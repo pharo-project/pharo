@@ -46,7 +46,7 @@ MetacelloAbstractVersionConstructor >> attributeOrder [
 
 { #category : 'api' }
 MetacelloAbstractVersionConstructor >> author: aBlockOrString [
-    "Define author field of version spec (MetacelloMCVersionSpec).
+	"Define author field of version spec (MetacelloMCVersionSpec).
 	 If <aBlockOrString> is a String, the version spec author is set to the String.
 	If <aBlockOrString> is a Block, the specifications in <aBlockOrString> are applied to the author spec (MetacelloValueHolderSpec). Not Recommended!
 	
@@ -56,7 +56,7 @@ MetacelloAbstractVersionConstructor >> author: aBlockOrString [
 			spec value: 'dkh'. ].
 	 "
 
-    self root author: aBlockOrString constructor: self
+	self authorForVersion: aBlockOrString
 ]
 
 { #category : 'api spec callbacks' }
@@ -66,12 +66,14 @@ MetacelloAbstractVersionConstructor >> authorForVersion: aBlockOrString [
 
 { #category : 'api' }
 MetacelloAbstractVersionConstructor >> baseline: aString [
-    self root baseline: aString constructor: self
+
+	self baselineForVersion: aString
 ]
 
 { #category : 'api' }
 MetacelloAbstractVersionConstructor >> baseline: aString with: aBlockOrString [
-    self root baseline: aString with: aBlockOrString constructor: self
+
+	self baselineForVersion: aString with: aBlockOrString
 ]
 
 { #category : 'api spec callbacks' }
@@ -86,7 +88,7 @@ MetacelloAbstractVersionConstructor >> baselineForVersion: aString with: aBlock 
 
 { #category : 'api' }
 MetacelloAbstractVersionConstructor >> blessing: aBlockOrString [
-    "Define blessing field of version spec (MetacelloMCVersionSpec).
+	"Define blessing field of version spec (MetacelloMCVersionSpec).
 	 If <aBlockOrString> is a String, the version spec blessing is set to the String. It is recommended to use a Symbol.
 	If <aBlockOrString> is a Block, the specifications in <aBlockOrString> are applied to the blessing spec (MetacelloValueHolderSpec). Not Recommended!
 	
@@ -101,7 +103,7 @@ MetacelloAbstractVersionConstructor >> blessing: aBlockOrString [
 		#release - indicating that the version spec has stabilized and will NOT change over time
 	 "
 
-    self root blessing: aBlockOrString constructor: self
+	self blessingForVersion: aBlockOrString
 ]
 
 { #category : 'api spec callbacks' }
@@ -141,7 +143,8 @@ MetacelloAbstractVersionConstructor >> configuration: aConfig [
 
 { #category : 'api' }
 MetacelloAbstractVersionConstructor >> configuration: aString with: aBlockOrString [
-    self root configuration: aString with: aBlockOrString constructor: self
+
+	self configurationForVersion: aString with: aBlockOrString
 ]
 
 { #category : 'accessing' }
@@ -157,7 +160,7 @@ MetacelloAbstractVersionConstructor >> configurationForVersion: aString with: aB
 
 { #category : 'api' }
 MetacelloAbstractVersionConstructor >> description: aBlockOrString [
-    "Define description field of version spec (MetacelloMCVersionSpec).
+	"Define description field of version spec (MetacelloMCVersionSpec).
 	 If <aBlockOrString> is a String, the version spec blessing is set to the String. It is recommended to use a Symbol.
 	If <aBlockOrString> is a Block, the specifications in <aBlockOrString> are applied to the blessing spec (MetacelloValueHolderSpec). Not Recommended!
 	
@@ -167,7 +170,7 @@ MetacelloAbstractVersionConstructor >> description: aBlockOrString [
 			spec value: 'Descriptive comment'.
 	 "
 
-    self root description: aBlockOrString constructor: self
+	self descriptionForVersion: aBlockOrString
 ]
 
 { #category : 'api spec callbacks' }
@@ -249,12 +252,14 @@ MetacelloAbstractVersionConstructor >> for: attributeListOrSymbol version: aStri
 
 { #category : 'api' }
 MetacelloAbstractVersionConstructor >> group: aString overrides: aStringOrCollection [
-    self root group: aString overrides: aStringOrCollection constructor: self
+
+	self groupForVersion: aString overrides: aStringOrCollection
 ]
 
 { #category : 'api' }
 MetacelloAbstractVersionConstructor >> group: aString with: aStringOrCollection [
-    self root group: aString with: aStringOrCollection constructor: self
+
+	self groupForVersion: aString with: aStringOrCollection
 ]
 
 { #category : 'api spec callbacks' }
@@ -279,7 +284,7 @@ MetacelloAbstractVersionConstructor >> groupForVersion: aString with: aStringOrC
 
 { #category : 'api' }
 MetacelloAbstractVersionConstructor >> import: aStringOrCollection [
-  "import names defined in baseline <aString> to be used when loading the version
+	"import names defined in baseline <aString> to be used when loading the version
 
 		spec baseline: 'Sample' with: [ spec repository: 'github://dalehenrich/sample:master/repository' ].
 		spec import: 'Sample' ]
@@ -291,12 +296,12 @@ MetacelloAbstractVersionConstructor >> import: aStringOrCollection [
 		spec import: #('Sample' 'Example')]	
 	 "
 
-  self root import: aStringOrCollection constructor: self
+	self importForVersion: aStringOrCollection
 ]
 
 { #category : 'api' }
 MetacelloAbstractVersionConstructor >> import: aString provides: aCollection [
-  "import names defined in baseline <aString> to be used when loading the version
+	"import names defined in baseline <aString> to be used when loading the version
 
 	
 		spec baseline: 'Sample' with: [ spec repository: 'github://dalehenrich/sample:master/repository' ].
@@ -305,7 +310,7 @@ MetacelloAbstractVersionConstructor >> import: aString provides: aCollection [
 		spec import: 'Example' provides: #('Example Core')]	
 	 "
 
-  self root import: aString provides: aCollection constructor: self
+	self importForVersion: aString provides: aCollection
 ]
 
 { #category : 'api spec callbacks' }
@@ -360,17 +365,19 @@ MetacelloAbstractVersionConstructor >> operatorForProject: anObject [
 
 { #category : 'api' }
 MetacelloAbstractVersionConstructor >> package: aString [
-    self root package: aString constructor: self
+
+	self packageForVersion: aString
 ]
 
 { #category : 'api' }
 MetacelloAbstractVersionConstructor >> package: aString overrides: aBlock [
-    self root package: aString overrides: aBlock constructor: self
+
+	self packageForVersion: aString overrides: aBlock
 ]
 
 { #category : 'api' }
 MetacelloAbstractVersionConstructor >> package: packageName with: aBlockOrString [
-    "Define specification for package <packageName>.
+	"Define specification for package <packageName>.
 	 If <aBlockOrString> is a String (or Symbol), the String is expected to be a version (or symbolic version).
 	If <aBlockOrString> is a Block, the specifications in <aBlockOrString> are applied to the project:
 	
@@ -381,7 +388,7 @@ MetacelloAbstractVersionConstructor >> package: packageName with: aBlockOrString
 			spec repository: '/opt/gemstone/repository'.
 	 "
 
-    self root package: packageName with: aBlockOrString constructor: self
+	self packageForVersion: packageName with: aBlockOrString
 ]
 
 { #category : 'api spec callbacks' }
@@ -410,7 +417,7 @@ MetacelloAbstractVersionConstructor >> packageForVersion: packageName with: aBlo
 
 { #category : 'api' }
 MetacelloAbstractVersionConstructor >> postLoadDoIt: aSymbol [
-    self root postLoadDoIt: aSymbol constructor: self
+    self postLoadDoItForVersion: aSymbol
 ]
 
 { #category : 'api spec callbacks' }
@@ -436,7 +443,7 @@ MetacelloAbstractVersionConstructor >> postLoadDoItForVersion: aSymbol [
 
 { #category : 'api' }
 MetacelloAbstractVersionConstructor >> preLoadDoIt: aSymbol [
-    self root preLoadDoIt: aSymbol constructor: self
+    self preLoadDoItForVersion: aSymbol
 ]
 
 { #category : 'api spec callbacks' }
@@ -468,26 +475,25 @@ MetacelloAbstractVersionConstructor >> project [
 
 { #category : 'api' }
 MetacelloAbstractVersionConstructor >> project: aString [
-    self root project: aString constructor: self
+
+	self projectForVersion: aString
 ]
 
 { #category : 'api' }
 MetacelloAbstractVersionConstructor >> project: aString copyFrom: oldSpecName with: aBlock [
-    self root
-        project: aString
-        copyFrom: oldSpecName
-        with: aBlock
-        constructor: self
+
+	self projectForVersion: aString copyFrom: oldSpecName with: aBlock
 ]
 
 { #category : 'api' }
 MetacelloAbstractVersionConstructor >> project: aString overrides: aBlock [
-    self root project: aString overrides: aBlock constructor: self
+
+	self projectForVersion: aString overrides: aBlock
 ]
 
 { #category : 'api' }
 MetacelloAbstractVersionConstructor >> project: aString with: aBlockOrString [
-    self root project: aString with: aBlockOrString constructor: self
+    self projectForVersion: aString with: aBlockOrString
 ]
 
 { #category : 'api spec callbacks' }
@@ -542,7 +548,7 @@ MetacelloAbstractVersionConstructor >> projectPackageForProject: aBlock [
 
 { #category : 'api' }
 MetacelloAbstractVersionConstructor >> removeGroup: aString [
-    self root removeGroup: aString constructor: self
+    self removeGroupForVersion: aString
 ]
 
 { #category : 'api spec callbacks' }
@@ -556,7 +562,7 @@ MetacelloAbstractVersionConstructor >> removeGroupForVersion: aString [
 
 { #category : 'api' }
 MetacelloAbstractVersionConstructor >> removePackage: aString [
-    self root removePackage: aString constructor: self
+    self removePackageForVersion: aString
 ]
 
 { #category : 'api spec callbacks' }
@@ -570,7 +576,7 @@ MetacelloAbstractVersionConstructor >> removePackageForVersion: aString [
 
 { #category : 'api' }
 MetacelloAbstractVersionConstructor >> removeProject: aString [
-    self root removeProject: aString constructor: self
+    self removeProjectForVersion: aString
 ]
 
 { #category : 'api spec callbacks' }
@@ -584,7 +590,8 @@ MetacelloAbstractVersionConstructor >> removeProjectForVersion: aString [
 
 { #category : 'api' }
 MetacelloAbstractVersionConstructor >> repositories: aBlock [
-    self root repositories: aBlock constructor: self
+
+	self repositoriesForVersion: aBlock
 ]
 
 { #category : 'api spec callbacks' }
@@ -609,16 +616,14 @@ MetacelloAbstractVersionConstructor >> repositoriesForVersion: aBlock [
 
 { #category : 'api' }
 MetacelloAbstractVersionConstructor >> repository: anObject [
-    self root repository: anObject constructor: self
+
+	self repositoryForVersion: anObject
 ]
 
 { #category : 'api' }
 MetacelloAbstractVersionConstructor >> repository: description username: username password: password [
-    self root
-        repository: description
-        username: username
-        password: password
-        constructor: self
+
+	self repositoryForVersion: description username: username password: password
 ]
 
 { #category : 'api spec callbacks' }
@@ -902,7 +907,7 @@ MetacelloAbstractVersionConstructor >> symbolicVersion: aSymbol [
 
 { #category : 'api' }
 MetacelloAbstractVersionConstructor >> timestamp: aBlockOrStringOrDateAndTime [
-    "Define timestamp field of version spec (MetacelloMCVersionSpec).
+	"Define timestamp field of version spec (MetacelloMCVersionSpec).
 	 If <aBlockOrStringOrDateAndTime> is a String, the version spec timetamp is set to the String.
 	 If <aBlockOrStringOrDateAndTime> is a DateAndTime, the version spec timetamp is set to the printString of the DateAndTime.
 	If <aBlockOrStringOrDateAndTime> is a Block, the specifications in <aBlockOrStringOrDateAndTime> are applied to the timestamp spec (MetacelloValueHolderSpec). Not Recommended!
@@ -915,7 +920,7 @@ MetacelloAbstractVersionConstructor >> timestamp: aBlockOrStringOrDateAndTime [
 			spec value: '10/7/2009 14:40'. ].
     "
 
-    self root timestamp: aBlockOrStringOrDateAndTime constructor: self
+	self timestampForVersion: aBlockOrStringOrDateAndTime
 ]
 
 { #category : 'api spec callbacks' }
@@ -957,7 +962,7 @@ MetacelloAbstractVersionConstructor >> versionForVersion: anObject [
 
 { #category : 'api' }
 MetacelloAbstractVersionConstructor >> versionString: anObject [
-    self root versionString: anObject constructor: self
+    self versionStringForVersion: anObject
 ]
 
 { #category : 'api spec callbacks' }

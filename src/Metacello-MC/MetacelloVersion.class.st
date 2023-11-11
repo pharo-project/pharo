@@ -75,12 +75,6 @@ MetacelloVersion >> computeVersionStatus [
 ]
 
 { #category : 'querying' }
-MetacelloVersion >> currentlyLoadedClassesInVersion [
-
-	^self spec currentlyLoadedClassesInVersion
-]
-
-{ #category : 'querying' }
 MetacelloVersion >> defaultPackageNamesToLoad: defaultList [
 	"Answer the list of packages and projects to be loaded: packages already loaded plust defaultList"
 	
@@ -239,27 +233,6 @@ MetacelloVersion >> importedVersions [
 MetacelloVersion >> importedVersions: aCollection [
 
 	importedVersions := aCollection
-]
-
-{ #category : 'testing' }
-MetacelloVersion >> isAllLoadedToSpec [
-	"all projects and packages are loaded and match specification"
-	
-	^self spec isAllLoadedToSpec
-]
-
-{ #category : 'testing' }
-MetacelloVersion >> isLoadedMatchConstraints [
-	"all loaded projects and packages match constraints"
-	
-	^self spec isLoadedMatchConstraints
-]
-
-{ #category : 'testing' }
-MetacelloVersion >> isLoadedToSpec [
-	"all loaded projects and packages match specifications"
-	
-	^self spec isLoadedToSpec
 ]
 
 { #category : 'testing' }
