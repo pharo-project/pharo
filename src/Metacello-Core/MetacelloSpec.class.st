@@ -202,9 +202,9 @@ MetacelloSpec >> removeMember [
 
 { #category : 'mutability' }
 MetacelloSpec >> shouldBeMutable [
-    self isMutable
-        ifTrue: [ ^ self ].
-    self error: 'Not allowed to modify an immutable object'
+
+	self isMutable ifTrue: [ ^ self ].
+	self error: 'Not allowed to modify an immutable object'
 ]
 
 { #category : 'merging' }
