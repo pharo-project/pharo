@@ -14,15 +14,9 @@ Class {
 { #category : 'instance creation' }
 MetacelloSpec class >> for: aVersionMap [
 
-	^(self platformClass new)
-		for: aVersionMap;
-		yourself
-]
-
-{ #category : 'accessing' }
-MetacelloSpec class >> platformClass [
-
-	^self
+	^ self new
+		  for: aVersionMap;
+		  yourself
 ]
 
 { #category : 'merging' }

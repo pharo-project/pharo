@@ -231,13 +231,7 @@ MetacelloProject >> fetchProject: aLoaderPolicy [
 { #category : 'spec classes' }
 MetacelloProject >> groupSpec [
 
-	^self groupSpecClass for: self
-]
-
-{ #category : 'spec classes' }
-MetacelloProject >> groupSpecClass [
-
-	^MetacelloGroupSpec
+	^ MetacelloGroupSpec for: self
 ]
 
 { #category : 'versions' }
@@ -415,13 +409,7 @@ MetacelloProject >> packageSpecClass [
 { #category : 'spec classes' }
 MetacelloProject >> packagesSpec [
 
-	^self packagesSpecClass for: self
-]
-
-{ #category : 'spec classes' }
-MetacelloProject >> packagesSpecClass [
-
-	^MetacelloPackagesSpec
+	^ MetacelloPackagesSpec for: self
 ]
 
 { #category : 'private' }
@@ -517,13 +505,7 @@ MetacelloProject >> projectPlatformAttributes [
 { #category : 'spec classes' }
 MetacelloProject >> projectReferenceSpec [
 
-	^self projectReferenceSpecClass for: self
-]
-
-{ #category : 'spec classes' }
-MetacelloProject >> projectReferenceSpecClass [
-
-	^MetacelloProjectReferenceSpec
+	^ MetacelloProjectReferenceSpec for: self
 ]
 
 { #category : 'spec classes' }
@@ -632,13 +614,7 @@ MetacelloProject >> updateProject: aLoaderPolicy [
 { #category : 'spec classes' }
 MetacelloProject >> valueHolderSpec [
 
-	^self valueHolderSpecClass for: self
-]
-
-{ #category : 'spec classes' }
-MetacelloProject >> valueHolderSpecClass [
-
-	^MetacelloValueHolderSpec
+	^ MetacelloValueHolderSpec for: self
 ]
 
 { #category : 'versions' }
