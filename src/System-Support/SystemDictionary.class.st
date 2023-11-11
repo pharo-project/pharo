@@ -187,6 +187,13 @@ SystemDictionary >> classOrTraitNamed: aString [
 ]
 
 { #category : 'accessing' }
+SystemDictionary >> codeChangeAnnouncer [
+	"This should not be hardcoded in the futurebut I should have my own instance."
+
+	^ SystemAnnouncer uniqueInstance
+]
+
+{ #category : 'accessing' }
 SystemDictionary >> environment [
 	"For conversion from SmalltalkImage to SystemDictionary"
 
@@ -328,13 +335,6 @@ SystemDictionary >> organization: anOrganization [
 SystemDictionary >> outerScope [
 
 	^ nil
-]
-
-{ #category : 'accessing' }
-SystemDictionary >> pharoModelAnnouncer [
-	"This should not be hardcoded in the futurebut I should have my own instance."
-
-	^ SystemAnnouncer uniqueInstance
 ]
 
 { #category : 'accessing' }

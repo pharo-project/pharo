@@ -185,8 +185,8 @@ Breakpoint class >> notifyBreakpointRemoved: aBreakpoint fromNodes: nodes [
 Breakpoint class >> registerInterestToSystemAnnouncement [
 
 	<systemEventRegistration>
-	self pharoModelAnnouncer unsubscribe: self.
-	self pharoModelAnnouncer weak
+	self codeChangeAnnouncer unsubscribe: self.
+	self codeChangeAnnouncer weak
 		when: MethodRemoved send: #handleMethodRemoved: to: self;
 		when: MethodModified send: #handleMethodModified: to: self;
 		when: ClassRemoved send: #handleClassRemoved: to: self

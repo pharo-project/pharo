@@ -543,6 +543,12 @@ Behavior >> cleanUp: aggressive [
 	^self cleanUp
 ]
 
+{ #category : 'accessing' }
+Behavior >> codeChangeAnnouncer [
+
+	^ self environment codeChangeAnnouncer
+]
+
 { #category : 'accessing - method dictionary' }
 Behavior >> compiledMethodAt: selector [
 	"Answer the compiled method associated with the argument, selector (a
@@ -1336,12 +1342,6 @@ Behavior >> packageOrganizer [
 	^ self environment organization
 ]
 
-{ #category : 'accessing' }
-Behavior >> pharoModelAnnouncer [
-
-	^ self environment pharoModelAnnouncer
-]
-
 { #category : 'copying' }
 Behavior >> postCopy [
 	super postCopy.
@@ -1444,7 +1444,7 @@ Behavior >> removeSelector: aSelector [
 Behavior >> removeSelectorSilently: selector [
 	"Remove selector without sending system change notifications"
 	<reflection: 'Class structural modification - Selector/Method modification'>
-	^ self pharoModelAnnouncer suspendAllWhile: [self removeSelector: selector]
+	^ self codeChangeAnnouncer suspendAllWhile: [self removeSelector: selector]
 ]
 
 { #category : 'cleanup' }

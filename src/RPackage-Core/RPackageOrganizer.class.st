@@ -140,7 +140,7 @@ RPackageOrganizer >> addPackage: aPackage [
 
 	self basicRegisterPackage: package.
 
-	self pharoModelAnnouncer  announce: (PackageAdded to: package).
+	self codeChangeAnnouncer  announce: (PackageAdded to: package).
 
 	^ package
 ]
@@ -157,6 +157,12 @@ RPackageOrganizer >> basicUnregisterPackage: aPackage [
 	"Unregister the specified package from the list of registered packages. Raise the PackageRemoved announcement. This is a low level action. It does not unregister the back pointer from classes to packages or any other information managed by the organizer"
 
 	^ packages removeKey: aPackage name ifAbsent: [  ]
+]
+
+{ #category : 'accessing' }
+RPackageOrganizer >> codeChangeAnnouncer [
+
+	^ self environment codeChangeAnnouncer
 ]
 
 { #category : 'registration' }
@@ -353,12 +359,6 @@ RPackageOrganizer >> packagesDo: aBlock [
 	self packages do: aBlock
 ]
 
-{ #category : 'accessing' }
-RPackageOrganizer >> pharoModelAnnouncer [
-
-	^ self environment pharoModelAnnouncer
-]
-
 { #category : 'system integration' }
 RPackageOrganizer >> removeClass: class [
 	"Remove the class, the class backpointer, the extensions and the extension backPointer from the receiver and the class involved with the class named: className. className is a class name and should not be a metaclass one. "
@@ -422,7 +422,7 @@ RPackageOrganizer >> repackageMethod: method oldProtocol: oldProtocol newProtoco
 	oldPackage removeMethod: method.
 	newPackage addMethod: method.
 
-	self pharoModelAnnouncer  methodRepackaged: method from: oldPackage to: newPackage
+	self codeChangeAnnouncer  methodRepackaged: method from: oldPackage to: newPackage
 ]
 
 { #category : 'accessing' }
@@ -455,7 +455,7 @@ RPackageOrganizer >> unregisterPackage: aPackage [
 		           ifFalse: [ aPackage ].
 
 	self basicUnregisterPackage: package.
-	self pharoModelAnnouncer  announce: (PackageRemoved to: package).
+	self codeChangeAnnouncer  announce: (PackageRemoved to: package).
 
 	^ package
 ]

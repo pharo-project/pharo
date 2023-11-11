@@ -182,6 +182,12 @@ RPackage >> classesTaggedWith: aSymbol [
 ]
 
 { #category : 'accessing' }
+RPackage >> codeChangeAnnouncer [
+
+	^ self environment codeChangeAnnouncer
+]
+
+{ #category : 'accessing' }
 RPackage >> definedClassNames [
 	"Return the class names having methods defined in the receiver."
 
@@ -261,7 +267,7 @@ RPackage >> ensureTag: aTag [
 	newTag := RPackageTag package: self name: tagName.
 	classTags add: newTag.
 
-	self pharoModelAnnouncer  announce: (PackageTagAdded to: newTag).
+	self codeChangeAnnouncer  announce: (PackageTagAdded to: newTag).
 	^ newTag
 ]
 
@@ -522,8 +528,8 @@ RPackage >> moveClass: aClass toTag: aTag [
 
 	"If the tag is undefined, this means we are adding the class. Else we are updating the package or tag."
 	oldTag isUndefined
-		ifTrue: [ self pharoModelAnnouncer  announce: (ClassAdded class: aClass) ]
-		ifFalse: [ self pharoModelAnnouncer  announce: (ClassRepackaged classRepackaged: aClass oldTag: oldTag newTag: newTag) ]
+		ifTrue: [ self codeChangeAnnouncer  announce: (ClassAdded class: aClass) ]
+		ifFalse: [ self codeChangeAnnouncer  announce: (ClassRepackaged classRepackaged: aClass oldTag: oldTag newTag: newTag) ]
 ]
 
 { #category : 'accessing' }
@@ -571,12 +577,6 @@ RPackage >> packageName [
 RPackage >> packages [
 	"Compatibility with monticello and old PackageInfo"
 	^ self classTags
-]
-
-{ #category : 'accessing' }
-RPackage >> pharoModelAnnouncer [
-
-	^ self environment pharoModelAnnouncer
 ]
 
 { #category : 'printing' }
@@ -721,7 +721,7 @@ RPackage >> removeTag: aTag [
 
 	classTags remove: tag ifAbsent: [ ^ self ].
 
-	self pharoModelAnnouncer  announce: (PackageTagRemoved to: tag)
+	self codeChangeAnnouncer  announce: (PackageTagRemoved to: tag)
 ]
 
 { #category : 'class tags' }
@@ -751,7 +751,7 @@ RPackage >> renameTo: aSymbol [
 		protocol rename: '*' , newName , (protocol name allButFirst: oldName size + 1) ].
 
 	self organizer basicRegisterPackage: self.
-	self pharoModelAnnouncer  announce: (PackageRenamed to: self oldName: oldName newName: newName)
+	self codeChangeAnnouncer  announce: (PackageRenamed to: self oldName: oldName newName: newName)
 ]
 
 { #category : 'class tags' }
