@@ -39,12 +39,6 @@ MetacelloPackageLoadDirective >> packageDirectivesDo: aBlock [
 	aBlock value: self
 ]
 
-{ #category : 'enumerating' }
-MetacelloPackageLoadDirective >> packageDo: aBlock [
-
-	aBlock value: self
-]
-
 { #category : 'accessing' }
 MetacelloPackageLoadDirective >> packageName [
 
@@ -70,7 +64,7 @@ MetacelloPackageLoadDirective >> resolvedReference: anObject [
 { #category : 'initialization' }
 MetacelloPackageLoadDirective >> spec: aPackageSpec externalReference: anExternalReference loader: aLoader [
 
-	super spec: aPackageSpec loader: aLoader.
+	self spec: aPackageSpec loader: aLoader.
 	externalReference := anExternalReference
 ]
 

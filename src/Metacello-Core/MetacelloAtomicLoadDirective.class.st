@@ -11,15 +11,6 @@ Class {
 	#tag : 'Directives'
 }
 
-{ #category : 'enumerating' }
-MetacelloAtomicLoadDirective >> directivesDo: aBlock [
-
-	aBlock value: self.
-	self preloads do: [:directive | directive directivesDo: aBlock ].
-	self loadDirectives do: [:directive | directive directivesDo: aBlock ].
-	self postloads do: [:directive | directive directivesDo: aBlock ].
-]
-
 { #category : 'actions' }
 MetacelloAtomicLoadDirective >> finalizeLoad: aGofer [
 	"load the accumulated packages (if any), reset the package list"
@@ -99,22 +90,6 @@ MetacelloAtomicLoadDirective >> postloads [
 MetacelloAtomicLoadDirective >> preloads [
 
 	^ preloads ifNil: [ preloads := OrderedCollection new ]
-]
-
-{ #category : 'enumerating' }
-MetacelloAtomicLoadDirective >> prepostLoadDirectivesDo: aBlock [
-
-	self preloads do: [:directive | directive prepostLoadDirectivesDo: aBlock ].
-	self loadDirectives do: [:directive | directive prepostLoadDirectivesDo: aBlock ].
-	self postloads do: [:directive | directive prepostLoadDirectivesDo: aBlock ].
-]
-
-{ #category : 'enumerating' }
-MetacelloAtomicLoadDirective >> prepostLoadsDo: aBlock [
-
-	self preloads do: [:directive | directive prepostLoadDo: aBlock ].
-	self loadDirectives do: [:directive | directive prepostLoadDo: aBlock ].
-	self postloads do: [:directive | directive prepostLoadDo: aBlock ].
 ]
 
 { #category : 'accessing' }

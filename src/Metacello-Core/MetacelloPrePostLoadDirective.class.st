@@ -14,15 +14,3 @@ MetacelloPrePostLoadDirective >> evaluateSupplyingAnswers: loadBlock [
 		ifTrue: [ loadBlock valueSupplyingMetacelloAnswers: answers ]
 		ifFalse: [ loadBlock value]
 ]
-
-{ #category : 'enumerating' }
-MetacelloPrePostLoadDirective >> prepostLoadDirectivesDo: aBlock [
-
-	aBlock value: self
-]
-
-{ #category : 'enumerating' }
-MetacelloPrePostLoadDirective >> prepostLoadDo: aBlock [
-
-	aBlock value: self
-]

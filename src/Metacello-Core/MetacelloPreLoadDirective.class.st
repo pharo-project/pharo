@@ -24,12 +24,6 @@ MetacelloPreLoadDirective >> loadUsing: aLoaderDirective gofer: aGofer [
 	aLoaderDirective loadPreloadDirective: self.
 ]
 
-{ #category : 'actions' }
-MetacelloPreLoadDirective >> preLoadDo: aBlock [
-
-	aBlock value: self
-]
-
 { #category : 'accessing' }
 MetacelloPreLoadDirective >> title [
 

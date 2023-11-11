@@ -24,12 +24,6 @@ MetacelloPostLoadDirective >> loadUsing: aLoaderDirective gofer: aGofer [
 	aLoaderDirective loadPostloadDirective: self.
 ]
 
-{ #category : 'actions' }
-MetacelloPostLoadDirective >> postLoadDo: aBlock [
-
-	aBlock value: self
-]
-
 { #category : 'accessing' }
 MetacelloPostLoadDirective >> title [
 

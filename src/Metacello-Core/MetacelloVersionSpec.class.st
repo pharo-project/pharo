@@ -519,11 +519,7 @@ MetacelloVersionSpec >> packageNamed: aString [
 ]
 
 { #category : 'querying' }
-MetacelloVersionSpec >> packageNamed: aString forLoad: ignored forMap: map ifAbsent: absentBlock [
-	"at the end of the day, I don't the forLoad arg is important ... 
-   it just ends up triggering an error ... when during a real load, you would 
-   not get error. After a decent period of mourning we should just scrub this 
-   arg from system"
+MetacelloVersionSpec >> packageNamed: aString forMap: map ifAbsent: absentBlock [
 
 	| importSpec |
 	^ map at: aString ifAbsent: [
@@ -546,17 +542,6 @@ MetacelloVersionSpec >> packageNamed: aString forLoad: ignored forMap: map ifAbs
 					  includes: self packageNames;
 					  yourself ]
 			  ifFalse: [ absentBlock value ] ]
-]
-
-{ #category : 'querying' }
-MetacelloVersionSpec >> packageNamed: aString forMap: map ifAbsent: absentBlock [
-	"import: only allowed to be used with baseline project specs"
-
-	^ self
-		  packageNamed: aString
-		  forLoad: true
-		  forMap: map
-		  ifAbsent: absentBlock
 ]
 
 { #category : 'querying' }
@@ -714,15 +699,12 @@ MetacelloVersionSpec >> repositorySpecs [
 ]
 
 { #category : 'loading' }
-MetacelloVersionSpec >> resolveToLoadableSpec: aString forLoad: forLoad forMap: map packages: packageMap [
-    | package |
-    package := self
-        packageNamed: aString
-        forLoad: forLoad
-        forMap: map
-        ifAbsent: [ ^ self error: 'Name not found: ' , aString ].
-    packageMap at: package name put: package.
-    ^ {package}
+MetacelloVersionSpec >> resolveToLoadableSpec: aString forMap: map packages: packageMap [
+
+	| package |
+	package := self packageNamed: aString forMap: map ifAbsent: [ ^ self error: 'Name not found: ' , aString ].
+	packageMap at: package name put: package.
+	^ { package }
 ]
 
 { #category : 'loading' }
@@ -737,12 +719,12 @@ MetacelloVersionSpec >> resolveToLoadableSpecs: nameList [
 
 	| map |
 	map := Dictionary new.
-	self resolveToLoadableSpecs: nameList forLoad: false map: map.
+	self resolveToLoadableSpecs: nameList map: map.
 	^ map values
 ]
 
 { #category : 'loading' }
-MetacelloVersionSpec >> resolveToLoadableSpecs: required forLoad: forLoad map: packageMap [
+MetacelloVersionSpec >> resolveToLoadableSpecs: required map: packageMap [
 
 	| reqd allReqd map newReqd |
 	reqd := required copy.
@@ -751,11 +733,7 @@ MetacelloVersionSpec >> resolveToLoadableSpecs: required forLoad: forLoad map: p
 	[ reqd isEmpty ] whileFalse: [
 		newReqd := Set new.
 		reqd do: [ :req |
-			(self
-				 resolveToLoadableSpec: req
-				 forLoad: forLoad
-				 forMap: map
-				 packages: packageMap) do: [ :loadableSpec |
+			(self resolveToLoadableSpec: req forMap: map packages: packageMap) do: [ :loadableSpec |
 				newReqd addAll: loadableSpec requires.
 				newReqd addAll: loadableSpec includes ] ].
 		allReqd addAll: reqd.

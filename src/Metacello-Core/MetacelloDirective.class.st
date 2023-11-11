@@ -13,10 +13,7 @@ Class {
 { #category : 'instance creation' }
 MetacelloDirective class >> loadPackage: aPackageSpec externalReference: externalReference loader: aLoader [
 
-	^ MetacelloPackageLoadDirective new
-		  spec: aPackageSpec
-		  externalReference: externalReference
-		  loader: aLoader
+	^ MetacelloPackageLoadDirective new spec: aPackageSpec externalReference: externalReference loader: aLoader
 ]
 
 { #category : 'instance creation' }
@@ -46,12 +43,6 @@ MetacelloDirective >> addTo: aLoaderDirective [
 	aLoaderDirective add: self
 ]
 
-{ #category : 'enumerating' }
-MetacelloDirective >> directivesDo: aBlock [
-
-	aBlock value: self
-]
-
 { #category : 'printing' }
 MetacelloDirective >> label [
 
@@ -78,26 +69,6 @@ MetacelloDirective >> loader: aLoader [
 
 { #category : 'enumerating' }
 MetacelloDirective >> packageDirectivesDo: aBlock [
-]
-
-{ #category : 'actions' }
-MetacelloDirective >> packageDo: aBlock [
-]
-
-{ #category : 'actions' }
-MetacelloDirective >> postLoadDo: aBlock [
-]
-
-{ #category : 'actions' }
-MetacelloDirective >> preLoadDo: aBlock [
-]
-
-{ #category : 'enumerating' }
-MetacelloDirective >> prepostLoadDirectivesDo: aBlock [
-]
-
-{ #category : 'enumerating' }
-MetacelloDirective >> prepostLoadDo: aBlock [
 ]
 
 { #category : 'printing' }
@@ -140,16 +111,4 @@ MetacelloDirective >> spec: packageOrVersionSpec loader: aLoader [
 MetacelloDirective >> title [
 
 	self subclassResponsibility
-]
-
-{ #category : 'enumerating' }
-MetacelloDirective >> versionDirectivesDepthFirstDo: aBlock [
-]
-
-{ #category : 'enumerating' }
-MetacelloDirective >> versionDirectivesDo: aBlock [
-]
-
-{ #category : 'actions' }
-MetacelloDirective >> versionDo: aBlock [
 ]

@@ -15,13 +15,6 @@ MetacelloVersionLoadDirective >> add: aDirective [
 	self loadDirectives add: aDirective
 ]
 
-{ #category : 'enumerating' }
-MetacelloVersionLoadDirective >> directivesDo: aBlock [
-
-	aBlock value: self.
-	self loadDirectives do: [:directive | directive directivesDo: aBlock ].
-]
-
 { #category : 'actions' }
 MetacelloVersionLoadDirective >> finalizeLoad: aGofer [
 	"nothing special for linear loads"
@@ -102,24 +95,6 @@ MetacelloVersionLoadDirective >> packageDirectivesDo: aBlock [
 	self loadDirectives do: [:directive | directive packageDirectivesDo: aBlock ].
 ]
 
-{ #category : 'enumerating' }
-MetacelloVersionLoadDirective >> packagesDo: aBlock [
-
-	self loadDirectives do: [:directive | directive packageDo: aBlock ].
-]
-
-{ #category : 'enumerating' }
-MetacelloVersionLoadDirective >> prepostLoadDirectivesDo: aBlock [
-
-	self loadDirectives do: [:directive | directive prepostLoadDirectivesDo: aBlock ].
-]
-
-{ #category : 'enumerating' }
-MetacelloVersionLoadDirective >> prepostLoadsDo: aBlock [
-
-	self loadDirectives do: [:directive | directive prepostLoadDo: aBlock ].
-]
-
 { #category : 'printing' }
 MetacelloVersionLoadDirective >> printLoadDirectivesOn: aStream indent: indent [
 
@@ -144,30 +119,4 @@ MetacelloVersionLoadDirective >> spec [
 			  on: MessageNotUnderstood
 			  do: [ :ex | ex return: self loader spec ] ].
 	^ spec
-]
-
-{ #category : 'enumerating' }
-MetacelloVersionLoadDirective >> versionDirectivesDepthFirstDo: aBlock [
-
-	self loadDirectives do: [:directive | directive versionDirectivesDepthFirstDo: aBlock ].
-	aBlock value: self.
-]
-
-{ #category : 'enumerating' }
-MetacelloVersionLoadDirective >> versionDirectivesDo: aBlock [
-
-	aBlock value: self.
-	self loadDirectives do: [:directive | directive versionDirectivesDo: aBlock ].
-]
-
-{ #category : 'enumerating' }
-MetacelloVersionLoadDirective >> versionDo: aBlock [
-
-	aBlock value: self.
-]
-
-{ #category : 'enumerating' }
-MetacelloVersionLoadDirective >> versionsDo: aBlock [
-
-	self loadDirectives do: [:directive | directive versionDo: aBlock ].
 ]
