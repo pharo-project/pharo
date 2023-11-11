@@ -43,12 +43,6 @@ MetacelloMemberListSpec >> copy: aMemberSpec [
 	self addMember: aMemberSpec
 ]
 
-{ #category : 'actions' }
-MetacelloMemberListSpec >> copy: specNamed to: aSpec [
-
-	self subclassResponsibility
-]
-
 { #category : 'toolbox support' }
 MetacelloMemberListSpec >> deleteSpec: aSpec [
 	"remove the spec from list"

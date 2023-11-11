@@ -106,29 +106,17 @@ MetacelloRepositoriesSpec >> repository: aStringOrSpec [
 	aStringOrSpec addToMetacelloRepositories: self
 ]
 
-{ #category : 'construction' }
-MetacelloRepositoriesSpec >> repository: anObject constructor: aVersionConstructor [
-    aVersionConstructor repositoryForRepositories: anObject
-]
-
 { #category : 'actions' }
 MetacelloRepositoriesSpec >> repository: description username: username password: password [
 
 	| spec |
-	spec := 
-		(self project repositorySpec)
-			description: description;
-			username: username;
-			password: password;
-			yourself.
-	self addMember: 
-		(self addMember 
-			name: spec name;
-			spec: spec;
-			yourself)
-]
-
-{ #category : 'construction' }
-MetacelloRepositoriesSpec >> repository: aString username: username password: password constructor: aVersionConstructor [
-    aVersionConstructor repositoryForRepositories: aString username: username password: password
+	spec := self project repositorySpec
+		        description: description;
+		        username: username;
+		        password: password;
+		        yourself.
+	self addMember: (self addMember
+			 name: spec name;
+			 spec: spec;
+			 yourself)
 ]

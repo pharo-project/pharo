@@ -448,12 +448,7 @@ MetacelloProject >> projectReferenceSpec [
 { #category : 'spec classes' }
 MetacelloProject >> projectSpec [
 
-	^self projectSpecClass for: self
-]
-
-{ #category : 'spec classes' }
-MetacelloProject >> projectSpecClass [
-	^ MetacelloMCNamelessProjectSpec
+	^ MetacelloMCNamelessProjectSpec for: self
 ]
 
 { #category : 'spec classes' }

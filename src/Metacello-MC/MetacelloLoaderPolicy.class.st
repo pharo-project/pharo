@@ -12,8 +12,9 @@ Class {
 		'loadDirective',
 		'silently'
 	],
-	#category : 'Metacello-MC',
-	#package : 'Metacello-MC'
+	#category : 'Metacello-MC-Loaders',
+	#package : 'Metacello-MC',
+	#tag : 'Loaders'
 }
 
 { #category : 'accessing' }

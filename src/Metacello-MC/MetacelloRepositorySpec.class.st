@@ -72,26 +72,15 @@ MetacelloRepositorySpec >> description: aString [
 	description := aString
 ]
 
-{ #category : 'private' }
-MetacelloRepositorySpec >> extractTypeFromDescription [
-
-	^MetacelloPlatform current extractTypeFromDescription: self description
-]
-
 { #category : 'mc support' }
 MetacelloRepositorySpec >> hasNoLoadConflicts: aMetacelloRepositorySpec [
-  self description = aMetacelloRepositorySpec description
-    ifTrue: [ ^ true ].
-  self type = aMetacelloRepositorySpec type
-    ifFalse: [ 
-      "if the types are different then we don't need to create the repoitory to 
+
+	self description = aMetacelloRepositorySpec description ifTrue: [ ^ true ].
+	self type = aMetacelloRepositorySpec type ifFalse: [ "if the types are different then we don't need to create the repoitory to 
        know that there will be conflicts"
-      ^ false ].
-  (#('github' 'gitorious' 'bitbucket') includes: self type)
-    ifTrue: [ 
-      ^ self createRepository
-        hasNoLoadConflicts: aMetacelloRepositorySpec createRepository ].
-  ^ false
+		^ false ].
+	(#( 'github' 'gitorious' 'bitbucket' ) includes: self type) ifTrue: [ ^ self createRepository hasNoLoadConflicts: aMetacelloRepositorySpec createRepository ].
+	^ false
 ]
 
 { #category : 'private' }
@@ -146,7 +135,7 @@ MetacelloRepositorySpec >> removeFromMetacelloRepositories: aMetacelloRepositori
 { #category : 'querying' }
 MetacelloRepositorySpec >> type [
 
-	^ type ifNil: [ type := self extractTypeFromDescription ]
+	^ type ifNil: [ type := MetacelloPlatform current extractTypeFromDescription: self description ]
 ]
 
 { #category : 'accessing' }
