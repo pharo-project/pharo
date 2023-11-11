@@ -219,14 +219,14 @@ MetacelloSpecLoader >> loadPackageDirectives: pkgLoads gofer: aGofer [
 			loadBlock := [ "pkgLoads do: [:packageLoadDirective |  mcLoader preLoad: packageLoadDirective spec ]."
 			             goferLoad execute.
 			             pkgLoads do: [ :packageLoadDirective |
-				             packageLoadDirective resolvedReference == nil
-					             ifTrue: [ MetacelloNotification signal: 'Already Loaded -> ' , packageLoadDirective file level: 2 ]
-					             ifFalse: [
+				             packageLoadDirective resolvedReference
+					             ifNotNil: [
 						             MetacelloNotification
 							             signal: 'Loaded -> ' , packageLoadDirective file , ' --- ' , packageLoadDirective repository repositoryDescription , ' --- '
 								             , packageLoadDirective resolvedReference repository description
 							             level: 2.
-						             packageLoadDirective resolvedReference workingCopy repositoryGroup addRepository: packageLoadDirective repository ] ].
+						             packageLoadDirective resolvedReference workingCopy repositoryGroup addRepository: packageLoadDirective repository ]
+					             ifNil: [ MetacelloNotification signal: 'Already Loaded -> ' , packageLoadDirective file level: 2 ] ].
 			             self clearCurrentVersionCache "pkgLoads do: [:packageLoadDirective | 
 					packageLoadDirective resolvedReference ~~ nil
 						ifTrue: [mcLoader postLoad: packageLoadDirective spec ]]" ].

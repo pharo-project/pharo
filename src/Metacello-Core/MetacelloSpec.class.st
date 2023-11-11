@@ -94,10 +94,9 @@ MetacelloSpec >> label [
 MetacelloSpec >> loader [
 
 	^ loader ifNil: [
-		  | prjctLoader |
-		  (prjctLoader := self project loader) == nil
-			  ifTrue: [ self loader: (self project loaderClass on: self) ]
-			  ifFalse: [ self loader: prjctLoader ].
+		  self project loader
+			  ifNotNil: [ :prjctLoader | self loader: prjctLoader ]
+			  ifNil: [ self loader: (self project loaderClass on: self) ].
 		  loader ]
 ]
 

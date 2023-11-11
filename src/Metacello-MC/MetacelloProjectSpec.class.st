@@ -155,13 +155,11 @@ MetacelloProjectSpec >> compareEqual: aMetacelloProjectSpec [
 
 { #category : 'scripting' }
 MetacelloProjectSpec >> compareVersions: aMetacelloProjectSpec usingOperator: anOperator [
-  ^ aMetacelloProjectSpec versionOrNil == nil
-    ifTrue: [ 
-      "https://github.com/dalehenrich/metacello-work/issues/199#issuecomment-21739622"
-      aMetacelloProjectSpec versionString asMetacelloVersionNumber
-        perform: anOperator
-        with: self version versionNumber ]
-    ifFalse: [ ^ aMetacelloProjectSpec version perform: anOperator with: self version ]
+
+	^ aMetacelloProjectSpec versionOrNil
+		  ifNotNil: [ ^ aMetacelloProjectSpec version perform: anOperator with: self version ]
+		  ifNil: [ "https://github.com/dalehenrich/metacello-work/issues/199#issuecomment-21739622"
+			  aMetacelloProjectSpec versionString asMetacelloVersionNumber perform: anOperator with: self version versionNumber ]
 ]
 
 { #category : 'scripting' }
@@ -740,14 +738,14 @@ MetacelloProjectSpec >> loadVersion: aVersionOrNil [
 		         ifFalse: [ vrsn packageAndProjectNamesToLoad: (self loadListForVersion: vrsn) loader: mcLoader ]) asSet.
 	MetacelloPlatform current
 		useStackCacheDuring: [ :dict |
-			| projectCache cachedList |
+			| projectCache |
 			projectCache := dict at: self projectClass ifAbsent: [ dict at: self projectClass put: Dictionary new ].
-			(cachedList := projectCache at: vrsn ifAbsent: [  ]) == nil
-				ifTrue: [ projectCache at: vrsn put: list ]
-				ifFalse: [
+			(projectCache at: vrsn ifAbsent: [  ])
+				ifNotNil: [ :cachedList |
 					(cachedList size = list size and: [ cachedList allSatisfy: [ :each | list includes: each ] ])
 						ifTrue: [ "no need to refetch list ... recursion stoppper (Issue 95)" ^ self ]
-						ifFalse: [ projectCache at: vrsn put: list ] ].
+						ifFalse: [ projectCache at: vrsn put: list ] ]
+				ifNil: [ projectCache at: vrsn put: list ].
 			vrsn versionString ~= self versionString ifTrue: [ MetacelloNotification signal: ' [' , vrsn versionString , ']' ].
 			mcLoader preLoad: self.
 			vrsn fetchRequiredFromArray: list. "do the load"
@@ -800,11 +798,10 @@ MetacelloProjectSpec >> mergeMap [
 
 { #category : 'merging' }
 MetacelloProjectSpec >> mergeRepositoriesSpec: anotherRepositories [
-  self
-    repositories:
-      (self getRepositories == nil
-        ifTrue: [ anotherRepositories ]
-        ifFalse: [ self repositories mergeSpec: anotherRepositories ])
+
+	self repositories: (self getRepositories
+			 ifNotNil: [ self repositories mergeSpec: anotherRepositories ]
+			 ifNil: [ anotherRepositories ])
 ]
 
 { #category : 'scripting' }
@@ -1203,15 +1200,15 @@ MetacelloProjectSpec >> version [
 	"Empty version string means use latestVersion or #bleedingEdge"
 
 	self projectClass ifNil: [ ^ nil ].
-	^ self versionString == nil
-		  ifTrue: [
+	^ self versionString
+		  ifNotNil: [ self projectClassProject version: self versionString ]
+		  ifNil: [
 			  | vrsn |
 			  "Eventually it will become an error to not specify a project reference version as default: #stable is the preferred default""self deprecated: 'Must specify a project reference version.'."
 			  self flag: 'deprecate after version 1.0'.
 			  (vrsn := self projectClassProject latestVersion) == nil
 				  ifTrue: [ self projectClassProject version: #bleedingEdge ]
 				  ifFalse: [ vrsn ] ]
-		  ifFalse: [ self projectClassProject version: self versionString ]
 ]
 
 { #category : 'construction' }

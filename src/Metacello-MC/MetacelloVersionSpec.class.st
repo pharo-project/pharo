@@ -340,18 +340,16 @@ MetacelloVersionSpec >> difference: otherVersionSpec [
 		packageDo: [ :packageSpec | otherPackageSpecs at: packageSpec name put: packageSpec ]
 		groupDo: [ :ignored |  ].
 	myProjectSpecs valuesDo: [ :myProjectSpec |
-		| otherProjectSpec |
-		otherProjectSpec := otherProjectSpecs at: myProjectSpec name ifAbsent: [  ].
-		otherProjectSpec == nil
-			ifTrue: [
-				report removals at: myProjectSpec name put: {
-						myProjectSpec versionString.
-						'' } ]
-			ifFalse: [
+		(otherProjectSpecs at: myProjectSpec name ifAbsent: [  ])
+			ifNotNil: [ :otherProjectSpec |
 				myProjectSpec versionString = otherProjectSpec versionString ifFalse: [
 					report modifications at: myProjectSpec name put: {
 							myProjectSpec versionString.
-							otherProjectSpec versionString } ] ] ].
+							otherProjectSpec versionString } ] ]
+			ifNil: [
+				report removals at: myProjectSpec name put: {
+						myProjectSpec versionString.
+						'' } ] ].
 	otherProjectSpecs valuesDo: [ :otherProjectSpec |
 		(myProjectSpecs at: otherProjectSpec name ifAbsent: [  ]) ifNil: [
 			report additions at: otherProjectSpec name put: {
@@ -360,16 +358,16 @@ MetacelloVersionSpec >> difference: otherVersionSpec [
 	myPackageSpecs valuesDo: [ :myPackageSpec |
 		| otherPackageSpec |
 		otherPackageSpec := otherPackageSpecs at: myPackageSpec name ifAbsent: [  ].
-		otherPackageSpec == nil
-			ifTrue: [
-				report removals at: myPackageSpec name put: {
-						myPackageSpec file.
-						'' } ]
-			ifFalse: [
+		otherPackageSpec
+			ifNotNil: [
 				myPackageSpec file = otherPackageSpec file ifFalse: [
 					report modifications at: myPackageSpec name put: {
 							myPackageSpec file.
-							otherPackageSpec file } ] ] ].
+							otherPackageSpec file } ] ]
+			ifNil: [
+				report removals at: myPackageSpec name put: {
+						myPackageSpec file.
+						'' } ] ].
 	otherPackageSpecs valuesDo: [ :otherPackageSpec |
 		(myPackageSpecs at: otherPackageSpec name ifAbsent: [  ]) ifNil: [
 			report additions at: otherPackageSpec name put: {
@@ -958,31 +956,28 @@ MetacelloVersionSpec >> resolveToLoadableSpecs: nameList [
 
 { #category : 'loading' }
 MetacelloVersionSpec >> resolveToLoadableSpecs: required forLoad: forLoad map: packageMap [
-  | reqd allReqd map newReqd spec |
-  reqd := required copy.
-  allReqd := Set new.
-  map := self packages map.
-  [ reqd isEmpty ]
-    whileFalse: [ 
-      newReqd := Set new.
-      reqd
-        do: [ :req | 
-          (self
-            resolveToLoadableSpec: req
-            forLoad: forLoad
-            forMap: map
-            packages: packageMap)
-            do: [ :loadableSpec | 
-              newReqd addAll: loadableSpec requires.
-              newReqd addAll: loadableSpec includes ] ].
-      allReqd addAll: reqd.
-      newReqd removeAllFoundIn: allReqd.
-      reqd := newReqd ].
-  packageMap keys
-    do: [ :pkgName | 
-      (spec := (packageMap at: pkgName) resolveToLoadableSpec) == nil
-        ifTrue: [ packageMap removeKey: pkgName ]
-        ifFalse: [ packageMap at: pkgName put: (packageMap at: pkgName) resolveToLoadableSpec ] ]
+
+	| reqd allReqd map newReqd |
+	reqd := required copy.
+	allReqd := Set new.
+	map := self packages map.
+	[ reqd isEmpty ] whileFalse: [
+		newReqd := Set new.
+		reqd do: [ :req |
+			(self
+				 resolveToLoadableSpec: req
+				 forLoad: forLoad
+				 forMap: map
+				 packages: packageMap) do: [ :loadableSpec |
+				newReqd addAll: loadableSpec requires.
+				newReqd addAll: loadableSpec includes ] ].
+		allReqd addAll: reqd.
+		newReqd removeAllFoundIn: allReqd.
+		reqd := newReqd ].
+	packageMap keys do: [ :pkgName |
+		(packageMap at: pkgName) resolveToLoadableSpec
+			ifNotNil: [ packageMap at: pkgName put: (packageMap at: pkgName) resolveToLoadableSpec ]
+			ifNil: [ packageMap removeKey: pkgName ] ]
 ]
 
 { #category : 'accessing' }

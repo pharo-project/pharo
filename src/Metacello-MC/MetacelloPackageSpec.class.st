@@ -291,11 +291,9 @@ MetacelloPackageSpec >> getRepositories [
 { #category : 'accessing' }
 MetacelloPackageSpec >> goferLoaderReference [
 
-	^file == nil 
-		ifTrue: [ GoferPackageReference name: self name ]
-		ifFalse: [ 
-			"does Monticello-style #versionInfoFromVersionNamed: matching"
-			MetacelloGoferPackage name: self name packageFilename: self file ]
+	^ file
+		  ifNotNil: [ "does Monticello-style #versionInfoFromVersionNamed: matching" MetacelloGoferPackage name: self name packageFilename: self file ]
+		  ifNil: [ GoferPackageReference name: self name ]
 ]
 
 { #category : 'accessing' }

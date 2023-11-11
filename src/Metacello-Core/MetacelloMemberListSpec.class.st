@@ -138,11 +138,10 @@ MetacelloMemberListSpec >> mapCopy: aMemberSpec into: map [
 
 { #category : 'private' }
 MetacelloMemberListSpec >> mapMerge: aMemberSpec into: map [
-	| spec |
-	spec :=  map at: aMemberSpec name ifAbsent: [].
-	spec == nil
-		ifTrue: [ map at: aMemberSpec name put: aMemberSpec spec copy ]
-		ifFalse: [ map at: aMemberSpec name put: (spec mergeSpec: aMemberSpec spec)]
+
+	(map at: aMemberSpec name ifAbsent: [  ])
+		ifNotNil: [ :spec | map at: aMemberSpec name put: (spec mergeSpec: aMemberSpec spec) ]
+		ifNil: [ map at: aMemberSpec name put: aMemberSpec spec copy ]
 ]
 
 { #category : 'private' }

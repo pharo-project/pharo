@@ -110,9 +110,9 @@ MetacelloVersionConstructor >> collectAllVersionsFromVersionImportPragmasInto: v
 								(versionMap at: importedVersion ifAbsent: [  ]) ifNotNil: [ :version |
 									defined := true.
 									completed add: pragma.
-									versionSpec == nil
-										ifTrue: [ versionSpec := version spec copy ]
-										ifFalse: [ versionSpec := versionSpec mergeSpec: version spec copy ].
+									versionSpec
+										ifNotNil: [ versionSpec := versionSpec mergeSpec: version spec copy ]
+										ifNil: [ versionSpec := version spec copy ].
 									versionSpec versionString: versionString.
 									executionBlock value: versionSpec value: pragma ] ] ] ] ] ]
 				on: Error
