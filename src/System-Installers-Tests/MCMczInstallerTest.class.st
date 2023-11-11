@@ -78,7 +78,6 @@ MCMczInstallerTest >> tearDown [
 MCMczInstallerTest >> testInstallFromFile [
 	| stream |
 	stream := self fileStream.
-
 	MCMczWriter fileOut: expected on: stream.
 	stream close.
 

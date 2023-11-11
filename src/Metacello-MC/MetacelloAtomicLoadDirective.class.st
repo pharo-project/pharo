@@ -50,7 +50,7 @@ MetacelloAtomicLoadDirective >> loadLinearLoadDirective: aLoaderDirective gofer:
 	super loadLinearLoadDirective: aLoaderDirective gofer: aGofer
 ]
 
-{ #category : 'loading' }
+{ #category : 'actions' }
 MetacelloAtomicLoadDirective >> loadPackageDirective: aPackageLoadDirective gofer: aGofer [
 	"accumulate packages"
 	

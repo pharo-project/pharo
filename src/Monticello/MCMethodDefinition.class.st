@@ -123,16 +123,6 @@ MCMethodDefinition >> actualClass [
 				ifFalse: [ class ] ]
 ]
 
-{ #category : 'installing' }
-MCMethodDefinition >> asMethodAddition [
-
-	^ MethodAddition new
-		  compile: source
-		  classified: category
-		  withStamp: timeStamp
-		  inClass: self actualClass
-]
-
 { #category : 'accessing - backward' }
 MCMethodDefinition >> category [
 	"Please favor protocol instead of category. We want to have method protocol and class package and tag = a category"
@@ -248,17 +238,18 @@ MCMethodDefinition >> isOverrideMethod [
 
 { #category : 'installing' }
 MCMethodDefinition >> load [
-	| sel |
-	sel := (self actualClass compiler
-		protocol: category;
-		changeStamp: timeStamp;
-		permitUndeclared: true;
-		install: source) selector.
-	sel = selector ifTrue: [ ^ self ].
-	Warning signal: (
-		'Monticello: Selector missmatch. Got {1}, expected {2} for class {3}.'
-		format: { sel. selector. self actualClass name }).
-	selector := sel
+
+	| method |
+	method := self actualClass compiler
+		          protocol: category;
+		          changeStamp: timeStamp;
+		          permitUndeclared: true;
+		          install: source.
+
+	method selector = selector ifTrue: [ ^ self ].
+	"This can happen if we provide a selector that does not match the source code. I (Cyril Ferlicot) personnaly do not like that. I would prefer even that the MCMethodDefinition would not have a selector variable at all. But this is used in some places of the system :("
+	Warning signal: ('Monticello: Selector missmatch. Got {1}, expected {2} for class {3}.' format: { method selector. selector. self actualClass name }).
+	selector := method selector
 ]
 
 { #category : 'installing' }

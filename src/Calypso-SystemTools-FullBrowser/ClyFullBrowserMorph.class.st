@@ -657,27 +657,25 @@ ClyFullBrowserMorph >> selectPackage: aPackage [
 
 	self changeStateBy: [
 		packageView selection selectItemsWith: { aPackage }.
-		packageView selection isEmpty ifTrue: [ self switchToPackages ].
-		packageView selection selectItemsWith: { aPackage }.
-	]
+		packageView selection isEmpty ifTrue: [
+			self showInPackageView: aPackage.
+			packageView selection selectItemsWith: { aPackage } ] ]
 ]
 
 { #category : 'navigation' }
 ClyFullBrowserMorph >> selectPackage: aPackage andTag: tagName [
 
 	| packageItem targetClassGroup foundPackages |
-
 	self changeStateBy: [
-		foundPackages := packageView findItemsWith: {aPackage}.
+		foundPackages := packageView findItemsWith: { aPackage }.
 		foundPackages ifEmpty: [
-			self switchToPackages.
-			foundPackages := packageView findItemsWith: {aPackage} ].
+			self showInPackageView: aPackage.
+			foundPackages := packageView findItemsWith: { aPackage } ].
 		packageItem := foundPackages first.
 		packageItem expand.
-		targetClassGroup := packageItem childrenItems detect: [:each | each name = tagName ].
+		targetClassGroup := packageItem childrenItems detect: [ :each | each name = tagName ].
 
-		packageView selection selectItems: { targetClassGroup }
-	]
+		packageView selection selectItems: { targetClassGroup } ]
 ]
 
 { #category : 'navigation' }
@@ -712,6 +710,16 @@ ClyFullBrowserMorph >> showAllMethods [
 
 	methodQuery := ClyAllMethodsQuery sortedFrom: self classScopeForMethods.
 	methodView showQuery: methodQuery
+]
+
+{ #category : 'navigation' }
+ClyFullBrowserMorph >> showInPackageView: aPackage [
+	"If true we are in the project view and we need to find the package and expand it"
+
+	(packageView showsItemsFromQuery: ClyAllProjectsQuery) ifTrue: [
+		self projectSelection selectItemsWhere: [ :each | (each representsItemOfType: Project) and: [ each actualObject includesPackage: aPackage ] ].
+		self projectSelection items first expand ].
+	self packageSelection selectItemsWith: { aPackage }
 ]
 
 { #category : 'testing' }
@@ -868,6 +876,14 @@ ClyFullBrowserMorph >> switchToVariables [
 			from: classScope, classScope asInheritedScope
 			as: ClyGroupedInstanceVariablesResult withDefaultHierarchy
 	]
+]
+
+{ #category : 'taskbar-required' }
+ClyFullBrowserMorph >> taskbarLabel [
+
+	| title |
+	title := self newWindowTitle.
+	^ title allButFirst: (title findString: ': ')
 ]
 
 { #category : 'private' }

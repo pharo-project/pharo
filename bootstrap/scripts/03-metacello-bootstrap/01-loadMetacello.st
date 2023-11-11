@@ -3,7 +3,6 @@ mcPackages := #(
  'ScriptingExtensions'
  'System-FileRegistry'
  'FileSystem-Memory'
- 'Ring-Definitions-Containers'
  'StartupPreferences'
  'ConfigurationCommandLineHandler-Core'
  'PragmaCollector'
@@ -21,8 +20,6 @@ mcPackages := #(
  'Metacello-GitHub'
  'Metacello-Bitbucket'
  'Metacello-Platform'
- 'Metacello-ToolBox'
- 'Metacello-PharoExtensions'
  'MetacelloCommandLineHandler-Core'
  ).
 

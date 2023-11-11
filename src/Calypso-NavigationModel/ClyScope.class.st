@@ -207,7 +207,8 @@ ClyScope >> isBasedOnSingleBasis [
 
 { #category : 'testing' }
 ClyScope >> isBoundToEnvironment [
-	^environment notNil
+
+	^ environment isNotNil
 ]
 
 { #category : 'queries' }

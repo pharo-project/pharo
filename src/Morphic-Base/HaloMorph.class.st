@@ -170,7 +170,7 @@ HaloMorph class >> iconicHaloSpecifications [
 	(addDismissHandle:		left			top				(red		muchLighter)			#haloDismissIcon)
 	(addRotateHandle:		left			bottom			(blue paler paler paler paler)							#haloRotIcon)
 	(addMenuHandle:		leftCenter	top				(red)							#haloMenuIcon)
-	(addGrabHandle:			center		top				(gray)							#haloGrabIcon)
+	(addGrabHandle:			center		top				(gray)							#haloGrab)
 	(addDragHandle:			rightCenter	top				(brown)							#haloDragIcon)
 	(addDupHandle:			right		top				(green)							#haloDupIcon)
 	(addHelpHandle:			center		bottom			(lightBlue)						#haloHelpIcon)
@@ -255,7 +255,7 @@ HaloMorph >> addCollapseHandle: handleSpec [
 	"Add the collapse handle, with all of its event handlers set up, unless the target's owner is not the world or the hand."
 
 	| collapseHandle |
-	(target owner notNil "nil happens, amazingly"
+	(target owner isNotNil "nil happens, amazingly"
 			and: [target owner isWorldOrHandMorph])
 		ifFalse: [^ self].
 	collapseHandle := self addHandle: handleSpec
@@ -665,7 +665,7 @@ HaloMorph >> borderStyle [
 	"Answer the border style to use for the receiver.
 	Depends on the target and on some settings."
 
-	^(target notNil and: [self showBoundsInHalo and: [target isWorldMorph not]])
+	^(target isNotNil and: [self showBoundsInHalo and: [target isWorldMorph not]])
 		ifTrue: [super borderStyle]
 		ifFalse: [SimpleBorderStyle width: 0 color: Color transparent]
 ]
@@ -676,7 +676,7 @@ HaloMorph >> changed [
 
 	self extent > (200 @ 200)
 		ifTrue: [
-			(target notNil and: [ target ~~ self world ]) ifTrue: [
+			(target isNotNil and: [ target ~~ self world ]) ifTrue: [
 				"Invalidate 4 outer strips first, thus subsuming separate damage."
 				(self fullBounds areasOutside: target bounds) do: [ :r |
 					self invalidRect: r ] ].
@@ -1301,7 +1301,7 @@ HaloMorph >> showDirectionHandles: wantToShow addHandles: needHandles [
 
 { #category : 'private' }
 HaloMorph >> showingDirectionHandles [
-	^directionArrowAnchor notNil
+	^directionArrowAnchor isNotNil
 ]
 
 { #category : 'private' }

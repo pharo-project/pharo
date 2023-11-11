@@ -269,6 +269,16 @@ ReleaseTest >> testNoNullCharacter [
 	self assert: violations isEmpty description: 'Source corrupted: Methods with Null character found'
 ]
 
+{ #category : 'tests' }
+ReleaseTest >> testNoOrphanPackage [
+	"This test ensure that all packages loaded in Pharo are part of a baseline. This will be the most useful when we will be able to execute release tests last in the CI of Pharo. We will be able to detect generated packages that are not removed by the #tearDowns"
+
+	| declaredPackages |
+	declaredPackages := ((self class environment allClasses select: [ :class | class inheritsFrom: BaselineOf ]) flatCollect: [ :baseline |
+		                     baseline withAllPackageNames ]) asSet.
+	self assertEmpty: (self packageOrganizer packages reject: [ :package | package isUndefined or: [ declaredPackages includes: package name ] ])
+]
+
 { #category : 'tests - source' }
 ReleaseTest >> testNoPeriodInMethodSignature [
 	| methods |
@@ -531,7 +541,7 @@ ReleaseTest >> testUnknownProcesses [
 ReleaseTest >> testUnpackagedClasses [
 
 	| unpackagedClasses |
-	unpackagedClasses := Smalltalk allClassesAndTraits select: [ :each | (self packageOrganizer packageOf: each) name = UndefinedPackage undefinedPackageName ].
+	unpackagedClasses := Smalltalk allClassesAndTraits select: [ :each | each package isUndefined ].
 	self assert: unpackagedClasses isEmpty description: (String streamContents: [ :s |
 			 s nextPutAll: 'Found the following unpackaged classes: '.
 			 unpackagedClasses do: [ :cls | s tab print: cls ] separatedBy: [ s cr ] ])

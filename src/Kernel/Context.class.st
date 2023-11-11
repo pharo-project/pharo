@@ -502,6 +502,21 @@ Context >> cut: aContext [
 	callee privSender: nil
 ]
 
+{ #category : 'accessing' }
+Context >> deadContextForClosure: closure [
+
+	| outerMethod |
+	outerMethod := closure literalAt: closure literals size + 1.
+
+	^ (self class
+		   sender: self
+		   receiver: nil
+		   method: outerMethod
+		   arguments: {  })
+		  pc: nil;
+		  yourself
+]
+
 { #category : 'printing' }
 Context >> debugStack: stackSize on: aStream [
 	"print a condensed version of the stack up to stackSize on aStream"
@@ -703,7 +718,7 @@ Context >> errorReportOn: stream [
 	"Note: The following is an open-coded version of  Context>>stackOfSize: since this method may be called during a  low space condition and we might run out of space for allocating the  full stack."
 	stackDepth := 0.
 	aContext := self.
-	[ aContext notNil and: [ (stackDepth := stackDepth + 1) < 40 ]]
+	[ aContext isNotNil and: [ (stackDepth := stackDepth + 1) < 40 ]]
 		whileTrue: [
 			"variable values"
 			aContext printDetails: stream.
@@ -872,7 +887,7 @@ Context >> handleSignal: exception [
 Context >> hasContext: aContext [
 	"Answer whether aContext is me or one of my senders"
 
-	^ (self findContextSuchThat: [ :context | context == aContext ]) notNil
+	^ (self findContextSuchThat: [ :context | context == aContext ]) isNotNil
 ]
 
 { #category : 'accessing' }
@@ -925,9 +940,9 @@ Context >> home [
 
 	closureOrNil ifNil: [ ^ self ].
 	"this happens for clean blocks, we try to find the home on the stack"
-	^ closureOrNil outerContext 
-		ifNil: [ self activeHome ]
-		ifNotNil: [:outer | outer home ]
+	^ closureOrNil outerContext
+		  ifNil: [ self activeHome ifNil: [ self deadContextForClosure: self method ] ]
+		  ifNotNil: [ :outer | outer home ]
 ]
 
 { #category : 'accessing' }
@@ -1789,7 +1804,7 @@ Context >> return: value from: aSender [
 		^ self send: #cannotReturn: to: self with: {value} super: false ].
 	newTop := aSender sender.
 	context := self findNextUnwindContextUpTo: newTop.
-	(context notNil and: [ context unwindBlock = closureOrNil ]) ifTrue: [
+	(context isNotNil and: [ context unwindBlock = closureOrNil ]) ifTrue: [
 		"Here the return happens inside the unwind block like in following example:
 				[ #test ] ensure: [ ^ #returnFromUnwindBlock ]
 		In such cases #findNextUnwindContextUpTo: returns the corresponding #ensure context

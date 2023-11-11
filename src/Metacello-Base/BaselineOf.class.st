@@ -72,11 +72,61 @@ Class {
 	#package : 'Metacello-Base'
 }
 
+{ #category : 'accessing' }
+BaselineOf class >> allPackageNames [
+	
+	^ self version packages collect: [:each | each name]
+]
+
+{ #category : 'accessing' }
+BaselineOf class >> deepPackagesOfGroupNamed: aName [
+	"Traverses the group tree to collect packages"
+	| allGroups projects group |
+
+	allGroups := self version groups.
+	projects := Array streamContents: [ :stream |
+		self version spec
+			specListProjectDo: [ :each | stream nextPut: each ] 
+			packageDo: [ :each | ] 
+			groupDo: [  :each | ] ].
+	group := allGroups detect: [ :eachGroup | eachGroup name = aName ].
+	^ (group includes
+		collect: [ :each | 
+			(allGroups anySatisfy: [ :eachGroup | eachGroup name = each ])
+				ifTrue: [ self deepPackagesOfGroupNamed: each ]
+				ifFalse: [
+					(projects noneSatisfy: [ :eachProject | eachProject name = each ]) 
+						ifTrue: [ { each } ]
+						ifFalse: [ #() ] ] ])
+		flattened
+]
+
 { #category : 'testing' }
 BaselineOf class >> isProject [
 	"This method can be overriden if we have baselines in the image for tests so that we do not consider it is a project of the image."
 
 	^ true
+]
+
+{ #category : 'accessing' }
+BaselineOf class >> packagesOfGroupNamed: aName [
+
+	^ (self version groups detect: [ :g | g name = aName ]) includes
+]
+
+{ #category : 'accessing' }
+BaselineOf class >> version [
+	
+	^ self project version
+]
+
+{ #category : 'accessing' }
+BaselineOf class >> withAllPackageNames [
+	"Return the name of all packages I includes and the name of my package "
+
+	^ self allPackageNames
+		  add: self class package name;
+		  yourself
 ]
 
 { #category : 'baselines' }
@@ -95,6 +145,28 @@ BaselineOf >> baseline: spec [
 			group: 'CoreTests' with: #('XXX-Core' 'XXX-Core-Tests');
 			group: 'default' with: #('Beacon-XXX' 'Beacon-XXX-Tests') ]
 	"
+]
+
+{ #category : 'accessing' }
+BaselineOf >> packageRepository [
+
+	" Tries to determine a repository from which the baseline is being loaded. Useful for 
+	refering other baselines in the same repository. "
+	
+	^ (self class package mcWorkingCopy repositoryGroup repositories reject: [:each | each = MCCacheRepository uniqueInstance]) 
+		ifNotEmpty: [ :repositories | repositories anyOne ]
+		ifEmpty: [ nil ]
+]
+
+{ #category : 'accessing' }
+BaselineOf >> packageRepositoryURL [
+
+	" Tries to determine a repository URL from which the baseline is being loaded. Useful for 
+	refering other baselines in the same repository. "
+
+	^ self packageRepository
+		ifNotNil: [ :aRepository | aRepository description ]
+		ifNil: [ '' ]
 ]
 
 { #category : 'baselines' }

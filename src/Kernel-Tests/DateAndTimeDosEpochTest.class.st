@@ -35,7 +35,7 @@ DateAndTimeDosEpochTest >> tearDown [
 
 { #category : 'tests' }
 DateAndTimeDosEpochTest >> testAsDate [
-	self assert: aDateAndTime asDate equals: (Date readFrom: '1-1-1980' pattern: 'd-m-y') 
+	self assert: aDateAndTime asDate equals: 'January 1, 1980' asDate
 ]
 
 { #category : 'tests' }
@@ -81,7 +81,7 @@ DateAndTimeDosEpochTest >> testCurrent [
 
 { #category : 'tests' }
 DateAndTimeDosEpochTest >> testDateTime [
-	self assert: aDateAndTime equals: (DateAndTime date: (Date readFrom: '1-1-1980' pattern: 'd-m-y') time: '00:00:00' asTime)
+	self assert: aDateAndTime equals: (DateAndTime date: '01-01-1980' asDate time: '00:00:00' asTime)
 ]
 
 { #category : 'tests' }
@@ -153,10 +153,10 @@ DateAndTimeDosEpochTest >> testFromSeconds [
 
 { #category : 'tests' }
 DateAndTimeDosEpochTest >> testFromString [
-	self assert: aDateAndTime equals: (DateAndTime fromString: '1980-01-01T00:00:00+00:00').
-	self assert: aDateAndTime equals: (DateAndTime fromString: '1980-01-01T00:00:00').
-	self assert: aDateAndTime equals: (DateAndTime fromString: '1980-01-01T00:00').
-	self assert: aDateAndTime equals: (DateAndTime fromString: '1980-01-01T00:00:00+00:00')
+	self assert: aDateAndTime equals: (DateAndTime fromString: ' 1980-01-01T00:00:00+00:00').
+	self assert: aDateAndTime equals: (DateAndTime fromString: ' 1980-01-01T00:00:00').
+	self assert: aDateAndTime equals: (DateAndTime fromString: ' 1980-01-01T00:00').
+	self assert: aDateAndTime equals: (DateAndTime fromString: ' 1980-01-01T00:00:00+00:00')
 ]
 
 { #category : 'tests' }
@@ -202,7 +202,7 @@ DateAndTimeDosEpochTest >> testMeridianAbbreviation [
 { #category : 'tests' }
 DateAndTimeDosEpochTest >> testMiddleOf [
 	self assert: (aDateAndTime middleOf: '2:00:00:00' asDuration)
-	     equals: (Timespan starting: (Date readFrom: '31-12-1979' pattern: 'd-m-y') duration: 2 days)
+	     equals: (Timespan starting: '12-31-1979' asDate duration: 2 days)
 ]
 
 { #category : 'tests' }
@@ -315,7 +315,7 @@ DateAndTimeDosEpochTest >> testToByDo [
 	| schedule |
 	schedule := aDateAndTime to: aDateAndTime + 10 days by: 5 days do: [:i | ].
 	self
-		assert: schedule notNil;
+		assert: schedule isNotNil;
 		assert: schedule duration equals: 10 days
 ]
 

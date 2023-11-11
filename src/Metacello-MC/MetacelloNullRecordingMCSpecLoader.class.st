@@ -3,8 +3,7 @@ Class {
 	#superclass : 'MetacelloFetchingMCSpecLoader',
 	#instVars : [
 		'afterLoads',
-		'beforeLoads',
-		'evalDoits'
+		'beforeLoads'
 	],
 	#category : 'Metacello-MC-Loaders',
 	#package : 'Metacello-MC',
@@ -46,18 +45,6 @@ MetacelloNullRecordingMCSpecLoader >> doingLoads: aBlock [
 MetacelloNullRecordingMCSpecLoader >> ensureForDevelopment [
 
 	^false
-]
-
-{ #category : 'accessing' }
-MetacelloNullRecordingMCSpecLoader >> evalDoits [
-
-	^ evalDoits ifNil: [ evalDoits := false ]
-]
-
-{ #category : 'accessing' }
-MetacelloNullRecordingMCSpecLoader >> evalDoits: aBool [
-
-	evalDoits := aBool
 ]
 
 { #category : 'actions' }
@@ -106,15 +93,6 @@ MetacelloNullRecordingMCSpecLoader >> loadedPackages [
 ]
 
 { #category : 'accessing' }
-MetacelloNullRecordingMCSpecLoader >> loadedRepositories [
-
-	| repos |
-	repos := OrderedCollection new.
-	self repositoryMap values collect: [:coll | repos addAll: coll ].
-	^repos
-]
-
-{ #category : 'accessing' }
 MetacelloNullRecordingMCSpecLoader >> loadingSpecLoader [
 
 	^self
@@ -132,19 +110,13 @@ MetacelloNullRecordingMCSpecLoader >> packages [
 { #category : 'doits' }
 MetacelloNullRecordingMCSpecLoader >> postLoad: packageOrVersionSpec [
 
-	self evalDoits ifFalse: [ ^self ].
-	packageOrVersionSpec postLoadDoItBlock ~~ nil
-		ifTrue: [ self afterLoads add: packageOrVersionSpec printString, ' load' ].
-	super postLoad: packageOrVersionSpec
+	^ self
 ]
 
 { #category : 'doits' }
 MetacelloNullRecordingMCSpecLoader >> preLoad: packageOrVersionSpec [
 
-	self evalDoits ifFalse: [ ^self ].
-	packageOrVersionSpec preLoadDoItBlock ~~ nil
-		ifTrue: [ self beforeLoads add: packageOrVersionSpec printString, ' load' ].
-	super preLoad: packageOrVersionSpec
+	^ self
 ]
 
 { #category : 'accessing' }

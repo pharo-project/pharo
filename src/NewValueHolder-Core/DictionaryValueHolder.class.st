@@ -103,10 +103,3 @@ DictionaryValueHolder >> size [
 
 	^ value size
 ]
-
-{ #category : 'protocol' }
-DictionaryValueHolder >> valueAtNewKey: aKey put: anObject atIndex: index declareFrom: aDictionary [
-
-	value valueAtNewKey: aKey put: anObject atIndex: index declareFrom: aDictionary.
-	self valueChanged
-]

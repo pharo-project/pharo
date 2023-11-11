@@ -7,7 +7,6 @@ repositoryReference := (Smalltalk os environment at: 'BOOTSTRAP_REPOSITORY' ifAb
 repository := TonelRepository new
 	directory: repositoryReference;
 	yourself.
-(repository versionWithInfo: (repository versionInfoFromVersionNamed: 'Metacello-PharoExtensions')) snapshot install.
 (repository versionWithInfo: (repository versionInfoFromVersionNamed: 'BaselineOfPharoBootstrap')) snapshot install.
 
 Transcript nextPutAll: '[Hermes] - Generating Environment from repository'; cr.

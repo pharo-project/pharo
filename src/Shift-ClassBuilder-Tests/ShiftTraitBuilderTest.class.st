@@ -62,7 +62,7 @@ ShiftTraitBuilderTest >> testCreatingEmptyTraitHasDefaultElements [
 	self assert: newTrait traitComposition equals: {  } asTraitComposition.
 	self assert: newTrait class traitComposition equals: {  } asTraitComposition.
 	self assert: newTrait classVarNames equals: #(  ).
-	self assert: newTrait category equals: self packageNameForTest
+	self assert: newTrait package name equals: self packageNameForTest
 ]
 
 { #category : 'tests - class creation' }

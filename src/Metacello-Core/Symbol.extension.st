@@ -6,11 +6,6 @@ Symbol >> asMetacelloAttributeList [
 ]
 
 { #category : '*Metacello-Core' }
-Symbol >> asMetacelloAttributePath [
-    ^ MetacelloMethodSectionPath with: {self}
-]
-
-{ #category : '*Metacello-Core' }
 Symbol >> setForDo: aBlock withInMetacelloConfig: aMetacelloConstructore [
     aMetacelloConstructore setFor: {self} do: aBlock
 ]

@@ -86,6 +86,7 @@ ClassDescription >> addSelector: selector withMethod: compiledMethod [
 
 { #category : 'accessing - method dictionary' }
 ClassDescription >> addSelectorSilently: selector withMethod: compiledMethod [
+
 	<reflection: 'Class structural modification - Selector/Method modification'>
 	super addSelectorSilently: selector withMethod: compiledMethod.
 	self instanceSide noteAddedSelector: selector meta: self isMeta
@@ -647,6 +648,13 @@ ClassDescription >> isDeprecated [
 	^ self package isDeprecated
 ]
 
+{ #category : 'testing' }
+ClassDescription >> isInstalled [
+	"Return true if I am installed in the system (which is equivalent to me been part of my package organizer). Else, return false."
+
+	^ self packageOrganizer isClassInstalled: self
+]
+
 { #category : 'accessing - parallel hierarchy' }
 ClassDescription >> isInstanceSide [
 	"Return true whether the receiver is a class (in a couple class/metaclass sense)."
@@ -822,6 +830,19 @@ ClassDescription >> oldPharoDefinition [
 		definitionString
 ]
 
+{ #category : 'accessing' }
+ClassDescription >> package [
+
+	^ self subclassResponsibility
+]
+
+{ #category : 'accessing' }
+ClassDescription >> packageTag [
+	"Package tags are sub categories of packages to have a better organization of the packages."
+
+	^ self subclassResponsibility
+]
+
 { #category : 'printing' }
 ClassDescription >> printOn: aStream [
 	aStream nextPutAll: self name
@@ -953,18 +974,17 @@ ClassDescription >> removeSelector: selector [
 	dictionary of the receiver, if it is there. Answer nil otherwise."
 
   <reflection: 'Class structural modification - Selector/Method modification'>
-	| method protocol package origin |
+	| method protocol origin |
 	method := self compiledMethodAt: selector ifAbsent: [ ^ nil ].
 	origin := method origin.
 	protocol := self protocolOfSelector: selector.
-	package := method package.
 
 	method removeFromPackage.
 	self removeFromProtocols: selector.
 
 	super removeSelector: selector.
 
-	SystemAnnouncer uniqueInstance methodRemoved: method protocol: protocol origin: origin package: package
+	SystemAnnouncer uniqueInstance methodRemoved: method protocol: protocol origin: origin
 ]
 
 { #category : 'instance variables' }

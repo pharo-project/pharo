@@ -92,7 +92,7 @@ TableLayout >> computeCellArrangement: cellHolder in: newBounds horizontal: aBoo
 		] ifFalse:[
 			sum := sum + (cell cellSize x).
 		].
-		((sum + (n * inset x)) > wrap and:[first notNil]) ifTrue:[
+		((sum + (n * inset x)) > wrap and:[first isNotNil]) ifTrue:[
 			"It doesn't fit and we're not starting a new line"
 			(spacing == #localSquare or:[spacing == #localRect]) ifTrue:[
 				spacing == #localSquare

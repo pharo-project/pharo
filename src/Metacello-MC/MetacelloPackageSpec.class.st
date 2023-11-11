@@ -156,13 +156,6 @@ MetacelloPackageSpec >> configShortCutMethodBodyOn: aStream member: aMember inde
 		ifTrue: [ aStream nextPutAll: ' with: ', file printString ]
 ]
 
-{ #category : 'development support' }
-MetacelloPackageSpec >> copySpecTo: aRepositorySpec [
-	"Copy current mcz file to the repository named in aRepositorySpec"
-
-	self loader copySpec: self from: self repositorySpecs to: aRepositorySpec createRepository
-]
-
 { #category : 'testing' }
 MetacelloPackageSpec >> currentPackageLoaded: loadedBlock comparing: comarisonOperator notLoaded: notLoadedBlock using: anMCLoader [
 	"Use currentVersionInfoFor: because it involves the loader and returns versionInfo for a planned load 
@@ -202,7 +195,7 @@ MetacelloPackageSpec >> currentVersionInfo [
 
 { #category : 'loading' }
 MetacelloPackageSpec >> ensureLoadUsing: mcLoader [
-	self explicitLoadUsing: mcLoader ensureSpecLoader
+	self forceLoadUsing: mcLoader ensureSpecLoader
 ]
 
 { #category : 'loading' }
@@ -210,24 +203,6 @@ MetacelloPackageSpec >> ensureLoadedForDevelopmentUsing: mcLoader [
 	"noop"
 	
 	^true
-]
-
-{ #category : 'loading' }
-MetacelloPackageSpec >> explicitLoadUsing: mcLoader [
-	| wc fetchingSpecLoader |
-
-	((wc := self workingCopy) notNil and: [ wc needsSaving ]) 
-		ifTrue: [ 
-			(MetacelloSkipDirtyPackageLoad signal: self)
-				ifTrue:  [
-					MetacelloNotification signal: ('Skipping load of modified package: ', self file).
-					^self]
-				ifFalse: [MetacelloNotification signal: ('Load over modified package: ', self file)] ].
-	"fetch and explicitly load it"
-	fetchingSpecLoader := mcLoader fetchingSpecLoader.
-	fetchingSpecLoader
-		explicitLoadPackageSpecs: (Array with: self) 
-		repositories: (fetchingSpecLoader repositoriesFrom: self repositorySpecs).
 ]
 
 { #category : 'private' }
@@ -280,6 +255,20 @@ MetacelloPackageSpec >> file: aString constructor: aVersionConstructor [
     aVersionConstructor fileForPackage: aString
 ]
 
+{ #category : 'loading' }
+MetacelloPackageSpec >> forceLoadUsing: mcLoader [
+
+	| fetchingSpecLoader |
+	"force load it"
+	fetchingSpecLoader := (MetacelloLoadingMCSpecLoader on: mcLoader spec)
+		                      loaderPolicy: mcLoader loaderPolicy copy;
+		                      yourself.
+	fetchingSpecLoader
+		linearLoadPackageSpecs: (Array with: self)
+		repositories:
+		(fetchingSpecLoader repositoriesFrom: self repositorySpecs)
+]
+
 { #category : 'development support' }
 MetacelloPackageSpec >> forceUpdatePackageSpec: updatedSpecs using: anMCLoader [
 	
@@ -317,37 +306,6 @@ MetacelloPackageSpec >> getRepositories [
     "raw access to iv"
 
     ^ repositories
-]
-
-{ #category : 'development support' }
-MetacelloPackageSpec >> goferBranchPackage: branchName message: commitMessage [
-	"uses gofer to do commit ... non-interactive"
-
-	| latestFile pkgSpec   |
-	(file notNil and: [ (self name, '.', branchName) = self file ])
-		ifTrue: [ 
-			latestFile := self loader latestPackage: self file fromRepository: self repositorySpecs.
-			pkgSpec := self copy.
-			latestFile ~~ nil
-				ifTrue: [ 
-					pkgSpec file: latestFile.
-					pkgSpec goferCommitPackage: commitMessage.
-					^ self ] ].
-	self loader goferCommitBranchPackage: branchName using: self repositorySpecs commitMessage: commitMessage
-]
-
-{ #category : 'development support' }
-MetacelloPackageSpec >> goferCommitPackage: commitMessage [
-	"uses gofer to do commit ... non-interactive"
-	
-	| latestFile pkgSpec |
-	^(file notNil and: [ self name = self file ])
-		ifTrue: [
-			latestFile := self loader latestPackage: self name fromRepository: self repositorySpecs.
-			pkgSpec := self copy.
-			pkgSpec file: latestFile.
-			pkgSpec goferCommitPackage: commitMessage ]
-		ifFalse: [ self loader goferCommitPackageUsing: self repositorySpecs commitMessage: commitMessage ]
 ]
 
 { #category : 'accessing' }
@@ -404,13 +362,13 @@ MetacelloPackageSpec >> isPackageLoaded: aLoader [
 { #category : 'loading' }
 MetacelloPackageSpec >> load [
 
-	self explicitLoadUsing: self loader
+	self forceLoadUsing: self loader
 ]
 
 { #category : 'loading' }
 MetacelloPackageSpec >> loadUsing: mcLoader [
 
-	self loader doingLoads: [ self explicitLoadUsing: mcLoader ]
+	self loader doingLoads: [ self forceLoadUsing: mcLoader ]
 ]
 
 { #category : 'loading' }
@@ -462,12 +420,6 @@ MetacelloPackageSpec >> nonOverridable [
 MetacelloPackageSpec >> packageSpecsInLoadOrder [
 
 	^{ self. }
-]
-
-{ #category : 'development support' }
-MetacelloPackageSpec >> packagesNeedSavingVisited: visitedProjects using: repos into: aCollection [
-
-	^self loader packagesNeedSavingUsing: repos into: aCollection
 ]
 
 { #category : 'copying' }
@@ -578,20 +530,6 @@ MetacelloPackageSpec >> resolveToPackagesIn: aVersionSpec visited: visited [
 	^{ self }
 ]
 
-{ #category : 'development support' }
-MetacelloPackageSpec >> savePackage [
-	"Interactive save ... prompted for commit message and package name unless MCVersionNameAndMessageRequest handled"
-
-	| latestFile pkgSpec |
-	^(file notNil and: [ self name = self file ])
-		ifTrue: [
-			latestFile := self loader latestPackage: self name fromRepository: self repositorySpecs.
-			pkgSpec := self copy.
-			pkgSpec file: latestFile.
-			pkgSpec savePackage ]
-		ifFalse: [ self loader savePackageUsing: self repositorySpecs ]
-]
-
 { #category : 'fetching' }
 MetacelloPackageSpec >> searchCacheRepositoryForPackage: searchBlock [
   "evaluate the <searchBlock> if you want to search for the package in a local package cache"
@@ -640,24 +578,6 @@ MetacelloPackageSpec >> updateForSpawnMethod: sourceSpec [
 	name := nm.
 	file := fl.
 	^ file == nil
-]
-
-{ #category : 'development support' }
-MetacelloPackageSpec >> updatePackageRepositories: repositorySpecs [
-
-	| resolvedPackageRef |
-	MetacelloNotification signal: ('  Looking up version -> ', self file).
-	resolvedPackageRef := self loader resolveSpec: self from: repositorySpecs.
-	MetacelloNotification signal: ('Update repositoryGroup -> ', resolvedPackageRef name, ' ' , resolvedPackageRef repository description).
-	resolvedPackageRef version workingCopy repositoryGroup addRepository: resolvedPackageRef repository
-]
-
-{ #category : 'development support' }
-MetacelloPackageSpec >> updatePackageRepositoriesFor: aVersionSpec [
-	"Don't update the repository unless the package is loaded in the image"
-
-	self workingCopy ifNil: [ ^ self ].
-	self updatePackageRepositories: self repositorySpecs , aVersionSpec repositorySpecs
 ]
 
 { #category : 'development support' }

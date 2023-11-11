@@ -22,8 +22,8 @@ Class {
 		'classPool',
 		'sharedPools',
 		'environment',
-		'category',
-		'commentSourcePointer'
+		'commentSourcePointer',
+		'packageTag'
 	],
 	#classVars : [
 		'ObsoleteClasses'
@@ -85,7 +85,7 @@ Class class >> superclassOrder: classes [
     all := OrderedCollection new: unprocessedClasses size.
     unprocessedClasses size timesRepeat:
         [ | nextClass nextClassIndex |
-            nextClassIndex := list findFirst: [:aClass | aClass notNil
+            nextClassIndex := list findFirst: [:aClass | aClass isNotNil
                 and: [(unprocessedClasses includes: aClass)
                 and: [self hasNoDependenciesFor: aClass in: unprocessedClasses cache: cache]]].
             nextClass := list at: nextClassIndex.
@@ -204,11 +204,6 @@ Class >> applyDeprecation [
 	self deprecationRefactorings do: #execute
 ]
 
-{ #category : 'accessing' }
-Class >> basicCategory: aSymbol [
-	category := aSymbol
-]
-
 { #category : 'class variables' }
 Class >> basicDeclareClassVariable: aClassVariable [
 	"Add aClassVariable to the receiver. Two cases are handled here:
@@ -233,6 +228,12 @@ Class >> basicDeclareClassVariable: aClassVariable [
 		existingVar becomeForward: aClassVariable
 	].
 	self classPool add: aClassVariable
+]
+
+{ #category : 'accessing' }
+Class >> basicTag: aPackageTag [
+
+	packageTag := aPackageTag
 ]
 
 { #category : 'compiling' }
@@ -266,25 +267,7 @@ Class >> bindingOf: varName [
 Class >> category [
 	"Answer the system organization category for the receiver."
 
-	^ category
-]
-
-{ #category : 'organization' }
-Class >> category: aString [
-	"Categorize the receiver under the system category, aString, removing it from
-	any previous categorization."
-
-	| newPackage |
-
-	self flag: #package. "Should be deprecated"
-	self category = aString ifTrue: [ ^ self ].
-
-	self basicCategory: aString asSymbol.
-
-	self flag: #package. "#toTagName: should be inlined here."
-	newPackage := self packageOrganizer ensurePackageMatching: self category.
-	newPackage moveClass: self toTag: (newPackage toTagName: self category).
-
+	^ self packageTag categoryName
 ]
 
 { #category : 'subclass creation' }
@@ -293,7 +276,7 @@ Class >> checkForCompiledMethodLayout: className [
 
 	| oldClassOrNil actualLayoutClass |
 	oldClassOrNil := self environment at: className ifAbsent: [ nil ].
-	actualLayoutClass := (oldClassOrNil notNil and: [ oldClassOrNil classLayout class == CompiledMethodLayout ])
+	actualLayoutClass := (oldClassOrNil isNotNil and: [ oldClassOrNil classLayout class == CompiledMethodLayout ])
 		ifTrue: [ CompiledMethodLayout ]
 		ifFalse: [ ByteLayout ].
 	^ actualLayoutClass
@@ -520,7 +503,8 @@ Class >> copyForAnnouncement [
 		            setFormat: format;
 		            setName: name;
 		            classPool: classPool copy;
-		            sharedPools: sharedPools copy.
+		            sharedPools: sharedPools copy;
+		            basicTag: packageTag.
 	self class instSize + 1 to: self class instSize do: [ :offset | newClass instVarAt: offset put: (self instVarAt: offset) ].
 	newClass classLayout: (layout copy host: newClass).
 	^ newClass
@@ -651,7 +635,8 @@ Class >> hasBindingThatBeginsWith: aString [
 { #category : 'accessing - parallel hierarchy' }
 Class >> hasClassSide [
 	<reflection: 'Class structural inspection - Class/Metaclass shift'>
-	^self classSide notNil
+
+	^ self classSide isNotNil
 ]
 
 { #category : 'class variables' }
@@ -810,6 +795,18 @@ Class >> obsolete [
 	super obsolete
 ]
 
+{ #category : 'accessing' }
+Class >> package [
+
+	^ self packageTag package
+]
+
+{ #category : 'accessing' }
+Class >> packageTag [
+
+	^ packageTag ifNil: [ self packageOrganizer undefinedPackage undefinedTag ]
+]
+
 { #category : 'compiling' }
 Class >> possibleVariablesFor: misspelled continuedFrom: oldResults [
 
@@ -860,15 +857,16 @@ Class >> removeClassVarNamed: aString interactive: interactive [
 	aSymbol := aString asSymbol.
 	(self classPool includesKey: aSymbol) ifFalse: [ ^ self error: aString , ' is not a class variable' ].
 	varUserClass := self anyUserOfClassVarNamed: aSymbol.
-	varUserClass notNil & interactive ifTrue: [
+	varUserClass isNotNil & interactive ifTrue: [
 		(self confirm: (aString , ' is still used in code of class ' , varUserClass name , '.\Is it okay to move it to Undeclared?') withCRs) ifFalse: [ ^ self ] ].
 
 	varUserClass
 		ifNotNil: [
 			NewUndeclaredWarning signal: aString in: self name.
-			Undeclared declare: aSymbol from: self classPool ]
-		ifNil: [ self classPool removeKey: aSymbol ].
-
+			"NOTE: we add ClassVariable to Undeclared, we need to update to UndeclaredVariable"
+			Undeclared add: (self classPool associationAt: aSymbol) ].
+		
+	self classPool removeKey: aSymbol.
 	self classPool ifEmpty: [ self classPool: nil ].
 
 	SystemAnnouncer uniqueInstance classModificationAppliedTo: self
@@ -894,7 +892,6 @@ Class >> removeFromSystem: logged [
 	Keep the class name and category for triggering the system change message. If we wait to long, then we get obsolete information which is not what we want.
 	Tell class to deactivate and unload itself-- two separate events in the module system"
 
-	| packageTag |
 	self release.
 	self unload.
 
@@ -902,15 +899,13 @@ Class >> removeFromSystem: logged [
 
 	"we add the class to Undeclared so that if references still exist, they will  be automatically fixed if this class is loaded again. We do not check if references exist as it is too slow"
 	Undeclared declare: self name asSymbol from: Smalltalk globals.
-	self flag: #package. "For now the class cannot return its package tag after been removed. In the future the class should keep a reference to its package tag so we should not need that."
-	packageTag := self packageTag.
 	self environment forgetClass: self.
 
 	"In case the class has deprecated aliases we need to remove them from the system dictionary.
 	We deal also with a special case that is the case a class of the same name than the alias is installed in the image after the alias. In that case we do not remove it. It's the reason we check if the global of the alias is the same as self."
 	self deprecatedAliases do: [ :alias | self environment at: alias ifPresent: [ :class | class = self ifTrue: [ self environment removeKey: alias ] ] ].
 	self obsolete.
-	logged ifTrue: [ SystemAnnouncer announce: (ClassRemoved class: self packageTag: packageTag) ]
+	logged ifTrue: [ SystemAnnouncer announce: (ClassRemoved class: self) ]
 ]
 
 { #category : 'initialization' }

@@ -58,10 +58,9 @@ VariableBreakpointTest >> argNodes [
 { #category : 'helpers' }
 VariableBreakpointTest >> compileTestClass [
 
-	testClass := (VariableBreakpointMockClass
-		             << #VariableBreakpointTestSubclass
-		             slots:  {#v3}; 
-		             package: 'Reflectivity-Tests-Breakpoints') install.
+	testClass := ((VariableBreakpointMockClass << #VariableBreakpointTestSubclass)
+		              slots: { #v3 };
+		              package: self packageNameForTests) install.
 	testClass compile: 'accessingV1 ^v1'.
 	testClass compile: 'accessingtemp |temp| temp := 0'
 ]
@@ -69,8 +68,7 @@ VariableBreakpointTest >> compileTestClass [
 { #category : 'helpers' }
 VariableBreakpointTest >> compileTestClass2 [
 
-	testSubclass := (testClass
-		                << #VariableBreakpointTestSubclass2 package: 'Reflectivity-Tests-Breakpoints') install.
+	testSubclass := (testClass << #VariableBreakpointTestSubclass2 package: self packageNameForTests) install.
 	testSubclass compile: 'accessingV1 ^v1'
 ]
 
@@ -105,6 +103,12 @@ VariableBreakpointTest >> nodesForV2InVariableBreakpointMockSubclass [
 	^nodes
 ]
 
+{ #category : 'helpers' }
+VariableBreakpointTest >> packageNameForTests [
+
+	^ 'Generated-Reflectivity-Tests-Breakpoints'
+]
+
 { #category : 'running' }
 VariableBreakpointTest >> setUp [
 	super setUp.
@@ -118,12 +122,10 @@ VariableBreakpointTest >> setUp [
 
 { #category : 'running' }
 VariableBreakpointTest >> tearDown [
-	wp
-		ifNotNil: [ wp isInstalled
-				ifTrue: [ wp remove ] ].
+
+	wp ifNotNil: [ wp isInstalled ifTrue: [ wp remove ] ].
 	Breakpoint unregisterObserver: observer.
-	testSubclass ifNotNil:[testSubclass removeFromSystem].
-	testClass ifNotNil:[testClass removeFromSystem].
+	self packageOrganizer removePackage: self packageNameForTests.
 	super tearDown
 ]
 

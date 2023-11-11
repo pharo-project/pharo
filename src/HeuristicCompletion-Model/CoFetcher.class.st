@@ -136,7 +136,7 @@ CoFetcher >> next: anInteger [
 		[ (last := self next) ifNotNil: [ :each |
 			stream nextPut: each.
 			total := total + 1 ] ]
-			doWhileTrue: [ total < anInteger and: [ last notNil ] ] ]
+			doWhileTrue: [ total < anInteger and: [ last isNotNil ] ] ]
 ]
 
 { #category : 'resetting' }

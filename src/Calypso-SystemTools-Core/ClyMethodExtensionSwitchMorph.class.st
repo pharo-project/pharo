@@ -49,7 +49,7 @@ ClyMethodExtensionSwitchMorph >> checkbox: anObject [
 { #category : 'testing' }
 ClyMethodExtensionSwitchMorph >> isActive [
 
-	^ownerTool extendingPackage notNil
+	^ ownerTool extendingPackage isNotNil
 ]
 
 { #category : 'accessing' }

@@ -16,7 +16,7 @@ ManifestCollectionsWeak class >> dependencies [
 
 { #category : 'meta-data - dependency analyser' }
 ManifestCollectionsWeak class >> manuallyResolvedDependencies [
-	^ #(#'System-Support' #'Collections-Streams')
+	^ #('Collections-Streams')
 ]
 
 { #category : 'meta-data' }

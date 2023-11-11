@@ -1782,7 +1782,7 @@ StrikeFont >> reset [
 	"Reset the cache of derivative emphasized fonts"
 
 	fallbackFont class = FixedFaceFont ifTrue: [ fallbackFont := nil ].
-	derivativeFonts ifNotNil: [ derivativeFonts withIndexDo: [ :f :i | (f notNil and: [ f isSynthetic ]) ifTrue: [ derivativeFonts at: i put: nil ] ] ]
+	derivativeFonts ifNotNil: [ derivativeFonts withIndexDo: [ :f :i | (f isNotNil and: [ f isSynthetic ]) ifTrue: [ derivativeFonts at: i put: nil ] ] ]
 ]
 
 { #category : 'file in/out' }
