@@ -26,14 +26,11 @@ MetacelloVersionConstructor >> calculate: aConfig project: aProject [
 	self project errorMap: self errorMap.
 	self project symbolicVersionMap: symbolicVersionMap.
 	self project configuration: aConfig. "now that we have a nearly complete project, we can collect the defaultSymbolicVersions, which expect the project to be fully constructed"
-	self
-		collectDefaultSymbolicVersionsFromVersionPragmasFrom: self extractDefaultSymbolicVersionPragmas
-		into: symbolicVersionMap
-		using: self defaultSymbolicVersionResolverBlock. "Pick up defaults from MetacelloBaseConfiguration"
+	self collectDefaultSymbolicVersionsFromVersionPragmasFrom: self extractDefaultSymbolicVersionPragmas into: symbolicVersionMap receiver: self configuration. "Pick up defaults from MetacelloBaseConfiguration"
 	self
 		collectDefaultSymbolicVersionsFromVersionPragmasFrom: self extractCommonDefaultSymbolicVersionPragmas
 		into: symbolicVersionMap
-		using: self commonDefaultSymbolicVersionResolverBlock. "now resolive symbolicVersions defined as symbolicVersions"
+		receiver: (ConfigurationOf new project: self project). "now resolive symbolicVersions defined as symbolicVersions"
 	symbolicVersionMap copy keysAndValuesDo: [ :symbolic :original |
 		| versionString visited |
 		versionString := original.
@@ -116,9 +113,8 @@ MetacelloVersionConstructor >> collectAllVersionsFromVersionImportPragmasInto: v
 { #category : 'private' }
 MetacelloVersionConstructor >> collectAllVersionsFromVersionPragmasInto: versionMap [
 
-	| defined versionPragmaDict |
-	versionPragmaDict := self extractVersionPragmas.
-	versionPragmaDict keysAndValuesDo: [ :versionString :pragmaColl |
+	| defined |
+	self extractVersionPragmas keysAndValuesDo: [ :versionString :pragmaColl |
 		| versionSpec |
 		versionSpec := self project versionSpec.
 		versionSpec versionString: versionString.
@@ -141,7 +137,7 @@ MetacelloVersionConstructor >> collectAllVersionsFromVersionPragmasInto: version
 ]
 
 { #category : 'private' }
-MetacelloVersionConstructor >> collectDefaultSymbolicVersionsFromVersionPragmasFrom: versionPragmaDict into: symbolicVersionMap using: executionBlock [
+MetacelloVersionConstructor >> collectDefaultSymbolicVersionsFromVersionPragmasFrom: versionPragmaDict into: symbolicVersionMap receiver: receiver [
 
 	| defined versionString |
 	versionPragmaDict keysAndValuesDo: [ :versionSymbol :pragmaColl |
@@ -149,39 +145,15 @@ MetacelloVersionConstructor >> collectDefaultSymbolicVersionsFromVersionPragmasF
 		symbolicVersionMap at: versionSymbol ifAbsent: [ "process the defaultSymbolicVersion only if the symbolicVersion is not defined yet"
 			pragmaColl do: [ :pragma |
 				defined := true.
-				versionString := executionBlock value: versionSymbol value: pragma ].
+				versionString := self resolveDefaultSymbolicVersionFor: versionSymbol withPragma: pragma receiver: receiver ].
 			defined ifTrue: [ versionString ifNotNil: [ symbolicVersionMap at: versionSymbol put: versionString ] ].
 			self reset ] ]
 ]
 
-{ #category : 'private' }
-MetacelloVersionConstructor >> commonDefaultSymbolicVersionResolverBlock [
-	^ self defaultSymbolicVersionResolverBlock: (ConfigurationOf new project: self project)
-]
-
-{ #category : 'private' }
-MetacelloVersionConstructor >> defaultSymbolicVersionResolverBlock [
-	^ self defaultSymbolicVersionResolverBlock: self configuration
-]
-
-{ #category : 'private' }
-MetacelloVersionConstructor >> defaultSymbolicVersionResolverBlock: receiver [
-	^ [ :symbolicVrsn :pragma | 
-	| result |
-	result := nil.
-	(pragma argumentAt: 1) = symbolicVrsn
-		ifTrue: [ 
-			self symbolicVersion: symbolicVrsn.
-			result := [ receiver perform: pragma methodSelector ] 
-				on: MetacelloVersionDoesNotExistError 
-				do: [ :ex | ex return: nil ] ].
-	result ]
-]
-
 { #category : 'accessing' }
 MetacelloVersionConstructor >> errorMap [
-    errorMap ifNil: [ errorMap := Dictionary new ].
-    ^ errorMap
+
+	^ errorMap ifNil: [ errorMap := Dictionary new ]
 ]
 
 { #category : 'private' }
@@ -221,6 +193,18 @@ MetacelloVersionConstructor >> on: aConfig project: aProject [
 ]
 
 { #category : 'private' }
+MetacelloVersionConstructor >> resolveDefaultSymbolicVersionFor: symbolicVrsn withPragma: pragma receiver: receiver [
+
+	| result |
+	(pragma argumentAt: 1) = symbolicVrsn ifTrue: [
+		self symbolicVersion: symbolicVrsn.
+		result := [ receiver perform: pragma methodSelector ]
+			          on: MetacelloVersionDoesNotExistError
+			          do: [ :ex | ex return: nil ] ].
+	^ result
+]
+
+{ #category : 'private' }
 MetacelloVersionConstructor >> resolveSymbolicVersion: symbolicVrsn withPragma: pragma [
 
 	| result |
@@ -249,30 +233,21 @@ MetacelloVersionConstructor >> validateVersionString: versionString againstSpec:
 
 { #category : 'private' }
 MetacelloVersionConstructor >> verifyVersionImportPragmas: pragmaDict definedIn: versionMap [
-    pragmaDict copy
-        keysAndValuesDo: [ :versionString :pragmaColl | 
-            [ 
-            pragmaColl
-                do: [ :pragma | 
-                    (pragma argumentAt: 2)
-                        do: [ :importedVersion | 
-                            versionMap
-                                at: importedVersion
-                                ifAbsent: [ 
-                                    pragmaDict
-                                        at: importedVersion
-                                        ifAbsent: [ 
-                                            ^ self
-                                                error:
-                                                    'The imported version:' , importedVersion printString , ' for version: ' , versionString
-                                                        , ' referenced from the method: ' , pragma methodSelector printString
-                                                        , ' in configuration ' , configuration class printString
-                                                        , ' has not been defined.' ] ] ] ] ]
-                on: Error
-                do: [ :ex | 
-                    (MetacelloErrorInProjectConstructionNotification versionString: versionString exception: ex)
-                        ifTrue: [ ^ ex pass ]
-                        ifFalse: [ 
-                            pragmaDict removeKey: versionString.
-                            self errorMap at: versionString put: ex ] ] ]
+
+	pragmaDict copy keysAndValuesDo: [ :versionString :pragmaColl |
+		[
+		pragmaColl do: [ :pragma |
+			(pragma argumentAt: 2) do: [ :importedVersion |
+				versionMap at: importedVersion ifAbsent: [
+					pragmaDict at: importedVersion ifAbsent: [
+						^ self error:
+							  'The imported version:' , importedVersion printString , ' for version: ' , versionString , ' referenced from the method: '
+							  , pragma methodSelector printString , ' in configuration ' , configuration class printString , ' has not been defined.' ] ] ] ] ]
+			on: Error
+			do: [ :ex |
+				(MetacelloErrorInProjectConstructionNotification versionString: versionString exception: ex)
+					ifTrue: [ ^ ex pass ]
+					ifFalse: [
+						pragmaDict removeKey: versionString.
+						self errorMap at: versionString put: ex ] ] ]
 ]
