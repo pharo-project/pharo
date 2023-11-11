@@ -35,6 +35,7 @@ CompiledMethod allInstancesDo: [ :m | m cachePragmas ].
 MCFileTreeStCypressWriter initialize.
 MCFileTreeFileSystemUtils initialize.
 
+ConfigurationOf initialize.
 MetacelloPlatform initialize.
 
 STONWriter initialize.
