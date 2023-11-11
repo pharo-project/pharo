@@ -53,12 +53,6 @@ UndefinedObject >> setPreLoadDoItInMetacelloSpec: aMetacelloSpec [
 ]
 
 { #category : '*Metacello-Core' }
-UndefinedObject >> setProject: aString withInMetacelloConfig: aMetacelloConfig [
-
-	aMetacelloConfig setProject: aString withString: self
-]
-
-{ #category : '*Metacello-Core' }
 UndefinedObject >> setTimestampInMetacelloVersion: aMetacelloVersionSpec [
 
 	aMetacelloVersionSpec setTimestamp: self

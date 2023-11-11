@@ -53,7 +53,7 @@ MetacelloAbstractVersionConstructor >> attributeOrder [
 MetacelloAbstractVersionConstructor >> author: aBlockOrString [
 	"Define author field of version spec (MetacelloMCVersionSpec).
 	 If <aBlockOrString> is a String, the version spec author is set to the String.
-	If <aBlockOrString> is a Block, the specifications in <aBlockOrString> are applied to the author spec (MetacelloValueHolderSpec). Not Recommended!
+	If <aBlockOrString> is a Block, the specifications in <aBlockOrString> are applied to the author spec (MetacelloValueHolderSpec). Not Recommended! This second version is now deprecated.
 	
 		spec author: 'dkh'.
 		
@@ -61,26 +61,38 @@ MetacelloAbstractVersionConstructor >> author: aBlockOrString [
 			spec value: 'dkh'. ].
 	 "
 
-	aBlockOrString setAuthorInMetacelloConfig: self
+	aBlockOrString isString
+		ifTrue: [ self root author: aBlockOrString ]
+		ifFalse: [ self setAuthorWithBlock: aBlockOrString ]
 ]
 
 { #category : 'api' }
 MetacelloAbstractVersionConstructor >> baseline: aString [
 
-	self setBaseline: aString
+	| spec projectSpec |
+	projectSpec := self project baselineOfProjectSpec
+		               name: aString;
+		               className: 'BaselineOf' , aString;
+		               yourself.
+	spec := self project projectReferenceSpec
+		        name: aString;
+		        projectReference: projectSpec;
+		        yourself.
+	self root packages merge: spec.
+	^ projectSpec
 ]
 
 { #category : 'api' }
 MetacelloAbstractVersionConstructor >> baseline: aString with: aBlock [
 
-	aBlock setBaseline: aString withInMetacelloConfig: self
+	self with: (self baseline: aString) during: aBlock
 ]
 
 { #category : 'api' }
 MetacelloAbstractVersionConstructor >> blessing: aBlockOrString [
 	"Define blessing field of version spec (MetacelloMCVersionSpec).
 	 If <aBlockOrString> is a String, the version spec blessing is set to the String. It is recommended to use a Symbol.
-	If <aBlockOrString> is a Block, the specifications in <aBlockOrString> are applied to the blessing spec (MetacelloValueHolderSpec). Not Recommended!
+	If <aBlockOrString> is a Block, the specifications in <aBlockOrString> are applied to the blessing spec (MetacelloValueHolderSpec). Not Recommended! This second version is now deprecated.
 	
 		spec blessing: #release.
 		
@@ -93,7 +105,9 @@ MetacelloAbstractVersionConstructor >> blessing: aBlockOrString [
 		#release - indicating that the version spec has stabilized and will NOT change over time
 	 "
 
-	aBlockOrString setBlessingInMetacelloConfig: self
+	aBlockOrString isString
+		ifTrue: [ self root blessing: aBlockOrString ]
+		ifFalse: [ self setBlessingWithBlock: aBlockOrString ]
 ]
 
 { #category : 'initialization' }
@@ -127,9 +141,18 @@ MetacelloAbstractVersionConstructor >> configuration: aConfig [
 ]
 
 { #category : 'api' }
-MetacelloAbstractVersionConstructor >> configuration: aString with: aBlockOrString [
+MetacelloAbstractVersionConstructor >> configuration: aString with: aBlock [
 
-	aBlockOrString setConfiguration: aString withInMetacelloConfig: self
+	| spec projectSpec |
+	projectSpec := self project configurationOfProjectSpec
+		               name: aString;
+		               yourself.
+	spec := self project projectReferenceSpec
+		        name: aString;
+		        projectReference: projectSpec;
+		        yourself.
+	self root packages merge: spec.
+	self with: projectSpec during: aBlock
 ]
 
 { #category : 'accessing' }
@@ -142,7 +165,7 @@ MetacelloAbstractVersionConstructor >> configurationClass [
 MetacelloAbstractVersionConstructor >> description: aBlockOrString [
 	"Define description field of version spec (MetacelloMCVersionSpec).
 	 If <aBlockOrString> is a String, the version spec blessing is set to the String. It is recommended to use a Symbol.
-	If <aBlockOrString> is a Block, the specifications in <aBlockOrString> are applied to the blessing spec (MetacelloValueHolderSpec). Not Recommended!
+	If <aBlockOrString> is a Block, the specifications in <aBlockOrString> are applied to the blessing spec (MetacelloValueHolderSpec). Not Recommended! This second version is now deprecated.
 	
 		spec description: 'Descriptive comment'.
 		
@@ -150,7 +173,9 @@ MetacelloAbstractVersionConstructor >> description: aBlockOrString [
 			spec value: 'Descriptive comment'.
 	 "
 
-	aBlockOrString setDescriptionInMetacelloConfig: self
+	aBlockOrString isString
+		ifTrue: [ self root description: aBlockOrString ]
+		ifFalse: [ self setDescriptionWithBlock: aBlockOrString ]
 ]
 
 { #category : 'private' }
@@ -410,7 +435,18 @@ MetacelloAbstractVersionConstructor >> package: packageName with: aBlockOrString
 			spec repository: '/opt/gemstone/repository'.
 	 "
 
-	aBlockOrString setPackage: packageName withInMetacelloConfig: self
+	| spec |
+	spec := self project packageSpec
+		        name: packageName;
+		        yourself.
+
+	aBlockOrString isString
+		ifTrue: [
+			spec file: aBlockOrString.
+			self root packages merge: spec ]
+		ifFalse: [
+			self root packages merge: spec.
+			self with: spec during: aBlockOrString ]
 ]
 
 { #category : 'api' }
@@ -472,7 +508,19 @@ MetacelloAbstractVersionConstructor >> project: aString overrides: aBlock [
 { #category : 'api' }
 MetacelloAbstractVersionConstructor >> project: aString with: aBlockOrString [
 
-	aBlockOrString setProject: aString withInMetacelloConfig: self
+	| projectSpec |
+	projectSpec := self project projectSpec
+		               name: aString;
+		               yourself.
+
+	self root packages merge: (self project projectReferenceSpec
+			 name: aString;
+			 projectReference: projectSpec;
+			 yourself).
+
+	aBlockOrString isString
+		ifTrue: [ projectSpec versionString: aBlockOrString ]
+		ifFalse: [ self with: projectSpec during: aBlockOrString ]
 ]
 
 { #category : 'accessing' }
@@ -556,6 +604,7 @@ MetacelloAbstractVersionConstructor >> root: aMetacelloSpec [
 MetacelloAbstractVersionConstructor >> setAuthorWithBlock: aBlock [
 
 	| spec |
+	self deprecated: 'Author should be provided as a string and not a block since it brind not value.'.
 	(spec := self root getAuthor) ifNil: [
 		spec := self project valueHolderSpec.
 		self root setAuthor: spec ].
@@ -563,31 +612,10 @@ MetacelloAbstractVersionConstructor >> setAuthorWithBlock: aBlock [
 ]
 
 { #category : 'api callbacks' }
-MetacelloAbstractVersionConstructor >> setBaseline: aString [
-    | spec projectSpec |
-    projectSpec := self project baselineOfProjectSpec
-        name: aString;
-        className: 'BaselineOf' , aString;
-        yourself.
-    spec := self project projectReferenceSpec
-        name: aString;
-        projectReference: projectSpec;
-        yourself.
-    self root packages merge: spec.
-    ^ projectSpec
-]
-
-{ #category : 'api callbacks' }
-MetacelloAbstractVersionConstructor >> setBaseline: aString withBlock: aBlock [
-    | projectSpec |
-    projectSpec := self setBaseline: aString.
-    self with: projectSpec during: aBlock
-]
-
-{ #category : 'api callbacks' }
 MetacelloAbstractVersionConstructor >> setBlessingWithBlock: aBlock [
 
 	| spec |
+	self deprecated: 'Blessing should be provided as a string and not a block since it brind not value.'.
 	(spec := self root getBlessing) ifNil: [
 		spec := self project valueHolderSpec.
 		self root setBlessing: spec ].
@@ -595,48 +623,14 @@ MetacelloAbstractVersionConstructor >> setBlessingWithBlock: aBlock [
 ]
 
 { #category : 'api callbacks' }
-MetacelloAbstractVersionConstructor >> setConfiguration: aString withBlock: aBlock [
-    | spec projectSpec |
-    projectSpec := self project configurationOfProjectSpec
-        name: aString;
-        yourself.
-    spec := self project projectReferenceSpec
-        name: aString;
-        projectReference: projectSpec;
-        yourself.
-    self root packages merge: spec.
-    self with: projectSpec during: aBlock
-]
-
-{ #category : 'api callbacks' }
 MetacelloAbstractVersionConstructor >> setDescriptionWithBlock: aBlock [
 
 	| spec |
+	self deprecated: 'Description should be provided as a string and not a block since it brind not value.'.
 	(spec := self root getDescription) ifNil: [
 		spec := self project valueHolderSpec.
 		self root setDescription: spec ].
 	self with: spec during: aBlock
-]
-
-{ #category : 'api callbacks' }
-MetacelloAbstractVersionConstructor >> setPackage: aString withBlock: aBlock [
-
-	| spec |
-	spec := 
-		(self project packageSpec)
-			name: aString;
-			yourself.
-	self root packages merge: spec.
-	self with: spec during: aBlock
-]
-
-{ #category : 'api callbacks' }
-MetacelloAbstractVersionConstructor >> setPackage: aString withString: aFile [
-
-	self root packages merge: (self project packageSpec
-			 name: aString;
-			 file: aFile;
-			 yourself)
 ]
 
 { #category : 'accessing' }
@@ -646,40 +640,10 @@ MetacelloAbstractVersionConstructor >> setProject: aProject [
 ]
 
 { #category : 'api callbacks' }
-MetacelloAbstractVersionConstructor >> setProject: aString withBlock: aBlock [
-    | spec projectSpec |
-    projectSpec := self project projectSpec
-        name: aString;
-        yourself.
-    spec := self project projectReferenceSpec
-        name: aString;
-        projectReference: projectSpec;
-        yourself.
-    self root packages merge: spec.
-    self with: projectSpec during: aBlock
-]
-
-{ #category : 'api callbacks' }
-MetacelloAbstractVersionConstructor >> setProject: aString withString: versionString [
-
-	| spec projectSpec |
-	projectSpec := 
-		(self project projectSpec)
-			name: aString;
-			versionString: versionString;
-			yourself.
-	spec := 
-		(self project projectReferenceSpec)
-			name: aString;
-			projectReference: projectSpec;
-			yourself.
-	self root packages merge: spec.
-]
-
-{ #category : 'api callbacks' }
 MetacelloAbstractVersionConstructor >> setTimestampWithBlock: aBlock [
 
 	| spec |
+	self deprecated: 'Timestamp should be provided as a string and not a block since it brind not value.'.
 	(spec := self root getTimestamp) ifNil: [
 		spec := self project valueHolderSpec.
 		self root setTimestamp: spec ].
@@ -709,7 +673,7 @@ MetacelloAbstractVersionConstructor >> timestamp: aBlockOrStringOrDateAndTime [
 	"Define timestamp field of version spec (MetacelloMCVersionSpec).
 	 If <aBlockOrStringOrDateAndTime> is a String, the version spec timetamp is set to the String.
 	 If <aBlockOrStringOrDateAndTime> is a DateAndTime, the version spec timetamp is set to the printString of the DateAndTime.
-	If <aBlockOrStringOrDateAndTime> is a Block, the specifications in <aBlockOrStringOrDateAndTime> are applied to the timestamp spec (MetacelloValueHolderSpec). Not Recommended!
+	If <aBlockOrStringOrDateAndTime> is a Block, the specifications in <aBlockOrStringOrDateAndTime> are applied to the timestamp spec (MetacelloValueHolderSpec). Not Recommended! This third version is now deprecated.
 	
 		spec timestamp: '10/7/2009 14:40'.
 		
@@ -719,7 +683,12 @@ MetacelloAbstractVersionConstructor >> timestamp: aBlockOrStringOrDateAndTime [
 			spec value: '10/7/2009 14:40'. ].
     "
 
-	aBlockOrStringOrDateAndTime setTimestampInMetacelloConfig: self
+	aBlockOrStringOrDateAndTime isString
+		ifTrue: [ self root timestamp: aBlockOrStringOrDateAndTime ]
+		ifFalse: [
+			aBlockOrStringOrDateAndTime isBlock
+				ifTrue: [ self setTimestampWithBlock: aBlockOrStringOrDateAndTime ]
+				ifFalse: [ self timestamp: aBlockOrStringOrDateAndTime printString ] ]
 ]
 
 { #category : 'validation' }
