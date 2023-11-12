@@ -27,7 +27,8 @@ MCClassTraitDefinition >> = aDefinition [
 	^ super = aDefinition
 		and: [ baseTrait = aDefinition baseTrait
 		and: [ self classTraitCompositionString = aDefinition classTraitCompositionString
-		and: [ self category = aDefinition category ] ] ]
+		and: [ self packageName = aDefinition packageName
+		and: [  self tagName = aDefinition tagName] ] ] ]
 ]
 
 { #category : 'visiting' }
@@ -110,10 +111,12 @@ MCClassTraitDefinition >> description [
 
 { #category : 'comparing' }
 MCClassTraitDefinition >> hash [
+
 	| hash |
 	hash := String stringHash: baseTrait initialHash: 0.
 	hash := String stringHash: self classTraitCompositionString initialHash: hash.
-	self category ifNotNil: [ :cat | hash := String stringHash: cat initialHash: hash ].
+	self packageName ifNotNil: [ :string | hash := String stringHash: string initialHash: hash ].
+	self tagName ifNotNil: [ :straing | hash := String stringHash: straing initialHash: hash ].
 	^ hash
 ]
 
