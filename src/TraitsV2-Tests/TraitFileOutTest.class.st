@@ -1,6 +1,6 @@
 Class {
 	#name : 'TraitFileOutTest',
-	#superclass : 'TraitsTestCase',
+	#superclass : 'AbstractTraitsOnPreparedModelTest',
 	#instVars : [
 		'ca',
 		'cb',
@@ -19,29 +19,29 @@ TraitFileOutTest class >> defaultTimeLimit [
 	^ 15 seconds
 ]
 
-{ #category : 'running' }
-TraitFileOutTest >> packageName [
+{ #category : 'utilities' }
+TraitFileOutTest >> classesAndTraitsInTestPackage [
 
-	^ 'Traits-Tests-FileOut'
+	^ (self packageOrganizer packageNamed: self packageNameForTests) definedClasses
 ]
 
 { #category : 'running' }
 TraitFileOutTest >> setUp [
-	super setUp.
-	self packageOrganizer ensurePackage: self packageName.
 
-	td := self createTraitNamed: #TD uses: {}.
+	super setUp.
+
+	td := self newTrait: #TD traits: {  }.
 	td compile: 'd' classified: #cat1.
-	tc := self createTraitNamed: #TC uses: td.
+	tc := self newTrait: #TC traits: td.
 	tc compile: 'c' classified: #cat1.
-	tb := self createTraitNamed: #TB uses: td.
+	tb := self newTrait: #TB traits: td.
 	tb compile: 'b' classified: #cat1.
-	ta := self createTraitNamed: #TA uses: tb + tc @ {#cc->#c} - {#c}.
+	ta := self newTrait: #TA traits: tb + tc @ { (#cc -> #c) } - { #c }.
 	ta compile: 'a' classified: #cat1.
 
-	ca := self createClassNamed: #CA superclass: Object uses: {}.
+	ca := self newClass: #CA superclass: Object traits: {  }.
 	ca compile: 'ca' classified: #cat1.
-	cb := self createClassNamed: #CB superclass: ca uses: ta.
+	cb := self newClass: #CB superclass: ca traits: ta.
 	cb compile: 'cb' classified: #cat1.
 
 	"make the class of cb also use tc:"
@@ -53,11 +53,8 @@ TraitFileOutTest >> tearDown [
 
 	| dir |
 	dir := FileSystem workingDirectory.
-	self createdClassesAndTraits , self resourceClassesAndTraits do: [ :each | (dir / each asString , 'st') ensureDelete ].
-	(dir / self packageName , 'st') ensureDelete.
-	self packageOrganizer removePackage: self packageName.
-	"Ensure cleaning of obsoletes refs"
-	ca := cb := ta := tb := tc := td := nil.
+	self classesAndTraitsInTestPackage do: [ :each | (dir / each asString , 'st') ensureDelete ].
+	(dir / self packageNameForTests , 'st') ensureDelete.
 	super tearDown
 ]
 
@@ -67,17 +64,19 @@ TraitFileOutTest >> testFileOutCategory [
 	file them in again."
 
 	self timeLimit: 30 seconds.
-	(self packageOrganizer packageNamed: self packageName)
+	"Tempaprary hack because the old class definition builder does not manages yet classes with nil as superclass."
+	{ c3 . c5 . c4 . c6 . c7 . c8 } do: [ :class | class removeFromSystem ].
+	(self packageOrganizer packageNamed: self packageNameForTests)
 		fileOut;
 		removeFromSystem.
-	self deny: (testingEnvironment keys asSet includesAnyOf: #( #CA #CB #TA #TB #TC #TD )).
+	self deny: (self class environment keys asSet includesAnyOf: #( #CA #CB #TA #TB #TC #TD )).
 
-	CodeImporter evaluateFileNamed: self packageName , '.st'.
-	self assertCollection: testingEnvironment keys asSet includesAll: #( #CA #CB #TA #TB #TC #TD ).
-	ta := testingEnvironment at: #TA.
+	CodeImporter evaluateFileNamed: self packageNameForTests , '.st'.
+	self assertCollection: self class environment keys asSet includesAll: #( #CA #CB #TA #TB #TC #TD ).
+	ta := self class environment at: #TA.
 	self assert: ta traitComposition asString equals: '((TB + TC) @ {#cc->#c}) - {#c}'.
 	self assertCollection: ta selectors asSet includesAll: #( #a #b #cc ).
-	cb := testingEnvironment at: #CB.
+	cb := self class environment at: #CB.
 	self assert: cb traitComposition asString equals: 'TA'.
 	self assertCollection: cb selectors asSet includesAll: #( #cb #a #b #cc ). "test classSide traitComposition of CB"
 	self assert: cb classSide traitComposition asString equals: 'TA classTrait + TC'.
@@ -93,17 +92,14 @@ TraitFileOutTest >> testFileOutTrait [
 	self t6 classSide compile: 'localClassSideMethod: argument ^argument'.
 	self t6 fileOut.
 	fileName := self t6 asString , '.st'.
-	self resourceClassesAndTraits remove: self t6.
 	self t6 removeFromSystem.
 
 	CodeImporter evaluateFileNamed: fileName.
-	self assert: (testingEnvironment includesKey: #T6).
-	TraitsResource current t6: (testingEnvironment at: #T6).
-	self resourceClassesAndTraits add: self t6.
+	self assert: (self class environment includesKey: #T6).
 	self assert: self t6 traitComposition asString equals: 'T1 + (T2 @ {#m22Alias->#m22})'.
-	self assertCollection: self t6 selectors asSet includesAll: #(#localMethod: #m11 #m12 #m13 #m21 #m22Alias).
+	self assertCollection: self t6 selectors asSet includesAll: #( #localMethod: #m11 #m12 #m13 #m21 #m22Alias ).
 	self assert: self t6 classSide localMethods size equals: 1.
-	self assertCollection: self t6 classSide selectors asSet includesAll: #(#localClassSideMethod: #m2ClassSide:)
+	self assertCollection: self t6 classSide selectors asSet includesAll: #( #localClassSideMethod: #m2ClassSide: )
 ]
 
 { #category : 'tests' }

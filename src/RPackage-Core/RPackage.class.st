@@ -58,7 +58,6 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'extensionSelectors',
-		'definedSelectors',
 		'name',
 		'classTags',
 		'organizer'
@@ -130,9 +129,7 @@ RPackage >> addMethod: aCompiledMethod [
 	| methodClass |
 	methodClass := aCompiledMethod methodClass.
 	(self includesClass: methodClass)
-		ifTrue: [
-			aCompiledMethod removeProperty: #extensionPackage. "We want to make sure the method is not considered an extension."
-			(definedSelectors at: methodClass ifAbsentPut: [ IdentitySet new ]) add: aCompiledMethod selector ]
+		ifTrue: [ "We want to make sure the method is not considered an extension." aCompiledMethod removeProperty: #extensionPackage ]
 		ifFalse: [
 			aCompiledMethod propertyAt: #extensionPackage put: self. "We tag the method as an extension method."
 			(extensionSelectors at: methodClass ifAbsentPut: [ IdentitySet new ]) add: aCompiledMethod selector ].
@@ -182,6 +179,12 @@ RPackage >> classesTaggedWith: aSymbol [
 ]
 
 { #category : 'accessing' }
+RPackage >> codeChangeAnnouncer [
+
+	^ self environment codeChangeAnnouncer
+]
+
+{ #category : 'accessing' }
 RPackage >> definedClassNames [
 	"Return the class names having methods defined in the receiver."
 
@@ -208,7 +211,9 @@ RPackage >> definedOrExtendedClasses [
 { #category : 'accessing' }
 RPackage >> definedSelectorsForClass: aClass [
 
-	^ definedSelectors at: aClass ifAbsent: [ #(  ) ]
+	^ (self includesClass: aClass)
+		  ifTrue: [ aClass definedSelectors ]
+		  ifFalse: [ #(  ) ]
 ]
 
 { #category : 'testing' }
@@ -261,7 +266,7 @@ RPackage >> ensureTag: aTag [
 	newTag := RPackageTag package: self name: tagName.
 	classTags add: newTag.
 
-	SystemAnnouncer announce: (PackageTagAdded to: newTag).
+	self codeChangeAnnouncer  announce: (PackageTagAdded to: newTag).
 	^ newTag
 ]
 
@@ -282,7 +287,7 @@ RPackage >> extendedClassNames [
 RPackage >> extendedClasses [
 	"Return classes and metaclasses that are extended in the receiver. They represent the classes of method extensions"
 
-	^ extensionSelectors keys
+	^ (extensionSelectors keys collect: [ :class | class instanceSide ]) asSet
 ]
 
 { #category : 'testing' }
@@ -369,6 +374,9 @@ RPackage >> importProtocol: aProtocol forClass: aClass [
 RPackage >> includesClass: aClass [
 	"Returns true if the receiver includes aClass in the classes that are defined within it: only class definition are considered - not class extensions"
 
+	"This check is here for speed reason. We first check that the package of the class is myself, and if it is, we also need to check that I contains the class because if the class is removed it will still know I am its package but I will not contain it anymore."
+	aClass package = self ifFalse: [ ^ false ].
+	
 	^ self classTags anySatisfy: [ :tag | tag includesClass: aClass ]
 ]
 
@@ -424,7 +432,6 @@ RPackage >> includesSelector: aSelector ofClass: aClass [
 RPackage >> initialize [
 
 	super initialize.
-	definedSelectors := IdentityDictionary new.
 	extensionSelectors := IdentityDictionary new.
 	classTags := Set new
 ]
@@ -477,7 +484,10 @@ RPackage >> methods [
 	methods := OrderedCollection new.
 
 	extensionSelectors keysAndValuesDo: [ :class :selectors | methods addAll: (selectors collect: [ :selector | class >> selector ]) ].
-	definedSelectors keysAndValuesDo: [ :class :selectors | methods addAll: (selectors collect: [ :selector | class >> selector ]) ].
+	self definedClasses do: [ :class |
+		methods
+			addAll: class definedMethods;
+			addAll: class classSide definedMethods ].
 
 	^ methods
 ]
@@ -511,7 +521,7 @@ RPackage >> moveClass: aClass toTag: aTag [
 	
 	oldPackage = self ifFalse: [
 		"In case I contain extension methods."
-		self removeAllMethodsFromClass: aClass.
+		self removeAllExtensionMethodsFromClass: aClass.
 		
 		{ aClass. aClass classSide } do: [ :class |
 			(self extensionProtocolsForClass: class) do: [ :protocol | class renameProtocol: protocol as: Protocol unclassified ].
@@ -522,8 +532,8 @@ RPackage >> moveClass: aClass toTag: aTag [
 
 	"If the tag is undefined, this means we are adding the class. Else we are updating the package or tag."
 	oldTag isUndefined
-		ifTrue: [ SystemAnnouncer uniqueInstance announce: (ClassAdded class: aClass) ]
-		ifFalse: [ SystemAnnouncer uniqueInstance announce: (ClassRepackaged classRepackaged: aClass oldTag: oldTag newTag: newTag) ]
+		ifTrue: [ self codeChangeAnnouncer  announce: (ClassAdded class: aClass) ]
+		ifFalse: [ self codeChangeAnnouncer  announce: (ClassRepackaged classRepackaged: aClass oldTag: oldTag newTag: newTag) ]
 ]
 
 { #category : 'accessing' }
@@ -616,23 +626,17 @@ RPackage >> propertyAt: propName put: propValue [
 ]
 
 { #category : 'private - register' }
-RPackage >> removeAllMethodsFromClass: aClass [
+RPackage >> removeAllExtensionMethodsFromClass: aClass [
 	"Remove all the methods (defined and extensions) that are related to the class as parameter. The class should always be instance side."
 
-	definedSelectors removeKey: aClass ifAbsent: [  ].
-	definedSelectors removeKey: aClass classSide ifAbsent: [  ].
 	extensionSelectors removeKey: aClass ifAbsent: [  ].
 	extensionSelectors removeKey: aClass classSide ifAbsent: [  ]
 ]
 
 { #category : 'removing' }
 RPackage >> removeClass: aClass [
-	"I remove the class, methods and potential empty tags from myself."
+	"I remove the class and potential empty tags from myself."
 
-	"First I remove all the methods of the class from myself."
-	self removeAllMethodsFromClass: aClass.
-
-	"Then I unregister it from the tags"
 	self classTags
 		detect: [ :tag | tag includesClass: aClass ]
 		ifFound: [ :tag | tag removeClass: aClass ]
@@ -660,15 +664,11 @@ RPackage >> removeMethod: aCompiledMethod [
 
 	| methodClass |
 	methodClass := aCompiledMethod methodClass.
-	(self includesClass: methodClass)
-		ifTrue: [
-			definedSelectors at: methodClass ifPresent: [ :selectors |
-				selectors remove: aCompiledMethod selector ifAbsent: [  ].
-				selectors ifEmpty: [ definedSelectors removeKey: methodClass ] ] ]
-		ifFalse: [
-			extensionSelectors at: methodClass ifPresent: [ :selectors |
-				selectors remove: aCompiledMethod selector ifAbsent: [  ].
-				selectors ifEmpty: [ extensionSelectors removeKey: methodClass ] ] ].
+	"We need to act only on extension methods because defined methods are not stored anymore"
+	(self includesClass: methodClass) ifFalse: [
+		extensionSelectors at: methodClass ifPresent: [ :selectors |
+			selectors remove: aCompiledMethod selector ifAbsent: [  ].
+			selectors ifEmpty: [ extensionSelectors removeKey: methodClass ] ] ].
 
 	^ aCompiledMethod
 ]
@@ -715,7 +715,7 @@ RPackage >> removeTag: aTag [
 
 	classTags remove: tag ifAbsent: [ ^ self ].
 
-	SystemAnnouncer announce: (PackageTagRemoved to: tag)
+	self codeChangeAnnouncer  announce: (PackageTagRemoved to: tag)
 ]
 
 { #category : 'class tags' }
@@ -745,7 +745,7 @@ RPackage >> renameTo: aSymbol [
 		protocol rename: '*' , newName , (protocol name allButFirst: oldName size + 1) ].
 
 	self organizer basicRegisterPackage: self.
-	SystemAnnouncer uniqueInstance announce: (PackageRenamed to: self oldName: oldName newName: newName)
+	self codeChangeAnnouncer  announce: (PackageRenamed to: self oldName: oldName newName: newName)
 ]
 
 { #category : 'class tags' }
@@ -775,7 +775,10 @@ RPackage >> selectors [
 	| allSelectors |
 	allSelectors := Set new.
 	extensionSelectors valuesDo: [ :selectors | allSelectors addAll: selectors ].
-	definedSelectors valuesDo: [ :selectors | allSelectors addAll: selectors ].
+	self definedClasses do: [ :class |
+		allSelectors
+			addAll: class definedSelectors;
+			addAll: class classSide definedSelectors ].
 	^ allSelectors
 ]
 

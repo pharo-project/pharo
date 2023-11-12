@@ -24,7 +24,9 @@ MetacelloPlatform class >> current [
 
 { #category : 'class initialization' }
 MetacelloPlatform class >> initialize [
-  self select
+
+	self select.
+	self deprecatedAliases: { #MetacelloPharoPlatform }
 ]
 
 { #category : 'initialize-release' }
@@ -104,18 +106,20 @@ MetacelloPlatform >> stackCacheFor: cacheName at: key doing: aBlock [
 { #category : 'caching' }
 MetacelloPlatform >> stackCacheFor: cacheName cacheClass: cacheClass at: key doing: aBlock [
 
-	self 
-		useStackCacheDuring: [:dict | | cache |
-			cache := dict at: cacheName ifAbsent: [].
-			cache ~~ nil
-				ifTrue: [ | value hasEntry |
+	self
+		useStackCacheDuring: [ :dict |
+			| cache |
+			cache := dict at: cacheName ifAbsent: [  ].
+			cache
+				ifNotNil: [
+					| value hasEntry |
 					hasEntry := true.
 					value := cache at: key ifAbsent: [ hasEntry := false ].
-					hasEntry ifTrue: [ ^value ]]
-				ifFalse: [ 
+					hasEntry ifTrue: [ ^ value ] ]
+				ifNil: [
 					cache := cacheClass new.
 					dict at: cacheName put: cache ].
-			^aBlock value: cache ] 
+			^ aBlock value: cache ]
 		defaultDictionary: nil
 ]
 

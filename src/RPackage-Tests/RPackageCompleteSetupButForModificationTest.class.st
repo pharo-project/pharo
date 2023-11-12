@@ -107,17 +107,8 @@ RPackageCompleteSetupButForModificationTest >> testExtensionMethodOfClass [
 { #category : 'test - addition' }
 RPackageCompleteSetupButForModificationTest >> testRemoveMethod [
 
-	p1 removeMethod: a1 >> #methodDefinedInP1.
+	a1 removeSelector: #methodDefinedInP1.
 	self deny: (p1 includesSelector: #methodDefinedInP1 ofClass: a1)
-]
-
-{ #category : 'test - addition' }
-RPackageCompleteSetupButForModificationTest >> testRemoveMethodDoesNotRemoveFromClass [
-	"we remove a method so it is not in the package but also not from the class anymore"
-
-	p1 removeMethod:  a1 >> #methodDefinedInP1.
-	self deny: (p1 includesSelector: #methodDefinedInP1 ofClass: a1).
-	self assert: (a1 selectors includes: #methodDefinedInP1)
 ]
 
 { #category : 'test - addition' }

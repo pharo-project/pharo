@@ -178,14 +178,14 @@ SystemSettingsPersistenceTest >> testStoreBooleanToSton [
 	| node stored string stored2 |
 	node := MockSettings booleanSettingNode.
 	stored := StoredSettingsFactory new from: node.
-	self assert: stored notNil.
+	self assert: stored isNotNil.
 	string := String streamContents: [ :aStream | | writer |
 		writer := STON writer on: aStream; prettyPrint: true; yourself.
 		writer writeObject: stored.
 	].
-	self assert: string notNil.
+	self assert: string isNotNil.
 	stored2 := STON fromString: string.
-	self assert: stored2 notNil.
+	self assert: stored2 isNotNil.
 	self assert: stored2 equals: stored
 ]
 
@@ -306,14 +306,14 @@ SystemSettingsPersistenceTest >> testWriteAndReadBoolean [
 	| node stored string stored2 |
 	node := MockSettings booleanSettingNode.
 	stored := StoredSettingsFactory new from: node.
-	self assert: stored notNil.
+	self assert: stored isNotNil.
 	string := String streamContents: [ :aStream | | writer |
 		writer := STON writer on: aStream; prettyPrint: true; yourself.
 		writer writeObject: stored.
 	].
-	self assert: string notNil.
+	self assert: string isNotNil.
 	stored2 := STON fromString: string.
-	self assert: stored2 notNil.
+	self assert: stored2 isNotNil.
 	self assert: stored2 equals: stored
 ]
 

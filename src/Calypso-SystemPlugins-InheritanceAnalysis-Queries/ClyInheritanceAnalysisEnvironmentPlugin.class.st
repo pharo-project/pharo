@@ -170,7 +170,7 @@ ClyInheritanceAnalysisEnvironmentPlugin >> isMethodOverridden: aMethod [
 	classes := self implementorsOf: aMethod.
 	methodClass := aMethod methodClass.
 	^classes anySatisfy: [ :each |
-		each notNil and: [(each inheritsFrom: methodClass) and: [ each isObsolete not ]]]
+		each isNotNil and: [(each inheritsFrom: methodClass) and: [ each isObsolete not ]]]
 ]
 
 { #category : 'methods analysis' }
