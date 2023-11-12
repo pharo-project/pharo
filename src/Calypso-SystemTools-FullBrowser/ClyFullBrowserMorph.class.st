@@ -384,10 +384,12 @@ ClyFullBrowserMorph >> isClassSelected: aClass [
 { #category : 'testing' }
 ClyFullBrowserMorph >> isPackagePartOfSelection: aPackage [
 
-	(self isPackageSelected: aPackage) ifTrue: [ ^true ].
+	(packageView selection isBasedOnItemType: Project) ifTrue: [
+		self projectSelection actualObjects
+			detect: [ :project | project includesPackage: aPackage ]
+			ifFound: [ ^ true ] ].
 
-	^self projectSelection actualObjects
-		anySatisfy: [ :project | project includesPackage: aPackage ]
+	^ self isPackageSelected: aPackage
 ]
 
 { #category : 'testing' }
