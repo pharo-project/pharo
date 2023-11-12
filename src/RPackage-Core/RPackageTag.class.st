@@ -60,6 +60,12 @@ RPackageTag >> classes [
 ]
 
 { #category : 'accessing' }
+RPackageTag >> codeChangeAnnouncer [
+
+	^ self environment codeChangeAnnouncer
+]
+
+{ #category : 'accessing' }
 RPackageTag >> environment [
 
 	^ self package environment
@@ -191,7 +197,7 @@ RPackageTag >> renameTo: newTagName [
 
 	self basicRenameTo: newTagName.
 
-	SystemAnnouncer announce: (PackageTagRenamed to: self oldName: oldTagName newName: newTagName)
+	self codeChangeAnnouncer  announce: (PackageTagRenamed to: self oldName: oldTagName newName: newTagName)
 ]
 
 { #category : 'accessing' }

@@ -7,9 +7,6 @@ It is not a standard unit test because to compute dependencies takes a lot of ti
 Class {
 	#name : 'SystemDependenciesTest',
 	#superclass : 'TestCase',
-	#classInstVars : [
-		'dependenciesReport'
-	],
 	#category : 'System-DependenciesTests',
 	#package : 'System-DependenciesTests'
 }
@@ -17,34 +14,19 @@ Class {
 { #category : 'accessing' }
 SystemDependenciesTest class >> defaultTimeLimit [
 
-	^ 1 minute
+	^ 30 seconds
 ]
 
 { #category : 'accessing' }
-SystemDependenciesTest class >> dependenciesReport [
+SystemDependenciesTest class >> resources [
 
-	^ dependenciesReport ifNil: [ self rebuildDependenciesReport ]
-]
-
-{ #category : 'accessing' }
-SystemDependenciesTest class >> rebuildDependenciesReport [
-
-	dependenciesReport := DADependencyChecker new computeImageDependencies.
-	^ dependenciesReport
-]
-
-{ #category : 'accessing' }
-SystemDependenciesTest class >> resetDependenciesReport [
-	<script>
-	"self resetDependenciesReport"
-
-	dependenciesReport := nil
+	^ super resources copyWith: SystemDependenciesReportResource
 ]
 
 { #category : 'accessing' }
 SystemDependenciesTest >> dependenciesReport [
 
-	^ self class dependenciesReport
+	^ SystemDependenciesReportResource current dependenciesReport
 ]
 
 { #category : 'accessing' }

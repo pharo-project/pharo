@@ -364,7 +364,7 @@ ClyQueryViewMorph >> ensureSelectedItem [
 	self dataSource isEmpty ifTrue: [ ^self ].
 
 	selectionIndex := 1.
-	(desiredSelection notNil and: [desiredSelection isEmpty not]) ifTrue: [
+	(desiredSelection isNotNil and: [desiredSelection isEmpty not]) ifTrue: [
 		selectionIndex := desiredSelection lastSelectedItem globalPosition
 									min: self dataSource numberOfRows ].
 	self selection selectItems: {self dataSource elementAt: selectionIndex}.
@@ -932,7 +932,7 @@ ClyQueryViewMorph >> updateSelectionForNewFilter [
 
 	self initiateUIChangeBy: [
 		self updateSelection.
-		(desiredSelection notNil and: [ desiredSelection isEmpty not ]) ifTrue: [
+		(desiredSelection isNotNil and: [ desiredSelection isEmpty not ]) ifTrue: [
 			"We should never restore empty selection when filter was changed"
 			desiredSelection restoreCurrentSelection: selection]].
 

@@ -106,13 +106,23 @@ SystemDictionary >> allTraitsDo: aBlock [
 SystemDictionary >> at: aKey put: anObject [
 	"Override from Dictionary to check Undeclared and fix up
 	references to undeclared variables."
-
+	| index assoc |
 	aKey isSymbol ifFalse: [ self error: 'Only symbols are accepted as keys in SystemDictionary' ].
-	(self includesKey: aKey) ifFalse: [
-		self declare: aKey from: Undeclared.
-		self flushClassNameCache ].
-	super at: aKey put: anObject.
-	^ anObject
+	((self includesKey: aKey) not and: [ Undeclared includesKey: aKey ]) ifTrue: [
+ 			| undeclared |
+ 			undeclared := Undeclared associationAt: aKey.
+ 			"Undeclared variables record using methods in a property, remove. Boostrap might have used Associations"
+ 			(undeclared class == UndeclaredVariable) ifTrue: [undeclared removeProperty: #registeredMethods ifAbsent: [ ]]. 
+ 			"and change class to be Global" 
+ 			self add: (undeclared primitiveChangeClassTo: GlobalVariable new).
+ 			Undeclared removeKey: aKey].
+ 	"code of super at:put:, not using Associations but GlobalVariable"
+ 	index := self findElementOrNil: aKey.
+ 	assoc := array at: index.
+ 	assoc
+ 		ifNil: [self atNewIndex: index put: (GlobalVariable key: aKey value: anObject). self flushClassNameCache]
+ 		ifNotNil: [assoc value: anObject].
+ 	^ anObject
 ]
 
 { #category : 'adding' }
@@ -176,25 +186,11 @@ SystemDictionary >> classOrTraitNamed: aString [
 				  ifTrue: [ global classSide ] ] ]
 ]
 
-{ #category : 'adding' }
-SystemDictionary >> declare: key from: aDictionary [
-	"Add key to the receiver. If key already exists, do nothing. If aDictionary
-	includes key, then remove it from aDictionary and use its association as
-	the element of the receiver."
-	"overridden here to add a Global, not just an association"
+{ #category : 'accessing' }
+SystemDictionary >> codeChangeAnnouncer [
+	"This should not be hardcoded in the futurebut I should have my own instance."
 
-	(self includesKey: key) ifTrue: [^ self].
-	(aDictionary includesKey: key)
-		ifTrue:
-			[| undeclared |
-			undeclared := aDictionary associationAt: key.
-			"Undeclared variables record using methods in a property, remove. Boostrap might have used Associations"
-			(undeclared class == UndeclaredVariable) ifTrue: [undeclared removeProperty: #registeredMethods ifAbsent: [ ]]. 
-			"and change class to be Global"
-			self add: (undeclared primitiveChangeClassTo: GlobalVariable new).
-			aDictionary removeKey: key]
-		ifFalse:
-			[self add: (GlobalVariable key: key)]
+	^ SystemAnnouncer uniqueInstance
 ]
 
 { #category : 'accessing' }

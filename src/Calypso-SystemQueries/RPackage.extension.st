@@ -21,20 +21,13 @@ RPackage class >> defaultSortFunctionForCalypso [
 { #category : '*Calypso-SystemQueries' }
 RPackage >> definesOverridesOf: aMethod [
 
-	(self definesOverridesOf: aMethod in: definedSelectors) ifTrue: [ ^ true ].
-	(self definesOverridesOf: aMethod in: extensionSelectors) ifTrue: [ ^ true ].
-
-	^ false
-]
-
-{ #category : '*Calypso-SystemQueries' }
-RPackage >> definesOverridesOf: aMethod in: classAndSelectors [
-
 	| methodClass selector |
 	methodClass := aMethod origin.
 	selector := aMethod selector.
 
-	classAndSelectors keysAndValuesDo: [ :class :selectors | ((selectors includes: selector) and: [ class inheritsFrom: methodClass ]) ifTrue: [ ^ true ] ].
+	self definedClasses do: [ :class | (class inheritsFrom: methodClass) ifTrue: [ class definedSelectors includes: selector ] ].
+	extensionSelectors keysAndValuesDo: [ :class :selectors | ((selectors includes: selector) and: [ class inheritsFrom: methodClass ]) ifTrue: [ ^ true ] ].
+
 	^ false
 ]
 

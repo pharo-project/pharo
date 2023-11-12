@@ -8,7 +8,7 @@ Class {
 
 { #category : 'accessing' }
 MetacelloConfigurationSpecGenerator >> projectSpecCreationBlock [
-    ^ [ :projectName | {(MetacelloMCProject new configurationOfProjectSpec name: projectName)} ]
+    ^ [ :projectName | {(MetacelloProject new configurationOfProjectSpec name: projectName)} ]
 ]
 
 { #category : 'accessing' }
