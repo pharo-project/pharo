@@ -165,8 +165,8 @@ zip "${COMPILER_IMAGE_NAME}.zip" "${COMPILER_IMAGE_NAME}.image"
 echo $(date -u) "[Compiler] Installing Traits through Hermes"
 
 ${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" save ${TRAITS_IMAGE_NAME}
-${VM} "${TRAITS_IMAGE_NAME}.image" "${IMAGE_FLAGS}" loadHermes TraitsV2.hermes --save
-${VM} "${TRAITS_IMAGE_NAME}.image" "${IMAGE_FLAGS}" loadHermes Kernel-Traits.hermes Collections-Abstract-Traits.hermes CodeImport-Traits.hermes CodeExport-Traits.hermes TraitsV2-Compatibility.hermes --save
+${VM} "${TRAITS_IMAGE_NAME}.image" "${IMAGE_FLAGS}" loadHermes Traits.hermes --save
+${VM} "${TRAITS_IMAGE_NAME}.image" "${IMAGE_FLAGS}" loadHermes Kernel-Traits.hermes Collections-Abstract-Traits.hermes CodeImport-Traits.hermes CodeExport-Traits.hermes Traits-Compatibility.hermes --save
 zip "${TRAITS_IMAGE_NAME}.zip" "${TRAITS_IMAGE_NAME}.image"
 
 #Bootstrap Initialization: Class and RPackage initialization
