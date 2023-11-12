@@ -7,9 +7,6 @@ It is not a standard unit test because to compute dependencies takes a lot of ti
 Class {
 	#name : 'SystemDependenciesTest',
 	#superclass : 'TestCase',
-	#classInstVars : [
-		'dependenciesReport'
-	],
 	#category : 'System-DependenciesTests',
 	#package : 'System-DependenciesTests'
 }
@@ -17,34 +14,19 @@ Class {
 { #category : 'accessing' }
 SystemDependenciesTest class >> defaultTimeLimit [
 
-	^ 1 minute
+	^ 30 seconds
 ]
 
 { #category : 'accessing' }
-SystemDependenciesTest class >> dependenciesReport [
+SystemDependenciesTest class >> resources [
 
-	^ dependenciesReport ifNil: [ self rebuildDependenciesReport ]
-]
-
-{ #category : 'accessing' }
-SystemDependenciesTest class >> rebuildDependenciesReport [
-
-	dependenciesReport := DADependencyChecker new computeImageDependencies.
-	^ dependenciesReport
-]
-
-{ #category : 'accessing' }
-SystemDependenciesTest class >> resetDependenciesReport [
-	<script>
-	"self resetDependenciesReport"
-
-	dependenciesReport := nil
+	^ super resources copyWith: SystemDependenciesReportResource
 ]
 
 { #category : 'accessing' }
 SystemDependenciesTest >> dependenciesReport [
 
-	^ self class dependenciesReport
+	^ SystemDependenciesReportResource current dependenciesReport
 ]
 
 { #category : 'accessing' }
@@ -249,22 +231,22 @@ SystemDependenciesTest >> testExternalBasicToolsDependencies [
 		self metacelloPackageNames,
 		self tonelCorePackageNames,
 		BaselineOfTraits corePackages,
-		{ BaselineOfSUnit name }, BaselineOfSUnit allPackageNames, "ALL"
-		{ BaselineOfDisplay name }, BaselineOfDisplay allPackageNames,
-		{ BaselineOfUnifiedFFI name }, BaselineOfUnifiedFFI allPackageNames,
+		BaselineOfSUnit withAllPackageNames, "ALL"
+		BaselineOfDisplay withAllPackageNames,
+		BaselineOfUnifiedFFI withAllPackageNames,
 		{ BaselineOfFreeType name }, (BaselineOfFreeType deepPackagesOfGroupNamed: #ui),
 		{ BaselineOfKeymapping name }, (BaselineOfKeymapping deepPackagesOfGroupNamed: #ui),
-		{ BaselineOfMorphicCore name }, BaselineOfMorphicCore allPackageNames,
-		{ BaselineOfMorphic name }, BaselineOfMorphic allPackageNames,
-		{ BaselineOfMenuRegistration name }, BaselineOfMenuRegistration allPackageNames,
-		{ BaselineOfUI name }, BaselineOfUI allPackageNames,
-		{ BaselineOfRefactoring name }, BaselineOfRefactoring allPackageNames,
+		BaselineOfMorphicCore withAllPackageNames,
+		BaselineOfMorphic withAllPackageNames,
+		BaselineOfMenuRegistration withAllPackageNames,
+		BaselineOfUI withAllPackageNames,
+		BaselineOfRefactoring withAllPackageNames,
 		{ BaselineOfCommander2 name }, (BaselineOfCommander2 deepPackagesOfGroupNamed: #core),
 		{ BaselineOfCommander2 name }, (BaselineOfCommander2 deepPackagesOfGroupNamed: #ui),
 		{ BaselineOfNewValueHolder name }, (BaselineOfNewValueHolder packagesOfGroupNamed: #core),
 		{ BaselineOfSpecCore name }, (BaselineOfSpecCore deepPackagesOfGroupNamed: #default),
 		{ BaselineOfSpec2 name }, (BaselineOfSpec2 deepPackagesOfGroupNamed: #default),
-		{ BaselineOfBasicTools name }, BaselineOfBasicTools allPackageNames,
+		BaselineOfBasicTools withAllPackageNames,
 		{ BaselineOfNewTools name }, (BaselineOfNewTools deepPackagesOfGroupNamed: 'Methods'),
 		{ BaselineOfFuel name }, (BaselineOfFuel deepPackagesOfGroupNamed: #Tests),
 		BaselineOfThreadedFFI corePackageNames ).
@@ -352,7 +334,7 @@ SystemDependenciesTest >> testExternalIDEDependencies [
 	BaselineOfShout.
 	BaselineOfKernelTests.
 	BaselineOfHeuristicCompletion.
-	 } do: [ :baseline | packages := packages , {baseline name} , baseline allPackageNames ].
+	 } do: [ :baseline | packages := packages , baseline withAllPackageNames ].
 
 	packages := packages ,  { BaselineOfFreeType name }, (self packagesOfGroupNamed: 'ui' on: BaselineOfFreeType ).
 	packages := packages ,  { BaselineOfKeymapping name }, (self packagesOfGroupNamed: 'ui' on: BaselineOfKeymapping ).

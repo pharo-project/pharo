@@ -543,6 +543,12 @@ Behavior >> cleanUp: aggressive [
 	^self cleanUp
 ]
 
+{ #category : 'accessing' }
+Behavior >> codeChangeAnnouncer [
+
+	^ self environment codeChangeAnnouncer
+]
+
 { #category : 'accessing - method dictionary' }
 Behavior >> compiledMethodAt: selector [
 	"Answer the compiled method associated with the argument, selector (a
@@ -1435,7 +1441,7 @@ Behavior >> removeSelector: aSelector [
 Behavior >> removeSelectorSilently: selector [
 	"Remove selector without sending system change notifications"
 	<reflection: 'Class structural modification - Selector/Method modification'>
-	^ SystemAnnouncer uniqueInstance suspendAllWhile: [self removeSelector: selector]
+	^ self codeChangeAnnouncer suspendAllWhile: [self removeSelector: selector]
 ]
 
 { #category : 'cleanup' }

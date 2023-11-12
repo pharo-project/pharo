@@ -269,6 +269,16 @@ ReleaseTest >> testNoNullCharacter [
 	self assert: violations isEmpty description: 'Source corrupted: Methods with Null character found'
 ]
 
+{ #category : 'tests' }
+ReleaseTest >> testNoOrphanPackage [
+	"This test ensure that all packages loaded in Pharo are part of a baseline. This will be the most useful when we will be able to execute release tests last in the CI of Pharo. We will be able to detect generated packages that are not removed by the #tearDowns"
+
+	| declaredPackages |
+	declaredPackages := ((self class environment allClasses select: [ :class | class inheritsFrom: BaselineOf ]) flatCollect: [ :baseline |
+		                     baseline withAllPackageNames ]) asSet.
+	self assertEmpty: (self packageOrganizer packages reject: [ :package | package isUndefined or: [ declaredPackages includes: package name ] ])
+]
+
 { #category : 'tests - source' }
 ReleaseTest >> testNoPeriodInMethodSignature [
 	| methods |

@@ -7,18 +7,26 @@ Collection >> addToMetacelloPackages: aMetacelloPackagesSpec [
 ]
 
 { #category : '*Metacello-Core' }
-Collection >> asMetacelloAttributeList [
-    ^ self
-]
+Collection >> addToMetacelloRepositories: aMetacelloRepositoriesSpec [
 
-{ #category : '*Metacello-Core' }
-Collection >> asMetacelloAttributePath [
-    ^ MetacelloMethodSectionPath withAll: self
+	self do: [:each | each addToMetacelloRepositories: aMetacelloRepositoriesSpec ]
 ]
 
 { #category : '*Metacello-Core-scripting' }
 Collection >> execute: projectSpecBlock against: aScriptExecutor [
     aScriptExecutor executeCollection: self do: projectSpecBlock
+]
+
+{ #category : '*Metacello-Core' }
+Collection >> fetchRequiredForMetacelloMCVersion: aMetacelloMCVersion [
+
+	^aMetacelloMCVersion doFetchRequiredFromArray: self.
+]
+
+{ #category : '*Metacello-Core' }
+Collection >> loadRequiredForMetacelloMCVersion: aMetacelloMCVersion [
+
+	^aMetacelloMCVersion doLoadRequiredFromArray: self.
 ]
 
 { #category : '*Metacello-Core' }
@@ -28,24 +36,27 @@ Collection >> mergeIntoMetacelloPackages: aMetacelloPackagesSpec [
 ]
 
 { #category : '*Metacello-Core' }
+Collection >> mergeIntoMetacelloRepositories: aMetacelloRepositoriesSpec [
+
+	self do: [:each | each mergeIntoMetacelloRepositories: aMetacelloRepositoriesSpec ]
+]
+
+{ #category : '*Metacello-Core' }
+Collection >> recordRequiredForMetacelloMCVersion: aMetacelloMCVersion [
+
+	^aMetacelloMCVersion doRecordRequiredFromArray: self.
+]
+
+{ #category : '*Metacello-Core' }
 Collection >> removeFromMetacelloPackages: aMetacelloPackagesSpec [
 
 	self do: [:each | each removeFromMetacelloPackages: aMetacelloPackagesSpec ]
 ]
 
 { #category : '*Metacello-Core' }
-Collection >> setForDo: aBlock withInMetacelloConfig: aMetacelloConstructore [
-    aMetacelloConstructore setFor: self do: aBlock
-]
+Collection >> removeFromMetacelloRepositories: aMetacelloRepositoriesSpec [
 
-{ #category : '*Metacello-Core' }
-Collection >> setForVersion: aString withInMetacelloConfig: aMetacelloConstructore [
-    aMetacelloConstructore setFor: self version: aString
-]
-
-{ #category : '*Metacello-Core' }
-Collection >> setImportInVersionSpec: aMetacelloVersionSpec [
-  aMetacelloVersionSpec setImport: self asArray
+	self do: [:each | each removeFromMetacelloRepositories: aMetacelloRepositoriesSpec ]
 ]
 
 { #category : '*Metacello-Core' }

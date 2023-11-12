@@ -632,7 +632,7 @@ ChangeSet >> changedClasses [
 
 	^ self changedClassNames
 		collect: [ :className | Smalltalk globals classNamed: className ]
-		thenSelect: [ :aClass | aClass notNil ]
+		thenSelect: [ :aClass | aClass isNotNil ]
 ]
 
 { #category : 'method changes' }
@@ -967,7 +967,7 @@ ChangeSet >> fileOutPostscriptOn: stream [
 
 	| aString |
 	aString := self postscriptString.
-	(aString notNil and: [ aString notEmpty ])
+	(aString isNotNil and: [ aString notEmpty ])
 		ifFalse: [ ^ self ].
 	stream nextChunkPut: aString.	"surroundedBySingleQuotes"
 	stream
@@ -981,7 +981,7 @@ ChangeSet >> fileOutPreambleOn: stream [
 
 	| aString |
 	aString := self preambleString.
-	(aString notNil and: [ aString notEmpty ])
+	(aString isNotNil and: [ aString notEmpty ])
 		ifFalse: [ ^ self ].
 	stream nextChunkPut: aString.	"surroundedBySingleQuotes"
 	stream
@@ -1017,13 +1017,13 @@ ChangeSet >> hasAnyChangeForSelector: aSelector [
 { #category : 'accessing' }
 ChangeSet >> hasPostscript [
 
-	^ postscript notNil
+	^ postscript isNotNil
 ]
 
 { #category : 'moving changes' }
 ChangeSet >> hasPreamble [
 
-	^ preamble notNil
+	^ preamble isNotNil
 ]
 
 { #category : 'file in/out' }

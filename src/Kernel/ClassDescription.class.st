@@ -35,7 +35,7 @@ ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod 
 		priorOrigin := method origin ].
 
 	oldProtocol := self protocolOfSelector: selector.
-	SystemAnnouncer uniqueInstance prevent: MethodRecategorized during: [ self classify: selector under: protocol ].
+	self codeChangeAnnouncer prevent: MethodRecategorized during: [ self classify: selector under: protocol ].
 	newProtocol := self protocolOfSelector: selector.
 
 	self addSelectorSilently: selector withMethod: compiledMethod.
@@ -45,10 +45,10 @@ ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod 
 	(priorMethod isNil or: [ priorOrigin ~= compiledMethod origin ])
 		ifTrue: [
 			compiledMethod shouldBePackaged ifTrue: [ (self packageOrganizer packageForProtocol: newProtocol from: self) addMethod: compiledMethod ].
-			SystemAnnouncer uniqueInstance announce: (MethodAdded method: compiledMethod) ]
+			self codeChangeAnnouncer announce: (MethodAdded method: compiledMethod) ]
 		ifFalse: [ "If protocol changed and someone is from different package, I need to throw a method recategorized"
 			newProtocol = oldProtocol ifFalse: [ self announceRecategorizationOf: compiledMethod oldProtocol: oldProtocol ].
-			SystemAnnouncer uniqueInstance methodChangedFrom: priorMethod to: compiledMethod oldProtocol: oldProtocol ]
+			self codeChangeAnnouncer methodChangedFrom: priorMethod to: compiledMethod oldProtocol: oldProtocol ]
 ]
 
 { #category : 'instance variables' }
@@ -74,7 +74,7 @@ ClassDescription >> addProtocol: aProtocol [
 
 	"For now extensions are managed via protocols. If the protocol represent an extension we need to make sure the corresponding package exists."
 	protocol isExtensionProtocol ifTrue: [ self packageOrganizer ensurePackageOfExtensionProtocol: protocol ].
-	SystemAnnouncer announce: (ProtocolAdded in: self protocol: protocol).
+	self codeChangeAnnouncer  announce: (ProtocolAdded in: self protocol: protocol).
 	^ protocol
 ]
 
@@ -88,11 +88,6 @@ ClassDescription >> addSelector: selector withMethod: compiledMethod [
 ClassDescription >> addSelectorSilently: selector withMethod: compiledMethod [
 
 	<reflection: 'Class structural modification - Selector/Method modification'>
-	self
-		compiledMethodAt: selector
-		ifPresent: [ :priorMethod | "For now we cannot persiste properties of methods during recompilation, so if we have an extension method, we save here the package in the new method."
-			priorMethod propertyAt: #extensionPackage ifPresent: [ :package | compiledMethod propertyAt: #extensionPackage put: package ] ].
-
 	super addSelectorSilently: selector withMethod: compiledMethod.
 	self instanceSide noteAddedSelector: selector meta: self isMeta
 ]
@@ -161,7 +156,7 @@ ClassDescription >> announceRecategorizationOf: compiledMethod oldProtocol: oldP
 	compiledMethod origin = compiledMethod methodClass ifTrue: [ self packageOrganizer repackageMethod: compiledMethod oldProtocol: oldProtocol newProtocol: compiledMethod protocol ].
 
 	"Announce the recategorization"
-	SystemAnnouncer uniqueInstance methodRecategorized: compiledMethod oldProtocol: oldProtocol
+	self codeChangeAnnouncer methodRecategorized: compiledMethod oldProtocol: oldProtocol
 ]
 
 { #category : 'authors' }
@@ -366,7 +361,7 @@ ClassDescription >> compileSilently: sourceCode classified: protocolName [
 ClassDescription >> compileSilently: sourceCode classified: protocolName notifying: requestor [
 	"Compile the code and classify the resulting method in the given protocol, leaving no trail in the system log, nor in any change set, nor in the 'recent submissions' list."
 
-	^ SystemAnnouncer uniqueInstance suspendAllWhile: [ self compile: sourceCode classified: protocolName notifying: requestor ]
+	^ self codeChangeAnnouncer suspendAllWhile: [ self compile: sourceCode classified: protocolName notifying: requestor ]
 ]
 
 { #category : 'copying' }
@@ -970,7 +965,7 @@ ClassDescription >> removeProtocolIfEmpty: aProtocol [
 
 	oldProtocolNames := self protocolNames.
 	protocols := protocols copyWithout: protocol.
-	SystemAnnouncer announce: (ProtocolRemoved in: self protocol: protocol)
+	self codeChangeAnnouncer  announce: (ProtocolRemoved in: self protocol: protocol)
 ]
 
 { #category : 'accessing - method dictionary' }
@@ -989,7 +984,7 @@ ClassDescription >> removeSelector: selector [
 
 	super removeSelector: selector.
 
-	SystemAnnouncer uniqueInstance methodRemoved: method protocol: protocol origin: origin
+	self codeChangeAnnouncer  methodRemoved: method protocol: protocol origin: origin
 ]
 
 { #category : 'instance variables' }
