@@ -153,7 +153,7 @@ ClassDescription >> allUnreferencedInstanceVariables [
 ClassDescription >> announceRecategorizationOf: compiledMethod oldProtocol: oldProtocol [
 
 	"Repackage the method if it is not from a trait"
-	compiledMethod origin = compiledMethod methodClass ifTrue: [ self packageOrganizer repackageMethod: compiledMethod oldProtocol: oldProtocol newProtocol: compiledMethod protocol ].
+	compiledMethod isFromTrait ifFalse: [ self packageOrganizer repackageMethod: compiledMethod oldProtocol: oldProtocol newProtocol: compiledMethod protocol ].
 
 	"Announce the recategorization"
 	self codeChangeAnnouncer methodRecategorized: compiledMethod oldProtocol: oldProtocol

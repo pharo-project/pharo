@@ -123,18 +123,19 @@ RPackage >> addClass: aClass [
 ]
 
 { #category : 'add method - compiled method' }
-RPackage >> addMethod: aCompiledMethod [
-	"Add the method to the receiver as a defined method if the class is  defined in it, else as an extension."
+RPackage >> addMethod: aMethod [
+	"Ensure the method is in this package. If it is in a class I'm defining, I'll not keep a reference to it but just ensure it is not considered as an extension. If it is in a foreign class, it means it is an extension and I'll remember that."
 
-	| methodClass |
-	methodClass := aCompiledMethod methodClass.
-	(self includesClass: methodClass)
-		ifTrue: [ "We want to make sure the method is not considered an extension." aCompiledMethod removeProperty: #extensionPackage ]
+	"In case this method was an extension from another package we want to make sure we remove it from there."
+	aMethod extensionPackage ifNotNil: [ :extensionPackage | extensionPackage removeMethod: aMethod ].
+
+	(self includesClass: aMethod methodClass)
+		ifTrue: [ aMethod removeProperty: #extensionPackage ]
 		ifFalse: [
-			aCompiledMethod propertyAt: #extensionPackage put: self. "We tag the method as an extension method."
-			(extensionSelectors at: methodClass ifAbsentPut: [ IdentitySet new ]) add: aCompiledMethod selector ].
+			aMethod propertyAt: #extensionPackage put: self.
+			(extensionSelectors at: aMethod methodClass ifAbsentPut: [ IdentitySet new ]) add: aMethod selector ].
 
-	^ aCompiledMethod
+	^ aMethod
 ]
 
 { #category : 'class tags' }
@@ -238,9 +239,7 @@ RPackage >> demoteToTagInPackage [
 	tag := newPackage ensureTag: (self name withoutPrefix: newPackage name , '-').
 
 	self definedClasses do: [ :class | newPackage moveClass: class toTag: tag ].
-	self extensionMethods do: [ :method |
-		newPackage addMethod: method.
-		self removeMethod: method ].
+	self extensionMethods do: [ :method | newPackage addMethod: method ].
 
 	self removeFromSystem.
 
@@ -662,20 +661,13 @@ RPackage >> removeFromSystem [
 RPackage >> removeMethod: aCompiledMethod [
 	"Remove the method to the receiver as a defined method."
 
-	| methodClass |
-	methodClass := aCompiledMethod methodClass.
-	"We need to act only on extension methods because defined methods are not stored anymore"
-	(self includesClass: methodClass) ifFalse: [
-		extensionSelectors at: methodClass ifPresent: [ :selectors |
-			selectors remove: aCompiledMethod selector ifAbsent: [  ].
-			selectors ifEmpty: [ extensionSelectors removeKey: methodClass ] ] ].
+	(self includesClass: aCompiledMethod methodClass) ifFalse: [
+		extensionSelectors at: aCompiledMethod methodClass ifPresent: [ :selectors |
+			selectors remove: aCompiledMethod selector ifAbsent: [ ^ aCompiledMethod ].
+			"Cleanup the class from the dictionary if there is no extension anymore."
+			selectors ifEmpty: [ extensionSelectors removeKey: aCompiledMethod methodClass ] ] ].
 
 	^ aCompiledMethod
-]
-
-{ #category : 'add method - compiled method' }
-RPackage >> removeMethods: aCollection [
-	aCollection do: [ :each | self removeMethod: each ]
 ]
 
 { #category : 'properties' }

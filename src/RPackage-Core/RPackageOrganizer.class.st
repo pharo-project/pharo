@@ -415,14 +415,13 @@ RPackageOrganizer >> repackageMethod: method oldProtocol: oldProtocol newProtoco
 
 	| oldPackage newPackage |
 	newPackage := self packageForProtocol: newProtocol from: method methodClass.
-	oldPackage := self packageForProtocol: oldProtocol from: method methodClass.
+	oldPackage := method package.
 
 	oldPackage = newPackage ifTrue: [ ^ self ].
 
-	oldPackage removeMethod: method.
 	newPackage addMethod: method.
 
-	self codeChangeAnnouncer  methodRepackaged: method from: oldPackage to: newPackage
+	self codeChangeAnnouncer methodRepackaged: method from: oldPackage to: newPackage
 ]
 
 { #category : 'accessing' }
