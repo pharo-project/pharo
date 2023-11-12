@@ -143,7 +143,7 @@ OpalCompiler class >> overlayStep3FixSuperclassPointers [
 { #category : 'overlay' }
 OpalCompiler class >> overlayStep4SetImageCompiler [
 	"make the copy the default compiler for the image"
-	SmalltalkImage compilerClass: (self overlayEnvironment at: #OpalCompiler).
+	PharoImage compilerClass: (self overlayEnvironment at: #OpalCompiler).
 	ASTCache reset
 ]
 
@@ -165,7 +165,7 @@ OpalCompiler class >> recompileAll [
 { #category : 'public' }
 OpalCompiler class >> register [
 
-	SmalltalkImage current compilerClass: self
+	PharoImage current compilerClass: self
 ]
 
 { #category : 'overlay' }
@@ -188,7 +188,7 @@ OpalCompiler class >> stopUsingOverlayForDevelopment [
 	"set compiler back to normal and throw away overlay environment"
 
 	<script>
-	SmalltalkImage compilerClass: nil.
+	PharoImage compilerClass: nil.
 	overlayEnvironment := nil.
 	ASTCache reset
 ]

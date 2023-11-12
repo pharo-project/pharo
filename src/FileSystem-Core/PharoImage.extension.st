@@ -1,14 +1,14 @@
-Extension { #name : 'SmalltalkImage' }
+Extension { #name : 'PharoImage' }
 
 { #category : '*FileSystem-Core' }
-SmalltalkImage >> changesFile [
+PharoImage >> changesFile [
 	"Answer the file containing the current changes."
 
 	^ FileLocator changes
 ]
 
 { #category : '*FileSystem-Core' }
-SmalltalkImage >> imageFile [
+PharoImage >> imageFile [
 
 	^ FileLocator image
 ]

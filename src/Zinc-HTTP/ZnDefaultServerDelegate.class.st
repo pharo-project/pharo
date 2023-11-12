@@ -403,7 +403,7 @@ ZnDefaultServerDelegate >> value: request [
 
 { #category : 'private' }
 ZnDefaultServerDelegate >> vmStats [
-	^ SmalltalkImage current vm statisticsReport
+	^ PharoImage current vm statisticsReport
 ]
 
 { #category : 'responses' }

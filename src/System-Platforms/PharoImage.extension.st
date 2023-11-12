@@ -1,20 +1,20 @@
-Extension { #name : 'SmalltalkImage' }
+Extension { #name : 'PharoImage' }
 
 { #category : '*System-Platforms' }
-SmalltalkImage >> os [
+PharoImage >> os [
 	"Answer the object to query about os."
 
 	^ OSPlatform current
 ]
 
 { #category : '*System-Platforms' }
-SmalltalkImage >> platform [
+PharoImage >> platform [
 	"Answer the object to query about os."
 
 	^ self os
 ]
 
 { #category : '*System-Platforms' }
-SmalltalkImage >> platformName [
+PharoImage >> platformName [
 	^ self os platformName
 ]

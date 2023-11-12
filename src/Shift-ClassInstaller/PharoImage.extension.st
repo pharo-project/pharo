@@ -1,21 +1,21 @@
-Extension { #name : 'SmalltalkImage' }
+Extension { #name : 'PharoImage' }
 
 { #category : '*Shift-ClassInstaller' }
-SmalltalkImage >> anonymousClassInstaller [
+PharoImage >> anonymousClassInstaller [
 	"Answer the class responsible of creating classes in the system."
 
 	^ ShiftAnonymousClassInstaller
 ]
 
 { #category : '*Shift-ClassInstaller' }
-SmalltalkImage >> classBuilder [
+PharoImage >> classBuilder [
 	"Answer the object responsible of creating subclasses of myself in the system."
 
 	^ self classInstaller new builder
 ]
 
 { #category : '*Shift-ClassInstaller' }
-SmalltalkImage >> classInstaller [
+PharoImage >> classInstaller [
 	"Answer the class responsible of creating classes in the system."
 
 	^ ShiftClassInstaller

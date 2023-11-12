@@ -33,9 +33,9 @@ CompiledCodeTest >> methodReturnOne [
 { #category : 'tests - scanning' }
 CompiledCodeTest >> testAccessesRef [
 	| readMethod writeMethod classVar |
-	readMethod := SmalltalkImage class>>#compilerClass.
-	writeMethod := SmalltalkImage class>>#compilerClass:.
-	classVar := SmalltalkImage classVariableNamed: #CompilerClass.
+	readMethod := PharoImage class>>#compilerClass.
+	writeMethod := PharoImage class>>#compilerClass:.
+	classVar := PharoImage classVariableNamed: #CompilerClass.
 
 	self assert: (readMethod accessesRef: classVar).
 	self assert: (writeMethod accessesRef: classVar)
@@ -383,9 +383,9 @@ CompiledCodeTest >> testMethodReturnSpecial [
 { #category : 'tests - scanning' }
 CompiledCodeTest >> testReadsRef [
 	| readMethod writeMethod classVar |
-	readMethod := SmalltalkImage class>>#compilerClass.
-	writeMethod := SmalltalkImage class>>#compilerClass:.
-	classVar := SmalltalkImage classVariableNamed: #CompilerClass.
+	readMethod := PharoImage class>>#compilerClass.
+	writeMethod := PharoImage class>>#compilerClass:.
+	classVar := PharoImage classVariableNamed: #CompilerClass.
 
 	self assert: (readMethod readsRef: classVar).
 	self deny: (writeMethod readsRef: classVar).
