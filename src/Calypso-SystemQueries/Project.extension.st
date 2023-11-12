@@ -18,10 +18,8 @@ Project class >> defaultSortFunctionForCalypso [
 
 { #category : '*Calypso-SystemQueries' }
 Project class >> prepareClassQueriesFrom: packages in: aNavigationEnvironment [
-	^{
-		ClyAllClassesQuery from: ClyProjectScope ofAll: packages in: aNavigationEnvironment.
-		ClyAllClassesQuery from: ClyProjectExtensionScope ofAll: packages in: aNavigationEnvironment
-	}
+
+	^ { (ClyAllClassesQuery from: ClyProjectScope ofAll: packages in: aNavigationEnvironment) }
 ]
 
 { #category : '*Calypso-SystemQueries' }

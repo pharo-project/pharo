@@ -282,7 +282,7 @@ RPackage >> extendedClassNames [
 RPackage >> extendedClasses [
 	"Return classes and metaclasses that are extended in the receiver. They represent the classes of method extensions"
 
-	^ extensionSelectors keys
+	^ (extensionSelectors keys collect: [ :class | class instanceSide ]) asSet
 ]
 
 { #category : 'testing' }
