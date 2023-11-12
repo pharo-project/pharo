@@ -168,18 +168,24 @@ ClyFullBrowserMorph class >> taskbarIconName [
 
 { #category : 'private' }
 ClyFullBrowserMorph >> adoptForExtendedClass [
+
 	| extendingPackages extraGroups |
-	self classSelection isEmpty ifTrue: [ ^self ].
+	self classSelection isEmpty ifTrue: [ ^ self ].
 	methodGroupQuery := methodGroupQuery withoutItemsOfType: RPackage. "To remove previous package injection"
-	(self classSelection lastSelectedItem isMarkedWith: ClyExtendedClassTag) ifFalse: [ ^self ].
+	(self classSelection lastSelectedItem isMarkedWith: ClyExtendedClassTag) ifFalse: [ ^ self ].
 
 	"it will ensures method groups mode for extended class
 	to auto select extension methods of selected packages"
 	methodGroupQuery := ClyAllMethodGroupsQuery sortedFrom: self classScopeForMethods.
 
-	extendingPackages := self packageSelection actualObjects.
-	extraGroups := ClyConstantQuery
-				returning: extendingPackages as: ClyGroupedExtendingPackagesResult new.
+	extendingPackages := self packageSelection
+		                     ifEmpty: [ "In case we are not in the package view but the project view we collect the extensions packages in the project."
+			                     | extendingPackagesOfClass |
+			                     extendingPackagesOfClass := self classSelection lastSelectedItem actualObject extendingPackages.
+			                     self projectSelection actualObjects flatCollect: [ :project |
+				                     project packages select: [ :package | extendingPackagesOfClass includes: package ] ] ]
+		                     ifNotEmpty: [ :selection | selection actualObjects ].
+	extraGroups := ClyConstantQuery returning: extendingPackages as: ClyGroupedExtendingPackagesResult new.
 	extraGroups := methodGroupQuery scope adoptQuery: extraGroups.
 	methodGroupQuery := methodGroupQuery , extraGroups
 ]
@@ -633,12 +639,11 @@ ClyFullBrowserMorph >> selectCurrentExtensionMethodGroup [
 				self changeStateBy: [
 					| packages |
 					packages := projects lastSelectedItem actualObject packages.
-					1haltOnce.
 					self methodGroupSelection selectItemsWhere: [ :each |
 						(self packageOrganizer packageMatchingExtensionName: each name)
 							ifNil: [ false ]
 							ifNotNil: [ :package | packages includes: package ] ] ] ] ]
-		ifNotEmpty: [ :selection |1haltOnce. self selectMethodGroupNamed: self packageSelection lastSelectedItem name ]
+		ifNotEmpty: [ :selection | self selectMethodGroupNamed: self packageSelection lastSelectedItem name ]
 ]
 
 { #category : 'navigation' }
