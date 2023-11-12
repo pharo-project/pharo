@@ -72,7 +72,7 @@ MCTraitDefinition >> hasClassInstanceVariables [
 { #category : 'comparing' }
 MCTraitDefinition >> hash [
 
-	^ (name hash bitXor: traitComposition hash) bitXor: self category hash
+	^ ((name hash bitXor: traitComposition hash) bitXor: packageName hash) bitXor: tagName hash
 ]
 
 { #category : 'testing' }

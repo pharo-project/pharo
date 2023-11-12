@@ -84,17 +84,19 @@ FLTCreateClassOrTraitSerializationTest >> testCompiledMethodClassBinding [
 FLTCreateClassOrTraitSerializationTest >> testCreateBasic [
 	"Tests materialization of a class or trait not defined in the image."
 
-	| aClassOrTrait materializedClassOrTrait environment category name |
+	| aClassOrTrait materializedClassOrTrait environment name package packageTag |
 	aClassOrTrait := self newClassOrTrait.
 	environment := aClassOrTrait environment.
-	category := aClassOrTrait category.
+	package := aClassOrTrait package.
+	packageTag := aClassOrTrait packageTag.
 	name := aClassOrTrait name.
 
 	materializedClassOrTrait := self resultOfSerializeRemoveAndMaterialize: aClassOrTrait.
 
 	self deny: aClassOrTrait identicalTo: materializedClassOrTrait.
 	self assert: environment identicalTo: materializedClassOrTrait environment.
-	self assert: category equals: materializedClassOrTrait category.
+	self assert: package equals: materializedClassOrTrait package.
+	self assert: packageTag name equals: materializedClassOrTrait packageTag name.
 	self assert: name equals: materializedClassOrTrait name.
 
 	"It is important to notice that Fuel does not add the materialized class or trait into Smalltalk globals."

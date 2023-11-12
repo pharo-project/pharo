@@ -100,7 +100,8 @@ HDTestReport >> done [
 
 { #category : 'private' }
 HDTestReport >> generateTestName: aTestCase [
-	^ nodeName , (aTestCase class category copyReplaceAll: '-' with: '.')
+
+	^ nodeName , (aTestCase class package name copyReplaceAll: '-' with: '.')
 ]
 
 { #category : 'testing' }
