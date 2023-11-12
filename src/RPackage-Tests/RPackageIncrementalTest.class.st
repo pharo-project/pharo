@@ -260,7 +260,7 @@ RPackageIncrementalTest >> testExtensionClasses [
 	b2 class compile: 'methodPackagedInP1 ^ #methodPackagedInP1' classified: '*' , p1 name.
 
 	self assert: p1 extendedClasses size equals: 2.
-	self assert: (p1 extendedClasses includes: b2 class).
+	self assert: (p1 extendedClasses includes: b2).
 	"extensionClasses returns or metaclasses while extensionClassNames returns class names (but not metaclass names)"
 
 	self assert: p1 extendedClassNames size equals: 2.
