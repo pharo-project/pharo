@@ -640,6 +640,16 @@ DictionaryTest >> testNewFrom [
 ]
 
 { #category : 'tests - new' }
+DictionaryTest >> testNewFromArray [
+
+	| assocs |
+	self assert: (self classToBeTested newFromArray: {}) equals: self emptyDict.
+
+	assocs := self nonEmptyDict associations collect: [ :each | each copy ].
+	self assert: (self classToBeTested newFromArray: assocs) equals: self nonEmptyDict
+]
+
+{ #category : 'tests - new' }
 DictionaryTest >> testNewFromKeysAndValues [
 
 	| keys values newDict |
