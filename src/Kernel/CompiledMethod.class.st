@@ -462,10 +462,9 @@ CompiledMethod >> isFaulty [
 { #category : 'testing' }
 CompiledMethod >> isFromTrait [
 	"Return true for methods that have been included from Traits"
+
 	<reflection: 'Class structural inspection - Selectors and methods inspection'>
-	| origin |
-	origin := self origin.
-	^ origin isTrait and: [ origin ~= self methodClass ]
+	^ self hasProperty: #traitSource
 ]
 
 { #category : 'testing' }
