@@ -898,7 +898,7 @@ RubAbstractTextArea >> extent: aPoint [
 		handleBoundsChange: [
 			self wrapped
 				ifTrue: [
-					(bounds notNil and: [ bounds width = aPoint x ])
+					(bounds isNotNil and: [ bounds width = aPoint x ])
 						ifTrue: [ ^ self ].
 					super extent: ((self paragraph withoutDecorator extentFromClientBottomRight: aPoint) max: self minimumExtent).
 					self recomputeSelection ]
@@ -2138,7 +2138,7 @@ RubAbstractTextArea >> updateBottomFromParagraph [
 
 { #category : 'paragraph feedbacks' }
 RubAbstractTextArea >> updateExtentFromParagraph [
-	(paragraph notNil and: [ bounds notNil ])
+	(paragraph isNotNil and: [ bounds isNotNil ])
 		ifTrue: [
 			| newExtent |
 			newExtent := self paragraph extent max: self minimumExtent.
@@ -2235,7 +2235,7 @@ RubAbstractTextArea >> withOpeningClosingDelimitersHighlight [
 
 { #category : 'accessing - decorators' }
 RubAbstractTextArea >> withoutAnyDecorator [
-	[ self paragraph key notNil ] whileTrue: [ self withoutDecorator: paragraph ]
+	[ self paragraph key isNotNil ] whileTrue: [ self withoutDecorator: paragraph ]
 ]
 
 { #category : 'accessing - decorators' }
@@ -2244,7 +2244,7 @@ RubAbstractTextArea >> withoutDecorator: aDecorator [
 	(self hasDecorator: aDecorator)
 		ifFalse: [ ^ self ].
 	n := paragraph.
-	[ n notNil and: [ n ~= aDecorator ] ]
+	[ n isNotNil and: [ n ~= aDecorator ] ]
 		whileTrue: [
 			p := n.
 			n := p next ].

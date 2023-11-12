@@ -441,7 +441,7 @@ NECMenuMorph >> handlesMouseDown: anEvent [
 { #category : 'actions' }
 NECMenuMorph >> hasDetail [
 
-	^ detailMorph notNil
+	^ detailMorph isNotNil
 ]
 
 { #category : 'drawing' }

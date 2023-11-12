@@ -10,17 +10,6 @@ MetacelloProjectReferenceSpec >> loadUsing: aLoader gofer: ignored [
 ]
 
 { #category : '*Metacello-MC' }
-MetacelloProjectReferenceSpec >> packagesNeedSavingVisited: visitedProjects using: repos into: aCollection [
-
-	| prjct clsName vrsn |
-	prjct := self resolveToLoadableSpec.
-	(visitedProjects includes: (clsName := prjct className)) ifTrue: [ ^ self ].
-	visitedProjects add: clsName.
-	(vrsn := self versionOrNil) ifNil: [ ^ self ].
-	vrsn spec packagesNeedSavingVisited: visitedProjects into: aCollection
-]
-
-{ #category : '*Metacello-MC' }
 MetacelloProjectReferenceSpec >> repository: aStringOrMetacelloRepositorySpec [
     ^ self projectReference repository: aStringOrMetacelloRepositorySpec
 ]

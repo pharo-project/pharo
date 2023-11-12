@@ -863,9 +863,10 @@ Class >> removeClassVarNamed: aString interactive: interactive [
 	varUserClass
 		ifNotNil: [
 			NewUndeclaredWarning signal: aString in: self name.
-			Undeclared declare: aSymbol from: self classPool ]
-		ifNil: [ self classPool removeKey: aSymbol ].
-
+			"NOTE: we add ClassVariable to Undeclared, we need to update to UndeclaredVariable"
+			Undeclared add: (self classPool associationAt: aSymbol) ].
+		
+	self classPool removeKey: aSymbol.
 	self classPool ifEmpty: [ self classPool: nil ].
 
 	SystemAnnouncer uniqueInstance classModificationAppliedTo: self

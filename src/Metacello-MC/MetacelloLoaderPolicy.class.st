@@ -12,16 +12,9 @@ Class {
 		'loadDirective',
 		'silently'
 	],
-	#category : 'Metacello-MC-Loaders',
-	#package : 'Metacello-MC',
-	#tag : 'Loaders'
+	#category : 'Metacello-MC',
+	#package : 'Metacello-MC'
 }
-
-{ #category : 'instance creation' }
-MetacelloLoaderPolicy class >> overrideRepositories: aCollection [
-
-	^self new overrideRepositories: aCollection
-]
 
 { #category : 'accessing' }
 MetacelloLoaderPolicy >> cacheGofer [
@@ -120,18 +113,12 @@ MetacelloLoaderPolicy >> pushAtomicLoadDirectivesDuring: aBlock for: aLoader [
 ]
 
 { #category : 'actions' }
-MetacelloLoaderPolicy >> pushExplicitLoadDirectivesDuring: aBlock for: aLoader [
-
-	| directive |
-	directive := MetacelloExplicitLoadDirective loader: aLoader.
-	self pushLoadDirective: directive during: aBlock.
-	^directive
-]
-
-{ #category : 'actions' }
 MetacelloLoaderPolicy >> pushLinearLoadDirectivesDuring: aBlock for: aLoader [
 
-	self pushLoadDirective: (MetacelloLinearLoadDirective loader: aLoader) during: aBlock.
+	| directive |
+	directive := MetacelloLinearLoadDirective loader: aLoader.
+	self pushLoadDirective: directive during: aBlock.
+	^ directive
 ]
 
 { #category : 'private' }

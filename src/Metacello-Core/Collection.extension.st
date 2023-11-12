@@ -11,11 +11,6 @@ Collection >> asMetacelloAttributeList [
     ^ self
 ]
 
-{ #category : '*Metacello-Core' }
-Collection >> asMetacelloAttributePath [
-    ^ MetacelloMethodSectionPath withAll: self
-]
-
 { #category : '*Metacello-Core-scripting' }
 Collection >> execute: projectSpecBlock against: aScriptExecutor [
     aScriptExecutor executeCollection: self do: projectSpecBlock

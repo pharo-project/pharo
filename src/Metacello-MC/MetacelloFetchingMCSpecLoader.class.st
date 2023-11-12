@@ -28,12 +28,6 @@ MetacelloFetchingMCSpecLoader >> atomicLoadPackageSpecs: packageSpecs repositori
 		for: self
 ]
 
-{ #category : 'accessing' }
-MetacelloFetchingMCSpecLoader >> cacheRepository [
-
-	^self loaderPolicy cacheRepository
-]
-
 { #category : 'versionInfo' }
 MetacelloFetchingMCSpecLoader >> currentVersionInfoFor: packageSpec [
 
@@ -51,7 +45,6 @@ MetacelloFetchingMCSpecLoader >> doLoad [
 { #category : 'accessing' }
 MetacelloFetchingMCSpecLoader >> ensureSpecLoader [
 	^ (MetacelloEnsureFetchingMCSpecLoader on: self spec)
-		shouldDisablePackageCache: self shouldDisablePackageCache;
 		loaderPolicy: self loaderPolicy; "explicitly share the loaderPolicy"
 		yourself
 ]
@@ -60,16 +53,6 @@ MetacelloFetchingMCSpecLoader >> ensureSpecLoader [
 MetacelloFetchingMCSpecLoader >> ensuredMap [
 
 	^self loaderPolicy ensuredMap
-]
-
-{ #category : 'private' }
-MetacelloFetchingMCSpecLoader >> explicitLoadPackageSpecs: packageSpecs repositories: repositories [
-	
-	| directive |
-	directive := self loaderPolicy 
-		pushExplicitLoadDirectivesDuring: [ super linearLoadPackageSpecs: packageSpecs repositories: repositories ]
-		for: self.
-	directive explicitLoadWithPolicy: self loaderPolicy.
 ]
 
 { #category : 'actions' }
@@ -132,7 +115,7 @@ MetacelloFetchingMCSpecLoader >> linearLoadPackageSpec: packageSpec gofer: gofer
           (l := (GoferVersionReference name: reference name)
             resolveAllWith: self loaderPolicy cacheGofer) isEmpty
             ifTrue: [ 
-              self cacheRepository storeVersion: mcVersion.
+              self loaderPolicy cacheRepository storeVersion: mcVersion.
               reference == nearestReference
                 ifTrue: [ pSpec := packageSpec ]
                 ifFalse: [ 
@@ -149,10 +132,13 @@ MetacelloFetchingMCSpecLoader >> linearLoadPackageSpec: packageSpec gofer: gofer
 
 { #category : 'private' }
 MetacelloFetchingMCSpecLoader >> linearLoadPackageSpecs: packageSpecs repositories: repositories [
-	
-	self loaderPolicy 
-		pushLinearLoadDirectivesDuring: [ super linearLoadPackageSpecs: packageSpecs repositories: repositories ]
-		 for: self
+
+	self loaderPolicy
+		pushLinearLoadDirectivesDuring: [
+			super
+				linearLoadPackageSpecs: packageSpecs
+				repositories: repositories ]
+		for: self
 ]
 
 { #category : 'accessing' }
@@ -171,7 +157,6 @@ MetacelloFetchingMCSpecLoader >> loadDirective [
 MetacelloFetchingMCSpecLoader >> loadingSpecLoader [
 
 	^(MetacelloLoadingMCSpecLoader on: self spec)
-		shouldDisablePackageCache: self shouldDisablePackageCache;
 		loaderPolicy: self loaderPolicy copy;
 		yourself
 ]
