@@ -4,14 +4,28 @@ SUnit tests for class RunArray
 Class {
 	#name : 'RunArrayTest',
 	#superclass : 'TestCase',
-	#traits : 'TSequenceableTruncatedToSize',
-	#classTraits : 'TSequenceableTruncatedToSize classTrait',
+	#traits : 'TSequenceableTruncatedToSize + (TCreationWithTest - {#testWithAll})',
+	#classTraits : 'TSequenceableTruncatedToSize classTrait + TCreationWithTest classTrait',
 	#instVars : [
 		'collectionWith5Elements'
 	],
 	#category : 'Collections-Support-Tests',
 	#package : 'Collections-Support-Tests'
 }
+
+{ #category : 'requirements' }
+RunArrayTest >> collectionClass [
+	"Return the class to be used to create instances of the class tested"
+
+	^ RunArray
+]
+
+{ #category : 'requirements' }
+RunArrayTest >> collectionMoreThan5Elements [
+" return a collection including at least 5 elements"
+
+	^ collectionWith5Elements
+]
 
 { #category : 'requirements' }
 RunArrayTest >> collectionWith5Elements [
