@@ -143,18 +143,13 @@ RunArrayTest >> testNew [
 ]
 
 { #category : 'tests - instance creation' }
-RunArrayTest >> testNewFromArray [
+RunArrayTest >> testNewFrom [
 
 	| array |
 	array := RunArray newFrom: #($a $b $b $b $b $c $c $a).
 	self assert: array size equals: 8.
-	self assert: array asArray equals: #($a $b $b $b $b $c $c $a)
-]
+	self assert: array asArray equals: #($a $b $b $b $b $c $c $a).
 
-{ #category : 'tests - instance creation' }
-RunArrayTest >> testNewFromString [
-
-	| array |
 	array := RunArray newFrom: 'abbbbcca'.
 	self assert: array size equals: 8.
 	self assert: array asArray equals: #($a $b $b $b $b $c $c $a)
