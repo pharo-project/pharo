@@ -56,7 +56,7 @@ BaselineOfTraits >> baseline: spec [
 					'CodeImport-Traits'
 					'CodeExport-Traits' ).
 		
-		spec group: 'core-traits' with: #(core 'traits-in-kernel' 'compatibility').		
+		spec group: 'core-traits' with: #(core 'traits-in-kernel').		
 		spec group: 'default' with: #('core-traits').
 		spec group: 'traits-tests' with: #('default' 'TraitsV2-Tests').		
 	 ].
