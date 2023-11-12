@@ -25,7 +25,7 @@ Class {
 	#instVars : [
 		'name',
 		'url',
-		'icons',
+		'iconsPerScale',
 		'scale',
 		'reportNotFound'
 	],
@@ -327,7 +327,14 @@ ThemeIcons >> iconNamed: aSymbol ifNone: aBlock [
 
 { #category : 'accessing' }
 ThemeIcons >> icons [
-	^ icons ifNil: [ icons := Dictionary new: 0 ]
+
+	^ self iconsPerScale at: scale ifAbsentPut: [ IdentityDictionary new ]
+]
+
+{ #category : 'accessing' }
+ThemeIcons >> iconsPerScale [
+
+	^ iconsPerScale ifNil: [ iconsPerScale := Dictionary new ]
 ]
 
 { #category : 'testing' }
@@ -343,20 +350,24 @@ ThemeIcons >> loadIconsFromUrl [
 
 { #category : 'loading' }
 ThemeIcons >> loadIconsFromUrlUsingScale: newScale [
-	| newIcons zipArchive |
+	| newIconsPerScale zipArchive |
 
-	newIcons := IdentityDictionary new.
+	newIconsPerScale := Dictionary new.
 	zipArchive := self downloadFromUrl.
 
-	(((FileSystem zip: zipArchive) open workingDirectory allChildrenMatching: '*scale' , newScale asFloat asString) anyOne
-	allChildrenMatching: '*.png')
-		reject: [ :each | each base beginsWith: '.' ]
-		thenDo: [ :each |
-			[ newIcons
-				at: each base asSymbol
-				put: (self readPNGFrom: each) ]
-			on: Error do: [ :e | self crTrace: each fullName, ' not a PNG, skipping.'  ]].
-	icons := newIcons.
+	((FileSystem zip: zipArchive) open workingDirectory allChildrenMatching: 'png-scale*') do: [ :directory |
+		| newIcons |
+		newIconsPerScale
+			at: (Float readFrom: (directory basename copyFrom: 10 to: directory basename size))
+			put: (newIcons := IdentityDictionary new).
+		(directory allChildrenMatching: '*.png')
+			reject: [ :each | each base beginsWith: '.' ]
+			thenDo: [ :each |
+				[ newIcons
+					at: each base asSymbol
+					put: (self readPNGFrom: each) ]
+				on: Error do: [ :e | self crTrace: ('{1} not a PNG, skipping.' format: { each fullName }) ] ] ].
+	iconsPerScale := newIconsPerScale.
 	scale := newScale
 ]
 
