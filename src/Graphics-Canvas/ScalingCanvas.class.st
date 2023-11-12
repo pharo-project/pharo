@@ -214,7 +214,7 @@ ScalingCanvas class >> formCanvas: formCanvas scale: scale [
 { #category : 'class initialization' }
 ScalingCanvas class >> initialize [
 
-	| theme icons iconsScale2 |
+	| theme icons iconFormsScale2 |
 
 	FormMapping := IdentityDictionary new.
 
@@ -224,10 +224,9 @@ ScalingCanvas class >> initialize [
 
 	icons := Smalltalk ui icons.
 	icons scale = 1 ifFalse: [ ^ self ].
-	(iconsScale2 := ThemeIcons named: icons name)
-		loadIconsFromUrlUsingScale: 2.
+	iconFormsScale2 := icons iconsPerScale at: 2 ifAbsent: [ ^ self ].
 	icons allIconNames do: [ :iconName |
-		iconsScale2 icons at: iconName ifPresent: [ :formScale2 |
+		iconFormsScale2 at: iconName ifPresent: [ :formScale2 |
 			FormMapping at: (icons iconNamed: iconName) put: formScale2 ] ]
 ]
 
