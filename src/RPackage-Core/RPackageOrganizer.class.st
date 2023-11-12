@@ -140,7 +140,7 @@ RPackageOrganizer >> addPackage: aPackage [
 
 	self basicRegisterPackage: package.
 
-	SystemAnnouncer announce: (PackageAdded to: package).
+	self codeChangeAnnouncer  announce: (PackageAdded to: package).
 
 	^ package
 ]
@@ -157,6 +157,12 @@ RPackageOrganizer >> basicUnregisterPackage: aPackage [
 	"Unregister the specified package from the list of registered packages. Raise the PackageRemoved announcement. This is a low level action. It does not unregister the back pointer from classes to packages or any other information managed by the organizer"
 
 	^ packages removeKey: aPackage name ifAbsent: [  ]
+]
+
+{ #category : 'accessing' }
+RPackageOrganizer >> codeChangeAnnouncer [
+
+	^ self environment codeChangeAnnouncer
 ]
 
 { #category : 'registration' }
@@ -416,7 +422,7 @@ RPackageOrganizer >> repackageMethod: method oldProtocol: oldProtocol newProtoco
 	oldPackage removeMethod: method.
 	newPackage addMethod: method.
 
-	SystemAnnouncer uniqueInstance methodRepackaged: method from: oldPackage to: newPackage
+	self codeChangeAnnouncer  methodRepackaged: method from: oldPackage to: newPackage
 ]
 
 { #category : 'accessing' }
@@ -449,7 +455,7 @@ RPackageOrganizer >> unregisterPackage: aPackage [
 		           ifFalse: [ aPackage ].
 
 	self basicUnregisterPackage: package.
-	SystemAnnouncer announce: (PackageRemoved to: package).
+	self codeChangeAnnouncer  announce: (PackageRemoved to: package).
 
 	^ package
 ]
