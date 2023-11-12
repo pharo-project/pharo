@@ -50,6 +50,18 @@ TCreationWithTest >> testOfSize [
 ]
 
 { #category : 'tests - creation' }
+TCreationWithTest >> testPercentSignGreaterThan [
+
+	| aCol collection |
+	collection := self collectionMoreThan5Elements asArray.
+	aCol := self collectionClass %> collection.
+
+	collection do: [ :each | self assert: (aCol occurrencesOf: each ) equals: ( collection occurrencesOf: each ) ].
+
+	self assert: aCol size equals: collection size
+]
+
+{ #category : 'tests - creation' }
 TCreationWithTest >> testWith [
 
 	| aCol anElement |

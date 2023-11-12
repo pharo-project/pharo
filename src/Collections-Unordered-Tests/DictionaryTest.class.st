@@ -741,6 +741,16 @@ DictionaryTest >> testOtherDictionaryEquality [
 			self deny: nonEmptyDict2 equals: self nonEmptyDict ]
 ]
 
+{ #category : 'tests - new' }
+DictionaryTest >> testPercentSignGreaterThan [
+
+	| assocs |
+	self assert: (self classToBeTested %> {}) equals: self emptyDict.
+
+	assocs := self nonEmptyDict associations collect: [ :each | each copy ].
+	self assert: (self classToBeTested %> assocs) equals: self nonEmptyDict
+]
+
 { #category : 'tests' }
 DictionaryTest >> testRemoveAll [
 	"Allows one to remove all elements of a collection"
