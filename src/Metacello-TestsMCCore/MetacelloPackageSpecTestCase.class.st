@@ -7,7 +7,7 @@ Class {
 
 { #category : 'accessing' }
 MetacelloPackageSpecTestCase >> projectClass [
-    ^ MetacelloMCProject
+    ^ MetacelloProject
 ]
 
 { #category : 'tests' }

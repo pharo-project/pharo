@@ -67,6 +67,12 @@ Class {
 	#package : 'Metacello-Base'
 }
 
+{ #category : 'class initialization' }
+ConfigurationOf class >> initialize [
+
+	self deprecatedAliases: { #MetacelloBaseConfiguration }
+]
+
 { #category : 'accessing' }
 ConfigurationOf class >> project [
 
@@ -116,7 +122,7 @@ ConfigurationOf >> project [
 	^ project ifNil: [
 		  project := self projectClass new projectAttributes: self customProjectAttributes. "Create the Metacello project"
 		  project versionNumberClass: self versionNumberClass.
-		  project class versionConstructorClass on: self project: project. "Construct the project"
+		  MetacelloBaselineConstructor on: self project: project. "Construct the project"
 		  project loadType: #linear. "change to #atomic if desired"
 		  project ]
 ]
@@ -129,7 +135,7 @@ ConfigurationOf >> project: aProject [
 
 { #category : 'accessing' }
 ConfigurationOf >> projectClass [
-    ^ MetacelloMCProject
+    ^ MetacelloProject
 ]
 
 { #category : 'private' }

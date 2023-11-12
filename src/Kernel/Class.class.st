@@ -119,7 +119,7 @@ Class >> addClassVariable: aClassVariable [
 				, ' is already used as a variable name in class '
 				, subclass name]].
 	self basicDeclareClassVariable: aClassVariable.
-	SystemAnnouncer uniqueInstance
+	self codeChangeAnnouncer 
 			classDefinitionChangedFrom: oldState to: self;
 			classModificationAppliedTo: self
 ]
@@ -443,7 +443,7 @@ Class >> comment: aString stamp: aStamp [
 			self commentSourcePointer: newSourcePointer]
 		onFail: [ "ignore" ].
 
-	SystemAnnouncer uniqueInstance
+	self codeChangeAnnouncer 
 		class: self
 		oldComment: oldComment
 		newComment: aString
@@ -758,11 +758,20 @@ Class >> needsSlotClassDefinition [
 
 { #category : 'subclass creation' }
 Class >> newAnonymousSubclass [
+
+	<reflection: 'Class structural modification - Anonymous class creation'>
+	^ self newAnonymousSubclassInEnvironment: self environment
+]
+
+{ #category : 'subclass creation' }
+Class >> newAnonymousSubclassInEnvironment: anEnvironment [
+
 	<reflection: 'Class structural modification - Anonymous class creation'>
 	^ Smalltalk anonymousClassInstaller make: [ :builder |
-		builder
-			superclass: self ;
-			layoutClass: self classLayout class ]
+		  builder
+			  installingEnvironment: anEnvironment;
+			  superclass: self;
+			  layoutClass: self classLayout class ]
 ]
 
 { #category : 'subclass creation' }
@@ -869,7 +878,7 @@ Class >> removeClassVarNamed: aString interactive: interactive [
 	self classPool removeKey: aSymbol.
 	self classPool ifEmpty: [ self classPool: nil ].
 
-	SystemAnnouncer uniqueInstance classModificationAppliedTo: self
+	self codeChangeAnnouncer  classModificationAppliedTo: self
 ]
 
 { #category : 'class variables' }
@@ -905,7 +914,7 @@ Class >> removeFromSystem: logged [
 	We deal also with a special case that is the case a class of the same name than the alias is installed in the image after the alias. In that case we do not remove it. It's the reason we check if the global of the alias is the same as self."
 	self deprecatedAliases do: [ :alias | self environment at: alias ifPresent: [ :class | class = self ifTrue: [ self environment removeKey: alias ] ] ].
 	self obsolete.
-	logged ifTrue: [ SystemAnnouncer announce: (ClassRemoved class: self) ]
+	logged ifTrue: [ self codeChangeAnnouncer  announce: (ClassRemoved class: self) ]
 ]
 
 { #category : 'initialization' }
