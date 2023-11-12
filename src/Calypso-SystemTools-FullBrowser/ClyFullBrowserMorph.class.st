@@ -622,13 +622,23 @@ ClyFullBrowserMorph >> selectClass: aClass [
 { #category : 'navigation' }
 ClyFullBrowserMorph >> selectCurrentExtensionMethodGroup [
 
-	self classSelection isEmpty ifTrue: [ ^self ].
-	self classSelection isMultipleSelected ifTrue: [ ^self ].
+	self classSelection ifEmpty: [ ^ self ].
+	self classSelection isMultipleSelected ifTrue: [ ^ self ].
 
-	(self classSelection lastSelectedItem isMarkedWith: ClyExtendedClassTag)
-		ifFalse: [ ^self].
+	(self classSelection lastSelectedItem isMarkedWith: ClyExtendedClassTag) ifFalse: [ ^ self ].
 
-	self selectMethodGroupNamed: self packageSelection lastSelectedItem name
+	self packageSelection
+		ifEmpty: [
+			self projectSelection ifNotEmpty: [ :projects |
+				self changeStateBy: [
+					| packages |
+					packages := projects lastSelectedItem actualObject packages.
+					1haltOnce.
+					self methodGroupSelection selectItemsWhere: [ :each |
+						(self packageOrganizer packageMatchingExtensionName: each name)
+							ifNil: [ false ]
+							ifNotNil: [ :package | packages includes: package ] ] ] ] ]
+		ifNotEmpty: [ :selection |1haltOnce. self selectMethodGroupNamed: self packageSelection lastSelectedItem name ]
 ]
 
 { #category : 'navigation' }
@@ -726,8 +736,8 @@ ClyFullBrowserMorph >> showInPackageView: aPackage [
 
 { #category : 'testing' }
 ClyFullBrowserMorph >> showsFlatClasses [
-	^self packageSelection isEmpty not
-		and: [ (classView showsItemsFromScope: ClyClassHierarchyScope) not]
+
+	^ (self projectSelection isNotEmpty or: [ self packageSelection isNotEmpty ]) and: [ (classView showsItemsFromScope: ClyClassHierarchyScope) not ]
 ]
 
 { #category : 'testing' }
