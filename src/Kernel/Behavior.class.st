@@ -606,6 +606,7 @@ Behavior >> definedSelectors [
 
 	^ self definedMethods collect: [ :method | method selector ]
 ]
+
 { #category : 'accessing - instances and variables' }
 Behavior >> definedVariables [
 	"return all the Variables defined"
