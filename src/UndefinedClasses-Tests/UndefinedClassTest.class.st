@@ -43,7 +43,7 @@ UndefinedClassTest >> packageNameForTest [
 { #category : 'running' }
 UndefinedClassTest >> tearDown [
 
-	(self packageNameForTest asPackageIfAbsent: [ nil ]) ifNotNil: [ :package | package removeFromSystem ].
+	self packageOrganizer removePackage: self packageNameForTest.
 	self class environment at: #Foo ifPresent: [ :c | c removeFromSystem ].
 	self class environment at: #ColoredFoo ifPresent: [ :c | c removeFromSystem ].
 	super tearDown

@@ -500,10 +500,24 @@ ClassDescription >> expandedDefinitionStringFor: aPrinter [
 	^ self subclassResponsibility
 ]
 
+{ #category : 'accessing - packages' }
+ClassDescription >> extendingPackages [
+	"the extending packages of a class are the packages that extend it."
+
+	^ (self localMethods , self classSide localMethods
+		   select: #isExtension
+		   thenCollect: #extensionPackage) asIdentitySet
+]
+
 { #category : 'protocols' }
 ClassDescription >> extensionProtocols [
 
 	^ self protocols select: [ :protocol | protocol isExtensionProtocol ]
+]
+
+{ #category : 'accessing - packages' }
+ClassDescription >> extensionSelectors [
+	^ self extendingPackages flatCollect: [ :each | each extensionSelectorsForClass: self ]
 ]
 
 { #category : 'instance variables' }
@@ -646,6 +660,18 @@ ClassDescription >> isClassSide [
 { #category : 'testing' }
 ClassDescription >> isDeprecated [
 	^ self package isDeprecated
+]
+
+{ #category : 'testing' }
+ClassDescription >> isExtended [
+
+	^ self extendingPackages isEmpty
+]
+
+{ #category : 'testing' }
+ClassDescription >> isExtendedInPackage: aPackage [
+	"returns true if aPackage defines an extension to this class"
+	^ aPackage extendsClass: self
 ]
 
 { #category : 'testing' }
@@ -836,11 +862,48 @@ ClassDescription >> package [
 	^ self subclassResponsibility
 ]
 
+{ #category : 'accessing - packages' }
+ClassDescription >> package: aPackage [
+
+	^ (self packageOrganizer ensurePackage: aPackage) addClass: self
+]
+
+{ #category : 'accessing - packages' }
+ClassDescription >> package: aPackage tag: aTag [
+
+	^ (self packageOrganizer ensureTag: aTag inPackage: aPackage) addClass: self
+]
+
+{ #category : 'accessing - packages' }
+ClassDescription >> packageName [
+
+	^ self package ifNotNil: [ :package | package name ]
+]
+
 { #category : 'accessing' }
 ClassDescription >> packageTag [
 	"Package tags are sub categories of packages to have a better organization of the packages."
 
 	^ self subclassResponsibility
+]
+
+{ #category : 'accessing - packages' }
+ClassDescription >> packageTag: aTag [
+	(aTag isString ifTrue: [ self package ensureTag: aTag ] ifFalse: [ aTag ]) addClass: self
+]
+
+{ #category : 'accessing - packages' }
+ClassDescription >> packageTagName [
+	"Package tags are sub categories of packages to have a better organization of the packages. I return the name of my package tag.."
+
+	^ self packageTag name
+]
+
+{ #category : 'accessing - packages' }
+ClassDescription >> packages [
+	"the extending packages of a class are the packages that extend it."
+
+	^  self extendingPackages asSet copy add: self package; yourself
 ]
 
 { #category : 'printing' }
@@ -938,6 +1001,15 @@ ClassDescription >> removeNonexistentSelectorsFromProtocols [
 		protocol methodSelectors
 			reject: [ :selector | self includesSelector: selector ]
 			thenDo: [ :selector | self removeFromProtocols: selector ] ]
+]
+
+{ #category : 'accessing - packages' }
+ClassDescription >> removePackageTag [
+	"Removing a package tag is the same as moving it to the root tag that is the uncategorized tag."
+
+	| package |
+	package := self package.
+	package moveClass: self toTag: package rootTag
 ]
 
 { #category : 'protocols' }
