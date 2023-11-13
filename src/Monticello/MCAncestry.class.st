@@ -22,14 +22,6 @@ MCAncestry >> allAncestorsDo: aBlock [
 ]
 
 { #category : 'ancestry' }
-MCAncestry >> allAncestorsOnPathTo: aVersionInfo [
-	^ MCFilteredVersionSorter new
-		target: aVersionInfo;
-		addAllVersionInfos: self ancestors;
-		sortedVersionInfos
-]
-
-{ #category : 'ancestry' }
 MCAncestry >> ancestorString [
 	^ String streamContents:
 		[:s | self ancestors do: [:ea | s nextPutAll: ea name] separatedBy: [s nextPutAll: ', ']]
