@@ -4,8 +4,8 @@ SUnit tests for class ConfigurationCommandLineHandler
 Class {
 	#name : 'ConfigurationCommandLineHandlerTest',
 	#superclass : 'TestCase',
-	#category : 'ConfigurationCommandLineHandler-Tests',
-	#package : 'ConfigurationCommandLineHandler-Tests'
+	#category : 'Deprecated12',
+	#package : 'Deprecated12'
 }
 
 { #category : 'convenience' }
