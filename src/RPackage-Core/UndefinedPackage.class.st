@@ -26,6 +26,8 @@ UndefinedPackage >> addMethod: aCompiledMethod [
 { #category : 'class tags' }
 UndefinedPackage >> ensureTag: aTag [
 
+	aTag ifNil: [ ^ undefinedTag ].
+
 	^ aTag = undefinedTag
 		  ifTrue: [ aTag ]
 		  ifFalse: [ self error: 'Cannot add a tag to the UndefinedPackage' ]
