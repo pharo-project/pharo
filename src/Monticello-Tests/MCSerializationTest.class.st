@@ -44,30 +44,6 @@ MCSerializationTest >> assertVersionsMatchWith: writerClass [
 	self assertVersion: actual matches: expected.
 ]
 
-{ #category : 'mocks' }
-MCSerializationTest >> mockDiffyVersion [
-	| repos workingCopy base next |
-	repos := MCDictionaryRepository new.
-	workingCopy := MCWorkingCopy ensureForPackage: self mockPackage.
-	workingCopy repositoryGroup addRepository: repos.
-	MCRepositoryGroup default removeRepository: repos.
-	base := self mockVersion.
-	repos storeVersion: base.
-	self change: #a toReturn: 'a2'.
-	next := self mockVersionWithAncestor: base.
-	^ next asDiffAgainst: base	
-]
-
-{ #category : 'testing' }
-MCSerializationTest >> testMcdSerialization [
-	| stream expected actual |
-	expected := self mockDiffyVersion.
-	stream := ReadWriteStream on: ByteArray new.
-	MCMcdWriter fileOut: expected on: stream.
-	actual := MCMcdReader versionFromStream: stream reset.
-	self assertVersion: actual matches: expected.
-]
-
 { #category : 'testing' }
 MCSerializationTest >> testMczSerialization [
 	self assertVersionsMatchWith: MCMczWriter.

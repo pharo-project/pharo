@@ -28,14 +28,6 @@ MCDiffyVersion class >> baseNameFrom: diffName [
 ]
 
 { #category : 'name utilities' }
-MCDiffyVersion class >> canonicalNameFor: aFileName [
-	^(self nameForVer: (self verNameFrom: aFileName)
-		base: (self baseNameFrom: aFileName))
-			, '.', MCMcdReader extension
-
-]
-
-{ #category : 'name utilities' }
 MCDiffyVersion class >> nameForVer: versionName base: baseName [
 	| baseId |
 	baseId := (versionName copyUpToLast: $.) = (baseName copyUpToLast: $.)
@@ -120,9 +112,4 @@ MCDiffyVersion >> snapshot [
 { #category : 'accessing' }
 MCDiffyVersion >> summary [
 	^ '(Diff against ', self baseInfo name, ')', String cr, super summary
-]
-
-{ #category : 'accessing' }
-MCDiffyVersion >> writerClass [
-	^ MCMcdWriter 
 ]
