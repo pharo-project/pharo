@@ -309,9 +309,10 @@ Class >> classComment: aString stamp: aStamp [
 { #category : 'subclass creation' }
 Class >> classInstaller [
 	"Answer the class responsible of creating subclasses of myself in the system."
-	^self isAnonymous
-		ifTrue: [Smalltalk anonymousClassInstaller]
-		ifFalse: [Smalltalk classInstaller]
+
+	^ self isAnonymous
+		  ifTrue: [ Smalltalk anonymousClassInstaller ]
+		  ifFalse: [ Smalltalk classInstaller ]
 ]
 
 { #category : 'accessing' }

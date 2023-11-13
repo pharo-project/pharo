@@ -517,6 +517,13 @@ ReleaseTest >> testUndeclared [
 	self assert: remaining isEmpty description: description
 ]
 
+{ #category : 'tests - rpackage' }
+ReleaseTest >> testUndefinedPackageShouldBeEmpty [
+	"The unpackage package should not have any defined class or extended classes"
+
+	self assertEmpty: self packageOrganizer undefinedPackage classes
+]
+
 { #category : 'tests' }
 ReleaseTest >> testUnknownProcesses [
 	"Make sure that there are no other processes running except the known processes"
@@ -544,15 +551,6 @@ ReleaseTest >> testUnpackagedClasses [
 	self assert: unpackagedClasses isEmpty description: (String streamContents: [ :s |
 			 s nextPutAll: 'Found the following unpackaged classes: '.
 			 unpackagedClasses do: [ :cls | s tab print: cls ] separatedBy: [ s cr ] ])
-]
-
-{ #category : 'tests - rpackage' }
-ReleaseTest >> testUnpackagedPackageShouldBeEmpty [
-
-	| unpackagePackage |
-	unpackagePackage := self packageOrganizer packageNamed: UndefinedPackage undefinedPackageName.
-	"The unpackage package should not have any defined class or extended classes"
-	self assertEmpty: unpackagePackage classes
 ]
 
 { #category : 'tests' }

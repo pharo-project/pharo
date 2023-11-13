@@ -219,17 +219,15 @@ TraitBuilderEnhancer >> newMetaclass: aBuilder [
 ]
 
 { #category : 'class modifications' }
-TraitBuilderEnhancer >> propagateChangesToRelatedClasses: newClass installer: installer [
+TraitBuilderEnhancer >> propagateChangesToRelatedClasses: newClass builder: aBuilder [
 
-	super propagateChangesToRelatedClasses: newClass installer: installer.
+	super propagateChangesToRelatedClasses: newClass builder: aBuilder.
 
 	"If the newClass is a trait I have to remake the users of it"
 	newClass isTrait ifFalse: [ ^ self ].
-	(builder changes noneSatisfy:
-		[ :each | each hasChangeClassSideShape or: [ each hasChangeInstanceSideShape  ] ])
-		ifTrue: [^self].
+	(builder changes noneSatisfy: [ :each | each hasChangeClassSideShape or: [ each hasChangeInstanceSideShape ] ]) ifTrue: [ ^ self ].
 
-	newClass users do: [ :each | installer remake: each instanceSide ]
+	newClass users do: [ :user | user classInstaller remake: user basedOn: aBuilder ]
 ]
 
 { #category : 'accessing' }
