@@ -338,6 +338,16 @@ TaAbstractComposition >> isSourcesPresentInSystem [
 	^ ((Smalltalk globals includesKey: #SourceFiles) and: [ (Smalltalk globals at: #SourceFiles) notNil])
 ]
 
+{ #category : 'testing' }
+TaAbstractComposition >> isTraitAlias [
+	^ false
+]
+
+{ #category : 'testing' }
+TaAbstractComposition >> isTraitExclusion [
+	^ false
+]
+
 { #category : 'accessing' }
 TaAbstractComposition >> name [
 	self subclassResponsibility
@@ -463,6 +473,13 @@ TaAbstractComposition >> traits [
 	"Returns the traits directly used in the trait composition. #allTraits returns all the traits used and the ones referenced recursively."
 
 	^ self subclassResponsibility
+]
+
+{ #category : 'deprecated' }
+TaAbstractComposition >> transformations [
+	"For compatibility with old code, does not use!
+	It returns all the elements in the trait composition"
+	self subclassResponsibility
 ]
 
 { #category : 'operations' }

@@ -15,3 +15,9 @@ TaCompositionElement >> asRingMinimalDefinitionIn: anRGEnvironment [
 			"we need to set real object because we cannot simply identify the real object from the model data"
 			def ]
 ]
+
+{ #category : '*Ring-TraitsSupport' }
+TaCompositionElement >> includesElement: anElement [
+
+	^ self == anElement
+]
