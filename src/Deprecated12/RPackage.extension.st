@@ -120,6 +120,15 @@ RPackage >> importClasses: classCollection [
 ]
 
 { #category : '*Deprecated12' }
+RPackage >> includesDefinedSelector: aSelector ofClass: aClass [
+	"Return true if the receiver includes the method of selector aSelector. Only checks methods defined in this package"
+
+	self deprecated: 'Since Pharo 12 the packages do not save the defined selector they contains but delegate this to the classes they contrains.
+	If you want to know if a package contains a selector, you can just check if your package contrains the class and if the class contains the selector.'.
+	^ (self definedSelectorsForClass: aClass) includes: aSelector asSymbol
+]
+
+{ #category : '*Deprecated12' }
 RPackage >> includesDefinedSelector: aSelector ofClassName: aClassName [
 	"Return true if the receiver includes the method of selector aSelector. Only checks methods defined (not extended by other packages or package extensions)"
 

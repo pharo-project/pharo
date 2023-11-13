@@ -10,7 +10,7 @@ However  I have the following groups to describe the dependencies:
 - compatibility: I include a compatibility package with the old traits and classes to be used only to accept the extension methods. This will be removed with the time.
 - core-traits: Minimum required to use in an image.
 - default: I include the tests and all the previous.
-- traits-tests: adding the tests for TraitsV2.
+- traits-tests: adding the tests for Traits.
 "
 Class {
 	#name : 'BaselineOfTraits',
@@ -30,7 +30,7 @@ BaselineOfTraits class >> corePackages [
 { #category : 'baselines' }
 BaselineOfTraits class >> packagesToExportWithHermes [
 
-	^ self allPackageNames reject: [ :aPackageName | aPackageName = 'TraitsV2-Tests'].
+	^ self allPackageNames reject: [ :aPackageName | aPackageName = 'Traits-Tests'].
 ]
 
 { #category : 'baselines' }
@@ -40,16 +40,16 @@ BaselineOfTraits >> baseline: spec [
 	spec for: #common do: [
 
 		spec 
-			package: 'TraitsV2';
+			package: 'Traits';
 			
-			package: 'Kernel-Traits' with: [ spec requires: #('TraitsV2') ];
-			package: 'Collections-Abstract-Traits' with: [ spec requires: #('TraitsV2') ];
-			package: 'CodeImport-Traits' with: [ spec requires: #('TraitsV2') ];
-			package: 'CodeExport-Traits' with: [ spec requires: #('TraitsV2') ];
-			package: 'TraitsV2-Tests' with: [ spec requires: #('TraitsV2') ];
-			package: 'TraitsV2-Compatibility' with: [ spec requires: #('TraitsV2') ].
+			package: 'Kernel-Traits' with: [ spec requires: #('Traits') ];
+			package: 'Collections-Abstract-Traits' with: [ spec requires: #('Traits') ];
+			package: 'CodeImport-Traits' with: [ spec requires: #('Traits') ];
+			package: 'CodeExport-Traits' with: [ spec requires: #('Traits') ];
+			package: 'Traits-Tests' with: [ spec requires: #('Traits') ];
+			package: 'Traits-Compatibility' with: [ spec requires: #('Traits') ].
 
-		spec group: 'core' with: #('TraitsV2').
+		spec group: 'core' with: #('Traits').
 					
 		spec group: 'traits-in-kernel' with: #(
 					'Kernel-Traits'
@@ -57,10 +57,10 @@ BaselineOfTraits >> baseline: spec [
 					'CodeImport-Traits'
 					'CodeExport-Traits' ).
 					
-		spec group: 'compatibility' with: #('TraitsV2-Compatibility').
+		spec group: 'compatibility' with: #('Traits-Compatibility').
 		
 		spec group: 'core-traits' with: #(core 'traits-in-kernel' 'compatibility').		
 		spec group: 'default' with: #('core-traits').
-		spec group: 'traits-tests' with: #('default' 'TraitsV2-Tests').		
+		spec group: 'traits-tests' with: #('default' 'Traits-Tests').		
 	 ].
 ]
