@@ -4,8 +4,8 @@ This class should trigger the RBDefinesEqualNotHashRule critic.
 Class {
 	#name : 'RBSmalllintTestDefinesEqualNotHashObject',
 	#superclass : 'RBSmalllintTestSuperclassObject',
-	#category : 'Refactoring-Tests-Critics-Base',
-	#package : 'Refactoring-Tests-Critics',
+	#category : 'Refactoring-Critics-Tests-Base',
+	#package : 'Refactoring-Critics-Tests',
 	#tag : 'Base'
 }
 

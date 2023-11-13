@@ -13,8 +13,8 @@ Class {
 	#classInstVars : [
 		'classInstVar'
 	],
-	#category : 'Refactoring-Tests-Changes',
-	#package : 'Refactoring-Tests-Changes'
+	#category : 'Refactoring-Changes-Tests',
+	#package : 'Refactoring-Changes-Tests'
 }
 
 { #category : 'accessing' }
