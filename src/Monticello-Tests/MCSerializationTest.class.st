@@ -23,17 +23,6 @@ MCSerializationTest >> assertExtensionProvidedBy: aClass [
 ]
 
 { #category : 'asserting' }
-MCSerializationTest >> assertSnapshotsMatchWith: writerClass [
-	| readerClass expected stream actual |
-	readerClass := writerClass readerClass.
-	expected := self mockSnapshot.
-	stream := ReadWriteStream on: ''.
-	(writerClass on: stream) writeSnapshot: expected.
-	actual := readerClass snapshotFromStream: stream reset.
-	self assertSnapshot: actual matches: expected.
-]
-
-{ #category : 'asserting' }
 MCSerializationTest >> assertVersionInfosMatchWith: writerClass [
 	| stream readerClass expected actual |
 	readerClass := writerClass readerClass.
@@ -89,5 +78,12 @@ MCSerializationTest >> testMczSerialization [
 
 { #category : 'testing' }
 MCSerializationTest >> testStSerialization [
-	self assertSnapshotsMatchWith: MCStWriter.
+
+	| readerClass expected stream actual |
+	readerClass := MCStWriter readerClass.
+	expected := self mockSnapshot.
+	stream := ReadWriteStream on: ''.
+	(MCStWriter on: stream) writeSnapshot: expected.
+	actual := (readerClass on: stream reset) snapshot.
+	self assertSnapshot: actual matches: expected
 ]
