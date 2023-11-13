@@ -11,8 +11,8 @@ Class {
 		'AClassVariable',
 		'ClassSideOnlyVariable'
 	],
-	#category : 'Refactoring-Tests-Environment',
-	#package : 'Refactoring-Tests-Environment'
+	#category : 'Refactoring-Environment-Tests',
+	#package : 'Refactoring-Environment-Tests'
 }
 
 { #category : 'accessing' }
@@ -336,9 +336,9 @@ RBBrowserEnvironmentTest >> testOrEnvironment [
 
 { #category : 'tests - environments' }
 RBBrowserEnvironmentTest >> testPackageEnvironment [
+
 	| aPackageEnvironment |
-	aPackageEnvironment := universalEnvironment
-		forPackageNames: (Array with: 'Refactoring-Tests-Environment' with: 'Refactoring-Tests-Critics').
+	aPackageEnvironment := universalEnvironment forPackageNames: (Array with: 'Refactoring-Environment-Tests' with: 'Refactoring-Critics-Tests').
 	self universalTestFor: aPackageEnvironment.
 	self assert: (aPackageEnvironment implementorsOf: #testPackageEnvironment) numberSelectors equals: 1
 ]
