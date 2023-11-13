@@ -20,10 +20,7 @@ Class {
 
 { #category : 'baselines' }
 BaselineOfTraits class >> corePackages [
-	| groups |
-
-	groups := self packagesOfGroupNamed: 'core-traits'.
-	^ groups flatCollect: [ :e | self packagesOfGroupNamed: e ].
+	 ^ self packagesOfGroupNamed: 'core-traits' , self packagesOfGroupNamed: 'core'
 ]
 
 { #category : 'baselines' }
