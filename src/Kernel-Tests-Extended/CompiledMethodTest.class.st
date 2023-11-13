@@ -293,6 +293,24 @@ CompiledMethodTest >> testAccessesSlot [
 	self assert: ((Point>>#setX:setY:) accessesSlot: (Point slotNamed: #y))
 ]
 
+{ #category : 'tests - compiling' }
+CompiledMethodTest >> testAddingSlotDoesNotRemoveExtension [
+	"Regression test for a case where recompiling a method removed the fact that it was an extension."
+
+	[
+	class := self class classInstaller make: [ :aBuilder |
+		         aBuilder
+			         name: #TUTU;
+			         slots: { #test };
+			         package: self packageNameForTests ].
+	class compile: 'isExtensionTestMethod ^ test' classified: '*Kernel-Tests-Generated-Package'.
+	self assert: (class >> #isExtensionTestMethod) isExtension.
+
+	class addInstVarNamed: 'test2'.
+
+	self assert: (class >> #isExtensionTestMethod) isExtension ] ensure: [ self packageOrganizer removePackage: 'Kernel-Tests-Generated-Package' ]
+]
+
 { #category : 'tests - converting' }
 CompiledMethodTest >> testAsString [
 
@@ -345,7 +363,7 @@ CompiledMethodTest >> testComparison [
 			self deny: each equals: method2 ]
 ]
 
-{ #category : 'tests - abstract' }
+{ #category : 'tests - compiling' }
 CompiledMethodTest >> testCompilingExistingMethodDoesNotRemoveExtensions [
 	"Regression test for a case where recompiling a method removed the fact that it was an extension."
 
@@ -457,7 +475,7 @@ CompiledMethodTest >> testHasPragma [
 	self deny: methodWithOutPragma hasPragma
 ]
 
-{ #category : 'tests - abstract' }
+{ #category : 'tests - testing' }
 CompiledMethodTest >> testIsAbstract [
 
 	self assert: (self class >> #abstractMethod) isAbstract.
@@ -481,7 +499,7 @@ CompiledMethodTest >> testIsDeprecated [
 			ifFalse: [ self deny: (self class >> each) isDeprecated ] ]
 ]
 
-{ #category : 'tests - abstract' }
+{ #category : 'tests - testing' }
 CompiledMethodTest >> testIsExtension [
 
 	[
@@ -854,7 +872,7 @@ CompiledMethodTest >> testReadsSlot [
 	self deny: ((Point>>#setX:setY:) readsSlot: (Point slotNamed: #y))
 ]
 
-{ #category : 'tests - abstract' }
+{ #category : 'tests - compiling' }
 CompiledMethodTest >> testRecompilingDoesNotRemoveExtensions [
 	"Regression test for a case where recompiling a method removed the fact that it was an extension."
 
