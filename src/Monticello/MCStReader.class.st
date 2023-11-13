@@ -118,8 +118,7 @@ MCStReader >> loadDefinitions [
 { #category : 'reading' }
 MCStReader >> methodDefinitionsFor: aRingClass [
 
-	^ aRingClass methods collect: 
-		[ :each | each asMCMethodDefinition ]
+	^ aRingClass methods collect: [ :each | each asMCMethodDefinition ]
 ]
 
 { #category : 'evaluating' }

@@ -185,9 +185,7 @@ ASTCache >> reset [
 ASTCache >> statistics [
 
 	^ statistics ifNil: [ "CacheStatistics comes from another package. It does not worth the dependency"
-		  Smalltalk globals
-			  at: #CacheStatistics
-			  ifPresent: [ :CS | statistics := CS new ] ]
+		  self class environment at: #CacheStatistics ifPresent: [ :CS | statistics := CS new ] ]
 ]
 
 { #category : 'accessing' }
