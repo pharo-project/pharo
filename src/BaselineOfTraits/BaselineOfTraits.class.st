@@ -20,7 +20,7 @@ Class {
 
 { #category : 'baselines' }
 BaselineOfTraits class >> corePackages [
-	 ^ self packagesOfGroupNamed: 'core-traits' , self packagesOfGroupNamed: 'core'
+	 ^ (self packagesOfGroupNamed: 'core-traits') , (self packagesOfGroupNamed: 'core')
 ]
 
 { #category : 'baselines' }
