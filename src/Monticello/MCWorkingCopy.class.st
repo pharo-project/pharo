@@ -569,20 +569,6 @@ MCWorkingCopy >> packageSet [
 	^ package packageSet
 ]
 
-{ #category : 'private' }
-MCWorkingCopy >> possiblyNewerVersions [
-
-	^Array streamContents: [:strm |
-		self repositoryGroup repositories do: [:repo |
-			strm nextPutAll: (self possiblyNewerVersionsIn: repo)]]
-]
-
-{ #category : 'private' }
-MCWorkingCopy >> possiblyNewerVersionsIn: aRepository [
-
-	^aRepository possiblyNewerVersionsOfAnyOf: self ancestors
-]
-
 { #category : 'printing' }
 MCWorkingCopy >> printOn: aStream [
 
@@ -667,25 +653,6 @@ MCWorkingCopy >> systemPackage [
 	^ self package systemPackage
 ]
 
-{ #category : 'accessing' }
-MCWorkingCopy >> theCachedRepository [
-
-	^ MCCacheRepository uniqueInstance.
-]
-
-{ #category : 'private' }
-MCWorkingCopy >> uniqueVersionName [
-	|versionName|
-	counter := nil.
-	'Creating unique version number' 
-		displayProgressFrom: 0 
-		to: 1 
-		during: [ :arg|
-			[versionName := self nextVersionName.
-			self repositoryGroup includesVersionNamed: versionName] whileTrue ].
-	^ versionName
-]
-
 { #category : 'private' }
 MCWorkingCopy >> uniqueVersionNameIn: aRepository [
 	|versionName|
@@ -732,9 +699,4 @@ MCWorkingCopy >> versionInfo [
 { #category : 'accessing' }
 MCWorkingCopy >> versionInfo: aVersionInfo [
 	ancestry := MCWorkingAncestry new addAncestor: aVersionInfo
-]
-
-{ #category : 'private' }
-MCWorkingCopy >> versionSeparator [
-	^ $_
 ]
