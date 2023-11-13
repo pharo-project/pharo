@@ -604,9 +604,7 @@ Behavior >> definedMethods [
 Behavior >> definedSelectors [
 	"Returns the selectors of classes excluding the ones of the traits or extensions"
 
-	^ self localMethods
-		  reject: [ :method | method isExtension ]
-		  thenCollect: [ :method | method selector ]
+	^ self definedMethods collect: [ :method | method selector ]
 ]
 
 { #category : 'accessing - instances and variables' }

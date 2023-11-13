@@ -55,12 +55,12 @@ RPackageTraitTest >> testMethodOverridingTraitMethodIsKnowByPackage [
 
 	a2 setTraitComposition: t1 asTraitComposition.
 
-	self deny: (p1 includesDefinedSelector: #traitMethodDefinedInP1 ofClass: a2).
+	self deny: (p1 includesSelector: #traitMethodDefinedInP1 ofClass: a2).
 	self assert: (a2 >> #traitMethodDefinedInP1) isFromTrait.
 
 	a2 compile: 'traitMethodDefinedInP1 "Override in the class"'.
 
-	self assert: (p1 includesDefinedSelector: #traitMethodDefinedInP1 ofClass: a2).
+	self assert: (a2 >> #traitMethodDefinedInP1) package equals: p1.
 	self deny: (a2 >> #traitMethodDefinedInP1) isFromTrait
 ]
 

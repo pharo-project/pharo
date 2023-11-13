@@ -140,22 +140,24 @@ RPackage >> addMethod: aCompiledMethod [
 { #category : 'class tags' }
 RPackage >> classTagNamed: aSymbol [
 
-	^ classTags detect: [ :each | each name = aSymbol ]
+	^ self classTags detect: [ :each | each name = aSymbol ]
 ]
 
 { #category : 'class tags' }
 RPackage >> classTagNamed: aSymbol ifAbsent: aBlock [
-	^ classTags
-		detect: [ :each | each name = aSymbol ]
-		ifNone: aBlock
+
+	^ self classTags
+		  detect: [ :each | each name = aSymbol ]
+		  ifNone: aBlock
 ]
 
 { #category : 'class tags' }
 RPackage >> classTagNamed: aSymbol ifPresent: aBlock [
-	^ classTags
-		detect: [ :each | each name = aSymbol ]
-		ifFound: [ :tag | aBlock cull: tag ]
-		ifNone: [ nil ]
+
+	^ self classTags
+		  detect: [ :each | each name = aSymbol ]
+		  ifFound: [ :tag | aBlock cull: tag ]
+		  ifNone: [ nil ]
 ]
 
 { #category : 'class tags' }
@@ -221,9 +223,7 @@ RPackage >> definesOrExtendsClass: aClass [
 	"Returns true whether the class, aClass, is one of the locally defined classes of the receiver or
 	if the receiver extends such class (that is defined in another package)"
 
-	| canonizedName |
-	canonizedName := aClass instanceSide name.
-	^ (self includesClassNamed: canonizedName) or: [ self extendedClassNames includes: canonizedName ]
+	^ (self includesClass: aClass instanceSide) or: [ self extendedClasses includes: aClass instanceSide ]
 ]
 
 { #category : 'converting' }
@@ -280,7 +280,7 @@ RPackage >> environment [
 RPackage >> extendedClassNames [
 	"Return the name of the classes which are extended by the receiver package. if a metaclass is extended, just get its sole instance class name."
 
-	^ extensionSelectors keys collect: [ :class | class instanceSide name ] as: Set
+	^ self extendedClasses collect: [ :class | class instanceSide name ] as: Set
 ]
 
 { #category : 'accessing' }
@@ -393,13 +393,6 @@ RPackage >> includesClassTagNamed: aString [
 ]
 
 { #category : 'testing' }
-RPackage >> includesDefinedSelector: aSelector ofClass: aClass [
-	"Return true if the receiver includes the method of selector aSelector. Only checks methods defined in this package"
-
-	^ (self definedSelectorsForClass: aClass) includes: aSelector asSymbol
-]
-
-{ #category : 'testing' }
 RPackage >> includesExtensionSelector: aSelector ofClass: aClass [
 	"Return true if the receiver includes the method of selector aSelector. Only checks methods extending other packages"
 
@@ -417,7 +410,6 @@ RPackage >> includesProtocol: protocol ofClass: aClass [
 
 	(protocol isExtensionProtocolMatching: self) ifTrue: [ ^ true ].
 
-
 	^ (self includesClass: aClass) and: [ protocol isExtensionProtocol not ]
 ]
 
@@ -425,7 +417,7 @@ RPackage >> includesProtocol: protocol ofClass: aClass [
 RPackage >> includesSelector: aSelector ofClass: aClass [
 	"Return true if the receiver includes the method of selector aSelector. Checks methods defined locally as well as extending other packages"
 
-	^ (self includesDefinedSelector: aSelector ofClass: aClass) or: [ self includesExtensionSelector: aSelector ofClass: aClass ]
+	^ ((self includesClass: aClass) and: [ aClass definedSelectors includes: aSelector ]) or: [ self includesExtensionSelector: aSelector ofClass: aClass ]
 ]
 
 { #category : 'initialization' }

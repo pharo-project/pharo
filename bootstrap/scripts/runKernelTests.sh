@@ -63,7 +63,7 @@ export PHARO_CI_TESTING_ENVIRONMENT=1
 ./pharo bootstrap.image initializePackages --packages --protocols=protocolsKernel.txt --save
 
 #Load traits
-./pharo bootstrap.image loadHermes TraitsV2.hermes --save
+./pharo bootstrap.image loadHermes Traits.hermes --save
 
 #Loading Tests
 ./pharo bootstrap.image loadHermes SUnit-Core.hermes JenkinsTools-Core.hermes JenkinsTools-Core.hermes SUnit-Tests.hermes --save --no-fail-on-undeclared --on-duplication=ignore

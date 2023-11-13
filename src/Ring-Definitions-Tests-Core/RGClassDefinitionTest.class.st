@@ -71,7 +71,7 @@ RGClassDefinitionTest >> testAsClassDefinition2 [
 	self assert: newClass isRingObject.
 	self assert: newClass isClass.
 	self assert: newClass name identicalTo: #MOPTestClassC.
-	self assert: newClass package name equals: 'TraitsV2-Tests'.
+	self assert: newClass package name equals: 'Traits-Tests'.
 	self assert: newClass packageTag equals: #MOP.
 	self assert: newClass superclassName isNotNil.
 	self assert: newClass traitCompositionSource equals: 'Trait2'.

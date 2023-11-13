@@ -7,7 +7,7 @@ Trait << #TMyTrait
 	trait: TEmpty;
 	slots: {};
 	tag: '' ;
-	package: 'TraitsV2'
+	package: 'Traits'
 ```
 
 "

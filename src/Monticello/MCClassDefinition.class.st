@@ -35,8 +35,9 @@ MCClassDefinition >> = aDefinition [
 		and: [ superclassName = aDefinition superclassName
 		and: [ self traitCompositionString = aDefinition traitCompositionString
 		and: [ self classTraitCompositionString = aDefinition classTraitCompositionString
-		and: [ self category = aDefinition category
-		and: [ type = aDefinition type and: [ self sortedVariables = aDefinition sortedVariables and: [ comment = aDefinition comment ] ] ] ] ] ] ]
+		and: [ self packageName = aDefinition packageName
+		and: [  self tagName = aDefinition tagName
+		and: [ type = aDefinition type and: [ self sortedVariables = aDefinition sortedVariables and: [ comment = aDefinition comment ] ] ] ] ] ] ]]
 ]
 
 { #category : 'visiting' }
@@ -266,8 +267,8 @@ MCClassDefinition >> hasTraitComposition [
 { #category : 'comparing' }
 MCClassDefinition >> hash [
 
-	^ (((((name hash bitXor: superclassName hash) bitXor: traitComposition hash) bitXor: classTraitComposition hash) bitXor: self category hash) bitXor: type hash)
-		  bitXor: variables hash
+	^ ((((((name hash bitXor: superclassName hash) bitXor: traitComposition hash) bitXor: classTraitComposition hash) bitXor: packageName hash) bitXor:
+		    tagName hash) bitXor: type hash) bitXor: variables hash
 ]
 
 { #category : 'initialization' }

@@ -8,6 +8,38 @@ Class {
 	#package : 'RPackage-Tests'
 }
 
+{ #category : 'tests - operations on protocols' }
+RPackageClassesSynchronisationTest >> testAddExtensionProtocol [
+	"test that by adding a protocol, nothing change from  RPackage point of vue."
+
+	| class xPackage |
+	xPackage := self ensureXPackage.
+
+	class := self newClassNamed: 'NewClass' in: xPackage.
+	self createMethodNamed: 'newMethod' inClass: class inCategory: 'xxxxx'.
+
+	class addProtocol: '*yyyyy'.
+
+	self assert: (self organizer hasPackage: #Yyyyy)
+]
+
+{ #category : 'tests - operations on protocols' }
+RPackageClassesSynchronisationTest >> testAddNewProtocolDoesNothing [
+	"test that by adding a protocol, nothing change from Package point of vue."
+
+	| xPackage class |
+	xPackage := self ensureXPackage.
+	class := self newClassNamed: 'NewClass' in: xPackage.
+	self createMethodNamed: 'newMethod' inClass: class inCategory: 'xxxxx'.
+
+	class addProtocol: 'accessing'.
+
+	self assert: (xPackage includesClass: class).
+	self assert: (class >> #newMethod) package equals: xPackage.
+	self deny: (class >> #newMethod) isExtension.
+	self assertEmpty: xPackage extensionMethods
+]
+
 { #category : 'tests - recategorizing class' }
 RPackageClassesSynchronisationTest >> testRecategorizeClassRegisterTheClassMethodsInTheNewPackage [
 	"test that when we recategorize a class, the new package in which it is defined include all the methods defined in this class (not extensions)"
@@ -24,7 +56,8 @@ RPackageClassesSynchronisationTest >> testRecategorizeClassRegisterTheClassMetho
 
 	class package: yPackage.
 
-	self assert: (yPackage includesDefinedSelector: #method1 ofClass: class).
+	self assert: (class >> #method1) package equals: yPackage.
+	self deny: (class >> #method1) isExtension.
 	self deny: (xPackage includesSelector: #method1 ofClass: class).
 	self deny: (zPackage includesSelector: #method1 ofClass: class).
 
@@ -33,7 +66,8 @@ RPackageClassesSynchronisationTest >> testRecategorizeClassRegisterTheClassMetho
 	self assert: (zPackage includesExtensionSelector: #method2 ofClass: class).
 
 	self deny: (xPackage includesSelector: #method3 ofClass: class).
-	self assert: (yPackage includesDefinedSelector: #method3 ofClass: class).
+	self assert: (class >> #method3) package equals: yPackage.
+	self deny: (class >> #method3) isExtension.
 	self deny: (zPackage includesSelector: #method3 ofClass: class)
 ]
 
@@ -75,8 +109,10 @@ RPackageClassesSynchronisationTest >> testRecategorizeClassWithMetaClassMethodsR
 	class package: yPackage.
 
 	"lets check metaclass methods"
-	self assert: (yPackage includesDefinedSelector: #method1 ofClass: class class).
-	self assert: (yPackage includesDefinedSelector: #method2 ofClass: class class).
+	self assert: (class class >> #method1) package equals: yPackage.
+	self deny: (class class >> #method1) isExtension.
+	self assert: (class class >> #method2) package equals: yPackage.
+	self deny: (class class >> #method2) isExtension.
 	self assert: (zPackage includesExtensionSelector: #method3 ofClass: class class)
 ]
 
@@ -107,6 +143,36 @@ RPackageClassesSynchronisationTest >> testRemoveClassUnregisterTheClassExtension
 	self deny: (yPackage includesSelector: #stubMethod ofClass: class)
 ]
 
+{ #category : 'tests - operations on protocols' }
+RPackageClassesSynchronisationTest >> testRemoveProtocol [
+	"test that by removing a protocol, the methods from this protocol are removed from the parent Package of the class"
+
+	| xPackage class |
+	xPackage := self ensureXPackage.
+	class := self newClassNamed: 'NewClass' in: xPackage.
+	self createMethodNamed: 'stubMethod' inClass: class inCategory: 'classic category'.
+
+	class removeProtocol: 'classic category'.
+
+	self deny: (xPackage includesSelector: #stubMethod ofClass: class)
+]
+
+{ #category : 'tests - operations on protocols' }
+RPackageClassesSynchronisationTest >> testRemovingExtensionProtocol [
+	"test that by removing an extension protocol (a category protocol with '*'), all the methods that were inside are removed from the extending package"
+
+	| xPackage yPackage class |
+	xPackage := self ensureXPackage.
+	yPackage := self ensureYPackage.
+	class := self newClassNamed: 'NewClass' in: xPackage.
+
+	self createMethodNamed: 'stubMethod' inClass: class inCategory: '*yyyyy'.
+
+	class removeProtocol: '*yyyyy'.
+
+	self deny: (yPackage includesSelector: #stubMethod ofClass: class)
+]
+
 { #category : 'tests - operations on classes' }
 RPackageClassesSynchronisationTest >> testRenameClass [
 
@@ -134,7 +200,8 @@ RPackageClassesSynchronisationTest >> testRenameClassUpdateClassDefinedSelectors
 
 	class rename: 'RPackageNewStubClass'.
 
-	self assert: (xPackage includesDefinedSelector: #stubMethod ofClass: class)
+	self assert: (class >> #stubMethod) package equals: xPackage.
+	self deny: (class >> #stubMethod) isExtension
 ]
 
 { #category : 'tests - operations on classes' }
@@ -163,7 +230,8 @@ RPackageClassesSynchronisationTest >> testRenameClassUpdateMetaclassDefinedSelec
 
 	class rename: 'RPackageNewStubClass'.
 
-	self assert: (xPackage includesDefinedSelector: #stubMethod ofClass: class class)
+	self assert: (class class >> #stubMethod) package equals: xPackage.
+	self deny: (class class >> #stubMethod) isExtension
 ]
 
 { #category : 'tests - operations on classes' }
@@ -197,100 +265,8 @@ RPackageClassesSynchronisationTest >> testRenameClassUpdateOrganizerClassExtendi
 ]
 
 { #category : 'tests - operations on protocols' }
-RPackageClassesSynchronisationTest >> testReorganizeClassByAddingExtensionProtocol [
-	"test that when we reoganized a class by adding a category, nothing change from  RPackage point of vue."
-
-	| class xPackage |
-	xPackage := self ensureXPackage.
-
-	class := self newClassNamed: 'NewClass' in: xPackage.
-	self createMethodNamed: 'newMethod' inClass: class inCategory: 'xxxxx'.
-	class addProtocol: '*yyyyy'.
-
-	self assert: (self organizer hasPackage: #Yyyyy)
-]
-
-{ #category : 'tests - operations on protocols' }
-RPackageClassesSynchronisationTest >> testReorganizeClassByAddingNewProtocolDoesNothing [
-	"test that when we reoganized a class by adding a category, nothing change from  RPackage point of vue."
-
-	| xPackage class |
-	xPackage := self ensureXPackage.
-	class := self newClassNamed: 'NewClass' in: xPackage.
-	self createMethodNamed: 'newMethod' inClass: class inCategory: 'xxxxx'.
-	class addProtocol: 'accessing'.
-
-	self assert: (xPackage includesClass: class).
-	self assert: (xPackage includesDefinedSelector: #newMethod ofClass: class).
-	self assert: xPackage extensionMethods size equals: 0
-]
-
-{ #category : 'tests - operations on protocols' }
-RPackageClassesSynchronisationTest >> testReorganizeClassByRemovingClassicCategoryRemoveMethodsFromTheParentPackage [
-	"test that when we reoganized a class by removing a classic category (a category not beginning with '*'), the methods from this category are removed from the parent RPackage of the class"
-
-	| xPackage class |
-	xPackage := self ensureXPackage.
-	class := self newClassNamed: 'NewClass' in: xPackage.
-	self createMethodNamed: 'stubMethod' inClass: class inCategory: 'classic category'.
-	class removeProtocol: 'classic category'.
-	self deny: (xPackage includesDefinedSelector: #stubMethod ofClass: class)
-]
-
-{ #category : 'tests - operations on protocols' }
-RPackageClassesSynchronisationTest >> testReorganizeClassByRemovingExtensionCategoryRemoveMethodsFromTheExtendingPackage [
-	"test that when we reoganized a class by removing an extension category (a category beginning with '*'), all the methods that were inside are removed from the extending package"
-
-	| xPackage yPackage class |
-	xPackage := self ensureXPackage.
-	yPackage := self ensureYPackage.
-	class := self newClassNamed: 'NewClass' in: xPackage.
-
-	self createMethodNamed: 'stubMethod' inClass: class inCategory: '*yyyyy'.
-
-	class removeProtocol: '*yyyyy'.
-
-	self deny: (yPackage includesExtensionSelector: #stubMethod ofClass: class).
-	self deny: (xPackage includesDefinedSelector: #stubMethod ofClass: class)
-]
-
-{ #category : 'tests - operations on protocols' }
-RPackageClassesSynchronisationTest >> testReorganizeClassByRenamingClassicCategoryToExtensionCategoryMoveAllMethodsFromParentPackageToExtendingPackage [
-	"test that when we reoganized a class by renaming a  classic category (a category not beginning with '*') to an extension category, all the methods are moved from the  parent package of the class to the extending package"
-
-	| xPackage yPackage class |
-	xPackage := self ensureXPackage.
-	yPackage := self ensureYPackage.
-	class := self newClassNamed: 'NewClass' in: xPackage.
-
-	self createMethodNamed: 'stubMethod' inClass: class inCategory: 'classic category'.
-	self createMethodNamed: 'stubMethod2' inClass: class inCategory: 'classic category'.
-
-	class renameProtocol: 'classic category' as: '*yyyyy'.
-
-	self assert: (yPackage includesExtensionSelector: #stubMethod ofClass: class).
-	self assert: (yPackage includesExtensionSelector: #stubMethod2 ofClass: class).
-	self deny: (xPackage includesDefinedSelector: #stubMethod ofClass: class).
-	self deny: (xPackage includesDefinedSelector: #stubMethod2 ofClass: class)
-]
-
-{ #category : 'tests - operations on protocols' }
-RPackageClassesSynchronisationTest >> testReorganizeClassByRenamingClassicCategoryToExtensionCategoryMoveMethodsFromParentPackageToExtendingPackage [
-	"test that when we reoganized a class by renaming a  classic category (a category not beginning with '*') to an extension category, all the methods are moved from the  parent package of the class to the extending package"
-
-	| xPackage yPackage class |
-	xPackage := self ensureXPackage.
-	yPackage := self ensureYPackage.
-	class := self newClassNamed: 'NewClass' in: xPackage.
-	self createMethodNamed: 'stubMethod' inClass: class inCategory: 'classic category'.
-	class renameProtocol: 'classic category' as: '*yyyyy'.
-	self assert: (yPackage includesExtensionSelector: #stubMethod ofClass: class).
-	self deny: (xPackage includesDefinedSelector: #stubMethod ofClass: class)
-]
-
-{ #category : 'tests - operations on protocols' }
-RPackageClassesSynchronisationTest >> testReorganizeClassByRenamingExtensionCategoryToAnotherExtensionCategoryAddMethodsToTheNewPackage [
-	"test that when we reoganized a class by renaming an extension category (a category beginning with '*') to another extension category, all the methods are moved to the new extendingPackage"
+RPackageClassesSynchronisationTest >> testRenamingExtensionProtocolToAnotherExtension [
+	"test that by renaming an extension protocol (a protocol beginning with '*') to another extension protocol, all the methods are moved to the new extendingPackage"
 
 	| xPackage yPackage zPackage class |
 	xPackage := self ensureXPackage.
@@ -298,15 +274,17 @@ RPackageClassesSynchronisationTest >> testReorganizeClassByRenamingExtensionCate
 	zPackage := self ensureZPackage.
 	class := self newClassNamed: 'NewClass' in: xPackage.
 	self createMethodNamed: 'stubMethod' inClass: class inCategory: '*yyyyy'.
+
 	class renameProtocol: '*yyyyy' as: '*zzzzz'.
+
 	self assert: (zPackage includesExtensionSelector: #stubMethod ofClass: class).
 	self deny: (yPackage includesExtensionSelector: #stubMethod ofClass: class).
-	self deny: (xPackage includesDefinedSelector: #stubMethod ofClass: class)
+	self deny: (xPackage includesSelector: #stubMethod ofClass: class)
 ]
 
 { #category : 'tests - operations on protocols' }
-RPackageClassesSynchronisationTest >> testReorganizeClassByRenamingExtensionCategoryToClassicCategoryMoveAllMethodsFromExtendingPackageToParentPackage [
-	"test that when we reoganized a class by renaming an extension category (a category beginning with '*') to a classic category, all the methods are moved from the  extendingPackage to the parent package of the class"
+RPackageClassesSynchronisationTest >> testRenamingExtenstionProtocolToClassicProtocol [
+	"test that by renaming an extension protocol (a protocol beginning with '*') to a classic protocol, all the methods are moved from the extendingPackage to the parent package of the class"
 
 	| xPackage yPackage class |
 	xPackage := self ensureXPackage.
@@ -320,20 +298,28 @@ RPackageClassesSynchronisationTest >> testReorganizeClassByRenamingExtensionCate
 
 	self deny: (yPackage includesExtensionSelector: #stubMethod ofClass: class).
 	self deny: (yPackage includesExtensionSelector: #stubMethod2 ofClass: class).
-	self assert: (xPackage includesDefinedSelector: #stubMethod ofClass: class).
-	self assert: (xPackage includesDefinedSelector: #stubMethod2 ofClass: class)
+	self assert: (class >> #stubMethod) package equals: xPackage.
+	self deny: (class >> #stubMethod) isExtension.
+	self assert: (class >> #stubMethod2) package equals: xPackage.
+	self deny: (class >> #stubMethod2) isExtension
 ]
 
 { #category : 'tests - operations on protocols' }
-RPackageClassesSynchronisationTest >> testReorganizeClassByRenamingExtensionCategoryToClassicCategoryMoveMethodsFromExtendingPackageToParentPackage [
-	"test that when we reoganized a class by renaming an extension category (a category beginning with '*') to a classic category, all the methods are moved from the  extendingPackage to the parent package of the class"
+RPackageClassesSynchronisationTest >> testRenamingProtocolToMakeItAnExtension [
+	"test that by renaming a  classic protocol (a protocol not beginning with '*') to an extension protocol, all the methods are moved from the parent package of the class to the extending package"
 
 	| xPackage yPackage class |
 	xPackage := self ensureXPackage.
 	yPackage := self ensureYPackage.
 	class := self newClassNamed: 'NewClass' in: xPackage.
-	self createMethodNamed: 'stubMethod' inClass: class inCategory: '*yyyyy'.
-	class renameProtocol: '*yyyyy' as: 'classic category'.
-	self deny: (yPackage includesExtensionSelector: #stubMethod ofClass: class).
-	self assert: (xPackage includesDefinedSelector: #stubMethod ofClass: class)
+
+	self createMethodNamed: 'stubMethod' inClass: class inCategory: 'classic category'.
+	self createMethodNamed: 'stubMethod2' inClass: class inCategory: 'classic category'.
+
+	class renameProtocol: 'classic category' as: '*yyyyy'.
+
+	self assert: (yPackage includesExtensionSelector: #stubMethod ofClass: class).
+	self assert: (yPackage includesExtensionSelector: #stubMethod2 ofClass: class).
+	self deny: (xPackage includesSelector: #stubMethod ofClass: class).
+	self deny: (xPackage includesSelector: #stubMethod2 ofClass: class)
 ]
