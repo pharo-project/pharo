@@ -245,6 +245,23 @@ MetacelloVersionSpec >> createVersion [
 	^ self versionClass fromSpec: self
 ]
 
+{ #category : 'querying' }
+MetacelloVersionSpec >> currentlyLoadedClassesInVersion [
+
+	| classes |
+	classes := Set new.
+	self
+		projectDo: [ :ignored |  ]
+		packageDo: [ :packageSpec |
+			| wc |
+			wc := [ packageSpec workingCopy ]
+				      on: Error
+				      do: [ :ex | ex return: nil ].
+			wc ifNotNil: [ classes addAll: wc packageSet classes ] ]
+		groupDo: [ :ignored |  ].
+	^ classes
+]
+
 { #category : 'loading' }
 MetacelloVersionSpec >> defaultPackageNames [
 	"if there is a package named 'default' (a group) then it defines the default package names,
