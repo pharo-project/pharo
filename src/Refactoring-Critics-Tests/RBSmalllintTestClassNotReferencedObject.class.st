@@ -5,8 +5,8 @@ This class should trigger the RBClassNotReferencedRule critic. All other classes
 Class {
 	#name : 'RBSmalllintTestClassNotReferencedObject',
 	#superclass : 'RBSmalllintTestSuperclassObject',
-	#category : 'Refactoring-Tests-Critics-Base',
-	#package : 'Refactoring-Tests-Critics',
+	#category : 'Refactoring-Critics-Tests-Base',
+	#package : 'Refactoring-Critics-Tests',
 	#tag : 'Base'
 }
 

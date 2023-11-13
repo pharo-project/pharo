@@ -4,8 +4,8 @@ A superclass for classes used to test critics.
 Class {
 	#name : 'RBSmalllintTestSuperclassObject',
 	#superclass : 'Object',
-	#category : 'Refactoring-Tests-Critics-Base',
-	#package : 'Refactoring-Tests-Critics',
+	#category : 'Refactoring-Critics-Tests-Base',
+	#package : 'Refactoring-Critics-Tests',
 	#tag : 'Base'
 }
 
