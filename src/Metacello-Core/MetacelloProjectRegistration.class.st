@@ -155,6 +155,12 @@ MetacelloProjectRegistration class >> registerProjectSpec: aProjectSpec ifPresen
         ifAbsent: [ newRegistration registerProject ]
 ]
 
+{ #category : 'registration' }
+MetacelloProjectRegistration class >> registrationForClassNamed: aClassName ifAbsent: absentBlock [
+
+	^ self registry registrationForClassNamed: aClassName ifAbsent: absentBlock
+]
+
 { #category : 'querying' }
 MetacelloProjectRegistration class >> registrationForProjectSpec: aProjectSpec ifAbsent: absentBlock ifPresent: presentBlock [
     | newRegistration |
