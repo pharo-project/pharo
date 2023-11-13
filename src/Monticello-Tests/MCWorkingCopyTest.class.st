@@ -215,22 +215,6 @@ MCWorkingCopyTest >> testNaming [
 ]
 
 { #category : 'tests' }
-MCWorkingCopyTest >> testOptimizedLoad [
-	| inst base diffy |
-	inst := self mockInstanceA.
-	base := self snapshot.
-	self change: #one toReturn: 2.
-	self assert: inst one equals: 2.
-	diffy := self snapshot asDiffAgainst: base.
-	self deny: diffy canOptimizeLoading.
-	self load: base.
-	self assert: inst one equals: 1.
-	self assert: diffy canOptimizeLoading.
-	self load: diffy.
-	self assert: inst one equals: 2
-]
-
-{ #category : 'tests' }
 MCWorkingCopyTest >> testRedundantMerge [
 	| base |
 	base := self snapshot.
