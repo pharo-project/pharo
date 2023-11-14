@@ -1,5 +1,5 @@
 "
-SUnit tests for RPackage method synchronization
+SUnit tests for Package method synchronization
 "
 Class {
 	#name : 'RPackageMethodsSynchronisationTest',

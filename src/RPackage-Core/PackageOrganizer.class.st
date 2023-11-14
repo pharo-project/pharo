@@ -1,17 +1,17 @@
 "
-A RPackageOrganizer is responsible for providing all the package currently defined in the system.
+A PackageOrganizer is responsible for providing all the package currently defined in the system.
 In addition it provides a back pointer from the class to its package.
 
 The classPackageMapping and the classExtendingPackageMapping should be moved in the future to the classes themselves. 
 
 
-For tests or actions that could destroy the package organizer,  do not access directly the singleton of RPackageOrganizer.
+For tests or actions that could destroy the package organizer,  do not access directly the singleton of PackageOrganizer.
 Use instead 
-		RPackage withOrganizer: aNewOrganizer do: ablock
-			or via RPackage organizer
+		Package withOrganizer: aNewOrganizer do: ablock
+			or via Package organizer
 		
 	
-RPackageOrganizer fillUp will fill up the system from the current PackageOrganizer
+PackageOrganizer fillUp will fill up the system from the current PackageOrganizer
 	""self fillUp""
 	
 -----------------------------------------------------------------------------------------------------------------------------------------------	
@@ -21,28 +21,28 @@ A rpackageOrganizer update itself when some changes are made in the system. It d
 Here is what I (Cyrille Delaunay) propose to do for each annocuement triggered:
 
 SystemCategoryAddedAnnouncement 	
-	=> I would just register a new RPackage (if it does not already exist) in the RPackageOrganizer
+	=> I would just register a new Package (if it does not already exist) in the PackageOrganizer
 	
 SystemCategoryRemovedAnnouncement 
-     => I would just unregister the RPackage concerned from the organizer
+     => I would just unregister the Package concerned from the organizer
 
 SystemCategoryRenamedAnnouncement
-     => I would update the RPackage concerned, by changing its name
+     => I would update the Package concerned, by changing its name
      => I would update the 'packages' dictionary of the organizer, putting the new name as key
 
 SystemClassAddedAnnouncement 
-    => Import the class in the RPackage concerned (RPackage >> importClass:)
-    => Register the class in the 'classPackageMapping' dictionary of the organizer (RPackageOrganizer >> registerPackage:forClass)
+    => Import the class in the Package concerned (Package >> importClass:)
+    => Register the class in the 'classPackageMapping' dictionary of the organizer (PackageOrganizer >> registerPackage:forClass)
     (=> maybe we should pay attention if both the class and the metaclass launch this kind of event ?)
 
 SystemClassRecategorizedAnnouncement
-    => I would update the old RPackage concerned:
+    => I would update the old Package concerned:
             => unregister the class
             => unregister all defined methods of the class
-    => I would update the new RPackage:
-            => Import the class in the RPackage (importClass:)
+    => I would update the new Package:
+            => Import the class in the Package (importClass:)
     => I would update the organizer:
-            => update the 'classPackageDictionary' to point on the new RPackage
+            => update the 'classPackageDictionary' to point on the new Package
 
  
 SystemClassRemovedAnnouncement
@@ -53,7 +53,7 @@ SystemClassRemovedAnnouncement
              => update the 'classPackageDictionary' to remove the class
 
 SystemClassRenamedAnnouncement
-    => I would update the RPackage in which the class is defined:
+    => I would update the Package in which the class is defined:
              => update the 'classDefinedSelectors' dictionary (replace the old key by the new one)
              => update the 'metaclassDefinedSelectors' dictionary (replace the old key by the new one)
     => I would update all RPackages extending this class
@@ -72,11 +72,11 @@ SystemProtocolAddedAnnouncement
     => I don’t see anything to do for this annoucement
 
 SystemProtocolRemovedAnnoucement
-    => If the category is an extension from a package, I would move all the methods concerned, from the extending RPackage to the class RPackage
+    => If the category is an extension from a package, I would move all the methods concerned, from the extending Package to the class Package
 
 SystemMethodAddedAnnouncement
        => I would check the category in which the method has been defined
-               => if it correspond to an extending package -> add the method to the extending RPackage
+               => if it correspond to an extending package -> add the method to the extending Package
                => if not, add the method to the class parentPackage
 
 SystemMethodModifiedAnnouncement
@@ -98,7 +98,7 @@ SystemMethodRecategorizedAnnouncement
           same thing than above
 
 SystemMethodRemovedAnnouncement
-       => I would simply remove the method from the RPackage in which it is register
+       => I would simply remove the method from the Package in which it is register
 "
 Class {
 	#name : 'PackageOrganizer',

@@ -6,7 +6,7 @@ Internal Representation and Key Implementation Points.
     Instance Variables
 	classGroup:		<ClyClassGroup>
 	newName:		<String>
-	package:		<RPackage>
+	package:		<Package>
 
 "
 Class {

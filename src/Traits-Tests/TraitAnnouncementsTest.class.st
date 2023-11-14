@@ -9,7 +9,7 @@ Class {
 }
 
 { #category : 'tests' }
-TraitAnnouncementsTest >> testRPackageIsUpdatedInClassSide [
+TraitAnnouncementsTest >> testPackageIsUpdatedInClassSide [
 
 	| c1 t1 |
 	t1 := self newTrait: #T1.
@@ -24,7 +24,7 @@ TraitAnnouncementsTest >> testRPackageIsUpdatedInClassSide [
 ]
 
 { #category : 'tests' }
-TraitAnnouncementsTest >> testRPackageIsUpdatedInInstanceSide [
+TraitAnnouncementsTest >> testPackageIsUpdatedInInstanceSide [
 
 	| c1 t1 |
 	t1 := self newTrait: #T1.

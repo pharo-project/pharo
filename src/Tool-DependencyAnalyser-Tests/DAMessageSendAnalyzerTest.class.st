@@ -16,13 +16,13 @@ DAMessageSendAnalyzerTest >> setUp [
 ]
 
 { #category : 'tests' }
-DAMessageSendAnalyzerTest >> testRPackage [
+DAMessageSendAnalyzerTest >> testPackage [
 
 	self assert: (analyzer rPackage isKindOf: Package).
 	analyzer := DAMessageSendAnalyzer on: 'Unloaded-Dummy-Package'.
 	self
 		assert: (analyzer rPackage isKindOf: Package)
-		description: 'It test that rPackage still answer a RPackage even when the analyzer was instantiated with an unexisting or unloaded package'.
+		description: 'It test that rPackage still answer a Package even when the analyzer was instantiated with an unexisting or unloaded package'.
 	self assert: analyzer rPackage definedClasses isEmpty.
 
 ]

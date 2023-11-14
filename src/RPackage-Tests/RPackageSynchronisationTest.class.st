@@ -12,7 +12,7 @@ RPackageSynchronisationTest >> tearDown [
 	super tearDown
 ]
 
-{ #category : 'to move to a simple RPackage test case' }
+{ #category : 'to move to a simple Package test case' }
 RPackageSynchronisationTest >> testNotRepackagedAnnouncementWhenModifyMethodByMovingInSameExtensionCategory [
 
 	| ann class |
@@ -29,7 +29,7 @@ RPackageSynchronisationTest >> testNotRepackagedAnnouncementWhenModifyMethodByMo
 	self assert: ann isNil
 ]
 
-{ #category : 'to move to a simple RPackage test case' }
+{ #category : 'to move to a simple Package test case' }
 RPackageSynchronisationTest >> testNotRepackagedAnnouncementWhenMovingClassicCategories [
 
 	| ann class |
@@ -48,7 +48,7 @@ RPackageSynchronisationTest >> testNotRepackagedAnnouncementWhenMovingClassicCat
 
 { #category : 'tests - recategorizing class' }
 RPackageSynchronisationTest >> testRecategorizeClassRaisesClassRepackagedEvent [
-	"test that when we recategorize a class, the organizer is updated so that the class name point the the new RPackage"
+	"test that when we recategorize a class, the organizer is updated so that the class name point the the new Package"
 
 	| xPackage yPackage class ann |
 	SystemAnnouncer uniqueInstance when: ClassRepackaged do: [ :a | ann := a ] for: self.
@@ -64,7 +64,7 @@ RPackageSynchronisationTest >> testRecategorizeClassRaisesClassRepackagedEvent [
 	self assert: ann newPackage equals: yPackage
 ]
 
-{ #category : 'to move to a simple RPackage test case' }
+{ #category : 'to move to a simple Package test case' }
 RPackageSynchronisationTest >> testRepackagedAnnouncementWhenModifyMethodByMovingFromClassicCategoryToExtensionCategory [
 
 	| ann class xPackage yPackage |
@@ -88,7 +88,7 @@ RPackageSynchronisationTest >> testRepackagedAnnouncementWhenModifyMethodByMovin
 	self assert: ann isNil
 ]
 
-{ #category : 'to move to a simple RPackage test case' }
+{ #category : 'to move to a simple Package test case' }
 RPackageSynchronisationTest >> testRepackagedAnnouncementWhenModifyMethodByMovingFromDifferentExtensionCategories [
 
 	| ann class yPackage zPackage |
@@ -109,7 +109,7 @@ RPackageSynchronisationTest >> testRepackagedAnnouncementWhenModifyMethodByMovin
 	self assert: ann newPackage equals: zPackage
 ]
 
-{ #category : 'to move to a simple RPackage test case' }
+{ #category : 'to move to a simple Package test case' }
 RPackageSynchronisationTest >> testRepackagedAnnouncementWhenModifyMethodByMovingFromExtensionCategoryToClassicCategory [
 
 	| ann class xPackage yPackage |

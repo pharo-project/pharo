@@ -57,9 +57,9 @@ RBSmalllintChecker >> checkMethodsForClass: aClass [
 ]
 
 { #category : 'private' }
-RBSmalllintChecker >> checkPackage: aRPackage [
-	(environment includesPackage: aRPackage)
-		ifTrue: [rule checkPackage: aRPackage]
+RBSmalllintChecker >> checkPackage: aPackage [
+	(environment includesPackage: aPackage)
+		ifTrue: [rule checkPackage: aPackage]
 ]
 
 { #category : 'accessing' }

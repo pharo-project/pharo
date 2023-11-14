@@ -94,7 +94,7 @@ MCWorkingCopy class >> classMoved: anEvent [
 
 { #category : 'system changes' }
 MCWorkingCopy class >> classRemoved: anEvent [
-	"Informs the registry who use to keep this class that its changed. Unlike #classModified:, class is not anymore in RPackages so it will not be found, that's why we look for system category instead if class is included or not"
+	"Informs the registry who use to keep this class that its changed. Unlike #classModified:, class is not anymore in Packages so it will not be found, that's why we look for system category instead if class is included or not"
 
 	anEvent packageAffected mcWorkingCopy ifNotNil: [ :workingCopy | workingCopy modified: true ].
 

@@ -1,5 +1,5 @@
 "
-SUnit tests for RPackage prerequisites
+SUnit tests for Package prerequisites
 "
 Class {
 	#name : 'RPackagePrequisitesTest',

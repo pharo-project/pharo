@@ -66,7 +66,7 @@ Package class >> prepareClassQueriesFrom: packages in: aNavigationEnvironment [
 { #category : '*Calypso-SystemQueries' }
 Package >> tagsForClasses [
 	"Any class could be tagged for user purpose.
-	Now we implement it on top of RPackageTag"
+	Now we implement it on top of PackageTag"
 
 	^self classTags reject: [:each | each isRoot] thenCollect: [:each | each name]
 ]

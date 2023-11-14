@@ -1,5 +1,5 @@
 "
-A RPackage is a new implementation of package.
+A Package is a new implementation of package.
 
 
 Instance Variables
@@ -7,7 +7,7 @@ Instance Variables
 	extensionSelectors:		Dictionary The list of extension selectors in the package mapped by classes
 	name:		String is the name of the package
 	classTags: Collection is the list of tags in the package
-	organizer: RPackageOrganizer is the organizer in which the package in included		
+	organizer: PackageOrganizer is the organizer in which the package in included		
 	
 Implementation notes 
 ====================
@@ -111,9 +111,9 @@ Package class >> rootTagName [
 ]
 
 { #category : 'comparing' }
-Package >> <= aRPackage [
+Package >> <= aPackage [
 
-	^ self name <= aRPackage name
+	^ self name <= aPackage name
 ]
 
 { #category : 'add class' }
@@ -448,10 +448,10 @@ Package >> isTestPackage [
 	 2. Or test package contains '-Tests-' in middle.
 	Some examples: "
 
-	"(RPackage named: 'MockPackage-Tests') isTestPackage >>> true"
-	"(RPackage named: 'MockPackage-tests') isTestPackage >>> true"
-	"(RPackage named: 'MockPackage') isTestPackage >>> false"
-	"(RPackage named: 'MockPackage-Tests-Package') isTestPackage >>> true"
+	"(Package named: 'MockPackage-Tests') isTestPackage >>> true"
+	"(Package named: 'MockPackage-tests') isTestPackage >>> true"
+	"(Package named: 'MockPackage') isTestPackage >>> false"
+	"(Package named: 'MockPackage-Tests-Package') isTestPackage >>> true"
 
 	^ (self name endsWith: '-Tests' caseSensitive: false) or: [ self name includesSubstring: '-Tests-' caseSensitive: false ]
 ]

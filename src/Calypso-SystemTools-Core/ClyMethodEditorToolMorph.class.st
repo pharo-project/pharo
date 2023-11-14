@@ -19,7 +19,7 @@ Subclasses should detect that editing method is going to be extension.
 Internal Representation and Key Implementation Points.
 
     Instance Variables
-	extendingPackage:		<RPackage>
+	extendingPackage:		<Package>
 	methodProtocol:		<Symbol> represents the name of the method protocol
 "
 Class {

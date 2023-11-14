@@ -1,5 +1,5 @@
 "
-I am a public announcement sent when a new RPackage is created
+I am a public announcement sent when a new Package is created
 "
 Class {
 	#name : 'PackageAdded',

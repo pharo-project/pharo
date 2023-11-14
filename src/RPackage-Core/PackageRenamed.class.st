@@ -1,5 +1,5 @@
 "
-I am a public announcement sent when a new RPackage is renamed
+I am a public announcement sent when a new Package is renamed
 "
 Class {
 	#name : 'PackageRenamed',

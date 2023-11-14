@@ -1,5 +1,5 @@
 "
-SUnit tests for RPackage classes synchronisation
+SUnit tests for Package classes synchronisation
 "
 Class {
 	#name : 'RPackageClassesSynchronisationTest',
@@ -10,7 +10,7 @@ Class {
 
 { #category : 'tests - operations on protocols' }
 RPackageClassesSynchronisationTest >> testAddExtensionProtocol [
-	"test that by adding a protocol, nothing change from  RPackage point of vue."
+	"test that by adding a protocol, nothing change from  Package point of vue."
 
 	| class xPackage |
 	xPackage := self ensureXPackage.
