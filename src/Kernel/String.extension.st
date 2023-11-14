@@ -1,11 +1,11 @@
 Extension { #name : 'String' }
 
-{ #category : '*RPackage-Core' }
+{ #category : '*Kernel' }
 String >> asPackage [
 	^ self asPackageIfAbsent: [ NotFound new messageText: 'There is no package named ', self; object: self; signal ]
 ]
 
-{ #category : '*RPackage-Core' }
+{ #category : '*Kernel' }
 String >> asPackageIfAbsent: aBlock [
 
 	^ self packageOrganizer packageNamed: self ifAbsent: aBlock

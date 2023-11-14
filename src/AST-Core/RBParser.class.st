@@ -848,6 +848,13 @@ RBParser >> parsePragma [
 ]
 
 { #category : 'private - parsing' }
+RBParser >> parsePragmaAndReturn [
+
+	self parsePragma.
+	^ pragmas first
+]
+
+{ #category : 'private - parsing' }
 RBParser >> parsePragmaLiteral [
 	"A literal array token is #( or #[."
 	currentToken isLiteralArrayToken
