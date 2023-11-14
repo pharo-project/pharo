@@ -51,7 +51,7 @@ RPackageOrganizerTest >> testAccessingPackage [
 RPackageOrganizerTest >> testCreateNewPackageWithConflictRaisesConflictException [
 
 	self organizer addPackage: 'P1'.
-	self should: [ self organizer addPackage: 'P1' ] raise: RPackageConflictError
+	self should: [ self organizer addPackage: 'P1' ] raise: PackageConflictError
 ]
 
 { #category : 'tests' }
@@ -242,7 +242,7 @@ RPackageOrganizerTest >> testPackageOf [
 RPackageOrganizerTest >> testRegisterPackageConflictWithPackage [
 
 	self ensurePackage: 'P1'.
-	self should: [ self organizer addPackage: (Package named: 'P1') ] raise: RPackageConflictError
+	self should: [ self organizer addPackage: (Package named: 'P1') ] raise: PackageConflictError
 ]
 
 { #category : 'tests' }

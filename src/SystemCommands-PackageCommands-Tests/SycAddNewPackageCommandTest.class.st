@@ -35,7 +35,7 @@ SycAddNewPackageCommandTest >> testExecuteAlreadyExists [
 		on: #createPackageNamed:
 		with: 'Test-Package'
 		verify: [ 
-			RPackageConflictError signal:
+			PackageConflictError signal:
 				'A package named Test-Package already exists' ].
 	systemEnvironment
 		on: #packageNamed:
