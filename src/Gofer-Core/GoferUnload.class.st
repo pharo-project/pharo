@@ -36,9 +36,8 @@ GoferUnload >> unload: aWorkingCopy [
 { #category : 'unloading' }
 GoferUnload >> unloadClasses: aWorkingCopy [
 
-	aWorkingCopy packageSet methods do: [ :each |
-		(each isClassSide and: [ each selector = #unload ])
-			ifTrue: [ each methodClass instanceSide unload ] ]
+	aWorkingCopy systemPackage ifNotNil: [ :package |
+		package methods do: [ :each | (each isClassSide and: [ each selector = #unload ]) ifTrue: [ each methodClass instanceSide unload ] ] ]
 ]
 
 { #category : 'unloading' }
@@ -66,7 +65,7 @@ GoferUnload >> unregisterPackageInfo: aWorkingCopy [
 { #category : 'unregistering' }
 GoferUnload >> unregisterPackageSet: aWorkingCopy [
 
-	aWorkingCopy packageSet removeFromSystem
+	self packageOrganizer removePackage: aWorkingCopy packageName
 ]
 
 { #category : 'unregistering' }
