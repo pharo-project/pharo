@@ -272,7 +272,7 @@ TestRunnerAbstractPresenter >> packagesPresenter [
 { #category : 'presenters-initialization' }
 TestRunnerAbstractPresenter >> packagesWithTests [
 
-	^ RPackageOrganizer default packages select: [ :package | 
+	^ PackageOrganizer default packages select: [ :package | 
 		  self containsTestCase: package ]
 ]
 

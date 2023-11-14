@@ -417,7 +417,7 @@ ReleaseTest >> testProperManifestClasses [
 ]
 
 { #category : 'tests - rpackage' }
-ReleaseTest >> testRPackageOrganizer [
+ReleaseTest >> testPackageOrganizer [
 	"Ensure other tests temporary created organizers are collected"
 
 	3 timesRepeat: [ Smalltalk garbageCollect ].
@@ -425,11 +425,11 @@ ReleaseTest >> testRPackageOrganizer [
 	"Now check :)"
 	self
 		assert: PackageOrganizer allInstances size = 1
-		description: 'There are multiple (' , PackageOrganizer allInstances size asString , ') instances of RPackageOrganizer'.
+		description: 'There are multiple (' , PackageOrganizer allInstances size asString , ') instances of PackageOrganizer'.
 
 	self
 		assert: PackageOrganizer allInstances first == self packageOrganizer
-		description: 'The default package organizer is the not the only instance of RPackageOrganizer'
+		description: 'The default package organizer is the not the only instance of PackageOrganizer'
 ]
 
 { #category : 'tests' }
