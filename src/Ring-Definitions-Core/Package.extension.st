@@ -1,6 +1,6 @@
-Extension { #name : 'RPackage' }
+Extension { #name : 'Package' }
 
 { #category : '*Ring-Definitions-Core' }
-RPackage >> asRingDefinition [
+Package >> asRingDefinition [
 	^RGPackageDefinition named: self name asSymbol
 ]

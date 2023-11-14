@@ -53,7 +53,7 @@ ReRuleManager class >> critiqueBanned: aReCritiqueBanned [
 	| baner |
 	baner := aReCritiqueBanned entityBanLevel.
 
-	baner class = RPackage
+	baner class = Package
 		ifTrue: [ self removeManagerFor: baner ]
 ]
 

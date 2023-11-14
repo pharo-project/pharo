@@ -159,7 +159,7 @@ RPackageReadOnlyCompleteSetupTest >> testDefinedSelectorsForClass [
 { #category : 'tests - tag class' }
 RPackageReadOnlyCompleteSetupTest >> testEmpty [
 
-	self assertEmpty: (RPackage named: 'new package') classTags
+	self assertEmpty: (Package named: 'new package') classTags
 ]
 
 { #category : 'tests - accessing' }

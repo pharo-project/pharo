@@ -190,7 +190,7 @@ MCClassTraitDefinition >> tagName [
 { #category : 'accessing' }
 MCClassTraitDefinition >> tagName: aString [
 
-	tagName := aString = RPackage rootTagName
+	tagName := aString = Package rootTagName
 		           ifTrue: [ nil ]
 		           ifFalse: [ aString asSymbol ]
 ]

@@ -137,7 +137,7 @@ MCOrganizationDefinition >> tagNames: aCollection [
 
 	| tags |
 	tags := aCollection.
-	tags := tags \ { RPackage rootTagName }.
+	tags := tags \ { Package rootTagName }.
 	tagNames := tags sorted asArray
 ]
 

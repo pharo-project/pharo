@@ -14,7 +14,7 @@ Class {
 
 { #category : 'items type' }
 ClyPackageQuery class >> resultItemsType [
-	^RPackage
+	^Package
 ]
 
 { #category : 'execution' }

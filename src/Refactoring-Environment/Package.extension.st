@@ -1,6 +1,6 @@
-Extension { #name : 'RPackage' }
+Extension { #name : 'Package' }
 
 { #category : '*Refactoring-Environment' }
-RPackage >> asEnvironment [
+Package >> asEnvironment [
 	^ RBPackageEnvironment package: self
 ]

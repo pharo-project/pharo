@@ -1,7 +1,7 @@
-Extension { #name : 'RPackage' }
+Extension { #name : 'Package' }
 
 { #category : '*CodeExport' }
-RPackage >> fileOut [
+Package >> fileOut [
 
 	| internalStream |
 	internalStream := (String new: 1000) writeStream.

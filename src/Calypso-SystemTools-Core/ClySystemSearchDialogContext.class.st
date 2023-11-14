@@ -30,5 +30,5 @@ ClySystemSearchDialogContext >> selectedMethodItems [
 
 { #category : 'selection-packages' }
 ClySystemSearchDialogContext >> selectedPackageItems [
-	^self selectedItemsOfType: RPackage
+	^self selectedItemsOfType: Package
 ]

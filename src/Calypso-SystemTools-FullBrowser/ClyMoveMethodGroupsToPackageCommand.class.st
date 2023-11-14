@@ -30,7 +30,7 @@ ClyMoveMethodGroupsToPackageCommand class >> fullBrowserDragAndDropActivation [
 
 	^CmdDragAndDropActivation
 		for: ClyMethodGroup asCalypsoItemContext
-		toDropIn: RPackage asCalypsoItemContext
+		toDropIn: Package asCalypsoItemContext
 ]
 
 { #category : 'accessing' }

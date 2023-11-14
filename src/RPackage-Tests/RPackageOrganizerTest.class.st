@@ -242,7 +242,7 @@ RPackageOrganizerTest >> testPackageOf [
 RPackageOrganizerTest >> testRegisterPackageConflictWithPackage [
 
 	self ensurePackage: 'P1'.
-	self should: [ self organizer addPackage: (RPackage named: 'P1') ] raise: RPackageConflictError
+	self should: [ self organizer addPackage: (Package named: 'P1') ] raise: RPackageConflictError
 ]
 
 { #category : 'tests' }

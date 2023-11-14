@@ -1,7 +1,7 @@
-Extension { #name : 'RPackage' }
+Extension { #name : 'Package' }
 
 { #category : '*Ring-Core' }
-RPackage >> asRingMinimalDefinitionIn: anRGEnvironment [
+Package >> asRingMinimalDefinitionIn: anRGEnvironment [
 
 	^ anRGEnvironment backend definitionFor: self ifAbsentRegister: [
 		RGPackage named: self name asSymbol parent: anRGEnvironment ]

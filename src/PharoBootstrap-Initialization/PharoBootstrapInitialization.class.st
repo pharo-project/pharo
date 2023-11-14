@@ -60,7 +60,7 @@ PharoBootstrapInitialization class >> initializeCommandLineHandlerAndErrorHandli
 	Collection initialize.
 	CompiledMethod initialize.
 	Slot initialize.
-	RPackage initialize.
+	Package initialize.
 	Behavior initialize.
 	Class initialize.
 

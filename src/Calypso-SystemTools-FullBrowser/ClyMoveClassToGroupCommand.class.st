@@ -32,7 +32,7 @@ ClyMoveClassToGroupCommand class >> fullBrowserDragAndDropActivation [
 
 	^CmdDragAndDropActivation
 		for: ClyClass asCalypsoItemContext
-		toDropIn: RPackage asCalypsoItemContext
+		toDropIn: Package asCalypsoItemContext
 ]
 
 { #category : 'activation' }

@@ -28,7 +28,7 @@ ClyBrowseIcebergPackageCommand >> execute [
 	commit := self repositoryModel commit.
 
 	#(1) do: [ :i |
-			snapshot := commit snapshotFor: (RPackage named: self packageModel name).
+			snapshot := commit snapshotFor: (Package named: self packageModel name).
  			snapshot importInto: env asPackageNamed: self packageModel name]
 		displayingProgress: 'loading'.
 	env clean.

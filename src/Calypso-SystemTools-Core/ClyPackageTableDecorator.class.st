@@ -16,7 +16,7 @@ Class {
 ClyPackageTableDecorator class >> decorationStrategy [
 	<classAnnotation>
 
-	^ClyTableDecorationStrategyAnnotation for: RPackage asCalypsoItemContext
+	^ClyTableDecorationStrategyAnnotation for: Package asCalypsoItemContext
 ]
 
 { #category : 'testing' }
