@@ -7,7 +7,6 @@ Class {
 	#name : 'MethodRemoved',
 	#superclass : 'MethodAnnouncement',
 	#instVars : [
-		'protocol',
 		'methodOrigin'
 	],
 	#category : 'System-Announcements-System-Methods',
@@ -16,19 +15,12 @@ Class {
 }
 
 { #category : 'instance creation' }
-MethodRemoved class >> methodRemoved: aCompiledMethod protocol: aProtocol origin: aBehavior [
+MethodRemoved class >> methodRemoved: aCompiledMethod origin: aBehavior [
 
 	^ self new
 		  method: aCompiledMethod;
-		  protocol: aProtocol;
 		  methodOrigin: aBehavior;
 		  yourself
-]
-
-{ #category : 'testing' }
-MethodRemoved >> affectsMethodsInProtocol: aProtocol [
-
-	^ self protocol name = aProtocol
 ]
 
 { #category : 'accessing' }
@@ -45,15 +37,4 @@ MethodRemoved >> methodOrigin: anObject [
 MethodRemoved >> methodRemoved [
 
 	^ method
-]
-
-{ #category : 'accessing' }
-MethodRemoved >> protocol [
-	^ protocol
-]
-
-{ #category : 'accessing' }
-MethodRemoved >> protocol: anObject [
-
-	protocol := anObject
 ]

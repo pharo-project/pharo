@@ -1058,7 +1058,7 @@ ClassDescription >> removeSelector: selector [
 
 	super removeSelector: selector.
 
-	self codeChangeAnnouncer methodRemoved: method protocol: protocol origin: origin
+	self codeChangeAnnouncer methodRemoved: method origin: origin
 ]
 
 { #category : 'instance variables' }

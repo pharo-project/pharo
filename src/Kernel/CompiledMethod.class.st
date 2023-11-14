@@ -814,7 +814,7 @@ CompiledMethod >> protocol: aProtocol [
 CompiledMethod >> protocolName [
 	"Return the name of the protocol (conceptual groups of methods) in which the receiver is grouped into."
 
-	^ self methodClass protocolNameOfSelector: self selector
+	^ self protocol ifNotNil: [ :protocol | protocol name ]
 ]
 
 { #category : 'scanning' }

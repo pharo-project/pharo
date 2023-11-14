@@ -849,10 +849,12 @@ CompiledMethodTest >> testProtocolOfRemovedMethod [
 	method := class >> #billy.
 
 	self assert: method protocol name equals: #cat.
+	self assert: method protocolName equals: #cat.
 
 	class removeSelector: #billy.
 
-	self assert: method protocol name equals: #cat
+	self assert: method protocol name equals: #cat.
+	self assert: method protocolName equals: #cat
 ]
 
 { #category : 'tests - instance variable' }
