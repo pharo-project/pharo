@@ -1045,7 +1045,7 @@ ClassDescription >> removeSelector: selector [
 	"Remove the message whose selector is given from the method
 	dictionary of the receiver, if it is there. Answer nil otherwise."
 
-  <reflection: 'Class structural modification - Selector/Method modification'>
+	<reflection: 'Class structural modification - Selector/Method modification'>
 	| method protocol origin |
 	method := self compiledMethodAt: selector ifAbsent: [ ^ nil ].
 	origin := method origin.
@@ -1054,9 +1054,11 @@ ClassDescription >> removeSelector: selector [
 	method removeFromPackage.
 	self removeFromProtocols: selector.
 
+	method propertyAt: #protocol put: protocol.
+
 	super removeSelector: selector.
 
-	self codeChangeAnnouncer  methodRemoved: method protocol: protocol origin: origin
+	self codeChangeAnnouncer methodRemoved: method protocol: protocol origin: origin
 ]
 
 { #category : 'instance variables' }
