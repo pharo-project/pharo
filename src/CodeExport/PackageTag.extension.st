@@ -1,7 +1,7 @@
-Extension { #name : 'RPackageTag' }
+Extension { #name : 'PackageTag' }
 
 { #category : '*CodeExport' }
-RPackageTag >> fileOut [
+PackageTag >> fileOut [
 
 	| internalStream |
 	internalStream := (String new: 1000) writeStream.
@@ -12,7 +12,7 @@ RPackageTag >> fileOut [
 ]
 
 { #category : '*CodeExport' }
-RPackageTag >> fileOutOn: aFileStream [
+PackageTag >> fileOutOn: aFileStream [
 	"Store on the file associated with aFileStream, all the traits and classes associated
 	with the category and any requested shared pools in the right order."
 
