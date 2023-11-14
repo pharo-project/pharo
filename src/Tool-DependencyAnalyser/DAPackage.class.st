@@ -5,7 +5,7 @@ Instance variables :
 
 - dependencies : a collection of `DAPackageDependency` (actually the nodes of a graph dependency, from a source DAPackage to a target DAPackage)
 - included : says if the DAPackage is included or not, at the beginning, in the set of packages.
-- rpackage : the instance of asRPackageSet 	
+- systemPackage : the instance of asRPackageSet 	
 - inStack : useful for tarjan algorithm and cycle algorithm. It avoids stack access
 - tarjanIndex and tarjanLowLink : integer for the tarjan algorithm.
 - bfsParent : see cycle algorithm
@@ -244,12 +244,8 @@ DAPackage >> printOn: aStream [
 ]
 
 { #category : 'accessing' }
-DAPackage >> rPackage [
-	^ self rPackageSet packages first
-]
-
-{ #category : 'accessing' }
 DAPackage >> rPackageSet [
+
 	^ rPackageSet
 ]
 
@@ -272,6 +268,12 @@ DAPackage >> remove: aDependency [
 { #category : 'dependencies' }
 DAPackage >> removeAllInternal [
 	dependencies := dependencies reject: [ :each | each isInternal ]
+]
+
+{ #category : 'accessing' }
+DAPackage >> systemPackage [
+
+	^ self rPackageSet packages first
 ]
 
 { #category : 'tarjan' }

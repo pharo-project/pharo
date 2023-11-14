@@ -88,8 +88,9 @@ DAPackageUnderAnalysisNode >> printOn: aStream [
 ]
 
 { #category : 'browse-nautilus' }
-DAPackageUnderAnalysisNode >> selectInBrowser [
-	self selectPackage: self content rPackage
+DAPackageUnderAnalysisNode >> systemPackage [
+
+	^ self content systemPackage
 ]
 
 { #category : 'dependencies' }

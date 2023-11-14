@@ -97,5 +97,5 @@ DAAddPackagePresenter >> selectedItemsFromPackageList [
 { #category : 'accessing' }
 DAAddPackagePresenter >> systemPackages [
 
-	^ (self packageOrganizer packages collect: [ :package | package packageName asString ]) asSortedCollection
+	^ (self packageOrganizer packages collect: [ :package | package name asString ]) asSortedCollection
 ]
