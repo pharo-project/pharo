@@ -1046,15 +1046,14 @@ ClassDescription >> removeSelector: selector [
 	dictionary of the receiver, if it is there. Answer nil otherwise."
 
 	<reflection: 'Class structural modification - Selector/Method modification'>
-	| method protocol origin |
+	| method origin |
 	method := self compiledMethodAt: selector ifAbsent: [ ^ nil ].
 	origin := method origin.
-	protocol := self protocolOfSelector: selector.
 
+	"Save the protocol in the properties so that method can still answer their protocol after been removed."
+	method propertyAt: #protocol put: (self protocolOfSelector: selector).
 	method removeFromPackage.
 	self removeFromProtocols: selector.
-
-	method propertyAt: #protocol put: protocol.
 
 	super removeSelector: selector.
 
