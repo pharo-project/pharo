@@ -143,11 +143,6 @@ RBMessageNode >> equalTo: anObject withMapping: aDictionary [
 	^true
 ]
 
-{ #category : 'fluid parser' }
-RBMessageNode >> handleMetaclassName: aCDFluidClassDefinitionParser [
-	aCDFluidClassDefinitionParser handleMetaclassNameFromMessage: self
-]
-
 { #category : 'comparing' }
 RBMessageNode >> hash [
 	^ (self receiver hash bitXor: self selector hash) bitXor: (self hashForCollection: self arguments)

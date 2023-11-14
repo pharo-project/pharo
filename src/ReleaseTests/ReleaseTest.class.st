@@ -505,7 +505,7 @@ ReleaseTest >> testUndeclared [
 			stream nextPutAll: 'Found undeclared Variables: '.
 			remaining do: [ :variable  |
 				| method |
-				method := variable usingMethods first.
+				method := variable usingMethods anyOne.
 				stream
 					cr
 					nextPutAll: variable name;
@@ -515,6 +515,13 @@ ReleaseTest >> testUndeclared [
 					print: method selector]].
 
 	self assert: remaining isEmpty description: description
+]
+
+{ #category : 'tests - rpackage' }
+ReleaseTest >> testUndefinedPackageShouldBeEmpty [
+	"The unpackage package should not have any defined class or extended classes"
+
+	self assertEmpty: self packageOrganizer undefinedPackage classes
 ]
 
 { #category : 'tests' }
@@ -544,15 +551,6 @@ ReleaseTest >> testUnpackagedClasses [
 	self assert: unpackagedClasses isEmpty description: (String streamContents: [ :s |
 			 s nextPutAll: 'Found the following unpackaged classes: '.
 			 unpackagedClasses do: [ :cls | s tab print: cls ] separatedBy: [ s cr ] ])
-]
-
-{ #category : 'tests - rpackage' }
-ReleaseTest >> testUnpackagedPackageShouldBeEmpty [
-
-	| unpackagePackage |
-	unpackagePackage := self packageOrganizer packageNamed: UndefinedPackage undefinedPackageName.
-	"The unpackage package should not have any defined class or extended classes"
-	self assertEmpty: unpackagePackage classes
 ]
 
 { #category : 'tests' }

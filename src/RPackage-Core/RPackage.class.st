@@ -140,22 +140,24 @@ RPackage >> addMethod: aCompiledMethod [
 { #category : 'class tags' }
 RPackage >> classTagNamed: aSymbol [
 
-	^ classTags detect: [ :each | each name = aSymbol ]
+	^ self classTags detect: [ :each | each name = aSymbol ]
 ]
 
 { #category : 'class tags' }
 RPackage >> classTagNamed: aSymbol ifAbsent: aBlock [
-	^ classTags
-		detect: [ :each | each name = aSymbol ]
-		ifNone: aBlock
+
+	^ self classTags
+		  detect: [ :each | each name = aSymbol ]
+		  ifNone: aBlock
 ]
 
 { #category : 'class tags' }
 RPackage >> classTagNamed: aSymbol ifPresent: aBlock [
-	^ classTags
-		detect: [ :each | each name = aSymbol ]
-		ifFound: [ :tag | aBlock cull: tag ]
-		ifNone: [ nil ]
+
+	^ self classTags
+		  detect: [ :each | each name = aSymbol ]
+		  ifFound: [ :tag | aBlock cull: tag ]
+		  ifNone: [ nil ]
 ]
 
 { #category : 'class tags' }

@@ -500,6 +500,22 @@ TraitTest >> testRedefiningATraitAsAClassShouldRaiseError [
 ]
 
 { #category : 'tests' }
+TraitTest >> testRemakingATraitUsedByAnAnonymousClassKeepItAnonymous [
+	"Regression test were an anonymous class became non anonymous if we updated a trait used by it."
+
+	| t1 aClass |
+	t1 := self newTrait: #T1 with: #(  ).
+
+	aClass := Smalltalk anonymousClassInstaller make: [ :builder | builder traitComposition: t1 ].
+
+	self assert: aClass isAnonymous.
+
+	t1 := self newTrait: #T1 with: #( aSlot ).
+
+	self assert: aClass isAnonymous
+]
+
+{ #category : 'tests' }
 TraitTest >> testRemoveFromSystem [
 
 	| aClass aTrait |

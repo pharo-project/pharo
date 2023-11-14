@@ -330,16 +330,16 @@ ChangeSet class >> newChanges: aChangeSet withOld: old [
 	SystemAnnouncer uniqueInstance unsubscribe: old.
 	current := aChangeSet.
 
-	SystemAnnouncer uniqueInstance private weak
+	SystemAnnouncer uniqueInstance weak
 		when: ClassRemoved send: #classRemoved: to: aChangeSet;
 		when: ClassAdded send: #classAdded: to: aChangeSet;
 		when: ClassCommented send: #classCommented: to: aChangeSet;
 		when: ClassRenamed send: #classRenamed: to: aChangeSet;
 		when: ProtocolAnnouncement send: #classReorganized: to: aChangeSet;
 		when: ClassRepackaged send: #classRepackaged: to: aChangeSet;
-		when: ClassModifiedClassDefinition send: #classModified: to: aChangeSet.
+		when: ClassModifiedClassDefinition send: #classModified: to: aChangeSet;
 
-	SystemAnnouncer uniqueInstance private weak
+
 		when: MethodAdded send: #methodAdded: to: aChangeSet;
 		when: MethodModified send: #methodModified: to: aChangeSet;
 		when: MethodRemoved send: #methodRemoved: to: aChangeSet;

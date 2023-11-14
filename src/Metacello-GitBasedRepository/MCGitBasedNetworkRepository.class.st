@@ -493,11 +493,6 @@ MCGitBasedNetworkRepository >> normalizeTagsData: jsonObject [
 ]
 
 { #category : 'accessing' }
-MCGitBasedNetworkRepository >> possiblyNewerVersionsOfAnyOf: someVersions [
-	^ self localRepository possiblyNewerVersionsOfAnyOf: someVersions
-]
-
-{ #category : 'accessing' }
 MCGitBasedNetworkRepository >> projectPath [
     ^ projectPath
 ]

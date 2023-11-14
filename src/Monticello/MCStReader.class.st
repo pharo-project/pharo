@@ -15,7 +15,10 @@ source := String streamContents: [:aStream| |writer|
 "
 Class {
 	#name : 'MCStReader',
-	#superclass : 'MCSnapshotReader',
+	#superclass : 'MCReader',
+	#instVars : [
+		'definitions'
+	],
 	#category : 'Monticello-Storing',
 	#package : 'Monticello',
 	#tag : 'Storing'
@@ -98,6 +101,12 @@ MCStReader >> commentStampFor: aRingClass [
 		ifFalse: [ nil ]
 ]
 
+{ #category : 'accessing' }
+MCStReader >> definitions [
+	definitions ifNil: [self loadDefinitions].
+	^ definitions
+]
+
 { #category : 'evaluating' }
 MCStReader >> loadDefinitions [
 	| filePackage |
@@ -127,6 +136,11 @@ MCStReader >> readStream [
 	^ ('!!
 
 ', stream contents) readStream
+]
+
+{ #category : 'accessing' }
+MCStReader >> snapshot [
+	^ MCSnapshot fromDefinitions: self definitions
 ]
 
 { #category : 'reading' }
