@@ -505,7 +505,7 @@ ReleaseTest >> testUndeclared [
 			stream nextPutAll: 'Found undeclared Variables: '.
 			remaining do: [ :variable  |
 				| method |
-				method := variable usingMethods first.
+				method := variable usingMethods anyOne.
 				stream
 					cr
 					nextPutAll: variable name;
