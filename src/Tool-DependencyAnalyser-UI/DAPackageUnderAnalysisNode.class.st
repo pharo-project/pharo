@@ -87,12 +87,6 @@ DAPackageUnderAnalysisNode >> printOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : 'browse-nautilus' }
-DAPackageUnderAnalysisNode >> systemPackage [
-
-	^ self content systemPackage
-]
-
 { #category : 'dependencies' }
 DAPackageUnderAnalysisNode >> wrappedPackageDependencies [
 	^ (self packageDependencies

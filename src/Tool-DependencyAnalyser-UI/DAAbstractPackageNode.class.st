@@ -29,5 +29,5 @@ DAAbstractPackageNode >> selectInBrowser [
 { #category : 'accessing' }
 DAAbstractPackageNode >> systemPackage [
 
-	^ self subclassResponsibility
+	^ self content systemPackage
 ]
