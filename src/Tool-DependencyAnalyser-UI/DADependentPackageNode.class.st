@@ -53,5 +53,5 @@ DADependentPackageNode >> label [
 { #category : 'accessing' }
 DADependentPackageNode >> systemPackage [
 
-	^ self content target rPackageSet packages first
+	^ self content target systemPackage
 ]

@@ -80,11 +80,6 @@ DADependentPackageWrapper >> printOn: aStream [
 ]
 
 { #category : 'accessing' }
-DADependentPackageWrapper >> rPackageSet [
-	^ pdPackage rPackageSet
-]
-
-{ #category : 'accessing' }
 DADependentPackageWrapper >> relationGraph [
 	^ relationGraph
 ]
@@ -92,6 +87,11 @@ DADependentPackageWrapper >> relationGraph [
 { #category : 'accessing' }
 DADependentPackageWrapper >> relationGraph: anObject [
 	relationGraph := anObject
+]
+
+{ #category : 'accessing' }
+DADependentPackageWrapper >> systemPackage [
+	^ pdPackage systemPackage
 ]
 
 { #category : 'accessing' }

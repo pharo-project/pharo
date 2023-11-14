@@ -33,5 +33,5 @@ DAReversePackageNode >> icon [
 { #category : 'accessing' }
 DAReversePackageNode >> systemPackage [
 
-	^ self content rPackageSet packages first
+	^self content systemPackage
 ]
