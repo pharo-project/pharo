@@ -20,12 +20,6 @@ MetacelloReferenceConfig >> baseline10: spec [
 	<version: '1.0-baseline'>
 	
 	spec for: #common do: [
-		"alternate methods for specifying author, blessing, description, timestamp, preLoadDoIt, postLoadDoit (not recommended)"
-		spec blessing: [ spec value: #baseline. ].
-		spec description: [ spec value: 'Descriptive comment'. ].
-		spec author: [ spec value: 'dkh'. ].
-		spec timestamp: [ spec value: '10/7/2009 14:40'. ].
-		spec timestamp: [ spec value: (DateAndTime fromString: '10/7/2009 14:40'). ].
 		"recommended methods for specifying author, blessing, description, timestamp, preLoadDoIt, postLoadDoit"
 		"#development, #baseline, #release, #beta, etc."
 		spec blessing: #baseline.									
