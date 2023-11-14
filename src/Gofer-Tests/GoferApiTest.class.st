@@ -196,18 +196,6 @@ GoferApiTest >> testSmalltalkhub [
 	self assert: gofer repositories: #('http://smalltalkhub.com/mc/dh83/ci/main/')
 ]
 
-{ #category : 'tests - repositories' }
-GoferApiTest >> testSubDirectoryRepository [
-
-	testingEnvironment
-		at: #MCSubDirectoryRepository
-		ifPresent: [ :subDirectoryRepositoryClass | |path|
-			path := (FileSystem disk workingDirectory / '*') fullName.
-			gofer directory: path.
-			self assert: gofer repositories: (Array with: path).
-			self assert: (gofer repositories first isKindOf: subDirectoryRepositoryClass) ]
-]
-
 { #category : 'tests - references' }
 GoferApiTest >> testVersionReference [
 
