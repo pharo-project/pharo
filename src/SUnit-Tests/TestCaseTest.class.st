@@ -58,9 +58,3 @@ TestCaseTest >> testAssertEqualsActualAndExpectedOrder [
 		whoseDescriptionIncludes: 'Got ''actual'' instead of ''expected with fairly long print string''.'
 		description: 'In #assert:equals: the first argument is the actual value and the second one is the expected.'
 ]
-
-{ #category : 'testing' }
-TestCaseTest >> testIsUnitTest [
-
-	self assert: TestCase isUnitTest
-]

@@ -29,11 +29,6 @@ Class {
 	#package : 'Traits-Tests'
 }
 
-{ #category : 'testing' }
-AbstractTraitsOnPreparedModelTest class >> isUnitTest [
-	^false
-]
-
 { #category : 'utilities' }
 AbstractTraitsOnPreparedModelTest >> assertPrints: aString like: anotherString [
 	self assert: (aString copyWithout: $ ) equals: (anotherString copyWithout: $ )

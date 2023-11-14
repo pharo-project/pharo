@@ -388,11 +388,6 @@ TestCase class >> isTestCase [
 ]
 
 { #category : 'testing' }
-TestCase class >> isUnitTest [
-	^true
-]
-
-{ #category : 'testing' }
 TestCase class >> isUsed [
 	"all my subclasses are used by me"
 	^self name = 'TestCase'

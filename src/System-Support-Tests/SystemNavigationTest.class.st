@@ -15,11 +15,6 @@ Class {
 	#tag : 'Image'
 }
 
-{ #category : 'testing' }
-SystemNavigationTest class >> isUnitTest [
-	^false
-]
-
 { #category : 'accessing' }
 SystemNavigationTest >> classFactory [
 
