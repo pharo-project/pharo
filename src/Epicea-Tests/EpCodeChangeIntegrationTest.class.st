@@ -24,7 +24,7 @@ EpCodeChangeIntegrationTest >> packageTagNameForTesting [
 { #category : 'running' }
 EpCodeChangeIntegrationTest >> tearDown [
 
-	(self packageNameForTesting asPackageIfAbsent: [ nil ]) ifNotNil: [ :package | package removeFromSystem ].
+	self packageOrganizer removePackage: self packageNameForTesting.
 	super tearDown
 ]
 
