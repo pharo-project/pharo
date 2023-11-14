@@ -8,7 +8,6 @@ Class {
 	#superclass : 'Announcer',
 	#instVars : [
 		'suspended',
-		'private',
 		'storedAnnouncements'
 	],
 	#category : 'Ring-Core-Announcements',
@@ -18,13 +17,10 @@ Class {
 
 { #category : 'announce' }
 RGEnvironmentAnnouncer >> announce: anAnnouncement [
+
 	self isSuspended
-		ifFalse: [
-			self private announce: anAnnouncement.
-			super announce: anAnnouncement ]
-		ifTrue:[
-			storedAnnouncements ifNotNil:[ storedAnnouncements add: anAnnouncement ]
-		]
+		ifFalse: [ super announce: anAnnouncement ]
+		ifTrue: [ storedAnnouncements ifNotNil: [ storedAnnouncements add: anAnnouncement ] ]
 ]
 
 { #category : 'triggering' }
@@ -104,11 +100,6 @@ RGEnvironmentAnnouncer >> methodRemoved: aMethod [
 			 origin: aMethod parent)
 ]
 
-{ #category : 'accessing' }
-RGEnvironmentAnnouncer >> private [
-	^private ifNil: [ private := Announcer new ]
-]
-
 { #category : 'announce' }
 RGEnvironmentAnnouncer >> suspendAllWhile: aBlock [
 	| oldSuspended |
@@ -136,10 +127,4 @@ RGEnvironmentAnnouncer >> suspendAllWhileStoring: aBlock [
 			storedAnnouncements := nil.
 		]
 	]
-]
-
-{ #category : 'subscription' }
-RGEnvironmentAnnouncer >> unsubscribe: anObject [
-	self private unsubscribe: anObject.
-	super unsubscribe: anObject
 ]

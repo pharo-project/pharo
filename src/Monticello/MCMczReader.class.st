@@ -109,12 +109,11 @@ MCMczReader >> contentsForMember: member [
 
 { #category : 'parsing' }
 MCMczReader >> extractDefinitionsFrom: member [
-	| reader |
-	(MCSnapshotReader readerClassForFileNamed: member fileName)
-		ifNotNil: [:rc |
-			reader := rc on: (self contentsForMember: member) readStream.
-			definitions addAll: reader definitions]
 
+	| reader |
+	(MCStReader canReadFileNamed: member fileName) ifFalse: [ ^ self ].
+	reader := MCStReader on: (self contentsForMember: member) readStream.
+	definitions addAll: reader definitions
 ]
 
 { #category : 'parsing' }

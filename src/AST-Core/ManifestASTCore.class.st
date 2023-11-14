@@ -13,7 +13,7 @@ Class {
 ManifestASTCore class >> manuallyResolvedDependencies [
 
 	<ignoreForCoverage>
-	^ #(#'OpalCompiler-Core')
+	^ #(#'Kernel-Chronology-Extras' #'OpalCompiler-Core')
 ]
 
 { #category : 'meta data' }
