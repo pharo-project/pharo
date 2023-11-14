@@ -26,7 +26,7 @@ RBPackageEnvironment class >> onEnvironment: anEnvironment packageNames: aCollec
 	^ self
 		onEnvironment: anEnvironment
 		packages: (aCollection collect: [ :each |
-			RPackageOrganizer default packageNamed: each ])
+			PackageOrganizer default packageNamed: each ])
 ]
 
 { #category : 'instance creation' }

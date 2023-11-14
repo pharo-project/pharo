@@ -337,7 +337,7 @@ ReleaseTest >> testNoSentButNotImplementedSelectors [
 	                    'RBFindAndReplacePreviewPresenter>>#initializeDialogWindow:' 'RBLintRuleTestData>>#runOnEnvironment:'
 	                    'RBRemoveClassRefactoring>>#senders' 'RBTransformationDummyRuleTest class>>#initializeAfterLoad1'
 	                    'RBTransformationDummyRuleTest class>>#rewrite:methods:name:' 'RBTransformationRuleTestData class>>#initializeAfterLoad1'
-	                    'RBTransformationRuleTestData class>>#rewrite:methods:name:' 'RGChunkImporter>>#visitDoItChunk:' 'RPackageOrganizer>>#categoryOfElement:'
+	                    'RBTransformationRuleTestData class>>#rewrite:methods:name:' 'RGChunkImporter>>#visitDoItChunk:'
 	                    'ReSentNotImplementedRuleTest>>#sampleMethod' 'Rectangle>>#newRectButtonPressedDo:inWorld:' 'RubSegmentMorph>>#intersects:'
 	                    'RubTextSegmentMorph>>#displayIconAt:onAthensCanvas:' 'SpApplication>>#ensureConfiguration' 'SpApplicationBackend>>#notify:'
 	                    'SpChangeSorterPresenter>>#createRingMethodForRemovedSelector:inClass:'
@@ -424,11 +424,11 @@ ReleaseTest >> testRPackageOrganizer [
 
 	"Now check :)"
 	self
-		assert: RPackageOrganizer allInstances size = 1
-		description: 'There are multiple (' , RPackageOrganizer allInstances size asString , ') instances of RPackageOrganizer'.
+		assert: PackageOrganizer allInstances size = 1
+		description: 'There are multiple (' , PackageOrganizer allInstances size asString , ') instances of RPackageOrganizer'.
 
 	self
-		assert: RPackageOrganizer allInstances first == self packageOrganizer
+		assert: PackageOrganizer allInstances first == self packageOrganizer
 		description: 'The default package organizer is the not the only instance of RPackageOrganizer'
 ]
 

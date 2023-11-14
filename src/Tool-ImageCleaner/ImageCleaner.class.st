@@ -45,7 +45,7 @@ ImageCleaner class >> cleanUpForRelease [
 ImageCleaner class >> examplePackages [
 	<script: 'self examplePackages inspect'>
 
-	^RPackageOrganizer default packageNames select: [ :each | each endsWith: '-Examples' ]
+	^PackageOrganizer default packageNames select: [ :each | each endsWith: '-Examples' ]
 ]
 
 { #category : 'instance creation' }
@@ -59,7 +59,7 @@ ImageCleaner class >> testPackages [
 	"All test packages to wipe out, except ReleeaseTests package."
 
 	<script: 'self testPackages inspect'>
-	^ RPackageOrganizer default testPackageNames copyWithout: 'ReleaseTests'
+	^ PackageOrganizer default testPackageNames copyWithout: 'ReleaseTests'
 ]
 
 { #category : 'api' }

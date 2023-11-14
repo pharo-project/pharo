@@ -684,7 +684,7 @@ SettingBrowser >> setViewedPackageNames: aText [
 	| allViewed |
 	allViewed := Set new.
 	aText asString substrings
-		do: [:sub | (RPackageOrganizer default
+		do: [:sub | (PackageOrganizer default
 						packageNamed: sub
 						ifAbsent: [])
 				ifNotNil: [:pkg | allViewed add: pkg]].

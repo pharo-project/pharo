@@ -176,7 +176,7 @@ RPackageTest >> testDemoteToRPackageNamedExistingPackage [
 RPackageTest >> testDemoteToRPackageNamedKeepOrganizer [
 
 	| newOrganizer package renamedPackage |
-	newOrganizer := RPackageOrganizer new.
+	newOrganizer := PackageOrganizer new.
 
 	package := newOrganizer ensurePackage: #'Test1-TAG1'.
 

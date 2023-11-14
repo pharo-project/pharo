@@ -1,7 +1,7 @@
-Extension { #name : 'RPackageOrganizer' }
+Extension { #name : 'PackageOrganizer' }
 
 { #category : '*Monticello-RPackage' }
-RPackageOrganizer >> isDefinedAsPackageOrSubPackageInMC: aSymbol [
+PackageOrganizer >> isDefinedAsPackageOrSubPackageInMC: aSymbol [
 	"a category has been added. "
 
 	^ MCWorkingCopy allWorkingCopies anySatisfy: [ :workingCopy | workingCopy packageName isCategoryOf: aSymbol ]
