@@ -63,6 +63,10 @@ PharoBootstrapInitialization class >> initializeCommandLineHandlerAndErrorHandli
 	Package initialize.
 	Behavior initialize.
 	Class initialize.
+	
+	"Next two lines are for the deprecated aliases. This should be removed in Pharo 13"
+	PackageTag initialize.
+	PackageOrganizer initialize.
 
 	UIManager default: NonInteractiveUIManager new.
 
