@@ -148,8 +148,8 @@ RPackageOrganizerTest >> testHasPackage [
 
 	| organizer packageFromOtherOrganizer name package |
 	name := 'TestPackageNameForPackageOrganizer'.
-	organizer := RPackageOrganizer new.
-	packageFromOtherOrganizer := RPackageOrganizer new ensurePackage: name.
+	organizer := PackageOrganizer new.
+	packageFromOtherOrganizer := PackageOrganizer new ensurePackage: name.
 	self deny: (organizer hasPackage: name).
 	self deny: (organizer hasPackage: packageFromOtherOrganizer).
 

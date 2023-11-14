@@ -1,14 +1,14 @@
-Extension { #name : 'RPackageOrganizer' }
+Extension { #name : 'PackageOrganizer' }
 
 { #category : '*Deprecated12' }
-RPackageOrganizer >> addCategory: aCategory [
+PackageOrganizer >> addCategory: aCategory [
 
 	self deprecated: 'The manipulation of categories got deprecated in Pharo 12. It is better to manipulate directly the packages and tags.'.
 	self ensurePackageMatching: aCategory
 ]
 
 { #category : '*Deprecated12' }
-RPackageOrganizer >> categories [
+PackageOrganizer >> categories [
 
 	| categories |
 	self deprecated: 'The manipulation of categories got deprecated in Pharo 12. It is better to manipulate directly the packages and tags.'.
@@ -21,21 +21,21 @@ RPackageOrganizer >> categories [
 ]
 
 { #category : '*Deprecated12' }
-RPackageOrganizer >> categoriesMatching: matchString [
+PackageOrganizer >> categoriesMatching: matchString [
 
 	self deprecated: 'The manipulation of categories got deprecated in Pharo 12. It is better to manipulate directly the packages and tags.'.
 	^ self categories select: [ :c | matchString match: c ]
 ]
 
 { #category : '*Deprecated12' }
-RPackageOrganizer >> categoryOfElement: behaviorName [
+PackageOrganizer >> categoryOfElement: behaviorName [
 
 	self deprecated: 'Use #categoryOfBehavior: instead' transformWith: '`@rcv categoryOfElement: `@arg' -> '`@rcv categoryOfBehavior: `@arg'.
 	^ self categoryOfBehavior: behaviorName
 ]
 
 { #category : '*Deprecated12' }
-RPackageOrganizer >> classesInCategory: category [
+PackageOrganizer >> classesInCategory: category [
 
 	self deprecated: 'The manipulation of categories got deprecated in Pharo 12. It is better to manipulate directly the packages and tags.'.
 	(self tagForCategory: category) ifNotNil: [ :tag | ^ tag classes asArray ].
@@ -44,21 +44,21 @@ RPackageOrganizer >> classesInCategory: category [
 ]
 
 { #category : '*Deprecated12' }
-RPackageOrganizer >> createPackageNamed: aString [
+PackageOrganizer >> createPackageNamed: aString [
 
 	self deprecated: 'Use #addPackage: instead.' transformWith: '`@rcv createPackageNamed: `@arg' -> '`@rcv addPackage: `@arg'.
 	^ self addPackage: aString
 ]
 
 { #category : '*Deprecated12' }
-RPackageOrganizer >> ensureExistAndRegisterPackageNamed: aSymbol [
+PackageOrganizer >> ensureExistAndRegisterPackageNamed: aSymbol [
 
 	self deprecated: 'Use #ensurePackage: instead.' transformWith: '`@rcv ensureExistAndRegisterPackageNamed: `@arg' -> '`@rcv ensurePackage: `@arg'.
 	^ self ensurePackage: aSymbol
 ]
 
 { #category : '*Deprecated12' }
-RPackageOrganizer >> globalPackageOf: aClass [
+PackageOrganizer >> globalPackageOf: aClass [
 
 	self deprecated:
 		'This method will be removed in the future version of Pharo because the implementation does not seems to match the old method comment and the usecases needing this method are too few.'.
@@ -66,7 +66,7 @@ RPackageOrganizer >> globalPackageOf: aClass [
 ]
 
 { #category : '*Deprecated12' }
-RPackageOrganizer >> includesCategory: aString [
+PackageOrganizer >> includesCategory: aString [
 	"Tests if a category is already included."
 
 	self deprecated: 'The manipulation of categories got deprecated in Pharo 12. It is better to manipulate directly the packages and tags.'.
@@ -74,21 +74,21 @@ RPackageOrganizer >> includesCategory: aString [
 ]
 
 { #category : '*Deprecated12' }
-RPackageOrganizer >> includesPackage: aPackage [
+PackageOrganizer >> includesPackage: aPackage [
 
 	self deprecated: 'Use #hasPackage: instead.' transformWith: '`@rcv includesPackage: `@arg' -> '`@rcv hasPackage: `@arg'.
 	^ self hasPackage: aPackage
 ]
 
 { #category : '*Deprecated12' }
-RPackageOrganizer >> includesPackageNamed: aSymbol [
+PackageOrganizer >> includesPackageNamed: aSymbol [
 
 	self deprecated: 'Use #hasPackage: instead.' transformWith: '`@rcv includesPackageNamed: `@arg' -> '`@rcv hasPackage: `@arg'.
 	^ self hasPackage: aSymbol
 ]
 
 { #category : '*Deprecated12' }
-RPackageOrganizer >> isEmptyCategoryNamed: categoryName [
+PackageOrganizer >> isEmptyCategoryNamed: categoryName [
 
 	self deprecated: 'The manipulation of categories got deprecated in Pharo 12. It is better to manipulate directly the packages and tags.'.
 	^ (self tagForCategory: categoryName)
@@ -97,7 +97,7 @@ RPackageOrganizer >> isEmptyCategoryNamed: categoryName [
 ]
 
 { #category : '*Deprecated12' }
-RPackageOrganizer class >> isPackageDefinedForClass: aClass [
+PackageOrganizer class >> isPackageDefinedForClass: aClass [
 
 	self
 		deprecated: 'This method is refering to a global which is not good. If you want to see if a class is packaged you should ask it to an instance of package organizer.'
@@ -107,7 +107,7 @@ RPackageOrganizer class >> isPackageDefinedForClass: aClass [
 ]
 
 { #category : '*Deprecated12' }
-RPackageOrganizer >> listAtCategoryNamed: categoryName [
+PackageOrganizer >> listAtCategoryNamed: categoryName [
 	"Answer the array of elements associated with the name, categoryName."
 
 	self deprecated: 'The manipulation of categories got deprecated in Pharo 12. It is better to manipulate directly the packages and tags.'.
@@ -115,7 +115,7 @@ RPackageOrganizer >> listAtCategoryNamed: categoryName [
 ]
 
 { #category : '*Deprecated12' }
-RPackageOrganizer >> packageExactlyMatchingExtensionName: anExtensionName [
+PackageOrganizer >> packageExactlyMatchingExtensionName: anExtensionName [
 	"only look for a package for which the name match 'anExtensionName', making no difference about case. Return nil if no package is found"
 
 	self
@@ -125,35 +125,35 @@ RPackageOrganizer >> packageExactlyMatchingExtensionName: anExtensionName [
 ]
 
 { #category : '*Deprecated12' }
-RPackageOrganizer >> registerPackage: aPackage [
+PackageOrganizer >> registerPackage: aPackage [
 
 	self deprecated: 'Use #addPackage: instead.' transformWith: '`@rcv registerPackage: `@arg' -> '`@rcv addPackage: `@arg'.
 	^ self addPackage: aPackage
 ]
 
 { #category : '*Deprecated12' }
-RPackageOrganizer >> registerPackageNamed: aString [
+PackageOrganizer >> registerPackageNamed: aString [
 
 	self deprecated: 'Use #ensurePackage: instead.' transformWith: '`@rcv registerPackageNamed: `@arg' -> '`@rcv ensurePackage: `@arg'.
 	^ self ensurePackage: aString
 ]
 
 { #category : '*Deprecated12' }
-RPackageOrganizer >> removeElement: behaviorName [
+PackageOrganizer >> removeElement: behaviorName [
 
 	self deprecated: 'The manipulation of categories got deprecated in Pharo 12. It is better to manipulate directly the packages and tags.'.
 	self error.
 ]
 
 { #category : '*Deprecated12' }
-RPackageOrganizer >> removeEmptyPackages [
+PackageOrganizer >> removeEmptyPackages [
 
 	self deprecated: 'Use #removeEmptyPackagesAndTags instead' transformWith: '`@rcv removeEmptyPackages' -> '`@rcv removeEmptyPackagesAndTags'.
 	self removeEmptyPackagesAndTags
 ]
 
 { #category : '*Deprecated12' }
-RPackageOrganizer >> tagForCategory: category [
+PackageOrganizer >> tagForCategory: category [
 
 	(self packageMatchingExtensionName: category) ifNotNil: [ :package |
 		package classTagNamed: (category withoutPrefix: package name , '-') ifPresent: [ :tag | ^ tag ] ].
@@ -162,7 +162,7 @@ RPackageOrganizer >> tagForCategory: category [
 ]
 
 { #category : '*Deprecated12' }
-RPackageOrganizer >> unregisterPackageNamed: symbol [
+PackageOrganizer >> unregisterPackageNamed: symbol [
 
 	self deprecated: 'Use #unregisterPackage: instead.' transformWith: '`@rcv unregisterPackageNamed: `@arg' -> '`@rcv unregisterPackage: `@arg'.
 	^ self unregisterPackage: symbol

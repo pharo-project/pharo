@@ -45,7 +45,7 @@ ClySystemEnvironment class >> currentImage [
 		currentImage := self new
 			name: 'Current image';
 			globals: Smalltalk globals;
-			packageOrganizer: RPackageOrganizer default;
+			packageOrganizer: PackageOrganizer default;
 			changesAnnouncer: SystemAnnouncer uniqueInstance]
 ]
 

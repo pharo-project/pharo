@@ -424,11 +424,11 @@ ReleaseTest >> testRPackageOrganizer [
 
 	"Now check :)"
 	self
-		assert: RPackageOrganizer allInstances size = 1
-		description: 'There are multiple (' , RPackageOrganizer allInstances size asString , ') instances of RPackageOrganizer'.
+		assert: PackageOrganizer allInstances size = 1
+		description: 'There are multiple (' , PackageOrganizer allInstances size asString , ') instances of RPackageOrganizer'.
 
 	self
-		assert: RPackageOrganizer allInstances first == self packageOrganizer
+		assert: PackageOrganizer allInstances first == self packageOrganizer
 		description: 'The default package organizer is the not the only instance of RPackageOrganizer'
 ]
 
