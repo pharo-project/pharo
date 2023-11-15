@@ -39,8 +39,8 @@ Class {
 		'repositoryURL',
 		'configurationName'
 	],
-	#category : 'ConfigurationCommandLineHandler-Core',
-	#package : 'ConfigurationCommandLineHandler-Core'
+	#category : 'Deprecated12',
+	#package : 'Deprecated12'
 }
 
 { #category : 'accessing' }
@@ -53,17 +53,24 @@ ConfigurationCommandLineHandler class >> description [
 	^ 'Install and inspect Metacello Configurations from the command line'
 ]
 
+{ #category : 'accessing' }
+ConfigurationCommandLineHandler class >> isDeprecated [
+	"Gofer will be removed in the future and this command line should not be used. Use Metacello or Monticello instead."
+
+	^ true
+]
+
 { #category : 'activation' }
 ConfigurationCommandLineHandler >> activate [
-	self activateHelpWithoutArguments
-		ifTrue: [ ^ self ].
-	
-	(self hasOption: 'install')
-		ifFalse: [ ^ self list ].
-		
+
+	self deprecated: 'This command line is deprecated. Metacello or Monticello should be used instead of gofer.'.
+	self activateHelpWithoutArguments ifTrue: [ ^ self ].
+
+	(self hasOption: 'install') ifFalse: [ ^ self list ].
+
 	self installConfiguration.
-	
-	self postConfiguration.
+
+	self postConfiguration
 ]
 
 { #category : 'accessing' }

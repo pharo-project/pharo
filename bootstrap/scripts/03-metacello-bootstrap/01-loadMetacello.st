@@ -4,7 +4,6 @@ mcPackages := #(
  'System-FileRegistry'
  'FileSystem-Memory'
  'StartupPreferences'
- 'ConfigurationCommandLineHandler-Core'
  'PragmaCollector'
  'System-FileRegistry'
  'Gofer-Core'
