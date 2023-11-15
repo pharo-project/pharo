@@ -63,6 +63,9 @@ PharoBootstrapInitialization class >> initializeCommandLineHandlerAndErrorHandli
 	RPackage initialize.
 	Behavior initialize.
 	Class initialize.
+	
+	"This next section can be removed in Pharo 13 since this is for deprecated aliases."
+	PackageOrganizer initialize.
 
 	UIManager default: NonInteractiveUIManager new.
 

@@ -373,7 +373,7 @@ RGPackageDefinition >> printOn: aStream [
 { #category : 'accessing' }
 RGPackageDefinition >> realPackage [
 
-	^ RPackageOrganizer default packageNamed: self name
+	^ PackageOrganizer default packageNamed: self name
 ]
 
 { #category : 'adding-removing' }

@@ -1,7 +1,7 @@
-Extension { #name : 'RPackageOrganizer' }
+Extension { #name : 'PackageOrganizer' }
 
 { #category : '*InitializePackagesCommandLineHandler' }
-RPackageOrganizer >> basicBootstrapInitialize [
+PackageOrganizer >> basicBootstrapInitialize [
 
 	| allBehaviors |
 	allBehaviors := Smalltalk allClassesAndTraits.
