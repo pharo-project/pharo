@@ -20,6 +20,11 @@ AbstractObjectsAsMethod >> flushCache [
 ]
 
 { #category : 'compatibility' }
+AbstractObjectsAsMethod >> methodClass [
+	^ self
+]
+
+{ #category : 'compatibility' }
 AbstractObjectsAsMethod >> methodClass: aMethodClass [
 ]
 
