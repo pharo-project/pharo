@@ -63,7 +63,7 @@ Class {
 { #category : 'class initialization' }
 Package class >> initialize [
 
-	"self deprecatedAliases: { #RPackage }."
+	self deprecatedAliases: { #RPackage }.
 	Properties
 		ifNil: [ self initializeProperties ]
 		ifNotNil: [
