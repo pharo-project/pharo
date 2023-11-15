@@ -60,9 +60,9 @@ PharoBootstrapInitialization class >> initializeCommandLineHandlerAndErrorHandli
 	Collection initialize.
 	CompiledMethod initialize.
 	Slot initialize.
-	Package initialize.
 	Behavior initialize.
 	Class initialize.
+	Package initialize.
 	
 	"Next three lines are for the deprecated aliases. This should be removed in Pharo 13"
 	PackageTag initialize.
