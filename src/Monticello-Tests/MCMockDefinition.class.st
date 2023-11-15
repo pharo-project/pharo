@@ -7,8 +7,9 @@ Class {
 	#instVars : [
 		'token'
 	],
-	#category : 'MonticelloMocks',
-	#package : 'MonticelloMocks'
+	#category : 'Monticello-Tests-Mocks',
+	#package : 'Monticello-Tests',
+	#tag : 'Mocks'
 }
 
 { #category : 'accessing' }
