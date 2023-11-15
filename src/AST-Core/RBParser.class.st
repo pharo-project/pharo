@@ -1231,7 +1231,7 @@ RBParser >> patchNegativeLiteral [
 	nextToken value: nextToken value negated.
 	(nextToken isKindOf: RBNumberLiteralToken)
 		ifTrue:
-			[nextToken source: (nextToken source copyFrom: 2 to: nextToken source size)].
+			[nextToken source: (nextToken source allButFirst)].
 	nextToken start: nextToken start + 1
 ]
 
