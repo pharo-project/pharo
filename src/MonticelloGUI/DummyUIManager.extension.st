@@ -1,5 +1,5 @@
 Extension { #name : 'DummyUIManager' }
 
-{ #category : '*Monticello-GUI-Diff' }
+{ #category : '*MonticelloGUI-Diff' }
 DummyUIManager >> merge: merger informing: aString [
 ]

@@ -1,13 +1,13 @@
 Extension { #name : 'MCMergeResolutionRequest' }
 
-{ #category : '*Monticello-GUI-Diff' }
+{ #category : '*MonticelloGUI-Diff' }
 MCMergeResolutionRequest >> defaultAction [
 	"Modally open a merge tool."
 
 	^self viewMerger
 ]
 
-{ #category : '*Monticello-GUI-Diff' }
+{ #category : '*MonticelloGUI-Diff' }
 MCMergeResolutionRequest >> viewMerger [
 	"Open a model browser to perform the merge and answer wheter merged."
 
@@ -18,7 +18,7 @@ MCMergeResolutionRequest >> viewMerger [
 					label: messageText) showModally]
 ]
 
-{ #category : '*Monticello-GUI-Diff' }
+{ #category : '*MonticelloGUI-Diff' }
 MCMergeResolutionRequest >> viewPatchMerger [
 	"Open a modal diff tools browser to perform the merge."
 

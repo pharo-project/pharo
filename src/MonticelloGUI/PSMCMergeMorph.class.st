@@ -9,8 +9,9 @@ Class {
 		'codeMorph',
 		'merged'
 	],
-	#category : 'Monticello-GUI-Diff',
-	#package : 'Monticello-GUI-Diff'
+	#category : 'MonticelloGUI-Diff',
+	#package : 'MonticelloGUI',
+	#tag : 'Diff'
 }
 
 { #category : 'instance creation' }

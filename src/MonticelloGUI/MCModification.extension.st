@@ -1,6 +1,6 @@
 Extension { #name : 'MCModification' }
 
-{ #category : '*Monticello-GUI-Diff' }
+{ #category : '*MonticelloGUI-Diff' }
 MCModification >> diff [
 	"Open a diff browser on the changes."
 
@@ -12,7 +12,7 @@ MCModification >> diff [
 			openInWindowLabeled: 'Diff' translated
 ]
 
-{ #category : '*Monticello-GUI-Diff' }
+{ #category : '*MonticelloGUI-Diff' }
 MCModification >> diffFromSource [
 	"Answer fromSource of the modification. If a class patch then answer
 	the fromSource with the class-side definition and comment appended."
@@ -25,7 +25,7 @@ MCModification >> diffFromSource [
 		ifFalse: [obsoletion diffSource]
 ]
 
-{ #category : '*Monticello-GUI-Diff' }
+{ #category : '*MonticelloGUI-Diff' }
 MCModification >> diffToSource [
 	"Answer toSource of the modification. If a class patch then answer
 	the toSource with the class-side definition and comment appended."

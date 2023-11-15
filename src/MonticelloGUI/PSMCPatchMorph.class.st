@@ -12,8 +12,9 @@ Class {
 	#classVars : [
 		'UsedByDefault'
 	],
-	#category : 'Monticello-GUI-Diff',
-	#package : 'Monticello-GUI-Diff'
+	#category : 'MonticelloGUI-Diff',
+	#package : 'MonticelloGUI',
+	#tag : 'Diff'
 }
 
 { #category : 'settings' }

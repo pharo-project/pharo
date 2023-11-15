@@ -1,5 +1,54 @@
 Extension { #name : 'MCPatchOperation' }
 
+{ #category : '*MonticelloGUI-Diff' }
+MCPatchOperation >> diff [
+	"Open a diff browser on the changes."
+]
+
+{ #category : '*MonticelloGUI-Diff' }
+MCPatchOperation >> diffFromSource [
+	"Answer fromSource of the operation for a diff tool."
+
+	^self fromSource
+]
+
+{ #category : '*MonticelloGUI-Diff' }
+MCPatchOperation >> diffToSource [
+	"Answer toSource of the operation for a diff tool."
+
+	^self toSource
+]
+
+{ #category : '*MonticelloGUI-Diff' }
+MCPatchOperation >> patchWrapper [
+	"Answer a wrapper for a patch tree for the receiver."
+
+	^PSMCPatchOperationWrapper with: self
+]
+
+{ #category : '*MonticelloGUI-Diff' }
+MCPatchOperation >> shortSummary [
+	"Answer a short summary of the receiver."
+
+	^self shortSummaryPrefix , self shortSummarySuffix
+]
+
+{ #category : '*MonticelloGUI-Diff' }
+MCPatchOperation >> shortSummaryPrefix [
+	"Answer a short summary prefix of the receiver."
+
+	^ self definition summary
+]
+
+{ #category : '*MonticelloGUI-Diff' }
+MCPatchOperation >> shortSummarySuffix [
+	"Answer a short summary suffix of the receiver."
+
+	^self fromSource = self toSource
+		ifTrue: [' (revision changed)']
+		ifFalse: ['']
+]
+
 { #category : '*MonticelloGUI' }
 MCPatchOperation >> source [
 	"I am call on the changes/merge tools of Monticello if you disable the 'Use Polymorph difference tool' on your setting."
@@ -25,4 +74,11 @@ MCPatchOperation >> summary [
 			ifTrue: [self remoteChosen ifTrue: [#underlined] ifFalse: [#struckOut]]
 			ifFalse: [#bold].
 	^ Text string:( self definition summary, self summarySuffix) attribute: (TextEmphasis perform: attribute)
+]
+
+{ #category : '*MonticelloGUI-Diff' }
+MCPatchOperation >> targetClassName [
+	"Answer the full class *name* of the target since the class may no longer exist."
+
+	^self definition fullClassName
 ]
