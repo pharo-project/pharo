@@ -524,26 +524,32 @@ MCWorkingCopy >> nextAncestors [
 
 { #category : 'private' }
 MCWorkingCopy >> nextVersionName [
+
 	| branch oldName base author |
 	branch := ''.
 	ancestry ancestors isEmpty
-		ifTrue: [counter ifNil: [counter := 0]. base := package name]
-		ifFalse:
-			[oldName := ancestry ancestors first name.
+		ifTrue: [
+			counter ifNil: [ counter := 0 ].
+			base := package name ]
+		ifFalse: [
+			oldName := ancestry ancestors first name.
 			oldName last isDigit
-				ifFalse: [base := oldName]
+				ifFalse: [ base := oldName ]
 				ifTrue: [
 					base := oldName copyUpToLast: $-.
 					branch := ((oldName copyAfterLast: $-) copyUpToLast: $.) copyAfter: $. ].
 			counter ifNil: [
-				counter := (ancestry ancestors collect: [:each |
-					each name last isDigit
-						ifFalse: [0]
-						ifTrue: [(each name copyAfterLast: $.) extractNumber]]) max]].
+				counter := (ancestry ancestors collect: [ :each |
+					            each name last isDigit
+						            ifFalse: [ 0 ]
+						            ifTrue: [ ('0' , (each name copyAfterLast: $.) select: [ :ea | ea isDigit ]) asNumber ] ]) max ] ].
 
-	branch isEmpty ifFalse: [branch := '.',branch].
+	branch isEmpty ifFalse: [ branch := '.' , branch ].
 	counter := counter + 1.
-	author := Author fullName collect: [ :each | each isAlphaNumeric ifTrue: [ each ] ifFalse: [ $_ ] ].
+	author := Author fullName collect: [ :each |
+		          each isAlphaNumeric
+			          ifTrue: [ each ]
+			          ifFalse: [ $_ ] ].
 	^ base , '-' , author , branch , '.' , counter asString
 ]
 
