@@ -8,7 +8,7 @@ RGPackage >> asPackageName [
 
 { #category : '*Calypso-Ring' }
 RGPackage >> calypsoEnvironmentType [
-	^RPackage
+	^Package
 ]
 
 { #category : '*Calypso-Ring' }

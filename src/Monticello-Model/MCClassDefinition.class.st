@@ -556,7 +556,7 @@ MCClassDefinition >> tagName [
 { #category : 'accessing' }
 MCClassDefinition >> tagName: aString [
 
-	tagName := aString = RPackage rootTagName
+	tagName := aString = Package rootTagName
 		           ifTrue: [ nil ]
 		           ifFalse: [ aString ifNotNil: [ aString asSymbol ] ]
 ]

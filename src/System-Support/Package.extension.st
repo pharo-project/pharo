@@ -1,7 +1,7 @@
-Extension { #name : 'RPackage' }
+Extension { #name : 'Package' }
 
 { #category : '*System-Support' }
-RPackage >> allUnsentMessages [
+Package >> allUnsentMessages [
 
 	^ SystemNavigation new
 		  environment: self environment;

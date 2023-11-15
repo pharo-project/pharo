@@ -29,7 +29,7 @@ PharoBootstrapRuleTest >> testRuleDoesNotFailIfAppliedOnNonBootstrapPackage [
 	rule := PharoBootstrapRule new.
 	rule class classVarNamed: 'DependencyChecker' put: PharoBootstrapAnalyzerStubWithNoNewDependency.
 
-	critiques := rule check: (RPackage named: #P1).
+	critiques := rule check: (Package named: #P1).
 
 	self assertEmpty: critiques
 ]
@@ -40,7 +40,7 @@ PharoBootstrapRuleTest >> testRuleDoesNotFailIfNoNewExternalDependency [
 	rule := PharoBootstrapRule new.
 	rule class classVarNamed: 'DependencyChecker' put: PharoBootstrapAnalyzerStubWithNoNewDependency.
 
-	critiques := rule check: (RPackage named: #Kernel).
+	critiques := rule check: (Package named: #Kernel).
 
 	self assertEmpty: critiques
 ]
@@ -52,7 +52,7 @@ PharoBootstrapRuleTest >> testRuleFailsIfAnyNewExternalDependencyFound [
 	rule class
 		classVarNamed: 'DependencyChecker'
 		put: PharoBootstrapAnalyzerStubWithNewDependency.
-	packageUnderTest := RPackage named: #Kernel.
+	packageUnderTest := Package named: #Kernel.
 
 	critiques := rule check: packageUnderTest.
 

@@ -34,7 +34,7 @@ ClyBrowseIcebergRepositoryCommand >> execute [
 	env := RGEnvironment new.
 	commit packageNames
 		do: [ :packageName |
-			snapshot := commit snapshotFor: (RPackage named: packageName).
+			snapshot := commit snapshotFor: (Package named: packageName).
 			snapshot importInto: env asPackageNamed: packageName ]
 		displayingProgress: 'loading'.
 	env clean.

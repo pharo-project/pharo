@@ -140,7 +140,7 @@ DAMessageSendAnalyzer >> rPackage [
 
 	^ packageAnalysis rPackageSet packages
 		  ifNotEmpty: [ :rPackages | rPackages detect: [ :each | each name = self packageName ] ]
-		  ifEmpty: [ RPackage named: 'Virtual' , self packageName ]
+		  ifEmpty: [ Package named: 'Virtual' , self packageName ]
 ]
 
 { #category : 'computing' }

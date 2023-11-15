@@ -11,7 +11,7 @@ Class {
 
 { #category : 'activation' }
 ClyRunTestsFromPackagesCommand class >> contextClass [
-	^RPackage asCalypsoItemContext
+	^Package asCalypsoItemContext
 ]
 
 { #category : 'activation' }
