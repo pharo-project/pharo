@@ -3,14 +3,14 @@ Mock for dependency testing
 "
 Class {
 	#name : 'MCMockDependentItem',
-	#superclass : 'MCMock',
+	#superclass : 'Object',
 	#instVars : [
 		'name',
 		'provides',
 		'requires'
 	],
-	#category : 'Monticello-Mocks',
-	#package : 'Monticello',
+	#category : 'Monticello-Tests-Mocks',
+	#package : 'Monticello-Tests',
 	#tag : 'Mocks'
 }
 

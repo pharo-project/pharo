@@ -24,13 +24,12 @@ MCPackageTest >> tearDown [
 { #category : 'tests' }
 MCPackageTest >> testUnload [
 
-	| mock |
 	self mockPackage unload.
 	self deny: (testingEnvironment hasClassNamed: #MCMockClassA).
 	self deny: (MCSnapshotTest includesSelector: #mockClassExtension).
 	self deny: (MCSnapshotTest hasProtocol: self mockExtensionProtocol).
-	mock := testingEnvironment at: #MCMock.
-	self assert: (mock subclasses
+	testingEnvironment at: #MCMockClassA ifPresent: [ self fail ].
+	self assert: (Object subclasses
 			 detect: [ :c | c name = #MCMockClassA ]
 			 ifNone: [  ]) isNil
 ]
@@ -39,15 +38,14 @@ MCPackageTest >> testUnload [
 MCPackageTest >> testUnloadWithAdditionalTracking [
 	"This is to test against another entity removing the extension protocol as well."
 
-	| mock |
 	SystemAnnouncer uniqueInstance when: MethodRemoved send: #aMethodRemoved: to: self.
 	self assert: (SystemAnnouncer uniqueInstance hasSubscriber: self).
 	self mockPackage unload.
 	self deny: (testingEnvironment hasClassNamed: #MCMockClassA).
 	self deny: (MCSnapshotTest includesSelector: #mockClassExtension).
 	self deny: (MCSnapshotTest hasProtocol: self mockExtensionProtocol).
-	mock := testingEnvironment at: #MCMock.
-	self assert: (mock subclasses
+	testingEnvironment at: #MCMockClassA ifPresent: [ self fail ].
+	self assert: (Object subclasses
 			 detect: [ :c | c name = #MCMockClassA ]
 			 ifNone: [  ]) isNil.
 	SystemAnnouncer uniqueInstance unsubscribe: self.

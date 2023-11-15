@@ -7,8 +7,8 @@ Class {
 	#instVars : [
 		'token'
 	],
-	#category : 'Monticello-Mocks',
-	#package : 'Monticello',
+	#category : 'Monticello-Tests-Mocks',
+	#package : 'Monticello-Tests',
 	#tag : 'Mocks'
 }
 
