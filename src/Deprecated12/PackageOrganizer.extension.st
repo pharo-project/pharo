@@ -30,8 +30,8 @@ PackageOrganizer >> categoriesMatching: matchString [
 { #category : '*Deprecated12' }
 PackageOrganizer >> categoryOfElement: behaviorName [
 
-	self deprecated: 'Use #categoryOfBehavior: instead' transformWith: '`@rcv categoryOfElement: `@arg' -> '`@rcv categoryOfBehavior: `@arg'.
-	^ self categoryOfBehavior: behaviorName
+	self deprecated: 'The concept of category go removed from Pharo.'.
+	^ (self class environment at: behaviorName) category
 ]
 
 { #category : '*Deprecated12' }

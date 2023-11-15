@@ -10,18 +10,11 @@ CDNormalMetaclassParserTest >> classDefinitionString [
 
 	^ '{superclassName} class << {className} class
 		traits: {classTraitName} classTrait;
-		slots: {slots}'
-			format: {
-				'className' -> self className.
-				'superclassName' -> self superclassName.
-				'slots' -> self slotsArray.
-				'classTraitName' -> self classTraitName
-			 } asDictionary
-]
-
-{ #category : 'helpers' }
-CDNormalMetaclassParserTest >> classTraitName [
-	^ 'TApplyingOnClassSide'
+		slots: {slots}' format: {
+			  ('className' -> self className).
+			  ('superclassName' -> self superclassName).
+			  ('slots' -> self slotsArray).
+			  ('classTraitName' -> self traitDefinition) } asDictionary
 ]
 
 { #category : 'helpers' }
@@ -39,5 +32,5 @@ CDNormalMetaclassParserTest >> traitCompositionNode [
 { #category : 'helpers' }
 CDNormalMetaclassParserTest >> traitDefinition [
 
-	^ self classTraitName
+	^ 'TEmpty'
 ]

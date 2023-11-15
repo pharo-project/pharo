@@ -337,7 +337,7 @@ ReleaseTest >> testNoSentButNotImplementedSelectors [
 	                    'RBFindAndReplacePreviewPresenter>>#initializeDialogWindow:' 'RBLintRuleTestData>>#runOnEnvironment:'
 	                    'RBRemoveClassRefactoring>>#senders' 'RBTransformationDummyRuleTest class>>#initializeAfterLoad1'
 	                    'RBTransformationDummyRuleTest class>>#rewrite:methods:name:' 'RBTransformationRuleTestData class>>#initializeAfterLoad1'
-	                    'RBTransformationRuleTestData class>>#rewrite:methods:name:' 'RGChunkImporter>>#visitDoItChunk:' 'PackageOrganizer>>#categoryOfElement:'
+	                    'RBTransformationRuleTestData class>>#rewrite:methods:name:' 'RGChunkImporter>>#visitDoItChunk:'
 	                    'ReSentNotImplementedRuleTest>>#sampleMethod' 'Rectangle>>#newRectButtonPressedDo:inWorld:' 'RubSegmentMorph>>#intersects:'
 	                    'RubTextSegmentMorph>>#displayIconAt:onAthensCanvas:' 'SpApplication>>#ensureConfiguration' 'SpApplicationBackend>>#notify:'
 	                    'SpChangeSorterPresenter>>#createRingMethodForRemovedSelector:inClass:'

@@ -1,6 +1,6 @@
 Extension { #name : 'PackageOrganizer' }
 
-{ #category : '*Monticello-Package' }
+{ #category : '*Monticello-RPackage' }
 PackageOrganizer >> isDefinedAsPackageOrSubPackageInMC: aSymbol [
 	"a category has been added. "
 

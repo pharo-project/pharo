@@ -3,7 +3,6 @@ A Package is a new implementation of package.
 
 
 Instance Variables
-	definedSelectors:		Dictionary The list of defined selectors in the package mapped by classes (excludes the extension selectors)
 	extensionSelectors:		Dictionary The list of extension selectors in the package mapped by classes
 	name:		String is the name of the package
 	classTags: Collection is the list of tags in the package
@@ -18,14 +17,10 @@ This class went over 4 internal representations implementation.
 	This was not good since we want to have defined classes without methods. 
 	- third: 4 dictionaries + definedClasses
 	This was not good because it was way too complex
-	- Fourth: 2 dictionaries + tags including the classes
-	The is the idea of the first iteration but the code got cleaned and it is now way easier to implement
+	- Fourth: 1 dictionary + tags including the classes
+	Now the classes are able to give their defining selectors really fast so there is no need to have the defining selectors. We just save a dictionary with the extended classes and the extension selectors for speed reasons.
 
-Originally I wanted to avoid to have a defined class list and I wanted to avoid to have to declare the class as defined. But this is not really good since
-	- we will want to know if a class definition (without method for example is defined in a given package)
-	- second this is easier to hook the packageOf: behavior (we register the package class when the class is 	added to the package).
-
-defined classes information is redundant with the dictionary keys of defined methods but we would have to check and register the class to the packageOrganizer the first time a method is defined then also check on remove to unregister the class from the packageOrganizer.
+Originally I wanted to avoid to have a defined class list and I wanted to avoid to have to declare the class as defined. But this is not really good since we will want to know if a class definition (without method for example) is defined in a given package
 
 Adding a method does not define the class as a defined package class. This has to be done explictly. The reason for this choice is that a class should register to the packageOrganizer and that I do not want to do it each time a method is added and I do not want to test it each time a method is added. Now this is done only when the class is declared as defined. 
 We could also give the complete freedom to the client to register the class but I thought it was a good compromise. 
@@ -47,11 +42,6 @@ So that we can have a package infrastructure as follows:
 			ClassD
 			ClassE
 			ClassA		
-	
-Todo
-====
-	Next: 
-	- finish 
 "
 Class {
 	#name : 'Package',

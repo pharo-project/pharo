@@ -65,7 +65,6 @@ RTFMethodTracer class >> methodsBlackList [
 		ProtoObject. #initialize.
 		SequenceableCollection. #first.
 		SmallInteger. #=.
-		TraitBehavior. #methodDict.
 		UndefinedObject. #notNil.
 	}
 ]
