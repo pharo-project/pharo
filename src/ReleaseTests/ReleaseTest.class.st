@@ -319,8 +319,7 @@ ReleaseTest >> testNoSentButNotImplementedSelectors [
 	                    'InstructionStream>>#interpretNext3ByteSistaV1Instruction:for:extA:extB:startPC:'
 	                    'KMDispatcher>>#spotterForKeysFor:' 'KMMetaModifier>>#printOsRepresentationOn:' 'LGitDiff>>#includesFileNamed:'
 	                    'LGitRepository>>#cloneRemote:signature:branch:checkoutOptions:' 'LazyListMorph>>#drawOnAthensCanvas:'
-	                    'MCAddition>>#myVersionOn:' 'MCConfigurationBrowser>>#addRepository' 'MCConfigurationBrowser>>#changedList'
-	                    'MCFileTreeAbstractReader>>#packageProperties' 'MCModification>>#myVersionOn:' 'MCOrganizationDefinition>>#addAnalysisToPackageChangeSet:change:'
+	                    'MCAddition>>#myVersionOn:' 'MCFileTreeAbstractReader>>#packageProperties' 'MCModification>>#myVersionOn:' 'MCOrganizationDefinition>>#addAnalysisToPackageChangeSet:change:'
 	                    'MicrodownSpecComponentForTest class>>#open' 'MockLessonView>>#showTutorialNode:' 'MorphTreeMorph>>#nodeExpandRequest:'
 	                    'MorphTreeMorph>>#selectItemsRequest:' 'PSMCClassChangeWrapper>>#remoteChosen' 'PolygonMorph>>#intersects:' 'RBBasicDummyLintRuleTest class>>#createMatcherFor:method:'
 	                    'RBBasicDummyLintRuleTest class>>#usesAdd' 'RBBasicDummyLintRuleTest class>>#unreferencedVariables'
@@ -337,10 +336,9 @@ ReleaseTest >> testNoSentButNotImplementedSelectors [
 	                    'RBFindAndReplacePreviewPresenter>>#initializeDialogWindow:' 'RBLintRuleTestData>>#runOnEnvironment:'
 	                    'RBRemoveClassRefactoring>>#senders' 'RBTransformationDummyRuleTest class>>#initializeAfterLoad1'
 	                    'RBTransformationDummyRuleTest class>>#rewrite:methods:name:' 'RBTransformationRuleTestData class>>#initializeAfterLoad1'
-	                    'RBTransformationRuleTestData class>>#rewrite:methods:name:' 'RGChunkImporter>>#visitDoItChunk:'
-	                    'ReSentNotImplementedRuleTest>>#sampleMethod' 'Rectangle>>#newRectButtonPressedDo:inWorld:' 'RubSegmentMorph>>#intersects:'
-	                    'RubTextSegmentMorph>>#displayIconAt:onAthensCanvas:' 'SpApplication>>#ensureConfiguration' 'SpApplicationBackend>>#notify:'
-	                    'SpChangeSorterPresenter>>#createRingMethodForRemovedSelector:inClass:'
+	                    'RBTransformationRuleTestData class>>#rewrite:methods:name:' 'RGChunkImporter>>#visitDoItChunk:' 'ReSentNotImplementedRuleTest>>#sampleMethod'
+	                    'Rectangle>>#newRectButtonPressedDo:inWorld:' 'RubSegmentMorph>>#intersects:' 'RubTextSegmentMorph>>#displayIconAt:onAthensCanvas:'
+	                    'SpApplication>>#ensureConfiguration' 'SpApplicationBackend>>#notify:' 'SpChangeSorterPresenter>>#createRingMethodForRemovedSelector:inClass:'
 	                    'SpRenameDefaultSpecToDefaultLayoutRefactoring>>#preconditions' 'SpRenameDefaultSpecToDefaultLayoutRefactoring>>#initialize'
 	                    'SpTransmission>>#from:port:to:transform:postTransmission:' 'SpTreeColumn>>#rowMorphFor:' 'SpUIThemeDecoratorTest>>#testDoesNotUnderstand'
 	                    'SpWindowPresenter>>#notify:' 'StSpotterPragmaBasedProcessor>>#installKeymappingsOn:'
@@ -393,6 +391,22 @@ ReleaseTest >> testObsoleteClasses [
 					print: obsoleteClasses ]]
 ]
 
+{ #category : 'tests - rpackage' }
+ReleaseTest >> testPackageOrganizer [
+	"Ensure other tests temporary created organizers are collected"
+
+	3 timesRepeat: [ Smalltalk garbageCollect ].
+
+	"Now check :)"
+	self
+		assert: PackageOrganizer allInstances size = 1
+		description: 'There are multiple (' , PackageOrganizer allInstances size asString , ') instances of PackageOrganizer'.
+
+	self
+		assert: PackageOrganizer allInstances first == self packageOrganizer
+		description: 'The default package organizer is the not the only instance of PackageOrganizer'
+]
+
 { #category : 'tests' }
 ReleaseTest >> testPharoVersionFileExists [
 
@@ -414,22 +428,6 @@ ReleaseTest >> testProperManifestClasses [
 	manifests := self class environment allClasses select: [:each | each isManifest ].
 	self assert: (manifests allSatisfy: [:each | each inheritsFrom: PackageManifest ]).
 	self assert: (manifests allSatisfy: [:each | each name beginsWith: 'Manifest' ])
-]
-
-{ #category : 'tests - rpackage' }
-ReleaseTest >> testPackageOrganizer [
-	"Ensure other tests temporary created organizers are collected"
-
-	3 timesRepeat: [ Smalltalk garbageCollect ].
-
-	"Now check :)"
-	self
-		assert: PackageOrganizer allInstances size = 1
-		description: 'There are multiple (' , PackageOrganizer allInstances size asString , ') instances of PackageOrganizer'.
-
-	self
-		assert: PackageOrganizer allInstances first == self packageOrganizer
-		description: 'The default package organizer is the not the only instance of PackageOrganizer'
 ]
 
 { #category : 'tests' }

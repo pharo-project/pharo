@@ -1,7 +1,7 @@
-Extension { #name : 'MCPatchBrowser' }
+Extension { #name : 'MCMergeBrowser' }
 
 { #category : '*Monticello-GUI-Diff' }
-MCPatchBrowser >> diffSelection [
+MCMergeBrowser >> diffSelection [
 	"Open a diff browser on the selection."
 
 	selection ifNotNil:
@@ -9,7 +9,7 @@ MCPatchBrowser >> diffSelection [
 ]
 
 { #category : '*Monticello-GUI-Diff' }
-MCPatchBrowser >> methodListMenu: aMenu [
+MCMergeBrowser >> methodListMenu: aMenu [
 
 	selection
 		ifNotNil: [
