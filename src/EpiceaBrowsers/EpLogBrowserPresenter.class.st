@@ -732,7 +732,9 @@ EpLogBrowserPresenter >> refresh [
 
 { #category : #refreshing }
 EpLogBrowserPresenter >> refreshEntryContent [
-	self refreshEntryContentWith: self selectedEntryItems
+	"Refresh the change list. I defer this action, so I'm prepated to be called from a non-UI process, such as the one of `OmDeferrer`. See: https://github.com/pharo-project/pharo/issues/9638"
+
+ 	self defer: [ self refreshEntryContentWith: self selectedEntryItems ]
 ]
 
 { #category : #refreshing }
