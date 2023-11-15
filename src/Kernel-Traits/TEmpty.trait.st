@@ -13,6 +13,7 @@ Trait << #TMyTrait
 "
 Trait {
 	#name : 'TEmpty',
-	#category : 'Kernel-Traits',
-	#package : 'Kernel-Traits'
+	#category : 'Kernel-Traits-Base',
+	#package : 'Kernel-Traits',
+	#tag : 'Base'
 }

@@ -115,6 +115,11 @@ TaAliasMethod >> isLocalAliasSelector: aSymbol [
 	^ (self hasAliasForNew: aSymbol) or: [ inner isLocalAliasSelector: aSymbol ]
 ]
 
+{ #category : 'testing' }
+TaAliasMethod >> isTraitAlias [
+	^ true
+]
+
 { #category : 'instance creation' }
 TaAliasMethod >> newSelectorFor: aSelector [
 	^ aliases keyAtValue: aSelector
