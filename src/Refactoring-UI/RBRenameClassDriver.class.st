@@ -51,15 +51,17 @@ RBRenameClassDriver >> requestNewName [
 	
 	| newName |
 	newName := SpRequestDialog new 
-							title: 'Provide a new class name for:' ;
+							title: 'Please provide a new class name' ;
+							label: 'The new name should be valid and not the one of an existing class.';
 							text: oldName;
 							openModal.
-	refactoring newName: newName
+	newName ifNil: [ ^ nil ].
+	refactoring newName: newName.
+	^ newName
 ]
 
 { #category : 'execution' }
 RBRenameClassDriver >> runRefactoring [
-	
 	| newName |
 	self configureRefactoring.
 	refactoring doesClassToBeRenamedExist
@@ -71,9 +73,14 @@ RBRenameClassDriver >> runRefactoring [
 	"usually we do not spawn a dialog out of the blue but we should ask the application.
 	It means that the driver should get the application from the tool that invoked it."
 
-	self requestNewName.
-	[ refactoring isValidClassName check ] whileFalse: [ 
-			self requestNewName ].
+	newName := self requestNewName.
+	newName ifNil: [ ^ self ].
+	newName = oldName ifTrue: [ ^ self ].
+
+	[ refactoring isValidClassName check & refactoring isNotGlobal check ] whileFalse: [ 
+			newName := self requestNewName.
+			newName ifNil: [ ^ self ].
+			newName = oldName ifTrue: [ ^ self ]. ].
 	self applyChanges
 	
 ]
