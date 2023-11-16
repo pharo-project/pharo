@@ -72,11 +72,11 @@ MCScriptDefinition >> installScript [
 
 { #category : 'installing' }
 MCScriptDefinition >> installScript: aString [
-	| sel pi |
-	sel := (self scriptSelector, ':') asSymbol.
-	pi := self packageSet.
-	(pi respondsTo: sel)
-		ifTrue: [pi perform: sel with: aString]
+
+	self systemPackage ifNotNil: [ :package |
+		| selector |
+		selector := self scriptSelector asMutator.
+		(package respondsTo: selector) ifTrue: [ package perform: selector with: aString ] ]
 ]
 
 { #category : 'testing' }
@@ -92,11 +92,6 @@ MCScriptDefinition >> load [
 { #category : 'accessing' }
 MCScriptDefinition >> packageName [
 	^ packageName
-]
-
-{ #category : 'accessing' }
-MCScriptDefinition >> packageSet [
-	^ RPackageSet named: packageName
 ]
 
 { #category : 'accessing' }
@@ -122,6 +117,13 @@ MCScriptDefinition >> source [
 { #category : 'accessing' }
 MCScriptDefinition >> summary [
 	^ packageName, ' ', self scriptSelector
+]
+
+{ #category : 'accessing' }
+MCScriptDefinition >> systemPackage [
+	"Return the corresponding system package. Return nil if no package in the system has this name."
+
+	^ self class environment organization packageNamed: self packageName ifAbsent: [ nil ]
 ]
 
 { #category : 'installing' }

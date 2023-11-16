@@ -570,11 +570,6 @@ MCWorkingCopy >> packageNameWithStar [
 		ifFalse: [self packageName]
 ]
 
-{ #category : 'accessing' }
-MCWorkingCopy >> packageSet [
-	^ package packageSet
-]
-
 { #category : 'printing' }
 MCWorkingCopy >> printOn: aStream [
 
