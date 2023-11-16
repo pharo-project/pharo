@@ -10,7 +10,7 @@ Class {
 }
 
 { #category : 'instance creation' }
-RBRenameClassDriver class >> rename: oldName to: newName [ 
+RBRenameClassDriver class >> rename: oldName [
 	
 	^ self new 
 		oldName: oldName;

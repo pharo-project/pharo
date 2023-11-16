@@ -23,18 +23,7 @@ SycRenameClassCommand2 >> defaultMenuItemName [
 SycRenameClassCommand2 >> execute [
 
 	(RBRenameClassDriver
-		rename: targetClass name
-		to: newName) scopes: toolContext refactoringScopes; runRefactoring
-]
-
-{ #category : 'accessing' }
-SycRenameClassCommand2 >> newName [
-	^ newName
-]
-
-{ #category : 'accessing' }
-SycRenameClassCommand2 >> newName: anObject [
-	newName := anObject
+		rename: targetClass name) scopes: toolContext refactoringScopes; runRefactoring
 ]
 
 { #category : 'execution' }
