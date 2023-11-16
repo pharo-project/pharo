@@ -129,7 +129,6 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		
 		spec package: 'FFI-Kernel'.
 				
-		spec package: 'CodeExport'.
 		spec package: 'CodeImport'.
 		
 		spec package: 'CodeImportCommandLineHandlers'.
@@ -206,7 +205,6 @@ BaselineOfPharoBootstrap >> baseline: spec [
 			'AST-Core'.
 			'Collections-Arithmetic'.
 			'Collections-Atomic'.
-			'CodeExport'.
 			'CodeImport'.
 			'CodeImportCommandLineHandlers'.
 			'Jobs'.
