@@ -11,5 +11,7 @@ Class {
 
 { #category : 'meta-data - dependency analyser' }
 ManifestSystemSources class >> manuallyResolvedDependencies [
-	^ #(#'Announcements-Core' #'Collections-Abstract')
+
+	<ignoreForCoverage>
+	^ #(#'Announcements-Core' #'System-Support')
 ]
