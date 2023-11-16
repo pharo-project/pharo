@@ -2,7 +2,9 @@ Class {
 	#name : 'RBRenameClassDriver',
 	#superclass : 'RBInteractionDriver',
 	#instVars : [
-		'oldName'
+		'oldName',
+		'newName',
+		'shouldEscape'
 	],
 	#category : 'Refactoring-UI-Drivers',
 	#package : 'Refactoring-UI',
@@ -29,6 +31,13 @@ RBRenameClassDriver >> configureRefactoring [
 		refactoring := RBRenameClassRefactoring rename: oldName.
 ]
 
+{ #category : 'resources' }
+RBRenameClassDriver >> initialize [ 
+	
+	super initialize.
+	shouldEscape := false.
+]
+
 { #category : 'accessing' }
 RBRenameClassDriver >> model: aRBNamespace [
 	"Pay attention when you specify a model that is a selection of the full environment. 
@@ -47,22 +56,25 @@ RBRenameClassDriver >> oldName: aString [
 ]
 
 { #category : 'execution' }
-RBRenameClassDriver >> requestNewName [
+RBRenameClassDriver >> requestNewNameBasedOn: aName [
 	
-	| newName |
 	newName := SpRequestDialog new 
 							title: 'Please provide a new class name' ;
 							label: 'The new name should be valid and not the one of an existing class.';
-							text: oldName;
+							text: aName;
 							openModal.
-	newName ifNil: [ ^ nil ].
+						
+	newName ifNil: [ shouldEscape := true. ^ self ].
+	newName = oldName 
+		ifTrue: [ shouldEscape := true. ^ self ].
+	
 	refactoring newName: newName.
 	^ newName
 ]
 
 { #category : 'execution' }
 RBRenameClassDriver >> runRefactoring [
-	| newName |
+	
 	self configureRefactoring.
 	refactoring doesClassToBeRenamedExist
 		ifFalse: [ self inform: 'The class ', oldName, ' does not exist.'. ^ self ].
@@ -73,14 +85,12 @@ RBRenameClassDriver >> runRefactoring [
 	"usually we do not spawn a dialog out of the blue but we should ask the application.
 	It means that the driver should get the application from the tool that invoked it."
 
-	newName := self requestNewName.
-	newName ifNil: [ ^ self ].
-	newName = oldName ifTrue: [ ^ self ].
+	newName := self requestNewNameBasedOn: oldName.
+	shouldEscape ifTrue: [ ^ self ].
 
 	[ refactoring isValidClassName check & refactoring isNotGlobal check ] whileFalse: [ 
-			newName := self requestNewName.
-			newName ifNil: [ ^ self ].
-			newName = oldName ifTrue: [ ^ self ]. ].
+			newName := self requestNewNameBasedOn: newName.
+			shouldEscape ifTrue: [ ^ self ] ].
 	self applyChanges
 	
 ]
