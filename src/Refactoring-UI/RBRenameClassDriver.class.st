@@ -31,7 +31,7 @@ RBRenameClassDriver >> configureRefactoring [
 		refactoring := RBRenameClassRefactoring rename: oldName.
 ]
 
-{ #category : 'resources' }
+{ #category : 'initialization' }
 RBRenameClassDriver >> initialize [ 
 	
 	super initialize.
