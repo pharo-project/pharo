@@ -227,7 +227,8 @@ ThemeIcons >> beReportNotFound [
 
 { #category : 'accessing' }
 ThemeIcons >> blankIcon [
-	^ self blankIconOfWidth: 16
+
+	^ self iconNamed: #blank
 ]
 
 { #category : 'utilities' }
@@ -304,7 +305,7 @@ ThemeIcons >> iconNamed: aSymbol [
 				ifTrue: [
 					self crTrace: (aSymbol, ' icon not found!').
 					self notFoundIcon scaledByDisplayScaleFactor ]
-				ifFalse: [ self blankIcon scaledByDisplayScaleFactor ]])
+				ifFalse: [ self blankIcon ]])
 ]
 
 { #category : 'accessing' }
