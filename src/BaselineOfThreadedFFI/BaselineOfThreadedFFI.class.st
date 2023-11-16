@@ -39,11 +39,10 @@ BaselineOfThreadedFFI >> baseline: spec [
 { #category : 'doits' }
 BaselineOfThreadedFFI >> reset [
 
-	Smalltalk globals
-		at: #FFIMethodRegistry 
-		ifPresent: [ :class | class resetAll ].
-		
-	Smalltalk globals
-		at: #FFIBackend 
-		ifPresent: [ :class | class reset ]
+	"This first line is a temporary hack for https://github.com/pharo-project/pharo/issues/15370. We should remove it not long after introducing it."
+	Smalltalk globals at: #FFIMethodRegistry ifPresent: [ :class | (TFFunctionDefinition >> #primFreeDefinition) recompile ].
+
+	Smalltalk globals at: #FFIMethodRegistry ifPresent: [ :class | class resetAll ].
+
+	Smalltalk globals at: #FFIBackend ifPresent: [ :class | class reset ]
 ]
