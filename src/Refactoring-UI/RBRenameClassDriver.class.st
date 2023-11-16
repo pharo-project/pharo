@@ -30,6 +30,18 @@ RBRenameClassDriver >> configureRefactoring [
 ]
 
 { #category : 'accessing' }
+RBRenameClassDriver >> model: aRBNamespace [
+	"Pay attention when you specify a model that is a selection of the full environment. 
+	Indeed imagine that you have a model of just one package, 
+	the precondition may say that the new name is not the one of an already existing global 
+	that is defined outside of your model (think of OrderedCollection) in this case
+	when the refactoring will check then it will say that the name is ok, and you will destroy the system
+	by creating a new class with the same name as an existing one."
+	
+	model := aRBNamespace
+]
+
+{ #category : 'accessing' }
 RBRenameClassDriver >> oldName: aString [ 
 	oldName := aString
 ]

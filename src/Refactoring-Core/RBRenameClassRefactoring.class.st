@@ -22,6 +22,12 @@ Class {
 	#tag : 'Refactorings'
 }
 
+{ #category : 'displaying' }
+RBRenameClassRefactoring class >> basicMenuItemString [
+
+	^ 'Rename'
+]
+
 { #category : 'instance creation' }
 RBRenameClassRefactoring class >> model: aRBNamespace rename: aClass to: aNewName [
 	^ self new
