@@ -227,25 +227,8 @@ ThemeIcons >> beReportNotFound [
 
 { #category : 'accessing' }
 ThemeIcons >> blankIcon [
-	^ self blankIconOfWidth: 16
-]
 
-{ #category : 'utilities' }
-ThemeIcons >> blankIconOfWidth: aNumber [
-
-	"We hard-code the most used cases to avoid symbol creation"
-
-	aNumber == 16 ifTrue: [ ^ self icons
-		at: #blank16
-		ifAbsentPut: [Form extent: 16 @ 1 depth: 8] ].
-
-	aNumber == 10 ifTrue: [ ^ self icons
-		at: #blank10
-		ifAbsentPut: [Form extent: 10 @ 1 depth: 8] ].
-
-	^ self icons
-		at: ('blank-' , aNumber asString) asSymbol
-		ifAbsentPut: [Form extent: aNumber @ 1 depth: 8]
+	^ self iconNamed: #blank
 ]
 
 { #category : 'private' }
@@ -303,8 +286,8 @@ ThemeIcons >> iconNamed: aSymbol [
 			self isReportingNotFound
 				ifTrue: [
 					self crTrace: (aSymbol, ' icon not found!').
-					self notFoundIcon scaledByDisplayScaleFactor ]
-				ifFalse: [ self blankIcon scaledByDisplayScaleFactor ]])
+					self notFoundIcon ]
+				ifFalse: [ self blankIcon ]])
 ]
 
 { #category : 'accessing' }
@@ -367,6 +350,8 @@ ThemeIcons >> loadIconsFromUrlUsingScale: newScale [
 					at: each base asSymbol
 					put: (self readPNGFrom: each) ]
 				on: Error do: [ :e | self crTrace: ('{1} not a PNG, skipping.' format: { each fullName }) ] ] ].
+	newIconsPerScale keysAndValuesDo: [ :iconsScale :icons |
+		icons at: #notFound ifAbsentPut: [ Color red iconOrThumbnailOfSize: 16 * iconsScale ] ].
 	iconsPerScale := newIconsPerScale.
 	scale := newScale
 ]
@@ -383,9 +368,8 @@ ThemeIcons >> name: aName [
 
 { #category : 'accessing' }
 ThemeIcons >> notFoundIcon [
-	^ self icons
-		at: #notFoundIcon
-		ifAbsentPut: [ Color red iconOrThumbnailOfSize: 16 ]
+
+	^ self iconNamed: #notFound ifNone: [ Form extent: 0@0 ]
 ]
 
 { #category : 'printing' }
