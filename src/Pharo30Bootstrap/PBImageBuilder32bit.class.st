@@ -2,14 +2,14 @@
 I create pharo images for Spur VMs in 32bit format.
 "
 Class {
-	#name : 'PBImageBuilderSpur5032bit',
-	#superclass : 'PBImageBuilderSpur50',
+	#name : 'PBImageBuilder32bit',
+	#superclass : 'PBAbstractImageBuilder',
 	#category : 'Pharo30Bootstrap',
 	#package : 'Pharo30Bootstrap'
 }
 
 { #category : 'initialization' }
-PBImageBuilderSpur5032bit >> initializeBackend [
+PBImageBuilder32bit >> initializeBackend [
 
 	espellBackend := EPSimulatorBackend for32Bit forBootstrap
 ]
