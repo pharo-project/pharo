@@ -14,7 +14,7 @@ Class {
 }
 
 { #category : 'instance creation' }
-Collection class >> %> anArray [
+Collection class >> <- anArray [
 
 	^ self newFromArray: anArray
 ]

@@ -619,6 +619,16 @@ DictionaryTest >> testKeyForIdentity [
 ]
 
 { #category : 'tests - new' }
+DictionaryTest >> testLessThanMinus [
+
+	| assocs |
+	self assert: (self classToBeTested <- {}) equals: self emptyDict.
+
+	assocs := self nonEmptyDict associations collect: [ :each | each copy ].
+	self assert: (self classToBeTested <- assocs) equals: self nonEmptyDict
+]
+
+{ #category : 'tests - new' }
 DictionaryTest >> testNew [
 	| d |
 	d := self classToBeTested new: 10.
@@ -739,16 +749,6 @@ DictionaryTest >> testOtherDictionaryEquality [
 			self nonEmptyDict keysAndValuesDo: [ :key :value | nonEmptyDict2 at: key put: value ].
 			self deny: self nonEmptyDict equals: nonEmptyDict2.
 			self deny: nonEmptyDict2 equals: self nonEmptyDict ]
-]
-
-{ #category : 'tests - new' }
-DictionaryTest >> testPercentSignGreaterThan [
-
-	| assocs |
-	self assert: (self classToBeTested %> {}) equals: self emptyDict.
-
-	assocs := self nonEmptyDict associations collect: [ :each | each copy ].
-	self assert: (self classToBeTested %> assocs) equals: self nonEmptyDict
 ]
 
 { #category : 'tests' }

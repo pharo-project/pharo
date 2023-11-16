@@ -30,6 +30,18 @@ TCreationWithTest >> test0FixtureCreationWithTest [
 ]
 
 { #category : 'tests - creation' }
+TCreationWithTest >> testLessThanMinus [
+
+	| aCol collection |
+	collection := self collectionMoreThan5Elements asArray.
+	aCol := self collectionClass <- collection.
+
+	collection do: [ :each | self assert: (aCol occurrencesOf: each ) equals: ( collection occurrencesOf: each ) ].
+
+	self assert: aCol size equals: collection size
+]
+
+{ #category : 'tests - creation' }
 TCreationWithTest >> testNewFromArray [
 
 	| aCol collection |
@@ -47,18 +59,6 @@ TCreationWithTest >> testOfSize [
 	| aCol |
 	aCol := self collectionClass ofSize: 3.
 	self assert: aCol size equals: 3
-]
-
-{ #category : 'tests - creation' }
-TCreationWithTest >> testPercentSignGreaterThan [
-
-	| aCol collection |
-	collection := self collectionMoreThan5Elements asArray.
-	aCol := self collectionClass %> collection.
-
-	collection do: [ :each | self assert: (aCol occurrencesOf: each ) equals: ( collection occurrencesOf: each ) ].
-
-	self assert: aCol size equals: collection size
 ]
 
 { #category : 'tests - creation' }
