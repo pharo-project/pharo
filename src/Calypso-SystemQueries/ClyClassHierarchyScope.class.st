@@ -162,7 +162,7 @@ ClyClassHierarchyScope >> metaLevelsOf: aClass do: aBlock [
 ClyClassHierarchyScope >> methodsDo: aBlock [
 
 	self classesDo: [ :eachClass |
-		eachClass methods do: aBlock ]
+		(environment system methodsInClass: eachClass) do: aBlock ]
 ]
 
 { #category : 'converting' }

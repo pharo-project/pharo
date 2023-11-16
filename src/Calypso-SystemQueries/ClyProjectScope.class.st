@@ -22,7 +22,8 @@ ClyProjectScope class >> defaultName [
 { #category : 'queries' }
 ClyProjectScope >> classesDo: aBlock [
 
-	self packagesDo: [ :package | package classes do: aBlock ]
+	self packagesDo: [ :package |
+		(environment system classesInPackage: package) do: aBlock ]
 ]
 
 { #category : 'testing' }
@@ -49,13 +50,15 @@ ClyProjectScope >> includesPackagesAffectedBy: aSystemAnnouncement [
 { #category : 'queries' }
 ClyProjectScope >> methodsDo: aBlock [
 
-	self packagesDo: [ :package | package methods do: aBlock ]
+	self packagesDo: [ :package |
+		(environment system methodsInPackage: package) do: aBlock ]
 ]
 
 { #category : 'queries' }
 ClyProjectScope >> packagesDo: aBlock [
+
 	self projectsDo: [ :project |
-		project packages do: aBlock ]
+		(environment system packagesInProject: project) do: aBlock ]
 ]
 
 { #category : 'queries' }

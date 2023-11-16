@@ -121,6 +121,12 @@ ClySystemEnvironment >> classes [
 	^ globals allClassesAndTraits
 ]
 
+{ #category : 'class management' }
+ClySystemEnvironment >> classesInPackage: aPackage [
+	
+	^ aPackage classes
+]
+
 { #category : 'compiling' }
 ClySystemEnvironment >> compileANewClassFrom: newClassDefinitionString notifying: aController startingFrom: oldClass [
 	"The receiver's textual content is a request to define a new class or trait. The
@@ -173,6 +179,12 @@ ClySystemEnvironment >> defaultClassCompiler [
 	^ self class compiler
 ]
 
+{ #category : 'class management' }
+ClySystemEnvironment >> definedClassesInPackage: aRBPackage [
+
+ 	^ aRBPackage definedClasses
+]
+
 { #category : 'package management' }
 ClySystemEnvironment >> ensurePackage: packageName [
 
@@ -182,6 +194,18 @@ ClySystemEnvironment >> ensurePackage: packageName [
 { #category : 'accessing' }
 ClySystemEnvironment >> environment [
 	^ RBBrowserEnvironment new
+]
+
+{ #category : 'class management' }
+ClySystemEnvironment >> extendedClassesInPackage: aPackage [
+	
+	^ aPackage extendedClasses
+]
+
+{ #category : 'method management' }
+ClySystemEnvironment >> extensionMethodsInPackage: aRBPackage [
+
+ 	^ aRBPackage extensionMethods
 ]
 
 { #category : 'class management' }
@@ -218,6 +242,22 @@ ClySystemEnvironment >> isOverridingExistingClassWhenDefiningClassNamed: newClas
 	^ (oldClass isNil or: [ oldClass instanceSide name asString ~= newClassName ]) and: [ self includesClassNamed: newClassName asSymbol ]
 ]
 
+{ #category : 'method management' }
+ClySystemEnvironment >> localMethodsInClass: aClass [
+	^ aClass localMethods
+]
+
+{ #category : 'method management' }
+ClySystemEnvironment >> methodsInClass: aClass [
+
+	^ aClass methods
+]
+
+{ #category : 'method management' }
+ClySystemEnvironment >> methodsInPackage: aPackage [
+	^ aPackage methods
+]
+
 { #category : 'accessing' }
 ClySystemEnvironment >> name [
 	^ name ifNil: [ super printString ]
@@ -246,6 +286,11 @@ ClySystemEnvironment >> packageOrganizer: anObject [
 { #category : 'accessing' }
 ClySystemEnvironment >> packages [
 	^ packageOrganizer packages
+]
+
+{ #category : 'package management' }
+ClySystemEnvironment >> packagesInProject: aProject [
+	^ aProject packages
 ]
 
 { #category : 'printing' }
@@ -286,6 +331,12 @@ ClySystemEnvironment >> subscribe: anObject for: anAnnouncementClass [
 { #category : 'subscription' }
 ClySystemEnvironment >> unsubscribe: anObject [
 	changesAnnouncer unsubscribe: anObject
+]
+
+{ #category : 'method management' }
+ClySystemEnvironment >> visibleMethodsInMetaclass: aMetaclass [
+
+	^ aMetaclass visibleMethods
 ]
 
 { #category : 'subscription' }

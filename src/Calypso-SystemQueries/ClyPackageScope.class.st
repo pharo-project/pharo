@@ -34,8 +34,9 @@ ClyPackageScope >> classGroupProvidersDo: aBlock [
 
 { #category : 'queries' }
 ClyPackageScope >> classesDo: aBlock [
+
 	self packagesDo: [ :package |
-		package definedClasses do: aBlock]
+		(environment system definedClassesInPackage: package) do: aBlock ]
 ]
 
 { #category : 'system changes' }
@@ -54,11 +55,11 @@ ClyPackageScope >> includesPackageTagsAffectedBy: aSystemAnnouncement [
 { #category : 'queries' }
 ClyPackageScope >> methodsDo: aBlock [
 	self classesDo: [:class |
-		class localMethods do: aBlock.
-		class classSide localMethods do: aBlock].
+		(environment system localMethodsInClass: class) do: aBlock.
+		(environment system localMethodsInClass: class classSide) do: aBlock].
 
 	self packagesDo: [ :package |
-		package extensionMethods do: aBlock ]
+		(environment system extensionMethodsInPackage: package) do: aBlock ]
 ]
 
 { #category : 'queries' }
