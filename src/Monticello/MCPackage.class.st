@@ -91,7 +91,7 @@ MCPackage >> snapshot [
 				   OrderedCollection new
 					   add: systemPackage asMCOrganizationDefinition;
 					   addAll: (systemPackage methods collect: [ :method | method asMCMethodDefinition ]);
-					   addAll: (systemPackage definedClasses flatCollect: [ :class | class classDefinitions ]);
+					   addAll: (systemPackage definedClasses collect: [ :class | class asClassDefinition ]);
 					   yourself ])
 ]
 

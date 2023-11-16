@@ -192,6 +192,11 @@ TaCompositionElement >> traits [
 	^ { innerClass }
 ]
 
+{ #category : 'deprecated' }
+TaCompositionElement >> transformations [
+	^ { self innerClass }
+]
+
 { #category : 'operations' }
 TaCompositionElement >> without: anotherTrait [
 	^ self = anotherTrait ifTrue:[nil] ifFalse:[self]

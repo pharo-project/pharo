@@ -297,6 +297,11 @@ TaSequence >> traits [
 	^ members flatCollect: #traits
 ]
 
+{ #category : 'deprecated' }
+TaSequence >> transformations [
+	^ members flatCollect: #transformations
+]
+
 { #category : 'validations' }
 TaSequence >> validateDuplications: anElement [
 	(members noneSatisfy: [ :e | e = anElement ])

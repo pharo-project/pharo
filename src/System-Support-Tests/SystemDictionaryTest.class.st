@@ -165,7 +165,7 @@ SystemDictionaryTest >> testSetOrganizationSetBackPointer [
 
 	| systemDictionary packageOrganizer |
 	systemDictionary := SystemDictionary new.
-	packageOrganizer := RPackageOrganizer new.
+	packageOrganizer := PackageOrganizer new.
 	systemDictionary organization: packageOrganizer.
 	self assert: packageOrganizer environment identicalTo: systemDictionary.
 	self assert: systemDictionary organization identicalTo: packageOrganizer

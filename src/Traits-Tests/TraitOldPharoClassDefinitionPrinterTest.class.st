@@ -40,15 +40,6 @@ TraitOldPharoClassDefinitionPrinterTest >> testMultiPools [
 ]
 
 { #category : 'tests - traits' }
-TraitOldPharoClassDefinitionPrinterTest >> testTBehavior [
-	"to me this looks strange to have empty uses here when empty instancevariablenames are not displayed."
-	self
-		assert: (self forClass: TBehavior)  equals:  'Trait named: #TBehavior
-	instanceVariableNames: ''''
-	package: ''Traits-Compatibility-Traits'''
-]
-
-{ #category : 'tests - traits' }
 TraitOldPharoClassDefinitionPrinterTest >> testTComparableClassTrait [
 
 	self assert: (self forClass: TComparable classTrait) equals: 'TComparable classTrait
@@ -61,6 +52,15 @@ TraitOldPharoClassDefinitionPrinterTest >> testTEventVisitorClassTrait [
 	self assert: (self forClass: EpTEventVisitor classTrait) equals: 'EpTEventVisitor classTrait
 	uses: EpTCodeChangeVisitor classTrait
 	instanceVariableNames: '''''
+]
+
+{ #category : 'tests - traits' }
+TraitOldPharoClassDefinitionPrinterTest >> testTIsEmpty [
+	"to me this looks strange to have empty uses here when empty instancevariablenames are not displayed."
+
+	self assert: (self forClass: TIsEmpty) equals: 'Trait named: #TIsEmpty
+	instanceVariableNames: ''''
+	package: ''Kernel-Traits-Base'''
 ]
 
 { #category : 'tests - traits' }
