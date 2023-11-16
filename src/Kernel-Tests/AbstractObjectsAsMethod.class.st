@@ -43,6 +43,11 @@ AbstractObjectsAsMethod >> package [
 	^self class package
 ]
 
+{ #category : 'accessing' }
+AbstractObjectsAsMethod >> pharoDocCommentNodes [
+	^ #()
+]
+
 { #category : 'compatibility' }
 AbstractObjectsAsMethod >> pragmas [
 	^#()
