@@ -286,7 +286,7 @@ ThemeIcons >> iconNamed: aSymbol [
 			self isReportingNotFound
 				ifTrue: [
 					self crTrace: (aSymbol, ' icon not found!').
-					self notFoundIcon scaledByDisplayScaleFactor ]
+					self notFoundIcon ]
 				ifFalse: [ self blankIcon ]])
 ]
 
@@ -350,6 +350,8 @@ ThemeIcons >> loadIconsFromUrlUsingScale: newScale [
 					at: each base asSymbol
 					put: (self readPNGFrom: each) ]
 				on: Error do: [ :e | self crTrace: ('{1} not a PNG, skipping.' format: { each fullName }) ] ] ].
+	newIconsPerScale keysAndValuesDo: [ :iconsScale :icons |
+		icons at: #notFound ifAbsentPut: [ Color red iconOrThumbnailOfSize: 16 * iconsScale ] ].
 	iconsPerScale := newIconsPerScale.
 	scale := newScale
 ]
@@ -366,9 +368,8 @@ ThemeIcons >> name: aName [
 
 { #category : 'accessing' }
 ThemeIcons >> notFoundIcon [
-	^ self icons
-		at: #notFoundIcon
-		ifAbsentPut: [ Color red iconOrThumbnailOfSize: 16 ]
+
+	^ self iconNamed: #notFound ifNone: [ Form extent: 0@0 ]
 ]
 
 { #category : 'printing' }
