@@ -960,7 +960,7 @@ PBAbstractImageBuilder >> installMethodsInBehaviorMapping: aBehaviorMapping onMi
 { #category : 'as yet unclassified' }
 PBAbstractImageBuilder >> instantiateClassLoader [
 
-	classLoader := PBSpurClassLoader new.
+	classLoader := PBClassLoader new.
 ]
 
 { #category : 'testing' }
