@@ -161,8 +161,8 @@ ZnClient >> cleanupConnection [
 		or: [
 			self streaming not
 				and: [
-					(request notNil and: [ request wantsConnectionClose ])
-						or: [ response notNil and: [ response wantsConnectionClose ] ] ] ])
+					(request isNotNil and: [ request wantsConnectionClose ])
+						or: [ response isNotNil and: [ response wantsConnectionClose ] ] ] ])
 		ifTrue: [
 			self close ]
 ]
@@ -740,7 +740,7 @@ ZnClient >> isBadRequest [
 ZnClient >> isConnected [
 	"Return true if I hold an open HTTP connection."
 
-	^ connection notNil and: [ connection isConnected ]
+	^ connection isNotNil and: [ connection isConnected ]
 ]
 
 { #category : 'testing' }
@@ -1015,7 +1015,7 @@ ZnClient >> newConnectionTo: url [
 	| initialMilliseconds |
 	self signalHTTPProgress: 'Connecting to ',  url authority.
 	initialMilliseconds := Time millisecondClockValue.
-	(connection notNil and: [ connection isConnected ])
+	(connection isNotNil and: [ connection isConnected ])
 		ifTrue: [ connection close ].
 	connection := ZnNetworkingUtils socketStreamToUrl: url.
 	url hasSecureScheme
@@ -1351,7 +1351,7 @@ ZnClient >> resetEntity [
 	This is sometimes necessary after a POST or PUT. This method will be called automatically
 	by #method: for certain requests."
 
-	(request notNil and: [ request hasEntity ])
+	(request isNotNil and: [ request hasEntity ])
 		ifTrue: [ request resetEntity: nil ]
 ]
 
