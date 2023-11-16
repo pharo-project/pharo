@@ -19,6 +19,11 @@ AbstractObjectsAsMethod >> cachePragmas [
 AbstractObjectsAsMethod >> flushCache [
 ]
 
+{ #category : 'testing' }
+AbstractObjectsAsMethod >> isTestCase [
+	^ false
+]
+
 { #category : 'compatibility' }
 AbstractObjectsAsMethod >> methodClass [
 	^ self
