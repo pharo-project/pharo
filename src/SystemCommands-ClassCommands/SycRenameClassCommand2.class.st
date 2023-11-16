@@ -17,7 +17,7 @@ SycRenameClassCommand2 >> defaultMenuIconName [
 
 { #category : 'accessing' }
 SycRenameClassCommand2 >> defaultMenuItemName [
-	^'Rename 2(WithDriver)'
+	^'Rename'
 ]
 
 { #category : 'execution' }
