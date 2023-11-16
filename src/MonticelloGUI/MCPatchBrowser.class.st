@@ -43,7 +43,7 @@ MCPatchBrowser >> defaultLabel [
 	^ 'Patch Browser'
 ]
 
-{ #category : '*MonticelloGUI-Diff' }
+{ #category : 'accessing' }
 MCPatchBrowser >> diffSelection [
 	"Open a diff browser on the selection."
 
@@ -76,7 +76,7 @@ MCPatchBrowser >> list [
 	^ self items collect: [:ea | ea summary]
 ]
 
-{ #category : '*MonticelloGUI-Diff' }
+{ #category : 'accessing' }
 MCPatchBrowser >> methodListMenu: aMenu [
 
 	selection
