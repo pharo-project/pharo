@@ -110,8 +110,8 @@ MCVersionLoader >> ensurePackage: mcPackage [
 
 { #category : 'testing' }
 MCVersionLoader >> hasLocalModifications [
-	^ self localModifications isEmpty not
-	
+
+	^ self localModifications isNotEmpty
 ]
 
 { #category : 'testing' }
