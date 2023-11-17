@@ -8,6 +8,23 @@ Class {
 	#package : 'RPackage-Tests'
 }
 
+{ #category : 'tests' }
+PackageAndClassesTest >> testAddClassNoDuplicate [
+
+	| xPackage a1 b1 |
+	xPackage := self ensureXPackage.
+	a1 := self newClassNamed: #A1InPackageP1 in: self yPackageName.
+	self assertEmpty: xPackage definedClasses.
+	xPackage addClass: a1.
+	self assert: xPackage definedClasses size equals: 1.
+	b1 := self newClassNamed: #B1InPackageP1 in: self yPackageName.
+	xPackage addClass: a1.
+	"adding the same class does not do anything - luckily"
+	self assert: xPackage definedClasses size equals: 1.
+	xPackage addClass: b1.
+	self assert: xPackage definedClasses size equals: 2
+]
+
 { #category : 'tests - operations on protocols' }
 PackageAndClassesTest >> testAddExtensionProtocol [
 	"test that by adding a protocol, nothing change from  Package point of vue."
@@ -38,6 +55,184 @@ PackageAndClassesTest >> testAddNewProtocolDoesNothing [
 	self assert: (class >> #newMethod) package equals: xPackage.
 	self deny: (class >> #newMethod) isExtension.
 	self assertEmpty: xPackage extensionMethods
+]
+
+{ #category : 'tests' }
+PackageAndClassesTest >> testClassAddition [
+
+	| xPackage a1 |
+	xPackage := self ensureXPackage.
+	a1 := self newClassNamed: #A1InPAckageP1 in: self yPackageName.
+	self assertEmpty: xPackage definedClasses.
+	xPackage addClass: a1.
+	self assert: xPackage definedClasses size equals: 1.
+	self assert: (xPackage includesClass: a1).
+	self assert: (xPackage includesClass: a1 class)
+]
+
+{ #category : 'tests' }
+PackageAndClassesTest >> testDefinedClassesAndDefinedClassNames [
+
+	| xPackage a1 b1 |
+	xPackage := self ensureXPackage.
+	a1 := self newClassNamed: #A1InPackageP1 in: xPackage.
+	self assert: xPackage definedClasses size equals: 1.
+	self assert: (xPackage definedClasses includes: a1).
+	self assert: (xPackage definedClassNames includes: a1 name).
+
+	b1 := self newClassNamed: #B1InPackageP1 in: xPackage.
+	self assert: xPackage definedClasses size equals: 2.
+	self assert: (xPackage definedClasses includes: b1).
+	self assert: (xPackage definedClassNames includes: b1 name)
+]
+
+{ #category : 'tests' }
+PackageAndClassesTest >> testExtensionClassNames [
+
+	| xPackage yPackage a2 b2 |
+	xPackage := self ensureXPackage.
+	yPackage := self ensureYPackage.
+	a2 := self newClassNamed: #A2InPackageP2 in: yPackage.
+	b2 := self newClassNamed: #B2InPackageP2 in: yPackage.
+	self deny: (xPackage includesClass: a2).
+	self assert: (yPackage includesClass: b2).
+	self assert: (yPackage includesClass: a2).
+
+	a2 compile: 'methodDefinedInP1 ^ #methodDefinedInP1' classified: '*' , xPackage name.
+
+	self assert: xPackage extensionSelectors size equals: 1.
+	self assert: xPackage extensionMethods size equals: 1.
+	self assert: (xPackage extendedClassNames includes: #A2InPackageP2).
+	self deny: (xPackage includesClass: a2). "method extension class are not included in packages"
+
+	b2 compile: 'firstMethodInB2PackagedInP1 ^ 1' classified: '*' , xPackage name.
+
+	self assert: xPackage extensionSelectors size equals: 2.
+	self assert: xPackage extensionMethods size equals: 2.
+	self assert: (xPackage extendedClassNames includes: #B2InPackageP2).
+	self deny: (xPackage includesClass: b2).
+
+	b2 compile: 'secondMethodInB2PackagedInP1 ^ 2' classified: '*' , xPackage name.
+
+	self assert: xPackage extensionSelectors size equals: 3.
+	self assert: xPackage extensionMethods size equals: 3.
+	self assert: xPackage extendedClasses size equals: 2.
+	self assert: (xPackage extendedClassNames includes: #B2InPackageP2).
+	self deny: (xPackage includesClass: b2)
+]
+
+{ #category : 'tests' }
+PackageAndClassesTest >> testExtensionClasses [
+
+	| xPackage yPackage a2 b2 |
+	xPackage := self ensureXPackage.
+	yPackage := self ensureYPackage.
+
+	a2 := self newClassNamed: #A2InPackageP2 in: yPackage.
+	b2 := self newClassNamed: #B2InPackageP2 in: yPackage.
+	self deny: (xPackage includesClass: a2).
+	self assert: (yPackage includesClass: a2).
+
+	a2 compile: 'methodPackagedInP1 ^ #methodPackagedInP1' classified: '*' , xPackage name.
+
+	self assert: xPackage extendedClasses size equals: 1.
+	self assert: (xPackage extendedClasses includes: a2).
+	self assert: xPackage extendedClassNames size equals: 1.
+	self assert: (xPackage extendedClassNames includes: a2 name).
+
+	b2 class compile: 'methodPackagedInP1 ^ #methodPackagedInP1' classified: '*' , xPackage name.
+
+	self assert: xPackage extendedClasses size equals: 2.
+	self assert: (xPackage extendedClasses includes: b2).
+	"extensionClasses returns or metaclasses while extensionClassNames returns class names (but not metaclass names)"
+
+	self assert: xPackage extendedClassNames size equals: 2.
+	self assert: (xPackage extendedClassNames includes: b2 name)
+]
+
+{ #category : 'tests' }
+PackageAndClassesTest >> testExtensionClassesWithCompiledMethod [
+
+	| xPackage yPackage a2 b2 |
+	xPackage := self ensureXPackage.
+	yPackage := self ensureYPackage.
+	a2 := self newClassNamed: #A2InPackageP2 in: yPackage.
+	b2 := self newClassNamed: #B2InPackageP2 in: yPackage.
+	self deny: (xPackage includesClass: a2).
+	self assert: (yPackage includesClass: b2).
+	self assert: (yPackage includesClass: b2).
+
+	a2 compile: 'methodDefinedInP1 ^ #methodDefinedInP1' classified: '*' , xPackage name.
+
+	self assert: xPackage extensionMethods size equals: 1.
+	self assert: xPackage extensionSelectors size equals: 1.
+	self assert: xPackage extendedClasses size equals: 1.
+	self deny: (xPackage includesClass: a2).
+	"method extension class are not included in packages"
+
+	b2 compile: 'firstMethodInB2PackagedInP1 ^ 1' classified: '*' , xPackage name.
+
+	self assert: xPackage extensionSelectors size equals: 2.
+	self assert: xPackage extensionMethods size equals: 2.
+	self assert: xPackage extendedClasses size equals: 2.
+	self deny: (xPackage includesClass: b2).
+
+	b2 compile: 'secondMethodInB2PackagedInP1 ^ 2' classified: '*' , xPackage name.
+
+	self assert: xPackage extensionSelectors size equals: 3.
+	self assert: xPackage extensionMethods size equals: 3.
+	self assert: xPackage extendedClasses size equals: 2.
+	self deny: (xPackage includesClass: b2)
+]
+
+{ #category : 'tests' }
+PackageAndClassesTest >> testIncludeClass [
+
+	| xPackage yPackage a2 |
+	xPackage := self ensureXPackage.
+	yPackage := self ensureYPackage.
+
+	a2 := self newClassNamed: #A2InPackageP2 in: yPackage.
+	a2 compile: 'methodPackagedInP1 ^ #methodPackagedInP1' classified: '*' , xPackage name.
+
+	self deny: (xPackage includesClass: a2).
+	xPackage addMethod: a2 >> #methodPackagedInP1.
+	self deny: (xPackage includesClass: a2).
+	"We should declare the class explictly. Adding a method does not declare
+	the class as defined. The reason is that like that the client controls the granularity
+	and moment of class registration."
+
+	xPackage addClass: a2.
+	self assert: (xPackage includesClass: a2).
+	self assert: (xPackage includesClassNamed: a2 name)
+]
+
+{ #category : 'tests' }
+PackageAndClassesTest >> testPackageOfClassForClassesNotDefinedInPackageButJustExtendingIt [
+
+	| xPackage yPackage a2 |
+	xPackage := self ensureXPackage.
+	yPackage := self ensureYPackage.
+
+	a2 := self newClassNamed: #A2InPackageP2 in: yPackage.
+	a2 compile: 'methodDefinedInP1 ^ #methodDefinedInP1' classified: '*' , xPackage name.
+
+	self assert: a2 package equals: yPackage.
+	xPackage extensionMethods do: [ :each | "the package of a class which is extended inside a package p, is not p
+	but the package where the class was defined"
+		self deny: each methodClass package equals: xPackage ]
+]
+
+{ #category : 'tests' }
+PackageAndClassesTest >> testPackageOfClassForDefinedClasses [
+
+	| xPackage a1 b1 |
+	xPackage := self ensureXPackage.
+	a1 := self newClassNamed: #A1InPAckageP1 in: xPackage.
+	b1 := self newClassNamed: #B1InPAckageP1 in: xPackage.
+
+	self assert: a1 package equals: xPackage.
+	self assert: b1 package equals: xPackage
 ]
 
 { #category : 'tests - recategorizing class' }
@@ -114,6 +309,58 @@ PackageAndClassesTest >> testRecategorizeClassWithMetaClassMethodsRegisterAllCla
 	self assert: (class class >> #method2) package equals: yPackage.
 	self deny: (class class >> #method2) isExtension.
 	self assert: (zPackage includesExtensionSelector: #method3 ofClass: class class)
+]
+
+{ #category : 'tests' }
+PackageAndClassesTest >> testRemoveClass [
+
+	| xPackage a1 b1 |
+	xPackage := self ensureXPackage.
+	a1 := self newClassNamed: #A1InPAckageP1 in: self yPackageName.
+	b1 := self newClassNamed: #B1InPAckageP1 in: self yPackageName.
+	self assertEmpty: xPackage definedClasses.
+
+	xPackage addClass: a1.
+	xPackage addClass: b1.
+	self assert: xPackage definedClasses size equals: 2.
+
+	self assert: (xPackage includesClass: a1).
+	self assert: (xPackage includesClass: b1).
+
+	xPackage removeClass: a1.
+	self assert: xPackage definedClasses size equals: 1.
+	self deny: (xPackage includesClass: a1).
+	self assert: (xPackage includesClass: b1).
+
+	xPackage removeClass: b1.
+	self deny: (xPackage includesClass: b1)
+]
+
+{ #category : 'tests' }
+PackageAndClassesTest >> testRemoveClassInTag [
+
+	| xPackage a1 b1 |
+	xPackage := self ensureXPackage.
+
+	a1 := self newClassNamed: #A1InPAckageP1 in: xPackage.
+	b1 := self newClassNamed: #B1InPAckageP1 in: xPackage.
+	self assert: xPackage definedClasses size equals: 2.
+
+	xPackage moveClass: a1 toTag: 'a1-tag'.
+	xPackage moveClass: b1 toTag: 'b1-tag'.
+	self assert: xPackage classTags size equals: 2.
+
+	self assert: (xPackage includesClass: a1).
+	self assert: (xPackage includesClass: b1).
+
+	xPackage removeClass: a1.
+	self assert: xPackage definedClasses size equals: 1.
+	self deny: (xPackage includesClass: a1).
+	self assert: (xPackage includesClass: b1).
+
+	xPackage removeClass: b1.
+	self deny: (xPackage includesClass: b1).
+	self assert: xPackage classTags size equals: 0
 ]
 
 { #category : 'tests - removing classes' }

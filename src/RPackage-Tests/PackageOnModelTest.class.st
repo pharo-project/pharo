@@ -18,8 +18,8 @@ P3
 	A2DefinedInY>>methodDefinedInP3 
 "
 Class {
-	#name : 'RPackageReadOnlyCompleteSetupTest',
-	#superclass : 'RPackageIncrementalTest',
+	#name : 'PackageOnModelTest',
+	#superclass : 'PackageTestCase',
 	#instVars : [
 		'a1',
 		'b1',
@@ -34,7 +34,7 @@ Class {
 }
 
 { #category : 'running' }
-RPackageReadOnlyCompleteSetupTest >> setUp [
+PackageOnModelTest >> setUp [
 
 	super setUp.
 	xPackage := self ensureXPackage.
@@ -58,7 +58,7 @@ RPackageReadOnlyCompleteSetupTest >> setUp [
 ]
 
 { #category : 'tests - tag class' }
-RPackageReadOnlyCompleteSetupTest >> testAddTag [
+PackageOnModelTest >> testAddTag [
 
 	self assert: xPackage classTags size equals: 1. "We start with the root tag"
 	xPackage ensureTag: #baz.
@@ -82,7 +82,7 @@ RPackageReadOnlyCompleteSetupTest >> testAddTag [
 ]
 
 { #category : 'tests - tag class' }
-RPackageReadOnlyCompleteSetupTest >> testAddTagNames [
+PackageOnModelTest >> testAddTagNames [
 
 	self assert: xPackage classTags size equals: 1. "We start with the root tag"
 	xPackage ensureTag: #baz.
@@ -106,7 +106,7 @@ RPackageReadOnlyCompleteSetupTest >> testAddTagNames [
 ]
 
 { #category : 'tests - tag class' }
-RPackageReadOnlyCompleteSetupTest >> testAddTagsToAClass [
+PackageOnModelTest >> testAddTagsToAClass [
 
 	self assert: xPackage classTags size equals: 1. "We start with the root tag"
 
@@ -125,7 +125,7 @@ RPackageReadOnlyCompleteSetupTest >> testAddTagsToAClass [
 ]
 
 { #category : 'tests - compiled method' }
-RPackageReadOnlyCompleteSetupTest >> testClassIsExtendedInPackage [
+PackageOnModelTest >> testClassIsExtendedInPackage [
 
 	self deny: (a1 isExtendedInPackage: xPackage).
 	self assert: (xPackage includesClass: a1).
@@ -136,14 +136,14 @@ RPackageReadOnlyCompleteSetupTest >> testClassIsExtendedInPackage [
 ]
 
 { #category : 'tests - compiled method' }
-RPackageReadOnlyCompleteSetupTest >> testCompiledMethodPackage [
+PackageOnModelTest >> testCompiledMethodPackage [
 
 	self assert: (a1 >> #methodDefinedInP1) package equals: xPackage.
 	self assert: (a2 >> #methodDefinedInP1) package equals: xPackage
 ]
 
 { #category : 'tests - situation' }
-RPackageReadOnlyCompleteSetupTest >> testDefinedSelectorsForClass [
+PackageOnModelTest >> testDefinedSelectorsForClass [
 
 	self assert: (xPackage definedSelectorsForClass: a1) size equals: 2.
 	self assert: (xPackage definedMethodsForClass: a1) size equals: 2.
@@ -155,13 +155,13 @@ RPackageReadOnlyCompleteSetupTest >> testDefinedSelectorsForClass [
 ]
 
 { #category : 'tests - tag class' }
-RPackageReadOnlyCompleteSetupTest >> testEmpty [
+PackageOnModelTest >> testEmpty [
 
 	self assertEmpty: (RPackage named: 'new package') classTags
 ]
 
 { #category : 'tests - accessing' }
-RPackageReadOnlyCompleteSetupTest >> testExtendingPackagesOfClass [
+PackageOnModelTest >> testExtendingPackagesOfClass [
 	"since a class can be extended by several packages, we want the list of packages that extend
 	the class"
 
@@ -178,7 +178,7 @@ RPackageReadOnlyCompleteSetupTest >> testExtendingPackagesOfClass [
 ]
 
 { #category : 'tests - accessing' }
-RPackageReadOnlyCompleteSetupTest >> testExtensionMethods [
+PackageOnModelTest >> testExtensionMethods [
 	"a package can extend several classes, either the class or  the meta-class side. 'extensionMethods' should list all the methods involved in shuch extensions. P3 extend a2 and a2 class"
 
 	self assert: (zPackage extensionMethods includes: a2 >> #methodDefinedInP3).
@@ -186,7 +186,7 @@ RPackageReadOnlyCompleteSetupTest >> testExtensionMethods [
 ]
 
 { #category : 'tests - situation' }
-RPackageReadOnlyCompleteSetupTest >> testExtensionSelectors [
+PackageOnModelTest >> testExtensionSelectors [
 	self assertEmpty: a1 extensionSelectors.
 
 	self assert: a2 extensionSelectors size equals: 2.
@@ -195,7 +195,7 @@ RPackageReadOnlyCompleteSetupTest >> testExtensionSelectors [
 ]
 
 { #category : 'tests - situation' }
-RPackageReadOnlyCompleteSetupTest >> testExtensionSelectorsForClass [
+PackageOnModelTest >> testExtensionSelectorsForClass [
 
 	self assert: (xPackage extensionSelectorsForClass: a2) size equals: 1.
 	self assert: ((xPackage extensionSelectorsForClass: a2) includes: #methodDefinedInP1).
@@ -205,14 +205,14 @@ RPackageReadOnlyCompleteSetupTest >> testExtensionSelectorsForClass [
 ]
 
 { #category : 'tests - situation' }
-RPackageReadOnlyCompleteSetupTest >> testMetaclassHasExtensions [
+PackageOnModelTest >> testMetaclassHasExtensions [
 
 	self assert: (zPackage includesExtensionSelector: #methodDefinedInP3 ofClass: a2).
 	self assert: (zPackage includesExtensionSelector: #classSideMethodDefinedInP3 ofClass: a2 class)
 ]
 
 { #category : 'tests - situation' }
-RPackageReadOnlyCompleteSetupTest >> testMethods [
+PackageOnModelTest >> testMethods [
 
 	| m1 m3 |
 	m1 := xPackage methods.
@@ -227,7 +227,7 @@ RPackageReadOnlyCompleteSetupTest >> testMethods [
 ]
 
 { #category : 'tests - situation' }
-RPackageReadOnlyCompleteSetupTest >> testMethodsForClass [
+PackageOnModelTest >> testMethodsForClass [
 
 	self assert: (xPackage methodsForClass: a1) size equals: 2.
 	self assert: ((xPackage methodsForClass: a1) includes: a1 >> #methodDefinedInP1).
@@ -243,7 +243,7 @@ RPackageReadOnlyCompleteSetupTest >> testMethodsForClass [
 ]
 
 { #category : 'tests - accessing' }
-RPackageReadOnlyCompleteSetupTest >> testPackagesOfClass [
+PackageOnModelTest >> testPackagesOfClass [
 	"since a class can be extended by several packages, we want the complete list of packages that define or extend
 	the class"
 
@@ -262,7 +262,7 @@ RPackageReadOnlyCompleteSetupTest >> testPackagesOfClass [
 ]
 
 { #category : 'tests - tag class' }
-RPackageReadOnlyCompleteSetupTest >> testRemoveTaggedClasses [
+PackageOnModelTest >> testRemoveTaggedClasses [
 
 	xPackage moveClass: a1 toTag: #foo.
 	xPackage moveClass: b1 toTag: #foo.
@@ -287,7 +287,7 @@ RPackageReadOnlyCompleteSetupTest >> testRemoveTaggedClasses [
 ]
 
 { #category : 'tests - situation' }
-RPackageReadOnlyCompleteSetupTest >> testSelectors [
+PackageOnModelTest >> testSelectors [
 
 	self assert: xPackage selectors size equals: 2.
 	self assert: (xPackage selectors includes: #methodDefinedInP1).
@@ -299,7 +299,7 @@ RPackageReadOnlyCompleteSetupTest >> testSelectors [
 ]
 
 { #category : 'tests - situation' }
-RPackageReadOnlyCompleteSetupTest >> testSelectorsForClass [
+PackageOnModelTest >> testSelectorsForClass [
 
 	self assert: (xPackage selectorsForClass: a1) size equals: 2.
 	self assert: ((xPackage selectorsForClass: a1) includes: #methodDefinedInP1).
@@ -315,7 +315,7 @@ RPackageReadOnlyCompleteSetupTest >> testSelectorsForClass [
 ]
 
 { #category : 'tests - situation' }
-RPackageReadOnlyCompleteSetupTest >> testStartingSituation [
+PackageOnModelTest >> testStartingSituation [
 
 	self deny: (yPackage includesClass: b1).
 	self assert: (yPackage includesClass: b2).
