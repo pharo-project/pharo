@@ -236,34 +236,6 @@ Gofer >> load [
 ]
 
 { #category : 'operations' }
-Gofer >> loadBleedingEdge [
-	"Load the baseline of the previously specifed configuration."
-
-	^ self loadVersion: #bleedingEdge
-]
-
-{ #category : 'operations' }
-Gofer >> loadDevelopment [
-	"Load the development version of the previously specifed configuration."
-
-	^ self loadVersion: #development
-]
-
-{ #category : 'operations' }
-Gofer >> loadStable [
-	"Load the stable version of the previously specifed configuration."
-
-	^ self loadVersion: #stable
-]
-
-{ #category : 'operations' }
-Gofer >> loadVersion: anMetacelloVersionIdentifierSymbol [
-	"Load the given version name"
-	^ self execute: GoferMetacelloLoad do: [ :operation|
-		operation version: anMetacelloVersionIdentifierSymbol ]
-]
-
-{ #category : 'operations' }
 Gofer >> merge [
 	"Merge the specified packages into their working copies."
 
