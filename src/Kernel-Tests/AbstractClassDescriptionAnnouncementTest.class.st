@@ -23,7 +23,7 @@ AbstractClassDescriptionAnnouncementTest >> tearDown [
 	super tearDown
 ]
 
-{ #category : 'protocol' }
+{ #category : 'running' }
 AbstractClassDescriptionAnnouncementTest >> when: anAnnouncement do: aBlock [
 
 	SystemAnnouncer uniqueInstance

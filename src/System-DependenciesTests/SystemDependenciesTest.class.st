@@ -56,27 +56,7 @@ SystemDependenciesTest >> knownBasicToolsDependencies [
 SystemDependenciesTest >> knownCompilerDependencies [
 	"ideally this list should be empty"
 
-	"Note: #'Transcript-Core' is brought by RPackage-Core but we want to kill this dependencies in the future because the kernel group should not depend on that."
-
-	^ #( #'FileSystem-Core' #'Transcript-Core' )
-]
-
-{ #category : 'known dependencies' }
-SystemDependenciesTest >> knownDisplayDependencies [
-	"ideally this list should be empty"
-
-	"Note: #'Transcript-Core' and brought by RPackage-Core but we want to kill those dependencies in the future because the kernel group should not depend on that."
-
-	^ #( #'Transcript-Core' )
-]
-
-{ #category : 'known dependencies' }
-SystemDependenciesTest >> knownFileSystemDependencies [
-	"ideally this list should be empty"
-
-	"Note: #'Transcript-Core' is brought by RPackage-Core but we want to kill this dependencies in the future because the kernel group should not depend on that."
-
-	^ #( #'Transcript-Core' )
+	^ #( #'FileSystem-Core' )
 ]
 
 { #category : 'known dependencies' }
@@ -91,47 +71,23 @@ SystemDependenciesTest >> knownIDEDependencies [
 SystemDependenciesTest >> knownKernelDependencies [
 	"ideally this list should be empty"
 
-	"Note: #'Transcript-Core' #Jobs are brought by RPackage-Core but we want to kill those dependencies in the future because the kernel group should not depend on that."
-
-	^ #( #'FileSystem-Core' #'Transcript-Core' #Jobs )
+	^ #( #'FileSystem-Core' )
 ]
 
 { #category : 'known dependencies' }
 SystemDependenciesTest >> knownLocalMonticelloDependencies [
 	"ideally this list should be empty"
 
-	"Note: #'Transcript-Core' is brought by RPackage-Core but we want to kill those dependencies in the future because the kernel group should not depend on that."
-
 	"Remove Zinc-HTTP next line once Zinc-Resource-Meta-Core does not depend anymore on Zinc-HTTP."
 
-	^ #( #'Transcript-Core' #'Zinc-HTTP' )
-]
-
-{ #category : 'known dependencies' }
-SystemDependenciesTest >> knownMetacelloDependencies [
-	"ideally this list should be empty"
-
-	"Note: #'Transcript-Core' is brought by RPackage-Core but we want to kill those dependencies in the future because the kernel group should not depend on that."
-
-	^ #( #'Transcript-Core' )
-]
-
-{ #category : 'known dependencies' }
-SystemDependenciesTest >> knownMonticelloDependencies [
-	"ideally this list should be empty"
-
-	"Note: #'Transcript-Core' is brought by RPackage-Core but we want to kill those dependencies in the future because the kernel group should not depend on that."
-
-	^ #( #'Transcript-Core' )
+	^ #( #'Zinc-HTTP' )
 ]
 
 { #category : 'known dependencies' }
 SystemDependenciesTest >> knownMorphicCoreDependencies [
 	"ideally this list should be empty"
 
-	"Note: #'Transcript-Core' is brought by RPackage-Core but we want to kill those dependencies in the future because the kernel group should not depend on that."
-
-	^ #( #'Keymapping-KeyCombinations' #'Refactoring-Critics' #'Refactoring-Environment' #'Transcript-Core' )
+	^ #( #'Keymapping-KeyCombinations' #'Refactoring-Critics' #'Refactoring-Environment')
 ]
 
 { #category : 'known dependencies' }
@@ -146,18 +102,14 @@ SystemDependenciesTest >> knownMorphicDependencies [
 SystemDependenciesTest >> knownSUnitDependencies [
 	"ideally this list should be empty"
 
-	"Note: #'Transcript-Core' is brought by RPackage-Core but we want to kill those dependencies in the future because the kernel group should not depend on that."
-
-	^ #( #'Refactoring-Critics' #'Refactoring-Environment' #'Transcript-Core' )
+	^ #( #'Refactoring-Critics' #'Refactoring-Environment' )
 ]
 
 { #category : 'known dependencies' }
 SystemDependenciesTest >> knownSUnitKernelDependencies [
 	"ideally this list should be empty"
 
-	"Note: #'Transcript-Core' is brought by RPackage-Core but we want to kill this dependencies in the future because the kernel group should not depend on that."
-
-	^ #( #'Transcript-Core' #'FileSystem-Core' )
+	^ #( #'FileSystem-Core' )
 ]
 
 { #category : 'known dependencies' }
@@ -174,7 +126,7 @@ SystemDependenciesTest >> knownUFFIDependencies [
 
 	"Note: #'Transcript-Core' is brought by RPackage-Core but we want to kill those dependencies in the future because the kernel group should not depend on that."
 
-	^ #( #'Refactoring-Critics' #'Refactoring-Environment' #'Transcript-Core' )
+	^ #( #'Refactoring-Critics' #'Refactoring-Environment' )
 ]
 
 { #category : 'known dependencies' }
@@ -279,7 +231,7 @@ SystemDependenciesTest >> testExternalDisplayDependencies [
 		BaselineOfTraits corePackages,
 		BaselineOfDisplay allPackageNames).
 
-	self assertCollection: dependencies hasSameElements: self knownDisplayDependencies
+	self assertEmpty: dependencies
 ]
 
 { #category : 'tests' }
@@ -291,7 +243,7 @@ SystemDependenciesTest >> testExternalFileSystemDependencies [
 		                , BaselineOfPharoBootstrap kernelAdditionalPackagesNames , BaselineOfPharoBootstrap compilerPackageNames
 		                , BaselineOfPharoBootstrap fileSystemPackageNames.
 
-	self assertCollection: dependencies hasSameElements: self knownFileSystemDependencies
+	self assertEmpty: dependencies
 ]
 
 { #category : 'tests' }
@@ -401,7 +353,7 @@ SystemDependenciesTest >> testExternalMetacelloDependencies [
 	| dependencies |
 	dependencies := self externalDependendiesOf: self metacelloPackageNames , BaselineOfTraits corePackages.
 
-	self assertCollection: dependencies hasSameElements: self knownMetacelloDependencies
+	self assertEmpty: dependencies 
 ]
 
 { #category : 'tests' }
@@ -419,7 +371,7 @@ SystemDependenciesTest >> testExternalMonticelloDependencies [
 		BaselineOfMonticello corePackageNames,
 		BaselineOfMonticello remoteRepositoriesPackageNames).
 
-	self assertCollection: dependencies hasSameElements: self knownMonticelloDependencies
+	self assertEmpty: dependencies 
 ]
 
 { #category : 'tests' }

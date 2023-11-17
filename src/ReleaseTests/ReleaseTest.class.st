@@ -132,6 +132,17 @@ ReleaseTest >> testClassesShadow [
 	self assert: classes isEmpty description: classes asArray asString
 ]
 
+{ #category : 'tests - package' }
+ReleaseTest >> testExistingPackageNamesDoesNotContainIllegalCharacters [
+
+	| illegalCharacters |
+	illegalCharacters := #( $\ $/ $: $* $? $" $< $> $| ).
+
+	self packageOrganizer packages do: [ :package |
+		self deny: (package name includesAnyOf: illegalCharacters).
+		package classTags do: [ :tag | self deny: (tag name includesAnyOf: illegalCharacters) ] ]
+]
+
 { #category : 'tests' }
 ReleaseTest >> testExplicitRequirementMethodsShouldBeImplementedInTheirUsers [
 	"If a class is using a trait with an explicit requirement method, this class should implement the method"
@@ -279,6 +290,13 @@ ReleaseTest >> testNoOrphanPackage [
 	self assertEmpty: (self packageOrganizer packages reject: [ :package | package isUndefined or: [ declaredPackages includes: package name ] ])
 ]
 
+{ #category : 'tests - package' }
+ReleaseTest >> testNoPackagesOverride [
+	"Class side packages should not be overridden"
+
+	Object allSubclasses do: [ :each | each class compiledMethodAt: #packages ifPresent: [ self fail: 'The #packages method should not be overriden' ] ]
+]
+
 { #category : 'tests - source' }
 ReleaseTest >> testNoPeriodInMethodSignature [
 	| methods |
@@ -391,7 +409,7 @@ ReleaseTest >> testObsoleteClasses [
 					print: obsoleteClasses ]]
 ]
 
-{ #category : 'tests - rpackage' }
+{ #category : 'tests - package' }
 ReleaseTest >> testPackageOrganizer [
 	"Ensure other tests temporary created organizers are collected"
 
@@ -421,7 +439,7 @@ ReleaseTest >> testPharoVersionFileExists [
 		equals: SystemVersion current major asString,  SystemVersion current minor asString
 ]
 
-{ #category : 'tests - packages - manifests' }
+{ #category : 'tests - package' }
 ReleaseTest >> testProperManifestClasses [
 
 	|manifests|
@@ -473,7 +491,7 @@ ReleaseTest >> testTestCasesEndsWithTestOrTestCase [
 	self assertValidLintRule: ReTestClassNameShouldEndWithTestRule new
 ]
 
-{ #category : 'tests - rpackage' }
+{ #category : 'tests - package' }
 ReleaseTest >> testThatAllMethodsArePackaged [
 	| classes instanceMethods classMethods allMethods methodsWithoutPackageInfo |
 	classes := Smalltalk allClassesAndTraits.
@@ -515,7 +533,7 @@ ReleaseTest >> testUndeclared [
 	self assert: remaining isEmpty description: description
 ]
 
-{ #category : 'tests - rpackage' }
+{ #category : 'tests - package' }
 ReleaseTest >> testUndefinedPackageShouldBeEmpty [
 	"The unpackage package should not have any defined class or extended classes"
 
@@ -541,7 +559,7 @@ ReleaseTest >> testUnknownProcesses [
 				separatedBy: [ out << String crlf ] ])
 ]
 
-{ #category : 'tests - rpackage' }
+{ #category : 'tests - package' }
 ReleaseTest >> testUnpackagedClasses [
 
 	| unpackagedClasses |

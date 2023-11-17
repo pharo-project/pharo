@@ -49,6 +49,7 @@ DAPackageDependencyWrapper >> printOn: aStream [
 ]
 
 { #category : 'accessing' }
-DAPackageDependencyWrapper >> rPackageSet [
-	^ daPackage rPackageSet
+DAPackageDependencyWrapper >> systemPackage [
+
+	^ daPackage systemPackage
 ]
