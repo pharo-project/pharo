@@ -2,14 +2,14 @@
 SUnit tests for RPackage tags
 "
 Class {
-	#name : 'RPackageTagTest',
+	#name : 'PackageTagTest',
 	#superclass : 'RPackageTestCase',
 	#category : 'RPackage-Tests',
 	#package : 'RPackage-Tests'
 }
 
 { #category : 'tests' }
-RPackageTagTest >> testAddClass [
+PackageTagTest >> testAddClass [
 
 	| xPackage yPackage yTag class |
 	xPackage := self ensureXPackage.
@@ -32,7 +32,7 @@ RPackageTagTest >> testAddClass [
 ]
 
 { #category : 'tests' }
-RPackageTagTest >> testAddClassSettingPackageTag [
+PackageTagTest >> testAddClassSettingPackageTag [
 
 	| xPackage yPackage yTag class |
 	xPackage := self ensureXPackage.
@@ -55,7 +55,7 @@ RPackageTagTest >> testAddClassSettingPackageTag [
 ]
 
 { #category : 'tests' }
-RPackageTagTest >> testAddTrait [
+PackageTagTest >> testAddTrait [
 
 	| xPackage yPackage yTag class |
 	xPackage := self ensureXPackage.
@@ -78,7 +78,7 @@ RPackageTagTest >> testAddTrait [
 ]
 
 { #category : 'tests' }
-RPackageTagTest >> testAddTraitSettingPackageTag [
+PackageTagTest >> testAddTraitSettingPackageTag [
 
 	| xPackage yPackage yTag class |
 	xPackage := self ensureXPackage.
@@ -101,7 +101,7 @@ RPackageTagTest >> testAddTraitSettingPackageTag [
 ]
 
 { #category : 'tests' }
-RPackageTagTest >> testCanHaveTagOfTheSameNameAsThePackage [
+PackageTagTest >> testCanHaveTagOfTheSameNameAsThePackage [
 
 	| xPackage xTag |
 	xPackage := self ensureXPackage.
@@ -112,7 +112,7 @@ RPackageTagTest >> testCanHaveTagOfTheSameNameAsThePackage [
 ]
 
 { #category : 'tests' }
-RPackageTagTest >> testIncludesClass [
+PackageTagTest >> testIncludesClass [
 
 	| package class tag |
 	package := self ensurePackage: #Test1.
@@ -129,7 +129,7 @@ RPackageTagTest >> testIncludesClass [
 ]
 
 { #category : 'tests' }
-RPackageTagTest >> testPromoteAsPackage [
+PackageTagTest >> testPromoteAsPackage [
 
 	| package1 package2 class tag1 |
 	package1 := self ensurePackage: #Test1.
@@ -147,7 +147,7 @@ RPackageTagTest >> testPromoteAsPackage [
 ]
 
 { #category : 'tests' }
-RPackageTagTest >> testRemoveClass [
+PackageTagTest >> testRemoveClass [
 
 	| package tag class |
 	package := self ensurePackage: #Test1.
@@ -166,7 +166,7 @@ RPackageTagTest >> testRemoveClass [
 ]
 
 { #category : 'tests' }
-RPackageTagTest >> testRemoveClassRemoveTagIfEmpty [
+PackageTagTest >> testRemoveClassRemoveTagIfEmpty [
 
 	| package tag class |
 	package := self ensurePackage: #Test1.

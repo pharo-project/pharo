@@ -6,25 +6,25 @@ Therefore the new created PackageOrganizer is not registered to listen to event.
 
 "
 Class {
-	#name : 'RPackageOrganizerTest',
+	#name : 'PackageOrganizerTest',
 	#superclass : 'RPackageTestCase',
 	#category : 'RPackage-Tests',
 	#package : 'RPackage-Tests'
 }
 
 { #category : 'utilities' }
-RPackageOrganizerTest class >> removeClassNamedIfExists: aClassNameSymbol [
+PackageOrganizerTest class >> removeClassNamedIfExists: aClassNameSymbol [
 
 	self environment at: aClassNameSymbol asSymbol ifPresent: [ :c | c removeFromSystem ]
 ]
 
 { #category : 'utilities' }
-RPackageOrganizerTest >> quadrangleClass [
+PackageOrganizerTest >> quadrangleClass [
 	^ self organizer environment at: #QuadrangleForTesting
 ]
 
 { #category : 'tests' }
-RPackageOrganizerTest >> testAccessingPackage [
+PackageOrganizerTest >> testAccessingPackage [
 
 	| p1 |
 	p1 := self ensurePackage: 'P1'.
@@ -33,34 +33,34 @@ RPackageOrganizerTest >> testAccessingPackage [
 ]
 
 { #category : 'tests' }
-RPackageOrganizerTest >> testCreateNewPackageWithConflictRaisesConflictException [
+PackageOrganizerTest >> testCreateNewPackageWithConflictRaisesConflictException [
 
 	self organizer addPackage: 'P1'.
 	self should: [ self organizer addPackage: 'P1' ] raise: RPackageConflictError
 ]
 
 { #category : 'tests' }
-RPackageOrganizerTest >> testCreateNewPackageWithoutConflictCreatesPackage [
+PackageOrganizerTest >> testCreateNewPackageWithoutConflictCreatesPackage [
 
 	self organizer addPackage: 'P1'.
 	self assert: (self organizer hasPackage: 'P1')
 ]
 
 { #category : 'tests' }
-RPackageOrganizerTest >> testDefaultEnvironment [
+PackageOrganizerTest >> testDefaultEnvironment [
 	"When no environment is specified, point to the default one"
 
 	self assert: PackageOrganizer new environment identicalTo: Smalltalk globals
 ]
 
 { #category : 'tests' }
-RPackageOrganizerTest >> testDefaultOrganizer [
+PackageOrganizerTest >> testDefaultOrganizer [
 
 	self assert: self packageOrganizer identicalTo: self class environment organization
 ]
 
 { #category : 'tests' }
-RPackageOrganizerTest >> testDefinedClassesInstanceAndMetaSideAPI [
+PackageOrganizerTest >> testDefinedClassesInstanceAndMetaSideAPI [
 
 	| xPackage |
 	xPackage := self ensureXPackage.
@@ -71,14 +71,14 @@ RPackageOrganizerTest >> testDefinedClassesInstanceAndMetaSideAPI [
 ]
 
 { #category : 'tests' }
-RPackageOrganizerTest >> testEmpty [
+PackageOrganizerTest >> testEmpty [
 
 	self assert: self organizer packageNames size equals: 1.
 	self assert: (self organizer packageNames includes: UndefinedPackage undefinedPackageName)
 ]
 
 { #category : 'tests' }
-RPackageOrganizerTest >> testEnsurePackageManagesDifferentCase [
+PackageOrganizerTest >> testEnsurePackageManagesDifferentCase [
 
 	| package1 package2 |
 	package1 := self organizer ensurePackage: #Package1.
@@ -93,7 +93,7 @@ RPackageOrganizerTest >> testEnsurePackageManagesDifferentCase [
 ]
 
 { #category : 'tests' }
-RPackageOrganizerTest >> testExtensionMethodNotExactlyTheName [
+PackageOrganizerTest >> testExtensionMethodNotExactlyTheName [
 
 	| p1 p2 c1 |
 	p1 := self ensurePackage: 'P1'.
@@ -108,7 +108,7 @@ RPackageOrganizerTest >> testExtensionMethodNotExactlyTheName [
 ]
 
 { #category : 'tests' }
-RPackageOrganizerTest >> testFullRegistration [
+PackageOrganizerTest >> testFullRegistration [
 
 	| xPackage yPackage zPackage a1 a2 b1 b2 a3 |
 	"taken from setup of RPackageReadOnlyCompleteSetup"
@@ -142,7 +142,7 @@ RPackageOrganizerTest >> testFullRegistration [
 ]
 
 { #category : 'tests' }
-RPackageOrganizerTest >> testHasPackage [
+PackageOrganizerTest >> testHasPackage [
 
 	| organizer packageFromOtherOrganizer name package |
 	name := 'TestPackageNameForPackageOrganizer'.
@@ -160,7 +160,7 @@ RPackageOrganizerTest >> testHasPackage [
 ]
 
 { #category : 'tests' }
-RPackageOrganizerTest >> testHasPackageCaseInsensitive [
+PackageOrganizerTest >> testHasPackageCaseInsensitive [
 
 	self organizer ensurePackage: #Package1.
 
@@ -170,7 +170,7 @@ RPackageOrganizerTest >> testHasPackageCaseInsensitive [
 ]
 
 { #category : 'tests' }
-RPackageOrganizerTest >> testPackageNamed [
+PackageOrganizerTest >> testPackageNamed [
 
 	| package |
 	package := self organizer ensurePackage: #Package1.
@@ -181,7 +181,7 @@ RPackageOrganizerTest >> testPackageNamed [
 ]
 
 { #category : 'tests' }
-RPackageOrganizerTest >> testPackageNamedIfAbsent [
+PackageOrganizerTest >> testPackageNamedIfAbsent [
 
 	| package |
 	package := self organizer ensurePackage: #Package1.
@@ -193,7 +193,7 @@ RPackageOrganizerTest >> testPackageNamedIfAbsent [
 ]
 
 { #category : 'tests' }
-RPackageOrganizerTest >> testPackageNamedIfPresent [
+PackageOrganizerTest >> testPackageNamedIfPresent [
 
 	| package |
 	package := self organizer ensurePackage: #Package1.
@@ -205,7 +205,7 @@ RPackageOrganizerTest >> testPackageNamedIfPresent [
 ]
 
 { #category : 'tests' }
-RPackageOrganizerTest >> testPackageNamedWithDifferentCase [
+PackageOrganizerTest >> testPackageNamedWithDifferentCase [
 
 	| package |
 	package := self organizer ensurePackage: #Package1.
@@ -216,13 +216,13 @@ RPackageOrganizerTest >> testPackageNamedWithDifferentCase [
 ]
 
 { #category : 'tests' }
-RPackageOrganizerTest >> testPackageNamedWithoutMatchingPackage [
+PackageOrganizerTest >> testPackageNamedWithoutMatchingPackage [
 
 	self should: [ self organizer packageNamed: #PacKAge1 ] raise: NotFound
 ]
 
 { #category : 'tests' }
-RPackageOrganizerTest >> testPackageOf [
+PackageOrganizerTest >> testPackageOf [
 
 	| xPackage yPackage class |
 	xPackage := self ensureXPackage.
@@ -237,14 +237,14 @@ RPackageOrganizerTest >> testPackageOf [
 ]
 
 { #category : 'tests' }
-RPackageOrganizerTest >> testRegisterPackageConflictWithPackage [
+PackageOrganizerTest >> testRegisterPackageConflictWithPackage [
 
 	self ensurePackage: 'P1'.
 	self should: [ self organizer addPackage: (RPackage named: 'P1') ] raise: RPackageConflictError
 ]
 
 { #category : 'tests' }
-RPackageOrganizerTest >> testRegisterPackageConflictWithPackageTag [
+PackageOrganizerTest >> testRegisterPackageConflictWithPackageTag [
 	"In the past we could not have package-tag with the same name than a package but now it is possible"
 
 	| package1 package2 tag |
@@ -259,7 +259,7 @@ RPackageOrganizerTest >> testRegisterPackageConflictWithPackageTag [
 ]
 
 { #category : 'tests' }
-RPackageOrganizerTest >> testRegisterPackageTagConflictWithPackage [
+PackageOrganizerTest >> testRegisterPackageTagConflictWithPackage [
 
 	| package1 package2 tag |
 	package1 := self ensurePackage: #P1.
@@ -272,7 +272,7 @@ RPackageOrganizerTest >> testRegisterPackageTagConflictWithPackage [
 ]
 
 { #category : 'tests' }
-RPackageOrganizerTest >> testRegisteredNumberOfPackageIsOk [
+PackageOrganizerTest >> testRegisteredNumberOfPackageIsOk [
 	| p1 p2 p3 |
 	p1 := self ensurePackage: 'P1'.
 	p2 := self ensurePackage: 'P2'.
@@ -287,7 +287,7 @@ RPackageOrganizerTest >> testRegisteredNumberOfPackageIsOk [
 ]
 
 { #category : 'tests' }
-RPackageOrganizerTest >> testRegisteredPackages [
+PackageOrganizerTest >> testRegisteredPackages [
 
 	| p1 p2 p3 |
 	p1 := self ensurePackage: 'P1'.
@@ -301,7 +301,7 @@ RPackageOrganizerTest >> testRegisteredPackages [
 ]
 
 { #category : 'tests' }
-RPackageOrganizerTest >> testRemoveClassUsingEnvironment [
+PackageOrganizerTest >> testRemoveClassUsingEnvironment [
 
 	| xPackage class |
 	xPackage := self ensureXPackage.
@@ -312,7 +312,7 @@ RPackageOrganizerTest >> testRemoveClassUsingEnvironment [
 ]
 
 { #category : 'tests' }
-RPackageOrganizerTest >> testRemoveEmptyPackagesAndTags [
+PackageOrganizerTest >> testRemoveEmptyPackagesAndTags [
 
 	| package1 package2 package3 package4 class tag1 tag2 |
 	"This one will contain a class"
@@ -356,7 +356,7 @@ RPackageOrganizerTest >> testRemoveEmptyPackagesAndTags [
 ]
 
 { #category : 'tests' }
-RPackageOrganizerTest >> testRemovePackage [
+PackageOrganizerTest >> testRemovePackage [
 
 	| xPackage yPackage zPackage a1 a2 b1 b2 a3 |
 	"taken from setup of RPackageReadOnlyCompleteSetup"
@@ -390,7 +390,7 @@ RPackageOrganizerTest >> testRemovePackage [
 ]
 
 { #category : 'tests' }
-RPackageOrganizerTest >> testRenameUpdateTheOrganizer [
+PackageOrganizerTest >> testRenameUpdateTheOrganizer [
 	"test that when we rename a category, the organizer dictionary is update with this new name, so that we can access the package with this new name as key"
 
 	| package |
@@ -403,7 +403,7 @@ RPackageOrganizerTest >> testRenameUpdateTheOrganizer [
 ]
 
 { #category : 'tests' }
-RPackageOrganizerTest >> testTestPackageNames [
+PackageOrganizerTest >> testTestPackageNames [
 
 	| packages |
 	packages := #( 'MockPackage-Tests' 'MockPackage2-tests' 'MockPackage' 'MockPackage-Tests-Package' ) collect: [ :pName | self ensurePackage: pName ].
@@ -416,7 +416,7 @@ RPackageOrganizerTest >> testTestPackageNames [
 ]
 
 { #category : 'tests' }
-RPackageOrganizerTest >> testTestPackages [
+PackageOrganizerTest >> testTestPackages [
 
 	| packages |
 	packages := #( 'MockPackage-Tests' 'MockPackage2-tests' 'MockPackage' 'MockPackage-Tests-Package' ) collect: [ :pName | self ensurePackage: pName ].
@@ -429,7 +429,7 @@ RPackageOrganizerTest >> testTestPackages [
 ]
 
 { #category : 'tests' }
-RPackageOrganizerTest >> testUnregister [
+PackageOrganizerTest >> testUnregister [
 
 	| p1 p2 p3 |
 	p1 := self ensurePackage: 'P1'.

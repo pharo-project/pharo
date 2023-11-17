@@ -2,14 +2,14 @@
 SUnit tests for RPackage method synchronization
 "
 Class {
-	#name : 'RPackageMethodsSynchronisationTest',
+	#name : 'PackageAndDefinedMethodsSynchronisationTest',
 	#superclass : 'RPackageTestCase',
 	#category : 'RPackage-Tests',
 	#package : 'RPackage-Tests'
 }
 
 { #category : 'tests - operations on methods' }
-RPackageMethodsSynchronisationTest >> testModifyExtensionProtocolUpdatesThePackage [
+PackageAndDefinedMethodsSynchronisationTest >> testModifyExtensionProtocolUpdatesThePackage [
 	"test that when we move a method from an extension category ( begining with *) to another extending package , the method is moved from the extending package to the other extending package"
 
 	| class xPackage yPackage zPackage |
@@ -27,7 +27,7 @@ RPackageMethodsSynchronisationTest >> testModifyExtensionProtocolUpdatesThePacka
 ]
 
 { #category : 'tests - operations on methods' }
-RPackageMethodsSynchronisationTest >> testModifyProtocolOfMethodyDoesNothing [
+PackageAndDefinedMethodsSynchronisationTest >> testModifyProtocolOfMethodyDoesNothing [
 	"test that when we move a method from a classic category (not begining with *) to another classic category , the packaging keeps the same"
 
 	| class xPackage |
@@ -46,7 +46,7 @@ RPackageMethodsSynchronisationTest >> testModifyProtocolOfMethodyDoesNothing [
 ]
 
 { #category : 'tests - operations on methods' }
-RPackageMethodsSynchronisationTest >> testModifyProtocolToExtensionUpdatesThePackage [
+PackageAndDefinedMethodsSynchronisationTest >> testModifyProtocolToExtensionUpdatesThePackage [
 	"test that when we move a method from a classic category (not begining with *) to an extension category , the method is moved from the parent package of the class to the extending package"
 
 	| class xPackage yPackage |
@@ -67,7 +67,7 @@ RPackageMethodsSynchronisationTest >> testModifyProtocolToExtensionUpdatesThePac
 ]
 
 { #category : 'tests - operations on methods' }
-RPackageMethodsSynchronisationTest >> testModifyProtocolToRemoveExtensionUpdatesThePackage [
+PackageAndDefinedMethodsSynchronisationTest >> testModifyProtocolToRemoveExtensionUpdatesThePackage [
 	"test that when we move a method from an extension category ( begining with *) to a classic category , the method is moved from the extending package to the parent package of the class"
 
 	| class xPackage yPackage |
@@ -83,7 +83,7 @@ RPackageMethodsSynchronisationTest >> testModifyProtocolToRemoveExtensionUpdates
 ]
 
 { #category : 'tests - operations on methods' }
-RPackageMethodsSynchronisationTest >> testPackageOfNonExtensionMethodIsPackageOfTheClass [
+PackageAndDefinedMethodsSynchronisationTest >> testPackageOfNonExtensionMethodIsPackageOfTheClass [
 	"test that when we add a method to a  class in a classic category (not beginning with *), this method is added to the parent package of the class"
 
 	| xPackage class |
@@ -98,7 +98,7 @@ RPackageMethodsSynchronisationTest >> testPackageOfNonExtensionMethodIsPackageOf
 ]
 
 { #category : 'tests - operations on methods' }
-RPackageMethodsSynchronisationTest >> testPackageOfNonExtensionMethodIsPackageOfTheTrait [
+PackageAndDefinedMethodsSynchronisationTest >> testPackageOfNonExtensionMethodIsPackageOfTheTrait [
 	"test that when we add a method to a  trait in a classic category (*not beginning with *), this method is added to the parent package of the class"
 
 	| xPackage trait |
@@ -113,7 +113,7 @@ RPackageMethodsSynchronisationTest >> testPackageOfNonExtensionMethodIsPackageOf
 ]
 
 { #category : 'tests - operations on methods' }
-RPackageMethodsSynchronisationTest >> testRemoveMethodRemoveMethodFromItsPackage [
+PackageAndDefinedMethodsSynchronisationTest >> testRemoveMethodRemoveMethodFromItsPackage [
 	"test that when we remove a method, the method is remod from the package in which the method is defined"
 
 	| xPackage class |

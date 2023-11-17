@@ -2,14 +2,14 @@
 SUnit tests on renaming packages
 "
 Class {
-	#name : 'RPackageRenameTest',
+	#name : 'PackageRenameTest',
 	#superclass : 'RPackageTestCase',
 	#category : 'RPackage-Tests',
 	#package : 'RPackage-Tests'
 }
 
 { #category : 'tests' }
-RPackageRenameTest >> testRenamePackage [
+PackageRenameTest >> testRenamePackage [
 	"Test that we do rename the package as expected."
 
 	| package workingCopy class |
@@ -36,7 +36,7 @@ RPackageRenameTest >> testRenamePackage [
 ]
 
 { #category : 'tests' }
-RPackageRenameTest >> testRenamePackageToOwnTagName [
+PackageRenameTest >> testRenamePackageToOwnTagName [
 	"If we rename a package to the (full)category name of one of its tags"
 
 	| package workingCopy class1 class2 |
@@ -60,7 +60,7 @@ RPackageRenameTest >> testRenamePackageToOwnTagName [
 ]
 
 { #category : 'tests' }
-RPackageRenameTest >> testRenamePackageToOwnTagNameWithClassesInRoot [
+PackageRenameTest >> testRenamePackageToOwnTagNameWithClassesInRoot [
 	"If we rename a package to the (full)category name of one of its tags and the (non-tag)package is not empty"
 
 	| package workingCopy class1 class2 class3 |
@@ -84,7 +84,7 @@ RPackageRenameTest >> testRenamePackageToOwnTagNameWithClassesInRoot [
 ]
 
 { #category : 'tests' }
-RPackageRenameTest >> testRenamePackageWithExtensions [
+PackageRenameTest >> testRenamePackageWithExtensions [
 
 	| package class extendedPackage extension |
 	package := self ensurePackage: 'OriginalPackage'.
@@ -115,7 +115,7 @@ RPackageRenameTest >> testRenamePackageWithExtensions [
 ]
 
 { #category : 'tests' }
-RPackageRenameTest >> testRenamePackageWithExtensionsInClassSide [
+PackageRenameTest >> testRenamePackageWithExtensionsInClassSide [
 
 	| package class extendedPackage extension |
 	package := self ensurePackage: 'OriginalPackage'.
@@ -142,7 +142,7 @@ RPackageRenameTest >> testRenamePackageWithExtensionsInClassSide [
 ]
 
 { #category : 'tests' }
-RPackageRenameTest >> testUnregisterPackage [
+PackageRenameTest >> testUnregisterPackage [
 	"Test that we do unregister the package as expected."
 
 	| package workingCopy class |

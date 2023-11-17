@@ -2,14 +2,14 @@
 SUnit tests for RPackage 
 "
 Class {
-	#name : 'RPackageTest',
+	#name : 'PackageTest',
 	#superclass : 'RPackageTestCase',
 	#category : 'RPackage-Tests',
 	#package : 'RPackage-Tests'
 }
 
 { #category : 'tests - classes' }
-RPackageTest >> testAddClass [
+PackageTest >> testAddClass [
 
 	| xPackage yPackage class |
 	xPackage := self ensureXPackage.
@@ -31,7 +31,7 @@ RPackageTest >> testAddClass [
 ]
 
 { #category : 'tests - classes' }
-RPackageTest >> testAddClassSettingPackage [
+PackageTest >> testAddClassSettingPackage [
 
 	| xPackage yPackage class |
 	xPackage := self ensureXPackage.
@@ -53,7 +53,7 @@ RPackageTest >> testAddClassSettingPackage [
 ]
 
 { #category : 'tests - classes' }
-RPackageTest >> testAddTrait [
+PackageTest >> testAddTrait [
 
 	| xPackage yPackage class |
 	xPackage := self ensureXPackage.
@@ -75,7 +75,7 @@ RPackageTest >> testAddTrait [
 ]
 
 { #category : 'tests - classes' }
-RPackageTest >> testAddTraitSettingPackage [
+PackageTest >> testAddTraitSettingPackage [
 
 	| xPackage yPackage class |
 	xPackage := self ensureXPackage.
@@ -97,7 +97,7 @@ RPackageTest >> testAddTraitSettingPackage [
 ]
 
 { #category : 'tests' }
-RPackageTest >> testAllUnsentMessages [
+PackageTest >> testAllUnsentMessages [
 
 	| package class1 class2 |
 	package := self ensurePackage: #Test1.
@@ -122,7 +122,7 @@ RPackageTest >> testAllUnsentMessages [
 ]
 
 { #category : 'tests' }
-RPackageTest >> testAnonymousClassAndSelector [
+PackageTest >> testAnonymousClassAndSelector [
 	"jgeidel test case from issue 12628."
 
 	"Make sure we don't have a registration or a package for the method."
@@ -137,23 +137,23 @@ RPackageTest >> testAnonymousClassAndSelector [
 ]
 
 { #category : 'tests - extensions' }
-RPackageTest >> testAsPackage [
+PackageTest >> testAsPackage [
 	self assert: self class package name asPackage isNotNil
 ]
 
 { #category : 'tests - extensions' }
-RPackageTest >> testAsPackageIfAbsent [
+PackageTest >> testAsPackageIfAbsent [
 	self assert: ('___inexistent___package___' asPackageIfAbsent: [ true ])
 ]
 
 { #category : 'tests - extensions' }
-RPackageTest >> testAsPackageWithError [
+PackageTest >> testAsPackageWithError [
 
 	self should: [ '___inexistent___package___' asPackage ] raise: NotFound
 ]
 
 { #category : 'tests - demotion' }
-RPackageTest >> testDemoteToRPackageNamed [
+PackageTest >> testDemoteToRPackageNamed [
 
 	| package1 package2 class |
 	package1 := self ensurePackage: #'Test1-TAG1'.
@@ -170,7 +170,7 @@ RPackageTest >> testDemoteToRPackageNamed [
 ]
 
 { #category : 'tests - demotion' }
-RPackageTest >> testDemoteToRPackageNamedExistingPackage [
+PackageTest >> testDemoteToRPackageNamedExistingPackage [
 
 	| package1 package2 packageExisting class |
 	package1 := self ensurePackage: #'Test1-TAG1'.
@@ -189,7 +189,7 @@ RPackageTest >> testDemoteToRPackageNamedExistingPackage [
 ]
 
 { #category : 'tests - demotion' }
-RPackageTest >> testDemoteToRPackageNamedKeepOrganizer [
+PackageTest >> testDemoteToRPackageNamedKeepOrganizer [
 
 	| newOrganizer package renamedPackage |
 	newOrganizer := PackageOrganizer new.
@@ -202,7 +202,7 @@ RPackageTest >> testDemoteToRPackageNamedKeepOrganizer [
 ]
 
 { #category : 'tests - demotion' }
-RPackageTest >> testDemoteToRPackageNamedMultilevelPackage [
+PackageTest >> testDemoteToRPackageNamedMultilevelPackage [
 
 	| package1 package2 class |
 	package1 := self ensurePackage: #'Test1-TAG1-X1'.
@@ -219,7 +219,7 @@ RPackageTest >> testDemoteToRPackageNamedMultilevelPackage [
 ]
 
 { #category : 'tests - demotion' }
-RPackageTest >> testDemoteToRPackageNamedWithExtension [
+PackageTest >> testDemoteToRPackageNamedWithExtension [
 
 	| packageOriginal packageDemoted class classOther |
 	packageOriginal := self ensurePackage: #'Test1-TAG1'.
@@ -244,7 +244,7 @@ RPackageTest >> testDemoteToRPackageNamedWithExtension [
 ]
 
 { #category : 'tests - properties' }
-RPackageTest >> testHasProperty [
+PackageTest >> testHasProperty [
 	| package testValue |
 
 	testValue := Date today.
@@ -258,7 +258,7 @@ RPackageTest >> testHasProperty [
 ]
 
 { #category : 'tests - queries' }
-RPackageTest >> testHierarchyRoots [
+PackageTest >> testHierarchyRoots [
 
 	| roots |
 	roots := (self packageOrganizer packageNamed: #'RPackage-Tests') hierarchyRoots.
@@ -267,7 +267,7 @@ RPackageTest >> testHierarchyRoots [
 ]
 
 { #category : 'tests' }
-RPackageTest >> testIsTestPackage [
+PackageTest >> testIsTestPackage [
 
 	| package |
 	package := self organizer ensurePackage: 'MockPackage-Tests'.
@@ -284,7 +284,7 @@ RPackageTest >> testIsTestPackage [
 ]
 
 { #category : 'tests - MC' }
-RPackageTest >> testMcPackage [
+PackageTest >> testMcPackage [
 
 	| rPackage |
 	rPackage := self organizer ensurePackage: #Test1.
@@ -292,7 +292,7 @@ RPackageTest >> testMcPackage [
 ]
 
 { #category : 'tests - MC' }
-RPackageTest >> testMcWorkingCopy [
+PackageTest >> testMcWorkingCopy [
 
 	| rPackage |
 	rPackage := self organizer ensurePackage: #Test1.
@@ -300,7 +300,7 @@ RPackageTest >> testMcWorkingCopy [
 ]
 
 { #category : 'tests - classes' }
-RPackageTest >> testMoveClassToTag [
+PackageTest >> testMoveClassToTag [
 
 	| xPackage yPackage yTag class |
 	xPackage := self ensureXPackage.
@@ -323,7 +323,7 @@ RPackageTest >> testMoveClassToTag [
 ]
 
 { #category : 'tests - classes' }
-RPackageTest >> testMoveClassToTagInDefaultTag [
+PackageTest >> testMoveClassToTagInDefaultTag [
 
 	| xPackage yPackage class |
 	xPackage := self ensureXPackage.
@@ -345,7 +345,7 @@ RPackageTest >> testMoveClassToTagInDefaultTag [
 ]
 
 { #category : 'tests - classes' }
-RPackageTest >> testMoveClassToTagName [
+PackageTest >> testMoveClassToTagName [
 
 	| xPackage yPackage yTag class |
 	xPackage := self ensureXPackage.
@@ -368,7 +368,7 @@ RPackageTest >> testMoveClassToTagName [
 ]
 
 { #category : 'tests - properties' }
-RPackageTest >> testPropertyAtPut [
+PackageTest >> testPropertyAtPut [
 
 	| testValue package |
 
@@ -385,7 +385,7 @@ RPackageTest >> testPropertyAtPut [
 ]
 
 { #category : 'tests - classes' }
-RPackageTest >> testRemoveClassUsingEnvironment [
+PackageTest >> testRemoveClassUsingEnvironment [
 
 	| xPackage class |
 	xPackage := self ensureXPackage.
@@ -396,7 +396,7 @@ RPackageTest >> testRemoveClassUsingEnvironment [
 ]
 
 { #category : 'tests' }
-RPackageTest >> testRemoveEmptyTags [
+PackageTest >> testRemoveEmptyTags [
 
 	| package class tag1 tag2 |
 	package := self ensurePackage: #Test1.
@@ -420,7 +420,7 @@ RPackageTest >> testRemoveEmptyTags [
 ]
 
 { #category : 'tests' }
-RPackageTest >> testRemoveFromSystemRemoveAllTags [
+PackageTest >> testRemoveFromSystemRemoveAllTags [
 	"Regression test because #removeFromSystem was removing the tags while iterating on them and that caused troubles."
 
 	| xPackage tag1 tag2 tag3 |
@@ -441,7 +441,7 @@ RPackageTest >> testRemoveFromSystemRemoveAllTags [
 ]
 
 { #category : 'tests' }
-RPackageTest >> testRemoveTag [
+PackageTest >> testRemoveTag [
 
 	| p1 a1 b1 |
 	p1 := self ensurePackage: #P1.
@@ -468,7 +468,7 @@ RPackageTest >> testRemoveTag [
 ]
 
 { #category : 'tests' }
-RPackageTest >> testRemoveTagRemoveClasses [
+PackageTest >> testRemoveTagRemoveClasses [
 
 	| p1 a1 |
 	p1 := self ensurePackage: #P1.
@@ -489,7 +489,7 @@ RPackageTest >> testRemoveTagRemoveClasses [
 ]
 
 { #category : 'tests' }
-RPackageTest >> testRenamePackageAlsoRenameAllExtensionProtocols [
+PackageTest >> testRenamePackageAlsoRenameAllExtensionProtocols [
 	"test that when we rename a category, all corresponding extension protocols in the system are renamed"
 
 	| p1 p2 p3 classInY classInZ |
@@ -513,7 +513,7 @@ RPackageTest >> testRenamePackageAlsoRenameAllExtensionProtocols [
 ]
 
 { #category : 'tests' }
-RPackageTest >> testRenameUpdateTheOrganizer [
+PackageTest >> testRenameUpdateTheOrganizer [
 	"test that when we rename a category, the organizer dictionary is update with this new name, so that we can access the package with this new name as key"
 
 	| package |
