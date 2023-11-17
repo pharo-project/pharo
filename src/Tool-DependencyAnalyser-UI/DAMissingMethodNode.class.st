@@ -38,13 +38,14 @@ DAMissingMethodNode >> messageSendAnalysis [
 
 { #category : 'api' }
 DAMissingMethodNode >> messageSendNodes [
-	^ self messageSendAnalysis rPackage methods
-		select: [ :method | method sendsSelector: self content ]
-		thenCollect: [ :method |
-			DAMessageSendNode new
-				content: method;
-				parentNode: self;
-				yourself ]
+
+	^ self messageSendAnalysis systemPackage methods
+		  select: [ :method | method sendsSelector: self content ]
+		  thenCollect: [ :method |
+			  DAMessageSendNode new
+				  content: method;
+				  parentNode: self;
+				  yourself ]
 ]
 
 { #category : 'api' }
@@ -56,11 +57,6 @@ DAMissingMethodNode >> methodImplementationNodes [
 			parentNode: self;
 			yourself ])
 		sorted: [ :a :b | a content package name < b content package name ]
-]
-
-{ #category : 'private' }
-DAMissingMethodNode >> packageMethods [
-	^ self messageSendAnalysis rPackage methods
 ]
 
 { #category : 'browse-nautilus' }

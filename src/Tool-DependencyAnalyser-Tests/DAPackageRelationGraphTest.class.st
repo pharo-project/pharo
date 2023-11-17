@@ -28,20 +28,21 @@ DAPackageRelationGraphTest >> packageDependencyFrom: aPackage to: anOtherPackage
 
 { #category : 'running' }
 DAPackageRelationGraphTest >> setUp [
+
 	super setUp.
 	aPackageRelationGraph := DAPackageRelationGraph new.
-	packageCollectionAbstract := DAPackage on: (RPackageSet named: 'Collections-Abstract').
-	packageStrings := DAPackage on:(RPackageSet named: 'Collections-Strings').
-	packageKernel := DAPackage on:(RPackageSet named: 'Kernel').
-	packageMorphicBase := DAPackage on: (RPackageSet named: 'Morphic-Base').
-	packageTextCore := DAPackage on: (RPackageSet named: 'Text-Core').
-	packageRegexCore := DAPackage on:(RPackageSet named: 'Regex-Core').
-	packageCollectionsSequenceable := DAPackage on: (RPackageSet named: 'Collections-Sequenceable').
-	packagePackageDependencies := DAPackage on: (RPackageSet named:  #'Tool-DependencyAnalyser').
-	packageA := DAPackage on: (RPackageSet named: 'A').
-	packageB := DAPackage on: (RPackageSet named: 'B').
-	packageC := DAPackage on: (RPackageSet named: 'C').
-	packageD := DAPackage on: (RPackageSet named: 'D')
+	packageCollectionAbstract := DAPackage onPackageNamed: 'Collections-Abstract'.
+	packageStrings := DAPackage onPackageNamed: 'Collections-Strings'.
+	packageKernel := DAPackage onPackageNamed: 'Kernel'.
+	packageMorphicBase := DAPackage onPackageNamed: 'Morphic-Base'.
+	packageTextCore := DAPackage onPackageNamed: 'Text-Core'.
+	packageRegexCore := DAPackage onPackageNamed: 'Regex-Core'.
+	packageCollectionsSequenceable := DAPackage onPackageNamed: 'Collections-Sequenceable'.
+	packagePackageDependencies := DAPackage onPackageNamed: #'Tool-DependencyAnalyser'.
+	packageA := DAPackage onPackageNamed: 'A'.
+	packageB := DAPackage onPackageNamed: 'B'.
+	packageC := DAPackage onPackageNamed: 'C'.
+	packageD := DAPackage onPackageNamed: 'D'
 ]
 
 { #category : 'tests' }
@@ -133,10 +134,10 @@ DAPackageRelationGraphTest >> testCanGetDaPackageFromAGivenClass [
 
 { #category : 'tests' }
 DAPackageRelationGraphTest >> testClearAllDependencies [
+
 	| aRelationGraph packagesFromGraph |
-	aRelationGraph := DAPackageRelationGraph
-		onPackages:
-			(#('Collections-Abstract' 'Collections-Sequenceable') collect: [ :each | DAPackage on: (RPackageSet named: each) ]).
+	aRelationGraph := DAPackageRelationGraph onPackages:
+		                  (#( 'Collections-Abstract' 'Collections-Sequenceable' ) collect: [ :each | DAPackage onPackageNamed: each ]).
 	aRelationGraph
 		build;
 		clearAllDependencies.
