@@ -303,13 +303,6 @@ Gofer >> references [
 	^ Array withAll: references
 ]
 
-{ #category : 'operations' }
-Gofer >> reinitialize [
-	"Calls the class side initializers on all package code."
-
-	^ self execute: GoferReinitialize
-]
-
 { #category : 'repositories - places' }
 Gofer >> renggli: aString [
 	self url: 'http://source.lukas-renggli.ch/' , aString
