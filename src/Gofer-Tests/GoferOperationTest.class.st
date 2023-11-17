@@ -118,13 +118,6 @@ GoferOperationTest >> testMerge [
 ]
 
 { #category : 'tests' }
-GoferOperationTest >> testRecompile [
-
-	gofer package: 'Gofer-Core'.
-	gofer recompile
-]
-
-{ #category : 'tests' }
 GoferOperationTest >> testReinitialize [
 
 	| class |

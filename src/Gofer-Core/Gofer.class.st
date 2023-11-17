@@ -296,13 +296,6 @@ Gofer >> postCopy [
 	resolvedReferencesCache := nil
 ]
 
-{ #category : 'operations' }
-Gofer >> recompile [
-	"Recompile the specified packages."
-
-	^ self execute: GoferRecompile
-]
-
 { #category : 'accessing' }
 Gofer >> references [
 	"Answer the configured references."
