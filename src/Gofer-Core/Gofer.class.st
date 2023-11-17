@@ -278,13 +278,6 @@ Gofer >> loadVersion: anMetacelloVersionIdentifierSymbol [
 ]
 
 { #category : 'operations' }
-Gofer >> localChanges [
-	"Answer the changes between the base version and the working copy."
-
-	^ self execute: GoferLocalChanges
-]
-
-{ #category : 'operations' }
 Gofer >> merge [
 	"Merge the specified packages into their working copies."
 
@@ -336,13 +329,6 @@ Gofer >> reinitialize [
 	"Calls the class side initializers on all package code."
 
 	^ self execute: GoferReinitialize
-]
-
-{ #category : 'operations' }
-Gofer >> remoteChanges [
-	"Display the changes between the working copy and the remote changes."
-
-	^ self execute: GoferRemoteChanges
 ]
 
 { #category : 'repositories - places' }

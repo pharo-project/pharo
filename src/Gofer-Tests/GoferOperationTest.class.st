@@ -117,18 +117,6 @@ GoferOperationTest >> testLoad [
 ]
 
 { #category : 'tests' }
-GoferOperationTest >> testLocalChanges [
-
-	| changes |
-	gofer
-		package: 'GoferBar';
-		load.
-	(environment classNamed: #GoferBar) compile: 'foo'.
-	changes := gofer localChanges.
-	self assert: changes operations size equals: 1
-]
-
-{ #category : 'tests' }
 GoferOperationTest >> testMerge [
 
 	| initial |
@@ -171,18 +159,6 @@ GoferOperationTest >> testReinitialize [
 	gofer reinitialize.
 	self assert: (class classPool at: #InstanceSide) isNil.
 	self assert: (class classPool at: #ClassSide)
-]
-
-{ #category : 'tests' }
-GoferOperationTest >> testRemoteChanges [
-
-	| changes |
-	gofer
-		package: 'GoferBar';
-		load.
-	(environment classNamed: #GoferBar) compile: 'foo'.
-	changes := gofer remoteChanges.
-	self assert: changes operations size equals: 1
 ]
 
 { #category : 'tests' }
