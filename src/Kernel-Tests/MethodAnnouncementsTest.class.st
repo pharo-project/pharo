@@ -3,28 +3,11 @@ I am a test case specialized in checking that the announcements linked to protoc
 "
 Class {
 	#name : 'MethodAnnouncementsTest',
-	#superclass : 'AbstractClassDescriptionTest',
-	#instVars : [
-		'numberOfAnnouncements'
-	],
+	#superclass : 'AbstractClassDescriptionAnnouncementTest',
 	#category : 'Kernel-Tests-Classes',
 	#package : 'Kernel-Tests',
 	#tag : 'Classes'
 }
-
-{ #category : 'running' }
-MethodAnnouncementsTest >> setUp [
-
-	super setUp.
-	numberOfAnnouncements := 0
-]
-
-{ #category : 'running' }
-MethodAnnouncementsTest >> tearDown [
-
-	SystemAnnouncer uniqueInstance unsubscribe: self.
-	super tearDown
-]
 
 { #category : 'tests' }
 MethodAnnouncementsTest >> testRemoveSelectorDoesNotAnnounceRecategorization [
@@ -61,15 +44,4 @@ MethodAnnouncementsTest >> testRemoveSelectorSetThePackage [
 	class removeSelector: #king.
 
 	self assert: numberOfAnnouncements equals: 1
-]
-
-{ #category : 'helpers' }
-MethodAnnouncementsTest >> when: anAnnouncement do: aBlock [
-
-	SystemAnnouncer uniqueInstance
-		when: anAnnouncement
-		do: [ :ann |
-			numberOfAnnouncements := numberOfAnnouncements + 1.
-			aBlock cull: ann ]
-		for: self
 ]
