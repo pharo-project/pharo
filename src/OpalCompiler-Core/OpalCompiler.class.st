@@ -549,7 +549,7 @@ OpalCompiler >> generateMethod [
 	self priorMethod ifNil: [ self methodClass ifNotNil: [ :class | self priorMethod: (class compiledMethodAt: method selector ifAbsent: [ nil ]) ] ].
 
 	"In case we are not compiling the method for the first time, we want to ensure that some properties are kept."
-	self priorMethod ifNotNil: [ priorMethod propertyAt: #extensionPackage ifPresent: [ :package | method propertyAt: #extensionPackage put: package ] ].
+	self priorMethod ifNotNil: [ priorMethod migratePersistingPropertiesIn: method ].
 	^ method
 ]
 
