@@ -18,21 +18,6 @@ RPackageOrganizerTest class >> removeClassNamedIfExists: aClassNameSymbol [
 	self environment at: aClassNameSymbol asSymbol ifPresent: [ :c | c removeFromSystem ]
 ]
 
-{ #category : 'tests' }
-RPackageOrganizerTest >> p1Name [
-	^ 'RPackageTestP1'
-]
-
-{ #category : 'tests' }
-RPackageOrganizerTest >> p2Name [
-	^ 'RPackageTestP2'
-]
-
-{ #category : 'tests' }
-RPackageOrganizerTest >> p3Name [
-	^ 'RPackageTestP3'
-]
-
 { #category : 'utilities' }
 RPackageOrganizerTest >> quadrangleClass [
 	^ self organizer environment at: #QuadrangleForTesting
@@ -77,9 +62,9 @@ RPackageOrganizerTest >> testDefaultOrganizer [
 { #category : 'tests' }
 RPackageOrganizerTest >> testDefinedClassesInstanceAndMetaSideAPI [
 
-	| p1 |
-	p1 := self ensureXPackage.
-	self newClassNamed: #MyPoint in: p1.
+	| xPackage |
+	xPackage := self ensureXPackage.
+	self newClassNamed: #MyPoint in: xPackage.
 	self assert: self organizer packageNames size equals: 2.
 	self assert: self organizer packages size equals: 2.
 	self assert: (self organizer packageNamed: self xPackageName) definedClasses size equals: 1
@@ -125,35 +110,35 @@ RPackageOrganizerTest >> testExtensionMethodNotExactlyTheName [
 { #category : 'tests' }
 RPackageOrganizerTest >> testFullRegistration [
 
-	| p1 p2 p3 a1 a2 b1 b2 a3 |
+	| xPackage yPackage zPackage a1 a2 b1 b2 a3 |
 	"taken from setup of RPackageReadOnlyCompleteSetup"
-	p1 := self ensureXPackage.
-	p2 := self ensureYPackage.
-	p3 := self ensureZPackage.
+	xPackage := self ensureXPackage.
+	yPackage := self ensureYPackage.
+	zPackage := self ensureZPackage.
 
-	a1 := self newClassNamed: #A1DefinedInP1 in: p1.
-	b1 := self newClassNamed: #B1DefinedInP1 in: p1.
-	a2 := self newClassNamed: #A2DefinedInP2 in: p2.
-	b2 := self newClassNamed: #B2DefinedInP2 in: p2.
-	a3 := self newClassNamed: #A3DefinedInP3 in: p3.
+	a1 := self newClassNamed: #A1DefinedInP1 in: xPackage.
+	b1 := self newClassNamed: #B1DefinedInP1 in: xPackage.
+	a2 := self newClassNamed: #A2DefinedInP2 in: yPackage.
+	b2 := self newClassNamed: #B2DefinedInP2 in: yPackage.
+	a3 := self newClassNamed: #A3DefinedInP3 in: zPackage.
 
 	a1 compile: 'methodDefinedInP1 ^ #methodDefinedInP1'.
 	a1 compile: 'anotherMethodDefinedInP1 ^ #anotherMethodDefinedInP1'.
 
-	a2 compile: 'methodDefinedInP1 ^ #methodDefinedInP1' classified: '*' , p1 name.
+	a2 compile: 'methodDefinedInP1 ^ #methodDefinedInP1' classified: '*' , xPackage name.
 	a2 compile: 'methodDefinedInP2 ^ #methodDefinedInP2'.
-	a2 compile: 'methodDefinedInP3 ^ #methodDefinedInP3' classified: '*' , p3 name.
-	a2 class compile: 'classSideMethodDefinedInP3 ^ #classSideMethodDefinedInP3' classified: '*' , p3 name.
+	a2 compile: 'methodDefinedInP3 ^ #methodDefinedInP3' classified: '*' , zPackage name.
+	a2 class compile: 'classSideMethodDefinedInP3 ^ #classSideMethodDefinedInP3' classified: '*' , zPackage name.
 
-	self deny: (p2 includesClass: b1).
-	self assert: (p2 includesClass: b2).
+	self deny: (yPackage includesClass: b1).
+	self assert: (yPackage includesClass: b2).
 	"a locally defined class not extended by other packages"
 
-	self assert: (p2 includesClass: a2).
+	self assert: (yPackage includesClass: a2).
 	"a locally defined class extended by other packages"
 
-	self assert: (p1 definesOrExtendsClass: a2).
-	self deny: (p1 includesClass: a2)
+	self assert: (xPackage definesOrExtendsClass: a2).
+	self deny: (xPackage includesClass: a2)
 ]
 
 { #category : 'tests' }
@@ -373,29 +358,29 @@ RPackageOrganizerTest >> testRemoveEmptyPackagesAndTags [
 { #category : 'tests' }
 RPackageOrganizerTest >> testRemovePackage [
 
-	| p1 p2 p3 a1 a2 b1 b2 a3 |
+	| xPackage yPackage zPackage a1 a2 b1 b2 a3 |
 	"taken from setup of RPackageReadOnlyCompleteSetup"
-	p1 := self ensureXPackage.
-	p2 := self ensureYPackage.
-	p3 := self ensureZPackage.
+	xPackage := self ensureXPackage.
+	yPackage := self ensureYPackage.
+	zPackage := self ensureZPackage.
 
-	a1 := self newClassNamed: #A1DefinedInP1 in: p1.
-	b1 := self newClassNamed: #B1DefinedInP1 in: p1.
-	a2 := self newClassNamed: #A2DefinedInP2 in: p2.
-	b2 := self newClassNamed: #B2DefinedInP2 in: p2.
-	a3 := self newClassNamed: #A3DefinedInP3 in: p3.
+	a1 := self newClassNamed: #A1DefinedInP1 in: xPackage.
+	b1 := self newClassNamed: #B1DefinedInP1 in: xPackage.
+	a2 := self newClassNamed: #A2DefinedInP2 in: yPackage.
+	b2 := self newClassNamed: #B2DefinedInP2 in: yPackage.
+	a3 := self newClassNamed: #A3DefinedInP3 in: zPackage.
 
 	a1 compile: 'methodDefinedInP1 ^ #methodDefinedInP1'.
 	a1 compile: 'anotherMethodDefinedInP1 ^ #anotherMethodDefinedInP1'.
 
-	a2 compile: 'methodDefinedInP1 ^ #methodDefinedInP1' classified: '*' , p1 name.
+	a2 compile: 'methodDefinedInP1 ^ #methodDefinedInP1' classified: '*' , xPackage name.
 	a2 compile: 'methodDefinedInP2 ^ #methodDefinedInP2'.
-	a2 compile: 'methodDefinedInP3 ^ #methodDefinedInP3' classified: '*' , p3 name.
-	a2 class compile: 'classSideMethodDefinedInP3 ^ #classSideMethodDefinedInP3' classified: '*' , p3 name.
+	a2 compile: 'methodDefinedInP3 ^ #methodDefinedInP3' classified: '*' , zPackage name.
+	a2 class compile: 'classSideMethodDefinedInP3 ^ #classSideMethodDefinedInP3' classified: '*' , zPackage name.
 
-	self organizer removePackage: p1.
-	self organizer removePackage: p2.
-	self organizer removePackage: p3.
+	self organizer removePackage: xPackage.
+	self organizer removePackage: yPackage.
+	self organizer removePackage: zPackage.
 
 	self deny: (self organizer packageOf: a1) isNil.
 	self deny: (self organizer packageOf: a2) isNil.

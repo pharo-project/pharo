@@ -5,14 +5,13 @@ Class {
 	#name : 'RPackageCompleteSetupButForModificationTest',
 	#superclass : 'RPackageIncrementalTest',
 	#instVars : [
-		'p1',
-		'p2',
-		'p3',
 		'a1',
 		'b1',
 		'a2',
-		'a3',
-		'b2'
+		'b2',
+		'xPackage',
+		'yPackage',
+		'zPackage'
 	],
 	#category : 'RPackage-Tests',
 	#package : 'RPackage-Tests'
@@ -22,36 +21,35 @@ Class {
 RPackageCompleteSetupButForModificationTest >> setUp [
 
 	super setUp.
-	p1 := self ensureXPackage.
-	p2 := self ensureYPackage.
-	p3 := self ensureZPackage.
+	xPackage := self ensureXPackage.
+	yPackage := self ensureYPackage.
+	zPackage := self ensureZPackage.
 
-	a1 := self newClassNamed: #A1DefinedInP1 in: p1.
-	b1 := self newClassNamed: #B1DefinedInP1 in: p1.
-	a2 := self newClassNamed: #A2DefinedInP2 in: p2.
-	b2 := self newClassNamed: #B2DefinedInP2 in: p2.
-	a3 := self newClassNamed: #A3DefinedInP3 in: p3.
+	a1 := self newClassNamed: #A1DefinedInP1 in: xPackage.
+	b1 := self newClassNamed: #B1DefinedInP1 in: xPackage.
+	a2 := self newClassNamed: #A2DefinedInP2 in: yPackage.
+	b2 := self newClassNamed: #B2DefinedInP2 in: yPackage.
 
 	a1 compile: 'methodDefinedInP1 ^ #methodDefinedInP1'.
 	a1 compile: 'anotherMethodDefinedInP1 ^ #anotherMethodDefinedInP1'.
 
-	a2 compile: 'methodDefinedInP1 ^ #methodDefinedInP1' classified: '*' , p1 name.
+	a2 compile: 'methodDefinedInP1 ^ #methodDefinedInP1' classified: '*' , xPackage name.
 	a2 compile: 'methodDefinedInP2 ^ #methodDefinedInP2'.
 
-	a2 compile: 'methodDefinedInP3 ^ #methodDefinedInP3' classified: '*' , p3 name.
-	a2 class compile: 'classSideMethodDefinedInP3 ^ #classSideMethodDefinedInP3' classified: '*' , p3 name
+	a2 compile: 'methodDefinedInP3 ^ #methodDefinedInP3' classified: '*' , zPackage name.
+	a2 class compile: 'classSideMethodDefinedInP3 ^ #classSideMethodDefinedInP3' classified: '*' , zPackage name
 ]
 
 { #category : 'test - addition' }
 RPackageCompleteSetupButForModificationTest >> testAddMethod [
 
-	self assert: (p1 includesSelector: #methodDefinedInP1 ofClass: a1).
+	self assert: (xPackage includesSelector: #methodDefinedInP1 ofClass: a1).
 
 	a1 compileSilently: 'zork ^ #methodDefinedInP1'.
-	p1 addMethod: (a1>>#zork).
-	self assert: (p1 includesSelector: #zork ofClass: a1).
+	xPackage addMethod: (a1>>#zork).
+	self assert: (xPackage includesSelector: #zork ofClass: a1).
 
-	self assert: (p3 includesSelector: #classSideMethodDefinedInP3 ofClass: a2 class)
+	self assert: (zPackage includesSelector: #classSideMethodDefinedInP3 ofClass: a2 class)
 ]
 
 { #category : 'test - addition' }
@@ -59,20 +57,20 @@ RPackageCompleteSetupButForModificationTest >> testBasicRemoveClass [
 	"we remove a class we check that it is not in the package anymore"
 
 	|  size |
-	size := p1 definedClasses size.
+	size := xPackage definedClasses size.
 	self assert: size equals: 2.
-	self assert: (p1 includesClass: a1).
-	self assert: (p1 includesClass: a1 class).
-	p1 removeClass: a1.
-	self assert: p1 definedClasses size equals: (size - 1).
-	self assert: (p1 includesClass: b1).
-	self assert: (p1 includesClass: b1 class).
-	self deny: (p1 includesClass: a1).
-	self deny: (p1 includesClass: a1 class).
-	p1 removeClass: b1.
-	self assert: p1 definedClasses size equals: (size - 2).
-	self deny: (p1 includesClass: b1).
-	self deny: (p1 includesClass: b1 class)
+	self assert: (xPackage includesClass: a1).
+	self assert: (xPackage includesClass: a1 class).
+	xPackage removeClass: a1.
+	self assert: xPackage definedClasses size equals: (size - 1).
+	self assert: (xPackage includesClass: b1).
+	self assert: (xPackage includesClass: b1 class).
+	self deny: (xPackage includesClass: a1).
+	self deny: (xPackage includesClass: a1 class).
+	xPackage removeClass: b1.
+	self assert: xPackage definedClasses size equals: (size - 2).
+	self deny: (xPackage includesClass: b1).
+	self deny: (xPackage includesClass: b1 class)
 ]
 
 { #category : 'test - starting situation' }
@@ -95,38 +93,38 @@ RPackageCompleteSetupButForModificationTest >> testExtensionMethodOfClass [
 	however when looking with a package view we only see the package
 	extension."
 
-	self assert: (p2 extensionMethodsForClass: a2) size equals: 0.
-	self assert: (p1 extensionMethodsForClass: a1) size equals: 0.
+	self assert: (yPackage extensionMethodsForClass: a2) size equals: 0.
+	self assert: (xPackage extensionMethodsForClass: a1) size equals: 0.
 	"show that extensionMethodsForClass: does works for methods of class
 	defined in the package"
 
-	self assert: (p1 extensionMethodsForClass: a2) size equals: 1.
-	self assert: (p3 extensionMethodsForClass: a2) size equals: 1
+	self assert: (xPackage extensionMethodsForClass: a2) size equals: 1.
+	self assert: (zPackage extensionMethodsForClass: a2) size equals: 1
 ]
 
 { #category : 'test - addition' }
 RPackageCompleteSetupButForModificationTest >> testRemoveMethod [
 
 	a1 removeSelector: #methodDefinedInP1.
-	self deny: (p1 includesSelector: #methodDefinedInP1 ofClass: a1)
+	self deny: (xPackage includesSelector: #methodDefinedInP1 ofClass: a1)
 ]
 
 { #category : 'test - addition' }
 RPackageCompleteSetupButForModificationTest >> testRemoveShouldRaiseErrorWhenMethodIsNotInPackage [
 
-	self should: [ p2 removeMethod: a2>>#methodDefinedZork ] raise: Error
+	self should: [ yPackage removeMethod: a2>>#methodDefinedZork ] raise: Error
 ]
 
 { #category : 'test - starting situation' }
 RPackageCompleteSetupButForModificationTest >> testStartingSituation [
 
-	self deny: (p2 includesClass: b1).
-	self assert: (p2 includesClass: b2).
+	self deny: (yPackage includesClass: b1).
+	self assert: (yPackage includesClass: b2).
 	"a locally defined class not extended by other packages"
 
-	self assert: (p2 includesClass: a2).
+	self assert: (yPackage includesClass: a2).
 	"a locally defined class extended by other packages"
 
-	self assert: (p1 definesOrExtendsClass: a2).
-	self deny: (p1 includesClass: a2)
+	self assert: (xPackage definesOrExtendsClass: a2).
+	self deny: (xPackage includesClass: a2)
 ]
