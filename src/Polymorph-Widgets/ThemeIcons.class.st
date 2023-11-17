@@ -210,6 +210,13 @@ ThemeIcons >> allIconNames [
 	^ self icons keys
 ]
 
+{ #category : 'private' }
+ThemeIcons >> basicIconNamed: aSymbol [
+
+	^ self icons at: aSymbol ifPresent: [ :icon |
+		icon scaledToSize: icon extent * (self currentWorld displayScaleFactor / self scale) ]
+]
+
 { #category : 'accessing' }
 ThemeIcons >> beCurrent [
 	self class current: self
@@ -293,16 +300,15 @@ ThemeIcons >> iconNamed: aSymbol [
 { #category : 'accessing' }
 ThemeIcons >> iconNamed: aSymbol ifNone: aBlock [
 
-	self icons at: aSymbol asSymbol ifPresent: [ :icon | ^ icon scaledToSize: icon extent * (self currentWorld displayScaleFactor / self scale) ].
+	(self basicIconNamed: aSymbol asSymbol) ifNotNil: [ :icon | ^ icon ].
 	"Trying the old way"
 
 	
 	((aSymbol endsWith: 'Icon') or: [ (aSymbol endsWith: 'Form') ]) ifTrue: [
-		self icons
-			at: (aSymbol allButLast: 4) asSymbol
-			ifPresent: [ :icon | 
+		(self basicIconNamed: (aSymbol allButLast: 4) asSymbol)
+			ifNotNil: [ :icon | 
 				('Using old icon name, please rename ', aSymbol printString) traceCr.
-				^ icon scaledToSize: icon extent * (self currentWorld displayScaleFactor / self scale) ]
+				^ icon ]
 	].
 
 	^ aBlock value
