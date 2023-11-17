@@ -60,7 +60,7 @@ ClyClassCreationToolMorph >> belongsToCurrentBrowserContext [
 { #category : 'template' }
 ClyClassCreationToolMorph >> classTemplate [
 
-	^ ClassDefinitionPrinter fluid compactClassDefinitionTemplateInPackage:  self packageName
+	^ ClassDefinitionPrinter fluid compactClassDefinitionTemplateInPackage:self packageName tag: self tag
 ]
 
 { #category : 'initialization' }
@@ -115,11 +115,9 @@ ClyClassCreationToolMorph >> package: anObject [
 { #category : 'accessing' }
 ClyClassCreationToolMorph >> packageName [
 
-	package ifNil: [ ^'' ].
-
-	tag ifNil: [ ^package name ].
-
-	^package name , '-' , tag
+	^ package
+		  ifNotNil: [ package name ]
+		  ifNil: [ '' ]
 ]
 
 { #category : 'printing' }
