@@ -128,8 +128,8 @@ RPackageOrganizerTest >> testFullRegistration [
 	| p1 p2 p3 a1 a2 b1 b2 a3 |
 	"taken from setup of RPackageReadOnlyCompleteSetup"
 	p1 := self ensureXPackage.
-	p2 := self ensurePackage: self p2Name.
-	p3 := self ensurePackage: self p3Name.
+	p2 := self ensureYPackage.
+	p3 := self ensureZPackage.
 
 	a1 := self newClassNamed: #A1DefinedInP1 in: p1.
 	b1 := self newClassNamed: #B1DefinedInP1 in: p1.
@@ -376,8 +376,8 @@ RPackageOrganizerTest >> testRemovePackage [
 	| p1 p2 p3 a1 a2 b1 b2 a3 |
 	"taken from setup of RPackageReadOnlyCompleteSetup"
 	p1 := self ensureXPackage.
-	p2 := self ensurePackage: self p2Name.
-	p3 := self ensurePackage: self p3Name.
+	p2 := self ensureYPackage.
+	p3 := self ensureZPackage.
 
 	a1 := self newClassNamed: #A1DefinedInP1 in: p1.
 	b1 := self newClassNamed: #B1DefinedInP1 in: p1.

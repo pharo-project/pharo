@@ -23,8 +23,8 @@ RPackageCompleteSetupButForModificationTest >> setUp [
 
 	super setUp.
 	p1 := self ensureXPackage.
-	p2 := self ensurePackage: self p2Name.
-	p3 := self ensurePackage: self p3Name.
+	p2 := self ensureYPackage.
+	p3 := self ensureZPackage.
 
 	a1 := self newClassNamed: #A1DefinedInP1 in: p1.
 	b1 := self newClassNamed: #B1DefinedInP1 in: p1.

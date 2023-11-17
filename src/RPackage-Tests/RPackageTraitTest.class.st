@@ -22,8 +22,8 @@ RPackageTraitTest >> setUp [
 	super setUp.
 
 	p1 := self ensureXPackage.
-	p2 := self ensurePackage: self p2Name.
-	p3 := self ensurePackage: self p3Name.
+	p2 := self ensureYPackage.
+	p3 := self ensureZPackage.
 
 	a1 := self newClassNamed: #A1DefinedInP1 in: p1.
 
@@ -35,7 +35,7 @@ RPackageTraitTest >> setUp [
 	t1 compile: 'traitMethodDefinedInP1 ^ #traitMethodDefinedInP1'.
 
 	"P3 defines a new method extension on T1 (packaged in p1)"
-	t1 compile: 'traitMethodExtendedFromP3 ^ #traitMethodExtendedFromP3' classified: '*' , self p3Name.
+	t1 compile: 'traitMethodExtendedFromP3 ^ #traitMethodExtendedFromP3' classified: '*' , self zPackageName.
 
 	t2 := self newTraitNamed: #TraitInPackageP2 in: p2.
 	t2 compile: 'traitMethodDefinedInP2 ^ #traitMethodDefinedInP2'.
