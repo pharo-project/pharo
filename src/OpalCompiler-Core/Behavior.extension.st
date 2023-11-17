@@ -108,11 +108,14 @@ Behavior >> recompileBasic: selector from: oldClass [
 				source: (oldClass sourceCodeAt: selector);
 				class: self;
 				permitFaulty: true;
+				logged: false; "No need to log recompilation in the sources."
 				compile.   "Assume OK after proceed from SyntaxError"
 	newMethod sourcePointer: method sourcePointer.
 	
-	"For now we cannot persiste properties of methods during recompilation, so if we have an extension method, we save here the package in the new method."
+	"In case we are not compiling the method for the first time, we want to ensure that some properties are kept.
+	Opal should do the work but since we give the new class to opal it cannot find the old properties."
 	method propertyAt: #extensionPackage ifPresent: [ :package | newMethod propertyAt: #extensionPackage put: package ].
+
 
 	selector == newMethod selector ifFalse: [self error: 'selector changed!'].
 	^ newMethod

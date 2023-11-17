@@ -117,12 +117,13 @@ ZnMessage >> entityWriterOn: stream [
 
 { #category : 'testing' }
 ZnMessage >> hasEntity [
-	^ self entity notNil
+	^ self entity isNotNil
 ]
 
 { #category : 'testing' }
 ZnMessage >> hasHeaders [
-	^ headers notNil and: [ self headers isEmpty not ]
+
+	^ headers isNotNil and: [ self headers isEmpty not ]
 ]
 
 { #category : 'testing' }
@@ -130,7 +131,7 @@ ZnMessage >> hasSession [
 	"Return if there currently is a server session.
 	This only returns a value during #handleRequest:"
 
-	^ ZnCurrentServerSession value notNil
+	^ ZnCurrentServerSession value isNotNil
 ]
 
 { #category : 'comparing' }
@@ -216,7 +217,7 @@ ZnMessage >> resetEntity: object [
 	even if I am already describing an entity using my content type and length.
 	See also: #clearEntity"
 
-	(entity ~= object and: [ entity notNil ])
+	(entity ~= object and: [ entity isNotNil ])
 		ifTrue: [ entity close ].
 	entity := object.
 	self headers acceptEntityDescription: object

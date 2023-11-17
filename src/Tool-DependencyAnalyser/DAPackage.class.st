@@ -5,7 +5,7 @@ Instance variables :
 
 - dependencies : a collection of `DAPackageDependency` (actually the nodes of a graph dependency, from a source DAPackage to a target DAPackage)
 - included : says if the DAPackage is included or not, at the beginning, in the set of packages.
-- rpackage : the instance of asRPackageSet 	
+- systemPackage : the instance of the package in the system if it is loaded 	
 - inStack : useful for tarjan algorithm and cycle algorithm. It avoids stack access
 - tarjanIndex and tarjanLowLink : integer for the tarjan algorithm.
 - bfsParent : see cycle algorithm
@@ -22,7 +22,8 @@ Class {
 		'tarjanLowLink',
 		'bfsParent',
 		'seen',
-		'rPackageSet'
+		'systemPackage',
+		'packageName'
 	],
 	#category : 'Tool-DependencyAnalyser-Core',
 	#package : 'Tool-DependencyAnalyser',
@@ -35,13 +36,13 @@ DAPackage class >> new [
 ]
 
 { #category : 'instance creation' }
-DAPackage class >> on: aRPackageSet [
-	^ self basicNew initializeWithPackage: aRPackageSet; yourself
-]
-
-{ #category : 'instance creation' }
 DAPackage class >> onPackageNamed: aString [
-	^ self on: (RPackageSet named: aString)
+	"In the future we should manage different environment and not go into the global one."
+
+	^ self basicNew
+		  initializeWithPackage: (self packageOrganizer packageNamed: aString ifAbsent: [ nil ]);
+		  packageName: aString;
+		  yourself
 ]
 
 { #category : 'comparing' }
@@ -199,10 +200,11 @@ DAPackage >> included: anObject [
 ]
 
 { #category : 'initialization' }
-DAPackage >> initializeWithPackage: aRPackageSet [
+DAPackage >> initializeWithPackage: aPackage [
+
 	self initialize.
 	self clearDependencies.
-	rPackageSet := aRPackageSet.
+	systemPackage := aPackage.
 	included := false.
 	inStack := false.
 	seen := false.
@@ -233,7 +235,13 @@ DAPackage >> isTarjanUndefined [
 
 { #category : 'accessing' }
 DAPackage >> packageName [
-	^ self rPackageSet packageName
+
+	^ packageName
+]
+
+{ #category : 'accessing' }
+DAPackage >> packageName: anObject [
+	packageName := anObject
 ]
 
 { #category : 'printing' }
@@ -241,21 +249,6 @@ DAPackage >> printOn: aStream [
 	aStream
 		nextPutAll: 'Dependencies on: ';
 		nextPutAll: self packageName
-]
-
-{ #category : 'accessing' }
-DAPackage >> rPackage [
-	^ self rPackageSet packages first
-]
-
-{ #category : 'accessing' }
-DAPackage >> rPackageSet [
-	^ rPackageSet
-]
-
-{ #category : 'accessing' }
-DAPackage >> rPackageSet: anObject [
-	rPackageSet := anObject
 ]
 
 { #category : 'accessing' }
@@ -272,6 +265,12 @@ DAPackage >> remove: aDependency [
 { #category : 'dependencies' }
 DAPackage >> removeAllInternal [
 	dependencies := dependencies reject: [ :each | each isInternal ]
+]
+
+{ #category : 'accessing' }
+DAPackage >> systemPackage [
+
+	^ systemPackage
 ]
 
 { #category : 'tarjan' }

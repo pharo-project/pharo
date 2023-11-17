@@ -45,7 +45,6 @@ BaselineOfUI >> baseline: spec [
 		
 		spec package: 'StartupPreferences'.		
 		spec package: 'Transcript-Tool'.
-		spec package: 'Tool-Workspace'.
 		spec package: 'Morphic-Widgets-Tree'.
 
 		spec baseline: 'Keymapping' with: [ 
@@ -62,11 +61,6 @@ BaselineOfUI >> postload: loader package: packageSpec [
 	"Ignore pre and post loads if already executed"
 	Initialized = true ifTrue: [ ^ self ].
 
-	Smalltalk tools register: Workspace as: #browser.
-	Smalltalk tools register: Workspace as: #monticelloBrowser.
-	Smalltalk tools register: Workspace as: #fileList.
-	Smalltalk tools register: Workspace as: #changeList.	
-	
 	Smalltalk ui theme settings preferGradientFill: true.
 	PharoCommonTools initialize.
 

@@ -120,7 +120,7 @@ ClyQueryTest >> testHasReadonlyRequiredResultByDefault [
 { #category : 'tests' }
 ClyQueryTest >> testHasRequiredResultByDefault [
 
-	self assert: query requiredResult notNil
+	self assert: query requiredResult isNotNil
 ]
 
 { #category : 'tests' }

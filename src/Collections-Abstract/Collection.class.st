@@ -14,6 +14,12 @@ Class {
 }
 
 { #category : 'instance creation' }
+Collection class >> <- anArray [
+
+	^ self newFromArray: anArray
+]
+
+{ #category : 'instance creation' }
 Collection class >> empty [
 	^ self new
 ]
@@ -943,23 +949,22 @@ Collection >> identityIncludes: anObject [
 
 { #category : 'testing' }
 Collection >> ifEmpty: aBlock [
-	"Evaluate the given block, answering its value if the receiver is empty, otherwise answer the receiver."
+	"Evaluate the given block, answering its value if the receiver is empty, otherwise answer the receiver.
+	Note that the fact that this method returns its receiver in case the receiver is not empty allows one to write expressions like the following ones: self classifyMethodAs: (myProtocol ifEmpty: [ Protocol unclassified ])"
 
 	"(#(1 2) ifEmpty: [0]) >>> #(1 2)"
 	"(#() ifEmpty: [0]) >>> 0"
 	"('' ifEmpty: ['(nil)']) >>> '(nil)'"
 
-	"Note that the fact that this method returns its receiver in case the receiver is not empty allows one to write expressions like the following ones: self classifyMethodAs: (myProtocol ifEmpty: [ Protocol unclassified ])"
-
 	^ self isEmpty
-		ifTrue: [ aBlock value ]
-		ifFalse: [ self ]
+		  ifTrue: [ aBlock value ]
+		  ifFalse: [ self ]
 ]
 
 { #category : 'testing' }
 Collection >> ifEmpty: emptyBlock ifNotEmpty: notEmptyBlock [
-	"Evaluate emptyBlock if I'm empty, notEmptyBlock otherwise"
-	"If the notEmptyBlock has an argument, eval with the receiver as its argument"
+	"Evaluate emptyBlock if I'm empty, notEmptyBlock otherwise
+	If the notEmptyBlock has an argument, eval with the receiver as its argument"
 
 	^ self isEmpty
 		ifTrue: [ emptyBlock value ]

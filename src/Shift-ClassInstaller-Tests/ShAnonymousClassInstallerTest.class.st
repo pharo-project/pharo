@@ -20,3 +20,14 @@ ShAnonymousClassInstallerTest >> testSubclasses [
 
 	self assert: (self packageOrganizer packageOfClassNamed: aSubClass name) isUndefined
 ]
+
+{ #category : 'tests' }
+ShAnonymousClassInstallerTest >> testSubclassesInEnvironment [
+
+	| newEnvironment aSubClass |
+	newEnvironment := self class environment class new.
+
+	aSubClass := Object newAnonymousSubclassInEnvironment: newEnvironment.
+
+	self assert: aSubClass environment identicalTo: newEnvironment
+]

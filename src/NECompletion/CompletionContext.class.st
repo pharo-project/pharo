@@ -93,7 +93,7 @@ CompletionContext >> hasEntries [
 
 { #category : 'testing' }
 CompletionContext >> hasMessage [
-	^ self message notNil
+	^ self message isNotNil
 ]
 
 { #category : 'entries' }
@@ -104,7 +104,7 @@ CompletionContext >> initEntries [
 
 { #category : 'parsing' }
 CompletionContext >> isScripting [
-	^ engine notNil and: [ engine isScripting ]
+	^ engine isNotNil and: [ engine isScripting ]
 ]
 
 { #category : 'accessing' }

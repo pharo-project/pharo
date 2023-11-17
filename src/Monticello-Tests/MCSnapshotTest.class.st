@@ -88,7 +88,7 @@ MCSnapshotTest >> setUp [
 MCSnapshotTest >> tearDown [
 
 	self packageOrganizer removePackage: 'Monticello-Snapshot-Mock'.
-	super tearDown
+	super tearDown.
 ]
 
 { #category : 'tests' }

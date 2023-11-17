@@ -848,6 +848,13 @@ RBParser >> parsePragma [
 ]
 
 { #category : 'private - parsing' }
+RBParser >> parsePragmaAndReturn [
+
+	self parsePragma.
+	^ pragmas first
+]
+
+{ #category : 'private - parsing' }
 RBParser >> parsePragmaLiteral [
 	"A literal array token is #( or #[."
 	currentToken isLiteralArrayToken
@@ -1224,7 +1231,7 @@ RBParser >> patchNegativeLiteral [
 	nextToken value: nextToken value negated.
 	(nextToken isKindOf: RBNumberLiteralToken)
 		ifTrue:
-			[nextToken source: (nextToken source copyFrom: 2 to: nextToken source size)].
+			[nextToken source: (nextToken source allButFirst)].
 	nextToken start: nextToken start + 1
 ]
 

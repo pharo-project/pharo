@@ -119,7 +119,7 @@ Class >> addClassVariable: aClassVariable [
 				, ' is already used as a variable name in class '
 				, subclass name]].
 	self basicDeclareClassVariable: aClassVariable.
-	SystemAnnouncer uniqueInstance
+	self codeChangeAnnouncer 
 			classDefinitionChangedFrom: oldState to: self;
 			classModificationAppliedTo: self
 ]
@@ -309,9 +309,10 @@ Class >> classComment: aString stamp: aStamp [
 { #category : 'subclass creation' }
 Class >> classInstaller [
 	"Answer the class responsible of creating subclasses of myself in the system."
-	^self isAnonymous
-		ifTrue: [Smalltalk anonymousClassInstaller]
-		ifFalse: [Smalltalk classInstaller]
+
+	^ self isAnonymous
+		  ifTrue: [ Smalltalk anonymousClassInstaller ]
+		  ifFalse: [ Smalltalk classInstaller ]
 ]
 
 { #category : 'accessing' }
@@ -443,7 +444,7 @@ Class >> comment: aString stamp: aStamp [
 			self commentSourcePointer: newSourcePointer]
 		onFail: [ "ignore" ].
 
-	SystemAnnouncer uniqueInstance
+	self codeChangeAnnouncer 
 		class: self
 		oldComment: oldComment
 		newComment: aString
@@ -539,7 +540,8 @@ Class >> definedVariables [
 
 { #category : 'class variables' }
 Class >> definesClassVariable: aGlobal [
-	"Return whether the receiver has a class variables (shared variables among its class and subclasses) named: aString"
+	"Return whether the receiver defines a class variables (shared variable)
+	Note: Does not take superclass into account"
 	<reflection: 'Class structural inspection - Class variable inspection'>
 	^ self classVariables includes: aGlobal
 ]
@@ -758,11 +760,20 @@ Class >> needsSlotClassDefinition [
 
 { #category : 'subclass creation' }
 Class >> newAnonymousSubclass [
+
+	<reflection: 'Class structural modification - Anonymous class creation'>
+	^ self newAnonymousSubclassInEnvironment: self environment
+]
+
+{ #category : 'subclass creation' }
+Class >> newAnonymousSubclassInEnvironment: anEnvironment [
+
 	<reflection: 'Class structural modification - Anonymous class creation'>
 	^ Smalltalk anonymousClassInstaller make: [ :builder |
-		builder
-			superclass: self ;
-			layoutClass: self classLayout class ]
+		  builder
+			  installingEnvironment: anEnvironment;
+			  superclass: self;
+			  layoutClass: self classLayout class ]
 ]
 
 { #category : 'subclass creation' }
@@ -863,12 +874,13 @@ Class >> removeClassVarNamed: aString interactive: interactive [
 	varUserClass
 		ifNotNil: [
 			NewUndeclaredWarning signal: aString in: self name.
-			Undeclared declare: aSymbol from: self classPool ]
-		ifNil: [ self classPool removeKey: aSymbol ].
-
+			"NOTE: we add ClassVariable to Undeclared, we need to update to UndeclaredVariable"
+			Undeclared add: (self classPool associationAt: aSymbol) ].
+		
+	self classPool removeKey: aSymbol.
 	self classPool ifEmpty: [ self classPool: nil ].
 
-	SystemAnnouncer uniqueInstance classModificationAppliedTo: self
+	self codeChangeAnnouncer  classModificationAppliedTo: self
 ]
 
 { #category : 'class variables' }
@@ -897,14 +909,14 @@ Class >> removeFromSystem: logged [
 	self superclass ifNotNil: [ "If we have no superclass there's nothing to be remembered" self superclass addObsoleteSubclass: self ].
 
 	"we add the class to Undeclared so that if references still exist, they will  be automatically fixed if this class is loaded again. We do not check if references exist as it is too slow"
-	Undeclared declare: self name asSymbol from: Smalltalk globals.
+	Undeclared declare: self name asSymbol from: self environment.
 	self environment forgetClass: self.
 
 	"In case the class has deprecated aliases we need to remove them from the system dictionary.
 	We deal also with a special case that is the case a class of the same name than the alias is installed in the image after the alias. In that case we do not remove it. It's the reason we check if the global of the alias is the same as self."
 	self deprecatedAliases do: [ :alias | self environment at: alias ifPresent: [ :class | class = self ifTrue: [ self environment removeKey: alias ] ] ].
 	self obsolete.
-	logged ifTrue: [ SystemAnnouncer announce: (ClassRemoved class: self) ]
+	logged ifTrue: [ self codeChangeAnnouncer  announce: (ClassRemoved class: self) ]
 ]
 
 { #category : 'initialization' }

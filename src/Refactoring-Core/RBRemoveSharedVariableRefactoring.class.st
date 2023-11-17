@@ -1,3 +1,6 @@
+"
+A simple refactoring to remove a shared variable.
+"
 Class {
 	#name : 'RBRemoveSharedVariableRefactoring',
 	#superclass : 'RBVariableRefactoring',
@@ -8,6 +11,12 @@ Class {
 	#package : 'Refactoring-Core',
 	#tag : 'Refactorings'
 }
+
+{ #category : 'displaying' }
+RBRemoveSharedVariableRefactoring class >> basicMenuItemString [
+
+	^ 'Remove Shared Variable'
+]
 
 { #category : 'instance creation' }
 RBRemoveSharedVariableRefactoring class >> model: aNamespace remove: variable from: class [

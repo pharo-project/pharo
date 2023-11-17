@@ -32,14 +32,15 @@ DAPackageDependencyTest >> referenceDependency: aClass [
 
 { #category : 'running' }
 DAPackageDependencyTest >> setUp [
+
 	| source target |
 	super setUp.
-	source := DAPackage on: (RPackageSet named:'Kernel').
-	target := DAPackage on: (RPackageSet named:'Collections-Abstract').
-	aPackageDependency := DAPackageDependency from:source to:target.
-	anInternalPackageDependency := DAPackageDependency from:source to:source.
-	packageA := DAPackage on: (RPackageSet named:'A').
-	packageB := DAPackage on: (RPackageSet named:'B')
+	source := DAPackage onPackageNamed: 'Kernel'.
+	target := DAPackage onPackageNamed: 'Collections-Abstract'.
+	aPackageDependency := DAPackageDependency from: source to: target.
+	anInternalPackageDependency := DAPackageDependency from: source to: source.
+	packageA := DAPackage onPackageNamed: 'A'.
+	packageB := DAPackage onPackageNamed: 'B'
 ]
 
 { #category : 'tests' }

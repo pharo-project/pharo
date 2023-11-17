@@ -33,7 +33,7 @@ RBEnvironmentVisitor >> visitClassEnv: rbClassEnv [
 { #category : 'visiting' }
 RBEnvironmentVisitor >> visitPackageEnv: rbPackageEnv [
 	| list selectedList methodName items dialog |
-	list := RPackageOrganizer default packages sorted: #packageName ascending.
+	list := PackageOrganizer default packages sorted: #packageName ascending.
 	selectedList := rbPackageEnv packages asArray sorted: #packageName ascending.
 	methodName := #packageName.
 	items := OrderedCollection new.

@@ -294,7 +294,7 @@ Context >> activeOuterContext [
 Context >> arguments [
 	"returns the arguments of a message invocation"
 	<reflection: 'Stack Manipulation - Context'>
-	^(1 to: self numArgs) collect: [:i | self tempAt: i]
+	^(1 to: self numArgs) collect: [:i | self basicAt: i]
 ]
 
 { #category : 'closure support' }

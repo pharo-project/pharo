@@ -109,7 +109,7 @@ ClyProtocolEditorMorph >> initialize [
 { #category : 'testing' }
 ClyProtocolEditorMorph >> isExtensionActive [
 
-	^ownerTool extendingPackage notNil
+	^ownerTool extendingPackage isNotNil
 ]
 
 { #category : 'operations' }

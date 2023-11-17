@@ -442,6 +442,17 @@ CompiledMethod >> isExplicitlyRequired: marker [
 ]
 
 { #category : 'testing' }
+CompiledMethod >> isExtension [
+	"I return true if a method is an extension method. Which means that the methods is not packaged in the package of the class containing the method, but in another package."
+
+	"(self >> #selector) isExtension >>> false"
+
+	"(self >> #traitSource) isExtension >>> true"
+
+	^ self hasProperty: #extensionPackage
+]
+
+{ #category : 'testing' }
 CompiledMethod >> isFaulty [
  	"check if this method was compiled from syntactically wrong code"
 	| ast |
@@ -462,10 +473,9 @@ CompiledMethod >> isFaulty [
 { #category : 'testing' }
 CompiledMethod >> isFromTrait [
 	"Return true for methods that have been included from Traits"
+
 	<reflection: 'Class structural inspection - Selectors and methods inspection'>
-	| origin |
-	origin := self origin.
-	^ origin isTrait and: [ origin ~= self methodClass ]
+	^ self hasProperty: #traitSource
 ]
 
 { #category : 'testing' }
@@ -830,6 +840,12 @@ CompiledMethod >> refersToLiteral: aLiteral [
 	"Answer true if any literal in this method is literal, even if embedded in array structure."
 
 	^(self pragmaRefersToLiteral: aLiteral) or: [ super refersToLiteral: aLiteral]
+]
+
+{ #category : 'private' }
+CompiledMethod >> removeFromPackage [
+
+	self isFromTrait ifFalse: [ self package ifNotNil: [ :package | package removeMethod: self ] ]
 ]
 
 { #category : 'initialization' }

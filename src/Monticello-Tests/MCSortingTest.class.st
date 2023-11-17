@@ -6,11 +6,6 @@ Class {
 	#tag : 'Sorting'
 }
 
-{ #category : 'testing' }
-MCSortingTest class >> isUnitTest [
-	^false
-]
-
 { #category : 'building' }
 MCSortingTest >> classNamed: aSymbol [
 

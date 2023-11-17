@@ -25,7 +25,7 @@ Class {
 	#instVars : [
 		'name',
 		'url',
-		'icons',
+		'iconsPerScale',
 		'scale',
 		'reportNotFound'
 	],
@@ -227,25 +227,8 @@ ThemeIcons >> beReportNotFound [
 
 { #category : 'accessing' }
 ThemeIcons >> blankIcon [
-	^ self blankIconOfWidth: 16
-]
 
-{ #category : 'utilities' }
-ThemeIcons >> blankIconOfWidth: aNumber [
-
-	"We hard-code the most used cases to avoid symbol creation"
-
-	aNumber == 16 ifTrue: [ ^ self icons
-		at: #blank16
-		ifAbsentPut: [Form extent: 16 @ 1 depth: 8] ].
-
-	aNumber == 10 ifTrue: [ ^ self icons
-		at: #blank10
-		ifAbsentPut: [Form extent: 10 @ 1 depth: 8] ].
-
-	^ self icons
-		at: ('blank-' , aNumber asString) asSymbol
-		ifAbsentPut: [Form extent: aNumber @ 1 depth: 8]
+	^ self iconNamed: #blank
 ]
 
 { #category : 'private' }
@@ -303,8 +286,8 @@ ThemeIcons >> iconNamed: aSymbol [
 			self isReportingNotFound
 				ifTrue: [
 					self crTrace: (aSymbol, ' icon not found!').
-					self notFoundIcon scaledByDisplayScaleFactor ]
-				ifFalse: [ self blankIcon scaledByDisplayScaleFactor ]])
+					self notFoundIcon ]
+				ifFalse: [ self blankIcon ]])
 ]
 
 { #category : 'accessing' }
@@ -327,7 +310,14 @@ ThemeIcons >> iconNamed: aSymbol ifNone: aBlock [
 
 { #category : 'accessing' }
 ThemeIcons >> icons [
-	^ icons ifNil: [ icons := Dictionary new: 0 ]
+
+	^ self iconsPerScale at: scale ifAbsentPut: [ IdentityDictionary new ]
+]
+
+{ #category : 'accessing' }
+ThemeIcons >> iconsPerScale [
+
+	^ iconsPerScale ifNil: [ iconsPerScale := Dictionary new ]
 ]
 
 { #category : 'testing' }
@@ -343,20 +333,26 @@ ThemeIcons >> loadIconsFromUrl [
 
 { #category : 'loading' }
 ThemeIcons >> loadIconsFromUrlUsingScale: newScale [
-	| newIcons zipArchive |
+	| newIconsPerScale zipArchive |
 
-	newIcons := IdentityDictionary new.
+	newIconsPerScale := Dictionary new.
 	zipArchive := self downloadFromUrl.
 
-	(((FileSystem zip: zipArchive) open workingDirectory allChildrenMatching: '*scale' , newScale asFloat asString) anyOne
-	allChildrenMatching: '*.png')
-		reject: [ :each | each base beginsWith: '.' ]
-		thenDo: [ :each |
-			[ newIcons
-				at: each base asSymbol
-				put: (self readPNGFrom: each) ]
-			on: Error do: [ :e | self crTrace: each fullName, ' not a PNG, skipping.'  ]].
-	icons := newIcons.
+	((FileSystem zip: zipArchive) open workingDirectory allChildrenMatching: 'png-scale*') do: [ :directory |
+		| newIcons |
+		newIconsPerScale
+			at: (Float readFrom: (directory basename copyFrom: 10 to: directory basename size))
+			put: (newIcons := IdentityDictionary new).
+		(directory allChildrenMatching: '*.png')
+			reject: [ :each | each base beginsWith: '.' ]
+			thenDo: [ :each |
+				[ newIcons
+					at: each base asSymbol
+					put: (self readPNGFrom: each) ]
+				on: Error do: [ :e | self crTrace: ('{1} not a PNG, skipping.' format: { each fullName }) ] ] ].
+	newIconsPerScale keysAndValuesDo: [ :iconsScale :icons |
+		icons at: #notFound ifAbsentPut: [ Color red iconOrThumbnailOfSize: 16 * iconsScale ] ].
+	iconsPerScale := newIconsPerScale.
 	scale := newScale
 ]
 
@@ -372,9 +368,8 @@ ThemeIcons >> name: aName [
 
 { #category : 'accessing' }
 ThemeIcons >> notFoundIcon [
-	^ self icons
-		at: #notFoundIcon
-		ifAbsentPut: [ Color red iconOrThumbnailOfSize: 16 ]
+
+	^ self iconNamed: #notFound ifNone: [ Form extent: 0@0 ]
 ]
 
 { #category : 'printing' }

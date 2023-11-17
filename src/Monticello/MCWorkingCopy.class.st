@@ -316,28 +316,6 @@ MCWorkingCopy >> announcer [
 ]
 
 { #category : 'operations' }
-MCWorkingCopy >> backportChangesTo: aVersionInfo [
-	| baseVersion fullPatch currentVersionInfo currentVersion newSnapshot newAncestry |
-	currentVersionInfo := self currentVersionInfo.
-	baseVersion := self repositoryGroup versionWithInfo: aVersionInfo.
-	currentVersion := self repositoryGroup versionWithInfo: currentVersionInfo.
-	fullPatch := currentVersion snapshot patchRelativeToBase: baseVersion snapshot.
-	(MCChangeSelectionRequest new
-		patch: fullPatch;
-		label: 'Changes to Backport';
-		signal ) ifNotNil:
-		[:partialPatch |
-		newSnapshot := MCPatcher apply: partialPatch to: baseVersion snapshot.
-		newAncestry := MCWorkingAncestry new
-							addAncestor: aVersionInfo;
-							addStepChild: currentVersionInfo;
-							yourself.
-		MCPackageLoader updatePackage: package withSnapshot: newSnapshot.
-		ancestry := newAncestry.
-		self modified: false; modified: true]
-]
-
-{ #category : 'operations' }
 MCWorkingCopy >> changesRelativeToRepository: aRepository [
 	^ self completeSnapshot patchRelativeToBase: (self closestAncestorSnapshotIn: aRepository).
 ]
@@ -513,15 +491,8 @@ MCWorkingCopy >> newVersionIn: aRepository [
 
 { #category : 'operations' }
 MCWorkingCopy >> newVersionWithMessage: aMessageString in: aRepository [
-	^ self 
-		newVersionWithName: (self uniqueVersionNameIn: aRepository)  
-		message: aMessageString
-		in: aRepository.
 
-	"^ (self requestVersionNameAndMessageWithSuggestion: self uniqueVersionName) ifNotNil:
-		[:pair |
-		self newVersionWithName: pair first message: aMessageString].
-	"
+	^ self newVersionWithName: (self uniqueVersionNameIn: aRepository) message: aMessageString in: aRepository
 ]
 
 { #category : 'operations' }
@@ -553,26 +524,32 @@ MCWorkingCopy >> nextAncestors [
 
 { #category : 'private' }
 MCWorkingCopy >> nextVersionName [
+
 	| branch oldName base author |
 	branch := ''.
 	ancestry ancestors isEmpty
-		ifTrue: [counter ifNil: [counter := 0]. base := package name]
-		ifFalse:
-			[oldName := ancestry ancestors first name.
+		ifTrue: [
+			counter ifNil: [ counter := 0 ].
+			base := package name ]
+		ifFalse: [
+			oldName := ancestry ancestors first name.
 			oldName last isDigit
-				ifFalse: [base := oldName]
+				ifFalse: [ base := oldName ]
 				ifTrue: [
 					base := oldName copyUpToLast: $-.
 					branch := ((oldName copyAfterLast: $-) copyUpToLast: $.) copyAfter: $. ].
 			counter ifNil: [
-				counter := (ancestry ancestors collect: [:each |
-					each name last isDigit
-						ifFalse: [0]
-						ifTrue: [(each name copyAfterLast: $.) extractNumber]]) max]].
+				counter := (ancestry ancestors collect: [ :each |
+					            each name last isDigit
+						            ifFalse: [ 0 ]
+						            ifTrue: [ ('0' , (each name copyAfterLast: $.) select: [ :ea | ea isDigit ]) asNumber ] ]) max ] ].
 
-	branch isEmpty ifFalse: [branch := '.',branch].
+	branch isEmpty ifFalse: [ branch := '.' , branch ].
 	counter := counter + 1.
-	author := Author fullName collect: [ :each | each isAlphaNumeric ifTrue: [ each ] ifFalse: [ $_ ] ].
+	author := Author fullName collect: [ :each |
+		          each isAlphaNumeric
+			          ifTrue: [ each ]
+			          ifFalse: [ $_ ] ].
 	^ base , '-' , author , branch , '.' , counter asString
 ]
 
@@ -591,25 +568,6 @@ MCWorkingCopy >> packageNameWithStar [
 	^ modified
 		ifTrue: ['* ', self packageName]
 		ifFalse: [self packageName]
-]
-
-{ #category : 'accessing' }
-MCWorkingCopy >> packageSet [
-	^ package packageSet
-]
-
-{ #category : 'private' }
-MCWorkingCopy >> possiblyNewerVersions [
-
-	^Array streamContents: [:strm |
-		self repositoryGroup repositories do: [:repo |
-			strm nextPutAll: (self possiblyNewerVersionsIn: repo)]]
-]
-
-{ #category : 'private' }
-MCWorkingCopy >> possiblyNewerVersionsIn: aRepository [
-
-	^aRepository possiblyNewerVersionsOfAnyOf: self ancestors
 ]
 
 { #category : 'printing' }
@@ -696,25 +654,6 @@ MCWorkingCopy >> systemPackage [
 	^ self package systemPackage
 ]
 
-{ #category : 'accessing' }
-MCWorkingCopy >> theCachedRepository [
-
-	^ MCCacheRepository uniqueInstance.
-]
-
-{ #category : 'private' }
-MCWorkingCopy >> uniqueVersionName [
-	|versionName|
-	counter := nil.
-	'Creating unique version number' 
-		displayProgressFrom: 0 
-		to: 1 
-		during: [ :arg|
-			[versionName := self nextVersionName.
-			self repositoryGroup includesVersionNamed: versionName] whileTrue ].
-	^ versionName
-]
-
 { #category : 'private' }
 MCWorkingCopy >> uniqueVersionNameIn: aRepository [
 	|versionName|
@@ -761,9 +700,4 @@ MCWorkingCopy >> versionInfo [
 { #category : 'accessing' }
 MCWorkingCopy >> versionInfo: aVersionInfo [
 	ancestry := MCWorkingAncestry new addAncestor: aVersionInfo
-]
-
-{ #category : 'private' }
-MCWorkingCopy >> versionSeparator [
-	^ $_
 ]

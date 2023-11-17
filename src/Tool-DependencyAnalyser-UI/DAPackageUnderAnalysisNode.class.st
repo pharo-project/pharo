@@ -87,11 +87,6 @@ DAPackageUnderAnalysisNode >> printOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : 'browse-nautilus' }
-DAPackageUnderAnalysisNode >> selectInBrowser [
-	self selectPackage: self content rPackage
-]
-
 { #category : 'dependencies' }
 DAPackageUnderAnalysisNode >> wrappedPackageDependencies [
 	^ (self packageDependencies

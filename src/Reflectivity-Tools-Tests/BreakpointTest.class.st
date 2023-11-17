@@ -40,13 +40,12 @@ BreakpointTest >> setUp [
 
 { #category : 'running' }
 BreakpointTest >> tearDown [
-	| pkg |
+
 	Breakpoint removeAll.
 	Breakpoint all addAll: previousBreakpoints.
 	SystemAnnouncer announcer: oldSystemAnnouncer.
 	cls ifNotNil: [ cls isObsolete ifFalse: [ cls removeFromSystem ] ].
-	pkg := 'DummyPackage' asPackageIfAbsent: [ ].
-	pkg ifNotNil: [ pkg removeFromSystem ].
+	self packageOrganizer removePackage: 'DummyPackage'.
 	super tearDown
 ]
 

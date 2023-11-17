@@ -110,9 +110,9 @@ ShDefaultBuilderEnhancer >> on: newClass declareClassVariables: sharedVariables 
 ]
 
 { #category : 'class modifications' }
-ShDefaultBuilderEnhancer >> propagateChangesToRelatedClasses: newClass installer: installer [
+ShDefaultBuilderEnhancer >> propagateChangesToRelatedClasses: newClass builder: aBuilder [
 
-	newClass subclasses do: [ :e | installer remake: e ]
+	newClass subclasses do: [ :subclass | subclass classInstaller remake: subclass basedOn: aBuilder ]
 ]
 
 { #category : 'class modifications' }

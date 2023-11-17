@@ -48,13 +48,6 @@ TheManifestBuilder class >> hasManifestFor: aItem [
 	^  (self new manifestOf: aItem) isNil not
 ]
 
-{ #category : 'instance creation' }
-TheManifestBuilder class >> hasPackageNamed: aPackageName [
-
-	^ self allManifestClasses
-		anySatisfy: [:each | each category = aPackageName  ]
-]
-
 { #category : 'accessing - manifest' }
 TheManifestBuilder class >> manifestClassComment [
 
@@ -93,13 +86,14 @@ TheManifestBuilder class >> of: aItem [
 ]
 
 { #category : 'instance creation' }
-TheManifestBuilder class >> ofPackageNamed: aPackageName [
+TheManifestBuilder class >> ofPackage: aPackage [
+
 	| builder |
 	builder := self new.
 	self allManifestClasses
-		detect: [ :each | each category = aPackageName ]
+		detect: [ :each | each package = aPackage ]
 		ifFound: [ :manifestClass | builder manifestClass: manifestClass ]
-		ifNone: [ builder createManifestNamed: aPackageName ].
+		ifNone: [ builder createManifestNamed: aPackage name ].
 	^ builder
 ]
 
