@@ -104,7 +104,8 @@ PackageOrganizer >> ensureTag: aTagName inPackage: aPackageName [
 
 { #category : 'accessing' }
 PackageOrganizer >> environment [
-	 ^ environment ifNil: [ environment := Smalltalk globals]
+
+	^ environment ifNil: [ environment := self class environment ]
 ]
 
 { #category : 'accessing' }
