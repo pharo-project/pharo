@@ -1,6 +1,13 @@
 Extension { #name : 'Gofer' }
 
 { #category : '*Gofer-Deprecated' }
+Gofer >> cleanup [
+	"Cleans the specified packages."
+
+	^ self execute: GoferCleanup
+]
+
+{ #category : '*Gofer-Deprecated' }
 Gofer >> commit [
 	"Commit the modified packages."
 

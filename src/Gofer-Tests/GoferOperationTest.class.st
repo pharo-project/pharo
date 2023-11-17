@@ -74,23 +74,6 @@ GoferOperationTest >> tearDown [
 ]
 
 { #category : 'tests' }
-GoferOperationTest >> testCleanup [
-
-	| class |
-	gofer
-		package: 'GoferFoo';
-		load.
-	class := environment classNamed: #GoferFoo.
-	environment organization ensureTag: #Empty inPackage: #GoferFoo.
-	class addProtocol: #empty.
-	class class addProtocol: #empty.
-	gofer cleanup.
-	self deny: (self packageOrganizer hasTag: #Empty inPackage: #GoferFoo).
-	self deny: (class hasProtocol: #'GoferFoo-Empty').
-	self deny: (class class hasProtocol: #'GoferFoo-Empty')
-]
-
-{ #category : 'tests' }
 GoferOperationTest >> testLoad [
 
 	gofer version: 'GoferFoo-lr.1'.

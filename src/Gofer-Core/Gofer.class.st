@@ -139,13 +139,6 @@ Gofer >> blueplane: aString [
 	self url: 'http://squeaksource.blueplane.jp/' , aString
 ]
 
-{ #category : 'operations' }
-Gofer >> cleanup [
-	"Cleans the specified packages."
-
-	^ self execute: GoferCleanup
-]
-
 { #category : 'references' }
 Gofer >> configuration [
 	"Add a default Configuration package by using the repository name.
