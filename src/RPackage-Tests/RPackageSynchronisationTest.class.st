@@ -20,7 +20,7 @@ RPackageSynchronisationTest >> testNotRepackagedAnnouncementWhenModifyMethodByMo
 
 	class := self newClassNamed: 'NewClass' in: 'XXXXX'.
 
-	self createMethodNamed: 'stubMethod' inClass: class asExtensionOf: yPackage.
+	self createMethodNamed: 'stubMethod' inClass: class asExtensionOf: 'yyyyy'.
 
 	self assert: ann isNil.
 

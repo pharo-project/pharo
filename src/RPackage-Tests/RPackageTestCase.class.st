@@ -18,11 +18,11 @@ RPackageTestCase class >> isAbstract [
 ]
 
 { #category : 'private' }
-RPackageTestCase >> createMethodNamed: methodName inClass: aClass asExtensionOf: aPackage [ 
+RPackageTestCase >> createMethodNamed: methodName inClass: aClass asExtensionOf: aPackage [
 
-	^ aClass compile: (methodName, ' ^nil') classified:('*' , (aPackage isString
-	 ifTrue: [ aPackage ]
-	 ifFalse: [ aPackage name ]))
+	^ aClass compile: methodName , ' ^nil' classified: '*' , (aPackage isString
+			   ifTrue: [ aPackage ]
+			   ifFalse: [ aPackage name ])
 ]
 
 { #category : 'private' }

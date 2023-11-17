@@ -10,7 +10,7 @@ Class {
 
 { #category : 'tests - operations on protocols' }
 RPackageClassesSynchronisationTest >> testAddExtensionProtocol [
-	"test that by adding a protocol, nothing change from  RPackage point of vue."
+	"test that by adding a protocol, nothing change from  Package point of vue."
 
 	| class xPackage |
 	xPackage := self ensureXPackage.
@@ -168,7 +168,7 @@ RPackageClassesSynchronisationTest >> testRemovingExtensionProtocol [
 
 	self createMethodNamed: 'stubMethod' inClass: class asExtensionOf: yPackage.
 
-	class removeProtocol: '*yyyyy'.
+	class removeProtocol: '*YYYYY'.
 
 	self deny: (yPackage includesSelector: #stubMethod ofClass: class)
 ]
@@ -275,7 +275,7 @@ RPackageClassesSynchronisationTest >> testRenamingExtensionProtocolToAnotherExte
 	class := self newClassNamed: 'NewClass' in: xPackage.
 	self createMethodNamed: 'stubMethod' inClass: class asExtensionOf: yPackage.
 
-	class renameProtocol: '*yyyyy' as: '*zzzzz'.
+	class renameProtocol: '*YYYYY' as: '*zzzzz'.
 
 	self assert: (zPackage includesExtensionSelector: #stubMethod ofClass: class).
 	self deny: (yPackage includesExtensionSelector: #stubMethod ofClass: class).
@@ -294,7 +294,7 @@ RPackageClassesSynchronisationTest >> testRenamingExtenstionProtocolToClassicPro
 	self createMethodNamed: 'stubMethod' inClass: class asExtensionOf: yPackage.
 	self createMethodNamed: 'stubMethod2' inClass: class asExtensionOf: yPackage.
 
-	class renameProtocol: '*yyyyy' as: 'classic category'.
+	class renameProtocol: '*YYYYY' as: 'classic category'.
 
 	self deny: (yPackage includesExtensionSelector: #stubMethod ofClass: class).
 	self deny: (yPackage includesExtensionSelector: #stubMethod2 ofClass: class).
