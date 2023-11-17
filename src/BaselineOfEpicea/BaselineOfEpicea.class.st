@@ -15,7 +15,7 @@ BaselineOfEpicea >> baseline: spec [
 			package: 'Epicea' with: [ spec requires: 'Ombu' ];
 			package: 'Hiedra';
 			package: 'Hiedra-Examples';
-			package: 'EpiceaBrowsers' with: [ spec requires: 'Hiedra' ].
+			package: 'EpiceaBrowsers' with: [ spec requires: #( 'Epicea' 'Hiedra') ].
 
 		spec
 			package: 'Ombu-Tests' with: [ spec requires: 'Ombu' ];
