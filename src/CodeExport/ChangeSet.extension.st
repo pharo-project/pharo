@@ -14,9 +14,6 @@ ChangeSet >> fileOut [
 { #category : '*CodeExport' }
 ChangeSet >> fileOutBody: fileReference [
 
-	UIManager default
-		showWaitCursorWhile:
-			[
 			| internalStream |
 			internalStream := (String new: 10000) writeStream.
 			internalStream
@@ -28,7 +25,7 @@ ChangeSet >> fileOutBody: fileReference [
 
 			CodeExporter
 				writeSourceCodeFrom: internalStream
-				toFileReference: fileReference ]
+				toFileReference: fileReference
 ]
 
 { #category : '*CodeExport' }
