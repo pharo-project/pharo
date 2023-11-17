@@ -118,17 +118,6 @@ GoferOperationTest >> testMerge [
 ]
 
 { #category : 'tests' }
-GoferOperationTest >> testUnload [
-
-	gofer
-		package: 'GoferFoo';
-		load.
-	gofer unload.
-	self deny: (self hasPackage: 'GoferFoo').
-	self deny: (self hasClass: #GoferFoo)
-]
-
-{ #category : 'tests' }
 GoferOperationTest >> testUpdate [
 
 	| initial |

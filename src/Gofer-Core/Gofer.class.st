@@ -317,13 +317,6 @@ Gofer >> squeaksource: aProjectName [
 ]
 
 { #category : 'operations' }
-Gofer >> unload [
-	"Unload the specified packages."
-
-	^ self execute: GoferUnload
-]
-
-{ #category : 'operations' }
 Gofer >> update [
 	"Update the specified packages."
 
