@@ -75,6 +75,23 @@ SystemNavigationTest >> testAllExistingProtocolsFor [
 ]
 
 { #category : 'tests' }
+SystemNavigationTest >> testAllGlobalNamesStartingWithDoCaseSensitive [
+
+	| result |
+	result := OrderedCollection new.
+	self systemNavigationToTest allGlobalNamesStartingWith: 'Sma' do: [ :name | result add: name ] caseSensitive: true.
+	self assert: (result includes: 'Smalltalk').
+
+	result := OrderedCollection new.
+	self systemNavigationToTest allGlobalNamesStartingWith: 'sma' do: [ :name | result add: name ] caseSensitive: true.
+	self deny: (result includes: 'Smalltalk').
+
+	result := OrderedCollection new.
+	self systemNavigationToTest allGlobalNamesStartingWith: 'sma' do: [ :name | result add: name ] caseSensitive: false.
+	self assert: (result includes: 'Smalltalk')
+]
+
+{ #category : 'tests' }
 SystemNavigationTest >> testAllReferencesToDo [
 	"test trying to not hard code numbers as they will be different"
 	| counterSymbol counterClass |
