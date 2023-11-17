@@ -2,14 +2,14 @@
 SUnit tests for RPackage classes synchronisation
 "
 Class {
-	#name : 'PackageAndClassesSynchronisationTest',
-	#superclass : 'RPackageTestCase',
+	#name : 'PackageAndClassesTest',
+	#superclass : 'PackageTestCase',
 	#category : 'RPackage-Tests',
 	#package : 'RPackage-Tests'
 }
 
 { #category : 'tests - operations on protocols' }
-PackageAndClassesSynchronisationTest >> testAddExtensionProtocol [
+PackageAndClassesTest >> testAddExtensionProtocol [
 	"test that by adding a protocol, nothing change from  Package point of vue."
 
 	| class xPackage |
@@ -24,7 +24,7 @@ PackageAndClassesSynchronisationTest >> testAddExtensionProtocol [
 ]
 
 { #category : 'tests - operations on protocols' }
-PackageAndClassesSynchronisationTest >> testAddNewProtocolDoesNothing [
+PackageAndClassesTest >> testAddNewProtocolDoesNothing [
 	"test that by adding a protocol, nothing change from Package point of vue."
 
 	| xPackage class |
@@ -41,7 +41,7 @@ PackageAndClassesSynchronisationTest >> testAddNewProtocolDoesNothing [
 ]
 
 { #category : 'tests - recategorizing class' }
-PackageAndClassesSynchronisationTest >> testRecategorizeClassRegisterTheClassMethodsInTheNewPackage [
+PackageAndClassesTest >> testRecategorizeClassRegisterTheClassMethodsInTheNewPackage [
 	"test that when we recategorize a class, the new package in which it is defined include all the methods defined in this class (not extensions)"
 
 	| xPackage yPackage zPackage class |
@@ -72,7 +72,7 @@ PackageAndClassesSynchronisationTest >> testRecategorizeClassRegisterTheClassMet
 ]
 
 { #category : 'tests - recategorizing class' }
-PackageAndClassesSynchronisationTest >> testRecategorizeClassUnregisterTheClassMethodsFromTheOldPackage [
+PackageAndClassesTest >> testRecategorizeClassUnregisterTheClassMethodsFromTheOldPackage [
 	"test that when we recategorize a class, the old package in which it was defined don't include its defined methods (not extensions) anymore"
 
 	| xPackage yPackage zPackage class |
@@ -92,7 +92,7 @@ PackageAndClassesSynchronisationTest >> testRecategorizeClassUnregisterTheClassM
 ]
 
 { #category : 'tests - recategorizing class' }
-PackageAndClassesSynchronisationTest >> testRecategorizeClassWithMetaClassMethodsRegisterAllClassMethodsInTheNewPackage [
+PackageAndClassesTest >> testRecategorizeClassWithMetaClassMethodsRegisterAllClassMethodsInTheNewPackage [
 	"test that when we recategorize a class (having methods defined in both instance and class side), the new package in which it is defined include all the methods (from instance and class side) defined in this class (not extensions)"
 
 	| xPackage yPackage zPackage class |
@@ -117,7 +117,7 @@ PackageAndClassesSynchronisationTest >> testRecategorizeClassWithMetaClassMethod
 ]
 
 { #category : 'tests - removing classes' }
-PackageAndClassesSynchronisationTest >> testRemoveClassUnregisterTheClassDefinedMethodsFromItsPackage [
+PackageAndClassesTest >> testRemoveClassUnregisterTheClassDefinedMethodsFromItsPackage [
 	"test that when we remove a class, the class methods defined in the parent package (not extensions) are all removed  from its parent Package"
 
 	| xPackage class |
@@ -130,7 +130,7 @@ PackageAndClassesSynchronisationTest >> testRemoveClassUnregisterTheClassDefined
 ]
 
 { #category : 'tests - removing classes' }
-PackageAndClassesSynchronisationTest >> testRemoveClassUnregisterTheClassExtensionMethodsFromTheCorrespondingPackage [
+PackageAndClassesTest >> testRemoveClassUnregisterTheClassExtensionMethodsFromTheCorrespondingPackage [
 	"test that when we remove a class, the class extension methods are all removed  from theire corresponding parent Package"
 
 	| xPackage yPackage class |
@@ -144,7 +144,7 @@ PackageAndClassesSynchronisationTest >> testRemoveClassUnregisterTheClassExtensi
 ]
 
 { #category : 'tests - operations on protocols' }
-PackageAndClassesSynchronisationTest >> testRemoveProtocol [
+PackageAndClassesTest >> testRemoveProtocol [
 	"test that by removing a protocol, the methods from this protocol are removed from the parent Package of the class"
 
 	| xPackage class |
@@ -158,7 +158,7 @@ PackageAndClassesSynchronisationTest >> testRemoveProtocol [
 ]
 
 { #category : 'tests - operations on protocols' }
-PackageAndClassesSynchronisationTest >> testRemovingExtensionProtocol [
+PackageAndClassesTest >> testRemovingExtensionProtocol [
 	"test that by removing an extension protocol (a category protocol with '*'), all the methods that were inside are removed from the extending package"
 
 	| xPackage yPackage class |
@@ -174,7 +174,7 @@ PackageAndClassesSynchronisationTest >> testRemovingExtensionProtocol [
 ]
 
 { #category : 'tests - operations on classes' }
-PackageAndClassesSynchronisationTest >> testRenameClass [
+PackageAndClassesTest >> testRenameClass [
 
 	| xPackage class |
 	xPackage := self ensureXPackage.
@@ -190,7 +190,7 @@ PackageAndClassesSynchronisationTest >> testRenameClass [
 ]
 
 { #category : 'tests - operations on classes' }
-PackageAndClassesSynchronisationTest >> testRenameClassUpdateClassDefinedSelectorsInTheParentPackage [
+PackageAndClassesTest >> testRenameClassUpdateClassDefinedSelectorsInTheParentPackage [
 	"test that when we rename a class, the  'classDefinedSelectors' dictionary of the parent package is updated with the new name. There fore we test that we can correctly access the selector from the package by specifying the right name (the new name)"
 
 	| xPackage class |
@@ -205,7 +205,7 @@ PackageAndClassesSynchronisationTest >> testRenameClassUpdateClassDefinedSelecto
 ]
 
 { #category : 'tests - operations on classes' }
-PackageAndClassesSynchronisationTest >> testRenameClassUpdateClassExtensionSelectorsInTheExtendingPackages [
+PackageAndClassesTest >> testRenameClassUpdateClassExtensionSelectorsInTheExtendingPackages [
 	"test that when we rename a class, the  'classExtensionSelectors' dictionaries of the extending packages  are updated with the new name. Therfore we test that we can correctly access the selectors from the package by specifying the right name (the new name)"
 
 	| xPackage yPackage class |
@@ -220,7 +220,7 @@ PackageAndClassesSynchronisationTest >> testRenameClassUpdateClassExtensionSelec
 ]
 
 { #category : 'tests - operations on classes' }
-PackageAndClassesSynchronisationTest >> testRenameClassUpdateMetaclassDefinedSelectorsInTheParentPackage [
+PackageAndClassesTest >> testRenameClassUpdateMetaclassDefinedSelectorsInTheParentPackage [
 	"test that when we rename a class, the  'metaclassDefinedSelectors' dictionary of the parent package is updated with the new name. Ther fore we test that we can correctly access the selector from the package by specifying the right name (the new name)"
 
 	| xPackage class |
@@ -235,7 +235,7 @@ PackageAndClassesSynchronisationTest >> testRenameClassUpdateMetaclassDefinedSel
 ]
 
 { #category : 'tests - operations on classes' }
-PackageAndClassesSynchronisationTest >> testRenameClassUpdateMetaclassExtensionSelectorsInTheExtendingPackages [
+PackageAndClassesTest >> testRenameClassUpdateMetaclassExtensionSelectorsInTheExtendingPackages [
 	"test that when we rename a class, the  'metaclassExtensionSelectors' dictionaries of the extending packages  are updated with the new name. Ther fore we test that we can correctly access the selectors from the package by specifying the right name (the new name)"
 
 	| xPackage yPackage class |
@@ -250,7 +250,7 @@ PackageAndClassesSynchronisationTest >> testRenameClassUpdateMetaclassExtensionS
 ]
 
 { #category : 'tests - operations on classes' }
-PackageAndClassesSynchronisationTest >> testRenameClassUpdateOrganizerClassExtendingPackagesMapping [
+PackageAndClassesTest >> testRenameClassUpdateOrganizerClassExtendingPackagesMapping [
 	"test that when we rename a class, the classExtendingPackages dictionary of the organizer is updated with the new name, so that we can access the packages when specifying the new name"
 
 	| xPackage yPackage class |
@@ -265,7 +265,7 @@ PackageAndClassesSynchronisationTest >> testRenameClassUpdateOrganizerClassExten
 ]
 
 { #category : 'tests - operations on protocols' }
-PackageAndClassesSynchronisationTest >> testRenamingExtensionProtocolToAnotherExtension [
+PackageAndClassesTest >> testRenamingExtensionProtocolToAnotherExtension [
 	"test that by renaming an extension protocol (a protocol beginning with '*') to another extension protocol, all the methods are moved to the new extendingPackage"
 
 	| xPackage yPackage zPackage class |
@@ -283,7 +283,7 @@ PackageAndClassesSynchronisationTest >> testRenamingExtensionProtocolToAnotherEx
 ]
 
 { #category : 'tests - operations on protocols' }
-PackageAndClassesSynchronisationTest >> testRenamingExtenstionProtocolToClassicProtocol [
+PackageAndClassesTest >> testRenamingExtenstionProtocolToClassicProtocol [
 	"test that by renaming an extension protocol (a protocol beginning with '*') to a classic protocol, all the methods are moved from the extendingPackage to the parent package of the class"
 
 	| xPackage yPackage class |
@@ -305,7 +305,7 @@ PackageAndClassesSynchronisationTest >> testRenamingExtenstionProtocolToClassicP
 ]
 
 { #category : 'tests - operations on protocols' }
-PackageAndClassesSynchronisationTest >> testRenamingProtocolToMakeItAnExtension [
+PackageAndClassesTest >> testRenamingProtocolToMakeItAnExtension [
 	"test that by renaming a  classic protocol (a protocol not beginning with '*') to an extension protocol, all the methods are moved from the parent package of the class to the extending package"
 
 	| xPackage yPackage class |

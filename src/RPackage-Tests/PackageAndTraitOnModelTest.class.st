@@ -2,8 +2,8 @@
 SUnit tests for RPackage
 "
 Class {
-	#name : 'RPackageTraitTest',
-	#superclass : 'RPackageIncrementalTest',
+	#name : 'PackageAndTraitOnModelTest',
+	#superclass : 'PackageTestCase',
 	#instVars : [
 		'a1',
 		't1',
@@ -17,7 +17,7 @@ Class {
 }
 
 { #category : 'running' }
-RPackageTraitTest >> setUp [
+PackageAndTraitOnModelTest >> setUp [
 
 	super setUp.
 
@@ -47,7 +47,7 @@ RPackageTraitTest >> setUp [
 ]
 
 { #category : 'tests' }
-RPackageTraitTest >> testMethodOverridingTraitMethodIsKnowByPackage [
+PackageAndTraitOnModelTest >> testMethodOverridingTraitMethodIsKnowByPackage [
 	"Regression test for a bug where adding a method to a class that overrides a method from a trait was not know by the package of the class"
 
 	| a2 |
@@ -65,7 +65,7 @@ RPackageTraitTest >> testMethodOverridingTraitMethodIsKnowByPackage [
 ]
 
 { #category : 'tests' }
-RPackageTraitTest >> testPackageOfClassMethodFromTraitExtensionIsExtendingPackage [
+PackageAndTraitOnModelTest >> testPackageOfClassMethodFromTraitExtensionIsExtendingPackage [
 	"The package of a method defined in atrait but package in another package than the extended trait is the
 	package containing the extension."
 
@@ -77,7 +77,7 @@ RPackageTraitTest >> testPackageOfClassMethodFromTraitExtensionIsExtendingPackag
 ]
 
 { #category : 'tests' }
-RPackageTraitTest >> testPackageOfClassMethodFromTraitIsTraitPackage [
+PackageAndTraitOnModelTest >> testPackageOfClassMethodFromTraitIsTraitPackage [
 	"test that a class method coming from a trait is packaged in the trait package"
 
 	self assert: (a1 >> #traitMethodDefinedInP1) package equals: xPackage.
@@ -85,7 +85,7 @@ RPackageTraitTest >> testPackageOfClassMethodFromTraitIsTraitPackage [
 ]
 
 { #category : 'tests' }
-RPackageTraitTest >> testPackageOfClassMethodIsClassPackage [
+PackageAndTraitOnModelTest >> testPackageOfClassMethodIsClassPackage [
 	"The package of a local method (not defined in a trait) is the package of its class"
 
 	self assert: (a1 >> #localMethodDefinedInP1) package equals: xPackage.
@@ -94,7 +94,7 @@ RPackageTraitTest >> testPackageOfClassMethodIsClassPackage [
 ]
 
 { #category : 'tests' }
-RPackageTraitTest >> testPackageOfTraitMethodIsTraitPackage [
+PackageAndTraitOnModelTest >> testPackageOfTraitMethodIsTraitPackage [
 	"The package of a trait method is the package of its trait."
 
 	self assert: (a1 >> #traitMethodDefinedInP2) package equals: yPackage.
@@ -103,7 +103,7 @@ RPackageTraitTest >> testPackageOfTraitMethodIsTraitPackage [
 ]
 
 { #category : 'tests' }
-RPackageTraitTest >> testStartingSituation [
+PackageAndTraitOnModelTest >> testStartingSituation [
 
 	self deny: (yPackage includesClass: a1).
 	self assert: (xPackage includesClass: a1).

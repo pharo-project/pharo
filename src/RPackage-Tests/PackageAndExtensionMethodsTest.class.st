@@ -2,14 +2,14 @@
 SUnit tests for RPackage extension methods
 "
 Class {
-	#name : 'PackageAndExtensionMethodsSynchronisationTest',
-	#superclass : 'RPackageTestCase',
+	#name : 'PackageAndExtensionMethodsTest',
+	#superclass : 'PackageTestCase',
 	#category : 'RPackage-Tests',
 	#package : 'RPackage-Tests'
 }
 
 { #category : 'we are not sure' }
-PackageAndExtensionMethodsSynchronisationTest >> testAddMethodInExtensionCategoryBestMatchingNameAddMethodToTheExtendingPackage [
+PackageAndExtensionMethodsTest >> testAddMethodInExtensionCategoryBestMatchingNameAddMethodToTheExtendingPackage [
 	"test that when we add a method  in an extension category ( beginning with*) that enlarge a package name (for example *mondrian-accessing for Mondrian), this method is added to the corresponding extending package"
 
 	| class xPackage yPackage tag |
@@ -29,7 +29,7 @@ PackageAndExtensionMethodsSynchronisationTest >> testAddMethodInExtensionCategor
 ]
 
 { #category : 'we are not sure' }
-PackageAndExtensionMethodsSynchronisationTest >> testAddMethodInExtensionCategoryMatchingNameAddMethodToTheExtendingPackage [
+PackageAndExtensionMethodsTest >> testAddMethodInExtensionCategoryMatchingNameAddMethodToTheExtendingPackage [
 	"test that when we add a method  in an extension category ( beginning with*) that enlarge a package name (for example *mondrian-accessing for Mondrian), this method is added to the corresponding extending package"
 
 	| class xPackage yPackage |
@@ -46,7 +46,7 @@ PackageAndExtensionMethodsSynchronisationTest >> testAddMethodInExtensionCategor
 ]
 
 { #category : 'testing' }
-PackageAndExtensionMethodsSynchronisationTest >> testAddMethodInExtensionCategoryNotExistingCreateANewPackage [
+PackageAndExtensionMethodsTest >> testAddMethodInExtensionCategoryNotExistingCreateANewPackage [
 	"test that when we add a method  in an extension category ( beginning with *)that does not refer to an existing categorya new package with the name of this category is added, and that the method is added to this new package"
 
 	| class xPackage |
@@ -62,7 +62,7 @@ PackageAndExtensionMethodsSynchronisationTest >> testAddMethodInExtensionCategor
 ]
 
 { #category : 'testing' }
-PackageAndExtensionMethodsSynchronisationTest >> testAddMethodInExtensionCategoryNotExistingCreateANewPackageAndInstallsMethodInIt [
+PackageAndExtensionMethodsTest >> testAddMethodInExtensionCategoryNotExistingCreateANewPackageAndInstallsMethodInIt [
 	"test that when we add a method  in an extension category ( beginning with *)that does not refer to an existing categorya new package with the name of this category is added, and that the method is added to this new package"
 
 	| class xPackage |
@@ -79,7 +79,7 @@ PackageAndExtensionMethodsSynchronisationTest >> testAddMethodInExtensionCategor
 ]
 
 { #category : 'we are not sure' }
-PackageAndExtensionMethodsSynchronisationTest >> testAddMethodInExtensionCategoryNotRespectingCaseAddMethodToTheExtendingPackage [
+PackageAndExtensionMethodsTest >> testAddMethodInExtensionCategoryNotRespectingCaseAddMethodToTheExtendingPackage [
 	"test that when we add a method  in an extension category ( beginning with *)thae does not match the case of the corresponding package (for example *packagea for PackageA), this method is added to the corresponding extending package"
 
 	| class xPackage yPackage |
@@ -96,7 +96,7 @@ PackageAndExtensionMethodsSynchronisationTest >> testAddMethodInExtensionCategor
 ]
 
 { #category : 'we are not sure' }
-PackageAndExtensionMethodsSynchronisationTest >> testAddMethodInExtensionCategoryWithExactMatchAddMethodToTheExtendingPackage [
+PackageAndExtensionMethodsTest >> testAddMethodInExtensionCategoryWithExactMatchAddMethodToTheExtendingPackage [
 	"test that when we add a method to a  class in an extension category ( beginning with *), this method is added to the corresponding extending package"
 
 	| class xPackage yPackage |
@@ -114,8 +114,25 @@ PackageAndExtensionMethodsSynchronisationTest >> testAddMethodInExtensionCategor
 	self assert: (class >> #stubMethod) package equals: yPackage
 ]
 
+{ #category : 'we are not sure' }
+PackageAndExtensionMethodsTest >> testExtensionMethodsForClass [
+	"test that when we add a method to a  class in an extension category ( beginning with *), this method is added to the corresponding extending package"
+
+	| class xPackage yPackage |
+	xPackage := self ensureXPackage.
+	yPackage := self ensureYPackage.
+	self ensureTagYinX.
+
+	class := self newClassNamed: 'NewClass' in: xPackage.
+
+	self createMethodNamed: 'stubMethod' inClass: class inProtocol: '*YYYYY'.
+
+	self assertEmpty: (xPackage extensionMethodsForClass: class).
+	self assert: (yPackage extensionMethodsForClass: class) equals: { (class >> #stubMethod) }
+]
+
 { #category : 'tests - operations on methods' }
-PackageAndExtensionMethodsSynchronisationTest >> testModifyMethodByChangingCode [
+PackageAndExtensionMethodsTest >> testModifyMethodByChangingCode [
 	"test that when we modify the code of a method, everything work well: NOTHING SHOULD HAPPEN REGARDING THE PACKAGING"
 
 	| class xPackage |
@@ -132,7 +149,7 @@ PackageAndExtensionMethodsSynchronisationTest >> testModifyMethodByChangingCode 
 ]
 
 { #category : 'tests - operations on methods' }
-PackageAndExtensionMethodsSynchronisationTest >> testMoveClassInPackageWithExtensionsOnClass [
+PackageAndExtensionMethodsTest >> testMoveClassInPackageWithExtensionsOnClass [
 	"Move a class in package XXXXX (with extensions from YYYY) to package YYYYY."
 
 	| class yPackage xPackage |
@@ -151,7 +168,7 @@ PackageAndExtensionMethodsSynchronisationTest >> testMoveClassInPackageWithExten
 ]
 
 { #category : 'tests - operations on methods' }
-PackageAndExtensionMethodsSynchronisationTest >> testMoveClassInPackageWithExtensionsOnClassAndBack [
+PackageAndExtensionMethodsTest >> testMoveClassInPackageWithExtensionsOnClassAndBack [
 	"Move a class in package XXXXX (with extensions from YYYY) to package YYYYY."
 
 	| class xPackage yPackage |
@@ -178,7 +195,7 @@ PackageAndExtensionMethodsSynchronisationTest >> testMoveClassInPackageWithExten
 ]
 
 { #category : 'tests - operations on methods' }
-PackageAndExtensionMethodsSynchronisationTest >> testRemoveAllExtensionMethodsFromMetaAndInstanceSideUpdateOrganizerExtensionsMapping [
+PackageAndExtensionMethodsTest >> testRemoveAllExtensionMethodsFromMetaAndInstanceSideUpdateOrganizerExtensionsMapping [
 	"test that In a class (from the meta  and the instance side ), when we remove all the method extended by the same external package, the class get unregistered from the classExtendingPackagesMapping of the organizer "
 
 	| xPackage class yPackage |
@@ -197,7 +214,7 @@ PackageAndExtensionMethodsSynchronisationTest >> testRemoveAllExtensionMethodsFr
 ]
 
 { #category : 'tests - operations on methods' }
-PackageAndExtensionMethodsSynchronisationTest >> testRemoveAllExtensionMethodsRemoveTheClassFromExtendedClasses [
+PackageAndExtensionMethodsTest >> testRemoveAllExtensionMethodsRemoveTheClassFromExtendedClasses [
 	"test that In a class, when we remove all the method extended by the same external package, the class get unregistered from the extended classes of the external package "
 
 	| xPackage class yPackage |
@@ -217,7 +234,7 @@ PackageAndExtensionMethodsSynchronisationTest >> testRemoveAllExtensionMethodsRe
 ]
 
 { #category : 'tests - operations on methods' }
-PackageAndExtensionMethodsSynchronisationTest >> testRemoveExtensionMethodDoesNotRemoveExtendingPackage [
+PackageAndExtensionMethodsTest >> testRemoveExtensionMethodDoesNotRemoveExtendingPackage [
 	"test that when we remove a method that is an extension from an external package, the package is not removed from the the class extending packages if another extension still exist"
 
 	| xPackage class yPackage |
@@ -237,7 +254,7 @@ PackageAndExtensionMethodsSynchronisationTest >> testRemoveExtensionMethodDoesNo
 ]
 
 { #category : 'tests - operations on methods' }
-PackageAndExtensionMethodsSynchronisationTest >> testRemoveExtensionMethodRemoveMethodFromItsPackage [
+PackageAndExtensionMethodsTest >> testRemoveExtensionMethodRemoveMethodFromItsPackage [
 	"test that when we remove a method that is an extension from an external package, the method is removed from this package"
 
 	| xPackage class yPackage |

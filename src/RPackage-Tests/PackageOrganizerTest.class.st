@@ -7,7 +7,7 @@ Therefore the new created PackageOrganizer is not registered to listen to event.
 "
 Class {
 	#name : 'PackageOrganizerTest',
-	#superclass : 'RPackageTestCase',
+	#superclass : 'PackageTestCase',
 	#category : 'RPackage-Tests',
 	#package : 'RPackage-Tests'
 }

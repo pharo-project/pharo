@@ -18,15 +18,10 @@ P3
 "
 Class {
 	#name : 'RPackageIncrementalTest',
-	#superclass : 'RPackageTestCase',
+	#superclass : 'PackageTestCase',
 	#category : 'RPackage-Tests',
 	#package : 'RPackage-Tests'
 }
-
-{ #category : 'utilities' }
-RPackageIncrementalTest >> removeClassNamedIfExists: aClassNameSymbol [
-	testingEnvironment at: aClassNameSymbol asSymbol ifPresent: [:c| c removeFromSystem]
-]
 
 { #category : 'tests - class addition removal' }
 RPackageIncrementalTest >> testAddClassNoDuplicate [

@@ -3,7 +3,7 @@ SUnit tests for RPackage tags
 "
 Class {
 	#name : 'PackageTagTest',
-	#superclass : 'RPackageTestCase',
+	#superclass : 'PackageTestCase',
 	#category : 'RPackage-Tests',
 	#package : 'RPackage-Tests'
 }

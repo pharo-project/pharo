@@ -3,7 +3,7 @@ SUnit tests on renaming packages
 "
 Class {
 	#name : 'PackageRenameTest',
-	#superclass : 'RPackageTestCase',
+	#superclass : 'PackageTestCase',
 	#category : 'RPackage-Tests',
 	#package : 'RPackage-Tests'
 }

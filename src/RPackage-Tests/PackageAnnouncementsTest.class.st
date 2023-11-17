@@ -1,6 +1,6 @@
 Class {
 	#name : 'PackageAnnouncementsTest',
-	#superclass : 'RPackageTestCase',
+	#superclass : 'PackageTestCase',
 	#instVars : [
 		'numberOfAnnouncements'
 	],

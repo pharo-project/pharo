@@ -3,7 +3,7 @@ SUnit tests for RPackage
 "
 Class {
 	#name : 'PackageTest',
-	#superclass : 'RPackageTestCase',
+	#superclass : 'PackageTestCase',
 	#category : 'RPackage-Tests',
 	#package : 'RPackage-Tests'
 }
@@ -263,7 +263,7 @@ PackageTest >> testHierarchyRoots [
 	| roots |
 	roots := (self packageOrganizer packageNamed: #'RPackage-Tests') hierarchyRoots.
 	roots := roots collect: [ :each | each name ].
-	#( RPackageTestCase ) do: [ :each | roots includes: each ]
+	#( #PackageTestCase ) do: [ :each | roots includes: each ]
 ]
 
 { #category : 'tests' }

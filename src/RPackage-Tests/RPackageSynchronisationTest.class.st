@@ -1,6 +1,6 @@
 Class {
 	#name : 'RPackageSynchronisationTest',
-	#superclass : 'RPackageTestCase',
+	#superclass : 'PackageTestCase',
 	#category : 'RPackage-Tests',
 	#package : 'RPackage-Tests'
 }

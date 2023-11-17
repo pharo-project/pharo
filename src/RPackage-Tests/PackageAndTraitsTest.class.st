@@ -3,14 +3,14 @@ SUnit tests for RPackage trait synchronization
 
 "
 Class {
-	#name : 'PackageAndTraitsSynchronisationTest',
-	#superclass : 'RPackageTestCase',
+	#name : 'PackageAndTraitsTest',
+	#superclass : 'PackageTestCase',
 	#category : 'RPackage-Tests',
 	#package : 'RPackage-Tests'
 }
 
 { #category : 'tests - operations on methods' }
-PackageAndTraitsSynchronisationTest >> testAddMethodByUsingATraitDoesNotAddTheMethodToThePackage [
+PackageAndTraitsTest >> testAddMethodByUsingATraitDoesNotAddTheMethodToThePackage [
 	"test that when a method is added to a class bu using a trait, this method is not imported in the parent package of the class"
 
 	| xPackage yPackage class trait |
@@ -29,7 +29,7 @@ PackageAndTraitsSynchronisationTest >> testAddMethodByUsingATraitDoesNotAddTheMe
 ]
 
 { #category : 'tests - operations on methods' }
-PackageAndTraitsSynchronisationTest >> testRemoveMethodComingFromTraitDoesNotRemoveMethodFromTraitPackage [
+PackageAndTraitsTest >> testRemoveMethodComingFromTraitDoesNotRemoveMethodFromTraitPackage [
 	"test that when we remove a class method coming from a trait, the method is not removed from the parent package of the trait"
 
 	| xPackage yPackage class trait |
@@ -48,7 +48,7 @@ PackageAndTraitsSynchronisationTest >> testRemoveMethodComingFromTraitDoesNotRem
 ]
 
 { #category : 'tests - operations on methods' }
-PackageAndTraitsSynchronisationTest >> testRemoveTraitMethod [
+PackageAndTraitsTest >> testRemoveTraitMethod [
 	"test that when we remove a method from a trait used by a class, the method is removed from the trait package normally"
 
 	| xPackage yPackage class trait |
@@ -65,7 +65,7 @@ PackageAndTraitsSynchronisationTest >> testRemoveTraitMethod [
 ]
 
 { #category : 'tests - operations on methods' }
-PackageAndTraitsSynchronisationTest >> testRemoveTraitMethodOverridenByClassDoesRemoveMethodFromClassPackage [
+PackageAndTraitsTest >> testRemoveTraitMethodOverridenByClassDoesRemoveMethodFromClassPackage [
 	"test that when we remove a class method overriding the one from a trait, the method is removed from the class package"
 
 	| xPackage yPackage class trait |
@@ -84,7 +84,7 @@ PackageAndTraitsSynchronisationTest >> testRemoveTraitMethodOverridenByClassDoes
 ]
 
 { #category : 'tests - operations on methods' }
-PackageAndTraitsSynchronisationTest >> testTraitCompositionMethodsArePackagedWithTheirTraits [
+PackageAndTraitsTest >> testTraitCompositionMethodsArePackagedWithTheirTraits [
 	"test that when we remove a class method coming from a trait, the method is not removed from the parent package of the trait"
 
 	| xPackage yPackage class trait |
