@@ -136,6 +136,22 @@ RPackageTest >> testAnonymousClassAndSelector [
 	ghost classify: #rpackagetest under: '*rpackagetest'
 ]
 
+{ #category : 'tests - extensions' }
+RPackageTest >> testAsPackage [
+	self assert: self class package name asPackage isNotNil
+]
+
+{ #category : 'tests - extensions' }
+RPackageTest >> testAsPackageIfAbsent [
+	self assert: ('___inexistent___package___' asPackageIfAbsent: [ true ])
+]
+
+{ #category : 'tests - extensions' }
+RPackageTest >> testAsPackageWithError [
+
+	self should: [ '___inexistent___package___' asPackage ] raise: NotFound
+]
+
 { #category : 'tests - demotion' }
 RPackageTest >> testDemoteToRPackageNamed [
 

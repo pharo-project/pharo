@@ -11,6 +11,12 @@ Class {
 	#package : 'RPackage-Tests'
 }
 
+{ #category : 'testing' }
+RPackageTestCase class >> isAbstract [
+
+	^ self = RPackageTestCase
+]
+
 { #category : 'private' }
 RPackageTestCase >> createMethodNamed: methodName inClass: aClass inCategory: aCategoryName [ 
 
