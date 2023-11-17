@@ -17,7 +17,7 @@ RPackageMethodsSynchronisationTest >> testModifyExtensionProtocolUpdatesThePacka
 	yPackage := self ensureYPackage.
 	zPackage := self ensureZPackage.
 	class := self newClassNamed: 'NewClass' in: xPackage.
-	self createMethodNamed: #newMethod inClass: class inCategory: '*yyyyy'.
+	self createMethodNamed: #newMethod inClass: class asExtensionOf: yPackage.
 
 	class classify: #newMethod under: '*zzzzz'.
 	self deny: (xPackage includesSelector: #newMethod ofClass: class).
@@ -33,7 +33,7 @@ RPackageMethodsSynchronisationTest >> testModifyProtocolOfMethodyDoesNothing [
 	| class xPackage |
 	xPackage := self ensureXPackage.
 	class := self newClassNamed: 'NewClass' in: xPackage.
-	self createMethodNamed: 'stubMethod' inClass: class inCategory: 'old protocol'.
+	self createMethodNamed: 'stubMethod' inClass: class inProtocol: 'old protocol'.
 
 	"this we do"
 	class classify: #stubMethod under: 'new protocol'.
@@ -53,7 +53,7 @@ RPackageMethodsSynchronisationTest >> testModifyProtocolToExtensionUpdatesThePac
 	xPackage := self ensureXPackage.
 	yPackage := self ensureYPackage.
 	class := self newClassNamed: 'NewClass' in: xPackage.
-	self createMethodNamed: 'stubMethod' inClass: class inCategory: 'old protocol'.
+	self createMethodNamed: 'stubMethod' inClass: class inProtocol: 'old protocol'.
 
 	class classify: #stubMethod under: '*yyyyy'.
 	self deny: (xPackage includesSelector: #stubMethod ofClass: class).
@@ -74,7 +74,7 @@ RPackageMethodsSynchronisationTest >> testModifyProtocolToRemoveExtensionUpdates
 	xPackage := self ensureXPackage.
 	yPackage := self ensureYPackage.
 	class := self newClassNamed: 'NewClass' in: xPackage.
-	self createMethodNamed: 'stubMethod' inClass: class inCategory: '*yyyyy'.
+	self createMethodNamed: 'stubMethod' inClass: class asExtensionOf: yPackage.
 
 	class classify: #stubMethod under: 'classic protocol'.
 	self assert: (class >> #stubMethod) package equals: xPackage.
@@ -91,7 +91,7 @@ RPackageMethodsSynchronisationTest >> testPackageOfNonExtensionMethodIsPackageOf
 
 	class := self newClassNamed: 'NewClass' in: xPackage.
 
-	self createMethodNamed: 'stubMethod' inClass: class inCategory: 'protocol'.
+	self createMethodNamed: 'stubMethod' inClass: class inProtocol: 'protocol'.
 
 	self assert: (class >> #stubMethod) package equals: class package.
 	self deny: (class >> #stubMethod) isExtension
@@ -106,7 +106,7 @@ RPackageMethodsSynchronisationTest >> testPackageOfNonExtensionMethodIsPackageOf
 
 	trait := self newTraitNamed: 'NewClass' in: xPackage.
 
-	self createMethodNamed: 'stubMethod' inClass: trait inCategory: 'protocol'.
+	self createMethodNamed: 'stubMethod' inClass: trait inProtocol: 'protocol'.
 
 	self assert: (trait >> #stubMethod) package equals: trait package.
 	self deny: (trait >> #stubMethod) isExtension
@@ -119,7 +119,7 @@ RPackageMethodsSynchronisationTest >> testRemoveMethodRemoveMethodFromItsPackage
 	| xPackage class |
 	xPackage := self ensureXPackage.
 	class := self newClassNamed: 'NewClass' in: xPackage.
-	self createMethodNamed: 'stubMethod' inClass: class inCategory: 'classic category'.
+	self createMethodNamed: 'stubMethod' inClass: class inProtocol: 'classic category'.
 
 	class removeSelector: #stubMethod.
 

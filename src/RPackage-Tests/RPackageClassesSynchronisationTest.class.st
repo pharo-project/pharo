@@ -16,7 +16,7 @@ RPackageClassesSynchronisationTest >> testAddExtensionProtocol [
 	xPackage := self ensureXPackage.
 
 	class := self newClassNamed: 'NewClass' in: xPackage.
-	self createMethodNamed: 'newMethod' inClass: class inCategory: 'xxxxx'.
+	self createMethodNamed: 'newMethod' inClass: class asExtensionOf: xPackage.
 
 	class addProtocol: '*yyyyy'.
 
@@ -30,7 +30,7 @@ RPackageClassesSynchronisationTest >> testAddNewProtocolDoesNothing [
 	| xPackage class |
 	xPackage := self ensureXPackage.
 	class := self newClassNamed: 'NewClass' in: xPackage.
-	self createMethodNamed: 'newMethod' inClass: class inCategory: 'xxxxx'.
+	self createMethodNamed: 'newMethod' inClass: class asExtensionOf: xPackage.
 
 	class addProtocol: 'accessing'.
 
@@ -50,9 +50,9 @@ RPackageClassesSynchronisationTest >> testRecategorizeClassRegisterTheClassMetho
 	zPackage := self ensureZPackage.
 
 	class := self newClassNamed: 'NewClass' in: xPackage.
-	self createMethodNamed: 'method1' inClass: class inCategory: 'category'.
-	self createMethodNamed: 'method2' inClass: class inCategory: '*zzzzz'.
-	self createMethodNamed: 'method3' inClass: class inCategory: '*yyyyy'.
+	self createMethodNamed: 'method1' inClass: class inProtocol: 'category'.
+	self createMethodNamed: 'method2' inClass: class asExtensionOf: zPackage.
+	self createMethodNamed: 'method3' inClass: class asExtensionOf: yPackage.
 
 	class package: yPackage.
 
@@ -81,9 +81,9 @@ RPackageClassesSynchronisationTest >> testRecategorizeClassUnregisterTheClassMet
 	zPackage := self ensureZPackage.
 
 	class := self newClassNamed: 'NewClass' in: xPackage.
-	self createMethodNamed: 'method1' inClass: class inCategory: 'category'.
-	self createMethodNamed: 'method2' inClass: class inCategory: '*zzzzz'.
-	self createMethodNamed: 'method3' inClass: class inCategory: '*yyyyy'.
+	self createMethodNamed: 'method1' inClass: class inProtocol: 'category'.
+	self createMethodNamed: 'method2' inClass: class inProtocol: '*zzzzz'.
+	self createMethodNamed: 'method3' inClass: class asExtensionOf: yPackage.
 
 	class package: yPackage.
 	self deny: (xPackage includesSelector: #method1 ofClass: class).
@@ -102,9 +102,9 @@ RPackageClassesSynchronisationTest >> testRecategorizeClassWithMetaClassMethodsR
 
 	class := self newClassNamed: 'NewClass' in: xPackage.
 
-	self createMethodNamed: 'method1' inClass: class class inCategory: 'category'.
-	self createMethodNamed: 'method2' inClass: class class inCategory: '*yyyyy'.
-	self createMethodNamed: 'method3' inClass: class class inCategory: '*zzzzz'.
+	self createMethodNamed: 'method1' inClass: class class inProtocol: 'category'.
+	self createMethodNamed: 'method2' inClass: class class asExtensionOf: yPackage.
+	self createMethodNamed: 'method3' inClass: class class inProtocol: '*zzzzz'.
 
 	class package: yPackage.
 
@@ -123,7 +123,7 @@ RPackageClassesSynchronisationTest >> testRemoveClassUnregisterTheClassDefinedMe
 	| xPackage class |
 	xPackage := self ensureXPackage.
 	class := self newClassNamed: 'NewClass' in: xPackage.
-	self createMethodNamed: 'stubMethod' inClass: class inCategory: 'classic category'.
+	self createMethodNamed: 'stubMethod' inClass: class inProtocol: 'classic category'.
 
 	self organizer environment removeClassNamed: 'NewClass'.
 	self deny: (xPackage includesSelector: #stubMethod ofClass: class)
@@ -137,7 +137,7 @@ RPackageClassesSynchronisationTest >> testRemoveClassUnregisterTheClassExtension
 	xPackage := self ensureXPackage.
 	yPackage := self ensureYPackage.
 	class := self newClassNamed: 'NewClass' in: xPackage.
-	self createMethodNamed: 'stubMethod' inClass: class inCategory: '*yyyyy'.
+	self createMethodNamed: 'stubMethod' inClass: class asExtensionOf: yPackage.
 
 	self organizer environment removeClassNamed: 'NewClass'.
 	self deny: (yPackage includesSelector: #stubMethod ofClass: class)
@@ -150,7 +150,7 @@ RPackageClassesSynchronisationTest >> testRemoveProtocol [
 	| xPackage class |
 	xPackage := self ensureXPackage.
 	class := self newClassNamed: 'NewClass' in: xPackage.
-	self createMethodNamed: 'stubMethod' inClass: class inCategory: 'classic category'.
+	self createMethodNamed: 'stubMethod' inClass: class inProtocol: 'classic category'.
 
 	class removeProtocol: 'classic category'.
 
@@ -166,7 +166,7 @@ RPackageClassesSynchronisationTest >> testRemovingExtensionProtocol [
 	yPackage := self ensureYPackage.
 	class := self newClassNamed: 'NewClass' in: xPackage.
 
-	self createMethodNamed: 'stubMethod' inClass: class inCategory: '*yyyyy'.
+	self createMethodNamed: 'stubMethod' inClass: class asExtensionOf: yPackage.
 
 	class removeProtocol: '*yyyyy'.
 
@@ -196,7 +196,7 @@ RPackageClassesSynchronisationTest >> testRenameClassUpdateClassDefinedSelectors
 	| xPackage class |
 	xPackage := self ensureXPackage.
 	class := self newClassNamed: 'RPackageOldStubClass' asSymbol in: xPackage.
-	self createMethodNamed: 'stubMethod' inClass: class inCategory: 'classic category'.
+	self createMethodNamed: 'stubMethod' inClass: class inProtocol: 'classic category'.
 
 	class rename: 'RPackageNewStubClass'.
 
@@ -212,7 +212,7 @@ RPackageClassesSynchronisationTest >> testRenameClassUpdateClassExtensionSelecto
 	xPackage := self ensureXPackage.
 	yPackage := self ensureYPackage.
 	class := self newClassNamed: #RPackageOldStubClass in: xPackage.
-	self createMethodNamed: 'stubMethod' inClass: class inCategory: '*yyyyy'.
+	self createMethodNamed: 'stubMethod' inClass: class asExtensionOf: yPackage.
 
 	class rename: 'RPackageNewStubClass'.
 
@@ -226,7 +226,7 @@ RPackageClassesSynchronisationTest >> testRenameClassUpdateMetaclassDefinedSelec
 	| xPackage class |
 	xPackage := self ensureXPackage.
 	class := self newClassNamed: #RPackageOldStubClass in: xPackage.
-	self createMethodNamed: 'stubMethod' inClassSideOfClass: class inCategory: 'classic category'.
+	self createMethodNamed: 'stubMethod' inClass: class class inProtocol: 'classic category'.
 
 	class rename: 'RPackageNewStubClass'.
 
@@ -242,7 +242,7 @@ RPackageClassesSynchronisationTest >> testRenameClassUpdateMetaclassExtensionSel
 	xPackage := self ensureXPackage.
 	yPackage := self ensureYPackage.
 	class := self newClassNamed: #RPackageOldStubClass in: xPackage.
-	self createMethodNamed: 'stubMethod' inClassSideOfClass: class inCategory: '*yyyyy'.
+	self createMethodNamed: 'stubMethod' inClass: class class asExtensionOf: yPackage.
 
 	class rename: 'RPackageNewStubClass'.
 
@@ -257,7 +257,7 @@ RPackageClassesSynchronisationTest >> testRenameClassUpdateOrganizerClassExtendi
 	xPackage := self ensureXPackage.
 	yPackage := self ensureYPackage.
 	class := self newClassNamed: #RPackageOldStubClass in: xPackage.
-	self createMethodNamed: #stubMethod inClass: class inCategory: '*yyyyy'.
+	self createMethodNamed: #stubMethod inClass: class asExtensionOf: yPackage.
 
 	class rename: 'RPackageNewStubClass'.
 
@@ -273,7 +273,7 @@ RPackageClassesSynchronisationTest >> testRenamingExtensionProtocolToAnotherExte
 	yPackage := self ensureYPackage.
 	zPackage := self ensureZPackage.
 	class := self newClassNamed: 'NewClass' in: xPackage.
-	self createMethodNamed: 'stubMethod' inClass: class inCategory: '*yyyyy'.
+	self createMethodNamed: 'stubMethod' inClass: class asExtensionOf: yPackage.
 
 	class renameProtocol: '*yyyyy' as: '*zzzzz'.
 
@@ -291,8 +291,8 @@ RPackageClassesSynchronisationTest >> testRenamingExtenstionProtocolToClassicPro
 	yPackage := self ensureYPackage.
 	class := self newClassNamed: 'NewClass' in: xPackage.
 
-	self createMethodNamed: 'stubMethod' inClass: class inCategory: '*yyyyy'.
-	self createMethodNamed: 'stubMethod2' inClass: class inCategory: '*yyyyy'.
+	self createMethodNamed: 'stubMethod' inClass: class asExtensionOf: yPackage.
+	self createMethodNamed: 'stubMethod2' inClass: class asExtensionOf: yPackage.
 
 	class renameProtocol: '*yyyyy' as: 'classic category'.
 
@@ -313,8 +313,8 @@ RPackageClassesSynchronisationTest >> testRenamingProtocolToMakeItAnExtension [
 	yPackage := self ensureYPackage.
 	class := self newClassNamed: 'NewClass' in: xPackage.
 
-	self createMethodNamed: 'stubMethod' inClass: class inCategory: 'classic category'.
-	self createMethodNamed: 'stubMethod2' inClass: class inCategory: 'classic category'.
+	self createMethodNamed: 'stubMethod' inClass: class inProtocol: 'classic category'.
+	self createMethodNamed: 'stubMethod2' inClass: class inProtocol: 'classic category'.
 
 	class renameProtocol: 'classic category' as: '*yyyyy'.
 

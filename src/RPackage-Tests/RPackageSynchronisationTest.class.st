@@ -20,7 +20,7 @@ RPackageSynchronisationTest >> testNotRepackagedAnnouncementWhenModifyMethodByMo
 
 	class := self newClassNamed: 'NewClass' in: 'XXXXX'.
 
-	self createMethodNamed: 'stubMethod' inClass: class inCategory: '*yyyyy'.
+	self createMethodNamed: 'stubMethod' inClass: class asExtensionOf: yPackage.
 
 	self assert: ann isNil.
 
@@ -37,7 +37,7 @@ RPackageSynchronisationTest >> testNotRepackagedAnnouncementWhenMovingClassicCat
 
 	class := self newClassNamed: 'NewClass' in: 'XXXXX'.
 
-	self createMethodNamed: 'stubMethod' inClass: class inCategory: 'classic'.
+	self createMethodNamed: 'stubMethod' inClass: class inProtocol: 'classic'.
 
 	self assert: ann isNil.
 
@@ -73,7 +73,7 @@ RPackageSynchronisationTest >> testRepackagedAnnouncementWhenModifyMethodByMovin
 	xPackage := self ensureXPackage.
 	yPackage := self ensureYPackage.
 	class := self newClassNamed: 'NewClass' in: xPackage.
-	self createMethodNamed: 'stubMethod' inClass: class inCategory: 'classic category'.
+	self createMethodNamed: 'stubMethod' inClass: class inProtocol: 'classic category'.
 
 	class classify: #stubMethod under: '*yyyyy'.
 
@@ -99,7 +99,7 @@ RPackageSynchronisationTest >> testRepackagedAnnouncementWhenModifyMethodByMovin
 	zPackage := self ensureZPackage.
 
 	class := self newClassNamed: 'NewClass' in: 'XXXXX'.
-	self createMethodNamed: 'stubMethod' inClass: class inCategory: '*yyyyy'.
+	self createMethodNamed: 'stubMethod' inClass: class asExtensionOf: yPackage.
 
 	class classify: #stubMethod under: '*zzzzz'.
 
@@ -118,7 +118,7 @@ RPackageSynchronisationTest >> testRepackagedAnnouncementWhenModifyMethodByMovin
 	xPackage := self ensureXPackage.
 	yPackage := self ensureYPackage.
 	class := self newClassNamed: 'NewClass' in: xPackage.
-	self createMethodNamed: 'stubMethod' inClass: class inCategory: '*yyyyy'.
+	self createMethodNamed: 'stubMethod' inClass: class asExtensionOf: yPackage.
 
 	class classify: #stubMethod under: 'classic one'.
 
