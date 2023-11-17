@@ -446,24 +446,24 @@ RPackageTest >> testRemoveTag [
 	| p1 a1 b1 |
 	p1 := self ensurePackage: #P1.
 
-	a1 := self newClassNamed: #A1DefinedInP1 in: p1.
-	b1 := self newClassNamed: #B1DefinedInP1 in: p1.
+	a1 := self newClassNamed: #A1DefinedInX in: p1.
+	b1 := self newClassNamed: #B1DefinedInX in: p1.
 	self assert: p1 classTags size equals: 1. "We start with the root tag"
 
 	p1 moveClass: a1 toTag: #foo.
-	self assert: (((p1 classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #A1DefinedInP1).
+	self assert: (((p1 classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #A1DefinedInX).
 	self assert: (p1 classesTaggedWith: #foo) size equals: 1.
 
 	p1 moveClass: b1 toTag: #foo.
-	self assert: (((p1 classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #B1DefinedInP1).
+	self assert: (((p1 classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #B1DefinedInX).
 	self assert: (p1 classesTaggedWith: #foo) size equals: 2.
 
 	p1 removeTag: #bar.
-	self assert: (((p1 classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #B1DefinedInP1).
+	self assert: (((p1 classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #B1DefinedInX).
 	self assert: (p1 classesTaggedWith: #foo) size equals: 2.
 
 	p1 removeTag: #foo.
-	self deny: (((p1 classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #B1DefinedInP1).
+	self deny: (((p1 classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #B1DefinedInX).
 	self assertEmpty: (p1 classesTaggedWith: #foo)
 ]
 
@@ -473,15 +473,15 @@ RPackageTest >> testRemoveTagRemoveClasses [
 	| p1 a1 |
 	p1 := self ensurePackage: #P1.
 
-	a1 := self newClassNamed: #A1DefinedInP1 in: p1.
+	a1 := self newClassNamed: #A1DefinedInX in: p1.
 	self assert: p1 classTags size equals: 1. "We start with the root tag"
 
 	p1 moveClass: a1 toTag: #foo.
-	self assert: (((p1 classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #A1DefinedInP1).
+	self assert: (((p1 classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #A1DefinedInX).
 	self assert: (p1 classesTaggedWith: #foo) size equals: 1.
 
 	p1 removeTag: #foo.
-	self deny: (((p1 classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #B1DefinedInP1).
+	self deny: (((p1 classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #B1DefinedInX).
 	self assertEmpty: (p1 classesTaggedWith: #foo).
 	self deny: (p1 includesClass: a1).
 	self assert: (self organizer packageOf: a1) name equals: UndefinedPackage undefinedPackageName.

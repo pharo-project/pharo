@@ -25,7 +25,7 @@ RPackageTraitTest >> setUp [
 	yPackage := self ensureYPackage.
 	zPackage := self ensureZPackage.
 
-	a1 := self newClassNamed: #A1DefinedInP1 in: xPackage.
+	a1 := self newClassNamed: #A1DefinedInX in: xPackage.
 
 	"a1 defines two normal = local methods"
 	a1 compile: 'localMethodDefinedInP1 ^ #methodDefinedInP1'.
@@ -51,7 +51,7 @@ RPackageTraitTest >> testMethodOverridingTraitMethodIsKnowByPackage [
 	"Regression test for a bug where adding a method to a class that overrides a method from a trait was not know by the package of the class"
 
 	| a2 |
-	a2 := self newClassNamed: #A2DefinedInP1 in: xPackage.
+	a2 := self newClassNamed: #A2DefinedInX in: xPackage.
 
 	a2 setTraitComposition: t1 asTraitComposition.
 

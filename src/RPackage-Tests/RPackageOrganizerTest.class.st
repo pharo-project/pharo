@@ -116,11 +116,11 @@ RPackageOrganizerTest >> testFullRegistration [
 	yPackage := self ensureYPackage.
 	zPackage := self ensureZPackage.
 
-	a1 := self newClassNamed: #A1DefinedInP1 in: xPackage.
-	b1 := self newClassNamed: #B1DefinedInP1 in: xPackage.
-	a2 := self newClassNamed: #A2DefinedInP2 in: yPackage.
-	b2 := self newClassNamed: #B2DefinedInP2 in: yPackage.
-	a3 := self newClassNamed: #A3DefinedInP3 in: zPackage.
+	a1 := self newClassNamed: #A1DefinedInX in: xPackage.
+	b1 := self newClassNamed: #B1DefinedInX in: xPackage.
+	a2 := self newClassNamed: #A2DefinedInY in: yPackage.
+	b2 := self newClassNamed: #B2DefinedInY in: yPackage.
+	a3 := self newClassNamed: #A3DefinedInZ in: zPackage.
 
 	a1 compile: 'methodDefinedInP1 ^ #methodDefinedInP1'.
 	a1 compile: 'anotherMethodDefinedInP1 ^ #anotherMethodDefinedInP1'.
@@ -364,11 +364,11 @@ RPackageOrganizerTest >> testRemovePackage [
 	yPackage := self ensureYPackage.
 	zPackage := self ensureZPackage.
 
-	a1 := self newClassNamed: #A1DefinedInP1 in: xPackage.
-	b1 := self newClassNamed: #B1DefinedInP1 in: xPackage.
-	a2 := self newClassNamed: #A2DefinedInP2 in: yPackage.
-	b2 := self newClassNamed: #B2DefinedInP2 in: yPackage.
-	a3 := self newClassNamed: #A3DefinedInP3 in: zPackage.
+	a1 := self newClassNamed: #A1DefinedInX in: xPackage.
+	b1 := self newClassNamed: #B1DefinedInX in: xPackage.
+	a2 := self newClassNamed: #A2DefinedInY in: yPackage.
+	b2 := self newClassNamed: #B2DefinedInY in: yPackage.
+	a3 := self newClassNamed: #A3DefinedInZ in: zPackage.
 
 	a1 compile: 'methodDefinedInP1 ^ #methodDefinedInP1'.
 	a1 compile: 'anotherMethodDefinedInP1 ^ #anotherMethodDefinedInP1'.

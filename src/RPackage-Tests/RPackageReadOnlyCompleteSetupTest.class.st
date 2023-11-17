@@ -3,19 +3,19 @@ The tests takes as fixture the following situation and exercises the readonly qu
 We should be able to use a test resources to speed it up.
 
 P1 
-	A1DefinedInP1
-	A1DefinedInP1>>methodDefinedInP1
-	B1DefinedInP1	
-	A2DefinedInP2>>methodDefinedInP1
+	A1DefinedInX
+	A1DefinedInX>>methodDefinedInP1
+	B1DefinedInX	
+	A2DefinedInY>>methodDefinedInP1
 	
 P2
-	A2DefinedInP2
-	A2DefinedInP2>>methodDefinedInP2
+	A2DefinedInY
+	A2DefinedInY>>methodDefinedInP2
 	B2DefinedInB2	
 
 P3
-	A3DefinedInP3	
-	A2DefinedInP2>>methodDefinedInP3 
+	A3DefinedInZ	
+	A2DefinedInY>>methodDefinedInP3 
 "
 Class {
 	#name : 'RPackageReadOnlyCompleteSetupTest',
@@ -41,10 +41,10 @@ RPackageReadOnlyCompleteSetupTest >> setUp [
 	yPackage := self ensureYPackage.
 	zPackage := self ensureZPackage.
 
-	a1 := self newClassNamed: #A1DefinedInP1 in: xPackage.
-	b1 := self newClassNamed: #B1DefinedInP1 in: xPackage.
-	a2 := self newClassNamed: #A2DefinedInP2 in: yPackage.
-	b2 := self newClassNamed: #B2DefinedInP2 in: yPackage.
+	a1 := self newClassNamed: #A1DefinedInX in: xPackage.
+	b1 := self newClassNamed: #B1DefinedInX in: xPackage.
+	a2 := self newClassNamed: #A2DefinedInY in: yPackage.
+	b2 := self newClassNamed: #B2DefinedInY in: yPackage.
 
 	a1 compile: 'methodDefinedInP1 ^ #methodDefinedInP1'.
 	a1 compile: 'anotherMethodDefinedInP1 ^ #anotherMethodDefinedInP1'.
@@ -69,15 +69,15 @@ RPackageReadOnlyCompleteSetupTest >> testAddTag [
 	xPackage moveClass: b1 toTag: #foo.
 	self assert: (xPackage classTags anySatisfy: [ :tag | tag name = #foo ]).
 	self assert: xPackage classTags size equals: 2. "foo and baz. The root tag got automatically removed since it was empty."
-	self assert: (((xPackage classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #A1DefinedInP1).
-	self assert: (((xPackage classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #B1DefinedInP1).
+	self assert: (((xPackage classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #A1DefinedInX).
+	self assert: (((xPackage classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #B1DefinedInX).
 	self assert: (xPackage classesTaggedWith: #foo) size equals: 2.
 
 	xPackage ensureTag: #foo.
 	self assert: (xPackage classTags anySatisfy: [ :tag | tag name = #baz ]).
 	self assert: (xPackage classTags anySatisfy: [ :tag | tag name = #foo ]).
-	self assert: (((xPackage classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #A1DefinedInP1).
-	self assert: (((xPackage classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #B1DefinedInP1).
+	self assert: (((xPackage classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #A1DefinedInX).
+	self assert: (((xPackage classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #B1DefinedInX).
 	self assert: (xPackage classesTaggedWith: #foo) size equals: 2
 ]
 
@@ -93,15 +93,15 @@ RPackageReadOnlyCompleteSetupTest >> testAddTagNames [
 	xPackage moveClass: b1 toTag: #foo.
 	self assert: (xPackage classTags anySatisfy: [ :tag | tag name = #foo ]).
 	self assert: xPackage classTags size equals: 2. "foo and baz. The root tag got automatically removed since it was empty."
-	self assert: ((xPackage classTagNamed: #foo) classNames includes: #A1DefinedInP1).
-	self assert: ((xPackage classTagNamed: #foo) classNames includes: #B1DefinedInP1).
+	self assert: ((xPackage classTagNamed: #foo) classNames includes: #A1DefinedInX).
+	self assert: ((xPackage classTagNamed: #foo) classNames includes: #B1DefinedInX).
 	self assert: (xPackage classTagNamed: #foo) classNames size equals: 2.
 
 	xPackage ensureTag: #foo.
 	self assert: (xPackage classTags anySatisfy: [ :tag | tag name = #baz ]).
 	self assert: (xPackage classTags anySatisfy: [ :tag | tag name = #foo ]).
-	self assert: ((xPackage classTagNamed: #foo) classNames includes: #A1DefinedInP1).
-	self assert: ((xPackage classTagNamed: #foo) classNames includes: #B1DefinedInP1).
+	self assert: ((xPackage classTagNamed: #foo) classNames includes: #A1DefinedInX).
+	self assert: ((xPackage classTagNamed: #foo) classNames includes: #B1DefinedInX).
 	self assert: (xPackage classTagNamed: #foo) classNames size equals: 2
 ]
 
@@ -111,15 +111,15 @@ RPackageReadOnlyCompleteSetupTest >> testAddTagsToAClass [
 	self assert: xPackage classTags size equals: 1. "We start with the root tag"
 
 	xPackage moveClass: a1 toTag: #foo.
-	self assert: (((xPackage classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #A1DefinedInP1).
+	self assert: (((xPackage classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #A1DefinedInX).
 	self assert: (xPackage classesTaggedWith: #foo) size equals: 1.
 
 	xPackage moveClass: b1 toTag: #foo.
-	self assert: (((xPackage classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #B1DefinedInP1).
+	self assert: (((xPackage classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #B1DefinedInX).
 	self assert: (xPackage classesTaggedWith: #foo) size equals: 2.
 
 	xPackage moveClass: b1 toTag: #zork.
-	self assert: (((xPackage classesTaggedWith: #zork) collect: [ :each | each name ]) includes: #B1DefinedInP1).
+	self assert: (((xPackage classesTaggedWith: #zork) collect: [ :each | each name ]) includes: #B1DefinedInX).
 	self assert: (xPackage classesTaggedWith: #foo) size equals: 1.
 	self assert: (xPackage classesTaggedWith: #zork) size equals: 1
 ]
@@ -267,22 +267,22 @@ RPackageReadOnlyCompleteSetupTest >> testRemoveTaggedClasses [
 	xPackage moveClass: a1 toTag: #foo.
 	xPackage moveClass: b1 toTag: #foo.
 	xPackage moveClass: b1 toTag: #zork.
-	self assert: (((xPackage classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #A1DefinedInP1).
-	self deny: (((xPackage classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #B1DefinedInP1).
+	self assert: (((xPackage classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #A1DefinedInX).
+	self deny: (((xPackage classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #B1DefinedInX).
 	self assert: (xPackage classesTaggedWith: #foo) size equals: 1.
-	self deny: (((xPackage classesTaggedWith: #zork) collect: [ :each | each name ]) includes: #A1DefinedInP1).
-	self assert: (((xPackage classesTaggedWith: #zork) collect: [ :each | each name ]) includes: #B1DefinedInP1).
+	self deny: (((xPackage classesTaggedWith: #zork) collect: [ :each | each name ]) includes: #A1DefinedInX).
+	self assert: (((xPackage classesTaggedWith: #zork) collect: [ :each | each name ]) includes: #B1DefinedInX).
 
 	"now when we remove a class" "from an existing tags list"
 	xPackage removeClass: a1.
-	self deny: (((xPackage classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #A1DefinedInP1).
-	self deny: (((xPackage classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #B1DefinedInP1).
+	self deny: (((xPackage classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #A1DefinedInX).
+	self deny: (((xPackage classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #B1DefinedInX).
 	self assertEmpty: (xPackage classesTaggedWith: #foo).
 
 	"with a class not registered to a tag list"
 	xPackage removeClass: self class.
-	self deny: (((xPackage classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #A1DefinedInP1).
-	self deny: (((xPackage classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #B1DefinedInP1).
+	self deny: (((xPackage classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #A1DefinedInX).
+	self deny: (((xPackage classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #B1DefinedInX).
 	self assertEmpty: (xPackage classesTaggedWith: #foo)
 ]
 

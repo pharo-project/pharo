@@ -4,17 +4,17 @@ For tests that do not need to check the incremental construction.
 
 
 P1 
-	A1DefinedInP1>>methodDefinedInP1
-	B1DefinedInP1	
-	A2DefinedInP2>>methodDefinedInP1  (was *P2)
+	A1DefinedInX>>methodDefinedInP1
+	B1DefinedInX	
+	A2DefinedInY>>methodDefinedInP1  (was *P2)
 	
 P2
-	A2DefinedInP2>>methodDefinedInP2
+	A2DefinedInY>>methodDefinedInP2
 	B2DefinedInB2	
 
 P3
-	A3DefinedInP3	
-	A2DefinedInP2>>methodDefinedInP3  (was *P2*)
+	A3DefinedInZ	
+	A2DefinedInY>>methodDefinedInP3  (was *P2*)
 "
 Class {
 	#name : 'RPackageIncrementalTest',
@@ -407,7 +407,7 @@ RPackageIncrementalTest >> testMethodAddition [
 
 	| xPackage a1 |
 	xPackage := self ensureXPackage.
-	a1 := self newClassNamed: #A1DefinedInP1 in: xPackage.
+	a1 := self newClassNamed: #A1DefinedInX in: xPackage.
 	a1 compileSilently: 'foo ^ 10'.
 	xPackage addMethod: a1 >> #foo.
 	self assert: (xPackage includesSelector: #foo ofClass: a1)

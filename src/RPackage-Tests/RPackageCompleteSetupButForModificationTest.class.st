@@ -25,10 +25,10 @@ RPackageCompleteSetupButForModificationTest >> setUp [
 	yPackage := self ensureYPackage.
 	zPackage := self ensureZPackage.
 
-	a1 := self newClassNamed: #A1DefinedInP1 in: xPackage.
-	b1 := self newClassNamed: #B1DefinedInP1 in: xPackage.
-	a2 := self newClassNamed: #A2DefinedInP2 in: yPackage.
-	b2 := self newClassNamed: #B2DefinedInP2 in: yPackage.
+	a1 := self newClassNamed: #A1DefinedInX in: xPackage.
+	b1 := self newClassNamed: #B1DefinedInX in: xPackage.
+	a2 := self newClassNamed: #A2DefinedInY in: yPackage.
+	b2 := self newClassNamed: #B2DefinedInY in: yPackage.
 
 	a1 compile: 'methodDefinedInP1 ^ #methodDefinedInP1'.
 	a1 compile: 'anotherMethodDefinedInP1 ^ #anotherMethodDefinedInP1'.
@@ -76,17 +76,17 @@ RPackageCompleteSetupButForModificationTest >> testBasicRemoveClass [
 { #category : 'test - starting situation' }
 RPackageCompleteSetupButForModificationTest >> testExtensionMethodOfClass [
 	"P1
-		A1DefinedInP1>>methodDefinedInP1
-		B1DefinedInP1
-		A2DefinedInP2>>methodDefinedInP1  (was *P2)
+		A1DefinedInX>>methodDefinedInP1
+		B1DefinedInX
+		A2DefinedInY>>methodDefinedInP1  (was *P2)
 
 	P2
-		A2DefinedInP2>>methodDefinedInP2
+		A2DefinedInY>>methodDefinedInP2
 		B2DefinedInB2
 
 	P3
-		A3DefinedInP3
-		A2DefinedInP2>>methodDefinedInP3  (was *P2*)"
+		A3DefinedInZ
+		A2DefinedInY>>methodDefinedInP3  (was *P2*)"
 
 	self assert: a2 selectors size equals: 3.
 	"the class contains methods defined by several packages
