@@ -540,7 +540,8 @@ Class >> definedVariables [
 
 { #category : 'class variables' }
 Class >> definesClassVariable: aGlobal [
-	"Return whether the receiver has a class variables (shared variables among its class and subclasses) named: aString"
+	"Return whether the receiver defines a class variables (shared variable)
+	Note: Does not take superclass into account"
 	<reflection: 'Class structural inspection - Class variable inspection'>
 	^ self classVariables includes: aGlobal
 ]
