@@ -309,13 +309,6 @@ Gofer >> squeaksource: aProjectName [
 	self repository: (MCSqueaksourceRepository location: 'http://www.squeaksource.com/' , aProjectName)
 ]
 
-{ #category : 'operations' }
-Gofer >> update [
-	"Update the specified packages."
-
-	^ self execute: GoferUpdate
-]
-
 { #category : 'repositories' }
 Gofer >> url: anUrlString [
 	"Add anUrlString as a repository for the following package operations."
