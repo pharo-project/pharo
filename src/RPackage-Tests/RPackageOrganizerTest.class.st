@@ -62,6 +62,19 @@ RPackageOrganizerTest >> testCreateNewPackageWithoutConflictCreatesPackage [
 ]
 
 { #category : 'tests' }
+RPackageOrganizerTest >> testDefaultEnvironment [
+	"When no environment is specified, point to the default one"
+
+	self assert: PackageOrganizer new environment identicalTo: Smalltalk globals
+]
+
+{ #category : 'tests' }
+RPackageOrganizerTest >> testDefaultOrganizer [
+
+	self assert: self packageOrganizer identicalTo: self class environment organization
+]
+
+{ #category : 'tests' }
 RPackageOrganizerTest >> testDefinedClassesInstanceAndMetaSideAPI [
 
 	| p1 |
