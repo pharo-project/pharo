@@ -36,9 +36,9 @@ Class {
 
 { #category : 'baselines' }
 BaselineOfIDE >> baseline: spec [
+
 	<baseline>
 	| repository |
-
 	repository := self packageRepositoryURL.
 	spec for: #common do: [
 		spec postLoadDoIt: #postload:package:.
@@ -79,11 +79,11 @@ BaselineOfIDE >> baseline: spec [
 			spec
 				repository: repository;
 				loads: #( 'tests' ) ].
-			
+
 		spec baseline: 'Refactoring' with: [
 			spec
 				repository: repository;
-				loads: #( 'Tests') ].
+				loads: #( 'Tests' ) ].
 
 		spec package: 'Math-Operations-Extensions-Tests'.
 		spec package: 'Network-Tests'.
@@ -100,34 +100,44 @@ BaselineOfIDE >> baseline: spec [
 		spec baseline: 'KernelTests' with: [ spec repository: repository ].
 		spec baseline: 'Shout' with: [ spec repository: repository ].
 
-		spec
-			baseline: 'ReflectionMirrors'
-			with: [ spec repository: repository ].
+		spec baseline: 'ReflectionMirrors' with: [ spec repository: repository ].
 		spec baseline: 'FuzzyMatcher' with: [ spec repository: repository ].
 		spec baseline: 'QA' with: [ spec repository: repository ].
 		spec baseline: 'OSWindow' with: [ spec repository: repository ].
 		spec baseline: 'EmergencyDebugger' with: [ spec repository: repository ].
-		spec baseline: 'Epicea' with: [ spec repository: repository ].
+
+		spec baseline: 'Epicea' with: [
+			spec
+				repository: repository;
+				loads: #Browsers ].
+
 		spec baseline: 'Misc' with: [ spec repository: repository ].
 		spec baseline: 'Fuel' with: [
 			spec
 				repository: repository;
 				loads: #( 'Tests' ) ].
 		spec baseline: 'GeneralTests' with: [ spec repository: repository ].
-		spec baseline: 'FreeType' with: [ spec repository: repository; loads: 'tests' ].
-		spec baseline: 'Keymapping' with: [ spec repository: repository; loads: 'tests' ].
+		spec baseline: 'FreeType' with: [
+			spec
+				repository: repository;
+				loads: 'tests' ].
+		spec baseline: 'Keymapping' with: [
+			spec
+				repository: repository;
+				loads: 'tests' ].
 		spec baseline: 'Zodiac' with: [ spec repository: repository ].
 		spec baseline: 'SortFunctions' with: [ spec repository: repository ].
 		spec baseline: 'Equals' with: [ spec repository: repository ].
-		spec baseline: 'NewValueHolder' with: [ spec repository: repository; loads: 'tests' ].
+		spec baseline: 'NewValueHolder' with: [
+			spec
+				repository: repository;
+				loads: 'tests' ].
 		spec package: 'STON-Extensions'.
 
 		spec package: 'BaselineOfPharoBootstrap'.
 		spec package: 'BaselineOfMonticello'.
 		spec package: 'BaselineOfMetacello'.
-		spec
-			baseline: 'ReferenceFinder'
-			with: [ spec repository: repository ].
+		spec baseline: 'ReferenceFinder' with: [ spec repository: repository ].
 		spec baseline: 'ClassParser' with: [ spec repository: repository ].
 		spec baseline: 'Calypso' with: [
 			spec
@@ -135,7 +145,10 @@ BaselineOfIDE >> baseline: spec [
 				loads: #( 'FullEnvironment' 'SystemBrowser' 'Tests' ) ].
 		spec baseline: 'Ring' with: [ spec repository: repository ].
 		spec baseline: 'HeuristicCompletion' with: [ spec repository: repository ].
-		spec baseline: 'DependencyAnalyzer' with: [ spec repository: repository; loads: #('Tool-DependencyAnalyser-UI-Tab') ].
+		spec baseline: 'DependencyAnalyzer' with: [
+			spec
+				repository: repository;
+				loads: #( 'Tool-DependencyAnalyser-UI-Tab' ) ].
 		self specCode: spec.
 		self newTools: spec.
 		self drTests: spec.
@@ -148,9 +161,7 @@ BaselineOfIDE >> baseline: spec [
 		spec baseline: 'ThreadedFFI' with: [ spec repository: repository ].
 		spec baseline: 'ProfilerUI' with: [ spec repository: repository ].
 
-		spec package: 'Kernel-ExtraUtils'
-
-	]
+		spec package: 'Kernel-ExtraUtils' ]
 ]
 
 { #category : 'baselines' }
