@@ -325,13 +325,6 @@ Gofer >> postCopy [
 ]
 
 { #category : 'operations' }
-Gofer >> push [
-	"Upload local versions from local cache into remote repositories."
-
-	^ self execute: GoferPush
-]
-
-{ #category : 'operations' }
 Gofer >> recompile [
 	"Recompile the specified packages."
 
