@@ -146,20 +146,6 @@ Gofer >> cleanup [
 	^ self execute: GoferCleanup
 ]
 
-{ #category : 'operations' }
-Gofer >> commit [
-	"Commit the modified packages."
-
-	^ self execute: GoferCommit
-]
-
-{ #category : 'operations' }
-Gofer >> commit: aString [
-	"Commit the modified packages with the given commit message."
-
-	^ self execute: GoferCommit do: [ :operation | operation message: aString ]
-]
-
 { #category : 'references' }
 Gofer >> configuration [
 	"Add a default Configuration package by using the repository name.

@@ -91,23 +91,6 @@ GoferOperationTest >> testCleanup [
 ]
 
 { #category : 'tests' }
-GoferOperationTest >> testCommit [
-
-	| repository |
-	repository := MCDictionaryRepository new.
-	gofer
-		package: 'GoferFoo';
-		load.
-	gofer := Gofer new.
-	gofer
-		disablePackageCache;
-		repository: repository;
-		package: 'GoferFoo';
-		commit: 'A test commit'.
-	self assert: repository allVersionInfos size equals: 1
-]
-
-{ #category : 'tests' }
 GoferOperationTest >> testLoad [
 
 	gofer version: 'GoferFoo-lr.1'.
