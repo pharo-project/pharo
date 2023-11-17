@@ -171,20 +171,24 @@ BaselineOfPharo class >> welcomeBrowserRepository [
 
 { #category : 'baselines' }
 BaselineOfPharo >> baseline: spec [
+
 	<baseline>
 	| repository |
 	repository := self packageRepositoryURL.
 
 	spec for: #common do: [
-		spec postLoadDoIt: #'postload:package:'.
-		spec baseline: 'BaseLibraries' with: [spec repository: repository].
-		
-		spec baseline: 'IDE' with: [spec repository: repository].
-		spec baseline: 'Calypso' with: [ 
-			spec repository: repository; loads: #('IcebergSupport'). ].
-		
-		spec package: 'Deprecated12'.
-	]
+		spec postLoadDoIt: #postload:package:.
+		spec baseline: 'BaseLibraries' with: [ spec repository: repository ].
+
+		spec baseline: 'IDE' with: [ spec repository: repository ].
+		spec baseline: 'Calypso' with: [
+			spec
+				repository: repository;
+				loads: #( 'IcebergSupport' ) ].
+
+		spec
+			package: 'Gofer-Deprecated';
+			package: 'Deprecated12' ]
 ]
 
 { #category : 'baseline' }
