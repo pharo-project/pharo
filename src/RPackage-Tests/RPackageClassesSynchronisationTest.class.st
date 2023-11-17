@@ -82,7 +82,7 @@ RPackageClassesSynchronisationTest >> testRecategorizeClassUnregisterTheClassMet
 
 	class := self newClassNamed: 'NewClass' in: xPackage.
 	self createMethodNamed: 'method1' inClass: class inProtocol: 'category'.
-	self createMethodNamed: 'method2' inClass: class inProtocol: '*zzzzz'.
+	self createMethodNamed: 'method2' inClass: class asExtensionOf: zPackage.
 	self createMethodNamed: 'method3' inClass: class asExtensionOf: yPackage.
 
 	class package: yPackage.
@@ -104,7 +104,7 @@ RPackageClassesSynchronisationTest >> testRecategorizeClassWithMetaClassMethodsR
 
 	self createMethodNamed: 'method1' inClass: class class inProtocol: 'category'.
 	self createMethodNamed: 'method2' inClass: class class asExtensionOf: yPackage.
-	self createMethodNamed: 'method3' inClass: class class inProtocol: '*zzzzz'.
+	self createMethodNamed: 'method3' inClass: class class asExtensionOf: zPackage.
 
 	class package: yPackage.
 
