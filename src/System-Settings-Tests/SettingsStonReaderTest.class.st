@@ -33,7 +33,7 @@ SettingsStonReaderTest >> testEmptyStream [
 SettingsStonReaderTest >> testLoad [
 	reader stream: MockSettings oneStoredSettingSTONString readStream.
 	reader load.
-	self assert: reader storedSettings notNil.
+	self assert: reader storedSettings isNotNil.
 	self assert: reader storedSettings size equals: 1.
 	self assert: reader storedSettings first realValue equals: true
 ]
@@ -42,7 +42,7 @@ SettingsStonReaderTest >> testLoad [
 SettingsStonReaderTest >> testLoadNotExistingClassNameForRealValue [
 	reader stream: MockSettings notExistingClassStoredSettingSTONString readStream.
 	reader load.
-	self assert: reader storedSettings notNil.
+	self assert: reader storedSettings isNotNil.
 	self assert: reader storedSettings size equals: 1.
 	self should: [  reader storedSettings first realValue ] raise: NotFound.
 	reader storedSettings first updateSettingNode: nil
@@ -52,7 +52,7 @@ SettingsStonReaderTest >> testLoadNotExistingClassNameForRealValue [
 SettingsStonReaderTest >> testLoadTwoObjects [
 	reader stream: MockSettings twoStoredSettingsSTONString readStream.
 	reader load.
-	self assert: reader storedSettings notNil.
+	self assert: reader storedSettings isNotNil.
 	self assert: reader storedSettings size equals: 2.
 	self assert: reader storedSettings first realValue equals: false.
 	self assert: reader storedSettings second realValue equals: 55

@@ -330,7 +330,8 @@ ZnMimeType >> clearCharSet [
 
 { #category : 'testing' }
 ZnMimeType >> hasParameters [
-	^ parameters notNil and: [ parameters isEmpty not ]
+
+	^ parameters isNotNil and: [ parameters isNotEmpty ]
 ]
 
 { #category : 'testing' }
@@ -363,7 +364,7 @@ ZnMimeType >> isBinary [
 
 { #category : 'testing' }
 ZnMimeType >> isCharSetUTF8 [
-	^ self charSet notNil and: [ self charSet sameAs: 'utf-8' ]
+	^ self charSet isNotNil and: [ self charSet sameAs: 'utf-8' ]
 ]
 
 { #category : 'testing' }

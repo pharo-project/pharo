@@ -227,7 +227,7 @@ ClyDataSource >> findItemsWith: actualObjects [
 	| foundItems |
 	foundItems := self itemCursor findItemsWith: actualObjects.
 
-	^foundItems select: #notNil thenCollect: [:each |
+	^foundItems select: #isNotNil thenCollect: [:each |
 		self createElementWith: each ]
 ]
 

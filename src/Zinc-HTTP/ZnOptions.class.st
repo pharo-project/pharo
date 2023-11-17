@@ -200,7 +200,7 @@ ZnOptions >> at: key put: value [
 				at: key
 				with: value
 				retrySelector: #at:put:) signal ].
-	(parent notNil and: [ parent includesKey: key ])
+	(parent isNotNil and: [ parent includesKey: key ])
 		ifFalse: [ KeyNotFound signalFor: key in: self ].
 	options ifNil: [ options := Dictionary new ].
 	^ options at: key put: value
@@ -228,8 +228,8 @@ ZnOptions >> during: block [
 
 { #category : 'testing' }
 ZnOptions >> includesKey: key [
-	^ (options notNil and: [ options includesKey: key ])
-		or: [ parent notNil and: [ parent includesKey: key ] ]
+	^ (options isNotNil and: [ options includesKey: key ])
+		or: [ parent isNotNil and: [ parent includesKey: key ] ]
 ]
 
 { #category : 'private' }

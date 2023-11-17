@@ -49,7 +49,7 @@ ZnEntityTest >> testMultiPartFormDataWriteRead [
 		addPart: (ZnMimePart fieldName: 'info' value: 'my-info');
 		addPart: (ZnMimePart fieldName: 'file' fileName: 'foo.txt' entity: (ZnEntity text: 'Zinc HTTP Components'));
 		yourself.
-	self assert: input contentLength notNil.
+	self assert: input contentLength isNotNil.
 	self assert: input contentLength > 0.
 	self assert: (input contentType matches: ZnMimeType multiPartFormData).
 	bytes := ByteArray streamContents: [ :stream | input writeOn: stream ].
@@ -75,7 +75,7 @@ ZnEntityTest >> testMultiPartFormDataWriteReadBinary [
 		addPart: (ZnMimePart fieldName: 'info' value: 'my-info');
 		addPart: (ZnMimePart fieldName: 'file' fileName: 'foo.txt' entity: (ZnEntity text: 'Zinc HTTP Components'));
 		yourself.
-	self assert: input contentLength notNil.
+	self assert: input contentLength isNotNil.
 	self assert: input contentLength > 0.
 	self assert: (input contentType matches: ZnMimeType multiPartFormData).
 	bytes := ByteArray streamContents: [ :stream | input writeOn: stream ].

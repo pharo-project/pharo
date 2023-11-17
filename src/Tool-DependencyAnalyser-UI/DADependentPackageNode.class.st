@@ -47,10 +47,11 @@ DADependentPackageNode >> isPackageNode [
 
 { #category : 'displaying' }
 DADependentPackageNode >> label [
-	^ self rPackage packageName
+	^ self systemPackage name
 ]
 
 { #category : 'accessing' }
-DADependentPackageNode >> rPackage [
-	^ self content target rPackageSet
+DADependentPackageNode >> systemPackage [
+
+	^ self content target systemPackage
 ]

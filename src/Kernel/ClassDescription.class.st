@@ -35,7 +35,7 @@ ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod 
 		priorOrigin := method origin ].
 
 	oldProtocol := self protocolOfSelector: selector.
-	SystemAnnouncer uniqueInstance prevent: MethodRecategorized during: [ self classify: selector under: protocol ].
+	self codeChangeAnnouncer prevent: MethodRecategorized during: [ self classify: selector under: protocol ].
 	newProtocol := self protocolOfSelector: selector.
 
 	self addSelectorSilently: selector withMethod: compiledMethod.
@@ -45,10 +45,10 @@ ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod 
 	(priorMethod isNil or: [ priorOrigin ~= compiledMethod origin ])
 		ifTrue: [
 			compiledMethod shouldBePackaged ifTrue: [ (self packageOrganizer packageForProtocol: newProtocol from: self) addMethod: compiledMethod ].
-			SystemAnnouncer uniqueInstance announce: (MethodAdded method: compiledMethod) ]
+			self codeChangeAnnouncer announce: (MethodAdded method: compiledMethod) ]
 		ifFalse: [ "If protocol changed and someone is from different package, I need to throw a method recategorized"
 			newProtocol = oldProtocol ifFalse: [ self announceRecategorizationOf: compiledMethod oldProtocol: oldProtocol ].
-			SystemAnnouncer uniqueInstance methodChangedFrom: priorMethod to: compiledMethod oldProtocol: oldProtocol ]
+			self codeChangeAnnouncer methodChangedFrom: priorMethod to: compiledMethod oldProtocol: oldProtocol ]
 ]
 
 { #category : 'instance variables' }
@@ -74,7 +74,7 @@ ClassDescription >> addProtocol: aProtocol [
 
 	"For now extensions are managed via protocols. If the protocol represent an extension we need to make sure the corresponding package exists."
 	protocol isExtensionProtocol ifTrue: [ self packageOrganizer ensurePackageOfExtensionProtocol: protocol ].
-	SystemAnnouncer announce: (ProtocolAdded in: self protocol: protocol).
+	self codeChangeAnnouncer  announce: (ProtocolAdded in: self protocol: protocol).
 	^ protocol
 ]
 
@@ -156,7 +156,7 @@ ClassDescription >> announceRecategorizationOf: compiledMethod oldProtocol: oldP
 	compiledMethod origin = compiledMethod methodClass ifTrue: [ self packageOrganizer repackageMethod: compiledMethod oldProtocol: oldProtocol newProtocol: compiledMethod protocol ].
 
 	"Announce the recategorization"
-	SystemAnnouncer uniqueInstance methodRecategorized: compiledMethod oldProtocol: oldProtocol
+	self codeChangeAnnouncer methodRecategorized: compiledMethod oldProtocol: oldProtocol
 ]
 
 { #category : 'authors' }
@@ -361,7 +361,7 @@ ClassDescription >> compileSilently: sourceCode classified: protocolName [
 ClassDescription >> compileSilently: sourceCode classified: protocolName notifying: requestor [
 	"Compile the code and classify the resulting method in the given protocol, leaving no trail in the system log, nor in any change set, nor in the 'recent submissions' list."
 
-	^ SystemAnnouncer uniqueInstance suspendAllWhile: [ self compile: sourceCode classified: protocolName notifying: requestor ]
+	^ self codeChangeAnnouncer suspendAllWhile: [ self compile: sourceCode classified: protocolName notifying: requestor ]
 ]
 
 { #category : 'copying' }
@@ -500,10 +500,24 @@ ClassDescription >> expandedDefinitionStringFor: aPrinter [
 	^ self subclassResponsibility
 ]
 
+{ #category : 'accessing - packages' }
+ClassDescription >> extendingPackages [
+	"the extending packages of a class are the packages that extend it."
+
+	^ (self localMethods , self classSide localMethods
+		   select: [ :each | each isExtension ]
+		   thenCollect: [ :each | each extensionPackage ]) asIdentitySet
+]
+
 { #category : 'protocols' }
 ClassDescription >> extensionProtocols [
 
 	^ self protocols select: [ :protocol | protocol isExtensionProtocol ]
+]
+
+{ #category : 'accessing - packages' }
+ClassDescription >> extensionSelectors [
+	^ self extendingPackages flatCollect: [ :each | each extensionSelectorsForClass: self ]
 ]
 
 { #category : 'instance variables' }
@@ -646,6 +660,18 @@ ClassDescription >> isClassSide [
 { #category : 'testing' }
 ClassDescription >> isDeprecated [
 	^ self package isDeprecated
+]
+
+{ #category : 'testing' }
+ClassDescription >> isExtended [
+
+	^ self extendingPackages isEmpty
+]
+
+{ #category : 'testing' }
+ClassDescription >> isExtendedInPackage: aPackage [
+	"returns true if aPackage defines an extension to this class"
+	^ aPackage extendsClass: self
 ]
 
 { #category : 'testing' }
@@ -836,11 +862,48 @@ ClassDescription >> package [
 	^ self subclassResponsibility
 ]
 
+{ #category : 'accessing - packages' }
+ClassDescription >> package: aPackage [
+
+	^ (self packageOrganizer ensurePackage: aPackage) addClass: self
+]
+
+{ #category : 'accessing - packages' }
+ClassDescription >> package: aPackage tag: aTag [
+
+	^ (self packageOrganizer ensureTag: aTag inPackage: aPackage) addClass: self
+]
+
+{ #category : 'accessing - packages' }
+ClassDescription >> packageName [
+
+	^ self package ifNotNil: [ :package | package name ]
+]
+
 { #category : 'accessing' }
 ClassDescription >> packageTag [
 	"Package tags are sub categories of packages to have a better organization of the packages."
 
 	^ self subclassResponsibility
+]
+
+{ #category : 'accessing - packages' }
+ClassDescription >> packageTag: aTag [
+	(aTag isString ifTrue: [ self package ensureTag: aTag ] ifFalse: [ aTag ]) addClass: self
+]
+
+{ #category : 'accessing - packages' }
+ClassDescription >> packageTagName [
+	"Package tags are sub categories of packages to have a better organization of the packages. I return the name of my package tag.."
+
+	^ self packageTag name
+]
+
+{ #category : 'accessing - packages' }
+ClassDescription >> packages [
+	"the extending packages of a class are the packages that extend it."
+
+	^  self extendingPackages asSet copy add: self package; yourself
 ]
 
 { #category : 'printing' }
@@ -940,6 +1003,15 @@ ClassDescription >> removeNonexistentSelectorsFromProtocols [
 			thenDo: [ :selector | self removeFromProtocols: selector ] ]
 ]
 
+{ #category : 'accessing - packages' }
+ClassDescription >> removePackageTag [
+	"Removing a package tag is the same as moving it to the root tag that is the uncategorized tag."
+
+	| package |
+	package := self package.
+	package moveClass: self toTag: package rootTag
+]
+
 { #category : 'protocols' }
 ClassDescription >> removeProtocol: aProtocol [
 	"Remove all methods present in the given protocol (or protocol name) and remove the protocol.
@@ -965,7 +1037,7 @@ ClassDescription >> removeProtocolIfEmpty: aProtocol [
 
 	oldProtocolNames := self protocolNames.
 	protocols := protocols copyWithout: protocol.
-	SystemAnnouncer announce: (ProtocolRemoved in: self protocol: protocol)
+	self codeChangeAnnouncer  announce: (ProtocolRemoved in: self protocol: protocol)
 ]
 
 { #category : 'accessing - method dictionary' }
@@ -984,7 +1056,7 @@ ClassDescription >> removeSelector: selector [
 
 	super removeSelector: selector.
 
-	SystemAnnouncer uniqueInstance methodRemoved: method protocol: protocol origin: origin
+	self codeChangeAnnouncer  methodRemoved: method protocol: protocol origin: origin
 ]
 
 { #category : 'instance variables' }

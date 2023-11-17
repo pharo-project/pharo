@@ -67,7 +67,7 @@ SettingTree >> childrenOf: aNode [
 	"Get aNode children. Assign children order if one child has an order which is not nil"
 	children := self nodeList select: [ :p | p parentName = aNode settingDeclaration name ].
 	children
-		detect: [ :n | n order notNil ]
+		detect: [ :n | n order isNotNil ]
 		ifFound: [ :firstWithOrder |
 			idx := children indexOf: firstWithOrder.
 			order := firstWithOrder order.
@@ -116,7 +116,7 @@ SettingTree >> emptyNodeNamed: aSymbol [
 { #category : 'accessing' }
 SettingTree >> itemSortBlock [
 	^ [:a :b |
-		((a order notNil and: [b order notNil]) and: [a order ~= b order])
+		((a order isNotNil and: [b order isNotNil]) and: [a order ~= b order])
 			ifTrue: [a order < b order]
 			ifFalse: [((a order isNil and: [b order isNil]) or: [a order = b order])
 				ifTrue: [a label < b label]
@@ -182,7 +182,7 @@ SettingTree >> storeSettingNodes [
 
 { #category : 'querying' }
 SettingTree >> unclassified [
-	^ self nodeList select: [:node | node parentName notNil and: [node parentNode isNil]]
+	^ self nodeList select: [:node | node parentName isNotNil and: [node parentNode isNil]]
 ]
 
 { #category : 'accessing' }

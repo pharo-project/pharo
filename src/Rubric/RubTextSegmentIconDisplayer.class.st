@@ -40,7 +40,7 @@ RubTextSegmentIconDisplayer >> drawOn: aCanvas [
 			tl := self lineIndexForPoint: visibleRectangle topLeft.
 			br := self lineIndexForPoint: visibleRectangle bottomRight.
 			tl to: br do: [ :i |
-				((self paragraphProvider segmentsAtLine: i) select: [ :s | s icon notNil ])
+				((self paragraphProvider segmentsAtLine: i) select: [ :s | s icon isNotNil ])
 					ifNotEmpty: [ :segments |
 						| s pos |
 						s := segments first.
@@ -111,7 +111,7 @@ RubTextSegmentIconDisplayer >> handleMouseOver: anEvent [
 	| lineIndex |
 	super handleMouseOver: anEvent.
 	lineIndex := self lineIndexForPoint: anEvent position.
-	self mouseEnter: anEvent in: ( (self paragraphProvider segmentsAtLine: lineIndex) select: [ :s | s icon notNil ] ).
+	self mouseEnter: anEvent in: ( (self paragraphProvider segmentsAtLine: lineIndex) select: [ :s | s icon isNotNil ] ).
 	previouslyIn ifNotNil: [
 		previouslyIn showMouseHasLeaved.
 		previouslyIn := nil ]

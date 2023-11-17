@@ -8,7 +8,6 @@ Class {
 	#superclass : 'Announcer',
 	#instVars : [
 		'suspended',
-		'private',
 		'storedAnnouncements'
 	],
 	#classInstVars : [
@@ -59,13 +58,10 @@ SystemAnnouncer class >> unload [
 
 { #category : 'announce' }
 SystemAnnouncer >> announce: anAnnouncement [
+
 	self isSuspended
-		ifFalse: [
-			self private announce: anAnnouncement.
-			super announce: anAnnouncement ]
-		ifTrue:[
-			storedAnnouncements ifNotNil:[ storedAnnouncements add: anAnnouncement ]
-		]
+		ifFalse: [ super announce: anAnnouncement ]
+		ifTrue: [ storedAnnouncements ifNotNil: [ storedAnnouncements add: anAnnouncement ] ]
 ]
 
 { #category : 'triggering' }
@@ -155,11 +151,6 @@ SystemAnnouncer >> methodRepackaged: aMethod from: aPackage to: anotherPackage [
 						newPackage: anotherPackage)
 ]
 
-{ #category : 'accessing' }
-SystemAnnouncer >> private [
-	^private ifNil: [ private := Announcer new ]
-]
-
 { #category : 'triggering' }
 SystemAnnouncer >> snapshotDone: isNewImage [
 
@@ -198,10 +189,4 @@ SystemAnnouncer >> suspendAllWhileStoring: aBlock [
 { #category : 'triggering' }
 SystemAnnouncer >> traitDefinitionChangedFrom: oldTrait to: newTrait [
 	self announce: (ClassModifiedClassDefinition classDefinitionChangedFrom: oldTrait to: newTrait)
-]
-
-{ #category : 'subscription' }
-SystemAnnouncer >> unsubscribe: anObject [
-	self private unsubscribe: anObject.
-	super unsubscribe: anObject
 ]

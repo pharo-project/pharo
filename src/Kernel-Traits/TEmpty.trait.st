@@ -7,12 +7,13 @@ Trait << #TMyTrait
 	trait: TEmpty;
 	slots: {};
 	tag: '' ;
-	package: 'TraitsV2'
+	package: 'Traits'
 ```
 
 "
 Trait {
 	#name : 'TEmpty',
-	#category : 'Kernel-Traits',
-	#package : 'Kernel-Traits'
+	#category : 'Kernel-Traits-Base',
+	#package : 'Kernel-Traits',
+	#tag : 'Base'
 }

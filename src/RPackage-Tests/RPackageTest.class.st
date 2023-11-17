@@ -128,10 +128,10 @@ RPackageTest >> testAnonymousClassAndSelector [
 	"Make sure we don't have a registration or a package for the method."
 
 	| ghost method |
-	ghost := Object newAnonymousSubclass.
+	ghost := Object newAnonymousSubclassInEnvironment: testEnvironment.
 	method := ghost compiler compile: 'rpackagetest'.
 	ghost addSelector: #rpackagetest withMethod: method.
-	self deny: (self organizer undefinedPackage includesDefinedSelector: #rpackagetest ofClass: ghost).
+	self deny: (self organizer undefinedPackage includesSelector: #rpackagetest ofClass: ghost).
 	self assert: (self organizer packageOfClassNamed: ghost name) equals: self organizer undefinedPackage.
 	ghost classify: #rpackagetest under: '*rpackagetest'
 ]
@@ -176,7 +176,7 @@ RPackageTest >> testDemoteToRPackageNamedExistingPackage [
 RPackageTest >> testDemoteToRPackageNamedKeepOrganizer [
 
 	| newOrganizer package renamedPackage |
-	newOrganizer := RPackageOrganizer new.
+	newOrganizer := PackageOrganizer new.
 
 	package := newOrganizer ensurePackage: #'Test1-TAG1'.
 

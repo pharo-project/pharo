@@ -12,5 +12,6 @@ ClyClassCreationToolMorph >> decorateByCritic: aCriticTool [
 
 { #category : '*Calypso-SystemPlugins-Critic-Browser' }
 ClyClassCreationToolMorph >> supportsCriticDecoration [
-	^package notNil
+
+	^ package isNotNil
 ]
