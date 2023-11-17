@@ -221,9 +221,12 @@ ThemeIcons >> basicIconFormSetNamed: aSymbol [
 		ifAbsentPut: [ IdentityDictionary new ])
 			at: aSymbol ifAbsentPut: [
 				self icons at: aSymbol
-					ifPresent: [ :icon |
-						FormSet form:
-							(icon scaledToSize: icon extent * (displayScaleFactor / self scale)) ]
+					ifPresent: [ :form |
+						| allForms scaledForm |
+						allForms := OrderedCollection new.
+						iconsPerScale do: [ :icons | icons at: aSymbol ifPresent: [ :otherForm | allForms add: otherForm ] ].
+						allForms add: (scaledForm := form scaledToSize: form extent * (displayScaleFactor / self scale)).
+						FormSet extent: scaledForm extent depth: scaledForm depth forms: (Array withAll: allForms) ]
 					ifAbsent: [ ^ nil ] ]
 ]
 
