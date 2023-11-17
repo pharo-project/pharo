@@ -118,19 +118,6 @@ GoferOperationTest >> testMerge [
 ]
 
 { #category : 'tests' }
-GoferOperationTest >> testRevert [
-
-	gofer
-		package: 'GoferFoo';
-		package: 'GoferBar';
-		load.
-	(environment classNamed: #GoferBar) package: 'GoferFoo'.
-	gofer revert.
-	self assert: (environment classNamed: #GoferFoo) package name equals: #GoferFoo.
-	self assert: (environment classNamed: #GoferBar) package name equals: #GoferBar
-]
-
-{ #category : 'tests' }
 GoferOperationTest >> testUnload [
 
 	gofer

@@ -336,13 +336,6 @@ Gofer >> resolved [
 	^ self references collect: [ :each | each resolveWith: self ]
 ]
 
-{ #category : 'operations' }
-Gofer >> revert [
-	"Revert the specified packages to the currently loaded version."
-
-	^ self execute: GoferRevert
-]
-
 { #category : 'repositories - places' }
 Gofer >> smalltalkhubUser: aUserName project: aProjectName [
 	self repository: (MCSmalltalkhubRepository owner: aUserName project: aProjectName)
