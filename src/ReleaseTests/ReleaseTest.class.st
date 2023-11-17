@@ -290,6 +290,13 @@ ReleaseTest >> testNoOrphanPackage [
 	self assertEmpty: (self packageOrganizer packages reject: [ :package | package isUndefined or: [ declaredPackages includes: package name ] ])
 ]
 
+{ #category : 'tests - package' }
+ReleaseTest >> testNoPackagesOverride [
+	"Class side packages should not be overridden"
+
+	Object allSubclasses do: [ :each | each class compiledMethodAt: #packages ifPresent: [ self fail: 'The #packages method should not be overriden' ] ]
+]
+
 { #category : 'tests - source' }
 ReleaseTest >> testNoPeriodInMethodSignature [
 	| methods |
