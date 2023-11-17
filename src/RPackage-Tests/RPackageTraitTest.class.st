@@ -21,7 +21,7 @@ RPackageTraitTest >> setUp [
 
 	super setUp.
 
-	p1 := self ensurePackage: self p1Name.
+	p1 := self ensureXPackage.
 	p2 := self ensurePackage: self p2Name.
 	p3 := self ensurePackage: self p3Name.
 
@@ -41,7 +41,7 @@ RPackageTraitTest >> setUp [
 	t2 compile: 'traitMethodDefinedInP2 ^ #traitMethodDefinedInP2'.
 
 	"Here P1 extends T2 from P2 with a new method"
-	t2 compile: 'traitMethodExtendedFromP1 ^ #traitMethodExtendedFromP1' classified: '*' , self p1Name.
+	t2 compile: 'traitMethodExtendedFromP1 ^ #traitMethodExtendedFromP1' classified: '*' , self xPackageName.
 
 	a1 setTraitComposition: (t1 + t2) asTraitComposition
 ]

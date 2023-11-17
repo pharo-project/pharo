@@ -47,7 +47,7 @@ RPackageIncrementalTest >> removeClassNamedIfExists: aClassNameSymbol [
 RPackageIncrementalTest >> testAddClassNoDuplicate [
 
 	| p a1 b1 |
-	p := self ensurePackage: self p1Name.
+	p := self ensureXPackage.
 	a1 := self newClassNamed: #A1InPackageP1 in: self p2Name.
 	self assertEmpty: p definedClasses.
 	p addClass: a1.
@@ -64,7 +64,7 @@ RPackageIncrementalTest >> testAddClassNoDuplicate [
 RPackageIncrementalTest >> testAddRemoveMethod [
 
 	| p1 p2 p3 a2 |
-	p1 := self ensurePackage: self p1Name.
+	p1 := self ensureXPackage.
 	p2 := self ensurePackage: self p2Name.
 	p3 := self ensurePackage: self p3Name.
 	a2 := self newClassNamed: #A2InPackageP2 in: p2.
@@ -91,7 +91,7 @@ RPackageIncrementalTest >> testAddRemoveMethod [
 RPackageIncrementalTest >> testClassAddition [
 
 	| p a1 |
-	p := self ensurePackage: self p1Name.
+	p := self ensureXPackage.
 	a1 := self newClassNamed: #A1InPAckageP1 in: self p2Name.
 	self assertEmpty: p definedClasses.
 	p addClass: a1.
@@ -104,7 +104,7 @@ RPackageIncrementalTest >> testClassAddition [
 RPackageIncrementalTest >> testClassDefinitionRemoval [
 
 	| p a1 b1 |
-	p := self ensurePackage: self p1Name.
+	p := self ensureXPackage.
 	a1 := self newClassNamed: #A1InPAckageP1 in: self p2Name.
 	b1 := self newClassNamed: #B1InPAckageP1 in: self p2Name.
 	self assertEmpty: p definedClasses.
@@ -129,7 +129,7 @@ RPackageIncrementalTest >> testClassDefinitionRemoval [
 RPackageIncrementalTest >> testClassDefinitionWithTagsRemoval [
 
 	| p a1 b1 |
-	p := self ensurePackage: self p1Name.
+	p := self ensureXPackage.
 
 	a1 := self newClassNamed: #A1InPAckageP1 in: p.
 	b1 := self newClassNamed: #B1InPAckageP1 in: p.
@@ -156,7 +156,7 @@ RPackageIncrementalTest >> testClassDefinitionWithTagsRemoval [
 RPackageIncrementalTest >> testDefinedClassesAndDefinedClassNames [
 
 	| p a1 b1 |
-	p := self ensurePackage: self p1Name.
+	p := self ensureXPackage.
 	a1 := self newClassNamed: #A1InPackageP1 in: p.
 	self assert: p definedClasses size equals: 1.
 	self assert: (p definedClasses includes: a1).
@@ -172,7 +172,7 @@ RPackageIncrementalTest >> testDefinedClassesAndDefinedClassNames [
 RPackageIncrementalTest >> testExtensionClassNames [
 
 	| p1 p2 a2 b2 |
-	p1 := self ensurePackage: self p1Name.
+	p1 := self ensureXPackage.
 	p2 := self ensurePackage: self p2Name.
 	a2 := self newClassNamed: #A2InPackageP2 in: p2.
 	b2 := self newClassNamed: #B2InPackageP2 in: p2.
@@ -207,7 +207,7 @@ RPackageIncrementalTest >> testExtensionClassNames [
 RPackageIncrementalTest >> testExtensionClasses [
 
 	| p1 p2 a2 b2 |
-	p1 := self ensurePackage: self p1Name.
+	p1 := self ensureXPackage.
 	p2 := self ensurePackage: self p2Name.
 
 	a2 := self newClassNamed: #A2InPackageP2 in: p2.
@@ -236,7 +236,7 @@ RPackageIncrementalTest >> testExtensionClasses [
 RPackageIncrementalTest >> testExtensionClassesWithCompiledMethod [
 
 	| p1 p2 a2 b2 |
-	p1 := self ensurePackage: self p1Name.
+	p1 := self ensureXPackage.
 	p2 := self ensurePackage: self p2Name.
 	a2 := self newClassNamed: #A2InPackageP2 in: p2.
 	b2 := self newClassNamed: #B2InPackageP2 in: p2.
@@ -271,7 +271,7 @@ RPackageIncrementalTest >> testExtensionClassesWithCompiledMethod [
 RPackageIncrementalTest >> testExtensionMethods [
 
 	| p1 p2 a2 b2 |
-	p1 := self ensurePackage: self p1Name.
+	p1 := self ensureXPackage.
 	p2 := self ensurePackage: self p2Name.
 
 	a2 := self newClassNamed: #A2InPackageP2 in: p2.
@@ -290,7 +290,7 @@ RPackageIncrementalTest >> testExtensionMethods [
 RPackageIncrementalTest >> testIncludeClass [
 
 	| p1 p2 a2 |
-	p1 := self ensurePackage: self p1Name.
+	p1 := self ensureXPackage.
 	p2 := self ensurePackage: self p2Name.
 
 	a2 := self newClassNamed: #A2InPackageP2 in: p2.
@@ -312,7 +312,7 @@ RPackageIncrementalTest >> testIncludeClass [
 RPackageIncrementalTest >> testIncludeClassMore [
 
 	| p1 p2 p3 a2 |
-	p1 := self ensurePackage: self p1Name.
+	p1 := self ensureXPackage.
 	p2 := self ensurePackage: self p2Name.
 	p3 := self ensurePackage: self p3Name.
 	a2 := self newClassNamed: #A2InPackageP2 in: p2.
@@ -329,7 +329,7 @@ RPackageIncrementalTest >> testIncludeClassMore [
 RPackageIncrementalTest >> testIncludeSelectorOfClass [
 
 	| p1 p2 p3 a2 |
-	p1 := self ensurePackage: self p1Name.
+	p1 := self ensureXPackage.
 	p2 := self ensurePackage: self p2Name.
 	p3 := self ensurePackage: self p3Name.
 	a2 := self newClassNamed: #A2InPackageP2 in: p2.
@@ -354,7 +354,7 @@ RPackageIncrementalTest >> testIncludeSelectorOfClass [
 RPackageIncrementalTest >> testIncludeSelectorOfMetaClass [
 
 	| p1 p2 p3 a2 |
-	p1 := self ensurePackage: self p1Name.
+	p1 := self ensureXPackage.
 	p2 := self ensurePackage: self p2Name.
 	p3 := self ensurePackage: self p3Name.
 	a2 := self newClassNamed: #A2InPackageP2 in: p2.
@@ -380,7 +380,7 @@ RPackageIncrementalTest >> testIncludeSelectorOfMetaClass [
 RPackageIncrementalTest >> testIncludesMethodOfClassInPresenceOfOtherPackageExtensions [
 
 	| p1 p2 p3 a2 |
-	p1 := self ensurePackage: self p1Name.
+	p1 := self ensureXPackage.
 	p2 := self ensurePackage: self p2Name.
 	p3 := self ensurePackage: self p3Name.
 	a2 := self newClassNamed: #A2InPackageP2 in: p2.
@@ -401,7 +401,7 @@ RPackageIncrementalTest >> testIncludesMethodOfClassInPresenceOfOtherPackageExte
 RPackageIncrementalTest >> testIncludesOrTouches [
 
 	| p1 p2 a2 |
-	p1 := self ensurePackage: self p1Name.
+	p1 := self ensureXPackage.
 	p2 := self ensurePackage: self p2Name.
 
 	a2 := self newClassNamed: #A2InPackageP2 in: p2.
@@ -421,7 +421,7 @@ RPackageIncrementalTest >> testIncludesOrTouches [
 RPackageIncrementalTest >> testMethodAddition [
 
 	| p1 a1 |
-	p1 := self ensurePackage: self p1Name.
+	p1 := self ensureXPackage.
 	a1 := self newClassNamed: #A1DefinedInP1 in: p1.
 	a1 compileSilently: 'foo ^ 10'.
 	p1 addMethod: a1 >> #foo.
@@ -432,7 +432,7 @@ RPackageIncrementalTest >> testMethodAddition [
 RPackageIncrementalTest >> testMethodPackageResolution [
 
 	| p1 a1 |
-	p1 := self ensurePackage: self p1Name.
+	p1 := self ensureXPackage.
 	a1 := self newClassNamed: #A2InPackageP1 in: p1.
 	a1 compile: 'method ^ #methodDefinedInP1'.
 	a1 class compile: 'method ^ #methodDefinedInP1'.
@@ -445,7 +445,7 @@ RPackageIncrementalTest >> testMethodPackageResolution [
 RPackageIncrementalTest >> testPackageOfClassForClassesNotDefinedInPackageButJustExtendingIt [
 
 	| p1 p2 a2 |
-	p1 := self ensurePackage: self p1Name.
+	p1 := self ensureXPackage.
 	p2 := self ensurePackage: self p2Name.
 
 	a2 := self newClassNamed: #A2InPackageP2 in: p2.
@@ -461,7 +461,7 @@ RPackageIncrementalTest >> testPackageOfClassForClassesNotDefinedInPackageButJus
 RPackageIncrementalTest >> testPackageOfClassForDefinedClasses [
 
 	| p a1 b1 |
-	p := self ensurePackage: self p1Name.
+	p := self ensureXPackage.
 	a1 := self newClassNamed: #A1InPAckageP1 in: p.
 	b1 := self newClassNamed: #B1InPAckageP1 in: p.
 
@@ -473,7 +473,7 @@ RPackageIncrementalTest >> testPackageOfClassForDefinedClasses [
 RPackageIncrementalTest >> testRemoveClassRemovesExtensions [
 
 	| p1 p2 a1 |
-	p1 := self ensurePackage: self p1Name.
+	p1 := self ensureXPackage.
 	p2 := self ensurePackage: self p2Name.
 	"the class is created but not added to the package for now"
 	a1 := self newClassNamed: #A1InPackageP1 in: p1.
@@ -492,7 +492,7 @@ RPackageIncrementalTest >> testRemoveClassRemovesExtensions [
 RPackageIncrementalTest >> testRemoveExtensionMethodRemovesExtensionsFromPackage [
 
 	| p1 p2 a1 |
-	p1 := self ensurePackage: self p1Name.
+	p1 := self ensureXPackage.
 	p2 := self ensurePackage: self p2Name.
 	"the class is created but not added to the package for now"
 	a1 := self newClassNamed: #A1InPackageP1 in: p1.
@@ -511,7 +511,7 @@ RPackageIncrementalTest >> testRemoveExtensionMethodRemovesExtensionsFromPackage
 RPackageIncrementalTest >> testTwoClassesWithExtensions [
 
 	| p1 p2 a2 b2 |
-	p1 := self ensurePackage: self p1Name.
+	p1 := self ensureXPackage.
 	p2 := self ensurePackage: self p2Name.
 
 	a2 := self newClassNamed: #A2InPackageP2 in: p2.
@@ -527,7 +527,7 @@ RPackageIncrementalTest >> testTwoClassesWithExtensions [
 RPackageIncrementalTest >> testUniqueClassInDefinedClassesUsingAddClassDefinition [
 
 	| p a1 |
-	p := self ensurePackage: self p1Name.
+	p := self ensureXPackage.
 	a1 := self newClassNamed: #A1InPackageP1 in: self p2Name.
 	self assertEmpty: p definedClasses.
 	p addClass: a1.

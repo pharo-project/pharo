@@ -29,37 +29,37 @@ RPackageTestCase >> createMethodNamed: methodName inClassSideOfClass: aClass inC
 	^ aClass classSide compile: (methodName, ' ^nil') classified: aCategoryName.
 ]
 
-{ #category : 'utilities' }
+{ #category : 'helpers' }
 RPackageTestCase >> ensurePackage: aName [
 
 	^ self organizer ensurePackage: aName
 ]
 
-{ #category : 'utilities' }
+{ #category : 'helpers' }
 RPackageTestCase >> ensureTagYinX [
 
 	^ self organizer ensureTag: #YYYY inPackage: #XXXXX
 ]
 
-{ #category : 'utilities' }
+{ #category : 'helpers' }
 RPackageTestCase >> ensureXPackage [
 
-	^ self organizer ensurePackage: #XXXXX
+	^ self organizer ensurePackage: self xPackageName
 ]
 
-{ #category : 'utilities' }
+{ #category : 'helpers' }
 RPackageTestCase >> ensureYPackage [
 
-	^ self organizer ensurePackage: #YYYYY
+	^ self organizer ensurePackage: self yPackageName
 ]
 
-{ #category : 'utilities' }
+{ #category : 'helpers' }
 RPackageTestCase >> ensureZPackage [
 
-	^ self organizer ensurePackage: #ZZZZZ
+	^ self organizer ensurePackage: self zPackageName
 ]
 
-{ #category : 'utilities' }
+{ #category : 'helpers' }
 RPackageTestCase >> newClassNamed: aName in: aPackage [
 
 	^ self class classInstaller make: [ :aClassBuilder |
@@ -71,7 +71,7 @@ RPackageTestCase >> newClassNamed: aName in: aPackage [
 					   ifFalse: [ aPackage name ]) ]
 ]
 
-{ #category : 'utilities' }
+{ #category : 'helpers' }
 RPackageTestCase >> newClassNamed: aName in: aPackage tag: aTag [
 
 	^ self class classInstaller make: [ :aClassBuilder |
@@ -86,7 +86,7 @@ RPackageTestCase >> newClassNamed: aName in: aPackage tag: aTag [
 					   ifFalse: [ aTag name ]) ]
 ]
 
-{ #category : 'utilities' }
+{ #category : 'helpers' }
 RPackageTestCase >> newClassNamed: aName inTag: aTag [
 
 	^ self class classInstaller make: [ :aClassBuilder |
@@ -97,7 +97,7 @@ RPackageTestCase >> newClassNamed: aName inTag: aTag [
 			  tag: aTag name ]
 ]
 
-{ #category : 'utilities' }
+{ #category : 'helpers' }
 RPackageTestCase >> newTraitNamed: aName in: aPackage [
 
 	^ self class classInstaller make: [ :aBuilder |
@@ -110,7 +110,7 @@ RPackageTestCase >> newTraitNamed: aName in: aPackage [
 			  beTrait ]
 ]
 
-{ #category : 'utilities' }
+{ #category : 'helpers' }
 RPackageTestCase >> newTraitNamed: aName in: aPackage tag: aTag [
 
 	^ self class classInstaller make: [ :aClassBuilder |
@@ -126,7 +126,7 @@ RPackageTestCase >> newTraitNamed: aName in: aPackage tag: aTag [
 					   ifFalse: [ aTag name ]) ]
 ]
 
-{ #category : 'utilities' }
+{ #category : 'helpers' }
 RPackageTestCase >> newTraitNamed: aName inTag: aTag [
 
 	^ self class classInstaller make: [ :aBuilder |
@@ -158,4 +158,22 @@ RPackageTestCase >> tearDown [
 	self organizer packages do: [ :package | package removeFromSystem ].
 
 	super tearDown
+]
+
+{ #category : 'helpers' }
+RPackageTestCase >> xPackageName [
+
+	^ #XXXXX
+]
+
+{ #category : 'helpers' }
+RPackageTestCase >> yPackageName [
+
+	^ #YYYYY
+]
+
+{ #category : 'helpers' }
+RPackageTestCase >> zPackageName [
+
+	^ #ZZZZZ
 ]

@@ -78,11 +78,11 @@ RPackageOrganizerTest >> testDefaultOrganizer [
 RPackageOrganizerTest >> testDefinedClassesInstanceAndMetaSideAPI [
 
 	| p1 |
-	p1 := self ensurePackage: self p1Name.
+	p1 := self ensureXPackage.
 	self newClassNamed: #MyPoint in: p1.
 	self assert: self organizer packageNames size equals: 2.
 	self assert: self organizer packages size equals: 2.
-	self assert: (self organizer packageNamed: self p1Name) definedClasses size equals: 1
+	self assert: (self organizer packageNamed: self xPackageName) definedClasses size equals: 1
 ]
 
 { #category : 'tests' }
@@ -127,7 +127,7 @@ RPackageOrganizerTest >> testFullRegistration [
 
 	| p1 p2 p3 a1 a2 b1 b2 a3 |
 	"taken from setup of RPackageReadOnlyCompleteSetup"
-	p1 := self ensurePackage: self p1Name.
+	p1 := self ensureXPackage.
 	p2 := self ensurePackage: self p2Name.
 	p3 := self ensurePackage: self p3Name.
 
@@ -375,7 +375,7 @@ RPackageOrganizerTest >> testRemovePackage [
 
 	| p1 p2 p3 a1 a2 b1 b2 a3 |
 	"taken from setup of RPackageReadOnlyCompleteSetup"
-	p1 := self ensurePackage: self p1Name.
+	p1 := self ensureXPackage.
 	p2 := self ensurePackage: self p2Name.
 	p3 := self ensurePackage: self p3Name.
 

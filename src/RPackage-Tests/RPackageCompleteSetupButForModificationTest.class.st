@@ -22,7 +22,7 @@ Class {
 RPackageCompleteSetupButForModificationTest >> setUp [
 
 	super setUp.
-	p1 := self ensurePackage: self p1Name.
+	p1 := self ensureXPackage.
 	p2 := self ensurePackage: self p2Name.
 	p3 := self ensurePackage: self p3Name.
 
