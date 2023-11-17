@@ -27,6 +27,7 @@ Class {
 		'url',
 		'iconsPerScale',
 		'scale',
+		'formSetsCache',
 		'reportNotFound'
 	],
 	#classVars : [
@@ -213,9 +214,17 @@ ThemeIcons >> allIconNames [
 { #category : 'private' }
 ThemeIcons >> basicIconFormSetNamed: aSymbol [
 
-	^ self icons at: aSymbol ifPresent: [ :icon |
-		FormSet form:
-			(icon scaledToSize: icon extent * (self currentWorld displayScaleFactor / self scale)) ]
+	| displayScaleFactor |
+
+	^ ((formSetsCache ifNil: [ formSetsCache := Dictionary new ])
+		at: (displayScaleFactor := self currentWorld displayScaleFactor)
+		ifAbsentPut: [ IdentityDictionary new ])
+			at: aSymbol ifAbsentPut: [
+				self icons at: aSymbol
+					ifPresent: [ :icon |
+						FormSet form:
+							(icon scaledToSize: icon extent * (displayScaleFactor / self scale)) ]
+					ifAbsent: [ ^ nil ] ]
 ]
 
 { #category : 'accessing' }
