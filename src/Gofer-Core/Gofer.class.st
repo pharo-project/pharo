@@ -225,13 +225,6 @@ Gofer >> execute: anOperationClass do: aBlock [
 	^ operation execute
 ]
 
-{ #category : 'operations' }
-Gofer >> fetch [
-	"Download versions from remote repositories into the local cache."
-
-	^ self execute: GoferFetch
-]
-
 { #category : 'repositories - places' }
 Gofer >> gemsource: aString [
 	self url: 'http://seaside.gemstone.com/ss/' , aString

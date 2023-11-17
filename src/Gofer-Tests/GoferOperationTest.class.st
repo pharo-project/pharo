@@ -108,14 +108,6 @@ GoferOperationTest >> testCommit [
 ]
 
 { #category : 'tests' }
-GoferOperationTest >> testFetch [
-
-	gofer
-		package: 'GoferFoo';
-		fetch
-]
-
-{ #category : 'tests' }
 GoferOperationTest >> testLoad [
 
 	gofer version: 'GoferFoo-lr.1'.
