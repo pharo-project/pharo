@@ -37,7 +37,7 @@ TraitFluidClassDefinitionPrinterTest >> testCompactTraitFullTemplate [
 	self assert: (FluidClassDefinitionPrinter new compactTraitDefinitionTemplateInPackage: 'Traits' tag: #Basic) equals: 'Trait << #TMyTrait
 	traits: {};
 	slots: {};
-	tag: #Basic
+	tag: #Basic;
 	package: ''Traits'''
 ]
 
