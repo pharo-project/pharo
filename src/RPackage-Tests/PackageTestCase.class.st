@@ -2,7 +2,7 @@
 Common superclass for RPackage related tests
 "
 Class {
-	#name : 'RPackageTestCase',
+	#name : 'PackageTestCase',
 	#superclass : 'AbstractEnvironmentTestCase',
 	#instVars : [
 		'testEnvironment'
@@ -11,50 +11,58 @@ Class {
 	#package : 'RPackage-Tests'
 }
 
-{ #category : 'private' }
-RPackageTestCase >> createMethodNamed: methodName inClass: aClass inCategory: aCategoryName [ 
+{ #category : 'testing' }
+PackageTestCase class >> isAbstract [
 
-	^ aClass compile: (methodName, ' ^nil') classified: aCategoryName.
+	^ self = PackageTestCase
 ]
 
 { #category : 'private' }
-RPackageTestCase >> createMethodNamed: methodName inClassSideOfClass: aClass inCategory: aCategoryName [ 
+PackageTestCase >> createMethodNamed: methodName inClass: aClass asExtensionOf: aPackage [
 
-	^ aClass classSide compile: (methodName, ' ^nil') classified: aCategoryName.
+	^ aClass compile: methodName , ' ^nil' classified: '*' , (aPackage isString
+			   ifTrue: [ aPackage ]
+			   ifFalse: [ aPackage name ])
 ]
 
-{ #category : 'utilities' }
-RPackageTestCase >> ensurePackage: aName [
+{ #category : 'private' }
+PackageTestCase >> createMethodNamed: methodName inClass: aClass inProtocol: aProtocol [ 
+
+	^ aClass compile: (methodName, ' ^nil') classified: aProtocol.
+]
+
+{ #category : 'helpers' }
+PackageTestCase >> ensurePackage: aName [
 
 	^ self organizer ensurePackage: aName
 ]
 
-{ #category : 'utilities' }
-RPackageTestCase >> ensureTagYinX [
+{ #category : 'helpers' }
+PackageTestCase >> ensureTagYinX [
 
 	^ self organizer ensureTag: #YYYY inPackage: #XXXXX
 ]
 
-{ #category : 'utilities' }
-RPackageTestCase >> ensureXPackage [
+{ #category : 'helpers' }
+PackageTestCase >> ensureXPackage [
 
-	^ self organizer ensurePackage: #XXXXX
+	^ self organizer ensurePackage: self xPackageName
 ]
 
-{ #category : 'utilities' }
-RPackageTestCase >> ensureYPackage [
+{ #category : 'helpers' }
+PackageTestCase >> ensureYPackage [
 
-	^ self organizer ensurePackage: #YYYYY
+	^ self organizer ensurePackage: self yPackageName
 ]
 
-{ #category : 'utilities' }
-RPackageTestCase >> ensureZPackage [
+{ #category : 'helpers' }
+PackageTestCase >> ensureZPackage [
 
-	^ self organizer ensurePackage: #ZZZZZ
+	^ self organizer ensurePackage: self zPackageName
 ]
 
-{ #category : 'utilities' }
-RPackageTestCase >> newClassNamed: aName in: aPackage [
+{ #category : 'helpers' }
+PackageTestCase >> newClassNamed: aName in: aPackage [
 
 	^ self class classInstaller make: [ :aClassBuilder |
 		  aClassBuilder
@@ -65,8 +73,8 @@ RPackageTestCase >> newClassNamed: aName in: aPackage [
 					   ifFalse: [ aPackage name ]) ]
 ]
 
-{ #category : 'utilities' }
-RPackageTestCase >> newClassNamed: aName in: aPackage tag: aTag [
+{ #category : 'helpers' }
+PackageTestCase >> newClassNamed: aName in: aPackage tag: aTag [
 
 	^ self class classInstaller make: [ :aClassBuilder |
 		  aClassBuilder
@@ -80,8 +88,8 @@ RPackageTestCase >> newClassNamed: aName in: aPackage tag: aTag [
 					   ifFalse: [ aTag name ]) ]
 ]
 
-{ #category : 'utilities' }
-RPackageTestCase >> newClassNamed: aName inTag: aTag [
+{ #category : 'helpers' }
+PackageTestCase >> newClassNamed: aName inTag: aTag [
 
 	^ self class classInstaller make: [ :aClassBuilder |
 		  aClassBuilder
@@ -91,8 +99,8 @@ RPackageTestCase >> newClassNamed: aName inTag: aTag [
 			  tag: aTag name ]
 ]
 
-{ #category : 'utilities' }
-RPackageTestCase >> newTraitNamed: aName in: aPackage [
+{ #category : 'helpers' }
+PackageTestCase >> newTraitNamed: aName in: aPackage [
 
 	^ self class classInstaller make: [ :aBuilder |
 		  aBuilder
@@ -104,8 +112,8 @@ RPackageTestCase >> newTraitNamed: aName in: aPackage [
 			  beTrait ]
 ]
 
-{ #category : 'utilities' }
-RPackageTestCase >> newTraitNamed: aName in: aPackage tag: aTag [
+{ #category : 'helpers' }
+PackageTestCase >> newTraitNamed: aName in: aPackage tag: aTag [
 
 	^ self class classInstaller make: [ :aClassBuilder |
 		  aClassBuilder
@@ -120,8 +128,8 @@ RPackageTestCase >> newTraitNamed: aName in: aPackage tag: aTag [
 					   ifFalse: [ aTag name ]) ]
 ]
 
-{ #category : 'utilities' }
-RPackageTestCase >> newTraitNamed: aName inTag: aTag [
+{ #category : 'helpers' }
+PackageTestCase >> newTraitNamed: aName inTag: aTag [
 
 	^ self class classInstaller make: [ :aBuilder |
 		  aBuilder
@@ -133,23 +141,41 @@ RPackageTestCase >> newTraitNamed: aName inTag: aTag [
 ]
 
 { #category : 'accessing' }
-RPackageTestCase >> organizer [
+PackageTestCase >> organizer [
 
 	^ testEnvironment organization
 ]
 
 { #category : 'running' }
-RPackageTestCase >> setUp [
+PackageTestCase >> setUp [
 
 	super setUp.
 	testEnvironment := self class environment class new
 ]
 
 { #category : 'running' }
-RPackageTestCase >> tearDown [
+PackageTestCase >> tearDown [
 
 	self organizer environment allClasses do: [ :cls | cls removeFromSystem ].
 	self organizer packages do: [ :package | package removeFromSystem ].
 
 	super tearDown
+]
+
+{ #category : 'helpers' }
+PackageTestCase >> xPackageName [
+
+	^ #XXXXX
+]
+
+{ #category : 'helpers' }
+PackageTestCase >> yPackageName [
+
+	^ #YYYYY
+]
+
+{ #category : 'helpers' }
+PackageTestCase >> zPackageName [
+
+	^ #ZZZZZ
 ]
