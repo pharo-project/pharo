@@ -545,7 +545,7 @@ FileDialogWindow >> newDeleteButton [
 		action: #deleteFileOrDirectory
 		arguments: nil
 		getEnabled: #hasSelectedFileOrDirectory
-		labelForm: (self iconNamed: #smallDeleteIcon)
+		labelForm: (self iconNamed: #smallDelete)
 		help: 'Press to delete the selected file or directory' translated
 ]
 

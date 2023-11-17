@@ -283,7 +283,7 @@ MetacelloProjectRegistration >> configurationProjectSpec: anObject [
 { #category : 'accessing' }
 MetacelloProjectRegistration >> configurationProjectSpecIfAbsent: absentBlock [
 
-	^ configurationProjectSpec ifNil: [ absentBlock ]
+	^ configurationProjectSpec ifNil: [ absentBlock value ]
 ]
 
 { #category : 'accessing' }

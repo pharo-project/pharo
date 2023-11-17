@@ -108,6 +108,7 @@ Behavior >> recompileBasic: selector from: oldClass [
 				source: (oldClass sourceCodeAt: selector);
 				class: self;
 				permitFaulty: true;
+				logged: false; "No need to log recompilation in the sources."
 				compile.   "Assume OK after proceed from SyntaxError"
 	newMethod sourcePointer: method sourcePointer.
 	

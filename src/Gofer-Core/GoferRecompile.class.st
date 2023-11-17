@@ -19,6 +19,5 @@ GoferRecompile >> execute [
 { #category : 'running' }
 GoferRecompile >> execute: aWorkingCopy [
 
-	aWorkingCopy packageSet methods
-		do: [ :each | each methodClass recompile: each selector ]
+	aWorkingCopy systemPackage ifNotNil: [ :package | package methods do: [ :each | each methodClass recompile: each selector ] ]
 ]

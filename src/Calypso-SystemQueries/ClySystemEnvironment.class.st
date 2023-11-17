@@ -1,5 +1,5 @@
 "
-I represent environment of Pharo system. I incapsulate globals (Smalltalk globals), packageOrganizer (RPackageOrganizer  default) and changesAnnouncer (SystemAnnouncer uniqueInstance). I have class side #currentImage instance created with all corresponding globals of current image.
+I represent environment of Pharo system. I incapsulate globals (Smalltalk globals), packageOrganizer (PackageOrganizer  default) and changesAnnouncer (SystemAnnouncer uniqueInstance). I have class side #currentImage instance created with all corresponding globals of current image.
 
 I am used to navigate over system by ClyNavigationEnvironment.
 
@@ -18,7 +18,7 @@ Internal Representation and Key Implementation Points.
 	changesAnnouncer:		<SystemAnnouncer>
 	globals:		<SmalltalkDictionary> ""Smalltalk globals class""
 	name:		<String>
-	packageOrganizer:		<RPackageOrganizer>
+	packageOrganizer:		<PackageOrganizer>
 	projectManager:		<ClyProjectManager>
 "
 Class {
@@ -45,7 +45,7 @@ ClySystemEnvironment class >> currentImage [
 		currentImage := self new
 			name: 'Current image';
 			globals: Smalltalk globals;
-			packageOrganizer: RPackageOrganizer default;
+			packageOrganizer: PackageOrganizer default;
 			changesAnnouncer: SystemAnnouncer uniqueInstance]
 ]
 

@@ -19,7 +19,7 @@ RPackageOrganizerSystemTest >> testDefault [
 RPackageOrganizerSystemTest >> testDefaultEnvironment [
 	"When no environment is specified, point to the default one"
 
-	self assert: RPackageOrganizer new environment identicalTo: Smalltalk globals
+	self assert: PackageOrganizer new environment identicalTo: Smalltalk globals
 ]
 
 { #category : 'tests' }

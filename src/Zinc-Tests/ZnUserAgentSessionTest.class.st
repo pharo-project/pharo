@@ -20,7 +20,7 @@ ZnUserAgentSessionTest >> testAccessors [
 	| session |
 	session := ZnUserAgentSession new.
 	self assert: (session cookieJar isKindOf: ZnCookieJar).
-	self assert: (session credentials notNil)
+	self assert: (session credentials isNotNil)
 ]
 
 { #category : 'testing' }
@@ -34,5 +34,5 @@ ZnUserAgentSessionTest >> testAddCredential [
 
 { #category : 'testing' }
 ZnUserAgentSessionTest >> testWithCookieJar [
-	self assert: ((ZnUserAgentSession withCookieJar: ZnCookieJar new) notNil)
+	self assert: ((ZnUserAgentSession withCookieJar: ZnCookieJar new) isNotNil)
 ]

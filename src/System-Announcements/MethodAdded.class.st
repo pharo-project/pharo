@@ -1,6 +1,6 @@
 "
 This announcement is emitted when we add a method to a class or a trait using:
-	=> Behavior >> compile: or TraitBehavior >> compile:
+	=> Behavior >> compile:
 "
 Class {
 	#name : 'MethodAdded',
