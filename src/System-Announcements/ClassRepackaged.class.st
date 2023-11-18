@@ -125,7 +125,5 @@ ClassRepackaged >> packagedChanged [
 { #category : 'accessing' }
 ClassRepackaged >> packagesAffected [
 
-	^ {
-		  self oldPackage.
-		  self newPackage }
+	^ { self oldPackage. self newPackage }
 ]
