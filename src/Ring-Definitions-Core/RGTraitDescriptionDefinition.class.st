@@ -36,12 +36,6 @@ RGTraitDescriptionDefinition >> allInstVarNames [
 	^#()
 ]
 
-{ #category : 'variables' }
-RGTraitDescriptionDefinition >> allSharedPoolNames [
-
-	^#()
-]
-
 { #category : 'testing' }
 RGTraitDescriptionDefinition >> isTrait [
 
