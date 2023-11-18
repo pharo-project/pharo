@@ -17,5 +17,5 @@ ClassDescription >> manifestBuilderForRuleChecker: aRuleChecker [
 { #category : '*Manifest-Core' }
 ClassDescription >> mcWorkingCopy [
 
-	MCWorkingCopy workingCopiesForPackage: self package do: [ :package | ^ package ]
+	^ self package mcWorkingCopy
 ]

@@ -798,9 +798,11 @@ CompiledMethod >> propertyKeysAndValuesDo: aBlock [
 
 { #category : 'protocols' }
 CompiledMethod >> protocol [
-	"Return in which protocol (conceptual groups of methods) the receiver is grouped into."
+	"Return in which protocol (conceptual groups of methods) the receiver is grouped into.
+	
+	With the current implementation the method will have to lookup the protocol in its class, but the #protocol property will be added when we remove a method to still be able to answer the protocol the method was into."
 
-	^ self methodClass protocolOfSelector: self selector
+	^ self propertyAt: #protocol ifAbsent: [ self methodClass protocolOfSelector: self selector ]
 ]
 
 { #category : 'protocols' }
@@ -812,7 +814,7 @@ CompiledMethod >> protocol: aProtocol [
 CompiledMethod >> protocolName [
 	"Return the name of the protocol (conceptual groups of methods) in which the receiver is grouped into."
 
-	^ self methodClass protocolNameOfSelector: self selector
+	^ self protocol ifNotNil: [ :protocol | protocol name ]
 ]
 
 { #category : 'scanning' }

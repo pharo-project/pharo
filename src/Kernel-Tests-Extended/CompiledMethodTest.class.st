@@ -839,6 +839,24 @@ CompiledMethodTest >> testPropertyAtIfPresentDoNotClashWithPragmas [
 	self assert: (method propertyAt: #bebou ifPresent: [ :value | value ]) ] ensure: [ method removeProperty: #bebou ]
 ]
 
+{ #category : 'tests - compiling' }
+CompiledMethodTest >> testProtocolOfRemovedMethod [
+
+	| method |
+	class := Object newAnonymousSubclass.
+	class compile: 'billy ^ 1' classified: 'cat'.
+
+	method := class >> #billy.
+
+	self assert: method protocol name equals: #cat.
+	self assert: method protocolName equals: #cat.
+
+	class removeSelector: #billy.
+
+	self assert: method protocol name equals: #cat.
+	self assert: method protocolName equals: #cat
+]
+
 { #category : 'tests - instance variable' }
 CompiledMethodTest >> testReadsField [
 	| method |

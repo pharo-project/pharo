@@ -213,7 +213,7 @@ MetacelloProject >> fetchProject: aLoaderPolicy [
 	(mcLoader := self loader) ifNil: [ mcLoader := self project loaderClass on: nil ].
 	mcLoader loaderPolicy: aLoaderPolicy.
 	mcLoader doingLoads: [
-		MCWorkingCopy workingCopiesForPackage: self configuration class package do: [ :workingCopy |
+		self configuration class mcWorkingCopy ifNotNil: [ :workingCopy |
 			| pkg |
 			pkg := self packageSpec.
 			workingCopy repositoryGroup repositories do: [ :repo | pkg repositories repository: (repo asRepositorySpecFor: self) ].
@@ -412,7 +412,7 @@ MetacelloProject >> projectForScriptEngine: aMetacelloScriptEngine unconditional
 { #category : 'development support' }
 MetacelloProject >> projectPackage [
 
-	MCWorkingCopy workingCopiesForPackage: self configuration class package do: [ :workingCopy |
+	self configuration class mcWorkingCopy ifNotNil: [ :workingCopy |
 		| pkgSpec repo |
 		pkgSpec := self packageSpec
 			           name: workingCopy packageName;
