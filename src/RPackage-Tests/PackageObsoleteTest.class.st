@@ -2,8 +2,8 @@
 SUnit tests for RPackage
 "
 Class {
-	#name : 'RPackageObsoleteTest',
-	#superclass : 'RPackageIncrementalTest',
+	#name : 'PackageObsoleteTest',
+	#superclass : 'PackageTestCase',
 	#instVars : [
 		'notRun'
 	],
@@ -12,25 +12,25 @@ Class {
 }
 
 { #category : 'accessing' }
-RPackageObsoleteTest >> setNotRun [
+PackageObsoleteTest >> setNotRun [
 	notRun := true
 ]
 
 { #category : 'tests' }
-RPackageObsoleteTest >> testAnnouncementClassRemovedIsRaisedOnRemoveFromSystem [
+PackageObsoleteTest >> testAnnouncementClassRemovedIsRaisedOnRemoveFromSystem [
 
 	| foo |
 	[
 	notRun := false.
 	SystemAnnouncer uniqueInstance weak when: ClassRemoved send: #setNotRun to: self.
-	foo := self newClassNamed: #FooForTest2 in: self p1Name.
+	foo := self newClassNamed: #FooForTest2 in: self xPackageName.
 	self deny: notRun.
 	foo removeFromSystem.
 	self assert: notRun ] ensure: [ SystemAnnouncer uniqueInstance unsubscribe: self ]
 ]
 
 { #category : 'tests' }
-RPackageObsoleteTest >> testMethodPackageFromObsoleteClass [
+PackageObsoleteTest >> testMethodPackageFromObsoleteClass [
 
 	| pack method foo |
 	pack := self ensurePackage: 'P1'.
@@ -48,7 +48,7 @@ RPackageObsoleteTest >> testMethodPackageFromObsoleteClass [
 ]
 
 { #category : 'tests' }
-RPackageObsoleteTest >> testMethodPackageOfRemovedClass [
+PackageObsoleteTest >> testMethodPackageOfRemovedClass [
 
 	| pack method foo |
 	pack := self ensurePackage: 'P1'.

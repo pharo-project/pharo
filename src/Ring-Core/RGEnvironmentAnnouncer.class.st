@@ -91,13 +91,7 @@ RGEnvironmentAnnouncer >> methodAdded: aMethod [
 RGEnvironmentAnnouncer >> methodRemoved: aMethod [
 	"For the protocol we should just send #protocol to the method when #protocol will return a protocol and not a symbol."
 
-	self announce: (MethodRemoved
-			 methodRemoved: aMethod
-			 protocol: (self class environment
-					  at: aMethod methodClass
-					  ifPresent: [ :class | class protocolNamed: aMethod protocol ]
-					  ifAbsent: [ aMethod protocol ])
-			 origin: aMethod parent)
+	self announce: (MethodRemoved methodRemoved: aMethod origin: aMethod parent)
 ]
 
 { #category : 'announce' }

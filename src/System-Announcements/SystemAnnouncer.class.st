@@ -137,10 +137,10 @@ SystemAnnouncer >> methodRecategorized: method oldProtocol: oldProtocol [
 ]
 
 { #category : 'triggering' }
-SystemAnnouncer >> methodRemoved: aMethod protocol: protocol origin: aBehavior [
+SystemAnnouncer >> methodRemoved: aMethod origin: aBehavior [
 	"A method with the given selector was removed from the class."
 
-	self announce: (MethodRemoved methodRemoved: aMethod protocol: protocol origin: aBehavior)
+	self announce: (MethodRemoved methodRemoved: aMethod origin: aBehavior)
 ]
 
 { #category : 'triggering' }

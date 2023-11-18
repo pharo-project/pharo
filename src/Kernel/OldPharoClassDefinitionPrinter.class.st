@@ -116,13 +116,6 @@ OldPharoClassDefinitionPrinter >> classVariablesOn: stream [
 ]
 
 { #category : 'template' }
-OldPharoClassDefinitionPrinter >> compactClassDefinitionTemplateInPackage: aString [
-	"there is not compact version..."
-
-	^ self classDefinitionTemplateInPackage: aString
-]
-
-{ #category : 'template' }
 OldPharoClassDefinitionPrinter >> compactTraitDefinitionTemplateInPackage: aString [
 
 	^ self traitDefinitionTemplateInPackage: aString
