@@ -7,8 +7,8 @@ Class {
 	#instVars : [
 		'constraintBlock'
 	],
-	#category : 'Gofer-Core-References',
-	#package : 'Gofer-Core',
+	#category : 'Gofer-Deprecated-References',
+	#package : 'Gofer-Deprecated',
 	#tag : 'References'
 }
 
