@@ -32,6 +32,7 @@ Class {
 	#classVars : [
 		'NewSymbols',
 		'SelectorTable',
+		'StrictComparison',
 		'SymbolTable'
 	],
 	#category : 'Collections-Strings-Base',
@@ -214,8 +215,8 @@ Symbol class >> rehash [
    "Symbol rehash"
 	"Rebuild the hash table, reclaiming unreferenced Symbols."
 
-	SymbolTable := WeakSet withAll: self allSubInstances.
-	NewSymbols := WeakSet new.
+	SymbolTable := WeakSetOfSymbols withAll: self allSubInstances.
+	NewSymbols := WeakSetOfSymbols new.
 	self resetSelectorTable
 ]
 
@@ -255,7 +256,7 @@ Symbol class >> selectorThatStartsCaseSensitive: leadingCharacters skipping: ski
 Symbol class >> shutDown: aboutToQuit [
 
 	SymbolTable addAll: NewSymbols.
-	NewSymbols := WeakSet new
+	NewSymbols := WeakSetOfSymbols new
 ]
 
 { #category : 'accessing' }
@@ -263,7 +264,31 @@ Symbol class >> streamSpecies [
 	^ String
 ]
 
-{ #category : 'symbol table' }
+{ #category : #setting }
+Symbol class >> strictComparison [
+
+	^ StrictComparison ifNil: [ false ]
+]
+
+{ #category : #setting }
+Symbol class >> strictComparison: aBoolean [
+
+	StrictComparison := aBoolean
+]
+
+{ #category : #setting }
+Symbol class >> symbolComparisonSettingOn: aBuilder [
+
+	<systemsettings>
+	(aBuilder setting: #strictComparison)
+		parent: #pharoSystem;
+		label: 'Strict comparison of Symbols';
+		default: false;
+		target: self;
+		description: 'Symbols and Strings having the same contents return false when compared using ='
+]
+
+{ #category : #'symbol table' }
 Symbol class >> thatStarts: leadingCharacters skipping: skipSym [
 	"Answer a selector symbol that starts with leadingCharacters.
 	Symbols beginning with a lower-case letter handled directly here.
@@ -342,6 +367,7 @@ Symbol >> , otherSymbolOrString [
 { #category : 'comparing' }
 Symbol >> = aSymbol [
 	"Compare the receiver and aSymbol."
+	Symbol strictComparison ifTrue: [ ^ self == aSymbol ].
 	self == aSymbol ifTrue: [^ true].
 	self class == aSymbol class ifTrue: [^ false].
 	"Use String comparison otherwise"
@@ -557,7 +583,16 @@ Symbol >> replaceFrom: start to: stop with: replacement startingAt: repStart [
 	self errorNoModification
 ]
 
-{ #category : 'converting' }
+{ #category : #comparing }
+Symbol >> sameContents: aSymbol [
+	"Compare the receiver and aSymbol."
+	self == aSymbol ifTrue: [^ true].
+	self class == aSymbol class ifTrue: [^ false].
+	"Use String comparison otherwise"
+	^ super = aSymbol
+]
+
+{ #category : #converting }
 Symbol >> separateKeywords [
 	"#'foo:zork:' separateKeywords -> 'foo:  zork:'"
 

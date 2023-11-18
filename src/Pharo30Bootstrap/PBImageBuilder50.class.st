@@ -188,7 +188,7 @@ PBImageBuilder50 >> createFalse [
 PBImageBuilder50 >> createInitialObjects [
 
 	| characterTable |
-	"We add the main globals  in the bootstrap environment before a system dictionary exists. These globals are needed to create a system dictionary, and will be used by the AST interpreter"
+	"We add the main globals in the bootstrap environment before a system dictionary exists. These globals are needed to create a system dictionary, and will be used by the AST interpreter"
 	PBStepFinishedSignal emit: 'initializing globals'.
 	
 	self log: 'Initializing objects.'.
@@ -206,9 +206,9 @@ PBImageBuilder50 >> createInitialObjects [
 					  objectSpace backend smallIntegerMirrorOn: each ])).
 
 	PBSubStepFinishedSignal emit: 'preparing class builder'.
+	
 	self bootstrapInterpreter evaluateCode:
 		'DangerousClassNotifier disable'.
-
 	self bootstrapInterpreter evaluateCode:
 		'Undeclared := UndeclaredRegistry new.'.
 	self bootstrapInterpreter evaluateCode:

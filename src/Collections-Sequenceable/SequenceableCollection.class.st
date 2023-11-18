@@ -1361,7 +1361,7 @@ SequenceableCollection >> indexOf: anElement startingAt: start ifAbsent: excepti
 
 	start to: self size do:
 		[:index |
-		(self at: index) = anElement ifTrue: [^ index]].
+		((self at: index) sameContents: anElement) ifTrue: [^ index]].
 	^ exceptionBlock value
 ]
 
