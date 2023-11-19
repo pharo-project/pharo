@@ -43,11 +43,6 @@ RBClassEnvironment class >> onEnvironment: anEnvironment classes: aCollection [
 		classes: aCollection; yourself
 ]
 
-{ #category : 'visiting' }
-RBClassEnvironment >> acceptVisitor: aEnvVisitor [
-	^ aEnvVisitor visitClassEnv: self
-]
-
 { #category : 'adding' }
 RBClassEnvironment >> addClass: aClass [
 	aClass isMeta
