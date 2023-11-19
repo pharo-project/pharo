@@ -53,7 +53,7 @@ RBVariableTypeTest >> testLintRuleTypes [
 { #category : 'tests' }
 RBVariableTypeTest >> testParseTreeTypes [
 	| types model |
-	model := RBClassModelFactory rbNamespace new.
+	model := RBNamespace new.
 	types := RBRefactoryTyper
 				typesFor: 'foo'
 				in: (self

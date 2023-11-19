@@ -179,7 +179,7 @@ RBExtractMethodParametrizedTest >> testFailureNonExistantSelector [
 { #category : 'tests' }
 RBExtractMethodParametrizedTest >> testModelExtractMethodWithTemporariesSelected [
 	| class refactoring |
-	model := RBClassModelFactory rbNamespace new.
+	model := RBNamespace new.
 	class := model classNamed: self class name.
 	class compile: 'foo [| temp | temp := 5. temp * temp] value'
 		classified: #(#accessing).
@@ -200,7 +200,7 @@ RBExtractMethodParametrizedTest >> testModelExtractMethodWithTemporariesSelected
 { #category : 'tests' }
 RBExtractMethodParametrizedTest >> testModelExtractMethodWithTemporaryAssigned [
 	| class refactoring |
-	model := RBClassModelFactory rbNamespace new.
+	model := RBNamespace new.
 	class := model classNamed: self class name.
 	class
 		compile: 'foo 				| temp bar | 				bar := 5. 				temp := bar * bar. 				Transcript show: temp printString; cr. 				^temp * temp'
