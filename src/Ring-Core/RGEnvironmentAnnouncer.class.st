@@ -11,14 +11,6 @@ Class {
 	#tag : 'Announcements'
 }
 
-{ #category : 'announce' }
-RGEnvironmentAnnouncer >> announce: anAnnouncement [
-
-	self isSuspended
-		ifFalse: [ super announce: anAnnouncement ]
-		ifTrue: [ storedAnnouncements ifNotNil: [ storedAnnouncements add: anAnnouncement ] ]
-]
-
 { #category : 'triggering' }
 RGEnvironmentAnnouncer >> behaviorAdded: anRGBehavior [
 
@@ -72,11 +64,6 @@ RGEnvironmentAnnouncer >> behaviorRenamed: anRGBehavior from: oldName [
 	self announce: (ClassRenamed class: anRGBehavior oldName: oldName newName: anRGBehavior name)
 ]
 
-{ #category : 'testing' }
-RGEnvironmentAnnouncer >> isSuspended [
-	^suspended ifNil: [ suspended := false ]
-]
-
 { #category : 'triggering' }
 RGEnvironmentAnnouncer >> methodAdded: aMethod [
 
@@ -88,33 +75,4 @@ RGEnvironmentAnnouncer >> methodRemoved: aMethod [
 	"For the protocol we should just send #protocol to the method when #protocol will return a protocol and not a symbol."
 
 	self announce: (MethodRemoved methodRemoved: aMethod origin: aMethod parent)
-]
-
-{ #category : 'announce' }
-RGEnvironmentAnnouncer >> suspendAllWhile: aBlock [
-	| oldSuspended |
-	oldSuspended := self isSuspended.
-	suspended := true.
-	^aBlock ensure: [ suspended := oldSuspended ]
-]
-
-{ #category : 'announce' }
-RGEnvironmentAnnouncer >> suspendAllWhileStoring: aBlock [
-	| reentring |
-	" Suspend all the announcements, storing them in an OrderedCollection, then returns this collection"
-
-	reentring := storedAnnouncements isNotNil.
-
-	reentring ifFalse:[
-		storedAnnouncements := OrderedCollection new.
-	].
-
-	[
-		self suspendAllWhile: aBlock.
-		^ storedAnnouncements.
-	] ensure:[
-		reentring ifFalse:[
-			storedAnnouncements := nil.
-		]
-	]
 ]

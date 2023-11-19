@@ -52,14 +52,6 @@ SystemAnnouncer class >> unload [
 	self uniqueInstance unsubscribe: self
 ]
 
-{ #category : 'announce' }
-SystemAnnouncer >> announce: anAnnouncement [
-
-	self isSuspended
-		ifFalse: [ super announce: anAnnouncement ]
-		ifTrue: [ storedAnnouncements ifNotNil: [ storedAnnouncements add: anAnnouncement ] ]
-]
-
 { #category : 'triggering' }
 SystemAnnouncer >> class: aClass oldComment: oldComment newComment: newComment oldStamp: oldStamp newStamp: newStamp [
 	"A class was commented in the system."
@@ -95,14 +87,6 @@ SystemAnnouncer >> classRenamed: aClass from: oldClassName to: newClassName [
 	self announce: (ClassRenamed class: aClass oldName: oldClassName newName: newClassName)
 ]
 
-{ #category : 'announce' }
-SystemAnnouncer >> delayAnnouncementsAfter: aBlock [
-	"I will execute a block and store all the announcements I am making during the execution of this block.
-	Once the execution is done, I will announce everything at once."
-
-	(self suspendAllWhileStoring: aBlock) do: [ :announcement | self announce: announcement ]
-]
-
 { #category : 'triggering' }
 SystemAnnouncer >> evaluated: textOrStream [
 	^ self evaluated: textOrStream context: nil
@@ -113,11 +97,6 @@ SystemAnnouncer >> evaluated: expression context: aContext [
 	self announce: (ExpressionEvaluated
 				expression: expression
 				context: aContext)
-]
-
-{ #category : 'testing' }
-SystemAnnouncer >> isSuspended [
-	^suspended ifNil: [ suspended := false ]
 ]
 
 { #category : 'triggering' }
@@ -151,38 +130,4 @@ SystemAnnouncer >> methodRepackaged: aMethod from: aPackage to: anotherPackage [
 SystemAnnouncer >> snapshotDone: isNewImage [
 
 	self announce: (SnapshotDone isNewImage: isNewImage)
-]
-
-{ #category : 'announce' }
-SystemAnnouncer >> suspendAllWhile: aBlock [
-	| oldSuspended |
-	oldSuspended := self isSuspended.
-	suspended := true.
-	^aBlock ensure: [ suspended := oldSuspended ]
-]
-
-{ #category : 'announce' }
-SystemAnnouncer >> suspendAllWhileStoring: aBlock [
-	| reentring |
-	" Suspend all the announcements, storing them in an OrderedCollection, then returns this collection"
-
-	reentring := storedAnnouncements isNotNil.
-
-	reentring ifFalse:[
-		storedAnnouncements := OrderedCollection new.
-	].
-
-	[
-		self suspendAllWhile: aBlock.
-		^ storedAnnouncements.
-	] ensure:[
-		reentring ifFalse:[
-			storedAnnouncements := nil.
-		]
-	]
-]
-
-{ #category : 'triggering' }
-SystemAnnouncer >> traitDefinitionChangedFrom: oldTrait to: newTrait [
-	self announce: (ClassModifiedClassDefinition classDefinitionChangedFrom: oldTrait to: newTrait)
 ]
