@@ -37,9 +37,9 @@ StartupUIManager >> handleError: anError log: shouldLog [
 { #category : 'ui requests' }
 StartupUIManager >> inform: aString [
 	(ProvideAnswerNotification signal: aString)
-		ifNotNil: [:answer | ^true].
+		ifNotNil: [ :answer | ^ true ].
 	self sessionManager
-		addDeferredStartupAction: [ self inform: aString ]
+		addDeferredStartupAction: [ self traceCr: aString ]
 ]
 
 { #category : 'error handling' }
