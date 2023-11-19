@@ -41,12 +41,7 @@ RBMoveMethodToClassTransformation >> applicabilityPreconditions [
 
 { #category : 'transforming' }
 RBMoveMethodToClassTransformation >> classModelOf: aClass [
-	| classModel |
-	classModel := aClass isMeta
-		ifTrue: [ RBClassModelFactory rbMetaclass named: aClass name ]
-		ifFalse: [ RBClassModelFactory rbClass named: aClass name ].
-	classModel model: self model.
-	^classModel
+	^ self model classObjectFor: aClass
 ]
 
 { #category : 'transforming' }
