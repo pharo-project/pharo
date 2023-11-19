@@ -5,7 +5,6 @@ Class {
 	#name : 'RBEntity',
 	#superclass : 'Object',
 	#instVars : [
-		'modelFactory',
 		'changeFactory'
 	],
 	#category : 'Refactoring-Core-Model',
