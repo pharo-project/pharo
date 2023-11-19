@@ -9,7 +9,7 @@ Class {
 { #category : 'tests' }
 RubFindReplaceServiceTest >> defaultFindReplaceServiceClass [
 
-	^ RubFindReplaceService
+	^ SpRubFindReplaceService
 ]
 
 { #category : 'tests' }

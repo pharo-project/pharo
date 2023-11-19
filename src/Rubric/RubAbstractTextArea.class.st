@@ -142,7 +142,7 @@ RubAbstractTextArea class >> caseSensitiveFinds: aBoolean [
 { #category : 'accessing' }
 RubAbstractTextArea class >> defaultFindReplaceServiceClass [
 
-	^ defaultFindReplaceServiceClass ifNil: [ RubFindReplaceService ]
+	^ defaultFindReplaceServiceClass ifNil: [ SpRubFindReplaceService ]
 ]
 
 { #category : 'accessing' }
