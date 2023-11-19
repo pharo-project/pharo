@@ -444,6 +444,38 @@ origin of Tr2>>foo is Tr1"
 ]
 
 { #category : 'tests' }
+TraitTest >> testPackageIsUpdatedInClassSide [
+
+	| c1 t1 |
+	t1 := self newTrait: #T1.
+	t1 class compile: 'msg ^ 1'.
+
+	c1 := self newClass: #C1 superclass: Object traits: t1.
+	c1 class compile: 'msg ^ 12'.
+
+	self assert: self packageNameForTests asPackage methods size equals: 2.
+	(c1 class >> #msg) removeFromSystem.
+	self assert: self packageNameForTests asPackage methods size equals: 1
+]
+
+{ #category : 'tests' }
+TraitTest >> testPackageIsUpdatedInInstanceSide [
+
+	| c1 t1 |
+	t1 := self newTrait: #T1.
+	t1 compile: 'msg ^ 1'.
+
+	c1 := self newClass: #C1 superclass: Object traits: t1.
+	c1 compile: 'msg ^ 12'.
+
+	self assert: (c1 >> #msg) origin equals: c1.
+
+	self assert: self packageNameForTests asPackage methods size equals: 2.
+	(c1 >> #msg) removeFromSystem.
+	self assert: self packageNameForTests asPackage methods size equals: 1
+]
+
+{ #category : 'tests' }
 TraitTest >> testRecompilingTraitClassMethodRecompilesTheMethodInTheUsers [
 
 	| trait class priorTraitMethod priorClassMethod |
@@ -680,6 +712,52 @@ TraitTest >> testTraitRemoval [
 	self assertEmpty: aClass selectors.
 	self deny: aClass hasTraitComposition.
 	self deny: (aTrait traitUsers includes: aClass)
+]
+
+{ #category : 'tests' }
+TraitTest >> testTraitSource [
+
+	self assert: (MOPTestClassC >> #c) traitSource isNil.
+	self assert: (MOPTestClassC >> #c2) traitSource equals: Trait2 asTraitComposition
+]
+
+{ #category : 'tests' }
+TraitTest >> testTraitSourceIsPersistedWithRecompilation [
+
+	[
+	Trait2 compile: 'traitMethod ^ 1' classified: '*GeneratedPackageForTest'.
+
+	self assert: (Trait2 >> #traitMethod) traitSource isNil.
+	self assert: (MOPTestClassC >> #traitMethod) traitSource equals: Trait2 asTraitComposition.
+
+	(Trait2 >> #traitMethod) recompile.
+
+	self assert: (Trait2 >> #traitMethod) traitSource isNil.
+	self assert: (MOPTestClassC >> #traitMethod) traitSource equals: Trait2 asTraitComposition ] ensure: [
+		self packageOrganizer removePackage: 'GeneratedPackageForTest' ]
+]
+
+{ #category : 'tests' }
+TraitTest >> testTraitSourceIsPersistedWithRemovalOfMetalinks [
+
+	[
+	| metalink |
+	Trait2 compile: 'traitMethod ^ 1' classified: '*GeneratedPackageForTest'.
+
+	self assert: (Trait2 >> #traitMethod) traitSource isNil.
+	self assert: (MOPTestClassC >> #traitMethod) traitSource equals: Trait2 asTraitComposition.
+
+	metalink := MetaLink new.
+	(MOPTestClassC >> #traitMethod) ast link: metalink.
+
+	self assert: (Trait2 >> #traitMethod) traitSource isNil.
+	self assert: (MOPTestClassC >> #traitMethod) traitSource equals: Trait2 asTraitComposition.
+
+	metalink uninstall.
+
+	self assert: (Trait2 >> #traitMethod) traitSource isNil.
+	self assert: (MOPTestClassC >> #traitMethod) traitSource equals: Trait2 asTraitComposition ] ensure: [
+		self packageOrganizer removePackage: 'GeneratedPackageForTest' ]
 ]
 
 { #category : 'tests' }

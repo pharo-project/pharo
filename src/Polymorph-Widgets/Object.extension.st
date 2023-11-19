@@ -1,6 +1,12 @@
 Extension { #name : 'Object' }
 
 { #category : '*Polymorph-Widgets' }
+Object >> iconFormSetNamed: aSymbol [
+
+	^ Smalltalk ui icons iconFormSetNamed: aSymbol
+]
+
+{ #category : '*Polymorph-Widgets' }
 Object >> iconNamed: aSymbol [
 
 	^ Smalltalk ui icons iconNamed: aSymbol

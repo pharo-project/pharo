@@ -118,9 +118,8 @@ TraitChange >> remove: aSelector into: aClass changes: results [
 		results updatedSelectors add: aSelector.
 		^ self ].
 
-
-	"We have to remove the method that was removed in a used trait."
-	(aClass methodDict includesKey: aSelector) ifTrue: [ aClass removeSelector: aSelector ].
+	"We have to remove the method that was removed in a used trait silently."
+	(aClass methodDict includesKey: aSelector) ifTrue: [ aClass removeSelectorSilently: aSelector ].
 
 	"The change is propagated as a removal"
 	results removedSelectors add: aSelector.

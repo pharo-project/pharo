@@ -256,7 +256,7 @@ RBRefactoryTyper >> implementorsOf: aSelector in: aClass storeIn: classes [
 
 { #category : 'initialization' }
 RBRefactoryTyper >> initialize [
-	model := RBClassModelFactory rbNamespace new.
+	model := RBNamespace new.
 	class := model classFor: Object.
 	variableTypes := Dictionary new.
 	variableMessages := Dictionary new.
