@@ -6,9 +6,14 @@ PackageA(tagB) conflicts with PackageA-B
 PackageA-B conflicts with PackageA(tagB)
 "
 Class {
-	#name : 'RPackageConflictError',
+	#name : 'PackageConflictError',
 	#superclass : 'Error',
 	#category : 'RPackage-Core-Exceptions',
 	#package : 'RPackage-Core',
 	#tag : 'Exceptions'
 }
+
+{ #category : 'class initialization' }
+PackageConflictError class >> initialize [
+	self deprecatedAliases: { #RPackageConflictError }
+]
