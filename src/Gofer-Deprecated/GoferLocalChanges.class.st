@@ -4,8 +4,8 @@ Handling local changes
 Class {
 	#name : 'GoferLocalChanges',
 	#superclass : 'GoferChanges',
-	#category : 'Gofer-Core-Operations',
-	#package : 'Gofer-Core',
+	#category : 'Gofer-Deprecated-Operations',
+	#package : 'Gofer-Deprecated',
 	#tag : 'Operations'
 }
 

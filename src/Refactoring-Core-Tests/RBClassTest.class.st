@@ -15,7 +15,7 @@ Class {
 RBClassTest >> setUp [
 
 	super setUp.
-	rbNamespace := RBClassModelFactory rbNamespace new.
+	rbNamespace := RBNamespace new.
 	objectClass := rbNamespace classNamed: #Object.
 	messageNodeClass := rbNamespace classNamed: #RBMessageNode.
 	rbNamespace defineClass: [ :aBuilder |
@@ -85,7 +85,7 @@ RBClassTest >> testDefinesPoolDictionary [
 	self deny: (objectClass definesPoolDictionary: #OpcodePool).
 	self assert: (newClass definesPoolDictionary: #TextConstants).
 	self deny: (messageNodeClass definesPoolDictionary: #OpcodePool).
-	self assert: ((RBClassModelFactory rbNamespace new classNamed: #Text)
+	self assert: ((RBNamespace new classNamed: #Text)
 				definesPoolDictionary: #TextConstants)
 ]
 

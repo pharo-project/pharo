@@ -4,8 +4,8 @@ I'm a private and internal class to Gofer. I'm a command used to call the class 
 Class {
 	#name : 'GoferReinitialize',
 	#superclass : 'GoferWorking',
-	#category : 'Gofer-Core-Operations',
-	#package : 'Gofer-Core',
+	#category : 'Gofer-Deprecated-Operations',
+	#package : 'Gofer-Deprecated',
 	#tag : 'Operations'
 }
 

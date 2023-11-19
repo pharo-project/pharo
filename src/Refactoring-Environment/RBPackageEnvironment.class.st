@@ -60,11 +60,6 @@ RBPackageEnvironment class >> packages: aCollection [
 		packages: aCollection
 ]
 
-{ #category : 'visiting' }
-RBPackageEnvironment >> acceptVisitor: aEnvVisitor [
-	^ aEnvVisitor visitPackageEnv: self
-]
-
 { #category : 'adding' }
 RBPackageEnvironment >> addPackage: aSymbol [
 	packages add: aSymbol

@@ -4,8 +4,8 @@ Recompile
 Class {
 	#name : 'GoferRecompile',
 	#superclass : 'GoferWorking',
-	#category : 'Gofer-Core-Operations',
-	#package : 'Gofer-Core',
+	#category : 'Gofer-Deprecated-Operations',
+	#package : 'Gofer-Deprecated',
 	#tag : 'Operations'
 }
 

@@ -7,8 +7,8 @@ Class {
 	#instVars : [
 		'cacheReferences'
 	],
-	#category : 'Gofer-Core-Operations',
-	#package : 'Gofer-Core',
+	#category : 'Gofer-Deprecated-Operations',
+	#package : 'Gofer-Deprecated',
 	#tag : 'Operations'
 }
 

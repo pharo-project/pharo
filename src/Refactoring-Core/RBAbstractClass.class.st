@@ -222,7 +222,7 @@ RBAbstractClass >> compile: aString classified: aSymbolCollection [
 				compile: aString
 				in: self
 				classified: aSymbolCollection.
-	method := modelFactory rbMethod
+	method := model rbMethodClass
 				for: self
 				source: aString
 				selector: change selector.
@@ -540,7 +540,7 @@ RBAbstractClass >> methodFor: aSelector [
 		  class compiledMethodAt: aSelector ifPresent: [ :compiledMethod |
 			  compiledMethod isFromTrait
 				  ifTrue: [ (compiledMethod traitSource hasMethod: aSelector) ifTrue: [ (model classNamed: compiledMethod origin name) methodFor: aSelector ] ]
-				  ifFalse: [ modelFactory rbMethod for: self fromMethod: compiledMethod andSelector: aSelector ] ] ]
+				  ifFalse: [ model rbMethodClass for: self fromMethod: compiledMethod andSelector: aSelector ] ] ]
 ]
 
 { #category : 'accessing' }
