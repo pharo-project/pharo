@@ -124,7 +124,7 @@ RBClassModelFactory >> rbMethod [
 
 { #category : 'factory access' }
 RBClassModelFactory >> rbNamespace [
-
+	self deprecated: 'Use the className RBNamespace directly'.
 	^ self class rbNamespace
 ]
 
