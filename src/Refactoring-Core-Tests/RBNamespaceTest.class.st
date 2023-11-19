@@ -210,21 +210,20 @@ RBNamespaceTest >> testIncludesClass [
 { #category : 'tests - classes' }
 RBNamespaceTest >> testModelImplementorsSenders [
 
-	| model class modelImps refs found |
-	model := namespace.
-	model defineClass: [ :aBuilder |
+	| class modelImps refs found |
+	namespace defineClass: [ :aBuilder |
 		aBuilder
 			superclass: Object;
 			name: #Asdf;
 			package: #'Refactory-Testing' ].
-	class := model classNamed: #Asdf.
+	class := namespace classNamed: #Asdf.
 	class compile: 'storeOn: aStream ^super storeOn: aStream' classified: 'printing'.
-	modelImps := model allImplementorsOf: #storeOn:.
+	modelImps := namespace allImplementorsOf: #storeOn:.
 	self assert: (modelImps includes: class).
 	self assert: modelImps size - 1 equals: (RBBrowserEnvironment new implementorsOf: #storeOn:) numberSelectors.
 	refs := RBBrowserEnvironment new referencesTo: #storeOn:.
 	found := false.
-	model allReferencesTo: #storeOn: do: [ :each |
+	namespace allReferencesTo: #storeOn: do: [ :each |
 		each modelClass = class
 			ifTrue: [ found := true ]
 			ifFalse: [ self assert: (refs includesSelector: each selector in: each modelClass realClass) ] ].
@@ -251,9 +250,7 @@ RBNamespaceTest >> testPopulateModel [
 { #category : 'tests - classes' }
 RBNamespaceTest >> testRedefineClassChange [
 
-	| st |
-		st := namespace.
-	st defineClass: [ :aBuilder |
+	namespace defineClass: [ :aBuilder |
 		aBuilder
 			superclass: nil;
 			name: #RBNamespaceTest;
@@ -261,100 +258,98 @@ RBNamespaceTest >> testRedefineClassChange [
 			sharedVariables: { #A };
 			sharedPools: 'TextConstants';
 			package: #'Refactory-Testing' ].
-	self assert: (st includesClassNamed: #Object).
-	self assert: (st classNamed: #Object) notNil
+	self assert: (namespace includesClassNamed: #Object).
+	self assert: (namespace classNamed: #Object) notNil
 ]
 
 { #category : 'tests - classes' }
 RBNamespaceTest >> testReferencesPrintOn [
-	| hasFoundObject hasFoundSelf smalltalk |
+
+	| hasFoundObject hasFoundSelf  |
 	hasFoundObject := false.
 	hasFoundSelf := false.
-	smalltalk := RBNamespace new.
-	smalltalk allReferencesTo: #printOn: do: [ :each |
+	namespace allReferencesTo: #printOn: do: [ :each |
 		hasFoundObject := hasFoundObject
 			or: [ each selector = #fullPrintString
-			and: [each modelClass = (smalltalk classNamed: #Object) ] ].
+			and: [each modelClass = (namespace classNamed: #Object) ] ].
 		hasFoundSelf := hasFoundSelf
 			or: [ each selector = #testReferencesPrintOn
-			and: [ each modelClass = (smalltalk classNamed: self class name) ] ] ].
+			and: [ each modelClass = (namespace classNamed: self class name) ] ] ].
 	self assert: hasFoundObject.
 	self assert: hasFoundSelf
 ]
 
 { #category : 'tests - classes' }
 RBNamespaceTest >> testReferencesPrintOnAfterAddition [
-	| hasFoundObject hasFoundSelf smalltalk |
+
+	| hasFoundObject hasFoundSelf |
 	hasFoundObject := false.
 	hasFoundSelf := false.
-	smalltalk := RBNamespace new.
-	(smalltalk classNamed: #Object)
+	(namespace classNamed: #Object)
 		compile: 'someTestReference self printOn: nil'
 		classified: 'testing'.
-	(smalltalk classNamed: self class name)
+	(namespace classNamed: self class name)
 		compile: 'someTestReference ^ #printOn:'
 		classified: 'testing'.
-	smalltalk allReferencesTo: #printOn: do: [ :each |
+	namespace allReferencesTo: #printOn: do: [ :each |
 		hasFoundObject := hasFoundObject
 			or: [ each selector = #someTestReference
-			and: [ each modelClass = (smalltalk classNamed: #Object) ] ].
+			and: [ each modelClass = (namespace classNamed: #Object) ] ].
 		hasFoundSelf := hasFoundSelf
 			or: [ each selector = #someTestReference
-			and: [ each modelClass = (smalltalk classNamed: self class name) ] ] ].
+			and: [ each modelClass = (namespace classNamed: self class name) ] ] ].
 	self assert: hasFoundObject.
 	self assert: hasFoundSelf
 ]
 
 { #category : 'tests - classes' }
 RBNamespaceTest >> testReferencesPrintOnAfterRemove [
-	| hasFoundObject hasFoundSelf smalltalk |
+
+	| hasFoundObject hasFoundSelf |
 	hasFoundObject := false.
 	hasFoundSelf := false.
-	smalltalk := RBNamespace new.
-	(smalltalk classNamed: #Object)
+
+	(namespace classNamed: #Object)
 		removeMethod: #printString.
-	(smalltalk classNamed: self class name)
+	(namespace classNamed: self class name)
 		removeMethod: #testReferencesPrintOnAfterRemove.
-	smalltalk allReferencesTo: #printOn: do: [ :each |
+	namespace allReferencesTo: #printOn: do: [ :each |
 		hasFoundObject := hasFoundObject
 			or: [ each selector = #printString
-			and: [ each modelClass = (smalltalk classNamed: #Object) ] ].
+			and: [ each modelClass = (namespace classNamed: #Object) ] ].
 		hasFoundSelf := hasFoundSelf
 			or: [ each selector = #testReferencesPrintOnAfterRemove
-			and: [ each modelClass = (smalltalk classNamed: self class name) ] ] ].
+			and: [ each modelClass = (namespace classNamed: self class name) ] ] ].
 	self deny: hasFoundObject.
 	self deny: hasFoundSelf
 ]
 
 { #category : 'tests - classes' }
 RBNamespaceTest >> testRemoveClassChange [
-	| st |
-	st := namespace.
-	st removeClassNamed: self class name.
-	self deny: (st includesClassNamed: self class name).
-	self assert: (st classNamed: self class name) isNil
+
+	namespace removeClassNamed: self class name.
+	self deny: (namespace includesClassNamed: self class name).
+	self assert: (namespace classNamed: self class name) isNil
 ]
 
 { #category : 'tests - classes' }
 RBNamespaceTest >> testReparentSuperclassChange [
-	| st superclass subclasses |
-	st := namespace.
-	superclass := st classFor: TestCase superclass.
-	subclasses := TestCase subclasses collect: [:each | st classFor: each].
-	st reparentClasses: subclasses to: superclass.
+
+	| superclass subclasses |
+	superclass := namespace classFor: TestCase superclass.
+	subclasses := TestCase subclasses collect: [:each | namespace classFor: each].
+	namespace reparentClasses: subclasses to: superclass.
 	subclasses do: [:each | self assert: each superclass equals: superclass]
 ]
 
 { #category : 'class tests' }
 RBNamespaceTest >> testRoots [
 
-	| model |
-	model := RBNamespace new.
 	self
 		assert:
-			(model rootClasses asSortedCollection: [ :a :b | a name < b name ])
+			(namespace rootClasses asSortedCollection: [ :a :b | a name < b name ])
 				asArray
 		equals:
-			(({ ProtoObject} collect: [ :each | model classFor: each ])
+			(({ ProtoObject} collect: [ :each | namespace classFor: each ])
 				 asSortedCollection: [ :a :b | a name < b name ]) asArray
 ]
