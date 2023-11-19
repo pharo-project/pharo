@@ -218,15 +218,6 @@ MCWorkingCopy class >> unregisterForNotifications [
 	SystemAnnouncer uniqueInstance unsubscribe: self
 ]
 
-{ #category : 'system changes' }
-MCWorkingCopy class >> workingCopiesForPackage: aPackage do: aBlock [
-
-	| packageName |
-	packageName := aPackage name.
-
-	self registry select: [ :workingCopy | workingCopy packageName = packageName ] thenDo: aBlock
-]
-
 { #category : 'operations' }
 MCWorkingCopy >> adopt: aVersion [
 	ancestry addAncestor: aVersion info.
