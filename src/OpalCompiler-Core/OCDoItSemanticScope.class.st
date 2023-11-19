@@ -25,7 +25,9 @@ OCDoItSemanticScope class >> isAbstract [
 { #category : 'code evaluation' }
 OCDoItSemanticScope >> evaluateDoIt: doItMethod [
 
-	^self receiver withArgs: #() executeMethod: doItMethod
+	^ [ self receiver withArgs: #() executeMethod: doItMethod] 
+			on: UndeclaredVariableRead
+		 	do: [ self receiver ]
 ]
 
 { #category : 'testing' }
