@@ -1,7 +1,7 @@
-Extension { #name : 'RPackageTag' }
+Extension { #name : 'PackageTag' }
 
 { #category : '*Manifest-Core' }
-RPackageTag >> manifestBuilderForRuleChecker: aRuleChecker [
+PackageTag >> manifestBuilderForRuleChecker: aRuleChecker [
 	"Return the manifestsince the rulechecker is keeping a cache, we ask it back"
 
 	^ aRuleChecker manifestBuilderOfPackage: self package

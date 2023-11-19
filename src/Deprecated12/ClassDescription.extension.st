@@ -307,7 +307,7 @@ ClassDescription >> untagFrom: aSymbol [
 	| package packageTag |
 	self deprecated: 'A class can have only one package tag so it is easier to use #removePackageTag.'.
 	"Any class or trait could be tagged by multiple symbols for user purpose.
-	For now we could only model single tag with RPackageTag"
+	For now we could only model single tag with PackageTag"
 	package := self package.
 	packageTag := self packageTag.
 	packageTag isRoot ifTrue: [ ^ #(  ) ].

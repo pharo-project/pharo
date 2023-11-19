@@ -370,5 +370,5 @@ PackageOrganizer >> validatePackageDoesNotExist: aPackage [
 	packageName := aPackage isString
 		               ifTrue: [ aPackage ]
 		               ifFalse: [ aPackage name ].
-	self packageNamed: packageName ifPresent: [ RPackageConflictError signal: ('A package named {1} already exists' format: { packageName }) ]
+	self packageNamed: packageName ifPresent: [ PackageConflictError signal: ('A package named {1} already exists' format: { packageName }) ]
 ]
