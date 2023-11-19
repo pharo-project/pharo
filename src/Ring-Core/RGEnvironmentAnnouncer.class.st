@@ -6,10 +6,6 @@ BEWARE: You should not need to subclass me. Think about just using me to send yo
 Class {
 	#name : 'RGEnvironmentAnnouncer',
 	#superclass : 'Announcer',
-	#instVars : [
-		'suspended',
-		'storedAnnouncements'
-	],
 	#category : 'Ring-Core-Announcements',
 	#package : 'Ring-Core',
 	#tag : 'Announcements'

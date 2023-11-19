@@ -9,7 +9,9 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'registry',
-		'preventedAnnouncements'
+		'preventedAnnouncements',
+		'suspended',
+		'storedAnnouncements'
 	],
 	#category : 'Announcements-Core-Base',
 	#package : 'Announcements-Core',

@@ -6,10 +6,6 @@ BEWARE: You should not need to subclass me. Think about just using me to send yo
 Class {
 	#name : 'SystemAnnouncer',
 	#superclass : 'Announcer',
-	#instVars : [
-		'suspended',
-		'storedAnnouncements'
-	],
 	#classInstVars : [
 		'announcer'
 	],
