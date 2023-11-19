@@ -4,8 +4,8 @@ I create pharo images for Spur VMs in 64bit format.
 Class {
 	#name : 'PBImageBuilder64bit',
 	#superclass : 'PBAbstractImageBuilder',
-	#category : 'Pharo30Bootstrap',
-	#package : 'Pharo30Bootstrap'
+	#category : 'PharoBootstrap',
+	#package : 'PharoBootstrap'
 }
 
 { #category : 'running' }

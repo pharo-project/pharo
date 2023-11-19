@@ -1,12 +1,12 @@
 Extension { #name : 'RGEnvironment' }
 
-{ #category : '*Pharo30Bootstrap' }
+{ #category : '*PharoBootstrap' }
 RGEnvironment >> allClasses [
 
 	^ self ask behaviors
 ]
 
-{ #category : '*Pharo30Bootstrap' }
+{ #category : '*PharoBootstrap' }
 RGEnvironment >> includesClassNamed: aName [ 
 
 	^ self ask includesClassNamed: aName 

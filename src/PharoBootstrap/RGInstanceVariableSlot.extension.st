@@ -1,6 +1,6 @@
 Extension { #name : 'RGInstanceVariableSlot' }
 
-{ #category : '*Pharo30Bootstrap' }
+{ #category : '*PharoBootstrap' }
 RGInstanceVariableSlot >> isValidForBootstrap [
 
 	^ true
