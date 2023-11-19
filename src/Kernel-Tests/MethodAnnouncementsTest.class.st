@@ -27,6 +27,25 @@ MethodAnnouncementsTest >> testCompileMethodAnnounceAddition [
 ]
 
 { #category : 'tests' }
+MethodAnnouncementsTest >> testRemoveMethodAnnounceRemoval [
+
+	class compiler
+		protocol: #titan;
+		install: 'king ^ 1'.
+
+	self when: MethodRemoved do: [ :ann |
+		self assert: ann method selector equals: #king.
+		self assert: ann method protocol name equals: #titan.
+		self assert: ann methodClass name equals: self classNameForTests.
+		self assert: ann methodPackage name equals: self packageNameForTests.
+		self assert: ann packagesAffected equals: { self packageNameForTests asPackage } ].
+
+	class removeSelector: #king.
+
+	self assert: numberOfAnnouncements equals: 1
+]
+
+{ #category : 'tests' }
 MethodAnnouncementsTest >> testRemoveSelectorDoesNotAnnounceRecategorization [
 
 	class compiler
@@ -59,6 +78,27 @@ MethodAnnouncementsTest >> testRemoveSelectorSetThePackage [
 		self assert: ann methodPackage name equals: self packageNameForTests ].
 
 	class removeSelector: #king.
+
+	self assert: numberOfAnnouncements equals: 1
+]
+
+{ #category : 'tests' }
+MethodAnnouncementsTest >> testUpdateMethodAnnounceModification [
+
+	class compiler
+		protocol: #titan;
+		install: 'king ^ 2'.
+
+	self when: MethodModified do: [ :ann |
+		self assert: ann method selector equals: #king.
+		self assert: ann method protocol name equals: #titan.
+		self assert: ann methodClass name equals: self classNameForTests.
+		self assert: ann methodPackage name equals: self packageNameForTests.
+		self assert: ann packagesAffected equals: { self packageNameForTests asPackage } ].
+
+	class compiler
+		protocol: #titan;
+		install: 'king ^ 1'.
 
 	self assert: numberOfAnnouncements equals: 1
 ]

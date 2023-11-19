@@ -48,7 +48,7 @@ ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod 
 			self codeChangeAnnouncer announce: (MethodAdded method: compiledMethod) ]
 		ifFalse: [ "If protocol changed and someone is from different package, I need to throw a method recategorized"
 			newProtocol = oldProtocol ifFalse: [ self announceRecategorizationOf: compiledMethod oldProtocol: oldProtocol ].
-			self codeChangeAnnouncer methodChangedFrom: priorMethod to: compiledMethod oldProtocol: oldProtocol ]
+			self codeChangeAnnouncer announce: (MethodModified methodChangedFrom: priorMethod to: compiledMethod oldProtocol: oldProtocol) ]
 ]
 
 { #category : 'instance variables' }
@@ -153,10 +153,10 @@ ClassDescription >> allUnreferencedInstanceVariables [
 ClassDescription >> announceRecategorizationOf: compiledMethod oldProtocol: oldProtocol [
 
 	"Repackage the method if it is not from a trait"
-	compiledMethod origin = compiledMethod methodClass ifTrue: [ self packageOrganizer repackageMethod: compiledMethod oldProtocol: oldProtocol newProtocol: compiledMethod protocol ].
+	compiledMethod isFromTrait ifFalse: [ self packageOrganizer repackageMethod: compiledMethod oldProtocol: oldProtocol newProtocol: compiledMethod protocol ].
 
 	"Announce the recategorization"
-	self codeChangeAnnouncer methodRecategorized: compiledMethod oldProtocol: oldProtocol
+	self codeChangeAnnouncer announce: (MethodRecategorized method: compiledMethod oldProtocol: oldProtocol)
 ]
 
 { #category : 'authors' }
