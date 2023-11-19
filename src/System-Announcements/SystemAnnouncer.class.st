@@ -100,18 +100,6 @@ SystemAnnouncer >> evaluated: expression context: aContext [
 ]
 
 { #category : 'triggering' }
-SystemAnnouncer >> methodChangedFrom: oldMethod to: newMethod oldProtocol: oldProtocol [
-
-	self announce: (MethodModified methodChangedFrom: oldMethod to: newMethod oldProtocol: oldProtocol)
-]
-
-{ #category : 'triggering' }
-SystemAnnouncer >> methodRecategorized: method oldProtocol: oldProtocol [
-
-	self announce: (MethodRecategorized method: method oldProtocol: oldProtocol)
-]
-
-{ #category : 'triggering' }
 SystemAnnouncer >> methodRemoved: aMethod origin: aBehavior [
 	"A method with the given selector was removed from the class."
 

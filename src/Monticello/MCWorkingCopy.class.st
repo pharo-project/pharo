@@ -152,8 +152,6 @@ MCWorkingCopy class >> initialize [
 MCWorkingCopy class >> methodModified: anEvent [
 	"trait methods aren't handled here"
 
-	anEvent isProvidedByATrait ifTrue: [ ^ self ].
-
 	^ anEvent methodPackage mcWorkingCopy ifNotNil: [ :wc | wc modified: true ]
 ]
 

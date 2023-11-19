@@ -62,12 +62,6 @@ MethodAnnouncement >> classAffected [
 ]
 
 { #category : 'testing' }
-MethodAnnouncement >> isProvidedByATrait [
-
-	^ self methodOrigin ~= self methodClass
-]
-
-{ #category : 'testing' }
 MethodAnnouncement >> isProvidedByExtension [
 	^self methodOrigin package ~= self methodPackage
 ]
