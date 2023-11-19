@@ -37,6 +37,7 @@ MethodAnnouncementsTest >> testRemoveMethodAnnounceRemoval [
 		self assert: ann method selector equals: #king.
 		self assert: ann method protocol name equals: #titan.
 		self assert: ann methodClass name equals: self classNameForTests.
+		"Until Pharo 12 the MethodRemoved announcement did not know the package of the method."
 		self assert: ann methodPackage name equals: self packageNameForTests.
 		self assert: ann packagesAffected equals: { self packageNameForTests asPackage } ].
 
@@ -53,24 +54,6 @@ MethodAnnouncementsTest >> testRemoveSelectorDoesNotAnnounceRecategorization [
 		install: 'king ^ 1'.
 
 	self when: MethodRecategorized do: [ :ann | self fail: 'No method recategorization should happen during the removal of a method' ].
-
-	self when: MethodRemoved do: [ :ann |
-		self assert: ann method selector equals: #king.
-		self assert: ann methodClass name equals: self classNameForTests.
-		self assert: ann methodPackage name equals: self packageNameForTests ].
-
-	class removeSelector: #king.
-
-	self assert: numberOfAnnouncements equals: 1
-]
-
-{ #category : 'tests' }
-MethodAnnouncementsTest >> testRemoveSelectorSetThePackage [
-	"Until Pharo 12 the MethodRemoved announcement did not know the package of the method."
-
-	class compiler
-		protocol: #titan;
-		install: 'king ^ 1'.
 
 	self when: MethodRemoved do: [ :ann |
 		self assert: ann method selector equals: #king.
