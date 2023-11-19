@@ -85,3 +85,25 @@ MethodAnnouncementsTest >> testUpdateMethodAnnounceModification [
 
 	self assert: numberOfAnnouncements equals: 1
 ]
+
+{ #category : 'tests' }
+MethodAnnouncementsTest >> testUpdateMethodAnnounceRecategorization [
+
+	class compiler
+		protocol: #demon;
+		install: 'king ^ 2'.
+
+	self when: MethodRecategorized do: [ :ann |
+		self assert: ann method selector equals: #king.
+		self assert: ann oldProtocol name equals: #demon.
+		self assert: ann newProtocol name equals: #titan.
+		self assert: ann methodClass name equals: self classNameForTests.
+		self assert: ann methodPackage name equals: self packageNameForTests.
+		self assert: ann packagesAffected equals: { self packageNameForTests asPackage } ].
+
+	class compiler
+		protocol: #titan;
+		install: 'king ^ 1'.
+
+	self assert: numberOfAnnouncements equals: 1
+]
