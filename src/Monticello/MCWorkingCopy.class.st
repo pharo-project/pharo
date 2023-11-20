@@ -79,39 +79,6 @@ MCWorkingCopy class >> announcer: anAnnouncer [
 	PrivateAnnouncer := anAnnouncer
 ]
 
-{ #category : 'system changes' }
-MCWorkingCopy class >> classModified: anEvent [
-
-	self workingCopiesForClass: anEvent classAffected do: [ :wc | wc modified: true ]
-]
-
-{ #category : 'system changes' }
-MCWorkingCopy class >> classMoved: anEvent [
-
-	self workingCopiesForPackage: anEvent oldPackage do: [ :mgr | mgr modified: true ].
-	self workingCopiesForPackage: anEvent newPackage do: [ :mgr | mgr modified: true ]
-]
-
-{ #category : 'system changes' }
-MCWorkingCopy class >> classRemoved: anEvent [
-	"Informs the registry who use to keep this class that its changed. Unlike #classModified:, class is not anymore in RPackages so it will not be found, that's why we look for system category instead if class is included or not"
-
-	anEvent packageAffected mcWorkingCopy ifNotNil: [ :workingCopy | workingCopy modified: true ].
-
-	anEvent classAffected protocols , anEvent classAffected classSide protocols
-		select: [ :protocol | protocol isExtensionProtocol ]
-		thenDo: [ :extensionProtocol |
-			(self packageOrganizer packageMatchingExtensionName: extensionProtocol name allButFirst) ifNotNil: [ :package |
-				package mcWorkingCopy ifNotNil: [ :workingCopy | workingCopy modified: true ] ] ]
-]
-
-{ #category : 'system changes' }
-MCWorkingCopy class >> classRenamed: anEvent [
-
-	self classModified: anEvent.
-	anEvent classAffected extendingPackages do: [ :pkg | self workingCopiesForPackage: pkg do: [ :workingCopy | workingCopy modified: true ] ]
-]
-
 { #category : 'accessing' }
 MCWorkingCopy class >> ensureForPackage: aPackage [
 
@@ -146,6 +113,12 @@ MCWorkingCopy class >> forPackageNamed: aPackageName [
 		  ifNone: [ NotFound signalFor: aPackageName in: self ]
 ]
 
+{ #category : 'system changes' }
+MCWorkingCopy class >> handleClassAndMethodsChange: anEvent [
+
+	anEvent packagesAffected do: [ :package | package mcWorkingCopy ifNotNil: [ :workingCopy | workingCopy modified: true ] ]
+]
+
 { #category : 'querying' }
 MCWorkingCopy class >> hasPackageNamed: aName [
 
@@ -173,27 +146,6 @@ MCWorkingCopy class >> initialize [
 
 	registry ifNotNil: [ registry rehash ].
 	self registerForNotifications
-]
-
-{ #category : 'system changes' }
-MCWorkingCopy class >> methodModified: anEvent [
-	"trait methods aren't handled here"
-	anEvent isProvidedByATrait ifTrue: [ ^ self ].
-
-	^ self workingCopiesForPackage: anEvent methodPackage do: [ :wc | wc modified: true ]
-]
-
-{ #category : 'system changes' }
-MCWorkingCopy class >> methodMoved: anEvent [
-
-	self workingCopiesForPackage: anEvent oldPackage do: [ :workingCopy | workingCopy modified: true ].
-	self workingCopiesForPackage: anEvent newPackage do: [ :workingCopy | workingCopy modified: true ]
-]
-
-{ #category : 'system changes' }
-MCWorkingCopy class >> methodRemoved: anEvent [
-
-	self workingCopiesForPackage: anEvent methodPackage do: [ :wc | wc modified: true ]
 ]
 
 { #category : 'system changes' }
@@ -239,13 +191,7 @@ MCWorkingCopy class >> registerInterestOnSystemChanges [
 		when: PackageAdded send: #packageAdded: to: self;
 		when: PackageRenamed send: #packageRenamed: to: self;
 		when: PackageRemoved send: #packageRemoved: to: self;
-		when: ClassAdded , ClassModifiedClassDefinition , ClassCommented , ClassParentRenamed send: #classModified: to: self;
-		when: ClassRenamed send: #classRenamed: to: self;
-		when: ClassRepackaged send: #classMoved: to: self;
-		when: ClassRemoved send: #classRemoved: to: self;
-		when: MethodAdded , MethodModified , MethodRecategorized send: #methodModified: to: self;
-		when: MethodRepackaged send: #methodMoved: to: self;
-		when: MethodRemoved send: #methodRemoved: to: self
+		when: ClassAnnouncement, MethodAnnouncement send: #handleClassAndMethodsChange: to: self
 ]
 
 { #category : 'private' }
@@ -270,21 +216,6 @@ MCWorkingCopy class >> registry [
 MCWorkingCopy class >> unregisterForNotifications [
 
 	SystemAnnouncer uniqueInstance unsubscribe: self
-]
-
-{ #category : 'system changes' }
-MCWorkingCopy class >> workingCopiesForClass: aClass do: aBlock [
-
-	^ self workingCopiesForPackage: aClass package do: aBlock
-]
-
-{ #category : 'system changes' }
-MCWorkingCopy class >> workingCopiesForPackage: aPackage do: aBlock [
-
-	| packageName |
-	packageName := aPackage name.
-
-	self registry select: [ :workingCopy | workingCopy packageName = packageName ] thenDo: aBlock
 ]
 
 { #category : 'operations' }

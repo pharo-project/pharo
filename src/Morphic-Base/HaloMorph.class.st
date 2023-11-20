@@ -718,12 +718,12 @@ HaloMorph >> createHandleAt: aPoint color: aColor iconName: iconName [
 			handle borderWidth: 0 ].
 	handle wantsYellowButtonMenu: false.
 	iconName
-		ifNotNil: [ ( self iconNamed: iconName )
-				ifNotNil: [ :form |
+		ifNotNil: [ ( self iconFormSetNamed: iconName )
+				ifNotNil: [ :formSet |
 					| image |
 
 					image := ImageMorph new.
-					image form: form.
+					image formSet: formSet.
 					image color: aColor contrastingBlackAndWhiteColor.
 					image lock.
 					handle addMorphCentered: image

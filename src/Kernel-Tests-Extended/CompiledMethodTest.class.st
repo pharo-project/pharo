@@ -293,7 +293,7 @@ CompiledMethodTest >> testAccessesSlot [
 	self assert: ((Point>>#setX:setY:) accessesSlot: (Point slotNamed: #y))
 ]
 
-{ #category : 'tests - compiling' }
+{ #category : 'tests - compilation' }
 CompiledMethodTest >> testAddingSlotDoesNotRemoveExtension [
 	"Regression test for a case where recompiling a method removed the fact that it was an extension."
 
@@ -303,12 +303,12 @@ CompiledMethodTest >> testAddingSlotDoesNotRemoveExtension [
 			         name: #TUTU;
 			         slots: { #test };
 			         package: self packageNameForTests ].
-	class compile: 'isExtensionTestMethod ^ test' classified: '*Kernel-Tests-Generated-Package'.
+	class compile: 'isExtensionTestMethod ^ test' classified: '*GeneratedPackageForTest'.
 	self assert: (class >> #isExtensionTestMethod) isExtension.
 
 	class addInstVarNamed: 'test2'.
 
-	self assert: (class >> #isExtensionTestMethod) isExtension ] ensure: [ self packageOrganizer removePackage: 'Kernel-Tests-Generated-Package' ]
+	self assert: (class >> #isExtensionTestMethod) isExtension ] ensure: [ self packageOrganizer removePackage: 'GeneratedPackageForTest' ]
 ]
 
 { #category : 'tests - converting' }
@@ -363,24 +363,24 @@ CompiledMethodTest >> testComparison [
 			self deny: each equals: method2 ]
 ]
 
-{ #category : 'tests - compiling' }
+{ #category : 'tests - compilation' }
 CompiledMethodTest >> testCompilingExistingMethodDoesNotRemoveExtensions [
 	"Regression test for a case where recompiling a method removed the fact that it was an extension."
 
 	[
 	| method |
-	self class compile: 'isExtensionTestMethod ^ 1' classified: '*Kernel-Tests-Generated-Package'.
+	self class compile: 'isExtensionTestMethod ^ 1' classified: '*GeneratedPackageForTest'.
 	method := self class >> #isExtensionTestMethod.
 	self assert: method isExtension.
 
 	self class compile: 'isExtensionTestMethod ^ 2'.
 
 	self assert: method isExtension ] ensure: [
-		self packageOrganizer removePackage: 'Kernel-Tests-Generated-Package'.
+		self packageOrganizer removePackage: 'GeneratedPackageForTest'.
 		self class compiledMethodAt: #isExtensionTestMethod ifPresent: [ :method | method removeFromSystem ] ]
 ]
 
-{ #category : 'tests' }
+{ #category : 'tests - copying' }
 CompiledMethodTest >> testCopy [
 	<pragma: #pragma>
 	| method copy |
@@ -839,6 +839,24 @@ CompiledMethodTest >> testPropertyAtIfPresentDoNotClashWithPragmas [
 	self assert: (method propertyAt: #bebou ifPresent: [ :value | value ]) ] ensure: [ method removeProperty: #bebou ]
 ]
 
+{ #category : 'tests - compiling' }
+CompiledMethodTest >> testProtocolOfRemovedMethod [
+
+	| method |
+	class := Object newAnonymousSubclass.
+	class compile: 'billy ^ 1' classified: 'cat'.
+
+	method := class >> #billy.
+
+	self assert: method protocol name equals: #cat.
+	self assert: method protocolName equals: #cat.
+
+	class removeSelector: #billy.
+
+	self assert: method protocol name equals: #cat.
+	self assert: method protocolName equals: #cat
+]
+
 { #category : 'tests - instance variable' }
 CompiledMethodTest >> testReadsField [
 	| method |
@@ -872,20 +890,20 @@ CompiledMethodTest >> testReadsSlot [
 	self deny: ((Point>>#setX:setY:) readsSlot: (Point slotNamed: #y))
 ]
 
-{ #category : 'tests - compiling' }
+{ #category : 'tests - compilation' }
 CompiledMethodTest >> testRecompilingDoesNotRemoveExtensions [
 	"Regression test for a case where recompiling a method removed the fact that it was an extension."
 
 	[
 	| method |
-	self class compile: 'isExtensionTestMethod ^ 1' classified: '*Kernel-Tests-Generated-Package'.
+	self class compile: 'isExtensionTestMethod ^ 1' classified: '*GeneratedPackageForTest'.
 	method := self class >> #isExtensionTestMethod.
 	self assert: method isExtension.
 
 	method recompile.
 
 	self assert: method isExtension ] ensure: [
-		self packageOrganizer removePackage: 'Kernel-Tests-Generated-Package'.
+		self packageOrganizer removePackage: 'GeneratedPackageForTest'.
 		self class compiledMethodAt: #isExtensionTestMethod ifPresent: [ :method | method removeFromSystem ] ]
 ]
 

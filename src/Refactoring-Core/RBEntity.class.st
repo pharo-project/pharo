@@ -5,7 +5,6 @@ Class {
 	#name : 'RBEntity',
 	#superclass : 'Object',
 	#instVars : [
-		'modelFactory',
 		'changeFactory'
 	],
 	#category : 'Refactoring-Core-Model',
@@ -16,7 +15,6 @@ Class {
 { #category : 'initialization' }
 RBEntity >> initialize [
 	super initialize.
-	modelFactory := RBClassModelFactory new.
 	changeFactory := RBRefactoryChangeManager changeFactory
 ]
 
@@ -24,4 +22,35 @@ RBEntity >> initialize [
 RBEntity >> parserClass [
 
 	^ RBParser
+]
+
+{ #category : 'factory access' }
+RBEntity >> rbClassClass [
+	^ RBClass
+]
+
+{ #category : 'factory access' }
+RBEntity >> rbMetaclassClass [
+	^ RBMetaclass
+]
+
+{ #category : 'factory access' }
+RBEntity >> rbMethodClass [
+	^ RBMethod
+]
+
+{ #category : 'factory access' }
+RBEntity >> rbPackageClass [
+
+	^ RBPackage
+]
+
+{ #category : 'factory access' }
+RBEntity >> rbTraitClass [
+	^ RBTrait
+]
+
+{ #category : 'factory access' }
+RBEntity >> rbTraitedMetaclassClass [
+	^ RBTraitedMetaclass 
 ]

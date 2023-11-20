@@ -193,6 +193,7 @@ TraitSlotScopeTest >> testSubClassWithTraitsAfterModificationOfParent [
 TraitSlotScopeTest >> testSubClassWithTraitsAfterModificationOfParentSharedPools [
 
 	| t1 c1 c2 t2 x1 |
+	[
 	t1 := self newTrait: #T1.
 	t2 := self newTrait: #T2.
 
@@ -218,7 +219,8 @@ TraitSlotScopeTest >> testSubClassWithTraitsAfterModificationOfParentSharedPools
 			      package: self packageNameForTests ].
 
 	self assert: c2 classLayout slotScope parentScope identicalTo: c2 superclass classLayout slotScope.
-	self assert: c2 class classLayout slotScope parentScope identicalTo: c2 class superclass classLayout slotScope
+	self assert: c2 class classLayout slotScope parentScope identicalTo: c2 class superclass classLayout slotScope ] ensure: [
+		c1 ifNotNil: [ "For now if we remove a used shared variables it causes troubles. So as a temporary workaround we remove the class first." c1 removeFromSystem ] ]
 ]
 
 { #category : 'tests' }

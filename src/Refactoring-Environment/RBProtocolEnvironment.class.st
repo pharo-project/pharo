@@ -34,11 +34,6 @@ RBProtocolEnvironment class >> onEnvironment: anEnvironment class: aClass protoc
 		class: aClass protocols: aCollection; yourself
 ]
 
-{ #category : 'visiting' }
-RBProtocolEnvironment >> acceptVisitor: aEnvVisitor [
-	^ aEnvVisitor visitProtocolEnv: self
-]
-
 { #category : 'adding' }
 RBProtocolEnvironment >> addProtocol: aSymbol [
 	protocols add: aSymbol

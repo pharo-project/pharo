@@ -588,6 +588,17 @@ CompiledMethod >> methodClass: aClass [
 		ifTrue: [ self literalAt: self numLiterals put: aClass binding ]
 ]
 
+{ #category : 'private' }
+CompiledMethod >> migratePersistingPropertiesIn: aNewCompileMethod [
+	"While creating a new version of a method, we might want to persist some properties. I am here for this. I migrate the properties to persist from myself, the old version of the method, to the new version."
+
+	| properties |
+	(properties := self penultimateLiteral) isMethodProperties ifFalse: [ ^ self "There is no property so nothing to migrate." ].
+
+	properties class propertiesToPersist do: [ :propertyName |
+		properties at: propertyName ifPresent: [ :value | aNewCompileMethod propertyAt: propertyName put: value ] ]
+]
+
 { #category : 'accessing' }
 CompiledMethod >> name [
 	^ self printString
@@ -798,9 +809,11 @@ CompiledMethod >> propertyKeysAndValuesDo: aBlock [
 
 { #category : 'protocols' }
 CompiledMethod >> protocol [
-	"Return in which protocol (conceptual groups of methods) the receiver is grouped into."
+	"Return in which protocol (conceptual groups of methods) the receiver is grouped into.
+	
+	With the current implementation the method will have to lookup the protocol in its class, but the #protocol property will be added when we remove a method to still be able to answer the protocol the method was into."
 
-	^ self methodClass protocolOfSelector: self selector
+	^ self propertyAt: #protocol ifAbsent: [ self methodClass protocolOfSelector: self selector ]
 ]
 
 { #category : 'protocols' }
@@ -812,7 +825,7 @@ CompiledMethod >> protocol: aProtocol [
 CompiledMethod >> protocolName [
 	"Return the name of the protocol (conceptual groups of methods) in which the receiver is grouped into."
 
-	^ self methodClass protocolNameOfSelector: self selector
+	^ self protocol ifNotNil: [ :protocol | protocol name ]
 ]
 
 { #category : 'scanning' }
@@ -929,14 +942,6 @@ CompiledMethod >> setSourcePointer: srcPointer [
 	trailerBytes := srcPointer asByteArrayOfSize: trailerSize.
 	start := self size - trailerSize.
 	start + 1 to: self size do: [:n | self at: n put: (trailerBytes at: n - start) ]
-]
-
-{ #category : 'testing' }
-CompiledMethod >> shouldBePackaged [
-	"This method is a hack.. Ideally this code should be inlined in ClassDescription>>#addAndClassifySelector:withMethod:inProtocol: but ObjectsAsMethodsExample needs this in order to work. I don't like this. If someone has a better idea on how to not packages this kind of ObjectAsMethod go ahead please!"
-
-	"This means I'm not from a Trait."
-	^ self origin = self methodClass
 ]
 
 { #category : 'accessing' }
