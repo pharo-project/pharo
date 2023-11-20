@@ -44,11 +44,6 @@ Trait class >> << aSymbolOrAClassSideTrait [
 		  yourself
 ]
 
-{ #category : 'class initialization' }
-Trait class >> initialize [
-	AdditionalMethodState persistProperty: #traitSource
-]
-
 { #category : 'file in/out' }
 Trait class >> traitDependencyOrder: traitsToSort [
 	"Given a collection of traits, return a the collection sorted so that traits used by other traits are before them."

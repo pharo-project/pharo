@@ -53,7 +53,7 @@ AdditionalMethodState class >> persistProperty: aSymbol [
 AdditionalMethodState class >> propertiesToPersist [
 	"See class comment."
 
-	^ PropertiesToPersist ifNil: [ PropertiesToPersist := Set with: #( #extensionPackage ) ]
+	^ PropertiesToPersist ifNil: [ PropertiesToPersist := Set <- #( #extensionPackage #traitSource ) ]
 ]
 
 { #category : 'accessing' }
