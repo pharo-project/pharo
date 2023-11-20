@@ -166,7 +166,6 @@ MCWorkingCopy class >> registerForNotifications [
 
 	<systemEventRegistration>
 	self
-		announcer: nil;
 		unregisterForNotifications;
 		registerInterestOnSystemChanges
 ]
