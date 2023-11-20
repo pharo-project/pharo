@@ -327,10 +327,11 @@ ChangeSet class >> newChanges: aChangeSet [
 ChangeSet class >> newChanges: aChangeSet withOld: old [
 	"Set the system ChangeSet to be the argument, aChangeSet."
 
-	SystemAnnouncer uniqueInstance unsubscribe: old.
+	self codeChangeAnnouncer unsubscribe: old.
+	self codeSupportAnnouncer unsubscribe: old.
 	current := aChangeSet.
 
-	SystemAnnouncer uniqueInstance weak
+	self codeChangeAnnouncer weak
 		when: ClassRemoved send: #classRemoved: to: aChangeSet;
 		when: ClassAdded send: #classAdded: to: aChangeSet;
 		when: ClassCommented send: #classCommented: to: aChangeSet;
@@ -338,15 +339,17 @@ ChangeSet class >> newChanges: aChangeSet withOld: old [
 		when: ProtocolAnnouncement send: #classReorganized: to: aChangeSet;
 		when: ClassRepackaged send: #classRepackaged: to: aChangeSet;
 		when: ClassModifiedClassDefinition send: #classModified: to: aChangeSet;
-
-
 		when: MethodAdded send: #methodAdded: to: aChangeSet;
 		when: MethodModified send: #methodModified: to: aChangeSet;
 		when: MethodRemoved send: #methodRemoved: to: aChangeSet;
-		when: MethodRecategorized send: #methodRecategorized: to: aChangeSet;
-		when: DoItChunkImported send: #doItChunkImported: to: aChangeSet.
+		when: MethodRecategorized send: #methodRecategorized: to: aChangeSet.
 
-	SystemAnnouncer announce: (CurrentChangeSetChanged new old: old; new: aChangeSet ; yourself)
+	self codeSupportAnnouncer weak when: DoItChunkImported send: #doItChunkImported: to: aChangeSet.
+
+	self codeSupportAnnouncer announce: (CurrentChangeSetChanged new
+			 old: old;
+			 new: aChangeSet;
+			 yourself)
 ]
 
 { #category : 'services' }

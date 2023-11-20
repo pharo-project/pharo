@@ -71,11 +71,8 @@ ClyMethodCodeEditorToolMorph >> applyDecorations [
 { #category : 'controlling' }
 ClyMethodCodeEditorToolMorph >> attachToSystem [
 
-	browser system
-		when: (ClyMethodChange of: self editingMethod)
-		send: #triggerUpdate
-		to: self.
-	SystemAnnouncer uniqueInstance weak when: ASTCacheReset send: #resetASTCache to: self
+	browser system when: (ClyMethodChange of: self editingMethod) send: #triggerUpdate to: self.
+	self class codeSupportAnnouncer weak when: ASTCacheReset send: #resetASTCache to: self
 ]
 
 { #category : 'testing' }

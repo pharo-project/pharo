@@ -182,7 +182,7 @@ HEInstaller >> installMethods: exportedClass into: aClass [
 { #category : 'installing package' }
 HEInstaller >> installPackage: aHEPackage [
 
-	SystemAnnouncer uniqueInstance delayAnnouncementsAfter: [ self doInstallPackage: aHEPackage ]
+	self class codeChangeAnnouncer delayAnnouncementsAfter: [ self doInstallPackage: aHEPackage ]
 ]
 
 { #category : 'messages' }

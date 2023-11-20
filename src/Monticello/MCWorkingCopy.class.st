@@ -187,11 +187,11 @@ MCWorkingCopy class >> registerForNotifications [
 { #category : 'event registration' }
 MCWorkingCopy class >> registerInterestOnSystemChanges [
 
-	SystemAnnouncer uniqueInstance weak
+	self class codeChangeAnnouncer weak
 		when: PackageAdded send: #packageAdded: to: self;
 		when: PackageRenamed send: #packageRenamed: to: self;
 		when: PackageRemoved send: #packageRemoved: to: self;
-		when: ClassAnnouncement, MethodAnnouncement send: #handleClassAndMethodsChange: to: self
+		when: ClassAnnouncement , MethodAnnouncement send: #handleClassAndMethodsChange: to: self
 ]
 
 { #category : 'private' }

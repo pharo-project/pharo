@@ -45,10 +45,11 @@ MCVersionLoader >> announceLoad: aString do: aBlock [
 
 { #category : 'private' }
 MCVersionLoader >> announceLoadStop: aString [
-	SystemAnnouncer announce: (MCVersionLoaderStopped new
-		versionLoader: self;
-		label: aString; 
-		yourself)
+
+	self class codeSupportAnnouncer announce: (MCVersionLoaderStopped new
+			 versionLoader: self;
+			 label: aString;
+			 yourself)
 ]
 
 { #category : 'private' }

@@ -51,7 +51,8 @@ Class {
 
 { #category : 'private' }
 EFFormatter class >> announceASettingChange [
-	SystemAnnouncer announce: EFSettingChanged
+
+	self codeSupportAnnouncer announce: EFSettingChanged
 ]
 
 { #category : 'private' }
