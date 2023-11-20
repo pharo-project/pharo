@@ -15,6 +15,13 @@ ManifestKernelTraits class >> ruleBetweenAndRuleV1FalsePositive [
 ]
 
 { #category : 'code-critics' }
+ManifestKernelTraits class >> ruleMinMaxRuleV1FalsePositive [
+
+	<ignoreForCoverage>
+	^ #(#(#(#RGMethodDefinition #(#TComparable #min: #false)) #'2023-11-20T22:41:18.539887+01:00') )
+]
+
+{ #category : 'code-critics' }
 ManifestKernelTraits class >> ruleNotEliminationRuleV1FalsePositive [
 
 	<ignoreForCoverage>

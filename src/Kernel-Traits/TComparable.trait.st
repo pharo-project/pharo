@@ -72,7 +72,9 @@ TComparable >> max: aComparable [
 TComparable >> min: aComparable [
 	"Answer the receiver or the argument, whichever is lesser."
 
-	^ self min: aComparable
+	^ self < aComparable
+		  ifTrue: [ self ]
+		  ifFalse: [ aComparable ]
 ]
 
 { #category : 'comparing' }
