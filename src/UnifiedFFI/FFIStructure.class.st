@@ -315,9 +315,9 @@ FFIStructure class >> rebuildFieldAccessors [
 
 { #category : 'private' }
 FFIStructure class >> removeAllOffsetVariables [
-	self classPool keys
-		select: [ :each | each beginsWith: 'OFFSET_' ]
-		thenDo: [ :each | self removeClassVarNamed: each ]
+	self classVariables 
+		select: [ :variable | variable name beginsWith: 'OFFSET_' ]
+		thenDo: [ :variable | self removeClassVariable: variable ]
 ]
 
 { #category : 'class initialization' }
