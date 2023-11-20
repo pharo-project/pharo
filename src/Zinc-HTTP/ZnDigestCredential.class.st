@@ -65,7 +65,7 @@ ZnDigestCredential >> authTokenForUrl: urlObject method: method [
 
 { #category : 'testing' }
 ZnDigestCredential >> isComplete [
-	^ super isComplete & nonce notNil
+	^ super isComplete & nonce isNotNil
 ]
 
 { #category : 'operations' }

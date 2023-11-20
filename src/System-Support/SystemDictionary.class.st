@@ -188,6 +188,17 @@ SystemDictionary >> classOrTraitNamed: aString [
 
 { #category : 'accessing' }
 SystemDictionary >> codeChangeAnnouncer [
+	"A code change announcer is an announcer to register to Class, Method, Package and Protocol announcement."
+
+	"This should not be hardcoded in the futurebut I should have my own instance."
+
+	^ SystemAnnouncer uniqueInstance
+]
+
+{ #category : 'accessing' }
+SystemDictionary >> codeSupportAnnouncer [
+	"A code support announcer is an announcer used for tooling support such as the breakpoints or AST cache."
+
 	"This should not be hardcoded in the futurebut I should have my own instance."
 
 	^ SystemAnnouncer uniqueInstance

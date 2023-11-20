@@ -31,7 +31,7 @@ RBInlineAllMethodParametrizedTest >> testFailureInlineMethodCanNotUnderstandSele
 { #category : 'tests' }
 RBInlineAllMethodParametrizedTest >> testInlineMethodCalledAsSuper [
 	| class superclass |
-	model := RBClassModelFactory rbNamespace new.
+	model := RBNamespace new.
 	superclass := model classNamed: self class superclass name.
 	superclass compile: 'foo: arg1 bar: arg2 ^ arg1 + arg2' classified: #(#accessing).
 	class := model classNamed: self class name.
@@ -45,7 +45,7 @@ RBInlineAllMethodParametrizedTest >> testInlineMethodCalledAsSuper [
 { #category : 'tests' }
 RBInlineAllMethodParametrizedTest >> testInlineMethodWithMultipleArgs [
 	| class |
-	model := RBClassModelFactory rbNamespace new.
+	model := RBNamespace new.
 	class := model classNamed: self class name.
 	class
 		compile: 'foo: arg1 bar: arg2 ^ arg1 + arg2' classified: #(#accessing);
@@ -77,7 +77,7 @@ RBInlineAllMethodParametrizedTest >> testInlineMethodWithMultipleSendersInMethod
 { #category : 'tests' }
 RBInlineAllMethodParametrizedTest >> testRecursiveMethod [
 	| class |
-	model := RBClassModelFactory rbNamespace new.
+	model := RBNamespace new.
 	class := model classNamed: self class name.
 	class
 		compile: 'foo ^self foo' classified: #(#accessing);

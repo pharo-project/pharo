@@ -1031,7 +1031,7 @@ MenuMorph >> layoutItems [
 		item icon ifNotNil: [maxIconWidth := maxIconWidth max: item icon width].
 		item hasSubMenu ifTrue: [item subMenu layoutItems]].
 	maxIconWidth isZero
-		ifFalse: [self addBlankIconsIfNecessary: (Smalltalk ui icons blankIconOfWidth: maxIconWidth)]
+		ifFalse: [self addBlankIconsIfNecessary: (Form extent: maxIconWidth @ 1 depth: 8)]
 ]
 
 { #category : 'events' }

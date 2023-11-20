@@ -32,7 +32,7 @@ ZnEntityReader >> allowReadingUpToEnd [
 
 { #category : 'testing' }
 ZnEntityReader >> allowsReadingUpToEnd [
-	^ allowReadingUpToEnd notNil and: [ allowReadingUpToEnd ]
+	^ allowReadingUpToEnd isNotNil and: [ allowReadingUpToEnd ]
 ]
 
 { #category : 'accessing' }
@@ -76,7 +76,7 @@ ZnEntityReader >> headers: znHeaders [
 
 { #category : 'testing' }
 ZnEntityReader >> isBinary [
-	^ binary notNil and: [ binary ]
+	^ binary isNotNil and: [ binary ]
 ]
 
 { #category : 'testing' }
@@ -100,7 +100,7 @@ ZnEntityReader >> isIdentityEncoded [
 
 { #category : 'testing' }
 ZnEntityReader >> isStreaming [
-	^ streaming notNil and: [ streaming ]
+	^ streaming isNotNil and: [ streaming ]
 ]
 
 { #category : 'public' }

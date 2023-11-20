@@ -4,14 +4,28 @@ SUnit tests for class RunArray
 Class {
 	#name : 'RunArrayTest',
 	#superclass : 'TestCase',
-	#traits : 'TSequenceableTruncatedToSize',
-	#classTraits : 'TSequenceableTruncatedToSize classTrait',
+	#traits : 'TSequenceableTruncatedToSize + (TCreationWithTest - {#testWithAll})',
+	#classTraits : 'TSequenceableTruncatedToSize classTrait + TCreationWithTest classTrait',
 	#instVars : [
 		'collectionWith5Elements'
 	],
 	#category : 'Collections-Support-Tests',
 	#package : 'Collections-Support-Tests'
 }
+
+{ #category : 'requirements' }
+RunArrayTest >> collectionClass [
+	"Return the class to be used to create instances of the class tested"
+
+	^ RunArray
+]
+
+{ #category : 'requirements' }
+RunArrayTest >> collectionMoreThan5Elements [
+" return a collection including at least 5 elements"
+
+	^ collectionWith5Elements
+]
 
 { #category : 'requirements' }
 RunArrayTest >> collectionWith5Elements [
@@ -143,18 +157,13 @@ RunArrayTest >> testNew [
 ]
 
 { #category : 'tests - instance creation' }
-RunArrayTest >> testNewFromArray [
+RunArrayTest >> testNewFrom [
 
 	| array |
 	array := RunArray newFrom: #($a $b $b $b $b $c $c $a).
 	self assert: array size equals: 8.
-	self assert: array asArray equals: #($a $b $b $b $b $c $c $a)
-]
+	self assert: array asArray equals: #($a $b $b $b $b $c $c $a).
 
-{ #category : 'tests - instance creation' }
-RunArrayTest >> testNewFromString [
-
-	| array |
 	array := RunArray newFrom: 'abbbbcca'.
 	self assert: array size equals: 8.
 	self assert: array asArray equals: #($a $b $b $b $b $c $c $a)

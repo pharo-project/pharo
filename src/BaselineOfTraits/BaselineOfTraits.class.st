@@ -39,12 +39,11 @@ BaselineOfTraits >> baseline: spec [
 			package: 'Kernel-Traits' with: [ spec requires: #( 'Traits' ) ];
 			package: 'Collections-Abstract-Traits' with: [ spec requires: #( 'Traits' ) ];
 			package: 'CodeImport-Traits' with: [ spec requires: #( 'Traits' ) ];
-			package: 'CodeExport-Traits' with: [ spec requires: #( 'Traits' ) ];
 			package: 'Traits-Tests' with: [ spec requires: #( 'Traits' ) ].
 
 		spec group: 'core' with: #( 'Traits' ).
 
-		spec group: 'core-traits' with: #( 'Kernel-Traits' 'Collections-Abstract-Traits' 'CodeImport-Traits' 'CodeExport-Traits' ).
+		spec group: 'core-traits' with: #( 'Kernel-Traits' 'Collections-Abstract-Traits' 'CodeImport-Traits' ).
 
 		spec group: 'default' with: #( 'core-traits' ).
 		spec group: 'traits-tests' with: #( 'default' 'Traits-Tests' ) ]

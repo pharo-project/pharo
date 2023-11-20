@@ -9,12 +9,6 @@ Class {
 	#tag : 'Classes'
 }
 
-{ #category : 'private' }
-ClassDescriptionProtocolsTest >> performTest [
-
-	SystemAnnouncer uniqueInstance suspendAllWhile: [ super performTest ]
-]
-
 { #category : 'tests' }
 ClassDescriptionProtocolsTest >> testAddProtocol [
 

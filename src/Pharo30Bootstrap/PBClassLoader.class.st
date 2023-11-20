@@ -2,16 +2,17 @@ Class {
 	#name : 'PBClassLoader',
 	#superclass : 'Object',
 	#instVars : [
+		'nextClassIndex',
 		'builder',
+		'useClassBuilder',
 		'initializedClasses',
+		'compactClasses',
+		'mirrorDefinitionMap',
+		'definitionMirrorMap',
+		'shouldInitializeClassPool',
 		'environment',
 		'systemDefinition',
-		'compactClasses',
-		'shouldInitializeClassPool',
-		'useClassBuilder',
-		'fullyLoaded',
-		'definitionMirrorMap',
-		'mirrorDefinitionMap'
+		'fullyLoaded'
 	],
 	#category : 'Pharo30Bootstrap',
 	#package : 'Pharo30Bootstrap'
@@ -23,7 +24,7 @@ PBClassLoader >> builder: aBuilder [
 	builder := aBuilder
 ]
 
-{ #category : 'class-loading' }
+{ #category : 'accessing' }
 PBClassLoader >> classDefinitionFor: aClass [
 	"Answer a String that defines the receiver."
 
@@ -53,10 +54,10 @@ PBClassLoader >> classDefinitionFor: aClass [
 			tag: {tag};
 			environment: {superClass} environment;
 			classSlots: {classInstanceVariablesString} asSlotCollection ].
-	newClass layout compactClassIndex: {compactIndex}.
+	"newClass setTraitComposition: {aTraitComposition} asTraitComposition."
 	newClass'
 		format: { 
-			'superClass' -> aClass superclass name.
+			'superClass' -> (aClass superclass ifNil: ['nil'] ifNotNil: [ :superclass | superclass name ]).
 			'name' -> aClass name printString.
 			'type' -> type.
 			'instanceVariablesString' -> (' ' join: aClass instVarNames) printString.
@@ -65,7 +66,7 @@ PBClassLoader >> classDefinitionFor: aClass [
 			'package' -> aClass package name printString.
 			'tag' -> (aClass tags ifEmpty: [ 'nil' ] ifNotEmpty: [ :tags | tags anyOne printString ]).
 			'classInstanceVariablesString' -> (' ' join: aClass classSide instVarNames) printString.
-			'compactIndex' -> (self compactClassIndexForClass: aClass) } asDictionary.
+			'aTraitComposition' -> aClass traitCompositionString } asDictionary.
 ]
 
 { #category : 'accessing' }
@@ -294,11 +295,23 @@ PBClassLoader >> map: aClassMirror with: aDefinition [
 
 	"We create a mapping between the real classes and their definitions for later"
 	
+	| classSideMirror |
+	self assert: (aClassMirror target isKindOf: EPSimulatorHandle).
+	(aClassMirror backend simulator objectMemory classTableRootObj) ifNotNil: [
+		self assert: aClassMirror target asClassIndexHandle address notNil.
+		aClassMirror target: (aClassMirror target asClassIndexHandle) ].
+
 	mirrorDefinitionMap at: aClassMirror put: aDefinition.
 	definitionMirrorMap at: aDefinition put: aClassMirror.
+
+	classSideMirror := aClassMirror basicClass.
+	"only valid for Spur simulator bootstrap by now"
+	(aClassMirror backend simulator objectMemory classTableRootObj) ifNotNil: [
+		self assert: classSideMirror target asClassIndexHandle address notNil.
+		classSideMirror target: (classSideMirror target asClassIndexHandle) ].
 	
-	mirrorDefinitionMap at: aClassMirror basicClass put: aDefinition classSide.
-	definitionMirrorMap at: aDefinition classSide put: aClassMirror basicClass
+	mirrorDefinitionMap at: classSideMirror put: aDefinition classSide.
+	definitionMirrorMap at: aDefinition classSide put: classSideMirror.
 ]
 
 { #category : 'stubs' }
@@ -351,10 +364,11 @@ PBClassLoader >> migrateOldClass: oldClass to: newClass [
 		ifFalse:[ oldClassMetaclass becomeInto: newClass basicClass ] 
 ]
 
-{ #category : 'accessing' }
-PBClassLoader >> next [
-
-	self subclassResponsibility
+{ #category : 'registration' }
+PBClassLoader >> newClassIndex [
+	
+	nextClassIndex ifNil: [ nextClassIndex := 1024 ].
+	^ nextClassIndex := nextClassIndex + 1
 ]
 
 { #category : 'registration' }
@@ -378,6 +392,11 @@ PBClassLoader >> registerClass: aClassMirror named: aName fullyLoaded: aBoolean 
 	
 	"We create a mapping between the real classes and their definitions for later"
 	self map: aClassMirror with: (systemDefinition classNamed: aName).
+	
+	"We say the simulator that this class is a root, possible becomes can come into it. THIS IS ONLY VALID FOR SPUR SIMULATOR BOOTSTRAP. REFACTOR ME".
+	self flag: #refactorMe.
+	builder objectSpace backend addExtraRoot: aClassMirror.
+	builder objectSpace backend addExtraRoot: aClassMirror classSide.
 	
 	"We reset the class map of the ast interpreter"
 	fullyLoaded at: aName put: aBoolean
