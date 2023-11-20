@@ -17,10 +17,10 @@ OpenToolTest >> openInspectorOn: anObject [
 
 { #category : 'tests - implementors' }
 OpenToolTest >> testImplementorsOfAt [
-	| senders |
-	senders := SystemNavigation default browseAllImplementorsOf: #name.
-	senders changed.
-	senders close
+	| implementors |
+	implementors := SystemNavigation default browseAllImplementorsOf: #name.
+	implementors changed.
+	implementors close
 ]
 
 { #category : 'tests - inspect' }
