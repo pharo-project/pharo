@@ -37,9 +37,3 @@ Class >> fileOutOn: aFileStream initializing: aBool [
 				fileOutOn: aFileStream
 				initializing: aBool ]
 ]
-
-{ #category : '*CodeExport' }
-Class >> shouldFileOutPool: aPoolName [
-	"respond with true if the user wants to file out aPoolName"
-	^self confirm: ('FileOut the sharedPool ', aPoolName, '?')
-]
