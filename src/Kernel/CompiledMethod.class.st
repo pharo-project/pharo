@@ -595,8 +595,7 @@ CompiledMethod >> migratePersistingPropertiesIn: aNewCompileMethod [
 	| properties |
 	(properties := self penultimateLiteral) isMethodProperties ifFalse: [ ^ self "There is no property so nothing to migrate." ].
 
-	"For now the properties are hard coded. Later they should be configurable in the additional state"
-	#( #extensionPackage #traitSource ) do: [ :propertyName |
+	properties class propertiesToPersist do: [ :propertyName |
 		properties at: propertyName ifPresent: [ :value | aNewCompileMethod propertyAt: propertyName put: value ] ]
 ]
 

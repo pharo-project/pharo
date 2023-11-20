@@ -380,7 +380,7 @@ CompiledMethodTest >> testCompilingExistingMethodDoesNotRemoveExtensions [
 		self class compiledMethodAt: #isExtensionTestMethod ifPresent: [ :method | method removeFromSystem ] ]
 ]
 
-{ #category : 'tests' }
+{ #category : 'tests - copying' }
 CompiledMethodTest >> testCopy [
 	<pragma: #pragma>
 	| method copy |

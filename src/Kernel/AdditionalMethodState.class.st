@@ -1,6 +1,10 @@
 "
-I am class holding state for compiled methods. All my instance variables should be actually part of the CompiledMethod itself, but the current implementation of the VM doesn't allow this.  Currently I hold the selector and any pragmas or properties the compiled method has.  Pragmas and properties are stored in indexable fields; pragmas as instances of Pragma, properties as instances of Association.
+I am class holding state for compiled methods.
+All my instance variables should be actually part of the CompiledMethod itself, but the current implementation of the VM doesn't allow this.
+Currently I hold the selector and any pragmas or properties the compiled method has.  Pragmas and properties are stored in indexable fields; pragmas as instances of Pragma, properties as instances of Association.
 I am a reimplementation of much of MethodProperties, but eliminating the explicit properties and pragmas dictionaries.  Hence I answer true to isMethodProperties.
+
+The additional state is lost when we replace a method of a class (either by recompilation or installing a new version). But we might want to persist some properties from a method to another. In order to do that, some properties can be tagged ""to persist"" on my class side using #persistProperty:. Then the compiler will take care of migrating those properties.
 "
 Class {
 	#name : 'AdditionalMethodState',
@@ -9,6 +13,9 @@ Class {
 	#instVars : [
 		'method',
 		'selector'
+	],
+	#classVars : [
+		'PropertiesToPersist'
 	],
 	#category : 'Kernel-Methods',
 	#package : 'Kernel',
@@ -33,6 +40,26 @@ AdditionalMethodState class >> forSelector: aSelector [
 { #category : 'instance creation' }
 AdditionalMethodState class >> new [
 	^ self new: 0
+]
+
+{ #category : 'accessing' }
+AdditionalMethodState class >> persistProperty: aSymbol [
+	"A property to persist is a property to migrate to a new compile method when we compile a new method replacing an old one in a class."
+
+	self propertiesToPersist add: aSymbol
+]
+
+{ #category : 'accessing' }
+AdditionalMethodState class >> propertiesToPersist [
+	"See class comment."
+
+	^ PropertiesToPersist ifNil: [ PropertiesToPersist := Set <- #( #extensionPackage #traitSource ) ]
+]
+
+{ #category : 'accessing' }
+AdditionalMethodState class >> propertiesToPersist: anObject [
+
+	PropertiesToPersist := anObject
 ]
 
 { #category : 'instance creation' }

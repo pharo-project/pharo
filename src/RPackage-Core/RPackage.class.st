@@ -62,7 +62,6 @@ Class {
 
 { #category : 'class initialization' }
 RPackage class >> initialize [
-
 	Properties
 		ifNil: [ self initializeProperties ]
 		ifNotNil: [
