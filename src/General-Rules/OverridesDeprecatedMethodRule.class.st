@@ -6,8 +6,9 @@ This rule will not activate if the method itself deprecated because it is make s
 Class {
 	#name : 'OverridesDeprecatedMethodRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'General-Rules',
-	#package : 'General-Rules'
+	#category : 'General-Rules-Base',
+	#package : 'General-Rules',
+	#tag : 'Base'
 }
 
 { #category : 'testing' }
