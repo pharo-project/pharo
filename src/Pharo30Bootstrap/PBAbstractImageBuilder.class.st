@@ -189,12 +189,6 @@ PBAbstractImageBuilder >> builtClassNames [
 	^ classLoader loadedClassNames
 ]
 
-{ #category : 'checkpoints' }
-PBAbstractImageBuilder >> checkpoint: aString [ 
-	
-	"I do nothing"
-]
-
 { #category : 'accessing' }
 PBAbstractImageBuilder >> classForClassMirror: anEPClassMirror [
 
@@ -297,8 +291,7 @@ PBAbstractImageBuilder >> createClasses [
 			 objectSpace: objectSpace;
 			 yourself).
 
-	PBStepFinishedSignal emit: 'Classes created'.
-	self checkpoint: 'created_classes'
+	PBStepFinishedSignal emit: 'Classes created'
 ]
 
 { #category : 'running' }
@@ -428,9 +421,7 @@ PBAbstractImageBuilder >> createInitialObjects [
 			put: (ImmediateLayout new).' format:
 			 { self espellBackend instanceVariableMapping listOfClassSlots }).
 
-	PBStepFinishedSignal emit: 'Class builder ready to create classes'.
-
-	self checkpoint: 'created_initial_objects'
+	PBStepFinishedSignal emit: 'Class builder ready to create classes'
 ]
 
 { #category : 'method-compiling' }
@@ -747,7 +738,6 @@ PBAbstractImageBuilder >> initializeImage [
 	| process |
 	self log: 'Initializing image.'.
 	self flag: 'should migrate this method'.
-	self checkpoint: 'image_initialization'.
 
 	self initializeSpecialObjectArray.
 
@@ -858,8 +848,7 @@ PBAbstractImageBuilder >> installExtensionMethods [
 			installExtensionMethodsOf: aPackageDefinition
 			prefixed: (index printPaddedWith: $0 to: 3) , '/' , total asString ].
 
-	PBStepFinishedSignal emit: 'Installed extension methods'.
-	self checkpoint: 'installed_extension_methods'
+	PBStepFinishedSignal emit: 'Installed extension methods'
 ]
 
 { #category : 'running' }
@@ -921,8 +910,7 @@ PBAbstractImageBuilder >> installMethods [
 		self
 			installMethodsInBehaviorDefinition: aClassDefinition
 			prefixed: (index printPaddedWith: $0 to: 3) , '/' , total asString ].
-	PBStepFinishedSignal emit: 'installed_methods'.
-	self checkpoint: 'installed_methods'
+	PBStepFinishedSignal emit: 'installed_methods'
 ]
 
 { #category : 'running' }
