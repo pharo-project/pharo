@@ -1,5 +1,5 @@
 "
-I represent a ClassTrait.
+I represent a MetaclassForTrait.
 I am stored as a symbol.
 
 When serialized I get the name of the base trait.

@@ -42,7 +42,7 @@ Paragraph >> displaySelectionBarOnAthensCanvas: anAthensCanvas [
 
 { #category : '*Athens-Morphic' }
 Paragraph >> displaySelectionBlock: aSelBlock inLine: line onAthensCanvas: anAthensCanvas [
-	(selectionStart notNil and: [ selectionStop notNil and: [ selectionStart ~= selectionStop ] ])
+	(selectionStart isNotNil and: [ selectionStop isNotNil and: [ selectionStart ~= selectionStop ] ])
 		ifTrue: [
 			| startIdx stopIdx selSartIdx selStopIdx selBlockRange selRange |
 			startIdx := aSelBlock first stringIndex.

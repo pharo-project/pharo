@@ -9,14 +9,6 @@ Class {
 	#tag : 'Processes'
 }
 
-{ #category : 'tests' }
-ProcessTest >> expectedFailures [
-	^#("these two tests fail after fixing the root cause of an unwind error in Process>>terminate"
-		#testIsTerminatingForcedTermination
-		#testTerminationShouldProceedAllEnsureBlocksIfSomeWasFailed
-	)
-]
-
 { #category : 'running' }
 ProcessTest >> setUp [
 	super setUp.
@@ -47,7 +39,6 @@ ProcessTest >> testActiveProcessFromProcesorShouldUseInstalledEffectiveProcess [
 	self assert: processFromProcessor identicalTo: effectiveProcess
 ]
 
-{ #category : #tests }
 ProcessTest >> testBlockedProcessState [
 
 	| semaphore mutex p |
@@ -76,7 +67,82 @@ ProcessTest >> testBlockedProcessState [
 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
+ProcessTest >> testChangingOtherPriorityAffectsScheduling [
+
+	| val sem proc1 proc2 |
+	val := #(  ).
+	sem := Semaphore new.
+	proc1 := [
+	         val := val copyWith: 1.
+	         sem signal ] forkAt: Processor activePriority - 3.
+	proc2 := [
+	         val := val copyWith: 2.
+	         sem signal ] forkAt: Processor activePriority - 2.
+
+	proc1 priority: Processor activePriority - 1.
+	self assert: val equals: #(  ). "Sanity check"
+	sem wait.
+	"proc1 is recognized as higher-priority than proc2.
+	We get the processor back before proc2 runs."
+	self assert: val equals: #( 1 ).
+	sem wait.
+	self assert: val equals: #( 1 2 )
+]
+
+{ #category : 'tests' }
+ProcessTest >> testChangingOtherPriorityLowerDuringSemaphoreWait [
+
+	| semaphore hasBlockRun backgroundProcess |
+	semaphore := Semaphore new.
+	hasBlockRun := false.
+	backgroundProcess := [
+	                     semaphore wait.
+	                     hasBlockRun := true ] forkAt:
+		                     Processor activePriority + 1.
+	self assert: backgroundProcess suspendingList equals: semaphore. 
+	self deny: hasBlockRun. "Process is blocked on Semaphore"
+	backgroundProcess priority: Processor activePriority - 1.
+	self deny: hasBlockRun. "Still waiting on Semaphore"
+	self assert: backgroundProcess suspendingList equals: semaphore.
+	semaphore signal.
+	self deny: hasBlockRun. "Lowered priority respected when signaling semaphore"
+	backgroundProcess priority: Processor activePriority + 1.
+	self assert: hasBlockRun. "Preempted as normal"
+]
+
+{ #category : 'tests' }
+ProcessTest >> testChangingOtherPriorityPreemptsCurrentProcess [
+
+	| hasBlockRun backgroundProcess |
+	hasBlockRun := false.
+	backgroundProcess := [ hasBlockRun := true ] forkAt:
+		                     Processor activePriority - 1.
+	self deny: hasBlockRun. "We continue running."
+	backgroundProcess priority: Processor activePriority + 1.
+	self assert: hasBlockRun "We have been preempted."
+]
+
+{ #category : 'tests' }
+ProcessTest >> testChangingOtherPriorityRaiseDuringSemaphoreWait [
+
+	| semaphore hasBlockRun backgroundProcess |
+	semaphore := Semaphore new.
+	hasBlockRun := false.
+	backgroundProcess := [
+	                     semaphore wait.
+	                     hasBlockRun := true ] forkAt:
+		                     Processor activePriority + 1.
+	self assert: backgroundProcess suspendingList equals: semaphore.
+	self deny: hasBlockRun. "Process is blocked on Semaphore"
+	backgroundProcess priority: Processor activePriority + 2.
+	self deny: hasBlockRun. "Still waiting on Semaphore"
+	self assert: backgroundProcess suspendingList equals: semaphore.
+	semaphore signal.
+	self assert: hasBlockRun
+]
+
+{ #category : 'tests' }
 ProcessTest >> testChangingPriorityRespectsTheProcessPreemptionSettings [
 	"test whether #priority: preempts active process to allow higher priority processes run;
 	#priority behavior reflects the processPreemptionYields setting - for false the active
@@ -596,6 +662,20 @@ ProcessTest >> testNormalProcessWithArgsCompletionWithLeftEffectiveProcess [
 	effectiveProcess terminate
 ]
 
+{ #category : 'tests - termination' }
+ProcessTest >> testProcessFaithfulTermination [
+	"When terminating a process, unwind blocks should be evaluated as if they were executed by the process being terminated."
+
+	| process |
+	[[process := Processor activeProcess.
+		Processor activeProcess suspend] ensure: [
+		self assert: process = Processor activeProcess]
+	] fork.
+	Processor yield.
+	process terminate.
+	self assert: process isTerminated
+]
+
 { #category : 'tests' }
 ProcessTest >> testRealActiveProcessFromProcesor [
 
@@ -704,8 +784,30 @@ ProcessTest >> testTerminateAnswersSelf [
 ]
 
 { #category : 'tests - termination' }
-ProcessTest >> testTerminationShouldProceedAllEnsureBlocksIfSomeWasFailed [
+ProcessTest >> testTerminateInTerminate [
+	"Terminating a terminator process should unwind both the terminator and its terminatee process"
+	
+	| terminator terminatee unwound |
+	unwound := false.
+	terminatee := [[Processor activeProcess suspend] ensure: [unwound := true]] fork.
+	Processor yield.
+	terminator := [terminatee terminate] newProcess.
+	self assert: terminatee isSuspended.
+	self assert: terminator isSuspended.
+	"run terminator and stop inside #terminate, e.g. before executing #suspend in #terminate"
+	[(InstructionStream on: terminator suspendedContext method pc: terminator suspendedContext pc) selectorToSendOrSelf = #handleProcessTerminationOfWaitingContext:]
+		whileFalse: [terminator step].
+	self assert: terminator isSuspended.
+	terminator terminate.
+	self assert: terminator isTerminated. 
+	self assert: unwound
+]
 
+{ #category : 'tests - termination' }
+ProcessTest >> testTerminationShouldProceedAllEnsureBlocksIfSomeWasFailed [
+"
+	<expectedFailure>
+		
 	| ensureCalled process ensureFailure started unwindError |
 	ensureFailure := Error new messageText: 'signalled inside ensure'.
 	ensureCalled := false.
@@ -718,12 +820,13 @@ ProcessTest >> testTerminationShouldProceedAllEnsureBlocksIfSomeWasFailed [
 		] on: UnwindError do: [ :err | unwindError := err ]
 	] forkAt: Processor activePriority + 1.
 
-	"We terminate the process in backround using higher priority
+	""We terminate the process in backround using higher priority
 	to ensure that all forked processes during the termination logic will finish before the test continue.
-	The UnwindError during termination is always signalled by fork"
+	The UnwindError during termination is always signalled by fork""
 	[ process terminate ] forkAt: Processor activePriority + 1.
 	self assert: ensureCalled.
 	self assert: unwindError signalerContext sender exception equals: ensureFailure
+"
 ]
 
 { #category : 'tests - termination' }

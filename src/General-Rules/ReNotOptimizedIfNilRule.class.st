@@ -1,0 +1,34 @@
+"
+ifNil: ifNotNil: ifNil:ifNotNil: ifNotNil:ifNil: is used in a way that it can not be optimized.
+
+This can be fixed by making sure that all arguments are static blocks.
+
+See the method RBMessageNode>>#isInlineIfNil for the exact implementation of the check that the compiler uses
+
+
+"
+Class {
+	#name : 'ReNotOptimizedIfNilRule',
+	#superclass : 'ReNodeBasedRule',
+	#category : 'General-Rules-Migrated',
+	#package : 'General-Rules',
+	#tag : 'Migrated'
+}
+
+{ #category : 'running' }
+ReNotOptimizedIfNilRule >> check: aNode forCritiquesDo: aBlock [
+	aNode isMessage ifFalse: [  ^ self ].
+	(#(ifNil: ifNotNil: ifNil:ifNotNil: ifNotNil:ifNil:) includes: aNode selector) ifFalse: [^ self].
+	aNode isInlineIfNil ifFalse: [
+		aBlock cull: (self critiqueFor: aNode) ]
+]
+
+{ #category : 'accessing' }
+ReNotOptimizedIfNilRule >> group [
+	^ 'Optimization'
+]
+
+{ #category : 'accessing' }
+ReNotOptimizedIfNilRule >> name [
+	^ 'ifNil: ifNotNil: ifNil:ifNotNil: ifNotNil:ifNil: is used in a way that it can not be optimized'
+]

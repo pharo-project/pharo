@@ -40,7 +40,7 @@ ClassListNodeExample >> commentText [
 
 { #category : 'menu' }
 ClassListNodeExample >> icon [
-	^ self iconNamed: #smallExpertIcon
+	^ self iconNamed: #smallExpert
 ]
 
 { #category : 'accessing' }

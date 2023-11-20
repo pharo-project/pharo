@@ -254,8 +254,13 @@ BalloonEngine >> bitBlt [
 
 { #category : 'accessing' }
 BalloonEngine >> bitBlt: aBitBlt [
+
+	| width |
 	bitBlt := aBitBlt.
 	bitBlt ifNil: [^self].
+	width := bitBlt destForm width.
+	width <= 0 ifTrue: [ width := self class defaultBitmapWidth ].
+	span := Bitmap new: width + 1.
 	self class primitiveSetBitBltPlugin: bitBlt getPluginName.
 	self clipRect: bitBlt clipRect.
 	bitBlt
@@ -306,7 +311,7 @@ BalloonEngine >> colorTransform: aColorTransform [
 
 { #category : 'copying' }
 BalloonEngine >> copyBits [
-	(bitBlt notNil and:[bitBlt destForm notNil]) ifTrue:[bitBlt destForm unhibernate].
+	(bitBlt isNotNil and:[bitBlt destForm isNotNil]) ifTrue:[bitBlt destForm unhibernate].
 	self copyLoopFaster
 ]
 
@@ -435,7 +440,6 @@ BalloonEngine >> initialize [
 
 	super initialize.
 
-	self initializeSpan.
 	externals := OrderedCollection new: 100.
 
 	self bitBlt: ((BitBlt toForm: Display)
@@ -444,17 +448,6 @@ BalloonEngine >> initialize [
 
 	forms := #().
 	deferred := false
-]
-
-{ #category : 'initialization' }
-BalloonEngine >> initializeSpan [
-	| width |
-
-	"Get the display width to initialize width of the bitmap, if the width is zero or negative, use a default width"
-	width := Display width.
-	width <= 0 ifTrue:[ width := self class defaultBitmapWidth ].
-
-	span := Bitmap new: width
 ]
 
 { #category : 'initialize' }
@@ -725,8 +718,8 @@ BalloonEngine >> registerFill: fill1 and: fill2 [
 BalloonEngine >> registerFills: fills [
 
 	| fillIndexList index fillIndex |
-	((colorTransform notNil and:[colorTransform isAlphaTransform]) or:[
-		fills anySatisfy: [:any| any notNil and:[any isTranslucent]]])
+	((colorTransform isNotNil and:[colorTransform isAlphaTransform]) or:[
+		fills anySatisfy: [:any| any isNotNil and:[any isTranslucent]]])
 			ifTrue:[	self flush.
 					self reset.
 					postFlushNeeded := true].

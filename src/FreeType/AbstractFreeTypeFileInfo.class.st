@@ -54,13 +54,12 @@ AbstractFreeTypeFileInfo >> extractAttributesFromNames [
 	Also set the familyGroupName and styleNameExtracted"
 
 	| p |
-
-	p:= FreeTypeNameParser new
-		familyNameIn: self validFamilyName;
-		styleNameIn: self validStyleName;
-		italicFlag: italic;
-		boldFlag: bold;
-		parse.
+	p := FreeTypeNameParser new
+		     familyNameIn: self validFamilyName;
+		     styleNameIn: self validStyleName;
+		     italicFlag: italic;
+		     boldFlag: bold;
+		     parse.
 	familyGroupName := p familyName.
 	slant := p extractedSlant.
 	slantValue := p extractedSlantValue.
@@ -70,16 +69,11 @@ AbstractFreeTypeFileInfo >> extractAttributesFromNames [
 	stretchValue := p extractedStretchValue.
 	upright := p extractedUpright.
 	styleNameExtracted := ''.
-	stretch ifNotNil:[
-		styleNameExtracted := styleNameExtracted ,stretch].
-	(weight notNil "and:[weight asLowercase ~= 'medium']")
-		ifTrue:[
-			styleNameExtracted := styleNameExtracted , ' ', weight].
-	slant ifNotNil:[
-		styleNameExtracted := styleNameExtracted , ' ', slant].
+	stretch ifNotNil: [ styleNameExtracted := styleNameExtracted , stretch ].
+	weight ifNotNil: [ styleNameExtracted := styleNameExtracted , ' ' , weight ]. "and:[weight asLowercase ~= 'medium']"
+	slant ifNotNil: [ styleNameExtracted := styleNameExtracted , ' ' , slant ].
 	styleNameExtracted := styleNameExtracted trimBoth.
-	styleNameExtracted ifEmpty: [
-		styleNameExtracted := upright ifNil:['Regular']]
+	styleNameExtracted ifEmpty: [ styleNameExtracted := upright ifNil: [ 'Regular' ] ]
 ]
 
 { #category : 'accessing' }
@@ -249,16 +243,14 @@ AbstractFreeTypeFileInfo >> styleNameExtracted [
 
 { #category : 'accessing' }
 AbstractFreeTypeFileInfo >> styleNameWithItalicForcedToBe: aString [
+
 	| answer |
 	answer := ''.
-	stretch ifNotNil:[
-		answer := answer ,stretch].
-	(weight notNil "and:[weight asLowercase ~= 'medium']")
-		ifTrue:[
-			answer := answer , ' ', weight].
-	answer := answer , ' ', aString.
+	stretch ifNotNil: [ answer := answer , stretch ].
+	weight ifNotNil: [ answer := answer , ' ' , weight ]. "and:[weight asLowercase ~= 'medium']"
+	answer := answer , ' ' , aString.
 	answer := answer trimBoth.
-	^answer
+	^ answer
 ]
 
 { #category : 'accessing' }

@@ -38,7 +38,9 @@ VariableBreakpointMockClass >> methodWithTempsAndArg: arg [
 ]
 
 { #category : 'accessing' }
-VariableBreakpointMockClass >> v1 [ ^v1
+VariableBreakpointMockClass >> v1 [
+
+	^ v1
 ]
 
 { #category : 'accessing' }

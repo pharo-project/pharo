@@ -72,7 +72,7 @@ String streamContents: [ :st |
 	printer doNotShowSuperclasses.
 	printer on: st.	
 	((SortedCollection sortBlock: [ :a :b | a name < b name ])
-		addAll: (RPackageOrganizer default packageNamed: 'Refactoring-Core') roots)
+		addAll: (PackageOrganizer default packageNamed: 'Refactoring-Core') roots)
 			do: [ :each | 
 				printer forClass: each. 
 				printer print.
@@ -83,7 +83,7 @@ Now to print according to tags:
 
 ```
 | p roots |
-p := (RPackageOrganizer default packageNamed: 'MenuRegistration').
+p := (PackageOrganizer default packageNamed: 'MenuRegistration').
 roots := p roots. 
 String streamContents: [ :st |  
 	| printer |

@@ -68,12 +68,6 @@ ClassRenamed >> affectsVariablesOf: aClass [
 ]
 
 { #category : 'accessing' }
-ClassRenamed >> category [
-
-	^ self classRenamed category
-]
-
-{ #category : 'accessing' }
 ClassRenamed >> classAffected [
 	^self classRenamed
 ]

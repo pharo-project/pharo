@@ -37,7 +37,6 @@ ClyExternalPackageMethodGroup >> importMethod: aMethod [
 
 	super importMethod: aMethod.
 
-	self package addMethod: aMethod.
 	aMethod protocol: '*' , self package name
 ]
 

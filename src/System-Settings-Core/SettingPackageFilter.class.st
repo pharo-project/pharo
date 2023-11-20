@@ -21,7 +21,7 @@ Class {
 { #category : 'filtering' }
 SettingPackageFilter >> keepSettingTreeNode: aSettingNode [
 	| rp |
-	^ (rp := aSettingNode receiverPackage) notNil and: [self packages includes: rp]
+	^ (rp := aSettingNode receiverPackage) isNotNil and: [self packages includes: rp]
 ]
 
 { #category : 'accessing' }

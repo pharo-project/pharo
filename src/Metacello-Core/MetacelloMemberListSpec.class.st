@@ -43,12 +43,6 @@ MetacelloMemberListSpec >> copy: aMemberSpec [
 	self addMember: aMemberSpec
 ]
 
-{ #category : 'actions' }
-MetacelloMemberListSpec >> copy: specNamed to: aSpec [
-
-	self subclassResponsibility
-]
-
 { #category : 'toolbox support' }
 MetacelloMemberListSpec >> deleteSpec: aSpec [
 	"remove the spec from list"
@@ -94,8 +88,7 @@ MetacelloMemberListSpec >> isEmpty [
 { #category : 'accessing' }
 MetacelloMemberListSpec >> list [
 
-	list == nil ifTrue: [ list := OrderedCollection new ].
-	^list
+	^ list ifNil: [ list := OrderedCollection new ]
 ]
 
 { #category : 'accessing' }
@@ -107,18 +100,18 @@ MetacelloMemberListSpec >> list: aCollection [
 
 { #category : 'accessing' }
 MetacelloMemberListSpec >> map [
-	
+
 	| map |
-	memberMap ~~ nil ifTrue: [ ^memberMap ].
+	memberMap ifNotNil: [ ^ memberMap ].
 	map := Dictionary new.
-	self list do: [:member | 
+	self list do: [ :member |
 		member
-			applyAdd: [:memberSpec | self mapAdd: memberSpec into: map ] 
-			copy: [:memberSpec | self mapCopy: memberSpec into: map ]
-			merge: [:memberSpec | self mapMerge: memberSpec into: map ] 
-			remove: [:memberSpec | self mapRemove: memberSpec into: map ]].
+			applyAdd: [ :memberSpec | self mapAdd: memberSpec into: map ]
+			copy: [ :memberSpec | self mapCopy: memberSpec into: map ]
+			merge: [ :memberSpec | self mapMerge: memberSpec into: map ]
+			remove: [ :memberSpec | self mapRemove: memberSpec into: map ] ].
 	memberMap := map.
-	^memberMap
+	^ memberMap
 ]
 
 { #category : 'private' }
@@ -129,22 +122,20 @@ MetacelloMemberListSpec >> mapAdd: aMemberSpec into: map [
 
 { #category : 'private' }
 MetacelloMemberListSpec >> mapCopy: aMemberSpec into: map [
-    | spec |
-    spec := map at: aMemberSpec sourceName ifAbsent: [  ].
-    spec == nil
-        ifTrue: [ ^ self error: 'Source spec named ' , aMemberSpec sourceName printString , ' not found' ]
-        ifFalse: [ 
-            spec aboutToCopy.
-            map at: aMemberSpec name put: (spec copy mergeSpec: aMemberSpec spec copy) ]
+
+	(map at: aMemberSpec sourceName ifAbsent: [  ])
+		ifNil: [ self error: 'Source spec named ' , aMemberSpec sourceName printString , ' not found' ]
+		ifNotNil: [ :spec |
+			spec aboutToCopy.
+			map at: aMemberSpec name put: (spec copy mergeSpec: aMemberSpec spec copy) ]
 ]
 
 { #category : 'private' }
 MetacelloMemberListSpec >> mapMerge: aMemberSpec into: map [
-	| spec |
-	spec :=  map at: aMemberSpec name ifAbsent: [].
-	spec == nil
-		ifTrue: [ map at: aMemberSpec name put: aMemberSpec spec copy ]
-		ifFalse: [ map at: aMemberSpec name put: (spec mergeSpec: aMemberSpec spec)]
+
+	(map at: aMemberSpec name ifAbsent: [  ])
+		ifNotNil: [ :spec | map at: aMemberSpec name put: (spec mergeSpec: aMemberSpec spec) ]
+		ifNil: [ map at: aMemberSpec name put: aMemberSpec spec copy ]
 ]
 
 { #category : 'private' }
@@ -198,36 +189,7 @@ MetacelloMemberListSpec >> select: aBlock [
 ]
 
 { #category : 'enumeration' }
-MetacelloMemberListSpec >> specListDetect: aBlock [
-	"Evaluate aBlock with each of the receiver's elements as the argument. 
-	Answer the first element for which aBlock evaluates to true."
-
-	^ self specListDetect: aBlock ifNone: [ self error: 'Object is not in the collection.' ]
-]
-
-{ #category : 'enumeration' }
-MetacelloMemberListSpec >> specListDetect: aBlock ifNone: exceptionBlock [
-	"Evaluate aBlock with each of the receiver's elements as the argument.  
-	Answer the first element for which aBlock evaluates to true. If none  
-	evaluate to true, then evaluate the argument, exceptionBlock."
-
-	self
-		specListDo: [ :each | 
-			(aBlock value: each)
-				ifTrue: [ ^ each ] ].
-	^ exceptionBlock value
-]
-
-{ #category : 'enumeration' }
 MetacelloMemberListSpec >> specListDo: aBlock [
 
 	self list do: [:member |  aBlock value: member spec ]
-]
-
-{ #category : 'enumeration' }
-MetacelloMemberListSpec >> specListSelect: aBlock [ 
-	| newCollection |
-	newCollection := OrderedCollection new.
-	self specListDo: [:each | (aBlock value: each) ifTrue: [newCollection add: each]].
-	^newCollection
 ]

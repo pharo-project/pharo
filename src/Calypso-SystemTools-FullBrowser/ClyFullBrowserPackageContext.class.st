@@ -22,7 +22,7 @@ ClyFullBrowserPackageContext >> isClassGroupSelected [
 ]
 
 { #category : 'selection-class groups' }
-ClyFullBrowserPackageContext >> isClassTagSelected [
+ClyFullBrowserPackageContext >> isPackageTagSelected [
 	^false
 ]
 

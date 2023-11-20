@@ -21,26 +21,21 @@ RPackage class >> defaultSortFunctionForCalypso [
 { #category : '*Calypso-SystemQueries' }
 RPackage >> definesOverridesOf: aMethod [
 
-	(self definesOverridesOf: aMethod in: definedSelectors) ifTrue: [ ^ true ].
-	(self definesOverridesOf: aMethod in: extensionSelectors) ifTrue: [ ^ true ].
-
-	^ false
-]
-
-{ #category : '*Calypso-SystemQueries' }
-RPackage >> definesOverridesOf: aMethod in: classAndSelectors [
-
 	| methodClass selector |
 	methodClass := aMethod origin.
 	selector := aMethod selector.
 
-	classAndSelectors keysAndValuesDo: [ :class :selectors | ((selectors includes: selector) and: [ class inheritsFrom: methodClass ]) ifTrue: [ ^ true ] ].
+	self definedClasses do: [ :class | (class inheritsFrom: methodClass) ifTrue: [ class definedSelectors includes: selector ] ].
+	extensionSelectors keysAndValuesDo: [ :class :selectors | ((selectors includes: selector) and: [ class inheritsFrom: methodClass ]) ifTrue: [ ^ true ] ].
+
 	^ false
 ]
 
 { #category : '*Calypso-SystemQueries' }
-RPackage >> importClasses: classCollection [
-	classCollection do: [ :each | self addClass: each ]
+RPackage >> includesClassesAffectedBy: aSystemAnnouncement [
+
+	^(aSystemAnnouncement affectsClassesDefinedInPackage: self)
+		or: [ aSystemAnnouncement affectsClassesExtendedInPackage: self ]
 ]
 
 { #category : '*Calypso-SystemQueries' }
@@ -56,8 +51,8 @@ RPackage class >> itemsSortOrderForCalypso [
 
 { #category : '*Calypso-SystemQueries' }
 RPackage class >> prepareClassGroupQueryFrom: aPackage in: aNavigationEnvironment [
-	^ ClyAllClassGroupsQuery
-		sortedFrom: (ClyPackageScope of: aPackage in: aNavigationEnvironment)
+
+	^ ClyAllPackageTagsQuery sortedFrom: (ClyPackageScope of: aPackage in: aNavigationEnvironment)
 ]
 
 { #category : '*Calypso-SystemQueries' }
@@ -71,7 +66,7 @@ RPackage class >> prepareClassQueriesFrom: packages in: aNavigationEnvironment [
 { #category : '*Calypso-SystemQueries' }
 RPackage >> tagsForClasses [
 	"Any class could be tagged for user purpose.
-	Now we implement it on top of RPackageTag"
+	Now we implement it on top of PackageTag"
 
 	^self classTags reject: [:each | each isRoot] thenCollect: [:each | each name]
 ]

@@ -1882,12 +1882,12 @@ RBCodeSnippet class >> badSemantic [
 			         skip: #testEvaluateOnErrorResume). "evaluate cannot distinguishes runtime errors and compiletime errors"
 		        (self new
 			         source:
-				         'OCUndeclaredVariableWarning signal: ''false error''';
+				         'Warning signal: ''false error''';
 			         nodeAt:
-				         '1111111111111111111111111110000000002222222222222';
+				         '11111110000000002222222222222';
 			         styled:
-				         'ggggggggggggggggggggggggggg sssssss ''''''''''''''''''''''''''';
-			         raise: OCUndeclaredVariableWarning). "same, but warning are silently ignored"
+				         'ggggggg sssssss ''''''''''''''''''''''''''';
+			         raise: Warning). "same, but warning are silently ignored"
 		        (self new
 			         source: 'RuntimeSyntaxError signal: ''false error''';
 			         nodeAt: '1111111111111111110000000002222222222222';
@@ -2769,51 +2769,6 @@ RBCodeSnippet class >> styleAll [
 	self allSnippets do: [ :each |
 		bigtext ifNotEmpty: [ bigtext append: String cr ].
 		bigtext append: each styledText ].
-	bigtext inspect
-]
-
-{ #category : 'script' }
-RBCodeSnippet class >> styleWithError: snippets [
-	"Display all snippets in a big styled text with compilation error messages and error nodes.
-	Each compilation error message and each error node is displayed indenpendently."
-
-	<script: 'self styleWithError: self allSnippets'>
-
-	| bigtext |
-	bigtext := Text new.
-	snippets do: [ :each |
-		| text ast |
-		bigtext ifNotEmpty: [ bigtext append: String cr ].
-
-		"Get the original styled text"
-		text := each styledText.
-		bigtext append: text.
-
-		"Try to compile it and collect error messages"
-		each compileOnError: [ :exception |
-				"In case of error, insert error message (like an old-school smalltalk compiler)"
-				text
-					replaceFrom: exception position
-					to: exception position - 1
-					with: (exception messageText asText addAttribute:
-							 (TextBackgroundColor color: Color lightBlue)).
-				bigtext append: String cr.
-				bigtext append: String tab.
-				bigtext append: text.
-				bigtext append: '   '.
-				bigtext append: ('SyntaxErrorNotification' asText makeAllColor: Color gray).
-				].
-
-		"Then the fun part. Add line for each node with error or warning"
-		ast := each doSemanticAnalysis.
-		ast nodesPostorderDo: [ :node |
-			node notices do: [ :notice |
-				text := each textWithNode: node message: notice messageText at: notice position.
-				bigtext append: String cr.
-				bigtext append: String tab.
-				bigtext append: text.
-				bigtext append: (('   {1} ({2})' format: {node class name. notice class name}) asText makeAllColor: Color gray)
-			] ] ].
 	bigtext inspect
 ]
 

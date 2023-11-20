@@ -33,26 +33,6 @@ GoferApiTest >> testBlueplane [
 	self assert: gofer repositories: #('http://squeaksource.blueplane.jp/SIXX')
 ]
 
-{ #category : 'tests - references' }
-GoferApiTest >> testConstraintReference [
-
-	| reference |
-	gofer
-		repository: self monticelloRepository;
-		package: 'GoferBar' constraint: [ :ref | ref branch = 'branch' ].
-
-	self assert: gofer resolved size equals: 1.
-
-	reference := gofer resolved first.
-
-	self assert: (reference isKindOf: GoferResolvedReference).
-	self assert: reference packageName equals: 'GoferBar'.
-	self assert: reference author equals: 'lr'.
-	self assert: reference branch equals: 'branch'.
-	self assert: reference versionNumber equals: 2.
-	self assert: reference repository equals: self monticelloRepository
-]
-
 { #category : 'tests - repositories' }
 GoferApiTest >> testCustomRepository [
 
@@ -194,18 +174,6 @@ GoferApiTest >> testSmalltalkhub [
 
 	gofer smalltalkhubUser: 'dh83' project: 'ci'.
 	self assert: gofer repositories: #('http://smalltalkhub.com/mc/dh83/ci/main/')
-]
-
-{ #category : 'tests - repositories' }
-GoferApiTest >> testSubDirectoryRepository [
-
-	testingEnvironment
-		at: #MCSubDirectoryRepository
-		ifPresent: [ :subDirectoryRepositoryClass | |path|
-			path := (FileSystem disk workingDirectory / '*') fullName.
-			gofer directory: path.
-			self assert: gofer repositories: (Array with: path).
-			self assert: (gofer repositories first isKindOf: subDirectoryRepositoryClass) ]
 ]
 
 { #category : 'tests - references' }

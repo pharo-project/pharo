@@ -180,7 +180,7 @@ DialogWindowMorph >> handlesKeyboard: evt [
 
 	(super handlesKeyboard: evt) ifTrue: [^true].
 	^evt keyCharacter = Character escape or: [
-		(self defaultButton notNil and: [
+		(self defaultButton isNotNil and: [
 			evt keyCharacter = Character cr])]
 ]
 
@@ -232,7 +232,7 @@ DialogWindowMorph >> keyDown: evt [
 	"Check for return and escape keys."
 
 	super keyDown: evt.
-	(self defaultButton notNil and: [evt key = KeyboardKey enter or: [evt key = KeyboardKey keypadEnter]])
+	(self defaultButton isNotNil and: [evt key = KeyboardKey enter or: [evt key = KeyboardKey keypadEnter]])
 		ifTrue: [self returnPressed. ^true].
 
 	evt key = KeyboardKey escape ifTrue: [self escapePressed. ^true].

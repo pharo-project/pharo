@@ -121,12 +121,9 @@ ReferenceFinder >> addBacklinkLevel [
 
 { #category : 'private' }
 ReferenceFinder >> backlinkFor: anObject [
-	| toObject |
-	backlinks do:
-			[:each |
-			toObject := each at: anObject ifAbsent: [nil].
-			toObject notNil ifTrue: [^toObject]].
-	^nil
+
+	backlinks do: [ :each | each at: anObject ifPresent: [ :toObject | ^ toObject ] ].
+	^ nil
 ]
 
 { #category : 'private' }
@@ -216,20 +213,16 @@ ReferenceFinder >> processLinkTo: newObject from: anObject [
 { #category : 'private' }
 ReferenceFinder >> searchForObject [
 
-	[| objects |
+	[
+	| objects |
 	self printToDoNotice.
 	objects := objectsLeft.
 	objectsLeft := OrderedCollection new.
 	self addBacklinkLevel.
-	objects do:
-			[:each |
-			| path |
-			(path := self searchVariablesIn: each) notNil
-				ifTrue: [foundBlock value: path].
-			(path := self searchIndicesIn: each) notNil
-				ifTrue: [foundBlock value: path]].
-	objectsLeft isEmpty]
-			whileFalse
+	objects do: [ :each |
+		(self searchVariablesIn: each) ifNotNil: [ :path | foundBlock value: path ].
+		(self searchIndicesIn: each) ifNotNil: [ :path | foundBlock value: path ] ].
+	objectsLeft isEmpty ] whileFalse
 ]
 
 { #category : 'private' }
@@ -250,13 +243,11 @@ ReferenceFinder >> searchIndicesIn: anObject [
 
 { #category : 'private' }
 ReferenceFinder >> searchVariablesIn: anObject [
+
 	| class |
 	class := self _objectClass: anObject.
-	1 to: class instSize do:
-		[:i | | path |
-		path := self processLinkTo: (self _object: anObject instVarAt: i) from: anObject.
-		path notNil ifTrue: [^path]].
-	^nil
+	1 to: class instSize do: [ :i | (self processLinkTo: (self _object: anObject instVarAt: i) from: anObject) ifNotNil: [ :path | ^ path ] ].
+	^ nil
 ]
 
 { #category : 'initialization' }

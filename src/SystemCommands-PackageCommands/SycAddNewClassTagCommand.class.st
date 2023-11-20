@@ -27,7 +27,7 @@ SycAddNewClassTagCommand class >> canBeExecutedInContext: aToolContext [
 { #category : 'execution' }
 SycAddNewClassTagCommand >> applyResultInContext: aToolContext [
 	super applyResultInContext: aToolContext.
-	aToolContext showPackage: package atClassTag: tagName
+	aToolContext showPackage: package tag: tagName
 ]
 
 { #category : 'accessing' }

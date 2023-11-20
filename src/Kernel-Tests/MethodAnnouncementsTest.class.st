@@ -3,27 +3,47 @@ I am a test case specialized in checking that the announcements linked to protoc
 "
 Class {
 	#name : 'MethodAnnouncementsTest',
-	#superclass : 'AbstractClassDescriptionTest',
-	#instVars : [
-		'numberOfAnnouncements'
-	],
+	#superclass : 'AbstractClassDescriptionAnnouncementTest',
 	#category : 'Kernel-Tests-Classes',
 	#package : 'Kernel-Tests',
 	#tag : 'Classes'
 }
 
-{ #category : 'running' }
-MethodAnnouncementsTest >> setUp [
+{ #category : 'tests' }
+MethodAnnouncementsTest >> testCompileMethodAnnounceAddition [
 
-	super setUp.
-	numberOfAnnouncements := 0
+	self when: MethodAdded do: [ :ann |
+		self assert: ann method selector equals: #king.
+		self assert: ann method protocol name equals: #titan.
+		self assert: ann methodClass name equals: self classNameForTests.
+		self assert: ann methodPackage name equals: self packageNameForTests.
+		self assert: ann packagesAffected equals: { self packageNameForTests asPackage } ].
+
+	class compiler
+		protocol: #titan;
+		install: 'king ^ 1'.
+
+	self assert: numberOfAnnouncements equals: 1
 ]
 
-{ #category : 'running' }
-MethodAnnouncementsTest >> tearDown [
+{ #category : 'tests' }
+MethodAnnouncementsTest >> testRemoveMethodAnnounceRemoval [
 
-	SystemAnnouncer uniqueInstance unsubscribe: self.
-	super tearDown
+	class compiler
+		protocol: #titan;
+		install: 'king ^ 1'.
+
+	self when: MethodRemoved do: [ :ann |
+		self assert: ann method selector equals: #king.
+		self assert: ann method protocol name equals: #titan.
+		self assert: ann methodClass name equals: self classNameForTests.
+		"Until Pharo 12 the MethodRemoved announcement did not know the package of the method."
+		self assert: ann methodPackage name equals: self packageNameForTests.
+		self assert: ann packagesAffected equals: { self packageNameForTests asPackage } ].
+
+	class removeSelector: #king.
+
+	self assert: numberOfAnnouncements equals: 1
 ]
 
 { #category : 'tests' }
@@ -46,30 +66,44 @@ MethodAnnouncementsTest >> testRemoveSelectorDoesNotAnnounceRecategorization [
 ]
 
 { #category : 'tests' }
-MethodAnnouncementsTest >> testRemoveSelectorSetThePackage [
-	"Until Pharo 12 the MethodRemoved announcement did not know the package of the method."
+MethodAnnouncementsTest >> testUpdateMethodAnnounceModification [
+
+	class compiler
+		protocol: #titan;
+		install: 'king ^ 2'.
+
+	self when: MethodModified do: [ :ann |
+		self assert: ann method selector equals: #king.
+		self assert: ann method protocol name equals: #titan.
+		self assert: ann methodClass name equals: self classNameForTests.
+		self assert: ann methodPackage name equals: self packageNameForTests.
+		self assert: ann packagesAffected equals: { self packageNameForTests asPackage } ].
 
 	class compiler
 		protocol: #titan;
 		install: 'king ^ 1'.
 
-	self when: MethodRemoved do: [ :ann |
-		self assert: ann method selector equals: #king.
-		self assert: ann methodClass name equals: self classNameForTests.
-		self assert: ann methodPackage name equals: self packageNameForTests ].
-
-	class removeSelector: #king.
-
 	self assert: numberOfAnnouncements equals: 1
 ]
 
-{ #category : 'helpers' }
-MethodAnnouncementsTest >> when: anAnnouncement do: aBlock [
+{ #category : 'tests' }
+MethodAnnouncementsTest >> testUpdateMethodAnnounceRecategorization [
 
-	SystemAnnouncer uniqueInstance
-		when: anAnnouncement
-		do: [ :ann |
-			numberOfAnnouncements := numberOfAnnouncements + 1.
-			aBlock cull: ann ]
-		for: self
+	class compiler
+		protocol: #demon;
+		install: 'king ^ 2'.
+
+	self when: MethodRecategorized do: [ :ann |
+		self assert: ann method selector equals: #king.
+		self assert: ann oldProtocol name equals: #demon.
+		self assert: ann newProtocol name equals: #titan.
+		self assert: ann methodClass name equals: self classNameForTests.
+		self assert: ann methodPackage name equals: self packageNameForTests.
+		self assert: ann packagesAffected equals: { self packageNameForTests asPackage } ].
+
+	class compiler
+		protocol: #titan;
+		install: 'king ^ 1'.
+
+	self assert: numberOfAnnouncements equals: 1
 ]

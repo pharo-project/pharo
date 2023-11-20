@@ -8,20 +8,13 @@ Class {
 { #category : 'helpers' }
 CDMetaclassWithTraitParserTest >> classDefinitionString [
 
-	^ '{className} class
-		uses: {classTraitName} classTrait
-		instanceVariableNames: ''{instvar1} {instvar2}'''
-			format: {
-				'className' -> self className.
-				'instvar1' -> self firstInstanceVariableName.
-				'instvar2' -> self secondInstanceVariableName.
-				'classTraitName' -> self classTraitName
-			 } asDictionary
-]
-
-{ #category : 'helpers' }
-CDMetaclassWithTraitParserTest >> classTraitName [
-	^ 'TApplyingOnClassSide'
+	^ '{superclassName} class << {className} class
+		traits: {classTraitName} classTrait;
+		slots: {slots}' format: {
+			  ('className' -> self className).
+			  ('superclassName' -> self superclassName).
+			  ('slots' -> self slotsArray).
+			  ('classTraitName' -> self traitDefinition) } asDictionary
 ]
 
 { #category : 'helpers' }
@@ -39,5 +32,5 @@ CDMetaclassWithTraitParserTest >> traitCompositionNode [
 { #category : 'helpers' }
 CDMetaclassWithTraitParserTest >> traitDefinition [
 
-	^ self classTraitName
+	^ 'TEmpty'
 ]

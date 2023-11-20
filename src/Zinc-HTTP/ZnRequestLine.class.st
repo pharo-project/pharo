@@ -83,7 +83,7 @@ ZnRequestLine >> postCopy [
 
 { #category : 'printing' }
 ZnRequestLine >> printMethodAndUriOn: stream [
-	(self method notNil and: [ self uri notNil ])
+	(self method isNotNil and: [ self uri isNotNil ])
 		ifFalse: [ ^ self ].
 	stream
 		nextPutAll: self method;
@@ -94,7 +94,7 @@ ZnRequestLine >> printMethodAndUriOn: stream [
 { #category : 'printing' }
 ZnRequestLine >> printOn: stream [
 	super printOn: stream.
-	(self method notNil and: [ self uri notNil ])
+	(self method isNotNil and: [ self uri isNotNil ])
 		ifFalse: [ ^ self ].
 	stream nextPut: $(.
 	self printMethodAndUriOn: stream.

@@ -109,7 +109,7 @@ SettingNode >> isAnotherValueStored [
 	"Return true if the another setting value is stored."
 	| storedValue |
 	storedValue := self storedValue.
-	^ storedValue notNil and: [ storedValue ~= self settingValue ]
+	^ storedValue isNotNil and: [ storedValue ~= self settingValue ]
 ]
 
 { #category : 'testing' }
@@ -133,7 +133,7 @@ SettingNode >> isNotCurrentValueStored [
 SettingNode >> isStored [
 	"Return true if this setting node has stored value.
 	The stored value can differ from the current value."
-	^ self storedValue notNil
+	^ self storedValue isNotNil
 ]
 
 { #category : 'menu' }

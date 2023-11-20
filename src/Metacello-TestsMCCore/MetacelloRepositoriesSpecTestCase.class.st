@@ -7,7 +7,7 @@ Class {
 
 { #category : 'accessing' }
 MetacelloRepositoriesSpecTestCase >> projectClass [
-    ^ MetacelloMCProject
+    ^ MetacelloProject
 ]
 
 { #category : 'tests' }

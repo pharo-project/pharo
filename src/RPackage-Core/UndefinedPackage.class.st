@@ -18,6 +18,21 @@ UndefinedPackage class >> undefinedPackageName [
 	^ #_UnpackagedPackage
 ]
 
+{ #category : 'adding' }
+UndefinedPackage >> addMethod: aCompiledMethod [
+	"We do not import the methods in this package."
+]
+
+{ #category : 'class tags' }
+UndefinedPackage >> ensureTag: aTag [
+
+	aTag ifNil: [ ^ undefinedTag ].
+
+	^ aTag = undefinedTag
+		  ifTrue: [ aTag ]
+		  ifFalse: [ self error: 'Cannot add a tag to the UndefinedPackage' ]
+]
+
 { #category : 'initialization' }
 UndefinedPackage >> initialize [
 

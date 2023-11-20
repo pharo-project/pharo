@@ -13,5 +13,5 @@ Class {
 DAPackageItemDiffNode >> icon [
 	self content isNew ifTrue: [ ^ self iconNamed: #changeAdd ].
 	self content isRemoved ifTrue: [^ self iconNamed: #smallCancel].
-	^ self iconNamed: #forwardIcon
+	^ self iconNamed: #forward
 ]

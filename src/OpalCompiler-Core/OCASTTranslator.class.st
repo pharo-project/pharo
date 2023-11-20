@@ -528,7 +528,7 @@ OCASTTranslator >> visitAssignmentNode: anAssignmentNode [
 	var isInvalidVariable ifTrue: [ ^ self emitRuntimeError: anAssignmentNode ].
 
 	"Because we are producing a CompiledMethod, register undeclared variables to `Undeclared`"
-	var isUndeclaredVariable ifTrue: [ var register ].
+	var isUndeclaredVariable ifTrue: [ var registerFromNode: anAssignmentNode ].
 
 	var emitStore: methodBuilder
 ]
@@ -730,7 +730,7 @@ OCASTTranslator >> visitPragmaNode: aPragmaNode [
 
 	| var |
 	aPragmaNode isParseError ifTrue: [ ^self ].
-	methodBuilder addPragma: aPragmaNode asPragma.
+	methodBuilder addPragma: aPragmaNode pragma.
 
 	"if the pragma is a primitive that defines an error variable, we need to store error value
 	which is on the stack"
@@ -765,7 +765,7 @@ OCASTTranslator >> visitVariableNode: aVariableNode [
 
 	"Because we are producing a CompiledMethod, register undeclared variables to `Undeclared`"
 	aVariableNode variable isUndeclaredVariable ifTrue: [
-		aVariableNode variable register ].
+		aVariableNode variable registerFromNode: aVariableNode  ].
 
 	aVariableNode variable emitValue: methodBuilder
 ]

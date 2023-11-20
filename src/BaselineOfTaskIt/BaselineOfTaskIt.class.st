@@ -12,16 +12,6 @@ BaselineOfTaskIt class >> DevelopmentSupport [
 	<apiDocumentation>
 ]
 
-{ #category : 'private' }
-BaselineOfTaskIt class >> baseConfigurationClassIfAbsent: aBlock [
-
-	^Smalltalk
-		at: #MetacelloBaseConfiguration
-		ifAbsent: [ 
-			self ensureMetacelloBaseConfiguration.
-			Smalltalk at: #MetacelloBaseConfiguration ifAbsent: aBlock ].
-]
-
 { #category : 'catalog' }
 BaselineOfTaskIt class >> catalogContactInfo [
 	^ 'santiagobragagnolo@gmail.com'
@@ -35,22 +25,6 @@ BaselineOfTaskIt class >> catalogDescription [
 { #category : 'catalog' }
 BaselineOfTaskIt class >> catalogKeywords [
 	^ {'multiprocessing'. 'futures'. 'tasks'. 'services'. }
-]
-
-{ #category : 'private' }
-BaselineOfTaskIt class >> ensureMetacelloBaseConfiguration [
-
-	Smalltalk
-		at: #MetacelloBaseConfiguration
-		ifAbsent: [ 
-			| repository version |
-			repository := MCHttpRepository location: 'http://seaside.gemstone.com/ss/metacello' user: '' password: ''.
-			repository
-				versionReaderForFileNamed: 'Metacello-Base-DaleHenrichs.2.mcz'
-				do: [ :reader | 
-					version := reader version.
-					version load.
-					version workingCopy repositoryGroup addRepository: repository ] ]
 ]
 
 { #category : 'metacello tool support' }

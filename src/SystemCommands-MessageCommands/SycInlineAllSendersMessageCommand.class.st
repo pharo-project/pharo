@@ -31,7 +31,7 @@ SycInlineAllSendersMessageCommand >> createRefactoring [
 
 { #category : 'accessing' }
 SycInlineAllSendersMessageCommand >> defaultMenuIconName [
-	^#smallRightFlushIcon
+	^#smallRightFlush
 ]
 
 { #category : 'accessing' }

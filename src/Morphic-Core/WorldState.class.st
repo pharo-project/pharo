@@ -479,7 +479,7 @@ WorldState >> displayWorldSafely: aWorld [
 		[
 			errCtx := errCtx sender.
 			"Search the sender chain to find the morph causing the problem"
-			[errCtx notNil and:[(errCtx receiver isMorph) not]]
+			[errCtx isNotNil and:[(errCtx receiver isMorph) not]]
 				whileTrue:[errCtx := errCtx sender].
 			"If we're at the root of the context chain then we have a fatal drawing problem"
 			errCtx ifNil:[^self handleFatalDrawingError: err description].

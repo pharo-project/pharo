@@ -48,10 +48,10 @@ MCChangeNotificationTest >> testCoreMethodModified [
 ]
 
 { #category : 'tests' }
-MCChangeNotificationTest >> testExtMethodModified [
+MCChangeNotificationTest >> testExtensionMethodModified [
 	| event method |
 	workingCopy modified: false.
-	method := workingCopy packageSet extensionMethods first.
+	method := workingCopy systemPackage extensionMethods first.
 	event := self modifiedEventFor: method selector ofClass: method methodClass.
 	MCWorkingCopy methodModified: event.
 	self assert: workingCopy modified

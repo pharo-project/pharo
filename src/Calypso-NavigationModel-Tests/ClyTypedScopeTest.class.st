@@ -178,7 +178,7 @@ ClyTypedScopeTest >> testConvertingWithNewBasisObjects [
 		assert: convertedScope basisObjects asSet
 		equals: {self extraBasisSample} asSet.
 	self assert: convertedScope basisSize equals: 1.
-	self assert: convertedScope environment notNil.
+	self assert: convertedScope environment isNotNil.
 	self assert: convertedScope environment equals: environment
 ]
 

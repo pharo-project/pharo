@@ -23,7 +23,7 @@ ClyIcebergShowMethodVersionCommand class >> canBeExecutedInContext: aToolContext
 
 	^ aToolContext isMethodSelected and: [
 		  (IceRepository registeredRepositoryIncludingPackage:
-			   aToolContext lastSelectedMethod package) notNil ]
+			   aToolContext lastSelectedMethod package) isNotNil ]
 ]
 
 { #category : 'accessing' }

@@ -23,7 +23,7 @@ Screenshot class >> screenShotCommandOn: aBuilder [
 		selector: #makeAScreenshot;
 		label: 'Screenshot';
 		help: 'Take a screenshot';
-		iconName: #smallScreenshotIcon
+		iconName: #smallScreenshot
 ]
 
 { #category : 'operations' }

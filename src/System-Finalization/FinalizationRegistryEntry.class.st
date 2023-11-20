@@ -23,7 +23,7 @@ On the image side, the finalization process will send the message #mourn to an E
 
 # Implementation details
 
-I am implemented as a double linked list, to make removals O(1)
+I am implemented to be inside a double linked list and know the link I belong to, to make removals O(1)
 
 !! More Documentation
 
@@ -37,8 +37,7 @@ Class {
 	#type : 'ephemeron',
 	#instVars : [
 		'container',
-		'next',
-		'previous'
+		'link'
 	],
 	#category : 'System-Finalization-Registry',
 	#package : 'System-Finalization',
@@ -56,26 +55,6 @@ FinalizationRegistryEntry class >> key: key value: value container: aContainer [
 ]
 
 { #category : 'accessing' }
-FinalizationRegistryEntry >> chainNext: aNode [
-	"Insert a node in the middle of myself and my next node.
-	Assume the argument is a valid node with has no next or previous."
-	| previousNext |
-	previousNext := next.
-	next := aNode.
-	previousNext ifNotNil: [
-		previousNext previous: aNode ].
-	
-	aNode next: previousNext.
-	aNode previous: self
-]
-
-{ #category : 'accessing' }
-FinalizationRegistryEntry >> check [
-
-	^ self next previous == self and: [ self previous next == self ]
-]
-
-{ #category : 'accessing' }
 FinalizationRegistryEntry >> container [
 
 	^ container
@@ -87,25 +66,16 @@ FinalizationRegistryEntry >> container: anEphemeronContainer [
 	container := anEphemeronContainer
 ]
 
-{ #category : 'testing' }
-FinalizationRegistryEntry >> includes: anObject [
+{ #category : 'accessing' }
+FinalizationRegistryEntry >> link [
 
-	key = anObject ifTrue: [ ^ true ].
-	next ifNil: [ ^ false ].
-	^ next includes: anObject
+	^ link
 ]
 
-{ #category : 'enumerating' }
-FinalizationRegistryEntry >> keys [
+{ #category : 'accessing' }
+FinalizationRegistryEntry >> link: anObject [
 
-	"Base case, last entry in the list"
-	next ifNil: [ ^ { key } ].
-
-	"The head is empty, so check that"
-	key ifNil: [ ^ next keys ].
-	
-	"Otherwise, this is the recursive case"
-	^ { key }, next keys
+	link := anObject
 ]
 
 { #category : 'mourning' }
@@ -116,61 +86,4 @@ FinalizationRegistryEntry >> mourn [
 	Ask the container to finalize myself"
 
 	container finalizeEphemeron: self
-]
-
-{ #category : 'accessing' }
-FinalizationRegistryEntry >> next [
-
-	^ next
-]
-
-{ #category : 'accessing' }
-FinalizationRegistryEntry >> next: anObject [
-
-	next := anObject
-]
-
-{ #category : 'accessing' }
-FinalizationRegistryEntry >> previous [
-
-	^ previous
-]
-
-{ #category : 'accessing' }
-FinalizationRegistryEntry >> previous: anObject [
-
-	previous := anObject
-]
-
-{ #category : 'accessing' }
-FinalizationRegistryEntry >> removeFromChain [
-
-	| previousNext |
-	previous ifNil: [ ^ self ].
-
-	previousNext := next.
-	previous next: previousNext.
-
-	previousNext ifNil: [ ^ self ].
-	previousNext previous: previous.
-]
-
-{ #category : 'accessing' }
-FinalizationRegistryEntry >> size [
-
-	next ifNil: [ ^ 1 ].
-	^ 1 + next size
-]
-
-{ #category : 'enumerating' }
-FinalizationRegistryEntry >> values [
-
-	"Base case, last entry in the list"
-	next ifNil: [ ^ { value } ].
-
-	"The head is empty, so check that"
-	key ifNil: [ ^ next values ].
-
-	"Otherwise, this is the recursive case"
-	^ { value }, next values
 ]

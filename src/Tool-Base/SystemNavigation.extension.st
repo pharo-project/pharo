@@ -340,7 +340,7 @@ SystemNavigation >> browseUndeclaredReferences [
 	SystemNavigation new browseUndeclaredReferences
 	"
 
-	Undeclared removeUnreferencedKeys.
+	Smalltalk image cleanOutUndeclared.
 	Undeclared associations do: [:binding |
 		self
 			browseMessageList: (self allReferencesTo: binding )

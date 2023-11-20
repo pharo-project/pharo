@@ -1,7 +1,7 @@
 Extension { #name : 'CompiledCode' }
 
 { #category : '*Deprecated12' }
-CompiledCode >> packageFromOrganizer: anRPackageOrganizer [
+CompiledCode >> packageFromOrganizer: aPackageOrganizer [
 
 	self
 		deprecated: 'Use #package instead since the previous implementation was not using the parameter.'

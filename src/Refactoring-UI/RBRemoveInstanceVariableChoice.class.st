@@ -1,6 +1,6 @@
 Class {
 	#name : 'RBRemoveInstanceVariableChoice',
-	#superclass : 'RBInstanceVariableChoice',
+	#superclass : 'RBVariableChoice',
 	#category : 'Refactoring-UI-Choices',
 	#package : 'Refactoring-UI',
 	#tag : 'Choices'

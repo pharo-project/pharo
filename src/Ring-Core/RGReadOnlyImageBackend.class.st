@@ -101,7 +101,7 @@ RGReadOnlyImageBackend >> definedBehaviorsFor: anRGPackage do: aBlock [
 { #category : 'trait exclusion' }
 RGReadOnlyImageBackend >> exclusionsFor: anRGTraitExclusion do: aBlock [
 
-	^ (anRGTraitExclusion propertyNamed: #realObject ifAbsent: [ self error: 'You can use only trait transformations generated directly by this backend' ]) exclusions do: [:each | aBlock value: each ]
+	^ (anRGTraitExclusion propertyNamed: #realObject ifAbsent: [ self error: 'You can use only trait transformations generated directly by this backend' ]) removedSelectors do: [:each | aBlock value: each ]
 ]
 
 { #category : 'slot' }
@@ -227,7 +227,7 @@ RGReadOnlyImageBackend >> packageFor: anRGBehavior [
 { #category : 'environment' }
 RGReadOnlyImageBackend >> packagesFor: anRGEnvironment do: aBlock [
 
-	RPackageOrganizer default packagesDo: [:each |
+	PackageOrganizer default packagesDo: [:each |
 		| def |
 		def := self definitionFor: each ifAbsentRegister: [each asRingMinimalDefinitionIn: anRGEnvironment].
 		aBlock value: def.]
@@ -250,7 +250,7 @@ RGReadOnlyImageBackend >> realMethodFor: anRGMethod [
 { #category : 'accessing' }
 RGReadOnlyImageBackend >> realPackageFor: anRGPackage [
 
-	^ RPackageOrganizer default packageNamed: anRGPackage name ifAbsent: [nil]
+	^ PackageOrganizer default packageNamed: anRGPackage name ifAbsent: [nil]
 ]
 
 { #category : 'resolving' }

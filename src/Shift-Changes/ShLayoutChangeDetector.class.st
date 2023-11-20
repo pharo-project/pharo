@@ -11,6 +11,6 @@ Class {
 { #category : 'initialization' }
 ShLayoutChangeDetector >> initialize [
 	super initialize.
-	builderAccessor := [ :e | e layoutDefinition layoutClass ].
+	builderAccessor := [ :e | e layoutClass ].
 	classAccessor := [ :e | e classLayout class ]
 ]

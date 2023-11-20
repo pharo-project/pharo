@@ -27,6 +27,13 @@ CDClassDefinitionNode >> binding [
 	^ self class environment associationAt: self className ifAbsent: [LiteralVariable key: nil value: self]
 ]
 
+{ #category : 'initialization' }
+CDClassDefinitionNode >> initialize [
+
+	super initialize.
+	sharedVariableNodes := OrderedCollection new
+]
+
 { #category : 'testing' }
 CDClassDefinitionNode >> isClassDefinition [
 
@@ -88,7 +95,8 @@ CDClassDefinitionNode >> sharedVariableNodes [
 
 { #category : 'accessing' }
 CDClassDefinitionNode >> sharedVariables [
-	^ sharedVariableNodes ifNil:[ sharedVariableNodes := OrderedCollection new ]
+
+	^ sharedVariableNodes
 ]
 
 { #category : 'accessing' }

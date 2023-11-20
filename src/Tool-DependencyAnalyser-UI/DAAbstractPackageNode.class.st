@@ -22,7 +22,12 @@ DAAbstractPackageNode >> packageName [
 
 { #category : 'browse-nautilus' }
 DAAbstractPackageNode >> selectInBrowser [
-	"rPackage is always a RPackageSet"
 
-	self selectPackage: self rPackage packages last
+	self selectPackage: self systemPackage
+]
+
+{ #category : 'accessing' }
+DAAbstractPackageNode >> systemPackage [
+
+	^ self content systemPackage
 ]

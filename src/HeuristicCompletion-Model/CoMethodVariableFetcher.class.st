@@ -37,7 +37,7 @@ CoMethodVariableFetcher >> methodVariableNamesDo: aBlock [
 
 	| currentNode |
 	currentNode := completionASTNode.
-	[ currentNode notNil ] whileTrue: [
+	[ currentNode isNotNil ] whileTrue: [
 		"ASTs are strange.
 		There is no way to ask the variables defined in the scope in an ordered way.
 		Hack our way through"

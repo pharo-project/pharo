@@ -99,7 +99,7 @@ CharacterBlock >> printOn: aStream [
 
 	aStream nextPutAll: 'a CharacterBlock with index '.
 	stringIndex printOn: aStream.
-	(text notNil and: [text notEmpty and: [ stringIndex between: 1 and: text size ]])
+	(text isNotNil and: [text notEmpty and: [ stringIndex between: 1 and: text size ]])
 		ifTrue: [aStream nextPutAll: ' and character '.
 				(text at: stringIndex) printOn: aStream].
 	aStream nextPutAll: ' and rectangle '.

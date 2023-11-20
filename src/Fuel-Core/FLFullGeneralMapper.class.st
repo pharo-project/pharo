@@ -73,16 +73,6 @@ FLFullGeneralMapper >> visitClass: aClass [
 ]
 
 { #category : 'visiting' }
-FLFullGeneralMapper >> visitClassTrait: aClassTrait [
-	(self shouldSerializeBehaviorFully: aClassTrait)
-		ifTrue: [
-			self
-				mapAndTraceByClusterName: aClassTrait
-				to: FLClassTraitCluster ]
-		ifFalse: [ next mapAndTrace: aClassTrait ]
-]
-
-{ #category : 'visiting' }
 FLFullGeneralMapper >> visitClassVariable: aClassVariable [
 	"Consider class variables regular objects (not globals), unless
 	their owning class is being fully serialized, in which case the class

@@ -15,25 +15,25 @@ RBEOFTokenTest >> setUp [
 	token := RBEOFToken start: (1 to: 10)
 ]
 
-{ #category : 'test' }
+{ #category : 'tests' }
 RBEOFTokenTest >> testLength [
 
 	self assert: token length equals: 0
 ]
 
-{ #category : 'test' }
+{ #category : 'tests' }
 RBEOFTokenTest >> testSource [
 
 	self assert: token source equals: String empty
 ]
 
-{ #category : 'test' }
+{ #category : 'tests' }
 RBEOFTokenTest >> testValue [
 
 	self assert: token value equals: String empty
 ]
 
-{ #category : 'test' }
+{ #category : 'tests' }
 RBEOFTokenTest >> testisEOF [
 
 	self assert: token isEOF

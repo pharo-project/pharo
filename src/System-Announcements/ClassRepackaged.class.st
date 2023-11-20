@@ -24,6 +24,12 @@ ClassRepackaged class >> classRepackaged: aClass oldTag: oldTag newTag: newTag [
 		  yourself
 ]
 
+{ #category : 'class initialization' }
+ClassRepackaged class >> initialize [
+
+	self deprecatedAliases: { #ClassRecategorized }
+]
+
 { #category : 'testing' }
 ClassRepackaged >> affectsMethods [
 	"methods belong to class which could be represented by tools as part of method"
@@ -67,14 +73,6 @@ ClassRepackaged >> classRepackaged: anObject [
 ]
 
 { #category : 'accessing' }
-ClassRepackaged >> classTagsAffected [
-
-	^ {
-		  self newTag.
-		  self oldTag }
-]
-
-{ #category : 'accessing' }
 ClassRepackaged >> newPackage [
 
 	^ self newTag package
@@ -110,6 +108,14 @@ ClassRepackaged >> oldTag: anObject [
 	oldTag := anObject
 ]
 
+{ #category : 'accessing' }
+ClassRepackaged >> packageTagsAffected [
+
+	^ {
+		  self newTag.
+		  self oldTag }
+]
+
 { #category : 'testing' }
 ClassRepackaged >> packagedChanged [
 
@@ -119,7 +125,5 @@ ClassRepackaged >> packagedChanged [
 { #category : 'accessing' }
 ClassRepackaged >> packagesAffected [
 
-	^ {
-		  self oldPackage.
-		  self newPackage }
+	^ { self oldPackage. self newPackage }
 ]

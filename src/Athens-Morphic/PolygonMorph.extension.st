@@ -193,22 +193,20 @@ PolygonMorph >> drawArrowsOnAthensCanvas: aAthensCanvas [
 
 { #category : '*Athens-Morphic' }
 PolygonMorph >> drawOnAthensCanvas: anAthensCanvas [
+
 	| border shape stroke |
 	border := self borderStyle.
 	shape := self asAthensPathOn: anAthensCanvas.
-	self isClosed
-		ifTrue: [
-			anAthensCanvas setPaint: self fillStyle.
-			anAthensCanvas drawShape: shape ].
+	self isClosed ifTrue: [
+		anAthensCanvas setPaint: self fillStyle.
+		anAthensCanvas drawShape: shape ].
 	stroke := anAthensCanvas setStrokePaint: border color.
 	stroke width: border width.
-	self dashedBorder notNil
-		ifTrue: [ self setDashOnStroke: stroke ].
+	self dashedBorder ifNotNil: [ self setDashOnStroke: stroke ].
 	anAthensCanvas drawShape: shape.
-	self hasTwoColorDash
-		ifTrue: [
-			self setSecondColorDashOnStroke: stroke.
-			anAthensCanvas drawShape: shape ].
+	self hasTwoColorDash ifTrue: [
+		self setSecondColorDashOnStroke: stroke.
+		anAthensCanvas drawShape: shape ].
 	self drawArrowsOnAthensCanvas: anAthensCanvas
 ]
 
@@ -216,7 +214,7 @@ PolygonMorph >> drawOnAthensCanvas: anAthensCanvas [
 PolygonMorph >> hasTwoColorDash [
 	" return true if the dash spec has another color"
 
-	^ self dashedBorder notNil and: [ self dashedBorder size > 2 ]
+	^ self dashedBorder isNotNil and: [ self dashedBorder size > 2 ]
 ]
 
 { #category : '*Athens-Morphic' }

@@ -44,7 +44,7 @@ RxsRegex >> initializeBranch: aBranch regex: aRegex [
 { #category : 'testing' }
 RxsRegex >> isNullable [
 
-	^branch isNullable or: [regex notNil and: [regex isNullable]]
+	^branch isNullable or: [regex isNotNil and: [regex isNullable]]
 ]
 
 { #category : 'accessing' }

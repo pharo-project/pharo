@@ -11,21 +11,11 @@ It should creates group instance using given scope. The package scope is given t
 "
 Class {
 	#name : 'ClySingleClassGroupProvider',
-	#superclass : 'ClyClassGroupProvider',
+	#superclass : 'ClyPackageTagProvider',
 	#category : 'Calypso-SystemQueries-Domain',
 	#package : 'Calypso-SystemQueries',
 	#tag : 'Domain'
 }
-
-{ #category : 'building groups' }
-ClySingleClassGroupProvider >> classGroupsIn: aPackageScope do: aBlock [
-
-	| classQuery |
-	classQuery := self createClassQueryFrom: aPackageScope.
-	classQuery hasEmptyResult ifTrue: [ ^self ].
-
-	aBlock value: (self createClassGroupFor: classQuery from: aPackageScope)
-]
 
 { #category : 'building groups' }
 ClySingleClassGroupProvider >> createClassGroupFor: aClassQuery from: aPackageScope [
@@ -35,4 +25,14 @@ ClySingleClassGroupProvider >> createClassGroupFor: aClassQuery from: aPackageSc
 { #category : 'building groups' }
 ClySingleClassGroupProvider >> createClassQueryFrom: aPackageScope [
 	self subclassResponsibility
+]
+
+{ #category : 'building groups' }
+ClySingleClassGroupProvider >> packageTagssIn: aPackageScope do: aBlock [
+
+	| classQuery |
+	classQuery := self createClassQueryFrom: aPackageScope.
+	classQuery hasEmptyResult ifTrue: [ ^self ].
+
+	aBlock value: (self createClassGroupFor: classQuery from: aPackageScope)
 ]

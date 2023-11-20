@@ -172,8 +172,8 @@ RubExtraSelectionDecorator >> hasValidSelection [
 
 	paragraph := self paragraph ifNil: [ ^false ].
 
-	^paragraph selectionStart notNil and: [
-		paragraph selectionStop notNil and: [
+	^paragraph selectionStart isNotNil and: [
+		paragraph selectionStop isNotNil and: [
 			paragraph selectionStart ~= paragraph selectionStop
 		]
 	]

@@ -110,6 +110,9 @@ OCCompiledMethodIntegrityTest >> testUndeclaredVariable [
 	undeclaredBinding := newCompiledMethod literals detect: [ :each | each name = #undeclaredTestVar ].
 	self assert: undeclaredBinding class equals: UndeclaredVariable.
 	self assert: undeclaredBinding identicalTo: (Undeclared associationAt: #undeclaredTestVar).
+	self assert: (undeclaredBinding registeredMethods includes: newCompiledMethod).
+	"but as the method is not installed, it is not a usingMethod"
+	self deny: (undeclaredBinding usingMethods includes: newCompiledMethod).
 	undeclaredBinding unregister
 ]
 
@@ -138,7 +141,7 @@ OCCompiledMethodIntegrityTest >> testUndeclaredVariableWhenItIsAlreadyRegistered
 	The bootstrap will be updated at some point. But now this case needs to be supported:
 		- declaring undefined var should update registered variable when its type is not undeclared var"
 	| newCompiledMethod undeclaredBinding |
-	Undeclared add: #undeclaredTestVar -> nil.
+	(UndeclaredVariable named: #undeclaredTestVar) register.
 	newCompiledMethod := OpalCompiler new
 		source:
 			'methodWithUndeclaredVar

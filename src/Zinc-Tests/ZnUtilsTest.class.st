@@ -37,7 +37,7 @@ ZnUtilsTest >> testDefaultJSONReader [
 	expectedParserClass := self class environment at: #NeoJSONObject ifAbsent: [
 		          self class environment at: #STONJSON ifAbsent:[nil]].
 
-	self assert: reader notNil.
+	self assert: reader isNotNil.
 	self assert: reader equals: expectedParserClass
 ]
 
@@ -49,7 +49,7 @@ ZnUtilsTest >> testDefaultJSONWriter [
 	expectedParserClass := self class environment at: #NeoJSONWriter ifAbsent: [
 		          self class environment at: #STONJSON ifAbsent:[nil]].
 
-	self assert: writer notNil.
+	self assert: writer isNotNil.
 	self assert: writer equals: expectedParserClass
 ]
 

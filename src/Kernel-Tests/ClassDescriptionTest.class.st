@@ -236,6 +236,26 @@ ClassDescriptionTest >> testHasSlotNamed [
 ]
 
 { #category : 'tests' }
+ClassDescriptionTest >> testIsInstalled [
+
+	| class |
+	class := self createTestClass.
+
+	self deny: class isInstalled description: 'The class was built but not installed so it should not be installed.'.
+
+	class := self class classInstaller make: [ :aBuilder |
+		         aBuilder
+			         fillFor: class;
+			         package: self compilationTestPackageName ].
+
+	self assert: class isInstalled description: 'The class got installed in the system and thus should be installed.'.
+
+	class removeFromSystem.
+
+	self deny: class isInstalled description: 'After removing a class it should be considered as not installed.'
+]
+
+{ #category : 'tests' }
 ClassDescriptionTest >> testMethods [
 	self assert: Object methods equals: Object methodDict values
 ]

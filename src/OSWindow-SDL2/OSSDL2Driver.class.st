@@ -207,16 +207,15 @@ OSSDL2Driver >> eventLoopProcessWithVMWindow [
 
 { #category : 'events-processing' }
 OSSDL2Driver >> eventLoopProcessWithoutPlugin [
-	| event session |
+
+	| event delay |
 	event := SDL_Event new.
-	session := Smalltalk session.
+	delay := Delay forMilliseconds: 5.
 
-	[ session == Smalltalk session]
-	whileTrue: [
+	[ event isNull ] whileFalse: [
 		[ (SDL2 pollEvent: event) > 0 ]
-		whileTrue: [ self processEvent: event ].
-
-		(Delay forMilliseconds: 5) wait ]
+			whileTrue: [ self processEvent: event ].
+		delay wait ]
 ]
 
 { #category : 'initialization' }

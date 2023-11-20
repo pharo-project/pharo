@@ -59,7 +59,7 @@ SourceFileArray >> changeRecordsFrom: initialSourcePointer className: theNonMeta
 		| file previousFilePosition previousFileIndex preamble stamp protocol preambleTokens |
 		file := sourceFilesCopy fileAt: fileIndex ifAbsent: [ ^ self ].
 
-		[ filePosition notNil & file notNil ]
+		[ filePosition isNotNil & file isNotNil ]
 			whileTrue: [
 				file position: (0 max: filePosition - 150).	"Skip back to before the preamble"
 				[ file position < (filePosition - 1) ] whileTrue: [

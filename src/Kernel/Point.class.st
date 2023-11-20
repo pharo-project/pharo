@@ -532,7 +532,7 @@ Point >> printOn: aStream [
 	aStream nextPut: $(.
 	x printOn: aStream.
 	aStream nextPut: $@.
-	(y notNil and: [y negative])
+	(y isNotNil and: [y negative])
 		ifTrue: [
 			"Avoid ambiguous @- construct"
 			aStream space].

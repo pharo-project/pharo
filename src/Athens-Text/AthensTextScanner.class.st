@@ -169,7 +169,7 @@ AthensTextScanner >> textBackground: aColor [
 
 	"background is transparent by default "
 
-	(currentBackground notNil and: [ currentBackground color = aColor ])
+	(currentBackground isNotNil and: [ currentBackground color = aColor ])
 		ifTrue: [ ^ self].
 
 	currentBackground ifNil: [ aColor isTransparent ifTrue: [ ^ self ] ].

@@ -57,6 +57,16 @@ Path class >> addElement: element to: result [
 ]
 
 { #category : 'private' }
+Path class >> addElement: element to: result on: filesystem [
+	element = '..'
+		ifTrue: [ ^ self addParentElementTo: result on: filesystem ].
+	element = ''
+		ifTrue: [ ^ self addEmptyElementTo: result ].
+	element = '.'
+		ifFalse: [ result add: element ]
+]
+
+{ #category : 'private' }
 Path class >> addEmptyElementTo: result [
 	result isEmpty ifTrue: [result add: '']
 ]
@@ -69,11 +79,31 @@ Path class >> addParentElementTo: result [
 ]
 
 { #category : 'private' }
+Path class >> addParentElementTo: result on: filesystem [
+	"Since this path is relative we don't know what it will be resolved against.
+	Canonicalize assuming no symbolic links"
+
+	(result isEmpty or: [ result last = '..' ])
+		ifTrue: [ result add: '..' ]
+		ifFalse: [ result removeLast ]
+]
+
+{ #category : 'private' }
 Path class >> canonicalizeElements: aCollection [
 	| result |
 	result := OrderedCollection new.
 	aCollection do: [ :element |
 		self addElement: element to: result].
+	^ result
+]
+
+{ #category : 'private' }
+Path class >> canonicalizeElements: aCollection filesystem: filesystem [
+	| result |
+
+	result := OrderedCollection new.
+	aCollection do: [ :element |
+		self addElement: element to: result on: filesystem ].
 	^ result
 ]
 
@@ -304,6 +334,15 @@ Path >> canonicalize [
 	"Answer the receiver with references to the current folder (.) and parent folder (..) removed"
 
 	^self class withAll: (self class canonicalizeElements: self segments)
+]
+
+{ #category : 'navigating' }
+Path >> canonicalizeOnFilesystem: filesystem [
+	"Answer the receiver with references to the current folder (.) and parent folder (..) removed"
+
+	^self class withAll: (self class 
+		canonicalizeElements: self segments 
+		filesystem: filesystem)
 ]
 
 { #category : 'comparing' }

@@ -308,3 +308,10 @@ MemoryStore >> replaceFile: path in: aBlock [
 MemoryStore >> root [
 	^ root
 ]
+
+{ #category : 'private' }
+MemoryStore >> symlinkEntryAt: aPath fileSystem: aFilesystem [
+	"MemoryStore doesn't support symbolic links, so a standard entry can be used"
+
+	^ MemoryDirectoryEntry reference: (aFilesystem referenceTo: aPath)
+]

@@ -352,7 +352,8 @@ ClyQueryResult >> initializeItems [
 
 { #category : 'testing' }
 ClyQueryResult >> isBuilt [
-	^items notNil
+
+	^ items isNotNil
 ]
 
 { #category : 'testing' }
@@ -362,7 +363,8 @@ ClyQueryResult >> isEmpty [
 
 { #category : 'testing' }
 ClyQueryResult >> isProtected [
-	^accessGuard notNil
+
+	^ accessGuard isNotNil
 ]
 
 { #category : 'accessing' }

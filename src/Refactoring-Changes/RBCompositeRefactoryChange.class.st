@@ -88,20 +88,14 @@ RBCompositeRefactoryChange >> changeClass [
 { #category : 'accessing' }
 RBCompositeRefactoryChange >> changeForClass: aClassName selector: aSelector [
 
-	changes reverseDo: [ :each |
-		| change |
-		change := each changeForClass: aClassName selector: aSelector.
-		change notNil ifTrue: [ ^ change ] ].
+	changes reverseDo: [ :each | (each changeForClass: aClassName selector: aSelector) ifNotNil: [ :change | ^ change ] ].
 	^ nil
 ]
 
 { #category : 'accessing' }
 RBCompositeRefactoryChange >> changeForMetaclass: aClassName selector: aSelector [
 
-	changes reverseDo: [ :each |
-		| change |
-		change := each changeForMetaclass: aClassName selector: aSelector.
-		change notNil ifTrue: [ ^ change ] ].
+	changes reverseDo: [ :each | (each changeForMetaclass: aClassName selector: aSelector) ifNotNil: [ :change | ^ change ] ].
 	^ nil
 ]
 

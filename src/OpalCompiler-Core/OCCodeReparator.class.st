@@ -73,7 +73,7 @@ OCCodeReparator >> defineClass: classSymbol [
 
 	| systemCategory classDefinition |
 	systemCategory := node methodNode methodClass category ifNil: [ 'Unknown' ].
-	classDefinition := ClassDefinitionPrinter new
+	classDefinition := ClassDefinitionPrinter fluid
 		                   classDefinitionTemplateInPackage: systemCategory
 		                   named: classSymbol.
 	^ self
@@ -90,10 +90,10 @@ OCCodeReparator >> defineClassOrTrait: aSymbol definitionString: aString [
 		multiLineRequest: 'Edit definition:'
 		initialAnswer: aString
 		answerHeight: 200.
-	aString isEmptyOrNil
+	definitionString isEmptyOrNil
 		ifTrue: [ ^ Abort signal ].
 	result := self class compiler
-		source: aString;
+		source: definitionString;
 		logged: true;
 		evaluate.
 	"Because some class definition syntax the (fuild one) does not evaluate to a
@@ -114,7 +114,7 @@ OCCodeReparator >> defineTrait: traitName [
 	traitSymbol := traitName asSymbol.
 	
 	systemCategory := node methodNode methodClass category ifNil: [ 'Unknown' ].
-	traitDefinition := ClassDefinitionPrinter new
+	traitDefinition := ClassDefinitionPrinter fluid
 		                   traitDefinitionTemplateInPackage: systemCategory
 		                   named: traitSymbol.
 	^ self

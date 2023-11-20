@@ -8,11 +8,6 @@ Class {
 	#package : 'Ring-Tests-ChunkImporter'
 }
 
-{ #category : 'expected failures' }
-Ring2ChunkImporterTest >> expectedFailures [
-	^ #(testMultipleMixedChunksInStrangeOrderWithMetaclassTrait testStandardMethodInNewMetaclassTrait)
-]
-
 { #category : 'tests' }
 Ring2ChunkImporterTest >> testClassWithNilSuperclass [
 
@@ -27,7 +22,7 @@ Ring2ChunkImporterTest >> testClassWithNilSuperclass [
 SomeClass superclass: nil!' readStream.
 
 	class := importer environment ask behaviorNamed: #SomeClass.
-	self assert: class notNil.
+	self assert: class isNotNil.
 	self assert: class instVarNames isEmpty.
 	self assert: class classVarNames isEmpty.
 	self assert: class package name equals: 'SomePackage'
@@ -46,7 +41,7 @@ Ring2ChunkImporterTest >> testClassWithSimpleSlots [
 	category: ''Slot-Tests-Associations''!' readStream.
 
 	class := importer environment ask behaviorNamed: #SlotExampleMovie.
-	self assert: class notNil.
+	self assert: class isNotNil.
 	self assert: class instVarNames asArray equals: #(#name #year #director #actors).
 	self assert: class classVarNames isEmpty.
 	self assert: class category equals: 'Slot-Tests-Associations'
@@ -66,7 +61,7 @@ Ring2ChunkImporterTest >> testClassWithUnknownSlots [
 	category: ''Slot-Tests-Associations''!' readStream.
 
 	class := importer environment ask behaviorNamed: #SlotExampleMovie.
-	self assert: class notNil.
+	self assert: class isNotNil.
 	self assert: class instVarNames asArray equals: #(#name #year #director #actors).
 	self assert: class classVarNames isEmpty.
 	self assert: class category equals: 'Slot-Tests-Associations'.
@@ -87,7 +82,7 @@ Ring2ChunkImporterTest >> testClassWithUnknownSlotsWithMessages [
 	category: ''Slot-Tests-Associations''!' readStream.
 
 	class := importer environment ask behaviorNamed: #SlotExampleMovie.
-	self assert: class notNil.
+	self assert: class isNotNil.
 	self assert: class instVarNames asArray equals: #(#name #year #director #actors).
 	self assert: class classVarNames isEmpty.
 	self assert: class category equals: 'Slot-Tests-Associations'.
@@ -108,7 +103,7 @@ Ring2ChunkImporterTest >> testHistoricalStandardComment [
 	class := importer environment ask behaviorNamed: #SomeClass.
 	comment := class comment.
 
-	self assert: comment notNil.
+	self assert: comment isNotNil.
 	self assert: comment isComment.
 	self assert: comment isRingResolved.
 	self assert: (comment hasResolvedAll: #(content author time)).
@@ -128,12 +123,12 @@ Ring2ChunkImporterTest >> testMetaclassWithTrait [
 	uses: SomeTrait classTrait
 	instanceVariableNames: ''''' readStream.
 	class := importer environment ask behaviorNamed: 'SomeClass class'.
-	self assert: class notNil.
+	self assert: class isNotNil.
 	self assert: class isMetaclass.
 	self assert: class instVarNames isEmpty.
-	self assert: (importer environment ask behaviorNamed: 'SomeClass') notNil.
-	self assert: (importer environment ask behaviorNamed: 'SomeTrait classTrait') notNil.
-	self assert: (importer environment ask behaviorNamed: 'SomeTrait') notNil.
+	self assert: (importer environment ask behaviorNamed: 'SomeClass') isNotNil.
+	self assert: (importer environment ask behaviorNamed: 'SomeTrait classTrait') isNotNil.
+	self assert: (importer environment ask behaviorNamed: 'SomeTrait') isNotNil.
 	self assert: class traitComposition transformations size equals: 1.
 	self assert: class traitComposition transformations first name equals: 'SomeTrait classTrait'.
 	self assert: class traitComposition transformations first isTrait
@@ -150,11 +145,11 @@ Ring2ChunkImporterTest >> testMultipleChunks [
 Object subclass: #SomeClass2!' readStream.
 
 	class := importer environment ask behaviorNamed: #SomeClass.
-	self assert: class notNil.
+	self assert: class isNotNil.
 	self assert: class superclass name equals: #Object.
 
 	class := importer environment ask behaviorNamed: #SomeClass2.
-	self assert: class notNil.
+	self assert: class isNotNil.
 	self assert: class superclass name equals: #Object
 ]
 
@@ -169,11 +164,11 @@ Ring2ChunkImporterTest >> testMultipleClassChunksInStrangeOrder [
 Object subclass: #SomeClass2!' readStream.
 
 	class := importer environment ask behaviorNamed: #SomeClass.
-	self assert: class notNil.
+	self assert: class isNotNil.
 	self assert: class superclass name equals: #SomeClass2.
 
 	class2 := importer environment ask behaviorNamed: #SomeClass2.
-	self assert: class2 notNil.
+	self assert: class2 isNotNil.
 	self assert: class2 superclass name equals: #Object.
 
 	self assert: class superclass identicalTo: class2
@@ -192,10 +187,10 @@ someMethod
 Object subclass: #SomeClass!' readStream.
 
 	class := importer environment ask behaviorNamed: #SomeClass.
-	self assert: class notNil.
+	self assert: class isNotNil.
 	self assert: class superclass name equals: #Object.
 	method := class methodNamed: #someMethod.
-	self assert: method notNil.
+	self assert: method isNotNil.
 	self assert: (method sourceCode endsWith: '^true')
 ]
 
@@ -204,24 +199,24 @@ Ring2ChunkImporterTest >> testMultipleMixedChunksInStrangeOrderWithMetaclassTrai
 
 	| importer trait method |
 
-	" EXPECTED FAILURE "
+	<expectedFailure>
 	"This test currently needs to fail because the CodeImporter gives only original behavior name and #isMata.
 	We do not know that the behavior was supposed to be classTrait."
 
 	importer := RGChunkImporter new.
 
-	importer fileInFrom: '!TBehavior classTrait methodsFor: ''some protocol'' stamp: ''GuillermoPolito 5/2/2012 13:35''!
+	importer fileInFrom: '!TEmpty classTrait methodsFor: ''some protocol'' stamp: ''GuillermoPolito 5/2/2012 13:35''!
 someMethod
 	^true! !
-Trait named: #TBehavior
+Trait named: #TEmpty
 	uses: {}
 	package: ''Traits-Kernel-Traits''!' readStream.
 
-	trait := importer environment ask behaviorNamed: #'TBehavior classTrait'.
-	self assert: trait notNil.
+	trait := importer environment ask behaviorNamed: #'TEmpty classTrait'.
+	self assert: trait isNotNil.
 	self assert: (trait isTrait and: [ trait isMetaclassTrait not ]).
 	method := trait methodNamed: #someMethod.
-	self assert: method notNil.
+	self assert: method isNotNil.
 	self assert: (method sourceCode endsWith: '^true')
 ]
 
@@ -232,18 +227,18 @@ Ring2ChunkImporterTest >> testMultipleMixedChunksInStrangeOrderWithTrait [
 
 	importer := RGChunkImporter new.
 
-	importer fileInFrom: '!TBehavior methodsFor: ''some protocol'' stamp: ''GuillermoPolito 5/2/2012 13:35''!
+	importer fileInFrom: '!TEmpty methodsFor: ''some protocol'' stamp: ''GuillermoPolito 5/2/2012 13:35''!
 someMethod
 	^true! !
-Trait named: #TBehavior
+Trait named: #TEmpty
 	uses: {}
 	package: ''Traits-Kernel-Traits''!' readStream.
 
-	trait := importer environment ask behaviorNamed: #TBehavior.
-	self assert: trait notNil.
+	trait := importer environment ask behaviorNamed: #TEmpty.
+	self assert: trait isNotNil.
 	self assert: (trait isTrait and: [ trait isMetaclassTrait not ]).
 	method := trait methodNamed: #someMethod.
-	self assert: method notNil.
+	self assert: method isNotNil.
 	self assert: (method sourceCode endsWith: '^true')
 ]
 
@@ -261,7 +256,7 @@ Ring2ChunkImporterTest >> testProtoObject [
 ProtoObject superclass: nil!' readStream.
 
 	class := importer environment ask behaviorNamed: #ProtoObject.
-	self assert: class notNil.
+	self assert: class isNotNil.
 	self assert: class superclass isNil.
 	self assert: class instVarNames isEmpty.
 	self assert: class classVarNames isEmpty.
@@ -276,14 +271,14 @@ Ring2ChunkImporterTest >> testSpecialSuperclasses [
 	importer := RGChunkImporter new.
 	importer fileInFrom: 'SomeClass subclass: #SomeClass' readStream.
 	class := importer environment ask behaviorNamed: #SomeClass.
-	self assert: class notNil.
+	self assert: class isNotNil.
 	self assert: class superclass equals: class.
 
 	importer := RGChunkImporter new.
 	importer fileInFrom: 'SomeClass subclass: #SomeClass.
 	SomeClass superclass: nil.!' readStream.
 	class := importer environment ask behaviorNamed: #SomeClass.
-	self assert: class notNil.
+	self assert: class isNotNil.
 	self assert: class superclass isNil.
 
 	importer := RGChunkImporter new.
@@ -405,7 +400,7 @@ Ring2ChunkImporterTest >> testStandardComment [
 	class := importer environment ask behaviorNamed: #SomeClass.
 	comment := class comment.
 
-	self assert: comment notNil.
+	self assert: comment isNotNil.
 	self assert: comment isComment.
 	self assert: comment isRingResolved.
 	self assert: (comment hasResolvedAll: #(content author time)).
@@ -424,16 +419,16 @@ Ring2ChunkImporterTest >> testStandardMetaclass [
 	importer fileInFrom: 'SomeClass class
 	instanceVariableNames: ''''' readStream.
 	class := importer environment ask behaviorNamed: 'SomeClass class'.
-	self assert: class notNil.
+	self assert: class isNotNil.
 	self assert: class isMetaclass.
 	self assert: class instVarNames isEmpty.
-	self assert: (importer environment ask behaviorNamed: 'SomeClass') notNil.
+	self assert: (importer environment ask behaviorNamed: 'SomeClass') isNotNil.
 
 	importer := RGChunkImporter new.
 	importer fileInFrom: 'SomeClass class
 	instanceVariableNames: ''var1 var2 var3''' readStream.
 	class := importer environment ask behaviorNamed: 'SomeClass class'.
-	self assert: class notNil.
+	self assert: class isNotNil.
 	self assert: class isMetaclass.
 	self assert: class instVarNames equals: #(var1 var2 var3)
 ]
@@ -472,11 +467,11 @@ Ring2ChunkImporterTest >> testStandardMetaclassTrait [
 
 	importer := RGChunkImporter new.
 
-	importer fileInFrom: 'TBehavior classTrait
+	importer fileInFrom: 'TEmpty classTrait
 	uses: {}' readStream.
 
-	trait := importer environment ask behaviorNamed: #'TBehavior classTrait'.
-	self assert: trait notNil.
+	trait := importer environment ask behaviorNamed: #'TEmpty classTrait'.
+	self assert: trait isNotNil.
 	self assert: trait isMetaclassTrait.
 	self assert: trait traitComposition transformations isEmpty
 ]
@@ -486,34 +481,33 @@ Ring2ChunkImporterTest >> testStandardMetaclassTraitWithMultipleTraits [
 
 	| importer trait usedTraits |
 	importer := RGChunkImporter new.
-	importer fileInFrom: 'TClass classTrait
-	uses: TClassDescription classTrait + TComposingDescription classTrait + TTransformationCompatibility classTrait' readStream.
-	trait := importer environment ask behaviorNamed: #'TClass classTrait'.
-	self assert: trait notNil.
+	importer fileInFrom: 'TEmpty classTrait
+	uses: TIsEmpty classTrait + TComparable classTrait + TTransformationCompatibility classTrait' readStream.
+	trait := importer environment ask behaviorNamed: #'TEmpty classTrait'.
+	self assert: trait isNotNil.
 	self assert: trait isMetaclassTrait.
 	self assert: trait traitComposition transformations notEmpty.
 	usedTraits := trait traitComposition transformations.
 	self assert: (usedTraits allSatisfy: [:each | each isTrait]).
-	self assert: (usedTraits collect: [:each | each name]) asArray equals: #('TClassDescription classTrait' 'TComposingDescription classTrait' 'TTransformationCompatibility classTrait')
+	self assert: (usedTraits collect: [:each | each name]) asArray equals: #('TIsEmpty classTrait' 'TComparable classTrait' 'TTransformationCompatibility classTrait')
 ]
 
 { #category : 'tests' }
 Ring2ChunkImporterTest >> testStandardMetaclassTraitWithSingleTrait [
+
 	| importer trait usedTrait |
 	importer := RGChunkImporter new.
 
-	importer
-		fileInFrom:
-			'TClass classTrait
-	uses: TBehaviorCategorization classTrait' readStream.
+	importer fileInFrom: 'TEmpty classTrait
+	uses: TIsEmpty classTrait' readStream.
 
-	trait := importer environment ask behaviorNamed: #'TClass classTrait'.
-	self assert: trait notNil.
+	trait := importer environment ask behaviorNamed: #'TEmpty classTrait'.
+	self assert: trait isNotNil.
 	self assert: trait isMetaclassTrait.
 	self assert: trait traitComposition transformations notEmpty.
 	usedTrait := trait traitComposition transformations first.
-	self assert: usedTrait name equals: #'TBehaviorCategorization classTrait'.
-	self assert: (importer environment ask behaviorNamed: #'TBehaviorCategorization classTrait') notNil
+	self assert: usedTrait name equals: #'TIsEmpty classTrait'.
+	self assert: (importer environment ask behaviorNamed: #'TIsEmpty classTrait') isNotNil
 ]
 
 { #category : 'tests' }
@@ -532,7 +526,7 @@ Ring2ChunkImporterTest >> testStandardMethod [
 	method := class methodNamed: #someMethod.
 
 	self assert: class isClass.
-	self assert: method notNil.
+	self assert: method isNotNil.
 	self assert: method isRingResolved.
 	self assert: (method hasResolvedAll: #(name sourceCode author time tags)).
 
@@ -560,7 +554,7 @@ Ring2ChunkImporterTest >> testStandardMethodInExistingClass [
 	method := class methodNamed: #someMethod.
 
 	self assert: class isClass.
-	self assert: method notNil.
+	self assert: method isNotNil.
 	self assert: method isRingResolved.
 	self assert: (method hasResolvedAll: #(name sourceCode author time tags)).
 
@@ -589,7 +583,7 @@ Ring2ChunkImporterTest >> testStandardMethodInExistingMetaclassTrait [
 	method := trait methodNamed: #someMethod.
 
 	self assert: (trait isMetaclassTrait).
-	self assert: method notNil.
+	self assert: method isNotNil.
 	self assert: method isRingResolved.
 	self assert: (method hasResolvedAll: #(name sourceCode author time tags)).
 
@@ -618,7 +612,7 @@ Ring2ChunkImporterTest >> testStandardMethodInExistingTrait [
 	method := trait methodNamed: #someMethod.
 
 	self assert: (trait isTrait and: [trait isMetaclassTrait not]).
-	self assert: method notNil.
+	self assert: method isNotNil.
 	self assert: method isRingResolved.
 	self assert: (method hasResolvedAll: #(name sourceCode author time tags)).
 
@@ -646,7 +640,7 @@ Ring2ChunkImporterTest >> testStandardMethodInNewMetaclass [
 	method := class metaclass methodNamed: #someMethod.
 
 	self assert: class isClass.
-	self assert: method notNil.
+	self assert: method isNotNil.
 	self assert: method isRingResolved.
 	self assert: (method hasResolvedAll: #(name tags sourceCode author time)).
 
@@ -663,7 +657,7 @@ Ring2ChunkImporterTest >> testStandardMethodInNewMetaclassTrait [
 
 	| importer trait method code |
 
-	" EXPECTED FAILURE "
+	<expectedFailure>
 	"This test currently needs to fail because the CodeImporter gives only original behavior name and #isMata.
 	We do not know that the behavior was supposed to be classTrait."
 
@@ -679,7 +673,7 @@ Ring2ChunkImporterTest >> testStandardMethodInNewMetaclassTrait [
 
 	self assert: trait isTrait.
 	self assert: trait classTrait isMetaclassTrait.
-	self assert: method notNil.
+	self assert: method isNotNil.
 	self assert: method isRingResolved.
 	self assert: (method hasResolvedAll: #(name protocol sourceCode author time)).
 
@@ -711,12 +705,12 @@ Ring2ChunkImporterTest >> testStandardTrait [
 
 	importer := RGChunkImporter new.
 
-	importer fileInFrom: 'Trait named: #TBehavior
+	importer fileInFrom: 'Trait named: #TIsEmpty
 	uses: {}
 	package: ''Traits-Kernel-Traits''' readStream.
 
-	trait := importer environment ask behaviorNamed: #TBehavior.
-	self assert: trait notNil.
+	trait := importer environment ask behaviorNamed: #TIsEmpty.
+	self assert: trait isNotNil.
 	self assert: (trait isTrait and: [trait isMetaclassTrait not]).
 	self assert: trait traitComposition transformations isEmpty.
 	self assert: trait package name equals: 'Traits-Kernel-Traits'
@@ -726,20 +720,19 @@ Ring2ChunkImporterTest >> testStandardTrait [
 Ring2ChunkImporterTest >> testStandardTraitWithExclusions [
 
 	| importer trait usedTraits |
-
 	importer := RGChunkImporter new.
 
-	importer fileInFrom: 'Trait named: #TClass
-	uses: TClassDescription - {#msg1. #msg2}
+	importer fileInFrom: 'Trait named: #TEmpty
+	uses: TComparable - {#<=. #>}
 	category: ''Traits-Kernel''' readStream.
 
-	trait := importer environment ask behaviorNamed: #TClass.
-	self assert: trait notNil.
+	trait := importer environment ask behaviorNamed: #TEmpty.
+	self assert: trait isNotNil.
 	self assert: trait traitComposition transformations notEmpty.
 	usedTraits := trait traitComposition transformations.
 	self assert: usedTraits size equals: 1.
-	self assert: usedTraits first subject name equals: 'TClassDescription'.
-	self assert: usedTraits first exclusions asArray equals: #(msg1 msg2).
+	self assert: usedTraits first subject name equals: 'TComparable'.
+	self assert: usedTraits first removedSelectors asArray equals: #( #'<=' #> ).
 
 	self assert: trait category equals: 'Traits-Kernel'
 ]
@@ -749,16 +742,16 @@ Ring2ChunkImporterTest >> testStandardTraitWithMultipleTraits [
 
 	| importer trait usedTraits |
 	importer := RGChunkImporter new.
-	importer fileInFrom: 'Trait named: #TClass
-	uses: TClassDescription + TComposingDescription + TTransformationCompatibility
+	importer fileInFrom: 'Trait named: #TEmpty
+	uses: TComparable + TIsEmpty + TTransformationCompatibility
 	category: ''Traits-Kernel''' readStream.
 
-	trait := importer environment ask behaviorNamed: #TClass.
-	self assert: trait notNil.
+	trait := importer environment ask behaviorNamed: #TEmpty.
+	self assert: trait isNotNil.
 	self assert: trait traitComposition transformations notEmpty.
 	usedTraits := trait traitComposition transformations.
 	self assert: (usedTraits allSatisfy: [:each | each isTrait]).
-	self assert: (usedTraits collect: [:each | each name]) asArray equals: #(TClassDescription TComposingDescription TTransformationCompatibility).
+	self assert: (usedTraits collect: [:each | each name]) asArray equals: #(TComparable TIsEmpty TTransformationCompatibility).
 	self assert: trait category equals: 'Traits-Kernel'
 ]
 
@@ -769,16 +762,16 @@ Ring2ChunkImporterTest >> testStandardTraitWithSingleTrait [
 
 	importer
 		fileInFrom:
-			'Trait named: #TClass
-	uses: TBehaviorCategorization
+			'Trait named: #TEmpty
+	uses: TIsEmpty
 	package: ''Traits-Kernel-Traits''' readStream.
 
-	trait := importer environment ask behaviorNamed: #TClass.
-	self assert: trait notNil.
+	trait := importer environment ask behaviorNamed: #TEmpty.
+	self assert: trait isNotNil.
 	self assert: trait traitComposition transformations notEmpty.
 	usedTrait := trait traitComposition transformations first.
-	self assert: usedTrait name equals: #TBehaviorCategorization.
-	self assert: (importer environment ask behaviorNamed: #TBehaviorCategorization) notNil.
+	self assert: usedTrait name equals: #TIsEmpty.
+	self assert: (importer environment ask behaviorNamed: #TIsEmpty) isNotNil.
 	self assert: trait category equals: 'Traits-Kernel-Traits'
 ]
 
@@ -789,12 +782,12 @@ Ring2ChunkImporterTest >> testStandardTraitWithTraits [
 
 	importer := RGChunkImporter new.
 
-	importer fileInFrom: 'Trait named: #TBehavior
+	importer fileInFrom: 'Trait named: #TEmpty
 	uses: {}
 	package: ''Traits-Kernel-Traits''' readStream.
 
-	trait := importer environment ask behaviorNamed: #TBehavior.
-	self assert: trait notNil.
+	trait := importer environment ask behaviorNamed: #TEmpty.
+	self assert: trait isNotNil.
 	self assert: trait traitComposition transformations isEmpty.
 	self assert: trait package name equals: 'Traits-Kernel-Traits'
 ]

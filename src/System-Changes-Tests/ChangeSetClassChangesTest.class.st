@@ -81,9 +81,8 @@ ChangeSetClassChangesTest >> testChangeClassCategory [
 	"Changing the class category for a class should result in a change
 	record being added to the current change set."
 
+	[
 	| class saveClassDefinition |
-	self skip.
-	"see https://github.com/pharo-project/pharo/issues/13315"
 	"Define a class and save its definition"
 	class := factory make: [ :aBuilder | aBuilder package: 'TestPackage1' ].
 	saveClassDefinition := class definitionString.
@@ -97,7 +96,10 @@ ChangeSetClassChangesTest >> testChangeClassCategory [
 	self deny: class definitionString equals: saveClassDefinition.
 
 	"Assert that the change has been recorded in the current change set"
-	self assert: (ChangeSet current changeRecorderFor: class) priorDefinition equals: class definitionString
+	self assert: (ChangeSet current changeRecorderFor: class) priorDefinition equals: class definitionString ] ensure: [
+		self packageOrganizer
+			removePackage: 'TestPackage1';
+			removePackage: 'TestPackage2' ]
 ]
 
 { #category : 'tests' }
@@ -108,9 +110,8 @@ ChangeSetClassChangesTest >> testChangeClassCategoryAddsNewChangeRecord [
 	"At the start of this test, JunkClass should not exist, and there should be
 	no change records pertaining to it in the change set."
 
+	[
 	| class |
-	self skip.
-	"see https://github.com/pharo-project/pharo/issues/13315"
 	class := factory make: [ :aBuilder | aBuilder package: 'TestPackage1' ].
 
 	"Forget about JunkClass in the change set"
@@ -122,7 +123,10 @@ ChangeSetClassChangesTest >> testChangeClassCategoryAddsNewChangeRecord [
 			fillFor: class;
 			package: 'TestPackage2' ].
 
-	self assert: (ChangeSet current changeRecorderFor: class) priorDefinition equals: class definitionString
+	self assert: (ChangeSet current changeRecorderFor: class) priorDefinition equals: class definitionString ] ensure: [
+		self packageOrganizer
+			removePackage: 'TestPackage1';
+			removePackage: 'TestPackage2' ]
 ]
 
 { #category : 'tests' }

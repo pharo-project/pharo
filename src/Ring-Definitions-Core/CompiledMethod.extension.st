@@ -14,14 +14,23 @@ CompiledMethod >> asActiveRingDefinition [
 
 { #category : '*Ring-Definitions-Core' }
 CompiledMethod >> asFullRingDefinition [
-
 	"Retrieves an active RGMethodDefinition which knows its parent <class>.
 	Note that the full conversion does not happen at the level of the class. If you need that request asFullRingDefinition to the class"
-	| rgClass rgMethod |
-	rgClass := self realClass asRingDefinition.
+
+	^ self asFullRingDefinitionInRGClass: self realClass asRingDefinition
+]
+
+{ #category : '*Ring-Definitions-Core' }
+CompiledMethod >> asFullRingDefinitionInRGClass: rgClass [
+
+	| rgMethod |
 	rgMethod := self asActiveRingDefinition.
 	rgClass addMethod: rgMethod.
-	rgMethod package: (RGContainer packageOfMethod: rgMethod).
+
+	rgMethod package: (self protocol isExtensionProtocol
+			 ifFalse: [ rgClass package ]
+			 ifTrue: [ self package asRingDefinition ]).
+
 	^ rgMethod
 ]
 

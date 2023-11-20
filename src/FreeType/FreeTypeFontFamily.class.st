@@ -57,7 +57,7 @@ FreeTypeFontFamily >> addSimulatedMembers [
 	membersByWeightAndStretch keysAndValuesDo:[:key :col | | oblique regular |
 		regular := col detect: [:each | each slantValue = 0] ifNone:[].
 		oblique := col detect:[:each | each slantValue > 0] ifNone:[]. "oblique or italic"
-		(oblique isNil and:[regular notNil])
+		(oblique isNil and:[regular isNotNil])
 			ifTrue:[
 				regular isSimulatedStyle
 					ifTrue:[members add: regular asSimulatedBoldOblique]

@@ -4,7 +4,7 @@
 	"/!\ Change the value of this line by the path to your local Pharo clone"
 	pharo := 'pharo' asFileReference.
 	
-	allPackages := RPackageOrganizer default packages.
+	allPackages := PackageOrganizer default packages.
 	sources := pharo / 'src'.
 	sources directories
 		select: [ :each | 

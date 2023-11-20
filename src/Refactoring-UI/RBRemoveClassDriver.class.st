@@ -1,3 +1,10 @@
+"
+I'm an interaction object responsible for driving the analysis and interactive removal of classes.
+In particular I propose different refactorings based on the situation:
+- push state of the remove class to children
+- reparent the children to their grand-parent.
+
+"
 Class {
 	#name : 'RBRemoveClassDriver',
 	#superclass : 'RBInteractionDriver',

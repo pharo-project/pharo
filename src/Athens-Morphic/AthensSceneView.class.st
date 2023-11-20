@@ -106,7 +106,7 @@ AthensSceneView >> handlesMouseWheel: event [
 AthensSceneView >> inState: stateName [
 
 
-	^ (state at: stateName ifAbsent: nil) notNil
+	^ (state at: stateName ifAbsent: nil) isNotNil
 ]
 
 { #category : 'state tracking' }

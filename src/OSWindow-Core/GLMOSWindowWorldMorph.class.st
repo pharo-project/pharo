@@ -26,7 +26,8 @@ GLMOSWindowWorldMorph >> actOnWindowRequest: ann [
 
 { #category : 'submorphs - add/remove' }
 GLMOSWindowWorldMorph >> delete [
-	self model notNil ifTrue: [self model unregisterFromAllAnnouncements].
+
+	self model ifNotNil: [ self model unregisterFromAllAnnouncements ].
 	super delete
 ]
 

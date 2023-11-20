@@ -395,9 +395,10 @@ BitBlt >> copy: destRectangle from: sourcePt in: srcForm [
 { #category : 'copying' }
 BitBlt >> copy: destRectangle from: sourcePt in: srcForm fillColor: hf rule: rule [
 	"Specify a Color to fill, not a Form."
+
 	| destOrigin |
 	sourceForm := srcForm.
-	self fillColor: hf.	"sets halftoneForm"
+	self fillColor: hf. "sets halftoneForm"
 	combinationRule := rule.
 	destOrigin := destRectangle origin.
 	destX := destOrigin x.
@@ -406,7 +407,7 @@ BitBlt >> copy: destRectangle from: sourcePt in: srcForm fillColor: hf rule: rul
 	sourceY := sourcePt y.
 	width := destRectangle width.
 	height := destRectangle height.
-	srcForm == nil ifFalse: [ colorMap := srcForm colormapIfNeededFor: destForm ].
+	srcForm ifNotNil: [ colorMap := srcForm colormapIfNeededFor: destForm ].
 	^ self copyBits
 ]
 
@@ -463,7 +464,7 @@ BitBlt >> copyBits [
 	combinationRule = Form oldErase1bitShape ifTrue: [ ^ self eraseBits ].
 
 	"Check if BitBlt doesn't support full color maps"
-	(colorMap notNil and: [ colorMap isColormap ]) ifTrue:
+	(colorMap isNotNil and: [ colorMap isColormap ]) ifTrue:
 		[ colorMap := colorMap colors.
 		^ self copyBits ].
 	"Check if clipping gots us way out of range"
@@ -927,10 +928,11 @@ BitBlt >> setDestForm: df [
 
 { #category : 'private' }
 BitBlt >> setDestForm: df sourceForm: sf fillColor: hf combinationRule: cr destOrigin: destOrigin sourceOrigin: sourceOrigin extent: extent clipRect: clipRect [
+
 	| aPoint |
 	destForm := df.
 	sourceForm := sf.
-	self fillColor: hf.	"sets halftoneForm"
+	self fillColor: hf. "sets halftoneForm"
 	combinationRule := cr.
 	destX := destOrigin x.
 	destY := destOrigin y.
@@ -944,7 +946,7 @@ BitBlt >> setDestForm: df sourceForm: sf fillColor: hf combinationRule: cr destO
 	aPoint := clipRect corner.
 	clipWidth := aPoint x - clipX.
 	clipHeight := aPoint y - clipY.
-	sourceForm == nil ifFalse: [ colorMap := sourceForm colormapIfNeededFor: destForm ]
+	sourceForm ifNotNil: [ colorMap := sourceForm colormapIfNeededFor: destForm ]
 ]
 
 { #category : 'accessing' }

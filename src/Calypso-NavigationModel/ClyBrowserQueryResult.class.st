@@ -89,7 +89,7 @@ ClyBrowserQueryResult >> findItemsWith: actualObjects [
 				detect: [ :item | item representsObjectEqualTo: eachObject ]
 				ifNone: nil].
 
-		result select: #notNil thenDo: [ :each |
+		result select: #isNotNil thenDo: [ :each |
 			each prepareIn: environment ].
 		^result]
 ]

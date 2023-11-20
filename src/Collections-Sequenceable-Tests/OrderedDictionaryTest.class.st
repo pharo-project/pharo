@@ -706,22 +706,6 @@ OrderedDictionaryTest >> testCopyEmpty [
 ]
 
 { #category : 'tests' }
-OrderedDictionaryTest >> testDeclareFrom [
-	| dictionary otherDictionary |
-	dictionary := self emptyDictionary.
-	otherDictionary := self dictionaryWithOrderedAssociations.
-	self orderedKeys do: [ :each | self assert: (dictionary declare: each from: otherDictionary) identicalTo: dictionary ].
-	self assertIsDictionary: dictionary withOrderedAssociations: self orderedAssociations.
-	self assertEmpty: otherDictionary.
-
-	self orderedKeys
-		do: [ :each |
-			otherDictionary add: each -> self newValue.
-			self assert: (dictionary declare: each from: otherDictionary) identicalTo: dictionary ].
-	self assertIsDictionary: dictionary withOrderedAssociations: self orderedAssociations
-]
-
-{ #category : 'tests' }
 OrderedDictionaryTest >> testDictionary [
 	| dictionary |
 	dictionary := self emptyDictionary.

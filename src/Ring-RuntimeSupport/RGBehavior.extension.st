@@ -102,12 +102,6 @@ RGBehavior >> isClassSide [
 ]
 
 { #category : '*Ring-RuntimeSupport' }
-RGBehavior >> isDefinedInPackage: aPackage [
-
-	^ self package = aPackage
-]
-
-{ #category : '*Ring-RuntimeSupport' }
 RGBehavior >> isInstanceSide [
 	^self isClassSide not
 ]

@@ -22,14 +22,6 @@ Class {
 	#package : 'Graphics-Fonts'
 }
 
-{ #category : 'compiling' }
-FontSet class >> acceptsLoggingOfCompilation [
-	"Dont log sources for my subclasses, so as not to waste time
-	and space storing printString versions of the string literals."
-
-	^ self == FontSet
-]
-
 { #category : 'private' }
 FontSet class >> fontCategory [
 	^ 'Graphics-Fonts' asSymbol

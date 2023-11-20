@@ -29,7 +29,7 @@ ZnBasicCredential >> authTokenForUrl: urlObject method: method [
 
 { #category : 'testing' }
 ZnBasicCredential >> isComplete [
-	^ username notNil & password notNil
+	^ username isNotNil & password isNotNil
 ]
 
 { #category : 'accessing' }

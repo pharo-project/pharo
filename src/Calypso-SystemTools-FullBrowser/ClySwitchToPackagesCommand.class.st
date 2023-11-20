@@ -27,7 +27,8 @@ ClySwitchToPackagesCommand >> description [
 
 { #category : 'execution' }
 ClySwitchToPackagesCommand >> execute [
-	^browser switchToPackages
+
+	^ browser switchToPackages
 ]
 
 { #category : 'testing' }

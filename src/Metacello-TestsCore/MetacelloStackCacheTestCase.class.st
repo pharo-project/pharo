@@ -11,7 +11,7 @@ MetacelloStackCacheTestCase >> cacheNil [
 	^MetacelloPlatform current 
 		stackCacheFor: #cacheNil
 		at: #key 
-		doing: [:cache | | value |
+		doing: [:cache |
 			cache at: #key put: nil.
 			self cacheNil ]
 ]
@@ -113,7 +113,6 @@ MetacelloStackCacheTestCase >> testClearCache [
 		stackCacheFor: #cached
 		at: #key
 		doing: [ :cache | 
-			| value |
 			cache at: #x put: 1.
 			self assert: (cache at: #x ifAbsent: [  ]) identicalTo: 1.
 			MetacelloClearStackCacheNotification signal.

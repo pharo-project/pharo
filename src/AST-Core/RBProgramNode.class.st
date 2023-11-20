@@ -1217,7 +1217,8 @@ RBProgramNode >> size [
 
 { #category : 'accessing' }
 RBProgramNode >> source [
-	^ parent notNil ifTrue: [ parent source ] ifFalse: [ nil ]
+
+	^ parent ifNotNil: [ parent source ]
 ]
 
 { #category : 'accessing' }

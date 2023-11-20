@@ -20,8 +20,30 @@ ShClassInstallerAnnouncementsTest >> setUp [
 ShClassInstallerAnnouncementsTest >> tearDown [
 
 	SystemAnnouncer uniqueInstance unsubscribe: self.
-	{ newTrait } do: [ :class | class ifNotNil: [ class removeFromSystem ] ].
 	super tearDown
+]
+
+{ #category : 'tests' }
+ShClassInstallerAnnouncementsTest >> testClassRepackagingShouldAnnounceClassModified [
+
+	| aClass |
+	aClass := ShiftClassInstaller make: [ :builder |
+		          builder
+			          name: #SHClass;
+			          package: self generatedClassesPackageName ].
+
+	self when: ClassRepackaged do: [ :ann |
+		self assert: ann oldPackage name equals: self generatedClassesPackageName.
+		self assert: ann newPackage name equals: self generatedClassesPackageName , '2'.
+		self assert: ann classRepackaged name equals: #SHClass ].
+
+	[
+	ShiftClassInstaller make: [ :builder |
+		builder
+			fillFor: aClass;
+			package: self generatedClassesPackageName , '2' ].
+
+	self assert: numberOfAnnouncements equals: 1 ] ensure: [ self packageOrganizer removePackage: self generatedClassesPackageName , '2' ]
 ]
 
 { #category : 'tests' }

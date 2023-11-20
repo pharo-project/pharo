@@ -26,11 +26,6 @@ RBMoveMethodsToClassSideDriver class >> scopes: scopesList methods: aCollectionO
 	^ self new scopes: scopesList methods: aCollectionOfMethods
 ]
 
-{ #category : 'resources' }
-RBMoveMethodsToClassSideDriver >> refactoring [
-	^ refactoring.
-]
-
 { #category : 'execution' }
 RBMoveMethodsToClassSideDriver >> runRefactoring [
 

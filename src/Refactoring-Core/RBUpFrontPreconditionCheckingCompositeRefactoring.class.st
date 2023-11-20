@@ -34,7 +34,9 @@ RBUpFrontPreconditionCheckingCompositeRefactoring >> breakingChangePreconditions
 
 	refactorings ifEmpty: [ ^ self ].
 	refactorings size = 1 ifTrue: [ ^ refactorings first breakingChangePreconditions ].
-	^ refactorings inject: RBTrueCondition new into: [ :sum :each | sum & each applicabilityPreconditions ]
+	^ refactorings allButFirst 
+		inject: refactorings first breakingChangePreconditions 
+		into: [ :sum :each | sum & each applicabilityPreconditions ]
 ]
 
 { #category : 'preconditions' }

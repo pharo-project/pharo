@@ -75,7 +75,7 @@ KMKeyCombinationSequence >> hash [
 { #category : 'private' }
 KMKeyCombinationSequence >> haveShortcutsSameModifier [
 
-	^ (shortcuts collect: [ :s | s modifier ] as: Set) size = 1
+	^ self shortcutModifiers size = 1
 ]
 
 { #category : 'matching' }
@@ -93,7 +93,7 @@ KMKeyCombinationSequence >> next: aShortcut [
 	self addShortcut: aShortcut
 ]
 
-{ #category : 'printing' }
+{ #category : 'accessing - platform' }
 KMKeyCombinationSequence >> platformModifier [
 
 	self sequence do: [ :each | ^ each platformModifier ].
@@ -123,9 +123,13 @@ KMKeyCombinationSequence >> printOn: aStream [
 { #category : 'private' }
 KMKeyCombinationSequence >> printSequenceWithSameModifierOn: aStream [
 
-	aStream
-		nextPutAll: shortcuts first modifier name;
-		nextPutAll: ' + ('.
+	| modifier |
+	
+	modifier := self shortcutModifiers anyOne.
+	modifier name
+		ifNil: [ aStream nextPutAll: 'Composed' ]
+		ifNotNil: [ : modifierName | aStream nextPutAll: modifierName  ].
+	aStream nextPutAll: ' + ('.
 	shortcuts
 		do: [ :s | aStream nextPutAll: s key name ]
 		separatedBy: [ aStream nextPutAll: ' , ' ].
@@ -135,4 +139,11 @@ KMKeyCombinationSequence >> printSequenceWithSameModifierOn: aStream [
 { #category : 'accessing' }
 KMKeyCombinationSequence >> sequence [
 	^ shortcuts ifNil: [ shortcuts := OrderedCollection new ]
+]
+
+{ #category : 'private' }
+KMKeyCombinationSequence >> shortcutModifiers [
+	"Answer a <Set> of the receiver's modifiers, i.e. keys pressed to modify the value of a following key"
+
+	^ shortcuts collect: [ :s | s modifier ] as: Set
 ]

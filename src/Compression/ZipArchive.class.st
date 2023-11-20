@@ -51,6 +51,14 @@ ZipArchive class >> extractAllIn: aFileReferenceOrFileName [
 		extractAllTo: directory
 ]
 
+{ #category : 'file in/out' }
+ZipArchive class >> extractFrom: aZipFile to: aDirectory [
+
+	^ self new
+		  readFrom: aZipFile;
+		  extractAllTo: aDirectory asFileReference
+]
+
 { #category : 'constants' }
 ZipArchive class >> findEndOfCentralDirectoryFrom: stream [
 	"Seek in the given stream to the end, then read backwards until we find the

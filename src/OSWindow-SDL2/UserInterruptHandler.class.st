@@ -73,7 +73,7 @@ UserInterruptHandler >> processToInterrupt [
 		scanSchedule: [:p |
 		 "suspendedContext sender == nil usually means that process is only scheduled but had no chance to run"
 			(p ~~ Processor backgroundProcess and: [p suspendedContext sender notNil]) ifTrue: [
-				p ~~  WeakArray runningFinalizationProcess
+				p ~~  FinalizationProcess runningFinalizationProcess
 					ifTrue: [^p]
 					ifFalse: [fallback := p]]]
 		startingAt: Processor activePriority.

@@ -17,11 +17,6 @@ GoferTest class >> isAbstract [
 	^ self name = #GoferTest
 ]
 
-{ #category : 'testing' }
-GoferTest class >> isUnitTest [
-	^false
-]
-
 { #category : 'accessing' }
 GoferTest class >> packageNamesUnderTest [
 	^ #('Gofer-Core')

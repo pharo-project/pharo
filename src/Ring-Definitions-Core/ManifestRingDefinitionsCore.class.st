@@ -11,5 +11,5 @@ Class {
 
 { #category : 'meta-data - dependency analyser' }
 ManifestRingDefinitionsCore class >> manuallyResolvedDependencies [
-	^ #(#'Collections-Abstract' #'Collections-Strings' #'Collections-Streams' #'System-Sources')
+	^ #(#'Collections-Abstract' #'Collections-Streams' #'System-Sources')
 ]

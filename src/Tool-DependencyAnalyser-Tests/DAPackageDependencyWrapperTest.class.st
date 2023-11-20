@@ -12,8 +12,9 @@ Class {
 
 { #category : 'running' }
 DAPackageDependencyWrapperTest >> setUp [
+
 	super setUp.
-	packageA := DAPackage on: (RPackageSet named:'A')
+	packageA := DAPackage onPackageNamed: 'A'
 ]
 
 { #category : 'tests' }

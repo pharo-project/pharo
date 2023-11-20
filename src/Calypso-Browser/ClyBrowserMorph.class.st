@@ -363,7 +363,7 @@ ClyBrowserMorph >> initialize [
 	self changeProportionalLayout.
 	self initializeToolsPanel.
 	self initializeNavigationPanel.
-	self addPaneSplitters
+	self layoutChildren
 ]
 
 { #category : 'initialization' }
@@ -379,7 +379,7 @@ ClyBrowserMorph >> initializeNavigationPanel [
 	eachViewExtent := 1.0 / navigationViews size.
 	lastViewLeft := 0.0.
 	navigationViews do: [ :each | | frame |
-		frame := (lastViewLeft @ 0.0 corner: lastViewLeft + eachViewExtent @ 1.0) asLayoutFrame.
+		frame := ( lastViewLeft @ 0.0 corner: lastViewLeft + eachViewExtent @ 1.0) asLayoutFrame.
 		each == navigationViews last ifFalse: [
 			frame := frame rightOffset: -4 ].
 		navigationPanel
@@ -387,8 +387,7 @@ ClyBrowserMorph >> initializeNavigationPanel [
 			fullFrame: frame.
 		lastViewLeft := lastViewLeft + eachViewExtent ].
 
-	navigationPanel addPaneSplitters.
-	self addMorph: navigationPanel fullFrame: ((0.0 @ 0 corner: 1.0 @ 0.5) asLayoutFrame bottomOffset: toolbar height negated)
+	navigationPanel addPaneSplitters
 ]
 
 { #category : 'initialization' }
@@ -398,20 +397,9 @@ ClyBrowserMorph >> initializeNavigationViews [
 
 { #category : 'initialization' }
 ClyBrowserMorph >> initializeToolsPanel [
+
 	toolbar := ClyToolbarMorph of: self.
-	tabManager := ClyNotebookManager of: self.
-
-	toolPanel := PanelMorph new.
-	toolPanel name: 'tools panel'.
-	toolPanel
-		changeTableLayout;
-		hResizing: #spaceFill;
-		vResizing: #spaceFill;
-		listDirection: #topToBottom.
-	self addMorph: toolPanel fullFrame: ((0.0 @ 0.5 corner: 1.0 @ 1.0) asLayoutFrame topOffset: toolbar height negated).
-
-	toolPanel addMorphBack: toolbar.
-	toolPanel addMorphBack: tabManager tabMorph
+	tabManager := ClyNotebookManager of: self
 ]
 
 { #category : 'testing' }
@@ -433,6 +421,36 @@ ClyBrowserMorph >> itemsChanged [
 ClyBrowserMorph >> kmDispatcher [
 
 	^ CmdKMDispatcher attachedTo: self
+]
+
+{ #category : 'initialization' }
+ClyBrowserMorph >> layoutChildren [
+
+	"Set up the typical calypso browser layout with:
+	  - package | classes | protocols | methods panels
+	  - toolbar
+	  - tool (the code editor and so on)"
+	self
+		addMorph: navigationPanel
+		fullFrame: ((0.0 @ 0 corner: 1.0 @ 0.5) asLayoutFrame bottomOffset:
+				 toolbar height negated).
+
+	toolPanel := PanelMorph new.
+	toolPanel name: 'tools panel'.
+	toolPanel
+		changeTableLayout;
+		hResizing: #spaceFill;
+		vResizing: #spaceFill;
+		listDirection: #topToBottom.
+	self
+		addMorph: toolPanel
+		fullFrame: ((0.0 @ 0.5 corner: 1.0 @ 1.0) asLayoutFrame topOffset:
+				 toolbar height negated).
+
+	toolPanel addMorphBack: toolbar.
+	toolPanel addMorphBack: tabManager tabMorph.
+	
+	self addPaneSplitters
 ]
 
 { #category : 'navigation' }

@@ -20,7 +20,8 @@ OCStaticASTCompilerPlugin class >> isAbstract [
 
 { #category : 'private' }
 OCStaticASTCompilerPlugin class >> priority [
-	self subclassResponsibility
+
+	^ 0
 ]
 
 { #category : 'instance creation' }
@@ -51,9 +52,11 @@ OCStaticASTCompilerPlugin >> priority [
 { #category : 'private - transforming' }
 OCStaticASTCompilerPlugin >> transform [
 	"Subclasses override this method to actually provide the AST transformation.
-	 IMPORTANT: If you modify the AST, make sure to copy it before using #copyAST!"
+	 IMPORTANT: If you modify the AST, make sure to copy it before using #copyAST!
+	
+	I act as a no-op to prevent loading errors. Image ClassA overrides #compiler to use PluginA from the same package. During the loading maybe the #transfrom method is not present yet and will break the loading if we use a subclass responsibility."
 
-	self subclassResponsibility
+	
 ]
 
 { #category : 'transforming' }

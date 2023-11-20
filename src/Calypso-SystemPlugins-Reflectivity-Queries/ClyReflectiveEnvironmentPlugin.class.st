@@ -35,7 +35,7 @@ ClyReflectiveEnvironmentPlugin >> decorateBrowserItem: anItem ofMethod: aMethod 
 ClyReflectiveEnvironmentPlugin >> doesAnyManager: metalinkManagers belongsTo: aMethod [
 
 	^metalinkManagers anySatisfy: [ :each |
-		each notNil and: [ self doesNodeOf: each belongsTo: aMethod]]
+		each isNotNil and: [ self doesNodeOf: each belongsTo: aMethod]]
 ]
 
 { #category : 'item decoration' }

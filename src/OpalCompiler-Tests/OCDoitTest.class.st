@@ -85,6 +85,22 @@ OCDoitTest >> testDoItContextReadTemp [
 ]
 
 { #category : 'tests' }
+OCDoitTest >> testDoItContextReadThisContext [
+
+	| value |
+	"We can read read thisContext in a DoIt and it is the context that we evaluate against, not the context of the doit.
+	 We shadow the ThisContextVarable using a DoItVariable created by PseudoVariable>>#asDoItVariableFrom:"
+
+	value := thisContext compiler evaluate: 'thisContext'.
+	
+	"if we would not shadow, we would read the context of the DoIt"
+	self deny: value selector identicalTo: #DoIt.
+	"but instead we read the context that we evaluated against"
+	self assert: value identicalTo: thisContext.
+	self assert: value selector identicalTo: #testDoItContextReadThisContext
+]
+
+{ #category : 'tests' }
 OCDoitTest >> testDoItExtraBindings [
 	"We can use extra bindings in a DoIt"
 

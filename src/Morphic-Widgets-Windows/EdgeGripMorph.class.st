@@ -280,7 +280,7 @@ EdgeGripMorph >> targetPoint: aPoint [
 
 	|minExt rect |
 	rect := self target bounds withSideOrCorner: self edgeName setToPoint: aPoint.
-	minExt := (self target layoutPolicy notNil and: [self target layoutPolicy isTableLayout])
+	minExt := (self target layoutPolicy isNotNil and: [self target layoutPolicy isTableLayout])
 		ifTrue: [self target layoutPolicy minExtentOf: self target in: self target layoutBounds]
 		ifFalse: [self target minimumExtent].
 	rect width <= minExt x ifTrue: [

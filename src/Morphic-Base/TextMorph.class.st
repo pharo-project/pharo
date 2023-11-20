@@ -97,7 +97,6 @@ TextMorph >> addCustomMenuItems: aCustomMenu hand: aHandMorph [
 	aCustomMenu add: 'add predecessor' selector: #addPredecessor:.
 	aCustomMenu add: 'add successor' selector: #addSuccessor:.
 	aCustomMenu add: 'code pane menu...' selector: #yellowButtonActivity.
-	aCustomMenu add: 'code pane shift menu...' selector: #shiftedYellowButtonActivity.
 
 	outer := self owner.
 	outer
@@ -224,7 +223,7 @@ TextMorph >> autoFitString [
 
 { #category : 'containment' }
 TextMorph >> avoidsOcclusions [
-	^container notNil and: [ container avoidsOcclusions ]
+	^container isNotNil and: [ container avoidsOcclusions ]
 ]
 
 { #category : 'accessing' }
@@ -403,8 +402,9 @@ TextMorph >> chooseFont [
 
 { #category : 'editing' }
 TextMorph >> chooseStyle [
-	self editor changeStyle.
-	self updateFromParagraph
+	"editor for now disabled"
+	"self editor changeStyle.
+	self updateFromParagraph"
 ]
 
 { #category : 'private' }
@@ -700,7 +700,8 @@ TextMorph >> fillingOnOff [
 { #category : 'containment' }
 TextMorph >> fillsOwner [
 	"Answer true if I fill my owner's shape."
-	^container notNil and: [container fillsOwner]
+
+	^ container isNotNil and: [ container fillsOwner ]
 ]
 
 { #category : 'containment' }
@@ -752,7 +753,7 @@ TextMorph >> fit [
 							[para := paragraph.	"Save para (layoutChanged smashes it)"
 							super extent: newExtent.
 							paragraph := para]].
-			(container notNil and: [successor isNil])
+			(container isNotNil and: [successor isNil])
 				ifTrue:
 					[cBounds := container bounds truncated.
 					"23 sept 2000 - try to allow vertical growth"
@@ -844,9 +845,10 @@ TextMorph >> getLastCharacter [
 
 { #category : 'event handling' }
 TextMorph >> getMenu: shiftKeyState [
-	^ shiftKeyState not
+	"editor for now disabled"
+	"^ shiftKeyState not
 		ifTrue: [editor yellowButtonMenu]
-		ifFalse: [editor shiftedYellowButtonMenu]
+		ifFalse: [editor shiftedYellowButtonMenu]"
 ]
 
 { #category : 'submorphs - add/remove' }
@@ -943,7 +945,7 @@ TextMorph >> handlesMouseOver: evt [
 
 { #category : 'event handling' }
 TextMorph >> hasFocus [
-	^editor notNil
+	^editor isNotNil
 ]
 
 { #category : 'editing' }
@@ -983,10 +985,7 @@ TextMorph >> installEditorToReplace: priorEditor [
 	If priorEditor is not nil, then initialize the new editor from its state.
 	We may want to rework this so it actually uses the prior editor."
 
-	| stateArray |
-	priorEditor ifNotNil: [stateArray := priorEditor stateArray].
 	editor := self editorClass forTextArea: (RubEditingArea new setTextWith: self contents; yourself).
-	priorEditor ifNotNil: [editor stateArrayPut: stateArray].
 	self selectionChanged.
 	^ editor
 ]
@@ -1141,7 +1140,8 @@ TextMorph >> mouseDown: evt [
 		ifTrue: ["First check for option (menu) click"
 			(self yellowButtonActivity: evt shiftPressed)
 				ifTrue: [ ^ self ]].
-	self handleInteraction: [editor mouseDown: evt].
+	"editing for now disabled"
+	"self handleInteraction: [editor mouseDown: evt]."
 	self hasKeyboardFocus
 		ifFalse: [self takeKeyboardFocus].
 	super mouseDown: evt
@@ -1163,16 +1163,9 @@ TextMorph >> mouseLeave: evt [
 
 { #category : 'event handling' }
 TextMorph >> mouseMove: event [
-
 	event redButtonPressed ifFalse: [ ^ self ].
-	self handleInteraction: [ editor mouseMove: event ]
-]
-
-{ #category : 'accessing' }
-TextMorph >> mouseUp: evt [
-	self handleInteraction: [editor mouseUp: evt].
-	(self boundsInWorld containsPoint: self currentHand position)
-		ifFalse: [self hideOverEditableTextCursor]
+	"editing for now disabled"
+	"self handleInteraction: [ editor mouseMove: event ]"
 ]
 
 { #category : 'editing helpers' }
@@ -1191,7 +1184,7 @@ TextMorph >> newContents: stringOrText [
 	newText := stringOrText isString
 		           ifTrue: [
 			           | textSize |
-			           (text notNil and: [
+			           (text isNotNil and: [
 				            (textSize := text size) > 0 and: [
 					            (text runLengthFor: 1) = textSize ] ])
 				           ifTrue: [
@@ -1303,7 +1296,7 @@ TextMorph >> paragraph [
 	"...Code here to recreate the paragraph..."
 	newParagraph  := (Paragraph new textOwner: self owner).
 
-	newParagraph wantsColumnBreaks: successor notNil.
+	newParagraph wantsColumnBreaks: successor isNotNil.
 	newParagraph
 		compose: text
 		style: textStyle copy
@@ -1594,7 +1587,7 @@ TextMorph >> setPredecessor: newPredecessor [
 TextMorph >> setSuccessor: newSuccessor [
 
 	successor := newSuccessor.
-	paragraph ifNotNil: [paragraph wantsColumnBreaks: successor notNil]
+	paragraph ifNotNil: [paragraph wantsColumnBreaks: successor isNotNil]
 ]
 
 { #category : 'initialization' }
@@ -1607,14 +1600,6 @@ TextMorph >> setTextStyle: aTextStyle [
 { #category : 'find-replace' }
 TextMorph >> sharesFindReplace [
 	^ false
-]
-
-{ #category : 'menu' }
-TextMorph >> shiftedYellowButtonActivity [
-	"Supply the normal 'code pane' menu to use its text editing commands from a menu."
-
-	self editor pluggableYellowButtonActivity: true.
-	self changed
 ]
 
 { #category : 'event handling' }
@@ -1783,9 +1768,9 @@ TextMorph >> updateFromParagraph [
 						ifFalse:
 							[predecessor changed.	"really only last line"
 							self predecessorChanged]]].
-	((back := predecessor notNil
+	((back := predecessor isNotNil
 				and: [sel first <= self paragraph firstCharacterIndex]) or:
-				[successor notNil
+				[successor isNotNil
 					and: [sel first > (self paragraph lastCharacterIndex + 1)]])
 		ifTrue:
 			["The selection is no longer inside this paragraph.

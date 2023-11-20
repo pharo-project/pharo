@@ -71,7 +71,7 @@ ObjectStringConverter >> isStringValid: aString [
 ObjectStringConverter >> needsConversion [
 	"Answer whether conversion is required for the receiver's object class."
 
-	^self objectClass notNil and: [(self objectClass includesBehavior: String) not]
+	^self objectClass isNotNil and: [(self objectClass includesBehavior: String) not]
 ]
 
 { #category : 'converting' }
@@ -133,7 +133,7 @@ ObjectStringConverter >> stringAsObject: aString [
 
 	|transformed|
 	transformed := self stringTransformBlock value: aString asString.
-	^(transformed notNil and: [self needsConversion])
+	^(transformed isNotNil and: [self needsConversion])
 		ifTrue: [self objectClass readFromString: transformed]
 		ifFalse: [transformed]
 ]

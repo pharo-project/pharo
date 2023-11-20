@@ -998,9 +998,11 @@ symbolic link information
 					self platformSupportsSymbolicLinksEgUnix]]]) ifTrue:
 						[DiskSymlinkDirectoryEntry fileSystem: DiskStore currentFileSystem path: aString asPath]"
 	error isPrimitiveError ifTrue: [
-		(attributeNumber = 16 and: [ error errorCode = self unsupportedOperation ]) ifTrue:
-			"If symlinks aren't supported, answer false"
-			[ ^false ]].
+		"If symlinks aren't supported or the supplied path doesn't exist, answer false"
+		(attributeNumber = 16 and: 
+			[ error errorCode = self unsupportedOperation or:
+			[ error errorCode = self cantStatPath ] ]) ifTrue:
+				[ ^false ] ].
 	^self signalError: error for: aByteArray
 ]
 

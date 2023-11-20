@@ -16,27 +16,9 @@ CDClassDefinitionParserTest >> firstClassVariableIndex [
 	^ self classDefinitionString findString: self firstClassVariableName
 ]
 
-{ #category : 'helpers' }
-CDClassDefinitionParserTest >> firstClassVariableName [
-
-	^ 'firstClass'
-]
-
 { #category : 'tests' }
 CDClassDefinitionParserTest >> packageName [
 	^  #MyPackage
-]
-
-{ #category : 'helpers' }
-CDClassDefinitionParserTest >> secondClassVariableName [
-
-	^ 'secondClass'
-]
-
-{ #category : 'helpers' }
-CDClassDefinitionParserTest >> superclassName [
-
-	^ 'TheSuperClass'
 ]
 
 { #category : 'tests' }

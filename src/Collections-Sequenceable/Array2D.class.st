@@ -1,18 +1,8 @@
 "
-I represent a mathematical matrix or a two-dimensional array. I provide methods for creating matrices, operating on them arithmetically and algebraically. 
+This class is deprecated because this issue
+https://github.com/pharo-project/pharo/issues/12140
 
-Structure:
- - numberOfRows : a non-negative integer saying how many rows there are.
- - numberOfColumns : a non-negative integer saying how many columns there are.
- - contents : an Array holding the elements in row-major order.  That is, for a 2x3 array the contents are (11 12 13 21 22 23).  
-
-
-Element-wise matrix arithmetic works; you can freely mix matrices and numbers but
-don't try to mix matrices and arrays (yet).
-Matrix multiplication, using the symbol +* (derived from APL's +.x), works between
-(Matrix or Array) +* (Matrix or Array).  Don't try to use a number as an argument of +*.
-Matrix * Number and Number * Matrix work fine, so you don't need +* with numbers.
-
+Please use the new implementation in https://github.com/pharo-containers/Containers-Array2D
 "
 Class {
 	#name : 'Array2D',
@@ -49,6 +39,11 @@ Array2D class >> identity: n [
 	r := self zeros: n.
 	1 to: n do: [ :i | r at: i at: i put: 1 ].
 	^ r
+]
+
+{ #category : 'testing' }
+Array2D class >> isDeprecated [
+	^ true
 ]
 
 { #category : 'instance creation' }

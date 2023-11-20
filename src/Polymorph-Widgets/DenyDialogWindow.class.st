@@ -13,7 +13,7 @@ Class {
 DenyDialogWindow class >> taskbarIconName [
 	"Answer the icon for the receiver in a task bar."
 
-	^#smallLockIcon
+	^#smallLock
 ]
 
 { #category : 'visual properties' }

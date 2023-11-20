@@ -276,7 +276,7 @@ ClyMethodCodeEditorToolMorph >> methodProtocol: protocolName [
 ClyMethodCodeEditorToolMorph >> modifiesExtension [
 	^editingMethod isExtension
 		ifTrue: [ extendingPackage ~~ editingMethod package  ]
-		ifFalse: [ extendingPackage notNil and: [extendingPackage ~~ self methodClass package] ]
+		ifFalse: [ extendingPackage isNotNil and: [extendingPackage ~~ self methodClass package] ]
 ]
 
 { #category : 'printing' }

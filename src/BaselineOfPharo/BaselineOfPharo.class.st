@@ -121,19 +121,18 @@ BaselineOfPharo class >> newToolsRepository [
 
 { #category : 'external projects' }
 BaselineOfPharo class >> roassal [
-	<externalProject>	
-
+	<externalProject>
 	^ PharoExternalProject 
-		newName: 'Roassal3' 
-		owner: 'ObjectProfile' 
-		project: 'Roassal3' 
-		version: 'v1.03'
+		newName: 'Roassal' 
+		owner: 'pharo-graphics' 
+		project: 'Roassal' 
+		version: 'v1.05b'
 ]
 
 { #category : 'repository urls' }
-BaselineOfPharo class >> roassal3Repository [
+BaselineOfPharo class >> roassalRepository [
 
-	^ (self externalProjectNamed: 'Roassal3') repository
+	^ (self externalProjectNamed: 'Roassal') repository
 ]
 
 { #category : 'external projects' }
@@ -172,23 +171,24 @@ BaselineOfPharo class >> welcomeBrowserRepository [
 
 { #category : 'baselines' }
 BaselineOfPharo >> baseline: spec [
+
 	<baseline>
 	| repository |
 	repository := self packageRepositoryURL.
 
 	spec for: #common do: [
-		spec postLoadDoIt: #'postload:package:'.
-		spec baseline: 'BaseLibraries' with: [spec repository: repository].
-		
-		spec baseline: 'IDE' with: [spec repository: repository].
-		spec baseline: 'Calypso' with: [ 
-			spec repository: repository; loads: #('IcebergSupport'). ].
-		
-		spec package: 'Deprecated12'.
-		
-		spec package: 'FluidClassBuilder'.
-		spec package: 'FluidClassBuilder-Tests' with: [ spec requires: 'FluidClassBuilder' ].
-	]
+		spec postLoadDoIt: #postload:package:.
+		spec baseline: 'BaseLibraries' with: [ spec repository: repository ].
+
+		spec baseline: 'IDE' with: [ spec repository: repository ].
+		spec baseline: 'Calypso' with: [
+			spec
+				repository: repository;
+				loads: #( 'IcebergSupport' ) ].
+
+		spec
+			package: 'Gofer-Deprecated';
+			package: 'Deprecated12' ]
 ]
 
 { #category : 'baseline' }

@@ -20,17 +20,18 @@ Class {
 
 { #category : 'running' }
 DATarjanAlgorithmTest >> setUp [
+
 	super setUp.
 	tarjanPackage := AITarjan new.
 	anArray := Array new: 8.
-	packageA := DAPackage on: (RPackageSet named: 'A').
-	packageB := DAPackage on: (RPackageSet named: 'B').
-	packageC := DAPackage on: (RPackageSet named: 'C').
-	packageD := DAPackage on: (RPackageSet named: 'D').
-	packageE := DAPackage on: (RPackageSet named: 'E').
-	packageF := DAPackage on: (RPackageSet named: 'F').
-	packageG := DAPackage on: (RPackageSet named: 'G').
-	packageH := DAPackage on: (RPackageSet named: 'H').
+	packageA := DAPackage onPackageNamed: 'A'.
+	packageB := DAPackage onPackageNamed: 'B'.
+	packageC := DAPackage onPackageNamed: 'C'.
+	packageD := DAPackage onPackageNamed: 'D'.
+	packageE := DAPackage onPackageNamed: 'E'.
+	packageF := DAPackage onPackageNamed: 'F'.
+	packageG := DAPackage onPackageNamed: 'G'.
+	packageH := DAPackage onPackageNamed: 'H'.
 	anArray at: 1 put: packageA.
 	anArray at: 2 put: packageB.
 	anArray at: 3 put: packageC.
@@ -38,7 +39,7 @@ DATarjanAlgorithmTest >> setUp [
 	anArray at: 5 put: packageE.
 	anArray at: 6 put: packageF.
 	anArray at: 7 put: packageG.
-	anArray at: 8 put:packageH
+	anArray at: 8 put: packageH
 ]
 
 { #category : 'utilities' }
@@ -54,7 +55,7 @@ DATarjanAlgorithmTest >> testNoOutgoingDependenciesAfterTarjan [
 	aCollection := OrderedCollection withAll: (self packageOrganizer packages
 			                select: [ :package | '*Collections*' match: package name asString ]
 			                thenCollect: [ :package | package name ]).
-	aRelation := DAPackageRelationGraph onPackages: (aCollection collect: [ :each | DAPackage on: (RPackageSet named: each) ]).
+	aRelation := DAPackageRelationGraph onPackages: (aCollection collect: [ :each | DAPackage onPackageNamed: each ]).
 	aRelation
 		computeStaticDependencies;
 		removeInternalDependencies;

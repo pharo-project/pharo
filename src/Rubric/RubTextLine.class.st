@@ -132,7 +132,7 @@ RubTextLine >> justifiedPadFor: spaceIndex font: aFont [
 
 	| pad |
 	internalSpaces = 0 ifTrue: [^0].
-	^(aFont notNil and:[aFont isSubPixelPositioned])
+	^(aFont isNotNil and:[aFont isSubPixelPositioned])
 		ifTrue:[paddingWidth * 1.0 / internalSpaces]
 		ifFalse:[
 			pad := paddingWidth // internalSpaces.

@@ -53,7 +53,7 @@ ClassTreeNodeExample >> contents [
 
 { #category : 'menu' }
 ClassTreeNodeExample >> icon [
-	^ self iconNamed: #smallExpertIcon
+	^ self iconNamed: #smallExpert
 ]
 
 { #category : 'accessing' }

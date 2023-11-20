@@ -16,7 +16,7 @@ ReSmokeExceptionStrategyTest >> setUp [
 		aClassBuilder
 			name: #ReBrokenRuleForTesting;
 			superclass: ReAbstractRule;
-			package: self class category ].
+			package: self class package ].
 
 
 	brokenRule class

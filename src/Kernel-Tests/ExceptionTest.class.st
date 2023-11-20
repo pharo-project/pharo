@@ -342,7 +342,7 @@ ExceptionTest >> testResignalExceptionThatHasBeenSignaledTwice [
 		on: ZeroDivide
 		do: [ :e | e resume: 17 ].
 
-	self assert: shouldBe17 notNil
+	self assert: shouldBe17 isNotNil
 ]
 
 { #category : 'tests - exceptiontester' }

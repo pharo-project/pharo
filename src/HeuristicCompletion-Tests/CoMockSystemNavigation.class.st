@@ -13,16 +13,8 @@ Class {
 	#tag : 'Core'
 }
 
-{ #category : 'accessing' }
-CoMockSystemNavigation >> allClassNamesStartingWith: aString do: aBlock [
-
-	globals do: [ :e |
-		(e beginsWith: aString)
-			ifTrue: [ aBlock value: e ] ]
-]
-
 { #category : 'query' }
-CoMockSystemNavigation >> allClassNamesStartingWith: aString do: aBlock caseSensitive: cs [
+CoMockSystemNavigation >> allGlobalNamesStartingWith: aString do: aBlock caseSensitive: cs [
 
 	globals do: [ :e |
 		(aString isEmpty or: [ e beginsWith: aString caseSensitive: cs ])

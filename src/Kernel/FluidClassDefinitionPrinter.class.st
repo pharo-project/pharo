@@ -99,22 +99,46 @@ FluidClassDefinitionPrinter >> classVariableDefinitionsOn: aStream [
 ]
 
 { #category : 'template' }
-FluidClassDefinitionPrinter >> compactClassDefinitionTemplateInPackage: aPackageName [
-	^ String streamContents: [ :s |
-			s nextPutAll: 'Object << #MyClass'; crtab.
-			s nextPutAll: 'slots: {};'; crtab.
-			s nextPutAll: 'sharedVariables: {};'; crtab.
-			s nextPutAll: 'package: ''', aPackageName, '''' ]
-]
-
-{ #category : 'template' }
-FluidClassDefinitionPrinter >> compactTraitDefinitionTemplateInPackage: aPackageName [
+FluidClassDefinitionPrinter >> compactClassDefinitionTemplateInPackage: aPackageName tag: aTagName [
 
 	^ String streamContents: [ :s |
 		  s
-			  nextPutAll: 'Trait << #TMyTrait';  crtab;
-			  nextPutAll: 'traits: {};'; crtab ;
-			  nextPutAll: 'slots: {};'; crtab ;
+			  nextPutAll: 'Object << #MyClass';
+			  crtab;
+			  nextPutAll: 'slots: {};';
+			  crtab;
+			  nextPutAll: 'sharedVariables: {};';
+			  crtab.
+		  aTagName ifNotNil: [
+			  s
+				  nextPutAll: 'tag: ';
+				  print: aTagName;
+				  nextPutAll: ';';
+				  crtab ].
+		  s
+			  nextPutAll: 'package: ''';
+			  nextPutAll: aPackageName;
+			  nextPutAll: '''' ]
+]
+
+{ #category : 'template' }
+FluidClassDefinitionPrinter >> compactTraitDefinitionTemplateInPackage: aPackageName tag: aTagName [
+
+	^ String streamContents: [ :s |
+		  s
+			  nextPutAll: 'Trait << #TMyTrait';
+			  crtab;
+			  nextPutAll: 'traits: {};';
+			  crtab;
+			  nextPutAll: 'slots: {};';
+			  crtab.
+		  aTagName ifNotNil: [
+			  s
+				  nextPutAll: 'tag: ';
+				  print: aTagName;
+				  nextPutAll: ';';
+				  crtab ].
+		  s
 			  nextPutAll: 'package: ''';
 			  nextPutAll: aPackageName;
 			  nextPutAll: '''' ]
@@ -141,16 +165,12 @@ FluidClassDefinitionPrinter >> expandedDefinitionString [
 		  self slotsOn: s.
 		  self sharedVariablesOn: s.
 		  self sharedPoolsOn: s.
-
-		  forClass packageTag ifNotNil: [ :t |
-			  | tag |
-			  tag := t name.
-			  tag = forClass package name
-				  ifTrue: [
-					  s
-						  crtab;
-						  nextPutAll: 'tag: '''';' ]
-				  ifFalse: [ self tagOn: s ] ].
+		  forClass packageTag isRoot
+			  ifTrue: [
+				  s
+					  crtab;
+					  nextPutAll: 'tag: '''';' ]
+			  ifFalse: [ self tagOn: s ].
 		  self packageOn: s ]
 ]
 
@@ -314,13 +334,11 @@ FluidClassDefinitionPrinter >> msgAndClassNameOn: s [
 FluidClassDefinitionPrinter >> packageOn: s [
 	"The code to get the package name is not nice but it is possible we are asking the definition to a class that was uninstalled from the system and in that case it does not know its package anymore. And some code in the image expect to have the package of the class with the same name instead."
 
-	self flag: #package. "The current way of getting the package is really slow but it is the only way to get a package for the removed classes. This is the wrong package then but we have breaking tests if we fix it for now :(
-	I'll come with a better fix once the classes will know their package tag"
 	s
 		crtab;
 		nextPutAll: 'package: ';
 		nextPut: $';
-		nextPutAll: (forClass packageOrganizer packageOfClassNamed: forClass name) name;
+		nextPutAll: forClass package name;
 		nextPut: $'
 ]
 
@@ -404,14 +422,14 @@ FluidClassDefinitionPrinter >> slotsOn: s [
 
 { #category : 'expanded double dispatch API' }
 FluidClassDefinitionPrinter >> tagOn: aStream [
+	"We don't print if the tag is the root tag."
+	forClass packageTag isRoot ifTrue: [ ^ self ].
 
-	forClass packageTag isRoot ifFalse: [
-		aStream
-			crtab;
-			nextPutAll: 'tag: ';
-			nextPut: $';
-			nextPutAll: forClass packageTag name asString;
-			nextPutAll: ''';' ]
+	aStream
+		crtab;
+		nextPutAll: 'tag: ''';
+		nextPutAll: forClass packageTag name asString;
+		nextPutAll: ''';'
 ]
 
 { #category : 'printing' }

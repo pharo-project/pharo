@@ -80,7 +80,7 @@ ClySourceCodeContext >> isArgOrTempVariableSelected [
 ClySourceCodeContext >> isAssignmentSelected [
 	| node |
 	node := self selectedSourceNode.
-	[node notNil] whileTrue: [
+	[node isNotNil] whileTrue: [
 		node isAssignment ifTrue: [ ^true ].
 		node := node parent].
 	^false

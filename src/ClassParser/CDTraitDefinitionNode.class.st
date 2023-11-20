@@ -2,7 +2,7 @@
 I represent the definition of a Trait e.g.,
 
 ```
-Trait named: TBehavior
+Trait named: TEmpty
 	uses: Trait2;
 	package: 'Kernel'
 ```

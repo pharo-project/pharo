@@ -1,6 +1,20 @@
 Extension { #name : 'ClassFactoryForTestCase' }
 
 { #category : '*Deprecated12' }
+ClassFactoryForTestCase >> defaultCategory [
+
+	self deprecated: 'Use #packageName and #tagName instead because the concept of categories is been removed from Pharo.'.
+	^ (self packageName , '-' , self tagName) asSymbol
+]
+
+{ #category : '*Deprecated12' }
+ClassFactoryForTestCase >> defaultTagPostfix [
+
+	self deprecated: 'Use #tagName instead.' transformWith: '`@rcv defaultTagPostfix' -> '`@rcv tagName'.
+	^ self tagName
+]
+
+{ #category : '*Deprecated12' }
 ClassFactoryForTestCase >> deleteClass: aClass [
 
 	self deprecated: 'Use #delete: instead. The behavior is the same.' transformWith: '`@rcv deleteClass: `@arg' -> '`@rcv -> delete: `@arg'.
@@ -182,7 +196,7 @@ ClassFactoryForTestCase >> silentlyNewSubclassOf: aClass instanceVariableNames: 
 			  superclass: aClass;
 			  slotsFromString: ivNamesString;
 			  sharedVariablesFromString: classVarsString;
-			  tag: self defaultTagPostfix ]
+			  tag: self tagName ]
 ]
 
 { #category : '*Deprecated12' }

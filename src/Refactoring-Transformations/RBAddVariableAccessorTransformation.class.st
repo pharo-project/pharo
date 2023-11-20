@@ -1,0 +1,124 @@
+"
+Adds accessors (getter and setter) for a variable in a class, if they do not exist.
+
+Usage:
+| transformation |
+transformation := (RBAddVariableAccessorTransformation
+	variable: 'variableName'
+	class: #RBVariableTransformation
+	classVariable: false)
+	transform.
+(ChangesBrowser changes: transformation model changes changes) open
+
+Preconditions:
+- the variable with which the accessors will be created shall exist. The parameter isClassVariable indicates whether to look in the instance or class variables.
+"
+Class {
+	#name : 'RBAddVariableAccessorTransformation',
+	#superclass : 'RBVariableTransformation',
+	#instVars : [
+		'getterMethod',
+		'setterMethod'
+	],
+	#category : 'Refactoring-Transformations-Model',
+	#package : 'Refactoring-Transformations',
+	#tag : 'Model'
+}
+
+{ #category : 'preconditions' }
+RBAddVariableAccessorTransformation >> applicabilityPreconditions [ 
+
+	class := self model classObjectFor: className.
+
+	^ isClassVariable
+		ifTrue: [RBCondition definesClassVariable: variableName asSymbol in: class]
+		ifFalse: [RBCondition definesInstanceVariable: variableName in: class]
+]
+
+{ #category : 'private' }
+RBAddVariableAccessorTransformation >> createGetterAccessor [
+
+	(self definingClass getterMethodFor: variableName) ifNil: [ self defineGetterMethod ]
+]
+
+{ #category : 'private' }
+RBAddVariableAccessorTransformation >> createSetterAccessor [
+
+	(self definingClass setterMethodFor: variableName)
+		ifNil: [ self defineSetterMethod ]
+		ifNotNil: [ setterMethod := self definingClass setterMethodFor: variableName ]
+]
+
+{ #category : 'private' }
+RBAddVariableAccessorTransformation >> defineGetterMethod [
+
+	getterMethod := self safeMethodNameFor: self definingClass basedOn: variableName asString.
+	(RBAddMethodTransformation
+		model: self model 
+		sourceCode: ('<1s><r><r><t>^ <2s>' expandMacrosWith: getterMethod with: variableName)
+		in: self definingClass
+		withProtocol: 'accessing') generateChanges.
+
+	^ getterMethod
+]
+
+{ #category : 'private' }
+RBAddVariableAccessorTransformation >> defineSetterMethod [
+
+	|  sourceCode |
+	sourceCode := '<1s> anObject<r><r><t><2s> := anObject'.
+	setterMethod := self safeMethodNameFor: self definingClass basedOn: variableName asString , ':'.
+	(RBAddMethodTransformation 
+		model: self model
+		sourceCode: (sourceCode expandMacrosWith: setterMethod with: variableName)
+		in: self definingClass 
+		withProtocol: 'accessing') generateChanges.
+	^ setterMethod
+]
+
+{ #category : 'accessing' }
+RBAddVariableAccessorTransformation >> definingClass [
+	"Usually a shared variable is defined on the instance side and instance 
+	variables on both instance and class side."
+	
+	^ isClassVariable
+		ifTrue: [ super definingClass classSide ]
+		ifFalse: [ super definingClass ]
+]
+
+{ #category : 'private' }
+RBAddVariableAccessorTransformation >> getterMethod [
+	^ getterMethod
+]
+
+{ #category : 'executing' }
+RBAddVariableAccessorTransformation >> privateTransform [
+
+	self
+		createGetterAccessor;
+		createSetterAccessor
+]
+
+{ #category : 'private' }
+RBAddVariableAccessorTransformation >> safeMethodNameFor: aClass basedOn: aString [
+	"Creates an unused method name containing aString"
+
+	| baseString newString hasParam i |
+	baseString := aString copy.
+	baseString at: 1 put: baseString first asLowercase.
+	newString := baseString.
+	hasParam := newString last = $:.
+	hasParam
+		ifTrue: [baseString := newString copyFrom: 1 to: newString size - 1].
+	i := 0.
+	[aClass hierarchyDefinesMethod: newString asSymbol] whileTrue:
+			[i := i + 1.
+			newString := baseString , i printString
+						, (hasParam ifTrue: [':'] ifFalse: [''])].
+	^newString asSymbol
+]
+
+{ #category : 'private' }
+RBAddVariableAccessorTransformation >> setterMethod [
+	^ setterMethod
+]

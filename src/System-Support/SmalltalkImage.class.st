@@ -47,9 +47,8 @@ Class {
 
 { #category : 'cleanup' }
 SmalltalkImage class >> cleanUp [
-	"Flush caches"
 
-	Undeclared removeUnreferencedKeys
+	Smalltalk image cleanOutUndeclared
 ]
 
 { #category : 'settings' }
@@ -337,7 +336,18 @@ SmalltalkImage >> classOrTraitNamed: aString [
 
 { #category : 'housekeeping' }
 SmalltalkImage >> cleanOutUndeclared [
-	Undeclared removeUnreferencedKeys
+	| unreferenced |
+	unreferenced := Undeclared keys asSet.
+	self systemNavigation allBehaviorsDo: [ :class |
+		class methodsDo: [ :method |
+			method withAllNestedLiteralsDo: [ :lit |
+				(lit isKindOf: UndeclaredVariable) ifTrue: [
+					unreferenced
+						remove: lit key
+						ifAbsent: [ "Sanity check--a binding with more than one reference may already be gone from the unreferenced set, but should be present in Undeclared itself"
+							self at: lit key ] ] ] ] ].
+
+	unreferenced do: [ :key | Undeclared removeKey: key ]
 ]
 
 { #category : 'cleanup' }
@@ -1324,6 +1334,12 @@ SmalltalkImage >> organization [
 	^globals organization
 ]
 
+{ #category : 'accessing' }
+SmalltalkImage >> packages [
+
+	^ self organization packages
+]
+
 { #category : 'memory space' }
 SmalltalkImage >> primBytesLeft [
 	"Primitive. Answer the number of free bytes available in old space.
@@ -1521,9 +1537,8 @@ SmalltalkImage >> removeClassNamed: aName [
 
 { #category : 'housekeeping' }
 SmalltalkImage >> removeEmptyMessageCategories [
-	"Smalltalk removeEmptyMessageCategories"
-
-	self garbageCollect.
+	<script>
+	
 	SystemNavigation default allBehaviorsDo: [ :class | class removeEmptyProtocols ].
 	self packageOrganizer removeEmptyPackagesAndTags
 ]

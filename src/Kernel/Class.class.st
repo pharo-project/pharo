@@ -22,8 +22,8 @@ Class {
 		'classPool',
 		'sharedPools',
 		'environment',
-		'category',
-		'commentSourcePointer'
+		'commentSourcePointer',
+		'packageTag'
 	],
 	#classVars : [
 		'ObsoleteClasses'
@@ -85,7 +85,7 @@ Class class >> superclassOrder: classes [
     all := OrderedCollection new: unprocessedClasses size.
     unprocessedClasses size timesRepeat:
         [ | nextClass nextClassIndex |
-            nextClassIndex := list findFirst: [:aClass | aClass notNil
+            nextClassIndex := list findFirst: [:aClass | aClass isNotNil
                 and: [(unprocessedClasses includes: aClass)
                 and: [self hasNoDependenciesFor: aClass in: unprocessedClasses cache: cache]]].
             nextClass := list at: nextClassIndex.
@@ -93,12 +93,6 @@ Class class >> superclassOrder: classes [
             all addLast: nextClass.
             unprocessedClasses remove: nextClass].
     ^all
-]
-
-{ #category : 'accessing' }
-Class class >> unclassifiedCategory [
-
-	^ #Unclassified
 ]
 
 { #category : 'class variables' }
@@ -125,7 +119,7 @@ Class >> addClassVariable: aClassVariable [
 				, ' is already used as a variable name in class '
 				, subclass name]].
 	self basicDeclareClassVariable: aClassVariable.
-	SystemAnnouncer uniqueInstance
+	self codeChangeAnnouncer 
 			classDefinitionChangedFrom: oldState to: self;
 			classModificationAppliedTo: self
 ]
@@ -210,11 +204,6 @@ Class >> applyDeprecation [
 	self deprecationRefactorings do: #execute
 ]
 
-{ #category : 'accessing' }
-Class >> basicCategory: aSymbol [
-	category := aSymbol
-]
-
 { #category : 'class variables' }
 Class >> basicDeclareClassVariable: aClassVariable [
 	"Add aClassVariable to the receiver. Two cases are handled here:
@@ -239,6 +228,12 @@ Class >> basicDeclareClassVariable: aClassVariable [
 		existingVar becomeForward: aClassVariable
 	].
 	self classPool add: aClassVariable
+]
+
+{ #category : 'accessing' }
+Class >> basicTag: aPackageTag [
+
+	packageTag := aPackageTag
 ]
 
 { #category : 'compiling' }
@@ -272,31 +267,16 @@ Class >> bindingOf: varName [
 Class >> category [
 	"Answer the system organization category for the receiver."
 
-	^ category
+	^ self packageTag categoryName
 ]
 
-{ #category : 'organization' }
-Class >> category: aString [
-	"Categorize the receiver under the system category, aString, removing it from
-	any previous categorization."
-
-	| oldCategory |
-	oldCategory := self category.
-	oldCategory = aString ifTrue: [ ^ self ].
-	self basicCategory: aString asSymbol.
-
-	oldCategory = Class unclassifiedCategory
-		ifTrue: [ SystemAnnouncer uniqueInstance classAdded: self inCategory: self category ]
-		ifFalse: [ SystemAnnouncer uniqueInstance class: self recategorizedFrom: oldCategory to: self category ]
-]
-
-{ #category : 'subclass creation - variableByte' }
+{ #category : 'subclass creation' }
 Class >> checkForCompiledMethodLayout: className [ 
 	"There is no class definiton message for CompiledMethodLayout, it just uses the one for bytelayout for CompiledCode, CompiledMethod and CompiledBlock"
 
 	| oldClassOrNil actualLayoutClass |
 	oldClassOrNil := self environment at: className ifAbsent: [ nil ].
-	actualLayoutClass := (oldClassOrNil notNil and: [ oldClassOrNil classLayout class == CompiledMethodLayout ])
+	actualLayoutClass := (oldClassOrNil isNotNil and: [ oldClassOrNil classLayout class == CompiledMethodLayout ])
 		ifTrue: [ CompiledMethodLayout ]
 		ifFalse: [ ByteLayout ].
 	^ actualLayoutClass
@@ -329,9 +309,10 @@ Class >> classComment: aString stamp: aStamp [
 { #category : 'subclass creation' }
 Class >> classInstaller [
 	"Answer the class responsible of creating subclasses of myself in the system."
-	^self isAnonymous
-		ifTrue: [Smalltalk anonymousClassInstaller]
-		ifFalse: [Smalltalk classInstaller]
+
+	^ self isAnonymous
+		  ifTrue: [ Smalltalk anonymousClassInstaller ]
+		  ifFalse: [ Smalltalk classInstaller ]
 ]
 
 { #category : 'accessing' }
@@ -463,7 +444,7 @@ Class >> comment: aString stamp: aStamp [
 			self commentSourcePointer: newSourcePointer]
 		onFail: [ "ignore" ].
 
-	SystemAnnouncer uniqueInstance
+	self codeChangeAnnouncer 
 		class: self
 		oldComment: oldComment
 		newComment: aString
@@ -523,7 +504,8 @@ Class >> copyForAnnouncement [
 		            setFormat: format;
 		            setName: name;
 		            classPool: classPool copy;
-		            sharedPools: sharedPools copy.
+		            sharedPools: sharedPools copy;
+		            basicTag: packageTag.
 	self class instSize + 1 to: self class instSize do: [ :offset | newClass instVarAt: offset put: (self instVarAt: offset) ].
 	newClass classLayout: (layout copy host: newClass).
 	^ newClass
@@ -558,7 +540,8 @@ Class >> definedVariables [
 
 { #category : 'class variables' }
 Class >> definesClassVariable: aGlobal [
-	"Return whether the receiver has a class variables (shared variables among its class and subclasses) named: aString"
+	"Return whether the receiver defines a class variables (shared variable)
+	Note: Does not take superclass into account"
 	<reflection: 'Class structural inspection - Class variable inspection'>
 	^ self classVariables includes: aGlobal
 ]
@@ -615,54 +598,6 @@ Class >> environment: anEnvironment [
 	environment := anEnvironment
 ]
 
-{ #category : 'subclass creation - weak' }
-Class >> ephemeronSubclass: className instanceVariableNames: instVarNameList classVariableNames: classVarNames package: cat [
-	"Added to allow for a simplified subclass creation experience. "
-
-	 ^ self classInstaller
-			make: [ :builder |
-				builder
-					superclass: self;
-					name: className;
-					layoutClass: EphemeronLayout;
-					slotsFromString: instVarNameList;
-					sharedVariablesFromString: classVarNames;
-					category: cat;
-					environment: self environment ]
-]
-
-{ #category : 'subclass creation - deprecated' }
-Class >> ephemeronSubclass: t instanceVariableNames: f classVariableNames: d poolDictionaries: s category: cat [
-
-	^ self classInstaller make: [ :builder |
-		  builder
-			  superclass: self;
-			  name: t;
-			  layoutClass: EphemeronLayout;
-			  slotsFromString: f;
-			  sharedVariablesFromString: d;
-			  sharedPools: s;
-			  category: cat;
-			  environment: self environment ]
-]
-
-{ #category : 'subclass creation - weak' }
-Class >> ephemeronSubclass: t instanceVariableNames: f classVariableNames: d poolDictionaries: s package: cat [
-	"This is the standard initialization message for creating a new class as a subclass of an existing class (the receiver) in which the subclass is to have weak indexable pointer variables."
-
-	^ self classInstaller
-		make: [ :builder |
-			builder
-				superclass: self;
-				name: t;
-				layoutClass: EphemeronLayout;
-				slotsFromString: f;
-				sharedVariablesFromString: d;
-				sharedPools: s;
-				category: cat;
-				environment: self environment ]
-]
-
 { #category : 'fileout' }
 Class >> expandedDefinitionStringFor: aPrinter [
 
@@ -702,7 +637,8 @@ Class >> hasBindingThatBeginsWith: aString [
 { #category : 'accessing - parallel hierarchy' }
 Class >> hasClassSide [
 	<reflection: 'Class structural inspection - Class/Metaclass shift'>
-	^self classSide notNil
+
+	^ self classSide isNotNil
 ]
 
 { #category : 'class variables' }
@@ -745,56 +681,6 @@ Class >> hasSharedPools [
 Class >> hasSubclasses [
 	<reflection: 'Class structural inspection - Iterating and querying hierarchy'>
 	^ self subclasses isNotEmpty
-]
-
-{ #category : 'subclass creation - immediate' }
-Class >> immediateSubclass: className instanceVariableNames: instVarNameList classVariableNames: classVarNames package: cat [
-	"
-	An immediate subclass define a class for which its value is coded within the OOP itself (like SmallInteger in 32 bits). It is not meant to be used by non-experimented users.
-
-	Immediates are objects that are stored in an object pointer using a tag to distinguish them from ordinary object pointers.  In v3 the only immediate is SmallInteger.  In 32-but spur there are SmallInteger and Character.  An implication of this is that in spur all Characters can be compared using #==.  In 64-bit Spur there is also SmallFloat64.  If a float's exponent is in the middle 8-bits of the 11-bit exponent range then it will be immediate.  If a float's exponent is outside of the middle 8-bits it will be boxed.
-	"
-	^ self classInstaller make: [ :builder |
-		builder
-			superclass: self;
-			name: className;
-			layoutClass: ImmediateLayout;
-			slotsFromString: instVarNameList;
-			sharedVariablesFromString: classVarNames;
-			category: cat;
-			environment: self environment ]
-]
-
-{ #category : 'subclass creation - deprecated' }
-Class >> immediateSubclass: t instanceVariableNames: f classVariableNames: d poolDictionaries: s category: cat [
-	^ self classInstaller make: [ :builder |
-		builder
-			superclass: self;
-			name: t;
-			layoutClass: ImmediateLayout;
-			slotsFromString: f;
-			sharedVariablesFromString: d;
-			sharedPools: s;
-			category: cat;
-			environment: self environment ]
-]
-
-{ #category : 'subclass creation - immediate' }
-Class >> immediateSubclass: t instanceVariableNames: f classVariableNames: d poolDictionaries: s package: cat [
-	"This is the standard initialization message for creating a new class as a
-	subclass of an existing class (the receiver) in which the subclass is to
-	have indexable pointer variables."
-
-	^ self classInstaller make: [ :builder |
-		builder
-			superclass: self;
-			name: t;
-			layoutClass: ImmediateLayout;
-			slotsFromString: f;
-			sharedVariablesFromString: d;
-			sharedPools: s;
-			category: cat;
-			environment: self environment ]
 ]
 
 { #category : 'compiling' }
@@ -874,11 +760,20 @@ Class >> needsSlotClassDefinition [
 
 { #category : 'subclass creation' }
 Class >> newAnonymousSubclass [
+
+	<reflection: 'Class structural modification - Anonymous class creation'>
+	^ self newAnonymousSubclassInEnvironment: self environment
+]
+
+{ #category : 'subclass creation' }
+Class >> newAnonymousSubclassInEnvironment: anEnvironment [
+
 	<reflection: 'Class structural modification - Anonymous class creation'>
 	^ Smalltalk anonymousClassInstaller make: [ :builder |
-		builder
-			superclass: self ;
-			layoutClass: self classLayout class ]
+		  builder
+			  installingEnvironment: anEnvironment;
+			  superclass: self;
+			  layoutClass: self classLayout class ]
 ]
 
 { #category : 'subclass creation' }
@@ -909,6 +804,18 @@ Class >> obsolete [
 	self hasClassSide ifTrue: [ self classSide obsolete].
 	ObsoleteClasses add: self.
 	super obsolete
+]
+
+{ #category : 'accessing' }
+Class >> package [
+
+	^ self packageTag package
+]
+
+{ #category : 'accessing' }
+Class >> packageTag [
+
+	^ packageTag ifNil: [ self packageOrganizer undefinedPackage undefinedTag ]
 ]
 
 { #category : 'compiling' }
@@ -961,18 +868,19 @@ Class >> removeClassVarNamed: aString interactive: interactive [
 	aSymbol := aString asSymbol.
 	(self classPool includesKey: aSymbol) ifFalse: [ ^ self error: aString , ' is not a class variable' ].
 	varUserClass := self anyUserOfClassVarNamed: aSymbol.
-	varUserClass notNil & interactive ifTrue: [
+	varUserClass isNotNil & interactive ifTrue: [
 		(self confirm: (aString , ' is still used in code of class ' , varUserClass name , '.\Is it okay to move it to Undeclared?') withCRs) ifFalse: [ ^ self ] ].
 
 	varUserClass
 		ifNotNil: [
 			NewUndeclaredWarning signal: aString in: self name.
-			Undeclared declare: aSymbol from: self classPool ]
-		ifNil: [ self classPool removeKey: aSymbol ].
-
+			"NOTE: we add ClassVariable to Undeclared, we need to update to UndeclaredVariable"
+			Undeclared add: (self classPool associationAt: aSymbol) ].
+		
+	self classPool removeKey: aSymbol.
 	self classPool ifEmpty: [ self classPool: nil ].
 
-	SystemAnnouncer uniqueInstance classModificationAppliedTo: self
+	self codeChangeAnnouncer  classModificationAppliedTo: self
 ]
 
 { #category : 'class variables' }
@@ -995,24 +903,20 @@ Class >> removeFromSystem: logged [
 	Keep the class name and category for triggering the system change message. If we wait to long, then we get obsolete information which is not what we want.
 	Tell class to deactivate and unload itself-- two separate events in the module system"
 
-	| myCategory package |
 	self release.
 	self unload.
 
 	self superclass ifNotNil: [ "If we have no superclass there's nothing to be remembered" self superclass addObsoleteSubclass: self ].
 
-	"we add the class to Undeclared so that if references still exist, they will  be automatically fixed
-	if this class is loaded again. We do not check if references exist as it is too slow"
-	Undeclared declare: self name asSymbol from: Smalltalk globals.
-	myCategory := self category.
-	package := self package.
+	"we add the class to Undeclared so that if references still exist, they will  be automatically fixed if this class is loaded again. We do not check if references exist as it is too slow"
+	Undeclared declare: self name asSymbol from: self environment.
 	self environment forgetClass: self.
 
 	"In case the class has deprecated aliases we need to remove them from the system dictionary.
 	We deal also with a special case that is the case a class of the same name than the alias is installed in the image after the alias. In that case we do not remove it. It's the reason we check if the global of the alias is the same as self."
 	self deprecatedAliases do: [ :alias | self environment at: alias ifPresent: [ :class | class = self ifTrue: [ self environment removeKey: alias ] ] ].
 	self obsolete.
-	logged ifTrue: [ SystemAnnouncer announce: (ClassRemoved class: self package: package category: myCategory) ]
+	logged ifTrue: [ self codeChangeAnnouncer  announce: (ClassRemoved class: self) ]
 ]
 
 { #category : 'initialization' }
@@ -1062,9 +966,10 @@ Class >> removeSharedPool: aDictionary [
 { #category : 'accessing - class hierarchy' }
 Class >> removeSubclass: aSubclass [
 	"If the argument, aSubclass, is one of the receiver's subclasses, remove it."
+
 	<reflection: 'Class structural modification - Hierarchy modification'>
-	self subclasses == nil ifFalse: [
-		self subclasses: (self subclasses copyWithout: aSubclass).
+	self subclasses ifNotNil: [ :classes |
+		self subclasses: (classes copyWithout: aSubclass).
 		self subclasses ifEmpty: [ self subclasses: nil ] ]
 ]
 
@@ -1133,13 +1038,13 @@ Class >> sharedPoolsDo: aBlockClosure [
 ]
 
 { #category : 'initialization' }
-Class >> sharing: poolString [
+Class >> sharing: sharedPoolNames [
 	"Set up sharedPools. Answer whether recompilation is advisable."
 
 	| oldPools |
 	oldPools := self sharedPools.
 	self sharedPools: OrderedCollection new.
-	(poolString substrings: ' ') do: [ :poolName |
+	sharedPoolNames do: [ :poolName |
 		self sharedPools add: (self environment at: poolName asSymbol ifAbsent: [
 				 (self confirm: 'The pool dictionary ' , poolName , ' does not exist.' , '\Do you want it automatically created?' withCRs)
 					 ifTrue: [
@@ -1147,7 +1052,8 @@ Class >> sharing: poolString [
 							 builder
 								 superclass: SharedPool;
 								 name: poolName;
-								 category: self category ] ]
+								 package: self package name;
+								 tag: self packageTag name ] ]
 					 ifFalse: [ ^ self inform: poolName , ' does not exist' ] ]) ].
 	self sharedPools ifEmpty: [ self sharedPools: nil ].
 	oldPools do: [ :pool |
@@ -1168,138 +1074,6 @@ Class >> subclass: t [
 				environment: self environment ]
 
 	
-]
-
-{ #category : 'subclass creation' }
-Class >> subclass: t instanceVariableNames: ins [
-	<reflection: 'Class structural modification - Old class creation'>
-	^ self classInstaller
-		make: [ :builder |
-			builder
-				superclass: self; 
-				name: t;
-				slotsFromString: ins;
-				environment: self environment ]
-]
-
-{ #category : 'subclass creation - deprecated' }
-Class >> subclass: aSubclassSymbol instanceVariableNames: instVarNameList classVariableNames: classVarNames category: aCategorySymbol [
-	"Added to allow for a simplified subclass creation experience. "
-	<reflection: 'Class structural modification - Old class creation'>
-
-		^ self classInstaller
-		make: [ :builder |
-			builder
-				superclass: self; 
-				name: aSubclassSymbol;
-				sharedVariablesFromString: classVarNames;
-				slotsFromString: instVarNameList;
-				environment: self environment ]
-]
-
-{ #category : 'subclass creation' }
-Class >> subclass: aSubclassSymbol instanceVariableNames: instVarNameList classVariableNames: classVarNames package: aPackageSymbol [
-	"Added to allow for a simplified subclass creation experience. "
-	<reflection: 'Class structural modification - Old class creation'>
-
-	^ self classInstaller
-		make: [ :builder |
-			builder
-				superclass: self;
-				name: aSubclassSymbol;
-				slotsFromString: instVarNameList;
-				sharedVariablesFromString: classVarNames;
-				category: aPackageSymbol;
-				environment: self environment ]
-]
-
-{ #category : 'subclass creation - deprecated' }
-Class >> subclass: t instanceVariableNames: f classVariableNames: d poolDictionaries: s category: cat [
-	<reflection: 'Class structural modification - Old class creation'>
-
-	^ self classInstaller
-		make: [ :builder |
-			builder
-				superclass: self;
-				name: t;
-				slotsFromString: f;
-				sharedVariablesFromString: d;
-				sharedPools: s;
-				category: cat;
-				environment: self environment ]
-]
-
-{ #category : 'subclass creation' }
-Class >> subclass: t instanceVariableNames: f classVariableNames: d poolDictionaries: s package: cat [
-	<reflection: 'Class structural modification - Old class creation'>
-
-	^ self classInstaller
-		make: [ :builder |
-			builder
-				superclass: self;
-				name: t;
-				layoutClass: self classLayout class;
-				slotsFromString: f;
-				sharedVariablesFromString: d;
-				sharedPools: s;
-				category: cat;
-				environment: self environment ]
-]
-
-{ #category : 'subclass creation - slots' }
-Class >> subclass: aSubclassSymbol layout: layoutClass slots: slotDefinition classVariables: classVarDefinition package: aCategorySymbol [
-	<reflection: 'Class structural modification - Old class creation'>
-
-	^ self classInstaller make: [ :builder |
-		  builder
-			  name: aSubclassSymbol;
-			  superclass: self;
-			  layoutClass: layoutClass;
-			  slots: slotDefinition;
-			  sharedVariables: classVarDefinition;
-			  category: aCategorySymbol ]
-]
-
-{ #category : 'subclass creation - slots' }
-Class >> subclass: aSubclassSymbol layout: layoutClass slots: slotDefinition classVariables: classVarDefinition poolDictionaries: someSharedPoolNames package: aCategorySymbol [
-	<reflection: 'Class structural modification - Old class creation'>
-
-	^ self classInstaller make: [ :builder |
-		  builder
-			  name: aSubclassSymbol;
-			  superclass: self;
-			  layoutClass: layoutClass;
-			  slots: slotDefinition;
-			  sharedVariables: classVarDefinition;
-			  sharedPools: someSharedPoolNames;
-			  category: aCategorySymbol ]
-]
-
-{ #category : 'subclass creation - slots' }
-Class >> subclass: aSubclassSymbol slots: slotDefinition classVariables: classVarDefinition package: aCategorySymbol [
-	<reflection: 'Class structural modification - Old class creation'>
-
-	^ self classInstaller make: [ :builder |
-		  builder
-			  name: aSubclassSymbol;
-			  superclass: self;
-			  slots: slotDefinition;
-			  sharedVariables: classVarDefinition;
-			  category: aCategorySymbol ]
-]
-
-{ #category : 'subclass creation - slots' }
-Class >> subclass: aSubclassSymbol slots: slotDefinition classVariables: classVarDefinition poolDictionaries: someSharedPoolNames package: aCategorySymbol [
-	<reflection: 'Class structural modification - Old class creation'>
-
-	^ self classInstaller make: [ :builder |
-		  builder
-			  name: aSubclassSymbol;
-			  superclass: self;
-			  slots: slotDefinition;
-			  sharedVariables: classVarDefinition;
-			  sharedPools: someSharedPoolNames;
-			  category: aCategorySymbol ]
 ]
 
 { #category : 'accessing - class hierarchy' }
@@ -1355,290 +1129,6 @@ Class >> usesPoolVarNamed: aString [
 	"Return whether the receiver has a pool variable named: aString, taking into account superclasses too"
 	<reflection: 'Class structural inspection - Shared pool inspection'>
 	^self allSharedPools anySatisfy: [:each | each usesClassVarNamed: aString]
-]
-
-{ #category : 'subclass creation - deprecated' }
-Class >> variableByteSubclass: className instanceVariableNames: instVarNameList  classVariableNames: classVarNames category: cat [
-
-	^ self classInstaller
-		make: [ :builder |
-			builder
-				superclass: self;
-				name: className;
-				layoutClass: (self checkForCompiledMethodLayout: className);
-				slotsFromString: instVarNameList;
-				sharedVariablesFromString: classVarNames;
-				category: cat;
-				environment: self environment ]
-]
-
-{ #category : 'subclass creation - variableByte' }
-Class >> variableByteSubclass: className instanceVariableNames: instVarNameList classVariableNames: classVarNames package: cat [
-	"Added to allow for a simplified subclass creation experience. "
-
-	^ self classInstaller
-		make: [ :builder |
-			builder
-				superclass: self;
-				name: className;
-				layoutClass: (self checkForCompiledMethodLayout: className);
-				slotsFromString: instVarNameList;
-				sharedVariablesFromString: classVarNames;
-				category: cat;
-				environment: self environment ]
-]
-
-{ #category : 'subclass creation - deprecated' }
-Class >> variableByteSubclass: className instanceVariableNames: f classVariableNames: d poolDictionaries: s category: cat [
-
-	^ self classInstaller
-		make: [ :builder |
-			builder
-				superclass: self;
-				name: className;
-				layoutClass: (self checkForCompiledMethodLayout: className);
-				slotsFromString: f;
-				sharedVariablesFromString: d;
-				sharedPools: s;
-				category: cat;
-				environment: self environment ]
-]
-
-{ #category : 'subclass creation - variableByte' }
-Class >> variableByteSubclass: className instanceVariableNames: f classVariableNames: d poolDictionaries: s package: cat [
-	"This is the standard initialization message for creating a new class as a
-	subclass of an existing class (the receiver) in which the subclass is to
-	have indexable byte-sized nonpointer variables."
-	
-	^ self classInstaller
-		make: [ :builder |
-			builder
-				superclass: self;
-				name: className;
-				layoutClass: (self checkForCompiledMethodLayout: className);
-				slotsFromString: f;
-				sharedVariablesFromString: d;
-				sharedPools: s;
-				category: cat;
-				environment: self environment ]
-]
-
-{ #category : 'subclass creation - variableByte' }
-Class >> variableDoubleByteSubclass: className instanceVariableNames: instVarNameList  classVariableNames: classVarNames package: cat [
-
-	^ self classInstaller
-		make: [ :builder |
-			builder
-				superclass: self;
-				name: className;
-				layoutClass: DoubleByteLayout;
-				slotsFromString: instVarNameList;
-				sharedVariablesFromString: classVarNames;
-				category: cat;
-				environment: self environment ]
-]
-
-{ #category : 'subclass creation - variableByte' }
-Class >> variableDoubleWordSubclass: className instanceVariableNames: instVarNameList  classVariableNames: classVarNames package: cat [
-
-	^ self classInstaller
-		make: [ :builder |
-			builder
-				superclass: self;
-				name: className;
-				layoutClass: DoubleWordLayout;
-				slotsFromString: instVarNameList;
-				sharedVariablesFromString: classVarNames;
-				category: cat;
-				environment: self environment ]
-]
-
-{ #category : 'subclass creation - deprecated' }
-Class >> variableSubclass: className instanceVariableNames: instVarNameList classVariableNames: classVarNames category: cat [
-
-	^ self classInstaller make: [ :builder |
-		  builder
-			  superclass: self;
-			  name: className;
-			  layoutClass: VariableLayout;
-			  slotsFromString: instVarNameList;
-			  sharedVariablesFromString: classVarNames;
-			  category: cat;
-			  environment: self environment ]
-]
-
-{ #category : 'subclass creation - variable' }
-Class >> variableSubclass: className instanceVariableNames: instVarNameList classVariableNames: classVarNames package: cat [
-
-	^ self classInstaller make: [ :builder |
-		  builder
-			  superclass: self;
-			  name: className;
-			  layoutClass: VariableLayout;
-			  slotsFromString: instVarNameList;
-			  sharedVariablesFromString: classVarNames;
-			  category: cat;
-			  environment: self environment ]
-]
-
-{ #category : 'subclass creation - deprecated' }
-Class >> variableSubclass: className instanceVariableNames: instVarNameList classVariableNames: classVarNames poolDictionaries: s category: cat [
-
-	^ self classInstaller make: [ :builder |
-		  builder
-			  superclass: self;
-			  name: className;
-			  layoutClass: VariableLayout;
-			  slotsFromString: instVarNameList;
-			  sharedVariablesFromString: classVarNames;
-			  sharedPools: s;
-			  category: cat;
-			  environment: self environment ]
-]
-
-{ #category : 'subclass creation - variable' }
-Class >> variableSubclass: t instanceVariableNames: f classVariableNames: d poolDictionaries: s package: cat [
-	"This is the standard initialization message for creating a new class as a
-	subclass of an existing class (the receiver) in which the subclass is to
-	have indexable pointer variables."
-
-	^ self classInstaller
-		make: [ :builder |
-			builder
-				superclass: self;
-				name: t;
-				layoutClass: VariableLayout;
-				slotsFromString: f;
-				sharedVariablesFromString: d;
-				sharedPools: s;
-				category: cat;
-				environment: self environment ]
-]
-
-{ #category : 'subclass creation - deprecated' }
-Class >> variableWordSubclass: className instanceVariableNames: instVarNameList classVariableNames: classVarNames category: cat [
-	"Added to allow for a simplified subclass creation experience. "
-
-	^ self classInstaller make: [ :builder |
-		  builder
-			  superclass: self;
-			  name: className;
-			  layoutClass: WordLayout;
-			  slotsFromString: instVarNameList;
-			  sharedVariablesFromString: classVarNames;
-			  category: cat;
-			  environment: self environment ]
-]
-
-{ #category : 'subclass creation - variableWord' }
-Class >> variableWordSubclass: className instanceVariableNames: instVarNameList classVariableNames: classVarNames package: cat [
-	"Variable word is like variable byte (ByteArray), variable size, with indices instead of named instance variables, but each index points to a full word (32 bits).
-
-	Objects on the heap are either pointers or bits.  For example instances of Point, Array, BlockClosure etc are pointer objects.  But Bitmap, ByteString, WideString etc are bits objects.  In v3 bits objects are either a sequence of bytes (ByteArray, ByteString, ByteSymbol etc) or 32-bit words (WideString, Float, Bitmap etc).  Spur supports byte, short, word and double-word bits objects even though currently only byte and word classes exist.  16-bit strings will be useful on Windows, for example."
-
-	^ self classInstaller make: [ :builder |
-		  builder
-			  superclass: self;
-			  name: className;
-			  layoutClass: WordLayout;
-			  slotsFromString: instVarNameList;
-			  sharedVariablesFromString: classVarNames;
-			  category: cat;
-			  environment: self environment ]
-]
-
-{ #category : 'subclass creation - deprecated' }
-Class >> variableWordSubclass: t instanceVariableNames: f classVariableNames: d poolDictionaries: s category: cat [
-
-	^ self classInstaller make: [ :builder |
-		  builder
-			  superclass: self;
-			  name: t;
-			  layoutClass: WordLayout;
-			  slotsFromString: f;
-			  sharedVariablesFromString: d;
-			  sharedPools: s;
-			  category: cat;
-			  environment: self environment ]
-]
-
-{ #category : 'subclass creation - variableWord' }
-Class >> variableWordSubclass: t instanceVariableNames: f classVariableNames: d poolDictionaries: s package: cat [
-	"This is the standard initialization message for creating a new class as a subclass of an existing class (the receiver) in which the subclass is to have indexable word-sized nonpointer variables."
-
-	^ self classInstaller
-		make: [ :builder |
-			builder
-				superclass: self;
-				name: t;
-				layoutClass: WordLayout;
-				slotsFromString: f;
-				sharedVariablesFromString: d;
-				sharedPools: s;
-				category: cat;
-				environment: self environment ]
-]
-
-{ #category : 'subclass creation - deprecated' }
-Class >> weakSubclass: className instanceVariableNames: instVarNameList classVariableNames: classVarNames category: cat [
-	"Added to allow for a simplified subclass creation experience. "
-
-	^ self classInstaller make: [ :builder |
-		  builder
-			  superclass: self;
-			  name: className;
-			  layoutClass: WeakLayout;
-			  slotsFromString: instVarNameList;
-			  sharedVariablesFromString: classVarNames;
-			  category: cat;
-			  environment: self environment ]
-]
-
-{ #category : 'subclass creation - weak' }
-Class >> weakSubclass: className instanceVariableNames: instVarNameList classVariableNames: classVarNames package: cat [
-	"Added to allow for a simplified subclass creation experience. "
-
-	^ self classInstaller make: [ :builder |
-		  builder
-			  superclass: self;
-			  name: className;
-			  layoutClass: WeakLayout;
-			  slotsFromString: instVarNameList;
-			  sharedVariablesFromString: classVarNames;
-			  category: cat;
-			  environment: self environment ]
-]
-
-{ #category : 'subclass creation - deprecated' }
-Class >> weakSubclass: t instanceVariableNames: f classVariableNames: d poolDictionaries: s category: cat [
-
-	^ self classInstaller make: [ :builder |
-		  builder
-			  superclass: self;
-			  name: t;
-			  layoutClass: WeakLayout;
-			  slotsFromString: f;
-			  sharedVariablesFromString: d;
-			  sharedPools: s;
-			  category: cat;
-			  environment: self environment ]
-]
-
-{ #category : 'subclass creation - weak' }
-Class >> weakSubclass: t instanceVariableNames: f classVariableNames: d poolDictionaries: s package: cat [
-	"This is the standard initialization message for creating a new class as a subclass of an existing class (the receiver) in which the subclass is to have weak indexable pointer variables."
-
-	^ self classInstaller
-		make: [ :builder |
-			builder
-				superclass: self;
-				name: t;
-				layoutClass: WeakLayout;
-				slotsFromString: f;
-				sharedVariablesFromString: d;
-				sharedPools: s;
-				category: cat;
-				environment: self environment ]
 ]
 
 { #category : 'class variables' }

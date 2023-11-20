@@ -8,17 +8,16 @@ Class {
 { #category : 'helpers' }
 CDDoubleWordClassParserTest >> classDefinitionString [
 
-	^ '{superclassName} variableDoubleWordSubclass: #{classname}
-		instanceVariableNames: ''{instvar1} {instvar2}''
-		classVariableNames: ''{classvar1} {classvar2}''
+	^ '{superclassName} << #{classname}
+		layout: DoubleWordLayout;
+		slots: {slots};
+		sharedVariables: {sharedVariables};
 		package: #MyPackage'
 			format: {
 				'classname' -> self className.
 				'superclassName' -> self superclassName.
-				'instvar1' -> self firstInstanceVariableName.
-				'instvar2' -> self secondInstanceVariableName.
-				'classvar1' -> self firstClassVariableName.
-				'classvar2' -> self secondClassVariableName. } asDictionary
+				'slots' -> self slotsArray.
+				'sharedVariables' -> self sharedVariablesArray } asDictionary
 ]
 
 { #category : 'helpers' }

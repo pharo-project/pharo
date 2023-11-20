@@ -62,9 +62,9 @@ RubShoutStylerDecorator >> okToStyle [
 
 { #category : 'event handling' }
 RubShoutStylerDecorator >> refreshStyling [
+	"Shout for the whole text"	
 
-	" shout for the whole text "
-	(next notNil and: [self okToStyle])
+	(next isNotNil and: [self okToStyle])
 		ifTrue: [ self text: self text ]
 ]
 
@@ -117,7 +117,7 @@ RubShoutStylerDecorator >> styler [
 	"The styler responsible for highlighting text in the receiver"
 
 	^ styler ifNil: [
-		styler := (self model notNil and: [  self model selectedClassOrMetaClass notNil ])
+		styler := (self model isNotNil and: [  self model selectedClassOrMetaClass isNotNil ])
 			ifTrue: [
 				self model selectedClassOrMetaClass syntaxHighlighter
 					view: self;
@@ -135,7 +135,7 @@ RubShoutStylerDecorator >> styler: aTextStyler [
 { #category : 'editing' }
 RubShoutStylerDecorator >> stylerStyled: styledCopyOfText [
 	next ifNil: [ ^ self ].
-	(text notNil and:[text string = styledCopyOfText string])
+	(text isNotNil and:[text string = styledCopyOfText string])
 		ifFalse: [ ^ self ].
 	text runs: styledCopyOfText runs.
 	"must take care to recompose. If not, the textArea

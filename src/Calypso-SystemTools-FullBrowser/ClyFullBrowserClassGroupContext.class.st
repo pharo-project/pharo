@@ -22,18 +22,18 @@ ClyFullBrowserClassGroupContext >> isClassGroupSelected [
 ]
 
 { #category : 'testing' }
-ClyFullBrowserClassGroupContext >> isClassTagSelected [
+ClyFullBrowserClassGroupContext >> isPackageSelected [
+	^tool packageSelection isEmpty not
+]
+
+{ #category : 'testing' }
+ClyFullBrowserClassGroupContext >> isPackageTagSelected [
 	| classGroupClass |
 	self isClassGroupSelected ifFalse: [ ^false ].
 
 	classGroupClass := self lastSelectedItem type.
 
-	^classGroupClass isBasedOnClassTag
-]
-
-{ #category : 'testing' }
-ClyFullBrowserClassGroupContext >> isPackageSelected [
-	^tool packageSelection isEmpty not
+	^classGroupClass isBasedOnPackageTag
 ]
 
 { #category : 'selection-class groups' }
@@ -42,9 +42,9 @@ ClyFullBrowserClassGroupContext >> lastSelectedClassGroup [
 ]
 
 { #category : 'selection-class groups' }
-ClyFullBrowserClassGroupContext >> lastSelectedClassTag [
+ClyFullBrowserClassGroupContext >> lastSelectedPackageTag [
 
-	^self lastSelectedObjectIn: self selectedClassTags
+	^self lastSelectedObjectIn: self selectedPackageTags
 ]
 
 { #category : 'selection-class groups' }
@@ -53,9 +53,9 @@ ClyFullBrowserClassGroupContext >> selectedClassGroups [
 ]
 
 { #category : 'selection-class groups' }
-ClyFullBrowserClassGroupContext >> selectedClassTags [
+ClyFullBrowserClassGroupContext >> selectedPackageTags [
 
 	^selectedItems
-		select: [ :each | each type isBasedOnClassTag ]
+		select: [ :each | each type isBasedOnPackageTag ]
 		thenCollect: [ :each | each name ]
 ]

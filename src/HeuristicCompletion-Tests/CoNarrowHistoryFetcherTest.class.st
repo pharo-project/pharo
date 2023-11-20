@@ -44,29 +44,20 @@ CoNarrowHistoryFetcherTest >> testNarrowingAndUnnarrowingReturnsSameResult [
 CoNarrowHistoryFetcherTest >> testNarrowingReturnsSameElementsThatCallingDirectly [
 
 	| originalSearch narrowedResults selectors |
-	
 	"using the array intead of the set leads to the test failing randomly
 	du to duplicate first entry in narrowedResults"
 	selectors := Symbol selectorTable asArray asSet.
 
 	"First execution with complete query"
-	fetcher := (CoCollectionFetcher onCollection: selectors)
-		           withNarrowHistory.
-	fetcher := fetcher
-		           narrowFilter: (CoCaseSensitiveBeginsWithFilter filterString: 'asL')
-		           narrowKey: 'as'.
+	fetcher := (CoCollectionFetcher onCollection: selectors) withNarrowHistory.
+	fetcher := fetcher narrowFilter: (CoCaseSensitiveBeginsWithFilter filterString: 'asL') narrowKey: 'as'.
 	originalSearch := fetcher next: 10.
 
 	"Second execution with query using narrowing"
-	fetcher := (CoCollectionFetcher onCollection: selectors)
-		           withNarrowHistory.
-	fetcher := fetcher
-		           narrowFilter: (CoCaseSensitiveBeginsWithFilter filterString: 'as')
-		           narrowKey: 'as'.
+	fetcher := (CoCollectionFetcher onCollection: selectors) withNarrowHistory.
+	fetcher := fetcher narrowFilter: (CoCaseSensitiveBeginsWithFilter filterString: 'as') narrowKey: 'as'.
 	fetcher next: 10.
-	fetcher := fetcher
-		           narrowFilter: (CoCaseSensitiveBeginsWithFilter filterString: 'asL')
-		           narrowKey: 'asL'.
+	fetcher := fetcher narrowFilter: (CoCaseSensitiveBeginsWithFilter filterString: 'asL') narrowKey: 'asL'.
 
 	narrowedResults := fetcher next: 10.
 

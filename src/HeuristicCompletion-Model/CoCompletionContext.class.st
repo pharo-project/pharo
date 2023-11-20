@@ -161,7 +161,7 @@ CoCompletionContext >> initialize [
 { #category : 'testing' }
 CoCompletionContext >> isScripting [
 
-	^ engine notNil and: [ engine isScripting ]
+	^ engine isNotNil and: [ engine isScripting ]
 ]
 
 { #category : 'narrowing' }

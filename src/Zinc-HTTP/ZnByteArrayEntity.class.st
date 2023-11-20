@@ -71,9 +71,12 @@ ZnByteArrayEntity >> isEmpty [
 
 { #category : 'printing' }
 ZnByteArrayEntity >> printContentsOn: stream [
+
 	super printContentsOn: stream.
-	self bytes notNil ifTrue: [
-		stream space; print: self bytes ]
+	self bytes ifNotNil: [
+		stream
+			space;
+			print: self bytes ]
 ]
 
 { #category : 'initialize-release' }

@@ -35,7 +35,7 @@ AthensPathSegment >> do: aBlock [
 
 	[ aBlock value: segment.
 	  segment := segment next.
-	  segment notNil ] whileTrue
+	  segment isNotNil ] whileTrue
 ]
 
 { #category : 'testing' }
@@ -75,7 +75,7 @@ AthensPathSegment >> size [
 	| segment count |
 	segment := self.
 	count := 0.
-	[ segment notNil ] whileTrue: [  count := count + 1. segment := segment next ].
+	[ segment isNotNil ] whileTrue: [  count := count + 1. segment := segment next ].
 
 	^ count
 ]

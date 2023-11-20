@@ -113,10 +113,19 @@ RPackage >> extensionCategoriesForClass: aClass [
 ]
 
 { #category : '*Deprecated12' }
-RPackage >> importClass: aClass [
+RPackage >> importClasses: classCollection [
 
-	self deprecated: 'Use #addClass: instead or #moveClass:toTag:' transformWith: '`@rcv importClass: `@arg' -> '`@rcv addClass: `@arg'.
-	^ self addClass: aClass
+	self deprecated: 'This method will be removed in future versions of Pharo'.
+	classCollection do: [ :each | self addClass: each ]
+]
+
+{ #category : '*Deprecated12' }
+RPackage >> includesDefinedSelector: aSelector ofClass: aClass [
+	"Return true if the receiver includes the method of selector aSelector. Only checks methods defined in this package"
+
+	self deprecated: 'Since Pharo 12 the packages do not save the defined selector they contains but delegate this to the classes they contrains.
+	If you want to know if a package contains a selector, you can just check if your package contrains the class and if the class contains the selector.'.
+	^ (self definedSelectorsForClass: aClass) includes: aSelector asSymbol
 ]
 
 { #category : '*Deprecated12' }
@@ -209,6 +218,19 @@ RPackage >> metaclassExtensionSlicesDo: aBlock [
 ]
 
 { #category : '*Deprecated12' }
+RPackage class >> organizer [
+
+	self deprecated: 'Manipulate the package organizer directly instead of setting it here.'.
+	^ self packageOrganizer
+]
+
+{ #category : '*Deprecated12' }
+RPackage class >> organizer: aPackageOrganizer [
+
+	self deprecated: 'Manipulate the package organizer directly instead of setting it here.'
+]
+
+{ #category : '*Deprecated12' }
 RPackage >> register [
 
 	self
@@ -239,4 +261,11 @@ RPackage >> unregister [
 		transformWith: '`@rcv unregister' -> '`@rcv organizer unregisterPackage: `@rcv'.
 
 	self organizer unregisterPackage: self
+]
+
+{ #category : '*Deprecated12' }
+RPackage class >> withOrganizer: aNewOrganizer do: aBlock [
+
+	self deprecated: 'There is no need to use this method to execute code in another package organizer anymore. Just make sure to set the environemnt of this organizer when using the shift class builder.'.
+	aBlock cull: aNewOrganizer
 ]

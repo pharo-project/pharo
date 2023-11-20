@@ -83,16 +83,14 @@ ChangesLog >> logChange: aStringOrText [
 
 { #category : 'event-listening' }
 ChangesLog >> logClassRemoved: announcement [
-	announcement classRemoved acceptsLoggingOfCompilation ifTrue: [
-		self logChange: 'Smalltalk globals removeClassNamed: #', announcement classRemoved name
-	]
+
+	self logChange: 'Smalltalk globals removeClassNamed: #' , announcement classRemoved name
 ]
 
 { #category : 'event-listening' }
 ChangesLog >> logClassRenamed: announcement [
-	announcement classRenamed acceptsLoggingOfCompilation ifTrue: [
-		self logChange: '(Smalltalk globals at: #', announcement oldName, ') rename: #', announcement newName.
-	]
+
+	self logChange: '(Smalltalk globals at: #' , announcement oldName , ') rename: #' , announcement newName
 ]
 
 { #category : 'event-listening' }
@@ -102,10 +100,8 @@ ChangesLog >> logExpressionEvaluated: announcement [
 
 { #category : 'event-listening' }
 ChangesLog >> logMethodRemoved: announcement [
-	announcement methodClass acceptsLoggingOfCompilation ifTrue: [
-		self logChange:
-			announcement methodClass name, ' removeSelector: #', announcement selector
-	]
+
+	self logChange: announcement methodClass name , ' removeSelector: #' , announcement selector
 ]
 
 { #category : 'logging' }

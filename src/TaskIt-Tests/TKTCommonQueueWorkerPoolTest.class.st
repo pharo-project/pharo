@@ -6,18 +6,6 @@ Class {
 	#tag : 'Worker'
 }
 
-{ #category : 'testing' }
-TKTCommonQueueWorkerPoolTest >> expectedFailures [
-
-	"This tests fail on P7"
-	SystemVersion current major <= 7 ifTrue: [
-		^ #(
-		testWorkerPoolWorkersAreStoppedAfterPoolsCollection
-		testWorkerPoolWorkersProcessesAreStoppedAfterPoolsCollection
-		) ].
-	^ #()
-]
-
 { #category : 'tests' }
 TKTCommonQueueWorkerPoolTest >> testWorkerPoolCretesWorkersWhenExecutingATask [
 	| pool |

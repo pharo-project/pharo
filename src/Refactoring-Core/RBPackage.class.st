@@ -75,5 +75,6 @@ RBPackage >> realPackage: anObject [
 
 { #category : 'accessing' }
 RBPackage >> realPackageFor: aSymbol [
-	self realPackage: ( self model environment packageAt: aSymbol ifAbsent: [nil] )
+
+	self realPackage: (self model environment packageAt: aSymbol ifAbsent: [nil])
 ]

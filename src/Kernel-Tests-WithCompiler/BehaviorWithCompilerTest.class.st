@@ -15,7 +15,7 @@ BehaviorWithCompilerTest >> newClass1 [
 	^ self class classInstaller make: [ :aClassBuilder |
 		aClassBuilder
 			name: 'MySuperclass';
-			package: self class category ]
+			package: self class package name ]
 ]
 
 { #category : 'tests' }
@@ -25,7 +25,7 @@ BehaviorWithCompilerTest >> newClass2 [
 		aClassBuilder
 			name: 'MySubclass';
 			superclass: c1;
-			package: self class category ]
+			package: self class package name ]
 ]
 
 { #category : 'running' }

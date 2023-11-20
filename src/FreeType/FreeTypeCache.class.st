@@ -66,7 +66,7 @@ FreeTypeCache class >> initialize [
 FreeTypeCache class >> shutDown: isImageQuitting [
 
 	isImageQuitting ifFalse: [ ^ self ].
-	(current notNil and: [ self clearCacheOnShutdown ])
+	(current isNotNil and: [ self clearCacheOnShutdown ])
 		ifTrue:[
 			self current removeAll.
 			current := nil ]
@@ -107,7 +107,7 @@ FreeTypeCache >> atFont: aFreeTypeFont charCode: charCodeInteger type: typeFlag 
 				^entry object].
 		v := aBlock value.
 		vSize := self sizeOf: v.
-		(maximumSize notNil and:[vSize > maximumSize])
+		(maximumSize isNotNil and:[vSize > maximumSize])
 			ifTrue:[^v].
 		used := used + vSize.
 		entry := (self fifoEntryClass new
@@ -130,7 +130,7 @@ FreeTypeCache >> atFont: aFreeTypeFont charCode: charCodeInteger type: typeFlag 
 
 	aFreeTypeFont mutex criticalReleasingOnError: [
 		anObjectSize := self sizeOf: anObject.
-		(maximumSize notNil and:[anObjectSize > maximumSize])
+		(maximumSize isNotNil and:[anObjectSize > maximumSize])
 			ifTrue:[^anObject].
 		(charCodeTable := fontTable at: aFreeTypeFont ifAbsentPut:[self dictionaryClass new: 60])
 			ifNotNil:[

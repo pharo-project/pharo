@@ -327,8 +327,8 @@ RGReadOnlyImageBackendTest >> testTraitExclusions [
 	traitExclusion := (MOPTestClassB traitComposition transformations second) asRingMinimalDefinitionIn: env.
 	self assert: traitExclusion isTraitExclusion.
 	self assert: traitExclusion subject name equals: #Trait2.
-	self assert: traitExclusion exclusions size equals: 1.
-	self assert: traitExclusion exclusions first equals: #c
+	self assert: traitExclusion removedSelectors size equals: 1.
+	self assert: traitExclusion removedSelectors first equals: #c
 ]
 
 { #category : 'tests' }

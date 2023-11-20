@@ -5,8 +5,7 @@ Class {
 	#name : 'MethodAnnouncement',
 	#superclass : 'SystemAnnouncement',
 	#instVars : [
-		'method',
-		'methodPackage'
+		'method'
 	],
 	#category : 'System-Announcements-System-Methods',
 	#package : 'System-Announcements',
@@ -41,7 +40,7 @@ MethodAnnouncement >> affectsMethodsDefinedInClass: aClass [
 { #category : 'testing' }
 MethodAnnouncement >> affectsMethodsDefinedInPackage: aPackage [
 
-	^methodPackage == aPackage or: [ self methodAffected package == aPackage ]
+	^ self methodPackage == aPackage or: [ self methodAffected package == aPackage ]
 ]
 
 { #category : 'testing' }
@@ -63,12 +62,6 @@ MethodAnnouncement >> classAffected [
 ]
 
 { #category : 'testing' }
-MethodAnnouncement >> isProvidedByATrait [
-
-	^ self methodOrigin ~= self methodClass
-]
-
-{ #category : 'testing' }
 MethodAnnouncement >> isProvidedByExtension [
 	^self methodOrigin package ~= self methodPackage
 ]
@@ -81,8 +74,8 @@ MethodAnnouncement >> method [
 
 { #category : 'accessing' }
 MethodAnnouncement >> method: aCompiledMethod [
-	method := aCompiledMethod.
-	methodPackage := aCompiledMethod package
+
+	method := aCompiledMethod
 ]
 
 { #category : 'accessing' }
@@ -102,7 +95,8 @@ MethodAnnouncement >> methodOrigin [
 
 { #category : 'accessing' }
 MethodAnnouncement >> methodPackage [
-	^ methodPackage ifNil: [ methodPackage := method package ]
+
+	^ method package
 ]
 
 { #category : 'accessing' }
@@ -113,8 +107,7 @@ MethodAnnouncement >> packagesAffected [
 { #category : 'accessing' }
 MethodAnnouncement >> protocol [
 
-	"This should just be `method protocol` when #protocol will return an actual protocol."
-	^ method methodClass protocolOfSelector: method selector
+	^ method protocol
 ]
 
 { #category : 'accessing' }

@@ -16,7 +16,7 @@ ClyClassGroupProviderTest >> buildGroupsFor: aPackage [
 	| classScope |
 	classScope := ClyPackageScope of: aPackage in: environment.
 	groupProvider
-		classGroupsIn: classScope
+		packageTagssIn: classScope
 		do: [ :each | builtGroups add: each ]
 ]
 
@@ -25,7 +25,7 @@ ClyClassGroupProviderTest >> buildGroupsForAll: packages [
 	| classScope |
 	classScope := ClyPackageScope ofAll: packages in: environment.
 	groupProvider
-		classGroupsIn: classScope
+		packageTagssIn: classScope
 		do: [ :each | builtGroups add: each ]
 ]
 

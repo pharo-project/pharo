@@ -24,7 +24,7 @@ CoverageRubricStyler >> iconBlock: aNode [
 
 { #category : 'defaults' }
 CoverageRubricStyler >> iconFor: aNode [
-	^ self iconNamed: #arrowUpIcon
+	^ self iconNamed: #arrowUp
 ]
 
 { #category : 'defaults' }

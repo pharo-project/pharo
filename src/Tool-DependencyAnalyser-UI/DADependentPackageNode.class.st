@@ -37,7 +37,7 @@ DADependentPackageNode >> hasChildren [
 
 { #category : 'accessing' }
 DADependentPackageNode >> icon [
-	^ self iconNamed: #forwardIcon
+	^ self iconNamed: #forward
 ]
 
 { #category : 'testing' }
@@ -47,10 +47,11 @@ DADependentPackageNode >> isPackageNode [
 
 { #category : 'displaying' }
 DADependentPackageNode >> label [
-	^ self rPackage packageName
+	^ self systemPackage name
 ]
 
 { #category : 'accessing' }
-DADependentPackageNode >> rPackage [
-	^ self content target rPackageSet
+DADependentPackageNode >> systemPackage [
+
+	^ self content target systemPackage
 ]

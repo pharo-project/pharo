@@ -103,16 +103,16 @@ ShDefaultBuilderEnhancer >> newMetaclass: builder [
 ]
 
 { #category : 'class modifications' }
-ShDefaultBuilderEnhancer >> on: newClass declareClassVariables: sharedVariables sharing: sharedPoolsString [
+ShDefaultBuilderEnhancer >> on: newClass declareClassVariables: sharedVariables sharing: sharedPoolNames [
 	newClass
 		declareClassVariables: sharedVariables;
-		sharing: sharedPoolsString
+		sharing:sharedPoolNames
 ]
 
 { #category : 'class modifications' }
-ShDefaultBuilderEnhancer >> propagateChangesToRelatedClasses: newClass installer: installer [
+ShDefaultBuilderEnhancer >> propagateChangesToRelatedClasses: newClass builder: aBuilder [
 
-	newClass subclasses do: [ :e | installer remake: e ]
+	newClass subclasses do: [ :subclass | subclass classInstaller remake: subclass basedOn: aBuilder ]
 ]
 
 { #category : 'class modifications' }

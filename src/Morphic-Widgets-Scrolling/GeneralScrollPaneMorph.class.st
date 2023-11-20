@@ -186,7 +186,7 @@ GeneralScrollPaneMorph >> hScrollbarShowWhenNeeded [
 GeneralScrollPaneMorph >> hScrollbarShowing [
 	"Answer whether the horizontal scrollbar is showing."
 
-	^self hScrollbar owner notNil
+	^self hScrollbar owner isNotNil
 ]
 
 { #category : 'scrollbars' }
@@ -587,7 +587,7 @@ GeneralScrollPaneMorph >> vScrollbarShowWhenNeeded [
 GeneralScrollPaneMorph >> vScrollbarShowing [
 	"Answer whether the vertical scrollbar is showing."
 
-	^self vScrollbar owner notNil
+	^self vScrollbar owner isNotNil
 ]
 
 { #category : 'scrollbars' }

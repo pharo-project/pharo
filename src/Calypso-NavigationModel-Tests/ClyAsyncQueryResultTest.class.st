@@ -62,13 +62,13 @@ ClyAsyncQueryResultTest >> testBuildShouldStartBackgroundProcessing [
 { #category : 'tests' }
 ClyAsyncQueryResultTest >> testForceLazyRebuildShouldNotResetExistingItems [
 
-	self assert: queryResult items notNil.
+	self assert: queryResult items isNotNil.
 
 	queryResult forceLazyRebuild.
 
 	self assert: queryResult needsRebuild.
 	self assert: queryResult isBuilt.
-	self assert: queryResult items notNil
+	self assert: queryResult items isNotNil
 ]
 
 { #category : 'tests' }

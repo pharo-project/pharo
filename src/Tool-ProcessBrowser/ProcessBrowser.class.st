@@ -238,7 +238,7 @@ ProcessBrowser class >> registerWellKnownProcesses [
 		allowStop: false
 		allowDebug: false.
 	self
-		registerWellKnownProcess: [ WeakArray runningFinalizationProcess ]
+		registerWellKnownProcess: [ FinalizationProcess runningFinalizationProcess ]
 		label: nil
 		allowStop: false
 		allowDebug: false.

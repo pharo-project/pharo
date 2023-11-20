@@ -64,7 +64,7 @@ KeyedTree >> atPath: anArray ifAbsentPut: aBlock [
 		ifTrue: [^self].
 	element := self.
 	anArray allButLastDo: [:key |
-		element := element at: key ifAbsentPut: [self species new]].
+		element := element at: key ifAbsentPut: [ self copyEmpty ]].
 	^element at: anArray last ifAbsentPut: aBlock
 ]
 
@@ -77,7 +77,7 @@ KeyedTree >> atPath: anArray put: aBlock [
 		ifTrue: [^self].
 	element := self.
 	anArray allButLastDo: [:key |
-		element := element at: key ifAbsentPut: [self species new]].
+		element := element at: key ifAbsentPut: [self copyEmpty]].
 	^element at: anArray last put: aBlock
 ]
 
@@ -111,7 +111,7 @@ KeyedTree >> merge: aKeyedTree [
 			| subtree |
 			(v isKindOf: KeyedTree)
 				ifTrue: [
-					subtree := self at: k ifAbsentPut: [ v species new ].
+					subtree := self at: k ifAbsentPut: [ v copyEmpty ].
 					(subtree isKindOf: KeyedTree)
 						ifFalse: [ subtree := self at: k put: v species new ].
 					subtree merge: v ]

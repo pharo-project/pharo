@@ -7,26 +7,13 @@ Class {
 	#instVars : [
 		'metaClass',
 		'comment',
-		'category',
-		'package'
+		'package',
+		'packageTag'
 	],
 	#category : 'Ring-Definitions-Core-Base',
 	#package : 'Ring-Definitions-Core',
 	#tag : 'Base'
 }
-
-{ #category : 'accessing' }
-RGTraitDefinition >> category [
-	"Retrieves the tag-package associated to the receiver"
-
-	^category
-]
-
-{ #category : 'accessing' }
-RGTraitDefinition >> category: aSymbol [
-
-	category:= aSymbol
-]
 
 { #category : 'accessing - parallel hierarchy' }
 RGTraitDefinition >> classSide [
@@ -69,7 +56,7 @@ RGTraitDefinition >> hasComment [
 { #category : 'testing' }
 RGTraitDefinition >> hasMetaclass [
 
-	^metaClass notNil
+	^metaClass isNotNil
 ]
 
 { #category : 'testing' }
@@ -100,11 +87,12 @@ RGTraitDefinition >> instanceVariables [
 RGTraitDefinition >> isSameRevisionAs: aRGTraitDefinition [
 	"This method look for equality of the properties of the receiver"
 
-	^(super isSameRevisionAs: aRGTraitDefinition)
-		and: [ self category = aRGTraitDefinition category
-		and: [ self traitCompositionSource = aRGTraitDefinition traitCompositionSource
-		and: [ ((self hasComment and: [ self comment isSameRevisionAs: aRGTraitDefinition comment ]) or:[ self hasComment not ])
-		and: [ (self classSide isSameRevisionAs: aRGTraitDefinition classSide) ] ] ] ]
+	^ (super isSameRevisionAs: aRGTraitDefinition) and: [
+		  self package name = aRGTraitDefinition package name and: [
+			  self packageTag = aRGTraitDefinition packageTag and: [
+				  self traitCompositionSource = aRGTraitDefinition traitCompositionSource and: [
+					  ((self hasComment and: [ self comment isSameRevisionAs: aRGTraitDefinition comment ]) or: [ self hasComment not ]) and: [
+						  self classSide isSameRevisionAs: aRGTraitDefinition classSide ] ] ] ] ]
 ]
 
 { #category : 'accessing' }
@@ -119,6 +107,18 @@ RGTraitDefinition >> package: aRGPackage [
 	"Sets the package in which this trait is contained"
 
 	package:= aRGPackage
+]
+
+{ #category : 'accessing' }
+RGTraitDefinition >> packageTag [
+
+	^ packageTag
+]
+
+{ #category : 'accessing' }
+RGTraitDefinition >> packageTag: anObject [
+
+	packageTag := anObject
 ]
 
 { #category : 'accessing' }

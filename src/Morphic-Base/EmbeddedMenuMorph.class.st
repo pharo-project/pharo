@@ -54,7 +54,7 @@ EmbeddedMenuMorph >> keyDown: evt [
 
 	key := evt key.
 	(key isArrowLeft or: [ key isArrowRight ])
-		ifTrue: [ (selectedItem notNil and: [ selectedItem hasSubMenu ])
+		ifTrue: [ (selectedItem isNotNil and: [ selectedItem hasSubMenu ])
 				ifTrue: [ evt hand newMouseFocus: selectedItem subMenu.
 					selectedItem subMenu moveSelectionDown: 1 event: evt.
 					^ evt hand newKeyboardFocus: selectedItem subMenu ] ].

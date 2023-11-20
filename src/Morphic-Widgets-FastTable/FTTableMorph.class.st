@@ -432,7 +432,8 @@ FTTableMorph >> handlesMouseWheel: event [
 
 { #category : 'testing' }
 FTTableMorph >> hasDataSource [
-	^ self dataSource notNil
+
+	^ self dataSource isNotNil
 ]
 
 { #category : 'testing' }
@@ -1175,7 +1176,7 @@ FTTableMorph >> showMenuForIndex: aTuple [
 	rowIndex := aTuple first.
 	columnIndex := aTuple second.
 
-	(rowIndex notNil and: [ (self isIndexSelected: rowIndex) not ]) ifTrue: [
+	(rowIndex isNotNil and: [ (self isIndexSelected: rowIndex) not ]) ifTrue: [
 		self selectIndex: (self selectionModeStrategy indexFromPosition: aTuple) ].
 
 	menu := self dataSource

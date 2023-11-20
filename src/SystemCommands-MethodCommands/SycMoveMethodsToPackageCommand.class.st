@@ -45,13 +45,10 @@ SycMoveMethodsToPackageCommand >> execute [
 { #category : 'execution' }
 SycMoveMethodsToPackageCommand >> moveMethod: aMethod toPackage: aPackage [
 
-	| existingPackage willBeExtension |
-	existingPackage := aMethod package.
-	existingPackage == aPackage ifTrue: [ ^ self ].
+	aMethod package = aPackage ifTrue: [ ^ self ].
 
-	willBeExtension := aPackage ~~ aMethod origin package.
-	aPackage addMethod: aMethod.
-	willBeExtension
+	"If true it means it is an extension"
+	aPackage ~~ aMethod origin package
 		ifTrue: [ aMethod protocol: '*' , aPackage name ]
 		ifFalse: [ self classifyMethod: aMethod ]
 ]

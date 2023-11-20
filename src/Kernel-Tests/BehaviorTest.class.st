@@ -103,6 +103,32 @@ BehaviorTest >> testBinding [
 	self assert: Object class binding key isNil
 ]
 
+{ #category : 'tests' }
+BehaviorTest >> testDefinedMethods [
+
+	[
+	ExampleForTest1 compile: 'extensionMethod ' classified: '*AGeneratedPackageForTest'.
+	self assertCollection: ExampleForTest1 localMethods hasSameElements: {
+			(ExampleForTest1 >> #aSuperclassVariable).
+			(ExampleForTest1 >> #aSuperclassVariable:).
+			(ExampleForTest1 >> #extensionMethod) }.
+
+	self assertCollection: ExampleForTest1 definedMethods hasSameElements: {
+			(ExampleForTest1 >> #aSuperclassVariable).
+			(ExampleForTest1 >> #aSuperclassVariable:) } ] ensure: [ self packageOrganizer removePackage: 'AGeneratedPackageForTest' ]
+]
+
+{ #category : 'tests' }
+BehaviorTest >> testDefinedSelectors [
+
+	[
+	ExampleForTest1 compile: 'extensionMethod ' classified: '*AGeneratedPackageForTest'.
+	self assertCollection: ExampleForTest1 localSelectors hasSameElements: #( #aSuperclassVariable #aSuperclassVariable: #extensionMethod ).
+
+	self assertCollection: ExampleForTest1 definedSelectors hasSameElements: #( #aSuperclassVariable #aSuperclassVariable: ) ] ensure: [
+		self packageOrganizer removePackage: 'AGeneratedPackageForTest' ]
+]
+
 { #category : 'tests - queries' }
 BehaviorTest >> testDefinedVariables [
 	self assert: Behavior new definedVariables isEmpty.
@@ -179,6 +205,20 @@ BehaviorTest >> testIsRootInEnvironment [
 BehaviorTest >> testIsUsed [
 	self assert: Object isUsed.
 	self assert: Object class isUsed
+]
+
+{ #category : 'tests' }
+BehaviorTest >> testLocalMethods [
+
+	self assertCollection: ExampleForTest1 localMethods hasSameElements: {
+			(ExampleForTest1 >> #aSuperclassVariable).
+			(ExampleForTest1 >> #aSuperclassVariable:) }
+]
+
+{ #category : 'tests' }
+BehaviorTest >> testLocalSelectors [
+
+	self assertCollection: ExampleForTest1 localSelectors hasSameElements: #( #aSuperclassVariable #aSuperclassVariable: )
 ]
 
 { #category : 'tests - queries' }

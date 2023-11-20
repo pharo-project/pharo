@@ -39,18 +39,18 @@ MetacelloScriptEngine class >> baselineNameFrom: baseName [
 
 { #category : 'utilities' }
 MetacelloScriptEngine class >> configurationNameFrom: baseName [
-    "Return the fully-qualified configuration class name."
+	"Return the fully-qualified configuration class name."
 
-    ^ (baseName indexOfSubCollection: 'ConfigurationOf') > 0
-        ifTrue: [ baseName ]
-        ifFalse: [ 'ConfigurationOf' , baseName ]
+	^ ((baseName beginsWith: 'ConfigurationOf')
+		   ifTrue: [ baseName ]
+		   ifFalse: [ 'ConfigurationOf' , baseName ]) asSymbol
 ]
 
 { #category : 'defaults' }
 MetacelloScriptEngine class >> defaultRepositoryDescription [
-    DefaultRepositoryDescription
-        ifNil: [ DefaultRepositoryDescription := MetacelloPlatform current defaultRepositoryDescription ].
-    ^ DefaultRepositoryDescription
+
+	DefaultRepositoryDescription ifNil: [ DefaultRepositoryDescription := 'http://smalltalkhub.com/mc/Pharo/MetaRepoForPharo30/main' ].
+	^ DefaultRepositoryDescription
 ]
 
 { #category : 'defaults' }
@@ -62,12 +62,6 @@ MetacelloScriptEngine class >> defaultRepositoryDescription: descriptionOrNil [
 MetacelloScriptEngine class >> defaultVersionString [
     DefaultVersionString ifNil: [ DefaultVersionString := #'stable' ].
     ^ DefaultVersionString
-]
-
-{ #category : 'options' }
-MetacelloScriptEngine >> cacheRepository [
-    ^ (MetacelloMCProject new repositorySpec description: (self options at: #'cacheRepository' ifAbsent: [ ^ nil ]))
-        createRepository
 ]
 
 { #category : 'defaults' }
@@ -120,8 +114,6 @@ MetacelloScriptEngine >> get [
       projectPackage := spec projectPackage.
       projectPackage repositorySpecs
         do: [ :repoSpec | repoSpec createRepository flushForScriptGet ].
-      self cacheRepository
-        ifNotNil: [ :cacheRepository | projectPackage loader loaderPolicy cacheRepository: cacheRepository ].
       projectPackage load.
       self root: (Smalltalk at: spec className asSymbol) project.
       MetacelloProjectRegistration
@@ -462,12 +454,6 @@ MetacelloScriptEngine >> register [
 { #category : 'accessing' }
 MetacelloScriptEngine >> repositories [
     ^ self projectSpec repositories
-]
-
-{ #category : 'options' }
-MetacelloScriptEngine >> repositoryOverrides [
-    ^ (self options at: #'repositoryOverrides' ifAbsent: [ ^ nil ])
-        collect: [ :description | (MetacelloMCProject new repositorySpec description: description) createRepository ]
 ]
 
 { #category : 'private' }

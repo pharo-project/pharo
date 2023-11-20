@@ -87,7 +87,7 @@ DockingBarToggleMenuItemMorph >> drawSubMenuMarker: aForm on: aCanvas in: aRecta
 	self drawIcon: aForm on: aCanvas in: markerRect
 ]
 
-{ #category : 'accessing' }
+{ #category : 'events' }
 DockingBarToggleMenuItemMorph >> mouseDown: evt [
 	"Handle a mouse down event. Menu items get activated when the mouse is over them."
 
@@ -103,17 +103,17 @@ DockingBarToggleMenuItemMorph >> mouseDown: evt [
 			owner selectItem: self event: evt. ]
 ]
 
-{ #category : 'accessing' }
+{ #category : 'events' }
 DockingBarToggleMenuItemMorph >> mouseEnter: evt [
 	"The mouse entered the receiver"
 
 	owner ifNotNil: [owner stayUp ifFalse: [self mouseEnterDragging: evt]].
-	(owner selectedItem notNil
+	(owner selectedItem isNotNil
 				and: [owner selectedItem ~~ self])
 			ifTrue: [owner selectItem: self event: evt.]
 ]
 
-{ #category : 'accessing' }
+{ #category : 'events' }
 DockingBarToggleMenuItemMorph >> mouseUp: evt [
 	"Handle a mouse up event. Menu items get activated when the mouse is over them. Do nothing if we're not in a 'valid menu transition', meaning that the current hand focus must be aimed at the owning menu."
 	evt hand mouseFocus == owner ifFalse: [^self].

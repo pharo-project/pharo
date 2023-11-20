@@ -33,5 +33,5 @@ TRefactoringCommandSupport >> setUpModelFromContext: aContext [
 	browser := aContext browser.
 	scope := browser defaultNavigationScope.
 	scope isCurrentImage ifTrue: [ scope := RefactoringSettings scopeRefactoring ].
-	model := RBClassModelFactory rbNamespace onEnvironment: scope asRBEnvironment
+	model := RBNamespace onEnvironment: scope asRBEnvironment
 ]

@@ -157,7 +157,7 @@ RBProgramNode >> link: aMetaLink [
 		add: aMetaLink.
 	aMetaLink installOn: self.
 	self clearReflectivityAnnotations.
-	self methodNode compiledMethod installLink: aMetaLink.
+	(self methodNode methodClass>>self methodNode selector) installLink: aMetaLink.
 	aMetaLink linkInstaller
 		propagateLinkAddition: aMetaLink
 		forNode: self.

@@ -154,7 +154,7 @@ StandardWindow >> noteNewOwner: aMorph [
 	"Go fullscreen if needed."
 
 	super noteNewOwner: aMorph.
-	(self isFullscreen and: [labelArea owner notNil]) ifTrue: [
+	(self isFullscreen and: [labelArea owner isNotNil]) ifTrue: [
 		self
 			beWithoutGrips;
 			removeLabelArea;

@@ -14,14 +14,8 @@ OldClassDefinitionPrinterTest >> expandedForClass: aClass [
 
 { #category : 'helpers' }
 OldClassDefinitionPrinterTest >> forClass: aClass [
-	^ (OldPharoClassDefinitionPrinter for: aClass) definitionString
-]
 
-{ #category : 'running' }
-OldClassDefinitionPrinterTest >> setUp [
-
-	super setUp.
-	ClassDefinitionPrinter showFluidClassDefinition: false
+	^ (OldPharoClassDefinitionPrinter oldPharo for: aClass) definitionString
 ]
 
 { #category : 'tests - classes' }

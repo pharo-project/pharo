@@ -13,7 +13,8 @@ Class {
 
 { #category : 'accessing' }
 ClyProjectContentQuery class >> resultItemsType [
-	^ClyProjectChildItem
+
+	^ Project
 ]
 
 { #category : 'execution' }
@@ -22,8 +23,7 @@ ClyProjectContentQuery >> buildResult: aQueryResult [
 	| allItems |
 	allItems := OrderedCollection new.
 
-	scope projectsDo: [ :each |
-		allItems addAll: each items  ].
+	scope packagesDo: [ :each | allItems add: each ].
 
 	aQueryResult fillWith: allItems
 ]
@@ -31,9 +31,8 @@ ClyProjectContentQuery >> buildResult: aQueryResult [
 { #category : 'execution' }
 ClyProjectContentQuery >> checkEmptyResult [
 
-	scope projectsDo: [ :each |
-		each items ifNotEmpty: [ ^false ]  ].
-	^true
+	scope packagesDo: [ :each | ^ false ].
+	^ true
 ]
 
 { #category : 'execution' }
@@ -42,6 +41,6 @@ ClyProjectContentQuery >> collectMetadataOf: aQueryResult by: anEnvironmentPlugi
 
 { #category : 'system changes' }
 ClyProjectContentQuery >> isResult: aQueryResult affectedBy: aSystemAnnouncement [
-	self flag: #todo.
-	^false
+
+	^scope includesPackagesAffectedBy: aSystemAnnouncement
 ]

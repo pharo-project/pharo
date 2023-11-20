@@ -95,7 +95,7 @@ RubPlainTextMode class >> menuOn: aBuilder [
 				selector: #pasteRecent;
 				iconName: #smallCopy;
 				withSeparatorAfter.
-			(aBuilder model model notNil and: [ aBuilder model acceptAllowed ])
+			(aBuilder model model isNotNil and: [ aBuilder model acceptAllowed ])
 				ifTrue: [
 					(aBuilder item: #Accept translated)
 						keyText: 's';

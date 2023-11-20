@@ -25,21 +25,19 @@ Class {
 Message class >> selector: aSymbol [
 	"Answer an instance of me with unary selector, aSymbol."
 	<reflection: 'Message sending and code execution - Message send reification'>
-	^self new setSelector: aSymbol arguments: (Array new: 0)
+	^self new setSelector: aSymbol arguments: #()
 ]
 
 { #category : 'instance creation' }
 Message class >> selector: aSymbol argument: anObject [
-	"Answer an instance of me whose selector is aSymbol and single
-	argument is anObject."
+	"Answer an instance of me whose selector is aSymbol and single argument is anObject."
 
 	^self new setSelector: aSymbol arguments: { anObject }
 ]
 
 { #category : 'instance creation' }
 Message class >> selector: aSymbol arguments: anArray [
-	"Answer an instance of me with selector, aSymbol, and arguments,
-	anArray."
+	"Answer an instance of me with selector, aSymbol, and arguments, anArray."
 
 	^self new setSelector: aSymbol arguments: anArray
 ]
@@ -103,6 +101,11 @@ Message >> lookupClass [
 Message >> lookupClass: aClass [
 	<reflection: 'Message sending and code execution - Message send reification'>
 	lookupClass := aClass
+]
+
+{ #category : 'accessing' }
+Message >> message [
+	^self
 ]
 
 { #category : 'accessing' }

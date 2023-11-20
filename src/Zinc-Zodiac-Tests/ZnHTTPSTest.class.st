@@ -44,7 +44,7 @@ ZnHTTPSTest class >> generateTestFiles [
 { #category : 'private' }
 ZnHTTPSTest >> ensureSocketStreamFactory [
 	self 
-		assert: ZnNetworkingUtils default secureSocketStreamClass notNil
+		assert: ZnNetworkingUtils default secureSocketStreamClass isNotNil
 		description: 'Please set a secure socket stream class in ZnNetworkingUtils default or switch to the ZnZodiacNetworkingUtils socket stream factory'
 ]
 

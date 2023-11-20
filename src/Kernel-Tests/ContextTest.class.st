@@ -210,8 +210,8 @@ ContextTest >> testHomeMethod [
 { #category : 'tests' }
 ContextTest >> testMethodContext [
 
-	self assert: aMethodContext home notNil.
-	self assert: aMethodContext receiver notNil.
+	self assert: aMethodContext home isNotNil.
+	self assert: aMethodContext receiver isNotNil.
 	self assert: (aMethodContext method isKindOf: CompiledMethod)
 ]
 

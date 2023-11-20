@@ -74,26 +74,18 @@ RGMetaclassStrategy >> defaultMetaClass [
 RGMetaclassStrategy >> definition [
 	"Refer to the comment in ClassDescription|definition."
 
-	^ String streamContents:
-		[:strm |
-		strm print: self.
-		self owner hasTraitComposition ifTrue: [
-			strm
-				crtab;
-				nextPutAll: 'uses: ';
-				print: self traitComposition ].
+	^ String streamContents: [ :strm |
+		  strm print: self.
+		  self owner hasTraitComposition ifTrue: [
+			  strm
+				  crtab;
+				  nextPutAll: 'uses: ';
+				  print: self traitComposition ].
 
-		(self owner slotsNeedFullDefinition or: [ ClassDefinitionPrinter showFluidClassDefinition ])
-			ifFalse: [
-						strm
-							crtab;
-							nextPutAll: 'instanceVariableNames: ';
-							store: self owner instanceVariablesString]
-			ifTrue: [
-						strm
-							crtab;
-							nextPutAll: 'slots: ';
-							nextPutAll: self owner slotDefinitionString]]
+		  strm
+			  crtab;
+			  nextPutAll: 'slots: ';
+			  nextPutAll: self owner slotDefinitionString ]
 ]
 
 { #category : 'initialization' }

@@ -171,6 +171,15 @@ ClassDescription >> copyCategory: protocolName from: aClass classified: newProto
 ]
 
 { #category : '*Deprecated12' }
+ClassDescription >> isDefinedInPackage: aPackage [
+
+	self
+		deprecated: 'This method will be removed because it is really specific and easy to inline. Use `receiver package = argument` instead.'
+		transformWith: '`@rcv isDefinedInPackage: `@package' -> '`@rcv package = `@package'.
+	^ self package = aPackage
+]
+
+{ #category : '*Deprecated12' }
 ClassDescription >> listAtCategoryNamed: aName [
 
 	self deprecated: 'Use #selectorsInProtocol: instead.' transformWith: '`@rcv listAtCategoryNamed: `@arg' -> '`@rcv selectorsInProtocol: `@arg'.
@@ -298,7 +307,7 @@ ClassDescription >> untagFrom: aSymbol [
 	| package packageTag |
 	self deprecated: 'A class can have only one package tag so it is easier to use #removePackageTag.'.
 	"Any class or trait could be tagged by multiple symbols for user purpose.
-	For now we could only model single tag with RPackageTag"
+	For now we could only model single tag with PackageTag"
 	package := self package.
 	packageTag := self packageTag.
 	packageTag isRoot ifTrue: [ ^ #(  ) ].

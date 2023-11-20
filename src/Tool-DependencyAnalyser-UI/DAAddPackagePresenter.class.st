@@ -23,19 +23,17 @@ DAAddPackagePresenter class >> title [
 
 { #category : 'protocol' }
 DAAddPackagePresenter >> actionOnAddPackage [
+
 	| relationGraph packagesToAdd |
-	buttonAddPackage
-		action: [
-			self selectedItemsFromPackageList
-				ifNotEmpty: [
-					relationGraph := self dependenciesPresenter relationGraph.
-					packagesToAdd := self selectedItemsFromPackageList
-						collect: [ :packageName | (DAPackage on: (RPackageSet named: packageName)) beSeen ].
-					relationGraph addPackages: packagesToAdd.
-					self dependenciesPresenter
-						refresh;
-						resetDefaultSettings.
-					self delete ] ]
+	buttonAddPackage action: [
+		self selectedItemsFromPackageList ifNotEmpty: [
+			relationGraph := self dependenciesPresenter relationGraph.
+			packagesToAdd := self selectedItemsFromPackageList collect: [ :packageName | (DAPackage onPackageNamed: packageName) beSeen ].
+			relationGraph addPackages: packagesToAdd.
+			self dependenciesPresenter
+				refresh;
+				resetDefaultSettings.
+			self delete ] ]
 ]
 
 { #category : 'actions' }
@@ -83,7 +81,7 @@ DAAddPackagePresenter >> initializePresenters [
 	buttonAddPackage := self newButton
 		help: 'Add these packages to the current analysis';
 		label: 'Add packages';
-		icon: (self iconNamed: #addIcon);
+		icon: (self iconNamed: #add);
 		yourself.
 
 	packageList := SpChooserPresenter new
@@ -97,5 +95,5 @@ DAAddPackagePresenter >> selectedItemsFromPackageList [
 { #category : 'accessing' }
 DAAddPackagePresenter >> systemPackages [
 
-	^ (self packageOrganizer packages collect: [ :package | package packageName asString ]) asSortedCollection
+	^ (self packageOrganizer packages collect: [ :package | package name asString ]) asSortedCollection
 ]

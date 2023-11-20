@@ -8,17 +8,6 @@ ClassDescription >> criticClass [
 ]
 
 { #category : '*Manifest-Core' }
-ClassDescription >> criticNameOn: aStream [
-	"This behavior may be folded later by changing the name of this method or using another one."
-
-	aStream
-		<< self name
-		<< ' ('
-		<< self category
-		<< ')'
-]
-
-{ #category : '*Manifest-Core' }
 ClassDescription >> manifestBuilderForRuleChecker: aRuleChecker [
 	"Return the manifestsince the rulechecker is keeping a cache, we ask it back"
 
@@ -28,5 +17,5 @@ ClassDescription >> manifestBuilderForRuleChecker: aRuleChecker [
 { #category : '*Manifest-Core' }
 ClassDescription >> mcWorkingCopy [
 
-	MCWorkingCopy workingCopiesForClass: self do: [ :package | ^ package ]
+	^ self package mcWorkingCopy
 ]

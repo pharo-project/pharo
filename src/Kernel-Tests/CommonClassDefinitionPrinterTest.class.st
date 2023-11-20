@@ -6,8 +6,7 @@ Class {
 	#name : 'CommonClassDefinitionPrinterTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'slotDisplay',
-		'slotUse'
+		'slotDisplay'
 	],
 	#category : 'Kernel-Tests-Fluid',
 	#package : 'Kernel-Tests',
@@ -16,8 +15,8 @@ Class {
 
 { #category : 'running' }
 CommonClassDefinitionPrinterTest >> setUp [
+
 	super setUp.
-	slotUse := ClassDefinitionPrinter showFluidClassDefinition.
 	slotDisplay := ClassDefinitionPrinter displayEmptySlots.
 	ClassDefinitionPrinter displayEmptySlots: false
 ]
@@ -25,7 +24,6 @@ CommonClassDefinitionPrinterTest >> setUp [
 { #category : 'running' }
 CommonClassDefinitionPrinterTest >> tearDown [
 
-	ClassDefinitionPrinter showFluidClassDefinition: slotUse.
 	ClassDefinitionPrinter displayEmptySlots: slotDisplay.
 	super tearDown
 ]

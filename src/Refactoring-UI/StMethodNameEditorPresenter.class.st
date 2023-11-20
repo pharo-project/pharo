@@ -260,8 +260,8 @@ StMethodNameEditorPresenter >> getParametersOrder [
 { #category : 'to be pushed to presenter' }
 StMethodNameEditorPresenter >> inform: aString [
 
-	self application newDialog
-		title: aString ;
+	^ self application newInform
+		title: aString;
 		acceptLabel: 'Got it !';
 		openDialog
 ]

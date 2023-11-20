@@ -13,5 +13,43 @@ Class {
 
 { #category : 'items type' }
 ClyAllProjectsQuery class >> resultItemsType [
-	^ClyManagedProject
+
+	^ Project
+]
+
+{ #category : 'execution' }
+ClyAllProjectsQuery >> buildResult: aQueryResult [
+
+	| packages |
+	packages := OrderedCollection new.
+
+	scope projectsDo: [ :each | packages add: each ].
+
+	aQueryResult fillWith: packages
+]
+
+{ #category : 'execution' }
+ClyAllProjectsQuery >> checkEmptyResult [
+
+	scope projectsDo: [ :each | ^ false ].
+
+	^ true
+]
+
+{ #category : 'execution' }
+ClyAllProjectsQuery >> collectMetadataOf: aQueryResult by: anEnvironmentPlugin [
+
+	anEnvironmentPlugin collectMetadataOfProjects: aQueryResult
+]
+
+{ #category : 'execution' }
+ClyAllProjectsQuery >> description [
+
+	^ 'Projects'
+]
+
+{ #category : 'execution' }
+ClyAllProjectsQuery >> isResult: aQueryResult affectedBy: aSystemAnnouncement [
+
+	^ aSystemAnnouncement affectsPackages
 ]

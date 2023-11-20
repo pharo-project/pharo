@@ -16,8 +16,9 @@ MCBitbucketRepository class >> basicFromUrl: aZnUrl [
 ]
 
 { #category : 'instance creation' }
-MCBitbucketRepository class >> createRepositoryFromSpec: aRepositorySpec on: aPlatform [
-	^ aPlatform createBitbucketRepository: aRepositorySpec
+MCBitbucketRepository class >> createRepositoryFromSpec: aRepositorySpec [
+
+	^ self location: aRepositorySpec description
 ]
 
 { #category : 'private' }

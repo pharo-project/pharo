@@ -395,8 +395,7 @@ DigitalSignatureAlgorithm >> isProbablyPrime: p [
 	SmallPrimes
 		ifNil: [
 			"generate list of small primes > 2"
-			SmallPrimes := Integer primesUpTo: 2000.
-			SmallPrimes := SmallPrimes copyFrom: 2 to: SmallPrimes size ].
+			SmallPrimes := (Integer primesUpTo: 2000) allButFirst ].
 	SmallPrimes detect: [ :f | p \\ f = 0 ] ifFound: [ :factor | ^ p = factor ].
 	pMinusOne := p - 1.
 	b := self logOfLargestPowerOfTwoDividing: pMinusOne.

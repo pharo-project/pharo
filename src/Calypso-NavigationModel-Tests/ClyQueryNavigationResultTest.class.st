@@ -79,7 +79,7 @@ ClyQueryNavigationResultTest >> testComparisonWithSimilarResult [
 { #category : 'tests' }
 ClyQueryNavigationResultTest >> testForceLazyRebuild [
 
-	self assert: queryResult items notNil.
+	self assert: queryResult items isNotNil.
 
 	queryResult forceLazyRebuild.
 

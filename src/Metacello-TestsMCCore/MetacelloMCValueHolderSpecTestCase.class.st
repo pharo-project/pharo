@@ -7,5 +7,5 @@ Class {
 
 { #category : 'accessing' }
 MetacelloMCValueHolderSpecTestCase >> projectClass [
-    ^ MetacelloMCProject
+    ^ MetacelloProject
 ]

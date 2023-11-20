@@ -836,7 +836,7 @@ OrderedCollection >> reversed [
 	"Answer a copy of the receiver with element order reversed.  "
 	"#(2 3 4 'fred') asOrderedCollection reversed >>> #('fred' 4 3 2) asOrderedCollection"
 	| newCol |
-	newCol := self species new.
+	newCol := self copyEmpty.
 	self reverseDo:
 		[:elem | newCol addLast: elem].
 	^ newCol

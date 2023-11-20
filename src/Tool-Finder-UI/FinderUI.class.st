@@ -419,7 +419,7 @@ FinderUI >> compileSource: aString notifying: aController [
 			^self].
 	class := self selectedClass.
 	method := class compiledMethodAt: self selectedMethod.
-	(class compile: (aString asString) classified: method category notifying: aController)
+	(class compile: (aString asString) classified: method protocol notifying: aController)
 			ifNil: [^ self ]
 			ifNotNil: [:selector |
 				self changed: #clearUserEdits ]

@@ -16,7 +16,7 @@ Class {
 { #category : 'testing' }
 ClySwitchToProjectsCommand class >> canBeExecutedInContext: aContext [
 
-	^ ClySystemEnvironment currentImage projectManager projectManagers notEmpty
+	^ ClySystemEnvironment currentImage projectManager hasProjects
 ]
 
 { #category : 'accessing' }
@@ -26,16 +26,18 @@ ClySwitchToProjectsCommand >> defaultMenuItemName [
 
 { #category : 'accessing' }
 ClySwitchToProjectsCommand >> description [
-	^'Do not supported currently'
+
+	^ 'Click to group packages by projects. Projects are currently defined by baselines.'
 ]
 
 { #category : 'execution' }
 ClySwitchToProjectsCommand >> execute [
-	browser switchToProjects
+
+	^ browser switchToProjects
 ]
 
 { #category : 'testing' }
 ClySwitchToProjectsCommand >> isAppliedToBrowser [
 
-	^ browser isInProjectView
+	^ (browser packageView showsItemsFromQuery: ClyAllProjectsQuery) and: [ browser isScopedModeEnabled not ]
 ]

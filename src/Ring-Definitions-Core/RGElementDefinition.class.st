@@ -277,7 +277,7 @@ RGElementDefinition >> instanceSideParentName [
 RGElementDefinition >> isDefined [
 	"isDefined when the receiver has its realClass defined in the system"
 
-	^self realClass notNil
+	^self realClass isNotNil
 ]
 
 { #category : 'accessing' }
@@ -297,8 +297,10 @@ RGElementDefinition >> isMeta: aBoolean [
 
 { #category : 'accessing' }
 RGElementDefinition >> isMetaSide [
-	
-	^self isMeta
+	self
+		deprecated: 'Use isMeta instead'
+		transformWith: '`@receiver isMetaSide' -> '`@receiver isMeta'.
+	^ self isMeta
 ]
 
 { #category : 'accessing' }
@@ -364,7 +366,7 @@ RGElementDefinition >> realParent [
 		          ifNotNil: [ self parent realClass ]
 		          ifNil: [ self rootEnvironment classNamed: self parentName ].
 	parent ifNil: [ ^ nil ].
-	
+
 	self isMeta ifTrue: [ parent := parent classSide ].
 	^ parent
 ]

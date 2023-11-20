@@ -669,7 +669,7 @@ GIFReadWriter >> writeFrameHeader: anImageFrame [
 	"Write any Extensions and/or headers that apply
 	to individual frames/subimages"
 	| interlaceByte |
-	anImageFrame delay notNil | transparentIndex notNil ifTrue: [
+	anImageFrame delay isNotNil | transparentIndex ifNotNil: [
 		self writeGCEForFrame: anImageFrame ].
 
 	"Next is the image descriptor"
@@ -721,6 +721,7 @@ GIFReadWriter >> writeGCEForFrame: anAnimatedImageFrame [
 
 { #category : 'private - encoding' }
 GIFReadWriter >> writeHeader [
+
 	| byte |
 	"Write the overall image file header onto the
 	output stream. This includes the global information
@@ -729,22 +730,20 @@ GIFReadWriter >> writeHeader [
 	stream position = 0 ifFalse: [ ^ self ].
 
 	self nextPutAll: 'GIF89a' asByteArray.
-	self writeWord: width.	"Screen Width"
-	self writeWord: height.	"Screen Height"
-	byte := 128.	"has color map"
-	byte := byte bitOr: (bitsPerPixel - 1 bitShift: 5).	"color resolution"
-	byte := byte bitOr: bitsPerPixel - 1.	"bits per pixel"
+	self writeWord: width. "Screen Width"
+	self writeWord: height. "Screen Height"
+	byte := 128. "has color map"
+	byte := byte bitOr: (bitsPerPixel - 1 bitShift: 5). "color resolution"
+	byte := byte bitOr: bitsPerPixel - 1. "bits per pixel"
 	self nextPut: byte.
-	self nextPut: 0.	"background color."
-	self nextPut: 0.	"reserved / unused 'pixel aspect ratio"
-	colorPalette do:
-		[ :pixelValue |
+	self nextPut: 0. "background color."
+	self nextPut: 0. "reserved / unused 'pixel aspect ratio"
+	colorPalette do: [ :pixelValue |
 		self
 			nextPut: ((pixelValue bitShift: -16) bitAnd: 255);
 			nextPut: ((pixelValue bitShift: -8) bitAnd: 255);
 			nextPut: (pixelValue bitAnd: 255) ].
-	loopCount notNil ifTrue:
-		[ self writeNetscapeExtension ]
+	loopCount ifNotNil: [ self writeNetscapeExtension ]
 ]
 
 { #category : 'private - encoding' }

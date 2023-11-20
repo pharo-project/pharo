@@ -14,11 +14,6 @@ MCTestCase class >> isAbstract [
 	^ self = MCTestCase
 ]
 
-{ #category : 'testing' }
-MCTestCase class >> isUnitTest [
-	^false
-]
-
 { #category : 'accessing' }
 MCTestCase class >> resources [
 	^ Array with: MCSnapshotResource

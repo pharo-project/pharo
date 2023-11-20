@@ -1,7 +1,6 @@
 Extension { #name : 'RBCascadeNode' }
 
 { #category : '*ClassParser' }
-RBCascadeNode >> extractClassDefinitionFor: aFluidParser [
-
-	aFluidParser setAdequateClassDefinitionFrom: self receiver
+RBCascadeNode >> handleMetaclassName: aCDFluidClassDefinitionParser [
+	aCDFluidClassDefinitionParser handleMetaclassNameFromCascade: self
 ]

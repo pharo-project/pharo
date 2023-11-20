@@ -16,6 +16,13 @@ SystemDictionaryTest class >> shouldInheritSelectors [
 ]
 
 { #category : 'requirements' }
+SystemDictionaryTest >> associationWithKeyAlreadyInToAdd [
+	" return an association that will be used to add to nonEmptyDict (the key of this association is already included in nonEmptyDict)"
+
+	^ GlobalVariable key: self nonEmptyDict keys anyOne value: valueNotIn
+]
+
+{ #category : 'requirements' }
 SystemDictionaryTest >> canBeUnhealthy [
 	"uses GlobalVariables instead of associations"
 
@@ -26,6 +33,21 @@ SystemDictionaryTest >> canBeUnhealthy [
 SystemDictionaryTest >> classToBeTested [
 
 	^ SystemDictionary
+]
+
+{ #category : 'requirements' }
+SystemDictionaryTest >> elementToAdd [
+	" return an element of type 'nonEmpy' elements'type'"
+
+	^ GlobalVariable key: #u value: 5
+]
+
+{ #category : 'running' }
+SystemDictionaryTest >> setUp [
+
+	super setUp.
+
+	associationNotIn := GlobalVariable key: keyNotIn value: valueNotIn
 ]
 
 { #category : 'requirements' }
@@ -68,6 +90,33 @@ SystemDictionaryTest >> testHasBindingThatBeginsWith [
 	super testHasBindingThatBeginsWith.
 	self assert: (Smalltalk globals hasBindingThatBeginsWith: 'Obje').
 	self deny: (Smalltalk globals hasBindingThatBeginsWith: 'NOTHEREIope')
+]
+
+{ #category : 'tests - testing' }
+SystemDictionaryTest >> testIncludesAssociationNoValue [
+
+	| association dictionary |
+
+	association := GlobalVariable key: #key.
+
+	self assert: association value isNil.
+
+	dictionary := self collectionClass new.
+
+	dictionary add: association.
+
+	self assert: (dictionary at: #key) isNil
+]
+
+{ #category : 'tests - testing' }
+SystemDictionaryTest >> testIncludesAssociationWithValue [
+
+	| association dictionary |
+	association := GlobalVariable key: #key value: 1.
+	dictionary := self collectionClass new.
+	dictionary add: association.
+
+	self assert: (dictionary at: #key) equals: 1
 ]
 
 { #category : 'tests' }
@@ -116,7 +165,7 @@ SystemDictionaryTest >> testSetOrganizationSetBackPointer [
 
 	| systemDictionary packageOrganizer |
 	systemDictionary := SystemDictionary new.
-	packageOrganizer := RPackageOrganizer new.
+	packageOrganizer := PackageOrganizer new.
 	systemDictionary organization: packageOrganizer.
 	self assert: packageOrganizer environment identicalTo: systemDictionary.
 	self assert: systemDictionary organization identicalTo: packageOrganizer
@@ -138,4 +187,13 @@ SystemDictionaryTest >> testSmalltalkPrintString [
 SystemDictionaryTest >> testSmalltalkSelfEvaluating [
 
 	self assert: Smalltalk isSelfEvaluating
+]
+
+{ #category : 'tests - printing' }
+SystemDictionaryTest >> testStoreOnWithNegativeInteger [
+
+	| dictionary |
+	dictionary := { (GlobalVariable key: 'x' value: -1) } as: self classToBeTested.
+
+	self assert: (String streamContents: [ :s | dictionary storeOn: s ]) equals: '((' , self classToBeTested name , ' new) add: (''x''-> -1); yourself)'
 ]

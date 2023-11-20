@@ -49,5 +49,5 @@ DockingBarMenuMorph >> veryDeepInner: deepCopier [
 { #category : 'accessing' }
 DockingBarMenuMorph >> wasActivatedFromDockingBar [
 	"answer true if the receiver was activated from a docking bar"
-	^ activatorDockingBar notNil
+	^ activatorDockingBar isNotNil
 ]

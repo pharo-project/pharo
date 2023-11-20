@@ -294,7 +294,7 @@ Context >> activeOuterContext [
 Context >> arguments [
 	"returns the arguments of a message invocation"
 	<reflection: 'Stack Manipulation - Context'>
-	^(1 to: self numArgs) collect: [:i | self tempAt: i]
+	^(1 to: self numArgs) collect: [:i | self basicAt: i]
 ]
 
 { #category : 'closure support' }
@@ -502,6 +502,21 @@ Context >> cut: aContext [
 	callee privSender: nil
 ]
 
+{ #category : 'accessing' }
+Context >> deadContextForClosure: closure [
+
+	| outerMethod |
+	outerMethod := closure literalAt: closure literals size + 1.
+
+	^ (self class
+		   sender: self
+		   receiver: nil
+		   method: outerMethod
+		   arguments: {  })
+		  pc: nil;
+		  yourself
+]
+
 { #category : 'printing' }
 Context >> debugStack: stackSize on: aStream [
 	"print a condensed version of the stack up to stackSize on aStream"
@@ -594,7 +609,7 @@ Context >> doPrimitive: primitiveIndex method: meth receiver: aReceiver args: ar
 			[^aReceiver simulateValueWithArguments: arguments first caller: self]].
 
 	((primitiveIndex between: 207 and: 209) "FullBlockClosure primitives"
-	  and: [(self objectClass: aReceiver) includesBehavior: FullBlockClosure]) ifTrue:
+	  and: [(self objectClass: aReceiver) includesBehavior: BlockClosure]) ifTrue:
 		[^primitiveIndex = 208
 			ifTrue: [aReceiver simulateValueWithArguments: arguments first caller: self]
 			ifFalse: [aReceiver simulateValueWithArguments: arguments caller: self]].
@@ -703,7 +718,7 @@ Context >> errorReportOn: stream [
 	"Note: The following is an open-coded version of  Context>>stackOfSize: since this method may be called during a  low space condition and we might run out of space for allocating the  full stack."
 	stackDepth := 0.
 	aContext := self.
-	[ aContext notNil and: [ (stackDepth := stackDepth + 1) < 40 ]]
+	[ aContext isNotNil and: [ (stackDepth := stackDepth + 1) < 40 ]]
 		whileTrue: [
 			"variable values"
 			aContext printDetails: stream.
@@ -872,7 +887,7 @@ Context >> handleSignal: exception [
 Context >> hasContext: aContext [
 	"Answer whether aContext is me or one of my senders"
 
-	^ (self findContextSuchThat: [ :context | context == aContext ]) notNil
+	^ (self findContextSuchThat: [ :context | context == aContext ]) isNotNil
 ]
 
 { #category : 'accessing' }
@@ -925,9 +940,9 @@ Context >> home [
 
 	closureOrNil ifNil: [ ^ self ].
 	"this happens for clean blocks, we try to find the home on the stack"
-	^ closureOrNil outerContext 
-		ifNil: [ self activeHome ]
-		ifNotNil: [:outer | outer home ]
+	^ closureOrNil outerContext
+		  ifNil: [ self activeHome ifNil: [ self deadContextForClosure: self method ] ]
+		  ifNotNil: [ :outer | outer home ]
 ]
 
 { #category : 'accessing' }
@@ -1087,9 +1102,7 @@ Context >> jump: distance withInterpreter: anInterpreter [
 Context >> longStack [
 	"Answer a String showing the top 100 contexts on my sender chain."
 
-	^ String streamContents: [ :stream |
-		(self stackOfSize: 100) do: [ :item |
-			stream print: item; cr ]]
+	^ self printStackOfSize: 100
 ]
 
 { #category : 'accessing' }
@@ -1483,6 +1496,18 @@ Context >> printOn: aStream [
 			outerContext printOn: aStream ]
 ]
 
+{ #category : 'debugger access' }
+Context >> printStackOfSize: aNumber [
+	"Answer a String showing the top ten contexts on my sender chain."
+
+	<reflection: 'Stack Manipulation - Context'>
+	^ String streamContents: [ :stream |
+		  (self stackOfSize: aNumber) do: [ :item |
+			  stream
+				  print: item;
+				  lf ] ]
+]
+
 { #category : 'initialization' }
 Context >> privRefresh [
 	"Reinitialize the receiver so that it is in the state it was at its creation."
@@ -1779,7 +1804,7 @@ Context >> return: value from: aSender [
 		^ self send: #cannotReturn: to: self with: {value} super: false ].
 	newTop := aSender sender.
 	context := self findNextUnwindContextUpTo: newTop.
-	(context notNil and: [ context unwindBlock = closureOrNil ]) ifTrue: [
+	(context isNotNil and: [ context unwindBlock = closureOrNil ]) ifTrue: [
 		"Here the return happens inside the unwind block like in following example:
 				[ #test ] ensure: [ ^ #returnFromUnwindBlock ]
 		In such cases #findNextUnwindContextUpTo: returns the corresponding #ensure context
@@ -1839,6 +1864,30 @@ Context >> runUntilErrorOrReturnFrom: aSender [
 		aSender terminateTo: context sender.  "remove above ensure and handler contexts"
 		{topContext. error}
 	]
+]
+
+{ #category : 'private' }
+Context >> runUntilReturnFrom: aContext [
+	"Run the receiver (which must be its stack top context) until aContext returns. Avoid a context that cannot return.
+	Note: to avoid infinite recursion of MNU error inside unwind blocks, implement e.g. a wrapper around the message
+	sentTo: receiver in #doesNotUnderstand:. Note: This method is a trivialized version of #runUntilErrorOrReturnFrom:
+	and was intended to be used by #unwindTo as a helper method to unwind non-local returns inside unwind blocks."
+
+	| here unwindBottom newTop |
+	here := thisContext.
+	"Avoid a context that cannot return between self and aContext (see Note 1 below)"
+	unwindBottom := self findContextSuchThat: [:ctx | ctx == aContext or: [ctx selector = #cannotReturn:]].
+	newTop := unwindBottom sender.
+	"Insert ensure context under unwindBottom in self's stack (see Note 2 below)"
+	unwindBottom insertSender: (Context contextEnsure: [here jump]).
+	self jump.  "Control jumps to self (see Note 2 below)"
+	"Control resumes here once the above inserted ensure block is executed"
+	^newTop   "Return the new top context (see Note 3 below)"
+
+	"Note 1: returning from #cannotReturn's sender would crash the VM so we install a guard ensure context right above it and after returning to #terminate the unwind will continue safely. Try running and debugging this example (avoid Proceeding the BCR error though; it would indeed crash the image):
+	[[[] ensure: [^2]] ensure: [^42]] fork"
+	"Note 2: self is run by jumping directly to it (the active process abandons thisContext and executes self on aProcess's stack; self is its top context). However, before jumping to self we insert an ensure block under unwindBottom context that jumps back to thisContext when evaluated. The inserted guard ensure context is removed once control jumps back to thisContext."
+	"Note 3: it doesn't matter newTop is not a proper stack top context because #terminate will use it only as a starting point in the search for the next unwind context and the computation will never return here. Cf. the pattern in #runUntilErrorOrReturnFrom:: removing the inserted ensure context by stepping until popped when executing non-local returns is not applicable here and would fail the tests testTerminationDuringNestedUnwindWithReturn1 and 2."
 ]
 
 { #category : 'debugger access' }
@@ -2006,10 +2055,8 @@ Context >> shortDebugStackOn: aStream [
 { #category : 'debugger access' }
 Context >> shortStack [
 	"Answer a String showing the top ten contexts on my sender chain."
-	<reflection: 'Stack Manipulation - Context'>
-	^ String streamContents: [ :stream |
-		(self stackOfSize: 10) do: [ :item |
-			stream print: item; cr]]
+
+	^ self printStackOfSize: 10
 ]
 
 { #category : 'debugger access' }
@@ -2270,6 +2317,16 @@ Context >> tryPrimitiveFor: aMethod receiver: aReceiver args: arguments [
 	^ self doPrimitive: primIndex method: aMethod receiver: aReceiver args: arguments
 ]
 
+{ #category : 'private' }
+Context >> unwindAndStop: aProcess [
+	"I'm a helper method to #terminate; I create and answer
+	 a helper stack for a terminating process to unwind itself from."
+
+	^(Context contextEnsure: [self unwindTo: nil]) 
+		privSender: [aProcess endProcess] asContext
+
+]
+
 { #category : 'special context access' }
 Context >> unwindBlock [
 	"unwindContext only. access temporaries from BlockClosure>>#ensure: and BlockClosure>>#ifCurtailed:"
@@ -2312,19 +2369,44 @@ Context >> unwindForTermination [
 
 { #category : 'private - exceptions' }
 Context >> unwindTo: aContext [
+	"Unwind self to aContext to execute pending #ensure:/#ifCurtailed: argument blocks between self
+	and aContext. Complete all pending unwind blocks including those currently in the middle of their
+	execution; these blocks will just finish their execution. Run all unwinds on their original stack
+	using #runUntilReturnFrom:."
 
-	| context unwindBlock |
-	context := self.
-	[ (context := context findNextUnwindContextUpTo: aContext) isNil ] whileFalse: [
-		(context unwindComplete) ifNil: [
-			context unwindComplete: true.
-			unwindBlock := context unwindBlock.
-			unwindBlock value ]]
+	| top ctx outerMost |
+	"If the receiver represents a block already halfways through an unwind, complete that unwind block
+	first; if there are multiple such nested unwind blocks, try to complete the outer-most one; all nested 
+	unwind blocks will be completed in the process; see tests in UnwindTest, testTerminationDuringUnwind. 
+	Note: Halfway-through blocks have already set the complete variable (tempAt: 2) in their defining
+	#ensure:/#ifCurtailed contexts from nil to true; we'll search for the bottom-most one.
+	Note: #findNextUnwindContextUpTo: starts searching from the receiver's sender so we must check 
+	whether the receiver itself is an unwind context as well; see testTerminateEnsureAsStackTop."
+	ctx := top := self.
+	ctx isUnwindContext ifFalse: [ctx := ctx findNextUnwindContextUpTo: aContext].
+	[ctx isNil] whileFalse: [
+		ctx unwindComplete ifNotNil: [
+			outerMost := ctx].
+		ctx := ctx findNextUnwindContextUpTo: aContext].
+	outerMost ifNotNil: [top := top runUntilReturnFrom: outerMost].
+	"By now no halfway-through unwind blocks are on the stack. Create a new top context for each 
+	pending unwind block (tempAt: 1) and execute it on the unwind block's stack to execute non-local 
+	returns correctly. Cf. the unwind pattern in #resume:through:. In #unwindTo, using #value instead of 
+	#runUntilReturnFrom: would lead to an incorrect evaluation of non-local returns on the wrong stack. 
+	Note: top points to the former outerMost sender now, i.e. to the next unexplored context."
+	ctx := top ifNil: [^self].
+	ctx isUnwindContext ifFalse: [ctx := ctx findNextUnwindContextUpTo: aContext].
+	[ctx isNil] whileFalse: [
+		ctx unwindComplete ifNil: [
+			ctx unwindComplete: true.
+			top := ctx unwindBlock asContextWithSender: ctx.
+			top runUntilReturnFrom: top].
+		ctx := ctx findNextUnwindContextUpTo: aContext]
 ]
 
 { #category : 'private' }
 Context >> withoutPrimitiveTryNamedPrimitiveIn: aCompiledMethod for: aReceiver withArgs: arguments [
-"When using the debugger we want to run a method step by step. What what happens when we do a step into a CompiledMethod which has a primitive? If such a method is executed from outside the Debugger (normal scenario) the VM knows that such CompiledMethod has a primitive declaration and hence executes it. If it fails then it continues executing all the bytecodes of the method. Otherwise, it just returns.
+	"When using the debugger we want to run a method step by step. What what happens when we do a step into a CompiledMethod which has a primitive? If such a method is executed from outside the Debugger (normal scenario) the VM knows that such CompiledMethod has a primitive declaration and hence executes it. If it fails then it continues executing all the bytecodes of the method. Otherwise, it just returns.
 
 Now, what is the problem with the Debugger? The problem is that if the primitive fail, we don't want that the VM directly executes all the remaining bytecodes of the method. Instead, we would like to go step by step witht he Debugger, just as happens with normal methods.
 
@@ -2337,13 +2419,12 @@ tryNamedPrimitive
 Since this method does not change its bytecodes for every invocation, we can reuse it for all methods with primitives. There are only 2 things we have to change in the template: the number of arguments and the primitive declaration (to use the correct primitive name and module name).
 
 Then what we do is to run that compiled method with the receiver and arguments we have. The result is that we will be invoking almost the same original method but a slighly different version that does not have the smalltalk part after the primitive and that in contrast sends #primitiveFailToken. If this method invocation does not fail, then the Debugger continues debugging the sender of the primitive method. In this case, the step in is the same as step over. If the primitive fails, then the debugger continues executing the smalltalk part after the primitive method. In this case, step in is a real step in."
-	| theMethod  |
-	arguments size > 8
-		ifTrue: [ ^ self class primitiveFailToken ].
+
+	| theMethod |
+	arguments size > 8 ifTrue: [ ^ self class primitiveFailToken ].
 	theMethod := self class tryNamedPrimitiveTemplateMethod.
 	theMethod prepareForSimulationWith: arguments size.
-	theMethod == nil
-		ifTrue: [ ^ self class primitiveFailToken ].
+	theMethod ifNil: [ ^ self class primitiveFailToken ].
 	self setNamedPrimitiveInformationFrom: aCompiledMethod toMethod: theMethod.
 	theMethod flushCache.
 

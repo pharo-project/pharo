@@ -17,8 +17,8 @@ Class {
 	#name : 'ThreePhaseButtonMorph',
 	#superclass : 'ImageMorph',
 	#instVars : [
-		'offImage',
-		'pressedImage',
+		'offFormSet',
+		'pressedFormSet',
 		'state',
 		'target',
 		'actionSelector',
@@ -94,7 +94,7 @@ ThreePhaseButtonMorph >> arguments: aCollection [
 ThreePhaseButtonMorph >> doButtonAction [
 	"Perform the action of this button. Subclasses may override this method. The default behavior is to send the button's actionSelector to its target object with its arguments."
 
-	(target notNil and: [actionSelector notNil])
+	(target isNotNil and: [actionSelector isNotNil])
 		ifTrue:
 			[Cursor normal
 				showWhile: [target perform: actionSelector withArguments: arguments].
@@ -122,11 +122,11 @@ ThreePhaseButtonMorph >> doButtonAction: evt [
 ThreePhaseButtonMorph >> drawOn: aCanvas [
 
 	state == #off ifTrue: [
-		offImage ifNotNil: [aCanvas translucentImage: offImage at: bounds origin]].
+		offFormSet ifNotNil: [aCanvas translucentFormSet: offFormSet at: bounds origin]].
 	state == #pressed ifTrue: [
-		pressedImage ifNotNil: [aCanvas translucentImage: pressedImage at: bounds origin]].
+		pressedFormSet ifNotNil: [aCanvas translucentFormSet: pressedFormSet at: bounds origin]].
 	state == #on ifTrue: [
-		image ifNotNil: [aCanvas translucentImage: image at: bounds origin]]
+		formSet ifNotNil: [aCanvas translucentFormSet: formSet at: bounds origin]]
 ]
 
 { #category : 'geometry' }
@@ -225,19 +225,45 @@ ThreePhaseButtonMorph >> mouseUp: evt [
 ]
 
 { #category : 'accessing' }
-ThreePhaseButtonMorph >> offImage [
-	^ offImage
+ThreePhaseButtonMorph >> offFormSet [
+
+	^ offFormSet
 ]
 
 { #category : 'accessing' }
-ThreePhaseButtonMorph >> offImage: aForm [
-	offImage := aForm.
+ThreePhaseButtonMorph >> offFormSet: aFormSet [
+
+	offFormSet := aFormSet.
 	self invalidRect: self bounds
 ]
 
 { #category : 'accessing' }
+ThreePhaseButtonMorph >> offImage [
+
+	^ offFormSet ifNotNil: [ offFormSet asForm ]
+]
+
+{ #category : 'accessing' }
+ThreePhaseButtonMorph >> offImage: aForm [
+
+	self offFormSet: (aForm ifNotNil: [ FormSet form: aForm ])
+]
+
+{ #category : 'accessing' }
+ThreePhaseButtonMorph >> onFormSet [
+
+	^ formSet
+]
+
+{ #category : 'accessing' }
+ThreePhaseButtonMorph >> onFormSet: aFormSet [
+
+	self formSet: aFormSet
+]
+
+{ #category : 'accessing' }
 ThreePhaseButtonMorph >> onImage [
-	^ image
+	^ formSet asForm
 ]
 
 { #category : 'button' }
@@ -249,14 +275,28 @@ ThreePhaseButtonMorph >> onImage: aForm [
 ]
 
 { #category : 'accessing' }
+ThreePhaseButtonMorph >> pressedFormSet [
+
+	^ pressedFormSet
+]
+
+{ #category : 'accessing' }
+ThreePhaseButtonMorph >> pressedFormSet: aFormSet [
+
+	pressedFormSet := aFormSet.
+	self invalidRect: self bounds
+]
+
+{ #category : 'accessing' }
 ThreePhaseButtonMorph >> pressedImage [
-	^ pressedImage
+
+	^ pressedFormSet ifNotNil: [ pressedFormSet asForm ]
 ]
 
 { #category : 'accessing' }
 ThreePhaseButtonMorph >> pressedImage: aForm [
-	pressedImage := aForm.
-	self invalidRect: self bounds
+
+	self pressedFormSet: (aForm ifNotNil: [ FormSet form: aForm ])
 ]
 
 { #category : 'printing' }
@@ -266,7 +306,7 @@ ThreePhaseButtonMorph >> printOn: aStream [
 	arguments notEmpty
 		ifTrue: [string := arguments at: (2 min: arguments size)].
 	aStream nextPutAll: '('.
-	(string notNil and: [string ~~ self])
+	(string isNotNil and: [string ~~ self])
 		ifTrue:
 			[aStream
 				print: string;
@@ -330,8 +370,8 @@ ThreePhaseButtonMorph >> veryDeepInner: deepCopier [
 	"Copy all of my instance variables.  Some need to be not copied at all, but shared.  	Warning!!  Every instance variable defined in this class must be handled.  We must also implement veryDeepFixupWith:.  See DeepCopier class comment."
 
 super veryDeepInner: deepCopier.
-offImage := offImage veryDeepCopyWith: deepCopier.
-pressedImage := pressedImage veryDeepCopyWith: deepCopier.
+offFormSet := offFormSet veryDeepCopyWith: deepCopier.
+pressedFormSet := pressedFormSet veryDeepCopyWith: deepCopier.
 state := state veryDeepCopyWith: deepCopier.
 "target := target.		Weakly copied"
 "actionSelector := actionSelector.		Symbol"

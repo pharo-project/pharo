@@ -170,7 +170,7 @@ RubTextScrollPane >> handleScrollerOffsetChange: aBlock [
 	| prevOffset ret |
 	prevOffset := self offset.
 	ret := aBlock value.
-	(self offset ~= prevOffset and: [ self owner notNil ])
+	(self offset ~= prevOffset and: [ self owner isNotNil ])
 		ifTrue: [ self owner scrollerOffsetChanged ].
 	^ ret
 ]
@@ -326,7 +326,7 @@ RubTextScrollPane >> scrollSelectionIntoView: event [
 		ifTrue: [ ^ false ].
 	rectToTest := selRects first merge: selRects last.
 	transform := scroller transformFrom: self.
-	(event notNil and: [ event isMouse and: [ event anyButtonPressed ] ])
+	(event isNotNil and: [ event isMouse and: [ event anyButtonPressed ] ])
 		ifTrue: [
 			"Check for autoscroll"
 			cpHere := transform localPointToGlobal: event cursorPoint.

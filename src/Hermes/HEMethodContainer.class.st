@@ -11,22 +11,13 @@ Class {
 		'classSideMethods',
 		'traitComposition',
 		'classTraitComposition',
-		'category'
+		'packageName',
+		'tagName'
 	],
 	#category : 'Hermes-Model',
 	#package : 'Hermes',
 	#tag : 'Model'
 }
-
-{ #category : 'accessing' }
-HEMethodContainer >> category [
-	^ category
-]
-
-{ #category : 'accessing' }
-HEMethodContainer >> category: anObject [
-	category := anObject
-]
 
 { #category : 'accessing' }
 HEMethodContainer >> classSideMethods [
@@ -56,9 +47,11 @@ HEMethodContainer >> doReadHeaderFrom: aReader [
 
 { #category : 'reading' }
 HEMethodContainer >> doReadMethodsFrom: aReader [
+
 	| numberOfMethods numberOfClassMethods |
-	"The category of a trait or a class is stored as a byteString."
-	category := aReader readByteSymbol.
+	"The package and tags of a trait or a class are stored as a byteString."
+	packageName := aReader readByteSymbol.
+	tagName := aReader readByteSymbol.
 	"The methods are stored with the quantity before them. First the instance side and the the class side."
 	numberOfMethods := aReader readInt32.
 
@@ -82,10 +75,34 @@ HEMethodContainer >> methods: anObject [
 	methods := anObject
 ]
 
+{ #category : 'accessing' }
+HEMethodContainer >> packageName [
+
+	^ packageName
+]
+
+{ #category : 'accessing' }
+HEMethodContainer >> packageName: anObject [
+
+	packageName := anObject
+]
+
 { #category : 'reading' }
 HEMethodContainer >> readFrom: aReader [
 	self doReadHeaderFrom: aReader.
 	self doReadMethodsFrom: aReader
+]
+
+{ #category : 'accessing' }
+HEMethodContainer >> tagName [
+
+	^ tagName
+]
+
+{ #category : 'accessing' }
+HEMethodContainer >> tagName: anObject [
+
+	tagName := anObject
 ]
 
 { #category : 'accessing' }

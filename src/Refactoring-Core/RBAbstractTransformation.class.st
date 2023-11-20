@@ -216,7 +216,7 @@ RBAbstractTransformation >> generateChanges [
 RBAbstractTransformation >> model [
 
 	^ model
-		ifNil: [ model := ( RBClassModelFactory rbNamespace onEnvironment: self defaultEnvironment )
+		ifNil: [ model := (RBNamespace onEnvironment: self defaultEnvironment )
 				name: 'Changes for ', self class name asString;
 				yourself
 			]

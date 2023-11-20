@@ -18,7 +18,7 @@ BaselineOfRing >> baseline: spec [
 				package: 'Ring-Tests-Core';
 				package: 'Ring-Tests-Monticello';
 				package: 'Ring-Tests-ChunkImporter';
-				package: 'Ring-TraitsV2Support';
+				package: 'Ring-TraitsSupport';
 				package: 'Ring-RuntimeSupport';
 				package: 'Calypso-Ring' ]
 ]

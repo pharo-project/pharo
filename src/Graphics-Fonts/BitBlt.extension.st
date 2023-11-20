@@ -94,7 +94,7 @@ BitBlt >> installStrikeFont: aStrikeFont foregroundColor: foregroundColor backgr
 
 	sourceForm depth = 1 ifTrue: [
 		self combinationRule: Form paint.
-		(colorMap notNil and:[lastSourceDepth = sourceForm depth]) ifFalse: [
+		(colorMap isNotNil and:[lastSourceDepth = sourceForm depth]) ifFalse: [
 			"Set up color map for a different source depth (color font)"
 			"Uses caching for reasonable efficiency"
 			colorMap := self cachedFontColormapFrom: sourceForm depth to: destForm depth.

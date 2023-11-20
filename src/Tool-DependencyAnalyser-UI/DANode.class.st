@@ -108,7 +108,8 @@ DANode >> label [
 
 { #category : 'accessing' }
 DANode >> packageUnderAnalysis [
-	^ self rootNode daPackage rPackageSet packages first
+
+	^ self rootNode daPackage systemPackage
 ]
 
 { #category : 'accessing' }

@@ -891,28 +891,13 @@ Object >> executor [
 { #category : 'error handling' }
 Object >> explicitRequirement [
 	"If one of the superclasses can perform the selector, we execute the method of that class, otherwise, the explicit requirement error is thrown"
+
 	<debuggerCompleteToSender>
-	| originalMethod originalArguments errorBlock originalReceiver callingContext originalSelector |
-	errorBlock := [ ^ self error: 'Explicitly required method' ].
-	callingContext := thisContext sender.
-	originalMethod := callingContext homeMethod.
-	originalMethod isFromTrait
-		ifFalse: [ errorBlock value].
-	originalReceiver := callingContext receiver.
-	originalSelector := originalMethod selector.
-	originalArguments := callingContext arguments.
-	originalReceiver class superclass
-		withAllSuperclassesDo: [ :superClass |
-			superClass
-				compiledMethodAt: originalSelector
-				ifPresent: [ :method |
-					(method isProvided or: [ method isFromTrait not ])
-						ifTrue: [ callingContext
-								return:
-									(method
-										valueWithReceiver: originalReceiver
-										arguments: originalArguments) ] ] ].
-	errorBlock value
+	| sender |
+	sender := thisContext sender.
+	[ sender return: (self perform: sender selector withArguments: sender arguments inSuperclass: sender methodClass superclass) ]
+		on: MessageNotUnderstood
+		do: [ self error: 'Explicitly required method' ]
 ]
 
 { #category : 'finalization' }

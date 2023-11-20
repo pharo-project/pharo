@@ -54,6 +54,7 @@ RBCodeSnippetTest >> testCodeImporter [
 	| string importer class runBlock |
 	"Code importer meed a plain expression or use a custom format"
 	snippet source isAllSeparators ifTrue: [ ^ self skip ].
+	[
 	string := snippet isScripting
 		          ifFalse: [
 			          class := ChunkImportTestCase new importAClass.
@@ -90,19 +91,7 @@ RBCodeSnippetTest >> testCodeImporter [
 
 	            value ].
 
-	self testExecuteBlock: runBlock
-]
-
-{ #category : 'tests' }
-RBCodeSnippetTest >> testDump [
-
-	| ast dump ast2 dump2 |
-	ast := snippet parse.
-	dump := ast dump.
-	ast2 := OpalCompiler new evaluate: dump.
-	self assert: ast2 equals: ast.
-	dump2 := ast2 dump.
-	self assert: dump2 equals: dump
+	self testExecuteBlock: runBlock ] ensure: [ self packageOrganizer removePackage: ChunkImportTestCase new packageNameForTests ]
 ]
 
 { #category : 'tests' }
@@ -173,7 +162,6 @@ RBCodeSnippetTest >> testParse [
 		self assert: ((node allParents includes: ast) or: [node = ast]).
 		node start to: node stop do: [ :i | self assert: ((node bestNodeFor: (i to: i)) isKindOf: RBProgramNode) ].
 		node start+1 to: node stop do: [ :i | self assert: ((node bestNodeForPosition: i) isKindOf: RBProgramNode) ].
-		self assert: node displaySourceCode isString.
 		self assert: node dump equals: node dump.
 		node hasMultipleReturns.
 		node hasNonLocalReturn.

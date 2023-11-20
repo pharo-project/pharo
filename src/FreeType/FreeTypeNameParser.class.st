@@ -232,7 +232,7 @@ FreeTypeNameParser >> extractSlant [
 	extractedSlantValue := LogicalFont slantRegular. "not italic or oblique"
 	(self italicAndObliqueNames
 		detect: [:each |
-			(matches := self lastMatchValueSequence: {each}) notNil]
+			(matches := self lastMatchValueSequence: {each}) isNotNil]
 		ifNone:[]) ifNotNil:[
 			start := matches first second.
 			end :=  matches last third.
@@ -262,7 +262,7 @@ FreeTypeNameParser >> extractStretch [
 		detect: [:each |
 			matches := self lastMatchValueSequence: each allButFirst.
 			matches ifNotNil:[extractedStretchValue := each first].
-			matches notNil]
+			matches isNotNil]
 		ifNone:[]) ifNotNil:[
 			start := matches first second.
 			end :=  matches last third.
@@ -286,7 +286,7 @@ FreeTypeNameParser >> extractUpright [
 		detect: [:tok |
 			(self normalNames
 				detect: [:str | str asLowercase = tok first asLowercase]
-				ifNone:[]) notNil ]
+				ifNone:[]) isNotNil ]
 		ifNone:[].
 	normalTok ifNotNil:[
 		"remove it from combinedName"
@@ -310,7 +310,7 @@ FreeTypeNameParser >> extractWeight [
 		detect: [:each |
 			matches := self lastMatchValueSequence: each allButFirst.
 			matches ifNotNil:[extractedWeightValue := each first].
-			matches notNil]
+			matches isNotNil]
 		ifNone:[]) ifNotNil:[
 			start := matches first second.
 			end :=  matches last third.

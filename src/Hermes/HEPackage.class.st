@@ -33,7 +33,7 @@ Class {
 
 { #category : 'formatting' }
 HEPackage class >> formatVersion [
-	^ 2
+	^ 3
 ]
 
 { #category : 'adding' }

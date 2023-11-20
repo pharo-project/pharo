@@ -47,7 +47,7 @@ DAAssemblyNode >> hasChildren [
 
 { #category : 'accessing' }
 DAAssemblyNode >> icon [
-	^ self iconNamed: #forwardIcon
+	^ self iconNamed: #forward
 ]
 
 { #category : 'testing' }

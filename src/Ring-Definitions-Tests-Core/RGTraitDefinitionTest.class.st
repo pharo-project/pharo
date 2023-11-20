@@ -48,44 +48,20 @@ RGTraitDefinitionTest >> testAddingMethods [
 
 { #category : 'testing' }
 RGTraitDefinitionTest >> testAsTraitDefinition [
+
 	| newTrait |
 	newTrait := TSortable asRingDefinition.
 	self assert: newTrait isRingObject.
 	self assert: newTrait isTrait.
 	self assert: newTrait name identicalTo: #TSortable.
-	self assert: newTrait category notNil.
-	self assert: newTrait superclassName notNil.
+	self assert: newTrait package isNotNil.
+	self assert: newTrait packageTag isNotNil.
+	self assert: newTrait superclassName isNotNil.
 
 
 	self assert: newTrait classSide isRingObject.
 	self assert: newTrait classSide isTrait.
 	self assert: newTrait classSide traitCompositionSource equals: '{}'
-]
-
-{ #category : 'testing' }
-RGTraitDefinitionTest >> testAsTraitDefinition2 [
-
-	| newTrait newClass newSlice |
-	newClass := MOPTestClassC
-		            asRingDefinitionWithMethods: false
-		            withSuperclasses: false
-		            withSubclasses: true
-		            withPackages: false.
-	newSlice := newClass environment.
-	self assert: newClass allSubclasses size equals: 0.
-	self assert: newClass traitNames size equals: 1.
-	self assert: newClass traits first equals: (newSlice traitNamed: #Trait2).
-
-	newTrait := MOPTestClassA
-		            asRingDefinitionWithMethods: true
-		            withSuperclasses: true
-		            withSubclasses: false
-		            withPackages: true.
-	newSlice := newTrait environment.
-	self assert: newTrait superclass equals: (newSlice classNamed: #Object).
-	self assert: newTrait methods size < newSlice methods size.
-	self assert: newTrait category equals: #'TraitsV2-Tests-MOP'.
-	self assertEmpty: newTrait subclasses
 ]
 
 { #category : 'testing' }
@@ -108,6 +84,7 @@ RGTraitDefinitionTest >> testExistingTrait [
 
 { #category : 'testing' }
 RGTraitDefinitionTest >> testNonExistingClass [
+
 	| newClass |
 	newClass := RGTraitDefinition named: #TConnection.
 	self assert: newClass isTrait.
@@ -116,7 +93,7 @@ RGTraitDefinitionTest >> testNonExistingClass [
 	self assert: newClass hasStamp not.
 	self assert: newClass parent equals: Smalltalk globals.
 	self assert: newClass package isNil.
-	self assert: newClass category isNil.
+	self assert: newClass packageTag isNil.
 	self assert: newClass hasMethods not.
 	self assert: newClass hasSuperclass not.
 	self assert: newClass hasTraitComposition not.
@@ -126,9 +103,10 @@ RGTraitDefinitionTest >> testNonExistingClass [
 
 { #category : 'testing' }
 RGTraitDefinitionTest >> testTraitEquality [
+
 	| newClass |
 	self assert: TSortable asRingDefinition equals: TSortable asRingDefinition.
 
-	newClass := TSortable asRingDefinition category: #Kernel.
+	newClass := TSortable asRingDefinition package: (RGPackageDefinition named: #Kernel).
 	self assert: TSortable asRingDefinition equals: newClass
 ]

@@ -23,12 +23,12 @@ MorphTreeMorphTest >> testLastClickedMorphSetUponUpdateList [
 	c
 		selectItems:
 			{CharacterSet}.
-	self assert: t listManager lastClickedMorph notNil.
+	self assert: t listManager lastClickedMorph isNotNil.
 	c rootClass: Bag.	"We change completely the list. CharacterSet is not anymore in the list after the update."
 	c updateList.
 	self assert: t listManager lastClickedMorph isNil.
 	c selectItems: { Bag }.
-	self assert: t listManager lastClickedMorph notNil ]
+	self assert: t listManager lastClickedMorph isNotNil ]
 		ensure: [ w close ]
 ]
 

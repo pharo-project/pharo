@@ -8,8 +8,3 @@ Class {
 	#package : 'Gofer-Core',
 	#tag : 'Manifest'
 }
-
-{ #category : 'code-critics' }
-ManifestGoferCore class >> ruleCollectionMessagesToExternalObjectRuleV1FalsePositive [
-	^ #(#(#(#RGMethodDefinition #(#GoferChanges #addReference: #false)) #'2021-07-23T19:30:50.698573+02:00') )
-]

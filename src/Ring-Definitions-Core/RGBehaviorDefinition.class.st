@@ -79,12 +79,6 @@ RGBehaviorDefinition class >> usersKey [
 	^#users
 ]
 
-{ #category : 'managing container' }
-RGBehaviorDefinition >> addInContainer: aRGContainer [
-
-	aRGContainer addClass: self
-]
-
 { #category : 'adding-removing methods' }
 RGBehaviorDefinition >> addMethod: aRGMethodDefinition [
 	"Adds aRGMethodDefinition in the methods dictionary.
@@ -142,7 +136,7 @@ RGBehaviorDefinition >> allSelectors [
 
 	class:= self.
 	selectors := Set new.
-	[class notNil] whileTrue:
+	[class isNotNil] whileTrue:
 			[selectors addAll: class selectors.
 			class := class superclass ].
 	^selectors
@@ -181,7 +175,7 @@ RGBehaviorDefinition >> allSuperclasses [
 		ifAbsentPut:[ | supers sprClass |
 			supers := OrderedCollection new.
 			sprClass := self superclass.
-			[sprClass notNil] whileTrue:
+			[sprClass isNotNil] whileTrue:
 				[supers add: sprClass.
 				sprClass := sprClass superclass].
 			supers ]
@@ -215,11 +209,11 @@ RGBehaviorDefinition >> classSide [
 { #category : 'accessing - methods' }
 RGBehaviorDefinition >> compiledMethodNamed: selector [
 	"Retrieves the compiled method from aRGMethodDefinition"
-	| method |
 
-	^(method:= self methodNamed: selector) notNil
-	ifTrue: [ method compiledMethod ]
-	ifFalse:[ nil ]
+	| method |
+	^ (method := self methodNamed: selector)
+		  ifNotNil: [ method compiledMethod ]
+		  ifNil: [ nil ]
 ]
 
 { #category : 'file in/out' }
@@ -255,7 +249,7 @@ RGBehaviorDefinition >> extensionMethods [
 RGBehaviorDefinition >> hasDefinitionSource [
 	"Tests whether the receiver has a source definition."
 
-	^ self definitionSource notNil
+	^ self definitionSource isNotNil
 ]
 
 { #category : 'testing' }
@@ -281,7 +275,7 @@ RGBehaviorDefinition >> hasProtocols [
 { #category : 'testing' }
 RGBehaviorDefinition >> hasSuperclass [
 
-	^superclass notNil
+	^superclass isNotNil
 ]
 
 { #category : 'testing' }
@@ -328,7 +322,7 @@ RGBehaviorDefinition >> instanceSide [
 RGBehaviorDefinition >> isDefined [
 	"If the class exists in the environment"
 
-	^self realClass notNil
+	^self realClass isNotNil
 ]
 
 { #category : 'managing container' }
@@ -379,6 +373,12 @@ RGBehaviorDefinition >> methods: aDictionary [
 
 { #category : 'accessing' }
 RGBehaviorDefinition >> package [
+
+	self subclassResponsibility
+]
+
+{ #category : 'accessing' }
+RGBehaviorDefinition >> packageTag [
 
 	self subclassResponsibility
 ]
@@ -497,13 +497,10 @@ RGBehaviorDefinition >> superclass: aRGBehaviorDefinition [
 	"The superclass is assigned.
 	If aRGBehaviorDefinition is not nil the receiver is added as a subclass and the superclass assignment also happens for classSide"
 
-	superclass := aRGBehaviorDefinition.
-	superclass notNil
-		ifFalse: [ ^ self ].
+	(superclass := aRGBehaviorDefinition) ifNil: [ ^ self ].
 	self superclassName: aRGBehaviorDefinition name.
 	aRGBehaviorDefinition addSubclass: self.
-	self hasMetaclass
-		ifTrue: [ self classSide superclass: aRGBehaviorDefinition classSide ]
+	self hasMetaclass ifTrue: [ self classSide superclass: aRGBehaviorDefinition classSide ]
 ]
 
 { #category : 'annotations' }

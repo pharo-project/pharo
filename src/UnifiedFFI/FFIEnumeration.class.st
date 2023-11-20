@@ -199,7 +199,7 @@ FFIEnumeration class >> enumClassForName: aName [
 			self class classInstaller make: [ :aBuilder |
 				aBuilder
 					name: className;
-					package: self category ]]
+					package: self package name ]]
 ]
 
 { #category : 'enum declaration' }

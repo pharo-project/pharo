@@ -36,8 +36,7 @@ MCMethodDefinitionTest >> secondExtensionPackageName [
 { #category : 'running' }
 MCMethodDefinitionTest >> tearDown [
 
-	{ self secondExtensionPackageName . self extensionPackageName . self mockPackageName }
-		do: [ :packageName | (packageName asPackageIfAbsent: [ nil ]) ifNotNil: [ :package | package removeFromSystem ] ].
+	{ self secondExtensionPackageName . self extensionPackageName . self mockPackageName } do: [ :packageName | self packageOrganizer removePackage: packageName ].
 	super tearDown
 ]
 
