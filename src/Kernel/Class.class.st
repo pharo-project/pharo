@@ -859,7 +859,7 @@ Class >> removeClassVarNamed: aStringOrSymbol [
 	classVariable isReferenced ifTrue: [
 			NewUndeclaredWarning signal: classVariable name in: self name.
 			"NOTE: we add ClassVariable to Undeclared, we need to update to UndeclaredVariable"
-			Undeclared add: (self classPool associationAt: classVariable key) ].
+			Undeclared add: classVariable ].
 		
 	self classPool removeKey: classVariable key.
 	self classPool ifEmpty: [ self classPool: nil ].
@@ -869,20 +869,12 @@ Class >> removeClassVarNamed: aStringOrSymbol [
 
 { #category : 'class variables' }
 Class >> removeClassVarNamed: aStringOrSymbol interactive: interactive [
-	"To be removed, interaction should be handled by the UI only"
-	<reflection: 'Class structural modification - Class variable modification'>
-
-	| classVariable |
-	self deprecated: 'Interaction should be handled by the UI'.
+	"Interaction should be handled by the UI, this had no users in the system"
 	
-	classVariable := self classPool 
-		associationAt: aStringOrSymbol asSymbol 
-		ifAbsent: [ ^ self error: aStringOrSymbol , ' is not a class variable' ].
-	
-	classVariable isReferenced & interactive 
-		ifTrue: [(self confirm: (classVariable name , ' is still used in code of class ' , classVariable users anyOne name , '.\Is it okay to move it to Undeclared?') withCRs) 
-		ifFalse: [ ^ self ] ].
-
+	self
+		deprecated: 'Interaction should be handled by the UI, use removeClassVarNamed:'
+		transformWith: '`@rcv removeClassVarNamed: `@arg1 interactive: `@arg2' -> '`@rcv removeClassVarNamed: `@arg1'.
+		
 	self removeClassVarNamed: aStringOrSymbol
 ]
 
