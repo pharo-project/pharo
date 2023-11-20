@@ -27,9 +27,6 @@ Class {
 		'package',
 		'modified'
 	],
-	#classVars : [
-		'PrivateAnnouncer'
-	],
 	#classInstVars : [
 		'registry'
 	],
@@ -67,16 +64,6 @@ MCWorkingCopy class >> ancestorsFromArray: anArray cache: cacheDictionary [
 		self infoFromDictionary: each cache: cacheDictionary.
 	].
 	^ anArray collect: [:dict | self infoFromDictionary: dict cache: cacheDictionary]
-]
-
-{ #category : 'private' }
-MCWorkingCopy class >> announcer [
-	^PrivateAnnouncer ifNil: [ SystemAnnouncer uniqueInstance  ]
-]
-
-{ #category : 'private' }
-MCWorkingCopy class >> announcer: anAnnouncer [
-	PrivateAnnouncer := anAnnouncer
 ]
 
 { #category : 'accessing' }
@@ -179,7 +166,6 @@ MCWorkingCopy class >> registerForNotifications [
 
 	<systemEventRegistration>
 	self
-		announcer: nil;
 		unregisterForNotifications;
 		registerInterestOnSystemChanges
 ]
@@ -239,11 +225,6 @@ MCWorkingCopy >> ancestors [
 { #category : 'accessing' }
 MCWorkingCopy >> ancestry [
 	^ ancestry
-]
-
-{ #category : 'private' }
-MCWorkingCopy >> announcer [
-	^self class announcer
 ]
 
 { #category : 'operations' }
