@@ -124,18 +124,6 @@ RBRemoveClassRefactoring >> preconditionEmptyClasses [
 	^ RBClassesEmptyCondition new classes: classesDictionary
 ]
 
-{ #category : 'helper methods' }
-RBRemoveClassRefactoring >> preconditionHasNoUsers: aClassOrTrait [
-
-	^ (RBCondition withBlock: [
-				(self refactoringAwareUsesOf: aClassOrTrait) isEmpty ])
-		  errorMacro:
-			  aClassOrTrait name , ' Trait is used.<n>Browse classes using it?';
-		  errorBlock: [
-			  self openBrowserOn: (self environmentWithUsersOf: aClassOrTrait) ];
-		  yourself
-]
-
 { #category : 'preconditions' }
 RBRemoveClassRefactoring >> preconditionHaveNoReferences [
 
@@ -176,14 +164,6 @@ RBRemoveClassRefactoring >> privateTransform [
 	self
 		reparentSubclasses;
 		removeClasses
-]
-
-{ #category : 'preconditions' }
-RBRemoveClassRefactoring >> refactoringAwareUsesOf: aClass [
-	"Return the 'symbol use' to the class taking into account that some uses may be created by other classes that should be removed by the refactoring."
-	
-^ ((self model allReferencesTo: aClass name)
-		collect: [ :each | each methodClass name ]) copyWithoutAll: classNames
 ]
 
 { #category : 'removing' }
