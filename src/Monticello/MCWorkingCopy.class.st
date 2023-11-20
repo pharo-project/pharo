@@ -79,12 +79,6 @@ MCWorkingCopy class >> announcer: anAnnouncer [
 	PrivateAnnouncer := anAnnouncer
 ]
 
-{ #category : 'system changes' }
-MCWorkingCopy class >> classModified: anEvent [
-
-	anEvent packagesAffected do: [ :package | package mcWorkingCopy ifNotNil: [ :copy | copy modified: true ] ]
-]
-
 { #category : 'accessing' }
 MCWorkingCopy class >> ensureForPackage: aPackage [
 
@@ -119,6 +113,12 @@ MCWorkingCopy class >> forPackageNamed: aPackageName [
 		  ifNone: [ NotFound signalFor: aPackageName in: self ]
 ]
 
+{ #category : 'system changes' }
+MCWorkingCopy class >> handleClassAndMethodsChange: anEvent [
+
+	anEvent packagesAffected do: [ :package | package mcWorkingCopy ifNotNil: [ :workingCopy | workingCopy modified: true ] ]
+]
+
 { #category : 'querying' }
 MCWorkingCopy class >> hasPackageNamed: aName [
 
@@ -146,26 +146,6 @@ MCWorkingCopy class >> initialize [
 
 	registry ifNotNil: [ registry rehash ].
 	self registerForNotifications
-]
-
-{ #category : 'system changes' }
-MCWorkingCopy class >> methodModified: anEvent [
-	"trait methods aren't handled here"
-
-	^ anEvent methodPackage mcWorkingCopy ifNotNil: [ :wc | wc modified: true ]
-]
-
-{ #category : 'system changes' }
-MCWorkingCopy class >> methodMoved: anEvent [
-
-	anEvent oldPackage mcWorkingCopy ifNotNil: [ :workingCopy | workingCopy modified: true ].
-	anEvent newPackage mcWorkingCopy ifNotNil: [ :workingCopy | workingCopy modified: true ]
-]
-
-{ #category : 'system changes' }
-MCWorkingCopy class >> methodRemoved: anEvent [
-
-	anEvent methodPackage mcWorkingCopy ifNotNil: [ :wc | wc modified: true ]
 ]
 
 { #category : 'system changes' }
@@ -211,10 +191,7 @@ MCWorkingCopy class >> registerInterestOnSystemChanges [
 		when: PackageAdded send: #packageAdded: to: self;
 		when: PackageRenamed send: #packageRenamed: to: self;
 		when: PackageRemoved send: #packageRemoved: to: self;
-		when: ClassAdded , ClassModifiedClassDefinition , ClassCommented , ClassParentRenamed , ClassRenamed , ClassRepackaged , ClassRemoved send: #classModified: to: self;
-		when: MethodAdded , MethodModified , MethodRecategorized send: #methodModified: to: self;
-		when: MethodRepackaged send: #methodMoved: to: self;
-		when: MethodRemoved send: #methodRemoved: to: self
+		when: ClassAnnouncement, MethodAnnouncement send: #handleClassAndMethodsChange: to: self
 ]
 
 { #category : 'private' }
