@@ -324,6 +324,12 @@ RGTraitV2Strategy >> isClass [
 	^ true
 ]
 
+{ #category : 'testing' }
+RGTraitV2Strategy >> isTraitStrategy [
+
+	^ true
+]
+
 { #category : 'default model values' }
 RGTraitV2Strategy >> makeResolved [
 
