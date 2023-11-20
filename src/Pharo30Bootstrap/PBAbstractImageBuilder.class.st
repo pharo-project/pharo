@@ -344,6 +344,8 @@ PBAbstractImageBuilder >> createInitialObjects [
 	self bootstrapInterpreter evaluateCode:
 		'Smalltalk instVarAt: 1 put: SystemDictionary new.'.
 	self bootstrapInterpreter evaluateCode:
+		'Undeclared := Smalltalk globals at: #Undeclared'.
+	self bootstrapInterpreter evaluateCode:
 		'Smalltalk globals at: #Smalltalk put: Smalltalk.'.
 
 	"Initialize the globals of the system. Careful: The AST interpreter will not know about these if we do not put them in the bootstrapEnvironment."
