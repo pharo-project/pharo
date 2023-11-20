@@ -421,8 +421,8 @@ SystemDictionary >> renameClass: aClass from: oldName [
 	self add: oldref. "Old association preserves old refs"
 	SessionManager default renamedClass: aClass from: oldName to: aClass name.
 	self flushClassNameCache.
-	SystemAnnouncer uniqueInstance classRenamed: aClass from: oldName to: aClass name.
-	aClass subclassesDo: [ :subclass | SystemAnnouncer uniqueInstance classParentOf: subclass renamedFrom: oldName to: aClass name ]
+	self class codeChangeAnnouncer classRenamed: aClass from: oldName to: aClass name.
+	aClass subclassesDo: [ :subclass | self class codeChangeAnnouncer classParentOf: subclass renamedFrom: oldName to: aClass name ]
 ]
 
 { #category : 'renaming' }

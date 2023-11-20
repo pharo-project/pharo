@@ -48,10 +48,9 @@ MenubarMorph class >> initialize [
 { #category : 'instance creation' }
 MenubarMorph class >> install [
 	"Unsubscribe to subscribe only once"
-	SystemAnnouncer uniqueInstance unsubscribe: self.
-	SystemAnnouncer uniqueInstance weak
-		when: MethodAnnouncement
-		send: #methodAnnouncementReceived: to: self
+
+	self codeChangeAnnouncer unsubscribe: self.
+	self codeChangeAnnouncer weak when: MethodAnnouncement send: #methodAnnouncementReceived: to: self
 ]
 
 { #category : 'setting' }

@@ -367,11 +367,9 @@ TestCase class >> historyAnnouncer [
 
 { #category : 'class initialization' }
 TestCase class >> initialize [
-	SystemAnnouncer uniqueInstance unsubscribe: self.
-	SystemAnnouncer uniqueInstance weak
-		when: MethodAdded, MethodModified, MethodRemoved
-		send: #methodChanged:
-		to: self
+
+	self codeChangeAnnouncer unsubscribe: self.
+	self codeChangeAnnouncer weak when: MethodAdded , MethodModified , MethodRemoved send: #methodChanged: to: self
 ]
 
 { #category : 'testing' }

@@ -31,7 +31,7 @@ DoItChunk >> importFor: requestor logSource: logSource [
 	| ast |
 	(contents beginsWith: '----') ifTrue: [ ^ self ].
 
-	SystemAnnouncer announce: (DoItChunkImported new
+	self class codeSupportAnnouncer announce: (DoItChunkImported new
 			 contents: contents;
 			 logSource: logSource;
 			 yourself).

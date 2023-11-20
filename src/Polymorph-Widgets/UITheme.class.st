@@ -89,26 +89,21 @@ UITheme class >> current: aUITheme [
 	SystemProgressMorph reset. "reset to use new fill styles"
 	ScrollBarMorph initializeImagesCache. "reset to use new arrows"
 
-	self class environment at: #SHPreferences ifPresent: [ :shPreferences |
-		shPreferences setStyleTable: aUITheme shStyleTable ].
+	self class environment at: #SHPreferences ifPresent: [ :shPreferences | shPreferences setStyleTable: aUITheme shStyleTable ].
 
-	self class environment at: #PolymorphSystemSettings ifPresent: [ :polymorphSystemSettings |
-		polymorphSystemSettings desktopColor: aUITheme desktopColor ].
+	self class environment at: #PolymorphSystemSettings ifPresent: [ :polymorphSystemSettings | polymorphSystemSettings desktopColor: aUITheme desktopColor ].
 
-	self class environment at: #NECPreferences ifPresent: [ :necPreferences |
-		necPreferences backgroundColor: aUITheme windowColor ].
+	self class environment at: #NECPreferences ifPresent: [ :necPreferences | necPreferences backgroundColor: aUITheme windowColor ].
 
-	self class environment at: #Paragraph ifPresent: [ :paragraph |
-		paragraph insertionPointColor: aUITheme caretColor ].
+	self class environment at: #Paragraph ifPresent: [ :paragraph | paragraph insertionPointColor: aUITheme caretColor ].
 
-	self class environment at: #BalloonMorph ifPresent: [ :balloonMorph |
-		balloonMorph setBalloonColorTo: aUITheme balloonBackgroundColor ].
+	self class environment at: #BalloonMorph ifPresent: [ :balloonMorph | balloonMorph setBalloonColorTo: aUITheme balloonBackgroundColor ].
 
 	aUITheme updateWorldDockingBars.
 	self currentWorld themeChanged.
-	(SystemWindow allSubInstances select:[:e | e owner isNil]) do: [ :each | each themeChanged ].
+	(SystemWindow allSubInstances select: [ :e | e owner isNil ]) do: [ :each | each themeChanged ].
 
-	SystemAnnouncer announce: UIThemeChanged
+	self codeSupportAnnouncer announce: UIThemeChanged
 ]
 
 { #category : 'accessing' }
