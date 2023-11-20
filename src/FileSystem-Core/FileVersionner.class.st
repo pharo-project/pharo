@@ -144,7 +144,7 @@ FileVersionner >> versionNumberFor: basename extension: extension [
 					maxVersion := maxVersion max: childVersion ] ].
 
 	^ maxVersion = 0
-		ifTrue: [ (((self fileReference / (basename , '.' , extension)) asFileReference exists) or: [ fileName notNil ])
+		ifTrue: [ (((self fileReference / (basename , '.' , extension)) asFileReference exists) or: [ fileName isNotNil ])
 			ifTrue: [ 0 ]
 			ifFalse: [ nil ] ]
 		ifFalse: [ maxVersion ]
@@ -168,7 +168,7 @@ FileVersionner >> versionNumberWithoutNumberPatternFor: basename extension: exte
 					maxVersion := maxVersion max: childVersion ] ].
 
 	^ maxVersion = 0
-		ifTrue: [ (((self fileReference / (basename, '.', extension)) asFileReference exists) or: [ fileName notNil ])
+		ifTrue: [ (((self fileReference / (basename, '.', extension)) asFileReference exists) or: [ fileName isNotNil ])
 			ifTrue: [ 0 ]
 			ifFalse: [ nil ] ]
 		ifFalse: [ maxVersion ]

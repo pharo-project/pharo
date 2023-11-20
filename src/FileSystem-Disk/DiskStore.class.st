@@ -382,7 +382,7 @@ DiskStore >> directoryAt: aPath nodesDo: aBlock [
 		dirPointer := openDir.
 		entryData := File primReaddir: dirPointer ].
 	[
-		[ entryData notNil ] whileTrue:
+		[ entryData isNotNil ] whileTrue:
 			[
 				fileName := entryData first.
 				entryData at: 1 put: (File decodePathString: fileName).

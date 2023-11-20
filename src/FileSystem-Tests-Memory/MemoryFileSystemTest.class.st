@@ -154,7 +154,7 @@ MemoryFileSystemTest >> testIsMemoryFileSystem [
 
 { #category : 'tests' }
 MemoryFileSystemTest >> testModifiedTimeWhenFileCreated [
-	self assert: (filesystem / 'file.txt') ensureCreateFile modificationTime notNil
+	self assert: (filesystem / 'file.txt') ensureCreateFile modificationTime isNotNil
 ]
 
 { #category : 'tests' }
@@ -163,7 +163,7 @@ MemoryFileSystemTest >> testModifiedTimeWhenFileModifiedByWriteStream [
 	fileReference := (filesystem / 'file.txt') ensureCreateFile.
 	modifiedTime := self lastModificationTimeOf: fileReference.
 	fileReference writeStreamDo: [ :aStream | aStream nextPutAll: 'data' ].
-	self assert: modifiedTime notNil.
+	self assert: modifiedTime isNotNil.
 	self deny: modifiedTime equals: fileReference modificationTime
 ]
 
@@ -174,7 +174,7 @@ MemoryFileSystemTest >> testModifiedTimeWhenFileModifiedWithBinaryWriteStream [
 	modifiedTime := self lastModificationTimeOf: fileReference.
 	data := 'some data'.
 	fileReference binaryWriteStreamDo: [ :aStream | aStream nextPutAll: data asByteArray ].
-	self assert: modifiedTime notNil.
+	self assert: modifiedTime isNotNil.
 	self deny: modifiedTime equals: fileReference modificationTime.
 	self
 		assert: data asByteArray
@@ -188,7 +188,7 @@ MemoryFileSystemTest >> testModifiedTimeWhenFileWrittenTo [
 	fileReference := (filesystem / 'file.txt') ensureCreateFile.
 	modifiedTime := self lastModificationTimeOf: fileReference.
 	fileReference binaryWriteStreamDo: [ :aStream | aStream nextPutAll: 'data' asByteArray ].
-	self assert: modifiedTime notNil.
+	self assert: modifiedTime isNotNil.
 	self deny: modifiedTime equals: fileReference modificationTime
 ]
 
@@ -199,7 +199,7 @@ MemoryFileSystemTest >> testModifiedTimeWhenHandleTruncated [
 	handle := fileReference openWritable: true.
 	modifiedTime := self lastModificationTimeOf: fileReference.
 	handle truncate.
-	self assert: modifiedTime notNil.
+	self assert: modifiedTime isNotNil.
 	self deny: modifiedTime equals: fileReference modificationTime
 ]
 

@@ -13,8 +13,16 @@ Class {
 
 { #category : 'retrying' }
 MirrorModificationForbidden >> retryModification [
-	fieldIndex notNil
-		ifTrue: [ MirrorPrimitives perform: retrySelector withArguments: {object. fieldIndex. newValue}]
-		ifFalse: [MirrorPrimitives perform: retrySelector withArguments: {object. newValue}].
+
+	fieldIndex
+		ifNotNil: [
+			MirrorPrimitives perform: retrySelector withArguments: {
+					object.
+					fieldIndex.
+					newValue } ]
+		ifNil: [
+			MirrorPrimitives perform: retrySelector withArguments: {
+					object.
+					newValue } ].
 	self resumeUnchecked: newValue
 ]

@@ -86,7 +86,7 @@ RBProgramNode >> hasLinks [
 
 { #category : '*Reflectivity' }
 RBProgramNode >> hasMetaLinks [
-	^ self links notNil and: [ self links notEmpty ]
+	^ self links isNotNil and: [ self links notEmpty ]
 ]
 
 { #category : '*Reflectivity' }
