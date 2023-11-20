@@ -58,5 +58,7 @@ ReAbstractRuleTestCase >> sourceAtChritique: critique [
 
 { #category : 'utilities' }
 ReAbstractRuleTestCase >> subjectUnderTest [
-	^(self class name allButLast: 4) asClass
+
+	^ (self class name allButLast: 4) asClassInEnvironment:
+		  self class environment
 ]

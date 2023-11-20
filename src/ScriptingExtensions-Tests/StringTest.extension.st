@@ -1,13 +1,6 @@
 Extension { #name : 'StringTest' }
 
 { #category : '*ScriptingExtensions-Tests' }
-StringTest >> testAsClass [
-	self
-		assert: 'String' asClass
-		equals: String
-]
-
-{ #category : '*ScriptingExtensions-Tests' }
 StringTest >> testAsClassIfAbsent [
 
 	self
@@ -25,4 +18,12 @@ StringTest >> testAsClassIfPresent [
 		self assert: class equals: String ].
 
 	'+' asClassIfPresent: [ ^ self fail ]
+]
+
+{ #category : '*ScriptingExtensions-Tests' }
+StringTest >> testAsClassInEnvironment [
+
+	self
+		assert: ('String' asClassInEnvironment: self class environment)
+		equals: String
 ]
