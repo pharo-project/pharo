@@ -213,6 +213,14 @@ MemoryStore >> initialize [
 ]
 
 { #category : 'testing' }
+MemoryStore >> isHidden: aResolvable attributes: statAttributesArray [
+	"Answer a boolean indicating whether the file is hidden or not.
+	We follow Unix here, using the file naming convention that file names beginning with a dot are not displayed"
+
+	^ aResolvable basename first = $.
+]
+
+{ #category : 'testing' }
 MemoryStore >> isMemoryFileSystem [
 	^ true
 ]

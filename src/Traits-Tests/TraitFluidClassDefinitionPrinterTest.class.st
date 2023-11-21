@@ -34,10 +34,10 @@ TraitFluidClassDefinitionPrinterTest >> testClassSideDoesNotShowPackage [
 { #category : 'tests - template' }
 TraitFluidClassDefinitionPrinterTest >> testCompactTraitFullTemplate [
 
-	self
-		assert: (FluidClassDefinitionPrinter new compactTraitDefinitionTemplateInPackage: 'Traits') equals: 'Trait << #TMyTrait
+	self assert: (FluidClassDefinitionPrinter new compactTraitDefinitionTemplateInPackage: 'Traits' tag: #Basic) equals: 'Trait << #TMyTrait
 	traits: {};
 	slots: {};
+	tag: #Basic;
 	package: ''Traits'''
 ]
 

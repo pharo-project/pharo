@@ -3,7 +3,7 @@ SUnit tests for RPackage Monticello synchronization
 "
 Class {
 	#name : 'RPackageMonticelloSynchronisationTest',
-	#superclass : 'RPackageTestCase',
+	#superclass : 'PackageTestCase',
 	#category : 'Monticello-Tests-RPackage',
 	#package : 'Monticello-Tests',
 	#tag : 'RPackage'

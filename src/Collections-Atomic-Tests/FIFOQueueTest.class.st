@@ -286,7 +286,7 @@ FIFOQueueTest >> testSuchThat [
 	self assert: (q nextOrNilSuchThat: [:e | e = 5 ]) equals: 5.
 
 	9 timesRepeat: [
-		self assert: (q nextOrNil notNil) ].
+		self assert: (q nextOrNil isNotNil) ].
 
 	self assert: q nextOrNil isNil
 ]

@@ -190,12 +190,13 @@ ZnMimePart >> fileName [
 
 { #category : 'testing' }
 ZnMimePart >> hasEntity [
-	^ self entity notNil
+	^ self entity isNotNil
 ]
 
 { #category : 'testing' }
 ZnMimePart >> hasHeaders [
-	^ headers notNil and: [ self headers isEmpty not ]
+
+	^ headers isNotNil and: [ self headers isNotEmpty ]
 ]
 
 { #category : 'comparing' }

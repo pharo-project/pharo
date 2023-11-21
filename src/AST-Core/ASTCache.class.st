@@ -36,7 +36,7 @@ Class {
 { #category : 'private - announcements' }
 ASTCache class >> announceCacheReset [
 
-	SystemAnnouncer announce: ASTCacheReset new
+	self codeSupportAnnouncer announce: ASTCacheReset new
 ]
 
 { #category : 'accessing' }

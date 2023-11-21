@@ -24,5 +24,5 @@ CompiledMethod >> manifestBuilderForRuleChecker: aRuleChecker [
 { #category : '*Manifest-Core' }
 CompiledMethod >> mcWorkingCopy [
 
-	MCWorkingCopy workingCopiesForPackage: self package do: [ :package | ^ package ]
+	^ self package mcWorkingCopy
 ]

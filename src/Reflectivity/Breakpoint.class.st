@@ -154,31 +154,19 @@ Breakpoint class >> isInstalledIn: aMethod [
 { #category : 'notifications' }
 Breakpoint class >> notifyBreakpointAdded: aBreakpoint [
 
-	| announcement |
-	announcement := BreakpointAdded
-		on: aBreakpoint
-		nodes: aBreakpoint link nodes.
-	SystemAnnouncer announce: announcement
+	self codeSupportAnnouncer announce: (BreakpointAdded on: aBreakpoint nodes: aBreakpoint link nodes)
 ]
 
 { #category : 'notifications' }
 Breakpoint class >> notifyBreakpointHit: aBreakpoint inContext: aContext node: node [
 
-	| announcement |
-	announcement := BreakpointHit
-		on: aBreakpoint
-		nodes: {node}.
-	SystemAnnouncer announce: announcement
+	self codeSupportAnnouncer announce: (BreakpointHit on: aBreakpoint nodes: { node })
 ]
 
 { #category : 'notifications' }
 Breakpoint class >> notifyBreakpointRemoved: aBreakpoint fromNodes: nodes [
 
-	| announcement |
-	announcement := BreakpointRemoved
-		on: aBreakpoint
-		nodes: nodes.
-	SystemAnnouncer announce: announcement
+	self codeSupportAnnouncer announce: (BreakpointRemoved on: aBreakpoint nodes: nodes)
 ]
 
 { #category : 'class initialization' }
@@ -392,7 +380,7 @@ Breakpoint >> isEnabled [
 { #category : 'testing' }
 Breakpoint >> isObjectCentric [
 
-	^ self targetInstance notNil
+	^ self targetInstance isNotNil
 ]
 
 { #category : 'testing' }

@@ -132,6 +132,17 @@ ReleaseTest >> testClassesShadow [
 	self assert: classes isEmpty description: classes asArray asString
 ]
 
+{ #category : 'tests - package' }
+ReleaseTest >> testExistingPackageNamesDoesNotContainIllegalCharacters [
+
+	| illegalCharacters |
+	illegalCharacters := #( $\ $/ $: $* $? $" $< $> $| ).
+
+	self packageOrganizer packages do: [ :package |
+		self deny: (package name includesAnyOf: illegalCharacters).
+		package classTags do: [ :tag | self deny: (tag name includesAnyOf: illegalCharacters) ] ]
+]
+
 { #category : 'tests' }
 ReleaseTest >> testExplicitRequirementMethodsShouldBeImplementedInTheirUsers [
 	"If a class is using a trait with an explicit requirement method, this class should implement the method"
@@ -279,6 +290,13 @@ ReleaseTest >> testNoOrphanPackage [
 	self assertEmpty: (self packageOrganizer packages reject: [ :package | package isUndefined or: [ declaredPackages includes: package name ] ])
 ]
 
+{ #category : 'tests - package' }
+ReleaseTest >> testNoPackagesOverride [
+	"Class side packages should not be overridden"
+
+	Object allSubclasses do: [ :each | each class compiledMethodAt: #packages ifPresent: [ self fail: 'The #packages method should not be overriden' ] ]
+]
+
 { #category : 'tests - source' }
 ReleaseTest >> testNoPeriodInMethodSignature [
 	| methods |
@@ -306,7 +324,7 @@ ReleaseTest >> testNoSentButNotImplementedSelectors [
 	                    'BalloonEngine>>#registerFills:' 'BalloonFillData>>#computeFill' 'ClyFullBrowserMorph>>#extendClassScopeForMethods:'
 	                    'ComplexBorderStyle>>#drawPolyPatchFrom:to:on:usingEnds:' 'ComplexBorderStyle>>#drawLineFrom:to:on:'
 	                    'Context>>#simulatePrimitive:in:receiver:arguments:' 'Context>>#doPrimitive:method:receiver:args:'
-	                    'Context>>#failPrimitiveWith:' 'DAGraphVizGenerator>>#buildGraphViz' 'DAGraphVizGenerator>>#openWith:' 'DAGraphVizGenerator>>#saveDotFileAndGenerateForType:'
+	                    'Context>>#failPrimitiveWith:' 'DAPackageRelationGraphGenerator>>#buildEdges' 'DAPackageCycleGenerator>>#buildEdges' 'DAGraphVizGenerator>>#buildGraphViz' 'DAGraphVizGenerator>>#openWith:' 'DAGraphVizGenerator>>#saveDotFileAndGenerateForType:'
 	                    'DAPackageAnalyzerDiffTreePresenter>>#buildRoots' 'DTReRunConfiguration>>#items' 'DebugSession>>#shouldDisplayContext:basedOnFilters:'
 	                    'DiskDirectoryEntry class>>#store:path:node:' 'EDEmergencyDebugger>>#resetDisplay' 'EDTest>>#prepareMethodVersionTest'
 	                    'ExternalDropHandler class>>#defaultHandler' 'FFICallbackArgumentReader>>#stackPointer' 'FFIFloat32>>#callbackReturnOn:for:'
@@ -319,8 +337,7 @@ ReleaseTest >> testNoSentButNotImplementedSelectors [
 	                    'InstructionStream>>#interpretNext3ByteSistaV1Instruction:for:extA:extB:startPC:'
 	                    'KMDispatcher>>#spotterForKeysFor:' 'KMMetaModifier>>#printOsRepresentationOn:' 'LGitDiff>>#includesFileNamed:'
 	                    'LGitRepository>>#cloneRemote:signature:branch:checkoutOptions:' 'LazyListMorph>>#drawOnAthensCanvas:'
-	                    'MCAddition>>#myVersionOn:' 'MCConfigurationBrowser>>#addRepository' 'MCConfigurationBrowser>>#changedList'
-	                    'MCFileTreeAbstractReader>>#packageProperties' 'MCModification>>#myVersionOn:' 'MCOrganizationDefinition>>#addAnalysisToPackageChangeSet:change:'
+	                    'MCAddition>>#myVersionOn:' 'MCFileTreeAbstractReader>>#packageProperties' 'MCModification>>#myVersionOn:' 'MCOrganizationDefinition>>#addAnalysisToPackageChangeSet:change:'
 	                    'MicrodownSpecComponentForTest class>>#open' 'MockLessonView>>#showTutorialNode:' 'MorphTreeMorph>>#nodeExpandRequest:'
 	                    'MorphTreeMorph>>#selectItemsRequest:' 'PSMCClassChangeWrapper>>#remoteChosen' 'PolygonMorph>>#intersects:' 'RBBasicDummyLintRuleTest class>>#createMatcherFor:method:'
 	                    'RBBasicDummyLintRuleTest class>>#usesAdd' 'RBBasicDummyLintRuleTest class>>#unreferencedVariables'
@@ -337,10 +354,9 @@ ReleaseTest >> testNoSentButNotImplementedSelectors [
 	                    'RBFindAndReplacePreviewPresenter>>#initializeDialogWindow:' 'RBLintRuleTestData>>#runOnEnvironment:'
 	                    'RBRemoveClassRefactoring>>#senders' 'RBTransformationDummyRuleTest class>>#initializeAfterLoad1'
 	                    'RBTransformationDummyRuleTest class>>#rewrite:methods:name:' 'RBTransformationRuleTestData class>>#initializeAfterLoad1'
-	                    'RBTransformationRuleTestData class>>#rewrite:methods:name:' 'RGChunkImporter>>#visitDoItChunk:'
-	                    'ReSentNotImplementedRuleTest>>#sampleMethod' 'Rectangle>>#newRectButtonPressedDo:inWorld:' 'RubSegmentMorph>>#intersects:'
-	                    'RubTextSegmentMorph>>#displayIconAt:onAthensCanvas:' 'SpApplication>>#ensureConfiguration' 'SpApplicationBackend>>#notify:'
-	                    'SpChangeSorterPresenter>>#createRingMethodForRemovedSelector:inClass:'
+	                    'RBTransformationRuleTestData class>>#rewrite:methods:name:' 'RGChunkImporter>>#visitDoItChunk:' 'ReSentNotImplementedRuleTest>>#sampleMethod'
+	                    'Rectangle>>#newRectButtonPressedDo:inWorld:' 'RubSegmentMorph>>#intersects:' 'RubTextSegmentMorph>>#displayIconAt:onAthensCanvas:'
+	                    'SpApplication>>#ensureConfiguration' 'SpApplicationBackend>>#notify:' 'SpChangeSorterPresenter>>#createRingMethodForRemovedSelector:inClass:'
 	                    'SpRenameDefaultSpecToDefaultLayoutRefactoring>>#preconditions' 'SpRenameDefaultSpecToDefaultLayoutRefactoring>>#initialize'
 	                    'SpTransmission>>#from:port:to:transform:postTransmission:' 'SpTreeColumn>>#rowMorphFor:' 'SpUIThemeDecoratorTest>>#testDoesNotUnderstand'
 	                    'SpWindowPresenter>>#notify:' 'StSpotterPragmaBasedProcessor>>#installKeymappingsOn:'
@@ -393,6 +409,22 @@ ReleaseTest >> testObsoleteClasses [
 					print: obsoleteClasses ]]
 ]
 
+{ #category : 'tests - package' }
+ReleaseTest >> testPackageOrganizer [
+	"Ensure other tests temporary created organizers are collected"
+
+	3 timesRepeat: [ Smalltalk garbageCollect ].
+
+	"Now check :)"
+	self
+		assert: PackageOrganizer allInstances size = 1
+		description: 'There are multiple (' , PackageOrganizer allInstances size asString , ') instances of PackageOrganizer'.
+
+	self
+		assert: PackageOrganizer allInstances first == self packageOrganizer
+		description: 'The default package organizer is the not the only instance of PackageOrganizer'
+]
+
 { #category : 'tests' }
 ReleaseTest >> testPharoVersionFileExists [
 
@@ -407,29 +439,13 @@ ReleaseTest >> testPharoVersionFileExists [
 		equals: SystemVersion current major asString,  SystemVersion current minor asString
 ]
 
-{ #category : 'tests - packages - manifests' }
+{ #category : 'tests - package' }
 ReleaseTest >> testProperManifestClasses [
 
 	|manifests|
 	manifests := self class environment allClasses select: [:each | each isManifest ].
 	self assert: (manifests allSatisfy: [:each | each inheritsFrom: PackageManifest ]).
 	self assert: (manifests allSatisfy: [:each | each name beginsWith: 'Manifest' ])
-]
-
-{ #category : 'tests - rpackage' }
-ReleaseTest >> testPackageOrganizer [
-	"Ensure other tests temporary created organizers are collected"
-
-	3 timesRepeat: [ Smalltalk garbageCollect ].
-
-	"Now check :)"
-	self
-		assert: PackageOrganizer allInstances size = 1
-		description: 'There are multiple (' , PackageOrganizer allInstances size asString , ') instances of PackageOrganizer'.
-
-	self
-		assert: PackageOrganizer allInstances first == self packageOrganizer
-		description: 'The default package organizer is the not the only instance of PackageOrganizer'
 ]
 
 { #category : 'tests' }
@@ -475,7 +491,7 @@ ReleaseTest >> testTestCasesEndsWithTestOrTestCase [
 	self assertValidLintRule: ReTestClassNameShouldEndWithTestRule new
 ]
 
-{ #category : 'tests - rpackage' }
+{ #category : 'tests - package' }
 ReleaseTest >> testThatAllMethodsArePackaged [
 	| classes instanceMethods classMethods allMethods methodsWithoutPackageInfo |
 	classes := Smalltalk allClassesAndTraits.
@@ -517,7 +533,7 @@ ReleaseTest >> testUndeclared [
 	self assert: remaining isEmpty description: description
 ]
 
-{ #category : 'tests - rpackage' }
+{ #category : 'tests - package' }
 ReleaseTest >> testUndefinedPackageShouldBeEmpty [
 	"The unpackage package should not have any defined class or extended classes"
 
@@ -543,7 +559,7 @@ ReleaseTest >> testUnknownProcesses [
 				separatedBy: [ out << String crlf ] ])
 ]
 
-{ #category : 'tests - rpackage' }
+{ #category : 'tests - package' }
 ReleaseTest >> testUnpackagedClasses [
 
 	| unpackagedClasses |

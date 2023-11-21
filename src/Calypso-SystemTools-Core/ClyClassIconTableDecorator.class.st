@@ -18,7 +18,7 @@ ClyClassIconTableDecorator class >> decorateMainTableCell: anItemCellMorph of: a
 	| icon |
 	super decorateMainTableCell: anItemCellMorph of: aDataSourceItem.
 
-   icon := self iconNamed: (Object environment
+   icon := self iconFormSetNamed: (Object environment
 		at: aDataSourceItem name asSymbol
 		ifPresent: [ :aClass | aClass systemIconName ]
 		ifAbsent: [ Object systemIconName ]).

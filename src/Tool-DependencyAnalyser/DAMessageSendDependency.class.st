@@ -24,7 +24,8 @@ DAMessageSendDependency >> isMessageSendDependency [
 
 { #category : 'accessing' }
 DAMessageSendDependency >> users [
-	^  (source rPackage methods
-		select: [ :method | method messages includesAny: implementedMethods ]
-		thenCollect: [ :method | method -> (method messages intersection: implementedMethods) ])
+
+	^ source systemPackage methods
+		  select: [ :method | method messages includesAny: implementedMethods ]
+		  thenCollect: [ :method | method -> (method messages intersection: implementedMethods) ]
 ]

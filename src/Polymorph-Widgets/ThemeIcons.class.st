@@ -27,6 +27,7 @@ Class {
 		'url',
 		'iconsPerScale',
 		'scale',
+		'formSetsCache',
 		'reportNotFound'
 	],
 	#classVars : [
@@ -106,9 +107,10 @@ ThemeIcons class >> current [
 
 { #category : 'instance creation' }
 ThemeIcons class >> current: aPack [
+
 	aPack hasIcons ifFalse: [ aPack loadIconsFromUrl ].
 	Current := aPack.
-	SystemAnnouncer announce: IconSetChanged
+	self codeSupportAnnouncer announce: IconSetChanged
 ]
 
 { #category : 'accessing' }
@@ -210,6 +212,25 @@ ThemeIcons >> allIconNames [
 	^ self icons keys
 ]
 
+{ #category : 'private' }
+ThemeIcons >> basicIconFormSetNamed: aSymbol [
+
+	| displayScaleFactor |
+
+	^ ((formSetsCache ifNil: [ formSetsCache := Dictionary new ])
+		at: (displayScaleFactor := self currentWorld displayScaleFactor)
+		ifAbsentPut: [ IdentityDictionary new ])
+			at: aSymbol ifAbsentPut: [
+				self icons at: aSymbol
+					ifPresent: [ :form |
+						| allForms scaledForm |
+						allForms := OrderedCollection new.
+						iconsPerScale do: [ :icons | icons at: aSymbol ifPresent: [ :otherForm | allForms add: otherForm ] ].
+						allForms add: (scaledForm := form scaledToSize: form extent * (displayScaleFactor / self scale)).
+						FormSet extent: scaledForm extent depth: scaledForm depth forms: (Array withAll: allForms) ]
+					ifAbsent: [ ^ nil ] ]
+]
+
 { #category : 'accessing' }
 ThemeIcons >> beCurrent [
 	self class current: self
@@ -227,25 +248,14 @@ ThemeIcons >> beReportNotFound [
 
 { #category : 'accessing' }
 ThemeIcons >> blankIcon [
-	^ self blankIconOfWidth: 16
+
+	^ self blankIconFormSet asForm
 ]
 
-{ #category : 'utilities' }
-ThemeIcons >> blankIconOfWidth: aNumber [
+{ #category : 'accessing' }
+ThemeIcons >> blankIconFormSet [
 
-	"We hard-code the most used cases to avoid symbol creation"
-
-	aNumber == 16 ifTrue: [ ^ self icons
-		at: #blank16
-		ifAbsentPut: [Form extent: 16 @ 1 depth: 8] ].
-
-	aNumber == 10 ifTrue: [ ^ self icons
-		at: #blank10
-		ifAbsentPut: [Form extent: 10 @ 1 depth: 8] ].
-
-	^ self icons
-		at: ('blank-' , aNumber asString) asSymbol
-		ifAbsentPut: [Form extent: aNumber @ 1 depth: 8]
+	^ self iconFormSetNamed: #blank
 ]
 
 { #category : 'private' }
@@ -296,33 +306,45 @@ ThemeIcons >> hash [
 ]
 
 { #category : 'accessing' }
-ThemeIcons >> iconNamed: aSymbol [
+ThemeIcons >> iconFormSetNamed: aSymbol [
+
 	^ (self
-		iconNamed: aSymbol
+		iconFormSetNamed: aSymbol
 		ifNone: [
 			self isReportingNotFound
 				ifTrue: [
 					self crTrace: (aSymbol, ' icon not found!').
-					self notFoundIcon scaledByDisplayScaleFactor ]
-				ifFalse: [ self blankIcon scaledByDisplayScaleFactor ]])
+					self notFoundIconFormSet ]
+				ifFalse: [ self blankIconFormSet ]])
+]
+
+{ #category : 'accessing' }
+ThemeIcons >> iconFormSetNamed: aSymbol ifNone: aBlock [
+
+	(self basicIconFormSetNamed: aSymbol asSymbol) ifNotNil: [ :icon | ^ icon ].
+	"Trying the old way"
+
+	
+	((aSymbol endsWith: 'Icon') or: [ (aSymbol endsWith: 'Form') ]) ifTrue: [
+		(self basicIconFormSetNamed: (aSymbol allButLast: 4) asSymbol)
+			ifNotNil: [ :icon | 
+				('Using old icon name, please rename ', aSymbol printString) traceCr.
+				^ icon ]
+	].
+
+	^ aBlock value
+]
+
+{ #category : 'accessing' }
+ThemeIcons >> iconNamed: aSymbol [
+
+	^ (self iconFormSetNamed: aSymbol) asForm
 ]
 
 { #category : 'accessing' }
 ThemeIcons >> iconNamed: aSymbol ifNone: aBlock [
 
-	self icons at: aSymbol asSymbol ifPresent: [ :icon | ^ icon scaledToSize: icon extent * (self currentWorld displayScaleFactor / self scale) ].
-	"Trying the old way"
-
-	
-	((aSymbol endsWith: 'Icon') or: [ (aSymbol endsWith: 'Form') ]) ifTrue: [
-		self icons
-			at: (aSymbol allButLast: 4) asSymbol
-			ifPresent: [ :icon | 
-				('Using old icon name, please rename ', aSymbol printString) traceCr.
-				^ icon scaledToSize: icon extent * (self currentWorld displayScaleFactor / self scale) ]
-	].
-
-	^ aBlock value
+	^ (self iconFormSetNamed: aSymbol ifNone: [ ^ aBlock value ]) asForm
 ]
 
 { #category : 'accessing' }
@@ -367,6 +389,8 @@ ThemeIcons >> loadIconsFromUrlUsingScale: newScale [
 					at: each base asSymbol
 					put: (self readPNGFrom: each) ]
 				on: Error do: [ :e | self crTrace: ('{1} not a PNG, skipping.' format: { each fullName }) ] ] ].
+	newIconsPerScale keysAndValuesDo: [ :iconsScale :icons |
+		icons at: #notFound ifAbsentPut: [ Color red iconOrThumbnailOfSize: 16 * iconsScale ] ].
 	iconsPerScale := newIconsPerScale.
 	scale := newScale
 ]
@@ -383,9 +407,14 @@ ThemeIcons >> name: aName [
 
 { #category : 'accessing' }
 ThemeIcons >> notFoundIcon [
-	^ self icons
-		at: #notFoundIcon
-		ifAbsentPut: [ Color red iconOrThumbnailOfSize: 16 ]
+
+	^ self notFoundIconFormSet asForm
+]
+
+{ #category : 'accessing' }
+ThemeIcons >> notFoundIconFormSet [
+
+	^ self iconFormSetNamed: #notFound ifNone: [ FormSet form: (Form extent: 0@0) ]
 ]
 
 { #category : 'printing' }

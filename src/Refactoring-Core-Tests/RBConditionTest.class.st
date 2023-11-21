@@ -15,7 +15,7 @@ Class {
 RBConditionTest >> setUp [
 
 	super setUp.
-	rbNamespace := RBClassModelFactory rbNamespace new.
+	rbNamespace := RBNamespace new.
 	objectClass := rbNamespace classNamed: #Object.
 	messageNodeClass := rbNamespace classNamed: #RBMessageNode.
 	rbNamespace defineClass: [ :aBuilder |

@@ -59,7 +59,7 @@ RBInteractionDriver >> refactoring [
 { #category : 'utilities' }
 RBInteractionDriver >> refactoringScopeOn: aScope [
 
-	^ RBClassModelFactory rbNamespace onEnvironment: aScope asRBEnvironment
+	^ RBNamespace onEnvironment: aScope asRBEnvironment
 ]
 
 { #category : 'execution' }

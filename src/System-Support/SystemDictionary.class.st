@@ -188,6 +188,17 @@ SystemDictionary >> classOrTraitNamed: aString [
 
 { #category : 'accessing' }
 SystemDictionary >> codeChangeAnnouncer [
+	"A code change announcer is an announcer to register to Class, Method, Package and Protocol announcement."
+
+	"This should not be hardcoded in the futurebut I should have my own instance."
+
+	^ SystemAnnouncer uniqueInstance
+]
+
+{ #category : 'accessing' }
+SystemDictionary >> codeSupportAnnouncer [
+	"A code support announcer is an announcer used for tooling support such as the breakpoints or AST cache."
+
 	"This should not be hardcoded in the futurebut I should have my own instance."
 
 	^ SystemAnnouncer uniqueInstance
@@ -410,8 +421,8 @@ SystemDictionary >> renameClass: aClass from: oldName [
 	self add: oldref. "Old association preserves old refs"
 	SessionManager default renamedClass: aClass from: oldName to: aClass name.
 	self flushClassNameCache.
-	SystemAnnouncer uniqueInstance classRenamed: aClass from: oldName to: aClass name.
-	aClass subclassesDo: [ :subclass | SystemAnnouncer uniqueInstance classParentOf: subclass renamedFrom: oldName to: aClass name ]
+	self class codeChangeAnnouncer classRenamed: aClass from: oldName to: aClass name.
+	aClass subclassesDo: [ :subclass | self class codeChangeAnnouncer classParentOf: subclass renamedFrom: oldName to: aClass name ]
 ]
 
 { #category : 'renaming' }

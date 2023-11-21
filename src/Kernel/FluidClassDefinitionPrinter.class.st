@@ -99,22 +99,46 @@ FluidClassDefinitionPrinter >> classVariableDefinitionsOn: aStream [
 ]
 
 { #category : 'template' }
-FluidClassDefinitionPrinter >> compactClassDefinitionTemplateInPackage: aPackageName [
-	^ String streamContents: [ :s |
-			s nextPutAll: 'Object << #MyClass'; crtab.
-			s nextPutAll: 'slots: {};'; crtab.
-			s nextPutAll: 'sharedVariables: {};'; crtab.
-			s nextPutAll: 'package: ''', aPackageName, '''' ]
-]
-
-{ #category : 'template' }
-FluidClassDefinitionPrinter >> compactTraitDefinitionTemplateInPackage: aPackageName [
+FluidClassDefinitionPrinter >> compactClassDefinitionTemplateInPackage: aPackageName tag: aTagName [
 
 	^ String streamContents: [ :s |
 		  s
-			  nextPutAll: 'Trait << #TMyTrait';  crtab;
-			  nextPutAll: 'traits: {};'; crtab ;
-			  nextPutAll: 'slots: {};'; crtab ;
+			  nextPutAll: 'Object << #MyClass';
+			  crtab;
+			  nextPutAll: 'slots: {};';
+			  crtab;
+			  nextPutAll: 'sharedVariables: {};';
+			  crtab.
+		  aTagName ifNotNil: [
+			  s
+				  nextPutAll: 'tag: ';
+				  print: aTagName;
+				  nextPutAll: ';';
+				  crtab ].
+		  s
+			  nextPutAll: 'package: ''';
+			  nextPutAll: aPackageName;
+			  nextPutAll: '''' ]
+]
+
+{ #category : 'template' }
+FluidClassDefinitionPrinter >> compactTraitDefinitionTemplateInPackage: aPackageName tag: aTagName [
+
+	^ String streamContents: [ :s |
+		  s
+			  nextPutAll: 'Trait << #TMyTrait';
+			  crtab;
+			  nextPutAll: 'traits: {};';
+			  crtab;
+			  nextPutAll: 'slots: {};';
+			  crtab.
+		  aTagName ifNotNil: [
+			  s
+				  nextPutAll: 'tag: ';
+				  print: aTagName;
+				  nextPutAll: ';';
+				  crtab ].
+		  s
 			  nextPutAll: 'package: ''';
 			  nextPutAll: aPackageName;
 			  nextPutAll: '''' ]

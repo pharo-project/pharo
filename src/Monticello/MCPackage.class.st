@@ -27,13 +27,6 @@ MCPackage >> = other [
 	^ other species = self species and: [other name = name]
 ]
 
-{ #category : 'accessing' }
-MCPackage >> correspondingRPackage [
-	"Use #systemPackage instead"
-
-	^ self systemPackage
-]
-
 { #category : 'printing' }
 MCPackage >> displayStringOn: aStream [
 	aStream nextPutAll: self name
@@ -78,11 +71,6 @@ MCPackage >> name [
 { #category : 'accessing' }
 MCPackage >> name: aString [
 	name := aString
-]
-
-{ #category : 'accessing' }
-MCPackage >> packageSet [
-	^ RPackageSet named: name
 ]
 
 { #category : 'printing' }

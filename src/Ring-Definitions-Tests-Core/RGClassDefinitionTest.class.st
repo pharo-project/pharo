@@ -344,7 +344,6 @@ RGClassDefinitionTest >> testWithPoolDictionaries [
 	self assert: newClass sharedPools size equals: 1.
 	self assert: newClass sharedPoolNames size equals: 1.
 	self assert: newClass allSharedPools size equals: 1.	"no hierarchy"
-	self assert: newClass allSharedPoolNames size equals: 1.
 
 	poolVar := newClass sharedPoolNamed: #TextConstants.
 	self assert: poolVar isNotNil.
@@ -353,9 +352,6 @@ RGClassDefinitionTest >> testWithPoolDictionaries [
 	self assert: poolVar parent equals: newClass.
 	self assert: poolVar parentName identicalTo: newClass name.
 	self assert: poolVar realClass equals: Text.
-
-	newClass withMetaclass.
-	self assert: newClass classSide allSharedPoolNames size equals: 1.
 
 	newClass removeSharedPoolNamed: #TextConstants.
 	self assertEmpty: newClass sharedPools

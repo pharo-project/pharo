@@ -63,7 +63,8 @@ DAMessageSendAnalyzer >> initializeWith: aDAPackage [
 
 { #category : 'accessing' }
 DAMessageSendAnalyzer >> manuallyResolvedDependencies [
-	^ self rPackage manuallyResolvedDependencies
+
+	^ self systemPackage manuallyResolvedDependencies
 ]
 
 { #category : 'computing' }
@@ -134,20 +135,17 @@ DAMessageSendAnalyzer >> possibleDeadCode [
 		select: #isEmpty
 ]
 
-{ #category : 'accessing' }
-DAMessageSendAnalyzer >> rPackage [
-	"Answer a <RPackage> matching the receiver's package name. If we are browsing an unloaded package, then answer a virtual RPackage so the message send analyzer could preserve its behavior with loaded packages in #manuallyResolvedDependencies"
-
-	^ packageAnalysis rPackageSet packages
-		  ifNotEmpty: [ :rPackages | rPackages detect: [ :each | each name = self packageName ] ]
-		  ifEmpty: [ Package named: 'Virtual' , self packageName ]
-]
-
 { #category : 'computing' }
 DAMessageSendAnalyzer >> sentMessages [
-	^ self rPackage methods
-		flatCollect: #messages
-		as: Set
+
+	^self systemPackage methods flatCollect: #messages as: Set
+]
+
+{ #category : 'accessing' }
+DAMessageSendAnalyzer >> systemPackage [
+	"Answer a <Package> matching the receiver's package name. If we are browsing an unloaded package, then answer a virtual RPackage so the message send analyzer could preserve its behavior with loaded packages in #manuallyResolvedDependencies"
+
+	^ packageAnalysis systemPackage ifNil: [ RPackage named: 'Virtual' , self packageName ]
 ]
 
 { #category : 'computing' }

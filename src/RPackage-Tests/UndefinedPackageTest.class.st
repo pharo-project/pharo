@@ -1,6 +1,6 @@
 Class {
 	#name : 'UndefinedPackageTest',
-	#superclass : 'RPackageTestCase',
+	#superclass : 'PackageTestCase',
 	#category : 'RPackage-Tests',
 	#package : 'RPackage-Tests'
 }

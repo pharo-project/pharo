@@ -62,12 +62,6 @@ MethodAnnouncement >> classAffected [
 ]
 
 { #category : 'testing' }
-MethodAnnouncement >> isProvidedByATrait [
-
-	^ self methodOrigin ~= self methodClass
-]
-
-{ #category : 'testing' }
 MethodAnnouncement >> isProvidedByExtension [
 	^self methodOrigin package ~= self methodPackage
 ]
@@ -113,8 +107,7 @@ MethodAnnouncement >> packagesAffected [
 { #category : 'accessing' }
 MethodAnnouncement >> protocol [
 
-	"This should just be `method protocol` when #protocol will return an actual protocol."
-	^ method methodClass protocolOfSelector: method selector
+	^ method protocol
 ]
 
 { #category : 'accessing' }

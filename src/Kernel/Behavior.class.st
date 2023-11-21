@@ -549,6 +549,12 @@ Behavior >> codeChangeAnnouncer [
 	^ self environment codeChangeAnnouncer
 ]
 
+{ #category : 'accessing' }
+Behavior >> codeSupportAnnouncer [
+
+	^ self environment codeSupportAnnouncer
+]
+
 { #category : 'accessing - method dictionary' }
 Behavior >> compiledMethodAt: selector [
 	"Answer the compiled method associated with the argument, selector (a

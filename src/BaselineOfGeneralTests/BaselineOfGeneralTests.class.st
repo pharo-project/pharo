@@ -7,9 +7,11 @@ Class {
 
 { #category : 'baselines' }
 BaselineOfGeneralTests >> baseline: spec [
-	<baseline>
 	"Needs to be re-sorted"
-	
+
+	<baseline>
+	| repository |
+	repository := self packageRepositoryURL.
 	spec for: #'common' do: [
 		spec 
 			package: 'Debugging-Utils-Tests';
@@ -28,10 +30,11 @@ BaselineOfGeneralTests >> baseline: spec [
 			package: 'Debugger-Oups-Tests';		
 			package: 'EmbeddedFreeType-Tests';
 			
-			package: 'Ombu-Tests';
-			package: 'Epicea-Tests';
-			package: 'Hiedra-Tests';
-			package: 'EpiceaBrowsers-Tests';
+
+			baseline: 'Epicea' with: [
+				spec
+					repository: repository;
+					loads: #Tests ];
 			
 			package: 'FileSystem-Tests-Memory';
 			package: 'Fonts-Infrastructure-Tests';

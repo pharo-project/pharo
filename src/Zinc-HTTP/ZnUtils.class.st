@@ -184,7 +184,7 @@ ZnUtils class >> readUpToEnd: inputStream limit: limit [
 	[ inputStream atEnd ] whileFalse: [ | readCount |
 		readCount := inputStream readInto: buffer startingAt: 1 count: bufferSize.
 		totalRead := totalRead + readCount.
-		(limit notNil and: [ totalRead > limit ])
+		(limit isNotNil and: [ totalRead > limit ])
 			ifTrue: [ ZnEntityTooLarge signal ].
 		outputStream ifNil: [
 			inputStream atEnd

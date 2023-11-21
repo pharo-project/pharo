@@ -146,7 +146,7 @@ ImageCleaner >> createLiteralTable [
 				(arrayValue  isSymbol not and:  [ arrayValue isImmediateObject not ]) ifTrue:
 				[array
 					at: (array identityIndexOf: arrayValue)
-					put: (literalTable like: arrayValue)]].
+					put: (literalTable like: arrayValue ifAbsent: [arrayValue])]].
 			array beReadOnlyObject ]
 ]
 
@@ -185,7 +185,7 @@ ImageCleaner >> shareLiterals [
 	"We go over all methods and replace all the literals that are equal by one copy"
 	self createLiteralTable.
 	self literalsDo: [ :literal :cm |
-			cm literalAt: (cm indexOfLiteral: literal) put: (literalTable like: literal)  ].
+			cm literalAt: (cm indexOfLiteral: literal) put: (literalTable like: literal ifAbsent: [ literal ])  ].
 	self detroyLiteralTable
 ]
 

@@ -3,7 +3,7 @@ I am a null object (Null Object Design Pattern) representing the fact that a cla
 "
 Class {
 	#name : 'UndefinedPackageTag',
-	#superclass : 'RPackageTag',
+	#superclass : 'PackageTag',
 	#category : 'RPackage-Core-Base',
 	#package : 'RPackage-Core',
 	#tag : 'Base'

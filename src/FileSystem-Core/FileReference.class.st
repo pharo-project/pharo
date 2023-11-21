@@ -316,6 +316,12 @@ FileReference >> isFile [
 ]
 
 { #category : 'testing' }
+FileReference >> isHidden [
+
+	^ filesystem isHidden: path attributes: nil
+]
+
+{ #category : 'testing' }
 FileReference >> isReadable [
 	^ filesystem isReadable: path
 ]

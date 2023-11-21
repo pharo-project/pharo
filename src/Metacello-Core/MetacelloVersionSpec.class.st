@@ -253,11 +253,9 @@ MetacelloVersionSpec >> currentlyLoadedClassesInVersion [
 	self
 		projectDo: [ :ignored |  ]
 		packageDo: [ :packageSpec |
-			| wc |
-			wc := [ packageSpec workingCopy ]
-				      on: Error
-				      do: [ :ex | ex return: nil ].
-			wc ifNotNil: [ classes addAll: wc packageSet classes ] ]
+			([ packageSpec workingCopy ]
+				 on: Error
+				 do: [ :ex | ex return: nil ]) ifNotNil: [ :workingCopy | workingCopy systemPackage ifNotNil: [ :package | classes addAll: package classes ] ] ]
 		groupDo: [ :ignored |  ].
 	^ classes
 ]

@@ -46,7 +46,7 @@ SycAddNewPackageCommand >> defaultMenuItemName [
 SycAddNewPackageCommand >> execute [
 
 	resultPackage := [ systemEnvironment createPackageNamed: packageName ]
-		                 on: RPackageConflictError
+		                 on: PackageConflictError
 		                 do: [ systemEnvironment packageNamed: packageName ]
 ]
 

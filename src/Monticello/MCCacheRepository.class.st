@@ -136,13 +136,6 @@ MCCacheRepository >> useDirectory: aFolder during: aBlock [
 	aBlock value ] ensure: [ self directory: oldDirectory ]
 ]
 
-{ #category : 'accessing' }
-MCCacheRepository >> versionInfoForFileNamed: aString [
-	^ self infoCache 
-		at: aString 
-		ifAbsentPut: [ self versionReaderForFileNamed: aString do: [:r | r info]]
-]
-
 { #category : 'interface' }
 MCCacheRepository >> versionWithInfo: aVersionInfo ifAbsent: errorBlock [
 	(self allFileNamesForVersionNamed: aVersionInfo name) do: [:fileName | | version |

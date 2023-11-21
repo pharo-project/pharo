@@ -339,6 +339,14 @@ Class >> classSide [
 ]
 
 { #category : 'class variables' }
+Class >> classThatDefinesClassVariable: classVarName [
+	"Answer the class that defines the given class variable"
+	<reflection: 'Class structural inspection - Class variable inspection'>
+	(self hasClassVarNamed: classVarName asSymbol) ifTrue: [^ self].
+	^self superclass ifNotNil: [self superclass classThatDefinesClassVariable: classVarName]
+]
+
+{ #category : 'class variables' }
 Class >> classVarNamed: aString [
 	"for compatibility"
 
@@ -518,9 +526,9 @@ Class >> declareClassVariables: newVars [
 	|  conflicts newVarNames |
 	conflicts := false.
 	newVarNames := newVars collect: [ :each | each name ].
-	"Remove. Warn if vars are removed that are still used"
+	
 	(self classVarNames difference: newVarNames) do: [:varName |
-		self removeClassVarNamed: varName interactive: false].
+		self removeClassVarNamed: varName ].
 
 	(newVarNames difference: self classVarNames) do: [:varName | "adding"
 			"check if new vars are defined elsewhere"
@@ -540,7 +548,8 @@ Class >> definedVariables [
 
 { #category : 'class variables' }
 Class >> definesClassVariable: aGlobal [
-	"Return whether the receiver has a class variables (shared variables among its class and subclasses) named: aString"
+	"Return whether the receiver defines a class variables (shared variable)
+	Note: Does not take superclass into account"
 	<reflection: 'Class structural inspection - Class variable inspection'>
 	^ self classVariables includes: aGlobal
 ]
@@ -846,47 +855,44 @@ Class >> reformatAll [
 ]
 
 { #category : 'class variables' }
-Class >> removeClassVarNamed: aString [
-	"Remove the class variable whose name is the argument, aString, from
-    the names defined in the receiver, a class. Create an error notification if
-    aString is not a class variable or if it is still being used in the code of
-    the class."
+Class >> removeClassVarNamed: aStringOrSymbol [
+	"Remove the class variable whose name is the argument, aString, from the names defined in the receiver, a class. Create an error notification if aString is not a class variable"
 	<reflection: 'Class structural modification - Class variable modification'>
-	self removeClassVarNamed: aString interactive: false
+
+	|  classVariable |
+	
+	classVariable := self 
+		classVariableNamed: aStringOrSymbol asSymbol 
+		ifAbsent: [ ^ self error: aStringOrSymbol , ' is not a class variable' ].
+	
+	self removeClassVariable: classVariable
 ]
 
 { #category : 'class variables' }
-Class >> removeClassVarNamed: aString interactive: interactive [
-	"Remove the class variable whose name is the argument, aString, from
-    the names defined in the receiver, a class. Create an error notification if
-    aString is not a class variable or if it is still being used in the code of
-    the class."
-	<reflection: 'Class structural modification - Class variable modification'>
-
-	| aSymbol varUserClass |
-	aSymbol := aString asSymbol.
-	(self classPool includesKey: aSymbol) ifFalse: [ ^ self error: aString , ' is not a class variable' ].
-	varUserClass := self anyUserOfClassVarNamed: aSymbol.
-	varUserClass isNotNil & interactive ifTrue: [
-		(self confirm: (aString , ' is still used in code of class ' , varUserClass name , '.\Is it okay to move it to Undeclared?') withCRs) ifFalse: [ ^ self ] ].
-
-	varUserClass
-		ifNotNil: [
-			NewUndeclaredWarning signal: aString in: self name.
-			"NOTE: we add ClassVariable to Undeclared, we need to update to UndeclaredVariable"
-			Undeclared add: (self classPool associationAt: aSymbol) ].
+Class >> removeClassVarNamed: aStringOrSymbol interactive: interactive [
+	"Interaction should be handled by the UI, this had no users in the system"
+	
+	self
+		deprecated: 'Interaction should be handled by the UI, use removeClassVarNamed:'
+		transformWith: '`@rcv removeClassVarNamed: `@arg1 interactive: `@arg2' -> '`@rcv removeClassVarNamed: `@arg1'.
 		
-	self classPool removeKey: aSymbol.
-	self classPool ifEmpty: [ self classPool: nil ].
-
-	self codeChangeAnnouncer  classModificationAppliedTo: self
+	self removeClassVarNamed: aStringOrSymbol
 ]
 
 { #category : 'class variables' }
-Class >> removeClassVariable: aGlobal [
+Class >> removeClassVariable: aClassVariable [
 	"Remove the class variable"
 	<reflection: 'Class structural modification - Class variable modification'>
-	self removeClassVarNamed: aGlobal name
+	
+	aClassVariable isReferenced ifTrue: [
+			NewUndeclaredWarning signal: aClassVariable name in: self name.
+			"NOTE: we add ClassVariable to Undeclared, we need to update to UndeclaredVariable"
+			Undeclared add: aClassVariable ].
+		
+	self classPool removeKey: aClassVariable key.
+	self classPool ifEmpty: [ self classPool: nil ].
+
+	self codeChangeAnnouncer classModificationAppliedTo: self
 ]
 
 { #category : 'initialization' }
