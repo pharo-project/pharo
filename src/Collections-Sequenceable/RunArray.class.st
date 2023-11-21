@@ -21,8 +21,8 @@ Class {
 		'lastRun',
 		'lastOffset'
 	],
-	#category : 'Collections-Support',
-	#package : 'Collections-Support'
+	#category : 'Collections-Sequenceable',
+	#package : 'Collections-Sequenceable'
 }
 
 { #category : 'instance creation' }
@@ -211,15 +211,6 @@ RunArray >> anySatisfy: aBlock [
 	"Only evaluate once per run"
 
 	^values anySatisfy: aBlock
-]
-
-{ #category : 'converting' }
-RunArray >> asBag [
-	| aBag |
-	aBag := Bag new: values size.
-	self runsAndValuesDo: [:run :value |
-		aBag add: value withOccurrences: run].
-	^aBag
 ]
 
 { #category : 'converting' }
