@@ -83,7 +83,7 @@ TIterateSequencedReadableTest >> testDetectSequenced [
 
 	| element result |
 	element := self nonEmptyMoreThan1Element at: 1.
-	result := self nonEmptyMoreThan1Element  detect: [:each | each notNil ].
+	result := self nonEmptyMoreThan1Element  detect: [:each | each isNotNil ].
 	self assert: result equals: element
 ]
 
