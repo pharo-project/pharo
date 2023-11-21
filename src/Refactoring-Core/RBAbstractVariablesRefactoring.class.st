@@ -226,7 +226,7 @@ RBAbstractVariablesRefactoring >> removeDefinedClassVariables [
 		detect:
 			[ :each |
 			(each instanceSide includesClass: (nonMetaClass whoDefinesClassVariable: varName)) not ]
-		ifNone: [ nil ]) notNil ].
+		ifNone: [ nil ]) isNotNil ].
 	classVarReaders := classVarReaders select: selectionBlock.
 	classVarWriters := classVarWriters select: selectionBlock
 ]

@@ -169,7 +169,7 @@ RBCreateAccessorsForVariableTransformation >> findGetterMethod [
 	matcher := self createMatcher.
 	^ self possibleGetterSelectors
 		detect: [ :each |
-			(self checkClass: definingClass selector: each using: matcher) notNil
+			(self checkClass: definingClass selector: each using: matcher) isNotNil
 				and: [ (definingClass subclassRedefines: each) not ] ]
 		ifNone: [ nil ]
 ]
@@ -186,7 +186,7 @@ RBCreateAccessorsForVariableTransformation >> findSetterMethod [
 		ifFalse: [ self parseTreeSearcherClass setterMethod: variableName ].
 	^ self possibleSetterSelectors
 		detect: [ :each |
-			(self checkClass: definingClass selector: each using: matcher) notNil
+			(self checkClass: definingClass selector: each using: matcher) isNotNil
 				and: [ (definingClass subclassRedefines: each) not ] ]
 		ifNone: [ nil ]
 ]

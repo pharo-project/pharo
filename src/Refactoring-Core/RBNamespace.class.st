@@ -411,7 +411,7 @@ RBNamespace >> hasRemoved: aSymbol [
 
 { #category : 'testing' }
 RBNamespace >> includesClassNamed: aSymbol [
-	^(self classNamed: aSymbol) notNil
+	^(self classNamed: aSymbol) isNotNil
 ]
 
 { #category : 'testing' }
@@ -575,7 +575,7 @@ RBNamespace >> privateRootClasses [
 	{ ProtoObject } do: [ :each |
 		| class |
 		class := self classFor: each.
-		(class notNil and: [ class superclass isNil ]) ifTrue: [
+		(class isNotNil and: [ class superclass isNil ]) ifTrue: [
 			classes add: class ] ].
 	^ classes
 ]

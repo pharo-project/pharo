@@ -357,7 +357,7 @@ RBInlineMethodTransformation >> renameConflictingTemporary: aName [
 	newName := aName.
 	index := 0.
 
-	[(sourceMessage whoDefines: newName) notNil or:
+	[(sourceMessage whoDefines: newName) isNotNil or:
 			[(class hierarchyDefinesVariable: newName) or: [allNames includes: newName]]]
 			whileTrue:
 				[index := index + 1.
