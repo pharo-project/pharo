@@ -316,6 +316,12 @@ FileReference >> isFile [
 ]
 
 { #category : 'testing' }
+FileReference >> isHidden [
+
+	^ (DiskDirectoryEntry reference: self) isHidden
+]
+
+{ #category : 'testing' }
 FileReference >> isReadable [
 	^ filesystem isReadable: path
 ]

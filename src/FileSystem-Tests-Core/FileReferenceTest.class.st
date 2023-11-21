@@ -658,6 +658,17 @@ FileReferenceTest >> testIsAbsolute [
 ]
 
 { #category : 'tests' }
+FileReferenceTest >> testIsHidden [
+	"We can only check standard file references which should not be hidden"
+
+	"Check a directory"
+	self deny: FileSystem workingDirectory isHidden.
+	
+	"Check a file"
+	self deny: FileLocator vmBinary asFileReference isHidden
+]
+
+{ #category : 'tests' }
 FileReferenceTest >> testIsNotAbsolute [
 	self deny: (filesystem * 'plonk') isAbsolute
 ]
