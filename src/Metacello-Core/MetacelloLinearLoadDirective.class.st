@@ -19,7 +19,7 @@ MetacelloLinearLoadDirective >> newLoaderForPolicy: aLoadPolicy [
 		  yourself
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'private' }
 MetacelloLinearLoadDirective >> newLoadingStrategyFrom: oldLoadingStrategy [
 
 	^ oldLoadingStrategy changeToLinearWithLoader: self loader

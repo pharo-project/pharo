@@ -10,7 +10,7 @@ Class {
 	#tag : 'Directives'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'switch-strategy' }
 MetacelloLoadingStrategy >> changeToAtomicWithLoader: anObject [
 
 	^ MetacelloAtomicLoadingStrategy new
@@ -19,7 +19,7 @@ MetacelloLoadingStrategy >> changeToAtomicWithLoader: anObject [
 		  yourself
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'switch-strategy' }
 MetacelloLoadingStrategy >> changeToLinearWithLoader: aLoader [
 
 	self subclassResponsibility
@@ -35,15 +35,6 @@ MetacelloLoadingStrategy >> gofer [
 MetacelloLoadingStrategy >> gofer: anObject [
 
 	gofer := anObject
-]
-
-{ #category : 'as yet unclassified' }
-MetacelloLoadingStrategy >> linear [
-
-	^ MetacelloLinearLoadingStrategy new
-		  gofer: gofer;
-		  loader: self loader;
-		  yourself
 ]
 
 { #category : 'accessing' }

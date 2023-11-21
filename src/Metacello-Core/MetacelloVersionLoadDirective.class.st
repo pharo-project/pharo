@@ -15,7 +15,7 @@ MetacelloVersionLoadDirective >> add: aDirective [
 	self loadDirectives add: aDirective
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'actions' }
 MetacelloVersionLoadDirective >> executeUsing: oldLoadingStrategy [
 
 	| newLoadingStrategy |
@@ -59,7 +59,7 @@ MetacelloVersionLoadDirective >> newLoaderForPolicy: aLoadPolicy [
 	self subclassResponsibility
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'private' }
 MetacelloVersionLoadDirective >> newLoadingStrategyFrom: oldLoadingStrategy [
 
 	self subclassResponsibility

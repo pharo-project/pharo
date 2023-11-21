@@ -11,14 +11,14 @@ Class {
 	#tag : 'Directives'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'switch-strategy' }
 MetacelloAtomicLoadingStrategy >> changeToAtomicWithLoader: anObject [
 	"If I'm atomic, just do nothing and continue as is"
 
 	^ self
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'switch-strategy' }
 MetacelloAtomicLoadingStrategy >> changeToLinearWithLoader: aLoader [
 	"If I'm atomic, close myself before starting a linear loading"
 
@@ -76,4 +76,14 @@ MetacelloAtomicLoadingStrategy >> initialize [
 	preloads := OrderedCollection new.
 	postloads := OrderedCollection new.
 	packageloads := OrderedCollection new
+]
+
+{ #category : 'switch-strategy' }
+MetacelloAtomicLoadingStrategy >> linear [
+	"Just return a linear strategy for myself, do not enforce anything.
+	This is for internal use. Check users"
+	^ MetacelloLinearLoadingStrategy new
+		  gofer: gofer;
+		  loader: self loader;
+		  yourself
 ]

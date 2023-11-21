@@ -6,7 +6,7 @@ Class {
 	#tag : 'Directives'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'switch-strategy' }
 MetacelloLinearLoadingStrategy >> changeToAtomicWithLoader: aLoader [
 	"If I'm linear, just open a new atomic one"
 
@@ -16,7 +16,7 @@ MetacelloLinearLoadingStrategy >> changeToAtomicWithLoader: aLoader [
 		  yourself
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'switch-strategy' }
 MetacelloLinearLoadingStrategy >> changeToLinearWithLoader: aLoader [
 	"If I'm linear, just do nothing and continue as is"
 
