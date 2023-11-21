@@ -12,16 +12,16 @@ MetacelloPostLoadDirective >> addTo: aLoaderDirective [
 	spec postLoadDoIt value ifNotNil: [ aLoaderDirective add: self ]
 ]
 
+{ #category : 'actions' }
+MetacelloPostLoadDirective >> executeUsing: aLoaderDirective gofer: aGofer [
+
+	aLoaderDirective loadPostloadDirective: self.
+]
+
 { #category : 'printing' }
 MetacelloPostLoadDirective >> label [
 
 	^super label, ' >> ', self spec postLoadDoIt value asString
-]
-
-{ #category : 'actions' }
-MetacelloPostLoadDirective >> loadUsing: aLoaderDirective gofer: aGofer [
-
-	aLoaderDirective loadPostloadDirective: self.
 ]
 
 { #category : 'accessing' }

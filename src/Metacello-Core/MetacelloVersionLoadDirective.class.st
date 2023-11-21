@@ -31,8 +31,9 @@ MetacelloVersionLoadDirective >> label [
 { #category : 'actions' }
 MetacelloVersionLoadDirective >> loadAtomicLoadDirective: aLoaderDirective gofer: aGofer [
 
-	aLoaderDirective loadDirectives do: [:directive | directive loadUsing: aLoaderDirective gofer: aGofer ].
-	aLoaderDirective finalizeLoad: aGofer.
+	aLoaderDirective loadDirectives do: [ :directive |
+		directive executeUsing: aLoaderDirective gofer: aGofer ].
+	aLoaderDirective finalizeLoad: aGofer
 ]
 
 { #category : 'accessing' }
@@ -49,8 +50,9 @@ MetacelloVersionLoadDirective >> loadDirectives: anObject [
 { #category : 'actions' }
 MetacelloVersionLoadDirective >> loadLinearLoadDirective: aLoaderDirective gofer: aGofer [
 
-	aLoaderDirective loadDirectives do: [:directive | directive loadUsing: aLoaderDirective gofer: aGofer ].
-	aLoaderDirective finalizeLoad: aGofer.
+	aLoaderDirective loadDirectives do: [ :directive |
+		directive executeUsing: aLoaderDirective gofer: aGofer ].
+	aLoaderDirective finalizeLoad: aGofer
 ]
 
 { #category : 'actions' }
@@ -86,7 +88,7 @@ MetacelloVersionLoadDirective >> loadWithPolicy: aLoadPolicy [
 	gofer := MetacelloGofer new.
 	gofer disablePackageCache.
 	gofer repository: aLoadPolicy cacheRepository.
-	self loadUsing: self gofer: gofer
+	self executeUsing: self gofer: gofer
 ]
 
 { #category : 'enumerating' }

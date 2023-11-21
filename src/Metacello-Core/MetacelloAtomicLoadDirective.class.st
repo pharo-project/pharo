@@ -12,6 +12,13 @@ Class {
 }
 
 { #category : 'actions' }
+MetacelloAtomicLoadDirective >> executeUsing: aLoaderDirective gofer: aGofer [
+
+	self loadDirectives isEmpty ifTrue: [ ^self ].
+	aLoaderDirective loadAtomicLoadDirective: self gofer: aGofer.
+]
+
+{ #category : 'actions' }
 MetacelloAtomicLoadDirective >> finalizeLoad: aGofer [
 	"load the accumulated packages (if any), reset the package list"
 
@@ -31,7 +38,8 @@ MetacelloAtomicLoadDirective >> finalizeLoad: aGofer [
 { #category : 'actions' }
 MetacelloAtomicLoadDirective >> loadAtomicLoadDirective: aLoaderDirective gofer: aGofer [
 
-	aLoaderDirective loadDirectives do: [:directive | directive loadUsing: self gofer: aGofer ].
+	aLoaderDirective loadDirectives do: [ :directive |
+		directive executeUsing: self gofer: aGofer ]
 ]
 
 { #category : 'actions' }
@@ -60,13 +68,6 @@ MetacelloAtomicLoadDirective >> loadPreloadDirective: aPreloadDirective [
 	"accumulate preloads"
 
 	self preloads add: aPreloadDirective
-]
-
-{ #category : 'actions' }
-MetacelloAtomicLoadDirective >> loadUsing: aLoaderDirective gofer: aGofer [
-
-	self loadDirectives isEmpty ifTrue: [ ^self ].
-	aLoaderDirective loadAtomicLoadDirective: self gofer: aGofer.
 ]
 
 { #category : 'accessing' }

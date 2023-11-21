@@ -10,6 +10,12 @@ Class {
 	#tag : 'Directives'
 }
 
+{ #category : 'actions' }
+MetacelloPackageLoadDirective >> executeUsing: aLoaderDirective gofer: aGofer [
+
+	aLoaderDirective loadPackageDirective: self gofer: aGofer
+]
+
 { #category : 'accessing' }
 MetacelloPackageLoadDirective >> externalReference [
 	^ externalReference
@@ -25,12 +31,6 @@ MetacelloPackageLoadDirective >> file [
 MetacelloPackageLoadDirective >> label [
 
 	^self file
-]
-
-{ #category : 'actions' }
-MetacelloPackageLoadDirective >> loadUsing: aLoaderDirective gofer: aGofer [
-
-	aLoaderDirective loadPackageDirective: self gofer: aGofer
 ]
 
 { #category : 'enumerating' }

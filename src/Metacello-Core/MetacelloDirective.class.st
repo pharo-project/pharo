@@ -43,16 +43,16 @@ MetacelloDirective >> addTo: aLoaderDirective [
 	aLoaderDirective add: self
 ]
 
+{ #category : 'actions' }
+MetacelloDirective >> executeUsing: aLoaderDirective gofer: aGofer [
+
+	self subclassResponsibility
+]
+
 { #category : 'printing' }
 MetacelloDirective >> label [
 
 	^self spec label
-]
-
-{ #category : 'actions' }
-MetacelloDirective >> loadUsing: aLoaderDirective gofer: aGofer [
-
-	self subclassResponsibility
 ]
 
 { #category : 'accessing' }
