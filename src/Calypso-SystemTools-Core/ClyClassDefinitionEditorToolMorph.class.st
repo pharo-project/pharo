@@ -15,15 +15,8 @@ Class {
 { #category : 'operations' }
 ClyClassDefinitionEditorToolMorph >> applyChanges [
 
-	| code ast |
+	| code |
 	code := self pendingText.
-
-	"The next line are here for the compatibility with the old class definition."
-	ast := RBParser parseExpression: code.
-	(OldClassDefinitionBuilder isOldClassCreation: ast) ifTrue: [
-		Warning signal:
-			'The class definition used is the old Pharo class definition. Now the Fluid class definition should be used. Check the comment of ShiftClassBuilder to know the syntax.'.
-		^ self applyChangesAsOldClassDefinition: ast ].
 
 	^ (code asString lines first includesSubstring: '<<')
 		  ifTrue: [ self applyChangesAsClassDefinition ]
@@ -35,9 +28,19 @@ ClyClassDefinitionEditorToolMorph >> applyChanges [
 { #category : 'operations' }
 ClyClassDefinitionEditorToolMorph >> applyChangesAsClassDefinition [
 
-	| newClass |
+	| code newClass ast |
+	
+	code := self pendingText.
+	
+	"The next line are here for the compatibility with the old class definition."
+	ast := RBParser parseExpression: code.
+	(OldClassDefinitionBuilder isOldClassCreation: ast) ifTrue: [
+		Warning signal:
+			'The class definition used is the old Pharo class definition. Now the Fluid class definition should be used. Check the comment of ShiftClassBuilder to know the syntax.'.
+		^ self applyChangesAsOldClassDefinition: ast ].
+	
 	newClass := browser
-		            compileANewClassFrom: self pendingText asString
+		            compileANewClassFrom: code
 		            notifying: textMorph
 		            startingFrom: editingClass.
 
