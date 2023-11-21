@@ -93,7 +93,7 @@ TextStyle class >> decodeStyleName: styleName [
 	[matchedKey := keys
 				detect: [:k | baseName endsWith: k]
 				ifNone: [].
-	matchedKey notNil]
+	matchedKey isNotNil]
 		whileTrue: [| last code |
 			last := baseName size - matchedKey size.
 			last > 0

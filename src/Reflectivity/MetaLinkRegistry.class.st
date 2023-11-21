@@ -99,7 +99,7 @@ MetaLinkRegistry >> permaLinksFor: aLink [
 MetaLinkRegistry >> permaLinksForClasses: targetClasses [
 	| allPermalinks |
 	allPermalinks := permalinks values flattened.
-	^ allPermalinks select: [ :p | (targetClasses select: [ :c | p notNil and: [ c == p slotOrVarClass ] ]) notEmpty ]
+	^ allPermalinks select: [ :p | (targetClasses select: [ :c | p isNotNil and: [ c == p slotOrVarClass ] ]) notEmpty ]
 ]
 
 { #category : 'permalinks' }

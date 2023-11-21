@@ -234,12 +234,14 @@ MetaLink >> enable [
 
 { #category : 'testing' }
 MetaLink >> hasCondition [
-	^condition notNil
+
+	^ condition isNotNil
 ]
 
 { #category : 'testing' }
 MetaLink >> hasMetaLevel [
-	^level notNil
+
+	^ level isNotNil
 ]
 
 { #category : 'testing' }
