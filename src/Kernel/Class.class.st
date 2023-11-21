@@ -518,7 +518,7 @@ Class >> declareClassVariables: newVars [
 	|  conflicts newVarNames |
 	conflicts := false.
 	newVarNames := newVars collect: [ :each | each name ].
-	"Remove. Warn if vars are removed that are still used"
+	
 	(self classVarNames difference: newVarNames) do: [:varName |
 		self removeClassVarNamed: varName ].
 
@@ -848,7 +848,7 @@ Class >> reformatAll [
 
 { #category : 'class variables' }
 Class >> removeClassVarNamed: aStringOrSymbol [
-	"Remove the class variable whose name is the argument, aString, from the names defined in the receiver, a class. Create an error notification if aString is not a class variable or if it is still being used in the code of the class."
+	"Remove the class variable whose name is the argument, aString, from the names defined in the receiver, a class. Create an error notification if aString is not a class variable"
 	<reflection: 'Class structural modification - Class variable modification'>
 
 	|  classVariable |
@@ -857,15 +857,7 @@ Class >> removeClassVarNamed: aStringOrSymbol [
 		associationAt: aStringOrSymbol asSymbol 
 		ifAbsent: [ ^ self error: aStringOrSymbol , ' is not a class variable' ].
 	
-	classVariable isReferenced ifTrue: [
-			NewUndeclaredWarning signal: classVariable name in: self name.
-			"NOTE: we add ClassVariable to Undeclared, we need to update to UndeclaredVariable"
-			Undeclared add: classVariable ].
-		
-	self classPool removeKey: classVariable key.
-	self classPool ifEmpty: [ self classPool: nil ].
-
-	self codeChangeAnnouncer classModificationAppliedTo: self
+	self removeClassVariable: classVariable
 ]
 
 { #category : 'class variables' }
@@ -880,10 +872,19 @@ Class >> removeClassVarNamed: aStringOrSymbol interactive: interactive [
 ]
 
 { #category : 'class variables' }
-Class >> removeClassVariable: aGlobal [
+Class >> removeClassVariable: aClassVariable [
 	"Remove the class variable"
 	<reflection: 'Class structural modification - Class variable modification'>
-	self removeClassVarNamed: aGlobal name
+	
+	aClassVariable isReferenced ifTrue: [
+			NewUndeclaredWarning signal: aClassVariable name in: self name.
+			"NOTE: we add ClassVariable to Undeclared, we need to update to UndeclaredVariable"
+			Undeclared add: aClassVariable ].
+		
+	self classPool removeKey: aClassVariable key.
+	self classPool ifEmpty: [ self classPool: nil ].
+
+	self codeChangeAnnouncer classModificationAppliedTo: self
 ]
 
 { #category : 'initialization' }
