@@ -1,19 +1,19 @@
 Class {
-	#name : 'MetacelloNullRecordingMCSpecLoader',
-	#superclass : 'MetacelloFetchingMCSpecLoader',
+	#name : 'MetacelloRecordTarget',
+	#superclass : 'MetacelloFetchTarget',
 	#category : 'Metacello-Core-Loaders',
 	#package : 'Metacello-Core',
 	#tag : 'Loaders'
 }
 
 { #category : 'accessing' }
-MetacelloNullRecordingMCSpecLoader >> actionLabel [
+MetacelloRecordTarget >> actionLabel [
 
 	^'Recording '
 ]
 
 { #category : 'versionInfo' }
-MetacelloNullRecordingMCSpecLoader >> currentVersionInfoFor: packageSpec [
+MetacelloRecordTarget >> currentVersionInfoFor: packageSpec [
 
 	^self loadData
 		currentVersionInfoFor: packageSpec 
@@ -21,18 +21,18 @@ MetacelloNullRecordingMCSpecLoader >> currentVersionInfoFor: packageSpec [
 ]
 
 { #category : 'actions' }
-MetacelloNullRecordingMCSpecLoader >> doingLoads: aBlock [
+MetacelloRecordTarget >> doingLoads: aBlock [
 	"escape mechanism for recording and null loaders to skip doing loaderlike things"
 ]
 
 { #category : 'testing' }
-MetacelloNullRecordingMCSpecLoader >> ensureForDevelopment [
+MetacelloRecordTarget >> ensureForDevelopment [
 
 	^false
 ]
 
 { #category : 'actions' }
-MetacelloNullRecordingMCSpecLoader >> linearLoadPackageSpec: packageSpec gofer: gofer [
+MetacelloRecordTarget >> linearLoadPackageSpec: packageSpec gofer: gofer [
 
 	MetacelloPlatform current
 		do:  [ | externalReference loadBlock answers fake |
@@ -58,23 +58,23 @@ MetacelloNullRecordingMCSpecLoader >> linearLoadPackageSpec: packageSpec gofer: 
 ]
 
 { #category : 'actions' }
-MetacelloNullRecordingMCSpecLoader >> loadPackageDirective: aPackageLoadDirective gofer: aGofer [
+MetacelloRecordTarget >> loadPackageDirective: aPackageLoadDirective gofer: aGofer [
 	"Noop"
 ]
 
 { #category : 'actions' }
-MetacelloNullRecordingMCSpecLoader >> loadPackageDirectives: pkgLoads gofer: aGofer [
+MetacelloRecordTarget >> loadPackageDirectives: pkgLoads gofer: aGofer [
 	"Noop"
 ]
 
 { #category : 'accessing' }
-MetacelloNullRecordingMCSpecLoader >> loadingSpecLoader [
+MetacelloRecordTarget >> loadingSpecLoader [
 
 	^self
 ]
 
 { #category : 'accessing' }
-MetacelloNullRecordingMCSpecLoader >> packages [
+MetacelloRecordTarget >> packages [
 
 	| packages |
 	packages := OrderedCollection new.
@@ -83,25 +83,25 @@ MetacelloNullRecordingMCSpecLoader >> packages [
 ]
 
 { #category : 'doits' }
-MetacelloNullRecordingMCSpecLoader >> postLoad: packageOrVersionSpec [
+MetacelloRecordTarget >> postLoad: packageOrVersionSpec [
 
 	^ self
 ]
 
 { #category : 'doits' }
-MetacelloNullRecordingMCSpecLoader >> preLoad: packageOrVersionSpec [
+MetacelloRecordTarget >> preLoad: packageOrVersionSpec [
 
 	^ self
 ]
 
 { #category : 'accessing' }
-MetacelloNullRecordingMCSpecLoader >> recordingSpecLoader [
+MetacelloRecordTarget >> recordingSpecLoader [
 
 	^self
 ]
 
 { #category : 'private' }
-MetacelloNullRecordingMCSpecLoader >> resolveRecordingPackageSpecReference: packageSpec gofer: gofer [
+MetacelloRecordTarget >> resolveRecordingPackageSpecReference: packageSpec gofer: gofer [
   | externalPackageReference |
   externalPackageReference := packageSpec file
 	ifNil: [ GoferPackageReference name: packageSpec name ]

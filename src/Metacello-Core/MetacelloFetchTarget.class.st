@@ -1,19 +1,19 @@
 Class {
-	#name : 'MetacelloFetchingMCSpecLoader',
-	#superclass : 'MetacelloSpecLoader',
+	#name : 'MetacelloFetchTarget',
+	#superclass : 'MetacelloTarget',
 	#category : 'Metacello-Core-Loaders',
 	#package : 'Metacello-Core',
 	#tag : 'Loaders'
 }
 
 { #category : 'accessing' }
-MetacelloFetchingMCSpecLoader >> actionLabel [
+MetacelloFetchTarget >> actionLabel [
 
 	^'Fetching '
 ]
 
 { #category : 'versionInfo' }
-MetacelloFetchingMCSpecLoader >> ancestorsFor: packageSpec [
+MetacelloFetchTarget >> ancestorsFor: packageSpec [
 
 	^self loadData
 		ancestorsFor: packageSpec 
@@ -21,15 +21,18 @@ MetacelloFetchingMCSpecLoader >> ancestorsFor: packageSpec [
 ]
 
 { #category : 'private' }
-MetacelloFetchingMCSpecLoader >> atomicLoadPackageSpecs: packageSpecs repositories: repositories [
+MetacelloFetchTarget >> atomicLoadPackageSpecs: packageSpecs repositories: repositories [
 
-	self loaderPolicy 
-		pushAtomicLoadDirectivesDuring: [ super linearLoadPackageSpecs: packageSpecs repositories: repositories ]
+	self loaderPolicy
+		pushAtomicLoadDirectivesDuring: [
+			super
+				linearLoadPackageSpecs: packageSpecs
+				repositories: repositories ]
 		for: self
 ]
 
 { #category : 'versionInfo' }
-MetacelloFetchingMCSpecLoader >> currentVersionInfoFor: packageSpec [
+MetacelloFetchTarget >> currentVersionInfoFor: packageSpec [
 
 	^self loadData
 		currentVersionInfoFor: packageSpec 
@@ -37,26 +40,26 @@ MetacelloFetchingMCSpecLoader >> currentVersionInfoFor: packageSpec [
 ]
 
 { #category : 'actions' }
-MetacelloFetchingMCSpecLoader >> doLoad [
+MetacelloFetchTarget >> doLoad [
 
 	self loaderPolicy copy load
 ]
 
 { #category : 'accessing' }
-MetacelloFetchingMCSpecLoader >> ensureSpecLoader [
-	^ (MetacelloEnsureFetchingMCSpecLoader on: self spec)
+MetacelloFetchTarget >> ensureSpecLoader [
+	^ (MetacelloEnsureFetchTarget on: self spec)
 		loaderPolicy: self loaderPolicy; "explicitly share the loaderPolicy"
 		yourself
 ]
 
 { #category : 'accessing' }
-MetacelloFetchingMCSpecLoader >> ensuredMap [
+MetacelloFetchTarget >> ensuredMap [
 
 	^self loaderPolicy ensuredMap
 ]
 
 { #category : 'actions' }
-MetacelloFetchingMCSpecLoader >> linearLoadPackageSpec: packageSpec gofer: gofer [
+MetacelloFetchTarget >> linearLoadPackageSpec: packageSpec gofer: gofer [
 
 	MetacelloPlatform current
 		do: [
@@ -100,8 +103,8 @@ MetacelloFetchingMCSpecLoader >> linearLoadPackageSpec: packageSpec gofer: gofer
 ]
 
 { #category : 'private' }
-MetacelloFetchingMCSpecLoader >> linearLoadPackageSpecs: packageSpecs repositories: repositories [
-
+MetacelloFetchTarget >> linearLoadPackageSpecs: packageSpecs repositories: repositories [
+1halt.
 	self loaderPolicy
 		pushLinearLoadDirectivesDuring: [
 			super
@@ -111,39 +114,39 @@ MetacelloFetchingMCSpecLoader >> linearLoadPackageSpecs: packageSpecs repositori
 ]
 
 { #category : 'accessing' }
-MetacelloFetchingMCSpecLoader >> loadData [
+MetacelloFetchTarget >> loadData [
 
 	^self loaderPolicy loadData
 ]
 
 { #category : 'accessing' }
-MetacelloFetchingMCSpecLoader >> loadDirective [
+MetacelloFetchTarget >> loadDirective [
 
 	^self loaderPolicy loadDirective
 ]
 
 { #category : 'accessing' }
-MetacelloFetchingMCSpecLoader >> loadingSpecLoader [
+MetacelloFetchTarget >> loadingSpecLoader [
 
-	^(MetacelloLoadingMCSpecLoader on: self spec)
+	^(MetacelloLoadTarget on: self spec)
 		loaderPolicy: self loaderPolicy copy;
 		yourself
 ]
 
 { #category : 'doits' }
-MetacelloFetchingMCSpecLoader >> postLoad: packageOrVersionSpec [
+MetacelloFetchTarget >> postLoad: packageOrVersionSpec [
 
 	(MetacelloDirective postLoadSpec: packageOrVersionSpec loader: self)  addTo: self loadDirective
 ]
 
 { #category : 'doits' }
-MetacelloFetchingMCSpecLoader >> preLoad: packageOrVersionSpec [
+MetacelloFetchTarget >> preLoad: packageOrVersionSpec [
 
 	(MetacelloDirective preLoadSpec: packageOrVersionSpec loader: self) addTo: self loadDirective
 ]
 
 { #category : 'printing' }
-MetacelloFetchingMCSpecLoader >> printOn: aStream [
+MetacelloFetchTarget >> printOn: aStream [
 	super printOn: aStream.
 	aStream nextPut: $(.
 	self loadDirective printOn: aStream.
@@ -151,7 +154,7 @@ MetacelloFetchingMCSpecLoader >> printOn: aStream [
 ]
 
 { #category : 'private' }
-MetacelloFetchingMCSpecLoader >> resolveDependencies: aResolvedReference nearest: nearestReference into: aCollection [
+MetacelloFetchTarget >> resolveDependencies: aResolvedReference nearest: nearestReference into: aCollection [
 
 	| block retryCount coll notDone |
 	self flag: 'Not used, but retained to avoid upgrade issues'.
@@ -180,7 +183,7 @@ MetacelloFetchingMCSpecLoader >> resolveDependencies: aResolvedReference nearest
 ]
 
 { #category : 'private' }
-MetacelloFetchingMCSpecLoader >> resolvePackageSpec: packageSpec cachedGofer: gofer [
+MetacelloFetchTarget >> resolvePackageSpec: packageSpec cachedGofer: gofer [
 
 	| versionReference references |
 	versionReference := packageSpec goferLoaderReference.
@@ -189,14 +192,14 @@ MetacelloFetchingMCSpecLoader >> resolvePackageSpec: packageSpec cachedGofer: go
 ]
 
 { #category : 'private' }
-MetacelloFetchingMCSpecLoader >> scheduleFetchFor: packageSpec cachedReference: reference [
+MetacelloFetchTarget >> scheduleFetchFor: packageSpec cachedReference: reference [
 	"reference already in the cache during fetch ...no need to schedule fetch"
 
 	^ self
 ]
 
 { #category : 'private' }
-MetacelloFetchingMCSpecLoader >> scheduleFetchFor: packageSpec externalReference: reference [
+MetacelloFetchTarget >> scheduleFetchFor: packageSpec externalReference: reference [
 
 	^ self
 		  scheduleFetchFor: packageSpec
@@ -205,14 +208,14 @@ MetacelloFetchingMCSpecLoader >> scheduleFetchFor: packageSpec externalReference
 ]
 
 { #category : 'private' }
-MetacelloFetchingMCSpecLoader >> scheduleFetchFor: packageSpec nearestReference: reference [
+MetacelloFetchTarget >> scheduleFetchFor: packageSpec nearestReference: reference [
 	"latest version in repository already matches the cached reference...no need to schedule fetch"
 
 	^ self
 ]
 
 { #category : 'private' }
-MetacelloFetchingMCSpecLoader >> scheduleFetchFor: packageSpec reference: reference message: message [
+MetacelloFetchTarget >> scheduleFetchFor: packageSpec reference: reference message: message [
 	self loaderPolicy resetCacheGofer.
 	self preLoad: packageSpec.
 	(MetacelloDirective loadPackage: packageSpec externalReference: reference loader: self) addTo: self loadDirective.

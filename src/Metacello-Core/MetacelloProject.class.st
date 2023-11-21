@@ -166,7 +166,7 @@ MetacelloProject >> defaultBlessing [
 { #category : 'spec classes' }
 MetacelloProject >> defaultLoaderClass [
 
-	^MetacelloLoadingMCSpecLoader
+	^MetacelloLoadTarget
 ]
 
 { #category : 'private' }

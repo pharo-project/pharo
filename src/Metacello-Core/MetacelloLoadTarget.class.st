@@ -1,27 +1,27 @@
 Class {
-	#name : 'MetacelloLoadingMCSpecLoader',
-	#superclass : 'MetacelloSpecLoader',
+	#name : 'MetacelloLoadTarget',
+	#superclass : 'MetacelloTarget',
 	#category : 'Metacello-Core-Loaders',
 	#package : 'Metacello-Core',
 	#tag : 'Loaders'
 }
 
 { #category : 'accessing' }
-MetacelloLoadingMCSpecLoader >> actionLabel [
+MetacelloLoadTarget >> actionLabel [
 
 	^'Loading '
 ]
 
 { #category : 'accessing' }
-MetacelloLoadingMCSpecLoader >> fetchingSpecLoader [
+MetacelloLoadTarget >> fetchingSpecLoader [
 
-	^(MetacelloFetchingMCSpecLoader on: self spec)
+	^(MetacelloFetchTarget on: self spec)
 		loaderPolicy: self loaderPolicy copy;
 		yourself
 ]
 
 { #category : 'private' }
-MetacelloLoadingMCSpecLoader >> linearLoadPackageSpec: packageSpec gofer: gofer [
+MetacelloLoadTarget >> linearLoadPackageSpec: packageSpec gofer: gofer [
 
 	MetacelloPlatform current
 		do: [
@@ -50,7 +50,7 @@ MetacelloLoadingMCSpecLoader >> linearLoadPackageSpec: packageSpec gofer: gofer 
 ]
 
 { #category : 'doits' }
-MetacelloLoadingMCSpecLoader >> postLoad: packageOrVersionSpec [
+MetacelloLoadTarget >> postLoad: packageOrVersionSpec [
 
 	packageOrVersionSpec postLoadDoItBlock ifNotNil: [ :block |
 		block valueWithPossibleArgs: {
@@ -59,7 +59,7 @@ MetacelloLoadingMCSpecLoader >> postLoad: packageOrVersionSpec [
 ]
 
 { #category : 'doits' }
-MetacelloLoadingMCSpecLoader >> preLoad: packageOrVersionSpec [
+MetacelloLoadTarget >> preLoad: packageOrVersionSpec [
 
 	packageOrVersionSpec preLoadDoItBlock ifNotNil: [ :block |
 		block valueWithPossibleArgs: {

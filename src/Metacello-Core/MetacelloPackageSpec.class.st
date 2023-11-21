@@ -245,15 +245,15 @@ MetacelloPackageSpec >> file: aString [
 { #category : 'loading' }
 MetacelloPackageSpec >> forceLoadUsing: mcLoader [
 
-	| fetchingSpecLoader |
+	| loadTarget |
 	"force load it"
-	fetchingSpecLoader := (MetacelloLoadingMCSpecLoader on: mcLoader spec)
+	loadTarget := (MetacelloLoadTarget on: mcLoader spec)
 		                      loaderPolicy: mcLoader loaderPolicy copy;
 		                      yourself.
-	fetchingSpecLoader
+	loadTarget
 		linearLoadPackageSpecs: (Array with: self)
 		repositories:
-		(fetchingSpecLoader repositoriesFrom: self repositorySpecs)
+		(loadTarget repositoriesFrom: self repositorySpecs)
 ]
 
 { #category : 'accessing' }

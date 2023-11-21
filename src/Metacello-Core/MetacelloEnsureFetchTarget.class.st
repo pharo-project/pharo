@@ -1,18 +1,18 @@
 Class {
-	#name : 'MetacelloEnsureFetchingMCSpecLoader',
-	#superclass : 'MetacelloFetchingMCSpecLoader',
+	#name : 'MetacelloEnsureFetchTarget',
+	#superclass : 'MetacelloFetchTarget',
 	#category : 'Metacello-Core-Loaders',
 	#package : 'Metacello-Core',
 	#tag : 'Loaders'
 }
 
 { #category : 'accessing' }
-MetacelloEnsureFetchingMCSpecLoader >> ensureSpecLoader [
+MetacelloEnsureFetchTarget >> ensureSpecLoader [
 	^ self
 ]
 
 { #category : 'private' }
-MetacelloEnsureFetchingMCSpecLoader >> scheduleFetchFor: packageSpec cachedReference: reference [
+MetacelloEnsureFetchTarget >> scheduleFetchFor: packageSpec cachedReference: reference [
   "reference already in the cache during fetch ...schedule a load directive for reference, so ensured load will come from cache"
 
   ^ self
@@ -25,7 +25,7 @@ MetacelloEnsureFetchingMCSpecLoader >> scheduleFetchFor: packageSpec cachedRefer
 ]
 
 { #category : 'private' }
-MetacelloEnsureFetchingMCSpecLoader >> scheduleFetchFor: packageSpec nearestReference: reference [
+MetacelloEnsureFetchTarget >> scheduleFetchFor: packageSpec nearestReference: reference [
   "latest version in repository already matches the cached reference...schedule a load directive for reference, so ensured load will come from cache"
 
   ^ self

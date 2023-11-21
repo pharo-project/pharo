@@ -43,7 +43,7 @@ MetacelloSpecTestCase >> projectWith: projectAttributes [
     project := self projectClass new.
     project projectAttributes: projectAttributes.
     MetacelloVersionConstructor on: self project: project.
-    project loader: MetacelloNullRecordingMCSpecLoader new.
+    project loader: MetacelloRecordTarget new.
     ^ project
 ]
 
