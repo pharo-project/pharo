@@ -12,10 +12,45 @@ Class {
 }
 
 { #category : 'actions' }
+MetacelloAtomicLoadDirective >> executeAtomicLoadDirective: aLoaderDirective gofer: aGofer [
+
+	aLoaderDirective loadDirectives do: [ :directive |
+		directive executeUsing: self gofer: aGofer ]
+]
+
+{ #category : 'actions' }
+MetacelloAtomicLoadDirective >> executeLinearLoadDirective: aLoaderDirective gofer: aGofer [
+
+	self finalizeLoad: aGofer.
+	super executeLinearLoadDirective: aLoaderDirective gofer: aGofer
+]
+
+{ #category : 'actions' }
+MetacelloAtomicLoadDirective >> executePackageDirective: aPackageLoadDirective gofer: aGofer [
+	"accumulate packages"
+	
+	self packageloads add: aPackageLoadDirective
+]
+
+{ #category : 'loading' }
+MetacelloAtomicLoadDirective >> executePostloadDirective: aPostloadDirective [
+	"accumulate postloads"
+
+	self postloads add: aPostloadDirective
+]
+
+{ #category : 'loading' }
+MetacelloAtomicLoadDirective >> executePreloadDirective: aPreloadDirective [ 
+	"accumulate preloads"
+
+	self preloads add: aPreloadDirective
+]
+
+{ #category : 'actions' }
 MetacelloAtomicLoadDirective >> executeUsing: aLoaderDirective gofer: aGofer [
 
 	self loadDirectives isEmpty ifTrue: [ ^self ].
-	aLoaderDirective loadAtomicLoadDirective: self gofer: aGofer.
+	aLoaderDirective executeAtomicLoadDirective: self gofer: aGofer.
 ]
 
 { #category : 'actions' }
@@ -23,7 +58,7 @@ MetacelloAtomicLoadDirective >> finalizeLoad: aGofer [
 	"load the accumulated packages (if any), reset the package list"
 
 	| pkgLoads |
-	self preloads do: [:directive | super loadPreloadDirective: directive ].
+	self preloads do: [:directive | super executePreloadDirective: directive ].
 	preloads := nil.
 	(pkgLoads := self packageloads) notEmpty 
 		ifTrue: [
@@ -31,43 +66,8 @@ MetacelloAtomicLoadDirective >> finalizeLoad: aGofer [
 				loadPackageDirectives: pkgLoads 
 				gofer: aGofer.
 			self packageloads: nil ].
-	self postloads do: [:directive | super loadPostloadDirective: directive ].
+	self postloads do: [:directive | super executePostloadDirective: directive ].
 	postloads := nil
-]
-
-{ #category : 'actions' }
-MetacelloAtomicLoadDirective >> loadAtomicLoadDirective: aLoaderDirective gofer: aGofer [
-
-	aLoaderDirective loadDirectives do: [ :directive |
-		directive executeUsing: self gofer: aGofer ]
-]
-
-{ #category : 'actions' }
-MetacelloAtomicLoadDirective >> loadLinearLoadDirective: aLoaderDirective gofer: aGofer [
-
-	self finalizeLoad: aGofer.
-	super loadLinearLoadDirective: aLoaderDirective gofer: aGofer
-]
-
-{ #category : 'actions' }
-MetacelloAtomicLoadDirective >> loadPackageDirective: aPackageLoadDirective gofer: aGofer [
-	"accumulate packages"
-	
-	self packageloads add: aPackageLoadDirective
-]
-
-{ #category : 'loading' }
-MetacelloAtomicLoadDirective >> loadPostloadDirective: aPostloadDirective [
-	"accumulate postloads"
-
-	self postloads add: aPostloadDirective
-]
-
-{ #category : 'loading' }
-MetacelloAtomicLoadDirective >> loadPreloadDirective: aPreloadDirective [ 
-	"accumulate preloads"
-
-	self preloads add: aPreloadDirective
 ]
 
 { #category : 'accessing' }

@@ -10,17 +10,7 @@ Class {
 MetacelloLinearLoadDirective >> executeUsing: aLoaderDirective gofer: aGofer [
 
 	self loadDirectives isEmpty ifTrue: [ ^self ].
-	aLoaderDirective loadLinearLoadDirective: self gofer: aGofer.
-]
-
-{ #category : 'actions' }
-MetacelloLinearLoadDirective >> loadWithPolicy: aLoadPolicy [
-
-	| gofer |
-	gofer := MetacelloGofer new.
-	gofer disablePackageCache.
-	gofer repository: aLoadPolicy cacheRepository.
-	self executeUsing: self gofer: gofer
+	aLoaderDirective executeLinearLoadDirective: self gofer: aGofer.
 ]
 
 { #category : 'accessing' }

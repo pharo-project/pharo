@@ -15,7 +15,7 @@ MetacelloPreLoadDirective >> addTo: aLoaderDirective [
 { #category : 'actions' }
 MetacelloPreLoadDirective >> executeUsing: aLoaderDirective gofer: aGofer [
 
-	aLoaderDirective loadPreloadDirective: self.
+	aLoaderDirective executePreloadDirective: self.
 ]
 
 { #category : 'printing' }
