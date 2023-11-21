@@ -380,7 +380,7 @@ Breakpoint >> isEnabled [
 { #category : 'testing' }
 Breakpoint >> isObjectCentric [
 
-	^ self targetInstance notNil
+	^ self targetInstance isNotNil
 ]
 
 { #category : 'testing' }

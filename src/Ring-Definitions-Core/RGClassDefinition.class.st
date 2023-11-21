@@ -98,11 +98,6 @@ RGClassDefinition >> allClassVariables [
 ]
 
 { #category : 'shared pools' }
-RGClassDefinition >> allSharedPoolNames [
-	^ self allSharedPools collect: [ :pool | pool name ]
-]
-
-{ #category : 'shared pools' }
 RGClassDefinition >> allSharedPools [
 	"Answer a collection of the pools the receiver shares, including those defined
 	in the superclasses of the receiver."

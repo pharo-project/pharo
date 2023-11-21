@@ -15,6 +15,14 @@ OpenToolTest >> openInspectorOn: anObject [
 	^ Smalltalk tools inspector inspect: anObject
 ]
 
+{ #category : 'tests - implementors' }
+OpenToolTest >> testImplementorsOfAt [
+	| implementors |
+	implementors := SystemNavigation default browseAllImplementorsOf: #name.
+	implementors changed.
+	implementors close
+]
+
 { #category : 'tests - inspect' }
 OpenToolTest >> testInspectArray [
 	| inspector |

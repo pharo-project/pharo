@@ -106,6 +106,18 @@ RGMetaclassTraitV2Strategy >> isMetaclassStrategy [
 	^ true
 ]
 
+{ #category : 'testing' }
+RGMetaclassTraitV2Strategy >> isMetaclassTrait [
+
+	^ true
+]
+
+{ #category : 'testing' }
+RGMetaclassTraitV2Strategy >> isMetaclassTraitStrategy [
+
+	^ true
+]
+
 { #category : 'private - backend access' }
 RGMetaclassTraitV2Strategy >> makeResolved [
 

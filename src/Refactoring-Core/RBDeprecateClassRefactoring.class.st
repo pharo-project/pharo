@@ -126,7 +126,7 @@ RBDeprecateClassRefactoring >> newClass [
 
 { #category : 'preconditions' }
 RBDeprecateClassRefactoring >> preconditions [
-	^((RBCondition withBlock: [deprecatedClass notNil and: [deprecatedClass isMeta not]])
+	^((RBCondition withBlock: [deprecatedClass isNotNil and: [deprecatedClass isMeta not]])
 			& (RBCondition isValidClassName: newName)
 			& (RBCondition isGlobal: newName in: self model)) |
 			(RBCondition withBlock: [ self refactoringError: newName , ' is not a valid class name'])

@@ -97,7 +97,7 @@ FileHandle >> flush [
 
 { #category : 'testing' }
 FileHandle >> isOpen [
-	^ (File sizeOrNil: id) notNil
+	^ (File sizeOrNil: id) isNotNil
 ]
 
 { #category : 'public' }

@@ -234,14 +234,6 @@ ClassDescription >> classSide [
 ]
 
 { #category : 'instance variables' }
-ClassDescription >> classThatDefinesClassVariable: classVarName [
-	"Answer the class that defines the given class variable"
-	<reflection: 'Class structural inspection - Class variable inspection'>
-	(self classPool includesKey: classVarName asSymbol) ifTrue: [^ self].
-	^self superclass ifNotNil: [self superclass classThatDefinesClassVariable: classVarName]
-]
-
-{ #category : 'instance variables' }
 ClassDescription >> classThatDefinesInstVarNamed: instVarName [
 	<reflection: 'Class structural inspection - Instance variable inspection'>
 	^self
@@ -903,7 +895,9 @@ ClassDescription >> packageTagName [
 ClassDescription >> packages [
 	"the extending packages of a class are the packages that extend it."
 
-	^  self extendingPackages asSet copy add: self package; yourself
+	^ self extendingPackages
+		  add: self package;
+		  yourself
 ]
 
 { #category : 'printing' }

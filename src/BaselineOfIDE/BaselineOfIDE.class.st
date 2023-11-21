@@ -39,8 +39,8 @@ Class {
 
 { #category : 'baselines' }
 BaselineOfIDE >> baseline: spec [
-
 	<baseline>
+
 	spec for: #common do: [
 		spec postLoadDoIt: #postload:package:.
 		spec baseline: 'BasicTools' with: [ spec repository: self repository ].
@@ -121,14 +121,14 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Kernel-ExtraUtils' ]
 ]
 
-{ #category : 'baselines' }
+{ #category : 'baselines - dependencies' }
 BaselineOfIDE >> beautifulComments: spec [ 
 
 	spec baseline: 'BeautifulComments' with: [ 
 		spec repository: (self class environment at: #BaselineOfPharo) beautifulCommentsRepository ]
 ]
 
-{ #category : 'baselines' }
+{ #category : 'baselines - dependencies' }
 BaselineOfIDE >> documentBrowserCore: spec [
 
 	spec baseline: 'NewToolsDocumentBrowser' with: [
@@ -137,13 +137,13 @@ BaselineOfIDE >> documentBrowserCore: spec [
 			loads: 'Core+Tests' ]
 ]
 
-{ #category : 'baselines' }
+{ #category : 'baselines - dependencies' }
 BaselineOfIDE >> drTests: spec [
 
 	spec baseline: 'DrTests' with: [ spec repository: self repository ]
 ]
 
-{ #category : 'baselines' }
+{ #category : 'private - loading' }
 BaselineOfIDE >> load: aProject group: aGroupName spec: spec [
 
 	spec baseline: aProject with: [
@@ -214,7 +214,7 @@ BaselineOfIDE >> makeCalypsoDefaultBrowser [
 	(self class environment at: #ClyBrowserMorph) beAllDefault.
 ]
 
-{ #category : 'baselines' }
+{ #category : 'baselines - dependencies' }
 BaselineOfIDE >> microdown: spec [ 
 
 	spec baseline: 'Microdown' with: [ 
@@ -223,7 +223,7 @@ BaselineOfIDE >> microdown: spec [
 			loads: #('RichText' 'Tests') ]
 ]
 
-{ #category : 'baselines' }
+{ #category : 'baselines - dependencies' }
 BaselineOfIDE >> newTools: spec [ 
 
 	spec baseline: 'NewTools' with: [
@@ -372,13 +372,13 @@ BaselineOfIDE >> registerProject: projectName externalProject: externalProject b
 		Metacello new baseline: each; register ]
 ]
 
-{ #category : 'baselines' }
+{ #category : 'accessing' }
 BaselineOfIDE >> repository [
 
 	^ repository ifNil: [ repository := self packageRepositoryURL ]
 ]
 
-{ #category : 'baselines' }
+{ #category : 'baselines - dependencies' }
 BaselineOfIDE >> roassal: spec [
 
 	spec 
@@ -389,7 +389,7 @@ BaselineOfIDE >> roassal: spec [
     			loads: #( 'Core' 'Tests') ]
 ]
 
-{ #category : 'baselines' }
+{ #category : 'baselines - dependencies' }
 BaselineOfIDE >> specCode: spec [
 
 	spec baseline: 'SpecCode' with: [ 
@@ -399,7 +399,7 @@ BaselineOfIDE >> specCode: spec [
 			loads: #('Code' 'CodeTests') ]
 ]
 
-{ #category : 'baselines' }
+{ #category : 'baselines - dependencies' }
 BaselineOfIDE >> welcomeBrowser: spec [
 
 	spec baseline: 'WelcomeBrowser' with: [

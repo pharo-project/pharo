@@ -244,7 +244,7 @@ FFIEnumeration class >> generatedEnumProtocolName [
 
 { #category : 'testing' }
 FFIEnumeration class >> includes: aSymbol [
-	^ self classPool includesKey: aSymbol
+	^ self hasClassVarNamed: aSymbol
 ]
 
 { #category : 'class initialization' }

@@ -27,9 +27,6 @@ Class {
 		'package',
 		'modified'
 	],
-	#classVars : [
-		'PrivateAnnouncer'
-	],
 	#classInstVars : [
 		'registry'
 	],
@@ -69,22 +66,6 @@ MCWorkingCopy class >> ancestorsFromArray: anArray cache: cacheDictionary [
 	^ anArray collect: [:dict | self infoFromDictionary: dict cache: cacheDictionary]
 ]
 
-{ #category : 'private' }
-MCWorkingCopy class >> announcer [
-	^PrivateAnnouncer ifNil: [ SystemAnnouncer uniqueInstance  ]
-]
-
-{ #category : 'private' }
-MCWorkingCopy class >> announcer: anAnnouncer [
-	PrivateAnnouncer := anAnnouncer
-]
-
-{ #category : 'system changes' }
-MCWorkingCopy class >> classModified: anEvent [
-
-	anEvent packagesAffected do: [ :package | package mcWorkingCopy ifNotNil: [ :copy | copy modified: true ] ]
-]
-
 { #category : 'accessing' }
 MCWorkingCopy class >> ensureForPackage: aPackage [
 
@@ -119,6 +100,12 @@ MCWorkingCopy class >> forPackageNamed: aPackageName [
 		  ifNone: [ NotFound signalFor: aPackageName in: self ]
 ]
 
+{ #category : 'system changes' }
+MCWorkingCopy class >> handleClassAndMethodsChange: anEvent [
+
+	anEvent packagesAffected do: [ :package | package mcWorkingCopy ifNotNil: [ :workingCopy | workingCopy modified: true ] ]
+]
+
 { #category : 'querying' }
 MCWorkingCopy class >> hasPackageNamed: aName [
 
@@ -146,26 +133,6 @@ MCWorkingCopy class >> initialize [
 
 	registry ifNotNil: [ registry rehash ].
 	self registerForNotifications
-]
-
-{ #category : 'system changes' }
-MCWorkingCopy class >> methodModified: anEvent [
-	"trait methods aren't handled here"
-
-	^ anEvent methodPackage mcWorkingCopy ifNotNil: [ :wc | wc modified: true ]
-]
-
-{ #category : 'system changes' }
-MCWorkingCopy class >> methodMoved: anEvent [
-
-	anEvent oldPackage mcWorkingCopy ifNotNil: [ :workingCopy | workingCopy modified: true ].
-	anEvent newPackage mcWorkingCopy ifNotNil: [ :workingCopy | workingCopy modified: true ]
-]
-
-{ #category : 'system changes' }
-MCWorkingCopy class >> methodRemoved: anEvent [
-
-	anEvent methodPackage mcWorkingCopy ifNotNil: [ :wc | wc modified: true ]
 ]
 
 { #category : 'system changes' }
@@ -199,7 +166,6 @@ MCWorkingCopy class >> registerForNotifications [
 
 	<systemEventRegistration>
 	self
-		announcer: nil;
 		unregisterForNotifications;
 		registerInterestOnSystemChanges
 ]
@@ -207,14 +173,11 @@ MCWorkingCopy class >> registerForNotifications [
 { #category : 'event registration' }
 MCWorkingCopy class >> registerInterestOnSystemChanges [
 
-	SystemAnnouncer uniqueInstance weak
+	self class codeChangeAnnouncer weak
 		when: PackageAdded send: #packageAdded: to: self;
 		when: PackageRenamed send: #packageRenamed: to: self;
 		when: PackageRemoved send: #packageRemoved: to: self;
-		when: ClassAdded , ClassModifiedClassDefinition , ClassCommented , ClassParentRenamed , ClassRenamed , ClassRepackaged , ClassRemoved send: #classModified: to: self;
-		when: MethodAdded , MethodModified , MethodRecategorized send: #methodModified: to: self;
-		when: MethodRepackaged send: #methodMoved: to: self;
-		when: MethodRemoved send: #methodRemoved: to: self
+		when: ClassAnnouncement , MethodAnnouncement send: #handleClassAndMethodsChange: to: self
 ]
 
 { #category : 'private' }
@@ -262,11 +225,6 @@ MCWorkingCopy >> ancestors [
 { #category : 'accessing' }
 MCWorkingCopy >> ancestry [
 	^ ancestry
-]
-
-{ #category : 'private' }
-MCWorkingCopy >> announcer [
-	^self class announcer
 ]
 
 { #category : 'operations' }
