@@ -239,7 +239,7 @@ Symbol class >> selectorThatStartsCaseSensitive: leadingCharacters skipping: ski
 	firstMatch := leadingCharacters at: 1.
 	size > 1 ifTrue: [key := leadingCharacters copyFrom: 2 to: size].
 	self selectorTable do: [:each |
-			(each notNil and: [each size >= size]) ifTrue:
+			(each isNotNil and: [each size >= size]) ifTrue:
 				[
 					((each at: 1) == firstMatch and:
 						[key == nil or:
