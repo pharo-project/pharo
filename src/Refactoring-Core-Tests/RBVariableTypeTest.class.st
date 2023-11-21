@@ -15,14 +15,14 @@ RBVariableTypeTest >> testBasicLintRuleTypes [
 	"self assert: types size = 1."
 	self assert: ([  ] class withAllSuperclasses
 			detect: [ :each | types includes: (typer model classFor: each) ]
-			ifNone: [ nil ]) notNil.
+			ifNone: [ nil ]) isNotNil.
 	types := typer
 		typesFor: 'methodBlock'
 		in: (typer model classFor: RBBasicLintRuleTestData).
 	"self should: [types size = 2]."
 	self assert: ([  ] class withAllSuperclasses
 			detect: [ :each | types includes: (typer model classFor: each) ]
-			ifNone: [ nil ]) notNil.
+			ifNone: [ nil ]) isNotNil.
 	"self should: [types includes: MessageChannel]."
 	typer printString
 ]

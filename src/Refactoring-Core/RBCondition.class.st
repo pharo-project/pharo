@@ -154,7 +154,7 @@ RBCondition class >> definesTempVar: aString in: aClass ignoreClass: subclass [
 			method ifNotNil: [
 				condition errorMacro:
 					method printString , ' defines variable ' , aString ].
-			method notNil ]
+			method isNotNil ]
 		errorString:
 			aClass printString
 			, ' <1?:does not >define<1?s:> temporary variable ' , aString.
@@ -176,7 +176,7 @@ RBCondition class >> definesTemporaryVariable: aString in: aClass [
 			method ifNotNil: [
 				condition errorMacro:
 					method printString , ' defines variable ' , aString ].
-			method notNil ]
+			method isNotNil ]
 		errorString:
 			aClass printString
 			, ' <1?:does not >define<1?s:> temporary variable ' , aString.
@@ -434,7 +434,7 @@ RBCondition class >> subclassesOf: aClass isDoingASuperSendFor: aSelector [
 				  each selectors anySatisfy: [ :sel |
 					  | tree |
 					  tree := each parseTreeForSelector: sel.
-					  tree notNil and: [ tree superMessages includes: aSelector ] ] ] ]
+					  tree isNotNil and: [ tree superMessages includes: aSelector ] ] ] ]
 		  errorString:
 			  '<1?:no:a> subclass of ' , aClass printString , ' is doing a super send using '
 			  , aSelector printString

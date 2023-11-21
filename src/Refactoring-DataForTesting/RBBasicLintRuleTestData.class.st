@@ -142,7 +142,7 @@ RBBasicLintRuleTestData class >> sentNotImplementedInApplication [
 						ifTrue:
 							[context superMessages isEmpty ifFalse: [message := context superMessages asArray first]]
 						ifFalse: [message := context superMessages detect: block ifNone: [nil]]].
-			message notNil ifTrue:
+			message isNotNil ifTrue:
 					[result addSearchString: message.
 					result addClass: context selectedClass selector: context selector]].
 	^detector
@@ -177,7 +177,7 @@ RBBasicLintRuleTestData class >> subclassResponsibilityNotDefined [
 							[:class |
 							class subclasses isEmpty
 								and: [(class whichClassIncludesSelector: each) == context selectedClass]]
-						ifNone: [nil]) notNil
+						ifNone: [nil]) isNotNil
 						ifTrue: [result addClass: context selectedClass selector: each]]].
 	^detector
 ]
@@ -196,7 +196,7 @@ RBBasicLintRuleTestData class >> superSends [
 			[:context :result |
 			(context selectedClass isMetaclass not
 				and: [self superMessages includes: context selector]) ifTrue:
-						[(context selectedClass superclass notNil
+						[(context selectedClass superclass isNotNil
 							and: [context selectedClass superclass canUnderstand: context selector])
 								ifTrue:
 									[(context superMessages includes: context selector)
@@ -238,8 +238,8 @@ RBBasicLintRuleTestData class >> utilityMethods [
 					[(context protocols detect:
 							[:each |
 							(self utilityProtocols detect: [:protocol | protocol match: each]
-								ifNone: [nil]) notNil]
-						ifNone: [nil]) notNil])
+								ifNone: [nil]) isNotNil]
+						ifNone: [nil]) isNotNil])
 				ifFalse:
 					[(self subclassOf: context selectedClass overrides: context selector)
 						ifFalse:

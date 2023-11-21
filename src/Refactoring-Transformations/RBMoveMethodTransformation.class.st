@@ -337,7 +337,7 @@ RBMoveMethodTransformation >> isMovingToArgument [
 { #category : 'transforming' }
 RBMoveMethodTransformation >> isMovingToInstVar [
 	^self isMovingToArgument not
-		and: [(class whoDefinesInstanceVariable: variable) notNil]
+		and: [(class whoDefinesInstanceVariable: variable) isNotNil]
 ]
 
 { #category : 'transforming' }
@@ -427,7 +427,7 @@ RBMoveMethodTransformation >> uniqueMethodNameFor: anInteger [
 	index := 0.
 
 	[name := before , index printString , after.
-	(Symbol findInterned: name) notNil]
+	(Symbol findInterned: name) isNotNil]
 			whileTrue: [index := index + 1].
 	^name asSymbol
 ]

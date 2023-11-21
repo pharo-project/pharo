@@ -306,7 +306,7 @@ RBMoveMethodRefactoring >> isMovingToArgument [
 { #category : 'testing' }
 RBMoveMethodRefactoring >> isMovingToInstVar [
 	^self isMovingToArgument not
-		and: [(class whoDefinesInstanceVariable: variable) notNil]
+		and: [(class whoDefinesInstanceVariable: variable) isNotNil]
 ]
 
 { #category : 'testing' }

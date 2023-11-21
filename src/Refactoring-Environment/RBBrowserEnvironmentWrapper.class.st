@@ -95,7 +95,7 @@ RBBrowserEnvironmentWrapper >> includesSelector: aSelector in: aClass [
 { #category : 'testing' }
 RBBrowserEnvironmentWrapper >> isBoundToEnvironment [
 
-	^ environment notNil
+	^ environment isNotNil
 ]
 
 { #category : 'testing' }

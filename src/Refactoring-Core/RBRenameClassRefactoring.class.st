@@ -74,7 +74,7 @@ RBRenameClassRefactoring >> className: aName newName: aNewName [
 
 { #category : 'preconditions' }
 RBRenameClassRefactoring >> doesClassToBeRenamedExist [
-	^ class notNil 
+	^ class isNotNil 
 ]
 
 { #category : 'preconditions' }

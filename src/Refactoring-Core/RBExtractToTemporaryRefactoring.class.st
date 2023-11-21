@@ -82,7 +82,7 @@ RBExtractToTemporaryRefactoring >> insertTemporary [
 
 	| node statementNode nodeReferences |
 	node := self parseTree whichNodeIsContainedBy: sourceInterval.
-	(node notNil and: [ node isValue ]) ifFalse: [
+	(node isNotNil and: [ node isValue ]) ifFalse: [
 		self refactoringError: 'Cannot assign to non-value nodes' ].
 	nodeReferences := node methodOrBlockNode allChildren select: [ :each |
 		                  each = node ].

@@ -369,7 +369,7 @@ RBBasicDummyLintRuleTest class >> equivalentSuperclassMethods [
 	detector name: 'Methods equivalently defined in superclass'.
 	detector methodBlock:
 			[:context :result |
-			context selectedClass superclass notNil ifTrue:
+			context selectedClass superclass isNotNil ifTrue:
 					[(context selectedClass superclass canUnderstand: context selector)
 						ifTrue:
 							[(((context selectedClass superclass
@@ -446,7 +446,7 @@ RBBasicDummyLintRuleTest class >> ifTrueBlocks [
 				->
 					[:aNode :answer |
 					answer or:
-							[(aNode arguments detect: [:each | each isBlock not] ifNone: [nil]) notNil]].
+							[(aNode arguments detect: [:each | each isBlock not] ifNone: [nil]) isNotNil]].
 	detector methodBlock:
 			[:context :result |
 			(matcher executeTree: context parseTree initialAnswer: false)
@@ -660,21 +660,22 @@ RBBasicDummyLintRuleTest class >> onlyReadOrWritten [
 
 { #category : 'bugs' }
 RBBasicDummyLintRuleTest class >> overridesSpecialMessage [
+
 	| detector |
 	detector := self new.
 	detector name: 'Overrides a "special" message'.
 	detector resultClass: RBClassEnvironment.
-	detector classBlock:
-			[:context :result |
-			((context selectedClass isMetaclass
-				ifTrue: [self metaclassShouldNotOverride]
-				ifFalse: [self classShouldNotOverride]) detect:
-						[:each |
-						context selectedClass superclass notNil and:
-								[(context selectedClass superclass canUnderstand: each)
-									and: [context selectedClass includesSelector: each]]]
-					ifNone: [nil]) notNil ifTrue: [result addClass: context selectedClass]].
-	^detector
+	detector classBlock: [ :context :result |
+		((context selectedClass isMetaclass
+			  ifTrue: [ self metaclassShouldNotOverride ]
+			  ifFalse: [ self classShouldNotOverride ])
+			 detect: [ :each |
+				 context selectedClass superclass isNotNil and: [
+					 (context selectedClass superclass canUnderstand: each) and: [
+						 context selectedClass includesSelector: each ] ] ]
+			 ifNone: [ nil ]) ifNotNil: [
+			result addClass: context selectedClass ] ].
+	^ detector
 ]
 
 { #category : 'miscellaneous' }
@@ -755,49 +756,46 @@ RBBasicDummyLintRuleTest class >> returnsIfTrue [
 
 { #category : 'possible bugs' }
 RBBasicDummyLintRuleTest class >> sendsDifferentSuper [
+
 	| detector |
 	detector := self new.
 	detector name: 'Sends different super message'.
-	detector methodBlock:
-			[:context :result |
-			| message |
-			(message := context superMessages detect: [:each | each ~= context selector]
-						ifNone: [nil]) notNil ifTrue:
-					[result addSearchString: message.
-					result addClass: context selectedClass selector: context selector]].
-	^detector
+	detector methodBlock: [ :context :result |
+		| message |
+		(message := context superMessages
+			            detect: [ :each | each ~= context selector ]
+			            ifNone: [ nil ]) ifNotNil: [
+			result addSearchString: message.
+			result addClass: context selectedClass selector: context selector ] ].
+	^ detector
 ]
 
 { #category : 'bugs' }
 RBBasicDummyLintRuleTest class >> sentNotImplemented [
 
 	| detector |
-
 	detector := self new.
 	detector name: 'Messages sent but not implemented'.
-	detector
-		methodBlock: [ :context :result |
-			| message |
-
-			message := context messages detect: [ :each | ( context implements: each ) not ] ifNone: [ nil ].
-			message
-				ifNil: [ message := context superMessages
-						detect: [ :each |
-							context selectedClass superclass isNil
-								or: [ ( context selectedClass superclass canUnderstand: each ) not ]
-							]
-						ifNone: [ nil ].
-					message
-						ifNil: [ message := context selfMessages
-								detect: [ :each | ( context selectedClass canUnderstand: each ) not ]
-								ifNone: [ nil ]
-							]
-					].
-			message notNil
-				ifTrue: [ result addSearchString: message.
-					result addClass: context selectedClass selector: context selector
-					]
-			].
+	detector methodBlock: [ :context :result |
+		| message |
+		message := context messages
+			           detect: [ :each | (context implements: each) not ]
+			           ifNone: [ nil ].
+		message ifNil: [
+			message := context superMessages
+				           detect: [ :each |
+					           context selectedClass superclass isNil or: [
+						           (context selectedClass superclass canUnderstand: each)
+							           not ] ]
+				           ifNone: [ nil ].
+			message ifNil: [
+				message := context selfMessages
+					           detect: [ :each |
+					           (context selectedClass canUnderstand: each) not ]
+					           ifNone: [ nil ] ] ].
+		message ifNotNil: [
+			result addSearchString: message.
+			result addClass: context selectedClass selector: context selector ] ].
 	^ detector
 ]
 
@@ -831,7 +829,7 @@ RBBasicDummyLintRuleTest class >> sentNotImplementedInApplication [
 							]
 						ifNotNil: [ message := context superMessages detect: block ifNone: [ nil ] ]
 					].
-			message notNil
+			message isNotNil
 				ifTrue: [ result addSearchString: message.
 					result addClass: context selectedClass selector: context selector
 					]
@@ -870,7 +868,7 @@ RBBasicDummyLintRuleTest class >> stringConcatenation [
 									[:each |
 									each isBlock
 										and: [concatenationMatcher executeTree: each initialAnswer: false]]
-								ifNone: [nil]) notNil]].
+								ifNone: [nil]) isNotNil]].
 	detector methodBlock:
 			[:context :result |
 			(matcher executeTree: context parseTree initialAnswer: false)
@@ -907,7 +905,7 @@ RBBasicDummyLintRuleTest class >> subclassResponsibilityNotDefined [
 							[:class |
 							class subclasses isEmpty
 								and: [(class whichClassIncludesSelector: each) == context selectedClass]]
-						ifNone: [nil]) notNil
+						ifNone: [nil]) isNotNil
 						ifTrue: [result addClass: context selectedClass selector: each]]].
 	^detector
 ]
@@ -926,7 +924,7 @@ RBBasicDummyLintRuleTest class >> superSends [
 			[:context :result |
 			(context selectedClass isMetaclass not
 				and: [self superMessages includes: context selector]) ifTrue:
-						[(context selectedClass superclass notNil
+						[(context selectedClass superclass isNotNil
 							and: [context selectedClass superclass canUnderstand: context selector])
 								ifTrue:
 									[(context superMessages includes: context selector)
@@ -1084,8 +1082,8 @@ RBBasicDummyLintRuleTest class >> utilityMethods [
 					[(context protocols detect:
 							[:each |
 							(self utilityProtocols detect: [:protocol | protocol match: each]
-								ifNone: [nil]) notNil]
-						ifNone: [nil]) notNil])
+								ifNone: [nil]) isNotNil]
+						ifNone: [nil]) isNotNil])
 				ifFalse:
 					[(self subclassOf: context selectedClass overrides: context selector)
 						ifFalse:
@@ -1133,7 +1131,7 @@ RBBasicDummyLintRuleTest class >> variableAssignedLiteral [
 								searcher addSearch: (each , ' := ``@object')
 											-> [:aNode :answer | answer isNil and: [aNode value isLiteralNode]].
 								tree := defClass parseTreeForSelector: selector.
-								tree notNil ifTrue:
+								tree isNotNil ifTrue:
 										[(searcher executeTree: tree initialAnswer: nil) == true
 											ifTrue: [result addInstVar: each for: context selectedClass]]]]].
 	^detector
@@ -1166,7 +1164,7 @@ RBBasicDummyLintRuleTest class >> variableReferencedOnce [
 							ifTrue:
 								[| tree |
 								tree := defClass parseTreeForSelector: selector.
-								tree notNil
+								tree isNotNil
 									ifTrue:
 										[(RBReadBeforeWrittenTester readBeforeWritten: (Array with: each) in: tree)
 											isEmpty

@@ -325,7 +325,7 @@ RBInlineMethodParametrizedTest >> testInlineMethod [
 															[context superMessages isEmpty
 																ifFalse: [message := context superMessages asArray first]]
 														ifFalse: [message := context superMessages detect: block ifNone: [nil]]].
-											message notNil
+											message isNotNil
 												ifTrue:
 													[result addSearchString: message.
 													result addClass: context selectedClass selector: context selector]].

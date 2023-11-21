@@ -272,8 +272,8 @@ RBRefactoringChangeTest >> testComposite [
 		compile: 'method ^ 2' in: self class class classified: #utilities.
 	self assert: changes changesSize equals: 2.
 	self assert: changes problemCount equals: 2.
-	self assert: (changes changeForClass: self class name selector: #method) notNil.
-	self assert: (changes changeForMetaclass: self class name selector: #method) notNil.
+	self assert: (changes changeForClass: self class name selector: #method) isNotNil.
+	self assert: (changes changeForMetaclass: self class name selector: #method) isNotNil.
 	self universalTestFor: changes
 ]
 
