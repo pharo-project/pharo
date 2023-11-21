@@ -44,7 +44,7 @@ MetacelloDirective >> addTo: aLoaderDirective [
 ]
 
 { #category : 'actions' }
-MetacelloDirective >> executeUsing: aLoaderDirective gofer: aGofer [
+MetacelloDirective >> executeUsing: aLoader [
 
 	self subclassResponsibility
 ]

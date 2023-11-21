@@ -15,37 +15,6 @@ MetacelloVersionLoadDirective >> add: aDirective [
 	self loadDirectives add: aDirective
 ]
 
-{ #category : 'actions' }
-MetacelloVersionLoadDirective >> executePackageDirective: aPackageLoadDirective gofer: aGofer [
-
-	aPackageLoadDirective loader loadingSpecLoader 
-		loadPackageDirective: aPackageLoadDirective 
-		gofer: aGofer
-]
-
-{ #category : 'loading' }
-MetacelloVersionLoadDirective >> executePostloadDirective: aPostloadDirective [
-
-	aPostloadDirective spec postLoadDoItBlock ifNotNil: [ :block |
-		MetacelloNotification signal: 'Evaluating -> ' , aPostloadDirective spec label , ' >> ' , aPostloadDirective spec postLoadDoIt value asString.
-		aPostloadDirective evaluateSupplyingAnswers: [ block valueWithPossibleArgs: (Array with: aPostloadDirective loader with: aPostloadDirective spec) ].
-		MetacelloNotification signal: 'Evaluated -> ' , aPostloadDirective spec label , ' >> ' , aPostloadDirective spec postLoadDoIt value asString ]
-]
-
-{ #category : 'loading' }
-MetacelloVersionLoadDirective >> executePreloadDirective: aPreloadDirective [
-
-	aPreloadDirective spec preLoadDoItBlock ifNotNil: [ :block |
-		MetacelloNotification signal: 'Evaluating -> ' , aPreloadDirective spec label , ' >> ' , aPreloadDirective spec preLoadDoIt value asString.
-		aPreloadDirective evaluateSupplyingAnswers: [ block valueWithPossibleArgs: (Array with: aPreloadDirective loader with: aPreloadDirective spec) ].
-		MetacelloNotification signal: 'Evaluated -> ' , aPreloadDirective spec label , ' >> ' , aPreloadDirective spec preLoadDoIt value asString ]
-]
-
-{ #category : 'actions' }
-MetacelloVersionLoadDirective >> finalizeLoad: aGofer [
-	"nothing special for linear loads"
-]
-
 { #category : 'printing' }
 MetacelloVersionLoadDirective >> label [
 
@@ -68,11 +37,13 @@ MetacelloVersionLoadDirective >> loadDirectives: anObject [
 { #category : 'actions' }
 MetacelloVersionLoadDirective >> loadWithPolicy: aLoadPolicy [
 
-	| gofer |
-	gofer := MetacelloGofer new.
-	gofer disablePackageCache.
-	gofer repository: aLoadPolicy cacheRepository.
-	self executeUsing: self gofer: gofer
+	self executeUsing: (self newLoaderForPolicy: aLoadPolicy)
+]
+
+{ #category : 'actions' }
+MetacelloVersionLoadDirective >> newLoaderForPolicy: aLoadPolicy [
+
+	self subclassResponsibility
 ]
 
 { #category : 'enumerating' }

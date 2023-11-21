@@ -13,9 +13,9 @@ MetacelloPostLoadDirective >> addTo: aLoaderDirective [
 ]
 
 { #category : 'actions' }
-MetacelloPostLoadDirective >> executeUsing: aLoaderDirective gofer: aGofer [
+MetacelloPostLoadDirective >> executeUsing: aLoader [
 
-	aLoaderDirective executePostloadDirective: self.
+	aLoader executePostloadDirective: self
 ]
 
 { #category : 'printing' }

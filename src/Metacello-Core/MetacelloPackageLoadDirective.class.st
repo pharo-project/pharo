@@ -11,9 +11,9 @@ Class {
 }
 
 { #category : 'actions' }
-MetacelloPackageLoadDirective >> executeUsing: aLoaderDirective gofer: aGofer [
+MetacelloPackageLoadDirective >> executeUsing: aLoader [
 
-	aLoaderDirective executePackageDirective: self gofer: aGofer
+	aLoader executePackageDirective: self gofer: nil
 ]
 
 { #category : 'accessing' }
