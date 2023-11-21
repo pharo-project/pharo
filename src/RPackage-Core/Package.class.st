@@ -253,7 +253,7 @@ Package >> ensureTag: aTag [
 
 	(self hasTag: aTag) ifTrue: [ ^ self classTagNamed: tagName ].
 
-	newTag := RPackageTag package: self name: tagName.
+	newTag := PackageTag package: self name: tagName.
 	classTags add: newTag.
 
 	self codeChangeAnnouncer  announce: (PackageTagAdded to: newTag).

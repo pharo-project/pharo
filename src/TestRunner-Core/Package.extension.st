@@ -1,7 +1,7 @@
-Extension { #name : 'RPackage' }
+Extension { #name : 'Package' }
 
 { #category : '*TestRunner-Core' }
-RPackage >> runBy: aTestRunner [
+Package >> runBy: aTestRunner [
 
 	aTestRunner runPackage: self
 ]
