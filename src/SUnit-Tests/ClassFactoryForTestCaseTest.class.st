@@ -93,7 +93,7 @@ ClassFactoryForTestCaseTest >> testSingleClassCreation [
 	self assert: class package name equals: factory packageName.
 	self assert: class packageTag name equals: factory tagName.
 	self assert: class instVarNames equals: #( a b c ).
-	self assert: class classPool keys asSet equals: #( X Y ) asSet
+	self assert: class classVarNames asSet equals: #( X Y ) asSet
 ]
 
 { #category : 'testing' }

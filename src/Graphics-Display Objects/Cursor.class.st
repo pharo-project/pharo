@@ -802,9 +802,9 @@ Cursor class >> initialize [
 Cursor class >> makeCursorsWithMask [
 	"Cursor initialize;makeCursorsWithMask"
 
-	self classPool associationsDo: [:var |
-		var value hasMask
-			ifFalse: [var value: var value withMask]]
+	self classVariables do: [:variable |
+		variable value hasMask
+			ifFalse: [variable value: variable value withMask]]
 ]
 
 { #category : 'constants' }
