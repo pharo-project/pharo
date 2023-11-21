@@ -318,7 +318,7 @@ FileReference >> isFile [
 { #category : 'testing' }
 FileReference >> isHidden [
 
-	^ (DiskDirectoryEntry reference: self) isHidden
+	^ filesystem isHidden: path attributes: nil
 ]
 
 { #category : 'testing' }
