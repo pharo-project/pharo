@@ -12,20 +12,6 @@ Class {
 }
 
 { #category : 'actions' }
-MetacelloAtomicLoadDirective >> executeAtomicLoadDirective: aLoaderDirective gofer: aGofer [
-
-	aLoaderDirective loadDirectives do: [ :directive |
-		directive executeUsing: self gofer: aGofer ]
-]
-
-{ #category : 'actions' }
-MetacelloAtomicLoadDirective >> executeLinearLoadDirective: aLoaderDirective gofer: aGofer [
-
-	self finalizeLoad: aGofer.
-	super executeLinearLoadDirective: aLoaderDirective gofer: aGofer
-]
-
-{ #category : 'actions' }
 MetacelloAtomicLoadDirective >> executePackageDirective: aPackageLoadDirective gofer: aGofer [
 	"accumulate packages"
 	
@@ -49,8 +35,13 @@ MetacelloAtomicLoadDirective >> executePreloadDirective: aPreloadDirective [
 { #category : 'actions' }
 MetacelloAtomicLoadDirective >> executeUsing: aLoaderDirective gofer: aGofer [
 
-	self loadDirectives isEmpty ifTrue: [ ^self ].
-	aLoaderDirective executeAtomicLoadDirective: self gofer: aGofer.
+	self loadDirectives isEmpty ifTrue: [ ^ self ].
+
+	self loadDirectives do: [ :directive |
+		directive executeUsing: self gofer: aGofer ].
+
+	(aLoaderDirective isKindOf: MetacelloAtomicLoadDirective) ifFalse: [
+		self finalizeLoad: aGofer ]
 ]
 
 { #category : 'actions' }

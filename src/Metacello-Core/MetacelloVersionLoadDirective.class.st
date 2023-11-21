@@ -16,22 +16,6 @@ MetacelloVersionLoadDirective >> add: aDirective [
 ]
 
 { #category : 'actions' }
-MetacelloVersionLoadDirective >> executeAtomicLoadDirective: aLoaderDirective gofer: aGofer [
-
-	aLoaderDirective loadDirectives do: [ :directive |
-		directive executeUsing: aLoaderDirective gofer: aGofer ].
-	aLoaderDirective finalizeLoad: aGofer
-]
-
-{ #category : 'actions' }
-MetacelloVersionLoadDirective >> executeLinearLoadDirective: aLoaderDirective gofer: aGofer [
-
-	aLoaderDirective loadDirectives do: [ :directive |
-		directive executeUsing: aLoaderDirective gofer: aGofer ].
-	aLoaderDirective finalizeLoad: aGofer
-]
-
-{ #category : 'actions' }
 MetacelloVersionLoadDirective >> executePackageDirective: aPackageLoadDirective gofer: aGofer [
 
 	aPackageLoadDirective loader loadingSpecLoader 
