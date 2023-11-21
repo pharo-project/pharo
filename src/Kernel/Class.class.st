@@ -339,6 +339,14 @@ Class >> classSide [
 ]
 
 { #category : 'class variables' }
+Class >> classThatDefinesClassVariable: classVarName [
+	"Answer the class that defines the given class variable"
+	<reflection: 'Class structural inspection - Class variable inspection'>
+	(self hasClassVarNamed: classVarName asSymbol) ifTrue: [^ self].
+	^self superclass ifNotNil: [self superclass classThatDefinesClassVariable: classVarName]
+]
+
+{ #category : 'class variables' }
 Class >> classVarNamed: aString [
 	"for compatibility"
 
@@ -853,8 +861,8 @@ Class >> removeClassVarNamed: aStringOrSymbol [
 
 	|  classVariable |
 	
-	classVariable := self classPool 
-		associationAt: aStringOrSymbol asSymbol 
+	classVariable := self 
+		classVariableNamed: aStringOrSymbol asSymbol 
 		ifAbsent: [ ^ self error: aStringOrSymbol , ' is not a class variable' ].
 	
 	self removeClassVariable: classVariable
