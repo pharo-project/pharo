@@ -267,31 +267,24 @@ PBAbstractImageBuilder >> createBehaviorFromDefinition: aRFiDefinition [
 { #category : 'running' }
 PBAbstractImageBuilder >> createClasses [
 
-	| definitions total smalltalkInstance |
-	
-	self log: 'Create classes'.
-	definitions := self systemDefinition ask allClassesAndTraits sorted: [ 
-		               :a 
-		               :b | a name < b name ].
-	total := definitions size.
-	definitions withIndexDo: [ :aClassDefinition :index | 
-		| time |
-		time := [ self createBehaviorFromDefinition: aClassDefinition ]
-			        timeToRun.
+	self logger
+		execute: [
+			| definitions total smalltalkInstance |
+			definitions := self systemDefinition ask allClassesAndTraits sorted: [ :a :b | a name < b name ].
+			total := definitions size.
+			definitions withIndexDo: [ :aClassDefinition :index |
+				| time |
+				time := [ self createBehaviorFromDefinition: aClassDefinition ] timeToRun.
 
-		PBSubStepFinishedSignal emit:
-			(index printPaddedWith: $0 to: 3) , '/' , total asString , ' - '
-			, time asString , ': Built behavior ' , aClassDefinition name ].
+				self log: (index printPaddedWith: $0 to: 3) , '/' , total asString , ' - ' , time asString , ': Built behavior ' , aClassDefinition name ].
 
-	smalltalkInstance := bootstrapEnvironment at: #Smalltalk.
-	objectSpace interpreter: bootstrapInterpreter.
-	objectSpace backend smalltalkInstance: smalltalkInstance.
-	objectSpace environment: ((EPSystemDictionary withSystemDictionary:
-				  objectSpace backend systemDictionary)
-			 objectSpace: objectSpace;
-			 yourself).
-
-	PBStepFinishedSignal emit: 'Classes created'
+			smalltalkInstance := bootstrapEnvironment at: #Smalltalk.
+			objectSpace interpreter: bootstrapInterpreter.
+			objectSpace backend smalltalkInstance: smalltalkInstance.
+			objectSpace environment: ((EPSystemDictionary withSystemDictionary: objectSpace backend systemDictionary)
+					 objectSpace: objectSpace;
+					 yourself) ]
+		logged: 'Create classes'
 ]
 
 { #category : 'running' }
@@ -310,65 +303,51 @@ PBAbstractImageBuilder >> createFalse [
 { #category : 'running' }
 PBAbstractImageBuilder >> createInitialObjects [
 
-	| characterTable |
-	"We add the main globals  in the bootstrap environment before a system dictionary exists. These globals are needed to create a system dictionary, and will be used by the AST interpreter"
-	PBStepFinishedSignal emit: 'initializing globals'.
-	
-	self log: 'Initializing objects.'.
-	self bootstrapEnvironment at: #Smalltalk put: objectSpace nilObject.
-	self bootstrapEnvironment at: #Undeclared put: objectSpace nilObject.
+	self logger
+		execute: [
+			| characterTable |
+			"We add the main globals  in the bootstrap environment before a system dictionary exists. These globals are needed to create a system dictionary, and will be used by the AST interpreter"
+			self log: 'Initializing objects.'.
+			self bootstrapEnvironment at: #Smalltalk put: objectSpace nilObject.
+			self bootstrapEnvironment at: #Undeclared put: objectSpace nilObject.
 
-	"We initialize the hash table sizes by hand.
+			"We initialize the hash table sizes by hand.
 	The AST interpreter is too slow to interpret HashTableSizes>>#initialize"
-	PBSubStepFinishedSignal emit: 'initializing hash table sizes'.
+			self log: 'initializing hash table sizes'.
 
-	(self classNamed: #HashTableSizes) mirror
-		instanceVariableAtIndex: (self classInstanceVariableIndexAt: 1)
-		put: (objectSpace newArrayWithAll:
-				 (HashTableSizes sizes collect: [ :each | 
-					  objectSpace backend smallIntegerMirrorOn: each ])).
+			(self classNamed: #HashTableSizes) mirror
+				instanceVariableAtIndex: (self classInstanceVariableIndexAt: 1)
+				put: (objectSpace newArrayWithAll: (HashTableSizes sizes collect: [ :each | objectSpace backend smallIntegerMirrorOn: each ])).
 
-	PBSubStepFinishedSignal emit: 'preparing class builder'.
-	self bootstrapInterpreter evaluateCode:
-		'DangerousClassNotifier disable'.
+			self log: 'preparing class builder'.
+			self bootstrapInterpreter evaluateCode: 'DangerousClassNotifier disable'.
 
-	self bootstrapInterpreter evaluateCode:
-		'Undeclared := UndeclaredRegistry new.'.
-	self bootstrapInterpreter evaluateCode:
-		'Smalltalk := SmalltalkImage basicNew.'.
-	self bootstrapInterpreter evaluateCode:
-		'Smalltalk instVarAt: 1 put: SystemDictionary new.'.
-	self bootstrapInterpreter evaluateCode:
-		'Smalltalk globals at: #Smalltalk put: Smalltalk.'.
-	self bootstrapInterpreter evaluateCode:
-		'Smalltalk globals at: #Undeclared put: Undeclared.'.
+			self bootstrapInterpreter evaluateCode: 'Undeclared := UndeclaredRegistry new.'.
+			self bootstrapInterpreter evaluateCode: 'Smalltalk := SmalltalkImage basicNew.'.
+			self bootstrapInterpreter evaluateCode: 'Smalltalk instVarAt: 1 put: SystemDictionary new.'.
+			self bootstrapInterpreter evaluateCode: 'Smalltalk globals at: #Smalltalk put: Smalltalk.'.
+			self bootstrapInterpreter evaluateCode: 'Smalltalk globals at: #Undeclared put: Undeclared.'.
 
-	"Initialize the globals of the system. Careful: The AST interpreter will not know about these if we do not put them in the bootstrapEnvironment."
-	self bootstrapInterpreter evaluateCode:
-		'Smalltalk globals at: #Processor put: nil.'.
-	self bootstrapInterpreter evaluateCode:
-		'Smalltalk globals at: #Transcript put: nil.'.
-	self bootstrapInterpreter evaluateCode:
-		'Smalltalk globals at: #SourceFiles put: nil.'.
+			"Initialize the globals of the system. Careful: The AST interpreter will not know about these if we do not put them in the bootstrapEnvironment."
+			self bootstrapInterpreter evaluateCode: 'Smalltalk globals at: #Processor put: nil.'.
+			self bootstrapInterpreter evaluateCode: 'Smalltalk globals at: #Transcript put: nil.'.
+			self bootstrapInterpreter evaluateCode: 'Smalltalk globals at: #SourceFiles put: nil.'.
 
 
-	PBSubStepFinishedSignal emit: 'class loader now creates class pools'.
-	classLoader initializeClassPools.
+			self log: 'class loader now creates class pools'.
+			classLoader initializeClassPools.
 
-	PBSubStepFinishedSignal emit: 'Initializing StartUp list'.
-	self bootstrapInterpreter evaluateCode: 'SmalltalkImage initialize.'.
+			self log: 'Initializing StartUp list'.
+			self bootstrapInterpreter evaluateCode: 'SmalltalkImage initialize.'.
 
-	PBSubStepFinishedSignal emit: 'Initializing Character Table'.
-	self bootstrapInterpreter evaluateCode: 'Character initialize.'.
-	characterTable := EPInternalCharacterTable new objectSpace:
-		                  objectSpace.
-	objectSpace backend characterTable:
-		((self classNamed: #Character) classPool at: #CharacterTable).
-	objectSpace characterTable: characterTable.
+			self log: 'Initializing Character Table'.
+			self bootstrapInterpreter evaluateCode: 'Character initialize.'.
+			characterTable := EPInternalCharacterTable new objectSpace: objectSpace.
+			objectSpace backend characterTable: ((self classNamed: #Character) classPool at: #CharacterTable).
+			objectSpace characterTable: characterTable.
 
-	PBSubStepFinishedSignal emit: 'Initializing String Ascii and CaseInsensitive Table'.
-	self bootstrapInterpreter evaluateCode:
-			'| asciiOrder caseInsesitiveOrder |
+			self log: 'Initializing String Ascii and CaseInsensitive Table'.
+			self bootstrapInterpreter evaluateCode: '| asciiOrder caseInsesitiveOrder |
 		asciiOrder := ((0 to: 255) as: ByteArray).
 	caseInsesitiveOrder := asciiOrder copy.
     (0 to: 255) do:[ :v |
@@ -380,34 +359,28 @@ PBAbstractImageBuilder >> createInitialObjects [
 		String classPool at: #AsciiOrder put: asciiOrder.
 		String classPool at: #CaseInsensitiveOrder put: caseInsesitiveOrder'.
 
-	PBSubStepFinishedSignal emit: 'Initializing SmallInteger constants'.
-	self bootstrapInterpreter evaluateCode: 'SmallInteger instVarAt: '
-		, (self classInstanceVariableIndexAt: 1) asString
-		, ' put: -16r40000000.'. "minVal"
-	self bootstrapInterpreter evaluateCode: 'SmallInteger instVarAt: '
-		, (self classInstanceVariableIndexAt: 2) asString
-		, ' put: 16r3FFFFFFF.'. "maxVal"
+			self log: 'Initializing SmallInteger constants'.
+			self bootstrapInterpreter evaluateCode: 'SmallInteger instVarAt: ' , (self classInstanceVariableIndexAt: 1) asString , ' put: -16r40000000.'. "minVal"
+			self bootstrapInterpreter evaluateCode: 'SmallInteger instVarAt: ' , (self classInstanceVariableIndexAt: 2) asString , ' put: 16r3FFFFFFF.'. "maxVal"
 
-	PBSubStepFinishedSignal emit: 'Initializing Date and Time constants'.
-	self bootstrapInterpreter evaluateCode: 'DateAndTime initialize.'.
-	self bootstrapInterpreter evaluateCode:
-		'ChronologyConstants initialize.'.
+			self log: 'Initializing Date and Time constants'.
+			self bootstrapInterpreter evaluateCode: 'DateAndTime initialize.'.
+			self bootstrapInterpreter evaluateCode: 'ChronologyConstants initialize.'.
 
-	PBSubStepFinishedSignal emit: 'Initializing CompiledMethod constants'.
-	self bootstrapInterpreter evaluateCode: 'CompiledMethod initialize.'.
+			self log: 'Initializing CompiledMethod constants'.
+			self bootstrapInterpreter evaluateCode: 'CompiledMethod initialize.'.
 
-	PBSubStepFinishedSignal emit: 'Initializing object dependent fields'.
-	self bootstrapInterpreter evaluateCode: 'Object initialize.'.
+			self log: 'Initializing object dependent fields'.
+			self bootstrapInterpreter evaluateCode: 'Object initialize.'.
 
-	PBSubStepFinishedSignal emit: 'Installing symbol table'.
-	self bootstrapInterpreter evaluateCode: 'Symbol initialize.
+			self log: 'Installing symbol table'.
+			self bootstrapInterpreter evaluateCode: 'Symbol initialize.
 	Symbol classPool at: #SymbolTable put: (WeakSet withAll: ByteSymbol allInstances)'.
-	objectSpace symbolTable:
-		(EPInternalSymbolTable new objectSpace: objectSpace).
+			objectSpace symbolTable: (EPInternalSymbolTable new objectSpace: objectSpace).
 
 
-	PBSubStepFinishedSignal emit: 'Bootstrapping class layouts'.
-	bootstrapInterpreter evaluateCode: ('| superLayout |
+			self log: 'Bootstrapping class layouts'.
+			bootstrapInterpreter evaluateCode: ('| superLayout |
 		superLayout := EmptyLayout instance.
 		Class
 			instVarAt: 4
@@ -418,10 +391,8 @@ PBAbstractImageBuilder >> createInitialObjects [
 		
 		SmallInteger
 			instVarAt: 4
-			put: (ImmediateLayout new).' format:
-			 { self espellBackend instanceVariableMapping listOfClassSlots }).
-
-	PBStepFinishedSignal emit: 'Class builder ready to create classes'
+			put: (ImmediateLayout new).' format: { self espellBackend instanceVariableMapping listOfClassSlots }) ]
+		logged: 'Initializing initial objects'
 ]
 
 { #category : 'method-compiling' }
@@ -694,7 +665,7 @@ PBAbstractImageBuilder >> initialize [
 
 	super initialize.
 	statistics := PBBootstrapStatistics new.
-	logger := PBBootstrapLogger new.
+	self logger: PBLogger new.
 	imageFileReference := 'bootstrap.image' asFileReference.
 
 	"the default espell backend for the bootstrap"
@@ -735,21 +706,22 @@ PBAbstractImageBuilder >> initializeBootstrapEnvironment [
 { #category : 'running' }
 PBAbstractImageBuilder >> initializeImage [
 
-	| process |
-	self log: 'Initializing image.'.
-	self flag: 'should migrate this method'.
+	self logger
+		execute: [
+			| process |
+			self flag: 'should migrate this method'.
 
-	self initializeSpecialObjectArray.
+			self initializeSpecialObjectArray.
 
-	self bootstrapInterpreter evaluateCode: '
+			self bootstrapInterpreter evaluateCode: '
 	Smalltalk at: #Processor put: (ProcessorScheduler basicNew).
 	(Smalltalk at: #Processor) instVarAt: 1 put: ((1 to: 80) collect: [ :i | ProcessList new ])'.
 
-	"Initialize the processor association for the special objects array.
+			"Initialize the processor association for the special objects array.
 	Enchancement possible: This should be automatically managed by the createVMStubs method"
-	objectSpace backend processorAssociation: (self bootstrapInterpreter evaluateCode: 'Smalltalk globals associationAt: #Processor.').
+			objectSpace backend processorAssociation: (self bootstrapInterpreter evaluateCode: 'Smalltalk globals associationAt: #Processor.').
 
-	process := objectSpace createProcessWithPriority: 40 doing: ('PharoBootstrapInitialization 
+			process := objectSpace createProcessWithPriority: 40 doing: ('PharoBootstrapInitialization 
 			initializeImageOfType: ''Pharo'' 
 			major: {major} 
 			minor: {minor} 
@@ -757,41 +729,41 @@ PBAbstractImageBuilder >> initializeImage [
 			suffix: ''{suffix}'' 
 			build: {build} 
 			commitHash: ''{hash}''.' format: {
-				            ('major' -> versionInfo major).
-				            ('minor' -> versionInfo minor).
-				            ('patch' -> versionInfo patch).
-				            ('suffix' -> (versionInfo suffix ifNil: [ '' ])).
-				            ('build' -> versionInfo buildNumber).
-				            ('hash' -> versionInfo commitHash) } asDictionary).
-	objectSpace installAsActiveProcess: process.
+						            ('major' -> versionInfo major).
+						            ('minor' -> versionInfo minor).
+						            ('patch' -> versionInfo patch).
+						            ('suffix' -> (versionInfo suffix ifNil: [ '' ])).
+						            ('build' -> versionInfo buildNumber).
+						            ('hash' -> versionInfo commitHash) } asDictionary).
+			objectSpace installAsActiveProcess: process.
 
-	self followForwardingPointers.
+			self followForwardingPointers.
 
-	espellBackend simulator stackPages pages do: [ :page | espellBackend simulator stackPages freeStackPage: page ].
-	espellBackend simulator freeUntracedStackPages.
-	[
-	[ espellBackend objectMemory flushNewSpace ]
-		on: Halt
-		do: [ :ex | "suppress halts from the usual suspects (development time halts)"
-			(#( #fullGC #compactImage #doScavenge: ) includes: ex signalerContext sender selector)
-				ifTrue: [ ex resume ]
-				ifFalse: [ ex pass ] ] ]
-		on: AssertionFailure
-		do: [ :e |
-			(e signalerContext sender method selector == #assert: and: [ e signalerContext sender sender method selector = #mapStackPages ])
-				ifTrue: [ e resume ]
-				ifFalse: [ e pass ] ].
+			espellBackend simulator stackPages pages do: [ :page | espellBackend simulator stackPages freeStackPage: page ].
+			espellBackend simulator freeUntracedStackPages.
+			[
+			[ espellBackend objectMemory flushNewSpace ]
+				on: Halt
+				do: [ :ex | "suppress halts from the usual suspects (development time halts)"
+					(#( #fullGC #compactImage #doScavenge: ) includes: ex signalerContext sender selector)
+						ifTrue: [ ex resume ]
+						ifFalse: [ ex pass ] ] ]
+				on: AssertionFailure
+				do: [ :e |
+					(e signalerContext sender method selector == #assert: and: [ e signalerContext sender sender method selector = #mapStackPages ])
+						ifTrue: [ e resume ]
+						ifFalse: [ e pass ] ].
 
-	self freeForwarders.
-	self compactImage.
-	self reportSizes.
+			self freeForwarders.
+			self compactImage.
+			self reportSizes.
 
-	self
-		writeSnapshot: imageFileReference fullName
-		ofTransformedImage: espellBackend simulator objectMemory
-		headerFlags: 0
-		screenSize: 0.
-	PBStepFinishedSignal emit: 'Installed extension methods'
+			self
+				writeSnapshot: imageFileReference fullName
+				ofTransformedImage: espellBackend simulator objectMemory
+				headerFlags: 0
+				screenSize: 0 ]
+		logged: 'Initializing image.'
 ]
 
 { #category : 'running' }
@@ -837,47 +809,36 @@ PBAbstractImageBuilder >> instSpecOfClass: aRFiClass [
 { #category : 'running' }
 PBAbstractImageBuilder >> installExtensionMethods [
 
-	| definitions total |
-	
-	self log: 'Installing extension methods.'.
-	definitions := self systemDefinition packages sorted: [ :a :b | 
-		               a name < b name ].
-	total := definitions size.
-	definitions withIndexDo: [ :aPackageDefinition :index | 
-		self
-			installExtensionMethodsOf: aPackageDefinition
-			prefixed: (index printPaddedWith: $0 to: 3) , '/' , total asString ].
-
-	PBStepFinishedSignal emit: 'Installed extension methods'
+	self logger
+		execute: [
+			| definitions total |
+			definitions := self systemDefinition packages sorted: [ :a :b | a name < b name ].
+			total := definitions size.
+			definitions withIndexDo: [ :aPackageDefinition :index |
+				self installExtensionMethodsOf: aPackageDefinition prefixed: (index printPaddedWith: $0 to: 3) , '/' , total asString ] ]
+		logged: 'Installing extension methods'
 ]
 
 { #category : 'running' }
 PBAbstractImageBuilder >> installExtensionMethodsOf: aPackageDefinition prefixed: aPrefix [
 
-	aPackageDefinition extensionMethods doWithIndex: [ 
-		:methodDefinition 
-		:index | 
-		| compiledMethod behaviorMirror methodClass logMessage |
+	aPackageDefinition extensionMethods doWithIndex: [ :methodDefinition :index |
+		| compiledMethod behaviorMirror methodClass |
 		methodClass := methodDefinition methodClass.
 		compiledMethod := self createNewMethod: methodDefinition.
-		behaviorMirror := bootstrapEnvironment at:
-			                  methodClass instanceSide name.
-		methodClass isMeta ifTrue: [ 
-			behaviorMirror := behaviorMirror classSide ].
-
-		logMessage := String streamContents: [ :stream | 
-			              stream
-				              nextPutAll: aPrefix;
-				              nextPut: $-;
-				              nextPutAll: index asString;
-				              nextPut: $/;
-				              nextPutAll:
-					              aPackageDefinition extensionMethods size asString;
-				              nextPutAll: ': Installing extension method ';
-				              nextPutAll: methodClass name;
-				              nextPutAll: '>>';
-				              nextPutAll: methodDefinition selector ].
-		PBSubStepFinishedSignal emit: logMessage.
+		behaviorMirror := bootstrapEnvironment at: methodClass instanceSide name.
+		methodClass isMeta ifTrue: [ behaviorMirror := behaviorMirror classSide ].
+		self log: (String streamContents: [ :stream |
+				 stream
+					 nextPutAll: aPrefix;
+					 nextPut: $-;
+					 nextPutAll: index asString;
+					 nextPut: $/;
+					 nextPutAll: aPackageDefinition extensionMethods size asString;
+					 nextPutAll: ': Installing extension method ';
+					 nextPutAll: methodClass name;
+					 nextPutAll: '>>';
+					 nextPutAll: methodDefinition selector ]).
 
 		self installMethod: compiledMethod inBehavior: behaviorMirror ]
 ]
@@ -899,18 +860,14 @@ PBAbstractImageBuilder >> installMethod: method inBehavior: theClass [
 { #category : 'running' }
 PBAbstractImageBuilder >> installMethods [
 
-	| definitions total |
-	
-	self log: 'Installing methods'.
-	definitions := self systemDefinition ask allClassesAndTraits sorted: [ 
-		               :a 
-		               :b | a name < b name ].
-	total := definitions size.
-	definitions withIndexDo: [ :aClassDefinition :index | "self checkpoint: 'installed_methods_wip'."
-		self
-			installMethodsInBehaviorDefinition: aClassDefinition
-			prefixed: (index printPaddedWith: $0 to: 3) , '/' , total asString ].
-	PBStepFinishedSignal emit: 'installed_methods'
+	self logger
+		execute: [
+			| definitions total |
+			definitions := self systemDefinition ask allClassesAndTraits sorted: [ :a :b | a name < b name ].
+			total := definitions size.
+			definitions withIndexDo: [ :aClassDefinition :index | "self checkpoint: 'installed_methods_wip'."
+				self installMethodsInBehaviorDefinition: aClassDefinition prefixed: (index printPaddedWith: $0 to: 3) , '/' , total asString ] ]
+		logged: 'Installing defined methods'
 ]
 
 { #category : 'running' }
@@ -931,16 +888,11 @@ PBAbstractImageBuilder >> installMethodsInBehaviorDefinition: behaviorDefinition
 PBAbstractImageBuilder >> installMethodsInBehaviorMapping: aBehaviorMapping onMirror: mirror prefixed: aPrefix [
 
 	| newMethods theClass |
-	newMethods := (self methodsFromDefinition: aBehaviorMapping) 
-		              sorted: [ :a :b | a selector < b selector ].
-	theClass := (self classNamed: aBehaviorMapping instanceSide name)
-		            mirror.
+	newMethods := (self methodsFromDefinition: aBehaviorMapping) sorted: [ :a :b | a selector < b selector ].
+	theClass := (self classNamed: aBehaviorMapping instanceSide name) mirror.
 	aBehaviorMapping isMeta ifTrue: [ theClass := theClass classSide ].
-	newMethods doWithIndex: [ :method :index | 
-		PBSubStepFinishedSignal emit:
-			aPrefix , ' - ' , index asString , '/' , newMethods size asString
-			, ': Installing method ' , aBehaviorMapping name , '>>'
-			, method selector.
+	newMethods doWithIndex: [ :method :index |
+		self log: aPrefix , ' - ' , index asString , '/' , newMethods size asString , ': Installing method ' , aBehaviorMapping name , '>>' , method selector.
 
 		self installMethod: method inBehavior: theClass ]
 ]
@@ -960,7 +912,19 @@ PBAbstractImageBuilder >> isMeta: aMirror [
 { #category : 'helpers' }
 PBAbstractImageBuilder >> log: aLogStatement [
 
-	logger log: aLogStatement
+	self logger log: aLogStatement
+]
+
+{ #category : 'accessing' }
+PBAbstractImageBuilder >> logger [
+
+	^ logger
+]
+
+{ #category : 'accessing' }
+PBAbstractImageBuilder >> logger: anObject [
+
+	logger := anObject
 ]
 
 { #category : 'accessing' }
