@@ -605,7 +605,7 @@ ExternalType >> printStructureFieldStartingAt: initialSpecIndex withName: name i
 { #category : 'printing' }
 ExternalType >> printTypedefOn: s [
 	s nextPutAll: 'typedef '.
-	(referentClass notNil
+	(referentClass isNotNil
 	 and: [(compiledSpec first bitClear: FFIStructSizeMask) = FFIFlagStructure])
 		ifTrue:
 			[| next |
