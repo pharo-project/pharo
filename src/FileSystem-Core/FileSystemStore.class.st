@@ -325,6 +325,13 @@ FileSystemStore >> isFile: aPath [
 ]
 
 { #category : 'testing' }
+FileSystemStore >> isHidden: aResolvable attributes: statAttributesArray [
+	"Answer a boolean indicating whether the file is hidden or not."
+
+	^ self subclassResponsibility
+]
+
+{ #category : 'testing' }
 FileSystemStore >> isReadable: aPath [
 	^FileAttributeNotSupported signalWith: self
 ]
