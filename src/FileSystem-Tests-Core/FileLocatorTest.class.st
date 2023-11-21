@@ -219,6 +219,13 @@ FileLocatorTest >> testIsAbsolute [
 ]
 
 { #category : 'compatibility tests' }
+FileLocatorTest >> testIsHidden [
+
+	locator := FileLocator image.
+	self deny: locator isHidden
+]
+
+{ #category : 'compatibility tests' }
 FileLocatorTest >> testIsNotRoot [
 	locator := FileLocator image.
 	self deny: locator isRoot

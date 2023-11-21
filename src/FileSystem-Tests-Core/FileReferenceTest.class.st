@@ -658,6 +658,29 @@ FileReferenceTest >> testIsAbsolute [
 ]
 
 { #category : 'tests' }
+FileReferenceTest >> testIsHidden [
+	| hiddenFolder hiddenFile |
+	self deny: filesystem root isHidden.
+	
+	hiddenFolder := (filesystem root / '.hidden') ensureCreateDirectory.
+	self assert: hiddenFolder isHidden.
+
+	hiddenFile := (filesystem root / '.hidden.txt') ensureCreateFile.
+	self assert: hiddenFile isHidden.	
+]
+
+{ #category : 'tests' }
+FileReferenceTest >> testIsHiddenWithRealFilesystem [
+	"For a real file system we can only check files that are visible by default. For any other we check in #testIsHidden"
+	
+	"Check a file on real file system"
+	self deny: FileLocator vmBinary asFileReference isHidden.
+
+	"Check a directory on real file system"
+	self deny: FileSystem workingDirectory isHidden
+]
+
+{ #category : 'tests' }
 FileReferenceTest >> testIsNotAbsolute [
 	self deny: (filesystem * 'plonk') isAbsolute
 ]
