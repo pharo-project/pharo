@@ -7,10 +7,10 @@ Class {
 }
 
 { #category : 'actions' }
-MetacelloLinearLoadingStrategy >> executePackageDirective: aMetacelloPackageLoadDirective gofer: aMetacelloGofer [ 
-	
-	aMetacelloPackageLoadDirective loader loadingSpecLoader 
-		loadPackageDirective: aMetacelloPackageLoadDirective 
+MetacelloLinearLoadingStrategy >> executePackageDirective: aMetacelloPackageLoadDirective gofer: aMetacelloGofer [
+
+	aMetacelloPackageLoadDirective loader loadingSpecLoader
+		loadPackageDirectives: { aMetacelloPackageLoadDirective }
 		gofer: self gofer
 ]
 

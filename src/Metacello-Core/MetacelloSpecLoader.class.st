@@ -169,39 +169,6 @@ MetacelloSpecLoader >> load [
 ]
 
 { #category : 'actions' }
-MetacelloSpecLoader >> loadPackageDirective: aPackageLoadDirective gofer: aGofer [
-
-	| packageSpec |
-	packageSpec := aPackageLoadDirective spec.
-	MetacelloPlatform current
-		do: [ | loadBlock goferLoad answers resolvedReference |
-
-			aGofer disablePackageCache.	"for good luck:)"
-			resolvedReference := self resolvePackageSpec: packageSpec gofer: aGofer.
-			resolvedReference ifNil: [ "Package version already loaded into image" ^ self ].
-			loadBlock := [ "mcLoader preLoad: packageSpec."
-			goferLoad := MetacelloGoferLoad on: aGofer.
-			goferLoad addResolved: resolvedReference.
-			goferLoad execute.
-			self clearCurrentVersionCache	"mcLoader postLoad: packageSpec"
-			].
-			MetacelloNotification signal:
-					'Loading -> ' , resolvedReference name , ' --- '
-						, aPackageLoadDirective repository repositoryDescription , ' --- '
-						, resolvedReference repository description.
-			( answers := packageSpec answers ) notEmpty
-				ifTrue: [ loadBlock valueSupplyingMetacelloAnswers: answers ]
-				ifFalse: [ loadBlock value ].
-			resolvedReference workingCopy repositoryGroup addRepository: aPackageLoadDirective repository.
-			MetacelloNotification signal:
-					'Loaded -> ' , resolvedReference name , ' --- '
-						, aPackageLoadDirective repository repositoryDescription , ' --- '
-						, resolvedReference repository description
-			]
-		displaying: 'Loading ' , packageSpec file
-]
-
-{ #category : 'actions' }
 MetacelloSpecLoader >> loadPackageDirectives: pkgLoads gofer: aGofer [
 
 	MetacelloPlatform current
@@ -209,32 +176,47 @@ MetacelloSpecLoader >> loadPackageDirectives: pkgLoads gofer: aGofer [
 			| goferLoad loadBlock answers |
 			goferLoad := MetacelloGoferLoad on: aGofer.
 			answers := OrderedCollection new.
+
 			pkgLoads do: [ :packageLoadDirective |
+				| packageSpec |
+				packageSpec := packageLoadDirective spec.
 				aGofer disablePackageCache. "for good luck:)"
-				(self resolvePackageSpec: packageLoadDirective spec gofer: aGofer) ifNotNil: [ :resolvedReference |
+				(self resolvePackageSpec: packageSpec gofer: aGofer) ifNotNil: [
+					:resolvedReference |
 					goferLoad addResolved: resolvedReference.
-					answers addAll: packageLoadDirective spec answers.
+					answers addAll: packageSpec answers.
 					packageLoadDirective resolvedReference: resolvedReference ] ].
-			MetacelloNotification signal: 'Starting atomic load'.
-			loadBlock := [ "pkgLoads do: [:packageLoadDirective |  mcLoader preLoad: packageLoadDirective spec ]."
+
+
+			loadBlock := [
 			             goferLoad execute.
 			             pkgLoads do: [ :packageLoadDirective |
 				             packageLoadDirective resolvedReference
 					             ifNotNil: [
 						             MetacelloNotification
-							             signal: 'Loaded -> ' , packageLoadDirective file , ' --- ' , packageLoadDirective repository repositoryDescription , ' --- '
-								             , packageLoadDirective resolvedReference repository description
+							             signal:
+								             'Loaded -> ' , packageLoadDirective file
+								             , ' --- '
+								             ,
+								             packageLoadDirective repository
+									             repositoryDescription , ' --- '
+								             ,
+								             packageLoadDirective resolvedReference repository
+									             description
 							             level: 2.
-						             packageLoadDirective resolvedReference workingCopy repositoryGroup addRepository: packageLoadDirective repository ]
-					             ifNil: [ MetacelloNotification signal: 'Already Loaded -> ' , packageLoadDirective file level: 2 ] ].
-			             self clearCurrentVersionCache "pkgLoads do: [:packageLoadDirective | 
-					packageLoadDirective resolvedReference ~~ nil
-						ifTrue: [mcLoader postLoad: packageLoadDirective spec ]]" ].
+						             packageLoadDirective resolvedReference workingCopy
+							             repositoryGroup addRepository:
+							             packageLoadDirective repository ]
+					             ifNil: [
+						             MetacelloNotification
+							             signal:
+							             'Already Loaded -> ' , packageLoadDirective file
+							             level: 2 ] ].
+			             self clearCurrentVersionCache ].
 			answers notEmpty
 				ifTrue: [ loadBlock valueSupplyingMetacelloAnswers: answers ]
-				ifFalse: [ loadBlock value ].
-			MetacelloNotification signal: 'Finished atomic load' ]
-		displaying: 'Atomic Load...'
+				ifFalse: [ loadBlock value ] ]
+		displaying: 'Loading...'
 ]
 
 { #category : 'accessing' }
