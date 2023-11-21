@@ -11,20 +11,6 @@ Class {
 	#tag : 'Directives'
 }
 
-{ #category : 'as yet unclassified' }
-MetacelloAtomicLoadDirective >> executeUsing: aLoadingStrategy [
-
-	| loadingStrategy |
-	self loadDirectives isEmpty ifTrue: [ ^ self ].
-
-	loadingStrategy := aLoadingStrategy atomic.
-	self loadDirectives do: [ :directive |
-		directive executeUsing: loadingStrategy ].
-
-	(loadingStrategy isKindOf: MetacelloAtomicLoadingStrategy) ifTrue: [
-		loadingStrategy finalizeLoadWith: self loader ]
-]
-
 { #category : 'actions' }
 MetacelloAtomicLoadDirective >> newLoaderForPolicy: aLoadPolicy [
 
@@ -36,6 +22,12 @@ MetacelloAtomicLoadDirective >> newLoaderForPolicy: aLoadPolicy [
 		gofer: gofer;
 		loader: self loader;
 		yourself
+]
+
+{ #category : 'instance creation' }
+MetacelloAtomicLoadDirective >> newLoadingStrategyFrom: oldLoadingStrategy [
+
+	^ oldLoadingStrategy changeToAtomicWithLoader: self loader
 ]
 
 { #category : 'accessing' }

@@ -15,6 +15,19 @@ MetacelloVersionLoadDirective >> add: aDirective [
 	self loadDirectives add: aDirective
 ]
 
+{ #category : 'as yet unclassified' }
+MetacelloVersionLoadDirective >> executeUsing: oldLoadingStrategy [
+
+	| newLoadingStrategy |
+	self loadDirectives isEmpty ifTrue: [ ^ self ].
+
+	newLoadingStrategy := self newLoadingStrategyFrom: oldLoadingStrategy.
+
+	self loadDirectives do: [ :directive |
+		directive executeUsing: newLoadingStrategy ].
+	newLoadingStrategy finalizeLoadWith: self loader
+]
+
 { #category : 'printing' }
 MetacelloVersionLoadDirective >> label [
 
@@ -42,6 +55,12 @@ MetacelloVersionLoadDirective >> loadWithPolicy: aLoadPolicy [
 
 { #category : 'actions' }
 MetacelloVersionLoadDirective >> newLoaderForPolicy: aLoadPolicy [
+
+	self subclassResponsibility
+]
+
+{ #category : 'as yet unclassified' }
+MetacelloVersionLoadDirective >> newLoadingStrategyFrom: oldLoadingStrategy [
 
 	self subclassResponsibility
 ]

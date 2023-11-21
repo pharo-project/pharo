@@ -6,8 +6,25 @@ Class {
 	#tag : 'Directives'
 }
 
+{ #category : 'as yet unclassified' }
+MetacelloLinearLoadingStrategy >> changeToAtomicWithLoader: aLoader [
+	"If I'm linear, just open a new atomic one"
+
+	^ MetacelloAtomicLoadingStrategy new
+		  gofer: gofer;
+		  loader: aLoader;
+		  yourself
+]
+
+{ #category : 'as yet unclassified' }
+MetacelloLinearLoadingStrategy >> changeToLinearWithLoader: aLoader [
+	"If I'm linear, just do nothing and continue as is"
+
+	^ self
+]
+
 { #category : 'actions' }
-MetacelloLinearLoadingStrategy >> executePackageDirective: aMetacelloPackageLoadDirective gofer: aMetacelloGofer [
+MetacelloLinearLoadingStrategy >> executePackageDirective: aMetacelloPackageLoadDirective [
 
 	aMetacelloPackageLoadDirective loader loadingSpecLoader
 		loadPackageDirectives: { aMetacelloPackageLoadDirective }
@@ -36,11 +53,4 @@ MetacelloLinearLoadingStrategy >> executePreloadDirective: aPreloadDirective [
 MetacelloLinearLoadingStrategy >> finalizeLoadWith: anObject [ 
 	
 	"Do nothing"
-]
-
-{ #category : 'instance creation' }
-MetacelloLinearLoadingStrategy >> linear [
-	
-	^ self
-	
 ]

@@ -12,13 +12,25 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-MetacelloAtomicLoadingStrategy >> atomic [
+MetacelloAtomicLoadingStrategy >> changeToAtomicWithLoader: anObject [
+	"If I'm atomic, just do nothing and continue as is"
 
 	^ self
 ]
 
+{ #category : 'as yet unclassified' }
+MetacelloAtomicLoadingStrategy >> changeToLinearWithLoader: aLoader [
+	"If I'm atomic, close myself before starting a linear loading"
+
+	self finalizeLoadWith: aLoader.
+	^ MetacelloLinearLoadingStrategy new
+		  gofer: gofer;
+		  loader: aLoader;
+		  yourself
+]
+
 { #category : 'actions' }
-MetacelloAtomicLoadingStrategy >> executePackageDirective: aPackageLoadDirective gofer: aGofer [
+MetacelloAtomicLoadingStrategy >> executePackageDirective: aPackageLoadDirective [
 	"accumulate packages"
 
 	packageloads ifNil: [ packageloads := OrderedCollection new ].

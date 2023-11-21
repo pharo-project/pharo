@@ -13,7 +13,7 @@ Class {
 { #category : 'actions' }
 MetacelloPackageLoadDirective >> executeUsing: aLoader [
 
-	aLoader executePackageDirective: self gofer: nil
+	aLoader executePackageDirective: self
 ]
 
 { #category : 'accessing' }

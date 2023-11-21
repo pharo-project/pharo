@@ -11,12 +11,18 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-MetacelloLoadingStrategy >> atomic [
+MetacelloLoadingStrategy >> changeToAtomicWithLoader: anObject [
 
 	^ MetacelloAtomicLoadingStrategy new
 		  gofer: gofer;
 		  loader: self loader;
 		  yourself
+]
+
+{ #category : 'as yet unclassified' }
+MetacelloLoadingStrategy >> changeToLinearWithLoader: aLoader [
+
+	self subclassResponsibility
 ]
 
 { #category : 'accessing' }
