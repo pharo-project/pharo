@@ -447,18 +447,13 @@ MetacelloProjectSpec >> ensureLoadedForDevelopmentUsing: mcLoader [
 
 { #category : 'private - loading' }
 MetacelloProjectSpec >> ensureProjectFetch: mcLoader [
-
 	"projectClass == nil or version == nil"
-	mcLoader ensureForDevelopment 
-		ifTrue: [ 
-			self notifyCleanStackCache.
-			self ensureLoadUsing: mcLoader ]
-		ifFalse: [ 
-			self fetchUsing: mcLoader ].
-		
-	mcLoader ensuredMap 
-		at: self name 
-		put: #'present'
+
+	mcLoader ensureForDevelopment
+		ifTrue: [ self ensureLoadUsing: mcLoader ]
+		ifFalse: [ self fetchUsing: mcLoader ].
+
+	mcLoader ensuredMap at: self name put: #present
 ]
 
 { #category : 'loading' }
@@ -468,9 +463,10 @@ MetacelloProjectSpec >> ensureProjectLoaded [
 
 	"answer true if the projectClass exists"
 
-	(self projectClass isNil or: [ self versionOrNil isNil or: [ (loader notNil or: [ self isMutable ]) and: [ self loader ignoreImage ] ] ]) ifTrue: [
-		self projectClass ifNotNil: [ :pc |
-			MetacelloClearStackCacheNotification signal: #( #currentVersion #currentVersionAgainst: #currentVersionInfo #versionConstructor #loadableSpecNames ) , { pc } ].
+	(self projectClass isNil or: [
+		 self versionOrNil isNil or: [
+			 (loader notNil or: [ self isMutable ]) and: [
+				 self loader ignoreImage ] ] ]) ifTrue: [
 		self projectPackage ifNil: [ ^ true ].
 		self ensureLoadUsing: self loader ].
 	^ self projectClass isNotNil
@@ -478,19 +474,17 @@ MetacelloProjectSpec >> ensureProjectLoaded [
 
 { #category : 'private - loading' }
 MetacelloProjectSpec >> ensureProjectLoaded: mcLoader ensured: ensured [
-	| version |
 
+	| version |
 	version := self versionOrNil.
 	version ifNil: [ ^ self ].
-	(self ensureConfigurationLoaded: version ensured: ensured)  ifFalse: [ ^ self ].
-	
+	(self ensureConfigurationLoaded: version ensured: ensured) ifFalse: [
+		^ self ].
+
 	mcLoader ensureForDevelopment
-		ifTrue: [ 
-			self notifyCleanStackCache.
-			self ensureLoadUsing: mcLoader ]
-		ifFalse: [ 
-			self projectPackage fetchUsing: mcLoader ].
-	mcLoader ensuredMap at: self name put: #'latest'
+		ifTrue: [ self ensureLoadUsing: mcLoader ]
+		ifFalse: [ self projectPackage fetchUsing: mcLoader ].
+	mcLoader ensuredMap at: self name put: #latest
 ]
 
 { #category : 'loading' }
@@ -692,29 +686,27 @@ MetacelloProjectSpec >> loadVersion: aVersionOrNil [
 			do: [ :ex |
 				^ (MetacelloProjectSpecLoadError projectSpec: self)
 					  versionDoesNotExistException: ex;
-					  signal: 'No version found for ' , self versionString printString , ' of ' , self className asString , ' because: ' , ex description ] ].
+					  signal:
+						  'No version found for ' , self versionString printString
+						  , ' of ' , self className asString , ' because: '
+						  , ex description ] ].
 	mcLoader := self loader copy.
 	mcLoader operator: self operator.
 	vrsn loader: mcLoader.
 	list := (mcLoader ignoreImage
 		         ifTrue: [ self loadListForVersion: vrsn ]
-		         ifFalse: [ vrsn packageAndProjectNamesToLoad: (self loadListForVersion: vrsn) loader: mcLoader ]) asSet.
-	MetacelloPlatform current
-		useStackCacheDuring: [ :dict |
-			| projectCache |
-			projectCache := dict at: self projectClass ifAbsent: [ dict at: self projectClass put: Dictionary new ].
-			(projectCache at: vrsn ifAbsent: [  ])
-				ifNotNil: [ :cachedList |
-					(cachedList size = list size and: [ cachedList allSatisfy: [ :each | list includes: each ] ])
-						ifTrue: [ "no need to refetch list ... recursion stoppper (Issue 95)" ^ self ]
-						ifFalse: [ projectCache at: vrsn put: list ] ]
-				ifNil: [ projectCache at: vrsn put: list ].
-			vrsn versionString ~= self versionString ifTrue: [ MetacelloNotification signal: ' [' , vrsn versionString , ']' ].
-			mcLoader preLoad: self.
-			vrsn fetchRequiredFromArray: list. "do the load"
-			(MetacelloProjectSpecLoadedNotification new projectSpec: (self copy versionString: vrsn versionString)) signal.
-			mcLoader postLoad: self ]
-		defaultDictionary: Dictionary new
+		         ifFalse: [
+			         vrsn
+				         packageAndProjectNamesToLoad:
+				         (self loadListForVersion: vrsn)
+				         loader: mcLoader ]) asSet.
+	vrsn versionString ~= self versionString ifTrue: [
+		MetacelloNotification signal: ' [' , vrsn versionString , ']' ].
+	mcLoader preLoad: self.
+	vrsn fetchRequiredFromArray: list. "do the load"
+	(MetacelloProjectSpecLoadedNotification new projectSpec:
+		 (self copy versionString: vrsn versionString)) signal.
+	mcLoader postLoad: self
 ]
 
 { #category : 'accessing' }
@@ -820,13 +812,6 @@ MetacelloProjectSpec >> name: aString [
 { #category : 'merging' }
 MetacelloProjectSpec >> nonOverridable [
     ^ super nonOverridable , #(#'projectPackage' #'repositories')
-]
-
-{ #category : 'private - loading' }
-MetacelloProjectSpec >> notifyCleanStackCache [
-
-	self projectClass ifNotNil: [ :pc |
-		MetacelloClearStackCacheNotification signal: #( #currentVersion #currentVersionAgainst: #currentVersionInfo #versionConstructor #loadableSpecNames ) , { pc } ]
 ]
 
 { #category : 'querying' }

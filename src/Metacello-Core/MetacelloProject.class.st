@@ -99,62 +99,44 @@ MetacelloProject >> createRepository: aRepositorySpec [
 
 { #category : 'versions' }
 MetacelloProject >> currentVersion [
-	| cacheKey cv |
-	cacheKey := self configuration class.
-	^ MetacelloPlatform current
-		stackCacheFor: #currentVersion
-		at: cacheKey
-		doing: [ :cache | 
-			cv := self currentVersionAgainst: nil.
-			^ cache at: cacheKey put: cv ]
+
+	^ self currentVersionAgainst: nil
 ]
 
 { #category : 'versions' }
 MetacelloProject >> currentVersionAgainst: resolvedPackageAndProjectNames [
 
-	| cacheKey |
-
-	cacheKey := resolvedPackageAndProjectNames
-		ifNil: [ Array with: self configuration class with: nil ]
-		ifNotNil: [ Array
-				with: self configuration class
-				with: ( resolvedPackageAndProjectNames sort: [ :a :b | a <= b ] )
-			].
-	^ MetacelloPlatform current
-		stackCacheFor: #currentVersionAgainst:
-		at: cacheKey
-		doing: [ :cache | 
-			| cv versions latestSomethingLoaded |
-
-			cv := nil.
-			versions := self sortedAndFilteredVersions.
-			versions
-				do: [ :version | 
-					| status matchBlock |
-
-					status := resolvedPackageAndProjectNames
-						ifNil: [ version spec isPartiallyCurrent ]
-						ifNotNil: [ version spec isPartiallyCurrentAgainst: resolvedPackageAndProjectNames ].
-					matchBlock := [ :matchStatus | 
-					cv := version copy.
-					cv versionStatus: matchStatus.
-					^ cache at: cacheKey put: cv
-					].
-					status isAllLoadedToSpec: matchBlock.
-					status isLoadedToSpec: matchBlock.
-					status isLoadedMatchConstraints: matchBlock.
-					status
-						isSomethingLoaded: [ :matchStatus | 
-							latestSomethingLoaded
-								ifNil: [ cv := version copy.
-									cv versionStatus: matchStatus.
-									latestSomethingLoaded := cv
-									]
-							]
-					].
-			latestSomethingLoaded ifNotNil: [ ^ cache at: cacheKey put: latestSomethingLoaded ].
-			^ cache at: cacheKey put: nil
-			]
+	| versions latestSomethingLoaded |
+	versions := self sortedAndFilteredVersions.
+	versions do: [ :version |
+		| status matchBlock |
+		status := resolvedPackageAndProjectNames
+			          ifNil: [ version spec isPartiallyCurrent ]
+			          ifNotNil: [
+				          version spec isPartiallyCurrentAgainst:
+					          resolvedPackageAndProjectNames ].
+		matchBlock := [ :matchStatus |
+		              | versionCopy |
+		              versionCopy := version copy.
+		              versionCopy versionStatus: matchStatus.
+		              ^ versionCopy ].
+	
+		status isAllLoadedToSpec: matchBlock.
+		status isLoadedToSpec: matchBlock.
+		status isLoadedMatchConstraints: matchBlock.
+	
+		status isSomethingLoaded: [ :matchStatus |
+			latestSomethingLoaded ifNil: [ | versionCopy |
+				versionCopy := version copy.
+				versionCopy versionStatus: matchStatus.
+				latestSomethingLoaded := versionCopy ] ] ].
+	
+	"If we finished the loop without finding a version in
+	 - isAllLoadedToSpec:
+	 - isLoadedToSpec:
+	 - isLoadedMatchConstraints:
+	then return what we found in the first call to isSomethingLoaded: (or nil if we did not find anything)"
+	^ latestSomethingLoaded
 ]
 
 { #category : 'accessing' }

@@ -67,14 +67,7 @@ MetacelloTarget class >> retryPackageResolution: aBool [
 { #category : 'versionInfo' }
 MetacelloTarget >> ancestorsFor: packageSpec [
 
-	| cacheKey vi |
-	cacheKey := packageSpec file.
-	^MetacelloPlatform current
-		stackCacheFor: #ancestors
-		at: cacheKey
-		doing: [ :cache | 
-			vi := packageSpec ancestors.
-			cache at: cacheKey put: vi ].
+	^ packageSpec ancestors
 ]
 
 { #category : 'accessing' }
@@ -102,22 +95,10 @@ MetacelloTarget >> asRecordingTarget [
 		yourself
 ]
 
-{ #category : 'caching' }
-MetacelloTarget >> clearCurrentVersionCache [
-	MetacelloClearStackCacheNotification signal: #(#currentVersion #currentVersionAgainst: #currentVersionInfo)
-]
-
 { #category : 'versionInfo' }
 MetacelloTarget >> currentVersionInfoFor: packageSpec [
 
-	| cacheKey vi |
-	cacheKey := packageSpec file.
-	^MetacelloPlatform current
-		stackCacheFor: #currentVersionInfo
-		at: cacheKey
-		doing: [ :cache | 
-			vi := packageSpec currentVersionInfo.
-			cache at: cacheKey put: vi ].
+	^ packageSpec currentVersionInfo
 ]
 
 { #category : 'actions' }
@@ -228,8 +209,7 @@ MetacelloTarget >> loadPackageDirectives: pkgLoads gofer: aGofer [
 						             MetacelloNotification
 							             signal:
 							             'Already Loaded -> ' , packageLoadDirective file
-							             level: 2 ] ].
-			             self clearCurrentVersionCache ].
+							             level: 2 ] ] ].
 			answers notEmpty
 				ifTrue: [ loadBlock valueSupplyingMetacelloAnswers: answers ]
 				ifFalse: [ loadBlock value ] ]

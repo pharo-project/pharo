@@ -223,7 +223,7 @@ MetacelloPackageSpec >> fetchPackage: aLoaderPolicy [
 MetacelloPackageSpec >> fetchUsing: aTarget [
 
 	| fetchingTarget |
-	1halt.
+
 	fetchingTarget := aTarget asFetchingTarget.
 	fetchingTarget linearLoadPackagesOfSpec: self
 ]
