@@ -244,7 +244,8 @@ SessionManager >> launchSnapshot: save andQuit: quit [
 	self currentSession start: isImageStarting.
 	snapshotResult
 		ifNil: [ self error: 'Failed to write image file (disk full?)' ]
-		ifNotNil: [ self class codeSupportAnnouncer snapshotDone: isImageStarting ].
+		ifNotNil: [ "This branch should be removed in Pharo 13 with the deprecated announcement."
+			self class environment at: #SnapshotDone ifPresent: [ :class | self class codeSupportAnnouncer announce: (class isNewImage: isImageStarting) ] ].
 
 	"We return the resuming state, which may be useful for users to know the state of the image"
 	^ isImageStarting

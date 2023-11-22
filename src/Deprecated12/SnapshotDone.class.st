@@ -9,10 +9,19 @@ Class {
 	#instVars : [
 		'isNewImage'
 	],
-	#category : 'System-Announcements-System-Base',
-	#package : 'System-Announcements',
-	#tag : 'System-Base'
+	#category : 'Deprecated12',
+	#package : 'Deprecated12'
 }
+
+{ #category : 'testing' }
+SnapshotDone class >> isDeprecated [
+	"This announcement is deprectaed because people reacting to the startup and shut down of the image should use the SessionManager instead of this announcement.
+	
+	See documentation:
+	https://github.com/pharo-open-documentation/pharo-wiki/blob/master/General/SessionsManagement.md "
+
+	^ true
+]
 
 { #category : 'instance creation' }
 SnapshotDone class >> isNewImage: aBoolean [
