@@ -18,11 +18,11 @@ SUnitVisitor >> visit: anObject [
 ]
 
 { #category : 'visiting' }
-SUnitVisitor >> visitRPackage: aRPackage [
-	"Defines the behaviour while visiting a RPackage.
+SUnitVisitor >> visitRPackage: aPackage [
+	"Defines the behaviour while visiting a Package.
 	 The default implementation below is to visit all TestCase subclasses in the package.
 	"
-	^ aRPackage definedClasses
+	^ aPackage definedClasses
 		select: [ :class | (class isTestCase) and: [ class isAbstract not ] ]
 		thenCollect: [ :class | class acceptSUnitVisitor: self ]
 ]

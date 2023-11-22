@@ -28,7 +28,7 @@ ClyBrowseIcebergCommitCommand >> execute [
 	methodHistoryLogEntry := self methodHistoryLogEntryModel entity.
 	methodHistoryLogEntry commit packageNames
 		do: [ :packageName |
-			snapshot := methodHistoryLogEntry commit snapshotFor: (RPackage named: packageName).
+			snapshot := methodHistoryLogEntry commit snapshotFor: (Package named: packageName).
 			snapshot importInto: env asPackageNamed: packageName ]
 		displayingProgress: 'loading'.
 	env clean.

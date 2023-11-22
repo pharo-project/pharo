@@ -5,7 +5,7 @@
   Iceberg enableMetacelloIntegration: true.
   Iceberg remoteTypeSelector: #httpsUrl.
 
-  repositoryPathString := ((Smalltalk os environment at: 'BOOTSTRAP_REPOSITORY' ifAbsent: ['.']) asFileReference / 'bootstrap' / 'src') fullName.
+  repositoryPathString := ((Smalltalk os environment at: 'BOOTSTRAP_REPOSITORY' ifAbsent: ['.']) asFileReference / 'src') fullName.
 
   Transcript show: '    [+] Loading tonel code to dump files for the Pharo bootstrap process from ' , repositoryPathString; cr.
 

@@ -3,7 +3,7 @@ I am a TestRunner. I run tests and return the result from:
 	- TestClass
 	- TestCase
 	- TestSuite
-	- aRPackage.
+	- aPackage.
 	- Collection of Tests
 
 You can simply use my method (NewTestRunner class run: aRunnable) to run all the previous elements.
@@ -84,12 +84,12 @@ NewTestRunner class >> runClass: aTestClass [
 ]
 
 { #category : 'running' }
-NewTestRunner class >> runPackage: aRPackage [
+NewTestRunner class >> runPackage: aPackage [
 
 	"return the result of the execution of the giving package"
 
 	^ self new
-		  runPackage: aRPackage;
+		  runPackage: aPackage;
 		  result
 ]
 
@@ -346,11 +346,11 @@ NewTestRunner >> runFailures [
 ]
 
 { #category : 'running' }
-NewTestRunner >> runPackage: aRPackage [
+NewTestRunner >> runPackage: aPackage [
 	"run the tests from the giving package"
 
 	self shouldAccumulate ifFalse: [ self resetResult ].
-	self testSuiteFromPackage: aRPackage.
+	self testSuiteFromPackage: aPackage.
 	self runAll
 ]
 
@@ -471,11 +471,11 @@ NewTestRunner >> testSuiteFromClass: aClass [
 ]
 
 { #category : 'private' }
-NewTestRunner >> testSuiteFromPackage: aRPackage [
+NewTestRunner >> testSuiteFromPackage: aPackage [
 	"Build testsuite from the giving Package"
 
-	aRPackage definedClasses do: [ :c | self testSuiteFromClass: c ].
-	self suite name: aRPackage name
+	aPackage definedClasses do: [ :c | self testSuiteFromClass: c ].
+	self suite name: aPackage name
 ]
 
 { #category : 'private' }

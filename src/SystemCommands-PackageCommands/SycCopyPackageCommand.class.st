@@ -5,7 +5,7 @@ Internal Representation and Key Implementation Points.
 
     Instance Variables
 	newName:		<String>
-	package:		<RPackage>
+	package:		<Package>
 "
 Class {
 	#name : 'SycCopyPackageCommand',
