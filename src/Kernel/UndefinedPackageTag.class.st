@@ -4,9 +4,9 @@ I am a null object (Null Object Design Pattern) representing the fact that a cla
 Class {
 	#name : 'UndefinedPackageTag',
 	#superclass : 'PackageTag',
-	#category : 'RPackage-Core-Base',
-	#package : 'RPackage-Core',
-	#tag : 'Base'
+	#category : 'Kernel-Packages',
+	#package : 'Kernel',
+	#tag : 'Packages'
 }
 
 { #category : 'instance creation' }

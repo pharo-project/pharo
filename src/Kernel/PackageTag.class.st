@@ -10,9 +10,9 @@ Class {
 		'name',
 		'classes'
 	],
-	#category : 'RPackage-Core-Base',
-	#package : 'RPackage-Core',
-	#tag : 'Base'
+	#category : 'Kernel-Packages',
+	#package : 'Kernel',
+	#tag : 'Packages'
 }
 
 { #category : 'class initialization' }
