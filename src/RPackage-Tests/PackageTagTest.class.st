@@ -55,6 +55,19 @@ PackageTagTest >> testAddClassSettingPackageTag [
 ]
 
 { #category : 'tests' }
+PackageTagTest >> testAddClassTagWithEmptyName [
+
+	| class |
+	class := self newClassNamed: #NewClass in: self xPackageName.
+
+	"When providing an empty tag name we expect to classify the class in the unclassify tag."
+	class packageTag: ''.
+
+	self assert: class packageTag isRoot.
+	self deny: class packageTag name equals: ''
+]
+
+{ #category : 'tests' }
 PackageTagTest >> testAddTrait [
 
 	| xPackage yPackage yTag class |
