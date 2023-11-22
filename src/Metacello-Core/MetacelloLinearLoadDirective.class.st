@@ -10,7 +10,7 @@ Class {
 MetacelloLinearLoadDirective >> newLoaderForPolicy: aLoadPolicy [
 
 	| gofer |
-	gofer := MetacelloGofer new.
+	gofer := Gofer new.
 	gofer disablePackageCache.
 	gofer repository: aLoadPolicy cacheRepository.
 	^ MetacelloLinearLoadingStrategy new

@@ -148,7 +148,7 @@ MetacelloTarget >> linearLoadPackageSpec: packageSpec gofer: gofer [
 MetacelloTarget >> linearLoadPackagesOfSpec: aSpec [
 	
 	| gofer monticelloRepositories |
-	gofer := MetacelloGofer new.
+	gofer := Gofer new.
 	monticelloRepositories := self repositoriesFrom: aSpec repositorySpecs.
 	monticelloRepositories do: [:repo | gofer repository: repo ].
 	aSpec packageSpecsInLoadOrder do: [:pkg | pkg loadUsing: self gofer: gofer ].
@@ -324,7 +324,7 @@ MetacelloTarget >> resolvePackageSpecReferences: packageSpec gofer: gofer [
 	self hasRepositoryOverrides not ifTrue: [
 "		1halt."
 		packageSpec repositorySpecs notEmpty ifTrue: [
-			localGofer := MetacelloGofer new.
+			localGofer := Gofer new.
 			(self repositoriesFrom: packageSpec repositorySpecs) do: [ :repo |
 				localGofer repository: repo ] ] ].
 	packageSpec getFile ifNil: [ "don't use package-cache when trying to get latest version"

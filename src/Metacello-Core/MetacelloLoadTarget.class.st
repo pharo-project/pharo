@@ -39,7 +39,7 @@ MetacelloLoadTarget >> linearLoadPackageSpec: packageSpec gofer: gofer [
 				^ self ].
 			loadBlock := [
 			             self preLoad: packageSpec.
-			             goferLoad := MetacelloGoferLoad on: MetacelloGofer new.
+			             goferLoad := MetacelloGoferLoad on: Gofer new.
 			             goferLoad addResolved: resolvedReference.
 			             goferLoad execute.
 			             self postLoad: packageSpec ].
