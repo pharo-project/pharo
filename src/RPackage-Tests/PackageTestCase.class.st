@@ -1,5 +1,5 @@
 "
-Common superclass for RPackage related tests
+Common superclass for Package related tests
 "
 Class {
 	#name : 'PackageTestCase',

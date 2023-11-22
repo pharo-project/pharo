@@ -64,9 +64,9 @@ PharoBootstrapInitialization class >> initializeCommandLineHandlerAndErrorHandli
 	Class initialize.
 	Package initialize.
 	
-	"This next section can be removed in Pharo 13 since this is for deprecated aliases."
-	PackageOrganizer initialize.
+	"Next three lines are for the deprecated aliases. This should be removed in Pharo 13"
 	PackageTag initialize.
+	PackageOrganizer initialize.
 	PackageConflictError initialize.
 
 	UIManager default: NonInteractiveUIManager new.

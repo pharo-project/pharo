@@ -1,5 +1,5 @@
 "
-SUnit tests for RPackage tags
+SUnit tests for Package tags
 "
 Class {
 	#name : 'PackageTagTest',

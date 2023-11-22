@@ -422,7 +422,7 @@ EpMonitor >> methodRecategorized: aMethodRecategorized [
 
 { #category : 'announcement handling' }
 EpMonitor >> methodRemoved: aMethodRemovedAnnouncement [
-	"RPackage already unregistered the method so we have to workaround protocol and package."
+	"Package already unregistered the method so we have to workaround protocol."
 
 	self addEvent: (EpMethodRemoval method: aMethodRemovedAnnouncement methodAffected asEpiceaRingDefinition)
 ]

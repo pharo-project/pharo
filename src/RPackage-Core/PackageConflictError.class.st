@@ -15,5 +15,6 @@ Class {
 
 { #category : 'class initialization' }
 PackageConflictError class >> initialize [
+
 	self deprecatedAliases: { #RPackageConflictError }
 ]

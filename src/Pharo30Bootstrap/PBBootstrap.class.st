@@ -200,7 +200,7 @@ PBBootstrap >> exportMonticelloInStFile [
 { #category : 'exporting' }
 PBBootstrap >> exportPackageNamesFor: packageNames to: aTextFile [
 
-	"export list of packages for the RPackage initialization. Eech package on standalone line"
+	"export list of packages for the Package initialization. Eech package on standalone line"
 		
 	aTextFile ensureDelete.
 	aTextFile writeStreamDo: [:stream | 
