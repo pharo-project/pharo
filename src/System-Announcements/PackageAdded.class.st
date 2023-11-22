@@ -4,9 +4,9 @@ I am a public announcement sent when a new Package is created
 Class {
 	#name : 'PackageAdded',
 	#superclass : 'PackageAnnouncement',
-	#category : 'RPackage-Core-Announcements',
-	#package : 'RPackage-Core',
-	#tag : 'Announcements'
+	#category : 'System-Announcements-System-Packages',
+	#package : 'System-Announcements',
+	#tag : 'System-Packages'
 }
 
 { #category : 'class initialization' }

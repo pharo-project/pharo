@@ -18,9 +18,9 @@ Class {
 		'cacheActive',
 		'cachePackages'
 	],
-	#category : 'RPackage-Core-Base',
-	#package : 'RPackage-Core',
-	#tag : 'Base'
+	#category : 'Kernel-Packages',
+	#package : 'Kernel',
+	#tag : 'Packages'
 }
 
 { #category : 'private' }

@@ -7,9 +7,9 @@ Class {
 	#instVars : [
 		'package'
 	],
-	#category : 'RPackage-Core-Announcements',
-	#package : 'RPackage-Core',
-	#tag : 'Announcements'
+	#category : 'System-Announcements-System-Packages',
+	#package : 'System-Announcements',
+	#tag : 'System-Packages'
 }
 
 { #category : 'class initialization' }

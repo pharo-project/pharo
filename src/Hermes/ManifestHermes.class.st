@@ -21,5 +21,6 @@ Class {
 
 { #category : 'meta-data - dependency analyser' }
 ManifestHermes class >> manuallyResolvedDependencies [
-	^ #(#'RPackage-Core' #Files #'Collections-Abstract')
+
+	^ #( #Files #'Collections-Abstract' )
 ]

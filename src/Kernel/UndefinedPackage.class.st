@@ -7,9 +7,9 @@ Class {
 	#instVars : [
 		'undefinedTag'
 	],
-	#category : 'RPackage-Core-Base',
-	#package : 'RPackage-Core',
-	#tag : 'Base'
+	#category : 'Kernel-Packages',
+	#package : 'Kernel',
+	#tag : 'Packages'
 }
 
 { #category : 'accessing' }

@@ -12,9 +12,9 @@ Class {
 		'packages',
 		'environment'
 	],
-	#category : 'RPackage-Core-Base',
-	#package : 'RPackage-Core',
-	#tag : 'Base'
+	#category : 'Kernel-Packages',
+	#package : 'Kernel',
+	#tag : 'Packages'
 }
 
 { #category : 'singleton' }
