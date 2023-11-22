@@ -246,7 +246,7 @@ Package >> ensureProperties [
 Package >> ensureTag: aTag [
 
 	| tagName newTag |
-	aTag ifNil: [ ^ self rootTag ].
+	(aTag isNil or: [ aTag = '' ]) ifTrue: [ ^ self rootTag ].
 	tagName := aTag isString
 		           ifTrue: [ aTag ]
 		           ifFalse: [ aTag name ].
@@ -256,7 +256,7 @@ Package >> ensureTag: aTag [
 	newTag := PackageTag package: self name: tagName.
 	classTags add: newTag.
 
-	self codeChangeAnnouncer  announce: (PackageTagAdded to: newTag).
+	self codeChangeAnnouncer announce: (PackageTagAdded to: newTag).
 	^ newTag
 ]
 
