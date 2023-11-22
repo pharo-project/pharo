@@ -60,9 +60,9 @@ PharoBootstrapInitialization class >> initializeCommandLineHandlerAndErrorHandli
 	Collection initialize.
 	CompiledMethod initialize.
 	Slot initialize.
-	RPackage initialize.
 	Behavior initialize.
 	Class initialize.
+	Package initialize.
 	
 	"This next section can be removed in Pharo 13 since this is for deprecated aliases."
 	PackageOrganizer initialize.

@@ -1,25 +1,25 @@
-Extension { #name : 'RPackage' }
+Extension { #name : 'Package' }
 
 { #category : '*Calypso-SystemQueries' }
-RPackage class >> convertToCalypsoBrowserItem: aPackage [
+Package class >> convertToCalypsoBrowserItem: aPackage [
 
 	^ClyBrowserItem named: aPackage name with: aPackage
 ]
 
 { #category : '*Calypso-SystemQueries' }
-RPackage class >> decorateBrowserItem: aBrowserItem by: anEnvironmentPlugin [
+Package class >> decorateBrowserItem: aBrowserItem by: anEnvironmentPlugin [
 	^ anEnvironmentPlugin
 		decorateBrowserItem: aBrowserItem
 		ofPackage: aBrowserItem actualObject
 ]
 
 { #category : '*Calypso-SystemQueries' }
-RPackage class >> defaultSortFunctionForCalypso [
+Package class >> defaultSortFunctionForCalypso [
 	^ClySortByNameFunction ascending
 ]
 
 { #category : '*Calypso-SystemQueries' }
-RPackage >> definesOverridesOf: aMethod [
+Package >> definesOverridesOf: aMethod [
 
 	| methodClass selector |
 	methodClass := aMethod origin.
@@ -32,31 +32,31 @@ RPackage >> definesOverridesOf: aMethod [
 ]
 
 { #category : '*Calypso-SystemQueries' }
-RPackage >> includesClassesAffectedBy: aSystemAnnouncement [
+Package >> includesClassesAffectedBy: aSystemAnnouncement [
 
 	^(aSystemAnnouncement affectsClassesDefinedInPackage: self)
 		or: [ aSystemAnnouncement affectsClassesExtendedInPackage: self ]
 ]
 
 { #category : '*Calypso-SystemQueries' }
-RPackage >> isAboutPackage: aPackage [
+Package >> isAboutPackage: aPackage [
 
 	^self == aPackage
 ]
 
 { #category : '*Calypso-SystemQueries' }
-RPackage class >> itemsSortOrderForCalypso [
+Package class >> itemsSortOrderForCalypso [
 	^10
 ]
 
 { #category : '*Calypso-SystemQueries' }
-RPackage class >> prepareClassGroupQueryFrom: aPackage in: aNavigationEnvironment [
+Package class >> prepareClassGroupQueryFrom: aPackage in: aNavigationEnvironment [
 
 	^ ClyAllPackageTagsQuery sortedFrom: (ClyPackageScope of: aPackage in: aNavigationEnvironment)
 ]
 
 { #category : '*Calypso-SystemQueries' }
-RPackage class >> prepareClassQueriesFrom: packages in: aNavigationEnvironment [
+Package class >> prepareClassQueriesFrom: packages in: aNavigationEnvironment [
 	^{
 		ClyAllClassesQuery from: ClyPackageScope ofAll: packages in: aNavigationEnvironment.
 		ClyAllClassesQuery from: ClyPackageExtensionScope ofAll: packages in: aNavigationEnvironment
@@ -64,7 +64,7 @@ RPackage class >> prepareClassQueriesFrom: packages in: aNavigationEnvironment [
 ]
 
 { #category : '*Calypso-SystemQueries' }
-RPackage >> tagsForClasses [
+Package >> tagsForClasses [
 	"Any class could be tagged for user purpose.
 	Now we implement it on top of PackageTag"
 

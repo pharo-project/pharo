@@ -1,7 +1,7 @@
-Extension { #name : 'RPackage' }
+Extension { #name : 'Package' }
 
 { #category : '*SUnit-Tests' }
-RPackage >> testSuite [
+Package >> testSuite [
 
 	| suite |
 

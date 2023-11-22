@@ -44,7 +44,7 @@ So that we can have a package infrastructure as follows:
 			ClassA		
 "
 Class {
-	#name : 'RPackage',
+	#name : 'Package',
 	#superclass : 'Object',
 	#instVars : [
 		'extensionSelectors',
@@ -61,7 +61,8 @@ Class {
 }
 
 { #category : 'class initialization' }
-RPackage class >> initialize [
+Package class >> initialize [
+	self deprecatedAliases: { #RPackage }.
 	Properties
 		ifNil: [ self initializeProperties ]
 		ifNotNil: [
@@ -72,12 +73,12 @@ RPackage class >> initialize [
 ]
 
 { #category : 'class initialization' }
-RPackage class >> initializeProperties [
+Package class >> initializeProperties [
 	Properties := WeakIdentityKeyDictionary new
 ]
 
 { #category : 'instance creation' }
-RPackage class >> named: aString [
+Package class >> named: aString [
 
 	^ self new
 		  name: aString;
@@ -85,7 +86,7 @@ RPackage class >> named: aString [
 ]
 
 { #category : 'instance creation' }
-RPackage class >> named: aString organizer: aPackageOrganizer [
+Package class >> named: aString organizer: aPackageOrganizer [
 
 	^ (self named: aString)
 		  organizer: aPackageOrganizer;
@@ -93,26 +94,26 @@ RPackage class >> named: aString organizer: aPackageOrganizer [
 ]
 
 { #category : 'accessing' }
-RPackage class >> rootTagName [
+Package class >> rootTagName [
 
 	^ #Uncategorized
 ]
 
 { #category : 'comparing' }
-RPackage >> <= aRPackage [
+Package >> <= aRPackage [
 
 	^ self name <= aRPackage name
 ]
 
 { #category : 'add class' }
-RPackage >> addClass: aClass [
+Package >> addClass: aClass [
 	"If no tag is given we put the class in the root tag"
 
 	self moveClass: aClass toTag: self rootTag
 ]
 
 { #category : 'add method - compiled method' }
-RPackage >> addMethod: aCompiledMethod [
+Package >> addMethod: aCompiledMethod [
 	"Add the method to the receiver as a defined method if the class is  defined in it, else as an extension."
 
 	| methodClass |
@@ -127,13 +128,13 @@ RPackage >> addMethod: aCompiledMethod [
 ]
 
 { #category : 'class tags' }
-RPackage >> classTagNamed: aSymbol [
+Package >> classTagNamed: aSymbol [
 
 	^ self classTags detect: [ :each | each name = aSymbol ]
 ]
 
 { #category : 'class tags' }
-RPackage >> classTagNamed: aSymbol ifAbsent: aBlock [
+Package >> classTagNamed: aSymbol ifAbsent: aBlock [
 
 	^ self classTags
 		  detect: [ :each | each name = aSymbol ]
@@ -141,7 +142,7 @@ RPackage >> classTagNamed: aSymbol ifAbsent: aBlock [
 ]
 
 { #category : 'class tags' }
-RPackage >> classTagNamed: aSymbol ifPresent: aBlock [
+Package >> classTagNamed: aSymbol ifPresent: aBlock [
 
 	^ self classTags
 		  detect: [ :each | each name = aSymbol ]
@@ -150,57 +151,57 @@ RPackage >> classTagNamed: aSymbol ifPresent: aBlock [
 ]
 
 { #category : 'class tags' }
-RPackage >> classTags [
+Package >> classTags [
 	"Returns the tags of the receiver"
 
 	^ classTags
 ]
 
 { #category : 'accessing' }
-RPackage >> classes [
+Package >> classes [
 	"Return all the classes"
 	^ self definedClasses, self extendedClasses
 ]
 
 { #category : 'class tags' }
-RPackage >> classesTaggedWith: aSymbol [
+Package >> classesTaggedWith: aSymbol [
 	"Returns the classes tagged using aSymbol"
 
 	^ (self classTagNamed: aSymbol ifAbsent: [ ^ #(  ) ]) classes
 ]
 
 { #category : 'accessing' }
-RPackage >> codeChangeAnnouncer [
+Package >> codeChangeAnnouncer [
 
 	^ self environment codeChangeAnnouncer
 ]
 
 { #category : 'accessing' }
-RPackage >> definedClassNames [
+Package >> definedClassNames [
 	"Return the class names having methods defined in the receiver."
 
 	^ self definedClasses collect: [ :class | class name ]
 ]
 
 { #category : 'accessing' }
-RPackage >> definedClasses [
+Package >> definedClasses [
 
 	^ self classTags flatCollect: [ :tag | tag classes ]
 ]
 
 { #category : 'accessing' }
-RPackage >> definedMethodsForClass: aClass [
+Package >> definedMethodsForClass: aClass [
 
 	^ (self definedSelectorsForClass: aClass) asOrderedCollection collect: [ :each | aClass >> each ]
 ]
 
 { #category : 'accessing' }
-RPackage >> definedOrExtendedClasses [
+Package >> definedOrExtendedClasses [
 	^ self definedClasses | self extendedClasses
 ]
 
 { #category : 'accessing' }
-RPackage >> definedSelectorsForClass: aClass [
+Package >> definedSelectorsForClass: aClass [
 
 	^ (self includesClass: aClass)
 		  ifTrue: [ aClass definedSelectors ]
@@ -208,7 +209,7 @@ RPackage >> definedSelectorsForClass: aClass [
 ]
 
 { #category : 'testing' }
-RPackage >> definesOrExtendsClass: aClass [
+Package >> definesOrExtendsClass: aClass [
 	"Returns true whether the class, aClass, is one of the locally defined classes of the receiver or
 	if the receiver extends such class (that is defined in another package)"
 
@@ -216,7 +217,7 @@ RPackage >> definesOrExtendsClass: aClass [
 ]
 
 { #category : 'converting' }
-RPackage >> demoteToTagInPackage [
+Package >> demoteToTagInPackage [
 
 	| newPackage tag |
 	(self name includes: $-) ifFalse: [ self error: 'To demote a package, it name needs to contain at least one dash `-`.' ].
@@ -237,12 +238,12 @@ RPackage >> demoteToTagInPackage [
 ]
 
 { #category : 'properties' }
-RPackage >> ensureProperties [
+Package >> ensureProperties [
 	^ Properties at: self ifAbsentPut: WeakKeyDictionary new
 ]
 
 { #category : 'class tags' }
-RPackage >> ensureTag: aTag [
+Package >> ensureTag: aTag [
 
 	| tagName newTag |
 	(aTag isNil or: [ aTag = '' ]) ifTrue: [ ^ self rootTag ].
@@ -260,27 +261,27 @@ RPackage >> ensureTag: aTag [
 ]
 
 { #category : 'accessing' }
-RPackage >> environment [
+Package >> environment [
 
 	^ self organizer environment
 ]
 
 { #category : 'accessing' }
-RPackage >> extendedClassNames [
+Package >> extendedClassNames [
 	"Return the name of the classes which are extended by the receiver package. if a metaclass is extended, just get its sole instance class name."
 
 	^ self extendedClasses collect: [ :class | class instanceSide name ] as: Set
 ]
 
 { #category : 'accessing' }
-RPackage >> extendedClasses [
+Package >> extendedClasses [
 	"Return classes and metaclasses that are extended in the receiver. They represent the classes of method extensions"
 
 	^ (extensionSelectors keys collect: [ :class | class instanceSide ]) asSet
 ]
 
 { #category : 'testing' }
-RPackage >> extendsClass: aClass [
+Package >> extendsClass: aClass [
 	"Returns true if the receiver extends aClass (that is defined in another package)"
 
 	| canonizedName |
@@ -289,7 +290,7 @@ RPackage >> extendsClass: aClass [
 ]
 
 { #category : 'accessing' }
-RPackage >> extensionMethods [
+Package >> extensionMethods [
 	"Extension methods are methods defined on classes that are not defined in the receiver"
 
 	| methods |
@@ -299,20 +300,20 @@ RPackage >> extensionMethods [
 ]
 
 { #category : 'accessing' }
-RPackage >> extensionMethodsForClass: aClass [
+Package >> extensionMethodsForClass: aClass [
 	"Change the set of extensions selectors to an Array to avoid compiled methods collisions in the resulting set."
 
 	^ (self extensionSelectorsForClass: aClass) asArray collect: [ :each | aClass >> each ]
 ]
 
 { #category : 'system compatibility' }
-RPackage >> extensionProtocolsForClass: aClass [
+Package >> extensionProtocolsForClass: aClass [
 
 	^ aClass protocols select: [ :protocol | protocol isExtensionProtocolMatching: self ]
 ]
 
 { #category : 'accessing' }
-RPackage >> extensionSelectors [
+Package >> extensionSelectors [
 	"Extension methods are methods defined on classes that are not defined in the receiver"
 
 	| allSelectors |
@@ -322,19 +323,19 @@ RPackage >> extensionSelectors [
 ]
 
 { #category : 'accessing' }
-RPackage >> extensionSelectorsForClass: aClass [
+Package >> extensionSelectorsForClass: aClass [
 
 	^ extensionSelectors at: aClass ifAbsent: [ #(  ) ]
 ]
 
 { #category : 'properties' }
-RPackage >> hasProperty: aKey [
+Package >> hasProperty: aKey [
 	self propertyAt: aKey ifAbsent: [ ^ false ].
 	^ true
 ]
 
 { #category : 'testing' }
-RPackage >> hasTag: aTag [
+Package >> hasTag: aTag [
 	"Takes a package tag or a package tag name as parameter and return true if I include this package tag."
 
 	^ self tagNames includes: (aTag isString
@@ -343,7 +344,7 @@ RPackage >> hasTag: aTag [
 ]
 
 { #category : 'accessing' }
-RPackage >> hierarchyRoots [
+Package >> hierarchyRoots [
 	"Returns all the hiearchy roots (by opposition to single classes inheriting from class outside the package) of a package"
 
 	^ self definedClasses
@@ -351,7 +352,7 @@ RPackage >> hierarchyRoots [
 ]
 
 { #category : 'private' }
-RPackage >> importProtocol: aProtocol forClass: aClass [
+Package >> importProtocol: aProtocol forClass: aClass [
 	"import all the local methods of a protocol as defined in the receiver."
 
 	(aClass methodsInProtocol: aProtocol)
@@ -360,7 +361,7 @@ RPackage >> importProtocol: aProtocol forClass: aClass [
 ]
 
 { #category : 'testing' }
-RPackage >> includesClass: aClass [
+Package >> includesClass: aClass [
 	"Returns true if the receiver includes aClass in the classes that are defined within it: only class definition are considered - not class extensions"
 
 	"This check is here for speed reason. We first check that the package of the class is myself, and if it is, we also need to check that I contains the class because if the class is removed it will still know I am its package but I will not contain it anymore."
@@ -370,32 +371,32 @@ RPackage >> includesClass: aClass [
 ]
 
 { #category : 'testing' }
-RPackage >> includesClassNamed: aSymbol [
+Package >> includesClassNamed: aSymbol [
 	"Returns true if the receiver includes class named aSymbol in the classes that are defined within it: only class definition are considered - not class extensions"
 
 	^ self definedClasses anySatisfy: [ :class | class name = aSymbol ]
 ]
 
 { #category : 'testing' }
-RPackage >> includesClassTagNamed: aString [
+Package >> includesClassTagNamed: aString [
 	^ self classTags anySatisfy: [ :each | each name = aString ]
 ]
 
 { #category : 'testing' }
-RPackage >> includesExtensionSelector: aSelector ofClass: aClass [
+Package >> includesExtensionSelector: aSelector ofClass: aClass [
 	"Return true if the receiver includes the method of selector aSelector. Only checks methods extending other packages"
 
 	^ (self extensionSelectorsForClass: aClass) includes: aSelector asSymbol
 ]
 
 { #category : 'testing' }
-RPackage >> includesMethodsAffectedBy: aSystemAnnouncement [
+Package >> includesMethodsAffectedBy: aSystemAnnouncement [
 
 	^aSystemAnnouncement affectsMethodsDefinedInPackage: self
 ]
 
 { #category : 'system compatibility' }
-RPackage >> includesProtocol: protocol ofClass: aClass [
+Package >> includesProtocol: protocol ofClass: aClass [
 
 	(protocol isExtensionProtocolMatching: self) ifTrue: [ ^ true ].
 
@@ -403,14 +404,14 @@ RPackage >> includesProtocol: protocol ofClass: aClass [
 ]
 
 { #category : 'testing' }
-RPackage >> includesSelector: aSelector ofClass: aClass [
+Package >> includesSelector: aSelector ofClass: aClass [
 	"Return true if the receiver includes the method of selector aSelector. Checks methods defined locally as well as extending other packages"
 
 	^ ((self includesClass: aClass) and: [ aClass definedSelectors includes: aSelector ]) or: [ self includesExtensionSelector: aSelector ofClass: aClass ]
 ]
 
 { #category : 'initialization' }
-RPackage >> initialize [
+Package >> initialize [
 
 	super initialize.
 	extensionSelectors := IdentityDictionary new.
@@ -418,20 +419,20 @@ RPackage >> initialize [
 ]
 
 { #category : 'testing' }
-RPackage >> isDeprecated [
+Package >> isDeprecated [
 	^ self packageManifestOrNil
 		ifNil: [ ^ false ]
 		ifNotNil: [ :manifest | manifest isDeprecated ]
 ]
 
 { #category : 'testing' }
-RPackage >> isEmpty [
+Package >> isEmpty [
 
 	^ self classes isEmpty and: [ self extensionSelectors isEmpty ]
 ]
 
 { #category : 'testing' }
-RPackage >> isTestPackage [
+Package >> isTestPackage [
 	"1. Test package ends with suffix -Tests. Suffix is case sensitive.
 	 2. Or test package contains '-Tests-' in middle.
 	Some examples: "
@@ -445,20 +446,20 @@ RPackage >> isTestPackage [
 ]
 
 { #category : 'testing' }
-RPackage >> isUndefined [
+Package >> isUndefined [
 
 	^ false
 ]
 
 { #category : 'accessing' }
-RPackage >> linesOfCode [
+Package >> linesOfCode [
 	"An approximate measure of lines of code.
 	Includes comments, but excludes blank lines."
 	^self methods inject: 0 into: [:sum :each | sum + each linesOfCode]
 ]
 
 { #category : 'accessing' }
-RPackage >> methods [
+Package >> methods [
 	"Return all the methods defined in this package. Including extension methods (i.e., methods defined on a class that is not defined by me)"
 
 	| methods |
@@ -474,7 +475,7 @@ RPackage >> methods [
 ]
 
 { #category : 'accessing' }
-RPackage >> methodsForClass: aClass [
+Package >> methodsForClass: aClass [
 	"Returns all compiled methods for a class in the receiver without distinction of extensions or not"
 
 	^ (self includesClass: aClass)
@@ -483,7 +484,7 @@ RPackage >> methodsForClass: aClass [
 ]
 
 { #category : 'private' }
-RPackage >> moveClass: aClass toTag: aTag [
+Package >> moveClass: aClass toTag: aTag [
 	"I am the main method to add a class to myself. 
 	I will take care of removing the class from its old package. I'll renamed its extensions protocols refering myself into the unclassified protocol. I'll add the class to the right tag and announce the change."
 
@@ -518,13 +519,13 @@ RPackage >> moveClass: aClass toTag: aTag [
 ]
 
 { #category : 'accessing' }
-RPackage >> name [
+Package >> name [
 
 	^ name
 ]
 
 { #category : 'accessing' }
-RPackage >> name: aSymbol [
+Package >> name: aSymbol [
 	"Set the name of a package. This method is private and should not be used.
 	If you wish to rename a package, use #renameTo: instead"
 
@@ -533,39 +534,39 @@ RPackage >> name: aSymbol [
 ]
 
 { #category : 'private' }
-RPackage >> organizer [
+Package >> organizer [
 
 	^ organizer
 ]
 
 { #category : 'accessing' }
-RPackage >> organizer: anObject [
+Package >> organizer: anObject [
 
 	organizer := anObject
 ]
 
 { #category : 'accessing' }
-RPackage >> packageManifestOrNil [
+Package >> packageManifestOrNil [
 	^ self definedClasses
 		detect: [ :each | each isManifest ]
 		ifNone: [ nil ]
 ]
 
 { #category : 'accessing' }
-RPackage >> packageName [
+Package >> packageName [
 
 	self deprecated: 'Use #name instead.' transformWith: '`@rcv packageName' -> '`@rcv name'.
 	^ self name
 ]
 
 { #category : 'system compatibility' }
-RPackage >> packages [
+Package >> packages [
 	"Compatibility with monticello and old PackageInfo"
 	^ self classTags
 ]
 
 { #category : 'printing' }
-RPackage >> printOn: aStream [
+Package >> printOn: aStream [
 	super printOn: aStream.
 	aStream nextPut: $(.
 	aStream nextPutAll: self name.
@@ -573,19 +574,19 @@ RPackage >> printOn: aStream [
 ]
 
 { #category : 'properties' }
-RPackage >> properties [
+Package >> properties [
 	^ Properties at: self ifAbsent: nil
 ]
 
 { #category : 'properties' }
-RPackage >> propertyAt: propName [
+Package >> propertyAt: propName [
 	^ self
 		propertyAt: propName
 		ifAbsent: [ nil ]
 ]
 
 { #category : 'properties' }
-RPackage >> propertyAt: propName ifAbsent: aBlock [
+Package >> propertyAt: propName ifAbsent: aBlock [
 	self properties ifNil: [^aBlock value].
 	^ self properties
 		at: propName
@@ -593,21 +594,21 @@ RPackage >> propertyAt: propName ifAbsent: aBlock [
 ]
 
 { #category : 'properties' }
-RPackage >> propertyAt: aKey ifAbsentPut: aBlock [
+Package >> propertyAt: aKey ifAbsentPut: aBlock [
 	"Answer the property associated with aKey or, if aKey isn't found store the result of evaluating aBlock as new value."
 
 	^ self propertyAt: aKey ifAbsent: [ self propertyAt: aKey put: aBlock value ]
 ]
 
 { #category : 'properties' }
-RPackage >> propertyAt: propName put: propValue [
+Package >> propertyAt: propName put: propValue [
 	^ self ensureProperties
 		at: propName
 		put: propValue
 ]
 
 { #category : 'private - register' }
-RPackage >> removeAllExtensionMethodsFromClass: aClass [
+Package >> removeAllExtensionMethodsFromClass: aClass [
 	"Remove all the methods (defined and extensions) that are related to the class as parameter. The class should always be instance side."
 
 	extensionSelectors removeKey: aClass ifAbsent: [  ].
@@ -615,7 +616,7 @@ RPackage >> removeAllExtensionMethodsFromClass: aClass [
 ]
 
 { #category : 'removing' }
-RPackage >> removeClass: aClass [
+Package >> removeClass: aClass [
 	"I remove the class and potential empty tags from myself."
 
 	self classTags
@@ -624,13 +625,13 @@ RPackage >> removeClass: aClass [
 ]
 
 { #category : 'class tags' }
-RPackage >> removeEmptyTags [
+Package >> removeEmptyTags [
 
 	(self classTags select: [ :tag | tag isEmpty ]) do: [ :emptyTag | self removeTag: emptyTag ]
 ]
 
 { #category : 'removing' }
-RPackage >> removeFromSystem [
+Package >> removeFromSystem [
 	"Copy to not remove collection over which we are iterating."
 
 	self classTags copy do: [ :tag | tag removeFromSystem ].
@@ -640,7 +641,7 @@ RPackage >> removeFromSystem [
 ]
 
 { #category : 'add method - compiled method' }
-RPackage >> removeMethod: aCompiledMethod [
+Package >> removeMethod: aCompiledMethod [
 	"Remove the method to the receiver as a defined method."
 
 	| methodClass |
@@ -655,25 +656,25 @@ RPackage >> removeMethod: aCompiledMethod [
 ]
 
 { #category : 'add method - compiled method' }
-RPackage >> removeMethods: aCollection [
+Package >> removeMethods: aCollection [
 	aCollection do: [ :each | self removeMethod: each ]
 ]
 
 { #category : 'properties' }
-RPackage >> removePropertiesIfEmpty [
+Package >> removePropertiesIfEmpty [
 	^ Properties at: self ifPresent: [ :dict |
 		dict ifEmpty: [ Properties removeKey: self ] ]
 ]
 
 { #category : 'properties' }
-RPackage >> removeProperty: propName [
+Package >> removeProperty: propName [
 	^ self
 		removeProperty: propName
 		ifAbsent: [ nil ]
 ]
 
 { #category : 'properties' }
-RPackage >> removeProperty: propName ifAbsent: aBlock [
+Package >> removeProperty: propName ifAbsent: aBlock [
 	| property |
 	self properties ifNil: [^aBlock value].
 	property := self properties
@@ -684,7 +685,7 @@ RPackage >> removeProperty: propName ifAbsent: aBlock [
 ]
 
 { #category : 'class tags' }
-RPackage >> removeTag: aTag [
+Package >> removeTag: aTag [
 
 	| tag |
 	tag := aTag isString
@@ -700,7 +701,7 @@ RPackage >> removeTag: aTag [
 ]
 
 { #category : 'class tags' }
-RPackage >> renameTag: aTag to: newName [
+Package >> renameTag: aTag to: newName [
 
 	(self hasTag: aTag) ifFalse: [ ^ self ].
 
@@ -710,7 +711,7 @@ RPackage >> renameTag: aTag to: newName [
 ]
 
 { #category : 'register' }
-RPackage >> renameTo: aSymbol [
+Package >> renameTo: aSymbol [
 	"Rename a package with a different name, provided as a symbol"
 
 	| oldName newName |
@@ -730,19 +731,19 @@ RPackage >> renameTo: aSymbol [
 ]
 
 { #category : 'class tags' }
-RPackage >> rootTag [
+Package >> rootTag [
 
 	^ self ensureTag: self rootTagName
 ]
 
 { #category : 'accessing' }
-RPackage >> rootTagName [
+Package >> rootTagName [
 
 	^ self class rootTagName
 ]
 
 { #category : 'accessing' }
-RPackage >> roots [
+Package >> roots [
 	"Returns all the root classes of a package. A root class is a class whose superclass is not defined in the package.
 	Root classes are potentially root of inheritance trees defined in a package."
 
@@ -751,7 +752,7 @@ RPackage >> roots [
 ]
 
 { #category : 'accessing' }
-RPackage >> selectors [
+Package >> selectors [
 
 	| allSelectors |
 	allSelectors := Set new.
@@ -764,7 +765,7 @@ RPackage >> selectors [
 ]
 
 { #category : 'accessing' }
-RPackage >> selectorsForClass: aClass [
+Package >> selectorsForClass: aClass [
 	"Returns all selectors for a class in the receiver without distinction of extensions or not"
 
 	^ (self includesClass: aClass)
@@ -773,13 +774,13 @@ RPackage >> selectorsForClass: aClass [
 ]
 
 { #category : 'class tags' }
-RPackage >> tagNames [
+Package >> tagNames [
 
 	^ self classTags collect: [ :tag | tag name ]
 ]
 
 { #category : 'class tags' }
-RPackage >> tagOf: aClass [
+Package >> tagOf: aClass [
 
 	^ self classTags
 		  detect: [ :tag | tag includesClass: aClass ]

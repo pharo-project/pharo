@@ -1,7 +1,7 @@
-Extension { #name : 'RPackage' }
+Extension { #name : 'Package' }
 
 { #category : '*Calypso-NavigationModel' }
-RPackage >> calypsoName [
+Package >> calypsoName [
 
 	^ self name
 ]

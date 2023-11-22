@@ -1,7 +1,7 @@
-Extension { #name : 'RPackage' }
+Extension { #name : 'Package' }
 
 { #category : '*Deprecated12' }
-RPackage >> actualClassTags [
+Package >> actualClassTags [
 
 	self deprecated: 'This method is too specific and will be removed in future versions of Pharo.'.
 	(classTags size = 1 and: [ classTags anyOne isRoot ]) ifTrue: [ ^ #(  ) ].
@@ -10,21 +10,21 @@ RPackage >> actualClassTags [
 ]
 
 { #category : '*Deprecated12' }
-RPackage >> addClassTag: tagName [
+Package >> addClassTag: tagName [
 
 	self deprecated: 'Use #ensureTag: instead' transformWith: '`@rcv addClassTag: `@arg' -> '`@rcv ensureTag: `@arg'.
 	^ self ensureTag: tagName
 ]
 
 { #category : '*Deprecated12' }
-RPackage >> basicRemoveTag: tag [
+Package >> basicRemoveTag: tag [
 
 	self deprecated: 'Use #removeTag: instead.' transformWith: '`@rcv removeClassTag: `@arg' -> '`@rcv removeTag: `@arg'.
 	self removeTag: tag
 ]
 
 { #category : '*Deprecated12' }
-RPackage >> classDefinedSlicesDo: aBlock [
+Package >> classDefinedSlicesDo: aBlock [
 
 	self deprecated:
 		'The API of RPackage is been cleaned and this method is not generic enough to stay in RPackage. You can look at the implementation of this method to know how to reproduce its behavior.'.
@@ -34,7 +34,7 @@ RPackage >> classDefinedSlicesDo: aBlock [
 ]
 
 { #category : '*Deprecated12' }
-RPackage >> classExtensionSlicesDo: aBlock [
+Package >> classExtensionSlicesDo: aBlock [
 	"This method iterates over the class extensions and their associated selectors. A slice is a class * list of selectors. aBlock will be applied to all the extensions slices of the receiver. aBlock first argument is the class and the second argument a list of method selectors"
 
 	self deprecated:
@@ -46,7 +46,7 @@ RPackage >> classExtensionSlicesDo: aBlock [
 ]
 
 { #category : '*Deprecated12' }
-RPackage >> classNamesAndExtensionSelectorsDo: aBlock [
+Package >> classNamesAndExtensionSelectorsDo: aBlock [
 	"Iterate over the extended methods grouped by classes and apply the argument.
 	The block will be passed a class name and each individual selectors.
 	Only classes with methods are paired with their methods"
@@ -58,7 +58,7 @@ RPackage >> classNamesAndExtensionSelectorsDo: aBlock [
 ]
 
 { #category : '*Deprecated12' }
-RPackage >> classNamesForClassTag: aSymbol [
+Package >> classNamesForClassTag: aSymbol [
 	"Returns the classes tagged using aSymbol"
 
 	self deprecated: 'This method is too specific and will be remove in future versions of Pharo. If you are using it you can inline the method'.
@@ -67,28 +67,28 @@ RPackage >> classNamesForClassTag: aSymbol [
 ]
 
 { #category : '*Deprecated12' }
-RPackage >> classTagForClass: aClass [
+Package >> classTagForClass: aClass [
 
 	self deprecated: 'Use #tagOf: instead' transformWith: '`@rcv classTagForClass: `@arg' -> '`@rcv tagOf: `@arg'.
 	^ self tagOf: aClass
 ]
 
 { #category : '*Deprecated12' }
-RPackage >> classesForClassTag: aTagName [
+Package >> classesForClassTag: aTagName [
 
 	self deprecated: 'Use #classesTaggedWith: instead.' transformWith: '`@rcv classesForClassTag: `@arg' -> '`@rcv classesTaggedWith: `@arg'.
 	^ self classesTaggedWith: aTagName
 ]
 
 { #category : '*Deprecated12' }
-RPackage class >> defaultPackageName [
+Package class >> defaultPackageName [
 
 	self deprecated: 'Use `UndefinedPackage undefinedPackageName`' transformWith: '`@rcv defaultPackageName' -> 'UndefinedPackage undefinedPackageName'.
 	^ UndefinedPackage undefinedPackageName
 ]
 
 { #category : '*Deprecated12' }
-RPackage >> definedClassesDo: aBlock [
+Package >> definedClassesDo: aBlock [
 
 	self deprecated:
 		'Use #definedClasses and a do instead because the name of this method is not explicit since it iterates over the *name* of the classes and not the classes themselves.'.
@@ -96,7 +96,7 @@ RPackage >> definedClassesDo: aBlock [
 ]
 
 { #category : '*Deprecated12' }
-RPackage >> definesClass: aClass [
+Package >> definesClass: aClass [
 
 	self deprecated: 'Use #includesClass: instead.' transformWith: '`@rcv definesClass: `@arg' -> '`@rcv includesClass: `@arg'.
 
@@ -104,7 +104,7 @@ RPackage >> definesClass: aClass [
 ]
 
 { #category : '*Deprecated12' }
-RPackage >> extensionCategoriesForClass: aClass [
+Package >> extensionCategoriesForClass: aClass [
 
 	self
 		deprecated: 'Use #extensionProtocolsForClass: instead.'
@@ -113,14 +113,14 @@ RPackage >> extensionCategoriesForClass: aClass [
 ]
 
 { #category : '*Deprecated12' }
-RPackage >> importClasses: classCollection [
+Package >> importClasses: classCollection [
 
 	self deprecated: 'This method will be removed in future versions of Pharo'.
 	classCollection do: [ :each | self addClass: each ]
 ]
 
 { #category : '*Deprecated12' }
-RPackage >> includesDefinedSelector: aSelector ofClass: aClass [
+Package >> includesDefinedSelector: aSelector ofClass: aClass [
 	"Return true if the receiver includes the method of selector aSelector. Only checks methods defined in this package"
 
 	self deprecated: 'Since Pharo 12 the packages do not save the defined selector they contains but delegate this to the classes they contrains.
@@ -129,7 +129,7 @@ RPackage >> includesDefinedSelector: aSelector ofClass: aClass [
 ]
 
 { #category : '*Deprecated12' }
-RPackage >> includesDefinedSelector: aSelector ofClassName: aClassName [
+Package >> includesDefinedSelector: aSelector ofClassName: aClassName [
 	"Return true if the receiver includes the method of selector aSelector. Only checks methods defined (not extended by other packages or package extensions)"
 
 	self deprecated: 'Use #includesDefinedSelector:ofClass: with the class directly'.
@@ -137,7 +137,7 @@ RPackage >> includesDefinedSelector: aSelector ofClassName: aClassName [
 ]
 
 { #category : '*Deprecated12' }
-RPackage >> includesDefinedSelector: aSelector ofMetaclassName: aClassName [
+Package >> includesDefinedSelector: aSelector ofMetaclassName: aClassName [
 	"Return true if the receiver includes the method of selector aSelector. Only checks methods defined (not extended by other packages or package extensions)"
 
 	self deprecated: 'Use #includesDefinedSelector:ofClass: with the class side of the class directly'.
@@ -145,7 +145,7 @@ RPackage >> includesDefinedSelector: aSelector ofMetaclassName: aClassName [
 ]
 
 { #category : '*Deprecated12' }
-RPackage >> includesExtensionSelector: aSelector ofClassName: aClassName [
+Package >> includesExtensionSelector: aSelector ofClassName: aClassName [
 	"Return true if the receiver includes the method of selector aSelector. Only checks methods extending other packages"
 
 	self deprecated: 'Use #includesExtensionSelector:ofClass: with the class directly'.
@@ -153,7 +153,7 @@ RPackage >> includesExtensionSelector: aSelector ofClassName: aClassName [
 ]
 
 { #category : '*Deprecated12' }
-RPackage >> includesExtensionSelector: aSelector ofMetaclassName: aClassName [
+Package >> includesExtensionSelector: aSelector ofMetaclassName: aClassName [
 	"Return true if the receiver includes the method of selector aSelector. Only checks methods extending other packages"
 
 	self deprecated: 'Use #includesExtensionSelector:ofClass: with the class side of the class directly'.
@@ -161,7 +161,7 @@ RPackage >> includesExtensionSelector: aSelector ofMetaclassName: aClassName [
 ]
 
 { #category : '*Deprecated12' }
-RPackage >> includesSelector: aSelector ofClassName: aClassName [
+Package >> includesSelector: aSelector ofClassName: aClassName [
 	"Return true if the receiver includes the method of selector aSelector. Checks methods defined locally as well as extending other packages"
 
 	self deprecated: 'Use #includesSelector:ofClass: directly with the class.'.
@@ -169,7 +169,7 @@ RPackage >> includesSelector: aSelector ofClassName: aClassName [
 ]
 
 { #category : '*Deprecated12' }
-RPackage >> includesSelector: aSelector ofMetaclassName: aClassName [
+Package >> includesSelector: aSelector ofMetaclassName: aClassName [
 	"Return true if the receiver includes the method of selector aSelector. Checks methods defined locally as well as extending other packages"
 
 	self deprecated: 'Use #includesSelector:ofClass: directly with the class.'.
@@ -177,14 +177,14 @@ RPackage >> includesSelector: aSelector ofMetaclassName: aClassName [
 ]
 
 { #category : '*Deprecated12' }
-RPackage >> isDefault [
+Package >> isDefault [
 
 	self deprecated: 'Use #isUndefined instead' transformWith: '`@rcv isDefault' -> '`@rcv isUndefined'.
 	^ self isUndefined
 ]
 
 { #category : '*Deprecated12' }
-RPackage >> isYourClassExtension: protocol [
+Package >> isYourClassExtension: protocol [
 
 	self
 		deprecated: 'Use #isExtensionMatching: on the parameter instead because the name is much more explicit.'
@@ -194,7 +194,7 @@ RPackage >> isYourClassExtension: protocol [
 ]
 
 { #category : '*Deprecated12' }
-RPackage >> metaclassDefinedSlicesDo: aBlock [
+Package >> metaclassDefinedSlicesDo: aBlock [
 	"This method iterates over the defined class and their associated selectors. a slice is a class * list of selectors. aBlock will be applied to all the extensions slices of the receiver. aBlok first argument is the class and the second argument a list of method selectors"
 
 	self deprecated:
@@ -206,7 +206,7 @@ RPackage >> metaclassDefinedSlicesDo: aBlock [
 ]
 
 { #category : '*Deprecated12' }
-RPackage >> metaclassExtensionSlicesDo: aBlock [
+Package >> metaclassExtensionSlicesDo: aBlock [
 	"This method iterates over the metaclass extensions and their associated selectors. A slice is a class * list of selectors. aBlock will be applied to all the extensions slices of the receiver. aBlok first argument is the class and second argument a list of selectors"
 
 	self deprecated:
@@ -218,20 +218,20 @@ RPackage >> metaclassExtensionSlicesDo: aBlock [
 ]
 
 { #category : '*Deprecated12' }
-RPackage class >> organizer [
+Package class >> organizer [
 
 	self deprecated: 'Manipulate the package organizer directly instead of setting it here.'.
 	^ self packageOrganizer
 ]
 
 { #category : '*Deprecated12' }
-RPackage class >> organizer: aPackageOrganizer [
+Package class >> organizer: aPackageOrganizer [
 
 	self deprecated: 'Manipulate the package organizer directly instead of setting it here.'
 ]
 
 { #category : '*Deprecated12' }
-RPackage >> register [
+Package >> register [
 
 	self
 		deprecated: 'Tihs method will be removed because usually if the package know the organizer it should be because the organizer created it.'
@@ -240,21 +240,21 @@ RPackage >> register [
 ]
 
 { #category : '*Deprecated12' }
-RPackage >> removeClassNamed: aClassName [
+Package >> removeClassNamed: aClassName [
 
 	self deprecated: 'Use #removeClass: with a real class instead.'.
 	^ self removeClass: (self organizer environment at: aClassName)
 ]
 
 { #category : '*Deprecated12' }
-RPackage >> removeClassTag: aSymbol [
+Package >> removeClassTag: aSymbol [
 
 	self deprecated: 'Use #removeTag: instead.' transformWith: '`@rcv removeClassTag: `@arg' -> '`@rcv removeTag: `@arg'.
 	self removeTag: aSymbol
 ]
 
 { #category : '*Deprecated12' }
-RPackage >> unregister [
+Package >> unregister [
 
 	self
 		deprecated: 'Tihs method will be removed because the name does not conform with the naming convensions of this class.'
@@ -264,7 +264,7 @@ RPackage >> unregister [
 ]
 
 { #category : '*Deprecated12' }
-RPackage class >> withOrganizer: aNewOrganizer do: aBlock [
+Package class >> withOrganizer: aNewOrganizer do: aBlock [
 
 	self deprecated: 'There is no need to use this method to execute code in another package organizer anymore. Just make sure to set the environemnt of this organizer when using the shift class builder.'.
 	aBlock cull: aNewOrganizer
