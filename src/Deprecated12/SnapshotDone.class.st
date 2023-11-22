@@ -37,3 +37,8 @@ SnapshotDone >> isNewImage [
 SnapshotDone >> isNewImage: anObject [
 	isNewImage := anObject
 ]
+
+{ #category : 'abstract' }
+SnapshotDone >> shouldBeConsideredByCalypsoEnvironment [
+	^false
+]
