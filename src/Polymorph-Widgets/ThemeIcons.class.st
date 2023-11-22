@@ -107,9 +107,10 @@ ThemeIcons class >> current [
 
 { #category : 'instance creation' }
 ThemeIcons class >> current: aPack [
+
 	aPack hasIcons ifFalse: [ aPack loadIconsFromUrl ].
 	Current := aPack.
-	SystemAnnouncer announce: IconSetChanged
+	self codeSupportAnnouncer announce: IconSetChanged
 ]
 
 { #category : 'accessing' }

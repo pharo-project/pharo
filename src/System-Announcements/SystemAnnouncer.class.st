@@ -113,9 +113,3 @@ SystemAnnouncer >> methodRepackaged: aMethod from: aPackage to: anotherPackage [
 						oldPackage: aPackage
 						newPackage: anotherPackage)
 ]
-
-{ #category : 'triggering' }
-SystemAnnouncer >> snapshotDone: isNewImage [
-
-	self announce: (SnapshotDone isNewImage: isNewImage)
-]

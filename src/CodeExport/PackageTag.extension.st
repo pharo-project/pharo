@@ -22,11 +22,6 @@ PackageTag >> fileOutOn: aFileStream [
 
 	toExport := traits asArray , (Class superclassOrder: (self classes reject: [ :class | class isTrait ])) asArray.
 
-	(toExport flatCollect: [ :class | class sharedPools ] as: Set) ifNotEmpty: [ :poolSet |
-		self class shouldFileOutPools ifTrue: [
-			poolSet
-				select: [ :aPool | self class shouldFileOutPool: (self environment keyAtIdentityValue: aPool) ]
-				thenDo: [ :aPool | self class fileOutPool: aPool onFileStream: aFileStream ] ] ].
 	toExport do: [ :each | each fileOutOn: aFileStream initializing: false ] separatedBy: [
 		aFileStream
 			cr;

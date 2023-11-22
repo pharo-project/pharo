@@ -100,7 +100,7 @@ BreakpointTest >> testBreakInContextNode [
 	Breakpoint registerObserver: observer.
 	breakpoint := Breakpoint new.
 	self should: [breakpoint breakInContext: self node: #node] raise: Break.
-	self assert: observer tag notNil.
+	self assert: observer tag isNotNil.
 	self assert: observer tag breakpoint identicalTo: breakpoint.
 	self assertCollection: observer tag nodes equals: #(#node)
 ]

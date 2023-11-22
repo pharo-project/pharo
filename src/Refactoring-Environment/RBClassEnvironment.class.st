@@ -101,12 +101,12 @@ RBClassEnvironment >> classesDo: aBlock [
 	classes do: [ :each |
 		| class |
 		class := self systemDictionary at: each ifAbsent: [ nil ].
-		(class notNil and: [ environment includesClass: class ])
+		(class isNotNil and: [ environment includesClass: class ])
 			ifTrue: [ aBlock value: class ] ].
 		metaClasses do: [ :each |
 		| class |
 		class := self systemDictionary at: each ifAbsent: [ nil ].
-		(class notNil and: [ environment includesClass: class classSide ])
+		(class isNotNil and: [ environment includesClass: class classSide ])
 			ifTrue: [ aBlock value: class classSide ] ]
 ]
 

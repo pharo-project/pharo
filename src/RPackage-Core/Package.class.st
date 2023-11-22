@@ -1,5 +1,5 @@
 "
-A Package is a new implementation of package.
+A RPackage is a new implementation of package.
 
 
 Instance Variables
@@ -62,7 +62,6 @@ Class {
 
 { #category : 'class initialization' }
 Package class >> initialize [
-
 	self deprecatedAliases: { #RPackage }.
 	Properties
 		ifNil: [ self initializeProperties ]
@@ -101,9 +100,9 @@ Package class >> rootTagName [
 ]
 
 { #category : 'comparing' }
-Package >> <= aPackage [
+Package >> <= aRPackage [
 
-	^ self name <= aPackage name
+	^ self name <= aRPackage name
 ]
 
 { #category : 'add class' }
@@ -247,7 +246,7 @@ Package >> ensureProperties [
 Package >> ensureTag: aTag [
 
 	| tagName newTag |
-	aTag ifNil: [ ^ self rootTag ].
+	(aTag isNil or: [ aTag = '' ]) ifTrue: [ ^ self rootTag ].
 	tagName := aTag isString
 		           ifTrue: [ aTag ]
 		           ifFalse: [ aTag name ].
@@ -257,7 +256,7 @@ Package >> ensureTag: aTag [
 	newTag := PackageTag package: self name: tagName.
 	classTags add: newTag.
 
-	self codeChangeAnnouncer  announce: (PackageTagAdded to: newTag).
+	self codeChangeAnnouncer announce: (PackageTagAdded to: newTag).
 	^ newTag
 ]
 
@@ -438,10 +437,10 @@ Package >> isTestPackage [
 	 2. Or test package contains '-Tests-' in middle.
 	Some examples: "
 
-	"(Package named: 'MockPackage-Tests') isTestPackage >>> true"
-	"(Package named: 'MockPackage-tests') isTestPackage >>> true"
-	"(Package named: 'MockPackage') isTestPackage >>> false"
-	"(Package named: 'MockPackage-Tests-Package') isTestPackage >>> true"
+	"(RPackage named: 'MockPackage-Tests') isTestPackage >>> true"
+	"(RPackage named: 'MockPackage-tests') isTestPackage >>> true"
+	"(RPackage named: 'MockPackage') isTestPackage >>> false"
+	"(RPackage named: 'MockPackage-Tests-Package') isTestPackage >>> true"
 
 	^ (self name endsWith: '-Tests' caseSensitive: false) or: [ self name includesSubstring: '-Tests-' caseSensitive: false ]
 ]

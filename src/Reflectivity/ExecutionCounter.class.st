@@ -69,12 +69,13 @@ ExecutionCounter class >> installOn: aRBProgramNode [
 
 { #category : 'class initialization' }
 ExecutionCounter class >> registerInterestToSystemAnnouncement [
-	<systemEventRegistration>
 
-	SystemAnnouncer uniqueInstance unsubscribe: self.
-	SystemAnnouncer uniqueInstance weak when: MethodRemoved send: #handleMethodRemoved: to: self.
-	SystemAnnouncer uniqueInstance weak when: MethodModified send: #handleMethodModified: to: self.
-	SystemAnnouncer uniqueInstance weak when: ClassRemoved send: #handleClassRemoved: to: self
+	<systemEventRegistration>
+	self codeChangeAnnouncer unsubscribe: self.
+	self codeChangeAnnouncer weak
+		when: MethodRemoved send: #handleMethodRemoved: to: self;
+		when: MethodModified send: #handleMethodModified: to: self;
+		when: ClassRemoved send: #handleClassRemoved: to: self
 ]
 
 { #category : 'cleanup' }

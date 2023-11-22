@@ -1,7 +1,7 @@
-Extension { #name : 'RPackage' }
+Extension { #name : 'Package' }
 
 { #category : '*Monticello-Model' }
-RPackage >> asMCOrganizationDefinition [
+Package >> asMCOrganizationDefinition [
 
 	^ MCOrganizationDefinition packageName: self name tagNames: self tagNames
 ]

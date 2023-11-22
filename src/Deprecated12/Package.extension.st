@@ -27,7 +27,7 @@ Package >> basicRemoveTag: tag [
 Package >> classDefinedSlicesDo: aBlock [
 
 	self deprecated:
-		'The API of Package is been cleaned and this method is not generic enough to stay in Package. You can look at the implementation of this method to know how to reproduce its behavior.'.
+		'The API of RPackage is been cleaned and this method is not generic enough to stay in RPackage. You can look at the implementation of this method to know how to reproduce its behavior.'.
 	self definedClasses
 		reject: [ :class | class isMeta ]
 		thenDo: [ :class | (self definedSelectorsForClass: class) ifNotEmpty: [ :selectors | aBlock value: class name value: selectors ] ]
@@ -38,7 +38,7 @@ Package >> classExtensionSlicesDo: aBlock [
 	"This method iterates over the class extensions and their associated selectors. A slice is a class * list of selectors. aBlock will be applied to all the extensions slices of the receiver. aBlock first argument is the class and the second argument a list of method selectors"
 
 	self deprecated:
-		'The API of Package is been cleaned and this method is not generic enough to stay in Package. You can look at the implementation of this method to know how to reproduce its behavior.'.
+		'The API of RPackage is been cleaned and this method is not generic enough to stay in RPackage. You can look at the implementation of this method to know how to reproduce its behavior.'.
 
 	self extendedClasses
 		reject: [ :class | class isMeta ]
@@ -52,7 +52,7 @@ Package >> classNamesAndExtensionSelectorsDo: aBlock [
 	Only classes with methods are paired with their methods"
 
 	self deprecated:
-		'The API of Package is been cleaned and this method is not generic enough to stay in Package. You can look at the implementation of this method to know how to reproduce its behavior.'.
+		'The API of RPackage is been cleaned and this method is not generic enough to stay in RPackage. You can look at the implementation of this method to know how to reproduce its behavior.'.
 	self extendedClasses do: [ :class |
 		(self extensionSelectorsForClass: class) ifNotEmpty: [ :selectors | selectors do: [ :selector | aBlock value: class name value: selector ] ] ]
 ]
@@ -198,7 +198,7 @@ Package >> metaclassDefinedSlicesDo: aBlock [
 	"This method iterates over the defined class and their associated selectors. a slice is a class * list of selectors. aBlock will be applied to all the extensions slices of the receiver. aBlok first argument is the class and the second argument a list of method selectors"
 
 	self deprecated:
-		'The API of Package is been cleaned and this method is not generic enough to stay in Package. You can look at the implementation of this method to know how to reproduce its behavior.'.
+		'The API of RPackage is been cleaned and this method is not generic enough to stay in RPackage. You can look at the implementation of this method to know how to reproduce its behavior.'.
 
 	self definedClasses
 		select: [ :class | class isMeta ]
@@ -210,7 +210,7 @@ Package >> metaclassExtensionSlicesDo: aBlock [
 	"This method iterates over the metaclass extensions and their associated selectors. A slice is a class * list of selectors. aBlock will be applied to all the extensions slices of the receiver. aBlok first argument is the class and second argument a list of selectors"
 
 	self deprecated:
-		'The API of Package is been cleaned and this method is not generic enough to stay in Package. You can look at the implementation of this method to know how to reproduce its behavior.'.
+		'The API of RPackage is been cleaned and this method is not generic enough to stay in RPackage. You can look at the implementation of this method to know how to reproduce its behavior.'.
 
 	self extendedClasses
 		select: [ :class | class isMeta ]

@@ -390,10 +390,11 @@ WorldMorph >> handsReverseDo: aBlock [
 
 { #category : 'initialization' }
 WorldMorph >> initialize [
-	worldState := WorldState new.
- 	super initialize.
 
-	SystemAnnouncer uniqueInstance weak when: FullscreenAnnouncement send: #fullscreenChanged: to: self
+	worldState := WorldState new.
+	super initialize.
+
+	self class codeSupportAnnouncer weak when: FullscreenAnnouncement send: #fullscreenChanged: to: self
 ]
 
 { #category : 'change reporting' }

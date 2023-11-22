@@ -157,7 +157,7 @@ PackageOnModelTest >> testDefinedSelectorsForClass [
 { #category : 'tests - tag class' }
 PackageOnModelTest >> testEmpty [
 
-	self assertEmpty: (RPackage named: 'new package') classTags
+	self assertEmpty: (Package named: 'new package') classTags
 ]
 
 { #category : 'tests - accessing' }

@@ -1,12 +1,6 @@
 Extension { #name : 'Package' }
 
-{ #category : '*Monticello' }
-Package >> asMCOrganizationDefinition [
-
-	^ MCOrganizationDefinition packageName: self name tagNames: self tagNames
-]
-
-{ #category : '*Monticello-Package' }
+{ #category : '*Monticello-RPackage' }
 Package >> isDirty [
 	
 	| mcp |
@@ -19,7 +13,7 @@ Package >> isDirty [
 		ifAbsent: [ false ])
 ]
 
-{ #category : '*Monticello-Package' }
+{ #category : '*Monticello-RPackage' }
 Package >> mcPackage [
 	"Normally the corresponding MCPackage should exist, but in certain cases it could happen that it does not"
 	
@@ -27,7 +21,7 @@ Package >> mcPackage [
 	
 ]
 
-{ #category : '*Monticello-Package' }
+{ #category : '*Monticello-RPackage' }
 Package >> mcWorkingCopy [
 
 	^ (MCWorkingCopy hasPackageNamed: self name)

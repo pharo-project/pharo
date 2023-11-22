@@ -37,7 +37,7 @@ PackageOrganizer >> addPackage: aPackage [
 	self validatePackageDoesNotExist: aPackage.
 
 	package := aPackage isString
-		           ifTrue: [ RPackage named: aPackage organizer: self ]
+		           ifTrue: [ Package named: aPackage organizer: self ]
 		           ifFalse: [ aPackage organizer: self ].
 
 	self basicRegisterPackage: package.
