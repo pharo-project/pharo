@@ -13,6 +13,9 @@ BaselineOfGeneralTests >> baseline: spec [
 	| repository |
 	repository := self packageRepositoryURL.
 	spec for: #'common' do: [
+		
+		spec baseline: 'KernelTests' with: [ spec repository: repository ].
+
 		spec
 			package: 'Debugging-Utils-Tests';
 			package: 'NumberParser-Tests';

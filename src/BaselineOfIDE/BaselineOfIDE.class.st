@@ -46,7 +46,6 @@ BaselineOfIDE >> baseline: spec [
 		spec baseline: 'BasicTools' with: [ spec repository: self repository ].
 		spec baseline: 'Athens' with: [ spec repository: self repository ].
 		spec baseline: 'Flashback' with: [ spec repository: self repository ].
-		spec baseline: 'KernelTests' with: [ spec repository: self repository ].
 
 		self
 			load: 'Shift' group: 'shift-tests' spec: spec;
