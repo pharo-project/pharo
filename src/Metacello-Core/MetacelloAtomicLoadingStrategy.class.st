@@ -52,7 +52,7 @@ MetacelloAtomicLoadingStrategy >> executePreloadDirective: aPreloadDirective [
 ]
 
 { #category : 'actions' }
-MetacelloAtomicLoadingStrategy >> finalizeLoadWith: realLoader [
+MetacelloAtomicLoadingStrategy >> finalizeLoadWith: target [
 	"load the accumulated packages (if any), reset the package list"
 
 	| pkgLoads |
@@ -60,7 +60,7 @@ MetacelloAtomicLoadingStrategy >> finalizeLoadWith: realLoader [
 		self linear executePreloadDirective: directive ].
 	preloads := nil.
 	(pkgLoads := packageloads) notEmpty ifTrue: [
-		realLoader loadingSpecLoader
+		target asLoadingTarget
 			loadPackageDirectives: pkgLoads
 			gofer: self gofer.
 		packageloads := nil ].

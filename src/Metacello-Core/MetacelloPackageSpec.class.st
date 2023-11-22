@@ -187,7 +187,7 @@ MetacelloPackageSpec >> currentVersionInfo [
 
 { #category : 'loading' }
 MetacelloPackageSpec >> ensureLoadUsing: mcLoader [
-	self forceLoadUsing: mcLoader ensureSpecLoader
+	self forceLoadUsing: mcLoader asEnsureTarget
 ]
 
 { #category : 'loading' }
@@ -220,13 +220,12 @@ MetacelloPackageSpec >> fetchPackage: aLoaderPolicy [
 ]
 
 { #category : 'loading' }
-MetacelloPackageSpec >> fetchUsing: mcLoader [
+MetacelloPackageSpec >> fetchUsing: aTarget [
 
-	| fetchingSpecLoader |
-	fetchingSpecLoader := mcLoader fetchingSpecLoader.
-	fetchingSpecLoader
-		linearLoadPackageSpecs: (Array with: self) 
-		repositories: (fetchingSpecLoader repositoriesFrom: self repositorySpecs).
+	| fetchingTarget |
+	1halt.
+	fetchingTarget := aTarget asFetchingTarget.
+	fetchingTarget linearLoadPackagesOfSpec: self
 ]
 
 { #category : 'querying' }
@@ -248,12 +247,9 @@ MetacelloPackageSpec >> forceLoadUsing: mcLoader [
 	| loadTarget |
 	"force load it"
 	loadTarget := (MetacelloLoadTarget on: mcLoader spec)
-		                      loaderPolicy: mcLoader loaderPolicy copy;
-		                      yourself.
-	loadTarget
-		linearLoadPackageSpecs: (Array with: self)
-		repositories:
-		(loadTarget repositoriesFrom: self repositorySpecs)
+		              loaderPolicy: mcLoader loaderPolicy copy;
+		              yourself.
+	loadTarget executeOnSpec: self
 ]
 
 { #category : 'accessing' }
@@ -393,7 +389,7 @@ MetacelloPackageSpec >> nonOverridable [
 { #category : 'loading' }
 MetacelloPackageSpec >> packageSpecsInLoadOrder [
 
-	^{ self. }
+	^ { self }
 ]
 
 { #category : 'copying' }

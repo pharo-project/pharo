@@ -13,11 +13,17 @@ MetacelloLoadTarget >> actionLabel [
 ]
 
 { #category : 'accessing' }
-MetacelloLoadTarget >> fetchingSpecLoader [
+MetacelloLoadTarget >> asFetchingTarget [
 
 	^(MetacelloFetchTarget on: self spec)
 		loaderPolicy: self loaderPolicy copy;
 		yourself
+]
+
+{ #category : 'executing' }
+MetacelloLoadTarget >> executeOnSpec: aSpec [
+
+	self linearLoadPackagesOfSpec: aSpec
 ]
 
 { #category : 'private' }

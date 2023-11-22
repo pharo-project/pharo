@@ -144,7 +144,7 @@ MetacelloVersion >> doRecordRequiredFromArray: anArray [
 	self loaderPolicy silently ifTrue: [ MetacelloPlatform current bypassProgressBars: true ].
 	[	MetacelloPlatform current
 			do:  [ | ans |
-				self versionSpec loader: originalLoader recordingSpecLoader.
+				self versionSpec loader: originalLoader asRecordingTarget.
 				ans := (self executeLoadFromArray: anArray) copy.
 				MetacelloNotification signal: ('...finished ', self versionNumber printString).
 				^ans ]
@@ -188,7 +188,7 @@ MetacelloVersion >> fetch: required [
 MetacelloVersion >> fetchRequiredFromArray: anArray [
 	| originalLoader displayString newLoader |
 	originalLoader := self versionSpec loader.
-	newLoader := originalLoader fetchingSpecLoader.
+	newLoader := originalLoader asFetchingTarget.
 	displayString := newLoader actionLabel , self versionNumber printString , ' of ' , self spec projectLabel.
 	MetacelloPlatform current
 		do: [ 

@@ -12,6 +12,18 @@ MetacelloRecordTarget >> actionLabel [
 	^'Recording '
 ]
 
+{ #category : 'accessing' }
+MetacelloRecordTarget >> asLoadingTarget [
+
+	^self
+]
+
+{ #category : 'accessing' }
+MetacelloRecordTarget >> asRecordingTarget [
+
+	^self
+]
+
 { #category : 'versionInfo' }
 MetacelloRecordTarget >> currentVersionInfoFor: packageSpec [
 
@@ -68,12 +80,6 @@ MetacelloRecordTarget >> loadPackageDirectives: pkgLoads gofer: aGofer [
 ]
 
 { #category : 'accessing' }
-MetacelloRecordTarget >> loadingSpecLoader [
-
-	^self
-]
-
-{ #category : 'accessing' }
 MetacelloRecordTarget >> packages [
 
 	| packages |
@@ -92,12 +98,6 @@ MetacelloRecordTarget >> postLoad: packageOrVersionSpec [
 MetacelloRecordTarget >> preLoad: packageOrVersionSpec [
 
 	^ self
-]
-
-{ #category : 'accessing' }
-MetacelloRecordTarget >> recordingSpecLoader [
-
-	^self
 ]
 
 { #category : 'private' }

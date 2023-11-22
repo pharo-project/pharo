@@ -77,6 +77,31 @@ MetacelloTarget >> ancestorsFor: packageSpec [
 			cache at: cacheKey put: vi ].
 ]
 
+{ #category : 'accessing' }
+MetacelloTarget >> asEnsureTarget [
+	^ self
+]
+
+{ #category : 'accessing' }
+MetacelloTarget >> asFetchingTarget [
+
+	^self
+]
+
+{ #category : 'accessing' }
+MetacelloTarget >> asLoadingTarget [
+
+	^self
+]
+
+{ #category : 'accessing' }
+MetacelloTarget >> asRecordingTarget [
+
+	^(MetacelloRecordTarget on: self spec)
+		loaderPolicy: self loaderPolicy copy;
+		yourself
+]
+
 { #category : 'caching' }
 MetacelloTarget >> clearCurrentVersionCache [
 	MetacelloClearStackCacheNotification signal: #(#currentVersion #currentVersionAgainst: #currentVersionInfo)
@@ -114,17 +139,6 @@ MetacelloTarget >> ensureForDevelopment [
   ^ true
 ]
 
-{ #category : 'accessing' }
-MetacelloTarget >> ensureSpecLoader [
-	^ self
-]
-
-{ #category : 'accessing' }
-MetacelloTarget >> fetchingSpecLoader [
-
-	^self
-]
-
 { #category : 'testing' }
 MetacelloTarget >> hasRepositoryOverrides [
 
@@ -150,22 +164,25 @@ MetacelloTarget >> linearLoadPackageSpec: packageSpec gofer: gofer [
 ]
 
 { #category : 'private' }
-MetacelloTarget >> linearLoadPackageSpecs: packageSpecs repositories: repositories [
+MetacelloTarget >> linearLoadPackagesOfSpec: aSpec [
 	
-	| gofer |
+	| gofer monticelloRepositories |
 	gofer := MetacelloGofer new.
-	repositories do: [:repo | gofer repository: repo ].
-	packageSpecs do: [:pkg | pkg loadUsing: self gofer: gofer ].
+	monticelloRepositories := self repositoriesFrom: aSpec repositorySpecs.
+	monticelloRepositories do: [:repo | gofer repository: repo ].
+	aSpec packageSpecsInLoadOrder do: [:pkg | pkg loadUsing: self gofer: gofer ].
 ]
 
 { #category : 'actions' }
 MetacelloTarget >> load [
-	| repos |
-	repos := self repositoriesFrom: self spec repositorySpecs.
-	^ self loadType == #atomic
-		ifTrue: [self atomicLoadPackageSpecs: self spec packageSpecsInLoadOrder repositories: repos]
-		ifFalse: ["assume #linear"
-			self linearLoadPackageSpecs: self spec packageSpecsInLoadOrder repositories: repos ]
+
+	self loadType == #atomic ifTrue: [
+		^ self atomicLoadPackageOfSpec: self spec ].
+	self loadType == #linear ifTrue: [
+		^ self linearLoadPackagesOfSpec: self spec ].
+
+	MetacelloError signal:
+		'Unknown loadType: ' , self loadType printString
 ]
 
 { #category : 'actions' }
@@ -237,12 +254,6 @@ MetacelloTarget >> loaderPolicy: anObject [
 	loaderPolicy := anObject
 ]
 
-{ #category : 'accessing' }
-MetacelloTarget >> loadingSpecLoader [
-
-	^self
-]
-
 { #category : 'packages' }
 MetacelloTarget >> nameComponentsFrom: aVersionName [
 
@@ -276,14 +287,6 @@ MetacelloTarget >> preLoad: packageOrVersionSpec [
 MetacelloTarget >> project [
 
 	^self spec project
-]
-
-{ #category : 'accessing' }
-MetacelloTarget >> recordingSpecLoader [
-
-	^(MetacelloRecordTarget on: self spec)
-		loaderPolicy: self loaderPolicy copy;
-		yourself
 ]
 
 { #category : 'repositories' }
@@ -337,7 +340,9 @@ MetacelloTarget >> resolvePackageSpecReferences: packageSpec gofer: gofer [
 
 	| versionReference references localGofer |
 	localGofer := gofer.
+"	1halt."
 	self hasRepositoryOverrides not ifTrue: [
+"		1halt."
 		packageSpec repositorySpecs notEmpty ifTrue: [
 			localGofer := MetacelloGofer new.
 			(self repositoriesFrom: packageSpec repositorySpecs) do: [ :repo |

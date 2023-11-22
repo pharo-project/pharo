@@ -1,6 +1,9 @@
 Class {
 	#name : 'MetacelloFetchTarget',
 	#superclass : 'MetacelloTarget',
+	#instVars : [
+		'shouldForceFetch'
+	],
 	#category : 'Metacello-Core-Loaders',
 	#package : 'Metacello-Core',
 	#tag : 'Loaders'
@@ -20,14 +23,30 @@ MetacelloFetchTarget >> ancestorsFor: packageSpec [
 		ifAbsent: [ super ancestorsFor: packageSpec ]
 ]
 
+{ #category : 'accessing' }
+MetacelloFetchTarget >> asEnsureTarget [
+	"explicitly share the loaderPolicy"
+
+	^ (MetacelloFetchTarget on: self spec)
+		  loaderPolicy: self loaderPolicy;
+		  forceFetch;
+		  yourself
+]
+
+{ #category : 'accessing' }
+MetacelloFetchTarget >> asLoadingTarget [
+
+	^(MetacelloLoadTarget on: self spec)
+		loaderPolicy: self loaderPolicy copy;
+		yourself
+]
+
 { #category : 'private' }
-MetacelloFetchTarget >> atomicLoadPackageSpecs: packageSpecs repositories: repositories [
+MetacelloFetchTarget >> atomicLoadPackageOfSpec: aSpec [
 
 	self loaderPolicy
 		pushAtomicLoadDirectivesDuring: [
-			super
-				linearLoadPackageSpecs: packageSpecs
-				repositories: repositories ]
+			super linearLoadPackagesOfSpec: aSpec ]
 		for: self
 ]
 
@@ -46,16 +65,22 @@ MetacelloFetchTarget >> doLoad [
 ]
 
 { #category : 'accessing' }
-MetacelloFetchTarget >> ensureSpecLoader [
-	^ (MetacelloEnsureFetchTarget on: self spec)
-		loaderPolicy: self loaderPolicy; "explicitly share the loaderPolicy"
-		yourself
-]
-
-{ #category : 'accessing' }
 MetacelloFetchTarget >> ensuredMap [
 
 	^self loaderPolicy ensuredMap
+]
+
+{ #category : 'initialization' }
+MetacelloFetchTarget >> forceFetch [
+
+	shouldForceFetch := true
+]
+
+{ #category : 'initialization' }
+MetacelloFetchTarget >> initialize [
+
+	super initialize.
+	shouldForceFetch := false
 ]
 
 { #category : 'actions' }
@@ -103,13 +128,11 @@ MetacelloFetchTarget >> linearLoadPackageSpec: packageSpec gofer: gofer [
 ]
 
 { #category : 'private' }
-MetacelloFetchTarget >> linearLoadPackageSpecs: packageSpecs repositories: repositories [
-1halt.
+MetacelloFetchTarget >> linearLoadPackagesOfSpec: aSpec [
+
 	self loaderPolicy
 		pushLinearLoadDirectivesDuring: [
-			super
-				linearLoadPackageSpecs: packageSpecs
-				repositories: repositories ]
+			super linearLoadPackagesOfSpec: aSpec ]
 		for: self
 ]
 
@@ -123,14 +146,6 @@ MetacelloFetchTarget >> loadData [
 MetacelloFetchTarget >> loadDirective [
 
 	^self loaderPolicy loadDirective
-]
-
-{ #category : 'accessing' }
-MetacelloFetchTarget >> loadingSpecLoader [
-
-	^(MetacelloLoadTarget on: self spec)
-		loaderPolicy: self loaderPolicy copy;
-		yourself
 ]
 
 { #category : 'doits' }
@@ -193,9 +208,15 @@ MetacelloFetchTarget >> resolvePackageSpec: packageSpec cachedGofer: gofer [
 
 { #category : 'private' }
 MetacelloFetchTarget >> scheduleFetchFor: packageSpec cachedReference: reference [
-	"reference already in the cache during fetch ...no need to schedule fetch"
+	"reference already in the cache during fetch ...schedule a load directive for reference, so ensured load will come from cache"
 
+	shouldForceFetch ifFalse: [ ^ self ].
 	^ self
+		  scheduleFetchFor: packageSpec
+		  reference: reference
+		  message: 'Fetched -> (cached) ' , reference name , ' --- '
+			  , reference repository repositoryDescription , ' --- '
+			  , reference repository description
 ]
 
 { #category : 'private' }
@@ -209,9 +230,15 @@ MetacelloFetchTarget >> scheduleFetchFor: packageSpec externalReference: referen
 
 { #category : 'private' }
 MetacelloFetchTarget >> scheduleFetchFor: packageSpec nearestReference: reference [
-	"latest version in repository already matches the cached reference...no need to schedule fetch"
+	"latest version in repository already matches the cached reference...schedule a load directive for reference, so ensured load will come from cache"
 
+	shouldForceFetch ifFalse: [ ^ self ].
 	^ self
+		  scheduleFetchFor: packageSpec
+		  reference: reference
+		  message: 'Fetched -> (nearest) ' , reference name , ' --- '
+			  , reference repository repositoryDescription , ' --- '
+			  , reference repository description
 ]
 
 { #category : 'private' }

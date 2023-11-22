@@ -26,7 +26,7 @@ MetacelloLinearLoadingStrategy >> changeToLinearWithLoader: aLoader [
 { #category : 'actions' }
 MetacelloLinearLoadingStrategy >> executePackageDirective: aMetacelloPackageLoadDirective [
 
-	aMetacelloPackageLoadDirective loader loadingSpecLoader
+	aMetacelloPackageLoadDirective loader asLoadingTarget
 		loadPackageDirectives: { aMetacelloPackageLoadDirective }
 		gofer: self gofer
 ]
