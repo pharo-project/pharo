@@ -4,8 +4,8 @@ SUnit tests for Package tags
 Class {
 	#name : 'PackageTagTest',
 	#superclass : 'PackageTestCase',
-	#category : 'RPackage-Tests',
-	#package : 'RPackage-Tests'
+	#category : 'Kernel-Packages-Tests',
+	#package : 'Kernel-Packages-Tests'
 }
 
 { #category : 'tests' }

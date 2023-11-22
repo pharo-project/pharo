@@ -17,7 +17,6 @@ BaselineOfGeneralTests >> baseline: spec [
 			package: 'Debugging-Utils-Tests';
 			package: 'NumberParser-Tests';
 			package: 'AST-Core-Tests';
-			package: 'RPackage-Tests';
 			package: 'Monticello-Tests';	"required by MonticelloMocks"
 			package: 'System-Installers-Tests' ;
 			package: 'MonticelloMocks';

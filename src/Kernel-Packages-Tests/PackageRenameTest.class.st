@@ -4,8 +4,8 @@ SUnit tests on renaming packages
 Class {
 	#name : 'PackageRenameTest',
 	#superclass : 'PackageTestCase',
-	#category : 'RPackage-Tests',
-	#package : 'RPackage-Tests'
+	#category : 'Kernel-Packages-Tests',
+	#package : 'Kernel-Packages-Tests'
 }
 
 { #category : 'tests' }

@@ -4,8 +4,8 @@ SUnit tests for Package
 Class {
 	#name : 'PackageTest',
 	#superclass : 'PackageTestCase',
-	#category : 'RPackage-Tests',
-	#package : 'RPackage-Tests'
+	#category : 'Kernel-Packages-Tests',
+	#package : 'Kernel-Packages-Tests'
 }
 
 { #category : 'tests - classes' }
@@ -261,7 +261,7 @@ PackageTest >> testHasProperty [
 PackageTest >> testHierarchyRoots [
 
 	| roots |
-	roots := (self packageOrganizer packageNamed: #'RPackage-Tests') hierarchyRoots.
+	roots := (self packageOrganizer packageNamed: #'Kernel-Packages-Tests') hierarchyRoots.
 	roots := roots collect: [ :each | each name ].
 	#( #PackageTestCase ) do: [ :each | roots includes: each ]
 ]

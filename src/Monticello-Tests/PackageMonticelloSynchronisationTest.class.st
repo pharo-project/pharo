@@ -2,21 +2,21 @@
 SUnit tests for Package Monticello synchronization
 "
 Class {
-	#name : 'RPackageMonticelloSynchronisationTest',
+	#name : 'PackageMonticelloSynchronisationTest',
 	#superclass : 'PackageTestCase',
-	#category : 'Monticello-Tests-RPackage',
+	#category : 'Monticello-Tests-Package',
 	#package : 'Monticello-Tests',
-	#tag : 'RPackage'
+	#tag : 'Package'
 }
 
 { #category : 'accessing' }
-RPackageMonticelloSynchronisationTest >> allWorkingCopies [
+PackageMonticelloSynchronisationTest >> allWorkingCopies [
 
 	^ MCWorkingCopy allWorkingCopies
 ]
 
 { #category : 'tests - operations on MCPackages' }
-RPackageMonticelloSynchronisationTest >> testAddMCPackageCreatesAPackage [
+PackageMonticelloSynchronisationTest >> testAddMCPackageCreatesAPackage [
 	"test that when we create a MCPackage, a corresponding package is created"
 
 	MCWorkingCopy ensureForPackageNamed: #Zork packageOrganizer: self organizer.
@@ -24,7 +24,7 @@ RPackageMonticelloSynchronisationTest >> testAddMCPackageCreatesAPackage [
 ]
 
 { #category : 'tests - operations on MCPackages' }
-RPackageMonticelloSynchronisationTest >> testAddMCPackageForCategoryAlreadyExistingDoesNotCreateAPackage [
+PackageMonticelloSynchronisationTest >> testAddMCPackageForCategoryAlreadyExistingDoesNotCreateAPackage [
 	"test that when we create a MCPackage and that a category of this name already exists, no package is created"
 
 	| tmpPackage |
@@ -35,7 +35,7 @@ RPackageMonticelloSynchronisationTest >> testAddMCPackageForCategoryAlreadyExist
 ]
 
 { #category : 'tests - operations on MCPackages' }
-RPackageMonticelloSynchronisationTest >> testUnloadMCPackageRemovesRPackage [
+PackageMonticelloSynchronisationTest >> testUnloadMCPackageRemovesPackage [
 	"test that when we remove a MC Package, the corresponding Package is removed from the organizer"
 
 	MCWorkingCopy ensureForPackageNamed: 'XXXXX' packageOrganizer: self organizer.
@@ -45,7 +45,7 @@ RPackageMonticelloSynchronisationTest >> testUnloadMCPackageRemovesRPackage [
 ]
 
 { #category : 'tests - operations on MCPackages' }
-RPackageMonticelloSynchronisationTest >> testUnregisterMCPackageKeepsRPackage [
+PackageMonticelloSynchronisationTest >> testUnregisterMCPackageKeepsPackage [
 	"test that when we remove a MC Package, the corresponding Package is removed from the organizer"
 
 	MCWorkingCopy ensureForPackageNamed: 'XXXXX' packageOrganizer: self organizer.

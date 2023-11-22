@@ -7,8 +7,8 @@ Class {
 	#instVars : [
 		'testEnvironment'
 	],
-	#category : 'RPackage-Tests',
-	#package : 'RPackage-Tests'
+	#category : 'Kernel-Packages-Tests',
+	#package : 'Kernel-Packages-Tests'
 }
 
 { #category : 'testing' }

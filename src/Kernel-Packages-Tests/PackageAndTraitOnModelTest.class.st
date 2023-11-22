@@ -12,8 +12,8 @@ Class {
 		'yPackage',
 		'zPackage'
 	],
-	#category : 'RPackage-Tests',
-	#package : 'RPackage-Tests'
+	#category : 'Kernel-Packages-Tests',
+	#package : 'Kernel-Packages-Tests'
 }
 
 { #category : 'running' }

@@ -4,8 +4,8 @@ SUnit tests for RPackage classes synchronisation
 Class {
 	#name : 'PackageAndClassesTest',
 	#superclass : 'PackageTestCase',
-	#category : 'RPackage-Tests',
-	#package : 'RPackage-Tests'
+	#category : 'Kernel-Packages-Tests',
+	#package : 'Kernel-Packages-Tests'
 }
 
 { #category : 'tests' }
