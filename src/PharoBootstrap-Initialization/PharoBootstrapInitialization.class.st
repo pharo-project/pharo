@@ -28,7 +28,6 @@ Class {
 PharoBootstrapInitialization class >> initializeCommandLineHandlerAndErrorHandling [
 	"This method is run before the new bootstrapped image is saved!"
 	
-	'Starting the initialization of the Pharo image' traceCr.
 	ProcessorScheduler initialize.
 
 	Object initialize.
@@ -42,7 +41,6 @@ PharoBootstrapInitialization class >> initializeCommandLineHandlerAndErrorHandli
 
 	OSPlatform startUp: true.
 
-	'Initializing primitive types' traceCr.
 	SmallInteger initialize.
 	String initialize.
 	ByteString initialize. 
@@ -90,14 +88,15 @@ PharoBootstrapInitialization class >> initializeCommandLineHandlerAndErrorHandli
 	ExternalObject initialize.
 	ExternalType initialize.
 
+	'Initializing Session Manager' traceCr.
+	SessionManager default installNewSession.
+	SessionManager initializeKernelRegistrations.
+
 	'Initializing basic command line behaviors' traceCr.
 	"Initialize basic command line behaviour"
 	NonInteractiveTranscript initialize.
 	BasicCommandLineHandler initialize.
 
-	'Initializing Session Manager' traceCr.
-	SessionManager default installNewSession.
-	SessionManager initializeKernelRegistrations.
 	Smalltalk snapshot: true andQuit: true.
 	Processor terminateActive
 ]
@@ -120,7 +119,6 @@ PharoBootstrapInitialization class >> initializeImageOfType: typeName major: maj
 	version description.
 	This method is run before the new bootstrapped image is saved!"
 
-	'Setting system version' traceCr.
 	SystemVersion writeClassVariableNamed: #Current value: (SystemVersion new
 			 type: typeName;
 			 major: major;
