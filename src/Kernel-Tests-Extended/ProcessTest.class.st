@@ -671,6 +671,26 @@ ProcessTest >> testRealActiveProcessFromProcesorShouldIgnoreInstalledEffectivePr
 	self assert: processFromProcessor identicalTo: activeProcess
 ]
 
+{ #category : 'tests - termination' }
+ProcessTest >> testResumeAfterBCR [
+
+	| expr executedReturnTwo error sync |
+	expr := true.
+	executedReturnTwo := false.
+	error := false.
+	sync := Semaphore new.
+	[[sync signal.
+	      [expr ifTrue: [^1].
+	       executedReturnTwo := true. ^2]
+	        on: BlockCannotReturn
+	        do: #resume]
+			on: Error
+			do: [error := true]] fork.
+	sync wait.
+	self deny: executedReturnTwo.
+	self assert: error
+]
+
 { #category : 'tests' }
 ProcessTest >> testSchedulingHigherPriorityServedFirst [
     "The first process to run will pass straight through the gate

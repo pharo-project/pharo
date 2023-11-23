@@ -428,9 +428,7 @@ Context >> cannotReturn: result [
 	closureOrNil ifNotNil: [ 
 		BlockCannotReturn result: result from: self home.
 		^self push: pc; pc: nil ].
-	UIManager default
-		requestDebuggerOpeningNamed: 'computation has been terminated'
-		inContext: thisContext
+	self error: 'computation has been terminated'
 ]
 
 { #category : 'private' }
