@@ -1,15 +1,16 @@
 Class {
-	#name : #ClyFlagMethodGroupProviderTest,
-	#superclass : #ClyMethodGroupProviderTest,
-	#category : #'Calypso-SystemPlugins-Flags-Queries-Tests'
+	#name : 'ClyFlagMethodGroupProviderTest',
+	#superclass : 'ClyMethodGroupProviderTest',
+	#category : 'Calypso-SystemPlugins-Flags-Queries-Tests',
+	#package : 'Calypso-SystemPlugins-Flags-Queries-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClyFlagMethodGroupProviderTest >> classSampleWhichHasGroup [
 	^ClyClassWithFlags
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyFlagMethodGroupProviderTest >> groupProviderClass [
 	^ClyFlagMethodGroupProvider
 ]

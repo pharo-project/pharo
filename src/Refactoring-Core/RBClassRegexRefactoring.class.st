@@ -7,26 +7,28 @@ Refactored classes can be renamed, copied and kept aside old ones: try renameCla
 See also the comment of superclass for a nice script.
 "
 Class {
-	#name : #RBClassRegexRefactoring,
-	#superclass : #RBRegexRefactoring,
+	#name : 'RBClassRegexRefactoring',
+	#superclass : 'RBRegexRefactoring',
 	#instVars : [
 		'rootClass',
 		'mode'
 	],
-	#category : #'Refactoring-Core-Refactorings'
+	#category : 'Refactoring-Core-Refactorings',
+	#package : 'Refactoring-Core',
+	#tag : 'Refactorings'
 }
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBClassRegexRefactoring >> copy: aClass name: aSymbol [
 	^ self duplicate: aClass name: aSymbol deep: true
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 RBClassRegexRefactoring >> copyClasses [
 	mode := #copy:name:
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBClassRegexRefactoring >> copyFrom: aSourceClass to: aTargetClass [
 	aSourceClass instanceVariableNames
 		do: [ :each | aTargetClass addInstanceVariable: each ].
@@ -36,76 +38,54 @@ RBClassRegexRefactoring >> copyFrom: aSourceClass to: aTargetClass [
 		aSourceClass sharedPoolNames
 			do: [ :each | aTargetClass addPoolDictionary: each ] ].
 	aSourceClass selectors do: [ :each |
-		aTargetClass
-			compile: (aSourceClass sourceCodeFor: each)
-			classified: (aSourceClass protocolsFor: each) ]
+		self generateChangesFor:
+			(RBAddMethodTransformation
+				sourceCode: (aSourceClass sourceCodeFor: each)
+				in: aTargetClass
+				withProtocol: (aSourceClass protocolsFor: each))]
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBClassRegexRefactoring >> create: aClass name: aSymbol [
 	^ self duplicate: aClass name: aSymbol deep: false
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 RBClassRegexRefactoring >> createClasses [
 	mode := #create:name:
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBClassRegexRefactoring >> duplicate: aClass name: aSymbol deep: aBoolean [
+
 	| superclass superclassName name class |
-	(self model includesClassNamed: aSymbol)
-		ifTrue: [ ^ nil ].
-	superclass := aClass superclass
-		ifNil: [ self rootClass ].
+	(self model includesClassNamed: aSymbol) ifTrue: [ ^ nil ].
+	superclass := aClass superclass ifNil: [ self rootClass ].
 	superclassName := (self model includesClassNamed: superclass name)
-		ifFalse: [ superclass name ]
-		ifTrue: [
-			(name := self execute: superclass name) = superclass name
-				ifFalse: [ self duplicate: superclass name: name deep: aBoolean ].
-			name ].
-	self model defineClass: ('<1s> %<%< #<2s> package: <3p>'
-			expandMacrosWith: superclassName
-			with: aSymbol with: aClass category asString).
+		                  ifFalse: [ superclass name ]
+		                  ifTrue: [
+			                  (name := self execute: superclass name) = superclass name ifFalse: [ self duplicate: superclass name: name deep: aBoolean ].
+			                  name ].
+	self model defineClass: [ :aBuilder |
+		aBuilder
+			superclassName: superclassName;
+			name: aSymbol;
+			package: aClass package name ].
 	aBoolean ifTrue: [
-		(class := self model classNamed: aSymbol)
-			ifNil: [ ^ self ].
+		(class := self model classNamed: aSymbol) ifNil: [ ^ self ].
 		self copyFrom: aClass to: class.
 		self copyFrom: aClass classSide to: class classSide ].
 	^ nil
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBClassRegexRefactoring >> initialize [
 	super initialize.
 	self createClasses
 ]
 
-{ #category : #transforming }
-RBClassRegexRefactoring >> rename: aClass name: aSymbol [
-	^ RBRenameClassRefactoring
-		model: self model
-		rename: aClass name
-		to: aSymbol
-]
-
-{ #category : #actions }
-RBClassRegexRefactoring >> renameClasses [
-	mode := #rename:name:
-]
-
-{ #category : #accessing }
-RBClassRegexRefactoring >> rootClass [
-	^ rootClass ifNil: [ Object ]
-]
-
-{ #category : #initialization }
-RBClassRegexRefactoring >> rootClass: aClass [
-	rootClass := aClass instanceSide
-]
-
-{ #category : #transforming }
-RBClassRegexRefactoring >> transform [
+{ #category : 'transforming' }
+RBClassRegexRefactoring >> privateTransform [
 	| replacement refactoring |
 	self model allClassesDo: [ :class |
 		(class isNil or: [ class isMeta ]) ifFalse: [
@@ -113,6 +93,29 @@ RBClassRegexRefactoring >> transform [
 			replacement = class name asString ifFalse: [
 				refactoring := self perform: mode
 					with: class with: replacement asSymbol.
-				(refactoring notNil and: [ refactoring preconditions check ])
-					ifTrue: [ refactoring transform ] ] ] ]
+				(refactoring isNotNil and: [ refactoring preconditions check ])
+					ifTrue: [ refactoring privateTransform ] ] ] ]
+]
+
+{ #category : 'transforming' }
+RBClassRegexRefactoring >> rename: aClass name: aSymbol [
+	^ RBRenameClassRefactoring
+		model: self model
+		rename: aClass name
+		to: aSymbol
+]
+
+{ #category : 'actions' }
+RBClassRegexRefactoring >> renameClasses [
+	mode := #rename:name:
+]
+
+{ #category : 'accessing' }
+RBClassRegexRefactoring >> rootClass [
+	^ rootClass ifNil: [ Object ]
+]
+
+{ #category : 'initialization' }
+RBClassRegexRefactoring >> rootClass: aClass [
+	rootClass := aClass instanceSide
 ]

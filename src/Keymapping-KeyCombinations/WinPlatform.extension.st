@@ -1,6 +1,6 @@
-Extension { #name : #WinPlatform }
+Extension { #name : 'WinPlatform' }
 
-{ #category : #'*Keymapping-KeyCombinations' }
+{ #category : '*Keymapping-KeyCombinations' }
 WinPlatform >> defaultModifier [
 
 	^ KMModifier control

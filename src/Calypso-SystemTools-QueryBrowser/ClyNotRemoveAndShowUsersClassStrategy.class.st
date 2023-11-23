@@ -4,17 +4,19 @@ I am the strategy to be used when a trait can't be removed due to the presence o
 I allow the user to browse those trait users.
 "
 Class {
-	#name : #ClyNotRemoveAndShowUsersClassStrategy,
-	#superclass : #ClyInteractiveRemoveClassStrategy,
-	#category : #'Calypso-SystemTools-QueryBrowser-Commands-Classes'
+	#name : 'ClyNotRemoveAndShowUsersClassStrategy',
+	#superclass : 'ClyInteractiveRemoveClassStrategy',
+	#category : 'Calypso-SystemTools-QueryBrowser-Commands-Classes',
+	#package : 'Calypso-SystemTools-QueryBrowser',
+	#tag : 'Commands-Classes'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyNotRemoveAndShowUsersClassStrategy class >> canExecuteWithReferences: hasReferences subclasses: hasSubclasses users: hasUsers [
 	^hasUsers
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyNotRemoveAndShowUsersClassStrategy >> execute: aSycRemoveClassCommand [
 	| users |
 	users := (aSycRemoveClassCommand classes flatCollect: [:each | each users])
@@ -22,12 +24,12 @@ ClyNotRemoveAndShowUsersClassStrategy >> execute: aSycRemoveClassCommand [
 	browser spawnQueryBrowserOn: (ClyConstantQuery returning: users)
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyNotRemoveAndShowUsersClassStrategy >> orderForBrowser [
 	^7
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyNotRemoveAndShowUsersClassStrategy >> userRequestString [
 	^'Don''t remove, but show me those users'
 ]

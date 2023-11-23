@@ -1,6 +1,6 @@
-Extension { #name : #ReAbstractCritique }
+Extension { #name : 'ReAbstractCritique' }
 
-{ #category : #'*Calypso-SystemPlugins-Critic-Queries' }
+{ #category : '*Calypso-SystemPlugins-Critic-Queries' }
 ReAbstractCritique class >> decorateBrowserItem: aBrowserItem by: anEnvironmentPlugin [
 	| critique |
 	critique := aBrowserItem actualObject.

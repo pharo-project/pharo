@@ -1,6 +1,6 @@
-Extension { #name : #TemporaryVariable }
+Extension { #name : 'TemporaryVariable' }
 
-{ #category : #'*Shout' }
+{ #category : '*Shout' }
 TemporaryVariable >> styleNameIn: aRBVariableNode [
 
 	^ self isDefinedByBlock

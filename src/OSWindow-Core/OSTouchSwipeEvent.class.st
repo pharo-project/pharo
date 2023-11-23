@@ -2,36 +2,38 @@
 Superclass of all swipes events
 "
 Class {
-	#name : #OSTouchSwipeEvent,
-	#superclass : #OSTouchComplexEvent,
+	#name : 'OSTouchSwipeEvent',
+	#superclass : 'OSTouchComplexEvent',
 	#instVars : [
 		'dDist',
 		'direction'
 	],
-	#category : #'OSWindow-Core-Events-Touch'
+	#category : 'OSWindow-Core-Events-Touch',
+	#package : 'OSWindow-Core',
+	#tag : 'Events-Touch'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSTouchSwipeEvent class >> id [
 	^ #swipe
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSTouchSwipeEvent >> dDist [
 	^ dDist
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSTouchSwipeEvent >> dDist: anObject [
 	dDist := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSTouchSwipeEvent >> direction [
 	^ direction
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSTouchSwipeEvent >> direction: anObject [
 	direction := anObject
 ]

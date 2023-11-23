@@ -7,17 +7,19 @@ For example when user expands tree node highlighted indexes should be shifted wh
 I just override how set up table selection by applying highlighted row indexes to table
 "
 Class {
-	#name : #ClyHighlightingSelection,
-	#superclass : #ClyDataSourceSelection,
-	#category : #'Calypso-Browser-DataSource'
+	#name : 'ClyHighlightingSelection',
+	#superclass : 'ClyDataSourceSelection',
+	#category : 'Calypso-Browser-DataSource',
+	#package : 'Calypso-Browser',
+	#tag : 'DataSource'
 }
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyHighlightingSelection >> ensureVisibleLastItem [
 	"highlighting should never force table visible position"
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyHighlightingSelection >> setUpSelectedRows: indexes in: aTableMorph silently: silentSelection [
 	silentSelection
 		ifTrue: [ aTableMorph basicHighlightIndexes: indexes ]

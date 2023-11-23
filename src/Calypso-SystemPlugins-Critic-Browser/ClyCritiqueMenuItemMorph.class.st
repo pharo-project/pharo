@@ -2,43 +2,49 @@
 I simulate the functionality of MenuItemMorph while providing more sophisticated visualization for rubric annotations 
 "
 Class {
-	#name : #ClyCritiqueMenuItemMorph,
-	#superclass : #Morph,
-	#category : #'Calypso-SystemPlugins-Critic-Browser'
+	#name : 'ClyCritiqueMenuItemMorph',
+	#superclass : 'Morph',
+	#category : 'Calypso-SystemPlugins-Critic-Browser',
+	#package : 'Calypso-SystemPlugins-Critic-Browser'
 }
 
-{ #category : #events }
+{ #category : 'events' }
 ClyCritiqueMenuItemMorph >> activateSubmenu: evt [
 
 	^ false
 ]
 
-{ #category : #selecting }
+{ #category : 'selecting' }
 ClyCritiqueMenuItemMorph >> deselect: sth [
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
+ClyCritiqueMenuItemMorph >> hasIcon [
+	^ false
+]
+
+{ #category : 'accessing' }
 ClyCritiqueMenuItemMorph >> hasIconOrMarker [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyCritiqueMenuItemMorph >> hasSubMenu [
 
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyCritiqueMenuItemMorph >> isEnabled [
 
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyCritiqueMenuItemMorph >> isMenuItemMorph [
 	^ true
 ]
 
-{ #category : #selecting }
+{ #category : 'selecting' }
 ClyCritiqueMenuItemMorph >> select: sth [
 ]

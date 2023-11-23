@@ -1,1 +1,1 @@
-Package { #name : #'Morphic-Widgets-FastTable-Tests' }
+Package { #name : 'Morphic-Widgets-FastTable-Tests' }

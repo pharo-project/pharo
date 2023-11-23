@@ -1,10 +1,12 @@
 Class {
-	#name : #CoHierarchyClassVariableFetcherTest,
-	#superclass : #CoClassVariableFetcherTest,
-	#category : #'HeuristicCompletion-Tests-Core'
+	#name : 'CoHierarchyClassVariableFetcherTest',
+	#superclass : 'CoClassVariableFetcherTest',
+	#category : 'HeuristicCompletion-Tests-Core',
+	#package : 'HeuristicCompletion-Tests',
+	#tag : 'Core'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 CoHierarchyClassVariableFetcherTest >> setUp [
 
 	super setUp.

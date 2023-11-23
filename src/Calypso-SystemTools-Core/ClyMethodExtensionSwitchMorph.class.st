@@ -8,15 +8,17 @@ Internal Representation and Key Implementation Points.
 
 "
 Class {
-	#name : #ClyMethodExtensionSwitchMorph,
-	#superclass : #ClyStatusBarItemMorph,
+	#name : 'ClyMethodExtensionSwitchMorph',
+	#superclass : 'ClyStatusBarItemMorph',
 	#instVars : [
 		'checkbox'
 	],
-	#category : #'Calypso-SystemTools-Core-Editors-Methods'
+	#category : 'Calypso-SystemTools-Core-Editors-Methods',
+	#package : 'Calypso-SystemTools-Core',
+	#tag : 'Editors-Methods'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyMethodExtensionSwitchMorph >> build [
 
 	checkbox := self theme
@@ -34,23 +36,23 @@ ClyMethodExtensionSwitchMorph >> build [
 	self addMorph: checkbox
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMethodExtensionSwitchMorph >> checkbox [
 	^ checkbox
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMethodExtensionSwitchMorph >> checkbox: anObject [
 	checkbox := anObject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyMethodExtensionSwitchMorph >> isActive [
 
-	^ownerTool extendingPackage notNil
+	^ ownerTool extendingPackage isNotNil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMethodExtensionSwitchMorph >> label [
 	| label |
 	label := ownerTool extendingPackage
@@ -60,7 +62,7 @@ ClyMethodExtensionSwitchMorph >> label [
 	^label
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ClyMethodExtensionSwitchMorph >> toggle [
 
 	[ownerTool toggleExtendingPackage] on: CmdCommandAborted do: [ :err | ].

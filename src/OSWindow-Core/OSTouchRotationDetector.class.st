@@ -2,8 +2,8 @@
 I am the abstract class for all the Rotation gesture detectors
 "
 Class {
-	#name : #OSTouchRotationDetector,
-	#superclass : #OSTouchStateGestureDetector,
+	#name : 'OSTouchRotationDetector',
+	#superclass : 'OSTouchStateGestureDetector',
 	#instVars : [
 		'minAngleBeforeDetection',
 		'vectorAtBeginnig',
@@ -13,22 +13,24 @@ Class {
 	#classVars : [
 		'MinAngleBeforeDetection'
 	],
-	#category : #'OSWindow-Core-Gestures'
+	#category : 'OSWindow-Core-Gestures',
+	#package : 'OSWindow-Core',
+	#tag : 'Gestures'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSTouchRotationDetector class >> minAngleBeforeDetection [
 	"I am the minimum angle, in degrees, required before the beginning of the rotation gesture"
 
 	^ MinAngleBeforeDetection ifNil: [ 10 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSTouchRotationDetector class >> minAngleBeforeDetection: anInteger [
 	MinAngleBeforeDetection := anInteger
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 OSTouchRotationDetector class >> minAngleBeforeDetectionSettingsOn: aBuilder [
 	<systemsettings>
 	(aBuilder setting: #minAngleBeforeDetection)
@@ -40,7 +42,7 @@ OSTouchRotationDetector class >> minAngleBeforeDetectionSettingsOn: aBuilder [
 		parent: #rotationGesture
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 OSTouchRotationDetector class >> touchRotationSettingsOn: aBuilder [
 	<systemsettings>
 	(aBuilder group: #rotationGesture)
@@ -48,12 +50,12 @@ OSTouchRotationDetector class >> touchRotationSettingsOn: aBuilder [
 		parent: #touchGestures
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 OSTouchRotationDetector >> beginConditions [
 	^ super beginConditions and: [ self isBrinkAngleOverwhelmed ]
 ]
 
-{ #category : #factory }
+{ #category : 'factory' }
 OSTouchRotationDetector >> createEventBeginning [
 	vectorAtBeginnig := self vectorBetweenFirstAndLastFingers.
 	currentAngle := vectorAtBeginnig angleWith: self vectorBetweenFirstAndLastFingers.
@@ -67,7 +69,7 @@ OSTouchRotationDetector >> createEventBeginning [
 		yourself
 ]
 
-{ #category : #factory }
+{ #category : 'factory' }
 OSTouchRotationDetector >> createEventDuringMove [
 	^ self eventClassMoveGesture new
 		timestamp: eventHandler lastUpdateTimestamp;
@@ -77,7 +79,7 @@ OSTouchRotationDetector >> createEventDuringMove [
 		yourself
 ]
 
-{ #category : #factory }
+{ #category : 'factory' }
 OSTouchRotationDetector >> createEventEnding [
 	^ self eventClassEndGesture new
 		timestamp: eventHandler lastUpdateTimestamp;
@@ -87,52 +89,52 @@ OSTouchRotationDetector >> createEventEnding [
 		yourself
 ]
 
-{ #category : #abstract }
+{ #category : 'abstract' }
 OSTouchRotationDetector >> eventClassBeginGesture [
 	self subclassResponsibility
 ]
 
-{ #category : #abstract }
+{ #category : 'abstract' }
 OSTouchRotationDetector >> eventClassEndGesture [
 	self subclassResponsibility
 ]
 
-{ #category : #abstract }
+{ #category : 'abstract' }
 OSTouchRotationDetector >> eventClassMoveGesture [
 	self subclassResponsibility
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OSTouchRotationDetector >> initialize [
 	super initialize.
 	currentAngle := 0.0.
 	minAngleBeforeDetection := self class minAngleBeforeDetection degreesToRadians
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 OSTouchRotationDetector >> isBrinkAngleOverwhelmed [
 	^ (currentAngle > (2 * Float pi - minAngleBeforeDetection) or: [ currentAngle < minAngleBeforeDetection ]) not
 ]
 
-{ #category : #update }
+{ #category : 'update' }
 OSTouchRotationDetector >> updateCurrentAngle [
 	lastAngle := currentAngle.
 	currentAngle := vectorAtBeginnig angleWith: self vectorBetweenFirstAndLastFingers
 ]
 
-{ #category : #calculating }
+{ #category : 'calculating' }
 OSTouchRotationDetector >> vectorBetweenFirstAndLastFingers [
 	^ self activeFingers first lastPosition - self activeFingers last lastPosition
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OSTouchRotationDetector >> visitTouchPointerDownEvent: anEvent [
 	super visitTouchPointerDownEvent: anEvent.
 	eventHandler fingerCount = self necessaryFingers
 		ifTrue:[ vectorAtBeginnig := self vectorBetweenFirstAndLastFingers ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OSTouchRotationDetector >> visitTouchPointerMoveEvent: anEvent [
 	super visitTouchPointerMoveEvent: anEvent.
 	eventHandler fingerCount = self necessaryFingers

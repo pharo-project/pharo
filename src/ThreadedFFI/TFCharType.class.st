@@ -2,24 +2,26 @@
 I extend TFIntType to support Characters.
 "
 Class {
-	#name : #TFCharType,
-	#superclass : #TFIntType,
-	#category : #'ThreadedFFI-Types'
+	#name : 'TFCharType',
+	#superclass : 'TFIntType',
+	#category : 'ThreadedFFI-Types',
+	#package : 'ThreadedFFI',
+	#tag : 'Types'
 }
 
-{ #category : #marshalling }
+{ #category : 'marshalling' }
 TFCharType >> emitMarshallFromPrimitive: builder [
 
 	builder send: #asCharacter
 ]
 
-{ #category : #marshalling }
+{ #category : 'marshalling' }
 TFCharType >> marshallFromPrimitive: aValue [
 
 	^ aValue asCharacter
 ]
 
-{ #category : #marshalling }
+{ #category : 'marshalling' }
 TFCharType >> marshallToPrimitive: aValue [
 
 	^ aValue asInteger

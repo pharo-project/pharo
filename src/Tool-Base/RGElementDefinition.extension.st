@@ -1,6 +1,6 @@
-Extension { #name : #RGElementDefinition }
+Extension { #name : 'RGElementDefinition' }
 
-{ #category : #'*Tool-Base' }
+{ #category : '*Tool-Base' }
 RGElementDefinition >> browse [
 
 	^ self tools browser openOnClass: self realClass

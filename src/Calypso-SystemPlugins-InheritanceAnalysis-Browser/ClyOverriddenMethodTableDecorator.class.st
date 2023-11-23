@@ -5,17 +5,18 @@ I add two or one iconic buttons as single icon which allow to open overridden or
 I am activated only in browser with installed ClyInheritanceAnalysisBrowserPlugin
 "
 Class {
-	#name : #ClyOverriddenMethodTableDecorator,
-	#superclass : #ClyMethodTableDecorator,
-	#category : #'Calypso-SystemPlugins-InheritanceAnalysis-Browser'
+	#name : 'ClyOverriddenMethodTableDecorator',
+	#superclass : 'ClyMethodTableDecorator',
+	#category : 'Calypso-SystemPlugins-InheritanceAnalysis-Browser',
+	#package : 'Calypso-SystemPlugins-InheritanceAnalysis-Browser'
 }
 
-{ #category : #decoration }
+{ #category : 'decoration' }
 ClyOverriddenMethodTableDecorator class >> browserPluginClass [
 	^ClyInheritanceAnalysisBrowserPlugin
 ]
 
-{ #category : #decoration }
+{ #category : 'decoration' }
 ClyOverriddenMethodTableDecorator class >> createMultiIconMorph [
 
 	^Morph new
@@ -27,7 +28,7 @@ ClyOverriddenMethodTableDecorator class >> createMultiIconMorph [
 		color: Color transparent
 ]
 
-{ #category : #decoration }
+{ #category : 'decoration' }
 ClyOverriddenMethodTableDecorator class >> decorateMainTableCell: anItemCellMorph inContext: itemContext [
 
 	| commands |
@@ -40,11 +41,11 @@ ClyOverriddenMethodTableDecorator class >> decorateMainTableCell: anItemCellMorp
 	self decorateTableCell: anItemCellMorph withCommands: commands inContext: itemContext
 ]
 
-{ #category : #decoration }
+{ #category : 'decoration' }
 ClyOverriddenMethodTableDecorator class >> decorateTableCell: anItemCellMorph of: aDataSourceItem [
 ]
 
-{ #category : #decoration }
+{ #category : 'decoration' }
 ClyOverriddenMethodTableDecorator class >> decorateTableCell: anItemCellMorph withCommands: commands inContext: itemContext [
 
 	| panel activator button |
@@ -60,12 +61,12 @@ ClyOverriddenMethodTableDecorator class >> decorateTableCell: anItemCellMorph wi
 	anItemCellMorph definitionMorph: panel
 ]
 
-{ #category : #decoration }
+{ #category : 'decoration' }
 ClyOverriddenMethodTableDecorator class >> priority [
 	^800
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyOverriddenMethodTableDecorator class >> wantsDecorateTableCellOf: aDataSourceItem [
 
 	^(aDataSourceItem isMarkedWith: ClyOverridingMethodTag)

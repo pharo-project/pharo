@@ -3,8 +3,8 @@ I am Buffered Read Write Stream.
 I should only be used in the SourceFile implementation
 "
 Class {
-	#name : #SourceFileBufferedReadWriteStream,
-	#superclass : #Object,
+	#name : 'SourceFileBufferedReadWriteStream',
+	#superclass : 'Object',
 	#instVars : [
 		'innerStream',
 		'buffer',
@@ -14,17 +14,19 @@ Class {
 		'nextPosition',
 		'isDirty'
 	],
-	#category : #'System-Sources-Streams'
+	#category : 'System-Sources-Streams',
+	#package : 'System-Sources',
+	#tag : 'Streams'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SourceFileBufferedReadWriteStream class >> on: writeStream [
 	^ self basicNew
 		on: writeStream;
 		yourself
 ]
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 SourceFileBufferedReadWriteStream class >> on: readStream do: block [
 	"Execute block with as argument a ZnBufferedReadStream on readStream.
 	Return the value of block."
@@ -36,13 +38,13 @@ SourceFileBufferedReadWriteStream class >> on: readStream do: block [
 	^ [block value: stream ] ensure: [ stream flush ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SourceFileBufferedReadWriteStream >> atEnd [
 
 	^ self atEnd: nextPosition
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SourceFileBufferedReadWriteStream >> atEnd: anInteger [
 
 	anInteger < streamSize ifTrue: [ ^ false ].
@@ -51,13 +53,13 @@ SourceFileBufferedReadWriteStream >> atEnd: anInteger [
 	^ true
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SourceFileBufferedReadWriteStream >> bufferAt: aPosition [
 
 	^ buffer at:  (aPosition - bufferOffset)
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SourceFileBufferedReadWriteStream >> bufferAt: aPosition put: anElement [
 
 	self checkBufferFor: nextPosition.
@@ -66,40 +68,40 @@ SourceFileBufferedReadWriteStream >> bufferAt: aPosition put: anElement [
 	buffer at: (aPosition - bufferOffset) put: anElement
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SourceFileBufferedReadWriteStream >> checkBufferFor: aPosition [
 
 	(self isPositionInBuffer: aPosition)
 		ifFalse: [ self refreshBufferFrom: aPosition ]
 ]
 
-{ #category : #closing }
+{ #category : 'closing' }
 SourceFileBufferedReadWriteStream >> close [
 
 	self flush.
 	innerStream close
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SourceFileBufferedReadWriteStream >> closed [
 
 	^ innerStream closed
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 SourceFileBufferedReadWriteStream >> collectionSpecies [
 	^ innerStream isBinary
 		ifTrue: [ ByteArray ]
 		ifFalse: [ String ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SourceFileBufferedReadWriteStream >> defaultBufferSize [
 
 	^ 2 raisedToInteger: 16
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 SourceFileBufferedReadWriteStream >> ensureWrittenPosition: aPosition [
 	isDirty ifFalse: [ ^ false ].
 
@@ -114,7 +116,7 @@ SourceFileBufferedReadWriteStream >> ensureWrittenPosition: aPosition [
 	^ false
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 SourceFileBufferedReadWriteStream >> flush [
 
 	isDirty ifFalse: [ ^ self ].
@@ -129,31 +131,31 @@ SourceFileBufferedReadWriteStream >> flush [
 	isDirty := false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SourceFileBufferedReadWriteStream >> isBinary [
 
 	^ innerStream isBinary
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SourceFileBufferedReadWriteStream >> isPositionInBuffer: aPosition [
 
 	^ aPosition between: bufferOffset and: bufferOffset + bufferLength
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SourceFileBufferedReadWriteStream >> isReadOnly [
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SourceFileBufferedReadWriteStream >> isStream [
 
 	^ true
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 SourceFileBufferedReadWriteStream >> next [
 	| value |
 
@@ -169,7 +171,7 @@ SourceFileBufferedReadWriteStream >> next [
 	^ value
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 SourceFileBufferedReadWriteStream >> next: aQuantity [
 
 	| read collection |
@@ -186,7 +188,7 @@ SourceFileBufferedReadWriteStream >> next: aQuantity [
 		ifFalse: [ collection copyFrom: 1 to: read - 1 ]
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 SourceFileBufferedReadWriteStream >> next: aQuantity putAll: aCollection startingAt: startingAt [
 
 	aCollection readStreamDo: [ :s |
@@ -194,7 +196,7 @@ SourceFileBufferedReadWriteStream >> next: aQuantity putAll: aCollection startin
 		self nextPutAll:  (s next: aQuantity)]
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 SourceFileBufferedReadWriteStream >> nextPut: anElement [
 
 	self checkBufferFor: nextPosition.
@@ -205,13 +207,13 @@ SourceFileBufferedReadWriteStream >> nextPut: anElement [
 	nextPosition := nextPosition + 1
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 SourceFileBufferedReadWriteStream >> nextPutAll: aCollection [
 
 	aCollection do: [ :each | self nextPut: each ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SourceFileBufferedReadWriteStream >> on: aStream [
 
 	innerStream := aStream.
@@ -225,7 +227,7 @@ SourceFileBufferedReadWriteStream >> on: aStream [
 	self sizeBuffer: self defaultBufferSize
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 SourceFileBufferedReadWriteStream >> peek [
 
 	| value |
@@ -236,19 +238,19 @@ SourceFileBufferedReadWriteStream >> peek [
 	^ value
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 SourceFileBufferedReadWriteStream >> position [
 
 	^ nextPosition - 1
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 SourceFileBufferedReadWriteStream >> position: aNewPosition [
 
 	^ nextPosition := aNewPosition + 1
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 SourceFileBufferedReadWriteStream >> readInto: aBuffer startingAt: startingAt count: count [
 
 	| remainingCount maxPositionInBuffer read countToRead |
@@ -276,7 +278,7 @@ SourceFileBufferedReadWriteStream >> readInto: aBuffer startingAt: startingAt co
 	^ read
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SourceFileBufferedReadWriteStream >> refreshBufferFrom: aPosition [
 
 	| nextBufferPosition |
@@ -300,19 +302,19 @@ SourceFileBufferedReadWriteStream >> refreshBufferFrom: aPosition [
 	bufferOffset := nextBufferPosition
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 SourceFileBufferedReadWriteStream >> setToEnd [
 
 	nextPosition := (streamSize max: (bufferOffset + bufferLength)) + 1
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 SourceFileBufferedReadWriteStream >> size [
 
 	^ streamSize max: (bufferOffset + bufferLength)
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 SourceFileBufferedReadWriteStream >> sizeBuffer: size [
 
 	bufferLength > 0 ifTrue: [ self flush ].
@@ -321,13 +323,13 @@ SourceFileBufferedReadWriteStream >> sizeBuffer: size [
 	buffer := self collectionSpecies new: size
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 SourceFileBufferedReadWriteStream >> skip: aQuantity [
 
 	nextPosition := nextPosition + aQuantity
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 SourceFileBufferedReadWriteStream >> upTo: value [
 	"Read upto but not including value and return them as a collection.
 	If value is not found, return the entire contents of the stream.
@@ -339,7 +341,7 @@ SourceFileBufferedReadWriteStream >> upTo: value [
 				writeStream nextPut: element ] ]
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 SourceFileBufferedReadWriteStream >> upToEnd [
 	"Read elements until the stream is atEnd and return them as a collection."
 

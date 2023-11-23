@@ -2,50 +2,47 @@
 Responsible for real-estate management on the screen, which is to say, controlling where new windows appear, with what sizes, etc.  5/20/96 sw
 "
 Class {
-	#name : #RealEstateAgent,
-	#superclass : #Object,
+	#name : 'RealEstateAgent',
+	#superclass : 'Object',
 	#classVars : [
 		'StaggerOffset',
 		'StandardSize',
 		'UsedStrategy'
 	],
-	#category : #'Morphic-Core-Worlds'
+	#category : 'Morphic-Core-Worlds',
+	#package : 'Morphic-Core',
+	#tag : 'Worlds'
 }
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RealEstateAgent class >> assignCollapseFrameFor: aSSView [
 	"Offer up a location along the left edge of the screen for a collapsed
 	SSView. Make sure it doesn't overlap any other collapsed frames."
+
 	| grid otherFrames topLeft viewBox collapsedFrame extent newFrame verticalBorderDistance top |
 	grid := 8.
 	verticalBorderDistance := 8.
-	otherFrames := ( aSSView world windowsSatisfying: [:w | w ~= aSSView])
-				collect: [:w | w collapsedFrame]
-				thenSelect: [:rect | rect notNil].
+	otherFrames := (aSSView world windowsSatisfying: [ :w | w ~= aSSView ])
+		               collect: [ :w | w collapsedFrame ]
+		               thenSelect: [ :rect | rect isNotNil ].
 	viewBox := aSSView world viewBox.
 	collapsedFrame := aSSView collapsedFrame.
-	extent := collapsedFrame notNil
-				ifTrue: [collapsedFrame extent]
-				ifFalse: [aSSView getRawLabel width + aSSView labelWidgetAllowance @ (aSSView labelHeight + 2)].
-	collapsedFrame notNil
-		ifTrue: [(otherFrames
-					anySatisfy: [:f | collapsedFrame intersects: f])
-				ifFalse: ["non overlapping"
-					^ collapsedFrame]].
+	extent := collapsedFrame isNotNil
+		          ifTrue: [ collapsedFrame extent ]
+		          ifFalse: [ aSSView getRawLabel width + aSSView labelWidgetAllowance @ (aSSView labelHeight + 2) ].
+	collapsedFrame ifNotNil: [ (otherFrames anySatisfy: [ :f | collapsedFrame intersects: f ]) ifFalse: [ "non overlapping" ^ collapsedFrame ] ].
 	top := viewBox top + verticalBorderDistance.
-	[topLeft := viewBox left @ top.
+	[
+	topLeft := viewBox left @ top.
 	newFrame := topLeft extent: extent.
-	newFrame bottom <= (viewBox height - verticalBorderDistance)]
-		whileTrue: [(otherFrames
-					anySatisfy: [:w | newFrame intersects: w])
-				ifFalse: ["no overlap"
-					^ newFrame].
-			top := top + grid].
+	newFrame bottom <= (viewBox height - verticalBorderDistance) ] whileTrue: [
+		(otherFrames anySatisfy: [ :w | newFrame intersects: w ]) ifFalse: [ "no overlap" ^ newFrame ].
+		top := top + grid ].
 	"If all else fails... (really to many wins here)"
 	^ 0 @ 0 extent: extent
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RealEstateAgent class >> assignCollapsePointFor: aSSView [
 	"Offer up a location along the left edge of the screen for a collapsed
 	SSView. Make sure it doesn't overlap any other collapsed frames."
@@ -54,7 +51,7 @@ RealEstateAgent class >> assignCollapsePointFor: aSSView [
 	"should be mult of 8, since manual move is gridded by 8"
 	otherFrames := ( aSSView world   windowsSatisfying: [:w | true])
 				collect: [:w | w collapsedFrame]
-				thenSelect: [:rect | rect notNil].
+				thenSelect: [:rect | rect isNotNil].
 	viewBox := aSSView world viewBox.
 	y := viewBox top.
 	[(y := y + grid) <= (viewBox height - grid)]
@@ -68,7 +65,7 @@ RealEstateAgent class >> assignCollapsePointFor: aSSView [
 	^ 0 @ 0
 ]
 
-{ #category : #strategy }
+{ #category : 'strategy' }
 RealEstateAgent class >> cascadeFor: aView initialExtent: initialExtent world: aWorld [
 
 	| position allowedArea |
@@ -80,7 +77,7 @@ RealEstateAgent class >> cascadeFor: aView initialExtent: initialExtent world: a
 		translatedAndSquishedToBeWithin: allowedArea
 ]
 
-{ #category : #framing }
+{ #category : 'framing' }
 RealEstateAgent class >> initialFrameFor: aView initialExtent: initialExtent world: aWorld [
 	"Find a plausible initial screen area for the supplied view, which
 	should be a StandardSystemView, taking into account the
@@ -90,14 +87,14 @@ RealEstateAgent class >> initialFrameFor: aView initialExtent: initialExtent wor
 	^self perform: self usedStrategy with: aView with: initialExtent with: aWorld
 ]
 
-{ #category : #framing }
+{ #category : 'framing' }
 RealEstateAgent class >> initialFrameFor: aView world: aWorld [
 	"Find a plausible initial screen area for the supplied view.  See called method."
 
 	^ self initialFrameFor: aView initialExtent: aView initialExtent world: aWorld
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 RealEstateAgent class >> initialize [
 	"RealEstateAgent initialize"
 
@@ -105,7 +102,7 @@ RealEstateAgent class >> initialize [
 	StandardSize := 700@500
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RealEstateAgent class >> maximumUsableArea [
 
 	| allowedArea |
@@ -114,7 +111,7 @@ RealEstateAgent class >> maximumUsableArea [
 	^allowedArea
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RealEstateAgent class >> maximumUsableAreaInWorld: aWorldOrNil [
 
 	| allowedArea |
@@ -126,17 +123,17 @@ RealEstateAgent class >> maximumUsableAreaInWorld: aWorldOrNil [
 	^allowedArea
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 RealEstateAgent class >> screenTopSetback [
 	^ 0
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 RealEstateAgent class >> scrollBarSetback [
 	^ 16-3 "width = 16; inset from border by 3"
 ]
 
-{ #category : #strategy }
+{ #category : 'strategy' }
 RealEstateAgent class >> staggerFor: aView initialExtent: initialExtent world: aWorld [
 
 	^ self strictlyStaggeredInitialFrameFor: aView
@@ -144,7 +141,7 @@ RealEstateAgent class >> staggerFor: aView initialExtent: initialExtent world: a
 				world: aWorld
 ]
 
-{ #category : #strategy }
+{ #category : 'strategy' }
 RealEstateAgent class >> standardFor: aView initialExtent: initialExtent world: aWorld [
 
 	| allOrigins screenRight screenBottom putativeOrigin putativeFrame allowedArea staggerOrigin otherFrames |
@@ -176,7 +173,7 @@ RealEstateAgent class >> standardFor: aView initialExtent: initialExtent world: 
 		translatedAndSquishedToBeWithin: allowedArea
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RealEstateAgent class >> standardPositionsInWorld: aWorldOrNil [
 	"Return a list of standard window positions -- this may have one, two, or four of them, depending on the size and shape of the display screen.  "
 
@@ -195,19 +192,19 @@ RealEstateAgent class >> standardPositionsInWorld: aWorldOrNil [
 	^ aList
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RealEstateAgent class >> standardSize [
 
 	^ StandardSize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RealEstateAgent class >> standardSize: extent [
 
 	StandardSize := extent
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 RealEstateAgent class >> standardWindowExtent [
 	"Answer the standard default extent for new windows. "
 	| effectiveExtent width strips height grid allowedArea maxLevel |
@@ -240,7 +237,7 @@ RealEstateAgent class >> standardWindowExtent [
 	^ width @ height max: StandardSize "RealEstateAgent standardWindowExtent"
 ]
 
-{ #category : #framing }
+{ #category : 'framing' }
 RealEstateAgent class >> strictlyStaggeredInitialFrameFor: aStandardSystemView initialExtent: initialExtent world: aWorld [
 	"This method implements a staggered window placement policy that I (di) like.
 	Basically it provides for up to 4 windows, staggered from each of the 4 corners.
@@ -281,17 +278,17 @@ RealEstateAgent class >> strictlyStaggeredInitialFrameFor: aStandardSystemView i
 		translatedAndSquishedToBeWithin: allowedArea
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 RealEstateAgent class >> usedStrategy [
 	^ UsedStrategy ifNil: [UsedStrategy := #staggerFor:initialExtent:world:]
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 RealEstateAgent class >> usedStrategy: aSelector [
 	UsedStrategy := aSelector
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 RealEstateAgent class >> windowColumnsDesired [
 	"Answer how many separate vertical columns of windows are
 	wanted."
@@ -302,7 +299,7 @@ RealEstateAgent class >> windowColumnsDesired [
 				ifFalse: [1]]
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 RealEstateAgent class >> windowRowsDesired [
 	"Answer how many separate horizontal rows of windows are wanted."
 	^ (self usedStrategy = #staggerFor:initialExtent:world:)

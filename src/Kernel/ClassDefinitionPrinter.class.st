@@ -53,145 +53,79 @@ In addition the printer should support
 
 "
 Class {
-	#name : #ClassDefinitionPrinter,
-	#superclass : #Object,
+	#name : 'ClassDefinitionPrinter',
+	#superclass : 'Object',
 	#instVars : [
 		'forClass'
 	],
 	#classVars : [
-		'DisplayEmptySlots',
-		'ShowFluidClassDefinition'
+		'DisplayEmptySlots'
 	],
-	#category : #'Kernel-ClassDefinitionPrinter'
+	#category : 'Kernel-ClassDefinitionPrinter',
+	#package : 'Kernel',
+	#tag : 'ClassDefinitionPrinter'
 }
 
-{ #category : #configure }
+{ #category : 'configure' }
 ClassDefinitionPrinter class >> displayEmptySlots [
 
 	^ DisplayEmptySlots ifNil: [ DisplayEmptySlots := true ]
 ]
 
-{ #category : #configure }
+{ #category : 'configure' }
 ClassDefinitionPrinter class >> displayEmptySlots: aBoolean [
 
 	DisplayEmptySlots := aBoolean
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClassDefinitionPrinter class >> fluid [
-	^  FluidClassDefinitionPrinter basicNew initialize
+	^  FluidClassDefinitionPrinter new
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClassDefinitionPrinter class >> for: aClass [
 	"Given the current class definition syntax and the need for the class,
 	return the correct printer.
 	We only print slots with the fluid class definition."
 
-	| instance |
-	instance :=
-		(aClass needsSlotClassDefinition
-			or: [ self showFluidClassDefinition ])
-				ifTrue: [ self fluid ]
-				ifFalse: [ self oldPharo ].
-	^ instance
-		for: aClass;
-		yourself
+	^ self fluid
+		  for: aClass;
+		  yourself
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClassDefinitionPrinter class >> isAbstract [
 
 	^ self == ClassDefinitionPrinter
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClassDefinitionPrinter class >> legacy [
-	^ LegacyClassDefinitionPrinter basicNew initialize
+	^ LegacyClassDefinitionPrinter new
 ]
 
-{ #category : #'instance creation' }
-ClassDefinitionPrinter class >> new [
-
-	^ self showFluidClassDefinition
-			ifTrue: [ self fluid ]
-			ifFalse: [ self oldPharo ]
-]
-
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClassDefinitionPrinter class >> oldPharo [
-	^ OldPharoClassDefinitionPrinter basicNew initialize
+	^ OldPharoClassDefinitionPrinter new
 ]
 
-{ #category : #settings }
-ClassDefinitionPrinter class >> settingsOn: aBuilder [
-	"This method could be packaged in a setting kernel related package.
-	For now when the Settings system is not available it will just be deadcode."
-
-	<systemsettings>
-	(aBuilder setting: #showFluidClassDefinition)
-		parent: #codeBrowsing;
-		default: false;
-		label: 'Use fluid class definition';
-		description: 'If true, the system will display the class definition using a fluid interface e.g.,
-
-Object << #Point
-	slots: { #x . #y };
-	tag: ''BasicObjects'';
-	package: ''Kernel''
-
-We suggest to use it because it will become the default syntax for Pharo. This new class definition has been designed to control the parameter explosion of the old one.
-In addition, as soon as you will use slots such as ObservableSlot and more this fluid class definition will be used because the old one is not handling well the slots.';
-		target: self.
-
-	(aBuilder setting: #displayEmptySlots)
-		parent: #codeBrowsing;
-		default: true;
-		label: 'Display empty slots';
-		description: 'If true, the system will display the slots even if they are empty e.g.,
-
-Object << #Faked
-	slots: { };
-	tag: ''BasicObjects'';
-	package: ''Kernel''
-	';
-		target: self
-]
-
-{ #category : #configure }
-ClassDefinitionPrinter class >> showFluidClassDefinition [
-
-	^ ShowFluidClassDefinition ifNil: [ ShowFluidClassDefinition := true ]
-]
-
-{ #category : #configure }
-ClassDefinitionPrinter class >> showFluidClassDefinition: aBoolean [
-
-	ShowFluidClassDefinition := aBoolean
-]
-
-{ #category : #configure }
-ClassDefinitionPrinter class >> toggleShowFluidClassDefinition [
-
-	self showFluidClassDefinition: self showFluidClassDefinition not
-]
-
-{ #category : #'public api' }
+{ #category : 'public api' }
 ClassDefinitionPrinter >> classDefinitionString [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassDefinitionPrinter >> classDefinitionTemplateInPackage: aPackageName [
-	^ self classDefinitionTemplateInPackage: aPackageName forClass: #MyClass
+	^ self classDefinitionTemplateInPackage: aPackageName named: #MyClass
 ]
 
-{ #category : #printing }
-ClassDefinitionPrinter >> classDefinitionTemplateInPackage: aPackageName forClass: aClassName [
+{ #category : 'template' }
+ClassDefinitionPrinter >> classDefinitionTemplateInPackage: aPackageName named: aClassName [
 	^ self subclassResponsibility
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClassDefinitionPrinter >> definitionString [
 	"The method is part of the double dispatch. It is an extra starting point.
 	Each entity will select the right definition and call me back.
@@ -200,36 +134,44 @@ ClassDefinitionPrinter >> definitionString [
 	^ forClass definitionStringFor: self
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClassDefinitionPrinter >> expandedDefinitionString [
-	"The method is part of the double dispatch. It is an extra starting point.
-	Each entity will select the right definition and call me back.
-	Normally this method is not used because the main point is the class...."
+	"We do not support expansion for most modes so we shortcut the double dispatch call."
 
-	^ forClass expandedDefinitionStringFor: self
+	^ self definitionString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassDefinitionPrinter >> for: aClass [
 	forClass := aClass
 ]
 
-{ #category : #'public api' }
+{ #category : 'public api' }
 ClassDefinitionPrinter >> metaclassDefinitionString [
 	^ self subclassResponsibility
 ]
 
-{ #category : #template }
+{ #category : 'template' }
 ClassDefinitionPrinter >> testClassDefinitionTemplateInPackage: aString [
 	^ self subclassResponsibility
 ]
 
-{ #category : #'public api' }
+{ #category : 'public api' }
 ClassDefinitionPrinter >> traitDefinitionString [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'template' }
+ClassDefinitionPrinter >> traitDefinitionTemplateInPackage: aString [
+	^ self traitDefinitionTemplateInPackage: aString named: #TMyTrait
+]
+
+{ #category : 'template' }
+ClassDefinitionPrinter >> traitDefinitionTemplateInPackage: aPackageName named: aTraitName [ 
+	^ self subclassResponsibility
+]
+
+{ #category : 'accessing' }
 ClassDefinitionPrinter >> traitedMetaclassDefinitionString [
 	^ self subclassResponsibility
 ]

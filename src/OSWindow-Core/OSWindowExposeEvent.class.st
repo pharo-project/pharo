@@ -2,30 +2,32 @@
 I am delivered when part (or whole) window are exposed on the desktop and needs refreshing.
 "
 Class {
-	#name : #OSWindowExposeEvent,
-	#superclass : #OSWindowEvent,
+	#name : 'OSWindowExposeEvent',
+	#superclass : 'OSWindowEvent',
 	#instVars : [
 		'timestamp'
 	],
-	#category : #'OSWindow-Core-Events'
+	#category : 'OSWindow-Core-Events',
+	#package : 'OSWindow-Core',
+	#tag : 'Events'
 }
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 OSWindowExposeEvent >> accept: aVisitor [
 	^ aVisitor visitWindowExposeEvent: self
 ]
 
-{ #category : #'default actions' }
+{ #category : 'default actions' }
 OSWindowExposeEvent >> defaultAction [
 	window isValid ifTrue: [ window renderer ifNotNil: [ window renderer exposed: timestamp ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowExposeEvent >> timestamp [
 	^ timestamp
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowExposeEvent >> timestamp: anObject [
 	timestamp := anObject
 ]

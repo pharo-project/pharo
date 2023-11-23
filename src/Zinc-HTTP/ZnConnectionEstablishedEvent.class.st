@@ -2,8 +2,8 @@
 ZnConnectionEstablishedEvent signals that a client HTTP connection to hostname:port (address:port) was established in duration milliseconds. This time includes DNS resolving.
 "
 Class {
-	#name : #ZnConnectionEstablishedEvent,
-	#superclass : #ZnClientLogEvent,
+	#name : 'ZnConnectionEstablishedEvent',
+	#superclass : 'ZnClientLogEvent',
 	#instVars : [
 		'hostname',
 		'port',
@@ -11,64 +11,68 @@ Class {
 		'duration',
 		'proxy'
 	],
-	#category : #'Zinc-HTTP-Logging'
+	#category : 'Zinc-HTTP-Logging',
+	#package : 'Zinc-HTTP',
+	#tag : 'Logging'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnConnectionEstablishedEvent >> address [
 	^ address
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnConnectionEstablishedEvent >> address: anObject [
 	address := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnConnectionEstablishedEvent >> duration [
 	^ duration
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnConnectionEstablishedEvent >> duration: anObject [
 	duration := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnConnectionEstablishedEvent >> hostname [
 	^ hostname
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnConnectionEstablishedEvent >> hostname: anObject [
 	hostname := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnConnectionEstablishedEvent >> port [
 	^ port
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnConnectionEstablishedEvent >> port: anObject [
 	port := anObject
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ZnConnectionEstablishedEvent >> printContentsOn: stream [
 	super printContentsOn: stream.
-	stream << ' Connection Established '; nextPutAll: hostname; nextPut: $:; print: port; space.
-	proxy ifNotNil: [ stream << 'via proxy '; print: proxy; space ].
-	address do: [ :each | stream print: each ] separatedBy: [ stream nextPut: $. ].
-	stream space; print: duration; << 'ms '
+	stream << 'Connection Established '; nextPutAll: hostname asString; nextPut: $:; print: port.
+	proxy ifNotNil: [ stream << ' via proxy '; print: proxy ].
+	address ifNotNil: [ 
+		stream space. 
+		address do: [ :each | stream print: each ] separatedBy: [ stream nextPut: $. ] ].
+	stream space; print: duration; << 'ms'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnConnectionEstablishedEvent >> proxy [
 	^ proxy
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnConnectionEstablishedEvent >> proxy: anObject [
 	proxy := anObject
 ]

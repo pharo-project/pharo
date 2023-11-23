@@ -2,18 +2,20 @@
 I am a cluster for storing classes in full detail.
 "
 Class {
-	#name : #FLClassCluster,
-	#superclass : #FLBehaviorCluster,
-	#category : #'Fuel-Core-Clusters'
+	#name : 'FLClassCluster',
+	#superclass : 'FLBehaviorCluster',
+	#category : 'Fuel-Core-Clusters',
+	#package : 'Fuel-Core',
+	#tag : 'Clusters'
 }
 
-{ #category : #analyzing }
+{ #category : 'analyzing' }
 FLClassCluster class >> clusterBucketIn: aClusterization [
 
 	^aClusterization metalevelInstanceSideBucket
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLClassCluster >> materializeInstanceWith: aDecoder [
 
 	| aMetaclass |
@@ -21,30 +23,37 @@ FLClassCluster >> materializeInstanceWith: aDecoder [
 	^aMetaclass new
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLClassCluster >> materializePostInstance: aClass with: aDecoder [
 
-	| superclass category name format instanceVariableNames layout |
+	| superclass name format instanceVariableNames layout comment stamp packageName packageTagName |
 	superclass := aDecoder nextEncodedReference.
-	category := aDecoder nextEncodedReference.
+	packageName := aDecoder nextEncodedReference.
+	packageTagName := aDecoder nextEncodedReference.
 	name := aDecoder nextEncodedReference.
 	format := aDecoder nextEncodedReference.
 	layout := self materializeLayoutWith: aDecoder.
 	instanceVariableNames := aDecoder nextEncodedString substrings: ' '.
+	comment := aDecoder nextEncodedString.
+	stamp := aDecoder nextEncodedString.
 
-	aClass 
+	aClass
 		basicSuperclass: superclass;
 		setName: name;
-		basicCategory: category; 
 		methodDictionary: MethodDictionary new.
+
+	self setTag: packageTagName ofPackage: packageName to: aClass.
+
 	self
 		installLayout: layout
 		withFormat: format
 		variableNames: instanceVariableNames
-		into: aClass
+		into: aClass.
+
+	aClass comment: comment stamp: stamp
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLClassCluster >> materializeReferencesOf: aClass with: aDecoder [
 
 	super materializeReferencesOf: aClass with: aDecoder.
@@ -58,7 +67,7 @@ FLClassCluster >> materializeReferencesOf: aClass with: aDecoder [
 		do: [ :index | aClass instVarAt: index put: aDecoder nextEncodedReference ]
 ]
 
-{ #category : #analyzing }
+{ #category : 'analyzing' }
 FLClassCluster >> referencesOf: aClass do: aBlock [
 
 	super referencesOf: aClass do: aBlock.
@@ -67,7 +76,8 @@ FLClassCluster >> referencesOf: aClass do: aBlock [
 	aBlock value: aClass superclass.
 	aBlock value: aClass basicClassPool.
 	aBlock value: aClass basicSharedPools. 
-	aBlock value: aClass category.
+	aBlock value: aClass package name.
+	aBlock value: aClass packageTag name.
 	aBlock value: aClass name.
 	aBlock value: aClass format.	
 	aBlock value: aClass basicEnvironment.
@@ -78,28 +88,34 @@ FLClassCluster >> referencesOf: aClass do: aBlock [
 		do: [ :index | aBlock value: (aClass instVarAt: index) ]
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLClassCluster >> serializeInstance: aClass with: anEncoder [
 
 	anEncoder encodeReferenceTo: aClass classSide
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLClassCluster >> serializePostInstance: aClass with: anEncoder [
 
 	anEncoder encodeReferenceTo: aClass superclass.
-	"Do not use #basicCategory because since it may be lazily computed it may happen that it is still in nil. "
-	anEncoder encodeReferenceTo: aClass category.
-	anEncoder encodeReferenceTo: aClass getName.
-	anEncoder encodeReferenceTo: aClass format.	
+
+	anEncoder
+		encodeReferenceTo: aClass package name;
+		encodeReferenceTo: aClass packageTag name;
+		encodeReferenceTo: aClass getName;
+		encodeReferenceTo: aClass format.	
 	self
 		serializeLayout: aClass classLayout
 		with: anEncoder.
-	anEncoder encodeString: aClass instanceVariablesString.
+	anEncoder
+		encodeString: aClass instanceVariablesString;
+		encodeString: aClass comment;
+		encodeString: aClass commentStamp.
+		
 	self flag: #todo. "The array of variable names represents a circularity problem between clusters: if we encode the reference to such array, then the cluster for arrays should be before of Class cluster. But this would disable us to serialize an array of internal classes."
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLClassCluster >> serializeReferencesOf: aClass with: anEncoder [
 
 	super serializeReferencesOf: aClass with: anEncoder.

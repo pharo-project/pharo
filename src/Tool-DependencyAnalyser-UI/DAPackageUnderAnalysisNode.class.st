@@ -2,17 +2,19 @@
 A DAPackageNode is used to display a package in a tree.
 "
 Class {
-	#name : #DAPackageUnderAnalysisNode,
-	#superclass : #DAAbstractPackageNode,
-	#category : #'Tool-DependencyAnalyser-UI-Nodes'
+	#name : 'DAPackageUnderAnalysisNode',
+	#superclass : 'DAAbstractPackageNode',
+	#category : 'Tool-DependencyAnalyser-UI-Nodes',
+	#package : 'Tool-DependencyAnalyser-UI',
+	#tag : 'Nodes'
 }
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 DAPackageUnderAnalysisNode >> <= aDANode [
 	^ (aDANode class respondsTo: #packageName) and: [ self packageName <= aDANode packageName ]
 ]
 
-{ #category : #dependencies }
+{ #category : 'dependencies' }
 DAPackageUnderAnalysisNode >> assemblyNodeFor: anAssemblyManifest [
 	^ (DAAssemblyNode newWith: (self packageDependencies
 			select: [ :dependency | anAssemblyManifest includes: dependency packageName ]
@@ -21,63 +23,63 @@ DAPackageUnderAnalysisNode >> assemblyNodeFor: anAssemblyManifest [
 		yourself
 ]
 
-{ #category : #dependencies }
+{ #category : 'dependencies' }
 DAPackageUnderAnalysisNode >> assemblyNodesFor: aListOfAssemblyManifest [
 	^ aListOfAssemblyManifest
 		collect: [ :each | self assemblyNodeFor: each ]
 		as: OrderedCollection
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 DAPackageUnderAnalysisNode >> childNodeClassFor: anItem [
 	 ^ anItem nodeClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAPackageUnderAnalysisNode >> children [
 	^ (self packageDependencies"GroupedByAssembly" sort: [ :a :b | a packageName < b packageName])
 		copyWith: DAPotentialDependenciesNode new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAPackageUnderAnalysisNode >> daPackage [
 	^ self content
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DAPackageUnderAnalysisNode >> hasChildren [
 	^ [ true ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAPackageUnderAnalysisNode >> icon [
 	^ self iconNamed: #package
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DAPackageUnderAnalysisNode >> isPackageNode [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAPackageUnderAnalysisNode >> manuallyResolvedDependencies [
 	^ self packageUnderAnalysis manuallyResolvedDependencies
 		collect: [ :packageName | DAManuallyAddedDependentPackageNode new content: packageName ]
 ]
 
-{ #category : #dependencies }
+{ #category : 'dependencies' }
 DAPackageUnderAnalysisNode >> packageDependencies [
 	^ self rootNode isCycle
 		ifTrue: [ self rootNode content dependentPackagesFrom: self content ]
 		ifFalse: [ self content dependencies ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAPackageUnderAnalysisNode >> packageName [
 	^ self daPackage packageName
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 DAPackageUnderAnalysisNode >> printOn: aStream [
 	super printOn: aStream.
 	aStream nextPut: $(.
@@ -85,12 +87,7 @@ DAPackageUnderAnalysisNode >> printOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : #'browse-nautilus' }
-DAPackageUnderAnalysisNode >> selectInBrowser [
-	self selectPackage: self content rPackage
-]
-
-{ #category : #dependencies }
+{ #category : 'dependencies' }
 DAPackageUnderAnalysisNode >> wrappedPackageDependencies [
 	^ (self packageDependencies
 		collect: #asPackageDependencyWrapper

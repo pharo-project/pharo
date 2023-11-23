@@ -13,7 +13,8 @@ Users can use me as context for commands which should be available in world menu
 		^CmdShortcutCommandActivation by: $b meta for: CmdWorldMenuContext 
 "
 Class {
-	#name : #CmdWorldMenuContext,
-	#superclass : #CmdToolContext,
-	#category : #'Commander-Activators-WorldMenu'
+	#name : 'CmdWorldMenuContext',
+	#superclass : 'CmdToolContext',
+	#category : 'Commander-Activators-WorldMenu',
+	#package : 'Commander-Activators-WorldMenu'
 }

@@ -2,19 +2,15 @@
 I represent the definition of a Trait e.g.,
 
 ```
-Trait named: TBehavior
+Trait named: TEmpty
 	uses: Trait2;
 	package: 'Kernel'
 ```
 "
 Class {
-	#name : #CDTraitDefinitionNode,
-	#superclass : #CDClassDefinitionNode,
-	#category : #'ClassParser-Model'
+	#name : 'CDTraitDefinitionNode',
+	#superclass : 'CDClassDefinitionNode',
+	#category : 'ClassParser-Model',
+	#package : 'ClassParser',
+	#tag : 'Model'
 }
-
-{ #category : #visitor }
-CDTraitDefinitionNode >> acceptVisitor: aProgramNodeVisitor [
-
-	self visitTraitDefinition: self
-]

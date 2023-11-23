@@ -1,10 +1,12 @@
 Class {
-	#name : #SuperVariableTest,
-	#superclass : #TestCase,
-	#category : #'Slot-Tests-VariablesAndSlots'
+	#name : 'SuperVariableTest',
+	#superclass : 'TestCase',
+	#category : 'Slot-Tests-VariablesAndSlots',
+	#package : 'Slot-Tests',
+	#tag : 'VariablesAndSlots'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 SuperVariableTest >> testReadInContext [
 
 	| var |
@@ -14,7 +16,7 @@ SuperVariableTest >> testReadInContext [
 	self assert: [(var readInContext: thisContext)] value identicalTo: super
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SuperVariableTest >> testReadInContextClean [
 	<compilerOptions: #( +optionCleanBlockClosure)>
 	| var block |
@@ -27,7 +29,7 @@ SuperVariableTest >> testReadInContextClean [
 	self assert: (var readInContext: block value ) equals: nil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SuperVariableTest >> testUsingMethods [
 
 	|  var |

@@ -1,15 +1,17 @@
 Class {
-	#name : #ClyHierarchicalSystemItemsTest,
-	#superclass : #ClyBrowserQueryResultTest,
-	#category : #'Calypso-SystemQueries-Tests-Results'
+	#name : 'ClyHierarchicalSystemItemsTest',
+	#superclass : 'ClyBrowserQueryResultTest',
+	#category : 'Calypso-SystemQueries-Tests-Results',
+	#package : 'Calypso-SystemQueries-Tests',
+	#tag : 'Results'
 }
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 ClyHierarchicalSystemItemsTest >> createQueryResult [
 	^ClyHierarchicalSystemItemsResult new
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyHierarchicalSystemItemsTest >> testFillingWithClassesFromOneHierarchy [
 
 	queryResult fillWith: { ClySubclassN1OfClass1FromP1Mock. ClySubclassLOfSubclassMFromP3Mock. ClyClass1FromP1Mock. ClySubclassN2OfClass1FromP1Mock }.
@@ -19,7 +21,7 @@ ClyHierarchicalSystemItemsTest >> testFillingWithClassesFromOneHierarchy [
 		ClySubclassN1OfClass1FromP1Mock. 1. ClySubclassN2OfClass1FromP1Mock. 1 }
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyHierarchicalSystemItemsTest >> testFillingWithMethodsAndClasses [
 
 	queryResult fillWith: {ClyClass1FromP1Mock. ClyClass1FromP1Mock >> #tag1Method1}.
@@ -29,7 +31,7 @@ ClyHierarchicalSystemItemsTest >> testFillingWithMethodsAndClasses [
 		withValue: [ :each | each name ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyHierarchicalSystemItemsTest >> testFillingWithMethodsOfSameClass [
 
 	queryResult fillWith: (
@@ -41,7 +43,7 @@ ClyHierarchicalSystemItemsTest >> testFillingWithMethodsOfSameClass [
 		withValue: [ :each | each name ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyHierarchicalSystemItemsTest >> testFillingWithSuperclassAndSubclassMethods [
 
 	queryResult fillWith: ClyClass1FromP1Mock localMethods, ClySubclassN1OfClass1FromP1Mock localMethods.

@@ -6,46 +6,56 @@ Strangely enough it does not inherit from MCDefinition.
 Its most important method is snapshot which returns a snapshot with all the entities that should be saved. 
 "
 Class {
-	#name : #MCPackage,
-	#superclass : #Object,
+	#name : 'MCPackage',
+	#superclass : 'Object',
 	#instVars : [
-		'name'
+		'name',
+		'environment'
 	],
-	#category : #'Monticello-Base'
+	#category : 'Monticello-Base',
+	#package : 'Monticello',
+	#tag : 'Base'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MCPackage class >> named: aString [
 	^ self new name: aString
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MCPackage >> = other [
 	^ other species = self species and: [other name = name]
 ]
 
-{ #category : #accessing }
-MCPackage >> correspondingRPackage [
-
-	^ self packageOrganizer packageNamed: self name asSymbol ifAbsent: [ nil ]
-]
-
-{ #category : #printing }
+{ #category : 'printing' }
 MCPackage >> displayStringOn: aStream [
 	aStream nextPutAll: self name
 ]
 
-{ #category : #'working copies' }
+{ #category : 'accessing' }
+MCPackage >> environment [
+	"Allows to have MCPackage that are link to system packages from a non default package organizer."
+
+	^ environment ifNil: [ self class environment ]
+]
+
+{ #category : 'accessing' }
+MCPackage >> environment: anObject [
+
+	environment := anObject
+]
+
+{ #category : 'working copies' }
 MCPackage >> hasWorkingCopy [
 	^ MCWorkingCopy registry includesKey: self
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MCPackage >> hash [
 	^ name asLowercase hash
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCPackage >> isDirty [
 	
 	^ self workingCopy
@@ -53,22 +63,17 @@ MCPackage >> isDirty [
 		ifNotNil: [ :wc | wc modified ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCPackage >> name [
 	^ name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCPackage >> name: aString [
 	name := aString
 ]
 
-{ #category : #accessing }
-MCPackage >> packageSet [
-	^ RPackageSet named: name
-]
-
-{ #category : #printing }
+{ #category : 'printing' }
 MCPackage >> printOn: aStream [
 	super printOn: aStream.
 	aStream
@@ -77,40 +82,40 @@ MCPackage >> printOn: aStream [
 		nextPut: $)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCPackage >> snapshot [
-	| rPackageSet definitions categories |
-	rPackageSet := self packageSet.
-	definitions := OrderedCollection new.
-	categories := rPackageSet categoryNames asArray.
-	categories isEmpty 
-		ifFalse: [ definitions add: (MCOrganizationDefinition categories: categories) ].
-		
-	rPackageSet methods 
-		do: [:ea | definitions add: ea asMCMethodDefinition] 
-		displayingProgress: [ :ea| 'Snapshotting methods...' ].
-				
-	rPackageSet definedClasses 
-		do: [:ea | definitions addAll: ea classDefinitions] 
-		displayingProgress: [ :ea| 'Snapshotting class ', ea asString ].
-		
-	^ MCSnapshot fromDefinitions: definitions
 
+	^ MCSnapshot fromDefinitions: (self systemPackage
+			   ifNil: [ #(  ) ]
+			   ifNotNil: [ :systemPackage |
+				   OrderedCollection new
+					   add: systemPackage asMCOrganizationDefinition;
+					   addAll: (systemPackage methods collect: [ :method | method asMCMethodDefinition ]);
+					   addAll: (systemPackage definedClasses collect: [ :class | class asClassDefinition ]);
+					   yourself ])
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MCPackage >> storeOn: aStream [
 	aStream
 		nextPutAll: 'MCPackage';
 		space; nextPutAll: 'named: '; store: name.
 ]
 
-{ #category : #'working copies' }
+{ #category : 'accessing' }
+MCPackage >> systemPackage [
+	"Return the corresponding system package. Return nil if no package in the system has this name."
+
+	^ self environment organization packageNamed: self name ifAbsent: [ nil ]
+]
+
+{ #category : 'working copies' }
 MCPackage >> unload [
 	^ self workingCopy unload
 ]
 
-{ #category : #'working copies' }
+{ #category : 'working copies' }
 MCPackage >> workingCopy [
-	^ MCWorkingCopy forPackage: self.
+
+	^ MCWorkingCopy ensureForPackage: self
 ]

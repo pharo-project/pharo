@@ -16,8 +16,8 @@ optIndirectCall 		This will perform an ""indirect function call"" as explained h
 
 "
 Class {
-	#name : #FFICallout,
-	#superclass : #Object,
+	#name : 'FFICallout',
+	#superclass : 'Object',
 	#instVars : [
 		'fnSpec',
 		'options',
@@ -30,15 +30,17 @@ Class {
 	#classVars : [
 		'TypeAliases'
 	],
-	#category : #'UnifiedFFI-Callouts'
+	#category : 'UnifiedFFI-Callouts',
+	#package : 'UnifiedFFI',
+	#tag : 'Callouts'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 FFICallout class >> initialize [
 	self initializeTypeAliases
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 FFICallout class >> initializeTypeAliases [
 	"self initializeTypeAliases"
 	TypeAliases := Dictionary newFromPairs:
@@ -99,17 +101,17 @@ FFICallout class >> initializeTypeAliases [
 		ExternalAddress FFIOop)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFICallout class >> typeAliases [
 	^ TypeAliases
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FFICallout >> aliasForType: aTypeName [
 	| alias |
 
 	alias := aTypeName.
-	(requestor notNil and: [ requestor respondsTo: #externalTypeAlias: ])
+	(requestor isNotNil and: [ requestor respondsTo: #externalTypeAlias: ])
 		ifTrue: [
 			alias := requestor externalTypeAlias: aTypeName.
 			alias ifNil: [ alias := aTypeName ] ].
@@ -117,55 +119,55 @@ FFICallout >> aliasForType: aTypeName [
 	^ TypeAliases at: alias ifAbsent: [ alias ]
 ]
 
-{ #category : #configuration }
+{ #category : 'configuration' }
 FFICallout >> beNonStrict [
 
 	self beStrict: false
 ]
 
-{ #category : #configuration }
+{ #category : 'configuration' }
 FFICallout >> beStrict [
 
 	self beStrict: true
 ]
 
-{ #category : #configuration }
+{ #category : 'configuration' }
 FFICallout >> beStrict: aBoolean [
 
 	self options at: #optStrict put: aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFICallout >> fnSpec [
 	^ fnSpec
 ]
 
-{ #category : #'argument loaders' }
+{ #category : 'argument loaders' }
 FFICallout >> indirectLoader: aLoader byIndex: anIndex [
 	"I do not have a case where it is used, so I don't know how to implement it.
 	 I will wait until an use case emerge..."
 	^ self notYetImplemented
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FFICallout >> initialize [
 	super initialize.
 	options := Dictionary new
 ]
 
-{ #category : #configuration }
+{ #category : 'configuration' }
 FFICallout >> isMandatoryStringEncoding [
 
 	^ self optionAt: #optStringEncodingMandatory
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FFICallout >> isStrict [
 
 	^ self resolutionMode isStrict
 ]
 
-{ #category : #'argument loaders' }
+{ #category : 'argument loaders' }
 FFICallout >> loaderForArgNamed: argName [
 	| loader |
 	"try getting the argument from the method arguments"
@@ -185,7 +187,7 @@ FFICallout >> loaderForArgNamed: argName [
 	^ loader
 ]
 
-{ #category : #'argument loaders' }
+{ #category : 'argument loaders' }
 FFICallout >> loaderForArgNamed: argName indirectIndex: anIndex [
 	| loader |
 	loader := self loaderForArgNamed: argName.
@@ -193,7 +195,7 @@ FFICallout >> loaderForArgNamed: argName indirectIndex: anIndex [
 	^ loader
 ]
 
-{ #category : #'argument loaders' }
+{ #category : 'argument loaders' }
 FFICallout >> loaderFromMethodArgsNamed: argName [
 	| index |
 	methodArgs ifNil: [ ^ nil ].
@@ -206,54 +208,54 @@ FFICallout >> loaderFromMethodArgsNamed: argName [
 			yourself ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFICallout >> method [
 	^ method
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFICallout >> method: aMethod [
 	method := aMethod
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFICallout >> methodArgs [
 	^ methodArgs
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFICallout >> methodArgs: anArray [
 	methodArgs := anArray
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFICallout >> namedFnSpec: namedFn [
 	fnSpec := self newSpecParser parseNamedFunction: namedFn
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFICallout >> newSpecParser [
 	^ FFIFunctionParser new requestor: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFICallout >> optionAt: optionName [
 	^ self options
 		at: optionName
 		ifAbsent: false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFICallout >> options [
 	^ options
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFICallout >> options: anObject [
 	self parseOptions: anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFICallout >> parseOptions: optionsArray [
 	"parse an array, which is a sequence of options in a form of:
 
@@ -284,32 +286,32 @@ FFICallout >> parseOptions: optionsArray [
 					options at: (option allButLast: option numArgs) asSymbol put: (include and: [ option isUnary or: [ rs next ] ]) ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFICallout >> receiver [
 	^ receiver
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFICallout >> receiver: anObject [
 	receiver := anObject
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FFICallout >> receiverArgumentLoader [
 	^ FFISelfArgument new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFICallout >> requestor [
 	^ requestor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFICallout >> requestor: aRequestor [
 	requestor := aRequestor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFICallout >> resolutionMode [
 
 	^ (self optionAt: #optStrict)
@@ -317,12 +319,12 @@ FFICallout >> resolutionMode [
 		ifFalse: [ FFIInferenceResolutionMode new ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFICallout >> resolveExternalType: anObject [
 	^ (self resolveType: anObject) externalType
 ]
 
-{ #category : #configuration }
+{ #category : 'configuration' }
 FFICallout >> resolveStringEncodingStrategy [
 
 	| encodingOptions |
@@ -343,7 +345,7 @@ FFICallout >> resolveStringEncodingStrategy [
 		ifFalse: [ FFIStringEncodingStrategy forEncoding: encodingOptions anyOne ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFICallout >> resolveType: aTypeName [
 	" a type name could be
 	 - a class variable name
@@ -378,13 +380,13 @@ FFICallout >> resolveType: aTypeName [
 	^ self error: 'Unable to resolve external type: ' , aTypeName asString
 ]
 
-{ #category : #'spec parsing' }
+{ #category : 'spec parsing' }
 FFICallout >> resolveUntypedArgument: anArgument [
 
 	^ self resolutionMode resolveUndeclaredTypeForArgument: anArgument withResolver: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFICallout >> sender: aSenderContext [
 	| nArgs |
 	self requestor: aSenderContext homeMethod methodClass.
@@ -394,31 +396,31 @@ FFICallout >> sender: aSenderContext [
 	self assert: (methodArgs size = nArgs)
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 FFICallout >> shouldAutoReleaseReturnedValue [
 
 	^ self optionAt: #optAutoReleaseReturnedValue
 ]
 
-{ #category : #configuration }
+{ #category : 'configuration' }
 FFICallout >> stringEncodingStrategy [
 
 	^ stringEncodingStrategy ifNil: [
 		stringEncodingStrategy := self resolveStringEncodingStrategy ]
 ]
 
-{ #category : #configuration }
+{ #category : 'configuration' }
 FFICallout >> stringEncodingStrategy: aStringEncodingStrategy [
 
 	stringEncodingStrategy := aStringEncodingStrategy
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FFICallout >> typeName: aName pointerArity: ptrArity [
 	^ (self resolveType: aName) pointerArity: ptrArity
 ]
 
-{ #category : #errors }
+{ #category : 'errors' }
 FFICallout >> unsupportedUntypedLiteral: aLiteral [
 
 	FFIUnsupportedUntypedLiteral signalFor: aLiteral

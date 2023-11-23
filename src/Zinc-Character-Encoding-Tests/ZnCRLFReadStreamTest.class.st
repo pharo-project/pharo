@@ -1,10 +1,11 @@
 Class {
-	#name : #ZnCRLFReadStreamTest,
-	#superclass : #TestCase,
-	#category : #'Zinc-Character-Encoding-Tests'
+	#name : 'ZnCRLFReadStreamTest',
+	#superclass : 'TestCase',
+	#category : 'Zinc-Character-Encoding-Tests',
+	#package : 'Zinc-Character-Encoding-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnCRLFReadStreamTest >> testBasicStream [
 
 	| lines input output |
@@ -31,7 +32,7 @@ ZnCRLFReadStreamTest >> testBasicStream [
 		equals: output asByteArray
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnCRLFReadStreamTest >> testDoubleEnding [
 
 	| lines input output |
@@ -64,7 +65,7 @@ ZnCRLFReadStreamTest >> testDoubleEnding [
 		equals: output asByteArray
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnCRLFReadStreamTest >> testPeek [
 
 	| input stream |

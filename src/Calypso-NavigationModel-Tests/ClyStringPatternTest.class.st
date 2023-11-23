@@ -1,10 +1,11 @@
 Class {
-	#name : #ClyStringPatternTest,
-	#superclass : #TestCase,
-	#category : #'Calypso-NavigationModel-Tests'
+	#name : 'ClyStringPatternTest',
+	#superclass : 'TestCase',
+	#category : 'Calypso-NavigationModel-Tests',
+	#package : 'Calypso-NavigationModel-Tests'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyStringPatternTest class >> isAbstract [
 	^self = ClyStringPatternTest
 ]

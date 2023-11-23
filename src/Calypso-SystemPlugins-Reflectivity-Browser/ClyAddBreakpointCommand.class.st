@@ -6,40 +6,42 @@ My subclasses should implement single method:
 - applyBreakpointCondition: aBreakpoint
 "
 Class {
-	#name : #ClyAddBreakpointCommand,
-	#superclass : #ClyDebuggingCommand,
-	#category : #'Calypso-SystemPlugins-Reflectivity-Browser-Breakpoints'
+	#name : 'ClyAddBreakpointCommand',
+	#superclass : 'ClyDebuggingCommand',
+	#category : 'Calypso-SystemPlugins-Reflectivity-Browser-Breakpoints',
+	#package : 'Calypso-SystemPlugins-Reflectivity-Browser',
+	#tag : 'Breakpoints'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyAddBreakpointCommand class >> canBeExecutedInContext: aBrowserContext [
 
 	^ (super canBeExecutedInContext: aBrowserContext) and: [
 		  aBrowserContext isSelectedItemHasBreakpoint not ]
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyAddBreakpointCommand class >> contextMenuOrder [
 	<classAnnotationDependency>
 	^1
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyAddBreakpointCommand class >> isAbstract [
 	^self = ClyAddBreakpointCommand
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyAddBreakpointCommand >> applyBreakpointCondition: aBreakpoint [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyAddBreakpointCommand >> defaultMenuIconName [
 	^ #halt
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyAddBreakpointCommand >> execute [
 
 	| breakpoint |

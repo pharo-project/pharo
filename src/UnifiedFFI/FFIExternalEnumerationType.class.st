@@ -2,39 +2,41 @@
 I define the type for FFIExternalEnumeration objects.
 "
 Class {
-	#name : #FFIExternalEnumerationType,
-	#superclass : #FFIExternalReferenceType,
+	#name : 'FFIExternalEnumerationType',
+	#superclass : 'FFIExternalReferenceType',
 	#instVars : [
 		'representationType'
 	],
-	#category : #'UnifiedFFI-Types'
+	#category : 'UnifiedFFI-Types',
+	#package : 'UnifiedFFI',
+	#tag : 'Types'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 FFIExternalEnumerationType class >> naturalPointerArity [
 	^ 0
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FFIExternalEnumerationType class >> objectClass: aClass [
 	^ self objectClass: aClass representationType: FFIUInt32 new
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FFIExternalEnumerationType class >> objectClass: aClass representationType: anIntegerType [
 	^ self new
 		objectClass: aClass;
 		representationType: anIntegerType
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FFIExternalEnumerationType >> basicHandle: aHandle at: index [
 	^ self objectClass fromInteger: (aHandle
 		perform: self externalType atomicSelector
 		with: index)
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FFIExternalEnumerationType >> basicHandle: aHandle at: index put: value [
 	^ aHandle
 		perform: (self externalType atomicSelector,#put:) asSymbol
@@ -42,12 +44,12 @@ FFIExternalEnumerationType >> basicHandle: aHandle at: index put: value [
 		with: value getHandle
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalEnumerationType >> callbackReturnOn: callbackContext for: anObject [
     ^ super callbackReturnOn: callbackContext for: anObject value
 ]
 
-{ #category : #'emitting code' }
+{ #category : 'emitting code' }
 FFIExternalEnumerationType >> emitReturn: aBuilder resultTempVar: resultVar context: aContext [
 	"| tmpResult |
 
@@ -65,27 +67,27 @@ FFIExternalEnumerationType >> emitReturn: aBuilder resultTempVar: resultVar cont
 		returnTop
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalEnumerationType >> externalType [
 	^ self representationType externalType
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalEnumerationType >> externalTypeAlignment [
 	^ self representationType externalTypeAlignment
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalEnumerationType >> externalTypeSize [
 	^ self representationType externalTypeSize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalEnumerationType >> instanceVariableName [
 	^ #value
 ]
 
-{ #category : #'emitting code' }
+{ #category : 'emitting code' }
 FFIExternalEnumerationType >> offsetReadEnumAt: offsetVariableName [
 	^ String streamContents:[ :stream|
 		stream
@@ -96,20 +98,20 @@ FFIExternalEnumerationType >> offsetReadEnumAt: offsetVariableName [
 			nextPutAll:')' ]
 ]
 
-{ #category : #'emitting code' }
+{ #category : 'emitting code' }
 FFIExternalEnumerationType >> offsetReadFieldAt: offsetVariableName [
 	"Return a string defining the accessor to an entity of the receiver type starting at the given byte offset. "
 	self isPointer ifTrue: [ ^ super offsetReadFieldAt: offsetVariableName ].
 	^ self offsetReadEnumAt: offsetVariableName
 ]
 
-{ #category : #'emitting code' }
+{ #category : 'emitting code' }
 FFIExternalEnumerationType >> offsetWriteFieldAt: offsetVariableName with: valueName [
 	^ String streamContents: [ :stream |
 		stream << 'handle ' << self externalType atomicSelector << ' ' << offsetVariableName << ' put: anObject value' ]
 ]
 
-{ #category : #'emitting code' }
+{ #category : 'emitting code' }
 FFIExternalEnumerationType >> readEnumAt: byteOffset [
 	^ String streamContents:[ :stream|
 		stream
@@ -120,24 +122,24 @@ FFIExternalEnumerationType >> readEnumAt: byteOffset [
 			nextPutAll:')' ]
 ]
 
-{ #category : #'emitting code' }
+{ #category : 'emitting code' }
 FFIExternalEnumerationType >> readFieldAt: byteOffset [
 	"Return a string defining the accessor to an entity of the receiver type starting at the given byte offset. "
 	self isPointer ifTrue: [ ^ super readFieldAt: byteOffset ].
 	^ self readEnumAt: byteOffset
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalEnumerationType >> representationType [
 	^ representationType
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalEnumerationType >> representationType: anObject [
 	representationType := anObject
 ]
 
-{ #category : #'emitting code' }
+{ #category : 'emitting code' }
 FFIExternalEnumerationType >> writeFieldAt: byteOffset with: valueName [
 	^ String streamContents: [ :stream |
 		stream << 'handle ' << self externalType atomicSelector << ' ' << byteOffset asString << ' put: anObject value' ]

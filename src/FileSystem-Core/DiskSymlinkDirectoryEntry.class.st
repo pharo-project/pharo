@@ -4,19 +4,21 @@ DiskSymlinkDirectoryEntry provides the same information as DiskDirectoryEntry, b
 See DiskDirectoryEntry for more information.
 "
 Class {
-	#name : #DiskSymlinkDirectoryEntry,
-	#superclass : #DiskDirectoryEntry,
-	#category : #'FileSystem-Core-Public'
+	#name : 'DiskSymlinkDirectoryEntry',
+	#superclass : 'DiskDirectoryEntry',
+	#category : 'FileSystem-Core-Public',
+	#package : 'FileSystem-Core',
+	#tag : 'Public'
 }
 
-{ #category : #'private - accessing' }
+{ #category : 'private - accessing' }
 DiskSymlinkDirectoryEntry >> statAttributeMask [
 	"Answer the mask used to retrieve lstat() attributes"
 
 	^2r101
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiskSymlinkDirectoryEntry >> targetPath [
 	"Answer the Path pointing to the real file.
 	If the receiver is a symbolic link, answer a file reference of the target.

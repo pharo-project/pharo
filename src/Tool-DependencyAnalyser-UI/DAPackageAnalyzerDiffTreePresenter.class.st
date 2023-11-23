@@ -2,29 +2,37 @@
 A PDPackageAnalyzerDiffTreeModel is to watch what are the difference between two analysis of dependencies.
 "
 Class {
-	#name : #DAPackageAnalyzerDiffTreePresenter,
-	#superclass : #SpPresenter,
+	#name : 'DAPackageAnalyzerDiffTreePresenter',
+	#superclass : 'SpPresenter',
 	#instVars : [
 		'treeDiff',
 		'packageRelationGraphDiff'
 	],
-	#category : #'Tool-DependencyAnalyser-UI-Core'
+	#category : 'Tool-DependencyAnalyser-UI-Core',
+	#package : 'Tool-DependencyAnalyser-UI',
+	#tag : 'Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 DAPackageAnalyzerDiffTreePresenter class >> newWith: oldRelationGraph on: newRelationGraph [
 	^ self new
 		initializeWith: oldRelationGraph on: newRelationGraph;
 		yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'specs' }
+DAPackageAnalyzerDiffTreePresenter class >> title [
+
+	^ 'Package Dependencies Analysis Diff'
+]
+
+{ #category : 'initialization' }
 DAPackageAnalyzerDiffTreePresenter >> buildRoots [
 	self treeDiff roots: packageRelationGraphDiff packagesDiffToDisplay.
 	self treeDiff whenBuiltDo: [ treeDiff rootNodeHolder: [ :item | DAPackageItemDiffNode new content: item ] ]
 ]
 
-{ #category : #specs }
+{ #category : 'specs' }
 DAPackageAnalyzerDiffTreePresenter >> defaultLayout [
 
 	^ SpBoxLayout newTopToBottom
@@ -32,18 +40,18 @@ DAPackageAnalyzerDiffTreePresenter >> defaultLayout [
 		yourself
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 DAPackageAnalyzerDiffTreePresenter >> extent [
 	^ 900@900
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DAPackageAnalyzerDiffTreePresenter >> initializePresenters [
 
 	treeDiff := self newTree
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DAPackageAnalyzerDiffTreePresenter >> initializeWith: oldRelationGraph on: newRelationGraph [
 	packageRelationGraphDiff := DAPackageRelationGraphDiff new
 		oldRelationGraph: oldRelationGraph;
@@ -53,12 +61,7 @@ DAPackageAnalyzerDiffTreePresenter >> initializeWith: oldRelationGraph on: newRe
 	self buildRoots
 ]
 
-{ #category : #protocol }
-DAPackageAnalyzerDiffTreePresenter >> title [
-	^ 'Package Dependencies Analysis Diff'
-]
-
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAPackageAnalyzerDiffTreePresenter >> treeDiff [
 	^ treeDiff
 ]

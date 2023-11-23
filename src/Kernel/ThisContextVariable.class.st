@@ -1,39 +1,41 @@
 "
-I model thisContext keyword
+I model thisContext
 "
 Class {
-	#name : #ThisContextVariable,
-	#superclass : #ReservedVariable,
-	#category : #'Kernel-Variables'
+	#name : 'ThisContextVariable',
+	#superclass : 'PseudoVariable',
+	#category : 'Kernel-Variables',
+	#package : 'Kernel',
+	#tag : 'Variables'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThisContextVariable class >> variableName [
 	^#thisContext
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 ThisContextVariable >> acceptVisitor: aProgramNodeVisitor node: aNode [
 	^ aProgramNodeVisitor visitThisContextNode: aNode
 ]
 
-{ #category : #'code generation' }
+{ #category : 'code generation' }
 ThisContextVariable >> emitValue: methodBuilder [
 
 	methodBuilder pushThisContext
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ThisContextVariable >> isThisContextVariable [
 	^true
 ]
 
-{ #category : #debugging }
+{ #category : 'debugging' }
 ThisContextVariable >> readInContext: aContext [
 	^aContext
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ThisContextVariable >> usingMethods [
 	^ environment allMethods select: [ :method |
 		  method readsThisContext ]

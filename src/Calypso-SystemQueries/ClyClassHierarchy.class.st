@@ -79,32 +79,34 @@ Internal Representation and Key Implementation Points.
 	sortFunction:		<SortFunction>
 "
 Class {
-	#name : #ClyClassHierarchy,
-	#superclass : #Object,
+	#name : 'ClyClassHierarchy',
+	#superclass : 'Object',
 	#instVars : [
 		'sortFunction',
 		'inverse'
 	],
-	#category : #'Calypso-SystemQueries-Results'
+	#category : 'Calypso-SystemQueries-Results',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Results'
 }
 
-{ #category : #building }
+{ #category : 'building' }
 ClyClassHierarchy class >> buildFrom: classes [
 	^self buildFrom: classes sortedBy: ClySortByNameFunction ascending
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ClyClassHierarchy class >> buildFrom: classes sortedBy: aSortFunction [
 	^(self sortedBy: aSortFunction)
 		buildFrom: classes
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ClyClassHierarchy class >> buildInverseFrom: classes [
 	^self buildInverseFrom: classes sortedBy: ClySortByNameFunction ascending
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ClyClassHierarchy class >> buildInverseFrom: classes sortedBy: aSortFunction [
 
 	^(self sortedBy: aSortFunction)
@@ -112,30 +114,30 @@ ClyClassHierarchy class >> buildInverseFrom: classes sortedBy: aSortFunction [
 		buildFrom: classes
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyClassHierarchy class >> inverse [
 	^self new
 		inverse: true
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyClassHierarchy class >> new [
 	^super new
 		sortFunction: ClySortByNameFunction ascending
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyClassHierarchy class >> sortedBy: aSortFunction [
 	^super new
 		sortFunction: aSortFunction
 ]
 
-{ #category : #composition }
+{ #category : 'composition' }
 ClyClassHierarchy >> , anotherHierarchy [
 	^ClyMergedHierarchy merge: { self. anotherHierarchy }
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ClyClassHierarchy >> = anObject [
 	"Answer whether the receiver and anObject represent the same object."
 
@@ -147,13 +149,13 @@ ClyClassHierarchy >> = anObject [
 		and: [ inverse = anObject isInverse ]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ClyClassHierarchy >> asQueryResult [
 
 	^ClyHierarchicallySortedClassesResult with: self
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ClyClassHierarchy >> buildFrom: classes [
 	| map |
 	map := ClyClassHierarchyMap for: self of: classes.
@@ -161,63 +163,63 @@ ClyClassHierarchy >> buildFrom: classes [
 	^map
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ClyClassHierarchy >> buildParentMap: aHierarchyMap for: aClass [
 	self subclassResponsibility
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ClyClassHierarchy >> containerForChildren [
 	^SortedCollection sortBlock: sortFunction
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ClyClassHierarchy >> hash [
 	"Answer an integer value that is related to the identity of the receiver."
 
 	^ sortFunction hash bitXor: inverse hash
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyClassHierarchy >> initialize [
 	super initialize.
 	inverse := false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyClassHierarchy >> inverse: aBoolean [
 	inverse := aBoolean
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ClyClassHierarchy >> inverted [
 	^self copy
 		inverse: inverse not
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyClassHierarchy >> isInverse [
 	^inverse
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyClassHierarchy >> printOn: aStream [
 	super printOn: aStream.
 
 	inverse ifTrue: [ aStream nextPutAll: '(inverse)']
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyClassHierarchy >> sortFunction [
 	^ sortFunction
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyClassHierarchy >> sortFunction: anObject [
 	sortFunction := anObject
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ClyClassHierarchy >> sortedBy: aSortFunction [
 	^self copy
 		sortFunction: aSortFunction

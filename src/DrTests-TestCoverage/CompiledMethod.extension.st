@@ -1,6 +1,6 @@
-Extension { #name : #CompiledMethod }
+Extension { #name : 'CompiledMethod' }
 
-{ #category : #'*DrTests-TestCoverage' }
+{ #category : '*DrTests-TestCoverage' }
 CompiledMethod >> drTestsName [
 	^ self printString
 ]

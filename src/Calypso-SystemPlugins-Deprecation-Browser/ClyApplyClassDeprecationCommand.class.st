@@ -3,42 +3,43 @@ I am a command to apply class deprecation in system.
 I ask class itself to get target refactorings and then execute them
 "
 Class {
-	#name : #ClyApplyClassDeprecationCommand,
-	#superclass : #SycSingleClassCommand,
-	#category : #'Calypso-SystemPlugins-Deprecation-Browser'
+	#name : 'ClyApplyClassDeprecationCommand',
+	#superclass : 'SycSingleClassCommand',
+	#category : 'Calypso-SystemPlugins-Deprecation-Browser',
+	#package : 'Calypso-SystemPlugins-Deprecation-Browser'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyApplyClassDeprecationCommand class >> canBeExecutedInContext: aToolContext [
 	^(super canBeExecutedInContext: aToolContext)
 		and: [ aToolContext selectedClassItems last isMarkedWith: ClyDeprecatedItemTag  ]
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyApplyClassDeprecationCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
 
 	^CmdContextMenuActivation byRootGroupItemFor: ClyClass asCalypsoItemContext
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyApplyClassDeprecationCommand >> asRefactorings [
 
 	^targetClass deprecationRefactorings
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyApplyClassDeprecationCommand >> defaultMenuItemName [
 	^'Apply deprecation'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyApplyClassDeprecationCommand >> execute [
 
 	self executeRefactorings
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyApplyClassDeprecationCommand >> isComplexRefactoring [
 	^true
 ]

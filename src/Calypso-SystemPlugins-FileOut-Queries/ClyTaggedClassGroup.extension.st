@@ -1,6 +1,6 @@
-Extension { #name : #ClyTaggedClassGroup }
+Extension { #name : 'ClyTaggedClassGroup' }
 
-{ #category : #'*Calypso-SystemPlugins-FileOut-Queries' }
+{ #category : '*Calypso-SystemPlugins-FileOut-Queries' }
 ClyTaggedClassGroup >> fileOut [
 
 	classQuery scope packagesDo: [ :each |

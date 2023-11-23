@@ -1,6 +1,6 @@
-Extension { #name : #RBVariableEnvironment }
+Extension { #name : 'RBVariableEnvironment' }
 
-{ #category : #'*Manifest-Core' }
+{ #category : '*Manifest-Core' }
 RBVariableEnvironment >> smallLintCritics [
 	^ self classes
 ]

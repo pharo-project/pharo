@@ -8,28 +8,30 @@ Structure:
 
 "
 Class {
-	#name : #IRPrimitive,
-	#superclass : #Object,
+	#name : 'IRPrimitive',
+	#superclass : 'Object',
 	#instVars : [
 		'primitiveNum',
 		'spec'
 	],
-	#category : #'OpalCompiler-Core-Bytecode'
+	#category : 'OpalCompiler-Core-Bytecode',
+	#package : 'OpalCompiler-Core',
+	#tag : 'Bytecode'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 IRPrimitive class >> from: aPragmaNode [
 
 	^ self new initializeFrom: aPragmaNode
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 IRPrimitive class >> null [
 
 	^ self new num: 0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRPrimitive >> initializeFrom: aPragmaNode [
 
 	primitiveNum := 0.
@@ -39,25 +41,25 @@ IRPrimitive >> initializeFrom: aPragmaNode [
 		with: 0 with: 0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRPrimitive >> num [
 
 	^ primitiveNum
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRPrimitive >> num: n [
 
 	primitiveNum := n
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 IRPrimitive >> printOn: aStream [
 
 	aStream nextPutAll: 'primitive '; print: primitiveNum
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 IRPrimitive >> printPrimitiveOn: aStream [
 	"Print the primitive on aStream"
 
@@ -88,20 +90,20 @@ IRPrimitive >> printPrimitiveOn: aStream [
 	aStream nextPut: $>
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 IRPrimitive >> sourceText [
 
 	^ String streamContents: [:stream |
 		self printPrimitiveOn: stream]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRPrimitive >> spec [
 
 	^ spec
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRPrimitive >> spec: literal [
 
 	spec := literal

@@ -14,28 +14,29 @@ Internal Representation and Key Implementation Points.
 
 "
 Class {
-	#name : #PropertySortFunction,
-	#superclass : #ComposedSortFunction,
+	#name : 'PropertySortFunction',
+	#superclass : 'ComposedSortFunction',
 	#instVars : [
 		'property'
 	],
-	#category : #'SortFunctions-Core'
+	#category : 'SortFunctions-Core',
+	#package : 'SortFunctions-Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 PropertySortFunction class >> property: selectorOrOneArgBlock [
 	^self new
 		property: selectorOrOneArgBlock
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 PropertySortFunction class >> property: selectorOrOneArgBlock collatedWith: aSortFunction [
 	^self new
 		property: selectorOrOneArgBlock;
 		baseSortFunction: aSortFunction
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 PropertySortFunction >> = anObject [
 	"Answer whether the receiver and anObject represent the same object."
 
@@ -47,29 +48,29 @@ PropertySortFunction >> = anObject [
 		and: [ property = anObject property ]
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 PropertySortFunction >> collate: anObject with: another [
 	^ baseSortFunction collate: (property value: anObject) with: (property value: another)
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 PropertySortFunction >> hash [
 	"Answer an integer value that is related to the identity of the receiver."
 
 	^ super hash bitXor: property hash
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PropertySortFunction >> property [
 	^ property
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PropertySortFunction >> property: aValuable [
 	property := aValuable
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 PropertySortFunction >> undefinedFirst [
 	"apply on the property"
 	^self class
@@ -77,7 +78,7 @@ PropertySortFunction >> undefinedFirst [
 		collatedWith: baseSortFunction undefinedFirst
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 PropertySortFunction >> undefinedLast [
 	"apply on the property"
 	^self class

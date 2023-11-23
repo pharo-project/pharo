@@ -5,22 +5,24 @@ When I am readed back I just read the first character of the value.
 My value is always a String
 "
 Class {
-	#name : #HECharacter,
-	#superclass : #HEByteString,
-	#category : #'Hermes-Model'
+	#name : 'HECharacter',
+	#superclass : 'HEByteString',
+	#category : 'Hermes-Model',
+	#package : 'Hermes',
+	#tag : 'Model'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HECharacter class >> tag [
 	^ 5
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 HECharacter >> asLiteralIn: env [
 	^ value at:1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HECharacter >> value: aValue [
 	value := aValue asString
 ]

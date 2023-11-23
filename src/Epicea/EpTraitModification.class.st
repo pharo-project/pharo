@@ -2,16 +2,18 @@
 I represent the modification of a trait.
 "
 Class {
-	#name : #EpTraitModification,
-	#superclass : #EpTraitChange,
+	#name : 'EpTraitModification',
+	#superclass : 'EpTraitChange',
 	#instVars : [
 		'oldTrait',
 		'newTrait'
 	],
-	#category : #'Epicea-Model'
+	#category : 'Epicea-Model',
+	#package : 'Epicea',
+	#tag : 'Model'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 EpTraitModification class >> oldTrait: anOldTrait newTrait: aNewTrait [
 
 	^ self basicNew
@@ -19,30 +21,30 @@ EpTraitModification class >> oldTrait: anOldTrait newTrait: aNewTrait [
 		yourself
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpTraitModification >> accept: aVisitor [
 
 	^ aVisitor visitTraitModification: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpTraitModification >> behaviorAffected [
 	^ newTrait
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpTraitModification >> behaviorAffectedName [
 
 	^ newTrait name
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 EpTraitModification >> hasChanges [
 	^ oldTrait definitionSource ~= newTrait definitionSource or: [
 		oldTrait classSide definitionSource ~= newTrait classSide definitionSource ]
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 EpTraitModification >> initializeOldTrait: anOldTrait newTrait: aNewTrait [
 
 	self initialize.
@@ -50,13 +52,13 @@ EpTraitModification >> initializeOldTrait: anOldTrait newTrait: aNewTrait [
 	newTrait := aNewTrait asEpiceaRingDefinition
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpTraitModification >> newTrait [
 
 	^ newTrait
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpTraitModification >> oldTrait [
 
 	^ oldTrait

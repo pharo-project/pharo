@@ -29,22 +29,24 @@ To remove to be able to remove the sources (.changes and .sources), you only hav
 N.B: Users that redefine the FFI API (like TLGitCalloutTrait >> call:options:) also have to wear the pragma. See also FFIAdditionalFFIMethodState and FDBDecompiler>>createNArgs:
 "
 Class {
-	#name : #FFICompilerPlugin,
-	#superclass : #OCStaticASTCompilerPlugin,
+	#name : 'FFICompilerPlugin',
+	#superclass : 'OCStaticASTCompilerPlugin',
 	#classVars : [
 		'FFICalloutSelectors'
 	],
-	#category : #'UnifiedFFI-Base'
+	#category : 'UnifiedFFI-Base',
+	#package : 'UnifiedFFI',
+	#tag : 'Base'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFICompilerPlugin class >> ffiCalloutSelectors [
 	<script: 'self ffiCalloutSelectors inspect'>
 
 	^FFICalloutSelectors ifNil: [ self initializeFFICalloutSelectors ]
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 FFICompilerPlugin class >> initialize [
 
 	self
@@ -53,13 +55,13 @@ FFICompilerPlugin class >> initialize [
 		install
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FFICompilerPlugin class >> initializeFFICalloutSelectors [
 
 	FFICalloutSelectors := (Pragma allNamed: #ffiCalloutTranslator) collect: [ :pragma | pragma method selector ] as: IdentitySet
 ]
 
-{ #category : #installation }
+{ #category : 'installation' }
 FFICompilerPlugin class >> install [
 	<script>
 	(CompilationContext defaultTransformationPlugins includes: self)
@@ -68,31 +70,31 @@ FFICompilerPlugin class >> install [
 	self recompileSenders
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FFICompilerPlugin class >> priority [
 	^ 2
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FFICompilerPlugin class >> recompileSenders [
 
 	self ffiCalloutSelectors do: [ :selector | selector senders do: [ :sender | sender recompile ] ]
 ]
 
-{ #category : #installation }
+{ #category : 'installation' }
 FFICompilerPlugin class >> uninstall [
 	<script>
 	CompilationContext removeDefaultTransformationPlugin: self.
 	self recompileSenders
 ]
 
-{ #category : #'private - accessing' }
+{ #category : 'private - accessing' }
 FFICompilerPlugin >> ffiCalloutSelectors [
 
 	^ self class ffiCalloutSelectors
 ]
 
-{ #category : #'private - transforming' }
+{ #category : 'private - transforming' }
 FFICompilerPlugin >> transform [
 	"While plugin is used to compile every method we can use it for two purposes:
 		- collect all ffiCallout selectors like ffiCall:, nbCall:
@@ -104,7 +106,7 @@ FFICompilerPlugin >> transform [
 	^ ast
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 FFICompilerPlugin >> transformsFFIMethod [
 
 	(ast hasPragmaNamed: #ffiCalloutTranslator)

@@ -49,8 +49,8 @@ Instance variables:
 	bottomOffset 	<Integer>	Fixed pixel offset to apply after fractional positioning (e.g., ""10 pixel right of the center of the owner"")
 "
 Class {
-	#name : #LayoutFrame,
-	#superclass : #Object,
+	#name : 'LayoutFrame',
+	#superclass : 'Object',
 	#instVars : [
 		'leftFraction',
 		'leftOffset',
@@ -61,10 +61,12 @@ Class {
 		'bottomFraction',
 		'bottomOffset'
 	],
-	#category : #'Morphic-Base-Layouts'
+	#category : 'Morphic-Base-Layouts',
+	#package : 'Morphic-Base',
+	#tag : 'Layouts'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 LayoutFrame class >> example [
 	<script>
 	| m s frame |
@@ -85,7 +87,7 @@ LayoutFrame class >> example [
 	m openInWorld
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 LayoutFrame class >> example2 [
 	<script>
 	| m s frame |
@@ -102,13 +104,13 @@ LayoutFrame class >> example2 [
 	m openInWorld
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 LayoutFrame class >> identity [
 	"by default a layout frame is initialized to represent the identity transformation"
 	^ self new
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 LayoutFrame >> = aFrame [
 	^self species = aFrame species
 		and:[ self leftFraction == aFrame leftFraction
@@ -121,7 +123,7 @@ LayoutFrame >> = aFrame [
 		and:[ self bottomOffset == aFrame bottomOffset]]]]]]]]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 LayoutFrame >> asArray [
 
 	^ { leftFraction .
@@ -134,39 +136,39 @@ LayoutFrame >> asArray [
 		bottomOffset }
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 LayoutFrame >> asLayoutFrame [
 	 ^self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LayoutFrame >> bottomFraction [
 	^ bottomFraction
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LayoutFrame >> bottomFraction: aNumber [
 	bottomFraction := aNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LayoutFrame >> bottomFraction: aNumber offset: anInteger [
 
 	bottomFraction := aNumber.
 	bottomOffset := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LayoutFrame >> bottomOffset [
 	^bottomOffset
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LayoutFrame >> bottomOffset: anInteger [
 	bottomOffset := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LayoutFrame >> bottomRightOffset: aPoint [
 	"If you construct a point on purpose to call this method, better use directly the correct accessors, i.e.
 	bottomRightOffset: 100 @ 200
@@ -179,7 +181,7 @@ LayoutFrame >> bottomRightOffset: aPoint [
 	rightOffset := aPoint x
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 LayoutFrame >> center: targetMorph with: anotherMorph [
 	"Change the receiver to center the targetMorph with anotherMorph.
 	Note the targetMorph is the morph on which the receiver will be applied.
@@ -190,14 +192,14 @@ LayoutFrame >> center: targetMorph with: anotherMorph [
 	self leftOffset: (anotherMorph width - targetMorph width) // 2
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LayoutFrame >> fractionRectangle [
 	"Return a rectangle representing the fraction part of layout frame: i.e left@top corner: right@bottom"
 
 	^ leftFraction @ topFraction corner: rightFraction @ bottomFraction
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LayoutFrame >> fromArray: anArray [
 	| str |
 	str := anArray readStream.
@@ -207,13 +209,13 @@ LayoutFrame >> fromArray: anArray [
 	 ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 LayoutFrame >> hasNoOffsets [
 
 	^ leftOffset = 0 and: [rightOffset = 0  and: [ topOffset = 0 and: [ bottomOffset = 0 ]]]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 LayoutFrame >> hash [
 	^(((((((( self species hash
 		+ leftFraction hash) hashMultiply
@@ -226,7 +228,7 @@ LayoutFrame >> hash [
 		+ bottomOffset hash) hashMultiply
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 LayoutFrame >> initialize [
 	"initialize defaults:
 	 - all offsets are zero
@@ -237,53 +239,53 @@ LayoutFrame >> initialize [
 	rightFraction := bottomFraction := 1
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 LayoutFrame >> isSelfEvaluating [
 	^ false
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 LayoutFrame >> layout: oldBounds in: newBounds [
 	"Return the proportional rectangle insetting the given bounds"
 
 	^ self transform: newBounds
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LayoutFrame >> leftFraction [
 	^leftFraction
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LayoutFrame >> leftFraction: aNumber [
 	leftFraction := aNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LayoutFrame >> leftFraction: aNumber offset: anInteger [
 
 	leftFraction := aNumber.
 	leftOffset := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LayoutFrame >> leftOffset [
 	^leftOffset
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LayoutFrame >> leftOffset: anInteger [
 	leftOffset := anInteger
 ]
 
-{ #category : #'objects from disk' }
+{ #category : 'objects from disk' }
 LayoutFrame >> negateBottomRightOffsets [
 
 	bottomOffset := bottomOffset negated.
 	rightOffset := rightOffset negated
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 LayoutFrame >> printOn: aStream [
 
 	super printOn: aStream.
@@ -299,7 +301,7 @@ LayoutFrame >> printOn: aStream [
 		nextPutAll: 'px ) '
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 LayoutFrame >> printOnForHelpingMigration: aStream [
 	aStream
 		nextPutAll: '(' ;
@@ -318,51 +320,51 @@ LayoutFrame >> printOnForHelpingMigration: aStream [
 		nextPutAll: ') '
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LayoutFrame >> rightFraction [
 	^rightFraction
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LayoutFrame >> rightFraction: aNumber [
 	rightFraction := aNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LayoutFrame >> rightFraction: aNumber offset: anInteger [
 
 	rightFraction := aNumber.
 	rightOffset := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LayoutFrame >> rightOffset [
 	^rightOffset
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LayoutFrame >> rightOffset: anInteger [
 	rightOffset := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LayoutFrame >> topFraction [
 	^topFraction
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LayoutFrame >> topFraction: aNumber [
 	topFraction := aNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LayoutFrame >> topFraction: aNumber offset: anInteger [
 
 	topFraction := aNumber.
 	topOffset := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LayoutFrame >> topLeftOffset: aPoint [
 	"If you construct a point on purpose to call this method, better use directly the correct accessors, i.e.
 	topLeftOffset: 100 @ 200
@@ -374,17 +376,17 @@ LayoutFrame >> topLeftOffset: aPoint [
 	leftOffset := aPoint x
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LayoutFrame >> topOffset [
 	^topOffset
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LayoutFrame >> topOffset: anInteger [
 	topOffset := anInteger
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 LayoutFrame >> transform: outerReferenceRectangle [
 	"Answer a new rectangle which transformed by receiver relative to outerReferenceRectangle.
 	If it is not possible to place a outerReferenceRectangle *inside*  this reference rectangle, then result will be zero-width (or zero-height) rectangle. Basically you transform to obtain a subrectangle area inside the reference rectangle"

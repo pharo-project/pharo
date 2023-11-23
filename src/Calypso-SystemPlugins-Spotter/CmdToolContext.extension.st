@@ -1,6 +1,6 @@
-Extension { #name : #CmdToolContext }
+Extension { #name : 'CmdToolContext' }
 
-{ #category : #'*Calypso-SystemPlugins-Spotter' }
+{ #category : '*Calypso-SystemPlugins-Spotter' }
 CmdToolContext >> asGoToSpotterCandidate [
 	^nil
 ]

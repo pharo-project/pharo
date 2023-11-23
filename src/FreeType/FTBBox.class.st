@@ -2,8 +2,8 @@
 I represent the FT_BBox type
 "
 Class {
-	#name : #FTBBox,
-	#superclass : #FFIExternalStructure,
+	#name : 'FTBBox',
+	#superclass : 'FFIExternalStructure',
 	#classVars : [
 		'OFFSET_XMAX',
 		'OFFSET_XMIN',
@@ -13,10 +13,12 @@ Class {
 	#pools : [
 		'FT2Types'
 	],
-	#category : #'FreeType-Bindings'
+	#category : 'FreeType-Bindings',
+	#package : 'FreeType',
+	#tag : 'Bindings'
 }
 
-{ #category : #'field definition' }
+{ #category : 'field definition' }
 FTBBox class >> fieldsDesc [
 
 	"self rebuildFieldAccessors"
@@ -29,56 +31,56 @@ FTBBox class >> fieldsDesc [
 )
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 FTBBox >> xMax [
 	"This method was automatically generated"
 
 	^ handle platformLongAt: OFFSET_XMAX
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 FTBBox >> xMax: anObject [
 	"This method was automatically generated"
 
 	^ handle platformLongAt: OFFSET_XMAX put: anObject
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 FTBBox >> xMin [
 	"This method was automatically generated"
 
 	^ handle platformLongAt: OFFSET_XMIN
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 FTBBox >> xMin: anObject [
 	"This method was automatically generated"
 
 	^ handle platformLongAt: OFFSET_XMIN put: anObject
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 FTBBox >> yMax [
 	"This method was automatically generated"
 
 	^ handle platformLongAt: OFFSET_YMAX
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 FTBBox >> yMax: anObject [
 	"This method was automatically generated"
 
 	^ handle platformLongAt: OFFSET_YMAX put: anObject
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 FTBBox >> yMin [
 	"This method was automatically generated"
 
 	^ handle platformLongAt: OFFSET_YMIN
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 FTBBox >> yMin: anObject [
 	"This method was automatically generated"
 

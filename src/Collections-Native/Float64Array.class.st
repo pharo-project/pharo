@@ -1,11 +1,13 @@
 Class {
-	#name : #Float64Array,
-	#superclass : #ArrayedCollection,
-	#type : #DoubleWordLayout,
-	#category : #'Collections-Native-Base'
+	#name : 'Float64Array',
+	#superclass : 'ArrayedCollection',
+	#type : 'DoubleWordLayout',
+	#category : 'Collections-Native-Base',
+	#package : 'Collections-Native',
+	#tag : 'Base'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Float64Array >> at64Bits: byteIndex [
 
 	<primitive: 614>
@@ -14,7 +16,7 @@ Float64Array >> at64Bits: byteIndex [
 	^ Float fromIEEE64BitWord: (self basicAt: elementIndex)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Float64Array >> at64Bits: byteIndex put: aFloat [
 
 	<primitive: 629>
@@ -24,13 +26,13 @@ Float64Array >> at64Bits: byteIndex put: aFloat [
 	^ aFloat
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Float64Array >> at: anIndex [
 
 	^ self at64Bits: anIndex - 1 * 8
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Float64Array >> at: anIndex put: aFloat [
 
 	^ self at64Bits: anIndex - 1 * 8 put: aFloat

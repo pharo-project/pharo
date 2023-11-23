@@ -1,51 +1,51 @@
 Class {
-	#name : #MCPackageTest,
-	#superclass : #MCTestCase,
-	#category : #'Monticello-Tests-Base'
+	#name : 'MCPackageTest',
+	#superclass : 'MCTestCase',
+	#category : 'Monticello-Tests-Base',
+	#package : 'Monticello-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 MCPackageTest >> aMethodRemoved: anEvent [
 	"Force cleaning of the protocol."
 
-	(anEvent protocol name = self mockExtensionMethodCategory and: [ anEvent methodClass == MCSnapshotTest ]) ifTrue: [
-		anEvent methodClass removeProtocolIfEmpty: self mockExtensionMethodCategory ]
+	(anEvent protocol name = self mockExtensionProtocol and: [ anEvent methodClass == MCSnapshotTest ]) ifTrue: [
+		anEvent methodClass removeProtocolIfEmpty: self mockExtensionProtocol ]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 MCPackageTest >> tearDown [
 	self mockSnapshot install.
 	MCDataStream initialize. "MCMockClassG ends up in the DataStream TypeMap -- we need to reset"
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCPackageTest >> testUnload [
 
-	| mock |
 	self mockPackage unload.
 	self deny: (testingEnvironment hasClassNamed: #MCMockClassA).
 	self deny: (MCSnapshotTest includesSelector: #mockClassExtension).
-	self deny: (MCSnapshotTest hasProtocol: self mockExtensionMethodCategory).
-	mock := testingEnvironment at: #MCMock.
-	self assert: (mock subclasses
+	self deny: (MCSnapshotTest hasProtocol: self mockExtensionProtocol).
+	testingEnvironment at: #MCMockClassA ifPresent: [ self fail ].
+	self assert: (Object subclasses
 			 detect: [ :c | c name = #MCMockClassA ]
 			 ifNone: [  ]) isNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCPackageTest >> testUnloadWithAdditionalTracking [
 	"This is to test against another entity removing the extension protocol as well."
 
-	| mock |
 	SystemAnnouncer uniqueInstance when: MethodRemoved send: #aMethodRemoved: to: self.
 	self assert: (SystemAnnouncer uniqueInstance hasSubscriber: self).
 	self mockPackage unload.
 	self deny: (testingEnvironment hasClassNamed: #MCMockClassA).
 	self deny: (MCSnapshotTest includesSelector: #mockClassExtension).
-	self deny: (MCSnapshotTest hasProtocol: self mockExtensionMethodCategory).
-	mock := testingEnvironment at: #MCMock.
-	self assert: (mock subclasses
+	self deny: (MCSnapshotTest hasProtocol: self mockExtensionProtocol).
+	testingEnvironment at: #MCMockClassA ifPresent: [ self fail ].
+	self assert: (Object subclasses
 			 detect: [ :c | c name = #MCMockClassA ]
 			 ifNone: [  ]) isNil.
 	SystemAnnouncer uniqueInstance unsubscribe: self.

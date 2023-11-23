@@ -5,39 +5,41 @@ Note that the order is not garanteed -- see TEqualityTest for that.
 
 "
 Trait {
-	#name : #TCopyTest,
-	#category : #'Collections-Abstract-Tests-Traits'
+	#name : 'TCopyTest',
+	#category : 'Collections-Abstract-Tests-Traits',
+	#package : 'Collections-Abstract-Tests',
+	#tag : 'Traits'
 }
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TCopyTest >> collectionNotIncluded [
 " return a collection for wich each element is not included in 'nonEmpty' "
 	^ self explicitRequirement
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TCopyTest >> collectionWithElementsToRemove [
 " return a collection of elements included in 'nonEmpty'  "
 	^ self explicitRequirement
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TCopyTest >> elementToAdd [
 " return an element of type 'nonEmpy' elements'type'  not  yet included in nonEmpty"
 	^ self explicitRequirement
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TCopyTest >> empty [
 	^ self explicitRequirement
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TCopyTest >> nonEmpty [
 	^ self explicitRequirement
 ]
 
-{ #category : #'tests - fixture' }
+{ #category : 'tests - fixture' }
 TCopyTest >> test0CopyTest [
 	self empty.
 	self assertEmpty: self empty.
@@ -51,7 +53,7 @@ TCopyTest >> test0CopyTest [
 	self collectionNotIncluded do: [ :each | self deny: (self nonEmpty includes: each) ]
 ]
 
-{ #category : #'tests - copy' }
+{ #category : 'tests - copy' }
 TCopyTest >> testCopyEmptyWith [
 
 	| res anElement |
@@ -61,7 +63,7 @@ TCopyTest >> testCopyEmptyWith [
 	self assert: (res includes: (anElement value))
 ]
 
-{ #category : #'tests - copy' }
+{ #category : 'tests - copy' }
 TCopyTest >> testCopyEmptyWithout [
 
 	| res |
@@ -70,7 +72,7 @@ TCopyTest >> testCopyEmptyWithout [
 	self deny: (res includes: self elementToAdd)
 ]
 
-{ #category : #'tests - copy' }
+{ #category : 'tests - copy' }
 TCopyTest >> testCopyEmptyWithoutAll [
 
 	| res |
@@ -79,7 +81,7 @@ TCopyTest >> testCopyEmptyWithoutAll [
 	self collectionWithElementsToRemove do: [ :each | self deny: (res includes: each) ]
 ]
 
-{ #category : #'tests - copy' }
+{ #category : 'tests - copy' }
 TCopyTest >> testCopyEquals [
 	"A copy should be equivalent to the things it's a copy of."
 
@@ -88,7 +90,7 @@ TCopyTest >> testCopyEquals [
 	self assert: copy equals: self nonEmpty
 ]
 
-{ #category : #'tests - copy' }
+{ #category : 'tests - copy' }
 TCopyTest >> testCopyNonEmptyWith [
 
 	| res anElement |
@@ -101,7 +103,7 @@ TCopyTest >> testCopyNonEmptyWith [
 	self nonEmpty do: [ :each | res includes: each ]
 ]
 
-{ #category : #'tests - copy' }
+{ #category : 'tests - copy' }
 TCopyTest >> testCopyNonEmptyWithout [
 
 	| res anElementOfTheCollection |
@@ -116,7 +118,7 @@ TCopyTest >> testCopyNonEmptyWithout [
 					ifFalse: [self assert: (res includes: each)]]
 ]
 
-{ #category : #'tests - copy' }
+{ #category : 'tests - copy' }
 TCopyTest >> testCopyNonEmptyWithoutAll [
 
 	| res |
@@ -130,7 +132,7 @@ TCopyTest >> testCopyNonEmptyWithoutAll [
 		(self collectionWithElementsToRemove includes: each) ifFalse: [ self assert: (res includes: each) ] ]
 ]
 
-{ #category : #'tests - copy' }
+{ #category : 'tests - copy' }
 TCopyTest >> testCopyNonEmptyWithoutAllNotIncluded [
 
 	| res |
@@ -141,7 +143,7 @@ TCopyTest >> testCopyNonEmptyWithoutAllNotIncluded [
 	self nonEmpty do: [ :each | self assert: (res includes: each) ]
 ]
 
-{ #category : #'tests - copy' }
+{ #category : 'tests - copy' }
 TCopyTest >> testCopyNonEmptyWithoutNotIncluded [
 
 	| res |
@@ -152,7 +154,7 @@ TCopyTest >> testCopyNonEmptyWithoutNotIncluded [
 	self nonEmpty do: [ :each | self assert: (res includes: each) ]
 ]
 
-{ #category : #'tests - copy' }
+{ #category : 'tests - copy' }
 TCopyTest >> testCopyNotSame [
 	"A copy of a collection should always be of the same class as the instance it copies"
 
@@ -161,7 +163,7 @@ TCopyTest >> testCopyNotSame [
 	self deny: copy  == self nonEmpty
 ]
 
-{ #category : #'tests - copy' }
+{ #category : 'tests - copy' }
 TCopyTest >> testCopySameClass [
 	"A copy of a collection should always be of the same class as the instance it copies"
 

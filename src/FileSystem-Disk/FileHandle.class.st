@@ -4,30 +4,32 @@ I provide an interface for doing IO on an open file. I keep an id, which as an o
 I implement the primitives on my class side.
 "
 Class {
-	#name : #FileHandle,
-	#superclass : #FileSystemHandle,
+	#name : 'FileHandle',
+	#superclass : 'FileSystemHandle',
 	#instVars : [
 		'id'
 	],
 	#classVars : [
 		'Registry'
 	],
-	#category : #'FileSystem-Disk-Base'
+	#category : 'FileSystem-Disk-Base',
+	#package : 'FileSystem-Disk',
+	#tag : 'Base'
 }
 
-{ #category : #registry }
+{ #category : 'registry' }
 FileHandle class >> register: aFileHandle [
 	"properly register the given FileHandle for being closed on garbage collection"
 	^self registry add: aFileHandle
 ]
 
-{ #category : #registry }
+{ #category : 'registry' }
 FileHandle class >> registry [
 
 	^ Registry ifNil: [ Registry := FinalizationRegistry new ]
 ]
 
-{ #category : #'system startup' }
+{ #category : 'system startup' }
 FileHandle class >> startUp: resuming [
 	"This functionality is disabled for now, to avoid doing a lot of processing at
 	image start up. To reenable, add this class to the start up list."
@@ -35,13 +37,13 @@ FileHandle class >> startUp: resuming [
 	resuming ifTrue: [self allInstancesDo: [:ea | ea startUp]]
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 FileHandle >> assureOpen [
 	"Compatibility method to make the FileHandle Tests pass"
 	self isOpen ifFalse: [ id := self basicOpen ]
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 FileHandle >> at: index read: buffer startingAt: start count: count [
 
 	self flag: 'TODO: remove once FileHandles are really used!'.
@@ -52,7 +54,7 @@ FileHandle >> at: index read: buffer startingAt: start count: count [
 		read: id into: buffer startingAt: start count: count
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 FileHandle >> at: index write: buffer startingAt: start count: count [
 
 	self flag: 'TODO: remove once FileHandles are really used!'.
@@ -63,28 +65,28 @@ FileHandle >> at: index write: buffer startingAt: start count: count [
 		write: id from: buffer startingAt: start count: count
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 FileHandle >> binaryReadStream [
 	^ (File named: reference fullName) readStream
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 FileHandle >> binaryWriteStream [
 	^ (File named: reference fullName) writeStream
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 FileHandle >> close [
 	File close: id.
 	id := nil
 ]
 
-{ #category : #finalization }
+{ #category : 'finalization' }
 FileHandle >> finalize [
 	File close: id
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 FileHandle >> flush [
 
 	self flag: 'TODO: remove once FileHandles are really used!'.
@@ -93,12 +95,12 @@ FileHandle >> flush [
 	File flush: id
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FileHandle >> isOpen [
-	^ (File sizeOrNil: id) notNil
+	^ (File sizeOrNil: id) isNotNil
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 FileHandle >> open [
 	self flag: 'TODO: for now we solely rely on the old FileStreams'
 	"id := self basicOpen.
@@ -107,13 +109,13 @@ FileHandle >> open [
 		self error: 'Unable to open file ' , reference printString]"
 ]
 
-{ #category : #finalization }
+{ #category : 'finalization' }
 FileHandle >> register [
 	"register the instance for proper clreanup on garbage collection"
 	^self class register: self
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 FileHandle >> size [
 
 	self flag: 'TODO: remove once FileHandles are really used!'.
@@ -122,7 +124,7 @@ FileHandle >> size [
 	^ File sizeOf: id
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FileHandle >> startUp [
 	"This functionality is disabled for now, to avoid doing lots of processing
 	on start up."
@@ -134,14 +136,14 @@ FileHandle >> startUp [
 	self basicOpen
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 FileHandle >> streamError [
 	reference exists
 		ifFalse: [FileDoesNotExistException signalWith: reference].
 	self error: 'Unable to open file ' , reference printString
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 FileHandle >> sync [
 
 	self flag: 'TODO: remove once FileHandles are really used!'.
@@ -150,7 +152,7 @@ FileHandle >> sync [
 	File sync: id
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 FileHandle >> truncateTo: anInteger [
 	File setPosition: id to: anInteger.
 	File truncate: id to: anInteger.

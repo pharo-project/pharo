@@ -2,8 +2,8 @@
 I am an Athens renderer which uses SDL2.
 "
 Class {
-	#name : #OSSDL2AthensRenderer,
-	#superclass : #OSWindowAthensRenderer,
+	#name : 'OSSDL2AthensRenderer',
+	#superclass : 'OSWindowAthensRenderer',
 	#instVars : [
 		'texture',
 		'renderer',
@@ -13,27 +13,29 @@ Class {
 	#pools : [
 		'SDL2Constants'
 	],
-	#category : #'OSWindow-SDL2-Rendering'
+	#category : 'OSWindow-SDL2-Rendering',
+	#package : 'OSWindow-SDL2',
+	#tag : 'Rendering'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OSSDL2AthensRenderer class >> for: aWindowHandle [
 	^ self basicNew
 		initializeWindowHandle: aWindowHandle;
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OSSDL2AthensRenderer class >> new [
 	self error: 'Use #for:'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSSDL2AthensRenderer >> athensSurface [
 	^ mutex critical: [super athensSurface]
 ]
 
-{ #category : #deleting }
+{ #category : 'deleting' }
 OSSDL2AthensRenderer >> destroy [
 
 	mutex critical: [
@@ -46,7 +48,7 @@ OSSDL2AthensRenderer >> destroy [
 	super destroy
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OSSDL2AthensRenderer >> drawTexturePixelsWith: aBlock [
 	| pixels pitch externalForm |
 	pixels := ExternalAddress new.
@@ -63,13 +65,13 @@ OSSDL2AthensRenderer >> drawTexturePixelsWith: aBlock [
 	]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OSSDL2AthensRenderer >> initialize [
 	super initialize.
 	mutex := Mutex new
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OSSDL2AthensRenderer >> initializeWindowHandle: aBackendWindow [
 	self initialize.
 	self backendWindow: aBackendWindow.
@@ -79,7 +81,7 @@ OSSDL2AthensRenderer >> initializeWindowHandle: aBackendWindow [
 	]
 ]
 
-{ #category : #'updating screen' }
+{ #category : 'updating screen' }
 OSSDL2AthensRenderer >> pixelExtent [
 	mutex critical: [
 		(renderer isNil or: [ renderer isNull ]) ifFalse: [ ^ renderer outputExtent ].
@@ -87,14 +89,14 @@ OSSDL2AthensRenderer >> pixelExtent [
 	^ super pixelExtent
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 OSSDL2AthensRenderer >> prepareForDrawing [
 	mutex critical: [
 		textureExtent ~= renderer outputExtent ifTrue: [ self resized ].
 	]
 ]
 
-{ #category : #'updating screen' }
+{ #category : 'updating screen' }
 OSSDL2AthensRenderer >> present [
 	mutex critical: [
 		self validate ifFalse: [ ^ self ].
@@ -105,13 +107,13 @@ OSSDL2AthensRenderer >> present [
 	]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OSSDL2AthensRenderer >> primitiveUpdateRectangle: rectangle externalForm: externalForm [
 	externalForm getCanvas
 		drawImage: athensSurface asForm at: rectangle origin sourceRect: rectangle
 ]
 
-{ #category : #'updating resources' }
+{ #category : 'updating resources' }
 OSSDL2AthensRenderer >> resetResources [
 	| extent |
 	self checkSession.
@@ -129,7 +131,7 @@ OSSDL2AthensRenderer >> resetResources [
 	textureExtent := extent
 ]
 
-{ #category : #'updating screen' }
+{ #category : 'updating screen' }
 OSSDL2AthensRenderer >> resized [
 	mutex critical: [
 		self resetResources.
@@ -137,12 +139,12 @@ OSSDL2AthensRenderer >> resized [
 	]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSSDL2AthensRenderer >> surface [
 	^ mutex critical: [super surface]
 ]
 
-{ #category : #'updating screen' }
+{ #category : 'updating screen' }
 OSSDL2AthensRenderer >> updateAll [
 	mutex critical: [
 		self validate ifFalse: [ ^ self ].
@@ -153,7 +155,7 @@ OSSDL2AthensRenderer >> updateAll [
 	]
 ]
 
-{ #category : #'updating screen' }
+{ #category : 'updating screen' }
 OSSDL2AthensRenderer >> updateRectangle: aRectangle [
 	mutex critical: [
 		| intersection |
@@ -168,7 +170,7 @@ OSSDL2AthensRenderer >> updateRectangle: aRectangle [
 	]
 ]
 
-{ #category : #'updating screen' }
+{ #category : 'updating screen' }
 OSSDL2AthensRenderer >> updateRectangles: allDamage [
 	mutex critical: [
 		| fullBounds |
@@ -187,7 +189,7 @@ OSSDL2AthensRenderer >> updateRectangles: allDamage [
 	]
 ]
 
-{ #category : #'updating screen' }
+{ #category : 'updating screen' }
 OSSDL2AthensRenderer >> validate [
 	self checkSession.
 	athensSurface ifNil: [ ^ false ].

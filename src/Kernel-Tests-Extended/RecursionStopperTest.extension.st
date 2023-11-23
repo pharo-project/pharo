@@ -1,6 +1,6 @@
-Extension { #name : #RecursionStopperTest }
+Extension { #name : 'RecursionStopperTest' }
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 RecursionStopperTest >> testThreadSafe [
 
 	self should: [ self threadSafe ] notTakeMoreThanMilliseconds: 10.

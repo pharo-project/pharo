@@ -1,24 +1,27 @@
-Extension { #name : #String }
+Extension { #name : 'String' }
 
-{ #category : #'*ScriptingExtensions' }
+{ #category : '*ScriptingExtensions' }
 String >> asClass [
-	"returns a global class with my name"
+	"Returns a global class with my name"
+
+	self deprecated: 'Use #asClassInEnvironment: with an appropriate environment instead' transformWith: '`@receiver asClass' -> '`@receiver asClassInEnvironment: self class environment'.
+
 	^ self asClassInEnvironment: Smalltalk globals
 ]
 
-{ #category : #'*ScriptingExtensions' }
+{ #category : '*ScriptingExtensions' }
 String >> asClassIfAbsent: absentBlock [
 	"returns a global class with my name"
 	^ self asClassInEnvironment: Smalltalk globals ifAbsent: absentBlock
 ]
 
-{ #category : #'*ScriptingExtensions' }
+{ #category : '*ScriptingExtensions' }
 String >> asClassIfPresent: presentBlock [
 	"returns a global class with my name"
 	^ presentBlock cull: (self asClassIfAbsent: [ ^ nil ])
 ]
 
-{ #category : #'*ScriptingExtensions' }
+{ #category : '*ScriptingExtensions' }
 String >> asClassInEnvironment: anEnvironment [
 	"I return class named after myself from anEnvironment"
 	^ self
@@ -26,7 +29,7 @@ String >> asClassInEnvironment: anEnvironment [
 		ifAbsent: [ NotFound signalFor: self in: anEnvironment ]
 ]
 
-{ #category : #'*ScriptingExtensions' }
+{ #category : '*ScriptingExtensions' }
 String >> asClassInEnvironment: anEnvironment ifAbsent: absentBlock [
 	^  anEnvironment
 			at: self asSymbol

@@ -7,22 +7,24 @@
  
 "
 Class {
-	#name : #RubLipsumBasicExample,
-	#superclass : #Model,
+	#name : 'RubLipsumBasicExample',
+	#superclass : 'Model',
 	#instVars : [
 		'textModel'
 	],
-	#category : #'Rubric-Editing-Widgets-Examples'
+	#category : 'Rubric-Editing-Widgets-Examples',
+	#package : 'Rubric',
+	#tag : 'Editing-Widgets-Examples'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 RubLipsumBasicExample class >> openNotWrapped [
 	"self openNotWrapped"
 
 	self openScrolledText: self new newScrolledTextNotWrapped
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RubLipsumBasicExample class >> openScrolledText: aScrolledText [
 
 	|  window |
@@ -32,23 +34,23 @@ RubLipsumBasicExample class >> openScrolledText: aScrolledText [
 	window openInWorld
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RubLipsumBasicExample class >> openWrapped [
 	"self openWrapped"
 	self openScrolledText: self new newScrolledTextWrapped
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RubLipsumBasicExample class >> title [
 	^ 'Lorem Ipsum example'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubLipsumBasicExample >> loremIpsum [
 	^ String loremIpsum: 81233
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 RubLipsumBasicExample >> newScrolledText [
 	| st |
 	st := self textModel newScrolledText
@@ -62,17 +64,17 @@ RubLipsumBasicExample >> newScrolledText [
 	^ st
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 RubLipsumBasicExample >> newScrolledTextNotWrapped [
 	^ self newScrolledText
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 RubLipsumBasicExample >> newScrolledTextWrapped [
 	^ self newScrolledText beWrapped
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubLipsumBasicExample >> textModel [
 	^ textModel ifNil: [textModel := RubScrolledTextModel new text: self loremIpsum ]
 ]

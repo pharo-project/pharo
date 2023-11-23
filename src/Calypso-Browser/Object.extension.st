@@ -1,6 +1,6 @@
-Extension { #name : #Object }
+Extension { #name : 'Object' }
 
-{ #category : #'*Calypso-Browser' }
+{ #category : '*Calypso-Browser' }
 Object class >> asCalypsoItemContext [
 	^ClyBrowserItemContext itemType: self
 ]

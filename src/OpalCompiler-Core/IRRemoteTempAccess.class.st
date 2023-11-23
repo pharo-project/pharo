@@ -2,25 +2,27 @@
 I model the pushRemoteTemporary Bytecode
 "
 Class {
-	#name : #IRRemoteTempAccess,
-	#superclass : #IRTempAccess,
+	#name : 'IRRemoteTempAccess',
+	#superclass : 'IRTempAccess',
 	#instVars : [
 		'tempVectorName'
 	],
-	#category : #'OpalCompiler-Core-IR-Nodes'
+	#category : 'OpalCompiler-Core-IR-Nodes',
+	#package : 'OpalCompiler-Core',
+	#tag : 'IR-Nodes'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 IRRemoteTempAccess >> isRemoteTemp [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRRemoteTempAccess >> tempVectorName [
 	^ tempVectorName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRRemoteTempAccess >> tempVectorName: anObject [
 	tempVectorName := anObject
 ]

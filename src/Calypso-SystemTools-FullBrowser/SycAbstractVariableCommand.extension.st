@@ -1,6 +1,6 @@
-Extension { #name : #SycAbstractVariableCommand }
+Extension { #name : 'SycAbstractVariableCommand' }
 
-{ #category : #'*Calypso-SystemTools-FullBrowser' }
+{ #category : '*Calypso-SystemTools-FullBrowser' }
 SycAbstractVariableCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
 

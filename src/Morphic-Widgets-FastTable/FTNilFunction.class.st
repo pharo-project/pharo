@@ -8,49 +8,51 @@ FTNilFunction table: (FTTableMorph with: (1 to: 200))
 
 "
 Class {
-	#name : #FTNilFunction,
-	#superclass : #FTFunction,
-	#category : #'Morphic-Widgets-FastTable-Functions'
+	#name : 'FTNilFunction',
+	#superclass : 'FTFunction',
+	#category : 'Morphic-Widgets-FastTable-Functions',
+	#package : 'Morphic-Widgets-FastTable',
+	#tag : 'Functions'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTNilFunction >> beExplicit [
 	"Do nothing"
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 FTNilFunction >> disable [
 	"Do nothing"
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FTNilFunction >> isExplicit [
 	^ false
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 FTNilFunction >> keyStroke: anEvent [
 	"Do nothing"
 	^ false
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FTNilFunction >> reset [
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FTNilFunction >> resizeContainerFrom: topLefPoint to: bottomRightPoint [
 	"I do not change the size of the container."
 
 	^ topLefPoint corner: bottomRightPoint
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FTNilFunction >> resizeWidget [
 	"Do nothing"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTNilFunction >> showWidget [
 	"Do nothing"
 ]

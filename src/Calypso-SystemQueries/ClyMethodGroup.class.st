@@ -38,63 +38,65 @@ Internal Representation and Key Implementation Points.
 	subgroupsQuery:		<ClyQuery>
 "
 Class {
-	#name : #ClyMethodGroup,
-	#superclass : #ClyItemGroup,
+	#name : 'ClyMethodGroup',
+	#superclass : 'ClyItemGroup',
 	#instVars : [
 		'methodQuery',
 		'subgroupsQuery'
 	],
-	#category : #'Calypso-SystemQueries-Domain'
+	#category : 'Calypso-SystemQueries-Domain',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Domain'
 }
 
-{ #category : #'item decoration' }
+{ #category : 'item decoration' }
 ClyMethodGroup class >> decorateBrowserItem: aBrowserItem by: anEnvironmentPlugin [
 	^ anEnvironmentPlugin
 		decorateBrowserItem: aBrowserItem
 		ofMethodGroup: aBrowserItem actualObject
 ]
 
-{ #category : #testing }
-ClyMethodGroup class >> isBasedOnMethodTag [
+{ #category : 'testing' }
+ClyMethodGroup class >> isBasedOnProtocol [
 	^false
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyMethodGroup class >> named: aString on: aMethodQuery [
 	^(self named: aString)
 		methodQuery: aMethodQuery
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyMethodGroup class >> named: aString on: aMethodQuery withSubgroupsFrom: subgroupsQuery [
 	^(self named: aString on: aMethodQuery)
 		subgroupsQuery: subgroupsQuery
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyMethodGroup class >> named: aString priority: aNumber on: aMethodQuery [
 	^(self named: aString priority: aNumber)
 		methodQuery: aMethodQuery
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyMethodGroup class >> named: aString priority: aNumber on: aMethodQuery withSubgroupsFrom: subgroupsQuery [
 	^(self named: aString priority: aNumber on: aMethodQuery)
 		subgroupsQuery: subgroupsQuery
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyMethodGroup class >> prepareSubgroupsQueryFrom: aMethodGroup in: aNavigationEnvironment [
 
 	^aMethodGroup subgroupsQuery
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyMethodGroup class >> shortName [
 	^'Methods'
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ClyMethodGroup >> = anObject [
 	"Answer whether the receiver and anObject represent the same object."
 
@@ -105,7 +107,7 @@ ClyMethodGroup >> = anObject [
 		and: [ subgroupsQuery = anObject subgroupsQuery ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyMethodGroup >> asAsyncQueryGroup [
 	^ClyAsyncMethodGroup
 		named: name
@@ -114,13 +116,13 @@ ClyMethodGroup >> asAsyncQueryGroup [
 		withSubgroupsFrom: subgroupsQuery
 ]
 
-{ #category : #operations }
-ClyMethodGroup >> convertToMethodTag: aTagName [
+{ #category : 'operations' }
+ClyMethodGroup >> categorizeMethodsIn: protocolName [
 
-	self methods do: [ :each | each tagWith: aTagName ]
+	self methods do: [ :method | method protocol: protocolName ]
 ]
 
-{ #category : #decoration }
+{ #category : 'decoration' }
 ClyMethodGroup >> decorateOwnBrowserItem: myItem [
 	super decorateOwnBrowserItem: myItem.
 
@@ -128,7 +130,7 @@ ClyMethodGroup >> decorateOwnBrowserItem: myItem [
 	subgroupsQuery decorateItemGroup: myItem
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyMethodGroup >> dependsOnMethod: aMethod [
 	"This method is used to collect dynamic method group which depends on methods.
 	It can be simple #includesMethod: which is default implementation here.
@@ -137,66 +139,66 @@ ClyMethodGroup >> dependsOnMethod: aMethod [
 	^self includesMethod: aMethod
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ClyMethodGroup >> hash [
 	"Answer an integer value that is related to the identity of the receiver."
 
 	^ methodQuery hash bitXor: subgroupsQuery hash
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ClyMethodGroup >> importMethod: aMethod [
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ClyMethodGroup >> importMethods: methodsCollection [
 
 	methodsCollection do: [ :each | self importMethod: each ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyMethodGroup >> includesMethod: aMethod [
 	^self methodQuery retrievesItem: aMethod
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyMethodGroup >> initialize [
 	super initialize.
 
 	subgroupsQuery := ClyUnknownQuery instance
 ]
 
-{ #category : #'system changes' }
+{ #category : 'system changes' }
 ClyMethodGroup >> isAffectedByPackageChange: aPackageAnnouncement [
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyMethodGroup >> isEmpty [
 	^methodQuery hasEmptyResult
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMethodGroup >> methodQuery [
 	^methodQuery
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMethodGroup >> methodQuery: aMethodQuery [
 	methodQuery := aMethodQuery
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMethodGroup >> methods [
 	^methodQuery execute items
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMethodGroup >> methodsSize [
 	^self methods size
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyMethodGroup >> printOn: aStream [
 	super printOn: aStream.
 	aStream nextPut: $(.
@@ -204,17 +206,17 @@ ClyMethodGroup >> printOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ClyMethodGroup >> removeWithMethods [
 	self methods do: [ :each | each removeFromSystem ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMethodGroup >> subgroupsQuery [
 	^subgroupsQuery
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMethodGroup >> subgroupsQuery: anObject [
 	subgroupsQuery := anObject
 ]

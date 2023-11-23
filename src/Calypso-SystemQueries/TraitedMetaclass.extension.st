@@ -1,23 +1,19 @@
-Extension { #name : #TraitedMetaclass }
+Extension { #name : 'TraitedMetaclass' }
 
-{ #category : #'*Calypso-SystemQueries' }
-TraitedMetaclass >> tagsForAllMethods [
-	"I act as #tagsForMethods but I also takes into account methods comming from traits"
+{ #category : '*Calypso-SystemQueries' }
+TraitedMetaclass >> protocolsForAllMethods [
 
 	| allProtocols selectors |
-	allProtocols := self protocols reject: [ :each | each isUnclassifiedProtocol | each isExtensionProtocol ].
+	allProtocols := self protocols reject: [ :protocol | protocol isUnclassifiedProtocol or: [ protocol isExtensionProtocol ] ].
 
-	selectors := self visibleMethods collect: [ :each | each selector ].
+	selectors := self visibleMethods collect: [ :method | method selector ].
 
 	^ allProtocols
-		select: [ :protocol |
-			protocol methodSelectors
-				ifEmpty: [ true ]
-				ifNotEmpty: [ :methods | methods anySatisfy: [ :method | selectors includes: method ] ] ]
-		thenCollect: #name
+		  select: [ :protocol | protocol methodSelectors ifEmpty: [ true ] ifNotEmpty: [ :methods | methods anySatisfy: [ :method | selectors includes: method ] ] ]
+		  thenCollect: #name
 ]
 
-{ #category : #'*Calypso-SystemQueries' }
+{ #category : '*Calypso-SystemQueries' }
 TraitedMetaclass >> visibleMethods [
 
 	^ self methods reject: [ :e | e origin = TraitedClass ]

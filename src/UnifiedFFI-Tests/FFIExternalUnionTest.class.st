@@ -2,12 +2,14 @@
 Tests for external unions
 "
 Class {
-	#name : #FFIExternalUnionTest,
-	#superclass : #TestCase,
-	#category : #'UnifiedFFI-Tests-Tests'
+	#name : 'FFIExternalUnionTest',
+	#superclass : 'TestCase',
+	#category : 'UnifiedFFI-Tests-Tests',
+	#package : 'UnifiedFFI-Tests',
+	#tag : 'Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFIExternalUnionTest >> testUnionAccess [
 	| union |
 	union := FFITestUnion new.

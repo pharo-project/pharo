@@ -1,6 +1,6 @@
-Extension { #name : #ClyFailedTestMethodsQuery }
+Extension { #name : 'ClyFailedTestMethodsQuery' }
 
-{ #category : #'*Calypso-SystemPlugins-SUnit-Browser' }
+{ #category : '*Calypso-SystemPlugins-SUnit-Browser' }
 ClyFailedTestMethodsQuery >> decorateMethodGroupTableCell: anItemCellMorph of: groupItem [
 	super decorateMethodGroupTableCell: anItemCellMorph of: groupItem.
 

@@ -1,1 +1,1 @@
-Package { #name : #'HeuristicCompletion-Tests' }
+Package { #name : 'HeuristicCompletion-Tests' }

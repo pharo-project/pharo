@@ -2,12 +2,14 @@
 Test extension methods for Zip support
 "
 Class {
-	#name : #ZipExtensionTest,
-	#superclass : #TestCase,
-	#category : #'Compression-Tests-Streams'
+	#name : 'ZipExtensionTest',
+	#superclass : 'TestCase',
+	#category : 'Compression-Tests-Streams',
+	#package : 'Compression-Tests',
+	#tag : 'Streams'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZipExtensionTest >> testBinaryZipped [
 	| data compressed |
 
@@ -29,7 +31,7 @@ ZipExtensionTest >> testBinaryZipped [
 	self assert: compressed unzipped asString equals: 'Pharo'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZipExtensionTest >> testZipped [
 	| compressed |
 	compressed := 'hello' zipped.

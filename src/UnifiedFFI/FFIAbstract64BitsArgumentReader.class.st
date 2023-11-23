@@ -6,33 +6,35 @@ The integer parameters are passed in the general purpose parameters (the address
 As the different calling conventions uses the registers in different ways and also they use different number of registers I only have limited reused code.
 "
 Class {
-	#name : #FFIAbstract64BitsArgumentReader,
-	#superclass : #FFICallbackArgumentReader,
+	#name : 'FFIAbstract64BitsArgumentReader',
+	#superclass : 'FFICallbackArgumentReader',
 	#instVars : [
 		'currentRegisterIndex'
 	],
-	#category : #'UnifiedFFI-Callbacks'
+	#category : 'UnifiedFFI-Callbacks',
+	#package : 'UnifiedFFI',
+	#tag : 'Callbacks'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIAbstract64BitsArgumentReader >> floatRegisterPointer [
 
 	^ callbackContext floatregargsp
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FFIAbstract64BitsArgumentReader >> initialize [
 	super initialize.
 	currentRegisterIndex := 1.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIAbstract64BitsArgumentReader >> integerRegisterPointer [
 
 	^ callbackContext intregargsp
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIAbstract64BitsArgumentReader >> numberOfRegisters [
 
 	^ self subclassResponsibility

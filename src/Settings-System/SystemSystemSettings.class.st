@@ -2,12 +2,13 @@
 Settings for the system itself
 "
 Class {
-	#name : #SystemSystemSettings,
-	#superclass : #Object,
-	#category : #'Settings-System'
+	#name : 'SystemSystemSettings',
+	#superclass : 'Object',
+	#category : 'Settings-System',
+	#package : 'Settings-System'
 }
 
-{ #category : #settings }
+{ #category : 'settings' }
 SystemSystemSettings class >> systemSettingOn: aBuilder [
 	<systemsettings>
 

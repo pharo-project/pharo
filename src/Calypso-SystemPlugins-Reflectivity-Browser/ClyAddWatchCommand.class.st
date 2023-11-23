@@ -2,34 +2,36 @@
 I am a command to install watchpoint into the given method or source node
 "
 Class {
-	#name : #ClyAddWatchCommand,
-	#superclass : #ClyAdvancedDebuggingCommand,
-	#category : #'Calypso-SystemPlugins-Reflectivity-Browser-Watchpoints'
+	#name : 'ClyAddWatchCommand',
+	#superclass : 'ClyAdvancedDebuggingCommand',
+	#category : 'Calypso-SystemPlugins-Reflectivity-Browser-Watchpoints',
+	#package : 'Calypso-SystemPlugins-Reflectivity-Browser',
+	#tag : 'Watchpoints'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyAddWatchCommand class >> canBeExecutedInContext: aBrowserContext [
 
 	^ (super canBeExecutedInContext: aBrowserContext) and: [
 		  aBrowserContext isSelectedItemHasWatch not ]
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyAddWatchCommand class >> contextMenuOrder [
 	^3
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyAddWatchCommand >> defaultMenuIconName [
 	^#haloView
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyAddWatchCommand >> defaultMenuItemName [
 	^' Add Watchpoint to  ',  sourceNode displaySourceCode
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyAddWatchCommand >> execute [
 
 	Watch in: sourceNode

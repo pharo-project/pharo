@@ -9,15 +9,17 @@ Internal Representation and Key Implementation Points.
 	browser:		<ClyBrowser>
 "
 Class {
-	#name : #ClyShowGroupsInMethodBrowserCommand,
-	#superclass : #ClyMethodGroupCommand,
+	#name : 'ClyShowGroupsInMethodBrowserCommand',
+	#superclass : 'ClyMethodGroupCommand',
 	#instVars : [
 		'browser'
 	],
-	#category : #'Calypso-SystemTools-QueryBrowser-Commands-Queries'
+	#category : 'Calypso-SystemTools-QueryBrowser-Commands-Queries',
+	#package : 'Calypso-SystemTools-QueryBrowser',
+	#tag : 'Commands-Queries'
 }
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyShowGroupsInMethodBrowserCommand class >> fullBrowserDoubleClickMenuActivation [
 	<classAnnotation>
 
@@ -25,24 +27,24 @@ ClyShowGroupsInMethodBrowserCommand class >> fullBrowserDoubleClickMenuActivatio
 		priority: 10000
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyShowGroupsInMethodBrowserCommand class >> fullBrowserMethodGroupMenuActivation [
 	<classAnnotation>
 
 	^CmdContextMenuActivation byItemOf: ClyQueryMenuGroup for: ClyFullBrowserMethodGroupContext
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyShowGroupsInMethodBrowserCommand >> defaultMenuIconName [
 	^#glamorousBrowse
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyShowGroupsInMethodBrowserCommand >> defaultMenuItemName [
 	^'Show in method browser'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyShowGroupsInMethodBrowserCommand >> execute [
 
 	| queries fullQuery |
@@ -52,7 +54,7 @@ ClyShowGroupsInMethodBrowserCommand >> execute [
 	browser spawnQueryBrowserOn: fullQuery
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyShowGroupsInMethodBrowserCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 

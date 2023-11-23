@@ -1,1 +1,1 @@
-Package { #name : #'Calypso-SystemPlugins-ClassScripts-Browser' }
+Package { #name : 'Calypso-SystemPlugins-ClassScripts-Browser' }

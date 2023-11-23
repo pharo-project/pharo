@@ -1,24 +1,26 @@
 Class {
-	#name : #TDebuggerTest,
-	#superclass : #TestCase,
+	#name : 'TDebuggerTest',
+	#superclass : 'TestCase',
 	#traits : 'TDebugger',
 	#classTraits : 'TDebugger classTrait',
-	#category : #'Debugger-Model-Tests-Core'
+	#category : 'Debugger-Model-Tests-Core',
+	#package : 'Debugger-Model-Tests',
+	#tag : 'Core'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TDebuggerTest class >> closeAllDebuggers [
 	"Do nothing. This class is a test class, not a real debugger, so it cannot stay open like real debugger. Therefore, it has nothing to do to 'close all of its debuggers'"
 
 	^ self
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TDebuggerTest class >> debugSession: aDebugSession [
 	^true
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TDebuggerTest >> testAvailableAutomatically [
 	self class availableAutomatically: nil.
 	self
@@ -30,12 +32,12 @@ TDebuggerTest >> testAvailableAutomatically [
 	self deny: self class availableAutomatically
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TDebuggerTest >> testDebugSession [
 	self assert: (self class debugSession: nil)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TDebuggerTest >> testHandlesContext [
 	"By default handles any context"
 
@@ -48,7 +50,7 @@ TDebuggerTest >> testHandlesContext [
 				  yourself))
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TDebuggerTest >> testRank [
 	self class rank: nil.
 	self assert: self class rank equals: DebuggerSettings defaultDebuggerRank.
@@ -56,7 +58,7 @@ TDebuggerTest >> testRank [
 	self assert: self class rank equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TDebuggerTest >> testSystemDebuggers [
 
 	| debuggers traitUsersWithSubclasses |

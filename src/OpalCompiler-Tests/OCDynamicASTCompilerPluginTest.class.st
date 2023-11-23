@@ -1,10 +1,12 @@
 Class {
-	#name : #OCDynamicASTCompilerPluginTest,
-	#superclass : #TestCase,
-	#category : #'OpalCompiler-Tests-Plugins'
+	#name : 'OCDynamicASTCompilerPluginTest',
+	#superclass : 'TestCase',
+	#category : 'OpalCompiler-Tests-Plugins',
+	#package : 'OpalCompiler-Tests',
+	#tag : 'Plugins'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCDynamicASTCompilerPluginTest >> testCreateAndUseDynamicCompilerPlugin [
 
 	| plugin result |
@@ -24,7 +26,7 @@ OCDynamicASTCompilerPluginTest >> testCreateAndUseDynamicCompilerPlugin [
 	self assert: result equals: 'meaning of life'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCDynamicASTCompilerPluginTest >> testCreateDynamicCompilerPluginWithDefaultPriority [
 
 	| plugin |

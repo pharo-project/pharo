@@ -1,6 +1,6 @@
-Extension { #name : #Announcer }
+Extension { #name : 'Announcer' }
 
-{ #category : #'*Deprecated12' }
+{ #category : '*Deprecated12' }
 Announcer >> when: anAnnouncementClass do: aValuable [
 
 	| subscriberForDeprecation |

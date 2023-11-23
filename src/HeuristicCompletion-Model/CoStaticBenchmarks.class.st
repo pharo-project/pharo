@@ -21,17 +21,19 @@ staticHeuristics := CoStaticBenchmarks new
 	run.
 "
 Class {
-	#name : #CoStaticBenchmarks,
-	#superclass : #Object,
+	#name : 'CoStaticBenchmarks',
+	#superclass : 'Object',
 	#instVars : [
 		'scope',
 		'completionBenchs',
 		'builder'
 	],
-	#category : #'HeuristicCompletion-Model-Benchmarks'
+	#category : 'HeuristicCompletion-Model-Benchmarks',
+	#package : 'HeuristicCompletion-Model',
+	#tag : 'Benchmarks'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 CoStaticBenchmarks class >> runFor: aClass [
 
 	^ self new
@@ -39,7 +41,7 @@ CoStaticBenchmarks class >> runFor: aClass [
 		run
 ]
 
-{ #category : #inspector }
+{ #category : 'inspector' }
 CoStaticBenchmarks >> accuracyForCompletionIndex: completionIndexRange withPrefixSize: prefixSize [
 
 	| totalEntries |
@@ -51,7 +53,7 @@ CoStaticBenchmarks >> accuracyForCompletionIndex: completionIndexRange withPrefi
 	]) / totalEntries
 ]
 
-{ #category : #benchmarks }
+{ #category : 'benchmarks' }
 CoStaticBenchmarks >> benchCallsite: aRBMessageNode atPosition: aPosition [
 
 	| originalSelector |
@@ -88,13 +90,13 @@ CoStaticBenchmarks >> benchCallsite: aRBMessageNode atPosition: aPosition [
 	aRBMessageNode selector: originalSelector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoStaticBenchmarks >> builder: aCompletionBuilder [
 
 	builder := aCompletionBuilder
 ]
 
-{ #category : #inspector }
+{ #category : 'inspector' }
 CoStaticBenchmarks >> completionIndexes [
 
 	^ { 1 to: 1.
@@ -105,26 +107,26 @@ CoStaticBenchmarks >> completionIndexes [
 	}
 ]
 
-{ #category : #scoring }
+{ #category : 'scoring' }
 CoStaticBenchmarks >> gradeForPrefixSize: prefixSize [
 
 	^ self accuracyForCompletionIndex: (2 to: 8) withPrefixSize: prefixSize
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CoStaticBenchmarks >> initialize [
 
 	super initialize.
 	completionBenchs := Dictionary new
 ]
 
-{ #category : #inspector }
+{ #category : 'inspector' }
 CoStaticBenchmarks >> prefixSizes [
 
 	^ 2 to: 8
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 CoStaticBenchmarks >> printOn: aStream [
 
 	aStream
@@ -134,7 +136,7 @@ CoStaticBenchmarks >> printOn: aStream [
 		nextPutAll: ')'
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 CoStaticBenchmarks >> run [
 
 	scope methodsDo: [ :method |
@@ -145,18 +147,18 @@ CoStaticBenchmarks >> run [
 	]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoStaticBenchmarks >> scope: aClass [
 	scope := aClass
 ]
 
-{ #category : #scoring }
+{ #category : 'scoring' }
 CoStaticBenchmarks >> score [
 
 	^ ((1 to: 7) sum: [ :i | (self gradeForPrefixSize: i + 1) / i ]) * 100 / ((1 to: 7) sum: [ :index | 1/index ])
 ]
 
-{ #category : #inspector }
+{ #category : 'inspector' }
 CoStaticBenchmarks >> totalEntriesPerPrefixSize: aPrefixSize [
 
 	^ completionBenchs sum: [ :benchsPerPrefix | (benchsPerPrefix at: aPrefixSize ifAbsent: [ {0} ]) first ]

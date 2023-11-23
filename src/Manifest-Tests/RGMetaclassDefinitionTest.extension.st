@@ -1,6 +1,6 @@
-Extension { #name : #RGMetaclassDefinitionTest }
+Extension { #name : 'RGMetaclassDefinitionTest' }
 
-{ #category : #'*Manifest-Tests' }
+{ #category : '*Manifest-Tests' }
 RGMetaclassDefinitionTest >> testArrayStringForManifest [
 	| class |
 	class := self class class.
@@ -10,7 +10,7 @@ RGMetaclassDefinitionTest >> testArrayStringForManifest [
 		equals: { #RGMetaclassDefinition . { class name asSymbol . self class name asSymbol } }
 ]
 
-{ #category : #'*Manifest-Tests' }
+{ #category : '*Manifest-Tests' }
 RGMetaclassDefinitionTest >> testManifestReadOn [
 	| class |
 	class := self class.

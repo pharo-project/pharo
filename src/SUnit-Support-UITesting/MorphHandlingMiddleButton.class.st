@@ -2,41 +2,43 @@
 I log when the middle mouse button has been clicked on me, which is useful for testing.
 "
 Class {
-	#name : #MorphHandlingMiddleButton,
-	#superclass : #Morph,
+	#name : 'MorphHandlingMiddleButton',
+	#superclass : 'Morph',
 	#instVars : [
 		'receivedBlueButtonUp',
 		'receivedBlueButtonDown'
 	],
-	#category : #'SUnit-Support-UITesting-Morphic'
+	#category : 'SUnit-Support-UITesting-Morphic',
+	#package : 'SUnit-Support-UITesting',
+	#tag : 'Morphic'
 }
 
-{ #category : #'meta-actions' }
+{ #category : 'meta-actions' }
 MorphHandlingMiddleButton >> blueButtonUp: anEvent [
 
 	receivedBlueButtonUp := true
 ]
 
-{ #category : #'meta-actions' }
+{ #category : 'meta-actions' }
 MorphHandlingMiddleButton >> handleSpecialGesture: anEvent [
 
 	receivedBlueButtonDown := true
 ]
 
-{ #category : #'meta-actions' }
+{ #category : 'meta-actions' }
 MorphHandlingMiddleButton >> handlerForBlueButtonDown: anEvent [
 
 	^ self
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MorphHandlingMiddleButton >> initialize [
 
 	super initialize.
 	receivedBlueButtonUp := receivedBlueButtonDown := false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MorphHandlingMiddleButton >> wasClickedWithMiddleButton [
 
 	^ receivedBlueButtonDown and: [ receivedBlueButtonUp ]

@@ -2,18 +2,20 @@
 Reverse alphabetic sorting
 "
 Class {
-	#name : #ReverseAlphabeticSorter,
-	#superclass : #CompletionSorter,
-	#category : #'NECompletion-Sorting'
+	#name : 'ReverseAlphabeticSorter',
+	#superclass : 'CompletionSorter',
+	#category : 'NECompletion-Sorting',
+	#package : 'NECompletion',
+	#tag : 'Sorting'
 }
 
-{ #category : #description }
+{ #category : 'description' }
 ReverseAlphabeticSorter class >> kind [
 
 	^ 'reverse'
 ]
 
-{ #category : #sorting }
+{ #category : 'sorting' }
 ReverseAlphabeticSorter >> sortCompletionList: anOrderedCollection [
 	"this is just for testing, reverse sort makes no sense in practice"
 	^ anOrderedCollection sort reverse

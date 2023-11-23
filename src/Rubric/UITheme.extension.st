@@ -1,6 +1,6 @@
-Extension { #name : #UITheme }
+Extension { #name : 'UITheme' }
 
-{ #category : #'*Rubric-Editing-Core' }
+{ #category : '*Rubric-Editing-Core' }
 UITheme >> rubScrolledTextMorphThemer [
 	^ RubScrolledTextMorphThemer new
 ]

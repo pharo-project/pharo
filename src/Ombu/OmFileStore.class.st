@@ -2,8 +2,8 @@
 I am a single-file store of entries. Each new entry is appended at the end. Entries are lazily read from file on demand.
 "
 Class {
-	#name : #OmFileStore,
-	#superclass : #OmStore,
+	#name : 'OmFileStore',
+	#superclass : 'OmStore',
 	#instVars : [
 		'globalName',
 		'headReference',
@@ -17,22 +17,24 @@ Class {
 		'lock',
 		'lastStreamPosition'
 	],
-	#category : #'Ombu-Stores'
+	#category : 'Ombu-Stores',
+	#package : 'Ombu',
+	#tag : 'Stores'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmFileStore class >> defaultFileSuffix [
 
 	^ '.ombu'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmFileStore class >> defaultWritingDeferDuration [
 
 	^ 250 milliSeconds
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OmFileStore class >> existsStoreNamed: aGlobalName inDirectory: aFileReference [
 
 	^ aFileReference exists and: [
@@ -41,13 +43,13 @@ OmFileStore class >> existsStoreNamed: aGlobalName inDirectory: aFileReference [
 			inDirectory: aFileReference) exists ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmFileStore class >> fileReferenceForStoreNamed: aGlobalName inDirectory: baseDirectoryFileReference [
 
 	^ baseDirectoryFileReference / (aGlobalName, self defaultFileSuffix)
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OmFileStore class >> fromFile: aFileReference [
 
 	^ self
@@ -55,18 +57,18 @@ OmFileStore class >> fromFile: aFileReference [
 		inFile: aFileReference
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmFileStore class >> globalNameFrom: directoryEntryOrFileReference [
 
 	^ directoryEntryOrFileReference asFileReference basenameWithoutExtension
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OmFileStore class >> named: aGlobalName [
 	^ self named: aGlobalName inDirectory: FileSystem memory
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OmFileStore class >> named: aGlobalName inDirectory: baseDirectoryFileReference [
 
 	^ self
@@ -74,7 +76,7 @@ OmFileStore class >> named: aGlobalName inDirectory: baseDirectoryFileReference 
 		inFile: (self fileReferenceForStoreNamed: aGlobalName inDirectory: baseDirectoryFileReference)
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OmFileStore class >> named: aName inFile: aFileReference [
 
 	^ self basicNew
@@ -83,25 +85,25 @@ OmFileStore class >> named: aName inFile: aFileReference [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OmFileStore class >> new [
 
 	^ self named: UUID new asString36
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OmFileStore >> checkIfMustRefresh [
 
 	mustRefresh ifTrue: [ self refresh ]
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 OmFileStore >> copyReopened [
 
 	^ self species named: globalName inFile: fileReference
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OmFileStore >> critical: aBlock [
 
 	lock ifNil: [
@@ -110,14 +112,14 @@ OmFileStore >> critical: aBlock [
 	^ lock critical: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmFileStore >> ensureDeleteFile [
 	"After execution of this method, the .ombu file this instance represents will not exist."
 
 	^ self fileReference ensureDelete
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmFileStore >> entriesCount [
 	"Answer the number of entries that this store contains"
 
@@ -126,7 +128,7 @@ OmFileStore >> entriesCount [
 	^ entryCount
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 OmFileStore >> entriesDo: aBlockClosure [
 	"Evaluate the closure on each entry"
 
@@ -143,13 +145,13 @@ OmFileStore >> entriesDo: aBlockClosure [
 		aBlockClosure value: entryAndLocalName key ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OmFileStore >> entryBuffer [
 
 	^ entryBuffer ifNil: [ entryBuffer := OrderedCollection new ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmFileStore >> entryBufferDo: aBlock [
 	"Iterate the entryBuffer taking care of performance (avoid triggering the lazy initialization)."
 
@@ -158,13 +160,13 @@ OmFileStore >> entryBufferDo: aBlock [
 		entryBuffer asArray do: aBlock ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OmFileStore >> entryByLocalName [
 
 	^ entryByLocalName ifNil: [ entryByLocalName := WeakValueDictionary new ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmFileStore >> entryFor: aReference ifPresent: presentBlockClosure ifAbsent: absentBlockClosure [
 
 	(aReference isNull or: [ aReference globalName ~= self globalName])
@@ -182,7 +184,7 @@ OmFileStore >> entryFor: aReference ifPresent: presentBlockClosure ifAbsent: abs
 				ifAbsent: absentBlockClosure ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OmFileStore >> entryPositionsByLocalName [
 
 	self checkIfMustRefresh.
@@ -190,7 +192,7 @@ OmFileStore >> entryPositionsByLocalName [
 	^ entryPositionsByLocalName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmFileStore >> entryReferences [
 	"Optimized implementation for potentially large files"
 
@@ -198,13 +200,13 @@ OmFileStore >> entryReferences [
 			self referenceToLocalName: index asString ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmFileStore >> fileReference [
 
 	^ fileReference
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmFileStore >> firstEntryIfAbsent: absentBlock [
 
 	^ [ super firstEntryIfAbsent: absentBlock ]
@@ -212,13 +214,13 @@ OmFileStore >> firstEntryIfAbsent: absentBlock [
 			do: absentBlock
 ]
 
-{ #category : #refreshing }
+{ #category : 'refreshing' }
 OmFileStore >> flush [
 
 	self writingDeferrer flush
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OmFileStore >> flushEntryBuffer [
 
 	self critical: [
@@ -257,13 +259,13 @@ OmFileStore >> flushEntryBuffer [
 		self refreshEntryPositionsByLocalNameStartingAt: initialPosition since: initialLocalName ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmFileStore >> globalName [
 
 	^ globalName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmFileStore >> headReference [
 
 	self checkIfMustRefresh.
@@ -271,7 +273,7 @@ OmFileStore >> headReference [
 	^ headReference
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OmFileStore >> initialize [
 
 	super initialize.
@@ -281,7 +283,7 @@ OmFileStore >> initialize [
 	headReference := OmNullReference uniqueInstance
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OmFileStore >> initializeWithGlobalName: aName fileReference: aFileReference [
 
 	self initialize.
@@ -291,27 +293,27 @@ OmFileStore >> initializeWithGlobalName: aName fileReference: aFileReference [
 	mustRefresh := fileReference exists. "Late file read"
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OmFileStore >> isOutdated [
 	"Answer if #refresh is needed. A store is outdated if the file exists and has greater size than last time I wrote."
 
 	^ self fileReference exists and: [ self fileReference size ~= lastStreamPosition ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmFileStore >> lowLevelFileStoreIfNone: aBlock [
 	"Needed by EpLostChangesDetector"
 
 	^ self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmFileStore >> mustRefresh [
 
 	^ mustRefresh
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 OmFileStore >> newEntry: anEntry [
 
 	self critical: [
@@ -335,19 +337,19 @@ OmFileStore >> newEntry: anEntry [
 		]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OmFileStore >> newEntryReader [
 
 	^ OmSTONEntryReader newForStore: self
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OmFileStore >> newEntryWriter [
 
 	^ OmSTONEntryWriter newForStore: self
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OmFileStore >> nextEntryFromPosition: aFilePosition [
 
 	^ self readEntriesWith: [ :readStream |
@@ -355,7 +357,7 @@ OmFileStore >> nextEntryFromPosition: aFilePosition [
 		self newEntryReader stream: readStream; nextEntry ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 OmFileStore >> printOn: aStream [
 
 	super printOn: aStream.
@@ -366,7 +368,7 @@ OmFileStore >> printOn: aStream [
 		nextPut: $)
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OmFileStore >> readEntriesWith: aBlockClosure [
 
 	self fileReference readStreamDo: [ :readStream | [
@@ -379,7 +381,7 @@ OmFileStore >> readEntriesWith: aBlockClosure [
 					position: readStream position) signal ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmFileStore >> readEntryForLocalName: aString ifPresent: presentBlockClosure ifAbsent: absentBlockClosure [
 
 	^ self entryPositionsByLocalName
@@ -389,7 +391,7 @@ OmFileStore >> readEntryForLocalName: aString ifPresent: presentBlockClosure ifA
 		ifAbsent: absentBlockClosure
 ]
 
-{ #category : #refreshing }
+{ #category : 'refreshing' }
 OmFileStore >> refresh [
 	self flush.
 
@@ -407,7 +409,7 @@ OmFileStore >> refresh [
 						ensure: [ headReference := self referenceToLocalName: entryCount asString ] ] ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OmFileStore >> refreshEntryPositionsByLocalNameStartingAt: firstStreamPosition since: initialLocalName [
 	"Workaround needed because can't get real file stream position from ZnBufferedWriteStream.
 	(+ would need special care of WideStrings)"
@@ -425,19 +427,19 @@ OmFileStore >> refreshEntryPositionsByLocalNameStartingAt: firstStreamPosition s
 		]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmFileStore >> writingDeferDuration [
 
 	^ self writingDeferrer duration
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmFileStore >> writingDeferDuration: aDuration [
 
 	self writingDeferrer duration: aDuration
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmFileStore >> writingDeferrer [
 
 	^ writingDeferrer ifNil: [
@@ -447,7 +449,7 @@ OmFileStore >> writingDeferrer [
 			after: self class defaultWritingDeferDuration ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmFileStore >> writingFileReference [
 
 	^ fileReference

@@ -6,47 +6,48 @@ My instances can be created using `BlockClosure>>#benchCompareTo:`, which takes 
 I provide the #frequencyFactor and #periodFactor methods to access and analyze the comparison factors.
 "
 Class {
-	#name : #BenchmarkComparison,
-	#superclass : #Object,
+	#name : 'BenchmarkComparison',
+	#superclass : 'Object',
 	#instVars : [
 		'referenceResult',
 		'comparisonResult'
 	],
-	#category : #'Kernel-Chronology-Extras'
+	#category : 'Kernel-Chronology-Extras',
+	#package : 'Kernel-Chronology-Extras'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BenchmarkComparison >> comparisonResult [
 
 	^ comparisonResult
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BenchmarkComparison >> comparisonResult: aBenchmarkResult [
 
 	comparisonResult := aBenchmarkResult
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 BenchmarkComparison >> frequencyFactor [
 
 	^ comparisonResult frequency / referenceResult frequency
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 BenchmarkComparison >> isEmpty [
 
 	^ (referenceResult isNil | comparisonResult isNil or: [
 		   referenceResult isEmpty or: [ comparisonResult isEmpty ] ]) not
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 BenchmarkComparison >> periodFactor [
 
 	^ comparisonResult period / referenceResult period
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 BenchmarkComparison >> printOn: stream [
 
 	self isEmpty
@@ -60,13 +61,13 @@ BenchmarkComparison >> printOn: stream [
 			stream << '/s' ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BenchmarkComparison >> referenceResult [
 
 	^ referenceResult
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BenchmarkComparison >> referenceResult: aBenchmarkResult [
 
 	referenceResult := aBenchmarkResult

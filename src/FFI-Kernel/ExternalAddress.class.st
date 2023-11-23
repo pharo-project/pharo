@@ -2,22 +2,23 @@
 An ExternalAddress is an opaque handle to objects outside Pharo memory (e.g., a pointer).
 "
 Class {
-	#name : #ExternalAddress,
-	#superclass : #ByteArray,
-	#type : #bytes,
+	#name : 'ExternalAddress',
+	#superclass : 'ByteArray',
+	#type : 'bytes',
 	#classInstVars : [
 		'wordSize'
 	],
-	#category : #'FFI-Kernel'
+	#category : 'FFI-Kernel',
+	#package : 'FFI-Kernel'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ExternalAddress class >> allocate: byteSize [
 
 	^ FFIBackend current allocate: byteSize
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ExternalAddress class >> allocate: byteSize bytesDuring: aBlock [
 
 	| address |
@@ -25,7 +26,7 @@ ExternalAddress class >> allocate: byteSize bytesDuring: aBlock [
 	^ [ aBlock value: address ] ensure: [ address free ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ExternalAddress class >> gcallocate: byteSize [
 	"Primitive. Allocate an object on the external heap.
 	The external memory will be freed when i am garbage collected.
@@ -37,19 +38,19 @@ ExternalAddress class >> gcallocate: byteSize [
 	^externalAddress
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ExternalAddress class >> loadSymbol: moduleSymbol module: module [
 
 	^ FFIBackend current loadSymbol: moduleSymbol module: module
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ExternalAddress class >> new [
 	"External addresses are either four or eight bytes long."
 	^super new: self wordSize
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ExternalAddress class >> new: n [
 	"Only create ExternalAddresses of the right size."
 	^n = self wordSize
@@ -57,7 +58,7 @@ ExternalAddress class >> new: n [
 		ifFalse: [self shouldNotImplement]
 ]
 
-{ #category : #'system startup' }
+{ #category : 'system startup' }
 ExternalAddress class >> startUp: resuming [
 	"If starting the image afresh all external addresses should be zero.
 	 In addition, if the word size has changed then external addresses shoiuld be resized.
@@ -66,12 +67,12 @@ ExternalAddress class >> startUp: resuming [
 		self allInstancesDo: [ :each | each beNull ]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExternalAddress class >> wordSize [
 	^wordSize ifNil: [ wordSize := Smalltalk wordSize ]
 ]
 
-{ #category : #arithmetic }
+{ #category : 'arithmetic' }
 ExternalAddress >> + offset [
 	"Create an address that is offset by the given number of bytes.
 	More tricky than one would think due to the FFI's handling of ExternalAddress
@@ -88,7 +89,7 @@ ExternalAddress >> + offset [
 	^bytes asExternalPointer
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ExternalAddress >> = other [
 
 	self == other ifTrue: [ ^ true ].
@@ -99,7 +100,7 @@ ExternalAddress >> = other [
 	^ true
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ExternalAddress >> asByteArrayPointer [
 	"Answer a ByteArray containing a copy of pointer to the contents of the receiver."
 	| sz |
@@ -107,37 +108,37 @@ ExternalAddress >> asByteArrayPointer [
 		replaceFrom: 1 to: sz with: self startingAt: 1 "answers self"
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ExternalAddress >> asExternalPointer [
 	"No need to convert."
 	^self
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ExternalAddress >> asInteger [
 	"convert address to integer"
 	^ self asByteArrayPointer integerAt: 1 size: self size signed: false
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ExternalAddress >> beNull [
 	"Make the receiver a NULL pointer"
 	self atAllPut: 0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExternalAddress >> byteAt: byteOffset [
 	"Go through a different primitive since the receiver describes data in the outside world"
 	^self unsignedByteAt: byteOffset
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExternalAddress >> byteAt: byteOffset put: value [
 	"Go through a different primitive since the receiver describes data in the outside world"
 	^self unsignedByteAt: byteOffset put: value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExternalAddress >> bytesFromCString [
 	" Assume that the receiver represents a C string and convert it to a byte array.
 	WARNING: the referenced data MUST ends with a NULL character (byte 0).
@@ -154,14 +155,14 @@ ExternalAddress >> bytesFromCString [
 					index := index + 1]]
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 ExternalAddress >> clone [
 
 	<primitive: 148>
 	self primitiveFailed
 ]
 
-{ #category : #finalization }
+{ #category : 'finalization' }
 ExternalAddress >> finalize [
 	"I am an executor (a copy) of an ExternalAddress that was just garbage collected.
 	I must finalize. my mission is to free memory"
@@ -169,13 +170,13 @@ ExternalAddress >> finalize [
 	self free
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ExternalAddress >> free [
 
 	^ FFIBackend current free: self
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ExternalAddress >> fromCString [
 	| index aByte |
 
@@ -192,7 +193,7 @@ ExternalAddress >> fromCString [
 					index := index + 1]]) utf8Decoded
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ExternalAddress >> fromInteger: address [
 	"set my handle to point at address."
 	"Do we really need this? bf 2/21/2001 23:48"
@@ -212,34 +213,34 @@ ExternalAddress >> fromInteger: address [
 			basicAt: 8 put: (pointer byteAt: 8)]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExternalAddress >> isExternalAddress [
 	"Return true if the receiver describes the address of an object in the outside world"
 	^true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ExternalAddress >> isNull [
 	"Answer true if I am a null pointer"
 	1 to: self size do:[:i| (self at: i) = 0 ifFalse:[^false]].
 	^true
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ExternalAddress >> printOn: aStream [
 	"print this as a hex address ('@ 16rFFFFFFFF') to distinguish it from ByteArrays"
 
 	aStream nextPutAll: '@ '; nextPutAll: (self asInteger storeStringBase: 16 length: 11 padded: true)
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 ExternalAddress >> shallowCopy [
 	"Re-implemented to avoid superclass call to #new:"
 	"But superclass's shallowCopy sends basicNew: and basicNew: is ok. eem 2/21/2016 15:31"
 	^self clone
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExternalAddress >> utf8StringFromCString [
 
 	"Assume that the receiver represents a C string and convert it to a byte array.

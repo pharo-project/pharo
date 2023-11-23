@@ -1,6 +1,6 @@
-Extension { #name : #Morph }
+Extension { #name : 'Morph' }
 
-{ #category : #'*OSWindow-Core' }
+{ #category : '*OSWindow-Core' }
 Morph >> openInExternalWindow [
 	| world |
 	world := OSWindowWorldMorph new extent: self fullBounds extent.
@@ -19,7 +19,7 @@ Morph >> openInExternalWindow [
 	^ world open
 ]
 
-{ #category : #'*OSWindow-Core' }
+{ #category : '*OSWindow-Core' }
 Morph >> openInExternalWindowModalCallback: aBlock [
 	| world |
 	world := OSWindowWorldMorph new extent: self extent.

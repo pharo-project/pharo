@@ -2,37 +2,39 @@
 I am command line test runner. I run a TestSuite and outpout the progress in a terminal friendly way.
 "
 Class {
-	#name : #CommandLineTestRunner,
-	#superclass : #HDTestReport,
+	#name : 'CommandLineTestRunner',
+	#superclass : 'HDTestReport',
 	#instVars : [
 		'stderr',
 		'stdout',
 		'currentTest',
 		'maxTest'
 	],
-	#category : #'SUnit-UI-Headless'
+	#category : 'SUnit-UI-Headless',
+	#package : 'SUnit-UI',
+	#tag : 'Headless'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 CommandLineTestRunner >> createStderr [
 	^ Stdio stderr
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 CommandLineTestRunner >> createStdout [
 	^ Stdio stdout
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 CommandLineTestRunner >> done [
 ]
 
-{ #category : #helper }
+{ #category : 'helper' }
 CommandLineTestRunner >> increaseTestCount [
 	currentTest := currentTest + 1
 ]
 
-{ #category : #helper }
+{ #category : 'helper' }
 CommandLineTestRunner >> print: longErrorMessage short: shortErrorMessage of: aTestCase [
 	| cr |
 
@@ -45,7 +47,7 @@ CommandLineTestRunner >> print: longErrorMessage short: shortErrorMessage of: aT
 		ifFalse: [ self stdout << longErrorMessage << cr ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 CommandLineTestRunner >> printReport [
 	| cr |
 	cr := OSPlatform current lineEnding.
@@ -57,11 +59,11 @@ CommandLineTestRunner >> printReport [
 		<< cr
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 CommandLineTestRunner >> printTestCase: aTestCase [
 ]
 
-{ #category : #helper }
+{ #category : 'helper' }
 CommandLineTestRunner >> recordPassOf: aTestCase [
 	self
 		print: nil
@@ -69,7 +71,7 @@ CommandLineTestRunner >> recordPassOf: aTestCase [
 		of: aTestCase
 ]
 
-{ #category : #helper }
+{ #category : 'helper' }
 CommandLineTestRunner >> recordSkip: aTestSkip duringTest: aTestCase [
 	self
 		print: nil
@@ -77,7 +79,7 @@ CommandLineTestRunner >> recordSkip: aTestSkip duringTest: aTestCase [
 		of: aTestCase
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 CommandLineTestRunner >> reportTestCase: aTestCase runBlock: aBlock [
 
 	self increaseTestCount.
@@ -85,14 +87,14 @@ CommandLineTestRunner >> reportTestCase: aTestCase runBlock: aBlock [
 	aBlock value
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 CommandLineTestRunner >> setUp [
 
 	currentTest := 0.
 	maxTest := suite tests size
 ]
 
-{ #category : #helper }
+{ #category : 'helper' }
 CommandLineTestRunner >> shortStackDescriptionFor: anError [
 	^ (String streamContents: [ :s|
 			s << anError printString; cr.
@@ -101,14 +103,14 @@ CommandLineTestRunner >> shortStackDescriptionFor: anError [
 		with: OSPlatform current lineEnding
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CommandLineTestRunner >> stderr [
 	(stderr isNil or: [ stderr closed ])
 		ifTrue: [ stderr := self createStderr ].
 	^ stderr
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CommandLineTestRunner >> stdout [
 	(stdout isNil or: [ stdout closed ])
 		ifTrue: [ stdout := self createStdout ].
@@ -116,12 +118,12 @@ CommandLineTestRunner >> stdout [
 	^ stdout
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 CommandLineTestRunner >> tearDown [
 	self printReport
 ]
 
-{ #category : #helper }
+{ #category : 'helper' }
 CommandLineTestRunner >> writeError: anError of: aTestCase [
 	self
 		print: (self shortStackDescriptionFor: anError)
@@ -129,7 +131,7 @@ CommandLineTestRunner >> writeError: anError of: aTestCase [
 		of: aTestCase
 ]
 
-{ #category : #helper }
+{ #category : 'helper' }
 CommandLineTestRunner >> writeFailure: anError of: aTestCase [
 	self
 		print: (self shortStackDescriptionFor: anError)

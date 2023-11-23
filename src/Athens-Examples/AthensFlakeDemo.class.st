@@ -3,34 +3,36 @@ AthensFlakeDemo new openInWindow
 
 "
 Class {
-	#name : #AthensFlakeDemo,
-	#superclass : #Morph,
+	#name : 'AthensFlakeDemo',
+	#superclass : 'Morph',
 	#instVars : [
 		'surface',
 		'circle',
 		'frame',
 		'spike'
 	],
-	#category : #'Athens-Examples-Morphic'
+	#category : 'Athens-Examples-Morphic',
+	#package : 'Athens-Examples',
+	#tag : 'Morphic'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 AthensFlakeDemo class >> open [
 	<example>
 	self new openInWindow
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensFlakeDemo >> circle [
 	^ circle
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 AthensFlakeDemo >> defaultExtent [
 	^ 800@800
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 AthensFlakeDemo >> drawCircles: canvas [
 
 	canvas pathTransform restoreAfter: [
@@ -55,14 +57,14 @@ AthensFlakeDemo >> drawCircles: canvas [
 	]
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 AthensFlakeDemo >> drawOn: aCanvas [
 
 	self render.
 	surface displayOnMorphicCanvas: aCanvas at: bounds origin
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 AthensFlakeDemo >> drawSpike: canvas [
 
 
@@ -93,7 +95,7 @@ AthensFlakeDemo >> drawSpike: canvas [
 	]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AthensFlakeDemo >> initialize [
 
 	super initialize.
@@ -125,7 +127,7 @@ AthensFlakeDemo >> initialize [
 	self startStepping
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 AthensFlakeDemo >> render [
 
 	surface drawDuring: [:canvas |
@@ -149,14 +151,14 @@ AthensFlakeDemo >> render [
 	]
 ]
 
-{ #category : #stepping }
+{ #category : 'stepping' }
 AthensFlakeDemo >> step [
 	frame := Time millisecondClockValue / 100.
 
 	self changed
 ]
 
-{ #category : #stepping }
+{ #category : 'stepping' }
 AthensFlakeDemo >> stepTime [
 	^ 0
 ]

@@ -2,31 +2,33 @@
 Announce that the current change set has changed
 "
 Class {
-	#name : #CurrentChangeSetChanged,
-	#superclass : #Announcement,
+	#name : 'CurrentChangeSetChanged',
+	#superclass : 'Announcement',
 	#instVars : [
 		'new',
 		'old'
 	],
-	#category : #'System-Changes-Announcements'
+	#category : 'System-Changes-Announcements',
+	#package : 'System-Changes',
+	#tag : 'Announcements'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CurrentChangeSetChanged >> new [
 	^ new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CurrentChangeSetChanged >> new: anObject [
 	new := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CurrentChangeSetChanged >> old [
 	^ old
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CurrentChangeSetChanged >> old: anObject [
 	old := anObject
 ]

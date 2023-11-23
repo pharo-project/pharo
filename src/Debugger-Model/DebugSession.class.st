@@ -20,8 +20,8 @@ Because the exception system is implemented in Pharo, the handling of the initia
 
 "
 Class {
-	#name : #DebugSession,
-	#superclass : #Object,
+	#name : 'DebugSession',
+	#superclass : 'Object',
 	#instVars : [
 		'name',
 		'interruptedContext',
@@ -35,38 +35,40 @@ Class {
 	#classInstVars : [
 		'contextModelClass'
 	],
-	#category : #'Debugger-Model-Core'
+	#category : 'Debugger-Model-Core',
+	#package : 'Debugger-Model',
+	#tag : 'Core'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DebugSession class >> contextModelClass [
 
 	^ contextModelClass ifNil: [ self defaultContextModelClass ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DebugSession class >> contextModelClass: anObject [
 
 	contextModelClass := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DebugSession class >> defaultContextModelClass [
 
 	^ DebugContext
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 DebugSession class >> logDebuggerStackToFile [
 	^ LogDebuggerStackToFile ifNil: [LogDebuggerStackToFile := true]
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 DebugSession class >> logDebuggerStackToFile: aBoolean [
 	LogDebuggerStackToFile := aBoolean
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 DebugSession class >> named: aString on: aProcess startedAt: aContext [
 	^ self new
 		name: aString;
@@ -74,62 +76,64 @@ DebugSession class >> named: aString on: aProcess startedAt: aContext [
 		detectUIProcess
 ]
 
-{ #category : #'debugging actions' }
+{ #category : 'debugging actions' }
 DebugSession >> clear [
 	"If after resuming the process the user does plan to reuse this session with
 	the same process, it should call this method."
 	exception := nil.
 	interruptedProcess := nil.
-	self updateContextTo: nil
+	self updateContextTo: nil.
+	
+	self triggerEvent: #clear
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DebugSession >> context [
 
 	^ interruptedContext
 ]
 
-{ #category : #context }
+{ #category : 'context' }
 DebugSession >> contextChanged [
 
 	self triggerEvent: #contextChanged
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DebugSession >> createModelForContext: aContext [
 
 	^ (self class contextModelClass forContext: aContext)
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DebugSession >> detectUIProcess [
 
 	errorWasInUIProcess := UIManager default uiProcess == interruptedProcess
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DebugSession >> errorWasInUIProcess [
 
 	^ errorWasInUIProcess
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DebugSession >> errorWasInUIProcess: aBoolean [
 
 	errorWasInUIProcess := aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DebugSession >> exception [
 	^ exception
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DebugSession >> exception: anObject [
 	exception := anObject
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 DebugSession >> implement: aMessage classified: aSymbol inClass: aClass forContext: aContext [
 
 	aClass
@@ -146,7 +150,7 @@ DebugSession >> implement: aMessage classified: aSymbol inClass: aClass forConte
 	self contextChanged
 ]
 
-{ #category : #'debug - session' }
+{ #category : 'debug - session' }
 DebugSession >> implement: aMessage inClass: aClass forContext: aContext [
 	| method |
 	aClass compile: (DynamicMessageImplementor for: aMessage in: aClass) value.
@@ -165,13 +169,13 @@ DebugSession >> implement: aMessage inClass: aClass forContext: aContext [
 	^ method
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DebugSession >> installAlarm: aSelector [
 
 	self installAlarm: aSelector withArgument: #()
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DebugSession >> installAlarm: aSelector withArgument: args [
 
 	self currentWorld
@@ -181,25 +185,25 @@ DebugSession >> installAlarm: aSelector withArgument: args [
 		at: Time millisecondClockValue + 200
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DebugSession >> interruptedContext [
 
 	^ interruptedContext
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DebugSession >> interruptedProcess [
 
 	^ interruptedProcess
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DebugSession >> isAboutUIProcess [
 
 	^errorWasInUIProcess
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DebugSession >> isContextPostMortem: selectedContext [
 	"return whether we're inspecting a frozen exception without a process attached"
 	| suspendedContext |
@@ -208,37 +212,37 @@ DebugSession >> isContextPostMortem: selectedContext [
 	^ (suspendedContext hasContext: selectedContext) not
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DebugSession >> isInterruptedContextATest [
 
 	^ (self isTestObject: self interruptedContext receiver) and: [ self isTestMethod: self interruptedContext method of: self interruptedContext receiver ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DebugSession >> isInterruptedContextDoesNotUnderstand [
 
 	^ self interruptedContext selector == #doesNotUnderstand:
 ]
 
-{ #category : #context }
+{ #category : 'context' }
 DebugSession >> isLatestContext: aContext [
   	^ interruptedProcess suspendedContext == aContext
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DebugSession >> isTestMethod: aCompiledMethod of: aTestCase [
 
 	^ aCompiledMethod selector = aTestCase selector
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DebugSession >> isTestObject: anObject [
 
 	"I'm not sure this is the best way to doit because it creates a coupling with TestCase, but due that SUnit is part of the core I think it is not bad after all - Hernan'"
 	^ anObject isKindOf: TestCase
 ]
 
-{ #category : #logging }
+{ #category : 'logging' }
 DebugSession >> logStackToFileIfNeeded [
 	self class logDebuggerStackToFile ifFalse: [ ^self ].
 
@@ -246,17 +250,17 @@ DebugSession >> logStackToFileIfNeeded [
 		valueWithin: 100 milliSeconds onTimeout: [  ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DebugSession >> name [
 	^ name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DebugSession >> name: aString [
 	name := aString
 ]
 
-{ #category : #context }
+{ #category : 'context' }
 DebugSession >> pcRangeForContext: aContext [
 	"Answer the indices in the source code for the method corresponding to
 	aContext's program counter value."
@@ -266,7 +270,7 @@ DebugSession >> pcRangeForContext: aContext [
 	^ aContext pcRangeContextIsActive: (self isLatestContext: aContext)
 ]
 
-{ #category : #'debugging actions' }
+{ #category : 'debugging actions' }
 DebugSession >> peelToFirstLike: aContext [
 	"Peel the stack back to the second occurance of the currently selected message.  Very useful for an infinite recursion.  Gets back to the second call so you can see one complete recursion cycle, and how it was called at the beginning.  Also frees a lot of space!"
 
@@ -279,18 +283,18 @@ DebugSession >> peelToFirstLike: aContext [
 	self contextChanged
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DebugSession >> prepareTestToRunAgain [
 
 	self interruptedContext receiver prepareToRunAgain
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DebugSession >> process [
 	^ interruptedProcess
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DebugSession >> process: aProcess context: aContext [
 	"aProcess stepToSendOrReturn"
 	"aProcess isSuspended ifTrue: [ aProcess stepToSendOrReturn ]"
@@ -299,7 +303,7 @@ DebugSession >> process: aProcess context: aContext [
 	interruptedContext ifNil: [ interruptedContext := aContext ]
 ]
 
-{ #category : #'debugging actions' }
+{ #category : 'debugging actions' }
 DebugSession >> recompileMethodTo: text inContext: aContext notifying: aNotifyer [
 	"The retrieved information has changed and its source must now be updated.
 	 In this case, the retrieved information is the method of the given context."
@@ -322,7 +326,7 @@ DebugSession >> recompileMethodTo: text inContext: aContext notifying: aNotifyer
 	^ true
 ]
 
-{ #category : #'debugging actions' }
+{ #category : 'debugging actions' }
 DebugSession >> restart: aContext [
 	"Proceed from the initial state of selectedContext."
 	"Closing now depends on a setting (RestartAlsoProceeds class variable) --> not supported in this version"
@@ -336,7 +340,7 @@ DebugSession >> restart: aContext [
 	self triggerEvent: #restart
 ]
 
-{ #category : #'debugging actions' }
+{ #category : 'debugging actions' }
 DebugSession >> resume [
 	"Proceed execution of the receiver's model, starting after the expression at
 	which an interruption occurred."
@@ -351,7 +355,7 @@ DebugSession >> resume [
 	self triggerEvent: #resume
 ]
 
-{ #category : #'debugging actions' }
+{ #category : 'debugging actions' }
 DebugSession >> resume: aValue [
 	"Proceed execution of the receiver's model, starting after the expression at
 	which an interruption occurred."
@@ -366,7 +370,7 @@ DebugSession >> resume: aValue [
 	self triggerEvent: #resume
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DebugSession >> resumeProcess [
 	"Make sure the interrupted process is restored properly and restart the low space handler"
 
@@ -380,7 +384,7 @@ DebugSession >> resumeProcess [
 	Smalltalk installLowSpaceWatcher
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DebugSession >> resumeProcessWithValue: aValue [
 	"Make sure the interrupted process is restored properly and restart the low space handler"
 
@@ -388,7 +392,7 @@ DebugSession >> resumeProcessWithValue: aValue [
 	self resumeProcess
 ]
 
-{ #category : #'debugging actions' }
+{ #category : 'debugging actions' }
 DebugSession >> returnValue: anObject from: aContext [
 	"Force a return of a given value to the previous context!"
 
@@ -403,7 +407,7 @@ DebugSession >> returnValue: anObject from: aContext [
 	self contextChanged
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 DebugSession >> rewindContextToMethod: aMethod fromContext: aContext [
 	"this method is typically to be used after a hot compilation of a method from the stack.
 	in order to return to the context containg the compiled method."
@@ -422,7 +426,7 @@ DebugSession >> rewindContextToMethod: aMethod fromContext: aContext [
 	self isInterruptedContextATest ifTrue: [ self prepareTestToRunAgain ]
 ]
 
-{ #category : #'debugging actions' }
+{ #category : 'debugging actions' }
 DebugSession >> runToSelection: selectionInterval inContext: aContext [
 	"Attempt to step over instructions in selectedContext until the
 	execution reaches the selected instruction. This happens when the
@@ -437,13 +441,13 @@ DebugSession >> runToSelection: selectionInterval inContext: aContext [
 		whileTrue: [ self stepOver: aContext ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DebugSession >> selectedCodeRangeForContext: selectedContext [
 
 	^ self pcRangeForContext: selectedContext
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DebugSession >> shouldDisplayContext: aContext basedOnFilters: stackFilters [
 	"Return true if all filters match the given context, or false otherwise.
 	True is returned if there are no filters."
@@ -451,7 +455,7 @@ DebugSession >> shouldDisplayContext: aContext basedOnFilters: stackFilters [
 	^stackFilters allSatisfy: [ :aFilter | aFilter shouldDisplay: aContext ]
 ]
 
-{ #category : #logging }
+{ #category : 'logging' }
 DebugSession >> signalDebuggerError: anError [
 
 	DebuggerSettings emergencyDebugger
@@ -459,19 +463,19 @@ DebugSession >> signalDebuggerError: anError [
 		fromSession: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DebugSession >> stack [
 
 	^ interruptedContext stack
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DebugSession >> stackOfSize: size [
 
 	^ interruptedContext stackOfSize: size
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DebugSession >> stackOfSize: limit usingFilters: stackFilters [
 	"Answer an OrderedCollection of the top 'limit' contexts on the receiver's sender chain, according to the given filters.
 
@@ -519,13 +523,13 @@ DebugSession >> stackOfSize: limit usingFilters: stackFilters [
 	^ stack
 ]
 
-{ #category : #'debugging actions' }
+{ #category : 'debugging actions' }
 DebugSession >> stepInto [
 
 	self stepInto: interruptedContext
 ]
 
-{ #category : #'debugging actions' }
+{ #category : 'debugging actions' }
 DebugSession >> stepInto: aContext [
 	"Send the selected message in selectedContext, and take control in
 	the method invoked to allow further step or send."
@@ -538,19 +542,19 @@ DebugSession >> stepInto: aContext [
 	self triggerEvent: #stepInto
 ]
 
-{ #category : #'debugging actions' }
+{ #category : 'debugging actions' }
 DebugSession >> stepIntoUntil: aBlock [
 	[ aBlock cull: interruptedContext ]
 		whileFalse: [ self stepInto: interruptedContext ]
 ]
 
-{ #category : #'debugging actions' }
+{ #category : 'debugging actions' }
 DebugSession >> stepOver [
 
 	self stepOver: interruptedContext
 ]
 
-{ #category : #'debugging actions' }
+{ #category : 'debugging actions' }
 DebugSession >> stepOver: aContext [
 	"Send the selected message in selectedContext, and regain control
 	after the invoked method returns."
@@ -568,13 +572,13 @@ DebugSession >> stepOver: aContext [
 	self triggerEvent: #stepOver
 ]
 
-{ #category : #'debugging actions' }
+{ #category : 'debugging actions' }
 DebugSession >> stepThrough [
 
 	self stepThrough: interruptedContext
 ]
 
-{ #category : #'debugging actions' }
+{ #category : 'debugging actions' }
 DebugSession >> stepThrough: aContext [
 	"Send messages until you return to selectedContext.
 	 Used to step into a block in the method."
@@ -587,7 +591,7 @@ DebugSession >> stepThrough: aContext [
 	self triggerEvent: #stepThrough
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DebugSession >> stepToFirstInterestingBytecodeIn: aProcess [
 	"After a restart of a method activation step to the first
 	bytecode instruction that is of interest for the debugger.
@@ -606,7 +610,7 @@ DebugSession >> stepToFirstInterestingBytecodeIn: aProcess [
 	^ aProcess stepToSendOrReturn
 ]
 
-{ #category : #'debugging actions' }
+{ #category : 'debugging actions' }
 DebugSession >> terminate [
 	"Action that needs to be executed after the window containing this debug session is closed,
 	in order to terminate the right process."
@@ -624,7 +628,7 @@ DebugSession >> terminate [
 				ifTrue: [Processor terminateActive] ]
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 DebugSession >> unwindAndRestartToContext: aContext [
 
 	| ctx |
@@ -636,13 +640,13 @@ DebugSession >> unwindAndRestartToContext: aContext [
 	self updateContextTo: aContext
 ]
 
-{ #category : #context }
+{ #category : 'context' }
 DebugSession >> updateContextTo: aContext [
 
 	interruptedContext := aContext
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 DebugSession >> updateWithContext: newContext fromProcess: aProcess [
 
 	self process: aProcess context: newContext

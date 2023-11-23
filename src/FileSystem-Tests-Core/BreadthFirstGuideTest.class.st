@@ -2,12 +2,14 @@
 SUnit tests for class BreadthFirstGuide
 "
 Class {
-	#name : #BreadthFirstGuideTest,
-	#superclass : #GuideTest,
-	#category : #'FileSystem-Tests-Core-Guide'
+	#name : 'BreadthFirstGuideTest',
+	#superclass : 'GuideTest',
+	#category : 'FileSystem-Tests-Core-Guide',
+	#package : 'FileSystem-Tests-Core',
+	#tag : 'Guide'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 BreadthFirstGuideTest >> testAll [
 	guide := BreadthFirstGuide for: self.
 	guide show: (filesystem / 'alpha').

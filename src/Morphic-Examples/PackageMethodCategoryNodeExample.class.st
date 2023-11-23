@@ -2,17 +2,19 @@
 Example for a package method node
 "
 Class {
-	#name : #PackageMethodCategoryNodeExample,
-	#superclass : #PackageAbstractNodeExample,
-	#category : #'Morphic-Examples-MorphTreeWidget'
+	#name : 'PackageMethodCategoryNodeExample',
+	#superclass : 'PackageAbstractNodeExample',
+	#category : 'Morphic-Examples-MorphTreeWidget',
+	#package : 'Morphic-Examples',
+	#tag : 'MorphTreeWidget'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PackageMethodCategoryNodeExample >> childNodeClassFromItem: anItem [
 	^ PackageMethodNodeExample
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PackageMethodCategoryNodeExample >> childrenItems [
 
 	^ self parentNode item selectorsInProtocol: self item

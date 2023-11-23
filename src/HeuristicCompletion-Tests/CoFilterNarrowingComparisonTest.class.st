@@ -1,10 +1,12 @@
 Class {
-	#name : #CoFilterNarrowingComparisonTest,
-	#superclass : #TestCase,
-	#category : #'HeuristicCompletion-Tests-Core'
+	#name : 'CoFilterNarrowingComparisonTest',
+	#superclass : 'TestCase',
+	#category : 'HeuristicCompletion-Tests-Core',
+	#package : 'HeuristicCompletion-Tests',
+	#tag : 'Core'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoFilterNarrowingComparisonTest >> testCaseInsensitiveFilterIsNarrowWhenTheInternalAreNarrowed [
 
 	| caseSensitive caseSensitive2 |
@@ -16,7 +18,7 @@ CoFilterNarrowingComparisonTest >> testCaseInsensitiveFilterIsNarrowWhenTheInter
 	self assert: (caseSensitive2 isMoreNarrowThan: caseSensitive)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoFilterNarrowingComparisonTest >> testCaseInsensitiveFilterIsNotNarrowThanNegated [
 
 	| caseInsensitive negated |
@@ -27,7 +29,7 @@ CoFilterNarrowingComparisonTest >> testCaseInsensitiveFilterIsNotNarrowThanNegat
 	self deny: (caseInsensitive isMoreNarrowThan: negated)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoFilterNarrowingComparisonTest >> testCaseInsensitiveFilterIsNotNarrowWhenTheInternalAreNotNarrowed [
 
 	| caseSensitive caseSensitive2 |
@@ -39,7 +41,7 @@ CoFilterNarrowingComparisonTest >> testCaseInsensitiveFilterIsNotNarrowWhenTheIn
 	self deny: (caseSensitive2 isMoreNarrowThan: caseSensitive)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoFilterNarrowingComparisonTest >> testCaseSensitiveFilterIsNarrowWhenTheInternalAreNarrowed [
 
 	| caseSensitive caseSensitive2 |
@@ -51,7 +53,7 @@ CoFilterNarrowingComparisonTest >> testCaseSensitiveFilterIsNarrowWhenTheInterna
 	self assert: (caseSensitive2 isMoreNarrowThan: caseSensitive)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoFilterNarrowingComparisonTest >> testCaseSensitiveFilterIsNotNarrowThanNegated [
 
 	| caseSensitive negated |
@@ -62,7 +64,7 @@ CoFilterNarrowingComparisonTest >> testCaseSensitiveFilterIsNotNarrowThanNegated
 	self deny: (caseSensitive isMoreNarrowThan: negated)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoFilterNarrowingComparisonTest >> testCaseSensitiveFilterIsNotNarrowWhenTheInternalAreNotNarrowed [
 
 	| caseSensitive caseSensitive2 |
@@ -74,7 +76,7 @@ CoFilterNarrowingComparisonTest >> testCaseSensitiveFilterIsNotNarrowWhenTheInte
 	self deny: (caseSensitive2 isMoreNarrowThan: caseSensitive)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoFilterNarrowingComparisonTest >> testNegatedFilterIsNarrowWhenTheInternalAreNarrowed [
 
 	| caseSensitive negated caseSensitive2 negated2 |
@@ -92,7 +94,7 @@ CoFilterNarrowingComparisonTest >> testNegatedFilterIsNarrowWhenTheInternalAreNa
 	self assert: (negated2 isMoreNarrowThan: negated)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoFilterNarrowingComparisonTest >> testNegatedFilterIsNotNarrowThanANegatedWithANonNarrowed [
 
 	| caseSensitive negated caseSensitive2 negated2 |
@@ -110,7 +112,7 @@ CoFilterNarrowingComparisonTest >> testNegatedFilterIsNotNarrowThanANegatedWithA
 	self deny: (negated2 isMoreNarrowThan: negated)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoFilterNarrowingComparisonTest >> testNegatedFilterIsNotNarrowThanCaseInsensitive [
 
 	| caseInsensitive negated |
@@ -121,7 +123,7 @@ CoFilterNarrowingComparisonTest >> testNegatedFilterIsNotNarrowThanCaseInsensiti
 	self deny: (negated isMoreNarrowThan: caseInsensitive)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoFilterNarrowingComparisonTest >> testNegatedFilterIsNotNarrowThanCaseSensitive [
 
 	| caseSensitive negated |

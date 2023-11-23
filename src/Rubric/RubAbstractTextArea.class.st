@@ -75,8 +75,8 @@ wrapped
 
 "
 Class {
-	#name : #RubAbstractTextArea,
-	#superclass : #Morph,
+	#name : 'RubAbstractTextArea',
+	#superclass : 'Morph',
 	#instVars : [
 		'model',
 		'paragraph',
@@ -114,42 +114,44 @@ Class {
 	#classInstVars : [
 		'defaultFindReplaceServiceClass'
 	],
-	#category : #'Rubric-Editing-Core'
+	#category : 'Rubric-Editing-Core',
+	#package : 'Rubric',
+	#tag : 'Editing-Core'
 }
 
-{ #category : #settings }
+{ #category : 'settings' }
 RubAbstractTextArea class >> backgroundColor [
 	^ BackgroundColor ifNil: [ self theme backgroundColor ]
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 RubAbstractTextArea class >> backgroundColor: aColor [
 	BackgroundColor := aColor
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 RubAbstractTextArea class >> caseSensitiveFinds [
 	^ CaseSensitiveFinds ifNil: [CaseSensitiveFinds := false]
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 RubAbstractTextArea class >> caseSensitiveFinds: aBoolean [
 	CaseSensitiveFinds := aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubAbstractTextArea class >> defaultFindReplaceServiceClass [
 
 	^ defaultFindReplaceServiceClass ifNil: [ RubFindReplaceService ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubAbstractTextArea class >> defaultFindReplaceServiceClass: aClass [
 
 	^ defaultFindReplaceServiceClass := aClass
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 RubAbstractTextArea class >> defaultMaxExtent [
 
 	"Return default large enough size of an infinite area. SmallInteger maxVal on 32-bit systems."
@@ -157,12 +159,40 @@ RubAbstractTextArea class >> defaultMaxExtent [
 	^ 16r3FFFFFFF
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
+RubAbstractTextArea class >> editingSettingsOn: aBuilder [
+	<systemsettings>
+	(aBuilder group: #codeEditing)
+		label: 'Text Editing';
+		noOrdering;
+		description: 'All settings concerned with text editing' ;
+		with: [
+			(aBuilder setting: #selectionColor)
+				target: UITheme;
+				default: (Color r: 0.6862170087976539 g: 0.8347996089931574 b: 0.9794721407624634 alpha: 1.0);
+				targetSelector: #currentSettings;
+				label: 'Selection color'.
+			(aBuilder setting: #unfocusedSelectionColor)
+				target: UITheme;
+				targetSelector: #currentSettings;
+				description: 'The color of the selection for unfocused windows' ;
+				default: (Color r: 0.729227761485826 g: 0.8318670576735093 b: 0.9335288367546432 alpha: 1.0);
+				label: 'Unfocused selection color'.
+			(aBuilder setting: #selectionTextColor)
+				target: UITheme;
+				targetSelector: #currentSettings;
+				default: Color black;
+				label: 'Selection text color';
+				description: 'The color of the selection text'.
+		]
+]
+
+{ #category : 'settings' }
 RubAbstractTextArea class >> editorFont [
 	^ StandardFonts defaultFont
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RubAbstractTextArea class >> embeddedMorphExample [
 	"This is a simple example of how to embed morphs into a text. It is also a test to quickly see with ones eyes that the morphs are place right and behaves well under resize of window.
 The example sits in this class because this class is the one which implements the placement of morphs"
@@ -182,7 +212,7 @@ The example sits in this class because this class is the one which implements th
 	 	openInWindow
 ]
 
-{ #category : #'shortcut examples' }
+{ #category : 'shortcut examples' }
 RubAbstractTextArea class >> examplesOfEditorShortcutsOn: aBuilder [
 	"No Keymap here, by default, the editor rely on a builtin keymapping engine (see TextEditor and SmallEditor)
 	Here are some example on how to declare them if you want to setup different shortcuts
@@ -286,7 +316,7 @@ RubAbstractTextArea class >> examplesOfEditorShortcutsOn: aBuilder [
 	"
 ]
 
-{ #category : #'shortcut examples' }
+{ #category : 'shortcut examples' }
 RubAbstractTextArea class >> examplesOfSmalltalkEditorShortcutsOn: aBuilder [
 	"No Keymap here, by default, the editor rely on a builtin keymapping engine (see TextEditor and SmallEditor)
 	Here are some example on how to declare them if you want to setup different shortcuts
@@ -324,47 +354,47 @@ RubAbstractTextArea class >> examplesOfSmalltalkEditorShortcutsOn: aBuilder [
 		"
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 RubAbstractTextArea class >> highlightMessageSend [
 	^ HighlightMessageSend ifNil: [ HighlightMessageSend := false ]
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 RubAbstractTextArea class >> highlightMessageSend: aBoolean [
 	HighlightMessageSend := aBoolean
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 RubAbstractTextArea class >> lineNumbersBackgroundColor [
 	^ LineNumbersBackgroundColor ifNil: [ LineNumbersBackgroundColor := self theme backgroundColor darker]
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 RubAbstractTextArea class >> lineNumbersBackgroundColor: aColor [
 	 LineNumbersBackgroundColor := aColor
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 RubAbstractTextArea class >> lineNumbersFont [
 	^ LineNumbersFont ifNil: [ LineNumbersFont := TextStyle default fontOfPointSize: 7]
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 RubAbstractTextArea class >> lineNumbersFont: aFont [
 	LineNumbersFont := aFont
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 RubAbstractTextArea class >> lineNumbersTextColor [
 	^ LineNumbersTextColor ifNil: [ LineNumbersTextColor := self theme lineNumberColor ]
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 RubAbstractTextArea class >> lineNumbersTextColor: aColor [
 	LineNumbersTextColor := aColor
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 RubAbstractTextArea class >> rubricSettingsOn: aBuilder [
 	<systemsettings>
 	(aBuilder group: #Rubric)
@@ -406,40 +436,40 @@ RubAbstractTextArea class >> rubricSettingsOn: aBuilder [
 				label: 'Highlight Message Send' ]
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 RubAbstractTextArea class >> textColor [
 	^ DefaultTextColor ifNil: [ DefaultTextColor := self theme textColor ]
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 RubAbstractTextArea class >> textColor: aColor [
 	DefaultTextColor := aColor
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 RubAbstractTextArea class >> walkAlongDisplayedLine [
 	^ WalkAlongDisplayedLine ifNil: [WalkAlongDisplayedLine := true]
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 RubAbstractTextArea class >> walkAlongDisplayedLine: aBoolean [
 	WalkAlongDisplayedLine := aBoolean
 ]
 
-{ #category : #'dropping/grabbing' }
+{ #category : 'dropping/grabbing' }
 RubAbstractTextArea >> aboutToBeGrabbedBy: aHand [
 	self grabbedAllowed
 		ifTrue: [ ^ super aboutToBeGrabbedBy: aHand ].
 	^ nil
 ]
 
-{ #category : #'accessing - editor' }
+{ #category : 'accessing - editor' }
 RubAbstractTextArea >> acceptAllowed [
 
 	^ editingMode acceptAllowed
 ]
 
-{ #category : #editing }
+{ #category : 'editing' }
 RubAbstractTextArea >> acceptContents [
 	"The message is sent when the user hits enter or Cmd-S.
 	Accept the current contents and endediting"
@@ -448,34 +478,34 @@ RubAbstractTextArea >> acceptContents [
 	self changed
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 RubAbstractTextArea >> acceptDroppingMorph: aMorph event: evt [
 	"This message is sent when a morph is dropped onto me."
 	self addMorphFront: aMorph fromWorldPosition: aMorph position.
 		"Make a TextAnchor and install it in a run."
 ]
 
-{ #category : #'accessing - text' }
+{ #category : 'accessing - text' }
 RubAbstractTextArea >> addAttribute: anAttribute [
 	self text addAttribute: anAttribute
 ]
 
-{ #category : #'accessing - cursor' }
+{ #category : 'accessing - cursor' }
 RubAbstractTextArea >> addCursor [
 	self cursor ifNil: [ self addMorph: (cursor := self newCursor) ]
 ]
 
-{ #category : #'embedded morphs' }
+{ #category : 'embedded morphs' }
 RubAbstractTextArea >> addEmbeddedMorph: aMorph [
 	self embeddedMorphs add: aMorph
 ]
 
-{ #category : #'accessing - selection' }
+{ #category : 'accessing - selection' }
 RubAbstractTextArea >> addPrimarySelection [
 	self addMorph: self newPrimarySelection
 ]
 
-{ #category : #'accessing - segments' }
+{ #category : 'accessing - segments' }
 RubAbstractTextArea >> addSegment: aRubTextSegmentMorph [
 	| seg |
 	seg := aRubTextSegmentMorph inTextArea: self.
@@ -484,17 +514,17 @@ RubAbstractTextArea >> addSegment: aRubTextSegmentMorph [
 	^ seg
 ]
 
-{ #category : #'public accessing' }
+{ #category : 'public accessing' }
 RubAbstractTextArea >> allowMenu [
 	self menuAllowed: true
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RubAbstractTextArea >> announce: anAnnouncement [
 	self announcer announce: anAnnouncement
 ]
 
-{ #category : #'accessing - text' }
+{ #category : 'accessing - text' }
 RubAbstractTextArea >> appendText: aStringOrText [
 	self
 		handleEdit:
@@ -505,23 +535,23 @@ RubAbstractTextArea >> appendText: aStringOrText [
 					self selectInvisiblyFrom: self text size + 1 to: self text size ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubAbstractTextArea >> backgroundColor [
 	^ self color
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubAbstractTextArea >> backgroundColor: newColor [
 	self color: newColor
 ]
 
-{ #category : #'public accessing' }
+{ #category : 'public accessing' }
 RubAbstractTextArea >> beEditable [
 	self readOnly
 		ifTrue: [ self readOnly: false ]
 ]
 
-{ #category : #'public accessing' }
+{ #category : 'public accessing' }
 RubAbstractTextArea >> beEditableWhile: aBlock [
 	| wasEditable |
 	wasEditable := self readOnly.
@@ -529,29 +559,29 @@ RubAbstractTextArea >> beEditableWhile: aBlock [
 	aBlock ensure: [ self readOnly:  wasEditable]
 ]
 
-{ #category : #'public accessing' }
+{ #category : 'public accessing' }
 RubAbstractTextArea >> beReadOnly [
 	self readOnly
 		ifFalse: [ self readOnly: true ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubAbstractTextArea >> borderWidth: newWidth [
 	"No border allowed"
 	super borderWidth: 0
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 RubAbstractTextArea >> bounds [
 	^ super bounds ifNil: [ self defaultBounds ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RubAbstractTextArea >> canChangeText [
 	^ self enabled and: [ self readOnly not ]
 ]
 
-{ #category : #editing }
+{ #category : 'editing' }
 RubAbstractTextArea >> cancelEdits [
 	"The message is sent when the user hits enter or Cmd-L.
 	Cancel the current contents and end editing.
@@ -559,17 +589,17 @@ RubAbstractTextArea >> cancelEdits [
 	self announce: (RubCancelEditRequested morph: self)
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 RubAbstractTextArea >> caseSensitiveFinds [
 	^ self class caseSensitiveFinds
 ]
 
-{ #category : #'accessing - decorators' }
+{ #category : 'accessing - decorators' }
 RubAbstractTextArea >> classOfDecoratorNamed: aKey [
 	^ RubParagraphDecorator classOfDecoratorNamed: aKey
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubAbstractTextArea >> click: anEvent [
 	self
 		handleEdit: [
@@ -577,25 +607,25 @@ RubAbstractTextArea >> click: anEvent [
 			self scrollSelectionIntoView: nil ]
 ]
 
-{ #category : #'accessing - editor' }
+{ #category : 'accessing - editor' }
 RubAbstractTextArea >> closingDelimiters [
 	^ self editor closingDelimiters
 ]
 
-{ #category : #completion }
+{ #category : 'completion' }
 RubAbstractTextArea >> completionEngine [
 
 	^ completionEngine
 ]
 
-{ #category : #completion }
+{ #category : 'completion' }
 RubAbstractTextArea >> completionPostAction [
 
 	self hasCompletionEngine
 		ifTrue: [ completionEngine closeMenu ]
 ]
 
-{ #category : #composing }
+{ #category : 'composing' }
 RubAbstractTextArea >> compose [
 
 	self prepareParagraphToCompose.
@@ -603,12 +633,12 @@ RubAbstractTextArea >> compose [
 	self drawEmbeddedMorphs
 ]
 
-{ #category : #composing }
+{ #category : 'composing' }
 RubAbstractTextArea >> compositionRectangle [
 	^ scrollPane ifNil: [ self innerBounds ] ifNotNil: [ self innerBounds topLeft extent: scrollPane scrollBounds extent ]
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 RubAbstractTextArea >> copy [
 	^ super copy
 		text: self text copy
@@ -617,78 +647,78 @@ RubAbstractTextArea >> copy [
 		textColor: textColor
 ]
 
-{ #category : #'interactive error protocol' }
+{ #category : 'interactive error protocol' }
 RubAbstractTextArea >> correctFrom: start to: stop with: aString [
 	self editor correctFrom: start to: stop with: aString
 ]
 
-{ #category : #'accessing - cursor' }
+{ #category : 'accessing - cursor' }
 RubAbstractTextArea >> cursor [
 	^ cursor
 ]
 
-{ #category : #'accessing - cursor' }
+{ #category : 'accessing - cursor' }
 RubAbstractTextArea >> cursorClass [
 	^ RubCursor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubAbstractTextArea >> cursorWidth [
 	^ self cursorClass defaultWidth
 ]
 
-{ #category : #'accessing - decorators' }
+{ #category : 'accessing - decorators' }
 RubAbstractTextArea >> decoratorNamed: aKey [
 	^self paragraph decoratorNamed: aKey
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 RubAbstractTextArea >> defaultBounds [
 	^ super defaultBounds topLeft corner: self minimumExtent
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 RubAbstractTextArea >> defaultColor [
 	"Answer the default color/fill style for the receiver. If the settings has been used then honor it, else returns the theme color"
 
   	^ self class backgroundColor
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubAbstractTextArea >> defaultFindReplaceServiceClass [
 
 	^ self class defaultFindReplaceServiceClass
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 RubAbstractTextArea >> defaultGetMenuPolicy [
 	^ self
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 RubAbstractTextArea >> defaultMargins [
 
 	^ Margin left: 6 right: 6 top: 6 bottom: 6
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 RubAbstractTextArea >> defaultMenuAllowed [
 	^ true
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 RubAbstractTextArea >> defaultReadOnly [
 
 	^ false
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 RubAbstractTextArea >> defaultTextColor [
 	"answer the default color/fill style for the receiver"
 	^ self class textColor
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 RubAbstractTextArea >> defaultTextStyle [
 	| ts f |
 	f := self class editorFont.
@@ -697,39 +727,39 @@ RubAbstractTextArea >> defaultTextStyle [
 	^ ts
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 RubAbstractTextArea >> defaultYellowButtonMenuEnabled [
 	^ self defaultMenuAllowed
 ]
 
-{ #category : #'submorphs - add/remove' }
+{ #category : 'submorphs - add/remove' }
 RubAbstractTextArea >> delete [
 	self hasFocus
 		ifTrue: [ self currentHand newKeyboardFocus: nil ].
 	super delete
 ]
 
-{ #category : #'interactive error protocol' }
+{ #category : 'interactive error protocol' }
 RubAbstractTextArea >> deselect [
 	self selectFrom: 1 to: 0
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubAbstractTextArea >> doubleClick: anEvent [
 	^ self handleEdit: [ self editor doubleClick: anEvent ]
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubAbstractTextArea >> dragDoubleClick: event [
 	hasDragDoubleClick := true.
 	mouseDownPoint := event cursorPoint
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubAbstractTextArea >> dragStart: event [
 ]
 
-{ #category : #composing }
+{ #category : 'composing' }
 RubAbstractTextArea >> drawEmbeddedMorphs [
 	"Scan through text to find spans of TextBackgroundColor, and mark them using TextBackgroundColorSegmentMorph."
 
@@ -748,7 +778,7 @@ RubAbstractTextArea >> drawEmbeddedMorphs [
 						ifTrue: [ self addEmbeddedMorph: v anchoredMorph  ] ] ]
 ]
 
-{ #category : #'embedded morphs' }
+{ #category : 'embedded morphs' }
 RubAbstractTextArea >> drawEmbeddedMorphsOn: aCanvas [
 	"draw only those embedded morphs which has been placed by RubDisplayScanner>>placeEmbeddedObject:"
 	((self embeddedMorphs)
@@ -756,7 +786,7 @@ RubAbstractTextArea >> drawEmbeddedMorphsOn: aCanvas [
 		do: [ :morph | morph fullDrawOn: aCanvas]
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 RubAbstractTextArea >> drawSubmorphsOn: aCanvas [
 	"Draw the focus here since we are using inset bounds
 	for the focus rectangle."
@@ -768,7 +798,7 @@ RubAbstractTextArea >> drawSubmorphsOn: aCanvas [
 	self drawEmbeddedMorphsOn: aCanvas
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 RubAbstractTextArea >> drawSubmorphsOnAthensCanvas: aCanvas [
 	"Draw the focus here since we are using inset bounds
 	for the focus rectangle."
@@ -779,27 +809,27 @@ RubAbstractTextArea >> drawSubmorphsOnAthensCanvas: aCanvas [
 		ifTrue: [  self drawKeyboardFocusOnAthensCanvas: aCanvas ]
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 RubAbstractTextArea >> drawingBounds [
 	^ (self scrollPane isNil or: [ self wrapped ])
 		ifTrue: [self innerBounds]
 		ifFalse: [ self innerBounds topLeft extent: self class defaultMaxExtent @ self class defaultMaxExtent ]
 ]
 
-{ #category : #'accessing - selection' }
+{ #category : 'accessing - selection' }
 RubAbstractTextArea >> editPrimarySelectionSeparately [
 	| view |
 	view := self primarySelection readWriteView.
 	(view embeddedInMorphicWindowLabeled: 'Selection editing') openInHand
 ]
 
-{ #category : #'accessing - im text input' }
+{ #category : 'accessing - im text input' }
 RubAbstractTextArea >> editing [
 
 	^ editing = true
 ]
 
-{ #category : #'accessing - editing mode' }
+{ #category : 'accessing - editing mode' }
 RubAbstractTextArea >> editingMode [
 	^ editingMode
 		ifNil: [
@@ -807,54 +837,54 @@ RubAbstractTextArea >> editingMode [
 			editingMode ]
 ]
 
-{ #category : #'accessing - editing mode' }
+{ #category : 'accessing - editing mode' }
 RubAbstractTextArea >> editingMode: anEditingMode [
 	editingMode unplug.
 	editingMode := anEditingMode.
 	editingMode plugin: self
 ]
 
-{ #category : #'accessing - editing state' }
+{ #category : 'accessing - editing state' }
 RubAbstractTextArea >> editingState [
 	^ editingState ifNil: [editingState := self newEditingState]
 ]
 
-{ #category : #'accessing - editing state' }
+{ #category : 'accessing - editing state' }
 RubAbstractTextArea >> editingStateClass [
 	^ RubEditingState
 ]
 
-{ #category : #'accessing - editor' }
+{ #category : 'accessing - editor' }
 RubAbstractTextArea >> editor [
 	"Return my current editor, or install a new one."
 	^ editor ifNil: [ editor := self newEditor ]
 ]
 
-{ #category : #'accessing - editor' }
+{ #category : 'accessing - editor' }
 RubAbstractTextArea >> editorClass [
 	"Answer the class used to create the receiver's editor"
 
 	^ RubTextEditor
 ]
 
-{ #category : #'embedded morphs' }
+{ #category : 'embedded morphs' }
 RubAbstractTextArea >> embeddedMorphs [
 	"Embedded morphs are kept seperate from other submorphs, to ensure only those placed by
 	RubDisplayScanner>>placeEmbeddedObject: are drawn"
 	^ embeddedMorphs ifNil: [ embeddedMorphs := OrderedCollection new ]
 ]
 
-{ #category : #'accessing - editing state' }
+{ #category : 'accessing - editing state' }
 RubAbstractTextArea >> emphasisHere [
 	^ self editingState emphasisHere
 ]
 
-{ #category : #'accessing - editing state' }
+{ #category : 'accessing - editing state' }
 RubAbstractTextArea >> emphasisHere: aListOfAttributes [
 	self editingState emphasisHere: aListOfAttributes
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubAbstractTextArea >> escapePressed [
 	"do nothing. do not simulate a right click
 	because Esc is too useful as a shortcut for other purposes
@@ -862,20 +892,20 @@ RubAbstractTextArea >> escapePressed [
 	"^ self yellowButtonActivity: false"
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 RubAbstractTextArea >> extent: aPoint [
 	self
 		handleBoundsChange: [
 			self wrapped
 				ifTrue: [
-					(bounds notNil and: [ bounds width = aPoint x ])
+					(bounds isNotNil and: [ bounds width = aPoint x ])
 						ifTrue: [ ^ self ].
 					super extent: ((self paragraph withoutDecorator extentFromClientBottomRight: aPoint) max: self minimumExtent).
 					self recomputeSelection ]
 				ifFalse: [ super extent: aPoint ] ]
 ]
 
-{ #category : #'find-replace' }
+{ #category : 'find-replace' }
 RubAbstractTextArea >> findAndSelect: aRegex startingAt: anIndex searchBackwards: searchBackwards [
 	| where |
 	self
@@ -888,7 +918,7 @@ RubAbstractTextArea >> findAndSelect: aRegex startingAt: anIndex searchBackwards
 	^ where
 ]
 
-{ #category : #'find-replace' }
+{ #category : 'find-replace' }
 RubAbstractTextArea >> findNextString: aSubstring startingAt: searchIdx [
 	| where |
 	self
@@ -896,36 +926,36 @@ RubAbstractTextArea >> findNextString: aSubstring startingAt: searchIdx [
 	^ where
 ]
 
-{ #category : #'find-replace' }
+{ #category : 'find-replace' }
 RubAbstractTextArea >> findRegex [
 	^ self editor findRegex
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubAbstractTextArea >> findReplaceService [
 	^ findReplaceService ifNil: [
 		findReplaceService := self defaultFindReplaceServiceClass newFor: self]
 ]
 
-{ #category : #'find-replace' }
+{ #category : 'find-replace' }
 RubAbstractTextArea >> findText [
 	^ self editor findText
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubAbstractTextArea >> focusChanged [
 	super focusChanged.
 	self editor focusChanged.
 	self changed
 ]
 
-{ #category : #'accessing - text' }
+{ #category : 'accessing - text' }
 RubAbstractTextArea >> font [
 	"Answer the probable font"
 	^ self textStyle fonts at: self textStyle defaultFontIndex
 ]
 
-{ #category : #'accessing - text' }
+{ #category : 'accessing - text' }
 RubAbstractTextArea >> font: aFont [
 	| newTextStyle |
 	newTextStyle := aFont textStyle copy ifNil: [ TextStyle fontArray: { aFont } ].
@@ -933,19 +963,19 @@ RubAbstractTextArea >> font: aFont [
 	self textStyle: newTextStyle
 ]
 
-{ #category : #'public accessing' }
+{ #category : 'public accessing' }
 RubAbstractTextArea >> forbidMenu [
 	self menuAllowed: false
 ]
 
-{ #category : #composing }
+{ #category : 'composing' }
 RubAbstractTextArea >> forceCompose [
 
 	self prepareParagraphToCompose.
 	self paragraph forceCompose
 ]
 
-{ #category : #'accessing - cursor' }
+{ #category : 'accessing - cursor' }
 RubAbstractTextArea >> forceCursorVisibleWhile: aBlock [
 	self cursor
 		ifNotNil: [ :cur |
@@ -956,12 +986,12 @@ RubAbstractTextArea >> forceCursorVisibleWhile: aBlock [
 				ensure: [ cur stayVisible: prev ] ]
 ]
 
-{ #category : #'paragraph feedbacks' }
+{ #category : 'paragraph feedbacks' }
 RubAbstractTextArea >> forceExtentTo: aPoint [
 	super extent: aPoint
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubAbstractTextArea >> getMenu: shiftKeyState [
 	"Ask the getMenuPolicy to lookup the menu to popup if any"
 
@@ -970,36 +1000,36 @@ RubAbstractTextArea >> getMenu: shiftKeyState [
 		ifFalse: [ self getMenuPolicy lookupMenu ]
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 RubAbstractTextArea >> getMenuPolicy [
 	^ getMenuPolicy ifNil: [ getMenuPolicy := self defaultGetMenuPolicy ]
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 RubAbstractTextArea >> getMenuPolicy: aGetMenuPolicy [
 	getMenuPolicy := aGetMenuPolicy
 ]
 
-{ #category : #'dropping/grabbing' }
+{ #category : 'dropping/grabbing' }
 RubAbstractTextArea >> grabbedAllowed [
 	^ scrollPane isNil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubAbstractTextArea >> grow [
 	"Answer whether the area should grow horizontally."
 
 	^ grow
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubAbstractTextArea >> grow: aBool [
 	"Set whether the area should grow horizontally."
 
 	grow := aBool
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 RubAbstractTextArea >> handleBoundsChange: aBlock [
 	| oldBounds |
 	oldBounds := self bounds copy.
@@ -1012,7 +1042,7 @@ RubAbstractTextArea >> handleBoundsChange: aBlock [
 			self announce: ((RubExtentChanged morph: self) previousBounds: oldBounds) ]
 ]
 
-{ #category : #editing }
+{ #category : 'editing' }
 RubAbstractTextArea >> handleEdit: editBlock [
 	"Ensure that changed areas get suitably redrawn"
 
@@ -1024,14 +1054,14 @@ RubAbstractTextArea >> handleEdit: editBlock [
 	self selectionChanged	"Note new selection"
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubAbstractTextArea >> handleKeyDown: anEvent [
 
 	editing = true ifTrue: [ ^ self ].
 	^ super handleKeyDown: anEvent
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubAbstractTextArea >> handleKeystroke: anEvent [
 	"System level event handling."
 
@@ -1043,7 +1073,7 @@ RubAbstractTextArea >> handleKeystroke: anEvent [
 	anEvent wasHandled: true
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubAbstractTextArea >> handleMouseMove: anEvent [
 	"Re-implemented to allow for mouse-up move events"
 
@@ -1058,14 +1088,14 @@ RubAbstractTextArea >> handleMouseMove: anEvent [
 	super handleMouseMove: anEvent
 ]
 
-{ #category : #composing }
+{ #category : 'composing' }
 RubAbstractTextArea >> handleParagraphChange: aBlock [
 	aBlock value.
 	self compose.
 	self changed
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RubAbstractTextArea >> handleReturnKey [
 	| answer |
 	answer := RubReturnEntered morph: self.
@@ -1075,7 +1105,7 @@ RubAbstractTextArea >> handleReturnKey [
 	^ answer accepted
 ]
 
-{ #category : #'accessing - selection' }
+{ #category : 'accessing - selection' }
 RubAbstractTextArea >> handleSelectionChange: aBlock [
 	| prevMarkBlock prevPointBlock |
 	self flag: #pharoFixMe. "hack here because text segments are not well designed regarding text editing".
@@ -1092,81 +1122,81 @@ RubAbstractTextArea >> handleSelectionChange: aBlock [
 	self announce: (RubSelectionChanged from: self previousMarkBlock: prevMarkBlock previousPointBlock: prevPointBlock)
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubAbstractTextArea >> handlesKeyboard: evt [
 	^true
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubAbstractTextArea >> handlesMouseDown: evt [
 	^ self innerBounds containsPoint: evt cursorPoint
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubAbstractTextArea >> handlesMouseOver: evt [
 	"Do I want to receive mouseEnter: and mouseLeave: when the button is up and the hand is empty?"
 	^ self enabled
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubAbstractTextArea >> handlesTextEditionEvent: anEvent [
 
 	^ true
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubAbstractTextArea >> handlesTextInputEvent: anEvent [
 
 	^ true
 ]
 
-{ #category : #completion }
+{ #category : 'completion' }
 RubAbstractTextArea >> hasCompletionEngine [
 
 	^ completionEngine isNil not
 ]
 
-{ #category : #'accessing - decorators' }
+{ #category : 'accessing - decorators' }
 RubAbstractTextArea >> hasDecorator: aDecorator [
 	^ self paragraph hasDecorator: aDecorator
 ]
 
-{ #category : #'accessing - decorators' }
+{ #category : 'accessing - decorators' }
 RubAbstractTextArea >> hasDecoratorNamed: aKey [
 	^ self paragraph hasDecoratorNamed: aKey
 ]
 
-{ #category : #'find-replace' }
+{ #category : 'find-replace' }
 RubAbstractTextArea >> hasFindReplaceFocus [
 	^ self findReplaceService dialogIsActiveFor: self
 ]
 
-{ #category : #'accessing - editing state' }
+{ #category : 'accessing - editing state' }
 RubAbstractTextArea >> hasFocus [
 	^ ( editingState ifNil: [^ false ] ) hasFocus
 ]
 
-{ #category : #'accessing - editing state' }
+{ #category : 'accessing - editing state' }
 RubAbstractTextArea >> hasFocus: aBoolean [
 	^ self editingState hasFocus: aBoolean
 ]
 
-{ #category : #'accessing - selection' }
+{ #category : 'accessing - selection' }
 RubAbstractTextArea >> hasSelection [
 	^ self editor hasSelection
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubAbstractTextArea >> hideOverEditableTextCursor [
 	self currentHand showTemporaryCursor: nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubAbstractTextArea >> highlightMessageSend [
 	^ self class highlightMessageSend
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RubAbstractTextArea >> initialize [
 	super initialize.
 	grow := false.
@@ -1178,7 +1208,7 @@ RubAbstractTextArea >> initialize [
 	hasDragDoubleClick := false
 ]
 
-{ #category : #keymapping }
+{ #category : 'keymapping' }
 RubAbstractTextArea >> initializeShortcuts: aKMDispatcher [
 	"we delegate the creation of default shortcuts to the editor
 	because it is the one that knows more details about the goal of editing"
@@ -1186,12 +1216,12 @@ RubAbstractTextArea >> initializeShortcuts: aKMDispatcher [
 	self editor initializeShortcuts: aKMDispatcher
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RubAbstractTextArea >> isReadOnly [
 	^ self readOnly
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubAbstractTextArea >> keyDown: anEvent [
 	"Handle a keystroke event."
 	(anEvent key = KeyboardKey enter or: [ anEvent key = KeyboardKey keypadEnter ])
@@ -1208,7 +1238,7 @@ RubAbstractTextArea >> keyDown: anEvent [
 	self handleEdit: [ self editor keyDown: anEvent ]
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubAbstractTextArea >> keyStroke: anEvent [
 
 	"Handle a keystroke event."
@@ -1223,7 +1253,7 @@ RubAbstractTextArea >> keyStroke: anEvent [
 	self scrollSelectionIntoView: nil
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubAbstractTextArea >> keyboardFocusChange: aBoolean [
 
 	aBoolean
@@ -1241,22 +1271,22 @@ RubAbstractTextArea >> keyboardFocusChange: aBoolean [
 	super keyboardFocusChange: aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubAbstractTextArea >> lineNumbersBackgroundColor [
 	^ self class lineNumbersBackgroundColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubAbstractTextArea >> lineNumbersTextColor [
 	^ self class lineNumbersTextColor
 ]
 
-{ #category : #'accessing - paragraph' }
+{ #category : 'accessing - paragraph' }
 RubAbstractTextArea >> lines [
 	^ self paragraph lines
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 RubAbstractTextArea >> lookupMenu [
 	"default implementation of the algorithm that lookup the menu"
 
@@ -1265,7 +1295,7 @@ RubAbstractTextArea >> lookupMenu [
 		ifNotNil: [ :m | m menu ifNil: [ self editingMode menu ] ]
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 RubAbstractTextArea >> lookupShiftMenu [
 	"default implementation of the algorithm that lookup the menu"
 
@@ -1276,12 +1306,12 @@ RubAbstractTextArea >> lookupShiftMenu [
 		ifNotNil: [ :m | m shiftMenu ifNil: [ default value ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubAbstractTextArea >> margins [
 	^  margins ifNil: [margins := self defaultMargins ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubAbstractTextArea >> margins: aMargin [
 	"Adjust margin to always be able to display a cursor to right of text bounds"
 	| m |
@@ -1294,46 +1324,46 @@ RubAbstractTextArea >> margins: aMargin [
 	margins := m
 ]
 
-{ #category : #'accessing - selection' }
+{ #category : 'accessing - selection' }
 RubAbstractTextArea >> markBlock [
 	^ self editingState markBlock
 ]
 
-{ #category : #'accessing - selection' }
+{ #category : 'accessing - selection' }
 RubAbstractTextArea >> markBlock: aCharacterBlock [
 	self handleSelectionChange: [ self editingState markBlock:  aCharacterBlock]
 ]
 
-{ #category : #'accessing - selection' }
+{ #category : 'accessing - selection' }
 RubAbstractTextArea >> markBlock: markCharacterBlock pointBlock: pointCharacterBlock [
 	self handleSelectionChange: [ self editingState markBlock: markCharacterBlock pointBlock: pointCharacterBlock ]
 ]
 
-{ #category : #'accessing - selection' }
+{ #category : 'accessing - selection' }
 RubAbstractTextArea >> markIndex [
 	^ self editingState markIndex
 ]
 
-{ #category : #'accessing - selection' }
+{ #category : 'accessing - selection' }
 RubAbstractTextArea >> markIndex: markIndex pointIndex: pointIndex [
 	self handleSelectionChange: [ self editingState markIndex: markIndex pointIndex: pointIndex ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubAbstractTextArea >> maxLength [
 	"Answer the maximum number of characters that may be typed."
 
 	^ maxLength
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubAbstractTextArea >> maxLength: anInteger [
 	"Set the maximum number of characters that may be typed."
 
 	maxLength := anInteger max: 0
 ]
 
-{ #category : #measuring }
+{ #category : 'measuring' }
 RubAbstractTextArea >> maxLineWidth [
 	"Answers with the maximum approximate pixel width across all lines"
 	| w |
@@ -1343,17 +1373,17 @@ RubAbstractTextArea >> maxLineWidth [
 	^ w * 6 // 5
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubAbstractTextArea >> menuAllowed [
 	^ menuAllowed ifNil: [ menuAllowed := self defaultMenuAllowed  ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubAbstractTextArea >> menuAllowed: aBoolean [
 	menuAllowed := aBoolean
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 RubAbstractTextArea >> minExtent [
 	| minH |
 	minH := scrollPane ifNil: [ 0 ] ifNotNil: [ 60 ].
@@ -1361,22 +1391,22 @@ RubAbstractTextArea >> minExtent [
 		@ (self textStyle lineGrid + self margins top + self margins bottom)
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 RubAbstractTextArea >> minimumExtent [
 	^ self minExtent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubAbstractTextArea >> model [
 	^model
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubAbstractTextArea >> model: aModel [
 	model := aModel
 ]
 
-{ #category : #'accessing - selection' }
+{ #category : 'accessing - selection' }
 RubAbstractTextArea >> modifySelection: aCharacterBlock [
 	"the aCharacterBlock becomes always the new point block. Whether the old point block or
 	the old mark block becomes the new mark block, depends on the distance. If the new character block
@@ -1387,7 +1417,7 @@ RubAbstractTextArea >> modifySelection: aCharacterBlock [
 		ifFalse: [ self markBlock: self pointBlock pointBlock: aCharacterBlock ]
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubAbstractTextArea >> mouseDown: evt [
 	"Make this TextMorph be the keyboard input focus, if it isn't
 	already, and repond to the text selection gesture.
@@ -1421,21 +1451,21 @@ RubAbstractTextArea >> mouseDown: evt [
 		ifFalse: [ self takeKeyboardFocus ]
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubAbstractTextArea >> mouseEnter: evt [
 	"Handle a mouseEnter event, meaning the mouse just entered my bounds with no button pressed."
 	super mouseEnter: evt.
 	self showOverEditableTextCursor
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubAbstractTextArea >> mouseLeave: evt [
 	"Handle a mouseLeave event, meaning the mouse just left my bounds with no button pressed."
 	super mouseLeave: evt.
 	self hideOverEditableTextCursor
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubAbstractTextArea >> mouseMove: evt [
 	
    self paragraph move: evt for: model controller: self editor.
@@ -1457,7 +1487,7 @@ RubAbstractTextArea >> mouseMove: evt [
 	self editor storeSelectionInText.
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubAbstractTextArea >> mouseUp: evt [
 
 	self scrollPivot: nil.
@@ -1467,23 +1497,23 @@ RubAbstractTextArea >> mouseUp: evt [
 	hasDragDoubleClick := false
 ]
 
-{ #category : #'accessing - cursor' }
+{ #category : 'accessing - cursor' }
 RubAbstractTextArea >> newCursor [
 	^ self cursorClass new
 ]
 
-{ #category : #'accessing - editing state' }
+{ #category : 'accessing - editing state' }
 RubAbstractTextArea >> newEditingState [
 	^ self editingStateClass new textArea: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubAbstractTextArea >> newEditor [
 	"Return my current editor, or install a new one."
 	^ self editorClass forTextArea: self
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RubAbstractTextArea >> newParagraph [
 	| newParagraph |
 	newParagraph := RubOpeningClosingDelimiterDecorator next: RubParagraph new.
@@ -1492,12 +1522,12 @@ RubAbstractTextArea >> newParagraph [
 	^ newParagraph
 ]
 
-{ #category : #'accessing - selection' }
+{ #category : 'accessing - selection' }
 RubAbstractTextArea >> newPrimarySelection [
 	^ RubPrimarySelectionMorph inTextArea: self from: self markIndex to: self pointIndex
 ]
 
-{ #category : #editing }
+{ #category : 'editing' }
 RubAbstractTextArea >> newSizeAfterUpdateFrom: start to: stop with: aText [
 	" compute and return my text new size avec an insertion/replacement with aText.
 	the receiver is not update "
@@ -1508,36 +1538,36 @@ RubAbstractTextArea >> newSizeAfterUpdateFrom: start to: stop with: aText [
 	^ self text size + replSize
 ]
 
-{ #category : #'interactive error protocol' }
+{ #category : 'interactive error protocol' }
 RubAbstractTextArea >> nextTokenFrom: start direction: dir [
 	^ self editor nextTokenFrom: start direction: dir
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubAbstractTextArea >> notificationStrategy: aStrategy [
 	self editor notificationStrategy: aStrategy
 ]
 
-{ #category : #'interactive error protocol' }
+{ #category : 'interactive error protocol' }
 RubAbstractTextArea >> notify: aString at: anInteger in: aStream [
 	^ self editor notify: aString at: anInteger in: aStream
 ]
 
-{ #category : #composing }
+{ #category : 'composing' }
 RubAbstractTextArea >> offset [
 	^ scrollPane
 		ifNil: [ 0@0 ]
 		ifNotNil: [ :h | scrollPane offset ]
 ]
 
-{ #category : #'find-replace' }
+{ #category : 'find-replace' }
 RubAbstractTextArea >> openFindDialog [
 	self sharesFindReplace
 		ifTrue: [ self announce: RubFindReplaceWindowRequired ]
 		ifFalse: [self flash]
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 RubAbstractTextArea >> openMenu [
 	"Opens the menu at the cursor position"
 	self openMenu: false and: [ :menu |
@@ -1545,7 +1575,7 @@ RubAbstractTextArea >> openMenu [
 	]
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 RubAbstractTextArea >> openMenu: shiftKeyState and: aBlock [
 	"Opens the menu at the cursor position, executing the given block afterwards"
 	(self getMenu: shiftKeyState)
@@ -1557,12 +1587,12 @@ RubAbstractTextArea >> openMenu: shiftKeyState and: aBlock [
 		]
 ]
 
-{ #category : #'accessing - editor' }
+{ #category : 'accessing - editor' }
 RubAbstractTextArea >> openingDelimiters [
 	^ self editor openingDelimiters
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RubAbstractTextArea >> paragraph [
 	"Paragraph instantiation is lazy -- create it only when needed"
 
@@ -1574,7 +1604,7 @@ RubAbstractTextArea >> paragraph [
 	^ paragraph
 ]
 
-{ #category : #'paragraph feedbacks' }
+{ #category : 'paragraph feedbacks' }
 RubAbstractTextArea >> paragraphReplacedTextFrom: start to: stop with: aText [
 	"A text change has taken place in my paragraph, as a result of editing and I must be updated"
 	self
@@ -1587,7 +1617,7 @@ RubAbstractTextArea >> paragraphReplacedTextFrom: start to: stop with: aText [
 	self drawEmbeddedMorphs
 ]
 
-{ #category : #'paragraph feedbacks' }
+{ #category : 'paragraph feedbacks' }
 RubAbstractTextArea >> paragraphWasComposedFrom: startIndex to: stopIndex [
 	self
 		handleBoundsChange: [
@@ -1596,7 +1626,7 @@ RubAbstractTextArea >> paragraphWasComposedFrom: startIndex to: stopIndex [
 				ifFalse: [ self updateExtentFromParagraph ] ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RubAbstractTextArea >> plugFindReplace [
 	self announcer
 		when:  MorphGotFocus send: #whenTextAreaGotFocus: to: self findReplaceService;
@@ -1604,42 +1634,42 @@ RubAbstractTextArea >> plugFindReplace [
 		when:  RubSelectionChanged send: #whenTextAreaSelectionChanged: to: self findReplaceService
 ]
 
-{ #category : #'accessing - selection' }
+{ #category : 'accessing - selection' }
 RubAbstractTextArea >> pointBlock [
 	^ self editingState pointBlock
 ]
 
-{ #category : #'accessing - selection' }
+{ #category : 'accessing - selection' }
 RubAbstractTextArea >> pointBlock: aCharacterBlock [
 	self handleSelectionChange: [ self editingState pointBlock: aCharacterBlock ]
 ]
 
-{ #category : #'accessing - selection' }
+{ #category : 'accessing - selection' }
 RubAbstractTextArea >> pointIndex [
 	^ self editingState pointIndex
 ]
 
-{ #category : #composing }
+{ #category : 'composing' }
 RubAbstractTextArea >> prepareParagraphToCompose [
 	self paragraph container: self compositionRectangle
 ]
 
-{ #category : #'accessing - selection' }
+{ #category : 'accessing - selection' }
 RubAbstractTextArea >> primarySelection [
 	^ self submorphThat: [ :sm | sm isKindOf: RubPrimarySelectionMorph ] ifNone:  [ ]
 ]
 
-{ #category : #'accessing - selection' }
+{ #category : 'accessing - selection' }
 RubAbstractTextArea >> primarySelectionBounds [
 	^ self primarySelection bounds
 ]
 
-{ #category : #'accessing - selection' }
+{ #category : 'accessing - selection' }
 RubAbstractTextArea >> primarySelectionColor [
 	^ self primarySelection ifNil: [ Color transparent] ifNotNil: [:ps | ps color ]
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 RubAbstractTextArea >> privateMoveBy: delta [
 	self
 		handleBoundsChange: [
@@ -1647,7 +1677,7 @@ RubAbstractTextArea >> privateMoveBy: delta [
 			super privateMoveBy: delta truncated ]
 ]
 
-{ #category : #editing }
+{ #category : 'editing' }
 RubAbstractTextArea >> privateReplaceFrom: start to: stop with: aText [
 	self maxLength
 		ifNotNil: [ | newSize |
@@ -1664,17 +1694,17 @@ RubAbstractTextArea >> privateReplaceFrom: start to: stop with: aText [
 	self paragraph replaceFrom: start to: stop with: aText
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RubAbstractTextArea >> privateSetParagraph: aParagraph [
 	paragraph := aParagraph
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RubAbstractTextArea >> privateSetTextStyle: aTextStyle [
 	textStyle := aTextStyle
 ]
 
-{ #category : #'accessing - text' }
+{ #category : 'accessing - text' }
 RubAbstractTextArea >> privateText: stringOrText [
 	"Accept new text contents."
 
@@ -1686,49 +1716,51 @@ RubAbstractTextArea >> privateText: stringOrText [
 			self paragraph text: (Text string: stringOrText asString attributes: {(TextFontChange fontNumber: fontNumber)}) ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RubAbstractTextArea >> privateTextStyle: aTextStyle [
 	textStyle := aTextStyle
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubAbstractTextArea >> readOnly [
 	^readOnly ifNil: [ readOnly := self defaultReadOnly ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubAbstractTextArea >> readOnly: aBoolean [
 	 readOnly := aBoolean
 ]
 
-{ #category : #'accessing - selection' }
+{ #category : 'accessing - selection' }
 RubAbstractTextArea >> recomputeSelection [
 	"The same characters are selected but their coordinates may have changed.
 	Redetermine the selection according to the start and stop block indices;
 	do not highlight."
-
+	
+	"workaround, guard for empty paragraph. https://github.com/pharo-project/pharo/issues/12502"
+	self editingState paragraph lines isEmpty ifTrue: [ ^self ].
 	self markIndex: self markIndex pointIndex: self pointIndex
 ]
 
-{ #category : #'multi level undo' }
+{ #category : 'multi level undo' }
 RubAbstractTextArea >> redoTypeIn: aText interval: anInterval [
 	self handleEdit: [self editor redoTypeIn: aText interval: anInterval]
 ]
 
-{ #category : #caching }
+{ #category : 'caching' }
 RubAbstractTextArea >> releaseCachedState [
 	super releaseCachedState.
 	self releaseParagraph
 ]
 
-{ #category : #'accessing - editing state' }
+{ #category : 'accessing - editing state' }
 RubAbstractTextArea >> releaseEditingState [
 	editingState ifNotNil: [
 		editingState unplug.
 		editingState := nil]
 ]
 
-{ #category : #'accessing - editor' }
+{ #category : 'accessing - editor' }
 RubAbstractTextArea >> releaseEditor [
 	"Release the editor for my paragraph."
 
@@ -1738,7 +1770,7 @@ RubAbstractTextArea >> releaseEditor [
 			editor := nil ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RubAbstractTextArea >> releaseParagraph [
 	paragraph
 		ifNotNil: [
@@ -1747,7 +1779,7 @@ RubAbstractTextArea >> releaseParagraph [
 			paragraph := nil ]
 ]
 
-{ #category : #'accessing - cursor' }
+{ #category : 'accessing - cursor' }
 RubAbstractTextArea >> removeCursor [
 	self cursor ifNotNil: [ :c |
 		self cursor aboutToBeRemoved.
@@ -1755,49 +1787,49 @@ RubAbstractTextArea >> removeCursor [
 	cursor := nil
 ]
 
-{ #category : #'accessing - segments' }
+{ #category : 'accessing - segments' }
 RubAbstractTextArea >> removeSegment: aRubTextSegmentMorph [
 	self announcer unsubscribe: aRubTextSegmentMorph.
 	self segments remove: aRubTextSegmentMorph ifAbsent: []
 ]
 
-{ #category : #'find-replace' }
+{ #category : 'find-replace' }
 RubAbstractTextArea >> replaceAll: aRegex with: aText [
 	self
 		handleEdit: [self editor replaceAll: aRegex with: aText]
 ]
 
-{ #category : #'find-replace' }
+{ #category : 'find-replace' }
 RubAbstractTextArea >> replaceAll: aRegex with: aText startingAt: startIdx [
 	self
 		handleEdit: [self editor replaceAll: aRegex with: aText startingAt: startIdx]
 ]
 
-{ #category : #editing }
+{ #category : 'editing' }
 RubAbstractTextArea >> replaceFrom: start to: stop with: aText [
 	self
 		handleEdit: [ self editor replaceTextFrom: start to: stop with: aText ]
 ]
 
-{ #category : #'find-replace' }
+{ #category : 'find-replace' }
 RubAbstractTextArea >> replaceSelectionWith: aText [
 	self
 		handleEdit: [self editor replaceSelectionWith: aText]
 ]
 
-{ #category : #'embedded morphs' }
+{ #category : 'embedded morphs' }
 RubAbstractTextArea >> resetEmbeddedMorphs [
 	"reset the #hasBeenPositioned property to false for all embeddedMorphs.
 	Those to actually be shown will be marked in RubDisplayScanner>>placeEmbeddedObject:"
 	self embeddedMorphs do: [ :morph | morph setProperty: #hasBeenPositioned toValue: false ]
 ]
 
-{ #category : #'dropping/grabbing' }
+{ #category : 'dropping/grabbing' }
 RubAbstractTextArea >> resistsRemoval [
 	^ self grabbedAllowed not
 ]
 
-{ #category : #'accessing - selection' }
+{ #category : 'accessing - selection' }
 RubAbstractTextArea >> restoreSelectionIndexesAfter: aBlock [
 	| prevStart prevStop |
 	prevStart := self markIndex min: self pointIndex.
@@ -1806,75 +1838,75 @@ RubAbstractTextArea >> restoreSelectionIndexesAfter: aBlock [
 	self selectFrom: prevStart to: prevStop - 1
 ]
 
-{ #category : #composing }
+{ #category : 'composing' }
 RubAbstractTextArea >> scrollBounds [
 	^ scrollPane
 		ifNil: [ self innerBounds  ]
 		ifNotNil: [ :h | scrollPane scrollBounds ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubAbstractTextArea >> scrollPane [
 	^ scrollPane
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubAbstractTextArea >> scrollPane: aScrollPane [
 	scrollPane := aScrollPane.
 	self color: Color transparent
 ]
 
-{ #category : #'accessing - editing state' }
+{ #category : 'accessing - editing state' }
 RubAbstractTextArea >> scrollPivot [
 	^self editingState scrollPivot
 ]
 
-{ #category : #'accessing - editing state' }
+{ #category : 'accessing - editing state' }
 RubAbstractTextArea >> scrollPivot: aPoint [
 	^self editingState scrollPivot: aPoint
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubAbstractTextArea >> scrollSelectionIntoView: evt [
 	scrollPane ifNotNil: [ scrollPane scrollSelectionIntoView: evt ]
 ]
 
-{ #category : #'accessing - segments' }
+{ #category : 'accessing - segments' }
 RubAbstractTextArea >> segments [
 	^ segments ifNil: [ segments := OrderedCollection new ]
 ]
 
-{ #category : #'accessing - segments' }
+{ #category : 'accessing - segments' }
 RubAbstractTextArea >> segmentsAtLine: aLineNumber [
 	^ self segments select: [ :s | s firstLineIndex = aLineNumber ]
 ]
 
-{ #category : #'accessing - selection' }
+{ #category : 'accessing - selection' }
 RubAbstractTextArea >> select [
 	self editor select
 ]
 
-{ #category : #'accessing - selection' }
+{ #category : 'accessing - selection' }
 RubAbstractTextArea >> selectAll [
 	self editor selectAll
 ]
 
-{ #category : #'accessing - selection' }
+{ #category : 'accessing - selection' }
 RubAbstractTextArea >> selectFrom: a to: b [
 	self editor selectFrom: a to: b
 ]
 
-{ #category : #'accessing - selection' }
+{ #category : 'accessing - selection' }
 RubAbstractTextArea >> selectInvisiblyFrom: start to: stop [
 	self editor selectInvisiblyFrom: start to: stop
 ]
 
-{ #category : #'accessing - selection' }
+{ #category : 'accessing - selection' }
 RubAbstractTextArea >> selection [
 	^ self editor selection
 ]
 
-{ #category : #'accessing - selection' }
+{ #category : 'accessing - selection' }
 RubAbstractTextArea >> selectionChanged [
 	"Invalidate all the selection rectangles.
 	Make sure that any drop shadow is accounted for too."
@@ -1882,12 +1914,12 @@ RubAbstractTextArea >> selectionChanged [
 	self recomputeSelection
 ]
 
-{ #category : #'accessing - selection' }
+{ #category : 'accessing - selection' }
 RubAbstractTextArea >> selectionInterval [
 	^self editor selectionInterval
 ]
 
-{ #category : #'accessing - selection' }
+{ #category : 'accessing - selection' }
 RubAbstractTextArea >> selectionRects [
 	^ Array
 		streamContents: [ :strm |
@@ -1895,40 +1927,40 @@ RubAbstractTextArea >> selectionRects [
 			self cursor ifNotNil: [ strm nextPut: self cursor bounds ] ]
 ]
 
-{ #category : #'accessing - selection' }
+{ #category : 'accessing - selection' }
 RubAbstractTextArea >> selectionStart [
 	^ self editingState selectionStart
 ]
 
-{ #category : #'accessing - selection' }
+{ #category : 'accessing - selection' }
 RubAbstractTextArea >> selectionStop [
 	^ self editingState selectionStop
 ]
 
-{ #category : #completion }
+{ #category : 'completion' }
 RubAbstractTextArea >> setCompletionEngine: anEngine [
 
 	completionEngine := anEngine
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RubAbstractTextArea >> setEmphasisHere [
 	self editor setEmphasisHere
 ]
 
-{ #category : #'public accessing' }
+{ #category : 'public accessing' }
 RubAbstractTextArea >> setTextWith: stringOrText [
 	"Accept new text contents."
 
 	self handleParagraphChange: [ self privateText: (self validateTextFrom: stringOrText) ]
 ]
 
-{ #category : #'find-replace' }
+{ #category : 'find-replace' }
 RubAbstractTextArea >> sharesFindReplace [
 	^ true
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubAbstractTextArea >> showOverEditableTextCursor [
 
 	| o |
@@ -1941,72 +1973,72 @@ RubAbstractTextArea >> showOverEditableTextCursor [
 		ifTrue: [ self currentHand showTemporaryCursor: ( self theme overTextCursorFor: self ) ]
 ]
 
-{ #category : #'accessing - selection' }
+{ #category : 'accessing - selection' }
 RubAbstractTextArea >> startIndex [
 	^ self selectionStart stringIndex
 ]
 
-{ #category : #'accessing - selection' }
+{ #category : 'accessing - selection' }
 RubAbstractTextArea >> stopIndex [
 	^ self selectionStop stringIndex
 ]
 
-{ #category : #'accessing - text' }
+{ #category : 'accessing - text' }
 RubAbstractTextArea >> string [
 	"obtain a string value from the receiver"
 
 	^ self text string
 ]
 
-{ #category : #'accessing - text' }
+{ #category : 'accessing - text' }
 RubAbstractTextArea >> tabWidth [
 	^ self paragraph tabWidth
 ]
 
-{ #category : #'accessing - text' }
+{ #category : 'accessing - text' }
 RubAbstractTextArea >> tabWidth: anInteger [
 	self paragraph tabWidth: anInteger
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubAbstractTextArea >> takeKeyboardFocus [
 	"Answer whether the receiver can normally take keyboard focus."
 	self takesKeyboardFocus ifFalse: [ ^self ].
 	^ super takeKeyboardFocus
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RubAbstractTextArea >> takesKeyboardFocus [
 	"Answer whether the receiver can normally take keyboard focus."
 
 	^true
 ]
 
-{ #category : #'accessing - text' }
+{ #category : 'accessing - text' }
 RubAbstractTextArea >> text [
 	^ self paragraph text
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RubAbstractTextArea >> text: t textStyle: s color: c textColor: tc [
 	"Private -- for use only in morphic duplication"
 	self releaseParagraph.
 	super text: t textStyle: s color: c textColor: tc
 ]
 
-{ #category : #'accessing - text' }
+{ #category : 'accessing - text' }
 RubAbstractTextArea >> textColor [
 	^ textColor ifNil: [ textColor := self defaultTextColor ]
 ]
 
-{ #category : #'accessing - text' }
+{ #category : 'accessing - text' }
 RubAbstractTextArea >> textColor: newColor [
 	textColor := newColor.
 	self addAttribute: (TextColor color: newColor).
 	self changed
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubAbstractTextArea >> textEdition: aTextEditionEvent [
 
 	aTextEditionEvent text
@@ -2019,7 +2051,7 @@ RubAbstractTextArea >> textEdition: aTextEditionEvent [
 				editing := false ] ]
 ]
 
-{ #category : #'accessing - text' }
+{ #category : 'accessing - text' }
 RubAbstractTextArea >> textFont: aFont [
 	self addAttribute: (TextFontReference toFont: aFont).
 	self paragraph compose.
@@ -2027,19 +2059,19 @@ RubAbstractTextArea >> textFont: aFont [
 	self  announce: (RubTextStyleChanged morph: self)
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubAbstractTextArea >> textInput: aTextInputEvent [
 	self editor zapSelectionWith: aTextInputEvent text.
 	self editor unselect.
 	editing := false
 ]
 
-{ #category : #'accessing - text' }
+{ #category : 'accessing - text' }
 RubAbstractTextArea >> textStyle [
 	^textStyle ifNil: [ textStyle := self defaultTextStyle  ]
 ]
 
-{ #category : #'accessing - text' }
+{ #category : 'accessing - text' }
 RubAbstractTextArea >> textStyle: aTextStyle [
 	self privateTextStyle: aTextStyle.
 	self addAttribute: (TextFontChange fontNumber: (textStyle defaultFontIndex)).
@@ -2048,7 +2080,7 @@ RubAbstractTextArea >> textStyle: aTextStyle [
 	self  announce: (RubTextStyleChanged morph: self)
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 RubAbstractTextArea >> themeChanged [
 
 	(self decoratorNamed: #shoutStyler) ifNotNil: [ :styler |
@@ -2058,7 +2090,7 @@ RubAbstractTextArea >> themeChanged [
 	super themeChanged
 ]
 
-{ #category : #structure }
+{ #category : 'structure' }
 RubAbstractTextArea >> topRendererOrSelf [
 
 	^ scrollPane
@@ -2066,17 +2098,17 @@ RubAbstractTextArea >> topRendererOrSelf [
 		ifNotNil: [ scrollPane topRendererOrSelf ]
 ]
 
-{ #category : #'multi level undo' }
+{ #category : 'multi level undo' }
 RubAbstractTextArea >> undoRedoExchange: aninterval with: anotherInterval [
 	self handleEdit: [self editor undoRedoExchange: aninterval with: anotherInterval]
 ]
 
-{ #category : #'multi level undo' }
+{ #category : 'multi level undo' }
 RubAbstractTextArea >> undoTypeIn: aText interval: anInterval [
 	self handleEdit: [self editor undoTypeIn: aText interval: anInterval]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RubAbstractTextArea >> unplug [
 	self unplugFindReplace.
 	self releaseEditingState.
@@ -2085,17 +2117,17 @@ RubAbstractTextArea >> unplug [
 	super unplug
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RubAbstractTextArea >> unplugFindReplace [
 	self announcer unsubscribe: self findReplaceService
 ]
 
-{ #category : #'accessing - selection' }
+{ #category : 'accessing - selection' }
 RubAbstractTextArea >> unselect [
 	self handleSelectionChange: [ self editingState unselect ]
 ]
 
-{ #category : #'paragraph feedbacks' }
+{ #category : 'paragraph feedbacks' }
 RubAbstractTextArea >> updateBottomFromParagraph [
 	paragraph
 		ifNotNil: [
@@ -2104,21 +2136,21 @@ RubAbstractTextArea >> updateBottomFromParagraph [
 			self forceExtentTo: self extent x @ newExtent y]
 ]
 
-{ #category : #'paragraph feedbacks' }
+{ #category : 'paragraph feedbacks' }
 RubAbstractTextArea >> updateExtentFromParagraph [
-	(paragraph notNil and: [ bounds notNil ])
+	(paragraph isNotNil and: [ bounds isNotNil ])
 		ifTrue: [
 			| newExtent |
 			newExtent := self paragraph extent max: self minimumExtent.
 			self forceExtentTo: (newExtent x + self margins right) @ newExtent y]
 ]
 
-{ #category : #'public accessing' }
+{ #category : 'public accessing' }
 RubAbstractTextArea >> updateMarginsWith: aMargin [
 	self handleParagraphChange: [self margins: aMargin ]
 ]
 
-{ #category : #'accessing - text' }
+{ #category : 'accessing - text' }
 RubAbstractTextArea >> updateTextWith: aStringOrText [
 	self
 		handleEdit: [ self
@@ -2131,14 +2163,14 @@ RubAbstractTextArea >> updateTextWith: aStringOrText [
 							self deselect ] ] ]
 ]
 
-{ #category : #'accessing - text' }
+{ #category : 'accessing - text' }
 RubAbstractTextArea >> userString [
 	"Do I have a text string to be searched on?"
 
 	^ self text string
 ]
 
-{ #category : #'accessing - text' }
+{ #category : 'accessing - text' }
 RubAbstractTextArea >> validateTextFrom: aStringOrText [
 	^ self maxLength
 		ifNil: [ aStringOrText ]
@@ -2147,7 +2179,7 @@ RubAbstractTextArea >> validateTextFrom: aStringOrText [
 				ifTrue: [ aStringOrText ] ]
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 RubAbstractTextArea >> veryDeepInner: deepCopier [
 	"Copy all of my instance variables. Some need to be not copied at all, but shared.
 	Warning!! Every instance variable defined in this class must be handled.
@@ -2160,17 +2192,17 @@ RubAbstractTextArea >> veryDeepInner: deepCopier [
 	editor := editor veryDeepCopyWith: deepCopier
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 RubAbstractTextArea >> wantsYellowButtonMenu [
 	^ self menuAllowed
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubAbstractTextArea >> whenFindTextChanged: anAnnouncement [
 	self changed
 ]
 
-{ #category : #'accessing - decorators' }
+{ #category : 'accessing - decorators' }
 RubAbstractTextArea >> withDecorator: aDecorator [
 	(self hasDecoratorNamed: aDecorator key)
 		ifTrue: [ ^ self ].
@@ -2178,7 +2210,7 @@ RubAbstractTextArea >> withDecorator: aDecorator [
 	self compose
 ]
 
-{ #category : #'accessing - decorators' }
+{ #category : 'accessing - decorators' }
 RubAbstractTextArea >> withDecoratorNamed: aKey [
 	(self hasDecoratorNamed: aKey)
 		ifTrue: [ ^ self ].
@@ -2186,33 +2218,33 @@ RubAbstractTextArea >> withDecoratorNamed: aKey [
 		ifNotNil: [ :cls | self withDecorator: cls new ]
 ]
 
-{ #category : #'accessing - decorators' }
+{ #category : 'accessing - decorators' }
 RubAbstractTextArea >> withDecoratorsNamed: aCollection [
 	aCollection do: [ :m | self withDecoratorNamed: m ]
 ]
 
-{ #category : #'accessing - decorators' }
+{ #category : 'accessing - decorators' }
 RubAbstractTextArea >> withFindReplaceSelection [
 	self withDecoratorNamed: #findReplaceSelection
 ]
 
-{ #category : #'accessing - decorators' }
+{ #category : 'accessing - decorators' }
 RubAbstractTextArea >> withOpeningClosingDelimitersHighlight [
 	self withDecoratorNamed: #openingClosingDelimitersHighlight
 ]
 
-{ #category : #'accessing - decorators' }
+{ #category : 'accessing - decorators' }
 RubAbstractTextArea >> withoutAnyDecorator [
-	[ self paragraph key notNil ] whileTrue: [ self withoutDecorator: paragraph ]
+	[ self paragraph key isNotNil ] whileTrue: [ self withoutDecorator: paragraph ]
 ]
 
-{ #category : #'accessing - decorators' }
+{ #category : 'accessing - decorators' }
 RubAbstractTextArea >> withoutDecorator: aDecorator [
 	| n p |
 	(self hasDecorator: aDecorator)
 		ifFalse: [ ^ self ].
 	n := paragraph.
-	[ n notNil and: [ n ~= aDecorator ] ]
+	[ n isNotNil and: [ n ~= aDecorator ] ]
 		whileTrue: [
 			p := n.
 			n := p next ].
@@ -2224,41 +2256,41 @@ RubAbstractTextArea >> withoutDecorator: aDecorator [
 	self changed
 ]
 
-{ #category : #'accessing - decorators' }
+{ #category : 'accessing - decorators' }
 RubAbstractTextArea >> withoutDecoratorNamed: aKey [
 	(self decoratorNamed: aKey)
 		ifNotNil: [ :m | self withoutDecorator: m ].
 	self changed
 ]
 
-{ #category : #'accessing - decorators' }
+{ #category : 'accessing - decorators' }
 RubAbstractTextArea >> withoutDecoratorsNamed: aCollection [
 	aCollection do: [ :m | self withoutDecoratorNamed: m ]
 ]
 
-{ #category : #'accessing - decorators' }
+{ #category : 'accessing - decorators' }
 RubAbstractTextArea >> withoutFindReplaceSelection [
 	self withoutDecoratorNamed: #findReplaceSelection
 ]
 
-{ #category : #'accessing - decorators' }
+{ #category : 'accessing - decorators' }
 RubAbstractTextArea >> withoutSecondarySelection [
 	self withoutDecoratorNamed: #secondarySelection
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubAbstractTextArea >> wouldAcceptKeyboardFocusUponTab [
 	"Answer whether the receiver might accept keyboard focus if
 	tab were hit in some container playfield"
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubAbstractTextArea >> wrapped [
 	^ false
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubAbstractTextArea >> yellowButtonActivity: shiftKeyState [
 	"Invoke the text-editing menu.
 	Check if required first!"

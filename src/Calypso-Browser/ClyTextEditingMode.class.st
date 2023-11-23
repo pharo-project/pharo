@@ -9,59 +9,61 @@ Internal Representation and Key Implementation Points.
 	isForScripting:		<Boolean>
 "
 Class {
-	#name : #ClyTextEditingMode,
-	#superclass : #RubSmalltalkCodeMode,
+	#name : 'ClyTextEditingMode',
+	#superclass : 'RubSmalltalkCodeMode',
 	#instVars : [
 		'isForScripting',
 		'browserTool'
 	],
-	#category : #'Calypso-Browser-TextEditors'
+	#category : 'Calypso-Browser-TextEditors',
+	#package : 'Calypso-Browser',
+	#tag : 'TextEditors'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyTextEditingMode class >> browserTool: aTextEditorTool [
 	^self new
 		browserTool: aTextEditorTool
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyTextEditingMode >> browser [
 	^ browserTool browser
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyTextEditingMode >> browserTool [
 	^ browserTool
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyTextEditingMode >> browserTool: aTextEditorTool [
 	browserTool := aTextEditorTool
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 ClyTextEditingMode >> editorClass [
 	^ClyTextEditor
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyTextEditingMode >> initialize [
 	super initialize.
 
 	isForScripting := false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyTextEditingMode >> isScripting [
 	^ isForScripting
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyTextEditingMode >> isScripting: anObject [
 	isForScripting := anObject
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 ClyTextEditingMode >> updateTextAreaWhenPlugged [
 	super updateTextAreaWhenPlugged.
 	isForScripting ifTrue: [ self textArea shoutStyler beForSmalltalkScripting]

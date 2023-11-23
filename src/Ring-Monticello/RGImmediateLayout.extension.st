@@ -1,6 +1,6 @@
-Extension { #name : #RGImmediateLayout }
+Extension { #name : 'RGImmediateLayout' }
 
-{ #category : #'*Ring-Monticello' }
+{ #category : '*Ring-Monticello' }
 RGImmediateLayout >> mcType [
 
 	^ #immediate

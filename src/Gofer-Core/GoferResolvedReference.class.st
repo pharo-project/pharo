@@ -2,15 +2,17 @@
 A GoferVersionReference refers to a specific version of a Monticello package in a particular repository. This class is the only one that can actually load the version, because it is the only one knowing where to find it.
 "
 Class {
-	#name : #GoferResolvedReference,
-	#superclass : #GoferVersionReference,
+	#name : 'GoferResolvedReference',
+	#superclass : 'GoferVersionReference',
 	#instVars : [
 		'repository'
 	],
-	#category : #'Gofer-Core-References'
+	#category : 'Gofer-Core-References',
+	#package : 'Gofer-Core',
+	#tag : 'References'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GoferResolvedReference class >> name: aString repository: aRepository [
 
 	^ self basicNew
@@ -18,7 +20,7 @@ GoferResolvedReference class >> name: aString repository: aRepository [
 		yourself
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 GoferResolvedReference >> <= aResolvedReference [
 	"Sort versions according to:
 
@@ -43,31 +45,20 @@ GoferResolvedReference >> <= aResolvedReference [
 	^ true
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GoferResolvedReference >> initializeName: aString repository: aRepository [
 	self initializeName: aString.
 	repository := aRepository
 ]
 
-{ #category : #actions }
-GoferResolvedReference >> merge [
-	"Merge-in the changes of this refence"
-
-	Gofer new
-		repository: self repository;
-		package: package;
-		version: self name;
-		merge
-]
-
-{ #category : #accessing }
+{ #category : 'accessing' }
 GoferResolvedReference >> repository [
 	"Answer the repository of the receiver."
 
 	^ repository
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GoferResolvedReference >> version [
 	"Answer a Monticello version of the receiver."
 

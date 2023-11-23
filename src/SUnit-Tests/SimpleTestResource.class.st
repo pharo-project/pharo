@@ -2,8 +2,8 @@
 I'm a simple test resource for test purposes
 "
 Class {
-	#name : #SimpleTestResource,
-	#superclass : #TestResource,
+	#name : 'SimpleTestResource',
+	#superclass : 'TestResource',
 	#instVars : [
 		'runningState',
 		'hasRun',
@@ -12,15 +12,17 @@ Class {
 	#classInstVars : [
 		'preventAvailability'
 	],
-	#category : #'SUnit-Tests-Resources'
+	#category : 'SUnit-Tests-Resources',
+	#package : 'SUnit-Tests',
+	#tag : 'Resources'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SimpleTestResource class >> allowAvailability [
 	^preventAvailability isNil
 ]
 
-{ #category : #utilties }
+{ #category : 'utilties' }
 SimpleTestResource class >> preventAvailabilityDuring: aBlock [
 	"Only setter of preventAvailability."
 
@@ -28,64 +30,64 @@ SimpleTestResource class >> preventAvailabilityDuring: aBlock [
 	^aBlock ensure: [preventAvailability := nil]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SimpleTestResource class >> rawCurrentForTest [
 	^current
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SimpleTestResource >> hasRun [
 	^hasRun
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SimpleTestResource >> hasSetup [
 	^hasSetup
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SimpleTestResource >> isAvailable [
 	^self class allowAvailability
 		and: [self runningState == self startedStateSymbol]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SimpleTestResource >> runningState [
 
 	^runningState
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SimpleTestResource >> runningState: aSymbol [
 
 	runningState := aSymbol
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 SimpleTestResource >> setRun [
 	hasRun := true
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 SimpleTestResource >> setUp [
 	super setUp.
 	self runningState: self startedStateSymbol.
 	hasSetup := true
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 SimpleTestResource >> startedStateSymbol [
 
 	^#started
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 SimpleTestResource >> stoppedStateSymbol [
 
 	^#stopped
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 SimpleTestResource >> tearDown [
 
 	self runningState: self stoppedStateSymbol

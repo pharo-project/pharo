@@ -4,61 +4,63 @@ A LimitedWriteStream is a specialized WriteStream that has a maximum size of the
 The message SequenceableCollection class streamContents:limitedTo: creates a LimitedWriteStream. In this case it prevents very large (or possibly recursive) object structures to ""overdo"" their textual representation. 
 "
 Class {
-	#name : #LimitedWriteStream,
-	#superclass : #WriteStream,
+	#name : 'LimitedWriteStream',
+	#superclass : 'WriteStream',
 	#instVars : [
 		'limit',
 		'limitBlock'
 	],
-	#category : #'Collections-Streams-Base'
+	#category : 'Collections-Streams-Base',
+	#package : 'Collections-Streams',
+	#tag : 'Base'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LimitedWriteStream class >> defaultLimit [
 	^ 1000
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 LimitedWriteStream class >> on: aCollection [
 	^ (self basicNew on: aCollection)
 		setLimit: self defaultLimit
 		limitBlock: nil
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 LimitedWriteStream class >> on: aCollection from: firstIndex to: lastIndex [
 	^ (self basicNew on: aCollection from: firstIndex to: lastIndex)
 		setLimit: self defaultLimit
 		limitBlock: nil
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 LimitedWriteStream class >> on: aCollection limit: anInteger limitBlock: aLimitBlock [
 	^ (self basicNew on: aCollection)
 		setLimit: anInteger
 		limitBlock: aLimitBlock
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 LimitedWriteStream class >> with: aCollection [
 	^ (self basicNew with: aCollection)
 		setLimit: self defaultLimit
 		limitBlock: nil
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 LimitedWriteStream class >> with: aCollection from: firstIndex to: lastIndex [
 	^ (self basicNew with: aCollection from: firstIndex to: lastIndex)
 		setLimit: self defaultLimit
 		limitBlock: nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LimitedWriteStream >> limit [
 	^ limit
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LimitedWriteStream >> limit: anInteger [
 	limit := anInteger.
 
@@ -68,17 +70,17 @@ LimitedWriteStream >> limit: anInteger [
 			limitBlock value ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LimitedWriteStream >> limitBlock [
 	^ limitBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LimitedWriteStream >> limitBlock: aBlock [
 	limitBlock := aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LimitedWriteStream >> nextPut: anObject [
 	"Ensure that the limit is not exceeded"
 
@@ -88,7 +90,7 @@ LimitedWriteStream >> nextPut: anObject [
 	^ anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LimitedWriteStream >> nextPutAll: aCollection [
 
 	| newEnd |
@@ -111,13 +113,13 @@ LimitedWriteStream >> nextPutAll: aCollection [
 	^ aCollection
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 LimitedWriteStream >> pastEndPut: anObject [
 	collection size >= limit ifTrue: [limitBlock value].  "Exceptional return"
 	^ super pastEndPut: anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 LimitedWriteStream >> setLimit: anInteger limitBlock: aBlock [
 	"Limit the numer of elements this stream will write..."
 	limit := anInteger.

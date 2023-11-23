@@ -1,6 +1,6 @@
-Extension { #name : #Paragraph }
+Extension { #name : 'Paragraph' }
 
-{ #category : #'*Athens-Morphic' }
+{ #category : '*Athens-Morphic' }
 Paragraph >> displayCaretAndSelectionOnAthensCanvas: anAthensCanvas [
 	selectionStart ifNil: [ ^ self ].
 	selectionStart = selectionStop
@@ -12,7 +12,7 @@ Paragraph >> displayCaretAndSelectionOnAthensCanvas: anAthensCanvas [
 			self forLinesIn: anAthensCanvas clipRect do: [ :line | selection displayInLine: line onAthensCanvas: anAthensCanvas ] ]
 ]
 
-{ #category : #'*Athens-Morphic' }
+{ #category : '*Athens-Morphic' }
 Paragraph >> displayExtraSelectionOnAthensCanvas: anAthensCanvas [
 	| visibleRectangle |
 	visibleRectangle := anAthensCanvas clipRect.
@@ -27,7 +27,7 @@ Paragraph >> displayExtraSelectionOnAthensCanvas: anAthensCanvas [
 						do: [ :selblock | self displaySelectionBlock: selblock inLine: line onAthensCanvas: anAthensCanvas ] ] ]
 ]
 
-{ #category : #'*Athens-Morphic' }
+{ #category : '*Athens-Morphic' }
 Paragraph >> displaySelectionBarOnAthensCanvas: anAthensCanvas [
 	| visibleRectangle line |
 	selectionStart ifNil: [ ^ self ].
@@ -40,9 +40,9 @@ Paragraph >> displaySelectionBarOnAthensCanvas: anAthensCanvas [
 	anAthensCanvas drawShape: (visibleRectangle left @ line top corner: visibleRectangle right @ line bottom)
 ]
 
-{ #category : #'*Athens-Morphic' }
+{ #category : '*Athens-Morphic' }
 Paragraph >> displaySelectionBlock: aSelBlock inLine: line onAthensCanvas: anAthensCanvas [
-	(selectionStart notNil and: [ selectionStop notNil and: [ selectionStart ~= selectionStop ] ])
+	(selectionStart isNotNil and: [ selectionStop isNotNil and: [ selectionStart ~= selectionStop ] ])
 		ifTrue: [
 			| startIdx stopIdx selSartIdx selStopIdx selBlockRange selRange |
 			startIdx := aSelBlock first stringIndex.
@@ -59,7 +59,7 @@ Paragraph >> displaySelectionBlock: aSelBlock inLine: line onAthensCanvas: anAth
 	aSelBlock displayInLine: line onAthensCanvas: anAthensCanvas
 ]
 
-{ #category : #'*Athens-Morphic' }
+{ #category : '*Athens-Morphic' }
 Paragraph >> displayTextOnAthensCanvas: anAthensCanvas in: aRectangle [
 	| athensDisplayScanner offset leftInRun |
 	anAthensCanvas clipBy: aRectangle during:[
@@ -75,7 +75,7 @@ Paragraph >> displayTextOnAthensCanvas: anAthensCanvas in: aRectangle [
 						ifTrue: [ leftInRun := athensDisplayScanner displayLine: line offset: offset leftInRun: leftInRun ] ] ] ]
 ]
 
-{ #category : #'*Athens-Morphic' }
+{ #category : '*Athens-Morphic' }
 Paragraph >> drawCaretOnAthensCanvas: anAthensCanvas [
 	(self showCaret not or: [ selectionStart isNil ])
 		ifTrue: [ ^ self ].
@@ -84,12 +84,12 @@ Paragraph >> drawCaretOnAthensCanvas: anAthensCanvas [
 	anAthensCanvas drawShape: self caretRect
 ]
 
-{ #category : #'*Athens-Morphic' }
+{ #category : '*Athens-Morphic' }
 Paragraph >> drawOnAthensCanvas: aCanvas bounds: aRectangle [
 	"do nothing"
 ]
 
-{ #category : #'*Athens-Morphic' }
+{ #category : '*Athens-Morphic' }
 Paragraph >> drawOnAthensCanvas: anAthensCanvas bounds: aRectangle color: aColor [
 	self displayCaretAndSelectionOnAthensCanvas: anAthensCanvas.
 	self displayExtraSelectionOnAthensCanvas: anAthensCanvas.
@@ -97,7 +97,7 @@ Paragraph >> drawOnAthensCanvas: anAthensCanvas bounds: aRectangle color: aColor
 	self displayTextOnAthensCanvas: anAthensCanvas in: aRectangle
 ]
 
-{ #category : #'*Athens-Morphic' }
+{ #category : '*Athens-Morphic' }
 Paragraph >> forLinesIn: aVisibleRect do: aBlock [
 	(self lineIndexForPoint: aVisibleRect topLeft) to:
 	(self lineIndexForPoint: aVisibleRect bottomRight) do:

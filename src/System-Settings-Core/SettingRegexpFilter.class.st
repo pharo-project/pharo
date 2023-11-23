@@ -9,22 +9,24 @@ regexp
 
 "
 Class {
-	#name : #SettingRegexpFilter,
-	#superclass : #SettingFilter,
+	#name : 'SettingRegexpFilter',
+	#superclass : 'SettingFilter',
 	#instVars : [
 		'regexp'
 	],
-	#category : #'System-Settings-Core-Filter'
+	#category : 'System-Settings-Core-Filter',
+	#package : 'System-Settings-Core',
+	#tag : 'Filter'
 }
 
-{ #category : #filtering }
+{ #category : 'filtering' }
 SettingRegexpFilter >> keepSettingDeclaration: aSettingDeclaration [
 	^ ({aSettingDeclaration name. aSettingDeclaration label. aSettingDeclaration description}
 				collect: [:e | e ifNil: ['']])
 				anySatisfy: [:token | token  matchesRegexIgnoringCase: self regexp]
 ]
 
-{ #category : #filtering }
+{ #category : 'filtering' }
 SettingRegexpFilter >> keepSettingTreeNode: aSettingNode [
 	^ (({aSettingNode methodClass name. aSettingNode selector}
 			collect: [:e | e ifNil: ['']])
@@ -32,14 +34,14 @@ SettingRegexpFilter >> keepSettingTreeNode: aSettingNode [
 		or: [self keepSettingDeclaration: aSettingNode settingDeclaration]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SettingRegexpFilter >> regexp [
 	"Answer the value of regexp"
 
 	^ regexp
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SettingRegexpFilter >> regexp: anObject [
 	"Set the value of regexp"
 

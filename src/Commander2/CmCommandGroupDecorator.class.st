@@ -4,102 +4,104 @@ I am the implementation of the decorator design pattern for command group.
 I just delegate everything to the #decoratedGroup. My subclasses probably do something more interesting.
 "
 Class {
-	#name : #CmCommandGroupDecorator,
-	#superclass : #CmAbstractCommandsGroup,
+	#name : 'CmCommandGroupDecorator',
+	#superclass : 'CmAbstractCommandsGroup',
 	#traits : 'CmTDecorator',
 	#classTraits : 'CmTDecorator classTrait',
 	#instVars : [
 		'decoratedGroup'
 	],
-	#category : #'Commander2-Groups'
+	#category : 'Commander2-Groups',
+	#package : 'Commander2',
+	#tag : 'Groups'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmCommandGroupDecorator >> allCommands [
 	^ self decoratedGroup allCommands
 ]
 
-{ #category : #'public-api' }
+{ #category : 'public-api' }
 CmCommandGroupDecorator >> commandOrGroupNamed: aString [
 	^ self decoratedGroup commandOrGroupNamed: aString
 ]
 
-{ #category : #'public-api' }
+{ #category : 'public-api' }
 CmCommandGroupDecorator >> commands [
 	^ self decoratedGroup commands
 ]
 
-{ #category : #decorating }
+{ #category : 'decorating' }
 CmCommandGroupDecorator >> decorate: aCmCommandsGroup [
 	self decoratedGroup: aCmCommandsGroup
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmCommandGroupDecorator >> decoratedGroup [
 	^ decoratedGroup
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmCommandGroupDecorator >> decoratedGroup: anObject [
 	decoratedGroup := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmCommandGroupDecorator >> description [
 	^ self decoratedGroup description
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmCommandGroupDecorator >> description: aString [
 	self decoratedGroup description: aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmCommandGroupDecorator >> dynamicDescription [
 	^ self decoratedGroup dynamicDescription
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmCommandGroupDecorator >> dynamicName [
 	^ self decoratedGroup dynamicName
 ]
 
-{ #category : #'public-api' }
+{ #category : 'public-api' }
 CmCommandGroupDecorator >> entries [
 	^ self decoratedGroup entries
 ]
 
-{ #category : #'public-api' }
+{ #category : 'public-api' }
 CmCommandGroupDecorator >> groups [
 	^ self decoratedGroup groups
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CmCommandGroupDecorator >> hasCommand: aCmCommand [
 	^ self decoratedGroup hasCommand: aCmCommand
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CmCommandGroupDecorator >> hasEntryNamed: aString [
 	^ self decoratedGroup hasEntryNamed: aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmCommandGroupDecorator >> name [
 	^ self decoratedGroup name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmCommandGroupDecorator >> name: aString [
 	self decoratedGroup name: aString
 ]
 
-{ #category : #'public-api' }
+{ #category : 'public-api' }
 CmCommandGroupDecorator >> register: aCmCommandOrGroup [
 	self decoratedGroup register: aCmCommandOrGroup
 ]
 
-{ #category : #'public-api' }
+{ #category : 'public-api' }
 CmCommandGroupDecorator >> unregister: aCmCommandOrGroup [
 	^ self decoratedGroup unregister: aCmCommandOrGroup
 ]

@@ -13,19 +13,21 @@ test
 	ifFalse: [ self baz ]
 "
 Class {
-	#name : #ReEndTrueFalseRule,
-	#superclass : #ReNodeMatchRule,
-	#category : #'Renraku-Rules-Rewrite'
+	#name : 'ReEndTrueFalseRule',
+	#superclass : 'ReNodeMatchRule',
+	#category : 'Renraku-Rules-Rewrite',
+	#package : 'Renraku',
+	#tag : 'Rules-Rewrite'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReEndTrueFalseRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'EndTrueFalseRule'
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 ReEndTrueFalseRule >> afterCheck: aNode mappings: mappingDict [
 	"after a node was match you can do a post-validation here on the node and the dictionalry of wildcars with matched nodes as values"
 
@@ -36,12 +38,12 @@ ReEndTrueFalseRule >> afterCheck: aNode mappings: mappingDict [
 		ifNotNil: [ true ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReEndTrueFalseRule >> group [
 	^ 'Optimization'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ReEndTrueFalseRule >> initialize [
 
 	super initialize.
@@ -57,17 +59,17 @@ ReEndTrueFalseRule >> initialize [
 				ifTrue: [| `@temps2 | `.Statement. `@.Statement2]')
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReEndTrueFalseRule >> name [
 	^ 'Check for same statements at end of ifTrue:ifFalse: blocks'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReEndTrueFalseRule >> rationale [
 	^ 'Checks for ifTrue:ifFalse: blocks that have the same code at the beginning or end.'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReEndTrueFalseRule >> severity [
 	^ #information
 ]

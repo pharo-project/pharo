@@ -2,27 +2,29 @@
 Used to create intentional hash collisions in tests, to test that collision handling is done correctly.
 "
 Class {
-	#name : #ObjectWithSettableHash,
-	#superclass : #Object,
+	#name : 'ObjectWithSettableHash',
+	#superclass : 'Object',
 	#instVars : [
 		'hash'
 	],
-	#category : #'Collections-Unordered-Tests-Dictionaries'
+	#category : 'Collections-Unordered-Tests-Dictionaries',
+	#package : 'Collections-Unordered-Tests',
+	#tag : 'Dictionaries'
 }
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ObjectWithSettableHash >> hash [
 
 	^ hash
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ObjectWithSettableHash >> hash: anObject [
 
 	hash := anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ObjectWithSettableHash >> initialize [
 
 	"Make sure hash answers a SmallInteger, even if we haven't set it yet."

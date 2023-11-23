@@ -1,23 +1,20 @@
 Class {
-	#name : #SlotMethodRecompilationTest,
-	#superclass : #SlotSilentTest,
+	#name : 'SlotMethodRecompilationTest',
+	#superclass : 'SlotSilentTest',
 	#instVars : [
 		'class'
 	],
-	#category : #'Slot-Tests-ClassBuilder'
+	#category : 'Slot-Tests-ClassBuilder',
+	#package : 'Slot-Tests',
+	#tag : 'ClassBuilder'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SlotMethodRecompilationTest >> method [
 	^ class >> #m1
 ]
 
-{ #category : #accessing }
-SlotMethodRecompilationTest >> methodBinding [
-	^ self method classBinding
-]
-
-{ #category : #tests }
+{ #category : 'tests' }
 SlotMethodRecompilationTest >> reshapeClass [
 	^ class := self
 		make: [ :builder |
@@ -25,7 +22,7 @@ SlotMethodRecompilationTest >> reshapeClass [
 			builder slots: #(#iv) ]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 SlotMethodRecompilationTest >> setUp [
 	super setUp.
 	class := self make: [ :builder |
@@ -33,42 +30,37 @@ SlotMethodRecompilationTest >> setUp [
 	class compile: 'm1'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SlotMethodRecompilationTest >> testClassReshapeShouldKeepClassBinding [
 	"Check that when a class is reshaped, the recompilation of the methods gives correct class bindings (in the literal array of the methods)"
 
 	self reshapeClass.
-	self assert: self methodBinding identicalTo: class binding
+	self assert: self method classBinding identicalTo: class binding
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SlotMethodRecompilationTest >> testClassReshapeShouldKeepClassBindingForTraitMethods [
 	"A method should have the same binding than its class even if it come from a trait"
 
 	self reshapeClass.
-	self assert: self traitMethodBinding identicalTo: class binding
+	self assert: self traitMethod classBinding identicalTo: class binding
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SlotMethodRecompilationTest >> testMethodClassBindingShouldBeClassBinding [
 	"A method should have the same binding than its class"
 
-	self assert: self methodBinding identicalTo: class binding
+	self assert:  self method classBinding identicalTo: class binding
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SlotMethodRecompilationTest >> testTraitMethodClassBindingShouldBeClassBinding [
 	"A method should have the same binding than its class even if it come from a trait"
 
-	self assert: self traitMethodBinding identicalTo: class binding
+	self assert: self traitMethod classBinding identicalTo: class binding
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SlotMethodRecompilationTest >> traitMethod [
 	^ class >> #one
-]
-
-{ #category : #accessing }
-SlotMethodRecompilationTest >> traitMethodBinding [
-	^ self traitMethod classBinding
 ]

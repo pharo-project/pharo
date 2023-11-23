@@ -2,27 +2,29 @@
 A ValueAdded is an announcement raised when an item (or a collection of items) was added to CollectionValueHolder.
 "
 Class {
-	#name : #ValueAdded,
-	#superclass : #Announcement,
+	#name : 'ValueAdded',
+	#superclass : 'Announcement',
 	#instVars : [
 		'newValue'
 	],
-	#category : #'NewValueHolder-Core-Announcements'
+	#category : 'NewValueHolder-Core-Announcements',
+	#package : 'NewValueHolder-Core',
+	#tag : 'Announcements'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ValueAdded class >> newValue: newValue [
 	^ self new
 		newValue: newValue;
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ValueAdded >> newValue [
 	^ newValue
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ValueAdded >> newValue: anObject [
 	newValue := anObject
 ]

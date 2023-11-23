@@ -9,80 +9,82 @@ Part of Zinc HTTP Components.
 
 "
 Class {
-	#name : #ZnChunkedWriteStream,
-	#superclass : #Object,
+	#name : 'ZnChunkedWriteStream',
+	#superclass : 'Object',
 	#instVars : [
 		'stream',
 		'extraHeaders',
 		'totalSize',
 		'chunkCount'
 	],
-	#category : #'Zinc-HTTP-Streaming'
+	#category : 'Zinc-HTTP-Streaming',
+	#package : 'Zinc-HTTP',
+	#tag : 'Streaming'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnChunkedWriteStream class >> on: writeStream [
 	^ self new
 		on: writeStream;
 		yourself
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 ZnChunkedWriteStream >> binary [
 	stream binary
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnChunkedWriteStream >> chunkCount [
 	^ chunkCount
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 ZnChunkedWriteStream >> close [
 	self finish.
 	stream close
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnChunkedWriteStream >> crlf [
 	stream nextPutAll: (self isBinary ifTrue: [ #[ 13 10 ] ] ifFalse: [ String crlf ])
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnChunkedWriteStream >> extraHeaders [
 	^ extraHeaders ifNil: [ extraHeaders := ZnHeaders new ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 ZnChunkedWriteStream >> finish [
 	self writeChunkSize: 0.
 	self crlf.
 	extraHeaders ifNotNil: [ extraHeaders writeOn: stream ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 ZnChunkedWriteStream >> flush [
 	stream flush
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ZnChunkedWriteStream >> initialize [
 	super initialize.
 	totalSize := 0.
 	chunkCount := 0
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnChunkedWriteStream >> isBinary [
 	^ stream isBinary
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnChunkedWriteStream >> isStream [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnChunkedWriteStream >> next: count putAll: collection [
 	self
 		next: count
@@ -90,7 +92,7 @@ ZnChunkedWriteStream >> next: count putAll: collection [
 		startingAt: 1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnChunkedWriteStream >> next: count putAll: collection startingAt: offset [
 	self writeChunkSize: count.
 	stream next: count putAll: collection startingAt: offset.
@@ -99,12 +101,12 @@ ZnChunkedWriteStream >> next: count putAll: collection startingAt: offset [
 	totalSize := totalSize + count
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnChunkedWriteStream >> nextPut: element [
 	self error: 'Wrap me into a buffered stream, because each #nexPut: will create a new chunk'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnChunkedWriteStream >> nextPutAll: collection [
 	self
 		next: collection size
@@ -112,17 +114,17 @@ ZnChunkedWriteStream >> nextPutAll: collection [
 		startingAt: 1
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 ZnChunkedWriteStream >> on: writeStream [
 	stream := writeStream
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnChunkedWriteStream >> position [
 	^ totalSize
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnChunkedWriteStream >> writeChunkSize: size [
 	stream nextPutAll: (self isBinary ifTrue: [ size printStringHex asByteArray ] ifFalse: [ size printStringHex ]).
 	self crlf

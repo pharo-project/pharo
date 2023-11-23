@@ -1,12 +1,15 @@
 Class {
-	#name : #LazyClassVariableTest,
-	#superclass : #SlotSilentTest,
-	#category : #'VariablesLibrary-Tests-Tests'
+	#name : 'LazyClassVariableTest',
+	#superclass : 'SlotSilentTest',
+	#category : 'VariablesLibrary-Tests-Tests',
+	#package : 'VariablesLibrary-Tests',
+	#tag : 'Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 LazyClassVariableTest >> testLazyClassVarCompiled [
 	| classVar |
+	<ignoreNotImplementedSelectors: #(ClassVar ClassVar:)>
 	classVar := #ClassVar => LazyClassVariable default: 5.
 	aClass := self make: [ :builder | builder sharedVariables: {classVar}].
 
@@ -16,7 +19,7 @@ LazyClassVariableTest >> testLazyClassVarCompiled [
 	self assert: aClass new ClassVar equals: 6
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LazyClassVariableTest >> testLazyClassVarReadReflective [
 	| classVar |
 	classVar := #ClassVar => LazyClassVariable default: 5.
@@ -27,7 +30,7 @@ LazyClassVariableTest >> testLazyClassVarReadReflective [
 	self assert: classVar read equals: 10
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LazyClassVariableTest >> testLazyClassVarReadReflectiveBlock [
 	| classVar |
 	classVar := #ClassVar => LazyClassVariable default: [5].
@@ -38,7 +41,7 @@ LazyClassVariableTest >> testLazyClassVarReadReflectiveBlock [
 	self assert: classVar read equals: 10
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LazyClassVariableTest >> testLazyClassVariablePrint [
 	| classVariable |
 	classVariable := #myClassVar => LazyClassVariable default: 5 .

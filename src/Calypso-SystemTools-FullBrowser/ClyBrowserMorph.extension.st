@@ -1,6 +1,6 @@
-Extension { #name : #ClyBrowserMorph }
+Extension { #name : 'ClyBrowserMorph' }
 
-{ #category : #'*Calypso-SystemTools-FullBrowser' }
+{ #category : '*Calypso-SystemTools-FullBrowser' }
 ClyBrowserMorph >> browseClassNamed: aString [
 
 	| classToBrowse |
@@ -14,7 +14,7 @@ ClyBrowserMorph >> browseClassNamed: aString [
 		browser selectClass: classToBrowse]
 ]
 
-{ #category : #'*Calypso-SystemTools-FullBrowser' }
+{ #category : '*Calypso-SystemTools-FullBrowser' }
 ClyBrowserMorph >> chooseClassToBrowseFrom: aClassNamePattern [
 	| query result |
 	query := (ClyAllClassesQuery sortedFrom: self systemScope)
@@ -28,14 +28,14 @@ ClyBrowserMorph >> chooseClassToBrowseFrom: aClassNamePattern [
 		from: query] on: CmdCommandAborted do: [ nil ]
 ]
 
-{ #category : #'*Calypso-SystemTools-FullBrowser' }
+{ #category : '*Calypso-SystemTools-FullBrowser' }
 ClyBrowserMorph >> spawnFullBrowser [
 
 	^self spawnBrowser: ClyFullBrowserMorph withState: [ :browser |
 		self navigateSpawnedFullBrowser: browser]
 ]
 
-{ #category : #'*Calypso-SystemTools-FullBrowser' }
+{ #category : '*Calypso-SystemTools-FullBrowser' }
 ClyBrowserMorph >> spawnHierarchyForClass: aClass selector: aSymbolOrNil [
 	"For compatibility with SystemNavigation
 	we should ensure current image environment if it is absent".

@@ -1,13 +1,13 @@
-Extension { #name : #ClassDescription }
+Extension { #name : 'ClassDescription' }
 
-{ #category : #'*Deprecated12' }
+{ #category : '*Deprecated12' }
 ClassDescription >> addCategory: aString [
 
 	self deprecated: 'Use #addProtocol: instead.' transformWith: '`@rcv addCategory: `@arg' -> '`@rcv addProtocol: `@arg'.
 	self addProtocol: aString
 ]
 
-{ #category : #'*Deprecated12' }
+{ #category : '*Deprecated12' }
 ClassDescription >> addMethodTag: aSymbol [
 
 	self deprecated: 'Use #addProtocol: instead.' transformWith: '`@rcv addMethodTag: `@arg' -> '`@rcv addProtocol: `@arg'.
@@ -15,21 +15,21 @@ ClassDescription >> addMethodTag: aSymbol [
 	self addProtocol: aSymbol
 ]
 
-{ #category : #'*Deprecated12' }
+{ #category : '*Deprecated12' }
 ClassDescription >> allCategories [
 
 	self deprecated: 'Use #protocolNames instead.' transformWith: '`@rcv allCategories' -> '`@rcv protocolNames'.
 	^ self protocolNames
 ]
 
-{ #category : #'*Deprecated12' }
+{ #category : '*Deprecated12' }
 ClassDescription >> allMethodSelectors [
 
 	self deprecated: 'Use #selectors instead' transformWith: '`@rcv allMethodSelectors' -> '`@rcv selectors'.
 	^ self selectors
 ]
 
-{ #category : #'*Deprecated12' }
+{ #category : '*Deprecated12' }
 ClassDescription >> allProtocolsUpTo: mostGenericClass [
 	"Answer a list of all the method protocols of the receiver and all its superclasses, up through mostGenericClass"
 
@@ -38,14 +38,14 @@ ClassDescription >> allProtocolsUpTo: mostGenericClass [
 	^ (self allSuperclassesIncluding: mostGenericClass) flatCollectAsSet: [ :aClass | aClass protocolNames ]
 ]
 
-{ #category : #'*Deprecated12' }
+{ #category : '*Deprecated12' }
 ClassDescription >> categories [
 
 	self deprecated: 'Use #protocolNames instead.' transformWith: '`@rcv categories' -> '`@rcv protocolNames'.
 	^ self protocolNames
 ]
 
-{ #category : #'*Deprecated12' }
+{ #category : '*Deprecated12' }
 ClassDescription >> categoryOfElement: aSelector [
 
 	self
@@ -54,16 +54,16 @@ ClassDescription >> categoryOfElement: aSelector [
 	^ self protocolNameOfSelector: aSelector
 ]
 
-{ #category : #'*Deprecated12' }
+{ #category : '*Deprecated12' }
 ClassDescription >> categoryOfElement: aSelector ifAbsent: aBlock [
 
 	self
 		deprecated: 'Use #protocolNameOfSelector: instead.'
 		transformWith: '`@rcv categoryOfElement: `@arg1 ifAbsent: `@arg2' -> '(`@rcv protocolNameOfSelector: `@arg1) ifNil: `@arg2'.
-	^ (self protocolNameOfSelector: aSelector) ifNil: aBlock
+	^ (self protocolNameOfSelector: aSelector) ifNil: [ aBlock value ]
 ]
 
-{ #category : #'*Deprecated12' }
+{ #category : '*Deprecated12' }
 ClassDescription >> classComment [
 
 	self
@@ -74,7 +74,7 @@ ClassDescription >> classComment [
 	^ self comment
 ]
 
-{ #category : #'*Deprecated12' }
+{ #category : '*Deprecated12' }
 ClassDescription >> classComment: aString [
 
 	self
@@ -84,10 +84,10 @@ ClassDescription >> classComment: aString [
 	self comment: aString
 ]
 
-{ #category : #'*Deprecated12' }
+{ #category : '*Deprecated12' }
 ClassDescription >> classesThatImplementAllOf: selectorSet [
-	"Return an array of any classes that implement all the messages in selectorSet."
-
+	"Return an array of any classes that implement all the messages in selectorSet."	
+		<reflection: 'Class structural inspection - Selectors and methods inspection'>
 	| found remaining |
 	self deprecated: 'This method will be removed in the next version of Pharo.'.
 	found := OrderedCollection new.
@@ -98,7 +98,7 @@ ClassDescription >> classesThatImplementAllOf: selectorSet [
 		^ self subclasses inject: Array new into: [ :subsThatDo :sub | subsThatDo , (sub classesThatImplementAllOf: remaining) ] ]
 ]
 
-{ #category : #'*Deprecated12' }
+{ #category : '*Deprecated12' }
 ClassDescription >> copy: selector from: originClass [
 	"Install a copy of originClass>>selector in myself as un unclassified method."
 
@@ -106,7 +106,7 @@ ClassDescription >> copy: selector from: originClass [
 	self copy: selector from: originClass classified: nil
 ]
 
-{ #category : #'*Deprecated12' }
+{ #category : '*Deprecated12' }
 ClassDescription >> copy: selector from: originClass classified: protocolName [
 	"Install a copy of originClass>>selector in myself under the specified protocol."
 
@@ -125,7 +125,7 @@ ClassDescription >> copy: selector from: originClass classified: protocolName [
 	self compile: sourceCode classified: protocol
 ]
 
-{ #category : #'*Deprecated12' }
+{ #category : '*Deprecated12' }
 ClassDescription >> copyAll: selectors from: originClass [
 	"Install a copy of all selectors from originClass in myself as unclassified methods."
 
@@ -134,7 +134,7 @@ ClassDescription >> copyAll: selectors from: originClass [
 	self copyAll: selectors from: originClass classified: nil
 ]
 
-{ #category : #'*Deprecated12' }
+{ #category : '*Deprecated12' }
 ClassDescription >> copyAll: selectors from: originClass classified: protocolName [
 	"Install a copy of all selectors from originClass in myself under the specified protocol."
 
@@ -143,7 +143,7 @@ ClassDescription >> copyAll: selectors from: originClass classified: protocolNam
 	selectors do: [ :selector | (originClass includesLocalSelector: selector) ifTrue: [ self copy: selector from: originClass classified: protocolName ] ]
 ]
 
-{ #category : #'*Deprecated12' }
+{ #category : '*Deprecated12' }
 ClassDescription >> copyAllCategoriesFrom: originClass [
 	"Install a copy of each methods of originClass in myself under the same protocol."
 
@@ -152,7 +152,7 @@ ClassDescription >> copyAllCategoriesFrom: originClass [
 	self copyAllMethodsFrom: originClass
 ]
 
-{ #category : #'*Deprecated12' }
+{ #category : '*Deprecated12' }
 ClassDescription >> copyCategory: protocolName from: originClass [
 	"Install all methods in the specified protocol of originClass in myself keeping the right protocol."
 
@@ -161,7 +161,7 @@ ClassDescription >> copyCategory: protocolName from: originClass [
 	self copyCategory: protocolName from: originClass classified: protocolName
 ]
 
-{ #category : #'*Deprecated12' }
+{ #category : '*Deprecated12' }
 ClassDescription >> copyCategory: protocolName from: aClass classified: newProtocolName [
 	"Move all methods in the protocol 'protocolName' of aClass into a protocol named 'newProtocolName'"
 
@@ -170,14 +170,30 @@ ClassDescription >> copyCategory: protocolName from: aClass classified: newProto
 	self copyAll: (aClass selectorsInProtocol: protocolName) from: aClass classified: newProtocolName
 ]
 
-{ #category : #'*Deprecated12' }
+{ #category : '*Deprecated12' }
+ClassDescription >> isDefinedInPackage: aPackage [
+
+	self
+		deprecated: 'This method will be removed because it is really specific and easy to inline. Use `receiver package = argument` instead.'
+		transformWith: '`@rcv isDefinedInPackage: `@package' -> '`@rcv package = `@package'.
+	^ self package = aPackage
+]
+
+{ #category : '*Deprecated12' }
 ClassDescription >> listAtCategoryNamed: aName [
 
 	self deprecated: 'Use #selectorsInProtocol: instead.' transformWith: '`@rcv listAtCategoryNamed: `@arg' -> '`@rcv selectorsInProtocol: `@arg'.
 	^ self selectorsInProtocol: aName
 ]
 
-{ #category : #'*Deprecated12' }
+{ #category : '*Deprecated12' }
+ClassDescription >> methodsTaggedWith: aSymbol [
+
+	self deprecated: 'Use methodsInProtocol: instead.' transformWith: '`@rcv methodsTaggedWith: `@arg' -> '`@rcv methodsInProtocol: `@arg'.
+	^ self methodsInProtocol: aSymbol
+]
+
+{ #category : '*Deprecated12' }
 ClassDescription >> organization [
 	"Answer the instance of ClassOrganizer that represents the organization
 	of the messages of the receiver."
@@ -186,34 +202,34 @@ ClassDescription >> organization [
 	^ self
 ]
 
-{ #category : #'*Deprecated12' }
+{ #category : '*Deprecated12' }
 ClassDescription >> organizedClass [
 
 	self deprecated: 'ClassOrganization was inlined and we do not need an organized class anymore.' transformWith: '`@rcv organizedClass' -> '`@rcv'.
 	^ self
 ]
 
-{ #category : #'*Deprecated12' }
+{ #category : '*Deprecated12' }
 ClassDescription >> removeCategory: protocolName [
 
 	self deprecated: 'Use #removeProtocolIfEmpty: instead.' transformWith: '`@rcv removeCategory: `@arg' -> '`@rcv removeProtocolIfEmpty: `@arg'.
 	self removeProtocolIfEmpty: protocolName
 ]
 
-{ #category : #'*Deprecated12' }
+{ #category : '*Deprecated12' }
 ClassDescription >> removeElement: aSelector [
 	self deprecated: 'Use #removeFromProtocols: instead.' transformWith: '`@rcv removeElement: `@arg' -> '`@rcv removeFromProtocols: `@arg'. 
 	^ self removeFromProtocols: aSelector
 ]
 
-{ #category : #'*Deprecated12' }
+{ #category : '*Deprecated12' }
 ClassDescription >> removeEmptyCategories [
 
 	self deprecated: 'Use #removeEmptyProtocols instead.' transformWith: '`@rcv removeEmptyCategories' -> '`@rcv removeEmptyProtocols'.
 	self removeEmptyProtocols
 ]
 
-{ #category : #'*Deprecated12' }
+{ #category : '*Deprecated12' }
 ClassDescription >> removeMethodTag: aSymbol [
 
 	self
@@ -222,14 +238,14 @@ ClassDescription >> removeMethodTag: aSymbol [
 	^ self removeProtocolIfEmpty: aSymbol
 ]
 
-{ #category : #'*Deprecated12' }
+{ #category : '*Deprecated12' }
 ClassDescription >> removeProtocolNamed: protocolName [
 
 	self deprecated: 'Use #removeProtocolIfEmpty: instead' transformWith: '`@rcv removeProtocolNamed: `@arg' -> '`@rcv removeProtocolIfEmpty: `@arg'.
 	^ self removeProtocolIfEmpty: protocolName
 ]
 
-{ #category : #'*Deprecated12' }
+{ #category : '*Deprecated12' }
 ClassDescription >> renameCategory: oldName toBe: newName [
 
 	self
@@ -238,7 +254,7 @@ ClassDescription >> renameCategory: oldName toBe: newName [
 	self renameProtocol: oldName as: newName
 ]
 
-{ #category : #'*Deprecated12' }
+{ #category : '*Deprecated12' }
 ClassDescription >> selectorsInCategory: aName [
 
 	self deprecated: 'Use #selectorsInProtocol: instead.' transformWith: '`@rcv selectorsInCategory: `@arg' -> '`@rcv selectorsInProtocol: `@arg'.
@@ -246,7 +262,7 @@ ClassDescription >> selectorsInCategory: aName [
 	^ self selectorsInProtocol: aName
 ]
 
-{ #category : #'*Deprecated12' }
+{ #category : '*Deprecated12' }
 ClassDescription >> silentlyRenameCategory: oldName toBe: newName [
 
 	self
@@ -255,14 +271,52 @@ ClassDescription >> silentlyRenameCategory: oldName toBe: newName [
 	self renameProtocol: oldName as: newName
 ]
 
-{ #category : #'*Deprecated12' }
+{ #category : '*Deprecated12' }
 ClassDescription >> subject [
 
 	self deprecated: 'ClassOrganization was inlined and we do not need an organized class anymore.' transformWith: '`@rcv subject' -> '`@rcv'.
 	^ self
 ]
 
-{ #category : #'*Deprecated12' }
+{ #category : '*Deprecated12' }
+ClassDescription >> tagWith: aSymbol [
+
+	self deprecated: 'Use #packageTag: instead.' transformWith: '`@rcv tagWith: `@arg' -> '`@rcv packageTag: `@arg'.
+	^ self packageTag: aSymbol
+]
+
+{ #category : '*Deprecated12' }
+ClassDescription >> tags [
+
+	self deprecated: 'Since a class can have only one tag, it is easier to just call the method #packageTag.'.
+	^ self packageTagName
+		  ifNil: [ {  } ]
+		  ifNotNil: [ :tag | { tag } ]
+]
+
+{ #category : '*Deprecated12' }
+ClassDescription >> tagsForMethods [
+
+	self deprecated: 'Use #protocolNames instead.' transformWith: '`@rcv tagsForMethods' -> '`@rcv protocolNames'.
+	^ self protocolNames
+]
+
+{ #category : '*Deprecated12' }
+ClassDescription >> untagFrom: aSymbol [
+
+	| package packageTag |
+	self deprecated: 'A class can have only one package tag so it is easier to use #removePackageTag.'.
+	"Any class or trait could be tagged by multiple symbols for user purpose.
+	For now we could only model single tag with PackageTag"
+	package := self package.
+	packageTag := self packageTag.
+	packageTag isRoot ifTrue: [ ^ #(  ) ].
+	packageTag name = aSymbol ifFalse: [ ^ self ].
+	packageTag removeClass: self.
+	package addClass: self
+]
+
+{ #category : '*Deprecated12' }
 ClassDescription >> whichCategoryIncludesSelector: aSelector [
 
 	self deprecated: 'Use #protocolNameOfSelector: instead.' transformWith: '`@rcv whichCategoryIncludeSelector: `@arg' -> '`@rcv protocolNameOfSelector: `@arg'.

@@ -4,12 +4,14 @@ I represent items as is. I do not apply any formatting or transformation.
 I am default #requiredResult of any query.
 "
 Class {
-	#name : #ClyRawQueryResult,
-	#superclass : #ClyQueryResult,
-	#category : #'Calypso-NavigationModel-Result'
+	#name : 'ClyRawQueryResult',
+	#superclass : 'ClyQueryResult',
+	#category : 'Calypso-NavigationModel-Result',
+	#package : 'Calypso-NavigationModel',
+	#tag : 'Result'
 }
 
-{ #category : #building }
+{ #category : 'building' }
 ClyRawQueryResult >> fillWith: queriedObjects [
 
 	items addAll: queriedObjects

@@ -1,6 +1,6 @@
-Extension { #name : #SycSourceCodeCommand }
+Extension { #name : 'SycSourceCodeCommand' }
 
-{ #category : #'*Calypso-SystemTools-Core' }
+{ #category : '*Calypso-SystemTools-Core' }
 SycSourceCodeCommand class >> sourceCodeMenuActivation [
 	<classAnnotation>
 

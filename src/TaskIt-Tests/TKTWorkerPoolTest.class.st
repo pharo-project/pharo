@@ -1,10 +1,12 @@
 Class {
-	#name : #TKTWorkerPoolTest,
-	#superclass : #TKTTestCase,
-	#category : #'TaskIt-Tests-Worker'
+	#name : 'TKTWorkerPoolTest',
+	#superclass : 'TKTTestCase',
+	#category : 'TaskIt-Tests-Worker',
+	#package : 'TaskIt-Tests',
+	#tag : 'Worker'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 TKTWorkerPoolTest >> testPriorityAfterStart [
 	| pool workerProcess newPriority doneSemaphore|
 	newPriority := 32.
@@ -23,7 +25,7 @@ TKTWorkerPoolTest >> testPriorityAfterStart [
 		self assert: workerProcess priority equals: newPriority]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TKTWorkerPoolTest >> testPrioritySetBeforeStart [
 	| pool workerProcess initialPriority doneSemaphore |
 	initialPriority := 32.
@@ -42,7 +44,7 @@ TKTWorkerPoolTest >> testPrioritySetBeforeStart [
 		self assert: workerProcess priority equals: initialPriority]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TKTWorkerPoolTest >> testWorkerPoolCretesWorkersWhenExecutingATask [
 	| pool |
 	pool := TKTWorkerPool new.
@@ -53,7 +55,7 @@ TKTWorkerPoolTest >> testWorkerPoolCretesWorkersWhenExecutingATask [
 	self assert: pool workers notEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TKTWorkerPoolTest >> testWorkerPoolDoesNotExceedPoolSize [
 	| pool |
 	pool := TKTWorkerPool new.
@@ -64,7 +66,7 @@ TKTWorkerPoolTest >> testWorkerPoolDoesNotExceedPoolSize [
 	self assert: pool size <= 4
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TKTWorkerPoolTest >> testWorkerPoolDoesNotExceedPoolSizeWhenSchedulingTasksInParallel [
 
 	| pool totalTasks futures |
@@ -85,7 +87,7 @@ TKTWorkerPoolTest >> testWorkerPoolDoesNotExceedPoolSizeWhenSchedulingTasksInPar
 	self assert: pool size equals: 10
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TKTWorkerPoolTest >> testWorkerPoolStopStopsWorkers [
 
 	| pool |
@@ -101,7 +103,7 @@ TKTWorkerPoolTest >> testWorkerPoolStopStopsWorkers [
 	pool workers do: [ :worker | self deny: worker isRunning ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TKTWorkerPoolTest >> testWorkerPoolWorkersAreStoppedAfterPoolsCollection [
 
 	| pool workerProcess |
@@ -120,7 +122,7 @@ TKTWorkerPoolTest >> testWorkerPoolWorkersAreStoppedAfterPoolsCollection [
 	self assertWithGarbageCollect: [ workerProcess first isNil ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TKTWorkerPoolTest >> testWorkerPoolWorkersProcessesAreStoppedAfterPoolsCollection [
 
 	| pool workerProcess |
@@ -137,7 +139,7 @@ TKTWorkerPoolTest >> testWorkerPoolWorkersProcessesAreStoppedAfterPoolsCollectio
 	self assertWithGarbageCollect: [ workerProcess first isNil ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TKTWorkerPoolTest >> testWorkerPoolWorkersProcessesAreTerminatedAfterPoolsCollection [
 
 	| pool workerProcess |

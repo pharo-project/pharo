@@ -2,8 +2,8 @@
 I responsible for scanning the Text and transforming it into a list of AthensTextLine, where each line is a list of AthensTextDisplayCommand (sub)instances
 "
 Class {
-	#name : #AthensTextScanner,
-	#superclass : #Object,
+	#name : 'AthensTextScanner',
+	#superclass : 'Object',
 	#instVars : [
 		'text',
 		'currentLine',
@@ -15,10 +15,11 @@ Class {
 		'currentStrip',
 		'currentBackground'
 	],
-	#category : #'Athens-Text'
+	#category : 'Athens-Text',
+	#package : 'Athens-Text'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensTextScanner >> addCharacter: position [
 	| charWidth fnt |
 
@@ -44,12 +45,12 @@ AthensTextScanner >> addCharacter: position [
 	currentStrip stop: position
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensTextScanner >> addCommand: aCommand [
 	currentLine addCommand: aCommand
 ]
 
-{ #category : #'text attributes' }
+{ #category : 'text attributes' }
 AthensTextScanner >> addEmphasis: emphasis [
 	| fnt |
 
@@ -58,7 +59,7 @@ AthensTextScanner >> addEmphasis: emphasis [
 	self setActualFont: (fnt emphasized: emphasis)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensTextScanner >> applyAttributes [
 	currentAttributes do: [:attr |
 		attr emphasizeScanner: self ].
@@ -67,41 +68,41 @@ AthensTextScanner >> applyAttributes [
 	currentColor ifNil: [ self textColor: self defaultColor ]
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 AthensTextScanner >> defaultColor [
 	^ Color black
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 AthensTextScanner >> defaultFont [
 
 	^ self textStyle defaultFont
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 AthensTextScanner >> defaultTextStyle [
 
 	^ TextStyle default
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensTextScanner >> endLine: index [
 
 	currentLine endIndex: index
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AthensTextScanner >> initialize [
 	lines := OrderedCollection new.
 	currentAttributes := #()
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensTextScanner >> lines [
 	^ lines
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensTextScanner >> newLine: startingIndex [
 
 	currentLine := lines add: (AthensTextLine new text: text;
@@ -122,12 +123,12 @@ AthensTextScanner >> newLine: startingIndex [
 	currentColor := currentBackground := currentFont := currentStrip := nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensTextScanner >> resetBackground [
 	self textBackground: Color transparent
 ]
 
-{ #category : #'text attributes' }
+{ #category : 'text attributes' }
 AthensTextScanner >> setActualFont: aFont [
 
 	currentFont ifNil: [
@@ -143,7 +144,7 @@ AthensTextScanner >> setActualFont: aFont [
 	]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensTextScanner >> setAttributes: anArray [
 	currentBackground := nil.
 	currentAttributes := anArray.
@@ -152,23 +153,23 @@ AthensTextScanner >> setAttributes: anArray [
 	currentStrip := nil
 ]
 
-{ #category : #'text attributes' }
+{ #category : 'text attributes' }
 AthensTextScanner >> setFont: fontNumber [
 
 	self setActualFont: (self textStyle fontAt: fontNumber)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensTextScanner >> text: aText [
 	text := aText
 ]
 
-{ #category : #'text attributes' }
+{ #category : 'text attributes' }
 AthensTextScanner >> textBackground: aColor [
 
 	"background is transparent by default "
 
-	(currentBackground notNil and: [ currentBackground color = aColor ])
+	(currentBackground isNotNil and: [ currentBackground color = aColor ])
 		ifTrue: [ ^ self].
 
 	currentBackground ifNil: [ aColor isTransparent ifTrue: [ ^ self ] ].
@@ -178,7 +179,7 @@ AthensTextScanner >> textBackground: aColor [
 	currentLine addCommand: currentBackground
 ]
 
-{ #category : #'text attributes' }
+{ #category : 'text attributes' }
 AthensTextScanner >> textColor: aColor [
 
 	currentColor ifNil: [
@@ -193,7 +194,7 @@ AthensTextScanner >> textColor: aColor [
 	]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensTextScanner >> textStyle [
 	^ textStyle ifNil: [ textStyle := self defaultTextStyle ]
 ]

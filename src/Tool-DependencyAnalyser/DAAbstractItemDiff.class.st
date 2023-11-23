@@ -2,8 +2,8 @@
 A PDAbstractItemDiff is a object which represent an item who added/modified/removed from an old analysis.
 "
 Class {
-	#name : #DAAbstractItemDiff,
-	#superclass : #Object,
+	#name : 'DAAbstractItemDiff',
+	#superclass : 'Object',
 	#instVars : [
 		'new',
 		'underteminate',
@@ -11,90 +11,92 @@ Class {
 		'diff',
 		'removed'
 	],
-	#category : #'Tool-DependencyAnalyser-Diff'
+	#category : 'Tool-DependencyAnalyser-Diff',
+	#package : 'Tool-DependencyAnalyser',
+	#tag : 'Diff'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 DAAbstractItemDiff class >> isAbstract [
 
 	^self == DAAbstractItemDiff
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 DAAbstractItemDiff class >> newWith: aContent [
 	^ (self new)
 		content: aContent;
 		yourself
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 DAAbstractItemDiff >> beNew [
 	new := true
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 DAAbstractItemDiff >> beRemoved [
 	removed := true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DAAbstractItemDiff >> beUnderteminate [
 	underteminate := true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DAAbstractItemDiff >> canBeDisplay [
 	^ (self isNew or: [ self isRemoved ]) or: [ self hasChanged ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAAbstractItemDiff >> content [
 	 ^ content
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAAbstractItemDiff >> content: aContent [
 	content := aContent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAAbstractItemDiff >> diff [
 	^ diff
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAAbstractItemDiff >> diff: anObject [
 	diff := anObject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DAAbstractItemDiff >> hasChanged [
 	self subclassResponsibility
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DAAbstractItemDiff >> initialize [
 	new := false.
 	removed := false.
 	underteminate := false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DAAbstractItemDiff >> isNew [
 	^ new
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DAAbstractItemDiff >> isRemoved [
 	^ removed
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DAAbstractItemDiff >> isUnderteminate [
 	 ^ underteminate
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 DAAbstractItemDiff >> printOn: aStream [
 	self subclassResponsibility
 ]

@@ -3,16 +3,17 @@ I store a username and password.
 
 "
 Class {
-	#name : #MCServerCredentials,
-	#superclass : #Object,
+	#name : 'MCServerCredentials',
+	#superclass : 'Object',
 	#instVars : [
 		'username',
 		'password'
 	],
-	#category : #MonticelloRemoteRepositories
+	#category : 'MonticelloRemoteRepositories',
+	#package : 'MonticelloRemoteRepositories'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MCServerCredentials class >> user: nameString password: passwordString [
 
 	^ self new
@@ -21,25 +22,25 @@ MCServerCredentials class >> user: nameString password: passwordString [
 			yourself.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCServerCredentials >> password [
 
 	^ password.
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCServerCredentials >> password: aString [ 
 
 	password := aString.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCServerCredentials >> username [
 
 	^ username.
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCServerCredentials >> username: aString [ 
 
 	username := aString.

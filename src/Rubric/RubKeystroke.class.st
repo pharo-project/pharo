@@ -2,25 +2,27 @@
 I am raised when a keystroke is done
 "
 Class {
-	#name : #RubKeystroke,
-	#superclass : #RubMorphAnnouncement,
+	#name : 'RubKeystroke',
+	#superclass : 'RubMorphAnnouncement',
 	#instVars : [
 		'event'
 	],
-	#category : #'Rubric-Editing-Announcements'
+	#category : 'Rubric-Editing-Announcements',
+	#package : 'Rubric',
+	#tag : 'Editing-Announcements'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RubKeystroke class >> with: anEvent [
 	^ self new event: anEvent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubKeystroke >> event [
 	^ event
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubKeystroke >> event: anObject [
 	event := anObject
 ]

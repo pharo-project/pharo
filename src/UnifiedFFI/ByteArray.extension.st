@@ -1,20 +1,20 @@
-Extension { #name : #ByteArray }
+Extension { #name : 'ByteArray' }
 
-{ #category : #'*UnifiedFFI' }
+{ #category : '*UnifiedFFI' }
 ByteArray >> packAsDoubleToArity: arity [
 	"In case I sending a buffer to get the contents I need to understand this message.
 	 See AthensCairoCanvas>>getCurrentPoint as an example."
 	^ self packToArity: arity
 ]
 
-{ #category : #'*UnifiedFFI' }
+{ #category : '*UnifiedFFI' }
 ByteArray >> packAsFloatToArity: arity [
 	"In case I sending a buffer to get the contents I need to understand this message.
 	 See AthensCairoCanvas>>getCurrentPoint as an example."
 	^ self packToArity: arity
 ]
 
-{ #category : #'*UnifiedFFI' }
+{ #category : '*UnifiedFFI' }
 ByteArray >> packToArity: arity [
 	"This is complicated... I assuming this ways of calling a function:
 
@@ -44,7 +44,7 @@ ByteArray >> packToArity: arity [
 	self error: 'Use ExternalAddress instead!'
 ]
 
-{ #category : #'*UnifiedFFI' }
+{ #category : '*UnifiedFFI' }
 ByteArray >> platformBitAt: byteOffset [
 
 	^ self
@@ -53,7 +53,7 @@ ByteArray >> platformBitAt: byteOffset [
 		signed: true
 ]
 
-{ #category : #'*UnifiedFFI' }
+{ #category : '*UnifiedFFI' }
 ByteArray >> platformBitAt: byteOffset put: value [
 
 	self
@@ -63,7 +63,7 @@ ByteArray >> platformBitAt: byteOffset put: value [
 		signed: true
 ]
 
-{ #category : #'*UnifiedFFI' }
+{ #category : '*UnifiedFFI' }
 ByteArray >> platformLongAt: byteOffset [
 	^ self
 		integerAt: byteOffset
@@ -71,7 +71,7 @@ ByteArray >> platformLongAt: byteOffset [
 		signed: true
 ]
 
-{ #category : #'*UnifiedFFI' }
+{ #category : '*UnifiedFFI' }
 ByteArray >> platformLongAt: byteOffset put: value [
 	self
 		integerAt: byteOffset
@@ -80,7 +80,7 @@ ByteArray >> platformLongAt: byteOffset put: value [
 		signed: true
 ]
 
-{ #category : #'*UnifiedFFI' }
+{ #category : '*UnifiedFFI' }
 ByteArray >> platformSizeTAt: byteOffset [
 	^ self
 		integerAt: byteOffset
@@ -88,7 +88,7 @@ ByteArray >> platformSizeTAt: byteOffset [
 		signed: false
 ]
 
-{ #category : #'*UnifiedFFI' }
+{ #category : '*UnifiedFFI' }
 ByteArray >> platformSizeTAt: byteOffset put: value [
 	self
 		integerAt: byteOffset
@@ -97,7 +97,7 @@ ByteArray >> platformSizeTAt: byteOffset put: value [
 		signed: false
 ]
 
-{ #category : #'*UnifiedFFI' }
+{ #category : '*UnifiedFFI' }
 ByteArray >> platformUnsignedBitAt: byteOffset [
 
 	^ self
@@ -106,7 +106,7 @@ ByteArray >> platformUnsignedBitAt: byteOffset [
 		signed: false
 ]
 
-{ #category : #'*UnifiedFFI' }
+{ #category : '*UnifiedFFI' }
 ByteArray >> platformUnsignedBitAt: byteOffset put: value [
 
 	self
@@ -116,7 +116,7 @@ ByteArray >> platformUnsignedBitAt: byteOffset put: value [
 		signed: false
 ]
 
-{ #category : #'*UnifiedFFI' }
+{ #category : '*UnifiedFFI' }
 ByteArray >> platformUnsignedLongAt: byteOffset [
 	^ self
 		integerAt: byteOffset
@@ -124,7 +124,7 @@ ByteArray >> platformUnsignedLongAt: byteOffset [
 		signed: false
 ]
 
-{ #category : #'*UnifiedFFI' }
+{ #category : '*UnifiedFFI' }
 ByteArray >> platformUnsignedLongAt: byteOffset put: value [
 	self
 		integerAt: byteOffset
@@ -133,12 +133,12 @@ ByteArray >> platformUnsignedLongAt: byteOffset put: value [
 		signed: false
 ]
 
-{ #category : #'*UnifiedFFI' }
+{ #category : '*UnifiedFFI' }
 ByteArray >> readString [
 	^ (ExternalData fromHandle: self type: ExternalType string) bytesFromCString
 ]
 
-{ #category : #'*UnifiedFFI' }
+{ #category : '*UnifiedFFI' }
 ByteArray >> readStringUTF8 [
 
 	self
@@ -150,26 +150,26 @@ ByteArray >> readStringUTF8 [
 		  utf8StringFromCString
 ]
 
-{ #category : #'*UnifiedFFI' }
+{ #category : '*UnifiedFFI' }
 ByteArray >> referenceStructAt: byteOffset length: length [
 	^ FFIExternalStructureReferenceHandle
 		handle: self
 		offset: byteOffset
 ]
 
-{ #category : #'*UnifiedFFI' }
+{ #category : '*UnifiedFFI' }
 ByteArray >> signedByteAt: byteOffset [
     "Return a 8bit signed integer starting at the given byte offset"
     ^self integerAt: byteOffset size: 1 signed: true
 ]
 
-{ #category : #'*UnifiedFFI' }
+{ #category : '*UnifiedFFI' }
 ByteArray >> signedByteAt: byteOffset put: value [
 	"Store a 8bit signed integer starting at the given byte offset"
 	^self integerAt: byteOffset put: value size: 1 signed: true
 ]
 
-{ #category : #'*UnifiedFFI' }
+{ #category : '*UnifiedFFI' }
 ByteArray >> unpackHandleFromArity: arity [
 	"This will 'unpack' a long (handle) from a certain arity. See #packToArity: for a better explanation."
 
@@ -177,7 +177,7 @@ ByteArray >> unpackHandleFromArity: arity [
 	^ self unsignedLongAt: 1
 ]
 
-{ #category : #'*UnifiedFFI' }
+{ #category : '*UnifiedFFI' }
 ByteArray >> utf8StringFromCString [
 
 	^ (ExternalData
@@ -186,7 +186,7 @@ ByteArray >> utf8StringFromCString [
 		utf8StringFromCString
 ]
 
-{ #category : #'*UnifiedFFI' }
+{ #category : '*UnifiedFFI' }
 ByteArray >> writeString: aString [
 	LibC memCopy: aString to: self size: aString size
 ]

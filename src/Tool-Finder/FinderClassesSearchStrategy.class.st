@@ -2,18 +2,20 @@
 I am a Finder search mode when we are looking for classes in the system.
 "
 Class {
-	#name : #FinderClassesSearchStrategy,
-	#superclass : #FinderSearchStrategy,
-	#category : #'Tool-Finder-Base'
+	#name : 'FinderClassesSearchStrategy',
+	#superclass : 'FinderSearchStrategy',
+	#category : 'Tool-Finder-Base',
+	#package : 'Tool-Finder',
+	#tag : 'Base'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FinderClassesSearchStrategy class >> strategyName [
 
 	^ #Classes
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 FinderClassesSearchStrategy >> computeListOfClasses [
 
 	| regex result |
@@ -29,7 +31,7 @@ FinderClassesSearchStrategy >> computeListOfClasses [
 	^ result
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 FinderClassesSearchStrategy >> constructDictionary [
 
 	| result |
@@ -38,22 +40,19 @@ FinderClassesSearchStrategy >> constructDictionary [
 	finder resultDictionary: result
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FinderClassesSearchStrategy >> findSelectedClassIn: path [
 
 	^ path first item
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FinderClassesSearchStrategy >> findSelectedMethodIn: path [
 
-	^ path
-		  at: 2
-		  ifPresent: [ :node | node item ]
-		  ifAbsent: [ nil ]
+	^ (path at: 2 ifAbsent: [ nil ]) ifNotNil: [ :node | node item ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FinderClassesSearchStrategy >> isClassesSearch [
 
 	^ true

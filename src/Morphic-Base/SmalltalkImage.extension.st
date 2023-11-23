@@ -1,6 +1,6 @@
-Extension { #name : #SmalltalkImage }
+Extension { #name : 'SmalltalkImage' }
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 SmalltalkImage >> aboutThisSystem [
 	"Identify software version"
 

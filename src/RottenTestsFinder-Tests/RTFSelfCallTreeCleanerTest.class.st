@@ -2,16 +2,17 @@
 A RTFSelfCallTreeCleanerTest is a test class for testing the behavior of RTFSelfCallTreeCleaner
 "
 Class {
-	#name : #RTFSelfCallTreeCleanerTest,
-	#superclass : #TestCase,
+	#name : 'RTFSelfCallTreeCleanerTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'tree1',
 		'tree2'
 	],
-	#category : #'RottenTestsFinder-Tests'
+	#category : 'RottenTestsFinder-Tests',
+	#package : 'RottenTestsFinder-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 RTFSelfCallTreeCleanerTest >> setUp [
 	super setUp.
 	tree1 := RTFSelfCallRootNode new
@@ -52,7 +53,7 @@ RTFSelfCallTreeCleanerTest >> setUp [
 				yourself
 ]
 
-{ #category : #'tests-visiting' }
+{ #category : 'tests-visiting' }
 RTFSelfCallTreeCleanerTest >> testVisitRTFSelfCallNode [
 	| cleanedTree1 cleanedTree2 |
 	cleanedTree1 := tree1 acceptVisitor: RTFSelfCallTreeCleaner new.

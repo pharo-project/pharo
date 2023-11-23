@@ -1,1 +1,1 @@
-Package { #name : #MenuRegistration }
+Package { #name : 'MenuRegistration' }

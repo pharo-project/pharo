@@ -1,6 +1,6 @@
-Extension { #name : #SycRemoveClassStrategy }
+Extension { #name : 'SycRemoveClassStrategy' }
 
-{ #category : #'*Calypso-SystemQueries' }
+{ #category : '*Calypso-SystemQueries' }
 SycRemoveClassStrategy class >> createForBrowser: aBrowser classes: aCollection [
 
 	| hasReferences hasSubclasses hasUsers |

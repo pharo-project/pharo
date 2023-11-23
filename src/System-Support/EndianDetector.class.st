@@ -12,16 +12,18 @@ Internally, I do the raw data copy by changing the class of the float into me. T
 - I'm in the startup list to check this on every startup
 "
 Class {
-	#name : #EndianDetector,
-	#superclass : #Object,
-	#type : #words,
+	#name : 'EndianDetector',
+	#superclass : 'Object',
+	#type : 'words',
 	#classVars : [
 		'EndianCache'
 	],
-	#category : #'System-Support-Utilities'
+	#category : 'System-Support-Utilities',
+	#package : 'System-Support',
+	#tag : 'Utilities'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 EndianDetector class >> calcEndianness [
 	"Store the least significant word of the float with 1; on big endian machines
 	 this is the second word"
@@ -35,25 +37,25 @@ EndianDetector class >> calcEndianness [
 		  ifFalse: [ #big ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EndianDetector class >> endianness [
 
 	^ EndianCache ifNil: [ EndianCache := self calcEndianness ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 EndianDetector class >> isBigEndian [
 
 	^ self isLittleEndian not
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 EndianDetector class >> isLittleEndian [
 
 	^ self endianness == #little
 ]
 
-{ #category : #'system startup' }
+{ #category : 'system startup' }
 EndianDetector class >> startUp: isImageStarting [
 
 	isImageStarting ifFalse: [ ^ self ].

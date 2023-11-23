@@ -1,6 +1,6 @@
-Extension { #name : #FileSystemDirectoryEntry }
+Extension { #name : 'FileSystemDirectoryEntry' }
 
-{ #category : #'*Compression' }
+{ #category : '*Compression' }
 FileSystemDirectoryEntry >> addArchiveMemberAs: aName in: anArchive [
 
 	self isDirectory

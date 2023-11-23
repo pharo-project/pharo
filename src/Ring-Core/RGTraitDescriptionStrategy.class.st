@@ -1,22 +1,18 @@
 Class {
-	#name : #RGTraitDescriptionStrategy,
-	#superclass : #RGBehaviorStrategy,
-	#category : #'Ring-Core-Kernel'
+	#name : 'RGTraitDescriptionStrategy',
+	#superclass : 'RGBehaviorStrategy',
+	#category : 'Ring-Core-Kernel',
+	#package : 'Ring-Core',
+	#tag : 'Kernel'
 }
 
-{ #category : #variables }
-RGTraitDescriptionStrategy >> allSharedPoolNames [
-
-	^#()
-]
-
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGTraitDescriptionStrategy >> bindingOf: varName [
 
 	^ self environment bindingOf: varName
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RGTraitDescriptionStrategy >> initialize [
 
 	super initialize.
@@ -24,25 +20,25 @@ RGTraitDescriptionStrategy >> initialize [
 	self owner environment backend createUnresolvedTraitGroupFor: self owner
 ]
 
-{ #category : #variables }
+{ #category : 'variables' }
 RGTraitDescriptionStrategy >> isTrait [
 
 	^true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGTraitDescriptionStrategy >> layout [
 
 	self incompatibleBehaviorType
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGTraitDescriptionStrategy >> layout: anRGLayout [
 
 	self incompatibleBehaviorType
 ]
 
-{ #category : #variables }
+{ #category : 'variables' }
 RGTraitDescriptionStrategy >> methods [
 
 	| allMethods |
@@ -51,7 +47,7 @@ RGTraitDescriptionStrategy >> methods [
 	^ allMethods asArray
 ]
 
-{ #category : #variables }
+{ #category : 'variables' }
 RGTraitDescriptionStrategy >> name: aString [
 
 	| usersWithOldDefinition |
@@ -66,13 +62,13 @@ RGTraitDescriptionStrategy >> name: aString [
 		self trait announcer behaviorModificationAppliedTo: assoc key. ]
 ]
 
-{ #category : #variables }
+{ #category : 'variables' }
 RGTraitDescriptionStrategy >> trait [
 
 	^ self owner
 ]
 
-{ #category : #variables }
+{ #category : 'variables' }
 RGTraitDescriptionStrategy >> users [
 
 	"return collection of user of the trait"

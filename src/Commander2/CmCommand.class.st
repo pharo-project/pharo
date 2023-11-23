@@ -7,28 +7,30 @@ This method defines the behaviour of the command.
 Eventually, #canBeRun can be override to check if the command can be run according to its current context.
 "
 Class {
-	#name : #CmCommand,
-	#superclass : #CmAbstractCommand,
+	#name : 'CmCommand',
+	#superclass : 'CmAbstractCommand',
 	#traits : 'CmTWithBasicNameAndDescription + CmTDecorable',
 	#classTraits : 'CmTWithBasicNameAndDescription classTrait + CmTDecorable classTrait',
 	#instVars : [
 		'context'
 	],
-	#category : #'Commander2-Commands'
+	#category : 'Commander2-Commands',
+	#package : 'Commander2',
+	#tag : 'Commands'
 }
 
-{ #category : #default }
+{ #category : 'default' }
 CmCommand class >> defaultDescription [
 	^ 'Not described command.'
 ]
 
-{ #category : #default }
+{ #category : 'default' }
 CmCommand class >> defaultName [
 
 	^ 'Unnamed'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CmCommand >> canBeExecuted [
 	"See my super class comment for this method.
 	 By default I return true.
@@ -36,7 +38,7 @@ CmCommand >> canBeExecuted [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmCommand >> context [
 	"The #context might be a BlockClosure that computes the actual context object when needed.
 	 Thus, we send #value which in case of a BlockClosure evaluate it and in case of another
@@ -45,17 +47,17 @@ CmCommand >> context [
 	^ context value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmCommand >> context: anObject [
 	context := anObject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CmCommand >> hasContext [
 	^ self context isNotNil
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CmCommand >> initialize [
 	super initialize.
 	self name: self class defaultName.

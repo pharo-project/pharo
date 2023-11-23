@@ -1,10 +1,11 @@
 Class {
-	#name : #ZnHeadersTest,
-	#superclass : #TestCase,
-	#category : #'Zinc-Tests'
+	#name : 'ZnHeadersTest',
+	#superclass : 'TestCase',
+	#category : 'Zinc-Tests',
+	#package : 'Zinc-Tests'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnHeadersTest >> testMergeValued [
 	| headers |
 	headers := ZnHeaders new.
@@ -13,7 +14,7 @@ ZnHeadersTest >> testMergeValued [
 	self assert: (headers at: 'Set-Cookie') equals: 'foo=1;bar=1'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnHeadersTest >> testMultiValued [
 	| headers |
 	headers := ZnHeaders new.
@@ -22,7 +23,7 @@ ZnHeadersTest >> testMultiValued [
 	self assert: (headers at: 'Set-Cookie') equals: #('foo=1' 'bar=1')
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnHeadersTest >> testMultiValuedStreaming [
 	| headers keysAndValues |
 	headers := ZnHeaders new.
@@ -34,7 +35,7 @@ ZnHeadersTest >> testMultiValuedStreaming [
 	self assert: keysAndValues equals: #('Set-Cookie' 'foo=1' 'Set-Cookie' 'bar=1') asOrderedCollection
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnHeadersTest >> testNormalization [
 	| headers |
 	headers := ZnHeaders new.
@@ -46,7 +47,7 @@ ZnHeadersTest >> testNormalization [
 	self assert: (headers at: 'Content-Type') equals: 'text/html'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnHeadersTest >> testReading [
 	| string headers |
 	string := 'Content-Type: text/plain', String crlf, 'Content-Length: 128', String crlf.
@@ -57,7 +58,7 @@ ZnHeadersTest >> testReading [
 	self assert: (headers at: 'Content-Length') equals: '128'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnHeadersTest >> testReadingMultiline [
 	| string headers |
 	string := 'Content-Type: text/plain', String crlf,
@@ -74,7 +75,7 @@ ZnHeadersTest >> testReadingMultiline [
 	self assert: (headers at: #long) equals: 'foo bar	baz'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnHeadersTest >> testReadingMultilineMultiValue [
 	| string headers |
 	string := 'Content-Type: text/plain', String crlf,
@@ -87,7 +88,7 @@ ZnHeadersTest >> testReadingMultilineMultiValue [
 	self assert: (headers at: #long) equals: #( 'foo bar	baz' 'more')
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnHeadersTest >> testReadingMultilineNonBinary [
 	| string headers |
 	string := 'Foo: 1', String crlf,
@@ -99,7 +100,7 @@ ZnHeadersTest >> testReadingMultilineNonBinary [
 	self assert: (headers at: 'Bar') equals: 'EOF'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnHeadersTest >> testWriting [
 	| headers string |
 	headers := ZnHeaders new

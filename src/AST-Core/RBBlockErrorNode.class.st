@@ -7,15 +7,17 @@ or the closure : [ block node .
 
 "
 Class {
-	#name : #RBBlockErrorNode,
-	#superclass : #RBEnglobingErrorNode,
+	#name : 'RBBlockErrorNode',
+	#superclass : 'RBEnglobingErrorNode',
 	#instVars : [
 		'arguments'
 	],
-	#category : #'AST-Core-Nodes - ErrorNodes'
+	#category : 'AST-Core-Nodes - ErrorNodes',
+	#package : 'AST-Core',
+	#tag : 'Nodes - ErrorNodes'
 }
 
-{ #category : #construction }
+{ #category : 'construction' }
 RBBlockErrorNode class >> error: aToken withNodes: aCollection [
 	"Analyses the token to identify if it's an opening or a closure."
 	| message |
@@ -30,46 +32,24 @@ RBBlockErrorNode class >> error: aToken withNodes: aCollection [
 		ifFalse: [ self new contents: aCollection; start: aCollection first start; stop: aToken stop; errorMessage: message ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBBlockErrorNode >> argumentNames [
 
 	^ self arguments collect: [:each | each name] as: Array
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBBlockErrorNode >> arguments [
 	^arguments
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBBlockErrorNode >> arguments: anObject [
 
 	arguments := anObject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBBlockErrorNode >> isBlockError [
 	^true
-]
-
-{ #category : #testing }
-RBBlockErrorNode >> repairCollectionFromStart [
-	" The repair process goes through goes through the statements that are compatible with an array.
-	  Begins with all statements included in the array and gets one of every time.
-	  The removed statements are to be added in the sequence node."
-	| collection result removedStatements |
-	collection := self content statements.
-	result := OrderedCollection new.
-	removedStatements := OrderedCollection new.
-	[ collection isNotNil ]
-		whileTrue: [ | statements node |
-						 statements := OrderedCollection new.
-						 node :=  RBArrayNode statements: collection.
-						 node start: self start.
-					 	 statements add: node .
-						 result add: statements, removedStatements.
-						 removedStatements addFirst: collection last.
-						 collection removeLast. ].
-	result add: removedStatements.
-	^collection
 ]

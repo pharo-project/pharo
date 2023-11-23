@@ -2,23 +2,25 @@
 I know how to map an object to its default cluster. I can map every object.
 "
 Class {
-	#name : #FLFullGeneralMapper,
-	#superclass : #FLLightGeneralMapper,
+	#name : 'FLFullGeneralMapper',
+	#superclass : 'FLLightGeneralMapper',
 	#instVars : [
 		'internalMethods',
 		'internalBehaviors',
 		'environment',
 		'globals'
 	],
-	#category : #'Fuel-Core-Mappers'
+	#category : 'Fuel-Core-Mappers',
+	#package : 'Fuel-Core',
+	#tag : 'Mappers'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLFullGeneralMapper >> environment [
 	^ environment
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FLFullGeneralMapper >> initialize [
 	super initialize.
 	
@@ -28,7 +30,7 @@ FLFullGeneralMapper >> initialize [
 	environment := self configuration environment
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FLFullGeneralMapper >> isBehaviorAnonymous: aBehavior [
 	^ (self environment includes: aBehavior instanceSide)
 		ifTrue: [ false ]
@@ -38,14 +40,14 @@ FLFullGeneralMapper >> isBehaviorAnonymous: aBehavior [
 			 true ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FLFullGeneralMapper >> shouldSerializeBehaviorFully: aBehavior [
 	^ (internalBehaviors includes: aBehavior instanceSide) or: [
 		(internalBehaviors includes: aBehavior classSide) or: [
 			self isBehaviorAnonymous: aBehavior ] ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FLFullGeneralMapper >> shouldSerializeCompiledMethodFully: aCompiledMethod [
 	"Answers true when aCompiledMethod must be fully serialized, and false otherwise.
 	Methods that can be looked up in the environment must not be fully serialized.
@@ -60,7 +62,7 @@ FLFullGeneralMapper >> shouldSerializeCompiledMethodFully: aCompiledMethod [
 				aCompiledMethod isDoIt ] ] ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 FLFullGeneralMapper >> visitClass: aClass [
 	(self shouldSerializeBehaviorFully: aClass)
 		ifTrue: [
@@ -70,17 +72,7 @@ FLFullGeneralMapper >> visitClass: aClass [
 		ifFalse: [ next mapAndTrace: aClass ]
 ]
 
-{ #category : #visiting }
-FLFullGeneralMapper >> visitClassTrait: aClassTrait [
-	(self shouldSerializeBehaviorFully: aClassTrait)
-		ifTrue: [
-			self
-				mapAndTraceByClusterName: aClassTrait
-				to: FLClassTraitCluster ]
-		ifFalse: [ next mapAndTrace: aClassTrait ]
-]
-
-{ #category : #visiting }
+{ #category : 'visiting' }
 FLFullGeneralMapper >> visitClassVariable: aClassVariable [
 	"Consider class variables regular objects (not globals), unless
 	their owning class is being fully serialized, in which case the class
@@ -93,7 +85,7 @@ FLFullGeneralMapper >> visitClassVariable: aClassVariable [
 		ifTrue: [ next mapAndTrace: aClassVariable ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 FLFullGeneralMapper >> visitCompiledBlock: aCompiledBlock [
 	(self shouldSerializeCompiledMethodFully: aCompiledBlock method)
 		ifTrue: [
@@ -103,7 +95,7 @@ FLFullGeneralMapper >> visitCompiledBlock: aCompiledBlock [
 		ifFalse: [ next mapAndTrace: aCompiledBlock ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 FLFullGeneralMapper >> visitCompiledMethod: aCompiledMethod [
 	(self shouldSerializeCompiledMethodFully: aCompiledMethod)
 		ifTrue: [
@@ -113,7 +105,7 @@ FLFullGeneralMapper >> visitCompiledMethod: aCompiledMethod [
 		ifFalse: [ next mapAndTrace: aCompiledMethod ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 FLFullGeneralMapper >> visitGlobalVariable: aGlobalVariable [
 	"Consider global variables globals that can be looked up, unless
 	the associated class (if any) should be fully serialized."
@@ -127,7 +119,7 @@ FLFullGeneralMapper >> visitGlobalVariable: aGlobalVariable [
 				ifFalse: [ next mapAndTrace: aGlobalVariable ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 FLFullGeneralMapper >> visitMetaclass: aMetaclass [
 	(self shouldSerializeBehaviorFully: aMetaclass)
 		ifTrue: [
@@ -137,7 +129,7 @@ FLFullGeneralMapper >> visitMetaclass: aMetaclass [
 		ifFalse: [ next mapAndTrace: aMetaclass ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 FLFullGeneralMapper >> visitMetaclassForTraits: aMetaclass [
 	(self shouldSerializeBehaviorFully: aMetaclass)
 		ifTrue: [
@@ -147,7 +139,7 @@ FLFullGeneralMapper >> visitMetaclassForTraits: aMetaclass [
 		ifFalse: [ next mapAndTrace: aMetaclass ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 FLFullGeneralMapper >> visitTrait: aTrait [
 	(self shouldSerializeBehaviorFully: aTrait)
 		ifTrue: [
@@ -157,7 +149,7 @@ FLFullGeneralMapper >> visitTrait: aTrait [
 		ifFalse: [ next mapAndTrace: aTrait ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 FLFullGeneralMapper >> visitTraitedMetaclass: aMetaclass [
 	(self shouldSerializeBehaviorFully: aMetaclass)
 		ifTrue: [

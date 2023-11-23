@@ -1,16 +1,17 @@
 Class {
-	#name : #BaselineOfThreadedFFI,
-	#superclass : #BaselineOf,
-	#category : #BaselineOfThreadedFFI
+	#name : 'BaselineOfThreadedFFI',
+	#superclass : 'BaselineOf',
+	#category : 'BaselineOfThreadedFFI',
+	#package : 'BaselineOfThreadedFFI'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BaselineOfThreadedFFI class >> corePackageNames [
 
 	^ self packagesOfGroupNamed: #Core
 ]
 
-{ #category : #baseline }
+{ #category : 'baseline' }
 BaselineOfThreadedFFI >> baseline: spec [
 	<baseline>
 
@@ -35,7 +36,7 @@ BaselineOfThreadedFFI >> baseline: spec [
 		group: 'default' with: #('Core' 'Graphics' 'Tests')
 ]
 
-{ #category : #doits }
+{ #category : 'doits' }
 BaselineOfThreadedFFI >> reset [
 
 	Smalltalk globals

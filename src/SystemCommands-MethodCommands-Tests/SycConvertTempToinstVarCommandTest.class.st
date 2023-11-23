@@ -1,10 +1,11 @@
 Class {
-	#name : #SycConvertTempToinstVarCommandTest,
-	#superclass : #TestCase,
-	#category : #'SystemCommands-MethodCommands-Tests'
+	#name : 'SycConvertTempToinstVarCommandTest',
+	#superclass : 'TestCase',
+	#category : 'SystemCommands-MethodCommands-Tests',
+	#package : 'SystemCommands-MethodCommands-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 SycConvertTempToinstVarCommandTest >> testCanExecuteOnArgumentNode [
 
 	| argNode sourceCodeContext |
@@ -14,7 +15,7 @@ SycConvertTempToinstVarCommandTest >> testCanExecuteOnArgumentNode [
 	self deny: (SycConvertTempToInstVarCommand canBeExecutedInContext: sourceCodeContext)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SycConvertTempToinstVarCommandTest >> testCanExecuteOnTemporaryNode [
 
 	| sourceCodeContext tempNode |

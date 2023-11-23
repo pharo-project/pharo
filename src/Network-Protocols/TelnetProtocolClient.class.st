@@ -6,20 +6,22 @@ Structure:
 
 "
 Class {
-	#name : #TelnetProtocolClient,
-	#superclass : #ProtocolClient,
+	#name : 'TelnetProtocolClient',
+	#superclass : 'ProtocolClient',
 	#instVars : [
 		'responseCode'
 	],
-	#category : #'Network-Protocols-Protocols'
+	#category : 'Network-Protocols-Protocols',
+	#package : 'Network-Protocols',
+	#tag : 'Protocols'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TelnetProtocolClient class >> rawResponseCodes [
 	self subclassResponsibility
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TelnetProtocolClient >> determineResponseCode [
 	self lastResponse size >= 3
 		ifFalse: [^0].
@@ -28,7 +30,7 @@ TelnetProtocolClient >> determineResponseCode [
 		do: [:ex | ex return: 0]
 ]
 
-{ #category : #'private - protocol' }
+{ #category : 'private - protocol' }
 TelnetProtocolClient >> fetchNextResponse [
 	"The FTP and similar protocols allow multi-line responses.
 	If the response is multi-line, the fourth character of the first line is a
@@ -56,13 +58,13 @@ TelnetProtocolClient >> fetchNextResponse [
 	self lastResponse: result contents
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TelnetProtocolClient >> lastResponse: aString [
 	super lastResponse: aString.
 	responseCode := self determineResponseCode
 ]
 
-{ #category : #'private - protocol' }
+{ #category : 'private - protocol' }
 TelnetProtocolClient >> lookForCode: code [
 	"We are expecting a certain code next."
 
@@ -71,7 +73,7 @@ TelnetProtocolClient >> lookForCode: code [
 		ifDifferent: [:response | (TelnetProtocolError protocolInstance: self) signal: response]
 ]
 
-{ #category : #'private - protocol' }
+{ #category : 'private - protocol' }
 TelnetProtocolClient >> lookForCode: code ifDifferent: handleBlock [
 	"We are expecting a certain code next."
 
@@ -81,29 +83,29 @@ TelnetProtocolClient >> lookForCode: code ifDifferent: handleBlock [
 		ifFalse: [handleBlock value: self lastResponse]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TelnetProtocolClient >> responseCode [
 	^responseCode
 ]
 
-{ #category : #'private - testing' }
+{ #category : 'private - testing' }
 TelnetProtocolClient >> responseIsContinuation [
 	^(self lastResponse size > 3
 		and: [(self lastResponse at: 4) == $-])
 ]
 
-{ #category : #'private - testing' }
+{ #category : 'private - testing' }
 TelnetProtocolClient >> responseIsContinuation: response [
 	^(response size > 3
 		and: [(response at: 4) == $-])
 ]
 
-{ #category : #'private - testing' }
+{ #category : 'private - testing' }
 TelnetProtocolClient >> responseIsError [
 	^self responseCode between: 500 and: 599
 ]
 
-{ #category : #'private - testing' }
+{ #category : 'private - testing' }
 TelnetProtocolClient >> responseIsWarning [
 	^self responseCode between: 400 and: 499
 ]

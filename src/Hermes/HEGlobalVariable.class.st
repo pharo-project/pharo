@@ -7,17 +7,19 @@ When deserialized I find the global variable in the target environment.
 I use the class being created to look up the binding. If there is no binding I create an undeclared. 
 "
 Class {
-	#name : #HEGlobalVariable,
-	#superclass : #HESymbol,
-	#category : #'Hermes-Model'
+	#name : 'HEGlobalVariable',
+	#superclass : 'HESymbol',
+	#category : 'Hermes-Model',
+	#package : 'Hermes',
+	#tag : 'Model'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEGlobalVariable class >> tag [
 	^ 7
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 HEGlobalVariable >> asLiteralIn: env [
 	| bind |
 	bind := env newClass bindingOf: value.
@@ -27,7 +29,7 @@ HEGlobalVariable >> asLiteralIn: env [
 	^UndeclaredVariable registeredWithName: value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEGlobalVariable >> value: aClassVariable [
 	value := aClassVariable name
 ]

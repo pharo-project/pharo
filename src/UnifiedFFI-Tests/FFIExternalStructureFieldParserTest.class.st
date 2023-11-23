@@ -2,26 +2,28 @@
 Tests for FFIExternalStructureFieldParser
 "
 Class {
-	#name : #FFIExternalStructureFieldParserTest,
-	#superclass : #TestCase,
+	#name : 'FFIExternalStructureFieldParserTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'architecture'
 	],
-	#category : #'UnifiedFFI-Tests-Tests'
+	#category : 'UnifiedFFI-Tests-Tests',
+	#package : 'UnifiedFFI-Tests',
+	#tag : 'Tests'
 }
 
-{ #category : #factory }
+{ #category : 'factory' }
 FFIExternalStructureFieldParserTest >> newParser [
 	^ FFIExternalStructureFieldParser new
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 FFIExternalStructureFieldParserTest >> setUp [
 	super setUp.
 	architecture := FFIArchitecture forCurrentArchitecture
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFIExternalStructureFieldParserTest >> testParseFieldsStructure [
 	| fieldSpec |
 
@@ -29,7 +31,7 @@ FFIExternalStructureFieldParserTest >> testParseFieldsStructure [
 		parseFields: FFITestStructure fields
 		structure: FFITestStructure.
 
-	self assert: fieldSpec notNil.
+	self assert: fieldSpec isNotNil.
 	self assert: fieldSpec fieldNames equals: #(byte short long float double int64 ulong size_t).
 	self assert: (fieldSpec typeFor: #byte) class equals: FFIUInt8.
 	self assert: (fieldSpec typeFor: #short) class equals: FFIInt16.

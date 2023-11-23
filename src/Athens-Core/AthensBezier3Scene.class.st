@@ -2,25 +2,27 @@
 I just a helper class used to debug & visualize rendering of bezier segment. This class is subject of changes or complete removal
 "
 Class {
-	#name : #AthensBezier3Scene,
-	#superclass : #Object,
+	#name : 'AthensBezier3Scene',
+	#superclass : 'Object',
 	#instVars : [
 		'pt1',
 		'pt2',
 		'pt3',
 		'pt4'
 	],
-	#category : #'Athens-Core-PathsGeometry'
+	#category : 'Athens-Core-PathsGeometry',
+	#package : 'Athens-Core',
+	#tag : 'PathsGeometry'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 AthensBezier3Scene class >> on: anControlPointArray [
 
 	^ self basicNew
 		initFromArray: anControlPointArray
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensBezier3Scene >> curvePathBlock [
 	^ [ :builder |
 		builder
@@ -30,7 +32,7 @@ AthensBezier3Scene >> curvePathBlock [
 	 ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AthensBezier3Scene >> initFromArray: aControlPointsArray [
 
 		pt1 := aControlPointsArray at: 1.
@@ -39,7 +41,7 @@ AthensBezier3Scene >> initFromArray: aControlPointsArray [
 		pt4 := aControlPointsArray at: 4
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 AthensBezier3Scene >> renderOn: canvas [
 
 	| path pathBlock |

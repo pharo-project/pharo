@@ -4,27 +4,29 @@ I am an abstract announcement for morphic events.  I carry the morph where the e
 My subclasses should add information for more precise events.
 "
 Class {
-	#name : #MorphAnnouncement,
-	#superclass : #Announcement,
+	#name : 'MorphAnnouncement',
+	#superclass : 'Announcement',
 	#instVars : [
 		'morph'
 	],
-	#category : #'Morphic-Core-Announcements'
+	#category : 'Morphic-Core-Announcements',
+	#package : 'Morphic-Core',
+	#tag : 'Announcements'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MorphAnnouncement class >> morph: aMorph [
 	^self new
 			morph: aMorph;
 			yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MorphAnnouncement >> morph [
 	^ morph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MorphAnnouncement >> morph: anObject [
 	morph := anObject
 ]

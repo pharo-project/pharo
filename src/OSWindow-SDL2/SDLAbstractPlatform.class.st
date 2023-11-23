@@ -5,34 +5,36 @@ Get the corresponding class to use through
  OSPlatform current sdlPlatform
 "
 Class {
-	#name : #SDLAbstractPlatform,
-	#superclass : #Object,
+	#name : 'SDLAbstractPlatform',
+	#superclass : 'Object',
 	#pools : [
 		'SDL2Constants',
 		'SDL2ConstantsHint'
 	],
-	#category : #'OSWindow-SDL2-Bindings'
+	#category : 'OSWindow-SDL2-Bindings',
+	#package : 'OSWindow-SDL2',
+	#tag : 'Bindings'
 }
 
-{ #category : #operations }
+{ #category : 'operations' }
 SDLAbstractPlatform >> afterMainPharoWindowCreated: aOSSDLWindow [
 
 	self subclassResponsibility
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 SDLAbstractPlatform >> afterSetWindowTitle: aString onWindow: aOSSDLWindow [
 
 	self subclassResponsibility
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SDLAbstractPlatform >> initPlatformSpecific [
 
 	self subclassResponsibility
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SDLAbstractPlatform >> systemCursorConversionTable [
 
 	^ #()

@@ -15,37 +15,38 @@ Internal Representation and Key Implementation Points.
 	extraMethods:		<Collection of<CompiledMethod>>
 "
 Class {
-	#name : #ClyOldMessageBrowserQuery,
-	#superclass : #ClyConstantMethodQuery,
+	#name : 'ClyOldMessageBrowserQuery',
+	#superclass : 'ClyConstantMethodQuery',
 	#instVars : [
 		'extraMethods',
 		'criteriaString',
 		'criteriaBlock'
 	],
-	#category : #'Calypso-SystemTools-OldToolCompatibillity'
+	#category : 'Calypso-SystemTools-OldToolCompatibillity',
+	#package : 'Calypso-SystemTools-OldToolCompatibillity'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyOldMessageBrowserQuery >> criteriaBlock [
 	^ criteriaBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyOldMessageBrowserQuery >> criteriaBlock: anObject [
 	criteriaBlock := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyOldMessageBrowserQuery >> criteriaString [
 	^ criteriaString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyOldMessageBrowserQuery >> criteriaString: anObject [
 	criteriaString := anObject asString
 ]
 
-{ #category : #'tools decoration' }
+{ #category : 'tools decoration' }
 ClyOldMessageBrowserQuery >> decorateResultMethodEditor: aMethodEditor [
 
 	criteriaString ifNil: [ ^self ].
@@ -53,13 +54,13 @@ ClyOldMessageBrowserQuery >> decorateResultMethodEditor: aMethodEditor [
 	aMethodEditor selectStringAsInMessageBrowser: criteriaString
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyOldMessageBrowserQuery >> initialize [
 	super initialize.
 	extraMethods := IdentitySet new
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyOldMessageBrowserQuery >> installedMethods [
 
 	| onlyMethods actualMethods |
@@ -69,7 +70,7 @@ ClyOldMessageBrowserQuery >> installedMethods [
 	^actualMethods, (methods reject: [ :each | each isCompiledMethod ])
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyOldMessageBrowserQuery >> selectsMethod: aMethod [
 	| result |
 	(super selectsMethod: aMethod) ifTrue: [ ^true ].

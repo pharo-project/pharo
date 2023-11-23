@@ -2,12 +2,13 @@
 Unit tests for ZnPrefixMappingDelegate
 "
 Class {
-	#name : #ZnPrefixMappingDelegateTest,
-	#superclass : #TestCase,
-	#category : #'Zinc-HTTP-Examples'
+	#name : 'ZnPrefixMappingDelegateTest',
+	#superclass : 'TestCase',
+	#category : 'Zinc-HTTP-Examples',
+	#package : 'Zinc-HTTP-Examples'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnPrefixMappingDelegateTest >> testMapping [
 	| delegate handled |
 	handled := false.
@@ -20,7 +21,7 @@ ZnPrefixMappingDelegateTest >> testMapping [
 	self assert: handled
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnPrefixMappingDelegateTest >> testNesting [
 	| delegate handled response |
 	handled := false.
@@ -37,7 +38,7 @@ ZnPrefixMappingDelegateTest >> testNesting [
 	self assert: response status equals: 404
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnPrefixMappingDelegateTest >> testPathConsumption [
 	| delegate innerPath uri |
 	uri := '/first/second/third' asZnUrl.

@@ -71,42 +71,43 @@ opened
 
 "
 Class {
-	#name : #HistoryNode,
-	#superclass : #HistoryLeaf,
+	#name : 'HistoryNode',
+	#superclass : 'HistoryLeaf',
 	#instVars : [
 		'history',
 		'opened'
 	],
-	#category : #'System-History-Utilities'
+	#category : 'System-History-Utilities',
+	#package : 'System-History',
+	#tag : 'Utilities'
 }
 
-{ #category : #adding }
+{ #category : 'adding' }
 HistoryNode >> addItem: anHistoryItem [
-	self current notNil
-		ifTrue: [(self current addItem: anHistoryItem)
-				ifTrue: [^ true]].
-	self opened
-		ifTrue: [self history add: anHistoryItem.
-			^ true].
+
+	self current ifNotNil: [ :current | (current addItem: anHistoryItem) ifTrue: [ ^ true ] ].
+	self opened ifTrue: [
+		self history add: anHistoryItem.
+		^ true ].
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HistoryNode >> at: aPosition [
 	^ self history at: aPosition
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HistoryNode >> at: aPosition put: anItem [
 	self history at: aPosition put: anItem
 ]
 
-{ #category : #'opening-closing' }
+{ #category : 'opening-closing' }
 HistoryNode >> close [
 	opened := false
 ]
 
-{ #category : #'opening-closing' }
+{ #category : 'opening-closing' }
 HistoryNode >> closeGroup [
 	(self current notNil
 			and: [self current isComposite
@@ -115,94 +116,94 @@ HistoryNode >> closeGroup [
 		ifFalse: [self close]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 HistoryNode >> closed [
 	^ self opened not
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 HistoryNode >> copyFrom: start to: stop [
 	^ self history copyFrom: start to: stop
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HistoryNode >> current [
 	^ self history isEmpty
 		ifFalse: [self history last]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HistoryNode >> first [
 	^ self history first
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HistoryNode >> groupClass [
 	^ self class
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HistoryNode >> history [
 	^ history ifNil: [history := OrderedCollection new]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 HistoryNode >> isComposite [
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 HistoryNode >> isEmpty [
 	^ self history isEmpty
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HistoryNode >> last [
 	^ self history last
 ]
 
-{ #category : #'opening-closing' }
+{ #category : 'opening-closing' }
 HistoryNode >> open [
 	opened := true
 ]
 
-{ #category : #'opening-closing' }
+{ #category : 'opening-closing' }
 HistoryNode >> openGroup [
 	^ self addItem: self groupClass new
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 HistoryNode >> opened [
 	^ opened ifNil: [opened := true]
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 HistoryNode >> removeAt: anIndex [
 	self history removeAt: anIndex
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 HistoryNode >> removeFirst [
 	self history removeFirst
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 HistoryNode >> removeLast [
 	self history removeLast
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 HistoryNode >> removeLast: count [
 	self history removeLast: count
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 HistoryNode >> reset [
 	history := nil.
 	opened := true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HistoryNode >> size [
 	^ self history size
 ]

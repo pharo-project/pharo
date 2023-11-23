@@ -1,6 +1,6 @@
-Extension { #name : #ProtoObject }
+Extension { #name : 'ProtoObject' }
 
-{ #category : #'*Reflectivity' }
+{ #category : '*Reflectivity' }
 ProtoObject >> metaLinkOptions [
 	^{
 	#isNil -> #( + optionCompileOnLinkInstallation).
@@ -8,14 +8,14 @@ ProtoObject >> metaLinkOptions [
 	}
 ]
 
-{ #category : #'*Reflectivity' }
+{ #category : '*Reflectivity' }
 ProtoObject >> nonAnonymousClass [
 	^ self class isAnonymous
 		ifTrue: [ self class superclass ]
 		ifFalse: [ self class ]
 ]
 
-{ #category : #'*Reflectivity' }
+{ #category : '*Reflectivity' }
 ProtoObject >> rFwithArgs: argArray executeMethod: compiledMethod [
 	"Execute compiledMethod against the receiver and args in argArray"
 	"This method is used by reflectivity internally. All meta-links are ignored"
@@ -24,7 +24,7 @@ ProtoObject >> rFwithArgs: argArray executeMethod: compiledMethod [
 	self primitiveFailed
 ]
 
-{ #category : #'*Reflectivity' }
+{ #category : '*Reflectivity' }
 ProtoObject >> rfIsEqual: anObject [
 	"Primitive. Answer whether the receiver and the argument are the same
 	object (have the same object pointer). Do not redefine the message == in

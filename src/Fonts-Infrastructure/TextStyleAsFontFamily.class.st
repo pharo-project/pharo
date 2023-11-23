@@ -2,15 +2,17 @@
 Text style as font family
 "
 Class {
-	#name : #TextStyleAsFontFamily,
-	#superclass : #AbstractFontFamily,
+	#name : 'TextStyleAsFontFamily',
+	#superclass : 'AbstractFontFamily',
 	#instVars : [
 		'textStyle'
 	],
-	#category : #'Fonts-Infrastructure-Derived'
+	#category : 'Fonts-Infrastructure-Derived',
+	#package : 'Fonts-Infrastructure',
+	#tag : 'Derived'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextStyleAsFontFamily >> members [
 
 	^ members ifNil: [
@@ -22,14 +24,14 @@ TextStyleAsFontFamily >> members [
 				             yourself ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextStyleAsFontFamily >> textStyle [
 	"Answer the value of textStyle"
 
 	^ textStyle
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextStyleAsFontFamily >> textStyle: anObject [
 	"Set the value of textStyle"
 

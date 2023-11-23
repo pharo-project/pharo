@@ -2,30 +2,32 @@
 a MIME object, along with its type and the URL it was found at (if any)
 "
 Class {
-	#name : #MIMEDocument,
-	#superclass : #Object,
+	#name : 'MIMEDocument',
+	#superclass : 'Object',
 	#instVars : [
 		'type',
 		'contents',
 		'contentStream',
 		'uri'
 	],
-	#category : #'Network-MIME-Base'
+	#category : 'Network-MIME-Base',
+	#package : 'Network-MIME',
+	#tag : 'Base'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MIMEDocument class >> content: aString [
 	^self contentType: self defaultContentType  content: aString
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MIMEDocument class >> contentStream: aStream [
 	^ self
 		contentStream: aStream
 		mimeType: self defaultMIMEType
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MIMEDocument class >> contentStream: aStream mimeType: aMimeType [
 	"create a MIMEDocument with the given content-type and contentStream"
 	"MIMEDocument mimeType: 'text/plain' asMIMEType contentStream: (ReadStream on: 'This is a test')"
@@ -33,7 +35,7 @@ MIMEDocument class >> contentStream: aStream mimeType: aMimeType [
 	^self contentStream: aStream mimeType: aMimeType uri: aStream uri
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MIMEDocument class >> contentStream: aStream mimeType: aMimeType uri: aURI [
 	"create a MIMEDocument with the given content-type and contentStream"
 	"MIMEDocument mimeType: 'text/plain' asMIMEType contentStream: (ReadStream on: 'This is a test')"
@@ -41,7 +43,7 @@ MIMEDocument class >> contentStream: aStream mimeType: aMimeType uri: aURI [
 	^self new contentStream: aStream mimeType: aMimeType uri: aURI
 ]
 
-{ #category : #compatibility }
+{ #category : 'compatibility' }
 MIMEDocument class >> contentType: aMIMEType content: content [
 	"create a MIMEDocument with the given content-type and content"
 	"MIMEDocument contentType: 'text/plain' content: 'This is a test'"
@@ -52,7 +54,7 @@ MIMEDocument class >> contentType: aMIMEType content: content [
 		yourself
 ]
 
-{ #category : #compatibility }
+{ #category : 'compatibility' }
 MIMEDocument class >> contentType: type content: content url: url [
 	^ self
 		contents: content
@@ -60,39 +62,39 @@ MIMEDocument class >> contentType: type content: content url: url [
 		uri: url
 ]
 
-{ #category : #'content-types' }
+{ #category : 'content-types' }
 MIMEDocument class >> contentTypeFormData [
 	^'application/x-www-form-urlencoded'
 ]
 
-{ #category : #'content-types' }
+{ #category : 'content-types' }
 MIMEDocument class >> contentTypeHtml [
 	^'text/html'
 ]
 
-{ #category : #'content-types' }
+{ #category : 'content-types' }
 MIMEDocument class >> contentTypeMultipart [
 	^'multipart/form-data'
 ]
 
-{ #category : #'content-types' }
+{ #category : 'content-types' }
 MIMEDocument class >> contentTypePlainText [
 	^'text/plain'
 ]
 
-{ #category : #'content-types' }
+{ #category : 'content-types' }
 MIMEDocument class >> contentTypeXml [
 	^'text/xml'
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MIMEDocument class >> contents: aString [
 	^ self
 		contents: aString
 		mimeType: self defaultMIMEType
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MIMEDocument class >> contents: content mimeType: aMimeType [
 	"create a MIMEDocument with the given content-type and content"
 	"MIMEDocument mimeType: 'text/plain' asMIMEType content: 'This is a test'"
@@ -100,7 +102,7 @@ MIMEDocument class >> contents: content mimeType: aMimeType [
 	^self contents: content mimeType: aMimeType uri: nil
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MIMEDocument class >> contents: content mimeType: aMimeType uri: aURL [
 	"create a MIMEDocument with the given content-type and content"
 	"MIMEDocument mimeType: 'text/plain' asMIMEType content: 'This is a test'"
@@ -108,29 +110,29 @@ MIMEDocument class >> contents: content mimeType: aMimeType uri: aURL [
 	^self new contents: content mimeType: aMimeType uri: aURL
 ]
 
-{ #category : #compatibility }
+{ #category : 'compatibility' }
 MIMEDocument class >> defaultContentType [
 	^self defaultMIMEType asString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MIMEDocument class >> defaultMIMEType [
 	^ ZnMimeType default
 ]
 
-{ #category : #compatibility }
+{ #category : 'compatibility' }
 MIMEDocument class >> guessContentTypeFromExtension: ext [
 	"guesses a content type from the extension"
 	^(self guessTypeFromExtension: ext) asString
 ]
 
-{ #category : #compatibility }
+{ #category : 'compatibility' }
 MIMEDocument class >> guessTypeFromExtension: ext [
 	"guesses a content type from the extension"
 	^self guessTypeFromName: ext
 ]
 
-{ #category : #compatibility }
+{ #category : 'compatibility' }
 MIMEDocument class >> guessTypeFromName: url [
 	"guesses a content type from the url"
 
@@ -141,17 +143,17 @@ MIMEDocument class >> guessTypeFromName: url [
 		ifAbsent: [ nil ]
 ]
 
-{ #category : #compatibility }
+{ #category : 'compatibility' }
 MIMEDocument class >> resetMIMEdatabase [
 	"no-op for catching Kom override"
 ]
 
-{ #category : #compatibility }
+{ #category : 'compatibility' }
 MIMEDocument >> content [
 	^self contents
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MIMEDocument >> contentStream [
 	"Answer a RWBinaryOrTextStream on the contents."
 
@@ -162,24 +164,24 @@ MIMEDocument >> contentStream [
 	^contentStream
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MIMEDocument >> contentStream: aStream mimeType: aMimeType uri: aUri [
 	type := aMimeType.
 	contentStream := aStream.
 	uri := aUri
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MIMEDocument >> contentStreamOnURI [
 	^self uri contentStream
 ]
 
-{ #category : #compatibility }
+{ #category : 'compatibility' }
 MIMEDocument >> contentType [
 	^self mimeType asString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MIMEDocument >> contents [
 	"Answer the receiver's raw data. If we have a stream to read from. Read in the data, cache it and discard the stream."
 
@@ -187,26 +189,26 @@ MIMEDocument >> contents [
 	^contents
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MIMEDocument >> contents: contentStringOrBytes mimeType: aMimeType uri: aURI [
 	type := aMimeType.
 	contents := contentStringOrBytes.
 	uri := aURI
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MIMEDocument >> discardContentStream [
 	contentStream ifNotNil: [contentStream close].
 	contentStream := nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MIMEDocument >> discardContents [
 	contents := nil.
 	self discardContentStream
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MIMEDocument >> getContentFromStream [
 	| streamContents |
 	streamContents := self contentStream contents.
@@ -214,52 +216,52 @@ MIMEDocument >> getContentFromStream [
 	^streamContents
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MIMEDocument >> isGif [
 	^ self mainType = 'image'
 		and: [self subType = 'gif']
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MIMEDocument >> isJpeg [
 	^ self mainType = 'image'
 		and: [ #('jpeg' 'jpg') includes: self subType ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MIMEDocument >> isMultipart [
 	^self mainType = 'multipart'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MIMEDocument >> isMultipartAlternative [
 	"whether the document is in a multipart format where the parts are alternates"
 	^ self contentType = 'multipart/alternative'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MIMEDocument >> isPng [
 	^ self mainType = 'image'
 		and: [self subType = 'png']
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MIMEDocument >> isPnm [
 	^ self mainType = 'image'
 		and: [self subType = 'pnm']
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MIMEDocument >> mainType [
 	^self mimeType main
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MIMEDocument >> mimeType [
 	^type
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MIMEDocument >> printOn: aStream [
 	aStream nextPutAll: self class name;
 		nextPutAll: ' (';
@@ -272,41 +274,41 @@ MIMEDocument >> printOn: aStream [
 		ifNil: [ aStream nextPutAll: 'unknown size)' ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MIMEDocument >> privateContent: aString [
 	contents := aString
 ]
 
-{ #category : #files }
+{ #category : 'files' }
 MIMEDocument >> saveToFile: pathString [
 	pathString asFileReference
 		binaryWriteStreamDo: [ :out |
 			out nextPutAll: self contents ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MIMEDocument >> subType [
 	^self mimeType sub
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MIMEDocument >> type: mimeType [
 	type := mimeType
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MIMEDocument >> uri [
 	"Answer the URL the receiver was downloaded from.  It may legitimately be nil."
 
 	^uri
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MIMEDocument >> uri: aURI [
 	uri := aURI
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MIMEDocument >> url [
 	"Answer the URL the receiver was downloaded from.  It may legitimately be nil."
 

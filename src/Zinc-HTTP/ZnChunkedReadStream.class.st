@@ -8,8 +8,8 @@ After I am completely read, I can tell you my totalSize and optional extraHeader
 Part of Zinc HTTP Components.
 "
 Class {
-	#name : #ZnChunkedReadStream,
-	#superclass : #Object,
+	#name : 'ZnChunkedReadStream',
+	#superclass : 'Object',
 	#instVars : [
 		'stream',
 		'chunk',
@@ -20,10 +20,12 @@ Class {
 		'chunkCount',
 		'extraHeaders'
 	],
-	#category : #'Zinc-HTTP-Streaming'
+	#category : 'Zinc-HTTP-Streaming',
+	#package : 'Zinc-HTTP',
+	#tag : 'Streaming'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnChunkedReadStream class >> on: stream [
 	^ self basicNew
 		initialize;
@@ -31,46 +33,46 @@ ZnChunkedReadStream class >> on: stream [
 		yourself
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnChunkedReadStream >> atEnd [
 	self ensureChunkOrAtEnd.
 	^ atEnd
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnChunkedReadStream >> binary [
 	stream binary
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnChunkedReadStream >> chunkCount [
 	^ chunkCount
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 ZnChunkedReadStream >> close [
 	stream ifNotNil: [ stream close. stream := nil ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnChunkedReadStream >> collectionSpecies [
 	^ self isBinary ifTrue: [ ByteArray ] ifFalse: [ String ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnChunkedReadStream >> contents [
 	"This is technically not correct, but it is better than nothing"
 
 	^ self upToEnd
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnChunkedReadStream >> ensureChunkBufferOfSize: size [
-	(chunk notNil and: [ size <= chunk size ]) ifTrue: [ ^ self ].
+	(chunk isNotNil and: [ size <= chunk size ]) ifTrue: [ ^ self ].
 	chunk := self collectionSpecies new: size
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnChunkedReadStream >> ensureChunkOrAtEnd [
 	atEnd
 		ifTrue: [ ^ self ].
@@ -78,17 +80,17 @@ ZnChunkedReadStream >> ensureChunkOrAtEnd [
 		ifTrue: [ self getNextChunk ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnChunkedReadStream >> extraHeaders [
 	^ extraHeaders
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnChunkedReadStream >> getExtraHeaders [
 	extraHeaders := ZnHeaders readFrom: stream
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnChunkedReadStream >> getNextChunk [
 	| size |
 	(size := self getNextChunkSize) = 0
@@ -106,31 +108,31 @@ ZnChunkedReadStream >> getNextChunk [
 			position := 0 ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnChunkedReadStream >> getNextChunkSize [
 	| line |
 	(line := (ZnLineReader on: stream) nextLine) isEmpty ifTrue: [ ^ 0 ].
 	^ Integer readFrom: (line copyUpTo: $;) base: 16
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ZnChunkedReadStream >> initialize [
 	atEnd := false.
 	chunkCount := 0.
 	totalSize := 0
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnChunkedReadStream >> isBinary [
 	^ stream isBinary
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnChunkedReadStream >> isStream [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnChunkedReadStream >> match: subCollection [
 	"Try to read and match the elements of subCollection.
 	If successful return true and leave the me positioned after the match.
@@ -162,14 +164,14 @@ ZnChunkedReadStream >> match: subCollection [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnChunkedReadStream >> next [
 	self ensureChunkOrAtEnd.
 	self atEnd ifTrue: [ ^ nil ].
 	^ chunk at: (position := position + 1)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnChunkedReadStream >> next: requestedCount [
 	"Read requestedCount elements into new collection and return it,
 	 it could be that less elements were available"
@@ -179,7 +181,7 @@ ZnChunkedReadStream >> next: requestedCount [
 		into: (self collectionSpecies new: requestedCount)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnChunkedReadStream >> next: requestedCount into: collection [
 	"Read requestedCount elements into collection,
 	returning a copy if less elements are available"
@@ -190,7 +192,7 @@ ZnChunkedReadStream >> next: requestedCount into: collection [
 		startingAt: 1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnChunkedReadStream >> next: requestedCount into: collection startingAt: offset [
 	"Read requestedCount elements into collection starting at offset,
 	returning a copy if less elements are available"
@@ -205,26 +207,26 @@ ZnChunkedReadStream >> next: requestedCount into: collection startingAt: offset 
 		ifFalse: [ collection copyFrom: 1 to: offset + readCount - 1 ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 ZnChunkedReadStream >> on: readStream [
 	stream := readStream
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnChunkedReadStream >> peek [
 	self ensureChunkOrAtEnd.
 	self atEnd ifTrue: [ ^ nil ].
 	^ chunk at: (position + 1)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnChunkedReadStream >> position [
 	^ self atEnd
 		ifTrue: [ totalSize ]
 		ifFalse: [ totalSize - chunk size + position ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnChunkedReadStream >> readInto: collection startingAt: offset count: requestedCount [
 	"Read requestedCount elements into collection starting at offset.
 	Return the actual number of elements read."
@@ -243,22 +245,23 @@ ZnChunkedReadStream >> readInto: collection startingAt: offset count: requestedC
 	^ read
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ZnChunkedReadStream >> reset [
 	"We don't allow it"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnChunkedReadStream >> skip: count [
+	count < 0 ifTrue: [ self error: 'cannot skip backwards' ].
 	count timesRepeat: [ self next ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnChunkedReadStream >> totalSize [
 	^ totalSize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnChunkedReadStream >> upTo: anObject [
 	"We use our own collectionSpecies."
 
@@ -267,7 +270,7 @@ ZnChunkedReadStream >> upTo: anObject [
 			whileFalse: [ out nextPut: element ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnChunkedReadStream >> upToEnd [
 	"We use our own collectionSpecies and read by chunk"
 

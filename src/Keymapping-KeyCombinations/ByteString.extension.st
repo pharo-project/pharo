@@ -1,6 +1,6 @@
-Extension { #name : #ByteString }
+Extension { #name : 'ByteString' }
 
-{ #category : #'*Keymapping-KeyCombinations' }
+{ #category : '*Keymapping-KeyCombinations' }
 ByteString >> asKeyCombination [
 	self size > 1
 		ifTrue: [ self error: 'Shortcuts only take a single letter'].

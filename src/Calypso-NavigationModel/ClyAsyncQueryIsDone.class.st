@@ -12,26 +12,28 @@ Internal Representation and Key Implementation Points.
 	queryResult:		<ClyAsyncQueryResult>
 "
 Class {
-	#name : #ClyAsyncQueryIsDone,
-	#superclass : #Announcement,
+	#name : 'ClyAsyncQueryIsDone',
+	#superclass : 'Announcement',
 	#instVars : [
 		'queryResult'
 	],
-	#category : #'Calypso-NavigationModel-Model'
+	#category : 'Calypso-NavigationModel-Model',
+	#package : 'Calypso-NavigationModel',
+	#tag : 'Model'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyAsyncQueryIsDone class >> with: anAsyncQueryResult [
 	^self new
 		queryResult: anAsyncQueryResult
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyAsyncQueryIsDone >> queryResult [
 	^ queryResult
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyAsyncQueryIsDone >> queryResult: anObject [
 	queryResult := anObject
 ]

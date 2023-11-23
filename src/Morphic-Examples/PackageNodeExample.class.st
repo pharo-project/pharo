@@ -2,22 +2,24 @@
 Example for a pakage node
 "
 Class {
-	#name : #PackageNodeExample,
-	#superclass : #PackageAbstractNodeExample,
-	#category : #'Morphic-Examples-MorphTreeWidget'
+	#name : 'PackageNodeExample',
+	#superclass : 'PackageAbstractNodeExample',
+	#category : 'Morphic-Examples-MorphTreeWidget',
+	#package : 'Morphic-Examples',
+	#tag : 'MorphTreeWidget'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PackageNodeExample >> asString [
 	^ self item packageName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PackageNodeExample >> childNodeClassFromItem: anItem [
 	^  PackageClassNodeExample
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PackageNodeExample >> childrenItems [
 	^ self item classes
 ]

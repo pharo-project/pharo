@@ -26,16 +26,18 @@ In this case the argument parts is a RBMessageNode.
 	
 "
 Class {
-	#name : #RBSlotInitializationNode,
-	#superclass : #RBNode,
+	#name : 'RBSlotInitializationNode',
+	#superclass : 'RBNode',
 	#instVars : [
 		'selectorParts',
 		'argumentParts'
 	],
-	#category : #'ClassParser-Model'
+	#category : 'ClassParser-Model',
+	#package : 'ClassParser',
+	#tag : 'Model'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBSlotInitializationNode class >> selectorParts: selectors argumentParts: aCollection [
 	^ self new
 		selectorParts: selectors;
@@ -43,7 +45,7 @@ RBSlotInitializationNode class >> selectorParts: selectors argumentParts: aColle
 		yourself
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 RBSlotInitializationNode >> = anObject [
 	self == anObject ifTrue: [^true].
 	self class = anObject class ifFalse: [^false].
@@ -51,28 +53,28 @@ RBSlotInitializationNode >> = anObject [
 	^ self argumentParts = anObject argumentParts
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RBSlotInitializationNode >> acceptVisitor: aVisitor [
 	"Continue the navigation only on non null messages."
 	^ self isNull ifFalse: [ aVisitor visitSlotInitializationNode: self ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBSlotInitializationNode >> argumentParts [
 	^ argumentParts
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBSlotInitializationNode >> argumentParts: aCollection [
 	argumentParts := aCollection
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 RBSlotInitializationNode >> hash [
 	^ self hashForCollection: self arguments
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBSlotInitializationNode >> initialize [
 
 	super initialize.
@@ -80,12 +82,12 @@ RBSlotInitializationNode >> initialize [
 	argumentParts := #()
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBSlotInitializationNode >> isNull [
 	^ selectorParts isEmpty
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBSlotInitializationNode >> printOn: aStream [
 	"We make sure that the result is empty to be used like a bad null pattern now."
 
@@ -101,17 +103,17 @@ RBSlotInitializationNode >> printOn: aStream [
 							i = size ifFalse: [ aStream	<< ' ']]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBSlotInitializationNode >> selectorParts [
 	^ selectorParts
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBSlotInitializationNode >> selectorParts: aCollection [
 	selectorParts := aCollection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBSlotInitializationNode >> selectorString [
 	^ String streamContents: [ :s |
 			selectorParts do: [ :e | s <<e ] ]

@@ -1,6 +1,6 @@
-Extension { #name : #Behavior }
+Extension { #name : 'Behavior' }
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 Behavior >> systemIconName [
 
 	^self isAbstract

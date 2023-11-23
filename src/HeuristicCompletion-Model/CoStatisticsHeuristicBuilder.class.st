@@ -20,15 +20,17 @@ CoStatisticsHeuristicWrapper -next-> CoStatisticsHeuristicWrapper
 I am used also as a hook, that can be redefined in subclasses and build heuristics differently.
 "
 Class {
-	#name : #CoStatisticsHeuristicBuilder,
-	#superclass : #CoHeuristicBuilder,
+	#name : 'CoStatisticsHeuristicBuilder',
+	#superclass : 'CoHeuristicBuilder',
 	#instVars : [
 		'statistics'
 	],
-	#category : #'HeuristicCompletion-Model-Statistics'
+	#category : 'HeuristicCompletion-Model-Statistics',
+	#package : 'HeuristicCompletion-Model',
+	#tag : 'Statistics'
 }
 
-{ #category : #adding }
+{ #category : 'adding' }
 CoStatisticsHeuristicBuilder >> add: anHeuristic [
 
 	super add: (CoStatisticsHeuristicWrapper new
@@ -37,12 +39,12 @@ CoStatisticsHeuristicBuilder >> add: anHeuristic [
 		yourself)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoStatisticsHeuristicBuilder >> statistics [
 	^ statistics
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoStatisticsHeuristicBuilder >> statistics: anObject [
 	statistics := anObject
 ]

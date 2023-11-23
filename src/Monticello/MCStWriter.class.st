@@ -11,26 +11,28 @@ String streamContents: [:aStream| |writer|
 ]
 "
 Class {
-	#name : #MCStWriter,
-	#superclass : #MCWriter,
+	#name : 'MCStWriter',
+	#superclass : 'MCWriter',
 	#instVars : [
 		'initializers',
 		'writeInitializers'
 	],
-	#category : #'Monticello-Storing'
+	#category : 'Monticello-Storing',
+	#package : 'Monticello',
+	#tag : 'Storing'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCStWriter class >> readerClass [
 	^ MCStReader
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 MCStWriter >> basicChunkContents: aBlock [
 	stream nextPut: (String streamContents: aBlock)
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 MCStWriter >> chunkContents: aBlock [
 	stream
 		cr;
@@ -38,20 +40,20 @@ MCStWriter >> chunkContents: aBlock [
 		cr
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MCStWriter >> stream: aStream [
 
 	stream := ChunkWriteStream on: aStream
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 MCStWriter >> visitClassDefinition: definition [
 	self writeClassDefinition: definition.
 	definition hasClassInstanceVariables ifTrue: [self writeMetaclassDefinition: definition].
 	definition hasComment ifTrue: [self writeClassComment: definition].
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 MCStWriter >> visitClassTraitDefinition: definition [
 	self chunkContents: [:s | s
 		nextPutAll: definition baseTrait;
@@ -62,12 +64,12 @@ MCStWriter >> visitClassTraitDefinition: definition [
 
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 MCStWriter >> visitMetaclassDefinition: definition [
 	self writeMetaclassDefinition: definition
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 MCStWriter >> visitMethodDefinition: definition [
 	self writeMethodPreamble: definition.
 	self writeMethodSource: definition.
@@ -76,32 +78,25 @@ MCStWriter >> visitMethodDefinition: definition [
 		self writeMethodInitializer: definition ].
 ]
 
-{ #category : #visiting }
-MCStWriter >> visitOrganizationDefinition: defintion [
-	defintion categories do: [:cat | self writeCategory: cat].
+{ #category : 'visiting' }
+MCStWriter >> visitOrganizationDefinition: definition [
 
+	self writePackage: definition packageName tags: (definition tagNames ifNil: [ #(  ) ])
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 MCStWriter >> visitScriptDefinition: definition [
 	self writeScriptDefinition: definition
 
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 MCStWriter >> visitTraitDefinition: definition [
 	self writeClassDefinition: definition.
 	definition hasComment ifTrue: [self writeClassComment: definition].
 ]
 
-{ #category : #writing }
-MCStWriter >> writeCategory: categoryName [
-	stream
-		nextChunkPut: 'SystemOrganization addCategory: ', categoryName printString;
-		cr
-]
-
-{ #category : #writing }
+{ #category : 'writing' }
 MCStWriter >> writeClassComment: definition [
 
 	self chunkContents: [ :str |
@@ -114,12 +109,12 @@ MCStWriter >> writeClassComment: definition [
 	stream cr.
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 MCStWriter >> writeClassDefinition: definition [
 	self chunkContents: [:s | definition printDefinitionOn: s].
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 MCStWriter >> writeDefinitions: aCollection [
 	
 	"the correct initialization order is unknown if some classes are missing in the image"
@@ -145,7 +140,7 @@ MCStWriter >> writeDefinitions: aCollection [
 		self chunkContents: [ :str | str  nextPutAll: association value contents ] ].
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCStWriter >> writeInitializers [
 
 	"answer if class initializers should be written"
@@ -153,13 +148,13 @@ MCStWriter >> writeInitializers [
 	^ writeInitializers ifNil: [ writeInitializers := true ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCStWriter >> writeInitializers: aBoolean [
 
 	writeInitializers := aBoolean
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 MCStWriter >> writeMetaclassDefinition: definition [
 	self chunkContents: [:str |
 		str	 nextPutAll: definition className;
@@ -174,7 +169,7 @@ MCStWriter >> writeMetaclassDefinition: definition [
 				nextPut: $']
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 MCStWriter >> writeMethodInitializer: aMethodDefinition [
 	
 	aMethodDefinition isInitializer ifTrue: [ 
@@ -184,13 +179,13 @@ MCStWriter >> writeMethodInitializer: aMethodDefinition [
 		].
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 MCStWriter >> writeMethodPostscript [
 	self basicChunkContents: [:str | str space ].
 	stream cr.
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 MCStWriter >> writeMethodPreamble: definition [
 	self chunkContents: [:str |
 		stream bang.
@@ -199,18 +194,28 @@ MCStWriter >> writeMethodPreamble: definition [
 			[ str nextPutAll: ' class' ].
 		str
 			nextPutAll: ' methodsFor: ';
-			nextPutAll: definition category asString printString;
+			nextPutAll: definition protocol asString printString;
 			nextPutAll: ' stamp: ';
 			nextPutAll: definition timeStamp asString printString
 		]
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 MCStWriter >> writeMethodSource: definition [
 	self basicChunkContents: [:str | str nextPutAll: definition source ].
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
+MCStWriter >> writePackage: packageName tags: aCollection [
+
+	stream
+		nextChunkPut: ('self packageOrganizer ensurePackage: {1} withTags: {2}' format: {
+						 packageName storeString.
+						 aCollection storeString });
+		cr
+]
+
+{ #category : 'writing' }
 MCStWriter >> writeScriptDefinition: definition [
 	self chunkContents: [:str | 
 		str nextPutAll: (
@@ -222,7 +227,7 @@ MCStWriter >> writeScriptDefinition: definition [
 			}) ]
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 MCStWriter >> writeSnapshot: aSnapshot [
 	self writeDefinitions: aSnapshot definitions
 ]

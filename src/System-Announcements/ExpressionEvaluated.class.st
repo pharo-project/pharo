@@ -2,21 +2,23 @@
 This announcement correspond to code evaluation.  For example, a DoIt or PrintIt evaluated in a workspace raises one of this announcements.
 "
 Class {
-	#name : #ExpressionEvaluated,
-	#superclass : #SystemAnnouncement,
+	#name : 'ExpressionEvaluated',
+	#superclass : 'SystemAnnouncement',
 	#instVars : [
 		'context',
 		'expressionEvaluated'
 	],
-	#category : #'System-Announcements-System-Base'
+	#category : 'System-Announcements-System-Base',
+	#package : 'System-Announcements',
+	#tag : 'System-Base'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ExpressionEvaluated class >> expression: theEvaluatedExpression [
 	^self expression: theEvaluatedExpression context: nil
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ExpressionEvaluated class >> expression: theEvaluatedExpression context: anExecutionContext [
 	^self new
 			expressionEvaluated: theEvaluatedExpression;
@@ -24,36 +26,36 @@ ExpressionEvaluated class >> expression: theEvaluatedExpression context: anExecu
 			yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExpressionEvaluated >> context [
 
 	^ context
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExpressionEvaluated >> context: anObject [
 
 	context := anObject
 ]
 
-{ #category : #'temporal for remove' }
+{ #category : 'temporal for remove' }
 ExpressionEvaluated >> expression [
 	^self expressionEvaluated
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExpressionEvaluated >> expressionEvaluated [
 
 	^ expressionEvaluated
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExpressionEvaluated >> expressionEvaluated: anObject [
 
 	expressionEvaluated := anObject
 ]
 
-{ #category : #'temporal for remove' }
+{ #category : 'temporal for remove' }
 ExpressionEvaluated >> item [
 	^expressionEvaluated
 ]

@@ -1,6 +1,6 @@
-Extension { #name : #DelayTest }
+Extension { #name : 'DelayTest' }
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 DelayTest >> testSemaphoreNoTimeout [
 	| sem process |
 	sem := Semaphore new.
@@ -14,7 +14,7 @@ DelayTest >> testSemaphoreNoTimeout [
 	self assert: process isTerminated
 ]
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 DelayTest >> testSemaphoreTimeout [
 	"When we provide our own semaphore for a Delay, it should be used"
 

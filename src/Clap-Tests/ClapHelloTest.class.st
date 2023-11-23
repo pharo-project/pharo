@@ -1,10 +1,12 @@
 Class {
-	#name : #ClapHelloTest,
-	#superclass : #ClapPharoCommandsTest,
-	#category : #'Clap-Tests-Commands'
+	#name : 'ClapHelloTest',
+	#superclass : 'ClapPharoCommandsTest',
+	#category : 'Clap-Tests-Commands',
+	#package : 'Clap-Tests',
+	#tag : 'Commands'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClapHelloTest >> testHello [
 	context := ClapCommandLineExamples hello activateWith: #('hello').
 
@@ -14,14 +16,14 @@ ClapHelloTest >> testHello [
 		equals: 'hello, world.' , self lineEnding
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClapHelloTest >> testHelloBothShoutingAndWhispering [
 	context := ClapCommandLineExamples hello activateWith: #('hello' '--shout' '--whisper').
 
 	self skip: 'should probably fail or obey the latest flag'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClapHelloTest >> testHelloFrench [
 	context := ClapCommandLineExamples hello activateWith: #('hello' '--language' 'fr').
 
@@ -31,7 +33,7 @@ ClapHelloTest >> testHelloFrench [
 		equals: 'bonjour, tout le monde.' , self lineEnding
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClapHelloTest >> testHelloShoutingLong [
 	context := ClapCommandLineExamples hello activateWith: #('hello' '--shout').
 
@@ -41,7 +43,7 @@ ClapHelloTest >> testHelloShoutingLong [
 		equals: 'HELLO, WORLD!' , self lineEnding
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClapHelloTest >> testHelloShoutingShort [
 	context := ClapCommandLineExamples hello activateWith: #('hello' '-s').
 
@@ -51,7 +53,7 @@ ClapHelloTest >> testHelloShoutingShort [
 		equals: 'HELLO, WORLD!' , self lineEnding
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClapHelloTest >> testHelloSomeone [
 	context := ClapCommandLineExamples hello activateWith: #('hello' 'someone').
 
@@ -61,7 +63,7 @@ ClapHelloTest >> testHelloSomeone [
 		equals: 'hello, someone.' , self lineEnding
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClapHelloTest >> testHelloWhisperingLong [
 	context := ClapCommandLineExamples hello activateWith: #('hello' '--whisper').
 
@@ -71,7 +73,7 @@ ClapHelloTest >> testHelloWhisperingLong [
 		equals: '(hello, world)' , self lineEnding
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClapHelloTest >> testHelloWhisperingShort [
 	context := ClapCommandLineExamples hello activateWith: #('hello' '-w').
 

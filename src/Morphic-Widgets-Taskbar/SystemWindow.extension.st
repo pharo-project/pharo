@@ -1,13 +1,13 @@
-Extension { #name : #SystemWindow }
+Extension { #name : 'SystemWindow' }
 
-{ #category : #'*Morphic-Widgets-Taskbar' }
+{ #category : '*Morphic-Widgets-Taskbar' }
 SystemWindow >> basicTaskThumbnailOfSize: thumbExtent [
 	"Answer a new task thumbnail for the receiver."
 
 	^super taskThumbnailOfSize: thumbExtent
 ]
 
-{ #category : #'*Morphic-Widgets-Taskbar' }
+{ #category : '*Morphic-Widgets-Taskbar' }
 SystemWindow >> canBeMovedToLeft [
 
 
@@ -15,21 +15,21 @@ SystemWindow >> canBeMovedToLeft [
 	^ self worldTaskbar canMoveLeft: self
 ]
 
-{ #category : #'*Morphic-Widgets-Taskbar' }
+{ #category : '*Morphic-Widgets-Taskbar' }
 SystemWindow >> canBeMovedToRight [
 
 	self worldTaskbar ifNil: [ ^ false ].
 	^ self worldTaskbar canMoveRight: self
 ]
 
-{ #category : #'*Morphic-Widgets-Taskbar' }
+{ #category : '*Morphic-Widgets-Taskbar' }
 SystemWindow >> isTaskbarPresent [
 	"Answer whether there is a taskbar in the world."
 
-	^self worldTaskbar notNil
+	^self worldTaskbar isNotNil
 ]
 
-{ #category : #'*Morphic-Widgets-Taskbar' }
+{ #category : '*Morphic-Widgets-Taskbar' }
 SystemWindow >> minimizeAfterGeneratingThumbnail [
 	"Minimize the window after thumbnail generation."
 
@@ -42,7 +42,7 @@ SystemWindow >> minimizeAfterGeneratingThumbnail [
 	self layoutChanged
 ]
 
-{ #category : #'*Morphic-Widgets-Taskbar' }
+{ #category : '*Morphic-Widgets-Taskbar' }
 SystemWindow >> restoreBeforeGeneratingThumbnail [
 	"Restore the window without activating unlocking or stepping."
 
@@ -55,7 +55,7 @@ SystemWindow >> restoreBeforeGeneratingThumbnail [
 	self layoutChanged
 ]
 
-{ #category : #'*Morphic-Widgets-Taskbar' }
+{ #category : '*Morphic-Widgets-Taskbar' }
 SystemWindow >> taskThumbnailOfSize: thumbExtent [
 	"Answer a new task thumbnail for the receiver."
 
@@ -69,7 +69,7 @@ SystemWindow >> taskThumbnailOfSize: thumbExtent [
 	^thumb
 ]
 
-{ #category : #'*Morphic-Widgets-Taskbar' }
+{ #category : '*Morphic-Widgets-Taskbar' }
 SystemWindow >> taskbarButtonClicked [
 	"The taskbar button for the receiver has been clicked.
 	If minimised then restore.
@@ -83,7 +83,7 @@ SystemWindow >> taskbarButtonClicked [
 					ifFalse: [self activate]]
 ]
 
-{ #category : #'*Morphic-Widgets-Taskbar' }
+{ #category : '*Morphic-Widgets-Taskbar' }
 SystemWindow >> taskbarButtonEntered: aButton event: evt in: aMorph [
 	"The mouse has entered out taskbar button.
 	Show a thumbnail."
@@ -99,7 +99,7 @@ SystemWindow >> taskbarButtonEntered: aButton event: evt in: aMorph [
 		thumb openInWorld]
 ]
 
-{ #category : #'*Morphic-Widgets-Taskbar' }
+{ #category : '*Morphic-Widgets-Taskbar' }
 SystemWindow >> taskbarButtonFor: aTaskbar [
 	"Answer a new task bar button for the receiver.
 	Answer nil if not required."
@@ -109,7 +109,7 @@ SystemWindow >> taskbarButtonFor: aTaskbar [
 		for: self
 ]
 
-{ #category : #'*Morphic-Widgets-Taskbar' }
+{ #category : '*Morphic-Widgets-Taskbar' }
 SystemWindow >> taskbarButtonLeft: aButton event: evt in: aMorph [
 	"The mouse has left our taskbar button.
 	Remove our thumbnail."
@@ -121,7 +121,7 @@ SystemWindow >> taskbarButtonLeft: aButton event: evt in: aMorph [
 			self removeProperty: #taskbarThumbnail]
 ]
 
-{ #category : #'*Morphic-Widgets-Taskbar' }
+{ #category : '*Morphic-Widgets-Taskbar' }
 SystemWindow >> taskbarButtonMenu: aMenu [
 	"Answer the menu for the task bar button."
 
@@ -235,7 +235,7 @@ SystemWindow >> taskbarButtonMenu: aMenu [
 	^menu
 ]
 
-{ #category : #'*Morphic-Widgets-Taskbar' }
+{ #category : '*Morphic-Widgets-Taskbar' }
 SystemWindow >> taskbarCloseAllLikeThis [
 
 	(self confirm: 'Do you really want to close all windows like this ?') ifFalse: [
@@ -243,7 +243,7 @@ SystemWindow >> taskbarCloseAllLikeThis [
 	(SystemWindow allSubInstances select: [ :w | w labelString = self labelString]) do: [ :w | w delete ]
 ]
 
-{ #category : #'*Morphic-Widgets-Taskbar' }
+{ #category : '*Morphic-Widgets-Taskbar' }
 SystemWindow >> taskbarCloseAllToLeft [
 
 	(self confirm: 'Do you really want to close all windows to left ?')
@@ -254,7 +254,7 @@ SystemWindow >> taskbarCloseAllToLeft [
 			task morph delete ] ]
 ]
 
-{ #category : #'*Morphic-Widgets-Taskbar' }
+{ #category : '*Morphic-Widgets-Taskbar' }
 SystemWindow >> taskbarCloseAllToRight [
 
 	| wasFound |
@@ -268,7 +268,7 @@ SystemWindow >> taskbarCloseAllToRight [
 				ifFalse: [ wasFound := task morph == self ] ] ]
 ]
 
-{ #category : #'*Morphic-Widgets-Taskbar' }
+{ #category : '*Morphic-Widgets-Taskbar' }
 SystemWindow >> taskbarCloseAllWindows [
 
 	(self confirm: 'Do you really want to close all windows ?') ifFalse: [
@@ -278,7 +278,7 @@ SystemWindow >> taskbarCloseAllWindows [
 		worldTaskbar tasks do: [ :task | task morph delete ] ]
 ]
 
-{ #category : #'*Morphic-Widgets-Taskbar' }
+{ #category : '*Morphic-Widgets-Taskbar' }
 SystemWindow >> taskbarLabel [
 	"Answer the label to use for a taskbar button for the receiver."
 
@@ -286,7 +286,7 @@ SystemWindow >> taskbarLabel [
 	^self labelString
 ]
 
-{ #category : #'*Morphic-Widgets-Taskbar' }
+{ #category : '*Morphic-Widgets-Taskbar' }
 SystemWindow >> taskbarState [
 	"Answer one of #minimized, #restored, #maximized or #active."
 
@@ -299,7 +299,7 @@ SystemWindow >> taskbarState [
 						ifFalse: [#restored]]]
 ]
 
-{ #category : #'*Morphic-Widgets-Taskbar' }
+{ #category : '*Morphic-Widgets-Taskbar' }
 SystemWindow >> taskbarTask [
 	"Answer a taskbar task for the receiver.
 	Answer nil if not required."
@@ -313,7 +313,7 @@ SystemWindow >> taskbarTask [
 	^taskbarTask
 ]
 
-{ #category : #'*Morphic-Widgets-Taskbar' }
+{ #category : '*Morphic-Widgets-Taskbar' }
 SystemWindow >> taskbarThumbnailExtent [
 	"Answer the size of a taskbar thumbnail for the receiver."
 
@@ -322,7 +322,7 @@ SystemWindow >> taskbarThumbnailExtent [
 		ifFalse: [super taskbarThumbnailExtent]
 ]
 
-{ #category : #'*Morphic-Widgets-Taskbar' }
+{ #category : '*Morphic-Widgets-Taskbar' }
 SystemWindow >> worldTaskbar [
 	"Answer the world taskbar or nil if none."
 

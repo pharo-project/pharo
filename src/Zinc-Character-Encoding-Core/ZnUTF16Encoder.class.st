@@ -8,24 +8,25 @@ Part of Zinc HTTP Components.
 
 "
 Class {
-	#name : #ZnUTF16Encoder,
-	#superclass : #ZnEndianSensitiveUTFEncoder,
-	#category : #'Zinc-Character-Encoding-Core'
+	#name : 'ZnUTF16Encoder',
+	#superclass : 'ZnEndianSensitiveUTFEncoder',
+	#category : 'Zinc-Character-Encoding-Core',
+	#package : 'Zinc-Character-Encoding-Core'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnUTF16Encoder class >> handlesEncoding: string [
 	"Return true when my instances handle the encoding described by string"
 
 	^ self knownEncodingIdentifiers includes: (self canonicalEncodingIdentifier: string)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnUTF16Encoder class >> knownEncodingIdentifiers [
 	^ #( 'utf16' 'utf16be' 'utf16le' )
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnUTF16Encoder >> back16BitWordOnStream: stream [
 	| firstByte secondByte |
 	firstByte := stream back.
@@ -35,7 +36,7 @@ ZnUTF16Encoder >> back16BitWordOnStream: stream [
 		ifFalse: [ firstByte + (secondByte << 8) ]
 ]
 
-{ #category : #'encoding - decoding' }
+{ #category : 'encoding - decoding' }
 ZnUTF16Encoder >> backOnStream: stream [
 	"Move back one character on stream"
 
@@ -46,7 +47,7 @@ ZnUTF16Encoder >> backOnStream: stream [
 			self back16BitWordOnStream: stream ]
 ]
 
-{ #category : #'encoding - decoding' }
+{ #category : 'encoding - decoding' }
 ZnUTF16Encoder >> encodedByteCountForCodePoint: codePoint [
 	"Return how many bytes are needed to encode integer code point"
 
@@ -55,7 +56,7 @@ ZnUTF16Encoder >> encodedByteCountForCodePoint: codePoint [
 	self errorOutsideRange
 ]
 
-{ #category : #'encoding - decoding' }
+{ #category : 'encoding - decoding' }
 ZnUTF16Encoder >> ensureAtBeginOfCodePointOnStream: stream [
 	"Ensure that the current position of stream is a the beginning of an encoded code point,
 	if not move further backwards. This is necessary when a position in the binary stream is set,
@@ -73,24 +74,24 @@ ZnUTF16Encoder >> ensureAtBeginOfCodePointOnStream: stream [
 			self back16BitWordOnStream: stream ]
 ]
 
-{ #category : #'error handling' }
+{ #category : 'error handling' }
 ZnUTF16Encoder >> errorIncomplete [
 	self error: 'Incomplete utf-16 encoding'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnUTF16Encoder >> identifier [
 	^ #utf16
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnUTF16Encoder >> isFixedLength [
 	"Return true when I am a fixed length encoding"
 
 	^ false
 ]
 
-{ #category : #'encoding - decoding' }
+{ #category : 'encoding - decoding' }
 ZnUTF16Encoder >> nextCodePointFromStream: stream [
 	"Read and return the next integer code point from stream"
 
@@ -108,7 +109,7 @@ ZnUTF16Encoder >> nextCodePointFromStream: stream [
 			16r10000 + code ]
 ]
 
-{ #category : #'encoding - decoding' }
+{ #category : 'encoding - decoding' }
 ZnUTF16Encoder >> nextPutCodePoint: codePoint toStream: stream [
 	"Write the encoding for integer code point to stream"
 
@@ -128,7 +129,7 @@ ZnUTF16Encoder >> nextPutCodePoint: codePoint toStream: stream [
 			self errorOutsideRange ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnUTF16Encoder >> processByteOrderMark: word [
 	^ (word = 16rFEFF or: [ word = 16rFFFE ])
 		ifTrue: [
@@ -138,7 +139,7 @@ ZnUTF16Encoder >> processByteOrderMark: word [
 		ifFalse: [ false ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnUTF16Encoder >> read16BitWordFromStream: stream [
 	| firstByte secondByte |
 	firstByte := stream next.
@@ -150,7 +151,7 @@ ZnUTF16Encoder >> read16BitWordFromStream: stream [
 		ifFalse: [ firstByte + (secondByte << 8) ]
 ]
 
-{ #category : #'encoding - decoding' }
+{ #category : 'encoding - decoding' }
 ZnUTF16Encoder >> skipToBeginOfCodePointOnStream: stream [
 	"Ensure that the current position of stream is a the beginning of an encoded code point,
 	if not move further forward. This is necessary when a position in the binary stream is set,
@@ -168,7 +169,7 @@ ZnUTF16Encoder >> skipToBeginOfCodePointOnStream: stream [
 			self read16BitWordFromStream: stream ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnUTF16Encoder >> write16BitWord: word toStream: stream [
 	self isBigEndian
 		ifTrue: [

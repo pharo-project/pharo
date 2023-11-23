@@ -16,28 +16,30 @@ My instances can be created using following expression:
 
 "
 Class {
-	#name : #OCContextualDoItSemanticScope,
-	#superclass : #OCDoItSemanticScope,
+	#name : 'OCContextualDoItSemanticScope',
+	#superclass : 'OCDoItSemanticScope',
 	#instVars : [
 		'targetContext',
 		'importedVariables'
 	],
-	#category : #'OpalCompiler-Core-Semantics'
+	#category : 'OpalCompiler-Core-Semantics',
+	#package : 'OpalCompiler-Core',
+	#tag : 'Semantics'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OCContextualDoItSemanticScope class >> targetingContext: aContext [
 	^self new
 		targetContext: aContext
 ]
 
-{ #category : #'code evaluation' }
+{ #category : 'code evaluation' }
 OCContextualDoItSemanticScope >> announceDoItEvaluation: aSourceString by: aSystemAnnouncer [
 
 	aSystemAnnouncer evaluated: aSourceString context: targetContext
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OCContextualDoItSemanticScope >> hasBindingThatBeginsWith: aString [
 
 	(targetContext astScope hasBindingThatBeginsWith: aString) ifTrue: [ ^true ].
@@ -45,7 +47,7 @@ OCContextualDoItSemanticScope >> hasBindingThatBeginsWith: aString [
 	^super hasBindingThatBeginsWith: aString
 ]
 
-{ #category : #lookup }
+{ #category : 'lookup' }
 OCContextualDoItSemanticScope >> importVariable: aVariable [
 
 	^importedVariables
@@ -53,26 +55,26 @@ OCContextualDoItSemanticScope >> importVariable: aVariable [
 		ifAbsentPut: [ aVariable asDoItVariableFrom: targetContext ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OCContextualDoItSemanticScope >> importedVariables [
 
 	^ importedVariables
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OCContextualDoItSemanticScope >> importedVariables: anObject [
 
 	importedVariables := anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OCContextualDoItSemanticScope >> initialize [
 	super initialize.
 
 	importedVariables := Dictionary new
 ]
 
-{ #category : #lookup }
+{ #category : 'lookup' }
 OCContextualDoItSemanticScope >> lookupVar: name [
 
 	(targetContext lookupVar: name) ifNotNil: [ :v | ^self importVariable: v].
@@ -80,23 +82,18 @@ OCContextualDoItSemanticScope >> lookupVar: name [
 	^super lookupVar: name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OCContextualDoItSemanticScope >> receiver [
 	^targetContext receiver
 ]
 
-{ #category : #accessing }
-OCContextualDoItSemanticScope >> targetClass [
-	^targetContext compiledCode methodClass
-]
-
-{ #category : #accessing }
+{ #category : 'accessing' }
 OCContextualDoItSemanticScope >> targetContext [
 
 	^ targetContext
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OCContextualDoItSemanticScope >> targetContext: aContext [
 
 	targetContext := aContext

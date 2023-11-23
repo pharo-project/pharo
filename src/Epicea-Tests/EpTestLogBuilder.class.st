@@ -2,41 +2,43 @@
 I am a helper for creating toy logs.
 "
 Class {
-	#name : #EpTestLogBuilder,
-	#superclass : #TestResource,
+	#name : 'EpTestLogBuilder',
+	#superclass : 'TestResource',
 	#instVars : [
 		'log',
 		'directory'
 	],
-	#category : #'Epicea-Tests-Resources'
+	#category : 'Epicea-Tests-Resources',
+	#package : 'Epicea-Tests',
+	#tag : 'Resources'
 }
 
-{ #category : #releasing }
+{ #category : 'releasing' }
 EpTestLogBuilder >> cleanUp [
 
 	self directory ensureDeleteAll
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpTestLogBuilder >> directory [
 
 	^ directory ifNil: [ directory := self newDirectory ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpTestLogBuilder >> log [
 
 	^ log ifNil: [ log := self newLog ]
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 EpTestLogBuilder >> logChildren: anInteger [
 	self
 		logChildren: anInteger
 		triggerReference: self logHeadReference
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 EpTestLogBuilder >> logChildren: anInteger triggerReference: triggerReference [
 
 	1 to: anInteger do: [ :index |
@@ -45,7 +47,7 @@ EpTestLogBuilder >> logChildren: anInteger triggerReference: triggerReference [
 			triggerReference: triggerReference ]
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 EpTestLogBuilder >> logEvent: anEvent [
 
 	^ self
@@ -53,7 +55,7 @@ EpTestLogBuilder >> logEvent: anEvent [
 		triggerReference: self log nullReference
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 EpTestLogBuilder >> logEvent: anEvent triggerReference: triggerReference [
 	self log
 		addEntryWith: anEvent
@@ -68,43 +70,43 @@ EpTestLogBuilder >> logEvent: anEvent triggerReference: triggerReference [
 	self log store flush
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpTestLogBuilder >> logHeadReference [
 	^ self log headReference
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 EpTestLogBuilder >> logInitial [
 	self
 		logEvent: (EpExpressionEvaluation expression: '0')
 		triggerReference: self log nullReference
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 EpTestLogBuilder >> newDirectory [
 
 	^ FileReference newTempFilePrefix: 'epicea-tests-' suffix: ''
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 EpTestLogBuilder >> newLog [
 
 	^ EpLog newWithStore: self newStore
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 EpTestLogBuilder >> newLogWithSessionStore [
 
 	^ EpLog newWithStore: self newSessionStore
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 EpTestLogBuilder >> newSessionStore [
 
 	^ OmSessionStore newWithBaseLocator: self directory ensureCreateDirectory
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 EpTestLogBuilder >> newStore [
 
 	^ OmFileStore
@@ -112,7 +114,7 @@ EpTestLogBuilder >> newStore [
 		inDirectory: self directory ensureCreateDirectory
 ]
 
-{ #category : #samples }
+{ #category : 'samples' }
 EpTestLogBuilder >> oneTriggerWithFourChildrenLog [
 
 	| triggerReference |
@@ -135,7 +137,7 @@ EpTestLogBuilder >> oneTriggerWithFourChildrenLog [
 	^ self log
 ]
 
-{ #category : #samples }
+{ #category : 'samples' }
 EpTestLogBuilder >> oneTriggerWithOneChildLog [
 
 	| triggerReference |
@@ -158,7 +160,7 @@ EpTestLogBuilder >> oneTriggerWithOneChildLog [
 	^ self log
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 EpTestLogBuilder >> useLogWithSessionStore [
 
 	log := self newLogWithSessionStore

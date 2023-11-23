@@ -1,26 +1,26 @@
-Extension { #name : #RGMethodDefinition }
+Extension { #name : 'RGMethodDefinition' }
 
-{ #category : #'*Reflectivity' }
+{ #category : '*Reflectivity' }
 RGMethodDefinition >> createTwin [
 	self compiledMethod createTwin
 ]
 
-{ #category : #'*Reflectivity' }
+{ #category : '*Reflectivity' }
 RGMethodDefinition >> installLink: aMetaLink [
 	self compiledMethod installLink: aMetaLink
 ]
 
-{ #category : #'*Reflectivity' }
+{ #category : '*Reflectivity' }
 RGMethodDefinition >> invalidate [
 	self compiledMethod invalidate
 ]
 
-{ #category : #'*Reflectivity' }
+{ #category : '*Reflectivity' }
 RGMethodDefinition >> removeLink: aLink [
 	self compiledMethod removeLink: aLink
 ]
 
-{ #category : #'*Reflectivity' }
+{ #category : '*Reflectivity' }
 RGMethodDefinition >> variableNodes [
 	^self compiledMethod variableNodes
 ]

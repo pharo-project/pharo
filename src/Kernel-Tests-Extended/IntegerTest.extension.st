@@ -1,13 +1,13 @@
-Extension { #name : #IntegerTest }
+Extension { #name : 'IntegerTest' }
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 IntegerTest >> testBenchFib [
 	self assert: 0 benchFib equals: 1.
 	self assert: 1 benchFib equals: 1.
 	self assert: 2 benchFib equals: 3
 ]
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 IntegerTest >> testBigReceiverInexactNthRoot [
 	"
 	IntegerTest new testBigReceiverInexactNthRoot
@@ -26,7 +26,7 @@ IntegerTest >> testBigReceiverInexactNthRoot [
 	self assert: 100 factorial asFloat equals: (100 factorial + 1) asFloat
 ]
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 IntegerTest >> testBigReceiverInexactSqrt [
 	"
 	IntegerTest new testBigReceiverInexactSqrt
@@ -46,14 +46,14 @@ IntegerTest >> testBigReceiverInexactSqrt [
 	self assert: (result predecessor asFraction squared - bigNum) abs >= (result asFraction squared - bigNum) abs
 ]
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 IntegerTest >> testBitOr [
 
 	self assert: (2r0101 | 2r1010) equals: 2r1111.
 	self assert: (2r0101 bitOr: 2r1010) equals: 2r1111
 ]
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 IntegerTest >> testDegreeCos [
 
 	45 degreeCos. "Following tests use approximate equality, because cosine are generally evaluated using inexact Floating point arithmetic"
@@ -70,7 +70,7 @@ IntegerTest >> testDegreeCos [
 		self assert: (k * 360) degreeCos - 1 equals: 0 ]
 ]
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 IntegerTest >> testDegreeSin [
 
 	45 degreeSin. "Following tests use approximate equality, because sine are generally evaluated using inexact Floating point arithmetic"
@@ -87,7 +87,7 @@ IntegerTest >> testDegreeSin [
 		self assert: (k * 360) degreeSin equals: 0 ]
 ]
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 IntegerTest >> testDigitsAccess [
 
 	self assert: (42 digitAt: 2 base: 10) equals: 4.
@@ -109,7 +109,7 @@ IntegerTest >> testDigitsAccess [
 	self assert: ((256*256) lastDigit) equals: 1
 ]
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 IntegerTest >> testExactRaisedTo [
 	"
 	IntegerTest new testExactRaisedTo
@@ -160,7 +160,7 @@ IntegerTest >> testExactRaisedTo [
 		self assert: ((i negated raisedTo: 3) -1 raisedTo: 5/3) isFloat ]
 ]
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 IntegerTest >> testExactSqrt [
 	"
 	IntegerTest new testExactSqrt
@@ -173,13 +173,13 @@ IntegerTest >> testExactSqrt [
 		self assert: i squared sqrt classAndValueEquals: i ]
 ]
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 IntegerTest >> testFloorLog [
 	self assert: (100 floorLog: 10) equals: 2.
 	self assert: ((2 raisedTo: Float emax + 3) floorLog: 10) = (2 log * (Float emax + 3)) floor description: 'Integer>>floorLog: should not overflow'
 ]
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 IntegerTest >> testIsPrime [
 
 	self assert: 2 isPrime.
@@ -210,7 +210,7 @@ IntegerTest >> testIsPrime [
 	self deny: 29996224275831 isPrime
 ]
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 IntegerTest >> testIsPrime2 [
 
 	"Not primes:"
@@ -226,14 +226,14 @@ IntegerTest >> testIsPrime2 [
 		self deny: each isPrime ]
 ]
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 IntegerTest >> testIsPrime3 [
 
 	self assert:
 		((Integer primesUpTo: 10000) allSatisfy: [ :each | each isPrime ])
 ]
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 IntegerTest >> testIsProbablyPrime [
 
 	"Not primes:"
@@ -249,7 +249,7 @@ IntegerTest >> testIsProbablyPrime [
 		self deny: each isProbablyPrime ]
 ]
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 IntegerTest >> testLargePrimesUpTo [
 	| nn |
 	nn := (2 raisedTo: 17) - 1.
@@ -257,7 +257,7 @@ IntegerTest >> testLargePrimesUpTo [
 	self assert: (Integer primesUpTo: nn + 1) last equals: nn
 ]
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 IntegerTest >> testLargePrimesUpTo2 [
 
 	| primesLessThan10000 |
@@ -416,25 +416,25 @@ IntegerTest >> testLargePrimesUpTo2 [
 	self assert: (Integer primesUpTo: 10000) equals: primesLessThan10000
 ]
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 IntegerTest >> testLn [
 	self assert: (100 ln closeTo: 10 ln*2).
 	self assert: ((2 raisedTo: Float emax + 3) ln closeTo: 2 ln*(Float emax + 3)) description: 'Integer>>ln should not overflow'
 ]
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 IntegerTest >> testLog [
 	self assert: (100 log closeTo: 2).
 	self assert: ((2 raisedTo: Float emax + 3) log closeTo: 2 log*(Float emax + 3)) description: 'Integer>>log should not overflow'
 ]
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 IntegerTest >> testNthRoot [
 	1 << 2000 nthRoot: 100.
 	self assert: (1 << 2000 nthRoot: 100) equals: 1 << 20
 ]
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 IntegerTest >> testNthRootErrorConditions [
 	"
 	IntegerTest new testExactRaisedToErrorConditions
@@ -444,7 +444,7 @@ IntegerTest >> testNthRootErrorConditions [
 	self should: [ -2 nthRoot: 1.24 ] raise: ArithmeticError
 ]
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 IntegerTest >> testNthRootExactness [
 	| inexactRoots largeExactPowersOf6 |
 	largeExactPowersOf6 := (2 to: 100) collect: [:k | k raisedTo: 66].
@@ -452,10 +452,11 @@ IntegerTest >> testNthRootExactness [
 	self assert: inexactRoots isEmpty description: 'Failed to find the exact 6th root of these numbers'
 ]
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 IntegerTest >> testNthRootTruncated [
-	<timeout:  5 "seconds">
+
 	| tooBigToBeAFloat large |
+	self timeLimit: 5 seconds.
 	tooBigToBeAFloat := 1 << 2000.
 	self assert: (tooBigToBeAFloat nthRootTruncated: 100) equals: 1 << 20.
 	self assert: (tooBigToBeAFloat + 1 nthRootTruncated: 100) equals: 1 << 20.
@@ -474,7 +475,7 @@ IntegerTest >> testNthRootTruncated [
 			self assert: (theTruncatedRoot + 1 raisedTo: thePower) > n]]
 ]
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 IntegerTest >> testPrimesUpTo [
 	| primes nn |
 	primes := Integer primesUpTo: 100.
@@ -490,7 +491,7 @@ IntegerTest >> testPrimesUpTo [
 	self assert: (Integer primesUpTo: nn + 1) last equals: nn
 ]
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 IntegerTest >> testRomanPrinting [
 	self assert: 0 printStringRoman equals: ''.	"No symbol for zero"
 	self assert: 1 printStringRoman equals: 'I'.
@@ -583,7 +584,7 @@ IntegerTest >> testRomanPrinting [
 	self assert: -10 printStringRoman equals: '-X'
 ]
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 IntegerTest >> testSqrtErrorConditions [
 	"
 	IntegerTest new testSqrtErrorConditions
@@ -592,7 +593,7 @@ IntegerTest >> testSqrtErrorConditions [
 	self should: [ -1 sqrt ] raise: ArithmeticError
 ]
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 IntegerTest >> testSqrtFloor [
 	#(-1234567890123 -10 -5 -1) do: [ :each | self should: [ each sqrtFloor ] raise: Error ].
 	#(0 1 2 3 4 5 10 16 30 160479924 386234481 501619156 524723498 580855366 766098594 834165249 1020363860 1042083924 1049218924 1459774772895569 3050005981408238 4856589481837079 5650488387708463 7831037396100244)

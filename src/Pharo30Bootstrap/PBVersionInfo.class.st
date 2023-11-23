@@ -12,8 +12,8 @@ I contain
 I am used during the bootstrap process to parse this information and include it in the generated binary image.
 "
 Class {
-	#name : #PBVersionInfo,
-	#superclass : #Object,
+	#name : 'PBVersionInfo',
+	#superclass : 'Object',
 	#instVars : [
 		'repository',
 		'commitHash',
@@ -23,10 +23,11 @@ Class {
 		'patch',
 		'suffix'
 	],
-	#category : 'Pharo30Bootstrap'
+	#category : 'Pharo30Bootstrap',
+	#package : 'Pharo30Bootstrap'
 }
 
-{ #category : #'instance-creation' }
+{ #category : 'instance-creation' }
 PBVersionInfo class >> fromLongGitDescribe: aString [ 
 	
 	| parts commitish semanticVersion |
@@ -40,7 +41,7 @@ PBVersionInfo class >> fromLongGitDescribe: aString [
 		yourself 
 ]
 
-{ #category : #'instance-creation' }
+{ #category : 'instance-creation' }
 PBVersionInfo class >> fromSemanticVersion: aString [ 
 	
 	^ self basicNew
@@ -48,13 +49,13 @@ PBVersionInfo class >> fromSemanticVersion: aString [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 PBVersionInfo class >> invalidMajorVersion: anObject [
 
 	self error: 'Invalid major version: ', anObject printString
 ]
 
-{ #category : #'instance-creation' }
+{ #category : 'instance-creation' }
 PBVersionInfo class >> major: anInteger [ 
 	
 	^ self basicNew
@@ -62,33 +63,33 @@ PBVersionInfo class >> major: anInteger [
 		initialize
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 PBVersionInfo class >> new [
 
 	self invalidMajorVersion: nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBVersionInfo >> buildNumber [
 	^ buildNumber ifNil: [ -1 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBVersionInfo >> buildNumber: anObject [
 	buildNumber := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBVersionInfo >> commitHash [
 	^ commitHash ifNil: [ 'UNKNOWN_COMMIT' ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBVersionInfo >> commitHash: aString [ 
 	commitHash := aString
 ]
 
-{ #category : #configuration }
+{ #category : 'configuration' }
 PBVersionInfo >> fromSemanticVersion: aString [ 
 	
 	| version versionAndSuffix partsWithoutSuffix |
@@ -115,77 +116,77 @@ PBVersionInfo >> fromSemanticVersion: aString [
 	^ self
 ]
 
-{ #category : #validating }
+{ #category : 'validating' }
 PBVersionInfo >> invalidMajorVersion: anObject [
 	
 	^ self class invalidMajorVersion: anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBVersionInfo >> major [
 	^ major
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBVersionInfo >> major: anObject [
 
 	self validateMajorVersion: anObject.
 	major := anObject asInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBVersionInfo >> majorVersion [
 	^ major 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBVersionInfo >> minor [
 	^ minor ifNil: [ 0 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBVersionInfo >> minor: anObject [
 	minor := anObject asInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBVersionInfo >> minorVersion [
 	^ minor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBVersionInfo >> patch [
 	^ patch ifNil: [ 0 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBVersionInfo >> patch: anObject [
 	
 	patch := anObject asInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBVersionInfo >> repository [
 	^ repository
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBVersionInfo >> repository: anObject [
 	repository := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBVersionInfo >> suffix [
 	
 	^ suffix
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBVersionInfo >> suffix: aString [ 
 	suffix := aString
 ]
 
-{ #category : #validating }
+{ #category : 'validating' }
 PBVersionInfo >> validateMajorVersion: anObject [
 	
 	| majorNumber |

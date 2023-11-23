@@ -2,39 +2,41 @@
 SUnit tests for identity bags
 "
 Class {
-	#name : #IdentityBagTest,
-	#superclass : #BagTest,
+	#name : 'IdentityBagTest',
+	#superclass : 'BagTest',
 	#instVars : [
 		'equalNotIdenticalElement',
 		'elementToCopy',
 		'identityBagNonEmptyNoDuplicate5Elements'
 	],
-	#category : #'Collections-Unordered-Tests-Bags'
+	#category : 'Collections-Unordered-Tests-Bags',
+	#package : 'Collections-Unordered-Tests',
+	#tag : 'Bags'
 }
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 IdentityBagTest >> elementToCopy [
 	^ elementToCopy ifNil: [ elementToCopy := 'element to copy' ]
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 IdentityBagTest >> equalNotIdenticalElement [
 	^ equalNotIdenticalElement ifNil: [ equalNotIdenticalElement := self elementToCopy copy ]
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 IdentityBagTest >> identityCollectionWithElementsCopyNotIdentical [
 "Returns a collection including elements for which #copy doesn't return the same object."
 	^ identityBagNonEmptyNoDuplicate5Elements ifNil: [
 	identityBagNonEmptyNoDuplicate5Elements := IdentityBag new add: 2.5 ; add: 1.5  ;add: 5.5 ; yourself ]
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 IdentityBagTest >> speciesClass [
 	^ IdentityBag
 ]
 
-{ #category : #'tests - converting' }
+{ #category : 'tests - converting' }
 IdentityBagTest >> testAsSetWithEqualsElements [
 	| t1 |
 	t1 := self withEqualElements asSet.
@@ -42,7 +44,7 @@ IdentityBagTest >> testAsSetWithEqualsElements [
 	self assert: t1 class equals: IdentitySet
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 IdentityBagTest >> testIdentity [
 
 	| bag identityBag aString anOtherString |
@@ -69,7 +71,7 @@ IdentityBagTest >> testIdentity [
 	self assert: (identityBag occurrencesOf: anOtherString) equals: 1
 ]
 
-{ #category : #'tests - identity adding' }
+{ #category : 'tests - identity adding' }
 IdentityBagTest >> testIdentityAdd [
 	| added |
 	self collection add: self elementToCopy.

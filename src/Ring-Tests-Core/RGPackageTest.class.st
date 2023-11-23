@@ -2,12 +2,13 @@
 SUnit tests for packages
 "
 Class {
-	#name : #RGPackageTest,
-	#superclass : #RGTest,
-	#category : #'Ring-Tests-Core'
+	#name : 'RGPackageTest',
+	#superclass : 'RGTest',
+	#category : 'Ring-Tests-Core',
+	#package : 'Ring-Tests-Core'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGPackageTest >> testAddingClass [
 
 	| newPackage newClass env |
@@ -21,7 +22,7 @@ RGPackageTest >> testAddingClass [
 	newPackage addDefinedBehavior: newClass
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGPackageTest >> testAddingPackage [
 "	| newPackage childPackage |
 
@@ -36,7 +37,7 @@ RGPackageTest >> testAddingPackage [
 	self assert: (childPackage package = newPackage)."
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGPackageTest >> testCategories [
 	| package env class1 class2 |
 	package := RGPackage named: 'SomePackage'.
@@ -61,7 +62,7 @@ RGPackageTest >> testCategories [
 	self assert: package categories asArray sorted equals: #('SomePackage-tag1' 'SomePackage-tag2')
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGPackageTest >> testClasses [
 
 	| package env class1 class2 trait1 |
@@ -107,7 +108,7 @@ RGPackageTest >> testClasses [
 	self assert: (package definedClasses includes: trait1)
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGPackageTest >> testDefinedBehaviorsCollection [
 
 	| package env behavior1 behavior2 behavior3 |
@@ -140,7 +141,7 @@ RGPackageTest >> testDefinedBehaviorsCollection [
 	self assert: (package hasResolved: #definedBehaviors)
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGPackageTest >> testDefinedBehaviorsOfUnresolvedPackages [
 
 	| env class |
@@ -151,7 +152,7 @@ RGPackageTest >> testDefinedBehaviorsOfUnresolvedPackages [
 	self assert: class package definedBehaviors anyOne equals: class
 ]
 
-{ #category : #'tests - new' }
+{ #category : 'tests - new' }
 RGPackageTest >> testNewPackage [
 	| newPackage |
 	newPackage := RGPackage named: 'Collections-Sequenceable'.
@@ -190,7 +191,7 @@ RGPackageTest >> testNewPackage [
 	self assert: newPackage traits isEmpty
 ]
 
-{ #category : #'tests - new' }
+{ #category : 'tests - new' }
 RGPackageTest >> testPrinting [
 	| newPackage |
 
@@ -199,7 +200,7 @@ RGPackageTest >> testPrinting [
 	self assert: newPackage printString equals: ('RGPackage(Collections-Sequenceable)')
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGPackageTest >> testResolvingConsistency [
 
 	| anObject |
@@ -207,7 +208,7 @@ RGPackageTest >> testResolvingConsistency [
 	self checkClassesConsistency: anObject and: anObject makeResolved
 ]
 
-{ #category : #'tests - new' }
+{ #category : 'tests - new' }
 RGPackageTest >> testStubPackage [
 	| env package package2 |
 	env := RGEnvironment new.
@@ -223,7 +224,7 @@ RGPackageTest >> testStubPackage [
 	self assert: (env ask packages size = 3)."
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGPackageTest >> testTagsForClasses [
 
 	| package env class1 class2 |
@@ -278,7 +279,7 @@ RGPackageTest >> testTagsForClasses [
 	self assert: (package classesTaggedWith: #tag3) isEmpty
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGPackageTest >> testTagsForClassesCollection [
 
 	| package env tag1 tag2 tag3 |

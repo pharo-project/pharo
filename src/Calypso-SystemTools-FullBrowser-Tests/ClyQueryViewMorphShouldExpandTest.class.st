@@ -2,12 +2,13 @@
 A ClyQueryViewMorphTest is a test class for testing the behavior of ClyQueryViewMorph
 "
 Class {
-	#name : #ClyQueryViewMorphShouldExpandTest,
-	#superclass : #TestCase,
-	#category : #'Calypso-SystemTools-FullBrowser-Tests'
+	#name : 'ClyQueryViewMorphShouldExpandTest',
+	#superclass : 'TestCase',
+	#category : 'Calypso-SystemTools-FullBrowser-Tests',
+	#package : 'Calypso-SystemTools-FullBrowser-Tests'
 }
 
-{ #category : #'test-init' }
+{ #category : 'test-init' }
 ClyQueryViewMorphShouldExpandTest >> testFirstDragEventShouldNotBeReadyToExpand [
 
 	| view item1 |
@@ -16,7 +17,7 @@ ClyQueryViewMorphShouldExpandTest >> testFirstDragEventShouldNotBeReadyToExpand 
 	self deny: (view isReadyToExpandForDrop: item1)
 ]
 
-{ #category : #'tests-focus' }
+{ #category : 'tests-focus' }
 ClyQueryViewMorphShouldExpandTest >> testHasUserBeenFocusingNotLongEnough [
 	| view item |
 	view := ClyQueryViewMorph new.
@@ -25,7 +26,7 @@ ClyQueryViewMorphShouldExpandTest >> testHasUserBeenFocusingNotLongEnough [
 	self deny: (view hasUserBeenFocusingOnItem: item)
 ]
 
-{ #category : #'tests-focus' }
+{ #category : 'tests-focus' }
 ClyQueryViewMorphShouldExpandTest >> testHasUserBeenFocusingOnSameItem [
 
 	| view item |
@@ -36,7 +37,7 @@ ClyQueryViewMorphShouldExpandTest >> testHasUserBeenFocusingOnSameItem [
 	self assert: (view hasUserBeenFocusingOnItem: item)
 ]
 
-{ #category : #'tests-expand' }
+{ #category : 'tests-expand' }
 ClyQueryViewMorphShouldExpandTest >> testShouldChangeTheTargetIfItemChanged [
 
 	| view item1 initialObject item2 |
@@ -49,7 +50,7 @@ ClyQueryViewMorphShouldExpandTest >> testShouldChangeTheTargetIfItemChanged [
 	self deny: initialObject equals: view targetDropItem
 ]
 
-{ #category : #'tests-expand' }
+{ #category : 'tests-expand' }
 ClyQueryViewMorphShouldExpandTest >> testShouldChangeTheTimeIfITHasBeenLongEnough [
 
 	| view item initialTime |
@@ -63,7 +64,7 @@ ClyQueryViewMorphShouldExpandTest >> testShouldChangeTheTimeIfITHasBeenLongEnoug
 	self assert: initialTime > view hoverOverDropItemStartTime
 ]
 
-{ #category : #'tests-expand' }
+{ #category : 'tests-expand' }
 ClyQueryViewMorphShouldExpandTest >> testShouldChangeTheTimeIfItemChanged [
 
 	| view item1 item2 initialTime |
@@ -75,7 +76,7 @@ ClyQueryViewMorphShouldExpandTest >> testShouldChangeTheTimeIfItemChanged [
 	self deny: initialTime equals: view hoverOverDropItemStartTime
 ]
 
-{ #category : #'tests-expand' }
+{ #category : 'tests-expand' }
 ClyQueryViewMorphShouldExpandTest >> testShouldExpandIfItHasBeenLongEnough [
 	| view item initialTime |
 	view := ClyQueryViewMorph new.
@@ -87,7 +88,7 @@ ClyQueryViewMorphShouldExpandTest >> testShouldExpandIfItHasBeenLongEnough [
 	self assert: (view isReadyToExpandForDrop: item)
 ]
 
-{ #category : #'tests-expand' }
+{ #category : 'tests-expand' }
 ClyQueryViewMorphShouldExpandTest >> testShouldExpandIfUserHasBeenFocusedLongEnough [
 
 	| view item |
@@ -99,7 +100,7 @@ ClyQueryViewMorphShouldExpandTest >> testShouldExpandIfUserHasBeenFocusedLongEno
 	self assert: view targetDropItem isNil
 ]
 
-{ #category : #'tests-expand' }
+{ #category : 'tests-expand' }
 ClyQueryViewMorphShouldExpandTest >> testShouldNotAllowToExpandInstantlyLastExpandedItem [
 	| view item initialTime |
 	view := ClyQueryViewMorph new.
@@ -112,7 +113,7 @@ ClyQueryViewMorphShouldExpandTest >> testShouldNotAllowToExpandInstantlyLastExpa
 	self deny: (view isReadyToExpandForDrop: item)
 ]
 
-{ #category : #'tests-expand' }
+{ #category : 'tests-expand' }
 ClyQueryViewMorphShouldExpandTest >> testShouldNotChangeTheTargetIfItemDidNotChange [
 
 	| view item1 initialObject |
@@ -124,7 +125,7 @@ ClyQueryViewMorphShouldExpandTest >> testShouldNotChangeTheTargetIfItemDidNotCha
 	self assert: initialObject equals: view targetDropItem
 ]
 
-{ #category : #'tests-expand' }
+{ #category : 'tests-expand' }
 ClyQueryViewMorphShouldExpandTest >> testShouldNotChangeTheTimeIfItemDidNotChange [
 
 	| view item1 initialTime |
@@ -136,7 +137,7 @@ ClyQueryViewMorphShouldExpandTest >> testShouldNotChangeTheTimeIfItemDidNotChang
 	self assert: initialTime equals: view hoverOverDropItemStartTime
 ]
 
-{ #category : #'tests-expand' }
+{ #category : 'tests-expand' }
 ClyQueryViewMorphShouldExpandTest >> testShouldNotExpandIfItHasNotBeenLongEnough [
 
 	| view item1 initialTime |
@@ -147,7 +148,7 @@ ClyQueryViewMorphShouldExpandTest >> testShouldNotExpandIfItHasNotBeenLongEnough
 	self deny: (view isReadyToExpandForDrop: item1)
 ]
 
-{ #category : #'tests-expand' }
+{ #category : 'tests-expand' }
 ClyQueryViewMorphShouldExpandTest >> testShouldNotExpandIfItemChanged [
 
 	| view item1 initialObject item2 |
@@ -159,7 +160,7 @@ ClyQueryViewMorphShouldExpandTest >> testShouldNotExpandIfItemChanged [
 	self deny: (view isReadyToExpandForDrop: item2)
 ]
 
-{ #category : #'tests-focus' }
+{ #category : 'tests-focus' }
 ClyQueryViewMorphShouldExpandTest >> testUserIstFocusingOnDifferentItems [
 
 	| view item1 item2 |

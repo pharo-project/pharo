@@ -5,47 +5,49 @@ All the packages in the cycle are stored in a Collection, in the their name alph
 As soon as possible, they will be stored in the order they have been found.
 "
 Class {
-	#name : #DAPackageCycle,
-	#superclass : #Object,
+	#name : 'DAPackageCycle',
+	#superclass : 'Object',
 	#instVars : [
 		'packages'
 	],
-	#category : #'Tool-DependencyAnalyser-Core'
+	#category : 'Tool-DependencyAnalyser-Core',
+	#package : 'Tool-DependencyAnalyser',
+	#tag : 'Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 DAPackageCycle class >> new [
 	^ self basicNew initialize; yourself
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 DAPackageCycle >> <= aPDPackageCycle [
 	^ (self size) <= (aPDPackageCycle size)
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 DAPackageCycle >> = aPDPackageCycle [
 	(aPDPackageCycle isKindOf: self class) ifFalse: [ ^ false ].
 	^ self size = aPDPackageCycle size and: [ self packages includesAll: aPDPackageCycle packages ]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 DAPackageCycle >> > aPDPackageCycle [
 	^ (self size) > (aPDPackageCycle size)
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 DAPackageCycle >> addAllPackages: aCollection [
 
 	aCollection do: [ :package | self addPackage: package]
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 DAPackageCycle >> addPackage: aPDPackage [
 	packages add: aPDPackage
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAPackageCycle >> dependentPackagesFrom: aPackage [
 	"only the dependent packages from the cycle"
 	^ aPackage dependentPackages select: [ :package |
@@ -53,7 +55,7 @@ DAPackageCycle >> dependentPackagesFrom: aPackage [
 		 ]
 ]
 
-{ #category : #displaying }
+{ #category : 'displaying' }
 DAPackageCycle >> displayString [
 	^ String streamContents: [ :stream |
 		stream
@@ -65,53 +67,53 @@ DAPackageCycle >> displayString [
 			separatedBy: [ stream space ] ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DAPackageCycle >> hasOutgoingDependencies: aPackage [
 	^ aPackage dependencies anySatisfy: [ :dependency | (self packages includes: (dependency target)) not ]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 DAPackageCycle >> hash [
 	^ self packages hash
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DAPackageCycle >> initialize [
 	super initialize.
 	packages := OrderedCollection new
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DAPackageCycle >> isAtLeastInCycle: aCollectionOfPDPackage [
 	^ aCollectionOfPDPackage anySatisfy: [ :package | self isInCycle: package ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DAPackageCycle >> isInCycle: aPackage [
 	^ packages includes: aPackage
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAPackageCycle >> packageAt: anInteger [
 	^ packages at: anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAPackageCycle >> packages [
 	^ packages
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAPackageCycle >> packages: anObject [
 	packages := anObject
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 DAPackageCycle >> removeOutgoingDependencies [
 	self packages do: [ :package | self removeOutgoingDependencies: package ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DAPackageCycle >> removeOutgoingDependencies: aPackage [
 
 	| removals |
@@ -121,12 +123,12 @@ DAPackageCycle >> removeOutgoingDependencies: aPackage [
 	removals do: [ :each | aPackage remove: each ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAPackageCycle >> reversedCycle [
 	packages := packages reversed
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAPackageCycle >> size [
 	^ packages size
 ]

@@ -1,6 +1,6 @@
-Extension { #name : #SycMigrateReferencesOfClassCommand }
+Extension { #name : 'SycMigrateReferencesOfClassCommand' }
 
-{ #category : #'*Calypso-SystemTools-Core' }
+{ #category : '*Calypso-SystemTools-Core' }
 SycMigrateReferencesOfClassCommand class >> sourceCodeMenuActivation [
 	<classAnnotation>
 

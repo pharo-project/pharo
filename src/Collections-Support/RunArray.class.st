@@ -12,8 +12,8 @@ Many complexities of access can be bypassed by using the method
 	RunArray withStartStopAndValueDo:
 "
 Class {
-	#name : #RunArray,
-	#superclass : #SequenceableCollection,
+	#name : 'RunArray',
+	#superclass : 'SequenceableCollection',
 	#instVars : [
 		'runs',
 		'values',
@@ -21,21 +21,22 @@ Class {
 		'lastRun',
 		'lastOffset'
 	],
-	#category : #'Collections-Support'
+	#category : 'Collections-Support',
+	#package : 'Collections-Support'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RunArray class >> new [
 
 	^self runs: Array new values: Array new
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RunArray class >> new: aSize [
 	^ self new: aSize withAll: nil
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RunArray class >> new: size withAll: value [
 	"Answer a new instance of me, whose every element is equal to the
 	argument, value."
@@ -44,7 +45,7 @@ RunArray class >> new: size withAll: value [
 	^self runs: { size } values: { value }
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RunArray class >> newFrom: aCollection [
 
 	"Answer an instance of me containing the same elements as aCollection."
@@ -73,7 +74,7 @@ RunArray class >> newFrom: aCollection [
 	^ self basicNew setRuns: runs contents setValues: values contents
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RunArray class >> newFromArray: anArray [
 
 	"Call specific newFrom:"
@@ -81,7 +82,7 @@ RunArray class >> newFromArray: anArray [
 	^ self newFrom: anArray
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RunArray class >> readFrom: aStream [
 	"Answer an instance of me as described on the stream, aStream."
 
@@ -96,7 +97,7 @@ RunArray class >> readFrom: aStream [
 	^ self runs: runs values: values
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RunArray class >> runs: newRuns values: newValues [
 	"Answer an instance of me with runs and values specified by the
 	arguments."
@@ -107,7 +108,7 @@ RunArray class >> runs: newRuns values: newValues [
 	^instance
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 RunArray >> , aRunArray [
 	"Answer a new RunArray that is a concatenation of the receiver and
 	aRunArray."
@@ -139,7 +140,7 @@ RunArray >> , aRunArray [
 				with: aRunArray values)
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 RunArray >> = otherArray [
 	"Test if all my elements are equal to those of otherArray"
 
@@ -152,7 +153,7 @@ RunArray >> = otherArray [
 		and: [values hasEqualElements: otherArray values]
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RunArray >> add: newObject [
 	"Include newObject as one of the receiver's elements. Answer newObject.
 	ArrayedCollections cannot respond to this message."
@@ -160,7 +161,7 @@ RunArray >> add: newObject [
 	^ self addLast: newObject
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RunArray >> add: newObject withOccurrences: anInteger [
 	"Add value as the last element of the receiver, the given number of times"
 	anInteger <= 0 ifTrue: [ ^self ].
@@ -173,7 +174,7 @@ RunArray >> add: newObject withOccurrences: anInteger [
 			[runs at: runs size put: runs last + anInteger]
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RunArray >> addFirst: value [
 	"Add value as the first element of the receiver."
 	lastIndex := nil. "flush access cache"
@@ -185,7 +186,7 @@ RunArray >> addFirst: value [
 			[runs at: 1 put: runs first+1]
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RunArray >> addLast: value [
 	"Add value as the last element of the receiver."
 	lastIndex := nil. "flush access cache"
@@ -198,21 +199,21 @@ RunArray >> addLast: value [
 	^value
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 RunArray >> allSatisfy: aBlock [
 	"Only evaluate once per run"
 
 	^values allSatisfy: aBlock
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 RunArray >> anySatisfy: aBlock [
 	"Only evaluate once per run"
 
 	^values anySatisfy: aBlock
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 RunArray >> asBag [
 	| aBag |
 	aBag := Bag new: values size.
@@ -221,18 +222,18 @@ RunArray >> asBag [
 	^aBag
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 RunArray >> asSet [
 	^values asSet
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RunArray >> at: index [
 
 	self at: index setRunOffsetAndValue: [:run :offset :value | ^value]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RunArray >> at: index put: aValue [
 	"Set an element of the RunArray"
 
@@ -265,7 +266,7 @@ RunArray >> at: index put: aValue [
 	^ aValue
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RunArray >> at: index setRunOffsetAndValue: aBlock [
 	"Supply all run information to aBlock."
 	"Tolerates index=0 and index=size+1 for copyReplace: "
@@ -296,7 +297,7 @@ RunArray >> at: index setRunOffsetAndValue: aBlock [
 		value: (values at: run) "value for this run"
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RunArray >> coalesce [
 	"Try to combine adjacent runs"
 	| ind |
@@ -311,13 +312,13 @@ RunArray >> coalesce [
 				"self error: 'needed to combine runs' "]]
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 RunArray >> collect: aBlock [
 	"Beware, the block will be evaluated only once per group of values."
 	^(self class runs: runs copy contents values: (values collect: aBlock)) coalesce
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 RunArray >> copyFrom: start to: stop [
 	| newRuns run1 run2 offset1 offset2 |
 	stop < start ifTrue: [^RunArray new].
@@ -333,7 +334,7 @@ RunArray >> copyFrom: start to: stop [
 	^RunArray runs: newRuns values: (values copyFrom: run1 to: run2)
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 RunArray >> copyReplaceFrom: start to: stop with: replacement [
 
 	^(self copyFrom: 1 to: start - 1)
@@ -341,7 +342,7 @@ RunArray >> copyReplaceFrom: start to: stop with: replacement [
 		, (self copyFrom: stop + 1 to: self size)
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 RunArray >> copyUpThrough: anElement [
 	"Optimized"
 
@@ -352,7 +353,7 @@ RunArray >> copyUpThrough: anElement [
 		values: newValues
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 RunArray >> copyUpTo: anElement [
 	"Optimized"
 
@@ -363,7 +364,7 @@ RunArray >> copyUpTo: anElement [
 		values: newValues
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 RunArray >> copyUpToLast: anElement [
 	"Optimized"
 
@@ -374,7 +375,7 @@ RunArray >> copyUpToLast: anElement [
 		values: newValues
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 RunArray >> count: aBlock [
 	"Beware, the block will be evaluated only once per group of values."
 	| count |
@@ -386,28 +387,28 @@ RunArray >> count: aBlock [
 	^count
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 RunArray >> detect: aBlock ifNone: exceptionBlock [
 	"Only evaluate once per run"
 
 	^values detect: aBlock ifNone: exceptionBlock
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 RunArray >> detectMax: aBlock [
 	"Only evaluate once per run"
 
 	^values detectMax: aBlock
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 RunArray >> detectMin: aBlock [
 	"Only evaluate once per run"
 
 	^values detectMin: aBlock
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 RunArray >> do: aBlock [
 	"This is refined for speed"
 
@@ -419,7 +420,7 @@ RunArray >> do: aBlock [
 			whileTrue: [aBlock value: v]]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RunArray >> fillFrom: aCollection with: aBlock [
 	"Evaluate aBlock with each of aCollection's elements as the argument.
 	Collect the resulting values into self. Answer self."
@@ -448,7 +449,7 @@ RunArray >> fillFrom: aCollection with: aBlock [
 	self setRuns: newRuns contents setValues: newValues contents
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 RunArray >> findFirst: aBlock [
 	| index |
 	index := 1.
@@ -458,7 +459,7 @@ RunArray >> findFirst: aBlock [
 	^0
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 RunArray >> findLast: aBlock [
 	| index |
 	index := values size + 1.
@@ -467,60 +468,60 @@ RunArray >> findLast: aBlock [
 	^0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RunArray >> first [
 	^values at: 1
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RunArray >> includes: anObject [
 	"Answer whether anObject is one of the receiver's elements."
 
 	^values includes: anObject
 ]
 
-{ #category : #'self evaluating' }
+{ #category : 'self evaluating' }
 RunArray >> isSelfEvaluating [
 	^ self class == RunArray and: [values isSelfEvaluating]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RunArray >> isSorted [
 	^values isSorted
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RunArray >> isSortedBy: aBlock [
 	^values isSortedBy: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RunArray >> last [
 	^values at: values size
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RunArray >> mapValues: mapBlock [
 	"NOTE: only meaningful to an entire set of runs"
 
 	values := values collect: mapBlock
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 RunArray >> noneSatisfy: aBlock [
 	"Only evaluate once per run"
 
 	^values noneSatisfy: aBlock
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 RunArray >> postCopy [
 	super postCopy.
 	runs := runs copy.
 	values := values copy
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RunArray >> printOn: aStream [
 	self printNameOn: aStream.
 	aStream
@@ -530,7 +531,7 @@ RunArray >> printOn: aStream [
 		print: values
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RunArray >> rangeOf: attr startingAt: startPos [
 	"Answer an interval that gives the range of attr at index position startPos. An empty interval with start value startPos is returned when the attribute attr is not present at position startPos. self size > 0 is assumed, it is the responsibility of the caller to test for emptiness of self.
 Note that an attribute may span several adjancent runs. "
@@ -560,7 +561,7 @@ Note that an attribute may span several adjancent runs. "
 					firstRelevantPosition to: lastRelevantPosition]]
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 RunArray >> remove: anObject ifAbsent: exceptionBlock [
 	| index mustCoalesce run |
 	index := values indexOf: anObject ifAbsent: [^exceptionBlock value].
@@ -578,13 +579,13 @@ RunArray >> remove: anObject ifAbsent: exceptionBlock [
 	^anObject
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 RunArray >> removeAll [
 	runs := Array new.
 	values := Array new
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RunArray >> repeatLast: times ifEmpty: defaultBlock [
 	"add the last value back again, the given number of times. If we are empty, add (defaultBlock value)"
 	times = 0 ifTrue: [^self ].
@@ -597,7 +598,7 @@ RunArray >> repeatLast: times ifEmpty: defaultBlock [
 			[runs at: runs size put: runs last+times]
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RunArray >> repeatLastIfEmpty: defaultBlock [
 	"add the last value back again. If we are empty, add (defaultBlock value)"
 	lastIndex := nil. "flush access cache"
@@ -609,14 +610,14 @@ RunArray >> repeatLastIfEmpty: defaultBlock [
 			[runs at: runs size put: runs last+1]
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 RunArray >> replace: aBlock [
 	"Beware, the block will be evaluated only once per group of values."
 	values := values replace: aBlock.
 	self coalesce
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 RunArray >> reverseDo: aBlock [
 	"This is refined for speed"
 
@@ -632,12 +633,12 @@ RunArray >> reverseDo: aBlock [
 				whileTrue: [aBlock value: v]]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 RunArray >> reversed [
 	^self class runs: runs reversed values: values reversed
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RunArray >> runLengthAt: index [
 	"Answer the length remaining in run beginning at index."
 
@@ -645,19 +646,19 @@ RunArray >> runLengthAt: index [
 		setRunOffsetAndValue: [:run :offset :value | ^(runs at: run) - offset]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RunArray >> runs [
 
 	^runs
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 RunArray >> runsAndValuesDo: aBlock [
 	"Evaluate aBlock with run lengths and values from the receiver"
 	^runs with: values do: aBlock
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 RunArray >> runsFrom: start to: stop do: aBlock [
 	"Evaluate aBlock with all existing runs in the range from start to stop"
 	start > stop ifTrue:[^self].
@@ -673,7 +674,7 @@ RunArray >> runsFrom: start to: stop do: aBlock [
 			index := index + (runs at: run)]]
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 RunArray >> select: aBlock [
 	"Beware, the block will be evaluated only once per group of values."
 	| newRuns newValues |
@@ -687,14 +688,14 @@ RunArray >> select: aBlock [
 	^(self class runs: newRuns contents values: newValues contents) coalesce
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RunArray >> setRuns: newRuns setValues: newValues [
 	lastIndex := nil. "flush access cache"
 	runs := newRuns asArray.
 	values := newValues asArray
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RunArray >> size [
 	| size |
 	size := 0.
@@ -702,7 +703,7 @@ RunArray >> size [
 	^size
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RunArray >> storeOn: aStream [
 
 	aStream nextPut: $(.
@@ -714,7 +715,7 @@ RunArray >> storeOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 RunArray >> sum: aBlock [
 	"Only loop on runs"
 	| sum |
@@ -724,14 +725,14 @@ RunArray >> sum: aBlock [
 	^ sum
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RunArray >> values [
 	"Answer the values in the receiver."
 
 	^values
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RunArray >> withStartStopAndValueDo: aBlock [
 	| start |
 	start := 1.
@@ -742,7 +743,7 @@ RunArray >> withStartStopAndValueDo: aBlock [
 		start := stop + 1]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RunArray >> writeOn: aStream [
 
 	aStream nextWordPut: runs size.

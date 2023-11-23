@@ -2,22 +2,24 @@
 I am a log browser item that represents an entry.
 "
 Class {
-	#name : #EpEntryItem,
-	#superclass : #Model,
+	#name : 'EpEntryItem',
+	#superclass : 'Model',
 	#instVars : [
 		'browser',
 		'entry',
 		'triggerItems'
 	],
-	#category : #'EpiceaBrowsers-UI-Log'
+	#category : 'EpiceaBrowsers-UI-Log',
+	#package : 'EpiceaBrowsers',
+	#tag : 'UI-Log'
 }
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 EpEntryItem >> = other [
 	^ self species = other species and: [ self entry = other entry ]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 EpEntryItem >> asMorph [
 
 	| morphs |
@@ -32,22 +34,22 @@ EpEntryItem >> asMorph [
 	^ self morphFactory rowWithAll: morphs
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 EpEntryItem >> browseItem [
 	self eventAccept: EpBrowseVisitor new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpEntryItem >> browser [
 	^ browser
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpEntryItem >> browser: anObject [
 	browser := anObject
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EpEntryItem >> commentMorphs [
 
 	browser commentsLog
@@ -58,75 +60,75 @@ EpEntryItem >> commentMorphs [
 	^ #()
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpEntryItem >> entry [
 	^ entry
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpEntryItem >> entry: anObject [
 	entry := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpEntryItem >> event [
 
 	^ entry content
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EpEntryItem >> eventAccept: aVisitor [
 
 	^ entry content accept: aVisitor
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EpEntryItem >> eventMorphs [
 
 	^ self eventAccept: EpMorphVisitor new
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 EpEntryItem >> hash [
 	^ self species hash bitXor: self entry hash
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EpEntryItem >> icon [
 
 	^ self eventAccept: EpIconVisitor new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpEntryItem >> log [
 	^ browser log
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EpEntryItem >> morphFactory [
 
 	^ EpMorphFactory default
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EpEntryItem >> newStateString [
 
 	^ self eventAccept: EpNewStateVisitor new
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 EpEntryItem >> oldComment [
 
 	^ browser commentsLog commentAt: entry ifAbsent: [ '' ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EpEntryItem >> oldStateString [
 
 	^ entry content accept: EpOldStateVisitor new
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 EpEntryItem >> printOn: aStream [
 	super printOn: aStream.
 
@@ -135,12 +137,12 @@ EpEntryItem >> printOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpEntryItem >> reference [
 	^ self log referenceTo: entry
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EpEntryItem >> timeMorphs [
 
 	^ self timeString
@@ -148,7 +150,7 @@ EpEntryItem >> timeMorphs [
 		ifNotEmpty: [:aString | { self morphFactory secondaryStringFor: aString } ]
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 EpEntryItem >> timeString [
 	| aDateTime |
 	aDateTime := self log timeAt: entry ifAbsent: [ ^ '' ].
@@ -156,17 +158,17 @@ EpEntryItem >> timeString [
 	^ aDateTime epiceaBrowsersAsString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpEntryItem >> triggerItems [
 	^ triggerItems
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpEntryItem >> triggerItems: anObject [
 	triggerItems := anObject
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EpEntryItem >> triggerMarkMorphs [
 
 	^ self triggerItems collect: [:item |

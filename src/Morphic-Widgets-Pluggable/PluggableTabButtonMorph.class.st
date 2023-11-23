@@ -8,8 +8,8 @@ There is a single selector which provides the text for the button label and affe
 The button label can be a String, Text, or Morph.  Texts work better than plain Strings.
 "
 Class {
-	#name : #PluggableTabButtonMorph,
-	#superclass : #Morph,
+	#name : 'PluggableTabButtonMorph',
+	#superclass : 'Morph',
 	#instVars : [
 		'active',
 		'model',
@@ -17,10 +17,12 @@ Class {
 		'arcLengths',
 		'subMorph'
 	],
-	#category : #'Morphic-Widgets-Pluggable-Tabs'
+	#category : 'Morphic-Widgets-Pluggable-Tabs',
+	#package : 'Morphic-Widgets-Pluggable',
+	#tag : 'Tabs'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 PluggableTabButtonMorph class >> on: anObject label: getTextSelector [
 	^self new
 	      model: anObject;
@@ -28,30 +30,30 @@ PluggableTabButtonMorph class >> on: anObject label: getTextSelector [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableTabButtonMorph >> active [
 	active ifNil: [ active := false ].
 	^ active
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableTabButtonMorph >> active: aBoolean [
 	active := aBoolean.
 	self changed
 ]
 
-{ #category : #'private - access' }
+{ #category : 'private - access' }
 PluggableTabButtonMorph >> arcLengths [
 	arcLengths ifNil: [ self calculateArcLengths ].
 	^ arcLengths
 ]
 
-{ #category : #'private - access' }
+{ #category : 'private - access' }
 PluggableTabButtonMorph >> arcLengths: anArrayOfIntegers [
 	arcLengths := anArrayOfIntegers
 ]
 
-{ #category : #precalculations }
+{ #category : 'precalculations' }
 PluggableTabButtonMorph >> calculateArcLengths [
 	| array radius |
 	radius := self cornerRadius.
@@ -65,18 +67,18 @@ PluggableTabButtonMorph >> calculateArcLengths [
 	self arcLengths: array
 ]
 
-{ #category : #'private - access' }
+{ #category : 'private - access' }
 PluggableTabButtonMorph >> cornerRadius [
 	^ 5
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 PluggableTabButtonMorph >> drawOn: aCanvas [
 	self drawTabOn: aCanvas.
 	self drawSubMorphOn: aCanvas
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 PluggableTabButtonMorph >> drawSubMorphOn: aCanvas [
 	| morphBounds |
 	morphBounds := self bounds insetBy: (self cornerRadius + 3) @ (self topInactiveGap // 2 + 2).
@@ -96,7 +98,7 @@ PluggableTabButtonMorph >> drawSubMorphOn: aCanvas [
 	aCanvas drawMorph: self subMorph
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 PluggableTabButtonMorph >> drawTabOn: aCanvas [
 	| top myColor cornerRadius myArcLengths myBounds |
 	cornerRadius := self cornerRadius.
@@ -139,113 +141,113 @@ PluggableTabButtonMorph >> drawTabOn: aCanvas [
 			color: myColor]
 ]
 
-{ #category : #event }
+{ #category : 'event' }
 PluggableTabButtonMorph >> handlesKeyboard: evt [
 	"Yes, we do it here."
 
 	^true
 ]
 
-{ #category : #keymapping }
+{ #category : 'keymapping' }
 PluggableTabButtonMorph >> initializeShortcuts: aKMDispatcher [
 
 	super initializeShortcuts: aKMDispatcher.
 	aKMDispatcher attachCategory: #MorphFocusNavigation
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableTabButtonMorph >> innerExtent: aPoint [
 	"Set the extent based on the primary visible part of the tab.  In other words add twice the cornerRadius to this extent"
 	self extent: (aPoint x + (self cornerRadius * 2)) @ (aPoint y)
 ]
 
-{ #category : #event }
+{ #category : 'event' }
 PluggableTabButtonMorph >> keyDown: event [
 
 	(self navigationKey: event) ifTrue: [^self].
 	super keyDown: event
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableTabButtonMorph >> model [
 	^ model
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableTabButtonMorph >> model: anObject [
 	model := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableTabButtonMorph >> outerGap [
 	"The horizontal distance of the outer left and right edges of the tab excluding the inner visible part"
 	^ self cornerRadius * 2
 ]
 
-{ #category : #stepping }
+{ #category : 'stepping' }
 PluggableTabButtonMorph >> step [
 	self subMorph step.
 	self changed
 ]
 
-{ #category : #stepping }
+{ #category : 'stepping' }
 PluggableTabButtonMorph >> stepTime [
 	^ self subMorph stepTime
 ]
 
-{ #category : #'private - access' }
+{ #category : 'private - access' }
 PluggableTabButtonMorph >> subMorph [
 	subMorph ifNil: [ self update: self textSelector ].
 	^ subMorph
 ]
 
-{ #category : #'private - access' }
+{ #category : 'private - access' }
 PluggableTabButtonMorph >> subMorph: aMorph [
 	subMorph := aMorph
 ]
 
-{ #category : #event }
+{ #category : 'event' }
 PluggableTabButtonMorph >> takesKeyboardFocus [
 	"Answer whether the receiver can normally take keyboard focus."
 
 	^true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableTabButtonMorph >> textSelector [
 	^ textSelector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableTabButtonMorph >> textSelector: aSymbol [
 	textSelector := aSymbol
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 PluggableTabButtonMorph >> toggle [
 	self active: self active not
 ]
 
-{ #category : #'private - access' }
+{ #category : 'private - access' }
 PluggableTabButtonMorph >> topInactiveGap [
 	^ 5
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 PluggableTabButtonMorph >> update: aSelector [
 	self textSelector
 		ifNotNil: [
 			aSelector = self textSelector
 				ifTrue: [
 					| morph |
-					morph := (aSelector isSymbol and: [ model notNil ])
+					morph := (aSelector isSymbol and: [ model isNotNil ])
 						ifTrue: [ (self model perform: aSelector) asMorph ]
 						ifFalse: [ aSelector value asMorph ].
 					self subMorph: morph ] ].
 	self changed
 ]
 
-{ #category : #stepping }
+{ #category : 'stepping' }
 PluggableTabButtonMorph >> wantsSteps [
 	^ self subMorph wantsSteps
 ]

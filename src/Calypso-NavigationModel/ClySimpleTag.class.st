@@ -12,15 +12,17 @@ I provide singleton instance for my subclasses:
 So tagging items do not produce garbage
 "
 Class {
-	#name : #ClySimpleTag,
-	#superclass : #ClyProperty,
+	#name : 'ClySimpleTag',
+	#superclass : 'ClyProperty',
 	#classInstVars : [
 		'instance'
 	],
-	#category : #'Calypso-NavigationModel-Tag'
+	#category : 'Calypso-NavigationModel-Tag',
+	#package : 'Calypso-NavigationModel',
+	#tag : 'Tag'
 }
 
-{ #category : #singleton }
+{ #category : 'singleton' }
 ClySimpleTag class >> instance [
 	^instance ifNil: [ instance := self new ]
 ]

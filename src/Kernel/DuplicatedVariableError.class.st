@@ -2,47 +2,49 @@
 I am an error signalled when a variable is redeclared. For instance when a method is created wich has a temporary or argument with the same name as an instance variable.
 "
 Class {
-	#name : #DuplicatedVariableError,
-	#superclass : #Error,
+	#name : 'DuplicatedVariableError',
+	#superclass : 'Error',
 	#instVars : [
 		'superclass',
 		'variable'
 	],
-	#category : #'Kernel-Exceptions'
+	#category : 'Kernel-Exceptions',
+	#package : 'Kernel',
+	#tag : 'Exceptions'
 }
 
-{ #category : #signalling }
+{ #category : 'signalling' }
 DuplicatedVariableError class >> signalWith: existingVariable [
 	^self new
 		variable: existingVariable;
 		signal: existingVariable name , ' is defined in ', existingVariable definingClass printString
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DuplicatedVariableError >> isResumable [
 
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DuplicatedVariableError >> superclass [
         "The superclass in which the variable is defined"
         ^superclass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DuplicatedVariableError >> superclass: aSuperclass [
         "The superclass in which the variable is defined"
         superclass := aSuperclass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DuplicatedVariableError >> variable [
         "Name of the duplicate variable"
         ^variable
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DuplicatedVariableError >> variable: aVariable [
         "Name of the duplicate variable"
         variable := aVariable

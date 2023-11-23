@@ -5,48 +5,31 @@ It is not a standard unit test because to compute dependencies takes a lot of ti
 
 "
 Class {
-	#name : #SystemDependenciesTest,
-	#superclass : #TestCase,
-	#classInstVars : [
-		'dependenciesReport'
-	],
-	#category : #'System-DependenciesTests'
+	#name : 'SystemDependenciesTest',
+	#superclass : 'TestCase',
+	#category : 'System-DependenciesTests',
+	#package : 'System-DependenciesTests'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SystemDependenciesTest class >> defaultTimeLimit [
 
-	^ 1 minute
+	^ 30 seconds
 ]
 
-{ #category : #accessing }
-SystemDependenciesTest class >> dependenciesReport [
+{ #category : 'accessing' }
+SystemDependenciesTest class >> resources [
 
-	^ dependenciesReport ifNil: [ self rebuildDependenciesReport ]
+	^ super resources copyWith: SystemDependenciesReportResource
 ]
 
-{ #category : #accessing }
-SystemDependenciesTest class >> rebuildDependenciesReport [
-
-	dependenciesReport := DADependencyChecker new computeImageDependencies.
-	^ dependenciesReport
-]
-
-{ #category : #accessing }
-SystemDependenciesTest class >> resetDependenciesReport [
-	<script>
-	"self resetDependenciesReport"
-
-	dependenciesReport := nil
-]
-
-{ #category : #accessing }
+{ #category : 'accessing' }
 SystemDependenciesTest >> dependenciesReport [
 
-	^ self class dependenciesReport
+	^ SystemDependenciesReportResource current dependenciesReport
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SystemDependenciesTest >> externalDependendiesOf: packagesCollection [
 
 	| dependencies |
@@ -58,126 +41,78 @@ SystemDependenciesTest >> externalDependendiesOf: packagesCollection [
 	^ dependencies sorted
 ]
 
-{ #category : #'known dependencies' }
+{ #category : 'known dependencies' }
 SystemDependenciesTest >> knownBasicToolsDependencies [
 
 	"ideally this list should be empty"
 
 	^ #( 'AST-Core-Tests' 'Athens-Cairo' 'Athens-Core' #'Athens-Morphic'
-	     #'Refactoring-Critics' #'Refactoring2-Transformations'
+	     #'Refactoring-Critics' #'Commander-Core'
 	     #Reflectivity #'Reflectivity-Tools' #Shout 'ParametrizedTests'
-	     'HeuristicCompletion-Model' #VariablesLibrary #'Spec2-CommonWidgets' )
+	     'HeuristicCompletion-Model' #VariablesLibrary #'Spec2-CommonWidgets')
 ]
 
-{ #category : #'known dependencies' }
+{ #category : 'known dependencies' }
 SystemDependenciesTest >> knownCompilerDependencies [
 	"ideally this list should be empty"
 
-	"Note: #Monticello #'Transcript-Core' and brought by RPackage-Core but we want to kill those dependencies in the future because the kernel group should not depend on that."
-
-	^ #( #'FileSystem-Core' #Monticello #'Transcript-Core' )
+	^ #( #'FileSystem-Core' )
 ]
 
-{ #category : #'known dependencies' }
-SystemDependenciesTest >> knownDisplayDependencies [
-	"ideally this list should be empty"
-
-	"Note: #'Transcript-Core' and brought by RPackage-Core but we want to kill those dependencies in the future because the kernel group should not depend on that."
-
-	^ #( #'Transcript-Core' )
-]
-
-{ #category : #'known dependencies' }
-SystemDependenciesTest >> knownFileSystemDependencies [
-	"ideally this list should be empty"
-
-	"Note: #Monticello #'Transcript-Core' are brought by RPackage-Core but we want to kill those dependencies in the future because the kernel group should not depend on that."
-
-	^ #( #Monticello #'Transcript-Core' )
-]
-
-{ #category : #'known dependencies' }
+{ #category : 'known dependencies' }
 SystemDependenciesTest >> knownIDEDependencies [
 
 	"ideally this list should be empty"
 
-	^ #('Spec2-CommonWidgets' #'Calypso-SystemPlugins-Traits-Queries-Tests-PWithTraits' #'AI-Algorithms-Graph' #'FluidClassBuilder')
+	^ #('Spec2-CommonWidgets' #'Calypso-SystemPlugins-Traits-Queries-Tests-PWithTraits' #'AI-Algorithms-Graph')
 ]
 
-{ #category : #'known dependencies' }
+{ #category : 'known dependencies' }
 SystemDependenciesTest >> knownKernelDependencies [
 	"ideally this list should be empty"
 
-	"Note: #Monticello #'Transcript-Core' #Jobs are brought by RPackage-Core but we want to kill those dependencies in the future because the kernel group should not depend on that."
-
-	^ #( #'FileSystem-Core' #Monticello #'Transcript-Core' #Jobs )
+	^ #( #'FileSystem-Core' )
 ]
 
-{ #category : #'known dependencies' }
+{ #category : 'known dependencies' }
 SystemDependenciesTest >> knownLocalMonticelloDependencies [
 	"ideally this list should be empty"
 
-	"Note: #'Transcript-Core' is brought by RPackage-Core but we want to kill those dependencies in the future because the kernel group should not depend on that."
-
 	"Remove Zinc-HTTP next line once Zinc-Resource-Meta-Core does not depend anymore on Zinc-HTTP."
 
-	^ #( #'Transcript-Core' #'Zinc-HTTP' )
+	^ #( #'Zinc-HTTP' )
 ]
 
-{ #category : #'known dependencies' }
-SystemDependenciesTest >> knownMetacelloDependencies [
-	"ideally this list should be empty"
-
-	"Note: #'Transcript-Core' is brought by RPackage-Core but we want to kill those dependencies in the future because the kernel group should not depend on that."
-
-	^ #( #'Transcript-Core' )
-]
-
-{ #category : #'known dependencies' }
-SystemDependenciesTest >> knownMonticelloDependencies [
-	"ideally this list should be empty"
-
-	"Note: #'Transcript-Core' is brought by RPackage-Core but we want to kill those dependencies in the future because the kernel group should not depend on that."
-
-	^ #( #'Transcript-Core' )
-]
-
-{ #category : #'known dependencies' }
+{ #category : 'known dependencies' }
 SystemDependenciesTest >> knownMorphicCoreDependencies [
 	"ideally this list should be empty"
 
-	"Note: #'Transcript-Core' is brought by RPackage-Core but we want to kill those dependencies in the future because the kernel group should not depend on that."
-
-	^ #( #'Keymapping-KeyCombinations' #'Refactoring-Critics' #'Refactoring-Environment' #'Transcript-Core' )
+	^ #( #'Keymapping-KeyCombinations' #'Refactoring-Critics' #'Refactoring-Environment')
 ]
 
-{ #category : #'known dependencies' }
+{ #category : 'known dependencies' }
 SystemDependenciesTest >> knownMorphicDependencies [
 	"ideally this list should be empty"
 
-	^ #(#'Refactoring-Critics' #'Refactoring-Environment' #'Spec2-Core' #'Tool-Diff' #'Tool-FileList' #'Tool-Profilers'
+	^ #(#'Refactoring-Critics' #'Refactoring-Environment' #'Spec2-Core' #'Tool-FileList' #'Tool-Profilers'
 	#'Athens-Morphic' #'Tools-CodeNavigation' "Rubric has a dependency on It" 'Debugger-Oups')
 ]
 
-{ #category : #'known dependencies' }
+{ #category : 'known dependencies' }
 SystemDependenciesTest >> knownSUnitDependencies [
 	"ideally this list should be empty"
 
-	"Note: #'Transcript-Core' is brought by RPackage-Core but we want to kill those dependencies in the future because the kernel group should not depend on that."
-
-	^ #( #'Refactoring-Critics' #'Refactoring-Environment' #'Transcript-Core' )
+	^ #( #'Refactoring-Critics' #'Refactoring-Environment' )
 ]
 
-{ #category : #'known dependencies' }
+{ #category : 'known dependencies' }
 SystemDependenciesTest >> knownSUnitKernelDependencies [
 	"ideally this list should be empty"
 
-	"Note: #Monticello #''Transcript-Core'' are brought by RPackage-Core but we want to kill those dependencies in the future because the kernel group should not depend on that."
-
-	^ #( #Monticello #'Transcript-Core' #'FileSystem-Core' )
+	^ #( #'FileSystem-Core' )
 ]
 
-{ #category : #'known dependencies' }
+{ #category : 'known dependencies' }
 SystemDependenciesTest >> knownSpec2Dependencies [
 
 	^ #(
@@ -185,16 +120,14 @@ SystemDependenciesTest >> knownSpec2Dependencies [
 		)
 ]
 
-{ #category : #'known dependencies' }
+{ #category : 'known dependencies' }
 SystemDependenciesTest >> knownUFFIDependencies [
 	"ideally this list should be empty"
 
-	"Note: #'Transcript-Core' is brought by RPackage-Core but we want to kill those dependencies in the future because the kernel group should not depend on that."
-
-	^ #( #'Refactoring-Critics' #'Refactoring-Environment' #'Transcript-Core' )
+	^ #( #'Refactoring-Critics' #'Refactoring-Environment' )
 ]
 
-{ #category : #'known dependencies' }
+{ #category : 'known dependencies' }
 SystemDependenciesTest >> knownUIDependencies [
 
 	"ideally this list should be empty"
@@ -203,7 +136,7 @@ SystemDependenciesTest >> knownUIDependencies [
 	#'Athens-Morphic' #'Refactoring-Critics' #'Refactoring-Environment' 'Reflectivity-Tools' #Shout #'Tool-Diff' #'Tool-FileList' #'Tool-Profilers' #'HeuristicCompletion-Model' 'NECompletion-Morphic' #VariablesLibrary #'Tools-CodeNavigation' #'Spec2-CommonWidgets')
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SystemDependenciesTest >> metacelloPackageNames [
 
 	^ BaselineOfPharoBootstrap kernelPackageNames,
@@ -216,7 +149,7 @@ SystemDependenciesTest >> metacelloPackageNames [
 	  (BaselineOfMetacello packagesOfGroupNamed: 'Core')
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SystemDependenciesTest >> packagesOfGroupNamed: aGroupName on: aBaseline [
 	| allMembers allPackagesInBaseline packages groups |
 
@@ -229,7 +162,7 @@ SystemDependenciesTest >> packagesOfGroupNamed: aGroupName on: aBaseline [
 	^ packages , (groups flatCollect: [:aInnerGroupName | self packagesOfGroupNamed: aInnerGroupName on: aBaseline ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SystemDependenciesTest >> testCollectionsShouldNotDependOnRandom [
 	"In the past Random-Core was depending on Collection-Abstract and Collections-Sequenceable but both those packages also depended on Random-Core.
 	This dependency has been removed and this test is here to ensure it does not get added back in the future."
@@ -239,7 +172,7 @@ SystemDependenciesTest >> testCollectionsShouldNotDependOnRandom [
 	self deny: (dependencies includes: 'Random-Core')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SystemDependenciesTest >> testExternalBasicToolsDependencies [
 
 	| dependencies |
@@ -248,33 +181,30 @@ SystemDependenciesTest >> testExternalBasicToolsDependencies [
 		self metacelloPackageNames,
 		self tonelCorePackageNames,
 		BaselineOfTraits corePackages,
-		{ BaselineOfSUnit name }, BaselineOfSUnit allPackageNames, "ALL"
-		{ BaselineOfDisplay name }, BaselineOfDisplay allPackageNames,
-		{ BaselineOfUnifiedFFI name }, BaselineOfUnifiedFFI allPackageNames,
+		BaselineOfSUnit withAllPackageNames, "ALL"
+		BaselineOfDisplay withAllPackageNames,
+		BaselineOfUnifiedFFI withAllPackageNames,
 		{ BaselineOfFreeType name }, (BaselineOfFreeType deepPackagesOfGroupNamed: #ui),
 		{ BaselineOfKeymapping name }, (BaselineOfKeymapping deepPackagesOfGroupNamed: #ui),
-		{ BaselineOfMorphicCore name }, BaselineOfMorphicCore allPackageNames,
-		{ BaselineOfMorphic name }, BaselineOfMorphic allPackageNames,
-		{ BaselineOfMenuRegistration name }, BaselineOfMenuRegistration allPackageNames,
-		{ BaselineOfUI name }, BaselineOfUI allPackageNames,
+		BaselineOfMorphicCore withAllPackageNames,
+		BaselineOfMorphic withAllPackageNames,
+		BaselineOfMenuRegistration withAllPackageNames,
+		BaselineOfUI withAllPackageNames,
+		BaselineOfRefactoring withAllPackageNames,
 		{ BaselineOfCommander2 name }, (BaselineOfCommander2 deepPackagesOfGroupNamed: #core),
 		{ BaselineOfCommander2 name }, (BaselineOfCommander2 deepPackagesOfGroupNamed: #ui),
 		{ BaselineOfNewValueHolder name }, (BaselineOfNewValueHolder packagesOfGroupNamed: #core),
 		{ BaselineOfSpecCore name }, (BaselineOfSpecCore deepPackagesOfGroupNamed: #default),
 		{ BaselineOfSpec2 name }, (BaselineOfSpec2 deepPackagesOfGroupNamed: #default),
-		{ BaselineOfBasicTools name }, BaselineOfBasicTools allPackageNames,
+		BaselineOfBasicTools withAllPackageNames,
 		{ BaselineOfNewTools name }, (BaselineOfNewTools deepPackagesOfGroupNamed: 'Methods'),
 		{ BaselineOfFuel name }, (BaselineOfFuel deepPackagesOfGroupNamed: #Tests),
-		{ BaselineOfFuelPlatform name.
-			'Fuel-Platform-Core'.
-			'Fuel-Platform-Pharo-Core'.
-			'Fuel-Platform-Pharo-', FLPlatform current versionNumber asString },
 		BaselineOfThreadedFFI corePackageNames ).
 
 	self assertCollection: dependencies hasSameElements: self knownBasicToolsDependencies
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SystemDependenciesTest >> testExternalCompilerDependencies [
 
 	| dependencies |
@@ -288,7 +218,7 @@ SystemDependenciesTest >> testExternalCompilerDependencies [
 	self assertCollection: dependencies hasSameElements: self knownCompilerDependencies
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SystemDependenciesTest >> testExternalDisplayDependencies [
 
 	| dependencies |
@@ -299,10 +229,10 @@ SystemDependenciesTest >> testExternalDisplayDependencies [
 		BaselineOfTraits corePackages,
 		BaselineOfDisplay allPackageNames).
 
-	self assertCollection: dependencies hasSameElements: self knownDisplayDependencies
+	self assertEmpty: dependencies
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SystemDependenciesTest >> testExternalFileSystemDependencies [
 
 	| dependencies |
@@ -311,10 +241,10 @@ SystemDependenciesTest >> testExternalFileSystemDependencies [
 		                , BaselineOfPharoBootstrap kernelAdditionalPackagesNames , BaselineOfPharoBootstrap compilerPackageNames
 		                , BaselineOfPharoBootstrap fileSystemPackageNames.
 
-	self assertCollection: dependencies hasSameElements: self knownFileSystemDependencies
+	self assertEmpty: dependencies
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SystemDependenciesTest >> testExternalIDEDependencies [
 	| dependencies packages |
 	packages := self metacelloPackageNames , self tonelCorePackageNames , { BaselineOfPharoBootstrap name. BaselineOfMonticello name. BaselineOfMetacello name}.
@@ -336,7 +266,6 @@ SystemDependenciesTest >> testExternalIDEDependencies [
 	BaselineOfClassAnnotation.
 	BaselineOfSystemCommands.
 	BaselineOfClassParser.
-	BaselineOfRefactoring2.
 	BaselineOfReferenceFinder.
 	BaselineOfSortFunctions.
 	BaselineOfGeneralTests.
@@ -355,7 +284,7 @@ SystemDependenciesTest >> testExternalIDEDependencies [
 	BaselineOfShout.
 	BaselineOfKernelTests.
 	BaselineOfHeuristicCompletion.
-	 } do: [ :baseline | packages := packages , {baseline name} , baseline allPackageNames ].
+	 } do: [ :baseline | packages := packages , baseline withAllPackageNames ].
 
 	packages := packages ,  { BaselineOfFreeType name }, (self packagesOfGroupNamed: 'ui' on: BaselineOfFreeType ).
 	packages := packages ,  { BaselineOfKeymapping name }, (self packagesOfGroupNamed: 'ui' on: BaselineOfKeymapping ).
@@ -380,14 +309,13 @@ SystemDependenciesTest >> testExternalIDEDependencies [
 		(self packagesOfGroupNamed: 'default' on: BaselineOfThreadedFFI ).
 	packages := packages ,  #('TaskIt').
 	packages := packages , { BaselineOfFuel name } , (BaselineOfFuel packagesOfGroupNamed: #Core).
-	packages := packages , {BaselineOfFuelPlatform name } , BaselineOfFuelPlatform allPackageNames.
 	packages := packages ,  { BaselineOfNewTools name }, (self packagesOfGroupNamed: 'CritiqueBrowser' on: BaselineOfNewTools ).
 
 	dependencies := self externalDependendiesOf: packages.
 	self assertCollection: dependencies hasSameElements: self knownIDEDependencies
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SystemDependenciesTest >> testExternalKernelDependencies [
 
 "
@@ -405,7 +333,7 @@ If you will break or weaken this test, a puppy will die!!!
 	self assertCollection: dependencies hasSameElements: self knownKernelDependencies
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SystemDependenciesTest >> testExternalLocalMonticelloDependencies [
 
 	| dependencies |
@@ -417,16 +345,16 @@ SystemDependenciesTest >> testExternalLocalMonticelloDependencies [
 	self assertCollection: dependencies hasSameElements: self knownLocalMonticelloDependencies
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SystemDependenciesTest >> testExternalMetacelloDependencies [
 
 	| dependencies |
 	dependencies := self externalDependendiesOf: self metacelloPackageNames , BaselineOfTraits corePackages.
 
-	self assertCollection: dependencies hasSameElements: self knownMetacelloDependencies
+	self assertEmpty: dependencies 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SystemDependenciesTest >> testExternalMonticelloDependencies [
 
 	| dependencies |
@@ -441,10 +369,10 @@ SystemDependenciesTest >> testExternalMonticelloDependencies [
 		BaselineOfMonticello corePackageNames,
 		BaselineOfMonticello remoteRepositoriesPackageNames).
 
-	self assertCollection: dependencies hasSameElements: self knownMonticelloDependencies
+	self assertEmpty: dependencies 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SystemDependenciesTest >> testExternalMorphicCoreDependencies [
 
 	| dependencies |
@@ -462,7 +390,7 @@ SystemDependenciesTest >> testExternalMorphicCoreDependencies [
 	self assertCollection: dependencies hasSameElements: self knownMorphicCoreDependencies
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SystemDependenciesTest >> testExternalMorphicDependencies [
 
 	| dependencies |
@@ -480,16 +408,13 @@ SystemDependenciesTest >> testExternalMorphicDependencies [
 		BaselineOfMorphic allPackageNames,
 		BaselineOfMenuRegistration allPackageNames,
 		(BaselineOfFuel deepPackagesOfGroupNamed: #Tests),
-		{'Fuel-Platform-Core'.
-			'Fuel-Platform-Pharo-Core'.
-			'Fuel-Platform-Pharo-', FLPlatform current versionNumber asString },
 		(BaselineOfNewValueHolder packagesOfGroupNamed: #core),
 		BaselineOfThreadedFFI corePackageNames ).
 
 	self assertCollection: dependencies hasSameElements: self knownMorphicDependencies
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SystemDependenciesTest >> testExternalSUnitDependencies [
 
 	| dependencies |
@@ -503,7 +428,7 @@ SystemDependenciesTest >> testExternalSUnitDependencies [
 	self assertCollection: dependencies hasSameElements: self knownSUnitDependencies
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SystemDependenciesTest >> testExternalSUnitKernelDependencies [
 
 	| dependencies |
@@ -519,7 +444,7 @@ SystemDependenciesTest >> testExternalSUnitKernelDependencies [
 	self assertCollection: dependencies hasSameElements: self knownSUnitKernelDependencies
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SystemDependenciesTest >> testExternalSpec2Dependencies [
 
 	| dependencies |
@@ -539,9 +464,6 @@ SystemDependenciesTest >> testExternalSpec2Dependencies [
 		BaselineOfMorphic allPackageNames,
 		BaselineOfMenuRegistration allPackageNames,
 		(BaselineOfFuel deepPackagesOfGroupNamed: #Tests),
-		{ 'Fuel-Platform-Core'.
-			'Fuel-Platform-Pharo-Core'.
-			'Fuel-Platform-Pharo-', FLPlatform current versionNumber asString },
 
 		(BaselineOfCommander2 deepPackagesOfGroupNamed: #default),
 
@@ -558,7 +480,7 @@ SystemDependenciesTest >> testExternalSpec2Dependencies [
 	self assertCollection: dependencies hasSameElements: self knownSpec2Dependencies
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SystemDependenciesTest >> testExternalUFFIDependencies [
 
 	| dependencies |
@@ -574,7 +496,7 @@ SystemDependenciesTest >> testExternalUFFIDependencies [
 	self assertCollection: dependencies hasSameElements: self knownUFFIDependencies
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SystemDependenciesTest >> testExternalUIDependencies [
 
 	| dependencies |
@@ -599,15 +521,12 @@ SystemDependenciesTest >> testExternalUIDependencies [
 		BaselineOfUI allPackageNames,
 		BaselineOfMenuRegistration allPackageNames,
 		(BaselineOfFuel deepPackagesOfGroupNamed: #Tests),
-		{ 'Fuel-Platform-Core'.
-			'Fuel-Platform-Pharo-Core'.
-			'Fuel-Platform-Pharo-', FLPlatform current versionNumber asString },
 		BaselineOfThreadedFFI corePackageNames )).
 
 	self assertCollection: dependencies hasSameElements: self knownUIDependencies
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SystemDependenciesTest >> testFilesShouldNotDependOnRandom [
 	"In the past Files was depending on Random-Core only to print a random number in a file name.
 	Now, there is no dependency between Files and Random-Core and if possible we would like to keep it this way in order to extract Random-Core from the KernelGroup of the Bootstrap (and maybe of the bootstrap in itself generally)"
@@ -617,7 +536,7 @@ SystemDependenciesTest >> testFilesShouldNotDependOnRandom [
 	self deny: (dependencies includes: 'Random-Core')
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SystemDependenciesTest >> tonelCorePackageNames [
 
 	^ { BaselineOfTonel name }, (BaselineOfTonel packagesOfGroupNamed: #core)

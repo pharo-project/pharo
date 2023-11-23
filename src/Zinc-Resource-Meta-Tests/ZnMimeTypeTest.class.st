@@ -1,10 +1,11 @@
 Class {
-	#name : #ZnMimeTypeTest,
-	#superclass : #TestCase,
-	#category : #'Zinc-Resource-Meta-Tests'
+	#name : 'ZnMimeTypeTest',
+	#superclass : 'TestCase',
+	#category : 'Zinc-Resource-Meta-Tests',
+	#package : 'Zinc-Resource-Meta-Tests'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnMimeTypeTest >> someNonBinaryMimeTypes [
 	^ #(
 		'text/plain;charset=ascii'
@@ -19,13 +20,13 @@ ZnMimeTypeTest >> someNonBinaryMimeTypes [
 		'application/csv')
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnMimeTypeTest >> testAsMimeType [
 	self assert: 'text/plain;charset=utf-8' asZnMimeType equals: ZnMimeType textPlain.
 	self assert: ZnMimeType applicationOctetStream asZnMimeType equals: ZnMimeType applicationOctetStream
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnMimeTypeTest >> testCharset [
 
 	| mimeType |
@@ -40,7 +41,7 @@ ZnMimeTypeTest >> testCharset [
 	self assert: mimeType charSet equals: 'utf-8'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnMimeTypeTest >> testComparingWithParameters [
 
 	| mimeType equalMimeType |
@@ -54,7 +55,7 @@ ZnMimeTypeTest >> testComparingWithParameters [
 		deny: mimeType equals: ZnMimeType applicationJson
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnMimeTypeTest >> testCopying [
 	| mimeType1 mimeType2 |
 	mimeType1 := ZnMimeType textPlain.
@@ -70,19 +71,19 @@ ZnMimeTypeTest >> testCopying [
 	self deny: mimeType1 charSet equals: mimeType2 charSet
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnMimeTypeTest >> testDefault [
 
 	self assert: ZnMimeType default equals: ZnMimeType applicationOctetStream
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnMimeTypeTest >> testIdentity [
 
 	self assert: ZnMimeType textPlain equals: ZnMimeType textPlain
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnMimeTypeTest >> testIsBinary [
 	self assert: ZnMimeType applicationOctetStream isBinary.
 	self assert: ZnMimeType imagePng isBinary.
@@ -94,7 +95,7 @@ ZnMimeTypeTest >> testIsBinary [
 		self deny: each asZnMimeType isBinary ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnMimeTypeTest >> testMatches [
 	#(
 		( 'text/plain' 'text/*' )
@@ -107,7 +108,7 @@ ZnMimeTypeTest >> testMatches [
 			self assert: (each first asZnMimeType matches: each second asZnMimeType) ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnMimeTypeTest >> testParameterCase [
 
 	| mimeType |
@@ -116,7 +117,7 @@ ZnMimeTypeTest >> testParameterCase [
 	self assert: (mimeType parameters includesKey: 'boundary')
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnMimeTypeTest >> testParameters [
 	| mimeType |
 	mimeType := ZnMimeType main: 'text' sub: 'plain'.
@@ -131,7 +132,7 @@ ZnMimeTypeTest >> testParameters [
 	self assert: (mimeType parameterAt: 'foo' ifAbsent: [ #none ]) equals: #none
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnMimeTypeTest >> testReading [
 
 	| mimeType |
@@ -144,7 +145,7 @@ ZnMimeTypeTest >> testReading [
 	self assert: mimeType isBinary not
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnMimeTypeTest >> testWriting [
 
 	| mimeType |

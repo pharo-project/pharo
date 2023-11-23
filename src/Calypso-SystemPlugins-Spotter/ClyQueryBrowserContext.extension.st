@@ -1,6 +1,6 @@
-Extension { #name : #ClyQueryBrowserContext }
+Extension { #name : 'ClyQueryBrowserContext' }
 
-{ #category : #'*Calypso-SystemPlugins-Spotter' }
+{ #category : '*Calypso-SystemPlugins-Spotter' }
 ClyQueryBrowserContext >> simpleNameForSpotterMenu [
 	^'Query result'
 ]

@@ -2,22 +2,24 @@
 I'm a specific store for Zip file systems
 "
 Class {
-	#name : #ZipStore,
-	#superclass : #MemoryStore,
+	#name : 'ZipStore',
+	#superclass : 'MemoryStore',
 	#instVars : [
 		'reference'
 	],
-	#category : #'FileSystem-Zip-Base'
+	#category : 'FileSystem-Zip-Base',
+	#package : 'FileSystem-Zip',
+	#tag : 'Base'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZipStore class >> reference: aReference [
 	^ self basicNew
 		initializeWithReference: aReference
 		yourself
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 ZipStore >> close [
 	| archive fs stream |
 	archive := ZipArchive new.
@@ -35,24 +37,24 @@ ZipStore >> close [
 		[ :output | output nextPutAll: stream contents ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ZipStore >> forReferencePrintOn: aStream [
 	aStream nextPutAll: 'zip://'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ZipStore >> initialize [
 	super initialize.
 	root := ZipFileSystemDirectory new
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ZipStore >> initializeWithReference: aReference [
 	self initialize.
 	reference := aReference
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 ZipStore >> open [
 	| archive |
 	self reference exists
@@ -73,7 +75,7 @@ ZipStore >> open [
 	^ self
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZipStore >> pathFromMember: anArchiveMember [
 	| path |
 	path := Path from: anArchiveMember fileName.
@@ -82,7 +84,7 @@ ZipStore >> pathFromMember: anArchiveMember [
 		ifFalse: [ path ]
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 ZipStore >> reference [
 	^ reference
 ]

@@ -1,1 +1,1 @@
-Package { #name : #'Calypso-SystemPlugins-FileOut-Browser' }
+Package { #name : 'Calypso-SystemPlugins-FileOut-Browser' }

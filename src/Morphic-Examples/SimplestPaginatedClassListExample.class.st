@@ -2,22 +2,24 @@
 Example for a paginated class list
 "
 Class {
-	#name : #SimplestPaginatedClassListExample,
-	#superclass : #PaginatedMorphTreeModel,
+	#name : 'SimplestPaginatedClassListExample',
+	#superclass : 'PaginatedMorphTreeModel',
 	#instVars : [
 		'rootClass'
 	],
-	#category : #'Morphic-Examples-MorphTreeWidget'
+	#category : 'Morphic-Examples-MorphTreeWidget',
+	#package : 'Morphic-Examples',
+	#tag : 'MorphTreeWidget'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 SimplestPaginatedClassListExample class >> example [
 	<sampleInstance>
 
 	^SimplestPaginatedClassListExample new openOn: Object
 ]
 
-{ #category : #view }
+{ #category : 'view' }
 SimplestPaginatedClassListExample >> defaultTreeMorph [
 	^ super defaultTreeMorph
 		multiSelection: true;
@@ -25,24 +27,24 @@ SimplestPaginatedClassListExample >> defaultTreeMorph [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SimplestPaginatedClassListExample >> itemsForTest [
 	^ rootClass allSubclasses
 ]
 
-{ #category : #view }
+{ #category : 'view' }
 SimplestPaginatedClassListExample >> openDialogOn: aClass [
 	rootClass := aClass.
 	^ self openDialogWindowIn: self currentWorld title: 'All Object subclasses'
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SimplestPaginatedClassListExample >> openOn: aClass [
 	rootClass := aClass.
 	(self dialogWindowIn: self currentWorld title: 'All Object subclasses') openInWorld
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SimplestPaginatedClassListExample >> rootItems [
 	^ self itemsForTest asArray sort: [:a :b | a name < b name]
 ]

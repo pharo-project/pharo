@@ -2,38 +2,40 @@
 RubAdornmentDisplayer adds a simple adornment for text area
 "
 Class {
-	#name : #RubAdornmentDisplayer,
-	#superclass : #RubScrolledTextExtraSurface,
-	#category : #'Rubric-Editing-Widgets'
+	#name : 'RubAdornmentDisplayer',
+	#superclass : 'RubScrolledTextExtraSurface',
+	#category : 'Rubric-Editing-Widgets',
+	#package : 'Rubric',
+	#tag : 'Editing-Widgets'
 }
 
-{ #category : #querying }
+{ #category : 'querying' }
 RubAdornmentDisplayer class >> key [
 	^ #adornment
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubAdornmentDisplayer >> computedHeightFrom: aRectangle [
 
 	^ aRectangle height min: self computedSize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubAdornmentDisplayer >> computedPositionFrom: aRectangle [
 	^  ((aRectangle right min: self scrollBounds right) - (self computedWidthFrom: aRectangle)) @ aRectangle top
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubAdornmentDisplayer >> computedSize [
 	^  25
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubAdornmentDisplayer >> computedWidthFrom: aRectangle [
 	^  (super computedWidthFrom: aRectangle) min: self computedSize
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 RubAdornmentDisplayer >> drawOn: aCanvas [
 	| bnds adorncolor size fillStyle |
 	super drawOn: aCanvas.
@@ -54,7 +56,7 @@ RubAdornmentDisplayer >> drawOn: aCanvas [
 		fillStyle: fillStyle
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 RubAdornmentDisplayer >> drawOnAthensCanvas: anAthensCanvas [
 	| bnds adorncolor size fillStyle vertices polygonPath |
 	super drawOnAthensCanvas: anAthensCanvas.
@@ -86,7 +88,7 @@ RubAdornmentDisplayer >> drawOnAthensCanvas: anAthensCanvas [
 	anAthensCanvas draw
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubAdornmentDisplayer >> level [
 	^ SmallInteger maxVal
 ]

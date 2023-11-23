@@ -3,34 +3,36 @@ I am the root class of the Ring meta-model.
 A Ring definition has a name, can be annotated and knows its environment
 "
 Class {
-	#name : #RGDefinition,
-	#superclass : #Object,
+	#name : 'RGDefinition',
+	#superclass : 'Object',
 	#instVars : [
 		'annotations',
 		'name'
 	],
-	#category : #'Ring-Definitions-Core-Base'
+	#category : 'Ring-Definitions-Core-Base',
+	#package : 'Ring-Definitions-Core',
+	#tag : 'Base'
 }
 
-{ #category : #annotations }
+{ #category : 'annotations' }
 RGDefinition class >> authorKey [
 
 	^#author
 ]
 
-{ #category : #annotations }
+{ #category : 'annotations' }
 RGDefinition class >> fullNameKey [
 
 	^#fullName
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGDefinition class >> isAbstract [
 
 	^ self == RGDefinition
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 RGDefinition class >> named: aName [
 
 	^self new
@@ -38,13 +40,13 @@ RGDefinition class >> named: aName [
 		yourself
 ]
 
-{ #category : #annotations }
+{ #category : 'annotations' }
 RGDefinition class >> timeStampKey [
 
 	^#timestamp
 ]
 
-{ #category : #annotations }
+{ #category : 'annotations' }
 RGDefinition >> annotationNamed: annotationName [
 	"Answer the value of the annotation named <annotationName>, or
 	nil if the annotation is not defined for the receiver."
@@ -54,7 +56,7 @@ RGDefinition >> annotationNamed: annotationName [
 		ifAbsent: [ nil ]
 ]
 
-{ #category : #annotations }
+{ #category : 'annotations' }
 RGDefinition >> annotationNamed: annotationName ifAbsent: exceptionBlock [
 	"Answer the value of the annotation named <annotationName>. If the
 	annotation is not defined for the receiver, answer the result of
@@ -68,7 +70,7 @@ RGDefinition >> annotationNamed: annotationName ifAbsent: exceptionBlock [
 			ifAbsent: [ exceptionBlock value ]
 ]
 
-{ #category : #annotations }
+{ #category : 'annotations' }
 RGDefinition >> annotationNamed: annotationName ifAbsentPut: blockValue [
 
 	^self annotations
@@ -76,7 +78,7 @@ RGDefinition >> annotationNamed: annotationName ifAbsentPut: blockValue [
 		ifAbsentPut: blockValue
 ]
 
-{ #category : #annotations }
+{ #category : 'annotations' }
 RGDefinition >> annotationNamed: annotationName put: value [
 
 	self annotations
@@ -84,7 +86,7 @@ RGDefinition >> annotationNamed: annotationName put: value [
 		put: value
 ]
 
-{ #category : #annotations }
+{ #category : 'annotations' }
 RGDefinition >> annotationNames [
 
 	self hasAnnotations
@@ -92,18 +94,18 @@ RGDefinition >> annotationNames [
 	^annotations keys
 ]
 
-{ #category : #annotations }
+{ #category : 'annotations' }
 RGDefinition >> annotations [
 
 	^annotations ifNil:[ annotations:= IdentityDictionary new ]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 RGDefinition >> asRingDefinition [
 	^ self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGDefinition >> environment [
 	"If the receiver has not namespace assigned the default is used"
 	"self class environment = Smalltalk globals"
@@ -111,20 +113,20 @@ RGDefinition >> environment [
 	^ self annotationNamed: #environment ifAbsent: [ self class environment ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGDefinition >> environment: namespace [
 
 	namespace = self class environment
 		ifFalse:[ self annotationNamed: #environment put: namespace ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGDefinition >> fullName [
 
 	^self name
 ]
 
-{ #category : #annotations }
+{ #category : 'annotations' }
 RGDefinition >> hasAnnotationNamed: annotationName [
 	"Answer <true> if the receiver contains the annotation named <annotationName>. "
 
@@ -133,110 +135,110 @@ RGDefinition >> hasAnnotationNamed: annotationName [
 	^annotations includesKey: annotationName
 ]
 
-{ #category : #annotations }
+{ #category : 'annotations' }
 RGDefinition >> hasAnnotations [
 
-	^annotations notNil
+	^annotations isNotNil
 ]
 
-{ #category : #'testing - types' }
+{ #category : 'testing - types' }
 RGDefinition >> isAccess [
 
 	^false
 ]
 
-{ #category : #'testing - types' }
+{ #category : 'testing - types' }
 RGDefinition >> isComment [
 
 	^false
 ]
 
-{ #category : #'testing - types' }
+{ #category : 'testing - types' }
 RGDefinition >> isGlobalVariable [
 
 	^false
 ]
 
-{ #category : #'testing - types' }
+{ #category : 'testing - types' }
 RGDefinition >> isInheritance [
 
 	^false
 ]
 
-{ #category : #'testing - types' }
+{ #category : 'testing - types' }
 RGDefinition >> isInvocation [
 
 	^false
 ]
 
-{ #category : #'testing - types' }
+{ #category : 'testing - types' }
 RGDefinition >> isMethod [
 
 	^false
 ]
 
-{ #category : #'testing - types' }
+{ #category : 'testing - types' }
 RGDefinition >> isNamespace [
 
 	^false
 ]
 
-{ #category : #'testing - types' }
+{ #category : 'testing - types' }
 RGDefinition >> isOrganization [
 
 	^false
 ]
 
-{ #category : #'testing - types' }
+{ #category : 'testing - types' }
 RGDefinition >> isPackage [
 
 	^false
 ]
 
-{ #category : #'testing - types' }
+{ #category : 'testing - types' }
 RGDefinition >> isPool [
 
 	^false
 ]
 
-{ #category : #'testing - types' }
+{ #category : 'testing - types' }
 RGDefinition >> isReference [
 
 	^false
 ]
 
-{ #category : #'testing - types' }
+{ #category : 'testing - types' }
 RGDefinition >> isRingObject [
 
 	^true
 ]
 
-{ #category : #'testing - types' }
+{ #category : 'testing - types' }
 RGDefinition >> isSlice [
 
 	^false
 ]
 
-{ #category : #'testing - types' }
+{ #category : 'testing - types' }
 RGDefinition >> isVariable [
 
 	^false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGDefinition >> name [
 
 	^name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGDefinition >> name: anObject [
 	"a symbol or a string should be expected"
 
 	name:= anObject
 ]
 
-{ #category : #annotations }
+{ #category : 'annotations' }
 RGDefinition >> removeAnnotationNamed: annotationName [
 	"Remove the annotation named <annotationName>. Fails quietly if there
 	is no annotation with the given name."
@@ -245,7 +247,7 @@ RGDefinition >> removeAnnotationNamed: annotationName [
 		ifTrue:[ annotations removeKey: annotationName ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGDefinition >> rootEnvironment [
 	"Retrieves the runtime environment of an RGObject"
 	"If the receiver is defined in an RGContainer the runtime environment is the one associated to its container"

@@ -5,12 +5,13 @@ Load type:
 - linear
 "
 Class {
-	#name : #BaselineOfFlashback,
-	#superclass : #BaselineOf,
-	#category : #BaselineOfFlashback
+	#name : 'BaselineOfFlashback',
+	#superclass : 'BaselineOf',
+	#category : 'BaselineOfFlashback',
+	#package : 'BaselineOfFlashback'
 }
 
-{ #category : #baseline }
+{ #category : 'baseline' }
 BaselineOfFlashback >> baseline: spec [
 	<baseline>
 	spec

@@ -1,6 +1,6 @@
-Extension { #name : #RubPluggableTextFieldMorph }
+Extension { #name : 'RubPluggableTextFieldMorph' }
 
-{ #category : #'*Athens-Morphic' }
+{ #category : '*Athens-Morphic' }
 RubPluggableTextFieldMorph >> drawOnAthensCanvas: anAthensCanvas [
 	"Eventually draw the helpText"
 	super drawOnAthensCanvas: anAthensCanvas.

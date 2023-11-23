@@ -1,14 +1,16 @@
 Class {
-	#name : #FTExampleMethodListGeneratorDataSource,
-	#superclass : #FTExampleMethodListDataSource,
+	#name : 'FTExampleMethodListGeneratorDataSource',
+	#superclass : 'FTExampleMethodListDataSource',
 	#instVars : [
 		'generator',
 		'size'
 	],
-	#category : #'Morphic-Widgets-FastTable-Examples'
+	#category : 'Morphic-Widgets-FastTable-Examples',
+	#package : 'Morphic-Widgets-FastTable',
+	#tag : 'Examples'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FTExampleMethodListGeneratorDataSource >> elementAt: anIndex [
 
 	^ self
@@ -16,7 +18,7 @@ FTExampleMethodListGeneratorDataSource >> elementAt: anIndex [
 		ifAbsent: [ self error: 'Index not found' ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FTExampleMethodListGeneratorDataSource >> elementAt: index ifAbsent: aBlock [
 
 	[ elements size < index ]
@@ -27,14 +29,14 @@ FTExampleMethodListGeneratorDataSource >> elementAt: index ifAbsent: aBlock [
 	^ elements at: index
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FTExampleMethodListGeneratorDataSource >> hasElementAt: index [
 
 	self elementAt: index ifAbsent: [ ^ false ].
 	^ true
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FTExampleMethodListGeneratorDataSource >> initializeClass: aClass [
 
 	self initialize.
@@ -48,7 +50,7 @@ FTExampleMethodListGeneratorDataSource >> initializeClass: aClass [
 			do: [ :each | g yield: (FTExampleMethodModel method: aClass>>each) ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTExampleMethodListGeneratorDataSource >> size [
 
 	^ size

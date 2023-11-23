@@ -5,16 +5,17 @@ Example:
 (RBBrowserEnvironment new) forClass:Morph protocols:{'printing'}.
 "
 Class {
-	#name : #RBProtocolEnvironment,
-	#superclass : #RBBrowserEnvironmentWrapper,
+	#name : 'RBProtocolEnvironment',
+	#superclass : 'RBBrowserEnvironmentWrapper',
 	#instVars : [
 		'class',
 		'protocols'
 	],
-	#category : #'Refactoring-Environment'
+	#category : 'Refactoring-Environment',
+	#package : 'Refactoring-Environment'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBProtocolEnvironment class >> class: aClass protocols: aCollection [
 	^ self
 		onEnvironment: self default
@@ -22,39 +23,34 @@ RBProtocolEnvironment class >> class: aClass protocols: aCollection [
 		protocols: aCollection
 ]
 
-{ #category : #'accessing - defaults' }
+{ #category : 'accessing - defaults' }
 RBProtocolEnvironment class >> defaultName [
 	^ 'Protocols'
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBProtocolEnvironment class >> onEnvironment: anEnvironment class: aClass protocols: aCollection [
 	^(self onEnvironment: anEnvironment)
 		class: aClass protocols: aCollection; yourself
 ]
 
-{ #category : #visiting }
-RBProtocolEnvironment >> acceptVisitor: aEnvVisitor [
-	^ aEnvVisitor visitProtocolEnv: self
-]
-
-{ #category : #adding }
+{ #category : 'adding' }
 RBProtocolEnvironment >> addProtocol: aSymbol [
 	protocols add: aSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBProtocolEnvironment >> basisObjects [
 	^ self protocols
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBProtocolEnvironment >> class: aClass protocols: aCollection [
 	class := aClass.
 	protocols := aCollection asOrderedCollection
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBProtocolEnvironment >> defaultLabel [
 	| stream |
 	stream := String new writeStream.
@@ -67,86 +63,70 @@ RBProtocolEnvironment >> defaultLabel [
 	^stream contents
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBProtocolEnvironment >> definedClass [
 	^ class
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBProtocolEnvironment >> definesClass: aClass [
 	^ aClass == class and: [super definesClass: aClass]
 ]
 
-{ #category : #description }
+{ #category : 'description' }
 RBProtocolEnvironment >> description [
 
 	^ label ifNil: [self defaultName , ' of ', self class name, self descriptionBasis]
 ]
 
-{ #category : #testing }
-RBProtocolEnvironment >> includesCategory: aCategory [
-	^ (super includesCategory: aCategory) and: [
-		(environment classNamesFor: aCategory)
-			inject: false into: [ :bool :each |
-				bool or: [
-					| aClass |
-					aClass := self systemDictionary at: each ifAbsent: [ nil ].
-					aClass == class or: [ aClass class == class ] ] ] ]
-]
-
-{ #category : #testing }
+{ #category : 'testing' }
 RBProtocolEnvironment >> includesClass: aClass [
 	^ aClass == class and: [super includesClass: aClass]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBProtocolEnvironment >> includesProtocol: aProtocol in: aClass [
-	^aClass == class and: [(super includesProtocol: aProtocol in: aClass)
-			and: [protocols includes: aProtocol]]
+
+	^ aClass == class and: [ (super includesProtocol: aProtocol in: aClass) and: [ protocols includes: aProtocol name ] ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBProtocolEnvironment >> includesSelector: aSelector in: aClass [
 	^(super includesSelector: aSelector in: aClass) and:
 			[protocols
 				includes: (environment whichProtocolIncludes: aSelector in: aClass)]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBProtocolEnvironment >> isEmpty [
 	^protocols isEmpty
 ]
 
-{ #category : #testing }
-RBProtocolEnvironment >> packages [
-	^ self methods collect: [ :m | m package ]
-]
-
-{ #category : #copying }
+{ #category : 'copying' }
 RBProtocolEnvironment >> postCopy [
 	super postCopy.
 	protocols := protocols copy
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBProtocolEnvironment >> printOn: aStream [
 
 	aStream nextPutAll: class name, ' protocols: '.
 	protocols do: [ :cls | aStream nextPutAll: cls, ', ']
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBProtocolEnvironment >> protocols [
 
 	^ protocols
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 RBProtocolEnvironment >> removeProtocol: aSymbol [
 	protocols remove: aSymbol ifAbsent: [  ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBProtocolEnvironment >> storeOn: aStream [
 	aStream nextPut: $(.
 	super storeOn: aStream.

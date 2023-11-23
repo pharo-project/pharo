@@ -1,10 +1,11 @@
 Class {
-	#name : #ReBasicScenarioExceptionStrategyTest,
-	#superclass : #ReExceptionStrategyBaseTest,
-	#category : #'Renraku-Tests'
+	#name : 'ReBasicScenarioExceptionStrategyTest',
+	#superclass : 'ReExceptionStrategyBaseTest',
+	#category : 'Renraku-Tests',
+	#package : 'Renraku-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReBasicScenarioExceptionStrategyTest >> testIgnore [
 	| critiques |
 	ReExceptionStrategy current: ReIgnoreExceptionStrategy.
@@ -14,7 +15,7 @@ ReBasicScenarioExceptionStrategyTest >> testIgnore [
 	self assertEmpty: critiques
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReBasicScenarioExceptionStrategyTest >> testLog [
 	| critiques |
 
@@ -32,7 +33,7 @@ ReBasicScenarioExceptionStrategyTest >> testLog [
 			crit message includesSubstring: self errorMessage ] ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReBasicScenarioExceptionStrategyTest >> testPass [
 
 	ReExceptionStrategy current: RePassExceptionStrategy.
@@ -42,7 +43,7 @@ ReBasicScenarioExceptionStrategyTest >> testPass [
 		raise: MyTestError
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 ReBasicScenarioExceptionStrategyTest >> validationScenario [
 	| critiques |
 

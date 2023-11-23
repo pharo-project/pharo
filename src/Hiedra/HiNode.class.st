@@ -4,18 +4,20 @@ I am a node that represents a value in a Hiedra ruler. I know links that connect
 
 "
 Class {
-	#name : #HiNode,
-	#superclass : #Object,
+	#name : 'HiNode',
+	#superclass : 'Object',
 	#instVars : [
 		'value',
 		'incomingLinks',
 		'outgoingLinks',
 		'rulerPoint'
 	],
-	#category : #'Hiedra-Model'
+	#category : 'Hiedra-Model',
+	#package : 'Hiedra',
+	#tag : 'Model'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 HiNode class >> value: aValue rulerPoint: aPoint [
 	^ self basicNew
 		initializeWithValue: aValue
@@ -23,39 +25,39 @@ HiNode class >> value: aValue rulerPoint: aPoint [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiNode >> addIncomingLink: aHiLink [
 	incomingLinks add: aHiLink
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiNode >> addOutgoingLink: aHiLink [
 	outgoingLinks add: aHiLink
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiNode >> anyLink [
 	"Answer a link (assuming it has at least one either outgoing or incoming link)."
 
 	^ (outgoingLinks ifEmpty: [ incomingLinks ]) first
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 HiNode >> hasAnyLink [
 	^ outgoingLinks isEmpty and: [ incomingLinks isEmpty ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 HiNode >> hasLinkTo: aHiNode [
 	^ outgoingLinks anySatisfy: [ :each | each target = aHiNode ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiNode >> incomingLinks [
 	^ incomingLinks
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 HiNode >> initializeWithValue: aValue rulerPoint: aPoint [
 
 	self initialize.
@@ -65,7 +67,7 @@ HiNode >> initializeWithValue: aValue rulerPoint: aPoint [
 	incomingLinks := LinkedList new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiNode >> intermediateRowIndicesTo: anotherNode [
 
 	| originRowIndex targetRowIndex |
@@ -77,12 +79,12 @@ HiNode >> intermediateRowIndicesTo: anotherNode [
 		ifFalse: [ originRowIndex - 1 to: targetRowIndex + 1 by: -1 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiNode >> outgoingLinks [
 	^ outgoingLinks
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 HiNode >> printOn: aStream [
 
 	super printOn: aStream.
@@ -95,12 +97,12 @@ HiNode >> printOn: aStream [
 		nextPut: $)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiNode >> rulerPoint [
 	^ rulerPoint
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiNode >> theValue [
 	^ value
 ]

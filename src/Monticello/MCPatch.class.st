@@ -2,36 +2,38 @@
 I represent a set of patch operations which can be applied by sending message applyTo: to my instances. 
 "
 Class {
-	#name : #MCPatch,
-	#superclass : #Object,
+	#name : 'MCPatch',
+	#superclass : 'Object',
 	#instVars : [
 		'operations'
 	],
-	#category : #'Monticello-Patching'
+	#category : 'Monticello-Patching',
+	#package : 'Monticello',
+	#tag : 'Patching'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MCPatch class >> fromBase: baseSnapshot target: targetSnapshot [
 	^ self new initializeWithBase: baseSnapshot target: targetSnapshot
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MCPatch class >> operations: aCollection [
 	^ self basicNew initializeWithOperations: aCollection
 ]
 
-{ #category : #applying }
+{ #category : 'applying' }
 MCPatch >> applyTo: anObject [
 	operations do: [:ea | ea applyTo: anObject].
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCPatch >> hasConflict [
 	^ self operations anySatisfy: [ :change| change isConflict ]
 ]
 
-{ #category : #intializing }
+{ #category : 'intializing' }
 MCPatch >> initializeWithBase: baseSnapshot target: targetSnapshot [
 	| base target |	
 	operations := OrderedCollection new.
@@ -53,17 +55,17 @@ MCPatch >> initializeWithBase: baseSnapshot target: targetSnapshot [
 			ifAbsent: [operations add: (MCRemoval of: b)]]		
 ]
 
-{ #category : #intializing }
+{ #category : 'intializing' }
 MCPatch >> initializeWithOperations: aCollection [
 	operations := aCollection
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MCPatch >> isEmpty [
 	^ operations isEmpty
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCPatch >> operations [
 	^ operations
 ]

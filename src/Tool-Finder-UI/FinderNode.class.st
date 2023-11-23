@@ -2,12 +2,13 @@
 A FinderNode is an abstract class used by the tree of FinderUI
 "
 Class {
-	#name : #FinderNode,
-	#superclass : #MorphTreeNodeModel,
-	#category : #'Tool-Finder-UI'
+	#name : 'FinderNode',
+	#superclass : 'MorphTreeNodeModel',
+	#category : 'Tool-Finder-UI',
+	#package : 'Tool-Finder-UI'
 }
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 FinderNode >> addInspectMenuItem: menu [
 
 	menu
@@ -16,47 +17,47 @@ FinderNode >> addInspectMenuItem: menu [
 		selector: #inspectItem
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FinderNode >> browse [
 
 	self subclassResponsibility
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FinderNode >> browseClass [
 
 	^ Smalltalk tools browser openOnClass: self item
 ]
 
-{ #category : #displaying }
+{ #category : 'displaying' }
 FinderNode >> displayString [
 
 	^ self item asString
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FinderNode >> doubleClick [
 	self browse
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FinderNode >> hasParentNode [
 	^ self parentNode isNil not
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FinderNode >> inspectItem [
 	self item inspect
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 FinderNode >> keyDown: anEvent [
 	(anEvent controlKeyPressed or: [ anEvent commandKeyPressed ]) ifFalse: [ ^ false ].
 	anEvent keyCharacter == $b ifTrue: [ ^ self browse ].
 	anEvent keyCharacter == $i ifTrue: [ ^ self inspectItem ]
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 FinderNode >> menu: menu shifted: aBoolean [
 	menu
 		add: 'Browse (b)'

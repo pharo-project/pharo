@@ -6,12 +6,14 @@ I represented in the browser either with ""instance side"" or ""class side"" nam
 I am expanded to inherited method groups for each of trait or class which are inherited by my class scope
 "
 Class {
-	#name : #ClyAllMethodGroup,
-	#superclass : #ClyInheritedMethodGroup,
-	#category : #'Calypso-SystemQueries-Domain'
+	#name : 'ClyAllMethodGroup',
+	#superclass : 'ClyInheritedMethodGroup',
+	#category : 'Calypso-SystemQueries-Domain',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Domain'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyAllMethodGroup class >> withMethodQuery: aMethodQuery andClassesInheritedFrom: aClassScope [
 	| group |
 	group := super withMethodQuery: aMethodQuery andClassesInheritedFrom: aClassScope.
@@ -21,7 +23,7 @@ ClyAllMethodGroup class >> withMethodQuery: aMethodQuery andClassesInheritedFrom
 	^group
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyAllMethodGroup class >> withMethodsInheritedFrom: aClassScope [
 
 	^self
@@ -29,10 +31,9 @@ ClyAllMethodGroup class >> withMethodsInheritedFrom: aClassScope [
 		andClassesInheritedFrom: aClassScope
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ClyAllMethodGroup >> importMethod: aMethod [
-	"To support some people scenario to unclassify methods
-	by drag and drop into this group (which was with ALL name in past)"
+	"To support some people scenario to unclassify methods by drag and drop into this group (which was with ALL name in past)"
 
-	aMethod tags do: [ :each | aMethod untagFrom: each ]
+	aMethod unclassify
 ]

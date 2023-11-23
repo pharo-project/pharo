@@ -1,6 +1,6 @@
-Extension { #name : #MCTraitDefinition }
+Extension { #name : 'MCTraitDefinition' }
 
-{ #category : #'*Ring-Monticello' }
+{ #category : '*Ring-Monticello' }
 MCTraitDefinition >> ensureRingDefinitionIn: anRGEnvironment [
 
 	^ anRGEnvironment backend definitionFor: self ifAbsentRegister: [

@@ -4,15 +4,17 @@ I represent the declaration of a class comment in a file.  My contents are the c
 Sending me the message #import makes me install the comment into the class.
 "
 Class {
-	#name : #ClassCommentChunk,
-	#superclass : #BehaviorOwnedChunk,
+	#name : 'ClassCommentChunk',
+	#superclass : 'BehaviorOwnedChunk',
 	#instVars : [
 		'stamp'
 	],
-	#category : #'CodeImport-Chunks'
+	#category : 'CodeImport-Chunks',
+	#package : 'CodeImport',
+	#tag : 'Chunks'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClassCommentChunk class >> contents: someContents behaviorName: behaviorName isMeta: aBoolean stamp: stamp [
 	^self new
 			contents: someContents;
@@ -22,19 +24,19 @@ ClassCommentChunk class >> contents: someContents behaviorName: behaviorName isM
 			yourself
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 ClassCommentChunk >> accept: aVisitor [
 
 	^ aVisitor visitClassCommentChunk: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassCommentChunk >> description [
 
 	^ 'Comment (', behaviorName, ')', stamp asString
 ]
 
-{ #category : #importing }
+{ #category : 'importing' }
 ClassCommentChunk >> importFor: aRequestor logSource: logSource [
 	(self existsBehavior)
 		ifFalse: [ self error: ('Cannot install comment in unexistent behavior {1}' format: { behaviorName asString } ) ].
@@ -44,18 +46,18 @@ ClassCommentChunk >> importFor: aRequestor logSource: logSource [
 						stamp: stamp
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClassCommentChunk >> isClassCommentDeclaration [
 
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassCommentChunk >> stamp [
 	^ stamp
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassCommentChunk >> stamp: classCommentStamp [
 	stamp := classCommentStamp
 ]

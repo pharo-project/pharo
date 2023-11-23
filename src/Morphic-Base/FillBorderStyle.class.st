@@ -2,21 +2,23 @@
 BorderStyle supporting general (potentially composite) fillstyles. 
 "
 Class {
-	#name : #FillBorderStyle,
-	#superclass : #SimpleBorderStyle,
+	#name : 'FillBorderStyle',
+	#superclass : 'SimpleBorderStyle',
 	#instVars : [
 		'fillStyle'
 	],
-	#category : #'Morphic-Base-Borders'
+	#category : 'Morphic-Base-Borders',
+	#package : 'Morphic-Base',
+	#tag : 'Borders'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 FillBorderStyle class >> initialize [
 	"Deprecated in Pharo 11"
 	self deprecatedAliases: { #FillStyleBorder }
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 FillBorderStyle >> borderRectsFor: aRectangle [
 	"Answer a collection of rectangles to fill.
 	Just four here for a rectangular border."
@@ -30,14 +32,14 @@ FillBorderStyle >> borderRectsFor: aRectangle [
 	^{rTop. rBottom. rLeft. rRight}
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FillBorderStyle >> fillStyle [
 	"Answer the value of fillStyle"
 
 	^fillStyle ifNil: [self color]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FillBorderStyle >> fillStyle: anObject [
 	"Set the value of fillStyle"
 
@@ -45,7 +47,7 @@ FillBorderStyle >> fillStyle: anObject [
 	anObject ifNotNil: [self baseColor: anObject asColor]
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 FillBorderStyle >> frameRectangle: aRectangle on: aCanvas [
 	"Fill the border areas with the fill style, clipping for each segment."
 
@@ -55,7 +57,7 @@ FillBorderStyle >> frameRectangle: aRectangle on: aCanvas [
 			fillStyle: self fillStyle]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FillBorderStyle >> hasFillStyle [
 	"Answer true."
 

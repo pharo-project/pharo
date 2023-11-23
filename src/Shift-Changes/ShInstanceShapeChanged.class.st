@@ -4,22 +4,23 @@ Of course if I migrate the instances, this change is propagated to the subclasse
 I propagate the changes adding a change like me in the subclasses.
 "
 Class {
-	#name : #ShInstanceShapeChanged,
-	#superclass : #ShAbstractChange,
-	#category : #'Shift-Changes'
+	#name : 'ShInstanceShapeChanged',
+	#superclass : 'ShAbstractChange',
+	#category : 'Shift-Changes',
+	#package : 'Shift-Changes'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ShInstanceShapeChanged >> hasChangeInstanceSideShape [
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ShInstanceShapeChanged >> hasToMigrateInstances [
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ShInstanceShapeChanged >> propagateToSubclasses: anotherBuilder [
 	anotherBuilder changes add: self
 ]

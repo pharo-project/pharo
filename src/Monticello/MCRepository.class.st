@@ -2,38 +2,35 @@
 A Metacello repository
 "
 Class {
-	#name : #MCRepository,
-	#superclass : #Object,
+	#name : 'MCRepository',
+	#superclass : 'Object',
 	#instVars : [
 		'creationTemplate'
 	],
 	#classVars : [
 		'Settings'
 	],
-	#category : #'Monticello-Repositories'
+	#category : 'Monticello-Repositories',
+	#package : 'Monticello',
+	#tag : 'Repositories'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCRepository class >> allConcreteSubclasses [
 	^ self withAllSubclasses reject: [:ea | ea isAbstract]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCRepository class >> creationTemplate [
 	self subclassResponsibility.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCRepository class >> description [
 	^ nil
 ]
 
-{ #category : #'request handling' }
-MCRepository class >> fillInTheBlankRequest [
-	self subclassResponsibility.
-]
-
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MCRepository class >> fromUrl: aUrlOrString [ 
 	| url |
 	url := aUrlOrString asUrl.
@@ -46,43 +43,38 @@ MCRepository class >> fromUrl: aUrlOrString [
 		ifNone: [ MCRepositoryError signal: 'Cannot instantiate a repository from the url: ', url asString ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCRepository class >> isAbstract [
 	^ self description isNil
 ]
 
-{ #category : #'instance creation' }
-MCRepository class >> morphicConfigure [
-	^ self new
-]
-
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCRepository class >> urlSchemes [
 	"Returns the URL schemes used to describe this repository"
 	^ #()
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MCRepository >> = other [
 	^ other species = self species and: [other description = self description]
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 MCRepository >> addTo: aRepository [
 	^ aRepository addBasicRepository: self
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 MCRepository >> asCreationTemplate [
 	^ self creationTemplate
 ]
 
-{ #category : #storing }
+{ #category : 'storing' }
 MCRepository >> basicStoreVersion: aVersion [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCRepository >> closestAncestorVersionFor: anAncestry ifNone: errorBlock [
 	anAncestry breadthFirstAncestorsDo:
 		[:ancestorInfo |
@@ -90,54 +82,49 @@ MCRepository >> closestAncestorVersionFor: anAncestry ifNone: errorBlock [
 	^ errorBlock value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCRepository >> creationTemplate [
 	^ creationTemplate
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCRepository >> creationTemplate: aString [
 	self creationTemplate ifNotNil: [ self error: 'Creation template already set for this MCRepository instance.' ].
 	
 	creationTemplate := aString.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCRepository >> description [
 	^ self class name
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MCRepository >> displayStringOn: aStream [
 	aStream nextPutAll: self description
 ]
 
-{ #category : #'error handling' }
+{ #category : 'error handling' }
 MCRepository >> error: aString [ 
 	^ MCRepositoryError new signal: aString
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MCRepository >> hash [
 	^ self description hash
 ]
 
-{ #category : #interface }
+{ #category : 'interface' }
 MCRepository >> includesVersionNamed: aString [
 	self subclassResponsibility
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCRepository >> isValid [
 	^true
 ]
 
-{ #category : #accessing }
-MCRepository >> possiblyNewerVersionsOfAnyOf: someVersions [
-	^#()
-]
-
-{ #category : #printing }
+{ #category : 'printing' }
 MCRepository >> printOn: aStream [
 	super printOn: aStream.
 	aStream
@@ -146,7 +133,7 @@ MCRepository >> printOn: aStream [
 		nextPut: $).
 ]
 
-{ #category : #storing }
+{ #category : 'storing' }
 MCRepository >> storeDependencies: aVersion [
 	MCCacheRepository uniqueInstance cacheAllFileNamesDuring: 
 		[self cacheAllFileNamesDuring: 
@@ -156,24 +143,23 @@ MCRepository >> storeDependencies: aVersion [
 						ifFalse: [self storeVersion: dep]]]]
 ]
 
-{ #category : #storing }
+{ #category : 'storing' }
 MCRepository >> storeVersion: aVersion [
-	self basicStoreVersion: aVersion.
-	SystemAnnouncer uniqueInstance
-		announce: (MCVersionSaved version: aVersion repository: self)
+
+	self basicStoreVersion: aVersion
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCRepository >> versionFrom: aVersionReferenceString [
 	self error: 'Unable to load from ' , self printString
 ]
 
-{ #category : #interface }
+{ #category : 'interface' }
 MCRepository >> versionWithInfo: aVersionInfo [
 	^ self versionWithInfo: aVersionInfo ifAbsent: [nil]
 ]
 
-{ #category : #interface }
+{ #category : 'interface' }
 MCRepository >> versionWithInfo: aVersionInfo ifAbsent: aBlock [
 	self subclassResponsibility 
 ]

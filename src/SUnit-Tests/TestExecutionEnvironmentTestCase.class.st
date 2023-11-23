@@ -1,26 +1,28 @@
 Class {
-	#name : #TestExecutionEnvironmentTestCase,
-	#superclass : #TestCase,
+	#name : 'TestExecutionEnvironmentTestCase',
+	#superclass : 'TestCase',
 	#instVars : [
 		'testService',
 		'executionEnvironment',
 		'processes'
 	],
-	#category : #'SUnit-Tests-Core'
+	#category : 'SUnit-Tests-Core',
+	#package : 'SUnit-Tests',
+	#tag : 'Core'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 TestExecutionEnvironmentTestCase class >> isAbstract [
 	^self = TestExecutionEnvironmentTestCase
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 TestExecutionEnvironmentTestCase >> createTestService [
 
 	self subclassResponsibility
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 TestExecutionEnvironmentTestCase >> newProcess: aName toImmediatelyExecute: aBlock [
 	| newProcess |
 	newProcess := aBlock newProcess.
@@ -30,7 +32,7 @@ TestExecutionEnvironmentTestCase >> newProcess: aName toImmediatelyExecute: aBlo
 	^newProcess
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 TestExecutionEnvironmentTestCase >> runCaseManaged [
 	"Here we are testing the test environment logic.
 	So we should disable it for ourselves"
@@ -38,7 +40,7 @@ TestExecutionEnvironmentTestCase >> runCaseManaged [
 	^DefaultExecutionEnvironment beActiveDuring: [ self runCase]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 TestExecutionEnvironmentTestCase >> runWithNoHandlers: aBlock [
 	"Executing the given block directly would go through all handlers of SUnit machinery.
 	Here we simulate the clean environment with no outer handlers for possible block errors"
@@ -52,7 +54,7 @@ TestExecutionEnvironmentTestCase >> runWithNoHandlers: aBlock [
 	^result
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 TestExecutionEnvironmentTestCase >> setUp [
 	super setUp.
 	processes := OrderedCollection new.
@@ -63,7 +65,7 @@ TestExecutionEnvironmentTestCase >> setUp [
 	executionEnvironment registerService: testService
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 TestExecutionEnvironmentTestCase >> tearDown [
 
 	executionEnvironment deactivated. "for the case if we activated environment during test"
@@ -72,7 +74,7 @@ TestExecutionEnvironmentTestCase >> tearDown [
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TestExecutionEnvironmentTestCase >> testCleanUpShouldRevertServiceToBeEnabledByDefault [
 
 	testService isEnabled: testService isEnabledByDefault not.
@@ -82,7 +84,7 @@ TestExecutionEnvironmentTestCase >> testCleanUpShouldRevertServiceToBeEnabledByD
 	self assert: testService isEnabled equals: testService isEnabledByDefault
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TestExecutionEnvironmentTestCase >> testIsEnabledByDefault [
 
 	testService := self createTestService.

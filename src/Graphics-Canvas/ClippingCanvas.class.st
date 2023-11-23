@@ -2,60 +2,57 @@
 A modified canvas which clips all drawing commands.
 "
 Class {
-	#name : #ClippingCanvas,
-	#superclass : #PluggableCanvas,
+	#name : 'ClippingCanvas',
+	#superclass : 'PluggableCanvas',
 	#instVars : [
 		'canvas',
 		'clipRect'
 	],
-	#category : #'Graphics-Canvas-Canvases'
+	#category : 'Graphics-Canvas-Canvases',
+	#package : 'Graphics-Canvas',
+	#tag : 'Canvases'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClippingCanvas class >> canvas: aCanvas  clipRect: aRectangle [
 	^self new canvas: aCanvas  clipRect: aRectangle
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ClippingCanvas >> apply: aBlock [
 	"apply the given block to the inner canvas with clipRect as the clipping rectangle"
 	canvas clipBy: clipRect during: aBlock
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClippingCanvas >> canvas: aCanvas  clipRect: aRectangle [
 	canvas := aCanvas.
 	clipRect := aRectangle
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClippingCanvas >> clipRect [
 	^clipRect
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClippingCanvas >> contentsOfArea: aRectangle into: aForm [
 	self flag: #hack.    "ignore the clipping specification for this command.  This is purely so that CachingCanvas will work properly when clipped.  There *has* to be a clean way to do this...."
 
 	^canvas contentsOfArea: aRectangle into: aForm
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClippingCanvas >> form [
 	^canvas form
 ]
 
-{ #category : #testing }
-ClippingCanvas >> isBalloonCanvas [
-	^canvas isBalloonCanvas
-]
-
-{ #category : #testing }
+{ #category : 'testing' }
 ClippingCanvas >> isShadowDrawing [
 	^canvas isShadowDrawing
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClippingCanvas >> shadowColor [
 	^canvas shadowColor
 ]

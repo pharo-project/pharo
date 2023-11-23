@@ -1,25 +1,26 @@
 Class {
-	#name : #MCGitHubRepository,
-	#superclass : #MCGitBasedNetworkRepository,
+	#name : 'MCGitHubRepository',
+	#superclass : 'MCGitBasedNetworkRepository',
 	#classVars : [
 		'CacheDirectory',
 		'DownloadCache',
 		'ETagsCache'
 	],
-	#category : #'Metacello-GitHub'
+	#category : 'Metacello-GitHub',
+	#package : 'Metacello-GitHub'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCGitHubRepository class >> basicDescription [
   ^ 'github'
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MCGitHubRepository class >> basicFromUrl: aZnUrl [ 
 	^ self location: aZnUrl asString
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCGitHubRepository class >> cacheDirectory [
   "use class var to survive upgrade when MCGitHubRepository moved to subclass of MCGitBasedRepository"
 
@@ -27,19 +28,20 @@ MCGitHubRepository class >> cacheDirectory [
   ^ CacheDirectory ifNil: [ self defaultCacheDirectory ].
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCGitHubRepository class >> cacheDirectory: aDirectory [
   "use class var to survive upgrade when MCGitHubRepository moved to subclass of MCGitBasedRepository"
 
   CacheDirectory := aDirectory
 ]
 
-{ #category : #'instance creation' }
-MCGitHubRepository class >> createRepositoryFromSpec: aRepositorySpec on: aPlatform [
-	^ aPlatform createGithubRepository: aRepositorySpec
+{ #category : 'instance creation' }
+MCGitHubRepository class >> createRepositoryFromSpec: aRepositorySpec [
+
+	^ self location: aRepositorySpec description
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCGitHubRepository class >> downloadCache [
   "use class var to survive upgrade when MCGitHubRepository moved to subclass of MCGitBasedRepository"
 
@@ -47,7 +49,7 @@ MCGitHubRepository class >> downloadCache [
   ^ DownloadCache
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCGitHubRepository class >> eTagsCache [
   "To avoid GitHub rate limiting problems, we are caching the ETags for the tag request: https://developer.github.com/v3/#conditional-requests"
 
@@ -55,7 +57,7 @@ MCGitHubRepository class >> eTagsCache [
   ^ ETagsCache
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MCGitHubRepository class >> flushDownloadCache [
   "use class var to survive upgrade when MCGitHubRepository moved to subclass of MCGitBasedRepository"
 
@@ -64,7 +66,7 @@ MCGitHubRepository class >> flushDownloadCache [
   DownloadCache := nil
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MCGitHubRepository class >> flushETagsCache [
   "mainly needed for tests .... but if you want to pare down object consumption..."
 
@@ -73,23 +75,23 @@ MCGitHubRepository class >> flushETagsCache [
   ETagsCache := nil
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCGitHubRepository class >> isAvailableFor: type [
 	^ type = 'github'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCGitHubRepository class >> isEnabled [
 
 	^true
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCGitHubRepository class >> projectZipUrlFor: projectPath versionString: versionString [
   ^ 'https://github.com/' , projectPath , '/zipball/' , versionString
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCGitHubRepository class >> resetCacheDirectoryIfInvalid [
   "use class var to survive upgrade when MCGitHubRepository moved to subclass of MCGitBasedRepository"
 
@@ -101,25 +103,35 @@ MCGitHubRepository class >> resetCacheDirectoryIfInvalid [
         ifFalse: [ CacheDirectory := nil ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCGitHubRepository class >> urlSchemes [
 	^ #(github)
 ]
 
-{ #category : #private }
-MCGitHubRepository >> downloadJSONTags [
-  | tagsUrl jsonObject |
-  tagsUrl := self projectTagsUrlFor: self projectPath.
-  jsonObject := MetacelloPlatform current
-    downloadJSON: tagsUrl
-    eTagsCache: self class eTagsCache
-    eTagsKey: self projectPath
-    username: self class siteUsername
-    pass: self class sitePassword.
-  ^ self normalizeTagsData: jsonObject
+{ #category : 'private' }
+MCGitHubRepository >> downloadJSON: url eTagsCache: eTagsCache eTagsKey: eTagsKey username: username pass: pass [
+	"return result of parsing JSON downloaded from url. username:pass may be nil, but calls will be subject to severe rate limits."
+
+	"To minimize GitHub rate limiting problems, we are caching the ETags for the tag request: https://developer.github.com/v3/#conditional-requests"
+
+	^ self downloadJSON: url username: username pass: pass
 ]
 
-{ #category : #private }
+{ #category : 'private' }
+MCGitHubRepository >> downloadJSONTags [
+
+	| tagsUrl jsonObject |
+	tagsUrl := self projectTagsUrlFor: self projectPath.
+	jsonObject := self
+		              downloadJSON: tagsUrl
+		              eTagsCache: self class eTagsCache
+		              eTagsKey: self projectPath
+		              username: self class siteUsername
+		              pass: self class sitePassword.
+	^ self normalizeTagsData: jsonObject
+]
+
+{ #category : 'private' }
 MCGitHubRepository >> normalizeTagsData: jsonObject [
   "return a dictionay mapping the tag name to the commit SHA"
 
@@ -143,7 +155,7 @@ MCGitHubRepository >> normalizeTagsData: jsonObject [
   ^ tagDict
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCGitHubRepository >> projectTagsUrlFor: projectPath2 [
   ^ 'https://api.github.com/repos/' , projectPath2 , '/tags'
 ]

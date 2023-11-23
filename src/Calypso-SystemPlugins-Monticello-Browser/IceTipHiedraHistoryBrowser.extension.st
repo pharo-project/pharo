@@ -1,6 +1,6 @@
-Extension { #name : #IceTipHiedraHistoryBrowser }
+Extension { #name : 'IceTipHiedraHistoryBrowser' }
 
-{ #category : #'*Calypso-SystemPlugins-Monticello-Browser' }
+{ #category : '*Calypso-SystemPlugins-Monticello-Browser' }
 IceTipHiedraHistoryBrowser class >> calypsoCommandsWith: presenter forRootGroup: aCommandGroup [
 	<extensionCommands>
 

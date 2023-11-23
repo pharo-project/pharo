@@ -2,8 +2,8 @@
 I represent a paragraph of a text area
 "
 Class {
-	#name : #RubParagraph,
-	#superclass : #Object,
+	#name : 'RubParagraph',
+	#superclass : 'Object',
 	#instVars : [
 		'text',
 		'composer',
@@ -11,19 +11,21 @@ Class {
 		'drawingEnabled',
 		'textArea'
 	],
-	#category : #'Rubric-Editing-Core'
+	#category : 'Rubric-Editing-Core',
+	#package : 'Rubric',
+	#tag : 'Editing-Core'
 }
 
-{ #category : #querying }
+{ #category : 'querying' }
 RubParagraph class >> key [
 	^ nil
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RubParagraph >> aboutToBeUnplugged [
 ]
 
-{ #category : #editing }
+{ #category : 'editing' }
 RubParagraph >> actionAttributesUnder: aClickPoint event: anEvent do: aBlock [
 	|startBlock|
 
@@ -38,12 +40,12 @@ RubParagraph >> actionAttributesUnder: aClickPoint event: anEvent do: aBlock [
 			boxes detect: [:each | each containsPoint: aClickPoint] ifFound: [ aBlock cull: attribute cull: boxes ]]
 ]
 
-{ #category : #'accessing - composer' }
+{ #category : 'accessing - composer' }
 RubParagraph >> actualWidth [
 	^ self composer actualWidth
 ]
 
-{ #category : #'geometry updating' }
+{ #category : 'geometry updating' }
 RubParagraph >> adjustBottomY [
 	| heights  bottomY verticalSize |
 	heights := self lines collect: [ :each | each lineHeight ].
@@ -52,7 +54,7 @@ RubParagraph >> adjustBottomY [
 	self container: (self container withBottom: bottomY truncated)
 ]
 
-{ #category : #'geometry updating' }
+{ #category : 'geometry updating' }
 RubParagraph >> adjustRightX [
 	| shrink |
 	shrink := self container right - self maxRightX.
@@ -60,7 +62,7 @@ RubParagraph >> adjustRightX [
 	self container: (self container withRight: self maxRightX)
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 RubParagraph >> characterBlockAtPoint: aPoint [
 	"Answer a CharacterBlock for the character in the text at aPoint."
 	| line |
@@ -70,7 +72,7 @@ RubParagraph >> characterBlockAtPoint: aPoint [
 		in: line
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 RubParagraph >> characterBlockForIndex: index [
 	"Answer a CharacterBlock for the character in text at index."
 	| line |
@@ -80,7 +82,7 @@ RubParagraph >> characterBlockForIndex: index [
 		in: line
 ]
 
-{ #category : #editing }
+{ #category : 'editing' }
 RubParagraph >> click: anEvent for: model controller: editor [
 	"Give sensitive text a chance to fire.  Display flash: (100@100 extent: 100@100)."
 
@@ -100,12 +102,12 @@ RubParagraph >> click: anEvent for: model controller: editor [
 	^ action
 ]
 
-{ #category : #'accessing - text area' }
+{ #category : 'accessing - text area' }
 RubParagraph >> closingDelimiters [
 	^ textArea closingDelimiters
 ]
 
-{ #category : #composition }
+{ #category : 'composition' }
 RubParagraph >> compose [
 	self
 		disableDrawingWhile: [
@@ -119,12 +121,12 @@ RubParagraph >> compose [
 			textArea ifNotNil: [ textArea paragraphWasComposedFrom: 1 to: self text size ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubParagraph >> composer [
 	^ composer ifNil: [ composer := self newComposer ]
 ]
 
-{ #category : #composition }
+{ #category : 'composition' }
 RubParagraph >> compositionExtent [
 	"Return the bounds for composing this text.  There are two cases:
 	1.  wrapped is true -- grow downward as necessary,
@@ -135,7 +137,7 @@ RubParagraph >> compositionExtent [
 		ifFalse: [ RubAbstractTextArea defaultMaxExtent @ RubAbstractTextArea defaultMaxExtent ]) max: self minimumCompositionExtent
 ]
 
-{ #category : #composition }
+{ #category : 'composition' }
 RubParagraph >> compositionRectangle [
 	| e tl |
 	e := self compositionExtent.
@@ -143,46 +145,46 @@ RubParagraph >> compositionRectangle [
 	^ tl corner: (tl x + e x - self margins right - (self margins left max: self cursorWidth)) @ e y
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubParagraph >> container [
 	^ container
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubParagraph >> container: atextContainerOrRectangle [
 	container := atextContainerOrRectangle
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 RubParagraph >> containsPoint: aPoint [
 	^ (self lines at: (self lineIndexForPoint: aPoint)) rectangle
 		containsPoint: aPoint
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 RubParagraph >> copy [
 
 	^ self error: 'A ParagraphHandler should never be copied'
 ]
 
-{ #category : #'accessing - text area' }
+{ #category : 'accessing - text area' }
 RubParagraph >> cursorWidth [
 	^ textArea cursorWidth
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 RubParagraph >> decoratorNamed: aKey [
 	^ nil
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 RubParagraph >> deepCopy [
 	"Don't want to copy the container (etc) or fonts in the TextStyle."
 
 	^ self error: 'A ParagraphHandler should never be deep copied'
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 RubParagraph >> defaultCharacterBlock [
 	^ (RubCharacterBlock new
 		stringIndex: 1
@@ -190,22 +192,22 @@ RubParagraph >> defaultCharacterBlock [
 		extent: 0 @ 0) textLine: self lines first
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RubParagraph >> defaultEmptyText [
 	^ Text string: '' attributes: { self defaultFontChange }
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RubParagraph >> defaultFontChange [
 	^ (TextFontChange fontNumber: self textStyle defaultFontIndex)
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 RubParagraph >> disableDrawing [
 	drawingEnabled := false
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 RubParagraph >> disableDrawingWhile: aBlock [
 	self drawingEnabled ifFalse: [ ^ aBlock value ].
 	self disableDrawing.
@@ -213,7 +215,7 @@ RubParagraph >> disableDrawingWhile: aBlock [
 		ensure: [ self enableDrawing ]
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 RubParagraph >> displayTextOnAthensCanvas: anAthensCanvas in: aRectangle [
 	| athensDisplayScanner offset leftInRun |
 	anAthensCanvas clipBy: aRectangle during:[
@@ -229,7 +231,7 @@ RubParagraph >> displayTextOnAthensCanvas: anAthensCanvas in: aRectangle [
 						ifTrue: [ leftInRun := athensDisplayScanner displayLine: line offset: offset leftInRun: leftInRun ] ] ] ]
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 RubParagraph >> drawOn: aCanvas using: aDisplayScanner at: aPosition [
 	"Send all visible lines to the displayScanner for display"
 
@@ -237,31 +239,31 @@ RubParagraph >> drawOn: aCanvas using: aDisplayScanner at: aPosition [
 	self drawingEnabled
 		ifFalse: [ ^ self ].
 	visibleRectangle := aCanvas clipRect.
-	offset := (aPosition - self position) truncated.
+	offset := (aPosition - (self position * aDisplayScanner scale)) truncated.
 	leftInRun := 0.
-	(self lineIndexForPoint: visibleRectangle topLeft) to: (self lineIndexForPoint: visibleRectangle bottomRight) do: [ :i |
+	(self lineIndexForPoint: visibleRectangle topLeft scale: aDisplayScanner scale) to: (self lineIndexForPoint: visibleRectangle bottomRight scale: aDisplayScanner scale) do: [ :i |
 		line := self lines at: i.
 		line first <= line last
 			ifTrue: [ leftInRun := aDisplayScanner displayLine: line offset: offset leftInRun: leftInRun ] ]
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 RubParagraph >> drawOnAthensCanvas: aCanvas bounds: aRectangle color: aColor [
 	aCanvas setPaint: aColor.
 	self displayTextOnAthensCanvas: aCanvas in: aRectangle
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 RubParagraph >> drawingEnabled [
 	^ drawingEnabled ifNil: [ drawingEnabled := true ]
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 RubParagraph >> enableDrawing [
 	drawingEnabled := true
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 RubParagraph >> extent [
 	self actualWidth ifNil: [ ^ self minimumExtent ].
 	"lines empty check as workaround: lots of crashes on the CI, see github case 3879"
@@ -270,7 +272,7 @@ RubParagraph >> extent [
 			(self lines last bottom - self lines first top + self margins top + self margins bottom)
 ]
 
-{ #category : #'geometry updating' }
+{ #category : 'geometry updating' }
 RubParagraph >> extentFromClientBottomRight: aPoint [
 	| w newExtent |
 	self wrapped
@@ -282,22 +284,22 @@ RubParagraph >> extentFromClientBottomRight: aPoint [
 	^ newExtent x @ self extent y
 ]
 
-{ #category : #'geometry updating' }
+{ #category : 'geometry updating' }
 RubParagraph >> extentFromClientWidth: anInteger [
 	^ self extentFromClientBottomRight: (anInteger @ self extent y)
 ]
 
-{ #category : #'mock selection' }
+{ #category : 'mock selection' }
 RubParagraph >> findRegex [
 	^ nil
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 RubParagraph >> firstLineCharacterIndexFromCharacterIndex: anIndex [
 	^ (self lines at: (self lineIndexOfCharacterIndex: anIndex)) first
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 RubParagraph >> firstNonBlankCharacterBlockInLine: aLine [
 	| idx str blanks |
 	idx := aLine first.
@@ -312,30 +314,30 @@ RubParagraph >> firstNonBlankCharacterBlockInLine: aLine [
 	^ self characterBlockForIndex: aLine last
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 RubParagraph >> forLinesIn: aVisibleRect do: aBlock [
 	(self lineIndexForPoint: aVisibleRect topLeft) to:
 	(self lineIndexForPoint: aVisibleRect bottomRight) do:
 		[:i | aBlock value: (self lines at: i) ]
 ]
 
-{ #category : #composition }
+{ #category : 'composition' }
 RubParagraph >> forceCompose [
 	self uptodateComposer prepareToForceComposition.
 	self compose
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 RubParagraph >> hasDecorator: aDecorator [
 	^ false
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 RubParagraph >> hasDecoratorNamed: aKey [
 	^ false
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 RubParagraph >> indentationOfLineIndex: lineIndex ifBlank: aBlock [
 	"Answer the number of leading tabs in the line at lineIndex.  If there are
 	 no visible characters, pass the number of tabs to aBlock and return its value.
@@ -344,18 +346,18 @@ RubParagraph >> indentationOfLineIndex: lineIndex ifBlank: aBlock [
 	^ self composer indentationOfLineIndex: lineIndex ifBlank: aBlock
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RubParagraph >> initialize [
 	super initialize.
 	drawingEnabled := true
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 RubParagraph >> key [
 	^self class key
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 RubParagraph >> lastLineCharacterIndexFromCharacterIndex: anIndex [
 	| targetLine |
 	targetLine := self lines at: (self lineIndexOfCharacterIndex: anIndex).
@@ -364,7 +366,7 @@ RubParagraph >> lastLineCharacterIndexFromCharacterIndex: anIndex [
 		ifFalse: [ targetLine last ]
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 RubParagraph >> lastNonBlankCharacterBlockInLine: aLine [
 	| idx str blanks |
 	idx := aLine last.
@@ -378,51 +380,57 @@ RubParagraph >> lastNonBlankCharacterBlockInLine: aLine [
 	^ self characterBlockForIndex: aLine first
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 RubParagraph >> lineIndexForPoint: aPoint [
-	"Answer the index of the line in which to select the character nearest to aPoint."
-	^ self composer lineIndexForPoint: aPoint
+
+	^ self lineIndexForPoint: aPoint scale: 1
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
+RubParagraph >> lineIndexForPoint: aPoint scale: scale [
+	"Answer the index of the line in which to select the character nearest to aPoint."
+	^ self composer lineIndexForPoint: aPoint scale: scale
+]
+
+{ #category : 'querying' }
 RubParagraph >> lineIndexOfCharacterIndex: characterIndex [
 	"Answer the line index for a given characterIndex."
 	"apparently the selector changed with NewParagraph"
 	^ self composer lineIndexOfCharacterIndex: characterIndex
 ]
 
-{ #category : #'accessing - composer' }
+{ #category : 'accessing - composer' }
 RubParagraph >> lines [
 	^ self composer lines
 ]
 
-{ #category : #'accessing - text area' }
+{ #category : 'accessing - text area' }
 RubParagraph >> margins [
 	^textArea margins
 ]
 
-{ #category : #'accessing - composer' }
+{ #category : 'accessing - composer' }
 RubParagraph >> maxRightX [
 	^ self composer maxRightX
 ]
 
-{ #category : #composition }
+{ #category : 'composition' }
 RubParagraph >> minimumCompositionExtent [
 
 	^ self minimumExtent x - self margins left @ self minimumExtent y
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 RubParagraph >> minimumExtent [
 	^ textArea minimumExtent
 ]
 
-{ #category : #'accessing - text area' }
+{ #category : 'accessing - text area' }
 RubParagraph >> model [
 	^ textArea model
 ]
 
-{ #category : #editing }
+{ #category : 'editing' }
 RubParagraph >> move: anEvent for: model controller: editor [
 	"Give sensitive text a chance to fire.  Display flash: (100@100 extent: 100@100)."
 
@@ -443,7 +451,7 @@ RubParagraph >> move: anEvent for: model controller: editor [
 	^ action
 ]
 
-{ #category : #'geometry updating' }
+{ #category : 'geometry updating' }
 RubParagraph >> moveBy: aPoint [
 	container := container translateBy: aPoint.
 	self composer moveBy: aPoint.
@@ -451,55 +459,55 @@ RubParagraph >> moveBy: aPoint [
 	textArea invalidRect: (self position extent: self extent)
 ]
 
-{ #category : #'accessing - composer' }
+{ #category : 'accessing - composer' }
 RubParagraph >> newComposer [
 	^ RubTextComposer new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubParagraph >> next [
 	^nil
 ]
 
-{ #category : #'accessing - composer' }
+{ #category : 'accessing - composer' }
 RubParagraph >> numberOfLines [
 
 	^ self lines size
 ]
 
-{ #category : #'accessing - composer' }
+{ #category : 'accessing - composer' }
 RubParagraph >> numberOfPhysicalLines [
 
 	^ self composer numberOfPhysicalLines
 ]
 
-{ #category : #'accessing - text area' }
+{ #category : 'accessing - text area' }
 RubParagraph >> openingDelimiters [
 	^ textArea openingDelimiters
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubParagraph >> paragraph [
 	^ self
 ]
 
-{ #category : #'accessing - text area' }
+{ #category : 'accessing - text area' }
 RubParagraph >> pointIndex [
 	^ textArea pointIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubParagraph >> position [
 	^ container topLeft
 ]
 
-{ #category : #composition }
+{ #category : 'composition' }
 RubParagraph >> recomposeFrom: start to: stop delta: delta [
 	self
 		disableDrawingWhile: [ 	self composer recomposeFrom: start to: stop delta: delta ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RubParagraph >> releaseComposer [
 	composer
 		ifNotNil: [ :c |
@@ -507,7 +515,7 @@ RubParagraph >> releaseComposer [
 			composer := nil ]
 ]
 
-{ #category : #editing }
+{ #category : 'editing' }
 RubParagraph >> replaceFrom: start to: stop with: aText [
 	"Edit the text, and then recompose the lines."
 
@@ -520,23 +528,23 @@ RubParagraph >> replaceFrom: start to: stop with: aText [
 			textArea paragraphReplacedTextFrom: start to: stop with: aText ]
 ]
 
-{ #category : #editing }
+{ #category : 'editing' }
 RubParagraph >> replaceFrom: start to: stop with: aText displaying: displayBoolean [
 	"Edit the text, and then recompose the lines."
 	self composer replaceFrom: start to: stop with: aText
 ]
 
-{ #category : #'accessing - text area' }
+{ #category : 'accessing - text area' }
 RubParagraph >> scrollPane [
 	^ textArea scrollPane
 ]
 
-{ #category : #'mock selection' }
+{ #category : 'mock selection' }
 RubParagraph >> selection [
 	^ self textArea selection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubParagraph >> selectionRects [
 	"Return an array of rectangles representing the selection region."
 
@@ -545,7 +553,7 @@ RubParagraph >> selectionRects [
 		ifNotNil: [ self selectionRectsFrom: self selectionStart to: self selectionStop ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubParagraph >> selectionRectsFrom: characterBlock1 to: characterBlock2 [
 	"Return an array of rectangles representing the area between the two character blocks given as arguments."
 
@@ -581,27 +589,27 @@ RubParagraph >> selectionRectsFrom: characterBlock1 to: characterBlock2 [
 			strm nextPut: ((self lines at: line2) topLeft corner: cb2 bottomLeft) ]
 ]
 
-{ #category : #'accessing - text area' }
+{ #category : 'accessing - text area' }
 RubParagraph >> selectionStart [
 	^ textArea selectionStart
 ]
 
-{ #category : #'accessing - text area' }
+{ #category : 'accessing - text area' }
 RubParagraph >> selectionStop [
 	^ textArea selectionStop
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubParagraph >> string [
 	^ self text string
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubParagraph >> tabWidth [
 	^ self textStyle rubTabWidth
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubParagraph >> tabWidth: anInteger [
 	| newTextStyle tabsArray |
 	newTextStyle := self textStyle copy.
@@ -613,47 +621,47 @@ RubParagraph >> tabWidth: anInteger [
 	self textArea recomputeSelection; changed
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubParagraph >> text [
 	^ text ifNil: [ text := self defaultEmptyText ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubParagraph >> text: aText [
 	(aText string notEmpty and: [aText runs isEmpty])
 		ifTrue: [ aText runs: (Array with: self defaultFontChange) ].
 	text := aText
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubParagraph >> textArea [
 	^ textArea
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubParagraph >> textArea: aClient [
 	"Classically, the client is a Morph which holds the text, the textstyle, the textColor.
 	client must never be nil except when I'm released"
 	textArea := aClient
 ]
 
-{ #category : #'accessing - text area' }
+{ #category : 'accessing - text area' }
 RubParagraph >> textStyle [
 	^ textArea textStyle
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubParagraph >> theme [
 	^ UITheme current
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 RubParagraph >> totalTextHeight [
 
 	^self lines last bottom
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RubParagraph >> unplug [
 	self releaseComposer.
 	textArea := nil.
@@ -661,12 +669,12 @@ RubParagraph >> unplug [
 	super unplug
 ]
 
-{ #category : #'geometry updating' }
+{ #category : 'geometry updating' }
 RubParagraph >> updateClientExtent [
 	textArea updateExtentFromParagraph
 ]
 
-{ #category : #'accessing - composer' }
+{ #category : 'accessing - composer' }
 RubParagraph >> uptodateComposer [
 	^ self composer
 		text: self text;
@@ -677,7 +685,7 @@ RubParagraph >> uptodateComposer [
 		yourself
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 RubParagraph >> verticesFrom: firstIndex to: lastIndex [
 	| firstCB lastCB firstLineIndex lastLineIndex firstLine lastLine vertices secondLine thirdLine |
 	firstCB := self characterBlockForIndex: firstIndex.
@@ -711,19 +719,19 @@ RubParagraph >> verticesFrom: firstIndex to: lastIndex [
 	^ vertices
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 RubParagraph >> width [
 	^  self wrapped
 		ifTrue: [ self container right  -  (self container insetBy: self margins) topLeft x]
 		ifFalse: [ RubAbstractTextArea defaultMaxExtent ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubParagraph >> withoutDecorator [
 	^ self
 ]
 
-{ #category : #'accessing - text area' }
+{ #category : 'accessing - text area' }
 RubParagraph >> wrapped [
 	^ textArea wrapped
 ]

@@ -4,18 +4,19 @@ I am a copy of class ClassDeprecationMetaLinkTest. This comment is copied from t
 This class contains tests
 "
 Class {
-	#name : #ClassDeprecationMetaLinkInstallerTest,
-	#superclass : #ClassDeprecationTest,
-	#category : #'ClassDeprecation-Tests'
+	#name : 'ClassDeprecationMetaLinkInstallerTest',
+	#superclass : 'ClassDeprecationTest',
+	#category : 'ClassDeprecation-Tests',
+	#package : 'ClassDeprecation-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClassDeprecationMetaLinkInstallerTest >> setUp [
 	super setUp.
 	referencingClass compile: referencingOriginalSource
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassDeprecationMetaLinkInstallerTest >> testVisit [
 	| globalNodes |
 	globalNodes := self globalNodes: referencingClass >> #references.

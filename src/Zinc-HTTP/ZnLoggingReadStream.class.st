@@ -21,25 +21,27 @@ ZnZincServerAdaptor default server reader: [ :stream | ZnRequest readBinaryFrom:
 Part of Zinc HTTP Components.
 "
 Class {
-	#name : #ZnLoggingReadStream,
-	#superclass : #Object,
+	#name : 'ZnLoggingReadStream',
+	#superclass : 'Object',
 	#instVars : [
 		'stream',
 		'logger',
 		'identifier',
 		'logLevel'
 	],
-	#category : #'Zinc-HTTP-Streaming'
+	#category : 'Zinc-HTTP-Streaming',
+	#package : 'Zinc-HTTP',
+	#tag : 'Streaming'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnLoggingReadStream class >> on: binaryReadStream [
 	^ self new
 		on: binaryReadStream;
 		yourself
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnLoggingReadStream >> atEnd [
 	| boolean |
 	boolean := stream atEnd.
@@ -49,30 +51,30 @@ ZnLoggingReadStream >> atEnd [
 	^ boolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnLoggingReadStream >> collectionSpecies [
 	^ ByteArray
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 ZnLoggingReadStream >> identifier: string [
 	identifier := string
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ZnLoggingReadStream >> initialize [
 	super initialize.
-	logger := [ :string | Transcript crShow: string ].
+	logger := [ :string | string traceCr ].
 	identifier := self class name asString.
 	logLevel := 1
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnLoggingReadStream >> isBinary [
 	^ true
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 ZnLoggingReadStream >> logLevel: integer [
 	"logLevel 1 logs reads with next and friends
 	logLevl 2 logs peek and atEnd too"
@@ -80,12 +82,12 @@ ZnLoggingReadStream >> logLevel: integer [
 	logLevel := integer
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 ZnLoggingReadStream >> logger: oneArgumentBlock [
 	logger := oneArgumentBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnLoggingReadStream >> next [
 	| byte |
 	byte := stream next.
@@ -95,7 +97,7 @@ ZnLoggingReadStream >> next [
 	^ byte
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnLoggingReadStream >> next: requestedCount [
 	"Read requestedCount elements into new collection and return it,
 	 it could be that less elements were available"
@@ -105,7 +107,7 @@ ZnLoggingReadStream >> next: requestedCount [
 		into: (self collectionSpecies new: requestedCount)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnLoggingReadStream >> next: requestedCount into: collection [
 	"Read requestedCount elements into collection,
 	returning a copy if less elements are available"
@@ -116,7 +118,7 @@ ZnLoggingReadStream >> next: requestedCount into: collection [
 		startingAt: 1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnLoggingReadStream >> next: requestedCount into: collection startingAt: offset [
 	"Read requestedCount elements into collection starting at offset,
 	returning a copy if less elements are available"
@@ -131,12 +133,12 @@ ZnLoggingReadStream >> next: requestedCount into: collection startingAt: offset 
 		ifFalse: [ collection copyFrom: 1 to: offset + readCount - 1 ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 ZnLoggingReadStream >> on: binaryReadStream [
 	stream := binaryReadStream
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnLoggingReadStream >> peek [
 	| byte |
 	byte := stream peek.
@@ -148,7 +150,7 @@ ZnLoggingReadStream >> peek [
 	^ byte
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnLoggingReadStream >> readInto: collection startingAt: offset count: count [
 	"Read count elements and place them in collection starting at offset.
 	Return the number of elements actually read."
@@ -168,12 +170,12 @@ ZnLoggingReadStream >> readInto: collection startingAt: offset count: count [
 	^ bytesRead
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnLoggingReadStream >> upToEnd [
 	^ ZnUtils readUpToEnd: self limit: nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnLoggingReadStream >> wrappedStream [
 	^ stream
 ]

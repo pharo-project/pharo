@@ -2,8 +2,8 @@
 i holding a collection of various key/button modifier flags, usually carried by certain events and accessible through #modifiers message.
 "
 Class {
-	#name : #OSStateModifiers,
-	#superclass : #Object,
+	#name : 'OSStateModifiers',
+	#superclass : 'Object',
 	#instVars : [
 		'leftShift',
 		'rightShift',
@@ -17,115 +17,117 @@ Class {
 		'numLock',
 		'buttons'
 	],
-	#category : #'OSWindow-Core-Events'
+	#category : 'OSWindow-Core-Events',
+	#package : 'OSWindow-Core',
+	#tag : 'Events'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSStateModifiers >> alt [
 	^ leftAlt or: [  rightAlt ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSStateModifiers >> any [
 
 	^ self cmd | self alt | self ctrl
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSStateModifiers >> buttons [
 	^ buttons
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSStateModifiers >> capsLock [
 
 	^ capsLock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSStateModifiers >> capsLock: anObject [
 
 	capsLock := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSStateModifiers >> cmd [
 	^ leftCmd or: [  rightCmd ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSStateModifiers >> ctrl [
 	^ leftCtrl or: [  rightCtrl ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OSStateModifiers >> initialize [
 	leftAlt := leftCmd := leftCtrl := leftShift := rightAlt := rightCmd := rightCtrl := rightShift :=
 	capsLock := numLock := false.
 	buttons := OSButtonState new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSStateModifiers >> leftAlt [
 
 	^ leftAlt
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSStateModifiers >> leftAlt: anObject [
 
 	leftAlt := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSStateModifiers >> leftCmd [
 
 	^ leftCmd
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSStateModifiers >> leftCmd: anObject [
 
 	leftCmd := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSStateModifiers >> leftCtrl [
 
 	^ leftCtrl
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSStateModifiers >> leftCtrl: anObject [
 
 	leftCtrl := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSStateModifiers >> leftShift [
 
 	^ leftShift
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSStateModifiers >> leftShift: anObject [
 
 	leftShift := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSStateModifiers >> numLock [
 
 	^ numLock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSStateModifiers >> numLock: anObject [
 
 	numLock := anObject
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 OSStateModifiers >> printOn: aStream [
 	aStream nextPutAll: self class name; space; nextPut: $[.
 	leftAlt ifTrue: [ aStream nextPutAll: 'leftAlt'; space ].
@@ -142,55 +144,55 @@ OSStateModifiers >> printOn: aStream [
 	aStream nextPut: $]; space; print: buttons
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSStateModifiers >> rightAlt [
 
 	^ rightAlt
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSStateModifiers >> rightAlt: anObject [
 
 	rightAlt := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSStateModifiers >> rightCmd [
 
 	^ rightCmd
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSStateModifiers >> rightCmd: anObject [
 
 	rightCmd := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSStateModifiers >> rightCtrl [
 
 	^ rightCtrl
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSStateModifiers >> rightCtrl: anObject [
 
 	rightCtrl := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSStateModifiers >> rightShift [
 
 	^ rightShift
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSStateModifiers >> rightShift: anObject [
 
 	rightShift := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSStateModifiers >> shift [
 	^ leftShift or: [  rightShift ]
 ]

@@ -1,6 +1,6 @@
-Extension { #name : #UndefinedObjectTest }
+Extension { #name : 'UndefinedObjectTest' }
 
-{ #category : #'*Kernel-Tests-WithCompiler' }
+{ #category : '*Kernel-Tests-WithCompiler' }
 UndefinedObjectTest >> testStoreOnRoundTrip [
 	| string |
 	string := String streamContents: [ :stream | nil storeOn: stream ].

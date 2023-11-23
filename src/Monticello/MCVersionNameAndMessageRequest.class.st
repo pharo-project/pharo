@@ -2,33 +2,35 @@
 Notify to requests for version name and message
 "
 Class {
-	#name : #MCVersionNameAndMessageRequest,
-	#superclass : #Notification,
+	#name : 'MCVersionNameAndMessageRequest',
+	#superclass : 'Notification',
 	#instVars : [
 		'suggestion',
 		'suggestedLogComment'
 	],
-	#category : #'Monticello-Versioning'
+	#category : 'Monticello-Versioning',
+	#package : 'Monticello',
+	#tag : 'Versioning'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCVersionNameAndMessageRequest >> suggestedLogComment [
 
 	^ suggestedLogComment
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCVersionNameAndMessageRequest >> suggestedLogComment: aLogMessage [
 
 	suggestedLogComment := aLogMessage
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCVersionNameAndMessageRequest >> suggestedName [
 	^ suggestion
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCVersionNameAndMessageRequest >> suggestedName: aString [
 	suggestion := aString
 ]

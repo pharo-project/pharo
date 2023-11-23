@@ -1,14 +1,16 @@
 Class {
-	#name : #MetaLinkRegistryTest,
-	#superclass : #ReflectivityTestCase,
+	#name : 'MetaLinkRegistryTest',
+	#superclass : 'ReflectivityTestCase',
 	#instVars : [
 		'registry',
 		'permalink'
 	],
-	#category : #'Reflectivity-Tests-Base'
+	#category : 'Reflectivity-Tests-Base',
+	#package : 'Reflectivity-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 MetaLinkRegistryTest >> setUp [
 
 	super setUp.
@@ -24,7 +26,7 @@ MetaLinkRegistryTest >> setUp [
 			yourself ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetaLinkRegistryTest >> testPermaLinksForMethod [
 	|plinks|
 	plinks := registry permaLinksForMethod: ReflectivityExamples2Subclass>>#useInstVarInSubclass.
@@ -32,7 +34,7 @@ MetaLinkRegistryTest >> testPermaLinksForMethod [
 	self assert: plinks first identicalTo: permalink
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetaLinkRegistryTest >> testSlotSourcesConsiderClassesHierarchy [
 
 	| slotSources |

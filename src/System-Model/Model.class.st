@@ -2,21 +2,23 @@
 Provides optimized model support
 "
 Class {
-	#name : #Model,
-	#superclass : #Object,
+	#name : 'Model',
+	#superclass : 'Object',
 	#instVars : [
 		'dependents',
 		'announcer'
 	],
-	#category : #'System-Model-Base'
+	#category : 'System-Model-Base',
+	#package : 'System-Model',
+	#tag : 'Base'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Model class >> theme [
 	^ Smalltalk ui theme
 ]
 
-{ #category : #dependents }
+{ #category : 'dependents' }
 Model >> addDependent: anObject [
 	"Make the given object one of the receiver's dependents."
 
@@ -26,24 +28,24 @@ Model >> addDependent: anObject [
 	^ anObject
 ]
 
-{ #category : #window }
+{ #category : 'window' }
 Model >> addModelItemsToWindowMenu: aMenu [
 	"aMenu is being constructed to be presented to the user in response to the user's pressing on the menu widget in the title bar of a morphic window.  Here, the model is given the opportunity to add any model-specific items to the menu, whose default target is the SystemWindow itself."
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Model >> announcer [
 
 	^ announcer ifNil: [ announcer := Announcer new ]
 ]
 
-{ #category : #backstops }
+{ #category : 'backstops' }
 Model >> arrowKey: aChar from: view [
 	"backstop; all the PluggableList* classes actually handle arrow keys, and the models handle other keys."
 	^false
 ]
 
-{ #category : #edits }
+{ #category : 'edits' }
 Model >> canDiscardEdits [
 	"Answer true if none of the views on this model has unaccepted edits that matter."
 
@@ -56,7 +58,7 @@ Model >> canDiscardEdits [
 	^ true
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 Model >> changed [
 	"Receiver changed in a general way; inform all the dependents by
 	sending each dependent an update: message."
@@ -64,7 +66,7 @@ Model >> changed [
 	self changed: self
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 Model >> changed: aParameter [
 	"Receiver changed. The change is denoted by the argument aParameter.
 	Usually the argument is a Symbol that is part of the dependent's change
@@ -73,7 +75,7 @@ Model >> changed: aParameter [
 	self dependents do: [:aDependent | aDependent update: aParameter]
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 Model >> changed: anAspect with: anObject [
 	"Receiver changed. The change is denoted by the argument anAspect.
 	Usually the argument is a Symbol that is part of the dependent's change
@@ -82,7 +84,7 @@ Model >> changed: anAspect with: anObject [
 	self dependents do: [:aDependent | aDependent update: anAspect with: anObject]
 ]
 
-{ #category : #dependents }
+{ #category : 'dependents' }
 Model >> dependents [
 	"Answer a collection of objects that are 'dependent' on the receiver;
 	 that is, all objects that should be notified if the receiver changes."
@@ -90,13 +92,13 @@ Model >> dependents [
 	^ self myDependents ifNil: [#()]
 ]
 
-{ #category : #announcing }
+{ #category : 'announcing' }
 Model >> destroyAnnouncer [
 
 	announcer := nil
 ]
 
-{ #category : #edits }
+{ #category : 'edits' }
 Model >> hasUnacceptedEdits [
 	"Answer true if any of the views on this model has unaccepted edits."
 
@@ -111,30 +113,30 @@ Model >> hasUnacceptedEdits [
 	^ false
 ]
 
-{ #category : #window }
+{ #category : 'window' }
 Model >> modelWakeUpIn: aWindow [
 	"A window with me as model is being entered or expanded.  Default response is no-op"
 ]
 
-{ #category : #'dependents-private' }
+{ #category : 'dependents-private' }
 Model >> myDependents [
 
 	^ dependents
 ]
 
-{ #category : #'dependents-private' }
+{ #category : 'dependents-private' }
 Model >> myDependents: aCollectionOrNil [
 
 	dependents := aCollectionOrNil
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 Model >> okToChange [
 	"Allows a controller to ask this of any model"
 	^ true
 ]
 
-{ #category : #dependents }
+{ #category : 'dependents' }
 Model >> removeDependent: anObject [
 	"Remove the given object as one of the receiver's dependents."
 
@@ -145,48 +147,48 @@ Model >> removeDependent: anObject [
 	^ anObject
 ]
 
-{ #category : #backstops }
+{ #category : 'backstops' }
 Model >> selectedClass [
 	"All owners of TextViews are asked this during a doIt"
 	^ nil
 ]
 
-{ #category : #stepping }
+{ #category : 'stepping' }
 Model >> step [
 	"Default for morphic models is no-op"
 ]
 
-{ #category : #stepping }
+{ #category : 'stepping' }
 Model >> stepAt: millisecondClockValue in: aWindow [
 
 	^ self stepIn: aWindow
 ]
 
-{ #category : #stepping }
+{ #category : 'stepping' }
 Model >> stepIn: aWindow [
 
 	^ self step
 ]
 
-{ #category : #stepping }
+{ #category : 'stepping' }
 Model >> stepTime [
 
 	^ 1000 "milliseconds -- default backstop for objects serving as models of system windows"
 ]
 
-{ #category : #stepping }
+{ #category : 'stepping' }
 Model >> stepTimeIn: aSystemWindow [
 
 	^ self stepTime
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 Model >> update: anAspect [
 
 	^ self
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 Model >> update: anAspect with: anObject [
 	"Receive a change notice from an object of whom the receiver is a
 	dependent. The default behavior is to call update:,
@@ -196,14 +198,14 @@ Model >> update: anAspect with: anObject [
 	^ self update: anAspect
 ]
 
-{ #category : #announcing }
+{ #category : 'announcing' }
 Model >> valueChanged [
 
 	"compatibility with the NewValueHolder"
 	self announcer announce: (ValueChanged newValue: self)
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 Model >> veryDeepFixupWith: deepCopier [
 	"See if the dependents are being copied also.  If so, point at the new copies.  (The dependent has self as its model.)
 	Dependents handled in class Object, when the model is not a Model, are fixed up in Object veryDeepCopy."
@@ -225,7 +227,7 @@ Model >> veryDeepFixupWith: deepCopier [
 				ifNotNil: [self addDependent: newDependent]]
 ]
 
-{ #category : #stepping }
+{ #category : 'stepping' }
 Model >> wantsSteps [
 	"Overridden by morphic classes whose instances want to be stepped,
 	or by model classes who want their morphic views to be stepped."
@@ -233,7 +235,7 @@ Model >> wantsSteps [
 	^ false
 ]
 
-{ #category : #announcing }
+{ #category : 'announcing' }
 Model >> whenChangedDo: aBlock [
 	"Culled block [ :newValue :oldValue :announcement :announcer | ]"
 
@@ -247,13 +249,13 @@ Model >> whenChangedDo: aBlock [
 	self announcer when: ValueChanged do: block for: aBlock receiver
 ]
 
-{ #category : #announcing }
+{ #category : 'announcing' }
 Model >> whenChangedSend: aSelector to: aReceiver [
 
 	self announcer when: ValueChanged send: aSelector to: aReceiver
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 Model >> windowIsClosing [
 	"This message is used to inform a models that its window is closing. Most models do nothing, but some, such as the Debugger, must do some cleanup. Note that this mechanism must be used with care by models that support multiple views, since one view may be closed while others left open."
 ]

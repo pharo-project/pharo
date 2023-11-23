@@ -3,19 +3,21 @@ LazyClassListExample new openOn: Object
 
 "
 Class {
-	#name : #LazyClassListExample,
-	#superclass : #ClassListExample,
-	#category : #'Morphic-Examples-MorphTreeWidget'
+	#name : 'LazyClassListExample',
+	#superclass : 'ClassListExample',
+	#category : 'Morphic-Examples-MorphTreeWidget',
+	#package : 'Morphic-Examples',
+	#tag : 'MorphTreeWidget'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 LazyClassListExample class >> example [
 	<sampleInstance>
 
 	^LazyClassListExample new openOn: Object
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LazyClassListExample >> treeMorphClass [
 	^ LazyMorphTreeMorph
 ]

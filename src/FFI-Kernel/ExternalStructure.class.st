@@ -61,8 +61,8 @@ LibraryExample>>initMyStruct: aStructExample name: name color: anInteger
 
 "
 Class {
-	#name : #ExternalStructure,
-	#superclass : #ExternalObject,
+	#name : 'ExternalStructure',
+	#superclass : 'ExternalObject',
 	#classVars : [
 		'PreviousPlatform'
 	],
@@ -72,16 +72,17 @@ Class {
 	#classInstVars : [
 		'compiledSpec'
 	],
-	#category : #'FFI-Kernel'
+	#category : 'FFI-Kernel',
+	#package : 'FFI-Kernel'
 }
 
-{ #category : #'field definition' }
+{ #category : 'field definition' }
 ExternalStructure class >> byteSize [
 	"Return the size in bytes of this structure."
 	^self compiledSpec first bitAnd: FFIStructSizeMask
 ]
 
-{ #category : #'field definition' }
+{ #category : 'field definition' }
 ExternalStructure class >> checkFieldLayoutChange [
 	"Recompile the spec and field accessors if the layout changed.
 	Answer true if the layout changed.
@@ -99,7 +100,7 @@ ExternalStructure class >> checkFieldLayoutChange [
 	^true
 ]
 
-{ #category : #'field definition' }
+{ #category : 'field definition' }
 ExternalStructure class >> compileAlias: spec withAccessors: aSymbol [
 
 	"Define all the fields in the receiver.
@@ -121,7 +122,7 @@ ExternalStructure class >> compileAlias: spec withAccessors: aSymbol [
 			].
 	isPointerField
 		ifTrue: [ externalType := externalType asPointerType ].
-	( fieldName notNil and: [ self shouldGenerate: fieldName policy: aSymbol ] )
+	( fieldName isNotNil and: [ self shouldGenerate: fieldName policy: aSymbol ] )
 		ifTrue: [ self defineAliasAccessorsFor: fieldName type: externalType ].
 	newCompiledSpec := isPointerField
 		ifTrue: [ WordArray with: ( ExternalType structureSpec bitOr: ExternalType pointerSpec ) ]
@@ -129,7 +130,7 @@ ExternalStructure class >> compileAlias: spec withAccessors: aSymbol [
 	^ newCompiledSpec
 ]
 
-{ #category : #'field definition' }
+{ #category : 'field definition' }
 ExternalStructure class >> compileAllFields [
 	"ExternalStructure compileAllFields"
 	self withAllSubclassesDo:[:cls|
@@ -137,14 +138,14 @@ ExternalStructure class >> compileAllFields [
 	]
 ]
 
-{ #category : #'field definition' }
+{ #category : 'field definition' }
 ExternalStructure class >> compileFields [
 	"Compile the field definition of the receiver.
 	Return the newly compiled spec."
 	^self compileFields: self fields
 ]
 
-{ #category : #'field definition' }
+{ #category : 'field definition' }
 ExternalStructure class >> compileFields: fieldSpec [
 	"Compile the field definition of the receiver.
 	Return the newly compiled spec."
@@ -153,7 +154,7 @@ ExternalStructure class >> compileFields: fieldSpec [
 	^compiledSpec
 ]
 
-{ #category : #'field definition' }
+{ #category : 'field definition' }
 ExternalStructure class >> compileFields: specArray withAccessors: aSymbol [
 	"Compile a type specification for the FFI machinery.
 	Return the newly compiled spec.
@@ -162,63 +163,54 @@ ExternalStructure class >> compileFields: specArray withAccessors: aSymbol [
 	- aSymbol = #never never generate the accessors
 	- aSymbol = #generated only generate the auto-generated accessors
 	- aSymbol = #absent only generate the absent accessors"
+
 	| byteOffset typeSpec newCompiledSpec |
-	(specArray size > 0 and: [specArray first class ~~ Array]) ifTrue:
-		[^ self compileAlias: specArray withAccessors: aSymbol].
+	(specArray size > 0 and: [ specArray first class ~~ Array ]) ifTrue: [ ^ self compileAlias: specArray withAccessors: aSymbol ].
 	byteOffset := 1.
 	typeSpec := WriteStream on: (WordArray new: 10).
 	typeSpec nextPut: FFIFlagStructure.
 	"dummy for size"
-	specArray do:
-		[:spec | | fieldName fieldType isPointerField externalType typeSize selfRefering |
+	specArray do: [ :spec |
+		| fieldName fieldType isPointerField externalType typeSize selfRefering |
 		fieldName := spec first.
 		fieldType := spec second.
 		isPointerField := fieldType last = $*.
 		fieldType := (fieldType findTokens: ' *') first.
 		externalType := ExternalType atomicTypeNamed: fieldType.
-		selfRefering := isPointerField and: [externalType isNil and: [fieldType = self asString]].
-		selfRefering ifTrue: [
-			externalType := ExternalType void asPointerType
-		] ifFalse:[
-			externalType == nil ifTrue: ["non-atomic"
-				Symbol
-					hasInterned: fieldType
-					ifTrue: [:sym | externalType := ExternalType structTypeNamed: sym].
-			].
-			externalType == nil ifTrue:[
-				self trace: '(' , fieldType , ' is void)'.
-				externalType := ExternalType void.
-			].
-			isPointerField ifTrue: [externalType := externalType asPointerType: self pointerSize]].
-			typeSize := externalType byteSize.
-			spec size > 2 ifTrue: ["extra size"
-				spec third < typeSize
-					ifTrue: [^ self error: 'Explicit type size is less than expected'].
-				typeSize := spec third.
-			].
-			(fieldName notNil and: [self shouldGenerate: fieldName policy: aSymbol]) ifTrue: [
-				self defineFieldAccessorsFor: fieldName startingAt: byteOffset type: externalType.
-			].
-			typeSpec nextPutAll: (externalType embeddedSpecWithSize: typeSize).
-			byteOffset := byteOffset + typeSize.
-		].
+		selfRefering := isPointerField and: [ externalType isNil and: [ fieldType = self asString ] ].
+		selfRefering
+			ifTrue: [ externalType := ExternalType void asPointerType ]
+			ifFalse: [
+				externalType ifNil: [ "non-atomic" Symbol hasInterned: fieldType ifTrue: [ :sym | externalType := ExternalType structTypeNamed: sym ] ].
+				externalType ifNil: [
+					self trace: '(' , fieldType , ' is void)'.
+					externalType := ExternalType void ].
+				isPointerField ifTrue: [ externalType := externalType asPointerType: self pointerSize ] ].
+		typeSize := externalType byteSize.
+		spec size > 2 ifTrue: [ "extra size"
+			spec third < typeSize ifTrue: [ ^ self error: 'Explicit type size is less than expected' ].
+			typeSize := spec third ].
+		(fieldName isNotNil and: [ self shouldGenerate: fieldName policy: aSymbol ]) ifTrue: [
+			self defineFieldAccessorsFor: fieldName startingAt: byteOffset type: externalType ].
+		typeSpec nextPutAll: (externalType embeddedSpecWithSize: typeSize).
+		byteOffset := byteOffset + typeSize ].
 	newCompiledSpec := typeSpec contents.
 	newCompiledSpec at: 1 put: (byteOffset - 1 bitOr: FFIFlagStructure).
 	^ newCompiledSpec
 ]
 
-{ #category : #'field definition' }
+{ #category : 'field definition' }
 ExternalStructure class >> compiledSpec [
 	"Return the compiled spec of the receiver"
 	^compiledSpec ifNil:[self compileFields]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ExternalStructure class >> compositeName [
 	^'struct'
 ]
 
-{ #category : #'field definition' }
+{ #category : 'field definition' }
 ExternalStructure class >> defineAliasAccessorsFor: fieldName type: type [
 	"Define read/write accessors for the given field"
 	| code refClass argName |
@@ -257,7 +249,7 @@ ExternalStructure class >> defineAliasAccessorsFor: fieldName type: type [
 	self compile: code classified: 'accessing'
 ]
 
-{ #category : #'field definition' }
+{ #category : 'field definition' }
 ExternalStructure class >> defineFieldAccessorsFor: fieldName startingAt: byteOffset type: type [
 	"Define read/write accessors for the given field"
 	| comment |
@@ -271,13 +263,13 @@ ExternalStructure class >> defineFieldAccessorsFor: fieldName startingAt: byteOf
 		withSelector: (fieldName, ':') asSymbol
 ]
 
-{ #category : #'field definition' }
+{ #category : 'field definition' }
 ExternalStructure class >> defineFields [
 	"Define all the fields in the receiver"
 	self defineFields: self fields
 ]
 
-{ #category : #'field definition' }
+{ #category : 'field definition' }
 ExternalStructure class >> defineFields: fieldSpec [
 	"Define all the fields in the receiver"
 	compiledSpec := self compileFields: fieldSpec withAccessors: #always.
@@ -285,31 +277,31 @@ ExternalStructure class >> defineFields: fieldSpec [
 	^compiledSpec
 ]
 
-{ #category : #'class management' }
+{ #category : 'class management' }
 ExternalStructure class >> doneCompiling [
 	"I have been recompiled. Update any types that reference me."
 	ExternalType noticeModificationOf: self
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ExternalStructure class >> externalNew [
 	"Create an instance of the receiver on the external heap"
 	^self fromHandle: (ExternalAddress allocate: self byteSize)
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ExternalStructure class >> externalType [
 	"Return an external type describing the receiver as a structure"
 	^ExternalType structTypeNamed: self name
 ]
 
-{ #category : #'field definition' }
+{ #category : 'field definition' }
 ExternalStructure class >> fields [
 	"Return the fields defining the receiver"
 	^#()
 ]
 
-{ #category : #'class management' }
+{ #category : 'class management' }
 ExternalStructure class >> fileOutInitializerOn: aFileStream [
 	super fileOutInitializerOn: aFileStream.
 	aFileStream cr.
@@ -318,7 +310,7 @@ ExternalStructure class >> fileOutInitializerOn: aFileStream [
 	aFileStream cr
 ]
 
-{ #category : #'class management' }
+{ #category : 'class management' }
 ExternalStructure class >> fileOutOn: aFileStream moveSource: moveSource toFile: fileIndex initializing: aBool [
 	super fileOutOn: aFileStream
 		moveSource: moveSource
@@ -331,12 +323,12 @@ ExternalStructure class >> fileOutOn: aFileStream moveSource: moveSource toFile:
 		aFileStream cr]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ExternalStructure class >> fromHandle: aHandle [
 	^self basicNew setHandle: aHandle
 ]
 
-{ #category : #'system startup' }
+{ #category : 'system startup' }
 ExternalStructure class >> install [
 	"Resuming the image on another architecture may require a re-compilation of structure layout."
 	| newPlatform |
@@ -347,7 +339,7 @@ ExternalStructure class >> install [
 			PreviousPlatform := newPlatform]
 ]
 
-{ #category : #compiling }
+{ #category : 'compiling' }
 ExternalStructure class >> maybeCompileAccessor: aString withSelector: selector [
 	(self compiledMethodAt: selector ifAbsent: []) ifNotNil:
 		[:existingMethod|
@@ -356,12 +348,12 @@ ExternalStructure class >> maybeCompileAccessor: aString withSelector: selector 
 	self compile: aString classified: #accessing
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ExternalStructure class >> new [
 	^self fromHandle: (ByteArray new: self byteSize)
 ]
 
-{ #category : #'class management' }
+{ #category : 'class management' }
 ExternalStructure class >> obsolete [
 	"The receiver is becoming obsolete.
 	NOTE: You if you remove the whole class category at once, you cannot
@@ -371,7 +363,7 @@ ExternalStructure class >> obsolete [
 	^ super obsolete
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExternalStructure class >> pointerSize [
 	"Answer the size of pointers for this class.  By default answer nil.
 	 Subclasses that contain pointers must define the size of a pointer if the code is to operate on 64-bit and 32-bit platforms.
@@ -379,7 +371,7 @@ ExternalStructure class >> pointerSize [
 	^nil
 ]
 
-{ #category : #'system startup' }
+{ #category : 'system startup' }
 ExternalStructure class >> recompileStructures [
 	"Check and update the layout of all subclasses for host machine dependency.
 	Arrange to check the inner nested structures first."
@@ -392,7 +384,7 @@ ExternalStructure class >> recompileStructures [
 	sorted do: [:e | e checkFieldLayoutChange]
 ]
 
-{ #category : #'class management' }
+{ #category : 'class management' }
 ExternalStructure class >> rename: aString [
 	| oldName |
 	oldName := name.
@@ -400,7 +392,7 @@ ExternalStructure class >> rename: aString [
 	oldName = name ifFalse:[ExternalType noticeRenamingOf: self from: oldName to: name]
 ]
 
-{ #category : #'field definition' }
+{ #category : 'field definition' }
 ExternalStructure class >> shouldGenerate: fieldname policy: aSymbol [
 	"Answer true if the field accessors must be compiled.
 	Do so according to the following rules:
@@ -418,7 +410,7 @@ ExternalStructure class >> shouldGenerate: fieldname policy: aSymbol [
 	self error: 'unknow generation policy'
 ]
 
-{ #category : #'field definition' }
+{ #category : 'field definition' }
 ExternalStructure class >> sortStructs: structureClasses into: sortedClasses [
 	"Sort the structure definitions so as to obtain a correct initialization order."
 
@@ -436,7 +428,7 @@ ExternalStructure class >> sortStructs: structureClasses into: sortedClasses [
 	sortedClasses add: (structureClasses remove: structClass)] repeat
 ]
 
-{ #category : #'field definition' }
+{ #category : 'field definition' }
 ExternalStructure class >> typeNamesFromWhichIDepend [
 	"Answer the set of type names of my fields (including pointer stars)"
 	| f |
@@ -445,24 +437,24 @@ ExternalStructure class >> typeNamesFromWhichIDepend [
 	^f collect: [:e | e second] as: Set
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ExternalStructure class >> typedef [
 	^self externalType typedef
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ExternalStructure >> compositeName [
 	^self class compositeName
 ]
 
-{ #category : #finalization }
+{ #category : 'finalization' }
 ExternalStructure >> free [
 	"Free the handle pointed to by the receiver"
-	(handle notNil and:[handle isExternalAddress]) ifTrue:[handle free].
+	(handle isNotNil and:[handle isExternalAddress]) ifTrue:[handle free].
 	handle := nil
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ExternalStructure >> longPrintOn: aStream [
 	"Append to the argument, aStream, the names and values of all the record's variables."
 	| fields |

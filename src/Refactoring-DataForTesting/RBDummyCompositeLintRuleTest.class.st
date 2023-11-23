@@ -1,18 +1,20 @@
 Class {
-	#name : #RBDummyCompositeLintRuleTest,
-	#superclass : #RBDummyLintRuleTest,
+	#name : 'RBDummyCompositeLintRuleTest',
+	#superclass : 'RBDummyLintRuleTest',
 	#instVars : [
 		'rules'
 	],
-	#category : #'Refactoring-DataForTesting-LittleHierarchy'
+	#category : 'Refactoring-DataForTesting-LittleHierarchy',
+	#package : 'Refactoring-DataForTesting',
+	#tag : 'LittleHierarchy'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBDummyCompositeLintRuleTest class >> allRules [
 	^self ruleFor: self protocol: 'all checks'
 ]
 
-{ #category : #'all checks' }
+{ #category : 'all checks' }
 RBDummyCompositeLintRuleTest class >> lintChecks [
 	^ self
 		rules: (RBBasicLintRuleTestData protocolsToCheck collect:
@@ -23,7 +25,7 @@ RBDummyCompositeLintRuleTest class >> lintChecks [
 		name: 'Lint checks'
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBDummyCompositeLintRuleTest class >> ruleFor: aClass protocol: aProtocol [
 	^self
 		rules: (((RBBrowserEnvironment new selectorsFor: aProtocol asSymbol in: aClass class)
@@ -33,26 +35,26 @@ RBDummyCompositeLintRuleTest class >> ruleFor: aClass protocol: aProtocol [
 				yourself)
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBDummyCompositeLintRuleTest class >> rules: aCollection [
 	^self new rules: aCollection
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBDummyCompositeLintRuleTest class >> rules: aCollection name: aString [
 	^(self new) rules: aCollection;
 		name: aString;
 		yourself
 ]
 
-{ #category : #'all checks' }
+{ #category : 'all checks' }
 RBDummyCompositeLintRuleTest class >> transformations [
 	^ self
 		ruleFor: RBTransformationRuleTestData
 		protocol: 'transformations'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBDummyCompositeLintRuleTest >> checkClass: aSmalllintContext [
 	rules do:
 			[:each |
@@ -60,7 +62,7 @@ RBDummyCompositeLintRuleTest >> checkClass: aSmalllintContext [
 			Processor yield]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBDummyCompositeLintRuleTest >> checkMethod: aSmalllintContext [
 	rules do:
 			[:each |
@@ -68,47 +70,49 @@ RBDummyCompositeLintRuleTest >> checkMethod: aSmalllintContext [
 			Processor yield]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBDummyCompositeLintRuleTest >> failedRules [
 	^rules inject: OrderedCollection new into: [:oc :each | oc addAll: each failedRules; yourself]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBDummyCompositeLintRuleTest >> hasConflicts [
-	^(rules detect: [:each | each hasConflicts] ifNone: [nil]) notNil
+
+	^ (rules detect: [ :each | each hasConflicts ] ifNone: [ nil ])
+		  isNotNil
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBDummyCompositeLintRuleTest >> isComposite [
 	^true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBDummyCompositeLintRuleTest >> isEmpty [
 	^(rules detect: [:each | each isEmpty not] ifNone: [nil]) isNil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBDummyCompositeLintRuleTest >> problemCount [
 	^rules inject: 0 into: [:count :each | count + each problemCount]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBDummyCompositeLintRuleTest >> resetResult [
 	rules do: [:each | each resetResult]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBDummyCompositeLintRuleTest >> rules [
 	^rules
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBDummyCompositeLintRuleTest >> rules: aCollection [
 	rules := aCollection
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBDummyCompositeLintRuleTest >> viewResults [
 	rules do: [:each | each viewResults]
 ]

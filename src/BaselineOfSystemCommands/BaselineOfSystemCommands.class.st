@@ -1,10 +1,11 @@
 Class {
-	#name : #BaselineOfSystemCommands,
-	#superclass : #BaselineOf,
-	#category : #BaselineOfSystemCommands
+	#name : 'BaselineOfSystemCommands',
+	#superclass : 'BaselineOf',
+	#category : 'BaselineOfSystemCommands',
+	#package : 'BaselineOfSystemCommands'
 }
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfSystemCommands >> baseline: spec [
 
 	<baseline>

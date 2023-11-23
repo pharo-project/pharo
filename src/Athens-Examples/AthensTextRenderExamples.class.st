@@ -2,17 +2,19 @@
 Visual tests for correct rendering of text using Athens
 "
 Class {
-	#name : #AthensTextRenderExamples,
-	#superclass : #Object,
-	#category : #'Athens-Examples-Morphic'
+	#name : 'AthensTextRenderExamples',
+	#superclass : 'Object',
+	#category : 'Athens-Examples-Morphic',
+	#package : 'Athens-Examples',
+	#tag : 'Morphic'
 }
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 AthensTextRenderExamples class >> surfaceClass [
 	^ AthensCairoSurface
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AthensTextRenderExamples class >> test1 [
 	<example>
 
@@ -46,7 +48,7 @@ globalBounds:  toLocal:
 	openInWindow
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AthensTextRenderExamples class >> test2 [
 	<example>
 
@@ -68,7 +70,7 @@ AthensTextRenderExamples class >> test2 [
 	surf asMorph openInWindow
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AthensTextRenderExamples class >> test3 [
 	<example>
 
@@ -93,7 +95,7 @@ AthensTextRenderExamples class >> test3 [
 	surf asMorph openInWindow
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AthensTextRenderExamples class >> test4 [
 	<example>
 
@@ -115,7 +117,7 @@ AthensTextRenderExamples class >> test4 [
 	surf asMorph openInWindow
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AthensTextRenderExamples class >> test5 [
 	<example>
 
@@ -136,7 +138,7 @@ AthensTextRenderExamples class >> test5 [
 	surf asMorph openInWindow
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AthensTextRenderExamples class >> testBlitting [
 	<example>
 
@@ -168,7 +170,7 @@ AthensTextRenderExamples class >> testBlitting [
 	dstForm asMorph openInWindow
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AthensTextRenderExamples class >> testText [
 
 	|  t  |

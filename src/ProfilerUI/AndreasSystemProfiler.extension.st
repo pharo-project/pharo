@@ -1,11 +1,11 @@
-Extension { #name : #AndreasSystemProfiler }
+Extension { #name : 'AndreasSystemProfiler' }
 
-{ #category : #'*ProfilerUI' }
+{ #category : '*ProfilerUI' }
 AndreasSystemProfiler >> blockCodeFrom: someCode [
 	^ '[' , someCode , '] value'
 ]
 
-{ #category : #'*ProfilerUI' }
+{ #category : '*ProfilerUI' }
 AndreasSystemProfiler >> doItSelectorsPath [
 	^ #( 'nil>>nil'
 		  'FullBlockClosure>>newProcess'
@@ -15,17 +15,17 @@ AndreasSystemProfiler >> doItSelectorsPath [
 		  'ProfilerModel>>DoIt' )
 ]
 
-{ #category : #'*ProfilerUI' }
+{ #category : '*ProfilerUI' }
 AndreasSystemProfiler >> tallyRoot [
 	^ tallyRoot
 ]
 
-{ #category : #'*ProfilerUI' }
+{ #category : '*ProfilerUI' }
 AndreasSystemProfiler >> totalTally [
 	^ totalTally
 ]
 
-{ #category : #'*ProfilerUI' }
+{ #category : '*ProfilerUI' }
 AndreasSystemProfiler >> totalTime [
 	^ totalTime
 ]

@@ -6,12 +6,14 @@ In use, be aware that objects only referenced by me are not ""removed"" (like in
 For more details, read my tests in WeakOrderedCollectionTest. 
 "
 Class {
-	#name : #WeakOrderedCollection,
-	#superclass : #OrderedCollection,
-	#category : #'Collections-Weak-Base'
+	#name : 'WeakOrderedCollection',
+	#superclass : 'OrderedCollection',
+	#category : 'Collections-Weak-Base',
+	#package : 'Collections-Weak',
+	#tag : 'Base'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 WeakOrderedCollection class >> arrayType [
 	^ WeakArray
 ]

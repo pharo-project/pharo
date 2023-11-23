@@ -6,12 +6,14 @@ It's the simplest change to the compiler that I could imagine that doesn't inter
 Note that  I only override a single private method, so changes in the superclass must be reflected here.
 "
 Class {
-	#name : #OCTargetCompilerParser,
-	#superclass : #RBParser,
-	#category : #'OpalCompiler-Tests-Semantic'
+	#name : 'OCTargetCompilerParser',
+	#superclass : 'RBParser',
+	#category : 'OpalCompiler-Tests-Semantic',
+	#package : 'OpalCompiler-Tests',
+	#tag : 'Semantic'
 }
 
-{ #category : #'private - parsing' }
+{ #category : 'private - parsing' }
 OCTargetCompilerParser >> parsePrimitiveLiteral [
 	"Creates a literal value node from a literal token."
 	| token value |

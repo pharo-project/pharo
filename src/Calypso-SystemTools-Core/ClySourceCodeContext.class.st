@@ -27,37 +27,39 @@ Internal Representation and Key Implementation Points.
 	selectedSourceNode:		<RBProgramNode>
 "
 Class {
-	#name : #ClySourceCodeContext,
-	#superclass : #ClyTextEditorContext,
+	#name : 'ClySourceCodeContext',
+	#superclass : 'ClyTextEditorContext',
 	#instVars : [
 		'selectedSourceNode'
 	],
-	#category : #'Calypso-SystemTools-Core-Editors-Methods'
+	#category : 'Calypso-SystemTools-Core-Editors-Methods',
+	#package : 'Calypso-SystemTools-Core',
+	#tag : 'Editors-Methods'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClySourceCodeContext class >> for: anEditorTool selectedNode: aProgramNode [
 
 	^(self for: anEditorTool)
 		selectedSourceNode: aProgramNode
 ]
 
-{ #category : #'user requests' }
+{ #category : 'user requests' }
 ClySourceCodeContext >> confirmUnusedClasses: variables [
 	^self browser confirmUnusedClasses: variables
 ]
 
-{ #category : #'user requests' }
+{ #category : 'user requests' }
 ClySourceCodeContext >> confirmUnusedVariables: variables [
 	^self browser confirmUnusedVariables: variables
 ]
 
-{ #category : #'user requests' }
+{ #category : 'user requests' }
 ClySourceCodeContext >> confirmUnusedVariablesInDefiningClass: variables [
 	^self browser confirmUnusedVariablesInDefiningClass: variables
 ]
 
-{ #category : #'command execution' }
+{ #category : 'command execution' }
 ClySourceCodeContext >> executeCommand: aCommand by: aCommandActivator [
 
 	aCommand isComplexRefactoring ifTrue: [
@@ -66,7 +68,7 @@ ClySourceCodeContext >> executeCommand: aCommand by: aCommandActivator [
 	aCommand execute
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClySourceCodeContext >> isArgOrTempVariableSelected [
 
 	| sourceNode |
@@ -74,17 +76,17 @@ ClySourceCodeContext >> isArgOrTempVariableSelected [
 	^ sourceNode isTempVariable or: [ sourceNode isArgumentVariable ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClySourceCodeContext >> isAssignmentSelected [
 	| node |
 	node := self selectedSourceNode.
-	[node notNil] whileTrue: [
+	[node isNotNil] whileTrue: [
 		node isAssignment ifTrue: [ ^true ].
 		node := node parent].
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClySourceCodeContext >> isClassSelected [
 
 	| node |
@@ -95,7 +97,7 @@ ClySourceCodeContext >> isClassSelected [
 		and: [ node binding isGlobalClassNameBinding ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClySourceCodeContext >> isGlobalVariableSelected [
 	| node binding |
 	node := self selectedSourceNode.
@@ -106,23 +108,23 @@ ClySourceCodeContext >> isGlobalVariableSelected [
 	^binding isGlobalVariable
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClySourceCodeContext >> isMessageSelected [
 
 	^self selectedSourceNode isMessage
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClySourceCodeContext >> isMethodSelected [
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClySourceCodeContext >> isTempVariableSelected [
 	^ self selectedSourceNode isTempVariable
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClySourceCodeContext >> isVariableSelected [
 	| node |
 	self isClassSelected ifTrue: [ ^ false ].
@@ -132,87 +134,87 @@ ClySourceCodeContext >> isVariableSelected [
 	^ node isLiteralVariable | node isInstanceVariable
 ]
 
-{ #category : #selection }
+{ #category : 'selection' }
 ClySourceCodeContext >> lastSelectedClass [
 
 	^self selectedClass
 ]
 
-{ #category : #selection }
+{ #category : 'selection' }
 ClySourceCodeContext >> lastSelectedMessage [
 
 	^self selectedMessage
 ]
 
-{ #category : #selection }
+{ #category : 'selection' }
 ClySourceCodeContext >> lastSelectedSourceNode [
 
 	^self selectedSourceNode
 ]
 
-{ #category : #selection }
+{ #category : 'selection' }
 ClySourceCodeContext >> lastSelectedVariable [
 
 	^self selectedVariable
 ]
 
-{ #category : #'refactoring support' }
+{ #category : 'refactoring support' }
 ClySourceCodeContext >> refactoringScopes [
 	^self browser allNavigationScopes
 ]
 
-{ #category : #selection }
+{ #category : 'selection' }
 ClySourceCodeContext >> selectedClass [
 
 	^self selectedSourceNode binding value
 ]
 
-{ #category : #selection }
+{ #category : 'selection' }
 ClySourceCodeContext >> selectedClasses [
 
 	^{self selectedClass}
 ]
 
-{ #category : #selection }
+{ #category : 'selection' }
 ClySourceCodeContext >> selectedMessage [
 	^SycMessageDescription ofMessageNode: self selectedSourceNode
 ]
 
-{ #category : #selection }
+{ #category : 'selection' }
 ClySourceCodeContext >> selectedMessages [
 
 	^{self selectedMessage}
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClySourceCodeContext >> selectedSourceNode [
 	^selectedSourceNode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClySourceCodeContext >> selectedSourceNode: anObject [
 	selectedSourceNode := anObject
 ]
 
-{ #category : #selection }
+{ #category : 'selection' }
 ClySourceCodeContext >> selectedVariable [
 
 	^self selectedSourceNode binding asCalypsoVariableOf: tool editingClass
 ]
 
-{ #category : #selection }
+{ #category : 'selection' }
 ClySourceCodeContext >> selectedVariables [
 
 	^{self selectedVariable}
 ]
 
-{ #category : #'tool controlling' }
+{ #category : 'tool controlling' }
 ClySourceCodeContext >> showSourceNode [
 
 	tool selectSourceNode: selectedSourceNode
 ]
 
-{ #category : #'tool controlling' }
+{ #category : 'tool controlling' }
 ClySourceCodeContext >> showVariableNamed: aString [
 	tool selectVariableNamed: aString
 ]

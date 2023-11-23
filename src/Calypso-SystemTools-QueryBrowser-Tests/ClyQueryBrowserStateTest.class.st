@@ -1,17 +1,18 @@
 Class {
-	#name : #ClyQueryBrowserStateTest,
-	#superclass : #ClyBrowserStateTest,
-	#category : #'Calypso-SystemTools-QueryBrowser-Tests'
+	#name : 'ClyQueryBrowserStateTest',
+	#superclass : 'ClyBrowserStateTest',
+	#category : 'Calypso-SystemTools-QueryBrowser-Tests',
+	#package : 'Calypso-SystemTools-QueryBrowser-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClyQueryBrowserStateTest >> createBrowser [
 	^ ClyQueryBrowserMorph on: environment scopes: {
 			ClyBothMetaLevelClassScope of: ClyClass1FromP1Mock in: environment.
 			ClyBothMetaLevelClassScope of: ClyClass2FromP1Mock in: environment}	"class with methods"
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyQueryBrowserStateTest >> restoreBrowserInstance [
 
 	self snapshotState.
@@ -19,14 +20,14 @@ ClyQueryBrowserStateTest >> restoreBrowserInstance [
 	navigationState applyTo: browser
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyQueryBrowserStateTest >> setUp [
 	super setUp.
 
 	browser showResultOf: (ClyAllMethodsQuery sortedFrom: browser queryScopes first)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyQueryBrowserStateTest >> testRestoredBrowserInstanceWithActiveScope [
 
 	browser activeScope: browser queryScopes last.
@@ -36,16 +37,16 @@ ClyQueryBrowserStateTest >> testRestoredBrowserInstanceWithActiveScope [
 	self assert: browser activeScope equals: browser queryScopes last
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyQueryBrowserStateTest >> testRestoredBrowserInstanceWithExpectedFlatQueryResult [
 
 	self restoreBrowserInstance.
 
-	self assert: navigationState expectedFlatQueryResult notNil.
+	self assert: navigationState expectedFlatQueryResult isNotNil.
 	self assert: browser expectedFlatQueryResult equals: navigationState expectedFlatQueryResult
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyQueryBrowserStateTest >> testRestoredBrowserInstanceWithMethodQuery [
 
 	| query |
@@ -57,7 +58,7 @@ ClyQueryBrowserStateTest >> testRestoredBrowserInstanceWithMethodQuery [
 	self assert: browser systemQuery equals: query
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyQueryBrowserStateTest >> testRestoredBrowserInstanceWithQueryScopes [
 
 	self restoreBrowserInstance.
@@ -66,7 +67,7 @@ ClyQueryBrowserStateTest >> testRestoredBrowserInstanceWithQueryScopes [
 	self assert: browser queryScopes equals: navigationState queryScopes
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyQueryBrowserStateTest >> testRetrievesActiveScope [
 
 	self snapshotState.
@@ -74,7 +75,7 @@ ClyQueryBrowserStateTest >> testRetrievesActiveScope [
 	self assert: navigationState activeScope equals: browser activeScope
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyQueryBrowserStateTest >> testRetrievesExpectedFlatQueryResult [
 
 	self snapshotState.
@@ -82,7 +83,7 @@ ClyQueryBrowserStateTest >> testRetrievesExpectedFlatQueryResult [
 	self assert: navigationState expectedFlatQueryResult equals: browser expectedFlatQueryResult
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyQueryBrowserStateTest >> testRetrievesMethodQuery [
 
 	self snapshotState.
@@ -90,7 +91,7 @@ ClyQueryBrowserStateTest >> testRetrievesMethodQuery [
 	self assert: navigationState systemQuery equals: browser systemQuery
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyQueryBrowserStateTest >> testRetrievesQueryScopes [
 
 	self snapshotState.

@@ -6,20 +6,22 @@ I represent subgroups of ""extensions"" method group.
 Internal Representation and Key Implementation Points.
 
     Instance Variables
-	package:		<RPackage>
+	package:		<Package>
 "
 Class {
-	#name : #ClyExternalPackageMethodGroup,
-	#superclass : #ClyMethodGroup,
-	#category : #'Calypso-SystemQueries-Domain'
+	#name : 'ClyExternalPackageMethodGroup',
+	#superclass : 'ClyMethodGroup',
+	#category : 'Calypso-SystemQueries-Domain',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Domain'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyExternalPackageMethodGroup class >> isEditableGroup [
 	^true
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyExternalPackageMethodGroup class >> withMethodsFrom: aClassScope packagedIn: aPackage [
 
 	| methodQuery |
@@ -30,15 +32,15 @@ ClyExternalPackageMethodGroup class >> withMethodsFrom: aClassScope packagedIn: 
 	^self named: aPackage name priority: 8.9 on: methodQuery
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ClyExternalPackageMethodGroup >> importMethod: aMethod [
+
 	super importMethod: aMethod.
 
-	self package addMethod: aMethod.
-	aMethod tagWith: ('*', self package name) asSymbol
+	aMethod protocol: '*' , self package name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyExternalPackageMethodGroup >> package [
 	^ methodQuery package
 ]

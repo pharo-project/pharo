@@ -1,6 +1,6 @@
-Extension { #name : #TransformationMorph }
+Extension { #name : 'TransformationMorph' }
 
-{ #category : #'*Athens-Morphic' }
+{ #category : '*Athens-Morphic' }
 TransformationMorph >> drawOnAthensCanvas: anAthensCanvas [
 	submorphs isEmpty ifTrue: [super drawOnAthensCanvas: anAthensCanvas]
 ]

@@ -3,8 +3,8 @@ I'm a callback queue associated to a worker.
 I handle all callbacks defined in the context of a worker.
 "
 Class {
-	#name : #TFCallbackQueue,
-	#superclass : #Object,
+	#name : 'TFCallbackQueue',
+	#superclass : 'Object',
 	#instVars : [
 		'semaphore',
 		'callbacksByAddress',
@@ -15,10 +15,12 @@ Class {
 	#classVars : [
 		'UniqueInstance'
 	],
-	#category : #'ThreadedFFI-Callbacks'
+	#category : 'ThreadedFFI-Callbacks',
+	#package : 'ThreadedFFI',
+	#tag : 'Callbacks'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 TFCallbackQueue class >> initialize [
 
 	SessionManager default
@@ -28,7 +30,7 @@ TFCallbackQueue class >> initialize [
 	self startUp: true
 ]
 
-{ #category : #'system startup' }
+{ #category : 'system startup' }
 TFCallbackQueue class >> shutDown: inANewImageSession [
 
 	inANewImageSession ifFalse: [ ^ self ].
@@ -36,25 +38,25 @@ TFCallbackQueue class >> shutDown: inANewImageSession [
 	UniqueInstance := nil
 ]
 
-{ #category : #'system startup' }
+{ #category : 'system startup' }
 TFCallbackQueue class >> startUp: inANewImageSession [
 
 	inANewImageSession ifFalse: [ ^ self ].
 	self uniqueInstance startUp
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TFCallbackQueue class >> uniqueInstance [
 
 	^ UniqueInstance ifNil: [ UniqueInstance := self new ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFCallbackQueue >> callbackProcess [
 	^ callbackProcess
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 TFCallbackQueue >> executeCallback: aCallbackInvocation [
 
 	aCallbackInvocation ifNil: [ ^self ].
@@ -67,7 +69,7 @@ TFCallbackQueue >> executeCallback: aCallbackInvocation [
 	aCallbackInvocation runner executeCallback: aCallbackInvocation
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TFCallbackQueue >> forkCallbackProcess [
 
 	(callbackProcess notNil and: [ callbackProcess isTerminated not ])
@@ -82,7 +84,7 @@ TFCallbackQueue >> forkCallbackProcess [
 		named: 'Callback queue'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TFCallbackQueue >> initialize [
 	super initialize.
 
@@ -93,7 +95,7 @@ TFCallbackQueue >> initialize [
 	self forkCallbackProcess
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TFCallbackQueue >> initializeQueue [
 
 	| semaphoreIndex |
@@ -105,7 +107,7 @@ TFCallbackQueue >> initializeQueue [
 				e pass]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TFCallbackQueue >> lookupCallback: anExternalAddress [
 	"#registerCallback: and #lookupCallback: are protected by a mutex because I need to prevent
 	 the execution of a collection grow while performing the lookup (this will move the elements
@@ -122,7 +124,7 @@ TFCallbackQueue >> lookupCallback: anExternalAddress [
 					ifAbsent: [ nil ] ] ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TFCallbackQueue >> nextPendingCallback [
 	| externalAddress |
 
@@ -132,14 +134,14 @@ TFCallbackQueue >> nextPendingCallback [
 	^ TFCallbackInvocation fromHandle: externalAddress
 ]
 
-{ #category : #'private - primitives' }
+{ #category : 'private - primitives' }
 TFCallbackQueue >> primNextPendingCallback [
 	<primitive: 'primitiveReadNextCallback'>
 
 	^ self primitiveFailed
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 TFCallbackQueue >> primitiveInitializeQueueWith: anInteger [
 
 	<primitive: 'primitiveInitilizeCallbacks'>
@@ -147,7 +149,7 @@ TFCallbackQueue >> primitiveInitializeQueueWith: anInteger [
 	^ self primitiveFailed
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 TFCallbackQueue >> registerCallback: aCallback [
 	"#registerCallback: and #lookupCallback: are protected by a mutex because I need to prevent
 	 the execution of a collection grow while performing the lookup (this will move the elements
@@ -159,7 +161,7 @@ TFCallbackQueue >> registerCallback: aCallback [
 			put: aCallback ]
 ]
 
-{ #category : #'system startup' }
+{ #category : 'system startup' }
 TFCallbackQueue >> shutDown [
 
 	self terminateProcess.
@@ -167,7 +169,7 @@ TFCallbackQueue >> shutDown [
 	pendingQueue removeAll
 ]
 
-{ #category : #'system startup' }
+{ #category : 'system startup' }
 TFCallbackQueue >> startUp [
 
 	[self initializeQueue.
@@ -175,7 +177,7 @@ TFCallbackQueue >> startUp [
 		onErrorDo: [ self inform: 'The current VM does not support TFFI Callbacks. It will use the old implementation' ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TFCallbackQueue >> terminateProcess [
 
 	callbackProcess ifNil: [ ^ self ].

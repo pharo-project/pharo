@@ -1,15 +1,16 @@
 Class {
-	#name : #MetacelloMCProjectSpecTestCase,
-	#superclass : #MetacelloProjectSpecTestCase,
-	#category : #'Metacello-TestsMCCore'
+	#name : 'MetacelloMCProjectSpecTestCase',
+	#superclass : 'MetacelloProjectSpecTestCase',
+	#category : 'Metacello-TestsMCCore',
+	#package : 'Metacello-TestsMCCore'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloMCProjectSpecTestCase >> projectClass [
-    ^ MetacelloMCProject
+    ^ MetacelloProject
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloMCProjectSpecTestCase >> testMCProjectMergeSpec [
 	| projectA projectB project repository |
 	projectA := self projectSpec
@@ -41,7 +42,7 @@ MetacelloMCProjectSpecTestCase >> testMCProjectMergeSpec [
 	self assert: repository password equals: 'secret'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloMCProjectSpecTestCase >> testMCProjectSpec [
 	| project repository |
 	project := self projectSpec.

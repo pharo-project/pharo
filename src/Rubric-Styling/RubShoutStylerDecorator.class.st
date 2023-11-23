@@ -2,23 +2,24 @@
 I am the shout styler decorator for a text area, I highlight the text 
 "
 Class {
-	#name : #RubShoutStylerDecorator,
-	#superclass : #RubParagraphDecorator,
+	#name : 'RubShoutStylerDecorator',
+	#superclass : 'RubParagraphDecorator',
 	#instVars : [
 		'styler',
 		'text',
 		'replaceStart',
 		'replaceStop'
 	],
-	#category : #'Rubric-Styling'
+	#category : 'Rubric-Styling',
+	#package : 'Rubric-Styling'
 }
 
-{ #category : #querying }
+{ #category : 'querying' }
 RubShoutStylerDecorator class >> key [
 	^ #shoutStyler
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RubShoutStylerDecorator >> aboutToBeUnplugged [
 
 	self paragraph ifNotNil: [ :paragraph |
@@ -26,24 +27,24 @@ RubShoutStylerDecorator >> aboutToBeUnplugged [
 	]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubShoutStylerDecorator >> beForSmalltalkScripting [
 	self styler workspace: self model
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubShoutStylerDecorator >> classOrMetaClass: aBehavior [
 	"set the classOrMetaClass in the receiver's styler to aBehavior"
 
 	self styler classOrMetaClass: aBehavior
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubShoutStylerDecorator >> defaultStyler [
 	^SHRBTextStyler new view: self; yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubShoutStylerDecorator >> next: aDecorator [
 	super next: aDecorator.
 	aDecorator ifNotNil: [
@@ -54,20 +55,20 @@ RubShoutStylerDecorator >> next: aDecorator [
 	]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubShoutStylerDecorator >> okToStyle [
 	^ self shoutEnabled and: [ self shoutAboutToStyle: self ]
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubShoutStylerDecorator >> refreshStyling [
+	"Shout for the whole text"	
 
-	" shout for the whole text "
-	(next notNil and: [self okToStyle])
+	(next isNotNil and: [self okToStyle])
 		ifTrue: [ self text: self text ]
 ]
 
-{ #category : #editing }
+{ #category : 'editing' }
 RubShoutStylerDecorator >> replaceFrom: start to: stop with: aText [
 
 	self okToStyle ifFalse: [ ^ next replaceFrom: start to: stop with: aText ].
@@ -87,17 +88,17 @@ RubShoutStylerDecorator >> replaceFrom: start to: stop with: aText [
 			paragraph textArea paragraphReplacedTextFrom: start to: stop with: aText ] ]
 ]
 
-{ #category : #shout }
+{ #category : 'shout' }
 RubShoutStylerDecorator >> shoutAboutToStyle: myself [
 	^ self paragraph textArea shoutAboutToStyle: myself
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RubShoutStylerDecorator >> shoutEnabled [
 	^ SHPreferences enabled
 ]
 
-{ #category : #editing }
+{ #category : 'editing' }
 RubShoutStylerDecorator >> style: aText [
 	"we can do background styling with (self styler styleInBackgroundProcess: aText), but it is not safe"
 
@@ -111,12 +112,12 @@ RubShoutStylerDecorator >> style: aText [
 			^ aText ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubShoutStylerDecorator >> styler [
 	"The styler responsible for highlighting text in the receiver"
 
 	^ styler ifNil: [
-		styler := (self model notNil and: [  self model selectedClassOrMetaClass notNil ])
+		styler := (self model isNotNil and: [  self model selectedClassOrMetaClass isNotNil ])
 			ifTrue: [
 				self model selectedClassOrMetaClass syntaxHighlighter
 					view: self;
@@ -124,17 +125,17 @@ RubShoutStylerDecorator >> styler [
 			ifFalse: [ self defaultStyler ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubShoutStylerDecorator >> styler: aTextStyler [
 
 	styler := aTextStyler.
 	styler view: self
 ]
 
-{ #category : #editing }
+{ #category : 'editing' }
 RubShoutStylerDecorator >> stylerStyled: styledCopyOfText [
 	next ifNil: [ ^ self ].
-	(text notNil and:[text string = styledCopyOfText string])
+	(text isNotNil and:[text string = styledCopyOfText string])
 		ifFalse: [ ^ self ].
 	text runs: styledCopyOfText runs.
 	"must take care to recompose. If not, the textArea
@@ -150,18 +151,18 @@ RubShoutStylerDecorator >> stylerStyled: styledCopyOfText [
 	self updateTextArea
 ]
 
-{ #category : #editing }
+{ #category : 'editing' }
 RubShoutStylerDecorator >> stylerStyledInBackground: styledCopyOfText [
 	text ifNil: [ ^self ].
 	self stylerStyled: styledCopyOfText
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubShoutStylerDecorator >> text [
 	^ next text
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubShoutStylerDecorator >> text: aText [
 
 	self okToStyle ifFalse: [ ^ next text: aText ].
@@ -173,7 +174,7 @@ RubShoutStylerDecorator >> text: aText [
 		self style: text ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RubShoutStylerDecorator >> updateTextArea [
 
 	| textArea |
@@ -186,7 +187,7 @@ RubShoutStylerDecorator >> updateTextArea [
 	(textArea scrollPane ifNil: [ textArea ]) changed
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubShoutStylerDecorator >> whenTextAcceptRequest: anAnnouncement [
 
 	self refreshStyling

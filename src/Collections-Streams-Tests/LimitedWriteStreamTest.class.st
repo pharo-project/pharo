@@ -2,17 +2,19 @@
 SUnit test clss for LimitedWriteStream
 "
 Class {
-	#name : #LimitedWriteStreamTest,
-	#superclass : #WriteStreamTest,
-	#category : #'Collections-Streams-Tests-Base'
+	#name : 'LimitedWriteStreamTest',
+	#superclass : 'WriteStreamTest',
+	#category : 'Collections-Streams-Tests-Base',
+	#package : 'Collections-Streams-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LimitedWriteStreamTest >> streamClass [
 	^ LimitedWriteStream
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LimitedWriteStreamTest >> testLimit [
 	| stream overLimit |
 	stream := self newStream.
@@ -36,7 +38,7 @@ LimitedWriteStreamTest >> testLimit [
 			assert: overLimit ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LimitedWriteStreamTest >> testLimitBlock [
 	| stream overLimit limitBlock |
 	stream := self newStream.
@@ -49,7 +51,7 @@ LimitedWriteStreamTest >> testLimitBlock [
 		deny: overLimit
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LimitedWriteStreamTest >> testNextPut [
 	| stream overLimit |
 	super testNextPut.
@@ -73,7 +75,7 @@ LimitedWriteStreamTest >> testNextPut [
 				assert: overLimit ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LimitedWriteStreamTest >> testNextPutAll [
 	| stream overLimit |
 	super testNextPutAll.
@@ -91,7 +93,7 @@ LimitedWriteStreamTest >> testNextPutAll [
 		assert: overLimit
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LimitedWriteStreamTest >> testOn [
 	| stream |
 	super testOn.
@@ -101,7 +103,7 @@ LimitedWriteStreamTest >> testOn [
 		assert: stream limitBlock isNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LimitedWriteStreamTest >> testOnFromTo [
 	| stream |
 	super testOnFromTo.
@@ -111,7 +113,7 @@ LimitedWriteStreamTest >> testOnFromTo [
 		assert: stream limitBlock isNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LimitedWriteStreamTest >> testOnLimitLimitBlock [
 	| collection overLimit limitBlock stream |
 	collection := String new.
@@ -126,7 +128,7 @@ LimitedWriteStreamTest >> testOnLimitLimitBlock [
 		deny: overLimit
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LimitedWriteStreamTest >> testSetLimitLimitBlock [
 	| stream overLimit |
 	stream := self newStream.
@@ -145,7 +147,7 @@ LimitedWriteStreamTest >> testSetLimitLimitBlock [
 		self assert: overLimit ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LimitedWriteStreamTest >> testWith [
 	"like on: except it starts writing at the end of its argument collection,
 	and the initial position is the collection size and the initial contents
@@ -176,7 +178,7 @@ LimitedWriteStreamTest >> testWith [
 				assert: overLimit ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LimitedWriteStreamTest >> testWithFromTo [
 	"like with: except it paritions its argument collection first using the
 	from:/to: indexes"

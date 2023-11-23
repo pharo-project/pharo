@@ -5,47 +5,49 @@ When executed, I execute my subfetchers one by one.
 Sequences are created by sending the message #, between two fetchers.
 "
 Class {
-	#name : #CoFetcherSequence,
-	#superclass : #CoFetcher,
+	#name : 'CoFetcherSequence',
+	#superclass : 'CoFetcher',
 	#instVars : [
 		'subcompletions'
 	],
-	#category : #'HeuristicCompletion-Model-Core'
+	#category : 'HeuristicCompletion-Model-Core',
+	#package : 'HeuristicCompletion-Model',
+	#tag : 'Core'
 }
 
-{ #category : #adding }
+{ #category : 'adding' }
 CoFetcherSequence >> add: aCompletion [
 
 	subcompletions add: aCompletion
 ]
 
-{ #category : #resetting }
+{ #category : 'resetting' }
 CoFetcherSequence >> context: anObject [
 
 	super context: anObject.
 	subcompletions do: [ :each | each context: anObject ]
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 CoFetcherSequence >> entriesDo: aBlock [
 	subcompletions do: [ :completion | completion entriesDo: aBlock ]
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 CoFetcherSequence >> filter: aFilter [
 
 	super filter: aFilter.
 	subcompletions do: [ :completion | completion filter: aFilter ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CoFetcherSequence >> initialize [
 
 	super initialize.
 	subcompletions := OrderedCollection new
 ]
 
-{ #category : #resetting }
+{ #category : 'resetting' }
 CoFetcherSequence >> reset [
 
 	super reset.

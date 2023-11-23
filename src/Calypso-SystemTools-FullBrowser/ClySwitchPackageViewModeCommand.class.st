@@ -3,12 +3,14 @@ I am a base class for commands which switch full browser package mode
 It can be either raw packages or projects
 "
 Class {
-	#name : #ClySwitchPackageViewModeCommand,
-	#superclass : #ClySwitchBrowserModeCommand,
-	#category : #'Calypso-SystemTools-FullBrowser-Commands-Packages'
+	#name : 'ClySwitchPackageViewModeCommand',
+	#superclass : 'ClySwitchBrowserModeCommand',
+	#category : 'Calypso-SystemTools-FullBrowser-Commands-Packages',
+	#package : 'Calypso-SystemTools-FullBrowser',
+	#tag : 'Commands-Packages'
 }
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClySwitchPackageViewModeCommand class >> fullBrowserToolbarActivation [
 	<classAnnotation>
 
@@ -18,7 +20,7 @@ ClySwitchPackageViewModeCommand class >> fullBrowserToolbarActivation [
 		for: ClyFullBrowserPackageContext
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClySwitchPackageViewModeCommand class >> fullBrowserToolbarActivation2 [
 	<classAnnotation>
 
@@ -28,7 +30,7 @@ ClySwitchPackageViewModeCommand class >> fullBrowserToolbarActivation2 [
 		for: ClyFullBrowserClassGroupContext
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClySwitchPackageViewModeCommand class >> fullBrowserToolbarActivation3 [
 	<classAnnotation>
 
@@ -38,18 +40,18 @@ ClySwitchPackageViewModeCommand class >> fullBrowserToolbarActivation3 [
 		for: ClyFullBrowserProjectContext
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClySwitchPackageViewModeCommand class >> isAbstract [
 	^self = ClySwitchPackageViewModeCommand
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClySwitchPackageViewModeCommand class >> toolbarOrder [
 	<classAnnotationDependency>
 	^10
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClySwitchPackageViewModeCommand >> isAppliedToBrowser [
 	^false
 ]

@@ -2,21 +2,23 @@
 A CmUICommandTest is a test class for testing the behavior of CmUICommand
 "
 Class {
-	#name : #CmUICommandTest,
-	#superclass : #TestCase,
+	#name : 'CmUICommandTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'command'
 	],
-	#category : #'Commander2-UI-Tests-Core'
+	#category : 'Commander2-UI-Tests-Core',
+	#package : 'Commander2-UI-Tests',
+	#tag : 'Core'
 }
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 CmUICommandTest >> banana [
 	"Does not return an icon, it is not needed for the test."
 	^ 42
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 CmUICommandTest >> iconNamed: aSymbol [
 	aSymbol ~= #banana
 		ifTrue: [ self error: 'Only #banana icon is needed for tests.' ].
@@ -24,13 +26,13 @@ CmUICommandTest >> iconNamed: aSymbol [
 	^ self banana
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 CmUICommandTest >> setUp [
 	super setUp.
 	command := CmUICommand new
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CmUICommandTest >> testHasIcon [
 	self deny: command hasIcon.
 
@@ -39,7 +41,7 @@ CmUICommandTest >> testHasIcon [
 	self assert: command hasIcon
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CmUICommandTest >> testHasShortcutKey [
 	self deny: command hasShortcutKey.
 
@@ -48,7 +50,7 @@ CmUICommandTest >> testHasShortcutKey [
 	self assert: command hasShortcutKey
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CmUICommandTest >> testIcon [
 	self assert: command icon isNil.
 
@@ -57,7 +59,7 @@ CmUICommandTest >> testIcon [
 	self assert: command icon equals: (command iconNamed: #add)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CmUICommandTest >> testIconName [
 	self assert: command iconName isNil.
 
@@ -66,7 +68,7 @@ CmUICommandTest >> testIconName [
 	self assert: command iconName equals: #add
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CmUICommandTest >> testIconNameFrom [
 	self assert: command iconProvider equals: Smalltalk ui icons.
 
@@ -76,7 +78,7 @@ CmUICommandTest >> testIconNameFrom [
 	self assert: (command icon) equals: self banana
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CmUICommandTest >> testIconProvider [
 	self assert: command iconProvider equals: Smalltalk ui icons.
 
@@ -88,7 +90,7 @@ CmUICommandTest >> testIconProvider [
 	self assert: (command icon) equals: self banana
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CmUICommandTest >> testShortcutKey [
 	self should: [ command shortcutKey ] raise: CmNoShortcutIsDefined.
 

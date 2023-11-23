@@ -59,29 +59,31 @@ Note that in #finalizeResourceData: you cannot access any other properties of yo
 
 "
 Class {
-	#name : #FFIExternalResourceExecutor,
-	#superclass : #Object,
+	#name : 'FFIExternalResourceExecutor',
+	#superclass : 'Object',
 	#instVars : [
 		'session',
 		'data',
 		'resourceClass'
 	],
-	#category : #'UnifiedFFI-External-Resources'
+	#category : 'UnifiedFFI-External-Resources',
+	#package : 'UnifiedFFI',
+	#tag : 'External-Resources'
 }
 
-{ #category : #finalization }
+{ #category : 'finalization' }
 FFIExternalResourceExecutor >> finalize [
 	session = Smalltalk session ifFalse: [ ^ self ].
 	resourceClass finalizeResourceData: data
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FFIExternalResourceExecutor >> initialize [
 	super initialize.
 	session := Smalltalk session
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FFIExternalResourceExecutor >> resourceClass: aResourceClass data: aData [
 	resourceClass := aResourceClass.
 	data := aData

@@ -2,15 +2,17 @@
 I'm a mock object to mock a translator
 "
 Class {
-	#name : #RegisterableTranslatorMock,
-	#superclass : #Object,
+	#name : 'RegisterableTranslatorMock',
+	#superclass : 'Object',
 	#instVars : [
 		'translations'
 	],
-	#category : #'System-Localization-Tests-Mocks'
+	#category : 'System-Localization-Tests-Mocks',
+	#package : 'System-Localization-Tests',
+	#tag : 'Mocks'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RegisterableTranslatorMock >> initialize [
 	"Initializes the receiver"
 
@@ -19,13 +21,13 @@ RegisterableTranslatorMock >> initialize [
 	translations at: #'TestCase' put: 'Testfall'
 ]
 
-{ #category : #translate }
+{ #category : 'translate' }
 RegisterableTranslatorMock >> translate: aString [
 	"Dispatch to a registered translator to translate the given string or (if there is no translator) return the untranslated string."
 	^translations at: aString asSymbol ifAbsent: [ aString ]
 ]
 
-{ #category : #translate }
+{ #category : 'translate' }
 RegisterableTranslatorMock >> translate: aString toLocale: localeID [
 
 	^self translate: aString

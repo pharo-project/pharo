@@ -6,24 +6,26 @@ Try:
 (GroupWindowMorph new openInWindowLabeled: 'Window organizer') extent: 400@400.
 "
 Class {
-	#name : #GroupWindowMorph,
-	#superclass : #Morph,
+	#name : 'GroupWindowMorph',
+	#superclass : 'Morph',
 	#traits : 'TEasilyThemed',
 	#classTraits : 'TEasilyThemed classTrait',
 	#instVars : [
 		'tabGroup'
 	],
-	#category : #'Morphic-Widgets-Windows-Widgets'
+	#category : 'Morphic-Widgets-Windows-Widgets',
+	#package : 'Morphic-Widgets-Windows',
+	#tag : 'Widgets'
 }
 
-{ #category : #layout }
+{ #category : 'layout' }
 GroupWindowMorph >> acceptDroppingMorph: aSystemWindow event: evt [
 	"Add the window."
 
 	self addWindow: aSystemWindow
 ]
 
-{ #category : #windows }
+{ #category : 'windows' }
 GroupWindowMorph >> addWindow: aSystemWindow [
   "Add an existing window to the pages."
 
@@ -49,21 +51,21 @@ GroupWindowMorph >> addWindow: aSystemWindow [
 		to: self
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 GroupWindowMorph >> changePropotionalLayout [
 	| layout |
-	((layout := self layoutPolicy) notNil and:[layout isProportionalLayout])
+	((layout := self layoutPolicy) isNotNil and:[layout isProportionalLayout])
 		ifTrue:[^self]. "already proportional layout"
 	self layoutPolicy: ProportionalLayout new.
 	self layoutChanged
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 GroupWindowMorph >> defaultColor [
 	^ self theme windowColor lighter
 ]
 
-{ #category : #'dropping/grabbing' }
+{ #category : 'dropping/grabbing' }
 GroupWindowMorph >> dragTab: aSystemWindow event: anEvent in: aTabLabel [
 	"Drag a tab. Remove the window from the organiser and place in hand."
 
@@ -72,7 +74,7 @@ GroupWindowMorph >> dragTab: aSystemWindow event: anEvent in: aTabLabel [
 	anEvent hand grabMorph: aSystemWindow
 ]
 
-{ #category : #windows }
+{ #category : 'windows' }
 GroupWindowMorph >> grabWindow [
 	"Request an existing window from the user and add it."
 
@@ -87,7 +89,7 @@ GroupWindowMorph >> grabWindow [
 	choice ifNotNil: [self addWindow: choice]
 ]
 
-{ #category : #'events-processing' }
+{ #category : 'events-processing' }
 GroupWindowMorph >> handleDropMorph: anEvent [
 	"Handle a dropping morph."
 
@@ -101,7 +103,7 @@ GroupWindowMorph >> handleDropMorph: anEvent [
 	aMorph justDroppedInto: self event: anEvent
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GroupWindowMorph >> initialize [
 	"Add the tab group with an inital workspace."
 
@@ -115,12 +117,12 @@ GroupWindowMorph >> initialize [
 	self tabGroup color: Color transparent
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 GroupWindowMorph >> isActive [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 GroupWindowMorph >> isWindowActive: aSystemWindow [
 	"Answer whether the given window is active.
 	True if the receiver is active and the window is the
@@ -129,7 +131,7 @@ GroupWindowMorph >> isWindowActive: aSystemWindow [
 	^ self tabGroup page == aSystemWindow and: [aSystemWindow isTopWindow ]
 ]
 
-{ #category : #windows }
+{ #category : 'windows' }
 GroupWindowMorph >> newTabGroup [
 	"Answer a new tab group."
 
@@ -137,7 +139,7 @@ GroupWindowMorph >> newTabGroup [
 		cornerStyle: #square
 ]
 
-{ #category : #windows }
+{ #category : 'windows' }
 GroupWindowMorph >> offerWindowMenu [
 	"Popup the window menu. Fill from current workspace."
 
@@ -152,18 +154,18 @@ GroupWindowMorph >> offerWindowMenu [
 	aMenu popUpEvent: self currentEvent in: self world
 ]
 
-{ #category : #'model - updating' }
+{ #category : 'model - updating' }
 GroupWindowMorph >> okToChange [
 
     ^self tabGroup pages allSatisfy: [ :each | each model okToChange ]
 ]
 
-{ #category : #windows }
+{ #category : 'windows' }
 GroupWindowMorph >> onWindowLabelChanged: ann [
 	self tabGroup relabelPage: ann window with: (self tabLabelFor: ann window)
 ]
 
-{ #category : #windows }
+{ #category : 'windows' }
 GroupWindowMorph >> removeWindow: aSystemWindow [
 	"Remove a window from the pages."
 
@@ -177,19 +179,19 @@ GroupWindowMorph >> removeWindow: aSystemWindow [
 	self tabGroup pages ifEmpty: [ self owner delete ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GroupWindowMorph >> tabGroup [
 
 	^ tabGroup
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GroupWindowMorph >> tabGroup: anObject [
 
 	tabGroup := anObject
 ]
 
-{ #category : #windows }
+{ #category : 'windows' }
 GroupWindowMorph >> tabLabelFor: aSystemWindow [
 	"Answer the tab label to use for the given page."
 
@@ -202,7 +204,7 @@ GroupWindowMorph >> tabLabelFor: aSystemWindow [
 			help: 'Close this tab and free the window'}
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 GroupWindowMorph >> update: aSymbol [
 	"Handle tab changes."
 
@@ -211,7 +213,7 @@ GroupWindowMorph >> update: aSymbol [
 		ifTrue: [self tabGroup page activate]
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 GroupWindowMorph >> update: aSymbol with: anObject [
 	"Handle tab changes."
 
@@ -225,7 +227,7 @@ GroupWindowMorph >> update: aSymbol with: anObject [
 				]
 ]
 
-{ #category : #'dropping/grabbing' }
+{ #category : 'dropping/grabbing' }
 GroupWindowMorph >> wantsDroppedMorph: aMorph event: evt [
   "Accept if a SystemWindow."
 

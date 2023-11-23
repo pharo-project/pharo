@@ -2,12 +2,14 @@
 A MagnitudeTest is a test class for testing the behavior of Magnitude
 "
 Class {
-	#name : #MagnitudeTest,
-	#superclass : #TestCase,
-	#category : #'Kernel-Tests-Numbers'
+	#name : 'MagnitudeTest',
+	#superclass : 'TestCase',
+	#category : 'Kernel-Tests-Numbers',
+	#package : 'Kernel-Tests',
+	#tag : 'Numbers'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 MagnitudeTest >> testBeBetweenAnd [
 	"inside"
 	self assert: (10 beBetween: 5 and: 20) equals: 10.
@@ -25,7 +27,7 @@ MagnitudeTest >> testBeBetweenAnd [
 	self assert: (30 beBetween: 20 and: 5) equals: 20
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MagnitudeTest >> testBetweenAnd [
 
 	self assert: (3 between: 0 and: 5).
@@ -33,7 +35,7 @@ MagnitudeTest >> testBetweenAnd [
 	self deny: (Date today between: Date today + 1 and: Date today + 3)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MagnitudeTest >> testCompareWithIfLesserIfEqualIfGreater [
 
 	self assert: ($b compareWith: $a ifLesser: [ 1 ] ifEqual: [ 2 ] ifGreater: [3]) equals: 3.
@@ -41,7 +43,7 @@ MagnitudeTest >> testCompareWithIfLesserIfEqualIfGreater [
 	self assert: ($b compareWith: $b ifLesser: [ 1 ] ifEqual: [ 2 ] ifGreater: [3]) equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MagnitudeTest >> testMax [
 
 	| huge |
@@ -51,7 +53,7 @@ MagnitudeTest >> testMax [
 	self assert: (1/3 max: 0.33333333333333333333333333333333333333333) equals: 1/3
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MagnitudeTest >> testMin [
 
 	| huge aThirdFloat |
@@ -62,7 +64,7 @@ MagnitudeTest >> testMin [
 	self assert: (1/3 min: aThirdFloat) equals: aThirdFloat
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MagnitudeTest >> testMinMax [
 
 	self assert: (10 min: 20 max: 12) equals: 12.
@@ -74,7 +76,7 @@ MagnitudeTest >> testMinMax [
 	self assert: (42 min: 40 max: 30) equals: 40
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MagnitudeTest >> testThreeWayCompareTo [
 
 	self assert: ($b threeWayCompareTo: $a) equals: 1.

@@ -1,6 +1,6 @@
-Extension { #name : #LazyMorphListMorph }
+Extension { #name : 'LazyMorphListMorph' }
 
-{ #category : #'*Athens-Morphic' }
+{ #category : '*Athens-Morphic' }
 LazyMorphListMorph >> athensDisplay: item atRow: row on: aCanvas [
 	"Display the given item at the given row on the given canvas."
 
@@ -12,7 +12,7 @@ LazyMorphListMorph >> athensDisplay: item atRow: row on: aCanvas [
 			aCanvas drawShape: (self selectionFrameForRow: row) ]
 ]
 
-{ #category : #'*Athens-Morphic' }
+{ #category : '*Athens-Morphic' }
 LazyMorphListMorph >> drawSubmorphsOnAthensCanvas: anAthensCanvas [
 	"Display submorphs back to front"
 

@@ -1,6 +1,6 @@
-Extension { #name : #OSPlatform }
+Extension { #name : 'OSPlatform' }
 
-{ #category : #'*Keymapping-Core' }
+{ #category : '*Keymapping-Core' }
 OSPlatform >> shortcutPrinter [
 	"Return a generic shortcut printer"
 	^ KMShortcutPrinter new

@@ -5,30 +5,32 @@ I shouldn't be created directly, but always be part of a refactoring namespace.
 My  namespace usally knows me and my meta class.
 "
 Class {
-	#name : #RBTrait,
-	#superclass : #RBClass,
+	#name : 'RBTrait',
+	#superclass : 'RBClass',
 	#instVars : [
 		'users'
 	],
-	#category : #'Refactoring-Core-Model'
+	#category : 'Refactoring-Core-Model',
+	#package : 'Refactoring-Core',
+	#tag : 'Model'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBTrait >> definesInstanceVariable: aString [
 	^ self directlyDefinesInstanceVariable: aString
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBTrait >> isTrait [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBTrait >> superclass [
 	^ nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBTrait >> users [
 	^ users ifNil: [ users := realClass users collect: [ :e | model classNamed: e name ] ]
 ]

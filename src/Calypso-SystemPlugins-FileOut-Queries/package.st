@@ -1,1 +1,1 @@
-Package { #name : #'Calypso-SystemPlugins-FileOut-Queries' }
+Package { #name : 'Calypso-SystemPlugins-FileOut-Queries' }

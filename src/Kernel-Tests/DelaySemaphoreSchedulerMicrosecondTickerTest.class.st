@@ -7,12 +7,14 @@ and run them for the specific combination of...
 
 "
 Class {
-	#name : #DelaySemaphoreSchedulerMicrosecondTickerTest,
-	#superclass : #DelayBasicSchedulerMicrosecondTickerTest,
-	#category : #'Kernel-Tests-Delays'
+	#name : 'DelaySemaphoreSchedulerMicrosecondTickerTest',
+	#superclass : 'DelayBasicSchedulerMicrosecondTickerTest',
+	#category : 'Kernel-Tests-Delays',
+	#package : 'Kernel-Tests',
+	#tag : 'Delays'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 DelaySemaphoreSchedulerMicrosecondTickerTest >> classForScheduler [
 	^ DelaySemaphoreScheduler
 ]

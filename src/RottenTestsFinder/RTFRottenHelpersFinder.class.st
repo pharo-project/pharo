@@ -4,36 +4,38 @@ Find rotten helper methods in the self call tree.
 #rottenHelpers is a Set of CompiledMethods being rotten.
 "
 Class {
-	#name : #RTFRottenHelpersFinder,
-	#superclass : #RTFSelfCallVisitor,
+	#name : 'RTFRottenHelpersFinder',
+	#superclass : 'RTFSelfCallVisitor',
 	#instVars : [
 		'rottenHelpers'
 	],
-	#category : #'RottenTestsFinder-SelfInterpreter'
+	#category : 'RottenTestsFinder-SelfInterpreter',
+	#package : 'RottenTestsFinder',
+	#tag : 'SelfInterpreter'
 }
 
-{ #category : #adding }
+{ #category : 'adding' }
 RTFRottenHelpersFinder >> addRottenHelper: aRottenHelper [
 	self rottenHelpers add: aRottenHelper
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RTFRottenHelpersFinder >> initialize [
 	super initialize.
 	self rottenHelpers: Set new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RTFRottenHelpersFinder >> rottenHelpers [
 	^ rottenHelpers
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RTFRottenHelpersFinder >> rottenHelpers: anObject [
 	rottenHelpers := anObject
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RTFRottenHelpersFinder >> visitRTFSelfCallNode: aRTFSelfCallNode [
 
 	(aRTFSelfCallNode subCalls allSatisfy: #hasBeenExecuted)

@@ -111,8 +111,8 @@ Internal Representation and Key Implementation Points.
 	toolbar:		<ClyToolbar>
 "
 Class {
-	#name : #ClyBrowserMorph,
-	#superclass : #PanelMorph,
+	#name : 'ClyBrowserMorph',
+	#superclass : 'PanelMorph',
 	#instVars : [
 		'navigationPanel',
 		'navigationViews',
@@ -125,40 +125,42 @@ Class {
 		'navigationEnvironment',
 		'systemScope'
 	],
-	#category : #'Calypso-Browser-UI'
+	#category : 'Calypso-Browser-UI',
+	#package : 'Calypso-Browser',
+	#tag : 'UI'
 }
 
-{ #category : #'tools registration' }
+{ #category : 'tools registration' }
 ClyBrowserMorph class >> beAllDefault [
 	<script>
 	self subclasses select: [ :each | each canBeDefault  ] thenDo: [ :each | each beDefaultBrowser ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyBrowserMorph class >> canBeDefault [
 	^self class includesSelector: #beDefaultBrowser
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyBrowserMorph class >> on: aNavigationEnvironment [
 	^self new
 		navigationEnvironment: aNavigationEnvironment;
 		setUpAvailablePlugins
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyBrowserMorph class >> on: aNavigationEnvironment systemScope: aSystemScope [
 	^(self on: aNavigationEnvironment)
 		systemScope: aSystemScope
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserMorph >> activeStatusBar [
 
 	^tabManager activeStatusBar
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserMorph >> addPlugin: aBrowserPlugin [
 	plugins detect: [ :each | each class = aBrowserPlugin class ] ifFound: [ ^self ].
 
@@ -166,7 +168,7 @@ ClyBrowserMorph >> addPlugin: aBrowserPlugin [
 	plugins add: aBrowserPlugin
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserMorph >> allContexts [
 
 	| result |
@@ -177,7 +179,7 @@ ClyBrowserMorph >> allContexts [
 	^result
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserMorph >> allContextsDo: aBlock [
 
 	self navigationContextsDo: aBlock.
@@ -187,7 +189,7 @@ ClyBrowserMorph >> allContextsDo: aBlock [
 		thenDo: [ :each | aBlock value: each createTextContext ]
 ]
 
-{ #category : #navigation }
+{ #category : 'navigation' }
 ClyBrowserMorph >> allNavigationScopes [
 
 	| defaultScope |
@@ -198,7 +200,7 @@ ClyBrowserMorph >> allNavigationScopes [
 		ifFalse: [ { self systemScope. defaultScope } ]
 ]
 
-{ #category : #'opening/closing' }
+{ #category : 'opening/closing' }
 ClyBrowserMorph >> buildWindow [
 	| window |
 	window := (SystemWindow labelled: self newWindowTitle) model: self.
@@ -208,7 +210,7 @@ ClyBrowserMorph >> buildWindow [
 	^window
 ]
 
-{ #category : #navigation }
+{ #category : 'navigation' }
 ClyBrowserMorph >> changeStateBy: aBlock [
 
 	| state navigationFailed |
@@ -228,7 +230,7 @@ ClyBrowserMorph >> changeStateBy: aBlock [
 			self rebuildAllTools]]
 ]
 
-{ #category : #navigation }
+{ #category : 'navigation' }
 ClyBrowserMorph >> changeStateOf: aQueryView by: aBlock [
 
 	| newTools |
@@ -241,7 +243,7 @@ ClyBrowserMorph >> changeStateOf: aQueryView by: aBlock [
 	]
 ]
 
-{ #category : #'opening/closing' }
+{ #category : 'opening/closing' }
 ClyBrowserMorph >> close [
 	| currentWindow |
 	currentWindow := self window.
@@ -256,14 +258,14 @@ ClyBrowserMorph >> close [
 	currentWindow close
 ]
 
-{ #category : #'tools support' }
+{ #category : 'tools support' }
 ClyBrowserMorph >> confirmDiscardChanges [
 
 	^self confirm: 'Changes have not been saved.
 Is it OK to discard changes?'
 ]
 
-{ #category : #context }
+{ #category : 'context' }
 ClyBrowserMorph >> createCommandContext [
 	"Some subclasses needs general global context where commands can be attached
 	independently from the actual internal widget under focus.
@@ -273,7 +275,7 @@ ClyBrowserMorph >> createCommandContext [
 	^ClyUnknownBrowserContext for: self
 ]
 
-{ #category : #'opening/closing' }
+{ #category : 'opening/closing' }
 ClyBrowserMorph >> createWindowGroupFrom: currentWindow [
   | group pos ext |
 	(currentWindow ownerThatIsA: GroupWindowMorph) ifNotNil: [:existing | ^existing].
@@ -289,32 +291,32 @@ ClyBrowserMorph >> createWindowGroupFrom: currentWindow [
 	^group
 ]
 
-{ #category : #'tools support' }
+{ #category : 'tools support' }
 ClyBrowserMorph >> decorateTool: aBrowserTool [
 
 	plugins do: [ :each | each decorateTool: aBrowserTool  ]
 ]
 
-{ #category : #navigation }
+{ #category : 'navigation' }
 ClyBrowserMorph >> defaultNavigationScope [
 
 	^self systemScope
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserMorph >> disablePluginsWhichAreNotIn: aBrowser [
 
 	plugins removeAllSuchThat: [ :each |
 		each isAutoActivated and: [ (aBrowser hasPlugin: each) not ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserMorph >> disableSlowPlugins [
 
 	plugins removeAllSuchThat: [ :each | each isSlow]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyBrowserMorph >> ensureInitialState [
 
 	(navigationViews anySatisfy: [ :each | each hasRealQuery ])
@@ -323,22 +325,22 @@ ClyBrowserMorph >> ensureInitialState [
 	self prepareDefaultState
 ]
 
-{ #category : #'tools support' }
+{ #category : 'tools support' }
 ClyBrowserMorph >> focusActiveTab [
 	tabManager focusActiveTab
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyBrowserMorph >> hasPlugin: aBrowserPlugin [
 	^self hasPluginOf: aBrowserPlugin class
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyBrowserMorph >> hasPluginOf: aBrowserPluginClass [
 	^plugins anySatisfy: [ :each | each class = aBrowserPluginClass ]
 ]
 
-{ #category : #navigation }
+{ #category : 'navigation' }
 ClyBrowserMorph >> ignoreNavigationDuring: aBlock [
 
 	navigationStarted ifTrue: [^aBlock value].
@@ -346,12 +348,12 @@ ClyBrowserMorph >> ignoreNavigationDuring: aBlock [
 	aBlock ensure: [ navigationStarted := false ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyBrowserMorph >> initialExtent [
 	^ 850@620 * self currentWorld displayScaleFactor
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyBrowserMorph >> initialize [
 	super initialize.
 	navigationStarted := false.
@@ -361,10 +363,10 @@ ClyBrowserMorph >> initialize [
 	self changeProportionalLayout.
 	self initializeToolsPanel.
 	self initializeNavigationPanel.
-	self addPaneSplitters
+	self layoutChildren
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyBrowserMorph >> initializeNavigationPanel [
 
 	| eachViewExtent lastViewLeft |
@@ -377,7 +379,7 @@ ClyBrowserMorph >> initializeNavigationPanel [
 	eachViewExtent := 1.0 / navigationViews size.
 	lastViewLeft := 0.0.
 	navigationViews do: [ :each | | frame |
-		frame := (lastViewLeft @ 0.0 corner: lastViewLeft + eachViewExtent @ 1.0) asLayoutFrame.
+		frame := ( lastViewLeft @ 0.0 corner: lastViewLeft + eachViewExtent @ 1.0) asLayoutFrame.
 		each == navigationViews last ifFalse: [
 			frame := frame rightOffset: -4 ].
 		navigationPanel
@@ -385,40 +387,28 @@ ClyBrowserMorph >> initializeNavigationPanel [
 			fullFrame: frame.
 		lastViewLeft := lastViewLeft + eachViewExtent ].
 
-	navigationPanel addPaneSplitters.
-	self addMorph: navigationPanel fullFrame: ((0.0 @ 0 corner: 1.0 @ 0.5) asLayoutFrame bottomOffset: toolbar height negated)
+	navigationPanel addPaneSplitters
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyBrowserMorph >> initializeNavigationViews [
 	self subclassResponsibility
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyBrowserMorph >> initializeToolsPanel [
+
 	toolbar := ClyToolbarMorph of: self.
-	tabManager := ClyNotebookManager of: self.
-
-	toolPanel := PanelMorph new.
-	toolPanel name: 'tools panel'.
-	toolPanel
-		changeTableLayout;
-		hResizing: #spaceFill;
-		vResizing: #spaceFill;
-		listDirection: #topToBottom.
-	self addMorph: toolPanel fullFrame: ((0.0 @ 0.5 corner: 1.0 @ 1.0) asLayoutFrame topOffset: toolbar height negated).
-
-	toolPanel addMorphBack: toolbar.
-	toolPanel addMorphBack: tabManager tabMorph
+	tabManager := ClyNotebookManager of: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyBrowserMorph >> isNavigationPanelFocused [
 
 	^navigationViews anySatisfy: [ :each | each hasKeyboardFocus ]
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 ClyBrowserMorph >> itemsChanged [
 
 	navigationStarted ifTrue: [ ^self ].
@@ -427,60 +417,90 @@ ClyBrowserMorph >> itemsChanged [
 	[self rebuildToolsForChangedEnvironment] ensure: [ navigationStarted := false ]
 ]
 
-{ #category : #keymapping }
+{ #category : 'keymapping' }
 ClyBrowserMorph >> kmDispatcher [
 
 	^ CmdKMDispatcher attachedTo: self
 ]
 
-{ #category : #navigation }
+{ #category : 'initialization' }
+ClyBrowserMorph >> layoutChildren [
+
+	"Set up the typical calypso browser layout with:
+	  - package | classes | protocols | methods panels
+	  - toolbar
+	  - tool (the code editor and so on)"
+	self
+		addMorph: navigationPanel
+		fullFrame: ((0.0 @ 0 corner: 1.0 @ 0.5) asLayoutFrame bottomOffset:
+				 toolbar height negated).
+
+	toolPanel := PanelMorph new.
+	toolPanel name: 'tools panel'.
+	toolPanel
+		changeTableLayout;
+		hResizing: #spaceFill;
+		vResizing: #spaceFill;
+		listDirection: #topToBottom.
+	self
+		addMorph: toolPanel
+		fullFrame: ((0.0 @ 0.5 corner: 1.0 @ 1.0) asLayoutFrame topOffset:
+				 toolbar height negated).
+
+	toolPanel addMorphBack: toolbar.
+	toolPanel addMorphBack: tabManager tabMorph.
+	
+	self addPaneSplitters
+]
+
+{ #category : 'navigation' }
 ClyBrowserMorph >> navigateBack [
 	navigationHistory undoNavigationOf: self
 ]
 
-{ #category : #navigation }
+{ #category : 'navigation' }
 ClyBrowserMorph >> navigateForward [
 	navigationHistory redoNavigationOf: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserMorph >> navigationContexts [
 
 	^ navigationViews collect: [ :each | each createSelectionContext ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserMorph >> navigationContextsDo: aBlock [
 
 	navigationViews do: [ :each | aBlock value: each createSelectionContext ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserMorph >> navigationEnvironment [
 	^ navigationEnvironment
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserMorph >> navigationEnvironment: aNavigationEnvironment [
 	navigationEnvironment := aNavigationEnvironment
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserMorph >> navigationHistory [
 	^ navigationHistory
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserMorph >> navigationHistory: aNavigationHistory [
 	navigationHistory := aNavigationHistory
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserMorph >> navigationViews [
 	^ navigationViews
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyBrowserMorph >> newNavigationView [
 	| view |
 	view := ClyQueryViewMorph for: self.
@@ -488,18 +508,18 @@ ClyBrowserMorph >> newNavigationView [
 	^view
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 ClyBrowserMorph >> newWindowTitle [
 	self subclassResponsibility
 ]
 
-{ #category : #'opening/closing' }
+{ #category : 'opening/closing' }
 ClyBrowserMorph >> okToChange [
 
 	^tabManager okToChange
 ]
 
-{ #category : #'opening/closing' }
+{ #category : 'opening/closing' }
 ClyBrowserMorph >> open [
 	| window |
 
@@ -507,15 +527,15 @@ ClyBrowserMorph >> open [
 	window := self openInWindow.
 	window model: self.
 	self updateWindowTitle.
-	window minimumExtent: 650@500.0
+	window minimumExtent: (650@500.0) scaledByDisplayScaleFactor
 ]
 
-{ #category : #'opening/closing' }
+{ #category : 'opening/closing' }
 ClyBrowserMorph >> openAnotherBrowser: aBrowser [
 	aBrowser open
 ]
 
-{ #category : #'opening/closing' }
+{ #category : 'opening/closing' }
 ClyBrowserMorph >> openInWindow: aWindow [
 	| groupWindow myWindow |
 	groupWindow := self createWindowGroupFrom: aWindow.
@@ -526,12 +546,12 @@ ClyBrowserMorph >> openInWindow: aWindow [
 	myWindow announceOpened
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserMorph >> plugins [
 	^plugins
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyBrowserMorph >> prepareDefaultState [
 	"The initial state is required state for browser.
 	But default state is the state which should be applyed
@@ -541,12 +561,12 @@ ClyBrowserMorph >> prepareDefaultState [
 	self prepareInitialState
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyBrowserMorph >> prepareInitialState [
 	self subclassResponsibility
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyBrowserMorph >> prepareInitialStateBy: aBlock [
 
 	navigationHistory ignoreNavigationDuring: [
@@ -554,43 +574,43 @@ ClyBrowserMorph >> prepareInitialStateBy: aBlock [
 		aBlock valueWithPossibleArgument: self]
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 ClyBrowserMorph >> rebuildAllTools [
 
 	tabManager updateTools.
 	self rebuildToolbar
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 ClyBrowserMorph >> rebuildToolbar [
 
 	toolbar updateItems
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 ClyBrowserMorph >> rebuildToolsForChangedEnvironment [
 
 	tabManager updateToolsForChangedEnvironment.
 	self rebuildToolbar
 ]
 
-{ #category : #navigation }
+{ #category : 'navigation' }
 ClyBrowserMorph >> recordNavigationState: aBrowserNavigationState [
 	navigationHistory recordState: aBrowserNavigationState
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserMorph >> removePlugin: aBrowserPlugin [
 
 	plugins removeAllSuchThat: [ :each | each class = aBrowserPlugin class ]
 ]
 
-{ #category : #'tools support' }
+{ #category : 'tools support' }
 ClyBrowserMorph >> searchDialog [
 	^ClyBrowserSearchDialogWindow for: self
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyBrowserMorph >> setUpAvailablePlugins [
 
 	ClyBrowserPlugin allSubclasses
@@ -598,19 +618,19 @@ ClyBrowserMorph >> setUpAvailablePlugins [
 		thenDo: [ :each | self addPlugin: each new ]
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 ClyBrowserMorph >> setWindowTitle: aString in: aWindow [
 
 	aWindow setLabel: aString
 ]
 
-{ #category : #navigation }
+{ #category : 'navigation' }
 ClyBrowserMorph >> snapshotState [
 
 	^ClyBrowserState of: self
 ]
 
-{ #category : #navigation }
+{ #category : 'navigation' }
 ClyBrowserMorph >> spawnBrowser: aBrowserClass withState: navigationBlock [
 	| browser |
 	browser := aBrowserClass on: navigationEnvironment systemScope: self systemScope.
@@ -622,7 +642,7 @@ ClyBrowserMorph >> spawnBrowser: aBrowserClass withState: navigationBlock [
 	^browser
 ]
 
-{ #category : #navigation }
+{ #category : 'navigation' }
 ClyBrowserMorph >> switchFocusToNextPane [
 
 	| focused next |
@@ -631,7 +651,7 @@ ClyBrowserMorph >> switchFocusToNextPane [
 	next takeKeyboardFocus
 ]
 
-{ #category : #navigation }
+{ #category : 'navigation' }
 ClyBrowserMorph >> switchFocusToPreviousPane [
 
 	| focused next |
@@ -640,27 +660,27 @@ ClyBrowserMorph >> switchFocusToPreviousPane [
 	next takeKeyboardFocus
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserMorph >> system [
 	^ navigationEnvironment system
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserMorph >> systemScope [
 	^systemScope ifNil: [systemScope := navigationEnvironment systemScope]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserMorph >> systemScope: aSystemScope [
 	systemScope := aSystemScope
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserMorph >> tabManager [
 	^tabManager
 ]
 
-{ #category : #'tools support' }
+{ #category : 'tools support' }
 ClyBrowserMorph >> toggleFullWindowTabs [
 
 	| tabMorph |
@@ -670,18 +690,18 @@ ClyBrowserMorph >> toggleFullWindowTabs [
 		ifTrue: [ toolPanel addMorphBack: tabMorph ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserMorph >> toolbar [
 	^toolbar
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 ClyBrowserMorph >> update [
 
 	navigationViews do: [ :each | each update ]
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 ClyBrowserMorph >> updateWindowTitle [
 
 	self window ifNotNil: [ :w |
@@ -694,13 +714,13 @@ ClyBrowserMorph >> updateWindowTitle [
 	]
 ]
 
-{ #category : #navigation }
+{ #category : 'navigation' }
 ClyBrowserMorph >> wasSpawnedFrom: aBrowser [
 
 	self recordNavigationState:  (ClyAccrossWindowNavigationState from: aBrowser)
 ]
 
-{ #category : #'opening/closing' }
+{ #category : 'opening/closing' }
 ClyBrowserMorph >> windowIsClosing [
 
 	navigationViews do: [ :each | each windowIsClosing ].
@@ -712,7 +732,7 @@ ClyBrowserMorph >> windowIsClosing [
 			model: nil]
 ]
 
-{ #category : #'tools support' }
+{ #category : 'tools support' }
 ClyBrowserMorph >> withTool: aToolClass do: aBlock [
 	^tabManager withTool: aToolClass do: aBlock
 ]

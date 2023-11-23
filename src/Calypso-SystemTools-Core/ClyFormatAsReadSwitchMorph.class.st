@@ -7,26 +7,28 @@ Internal Representation and Key Implementation Points.
 	checkbox:		<Object>
 "
 Class {
-	#name : #ClyFormatAsReadSwitchMorph,
-	#superclass : #ClyTextMorphToolMorph,
+	#name : 'ClyFormatAsReadSwitchMorph',
+	#superclass : 'ClyTextMorphToolMorph',
 	#instVars : [
 		'checkbox'
 	],
-	#category : #'Calypso-SystemTools-Core-Editors-Methods'
+	#category : 'Calypso-SystemTools-Core-Editors-Methods',
+	#package : 'Calypso-SystemTools-Core',
+	#tag : 'Editors-Methods'
 }
 
-{ #category : #formatting }
+{ #category : 'formatting' }
 ClyFormatAsReadSwitchMorph >> formatAsYouRead [
 
 	^ RBProgramNode formatterClass formatAsYouReadPolicy
 ]
 
-{ #category : #formatting }
+{ #category : 'formatting' }
 ClyFormatAsReadSwitchMorph >> formatAsYouReadLabel [
 	^ 'F'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyFormatAsReadSwitchMorph >> initialize [
 	super initialize.
 
@@ -42,7 +44,7 @@ ClyFormatAsReadSwitchMorph >> initialize [
 	self addMorph: checkbox
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ClyFormatAsReadSwitchMorph >> toggle [
 	| formatter isDirty |
 	formatter := RBProgramNode formatterClass.

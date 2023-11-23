@@ -2,52 +2,54 @@
 I am a node in a tree of Epicea logs, in a particular refresh of the browser. The nodes of such tree are Epicea files and an edge between a node A and another B exist when A contains an entry whose prior node is in B.
 "
 Class {
-	#name : #EpLogNode,
-	#superclass : #Object,
+	#name : 'EpLogNode',
+	#superclass : 'Object',
 	#instVars : [
 		'referencedNodes'
 	],
-	#category : #'EpiceaBrowsers-UI-Graph'
+	#category : 'EpiceaBrowsers-UI-Graph',
+	#package : 'EpiceaBrowsers',
+	#tag : 'UI-Graph'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpLogNode >> globalName [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 EpLogNode >> initialize [
 	super initialize.
 
 	referencedNodes := Set new
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 EpLogNode >> isMonitor [
 
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpLogNode >> log [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpLogNode >> modificationTime [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpLogNode >> modificationTimeString [
 
 	self subclassResponsibility
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 EpLogNode >> populateReferencedNodesWith: nodes [
 
 	self referencedGlobalNames do: [ :referencedGlobalName |
@@ -56,7 +58,7 @@ EpLogNode >> populateReferencedNodesWith: nodes [
 			ifFound: [ :referencedNode | referencedNodes add: referencedNode ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpLogNode >> referencedGlobalNames [
 
 	| firstEntry priorReference |
@@ -70,20 +72,20 @@ EpLogNode >> referencedGlobalNames [
 	^ { priorReference globalName }
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpLogNode >> referencedGlobalNamesIfEmptyLog [
 
 	^ #()
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpLogNode >> referencedNodes [
 	"Answer the referenced nodes, that were populated previously by #populateReferencedNodesWith:"
 
 	^ referencedNodes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpLogNode >> smallName [
 
 	^ self globalName contractTo: 25

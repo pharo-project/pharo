@@ -7,17 +7,19 @@ aTimeSpan= 91 days, starting January 8, 2003, midnight
 
 "
 Class {
-	#name : #TimespanDoTest,
-	#superclass : #TestCase,
+	#name : 'TimespanDoTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'aTimespan',
 		'aDuration',
 		'aDate'
 	],
-	#category : #'Kernel-Tests-Chronology'
+	#category : 'Kernel-Tests-Chronology',
+	#package : 'Kernel-Tests',
+	#tag : 'Chronology'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 TimespanDoTest >> setUp [
 	super setUp.
 	aDate := DateAndTime
@@ -36,7 +38,7 @@ TimespanDoTest >> setUp [
 	aTimespan := Timespan starting: aDate duration: aDuration
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimespanDoTest >> testDatesDo [
 	| dateArray |
 	dateArray := OrderedCollection new.
@@ -45,7 +47,7 @@ TimespanDoTest >> testDatesDo [
 	self assert: aTimespan dates equals: dateArray
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimespanDoTest >> testDoWith [
 	| count |
 	count := 0.
@@ -53,7 +55,7 @@ TimespanDoTest >> testDoWith [
 	self assert: count equals: 13
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimespanDoTest >> testDoWithWhen [
 	| count |
 	count := 0.
@@ -61,7 +63,7 @@ TimespanDoTest >> testDoWithWhen [
 	self assert: count equals: 5
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimespanDoTest >> testEveryDo [
 	| count duration |
 	count := 0.
@@ -70,7 +72,7 @@ TimespanDoTest >> testEveryDo [
 	self assert: count equals: 13
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimespanDoTest >> testNext [
 	self
 		assert: aTimespan next

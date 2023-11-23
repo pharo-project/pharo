@@ -1,22 +1,24 @@
 Class {
-	#name : #MetacelloRemoveMemberSpec,
-	#superclass : #MetacelloMemberSpec,
-	#category : #'Metacello-Core-Members'
+	#name : 'MetacelloRemoveMemberSpec',
+	#superclass : 'MetacelloMemberSpec',
+	#category : 'Metacello-Core-Members',
+	#package : 'Metacello-Core',
+	#tag : 'Members'
 }
 
-{ #category : #actions }
+{ #category : 'actions' }
 MetacelloRemoveMemberSpec >> applyAdd: addBlock copy: copyBlock merge: mergeBlock remove: removeBlock [
 
 	removeBlock value: self
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MetacelloRemoveMemberSpec >> applyToList: aListSpec [
 
 	aListSpec remove: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloRemoveMemberSpec >> methodUpdateSelector [
 
 	^#remove:

@@ -11,15 +11,16 @@ Internal Representation and Key Implementation Points.
 	testCaseResults:		<Dictionary of<TestCase class, ClyTestResultProperty>>
 "
 Class {
-	#name : #ClyCompositeTestResultProperty,
-	#superclass : #ClyTestResultProperty,
+	#name : 'ClyCompositeTestResultProperty',
+	#superclass : 'ClyTestResultProperty',
 	#instVars : [
 		'testCaseResults'
 	],
-	#category : #'Calypso-SystemPlugins-SUnit-Queries'
+	#category : 'Calypso-SystemPlugins-SUnit-Queries',
+	#package : 'Calypso-SystemPlugins-SUnit-Queries'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyCompositeTestResultProperty >> accumulateTestMethod: aMethod [
 	| testSelector result inheritingScope |
 	testSelector := aMethod selector.
@@ -33,30 +34,30 @@ ClyCompositeTestResultProperty >> accumulateTestMethod: aMethod [
 			result accumulateTest: testSelector of: concreteTestCase ]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyCompositeTestResultProperty >> concreteResultOf: aTestClass ifPresent: presentBlock [
 
 	^testCaseResults at: aTestClass ifPresent: presentBlock
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyCompositeTestResultProperty >> initialize [
 	super initialize.
 
 	testCaseResults := IdentityDictionary new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyCompositeTestResultProperty >> testCaseResults [
 	^ testCaseResults
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyCompositeTestResultProperty >> testCaseResults: anObject [
 	testCaseResults := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyCompositeTestResultProperty >> testCases [
 	^ testCaseResults keys
 ]

@@ -2,25 +2,27 @@
 I am raised when a mouse down is done
 "
 Class {
-	#name : #RubMouseClick,
-	#superclass : #RubMorphAnnouncement,
+	#name : 'RubMouseClick',
+	#superclass : 'RubMorphAnnouncement',
 	#instVars : [
 		'event'
 	],
-	#category : #'Rubric-Editing-Announcements'
+	#category : 'Rubric-Editing-Announcements',
+	#package : 'Rubric',
+	#tag : 'Editing-Announcements'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RubMouseClick class >> with: anEvent [
 	^ self new event: anEvent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubMouseClick >> event [
 	^ event
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubMouseClick >> event: anObject [
 	event := anObject
 ]

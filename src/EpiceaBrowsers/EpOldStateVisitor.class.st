@@ -2,60 +2,50 @@
 I answer a String that represents the old state of an EpEvent.
 "
 Class {
-	#name : #EpOldStateVisitor,
-	#superclass : #EpContentStringVisitor,
-	#category : #'EpiceaBrowsers-Visitors'
+	#name : 'EpOldStateVisitor',
+	#superclass : 'EpContentStringVisitor',
+	#category : 'EpiceaBrowsers-Visitors',
+	#package : 'EpiceaBrowsers',
+	#tag : 'Visitors'
 }
 
-{ #category : #visitor }
-EpOldStateVisitor >> visitBehaviorCategoryChange: aRecategorizationChange [
-
-	^ aRecategorizationChange oldCategory
-]
-
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpOldStateVisitor >> visitBehaviorCommentChange: aChange [
 
 	^ aChange oldComment asString
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpOldStateVisitor >> visitBehaviorNameChange: aClassRenameChange [
 
 	^ aClassRenameChange oldName
 ]
 
-{ #category : #visitor }
-EpOldStateVisitor >> visitCategoryRemoval: aClassCategoryRemovedChange [
+{ #category : 'visitor' }
+EpOldStateVisitor >> visitBehaviorRepackagedChange: aBehaviorRepackagedChange [
 
-	^ aClassCategoryRemovedChange categoryName
+	^ self printTag: aBehaviorRepackagedChange oldTagName package: aBehaviorRepackagedChange oldPackageName
 ]
 
-{ #category : #visitor }
-EpOldStateVisitor >> visitCategoryRename: aClassCategoryRenamedChange [
-
-	^ aClassCategoryRenamedChange oldCategoryName
-]
-
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpOldStateVisitor >> visitClassModification: aModificationClassChange [
 
 	^ self stringForBehavior: aModificationClassChange oldClass
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpOldStateVisitor >> visitClassRemoval: aClassRemovalChange [
 
 	^ self stringForBehavior: aClassRemovalChange classRemoved
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpOldStateVisitor >> visitLogCommentModification: anEvent [
 
 	^ anEvent oldComment
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpOldStateVisitor >> visitMethodModification: aMethodModification [
 
 	^ self
@@ -63,31 +53,49 @@ EpOldStateVisitor >> visitMethodModification: aMethodModification [
 		sourceCode: aMethodModification oldSourceCode
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpOldStateVisitor >> visitMethodRemoval: aMethodRemoval [
 
 	^ self printProtocol: aMethodRemoval protocol sourceCode: aMethodRemoval sourceCode
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
+EpOldStateVisitor >> visitPackageRename: aPackageRename [
+
+	^ aPackageRename oldPackageName
+]
+
+{ #category : 'visitor' }
+EpOldStateVisitor >> visitPackageTagRemoval: aPackageTagRemoval [
+
+	^ self printTag: aPackageTagRemoval tagName package: aPackageTagRemoval packageName
+]
+
+{ #category : 'visitor' }
+EpOldStateVisitor >> visitPackageTagRename: aPackageTagRename [
+
+	^ self printTag: aPackageTagRename oldTagName package: aPackageTagRename packageName
+]
+
+{ #category : 'visitor' }
 EpOldStateVisitor >> visitProtocolRemoval: aProtocolRemoval [
 
 	^ aProtocolRemoval protocol
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpOldStateVisitor >> visitTraitModification: aTraitModificationChange [
 
 	^ self stringForBehavior: aTraitModificationChange oldTrait
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpOldStateVisitor >> visitTraitRemoval:  aTraitRemoval [
 
 	^ self stringForBehavior: aTraitRemoval traitRemoved
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpOldStateVisitor >> visitUndo: anUndoEvent [
 
 	^ self displayBrowserOperation: anUndoEvent

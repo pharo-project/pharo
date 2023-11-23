@@ -2,12 +2,14 @@
 SUnit tests for packages
 "
 Class {
-	#name : #RGPackageDefinitionTest,
-	#superclass : #TestCase,
-	#category : #'Ring-Definitions-Tests-Containers-Base'
+	#name : 'RGPackageDefinitionTest',
+	#superclass : 'TestCase',
+	#category : 'Ring-Definitions-Tests-Containers-Base',
+	#package : 'Ring-Definitions-Tests-Containers',
+	#tag : 'Base'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGPackageDefinitionTest >> testAddingClass [
 	| newPackage newClass |
 	newPackage := RGPackageDefinition named: #'Collections-Sequenceable'.
@@ -19,21 +21,17 @@ RGPackageDefinitionTest >> testAddingClass [
 	self assert: (newPackage classNamed: #OrderedCollection) identicalTo: newClass
 ]
 
-{ #category : #testing }
-RGPackageDefinitionTest >> testAddingPackage [
-	| newPackage childPackage |
-	newPackage := RGPackageDefinition named: #Collections.
-	newPackage addPackageNamed: #'Collections-Sequenceable'.
+{ #category : 'tests' }
+RGPackageDefinitionTest >> testCategoryMatching [
 
-	self assert: (newPackage includesPackageNamed: #'Collections-Sequenceable').
-	self assert: newPackage packages size equals: 1.
-
-	childPackage := newPackage packageNamed: #'Collections-Sequenceable'.
-	self assert: childPackage parent equals: newPackage parent.
-	self assert: childPackage package equals: newPackage
+	self assert: ('Compression-Archives' isCategoryOf: 'Compression').
+	self deny: ('Compression' isCategoryOf: 'Compression-Archives').
+	self assert: ('Compression' isCategoryOf: 'Compression').
+	self assert: ('Compression-Arh' isCategoryOf: 'Compression').
+	self deny: ('XXXX' isCategoryOf: 'Compression-Archives')
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGPackageDefinitionTest >> testNewPackage [
 	| newPackage |
 	newPackage := RGPackageDefinition named: 'Collections-Sequenceable'.
@@ -42,7 +40,5 @@ RGPackageDefinitionTest >> testNewPackage [
 	self assert: newPackage name equals: 'Collections-Sequenceable'.
 	self assertEmpty: newPackage classes.
 	self assertEmpty: newPackage traits.
-	self assertEmpty: newPackage packages.
-	self assert: newPackage package isNil.
 	self assert: newPackage parent identicalTo: Smalltalk globals
 ]

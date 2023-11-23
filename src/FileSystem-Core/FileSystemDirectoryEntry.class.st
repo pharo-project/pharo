@@ -4,20 +4,22 @@ I am a cache for metadata about a file, symbolic link or directory.
 The set of attributes supported is platform dependent.  See the class comments of my subclasses for the details.
 "
 Class {
-	#name : #FileSystemDirectoryEntry,
-	#superclass : #Object,
+	#name : 'FileSystemDirectoryEntry',
+	#superclass : 'Object',
 	#instVars : [
 		'reference'
 	],
-	#category : #'FileSystem-Core-Public'
+	#category : 'FileSystem-Core-Public',
+	#package : 'FileSystem-Core',
+	#tag : 'Public'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileSystemDirectoryEntry class >> allPosixPermissions [
 	^8r777
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FileSystemDirectoryEntry class >> fileSystem: aFilesystem path: aPath [
 	"Create a directory entry given a filesystem and a path in such filesystem.
 	This method is here for backward compatibility, the appropriate subclass should be called directly, and not rely on the switch statement here."
@@ -28,7 +30,7 @@ FileSystemDirectoryEntry class >> fileSystem: aFilesystem path: aPath [
 		[ MemoryDirectoryEntry reference: (aFilesystem referenceTo: aPath) ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FileSystemDirectoryEntry class >> fileSystem: aFilesystem path: aPath creation: cTime modification: mTime isDir: aBoolean size: anInteger posixPermissions: posixNumber isSymlink: symlinkBooleam [
 	"Create a directory entry given a filesystem and a path in such filesystem.
 	This method is here for backward compatibility.  All other file attributes are retrieved independently."
@@ -39,13 +41,13 @@ FileSystemDirectoryEntry class >> fileSystem: aFilesystem path: aPath creation: 
 		[ MemoryDirectoryEntry reference: (aFilesystem referenceTo: aPath) ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FileSystemDirectoryEntry class >> reference: aFileReference [
 
 	^self new initializeWithReference: aFileReference
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FileSystemDirectoryEntry class >> reference: ref creation: cTime modification: mTime isDir: aBoolean size: anInteger posixPermissions: posixNumber isSymlink: symlinkBoolean [
 	"Create a directory entry given a file reference.
 	This method is here for backward compatibility.  All other file attributes are retrieved independently."
@@ -56,36 +58,36 @@ FileSystemDirectoryEntry class >> reference: ref creation: cTime modification: m
 		[ MemoryDirectoryEntry reference: ref ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileSystemDirectoryEntry >> accessTime [
 
 	^FileAttributeNotSupported signalWith: self
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 FileSystemDirectoryEntry >> asFileReference [
 	^ reference
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileSystemDirectoryEntry >> basename [
 
 	^ reference basename
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileSystemDirectoryEntry >> changeTime [
 	"Answer the files change time"
 
 	^FileAttributeNotSupported signalWith: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileSystemDirectoryEntry >> creation [
 	^ self creationTime
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileSystemDirectoryEntry >> creationTime [
 	"Answer the files creation time.
 	Different platforms will interpret this in different ways."
@@ -93,200 +95,200 @@ FileSystemDirectoryEntry >> creationTime [
 	^FileAttributeNotSupported signalWith: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileSystemDirectoryEntry >> deviceId [
 
 	^FileAttributeNotSupported signalWith: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FileSystemDirectoryEntry >> exists [
 	"Answer a boolean indicating whether the receivers file exists"
 
 	^self reference exists
 ]
 
-{ #category : #delegate }
+{ #category : 'delegate' }
 FileSystemDirectoryEntry >> extension [
 	^ reference extension
 ]
 
-{ #category : #delegate }
+{ #category : 'delegate' }
 FileSystemDirectoryEntry >> fullName [
 	^ reference fullName
 ]
 
-{ #category : #'cache management' }
+{ #category : 'cache management' }
 FileSystemDirectoryEntry >> getAccessAttributes [
 	"Noop by default"
 
 	^self
 ]
 
-{ #category : #'cache management' }
+{ #category : 'cache management' }
 FileSystemDirectoryEntry >> getAllAttributes [
 	"Noop by default"
 
 	^self
 ]
 
-{ #category : #'cache management' }
+{ #category : 'cache management' }
 FileSystemDirectoryEntry >> getStatAttributes [
 	"Noop by default"
 
 	^self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileSystemDirectoryEntry >> gid [
 
 	^FileAttributeNotSupported signalWith: self
 ]
 
-{ #category : #delegate }
+{ #category : 'delegate' }
 FileSystemDirectoryEntry >> ifAbsent: aBlock [
 	"Return self, or evaluate the block if I do not exist"
 
 	^ self exists ifTrue: [ self ] ifFalse: [ aBlock cull: self ]
 ]
 
-{ #category : #delegate }
+{ #category : 'delegate' }
 FileSystemDirectoryEntry >> ifExists: aBlock [
 	"Evaluate the block, unless I do not exist. If the receiver exists, pass it as argument to the block."
 
 	^ self exists ifTrue: [ aBlock cull: self ] ifFalse: [ self ]
 ]
 
-{ #category : #delegate }
+{ #category : 'delegate' }
 FileSystemDirectoryEntry >> ifExists: aBlock ifAbsent: anotherBlock [
 	"If the receiver exists, pass it as argument to aBlock. Else execute anotherBlock "
 
 	^ self exists ifTrue: [ aBlock cull: self ] ifFalse: [ anotherBlock cull: self ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FileSystemDirectoryEntry >> initializeWithReference: ref [
 
 	super initialize.
 	reference := ref
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileSystemDirectoryEntry >> inode [
 
 	^FileAttributeNotSupported signalWith: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FileSystemDirectoryEntry >> isDirectory [
 	"Return whether the receiver is a directory"
 
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FileSystemDirectoryEntry >> isExecutable [
 
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FileSystemDirectoryEntry >> isFIFO [
 
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FileSystemDirectoryEntry >> isFile [
 
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FileSystemDirectoryEntry >> isHidden [
 	"Return whether the receiver is hidden"
 
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FileSystemDirectoryEntry >> isReadable [
 
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FileSystemDirectoryEntry >> isRegular [
 
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FileSystemDirectoryEntry >> isSocket [
 
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FileSystemDirectoryEntry >> isSymlink [
 
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FileSystemDirectoryEntry >> isWritable [
 
 	^false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileSystemDirectoryEntry >> mode [
 
 	^FileAttributeNotSupported signalWith: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileSystemDirectoryEntry >> modification [
 	^ self modificationTime
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileSystemDirectoryEntry >> modificationTime [
 
 	^FileAttributeNotSupported signalWith: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileSystemDirectoryEntry >> numberOfHardLinks [
 
 	^FileAttributeNotSupported signalWith: self
 ]
 
-{ #category : #delegate }
+{ #category : 'delegate' }
 FileSystemDirectoryEntry >> pathSegments [
 	^ reference pathSegments
 ]
 
-{ #category : #delegate }
+{ #category : 'delegate' }
 FileSystemDirectoryEntry >> pathString [
 	"Answer the full path name of the receiver"
 
 	^reference pathString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileSystemDirectoryEntry >> permissions [
 
 	^FileAttributeNotSupported signalWith: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileSystemDirectoryEntry >> permissions: permissions [
 
 	^FileAttributeNotSupported signalWith: self
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 FileSystemDirectoryEntry >> printAttribute: anAttribute on: aStream [
 
 	[ (anAttribute value: self) printOn: aStream ]
@@ -294,7 +296,7 @@ FileSystemDirectoryEntry >> printAttribute: anAttribute on: aStream [
 		do: [ aStream << '(not supported)' ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 FileSystemDirectoryEntry >> printAttributeNamed: attributeName on: aStream [
 
 	aStream
@@ -306,7 +308,7 @@ FileSystemDirectoryEntry >> printAttributeNamed: attributeName on: aStream [
 	aStream cr
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 FileSystemDirectoryEntry >> printLongFormOn: aStream [
 
 	reference path printOn: aStream.
@@ -336,49 +338,49 @@ FileSystemDirectoryEntry >> printLongFormOn: aStream [
 		printAttributeNamed: #isWritable on: aStream
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 FileSystemDirectoryEntry >> printOn: aStream [
 
 	aStream << 'DirectoryEntry: '.
 	reference ifNotNil: [:ref | ref printOn: aStream]
 ]
 
-{ #category : #delegate }
+{ #category : 'delegate' }
 FileSystemDirectoryEntry >> readStream [
 	^ reference readStream
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileSystemDirectoryEntry >> reference [
 	^ reference
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileSystemDirectoryEntry >> size [
 
 	^FileAttributeNotSupported signalWith: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileSystemDirectoryEntry >> targetFileReference [
 	"Answer a FileReference representing the receivers target file"
 
 	^FileReference fileSystem: reference fileSystem path: self targetPath
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileSystemDirectoryEntry >> targetPath [
 
 	^FileAttributeNotSupported signalWith: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileSystemDirectoryEntry >> uid [
 
 	^FileAttributeNotSupported signalWith: self
 ]
 
-{ #category : #delegate }
+{ #category : 'delegate' }
 FileSystemDirectoryEntry >> writeStream [
 	^ reference writeStream
 ]

@@ -1,6 +1,6 @@
-Extension { #name : #BorderStyle }
+Extension { #name : 'BorderStyle' }
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 BorderStyle class >> dashed [
 	"Answer a dashed border style"
 

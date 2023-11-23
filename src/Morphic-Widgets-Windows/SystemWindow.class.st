@@ -4,8 +4,8 @@ SystemWindow is the Morphic equivalent of StandardSystemView -- a labelled conta
 The attribute onlyActiveOnTop, if set to true (and any call to activate will set this), determines that only the top member of a collection of such windows on the screen shall be active.  To be not active means that a mouse click in any region will only result in bringing the window to the top and then making it active.
 "
 Class {
-	#name : #SystemWindow,
-	#superclass : #ModelMorph,
+	#name : 'SystemWindow',
+	#superclass : 'ModelMorph',
 	#instVars : [
 		'labelString',
 		'stripes',
@@ -32,10 +32,12 @@ Class {
 		'FullscreenMargin',
 		'TopWindow'
 	],
-	#category : #'Morphic-Widgets-Windows-Widgets'
+	#category : 'Morphic-Widgets-Windows-Widgets',
+	#package : 'Morphic-Widgets-Windows',
+	#tag : 'Widgets'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SystemWindow class >> borderWidth [
 
 	"Making changes to this for some reason requires repositioning of CornerGripMorphs.
@@ -46,7 +48,7 @@ SystemWindow class >> borderWidth [
 	^ self theme windowBorderWidthFor: self
 ]
 
-{ #category : #keymapping }
+{ #category : 'keymapping' }
 SystemWindow class >> buildShortcutsOn: aBuilder [
 	<keymap>
 
@@ -57,7 +59,7 @@ SystemWindow class >> buildShortcutsOn: aBuilder [
 		description: 'Close this window'
 ]
 
-{ #category : #keymapping }
+{ #category : 'keymapping' }
 SystemWindow class >> buildWindowBottomEdgeShortcutsOn: aBuilder [
 	<keymap>
 
@@ -80,7 +82,7 @@ SystemWindow class >> buildWindowBottomEdgeShortcutsOn: aBuilder [
 		description: 'Move bottXX edge of the window up by half of the window extent'
 ]
 
-{ #category : #keymapping }
+{ #category : 'keymapping' }
 SystemWindow class >> buildWindowLeftEdgeShortcutsOn: aBuilder [
 	<keymap>
 
@@ -103,7 +105,7 @@ SystemWindow class >> buildWindowLeftEdgeShortcutsOn: aBuilder [
 		description: 'Move left edge of the window right by half of the window extent'
 ]
 
-{ #category : #keymapping }
+{ #category : 'keymapping' }
 SystemWindow class >> buildWindowMovingShortcutsOn: aBuilder [
 	<keymap>
 
@@ -144,7 +146,7 @@ SystemWindow class >> buildWindowMovingShortcutsOn: aBuilder [
 		description: 'Move window down by half of its extent'
 ]
 
-{ #category : #keymapping }
+{ #category : 'keymapping' }
 SystemWindow class >> buildWindowRightEdgeShortcutsOn: aBuilder [
 	<keymap>
 
@@ -167,7 +169,7 @@ SystemWindow class >> buildWindowRightEdgeShortcutsOn: aBuilder [
 		description: 'Center the window with a default extent'
 ]
 
-{ #category : #keymapping }
+{ #category : 'keymapping' }
 SystemWindow class >> buildWindowTilingShortcutsOn: aBuilder [
 	<keymap>
 
@@ -238,7 +240,7 @@ SystemWindow class >> buildWindowTilingShortcutsOn: aBuilder [
 		description: 'Center the window with a default extent'
 ]
 
-{ #category : #keymapping }
+{ #category : 'keymapping' }
 SystemWindow class >> buildWindowTopEdgeShortcutsOn: aBuilder [
 	<keymap>
 
@@ -261,7 +263,7 @@ SystemWindow class >> buildWindowTopEdgeShortcutsOn: aBuilder [
 		description: 'Move top edge of the window down by half of the window extent'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SystemWindow class >> closeBoxImage [
 	"Supplied here because we don't necessarily have ComicBold"
 
@@ -272,7 +274,7 @@ SystemWindow class >> closeBoxImage [
 	offset: 0@0)]
 ]
 
-{ #category : #'top window' }
+{ #category : 'top window' }
 SystemWindow class >> closeTopWindow [
 	"Try to close the top window.  It may of course decline"
 	TopWindow ifNotNil: [ :window |
@@ -281,7 +283,7 @@ SystemWindow class >> closeTopWindow [
 	]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SystemWindow class >> collapseBoxImage [
 	"Supplied here because we don't necessarily have ComicBold"
 
@@ -292,7 +294,7 @@ SystemWindow class >> collapseBoxImage [
 	offset: 0@0)]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SystemWindow class >> expandBoxImage [
 
 	^ (Form
@@ -302,35 +304,35 @@ SystemWindow class >> expandBoxImage [
 	offset: 0@0)
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 SystemWindow class >> fullscreenMargin [
 	^ FullscreenMargin ifNil: [FullscreenMargin := 0]
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 SystemWindow class >> fullscreenMargin: anInteger [
 	FullscreenMargin := anInteger
 ]
 
-{ #category : #'private-menu building' }
+{ #category : 'private-menu building' }
 SystemWindow class >> icons [
 
 	^ Smalltalk ui icons
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 SystemWindow class >> initialize [
 
 	CollapseBoxImage := nil.
 	CloseBoxImage := nil
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SystemWindow class >> labelled: labelString [
 	^self new setLabel: labelString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SystemWindow class >> menuBoxImage [
 
 	^ (Form
@@ -340,7 +342,7 @@ SystemWindow class >> menuBoxImage [
 	offset: 0@0)
 ]
 
-{ #category : #'top window' }
+{ #category : 'top window' }
 SystemWindow class >> noteTopWindowIn: aWorld [
 	"Clear the current top window and activate the topmost visible window"
 
@@ -352,7 +354,7 @@ SystemWindow class >> noteTopWindowIn: aWorld [
 			^m activate]]
 ]
 
-{ #category : #'top window' }
+{ #category : 'top window' }
 SystemWindow class >> sendTopWindowToBack [
  	"Send the top window of the world to the back. Relies on #submorphs array being ordered top to bottom. "
 	self currentWorld submorphs
@@ -360,7 +362,7 @@ SystemWindow class >> sendTopWindowToBack [
 		ifFound: [ :morph | morph sendToBack ]
 ]
 
-{ #category : #'menu items - tiling' }
+{ #category : 'menu items - tiling' }
 SystemWindow class >> tilingMenuItemsOn: aBuilder [
 
 	<windowMenu>
@@ -428,7 +430,7 @@ SystemWindow class >> tilingMenuItemsOn: aBuilder [
 		help: 'Center the window with a default extent'
 ]
 
-{ #category : #'menu items - tiling' }
+{ #category : 'menu items - tiling' }
 SystemWindow class >> tilingMenuOn: aBuilder [
 
 	<windowMenu>
@@ -437,12 +439,12 @@ SystemWindow class >> tilingMenuOn: aBuilder [
 		order: 10.5
 ]
 
-{ #category : #'top window' }
+{ #category : 'top window' }
 SystemWindow class >> topWindow [
 	^ TopWindow
 ]
 
-{ #category : #'top window' }
+{ #category : 'top window' }
 SystemWindow class >> wakeUpTopWindowUponStartup [
 	TopWindow ifNotNil:
 		[TopWindow isCollapsed ifFalse:
@@ -450,7 +452,7 @@ SystemWindow class >> wakeUpTopWindowUponStartup [
 				[TopWindow model modelWakeUpIn: TopWindow]]]
 ]
 
-{ #category : #'menu items' }
+{ #category : 'menu items' }
 SystemWindow class >> windowMenuOn: aBuilder [
 	"To inject your custom items in a specific place, note that each item increases in order by 1. For example, if you wanted your item to be the second item, you could give it an #order: 1.5"
 
@@ -459,7 +461,7 @@ SystemWindow class >> windowMenuOn: aBuilder [
 	(aBuilder item: #Close)
 		order: 1.0;
 		action: [ aBuilder model closeBoxHit ];
-		iconName: #windowCloseForm;
+		iconName: #windowClose;
 		enabledBlock: [ aBuilder model allowedToClose ];
 		withSeparatorAfter.
 	(aBuilder item: #About)
@@ -501,7 +503,7 @@ SystemWindow class >> windowMenuOn: aBuilder [
 		iconName: #windowMaximizeForm
 ]
 
-{ #category : #'top window' }
+{ #category : 'top window' }
 SystemWindow class >> windowsIn: aWorld satisfying: windowBlock [
 	| windows |
 
@@ -518,7 +520,7 @@ SystemWindow class >> windowsIn: aWorld satisfying: windowBlock [
 	^ windows
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 SystemWindow >> activate [
 	"Activate the owner too."
 
@@ -537,14 +539,14 @@ SystemWindow >> activate [
 	self positionModalOwner
 ]
 
-{ #category : #'top window' }
+{ #category : 'top window' }
 SystemWindow >> activateAndForceLabelToShow [
 	self activate.
 	bounds top < 0 ifTrue:
 		[self position: (self position x @ 0)]
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 SystemWindow >> activatedModalChild [
 
 	self modalChild ifNotNil: [ :modalChild |
@@ -557,7 +559,7 @@ SystemWindow >> activatedModalChild [
 	^false
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SystemWindow >> addCloseBox [
 	"If I have a labelArea, add a close box to it"
 	| frame |
@@ -569,7 +571,7 @@ SystemWindow >> addCloseBox [
 	labelArea addMorphBack: closeBox
 ]
 
-{ #category : #'menu actions' }
+{ #category : 'menu actions' }
 SystemWindow >> addCustomMenuItems: aCustomMenu hand: aHandMorph [
 	super addCustomMenuItems: aCustomMenu hand: aHandMorph.
 "template..."
@@ -577,20 +579,20 @@ SystemWindow >> addCustomMenuItems: aCustomMenu hand: aHandMorph [
 	aCustomMenu add: 'Edit label...' selector: #relabel
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SystemWindow >> addLabelArea [
 
 	labelArea :=self theme newWindowHeaderFor: self.
 	self addMorph: labelArea
 ]
 
-{ #category : #panes }
+{ #category : 'panes' }
 SystemWindow >> addMorph: aMorph frame: rectangle [
 
 	^ self addMorph: aMorph fullFrame: rectangle
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 SystemWindow >> addPaneSplittersIfNeeded [
 
 	(isCollapsed not
@@ -598,7 +600,7 @@ SystemWindow >> addPaneSplittersIfNeeded [
 			ifTrue: [self addPaneSplitters]
 ]
 
-{ #category : #'top window' }
+{ #category : 'top window' }
 SystemWindow >> adjustBorderUponActivationWhenLabeless [
 	"Adjust the border upon, um, activation when, um, labelless"
 
@@ -607,7 +609,7 @@ SystemWindow >> adjustBorderUponActivationWhenLabeless [
 		[self acquireBorderWidth: aWidth]
 ]
 
-{ #category : #'top window' }
+{ #category : 'top window' }
 SystemWindow >> adjustBorderUponDeactivationWhenLabeless [
 	"Adjust the border upon deactivation when, labelless"
 
@@ -616,7 +618,7 @@ SystemWindow >> adjustBorderUponDeactivationWhenLabeless [
 		[self acquireBorderWidth: aWidth]
 ]
 
-{ #category : #stepping }
+{ #category : 'stepping' }
 SystemWindow >> amendSteppingStatus [
 	"Circumstances having changed, find out whether stepping is wanted and assure that the new policy is carried out"
 
@@ -627,13 +629,13 @@ SystemWindow >> amendSteppingStatus [
 			[self stopStepping]
 ]
 
-{ #category : #announcement }
+{ #category : 'announcement' }
 SystemWindow >> announce: anAnnouncement [
 	"announcer is lazy initialized. If announcer is not set, this means that there is no listener, no need to propagate the announcement therefore"
 	self doAnnounce: anAnnouncement
 ]
 
-{ #category : #announcement }
+{ #category : 'announcement' }
 SystemWindow >> announceActivated [
 
 	self announce: (
@@ -643,7 +645,7 @@ SystemWindow >> announceActivated [
 	)
 ]
 
-{ #category : #announcement }
+{ #category : 'announcement' }
 SystemWindow >> announceDeActivated [
 
 	self announce: (
@@ -653,7 +655,7 @@ SystemWindow >> announceDeActivated [
 	)
 ]
 
-{ #category : #announcement }
+{ #category : 'announcement' }
 SystemWindow >> announceOpened [
 
 	super announceOpened.
@@ -663,12 +665,12 @@ SystemWindow >> announceOpened [
 						yourself)
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SystemWindow >> applyModelExtent [
 	self extent: model initialExtent
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 SystemWindow >> basicActivate [
 	"Bring me to the front and make me able to respond to mouse and keyboard."
 
@@ -701,7 +703,7 @@ SystemWindow >> basicActivate [
 	self privateFullBounds: nil; changed "ensure fullBounds computed for active drop shadow"
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 SystemWindow >> beResizeable [
 
 	isResizeable := true.
@@ -710,7 +712,7 @@ SystemWindow >> beResizeable [
 	self isResizeable ifTrue: [ self addGripsIfWanted ]
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 SystemWindow >> beTopWindow [
 
 	| oldTopWindow |
@@ -723,7 +725,7 @@ SystemWindow >> beTopWindow [
 	self announceActivated
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 SystemWindow >> beUnresizeable [
 
 	isResizeable := false.
@@ -732,7 +734,7 @@ SystemWindow >> beUnresizeable [
 	self isResizeable ifFalse: [ self removeGrips ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SystemWindow >> boxExtent [
 	"answer the extent to use in all the buttons.
 	The label height is used to be proportional to the standard window label font"
@@ -741,43 +743,43 @@ SystemWindow >> boxExtent [
 	^ (((14 @ 14) * self displayScaleFactor) max: label height @ label height)
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 SystemWindow >> buildWindowMenu [
 
 	^ self menu
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SystemWindow >> canBeMaximized [
 	"Answer whether we are not we can be maximised."
 
 	^ self isResizeable and: [ self isNotMaximized ]
 ]
 
-{ #category : #'menu actions' }
+{ #category : 'menu actions' }
 SystemWindow >> changeColor [
 	"Change the color of the receiver -- triggered, e.g. from a menu.  This variant allows the recolor triggered from the window's halo recolor handle to have the same result as choosing change-window-color from the window-title menu"
 	self setWindowColor
 ]
 
-{ #category : #'open/close' }
+{ #category : 'open/close' }
 SystemWindow >> close [
 	^ self delete
 ]
 
-{ #category : #keymapping }
+{ #category : 'keymapping' }
 SystemWindow >> closeWindowAction [
 "closed by a shortcut action.
  subclasses may overwrite this to do a different action (for example, cancel edits)"
 	self close
 ]
 
-{ #category : #'resize/collapse' }
+{ #category : 'resize/collapse' }
 SystemWindow >> collapse [
 	self isCollapsed ifFalse:[self collapseOrExpand]
 ]
 
-{ #category : #'resize/collapse' }
+{ #category : 'resize/collapse' }
 SystemWindow >> collapseOrExpand [
 
 	"Collapse or expand the window, depending on existing state.
@@ -824,23 +826,23 @@ SystemWindow >> collapseOrExpand [
 			 yourself)
 ]
 
-{ #category : #'resize/collapse' }
+{ #category : 'resize/collapse' }
 SystemWindow >> collapsedFrame [
 	^ collapsedFrame
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 SystemWindow >> colorForInsets [
 	^self paneColor colorForInsets
 ]
 
-{ #category : #label }
+{ #category : 'label' }
 SystemWindow >> copyTitle [
 	Clipboard clipboardText: self label.
 	self inform: 'Window title copied.'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SystemWindow >> createBox [
 	"create a button with default to be used in the label area"
 	"Transcript show: self paneColor asString;
@@ -855,7 +857,7 @@ SystemWindow >> createBox [
 	^ box
 ]
 
-{ #category : #'menu actions' }
+{ #category : 'menu actions' }
 SystemWindow >> createWindowGroup [
 	| group pos ext |
 	pos := self position.
@@ -868,25 +870,25 @@ SystemWindow >> createWindowGroup [
 		model: group
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SystemWindow >> defaultBorderColor [
 	"answer the default border color/fill style for the receiver"
 	^ #raised
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SystemWindow >> defaultColor [
 	"answer the default color/fill style for the receiver"
 	^ self theme backgroundColor
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 SystemWindow >> defaultIsResizeable [
 
 	^ true
 ]
 
-{ #category : #'open/close' }
+{ #category : 'open/close' }
 SystemWindow >> delete [
 	"Should activate window before asking model if okToChange
 	since likely that a confirmation dialog will be requested.
@@ -898,18 +900,18 @@ SystemWindow >> delete [
 	self deleteDiscardingChanges
 ]
 
-{ #category : #'menu actions' }
+{ #category : 'menu actions' }
 SystemWindow >> deleteCloseBox [
 	closeBox ifNotNil:
 		[closeBox delete.
 		closeBox := nil]
 ]
 
-{ #category : #'open/close' }
+{ #category : 'open/close' }
 SystemWindow >> deleteDiscardingChanges [
 	| thisWorld announcement animateClose |
 	animateClose := self visible
-		and: [ self world notNil
+		and: [ self world isNotNil
 				and: [ self theme shouldUseAnimations
 						and: [ self theme animationSettings animateClosing ] ] ].
 	self removePaneSplitters.	"in case we add some panes and reopen!"
@@ -932,37 +934,37 @@ SystemWindow >> deleteDiscardingChanges [
 	self currentWorld announcer announce: announcement
 ]
 
-{ #category : #'menu building' }
+{ #category : 'menu building' }
 SystemWindow >> discoveredMenuPragmaKeyword [
 
 	^ #windowMenu
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 SystemWindow >> doFastFrameDrag: grabPoint [
 	"Do fast frame dragging from the given point"
 
 	(FastDraggingFrameMorph forDragging: self clickedAt: grabPoint) openInWorld
 ]
 
-{ #category : #'resize/collapse' }
+{ #category : 'resize/collapse' }
 SystemWindow >> doFastWindowReframe: aSideOrCornerName [
 	"Do fast frame resizing  from the given corner or side"
 
 	(FastDraggingFrameMorph forResizing: self fromLocation: aSideOrCornerName) openInWorld
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SystemWindow >> embeddable [
 	^ embeddable ifNil: [embeddable := false]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SystemWindow >> embeddable: aBoolean [
 	embeddable := aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SystemWindow >> embeddedWindowOrNil [
 
 	"answer nil for common morphs, yourself from system windows and first submorph for transformation morphs"
@@ -970,7 +972,7 @@ SystemWindow >> embeddedWindowOrNil [
 	^ self
 ]
 
-{ #category : #panes }
+{ #category : 'panes' }
 SystemWindow >> existingPaneColor [
 	"Answer the existing pane color for the window, obtaining it from the first paneMorph if any, and fall back on using the second stripe color if necessary."
 
@@ -980,12 +982,12 @@ SystemWindow >> existingPaneColor [
 	^aColor
 ]
 
-{ #category : #'resize/collapse' }
+{ #category : 'resize/collapse' }
 SystemWindow >> expand [
 	self isCollapsed ifTrue:[self collapseOrExpand]
 ]
 
-{ #category : #'resize/collapse' }
+{ #category : 'resize/collapse' }
 SystemWindow >> extent: aPoint [
 	"Set the receiver's extent to value provided. Respect my minimumExtent."
 
@@ -1026,14 +1028,14 @@ SystemWindow >> extent: aPoint [
 						yourself)
 ]
 
-{ #category : #label }
+{ #category : 'label' }
 SystemWindow >> externalName [
 	"Answer the name by which the receiver is known in the UI"
 
 	^ labelString
 ]
 
-{ #category : #'menu building' }
+{ #category : 'menu building' }
 SystemWindow >> fallbackMenuOn: menu [
 	"Build the menu that is put up if something is going wrong with the menubuilder"
 
@@ -1046,30 +1048,30 @@ SystemWindow >> fallbackMenuOn: menu [
 	menu lastItem icon: self theme windowCloseForm
 ]
 
-{ #category : #'resize/collapse' }
+{ #category : 'resize/collapse' }
 SystemWindow >> fastFramingOn [
 
 	^self theme settings fastDragging and: [self isFlexed not]
 ]
 
-{ #category : #'resize/collapse' }
+{ #category : 'resize/collapse' }
 SystemWindow >> fullFrame [
 	^ fullFrame
 ]
 
-{ #category : #'menu actions' }
+{ #category : 'menu actions' }
 SystemWindow >> fullscreenBounds [
 	"Answer the bounds that the receiver would take if expanded to fullscreen."
 
 	^ (RealEstateAgent maximumUsableAreaInWorld: self world) insetBy: self fullscreenMargin
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 SystemWindow >> fullscreenMargin [
 	^ self class fullscreenMargin
 ]
 
-{ #category : #'resize/collapse' }
+{ #category : 'resize/collapse' }
 SystemWindow >> getBoundsWithFlex [
 	"Return the lastest bounds rectangle with origin forced to global coordinates"
 
@@ -1078,13 +1080,13 @@ SystemWindow >> getBoundsWithFlex [
 		ifFalse: [ self bounds ]
 ]
 
-{ #category : #'resize/collapse' }
+{ #category : 'resize/collapse' }
 SystemWindow >> getCollapsedFrame [
 
 	^RealEstateAgent assignCollapseFrameFor: self
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 SystemWindow >> grabSelfOrTopRenderer: evt [
 
 	| renderer |
@@ -1098,7 +1100,7 @@ SystemWindow >> grabSelfOrTopRenderer: evt [
 	]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SystemWindow >> gradientWithColor: aColor [
 
 	| ramp |
@@ -1111,7 +1113,7 @@ SystemWindow >> gradientWithColor: aColor [
 		normal: 223 @ 0
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 SystemWindow >> handleListenEvent: evt [
 	"Make sure we lock our contents after DnD has finished"
 	evt isMouse ifFalse:[^self].
@@ -1120,7 +1122,7 @@ SystemWindow >> handleListenEvent: evt [
 	evt hand removeMouseListener: self
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 SystemWindow >> handlesMouseDown: evt [
 	"If I am not the topWindow, then I will only respond to dragging by the title bar.
 	Any other click will only bring me to the top"
@@ -1128,32 +1130,32 @@ SystemWindow >> handlesMouseDown: evt [
 	^ self isEmbedded not
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 SystemWindow >> handlesMouseOverDragging: evt [
 	^true
 ]
 
-{ #category : #compatibility }
+{ #category : 'compatibility' }
 SystemWindow >> hasUnacceptedEdits [
 
 	^ (self submorphs select: [:e | e respondsTo: #hasUnacceptedEdits ]) anySatisfy: [:e | e hasUnacceptedEdits ]
 ]
 
-{ #category : #thumbnail }
+{ #category : 'thumbnail' }
 SystemWindow >> icon [
 	"Answer a form with an icon to represent the receiver"
 
 	^ self iconNamed: #windowIcon
 ]
 
-{ #category : #'open/close' }
+{ #category : 'open/close' }
 SystemWindow >> initialExtent [
 	^ (self model respondsTo: #initialExtent)
 		ifTrue: [self model initialExtent]
 		ifFalse: [ self extent ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SystemWindow >> initialize [
 	"Initialize a system window. Add label, stripes, etc., if desired"
 
@@ -1178,7 +1180,7 @@ SystemWindow >> initialize [
 	self bindKeyCombination: (Character arrowRight meta shift alt) toAction: [self taskbarMoveRight ]
 ]
 
-{ #category : #keymapping }
+{ #category : 'keymapping' }
 SystemWindow >> initializeShortcuts: aKMDispatcher [
 	"Where we may attach keymaps or even on:do: local shortcuts if needed."
 
@@ -1186,31 +1188,31 @@ SystemWindow >> initializeShortcuts: aKMDispatcher [
 	aKMDispatcher attachCategory: #WindowShortcuts
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SystemWindow >> isCloseable [
 	^ self mustNotClose not and: [ model ifNotNil: [ model okToChange ] ifNil: [ true ] ]
 ]
 
-{ #category : #'resize/collapse' }
+{ #category : 'resize/collapse' }
 SystemWindow >> isCollapsed [
 	^ isCollapsed
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SystemWindow >> isDisplayed [
-	" Answer true if I am currently displayed in the World"
+	"Answer true if I am currently displayed in the World"
 
-	^ self world notNil
+	^ self world isNotNil
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 SystemWindow >> isResizeable [
 	"Answer whether we are not we can be resized."
 
 	^ isResizeable ifNil: [ isResizeable := self defaultIsResizeable ]
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 SystemWindow >> isResizeable: aBoolean [
 
 	aBoolean = isResizeable ifTrue: [ ^ self ].
@@ -1219,34 +1221,34 @@ SystemWindow >> isResizeable: aBoolean [
 		ifFalse: [ self beUnresizeable ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SystemWindow >> isSystemWindow [
 "answer whatever the receiver is a SystemWindow"
 	^ true
 ]
 
-{ #category : #'top window' }
+{ #category : 'top window' }
 SystemWindow >> isTopWindow [
 
 	^self == TopWindow
 ]
 
-{ #category : #label }
+{ #category : 'label' }
 SystemWindow >> label [
 	^ labelString
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 SystemWindow >> labelRect [
 	^ self innerBounds withHeight: self labelHeight
 ]
 
-{ #category : #label }
+{ #category : 'label' }
 SystemWindow >> labelWidgetAllowance [
 	^ labelWidgetAllowance ifNil: [self setLabelWidgetAllowance]
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 SystemWindow >> layoutBounds [
 	"Bounds of pane area only."
 	| box |
@@ -1255,7 +1257,7 @@ SystemWindow >> layoutBounds [
 	^box withTop: box top + self labelHeight
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 SystemWindow >> makeMeVisible [
 
 	self world extent > (0@0) ifFalse: [^ self].
@@ -1269,7 +1271,7 @@ SystemWindow >> makeMeVisible [
 		ifFalse: [self position: (RealEstateAgent initialFrameFor: self initialExtent: self extent world: self world) topLeft]
 ]
 
-{ #category : #'menu actions' }
+{ #category : 'menu actions' }
 SystemWindow >> makeSecondTopmost [
 	| aWorld |
 	aWorld := self world.
@@ -1280,13 +1282,13 @@ SystemWindow >> makeSecondTopmost [
 			aWorld addMorph: self behind: nextWindow ]
 ]
 
-{ #category : #'menu actions' }
+{ #category : 'menu actions' }
 SystemWindow >> makeUnclosable [
 	mustNotClose := true.
 	self deleteCloseBox
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SystemWindow >> maximumExtent [
 	"This returns the maximum extent that the morph may be expanded to.
 	Return nil if this property has not been set."
@@ -1294,7 +1296,7 @@ SystemWindow >> maximumExtent [
 	^ self valueOfProperty: #maximumExtent
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SystemWindow >> maximumExtent: aPoint [
 	"This returns the maximum extent that the morph may be expanded to.
 	Return nil if this property has not been set."
@@ -1302,7 +1304,7 @@ SystemWindow >> maximumExtent: aPoint [
 	^ self setProperty: #maximumExtent toValue: aPoint
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 SystemWindow >> menu [
 
 	^(PragmaMenuBuilder
@@ -1310,7 +1312,7 @@ SystemWindow >> menu [
 		model: self) menu
 ]
 
-{ #category : #'resize/collapse' }
+{ #category : 'resize/collapse' }
 SystemWindow >> minimizeOrRestore [
 
 	"Collapse or expand the window, depending on existing state"
@@ -1356,14 +1358,14 @@ SystemWindow >> minimizeOrRestore [
 	self announce: windowEvent
 ]
 
-{ #category : #'modal-windows' }
+{ #category : 'modal-windows' }
 SystemWindow >> modalChild [
 	"Answer the modal child of the receiver, if any."
 
 	^self valueOfProperty: #modalChild
 ]
 
-{ #category : #'modal-windows' }
+{ #category : 'modal-windows' }
 SystemWindow >> modalLockTo: aSystemWindow [
 	"Lock the receiver as a modal owner of the given window."
 
@@ -1376,14 +1378,14 @@ SystemWindow >> modalLockTo: aSystemWindow [
 	]
 ]
 
-{ #category : #'modal-windows' }
+{ #category : 'modal-windows' }
 SystemWindow >> modalOwner [
 	"Answer the modal owner of the receiver, if any."
 
 	^self valueOfProperty: #modalOwner
 ]
 
-{ #category : #'modal-windows' }
+{ #category : 'modal-windows' }
 SystemWindow >> modalUnlockFrom: aSystemWindow [
 	"Unlock the receiver as a modal owner of the given window."
 
@@ -1394,7 +1396,7 @@ SystemWindow >> modalUnlockFrom: aSystemWindow [
 	self activate
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 SystemWindow >> mouseDown: evt [
 	"Changed to properly process the mouse down event if passing to
 	submorphs."
@@ -1414,7 +1416,7 @@ SystemWindow >> mouseDown: evt [
 	evt wasHandled: true
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 SystemWindow >> mouseEnterDragging: evt [
 	"unlock children for drop operations"
 	(self isTopWindow not and:[evt hand hasSubmorphs]) ifTrue:[
@@ -1423,7 +1425,7 @@ SystemWindow >> mouseEnterDragging: evt [
 	]
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 SystemWindow >> mouseLeaveDragging: evt [
 	"lock children after drop operations"
 	(self isTopWindow not and:[evt hand hasSubmorphs]) ifTrue:[
@@ -1432,7 +1434,7 @@ SystemWindow >> mouseLeaveDragging: evt [
 	]
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 SystemWindow >> mouseMove: evt [
 	"Handle a mouse-move event"
 
@@ -1443,25 +1445,25 @@ SystemWindow >> mouseMove: evt [
 	]
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 SystemWindow >> mouseUp: evt [
 	| cp |
 	cp := evt cursorPoint.
 	submorphs do: [:m | (m containsPoint: cp) ifTrue: [m mouseUp: evt]]
 ]
 
-{ #category : #move }
+{ #category : 'move' }
 SystemWindow >> moveTaskbarTaskToOffset: offset [
 
 	self worldTaskbar ifNotNil: [ :worldTaskbar | worldTaskbar updateTasks; move: self taskbarTask withOffset: offset ]
 ]
 
-{ #category : #'open/close' }
+{ #category : 'open/close' }
 SystemWindow >> mustNotClose [
 	^ mustNotClose == true
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 SystemWindow >> navigateFocus [
 
 	self rememberedKeyboardFocus
@@ -1477,7 +1479,7 @@ SystemWindow >> navigateFocus [
 		]
 ]
 
-{ #category : #'menu actions' }
+{ #category : 'menu actions' }
 SystemWindow >> offerWindowMenu [
 	| aMenu |
 	aMenu := self buildWindowMenu.
@@ -1486,13 +1488,13 @@ SystemWindow >> offerWindowMenu [
 	aMenu popUpEvent: self currentEvent in: self world
 ]
 
-{ #category : #'open/close' }
+{ #category : 'open/close' }
 SystemWindow >> openModal [
 	self openInWorld.
 	MorphicRenderLoop new doOneCycleWhile: [ self isInWorld ]
 ]
 
-{ #category : #'*Morphic-Widgets-Windows' }
+{ #category : 'open/close' }
 SystemWindow >> openModal: aSystemWindow [
 	"Open the given window locking the receiver until it is dismissed.
 	Answer the system window.
@@ -1508,14 +1510,14 @@ SystemWindow >> openModal: aSystemWindow [
 	^aSystemWindow
 ]
 
-{ #category : #panes }
+{ #category : 'panes' }
 SystemWindow >> paneColor: aColor [
 	self setProperty: #paneColor toValue: aColor.
 
 	self adoptPaneColor: aColor
 ]
 
-{ #category : #panes }
+{ #category : 'panes' }
 SystemWindow >> paneColorToUse [
 	^ Display depth <= 2
 		ifTrue:
@@ -1524,19 +1526,19 @@ SystemWindow >> paneColorToUse [
 			[self paneColor]
 ]
 
-{ #category : #panes }
+{ #category : 'panes' }
 SystemWindow >> paneMorphSatisfying: aBlock [
 	^ paneMorphs detect: aBlock ifNone: [ nil ]
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 SystemWindow >> paneMorphs [
 	"Nominally private but a need for obtaining this from the outside arose"
 
 	^ paneMorphs
 ]
 
-{ #category : #'resize/collapse' }
+{ #category : 'resize/collapse' }
 SystemWindow >> paneWithLongestSide: sideBlock near: aPoint [
 	| thePane theSide theLen |
 	theLen := 0.
@@ -1552,14 +1554,14 @@ SystemWindow >> paneWithLongestSide: sideBlock near: aPoint [
 	^ thePane
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 SystemWindow >> panelRect [
 	"Answer the area below the title bar which is devoted to panes."
 
 	^ self innerBounds insetBy: (0 @ self labelHeight corner: 0 @ 0)
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 SystemWindow >> position: newPos [
 	| oldPos |
 	isCollapsed
@@ -1579,7 +1581,7 @@ SystemWindow >> position: newPos [
 						window: self)]
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 SystemWindow >> positionModalOwner [
 
 	self modalOwner ifNotNil: [ :modalOwner |
@@ -1589,7 +1591,7 @@ SystemWindow >> positionModalOwner [
    ]
 ]
 
-{ #category : #'open/close' }
+{ #category : 'open/close' }
 SystemWindow >> positionSubmorphs [
 	"Feels like overkill, but effect needed"
 	super positionSubmorphs.
@@ -1597,14 +1599,14 @@ SystemWindow >> positionSubmorphs [
 		[:aMorph | aMorph positionSubmorphs]
 ]
 
-{ #category : #opening }
+{ #category : 'opening' }
 SystemWindow >> postOpenInWorld: aWorld [
 
 	self activate.
 	super postOpenInWorld: aWorld
 ]
 
-{ #category : #opening }
+{ #category : 'opening' }
 SystemWindow >> preOpenInWorld: aWorld [
 	"This msg and its callees result in the window being activeOnlyOnTop"
 	self bounds: (RealEstateAgent
@@ -1614,14 +1616,14 @@ SystemWindow >> preOpenInWorld: aWorld [
 	self playOpenSound
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 SystemWindow >> printOn: aStream [
 
 	super printOn: aStream.
 	label ifNotNil: [ aStream nextPutAll: ' named: ', self labelString  ]
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 SystemWindow >> privateBePassive [
 	"private"
 	self isInWorld ifFalse: [ ^self ].
@@ -1632,7 +1634,7 @@ SystemWindow >> privateBePassive [
 	announceDeActivated
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 SystemWindow >> putLabelItemsInLabelArea [
 	"Put label items into the label area, if there is one"
 
@@ -1644,12 +1646,12 @@ SystemWindow >> putLabelItemsInLabelArea [
 		label ifNotNil: [labelArea addMorph: label]]
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 SystemWindow >> raisedColor [
 	^self paneColor raisedColor
 ]
 
-{ #category : #'resize/collapse' }
+{ #category : 'resize/collapse' }
 SystemWindow >> reframePanesAdjoining: growingPane along: side to: aDisplayBox [
 	| delta newRect minDim theMin horiz |
 	growingPane ifNil: [^ self].  "As from click outside"
@@ -1682,7 +1684,7 @@ SystemWindow >> reframePanesAdjoining: growingPane along: side to: aDisplayBox [
 	self extent: self extent
 ]
 
-{ #category : #label }
+{ #category : 'label' }
 SystemWindow >> relabel [
 	| newLabel |
 	newLabel := UIManager default
@@ -1692,14 +1694,14 @@ SystemWindow >> relabel [
 	self setLabel: newLabel
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 SystemWindow >> removeMenuBox [
 	menuBox ifNotNil:
 		[menuBox delete.
 		menuBox := nil]
 ]
 
-{ #category : #panes }
+{ #category : 'panes' }
 SystemWindow >> replacePane: oldPane with: newPane [
 	"Make newPane exactly occupy the position and extent of oldPane"
 
@@ -1720,19 +1722,19 @@ SystemWindow >> replacePane: oldPane with: newPane [
 	self changed
 ]
 
-{ #category : #panes }
+{ #category : 'panes' }
 SystemWindow >> restoreDefaultPaneColor [
 	"Useful when changing from monochrome to color display"
 
 	self setStripeColorsFrom: self paneColor
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 SystemWindow >> scrollBarColor [
 	^self paneColor
 ]
 
-{ #category : #'menu actions' }
+{ #category : 'menu actions' }
 SystemWindow >> sendToBack [
     "Relies on #submorphs array being ordered top to bottom."
 	| otherSystemWindows |
@@ -1743,7 +1745,7 @@ SystemWindow >> sendToBack [
 	]
 ]
 
-{ #category : #'resize/collapse' }
+{ #category : 'resize/collapse' }
 SystemWindow >> setBoundsWithFlex: newFrame [
 	"Set bounds from newFrame with origin preserved from global coordinates"
 
@@ -1753,7 +1755,7 @@ SystemWindow >> setBoundsWithFlex: newFrame [
 		ifFalse: [super bounds: newFrame]
 ]
 
-{ #category : #label }
+{ #category : 'label' }
 SystemWindow >> setLabel: aString [
 	| frame announcement |
 	labelString := aString.
@@ -1786,14 +1788,14 @@ SystemWindow >> setLabel: aString [
 	label layoutFrame: frame
 ]
 
-{ #category : #label }
+{ #category : 'label' }
 SystemWindow >> setLabelFont: aFont [
 
 	label ifNil: [^ self].
 	label font: aFont
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 SystemWindow >> setPaneRectsFromBounds [
 	"Reset proportional specs from actual bounds, eg, after reframing panes"
 	| layoutBounds |
@@ -1814,7 +1816,7 @@ SystemWindow >> setPaneRectsFromBounds [
 	]
 ]
 
-{ #category : #panes }
+{ #category : 'panes' }
 SystemWindow >> setUpdatablePanesFrom: getSelectors [
 	| aList possibles |
 	"Set my updatablePanes inst var to the list of panes which are list panes with the given get-list selectors.  Order is important here!  Note that the method is robust in the face of panes not found, but a warning is printed in the transcript in each such case"
@@ -1829,7 +1831,7 @@ SystemWindow >> setUpdatablePanesFrom: getSelectors [
 	updatablePanes := aList asArray
 ]
 
-{ #category : #'menu actions' }
+{ #category : 'menu actions' }
 SystemWindow >> setWindowColor [
 	"Allow the user to select a new basic color for the window"
 
@@ -1837,13 +1839,13 @@ SystemWindow >> setWindowColor [
 		ifNotNil: [:nc | self setWindowColor: nc]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SystemWindow >> shouldDropOnMouseUp [
 	"Return true for consistency with fastdrag"
 	^true
 ]
 
-{ #category : #stepping }
+{ #category : 'stepping' }
 SystemWindow >> stepAt: millisecondClockValue [
 	"If the receiver is not collapsed, step it, after first stepping the model."
 
@@ -1854,14 +1856,14 @@ SystemWindow >> stepAt: millisecondClockValue [
 "Since this method ends up calling step, the model-stepping logic should not be duplicated there."
 ]
 
-{ #category : #stepping }
+{ #category : 'stepping' }
 SystemWindow >> stepTime [
 	^ model
 		ifNotNil: [model stepTimeIn: self]
 		ifNil: [200] "milliseconds"
 ]
 
-{ #category : #icons }
+{ #category : 'icons' }
 SystemWindow >> taskbarIconName [
 	"Answer the icon for the receiver in a task bar."
 
@@ -1872,20 +1874,20 @@ SystemWindow >> taskbarIconName [
 	^ super taskbarIconName
 ]
 
-{ #category : #move }
+{ #category : 'move' }
 SystemWindow >> taskbarMoveLeft [
 
 	self moveTaskbarTaskToOffset: -1
 ]
 
-{ #category : #move }
+{ #category : 'move' }
 SystemWindow >> taskbarMoveRight [
 
 
 	self moveTaskbarTaskToOffset: 1
 ]
 
-{ #category : #'open/close' }
+{ #category : 'open/close' }
 SystemWindow >> toggleClosable [
 	"Reinstate the close box. Go via theme to maintain box order."
 
@@ -1894,32 +1896,32 @@ SystemWindow >> toggleClosable [
 	ifFalse: [ self makeUnclosable ]
 ]
 
-{ #category : #'top window' }
+{ #category : 'top window' }
 SystemWindow >> topWindow [
 	^ self class topWindow
 ]
 
-{ #category : #'resize/collapse' }
+{ #category : 'resize/collapse' }
 SystemWindow >> unexpandedFrame [
 	"Return the frame size of an unexpanded window"
 
 	^ self valueOfProperty: #unexpandedFrame
 ]
 
-{ #category : #'resize/collapse' }
+{ #category : 'resize/collapse' }
 SystemWindow >> unexpandedFrame: aRectangle [
 	"Set the frame size of an unexpanded window"
 
 	^ self setProperty: #unexpandedFrame toValue: aRectangle
 ]
 
-{ #category : #panes }
+{ #category : 'panes' }
 SystemWindow >> updatablePanes [
 	"Answer the list of panes, in order, which should be sent the #verifyContents message"
 	^ updatablePanes ifNil: [updatablePanes := #()]
 ]
 
-{ #category : #label }
+{ #category : 'label' }
 SystemWindow >> update: aSymbol [
 	aSymbol = #relabel
 		ifTrue: [^ model ifNotNil: [ self setLabel: model labelString ] ].
@@ -1927,32 +1929,32 @@ SystemWindow >> update: aSymbol [
 		ifTrue: [self delete]
 ]
 
-{ #category : #panes }
+{ #category : 'panes' }
 SystemWindow >> updatePaneColors [
 	"Useful when changing from monochrome to color display"
 
 	self setStripeColorsFrom: self paneColorToUse
 ]
 
-{ #category : #'top window' }
+{ #category : 'top window' }
 SystemWindow >> updatePanesFromSubmorphs [
 	"Having removed some submorphs, make sure this is reflected in my paneMorphs."
 	paneMorphs := paneMorphs select: [ :pane | submorphs includes: pane ]
 ]
 
-{ #category : #'resize/collapse' }
+{ #category : 'resize/collapse' }
 SystemWindow >> wantsExpandBox [
 	"Answer whether I'd like an expand box"
 
 	^ true
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 SystemWindow >> wantsHalo [
 	^ false
 ]
 
-{ #category : #stepping }
+{ #category : 'stepping' }
 SystemWindow >> wantsSteps [
 	"Return true if the model wants its view to be stepped.  For an open system window, we give the model to offer an opinion"
 
@@ -1965,14 +1967,14 @@ SystemWindow >> wantsSteps [
 	^ model wantsSteps
 ]
 
-{ #category : #stepping }
+{ #category : 'stepping' }
 SystemWindow >> wantsStepsWhenCollapsed [
 	"Default is not to bother updating collapsed windows"
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SystemWindow >> wantsToBeCachedByHand [
 	"Return true if the receiver wants to be cached by the hand when it is dragged around."
 
@@ -1991,19 +1993,19 @@ SystemWindow >> wantsToBeCachedByHand [
 	^ true
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 SystemWindow >> wantsToBeDroppedInto: aMorph [
 	"Return true if it's okay to drop the receiver into aMorph"
 	^ aMorph isWorldMorph or: [self embeddable]
 ]
 
-{ #category : #'menu actions' }
+{ #category : 'menu actions' }
 SystemWindow >> wantsYellowButtonMenu [
 	"Answer true if the receiver wants a yellow button menu"
 	^ false
 ]
 
-{ #category : #label }
+{ #category : 'label' }
 SystemWindow >> widthOfFullLabelText [
 	^StandardFonts windowTitleFont widthOfString: labelString
 ]

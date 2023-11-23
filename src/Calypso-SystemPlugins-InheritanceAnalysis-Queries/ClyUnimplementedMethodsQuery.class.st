@@ -2,17 +2,18 @@
 I return all abstract methods inherited by classes in my scope which are still not implemented by them
 "
 Class {
-	#name : #ClyUnimplementedMethodsQuery,
-	#superclass : #ClyInheritanceAnalysisMethodQuery,
-	#category : #'Calypso-SystemPlugins-InheritanceAnalysis-Queries'
+	#name : 'ClyUnimplementedMethodsQuery',
+	#superclass : 'ClyInheritanceAnalysisMethodQuery',
+	#category : 'Calypso-SystemPlugins-InheritanceAnalysis-Queries',
+	#package : 'Calypso-SystemPlugins-InheritanceAnalysis-Queries'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyUnimplementedMethodsQuery class >> priority [
 	^8.5
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyUnimplementedMethodsQuery >> buildResult: aQueryResult [
 
 	| methods |
@@ -24,7 +25,7 @@ ClyUnimplementedMethodsQuery >> buildResult: aQueryResult [
 	aQueryResult fillWith: methods
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyUnimplementedMethodsQuery >> checkEmptyResult [
 
 	scope classesDo: [ :eachClass |
@@ -32,23 +33,23 @@ ClyUnimplementedMethodsQuery >> checkEmptyResult [
 	^true
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyUnimplementedMethodsQuery >> description [
 
 	^'unimplemented methods'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyUnimplementedMethodsQuery >> doesClassDefinedAsAbstract: aClass [
 	^(aClass classSide includesLocalSelector: #isAbstract) and: [aClass instanceSide isAbstract]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyUnimplementedMethodsQuery >> isAbstractMethod: aMethod [
 	^aMethod sendsSelector: #subclassResponsibility
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyUnimplementedMethodsQuery >> isAffectedByChangedMethod: aMethod [
 	| methodClass selector |
 	selector := aMethod selector.
@@ -59,7 +60,7 @@ ClyUnimplementedMethodsQuery >> isAffectedByChangedMethod: aMethod [
 	^(self isAbstractMethod: aMethod) or: [self isClass: methodClass shouldImplement: selector]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyUnimplementedMethodsQuery >> isClass: aClass shouldImplement: aSelector [
 
 	| inheritedMethod |
@@ -71,7 +72,7 @@ ClyUnimplementedMethodsQuery >> isClass: aClass shouldImplement: aSelector [
 	^self isAbstractMethod: inheritedMethod
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyUnimplementedMethodsQuery >> isClassHasToBeImplemented: aClass [
 	(self doesClassDefinedAsAbstract: aClass) ifTrue: [ ^false].
 
@@ -85,7 +86,7 @@ ClyUnimplementedMethodsQuery >> isClassHasToBeImplemented: aClass [
 	^false
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyUnimplementedMethodsQuery >> methodsToImplementIn: aClass [
 	| result implementor |
 	(self doesClassDefinedAsAbstract: aClass) ifTrue: [ ^#()].
@@ -101,7 +102,7 @@ ClyUnimplementedMethodsQuery >> methodsToImplementIn: aClass [
 	^result
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyUnimplementedMethodsQuery >> selectsMethod: aMethod [
 
 	| selector |
@@ -114,7 +115,7 @@ ClyUnimplementedMethodsQuery >> selectsMethod: aMethod [
 	^false
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyUnimplementedMethodsQuery >> withAbstractMethodsOf: aClass do: aBlock [
 
 	aClass localMethods

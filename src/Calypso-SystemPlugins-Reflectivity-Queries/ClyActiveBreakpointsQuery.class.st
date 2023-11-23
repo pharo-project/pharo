@@ -2,15 +2,17 @@
 I return all methods which have installed breakpoints or send the halt message (and friends like haltIf:)
 "
 Class {
-	#name : #ClyActiveBreakpointsQuery,
-	#superclass : #ClyMethodQuery,
+	#name : 'ClyActiveBreakpointsQuery',
+	#superclass : 'ClyMethodQuery',
 	#instVars : [
 		'excludesHaltsForTesting'
 	],
-	#category : #'Calypso-SystemPlugins-Reflectivity-Queries-Breakpoints'
+	#category : 'Calypso-SystemPlugins-Reflectivity-Queries-Breakpoints',
+	#package : 'Calypso-SystemPlugins-Reflectivity-Queries',
+	#tag : 'Breakpoints'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyActiveBreakpointsQuery class >> newIncludingHaltsForTesting [
 	| cab |
 	cab := self new.
@@ -18,7 +20,7 @@ ClyActiveBreakpointsQuery class >> newIncludingHaltsForTesting [
 	^ cab
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ClyActiveBreakpointsQuery >> = anObject [
 	"Answer whether the receiver and anObject represent the same object."
 
@@ -27,35 +29,35 @@ ClyActiveBreakpointsQuery >> = anObject [
 	^excludesHaltsForTesting = anObject excludesHaltsForTesting
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyActiveBreakpointsQuery >> description [
 	^'Active Breakpoints'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyActiveBreakpointsQuery >> excludesHaltsForTesting [
 	^ excludesHaltsForTesting
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyActiveBreakpointsQuery >> excludesHaltsForTesting: anObject [
 	excludesHaltsForTesting := anObject
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ClyActiveBreakpointsQuery >> hash [
 	"Answer an integer value that is related to the identity of the receiver."
 
 	^ super hash bitXor: excludesHaltsForTesting hash
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyActiveBreakpointsQuery >> initialize [
 	super initialize.
 	excludesHaltsForTesting := true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyActiveBreakpointsQuery >> selectsMethod: aMethod [
 	"If the method does not contain halts or breakpoints, we do not show it"
 	(aMethod hasBreakpoint or: [ aMethod containsHalt ]) ifFalse: [ ^false ].

@@ -1,50 +1,52 @@
 Class {
-	#name : #FFIFunctionResolutionTest,
-	#superclass : #FFIAbstractTest,
+	#name : 'FFIFunctionResolutionTest',
+	#superclass : 'FFIAbstractTest',
 	#instVars : [
 		'stack'
 	],
-	#category : #'UnifiedFFI-Tests-Tests'
+	#category : 'UnifiedFFI-Tests-Tests',
+	#package : 'UnifiedFFI-Tests',
+	#tag : 'Tests'
 }
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 FFIFunctionResolutionTest >> pushInstVar: anInteger [
 
 	stack push: {#ivar . anInteger}
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 FFIFunctionResolutionTest >> pushLiteral: aLiteral [
 
 	stack push: { #literal . aLiteral }
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 FFIFunctionResolutionTest >> pushLiteralVariable: aClassVariable [
 
 	stack push: { #classVariable . aClassVariable }
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 FFIFunctionResolutionTest >> pushReceiver [
 
 	stack push: #( self )
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 FFIFunctionResolutionTest >> pushTemp: aString [
 
 	stack push: { #temp . aString }
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 FFIFunctionResolutionTest >> setUp [
 
 	super setUp.
 	stack := Stack new
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFIFunctionResolutionTest >> testResolveArgumentVariableShouldSetArgumentVariableLoader [
 
 	| argument receiver context resolver |
@@ -69,7 +71,7 @@ FFIFunctionResolutionTest >> testResolveArgumentVariableShouldSetArgumentVariabl
 	self assert: stack pop equals: { #temp . 'arg' }
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFIFunctionResolutionTest >> testResolveArgumentVariableWithExplicitTypeResolvesType [
 
 	| argument receiver context resolver |
@@ -95,7 +97,7 @@ FFIFunctionResolutionTest >> testResolveArgumentVariableWithExplicitTypeResolves
 	self assert: argument resolvedType class equals: intType
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFIFunctionResolutionTest >> testResolveClassVariableShouldBeInt32Type [
 
 	| argument receiver context resolver |
@@ -119,7 +121,7 @@ FFIFunctionResolutionTest >> testResolveClassVariableShouldBeInt32Type [
 	self assert: argument resolvedType class equals: int32Type
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFIFunctionResolutionTest >> testResolveClassVariableShouldSetClassVariableLoader [
 
 	| argument receiver context resolver |
@@ -145,7 +147,7 @@ FFIFunctionResolutionTest >> testResolveClassVariableShouldSetClassVariableLoade
 	self assert: argument resolvedType class equals: int32Type
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFIFunctionResolutionTest >> testResolveConstantFalseShouldBeInt32Type [
 
 	| argument resolver |
@@ -162,7 +164,7 @@ FFIFunctionResolutionTest >> testResolveConstantFalseShouldBeInt32Type [
 	self assert: argument resolvedType class equals: int32Type
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFIFunctionResolutionTest >> testResolveConstantFalseShouldSetConstantZeroLoader [
 
 	| argument |
@@ -176,7 +178,7 @@ FFIFunctionResolutionTest >> testResolveConstantFalseShouldSetConstantZeroLoader
 	self assert: stack pop equals: { #literal . 0 }
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFIFunctionResolutionTest >> testResolveConstantIntegerShouldBeInt32 [
 
 	| argument |
@@ -189,7 +191,7 @@ FFIFunctionResolutionTest >> testResolveConstantIntegerShouldBeInt32 [
 	self assert: argument resolvedType class equals: uint32Type
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFIFunctionResolutionTest >> testResolveConstantIntegerShouldSetConstantLoader [
 
 	| argument |
@@ -203,7 +205,7 @@ FFIFunctionResolutionTest >> testResolveConstantIntegerShouldSetConstantLoader [
 	self assert: stack pop equals: { #literal . 1}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFIFunctionResolutionTest >> testResolveConstantNULLShouldBeVoidPointerType [
 
 	| argument |
@@ -217,7 +219,7 @@ FFIFunctionResolutionTest >> testResolveConstantNULLShouldBeVoidPointerType [
 	self assert: argument resolvedType pointerArity equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFIFunctionResolutionTest >> testResolveConstantNULLShouldSetConstantNullLoader [
 
 	| argument |
@@ -231,7 +233,7 @@ FFIFunctionResolutionTest >> testResolveConstantNULLShouldSetConstantNullLoader 
 	self assert: stack pop equals: { #literal . ExternalAddress null}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFIFunctionResolutionTest >> testResolveConstantNilShouldBeVoidPointerType [
 
 	| argument |
@@ -245,7 +247,7 @@ FFIFunctionResolutionTest >> testResolveConstantNilShouldBeVoidPointerType [
 	self assert: argument resolvedType pointerArity equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFIFunctionResolutionTest >> testResolveConstantNilShouldSetConstantNullLoader [
 
 	| argument |
@@ -259,7 +261,7 @@ FFIFunctionResolutionTest >> testResolveConstantNilShouldSetConstantNullLoader [
 	self assert: stack pop equals: { #literal . ExternalAddress null }
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFIFunctionResolutionTest >> testResolveConstantSelfOfExternalObjectShouldSetConstantFirstInstanceVariableLoader [
 
 	| argument receiver context resolver |
@@ -284,7 +286,7 @@ FFIFunctionResolutionTest >> testResolveConstantSelfOfExternalObjectShouldSetCon
 	self assert: stack pop equals: #(#ivar 1)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFIFunctionResolutionTest >> testResolveConstantSelfShouldResolveToExternalObjectType [
 
 	| argument receiver context resolver |
@@ -308,7 +310,7 @@ FFIFunctionResolutionTest >> testResolveConstantSelfShouldResolveToExternalObjec
 	self assert: argument resolvedType equals: (receiver class asExternalTypeOn: nil)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFIFunctionResolutionTest >> testResolveConstantSelfStringInStrictResolverFails [
 
 	| argument resolver |
@@ -321,7 +323,7 @@ FFIFunctionResolutionTest >> testResolveConstantSelfStringInStrictResolverFails 
 	self should: [argument resolveUsing: resolver] raise: FFIUnsupportedUntypedLiteral
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFIFunctionResolutionTest >> testResolveConstantSelfStringShouldSetConstantLoader [
 
 	| argument |
@@ -336,7 +338,7 @@ FFIFunctionResolutionTest >> testResolveConstantSelfStringShouldSetConstantLoade
 	self assert: stack pop equals: { #literal . 'self' }
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFIFunctionResolutionTest >> testResolveConstantTrueShouldBeInt32Type [
 
 	| argument resolver |
@@ -353,7 +355,7 @@ FFIFunctionResolutionTest >> testResolveConstantTrueShouldBeInt32Type [
 	self assert: argument resolvedType class equals: int32Type
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFIFunctionResolutionTest >> testResolveConstantTrueShouldSetConstantOneLoader [
 
 	| argument |
@@ -367,7 +369,7 @@ FFIFunctionResolutionTest >> testResolveConstantTrueShouldSetConstantOneLoader [
 	self assert: stack pop equals: { #literal . 1 }
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFIFunctionResolutionTest >> testResolveInstanceVariableShouldSetInstanceVariableLoader [
 
 	| argument receiver context resolver |

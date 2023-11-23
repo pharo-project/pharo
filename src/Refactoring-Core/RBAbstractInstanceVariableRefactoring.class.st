@@ -6,15 +6,17 @@ I create new accessor methods for the variables and replace every read and write
 
 "
 Class {
-	#name : #RBAbstractInstanceVariableRefactoring,
-	#superclass : #RBVariableRefactoring,
+	#name : 'RBAbstractInstanceVariableRefactoring',
+	#superclass : 'RBVariableRefactoring',
 	#instVars : [
 		'accessorsRefactoring'
 	],
-	#category : #'Refactoring-Core-Refactorings'
+	#category : 'Refactoring-Core-Refactorings',
+	#package : 'Refactoring-Core',
+	#tag : 'Refactorings'
 }
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBAbstractInstanceVariableRefactoring >> abstractReferences [
 
 	"Precondition: createAccessors has been executed. Else the setter and getter method are not initialized."
@@ -36,7 +38,7 @@ RBAbstractInstanceVariableRefactoring >> abstractReferences [
 		using: replacer
 ]
 
-{ #category : #'private - accessing' }
+{ #category : 'private - accessing' }
 RBAbstractInstanceVariableRefactoring >> accessorsRefactoring [
 
 	^ accessorsRefactoring
@@ -49,18 +51,18 @@ RBAbstractInstanceVariableRefactoring >> accessorsRefactoring [
 		ifNotNil: [ accessorsRefactoring ]
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBAbstractInstanceVariableRefactoring >> createAccessors [
-	self performCompositeRefactoring: self accessorsRefactoring
+	self generateChangesFor: self accessorsRefactoring
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBAbstractInstanceVariableRefactoring >> preconditions [
 	^ RBCondition directlyDefinesInstanceVariable: variableName in: class
 ]
 
-{ #category : #transforming }
-RBAbstractInstanceVariableRefactoring >> transform [
+{ #category : 'transforming' }
+RBAbstractInstanceVariableRefactoring >> privateTransform [
 	self createAccessors.
 	self abstractReferences
 ]

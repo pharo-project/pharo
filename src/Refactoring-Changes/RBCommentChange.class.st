@@ -4,15 +4,17 @@ setting its class comment will create a comment change. Executing this change wi
 class with my change stamp.
 "
 Class {
-	#name : #RBCommentChange,
-	#superclass : #RBRefactoryClassChange,
+	#name : 'RBCommentChange',
+	#superclass : 'RBRefactoryClassChange',
 	#instVars : [
 		'comment'
 	],
-	#category : #'Refactoring-Changes-Changes-Classes'
+	#category : 'Refactoring-Changes-Changes-Classes',
+	#package : 'Refactoring-Changes',
+	#tag : 'Changes-Classes'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBCommentChange class >> comment: aString in: aClass [
 
 	^ self new
@@ -21,7 +23,7 @@ RBCommentChange class >> comment: aString in: aClass [
 		  yourself
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 RBCommentChange >> asUndoOperation [
 
 	^ self copy
@@ -29,39 +31,39 @@ RBCommentChange >> asUndoOperation [
 		  yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCommentChange >> changeClass: aBehavior [
 
 	super changeClass: aBehavior.
 	isMeta := false
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBCommentChange >> changeString [
 
 	^ 'Comment ' , self displayClassName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCommentChange >> comment [
 
 	^ comment
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCommentChange >> comment: aString [
 
 	comment := aString
 ]
 
-{ #category : #private }
-RBCommentChange >> primitiveExecute [
+{ #category : 'private' }
+RBCommentChange >> generateChanges [
 
 	self changeClass comment: comment stamp: self changeStamp.
 	SystemAnnouncer uniqueInstance classCommented: self changeClass
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBCommentChange >> printOn: aStream [
 
 	aStream

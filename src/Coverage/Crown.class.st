@@ -4,36 +4,38 @@ I represent an not fully visided selector in a core result.
 For a given `selector`, I associate callers that are call sites (`RBSendNode`) in covered methods to callees that are uncovered methods (`CompiledMethod`).
 "
 Class {
-	#name : #Crown,
-	#superclass : #Object,
+	#name : 'Crown',
+	#superclass : 'Object',
 	#instVars : [
 		'selector',
 		'callees',
 		'callers'
 	],
-	#category : #'Coverage-Base'
+	#category : 'Coverage-Base',
+	#package : 'Coverage',
+	#tag : 'Base'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Crown >> callees [
 
 	^ callees
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Crown >> callers [
 
 	^ callers
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 Crown >> initialize [
 
 	callees := OrderedCollection new.
 	callers := OrderedCollection new
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 Crown >> printOn: aStream [
 
 	super printOn: aStream.
@@ -47,13 +49,13 @@ Crown >> printOn: aStream [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Crown >> selector [
 
 	^ selector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Crown >> selector: anObject [
 
 	selector := anObject

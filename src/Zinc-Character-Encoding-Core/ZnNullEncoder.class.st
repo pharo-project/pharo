@@ -7,12 +7,13 @@ Note that in principle I could handle Latin1 (ISO-8859-1) or ASCII, although tha
 Part of Zinc HTTP Components.
 "
 Class {
-	#name : #ZnNullEncoder,
-	#superclass : #ZnCharacterEncoder,
-	#category : #'Zinc-Character-Encoding-Core'
+	#name : 'ZnNullEncoder',
+	#superclass : 'ZnCharacterEncoder',
+	#category : 'Zinc-Character-Encoding-Core',
+	#package : 'Zinc-Character-Encoding-Core'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnNullEncoder class >> handlesEncoding: string [
 	"Return true when my instances handle the encoding described by string.
 	Note that in principle I could handle latin1 (iso-8859-1) and ASCII,
@@ -22,26 +23,26 @@ ZnNullEncoder class >> handlesEncoding: string [
 	^ (self canonicalEncodingIdentifier: string) = 'null'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnNullEncoder class >> knownEncodingIdentifiers [
 	^ #( null )
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnNullEncoder class >> newForEncoding: string [
 	"No further parametrization needed"
 
 	^ self new
 ]
 
-{ #category : #'encoding - decoding' }
+{ #category : 'encoding - decoding' }
 ZnNullEncoder >> backOnStream: stream [
 	"Move back one character on stream"
 
 	stream back
 ]
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 ZnNullEncoder >> decodeBytes: bytes [
 	"Decode bytes and return the resulting string"
 	"Overwritten for performance reasons"
@@ -49,7 +50,7 @@ ZnNullEncoder >> decodeBytes: bytes [
 	^ bytes asString
 ]
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 ZnNullEncoder >> encodeString: string [
 	"Encode string and return the resulting byte array"
 	"Overwritten for performance reasons"
@@ -57,7 +58,7 @@ ZnNullEncoder >> encodeString: string [
 	^ string asByteArray
 ]
 
-{ #category : #'encoding - decoding' }
+{ #category : 'encoding - decoding' }
 ZnNullEncoder >> encodedByteCountFor: character [
 	"Return how many bytes are needed to encode character"
 	"Overwritten for performance reasons"
@@ -65,14 +66,14 @@ ZnNullEncoder >> encodedByteCountFor: character [
 	^ 1
 ]
 
-{ #category : #'encoding - decoding' }
+{ #category : 'encoding - decoding' }
 ZnNullEncoder >> encodedByteCountForCodePoint: codePoint [
 	"Return how many bytes are needed to encode integer code point"
 
 	^ 1
 ]
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 ZnNullEncoder >> encodedByteCountForCodePoints: codePoints [
 	"Return the exact number of bytes it would take to encode codePoints as a byte array"
 	"Overwritten for performance reasons"
@@ -80,7 +81,7 @@ ZnNullEncoder >> encodedByteCountForCodePoints: codePoints [
 	^ codePoints size
 ]
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 ZnNullEncoder >> encodedByteCountForString: string [
 	"Return the exact number of bytes it would take to encode string as a byte array"
 	"Overwritten for performance reasons"
@@ -88,7 +89,7 @@ ZnNullEncoder >> encodedByteCountForString: string [
 	^ string size
 ]
 
-{ #category : #'encoding - decoding' }
+{ #category : 'encoding - decoding' }
 ZnNullEncoder >> ensureAtBeginOfCodePointOnStream: stream [
 	"Ensure that the current position of stream is a the beginning of an encoded code point,
 	if not move further backwards. This is necessary when a position in the binary stream is set,
@@ -97,12 +98,12 @@ ZnNullEncoder >> ensureAtBeginOfCodePointOnStream: stream [
 	"Nothing to be done, I am a byte encoding: each code point is encoded in a single byte"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnNullEncoder >> identifier [
 	^ #ascii
 ]
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 ZnNullEncoder >> next: count putAll: string startingAt: offset toStream: stream [
 	"Write count bytes from string starting at offset to stream."
 	"Overwritten for performance reasons"
@@ -115,14 +116,14 @@ ZnNullEncoder >> next: count putAll: string startingAt: offset toStream: stream 
 			super next: count putAll: string startingAt: offset toStream: stream ]
 ]
 
-{ #category : #'encoding - decoding' }
+{ #category : 'encoding - decoding' }
 ZnNullEncoder >> nextCodePointFromStream: stream [
 	"Read and return the next integer code point from stream"
 
 	^ stream next
 ]
 
-{ #category : #'encoding - decoding' }
+{ #category : 'encoding - decoding' }
 ZnNullEncoder >> nextPutCodePoint: codePoint toStream: stream [
 	"Write the encoding for Integer code point to stream"
 
@@ -131,7 +132,7 @@ ZnNullEncoder >> nextPutCodePoint: codePoint toStream: stream [
 		ifFalse: [ self errorOutsideRange ]
 ]
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 ZnNullEncoder >> readInto: string startingAt: offset count: requestedCount fromStream: stream [
 	"Read requestedCount characters into string starting at offset,
 	returning the number read, there could be less available when stream is atEnd"
@@ -143,7 +144,7 @@ ZnNullEncoder >> readInto: string startingAt: offset count: requestedCount fromS
 	^ requestedCount
 ]
 
-{ #category : #'encoding - decoding' }
+{ #category : 'encoding - decoding' }
 ZnNullEncoder >> skipToBeginOfCodePointOnStream: stream [
 	"Ensure that the current position of stream is a the beginning of an encoded code point,
 	if not move further forward. This is necessary when a position in the binary stream is set,

@@ -2,34 +2,36 @@
 I represent a refactoring that is composed of other refactorings.
 "
 Class {
-	#name : #EpCompositeRefactoring,
-	#superclass : #EpRefactoring,
+	#name : 'EpCompositeRefactoring',
+	#superclass : 'EpRefactoring',
 	#instVars : [
 		'childrenRefactorings'
 	],
-	#category : #'Epicea-Model'
+	#category : 'Epicea-Model',
+	#package : 'Epicea',
+	#tag : 'Model'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 EpCompositeRefactoring class >> withAll: someRefactorings [
 	^ self basicNew
 		initializeWith: someRefactorings;
 		yourself
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 EpCompositeRefactoring >> asRBRefactoring [
 	^ RBCompositeRefactoryChange new
 		changes: (childrenRefactorings collect: [:each | each asRBRefactoring]);
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpCompositeRefactoring >> childrenRefactorings [
 	^ childrenRefactorings
 ]
 
-{ #category : #initializing }
+{ #category : 'initializing' }
 EpCompositeRefactoring >> initializeWith: someRefactorings [
 	self initialize.
 	childrenRefactorings := someRefactorings collect: [:each | each asEpiceaEvent]

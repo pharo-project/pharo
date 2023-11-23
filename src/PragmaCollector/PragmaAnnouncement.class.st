@@ -9,25 +9,27 @@ pragma
 
 "
 Class {
-	#name : #PragmaAnnouncement,
-	#superclass : #Announcement,
+	#name : 'PragmaAnnouncement',
+	#superclass : 'Announcement',
 	#instVars : [
 		'pragma'
 	],
-	#category : #'PragmaCollector-Announcements'
+	#category : 'PragmaCollector-Announcements',
+	#package : 'PragmaCollector',
+	#tag : 'Announcements'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 PragmaAnnouncement class >> pragma: aPragma [
 	^ self new pragma: aPragma
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PragmaAnnouncement >> pragma [
 	^ pragma
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PragmaAnnouncement >> pragma: aPragma [
 	pragma := aPragma
 ]

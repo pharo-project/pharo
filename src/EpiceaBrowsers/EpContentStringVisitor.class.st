@@ -2,12 +2,14 @@
 I am an abstract superclass for some visitors that answer Strings describing EpEvent instances.
 "
 Class {
-	#name : #EpContentStringVisitor,
-	#superclass : #EpEntryContentVisitor,
-	#category : #'EpiceaBrowsers-Visitors'
+	#name : 'EpContentStringVisitor',
+	#superclass : 'EpEntryContentVisitor',
+	#category : 'EpiceaBrowsers-Visitors',
+	#package : 'EpiceaBrowsers',
+	#tag : 'Visitors'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 EpContentStringVisitor >> displayBrowserOperation: aBrowserOperationEvent [
 
 	^ String streamContents: [ :stream |
@@ -16,7 +18,7 @@ EpContentStringVisitor >> displayBrowserOperation: aBrowserOperationEvent [
 			nextPutAll: ' code changes produced' ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EpContentStringVisitor >> printProtocol: protocol sourceCode: sourceCode [
 
 	^ String streamContents: [ :stream |
@@ -27,7 +29,19 @@ EpContentStringVisitor >> printProtocol: protocol sourceCode: sourceCode [
 			nextPutAll: sourceCode ]
 ]
 
-{ #category : #visitor }
+{ #category : 'private' }
+EpContentStringVisitor >> printTag: aTagName package: aPackageName [
+
+	^ String streamContents: [ :stream |
+		  stream
+			  nextPutAll: '"Package: ';
+			  nextPutAll: aPackageName;
+			  nextPut: $";
+			  lf;
+			  nextPutAll: aTagName ]
+]
+
+{ #category : 'visitor' }
 EpContentStringVisitor >> stringForBehavior: aClassOrTrait [
 
 	^ String streamContents: [ :stream |
@@ -38,7 +52,7 @@ EpContentStringVisitor >> stringForBehavior: aClassOrTrait [
 			nextPutAll: aClassOrTrait classSide definitionSource ]
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpContentStringVisitor >> visitEvent: anEvent [
 	"By default display an empty string"
 

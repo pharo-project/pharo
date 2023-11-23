@@ -1,6 +1,6 @@
-Extension { #name : #AthensBezier3Scene }
+Extension { #name : 'AthensBezier3Scene' }
 
-{ #category : #'*Athens-Morphic' }
+{ #category : '*Athens-Morphic' }
 AthensBezier3Scene class >> openViewOn: aControlPointsArray [
 
 	^ AthensSceneView new

@@ -2,35 +2,37 @@
 I am the state of a selected tab
 "
 Class {
-	#name : #TabSelectedState,
-	#superclass : #TabEnabledState,
-	#category : #'Morphic-Widgets-Tabs-States'
+	#name : 'TabSelectedState',
+	#superclass : 'TabEnabledState',
+	#category : 'Morphic-Widgets-Tabs-States',
+	#package : 'Morphic-Widgets-Tabs',
+	#tag : 'States'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 TabSelectedState class >> initialize [
 
 	self deprecatedAliases: { #TabSelected }
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 TabSelectedState >> backgroundColor [
 	^ Smalltalk ui theme selectionColor
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 TabSelectedState >> isSelectedMatchingTheState: aBoolean [
 
 	^ aBoolean
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 TabSelectedState >> newStateForSelected: aBoolean [
 
 	^ TabEnabledState tab: self tab
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 TabSelectedState >> selected [
 
 	^ true

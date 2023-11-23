@@ -2,21 +2,23 @@
 I implement how to read entries from a stream using Ston serializer.
 "
 Class {
-	#name : #OmSTONEntryReader,
-	#superclass : #OmEntryReader,
+	#name : 'OmSTONEntryReader',
+	#superclass : 'OmEntryReader',
 	#instVars : [
 		'reader'
 	],
-	#category : #'Ombu-Persistence'
+	#category : 'Ombu-Persistence',
+	#package : 'Ombu',
+	#tag : 'Persistence'
 }
 
-{ #category : #reading }
+{ #category : 'reading' }
 OmSTONEntryReader >> entryPositionsDo: aBlock [
 
 	[ self nextEntryPositionIfFound: [ :position | aBlock value: position ] ifNone: [ ^ self ] ] repeat
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 OmSTONEntryReader >> entryPositionsReverseDo: aBlock [
 
 	| found token |
@@ -35,7 +37,7 @@ OmSTONEntryReader >> entryPositionsReverseDo: aBlock [
 	] doWhileTrue: true
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 OmSTONEntryReader >> entryPositionsUpTo: endPosition [
 
 	| positions |
@@ -48,7 +50,7 @@ OmSTONEntryReader >> entryPositionsUpTo: endPosition [
 	^ positions
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 OmSTONEntryReader >> nextEntry [
 
 	^ OmCurrentGlobalName
@@ -59,7 +61,7 @@ OmSTONEntryReader >> nextEntry [
 				next ]
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 OmSTONEntryReader >> nextEntryPositionIfFound: foundBlock ifNone: noneBlock [
 
 	| token |
@@ -78,7 +80,7 @@ OmSTONEntryReader >> nextEntryPositionIfFound: foundBlock ifNone: noneBlock [
 		ifFalse: [ foundBlock value: stream position - token size ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmSTONEntryReader >> positionAtNextEntry [
 	"Consume readStream up to the start of the next OmEntry.
 	Return true if an entry was found."
@@ -99,7 +101,7 @@ OmEntry {'.
 		  ifFalse: [ false ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmSTONEntryReader >> positionAtNextEntryStartingAt: aPosition [
 	"Consume reamStream up to the start of the next OmEntry. Note that aPosition may indicate the middle of multibyte UTF-8 character, that's tolerated by skipping forward the bytes.
 	Return true if an entry was found."
@@ -109,7 +111,7 @@ OmSTONEntryReader >> positionAtNextEntryStartingAt: aPosition [
 	^ self positionAtNextEntry
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmSTONEntryReader >> stonReader [
 
 	^ reader ifNil: [
@@ -118,7 +120,7 @@ OmSTONEntryReader >> stonReader [
 			yourself ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmSTONEntryReader >> stream: aReadStream [
 
 	super stream: aReadStream.

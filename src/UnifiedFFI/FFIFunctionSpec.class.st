@@ -5,32 +5,34 @@ same structure can be used to hold an information about it in my instances.
 However, what objects used to represent types and arguments is up to code generator.
 "
 Class {
-	#name : #FFIFunctionSpec,
-	#superclass : #Object,
+	#name : 'FFIFunctionSpec',
+	#superclass : 'Object',
 	#instVars : [
 		'returnType',
 		'functionName',
 		'arguments'
 	],
-	#category : #'UnifiedFFI-Base'
+	#category : 'UnifiedFFI-Base',
+	#package : 'UnifiedFFI',
+	#tag : 'Base'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIFunctionSpec >> addArgument: anArgument [
 	^ arguments add: anArgument
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIFunctionSpec >> arguments [
 	^ arguments
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIFunctionSpec >> arguments: anObject [
 	arguments := anObject
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 FFIFunctionSpec >> asArraySpec [
 	^ String streamContents: [ :stream |
 		stream nextPutAll: '#( '.
@@ -54,7 +56,7 @@ FFIFunctionSpec >> asArraySpec [
 		stream nextPutAll: '))' ]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 FFIFunctionSpec >> asArraySpecArrayedArgs [
 	^ String streamContents: [ :stream | |index|
 		stream nextPutAll: '#( '.
@@ -81,7 +83,7 @@ FFIFunctionSpec >> asArraySpecArrayedArgs [
 		stream nextPutAll: '))' ]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 FFIFunctionSpec >> asMethodSelectorAndArguments [
 	^ String streamContents: [ :stream |
 		stream nextPutAll: functionName.
@@ -105,7 +107,7 @@ FFIFunctionSpec >> asMethodSelectorAndArguments [
 						nextPutAll: each first ]]]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 FFIFunctionSpec >> asMethodSelectorAndArrayOfArguments [
 	^ String streamContents: [ :stream |
 		stream
@@ -119,46 +121,46 @@ FFIFunctionSpec >> asMethodSelectorAndArrayOfArguments [
 		stream nextPut: $" ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIFunctionSpec >> functionName [
 	^ functionName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIFunctionSpec >> functionName: anObject [
 	functionName := anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FFIFunctionSpec >> initialize [
 	super initialize.
 	arguments := OrderedCollection new
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FFIFunctionSpec >> isAnonymous [
 	^ self functionName isNil
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 FFIFunctionSpec >> printType: typeAndArity on: stream [
 	stream nextPutAll: typeAndArity first.
 	typeAndArity second timesRepeat: [ stream nextPut: $* ]
 ]
 
-{ #category : #resolution }
+{ #category : 'resolution' }
 FFIFunctionSpec >> resolveUsing: aResolver [
 
 	returnType resolveUsing: aResolver.
 	arguments do: [ :e | e resolveUsing: aResolver ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIFunctionSpec >> returnType [
 	^ returnType
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIFunctionSpec >> returnType: anObject [
 	returnType := anObject
 ]

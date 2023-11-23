@@ -4,51 +4,53 @@ I represent an explicit match over words in the argument sequence, which constit
 My instances have a value, given by the meaning block of my specification.
 "
 Class {
-	#name : #ClapExplicit,
-	#superclass : #ClapSubExpression,
+	#name : 'ClapExplicit',
+	#superclass : 'ClapSubExpression',
 	#instVars : [
 		'startIndex'
 	],
-	#category : #'Clap-Core-Activation'
+	#category : 'Clap-Core-Activation',
+	#package : 'Clap-Core',
+	#tag : 'Activation'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClapExplicit class >> isAbstract [
 	^ self == ClapExplicit
 ]
 
-{ #category : #matching }
+{ #category : 'matching' }
 ClapExplicit >> completeMatchOn: aStream [
 	self subclassResponsibility
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClapExplicit >> isExplicit [
 	^ true
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 ClapExplicit >> recordIn: parentMatch [
 	self parent: parentMatch.
 	self parent addChild: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClapExplicit >> span [
 	^ self start to: self stop
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClapExplicit >> start [
 	^ startIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClapExplicit >> stop [
 	^ self subclassResponsibility
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 ClapExplicit >> words [
 	^ self context arguments
 		collect: [ :str | str asByteArray utf8Decoded ]
@@ -56,7 +58,7 @@ ClapExplicit >> words [
 		to: self stop
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 ClapExplicit >> wordsDo: aBlock [
 	^ self context arguments
 		from: self start

@@ -3,12 +3,14 @@ I am mainly a test for fallback font.
 FontTest buildSuite run
 "
 Class {
-	#name : #FontTest,
-	#superclass : #TestCase,
-	#category : #'Text-Tests-Fonts'
+	#name : 'FontTest',
+	#superclass : 'TestCase',
+	#category : 'Text-Tests-Fonts',
+	#package : 'Text-Tests',
+	#tag : 'Fonts'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 FontTest >> testDisplay [
 
 	| text font bb destPoint width |
@@ -26,7 +28,7 @@ FontTest >> testDisplay [
 	"bb destForm asMorph openInHand."
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FontTest >> testParagraph [
 
 	| text p style height width |

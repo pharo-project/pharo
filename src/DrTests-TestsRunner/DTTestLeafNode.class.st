@@ -4,27 +4,29 @@ I am a leaf of the results tree for the test-runner plugin.
 Additionally to my superclass, I store the type of the result.
 "
 Class {
-	#name : #DTTestLeafNode,
-	#superclass : #DTTreeLeafNode,
+	#name : 'DTTestLeafNode',
+	#superclass : 'DTTreeLeafNode',
 	#instVars : [
 		'type'
 	],
-	#category : #'DrTests-TestsRunner-Base'
+	#category : 'DrTests-TestsRunner-Base',
+	#package : 'DrTests-TestsRunner',
+	#tag : 'Base'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 DTTestLeafNode class >> content: anObject type: aTestResultType [
 	^ (self content: anObject)
 		type: aTestResultType;
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTTestLeafNode >> type [
 	^ type
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTTestLeafNode >> type: anObject [
 	type := anObject
 ]

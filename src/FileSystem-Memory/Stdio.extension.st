@@ -1,6 +1,6 @@
-Extension { #name : #Stdio }
+Extension { #name : 'Stdio' }
 
-{ #category : #'*FileSystem-Memory' }
+{ #category : '*FileSystem-Memory' }
 Stdio class >> useMemoryStreams [
 	<script>
 	self createWriteStreamBlock: [ :aName | (FileSystem memory / aName asString) writeStream ]

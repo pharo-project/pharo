@@ -2,12 +2,14 @@
 SUnit tests for TextEmphasis
 "
 Class {
-	#name : #TextEmphasisTest,
-	#superclass : #HashAndEqualsTestCase,
-	#category : #'Text-Tests-Base'
+	#name : 'TextEmphasisTest',
+	#superclass : 'HashAndEqualsTestCase',
+	#category : 'Text-Tests-Base',
+	#package : 'Text-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 TextEmphasisTest >> setUp [
 	super setUp.
 	prototypes add: TextEmphasis bold;
@@ -18,7 +20,7 @@ TextEmphasisTest >> setUp [
 		 add: TextEmphasis underlined
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextEmphasisTest >> testAdd [
 	| t1 |
 	t1 := TextEmphasis bold.
@@ -26,17 +28,17 @@ TextEmphasisTest >> testAdd [
 	self assert: (t1 = 2r11) description: 'bold and italics didn''t add correctly'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextEmphasisTest >> testBold [
 	self assert: TextEmphasis bold equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextEmphasisTest >> testDominatedByCmd0 [
 	self assert: TextEmphasis new dominatedByCmd0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextEmphasisTest >> testDominates [
 	| text |
 	"self domination"
@@ -64,7 +66,7 @@ TextEmphasisTest >> testDominates [
 	self assert: (text attributesAt: 1) third emphasisCode equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextEmphasisTest >> testEmphasisCode [
 	| attr |
 	"test each emphasis code value"
@@ -85,29 +87,29 @@ TextEmphasisTest >> testEmphasisCode [
 	self assert: attr emphasisCode equals: 2r10011
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextEmphasisTest >> testFromCode [
 	| t1 |
 	t1 := TextEmphasis fromCode: 2r10101.
 	self assert: t1 value equals: 2r10101
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextEmphasisTest >> testItalic [
 	self assert: TextEmphasis italic equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextEmphasisTest >> testNarrow [
 	self assert: TextEmphasis narrow  equals: 8
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextEmphasisTest >> testNormal [
 	self assert: TextEmphasis normal equals: 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextEmphasisTest >> testRemove [
 	| t1  |
 	t1 := TextEmphasis bold.
@@ -116,7 +118,7 @@ TextEmphasisTest >> testRemove [
 	self assert: t1 = TextEmphasis italic description: 'Removing bold didn''t leave italics'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextEmphasisTest >> testSet [
 	"Not set with normal emphasis..."
 	self deny: TextEmphasis normal set.
@@ -131,17 +133,17 @@ TextEmphasisTest >> testSet [
 		self deny: attr set]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextEmphasisTest >> testStruckOut [
 	self assert: TextEmphasis struckOut equals: 16
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextEmphasisTest >> testUnderlined [
 	self assert: TextEmphasis underlined equals: 4
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextEmphasisTest >> testValue [
 	| attr |
 	"asking for the value return the emphasis code"

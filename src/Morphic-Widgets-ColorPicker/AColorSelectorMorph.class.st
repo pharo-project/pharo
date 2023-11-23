@@ -2,12 +2,13 @@
 ColorComponentSelector showing an alpha gradient over a hatched background.
 "
 Class {
-	#name : #AColorSelectorMorph,
-	#superclass : #BracketSliderMorph,
-	#category : #'Morphic-Widgets-ColorPicker'
+	#name : 'AColorSelectorMorph',
+	#superclass : 'BracketSliderMorph',
+	#category : 'Morphic-Widgets-ColorPicker',
+	#package : 'Morphic-Widgets-ColorPicker'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AColorSelectorMorph >> color: aColor [
 	"Set the gradient colors."
 
@@ -15,7 +16,7 @@ AColorSelectorMorph >> color: aColor [
 	self fillStyle: self defaultFillStyle
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 AColorSelectorMorph >> defaultFillStyle [
 	"Answer the hue gradient."
 
@@ -26,7 +27,7 @@ AColorSelectorMorph >> defaultFillStyle [
 					ifFalse: [0@self height])
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 AColorSelectorMorph >> drawOn: aCanvas [
 	"Draw a hatch pattern first."
 
@@ -36,7 +37,7 @@ AColorSelectorMorph >> drawOn: aCanvas [
 	super drawOn: aCanvas
 ]
 
-{ #category : #'visual properties' }
+{ #category : 'visual properties' }
 AColorSelectorMorph >> fillStyle: fillStyle [
 	"If it is a color then override with gradient."
 
@@ -45,14 +46,14 @@ AColorSelectorMorph >> fillStyle: fillStyle [
 		ifFalse: [super fillStyle: fillStyle]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AColorSelectorMorph >> hatchForm [
 	"Answer a form showing a grid hatch pattern."
 
 	^ColorPresenterMorph hatchForm
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AColorSelectorMorph >> initialize [
 	"Initialize the receiver."
 

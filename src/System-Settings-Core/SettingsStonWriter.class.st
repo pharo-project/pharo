@@ -16,32 +16,34 @@ Internal Representation and Key Implementation Points.
 
 "
 Class {
-	#name : #SettingsStonWriter,
-	#superclass : #Object,
+	#name : 'SettingsStonWriter',
+	#superclass : 'Object',
 	#instVars : [
 		'stream',
 		'storedSettings'
 	],
-	#category : #'System-Settings-Core-Persistence-Ston-StoredSettings-Builder'
+	#category : 'System-Settings-Core-Persistence-Ston-StoredSettings-Builder',
+	#package : 'System-Settings-Core',
+	#tag : 'Persistence-Ston-StoredSettings-Builder'
 }
 
-{ #category : #adding }
+{ #category : 'adding' }
 SettingsStonWriter >> addSetting: aStoredSetting [
 	storedSettings add: aStoredSetting
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 SettingsStonWriter >> addSettings: aCollectionOfStoredSettings [
 	storedSettings addAll: aCollectionOfStoredSettings
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SettingsStonWriter >> initialize [
 	super initialize.
 	storedSettings := OrderedCollection new
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 SettingsStonWriter >> store [
 	"Write the stored setting in the stream"
 
@@ -58,14 +60,14 @@ SettingsStonWriter >> store [
 		nextPut: filteredStoredSettings asArray
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SettingsStonWriter >> stream [
 	"Return the stream on which storedSettings are written in.
 	This method is useful for testing"
 	^ stream
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SettingsStonWriter >> stream: aWriteStream [
 	stream := aWriteStream
 ]

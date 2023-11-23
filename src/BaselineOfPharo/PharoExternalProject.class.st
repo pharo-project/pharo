@@ -4,8 +4,8 @@ External projects are kept at `BaselineOfPharo` but instead keeping a lot of str
 Is used to point to the place to download them (`PharoExternalProject>>repository`), but also to calculate the correct commit of the project (See `IcePharoPlugin class>>#commitOfExternalProject:`).
 "
 Class {
-	#name : #PharoExternalProject,
-	#superclass : #Object,
+	#name : 'PharoExternalProject',
+	#superclass : 'Object',
 	#instVars : [
 		'name',
 		'version',
@@ -13,16 +13,18 @@ Class {
 		'project',
 		'owner'
 	],
-	#category : #BaselineOfPharo
+	#category : 'BaselineOfPharo-Utilities',
+	#package : 'BaselineOfPharo',
+	#tag : 'Utilities'
 }
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 PharoExternalProject class >> defaultSourceDir [
 
 	^ 'src'
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 PharoExternalProject class >> newName: aName owner: owner project: aProject version: aVersion [
 
 	^ self 
@@ -33,7 +35,7 @@ PharoExternalProject class >> newName: aName owner: owner project: aProject vers
 		sourceDir: self defaultSourceDir
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 PharoExternalProject class >> newName: aName owner: anOwner project: aProject version: aVersion sourceDir: aSourceDir [
 
 	^ self basicNew
@@ -45,7 +47,7 @@ PharoExternalProject class >> newName: aName owner: anOwner project: aProject ve
 		yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PharoExternalProject >> initializeName: aName owner: anOwner project: aProject version: aVersion sourceDir: aSourceDir [
 
 	self initialize.
@@ -56,7 +58,7 @@ PharoExternalProject >> initializeName: aName owner: anOwner project: aProject v
 	sourceDir := aSourceDir
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PharoExternalProject >> initializeName: aName project: aRepository version: aVersion sourceDir: aSourceDir [
 
 	self initialize.
@@ -66,25 +68,31 @@ PharoExternalProject >> initializeName: aName project: aRepository version: aVer
 	sourceDir := aSourceDir
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PharoExternalProject >> name [
 
 	^ name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PharoExternalProject >> owner [
 
 	^ owner
 ]
 
-{ #category : #accessing }
+{ #category : 'printing' }
+PharoExternalProject >> printOn: aStream [
+
+	aStream nextPutAll: self name
+]
+
+{ #category : 'accessing' }
 PharoExternalProject >> project [
 
 	^ project
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PharoExternalProject >> repository [
 
 	^ 'github://{1}/{2}:{3}{4}' format: { 
@@ -94,13 +102,13 @@ PharoExternalProject >> repository [
 		self sourceDirWithSlash }
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PharoExternalProject >> sourceDir [
 
 	^ sourceDir
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 PharoExternalProject >> sourceDirWithSlash [
 
 	^ self sourceDir isEmptyOrNil
@@ -108,7 +116,7 @@ PharoExternalProject >> sourceDirWithSlash [
 		ifFalse: [ '/', self sourceDir ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PharoExternalProject >> version [
 
 	^ version

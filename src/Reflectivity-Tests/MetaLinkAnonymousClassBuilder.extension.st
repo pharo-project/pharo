@@ -1,11 +1,11 @@
-Extension { #name : #MetaLinkAnonymousClassBuilder }
+Extension { #name : 'MetaLinkAnonymousClassBuilder' }
 
-{ #category : #'*Reflectivity-Tests' }
+{ #category : '*Reflectivity-Tests' }
 MetaLinkAnonymousClassBuilder >> migratedObjects [
 	^ migratedObjects
 ]
 
-{ #category : #'*Reflectivity-Tests' }
+{ #category : '*Reflectivity-Tests' }
 MetaLinkAnonymousClassBuilder >> requestClassOfObject: anObject [
 	^anObject class
 ]

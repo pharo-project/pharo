@@ -9,23 +9,25 @@ Set, Bag, Dictionary.
 
 "
 Trait {
-	#name : #TIterateTest,
-	#category : #'Collections-Abstract-Tests-Traits'
+	#name : 'TIterateTest',
+	#category : 'Collections-Abstract-Tests-Traits',
+	#package : 'Collections-Abstract-Tests',
+	#tag : 'Traits'
 }
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TIterateTest >> collectionWithoutNilElements [
 " return a collection that doesn't includes a nil element  and that doesn't includes equal elements'"
 	self explicitRequirement
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TIterateTest >> empty [
 
 	self explicitRequirement
 ]
 
-{ #category : #'tests - fixture' }
+{ #category : 'tests - fixture' }
 TIterateTest >> test0FixtureIterateTest [
 	| res |
 	self collectionWithoutNilElements.
@@ -35,43 +37,43 @@ TIterateTest >> test0FixtureIterateTest [
 	self deny: res
 ]
 
-{ #category : #'tests - iterating' }
+{ #category : 'tests - iterating' }
 TIterateTest >> testAllSatisfy [
 
 	| element |
 	" when all element  satisfy the condition, should return true : "
-	self assert: ( self collectionWithoutNilElements  allSatisfy: [:each | (each notNil) ] ).
+	self assert: ( self collectionWithoutNilElements  allSatisfy: [:each | (each isNotNil) ] ).
 
 	" when all element don't satisfy the condition, should return false : "
-	self deny: ( self collectionWithoutNilElements  allSatisfy: [:each | (each notNil) not ] ).
+	self deny: ( self collectionWithoutNilElements  allSatisfy: [:each | (each isNotNil) not ] ).
 
 	" when only one element doesn't satisfy the condition' should return false'"
 	element := self collectionWithoutNilElements anyOne.
 	self deny: ( self collectionWithoutNilElements  allSatisfy: [:each | (each = element) not] )
 ]
 
-{ #category : #'tests - iterating' }
+{ #category : 'tests - iterating' }
 TIterateTest >> testAllSatisfyEmpty [
 
 	self assert: ( self empty allSatisfy: [:each | false])
 ]
 
-{ #category : #'tests - iterating' }
+{ #category : 'tests - iterating' }
 TIterateTest >> testAnySastify [
 
 	| element |
 	" when all elements satisty the condition, should return true :"
-	self assert: ( self collectionWithoutNilElements anySatisfy: [:each | each notNil ]).
+	self assert: ( self collectionWithoutNilElements anySatisfy: [:each | each isNotNil ]).
 
 	" when only one element satisfy the condition, should return true :"
 	element := self collectionWithoutNilElements anyOne.
 	self assert: ( self collectionWithoutNilElements  anySatisfy: [:each | (each = element)  ]   ).
 
 	" when all elements don't satisty the condition, should return false :"
-	self deny: ( self collectionWithoutNilElements anySatisfy: [:each | (each notNil) not ])
+	self deny: ( self collectionWithoutNilElements anySatisfy: [:each | (each isNotNil) not ])
 ]
 
-{ #category : #'tests - iterating' }
+{ #category : 'tests - iterating' }
 TIterateTest >> testBasicCollect [
 
 	| res index |
@@ -85,14 +87,14 @@ TIterateTest >> testBasicCollect [
 	self assert: index equals: self collectionWithoutNilElements size
 ]
 
-{ #category : #'tests - iterating' }
+{ #category : 'tests - iterating' }
 TIterateTest >> testBasicCollectEmpty [
 	| res |
 	res := self empty collect: [ :each | each class ].
 	self assertEmpty: res
 ]
 
-{ #category : #'tests - iterating' }
+{ #category : 'tests - iterating' }
 TIterateTest >> testBasicCollectThenDo [
 
 	| result index |
@@ -107,22 +109,22 @@ TIterateTest >> testBasicCollectThenDo [
 	self assert: index equals: self collectionWithoutNilElements size
 ]
 
-{ #category : #'tests - iterating' }
+{ #category : 'tests - iterating' }
 TIterateTest >> testCollectOnEmpty [
 	self assertEmpty: (self empty collect: [ :e | self fail ])
 ]
 
-{ #category : #'tests - iterating' }
+{ #category : 'tests - iterating' }
 TIterateTest >> testCollectThenDoOnEmpty [
 	self assertEmpty: (self empty collect: [ :e | self fail ] thenDo: [ self fail ])
 ]
 
-{ #category : #'tests - iterating' }
+{ #category : 'tests - iterating' }
 TIterateTest >> testCollectThenSelectOnEmpty [
 	self assertEmpty: (self empty collect: [ :e | self fail ] thenSelect: [ :e | self fail ])
 ]
 
-{ #category : #'tests - iterating' }
+{ #category : 'tests - iterating' }
 TIterateTest >> testDetect [
 
 	| res element |
@@ -132,11 +134,11 @@ TIterateTest >> testDetect [
 	self assert: (res  = element)
 ]
 
-{ #category : #'tests - iterating' }
+{ #category : 'tests - iterating' }
 TIterateTest >> testDetectIfNone [
 
 	| res element |
-	res := self collectionWithoutNilElements  detect: [:each | each notNil not] ifNone: [100].
+	res := self collectionWithoutNilElements  detect: [:each | each isNotNil not] ifNone: [100].
 	self assert: res  = 100.
 
 	element := self collectionWithoutNilElements anyOne.
@@ -144,7 +146,7 @@ TIterateTest >> testDetectIfNone [
 	self assert: res  = element
 ]
 
-{ #category : #'tests - iterating' }
+{ #category : 'tests - iterating' }
 TIterateTest >> testDo2 [
 	"dc: Bad test, it assumes that a new instance of #speciesClass allows addition with #add:. This is not the case of Interval for which species is Array."
 	"res := self speciesClass new.
@@ -167,7 +169,7 @@ TIterateTest >> testDo2 [
 	self assert: cptElementsIn size  = collection size
 ]
 
-{ #category : #'tests - iterating' }
+{ #category : 'tests - iterating' }
 TIterateTest >> testDoSeparatedBy [
 	| string expectedString beforeFirst |
 
@@ -187,7 +189,7 @@ TIterateTest >> testDoSeparatedBy [
 	self assert: expectedString = string
 ]
 
-{ #category : #'tests - iterating' }
+{ #category : 'tests - iterating' }
 TIterateTest >> testDoWithout [
 
 	| res element collection |
@@ -200,36 +202,35 @@ TIterateTest >> testDoWithout [
 	res do: [:each | self assert: (collection occurrencesOf: each) = ( res occurrencesOf: each ) ]
 ]
 
-{ #category : #'tests - iterating' }
+{ #category : 'tests - iterating' }
 TIterateTest >> testInjectInto [
-	|result|
-	result:= self collectionWithoutNilElements
-		inject: 0
-		into: [:inj :ele | ele notNil ifTrue: [ inj + 1 ]].
+
+	| result |
+	result := self collectionWithoutNilElements inject: 0 into: [ :inj :ele | ele ifNotNil: [ inj + 1 ] ].
 
 	self assert: self collectionWithoutNilElements size = result
 ]
 
-{ #category : #'tests - iterating' }
+{ #category : 'tests - iterating' }
 TIterateTest >> testNoneSatisfy [
 
 	| element |
-	self assert: ( self collectionWithoutNilElements  noneSatisfy: [:each | each notNil not ] ).
+	self assert: ( self collectionWithoutNilElements  noneSatisfy: [:each | each isNotNil not ] ).
 	element := self collectionWithoutNilElements anyOne.
 	self deny: ( self collectionWithoutNilElements  noneSatisfy: [:each | (each = element)not ] )
 ]
 
-{ #category : #'tests - iterating' }
+{ #category : 'tests - iterating' }
 TIterateTest >> testNoneSatisfyEmpty [
 
 	self assert: ( self empty noneSatisfy: [:each | false])
 ]
 
-{ #category : #'tests - iterating' }
+{ #category : 'tests - iterating' }
 TIterateTest >> testReject [
 
 	| res element |
-	res := self collectionWithoutNilElements reject: [:each | each notNil not].
+	res := self collectionWithoutNilElements reject: [:each | each isNotNil not].
 	self assert: res size = self collectionWithoutNilElements size.
 
 	element := self collectionWithoutNilElements anyOne.
@@ -237,26 +238,26 @@ TIterateTest >> testReject [
 	self assert: res size = (self collectionWithoutNilElements size - 1)
 ]
 
-{ #category : #'tests - iterating' }
+{ #category : 'tests - iterating' }
 TIterateTest >> testRejectAllThenCollect [
 	| result |
-	result := self collectionWithoutNilElements reject: [ :each | each notNil ] thenCollect: [ :each | self fail ].
+	result := self collectionWithoutNilElements reject: [ :each | each isNotNil ] thenCollect: [ :each | self fail ].
 
 	self assertEmpty: result
 ]
 
-{ #category : #'tests - iterating' }
+{ #category : 'tests - iterating' }
 TIterateTest >> testRejectAllThenDo [
 	| result |
 
 	result := self collectionWithoutNilElements
-		reject: [ :each | each notNil ]
+		reject: [ :each | each isNotNil ]
 		thenDo: [ :each | self fail ].
 
 	self assert: result equals: self collectionWithoutNilElements
 ]
 
-{ #category : #'tests - iterating' }
+{ #category : 'tests - iterating' }
 TIterateTest >> testRejectEmpty [
 
 	| res |
@@ -264,15 +265,15 @@ TIterateTest >> testRejectEmpty [
 	self assert: res size = self empty size
 ]
 
-{ #category : #'tests - iterating' }
+{ #category : 'tests - iterating' }
 TIterateTest >> testRejectNoReject [
 
 	| res |
-	res := self collectionWithoutNilElements  reject: [:each | each notNil not].
+	res := self collectionWithoutNilElements  reject: [:each | each isNotNil not].
 	self assert: res size = self collectionWithoutNilElements size
 ]
 
-{ #category : #'tests - iterating' }
+{ #category : 'tests - iterating' }
 TIterateTest >> testRejectThenCollect [
 
 	| result index selectIndex pivot |
@@ -287,7 +288,7 @@ TIterateTest >> testRejectThenCollect [
 			"reject the first element"
 			selectIndex = 1 ]
 		thenCollect: [ :each |
-			self assert: each notNil.
+			self assert: each isNotNil.
 			index := index + 1.
 			pivot ].
 
@@ -300,12 +301,12 @@ TIterateTest >> testRejectThenCollect [
 	self assert: (result occurrencesOf: pivot) >= 1
 ]
 
-{ #category : #'tests - iterating' }
+{ #category : 'tests - iterating' }
 TIterateTest >> testRejectThenCollectEmpty [
 	self assertEmpty: (self empty reject: [ :e | self fail ] thenCollect: [ :each | self fail ])
 ]
 
-{ #category : #'tests - iterating' }
+{ #category : 'tests - iterating' }
 TIterateTest >> testRejectThenDo [
 
 	| result index rejectIndex |
@@ -319,7 +320,7 @@ TIterateTest >> testRejectThenDo [
 			"reject the first element"
 			rejectIndex = 1 ]
 		thenDo: [ :each |
-			self assert: each notNil.
+			self assert: each isNotNil.
 			index := index + 1]	.
 
 	self assert: result equals: self collectionWithoutNilElements.
@@ -327,16 +328,16 @@ TIterateTest >> testRejectThenDo [
 	self assert: index equals: self collectionWithoutNilElements size - 1
 ]
 
-{ #category : #'tests - iterating' }
+{ #category : 'tests - iterating' }
 TIterateTest >> testRejectThenDoOnEmpty [
 	self assertEmpty: (self empty reject: [ :e | self fail ] thenDo: [ self fail ])
 ]
 
-{ #category : #'tests - iterating' }
+{ #category : 'tests - iterating' }
 TIterateTest >> testSelect [
 
 	| result element |
-	result := self collectionWithoutNilElements select: [ :each | each notNil].
+	result := self collectionWithoutNilElements select: [ :each | each isNotNil].
 	self assert: result size equals: self collectionWithoutNilElements size.
 
 	element := self collectionWithoutNilElements anyOne.
@@ -344,7 +345,7 @@ TIterateTest >> testSelect [
 	self assert: result size equals: (self collectionWithoutNilElements size - 1)
 ]
 
-{ #category : #'tests - iterating' }
+{ #category : 'tests - iterating' }
 TIterateTest >> testSelectNoneThenCollect [
 	| result |
 	result := self collectionWithoutNilElements select: [ :each | each isNil ] thenCollect: [ :each | self fail ].
@@ -352,7 +353,7 @@ TIterateTest >> testSelectNoneThenCollect [
 	self assertEmpty: result
 ]
 
-{ #category : #'tests - iterating' }
+{ #category : 'tests - iterating' }
 TIterateTest >> testSelectNoneThenDo [
 	| result |
 
@@ -363,12 +364,12 @@ TIterateTest >> testSelectNoneThenDo [
 	self assert: result equals: self collectionWithoutNilElements
 ]
 
-{ #category : #'tests - iterating' }
+{ #category : 'tests - iterating' }
 TIterateTest >> testSelectOnEmpty [
 	self assertEmpty: (self empty select: [ :e | self fail ])
 ]
 
-{ #category : #'tests - iterating' }
+{ #category : 'tests - iterating' }
 TIterateTest >> testSelectThenCollect [
 
 	| result index selectIndex pivot |
@@ -383,7 +384,7 @@ TIterateTest >> testSelectThenCollect [
 			"reject the first element"
 			selectIndex > 1 ]
 		thenCollect: [ :each |
-			self assert: each notNil.
+			self assert: each isNotNil.
 			index := index + 1.
 			pivot ].
 
@@ -396,12 +397,12 @@ TIterateTest >> testSelectThenCollect [
 	self assert: (result occurrencesOf: pivot) >= 1
 ]
 
-{ #category : #'tests - iterating' }
+{ #category : 'tests - iterating' }
 TIterateTest >> testSelectThenCollectOnEmpty [
 	self assertEmpty: (self empty select: [ :e | self fail ] thenCollect: [ self fail ])
 ]
 
-{ #category : #'tests - iterating' }
+{ #category : 'tests - iterating' }
 TIterateTest >> testSelectThenDo [
 
 	| result index selectIndex |
@@ -415,7 +416,7 @@ TIterateTest >> testSelectThenDo [
 			"reject the first element"
 			selectIndex > 1 ]
 		thenDo: [ :each |
-			self assert: each notNil.
+			self assert: each isNotNil.
 			index := index + 1]	.
 
 	self assert: result equals: self collectionWithoutNilElements.
@@ -423,16 +424,16 @@ TIterateTest >> testSelectThenDo [
 	self assert: index equals: self collectionWithoutNilElements size - 1
 ]
 
-{ #category : #'tests - iterating' }
+{ #category : 'tests - iterating' }
 TIterateTest >> testSelectThenDoOnEmpty [
 	self assertEmpty: (self empty select: [ :e | self fail ] thenDo: [ self fail ])
 ]
 
-{ #category : #'tests - iterating' }
+{ #category : 'tests - iterating' }
 TIterateTest >> testSumNumbers [
-	|result|
-	result:= self collectionWithoutNilElements
-		sumNumbers: [ :ele | ele notNil ifTrue: [ 1 ] ifFalse: [ 0 ]].
-
+	| result |
+	result := self collectionWithoutNilElements
+	sumNumbers: [ :ele | ele ifNil: [ 0 ] ifNotNil: [ 1 ] ].
+	
 	self assert: self collectionWithoutNilElements size = result
 ]

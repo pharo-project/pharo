@@ -18,8 +18,8 @@ This class caches a primary table of selected good primes within the positive Sm
 This class caches a second table built from the first to support faster direct lookup of primes for requested sizes in the range of 0 to ""self maxSmallSize"".
 "
 Class {
-	#name : #HashTableSizes,
-	#superclass : #Object,
+	#name : 'HashTableSizes',
+	#superclass : 'Object',
 	#instVars : [
 		'candidate',
 		'goodPrimes',
@@ -30,10 +30,12 @@ Class {
 		'sizes',
 		'smallSizesLookupTable'
 	],
-	#category : #'Collections-Unordered-Utilities'
+	#category : 'Collections-Unordered-Utilities',
+	#package : 'Collections-Unordered',
+	#tag : 'Utilities'
 }
 
-{ #category : #public }
+{ #category : 'public' }
 HashTableSizes class >> atLeast: lowerLimit [
 	"Answer the next good size >= lowerlimit.
 	If lowerLimit is larger than the largest known good prime,
@@ -48,7 +50,7 @@ HashTableSizes class >> atLeast: lowerLimit [
 		ifFalse: [ self basicAtLeast: lowerLimit ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 HashTableSizes class >> basicAtLeast: lowerLimit [
 	"Binary search for the next good size >= lowerlimit.
 	If lowerLimit is larger than the largest known good prime,
@@ -72,7 +74,7 @@ HashTableSizes class >> basicAtLeast: lowerLimit [
 		ifTrue: [ ^ primes at: high ] ] repeat
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 HashTableSizes class >> initialize [
 	"Throw away any previously-cached sizes, then compute and cache the sizes."
 
@@ -83,12 +85,12 @@ HashTableSizes class >> initialize [
 	self smallSizesLookupTable
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 HashTableSizes class >> maxSmallSize [
 	^ 255
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 HashTableSizes class >> numValuesPerPower [
 	"Answer the number of values that should be available in the cached table of primes
 	for each power-of-two range. A larger number allows closer sizing for pre-sized collections,
@@ -97,7 +99,7 @@ HashTableSizes class >> numValuesPerPower [
 	^5 "Chosen so there will be fewer than 128 primes in the sizes table"
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 HashTableSizes class >> sizes [
 	sizes
 		ifNil: [
@@ -107,7 +109,7 @@ HashTableSizes class >> sizes [
 	^ sizes
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 HashTableSizes class >> smallSizesLookupTable [
 	smallSizesLookupTable
 		ifNil: [
@@ -120,7 +122,7 @@ HashTableSizes class >> smallSizesLookupTable [
 	^ smallSizesLookupTable
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 HashTableSizes >> candidateIsGoodPrime [
 	"Answer true if candidate will make a good hash table size.
 	Some integers are rejected:
@@ -138,7 +140,7 @@ HashTableSizes >> candidateIsGoodPrime [
 	^ valuesNotToDivide allSatisfy: [ :dividend | dividend \\ candidate ~~ 0 ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 HashTableSizes >> computeSizes [
 	"Answer an array of integers that make good hash table sizes.
 	In each power of two, there are about five primes to choose from.
@@ -160,7 +162,7 @@ HashTableSizes >> computeSizes [
 	^ goodPrimes asArray
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 HashTableSizes >> firstCandidateForExp: exp [
 	"Answer the smallest odd integer greater 2**exp."
 
@@ -171,7 +173,7 @@ HashTableSizes >> firstCandidateForExp: exp [
 		ifFalse: [n + 1]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 HashTableSizes >> goodPrimeForExp: exp [
 	"Answer the next prime integer >= 2**exp that will make a good hash table size,
 	Some primes are rejected:
@@ -192,7 +194,7 @@ HashTableSizes >> goodPrimeForExp: exp [
 	^ candidate
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 HashTableSizes >> initialize [
 	"Can't use any hashed collections, if sizes is being initialized might get infinite recursion"
 
@@ -208,7 +210,7 @@ HashTableSizes >> initialize [
 	primesToAvoid := self primeAlmostFactorsOf: 1 hashMultiply
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 HashTableSizes >> limitForExp: exp [
 	"Answer the largest integer that isn't too close to the next higher power of 2 than exp."
 
@@ -217,7 +219,7 @@ HashTableSizes >> limitForExp: exp [
 	^(2 raisedTo: expLimit) rounded
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 HashTableSizes >> numValuesPerPower [
 	"Answer the number of values that should be available in the cached table of primes
 	for each power-of-two range."
@@ -225,7 +227,7 @@ HashTableSizes >> numValuesPerPower [
 	^self class numValuesPerPower
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 HashTableSizes >> primeAlmostFactorsOf: anInteger [
 	"Answer primes less than anInteger whose remainder when dividing anInteger is small"
 

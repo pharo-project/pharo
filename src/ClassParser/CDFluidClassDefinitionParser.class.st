@@ -1,5 +1,5 @@
 "
-I'm parser for the new class syntax. 
+I'm parser for the fluid class syntax. 
 
 
 ### The new syntax for class definition (just for the class and not for the methods) is
@@ -33,19 +33,34 @@ In addition having a binary message makes () unneccessary.
 
 "
 Class {
-	#name : #CDFluidClassDefinitionParser,
-	#superclass : #CDAbstractClassDefinitionParser,
+	#name : 'CDFluidClassDefinitionParser',
+	#superclass : 'Object',
 	#instVars : [
 		'classNameNode',
-		'superclassNode'
+		'superclassNode',
+		'classDefinition'
 	],
 	#classInstVars : [
 		'unrestrictedVariableDefinitions'
 	],
-	#category : #'ClassParser-Parser'
+	#category : 'ClassParser-Parser',
+	#package : 'ClassParser',
+	#tag : 'Parser'
 }
 
-{ #category : #settings }
+{ #category : 'parsing' }
+CDFluidClassDefinitionParser class >> fromASTNode: aNode [
+
+	^ self new parseRootNode: aNode
+]
+
+{ #category : 'instance creation' }
+CDFluidClassDefinitionParser class >> parse: aString [
+
+	^ self new parse: aString
+]
+
+{ #category : 'settings' }
 CDFluidClassDefinitionParser class >> settingsOn: aBuilder [
 	
 	<systemsettings>
@@ -61,29 +76,97 @@ WARNING2: the definition will be loaded by *unchecked* evaluation';
 		target: self.
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 CDFluidClassDefinitionParser class >> unrestrictedVariableDefinitions [
 	^ unrestrictedVariableDefinitions ifNil: [ false ]
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 CDFluidClassDefinitionParser class >> unrestrictedVariableDefinitions: aBoolean [
 	unrestrictedVariableDefinitions := aBoolean
 ]
 
-{ #category : #parsing }
+{ #category : 'internal' }
+CDFluidClassDefinitionParser >> beClassDefinition [
+
+	classDefinition := CDClassDefinitionNode new
+]
+
+{ #category : 'internal' }
+CDFluidClassDefinitionParser >> beClassSideTraitDefinition [
+
+	classDefinition := CDClassSideTraitDefinitionNode new
+]
+
+{ #category : 'internal' }
+CDFluidClassDefinitionParser >> beMetaclassDefinition [
+
+	classDefinition := CDMetaclassDefinitionNode new
+]
+
+{ #category : 'internal' }
+CDFluidClassDefinitionParser >> beTraitDefinition [
+
+	classDefinition := CDTraitDefinitionNode new
+]
+
+{ #category : 'private - class factory' }
+CDFluidClassDefinitionParser >> classNameNodeClass [
+	^ CDClassNameNode
+]
+
+{ #category : 'parsing' }
 CDFluidClassDefinitionParser >> handleClassAndSuperclassOf: aNode [
 
 	superclassNode ifNotNil: [ self handleSuperclassNode: superclassNode ].
 	self handleClassName: classNameNode
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
+CDFluidClassDefinitionParser >> handleClassName: aNode [
+	| className classNode |
+	className := (aNode isVariable
+		ifTrue: [ aNode name ]
+		ifFalse: [ aNode value ]) asSymbol.
+	classNode := self classNameNodeClass new
+		originalNode: aNode;
+		className: className.
+	classDefinition className: className astNode: classNode
+]
+
+{ #category : 'parsing' }
+CDFluidClassDefinitionParser >> handleInstanceVariablesFromNode: aNode [
+	| slots slotNodes instanceVariablesString |
+	instanceVariablesString := aNode value.
+	slots := instanceVariablesString substrings.
+	slotNodes := slots
+		collect: [ :slotName |
+			| start |
+			start := aNode start
+				+ (instanceVariablesString findString: slotName).
+			CDSlotNode new
+				node: aNode;
+				name: slotName;
+				variableClassName: #InstanceVariableSlot;
+				start: start;
+				stop: start + slotName size ].
+	classDefinition slots: slotNodes
+]
+
+{ #category : 'parsing' }
 CDFluidClassDefinitionParser >> handleLayout: aNode [
 	classDefinition layoutClass: aNode binding value
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
+CDFluidClassDefinitionParser >> handleMetaclassName: aNode [
+	"we are in situation ClassX class << ClassZ class
+				slots: {xxxx} so grab the class"
+
+	aNode handleMetaclassName: self
+]
+
+{ #category : 'parsing' }
 CDFluidClassDefinitionParser >> handleMetaclassNameFromCascade: aRBCascadeNode [
 
 	| className classNode node |
@@ -95,7 +178,7 @@ CDFluidClassDefinitionParser >> handleMetaclassNameFromCascade: aRBCascadeNode [
 	classDefinition className: node astNode: classNode
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 CDFluidClassDefinitionParser >> handleMetaclassNameFromMessage: aNode [
 
 	| className classNode node |
@@ -107,21 +190,27 @@ CDFluidClassDefinitionParser >> handleMetaclassNameFromMessage: aNode [
 	classDefinition className: node astNode: classNode
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
+CDFluidClassDefinitionParser >> handlePackage: aNode [
+
+	classDefinition packageNameNode: aNode astNode: aNode
+]
+
+{ #category : 'parsing' }
 CDFluidClassDefinitionParser >> handleSharedPoolsFromNode: aNode [
 	| sharedPoolNodes |
 	sharedPoolNodes := aNode children
 		collect: [ :aPoolNode |
 			self sharedPoolNodeClass
 				node: aPoolNode
-				name: aPoolNode name
+				name: aPoolNode value name
 				start: aPoolNode start
-				stop: aPoolNode start + aPoolNode name size
+				stop: aPoolNode start + aPoolNode value size
 			].
 	classDefinition sharedPools: sharedPoolNodes
 ]
 
-{ #category : #'parsing - variables' }
+{ #category : 'parsing - variables' }
 CDFluidClassDefinitionParser >> handleSharedVarableNodeSimple: slotDefNode [
 
 	"when a class variable is just #Name"
@@ -134,7 +223,7 @@ CDFluidClassDefinitionParser >> handleSharedVarableNodeSimple: slotDefNode [
 		  stop: slotDefNode stop
 ]
 
-{ #category : #'parsing - variables' }
+{ #category : 'parsing - variables' }
 CDFluidClassDefinitionParser >> handleSharedVariabeNode: variableDefNode [
 	 | variable |
 	"when a class variable is just #ClassVars"
@@ -150,7 +239,25 @@ CDFluidClassDefinitionParser >> handleSharedVariabeNode: variableDefNode [
 	classDefinition addSharedVariable: variable
 ]
 
-{ #category : #'parsing - variables' }
+{ #category : 'parsing' }
+CDFluidClassDefinitionParser >> handleSharedVariableNames: aNode [
+
+	| slots slotNodes classVariablesString |
+	classVariablesString := aNode value.
+	slots := classVariablesString substrings.
+	slotNodes := slots
+		collect: [ :slotName | | start |
+			start := aNode start + (classVariablesString findString: slotName).
+			CDSharedVariableNode
+				node: aNode
+				name: slotName
+				slotClassName: #ClassVariable
+				start: start
+				stop: start + slotName size ].
+	classDefinition sharedVariables: slotNodes
+]
+
+{ #category : 'parsing - variables' }
 CDFluidClassDefinitionParser >> handleSharedVariableNodeCascade: slotDefNode [
 
 	"#ClassVar => SomeVar default: 5; default2: 4"
@@ -163,7 +270,7 @@ CDFluidClassDefinitionParser >> handleSharedVariableNodeCascade: slotDefNode [
 		  stop: slotDefNode stop
 ]
 
-{ #category : #'parsing - variables' }
+{ #category : 'parsing - variables' }
 CDFluidClassDefinitionParser >> handleSharedVariableNodeSimpleClass: slotDefNode [
 
 	"when a calss var is just #var => SomeVar"
@@ -176,7 +283,7 @@ CDFluidClassDefinitionParser >> handleSharedVariableNodeSimpleClass: slotDefNode
 		  stop: slotDefNode stop
 ]
 
-{ #category : #'parsing - variables' }
+{ #category : 'parsing - variables' }
 CDFluidClassDefinitionParser >> handleSharedVariableNodeSimpleClassArgument: slotDefNode [
 
 	"When a class variable is #Var => SomeVar default: 5"
@@ -189,14 +296,14 @@ CDFluidClassDefinitionParser >> handleSharedVariableNodeSimpleClassArgument: slo
 		  stop: slotDefNode stop
 ]
 
-{ #category : #'parsing - variables' }
+{ #category : 'parsing - variables' }
 CDFluidClassDefinitionParser >> handleSharedVariableNodesFromArrayNode: aRBArrayNode [
 
 	aRBArrayNode statements do: [ :slotStatement |
 		self handleSharedVariabeNode: slotStatement ]
 ]
 
-{ #category : #'parsing - variables' }
+{ #category : 'parsing - variables' }
 CDFluidClassDefinitionParser >> handleSlotNode: slotDefNode [
 	 | slot |
 	
@@ -217,7 +324,7 @@ CDFluidClassDefinitionParser >> handleSlotNode: slotDefNode [
 	classDefinition addSlot: slot
 ]
 
-{ #category : #'parsing - variables' }
+{ #category : 'parsing - variables' }
 CDFluidClassDefinitionParser >> handleSlotNodeCascade: slotDefNode [
 
 	"#inst => InstanceVariableSlot default: 5; default2: 4"
@@ -230,7 +337,7 @@ CDFluidClassDefinitionParser >> handleSlotNodeCascade: slotDefNode [
 		  stop: slotDefNode stop
 ]
 
-{ #category : #'parsing - variables' }
+{ #category : 'parsing - variables' }
 CDFluidClassDefinitionParser >> handleSlotNodeSimple: slotDefNode [
 
 	"when a slot is just #inst"
@@ -243,7 +350,7 @@ CDFluidClassDefinitionParser >> handleSlotNodeSimple: slotDefNode [
 		  stop: slotDefNode stop
 ]
 
-{ #category : #'parsing - variables' }
+{ #category : 'parsing - variables' }
 CDFluidClassDefinitionParser >> handleSlotNodeSimpleClass: slotDefNode [
 
 	"when a variable is just #var => InstanceVariableSlot"
@@ -256,7 +363,7 @@ CDFluidClassDefinitionParser >> handleSlotNodeSimpleClass: slotDefNode [
 		  stop: slotDefNode stop
 ]
 
-{ #category : #'parsing - variables' }
+{ #category : 'parsing - variables' }
 CDFluidClassDefinitionParser >> handleSlotNodeSimpleClassArgument: slotDefNode [
 
 	"When a vaiable is #var => InstanceVariableSlot default: 5"
@@ -269,20 +376,20 @@ CDFluidClassDefinitionParser >> handleSlotNodeSimpleClassArgument: slotDefNode [
 		  stop: slotDefNode stop
 ]
 
-{ #category : #'parsing - variables' }
+{ #category : 'parsing - variables' }
 CDFluidClassDefinitionParser >> handleSlotsNodesFromArrayNode: aRBArrayNode [
 
 	aRBArrayNode statements do: [ :slotStatement |
 		self handleSlotNode: slotStatement ]
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 CDFluidClassDefinitionParser >> handleSuperclassNode: aSuperclassNode [
 	| aSuperclassName newSuperclassNode |
 
 	aSuperclassName := aSuperclassNode isLiteralNode
 		ifTrue: [ nil ]
-		ifFalse: [ aSuperclassNode binding value asString asSymbol ].
+		ifFalse: [aSuperclassNode name asSymbol ].
 	newSuperclassNode := self classNameNodeClass new
 		originalNode: aSuperclassNode;
 		className: aSuperclassName.
@@ -291,13 +398,22 @@ CDFluidClassDefinitionParser >> handleSuperclassNode: aSuperclassNode [
 		astNode: newSuperclassNode
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 CDFluidClassDefinitionParser >> handleTag: aNode [
 
 	classDefinition tag: (CDClassTagNode new name: aNode value)
 ]
 
-{ #category : #'parsing - variables' }
+{ #category : 'parsing' }
+CDFluidClassDefinitionParser >> handleTraitUsesFromNode: aNode [
+
+	| traitComposition |
+	aNode isDynamicArray and: [aNode allStatements ifEmpty: [ ^ self ]].
+ 	traitComposition := CDTraitCompositionBuilder new buildFrom: aNode.
+	classDefinition traitDefinition: traitComposition
+]
+
+{ #category : 'parsing - variables' }
 CDFluidClassDefinitionParser >> handleUnrestrictedSlotDefinition: slotDefNode [
 
 	"If the preference is enabled, allow unrestricted slot definitions. 
@@ -317,23 +433,36 @@ CDFluidClassDefinitionParser >> handleUnrestrictedSlotDefinition: slotDefNode [
 		  stop: slotDefNode stop
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
+CDFluidClassDefinitionParser >> parse: aString [
+	| expressionTree |
+	expressionTree := self parserClass parseExpression: aString.
+	expressionTree doSemanticAnalysis.
+	^ self parseRootNode: expressionTree
+]
+
+{ #category : 'parsing' }
 CDFluidClassDefinitionParser >> parseRootNode: expressionTree [
 
 	| searcher |
 	searcher := RBParseTreeSearcher new.
 	searcher
-		matches: 'Trait << `#name' do: [:aNode :answer |
+		matches: 'Trait << `#name' do: [ :aNode :answer |
 			classNameNode := searcher variableNamed: '`#name'.
-			self beTraitDefinition ];
-		matches: 'Trait << `name classTrait' do: [:aNode :answer |
+			self beTraitDefinition.
+			classDefinition superclassName: #Trait ];
+		matches: 'Trait << `name classTrait' do: [ :aNode :answer |
 			classNameNode := searcher variableNamed: '`name'.
 			self beClassSideTraitDefinition ];
-		matches: '`superclass << `#name' do: [:aNode :answer |
+		matches: '`superclass << `#name' do: [ :aNode :answer |
 			classNameNode := searcher variableNamed: '`#name'.
 			superclassNode := searcher variableNamed: '`superclass'.
 			self beClassDefinition ];
-		matches: '`superclass class << `name class' do: [:aNode :answer |
+		matches: 'nil << `#name' do: [ :aNode :answer |
+			classNameNode := searcher variableNamed: '`#name'.
+			self beClassDefinition.
+			classDefinition superclassName: #nil ];
+		matches: '`superclass class << `name class' do: [ :aNode :answer |
 			classNameNode := searcher variableNamed: '`name'.
 			self beMetaclassDefinition ].
 
@@ -344,7 +473,7 @@ CDFluidClassDefinitionParser >> parseRootNode: expressionTree [
 	^ classDefinition
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 CDFluidClassDefinitionParser >> parseSelectorPart: aString withArgument: aNode [
 	"We could do this with reflection, or with a dictionary and closures.
 	I chose to use a series of if for readability only."
@@ -370,7 +499,22 @@ CDFluidClassDefinitionParser >> parseSelectorPart: aString withArgument: aNode [
 		signal
 ]
 
-{ #category : #parsing }
+{ #category : 'private - class factory' }
+CDFluidClassDefinitionParser >> parserClass [
+	^ RBParser
+]
+
+{ #category : 'private - class factory' }
+CDFluidClassDefinitionParser >> sharedPoolNodeClass [
+	^ CDSharedPoolNode
+]
+
+{ #category : 'private - class factory' }
+CDFluidClassDefinitionParser >> slotNodeClass [
+	^ CDSlotNode
+]
+
+{ #category : 'parsing' }
 CDFluidClassDefinitionParser >> visitCascadeNode: aRBCascadeNode [
 	"See class comment. Here we handle the cascade version of the class definition."
 	"
@@ -388,7 +532,7 @@ CDFluidClassDefinitionParser >> visitCascadeNode: aRBCascadeNode [
 			self parseSelectorPart: selectorPart withArgument: argument ] ]
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 CDFluidClassDefinitionParser >> visitMessageNode: aRBMessageNode [
 	"See class comment. Here we handle the cascade version of the class definition."
 	"

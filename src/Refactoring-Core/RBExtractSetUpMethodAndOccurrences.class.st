@@ -54,23 +54,25 @@ RBDataTest >> testExample4 ""this method did not change""
 ```
 "
 Class {
-	#name : #RBExtractSetUpMethodAndOccurrences,
-	#superclass : #RBExtractMethodAndOccurrences,
-	#category : #'Refactoring-Core-Refactorings'
+	#name : 'RBExtractSetUpMethodAndOccurrences',
+	#superclass : 'RBExtractMethodAndOccurrences',
+	#category : 'Refactoring-Core-Refactorings',
+	#package : 'Refactoring-Core',
+	#tag : 'Refactorings'
 }
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBExtractSetUpMethodAndOccurrences >> extractMethodClass [
 	^ RBExtractSetUpMethodRefactoring
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBExtractSetUpMethodAndOccurrences >> findOccurrencesClass [
 	^ RBFindAndReplaceSetUpTransformation
 ]
 
-{ #category : #transforming }
-RBExtractSetUpMethodAndOccurrences >> transform [
+{ #category : 'transforming' }
+RBExtractSetUpMethodAndOccurrences >> privateTransform [
 	self extractMethod.
 	self findOccurrencesOf: #setUp
 ]

@@ -12,50 +12,52 @@ The two control points for the cubic are:
     CP2 = QP2 + 2/3 *(QP1-QP2) 
 "
 Class {
-	#name : #AthensQuadSegment,
-	#superclass : #AthensPathSegment,
+	#name : 'AthensQuadSegment',
+	#superclass : 'AthensPathSegment',
 	#instVars : [
 		'via',
 		'to'
 	],
-	#category : #'Athens-Core-Paths'
+	#category : 'Athens-Core-Paths',
+	#package : 'Athens-Core',
+	#tag : 'Paths'
 }
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 AthensQuadSegment >> accept: aVisitor [
 	^ aVisitor quadricBezierSegment: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensQuadSegment >> endPoint [
 	^ to
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AthensQuadSegment >> from: pt0 via: pt1 to: p [
 
 	via := pt1.
 	to := p
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 AthensQuadSegment >> sendCommandTo: aBuilder [
 	^ aBuilder curveVia: via to: to
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensQuadSegment >> to [
 
 	^ to
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensQuadSegment >> via [
 
 	^ via
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 AthensQuadSegment >> visitWith: visitor [
 
 	visitor visitQuadSegment: self

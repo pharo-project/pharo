@@ -2,12 +2,14 @@
 Tests to enforce proper categorization of methods
 "
 Class {
-	#name : #ProperMethodCategorizationTest,
-	#superclass : #TestCase,
-	#category : #'ReleaseTests-Categorization'
+	#name : 'ProperMethodCategorizationTest',
+	#superclass : 'TestCase',
+	#category : 'ReleaseTests-Categorization',
+	#package : 'ReleaseTests',
+	#tag : 'Categorization'
 }
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 ProperMethodCategorizationTest >> assureAll: selector areCategorizedIn: protocol whenSubclassOf: aClass [
 
 	| violating |
@@ -22,7 +24,7 @@ ProperMethodCategorizationTest >> assureAll: selector areCategorizedIn: protocol
 			format: { self explanationFrom: violating . aClass asString. selector. protocol })
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 ProperMethodCategorizationTest >> assureAll: selector areCategorizedInProtocols: protocols whenSubclassOf: aClass [
 	"Test whether the selector is categorized in at least the collection of protocols"
 
@@ -39,7 +41,7 @@ ProperMethodCategorizationTest >> assureAll: selector areCategorizedInProtocols:
 				 protocols })
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 ProperMethodCategorizationTest >> explanationFrom: violations [
 
 	^ (String streamContents: [:str |
@@ -47,14 +49,14 @@ ProperMethodCategorizationTest >> explanationFrom: violations [
 					separatedBy: [ str nextPutAll: ' ,'] ])
 ]
 
-{ #category : #'tests - instance creation' }
+{ #category : 'tests - instance creation' }
 ProperMethodCategorizationTest >> testBasicNewMethodNeedsToBeInInstanceCreationProtocol [
 	"The #basicNew methods should be in method protocol 'instance creation'"
 
 	self assureAll: #basicNew areCategorizedIn: #'instance creation' whenSubclassOf: Object class
 ]
 
-{ #category : #'tests - initialization' }
+{ #category : 'tests - initialization' }
 ProperMethodCategorizationTest >> testClassSideInitializeMethodNeedsToBeInClassInitializationProtocol [
 	"The class side #initialize methods should be in method protocol 'class initialization'"
 
@@ -71,49 +73,49 @@ ProperMethodCategorizationTest >> testClassSideInitializeMethodNeedsToBeInClassI
 	self assert: violating isEmpty description: 'Class side #initialize methods should be in "class initialization" method category:' , violating asString
 ]
 
-{ #category : #'tests - object' }
+{ #category : 'tests - object' }
 ProperMethodCategorizationTest >> testCloneMethodNeedsToBeInCopyingProtocol [
 	"The #clone methods should be in method protocol 'copying'"
 
 	self assureAll: #clone areCategorizedIn: #copying whenSubclassOf: Object
 ]
 
-{ #category : #'tests - object' }
+{ #category : 'tests - object' }
 ProperMethodCategorizationTest >> testCopyMethodNeedsToBeInCopyingProtocol [
 	"The #copy methods should be in method protocol 'copying'"
 
 	self assureAll: #copy areCategorizedIn: #copying whenSubclassOf: Object
 ]
 
-{ #category : #'tests - object' }
+{ #category : 'tests - object' }
 ProperMethodCategorizationTest >> testDeepCopyMethodNeedsToBeInCopyingProtocol [
 	"The #deepCopy methods should be in method protocol 'copying'"
 
 	self assureAll: #deepCopy areCategorizedIn: #copying whenSubclassOf: Object
 ]
 
-{ #category : #'tests - object' }
+{ #category : 'tests - object' }
 ProperMethodCategorizationTest >> testEqualMethodNeedsToBeInComparingProtocol [
 	"The #= method should be in method protocol 'comparing'"
 
 	self assureAll: #= areCategorizedIn: #comparing whenSubclassOf: Object
 ]
 
-{ #category : #'tests - object' }
+{ #category : 'tests - object' }
 ProperMethodCategorizationTest >> testFinalizeMethodNeedsToBeInComparingProtocol [
 	"The #finalize method should be in method protocol 'finalization'"
 
 	self assureAll: #finalize areCategorizedIn: #finalization whenSubclassOf: Object
 ]
 
-{ #category : #'tests - object' }
+{ #category : 'tests - object' }
 ProperMethodCategorizationTest >> testHashMethodNeedsToBeInComparingProtocol [
 	"The #hash method should be in method protocol 'comparing'"
 
 	self assureAll: #hash areCategorizedIn: #comparing whenSubclassOf: Object
 ]
 
-{ #category : #'tests - initialization' }
+{ #category : 'tests - initialization' }
 ProperMethodCategorizationTest >> testInstanceSideInitializeMethodNeedsToBeInInitializationProtocol [
 	"The instance side #initialize methods should be in method protocol 'initialization'"
 
@@ -132,7 +134,7 @@ ProperMethodCategorizationTest >> testInstanceSideInitializeMethodNeedsToBeInIni
 	self assert: violating isEmpty description: 'Instance side #initialize methods should be in "initialization" method category:' , violating asString
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProperMethodCategorizationTest >> testNoEmptyProtocols [
 	"Check that we have no protocols left without methods"
 
@@ -144,7 +146,7 @@ ProperMethodCategorizationTest >> testNoEmptyProtocols [
 	self assertEmpty: violations
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProperMethodCategorizationTest >> testNoLeadingOrTrailingSpacesInCategoryNames [
 	"Make sure we have no protocol names with leading or trailing spaces"
 
@@ -157,7 +159,7 @@ ProperMethodCategorizationTest >> testNoLeadingOrTrailingSpacesInCategoryNames [
 	self assert: violations isEmpty description: 'Found protocol names with leading or trailing spaces: ' , violations asString
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProperMethodCategorizationTest >> testNoUncategorizedMethods [
 	"Check that we have no #'as yet unclassified' protocols left"
 
@@ -166,7 +168,7 @@ ProperMethodCategorizationTest >> testNoUncategorizedMethods [
 
 
 	validExceptions := #( ClyClass2FromP1Mock #MCMock #'MCMock class' #'MCMockASubclass class' #'MCMockClassA class' #MCMockASubclass #MCMockClassD #'MCMockClassE class'
-	                      MFClassA MFClassB RBFooDummyLintRuleTest RBFooLintRuleTestData RBSmalllintTestObject RBTransformationDummyRuleTest
+	                      MFClassA MFClassB RBSmalllintTestObject
 	                      'RBTransformationRuleTestData1' StInspectorMockObjectSubclass StDebuggerCommand ).
 
 	remaining := violating asOrderedCollection reject: [ :each | validExceptions includes: each name ].
@@ -174,7 +176,7 @@ ProperMethodCategorizationTest >> testNoUncategorizedMethods [
 	self assert: remaining isEmpty description: 'the following classes have uncategorized methods: ' , remaining asString
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProperMethodCategorizationTest >> testNoUtilsMethods [
 	"Check that we have no #'utils' protocols left, the protocol should be 'utilities' "
 
@@ -185,42 +187,49 @@ ProperMethodCategorizationTest >> testNoUtilsMethods [
 	self assert: violating size <= 4 description: '#utils protocols left, the protocol should be ''utilities'': ' , violating asString
 ]
 
-{ #category : #'tests - object' }
+{ #category : 'tests - object' }
 ProperMethodCategorizationTest >> testPostCopyMethodNeedsToBeInCopyingProtocol [
 	"The #postCopy methods should be in method protocol 'copying'"
 
 	self assureAll: #postCopy areCategorizedIn: #copying whenSubclassOf: Object
 ]
 
-{ #category : #'tests - sunit' }
+{ #category : 'tests - sunit' }
 ProperMethodCategorizationTest >> testRunCaseMethodInSUnitTestsNeedsToBeInRunningProtocol [
 	"The #tearDown method in SUnit test classes should be in method protocol 'running'"
 
 	self assureAll: #runCase areCategorizedIn: #running whenSubclassOf: TestCase
 ]
 
-{ #category : #'tests - sunit' }
+{ #category : 'tests - sunit' }
 ProperMethodCategorizationTest >> testSetUpMethodInSUnitTestsNeedsToBeInRunningProtocol [
 	"The #setUp method in SUnit test classes should be in method protocol 'running'"
 
 	self assureAll: #setUp areCategorizedInProtocols: #(#running) whenSubclassOf: TestCase
 ]
 
-{ #category : #'tests - object' }
+{ #category : 'tests - object' }
 ProperMethodCategorizationTest >> testShallowCopyMethodNeedsToBeInCopyingProtocol [
 	"The #shallowCopy methods should be in method protocol 'copying'"
 
 	self assureAll: #shallowCopy areCategorizedIn: #copying whenSubclassOf: Object
 ]
 
-{ #category : #'tests - sunit' }
+{ #category : 'tests - private' }
+ProperMethodCategorizationTest >> testSpeciesMethodNeedsToBeInPrivateProtocol [
+	"The #species methods should be in method protocol 'private'"
+
+	self assureAll: #species areCategorizedIn: #private whenSubclassOf: Object
+]
+
+{ #category : 'tests - sunit' }
 ProperMethodCategorizationTest >> testTearDownMethodInSUnitTestsNeedsToBeInRunningProtocol [
 	"The #tearDown method in SUnit test classes should be in method protocol 'running'"
 
 	self assureAll: #tearDown areCategorizedInProtocols: #(#running) whenSubclassOf: TestCase
 ]
 
-{ #category : #'tests - object' }
+{ #category : 'tests - object' }
 ProperMethodCategorizationTest >> testVeryDeepCopyMethodNeedsToBeInCopyingProtocol [
 	"The #veryDeepCopy methods should be in method protocol 'copying'"
 

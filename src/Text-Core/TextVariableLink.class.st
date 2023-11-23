@@ -2,39 +2,41 @@
 An active link in a text linking to a variable
 "
 Class {
-	#name : #TextVariableLink,
-	#superclass : #TextLink,
+	#name : 'TextVariableLink',
+	#superclass : 'TextLink',
 	#instVars : [
 		'variableName'
 	],
-	#category : #'Text-Core-Attributes'
+	#category : 'Text-Core-Attributes',
+	#package : 'Text-Core',
+	#tag : 'Attributes'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TextVariableLink class >> variableName: aSymbol [
 	^ self new
 		variableName: aSymbol;
 		yourself
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 TextVariableLink >> = anotherObject [
 
 	^super = anotherObject and: [ variableName = anotherObject variableName ]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 TextVariableLink >> hash [
 
 	^(super hash + variableName hash) hashMultiply
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextVariableLink >> variableName [
 	^ variableName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextVariableLink >> variableName: aString [
 	variableName := aString
 ]

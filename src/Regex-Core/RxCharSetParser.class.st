@@ -10,29 +10,31 @@ Instance Variables:
 	elements	<Collection of: <RxsCharacter|RxsRange|RxsPredicate>> Parsing result
 "
 Class {
-	#name : #RxCharSetParser,
-	#superclass : #Object,
+	#name : 'RxCharSetParser',
+	#superclass : 'Object',
 	#instVars : [
 		'source',
 		'lookahead',
 		'elements'
 	],
-	#category : #'Regex-Core-Utilities'
+	#category : 'Regex-Core-Utilities',
+	#package : 'Regex-Core',
+	#tag : 'Utilities'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RxCharSetParser class >> on: aStream [
 
 	^self new initialize: aStream
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 RxCharSetParser >> addChar: aChar [
 
 	elements add: (RxsCharacter with: aChar)
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 RxCharSetParser >> addRangeFrom: firstChar to: lastChar [
 
 	firstChar asInteger > lastChar asInteger ifTrue:
@@ -40,7 +42,7 @@ RxCharSetParser >> addRangeFrom: firstChar to: lastChar [
 	elements add: (RxsRange from: firstChar to: lastChar)
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RxCharSetParser >> initialize: aStream [
 
 	source := aStream.
@@ -48,7 +50,7 @@ RxCharSetParser >> initialize: aStream [
 	elements := OrderedCollection new
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 RxCharSetParser >> match: aCharacter [
 
 	aCharacter = lookahead
@@ -61,7 +63,7 @@ RxCharSetParser >> match: aCharacter [
 		ifFalse: [lookahead := source next]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RxCharSetParser >> parse [
 
 	lookahead = $- ifTrue:
@@ -71,7 +73,7 @@ RxCharSetParser >> parse [
 	^elements
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 RxCharSetParser >> parseCharOrRange [
 	| firstChar |
 	firstChar := lookahead.
@@ -87,7 +89,7 @@ RxCharSetParser >> parseCharOrRange [
 	self addChar: firstChar
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 RxCharSetParser >> parseEscapeChar [
 
 	self match: $\.
@@ -97,7 +99,7 @@ RxCharSetParser >> parseEscapeChar [
 	self match: lookahead
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 RxCharSetParser >> parseNamedSet [
 
 	| name |
@@ -108,7 +110,7 @@ RxCharSetParser >> parseNamedSet [
 	elements add: (RxsPredicate forNamedClass: name)
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 RxCharSetParser >> parseStep [
 	lookahead = $[
 		ifTrue: [ ^ source peek = $:

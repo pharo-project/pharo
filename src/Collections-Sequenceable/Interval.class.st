@@ -57,17 +57,19 @@ NB: both expressions will not give exactly the same result. The first will conta
 
 "
 Class {
-	#name : #Interval,
-	#superclass : #SequenceableCollection,
+	#name : 'Interval',
+	#superclass : 'SequenceableCollection',
 	#instVars : [
 		'start',
 		'stop',
 		'step'
 	],
-	#category : #'Collections-Sequenceable-Base'
+	#category : 'Collections-Sequenceable-Base',
+	#package : 'Collections-Sequenceable',
+	#tag : 'Base'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Interval class >> from: startInteger to: stopInteger [
 	"Answer an instance of me, starting at startNumber, ending at
 	stopNumber, and with an interval increment of 1."
@@ -78,7 +80,7 @@ Interval class >> from: startInteger to: stopInteger [
 		by: 1
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Interval class >> from: startInteger to: stopInteger by: stepInteger [
 	"Answer an instance of me, starting at startNumber, ending at
 	stopNumber, and with an interval increment of stepNumber."
@@ -89,7 +91,7 @@ Interval class >> from: startInteger to: stopInteger by: stepInteger [
 		by: stepInteger
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Interval class >> new [
 	"Primitive. Create and answer with a new instance of the receiver
 	(a class) with no indexable fields. Fail if the class is indexable. Override
@@ -103,7 +105,7 @@ Interval class >> new [
 	^ self new  "retry if user proceeds"
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Interval class >> newFrom: aCollection [
 	"Answer an instance of me containing the same elements as aCollection."
 
@@ -129,7 +131,7 @@ Interval class >> newFrom: aCollection [
 "
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Interval class >> newFromArray: anArray [
 
 	"Interval does not store the elements.
@@ -138,24 +140,24 @@ Interval class >> newFromArray: anArray [
 	^ self newFrom: anArray
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Interval class >> streamSpecies [
 	^ Array
 ]
 
-{ #category : #arithmetic }
+{ #category : 'arithmetic' }
 Interval >> + number [
 
 	^ start + number to: stop + number by: step
 ]
 
-{ #category : #arithmetic }
+{ #category : 'arithmetic' }
 Interval >> - number [
 
 	^ start - number to: stop - number by: step
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 Interval >> = anObject [
 
 	^ self == anObject
@@ -167,14 +169,14 @@ Interval >> = anObject [
 			ifFalse: [super = anObject]]
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 Interval >> add: newObject [
 	"Adding to an Interval is not allowed."
 
 	self shouldNotImplement
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Interval >> anyOne [
 	"This message will fail for an empty Interval, super would not.
 	(2 to: 1) anyOne should fail because empty."
@@ -182,7 +184,7 @@ Interval >> anyOne [
 	^self at: 1
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Interval >> asOpenInterval [
 	"Return a new interval representing the open version of the receiver.
 	In other words, the new inteval does not contain the upper and lower boundaries of the receiver
@@ -194,7 +196,7 @@ Interval >> asOpenInterval [
 	^ start + step to: stop - step
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Interval >> at: anInteger [
 	"Answer the anInteger'th element."
 
@@ -203,14 +205,14 @@ Interval >> at: anInteger [
 		ifFalse: [ self errorSubscriptBounds: anInteger ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Interval >> at: anInteger put: anObject [
 	"Storing into an Interval is not allowed."
 
 	self error: 'you can not store into an interval'
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 Interval >> collect: aBlock [
 	| nextValue result |
 	result := self species new: self size.
@@ -222,7 +224,7 @@ Interval >> collect: aBlock [
 	^ result
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 Interval >> do: aBlock [
 	"Evaluate aBlock for each value of the interval.
 	Implementation note: instead of repeatedly incrementing the value
@@ -242,7 +244,7 @@ Interval >> do: aBlock [
 			aBlock value: aValue]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Interval >> extent [
 	"Answer the max - min of the receiver interval."
 	"(10 to: 50) extent"
@@ -250,14 +252,14 @@ Interval >> extent [
 	^stop - start
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Interval >> first [
 	"Refer to the comment in SequenceableCollection|first."
 
 	^start
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 Interval >> hash [
 	"Hash is reimplemented because = is implemented."
 
@@ -267,14 +269,14 @@ Interval >> hash [
 		bitOr: self size
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Interval >> increment [
 	"Answer the receiver's interval increment."
 
 	^step
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Interval >> indexOf: anElement startingAt: startIndex ifAbsent: exceptionBlock [
 	"startIndex is an positive integer, the collection index where the search is started."
 	"during the computation of val , floats are only used when the receiver contains floats"
@@ -296,18 +298,18 @@ Interval >> indexOf: anElement startingAt: startIndex ifAbsent: exceptionBlock [
 		ifFalse: [exceptionBlock value]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Interval >> isInterval [
 
 	^ true
 ]
 
-{ #category : #'self evaluating' }
+{ #category : 'self evaluating' }
 Interval >> isSelfEvaluating [
 	^ self class == Interval
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Interval >> last [
 	"Answer the last element of the receiver. Pay attention, last is not equivalent to stop in certain situations. See below."
 	"(1 to: 10 by: 2) last >>> 9"
@@ -316,7 +318,7 @@ Interval >> last [
 	^stop - (stop - start \\ step)
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 Interval >> permutationsDo: aBlock [
 	"Repeatly value aBlock with a single copy of the receiver. Reorder the copy
 	so that aBlock is presented all (self size factorial) possible permutations."
@@ -325,7 +327,7 @@ Interval >> permutationsDo: aBlock [
 	self asArray permutationsDo: aBlock
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 Interval >> printOn: aStream [
 	aStream nextPut: $(;
 	 print: start;
@@ -335,7 +337,7 @@ Interval >> printOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Interval >> rangeIncludes: aNumber [
 	"Return true if aNumber lies anywhere between the interval bounds.
 	This is a fast O(1) bounds check.
@@ -348,14 +350,14 @@ Interval >> rangeIncludes: aNumber [
 		ifFalse: [ aNumber between: stop and: start ]
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 Interval >> remove: newObject [
 	"Removing from an Interval is not allowed."
 
 	self error: 'elements cannot be removed from an Interval'
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 Interval >> reverseDo: aBlock [
 	"Evaluate aBlock for each element of my interval, in reverse order.
 	Implementation notes: see do: for an explanation on loop detail"
@@ -369,7 +371,7 @@ Interval >> reverseDo: aBlock [
 			aBlock value: aValue]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Interval >> setFrom: startInteger to: stopInteger by: stepInteger [
 
 	start := startInteger.
@@ -378,7 +380,7 @@ Interval >> setFrom: startInteger to: stopInteger by: stepInteger [
 	step isZero ifTrue: [ ^ DomainError signal: 'Zero size steps not allowed' ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Interval >> size [
 	"Answer how many elements the receiver contains."
 
@@ -391,34 +393,34 @@ Interval >> size [
 				ifFalse: [ (stop - start) // step + 1 ] ]
 ]
 
-{ #category : #sorting }
+{ #category : 'sorting' }
 Interval >> sort: aBlock [
 	"What sorting an Interval means is not clear."
 
 	self shouldNotImplement
 ]
 
-{ #category : #sorting }
+{ #category : 'sorting' }
 Interval >> sorted [
 	^ self increment >= 0
 		ifTrue: [ self copy ]
 		ifFalse: [ self last to: self first by: self increment negated ]
 ]
 
-{ #category : #sorting }
+{ #category : 'sorting' }
 Interval >> sorted: aSortBlockOrNil [
 	"Return a new sequenceable collection which contains the same elements as self but its elements are sorted by aSortBlockOrNil. The block should take two arguments and return true if the first element should preceed the second one. If aSortBlock is nil then <= is used for comparison. We convert the interval to an array because intervals can't be changed."
 
 	^self asArray sort: aSortBlockOrNil
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Interval >> species [
 
 	^Array
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Interval >> stop [
 	"Return the stop element of an interval. Pay attention this is not necessary the same as the last element."
 	"(1 to: 10 by: 2) last >>> 9"
@@ -427,7 +429,7 @@ Interval >> stop [
 	^ stop
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 Interval >> storeOn: aStream [
 	aStream nextPut: $(;
 	 	store: start;
@@ -437,7 +439,7 @@ Interval >> storeOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Interval >> sum [
 	"Optimized version. Use the sum(n * i - k, i=a..b) = -1/2 * (a - b - 1) * (n * (a + b) - 2 * k) equation with a = 1, n = step, b = self size and k = step - start."
 

@@ -9,53 +9,55 @@ Instance Variables
 
 "
 Class {
-	#name : #OSWindowPlatformSpecificHandle,
-	#superclass : #Object,
+	#name : 'OSWindowPlatformSpecificHandle',
+	#superclass : 'Object',
 	#instVars : [
 		'platform',
 		'display',
 		'window',
 		'surface'
 	],
-	#category : #'OSWindow-Core-Utilities'
+	#category : 'OSWindow-Core-Utilities',
+	#package : 'OSWindow-Core',
+	#tag : 'Utilities'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowPlatformSpecificHandle >> display [
 	^ display
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowPlatformSpecificHandle >> display: anObject [
 	display := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowPlatformSpecificHandle >> platform [
 	^ platform
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowPlatformSpecificHandle >> platform: anObject [
 	platform := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowPlatformSpecificHandle >> surface [
 	^ surface
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowPlatformSpecificHandle >> surface: anObject [
 	surface := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowPlatformSpecificHandle >> window [
 	^ window
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowPlatformSpecificHandle >> window: anObject [
 	window := anObject
 ]

@@ -1,6 +1,6 @@
-Extension { #name : #TimespanDoTest }
+Extension { #name : 'TimespanDoTest' }
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 TimespanDoTest >> testMonthsDo [
 	| monthArray |
 	monthArray := Array
@@ -11,7 +11,7 @@ TimespanDoTest >> testMonthsDo [
 	self assert: aTimespan months equals: monthArray
 ]
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 TimespanDoTest >> testWeeksDo [
 	| weekArray |
 	weekArray := OrderedCollection new.
@@ -20,7 +20,7 @@ TimespanDoTest >> testWeeksDo [
 	self assert: aTimespan weeks equals: weekArray
 ]
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 TimespanDoTest >> testYearsDo [
 	| yearArray |
 	yearArray := Array with: (Year starting: (DateAndTime year: 2003 day: 7) duration: 365 days).

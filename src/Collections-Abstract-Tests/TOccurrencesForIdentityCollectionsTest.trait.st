@@ -2,23 +2,25 @@
 A trait for test purposes
 "
 Trait {
-	#name : #TOccurrencesForIdentityCollectionsTest,
-	#category : #'Collections-Abstract-Tests-Traits'
+	#name : 'TOccurrencesForIdentityCollectionsTest',
+	#category : 'Collections-Abstract-Tests-Traits',
+	#package : 'Collections-Abstract-Tests',
+	#tag : 'Traits'
 }
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TOccurrencesForIdentityCollectionsTest >> identityCollectionWithElementsCopyNotIdentical [
 " return a collection including elements for which #copy return a new object "
 ^ self explicitRequirement
 ]
 
-{ #category : #'tests - fixture' }
+{ #category : 'tests - fixture' }
 TOccurrencesForIdentityCollectionsTest >> test0FixtureOccurrencesForIdentityCollectionsTest [
 	self identityCollectionWithElementsCopyNotIdentical.
 	self identityCollectionWithElementsCopyNotIdentical do: [ :each | self deny: each copy == each ]
 ]
 
-{ #category : #'tests - occurrencesOf for identity collections' }
+{ #category : 'tests - occurrencesOf for identity collections' }
 TOccurrencesForIdentityCollectionsTest >> testOccurrencesOfForIdentityCollections [
 
 | collection element elementCopy |

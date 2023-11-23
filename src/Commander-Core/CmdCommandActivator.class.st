@@ -36,17 +36,18 @@ Internal Representation and Key Implementation Points.
 	activationStrategy:		<CmdCommandActivationStrategy>	strategy which defines how command should be accessed and executed in given context
 "
 Class {
-	#name : #CmdCommandActivator,
-	#superclass : #Object,
+	#name : 'CmdCommandActivator',
+	#superclass : 'Object',
 	#instVars : [
 		'command',
 		'context',
 		'activationStrategy'
 	],
-	#category : #'Commander-Core'
+	#category : 'Commander-Core',
+	#package : 'Commander-Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CmdCommandActivator class >> createCommand: aCommandClass inContext: aToolContext [
 	| command |
 	command := aCommandClass new.
@@ -54,7 +55,7 @@ CmdCommandActivator class >> createCommand: aCommandClass inContext: aToolContex
 	^command
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CmdCommandActivator class >> for: aCommandClass inContext: aToolContext using: aCommandActivationStrategy [
 	| command |
 	command := self createCommand: aCommandClass inContext: aToolContext.
@@ -65,64 +66,64 @@ CmdCommandActivator class >> for: aCommandClass inContext: aToolContext using: a
 		activationStrategy: aCommandActivationStrategy
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CmdCommandActivator >> activatesCommand: aCommandClass [
 	^activationStrategy annotates: aCommandClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdCommandActivator >> activationStrategy [
 	^ activationStrategy
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdCommandActivator >> activationStrategy: anObject [
 	activationStrategy := anObject
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 CmdCommandActivator >> applyCommandResult [
 	context applyResultOf: command
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 CmdCommandActivator >> asCommandActivator [
 	^self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CmdCommandActivator >> canExecuteCommand [
 
 	^activationStrategy isActiveInContext: context
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdCommandActivator >> command [
 	^ command
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdCommandActivator >> command: anObject [
 	command := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdCommandActivator >> commandDescription [
 
 	^command description ifNil: [ self menuItemName ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdCommandActivator >> context [
 	^ context
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdCommandActivator >> context: anObject [
 	context := anObject
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 CmdCommandActivator >> executeCommand [
 
 	[self prepareCommandForExecution.
@@ -131,29 +132,29 @@ CmdCommandActivator >> executeCommand [
 		on: Exception do: [ :exc | self processCommandFailure: exc ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CmdCommandActivator >> isSimilarTo: anotherCommandActivator [
 
 	^(activationStrategy isSimilarTo: anotherCommandActivator activationStrategy)
 		and: [context isSimilarTo: anotherCommandActivator context ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdCommandActivator >> menuItemIcon [
 	^self command defaultMenuIcon
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdCommandActivator >> menuItemName [
 	^activationStrategy menuItemNameFor: command
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdCommandActivator >> menuItemOrder [
 	^activationStrategy menuItemOrder
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdCommandActivator >> newForCommand: aCommand [
 
 	| copy |
@@ -162,12 +163,12 @@ CmdCommandActivator >> newForCommand: aCommand [
 	^copy
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 CmdCommandActivator >> prepareCommandForExecution [
 	context prepareFullExecutionOf: command
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 CmdCommandActivator >> printOn: aStream [
 	super printOn: aStream.
 
@@ -176,7 +177,7 @@ CmdCommandActivator >> printOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 CmdCommandActivator >> processCommandFailure: anException [
 
 	context processFailure: anException of: command

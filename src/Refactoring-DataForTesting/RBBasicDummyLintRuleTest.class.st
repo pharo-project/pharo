@@ -1,16 +1,18 @@
 Class {
-	#name : #RBBasicDummyLintRuleTest,
-	#superclass : #RBDummyLintRuleTest,
+	#name : 'RBBasicDummyLintRuleTest',
+	#superclass : 'RBDummyLintRuleTest',
 	#instVars : [
 		'methodBlock',
 		'result',
 		'classBlock',
 		'anInstVar'
 	],
-	#category : #'Refactoring-DataForTesting-LittleHierarchy'
+	#category : 'Refactoring-DataForTesting-LittleHierarchy',
+	#package : 'Refactoring-DataForTesting',
+	#tag : 'LittleHierarchy'
 }
 
-{ #category : #'possible bugs' }
+{ #category : 'possible bugs' }
 RBBasicDummyLintRuleTest class >> abstractClass [
 	| detector subclassResponsibilitySymbol |
 	detector := self new.
@@ -25,7 +27,7 @@ RBBasicDummyLintRuleTest class >> abstractClass [
 	^detector
 ]
 
-{ #category : #'possible bugs' }
+{ #category : 'possible bugs' }
 RBBasicDummyLintRuleTest class >> addRemoveDependents [
 	| detector |
 	detector := self new.
@@ -48,7 +50,7 @@ RBBasicDummyLintRuleTest class >> addRemoveDependents [
 	^detector
 ]
 
-{ #category : #miscellaneous }
+{ #category : 'miscellaneous' }
 RBBasicDummyLintRuleTest class >> assignmentInBlock [
 	^self createParseTreeRule: #(
 			'`@cursor showWhile: [| `@temps | `@.Statements1. `var := `@object]'
@@ -60,7 +62,7 @@ RBBasicDummyLintRuleTest class >> assignmentInBlock [
 		name: 'Unnecessary assignment or return in block'
 ]
 
-{ #category : #'intention revealing' }
+{ #category : 'intention revealing' }
 RBBasicDummyLintRuleTest class >> assignmentInIfTrue [
 	^self createParseTreeRule:
 			#('`@boolean
@@ -72,7 +74,7 @@ RBBasicDummyLintRuleTest class >> assignmentInIfTrue [
 		name: 'Assignment to same variable and end of ifTrue:ifFalse: blocks'
 ]
 
-{ #category : #'intention revealing' }
+{ #category : 'intention revealing' }
 RBBasicDummyLintRuleTest class >> atIfAbsent [
 	^self createParseTreeRule:
 				#('`@object
@@ -88,7 +90,7 @@ RBBasicDummyLintRuleTest class >> atIfAbsent [
 		name: 'Uses at:ifAbsent: instead of at:ifAbsentPut:'
 ]
 
-{ #category : #bugs }
+{ #category : 'bugs' }
 RBBasicDummyLintRuleTest class >> booleanPrecedence [
 	^self createParseTreeRule:
 			#('`@object1 | `@object2 = `@object3'
@@ -102,7 +104,7 @@ RBBasicDummyLintRuleTest class >> booleanPrecedence [
 		name: 'Uses A | B = C instead of A | (B = C)'
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBBasicDummyLintRuleTest class >> canCall: aSelector in: aClass from: anApplication [
 	"This method contains on purpose not implemented messages, such as rootApplication "
 	| methodApp root |
@@ -113,7 +115,7 @@ RBBasicDummyLintRuleTest class >> canCall: aSelector in: aClass from: anApplicat
 	^methodApp == root or: [root isBasedOn: methodApp]
 ]
 
-{ #category : #miscellaneous }
+{ #category : 'miscellaneous' }
 RBBasicDummyLintRuleTest class >> classNameInSelector [
 	| detector |
 	detector := self new.
@@ -128,7 +130,7 @@ RBBasicDummyLintRuleTest class >> classNameInSelector [
 	^detector
 ]
 
-{ #category : #'unnecessary code' }
+{ #category : 'unnecessary code' }
 RBBasicDummyLintRuleTest class >> classNotReferenced [
 	| detector |
 	detector := self new.
@@ -146,12 +148,12 @@ RBBasicDummyLintRuleTest class >> classNotReferenced [
 	^detector
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBBasicDummyLintRuleTest class >> classShouldNotOverride [
 	^#(#== #class)
 ]
 
-{ #category : #'possible bugs' }
+{ #category : 'possible bugs' }
 RBBasicDummyLintRuleTest class >> collectionCopyEmpty [
 	| detector |
 	detector := self new.
@@ -168,7 +170,7 @@ RBBasicDummyLintRuleTest class >> collectionCopyEmpty [
 	^detector
 ]
 
-{ #category : #'intention revealing' }
+{ #category : 'intention revealing' }
 RBBasicDummyLintRuleTest class >> collectionMessagesToExternalObject [
 	| detector matcher |
 	detector := self new.
@@ -194,7 +196,7 @@ RBBasicDummyLintRuleTest class >> collectionMessagesToExternalObject [
 	^detector
 ]
 
-{ #category : #'intention revealing' }
+{ #category : 'intention revealing' }
 RBBasicDummyLintRuleTest class >> collectionProtocol [
 	^self createParseTreeRule:
 			#('`@collection do: [:`each | | `@temps | `@.Statements1. `@object add: `@arg. `@.Statements2]'
@@ -215,7 +217,7 @@ RBBasicDummyLintRuleTest class >> collectionProtocol [
 		name: 'Uses do: instead of collect: or select:''s'
 ]
 
-{ #category : #'intention revealing' }
+{ #category : 'intention revealing' }
 RBBasicDummyLintRuleTest class >> consistencyCheck [
 	^self createParseTreeRule:
 				#('`@object size == 0'
@@ -227,7 +229,7 @@ RBBasicDummyLintRuleTest class >> consistencyCheck [
 		name: 'Uses "size = 0" or "= nil" instead of "isEmpty" or "isNil"'
 ]
 
-{ #category : #'intention revealing' }
+{ #category : 'intention revealing' }
 RBBasicDummyLintRuleTest class >> contains [
 	^self createParseTreeRule:
 			#('(`@object detect: [:`each | | `@temps| `@.Statements] ifNone: [nil]) isNil'
@@ -240,7 +242,7 @@ RBBasicDummyLintRuleTest class >> contains [
 		name: 'Uses detect:ifNone: instead of contains:'
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBBasicDummyLintRuleTest class >> createMatcherFor: codeStrings method: aBoolean [
 	| matcher |
 	matcher := self parseTreeSearcher.
@@ -250,7 +252,7 @@ RBBasicDummyLintRuleTest class >> createMatcherFor: codeStrings method: aBoolean
 	^matcher
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBBasicDummyLintRuleTest class >> createParseTreeRule: codeStrings method: aBoolean name: aName [
 	| detector matcher |
 	detector := self new.
@@ -263,14 +265,14 @@ RBBasicDummyLintRuleTest class >> createParseTreeRule: codeStrings method: aBool
 	^detector
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBBasicDummyLintRuleTest class >> createParseTreeRule: codeStrings name: aName [
 	^self createParseTreeRule: codeStrings
 		method: false
 		name: aName
 ]
 
-{ #category : #'possible bugs' }
+{ #category : 'possible bugs' }
 RBBasicDummyLintRuleTest class >> definesEqualNotHash [
 	| detector |
 	detector := self new.
@@ -284,7 +286,7 @@ RBBasicDummyLintRuleTest class >> definesEqualNotHash [
 	^detector
 ]
 
-{ #category : #'intention revealing' }
+{ #category : 'intention revealing' }
 RBBasicDummyLintRuleTest class >> detectContains [
 	^self createParseTreeRule:
 			#('`@collection do: [:`each | | `@temps |
@@ -314,7 +316,7 @@ RBBasicDummyLintRuleTest class >> detectContains [
 		name: 'Uses do: instead of contains: or detect:''s'
 ]
 
-{ #category : #'unnecessary code' }
+{ #category : 'unnecessary code' }
 RBBasicDummyLintRuleTest class >> endTrueFalse [
 	| detector matcher |
 	detector := self new.
@@ -342,7 +344,7 @@ RBBasicDummyLintRuleTest class >> endTrueFalse [
 	^detector
 ]
 
-{ #category : #'unnecessary code' }
+{ #category : 'unnecessary code' }
 RBBasicDummyLintRuleTest class >> equalsTrue [
 	| detector matcher |
 	detector := self new.
@@ -360,14 +362,14 @@ RBBasicDummyLintRuleTest class >> equalsTrue [
 	^detector
 ]
 
-{ #category : #'unnecessary code' }
+{ #category : 'unnecessary code' }
 RBBasicDummyLintRuleTest class >> equivalentSuperclassMethods [
 	| detector |
 	detector := self new.
 	detector name: 'Methods equivalently defined in superclass'.
 	detector methodBlock:
 			[:context :result |
-			context selectedClass superclass notNil ifTrue:
+			context selectedClass superclass isNotNil ifTrue:
 					[(context selectedClass superclass canUnderstand: context selector)
 						ifTrue:
 							[(((context selectedClass superclass
@@ -378,7 +380,7 @@ RBBasicDummyLintRuleTest class >> equivalentSuperclassMethods [
 	^detector
 ]
 
-{ #category : #'unnecessary code' }
+{ #category : 'unnecessary code' }
 RBBasicDummyLintRuleTest class >> extraBlock [
 	^self
 		createParseTreeRule: (#('value' 'value: `@value' 'value: `@value1 value: `@value2' 'value: `@value1 value: `value2 value: `@value3' 'valueWithArguments: `@values')
@@ -386,7 +388,7 @@ RBBasicDummyLintRuleTest class >> extraBlock [
 		name: 'Block immediately evaluated'
 ]
 
-{ #category : #'possible bugs' }
+{ #category : 'possible bugs' }
 RBBasicDummyLintRuleTest class >> fileBlocks [
 	^self createParseTreeRule:
 				#('[| `@temps |
@@ -402,7 +404,7 @@ RBBasicDummyLintRuleTest class >> fileBlocks [
 		name: 'Assignment inside unwind blocks should be outside.'
 ]
 
-{ #category : #miscellaneous }
+{ #category : 'miscellaneous' }
 RBBasicDummyLintRuleTest class >> fullBlocks [
 
 "	| detector |
@@ -417,7 +419,7 @@ RBBasicDummyLintRuleTest class >> fullBlocks [
 	^detector"
 ]
 
-{ #category : #'intention revealing' }
+{ #category : 'intention revealing' }
 RBBasicDummyLintRuleTest class >> guardingClause [
 	^self
 		createParseTreeRule:
@@ -433,7 +435,7 @@ RBBasicDummyLintRuleTest class >> guardingClause [
 		name: 'Guarding clauses'
 ]
 
-{ #category : #miscellaneous }
+{ #category : 'miscellaneous' }
 RBBasicDummyLintRuleTest class >> ifTrueBlocks [
 	| detector matcher |
 	detector := self new.
@@ -444,7 +446,7 @@ RBBasicDummyLintRuleTest class >> ifTrueBlocks [
 				->
 					[:aNode :answer |
 					answer or:
-							[(aNode arguments detect: [:each | each isBlock not] ifNone: [nil]) notNil]].
+							[(aNode arguments detect: [:each | each isBlock not] ifNone: [nil]) isNotNil]].
 	detector methodBlock:
 			[:context :result |
 			(matcher executeTree: context parseTree initialAnswer: false)
@@ -452,7 +454,7 @@ RBBasicDummyLintRuleTest class >> ifTrueBlocks [
 	^detector
 ]
 
-{ #category : #'intention revealing' }
+{ #category : 'intention revealing' }
 RBBasicDummyLintRuleTest class >> ifTrueReturns [
 	| detector matcher |
 	detector := self new.
@@ -474,7 +476,7 @@ RBBasicDummyLintRuleTest class >> ifTrueReturns [
 	^detector
 ]
 
-{ #category : #'unnecessary code' }
+{ #category : 'unnecessary code' }
 RBBasicDummyLintRuleTest class >> implementedNotSent [
 	| detector |
 	detector := self new.
@@ -486,7 +488,7 @@ RBBasicDummyLintRuleTest class >> implementedNotSent [
 	^detector
 ]
 
-{ #category : #miscellaneous }
+{ #category : 'miscellaneous' }
 RBBasicDummyLintRuleTest class >> instVarInSubclasses [
 	| detector |
 	detector := self new.
@@ -507,7 +509,7 @@ RBBasicDummyLintRuleTest class >> instVarInSubclasses [
 	^detector
 ]
 
-{ #category : #'unnecessary code' }
+{ #category : 'unnecessary code' }
 RBBasicDummyLintRuleTest class >> justSendsSuper [
 	| detector matcher |
 	detector := self new.
@@ -521,12 +523,12 @@ RBBasicDummyLintRuleTest class >> justSendsSuper [
 	^detector
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBBasicDummyLintRuleTest class >> longMethodSize [
 	^10
 ]
 
-{ #category : #miscellaneous }
+{ #category : 'miscellaneous' }
 RBBasicDummyLintRuleTest class >> longMethods [
 	| detector matcher |
 	detector := self new.
@@ -545,12 +547,12 @@ RBBasicDummyLintRuleTest class >> longMethods [
 	^detector
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBBasicDummyLintRuleTest class >> metaclassShouldNotOverride [
 	^#(#name #comment)
 ]
 
-{ #category : #'intention revealing' }
+{ #category : 'intention revealing' }
 RBBasicDummyLintRuleTest class >> minMax [
 	| detector matcher |
 	detector := self new.
@@ -571,7 +573,7 @@ RBBasicDummyLintRuleTest class >> minMax [
 	^detector
 ]
 
-{ #category : #'intention revealing' }
+{ #category : 'intention revealing' }
 RBBasicDummyLintRuleTest class >> missingSubclassResponsibility [
 	| detector |
 	detector := self new.
@@ -599,7 +601,7 @@ RBBasicDummyLintRuleTest class >> missingSubclassResponsibility [
 	^detector
 ]
 
-{ #category : #'possible bugs' }
+{ #category : 'possible bugs' }
 RBBasicDummyLintRuleTest class >> missingYourself [
 	| detector matcher |
 	detector := self new.
@@ -618,7 +620,7 @@ RBBasicDummyLintRuleTest class >> missingYourself [
 	^detector
 ]
 
-{ #category : #'possible bugs' }
+{ #category : 'possible bugs' }
 RBBasicDummyLintRuleTest class >> modifiesCollection [
 	| detector addSearcher |
 	detector := self new.
@@ -632,7 +634,7 @@ RBBasicDummyLintRuleTest class >> modifiesCollection [
 	^detector
 ]
 
-{ #category : #'unnecessary code' }
+{ #category : 'unnecessary code' }
 RBBasicDummyLintRuleTest class >> onlyReadOrWritten [
 	| detector |
 	detector := self new.
@@ -656,26 +658,27 @@ RBBasicDummyLintRuleTest class >> onlyReadOrWritten [
 	^detector
 ]
 
-{ #category : #bugs }
+{ #category : 'bugs' }
 RBBasicDummyLintRuleTest class >> overridesSpecialMessage [
+
 	| detector |
 	detector := self new.
 	detector name: 'Overrides a "special" message'.
 	detector resultClass: RBClassEnvironment.
-	detector classBlock:
-			[:context :result |
-			((context selectedClass isMetaclass
-				ifTrue: [self metaclassShouldNotOverride]
-				ifFalse: [self classShouldNotOverride]) detect:
-						[:each |
-						context selectedClass superclass notNil and:
-								[(context selectedClass superclass canUnderstand: each)
-									and: [context selectedClass includesSelector: each]]]
-					ifNone: [nil]) notNil ifTrue: [result addClass: context selectedClass]].
-	^detector
+	detector classBlock: [ :context :result |
+		((context selectedClass isMetaclass
+			  ifTrue: [ self metaclassShouldNotOverride ]
+			  ifFalse: [ self classShouldNotOverride ])
+			 detect: [ :each |
+				 context selectedClass superclass isNotNil and: [
+					 (context selectedClass superclass canUnderstand: each) and: [
+						 context selectedClass includesSelector: each ] ] ]
+			 ifNone: [ nil ]) ifNotNil: [
+			result addClass: context selectedClass ] ].
+	^ detector
 ]
 
-{ #category : #miscellaneous }
+{ #category : 'miscellaneous' }
 RBBasicDummyLintRuleTest class >> precedence [
 	| detector matcher |
 	detector := self new.
@@ -693,12 +696,12 @@ RBBasicDummyLintRuleTest class >> precedence [
 	^ detector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBBasicDummyLintRuleTest class >> protocolsToCheck [
 	^#('bugs' 'possible bugs' 'unnecessary code' 'intention revealing' 'miscellaneous')
 ]
 
-{ #category : #miscellaneous }
+{ #category : 'miscellaneous' }
 RBBasicDummyLintRuleTest class >> refersToClass [
 	| detector |
 	detector := self new.
@@ -715,7 +718,7 @@ RBBasicDummyLintRuleTest class >> refersToClass [
 	^detector
 ]
 
-{ #category : #'possible bugs' }
+{ #category : 'possible bugs' }
 RBBasicDummyLintRuleTest class >> returnsBooleanAndOther [
 	| detector matcher |
 	detector := self new.
@@ -743,7 +746,7 @@ RBBasicDummyLintRuleTest class >> returnsBooleanAndOther [
 	^detector
 ]
 
-{ #category : #'possible bugs' }
+{ #category : 'possible bugs' }
 RBBasicDummyLintRuleTest class >> returnsIfTrue [
 	^self createParseTreeRule:
 				#('^`@condition ifTrue: [| `@temps | `@.statements]'
@@ -751,55 +754,52 @@ RBBasicDummyLintRuleTest class >> returnsIfTrue [
 		name: 'Returns value of ifTrue:/ifFalse: without ifFalse:/ifTrue: block'
 ]
 
-{ #category : #'possible bugs' }
+{ #category : 'possible bugs' }
 RBBasicDummyLintRuleTest class >> sendsDifferentSuper [
+
 	| detector |
 	detector := self new.
 	detector name: 'Sends different super message'.
-	detector methodBlock:
-			[:context :result |
-			| message |
-			(message := context superMessages detect: [:each | each ~= context selector]
-						ifNone: [nil]) notNil ifTrue:
-					[result addSearchString: message.
-					result addClass: context selectedClass selector: context selector]].
-	^detector
-]
-
-{ #category : #bugs }
-RBBasicDummyLintRuleTest class >> sentNotImplemented [
-
-	| detector |
-
-	detector := self new.
-	detector name: 'Messages sent but not implemented'.
-	detector
-		methodBlock: [ :context :result |
-			| message |
-
-			message := context messages detect: [ :each | ( context implements: each ) not ] ifNone: [ nil ].
-			message
-				ifNil: [ message := context superMessages
-						detect: [ :each |
-							context selectedClass superclass isNil
-								or: [ ( context selectedClass superclass canUnderstand: each ) not ]
-							]
-						ifNone: [ nil ].
-					message
-						ifNil: [ message := context selfMessages
-								detect: [ :each | ( context selectedClass canUnderstand: each ) not ]
-								ifNone: [ nil ]
-							]
-					].
-			message notNil
-				ifTrue: [ result addSearchString: message.
-					result addClass: context selectedClass selector: context selector
-					]
-			].
+	detector methodBlock: [ :context :result |
+		| message |
+		(message := context superMessages
+			            detect: [ :each | each ~= context selector ]
+			            ifNone: [ nil ]) ifNotNil: [
+			result addSearchString: message.
+			result addClass: context selectedClass selector: context selector ] ].
 	^ detector
 ]
 
-{ #category : #'possible bugs' }
+{ #category : 'bugs' }
+RBBasicDummyLintRuleTest class >> sentNotImplemented [
+
+	| detector |
+	detector := self new.
+	detector name: 'Messages sent but not implemented'.
+	detector methodBlock: [ :context :result |
+		| message |
+		message := context messages
+			           detect: [ :each | (context implements: each) not ]
+			           ifNone: [ nil ].
+		message ifNil: [
+			message := context superMessages
+				           detect: [ :each |
+					           context selectedClass superclass isNil or: [
+						           (context selectedClass superclass canUnderstand: each)
+							           not ] ]
+				           ifNone: [ nil ].
+			message ifNil: [
+				message := context selfMessages
+					           detect: [ :each |
+					           (context selectedClass canUnderstand: each) not ]
+					           ifNone: [ nil ] ] ].
+		message ifNotNil: [
+			result addSearchString: message.
+			result addClass: context selectedClass selector: context selector ] ].
+	^ detector
+]
+
+{ #category : 'possible bugs' }
 RBBasicDummyLintRuleTest class >> sentNotImplementedInApplication [
 
 	| detector |
@@ -829,7 +829,7 @@ RBBasicDummyLintRuleTest class >> sentNotImplementedInApplication [
 							]
 						ifNotNil: [ message := context superMessages detect: block ifNone: [ nil ] ]
 					].
-			message notNil
+			message isNotNil
 				ifTrue: [ result addSearchString: message.
 					result addClass: context selectedClass selector: context selector
 					]
@@ -837,7 +837,7 @@ RBBasicDummyLintRuleTest class >> sentNotImplementedInApplication [
 	^ detector
 ]
 
-{ #category : #'intention revealing' }
+{ #category : 'intention revealing' }
 RBBasicDummyLintRuleTest class >> sizeCheck [
 	^self createParseTreeRule: (#(#do: #collect: #reject: #select:) collect:
 					[:each |
@@ -850,7 +850,7 @@ RBBasicDummyLintRuleTest class >> sizeCheck [
 		name: 'Unnecessary size check'
 ]
 
-{ #category : #miscellaneous }
+{ #category : 'miscellaneous' }
 RBBasicDummyLintRuleTest class >> stringConcatenation [
 	| detector matcher concatenationMatcher |
 	detector := self new.
@@ -868,7 +868,7 @@ RBBasicDummyLintRuleTest class >> stringConcatenation [
 									[:each |
 									each isBlock
 										and: [concatenationMatcher executeTree: each initialAnswer: false]]
-								ifNone: [nil]) notNil]].
+								ifNone: [nil]) isNotNil]].
 	detector methodBlock:
 			[:context :result |
 			(matcher executeTree: context parseTree initialAnswer: false)
@@ -876,7 +876,7 @@ RBBasicDummyLintRuleTest class >> stringConcatenation [
 	^detector
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBBasicDummyLintRuleTest class >> subclassOf: aClass overrides: aSelector [
 	| subs |
 	subs := aClass subclasses.
@@ -890,7 +890,7 @@ RBBasicDummyLintRuleTest class >> subclassOf: aClass overrides: aSelector [
 	^false
 ]
 
-{ #category : #bugs }
+{ #category : 'bugs' }
 RBBasicDummyLintRuleTest class >> subclassResponsibilityNotDefined [
 	| detector subclassResponsibilitySymbol |
 	detector := self new.
@@ -905,17 +905,17 @@ RBBasicDummyLintRuleTest class >> subclassResponsibilityNotDefined [
 							[:class |
 							class subclasses isEmpty
 								and: [(class whichClassIncludesSelector: each) == context selectedClass]]
-						ifNone: [nil]) notNil
+						ifNone: [nil]) isNotNil
 						ifTrue: [result addClass: context selectedClass selector: each]]].
 	^detector
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBBasicDummyLintRuleTest class >> superMessages [
 	^#(#release #postCopy #postBuildWith: #preBuildWith: #postOpenWith: #noticeOfWindowClose: #initialize)
 ]
 
-{ #category : #'possible bugs' }
+{ #category : 'possible bugs' }
 RBBasicDummyLintRuleTest class >> superSends [
 	| detector |
 	detector := self new.
@@ -924,7 +924,7 @@ RBBasicDummyLintRuleTest class >> superSends [
 			[:context :result |
 			(context selectedClass isMetaclass not
 				and: [self superMessages includes: context selector]) ifTrue:
-						[(context selectedClass superclass notNil
+						[(context selectedClass superclass isNotNil
 							and: [context selectedClass superclass canUnderstand: context selector])
 								ifTrue:
 									[(context superMessages includes: context selector)
@@ -932,7 +932,7 @@ RBBasicDummyLintRuleTest class >> superSends [
 	^detector
 ]
 
-{ #category : #'possible bugs' }
+{ #category : 'possible bugs' }
 RBBasicDummyLintRuleTest class >> tempVarOverridesInstVar [
 	| detector matcher vars varName |
 	detector := self new.
@@ -952,7 +952,7 @@ RBBasicDummyLintRuleTest class >> tempVarOverridesInstVar [
 	^detector
 ]
 
-{ #category : #'possible bugs' }
+{ #category : 'possible bugs' }
 RBBasicDummyLintRuleTest class >> tempsReadBeforeWritten [
 	| detector |
 	detector := self new.
@@ -971,7 +971,7 @@ RBBasicDummyLintRuleTest class >> tempsReadBeforeWritten [
 	^detector
 ]
 
-{ #category : #'possible bugs' }
+{ #category : 'possible bugs' }
 RBBasicDummyLintRuleTest class >> threeElementPoint [
 	| detector matcher |
 	detector := self new.
@@ -995,7 +995,7 @@ RBBasicDummyLintRuleTest class >> threeElementPoint [
 	^detector
 ]
 
-{ #category : #'intention revealing' }
+{ #category : 'intention revealing' }
 RBBasicDummyLintRuleTest class >> toDo [
 	| detector matcher |
 	detector := self new.
@@ -1018,7 +1018,7 @@ RBBasicDummyLintRuleTest class >> toDo [
 	^detector
 ]
 
-{ #category : #'unnecessary code' }
+{ #category : 'unnecessary code' }
 RBBasicDummyLintRuleTest class >> unreferencedVariables [
 	| detector |
 	detector := self new.
@@ -1040,7 +1040,7 @@ RBBasicDummyLintRuleTest class >> unreferencedVariables [
 	^detector
 ]
 
-{ #category : #'possible bugs' }
+{ #category : 'possible bugs' }
 RBBasicDummyLintRuleTest class >> usesAdd [
 	| detector addSearcher |
 	detector := self new.
@@ -1053,7 +1053,7 @@ RBBasicDummyLintRuleTest class >> usesAdd [
 	^detector
 ]
 
-{ #category : #bugs }
+{ #category : 'bugs' }
 RBBasicDummyLintRuleTest class >> usesTrue [
 	| detector trueBinding falseBinding |
 	detector := self new.
@@ -1071,7 +1071,7 @@ RBBasicDummyLintRuleTest class >> usesTrue [
 	^detector
 ]
 
-{ #category : #miscellaneous }
+{ #category : 'miscellaneous' }
 RBBasicDummyLintRuleTest class >> utilityMethods [
 	| detector |
 	detector := self new.
@@ -1082,8 +1082,8 @@ RBBasicDummyLintRuleTest class >> utilityMethods [
 					[(context protocols detect:
 							[:each |
 							(self utilityProtocols detect: [:protocol | protocol match: each]
-								ifNone: [nil]) notNil]
-						ifNone: [nil]) notNil])
+								ifNone: [nil]) isNotNil]
+						ifNone: [nil]) isNotNil])
 				ifFalse:
 					[(self subclassOf: context selectedClass overrides: context selector)
 						ifFalse:
@@ -1096,14 +1096,14 @@ RBBasicDummyLintRuleTest class >> utilityMethods [
 	^detector
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBBasicDummyLintRuleTest class >> utilityProtocols [
 	"If a method is defined in one of these protocols, then don't check if its a utility method."
 
 	^#('*utilit*')
 ]
 
-{ #category : #miscellaneous }
+{ #category : 'miscellaneous' }
 RBBasicDummyLintRuleTest class >> variableAssignedLiteral [
 	| detector |
 	detector := self new.
@@ -1131,13 +1131,13 @@ RBBasicDummyLintRuleTest class >> variableAssignedLiteral [
 								searcher addSearch: (each , ' := ``@object')
 											-> [:aNode :answer | answer isNil and: [aNode value isLiteralNode]].
 								tree := defClass parseTreeForSelector: selector.
-								tree notNil ifTrue:
+								tree isNotNil ifTrue:
 										[(searcher executeTree: tree initialAnswer: nil) == true
 											ifTrue: [result addInstVar: each for: context selectedClass]]]]].
 	^detector
 ]
 
-{ #category : #'unnecessary code' }
+{ #category : 'unnecessary code' }
 RBBasicDummyLintRuleTest class >> variableReferencedOnce [
 	| detector |
 	detector := self new.
@@ -1164,7 +1164,7 @@ RBBasicDummyLintRuleTest class >> variableReferencedOnce [
 							ifTrue:
 								[| tree |
 								tree := defClass parseTreeForSelector: selector.
-								tree notNil
+								tree isNotNil
 									ifTrue:
 										[(RBReadBeforeWrittenTester readBeforeWritten: (Array with: each) in: tree)
 											isEmpty
@@ -1174,7 +1174,7 @@ RBBasicDummyLintRuleTest class >> variableReferencedOnce [
 	^detector
 ]
 
-{ #category : #'intention revealing' }
+{ #category : 'intention revealing' }
 RBBasicDummyLintRuleTest class >> whileTrue [
 	^self createParseTreeRule:
 			#('| `@temps |
@@ -1212,7 +1212,7 @@ RBBasicDummyLintRuleTest class >> whileTrue [
 		name: 'Uses whileTrue: instead of to:do:'
 ]
 
-{ #category : #miscellaneous }
+{ #category : 'miscellaneous' }
 RBBasicDummyLintRuleTest class >> yourselfNotUsed [
 	| detector addSearcher |
 	detector := self new.
@@ -1227,43 +1227,43 @@ RBBasicDummyLintRuleTest class >> yourselfNotUsed [
 	^detector
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBBasicDummyLintRuleTest >> anInstVar [
 	^ anInstVar
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 RBBasicDummyLintRuleTest >> anInstVar: anObject [
 	anInstVar := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBBasicDummyLintRuleTest >> checkClass: aSmalllintContext [
 	^classBlock value: aSmalllintContext value: result
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBBasicDummyLintRuleTest >> checkMethod: aSmalllintContext [
 	^methodBlock value: aSmalllintContext value: result
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBBasicDummyLintRuleTest >> classBlock [
 	^ self anInstVar + 5
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBBasicDummyLintRuleTest >> classBlock: aBlock [
 	classBlock := aBlock testMethod1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBBasicDummyLintRuleTest >> foobar [
 
 	^#( true false )
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBBasicDummyLintRuleTest >> initialize [
 	super initialize.
 	self anInstVar: 1.
@@ -1272,59 +1272,59 @@ RBBasicDummyLintRuleTest >> initialize [
 	self resultClass: RBSelectorEnvironment
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBBasicDummyLintRuleTest >> isEmpty [
 	^result isEmpty
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBBasicDummyLintRuleTest >> method: anObject1 with: anObject2 lots: anObject3 of: anObject4 arguments: anObject5 [
 	^ anObject5 + anObject1 > (anObject4 - anObject2 + anObject3)
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBBasicDummyLintRuleTest >> methodBlock: aBlock [
 	methodBlock := aBlock
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBBasicDummyLintRuleTest >> newResultClass: aClass [
 "New one:)"
 	result := aClass new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBBasicDummyLintRuleTest >> problemCount [
 	^result problemCount
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 RBBasicDummyLintRuleTest >> resetResult [
 	result := result copyEmpty.
 	result label: name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBBasicDummyLintRuleTest >> result [
 	^result
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 RBBasicDummyLintRuleTest >> result: aResult [
 	result := aResult copyEmpty
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBBasicDummyLintRuleTest >> resultClass: aClass [
 	result := aClass new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBBasicDummyLintRuleTest >> someDemoMethod [
 	^ self junk
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBBasicDummyLintRuleTest >> viewResults [
 	result openEditor
 ]

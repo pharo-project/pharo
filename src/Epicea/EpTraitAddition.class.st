@@ -2,15 +2,17 @@
 I represent the creation of a trait.
 "
 Class {
-	#name : #EpTraitAddition,
-	#superclass : #EpTraitChange,
+	#name : 'EpTraitAddition',
+	#superclass : 'EpTraitChange',
 	#instVars : [
 		'trait'
 	],
-	#category : #'Epicea-Model'
+	#category : 'Epicea-Model',
+	#package : 'Epicea',
+	#tag : 'Model'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 EpTraitAddition class >> trait: aTrait [
 
 	^ self basicNew
@@ -18,31 +20,31 @@ EpTraitAddition class >> trait: aTrait [
 		yourself
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpTraitAddition >> accept: aVisitor [
 
 	^ aVisitor visitTraitAddition: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpTraitAddition >> behaviorAffected [
 	^ self traitAdded
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpTraitAddition >> behaviorAffectedName [
 
 	^ self traitAdded name
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 EpTraitAddition >> initializeWithTrait: aTrait [
 
 	self initialize.
 	trait := aTrait asEpiceaRingDefinition
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpTraitAddition >> traitAdded [
 
 	^ trait

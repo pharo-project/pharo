@@ -2,15 +2,17 @@
 I interpret IRMethod instructions and write them out to a print stream.
 "
 Class {
-	#name : #IRPrinter,
-	#superclass : #IRVisitor,
+	#name : 'IRPrinter',
+	#superclass : 'IRVisitor',
 	#instVars : [
 		'stream'
 	],
-	#category : #'OpalCompiler-Core-IR-Manipulation'
+	#category : 'OpalCompiler-Core-IR-Manipulation',
+	#package : 'OpalCompiler-Core',
+	#tag : 'IR-Manipulation'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 IRPrinter >> label: seqNum [
 
 	"add tab and cr since this does not get called within interpretInstruction:"
@@ -20,32 +22,32 @@ IRPrinter >> label: seqNum [
 	stream cr
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 IRPrinter >> stream: stringWriteStream [
 
 	stream := stringWriteStream
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRPrinter >> visitBlockReturnTop: blockReturnTop [
 
 	stream nextPutAll: 'blockReturnTop'
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRPrinter >> visitInstruction: aNode [
 	self visitNode: aNode.
 	stream cr
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRPrinter >> visitJump: jump [
 
 	stream nextPutAll: 'goto: '.
 	jump destination orderNumber printOn: stream
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRPrinter >> visitJumpIf: jumpIf [
 
 	stream nextPutAll: 'if: '.
@@ -56,20 +58,20 @@ IRPrinter >> visitJumpIf: jumpIf [
 	jumpIf otherwise orderNumber printOn: stream
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRPrinter >> visitPop: pop [
 
 	stream nextPutAll: 'popTop'
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRPrinter >> visitPopIntoInstVar: instVar [
 
 	stream nextPutAll: 'popIntoInstVar: '.
 	instVar index printOn: stream
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRPrinter >> visitPopIntoLiteralVariable: litVar [
 
 	| object |
@@ -79,7 +81,7 @@ IRPrinter >> visitPopIntoLiteralVariable: litVar [
 	object printOn: stream
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRPrinter >> visitPopIntoRemoteTemp: remoteTemp [
 
 	stream nextPutAll: 'popIntoRemoteTemp: '.
@@ -88,14 +90,14 @@ IRPrinter >> visitPopIntoRemoteTemp: remoteTemp [
 	remoteTemp tempVectorName printOn: stream
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRPrinter >> visitPopIntoTemp: tmp [
 
 	stream nextPutAll: 'popIntoTemp: '.
 	tmp name printOn: stream
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRPrinter >> visitPushArray: array [
 
 	array cons
@@ -106,13 +108,13 @@ IRPrinter >> visitPushArray: array [
 	array size printOn: stream
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRPrinter >> visitPushDup: dup [
 
 	stream nextPutAll: 'pushDup'
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRPrinter >> visitPushFullClosure: fullBlock [
 
 	stream nextPutAll: 'pushFullBlock: '.
@@ -121,14 +123,14 @@ IRPrinter >> visitPushFullClosure: fullBlock [
 	stream nextPutAll: fullBlock copiedValues size printString
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRPrinter >> visitPushInstVar: instVar [
 
 	stream nextPutAll: 'pushInstVar: '.
 	instVar index printOn: stream
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRPrinter >> visitPushLiteral: lit [
 
 	| object |
@@ -138,7 +140,7 @@ IRPrinter >> visitPushLiteral: lit [
 	object printOn: stream
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRPrinter >> visitPushLiteralVariable: var [
 
 	| object |
@@ -148,13 +150,13 @@ IRPrinter >> visitPushLiteralVariable: var [
 	object printOn: stream
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRPrinter >> visitPushReceiver: receiver [
 
 	stream nextPutAll: 'pushReceiver'
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRPrinter >> visitPushRemoteTemp: remoteTemp [
 
 	stream nextPutAll: 'pushRemoteTemp: '.
@@ -163,38 +165,38 @@ IRPrinter >> visitPushRemoteTemp: remoteTemp [
 	remoteTemp tempVectorName printOn: stream
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRPrinter >> visitPushTemp: tmp [
 
 	stream nextPutAll: 'pushTemp: '.
 	tmp name printOn: stream
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRPrinter >> visitPushThisContext: ctxt [
 
 	stream nextPutAll: 'pushThisContext'
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRPrinter >> visitPushThisProcess: pushThisProcess [
 
 	stream nextPutAll: 'pushThisProcess'
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRPrinter >> visitReturn: ret [
 
 	stream nextPutAll: 'returnTop'
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRPrinter >> visitReturnInstVar: instVar [
 	stream nextPutAll: 'returnInstVar: '.
    instVar index printOn: stream
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRPrinter >> visitReturnLiteral: lit [
 
 	| object |
@@ -204,13 +206,13 @@ IRPrinter >> visitReturnLiteral: lit [
 	object printOn: stream
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRPrinter >> visitReturnReceiver: receiver [
 
 	stream nextPutAll: 'returnReceiver'
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRPrinter >> visitSend: send [
 
 	send superOf
@@ -222,19 +224,19 @@ IRPrinter >> visitSend: send [
 			behavior printOn: stream ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRPrinter >> visitSequence: instructionSequence [
 	self label: instructionSequence orderNumber.
 	super visitSequence: instructionSequence
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRPrinter >> visitStoreInstVar: instVar [
 	stream nextPutAll: 'storeInstVar: '.
    instVar index printOn: stream
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRPrinter >> visitStoreLiteralVariable: var [
 
 	| object |
@@ -244,7 +246,7 @@ IRPrinter >> visitStoreLiteralVariable: var [
 	object printOn: stream
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRPrinter >> visitStoreRemoteTemp: remoteTemp [
 	stream nextPutAll: 'storeRemoteTemp: '.
 	remoteTemp name printOn: stream.
@@ -252,14 +254,14 @@ IRPrinter >> visitStoreRemoteTemp: remoteTemp [
 	remoteTemp tempVectorName printOn: stream
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRPrinter >> visitStoreTemp: tmp [
 
    	stream nextPutAll: 'storeTemp: '.
 	tmp name printOn: stream
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRPrinter >> visitTempVector: tempVector [
 
 	stream nextPutAll: 'createTempVectorNamed: '.

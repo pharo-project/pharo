@@ -19,62 +19,53 @@ Subclasses should detect that editing method is going to be extension.
 Internal Representation and Key Implementation Points.
 
     Instance Variables
-	extendingPackage:		<RPackage>
-	methodTags:		<Array of<Symbol>>
+	extendingPackage:		<Package>
+	methodProtocol:		<Symbol> represents the name of the method protocol
 "
 Class {
-	#name : #ClyMethodEditorToolMorph,
-	#superclass : #ClyTextEditorToolMorph,
+	#name : 'ClyMethodEditorToolMorph',
+	#superclass : 'ClyTextEditorToolMorph',
 	#instVars : [
 		'ast',
-		'methodTags',
+		'methodProtocol',
 		'extendingPackage',
 		'targetClasses'
 	],
-	#category : #'Calypso-SystemTools-Core-Editors-Methods'
+	#category : 'Calypso-SystemTools-Core-Editors-Methods',
+	#package : 'Calypso-SystemTools-Core',
+	#tag : 'Editors-Methods'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyMethodEditorToolMorph class >> isAbstract [
 	^self = ClyMethodEditorToolMorph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMethodEditorToolMorph class >> tabOrder [
 	^20
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyMethodEditorToolMorph >> allowsDifferentActivationPriority [
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyMethodEditorToolMorph >> belongsToRemovedBrowserContext [
 	super belongsToRemovedBrowserContext ifTrue: [ ^true ].
 
 	^self methodClass isObsolete
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ClyMethodEditorToolMorph >> buildTextMorph [
 	super buildTextMorph.
 	ast := self initializeAST.
 	self formatTextIfNeeded
 ]
 
-{ #category : #'events handling' }
-ClyMethodEditorToolMorph >> changesAreAboutApply [
-	| tagsEditor |
-	super changesAreAboutApply.
-
-	tagsEditor := statusBar findDeeplyA: ClyMethodTagsEditorMorph.
-	tagsEditor ifNil: [ ^self ].
-
-	tagsEditor acceptTags
-]
-
-{ #category : #operations }
+{ #category : 'operations' }
 ClyMethodEditorToolMorph >> chooseClassForNewMethodIfNone: aBlock [
 
 	targetClasses size = 1 ifTrue: [ ^ targetClasses first].
@@ -86,7 +77,7 @@ ClyMethodEditorToolMorph >> chooseClassForNewMethodIfNone: aBlock [
 		on: CmdCommandAborted do: [:err | aBlock value ]
 ]
 
-{ #category : #'events handling' }
+{ #category : 'events handling' }
 ClyMethodEditorToolMorph >> currentEditedAST [
 
 	^ self methodClass compiler
@@ -94,23 +85,30 @@ ClyMethodEditorToolMorph >> currentEditedAST [
 		  parse
 ]
 
-{ #category : #accessing }
+{ #category : 'operations' }
+ClyMethodEditorToolMorph >> editProtocolOf: aMethod [
+
+	self applyChangesBy: [ methodProtocol ifNotNil: [ :protocolName | aMethod protocol: protocolName ] ]
+]
+
+{ #category : 'accessing' }
 ClyMethodEditorToolMorph >> editingClass [
 	^self methodClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMethodEditorToolMorph >> extendingPackage [
 	^ extendingPackage
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMethodEditorToolMorph >> extendingPackage: aPackage [
+
 	extendingPackage := aPackage.
-	methodTags := #()
+	methodProtocol := nil
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ClyMethodEditorToolMorph >> fillStatusBar [
 	| position |
 	super fillStatusBar.
@@ -119,17 +117,15 @@ ClyMethodEditorToolMorph >> fillStatusBar [
 	position comeToFront.
 	statusBar addCommandItem: (ClyTextWrapModeSwitchMorph of: textMorph).
 	statusBar addCommandItem: (ClyTextLineNumbersSwitchMorph of: textMorph).
-	statusBar addCommandItem: (ClyFormatAsReadSwitchMorph of: textMorph).
-
-	statusBar addCommandItem: (ClyMethodTagsAndPackageEditorMorph for: self)
+	statusBar addCommandItem: (ClyFormatAsReadSwitchMorph of: textMorph)
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ClyMethodEditorToolMorph >> formatSourceCode [
 	textMorph formatSourceCode
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ClyMethodEditorToolMorph >> formatTextIfNeeded [
 	RBProgramNode formatterClass formatAsYouReadPolicy ifFalse: [ ^self].
 
@@ -137,47 +133,42 @@ ClyMethodEditorToolMorph >> formatTextIfNeeded [
 	textModel clearUserEdits
 ]
 
-{ #category : #initialization }
-ClyMethodEditorToolMorph >> initialize [
-	super initialize.
-
-	methodTags := #()
-]
-
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyMethodEditorToolMorph >> initializeAST [
 	"subclasses might get it from the method"
 	^ self currentEditedAST
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyMethodEditorToolMorph >> isCommandAvailable: aCommand [
 
 	^ aCommand canBeExecutedInMethodEditor: self
 ]
 
-{ #category : #'rubric interaction model' }
+{ #category : 'rubric interaction model' }
 ClyMethodEditorToolMorph >> isScripting [
 	^false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMethodEditorToolMorph >> methodClass [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
-ClyMethodEditorToolMorph >> methodTags [
-	^methodTags
+{ #category : 'accessing' }
+ClyMethodEditorToolMorph >> methodProtocol [
+
+	^ methodProtocol
 ]
 
-{ #category : #accessing }
-ClyMethodEditorToolMorph >> methodTags: tagsArray [
-	methodTags := tagsArray.
+{ #category : 'accessing' }
+ClyMethodEditorToolMorph >> methodProtocol: protocolName [
+
+	methodProtocol := protocolName.
 	extendingPackage := nil
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyMethodEditorToolMorph >> modifiesExtension [
 	"it should answer if tool is going to modify extension state of method.
 	For example tool ca move method to another package
@@ -185,65 +176,52 @@ ClyMethodEditorToolMorph >> modifiesExtension [
 	self subclassResponsibility
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ClyMethodEditorToolMorph >> packageEditingMethod: aMethod [
 
 	self applyChangesBy: [
-		(extendingPackage notNil and: [aMethod package ~~ extendingPackage]) ifTrue: [
+		(extendingPackage isNotNil and: [aMethod package ~~ extendingPackage]) ifTrue: [
 			^(SycMoveMethodsToPackageCommand for: {aMethod} to: extendingPackage)
 				execute].
 
 		(extendingPackage isNil and: [ aMethod isExtension ]) ifTrue: [
-			(SycMoveMethodsToPackageDefiningClassCommand for: {aMethod})
+			(SycMoveMethodsToTheDefiningClassCommand for: {aMethod})
 				execute]
 	]
 ]
 
-{ #category : #'rubric interaction model' }
+{ #category : 'operations' }
+ClyMethodEditorToolMorph >> protocolAndPackageEditingMethod: aMethod [
+	self editProtocolOf: aMethod.
+	"Classification should be performed before package movement
+	because extending package is still based on protocol begining with star.
+	So it should override manual classification"
+	self packageEditingMethod: aMethod
+]
+
+{ #category : 'accessing' }
+ClyMethodEditorToolMorph >> protocolAndPackageEditor [
+	^(statusBar findDeeplyA: ClyProtocolEditorMorph) ifNil: [ CmdCommandAborted signal ]
+]
+
+{ #category : 'rubric interaction model' }
 ClyMethodEditorToolMorph >> selectedClassOrMetaClass [
 	^self methodClass
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyMethodEditorToolMorph >> setUpParametersFromModel [
 	super setUpParametersFromModel.
 
 	self setUpTargetClasses
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyMethodEditorToolMorph >> setUpTargetClasses [
 	self subclassResponsibility
 ]
 
-{ #category : #operations }
-ClyMethodEditorToolMorph >> tagAndPackageEditingMethod: aMethod [
-	self tagEditingMethod: aMethod.
-	"Tagging should be performed before package movement
-	because extending package is still based on protocol begining with star.
-	So it should override manual tagging"
-	self packageEditingMethod: aMethod
-]
-
-{ #category : #operations }
-ClyMethodEditorToolMorph >> tagEditingMethod: aMethod [
-	| existingTags removedTags newTags |
-	self applyChangesBy: [
-		existingTags := aMethod tags reject: [:each | each beginsWith: '*'].
-		removedTags := existingTags reject: [ :each | methodTags includes: each ].
-		newTags := methodTags reject: [ :each | existingTags includes: each ].
-
-		newTags do: [ :each | aMethod tagWith: each asSymbol].
-		removedTags do: [ :each | aMethod untagFrom: each asSymbol]
-	]
-]
-
-{ #category : #accessing }
-ClyMethodEditorToolMorph >> tagsAndPackageEditor [
-	^(statusBar findDeeplyA: ClyMethodTagsAndPackageEditorMorph) ifNil: [ CmdCommandAborted signal ]
-]
-
-{ #category : #'events handling' }
+{ #category : 'events handling' }
 ClyMethodEditorToolMorph >> textChanged: aTextChanged [
 	super textChanged: aTextChanged.
 	ast := self currentEditedAST.
@@ -254,7 +232,7 @@ ClyMethodEditorToolMorph >> textChanged: aTextChanged [
 	^ ast
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ClyMethodEditorToolMorph >> toggleExtendingPackage [
 
 	extendingPackage ifNotNil: [ ^extendingPackage := nil ].

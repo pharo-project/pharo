@@ -3,19 +3,21 @@ I am an heuristic using depth-bound type inference to type variables.
 I autocomplete messages in the hierarchy of the found types.
 "
 Class {
-	#name : #CoInitializeInferencedMessageHeuristic,
-	#superclass : #CoASTNodeFetcherHeuristic,
-	#category : #'HeuristicCompletion-Model-InitializeInferenceHeuristic'
+	#name : 'CoInitializeInferencedMessageHeuristic',
+	#superclass : 'CoASTNodeFetcherHeuristic',
+	#category : 'HeuristicCompletion-Model-InitializeInferenceHeuristic',
+	#package : 'HeuristicCompletion-Model',
+	#tag : 'InitializeInferenceHeuristic'
 }
 
-{ #category : #requests }
+{ #category : 'requests' }
 CoInitializeInferencedMessageHeuristic >> appliesForNode: aNode inContext: aContext [
 
-	^ aContext completionClass notNil
+	^ aContext completionClass isNotNil
 		and: [ aNode receiver isVariable ]
 ]
 
-{ #category : #requests }
+{ #category : 'requests' }
 CoInitializeInferencedMessageHeuristic >> buildFetcherFor: aNode inContext: aContext [
 
 	| variables fetcher |
@@ -29,7 +31,7 @@ CoInitializeInferencedMessageHeuristic >> buildFetcherFor: aNode inContext: aCon
 	^ fetcher
 ]
 
-{ #category : #requests }
+{ #category : 'requests' }
 CoInitializeInferencedMessageHeuristic >> inferTypesIn: aClass [
 
 	^ CoTypeInferencer new

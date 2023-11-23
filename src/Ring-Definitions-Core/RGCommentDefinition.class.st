@@ -2,16 +2,18 @@
 RGCommentDefinition is a first-class representation of class's comments
 "
 Class {
-	#name : #RGCommentDefinition,
-	#superclass : #RGElementDefinition,
+	#name : 'RGCommentDefinition',
+	#superclass : 'RGElementDefinition',
 	#instVars : [
 		'content',
 		'stamp'
 	],
-	#category : #'Ring-Definitions-Core-Base'
+	#category : 'Ring-Definitions-Core-Base',
+	#package : 'Ring-Definitions-Core',
+	#tag : 'Base'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RGCommentDefinition class >> realClass: aClass [
 	"Creates a ring comment definition from a Smalltalk class"
 	^(super realClass: aClass)
@@ -19,21 +21,21 @@ RGCommentDefinition class >> realClass: aClass [
 		yourself
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 RGCommentDefinition >> <= aRGCommentDefinition [
 	"Sort comment definition according to: 1) name of the class"
 
 	^(self parentName <= aRGCommentDefinition parentName)
 ]
 
-{ #category : #'type of comments' }
+{ #category : 'type of comments' }
 RGCommentDefinition >> asActive [
 
 	"Sets the receiver as active object, which will allow itself to retrieve its data from the class organization"
 	self annotationNamed: self class statusKey put: #active
 ]
 
-{ #category : #'type of comments' }
+{ #category : 'type of comments' }
 RGCommentDefinition >> asHistorical [
 
 	"Sets the receiver as historical object, which will allow itself to retrieve its data using the sourcePointer"
@@ -44,39 +46,39 @@ RGCommentDefinition >> asHistorical [
 			self sourcePointer: realClass commentSourcePointer ] ]
 ]
 
-{ #category : #'type of comments' }
+{ #category : 'type of comments' }
 RGCommentDefinition >> asPassive [
 
 	"Sets the receiver as passive object, which will allow itself to retrieve its data that was assigned in its creation"
 	self annotationNamed: self class statusKey put: #passive
 ]
 
-{ #category : #'stamp values' }
+{ #category : 'stamp values' }
 RGCommentDefinition >> author [
 
 	^self annotationNamed: self class authorKey
 		ifAbsentPut:[ self class parseAuthorAliasFrom: stamp ]
 ]
 
-{ #category : #'stamp values' }
+{ #category : 'stamp values' }
 RGCommentDefinition >> author: aString [
 
 	self annotationNamed: self class authorKey
 			put: aString
 ]
 
-{ #category : #'to remove as soon as possible' }
+{ #category : 'to remove as soon as possible' }
 RGCommentDefinition >> category [
 	^self realClass category
 ]
 
-{ #category : #'source pointers' }
+{ #category : 'source pointers' }
 RGCommentDefinition >> commentDataPointers [
 	"Retrieves the combination key to look for information of the receiver in the source file"
 	^'commentStamp:' -> #commentStamp:
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGCommentDefinition >> content [
 
 	self isActive
@@ -86,22 +88,22 @@ RGCommentDefinition >> content [
 	^ content
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGCommentDefinition >> content: anObject [
 
 	content:= anObject
 ]
 
-{ #category : #'source pointers' }
+{ #category : 'source pointers' }
 RGCommentDefinition >> contentAtPointer [
 	"A RGCommentDefinition may be created to point the sourceFile in which case it retrieves the class comment"
 
-	^ self sourcePointer notNil
-		ifTrue: [ SourceFiles sourceCodeAt: self sourcePointer ]
-		ifFalse:[ '' ]
+	^ self sourcePointer
+		  ifNotNil: [ SourceFiles sourceCodeAt: self sourcePointer ]
+		  ifNil: [ '' ]
 ]
 
-{ #category : #'type of comments' }
+{ #category : 'type of comments' }
 RGCommentDefinition >> fromActiveToHistorical [
 	"If the receiver was generated as an active comment, it can be converted to a historical one by reading the data of the real class (if exists)"
 
@@ -109,7 +111,7 @@ RGCommentDefinition >> fromActiveToHistorical [
 		self asHistorical ]
 ]
 
-{ #category : #'type of comments' }
+{ #category : 'type of comments' }
 RGCommentDefinition >> fromActiveToPassive [
 	"If the receiver was generated as an active comment, it can be converted to a passive one by reading the data of the real class organization"
 
@@ -122,7 +124,7 @@ RGCommentDefinition >> fromActiveToPassive [
 	self asPassive
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGCommentDefinition >> fullName [
 	"Keeps a unique description for the receiver. As annotation to avoid converting each time is invoked"
 
@@ -130,19 +132,19 @@ RGCommentDefinition >> fullName [
 		ifAbsentPut:[ (self parentName, ' ', self name) asSymbol ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGCommentDefinition >> hasAuthor [
 
 	^self hasStamp and:[ self author isEmptyOrNil not ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGCommentDefinition >> hasStamp [
 
 	^stamp isEmptyOrNil not
 ]
 
-{ #category : #'type of comments' }
+{ #category : 'type of comments' }
 RGCommentDefinition >> isActive [
 
 	"A ring comment isActive when it needs to access the class organization for retrieving its data"
@@ -151,24 +153,24 @@ RGCommentDefinition >> isActive [
 		ifNotNil:[ :status| status == #active ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGCommentDefinition >> isComment [
 
 	^true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGCommentDefinition >> isEmptyOrNil [
 
 	^content isEmptyOrNil
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGCommentDefinition >> isFromTrait [
 	^false
 ]
 
-{ #category : #'type of comments' }
+{ #category : 'type of comments' }
 RGCommentDefinition >> isHistorical [
 
 	"A ring comment can be used to point an old version of the receiver, in this case it will use the sourcePointer to retrieve its information"
@@ -177,7 +179,7 @@ RGCommentDefinition >> isHistorical [
 		ifNotNil:[ :status| status == #historical ]
 ]
 
-{ #category : #'type of comments' }
+{ #category : 'type of comments' }
 RGCommentDefinition >> isPassive [
 
 	"A ring comment isPassive by default.  In this case it will retrieve the data that was assigned in its creation"
@@ -186,7 +188,7 @@ RGCommentDefinition >> isPassive [
 		ifNotNil:[ :status| status == #passive ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGCommentDefinition >> isSameRevisionAs: aRGCommentDefinition [
 	"This method look for equality of the properties of the receiver"
 	"A comment validates only its contents and not its stamp"
@@ -195,25 +197,25 @@ RGCommentDefinition >> isSameRevisionAs: aRGCommentDefinition [
 		and:[ self content = aRGCommentDefinition content ]
 ]
 
-{ #category : #'to remove as soon as possible' }
+{ #category : 'to remove as soon as possible' }
 RGCommentDefinition >> isValid [
 	"for compatibility with method definition"
 
 	^ true
 ]
 
-{ #category : #'to remove as soon as possible' }
+{ #category : 'to remove as soon as possible' }
 RGCommentDefinition >> methodClass [
 	^ self realClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGCommentDefinition >> name [
 
 	^name ifNil:[ name := #Comment ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RGCommentDefinition >> printOn: aStream [
 
 	self parentName ifNotNil: [
@@ -222,31 +224,31 @@ RGCommentDefinition >> printOn: aStream [
 	aStream nextPutAll: self name
 ]
 
-{ #category : #'to remove as soon as possible' }
+{ #category : 'to remove as soon as possible' }
 RGCommentDefinition >> selector [
 	^ self name
 ]
 
-{ #category : #'backward compatibility' }
+{ #category : 'backward compatibility' }
 RGCommentDefinition >> sourceCode [
 
 	^ self content
 ]
 
-{ #category : #'source pointers' }
+{ #category : 'source pointers' }
 RGCommentDefinition >> sourcePointer [
 	"Retrieves the sourcePointer for this definition if exists"
 
 	^self annotationNamed:  self class sourcePointerKey
 ]
 
-{ #category : #'source pointers' }
+{ #category : 'source pointers' }
 RGCommentDefinition >> sourcePointer: aNumber [
 
 	self annotationNamed:  self class sourcePointerKey put: aNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGCommentDefinition >> stamp [
 	"Retrieves the user-alias + timestamp associated to the receiver (if exists)"
 
@@ -257,22 +259,25 @@ RGCommentDefinition >> stamp [
 	^ stamp
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGCommentDefinition >> stamp: anObject [
 
 	stamp:= anObject
 ]
 
-{ #category : #'source pointers' }
+{ #category : 'source pointers' }
 RGCommentDefinition >> stampAtPointer [
 	"A RGMethodDefinition may be created to point the sourceFile in which case it retrieves the stamp"
 
-	^ self sourcePointer notNil
-		ifTrue: [ SourceFiles timeStampAt: self sourcePointer for: self commentDataPointers ]
-		ifFalse:[ nil ]
+	^ self sourcePointer
+		  ifNotNil: [
+			  SourceFiles
+				  timeStampAt: self sourcePointer
+				  for: self commentDataPointers ]
+		  ifNil: [ nil ]
 ]
 
-{ #category : #'stamp values' }
+{ #category : 'stamp values' }
 RGCommentDefinition >> timeStamp [
 
 	^ self annotationNamed: self class timeStampKey
@@ -281,7 +286,7 @@ RGCommentDefinition >> timeStamp [
 							default: (DateAndTime epoch) ]
 ]
 
-{ #category : #'stamp values' }
+{ #category : 'stamp values' }
 RGCommentDefinition >> timeStamp: aTimestamp [
 
 	self annotationNamed: self class timeStampKey

@@ -15,17 +15,19 @@ User32 class>>getActiveWindow
 ]]]
 "
 Class {
-	#name : #FFIConstantHandle,
-	#superclass : #FFIExternalReference,
-	#category : #'UnifiedFFI-Objects'
+	#name : 'FFIConstantHandle',
+	#superclass : 'FFIExternalReference',
+	#category : 'UnifiedFFI-Objects',
+	#package : 'UnifiedFFI',
+	#tag : 'Objects'
 }
 
-{ #category : #converting }
+{ #category : 'converting' }
 FFIConstantHandle class >> asExternalTypeOn: generator [
 	^ FFIConstantHandleType objectClass: self
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FFIConstantHandle class >> fromInteger: anIntegerValue [
 	anIntegerValue ifNil: [ self error: 'Invalid value for ' , self name , ' contant handle' ].
 	^ self new
@@ -33,12 +35,12 @@ FFIConstantHandle class >> fromInteger: anIntegerValue [
 		yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FFIConstantHandle >> createDefaultHandle [
 	^ 0
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 FFIConstantHandle >> value [
 	^ self getHandle
 ]

@@ -5,27 +5,29 @@ Description
 I am a simple morph used by the MenubarMorph to add some separators. Use me via the #addSeparator method of MenubarMorph.
 "
 Class {
-	#name : #MenubarSeparatorMorph,
-	#superclass : #SimpleButtonMorph,
-	#category : #'Morphic-Widgets-Menubar-View'
+	#name : 'MenubarSeparatorMorph',
+	#superclass : 'SimpleButtonMorph',
+	#category : 'Morphic-Widgets-Menubar-View',
+	#package : 'Morphic-Widgets-Menubar',
+	#tag : 'View'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MenubarSeparatorMorph >> defaultBorderWidth [
 	^ 0
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MenubarSeparatorMorph >> defaultColor [
 	^ Color transparent
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MenubarSeparatorMorph >> defaultLabel [
 	^ '|'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MenubarSeparatorMorph >> initialize [
 	super initialize.
 	self
@@ -33,7 +35,7 @@ MenubarSeparatorMorph >> initialize [
 		borderWidth: self defaultBorderWidth
 ]
 
-{ #category : #theme }
+{ #category : 'theme' }
 MenubarSeparatorMorph >> themeChanged [
 	super themeChanged.
 	self

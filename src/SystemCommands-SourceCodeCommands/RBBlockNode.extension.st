@@ -1,6 +1,6 @@
-Extension { #name : #RBBlockNode }
+Extension { #name : 'RBBlockNode' }
 
-{ #category : #'*SystemCommands-SourceCodeCommands' }
+{ #category : '*SystemCommands-SourceCodeCommands' }
 RBBlockNode >> displaySourceCode [
 
 	| code |

@@ -4,17 +4,14 @@ A simple example for a AST transforming compiler plugin.
 I replace 42 with a  'meaning of life'.
 "
 Class {
-	#name : #ASTPluginMeaningOfLife,
-	#superclass : #OCStaticASTCompilerPlugin,
-	#category : #'OpalCompiler-Tests-Plugins'
+	#name : 'ASTPluginMeaningOfLife',
+	#superclass : 'OCStaticASTCompilerPlugin',
+	#category : 'OpalCompiler-Tests-Plugins',
+	#package : 'OpalCompiler-Tests',
+	#tag : 'Plugins'
 }
 
-{ #category : #accessing }
-ASTPluginMeaningOfLife class >> priority [
-	^ 0
-]
-
-{ #category : #'private - transforming' }
+{ #category : 'private - transforming' }
 ASTPluginMeaningOfLife >> transform [
 
 	| rule |

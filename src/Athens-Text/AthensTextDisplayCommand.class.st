@@ -4,27 +4,28 @@ An abstract base class for all text rendering commands.
 A text rendered takes a stream (or list) of my (sub)instances and in that way it renders the text
 "
 Class {
-	#name : #AthensTextDisplayCommand,
-	#superclass : #Object,
+	#name : 'AthensTextDisplayCommand',
+	#superclass : 'Object',
 	#instVars : [
 		'next'
 	],
-	#category : #'Athens-Text'
+	#category : 'Athens-Text',
+	#package : 'Athens-Text'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 AthensTextDisplayCommand class >> isAbstract [
 
 	^ self == AthensTextDisplayCommand
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensTextDisplayCommand >> addLast: aCommand [
 
 	self tail next: aCommand
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensTextDisplayCommand >> do: aBlock [
 
 	| nn |
@@ -35,7 +36,7 @@ AthensTextDisplayCommand >> do: aBlock [
 		nn := nn next ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensTextDisplayCommand >> insert: aCommands [
 
 	| nn |
@@ -44,36 +45,36 @@ AthensTextDisplayCommand >> insert: aCommands [
 	next tail next: nn
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensTextDisplayCommand >> next [
 
 	^ next
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensTextDisplayCommand >> next: anObject [
 
 	next := anObject
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 AthensTextDisplayCommand >> postCopy [
 	"unlink the copy by default"
 
 	next := nil
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 AthensTextDisplayCommand >> renderOn: renderer [
 
 	self shouldBeImplemented
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensTextDisplayCommand >> tail [
 
 	| nn |
 	nn := self.
-	[ nn next notNil ] whileTrue: [ nn := nn next ].
+	[ nn next isNotNil ] whileTrue: [ nn := nn next ].
 	^ nn
 ]

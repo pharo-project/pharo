@@ -2,12 +2,13 @@
 I command to launch the Abstract refactorings: create accessors and abstract the direct instance variable uses into accessors. 
 "
 Class {
-	#name : #SycAbstractAllInstVarAccessorsCommand,
-	#superclass : #SycClassCommand,
-	#category : #'SystemCommands-ClassCommands'
+	#name : 'SycAbstractAllInstVarAccessorsCommand',
+	#superclass : 'SycClassCommand',
+	#category : 'SystemCommands-ClassCommands',
+	#package : 'SystemCommands-ClassCommands'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycAbstractAllInstVarAccessorsCommand >> asRefactorings [
 	| refactorings env |
 	refactorings := classes flatCollect: [:each |
@@ -21,22 +22,22 @@ SycAbstractAllInstVarAccessorsCommand >> asRefactorings [
 	^ refactorings
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycAbstractAllInstVarAccessorsCommand >> defaultMenuIconName [
 	^ #smallAdd
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycAbstractAllInstVarAccessorsCommand >> defaultMenuItemName [
 	^'Abstract instance variables'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SycAbstractAllInstVarAccessorsCommand >> isComplexRefactoring [
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SycAbstractAllInstVarAccessorsCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 
@@ -44,7 +45,7 @@ SycAbstractAllInstVarAccessorsCommand >> prepareFullExecutionInContext: aToolCon
 	self selectVariables
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycAbstractAllInstVarAccessorsCommand >> selectVariables [
 	classes := classes collect: [:aClass | | vars dialog |
 		vars := aClass slots asOrderedCollection.

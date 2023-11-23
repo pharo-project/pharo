@@ -15,13 +15,13 @@ mooseAlgosRepo :=  MCHttpRepository
 	user: ''
 	password: ''.
 
-MCWorkingCopy allManagers
-	select: [ :m | m packageName beginsWith: 'Zodiac' ]
-	thenDo: [ :m | m repositoryGroup addRepository: zodiacRepo ].
+MCWorkingCopy allWorkingCopies
+	select: [ :wc | wc packageName beginsWith: 'Zodiac' ]
+	thenDo: [ :wc | wc repositoryGroup addRepository: zodiacRepo ].
 
-MCWorkingCopy allManagers
-	select: [ :m | m packageName beginsWith: 'Moose' ]
-	thenDo: [ :m | m repositoryGroup addRepository: mooseAlgosRepo ].
+MCWorkingCopy allWorkingCopies
+	select: [ :wc | wc packageName beginsWith: 'Moose' ]
+	thenDo: [ :wc | wc repositoryGroup addRepository: mooseAlgosRepo ].
 	
 icebergTarget := ('pharo-local' asFileReference / 'Iceberg') ensureCreateDirectory.
 libgitTarget := ('pharo-local' asFileReference / 'LibGit') ensureCreateDirectory.
@@ -47,13 +47,13 @@ libgitRepo := TonelRepository new
 	directory: libgitTarget ;
 	yourself.
 	
-MCWorkingCopy allManagers
-	select: [ :m | m packageName includesSubstring: 'Iceberg' ]
-	thenDo: [ :m | m repositoryGroup addRepository: iceRepo ].
+MCWorkingCopy allWorkingCopies
+	select: [ :wc | wc packageName includesSubstring: 'Iceberg' ]
+	thenDo: [ :wc | wc repositoryGroup addRepository: iceRepo ].
 	
-MCWorkingCopy allManagers
-	select: [ :m | #('BaselineOfLibGit' 'LibGit-Core') includes: m packageName ]
-	thenDo: [ :m | m repositoryGroup addRepository: libgitRepo ].
+MCWorkingCopy allWorkingCopies
+	select: [ :wc | #('BaselineOfLibGit' 'LibGit-Core') includes: wc packageName ]
+	thenDo: [ :wc | wc repositoryGroup addRepository: libgitRepo ].
 
 versions := ScriptLoader new perform: (#script, SystemVersion current highestUpdate asString) asSymbol.
 

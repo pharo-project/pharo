@@ -2,12 +2,14 @@
 I am a simple mock to test style of deprecated class.
 "
 Class {
-	#name : #SHRBDeprecatedClassMock,
-	#superclass : #Object,
-	#category : #'Shout-Tests-Styling'
+	#name : 'SHRBDeprecatedClassMock',
+	#superclass : 'Object',
+	#category : 'Shout-Tests-Styling',
+	#package : 'Shout-Tests',
+	#tag : 'Styling'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 SHRBDeprecatedClassMock class >> isDeprecated [
 
 	^ true

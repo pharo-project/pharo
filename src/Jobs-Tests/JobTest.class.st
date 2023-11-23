@@ -2,12 +2,14 @@
 SUnit tests for Job class
 "
 Class {
-	#name : #JobTest,
-	#superclass : #AbstractEnvironmentTestCase,
-	#category : #'Jobs-Tests-Base'
+	#name : 'JobTest',
+	#superclass : 'AbstractEnvironmentTestCase',
+	#category : 'Jobs-Tests-Base',
+	#package : 'Jobs-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 JobTest >> tearDown [
 
 	testingEnvironment at: #SystemProgressMorph ifPresent: [:spm | 
@@ -15,7 +17,7 @@ JobTest >> tearDown [
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 JobTest >> testChildJob [
 	| wasRun |
 	wasRun := false.
@@ -31,7 +33,7 @@ JobTest >> testChildJob [
 	self assert: wasRun
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 JobTest >> testCurrentJob [
 	[ :job | 
 	[ :job2 | 
@@ -41,7 +43,7 @@ JobTest >> testCurrentJob [
 	self assert: Job current identicalTo: job ] asJob run
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 JobTest >> testJobAnnouncements [
 	| announcements |
 	announcements := OrderedCollection new.
@@ -59,7 +61,7 @@ JobTest >> testJobAnnouncements [
 	Job jobAnnouncer unsubscribe: announcements
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 JobTest >> testLookupJob [
 	[ :job | 
 	[ :job2 | 
@@ -83,7 +85,7 @@ JobTest >> testLookupJob [
 	self assert: Job current identicalTo: job ] asJob run
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 JobTest >> testOwner [
 	[ :job | 
 	self assert: job owner identicalTo: self.
@@ -92,7 +94,7 @@ JobTest >> testOwner [
 	self assert: job2 owner identicalTo: self ] asJob run ] asJob run
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 JobTest >> testProgress [
 	| job |
 	job := Job new.
@@ -103,7 +105,7 @@ JobTest >> testProgress [
 	self assert: job progress equals: 1.0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 JobTest >> testProgressChangeByCurrentValue [
 	| job |
 	job := Job new.
@@ -115,7 +117,7 @@ JobTest >> testProgressChangeByCurrentValue [
 	self assert: job progress equals: 1.0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 JobTest >> testSingleJob [
 	| wasRun |
 	wasRun := false.

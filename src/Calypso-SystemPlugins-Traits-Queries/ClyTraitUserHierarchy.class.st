@@ -4,26 +4,27 @@ The children of every trait are user classes or traits.
 And basic classes has no children because they are not traits
 "
 Class {
-	#name : #ClyTraitUserHierarchy,
-	#superclass : #ClyClassHierarchy,
-	#category : #'Calypso-SystemPlugins-Traits-Queries'
+	#name : 'ClyTraitUserHierarchy',
+	#superclass : 'ClyClassHierarchy',
+	#category : 'Calypso-SystemPlugins-Traits-Queries',
+	#package : 'Calypso-SystemPlugins-Traits-Queries'
 }
 
-{ #category : #'method visibility' }
+{ #category : 'method visibility' }
 ClyTraitUserHierarchy class >> hierarchyForMethodVisibility [
 	"It will add inherited traits to the list of inherited classes to toggle visibility of methods"
 	^(ClySubclassHierarchy hierarchyForMethodVisibility, self inverse)
 		sortedBy: ClyTraitFirstSortFunction ascending
 ]
 
-{ #category : #'method visibility' }
+{ #category : 'method visibility' }
 ClyTraitUserHierarchy class >> methodVisibilityProvider [
 	<classAnnotation>
 	^ClyMethodVisibilityProviderAnnotation new
 		priority: 100 "We should override current default hierarchy in system"
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ClyTraitUserHierarchy >> buildParentMap: aHierarchyMap for: aClass [
 	| allParents eachParent |
 	allParents := IdentitySet withAll: aClass traits.

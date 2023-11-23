@@ -4,22 +4,24 @@ I am used to create AST nodes. This class is reserved for the RBAST.
 methodClass <Behavior> behavior where the compiled method is installed.
 "
 Class {
-	#name : #FBDASTBuilder,
-	#superclass : #Object,
+	#name : 'FBDASTBuilder',
+	#superclass : 'Object',
 	#instVars : [
 		'methodClass'
 	],
-	#category : #'Flashback-Decompiler-Utilities'
+	#category : 'Flashback-Decompiler-Utilities',
+	#package : 'Flashback-Decompiler',
+	#tag : 'Utilities'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FBDASTBuilder class >> newFor: class [
 	^ self new
 		methodClass: class;
 		yourself
 ]
 
-{ #category : #constructor }
+{ #category : 'constructor' }
 FBDASTBuilder >> codeAnyLitInd: anAssociation [
 	| varName |
 	"class binding on the class side has nil as key"
@@ -29,42 +31,42 @@ FBDASTBuilder >> codeAnyLitInd: anAssociation [
 		yourself
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 FBDASTBuilder >> codeArgument: tempName [
 	^ RBVariableNode named: tempName
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 FBDASTBuilder >> codeArray: array [
 	^ RBArrayNode statements: array
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 FBDASTBuilder >> codeAssignment: value to: variable [
 	^ RBAssignmentNode variable: variable value: value
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 FBDASTBuilder >> codeBlock: body [
 	^ self codeBlock: body arguments: #()
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 FBDASTBuilder >> codeBlock: body arguments: args [
 	^ RBBlockNode arguments: args body: body
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 FBDASTBuilder >> codeBlockFromStatements: statements [
 	^ self codeBlock: ((self codeSequence: #()) statements: statements; yourself)
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 FBDASTBuilder >> codeCascade: messages [
 	^ RBCascadeNode messages: messages
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 FBDASTBuilder >> codeConditionalNode: expr trueSequence: seq1 falseSequence: seq2 [
 	^ (self
 		codeMessage: #ifTrue:ifFalse:
@@ -76,32 +78,32 @@ FBDASTBuilder >> codeConditionalNode: expr trueSequence: seq1 falseSequence: seq
 		yourself
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 FBDASTBuilder >> codeEmptyBlock [
 	^ RBBlockNode body: (self codeSequence: #())
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 FBDASTBuilder >> codeEmptySequence [
 	^ self codeSequence: #()
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 FBDASTBuilder >> codeInstanceVariable: offset [
 	^ RBVariableNode named: (methodClass allSlots at: offset) name
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 FBDASTBuilder >> codeLiteral: lit [
 	^ RBLiteralNode value: lit
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 FBDASTBuilder >> codeLiteralValue: lit [
 	^ RBLiteralValueNode value: lit
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 FBDASTBuilder >> codeLoopNode: bool condition: seq1 body: seq2 [
 	^ (self
 		codeMessage: (#while , bool class name , ':') asSymbol
@@ -111,12 +113,12 @@ FBDASTBuilder >> codeLoopNode: bool condition: seq1 body: seq2 [
 		yourself
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 FBDASTBuilder >> codeMessage: selector receiver: rcvr arguments:args [
 	^ RBMessageNode receiver: rcvr selector: selector arguments: args
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 FBDASTBuilder >> codeMethod: selector arguments: args body: body pragmas: pragmas class: class [
 
 	^ (RBMethodNode selector: selector arguments: args body: body)
@@ -124,12 +126,12 @@ FBDASTBuilder >> codeMethod: selector arguments: args body: body pragmas: pragma
 		doSemanticAnalysisIn: class
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 FBDASTBuilder >> codeReceiver [
 	^ RBVariableNode selfNode
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 FBDASTBuilder >> codeRepeatNode: body [
 	^ (self
 		codeMessage: #repeat
@@ -139,47 +141,47 @@ FBDASTBuilder >> codeRepeatNode: body [
 			yourself
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 FBDASTBuilder >> codeReturn: value [
 	^ RBReturnNode value: value
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 FBDASTBuilder >> codeSelf [
 	^ RBVariableNode selfNode
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 FBDASTBuilder >> codeSequence: temps [
 	^ RBSequenceNode temporaries: temps statements: OrderedCollection new
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 FBDASTBuilder >> codeSuper [
 	^ RBVariableNode superNode
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 FBDASTBuilder >> codeTemp: tempName [
 	^ RBVariableNode named: tempName
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 FBDASTBuilder >> codeThisContext [
 	^ RBVariableNode thisContextNode
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 FBDASTBuilder >> codeVariable: variable [
 	^ RBVariableNode named: variable
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FBDASTBuilder >> methodClass [
 	^ methodClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FBDASTBuilder >> methodClass: anObject [
 	methodClass := anObject
 ]

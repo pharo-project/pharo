@@ -25,54 +25,42 @@ Examples:
 	pharo Pharo.image initializePackages --protocols=protocols.txt --packages=packages.txt --save
 "
 Class {
-	#name : #InitializePackagesCommandLineHandler,
-	#superclass : #CommandLineHandler,
-	#category : #InitializePackagesCommandLineHandler
+	#name : 'InitializePackagesCommandLineHandler',
+	#superclass : 'CommandLineHandler',
+	#category : 'InitializePackagesCommandLineHandler',
+	#package : 'InitializePackagesCommandLineHandler'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 InitializePackagesCommandLineHandler class >> commandName [
 	^ 'initializePackages'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 InitializePackagesCommandLineHandler class >> description [
 	^ 'Initialize packages and protocols from a given lists'
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 InitializePackagesCommandLineHandler >> activate [
 
-	self activateHelp
-		ifTrue: [ ^ self ].
+	self activateHelp ifTrue: [ ^ self ].
 
-	(self hasOption: 'protocols')
-			ifTrue: [ self initializeProtocolsFrom: (self optionAt: 'protocols')].
+	(self hasOption: 'protocols') ifTrue: [ self initializeProtocolsFrom: (self optionAt: 'protocols') ].
 
-	(self hasOption: 'packages')
-			ifTrue: [ self initializePackagesFrom: (self optionAt: 'packages')].
+	(self hasOption: 'packages') ifTrue: [ self initializePackages ].
 
-	(self hasOption: 'save')
-		ifTrue: [ Smalltalk snapshot: true andQuit: false ].
+	(self hasOption: 'save') ifTrue: [ Smalltalk snapshot: true andQuit: false ].
 	self exitSuccess
 ]
 
-{ #category : #activation }
-InitializePackagesCommandLineHandler >> initializePackagesFrom: aFileName [
+{ #category : 'activation' }
+InitializePackagesCommandLineHandler >> initializePackages [
 
-	| packages |
-
-	packages := OrderedCollection new.
-	(File named: aFileName) readStreamDo: [:binaryStream | | stream |
-		stream := ZnCharacterReadStream on: binaryStream encoding: 'utf8'.
-		[stream atEnd] whileFalse: [
-			packages add: (stream upTo: Character cr)]].
-
-	RPackageOrganizer default basicInitializeFromPackagesList: packages.
-	RPackageOrganizer registerInterestToSystemAnnouncement
+	PackageOrganizer default basicBootstrapInitialize
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 InitializePackagesCommandLineHandler >> initializeProtocolsFrom: aFileName [
 
 	(File named: aFileName) readStreamDo: [ :binaryStream |

@@ -2,8 +2,8 @@
 SUnit tests for FreeType cache
 "
 Class {
-	#name : #FreeTypeCacheTest,
-	#superclass : #TestCase,
+	#name : 'FreeTypeCacheTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'cache',
 		'fullCache',
@@ -17,10 +17,12 @@ Class {
 	#pools : [
 		'FreeTypeCacheConstants'
 	],
-	#category : #'FreeType-Tests-Cache'
+	#category : 'FreeType-Tests-Cache',
+	#package : 'FreeType-Tests',
+	#tag : 'Cache'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 FreeTypeCacheTest >> setUp [
 	super setUp.
 	cache := FreeTypeCache new.
@@ -43,10 +45,10 @@ FreeTypeCacheTest >> setUp [
 	fullCache
 		maximumSize: (10*(fullCache sizeOf: font1YGlyph)).
 	1 to: 10 do:[:i |
-		fullCache atFont: font1 charCode: i type: FreeTypeCacheGlyph put: font1YGlyph]
+		fullCache atFont: font1 charCode: i type: FreeTypeCacheGlyph scale: 1 put: font1YGlyph]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FreeTypeCacheTest >> testConstants [
 
 	| constants |
@@ -56,7 +58,7 @@ FreeTypeCacheTest >> testConstants [
 	self assert: (constants detect: [ :x | x isNil ] ifNone: [ ]) isNil "no value is nil"
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FreeTypeCacheTest >> testEntriesRemovedFIFO [
 
 	cache maximumSize: 10 * (cache sizeOf: font1XGlyph).
@@ -65,6 +67,7 @@ FreeTypeCacheTest >> testEntriesRemovedFIFO [
 			atFont: font1
 			charCode: (1000-i)
 			type: FreeTypeCacheGlyph
+			scale: 1
 			put: font1XGlyph].
 	self validateCollections: cache.
 	11 to: 1000 do:[:i |
@@ -72,6 +75,7 @@ FreeTypeCacheTest >> testEntriesRemovedFIFO [
 			atFont: font1
 			charCode: (1000-i)
 			type: FreeTypeCacheGlyph
+			scale: 1
 			put: font1XGlyph.
 		self validateSizes: cache.
 		self validateCollections: cache.
@@ -80,20 +84,20 @@ FreeTypeCacheTest >> testEntriesRemovedFIFO [
 				shouldnt: [cache atFont: font1 charCode: 1000-i2 type: FreeTypeCacheGlyph]
 				raise: Error]."
 		self
-			should: [cache atFont: font1 charCode: 1000-(i-10) type: FreeTypeCacheGlyph]
+			should: [cache atFont: font1 charCode: 1000-(i-10) type: FreeTypeCacheGlyph scale: 1]
 			raise: Error].
 	self validateSizes: cache
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FreeTypeCacheTest >> testFailedGet [
 
-	self should: [ cache atFont: font1 charCode: $X asInteger type: FreeTypeCacheGlyph ] raise: Error.
+	self should: [ cache atFont: font1 charCode: $X asInteger type: FreeTypeCacheGlyph scale: 1 ] raise: Error.
 	self assert: (cache instVarNamed: #used) equals: 0.
 	self validateSizes: cache
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FreeTypeCacheTest >> testFreeTypeCacheEntry [
 
 	| f f2 f3 |
@@ -102,12 +106,14 @@ FreeTypeCacheTest >> testFreeTypeCacheEntry [
 		charCode: 1;
 		font: font1;
 		type: FreeTypeCacheGlyph;
+		scale: 1;
 		object: font1XGlyph.
 	f2 := FreeTypeCacheEntry new.
 	f2
 		charCode: 2;
 		font: font1;
 		type: FreeTypeCacheGlyphLCD;
+		scale: 1;
 		object: font1XGlyph.
 	f nextLink: f2.
 	self assert: f ~= f2.
@@ -118,7 +124,7 @@ FreeTypeCacheTest >> testFreeTypeCacheEntry [
 	self assert: f equals: f3	"equality not based on nextLink"
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FreeTypeCacheTest >> testGlyphAccessIsThreadSafe [
 	"This test is weak because it depends in the rendering of Morphic and Rubrik"
 	"This test breaks 95% of times"
@@ -156,7 +162,7 @@ FreeTypeCacheTest >> testGlyphAccessIsThreadSafe [
 	]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FreeTypeCacheTest >> testGlyphAccessIsThreadSafeWhenAskingWidth [
 	"This test is weak because it depends in the rendering of Morphic and Rubrik"
 	"This test breaks 95% of times"
@@ -201,7 +207,7 @@ FreeTypeCacheTest >> testGlyphAccessIsThreadSafeWhenAskingWidth [
 	]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FreeTypeCacheTest >> testInstanceInitialization [
 
 	self assert: (cache instVarNamed: #maximumSize) equals: FreeTypeCache defaultMaximumSize.
@@ -212,7 +218,7 @@ FreeTypeCacheTest >> testInstanceInitialization [
 	self assertEmpty: (cache instVarNamed: #fifo)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FreeTypeCacheTest >> testMaximumSizeRespectedOnIfAbsentPut [
 
 	cache maximumSize: (cache sizeOf: font1XGlyph).
@@ -220,6 +226,7 @@ FreeTypeCacheTest >> testMaximumSizeRespectedOnIfAbsentPut [
 		atFont: font1
 		charCode: $X asInteger
 		type: FreeTypeCacheGlyph
+		scale: 1
 		ifAbsentPut: [font1XGlyph].
 	self validateSizes: cache.
 	self validateCollections: cache.
@@ -227,15 +234,16 @@ FreeTypeCacheTest >> testMaximumSizeRespectedOnIfAbsentPut [
 		atFont: font1
 		charCode: $Y asInteger
 		type: FreeTypeCacheGlyph
+		scale: 1
 		ifAbsentPut: [font1XGlyph].
 	self assert: (cache instVarNamed: #used) equals: 0.	"cache has been cleared on reaching max size"
 	self validateSizes: cache.
 	self validateCollections: cache.
-	self should: [ cache atFont: font1 charCode: $X asInteger type: FreeTypeCacheGlyph ] raise: Error.
-	self should: [ cache atFont: font1 charCode: $Y asInteger type: FreeTypeCacheGlyph ] raise: Error
+	self should: [ cache atFont: font1 charCode: $X asInteger type: FreeTypeCacheGlyph scale: 1 ] raise: Error.
+	self should: [ cache atFont: font1 charCode: $Y asInteger type: FreeTypeCacheGlyph scale: 1 ] raise: Error
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FreeTypeCacheTest >> testMaximumSizeRespectedOnPut [
 
 	cache maximumSize: (cache sizeOf: font1XGlyph).
@@ -243,6 +251,7 @@ FreeTypeCacheTest >> testMaximumSizeRespectedOnPut [
 		atFont: font1
 		charCode: $X asInteger
 		type: FreeTypeCacheGlyph
+		scale: 1
 		put: font1XGlyph.
 	self validateSizes: cache.
 	self validateCollections: cache.
@@ -250,15 +259,16 @@ FreeTypeCacheTest >> testMaximumSizeRespectedOnPut [
 		atFont: font1
 		charCode: $Y asInteger
 		type: FreeTypeCacheGlyph
+		scale: 1
 		put: font1XGlyph.
 	self assert: (cache instVarNamed: #used) equals: 0.	"cache has been cleared on reaching max size"
 	self validateSizes: cache.
 	self validateCollections: cache.
-	self should: [ cache atFont: font1 charCode: $X asInteger type: FreeTypeCacheGlyph ] raise: Error.
-	self should: [ cache atFont: font1 charCode: $Y asInteger type: FreeTypeCacheGlyph ] raise: Error
+	self should: [ cache atFont: font1 charCode: $X asInteger type: FreeTypeCacheGlyph scale: 1 ] raise: Error.
+	self should: [ cache atFont: font1 charCode: $Y asInteger type: FreeTypeCacheGlyph scale: 1 ] raise: Error
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FreeTypeCacheTest >> testNormalGetIfAbsentPut [
 
 	| u g r |
@@ -268,17 +278,18 @@ FreeTypeCacheTest >> testNormalGetIfAbsentPut [
 		atFont: font1
 		charCode: $X asInteger
 		type: FreeTypeCacheGlyph
+		scale: 1
 		ifAbsentPut: [ font1XGlyph ].
 	self assert: (r isKindOf: GlyphForm).
 	self assert: (cache instVarNamed: #used) > u.	"grown"
 	self validateSizes: cache.
-	g := cache atFont: font1 charCode: $X asInteger type: FreeTypeCacheGlyph.
+	g := cache atFont: font1 charCode: $X asInteger type: FreeTypeCacheGlyph scale: 1.
 	self assert: g identicalTo: font1XGlyph.
 	self validateSizes: cache.
 	self validateCollections: cache
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FreeTypeCacheTest >> testNormalGetIfAbsentPutTwice [
 
 	| u g r |
@@ -288,22 +299,24 @@ FreeTypeCacheTest >> testNormalGetIfAbsentPutTwice [
 		atFont: font1
 		charCode: $X asInteger
 		type: FreeTypeCacheGlyph
+		scale: 1
 		ifAbsentPut: [ font1XGlyph ].
 	r := cache
 		atFont: font1
 		charCode: $X asInteger
 		type: FreeTypeCacheGlyph
+		scale: 1
 		ifAbsentPut: [ font1XGlyph ].
 	self assert: (r isKindOf: GlyphForm).
 	self assert: (cache instVarNamed: #used) > u.	"grown"
 	self validateSizes: cache.
-	g := cache atFont: font1 charCode: $X asInteger type: FreeTypeCacheGlyph.
+	g := cache atFont: font1 charCode: $X asInteger type: FreeTypeCacheGlyph scale: 1.
 	self assert: g identicalTo: font1XGlyph.
 	self validateSizes: cache.
 	self validateCollections: cache
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FreeTypeCacheTest >> testNormalGetIfAbsentPutTwiceIntoNonEmptyCache [
 
 	| u g r |
@@ -313,27 +326,30 @@ FreeTypeCacheTest >> testNormalGetIfAbsentPutTwiceIntoNonEmptyCache [
 		atFont: font1
 		charCode: $Z asInteger
 		type: FreeTypeCacheGlyph
+		scale: 1
 		ifAbsentPut: [ font1XGlyph ].
 	r := cache
 		atFont: font1
 		charCode: $X asInteger
 		type: FreeTypeCacheGlyph
+		scale: 1
 		ifAbsentPut: [ font1XGlyph ].
 	r := cache
 		atFont: font1
 		charCode: $X asInteger
 		type: FreeTypeCacheGlyph
+		scale: 1
 		ifAbsentPut: [ font1XGlyph ].
 	self assert: (r isKindOf: GlyphForm).
 	self assert: (cache instVarNamed: #used) > u.	"grown"
 	self validateSizes: cache.
-	g := cache atFont: font1 charCode: $X asInteger type: FreeTypeCacheGlyph.
+	g := cache atFont: font1 charCode: $X asInteger type: FreeTypeCacheGlyph scale: 1.
 	self assert: g identicalTo: font1XGlyph.
 	self validateSizes: cache.
 	self validateCollections: cache
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FreeTypeCacheTest >> testNormalPutGet [
 
 	| u g |
@@ -343,16 +359,17 @@ FreeTypeCacheTest >> testNormalPutGet [
 		atFont: font1
 		charCode: $X asInteger
 		type: FreeTypeCacheGlyph
+		scale: 1
 		put: font1XGlyph.
 	self assert: (cache instVarNamed: #used) > u.	"grown"
 	self validateSizes: cache.
-	g := cache atFont: font1 charCode: $X asInteger type: FreeTypeCacheGlyph.
+	g := cache atFont: font1 charCode: $X asInteger type: FreeTypeCacheGlyph scale: 1.
 	self assert: g identicalTo: font1XGlyph.
 	self validateSizes: cache.
 	self validateCollections: cache
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FreeTypeCacheTest >> testNormalPutGetTwice [
 
 	| u g |
@@ -362,17 +379,18 @@ FreeTypeCacheTest >> testNormalPutGetTwice [
 		atFont: font1
 		charCode: $X asInteger
 		type: FreeTypeCacheGlyph
+		scale: 1
 		put: font1XGlyph.
 	self assert: (cache instVarNamed: #used) > u.	"grown"
 	self validateSizes: cache.
-	g := cache atFont: font1 charCode: $X asInteger type: FreeTypeCacheGlyph.
-	g := cache atFont: font1 charCode: $X asInteger type: FreeTypeCacheGlyph.
+	g := cache atFont: font1 charCode: $X asInteger type: FreeTypeCacheGlyph scale: 1.
+	g := cache atFont: font1 charCode: $X asInteger type: FreeTypeCacheGlyph scale: 1.
 	self assert: g identicalTo: font1XGlyph.
 	self validateSizes: cache.
 	self validateCollections: cache
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FreeTypeCacheTest >> testNormalPutGetWidth [
 
 	| u g |
@@ -382,16 +400,17 @@ FreeTypeCacheTest >> testNormalPutGetWidth [
 		atFont: font1
 		charCode: $X asInteger
 		type: FreeTypeCacheWidth
+		scale: 1
 		put: 100.
 	self assert: (cache instVarNamed: #used) > u.	"grown"
 	self validateSizes: cache.
-	g := cache atFont: font1 charCode: $X asInteger type: FreeTypeCacheWidth.
+	g := cache atFont: font1 charCode: $X asInteger type: FreeTypeCacheWidth scale: 1.
 	self assert: g equals: 100.
 	self validateSizes: cache.
 	self validateCollections: cache
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FreeTypeCacheTest >> testPutSameElementTwice [
 
 	cache maximumSize: nil.
@@ -399,6 +418,7 @@ FreeTypeCacheTest >> testPutSameElementTwice [
 		atFont: font1
 		charCode: $X asInteger
 		type: FreeTypeCacheGlyph
+		scale: 1
 		put: font1XGlyph.
 	self assert: (cache instVarNamed: #used) equals: (cache sizeOf: font1XGlyph).
 	self validateSizes: cache.
@@ -407,13 +427,14 @@ FreeTypeCacheTest >> testPutSameElementTwice [
 		atFont: font1
 		charCode: $X asInteger
 		type: FreeTypeCacheGlyph
+		scale: 1
 		put: font1XGlyph.
 	self assert: (cache instVarNamed: #used) equals: (cache sizeOf: font1XGlyph).
 	self validateSizes: cache.
 	self validateCollections: cache
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FreeTypeCacheTest >> testRemoveAll [
 
 	| m fifo fontTable |
@@ -429,55 +450,55 @@ FreeTypeCacheTest >> testRemoveAll [
 	self assert: fontTable class equals: (fullCache instVarNamed: #fontTable) class
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FreeTypeCacheTest >> testRemoveAllForFont [
 
 	| fifo |
 	fullCache maximumSize: nil.
 	1 to: 100 do:[:i |
-		fullCache atFont: font1 charCode: i type: 1 put: font1XGlyph].
+		fullCache atFont: font1 charCode: i type: 1 scale: 1 put: font1XGlyph].
 	1 to: 100 do:[:i |
-		fullCache atFont: font2 charCode: i type: 2 put: font1YGlyph].
+		fullCache atFont: font2 charCode: i type: 2 scale: 1 put: font1YGlyph].
 	1 to: 100 do:[:i |
-		fullCache atFont: font3 charCode: i type: 3 put: font1ZGlyph].
+		fullCache atFont: font3 charCode: i type: 3 scale: 1 put: font1ZGlyph].
 	fifo := fullCache instVarNamed: #fifo.
-	self assert: (fifo detect:[:each | each font = font1] ifNone:[]) notNil.
-	self assert: (fifo detect:[:each | each font = font2] ifNone:[]) notNil.
-	self assert: (fifo detect:[:each | each font = font3] ifNone:[]) notNil.
+	self assert: (fifo detect:[:each | each font = font1] ifNone:[]) isNotNil.
+	self assert: (fifo detect:[:each | each font = font2] ifNone:[]) isNotNil.
+	self assert: (fifo detect:[:each | each font = font3] ifNone:[]) isNotNil.
 	fullCache removeAllForFont: font1.
 	self validateSizes: fullCache.
 	self validateCollections: fullCache.
 	fifo := (fullCache instVarNamed: #fifo).
 	self assert: (fifo detect:[:each | each font = font1] ifNone:[]) isNil.
-	self assert: (fifo detect:[:each | each font = font2] ifNone:[]) notNil.
-	self assert: (fifo detect:[:each | each font = font2] ifNone:[]) notNil
+	self assert: (fifo detect:[:each | each font = font2] ifNone:[]) isNotNil.
+	self assert: (fifo detect:[:each | each font = font2] ifNone:[]) isNotNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FreeTypeCacheTest >> testRemoveAllForType [
 
 	| fifo |
 	fullCache maximumSize: nil.
 	1 to: 100 do:[:i |
-		fullCache atFont: font1 charCode: i type: 1 put: font1XGlyph].
+		fullCache atFont: font1 charCode: i type: 1 scale: 1 put: font1XGlyph].
 	1 to: 100 do:[:i |
-		fullCache atFont: font2 charCode: i type: 2 put: font1YGlyph].
+		fullCache atFont: font2 charCode: i type: 2 scale: 1 put: font1YGlyph].
 	1 to: 100 do:[:i |
-		fullCache atFont: font3 charCode: i type: 3 put: font1ZGlyph].
+		fullCache atFont: font3 charCode: i type: 3 scale: 1 put: font1ZGlyph].
 	fifo := fullCache instVarNamed: #fifo.
-	self assert: (fifo detect:[:each | each type = 1] ifNone:[]) notNil.
-	self assert: (fifo detect:[:each | each type = 2] ifNone:[]) notNil.
-	self assert: (fifo detect:[:each | each type = 3] ifNone:[]) notNil.
+	self assert: (fifo detect:[:each | each type = 1] ifNone:[]) isNotNil.
+	self assert: (fifo detect:[:each | each type = 2] ifNone:[]) isNotNil.
+	self assert: (fifo detect:[:each | each type = 3] ifNone:[]) isNotNil.
 	fullCache removeAllForType: 1.
 	self validateSizes: fullCache.
 	self validateCollections: fullCache.
 	fifo := (fullCache instVarNamed: #fifo).
 	self assert: (fifo detect:[:each | each type = 1] ifNone:[]) isNil.
-	self assert: (fifo detect:[:each | each type = 2] ifNone:[]) notNil.
-	self assert: (fifo detect:[:each | each type = 3] ifNone:[]) notNil
+	self assert: (fifo detect:[:each | each type = 2] ifNone:[]) isNotNil.
+	self assert: (fifo detect:[:each | each type = 3] ifNone:[]) isNotNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FreeTypeCacheTest >> testReport [
 
 	self assert: fullCache reportCacheState equals: '100% Full (maximumSize: 400320 , used: 400320)'.
@@ -488,7 +509,7 @@ FreeTypeCacheTest >> testReport [
 	self assert: cache reportCacheState equals: '0% Full (maximumSize: nil , used: 0)'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FreeTypeCacheTest >> testSetMaximumSize [
 
 	cache maximumSize: 0.
@@ -501,7 +522,7 @@ FreeTypeCacheTest >> testSetMaximumSize [
 	self validateCollections: cache
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FreeTypeCacheTest >> testSetMaximumSizeGrow [
 
 	| u m |
@@ -513,7 +534,7 @@ FreeTypeCacheTest >> testSetMaximumSizeGrow [
 	self validateCollections: cache
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FreeTypeCacheTest >> testSetMaximumSizeShrink [
 
 	| m |
@@ -524,7 +545,7 @@ FreeTypeCacheTest >> testSetMaximumSizeShrink [
 	self validateCollections: fullCache
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FreeTypeCacheTest >> testSetMaximumSizeUnbounded [
 
 	| u |
@@ -535,14 +556,14 @@ FreeTypeCacheTest >> testSetMaximumSizeUnbounded [
 	self validateCollections: cache
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FreeTypeCacheTest >> testSingleton [
 
 	self assert: FreeTypeCache current class equals: FreeTypeCache.
 	self assert: FreeTypeCache current identicalTo: FreeTypeCache current
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FreeTypeCacheTest >> validateCollections: aFreeTypeCache [
 	"check that the fifo list entries match the fontTable dict hierarchy"
 
@@ -551,13 +572,14 @@ FreeTypeCacheTest >> validateCollections: aFreeTypeCache [
 	fifo := aFreeTypeCache instVarNamed: #fifo.
 	lastLink := fifo instVarNamed: #lastLink.
 	fontTableEntries := Set new.
-	fontTable keysAndValuesDo: [ :k1 :v1 | v1 keysAndValuesDo: [ :k2 :v2 | v2 keysAndValuesDo: [ :k3 :v3 | fontTableEntries add: v3 ] ] ].
+	fontTable keysAndValuesDo: [ :k1 :v1 | v1 keysAndValuesDo: [ :k2 :v2 | v2 keysAndValuesDo: [ :k3 :v3 | v3 keysAndValuesDo: [ :k4 :v4 |
+		fontTableEntries add: v4 ] ] ] ].
 	self assert: fifo size equals: fontTableEntries size.
 	self assert: fifo asSet equals: fontTableEntries.
 	self assert: (lastLink isNil or: [ lastLink nextLink isNil ])
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FreeTypeCacheTest >> validateSizes: aFreeTypeCache [
 	"check that the used, maximumSize, and caches entries are valid"
 
@@ -566,7 +588,8 @@ FreeTypeCacheTest >> validateSizes: aFreeTypeCache [
 	used := aFreeTypeCache instVarNamed: #used.
 	max := aFreeTypeCache instVarNamed: #maximumSize.
 	calcSize := 0.
-	fontTable do: [ :charCodeTable | charCodeTable do: [ :typeTable | typeTable do: [ :entry | calcSize := calcSize + (aFreeTypeCache sizeOf: entry object) ] ] ].
+	fontTable do: [ :charCodeTable | charCodeTable do: [ :typeTable | typeTable do: [ :scaleTable | scaleTable do: [ :entry |
+		calcSize := calcSize + (aFreeTypeCache sizeOf: entry object) ] ] ] ].
 	self assert: calcSize equals: used.
 	self assert: (max isNil or: [ used <= max ])
 ]

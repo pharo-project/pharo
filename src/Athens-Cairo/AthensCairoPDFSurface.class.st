@@ -7,12 +7,14 @@ Reference: https://cairographics.org/manual/cairo-PDF-Surfaces.html
 
 "
 Class {
-	#name : #AthensCairoPDFSurface,
-	#superclass : #AthensCairoExportSurface,
-	#category : #'Athens-Cairo-Surface'
+	#name : 'AthensCairoPDFSurface',
+	#superclass : 'AthensCairoExportSurface',
+	#category : 'Athens-Cairo-Surface',
+	#package : 'Athens-Cairo',
+	#tag : 'Surface'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 AthensCairoPDFSurface class >> createExportingTo: fileName width: width height: height [
 	^ self ffiCall: #(AthensCairoPDFSurface cairo_pdf_surface_create(
 			String fileName,

@@ -1,54 +1,67 @@
 Class {
-	#name : #CDBehaviorParserTest,
-	#superclass : #TestCase,
+	#name : 'CDBehaviorParserTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'classDefinition'
 	],
-	#category : #'ClassParser-Tests'
+	#category : 'ClassParser-Tests',
+	#package : 'ClassParser-Tests'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 CDBehaviorParserTest class >> isAbstract [
 	^ self == CDBehaviorParserTest
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 CDBehaviorParserTest >> classDefinitionString [
 
 	self subclassResponsibility
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 CDBehaviorParserTest >> className [
 
 	^ 'TheClass'
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
+CDBehaviorParserTest >> firstClassVariableName [
+
+	^ 'firstClass'
+]
+
+{ #category : 'helpers' }
 CDBehaviorParserTest >> firstInstanceVariableName [
 
 	^ 'first'
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 CDBehaviorParserTest >> nodeFor: aString [
 
 	^ classDefinition bestNodeFor: (self selectionOf: aString)
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 CDBehaviorParserTest >> parserClass [
 
-	^ CDClassDefinitionParser
+	^ CDFluidClassDefinitionParser
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
+CDBehaviorParserTest >> secondClassVariableName [
+
+	^ 'secondClass'
+]
+
+{ #category : 'helpers' }
 CDBehaviorParserTest >> secondInstanceVariableName [
 
 	^ 'second'
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 CDBehaviorParserTest >> selectionOf: aText [
 
 	| start |
@@ -56,14 +69,36 @@ CDBehaviorParserTest >> selectionOf: aText [
 	^ start to: start
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 CDBehaviorParserTest >> setUp [
 
 	super setUp.
 	classDefinition := self parserClass parse: self classDefinitionString
 ]
 
-{ #category : #tests }
+{ #category : 'helpers' }
+CDBehaviorParserTest >> sharedVariablesArray [
+
+	^ '\{ #{classvar1} . #{classvar2} }' format: {
+			  ('classvar1' -> self firstClassVariableName).
+			  ('classvar2' -> self secondClassVariableName) } asDictionary
+]
+
+{ #category : 'helpers' }
+CDBehaviorParserTest >> slotsArray [
+
+	^ '\{ #{instvar1} . #{instvar2} }' format: {
+			  ('instvar1' -> self firstInstanceVariableName).
+			  ('instvar2' -> self secondInstanceVariableName) } asDictionary
+]
+
+{ #category : 'helpers' }
+CDBehaviorParserTest >> superclassName [
+
+	^ 'TheSuperClass'
+]
+
+{ #category : 'tests' }
 CDBehaviorParserTest >> testBestNodeForClassNameSelectionShouldBeClassNameNode [
 
 	| selectedNode selection |
@@ -72,7 +107,7 @@ CDBehaviorParserTest >> testBestNodeForClassNameSelectionShouldBeClassNameNode [
 	self assert: selectedNode equals: classDefinition classNameNode
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CDBehaviorParserTest >> testBestNodeForInstanceVariableSelectionShouldBeSlotNode [
 
 	| selectedNode selection |
@@ -82,7 +117,7 @@ CDBehaviorParserTest >> testBestNodeForInstanceVariableSelectionShouldBeSlotNode
 	self assert: selectedNode equals: classDefinition slotNodes first
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CDBehaviorParserTest >> testBestNodeForSecondInstanceVariableSelectionShouldBeSecondSlotNode [
 
 	| selectedNode selection |
@@ -92,20 +127,20 @@ CDBehaviorParserTest >> testBestNodeForSecondInstanceVariableSelectionShouldBeSe
 	self assert: selectedNode equals: classDefinition slotNodes second
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CDBehaviorParserTest >> testClassDefFromLegacyStringHasClassName [
 
 	self assert: classDefinition className equals: self className
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CDBehaviorParserTest >> testClassDefFromLegacyStringHasSlots [
 
 	self assert: classDefinition slotNodes first name equals: self firstInstanceVariableName.
 	self assert: classDefinition slotNodes second name equals: self secondInstanceVariableName
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CDBehaviorParserTest >> testClassNameNodeHaveParentReference [
 
 	| nameNode |
@@ -116,7 +151,7 @@ CDBehaviorParserTest >> testClassNameNodeHaveParentReference [
 	self assert: (classDefinition children includes: nameNode)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CDBehaviorParserTest >> testSlotNodesHaveParentReference [
 
 	| slotNode |

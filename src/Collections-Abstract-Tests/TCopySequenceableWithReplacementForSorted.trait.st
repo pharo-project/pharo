@@ -2,28 +2,30 @@
 A trait for test purposes
 "
 Trait {
-	#name : #TCopySequenceableWithReplacementForSorted,
-	#category : #'Collections-Abstract-Tests-Traits'
+	#name : 'TCopySequenceableWithReplacementForSorted',
+	#category : 'Collections-Abstract-Tests-Traits',
+	#package : 'Collections-Abstract-Tests',
+	#tag : 'Traits'
 }
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TCopySequenceableWithReplacementForSorted >> collectionOfSize5 [
 " return a collection of size 5"
 self explicitRequirement
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TCopySequenceableWithReplacementForSorted >> empty [
 self explicitRequirement
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TCopySequenceableWithReplacementForSorted >> replacementCollection [
 " return a collection including elements of type 'collectionOfSize5' elements'type"
 self explicitRequirement
 ]
 
-{ #category : #'tests - fixture' }
+{ #category : 'tests - fixture' }
 TCopySequenceableWithReplacementForSorted >> test0FixtureCopyWithReplacementForSorted [
 	self collectionOfSize5.
 	self assert: self collectionOfSize5 size = 5.
@@ -33,7 +35,7 @@ TCopySequenceableWithReplacementForSorted >> test0FixtureCopyWithReplacementForS
 	self assertEmpty: self empty
 ]
 
-{ #category : #'tests - copying with replacement for sorted' }
+{ #category : 'tests - copying with replacement for sorted' }
 TCopySequenceableWithReplacementForSorted >> testCopyFromToWithForSorted [
 	| collection result |
 	collection := self collectionOfSize5.
@@ -49,7 +51,7 @@ TCopySequenceableWithReplacementForSorted >> testCopyFromToWithForSorted [
 	self assert: result size equals: self replacementCollection size
 ]
 
-{ #category : #'tests - copying with replacement for sorted' }
+{ #category : 'tests - copying with replacement for sorted' }
 TCopySequenceableWithReplacementForSorted >> testCopyReplaceAllWithForSorted [
 	| collection result |
 	collection := self collectionOfSize5.

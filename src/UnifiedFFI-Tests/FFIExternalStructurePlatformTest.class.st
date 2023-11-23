@@ -2,22 +2,24 @@
 Tests for external structures on platform
 "
 Class {
-	#name : #FFIExternalStructurePlatformTest,
-	#superclass : #TestCase,
-	#category : #'UnifiedFFI-Tests-Tests'
+	#name : 'FFIExternalStructurePlatformTest',
+	#superclass : 'TestCase',
+	#category : 'UnifiedFFI-Tests-Tests',
+	#package : 'UnifiedFFI-Tests',
+	#tag : 'Tests'
 }
 
-{ #category : #'private - testing' }
+{ #category : 'private - testing' }
 FFIExternalStructurePlatformTest >> is32bit [
 	^ Smalltalk vm is32bit
 ]
 
-{ #category : #'private - testing' }
+{ #category : 'private - testing' }
 FFIExternalStructurePlatformTest >> is64bit [
 	^ Smalltalk vm is64bit
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFIExternalStructurePlatformTest >> testStructureHasCorrectOffsets32bits [
 	self is32bit ifFalse: [ ^ self skip ].
 
@@ -26,7 +28,7 @@ FFIExternalStructurePlatformTest >> testStructureHasCorrectOffsets32bits [
 	self assert: (FFITestStructureByPlatform classPool at: #OFFSET_POINTER) equals: 5
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFIExternalStructurePlatformTest >> testStructureHasCorrectOffsets64bits [
 	self is64bit ifFalse: [ ^ self skip ].
 
@@ -35,7 +37,7 @@ FFIExternalStructurePlatformTest >> testStructureHasCorrectOffsets64bits [
 	self assert: (FFITestStructureByPlatform classPool at: #OFFSET_POINTER) equals: 9
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFIExternalStructurePlatformTest >> testStructureHasCorrectSize32bits [
 	self is32bit ifFalse: [ ^ self skip ].
 
@@ -44,7 +46,7 @@ FFIExternalStructurePlatformTest >> testStructureHasCorrectSize32bits [
 		equals: 8
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFIExternalStructurePlatformTest >> testStructureHasCorrectSize64bits [
 	self is64bit ifFalse: [ ^ self skip ].
 

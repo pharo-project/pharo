@@ -1,10 +1,12 @@
 Class {
-	#name : #ComputedSlotTest,
-	#superclass : #SlotSilentTest,
-	#category : #'VariablesLibrary-Tests-Tests'
+	#name : 'ComputedSlotTest',
+	#superclass : 'SlotSilentTest',
+	#category : 'VariablesLibrary-Tests-Tests',
+	#package : 'VariablesLibrary-Tests',
+	#tag : 'Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 ComputedSlotTest >> testReadComputedSlotCompiled [
 	| object slot |
 	<ignoreNotImplementedSelectors: #(slot1)>
@@ -23,7 +25,7 @@ ComputedSlotTest >> testReadComputedSlotCompiled [
 	self assert: object slot1 equals: 5
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ComputedSlotTest >> testReadComputedSlotReflective [
 	| slot object |
 	slot := #slot1 => ComputedSlot with: [:obj | 3 + 2 ].
@@ -34,7 +36,7 @@ ComputedSlotTest >> testReadComputedSlotReflective [
 	self assert: (slot read: object) equals: 5
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ComputedSlotTest >> testReadComputedSlotReflectiveNoArg [
 	| slot object |
 	slot := #slot1 => ComputedSlot with: [3 + 2 ].
@@ -46,7 +48,7 @@ ComputedSlotTest >> testReadComputedSlotReflectiveNoArg [
 	self assert: (slot read: object) equals: 5
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ComputedSlotTest >> testWriteComputedSlotCompiled [
 	| slot object |
 	<ignoreNotImplementedSelectors: #(slot1: slot1)>

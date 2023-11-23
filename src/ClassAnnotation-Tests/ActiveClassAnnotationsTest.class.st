@@ -1,10 +1,12 @@
 Class {
-	#name : #ActiveClassAnnotationsTest,
-	#superclass : #ClassAnnotationTestCase,
-	#category : #'ClassAnnotation-Tests-Base'
+	#name : 'ActiveClassAnnotationsTest',
+	#superclass : 'ClassAnnotationTestCase',
+	#category : 'ClassAnnotation-Tests-Base',
+	#package : 'ClassAnnotation-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 ActiveClassAnnotationsTest >> testCanBeEnumeratedForGivenClassAndUser [
 
 	| annotationUser actual expected |
@@ -18,7 +20,7 @@ ActiveClassAnnotationsTest >> testCanBeEnumeratedForGivenClassAndUser [
 	self assert: actual asSet equals: expected asSet
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ActiveClassAnnotationsTest >> testCanBeEnumeratedForGivenUser [
 
 	| annotationUser actual expected |
@@ -31,7 +33,7 @@ ActiveClassAnnotationsTest >> testCanBeEnumeratedForGivenUser [
 	self assert: actual asSet equals: expected asSet
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ActiveClassAnnotationsTest >> testIncludeOnlyInstancesWhichAreActiveForGivenUser [
 
 	| actual annotationUser expected |
@@ -44,7 +46,7 @@ ActiveClassAnnotationsTest >> testIncludeOnlyInstancesWhichAreActiveForGivenUser
 	self assert: actual asSet equals: expected asSet
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ActiveClassAnnotationsTest >> testNotIncludeInstancesWhichAreNotActiveForGivenUser [
 
 	| actual annotationUser |
@@ -56,7 +58,7 @@ ActiveClassAnnotationsTest >> testNotIncludeInstancesWhichAreNotActiveForGivenUs
 	self assert: actual isEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ActiveClassAnnotationsTest >> testNotIncludeInstancesWithoutContext [
 
 	| annotations annotationUser |

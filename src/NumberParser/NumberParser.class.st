@@ -15,8 +15,8 @@ lasNonZero <Integer> position of last non zero digit, starting at 1 from left, 0
 failBlock <BlockClosure> Block to execute whenever an error occurs
 "
 Class {
-	#name : #NumberParser,
-	#superclass : #Object,
+	#name : 'NumberParser',
+	#superclass : 'Object',
 	#instVars : [
 		'sourceStream',
 		'base',
@@ -33,10 +33,12 @@ Class {
 	#classVars : [
 		'MaxExponent'
 	],
-	#category : #'NumberParser-Base'
+	#category : 'NumberParser-Base',
+	#package : 'NumberParser',
+	#tag : 'Base'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 NumberParser class >> isNumber: aStringOrStream [
 
 	| stream |
@@ -45,31 +47,31 @@ NumberParser class >> isNumber: aStringOrStream [
 	^ stream atEnd
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NumberParser class >> maxExponent [ 
 
 	^ MaxExponent ifNil: [ MaxExponent := 10000 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NumberParser class >> maxExponent: aValue [
 
 	MaxExponent := aValue
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 NumberParser class >> on: aStringOrStream [
 	^self new on: aStringOrStream
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 NumberParser class >> parse: aStringOrStream [
 	^self new
 		on: aStringOrStream;
 		nextNumber
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 NumberParser class >> parse: aStringOrStream onError: failBlock [
 	^(self new)
 		on: aStringOrStream;
@@ -77,7 +79,7 @@ NumberParser class >> parse: aStringOrStream onError: failBlock [
 		nextNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NumberParser class >> settingsOn: aBuilder [
 
 	<systemsettings>
@@ -90,7 +92,7 @@ NumberParser class >> settingsOn: aBuilder [
 		target: self
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 NumberParser class >> squeezeNumberOutOfString: stringOrStream [
 	"Try and find a number in this string. First, look if the string
 	starts with a number. Then, see if it ends with a number. Then,
@@ -101,7 +103,7 @@ NumberParser class >> squeezeNumberOutOfString: stringOrStream [
 	^ self squeezeNumberOutOfString: stringOrStream onError: [self error: 'Reading a number failed']
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 NumberParser class >> squeezeNumberOutOfString: stringOrStream onError: errorBlock [
 	"Try and find a number in this string. First, look if the string
 	starts with a number. Then, see if it ends with a number. Then,
@@ -122,21 +124,21 @@ NumberParser class >> squeezeNumberOutOfString: stringOrStream onError: errorBlo
 	^ errorBlock value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NumberParser >> allowPlusSign [
 	"Return a boolean indicating if plus sign is allowed or not"
 
 	^false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NumberParser >> allowPlusSignInExponent [
 	"Return a boolean indicating if plus sign is allowed or not in exponent"
 
 	^self allowPlusSign
 ]
 
-{ #category : #error }
+{ #category : 'error' }
 NumberParser >> expected: aString [
 
 	"This method handle errors on bad syntactically formated numbers.
@@ -152,7 +154,7 @@ NumberParser >> expected: aString [
 	self error: 'Reading a number failed: ' , errorString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NumberParser >> exponentLetters [
 	"answer the list of possible exponents for Numbers.
 	Note: this parser will not honour precision attached to the exponent.
@@ -162,12 +164,12 @@ NumberParser >> exponentLetters [
 	^'edq'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NumberParser >> failBlock: aBlockOrNil [
 	failBlock := aBlockOrNil
 ]
 
-{ #category : #'private - parsing' }
+{ #category : 'private - parsing' }
 NumberParser >> makeFloatFromMantissa: m exponent: k base: aRadix [
 	"Convert infinite precision arithmetic into Floating point.
 	This alogrithm rely on correct IEEE rounding mode
@@ -178,7 +180,7 @@ NumberParser >> makeFloatFromMantissa: m exponent: k base: aRadix [
 		ifFalse: [Fraction numerator: m denominator: (aRadix raisedToInteger: k negated)]) asFloat
 ]
 
-{ #category : #'private - parsing' }
+{ #category : 'private - parsing' }
 NumberParser >> makeIntegerOrScaledIntegerOrFloat [
 	"At this point, there is no digit, nor fractionPart.
 	maybe it can be a scaled decimal with fraction omitted...
@@ -196,7 +198,7 @@ NumberParser >> makeIntegerOrScaledIntegerOrFloat [
 	^ integerPart
 ]
 
-{ #category : #'private - parsing' }
+{ #category : 'private - parsing' }
 NumberParser >> makeScaledDecimalWithNumberOfNonZeroFractionDigits: numberOfNonZeroFractionDigits andNumberOfTrailingZeroInFractionPart: numberOfTrailingZeroInFractionPart [
 	"At this point integerPart fractionPart and scale have been read out (in inst var).
 	Form a ScaledDecimal.
@@ -210,19 +212,19 @@ NumberParser >> makeScaledDecimalWithNumberOfNonZeroFractionDigits: numberOfNonZ
 	^decimalFraction asScaledDecimal: scale
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NumberParser >> maxExponent [
 
 	^ maxExponent ifNil: [ self class maxExponent ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NumberParser >> maxExponent: aValue [
 
 	maxExponent  := aValue
 ]
 
-{ #category : #'private - parsing - large int' }
+{ #category : 'private - parsing - large int' }
 NumberParser >> nextElementaryLargeIntegerBase: aRadix [
 	"Form an unsigned integer with incoming digits from sourceStream.
 	Return this integer, or zero if no digits found.
@@ -246,7 +248,7 @@ NumberParser >> nextElementaryLargeIntegerBase: aRadix [
 	^value
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 NumberParser >> nextFraction [
 	| numerator denominator |
 	numerator := self nextInteger.
@@ -255,7 +257,7 @@ NumberParser >> nextFraction [
 	^numerator / denominator
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 NumberParser >> nextInteger [
 	"Main method for reading an Integer.
 	This won't try to read a Float nor a ScaledDecimal."
@@ -282,7 +284,7 @@ NumberParser >> nextInteger [
 	^ integerPart
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 NumberParser >> nextIntegerBase: aRadix [
 	"Form an integer with following digits.
 	Fail if no digit found"
@@ -295,7 +297,7 @@ NumberParser >> nextIntegerBase: aRadix [
 		ifFalse: [value]
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 NumberParser >> nextIntegerBase: aRadix ifFail: aBlock [
 	"Form an integer with optional sign and following digits from sourceStream."
 
@@ -308,7 +310,7 @@ NumberParser >> nextIntegerBase: aRadix ifFail: aBlock [
 		ifFalse: [value]
 ]
 
-{ #category : #'private - parsing - large int' }
+{ #category : 'private - parsing - large int' }
 NumberParser >> nextLargeIntegerBase: aRadix nPackets: nPackets [
 	"Form a Large integer with incoming digits from sourceStream.
 	Return this integer, or zero if no digits found.
@@ -331,7 +333,7 @@ NumberParser >> nextLargeIntegerBase: aRadix nPackets: nPackets [
 	^high * (aRadix raisedToInteger: nDigitsLow) + low
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 NumberParser >> nextNumber [
 	"Main method for reading a number.
 	 This one can read Float Integer and ScaledDecimal"
@@ -360,7 +362,7 @@ NumberParser >> nextNumber [
 		ifFalse: [self makeIntegerOrScaledIntegerOrFloat]
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 NumberParser >> nextNumberBase: b [
 	"Method for reading a number without radix prefix.
 	This one can read Float Integer and ScaledDecimal"
@@ -379,7 +381,7 @@ NumberParser >> nextNumberBase: b [
 		ifFalse: [self makeIntegerOrScaledIntegerOrFloat]
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 NumberParser >> nextScaledDecimal [
 	"Main method for reading a (scaled) decimal number.
 	Good Gracious, do not accept a decimal in another base than 10!
@@ -408,7 +410,7 @@ NumberParser >> nextScaledDecimal [
 	^integerPart asScaledDecimal: scale
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 NumberParser >> nextUnsignedIntegerBase: aRadix [
 	"Form an unsigned integer with incoming digits from sourceStream.
 	Fail if no digit found.
@@ -421,7 +423,7 @@ NumberParser >> nextUnsignedIntegerBase: aRadix [
 	^value
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 NumberParser >> nextUnsignedIntegerBase: aRadix ifFail: errorBlock [
 	"Form an unsigned integer with incoming digits from sourceStream.
 	Answer this integer, or execute errorBlock if no digit found.
@@ -433,7 +435,7 @@ NumberParser >> nextUnsignedIntegerBase: aRadix ifFail: errorBlock [
 	^value
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 NumberParser >> nextUnsignedIntegerOrNilBase: aRadix [
 	"Form an unsigned integer with incoming digits from sourceStream.
 	Answer this integer, or nil if no digit found.
@@ -465,7 +467,7 @@ NumberParser >> nextUnsignedIntegerOrNilBase: aRadix [
 	^high
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 NumberParser >> on: aStringOrStream [
 	sourceStream := aStringOrStream isString
 		ifTrue: [ aStringOrStream readStream ]
@@ -476,7 +478,7 @@ NumberParser >> on: aStringOrStream [
 	failBlock := nil
 ]
 
-{ #category : #'private - parsing' }
+{ #category : 'private - parsing' }
 NumberParser >> peekSignIsMinus [
 	"Peek an optional sign from sourceStream.
 	 Answer true if it is minus sign"
@@ -487,7 +489,7 @@ NumberParser >> peekSignIsMinus [
 	^isMinus
 ]
 
-{ #category : #'private - parsing' }
+{ #category : 'private - parsing' }
 NumberParser >> readExponent [
 	"Read the exponent if any (stored in instVar).
 	 Answer true if found, answer false if none.
@@ -522,7 +524,7 @@ NumberParser >> readExponent [
 	^ true
 ]
 
-{ #category : #'private - parsing' }
+{ #category : 'private - parsing' }
 NumberParser >> readNamedFloatOrFail [
 	"This method is used when there is no digit encountered:
 	It try and read a named Float NaN or Infinity.
@@ -538,7 +540,7 @@ NumberParser >> readNamedFloatOrFail [
 	^self expected: 'a digit between 0 and ' , (String with: (Character digitValue: base - 1))
 ]
 
-{ #category : #'private - parsing' }
+{ #category : 'private - parsing' }
 NumberParser >> readNumberWithFractionPartNumberOfTrailingZeroInIntegerPart: numberOfTrailingZeroInIntegerPart [
 	"At this stage, sign integerPart and a decimal point have been read.
 	try and form a number with a fractionPart"
@@ -573,7 +575,7 @@ NumberParser >> readNumberWithFractionPartNumberOfTrailingZeroInIntegerPart: num
 		ifFalse: [value]
 ]
 
-{ #category : #'private - parsing' }
+{ #category : 'private - parsing' }
 NumberParser >> readScaleWithDefaultNumberOfDigits: anInteger [
 	"Read the scale if any and store it into scale instance Variable.
 	Answer true if found, answer false if none.

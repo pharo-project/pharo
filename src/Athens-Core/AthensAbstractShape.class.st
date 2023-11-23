@@ -7,18 +7,20 @@ See my methods comments for more details.
 
 "
 Class {
-	#name : #AthensAbstractShape,
-	#superclass : #Object,
-	#category : #'Athens-Core-Shapes'
+	#name : 'AthensAbstractShape',
+	#superclass : 'Object',
+	#category : 'Athens-Core-Shapes',
+	#package : 'Athens-Core',
+	#tag : 'Shapes'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 AthensAbstractShape class >> isAbstract [
 
 	^ self == AthensAbstractShape
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 AthensAbstractShape >> asAthensShapeOn: canvas [
 	"Note: The answered object of this message should conform with AthensShape protocol.	"
 	self subclassResponsibility

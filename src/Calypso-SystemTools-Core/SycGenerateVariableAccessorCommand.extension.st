@@ -1,6 +1,6 @@
-Extension { #name : #SycGenerateVariableAccessorCommand }
+Extension { #name : 'SycGenerateVariableAccessorCommand' }
 
-{ #category : #'*Calypso-SystemTools-Core' }
+{ #category : '*Calypso-SystemTools-Core' }
 SycGenerateVariableAccessorCommand class >> sourceCodeMenuActivation [
 	<classAnnotation>
 

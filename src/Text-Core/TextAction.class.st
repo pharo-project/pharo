@@ -25,57 +25,59 @@ TextMorph new
 	openInWindow .
 "
 Class {
-	#name : #TextAction,
-	#superclass : #TextAttribute,
+	#name : 'TextAction',
+	#superclass : 'TextAttribute',
 	#instVars : [
 		'actOnClickBlock'
 	],
 	#classVars : [
 		'ActOnClickBlock'
 	],
-	#category : #'Text-Core-Attributes'
+	#category : 'Text-Core-Attributes',
+	#package : 'Text-Core',
+	#tag : 'Attributes'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextAction class >> actOnClickBlock [
 	^ ActOnClickBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextAction class >> actOnClickBlock: aBlock [
 	ActOnClickBlock := aBlock
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 TextAction class >> initialize [
 	"nil value and [] value are both nil, but sharing a block would hold on to its outer method"
 	ActOnClickBlock := nil
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 TextAction >> actOnClick: anEvent for: anObject in: paragraph editor: editor [
 	"sent when a user clicks on a piece of text to which I am applied in an editor"
 	"may be self is included in the event or an Object. "
 	^ actOnClickBlock valueWithEnoughArguments: (Array with: self with: anEvent with: anObject with: paragraph with: editor)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextAction >> actOnClickBlock [
 	^ actOnClickBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextAction >> actOnClickBlock: aBlock [
 	actOnClickBlock := aBlock
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 TextAction >> actOnMove: anEvent for: target in: aParagraph editor: anEditor [
 	"override in subclasses"
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TextAction >> analyze: aString [
 	"Analyze the selected text to find both the parameter to store and the text to emphesize (may be different from original selection).  Does not return self!.  May be of the form:
 3+4
@@ -110,30 +112,30 @@ Click Here<3+4>
 	^ Array with: param with: show
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TextAction >> dominatedByCmd0 [
 	"Cmd-0 should turn off active text"
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextAction >> info [
 	^ 'no hidden info'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TextAction >> initialize [
 	super initialize.
 	actOnClickBlock := ActOnClickBlock
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TextAction >> mayActOnEvent: anEvent [
 
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TextAction >> validate: aString [
 	"any format is OK with me"
 	^ aString

@@ -15,27 +15,29 @@ running at timingPriority will normally preempt all other processes.  This is pr
 to tests in the /scheduler/ variable.
 "
 Class {
-	#name : #DelayBasicSchedulerMicrosecondTickerTest,
-	#superclass : #TestCase,
+	#name : 'DelayBasicSchedulerMicrosecondTickerTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'ticker',
 		'scheduler',
 		'suspendedDelaysHeap'
 	],
-	#category : #'Kernel-Tests-Delays'
+	#category : 'Kernel-Tests-Delays',
+	#package : 'Kernel-Tests',
+	#tag : 'Delays'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 DelayBasicSchedulerMicrosecondTickerTest >> classForScheduler [
 	^ DelayBasicScheduler
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DelayBasicSchedulerMicrosecondTickerTest >> classForTicker [
 	^ DelayMicrosecondTickerSimulation
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 DelayBasicSchedulerMicrosecondTickerTest >> setUp [
 	"Event loop priority takes So it takes priority over following code"
 	super setUp.
@@ -45,7 +47,7 @@ DelayBasicSchedulerMicrosecondTickerTest >> setUp [
 	scheduler startTimerEventLoopPriority: Processor activePriority + 1. "So its slightly above normal priority of tests"
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DelayBasicSchedulerMicrosecondTickerTest >> testDelayWaitTimeoutCompleted [
 	| completed delay status |
 	completed := Semaphore new.
@@ -56,7 +58,7 @@ DelayBasicSchedulerMicrosecondTickerTest >> testDelayWaitTimeoutCompleted [
 	self assert: status equals: #completed
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DelayBasicSchedulerMicrosecondTickerTest >> testDelayWaitTimeoutTimedOut [
 	| completed delay status |
 	completed := Semaphore new.
@@ -66,7 +68,7 @@ DelayBasicSchedulerMicrosecondTickerTest >> testDelayWaitTimeoutTimedOut [
 	self assert: status equals: #timedOut
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DelayBasicSchedulerMicrosecondTickerTest >> testDurationLessThanMaxTicks [
 	"In #timingPriorityHandleEvent the maximum tick is hardcoded as 1000 milliseconds.
 	 Test when delay duration is less than this.
@@ -81,7 +83,7 @@ DelayBasicSchedulerMicrosecondTickerTest >> testDurationLessThanMaxTicks [
 	self assert: ticker vmSimNextWakeupMilliseconds equals: 100 + 789
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DelayBasicSchedulerMicrosecondTickerTest >> testDurationMoreThanMaxTicks [
 	"In #handleTimerEvent the maximum tick is hardcoded as 1000 milliseconds.
 	 Test when delay duration is less than this.
@@ -95,7 +97,7 @@ DelayBasicSchedulerMicrosecondTickerTest >> testDurationMoreThanMaxTicks [
 	self assert: ticker vmSimNextWakeupMilliseconds equals: 100 + 1000
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DelayBasicSchedulerMicrosecondTickerTest >> testForMilliseconds [
 	| delay |
 	delay := Delay forMilliseconds: 1000.
@@ -110,7 +112,7 @@ DelayBasicSchedulerMicrosecondTickerTest >> testForMilliseconds [
 	self assert: delay isExpired
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DelayBasicSchedulerMicrosecondTickerTest >> testForSeconds [
 	| delay |
 	delay := Delay forSeconds: 1.
@@ -125,7 +127,7 @@ DelayBasicSchedulerMicrosecondTickerTest >> testForSeconds [
 	self assert: delay isExpired
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DelayBasicSchedulerMicrosecondTickerTest >> testHeapBackwards [
 	|delay1 delay2 delay3 delay4|
 	delay1 := Delay forMilliseconds: 1.
@@ -144,7 +146,7 @@ DelayBasicSchedulerMicrosecondTickerTest >> testHeapBackwards [
 	self assert: suspendedDelaysHeap removeFirstOrNil equals: nil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DelayBasicSchedulerMicrosecondTickerTest >> testHeapForwards [
 	|delay1 delay2 delay3 delay4|
 	delay1 := Delay forMilliseconds: 1.
@@ -163,7 +165,7 @@ DelayBasicSchedulerMicrosecondTickerTest >> testHeapForwards [
 	self assert: suspendedDelaysHeap removeFirstOrNil equals: nil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DelayBasicSchedulerMicrosecondTickerTest >> testMillisecondsToGo [
 	| delay |
 	delay := Delay forMilliseconds: 100.
@@ -175,7 +177,7 @@ DelayBasicSchedulerMicrosecondTickerTest >> testMillisecondsToGo [
 	self assert: delay millisecondsToGo equals: 40
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DelayBasicSchedulerMicrosecondTickerTest >> testMillisecondsToGoExpired [
 	| delay |
 	delay := Delay forMilliseconds: 100.
@@ -187,7 +189,7 @@ DelayBasicSchedulerMicrosecondTickerTest >> testMillisecondsToGoExpired [
 	"self assert: delay millisecondsToGo equals: 0."
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DelayBasicSchedulerMicrosecondTickerTest >> testMultiSchedule [
 	| delay anotherDelay |
 	"Ensure that scheduling the same delay twice raises an error"
@@ -204,7 +206,7 @@ DelayBasicSchedulerMicrosecondTickerTest >> testMultiSchedule [
 	self assert: anotherDelay beingWaitedOn
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DelayBasicSchedulerMicrosecondTickerTest >> testSimpleOneDelay [
 	"
 	Event loop priority takes So it takes priority over following code"
@@ -223,7 +225,7 @@ DelayBasicSchedulerMicrosecondTickerTest >> testSimpleOneDelay [
 	self assert: delay isExpired
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DelayBasicSchedulerMicrosecondTickerTest >> testSimpleTwoDelays [
 	"Event loop priority takes so it takes priority over following code"
 	|delay1 delay2|
@@ -253,7 +255,7 @@ DelayBasicSchedulerMicrosecondTickerTest >> testSimpleTwoDelays [
 	self assert: delay2 isExpired
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DelayBasicSchedulerMicrosecondTickerTest >> testStartStop [
 	|error|
 	error := false.
@@ -262,7 +264,7 @@ DelayBasicSchedulerMicrosecondTickerTest >> testStartStop [
 	self deny: error
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DelayBasicSchedulerMicrosecondTickerTest >> testStoppedSchedulerExpiresRemainingDelays [
 	"Event loop priority takes So it takes priority over following code"
 	|delay1 delay2 delay3|
@@ -289,7 +291,7 @@ DelayBasicSchedulerMicrosecondTickerTest >> testStoppedSchedulerExpiresRemaining
 	self assert: delay3 isExpired
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DelayBasicSchedulerMicrosecondTickerTest >> testSuspendForSnapshot [
 	"
 	Event loop priority takes So it takes priority over following code"

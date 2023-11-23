@@ -1,18 +1,20 @@
 Class {
-	#name : #OCClosureCompilerTest,
-	#superclass : #TestCase,
+	#name : 'OCClosureCompilerTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'currentCompiler'
 	],
-	#category : #'OpalCompiler-Tests-FromOld'
+	#category : 'OpalCompiler-Tests-FromOld',
+	#package : 'OpalCompiler-Tests',
+	#tag : 'FromOld'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OCClosureCompilerTest class >> compilerClass [
 	^OpalCompiler
 ]
 
-{ #category : #'code examples' }
+{ #category : 'code examples' }
 OCClosureCompilerTest class >> methodWithCopiedAndAssignedTemps [
 	| blk "0w" a "0w" b "0w" c "0w" t "0w" r1 "0w" r2 "0w" |
 	a := 1. "1w"
@@ -40,7 +42,7 @@ OCClosureCompilerTest class >> methodWithCopiedAndAssignedTemps [
 		class: self class) generateUsingClosures: #(0 0 0 0)"
 ]
 
-{ #category : #'code examples' }
+{ #category : 'code examples' }
 OCClosureCompilerTest class >> methodWithCopiedAndPostClosedOverAssignedTemps [
 	| blk a b c r1 r2 |
 	a := 1.
@@ -58,7 +60,7 @@ OCClosureCompilerTest class >> methodWithCopiedAndPostClosedOverAssignedTemps [
 		class: self class) generateUsingClosures: #(0 0 0 0)"
 ]
 
-{ #category : #'code examples' }
+{ #category : 'code examples' }
 OCClosureCompilerTest class >> methodWithCopiedTemps [
 	| a b c r |
 	a := 1.
@@ -78,7 +80,7 @@ OCClosureCompilerTest class >> methodWithCopiedTemps [
 		class: self class) generateUsingClosures: #(0 0 0 0)"
 ]
 
-{ #category : #'code examples' }
+{ #category : 'code examples' }
 OCClosureCompilerTest class >> methodWithOptimizedBlocks [
 	| s c |
 	s := self isNil
@@ -94,7 +96,7 @@ OCClosureCompilerTest class >> methodWithOptimizedBlocks [
 		class: self class"
 ]
 
-{ #category : #'code examples' }
+{ #category : 'code examples' }
 OCClosureCompilerTest class >> methodWithOptimizedBlocksA [
 	| s c |
 	s := self isNil
@@ -110,7 +112,7 @@ OCClosureCompilerTest class >> methodWithOptimizedBlocksA [
 		class: self class"
 ]
 
-{ #category : #'code examples' }
+{ #category : 'code examples' }
 OCClosureCompilerTest class >> methodWithVariousTemps [
 	| classes total totalLength |
 	classes := self withAllSuperclasses.
@@ -126,7 +128,7 @@ OCClosureCompilerTest class >> methodWithVariousTemps [
 		class: self class"
 ]
 
-{ #category : #source }
+{ #category : 'source' }
 OCClosureCompilerTest >> closureCases [
 	^#(
 '| n |
@@ -288,7 +290,7 @@ mn generate: #(0 0 0 0).
 	outFileStream close' )
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCClosureCompilerTest >> doTestDebuggerTempAccessWith: one with: two [
 	"Test debugger access for temps"
 
@@ -325,30 +327,30 @@ OCClosureCompilerTest >> doTestDebuggerTempAccessWith: one with: two [
 	self assert: remote1 equals: 6 / 7
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 OCClosureCompilerTest >> evaluate: aString in: aContext to: anObject [
 	^ aContext compiler evaluate: aString
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 OCClosureCompilerTest >> setUp [
 	super setUp.
 	currentCompiler := SmalltalkImage compilerClass.
 	SmalltalkImage compilerClass: OpalCompiler
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 OCClosureCompilerTest >> tearDown [
 	SmalltalkImage compilerClass: currentCompiler.
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCClosureCompilerTest >> testDebuggerTempAccess [
 	self doTestDebuggerTempAccessWith: 1 with: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCClosureCompilerTest >> testInlineBlockCollectionEM1 [
 	| a1 b1 i1 a2 b2 i2 we wb |
 	b1 := OrderedCollection new.
@@ -369,7 +371,7 @@ OCClosureCompilerTest >> testInlineBlockCollectionEM1 [
 	self assert: b1 equals: b2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCClosureCompilerTest >> testInlineBlockCollectionLR1 [
 	"Test case from Lukas Renggli"
 
@@ -379,7 +381,7 @@ OCClosureCompilerTest >> testInlineBlockCollectionLR1 [
 	self assert: (col collect: [ :each | each value ]) asArray equals: (1 to: 11) asArray
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCClosureCompilerTest >> testInlineBlockCollectionLR2 [
 	"Test case from Lukas Renggli"
 
@@ -389,7 +391,7 @@ OCClosureCompilerTest >> testInlineBlockCollectionLR2 [
 	self assert: (col collect: [ :each | each value ]) asArray equals: (1 to: 11) asArray
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCClosureCompilerTest >> testInlineBlockCollectionLR3 [
 	| col |
 	col := OrderedCollection new.
@@ -401,7 +403,7 @@ OCClosureCompilerTest >> testInlineBlockCollectionLR3 [
 	self assert: (col collect: [ :each | each value ]) asArray equals: (2 to: 12) asArray
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCClosureCompilerTest >> testInlineBlockCollectionSD1 [
 	| a1 b1 a2 b2 |
 	b1 := OrderedCollection new.
@@ -418,7 +420,7 @@ OCClosureCompilerTest >> testInlineBlockCollectionSD1 [
 	self assert: b1 equals: b2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCClosureCompilerTest >> testOptimizedBlockLocalNilling1 [
 	"Whether a block is optimized or not a block-local temp
 	 should be nil at the start of each evaluation of the block."
@@ -429,7 +431,7 @@ OCClosureCompilerTest >> testOptimizedBlockLocalNilling1 [
 		self assert: j isNil not]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCClosureCompilerTest >> testOptimizedBlockLocalNilling2 [
 	"Whether a block is optimized or not a block-local temp
 	 should be nil at the start of each evaluation of the block."

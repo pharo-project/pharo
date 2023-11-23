@@ -15,29 +15,31 @@ The convenience method #bootstrapDefault will create an instance with the defaul
   MonticelloBootstrap bootstrapDefault
 "
 Class {
-	#name : #MonticelloBootstrap,
-	#superclass : #Object,
+	#name : 'MonticelloBootstrap',
+	#superclass : 'Object',
 	#instVars : [
 		'directory',
 		'localRepository'
 	],
-	#category : #'Monticello-Base'
+	#category : 'Monticello-Base',
+	#package : 'Monticello',
+	#tag : 'Base'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MonticelloBootstrap class >> bootstrapDefault [
 
 	(self inDirectory: self defaultDirectory)
 		bootstrap
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 MonticelloBootstrap class >> defaultDirectory [
 
 	^ FileLocator localDirectory / 'package-cache'
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MonticelloBootstrap class >> inDirectory: aDirectory [
 
 	^ self new
@@ -45,48 +47,46 @@ MonticelloBootstrap class >> inDirectory: aDirectory [
 		yourself
 ]
 
-{ #category : #bootstrapping }
+{ #category : 'bootstrapping' }
 MonticelloBootstrap >> bootstrap [
 
 	self createWorkingCopies.
 	self loadBootstrapPackages.
-	
-	SessionManager default registerSystemClassNamed: #SmalltalkImage.
 
+	SessionManager default registerSystemClassNamed: #SmalltalkImage
 ]
 
-{ #category : #versions }
+{ #category : 'versions' }
 MonticelloBootstrap >> bootstrapVersionsExcept: aBlock [
 
 	^ self bootstrapVersionsSatisfying: [ :arg | (aBlock value: arg) not ]
 ]
 
-{ #category : #versions }
+{ #category : 'versions' }
 MonticelloBootstrap >> bootstrapVersionsSatisfying: aBlock [
 
-	^ RPackageOrganizer default packages
-		select: [ :package | package name ~= RPackage defaultPackageName and: [ aBlock value: package ] ]
-		thenCollect: [ :rpackage | self fileNameForPackageNamed: rpackage name ]
+	^ PackageOrganizer default packages
+		  select: [ :package | package name ~= UndefinedPackage undefinedPackageName and: [ aBlock value: package ] ]
+		  thenCollect: [ :rpackage | self fileNameForPackageNamed: rpackage name ]
 ]
 
-{ #category : #bootstrapping }
+{ #category : 'bootstrapping' }
 MonticelloBootstrap >> createWorkingCopies [
-	
 	"For each of the packages inside the image, excepted by the Unpackaged package, create a monticello working copy.
 	This is achieved by creating an instance of a working copy and snapshotting it. This generates and registers the working copy automatically."
-	(RPackageOrganizer default packageNames) asSortedCollection do: [:packageName |
-		packageName = RPackage defaultPackageName ifFalse: [
-			SystemNotification signal: ('Creating Snapshot of: ', packageName).
-			(MCWorkingCopy forPackage: (MCPackage named: packageName)) snapshot ] ]
+
+	(PackageOrganizer default packageNames copyWithout: UndefinedPackage undefinedPackageName) asSortedCollection do: [ :packageName |
+		SystemNotification signal: 'Creating Snapshot of: ' , packageName.
+		(MCWorkingCopy ensureForPackageNamed: packageName) snapshot ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MonticelloBootstrap >> directory: aDirectory [
 
 	directory := aDirectory
 ]
 
-{ #category : #versions }
+{ #category : 'versions' }
 MonticelloBootstrap >> fileNameForPackageNamed: name [
 
 	| versionInfos |
@@ -101,21 +101,18 @@ MonticelloBootstrap >> fileNameForPackageNamed: name [
 	^ versionInfos anyOne basename
 ]
 
-{ #category : #bootstrapping }
+{ #category : 'bootstrapping' }
 MonticelloBootstrap >> loadBootstrapPackageNamed: aName [
 
 	self loadBootstrapPackagesNamed: { aName }
 ]
 
-{ #category : #bootstrapping }
+{ #category : 'bootstrapping' }
 MonticelloBootstrap >> loadBootstrapPackages [
 
 	MCCacheRepository cacheDirectory: directory.
 
-	(self bootstrapVersionsExcept: [ :package | 
-		#('Shift-ClassBuilder' 'Monticello')
-			includes: package name])
-		do: [ :version | self loadPackageVersion: version ].
+	(self bootstrapVersionsExcept: [ :package | #( 'Shift-ClassBuilder' 'Monticello' ) includes: package name ]) do: [ :version | self loadPackageVersion: version ].
 
 	"We load ShiftClassBuilder at the end because it has a patch to work in the bootstrap process. The patch is used when there is no source."
 
@@ -126,32 +123,39 @@ MonticelloBootstrap >> loadBootstrapPackages [
 	self loadBootstrapPackageNamed: 'Monticello'
 ]
 
-{ #category : #bootstrapping }
+{ #category : 'bootstrapping' }
 MonticelloBootstrap >> loadBootstrapPackagesNamed: aCollectionOfNames [
 
 	(self bootstrapVersionsSatisfying: [ :package | aCollectionOfNames includes: package name ])
 		do: [ :version | self loadPackageVersion: version ].
 ]
 
-{ #category : #bootstrapping }
+{ #category : 'bootstrapping' }
 MonticelloBootstrap >> loadPackageNamed: aName [
 
 	self loadPackagesNamed: { aName }
 ]
 
-{ #category : #bootstrapping }
+{ #category : 'bootstrapping' }
 MonticelloBootstrap >> loadPackageVersion: aFileName [
-	
-	[ 	SystemNotification signal: ('Loading ', aFileName asString).
-		"Use snapshot install instead of load to force loading.
-		Otherwise monticello finds no changes and does not load anything."
-		(self localRepository loadVersionFromFileNamed: aFileName) load.
-	] on: MCMergeOrLoadWarning do: [:warning |
-		SystemNotification signal: ('Warning: ', warning messageText asString).
-		warning resume: true ]
+
+	| previous |
+	"Until the bootstrap of Pharo runs on Pharo 12, the MCZ exported will be exported with categories in MCZ format instead of packages and tags. Using #readingOldExport should allow to bootstrap until we run the bootstrap in Pharo 12."
+	previous := MCMczReader readingOldExport.
+	[
+	MCMczReader readingOldExport: true.
+
+	[
+	SystemNotification signal: 'Loading ' , aFileName asString.
+	"Use snapshot install instead of load to force loading. Otherwise monticello finds no changes and does not load anything."
+	(self localRepository loadVersionFromFileNamed: aFileName) load ]
+		on: MCMergeOrLoadWarning
+		do: [ :warning |
+			SystemNotification signal: 'Warning: ' , warning messageText asString.
+			warning resume: true ] ] ensure: [ MCMczReader readingOldExport: previous ]
 ]
 
-{ #category : #bootstrapping }
+{ #category : 'bootstrapping' }
 MonticelloBootstrap >> loadPackagesNamed: aCollectionOfNames [
 
 	aCollectionOfNames do: [ :name | | filename |
@@ -159,7 +163,7 @@ MonticelloBootstrap >> loadPackagesNamed: aCollectionOfNames [
 		self loadPackageVersion: filename ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MonticelloBootstrap >> localRepository [
 
 	^ localRepository ifNil: [

@@ -1,11 +1,11 @@
-Extension { #name : #RBMultiEnvironment }
+Extension { #name : 'RBMultiEnvironment' }
 
-{ #category : #'*Manifest-Core' }
+{ #category : '*Manifest-Core' }
 RBMultiEnvironment >> isMultiEnvironment [
 	^ true
 ]
 
-{ #category : #'*Manifest-Core' }
+{ #category : '*Manifest-Core' }
 RBMultiEnvironment >> smallLintCritics [
 	^ self asSelectorEnvironment smallLintCritics
 ]

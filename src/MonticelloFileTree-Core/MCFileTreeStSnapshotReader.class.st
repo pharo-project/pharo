@@ -2,17 +2,18 @@
 Snapshot reader
 "
 Class {
-	#name : #MCFileTreeStSnapshotReader,
-	#superclass : #MCFileTreeAbstractReader,
-	#category : #'MonticelloFileTree-Core'
+	#name : 'MCFileTreeStSnapshotReader',
+	#superclass : 'MCFileTreeAbstractReader',
+	#category : 'MonticelloFileTree-Core',
+	#package : 'MonticelloFileTree-Core'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCFileTreeStSnapshotReader class >> extension [
     ^ 'pkg'
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MCFileTreeStSnapshotReader >> addClassAndMethodDefinitionsFromDirectory: aDirectory [
     | snapshot classes entries extensions |
     snapshot := self fileUtils directoryFromPath: 'snapshot' relativeTo: aDirectory.

@@ -9,59 +9,61 @@ Architectural considerations:
 most platform specific methods that need to be added to the platform class should be in the form of extensions rather then adding them directly to this package. Otherwise the platform class will degenerate very quickly into a dependence hub for all kinds of sub systems.
 "
 Class {
-	#name : #OSPlatform,
-	#superclass : #Object,
+	#name : 'OSPlatform',
+	#superclass : 'Object',
 	#classVars : [
 		'Current'
 	],
-	#category : #'System-Platforms-Base'
+	#category : 'System-Platforms-Base',
+	#package : 'System-Platforms',
+	#tag : 'Base'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSPlatform class >> current [
 	"Answer the current platform"
 	^Current
 ]
 
-{ #category : #'system attributes' }
+{ #category : 'system attributes' }
 OSPlatform class >> currentVersion [
 	"Return the version number string of the platform we're running on"
 
 	^ (Smalltalk vm getSystemAttribute: 1002) asString
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OSPlatform class >> determineActivePlatform [
 	"Look for the matching platform class"
 	^ self allSubclasses
 		detect: [ :any | any isActivePlatform ]
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 OSPlatform class >> example [
 	<example>
 	Smalltalk os current inspect
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 OSPlatform class >> initialize [
 
 	self startUp: true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OSPlatform class >> isActivePlatform [
 	"Answer whether the receiver is the active platform"
 	^false
 ]
 
-{ #category : #'system startup' }
+{ #category : 'system startup' }
 OSPlatform class >> shutDown: isImageQuitting [
 	"The system is going down"
 	Current ifNotNil: [ Current shutDown: isImageQuitting ]
 ]
 
-{ #category : #'system startup' }
+{ #category : 'system startup' }
 OSPlatform class >> startUp: isImageStarting [
 	"Determine the current platform."
 
@@ -71,38 +73,38 @@ OSPlatform class >> startUp: isImageStarting [
 	Current startUp: isImageStarting
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OSPlatform >> accept: aVisitor [
 
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSPlatform >> current [
 	^ self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSPlatform >> currentWorkingDirectoryPath [
 	"We MUST decode raw bytes to support non-Ascii characters"
 	^ self currentWorkingDirectoryRawPath decodeWith: self defaultEncoding
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSPlatform >> currentWorkingDirectoryPathWithBuffer: aByteArray [
 	<primitive: 'primitiveGetCurrentWorkingDirectory' module: '' error: ec>
 
 	^ self primitiveFailed
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSPlatform >> currentWorkingDirectoryPathWithBufferSize: aBufferSize [
 	| buffer |
 	buffer := ByteArray new: aBufferSize.
 	^ self currentWorkingDirectoryPathWithBuffer: buffer
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSPlatform >> currentWorkingDirectoryRawPath [
 	"This method calls the method getPwdViaFFI with argument of a buffer size.
 	By default it uses the defaultMaximumPathLength of each subclass as the buffer size.
@@ -110,19 +112,19 @@ OSPlatform >> currentWorkingDirectoryRawPath [
 	^ (self currentWorkingDirectoryPathWithBufferSize: self defaultMaximumPathLength) asByteArray
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSPlatform >> defaultEncoding [
 
 	^ ZnCharacterEncoder utf8
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSPlatform >> defaultMaximumPathLength [
 	"This method returns the default maximum path length for the getCurrentWorkingDirectory implementation"
 	 ^self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSPlatform >> family [
 	"Returns a symbol specific to the platform family (MacOSX, Windows, Unix, RiscOS).
 	This may need to be extended if there are new platforms added or significant differences within a platform family arise (as was the case between MacOS 9 and X)."
@@ -130,115 +132,115 @@ OSPlatform >> family [
 	self subclassResponsibility
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OSPlatform >> isLinux [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OSPlatform >> isMacOS [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OSPlatform >> isMacOSX [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OSPlatform >> isUnix [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OSPlatform >> isUnix32 [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OSPlatform >> isUnix64 [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OSPlatform >> isWin32 [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OSPlatform >> isWin64 [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OSPlatform >> isWindows [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OSPlatform >> isX11 [
 	^ self windowSystemName = 'X11'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSPlatform >> lineEnding [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSPlatform >> menuShortcutString [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSPlatform >> name [
 	"Return the name of the platform we're running on"
 
 	^ Smalltalk vm operatingSystemName
 ]
 
-{ #category : #compatbility }
+{ #category : 'compatbility' }
 OSPlatform >> platformFamily [
 	^ self family
 ]
 
-{ #category : #compatbility }
+{ #category : 'compatbility' }
 OSPlatform >> platformName [
 	^ self name
 ]
 
-{ #category : #'system startup' }
+{ #category : 'system startup' }
 OSPlatform >> shutDown: quitting [
 	"Pharo is shutting down. If this platform requires specific shutdown code, this is a great place to put it."
 ]
 
-{ #category : #'system startup' }
+{ #category : 'system startup' }
 OSPlatform >> startUp: resuming [
 	"Pharo is starting up. If this platform requires specific initialization, this is a great place to put it."
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSPlatform >> subtype [
 	"Return the subType of the platform we're running on"
 
 	^ (Smalltalk vm getSystemAttribute: 1003)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSPlatform >> version [
 	"Return the version number string of the platform we're running on"
 
 	^ self class currentVersion
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSPlatform >> virtualKey: virtualKeyCode [
 	"Subclass responsibility to override if necessary"
 	^nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSPlatform >> windowSystemName [
 	"Return the name of the window system currently being used for display."
 

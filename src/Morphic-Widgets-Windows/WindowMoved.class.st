@@ -5,36 +5,38 @@ A window position changes even when the topleft corner changed by a window resiz
 or the windows collapses.
 "
 Class {
-	#name : #WindowMoved,
-	#superclass : #WindowAnnouncement,
+	#name : 'WindowMoved',
+	#superclass : 'WindowAnnouncement',
 	#instVars : [
 		'oldPosition',
 		'newPosition'
 	],
-	#category : #'Morphic-Widgets-Windows-Announcements'
+	#category : 'Morphic-Widgets-Windows-Announcements',
+	#package : 'Morphic-Widgets-Windows',
+	#tag : 'Announcements'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 WindowMoved >> isMoved [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WindowMoved >> newPosition [
 	^ newPosition
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WindowMoved >> newPosition: anObject [
 	newPosition := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WindowMoved >> oldPosition [
 	^ oldPosition
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WindowMoved >> oldPosition: anObject [
 	oldPosition := anObject
 ]

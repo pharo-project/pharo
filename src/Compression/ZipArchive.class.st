@@ -4,8 +4,8 @@ A ZipArchive represents an archive that is read and/or written using the PKZIP f
 ZipArchive instances know how to read and write such archives; their members are subinstances of ZipArchiveMember.
 "
 Class {
-	#name : #ZipArchive,
-	#superclass : #Archive,
+	#name : 'ZipArchive',
+	#superclass : 'Archive',
 	#instVars : [
 		'centralDirectorySize',
 		'centralDirectoryOffsetWRTStartingDiskNumber',
@@ -16,30 +16,32 @@ Class {
 	#pools : [
 		'ZipFileConstants'
 	],
-	#category : #'Compression-Archives'
+	#category : 'Compression-Archives',
+	#package : 'Compression',
+	#tag : 'Archives'
 }
 
-{ #category : #constants }
+{ #category : 'constants' }
 ZipArchive class >> compressionDeflated [
 	^CompressionDeflated
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 ZipArchive class >> compressionLevelDefault [
 	^CompressionLevelDefault
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 ZipArchive class >> compressionLevelNone [
 	^CompressionLevelNone
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 ZipArchive class >> compressionStored [
 	^CompressionStored
 ]
 
-{ #category : #'file in/out' }
+{ #category : 'file in/out' }
 ZipArchive class >> extractAllIn: aFileReferenceOrFileName [
 	"Service method to extract all contents of a zip."
 	| directory |
@@ -49,7 +51,15 @@ ZipArchive class >> extractAllIn: aFileReferenceOrFileName [
 		extractAllTo: directory
 ]
 
-{ #category : #constants }
+{ #category : 'file in/out' }
+ZipArchive class >> extractFrom: aZipFile to: aDirectory [
+
+	^ self new
+		  readFrom: aZipFile;
+		  extractAllTo: aDirectory asFileReference
+]
+
+{ #category : 'constants' }
 ZipArchive class >> findEndOfCentralDirectoryFrom: stream [
 	"Seek in the given stream to the end, then read backwards until we find the
 	signature of the central directory record. Leave the file positioned right
@@ -81,7 +91,7 @@ ZipArchive class >> findEndOfCentralDirectoryFrom: stream [
 		ifFalse: [0]
 ]
 
-{ #category : #'testing - file format' }
+{ #category : 'testing - file format' }
 ZipArchive class >> isZipArchive: file [
 	"Answer whether the given file represents a valid zip file. The argument file can be a String, FileReference or an open binary read stream.
 
@@ -100,7 +110,7 @@ ZipArchive class >> isZipArchive: file [
 	^ eocdPosition > 0
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 ZipArchive class >> validSignatures [
 	"Return the valid signatures for a zip file"
 	^Array
@@ -109,7 +119,7 @@ ZipArchive class >> validSignatures [
 		with: EndOfCentralDirectorySignature
 ]
 
-{ #category : #'archive operations' }
+{ #category : 'archive operations' }
 ZipArchive >> addDeflateString: aString as: aFileName [
 	"Add a verbatim string under the given file name"
 
@@ -119,12 +129,12 @@ ZipArchive >> addDeflateString: aString as: aFileName [
 	^ mbr
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ZipArchive >> close [
 	self members do: [:m | m close ]
 ]
 
-{ #category : #'archive operations' }
+{ #category : 'archive operations' }
 ZipArchive >> extractAllTo: aDirectory [
 	"Extract all elements to the given directory; notifying user via UI on progress and if existing files exist"
 
@@ -134,14 +144,14 @@ ZipArchive >> extractAllTo: aDirectory [
 			self extractAllTo: aDirectory informing: bar ]
 ]
 
-{ #category : #'archive operations' }
+{ #category : 'archive operations' }
 ZipArchive >> extractAllTo: aDirectory informing: bar [
 	"Extract all elements to the given directory; notifying user via UI on progress and if existing files exist"
 
 	^ self extractAllTo: aDirectory informing: bar overwrite: false
 ]
 
-{ #category : #'archive operations' }
+{ #category : 'archive operations' }
 ZipArchive >> extractAllTo: aDirectory informing: aBar overwrite: allOverwrite [
 	"Extract all elements to the given directory. Informs user when a file exists and set to overwrite"
 
@@ -186,32 +196,32 @@ ZipArchive >> extractAllTo: aDirectory informing: aBar overwrite: allOverwrite [
 					lastUpdate := Time millisecondClockValue ] ]
 ]
 
-{ #category : #'archive operations' }
+{ #category : 'archive operations' }
 ZipArchive >> extractAllTo: aDirectory overwrite: overwriteAll [
 	"Extracts all elements to the given directory, overwriting existing entries if necessary. Does not use the UI for confirmation"
 
 	self members do: [ :entry | entry extractInDirectory: aDirectory withoutInformingOverwrite: overwriteAll ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZipArchive >> hasMemberSuchThat: aBlock [
 	"Answer whether we have a member satisfying the given condition"
 	^self members anySatisfy: aBlock
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ZipArchive >> initialize [
 	super initialize.
 	writeEOCDOffset := writeCentralDirectoryOffset := 0.
 	zipFileComment := ''
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZipArchive >> memberClass [
 	^ZipArchiveMember
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZipArchive >> prependedDataSize [
 	"Answer the size of whatever data exists before my first member.
 	Assumes that I was read from a file or stream (i.e. the first member is a ZipFileMember)"
@@ -220,7 +230,7 @@ ZipArchive >> prependedDataSize [
 		ifTrue: [ centralDirectoryOffsetWRTStartingDiskNumber ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZipArchive >> readEndOfCentralDirectoryFrom: aStream [
 	"Read EOCD, starting from position before signature."
 	| signature zipFileCommentLength endianStream |
@@ -238,7 +248,7 @@ ZipArchive >> readEndOfCentralDirectoryFrom: aStream [
 	zipFileComment := aStream next: zipFileCommentLength
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 ZipArchive >> readFrom: aStreamOrFile [
 	| stream name eocdPosition |
 	stream := aStreamOrFile isStream
@@ -251,7 +261,7 @@ ZipArchive >> readFrom: aStreamOrFile [
 	self readMembersFrom: stream named: name
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZipArchive >> readMembersFrom: stream named: fileName [
 
 	[ | signature newMember |
@@ -266,7 +276,7 @@ ZipArchive >> readMembersFrom: stream named: fileName [
 	] repeat
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZipArchive >> readSignatureFrom: stream [
 	"Returns next signature from given stream, leaves stream positioned afterwards."
 
@@ -279,7 +289,7 @@ ZipArchive >> readSignatureFrom: stream [
 	^signatureData
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZipArchive >> writeCentralDirectoryTo: aStream [
 	| offset |
 	offset := writeCentralDirectoryOffset.
@@ -291,7 +301,7 @@ ZipArchive >> writeCentralDirectoryTo: aStream [
 	self writeEndOfCentralDirectoryTo: aStream
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZipArchive >> writeEndOfCentralDirectoryTo: aStream [
 
 	| endianStream |
@@ -309,7 +319,7 @@ ZipArchive >> writeEndOfCentralDirectoryTo: aStream [
 	zipFileComment isEmpty ifFalse: [ aStream nextPutAll: zipFileComment ]
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 ZipArchive >> writeTo: stream [
 	members do: [ :member |
 		member writeTo: stream.
@@ -319,13 +329,13 @@ ZipArchive >> writeTo: stream [
 	self writeCentralDirectoryTo: stream
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 ZipArchive >> writeTo: stream prepending: aString [
 	stream nextPutAll: aString.
 	self writeTo: stream
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 ZipArchive >> writeTo: stream prependingFile: aFileReferenceOrFileName [
 
 	aFileReferenceOrFileName asFileReference binaryReadStreamDo: [ :prepended | | buffer |
@@ -342,12 +352,12 @@ ZipArchive >> writeTo: stream prependingFile: aFileReferenceOrFileName [
 	self writeTo: stream
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZipArchive >> zipFileComment [
 	^zipFileComment asString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZipArchive >> zipFileComment: aString [
 	zipFileComment := aString
 ]

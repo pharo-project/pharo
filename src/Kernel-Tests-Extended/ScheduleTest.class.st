@@ -2,23 +2,25 @@
 SUnit tests for recurring schedules (class Schedule).
 "
 Class {
-	#name : #ScheduleTest,
-	#superclass : #ClassTestCase,
+	#name : 'ScheduleTest',
+	#superclass : 'ClassTestCase',
 	#instVars : [
 		'firstEvent',
 		'aSchedule',
 		'restoredTimeZone'
 	],
-	#category : #'Kernel-Tests-Extended-Chronology'
+	#category : 'Kernel-Tests-Extended-Chronology',
+	#package : 'Kernel-Tests-Extended',
+	#tag : 'Chronology'
 }
 
-{ #category : #coverage }
+{ #category : 'coverage' }
 ScheduleTest >> classToBeTested [
 
 	^ Schedule
 ]
 
-{ #category : #coverage }
+{ #category : 'coverage' }
 ScheduleTest >> selectorsToBeIgnored [
 
 	| private |
@@ -27,7 +29,7 @@ ScheduleTest >> selectorsToBeIgnored [
 	^ super selectorsToBeIgnored, private
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ScheduleTest >> setUp [
  	 "Schedule is a type of Timespan representing repeated occurrences of the same event.
 	The beginning of the schedule is the first occurrence of the event.
@@ -53,14 +55,14 @@ ScheduleTest >> setUp [
 	aSchedule schedule: { Duration days: 1. Duration days: 6 }
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ScheduleTest >> tearDown [
 
 	DateAndTime localTimeZone: restoredTimeZone.
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ScheduleTest >> testBetweenAndDoDisjointWithSchedule [
 	| count |
 	count := 0.
@@ -68,7 +70,7 @@ ScheduleTest >> testBetweenAndDoDisjointWithSchedule [
 	self assert: count equals: 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ScheduleTest >> testBetweenAndDoIncludedInSchedule [
 	| count |
 	count := 0.
@@ -76,7 +78,7 @@ ScheduleTest >> testBetweenAndDoIncludedInSchedule [
 	self assert: count equals: 8
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ScheduleTest >> testBetweenAndDoOverlappingSchedule [
 	| count |
 	count := 0.
@@ -84,7 +86,7 @@ ScheduleTest >> testBetweenAndDoOverlappingSchedule [
 	self assert: count equals: 8
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ScheduleTest >> testDateAndTimes [
 	| answer |
 	self assert: aSchedule dateAndTimes size equals: 104.
@@ -94,7 +96,7 @@ ScheduleTest >> testDateAndTimes [
 	self assert: answer
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ScheduleTest >> testDaysOfWeekAreConsistent [
 	| originalDayOfWeekSet modifiedDayOfWeekSet start end |
 	originalDayOfWeekSet := (aSchedule dateAndTimes collect: [ :each | each dayOfWeek ]) asSet.
@@ -115,7 +117,7 @@ ScheduleTest >> testDaysOfWeekAreConsistent [
 	self assert: originalDayOfWeekSet equals: modifiedDayOfWeekSet asSet
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ScheduleTest >> testExampleFromSwikiPage [
 	"It is often neccessary to schedule repeated events, like airline flight schedules, TV programmes, and file backups.
 	 Schedule is a Timespan which maintains an array of Durations.
@@ -133,7 +135,7 @@ ScheduleTest >> testExampleFromSwikiPage [
 	shows dateAndTimes collect: [ :dt | dt dayOfWeekName ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ScheduleTest >> testFromDateAndTime [
 	| oc1 oc2 |
 	oc1 := OrderedCollection new.
@@ -144,12 +146,12 @@ ScheduleTest >> testFromDateAndTime [
 	self assert: oc1 asArray equals: oc2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ScheduleTest >> testIncludes [
 	self assert: (aSchedule includes: (DateAndTime year: 2003 month: 6 day: 15 hour: 20 minute: 30 second: 0 offset: 0 hours))
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ScheduleTest >> testMonotonicity [
 
 	| t1 t2 t3 t4 |
@@ -164,7 +166,7 @@ ScheduleTest >> testMonotonicity [
 		assert: (	t3 <= t4)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ScheduleTest >> testSchedule [
 	self assert: aSchedule schedule size equals: 2.
 	self assert: aSchedule schedule first equals: 1 days.

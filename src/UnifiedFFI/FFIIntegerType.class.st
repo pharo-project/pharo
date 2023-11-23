@@ -2,24 +2,26 @@
 A generic (abstract) integer type.
 "
 Class {
-	#name : #FFIIntegerType,
-	#superclass : #FFIExternalType,
-	#category : #'UnifiedFFI-Types'
+	#name : 'FFIIntegerType',
+	#superclass : 'FFIExternalType',
+	#category : 'UnifiedFFI-Types',
+	#package : 'UnifiedFFI',
+	#tag : 'Types'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIIntegerType >> defaultReturnOnError [
 
 	^ 0
 ]
 
-{ #category : #callbacks }
+{ #category : 'callbacks' }
 FFIIntegerType >> extractFromCallbackOn: aCallbackArgumentReader [
 
 	^ aCallbackArgumentReader extractIntegerType
 ]
 
-{ #category : #'stack parameter classification' }
+{ #category : 'stack parameter classification' }
 FFIIntegerType >> stackValueParameterClass [
 	^ #integer
 ]

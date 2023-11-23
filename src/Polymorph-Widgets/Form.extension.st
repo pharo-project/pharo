@@ -1,6 +1,6 @@
-Extension { #name : #Form }
+Extension { #name : 'Form' }
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 Form >> listRenderOn: aCanvas atRow: index bounds: aRectangle color: aColor backgroundColor: backgroundColor from: aList [
 	self asMorph
 		listRenderOn: aCanvas
@@ -11,19 +11,19 @@ Form >> listRenderOn: aCanvas atRow: index bounds: aRectangle color: aColor back
 		from: aList
 ]
 
-{ #category : #'*Polymorph-Widgets-Themes' }
+{ #category : '*Polymorph-Widgets-Themes' }
 Form >> mergeBottomRightWith: aForm [
 	^ self
 		mergeWith: aForm
 		at: self extent - aForm extent
 ]
 
-{ #category : #'*Polymorph-Widgets-Themes' }
+{ #category : '*Polymorph-Widgets-Themes' }
 Form >> mergeWith: aForm [
 	^ self mergeWith: aForm at: 0@0
 ]
 
-{ #category : #'*Polymorph-Widgets-Themes' }
+{ #category : '*Polymorph-Widgets-Themes' }
 Form >> mergeWith: aForm at: aPoint [
 	| mergedForm |
 
@@ -35,7 +35,7 @@ Form >> mergeWith: aForm at: aPoint [
 	^ mergedForm
 ]
 
-{ #category : #'*Polymorph-Widgets-Themes' }
+{ #category : '*Polymorph-Widgets-Themes' }
 Form >> setAsBackground [
 	"Set this form as a background image."
 	| world |

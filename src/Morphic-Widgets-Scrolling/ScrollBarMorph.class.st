@@ -6,8 +6,8 @@ Once we have this working, put in logic for horizontal operation as well.
 CachedImages was added to reduce the number of forms created and thrown away. This will be helpful for Nebraska and others as well.
 "
 Class {
-	#name : #ScrollBarMorph,
-	#superclass : #SliderMorph,
+	#name : 'ScrollBarMorph',
+	#superclass : 'SliderMorph',
 	#instVars : [
 		'upButton',
 		'downButton',
@@ -25,16 +25,17 @@ Class {
 		'ArrowImagesCache',
 		'BoxesImagesCache'
 	],
-	#category : #'Morphic-Widgets-Scrolling'
+	#category : 'Morphic-Widgets-Scrolling',
+	#package : 'Morphic-Widgets-Scrolling'
 }
 
-{ #category : #images }
+{ #category : 'images' }
 ScrollBarMorph class >> arrowOfDirection: aSymbol size: finalSizeInteger color: aColor [
-	"answer a form with an arrow based on the parameters"
+	"answer a FormSet with an arrow based on the parameters"
 	^ ArrowImagesCache at: {aSymbol. finalSizeInteger. aColor}
 ]
 
-{ #category : #'images - samples' }
+{ #category : 'images - samples' }
 ScrollBarMorph class >> arrowSamples [
 	"create a set of arrow with different sizes, colors and directions"
 	"
@@ -72,13 +73,13 @@ ScrollBarMorph class >> arrowSamples [
 	column openInHand
 ]
 
-{ #category : #images }
+{ #category : 'images' }
 ScrollBarMorph class >> boxOfSize: finalSizeInteger color: aColor [
 	"answer a form with an box based on the parameters"
 	^ BoxesImagesCache at: {finalSizeInteger. aColor}
 ]
 
-{ #category : #'images - samples' }
+{ #category : 'images - samples' }
 ScrollBarMorph class >> boxSamples [
 	"create a set of box with different sizes and colors"
 	"
@@ -112,14 +113,14 @@ ScrollBarMorph class >> boxSamples [
 	column openInHand
 ]
 
-{ #category : #cleanup }
+{ #category : 'cleanup' }
 ScrollBarMorph class >> cleanUp [
 	"Re-initialize the image cache"
 
 	self initializeImagesCache
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 ScrollBarMorph class >> initialize [
 
 	self initializeImagesCache.
@@ -127,7 +128,7 @@ ScrollBarMorph class >> initialize [
 	self deprecatedAliases: { #ScrollBar }
 ]
 
-{ #category : #'private - initialization' }
+{ #category : 'private - initialization' }
 ScrollBarMorph class >> initializeImagesCache [
 	"initialize the receiver's ImagesCache.
 
@@ -142,20 +143,20 @@ ScrollBarMorph class >> initializeImagesCache [
 	BoxesImagesCache := self theme createBoxImagesCache
 ]
 
-{ #category : #'images - samples' }
+{ #category : 'images - samples' }
 ScrollBarMorph class >> sampleColors [
 	"private"
 	^ (Color lightCyan wheel: 5)
 ]
 
-{ #category : #'images - samples' }
+{ #category : 'images - samples' }
 ScrollBarMorph class >> sampleSizes [
 
 "private"
 	^ #(10 12 14 16 18 32 64 )
 ]
 
-{ #category : #update }
+{ #category : 'update' }
 ScrollBarMorph >> adoptGradientColor: aColor [
 	"Adopt the given pane color."
 
@@ -180,14 +181,14 @@ ScrollBarMorph >> adoptGradientColor: aColor [
 	self updateDownButtonImage
 ]
 
-{ #category : #'private - accessing' }
+{ #category : 'private - accessing' }
 ScrollBarMorph >> adoptPaneColor: aColor [
 	"Adopt the given pane color"
 	aColor ifNil:[^self].
 	self sliderColor: aColor
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 ScrollBarMorph >> buttonExtent [
 	| size |
 	size := self theme scrollbarThickness.
@@ -201,14 +202,14 @@ ScrollBarMorph >> buttonExtent [
 			ifNotNil: [ downButton extent ] ]
 ]
 
-{ #category : #'private - accessing' }
+{ #category : 'private - accessing' }
 ScrollBarMorph >> buttonImageColor [
 	"Answer the color to use for the arrow image of a button."
 
 	^self theme scrollbarImageColorFor: self
 ]
 
-{ #category : #scrolling }
+{ #category : 'scrolling' }
 ScrollBarMorph >> doScrollByPage [
 	"Scroll automatically while mouse is down"
 	(self waitForDelay1: 300 delay2: 100) ifFalse: [^ self].
@@ -217,23 +218,23 @@ ScrollBarMorph >> doScrollByPage [
 		ifFalse: [self setValue: (value - pageDelta max: 0.0)]
 ]
 
-{ #category : #scrolling }
+{ #category : 'scrolling' }
 ScrollBarMorph >> doScrollDown [
 	"Scroll automatically while mouse is down"
 	(self waitForDelay1: 200 delay2: 40) ifFalse: [^ self].
 	self setValue: (value + scrollDelta + 0.000001 min: 1.0)
 ]
 
-{ #category : #scrolling }
+{ #category : 'scrolling' }
 ScrollBarMorph >> doScrollUp [
 	"Scroll automatically while mouse is down"
 	(self waitForDelay1: 200 delay2: 40) ifFalse: [^ self].
 	self setValue: (value - scrollDelta - 0.000001 max: 0.0)
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 ScrollBarMorph >> downImage [
-	"answer a form to be used in the down button"
+	"answer a FormSet to be used in the down button"
 	^ self class
 		arrowOfDirection: (bounds isWide
 				ifTrue: [#right]
@@ -242,7 +243,7 @@ ScrollBarMorph >> downImage [
 		color: self buttonImageColor
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 ScrollBarMorph >> expandSlider [
 	"Compute the new size of the slider (use the old sliderThickness as a minimum)."
 	| r |
@@ -252,7 +253,7 @@ ScrollBarMorph >> expandSlider [
 		ifFalse: [slider width @ ((r height * interval) asInteger max: self sliderThickness)])
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 ScrollBarMorph >> extent: p [
 	p x > p y
 		ifTrue: [super
@@ -261,7 +262,7 @@ ScrollBarMorph >> extent: p [
 				extent: (p max: (8 @ 42) scaledByDisplayScaleFactor)]
 ]
 
-{ #category : #'private - accessing' }
+{ #category : 'private - accessing' }
 ScrollBarMorph >> finishedScrolling [
 	"Scrolling has finished (button or paging area)."
 
@@ -279,7 +280,7 @@ ScrollBarMorph >> finishedScrolling [
 		borderStyle: self normalBorderStyle
 ]
 
-{ #category : #'private - accessing' }
+{ #category : 'private - accessing' }
 ScrollBarMorph >> finishedScrolling: event [
 	"Scrolling has finished for a button."
 
@@ -315,14 +316,14 @@ ScrollBarMorph >> finishedScrolling: event [
 							borderStyle: self normalButtonBorderStyle]]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ScrollBarMorph >> initialize [
 	super initialize.
 	scrollDelta := 0.02.
 	pageDelta := 0.2
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ScrollBarMorph >> initializeDownButton [
 	"initialize the receiver's downButton"
 
@@ -349,7 +350,7 @@ ScrollBarMorph >> initializeDownButton [
 	self addMorph: downButton
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ScrollBarMorph >> initializePagingArea [
 	"Initialize the receiver's pagingArea."
 
@@ -374,7 +375,7 @@ ScrollBarMorph >> initializePagingArea [
 	self on: #mouseLeave send: #mouseLeavePagingArea: to: self
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ScrollBarMorph >> initializeSlider [
 	"Initialize the receiver's slider."
 
@@ -389,7 +390,7 @@ ScrollBarMorph >> initializeSlider [
 	slider on: #mouseLeave send: #mouseLeaveThumb: to: self
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ScrollBarMorph >> initializeUpButton [
 	"initialize the receiver's upButton"
 	upButton := self theme newScrollBarUpButtonFor: self.
@@ -414,7 +415,7 @@ ScrollBarMorph >> initializeUpButton [
 	self addMorph: upButton
 ]
 
-{ #category : #'private - accessing' }
+{ #category : 'private - accessing' }
 ScrollBarMorph >> interval: d [
 	"Supply an optional floating fraction so slider can expand to indicate range.
 	Update the fill style for the tumb (may have extent-based elements)."
@@ -428,17 +429,17 @@ ScrollBarMorph >> interval: d [
 		ifFalse: [slider fillStyle: self normalThumbFillStyle]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ScrollBarMorph >> lastPaneColor [
 	^ lastPaneColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ScrollBarMorph >> lastPaneColor: anObject [
 	lastPaneColor := anObject
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 ScrollBarMorph >> menuImage [
 	"answer a form to be used in the menu button"
 	^ self class
@@ -446,7 +447,7 @@ ScrollBarMorph >> menuImage [
 		color: self thumbColor
 ]
 
-{ #category : #'other events' }
+{ #category : 'other events' }
 ScrollBarMorph >> mouseDownInSlider: event [
 	"The mouse has been pressed in the slider area."
 
@@ -473,7 +474,7 @@ ScrollBarMorph >> mouseDownInSlider: event [
 	self dragging: true
 ]
 
-{ #category : #mouse }
+{ #category : 'mouse' }
 ScrollBarMorph >> mouseEnterDownButton: event [
 	"The mouse has entered the down button."
 
@@ -483,7 +484,7 @@ ScrollBarMorph >> mouseEnterDownButton: event [
 		changed
 ]
 
-{ #category : #mouse }
+{ #category : 'mouse' }
 ScrollBarMorph >> mouseEnterPagingArea: event [
 	"The mouse has entered the paging area."
 
@@ -505,7 +506,7 @@ ScrollBarMorph >> mouseEnterPagingArea: event [
 		changed
 ]
 
-{ #category : #mouse }
+{ #category : 'mouse' }
 ScrollBarMorph >> mouseEnterThumb: event [
 	"The mouse has entered the thumb."
 
@@ -523,7 +524,7 @@ ScrollBarMorph >> mouseEnterThumb: event [
 		changed
 ]
 
-{ #category : #mouse }
+{ #category : 'mouse' }
 ScrollBarMorph >> mouseEnterUpButton: event [
 	"The mouse has entered the up button."
 
@@ -533,7 +534,7 @@ ScrollBarMorph >> mouseEnterUpButton: event [
 		changed
 ]
 
-{ #category : #mouse }
+{ #category : 'mouse' }
 ScrollBarMorph >> mouseLeaveDownButton: event [
 	"The mouse has left the down button."
 
@@ -545,7 +546,7 @@ ScrollBarMorph >> mouseLeaveDownButton: event [
 				changed ]
 ]
 
-{ #category : #mouse }
+{ #category : 'mouse' }
 ScrollBarMorph >> mouseLeavePagingArea: event [
 	"The mouse has left the paging area."
 
@@ -567,7 +568,7 @@ ScrollBarMorph >> mouseLeavePagingArea: event [
 		changed
 ]
 
-{ #category : #mouse }
+{ #category : 'mouse' }
 ScrollBarMorph >> mouseLeaveThumb: event [
 	"The mouse has left the thumb."
 
@@ -592,7 +593,7 @@ ScrollBarMorph >> mouseLeaveThumb: event [
 		borderStyle: buttonBorderStyle
 ]
 
-{ #category : #mouse }
+{ #category : 'mouse' }
 ScrollBarMorph >> mouseLeaveUpButton: event [
 	"The mouse has left the up button."
 
@@ -604,35 +605,35 @@ ScrollBarMorph >> mouseLeaveUpButton: event [
 				changed ]
 ]
 
-{ #category : #style }
+{ #category : 'style' }
 ScrollBarMorph >> mouseOverBorderStyle [
 	"Return the mouse over borderStyle for the receiver."
 
 	^self theme scrollbarMouseOverBorderStyleFor: self
 ]
 
-{ #category : #style }
+{ #category : 'style' }
 ScrollBarMorph >> mouseOverButtonBorderStyle [
 	"Return the mouse over button borderStyle for the receiver."
 
 	^self theme scrollbarMouseOverButtonBorderStyleFor: self
 ]
 
-{ #category : #style }
+{ #category : 'style' }
 ScrollBarMorph >> mouseOverButtonFillStyle [
 	"Return the mouse over button fillStyle for the receiver."
 
 	^self theme scrollbarMouseOverButtonFillStyleFor: self
 ]
 
-{ #category : #style }
+{ #category : 'style' }
 ScrollBarMorph >> mouseOverFillStyle [
 	"Return the mouse over fillStyle for the receiver."
 
 	^self theme scrollbarMouseOverFillStyleFor: self
 ]
 
-{ #category : #style }
+{ #category : 'style' }
 ScrollBarMorph >> mouseOverPagingAreaButtonBorderStyle [
 	"Return the button borderStyle for the receiver when the mouse
 	is over the paging area."
@@ -640,7 +641,7 @@ ScrollBarMorph >> mouseOverPagingAreaButtonBorderStyle [
 	^self theme scrollbarMouseOverBarButtonBorderStyleFor: self
 ]
 
-{ #category : #style }
+{ #category : 'style' }
 ScrollBarMorph >> mouseOverPagingAreaButtonFillStyle [
 	"Return the button fillStyle for the receiver when the mouse
 	is over the paging area."
@@ -648,7 +649,7 @@ ScrollBarMorph >> mouseOverPagingAreaButtonFillStyle [
 	^self theme scrollbarMouseOverBarButtonFillStyleFor: self
 ]
 
-{ #category : #style }
+{ #category : 'style' }
 ScrollBarMorph >> mouseOverPagingAreaThumbBorderStyle [
 	"Return the thumb borderStyle for the receiver when the mouse
 	is over the paging area."
@@ -656,7 +657,7 @@ ScrollBarMorph >> mouseOverPagingAreaThumbBorderStyle [
 	^self theme scrollbarMouseOverBarThumbBorderStyleFor: self
 ]
 
-{ #category : #style }
+{ #category : 'style' }
 ScrollBarMorph >> mouseOverPagingAreaThumbFillStyle [
 	"Return the thumb fillStyle for the receiver when the mouse
 	is over the paging area."
@@ -664,14 +665,14 @@ ScrollBarMorph >> mouseOverPagingAreaThumbFillStyle [
 	^self theme scrollbarMouseOverBarThumbFillStyleFor: self
 ]
 
-{ #category : #style }
+{ #category : 'style' }
 ScrollBarMorph >> mouseOverThumbBorderStyle [
 	"Return the mouse over thumb borderStyle for the receiver."
 
 	^self theme scrollbarMouseOverThumbBorderStyleFor: self
 ]
 
-{ #category : #style }
+{ #category : 'style' }
 ScrollBarMorph >> mouseOverThumbButtonBorderStyle [
 	"Return the button borderStyle for the receiver when the mouse
 	is over the thumb."
@@ -679,21 +680,21 @@ ScrollBarMorph >> mouseOverThumbButtonBorderStyle [
 	^self theme scrollbarMouseOverThumbButtonBorderStyleFor: self
 ]
 
-{ #category : #style }
+{ #category : 'style' }
 ScrollBarMorph >> mouseOverThumbButtonFillStyle [
 	"Return the mouse over thumb fillStyle for the receiver."
 
 	^self theme scrollbarMouseOverThumbButtonFillStyleFor: self
 ]
 
-{ #category : #style }
+{ #category : 'style' }
 ScrollBarMorph >> mouseOverThumbFillStyle [
 	"Return the mouse over thumb fillStyle for the receiver."
 
 	^self theme scrollbarMouseOverThumbFillStyleFor: self
 ]
 
-{ #category : #mouse }
+{ #category : 'mouse' }
 ScrollBarMorph >> mouseUpInSlider: event [
 	"The mouse button has been released."
 
@@ -712,96 +713,96 @@ ScrollBarMorph >> mouseUpInSlider: event [
 	self dragging:false
 ]
 
-{ #category : #style }
+{ #category : 'style' }
 ScrollBarMorph >> normalBorderStyle [
 	"Return the normal borderStyle for the receiver."
 
 	^self theme scrollbarNormalBorderStyleFor: self
 ]
 
-{ #category : #style }
+{ #category : 'style' }
 ScrollBarMorph >> normalButtonBorderStyle [
 	"Return the normal button borderStyle for the receiver."
 
 	^self theme scrollbarNormalButtonBorderStyleFor: self
 ]
 
-{ #category : #style }
+{ #category : 'style' }
 ScrollBarMorph >> normalButtonFillStyle [
 	"Return the normal button fillStyle for the receiver."
 
 	^self theme scrollbarNormalButtonFillStyleFor: self
 ]
 
-{ #category : #style }
+{ #category : 'style' }
 ScrollBarMorph >> normalFillStyle [
 	"Return the normal fillStyle for the receiver."
 
 	^self theme scrollbarNormalFillStyleFor: self
 ]
 
-{ #category : #style }
+{ #category : 'style' }
 ScrollBarMorph >> normalThumbBorderStyle [
 	"Return the normal thumb borderStyle for the receiver."
 
 	^self theme scrollbarNormalThumbBorderStyleFor: self
 ]
 
-{ #category : #style }
+{ #category : 'style' }
 ScrollBarMorph >> normalThumbFillStyle [
 	"Return the normal thumb fillStyle for the receiver."
 
 	^self theme scrollbarNormalThumbFillStyleFor: self
 ]
 
-{ #category : #'private - accessing' }
+{ #category : 'private - accessing' }
 ScrollBarMorph >> pagingArea [
 	^pagingArea
 ]
 
-{ #category : #style }
+{ #category : 'style' }
 ScrollBarMorph >> pressedBorderStyle [
 	"Return the pressed borderStyle for the receiver."
 
 	^self theme scrollbarPressedBorderStyleFor: self
 ]
 
-{ #category : #style }
+{ #category : 'style' }
 ScrollBarMorph >> pressedButtonBorderStyle [
 	"Return the pressed button borderStyle for the receiver."
 
 	^self theme scrollbarPressedButtonBorderStyleFor: self
 ]
 
-{ #category : #style }
+{ #category : 'style' }
 ScrollBarMorph >> pressedButtonFillStyle [
 	"Return the pressed button fillStyle for the receiver."
 
 	^self theme scrollbarPressedButtonFillStyleFor: self
 ]
 
-{ #category : #style }
+{ #category : 'style' }
 ScrollBarMorph >> pressedFillStyle [
 	"Return the pressed fillStyle for the receiver."
 
 	^self theme scrollbarPressedFillStyleFor: self
 ]
 
-{ #category : #style }
+{ #category : 'style' }
 ScrollBarMorph >> pressedThumbBorderStyle [
 	"Return the pressed thumb borderStyle for the receiver."
 
 	^self theme scrollbarPressedThumbBorderStyleFor: self
 ]
 
-{ #category : #style }
+{ #category : 'style' }
 ScrollBarMorph >> pressedThumbFillStyle [
 	"Return the pressed thumb fillStyle for the receiver."
 
 	^self theme scrollbarPressedThumbFillStyleFor: self
 ]
 
-{ #category : #'scroll timing' }
+{ #category : 'scroll timing' }
 ScrollBarMorph >> resetTimer [
 	timeOfMouseDown := Time millisecondClockValue.
 	timeOfLastScroll := timeOfMouseDown - 1000 max: 0.
@@ -809,34 +810,34 @@ ScrollBarMorph >> resetTimer [
 	currentScrollDelay := nil
 ]
 
-{ #category : #scrolling }
+{ #category : 'scrolling' }
 ScrollBarMorph >> scrollBarAction [
 	^self valueOfProperty: #scrollBarAction
 ]
 
-{ #category : #scrolling }
+{ #category : 'scrolling' }
 ScrollBarMorph >> scrollBarAction: aSymbol [
 	self setProperty: #scrollBarAction toValue: aSymbol
 ]
 
-{ #category : #'private - accessing' }
+{ #category : 'private - accessing' }
 ScrollBarMorph >> scrollDelta [
 	^ scrollDelta
 ]
 
-{ #category : #'private - accessing' }
+{ #category : 'private - accessing' }
 ScrollBarMorph >> scrollDelta: d1 pageDelta: d2 [
 	"Supply optional increments for better scrolling of, eg, text"
 	scrollDelta := d1.
 	pageDelta := d2
 ]
 
-{ #category : #scrolling }
+{ #category : 'scrolling' }
 ScrollBarMorph >> scrollDown: count [
 	self setValue: (value + (scrollDelta * count) + 0.000001 min: 1.0)
 ]
 
-{ #category : #'private - accessing' }
+{ #category : 'private - accessing' }
 ScrollBarMorph >> scrollDownInit [
 	"Initialize a scroll down (from button) operation.
 	Fixed to perform immediately with deferred
@@ -857,12 +858,12 @@ ScrollBarMorph >> scrollDownInit [
 	downButton borderStyle: self pressedButtonBorderStyle
 ]
 
-{ #category : #scrolling }
+{ #category : 'scrolling' }
 ScrollBarMorph >> scrollLeft: count [
 	self scrollUp: count
 ]
 
-{ #category : #'private - accessing' }
+{ #category : 'private - accessing' }
 ScrollBarMorph >> scrollPageInit: evt [
 	"Scroll initiated by the paging area."
 
@@ -877,17 +878,17 @@ ScrollBarMorph >> scrollPageInit: evt [
 	self startStepping: #stepAt: at: Time millisecondClockValue + self stepTime arguments: nil stepTime: nil
 ]
 
-{ #category : #scrolling }
+{ #category : 'scrolling' }
 ScrollBarMorph >> scrollRight: count [
 	self scrollDown: count
 ]
 
-{ #category : #scrolling }
+{ #category : 'scrolling' }
 ScrollBarMorph >> scrollUp: count [
 	self setValue: (value - (scrollDelta * count) - 0.000001 max: 0.0)
 ]
 
-{ #category : #'private - accessing' }
+{ #category : 'private - accessing' }
 ScrollBarMorph >> scrollUpInit [
 	"Initialize a scroll up (from button) operation.
 	Fixed to perform immediately with deferred
@@ -908,7 +909,7 @@ ScrollBarMorph >> scrollUpInit [
 	upButton borderStyle: self pressedButtonBorderStyle
 ]
 
-{ #category : #scrolling }
+{ #category : 'scrolling' }
 ScrollBarMorph >> setNextDirectionFromEvent: event [
 
 	nextPageDirection := bounds isWide ifTrue: [
@@ -919,7 +920,7 @@ ScrollBarMorph >> setNextDirectionFromEvent: event [
 	]
 ]
 
-{ #category : #'model access' }
+{ #category : 'model access' }
 ScrollBarMorph >> setValue: newValue [
 	"Using roundTo: instead of truncateTo: ensures that scrollUp will scroll the same distance as scrollDown.
 	Fix for >= 1.0 since, when close the roundTo may round down and not allow the value to reach
@@ -930,14 +931,14 @@ ScrollBarMorph >> setValue: newValue [
 	^ super setValue: (newValue roundTo: scrollDelta)
 ]
 
-{ #category : #'private - accessing' }
+{ #category : 'private - accessing' }
 ScrollBarMorph >> slider [
 	"Answer the slider."
 
 	^slider
 ]
 
-{ #category : #'private - accessing' }
+{ #category : 'private - accessing' }
 ScrollBarMorph >> sliderColor: aColor [
 	"Change the color of the scrollbar to go with aColor."
 	| buttonColor |
@@ -957,32 +958,32 @@ ScrollBarMorph >> sliderColor: aColor [
 	^self adoptGradientColor: aColor
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 ScrollBarMorph >> sliderExtent [
 	"The sliderExtent is now stored in the slider itself, not hardcoded as it is in the superclass."
 	^slider extent
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 ScrollBarMorph >> sliderThickness [
 	"Answer the minimum width/height of the scrollbar thumb. Refer to the theme."
 
 	^self theme scrollbarMinimumThumbThickness
 ]
 
-{ #category : #stepping }
+{ #category : 'stepping' }
 ScrollBarMorph >> step [
 	| action |
 	action := self scrollBarAction.
 	action ifNotNil:[self perform: action]
 ]
 
-{ #category : #stepping }
+{ #category : 'stepping' }
 ScrollBarMorph >> stepTime [
 	^ currentScrollDelay ifNil: [300]
 ]
 
-{ #category : #update }
+{ #category : 'update' }
 ScrollBarMorph >> themeChanged [
 	"Update the buttons, slider and paging area."
 
@@ -992,14 +993,14 @@ ScrollBarMorph >> themeChanged [
 	super themeChanged
 ]
 
-{ #category : #'private - accessing' }
+{ #category : 'private - accessing' }
 ScrollBarMorph >> thumbColor [
 	"Problem: Part of the ScrollBar/Slider code uses 'slider' to mean the entire scrollbar/slider widget, and part of it uses 'slider' to mean only the draggable 'thumb'.  This should be cleaned up so that 'thumb' is used instead of 'slider' where appropriate.  For now, the meaning of thumbColor is clear, at least."
 
 	^self class imageColorFor: self
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 ScrollBarMorph >> totalSliderArea [
 	| upperBoundsButton |
 	upperBoundsButton := upButton.
@@ -1010,9 +1011,9 @@ ScrollBarMorph >> totalSliderArea [
 			upperBoundsButton bounds bottomLeft corner: downButton bounds topRight ]
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 ScrollBarMorph >> upImage [
-	"answer a form to be used in the up button"
+	"answer a FormSet to be used in the up button"
 	^ self class
 		arrowOfDirection: (bounds isWide
 				ifTrue: [#left]
@@ -1021,29 +1022,29 @@ ScrollBarMorph >> upImage [
 		color: self buttonImageColor
 ]
 
-{ #category : #update }
+{ #category : 'update' }
 ScrollBarMorph >> updateDownButtonBounds [
 	"update the receiver's downButton bounds"
 
 	downButton bounds: (self theme scrollBarDownButtonBoundsFor: self)
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 ScrollBarMorph >> updateDownButtonImage [
 	"update the receiver's downButton.  put a new image inside"
 	downButton removeAllMorphs.
 	downButton
-		addMorphCentered: (ImageMorph new form: self downImage)
+		addMorphCentered: (ImageMorph new formSet: self downImage)
 ]
 
-{ #category : #update }
+{ #category : 'update' }
 ScrollBarMorph >> updatePagingAreaBounds [
 	"Initialize the receiver's pagingArea."
 
 	pagingArea bounds: self totalSliderArea
 ]
 
-{ #category : #update }
+{ #category : 'update' }
 ScrollBarMorph >> updateSliderBounds [
 	"Initialize the receiver's slider."
 
@@ -1054,22 +1055,22 @@ ScrollBarMorph >> updateSliderBounds [
 	super updateSliderBounds
 ]
 
-{ #category : #update }
+{ #category : 'update' }
 ScrollBarMorph >> updateUpButtonBounds [
 	"update the receiver's upButton bounds"
 
 	upButton bounds: (self theme scrollBarUpButtonBoundsFor: self)
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 ScrollBarMorph >> updateUpButtonImage [
 "update the receiver's upButton. put a new image inside"
 	upButton removeAllMorphs.
 	upButton
-		addMorphCentered: (ImageMorph new form: self upImage)
+		addMorphCentered: (ImageMorph new formSet: self upImage)
 ]
 
-{ #category : #'scroll timing' }
+{ #category : 'scroll timing' }
 ScrollBarMorph >> waitForDelay1: delay1 delay2: delay2 [
 	"Return true if an appropriate delay has passed since the last scroll operation.
 	The delay decreases exponentially from delay1 to delay2."
@@ -1083,7 +1084,7 @@ ScrollBarMorph >> waitForDelay1: delay1 delay2: delay2 [
 	^true
 ]
 
-{ #category : #stepping }
+{ #category : 'stepping' }
 ScrollBarMorph >> wantsSteps [
-	^self scrollBarAction notNil
+	^self scrollBarAction isNotNil
 ]

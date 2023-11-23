@@ -1,6 +1,6 @@
 Class {
-	#name : #DAPackageCycleDetectorTest,
-	#superclass : #TestCase,
+	#name : 'DAPackageCycleDetectorTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'packageA',
 		'packageB',
@@ -12,15 +12,17 @@ Class {
 		'cycleB',
 		'cycleC'
 	],
-	#category : #'Tool-DependencyAnalyser-Tests-Packages'
+	#category : 'Tool-DependencyAnalyser-Tests-Packages',
+	#package : 'Tool-DependencyAnalyser-Tests',
+	#tag : 'Packages'
 }
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 DAPackageCycleDetectorTest >> cyclesSize [
 	^ aPackageCycleDetection cycles size
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 DAPackageCycleDetectorTest >> graphWithThreeCycles [
 	| anArray |
 	anArray := Array new: 3.
@@ -35,32 +37,33 @@ DAPackageCycleDetectorTest >> graphWithThreeCycles [
 	^ DAPackageRelationGraph onPackages: anArray
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 DAPackageCycleDetectorTest >> queue [
 	^ aPackageCycleDetection instVarNamed: 'queue'
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 DAPackageCycleDetectorTest >> setUp [
+
 	super setUp.
 	aPackageCycleDetection := DAPackageCycleDetector new.
-	packageA := DAPackage on: (RPackageSet named: 'A').
-	packageB := DAPackage on: (RPackageSet named: 'B').
-	packageC := DAPackage on: (RPackageSet named: 'C').
-	packageD := DAPackage on: (RPackageSet named: 'D').
-	packageE := DAPackage on: (RPackageSet named: 'E').
+	packageA := DAPackage onPackageNamed: 'A'.
+	packageB := DAPackage onPackageNamed: 'B'.
+	packageC := DAPackage onPackageNamed: 'C'.
+	packageD := DAPackage onPackageNamed: 'D'.
+	packageE := DAPackage onPackageNamed: 'E'.
 	cycleA := DAPackageCycle new.
 	cycleB := DAPackageCycle new.
 	cycleC := DAPackageCycle new
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DAPackageCycleDetectorTest >> testAddCycle [
 	aPackageCycleDetection addCycle: DAPackageCycle new.
 	self assert: aPackageCycleDetection cycles size equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DAPackageCycleDetectorTest >> testAddVisitedNodes [
 	aPackageCycleDetection initializeVisitedNodes.
 	aPackageCycleDetection addVisitedNodes: packageA.
@@ -68,7 +71,7 @@ DAPackageCycleDetectorTest >> testAddVisitedNodes [
 	self assert: (aPackageCycleDetection visitedNodes includes: packageA)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DAPackageCycleDetectorTest >> testBuildCycleUntil [
 	| cycle |
 	packageA bfsParent: packageB.
@@ -86,7 +89,7 @@ DAPackageCycleDetectorTest >> testBuildCycleUntil [
 	self assert: (cycle isInCycle: packageD)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DAPackageCycleDetectorTest >> testCycleAlreadyFound [
 	| cycle otherCycle |
 	cycle := DAPackageCycle new.
@@ -100,7 +103,7 @@ DAPackageCycleDetectorTest >> testCycleAlreadyFound [
 	self assert: (aPackageCycleDetection cycleAlreadyFound: otherCycle)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DAPackageCycleDetectorTest >> testCyclesWith [
 	cycleA
 		addPackage: packageA;
@@ -125,7 +128,7 @@ DAPackageCycleDetectorTest >> testCyclesWith [
 	self assert: (aPackageCycleDetection cyclesWith: packageE) size equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DAPackageCycleDetectorTest >> testCyclesWithAtLeast [
 	| aCollectionOfPDPackage |
 	aCollectionOfPDPackage := OrderedCollection new.
@@ -152,7 +155,7 @@ DAPackageCycleDetectorTest >> testCyclesWithAtLeast [
 	self assert: (aPackageCycleDetection cyclesWithAtLeast: aCollectionOfPDPackage) size equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DAPackageCycleDetectorTest >> testDequeue [
 	| dequeue |
 	aPackageCycleDetection initializeQueueWith: packageA.
@@ -161,7 +164,7 @@ DAPackageCycleDetectorTest >> testDequeue [
 	self assertEmpty: self queue
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DAPackageCycleDetectorTest >> testEnqueue [
 	aPackageCycleDetection initializeQueueWith: packageA.
 	self assert: self queue size equals: 1.
@@ -169,7 +172,7 @@ DAPackageCycleDetectorTest >> testEnqueue [
 	self assert: self queue size equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DAPackageCycleDetectorTest >> testFindCyclesOne [
 	"we must find 1 cycles in this acyclic graph"
 
@@ -186,7 +189,7 @@ DAPackageCycleDetectorTest >> testFindCyclesOne [
 	self assert: aPackageCycleDetection cycles size equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DAPackageCycleDetectorTest >> testFindCyclesThreeNodes [
 	| aPDPackageRelation |
 	aPDPackageRelation := self graphWithThreeCycles.
@@ -194,7 +197,7 @@ DAPackageCycleDetectorTest >> testFindCyclesThreeNodes [
 	self assert: aPackageCycleDetection cycles size equals: 3
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DAPackageCycleDetectorTest >> testInitializeQueueWith [
 	| dequeue |
 	aPackageCycleDetection initializeQueueWith: packageA.
@@ -204,7 +207,7 @@ DAPackageCycleDetectorTest >> testInitializeQueueWith [
 	self assert: dequeue equals: packageA
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DAPackageCycleDetectorTest >> testIsVisitedOrInStack [
 	aPackageCycleDetection initializeVisitedNodes.
 	aPackageCycleDetection initializeQueueWith: packageA.
@@ -215,7 +218,7 @@ DAPackageCycleDetectorTest >> testIsVisitedOrInStack [
 	self assert: (aPackageCycleDetection isVisitedOrInQueue: packageA)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DAPackageCycleDetectorTest >> testReset [
 	| aPDPackageRelation |
 	aPDPackageRelation := self graphWithThreeCycles.
@@ -225,7 +228,7 @@ DAPackageCycleDetectorTest >> testReset [
 	self assertEmpty: aPackageCycleDetection cycles
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DAPackageCycleDetectorTest >> testfindCycles [
 	"the graph test is the SCC 1 from the paper"
 	| aPDPackageRelation anArray |
@@ -248,7 +251,7 @@ DAPackageCycleDetectorTest >> testfindCycles [
 	self assert: (aPackageCycleDetection  cycles anySatisfy: [ :cycle | ((cycle size = 2) or: (cycle size= 4)) or: (cycle size = 3) ])
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 DAPackageCycleDetectorTest >> visitedNodes [
 	^ aPackageCycleDetection instVarNamed: 'visitedNodes'
 ]

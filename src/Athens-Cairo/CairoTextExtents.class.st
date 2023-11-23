@@ -11,8 +11,8 @@ The `cairo_text_extents_t` structure stores the extents of a single glyph or a s
 - `double y_advance` distance to advance in the Y direction after drawing these glyphs. Will typically be zero except for vertical text layout as found in East-Asian languages.
 "
 Class {
-	#name : #CairoTextExtents,
-	#superclass : #FFIExternalStructure,
+	#name : 'CairoTextExtents',
+	#superclass : 'FFIExternalStructure',
 	#classVars : [
 		'OFFSET_HEIGHT',
 		'OFFSET_WIDTH',
@@ -21,10 +21,12 @@ Class {
 		'OFFSET_Y_ADVANCE',
 		'OFFSET_Y_BEARING'
 	],
-	#category : #'Athens-Cairo-Text'
+	#category : 'Athens-Cairo-Text',
+	#package : 'Athens-Cairo',
+	#tag : 'Text'
 }
 
-{ #category : #'field definition' }
+{ #category : 'field definition' }
 CairoTextExtents class >> fieldsDesc [
 	"self rebuildFieldAccessors"
 	^ #(
@@ -37,73 +39,73 @@ CairoTextExtents class >> fieldsDesc [
 	)
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 CairoTextExtents >> height [
 	"This method was automatically generated"
 	^handle doubleAt: OFFSET_HEIGHT
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 CairoTextExtents >> height: anObject [
 	"This method was automatically generated"
 	handle doubleAt: OFFSET_HEIGHT put: anObject
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 CairoTextExtents >> width [
 	"This method was automatically generated"
 	^handle doubleAt: OFFSET_WIDTH
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 CairoTextExtents >> width: anObject [
 	"This method was automatically generated"
 	handle doubleAt: OFFSET_WIDTH put: anObject
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 CairoTextExtents >> x_advance [
 	"This method was automatically generated"
 	^handle doubleAt: OFFSET_X_ADVANCE
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 CairoTextExtents >> x_advance: anObject [
 	"This method was automatically generated"
 	handle doubleAt: OFFSET_X_ADVANCE put: anObject
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 CairoTextExtents >> x_bearing [
 	"This method was automatically generated"
 	^handle doubleAt: OFFSET_X_BEARING
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 CairoTextExtents >> x_bearing: anObject [
 	"This method was automatically generated"
 	handle doubleAt: OFFSET_X_BEARING put: anObject
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 CairoTextExtents >> y_advance [
 	"This method was automatically generated"
 	^handle doubleAt: OFFSET_Y_ADVANCE
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 CairoTextExtents >> y_advance: anObject [
 	"This method was automatically generated"
 	handle doubleAt: OFFSET_Y_ADVANCE put: anObject
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 CairoTextExtents >> y_bearing [
 	"This method was automatically generated"
 	^handle doubleAt: OFFSET_Y_BEARING
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 CairoTextExtents >> y_bearing: anObject [
 	"This method was automatically generated"
 	handle doubleAt: OFFSET_Y_BEARING put: anObject

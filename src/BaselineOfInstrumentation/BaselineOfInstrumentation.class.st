@@ -1,10 +1,11 @@
 Class {
-	#name : #BaselineOfInstrumentation,
-	#superclass : #BaselineOf,
-	#category : #BaselineOfInstrumentation
+	#name : 'BaselineOfInstrumentation',
+	#superclass : 'BaselineOf',
+	#category : 'BaselineOfInstrumentation',
+	#package : 'BaselineOfInstrumentation'
 }
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfInstrumentation >> baseline: spec [
 
 	<baseline>

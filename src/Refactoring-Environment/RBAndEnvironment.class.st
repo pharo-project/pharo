@@ -6,51 +6,47 @@ Do not construct instances of me directly, use method #& for two existing enviro
 env1 & env2 -> a RBAndEnvironment.
 "
 Class {
-	#name : #RBAndEnvironment,
-	#superclass : #RBCompositeEnvironment,
-	#category : #'Refactoring-Environment'
+	#name : 'RBAndEnvironment',
+	#superclass : 'RBCompositeEnvironment',
+	#category : 'Refactoring-Environment',
+	#package : 'Refactoring-Environment'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBAndEnvironment class >> onEnvironment: anEnvironment and: anotherEnvironment [
 	^(self onEnvironment: anEnvironment)
 		andedEnvironment: anotherEnvironment;
 		yourself
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBAndEnvironment >> andedEnvironment [
 	^ otherEnvironment
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBAndEnvironment >> andedEnvironment: aBrowserEnvironment [
 	otherEnvironment := aBrowserEnvironment
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBAndEnvironment >> classes [
 	^ environment classes & self andedEnvironment classes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBAndEnvironment >> classesDo: aBlock [
 	environment
 		classesDo: [:each | (self includesClass: each) ifTrue: [aBlock value: each]]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBAndEnvironment >> definesClass: aClass [
 	^ (environment definesClass: aClass) and: [
 		self andedEnvironment definesClass: aClass ]
 ]
 
-{ #category : #testing }
-RBAndEnvironment >> includesCategory: aCategory [
-	^(self classNamesFor: aCategory) isNotEmpty
-]
-
-{ #category : #testing }
+{ #category : 'testing' }
 RBAndEnvironment >> includesClass: aClass [
 	| doesntHaveSelectors |
 	(environment includesClass: aClass) ifFalse: [^false].
@@ -64,49 +60,44 @@ RBAndEnvironment >> includesClass: aClass [
 	^doesntHaveSelectors
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBAndEnvironment >> includesProtocol: aProtocol in: aClass [
-	^ (environment includesProtocol: aProtocol in: aClass)
-		and: [ self andedEnvironment includesProtocol: aProtocol in: aClass ]
+
+	^ (environment includesProtocol: aProtocol in: aClass) and: [ self andedEnvironment includesProtocol: aProtocol in: aClass ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBAndEnvironment >> includesSelector: aSelector in: aClass [
 	^(environment includesSelector: aSelector in: aClass)
 		and: [ self andedEnvironment includesSelector: aSelector in: aClass ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBAndEnvironment >> methodsForClass: aClass do: aBlock [
 
 	environment methodsForClass: aClass do: [ :method | (self andedEnvironment includesSelector: method selector in: aClass) ifTrue: [ aBlock value: method ] ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBAndEnvironment >> operator [
 	^ ' & '
 ]
 
-{ #category : #accessing }
-RBAndEnvironment >> packages [
-	^ environment packages & self andedEnvironment packages
-]
-
-{ #category : #printing }
+{ #category : 'printing' }
 RBAndEnvironment >> printOn: aStream [
 	environment printOn: aStream.
 	aStream nextPutAll: self operator.
 	self andedEnvironment printOn: aStream
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBAndEnvironment >> problemCount [
 	^environment isClassEnvironment
 		ifTrue: [self numberClasses]
 		ifFalse: [super problemCount]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBAndEnvironment >> selectionIntervalFor: aString [
 	| interval |
 	interval := super selectionIntervalFor: aString.
@@ -114,7 +105,7 @@ RBAndEnvironment >> selectionIntervalFor: aString [
 	^ self andedEnvironment selectionIntervalFor: aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBAndEnvironment >> selectorsForClass: aClass do: aBlock [
 	environment selectorsForClass: aClass
 		do:
@@ -123,7 +114,7 @@ RBAndEnvironment >> selectorsForClass: aClass do: aBlock [
 				ifTrue: [aBlock value: each]]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBAndEnvironment >> storeOn: aStream [
 	aStream nextPut: $(.
 	environment storeOn: aStream.

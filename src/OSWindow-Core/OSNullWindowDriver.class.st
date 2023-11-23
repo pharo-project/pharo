@@ -7,23 +7,25 @@ or as a default driver while running image in headless mode.
 Using null driver allows most of the code which relies on existance of at least single main window to work flawlessly, by simply ignoring all requests/commands passed to it.
 "
 Class {
-	#name : #OSNullWindowDriver,
-	#superclass : #OSWindowDriver,
-	#category : #'OSWindow-Core-Utilities'
+	#name : 'OSNullWindowDriver',
+	#superclass : 'OSWindowDriver',
+	#category : 'OSWindow-Core-Utilities',
+	#package : 'OSWindow-Core',
+	#tag : 'Utilities'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 OSNullWindowDriver class >> isSupported [
 	"Yep, i am always supported"
 	^ true
 ]
 
-{ #category : #'window creation' }
+{ #category : 'window creation' }
 OSNullWindowDriver >> createWindowWithAttributes: anOSWindowAttributes osWindow: osWindow [
 	^ OSNullBackendWindow fromAttributes: anOSWindowAttributes for: osWindow
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OSNullWindowDriver >> isNullDriver [
 	^ true
 ]

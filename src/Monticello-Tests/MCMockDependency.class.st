@@ -2,42 +2,44 @@
 A test object mocking a dependency
 "
 Class {
-	#name : #MCMockDependency,
-	#superclass : #Object,
+	#name : 'MCMockDependency',
+	#superclass : 'Object',
 	#instVars : [
 		'name',
 		'children',
 		'hasResolution'
 	],
-	#category : #'Monticello-Tests-Dependencies'
+	#category : 'Monticello-Tests-Dependencies',
+	#package : 'Monticello-Tests',
+	#tag : 'Dependencies'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MCMockDependency class >> fromTree: anArray [ 
 	^ self new initializeWithTree: anArray
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MCMockDependency >> = other [
 	^ self name = other name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCMockDependency >> children [
 	^ children collect: [:ea | self class fromTree: ea]
 ]
 
-{ #category : #resolving }
+{ #category : 'resolving' }
 MCMockDependency >> hasResolution [
 	^ hasResolution
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MCMockDependency >> hash [
 	^ self name hash
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCMockDependency >> initializeWithTree: expr [
 	expr isSymbol
 		ifTrue: [name := expr.
@@ -51,7 +53,7 @@ MCMockDependency >> initializeWithTree: expr [
 							children := expr second]]
 ]
 
-{ #category : #mocks }
+{ #category : 'mocks' }
 MCMockDependency >> mockVersionInfo [
 	^ MCVersionInfo
 		name: self name
@@ -63,12 +65,12 @@ MCMockDependency >> mockVersionInfo [
 		ancestors: #()
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCMockDependency >> name [
 	^ name
 ]
 
-{ #category : #resolving }
+{ #category : 'resolving' }
 MCMockDependency >> resolve [
 	^ self hasResolution
 		ifTrue: [MCVersion new
@@ -79,7 +81,7 @@ MCMockDependency >> resolve [
 		ifFalse: [nil]
 ]
 
-{ #category : #mocks }
+{ #category : 'mocks' }
 MCMockDependency >> uuidForName: aName [ 
 	| nm id |
 	nm := aName asString.

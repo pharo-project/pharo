@@ -2,32 +2,34 @@
 Using the ObjectRefification, one can pass a pointer to the object where the link is installed in
 "
 Class {
-	#name : #RFObjectReification,
-	#superclass : #RFReification,
-	#category : #'Reflectivity-Reifications'
+	#name : 'RFObjectReification',
+	#superclass : 'RFReification',
+	#category : 'Reflectivity-Reifications',
+	#package : 'Reflectivity',
+	#tag : 'Reifications'
 }
 
-{ #category : #'plugin interface' }
+{ #category : 'plugin interface' }
 RFObjectReification class >> entities [
 	^{RBProgramNode. Variable}
 ]
 
-{ #category : #'plugin interface' }
+{ #category : 'plugin interface' }
 RFObjectReification class >> key [
 	^#object
 ]
 
-{ #category : #generate }
+{ #category : 'generate' }
 RFObjectReification >> genForInstanceVariableSlot [
 	^RBVariableNode selfNode
 ]
 
-{ #category : #generate }
+{ #category : 'generate' }
 RFObjectReification >> genForLiteralVariable [
 	^RBVariableNode selfNode
 ]
 
-{ #category : #generate }
+{ #category : 'generate' }
 RFObjectReification >> genForRBProgramNode [
 	^RBVariableNode selfNode
 ]

@@ -4,27 +4,29 @@ ZnUnknownHttpStatusCode is signalled when an unknown/unsupported HTTP status cod
 Part of Zinc HTTP Components. 
 "
 Class {
-	#name : #ZnUnknownHttpStatusCode,
-	#superclass : #ZnParseError,
+	#name : 'ZnUnknownHttpStatusCode',
+	#superclass : 'ZnParseError',
 	#instVars : [
 		'code'
 	],
-	#category : #'Zinc-HTTP-Exceptions'
+	#category : 'Zinc-HTTP-Exceptions',
+	#package : 'Zinc-HTTP',
+	#tag : 'Exceptions'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnUnknownHttpStatusCode class >> code: code [
 	^ self new
 		code: code;
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnUnknownHttpStatusCode >> code [
 	^ code
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnUnknownHttpStatusCode >> code: anObject [
 	code := anObject
 ]

@@ -3,8 +3,8 @@ This class holds the entry points for the utility functions around characters.
 
 "
 Class {
-	#name : #Unicode,
-	#superclass : #EncodedCharSet,
+	#name : 'Unicode',
+	#superclass : 'EncodedCharSet',
 	#classVars : [
 		'Cc',
 		'Cf',
@@ -43,10 +43,12 @@ Class {
 		'Zs',
 		'nonCharacters'
 	],
-	#category : #'Multilingual-Encodings-CharSets'
+	#category : 'Multilingual-Encodings-CharSets',
+	#package : 'Multilingual-Encodings',
+	#tag : 'CharSets'
 }
 
-{ #category : #comments }
+{ #category : 'comments' }
 Unicode class >> blocks320Comment [
 
 "# Blocks-3.2.0.txt
@@ -167,7 +169,7 @@ F0000..FFFFF; Supplementary Private Use Area-A
 "
 ]
 
-{ #category : #comments }
+{ #category : 'comments' }
 Unicode class >> blocks320Comment2 [
 
 "# Blocks-3.2.0.txt
@@ -377,25 +379,25 @@ F0000..FFFFF; Supplementary Private Use Area-A
 "
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Unicode class >> charFromUnicode: uniCode [
 
 	^ Character value: uniCode
 ]
 
-{ #category : #'class methods' }
+{ #category : 'class methods' }
 Unicode class >> compoundTextFinalChar [
 
 	self shouldNotImplement
 ]
 
-{ #category : #'class methods' }
+{ #category : 'class methods' }
 Unicode class >> compoundTextSequence [
 
 	self subclassResponsibility
 ]
 
-{ #category : #'class methods' }
+{ #category : 'class methods' }
 Unicode class >> digitValueOf: char [
 	"Answer 0-9 if the receiver is $0-$9, 10-35 if it is $A-$Z, and < 0
 	otherwise. This is used to parse literal numbers of radix 2-36."
@@ -413,13 +415,13 @@ Unicode class >> digitValueOf: char [
 	^ (DecimalProperty at: value+1)
 ]
 
-{ #category : #'class methods' }
+{ #category : 'class methods' }
 Unicode class >> generalCategory [
 
 	^ GeneralCategory
 ]
 
-{ #category : #'class methods' }
+{ #category : 'class methods' }
 Unicode class >> generalCategoryComment [
 "
 Lu Letter, Uppercase
@@ -455,7 +457,7 @@ Cn Other, Not Assigned (no characters in the file have this property)
 "
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 Unicode class >> initialize [
 	"This class should be initialized using the textual unicode definitions that can be found in
 	http://www.unicode.org/Public/UNIDATA/UnicodeData.txt
@@ -491,10 +493,10 @@ Unicode class >> initialize [
 	EncodedCharSet declareEncodedCharSet: self atIndex: 256
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 Unicode class >> initializeTagConstants [
 	" Unicode initializeTagConstants "
-	(self classPool keys
+	(self classVarNames
 		select: [:sym | sym size = 2
 						and: [sym first isUppercase and: [sym last isLowercase]]]) asSortedCollection
 		inject: 1
@@ -503,7 +505,7 @@ Unicode class >> initializeTagConstants [
 				ifFalse: [self classPool at: sym put: index. index + 1]]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Unicode class >> is: char inCategory: cat [
 	| index |
 	index := char charCode + 1.
@@ -512,75 +514,75 @@ Unicode class >> is: char inCategory: cat [
 	^ (GeneralCategory at: index) = cat
 ]
 
-{ #category : #'character classification' }
+{ #category : 'character classification' }
 Unicode class >> isCasedLetter: char [
 	"There are no Unicode Characters in this Category"
 	^ false
 ]
 
-{ #category : #'class methods' }
+{ #category : 'class methods' }
 Unicode class >> isCharset [
 
 	^ false
 ]
 
-{ #category : #'character classification' }
+{ #category : 'character classification' }
 Unicode class >> isClosePunctuation: char [
 	^ self is: char inCategory: Pe
 ]
 
-{ #category : #'character classification' }
+{ #category : 'character classification' }
 Unicode class >> isConnectorPunctuation: char [
 	^ self is: char inCategory: Pc
 ]
 
-{ #category : #'character classification' }
+{ #category : 'character classification' }
 Unicode class >> isControlOther: char [
 	^ self is: char inCategory: Cc
 ]
 
-{ #category : #'character classification' }
+{ #category : 'character classification' }
 Unicode class >> isCurrencySymbol: char [
 	^ self is: char inCategory: Sc
 ]
 
-{ #category : #'character classification' }
+{ #category : 'character classification' }
 Unicode class >> isDashPunctuation: char [
 	^ self is: char inCategory: Pd
 ]
 
-{ #category : #'character classification' }
+{ #category : 'character classification' }
 Unicode class >> isDecimalDigit: char [
 	^ self is: char inCategory: Nd
 ]
 
-{ #category : #'character classification' }
+{ #category : 'character classification' }
 Unicode class >> isDigit: char [
 	^ self is: char inCategory: Nd
 ]
 
-{ #category : #'character classification' }
+{ #category : 'character classification' }
 Unicode class >> isEnclosingMark: char [
 
 	^ self is: char inCategory: Me
 ]
 
-{ #category : #'character classification' }
+{ #category : 'character classification' }
 Unicode class >> isFinalQuote: char [
 	^ self is: char inCategory: Pf
 ]
 
-{ #category : #'character classification' }
+{ #category : 'character classification' }
 Unicode class >> isFormatOther: char [
 	^ self is: char inCategory: Cf
 ]
 
-{ #category : #'character classification' }
+{ #category : 'character classification' }
 Unicode class >> isInitialQuote: char [
 	^ self is: char inCategory: Pi
 ]
 
-{ #category : #'character classification' }
+{ #category : 'character classification' }
 Unicode class >> isLetter: char [
 	| index |
 	index := char charCode + 1.
@@ -589,7 +591,7 @@ Unicode class >> isLetter: char [
 	^ (GeneralCategory at: index) between: Ll and: Lu
 ]
 
-{ #category : #'character classification' }
+{ #category : 'character classification' }
 Unicode class >> isLetterModifier: char [
 	| index |
 	index := char charCode + 1.
@@ -598,17 +600,17 @@ Unicode class >> isLetterModifier: char [
 	^ (GeneralCategory at: index) = Lm
 ]
 
-{ #category : #'character classification' }
+{ #category : 'character classification' }
 Unicode class >> isLetterNumber: char [
 	^ self is: char inCategory: Nl
 ]
 
-{ #category : #'character classification' }
+{ #category : 'character classification' }
 Unicode class >> isLineSeparator: char [
 	^ self is: char inCategory: Zl
 ]
 
-{ #category : #'character classification' }
+{ #category : 'character classification' }
 Unicode class >> isLowercase: char [
 	| index |
 	index := char charCode + 1.
@@ -617,32 +619,32 @@ Unicode class >> isLowercase: char [
 	^ (GeneralCategory at: index) = Ll
 ]
 
-{ #category : #'character classification' }
+{ #category : 'character classification' }
 Unicode class >> isMathSymbol: char [
 	^ self is: char inCategory: Sm
 ]
 
-{ #category : #'character classification' }
+{ #category : 'character classification' }
 Unicode class >> isModifierSymbol: char [
 	^ self is: char inCategory: Sk
 ]
 
-{ #category : #'character classification' }
+{ #category : 'character classification' }
 Unicode class >> isNonCharacter: ch [
 	^ self nonCharacters includes: ch codePoint
 ]
 
-{ #category : #'character classification' }
+{ #category : 'character classification' }
 Unicode class >> isNonspacingMark: char [
 	^ self is: char inCategory: Mn
 ]
 
-{ #category : #'character classification' }
+{ #category : 'character classification' }
 Unicode class >> isOpenPunctuation: char [
 	^ self is: char inCategory: Ps
 ]
 
-{ #category : #'character classification' }
+{ #category : 'character classification' }
 Unicode class >> isOtherLetter: char [
 	| index |
 	index := char charCode + 1.
@@ -651,42 +653,42 @@ Unicode class >> isOtherLetter: char [
 	^ (GeneralCategory at: index) = Lo
 ]
 
-{ #category : #'character classification' }
+{ #category : 'character classification' }
 Unicode class >> isOtherNumber: char [
 	^ self is: char inCategory: No
 ]
 
-{ #category : #'character classification' }
+{ #category : 'character classification' }
 Unicode class >> isOtherPunctuation: char [
 	^ self is: char inCategory: Po
 ]
 
-{ #category : #'character classification' }
+{ #category : 'character classification' }
 Unicode class >> isOtherSymbol: char [
 	^ self is: char inCategory: So
 ]
 
-{ #category : #'character classification' }
+{ #category : 'character classification' }
 Unicode class >> isParagraphSeparator: char [
 	^ self is: char inCategory: Zp
 ]
 
-{ #category : #'character classification' }
+{ #category : 'character classification' }
 Unicode class >> isPrivateOther: char [
 	^ self is: char inCategory: Co
 ]
 
-{ #category : #'character classification' }
+{ #category : 'character classification' }
 Unicode class >> isSpaceSeparator: char [
 	^ self is: char inCategory: Zs
 ]
 
-{ #category : #'character classification' }
+{ #category : 'character classification' }
 Unicode class >> isSpacingCombiningMark: char [
 	^ self is: char inCategory: Mc
 ]
 
-{ #category : #'character classification' }
+{ #category : 'character classification' }
 Unicode class >> isSurrogateOther: char [
 	| index |
 	index := char charCode + 1.
@@ -695,7 +697,7 @@ Unicode class >> isSurrogateOther: char [
 	^ (GeneralCategory at: index) = Cs
 ]
 
-{ #category : #'character classification' }
+{ #category : 'character classification' }
 Unicode class >> isTitlecaseLetter: char [
 	| index |
 	index := char charCode + 1.
@@ -704,13 +706,13 @@ Unicode class >> isTitlecaseLetter: char [
 	^ (GeneralCategory at: index) = Lt
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Unicode class >> isTraditionalChinese: code [
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Unicode class >> isUnifiedKanji: code [
 	^ ((((code between: 16r2E80 and: 16rA4CF)
 		or: [ code between: 16rF900 and: 16rFAFF ])
@@ -719,7 +721,7 @@ Unicode class >> isUnifiedKanji: code [
 					or: [ code between: 16r20000 and: 16r2FA1F ]
 ]
 
-{ #category : #'character classification' }
+{ #category : 'character classification' }
 Unicode class >> isUppercase: char [
 	| index |
 	index := char charCode + 1.
@@ -728,20 +730,20 @@ Unicode class >> isUppercase: char [
 	^ (GeneralCategory at: index) = Lu
 ]
 
-{ #category : #'class methods' }
+{ #category : 'class methods' }
 Unicode class >> leadingChar [
 	self deprecated: 'not supported anymore' on: '6 September 2022' in: 'Pharo11'.
 	^ 0
 ]
 
-{ #category : #sizing }
+{ #category : 'sizing' }
 Unicode class >> maxValue [
 	"The maximum value of a character in this character set"
 
 	^ 16r10FFFF
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 Unicode class >> nonCharacters [
 	nonCharacters
 		ifNil: [ nonCharacters := (16rFDD0 to: 16rFDEF) asOrderedCollection
@@ -751,7 +753,7 @@ Unicode class >> nonCharacters [
 	^ nonCharacters
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 Unicode class >> parseCaseMappingFrom: stream [
 	"Parse the Unicode casing mappings from the given stream.
 	Handle only the simple mappings"
@@ -785,7 +787,7 @@ Unicode class >> parseCaseMappingFrom: stream [
 						ifFound: [ :up | ToUpper at: k ifAbsentPut: up ] ] ]
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 Unicode class >> parseUnicodeDataFrom: stream [
 	| line fieldEnd point fieldStart toNumber generalCategory decimalProperty loValue |
 
@@ -825,7 +827,7 @@ Unicode class >> parseUnicodeDataFrom: stream [
 	DecimalProperty zapDefaultOnlyEntries
 ]
 
-{ #category : #casing }
+{ #category : 'casing' }
 Unicode class >> toCasefold: aWideString [
 	"Transform a Wide String into fold case.
 	This is to enable case insensitive conversion."
@@ -836,7 +838,7 @@ Unicode class >> toCasefold: aWideString [
 			ifNotNil: [:low | self value: low]]
 ]
 
-{ #category : #casing }
+{ #category : 'casing' }
 Unicode class >> toLowercase: aCharacter [
 	"Transform a Wide String into lowercase.
 	This does not handle special cases where number of characters could change.
@@ -846,7 +848,7 @@ Unicode class >> toLowercase: aCharacter [
 			ifNotNil: [:low | ^ self value: low ]
 ]
 
-{ #category : #casing }
+{ #category : 'casing' }
 Unicode class >> toLowercaseString: aWideString [
 	"Transform a Wide String into lowercase.
 	This does not handle special cases where number of characters could change.
@@ -858,7 +860,7 @@ Unicode class >> toLowercaseString: aWideString [
 			ifNotNil: [:low | self value: low]]
 ]
 
-{ #category : #casing }
+{ #category : 'casing' }
 Unicode class >> toUppercase: aCharacter [
 	"Transform a Wide String into uppercase.
 	This does not handle special cases where number of characters could change.
@@ -868,7 +870,7 @@ Unicode class >> toUppercase: aCharacter [
 			ifNotNil: [:up | ^ self value: up]
 ]
 
-{ #category : #casing }
+{ #category : 'casing' }
 Unicode class >> toUppercaseString: aWideString [
 	"Transform a Wide String into uppercase.
 	This does not handle special cases where number of characters could change.
@@ -880,8 +882,14 @@ Unicode class >> toUppercaseString: aWideString [
 			ifNotNil: [:up | self value: up]]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Unicode class >> value: code [
 
 	^ Character value: code
+]
+
+{ #category : 'initialization' }
+Unicode >> initialize [
+		<ignoreUnusedClassVariables: #( Cn )>
+		super initialize.
 ]

@@ -9,8 +9,8 @@ A TextLine embodies the layout of a line of composed text.
 TextLine's rather verbose message protocol is required for compatibility with the old CharacterScanners.
 "
 Class {
-	#name : #TextLine,
-	#superclass : #Object,
+	#name : 'TextLine',
+	#superclass : 'Object',
 	#instVars : [
 		'left',
 		'right',
@@ -25,10 +25,12 @@ Class {
 	#pools : [
 		'TextConstants'
 	],
-	#category : #'Morphic-Base-Text Support'
+	#category : 'Morphic-Base-Text Support',
+	#package : 'Morphic-Base',
+	#tag : 'Text Support'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TextLine class >> start: startInteger stop: stopInteger internalSpaces: spacesInteger paddingWidth: padWidthInteger [
 	"Answer an instance of me with the arguments as the start, stop points,
 	number of spaces in the line, and width of the padding."
@@ -38,7 +40,7 @@ TextLine class >> start: startInteger stop: stopInteger internalSpaces: spacesIn
 	^ line internalSpaces: spacesInteger paddingWidth: padWidthInteger
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 TextLine >> = line [
 
 	^ self species = line species and: [
@@ -46,66 +48,66 @@ TextLine >> = line [
 				  internalSpaces = line internalSpaces and: [ paddingWidth = line paddingWidth ] ] ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextLine >> baseline [
 
 	^ baseline
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextLine >> bottom [
 
 	^ bottom
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextLine >> bottomRight [
 
 	^ right @ bottom
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextLine >> first [
 
 	^ firstIndex
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TextLine >> firstIndex: firstInteger lastIndex: lastInteger [
 
 	firstIndex := firstInteger.
 	lastIndex := lastInteger
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 TextLine >> hash [
 	"#hash is re-implemented because #= is re-implemented"
 
 	^ firstIndex hash bitXor: lastIndex hash
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextLine >> internalSpaces [
 	"Answer the number of spaces in the line."
 
 	^internalSpaces
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextLine >> internalSpaces: spacesInteger [
 	"Set the number of spaces in the line to be spacesInteger."
 
 	internalSpaces := spacesInteger
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TextLine >> internalSpaces: spacesInteger paddingWidth: padWidthInteger [
 
 	internalSpaces := spacesInteger.
 	paddingWidth := padWidthInteger
 ]
 
-{ #category : #scanning }
+{ #category : 'scanning' }
 TextLine >> justifiedPadFor: spaceIndex [
 	"Compute the width of pad for a given space in a line of justified text."
 
@@ -117,7 +119,7 @@ TextLine >> justifiedPadFor: spaceIndex [
 		ifFalse: [ pad ]
 ]
 
-{ #category : #scanning }
+{ #category : 'scanning' }
 TextLine >> justifiedTabDeltaFor: spaceIndex [
 	"Compute the delta for a tab in a line of justified text, so tab falls
 	somewhere plausible when line is justified."
@@ -131,32 +133,32 @@ TextLine >> justifiedTabDeltaFor: spaceIndex [
 		ifFalse: [ extraPad * (pad + 1) + ((spaceIndex - extraPad) * pad) ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextLine >> last [
 
 	^ lastIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextLine >> left [
 
 	^ left
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextLine >> leftMargin [
 	"This has to get fixed -- store during composition"
 
 	^ self left
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextLine >> leftMargin: lm [
 
 	left := lm
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextLine >> leftMarginForAlignment: alignmentCode [
 
 	alignmentCode = RightFlush ifTrue: [ ^ self left + paddingWidth ].
@@ -164,20 +166,20 @@ TextLine >> leftMarginForAlignment: alignmentCode [
 	^ self left "leftFlush and justified"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextLine >> lineHeight [
 
 	^ bottom - top
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TextLine >> lineHeight: height baseline: ascent [
 
 	bottom := top + height.
 	baseline := ascent
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 TextLine >> moveBy: delta [
 	"Move my rectangle by the given delta"
 
@@ -187,21 +189,21 @@ TextLine >> moveBy: delta [
 	bottom := bottom + delta y
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextLine >> paddingWidth [
 	"Answer the amount of space to be added to the font."
 
 	^paddingWidth
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextLine >> paddingWidth: padWidthInteger [
 	"Set the amount of space to be added to the font to be padWidthInteger."
 
 	paddingWidth := padWidthInteger
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 TextLine >> printOn: aStream [
 
 	super printOn: aStream.
@@ -212,13 +214,13 @@ TextLine >> printOn: aStream [
 		print: lastIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextLine >> rectangle [
 
 	^ self topLeft corner: self bottomRight
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextLine >> rectangle: lineRectangle [
 
 	left := lineRectangle left.
@@ -227,26 +229,26 @@ TextLine >> rectangle: lineRectangle [
 	bottom := lineRectangle bottom
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextLine >> right [
 
 	^ right
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextLine >> rightMargin [
 	"This has to get fixed -- store during composition"
 
 	^ self right
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextLine >> setRight: x [
 
 	right := x
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 TextLine >> slide: delta [
 	"Change the starting and stopping points of the line by delta."
 
@@ -254,7 +256,7 @@ TextLine >> slide: delta [
 	lastIndex := lastIndex + delta
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 TextLine >> slideIndexBy: delta andMoveTopTo: newTop [
 	"Relocate my character indices and y-values.
 	Used to slide constant text up or down in the wake of a text replacement."
@@ -265,26 +267,26 @@ TextLine >> slideIndexBy: delta andMoveTopTo: newTop [
 	top := newTop
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextLine >> stop: stopInteger [
 	"Set the stopping point in the string of the line to be stopInteger."
 
 	lastIndex := stopInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextLine >> top [
 
 	^ top
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextLine >> topLeft [
 
 	^ left @ top
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextLine >> width [
 
 	^ right - left

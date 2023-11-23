@@ -1,6 +1,6 @@
-Extension { #name : #Mutex }
+Extension { #name : 'Mutex' }
 
-{ #category : #'*Calypso-NavigationModel' }
+{ #category : '*Calypso-NavigationModel' }
 Mutex >> tryEnterCritical: criticalBlock ifLocked: lockedBlock [
 
 	| activeProcess |

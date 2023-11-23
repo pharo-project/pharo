@@ -1,10 +1,12 @@
 Class {
-	#name : #ClassDefinitionPrinterConfigurationTest,
-	#superclass : #CommonClassDefinitionPrinterTest,
-	#category : #'Kernel-Tests-Fluid'
+	#name : 'ClassDefinitionPrinterConfigurationTest',
+	#superclass : 'CommonClassDefinitionPrinterTest',
+	#category : 'Kernel-Tests-Fluid',
+	#package : 'Kernel-Tests',
+	#tag : 'Fluid'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassDefinitionPrinterConfigurationTest >> testFluidConfiguration [
 
 	self
@@ -17,7 +19,7 @@ ClassDefinitionPrinterConfigurationTest >> testFluidConfiguration [
 	package: ''Collections-Sequenceable'''
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassDefinitionPrinterConfigurationTest >> testLegacyPharoConfiguration [
 
 	self
@@ -31,7 +33,7 @@ ClassDefinitionPrinterConfigurationTest >> testLegacyPharoConfiguration [
 	category: ''Collections-Sequenceable-Base'''
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassDefinitionPrinterConfigurationTest >> testOldPharoConfiguration [
 
 	self
@@ -42,13 +44,4 @@ ClassDefinitionPrinterConfigurationTest >> testOldPharoConfiguration [
 	instanceVariableNames: ''''
 	classVariableNames: ''''
 	package: ''Collections-Sequenceable-Base'''
-]
-
-{ #category : #tests }
-ClassDefinitionPrinterConfigurationTest >> testToggleIsWorking [
-
-	| value |
-	value := ClassDefinitionPrinter showFluidClassDefinition.
-	ClassDefinitionPrinter toggleShowFluidClassDefinition.
-	self deny: ClassDefinitionPrinter showFluidClassDefinition equals: value
 ]

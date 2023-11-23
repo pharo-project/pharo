@@ -1,6 +1,6 @@
-Extension { #name : #ClyQueryBrowserMorph }
+Extension { #name : 'ClyQueryBrowserMorph' }
 
-{ #category : #'*Calypso-SystemTools-OldToolCompatibillity' }
+{ #category : '*Calypso-SystemTools-OldToolCompatibillity' }
 ClyQueryBrowserMorph class >> beDefaultBrowser [
 	<script>
 	^ClyOldMessageBrowserAdapter beDefaultBrowser

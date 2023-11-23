@@ -1,6 +1,6 @@
-Extension { #name : #ClyAsyncQueryIsDone }
+Extension { #name : 'ClyAsyncQueryIsDone' }
 
-{ #category : #'*Calypso-SystemPlugins-Critic-Queries' }
+{ #category : '*Calypso-SystemPlugins-Critic-Queries' }
 ClyAsyncQueryIsDone >> affectsCritiques [
 	^false
 ]

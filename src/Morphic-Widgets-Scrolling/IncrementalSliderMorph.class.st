@@ -1,16 +1,17 @@
 Class {
-	#name : #IncrementalSliderMorph,
-	#superclass : #ModelMorph,
+	#name : 'IncrementalSliderMorph',
+	#superclass : 'ModelMorph',
 	#instVars : [
 		'sliderMorph',
 		'getValueSelector',
 		'setValueSelector',
 		'getEnabledSelector'
 	],
-	#category : #'Morphic-Widgets-Scrolling'
+	#category : 'Morphic-Widgets-Scrolling',
+	#package : 'Morphic-Widgets-Scrolling'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 IncrementalSliderMorph class >> on: anObject getValue: getSel setValue: setSel [
 	"Answer a new instance of the receiver with
 	the given selectors as the interface."
@@ -21,7 +22,7 @@ IncrementalSliderMorph class >> on: anObject getValue: getSel setValue: setSel [
 		setValue: setSel
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 IncrementalSliderMorph class >> on: anObject getValue: getSel setValue: setSel min: min max: max quantum: quantum [
 	"Answer a new instance of the receiver with
 	the given selectors as the interface."
@@ -35,21 +36,21 @@ IncrementalSliderMorph class >> on: anObject getValue: getSel setValue: setSel m
 		setValue: setSel
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IncrementalSliderMorph >> buttons [
 	"Answer the buttons."
 
 	^{self firstSubmorph. self lastSubmorph}
 ]
 
-{ #category : #API }
+{ #category : 'API' }
 IncrementalSliderMorph >> decrement [
 	"Decrement the value."
 
 	self value: self value - self quantum
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 IncrementalSliderMorph >> defaultSliderFillStyle [
 	"Answer the hue gradient."
 
@@ -60,7 +61,7 @@ IncrementalSliderMorph >> defaultSliderFillStyle [
 					ifFalse: [0@self height])
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IncrementalSliderMorph >> enabled [
 	"Answer whether the receiver is enabled for user input."
 
@@ -69,7 +70,7 @@ IncrementalSliderMorph >> enabled [
 		ifNotNil: [:sm | sm enabled]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IncrementalSliderMorph >> enabled: aBoolean [
 	"Set whether the receiver is enabled for user input."
 
@@ -80,7 +81,7 @@ IncrementalSliderMorph >> enabled: aBoolean [
 		changed: #maxEnabled
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 IncrementalSliderMorph >> extent: aPoint [
 	"Set the button width to match the height."
 
@@ -89,14 +90,14 @@ IncrementalSliderMorph >> extent: aPoint [
 	self updateOrientation: aPoint
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IncrementalSliderMorph >> getEnabledSelector [
 	"Answer the value of getEnabledSelector"
 
 	^ getEnabledSelector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IncrementalSliderMorph >> getEnabledSelector: aSymbol [
 	"Set the value of getEnabledSelector"
 
@@ -104,28 +105,28 @@ IncrementalSliderMorph >> getEnabledSelector: aSymbol [
 	self updateEnabled
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IncrementalSliderMorph >> getValueSelector [
 	"Answer the value of getValueSelector"
 
 	^ getValueSelector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IncrementalSliderMorph >> getValueSelector: anObject [
 	"Set the value of getValueSelector"
 
 	getValueSelector := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IncrementalSliderMorph >> increment [
 	"Increment the value."
 
 	self value: self value + self quantum
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 IncrementalSliderMorph >> initialize [
 	"Initialize the receiver."
 
@@ -144,49 +145,49 @@ IncrementalSliderMorph >> initialize [
 		addMorphBack: self newIncrementButton
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IncrementalSliderMorph >> max [
 	"Answer the max value."
 
 	^(self sliderMorph ifNil: [^0]) max
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IncrementalSliderMorph >> max: aNumber [
 	"Set the max value."
 
 	(self sliderMorph ifNil: [^self]) max: aNumber
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 IncrementalSliderMorph >> maxEnabled [
 	"Answer whether the maximum button should be enabled."
 
 	^self enabled and: [self notAtMax]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IncrementalSliderMorph >> min [
 	"Answer the min value."
 
 	^(self sliderMorph ifNil: [^0]) min
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IncrementalSliderMorph >> min: aNumber [
 	"Set the min value."
 
 	(self sliderMorph ifNil: [^self]) min: aNumber
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 IncrementalSliderMorph >> minEnabled [
 	"Answer whether the minimum button should be enabled."
 
 	^self enabled and: [self notAtMin]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IncrementalSliderMorph >> minExtent [
 	"Must answer a fixed small size here to
 	allow auto orientation to work."
@@ -196,18 +197,18 @@ IncrementalSliderMorph >> minExtent [
 	^(24 max: superMin x) @ (24 max: superMin y)
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 IncrementalSliderMorph >> newButtonLabel: direction ofSize: size [
 	"Answer a new label for an inc/dec button."
 
 	^AlphaImageMorph new
-		image: (ScrollBarMorph
+		formSet: (ScrollBarMorph
 				arrowOfDirection: direction
 				size: size
 				color: self paneColor darker)
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 IncrementalSliderMorph >> newDecrementButton [
 	"Answer a new decrement button."
 
@@ -224,7 +225,7 @@ IncrementalSliderMorph >> newDecrementButton [
 		on: #mouseStillDown send: #decrement to: self
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 IncrementalSliderMorph >> newIncrementButton [
 	"Answer a new increment button."
 
@@ -241,7 +242,7 @@ IncrementalSliderMorph >> newIncrementButton [
 		on: #mouseStillDown send: #increment to: self
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 IncrementalSliderMorph >> newSliderMorph [
 	"Answer a new morph for the slider."
 
@@ -259,21 +260,21 @@ IncrementalSliderMorph >> newSliderMorph [
 	^slider
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 IncrementalSliderMorph >> notAtMax [
 	"Answer whether the value is not at the maximum,"
 
 	^self value < self max
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 IncrementalSliderMorph >> notAtMin [
 	"Answer whether the value is not at the minimum,"
 
 	^self value > self min
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 IncrementalSliderMorph >> on: anObject getValue: getSel setValue: setSel [
 	"Use the given selectors as the interface."
 
@@ -284,49 +285,49 @@ IncrementalSliderMorph >> on: anObject getValue: getSel setValue: setSel [
 		updateValue
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IncrementalSliderMorph >> quantum [
 	"Answer the quantum value."
 
 	^(self sliderMorph ifNil: [^0]) quantum
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IncrementalSliderMorph >> quantum: aNumber [
 	"Set the quantum value."
 
 	(self sliderMorph ifNil: [^self]) quantum: aNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IncrementalSliderMorph >> setValueSelector [
 	"Answer the value of setValueSelector"
 
 	^ setValueSelector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IncrementalSliderMorph >> setValueSelector: anObject [
 	"Set the value of setValueSelector"
 
 	setValueSelector := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IncrementalSliderMorph >> sliderMorph [
 	"Answer the value of sliderMorph"
 
 	^ sliderMorph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IncrementalSliderMorph >> sliderMorph: anObject [
 	"Set the value of sliderMorph"
 
 	sliderMorph := anObject
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 IncrementalSliderMorph >> update: aSymbol [
 	"Update the value."
 
@@ -337,7 +338,7 @@ IncrementalSliderMorph >> update: aSymbol [
 		ifTrue: [^self updateEnabled]
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 IncrementalSliderMorph >> updateEnabled [
 	"Update the enablement state."
 
@@ -346,7 +347,7 @@ IncrementalSliderMorph >> updateEnabled [
 			self enabled: (self model perform: self getEnabledSelector)]]
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 IncrementalSliderMorph >> updateOrientation: aPoint [
 	"Set the layout for the new extent."
 
@@ -381,7 +382,7 @@ IncrementalSliderMorph >> updateOrientation: aPoint [
 					label: (self newButtonLabel: #bottom ofSize: aPoint x // 2)]
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 IncrementalSliderMorph >> updateValue [
 	"Update the value."
 
@@ -392,7 +393,7 @@ IncrementalSliderMorph >> updateValue [
 			self changed: #minEnabled; changed: #maxEnabled]]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IncrementalSliderMorph >> value [
 	"Answer the slider value."
 
@@ -403,7 +404,7 @@ IncrementalSliderMorph >> value [
 					ifNotNil: [self model perform: self getValueSelector]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IncrementalSliderMorph >> value: aNumber [
 	"Set the slider value."
 

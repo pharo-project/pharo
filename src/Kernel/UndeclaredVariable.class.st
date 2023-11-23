@@ -6,12 +6,14 @@ The compiler forwards bytecode generation to me for accessing the variable.
 In future I can profice logging and user warning when evaluated code accesses undeclared variables
 "
 Class {
-	#name : #UndeclaredVariable,
-	#superclass : #LiteralVariable,
-	#category : #'Kernel-Variables'
+	#name : 'UndeclaredVariable',
+	#superclass : 'LiteralVariable',
+	#category : 'Kernel-Variables',
+	#package : 'Kernel',
+	#tag : 'Variables'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 UndeclaredVariable class >> possiblyRegisteredWithName: aString [
 
 	"Get a registered undeclared variable if any, or a new unregistered undeclared variable"
@@ -29,7 +31,7 @@ UndeclaredVariable class >> possiblyRegisteredWithName: aString [
 	^self named: varName
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 UndeclaredVariable class >> registeredWithName: aString [
 
 	| var |
@@ -38,13 +40,13 @@ UndeclaredVariable class >> registeredWithName: aString [
 	^ var
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 UndeclaredVariable >> definingClass [
 	"Nobody defines undeclared variable"
 	^nil
 ]
 
-{ #category : #'code generation' }
+{ #category : 'code generation' }
 UndeclaredVariable >> emitStore: aMethodBuilder [
 	| tempName |
 	"Swap implementation comes from the superclass"
@@ -58,30 +60,51 @@ UndeclaredVariable >> emitStore: aMethodBuilder [
 		send: #runtimeUndeclaredWrite:
 ]
 
-{ #category : #'code generation' }
+{ #category : 'code generation' }
 UndeclaredVariable >> emitValue: aMethodBuilder [
 	aMethodBuilder
 		pushLiteral: self;
 		send: #runtimeUndeclaredRead
 ]
 
-{ #category : #registry }
+{ #category : 'registry' }
 UndeclaredVariable >> isRegistered [
 	^Undeclared includesKey: name
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 UndeclaredVariable >> isUndeclaredVariable [
 
 	^ true
 ]
 
-{ #category : #registry }
+{ #category : 'registry' }
 UndeclaredVariable >> register [
 	Undeclared add: self
 ]
 
-{ #category : #'code generation' }
+{ #category : 'registry' }
+UndeclaredVariable >> registerFromNode: aNode [
+	| methodNode |
+	methodNode := aNode methodNode.
+	methodNode propertyAt: #Undeclareds ifAbsentPut: [WeakSet new].
+	(methodNode propertyAt: #Undeclareds) add: self.
+	self register
+]
+
+{ #category : 'registry' }
+UndeclaredVariable >> registerMethod: aCompiledMethod [
+	self registeredMethods add: aCompiledMethod
+]
+
+{ #category : 'queries' }
+UndeclaredVariable >> registeredMethods [
+	"We hold weakly on all compiledMethods that use this Undeclared
+	note: they might not be installed, e.g. long running method on the stack or a tool holding on to it"
+	^ self propertyAt: #registeredMethods ifAbsentPut: [ WeakIdentitySet new ]
+]
+
+{ #category : 'code generation' }
 UndeclaredVariable >> runtimeUndeclaredRead [
 
 	<debuggerCompleteToSender>
@@ -91,7 +114,7 @@ UndeclaredVariable >> runtimeUndeclaredRead [
 		signal
 ]
 
-{ #category : #'code generation' }
+{ #category : 'code generation' }
 UndeclaredVariable >> runtimeUndeclaredWrite: anObject [
 
 	<debuggerCompleteToSender>
@@ -102,7 +125,13 @@ UndeclaredVariable >> runtimeUndeclaredWrite: anObject [
 		signal
 ]
 
-{ #category : #registry }
+{ #category : 'registry' }
 UndeclaredVariable >> unregister [
 	Undeclared removeKey: name ifAbsent: [ ]
+]
+
+{ #category : 'queries' }
+UndeclaredVariable >> usingMethods [
+	"using methods returns just those that are installed in a class"
+	^ self registeredMethods select: [ :method | method isInstalled ]
 ]

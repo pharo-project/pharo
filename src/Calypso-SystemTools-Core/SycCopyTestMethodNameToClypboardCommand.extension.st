@@ -1,6 +1,6 @@
-Extension { #name : #SycCopyTestMethodNameToClypboardCommand }
+Extension { #name : 'SycCopyTestMethodNameToClypboardCommand' }
 
-{ #category : #'*Calypso-SystemTools-Core' }
+{ #category : '*Calypso-SystemTools-Core' }
 SycCopyTestMethodNameToClypboardCommand class >> methodContextMenuActivation [
 	<classAnnotation>
 

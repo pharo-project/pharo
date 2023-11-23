@@ -9,39 +9,41 @@ Internal Representation and Key Implementation Points.
 	progressIconMorph:		<ImageMorph>
 "
 Class {
-	#name : #ClyActivityAnimationIconMorph,
-	#superclass : #Morph,
+	#name : 'ClyActivityAnimationIconMorph',
+	#superclass : 'Morph',
 	#instVars : [
 		'progressIconMorph',
 		'progress'
 	],
-	#category : #'Calypso-Browser-UI'
+	#category : 'Calypso-Browser-UI',
+	#package : 'Calypso-Browser',
+	#tag : 'UI'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyActivityAnimationIconMorph class >> label: aString [
 	^self new
 		addLabel: aString;
 		yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyActivityAnimationIconMorph >> addLabel: aStringOrMorph [
 
 	self addMorphBack: aStringOrMorph asMorph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyActivityAnimationIconMorph >> currentIcon [
 	^TabMorph perform: (#refreshIcon, progress asString) asSymbol
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyActivityAnimationIconMorph >> defaultColor [
 	^Color transparent
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyActivityAnimationIconMorph >> initialize [
 	super initialize.
 	self
@@ -49,14 +51,14 @@ ClyActivityAnimationIconMorph >> initialize [
 		hResizing: #shrinkWrap;
 		vResizing: #shrinkWrap;
 		listDirection: #leftToRight;
-		cellInset: 2.
+		cellInset: 2 scaledByDisplayScaleFactor.
 	progress := 1.
 	progressIconMorph := self currentIcon asMorph.
 	self addMorphBack: progressIconMorph.
 	self extent: progressIconMorph extent
 ]
 
-{ #category : #stepping }
+{ #category : 'stepping' }
 ClyActivityAnimationIconMorph >> step [
 	progress := progress + 1.
 	progress > 10 ifTrue: [ progress := 1 ].
@@ -64,7 +66,7 @@ ClyActivityAnimationIconMorph >> step [
 	progressIconMorph form: self currentIcon
 ]
 
-{ #category : #stepping }
+{ #category : 'stepping' }
 ClyActivityAnimationIconMorph >> stepTime [
 
 	^ 100 "milliseconds"

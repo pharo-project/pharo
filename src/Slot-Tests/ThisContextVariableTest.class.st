@@ -1,10 +1,12 @@
 Class {
-	#name : #ThisContextVariableTest,
-	#superclass : #TestCase,
-	#category : #'Slot-Tests-VariablesAndSlots'
+	#name : 'ThisContextVariableTest',
+	#superclass : 'TestCase',
+	#category : 'Slot-Tests-VariablesAndSlots',
+	#package : 'Slot-Tests',
+	#tag : 'VariablesAndSlots'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 ThisContextVariableTest >> testReadInContext [
 
 	| var |
@@ -12,7 +14,7 @@ ThisContextVariableTest >> testReadInContext [
 	self assert: (var readInContext: thisContext) identicalTo: thisContext
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ThisContextVariableTest >> testUsingMethods [
 
 	| var |

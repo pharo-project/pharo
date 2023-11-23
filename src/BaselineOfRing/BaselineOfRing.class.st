@@ -1,10 +1,11 @@
 Class {
-	#name : #BaselineOfRing,
-	#superclass : #BaselineOf,
-	#category : #BaselineOfRing
+	#name : 'BaselineOfRing',
+	#superclass : 'BaselineOf',
+	#category : 'BaselineOfRing',
+	#package : 'BaselineOfRing'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BaselineOfRing >> baseline: spec [
 	<baseline>
 	spec for: #common
@@ -17,12 +18,12 @@ BaselineOfRing >> baseline: spec [
 				package: 'Ring-Tests-Core';
 				package: 'Ring-Tests-Monticello';
 				package: 'Ring-Tests-ChunkImporter';
-				package: 'Ring-TraitsV2Support';
+				package: 'Ring-TraitsSupport';
 				package: 'Ring-RuntimeSupport';
 				package: 'Calypso-Ring' ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BaselineOfRing >> repository [
 	^ self packageRepositoryURL
 ]

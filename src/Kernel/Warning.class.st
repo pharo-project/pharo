@@ -2,12 +2,14 @@
 A Warning is a Notification which by default should be brought to the attention of the user.
 "
 Class {
-	#name : #Warning,
-	#superclass : #Notification,
-	#category : #'Kernel-Exceptions'
+	#name : 'Warning',
+	#superclass : 'Notification',
+	#category : 'Kernel-Exceptions',
+	#package : 'Kernel',
+	#tag : 'Exceptions'
 }
 
-{ #category : #handling }
+{ #category : 'handling' }
 Warning >> defaultAction [
 	"No one has handled this warning, but now give them a chance to decide how to debug it.
 	If none handles this either then open debugger (see UnhandedError-defaultAction).
@@ -19,7 +21,7 @@ Warning >> defaultAction [
 	self raiseUnhandledError
 ]
 
-{ #category : #handling }
+{ #category : 'handling' }
 Warning >> unhandledErrorAction [
 
 	"No one has handled this warning, then I gave them a chance to decide how to debug it and I raise an UnhandledError. But it was not handled by anybody so that we are here (see UnhandedError-defaultAction).

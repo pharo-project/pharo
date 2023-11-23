@@ -1,10 +1,11 @@
 Class {
-	#name : #RGTraitAliasTest,
-	#superclass : #RGTest,
-	#category : #'Ring-Tests-Core'
+	#name : 'RGTraitAliasTest',
+	#superclass : 'RGTest',
+	#category : 'Ring-Tests-Core',
+	#package : 'Ring-Tests-Core'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGTraitAliasTest >> testAliasesCollection [
 
 	| traitAlias env alias1 alias2 alias3 |
@@ -37,7 +38,7 @@ RGTraitAliasTest >> testAliasesCollection [
 	self assert: (traitAlias hasResolved: #aliases)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGTraitAliasTest >> testImplicitEnvironment [
 
 	| def def2 env |
@@ -65,7 +66,7 @@ RGTraitAliasTest >> testImplicitEnvironment [
 	self assert: def parent transformations size equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGTraitAliasTest >> testNewTraitAlias [
 
 	| traitAlias |
@@ -75,7 +76,7 @@ RGTraitAliasTest >> testNewTraitAlias [
 	self assert: (traitAlias isTraitTransformation)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGTraitAliasTest >> testResolvingConsistency [
 
 	| anObject |
@@ -83,7 +84,7 @@ RGTraitAliasTest >> testResolvingConsistency [
 	self checkClassesConsistency: anObject and: anObject makeResolved
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGTraitAliasTest >> testUsedTraits [
 
 	| traitAlias trait usedTraits |

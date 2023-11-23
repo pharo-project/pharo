@@ -2,8 +2,8 @@
 I hold a lot of different constants needed to work with cairo library
 "
 Class {
-	#name : #AthensCairoDefinitions,
-	#superclass : #SharedPool,
+	#name : 'AthensCairoDefinitions',
+	#superclass : 'SharedPool',
 	#classVars : [
 		'CAIRO_ANTIALIAS_BEST',
 		'CAIRO_ANTIALIAS_DEFAULT',
@@ -132,10 +132,12 @@ Class {
 		'cairo_t',
 		'cairo_text_extents_t'
 	],
-	#category : #'Athens-Cairo-Pools'
+	#category : 'Athens-Cairo-Pools',
+	#package : 'Athens-Cairo',
+	#tag : 'Pools'
 }
 
-{ #category : #'private - initialization' }
+{ #category : 'private - initialization' }
 AthensCairoDefinitions class >> init_cairo_subpixel_order_t [
 
 "typedef enum {"
@@ -147,7 +149,7 @@ AthensCairoDefinitions class >> init_cairo_subpixel_order_t [
 "} cairo_subpixel_order_t;"
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 AthensCairoDefinitions class >> initialize [
 
 	"
@@ -172,7 +174,7 @@ AthensCairoDefinitions class >> initialize [
 		initialize_cairo_fill_rule_t
 ]
 
-{ #category : #'private - initialization' }
+{ #category : 'private - initialization' }
 AthensCairoDefinitions class >> initialize_cairo_antialias_t [
 
 "typedef enum {"
@@ -190,7 +192,7 @@ AthensCairoDefinitions class >> initialize_cairo_antialias_t [
 "} cairo_antialias_t; "
 ]
 
-{ #category : #'private - initialization' }
+{ #category : 'private - initialization' }
 AthensCairoDefinitions class >> initialize_cairo_extend_t [
 "typedef enum {"
     CAIRO_EXTEND_NONE := 0 .
@@ -200,14 +202,14 @@ AthensCairoDefinitions class >> initialize_cairo_extend_t [
 "} cairo_extend_t"
 ]
 
-{ #category : #'private - initialization' }
+{ #category : 'private - initialization' }
 AthensCairoDefinitions class >> initialize_cairo_fill_rule_t [
 "	typedef enum _cairo_status {"
    CAIRO_FILL_RULE_WINDING := 0.
 	CAIRO_FILL_RULE_EVEN_ODD := 1
 ]
 
-{ #category : #'private - initialization' }
+{ #category : 'private - initialization' }
 AthensCairoDefinitions class >> initialize_cairo_font_slant_t [
 
 	"typedef enum _cairo_font_slant {"
@@ -216,7 +218,7 @@ AthensCairoDefinitions class >> initialize_cairo_font_slant_t [
     CAIRO_FONT_SLANT_OBLIQUE := 2
 ]
 
-{ #category : #'private - initialization' }
+{ #category : 'private - initialization' }
 AthensCairoDefinitions class >> initialize_cairo_font_type_t [
 	"typedef enum _cairo_font_type {"
     CAIRO_FONT_TYPE_TOY := 0.
@@ -226,7 +228,7 @@ AthensCairoDefinitions class >> initialize_cairo_font_type_t [
     CAIRO_FONT_TYPE_USER := 4
 ]
 
-{ #category : #'private - initialization' }
+{ #category : 'private - initialization' }
 AthensCairoDefinitions class >> initialize_cairo_font_weight_t [
 
 	"typedef enum _cairo_font_weight {"
@@ -234,7 +236,7 @@ AthensCairoDefinitions class >> initialize_cairo_font_weight_t [
     CAIRO_FONT_WEIGHT_BOLD := 1
 ]
 
-{ #category : #'private - initialization' }
+{ #category : 'private - initialization' }
 AthensCairoDefinitions class >> initialize_cairo_format_t [
 
 	"enum cairo_format_t"
@@ -246,7 +248,7 @@ AthensCairoDefinitions class >> initialize_cairo_format_t [
 	CAIRO_FORMAT_RGB16_565 := 4
 ]
 
-{ #category : #'private - initialization' }
+{ #category : 'private - initialization' }
 AthensCairoDefinitions class >> initialize_cairo_hint_metrics_t [
 "typedef enum {"
     CAIRO_HINT_METRICS_DEFAULT := 0.
@@ -254,7 +256,7 @@ AthensCairoDefinitions class >> initialize_cairo_hint_metrics_t [
     CAIRO_HINT_METRICS_ON := 2
 ]
 
-{ #category : #'private - initialization' }
+{ #category : 'private - initialization' }
 AthensCairoDefinitions class >> initialize_cairo_hint_style_t [
 
 "typedef enum { "
@@ -266,7 +268,7 @@ AthensCairoDefinitions class >> initialize_cairo_hint_style_t [
 "} cairo_hint_style_t; "
 ]
 
-{ #category : #'private - initialization' }
+{ #category : 'private - initialization' }
 AthensCairoDefinitions class >> initialize_cairo_line_cap_t [
 	"typedef enum _cairo_line_cap { "
     CAIRO_LINE_CAP_BUTT := 0.
@@ -274,7 +276,7 @@ AthensCairoDefinitions class >> initialize_cairo_line_cap_t [
     CAIRO_LINE_CAP_SQUARE := 2
 ]
 
-{ #category : #'private - initialization' }
+{ #category : 'private - initialization' }
 AthensCairoDefinitions class >> initialize_cairo_line_join_t [
 "	typedef enum _cairo_line_join {"
     CAIRO_LINE_JOIN_MITER := 0.
@@ -282,7 +284,7 @@ AthensCairoDefinitions class >> initialize_cairo_line_join_t [
     CAIRO_LINE_JOIN_BEVEL := 2
 ]
 
-{ #category : #'private - initialization' }
+{ #category : 'private - initialization' }
 AthensCairoDefinitions class >> initialize_cairo_operator_t [
 "	typedef enum _cairo_operator {"
     CAIRO_OPERATOR_CLEAR := 0.
@@ -321,7 +323,7 @@ AthensCairoDefinitions class >> initialize_cairo_operator_t [
 "} cairo_operator_t;"
 ]
 
-{ #category : #'private - initialization' }
+{ #category : 'private - initialization' }
 AthensCairoDefinitions class >> initialize_cairo_status_t [
 "	typedef enum _cairo_status {"
     CAIRO_STATUS_SUCCESS := 0.
@@ -363,7 +365,7 @@ AthensCairoDefinitions class >> initialize_cairo_status_t [
     CAIRO_STATUS_DEVICE_ERROR:=35
 ]
 
-{ #category : #'private - initialization' }
+{ #category : 'private - initialization' }
 AthensCairoDefinitions class >> initialize_types [
 
 	cairo_status_t := cairo_font_type_t :=  cairo_line_join_t  := cairo_line_cap_t := cairo_status_t := cairo_font_slant_t := cairo_font_weight_t := cairo_operator_t  := cairo_fill_rule_t := #int.
@@ -374,4 +376,10 @@ AthensCairoDefinitions class >> initialize_types [
 
 	cairo_surface_t := #AthensCairoSurface .
 	cairo_text_extents_t := #CairoTextExtents
+]
+
+{ #category : 'initialization' }
+AthensCairoDefinitions >> initialize [
+		<ignoreUnusedClassVariables: #( CAIRO_STATUS_LAST_STATUS )>
+		super initialize.
 ]

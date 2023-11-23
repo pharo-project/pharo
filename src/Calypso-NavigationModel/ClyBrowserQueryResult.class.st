@@ -23,28 +23,30 @@ It returnes items which represent actualObjects.	Result will be in same order as
 Also I implement rawItems methods by returning actual unwrapped objects
 "
 Class {
-	#name : #ClyBrowserQueryResult,
-	#superclass : #ClyQueryResult,
-	#category : #'Calypso-NavigationModel-Result'
+	#name : 'ClyBrowserQueryResult',
+	#superclass : 'ClyQueryResult',
+	#category : 'Calypso-NavigationModel-Result',
+	#package : 'Calypso-NavigationModel',
+	#tag : 'Result'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserQueryResult >> adoptForBrowser [
 	^self
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ClyBrowserQueryResult >> buildIndexes [
 
 	items withIndexDo: [ :each :index | each position: index]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyBrowserQueryResult >> containerForItemsSortedByName [
 	^SortedCollection sortBlock: #name ascending
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyBrowserQueryResult >> createUpdateWithItemsStartingAt: startPosition count: cacheSize [
 	"it is important for remote scenario to call new metadata and new cache by single message.
 	In this case all required properties of metadata and cache will be transferred in one request using update instance"
@@ -57,7 +59,7 @@ ClyBrowserQueryResult >> createUpdateWithItemsStartingAt: startPosition count: c
 	^ClyBrowserQueryUpdate of: self withItems: itemCache
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyBrowserQueryResult >> findItemsSimilarTo: sampleBrowserItems [
 	| rest found |
 	self protectItemsWhile: [
@@ -74,7 +76,7 @@ ClyBrowserQueryResult >> findItemsSimilarTo: sampleBrowserItems [
 		^found]
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyBrowserQueryResult >> findItemsWith: actualObjects [
 	"it returnes browser items which represent actualObjects.
 	Result will be in same order as given actualObjects array.
@@ -87,12 +89,12 @@ ClyBrowserQueryResult >> findItemsWith: actualObjects [
 				detect: [ :item | item representsObjectEqualTo: eachObject ]
 				ifNone: nil].
 
-		result select: #notNil thenDo: [ :each |
+		result select: #isNotNil thenDo: [ :each |
 			each prepareIn: environment ].
 		^result]
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyBrowserQueryResult >> itemsStartingAt: startIndex count: size [
 
 	| result |
@@ -101,7 +103,7 @@ ClyBrowserQueryResult >> itemsStartingAt: startIndex count: size [
 	^result
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyBrowserQueryResult >> itemsWhere: conditionBlock [
 	| result |
 	result := super itemsWhere: conditionBlock.
@@ -109,26 +111,26 @@ ClyBrowserQueryResult >> itemsWhere: conditionBlock [
 	^result
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserQueryResult >> rawItems [
 
 	^items collect: [:each | each actualObject]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserQueryResult >> rawItemsDo: aBlock [
 
 	^items collect: [:each | each actualObject] thenDo: aBlock
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ClyBrowserQueryResult >> rebuild [
 	super rebuild.
 
 	self buildIndexes
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyBrowserQueryResult >> representsBrowserItems [
 	^true
 ]

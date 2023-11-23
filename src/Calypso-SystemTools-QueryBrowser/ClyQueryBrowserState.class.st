@@ -9,53 +9,55 @@ Internal Representation and Key Implementation Points.
 	queryScopes:		<Object>
 "
 Class {
-	#name : #ClyQueryBrowserState,
-	#superclass : #ClyBrowserState,
+	#name : 'ClyQueryBrowserState',
+	#superclass : 'ClyBrowserState',
 	#instVars : [
 		'activeScope',
 		'methodQuery',
 		'queryScopes',
 		'expectedFlatQueryResult'
 	],
-	#category : #'Calypso-SystemTools-QueryBrowser-UI'
+	#category : 'Calypso-SystemTools-QueryBrowser-UI',
+	#package : 'Calypso-SystemTools-QueryBrowser',
+	#tag : 'UI'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyQueryBrowserState >> activeScope [
 	^ activeScope
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyQueryBrowserState >> activeScope: anObject [
 	activeScope := anObject
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ClyQueryBrowserState >> createBrowser [
 	^ClyQueryBrowserMorph new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyQueryBrowserState >> expectedFlatQueryResult [
 	^ expectedFlatQueryResult
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyQueryBrowserState >> expectedFlatQueryResult: anObject [
 	expectedFlatQueryResult := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyQueryBrowserState >> queryScopes [
 	^ queryScopes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyQueryBrowserState >> queryScopes: anObject [
 	queryScopes := anObject
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ClyQueryBrowserState >> restoreStateOf: aBrowser [
 	super restoreStateOf: aBrowser.
 
@@ -66,7 +68,7 @@ ClyQueryBrowserState >> restoreStateOf: aBrowser [
 		expectedFlatQueryResult: expectedFlatQueryResult
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ClyQueryBrowserState >> retrieveStateFrom: aBrowser [
 	super retrieveStateFrom: aBrowser.
 
@@ -76,12 +78,12 @@ ClyQueryBrowserState >> retrieveStateFrom: aBrowser [
 	expectedFlatQueryResult := aBrowser expectedFlatQueryResult
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyQueryBrowserState >> systemQuery [
 	^ methodQuery
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyQueryBrowserState >> systemQuery: anObject [
 	methodQuery := anObject
 ]

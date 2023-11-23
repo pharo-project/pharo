@@ -2,18 +2,20 @@
 Do not rearrange these fields!
 "
 Class {
-	#name : #FreeTypeFace,
-	#superclass : #FT2Face,
+	#name : 'FreeTypeFace',
+	#superclass : 'FT2Face',
 	#instVars : [
 		'filename',
 		'index',
 		'fileContentsExternalMemory',
 		'hasKerning'
 	],
-	#category : #'FreeType-Fonts'
+	#category : 'FreeType-Fonts',
+	#package : 'FreeType',
+	#tag : 'Fonts'
 }
 
-{ #category : #'font dirs' }
+{ #category : 'font dirs' }
 FreeTypeFace class >> fontPathFor: aFilename [
 	"aFilename is local. Try hard to return a valid path to be handed to freetype library"
 
@@ -22,7 +24,7 @@ FreeTypeFace class >> fontPathFor: aFilename [
 	^ (FileSystem disk workingDirectory / 'Fonts' / aFilename) fullName
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FreeTypeFace class >> fromBytes: aByteArray index: anInteger [
 	"share alike instances"
 	| newFace |
@@ -38,7 +40,7 @@ FreeTypeFace class >> fromBytes: aByteArray index: anInteger [
 	^ newFace
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FreeTypeFace class >> fromFile: aFileName index: anInteger [
 	"share alike instances"
 
@@ -57,17 +59,17 @@ FreeTypeFace class >> fromFile: aFileName index: anInteger [
 		yourself
 ]
 
-{ #category : #'font dirs' }
+{ #category : 'font dirs' }
 FreeTypeFace class >> rememberFontDir: aDirecory [
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FreeTypeFace >> actAsExecutor [
 	super actAsExecutor.
 	filename := '<finalizer>'
 ]
 
-{ #category : #validation }
+{ #category : 'validation' }
 FreeTypeFace >> create [
 	"create me in FT2. This gets my handle, and loads the fields"
 
@@ -78,59 +80,59 @@ FreeTypeFace >> create [
 	self loadFields
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeFace >> familyName [
 	^super familyName ifNil:['?']
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeFace >> fileContentsExternalMemory: aFreeTypeExternalMemory [
 	fileContentsExternalMemory := aFreeTypeExternalMemory
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeFace >> fileContentsExternalMemoryBytes [
 	^fileContentsExternalMemory ifNotNil:[fileContentsExternalMemory bytes]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeFace >> filename [
 	^filename
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeFace >> filename: aString [
 	filename := aString
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FreeTypeFace >> hasFamilyName [
-	^super familyName notNil
+	^super familyName isNotNil
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FreeTypeFace >> hasKerning [
 	"FT_FACE_FLAG_KERNING = 64 (1 << 6)"
 
 	^ hasKerning ifNil: [ hasKerning := (faceFlags bitAnd: 64) = 64 ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FreeTypeFace >> hasStyleName [
-	^super styleName notNil
+	^super styleName isNotNil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeFace >> index [
 	^index
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeFace >> index: anInteger [
 	index := anInteger
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 FreeTypeFace >> postCopy [
 
 	handle beNull.
@@ -139,24 +141,24 @@ FreeTypeFace >> postCopy [
 	^ self
 ]
 
-{ #category : #caching }
+{ #category : 'caching' }
 FreeTypeFace >> releaseCachedState [
 
 	hasKerning := nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeFace >> styleName [
 	^super styleName ifNil:['']
 ]
 
-{ #category : #validation }
+{ #category : 'validation' }
 FreeTypeFace >> validate [
 	"If the receiver is not valid (has a nil handle), then create the
 	receiver to obtain a handle and load the receiver's fields"
 
 	(self isValid
-		and: [ numCharmaps notNil ])
+		and: [ numCharmaps isNotNil ])
 		ifTrue: [ ^ self ].
 
 	self create

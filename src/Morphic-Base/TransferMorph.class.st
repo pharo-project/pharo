@@ -6,8 +6,8 @@ It polls the shift state in its step method to update its copy state (shift pres
 And if you hit the Escape key while dragging, it aborts the drag operation.
 "
 Class {
-	#name : #TransferMorph,
-	#superclass : #Morph,
+	#name : 'TransferMorph',
+	#superclass : 'Morph',
 	#instVars : [
 		'transferType',
 		'passenger',
@@ -21,10 +21,12 @@ Class {
 	#classVars : [
 		'CopyPlusIcon'
 	],
-	#category : #'Morphic-Base-Events'
+	#category : 'Morphic-Base-Events',
+	#package : 'Morphic-Base',
+	#tag : 'Events'
 }
 
-{ #category : #'private - initialization' }
+{ #category : 'private - initialization' }
 TransferMorph class >> initIcons [
 	<script>
 
@@ -35,19 +37,19 @@ TransferMorph class >> initIcons [
 		offset: 0@0
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 TransferMorph class >> initialize [
 	"TransferMorph initialize"
 
 	self initIcons
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TransferMorph class >> withPassenger: anObject from: source [
 	^self withPassenger: anObject from: source hand: source currentHand
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TransferMorph class >> withPassenger: anObject from: source hand: dragHand [
 	^ self new
 		passenger: anObject;
@@ -58,7 +60,7 @@ TransferMorph class >> withPassenger: anObject from: source hand: dragHand [
 		yourself
 ]
 
-{ #category : #'dropping/grabbing' }
+{ #category : 'dropping/grabbing' }
 TransferMorph >> aboutToBeGrabbedBy: aHand [
 	"The receiver is being grabbed by a hand.
 	Perform necessary adjustments (if any) and return the actual morph
@@ -72,7 +74,7 @@ TransferMorph >> aboutToBeGrabbedBy: aHand [
 	aHand newKeyboardFocus: self
 ]
 
-{ #category : #'dropping/grabbing' }
+{ #category : 'dropping/grabbing' }
 TransferMorph >> animationForMoveSuccess: success [
 	| start stop slideForm |
 	success
@@ -90,13 +92,13 @@ TransferMorph >> animationForMoveSuccess: success [
 		delay: 20
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TransferMorph >> defaultColor [
 	"answer the default color/fill style for the receiver"
 	^ self theme selectionColor
 ]
 
-{ #category : #'submorphs - add/remove' }
+{ #category : 'submorphs - add/remove' }
 TransferMorph >> delete [
 	"See also >>justDroppedInto:event:."
 	accepted ifFalse: [
@@ -106,50 +108,50 @@ TransferMorph >> delete [
 	super delete
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TransferMorph >> dragHand [
 	"The hand dragging this morph"
 	^dragHand
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TransferMorph >> dragHand: aHandMorph [
 	"The hand dragging this morph"
 	dragHand := aHandMorph
 ]
 
-{ #category : #'drag and drop' }
+{ #category : 'drag and drop' }
 TransferMorph >> dragTransferType [
 	^transferType
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TransferMorph >> dragTransferType: aSymbol [
 	transferType := aSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TransferMorph >> draggedMorph [
 	draggedMorph ifNil: [self initDraggedMorph].
 	^draggedMorph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TransferMorph >> draggedMorph: aMorph [
 	draggedMorph := aMorph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TransferMorph >> dropNotifyRecipient [
 	^dropNotifyRecipient
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TransferMorph >> dropNotifyRecipient: anObject [
 	dropNotifyRecipient := anObject
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TransferMorph >> initDraggedMorph [
 	draggedMorph ifNotNil: [^self].
 	draggedMorph := self passenger asDraggableMorph.
@@ -158,7 +160,7 @@ TransferMorph >> initDraggedMorph [
 	self changed; fullBounds
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TransferMorph >> initialize [
 	"initialize the state of the receiver"
 	super initialize.
@@ -180,13 +182,13 @@ TransferMorph >> initialize [
 	self on: #keyStroke send: #keyStroke: to: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TransferMorph >> isTransferable [
 
 	^ true
 ]
 
-{ #category : #'dropping/grabbing' }
+{ #category : 'dropping/grabbing' }
 TransferMorph >> justDroppedInto: targetMorph event: anEvent [
 	"If only world wants this TransferMorph, treat it as unaccepted (see also >>delete)."
 	| formerPosition |
@@ -201,66 +203,66 @@ TransferMorph >> justDroppedInto: targetMorph event: anEvent [
 	self delete
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 TransferMorph >> keyDown: evt [
 	"Abort the drag on an escape"
 	evt keyCharacter ~= Character escape ifTrue: [ ^self ].
 	self delete
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TransferMorph >> move [
 	copy := false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TransferMorph >> passenger [
 	^passenger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TransferMorph >> passenger: anObject [
 	passenger := anObject
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TransferMorph >> privateFullMoveBy: delta [
 	super privateFullMoveBy: delta.
 	self changed: #position
 ]
 
-{ #category : #'dropping/grabbing' }
+{ #category : 'dropping/grabbing' }
 TransferMorph >> result: result [
 	^ self result: result from: nil
 ]
 
-{ #category : #'dropping/grabbing' }
+{ #category : 'dropping/grabbing' }
 TransferMorph >> result: aResult from: aResultGenerator [
 	"Send aResult of the drop operation computed by aResultGenerator to a
 	resultRecipient, if it exists."
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TransferMorph >> shouldCopy [
 	^copy
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TransferMorph >> shouldCopy: aBoolean [
 	copy := aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TransferMorph >> source [
 	^source
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TransferMorph >> source: anObject [
 	source := anObject
 ]
 
-{ #category : #stepping }
+{ #category : 'stepping' }
 TransferMorph >> step [
 	self shouldCopy = dragHand shiftPressed
 		ifTrue: [ ^ self ].
@@ -269,12 +271,12 @@ TransferMorph >> step [
 	self updateCopyIcon
 ]
 
-{ #category : #stepping }
+{ #category : 'stepping' }
 TransferMorph >> stepTime [
 	^100
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TransferMorph >> updateCopyIcon [
 
 	| copyIcon |

@@ -1,6 +1,6 @@
-Extension { #name : #FinderSelectorsSearchStrategy }
+Extension { #name : 'FinderSelectorsSearchStrategy' }
 
-{ #category : #'*Tool-Finder-UI' }
+{ #category : '*Tool-Finder-UI' }
 FinderSelectorsSearchStrategy >> rootNodeClassForResult: aCollection [
 
 	^ aCollection size > 1

@@ -1,6 +1,6 @@
-Extension { #name : #RBRenameInstanceVariableRefactoring }
+Extension { #name : 'RBRenameInstanceVariableRefactoring' }
 
-{ #category : #'*SystemCommands-VariableCommands' }
+{ #category : '*SystemCommands-VariableCommands' }
 RBRenameInstanceVariableRefactoring class >> classVariableAnalog [
 	^RBRenameClassVariableRefactoring
 ]

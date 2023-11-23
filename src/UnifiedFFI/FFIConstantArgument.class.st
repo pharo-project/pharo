@@ -6,15 +6,17 @@ I am resolved by resolving my type.
 The type knows how to resolve itself in a context.
 "
 Class {
-	#name : #FFIConstantArgument,
-	#superclass : #FFIFunctionArgument,
+	#name : 'FFIConstantArgument',
+	#superclass : 'FFIFunctionArgument',
 	#instVars : [
 		'value'
 	],
-	#category : #'UnifiedFFI-Arguments'
+	#category : 'UnifiedFFI-Arguments',
+	#package : 'UnifiedFFI',
+	#tag : 'Arguments'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FFIConstantArgument class >> value: aValue typeName: aTypeName arity: anInteger [
 
 	^ self new
@@ -23,7 +25,7 @@ FFIConstantArgument class >> value: aValue typeName: aTypeName arity: anInteger 
 		yourself
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 FFIConstantArgument >> asOldArraySpec [
 
 	^ {
@@ -35,26 +37,26 @@ FFIConstantArgument >> asOldArraySpec [
 		0 }
 ]
 
-{ #category : #'emitting code' }
+{ #category : 'emitting code' }
 FFIConstantArgument >> emitArgument: aBuilder context: aContext objectClass: objectClass instVarName: aName [
 
 	self shouldNotImplement
 ]
 
-{ #category : #'private - emitting code' }
+{ #category : 'private - emitting code' }
 FFIConstantArgument >> emitArgumentVariableAccesingPart: aBuilder context: aContext objectClass: objectClass instVarName: aName [
 
 	self shouldNotImplement
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FFIConstantArgument >> initialize [
 
 	super initialize.
 	type := FFIUndefinedTypeDeclaration new
 ]
 
-{ #category : #resolving }
+{ #category : 'resolving' }
 FFIConstantArgument >> resolveUsing: aResolver [
 
 	value = false ifTrue: [
@@ -81,13 +83,13 @@ FFIConstantArgument >> resolveUsing: aResolver [
 	resolvedType loader: loader
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIConstantArgument >> value [
 
 	^ value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIConstantArgument >> value: anObject [
 	value := anObject
 ]

@@ -5,12 +5,14 @@ Description
 I am a specialization of the MenuItemMorph for the Menubar. I adapt the look of the Morph to fit the design of the menubar.
 "
 Class {
-	#name : #MenubarItemMorph,
-	#superclass : #DockingBarMenuItemMorph,
-	#category : #'Morphic-Widgets-Menubar-View'
+	#name : 'MenubarItemMorph',
+	#superclass : 'DockingBarMenuItemMorph',
+	#category : 'Morphic-Widgets-Menubar-View',
+	#package : 'Morphic-Widgets-Menubar',
+	#tag : 'View'
 }
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 MenubarItemMorph >> drawIconOn: aCanvas [
 	| iconForm x y |
 	self hasIcon ifFalse: [ ^ self ].
@@ -22,25 +24,25 @@ MenubarItemMorph >> drawIconOn: aCanvas [
 	aCanvas translucentImage: iconForm at: x @ y
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 MenubarItemMorph >> drawSubmenuMarkerOn: aCanvas [
 
 	"Nothing"
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 MenubarItemMorph >> menuStringBounds [
 	| oldBounds |
 	oldBounds := super menuStringBounds.
 	^ oldBounds left: (oldBounds left + oldBounds right - self measureContents x) // 2
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MenubarItemMorph >> selectionFillStyle [
 	^ self theme menubarItemSelectionFillStyleFor: self
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MenubarItemMorph >> selectionTextColor [
 	^ self theme menubarItemSelectionTextColorFor: self
 ]

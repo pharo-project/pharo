@@ -1,6 +1,6 @@
-Extension { #name : #False }
+Extension { #name : 'False' }
 
-{ #category : #'*UnifiedFFI' }
+{ #category : '*UnifiedFFI' }
 False >> asInteger [
 	"Answer 0 since the receiver is false."
 

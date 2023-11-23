@@ -2,29 +2,31 @@
 I am a TextArea that only has one line of text.
 "
 Class {
-	#name : #RubTextFieldArea,
-	#superclass : #RubAbstractTextArea,
-	#category : #'Rubric-Editing-Core'
+	#name : 'RubTextFieldArea',
+	#superclass : 'RubAbstractTextArea',
+	#category : 'Rubric-Editing-Core',
+	#package : 'Rubric',
+	#tag : 'Editing-Core'
 }
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 RubTextFieldArea >> defaultMargins [
 
 	^ Margin left: 2 right: 2 top: 0 bottom: 1
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RubTextFieldArea >> newParagraph [
 	^ RubExtraSelectionDecorator next: super newParagraph
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RubTextFieldArea >> privateReplaceFrom: start to: stop with: aText [
 
 	super privateReplaceFrom: start to: stop with: (self sanitize: aText)
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RubTextFieldArea >> sanitize: aText [
 	| lineEndings |
 	lineEndings := { Character cr. Character lf }.
@@ -34,17 +36,17 @@ RubTextFieldArea >> sanitize: aText [
 		ifFalse: [ aText ]
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 RubTextFieldArea >> walkAlongDisplayedLine [
 	^ false
 ]
 
-{ #category : #'compatibility-toBeDeprecated' }
+{ #category : 'compatibility-toBeDeprecated' }
 RubTextFieldArea >> wrapFlag: aBoolean [
 	" not effect for a text field because such a morph is never wrapped "
 ]
 
-{ #category : #'compatibility-toBeDeprecated' }
+{ #category : 'compatibility-toBeDeprecated' }
 RubTextFieldArea >> wrapped: aBoolean [
 
 	" not effect for a text field because such a morph is never wrapped "

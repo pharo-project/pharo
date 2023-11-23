@@ -32,193 +32,195 @@ path
 	
 "
 Class {
-	#name : #FileLocator,
-	#superclass : #AbstractFileReference,
+	#name : 'FileLocator',
+	#superclass : 'AbstractFileReference',
 	#instVars : [
 		'origin'
 	],
 	#classVars : [
 		'Resolver'
 	],
-	#category : #'FileSystem-Core-Public'
+	#category : 'FileSystem-Core-Public',
+	#package : 'FileSystem-Core',
+	#tag : 'Public'
 }
 
-{ #category : #'windows-origins' }
+{ #category : 'windows-origins' }
 FileLocator class >> A [
 	^ self driveNamed: #A
 ]
 
-{ #category : #'windows-origins' }
+{ #category : 'windows-origins' }
 FileLocator class >> B [
 	^ self driveNamed: #B
 ]
 
-{ #category : #'windows-origins' }
+{ #category : 'windows-origins' }
 FileLocator class >> C [
 	^ self driveNamed: #C
 ]
 
-{ #category : #'windows-origins' }
+{ #category : 'windows-origins' }
 FileLocator class >> D [
 	^ self driveNamed: #D
 ]
 
-{ #category : #'windows-origins' }
+{ #category : 'windows-origins' }
 FileLocator class >> E [
 	^ self driveNamed: #E
 ]
 
-{ #category : #'windows-origins' }
+{ #category : 'windows-origins' }
 FileLocator class >> F [
 	^ self driveNamed: #F
 ]
 
-{ #category : #'windows-origins' }
+{ #category : 'windows-origins' }
 FileLocator class >> G [
 	^ self driveNamed: #G
 ]
 
-{ #category : #'windows-origins' }
+{ #category : 'windows-origins' }
 FileLocator class >> H [
 	^ self driveNamed: #H
 ]
 
-{ #category : #'windows-origins' }
+{ #category : 'windows-origins' }
 FileLocator class >> I [
 	^ self driveNamed: #I
 ]
 
-{ #category : #'windows-origins' }
+{ #category : 'windows-origins' }
 FileLocator class >> J [
 	^ self driveNamed: #J
 ]
 
-{ #category : #'windows-origins' }
+{ #category : 'windows-origins' }
 FileLocator class >> K [
 	^ self driveNamed: #K
 ]
 
-{ #category : #'windows-origins' }
+{ #category : 'windows-origins' }
 FileLocator class >> L [
 	^ self driveNamed: #L
 ]
 
-{ #category : #'windows-origins' }
+{ #category : 'windows-origins' }
 FileLocator class >> M [
 	^ self driveNamed: #M
 ]
 
-{ #category : #'windows-origins' }
+{ #category : 'windows-origins' }
 FileLocator class >> N [
 	^ self driveNamed: #N
 ]
 
-{ #category : #'windows-origins' }
+{ #category : 'windows-origins' }
 FileLocator class >> O [
 	^ self driveNamed: #O
 ]
 
-{ #category : #'windows-origins' }
+{ #category : 'windows-origins' }
 FileLocator class >> P [
 	^ self driveNamed: #P
 ]
 
-{ #category : #'windows-origins' }
+{ #category : 'windows-origins' }
 FileLocator class >> Q [
 	^ self driveNamed: #Q
 ]
 
-{ #category : #'windows-origins' }
+{ #category : 'windows-origins' }
 FileLocator class >> R [
 	^ self driveNamed: #R
 ]
 
-{ #category : #'windows-origins' }
+{ #category : 'windows-origins' }
 FileLocator class >> S [
 	^ self driveNamed: #S
 ]
 
-{ #category : #'windows-origins' }
+{ #category : 'windows-origins' }
 FileLocator class >> T [
 	^ self driveNamed: #T
 ]
 
-{ #category : #'windows-origins' }
+{ #category : 'windows-origins' }
 FileLocator class >> U [
 	^ self driveNamed: #U
 ]
 
-{ #category : #'windows-origins' }
+{ #category : 'windows-origins' }
 FileLocator class >> V [
 	^ self driveNamed: #V
 ]
 
-{ #category : #'windows-origins' }
+{ #category : 'windows-origins' }
 FileLocator class >> W [
 	^ self driveNamed: #W
 ]
 
-{ #category : #'windows-origins' }
+{ #category : 'windows-origins' }
 FileLocator class >> X [
 	^ self driveNamed: #X
 ]
 
-{ #category : #'windows-origins' }
+{ #category : 'windows-origins' }
 FileLocator class >> Y [
 	^ self driveNamed: #Y
 ]
 
-{ #category : #'windows-origins' }
+{ #category : 'windows-origins' }
 FileLocator class >> Z [
 	^ self driveNamed: #Z
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 FileLocator class >> addResolver: aResolver [
 	Resolver addResolver: aResolver
 ]
 
-{ #category : #origins }
+{ #category : 'origins' }
 FileLocator class >> cache [
 	^ self origin: #cache
 ]
 
-{ #category : #origins }
+{ #category : 'origins' }
 FileLocator class >> changes [
 	^ self origin: #changes
 ]
 
-{ #category : #origins }
+{ #category : 'origins' }
 FileLocator class >> cwd [
 	^ self workingDirectory
 ]
 
-{ #category : #origins }
+{ #category : 'origins' }
 FileLocator class >> desktop [
 	^ self origin: #desktop
 ]
 
-{ #category : #origins }
+{ #category : 'origins' }
 FileLocator class >> documents [
 	^ self origin: #documents
 ]
 
-{ #category : #origins }
+{ #category : 'origins' }
 FileLocator class >> downloads [
 	^ self origin: #downloads
 ]
 
-{ #category : #'windows-origins' }
+{ #category : 'windows-origins' }
 FileLocator class >> driveNamed: driveName [
 	^ FileReference fileSystem: (FileSystem disk) path: Path / (driveName, ':')
 ]
 
-{ #category : #flushing }
+{ #category : 'flushing' }
 FileLocator class >> flushCaches [
 	Resolver flushCaches
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FileLocator class >> fromPath: aPath ifNone: notFoundBlock [
 	"Returns a file locator if aPath is a reference to a supported origin or is a child of an origin.
 	If no locator matches, return the result of the evaluation of notFoundBlock.
@@ -239,7 +241,7 @@ FileLocator class >> fromPath: aPath ifNone: notFoundBlock [
 	^ notFoundBlock value
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FileLocator class >> fromString: aString ifNone: notFoundBlock [
 	"Returns a file locator if aString converted as path is a reference to a supported origin or is a child of an origin.
 	If no locator matches, return the result of the evaluation of notFoundBlock.
@@ -248,22 +250,22 @@ FileLocator class >> fromString: aString ifNone: notFoundBlock [
 	^ self fromPath: aString asPath ifNone: notFoundBlock
 ]
 
-{ #category : #origins }
+{ #category : 'origins' }
 FileLocator class >> home [
 	^ self origin: #home
 ]
 
-{ #category : #origins }
+{ #category : 'origins' }
 FileLocator class >> image [
 	^ self origin: #image
 ]
 
-{ #category : #origins }
+{ #category : 'origins' }
 FileLocator class >> imageDirectory [
 	^ self origin: #imageDirectory
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 FileLocator class >> initialize [
 	"FileLocator is needed to initialize SystemSettingsPersistence (call to FileLocator>>#preferences),
 	and could be useful for other classes.
@@ -273,33 +275,33 @@ FileLocator class >> initialize [
 	self startUp: true
 ]
 
-{ #category : #origins }
+{ #category : 'origins' }
 FileLocator class >> localDirectory [
 	^ self origin: #localDirectory
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FileLocator class >> origin: aSymbol [
 	^ self origin: aSymbol path: Path workingDirectory
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FileLocator class >> origin: aSymbol path: aPath [
 	^ self basicNew
 			initializeWithOrigin: aSymbol path: aPath
 ]
 
-{ #category : #origins }
+{ #category : 'origins' }
 FileLocator class >> preferences [
 	^ self origin: #preferences
 ]
 
-{ #category : #origins }
+{ #category : 'origins' }
 FileLocator class >> root [
 	^ FileSystem disk root
 ]
 
-{ #category : #'system startup' }
+{ #category : 'system startup' }
 FileLocator class >> startUp: resuming [
 	resuming
 		ifFalse: [ ^ self ].
@@ -308,110 +310,110 @@ FileLocator class >> startUp: resuming [
 	Resolver addResolver: PlatformResolver forCurrentPlatform
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileLocator class >> supportedOrigins [
 	| origins current |
 	origins := IdentitySet new.
 	current := Resolver.
-	[current notNil] whileTrue:
+	[current isNotNil] whileTrue:
 		[origins addAll: current supportedOrigins.
 		current := current next].
 	^ origins
 ]
 
-{ #category : #'mac-origins' }
+{ #category : 'mac-origins' }
 FileLocator class >> systemApplicationSupport [
 	^ self origin: #systemApplicationSupport
 ]
 
-{ #category : #'mac-origins' }
+{ #category : 'mac-origins' }
 FileLocator class >> systemLibrary [
 	^ self origin: #systemLibrary
 ]
 
-{ #category : #origins }
+{ #category : 'origins' }
 FileLocator class >> temp [
 	^ self origin: #temp
 ]
 
-{ #category : #'mac-origins' }
+{ #category : 'mac-origins' }
 FileLocator class >> userApplicationSupport [
 	^ self origin: #userApplicationSupport
 ]
 
-{ #category : #'unix-origins' }
+{ #category : 'unix-origins' }
 FileLocator class >> userData [
 	^ self origin: #userData
 ]
 
-{ #category : #'mac-origins' }
+{ #category : 'mac-origins' }
 FileLocator class >> userLibrary [
 	^ self origin: #userLibrary
 ]
 
-{ #category : #origins }
+{ #category : 'origins' }
 FileLocator class >> vmBinary [
 	^ self origin: #vmBinary
 ]
 
-{ #category : #origins }
+{ #category : 'origins' }
 FileLocator class >> vmDirectory [
 	^ self origin: #vmDirectory
 ]
 
-{ #category : #origins }
+{ #category : 'origins' }
 FileLocator class >> workingDirectory [
 	^ FileSystem disk referenceTo: RelativePath new
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 FileLocator >> = other [
 	^ self species = other species
 		and: [origin = other origin
 			and: [path = other path]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileLocator >> absolutePath [
 	"Return the absolute path"
 	^ self resolve path
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 FileLocator >> asAbsolute [
 	^ self
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 FileLocator >> asFileReference [
 	^ self resolve
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 FileLocator >> asPath [
 	"Answer the receiver's path"
 
 	^self resolve asPath
 ]
 
-{ #category : #streams }
+{ #category : 'streams' }
 FileLocator >> binaryReadStream [
 	^ self resolve binaryReadStream
 ]
 
-{ #category : #streams }
+{ #category : 'streams' }
 FileLocator >> binaryWriteStream [
 	"Answer a binary write stream on the receiver"
 
 	^ self resolve binaryWriteStream
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 FileLocator >> copyWithPath: newPath [
 	^ self class origin: origin path: newPath
 ]
 
-{ #category : #'error handling' }
+{ #category : 'error handling' }
 FileLocator >> doesNotUnderstand: aMessage [
 	"Redirect message to the resolved version of this FileLocator.
 	If FileReference won't understand the message send a normal DNU."
@@ -425,39 +427,39 @@ FileLocator >> doesNotUnderstand: aMessage [
 	^ super doesNotUnderstand: aMessage
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileLocator >> fullPath [
 	^ self resolve path
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 FileLocator >> hash [
 	^ origin hash bitXor: path hash
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FileLocator >> initializeWithOrigin: aSymbol path: aPath [
 	self initialize.
 	origin := aSymbol.
 	path := aPath
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FileLocator >> isAbsolute [
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FileLocator >> isRelative [
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileLocator >> origin [
 	^ origin
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 FileLocator >> printOn: aStream [
 	| fs |
 	aStream
@@ -471,12 +473,12 @@ FileLocator >> printOn: aStream [
 	fs printPath: path on: aStream
 ]
 
-{ #category : #streams }
+{ #category : 'streams' }
 FileLocator >> readStream [
 	^ self resolve readStream
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 FileLocator >> renameTo: newBasename [
 
 	| result |
@@ -486,12 +488,12 @@ FileLocator >> renameTo: newBasename [
 		ifFalse: [ path := result path ]
 ]
 
-{ #category : #navigating }
+{ #category : 'navigating' }
 FileLocator >> resolve [
 	^ (Resolver resolve: origin) resolve: path
 ]
 
-{ #category : #navigating }
+{ #category : 'navigating' }
 FileLocator >> resolveString: aString [
 	| filesystem thePath |
 	filesystem := (Resolver resolve: origin) fileSystem.
@@ -499,7 +501,7 @@ FileLocator >> resolveString: aString [
 	^ self withPath: (path resolvePath: thePath)
 ]
 
-{ #category : #streams }
+{ #category : 'streams' }
 FileLocator >> writeStream [
 	^ self resolve writeStream
 ]

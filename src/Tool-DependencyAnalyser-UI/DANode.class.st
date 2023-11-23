@@ -2,8 +2,8 @@
 This is an abstract class for to display nodes in a tree.
 "
 Class {
-	#name : #DANode,
-	#superclass : #Object,
+	#name : 'DANode',
+	#superclass : 'Object',
 	#instVars : [
 		'treeModelParent',
 		'cycle',
@@ -11,36 +11,38 @@ Class {
 		'content',
 		'parent'
 	],
-	#category : #'Tool-DependencyAnalyser-UI-Nodes'
+	#category : 'Tool-DependencyAnalyser-UI-Nodes',
+	#package : 'Tool-DependencyAnalyser-UI',
+	#tag : 'Nodes'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 DANode class >> isAbstract [
 
 	^ self == DANode
 ]
 
-{ #category : #'building-menu' }
+{ #category : 'building-menu' }
 DANode >> addMenuEntriesOn: aMenuGroup [
 	"overide this method to add contextual menu on nodes"
 ]
 
-{ #category : #'browse-nautilus' }
+{ #category : 'browse-nautilus' }
 DANode >> browseClass: classToBrowse [
 	Smalltalk tools browser openOnClass: classToBrowse
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DANode >> browser [
 	^ browser
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DANode >> browser: anObject [
 	browser := anObject
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DANode >> buildChildren [
 	self flag: 'to remove'.
 
@@ -54,72 +56,73 @@ DANode >> buildChildren [
 			yourself ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DANode >> children [
 	^ #()
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DANode >> content [
 	^ content
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DANode >> content: aDAPackage [
 	content := aDAPackage
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DANode >> cycle: anObject [
 	cycle := anObject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DANode >> isClassToDependencyNode [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DANode >> isCycle [
 	^ cycle
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DANode >> isCycleNode [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DANode >> isPackageNode [
  	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DANode >> isReferenceNode [
 	^ false
 ]
 
-{ #category : #displaying }
+{ #category : 'displaying' }
 DANode >> label [
 	^ self content displayString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DANode >> packageUnderAnalysis [
-	^ self rootNode daPackage rPackageSet packages first
+
+	^ self rootNode daPackage systemPackage
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DANode >> parentNode [
 	^ parent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DANode >> parentNode: aDANode [
 	parent := aDANode
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DANode >> rootNode [
 	| rootNode currentNode |
 	currentNode := self.
@@ -131,7 +134,7 @@ DANode >> rootNode [
 	^ currentNode
 ]
 
-{ #category : #'browse-nautilus' }
+{ #category : 'browse-nautilus' }
 DANode >> selectClass: aClass [
 	| aBrowser |
 
@@ -139,12 +142,12 @@ DANode >> selectClass: aClass [
 	aBrowser selectClass: aClass
 ]
 
-{ #category : #'browse-nautilus' }
+{ #category : 'browse-nautilus' }
 DANode >> selectInBrowser [
 	^ self subclassResponsibility
 ]
 
-{ #category : #'browse-nautilus' }
+{ #category : 'browse-nautilus' }
 DANode >> selectMethod: aMethod [
 	| classToBrowse aBrowser compiledMethod |
 	aBrowser := self rootNode browser.
@@ -153,24 +156,24 @@ DANode >> selectMethod: aMethod [
 	aBrowser selectMethod: compiledMethod
 ]
 
-{ #category : #'browse-nautilus' }
+{ #category : 'browse-nautilus' }
 DANode >> selectPackage: aPackage [
 	| aBrowser |
 	aBrowser := self rootNode browser.
 	aBrowser selectPackage: aPackage
 ]
 
-{ #category : #'browse-nautilus' }
+{ #category : 'browse-nautilus' }
 DANode >> spawnNewBrowser [
 	"do nothing by default"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DANode >> treeModelParent [
 	^ treeModelParent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DANode >> treeModelParent: anObject [
 	treeModelParent := anObject
 ]

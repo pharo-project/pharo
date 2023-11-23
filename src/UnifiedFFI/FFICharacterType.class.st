@@ -3,27 +3,29 @@ Character type.
 Represented as single byte on C side.
 "
 Class {
-	#name : #FFICharacterType,
-	#superclass : #FFIExternalType,
-	#category : #'UnifiedFFI-Types'
+	#name : 'FFICharacterType',
+	#superclass : 'FFIExternalType',
+	#category : 'UnifiedFFI-Types',
+	#package : 'UnifiedFFI',
+	#tag : 'Types'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFICharacterType class >> externalType [
 	^ ExternalType char
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFICharacterType class >> externalTypeAlignment [
 	^ 1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFICharacterType class >> externalTypeSize [
 	^ 1
 ]
 
-{ #category : #'emitting code' }
+{ #category : 'emitting code' }
 FFICharacterType >> basicEmitArgument: aBuilder context: aContext inCallout: aCallout [
 
 	| isString |
@@ -35,23 +37,23 @@ FFICharacterType >> basicEmitArgument: aBuilder context: aContext inCallout: aCa
 		ifFalse: [ super basicEmitArgument: aBuilder context: aContext inCallout: aCallout ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FFICharacterType >> basicHandle: aHandle at: index [
 	^ aHandle signedCharAt: index
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FFICharacterType >> basicHandle: aHandle at: index put: value [
 	^ aHandle signedCharAt: index put: value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFICharacterType >> defaultReturnOnError [
 
 	^ Character null
 ]
 
-{ #category : #'emitting code' }
+{ #category : 'emitting code' }
 FFICharacterType >> emitReturn: aBuilder resultTempVar: resultVar context: aContext inCallout: aCallout [
 
 	| isString |
@@ -66,25 +68,25 @@ FFICharacterType >> emitReturn: aBuilder resultTempVar: resultVar context: aCont
 		ifFalse: [ super emitReturn: aBuilder resultTempVar: resultVar context: aContext inCallout: aCallout ]
 ]
 
-{ #category : #callbacks }
+{ #category : 'callbacks' }
 FFICharacterType >> extractFromCallbackOn: aCallbackArgumentReader [
 
 	aCallbackArgumentReader extractCharacterType
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FFICharacterType >> needsArityPacking [
 	">1 because it can be a 'char *', then just roll when is 'char**' or bigger"
 	^ self pointerArity > 1
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FFICharacterType >> needsArityUnpacking [
 	"'char **' or bigger need to be unpacked"
 	^ self needsArityPacking
 ]
 
-{ #category : #'stack parameter classification' }
+{ #category : 'stack parameter classification' }
 FFICharacterType >> stackValueParameterClass [
 	^ #integer
 ]

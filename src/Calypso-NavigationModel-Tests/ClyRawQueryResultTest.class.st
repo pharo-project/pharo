@@ -1,15 +1,16 @@
 Class {
-	#name : #ClyRawQueryResultTest,
-	#superclass : #ClyQueryNavigationResultTest,
-	#category : #'Calypso-NavigationModel-Tests'
+	#name : 'ClyRawQueryResultTest',
+	#superclass : 'ClyQueryNavigationResultTest',
+	#category : 'Calypso-NavigationModel-Tests',
+	#package : 'Calypso-NavigationModel-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClyRawQueryResultTest >> createQueryResult [
 	^ClyRawQueryResult new
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyRawQueryResultTest >> testFillingWithItems [
 
 	queryResult fillWith: #(1 2 3).
@@ -17,7 +18,7 @@ ClyRawQueryResultTest >> testFillingWithItems [
 	self assert: queryResult items asArray equals: #(1 2 3)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyRawQueryResultTest >> testFillingWithItemsTwice [
 
 	queryResult fillWith: #(1 2 3).
@@ -26,7 +27,7 @@ ClyRawQueryResultTest >> testFillingWithItemsTwice [
 	self assert: queryResult items asArray equals: #(1 2 3 4 5 6)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyRawQueryResultTest >> testGettingAllItems [
 
 	| actual |
@@ -37,7 +38,7 @@ ClyRawQueryResultTest >> testGettingAllItems [
 	self assert: actual asArray equals: #(1 2 3)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyRawQueryResultTest >> testGettingAllItemsSatisfyingCondition [
 
 	| actual |
@@ -48,7 +49,7 @@ ClyRawQueryResultTest >> testGettingAllItemsSatisfyingCondition [
 	self assert: actual asArray equals: #(2 3 4)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyRawQueryResultTest >> testGettingItemsStartingAtGivenPosition [
 
 	| actual |
@@ -59,7 +60,7 @@ ClyRawQueryResultTest >> testGettingItemsStartingAtGivenPosition [
 	self assert: actual asArray equals: #(3 4)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyRawQueryResultTest >> testGettingItemsStartingWhereConditionIsValid [
 
 	| actual |

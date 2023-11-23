@@ -2,27 +2,28 @@
 A command to change the current font color
 "
 Class {
-	#name : #AthensColorChange,
-	#superclass : #AthensTextDisplayCommand,
+	#name : 'AthensColorChange',
+	#superclass : 'AthensTextDisplayCommand',
 	#instVars : [
 		'color'
 	],
-	#category : #'Athens-Text'
+	#category : 'Athens-Text',
+	#package : 'Athens-Text'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensColorChange >> color [
 
 	^ color
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensColorChange >> color: anObject [
 
 	color := anObject
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 AthensColorChange >> renderOn: renderer [
 	renderer setCurrentColor: color
 ]

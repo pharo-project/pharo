@@ -15,8 +15,8 @@ Whereas, in #visitMethodNode:,  the effectTranslator is used, because no value i
 
 "
 Class {
-	#name : #OCASTTranslator,
-	#superclass : #RBProgramNodeVisitor,
+	#name : 'OCASTTranslator',
+	#superclass : 'RBProgramNodeVisitor',
 	#instVars : [
 		'methodBuilder',
 		'nextUniqueInlineID'
@@ -24,10 +24,12 @@ Class {
 	#classVars : [
 		'OptimizedMessages'
 	],
-	#category : #'OpalCompiler-Core-Translator'
+	#category : 'OpalCompiler-Core-Translator',
+	#package : 'OpalCompiler-Core',
+	#tag : 'Translator'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 OCASTTranslator class >> initialize [
 
 	OptimizedMessages := {
@@ -53,17 +55,17 @@ OCASTTranslator class >> initialize [
 		                     (#whileTrue -> #emitWhileTrue:) } asDictionary
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OCASTTranslator >> compilationContext [
 	^methodBuilder compilationContext
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OCASTTranslator >> compilationContext: anObject [
 	methodBuilder compilationContext: anObject
 ]
 
-{ #category : #'inline messages factored' }
+{ #category : 'inline messages factored' }
 OCASTTranslator >> emitAllButLastCases: cases [
 
 	|  assocMessageNode  |
@@ -81,7 +83,7 @@ OCASTTranslator >> emitAllButLastCases: cases [
 	]
 ]
 
-{ #category : #'inline messages' }
+{ #category : 'inline messages' }
 OCASTTranslator >> emitAnd: aMessageNode [
 
 	self visitNode: aMessageNode receiver.
@@ -93,7 +95,7 @@ OCASTTranslator >> emitAnd: aMessageNode [
 	methodBuilder jumpAheadTarget: #end
 ]
 
-{ #category : #'inline messages' }
+{ #category : 'inline messages' }
 OCASTTranslator >> emitCaseOf: aMessageNode [
 
 	self
@@ -103,7 +105,7 @@ OCASTTranslator >> emitCaseOf: aMessageNode [
 			methodBuilder send: #caseError ]
 ]
 
-{ #category : #'inline messages factored' }
+{ #category : 'inline messages factored' }
 OCASTTranslator >> emitCaseOf: aMessageNode otherwiseBlock: aBlock [
 
 	| cases assocMessageNode  |
@@ -131,7 +133,7 @@ OCASTTranslator >> emitCaseOf: aMessageNode otherwiseBlock: aBlock [
 				ifFalse: [methodBuilder returnTop]]
 ]
 
-{ #category : #'inline messages' }
+{ #category : 'inline messages' }
 OCASTTranslator >> emitCaseOfOtherwise: aMessageNode [
 
 	self
@@ -139,7 +141,7 @@ OCASTTranslator >> emitCaseOfOtherwise: aMessageNode [
 		otherwiseBlock: [ self visitInlinedBlockNode: aMessageNode arguments last ]
 ]
 
-{ #category : #'inline messages factored' }
+{ #category : 'inline messages factored' }
 OCASTTranslator >> emitCondition: args boolean: aBoolean [
 	"emits the jumps so that one of the 2 blocks in args is evaluated depending on boolean"
 
@@ -151,7 +153,7 @@ OCASTTranslator >> emitCondition: args boolean: aBoolean [
 	methodBuilder jumpAheadTarget: #end
 ]
 
-{ #category : #'inline messages factored' }
+{ #category : 'inline messages factored' }
 OCASTTranslator >> emitIf: aMessageNode boolean: aBoolean [
 
 	self visitNode: aMessageNode receiver.
@@ -159,7 +161,7 @@ OCASTTranslator >> emitIf: aMessageNode boolean: aBoolean [
 	self emitCondition: aMessageNode arguments boolean: aBoolean
 ]
 
-{ #category : #'inline messages' }
+{ #category : 'inline messages' }
 OCASTTranslator >> emitIfFalse: aMessageNode [
 
 	self visitNode: aMessageNode receiver.
@@ -171,13 +173,13 @@ OCASTTranslator >> emitIfFalse: aMessageNode [
 	methodBuilder jumpAheadTarget: #end
 ]
 
-{ #category : #'inline messages' }
+{ #category : 'inline messages' }
 OCASTTranslator >> emitIfFalseIfTrue: aMessageNode [
 
 	self emitIf: aMessageNode boolean: true
 ]
 
-{ #category : #'inline messages' }
+{ #category : 'inline messages' }
 OCASTTranslator >> emitIfNil: aMessageNode [
 
 	self visitNode: aMessageNode receiver.
@@ -190,7 +192,7 @@ OCASTTranslator >> emitIfNil: aMessageNode [
 	methodBuilder jumpAheadTarget: #else
 ]
 
-{ #category : #'inline messages factored' }
+{ #category : 'inline messages factored' }
 OCASTTranslator >> emitIfNil: aMessageNode boolean: aBoolean [
 	| args notNilBlock |
 
@@ -206,12 +208,12 @@ OCASTTranslator >> emitIfNil: aMessageNode boolean: aBoolean [
 	self emitCondition: args boolean: aBoolean
 ]
 
-{ #category : #'inline messages' }
+{ #category : 'inline messages' }
 OCASTTranslator >> emitIfNilIfNotNil: aMessageNode [
 	self emitIfNil: aMessageNode boolean: false
 ]
 
-{ #category : #'inline messages' }
+{ #category : 'inline messages' }
 OCASTTranslator >> emitIfNotNil: aMessageNode [
 	| args |
 	self visitNode: aMessageNode receiver.
@@ -226,12 +228,12 @@ OCASTTranslator >> emitIfNotNil: aMessageNode [
 	methodBuilder jumpAheadTarget: #end
 ]
 
-{ #category : #'inline messages' }
+{ #category : 'inline messages' }
 OCASTTranslator >> emitIfNotNilIfNil: aMessageNode [
 	self emitIfNil: aMessageNode boolean: true
 ]
 
-{ #category : #'inline messages' }
+{ #category : 'inline messages' }
 OCASTTranslator >> emitIfTrue: aMessageNode [
 
 	self visitNode: aMessageNode receiver.
@@ -243,13 +245,13 @@ OCASTTranslator >> emitIfTrue: aMessageNode [
 	methodBuilder jumpAheadTarget: #end
 ]
 
-{ #category : #'inline messages' }
+{ #category : 'inline messages' }
 OCASTTranslator >> emitIfTrueIfFalse: aMessageNode [
 
 	self emitIf: aMessageNode boolean: false
 ]
 
-{ #category : #'visitor - double dispatching' }
+{ #category : 'visitor - double dispatching' }
 OCASTTranslator >> emitMessageNode: aMessageNode [
 
 	aMessageNode isCascaded ifFalse: [
@@ -261,7 +263,7 @@ OCASTTranslator >> emitMessageNode: aMessageNode [
 		ifFalse: [methodBuilder send: aMessageNode selector]
 ]
 
-{ #category : #'inline messages' }
+{ #category : 'inline messages' }
 OCASTTranslator >> emitOr: aMessageNode [
 
 	self visitNode: aMessageNode receiver.
@@ -273,7 +275,7 @@ OCASTTranslator >> emitOr: aMessageNode [
 	methodBuilder jumpAheadTarget: #end
 ]
 
-{ #category : #'inline messages' }
+{ #category : 'inline messages' }
 OCASTTranslator >> emitRepeat: aMessageNode [
 	| block |
 	block := aMessageNode receiver.
@@ -283,7 +285,7 @@ OCASTTranslator >> emitRepeat: aMessageNode [
 	methodBuilder pushLiteral: nil
 ]
 
-{ #category : #errors }
+{ #category : 'errors' }
 OCASTTranslator >> emitRuntimeError: aNode [
 	"Runtime errors should only be emited on faulty code"
 
@@ -298,7 +300,7 @@ OCASTTranslator >> emitRuntimeError: aNode [
 		send: #signalSyntaxError:
 ]
 
-{ #category : #'inline messages' }
+{ #category : 'inline messages' }
 OCASTTranslator >> emitTimesRepeat: aMessageNode [
 
 	| limit block limitEmit limitVariableName iteratorVariableName uniqueInlineID startLabelName doneLabelName |
@@ -343,7 +345,7 @@ OCASTTranslator >> emitTimesRepeat: aMessageNode [
 	methodBuilder jumpAheadTarget: doneLabelName
 ]
 
-{ #category : #'inline messages' }
+{ #category : 'inline messages' }
 OCASTTranslator >> emitToByDo: aMessageNode [
 
 	| step |
@@ -355,13 +357,13 @@ OCASTTranslator >> emitToByDo: aMessageNode [
 	self emitToDo: aMessageNode step: step
 ]
 
-{ #category : #'inline messages' }
+{ #category : 'inline messages' }
 OCASTTranslator >> emitToDo: aMessageNode [
 
 	self emitToDo: aMessageNode step: 1
 ]
 
-{ #category : #'inline messages factored' }
+{ #category : 'inline messages factored' }
 OCASTTranslator >> emitToDo: aMessageNode step: step [
 	| limit block iterator limitEmit |
 
@@ -397,7 +399,7 @@ OCASTTranslator >> emitToDo: aMessageNode step: step [
 	methodBuilder jumpAheadTarget: #done
 ]
 
-{ #category : #'inline messages factored' }
+{ #category : 'inline messages factored' }
 OCASTTranslator >> emitWhile: aMessageNode boolean: aBoolean [
 
 	methodBuilder jumpBackTarget: #begin.
@@ -410,19 +412,19 @@ OCASTTranslator >> emitWhile: aMessageNode boolean: aBoolean [
 	methodBuilder pushLiteral: nil
 ]
 
-{ #category : #'inline messages' }
+{ #category : 'inline messages' }
 OCASTTranslator >> emitWhileFalse: aMessageNode [
 
 	self emitWhile: aMessageNode boolean: true
 ]
 
-{ #category : #'inline messages' }
+{ #category : 'inline messages' }
 OCASTTranslator >> emitWhileTrue: aMessageNode [
 
 	self emitWhile: aMessageNode boolean: false
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OCASTTranslator >> initialize [
 
 	super initialize.
@@ -431,32 +433,32 @@ OCASTTranslator >> initialize [
 	nextUniqueInlineID := 0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OCASTTranslator >> ir [
 
 	^ methodBuilder ir
 ]
 
-{ #category : #'inline messages' }
+{ #category : 'inline messages' }
 OCASTTranslator >> nextUniqueInlineID [
 
 	nextUniqueInlineID := nextUniqueInlineID + 1.
 	^ '0', nextUniqueInlineID asString asSymbol
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OCASTTranslator >> privateMethodBuilder [
 	^ methodBuilder
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OCASTTranslator >> subTranslator [
 	"Return a new translator that can be used on blocks"
 
 	^ self compilationContext astTranslatorClass new compilationContext: self compilationContext
 ]
 
-{ #category : #'visitor - double dispatching' }
+{ #category : 'visitor - double dispatching' }
 OCASTTranslator >> translateConstantBlock: aBlockNode [
 	| ir |
 	"even though we never execute the compiledBlock, we create it so that the BlockClosure can use e.g. to query on the bytecode level"
@@ -471,7 +473,7 @@ OCASTTranslator >> translateConstantBlock: aBlockNode [
 	^ ir compiledBlock: aBlockNode scope
 ]
 
-{ #category : #'visitor - double dispatching' }
+{ #category : 'visitor - double dispatching' }
 OCASTTranslator >> translateFullBlock: aBlockNode [
 
 	methodBuilder mapToNode: aBlockNode.
@@ -495,13 +497,13 @@ OCASTTranslator >> translateFullBlock: aBlockNode [
 	^ aBlockNode ir compiledBlock: aBlockNode scope
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OCASTTranslator >> visitAnnotationMarkNode: aRBAnnotationValueNode [
 
 	self emitRuntimeError: aRBAnnotationValueNode
 ]
 
-{ #category : #'visitor - double dispatching' }
+{ #category : 'visitor - double dispatching' }
 OCASTTranslator >> visitArrayNode: anArrayNode [
 
 	| elementNodes |
@@ -513,7 +515,7 @@ OCASTTranslator >> visitArrayNode: anArrayNode [
 	methodBuilder pushConsArray: elementNodes size
 ]
 
-{ #category : #'visitor - double dispatching' }
+{ #category : 'visitor - double dispatching' }
 OCASTTranslator >> visitAssignmentNode: anAssignmentNode [
 
 	| var |
@@ -526,12 +528,12 @@ OCASTTranslator >> visitAssignmentNode: anAssignmentNode [
 	var isInvalidVariable ifTrue: [ ^ self emitRuntimeError: anAssignmentNode ].
 
 	"Because we are producing a CompiledMethod, register undeclared variables to `Undeclared`"
-	var isUndeclaredVariable ifTrue: [ var register ].
+	var isUndeclaredVariable ifTrue: [ var registerFromNode: anAssignmentNode ].
 
 	var emitStore: methodBuilder
 ]
 
-{ #category : #'visitor - double dispatching' }
+{ #category : 'visitor - double dispatching' }
 OCASTTranslator >> visitBlockNode: aBlockNode [
 	| compiledBlock |
 	aBlockNode isError ifTrue: [ ^ self emitRuntimeError: aBlockNode ].
@@ -547,7 +549,7 @@ OCASTTranslator >> visitBlockNode: aBlockNode [
 		ifFalse: [ methodBuilder pushFullClosureCompiledBlock: compiledBlock copiedValues: aBlockNode scope inComingCopiedVarNames ]
 ]
 
-{ #category : #'visitor - double dispatching' }
+{ #category : 'visitor - double dispatching' }
 OCASTTranslator >> visitCascadeNode: aCascadeNode [
 
 	self visitNode: aCascadeNode receiver.
@@ -558,7 +560,7 @@ OCASTTranslator >> visitCascadeNode: aCascadeNode [
 	self visitNode: aCascadeNode messages last
 ]
 
-{ #category : #'visitor - double dispatching' }
+{ #category : 'visitor - double dispatching' }
 OCASTTranslator >> visitCleanBlockNode: aBlockNode [
 	"create and push a clean blockclosure. As we create the clean block at compile time,
 	block creation at runtime is much faster than that of a full block"
@@ -571,7 +573,7 @@ OCASTTranslator >> visitCleanBlockNode: aBlockNode [
 	methodBuilder pushLiteral: cleanBlock
 ]
 
-{ #category : #'visitor - double dispatching' }
+{ #category : 'visitor - double dispatching' }
 OCASTTranslator >> visitConstantBlockNode: anBlockNode [
 	"create statically a constant blockclosure (we support 0-3 arguments).
 	Constant blockclosures are specialized clean blocks: same creation speed, but faster execution"
@@ -584,7 +586,7 @@ OCASTTranslator >> visitConstantBlockNode: anBlockNode [
 	methodBuilder pushLiteral: constantBlock
 ]
 
-{ #category : #'visitor - double dispatching' }
+{ #category : 'visitor - double dispatching' }
 OCASTTranslator >> visitEffectInlinedBlockNode: anOptimizedBlockNode [
 
 	self visitInlinedBlockNode: anOptimizedBlockNode.
@@ -594,7 +596,7 @@ OCASTTranslator >> visitEffectInlinedBlockNode: anOptimizedBlockNode [
 	methodBuilder popMap
 ]
 
-{ #category : #'visitor - double dispatching' }
+{ #category : 'visitor - double dispatching' }
 OCASTTranslator >> visitEffectNode: aNode [
 
 	self visitNode: aNode.
@@ -604,13 +606,13 @@ OCASTTranslator >> visitEffectNode: aNode [
 	methodBuilder popMap
 ]
 
-{ #category : #'visitor - double dispatching' }
+{ #category : 'visitor - double dispatching' }
 OCASTTranslator >> visitEnglobingErrorNode: anErrorNode [
 	"raise error at runtime"
 	self visitParseErrorNode: anErrorNode
 ]
 
-{ #category : #'visitor - double dispatching' }
+{ #category : 'visitor - double dispatching' }
 OCASTTranslator >> visitInlinedBlockNode: anOptimizedBlockNode [
 
 	"We are visiting a scope that is not a block, but inlined in the outer context.
@@ -639,34 +641,34 @@ OCASTTranslator >> visitInlinedBlockNode: anOptimizedBlockNode [
 	methodBuilder popMap
 ]
 
-{ #category : #'visitor - double dispatching' }
+{ #category : 'visitor - double dispatching' }
 OCASTTranslator >> visitLargeArrayNode: aRBArrayNode [
-	"Long form: generates (Array braceStream: N) nextPut: a; nextPut: b; ...; braceArray"
+	"Long form: using at:put:"
 	methodBuilder pushLiteralVariable: Array binding.
 	methodBuilder pushLiteral: aRBArrayNode statements size.
-	methodBuilder send: #braceStream:.
-	aRBArrayNode statements do: [ :each |
+	methodBuilder send: #new:.
+	aRBArrayNode statements withIndexDo: [  :each :index |
 		methodBuilder pushDup.
+		methodBuilder pushLiteral: index.
 		self visitNode: each.
-		methodBuilder send: #nextPut:.
+		methodBuilder send: #at:put:.
 		methodBuilder popTop.
-		].
-	methodBuilder send: #braceArray
+	].
 ]
 
-{ #category : #'visitor - double dispatching' }
+{ #category : 'visitor - double dispatching' }
 OCASTTranslator >> visitLiteralArrayNode: aRBLiteralArrayNode [
 
 	methodBuilder pushLiteral: aRBLiteralArrayNode value
 ]
 
-{ #category : #'visitor - double dispatching' }
+{ #category : 'visitor - double dispatching' }
 OCASTTranslator >> visitLiteralNode: aLiteralNode [
 
 	methodBuilder pushLiteral: aLiteralNode value
 ]
 
-{ #category : #'visitor - double dispatching' }
+{ #category : 'visitor - double dispatching' }
 OCASTTranslator >> visitMessageNode: aMessageNode [
 
 	aMessageNode isAnnotation ifTrue: [
@@ -680,7 +682,7 @@ OCASTTranslator >> visitMessageNode: aMessageNode [
 	^ self emitMessageNode: aMessageNode
 ]
 
-{ #category : #'visitor - double dispatching' }
+{ #category : 'visitor - double dispatching' }
 OCASTTranslator >> visitMethodNode: aMethodNode [
 
 	aMethodNode isError ifTrue: [self emitRuntimeError: aMethodNode ].
@@ -710,25 +712,25 @@ OCASTTranslator >> visitMethodNode: aMethodNode [
 				methodBuilder pushReceiver; returnTop ] ]
 ]
 
-{ #category : #'visitor - double dispatching' }
+{ #category : 'visitor - double dispatching' }
 OCASTTranslator >> visitNode: aNode [
 	methodBuilder mapToNode: aNode.
 	super visitNode: aNode.
 	methodBuilder popMap
 ]
 
-{ #category : #'visitor - double dispatching' }
+{ #category : 'visitor - double dispatching' }
 OCASTTranslator >> visitParseErrorNode: anErrorNode [
 
 	self emitRuntimeError: anErrorNode
 ]
 
-{ #category : #'visitor - double dispatching' }
+{ #category : 'visitor - double dispatching' }
 OCASTTranslator >> visitPragmaNode: aPragmaNode [
 
 	| var |
 	aPragmaNode isParseError ifTrue: [ ^self ].
-	methodBuilder addPragma: aPragmaNode asPragma.
+	methodBuilder addPragma: aPragmaNode pragma.
 
 	"if the pragma is a primitive that defines an error variable, we need to store error value
 	which is on the stack"
@@ -737,14 +739,14 @@ OCASTTranslator >> visitPragmaNode: aPragmaNode [
 	var emitStore: methodBuilder
 ]
 
-{ #category : #'visitor - double dispatching' }
+{ #category : 'visitor - double dispatching' }
 OCASTTranslator >> visitReturnNode: aReturnNode [
 
 	self visitNode: aReturnNode value.
 	methodBuilder returnTop
 ]
 
-{ #category : #'visitor - double dispatching' }
+{ #category : 'visitor - double dispatching' }
 OCASTTranslator >> visitSequenceNode: aSequenceNode [
 	| statements |
 	statements := aSequenceNode statements.
@@ -755,7 +757,7 @@ OCASTTranslator >> visitSequenceNode: aSequenceNode [
 	self visitNode: statements last
 ]
 
-{ #category : #'visitor - double dispatching' }
+{ #category : 'visitor - double dispatching' }
 OCASTTranslator >> visitVariableNode: aVariableNode [
 
 	"Invalid variable should fail"
@@ -763,7 +765,7 @@ OCASTTranslator >> visitVariableNode: aVariableNode [
 
 	"Because we are producing a CompiledMethod, register undeclared variables to `Undeclared`"
 	aVariableNode variable isUndeclaredVariable ifTrue: [
-		aVariableNode variable register ].
+		aVariableNode variable registerFromNode: aVariableNode  ].
 
 	aVariableNode variable emitValue: methodBuilder
 ]

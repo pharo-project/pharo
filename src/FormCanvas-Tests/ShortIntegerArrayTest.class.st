@@ -2,35 +2,36 @@
 SUnit Test for ShortIntegerArray
 "
 Class {
-	#name : #ShortIntegerArrayTest,
-	#superclass : #TestCase,
+	#name : 'ShortIntegerArrayTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'shortIntegerArray'
 	],
-	#category : #'FormCanvas-Tests'
+	#category : 'FormCanvas-Tests',
+	#package : 'FormCanvas-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ShortIntegerArrayTest >> setUp [
 
 	super setUp.
 	shortIntegerArray := ShortIntegerArray with: 4 with: 4+256 with: 2 with: 1+(256*10)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ShortIntegerArrayTest >> testAt [
 
 	self assert: 2 equals: (shortIntegerArray at: 3)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ShortIntegerArrayTest >> testAtPut [
 
 	shortIntegerArray at: 3 put: 100.
 	self assert: 100 equals: (shortIntegerArray at: 3)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ShortIntegerArrayTest >> testSetUp [
 
 	self assert: 4 equals: (shortIntegerArray at:1) .
@@ -39,7 +40,7 @@ ShortIntegerArrayTest >> testSetUp [
 	self assert: 1+(256*10) equals: (shortIntegerArray at:4)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ShortIntegerArrayTest >> testSwapBytePairs [
 
 	shortIntegerArray swapBytePairsHacky.
@@ -49,7 +50,7 @@ ShortIntegerArrayTest >> testSwapBytePairs [
 	self assert: 1*256 + 10 equals: (shortIntegerArray at:4)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ShortIntegerArrayTest >> testWriteBigEndianOn [
 
 	|stream|
@@ -58,7 +59,7 @@ ShortIntegerArrayTest >> testWriteBigEndianOn [
 	self assert: #(12 34 56 78) equals: stream contents
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ShortIntegerArrayTest >> testWriteLittleEndianOn [
 
 	|stream|

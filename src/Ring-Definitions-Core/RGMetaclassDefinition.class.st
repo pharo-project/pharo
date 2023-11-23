@@ -2,15 +2,17 @@
 RGMetaclassDefinition is a concrete representation of metaclasses of classes (traits are excluded)
 "
 Class {
-	#name : #RGMetaclassDefinition,
-	#superclass : #RGClassDescriptionDefinition,
+	#name : 'RGMetaclassDefinition',
+	#superclass : 'RGClassDescriptionDefinition',
 	#instVars : [
 		'baseClass'
 	],
-	#category : #'Ring-Definitions-Core-Base'
+	#category : 'Ring-Definitions-Core-Base',
+	#package : 'Ring-Definitions-Core',
+	#tag : 'Base'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 RGMetaclassDefinition class >> class: anORClassDefinition [
 
 	^self new
@@ -18,61 +20,50 @@ RGMetaclassDefinition class >> class: anORClassDefinition [
 		yourself
 ]
 
-{ #category : #variables }
+{ #category : 'variables' }
 RGMetaclassDefinition >> allClassVarNames [
 
 	^self instanceSide allClassVarNames
 ]
 
-{ #category : #variables }
-RGMetaclassDefinition >> allSharedPoolNames [
-
-	^self instanceSide allSharedPoolNames
-]
-
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGMetaclassDefinition >> baseClass: aRGClassDefinition [
 
 	baseClass:= aRGClassDefinition.
 	self name: (baseClass name, ' class') asSymbol
 ]
 
-{ #category : #accessing }
-RGMetaclassDefinition >> category [
-	^ self instanceSide category
-]
-
-{ #category : #'accessing - parallel hierarchy' }
+{ #category : 'accessing - parallel hierarchy' }
 RGMetaclassDefinition >> classSide [
 	"Return the metaclass of the couple class/metaclass. Useful to avoid explicit test."
 	^ self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGMetaclassDefinition >> environment [
 
 	^baseClass environment
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGMetaclassDefinition >> inheritsFrom: aClass [
 
 	^ self realClass inheritsFrom: aClass
 ]
 
-{ #category : #'accessing - parallel hierarchy' }
+{ #category : 'accessing - parallel hierarchy' }
 RGMetaclassDefinition >> instanceSide [
 	"Return the class of the couple class/metaclass. Useful to avoid explicit test."
 	^ baseClass
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGMetaclassDefinition >> isMeta [
 
 	^true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGMetaclassDefinition >> isSameRevisionAs: aRGMetaclassDefinition [
 	"This method look for equality of the properties of the receiver"
 
@@ -80,19 +71,24 @@ RGMetaclassDefinition >> isSameRevisionAs: aRGMetaclassDefinition [
 		and:[ self traitCompositionSource = aRGMetaclassDefinition traitCompositionSource ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGMetaclassDefinition >> package [
 
 	^baseClass package
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
+RGMetaclassDefinition >> packageTag [
+	^ self instanceSide packageTag
+]
+
+{ #category : 'accessing' }
 RGMetaclassDefinition >> realClass [
 
 	^baseClass realClass classSide
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RGMetaclassDefinition >> storeOn: aStream [
 
 	aStream nextPut: $(.

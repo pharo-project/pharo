@@ -2,8 +2,8 @@
 MetacelloScriptEngine runs the execution of the script for one projectSpec
 "
 Class {
-	#name : #MetacelloScriptEngine,
-	#superclass : #Object,
+	#name : 'MetacelloScriptEngine',
+	#superclass : 'Object',
 	#instVars : [
 		'root',
 		'projectSpec',
@@ -13,10 +13,12 @@ Class {
 		'DefaultRepositoryDescription',
 		'DefaultVersionString'
 	],
-	#category : #'Metacello-Core-Scripts'
+	#category : 'Metacello-Core-Scripts',
+	#package : 'Metacello-Core',
+	#tag : 'Scripts'
 }
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MetacelloScriptEngine class >> baseNameOf: className [
   ^ (className beginsWith: 'BaselineOf')
     ifTrue: [ className copyFrom: 'BaselineOf' size + 1 to: className size ]
@@ -26,7 +28,7 @@ MetacelloScriptEngine class >> baseNameOf: className [
         ifFalse: [ className ] ]
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MetacelloScriptEngine class >> baselineNameFrom: baseName [
     "Return the fully-qualified configuration class name."
 
@@ -35,50 +37,44 @@ MetacelloScriptEngine class >> baselineNameFrom: baseName [
         ifFalse: [ 'BaselineOf' , baseName ]
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MetacelloScriptEngine class >> configurationNameFrom: baseName [
-    "Return the fully-qualified configuration class name."
+	"Return the fully-qualified configuration class name."
 
-    ^ (baseName indexOfSubCollection: 'ConfigurationOf') > 0
-        ifTrue: [ baseName ]
-        ifFalse: [ 'ConfigurationOf' , baseName ]
+	^ ((baseName beginsWith: 'ConfigurationOf')
+		   ifTrue: [ baseName ]
+		   ifFalse: [ 'ConfigurationOf' , baseName ]) asSymbol
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 MetacelloScriptEngine class >> defaultRepositoryDescription [
-    DefaultRepositoryDescription
-        ifNil: [ DefaultRepositoryDescription := MetacelloPlatform current defaultRepositoryDescription ].
-    ^ DefaultRepositoryDescription
+
+	DefaultRepositoryDescription ifNil: [ DefaultRepositoryDescription := 'http://smalltalkhub.com/mc/Pharo/MetaRepoForPharo30/main' ].
+	^ DefaultRepositoryDescription
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 MetacelloScriptEngine class >> defaultRepositoryDescription: descriptionOrNil [
   DefaultRepositoryDescription := descriptionOrNil
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 MetacelloScriptEngine class >> defaultVersionString [
     DefaultVersionString ifNil: [ DefaultVersionString := #'stable' ].
     ^ DefaultVersionString
 ]
 
-{ #category : #options }
-MetacelloScriptEngine >> cacheRepository [
-    ^ (MetacelloMCProject new repositorySpec description: (self options at: #'cacheRepository' ifAbsent: [ ^ nil ]))
-        createRepository
-]
-
-{ #category : #defaults }
+{ #category : 'defaults' }
 MetacelloScriptEngine >> defaultRepositoryDescription [
     ^ self class defaultRepositoryDescription
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 MetacelloScriptEngine >> defaultVersionString [
     ^ self class defaultVersionString
 ]
 
-{ #category : #'actions api' }
+{ #category : 'actions api' }
 MetacelloScriptEngine >> fetch: required [
     self
         fetchRecord: [ :version | 
@@ -88,7 +84,7 @@ MetacelloScriptEngine >> fetch: required [
         required: required
 ]
 
-{ #category : #'actions api' }
+{ #category : 'actions api' }
 MetacelloScriptEngine >> fetchRecord: fetchRecordBlock required: required [
   MetacelloProjectRegistration
     copyRegistryWhile: [ 
@@ -106,7 +102,7 @@ MetacelloScriptEngine >> fetchRecord: fetchRecordBlock required: required [
           self root: (fetchRecordBlock value: version) loadDirective ] ]
 ]
 
-{ #category : #'actions api' }
+{ #category : 'actions api' }
 MetacelloScriptEngine >> get [
   " load a fresh copy from repo"
 
@@ -118,8 +114,6 @@ MetacelloScriptEngine >> get [
       projectPackage := spec projectPackage.
       projectPackage repositorySpecs
         do: [ :repoSpec | repoSpec createRepository flushForScriptGet ].
-      self cacheRepository
-        ifNotNil: [ :cacheRepository | projectPackage loader loaderPolicy cacheRepository: cacheRepository ].
       projectPackage load.
       self root: (Smalltalk at: spec className asSymbol) project.
       MetacelloProjectRegistration
@@ -136,7 +130,7 @@ MetacelloScriptEngine >> get [
                     ifNotNil: [ specCopy mergeScriptRepository: spec ] ] ] ] ]
 ]
 
-{ #category : #'project lookup' }
+{ #category : 'project lookup' }
 MetacelloScriptEngine >> getBaselineProjectUnconditionalLoad: unconditionalLoad [
     | project |
     project := (self getBaselineUnconditionalLoad: unconditionalLoad) project.
@@ -144,7 +138,7 @@ MetacelloScriptEngine >> getBaselineProjectUnconditionalLoad: unconditionalLoad 
     ^ project
 ]
 
-{ #category : #'project lookup' }
+{ #category : 'project lookup' }
 MetacelloScriptEngine >> getBaselineUnconditionalLoad: unconditionalLoad [
   | spec |
   spec := self projectSpec.
@@ -163,12 +157,12 @@ MetacelloScriptEngine >> getBaselineUnconditionalLoad: unconditionalLoad [
   ^ Smalltalk at: spec className asSymbol
 ]
 
-{ #category : #'project lookup' }
+{ #category : 'project lookup' }
 MetacelloScriptEngine >> getConfigurationProjectUnconditionalLoad: unconditionalLoad [
     ^ (self getConfigurationUnconditionalLoad: unconditionalLoad) project
 ]
 
-{ #category : #'project lookup' }
+{ #category : 'project lookup' }
 MetacelloScriptEngine >> getConfigurationUnconditionalLoad: unconditionalLoad [
     | spec |
     spec := self projectSpec.
@@ -181,7 +175,7 @@ MetacelloScriptEngine >> getConfigurationUnconditionalLoad: unconditionalLoad [
     ^ Smalltalk at: spec className asSymbol
 ]
 
-{ #category : #handlers }
+{ #category : 'handlers' }
 MetacelloScriptEngine >> handleConflict: exception [
     ^ (self options at: #'onConflict' ifAbsent: [ ^ exception pass ])
         cull: exception
@@ -189,7 +183,7 @@ MetacelloScriptEngine >> handleConflict: exception [
         cull: exception newProjectRegistration
 ]
 
-{ #category : #handlers }
+{ #category : 'handlers' }
 MetacelloScriptEngine >> handleDowngrade: exception [
     ^ (self options at: #'onDowngrade' ifAbsent: [ ^ exception pass ])
         cull: exception
@@ -197,14 +191,14 @@ MetacelloScriptEngine >> handleDowngrade: exception [
         cull: exception newProjectRegistration
 ]
 
-{ #category : #handlers }
+{ #category : 'handlers' }
 MetacelloScriptEngine >> handleEnsureProjectLoadedForDevelopment: exception [
     "if useCurrentVersion resume with true, else resume with false"
 
     ^ exception resume: self useCurrentVersion
 ]
 
-{ #category : #handlers }
+{ #category : 'handlers' }
 MetacelloScriptEngine >> handleLock: exception [
   ^ (self options at: #'onLock' ifAbsent: [ ^ exception pass ])
     cull: exception
@@ -212,7 +206,7 @@ MetacelloScriptEngine >> handleLock: exception [
     cull: exception newProjectRegistration
 ]
 
-{ #category : #handlers }
+{ #category : 'handlers' }
 MetacelloScriptEngine >> handleLookupBaselineSpecForEnsureLoad: exception [
   "if requested and registered don't compare equal, then ensure the new baseline is loaded"
 
@@ -222,14 +216,14 @@ MetacelloScriptEngine >> handleLookupBaselineSpecForEnsureLoad: exception [
   ^ exception resume: (registered compareEqual: requested) not
 ]
 
-{ #category : #handlers }
+{ #category : 'handlers' }
 MetacelloScriptEngine >> handleLookupProjectSpec: exception [
     ^ exception
         resume:
             ((self lookupProjectSpecFor: exception projectSpec) ifNil: [ ^ exception resume: exception projectSpec ])
 ]
 
-{ #category : #handlers }
+{ #category : 'handlers' }
 MetacelloScriptEngine >> handleLookupProjectSpecForLoad: exception [
   "if overrideProjectSpec is nil, use currentVersion in image, ignoreImage is false"
 
@@ -255,7 +249,7 @@ MetacelloScriptEngine >> handleLookupProjectSpecForLoad: exception [
         yourself)
 ]
 
-{ #category : #handlers }
+{ #category : 'handlers' }
 MetacelloScriptEngine >> handleNotificationsForAction: actionBlock [
   [ 
   [ 
@@ -285,7 +279,7 @@ MetacelloScriptEngine >> handleNotificationsForAction: actionBlock [
       self handleWarning: ex ]
 ]
 
-{ #category : #handlers }
+{ #category : 'handlers' }
 MetacelloScriptEngine >> handleProjectSpecLoaded: exception [
     MetacelloProjectRegistration
         registrationForProjectSpec: exception projectSpec
@@ -303,7 +297,7 @@ MetacelloScriptEngine >> handleProjectSpecLoaded: exception [
     exception resume
 ]
 
-{ #category : #handlers }
+{ #category : 'handlers' }
 MetacelloScriptEngine >> handleUpgrade: exception [
     ^ (self options at: #'onUpgrade' ifAbsent: [ ^ exception pass ])
         cull: exception
@@ -311,24 +305,24 @@ MetacelloScriptEngine >> handleUpgrade: exception [
         cull: exception newProjectRegistration
 ]
 
-{ #category : #handlers }
+{ #category : 'handlers' }
 MetacelloScriptEngine >> handleWarning: exception [
   ^ (self options at: #'onWarning' ifAbsent: [ ^ exception pass ])
     cull: exception
 ]
 
-{ #category : #options }
+{ #category : 'options' }
 MetacelloScriptEngine >> ignoreImage [
     ^ self options at: #'ignoreImage' ifAbsent: [ false ]
 ]
 
-{ #category : #'actions api' }
+{ #category : 'actions api' }
 MetacelloScriptEngine >> list [
   self setDefaultsAndValidateProjectSpec.
   self root: self projectSpec
 ]
 
-{ #category : #'actions api' }
+{ #category : 'actions api' }
 MetacelloScriptEngine >> load: required [
     self
         load: required
@@ -336,7 +330,7 @@ MetacelloScriptEngine >> load: required [
         onProjectUpgrade: [ :ex :existing :new | ex allowEvenIfLocked ]
 ]
 
-{ #category : #'actions api' }
+{ #category : 'actions api' }
 MetacelloScriptEngine >> load: required onProjectDownGrade: onDownGradeBlock onProjectUpgrade: onUpgradeBlock [
   MetacelloProjectRegistration
     copyRegistryRestoreOnErrorWhile: [ 
@@ -368,7 +362,7 @@ MetacelloScriptEngine >> load: required onProjectDownGrade: onDownGradeBlock onP
                     merge: new ] ] ] ]
 ]
 
-{ #category : #'actions api' }
+{ #category : 'actions api' }
 MetacelloScriptEngine >> lock [
   | spec |
   MetacelloProjectRegistration
@@ -396,7 +390,7 @@ MetacelloScriptEngine >> lock [
       self root: spec ]
 ]
 
-{ #category : #'project lookup' }
+{ #category : 'project lookup' }
 MetacelloScriptEngine >> lookupProjectSpecFor: aProjectSpec [
 	"if there is no conflict, choose new spec"
 	| registration |
@@ -409,33 +403,33 @@ MetacelloScriptEngine >> lookupProjectSpecFor: aProjectSpec [
 	^ registration projectSpec
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloScriptEngine >> options [
     options ifNil: [ options := Dictionary new ].
     ^ options
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloScriptEngine >> options: aDictionary [
     options := aDictionary
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloScriptEngine >> projectName [
     ^ self projectSpec name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloScriptEngine >> projectSpec [
     ^ projectSpec
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloScriptEngine >> projectSpec: aProjectSpec [
     projectSpec := aProjectSpec
 ]
 
-{ #category : #'actions api' }
+{ #category : 'actions api' }
 MetacelloScriptEngine >> record: required [
     self
         fetchRecord: [ :version | 
@@ -445,7 +439,7 @@ MetacelloScriptEngine >> record: required [
         required: required
 ]
 
-{ #category : #'actions api' }
+{ #category : 'actions api' }
 MetacelloScriptEngine >> register [
   | spec |
   self setDefaultsAndValidate: self projectSpec copy.	"don't add defaults"
@@ -457,18 +451,12 @@ MetacelloScriptEngine >> register [
   self root: spec
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloScriptEngine >> repositories [
     ^ self projectSpec repositories
 ]
 
-{ #category : #options }
-MetacelloScriptEngine >> repositoryOverrides [
-    ^ (self options at: #'repositoryOverrides' ifAbsent: [ ^ nil ])
-        collect: [ :description | (MetacelloMCProject new repositorySpec description: description) createRepository ]
-]
-
-{ #category : #private }
+{ #category : 'private' }
 MetacelloScriptEngine >> resolvePresentProject: existingRegistration new: newRegistration [
 
 	existingRegistration locked 
@@ -488,17 +476,17 @@ MetacelloScriptEngine >> resolvePresentProject: existingRegistration new: newReg
 		ifFalse: [ newRegistration ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloScriptEngine >> root [
 	^ root
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloScriptEngine >> root: anObject [
 	root := anObject
 ]
 
-{ #category : #'project lookup' }
+{ #category : 'project lookup' }
 MetacelloScriptEngine >> setDefaultsAndValidate: aProjectSpec [
   "NOTE: aProjectSpec has defaults assigned if versionString or repository missing"
 
@@ -514,19 +502,19 @@ MetacelloScriptEngine >> setDefaultsAndValidate: aProjectSpec [
     message: 'Project spec validation failure') signal
 ]
 
-{ #category : #'project lookup' }
+{ #category : 'project lookup' }
 MetacelloScriptEngine >> setDefaultsAndValidateProjectSpec [
   "NOTE: projectSpec has defaults assigned if versionString or repository missing"
 
   self setDefaultsAndValidate: self projectSpec
 ]
 
-{ #category : #options }
+{ #category : 'options' }
 MetacelloScriptEngine >> silently [
     ^ self options at: #'silently' ifAbsent: [ false ]
 ]
 
-{ #category : #'actions api' }
+{ #category : 'actions api' }
 MetacelloScriptEngine >> unlock [
   | spec |
   MetacelloProjectRegistration
@@ -540,7 +528,7 @@ MetacelloScriptEngine >> unlock [
       self root: spec ]
 ]
 
-{ #category : #'actions api' }
+{ #category : 'actions api' }
 MetacelloScriptEngine >> unregister [
   | spec |
   self setDefaultsAndValidate: self projectSpec copy.	"don't add defaults"
@@ -552,7 +540,7 @@ MetacelloScriptEngine >> unregister [
   self root: spec
 ]
 
-{ #category : #options }
+{ #category : 'options' }
 MetacelloScriptEngine >> useCurrentVersion [
     "private option used to implement the classic mode"
 

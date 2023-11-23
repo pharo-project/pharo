@@ -2,30 +2,32 @@
 I am an abstract class to add decoration on a text area
 "
 Class {
-	#name : #RubScrolledTextSideRuler,
-	#superclass : #RubScrolledTextExtra,
+	#name : 'RubScrolledTextSideRuler',
+	#superclass : 'RubScrolledTextExtra',
 	#instVars : [
 		'side'
 	],
-	#category : #'Rubric-Editing-Widgets'
+	#category : 'Rubric-Editing-Widgets',
+	#package : 'Rubric',
+	#tag : 'Editing-Widgets'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 RubScrolledTextSideRuler >> isHorizontal [
 	^ #(#top #bottom) includes: self side
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RubScrolledTextSideRuler >> isSideRuler [
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RubScrolledTextSideRuler >> isVertical [
 	^ #(#left #right) includes: self side
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 RubScrolledTextSideRuler >> manageLayoutInBounds: aRectangle [
 	super manageLayoutInBounds: aRectangle.
 	self extent: (self computedExtentFrom: aRectangle).
@@ -44,12 +46,12 @@ RubScrolledTextSideRuler >> manageLayoutInBounds: aRectangle [
 	^ self error: 'side must be in #( #left #right #bottom #top #over )'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubScrolledTextSideRuler >> side [
 	^side ifNil: [ side := #left ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubScrolledTextSideRuler >> side: aSide [
 	side := aSide
 ]

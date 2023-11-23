@@ -16,16 +16,17 @@ BenchmarkResult new
 
 "
 Class {
-	#name : #BenchmarkResult,
-	#superclass : #Object,
+	#name : 'BenchmarkResult',
+	#superclass : 'Object',
 	#instVars : [
 		'iterations',
 		'elapsedTime'
 	],
-	#category : #'Kernel-Chronology-Extras'
+	#category : 'Kernel-Chronology-Extras',
+	#package : 'Kernel-Chronology-Extras'
 }
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 BenchmarkResult >> compareTo: aBenchmarkResult [
 
 	^ BenchmarkComparison new
@@ -33,35 +34,35 @@ BenchmarkResult >> compareTo: aBenchmarkResult [
 		  comparisonResult: aBenchmarkResult
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BenchmarkResult >> elapsedTime [
 	"Return the duration of the total execution time"
 
 	^ elapsedTime
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BenchmarkResult >> elapsedTime: duration [
 	"Set the duration of the total execution time"
 
 	elapsedTime := duration
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BenchmarkResult >> executionsPerSecond [
 	"Return the average number of executions per second"
 
 	^ self frequency
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BenchmarkResult >> frequency [
 	"Return the average number of executions per second"
 
 	^ iterations / elapsedTime totalSeconds
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 BenchmarkResult >> isEmpty [
 	iterations isNil | elapsedTime isNil
 		ifTrue: [ ^ true ].
@@ -70,34 +71,34 @@ BenchmarkResult >> isEmpty [
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BenchmarkResult >> iterations [
 	"Return the number of iterations that were executed"
 
 	^ iterations
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BenchmarkResult >> iterations: integer [
 	"Set the number of iterations that were executed"
 
 	iterations := integer
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BenchmarkResult >> period [
 	"Return the average duration of one iteration"
 
 	^ elapsedTime / iterations
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 BenchmarkResult >> printFrequenceOn: stream [
 	self frequency printOn: stream showingDecimalPlaces: 3.
 	stream << ' per second'
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 BenchmarkResult >> printOn: stream [
 	self isEmpty
 		ifTrue: [
@@ -111,14 +112,14 @@ BenchmarkResult >> printOn: stream [
 			self printFrequenceOn: stream ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 BenchmarkResult >> shortPrintString [
 	self isEmpty
 		ifTrue: [ ^ self printString ].
 	^ String streamContents: [ :out | self printFrequenceOn: out ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BenchmarkResult >> timePerExecution [
 	"Return the average duration of one iteration"
 

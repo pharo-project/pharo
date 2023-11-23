@@ -2,12 +2,14 @@
 Basic Collection tests
 "
 Class {
-	#name : #CollectionTest,
-	#superclass : #TestCase,
-	#category : #'Collections-Support-Tests-Base'
+	#name : 'CollectionTest',
+	#superclass : 'TestCase',
+	#category : 'Collections-Support-Tests-Base',
+	#package : 'Collections-Support-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 CollectionTest >> testCopyWithoutDuplicates [
  	| a b |
 	a := #(1 2 3 4 4 5 6 1) copyWithoutDuplicates.
@@ -23,7 +25,7 @@ CollectionTest >> testCopyWithoutDuplicates [
 	self assert: [(a includesAll: b) and: [ b includesAll: a ]]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CollectionTest >> testGroupedByGroupsOrderSimple [
 	| dataCollection grouped keys |
 	"test of preserving groups order according to source collection order"
@@ -66,7 +68,7 @@ CollectionTest >> testGroupedByGroupsOrderSimple [
 	self assert: (grouped at: 'f') asArray equals: #(#('f' 2) #('f' 6) #('f' 7))
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CollectionTest >> testGroupedByGroupsOrderWithSortedCollectionOfDates [
 	| dataCollection grouped keys |
 	"data collection full of Date instances is sorted ascending"

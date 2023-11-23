@@ -1,6 +1,6 @@
-Extension { #name : #Heap }
+Extension { #name : 'Heap' }
 
-{ #category : #'*Collections-Sequenceable-Tests' }
+{ #category : '*Collections-Sequenceable-Tests' }
 Heap class >> heapExample [
 	"self heapExample"
 	"Create a sorted collection of numbers, remove the elements
@@ -30,7 +30,7 @@ Heap class >> heapExample [
 	str << 'Time for SortedCollection: '<< time printString << ' msecs'.]
 ]
 
-{ #category : #'*Collections-Sequenceable-Tests' }
+{ #category : '*Collections-Sequenceable-Tests' }
 Heap class >> heapSortExample [
 	"self heapSortExample"
 	"Sort a random collection of Floats and compare the results with

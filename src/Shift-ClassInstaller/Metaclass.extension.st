@@ -1,6 +1,6 @@
-Extension { #name : #Metaclass }
+Extension { #name : 'Metaclass' }
 
-{ #category : #'*Shift-ClassInstaller' }
+{ #category : '*Shift-ClassInstaller' }
 Metaclass >> instanceVariableNames: instVarString [
 
 	^ self slots: instVarString asSlotCollection

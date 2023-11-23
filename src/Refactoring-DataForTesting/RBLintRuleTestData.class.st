@@ -3,8 +3,8 @@ This hierarchy is code that is used as test data to test the refactoring engine.
 no sense or have lots of easy possible improvements... but as it is used for testing, they should not be fixed.
 "
 Class {
-	#name : #RBLintRuleTestData,
-	#superclass : #Object,
+	#name : 'RBLintRuleTestData',
+	#superclass : 'Object',
 	#instVars : [
 		'name',
 		'foo1'
@@ -16,50 +16,52 @@ Class {
 	#pools : [
 		'TextConstants'
 	],
-	#category : #'Refactoring-DataForTesting-LittleHierarchy'
+	#category : 'Refactoring-DataForTesting-LittleHierarchy',
+	#package : 'Refactoring-DataForTesting',
+	#tag : 'LittleHierarchy'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBLintRuleTestData class >> name1 [
 
 	^ Name1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBLintRuleTestData class >> name1: anObject [
 
 	Name1 := anObject
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 RBLintRuleTestData class >> parseTreeSearcher [
 	^ self parseTreeSearcherClass new
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 RBLintRuleTestData class >> parseTreeSearcherClass [
 	^ RBParseTreeSearcher
 ]
 
-{ #category : #foo }
+{ #category : 'foo' }
 RBLintRuleTestData class >> someFooMethod [
 	^ 'does nothing here:)'
 ]
 
-{ #category : #foo }
+{ #category : 'foo' }
 RBLintRuleTestData class >> someOtherFooMethod [
 	^ 'does nothing here even better:)'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBLintRuleTestData >> checkClass: aSmalllintContext [
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBLintRuleTestData >> checkMethod: aSmalllintContext [
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBLintRuleTestData >> displayName [
 	| nameStream |
 	nameStream := WriteStream on: (String new: 64).
@@ -70,51 +72,55 @@ RBLintRuleTestData >> displayName [
 	^nameStream contents
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBLintRuleTestData >> failedRules [
 	^self isEmpty
 		ifTrue: [#()]
 		ifFalse: [Array with: self]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBLintRuleTestData >> hasConflicts [
 	^false
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBLintRuleTestData >> initialize [
+
+	<ignoreUnusedVariables: #( #foo1 )>
+	<ignoreUnusedClassVariables: #( Foo1 )>
+	super initialize.
 	name := ''
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBLintRuleTestData >> isComposite [
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBLintRuleTestData >> isEmpty [
 	self subclassResponsibility
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBLintRuleTestData >> junk [
 	^ RBClassDataForRefactoringTest printString
 		copyFrom: 1
 		to: CR
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBLintRuleTestData >> name [
 	^name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBLintRuleTestData >> name: aString [
 	name := aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBLintRuleTestData >> openEditor [
 	| rules |
 	rules := self failedRules.
@@ -122,39 +128,39 @@ RBLintRuleTestData >> openEditor [
 	rules size == 1 ifTrue: [^rules first viewResults]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBLintRuleTestData >> printOn: aStream [
 
 	name ifNil: [ super printOn: aStream ] ifNotNil: [ aStream nextPutAll: name ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBLintRuleTestData >> problemCount [
 	^self subclassResponsibility
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBLintRuleTestData >> resetResult [
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBLintRuleTestData >> run [
 	^Object printOn: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBLintRuleTestData >> runOnEnvironment: anEnvironment [
 	^Object printOn: self onEnvironment: anEnvironment
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBLintRuleTestData >> someOtherDemoMethod [
 	| temp |
 	temp := self new.
 	^ temp junk
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBLintRuleTestData >> viewResults [
 	self subclassResponsibility
 ]

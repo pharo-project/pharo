@@ -2,21 +2,23 @@
 SUnit tests for FIFO queues
 "
 Class {
-	#name : #FIFOQueueTest,
-	#superclass : #TestCase,
+	#name : 'FIFOQueueTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'count'
 	],
-	#category : #'Collections-Atomic-Tests-Base'
+	#category : 'Collections-Atomic-Tests-Base',
+	#package : 'Collections-Atomic-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FIFOQueueTest >> newQueue [
 
 	^ WaitfreeQueue new
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 FIFOQueueTest >> runValidationTest [
 	| q sema prio pusher feeder feeders r crit done |
 	r := Random new.
@@ -54,7 +56,7 @@ FIFOQueueTest >> runValidationTest [
 	self assert: count equals: 1000
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 FIFOQueueTest >> runValidationTest2 [
 	| q sema prio pusher r cnt |
 
@@ -89,7 +91,7 @@ FIFOQueueTest >> runValidationTest2 [
 "
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FIFOQueueTest >> testBasics [
 	| q |
 	q := self newQueue.
@@ -109,7 +111,7 @@ FIFOQueueTest >> testBasics [
 	self assert: q nextOrNil isNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FIFOQueueTest >> testContention1 [
 	| q r1 r2 |
 	q := AtomicSharedQueue new.
@@ -130,7 +132,7 @@ FIFOQueueTest >> testContention1 [
 	self assert: q nextOrNil isNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FIFOQueueTest >> testFlush [
 	| q v sema |
 	q := self newQueue.
@@ -147,7 +149,7 @@ FIFOQueueTest >> testFlush [
 	self assert: v equals: 10
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FIFOQueueTest >> testFlushAllSuchThat [
 	| q |
 	q := self newQueue.
@@ -161,7 +163,7 @@ FIFOQueueTest >> testFlushAllSuchThat [
 	self assert: q nextOrNil isNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FIFOQueueTest >> testHeavyContention [
 	"run 10 threads, pushing new values to queue,
 	and 10 threads pullung values from queue,
@@ -204,7 +206,7 @@ FIFOQueueTest >> testHeavyContention [
 	self assert: q nextOrNil isNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FIFOQueueTest >> testHeavyContention2 [
 	"run 10 threads, pushing new values to queue,
 	and 10 threads pullung values from queue,
@@ -246,7 +248,7 @@ FIFOQueueTest >> testHeavyContention2 [
 	self assert: q nextOrNil isNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FIFOQueueTest >> testNextOrNilSuchThat [
 	| q item |
 	q := self newQueue.
@@ -260,7 +262,7 @@ FIFOQueueTest >> testNextOrNilSuchThat [
 	self should: q nextOrNil isNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FIFOQueueTest >> testSize [
 	| q |
 	q := self newQueue.
@@ -271,7 +273,7 @@ FIFOQueueTest >> testSize [
 	self assert: q size equals: 10
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FIFOQueueTest >> testSuchThat [
 	| q |
 	q := self newQueue.
@@ -284,7 +286,7 @@ FIFOQueueTest >> testSuchThat [
 	self assert: (q nextOrNilSuchThat: [:e | e = 5 ]) equals: 5.
 
 	9 timesRepeat: [
-		self assert: (q nextOrNil notNil) ].
+		self assert: (q nextOrNil isNotNil) ].
 
 	self assert: q nextOrNil isNil
 ]

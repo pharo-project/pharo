@@ -2,17 +2,18 @@
 SUnit tests for the key mapping dispatcher
 "
 Class {
-	#name : #KMDispatcherTest,
-	#superclass : #AbstractKeymappingTest,
-	#category : #'Keymapping-Tests'
+	#name : 'KMDispatcherTest',
+	#superclass : 'AbstractKeymappingTest',
+	#category : 'Keymapping-Tests',
+	#package : 'Keymapping-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 KMDispatcherTest >> keymapContainer [
 	^ KMRepository default
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 KMDispatcherTest >> testBuffering [
 	| morph flag category event1 event2 event3|
 	category := KMCategory named: #TestBlah.
@@ -47,7 +48,7 @@ KMDispatcherTest >> testBuffering [
 	self assert: flag
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 KMDispatcherTest >> testDetach [
 
 	| category1 category2 morph attachedCategories |
@@ -67,7 +68,7 @@ KMDispatcherTest >> testDetach [
 	self should: [ morph detachKeymapCategory: #NonExistent ] raise: Error
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 KMDispatcherTest >> testNoMultiTrigger [
 	| bm1 bm2 flag1 flag2 category otherCategory |
 	category := KMCategory named: #TestBlah.
@@ -94,7 +95,7 @@ KMDispatcherTest >> testNoMultiTrigger [
 	self assert: flag2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 KMDispatcherTest >> testNoStaggeredTrigger [
 	"Once a key sequence is recognized by a keymapper, all other
 	keymappers should clear their buffers"

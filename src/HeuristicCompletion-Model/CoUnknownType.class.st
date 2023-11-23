@@ -2,30 +2,32 @@
 I represent an unknown type for CoTypeInferencer.
 "
 Class {
-	#name : #CoUnknownType,
-	#superclass : #Object,
-	#category : #'HeuristicCompletion-Model-InitializeInferenceHeuristic'
+	#name : 'CoUnknownType',
+	#superclass : 'Object',
+	#category : 'HeuristicCompletion-Model-InitializeInferenceHeuristic',
+	#package : 'HeuristicCompletion-Model',
+	#tag : 'InitializeInferenceHeuristic'
 }
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 CoUnknownType >> = aType [
 
 	^ aType isKindOf: CoUnknownType
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 CoUnknownType >> hash [
 
 	^ self class hash
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoUnknownType >> instanceSide [
 
 	^ self
 ]
 
-{ #category : #lookup }
+{ #category : 'lookup' }
 CoUnknownType >> lookupSelector: aString [
 
 	^ nil

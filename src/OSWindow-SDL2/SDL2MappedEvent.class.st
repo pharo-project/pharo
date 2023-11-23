@@ -2,57 +2,59 @@
 SDL2 library structure
 "
 Class {
-	#name : #SDL2MappedEvent,
-	#superclass : #SDL2Structure,
-	#category : #'OSWindow-SDL2-Bindings'
+	#name : 'SDL2MappedEvent',
+	#superclass : 'SDL2Structure',
+	#category : 'OSWindow-SDL2-Bindings',
+	#package : 'OSWindow-SDL2',
+	#tag : 'Bindings'
 }
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 SDL2MappedEvent class >> accept: aVisitor [
 	self subclassResponsibility
 ]
 
-{ #category : #'event type' }
+{ #category : 'event type' }
 SDL2MappedEvent class >> eventType [
 	^ nil
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SDL2MappedEvent class >> fromSdlEvent: event [
 	"SDL event handlers are copied because there are allocated in Pharo memory as a bytearray"
 	^  self new setHandle: event getHandle copy
 ]
 
-{ #category : #'event type' }
+{ #category : 'event type' }
 SDL2MappedEvent >> eventType [
 	^ nil
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SDL2MappedEvent >> isClipboardUpdateEvent [
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SDL2MappedEvent >> isKeyDownEvent [
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SDL2MappedEvent >> isKeyUpEvent [
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SDL2MappedEvent >> isUserInterrupt [
 
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SDL2MappedEvent >> windowID [
 	^ nil
 ]

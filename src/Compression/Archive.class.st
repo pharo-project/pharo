@@ -2,20 +2,22 @@
 This is the abstract superclass for file archives. Archives can be read from or written to files, and contain members that represent files and directories.
 "
 Class {
-	#name : #Archive,
-	#superclass : #Object,
+	#name : 'Archive',
+	#superclass : 'Object',
 	#instVars : [
 		'members'
 	],
-	#category : #'Compression-Archives'
+	#category : 'Compression-Archives',
+	#package : 'Compression',
+	#tag : 'Archives'
 }
 
-{ #category : #'archive operations' }
+{ #category : 'archive operations' }
 Archive >> addDirectory: aFileReference [
 	^self addDirectory: aFileReference as: aFileReference path pathString
 ]
 
-{ #category : #'archive operations' }
+{ #category : 'archive operations' }
 Archive >> addDirectory: aFileReference as: anotherFileName [
 	| newMember |
 	newMember := self memberClass newFromDirectory: aFileReference localName: anotherFileName.
@@ -24,12 +26,12 @@ Archive >> addDirectory: aFileReference as: anotherFileName [
 	^newMember
 ]
 
-{ #category : #'archive operations' }
+{ #category : 'archive operations' }
 Archive >> addFile: aFileReference [
 	^self addFile: aFileReference as: aFileReference path pathString
 ]
 
-{ #category : #'archive operations' }
+{ #category : 'archive operations' }
 Archive >> addFile: aFileReference as: anotherFileName [
 	| newMember |
 	newMember := self memberClass newFromFile: aFileReference.
@@ -38,12 +40,12 @@ Archive >> addFile: aFileReference as: anotherFileName [
 	^newMember
 ]
 
-{ #category : #'archive operations' }
+{ #category : 'archive operations' }
 Archive >> addMember: aMember [
 	^members addLast: aMember
 ]
 
-{ #category : #'archive operations' }
+{ #category : 'archive operations' }
 Archive >> addString: aString as: aFileName [
 	| newMember |
 	newMember := self memberClass newFromString: aString named: aFileName.
@@ -52,7 +54,7 @@ Archive >> addString: aString as: aFileName [
 	^newMember
 ]
 
-{ #category : #'archive operations' }
+{ #category : 'archive operations' }
 Archive >> addTree: aFileReference relativeTo: relativePath match: aBlock [
 	| matches |
 	matches := aFileReference  entries select: [ :entry | aBlock value: entry ].
@@ -65,13 +67,13 @@ Archive >> addTree: aFileReference relativeTo: relativePath match: aBlock [
 	]
 ]
 
-{ #category : #'archive operations' }
+{ #category : 'archive operations' }
 Archive >> canWriteToFile: aFileReferenceOrFileName [
 	"Catch attempts to overwrite existing zip file"
 	^(members anySatisfy: [ :each | each usesFile: aFileReferenceOrFileName ]) not
 ]
 
-{ #category : #'archive operations' }
+{ #category : 'archive operations' }
 Archive >> contentsOf: aMemberOrName [
 	| member |
 	member := self member: aMemberOrName.
@@ -79,7 +81,7 @@ Archive >> contentsOf: aMemberOrName [
 	^member contents
 ]
 
-{ #category : #'archive operations' }
+{ #category : 'archive operations' }
 Archive >> extractMember: aMemberOrName [
 	| member |
 	member := self member: aMemberOrName.
@@ -90,7 +92,7 @@ Archive >> extractMember: aMemberOrName [
 		overwrite: true
 ]
 
-{ #category : #'archive operations' }
+{ #category : 'archive operations' }
 Archive >> extractMember: aMemberOrName toFileNamed: aFileName [
 	| member |
 	member := self member: aMemberOrName.
@@ -98,14 +100,14 @@ Archive >> extractMember: aMemberOrName toFileNamed: aFileName [
 	member extractToFileNamed: aFileName
 ]
 
-{ #category : #'archive operations' }
+{ #category : 'archive operations' }
 Archive >> extractMemberWithoutPath: aMemberOrName [
 	self
 		extractMemberWithoutPath: aMemberOrName
 		inDirectory: FileSystem workingDirectory
 ]
 
-{ #category : #'archive operations' }
+{ #category : 'archive operations' }
 Archive >> extractMemberWithoutPath: aMemberOrName inDirectory: dir [
 	| member |
 	member := self member: aMemberOrName.
@@ -113,51 +115,51 @@ Archive >> extractMemberWithoutPath: aMemberOrName inDirectory: dir [
 	member extractToFileNamed: member asFileReference basename inDirectory: dir overwrite: true
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 Archive >> initialize [
 	super initialize.
 	members := OrderedCollection new
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Archive >> member: aMemberOrName [
 	^(members includes: aMemberOrName)
 		ifTrue: [ aMemberOrName ]
 		ifFalse: [ self memberNamed: aMemberOrName ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Archive >> memberClass [
 	self subclassResponsibility
 ]
 
-{ #category : #'archive operations' }
+{ #category : 'archive operations' }
 Archive >> memberNamed: aString [
 	"Return the first member whose zip name or local file name matches aString, or nil"
 	^members detect: [ :ea | ea fileName = aString or: [ ea localFileName = aString ]] ifNone: [ ]
 ]
 
-{ #category : #'archive operations' }
+{ #category : 'archive operations' }
 Archive >> memberNames [
 	^members collect: [ :ea | ea fileName ]
 ]
 
-{ #category : #'archive operations' }
+{ #category : 'archive operations' }
 Archive >> members [
 	^members
 ]
 
-{ #category : #'archive operations' }
+{ #category : 'archive operations' }
 Archive >> membersMatching: aString [
 	^members select: [ :ea | (aString match: ea fileName) or: [ aString match: ea localFileName ] ]
 ]
 
-{ #category : #'archive operations' }
+{ #category : 'archive operations' }
 Archive >> numberOfMembers [
 	^members size
 ]
 
-{ #category : #'archive operations' }
+{ #category : 'archive operations' }
 Archive >> removeMember: aMemberOrName [
 	| member |
 	member := self member: aMemberOrName.
@@ -165,7 +167,7 @@ Archive >> removeMember: aMemberOrName [
 	^member
 ]
 
-{ #category : #'archive operations' }
+{ #category : 'archive operations' }
 Archive >> replaceMember: aMemberOrName with: newMember [
 	| member |
 	member := self member: aMemberOrName.
@@ -173,7 +175,7 @@ Archive >> replaceMember: aMemberOrName with: newMember [
 	^member
 ]
 
-{ #category : #'archive operations' }
+{ #category : 'archive operations' }
 Archive >> setContentsOf: aMemberOrName to: aString [
 	| newMember oldMember |
 	oldMember := self member: aMemberOrName.
@@ -182,12 +184,12 @@ Archive >> setContentsOf: aMemberOrName to: aString [
 	self replaceMember: oldMember with: newMember
 ]
 
-{ #category : #'archive operations' }
+{ #category : 'archive operations' }
 Archive >> writeTo: aStream [
 	self subclassResponsibility
 ]
 
-{ #category : #'archive operations' }
+{ #category : 'archive operations' }
 Archive >> writeToFile: aFileReferenceOrFileName [
 
 	"Catch attempts to overwrite existing zip file"

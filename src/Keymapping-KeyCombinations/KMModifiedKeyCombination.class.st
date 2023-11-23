@@ -16,16 +16,17 @@ $z alt
 ```
 "
 Class {
-	#name : #KMModifiedKeyCombination,
-	#superclass : #KMKeyCombination,
+	#name : 'KMModifiedKeyCombination',
+	#superclass : 'KMKeyCombination',
 	#instVars : [
 		'modifier',
 		'character'
 	],
-	#category : #'Keymapping-KeyCombinations'
+	#category : 'Keymapping-KeyCombinations',
+	#package : 'Keymapping-KeyCombinations'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 KMModifiedKeyCombination class >> modifier: aModifier character: aCharacter [
 	^ (self new)
 		modifier: aModifier;
@@ -33,7 +34,7 @@ KMModifiedKeyCombination class >> modifier: aModifier character: aCharacter [
 		yourself
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 KMModifiedKeyCombination >> = aShortcut [
 	super = aShortcut
 		ifFalse: [ ^ false ].
@@ -44,100 +45,100 @@ KMModifiedKeyCombination >> = aShortcut [
 	^ true
 ]
 
-{ #category : #combining }
+{ #category : 'combining' }
 KMModifiedKeyCombination >> alt [
 	^ self modifiedBy: KMModifier alt
 ]
 
-{ #category : #matching }
+{ #category : 'matching' }
 KMModifiedKeyCombination >> beginsWith: aKMShortcut [
 
 	^ self = aKMShortcut
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMModifiedKeyCombination >> character [
 	^ character
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMModifiedKeyCombination >> character: aCharacter [
 	character := aCharacter
 ]
 
-{ #category : #combining }
+{ #category : 'combining' }
 KMModifiedKeyCombination >> command [
 	^ self modifiedBy: KMModifier command
 ]
 
-{ #category : #combining }
+{ #category : 'combining' }
 KMModifiedKeyCombination >> control [
 	^ self modifiedBy: KMModifier ctrl
 ]
 
-{ #category : #combining }
+{ #category : 'combining' }
 KMModifiedKeyCombination >> ctrl [
 	^ self control
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 KMModifiedKeyCombination >> hash [
 	^ character hash + modifier hash
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMModifiedKeyCombination >> key [
 
 	^ self character key
 ]
 
-{ #category : #matching }
+{ #category : 'matching' }
 KMModifiedKeyCombination >> matchesEvent: aKeyboardEvent [
 
 	^ (self modifier matchesEvent: aKeyboardEvent)
 		and: [self character matchesEvent: aKeyboardEvent]
 ]
 
-{ #category : #combining }
+{ #category : 'combining' }
 KMModifiedKeyCombination >> meta [
 	^ self modifiedBy: KMModifier meta
 ]
 
-{ #category : #combining }
+{ #category : 'combining' }
 KMModifiedKeyCombination >> modifiedBy: aModifier [
 	^self character asKeyCombination modifiedBy: modifier + aModifier
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMModifiedKeyCombination >> modifier [
 	^ modifier
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMModifiedKeyCombination >> modifier: aModifier [
 	modifier := aModifier
 ]
 
-{ #category : #'accessing - platform' }
+{ #category : 'accessing - platform' }
 KMModifiedKeyCombination >> platformCharacter [
 
 	^ self character key
 ]
 
-{ #category : #'accessing - platform' }
+{ #category : 'accessing - platform' }
 KMModifiedKeyCombination >> platformModifier [
 
 	^ self modifier
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 KMModifiedKeyCombination >> printOn: aStream [
 	modifier printOn: aStream.
 	aStream << ' + '.
 	character printOn: aStream
 ]
 
-{ #category : #combining }
+{ #category : 'combining' }
 KMModifiedKeyCombination >> shift [
 	^ self modifiedBy: KMModifier shift
 ]

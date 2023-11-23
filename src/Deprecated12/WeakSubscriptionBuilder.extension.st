@@ -1,6 +1,6 @@
-Extension { #name : #WeakSubscriptionBuilder }
+Extension { #name : 'WeakSubscriptionBuilder' }
 
-{ #category : #'*Deprecated12' }
+{ #category : '*Deprecated12' }
 WeakSubscriptionBuilder >> when: anAnnouncementClass do: aValuable [
 
 	| subscriberForDeprecation |

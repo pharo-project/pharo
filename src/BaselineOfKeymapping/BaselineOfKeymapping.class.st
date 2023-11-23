@@ -1,10 +1,11 @@
 Class {
-	#name : #BaselineOfKeymapping,
-	#superclass : #BaselineOf,
-	#category : #BaselineOfKeymapping
+	#name : 'BaselineOfKeymapping',
+	#superclass : 'BaselineOf',
+	#category : 'BaselineOfKeymapping',
+	#package : 'BaselineOfKeymapping'
 }
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfKeymapping >> baseline: spec [
 	<baseline>
 	
@@ -28,7 +29,7 @@ BaselineOfKeymapping >> baseline: spec [
 				'Keymapping-Tests') ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BaselineOfKeymapping >> project [
 	| aProject |
 	

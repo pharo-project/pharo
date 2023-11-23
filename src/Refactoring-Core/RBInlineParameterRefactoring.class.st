@@ -38,15 +38,17 @@ method1
 ```
 "
 Class {
-	#name : #RBInlineParameterRefactoring,
-	#superclass : #RBRemoveParameterRefactoring,
+	#name : 'RBInlineParameterRefactoring',
+	#superclass : 'RBRemoveParameterRefactoring',
 	#instVars : [
 		'expressions'
 	],
-	#category : #'Refactoring-Core-Refactorings-Unused'
+	#category : 'Refactoring-Core-Refactorings-Unused',
+	#package : 'Refactoring-Core',
+	#tag : 'Refactorings-Unused'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBInlineParameterRefactoring class >> inlineParameter: aString in: aClass selector: aSelector [
 	^ self new
 		inlineParameter: aString
@@ -54,7 +56,7 @@ RBInlineParameterRefactoring class >> inlineParameter: aString in: aClass select
 		selector: aSelector
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBInlineParameterRefactoring class >> model: aRBSmalltalk inlineParameter: aString in: aClass selector: aSelector [
 	^ self new
 		model: aRBSmalltalk;
@@ -64,7 +66,7 @@ RBInlineParameterRefactoring class >> model: aRBSmalltalk inlineParameter: aStri
 		yourself
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBInlineParameterRefactoring >> allExpressionsToInline [
 	| coll |
 	coll := Set new.
@@ -77,7 +79,7 @@ RBInlineParameterRefactoring >> allExpressionsToInline [
 	^coll asOrderedCollection
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBInlineParameterRefactoring >> expressionsToInlineFrom: aTree [
 	| searcher |
 	searcher := self parseTreeSearcher.
@@ -90,14 +92,14 @@ RBInlineParameterRefactoring >> expressionsToInlineFrom: aTree [
 	^ searcher executeTree: aTree initialAnswer: OrderedCollection new
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBInlineParameterRefactoring >> inlineParameter: aString in: aClass selector: aSelector [
 	oldSelector := aSelector.
 	class := self classObjectFor: aClass.
 	argument := aString
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBInlineParameterRefactoring >> modifyImplementorParseTree: parseTree in: aClass [
 	| node assignment |
 	node := (parseTree arguments at: parameterIndex) copy.
@@ -107,7 +109,7 @@ RBInlineParameterRefactoring >> modifyImplementorParseTree: parseTree in: aClass
 	super modifyImplementorParseTree: parseTree in: aClass
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBInlineParameterRefactoring >> myConditions [
 	self getNewSelector.
 	expressions := self allExpressionsToInline.
@@ -120,7 +122,7 @@ RBInlineParameterRefactoring >> myConditions [
 					errorMacro: 'All values passed must be literal.')
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBInlineParameterRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

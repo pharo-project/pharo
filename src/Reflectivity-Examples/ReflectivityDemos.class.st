@@ -4,21 +4,22 @@ This class collects simple demos for Reflectivity.
 each method contains a small, self-contained demo.
 "
 Class {
-	#name : #ReflectivityDemos,
-	#superclass : #Object,
+	#name : 'ReflectivityDemos',
+	#superclass : 'Object',
 	#classVars : [
 		'CachedLink'
 	],
-	#category : #'Reflectivity-Examples'
+	#category : 'Reflectivity-Examples',
+	#package : 'Reflectivity-Examples'
 }
 
-{ #category : #cleanup }
+{ #category : 'cleanup' }
 ReflectivityDemos >> cleanUp [
 	<script: 'self new cleanUp'>
 	CachedLink ifNotNil: [ :link | link uninstall. CachedLink := nil ]
 ]
 
-{ #category : #demos }
+{ #category : 'demos' }
 ReflectivityDemos >> demoSelfSendLogging [
 	<script: 'self new demoSelfSendLogging'>
 

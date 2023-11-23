@@ -1,30 +1,30 @@
-Extension { #name : #Timespan }
+Extension { #name : 'Timespan' }
 
-{ #category : #'*Kernel-Chronology-Extras' }
+{ #category : '*Kernel-Chronology-Extras' }
 Timespan >> asDosTimestamp [
 
 	^ start asDosTimestamp
 ]
 
-{ #category : #'*Kernel-Chronology-Extras' }
+{ #category : '*Kernel-Chronology-Extras' }
 Timespan >> asMonth [
 
 	^ start asMonth
 ]
 
-{ #category : #'*Kernel-Chronology-Extras' }
+{ #category : '*Kernel-Chronology-Extras' }
 Timespan >> asWeek [
 
 	^ start asWeek
 ]
 
-{ #category : #'*Kernel-Chronology-Extras' }
+{ #category : '*Kernel-Chronology-Extras' }
 Timespan >> asYear [
 
 	^ start asYear
 ]
 
-{ #category : #'*Kernel-Chronology-Extras' }
+{ #category : '*Kernel-Chronology-Extras' }
 Timespan >> dates [
 
 
@@ -35,64 +35,64 @@ Timespan >> dates [
 	^ dates asArray
 ]
 
-{ #category : #'*Kernel-Chronology-Extras' }
+{ #category : '*Kernel-Chronology-Extras' }
 Timespan >> datesDo: aBlock [
 
 	self do: aBlock with: start asDate
 ]
 
-{ #category : #'*Kernel-Chronology-Extras' }
+{ #category : '*Kernel-Chronology-Extras' }
 Timespan >> day [
 	"Answer the day of the year represented by the receiver."
 	^ self dayOfYear
 ]
 
-{ #category : #'*Kernel-Chronology-Extras' }
+{ #category : '*Kernel-Chronology-Extras' }
 Timespan >> dayOfWeek [
 	"Answer the day of the week represented by the receiver."
 
 	^ start dayOfWeek
 ]
 
-{ #category : #'*Kernel-Chronology-Extras' }
+{ #category : '*Kernel-Chronology-Extras' }
 Timespan >> dayOfWeekName [
 	"Answer the day of the week represented by the receiver."
 
 	^ start dayOfWeekName
 ]
 
-{ #category : #'*Kernel-Chronology-Extras' }
+{ #category : '*Kernel-Chronology-Extras' }
 Timespan >> dayOfYear [
 	"Answer the day of the year represented by the receiver."
 
 	^ start dayOfYear
 ]
 
-{ #category : #'*Kernel-Chronology-Extras' }
+{ #category : '*Kernel-Chronology-Extras' }
 Timespan >> daysInMonth [
 
 	^ start daysInMonth
 ]
 
-{ #category : #'*Kernel-Chronology-Extras' }
+{ #category : '*Kernel-Chronology-Extras' }
 Timespan >> daysInYear [
  	"Answer the number of days in the month represented by the receiver."
 
 	^ start daysInYear
 ]
 
-{ #category : #'*Kernel-Chronology-Extras' }
+{ #category : '*Kernel-Chronology-Extras' }
 Timespan >> daysLeftInYear [
 	^ start daysLeftInYear
 ]
 
-{ #category : #'*Kernel-Chronology-Extras' }
+{ #category : '*Kernel-Chronology-Extras' }
 Timespan >> do: aBlock with: aFirstElement [
 
  	self do: aBlock with: aFirstElement when: [ :t | true ]
 ]
 
-{ #category : #'*Kernel-Chronology-Extras' }
+{ #category : '*Kernel-Chronology-Extras' }
 Timespan >> do: aBlock with: aFirstElement when: aConditionBlock [
 
 	| element end |
@@ -105,7 +105,7 @@ Timespan >> do: aBlock with: aFirstElement when: aConditionBlock [
 		element := element next. ]
 ]
 
-{ #category : #'*Kernel-Chronology-Extras' }
+{ #category : '*Kernel-Chronology-Extras' }
 Timespan >> end [
 
 	^ self duration asNanoSeconds = 0
@@ -113,7 +113,7 @@ Timespan >> end [
 		ifFalse: [ self next start - DateAndTime clockPrecision ]
 ]
 
-{ #category : #'*Kernel-Chronology-Extras' }
+{ #category : '*Kernel-Chronology-Extras' }
 Timespan >> every: aDuration do: aBlock [
 
 	| element end |
@@ -125,13 +125,13 @@ Timespan >> every: aDuration do: aBlock [
 		element := element + aDuration. ]
 ]
 
-{ #category : #'*Kernel-Chronology-Extras' }
+{ #category : '*Kernel-Chronology-Extras' }
 Timespan >> firstDayOfMonth [
 
 	^ start firstDayOfMonth
 ]
 
-{ #category : #'*Kernel-Chronology-Extras' }
+{ #category : '*Kernel-Chronology-Extras' }
 Timespan >> includes: aDateAndTime [
 
 	^ (aDateAndTime isKindOf: Timespan)
@@ -141,26 +141,26 @@ Timespan >> includes: aDateAndTime [
 			ifFalse: [ aDateAndTime asDateAndTime between: start and: self end ]
 ]
 
-{ #category : #'*Kernel-Chronology-Extras' }
+{ #category : '*Kernel-Chronology-Extras' }
 Timespan >> includesAll: aCollection [
 	"Answer whether all the elements of aCollection are in the receiver."
 
 	^ aCollection allSatisfy: [ :elem | self includes: elem ]
 ]
 
-{ #category : #'*Kernel-Chronology-Extras' }
+{ #category : '*Kernel-Chronology-Extras' }
 Timespan >> includesAny: aCollection [
 	"Answer whether any element of aCollection is included in the receiver"
 
 	^ aCollection anySatisfy: [ :elem | self includes: elem ]
 ]
 
-{ #category : #'*Kernel-Chronology-Extras' }
+{ #category : '*Kernel-Chronology-Extras' }
 Timespan >> includesAnyOf: aCollection [
 	^ self includesAny: aCollection
 ]
 
-{ #category : #'*Kernel-Chronology-Extras' }
+{ #category : '*Kernel-Chronology-Extras' }
 Timespan >> intersection: aTimespan [
 
 	 "Return the Timespan both have in common, or nil"
@@ -174,25 +174,25 @@ Timespan >> intersection: aTimespan [
 	 ^ self species starting: aBegin ending: anEnd
 ]
 
-{ #category : #'*Kernel-Chronology-Extras' }
+{ #category : '*Kernel-Chronology-Extras' }
 Timespan >> isLeapYear [
 
 	^ start isLeapYear
 ]
 
-{ #category : #'*Kernel-Chronology-Extras' }
+{ #category : '*Kernel-Chronology-Extras' }
 Timespan >> monthAbbreviation [
 
 	^ start monthAbbreviation
 ]
 
-{ #category : #'*Kernel-Chronology-Extras' }
+{ #category : '*Kernel-Chronology-Extras' }
 Timespan >> monthName [
 
 	^ start monthName
 ]
 
-{ #category : #'*Kernel-Chronology-Extras' }
+{ #category : '*Kernel-Chronology-Extras' }
 Timespan >> months [
 
 	| months |
@@ -201,13 +201,13 @@ Timespan >> months [
 	^ months asArray
 ]
 
-{ #category : #'*Kernel-Chronology-Extras' }
+{ #category : '*Kernel-Chronology-Extras' }
 Timespan >> monthsDo: aBlock [
 
  	self do: aBlock with: start asMonth
 ]
 
-{ #category : #'*Kernel-Chronology-Extras' }
+{ #category : '*Kernel-Chronology-Extras' }
 Timespan >> to: anEnd [
 	"Answer an Timespan. anEnd must be aDateAndTime or a Timespan"
 	| end |
@@ -217,7 +217,7 @@ Timespan >> to: anEnd [
 	^ Timespan starting: (self start) ending: end
 ]
 
-{ #category : #'*Kernel-Chronology-Extras' }
+{ #category : '*Kernel-Chronology-Extras' }
 Timespan >> translateTo: aTimeZone [
 	"Keep myself's representation and move it to another timezone offset.
 	Note that unlike #offset: this WILL change the absolute time in UTC"
@@ -226,13 +226,13 @@ Timespan >> translateTo: aTimeZone [
 		starting: (start translateTo: aTimeZone)
 ]
 
-{ #category : #'*Kernel-Chronology-Extras' }
+{ #category : '*Kernel-Chronology-Extras' }
 Timespan >> translateToUTC [
 	" Move this represenation to UTC"
 	^ self translateTo: 0
 ]
 
-{ #category : #'*Kernel-Chronology-Extras' }
+{ #category : '*Kernel-Chronology-Extras' }
 Timespan >> union: aTimespan [
 	 "Return the Timespan spanned by both"
 
@@ -243,7 +243,7 @@ Timespan >> union: aTimespan [
 	^ Timespan starting: aBegin ending: (anEnd + DateAndTime clockPrecision)
 ]
 
-{ #category : #'*Kernel-Chronology-Extras' }
+{ #category : '*Kernel-Chronology-Extras' }
 Timespan >> weeks [
 
 
@@ -253,20 +253,30 @@ Timespan >> weeks [
 	^ weeks asArray
 ]
 
-{ #category : #'*Kernel-Chronology-Extras' }
+{ #category : '*Kernel-Chronology-Extras' }
 Timespan >> weeksDo: aBlock [
 
 	self do: aBlock with: self asWeek
 ]
 
-{ #category : #'*Kernel-Chronology-Extras' }
+{ #category : '*Kernel-Chronology-Extras' }
+Timespan >> workDates [
+ 	"Exclude Saturday and Sunday"
+
+	| workDays |
+	workDays := OrderedCollection new.
+	self workDatesDo: [ :each | workDays add: each ].
+	^ workDays
+]
+
+{ #category : '*Kernel-Chronology-Extras' }
 Timespan >> workDatesDo: aBlock [
  	"Exclude Saturday and Sunday"
 
 	self do: aBlock with: start asDate when: [ :d | d dayOfWeek < 6 ]
 ]
 
-{ #category : #'*Kernel-Chronology-Extras' }
+{ #category : '*Kernel-Chronology-Extras' }
 Timespan >> years [
 
 
@@ -276,7 +286,7 @@ Timespan >> years [
 	^ years asArray
 ]
 
-{ #category : #'*Kernel-Chronology-Extras' }
+{ #category : '*Kernel-Chronology-Extras' }
 Timespan >> yearsDo: aBlock [
 
 	self do: aBlock with: start asYear

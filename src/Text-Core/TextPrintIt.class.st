@@ -11,7 +11,9 @@ TextMorph new
 	openInWindow.
 "
 Class {
-	#name : #TextPrintIt,
-	#superclass : #TextDoIt,
-	#category : #'Text-Core-Attributes'
+	#name : 'TextPrintIt',
+	#superclass : 'TextDoIt',
+	#category : 'Text-Core-Attributes',
+	#package : 'Text-Core',
+	#tag : 'Attributes'
 }

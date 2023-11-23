@@ -1,1 +1,1 @@
-Package { #name : #'ClassDeprecation-Tests' }
+Package { #name : 'ClassDeprecation-Tests' }

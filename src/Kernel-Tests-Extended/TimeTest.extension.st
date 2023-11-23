@@ -1,6 +1,6 @@
-Extension { #name : #TimeTest }
+Extension { #name : 'TimeTest' }
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 TimeTest >> testNanoConstructor [
 	| timeFromString timeFromNano timeFromNanoSecond |
 	timeFromString := Time fromString: '01:23:45.67809'.

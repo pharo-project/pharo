@@ -1,6 +1,6 @@
 Class {
-	#name : #MetacelloAbstractVersionConstructor,
-	#superclass : #MetacelloAbstractConstructor,
+	#name : 'MetacelloAbstractVersionConstructor',
+	#superclass : 'Object',
 	#instVars : [
 		'root',
 		'configuration',
@@ -10,45 +10,50 @@ Class {
 		'symbolicVersion',
 		'currentContext'
 	],
-	#category : #'Metacello-Core-Constructors'
+	#category : 'Metacello-Core-Constructors',
+	#package : 'Metacello-Core',
+	#tag : 'Constructors'
 }
 
-{ #category : #'method generation' }
-MetacelloAbstractVersionConstructor class >> symbolicMethodSelectorAndPragma: selector symbolicVersionSymbol: symbolicVersionSymbol on: strm [
-	strm
-		nextPutAll: selector asString , ' spec';
-		cr;
-		tab;
-		nextPutAll: '<symbolicVersion: #' , symbolicVersionSymbol asString printString;
-		nextPutAll: '>';
-		cr
+{ #category : 'instance creation' }
+MetacelloAbstractVersionConstructor class >> on: aConfig [
+
+	^ self new
+		  on: aConfig;
+		  yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'instance creation' }
+MetacelloAbstractVersionConstructor class >> on: aConfig project: aProject [
+
+	^ self new
+		  on: aConfig project: aProject;
+		  yourself
+]
+
+{ #category : 'accessing' }
 MetacelloAbstractVersionConstructor >> addAttribute: anAttribute [
 
 	self attributeOrder add: anAttribute
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloAbstractVersionConstructor >> attributeMap [
 
-	attributeMap == nil ifTrue: [ attributeMap := Dictionary new ].
-	^attributeMap
+	^ attributeMap ifNil: [ attributeMap := Dictionary new ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloAbstractVersionConstructor >> attributeOrder [
 
-	attributeOrder == nil ifTrue: [ attributeOrder := OrderedCollection new ].
-	^attributeOrder
+	^ attributeOrder ifNil: [ attributeOrder := OrderedCollection new ]
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 MetacelloAbstractVersionConstructor >> author: aBlockOrString [
-    "Define author field of version spec (MetacelloMCVersionSpec).
+	"Define author field of version spec (MetacelloMCVersionSpec).
 	 If <aBlockOrString> is a String, the version spec author is set to the String.
-	If <aBlockOrString> is a Block, the specifications in <aBlockOrString> are applied to the author spec (MetacelloValueHolderSpec). Not Recommended!
+	If <aBlockOrString> is a Block, the specifications in <aBlockOrString> are applied to the author spec (MetacelloValueHolderSpec). Not Recommended! This second version is now deprecated.
 	
 		spec author: 'dkh'.
 		
@@ -56,39 +61,38 @@ MetacelloAbstractVersionConstructor >> author: aBlockOrString [
 			spec value: 'dkh'. ].
 	 "
 
-    self root author: aBlockOrString constructor: self
+	aBlockOrString isString
+		ifTrue: [ self root author: aBlockOrString ]
+		ifFalse: [ self setAuthorWithBlock: aBlockOrString ]
 ]
 
-{ #category : #'api spec callbacks' }
-MetacelloAbstractVersionConstructor >> authorForVersion: aBlockOrString [
-    aBlockOrString setAuthorInMetacelloConfig: self
-]
-
-{ #category : #api }
+{ #category : 'api' }
 MetacelloAbstractVersionConstructor >> baseline: aString [
-    self root baseline: aString constructor: self
+
+	| spec projectSpec |
+	projectSpec := self project baselineOfProjectSpec
+		               name: aString;
+		               className: 'BaselineOf' , aString;
+		               yourself.
+	spec := self project projectReferenceSpec
+		        name: aString;
+		        projectReference: projectSpec;
+		        yourself.
+	self root packages merge: spec.
+	^ projectSpec
 ]
 
-{ #category : #api }
-MetacelloAbstractVersionConstructor >> baseline: aString with: aBlockOrString [
-    self root baseline: aString with: aBlockOrString constructor: self
+{ #category : 'api' }
+MetacelloAbstractVersionConstructor >> baseline: aString with: aBlock [
+
+	self with: (self baseline: aString) during: aBlock
 ]
 
-{ #category : #'api spec callbacks' }
-MetacelloAbstractVersionConstructor >> baselineForVersion: aString [
-    self setBaseline: aString
-]
-
-{ #category : #'api spec callbacks' }
-MetacelloAbstractVersionConstructor >> baselineForVersion: aString with: aBlock [
-    aBlock setBaseline: aString withInMetacelloConfig: self
-]
-
-{ #category : #api }
+{ #category : 'api' }
 MetacelloAbstractVersionConstructor >> blessing: aBlockOrString [
-    "Define blessing field of version spec (MetacelloMCVersionSpec).
+	"Define blessing field of version spec (MetacelloMCVersionSpec).
 	 If <aBlockOrString> is a String, the version spec blessing is set to the String. It is recommended to use a Symbol.
-	If <aBlockOrString> is a Block, the specifications in <aBlockOrString> are applied to the blessing spec (MetacelloValueHolderSpec). Not Recommended!
+	If <aBlockOrString> is a Block, the specifications in <aBlockOrString> are applied to the blessing spec (MetacelloValueHolderSpec). Not Recommended! This second version is now deprecated.
 	
 		spec blessing: #release.
 		
@@ -101,17 +105,19 @@ MetacelloAbstractVersionConstructor >> blessing: aBlockOrString [
 		#release - indicating that the version spec has stabilized and will NOT change over time
 	 "
 
-    self root blessing: aBlockOrString constructor: self
+	aBlockOrString isString
+		ifTrue: [ self root blessing: aBlockOrString ]
+		ifFalse: [ self setBlessingWithBlock: aBlockOrString ]
 ]
 
-{ #category : #'api spec callbacks' }
-MetacelloAbstractVersionConstructor >> blessingForVersion: aBlockOrString [
-    aBlockOrString setBlessingInMetacelloConfig: self
+{ #category : 'initialization' }
+MetacelloAbstractVersionConstructor >> calculate: aConfig project: aProject [ 
+	^ self subclassResponsibility
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 MetacelloAbstractVersionConstructor >> className: aString [
-    "Define className field of a project spec (MetacelloMCProjectSpec).
+	"Define className field of a project spec (MetacelloMCProjectSpec).
 	
 		spec project: 'CoolBrowser' with: [
 			spec className: 'ConfigurationOfCoolBrowser'. ].
@@ -119,47 +125,47 @@ MetacelloAbstractVersionConstructor >> className: aString [
 	The className field is OPTIONAL in the project spec. If omitted, the className will be created by prepending 'ConfigurationOf' to the project name.
 	 "
 
-    self root className: aString constructor: self
+	self root className: aString
 ]
 
-{ #category : #'api spec callbacks' }
-MetacelloAbstractVersionConstructor >> classNameForProject: aString [
-    self root className: aString
-]
-
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloAbstractVersionConstructor >> configuration [
 
 	^configuration
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloAbstractVersionConstructor >> configuration: aConfig [
 
 	configuration := aConfig
 ]
 
-{ #category : #api }
-MetacelloAbstractVersionConstructor >> configuration: aString with: aBlockOrString [
-    self root configuration: aString with: aBlockOrString constructor: self
+{ #category : 'api' }
+MetacelloAbstractVersionConstructor >> configuration: aString with: aBlock [
+
+	| spec projectSpec |
+	projectSpec := self project configurationOfProjectSpec
+		               name: aString;
+		               yourself.
+	spec := self project projectReferenceSpec
+		        name: aString;
+		        projectReference: projectSpec;
+		        yourself.
+	self root packages merge: spec.
+	self with: projectSpec during: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloAbstractVersionConstructor >> configurationClass [
 
 	^self configuration class
 ]
 
-{ #category : #'api spec callbacks' }
-MetacelloAbstractVersionConstructor >> configurationForVersion: aString with: aBlock [
-    aBlock setConfiguration: aString withInMetacelloConfig: self
-]
-
-{ #category : #api }
+{ #category : 'api' }
 MetacelloAbstractVersionConstructor >> description: aBlockOrString [
-    "Define description field of version spec (MetacelloMCVersionSpec).
+	"Define description field of version spec (MetacelloMCVersionSpec).
 	 If <aBlockOrString> is a String, the version spec blessing is set to the String. It is recommended to use a Symbol.
-	If <aBlockOrString> is a Block, the specifications in <aBlockOrString> are applied to the blessing spec (MetacelloValueHolderSpec). Not Recommended!
+	If <aBlockOrString> is a Block, the specifications in <aBlockOrString> are applied to the blessing spec (MetacelloValueHolderSpec). Not Recommended! This second version is now deprecated.
 	
 		spec description: 'Descriptive comment'.
 		
@@ -167,26 +173,99 @@ MetacelloAbstractVersionConstructor >> description: aBlockOrString [
 			spec value: 'Descriptive comment'.
 	 "
 
-    self root description: aBlockOrString constructor: self
+	aBlockOrString isString
+		ifTrue: [ self root description: aBlockOrString ]
+		ifFalse: [ self setDescriptionWithBlock: aBlockOrString ]
 ]
 
-{ #category : #'api spec callbacks' }
-MetacelloAbstractVersionConstructor >> descriptionForVersion: aBlockOrString [
-    aBlockOrString setDescriptionInMetacelloConfig: self
-]
-
-{ #category : #private }
+{ #category : 'private' }
 MetacelloAbstractVersionConstructor >> evaluatePragma: pragma [
+
 	currentContext := pragma.
-	[ self configuration 
-		perform: (MetacelloPlatform current selectorForPragma: pragma) 
-		with: self ] 
-	ensure: [ currentContext := nil ]
+	[ self configuration perform: pragma methodSelector with: self ] ensure: [ currentContext := nil ]
 ]
 
-{ #category : #api }
+{ #category : 'pragma extraction' }
+MetacelloAbstractVersionConstructor >> extractAllVersionPragmas [
+
+	| aDict |
+	aDict := Dictionary new.
+	self extractPragmas: #version: into: aDict.
+	self extractPragmas: #version:imports: into: aDict.
+	^aDict
+]
+
+{ #category : 'pragma extraction' }
+MetacelloAbstractVersionConstructor >> extractCommonDefaultSymbolicVersionPragmas [
+
+	| aDict |
+	aDict := Dictionary new.
+	self extractPragmas: #defaultSymbolicVersion: for: ConfigurationOf into: aDict.
+	^aDict
+]
+
+{ #category : 'pragma extraction' }
+MetacelloAbstractVersionConstructor >> extractDefaultSymbolicVersionPragmas [
+
+	| aDict |
+	aDict := Dictionary new.
+	self extractPragmas: #defaultSymbolicVersion: into: aDict.
+	^aDict
+]
+
+{ #category : 'private' }
+MetacelloAbstractVersionConstructor >> extractPragmas: pragmaKeyword for: aClass into: versionDict [
+
+	| versionString  pragmas |
+	(Pragma 
+		allNamed: pragmaKeyword
+		in: aClass) do: [:pragma |
+			versionString := pragma argumentAt: 1.
+			pragmas := versionDict 
+				at: versionString 
+				ifAbsent: [ | list |
+					list := OrderedCollection new.
+					versionDict at: versionString put: list.
+					list ].
+			pragmas add: pragma ].
+]
+
+{ #category : 'private' }
+MetacelloAbstractVersionConstructor >> extractPragmas: pragmaKeyword into: versionDict [
+
+	^self extractPragmas: pragmaKeyword for: self configurationClass into: versionDict
+]
+
+{ #category : 'pragma extraction' }
+MetacelloAbstractVersionConstructor >> extractSymbolicVersionPragmas [
+
+	| aDict |
+	aDict := Dictionary new.
+	self extractPragmas: #symbolicVersion: into: aDict.
+	^aDict
+]
+
+{ #category : 'pragma extraction' }
+MetacelloAbstractVersionConstructor >> extractVersionImportPragmas [
+
+	| aDict |
+	aDict := Dictionary new.
+	self extractPragmas: #version:imports: into: aDict.
+	^aDict
+]
+
+{ #category : 'pragma extraction' }
+MetacelloAbstractVersionConstructor >> extractVersionPragmas [
+
+	| aDict |
+	aDict := Dictionary new.
+	self extractPragmas: #version: into: aDict.
+	^aDict
+]
+
+{ #category : 'api' }
 MetacelloAbstractVersionConstructor >> file: aString [
-    "Define file field of a package spec (MetacelloPackageSpec) or project spec (MetacelloMCProjectSpec).
+	"Define file field of a package spec (MetacelloPackageSpec) or project spec (MetacelloMCProjectSpec).
 
 	For a package spec, the file: field is optional in a baseline. In a baseline, the file field may be used to specify a package branch for the package:
 	
@@ -214,66 +293,52 @@ MetacelloAbstractVersionConstructor >> file: aString [
 			spec file: 'MyProject-Metacello'.
 	 "
 
-    self root file: aString constructor: self
+	self root file: aString
 ]
 
-{ #category : #'api spec callbacks' }
-MetacelloAbstractVersionConstructor >> fileForPackage: aString [
-    self root file: aString
-]
-
-{ #category : #'api spec callbacks' }
-MetacelloAbstractVersionConstructor >> fileForProject: aString [
-    self root file: aString
-]
-
-{ #category : #api }
+{ #category : 'api' }
 MetacelloAbstractVersionConstructor >> for: attributeListOrSymbol do: aBlock [
-    "conditional version support"
+	"conditional version support"
 
-    attributeListOrSymbol setForDo: aBlock withInMetacelloConfig: self
+	(attributeListOrSymbol isSymbol
+		 ifTrue: [ { attributeListOrSymbol } ]
+		 ifFalse: [ attributeListOrSymbol ]) do: [ :attribute |
+		(self attributeMap at: attribute ifAbsentPut: [ OrderedCollection new ]) add: aBlock.
+		self addAttribute: attribute ]
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 MetacelloAbstractVersionConstructor >> for: attributeListOrSymbol version: aString [
-    "conditional symbolicVersion support"
+	"conditional symbolicVersion support"
 
-    attributeListOrSymbol setForVersion: aString withInMetacelloConfig: self
+	(attributeListOrSymbol isSymbol
+		 ifTrue: [ { attributeListOrSymbol } ]
+		 ifFalse: [ attributeListOrSymbol ]) do: [ :attribute |
+		self attributeMap at: attribute put: aString.
+		self addAttribute: attribute ]
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 MetacelloAbstractVersionConstructor >> group: aString overrides: aStringOrCollection [
-    self root group: aString overrides: aStringOrCollection constructor: self
+
+	self root packages add: (self project groupSpec
+			 name: aString;
+			 includes: aStringOrCollection;
+			 yourself)
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 MetacelloAbstractVersionConstructor >> group: aString with: aStringOrCollection [
-    self root group: aString with: aStringOrCollection constructor: self
+
+	self root packages merge: (self project groupSpec
+			 name: aString;
+			 includes: aStringOrCollection;
+			 yourself)
 ]
 
-{ #category : #'api spec callbacks' }
-MetacelloAbstractVersionConstructor >> groupForVersion: aString overrides: aStringOrCollection [
-    | spec |
-    spec := self project groupSpec
-        name: aString;
-        includes: aStringOrCollection;
-        yourself.
-    self root packages add: spec
-]
-
-{ #category : #'api spec callbacks' }
-MetacelloAbstractVersionConstructor >> groupForVersion: aString with: aStringOrCollection [
-    | spec |
-    spec := self project groupSpec
-        name: aString;
-        includes: aStringOrCollection;
-        yourself.
-    self root packages merge: spec
-]
-
-{ #category : #api }
+{ #category : 'api' }
 MetacelloAbstractVersionConstructor >> import: aStringOrCollection [
-  "import names defined in baseline <aString> to be used when loading the version
+	"import names defined in baseline <aString> to be used when loading the version
 
 		spec baseline: 'Sample' with: [ spec repository: 'github://dalehenrich/sample:master/repository' ].
 		spec import: 'Sample' ]
@@ -285,12 +350,12 @@ MetacelloAbstractVersionConstructor >> import: aStringOrCollection [
 		spec import: #('Sample' 'Example')]	
 	 "
 
-  self root import: aStringOrCollection constructor: self
+	self root import: aStringOrCollection
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 MetacelloAbstractVersionConstructor >> import: aString provides: aCollection [
-  "import names defined in baseline <aString> to be used when loading the version
+	"import names defined in baseline <aString> to be used when loading the version
 
 	
 		spec baseline: 'Sample' with: [ spec repository: 'github://dalehenrich/sample:master/repository' ].
@@ -299,72 +364,67 @@ MetacelloAbstractVersionConstructor >> import: aString provides: aCollection [
 		spec import: 'Example' provides: #('Example Core')]	
 	 "
 
-  self root import: aString provides: aCollection constructor: self
+	self root import: aString provides: aCollection
 ]
 
-{ #category : #'api spec callbacks' }
-MetacelloAbstractVersionConstructor >> importForVersion: aString [
-    self root import: aString
-]
-
-{ #category : #'api spec callbacks' }
-MetacelloAbstractVersionConstructor >> importForVersion: aString provides: anArray [
-  self root import: aString provides: anArray
-]
-
-{ #category : #api }
+{ #category : 'api' }
 MetacelloAbstractVersionConstructor >> includes: anObject [
-    self root includes: anObject constructor: self
+
+	self root includes: anObject
 ]
 
-{ #category : #'api spec callbacks' }
-MetacelloAbstractVersionConstructor >> includesForPackage: anObject [
-    self root includes: anObject
-]
-
-{ #category : #api }
+{ #category : 'api' }
 MetacelloAbstractVersionConstructor >> loads: aStringOrCollection [
-  self root loads: aStringOrCollection constructor: self
+
+	self root loads: aStringOrCollection
 ]
 
-{ #category : #'api spec callbacks' }
-MetacelloAbstractVersionConstructor >> loadsForProject: anObject [
-    self root loads: anObject
-]
-
-{ #category : #api }
+{ #category : 'api' }
 MetacelloAbstractVersionConstructor >> name: anObject [
-    self root name: anObject constructor: self
+
+	self root name: anObject
 ]
 
-{ #category : #'api spec callbacks' }
-MetacelloAbstractVersionConstructor >> nameForProject: aString [
-    self root name: aString
+{ #category : 'initialization' }
+MetacelloAbstractVersionConstructor >> on: aConfig [
+
+	self calculate: aConfig project: nil
 ]
 
-{ #category : #api }
+{ #category : 'initialization' }
+MetacelloAbstractVersionConstructor >> on: aConfig project: aProject [
+
+	self calculate: aConfig project: aProject
+]
+
+{ #category : 'api' }
 MetacelloAbstractVersionConstructor >> operator: anObject [
-    self root operator: anObject constructor: self
+
+	self root operator: anObject
 ]
 
-{ #category : #'api spec callbacks' }
-MetacelloAbstractVersionConstructor >> operatorForProject: anObject [
-    self root operator: anObject
-]
-
-{ #category : #api }
+{ #category : 'api' }
 MetacelloAbstractVersionConstructor >> package: aString [
-    self root package: aString constructor: self
+
+	self root packages add: (self project packageSpec
+			 name: aString;
+			 yourself)
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 MetacelloAbstractVersionConstructor >> package: aString overrides: aBlock [
-    self root package: aString overrides: aBlock constructor: self
+
+	| spec |
+	spec := self project packageSpec
+		        name: aString;
+		        yourself.
+	self root packages add: spec.
+	self with: spec during: aBlock
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 MetacelloAbstractVersionConstructor >> package: packageName with: aBlockOrString [
-    "Define specification for package <packageName>.
+	"Define specification for package <packageName>.
 	 If <aBlockOrString> is a String (or Symbol), the String is expected to be a version (or symbolic version).
 	If <aBlockOrString> is a Block, the specifications in <aBlockOrString> are applied to the project:
 	
@@ -375,540 +435,245 @@ MetacelloAbstractVersionConstructor >> package: packageName with: aBlockOrString
 			spec repository: '/opt/gemstone/repository'.
 	 "
 
-    self root package: packageName with: aBlockOrString constructor: self
+	| spec |
+	spec := self project packageSpec
+		        name: packageName;
+		        yourself.
+
+	aBlockOrString isString
+		ifTrue: [
+			spec file: aBlockOrString.
+			self root packages merge: spec ]
+		ifFalse: [
+			self root packages merge: spec.
+			self with: spec during: aBlockOrString ]
 ]
 
-{ #category : #'api spec callbacks' }
-MetacelloAbstractVersionConstructor >> packageForVersion: aString [
-    | spec |
-    spec := self project packageSpec
-        name: aString;
-        yourself.
-    self root packages add: spec
-]
-
-{ #category : #'api spec callbacks' }
-MetacelloAbstractVersionConstructor >> packageForVersion: aString overrides: aBlock [
-    | spec |
-    spec := self project packageSpec
-        name: aString;
-        yourself.
-    self root packages add: spec.
-    self with: spec during: aBlock
-]
-
-{ #category : #'api spec callbacks' }
-MetacelloAbstractVersionConstructor >> packageForVersion: packageName with: aBlockOrString [
-    aBlockOrString setPackage: packageName withInMetacelloConfig: self
-]
-
-{ #category : #api }
+{ #category : 'api' }
 MetacelloAbstractVersionConstructor >> postLoadDoIt: aSymbol [
-    self root postLoadDoIt: aSymbol constructor: self
+
+	self validateDoItSelector: aSymbol.
+	self root postLoadDoIt: aSymbol
 ]
 
-{ #category : #'api spec callbacks' }
-MetacelloAbstractVersionConstructor >> postLoadDoItForPackage: aSymbol [
-    self postLoadDoItForSpec: aSymbol
-]
-
-{ #category : #'api spec callbacks' }
-MetacelloAbstractVersionConstructor >> postLoadDoItForProject: aSymbol [
-    self postLoadDoItForSpec: aSymbol
-]
-
-{ #category : #'api spec callbacks' }
-MetacelloAbstractVersionConstructor >> postLoadDoItForSpec: aSymbol [
-    self validateDoItSelector: aSymbol.
-    self root postLoadDoIt: aSymbol
-]
-
-{ #category : #'api spec callbacks' }
-MetacelloAbstractVersionConstructor >> postLoadDoItForVersion: aSymbol [
-    self postLoadDoItForSpec: aSymbol
-]
-
-{ #category : #api }
+{ #category : 'api' }
 MetacelloAbstractVersionConstructor >> preLoadDoIt: aSymbol [
-    self root preLoadDoIt: aSymbol constructor: self
+
+	self validateDoItSelector: aSymbol.
+	self root preLoadDoIt: aSymbol
 ]
 
-{ #category : #'api spec callbacks' }
-MetacelloAbstractVersionConstructor >> preLoadDoItForPackage: aSymbol [
-    self preLoadDoItForSpec: aSymbol
-]
-
-{ #category : #'api spec callbacks' }
-MetacelloAbstractVersionConstructor >> preLoadDoItForProject: aSymbol [
-    self preLoadDoItForSpec: aSymbol
-]
-
-{ #category : #'api spec callbacks' }
-MetacelloAbstractVersionConstructor >> preLoadDoItForSpec: aSymbol [
-    self validateDoItSelector: aSymbol.
-    self root preLoadDoIt: aSymbol
-]
-
-{ #category : #'api spec callbacks' }
-MetacelloAbstractVersionConstructor >> preLoadDoItForVersion: aSymbol [
-    self preLoadDoItForSpec: aSymbol
-]
-
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloAbstractVersionConstructor >> project [
-    project == nil
-        ifTrue: [ project := self projectClass new ].
-    ^ project
+
+	^ project ifNil: [ project := self projectClass new ]
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 MetacelloAbstractVersionConstructor >> project: aString [
-    self root project: aString constructor: self
+
+	self project: aString with: ''
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 MetacelloAbstractVersionConstructor >> project: aString copyFrom: oldSpecName with: aBlock [
-    self root
-        project: aString
-        copyFrom: oldSpecName
-        with: aBlock
-        constructor: self
+
+	| spec projectSpec |
+	projectSpec := self project projectSpec
+		               name: aString;
+		               yourself.
+	spec := self project projectReferenceSpec
+		        name: aString;
+		        projectReference: projectSpec;
+		        yourself.
+	self root packages copy: oldSpecName to: spec.
+	self with: projectSpec during: aBlock
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 MetacelloAbstractVersionConstructor >> project: aString overrides: aBlock [
-    self root project: aString overrides: aBlock constructor: self
+
+	| spec projectSpec |
+	projectSpec := self project projectSpec
+		               name: aString;
+		               yourself.
+	spec := self project projectReferenceSpec
+		        name: aString;
+		        projectReference: projectSpec;
+		        yourself.
+	self root packages add: spec.
+	self with: projectSpec during: aBlock
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 MetacelloAbstractVersionConstructor >> project: aString with: aBlockOrString [
-    self root project: aString with: aBlockOrString constructor: self
+
+	| projectSpec |
+	projectSpec := self project projectSpec
+		               name: aString;
+		               yourself.
+
+	self root packages merge: (self project projectReferenceSpec
+			 name: aString;
+			 projectReference: projectSpec;
+			 yourself).
+
+	aBlockOrString isString
+		ifTrue: [ projectSpec versionString: aBlockOrString ]
+		ifFalse: [ self with: projectSpec during: aBlockOrString ]
 ]
 
-{ #category : #'api spec callbacks' }
-MetacelloAbstractVersionConstructor >> projectForVersion: aString [
-    self project: aString with: ''
+{ #category : 'accessing' }
+MetacelloAbstractVersionConstructor >> projectClass [
+
+	^ MetacelloProject
 ]
 
-{ #category : #'api spec callbacks' }
-MetacelloAbstractVersionConstructor >> projectForVersion: aString copyFrom: oldSpecName with: aBlock [
-    | spec projectSpec |
-    projectSpec := self project projectSpec
-        name: aString;
-        yourself.
-    spec := self project projectReferenceSpec
-        name: aString;
-        projectReference: projectSpec;
-        yourself.
-    self root packages copy: oldSpecName to: spec.
-    self with: projectSpec during: aBlock
-]
-
-{ #category : #'api spec callbacks' }
-MetacelloAbstractVersionConstructor >> projectForVersion: aString overrides: aBlock [
-    | spec projectSpec |
-    projectSpec := self project projectSpec
-        name: aString;
-        yourself.
-    spec := self project projectReferenceSpec
-        name: aString;
-        projectReference: projectSpec;
-        yourself.
-    self root packages add: spec.
-    self with: projectSpec during: aBlock
-]
-
-{ #category : #'api spec callbacks' }
-MetacelloAbstractVersionConstructor >> projectForVersion: aString with: aBlockOrString [
-    aBlockOrString setProject: aString withInMetacelloConfig: self
-]
-
-{ #category : #api }
+{ #category : 'api' }
 MetacelloAbstractVersionConstructor >> projectPackage: aBlock [
-    "projectPackage spec data folded into project spec"
+	"projectPackage spec data folded into project spec"
 
-    self root projectPackage: aBlock constructor: self
+	self with: self root during: aBlock
 ]
 
-{ #category : #'api spec callbacks' }
-MetacelloAbstractVersionConstructor >> projectPackageForProject: aBlock [
-    self with: self root during: aBlock
-]
-
-{ #category : #api }
+{ #category : 'api' }
 MetacelloAbstractVersionConstructor >> removeGroup: aString [
-    self root removeGroup: aString constructor: self
+
+	self root packages remove: (self project groupSpec
+			 name: aString;
+			 yourself)
 ]
 
-{ #category : #'api spec callbacks' }
-MetacelloAbstractVersionConstructor >> removeGroupForVersion: aString [
-    | spec |
-    spec := self project groupSpec
-        name: aString;
-        yourself.
-    self root packages remove: spec
-]
-
-{ #category : #api }
+{ #category : 'api' }
 MetacelloAbstractVersionConstructor >> removePackage: aString [
-    self root removePackage: aString constructor: self
+
+	self root packages remove: (self project packageSpec
+			 name: aString;
+			 yourself)
 ]
 
-{ #category : #'api spec callbacks' }
-MetacelloAbstractVersionConstructor >> removePackageForVersion: aString [
-    | spec |
-    spec := self project packageSpec
-        name: aString;
-        yourself.
-    self root packages remove: spec
-]
-
-{ #category : #api }
+{ #category : 'api' }
 MetacelloAbstractVersionConstructor >> removeProject: aString [
-    self root removeProject: aString constructor: self
+
+	self root packages remove: (self project projectReferenceSpec
+			 name: aString;
+			 yourself)
 ]
 
-{ #category : #'api spec callbacks' }
-MetacelloAbstractVersionConstructor >> removeProjectForVersion: aString [
-    | spec |
-    spec := self project projectReferenceSpec
-        name: aString;
-        yourself.
-    self root packages remove: spec
-]
-
-{ #category : #api }
+{ #category : 'api' }
 MetacelloAbstractVersionConstructor >> repositories: aBlock [
-    self root repositories: aBlock constructor: self
+
+	self with: self root repositories during: aBlock
 ]
 
-{ #category : #'api spec callbacks' }
-MetacelloAbstractVersionConstructor >> repositoriesForPackage: aBlock [
-    self repositoriesForSpec: aBlock
-]
-
-{ #category : #'api spec callbacks' }
-MetacelloAbstractVersionConstructor >> repositoriesForProject: aBlock [
-    self repositoriesForSpec: aBlock
-]
-
-{ #category : #'api spec callbacks' }
-MetacelloAbstractVersionConstructor >> repositoriesForSpec: aBlock [
-    self with: self root repositories during: aBlock
-]
-
-{ #category : #'api spec callbacks' }
-MetacelloAbstractVersionConstructor >> repositoriesForVersion: aBlock [
-    self repositoriesForSpec: aBlock
-]
-
-{ #category : #api }
+{ #category : 'api' }
 MetacelloAbstractVersionConstructor >> repository: anObject [
-    self root repository: anObject constructor: self
+
+	self root repository: anObject
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 MetacelloAbstractVersionConstructor >> repository: description username: username password: password [
-    self root
-        repository: description
-        username: username
-        password: password
-        constructor: self
+
+	self root repository: description username: username password: password
 ]
 
-{ #category : #'api spec callbacks' }
-MetacelloAbstractVersionConstructor >> repositoryForPackage: anObject [
-    self repositoryForSpec: anObject
-]
-
-{ #category : #'api spec callbacks' }
-MetacelloAbstractVersionConstructor >> repositoryForPackage: aString username: username password: password [
-    self repositoryForSpec: aString username: username password: password
-]
-
-{ #category : #'api spec callbacks' }
-MetacelloAbstractVersionConstructor >> repositoryForProject: anObject [
-    self repositoryForSpec: anObject
-]
-
-{ #category : #'api spec callbacks' }
-MetacelloAbstractVersionConstructor >> repositoryForProject: aString username: username password: password [
-    self repositoryForSpec: aString username: username password: password
-]
-
-{ #category : #'api spec callbacks' }
-MetacelloAbstractVersionConstructor >> repositoryForRepositories: anObject [
-    self repositoryForSpec: anObject
-]
-
-{ #category : #'api spec callbacks' }
-MetacelloAbstractVersionConstructor >> repositoryForRepositories: aString username: username password: password [
-    self repositoryForVersion: aString username: username password: password
-]
-
-{ #category : #'api spec callbacks' }
-MetacelloAbstractVersionConstructor >> repositoryForSpec: anObject [
-    self root repository: anObject
-]
-
-{ #category : #'api spec callbacks' }
-MetacelloAbstractVersionConstructor >> repositoryForSpec: aString username: username password: password [
-    self root repository: aString username: username password: password
-]
-
-{ #category : #'api spec callbacks' }
-MetacelloAbstractVersionConstructor >> repositoryForVersion: anObject [
-    self repositoryForSpec: anObject
-]
-
-{ #category : #'api spec callbacks' }
-MetacelloAbstractVersionConstructor >> repositoryForVersion: aString username: username password: password [
-    self repositoryForSpec: aString username: username password: password
-]
-
-{ #category : #api }
+{ #category : 'api' }
 MetacelloAbstractVersionConstructor >> requires: anObject [
-    self root requires: anObject constructor: self
+
+	self root requires: anObject
 ]
 
-{ #category : #'api spec callbacks' }
-MetacelloAbstractVersionConstructor >> requiresForPackage: anObject [
-    self root requires: anObject
-]
-
-{ #category : #initialization }
+{ #category : 'initialization' }
 MetacelloAbstractVersionConstructor >> reset [
     attributeMap := attributeOrder := nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloAbstractVersionConstructor >> root [
 
 	^root
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloAbstractVersionConstructor >> root: aMetacelloSpec [
     root := aMetacelloSpec
 ]
 
-{ #category : #'api callbacks' }
+{ #category : 'api callbacks' }
 MetacelloAbstractVersionConstructor >> setAuthorWithBlock: aBlock [
 
 	| spec |
-	(spec := self root getAuthor) == nil
-		ifTrue: [ 
-			spec := self project valueHolderSpec.
-			self root setAuthor: spec ].
+	self deprecated: 'Author should be provided as a string and not a block since it brind not value.'.
+	(spec := self root getAuthor) ifNil: [
+		spec := self project valueHolderSpec.
+		self root author: spec ].
 	self with: spec during: aBlock
 ]
 
-{ #category : #'api callbacks' }
-MetacelloAbstractVersionConstructor >> setAuthorWithString: aString [
-
-	self root author: aString
-]
-
-{ #category : #'api callbacks' }
-MetacelloAbstractVersionConstructor >> setBaseline: aString [
-    | spec projectSpec |
-    projectSpec := self project baselineOfProjectSpec
-        name: aString;
-        className: 'BaselineOf' , aString;
-        yourself.
-    spec := self project projectReferenceSpec
-        name: aString;
-        projectReference: projectSpec;
-        yourself.
-    self root packages merge: spec.
-    ^ projectSpec
-]
-
-{ #category : #'api callbacks' }
-MetacelloAbstractVersionConstructor >> setBaseline: aString withBlock: aBlock [
-    | projectSpec |
-    projectSpec := self setBaseline: aString.
-    self with: projectSpec during: aBlock
-]
-
-{ #category : #'api callbacks' }
+{ #category : 'api callbacks' }
 MetacelloAbstractVersionConstructor >> setBlessingWithBlock: aBlock [
 
 	| spec |
-	(spec := self root getBlessing) == nil
-		ifTrue: [ 
-			spec := self project valueHolderSpec.
-			self root setBlessing: spec ].
+	self deprecated: 'Blessing should be provided as a string and not a block since it brind not value.'.
+	(spec := self root getBlessing) ifNil: [
+		spec := self project valueHolderSpec.
+		self root blessing: spec ].
 	self with: spec during: aBlock
 ]
 
-{ #category : #'api callbacks' }
-MetacelloAbstractVersionConstructor >> setBlessingWithString: aString [
-
-	self root blessing: aString
-]
-
-{ #category : #'api callbacks' }
-MetacelloAbstractVersionConstructor >> setConfiguration: aString withBlock: aBlock [
-    | spec projectSpec |
-    projectSpec := self project configurationOfProjectSpec
-        name: aString;
-        yourself.
-    spec := self project projectReferenceSpec
-        name: aString;
-        projectReference: projectSpec;
-        yourself.
-    self root packages merge: spec.
-    self with: projectSpec during: aBlock
-]
-
-{ #category : #'api callbacks' }
+{ #category : 'api callbacks' }
 MetacelloAbstractVersionConstructor >> setDescriptionWithBlock: aBlock [
 
 	| spec |
-	(spec := self root getDescription) == nil
-		ifTrue: [ 
-			spec := self project valueHolderSpec.
-			self root setDescription: spec ].
+	self deprecated: 'Description should be provided as a string and not a block since it brind not value.'.
+	(spec := self root getDescription) ifNil: [
+		spec := self project valueHolderSpec.
+		self root description: spec ].
 	self with: spec during: aBlock
 ]
 
-{ #category : #'api callbacks' }
-MetacelloAbstractVersionConstructor >> setDescriptionWithString: aString [
-
-	self root description: aString
-]
-
-{ #category : #'api callbacks' }
-MetacelloAbstractVersionConstructor >> setFor: attributeList do: aBlock [
-    "conditional version support"
-
-    attributeList asMetacelloAttributeList
-        do: [ :attribute | 
-            | blockList |
-            blockList := self attributeMap
-                at: attribute
-                ifAbsent: [ self attributeMap at: attribute put: (blockList := OrderedCollection new) ].
-            blockList add: aBlock.
-            self addAttribute: attribute ]
-]
-
-{ #category : #'api callbacks' }
-MetacelloAbstractVersionConstructor >> setFor: attributeList version: aString [
-    "conditional symbolicVersion support"
-
-    attributeList asMetacelloAttributeList
-        do: [ :attribute | 
-            self attributeMap at: attribute put: aString.
-            self addAttribute: attribute ]
-]
-
-{ #category : #'api callbacks' }
-MetacelloAbstractVersionConstructor >> setPackage: aString withBlock: aBlock [
-
-	| spec |
-	spec := 
-		(self project packageSpec)
-			name: aString;
-			yourself.
-	self root packages merge: spec.
-	self with: spec during: aBlock
-]
-
-{ #category : #'api callbacks' }
-MetacelloAbstractVersionConstructor >> setPackage: aString withString: aFile [
-
-	| spec |
-	spec := 
-		(self project packageSpec)
-			name: aString;
-			file: aFile;
-			yourself.
-	self root packages merge: spec.
-]
-
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloAbstractVersionConstructor >> setProject: aProject [
 
 	project := aProject
 ]
 
-{ #category : #'api callbacks' }
-MetacelloAbstractVersionConstructor >> setProject: aString withBlock: aBlock [
-    | spec projectSpec |
-    projectSpec := self project projectSpec
-        name: aString;
-        yourself.
-    spec := self project projectReferenceSpec
-        name: aString;
-        projectReference: projectSpec;
-        yourself.
-    self root packages merge: spec.
-    self with: projectSpec during: aBlock
-]
-
-{ #category : #'api callbacks' }
-MetacelloAbstractVersionConstructor >> setProject: aString withString: versionString [
-
-	| spec projectSpec |
-	projectSpec := 
-		(self project projectSpec)
-			name: aString;
-			versionString: versionString;
-			yourself.
-	spec := 
-		(self project projectReferenceSpec)
-			name: aString;
-			projectReference: projectSpec;
-			yourself.
-	self root packages merge: spec.
-]
-
-{ #category : #'api callbacks' }
+{ #category : 'api callbacks' }
 MetacelloAbstractVersionConstructor >> setTimestampWithBlock: aBlock [
 
 	| spec |
-	(spec := self root getTimestamp) == nil
-		ifTrue: [ 
-			spec := self project valueHolderSpec.
-			self root setTimestamp: spec ].
+	self deprecated: 'Timestamp should be provided as a string and not a block since it brind not value.'.
+	(spec := self root getTimestamp) ifNil: [
+		spec := self project valueHolderSpec.
+		self root timestamp: spec ].
 	self with: spec during: aBlock
 ]
 
-{ #category : #'api callbacks' }
-MetacelloAbstractVersionConstructor >> setTimestampWithString: aString [
-
-	self root timestamp: aString
-]
-
-{ #category : #api }
+{ #category : 'api' }
 MetacelloAbstractVersionConstructor >> supplyingAnswers: aCollection [
-    self root supplyingAnswers: aCollection constructor: self
+
+	self root answers: aCollection
 ]
 
-{ #category : #'api spec callbacks' }
-MetacelloAbstractVersionConstructor >> supplyingAnswersForPackage: anObject [
-    self root answers: anObject
-]
-
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloAbstractVersionConstructor >> symbolicVersion [
 
 	^symbolicVersion
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloAbstractVersionConstructor >> symbolicVersion: aSymbol [
 
 	symbolicVersion := aSymbol
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 MetacelloAbstractVersionConstructor >> timestamp: aBlockOrStringOrDateAndTime [
-    "Define timestamp field of version spec (MetacelloMCVersionSpec).
+	"Define timestamp field of version spec (MetacelloMCVersionSpec).
 	 If <aBlockOrStringOrDateAndTime> is a String, the version spec timetamp is set to the String.
 	 If <aBlockOrStringOrDateAndTime> is a DateAndTime, the version spec timetamp is set to the printString of the DateAndTime.
-	If <aBlockOrStringOrDateAndTime> is a Block, the specifications in <aBlockOrStringOrDateAndTime> are applied to the timestamp spec (MetacelloValueHolderSpec). Not Recommended!
+	If <aBlockOrStringOrDateAndTime> is a Block, the specifications in <aBlockOrStringOrDateAndTime> are applied to the timestamp spec (MetacelloValueHolderSpec). Not Recommended! This third version is now deprecated.
 	
 		spec timestamp: '10/7/2009 14:40'.
 		
@@ -918,66 +683,44 @@ MetacelloAbstractVersionConstructor >> timestamp: aBlockOrStringOrDateAndTime [
 			spec value: '10/7/2009 14:40'. ].
     "
 
-    self root timestamp: aBlockOrStringOrDateAndTime constructor: self
+	aBlockOrStringOrDateAndTime isString
+		ifTrue: [ self root timestamp: aBlockOrStringOrDateAndTime ]
+		ifFalse: [
+			aBlockOrStringOrDateAndTime isBlock
+				ifTrue: [ self setTimestampWithBlock: aBlockOrStringOrDateAndTime ]
+				ifFalse: [ self timestamp: aBlockOrStringOrDateAndTime printString ] ]
 ]
 
-{ #category : #'api spec callbacks' }
-MetacelloAbstractVersionConstructor >> timestampForVersion: aBlockOrStringOrDateAndTime [
-    aBlockOrStringOrDateAndTime setTimestampInMetacelloConfig: self
-]
-
-{ #category : #validation }
+{ #category : 'validation' }
 MetacelloAbstractVersionConstructor >> validateDoItSelector: anObject [
 
-	anObject == nil ifTrue: [ ^ self ].
-	anObject isSymbol ifFalse: [ self error: 'Invalid message selector for doit: ', anObject printString ].
+	anObject ifNil: [ ^ self ].
+	anObject isSymbol ifFalse: [ self error: 'Invalid message selector for doit: ' , anObject printString ]
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 MetacelloAbstractVersionConstructor >> value: anObject [
-    self root value: anObject constructor: self
+
+	self root value: anObject
 ]
 
-{ #category : #'api spec callbacks' }
-MetacelloAbstractVersionConstructor >> valueForValueHolder: anObject [
-    self root value: anObject
-]
-
-{ #category : #api }
+{ #category : 'api' }
 MetacelloAbstractVersionConstructor >> version: anObject [
-    self root version: anObject constructor: self
+
+	self root versionString: anObject
 ]
 
-{ #category : #'api spec callbacks' }
-MetacelloAbstractVersionConstructor >> versionForProject: anObject [
-    self versionStringForProject: anObject
-]
-
-{ #category : #'api spec callbacks' }
-MetacelloAbstractVersionConstructor >> versionForVersion: anObject [
-    self versionStringForVersion: anObject
-]
-
-{ #category : #api }
+{ #category : 'api' }
 MetacelloAbstractVersionConstructor >> versionString: anObject [
-    self root versionString: anObject constructor: self
+
+	self root versionString: anObject
 ]
 
-{ #category : #'api spec callbacks' }
-MetacelloAbstractVersionConstructor >> versionStringForProject: anObject [
-    self root versionString: anObject
-]
-
-{ #category : #'api spec callbacks' }
-MetacelloAbstractVersionConstructor >> versionStringForVersion: anObject [
-    self versionStringForProject: anObject
-]
-
-{ #category : #private }
+{ #category : 'private' }
 MetacelloAbstractVersionConstructor >> with: aMetacelloSpec during: aBlock [
-    | previousRoot |
-    previousRoot := self root.
-    self root: aMetacelloSpec.
-    aBlock
-        ensure: [ self root: previousRoot ]
+
+	| previousRoot |
+	previousRoot := self root.
+	self root: aMetacelloSpec.
+	aBlock ensure: [ self root: previousRoot ]
 ]

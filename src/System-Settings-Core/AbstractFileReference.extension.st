@@ -1,6 +1,6 @@
-Extension { #name : #AbstractFileReference }
+Extension { #name : 'AbstractFileReference' }
 
-{ #category : #'*System-Settings-Core' }
+{ #category : '*System-Settings-Core' }
 AbstractFileReference >> acceptSettings: aVisitor [
 	^ aVisitor visitAbstractFileReference: self
 ]

@@ -17,12 +17,14 @@ I initialize the version object of the Image and perform the initial initializat
 Check #initializeCommandLineHandlerAndErrorHandling to see the steps performed.
 "
 Class {
-	#name : #PharoBootstrapInitialization,
-	#superclass : #Object,
-	#category : #'PharoBootstrap-Initialization-Base'
+	#name : 'PharoBootstrapInitialization',
+	#superclass : 'Object',
+	#category : 'PharoBootstrap-Initialization-Base',
+	#package : 'PharoBootstrap-Initialization',
+	#tag : 'Base'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PharoBootstrapInitialization class >> initializeCommandLineHandlerAndErrorHandling [
 	"This method is run before the new bootstrapped image is saved!"
 	ProcessorScheduler initialize.
@@ -46,7 +48,7 @@ PharoBootstrapInitialization class >> initializeCommandLineHandlerAndErrorHandli
 
 	"Weak array class initialization 2 lines"
 	Smalltalk specialObjectsArray at: 42 put: Semaphore new."to put in EPObjectSpace>>#createSpecialObjectsArray?"
-	WeakArray restartFinalizationProcess.
+	FinalizationProcess restartFinalizationProcess.
 
 	Smalltalk globals
 		at: #Transcript
@@ -58,8 +60,14 @@ PharoBootstrapInitialization class >> initializeCommandLineHandlerAndErrorHandli
 	Collection initialize.
 	CompiledMethod initialize.
 	Slot initialize.
-	RPackage initialize.
 	Behavior initialize.
+	Class initialize.
+	Package initialize.
+	
+	"Next three lines are for the deprecated aliases. This should be removed in Pharo 13"
+	PackageTag initialize.
+	PackageOrganizer initialize.
+	PackageConflictError initialize.
 
 	UIManager default: NonInteractiveUIManager new.
 
@@ -73,19 +81,17 @@ PharoBootstrapInitialization class >> initializeCommandLineHandlerAndErrorHandli
 
 	"FFI"
 	ExternalType initialize.
-	FFIBackend initialize.
-	
-	"Trascript"
-	NonInteractiveTranscript initialize.
 
 	"Initialize basic command line behaviour"
+	NonInteractiveTranscript initialize.
 	BasicCommandLineHandler initialize.
-	
+
+	SessionManager initializeKernelRegistrations.
 	Smalltalk snapshot: true andQuit: true.
 	Processor terminateActive
 ]
 
-{ #category : #'public api' }
+{ #category : 'public api' }
 PharoBootstrapInitialization class >> initializeFileSystem [
 	| env |
 	env := self environment.
@@ -95,7 +101,7 @@ PharoBootstrapInitialization class >> initializeFileSystem [
 	(env at: #File) initialize
 ]
 
-{ #category : #'public api' }
+{ #category : 'public api' }
 PharoBootstrapInitialization class >> initializeImageOfType: typeName major: major minor: minor patch: patch suffix: suffix build: buildNumber commitHash: hash [
 
 	"The image main entry point called by an image builder. The arguments specify the image

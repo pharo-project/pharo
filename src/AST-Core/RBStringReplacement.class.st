@@ -9,17 +9,19 @@ Instance Variables:
 
 "
 Class {
-	#name : #RBStringReplacement,
-	#superclass : #Object,
+	#name : 'RBStringReplacement',
+	#superclass : 'Object',
 	#instVars : [
 		'startPosition',
 		'stopPosition',
 		'string'
 	],
-	#category : #'AST-Core-Nodes'
+	#category : 'AST-Core-Nodes',
+	#package : 'AST-Core',
+	#tag : 'Nodes'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBStringReplacement class >> replaceFrom: startInteger to: stopInteger with: aString [
 	^(self new)
 		startPosition: startInteger;
@@ -28,32 +30,32 @@ RBStringReplacement class >> replaceFrom: startInteger to: stopInteger with: aSt
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBStringReplacement >> startPosition [
 	^startPosition
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBStringReplacement >> startPosition: anInteger [
 	startPosition := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBStringReplacement >> stopPosition [
 	^stopPosition
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBStringReplacement >> stopPosition: anInteger [
 	stopPosition := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBStringReplacement >> string [
 	^string
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBStringReplacement >> string: aString [
 	string := aString
 ]

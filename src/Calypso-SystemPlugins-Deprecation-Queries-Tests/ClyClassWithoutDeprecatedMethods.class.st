@@ -2,11 +2,12 @@
 I am example class without deprecated methods
 "
 Class {
-	#name : #ClyClassWithoutDeprecatedMethods,
-	#superclass : #Object,
-	#category : #'Calypso-SystemPlugins-Deprecation-Queries-Tests'
+	#name : 'ClyClassWithoutDeprecatedMethods',
+	#superclass : 'Object',
+	#category : 'Calypso-SystemPlugins-Deprecation-Queries-Tests',
+	#package : 'Calypso-SystemPlugins-Deprecation-Queries-Tests'
 }
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 ClyClassWithoutDeprecatedMethods >> someNotDeprecatedMethod [
 ]

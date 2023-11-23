@@ -1,38 +1,40 @@
 Class {
-	#name : #CDClassNameNode,
-	#superclass : #CDNode,
+	#name : 'CDClassNameNode',
+	#superclass : 'CDNode',
 	#instVars : [
 		'className'
 	],
-	#category : #'ClassParser-Model'
+	#category : 'ClassParser-Model',
+	#package : 'ClassParser',
+	#tag : 'Model'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CDClassNameNode >> binding [
 	^self existingBindingIfAbsent: [LiteralVariable key: className value: nil]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CDClassNameNode >> className [
 
 	^ className
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CDClassNameNode >> className: aString [
 
 	className := aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CDClassNameNode >> existingBindingIfAbsent: aBlock [
 
 	| binding |
 	binding := originalNode methodNode scope environment bindingOf: className.
-	^binding ifNil: aBlock
+	^binding ifNil: [ aBlock ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CDClassNameNode >> existingClassIfAbsent: aBlock [
 
 	| binding |
@@ -40,13 +42,13 @@ CDClassNameNode >> existingClassIfAbsent: aBlock [
 	^binding value
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CDClassNameNode >> isTempVariable [
 	"To be polymorphic to RB method nodes"
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CDClassNameNode >> isVariable [
 	"Existing class name is a variable
 	to be polymorphic to method literal nodes which encode class reference"
@@ -55,13 +57,13 @@ CDClassNameNode >> isVariable [
 	^true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CDClassNameNode >> name [
 
 	^ className
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CDClassNameNode >> value [
 
 	^ className

@@ -2,12 +2,14 @@
 I have the common behavior for serializing class and trait behaviors in full detail.
 "
 Class {
-	#name : #FLBehaviorCluster,
-	#superclass : #FLIteratingCluster,
-	#category : #'Fuel-Core-Clusters'
+	#name : 'FLBehaviorCluster',
+	#superclass : 'FLIteratingCluster',
+	#category : 'Fuel-Core-Clusters',
+	#package : 'Fuel-Core',
+	#tag : 'Clusters'
 }
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLBehaviorCluster >> afterMaterializationStepWith: aDecoder [
 	objects do:	[ :aClassOrTrait |
 		aClassOrTrait
@@ -15,7 +17,7 @@ FLBehaviorCluster >> afterMaterializationStepWith: aDecoder [
 			fuelInitializeTraitComposition ]
 ]
 
-{ #category : #'serialize/materialize layouts' }
+{ #category : 'serialize/materialize layouts' }
 FLBehaviorCluster >> installLayout: aLayout withFormat: anInteger variableNames: variableNames into: aClassOrTrait [
 	| scope superSlotSize slots |	
 	aLayout hasSlotScope ifTrue: [
@@ -43,25 +45,25 @@ FLBehaviorCluster >> installLayout: aLayout withFormat: anInteger variableNames:
 		setFormat: (anInteger max: aLayout format)
 ]
 
-{ #category : #'serialize/materialize layouts' }
+{ #category : 'serialize/materialize layouts' }
 FLBehaviorCluster >> materializeLayoutWith: aDecoder [
 
 	^ aDecoder nextEncodedReference new
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLBehaviorCluster >> materializePostInstance: aClassOrTrait with: aDecoder [
 
 	self subclassResponsibility
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLBehaviorCluster >> materializePostInstancesStepWith: aDecoder [
 
 	objects do:	[ :aClassOrTrait | self materializePostInstance: aClassOrTrait with: aDecoder ]
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLBehaviorCluster >> materializeReferencesOf: aClassOrTrait with: aDecoder [
 
 	aClassOrTrait
@@ -69,13 +71,13 @@ FLBehaviorCluster >> materializeReferencesOf: aClassOrTrait with: aDecoder [
 		protocols: aDecoder nextEncodedReference
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLBehaviorCluster >> materializeReferencesStepWith: aDecoder [
 
 	objects do:	[ :aClassOrTrait | self materializeReferencesOf: aClassOrTrait with: aDecoder ]
 ]
 
-{ #category : #analyzing }
+{ #category : 'analyzing' }
 FLBehaviorCluster >> referencesOf: aClassOrTrait do: aBlock [
 
 	aBlock
@@ -83,7 +85,7 @@ FLBehaviorCluster >> referencesOf: aClassOrTrait do: aBlock [
 		value: aClassOrTrait protocols
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLBehaviorCluster >> registerIndexesOn: aDictionary [
 	"Since the introduction of slots we need the superclass of materialized
 	class to be fully materialized already when we materialize the slots.
@@ -95,25 +97,25 @@ FLBehaviorCluster >> registerIndexesOn: aDictionary [
 	super registerIndexesOn: aDictionary
 ]
 
-{ #category : #'serialize/materialize layouts' }
+{ #category : 'serialize/materialize layouts' }
 FLBehaviorCluster >> serializeLayout: aLayout with: anEncoder [
 
 	anEncoder encodeReferenceTo: aLayout class.
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLBehaviorCluster >> serializePostInstance: aClassOrTrait with: anEncoder [
 
 	self subclassResponsibility
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLBehaviorCluster >> serializePostInstancesStepWith: anEncoder [  
 
 	objects do:	[ :aClassOrTrait | self serializePostInstance: aClassOrTrait with: anEncoder ]
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLBehaviorCluster >> serializeReferencesOf: aClassOrTrait with: anEncoder [
 
 	anEncoder
@@ -121,13 +123,22 @@ FLBehaviorCluster >> serializeReferencesOf: aClassOrTrait with: anEncoder [
 		encodeReferenceTo: aClassOrTrait protocols
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLBehaviorCluster >> serializeReferencesStepWith: anEncoder [
 
 	objects do:	[ :aClassOrTrait | self serializeReferencesOf: aClassOrTrait with: anEncoder ]
 ]
 
-{ #category : #'serialize/materialize layouts' }
+{ #category : 'serialize/materialize' }
+FLBehaviorCluster >> setTag: packageTagName ofPackage: packageName to: aClass [
+
+	packageName = UndefinedPackage undefinedPackageName ifFalse: [
+		aClass packageOrganizer packageNamed: packageName ifPresent: [ :package | ^ aClass basicTag: (package ensureTag: packageTagName) ] ].
+
+	aClass basicTag: aClass packageOrganizer undefinedPackage undefinedTag
+]
+
+{ #category : 'serialize/materialize layouts' }
 FLBehaviorCluster >> superclassLayoutOf: aClassOrTrait [
 	^ aClassOrTrait superclass
 			ifNotNil: [ :theSuperclass | theSuperclass classLayout ]
@@ -136,7 +147,7 @@ FLBehaviorCluster >> superclassLayoutOf: aClassOrTrait [
 				EmptyLayout instance]
 ]
 
-{ #category : #'serialize/materialize layouts' }
+{ #category : 'serialize/materialize layouts' }
 FLBehaviorCluster >> superclassSlotSizeOf: aClassOrTrait [
 	^ aClassOrTrait superclass
 		ifNotNil: [ :theSuperclass | theSuperclass allSlots size ]

@@ -4,8 +4,8 @@ Cubic bezier with 4 control points encapsulation.
 Main purpose of this class is to keep subdivision logic in clean and separate place
 "
 Class {
-	#name : #AthensCubicBezier,
-	#superclass : #Object,
+	#name : 'AthensCubicBezier',
+	#superclass : 'Object',
 	#instVars : [
 		'x1',
 		'y1',
@@ -16,10 +16,12 @@ Class {
 		'x4',
 		'y4'
 	],
-	#category : #'Athens-Core-PathsGeometry'
+	#category : 'Athens-Core-PathsGeometry',
+	#package : 'Athens-Core',
+	#tag : 'PathsGeometry'
 }
 
-{ #category : #subdivision }
+{ #category : 'subdivision' }
 AthensCubicBezier >> recursiveSubDiv: flattener level: level [
 
 	| dx dy d2 d3 da1 da2 k f1 f2 |
@@ -159,7 +161,7 @@ AthensCubicBezier >> recursiveSubDiv: flattener level: level [
 	]
 ]
 
-{ #category : #subdivision }
+{ #category : 'subdivision' }
 AthensCubicBezier >> subdivideAt: t do: aBinaryBlock [
 	| x12 y12 x23 y23 x34 y34 x1223 y1223 x2334 y2334 xsplit ysplit |
 
@@ -200,97 +202,97 @@ AthensCubicBezier >> subdivideAt: t do: aBinaryBlock [
 		)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensCubicBezier >> x1 [
 
 	^ x1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensCubicBezier >> x1: anObject [
 
 	x1 := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensCubicBezier >> x2 [
 
 	^ x2
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensCubicBezier >> x2: anObject [
 
 	x2 := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensCubicBezier >> x3 [
 
 	^ x3
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensCubicBezier >> x3: anObject [
 
 	x3 := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensCubicBezier >> x4 [
 
 	^ x4
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensCubicBezier >> x4: anObject [
 
 	x4 := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensCubicBezier >> y1 [
 
 	^ y1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensCubicBezier >> y1: anObject [
 
 	y1 := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensCubicBezier >> y2 [
 
 	^ y2
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensCubicBezier >> y2: anObject [
 
 	y2 := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensCubicBezier >> y3 [
 
 	^ y3
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensCubicBezier >> y3: anObject [
 
 	y3 := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensCubicBezier >> y4 [
 
 	^ y4
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensCubicBezier >> y4: anObject [
 
 	y4 := anObject

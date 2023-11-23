@@ -9,36 +9,38 @@ Internal Representation and Key Implementation Points.
 	queryScope:		<ClyScope>
 "
 Class {
-	#name : #ClySwitchQueryScopeCommand,
-	#superclass : #ClySwitchBrowserModeCommand,
+	#name : 'ClySwitchQueryScopeCommand',
+	#superclass : 'ClySwitchBrowserModeCommand',
 	#instVars : [
 		'queryScope'
 	],
-	#category : #'Calypso-SystemTools-QueryBrowser-Commands-Controlling'
+	#category : 'Calypso-SystemTools-QueryBrowser-Commands-Controlling',
+	#package : 'Calypso-SystemTools-QueryBrowser',
+	#tag : 'Commands-Controlling'
 }
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClySwitchQueryScopeCommand class >> queryBrowserMenuActivation [
 	<classAnnotation>
 
 	^CmdContextMenuActivation byItemOf: ClySwitchScopeMenuGroup for: ClyQueryBrowserContext
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClySwitchQueryScopeCommand class >> queryBrowserToolbarActivation [
 	<classAnnotation>
 
 	^ClyToolbarActivation byItemOf: ClyQueryResultToolbarGroup order: -5 for: ClyQueryBrowserContext
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClySwitchQueryScopeCommand class >> toScope: anEnvironmentScope in: aBrowser [
 	^self new
 		browser: aBrowser;
 		queryScope: anEnvironmentScope
 ]
 
-{ #category : #'activation - toolbar support' }
+{ #category : 'activation - toolbar support' }
 ClySwitchQueryScopeCommand >> addToolbarItemInto: toolbarMorph using: aCommandActivator [
 
 	| compoBox |
@@ -47,25 +49,25 @@ ClySwitchQueryScopeCommand >> addToolbarItemInto: toolbarMorph using: aCommandAc
 	toolbarMorph addNewItem: compoBox
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClySwitchQueryScopeCommand >> defaultMenuItemName [
 	queryScope ifNil: [ ^'Switch scope' ].
 
 	^'Switch scope to ', queryScope description
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClySwitchQueryScopeCommand >> defaultToolbarItemName [
 
 	^queryScope description
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClySwitchQueryScopeCommand >> execute [
 	browser switchScopeTo: queryScope
 ]
 
-{ #category : #'activation - context menu' }
+{ #category : 'activation - context menu' }
 ClySwitchQueryScopeCommand >> fillContextMenu: aMenu using: aCommandActivator [
 	| concreteScopeCommand switchActivator |
 
@@ -75,17 +77,17 @@ ClySwitchQueryScopeCommand >> fillContextMenu: aMenu using: aCommandActivator [
 		aMenu 	add: switchActivator menuItemName target: switchActivator selector: #executeCommand]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClySwitchQueryScopeCommand >> isAppliedToBrowser [
 	^browser isQueryScopeActive: queryScope
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClySwitchQueryScopeCommand >> queryScope [
 	^ queryScope
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClySwitchQueryScopeCommand >> queryScope: anObject [
 	queryScope := anObject
 ]

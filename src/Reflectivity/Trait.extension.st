@@ -1,6 +1,6 @@
-Extension { #name : #Trait }
+Extension { #name : 'Trait' }
 
-{ #category : #'*Reflectivity' }
+{ #category : '*Reflectivity' }
 Trait >> nonAnonymousClass [
 	^ self class isAnonymous
 		ifTrue: [ self class superclass ]

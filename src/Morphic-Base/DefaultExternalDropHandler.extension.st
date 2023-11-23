@@ -1,6 +1,6 @@
-Extension { #name : #DefaultExternalDropHandler }
+Extension { #name : 'DefaultExternalDropHandler' }
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 DefaultExternalDropHandler >> handle: aFileReference in: pasteUp dropEvent: anEvent [
 	"the file was just droped, let's do our job"
 

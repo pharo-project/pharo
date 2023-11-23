@@ -3,17 +3,19 @@ I am a specialization of EllipseMorph that knows enough to remain circular.
 
 "
 Class {
-	#name : #CircleMorph,
-	#superclass : #EllipseMorph,
+	#name : 'CircleMorph',
+	#superclass : 'EllipseMorph',
 	#instVars : [
 		'referencePosition',
 		'originalCenter',
 		'originalAngle'
 	],
-	#category : #'Morphic-Base-Basic'
+	#category : 'Morphic-Base-Basic',
+	#package : 'Morphic-Base',
+	#tag : 'Basic'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 CircleMorph class >> example [
 
 	CircleMorph new
@@ -23,7 +25,7 @@ CircleMorph class >> example [
 		openInWorld
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 CircleMorph class >> exampleBadExtent [
 	"Note: even when vertical vs. horizontal extent is given different it remains a circle"
 
@@ -33,7 +35,7 @@ CircleMorph class >> exampleBadExtent [
 		openInWorld
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 CircleMorph >> bounds: aRectangle [
 
 	| size |
@@ -42,19 +44,19 @@ CircleMorph >> bounds: aRectangle [
 		(Rectangle origin: aRectangle origin extent: size @ size)
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CircleMorph >> defaultBounds [
 
 	^0@0 extent: 40@40
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CircleMorph >> defaultColor [
 
 	^Color green lighter
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 CircleMorph >> extent: aPoint [
 
 	| size oldRotationCenter |
@@ -64,40 +66,40 @@ CircleMorph >> extent: aPoint [
 	self rotationCenter: oldRotationCenter
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CircleMorph >> initialize [
 
 	super initialize.
 	referencePosition := self center
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CircleMorph >> originalCenter [
 
 	^ originalCenter
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CircleMorph >> originalCenter: anObject [
 
 	originalCenter := anObject
 ]
 
-{ #category : #'rotate scale and flex' }
+{ #category : 'rotate scale and flex' }
 CircleMorph >> prepareForRotating [
 	"When rotating from a halo, I can do this without a flex shell"
 
 	^ self
 ]
 
-{ #category : #'rotate scale and flex' }
+{ #category : 'rotate scale and flex' }
 CircleMorph >> prepareForScaling [
 	"When scaling from a halo, I can do this without a flex shell"
 
 	^ self
 ]
 
-{ #category : #'rotate scale and flex' }
+{ #category : 'rotate scale and flex' }
 CircleMorph >> privateMoveBy: delta [
 
 	referencePosition := referencePosition + delta.
@@ -105,14 +107,14 @@ CircleMorph >> privateMoveBy: delta [
 	super privateMoveBy: delta
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 CircleMorph >> referencePosition [
 	"Return the current reference position of the receiver"
 
 	^ referencePosition
 ]
 
-{ #category : #'rotate scale and flex' }
+{ #category : 'rotate scale and flex' }
 CircleMorph >> rotationCenter [
 	"Return the rotation center of the receiver. The rotation center defines the relative offset inside the receiver's bounds for locating the reference position."
 	| refPos |
@@ -120,7 +122,7 @@ CircleMorph >> rotationCenter [
 	^ (refPos - self bounds origin) / self bounds extent asFloatPoint
 ]
 
-{ #category : #'rotate scale and flex' }
+{ #category : 'rotate scale and flex' }
 CircleMorph >> rotationCenter: aPointOrNil [
 	"Set the new rotation center of the receiver. The rotation center defines the relative offset inside the receiver's bounds for locating the reference position."
 
@@ -131,13 +133,13 @@ CircleMorph >> rotationCenter: aPointOrNil [
 		self setRotationCenterFrom: newRef ]
 ]
 
-{ #category : #'rotate scale and flex' }
+{ #category : 'rotate scale and flex' }
 CircleMorph >> rotationDegrees [
 
 	^ self forwardDirection
 ]
 
-{ #category : #'rotate scale and flex' }
+{ #category : 'rotate scale and flex' }
 CircleMorph >> rotationDegrees: degrees [
 	| ref newPos flex origAngle origCenter |
 	ref := self referencePosition.
@@ -154,7 +156,7 @@ CircleMorph >> rotationDegrees: degrees [
 	self changed
 ]
 
-{ #category : #menus }
+{ #category : 'menus' }
 CircleMorph >> setRotationCenterFrom: aPoint [
 	"Called by halo rotation code.
 	Circles store their referencePosition."
@@ -164,7 +166,7 @@ CircleMorph >> setRotationCenterFrom: aPoint [
 	originalAngle := self heading
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 CircleMorph >> transformedBy: aTransform [
 
 	aTransform isIdentity ifTrue: [ ^ self ].

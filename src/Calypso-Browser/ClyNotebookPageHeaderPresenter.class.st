@@ -1,6 +1,6 @@
 Class {
-	#name : #ClyNotebookPageHeaderPresenter,
-	#superclass : #SpPresenter,
+	#name : 'ClyNotebookPageHeaderPresenter',
+	#superclass : 'SpPresenter',
 	#instVars : [
 		'pageMorph',
 		'iconImage',
@@ -9,10 +9,12 @@ Class {
 		'closeAction',
 		'doubleClickAction'
 	],
-	#category : #'Calypso-Browser-Tabs'
+	#category : 'Calypso-Browser-Tabs',
+	#package : 'Calypso-Browser',
+	#tag : 'Tabs'
 }
 
-{ #category : #layout }
+{ #category : 'layout' }
 ClyNotebookPageHeaderPresenter class >> defaultLayout [
 	^ SpBoxLayout newLeftToRight
 		spacing: 3;
@@ -22,21 +24,21 @@ ClyNotebookPageHeaderPresenter class >> defaultLayout [
 		yourself
 ]
 
-{ #category : #'event processing' }
+{ #category : 'event processing' }
 ClyNotebookPageHeaderPresenter >> doClose [
 
 	closeAction ifNil: [ ^ self ].
 	closeAction cull: self
 ]
 
-{ #category : #'event processing' }
+{ #category : 'event processing' }
 ClyNotebookPageHeaderPresenter >> doDoubleClick [
 
 	doubleClickAction ifNil: [ ^ self ].
 	doubleClickAction cull: self
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyNotebookPageHeaderPresenter >> initializePresenters [
 
 	iconImage := self newImage.
@@ -63,7 +65,7 @@ ClyNotebookPageHeaderPresenter >> initializePresenters [
 	self updatePresenter
 ]
 
-{ #category : #'event processing' }
+{ #category : 'event processing' }
 ClyNotebookPageHeaderPresenter >> mouseDown: event [
 
 	"bubble up"
@@ -72,7 +74,7 @@ ClyNotebookPageHeaderPresenter >> mouseDown: event [
 		fromMorph: self adapter widget owner
 ]
 
-{ #category : #'event processing' }
+{ #category : 'event processing' }
 ClyNotebookPageHeaderPresenter >> mouseUp: event [
 
 	"bubble up"
@@ -81,25 +83,25 @@ ClyNotebookPageHeaderPresenter >> mouseUp: event [
 		fromMorph: self adapter widget owner
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 ClyNotebookPageHeaderPresenter >> onClose: aBlock [
 
 	closeAction := aBlock
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 ClyNotebookPageHeaderPresenter >> onDoubleClick: aBlock [
 
 	doubleClickAction := aBlock
 ]
 
-{ #category : #'accessing - model' }
+{ #category : 'accessing - model' }
 ClyNotebookPageHeaderPresenter >> setModelBeforeInitialization: aPageMorph [
 
 	pageMorph := aPageMorph
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyNotebookPageHeaderPresenter >> updatePresenter [
 
 	iconImage image: pageMorph icon.

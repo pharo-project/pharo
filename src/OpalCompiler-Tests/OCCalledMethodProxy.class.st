@@ -1,14 +1,16 @@
 Class {
-	#name : #OCCalledMethodProxy,
-	#superclass : #Object,
+	#name : 'OCCalledMethodProxy',
+	#superclass : 'Object',
 	#instVars : [
 		'originalMethod',
 		'called'
 	],
-	#category : #'OpalCompiler-Tests-AST'
+	#category : 'OpalCompiler-Tests-AST',
+	#package : 'OpalCompiler-Tests',
+	#tag : 'AST'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OCCalledMethodProxy class >> on: aMethod [
 
 	^ self new
@@ -16,57 +18,64 @@ OCCalledMethodProxy class >> on: aMethod [
 		  yourself
 ]
 
-{ #category : #'accessing - pragmas & properties' }
+{ #category : 'accessing - pragmas & properties' }
 OCCalledMethodProxy >> cachePragmas [
 	
 	^ originalMethod cachePragmas
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OCCalledMethodProxy >> called [
 
 	^ called
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OCCalledMethodProxy >> initialize [
 
 	super initialize.
 	called := false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OCCalledMethodProxy >> methodClass: aClass [ 
 	
 	originalMethod methodClass: aClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OCCalledMethodProxy >> originalMethod [
 
 	^ originalMethod
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OCCalledMethodProxy >> originalMethod: anObject [
 
 	originalMethod := anObject
 ]
 
-{ #category : #evaluation }
+{ #category : 'accessing' }
+OCCalledMethodProxy >> propertyAt: aSymbol ifPresent: aBlock [
+	"Do nothing there"
+
+	
+]
+
+{ #category : 'evaluation' }
 OCCalledMethodProxy >> run: aSelector with: arguments in: aReceiver [
 
 	called := true.
 	^ originalMethod valueWithReceiver: aReceiver arguments: arguments
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OCCalledMethodProxy >> selector: aString [ 
 	
 	originalMethod selector: aString
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OCCalledMethodProxy >> wasCalled [
 	
 	^ called

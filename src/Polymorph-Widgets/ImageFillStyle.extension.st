@@ -1,6 +1,6 @@
-Extension { #name : #ImageFillStyle }
+Extension { #name : 'ImageFillStyle' }
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 ImageFillStyle >> fillRectangle: aRectangle on: aCanvas [
 	"Fill the given rectangle on the given canvas with the receiver."
 

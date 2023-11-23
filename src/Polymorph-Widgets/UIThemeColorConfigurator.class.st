@@ -4,87 +4,89 @@ I am a class that is in charge of return the colors for the UITheme. You need to
 So, if you want to create your own theme, you need to subclass me and redefine my abstract methods. You can also override any method to change the colors.
 "
 Class {
-	#name : #UIThemeColorConfigurator,
-	#superclass : #Object,
+	#name : 'UIThemeColorConfigurator',
+	#superclass : 'Object',
 	#instVars : [
 		'themeSettings'
 	],
-	#category : #'Polymorph-Widgets-Themes'
+	#category : 'Polymorph-Widgets-Themes',
+	#package : 'Polymorph-Widgets',
+	#tag : 'Themes'
 }
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemeColorConfigurator >> backgroundColor [
 
 	^ Color white
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemeColorConfigurator >> badgeColor [
 
 	^ Color red
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemeColorConfigurator >> badgeTextColor [
 
 	^ Color white
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemeColorConfigurator >> balloonBackgroundColor [
 
 	^ self lightBaseColor
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemeColorConfigurator >> balloonTextColor [
 
 	^ self textColor
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemeColorConfigurator >> baseColor [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemeColorConfigurator >> baseColorFor: anObject [
 
 	^ self baseColor
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemeColorConfigurator >> basePassiveBackgroundColor [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #scrollbars }
+{ #category : 'scrollbars' }
 UIThemeColorConfigurator >> baseScrollbarColorFor: aScrollbar [
 
 	^ aScrollbar lastPaneColor ifNil: [ self scrollbarColor ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemeColorConfigurator >> baseSelectionColor [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemeColorConfigurator >> borderColor [
 
 	^ Color gray
 ]
 
-{ #category : #buttons }
+{ #category : 'buttons' }
 UIThemeColorConfigurator >> buttonColor [
 
 	^ themeSettings buttonColor
 ]
 
-{ #category : #buttons }
+{ #category : 'buttons' }
 UIThemeColorConfigurator >> buttonColorFor: aButton [
 
 	^ themeSettings standardColorsOnly
@@ -92,7 +94,7 @@ UIThemeColorConfigurator >> buttonColorFor: aButton [
 		ifFalse: [ aButton colorToUse ]
 ]
 
-{ #category : #buttons }
+{ #category : 'buttons' }
 UIThemeColorConfigurator >> buttonColouredMiddleColor [
 
 	"Return the middle area colour for a coloured button fillStyle."
@@ -100,7 +102,7 @@ UIThemeColorConfigurator >> buttonColouredMiddleColor [
 	^ Color r: 102 g: 127 b: 168 range: 255
 ]
 
-{ #category : #buttons }
+{ #category : 'buttons' }
 UIThemeColorConfigurator >> buttonPlainMiddleColor [
 
 	"Return the middle area colour for a plain button fillStyle."
@@ -108,7 +110,7 @@ UIThemeColorConfigurator >> buttonPlainMiddleColor [
 	^ Color r: 211 g: 211 b: 211 range: 255
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemeColorConfigurator >> calypsoFrozenItemColor [
 
 	"For Pharo 6 compatibilit reason it is not separate overrides in concrete theme classes.
@@ -120,97 +122,97 @@ UIThemeColorConfigurator >> calypsoFrozenItemColor [
 		ifFalse: [ Color cyan ]
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemeColorConfigurator >> caretColor [
 
 	^ Color blue
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemeColorConfigurator >> classExtensionColor [
 
 	^ Color gray darker
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemeColorConfigurator >> dangerBackgroundColor [
 
 	^ self dangerTextColor darker darker
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemeColorConfigurator >> dangerTextColor [
 
 	^ Color red darker darker
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemeColorConfigurator >> darkBaseColor [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemeColorConfigurator >> desktopColor [
 
 	^ Color r: 240 g: 240 b: 240 range: 255
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemeColorConfigurator >> diffAdditionalLineBackgroundColor [
 
 	^ Color green alpha: 0.2
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemeColorConfigurator >> diffAdditionalTextInLineBackgroundColor [
 
 	^ self diffAdditionalLineBackgroundColor alpha: 0.4
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemeColorConfigurator >> diffEdgeColor [
 
 	^ Color gray alpha: 0.3
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemeColorConfigurator >> diffJoinColor [
 
 	^ Color paleBlue duller
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemeColorConfigurator >> diffMapColor [
 
 	^ self backgroundColor
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemeColorConfigurator >> diffModificatedLineBackgroundColor [
 
 	^ Color yellow alpha: 0.2
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemeColorConfigurator >> diffRemovalHighlightColor [
 
 	^ self diffRemovedLinesBackgroundColor alpha: 0.4
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemeColorConfigurator >> diffRemovedLinesBackgroundColor [
 
 	^ Color red alpha: 0.2
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemeColorConfigurator >> disabledColor [
 
 	^ Color gray
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemeColorConfigurator >> disabledLabelColor [
 
 	^ Color r: 0.4115347018572825
@@ -219,140 +221,140 @@ UIThemeColorConfigurator >> disabledLabelColor [
 		  alpha: 1.0
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemeColorConfigurator >> disabledTextColor [
 
 	^ self disabledColor
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemeColorConfigurator >> dropListNormalFillStyleFor: anObject [
 
 	^ SolidFillStyle color: Color white
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemeColorConfigurator >> dropListNormalListFillStyleFor: anObject [
 
 	^ Color white
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemeColorConfigurator >> enabledColor [
 
 	^ Color black
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemeColorConfigurator >> errorPopperBackgroundColor [
 
 	^ Color paleRed
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemeColorConfigurator >> ghostTextColor [
 
 	^ Color lightGray
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemeColorConfigurator >> growlBorderColorFor: aGrowlMorph [
 
 	^ Color gray
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemeColorConfigurator >> growlContentsColorFor: aGrowlMorph [
 
 	^ Color white
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemeColorConfigurator >> growlFillColorFor: aGrowlMorph [
 
 	^ Color darkGray alpha: 0.5
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemeColorConfigurator >> growlLabelColorFor: aGrowlMorph [
 
 	^ Color white twiceDarker
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemeColorConfigurator >> highlightTextColor [
 	"I am a color used to have a text color that is more visible than the classic text color to do some highlights."
 
 	^ Color fromHexString: '7C4DFF'
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemeColorConfigurator >> lessConspicuousColorFrom: aColor [
 
 	^ aColor alphaMixed: 0.5 with: Color white
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemeColorConfigurator >> lightBackgroundColor [
 
 	^ Color veryLightGray muchLighter
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemeColorConfigurator >> lightBaseColor [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemeColorConfigurator >> lightColorFor: aButton [
 
 	^ self lightBaseColor
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemeColorConfigurator >> lightSelectionColor [
 
 	^ Color r: 175 g: 213 b: 250 range: 255
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemeColorConfigurator >> lineNumberColor [
 
 	^ Color gray muchDarker
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemeColorConfigurator >> listBackgroundColor [
 
 	^ self backgroundColor
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemeColorConfigurator >> listNormalFillStyleFor: anObject [
 
 	^ Color white
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemeColorConfigurator >> listTextColor [
 
 	^ Color black
 ]
 
-{ #category : #menus }
+{ #category : 'menus' }
 UIThemeColorConfigurator >> menuBorderColor [
 
 	^ themeSettings menuBorderColor
 ]
 
-{ #category : #menus }
+{ #category : 'menus' }
 UIThemeColorConfigurator >> menuColor [
 
 	^ themeSettings menuColor
 ]
 
-{ #category : #menus }
+{ #category : 'menus' }
 UIThemeColorConfigurator >> menuItemDisabledTextColorFor: aMenuItem [
 
 	^ (aMenuItem color luminance - aMenuItem owner color luminance) abs < 0.3
@@ -360,31 +362,31 @@ UIThemeColorConfigurator >> menuItemDisabledTextColorFor: aMenuItem [
 		ifFalse: [ aMenuItem owner color muchDarker ]
 ]
 
-{ #category : #menus }
+{ #category : 'menus' }
 UIThemeColorConfigurator >> menuKeyboardFocusColor [
 
 	^ themeSettings menuKeyboardFocusColor
 ]
 
-{ #category : #menus }
+{ #category : 'menus' }
 UIThemeColorConfigurator >> menuSelectionColor [
 
 	^ themeSettings menuSelectionColor
 ]
 
-{ #category : #menus }
+{ #category : 'menus' }
 UIThemeColorConfigurator >> menuShadowColor [
 
 	^ themeSettings menuShadowColor
 ]
 
-{ #category : #menus }
+{ #category : 'menus' }
 UIThemeColorConfigurator >> menuTitleColor [
 
 	^ themeSettings menuTitleColor
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemeColorConfigurator >> modalBackdropColor [
 
 	"This method should probably be moved to Pharo later."
@@ -392,43 +394,43 @@ UIThemeColorConfigurator >> modalBackdropColor [
 	^ Color black alpha: 0.2
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemeColorConfigurator >> mouseOverColor [
 
 	^ self backgroundColor darker darker
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemeColorConfigurator >> paginatorSelectionColor [
 
 	^ self darkBaseColor alpha: 0.8
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemeColorConfigurator >> patchworkUIThemeColorFor: anObject [
 
 	^ themeSettings windowColor
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemeColorConfigurator >> popoverButtonColor [
 
 	^ self darkBaseColor
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemeColorConfigurator >> progressBarColorFor: anObject [
 
 	^ themeSettings progressBarColor
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemeColorConfigurator >> progressBarProgressColorFor: anObject [
 
 	^ themeSettings progressBarProgressColor
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemeColorConfigurator >> resizerGripNormalFillStyleFor: aResizer [
 
 	"Return the normal fillStyle for the given resizer.
@@ -438,13 +440,13 @@ UIThemeColorConfigurator >> resizerGripNormalFillStyleFor: aResizer [
 	^ Color transparent
 ]
 
-{ #category : #scrollbars }
+{ #category : 'scrollbars' }
 UIThemeColorConfigurator >> scrollbarColor [
 
 	^ themeSettings scrollbarColor
 ]
 
-{ #category : #scrollbars }
+{ #category : 'scrollbars' }
 UIThemeColorConfigurator >> scrollbarColorFor: aScrollbar [
 
 	^ themeSettings standardColorsOnly
@@ -452,13 +454,13 @@ UIThemeColorConfigurator >> scrollbarColorFor: aScrollbar [
 		ifFalse: [ aScrollbar lastPaneColor ifNil: [ Color white ] ]
 ]
 
-{ #category : #scrollbars }
+{ #category : 'scrollbars' }
 UIThemeColorConfigurator >> scrollbarImageColorFor: aScrollbar [
 
 	^ (self baseScrollbarColorFor: aScrollbar) darker
 ]
 
-{ #category : #scrollbars }
+{ #category : 'scrollbars' }
 UIThemeColorConfigurator >> scrollbarNormalFillStyleFor: aScrollbar [
 	"Return the normal scrollbar fillStyle for the given scrollbar."
 
@@ -466,79 +468,79 @@ UIThemeColorConfigurator >> scrollbarNormalFillStyleFor: aScrollbar [
 	Color r: 245 g: 245 b: 245 range: 255
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemeColorConfigurator >> secondarySelectionColor [
 
 	^ Color r: 0.927 g: 0.962 b: 0.995 alpha: 1.0
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemeColorConfigurator >> selectedItemListTextColor [
 
 	^ self textColor
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemeColorConfigurator >> selectionBarColor [
 
 	^ themeSettings selectionBarColor
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemeColorConfigurator >> selectionColor [
 
 	^ themeSettings selectionColor
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemeColorConfigurator >> selectionTextColor [
 
 	^ themeSettings selectionTextColor
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemeColorConfigurator >> sliderNormalFillStyleFor: anObject [
 
 	^ SolidFillStyle color: Color white
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemeColorConfigurator >> spotlightWindowColor [
 
 	^ self selectionColor muchDarker
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemeColorConfigurator >> subgroupColorFrom: paneColor [
 
 	^ self lightColorFor: paneColor "self class baseColor"
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemeColorConfigurator >> successBackgroundColor [
 
 	^ self successTextColor lighter lighter
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemeColorConfigurator >> successTextColor [
 
 	^ Color r: 0 g: 0.5 b: 0
 ]
 
-{ #category : #taskbar }
+{ #category : 'taskbar' }
 UIThemeColorConfigurator >> taskbarActiveButtonColorFor: anObject [
 
 	^ self scrollbarColor alphaMixed: 0.7 with: Color white
 ]
 
-{ #category : #taskbar }
+{ #category : 'taskbar' }
 UIThemeColorConfigurator >> taskbarButtonColorFor: aButton [
 
 	^ self windowColorFor: aButton model
 ]
 
-{ #category : #taskbar }
+{ #category : 'taskbar' }
 UIThemeColorConfigurator >> taskbarButtonLabelColorFor: aButton [
 
 	^ aButton model isActive
@@ -546,43 +548,43 @@ UIThemeColorConfigurator >> taskbarButtonLabelColorFor: aButton [
 		ifFalse: [ Color gray darker ]
 ]
 
-{ #category : #taskbar }
+{ #category : 'taskbar' }
 UIThemeColorConfigurator >> taskbarItemLabelColorForCollapsed: anObject [
 
 	^ Color darkGray
 ]
 
-{ #category : #taskbar }
+{ #category : 'taskbar' }
 UIThemeColorConfigurator >> taskbarItemLabelColorForExpanded: anObject [
 
 	^ Color black
 ]
 
-{ #category : #taskbar }
+{ #category : 'taskbar' }
 UIThemeColorConfigurator >> taskbarMinimizedButtonColorFor: anObject [
 
 	^ Color transparent
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemeColorConfigurator >> textColor [
 
 	^ Color black
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemeColorConfigurator >> textColorForNonStandardBackground [
 
 	^ self textColor
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemeColorConfigurator >> textEditorNormalFillStyleFor: anObject [
 
 	^ Color white
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemeColorConfigurator >> textFieldNormalFillStyleFor: aTextField [
 
 	"Return the normal fillStyle for the given text field."
@@ -590,73 +592,73 @@ UIThemeColorConfigurator >> textFieldNormalFillStyleFor: aTextField [
 	^ Color white
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 UIThemeColorConfigurator >> themeSettings [
 
 	^ themeSettings
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 UIThemeColorConfigurator >> themeSettings: anObject [
 
 	themeSettings := anObject
 ]
 
-{ #category : #'basic-colors' }
+{ #category : 'basic-colors' }
 UIThemeColorConfigurator >> treeLineColorsFrom: aColor [
 
 	^ { aColor. Color transparent }
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemeColorConfigurator >> unfocusedSelectionColor [
 
 	^ themeSettings unfocusedSelectionColor
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemeColorConfigurator >> urlColor [
 
 	^ Color fromHexString: '03A9F4'
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemeColorConfigurator >> veryLightSelectionColor [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemeColorConfigurator >> warningBackgroundColor [
 
 	^ Color yellow
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemeColorConfigurator >> warningTextColor [
 
 	^ Color yellow muchDarker
 ]
 
-{ #category : #windows }
+{ #category : 'windows' }
 UIThemeColorConfigurator >> windowActiveLabelFillStyleFor: anObject [
 
 	^ Color black
 ]
 
-{ #category : #windows }
+{ #category : 'windows' }
 UIThemeColorConfigurator >> windowColor [
 
 	^ themeSettings windowColor
 ]
 
-{ #category : #windows }
+{ #category : 'windows' }
 UIThemeColorConfigurator >> windowColorFor: anObject [
 
 	^ themeSettings windowColor
 ]
 
-{ #category : #windows }
+{ #category : 'windows' }
 UIThemeColorConfigurator >> windowEdgeNormalFillStyleFor: anEdgeGrip [
 
 	"Return the normal window edge fillStyle for the given edge grip."
@@ -664,13 +666,13 @@ UIThemeColorConfigurator >> windowEdgeNormalFillStyleFor: anEdgeGrip [
 	^ Color transparent
 ]
 
-{ #category : #windows }
+{ #category : 'windows' }
 UIThemeColorConfigurator >> windowShadowColor [
 
 	^ Color gray
 ]
 
-{ #category : #colors }
+{ #category : 'colors' }
 UIThemeColorConfigurator >> worldMainDockingBarColorFor: anObject [
 
 	^ themeSettings derivedMenuColor

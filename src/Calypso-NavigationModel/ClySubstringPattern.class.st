@@ -12,21 +12,23 @@ Internal Representation and Key Implementation Points.
 	isCaseSensitive:		<Boolean>
 "
 Class {
-	#name : #ClySubstringPattern,
-	#superclass : #ClyStringPattern,
+	#name : 'ClySubstringPattern',
+	#superclass : 'ClyStringPattern',
 	#instVars : [
 		'isCaseSensitive'
 	],
-	#category : #'Calypso-NavigationModel-Model'
+	#category : 'Calypso-NavigationModel-Model',
+	#package : 'Calypso-NavigationModel',
+	#tag : 'Model'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClySubstringPattern class >> with: patternString caseSensitive: aBool [
 	^(self with: patternString)
 		isCaseSensitive: aBool
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ClySubstringPattern >> = anObject [
 	"Answer whether the receiver and anObject represent the same object."
 
@@ -36,31 +38,31 @@ ClySubstringPattern >> = anObject [
 	^ isCaseSensitive = anObject isCaseSensitive
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ClySubstringPattern >> hash [
 	"Answer an integer value that is related to the identity of the receiver."
 
 	^super hash bitXor: isCaseSensitive hash
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClySubstringPattern >> initialize [
 	super initialize.
 
 	isCaseSensitive := false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClySubstringPattern >> isCaseSensitive [
 	^ isCaseSensitive
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClySubstringPattern >> isCaseSensitive: anObject [
 	isCaseSensitive := anObject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClySubstringPattern >> matches: aString [
 	^aString includesSubstring: value caseSensitive: isCaseSensitive
 ]

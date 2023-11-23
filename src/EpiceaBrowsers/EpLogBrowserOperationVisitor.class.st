@@ -2,15 +2,17 @@
 I am an abstract superclass useful for visitors of EpLogBrowserOperation.
 "
 Class {
-	#name : #EpLogBrowserOperationVisitor,
-	#superclass : #Object,
+	#name : 'EpLogBrowserOperationVisitor',
+	#superclass : 'Object',
 	#instVars : [
 		'environment'
 	],
-	#category : #'EpiceaBrowsers-Visitors'
+	#category : 'EpiceaBrowsers-Visitors',
+	#package : 'EpiceaBrowsers',
+	#tag : 'Visitors'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 EpLogBrowserOperationVisitor class >> inEnvironment: anEnvironment [
 
 	^ self basicNew
@@ -18,12 +20,12 @@ EpLogBrowserOperationVisitor class >> inEnvironment: anEnvironment [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 EpLogBrowserOperationVisitor class >> new [
 	^ self inEnvironment: self environment
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EpLogBrowserOperationVisitor >> behaviorNamed: aSymbol ifPresent: presentBlock [
 
 	^ (environment classOrTraitNamed: aSymbol)
@@ -31,13 +33,13 @@ EpLogBrowserOperationVisitor >> behaviorNamed: aSymbol ifPresent: presentBlock [
 		ifNotNil: presentBlock
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EpLogBrowserOperationVisitor >> compiler [
 
 	^ self class compiler
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 EpLogBrowserOperationVisitor >> initializeWith: anEnvironment [
 
 	self initialize.

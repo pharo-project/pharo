@@ -2,31 +2,33 @@
 Announcement sent when a Version has finished loading
 "
 Class {
-	#name : #MCVersionLoaderStopped,
-	#superclass : #Announcement,
+	#name : 'MCVersionLoaderStopped',
+	#superclass : 'Announcement',
 	#instVars : [
 		'versionLoader',
 		'label'
 	],
-	#category : #'Monticello-Announcements'
+	#category : 'Monticello-Announcements',
+	#package : 'Monticello',
+	#tag : 'Announcements'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCVersionLoaderStopped >> label [
 	^ label
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCVersionLoaderStopped >> label: anObject [
 	label := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCVersionLoaderStopped >> versionLoader [
 	^ versionLoader
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCVersionLoaderStopped >> versionLoader: anObject [
 	versionLoader := anObject
 ]

@@ -5,19 +5,21 @@ I shouldn't be created directly, but always be part of a refactoring namespace.
 My  namespace usally knows me and my non meta class.
 "
 Class {
-	#name : #RBMetaclass,
-	#superclass : #RBAbstractClass,
-	#category : #'Refactoring-Core-Model'
+	#name : 'RBMetaclass',
+	#superclass : 'RBAbstractClass',
+	#category : 'Refactoring-Core-Model',
+	#package : 'Refactoring-Core',
+	#tag : 'Model'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBMetaclass class >> existingNamed: aSymbol [
 	^(self named: aSymbol)
 		realName: aSymbol;
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBMetaclass class >> existingNamed: aSymbol model: aRBNamespace [
 	^ (self named: aSymbol)
 		model: aRBNamespace;
@@ -25,58 +27,58 @@ RBMetaclass class >> existingNamed: aSymbol model: aRBNamespace [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBMetaclass class >> named: aSymbol [
 	^(self new)
 		name: aSymbol;
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMetaclass >> allClassVariableNames [
 	^ self instanceSide allClassVariableNames
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMetaclass >> allPoolDictionaryNames [
 	^ self instanceSide allPoolDictionaryNames
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMetaclass >> classSide [
 	"Return the metaclass of the couple class/metaclass. Useful to avoid explicit test."
 
 	^ self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBMetaclass >> directlyDefinesClassVariable: aString [
 
 	^ self instanceSide directlyDefinesClassVariable: aString
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBMetaclass >> directlyDefinesPoolDictionary: aString [
 	^ self instanceSide directlyDefinesPoolDictionary: aString
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBMetaclass >> isMeta [
 	^true
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBMetaclass >> printOn: aStream [
 	super printOn: aStream.
 	aStream nextPutAll: ' class'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBMetaclass >> realName: aSymbol [
 	self realClass: (self model environment at: aSymbol) classSide
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBMetaclass >> storeOn: aStream [
 	super storeOn: aStream.
 	aStream nextPutAll: ' class'

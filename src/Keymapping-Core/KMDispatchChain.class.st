@@ -3,17 +3,19 @@ I am an object that controls the dispatch order of keymaps given a hierarchy of 
 
 "
 Class {
-	#name : #KMDispatchChain,
-	#superclass : #Object,
+	#name : 'KMDispatchChain',
+	#superclass : 'Object',
 	#instVars : [
 		'target',
 		'dispatcher',
 		'initialTarget'
 	],
-	#category : #'Keymapping-Core-Dispatching'
+	#category : 'Keymapping-Core-Dispatching',
+	#package : 'Keymapping-Core',
+	#tag : 'Dispatching'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 KMDispatchChain class >> from: anInitialTarget andDispatcher: aDispatcher [
 	^self new
 			dispatcher: aDispatcher;
@@ -21,7 +23,7 @@ KMDispatchChain class >> from: anInitialTarget andDispatcher: aDispatcher [
 			yourself
 ]
 
-{ #category : #dispatching }
+{ #category : 'dispatching' }
 KMDispatchChain >> dispatch: aKeyboardEvent [
 	self do: [ :targetToDispatch |
 		targetToDispatch dispatch: KMBuffer uniqueInstance buffer copy.
@@ -31,13 +33,13 @@ KMDispatchChain >> dispatch: aKeyboardEvent [
 	aKeyboardEvent wasHandled ifFalse: [ KMBuffer uniqueInstance clearBuffer ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 KMDispatchChain >> dispatcher: aDispatcher [
 	dispatcher := aDispatcher.
 	self target: dispatcher target
 ]
 
-{ #category : #iterating }
+{ #category : 'iterating' }
 KMDispatchChain >> do: aBlock [
 	| currentTarget |
 	currentTarget := initialTarget.
@@ -48,17 +50,17 @@ KMDispatchChain >> do: aBlock [
 		]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 KMDispatchChain >> startOn: anInitialTarget [
 	initialTarget := anInitialTarget
 ]
 
-{ #category : #iterating }
+{ #category : 'iterating' }
 KMDispatchChain >> target [
 	^target
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 KMDispatchChain >> target: aTarget [
 	target := aTarget
 ]

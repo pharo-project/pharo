@@ -1,6 +1,6 @@
-Extension { #name : #ClyTextEditor }
+Extension { #name : 'ClyTextEditor' }
 
-{ #category : #'*Calypso-SystemTools-FullBrowser' }
+{ #category : '*Calypso-SystemTools-FullBrowser' }
 ClyTextEditor >> browseFullClass [
 	"self lineSelectAndEmptyCheck: [^ self]."
 

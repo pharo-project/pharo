@@ -1,6 +1,6 @@
-Extension { #name : #Color }
+Extension { #name : 'Color' }
 
-{ #category : #'*Graphics-Primitives' }
+{ #category : '*Graphics-Primitives' }
 Color >> bitPatternForDepth: depth [
 	"Return a Bitmap, possibly containing a stipple pattern, that best represents this color at the given depth. BitBlt calls this method to convert colors into Bitmaps. The resulting Bitmap may be multiple words to represent a stipple pattern of several lines.  "
 	"See also:	pixelValueAtDepth:	-- value for single pixel
@@ -17,7 +17,7 @@ Color >> bitPatternForDepth: depth [
 	depth = 2 ifTrue: [ ^ cachedBitPattern := self halfTonePattern2 ]
 ]
 
-{ #category : #'*Graphics-Primitives' }
+{ #category : '*Graphics-Primitives' }
 Color class >> cachedColormapFrom: sourceDepth to: destDepth [
 	"Return a cached colormap for mapping between the given depths. Always return a real colormap, not nil; this allows the client to get an identity colormap that can then be copied and modified to do color transformations."
 	"Note: This method returns a shared, cached colormap to save time and space. Clients that need to modify a colormap returned by this method should make a copy and modify that!"
@@ -36,7 +36,7 @@ Color class >> cachedColormapFrom: sourceDepth to: destDepth [
 	^ map
 ]
 
-{ #category : #'*Graphics-Primitives' }
+{ #category : '*Graphics-Primitives' }
 Color class >> colorMapIfNeededFrom: sourceDepth to: destDepth [
 	"Return a colormap for mapping between the given depths, or nil if no colormap is needed."
 	"Note: This method returns a shared, cached colormap to save time and space. Clients that need to modify a colormap returned by this method should make a copy and modify that!"
@@ -50,7 +50,7 @@ Color class >> colorMapIfNeededFrom: sourceDepth to: destDepth [
 	^ self cachedColormapFrom: sourceDepth to: destDepth
 ]
 
-{ #category : #'*Graphics-Primitives' }
+{ #category : '*Graphics-Primitives' }
 Color class >> computeColorConvertingMap: targetColor from: sourceDepth to: destDepth keepSubPixelAA: keepSubPix [
 	^ sourceDepth < 16
 		ifTrue: [ "source is 1-, 2-, 4-, or 8-bit indexed color.
@@ -59,7 +59,7 @@ Color class >> computeColorConvertingMap: targetColor from: sourceDepth to: dest
 		Might include subpixelAA" self computeRGBColorConvertingMap: targetColor to: destDepth keepSubPixelAA: keepSubPix ]
 ]
 
-{ #category : #'*Graphics-Primitives' }
+{ #category : '*Graphics-Primitives' }
 Color class >> computeColormapFrom: sourceDepth to: destDepth [
 	"Compute a colorMap for translating between the given depths. A colormap is a Bitmap whose entries contain the pixel values for the destination depth. Typical clients use cachedColormapFrom:to: instead."
 	| map bitsPerColor |
@@ -87,7 +87,7 @@ Color class >> computeColormapFrom: sourceDepth to: destDepth [
 	^ map
 ]
 
-{ #category : #'*Graphics-Primitives' }
+{ #category : '*Graphics-Primitives' }
 Color class >> computeIndexedColorConvertingMap: targetColor from: sourceDepth to: destDepth [
 	| map |
 	map := (IndexedColors
@@ -95,7 +95,7 @@ Color class >> computeIndexedColorConvertingMap: targetColor from: sourceDepth t
 		to: (1 bitShift: sourceDepth)) collect:
 		[ :cc | | f c |
 		f := 1.0 - ((cc red + cc green + cc blue) / 3.0).
-		c := targetColor notNil
+		c := targetColor isNotNil
 			ifTrue:
 				[ destDepth = 32
 					ifTrue: [ targetColor * f alpha: f ]
@@ -114,7 +114,7 @@ Color class >> computeIndexedColorConvertingMap: targetColor from: sourceDepth t
 	^ map
 ]
 
-{ #category : #'*Graphics-Primitives' }
+{ #category : '*Graphics-Primitives' }
 Color class >> computeRGBColorConvertingMap: targetColor to: destDepth keepSubPixelAA: keepSubPix [
 	"Builds a colormap intended to convert from subpixelAA black values to targetColor values.
 	keepSubPix
@@ -138,7 +138,7 @@ Color class >> computeRGBColorConvertingMap: targetColor to: destDepth keepSubPi
 			g := (i bitShift: 0 - bitsPerColor) bitAnd: mask.
 			b := (i bitShift: 0) bitAnd: mask.
 			f := 1.0 - ((r + g + b) / 3.0 / mask).
-			c := targetColor notNil
+			c := targetColor isNotNil
 				ifTrue:
 					[ (keepSubPix and: [ destDepth > 8 ])
 						ifTrue:
@@ -172,7 +172,7 @@ Color class >> computeRGBColorConvertingMap: targetColor to: destDepth keepSubPi
 	^ map
 ]
 
-{ #category : #'*Graphics-Primitives' }
+{ #category : '*Graphics-Primitives' }
 Color class >> computeRGBColormapFor: destDepth bitsPerColor: bitsPerColor [
 	"Compute a colorMap for translating from 16-bit or 32-bit RGB color to the given depth, using the given number of of bits per color component."
 	| mask map c |
@@ -198,7 +198,7 @@ Color class >> computeRGBColormapFor: destDepth bitsPerColor: bitsPerColor [
 	^ map
 ]
 
-{ #category : #'*Graphics-Primitives' }
+{ #category : '*Graphics-Primitives' }
 Color >> halfTonePattern1 [
 	"Return a halftone-pattern to approximate luminance levels on 1-bit deep Forms."
 	| lum |
@@ -219,7 +219,7 @@ Color >> halfTonePattern1 [
 	^ Bitmap with: 0	"1-bit white"
 ]
 
-{ #category : #'*Graphics-Primitives' }
+{ #category : '*Graphics-Primitives' }
 Color >> halfTonePattern2 [
 	"Return a halftone-pattern to approximate luminance levels on 2-bit deep Forms."
 	| lum |
@@ -269,7 +269,7 @@ Array with: (Compiler evaluate: w1) with: (Compiler evaluate: w2)
 "
 ]
 
-{ #category : #'*Graphics-Primitives' }
+{ #category : '*Graphics-Primitives' }
 Color class >> maskingMap: depth [
 	"Return a color map that maps all colors except transparent to words of all ones. Used to create a mask for a Form whose transparent pixel value is zero. Cache the most recently used map."
 	| sizeNeeded |
@@ -286,7 +286,7 @@ Color class >> maskingMap: depth [
 	^ MaskingMap
 ]
 
-{ #category : #'*Graphics-Primitives' }
+{ #category : '*Graphics-Primitives' }
 Color class >> pixelScreenForDepth: depth [
 	"Return a 50% stipple containing alternating pixels of all-zeros and all-ones to be used as a mask at the given depth."
 	| mask bits |
@@ -300,7 +300,7 @@ Color class >> pixelScreenForDepth: depth [
 		with: mask bitInvert32
 ]
 
-{ #category : #'*Graphics-Primitives' }
+{ #category : '*Graphics-Primitives' }
 Color class >> shutDown [
 
 	<script>

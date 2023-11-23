@@ -4,23 +4,25 @@ This is the unit test for the class Time.
 
 "
 Class {
-	#name : #TimeTest,
-	#superclass : #ClassTestCase,
+	#name : 'TimeTest',
+	#superclass : 'ClassTestCase',
 	#instVars : [
 		'time',
 		'aTime',
 		'localTimeZoneToRestore'
 	],
-	#category : #'Kernel-Tests-Chronology'
+	#category : 'Kernel-Tests-Chronology',
+	#package : 'Kernel-Tests',
+	#tag : 'Chronology'
 }
 
-{ #category : #coverage }
+{ #category : 'coverage' }
 TimeTest >> classToBeTested [
 
 	^ self timeClass
 ]
 
-{ #category : #coverage }
+{ #category : 'coverage' }
 TimeTest >> selectorsToBeIgnored [
 
 	 | deprecated private special primitives timing benchmarks |
@@ -35,7 +37,7 @@ TimeTest >> selectorsToBeIgnored [
 	^ super selectorsToBeIgnored, deprecated, private, special, primitives, timing, benchmarks
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 TimeTest >> setUp [
 	super setUp.
 	localTimeZoneToRestore := DateAndTime localTimeZone.
@@ -44,13 +46,13 @@ TimeTest >> setUp [
 	aTime := Time readFrom: '12:34:56 pm' readStream
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 TimeTest >> tearDown [
 	DateAndTime localTimeZone: localTimeZoneToRestore.
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimeTest >> testAccessing [
 	self
 		assert: time hours equals: 4;
@@ -59,7 +61,7 @@ TimeTest >> testAccessing [
 		assert: time asSeconds equals: 14567
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimeTest >> testAddSeconds [
 	self assert: (aTime addSeconds: 1) equals: (Time readFrom: '12:34:57' readStream).
 	self assert: (aTime addSeconds: 60) equals: (Time readFrom: '12:35:56' readStream).
@@ -67,12 +69,12 @@ TimeTest >> testAddSeconds [
 	self should: [aTime addSeconds: 24 * 60 * 60]  raise:  TimeError
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimeTest >> testAddTime [
 	self assert: (aTime addTime: '2:30:17' asTime) equals: ('15:05:13' asTime)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimeTest >> testArithmetic [
 	| t1 t2 t3 |
 	t1 := time addSeconds: 70.	"4:03:57 am"
@@ -91,17 +93,17 @@ TimeTest >> testArithmetic [
 	self assert: t3 equals: time
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimeTest >> testAsDate [
 	self assert: aTime asDate equals: Date current
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimeTest >> testAsDateAndTime [
 	self assert: aTime asDateAndTime equals: DateAndTime current midnight + aTime
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimeTest >> testAsDuration [
 	self
 		assert: aTime asDuration
@@ -113,32 +115,32 @@ TimeTest >> testAsDuration [
 				seconds: 56)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimeTest >> testAsNanoSeconds [
 	self assert: aTime asNanoSeconds equals: 45296000000000
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimeTest >> testAsSeconds [
 	self assert: aTime asSeconds equals: 45296
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimeTest >> testAsTime [
 	self assert: aTime asTime equals: aTime
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimeTest >> testAsWeek [
 	self assert: aTime asWeek equals: (DateAndTime current midnight + aTime) asWeek
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimeTest >> testAsYear [
 	self assert: aTime asYear equals: (DateAndTime current midnight + aTime) asYear
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimeTest >> testComparing [
 	| t1 t2 t3 |
 	t1 := self timeClass fromSeconds: 14567.	"4:02:47 am"
@@ -154,31 +156,31 @@ TimeTest >> testComparing [
 		assert: t1 < t3
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimeTest >> testConverting [
 	self assert: time asSeconds equals: 14567
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimeTest >> testDuration [
 	self assert: aTime duration equals: 0 seconds
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimeTest >> testEqual [
 	self assert: aTime equals: (Time readFrom: '12:34:56' readStream).
 	self assert: aTime equals: (Time readFrom: '12:34:56.00' readStream).
 	self assert: aTime equals: (Time readFrom: '12:34:56.0000' readStream)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimeTest >> testFromSeconds [
 	| t |
 	t := self timeClass fromSeconds: 14567.
 	self assert: t equals: time
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimeTest >> testGeneralInquiries [
 	| date aDateAndTime |
 
@@ -189,12 +191,12 @@ TimeTest >> testGeneralInquiries [
 		assert: aDateAndTime equals: {date. time}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimeTest >> testHhmm24 [
 	self assert: aTime hhmm24 equals: '1234'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimeTest >> testHour [
 	self assert: aTime hour equals: 12.
 	self assert: aTime hour12 equals: 12.
@@ -202,69 +204,69 @@ TimeTest >> testHour [
 	self assert: aTime hours equals: 12
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimeTest >> testLessThan [
 	self assert: aTime < (Time readFrom: '12:34:57' readStream)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimeTest >> testMeridianAbbreviation [
 	self assert: aTime meridianAbbreviation equals: 'PM'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimeTest >> testMinute [
 	self assert: aTime minute equals: 34.
 	self assert: aTime minutes equals: 34
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimeTest >> testNanoSecond [
 	self assert: aTime nanoSecond equals: 0
 	"Right now all times all seconds"
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimeTest >> testNew [
 	self assert: self timeClass new asSeconds equals: 0
 ]
 
-{ #category : #'tests - printing' }
+{ #category : 'tests - printing' }
 TimeTest >> testPrint24 [
 	self assert: aTime print24 equals: '12:34:56'
 ]
 
-{ #category : #'tests - printing' }
+{ #category : 'tests - printing' }
 TimeTest >> testPrint24On [
 	self assert: (String streamContents: [ :str | aTime print24: true on: str ]) equals: '12:34:56'
 ]
 
-{ #category : #'tests - printing' }
+{ #category : 'tests - printing' }
 TimeTest >> testPrint24OnWithPM [
 	self assert: (String streamContents: [ :str | aTime print24: false on: str ]) equals: '12:34:56 pm'
 ]
 
-{ #category : #'tests - printing' }
+{ #category : 'tests - printing' }
 TimeTest >> testPrint24OnWithoutSeconds [
 	self assert: (String streamContents: [ :str | aTime print24: true showSeconds: true on: str ]) equals: '12:34:56'
 ]
 
-{ #category : #'tests - printing' }
+{ #category : 'tests - printing' }
 TimeTest >> testPrint24withNanos [
 	self assert: '12:34:56.1' asTime print24 equals: '12:34:56'
 ]
 
-{ #category : #'tests - printing' }
+{ #category : 'tests - printing' }
 TimeTest >> testPrintMinutes [
 	self assert: aTime printMinutes equals: '12:34 pm'
 ]
 
-{ #category : #'tests - printing' }
+{ #category : 'tests - printing' }
 TimeTest >> testPrintOn [
 	self assert: (String streamContents: [ :str | aTime printOn: str ]) equals: '12:34:56 pm'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimeTest >> testPrintStringNanos [
 	self
 		assert:
@@ -276,7 +278,7 @@ TimeTest >> testPrintStringNanos [
 		equals: '3:15:15.15 pm'
 ]
 
-{ #category : #'tests - printing' }
+{ #category : 'tests - printing' }
 TimeTest >> testPrinting [
 	self
 		assert: time printString equals: '4:02:47 am';
@@ -286,7 +288,7 @@ TimeTest >> testPrinting [
 		assert: time hhmm24 equals: '0402'
 ]
 
-{ #category : #'tests - input' }
+{ #category : 'tests - input' }
 TimeTest >> testReadFrom [
 	| string t |
 	string := '4:02:47 am'.
@@ -294,14 +296,14 @@ TimeTest >> testReadFrom [
 	self assert: time printString equals: t printString
 ]
 
-{ #category : #'tests - input' }
+{ #category : 'tests - input' }
 TimeTest >> testReadFromWithError [
 
 	#('invalid' '0:invalid' '1 invalid' '1 pm is the afternoon' '1250 Fake St, New York, USA 12345' '13000 AM' '25:69:1239' '1,3,6') do: [ :each |
 	self should: [self timeClass readFrom: each readStream] raise: Error.]
 ]
 
-{ #category : #'tests - input' }
+{ #category : 'tests - input' }
 TimeTest >> testReadFromWithNanos [
 	#('4:02:47.5 am' '4:02:55.521 pm')
 		do: [ :each |
@@ -311,41 +313,41 @@ TimeTest >> testReadFromWithNanos [
 	"there is a bug with 520 instead of 521"
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimeTest >> testSecond [
 	self assert: aTime second equals: 56.
 	self assert: aTime seconds equals: 56
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimeTest >> testSeconds [
 	self assert: (Time readFrom: '20:33:14.321-05:00' readStream) asDuration seconds equals: 14
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimeTest >> testStoreOn [
 	self assert: (String streamContents: [ :str | aTime storeOn: str ]) equals: '''12:34:56 pm'' asTime'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimeTest >> testStoring [
 	self
 		assert: time storeString equals: '''4:02:47 am'' asTime';
 		assert: time equals: '4:02:47 am' asTime
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimeTest >> testSubtractTime [
 	self assert: (aTime subtractTime: aTime) equals: (Time readFrom: '00:00:00' readStream)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimeTest >> testTicks [
 	self assert: aTime ticks equals: #(0 45296 0).
 	self assert: aTime equals: (Time new ticks: #(0 45296 0))
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimeTest >> testValidationSeconds [
 	| day |
 	day := 24*60*60.
@@ -357,7 +359,7 @@ TimeTest >> testValidationSeconds [
 	self should: [ Time new seconds: -1 nanoSeconds: 0] raise: TimeError
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimeTest >> testValidationTicks [
 	| day |
 	day := 24*60*60.
@@ -367,7 +369,7 @@ TimeTest >> testValidationTicks [
 	self should: [ Time new ticks: {0. 0. -1}] raise: TimeError
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimeTest >> testValidationWallClock [
 	self should: [ Time hour: 24 minute: 0 second: 0] raise: TimeError.
 	self should: [ Time hour: -1 minute: 0 second: 0] raise: TimeError.
@@ -377,7 +379,7 @@ TimeTest >> testValidationWallClock [
 	self should: [ Time hour: 0 minute: 0 second: -1] raise: TimeError
 ]
 
-{ #category : #setup }
+{ #category : 'setup' }
 TimeTest >> timeClass [
 
 	^ Time

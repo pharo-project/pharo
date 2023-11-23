@@ -24,22 +24,24 @@ Examples:
 	3.0
 "
 Class {
-	#name : #PrintVersionCommandLineHandler,
-	#superclass : #CommandLineHandler,
-	#category : #'System-BasicCommandLineHandler-Base'
+	#name : 'PrintVersionCommandLineHandler',
+	#superclass : 'CommandLineHandler',
+	#category : 'System-BasicCommandLineHandler-Base',
+	#package : 'System-BasicCommandLineHandler',
+	#tag : 'Base'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PrintVersionCommandLineHandler class >> commandName [
 	^ 'printVersion'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PrintVersionCommandLineHandler class >> description [
 	^ 'Print image version'
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 PrintVersionCommandLineHandler >> activate [
 	self activateHelp
 		ifTrue: [  ^ self ].
@@ -61,14 +63,14 @@ PrintVersionCommandLineHandler >> activate [
 	^ self exitFailure
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 PrintVersionCommandLineHandler >> printNumericVersion [
 	self stdout
 		print: SystemVersion current highestUpdate;
 		lf
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 PrintVersionCommandLineHandler >> printRelease [
 	self stdout
 		print: SystemVersion current major;
@@ -77,7 +79,7 @@ PrintVersionCommandLineHandler >> printRelease [
 		lf
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 PrintVersionCommandLineHandler >> printVersion [
 	self stdout
 		nextPutAll: '[version] ';

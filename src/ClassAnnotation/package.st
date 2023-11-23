@@ -1,1 +1,1 @@
-Package { #name : #ClassAnnotation }
+Package { #name : 'ClassAnnotation' }

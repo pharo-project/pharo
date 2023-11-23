@@ -1,58 +1,57 @@
 Class {
-	#name : #MetacelloPackageSpecResolutionError,
-	#superclass : #Error,
+	#name : 'MetacelloPackageSpecResolutionError',
+	#superclass : 'Error',
 	#instVars : [
 		'packageSpec',
 		'repositories',
 		'repositoryError'
 	],
-	#category : #'Metacello-Core-Exceptions-Errors'
+	#category : 'Metacello-Core-Exceptions-Errors',
+	#package : 'Metacello-Core',
+	#tag : 'Exceptions-Errors'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloPackageSpecResolutionError >> description [
-    "Return a textual description of the exception."
+	"Return a textual description of the exception."
 
-    ^ 'Could not resolve: ' , packageSpec name , ' [' , packageSpec file , ']' , ' in' , self repositoryString
-        ,
-            (repositoryError == nil
-                ifTrue: [ '' ]
-                ifFalse: [ 
-                    "report repository error to user here, since failure here is likely to be due to earlier repository error"
-                    ' ERROR: ' , repositoryError description printString ])
+	^ 'Could not resolve: ' , packageSpec name , ' [' , packageSpec file , ']' , ' in' , self repositoryString , (repositoryError
+		   ifNotNil: [ "report repository error to user here, since failure here is likely to be due to earlier repository error"
+			   ' ERROR: ' , repositoryError description printString ]
+		   ifNil: [ '' ])
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloPackageSpecResolutionError >> packageSpec [
 	^ packageSpec
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloPackageSpecResolutionError >> packageSpec: anObject [
 	packageSpec := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloPackageSpecResolutionError >> repositories [
 	^ repositories
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloPackageSpecResolutionError >> repositories: anObject [
 	repositories := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloPackageSpecResolutionError >> repositoryError [
 	^ repositoryError
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloPackageSpecResolutionError >> repositoryError: anObject [
 	repositoryError := anObject
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloPackageSpecResolutionError >> repositoryString [
     | repositoryString |
     repositoryString := ''.
@@ -60,7 +59,7 @@ MetacelloPackageSpecResolutionError >> repositoryString [
     ^ repositoryString
 ]
 
-{ #category : #Signaling }
+{ #category : 'Signaling' }
 MetacelloPackageSpecResolutionError >> signal [
   "GemStone needs this to print exception correctly"
 

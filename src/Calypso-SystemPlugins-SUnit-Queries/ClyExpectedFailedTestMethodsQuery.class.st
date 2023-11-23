@@ -2,17 +2,18 @@
 I return all test methods which are marked with <expectedFailure> pragma
 "
 Class {
-	#name : #ClyExpectedFailedTestMethodsQuery,
-	#superclass : #ClyMethodQuery,
-	#category : #'Calypso-SystemPlugins-SUnit-Queries'
+	#name : 'ClyExpectedFailedTestMethodsQuery',
+	#superclass : 'ClyMethodQuery',
+	#category : 'Calypso-SystemPlugins-SUnit-Queries',
+	#package : 'Calypso-SystemPlugins-SUnit-Queries'
 }
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyExpectedFailedTestMethodsQuery >> description [
 	^'expected failures'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyExpectedFailedTestMethodsQuery >> selectsMethod: aMethod [
 	^aMethod hasPragmaNamed: #expectedFailure
 ]

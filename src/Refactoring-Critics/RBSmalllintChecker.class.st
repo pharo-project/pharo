@@ -6,25 +6,26 @@ My main API is
 - ==run== which resets and runs the rules.
 "
 Class {
-	#name : #RBSmalllintChecker,
-	#superclass : #Object,
+	#name : 'RBSmalllintChecker',
+	#superclass : 'Object',
 	#instVars : [
 		'rule',
 		'environment',
 		'context',
 		'methodBlock'
 	],
-	#category : #'Refactoring-Critics'
+	#category : 'Refactoring-Critics',
+	#package : 'Refactoring-Critics'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBSmalllintChecker class >> newWithContext [
 	^(self new)
 		context: RBSmalllintContext new;
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBSmalllintChecker class >> runRule: aLintRule [
 	(self new)
 		rule: aLintRule;
@@ -32,7 +33,7 @@ RBSmalllintChecker class >> runRule: aLintRule [
 	^aLintRule
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBSmalllintChecker class >> runRule: aLintRule onEnvironment: aBrowserEnvironment [
 	aLintRule resetResult.
 	(self new)
@@ -42,12 +43,12 @@ RBSmalllintChecker class >> runRule: aLintRule onEnvironment: aBrowserEnvironmen
 	^aLintRule
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBSmalllintChecker >> checkClass: aClass [
 	(environment includesClass: aClass) ifTrue: [rule checkClass: aClass]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBSmalllintChecker >> checkMethodsForClass: aClass [
 
 	^ environment methodsForClass: aClass do: [ :method |
@@ -55,46 +56,46 @@ RBSmalllintChecker >> checkMethodsForClass: aClass [
 		  methodBlock value ]
 ]
 
-{ #category : #private }
-RBSmalllintChecker >> checkPackage: aRPackage [
-	(environment includesPackage: aRPackage)
-		ifTrue: [rule checkPackage: aRPackage]
+{ #category : 'private' }
+RBSmalllintChecker >> checkPackage: aPackage [
+	(environment includesPackage: aPackage)
+		ifTrue: [rule checkPackage: aPackage]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBSmalllintChecker >> context: aSmalllintContext [
 	context := aSmalllintContext
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBSmalllintChecker >> environment: aBrowserEnvironment [
 	environment := aBrowserEnvironment
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBSmalllintChecker >> initialize [
 	methodBlock := [].
 	environment := RBBrowserEnvironment new.
 	context := RBSmalllintContext newNoCache
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBSmalllintChecker >> methodBlock: aBlock [
 	methodBlock := aBlock
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBSmalllintChecker >> release [
 	context release.
 	super release
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBSmalllintChecker >> rule: aLintRule [
 	rule := aLintRule
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 RBSmalllintChecker >> run [
 	environment classesAndTraits
 		do: [ :class |

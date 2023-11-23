@@ -1,16 +1,18 @@
 Class {
-	#name : #MetacelloLockTest,
-	#superclass : #TestCase,
-	#category : #'Metacello-TestsCore-Specs'
+	#name : 'MetacelloLockTest',
+	#superclass : 'TestCase',
+	#category : 'Metacello-TestsCore-Specs',
+	#package : 'Metacello-TestsCore',
+	#tag : 'Specs'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloLockTest >> project [
 
 	^ BaselineOfTestToLock1 project
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloLockTest >> testLoadLockedWillNotIncludeLockedPackages [
 	"Using record as a way to determine which packages will be loaded"
 
@@ -34,7 +36,7 @@ MetacelloLockTest >> testLoadLockedWillNotIncludeLockedPackages [
 		Metacello new baseline: 'TestToLock2'; unregister ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloLockTest >> testRegisterProject [
 
 	self 

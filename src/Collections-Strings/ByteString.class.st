@@ -3,16 +3,18 @@ This class represents the array of 8 bit wide characters.
 
 "
 Class {
-	#name : #ByteString,
-	#superclass : #String,
-	#type : #bytes,
+	#name : 'ByteString',
+	#superclass : 'String',
+	#type : 'bytes',
 	#classVars : [
 		'NonAsciiMap'
 	],
-	#category : #'Collections-Strings-Base'
+	#category : 'Collections-Strings-Base',
+	#package : 'Collections-Strings',
+	#tag : 'Base'
 }
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 ByteString class >> findFirstInString: aString  inSet: inclusionMap  startingAt: start [
 
 	| i stringSize |
@@ -31,7 +33,7 @@ ByteString class >> findFirstInString: aString  inSet: inclusionMap  startingAt:
 	^i
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 ByteString class >> indexOfAscii: anInteger inString: aString startingAt: start [
 
 	| stringSize |
@@ -46,7 +48,7 @@ ByteString class >> indexOfAscii: anInteger inString: aString startingAt: start 
 	^ 0
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 ByteString class >> initialize [
 
 	NonAsciiMap := ByteArray new: 256.
@@ -56,13 +58,13 @@ ByteString class >> initialize [
 			ifFalse: [ NonAsciiMap at: i + 1 put: 1 "extended charset" ] ]
 ]
 
-{ #category : #abstract }
+{ #category : 'abstract' }
 ByteString class >> nonAsciiMap [
 
 	^ NonAsciiMap
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 ByteString class >> stringHash: aString initialHash: speciesHash [
 
 	| stringSize hash low |
@@ -82,7 +84,7 @@ ByteString class >> stringHash: aString initialHash: speciesHash [
 	^ hash
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 ByteString class >> translate: aString from: start  to: stop  table: table [
 	"translate the characters in the string by the given table, in place"
 	<primitive: 'primitiveTranslateStringWithTable' module: 'MiscPrimitivePlugin'>
@@ -93,7 +95,7 @@ ByteString class >> translate: aString from: start  to: stop  table: table [
 		aString at: i put: (table at: (aString basicAt: i) + 1) ]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ByteString >> asByteArray [
 
 	| ba sz |
@@ -103,13 +105,13 @@ ByteString >> asByteArray [
 	^ba
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ByteString >> asOctetString [
 
 	^ self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ByteString >> at: index [
 	"Primitive. Answer the Character stored in the field of the receiver
 	indexed by the argument. Fail if the index argument is not an Integer or
@@ -119,7 +121,7 @@ ByteString >> at: index [
 	^ Character value: (super at: index)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ByteString >> at: index put: aCharacter [
 	"Primitive. Store the Character in the field of the receiver indicated by
 	the index. Fail if the index is not an Integer or is out of bounds, or if
@@ -142,25 +144,25 @@ ByteString >> at: index put: aCharacter [
 		ifTrue: [ ^ self modificationForbiddenFor: #at:put: index: index value: aCharacter ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ByteString >> byteAt: index [
 	<primitive: 60>
 	^(self at: index) asciiValue
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ByteString >> byteAt: index put: value [
 	<primitive: 61>
 	self at: index put: value asCharacter.
 	^value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ByteString >> byteSize [
 	^self size
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ByteString >> compareWith: anotherString [
 	"Return a negative Smi, 0 or a positive Smi if self is anotherString, with the collating order of characters given optionnally by the order array."
 
@@ -168,7 +170,7 @@ ByteString >> compareWith: anotherString [
 	^ self compareWith: anotherString collated: AsciiOrder
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ByteString >> compareWith: anotherString collated: order [
 	"Return a negative Smi, 0 or a positive Smi if self is anotherString, with the collating order of characters given optionnally by the order array."
 
@@ -189,32 +191,32 @@ ByteString >> compareWith: anotherString collated: order [
 		  ifFalse: [ 1 ]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ByteString >> createSymbol [
 
 	^(ByteSymbol basicNew: self size) string: self
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ByteString >> findSubstring: key in: body startingAt: start matchTable: matchTable [
 
 	^ key findIn: body startingAt: start matchTable: matchTable
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ByteString >> hasWideCharacterFrom: start to: stop [
 	"Only WideStrings contain these characters"
 
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ByteString >> indexOfAnyOf: aCollection startingAt: start [
 	"Use double dispatching for speed"
 	^aCollection findFirstInByteString: self startingAt: start
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ByteString >> indexOfAnyOf: aCollection startingAt: start ifAbsent: aBlock [
 	"Use double dispatching for speed"
 	| index |
@@ -223,7 +225,7 @@ ByteString >> indexOfAnyOf: aCollection startingAt: start ifAbsent: aBlock [
 		ifFalse: [index]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ByteString >> isAsciiString [
 
 	^ (self class
@@ -232,7 +234,7 @@ ByteString >> isAsciiString [
 		   startingAt: 1) = 0
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ByteString >> isByteString [
 	"Answer whether the receiver is a ByteString"
 
@@ -241,7 +243,7 @@ ByteString >> isByteString [
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ByteString >> isOctetString [
 	"Answer whether the receiver can be represented as a byte string.
 	This is different from asking whether the receiver *is* a ByteString
@@ -252,7 +254,7 @@ ByteString >> isOctetString [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ByteString >> replaceFrom: start to: stop with: replacement startingAt: repStart [
 	"Primitive. This destructively replaces elements from start to stop in the receiver starting at index, repStart, in the collection, replacement. Answer the receiver. Range checks are performed in the primitive only. Optional. See Object documentation whatIsAPrimitive."
 	<primitive: 105>

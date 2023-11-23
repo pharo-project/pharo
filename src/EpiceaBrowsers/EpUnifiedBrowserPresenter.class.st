@@ -5,18 +5,20 @@ Open with:
 self open
 "
 Class {
-	#name : #EpUnifiedBrowserPresenter,
-	#superclass : #SpPresenter,
+	#name : 'EpUnifiedBrowserPresenter',
+	#superclass : 'SpPresenter',
 	#instVars : [
 		'refreshDeferrer',
 		'logPresenter',
 		'logNodesPresenter',
 		'toolbarPresenter'
 	],
-	#category : #'EpiceaBrowsers-UI-Unified'
+	#category : 'EpiceaBrowsers-UI-Unified',
+	#package : 'EpiceaBrowsers',
+	#tag : 'UI-Unified'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 EpUnifiedBrowserPresenter class >> open [
 
 	<script>
@@ -26,13 +28,13 @@ EpUnifiedBrowserPresenter class >> open [
 		  yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpUnifiedBrowserPresenter class >> taskbarIconName [
 
 	^ #recoverLostChanges
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpUnifiedBrowserPresenter class >> worldMenuItemOn: aBuilder [
 	<worldMenu>
 
@@ -44,7 +46,7 @@ EpUnifiedBrowserPresenter class >> worldMenuItemOn: aBuilder [
 		order: 1
 ]
 
-{ #category : #refreshing }
+{ #category : 'refreshing' }
 EpUnifiedBrowserPresenter >> freshLogFromSelection: selection [
 	^ selection selectedItems
 		ifEmpty: [ EpLog newNull ]
@@ -55,7 +57,7 @@ EpUnifiedBrowserPresenter >> freshLogFromSelection: selection [
 			EpLog newWithEntries: entries ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 EpUnifiedBrowserPresenter >> initializePresenter [
 	super initializePresenter.
 	logNodesPresenter whenSelectionChangedDo: [ :selection | self refreshWithLogSelection: selection ].
@@ -63,7 +65,7 @@ EpUnifiedBrowserPresenter >> initializePresenter [
 	self initializeWorkaroundToRefreshOnMonitorLogAnnouncement
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 EpUnifiedBrowserPresenter >> initializePresenters [
 
 	self layout: (SpBoxLayout newTopToBottom
@@ -83,12 +85,12 @@ EpUnifiedBrowserPresenter >> initializePresenters [
 	self initializeWorkaroundToRefreshOnMonitorLogAnnouncement
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 EpUnifiedBrowserPresenter >> initializeRefreshOnSessionUpdate [
 	self updatesAnnouncer weak when: OmSessionStoreUpdated send: #refresh to: self
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 EpUnifiedBrowserPresenter >> initializeToolbar [
 
 	toolbarPresenter
@@ -112,7 +114,7 @@ EpUnifiedBrowserPresenter >> initializeToolbar [
 			yourself)
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 EpUnifiedBrowserPresenter >> initializeWindow: aWindowPresenter [
 	aWindowPresenter
 		title: 'Epicea - Code Changes';
@@ -120,7 +122,7 @@ EpUnifiedBrowserPresenter >> initializeWindow: aWindowPresenter [
 		whenClosedDo: [ self updatesAnnouncer unsubscribe: self ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 EpUnifiedBrowserPresenter >> initializeWorkaroundToRefreshOnMonitorLogAnnouncement [
 	refreshDeferrer := OmDeferrer send: #refreshIfMonitorLogSelected to: self after: 500 milliSeconds.
 
@@ -131,23 +133,23 @@ EpUnifiedBrowserPresenter >> initializeWorkaroundToRefreshOnMonitorLogAnnounceme
 			self monitorLogAnnouncer unsubscribe: refreshDeferrer ] ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 EpUnifiedBrowserPresenter >> monitorLogAnnouncer [
 	^ EpMonitor current log announcer
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 EpUnifiedBrowserPresenter >> openDashboard [
 
 	(EpDashboardPresenter newApplication: self application) open
 ]
 
-{ #category : #refreshing }
+{ #category : 'refreshing' }
 EpUnifiedBrowserPresenter >> refresh [
 	logNodesPresenter refresh
 ]
 
-{ #category : #refreshing }
+{ #category : 'refreshing' }
 EpUnifiedBrowserPresenter >> refreshIfMonitorLogSelected [
 	"See initializeWorkaroundToRefreshOnMonitorLogAnnouncement"
 
@@ -155,13 +157,13 @@ EpUnifiedBrowserPresenter >> refreshIfMonitorLogSelected [
 		ifTrue: [ logPresenter refresh ]
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 EpUnifiedBrowserPresenter >> refreshLogs [
 
 	logNodesPresenter refresh
 ]
 
-{ #category : #refreshing }
+{ #category : 'refreshing' }
 EpUnifiedBrowserPresenter >> refreshWithLogSelection: selection [
 
 	logPresenter
@@ -170,13 +172,13 @@ EpUnifiedBrowserPresenter >> refreshWithLogSelection: selection [
 		cleanEntryContent
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 EpUnifiedBrowserPresenter >> selectDirectory [
 
 	logNodesPresenter selectDirectory
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 EpUnifiedBrowserPresenter >> updatesAnnouncer [
 	^ EpMonitor current sessionStore announcer
 ]

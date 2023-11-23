@@ -18,22 +18,24 @@ Each instruction is reified as an instance of one of my subclasses and grouped b
 
 "
 Class {
-	#name : #IRInstruction,
-	#superclass : #Object,
+	#name : 'IRInstruction',
+	#superclass : 'Object',
 	#instVars : [
 		'sourceNode',
 		'bytecodeIndex',
 		'sequence'
 	],
-	#category : #'OpalCompiler-Core-IR-Nodes'
+	#category : 'OpalCompiler-Core-IR-Nodes',
+	#package : 'OpalCompiler-Core',
+	#tag : 'IR-Nodes'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 IRInstruction class >> blockReturnTop [
 	^ IRBlockReturnTop new
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 IRInstruction class >> createTempVectorNamed: aTempVectorName withVars: anArray [
 
 	^ IRTempVector new
@@ -42,12 +44,12 @@ IRInstruction class >> createTempVectorNamed: aTempVectorName withVars: anArray 
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 IRInstruction class >> popTop [
 	^ IRPop new
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 IRInstruction class >> pushConsArray: aSize [
 	^IRPushArray new
 		size: aSize;
@@ -55,13 +57,13 @@ IRInstruction class >> pushConsArray: aSize [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 IRInstruction class >> pushDup [
 
 	^ IRPushDup new
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 IRInstruction class >> pushFullClosureCompiledBlock: compiledBlock copiedValues: copiedValues [
 	^IRPushFullClosure new
 			copiedValues: copiedValues;
@@ -69,7 +71,7 @@ IRInstruction class >> pushFullClosureCompiledBlock: compiledBlock copiedValues:
 			yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 IRInstruction class >> pushFullClosureCompiledBlock: compiledBlock copiedValues: copiedValues outerContextNeeded: aBoolean [
 	^IRPushFullClosure new
 			copiedValues: copiedValues;
@@ -78,7 +80,7 @@ IRInstruction class >> pushFullClosureCompiledBlock: compiledBlock copiedValues:
 			yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 IRInstruction class >> pushInstVar: index [
 
 	^ IRPushInstVar new
@@ -86,14 +88,14 @@ IRInstruction class >> pushInstVar: index [
 			yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 IRInstruction class >> pushLiteral: object [
 
 	^ IRPushLiteral new
 		literal: object
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 IRInstruction class >> pushLiteralVariable: object [
 
 	^ IRPushLiteralVariable new
@@ -101,7 +103,7 @@ IRInstruction class >> pushLiteralVariable: object [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 IRInstruction class >> pushNewArray: aSize [
 
 	^IRPushArray new
@@ -110,12 +112,12 @@ IRInstruction class >> pushNewArray: aSize [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 IRInstruction class >> pushReceiver [
 	^ IRPushReceiver new
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 IRInstruction class >> pushRemoteTemp: aName inVectorAt: nameOfVector [
 	^ IRPushRemoteTemp new
 		name: aName;
@@ -123,7 +125,7 @@ IRInstruction class >> pushRemoteTemp: aName inVectorAt: nameOfVector [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 IRInstruction class >> pushTemp: aName [
 
 	^ IRPushTemp new
@@ -131,30 +133,30 @@ IRInstruction class >> pushTemp: aName [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 IRInstruction class >> pushThisContext [
 	^ IRPushThisContext new
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 IRInstruction class >> pushThisProcess [
 	^ IRPushThisProcess new
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 IRInstruction class >> returnTop [
 
 	^ IRReturn new
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 IRInstruction class >> send: selector [
 
 	^ IRSend new
 		selector: selector
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 IRInstruction class >> send: selector toSuperOf: behavior [
 
 	behavior ifNil: [self error: 'super of nil does not exist'].
@@ -164,14 +166,14 @@ IRInstruction class >> send: selector toSuperOf: behavior [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 IRInstruction class >> storeInstVar: index [
 	^ IRStoreInstVar new
 		index: index;
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 IRInstruction class >> storeIntoLiteralVariable: object [
 
 	^ IRStoreLiteralVariable new
@@ -179,7 +181,7 @@ IRInstruction class >> storeIntoLiteralVariable: object [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 IRInstruction class >> storeRemoteTemp: aName inVectorAt: nameOfVector [
 	^ IRStoreRemoteTemp new
 		name: aName;
@@ -187,41 +189,41 @@ IRInstruction class >> storeRemoteTemp: aName inVectorAt: nameOfVector [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 IRInstruction class >> storeTemp: aName [
 	^ IRStoreTemp new
 		name: aName;
 		yourself
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRInstruction >> accept: aVisitor [
 	self subclassResponsibility
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 IRInstruction >> addInstructionsAfter: aCollection [
 	sequence addInstructions: aCollection after: self
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 IRInstruction >> addInstructionsBefore: aCollection [
 	sequence addInstructions: aCollection before: self
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 IRInstruction >> bytecodeIndex [
 
 	^ bytecodeIndex
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 IRInstruction >> bytecodeIndex: index [
 
 	bytecodeIndex := index
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 IRInstruction >> bytecodeOffset [
 	| startpc |
 	startpc := self method compiledMethod initialPC.
@@ -229,188 +231,188 @@ IRInstruction >> bytecodeOffset [
 	^self bytecodeIndex + startpc - 1
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 IRInstruction >> canBeQuickReturn [
 	^ false
 ]
 
-{ #category : #inspector }
+{ #category : 'inspector' }
 IRInstruction >> children [
 	^#()
 ]
 
-{ #category : #replacing }
+{ #category : 'replacing' }
 IRInstruction >> delete [
 	sequence ifNil: [self error: 'This node doesn''t have a sequence'].
 	sequence remove: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 IRInstruction >> isBlockReturnTop [
 
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 IRInstruction >> isGoto [
 	"is unconditional jump"
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 IRInstruction >> isIf [
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 IRInstruction >> isInstVarAccess [
 
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 IRInstruction >> isJump [
 	"goto or if"
 
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 IRInstruction >> isLiteralVariable [
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 IRInstruction >> isPop [
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 IRInstruction >> isPushLiteral [
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 IRInstruction >> isPushLiteral: valueTest [
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 IRInstruction >> isRead [
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 IRInstruction >> isRemovableByPop [
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 IRInstruction >> isReturn [
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 IRInstruction >> isSelf [
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 IRInstruction >> isSend [
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 IRInstruction >> isStore [
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 IRInstruction >> isTemp [
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 IRInstruction >> isTempVector [
 	^false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRInstruction >> method [
 	^sequence method
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRInstruction >> nonBodySuccessorSequences [
 	^self successorSequences
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 IRInstruction >> printOn: aStream [
 	IRPrinter new
 			stream: aStream;
 			visitNode: self
 ]
 
-{ #category : #replacing }
+{ #category : 'replacing' }
 IRInstruction >> replaceNode: aNode withNode: anotherNode [
 	self error: 'I don''t store other nodes'
 ]
 
-{ #category : #replacing }
+{ #category : 'replacing' }
 IRInstruction >> replaceWith: aNode [
 	sequence ifNil: [self error: 'This node doesn''t have a sequence'].
 	sequence replaceNode: self withNode: aNode
 ]
 
-{ #category : #replacing }
+{ #category : 'replacing' }
 IRInstruction >> replaceWithInstructions: aCollection [
 
 	sequence ifNil: [self error: 'This node doesn''t have a sequence'].
 	sequence replaceNode: self withNodes: aCollection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRInstruction >> sequence [
 	^sequence
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRInstruction >> sequence: aSeq [
 	sequence := aSeq
 ]
 
-{ #category : #inspector }
+{ #category : 'inspector' }
 IRInstruction >> sourceInterval [
 	^self sourceNode sourceInterval
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 IRInstruction >> sourceNode [
 
 	^ sourceNode
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 IRInstruction >> sourceNode: parseNode [
 
 	sourceNode := parseNode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRInstruction >> successorSequences [
 	"sent to last instruction in sequence which is expected to be a jump and return instruction"
 
 	^ #()
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 IRInstruction >> transitionsToNextSequence [
 	"Does the current instruction intrinsically know how to transition to the next sequence?"
 	^ self isJump or: [self isReturn]

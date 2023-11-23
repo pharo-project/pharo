@@ -3,35 +3,37 @@ I represent a duration starting on a specific DateAndTime.
 
 "
 Class {
-	#name : #Timespan,
-	#superclass : #Magnitude,
+	#name : 'Timespan',
+	#superclass : 'Magnitude',
 	#instVars : [
 		'start',
 		'duration'
 	],
-	#category : #'Kernel-Chronology'
+	#category : 'Kernel-Chronology',
+	#package : 'Kernel',
+	#tag : 'Chronology'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Timespan class >> current [
 
 	^ self starting: DateAndTime now
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Timespan class >> new [
 	"Answer a Timespan starting on the epoch: 1 January 1901"
 
 	^ self starting: DateAndTime new
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Timespan class >> starting: aDateAndTime [
 
 	^ self starting: aDateAndTime duration: Duration zero
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Timespan class >> starting: aDateAndTime duration: aDuration [
 
 	^ self basicNew
@@ -40,7 +42,7 @@ Timespan class >> starting: aDateAndTime duration: aDuration [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Timespan class >> starting: startDateAndTime ending: endDateAndTime [
 
 	^ self
@@ -48,14 +50,14 @@ Timespan class >> starting: startDateAndTime ending: endDateAndTime [
 		duration: (endDateAndTime asDateAndTime - startDateAndTime)
 ]
 
-{ #category : #arithmetic }
+{ #category : 'arithmetic' }
 Timespan >> + operand [
 	"operand conforms to protocol Duration"
 
 	^ self species starting: (self start + operand) duration: self duration
 ]
 
-{ #category : #arithmetic }
+{ #category : 'arithmetic' }
 Timespan >> - operand [
 	"operand conforms to protocol DateAndTime or protocol Duration"
 
@@ -64,112 +66,112 @@ Timespan >> - operand [
 	 	ifFalse: [ self + (operand negated) ]
 ]
 
-{ #category : #arithmetic }
+{ #category : 'arithmetic' }
 Timespan >> < comparand [
 
 	^ self start < comparand
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 Timespan >> = comparand [
 	^ self species = comparand species
 		and: [ self start = comparand start
 				and: [ self duration = comparand duration ]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Timespan >> asDate [
 
 	^ start asDate
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Timespan >> asDateAndTime [
 
 	^ start
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Timespan >> asDuration [
 
 	^ self duration
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Timespan >> asSeconds [
  	"Answer the seconds since the epoch: 1 January 1901"
 
  	^ start asSeconds
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Timespan >> asTime [
 
 	^ start asTime
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Timespan >> dayOfMonth [
 	"Answer the day of the month represented by the receiver."
 
 	^ start dayOfMonth
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Timespan >> duration [
  	"Answer the Duration of this timespan"
 
 	^ duration
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Timespan >> duration: aDuration [
 	"Set the Duration of this timespan"
 
 	duration := aDuration
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 Timespan >> hash [
 
 	^ start hash + duration hash
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Timespan >> julianDayNumber [
 
 	^ start julianDayNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Timespan >> julianDayNumberUTC [
 	^ start julianDayNumberUTC
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Timespan >> month [
 
 	^ start month
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Timespan >> monthIndex [
 
 	^ self month
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Timespan >> next [
 
 	^ self class starting: (start + duration) duration: duration
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Timespan >> offset [
 	^ start offset
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Timespan >> offset: anOffset [
 	"Answer a <Timespan> equivalent to the receiver but with its local time
 	being offset from UTC by offset.
@@ -180,13 +182,13 @@ Timespan >> offset: anOffset [
 		duration: self duration
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Timespan >> previous [
 
 	^ self class starting: (start - duration) duration: duration
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 Timespan >> printOn: aStream [
 
 	super printOn: aStream.
@@ -198,21 +200,21 @@ Timespan >> printOn: aStream [
 		nextPut: $)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Timespan >> start [
  	"Answer the start DateAndTime of this timespan"
 
 	^ start
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Timespan >> start: aDateAndTime [
 	"Store the start DateAndTime of this timespan"
 
 	start := aDateAndTime asDateAndTime
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Timespan >> year [
 
 	^ start year

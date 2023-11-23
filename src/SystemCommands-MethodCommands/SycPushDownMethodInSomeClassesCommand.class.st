@@ -4,46 +4,47 @@ I am a command that pushes down methods in some classes.
 I am responsible for delegating execution to `RBPushDownMethodInSomeClassesDriver`.
 "
 Class {
-	#name : #SycPushDownMethodInSomeClassesCommand,
-	#superclass : #SysRefactoringMethodCommand,
+	#name : 'SycPushDownMethodInSomeClassesCommand',
+	#superclass : 'SysRefactoringMethodCommand',
 	#instVars : [
 		'refactoringScopes'
 	],
-	#category : #'SystemCommands-MethodCommands'
+	#category : 'SystemCommands-MethodCommands',
+	#package : 'SystemCommands-MethodCommands'
 }
 
-{ #category : #converting }
+{ #category : 'converting' }
 SycPushDownMethodInSomeClassesCommand >> asRefactorings [
 
 	self shouldNotImplement
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycPushDownMethodInSomeClassesCommand >> defaultMenuIconName [
 	^ #down
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycPushDownMethodInSomeClassesCommand >> defaultMenuItemName [
 	^'Push down in some classes'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycPushDownMethodInSomeClassesCommand >> executeRefactorings [
 
 	(RBPushDownMethodInSomeClassesDriver
 		model: model
 		scopes: refactoringScopes
-		pushDown: methods) execute
+		pushDown: methods) runRefactoring
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SycPushDownMethodInSomeClassesCommand >> isComplexRefactoring [ 
 
 	^ false
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycPushDownMethodInSomeClassesCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 	refactoringScopes := aToolContext refactoringScopes

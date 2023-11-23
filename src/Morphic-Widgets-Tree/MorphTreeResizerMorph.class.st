@@ -2,57 +2,58 @@
 A resizer morph for a morphic based tree
 "
 Class {
-	#name : #MorphTreeResizerMorph,
-	#superclass : #AbstractResizerMorph,
+	#name : 'MorphTreeResizerMorph',
+	#superclass : 'AbstractResizerMorph',
 	#instVars : [
 		'traceMorph',
 		'oldColor',
 		'index',
 		'container'
 	],
-	#category : #'Morphic-Widgets-Tree'
+	#category : 'Morphic-Widgets-Tree',
+	#package : 'Morphic-Widgets-Tree'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MorphTreeResizerMorph class >> container: aTreeList index: anInteger [
 	^ self new container: aTreeList index: anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MorphTreeResizerMorph class >> fastSplitterResize [
 	^ true
 ]
 
-{ #category : #'Polymorph-Widgets' }
+{ #category : 'Polymorph-Widgets' }
 MorphTreeResizerMorph >> adoptPaneColor: paneColor [
 	"Change our color too."
 	super adoptPaneColor: paneColor.
 	self fillStyle: self normalFillStyle
 ]
 
-{ #category : #'private - testing' }
+{ #category : 'private - testing' }
 MorphTreeResizerMorph >> canResizeColumn [
 	^self column resizable
 ]
 
-{ #category : #'private - testing' }
+{ #category : 'private - testing' }
 MorphTreeResizerMorph >> column [
 	^container columns at: index
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MorphTreeResizerMorph >> container: aTreeMorph index: anInteger [
 	container := aTreeMorph.
 	index := anInteger
 ]
 
-{ #category : #'dependents access' }
+{ #category : 'dependents access' }
 MorphTreeResizerMorph >> delete [
 	super delete.
 	self release
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 MorphTreeResizerMorph >> doubleClick: event [
 	"A double click occurred.
 	Resize the column to fit all content."
@@ -63,18 +64,18 @@ MorphTreeResizerMorph >> doubleClick: event [
 	container resizerChanged
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 MorphTreeResizerMorph >> drawOn: aCanvas [
-	(owner notNil and: [owner containsPoint: self position])
+	(owner isNotNil and: [owner containsPoint: self position])
 		ifTrue: [super drawOn: aCanvas]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MorphTreeResizerMorph >> getOldColor [
 	^ oldColor ifNil: [Color transparent]
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 MorphTreeResizerMorph >> mouseDown: anEvent [
 	"A mouse button has been pressed.
 	Update the color for feedback and store the mouse
@@ -89,20 +90,21 @@ MorphTreeResizerMorph >> mouseDown: anEvent [
 	lastMouse := {cp. cp - self position}
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 MorphTreeResizerMorph >> mouseEnter: anEvent [
-	self canResizeColumn ifFalse: [^ self].
-	(owner notNil and: [owner bounds containsPoint: anEvent position])
-		ifTrue: [super mouseEnter: anEvent]
+
+	self canResizeColumn ifFalse: [ ^ self ].
+	(owner isNotNil and: [ owner bounds containsPoint: anEvent position ])
+		ifTrue: [ super mouseEnter: anEvent ]
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 MorphTreeResizerMorph >> mouseLeave: anEvent [
 	self canResizeColumn ifFalse: [^ self].
 	super mouseLeave: anEvent
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 MorphTreeResizerMorph >> mouseMove: anEvent [
 	self canResizeColumn ifFalse: [^ self].
 	anEvent hand temporaryCursor
@@ -117,7 +119,7 @@ MorphTreeResizerMorph >> mouseMove: anEvent [
 		ifFalse: [self updateFromEvent: anEvent]
 ]
 
-{ #category : #'Polymorph-Widgets' }
+{ #category : 'Polymorph-Widgets' }
 MorphTreeResizerMorph >> mouseUp: anEvent [
 	"Change the cursor back to normal if necessary and change the color back to normal."
 
@@ -131,30 +133,30 @@ MorphTreeResizerMorph >> mouseUp: anEvent [
 	self triggerEvent: #mouseUp
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MorphTreeResizerMorph >> normalFillStyle [
 	"Return the normal fillstyle for the receiver."
 	^ self theme morphTreeSplitterNormalFillStyleFor: self
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MorphTreeResizerMorph >> normalizedX: x [
 
 	^ x
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MorphTreeResizerMorph >> normalizedY: y [
 	^y
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MorphTreeResizerMorph >> pressedFillStyle [
 	"Return the pressed fillStyle of the receiver."
 	^ self theme morphTreeSplitterPressedFillStyleFor: self
 ]
 
-{ #category : #'submorphs - add/remove' }
+{ #category : 'submorphs - add/remove' }
 MorphTreeResizerMorph >> release [
 	traceMorph := nil.
 	oldColor := nil.
@@ -163,36 +165,36 @@ MorphTreeResizerMorph >> release [
 	super release
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MorphTreeResizerMorph >> resizeCursor [
 	^ Cursor resizeForEdge: #left
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MorphTreeResizerMorph >> setGrabbedColor [
 	"Set the color of the receiver when it is grabbed."
 
 	self fillStyle: self pressedFillStyle
 ]
 
-{ #category : #'Polymorph-Widgets' }
+{ #category : 'Polymorph-Widgets' }
 MorphTreeResizerMorph >> shouldDraw [
 	^ true
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MorphTreeResizerMorph >> splitsTopAndBottom [
 	^ false
 ]
 
-{ #category : #'Polymorph-Widgets' }
+{ #category : 'Polymorph-Widgets' }
 MorphTreeResizerMorph >> themeChanged [
 	"Update the fill style."
 	self fillStyle: self normalFillStyle.
 	super themeChanged
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MorphTreeResizerMorph >> updateFromEvent: anEvent [
 	"Update the splitter and attached morph positions from
 	the mouse event.

@@ -2,30 +2,32 @@
 I am delivered when a window is shown.
 "
 Class {
-	#name : #OSWindowShownEvent,
-	#superclass : #OSWindowEvent,
+	#name : 'OSWindowShownEvent',
+	#superclass : 'OSWindowEvent',
 	#instVars : [
 		'timestamp'
 	],
-	#category : #'OSWindow-Core-Events'
+	#category : 'OSWindow-Core-Events',
+	#package : 'OSWindow-Core',
+	#tag : 'Events'
 }
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 OSWindowShownEvent >> accept: aVisitor [
 	^ aVisitor visitWindowShownEvent: self
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 OSWindowShownEvent >> defaultAction [
 	window isValid ifTrue: [ window renderer ifNotNil: [ window renderer exposed: timestamp  ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowShownEvent >> timestamp [
 	^ timestamp
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowShownEvent >> timestamp: anObject [
 	timestamp := anObject
 ]

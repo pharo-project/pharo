@@ -6,18 +6,19 @@ I am a copy of class ClassDeprecationMetaLinkTest. This comment is copied from t
 This class contains tests
 "
 Class {
-	#name : #ClassDeprecationCompiledMethodTest,
-	#superclass : #ClassDeprecationTest,
-	#category : #'ClassDeprecation-Tests'
+	#name : 'ClassDeprecationCompiledMethodTest',
+	#superclass : 'ClassDeprecationTest',
+	#category : 'ClassDeprecation-Tests',
+	#package : 'ClassDeprecation-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClassDeprecationCompiledMethodTest >> setUp [
 	super setUp.
 	referencingClass compile: referencingOriginalSource
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassDeprecationCompiledMethodTest >> testHasDeprecationTransformableReferences [
 	self
 		assert:
@@ -29,7 +30,7 @@ ClassDeprecationCompiledMethodTest >> testHasDeprecationTransformableReferences 
 				hasDeprecationTransformableReferences
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassDeprecationCompiledMethodTest >> testInstallDeprecationTransformMetaLinks [
 	| globalNodes |
 	globalNodes := self globalNodes: referencingClass >> #references.
@@ -52,7 +53,7 @@ ClassDeprecationCompiledMethodTest >> testInstallDeprecationTransformMetaLinks [
 	self assert: globalNodes size equals: 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassDeprecationCompiledMethodTest >> testIsDeprecationTransformableMethod [
 	self
 		deny: (referencingClass >> #references) isDeprecationTransformableMethod.
@@ -62,7 +63,7 @@ ClassDeprecationCompiledMethodTest >> testIsDeprecationTransformableMethod [
 				isDeprecationTransformableMethod
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassDeprecationCompiledMethodTest >> testUninstallDeprecationTransformMetaLinks [
 	| globalNodes |
 	(referencingClass >> #references)

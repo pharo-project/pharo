@@ -1,6 +1,6 @@
-Extension { #name : #FFIExternalEnumerationType }
+Extension { #name : 'FFIExternalEnumerationType' }
 
-{ #category : #'*ThreadedFFI-UFFI-Overrides' }
+{ #category : '*ThreadedFFI-UFFI-Overrides' }
 FFIExternalEnumerationType >> tfExternalType [
 
 	^ self representationType tfExternalType

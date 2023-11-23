@@ -2,22 +2,24 @@
 store remote temp
 "
 Class {
-	#name : #IRStoreRemoteTemp,
-	#superclass : #IRRemoteTempAccess,
-	#category : #'OpalCompiler-Core-IR-Nodes'
+	#name : 'IRStoreRemoteTemp',
+	#superclass : 'IRRemoteTempAccess',
+	#category : 'OpalCompiler-Core-IR-Nodes',
+	#package : 'OpalCompiler-Core',
+	#tag : 'IR-Nodes'
 }
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRStoreRemoteTemp >> accept: aVisitor [
 	^ aVisitor visitStoreRemoteTemp: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 IRStoreRemoteTemp >> isStore [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRStoreRemoteTemp >> popIntoNode [
 	^ IRPopIntoRemoteTemp new
 		name: name;

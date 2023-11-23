@@ -2,40 +2,42 @@
 A trait for test purposes
 "
 Trait {
-	#name : #TPutBasicTest,
-	#category : #'Collections-Abstract-Tests-Traits'
+	#name : 'TPutBasicTest',
+	#category : 'Collections-Abstract-Tests-Traits',
+	#package : 'Collections-Abstract-Tests',
+	#tag : 'Traits'
 }
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TPutBasicTest >> aValue [
 " return a value to put into nonEmpty"
 	^ self explicitRequirement
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TPutBasicTest >> anIndex [
 " return an index in nonEmpty bounds"
 	^ self explicitRequirement
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TPutBasicTest >> anotherValue [
 " return a value ( not eual to 'aValue' ) to put into nonEmpty "
 	^ self explicitRequirement
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TPutBasicTest >> empty [
 	^self explicitRequirement
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TPutBasicTest >> nonEmpty [
 
 	^ self explicitRequirement
 ]
 
-{ #category : #'tests - fixture' }
+{ #category : 'tests - fixture' }
 TPutBasicTest >> test0FixturePutTest [
 	self aValue.
 	self anotherValue.
@@ -50,20 +52,20 @@ TPutBasicTest >> test0FixturePutTest [
 	self denyEmpty: self nonEmpty
 ]
 
-{ #category : #'tests - at put' }
+{ #category : 'tests - at put' }
 TPutBasicTest >> testAtPut [
 
 	self nonEmpty at: self anIndex put: self aValue.
 	self assert: (self nonEmpty at: self anIndex) = self aValue
 ]
 
-{ #category : #'tests - at put' }
+{ #category : 'tests - at put' }
 TPutBasicTest >> testAtPutOutOfBounds [
 
 	self should: [self empty at: self anIndex put: self aValue] raise: Error
 ]
 
-{ #category : #'tests - at put' }
+{ #category : 'tests - at put' }
 TPutBasicTest >> testAtPutTwoValues [
 
 	self nonEmpty at: self anIndex put: self aValue.

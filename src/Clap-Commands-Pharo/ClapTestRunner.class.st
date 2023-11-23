@@ -2,15 +2,16 @@
 I run unit tests found in specified packages, and display their results to standard output.
 "
 Class {
-	#name : #ClapTestRunner,
-	#superclass : #ClapPharoApplication,
+	#name : 'ClapTestRunner',
+	#superclass : 'ClapPharoApplication',
 	#instVars : [
 		'suite'
 	],
-	#category : #'Clap-Commands-Pharo'
+	#category : 'Clap-Commands-Pharo',
+	#package : 'Clap-Commands-Pharo'
 }
 
-{ #category : #'command line' }
+{ #category : 'command line' }
 ClapTestRunner class >> test [
 	<commandline>
 	^ (ClapCommand id: #test)
@@ -31,7 +32,7 @@ ClapTestRunner class >> test [
 			(self with: args) execute ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ClapTestRunner >> buildSuite [
 	| packageSuites |
 	packageSuites := self packages
@@ -41,7 +42,7 @@ ClapTestRunner >> buildSuite [
 		addTests: packageSuites
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClapTestRunner >> execute [
 	| result |
 	self outputStreamDo: [ :out |
@@ -60,23 +61,20 @@ ClapTestRunner >> execute [
 	self context exitSuccess
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClapTestRunner >> packagePatterns [
 	^ arguments
 		occurrencesOf: #PKG
 		collect: #value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClapTestRunner >> packages [
-	^ self packagePatterns
-		flatCollect: [ :regex |
-			RPackage organizer packages
-				select: [ :package | regex matches: package name ]]
-		as: Set
+
+	^ self packagePatterns flatCollect: [ :regex | self packageOrganizer packages select: [ :package | regex matches: package name ] ] as: Set
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClapTestRunner >> suite [
 	suite ifNil: [ self buildSuite ].
 	^ suite

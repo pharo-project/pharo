@@ -10,12 +10,14 @@ There are two main subclasses:
 See comments for details
 "
 Class {
-	#name : #UnhandledException,
-	#superclass : #Exception,
-	#category : #'Kernel-Exceptions'
+	#name : 'UnhandledException',
+	#superclass : 'Exception',
+	#category : 'Kernel-Exceptions',
+	#package : 'Kernel',
+	#tag : 'Exceptions'
 }
 
-{ #category : #handling }
+{ #category : 'handling' }
 UnhandledException >> defaultAction [
 	"If none handles this either then open debugger.
 

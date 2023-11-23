@@ -7,40 +7,42 @@ Instance variables:
 	maxCode		<Integer>	- Maximum value with non-zero frequency
 "
 Class {
-	#name : #ZipEncoderTree,
-	#superclass : #Object,
+	#name : 'ZipEncoderTree',
+	#superclass : 'Object',
 	#instVars : [
 		'bitLengths',
 		'codes',
 		'maxCode'
 	],
-	#category : #'Compression-Streams'
+	#category : 'Compression-Streams',
+	#package : 'Compression',
+	#tag : 'Streams'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZipEncoderTree class >> buildTreeFrom: frequencies maxDepth: depth [
 	^self new buildTreeFrom: frequencies maxDepth: depth
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZipEncoderTree >> bitLengthAt: index [
 	^ bitLengths at: index + 1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZipEncoderTree >> bitLengths [
 	"Return an array of all bitLength values for valid codes"
 	^bitLengths
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZipEncoderTree >> bitLengths: blArray codes: codeArray [
 	bitLengths := blArray as: WordArray.
 	codes := codeArray as: WordArray.
 	[ (self bitLengthAt: maxCode) > 0 ] assert
 ]
 
-{ #category : #encoding }
+{ #category : 'encoding' }
 ZipEncoderTree >> buildCodes: nodeList counts: blCounts maxDepth: depth [
 	"Build the codes for all nodes"
 	| nextCode code node length |
@@ -61,7 +63,7 @@ ZipEncoderTree >> buildCodes: nodeList counts: blCounts maxDepth: depth [
 	]
 ]
 
-{ #category : #encoding }
+{ #category : 'encoding' }
 ZipEncoderTree >> buildHierarchyFrom: aHeap [
 	"Build the node hierarchy based on the leafs in aHeap"
 	| left right parent |
@@ -79,7 +81,7 @@ ZipEncoderTree >> buildHierarchyFrom: aHeap [
 	^aHeap removeFirst
 ]
 
-{ #category : #encoding }
+{ #category : 'encoding' }
 ZipEncoderTree >> buildTree: nodeList maxDepth: depth [
 	"Build either the literal or the distance tree"
 	| heap rootNode blCounts |
@@ -115,7 +117,7 @@ ZipEncoderTree >> buildTree: nodeList maxDepth: depth [
 	self setValuesFrom: nodeList
 ]
 
-{ #category : #encoding }
+{ #category : 'encoding' }
 ZipEncoderTree >> buildTreeFrom: frequencies maxDepth: depth [
 	"Build the receiver from the given frequency values"
 	| nodeList |
@@ -126,28 +128,28 @@ ZipEncoderTree >> buildTreeFrom: frequencies maxDepth: depth [
 	self buildTree: nodeList maxDepth: depth
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZipEncoderTree >> codeAt: index [
 	^ codes at: index + 1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZipEncoderTree >> codes [
 	"Return an array of all valid codes"
 	^codes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZipEncoderTree >> maxCode [
 	^maxCode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZipEncoderTree >> maxCode: aNumber [
 	maxCode := aNumber
 ]
 
-{ #category : #encoding }
+{ #category : 'encoding' }
 ZipEncoderTree >> nodeSortBlock [
 	^ [ :n1 :n2 |
 	n1 frequency = n2 frequency
@@ -155,7 +157,7 @@ ZipEncoderTree >> nodeSortBlock [
 		ifFalse: [ n1 frequency <= n2 frequency ] ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZipEncoderTree >> reverseBits: code length: length [
 	"Bit reverse the given code"
 	| result bit bits |
@@ -168,7 +170,7 @@ ZipEncoderTree >> reverseBits: code length: length [
 	^result
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZipEncoderTree >> setValuesFrom: nodeList [
 	self bitLengths: (nodeList
 			collect: [:n | n bitLength]

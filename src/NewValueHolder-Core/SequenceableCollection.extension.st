@@ -1,6 +1,6 @@
-Extension { #name : #SequenceableCollection }
+Extension { #name : 'SequenceableCollection' }
 
-{ #category : #'*NewValueHolder-Core' }
+{ #category : '*NewValueHolder-Core' }
 SequenceableCollection >> asValueHolder [
 
 	^ CollectionValueHolder value: self

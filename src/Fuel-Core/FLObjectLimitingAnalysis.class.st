@@ -6,26 +6,28 @@ I know how many object have been analyzed and when the configured limit is reach
 I am used by FLSerialization to build the graph of objects to serialize.
 "
 Class {
-	#name : #FLObjectLimitingAnalysis,
-	#superclass : #FLAnalysis,
+	#name : 'FLObjectLimitingAnalysis',
+	#superclass : 'FLAnalysis',
 	#instVars : [
 		'objectCounter',
 		'objectLimit'
 	],
-	#category : #'Fuel-Core-Base'
+	#category : 'Fuel-Core-Base',
+	#package : 'Fuel-Core',
+	#tag : 'Base'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FLObjectLimitingAnalysis class >> isResponsible [
 	^ self configuration hasObjectsLimit
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FLObjectLimitingAnalysis class >> priority [
 	^ 30
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FLObjectLimitingAnalysis >> initialize [
 	super initialize.
 	
@@ -33,7 +35,7 @@ FLObjectLimitingAnalysis >> initialize [
 	objectLimit := self configuration objectLimit
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 FLObjectLimitingAnalysis >> mapAndTrace: anObject [
 	"Don't count nil as an object"
 	anObject ifNil: [

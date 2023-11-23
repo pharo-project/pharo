@@ -2,19 +2,20 @@
 I am a command to push up given variables
 "
 Class {
-	#name : #SycPushUpVariableCommand,
-	#superclass : #SycRefactorVariableCommand,
-	#category : #'SystemCommands-VariableCommands'
+	#name : 'SycPushUpVariableCommand',
+	#superclass : 'SycRefactorVariableCommand',
+	#category : 'SystemCommands-VariableCommands',
+	#package : 'SystemCommands-VariableCommands'
 }
 
-{ #category : #activation }
+{ #category : 'activation' }
 SycPushUpVariableCommand class >> sourceCodeMenuActivation [
 	<classAnnotation>
 
 	^SycSourceCodeMenuActivation byRootGroupItemOrder: 1.3 for: ClySourceCodeContext
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycPushUpVariableCommand >> asRefactorings [
 
 	^self
@@ -23,12 +24,12 @@ SycPushUpVariableCommand >> asRefactorings [
 			refactoring variable: var name class: var definingClass superclass]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycPushUpVariableCommand >> defaultMenuIconName [
 	^ #up
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycPushUpVariableCommand >> defaultMenuItemName [
 	^'Push up'
 ]

@@ -5,31 +5,33 @@ Internal Representation and Key Implementation Points.
 
     Instance Variables
 	newName:		<String>
-	package:		<RPackage>
+	package:		<Package>
 "
 Class {
-	#name : #SycCopyPackageCommand,
-	#superclass : #CmdCommand,
-	#category : #'SystemCommands-PackageCommands-Scope'
+	#name : 'SycCopyPackageCommand',
+	#superclass : 'CmdCommand',
+	#category : 'SystemCommands-PackageCommands-Scope',
+	#package : 'SystemCommands-PackageCommands',
+	#tag : 'Scope'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 SycCopyPackageCommand class >> canBeExecutedInContext: aToolContext [
 
 	^ aToolContext isPackageSelected
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycCopyPackageCommand >> defaultMenuIconName [
 	^#smallCopy
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycCopyPackageCommand >> defaultMenuItemName [
 	^'Copy all package'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycCopyPackageCommand >> prepareFullExecutionInContext: aToolContext [
 
 	| dialog package newName |

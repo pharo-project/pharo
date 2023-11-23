@@ -16,15 +16,17 @@ During #writeOn: this stream is copied to the output stream.
 Part of Zinc HTTP Components.
 "
 Class {
-	#name : #ZnStreamingEntity,
-	#superclass : #ZnEntity,
+	#name : 'ZnStreamingEntity',
+	#superclass : 'ZnEntity',
 	#instVars : [
 		'stream'
 	],
-	#category : #'Zinc-HTTP-Core'
+	#category : 'Zinc-HTTP-Core',
+	#package : 'Zinc-HTTP',
+	#tag : 'Core'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnStreamingEntity class >> designatedMimeType [
 	"I have no designated mime type, I can handle all content.
 	See #concreteSubclassForType: "
@@ -32,7 +34,7 @@ ZnStreamingEntity class >> designatedMimeType [
 	^ nil
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnStreamingEntity class >> matches: mimeType [
 	"I have no designated mime type, I can handle all content.
 	See #concreteSubclassForType: "
@@ -40,7 +42,7 @@ ZnStreamingEntity class >> matches: mimeType [
 	^ false
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnStreamingEntity class >> readFrom: stream usingType: mimeType andLength: length [
 	"Create and return a new streaming entity of mimeType and length from stream.
 	Clients can/must use the embedded ZnLimitedReadStream to read all content,
@@ -51,14 +53,14 @@ ZnStreamingEntity class >> readFrom: stream usingType: mimeType andLength: lengt
 		yourself
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 ZnStreamingEntity >> close [
 	stream ifNotNil: [
 		stream close.
 		stream := nil ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnStreamingEntity >> consumeContent [
 	"To be improved later on using some kind of larger buffer"
 
@@ -66,7 +68,7 @@ ZnStreamingEntity >> consumeContent [
 		whileFalse: [ self stream next ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnStreamingEntity >> contents [
 	"Since this is a non-repeatable entity,
 	#contents will #consumeContent,
@@ -76,14 +78,14 @@ ZnStreamingEntity >> contents [
 	^ ZnUtils readUpToEnd: self stream limit: (ZnCurrentOptions at: #maximumEntitySize)
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnStreamingEntity >> isEmpty [
 	"We actually don't know"
 
 	^ false
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 ZnStreamingEntity >> readFrom: readStream [
 
 	self contentLength
@@ -93,22 +95,22 @@ ZnStreamingEntity >> readFrom: readStream [
 			self stream: limitedStream ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnStreamingEntity >> readStream [
 	^ self stream
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnStreamingEntity >> stream [
 	^ stream
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnStreamingEntity >> stream: readStream [
 	stream := readStream
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 ZnStreamingEntity >> writeOn: outputStream [
 	(self contentLength isNil or: [ self contentLength = 0 ])
 		ifTrue: [

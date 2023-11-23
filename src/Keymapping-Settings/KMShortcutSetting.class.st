@@ -2,17 +2,18 @@
 I represent a shortcut setting. I relate a keymap with its default shortcut and its current shortcut, so it can be mutated.
 "
 Class {
-	#name : #KMShortcutSetting,
-	#superclass : #Object,
+	#name : 'KMShortcutSetting',
+	#superclass : 'Object',
 	#instVars : [
 		'shortcutName',
 		'category',
 		'action'
 	],
-	#category : #'Keymapping-Settings'
+	#category : 'Keymapping-Settings',
+	#package : 'Keymapping-Settings'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 KMShortcutSetting class >> for: aShortcutName in: aCategory [
 	^ (self new)
 		shortcutName: aShortcutName;
@@ -20,7 +21,7 @@ KMShortcutSetting class >> for: aShortcutName in: aCategory [
 		yourself
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 KMShortcutSetting class >> settingInputWidgetForNode: aSettingNode [
 	| catcherMorph theme |
 	theme := UITheme builder.
@@ -28,42 +29,42 @@ KMShortcutSetting class >> settingInputWidgetForNode: aSettingNode [
 	^ theme newRow: {catcherMorph}
 ]
 
-{ #category : #setting }
+{ #category : 'setting' }
 KMShortcutSetting >> accept: aShortcut [
 	self keymap shortcut: aShortcut
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMShortcutSetting >> action: anActionBlock [
 	action := anActionBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMShortcutSetting >> category: aCategory [
 	category := aCategory
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMShortcutSetting >> defaultShortcut [
 	^ self keymap defaultShortcut
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMShortcutSetting >> keymap [
 	^ KMFactory keymapContainer keymapNamed: shortcutName inCategory: category
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMShortcutSetting >> keystrokes [
 	^ self keymap shortcut
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMShortcutSetting >> shortcut [
 	^ self keymap shortcut
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMShortcutSetting >> shortcutName: aShortcutName [
 	shortcutName := aShortcutName
 ]

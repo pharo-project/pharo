@@ -1,99 +1,97 @@
 Class {
-	#name : #MCSnapshotTest,
-	#superclass : #MCTestCase,
+	#name : 'MCSnapshotTest',
+	#superclass : 'MCTestCase',
 	#instVars : [
 		'snapshot'
 	],
-	#category : #'Monticello-Tests-Snapshots'
+	#category : 'Monticello-Tests-Snapshots',
+	#package : 'Monticello-Tests',
+	#tag : 'Snapshots'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 MCSnapshotTest >> createSnapshotWithClassWithClassSideTraits [
 
 	| t1 t2 |
-	
-	RPackageOrganizer default registerPackageNamed: 'Monticello-Snapshot-Mock'.
-	
+	self packageOrganizer ensurePackage: 'Monticello-Snapshot-Mock'.
+
 	t1 := self class classInstaller make: [ :aBuilder |
-		aBuilder 
-			name: #T1;
-			package:  'Monticello-Snapshot-Mock';
-			beTrait ].					
+		      aBuilder
+			      name: #T1;
+			      package: 'Monticello-Snapshot-Mock';
+			      beTrait ].
 
 	t2 := self class classInstaller make: [ :aBuilder |
-		aBuilder 
-			name: #T2;
-			package:  'Monticello-Snapshot-Mock';
-			beTrait ].					
+		      aBuilder
+			      name: #T2;
+			      package: 'Monticello-Snapshot-Mock';
+			      beTrait ].
 
-	self class classInstaller make: [ :aBuilder | 
-			aBuilder 
-				name: #C1;
-				traitComposition: t1 + t2;
-				classTraitComposition: (t1 classTrait + t2 classTrait - #m1);
-				package: 'Monticello-Snapshot-Mock'].
+	self class classInstaller make: [ :aBuilder |
+		aBuilder
+			name: #C1;
+			traitComposition: t1 + t2;
+			classTraitComposition: t1 classTrait + t2 classTrait - #m1;
+			package: 'Monticello-Snapshot-Mock' ].
 
-	^ (MCWorkingCopy forPackage: (MCPackage new name: 'Monticello-Snapshot-Mock')) snapshot. 
+	^ (MCWorkingCopy forPackageNamed: 'Monticello-Snapshot-Mock') snapshot
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 MCSnapshotTest >> createSnapshotWithTraitWithClassSideTraits [
 
 	| t1 t2 t3 |
-	
-	RPackageOrganizer default registerPackageNamed: 'Monticello-Snapshot-Mock'.
+	self packageOrganizer ensurePackage: 'Monticello-Snapshot-Mock'.
 
 	t1 := self class classInstaller make: [ :aBuilder |
-		aBuilder 
-			name: #T1;
-			package:  'Monticello-Snapshot-Mock';
-			beTrait ].					
+		      aBuilder
+			      name: #T1;
+			      package: 'Monticello-Snapshot-Mock';
+			      beTrait ].
 
 	t2 := self class classInstaller make: [ :aBuilder |
-		aBuilder 
-			name: #T2;
-			package:  'Monticello-Snapshot-Mock';
-			beTrait ].					
+		      aBuilder
+			      name: #T2;
+			      package: 'Monticello-Snapshot-Mock';
+			      beTrait ].
 
 	t3 := self class classInstaller make: [ :aBuilder |
-		aBuilder 
-			name: #T3;
-			traitComposition: t1 + t2;
-			classTraitComposition: (t1 classTrait + t2 classTrait - #m1);
-			package:  'Monticello-Snapshot-Mock';
-			beTrait ].					
+		      aBuilder
+			      name: #T3;
+			      traitComposition: t1 + t2;
+			      classTraitComposition: t1 classTrait + t2 classTrait - #m1;
+			      package: 'Monticello-Snapshot-Mock';
+			      beTrait ].
 
-	^ (MCWorkingCopy forPackage: (MCPackage new name: 'Monticello-Snapshot-Mock')) snapshot. 
+	^ (MCWorkingCopy forPackageNamed: 'Monticello-Snapshot-Mock') snapshot
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MCSnapshotTest >> lookupClass: aName in: definitions [
 	^ definitions
 		detect: [ :aDef | aDef isClassDefinition and: [ aDef className = aName ] ]
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MCSnapshotTest >> lookupTrait: aName in: definitions [ 
 
 	^ definitions detect: [ :aDef | aDef isTraitDefinition and: [ aDef className = aName ] ]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 MCSnapshotTest >> setUp [
 	super setUp.
 	snapshot :=  self mockSnapshot.
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 MCSnapshotTest >> tearDown [ 
 
-	| package |
-	package := 'Monticello-Snapshot-Mock' asPackageIfAbsent: [nil].
-	package ifNotNil: [ package removeFromSystem ].
+	self packageOrganizer removePackage: 'Monticello-Snapshot-Mock'.
 	super tearDown.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCSnapshotTest >> testClassWithClassTraitCompositionHasCorrectTraitComposition [
 
 	| definitions def |
@@ -105,7 +103,7 @@ MCSnapshotTest >> testClassWithClassTraitCompositionHasCorrectTraitComposition [
 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCSnapshotTest >> testClassWithClassTraitCompositionHasTraitComposition [
 
 	| definitions def |
@@ -118,7 +116,7 @@ MCSnapshotTest >> testClassWithClassTraitCompositionHasTraitComposition [
 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCSnapshotTest >> testCreation [
 	|d|
 	d :=  self mockSnapshot definitions.
@@ -128,7 +126,7 @@ MCSnapshotTest >> testCreation [
 	
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCSnapshotTest >> testTraitWithClassTraitCompositionHasCorrectTraitComposition [
 
 	| definitions def |
@@ -140,15 +138,15 @@ MCSnapshotTest >> testTraitWithClassTraitCompositionHasCorrectTraitComposition [
 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCSnapshotTest >> testTraitWithClassTraitCompositionHasTraitComposition [
 
 	| definitions def |
-	definitions :=  self createSnapshotWithTraitWithClassSideTraits definitions.
-	def := self lookupTrait: #T3 in: definitions.
+	definitions := self createSnapshotWithTraitWithClassSideTraits definitions.
+	"This could use #lookupTrait:in: when this issue will be fixed: https://github.com/pharo-project/pharo/issues/14605
 	
-	self assert: def hasClassTraitComposition.
+	The problem is that since MCClassTraitDefinition returns true, we can get a MCClassTraitDefinition instead of a MCTraitDefinition"
+	def := definitions detect: [ :aDef | (aDef isKindOf: MCTraitDefinition) and: [ aDef className = #T3 ] ].
 
-
-
+	self assert: def hasClassTraitComposition
 ]

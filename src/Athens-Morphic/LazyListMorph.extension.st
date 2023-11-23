@@ -1,6 +1,6 @@
-Extension { #name : #LazyListMorph }
+Extension { #name : 'LazyListMorph' }
 
-{ #category : #'*Athens-Morphic' }
+{ #category : '*Athens-Morphic' }
 LazyListMorph >> athensDisplay: item atRow: row on: aCanvas [
 	"Display the given item at the given row on the given
 	canvas."
@@ -24,28 +24,28 @@ LazyListMorph >> athensDisplay: item atRow: row on: aCanvas [
 			aCanvas drawShape: (self selectionFrameForRow: row) ]
 ]
 
-{ #category : #'*Athens-Morphic' }
+{ #category : '*Athens-Morphic' }
 LazyListMorph >> athensDrawBackgroundForRow: row on: aCanvas color: aColor [
 
 	aCanvas setPaint: aColor.
 	aCanvas drawShape: (self selectionFrameForRow: row)
 ]
 
-{ #category : #'*Athens-Morphic' }
+{ #category : '*Athens-Morphic' }
 LazyListMorph >> athensDrawBackgroundForSearchedRow: row on: aCanvas [
 
 	aCanvas setPaint: listSource secondarySelectionColor.
 	aCanvas drawShape: (self selectionFrameForRow: row)
 ]
 
-{ #category : #'*Athens-Morphic' }
+{ #category : '*Athens-Morphic' }
 LazyListMorph >> athensDrawBackgroundForSelectedRow: row on: aCanvas [
 
 	aCanvas setPaint: listSource selectionColorToUse.
 	aCanvas drawShape: (self selectionFrameForRow: row)
 ]
 
-{ #category : #'*Athens-Morphic' }
+{ #category : '*Athens-Morphic' }
 LazyListMorph >> athensDrawSelectionOn: anAthensCanvas [
 
 	selectedRow ifNil: [ ^self ].
@@ -53,7 +53,7 @@ LazyListMorph >> athensDrawSelectionOn: anAthensCanvas [
 	self athensDrawBackgroundForSelectedRow: selectedRow on: anAthensCanvas
 ]
 
-{ #category : #'*Athens-Morphic' }
+{ #category : '*Athens-Morphic' }
 LazyListMorph >> athensHighlightPotentialDropRow: row on: anAthensCanvas [
 	| drawBounds |
 	drawBounds := self drawBoundsForRow: row.
@@ -62,7 +62,7 @@ LazyListMorph >> athensHighlightPotentialDropRow: row on: anAthensCanvas [
 	anAthensCanvas drawShape: drawBounds
 ]
 
-{ #category : #'*Athens-Morphic' }
+{ #category : '*Athens-Morphic' }
 LazyListMorph >> drawOnAthensCanvas: aCanvas [
 	listItems isEmpty
 		ifTrue: [^ self].

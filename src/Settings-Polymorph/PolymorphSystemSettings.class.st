@@ -2,8 +2,8 @@
 I provide settings for Morphic appearance (theme, fonts, colors, ...) that can be found and changed in the Settings browser.
 "
 Class {
-	#name : #PolymorphSystemSettings,
-	#superclass : #Object,
+	#name : 'PolymorphSystemSettings',
+	#superclass : 'Object',
 	#classVars : [
 		'DesktopColor',
 		'DesktopGradientDirection',
@@ -16,10 +16,11 @@ Class {
 		'ShowDesktopLogo',
 		'UseDesktopGradientFill'
 	],
-	#category : #'Settings-Polymorph'
+	#category : 'Settings-Polymorph',
+	#package : 'Settings-Polymorph'
 }
 
-{ #category : #settings }
+{ #category : 'settings' }
 PolymorphSystemSettings class >> appearanceSettingsOn: aBuilder [
 	<systemsettings>
 	(aBuilder group: #appearance)
@@ -37,7 +38,7 @@ PolymorphSystemSettings class >> appearanceSettingsOn: aBuilder [
 			self soundSettingsOn: aBuilder]
 ]
 
-{ #category : #desktop }
+{ #category : 'desktop' }
 PolymorphSystemSettings class >> desktopBackgroundChanged [
 	| fill |
 
@@ -76,18 +77,18 @@ PolymorphSystemSettings class >> desktopBackgroundChanged [
 		self currentWorld changed
 ]
 
-{ #category : #desktop }
+{ #category : 'desktop' }
 PolymorphSystemSettings class >> desktopColor [
 	^ DesktopColor ifNil: [DesktopColor := self currentWorld defaultWorldColor]
 ]
 
-{ #category : #desktop }
+{ #category : 'desktop' }
 PolymorphSystemSettings class >> desktopColor: aColor [
 	DesktopColor := aColor.
 	self desktopBackgroundChanged
 ]
 
-{ #category : #desktop }
+{ #category : 'desktop' }
 PolymorphSystemSettings class >> desktopColorSettingsOn: aBuilder [
 	(aBuilder setting: #desktopColor) label: 'Color';
 		 description: 'This is the only color of your desktop if no gradient is used. If you make use of a gradient, then this color is the first one of the gradient';
@@ -115,76 +116,76 @@ PolymorphSystemSettings class >> desktopColorSettingsOn: aBuilder [
 							'Center' translated -> #center}]]
 ]
 
-{ #category : #desktop }
+{ #category : 'desktop' }
 PolymorphSystemSettings class >> desktopGradientDirection [
 	"#Radial #Vertical or #Horizontal"
 	^ DesktopGradientDirection ifNil: [DesktopGradientDirection := #Vertical]
 ]
 
-{ #category : #desktop }
+{ #category : 'desktop' }
 PolymorphSystemSettings class >> desktopGradientDirection: aSymbol [
 	"#Radial #Vertical or #Horizontal"
 	DesktopGradientDirection := aSymbol.
 	self desktopBackgroundChanged
 ]
 
-{ #category : #desktop }
+{ #category : 'desktop' }
 PolymorphSystemSettings class >> desktopGradientFillColor [
 	^ DesktopGradientFillColor ifNil: [DesktopGradientFillColor := self desktopColor]
 ]
 
-{ #category : #desktop }
+{ #category : 'desktop' }
 PolymorphSystemSettings class >> desktopGradientFillColor: aColor [
 	DesktopGradientFillColor := aColor.
 	self desktopBackgroundChanged
 ]
 
-{ #category : #desktop }
+{ #category : 'desktop' }
 PolymorphSystemSettings class >> desktopGradientOrigin [
 	"#topLeft #topCenter #topRight #rightCenter #bottomRight #bottomCenter #bottomLeft #leftCenter #center"
 	^ DesktopGradientOrigin ifNil: [DesktopGradientOrigin := #topLeft]
 ]
 
-{ #category : #desktop }
+{ #category : 'desktop' }
 PolymorphSystemSettings class >> desktopGradientOrigin: aSymbol [
 	"#Radial #Vertical or #Horizontal"
 	DesktopGradientOrigin := aSymbol.
 	self desktopBackgroundChanged
 ]
 
-{ #category : #desktop }
+{ #category : 'desktop' }
 PolymorphSystemSettings class >> desktopImageFileName [
 	^ DesktopImageFileName ifNil: [DesktopImageFileName := '']
 ]
 
-{ #category : #desktop }
+{ #category : 'desktop' }
 PolymorphSystemSettings class >> desktopImageFileName: aFileName [
 	DesktopImageFileName := aFileName.
 	self desktopBackgroundChanged
 ]
 
-{ #category : #desktop }
+{ #category : 'desktop' }
 PolymorphSystemSettings class >> desktopImageLayout [
 	^ DesktopImageLayout ifNil: [DesktopImageLayout := #scaled]
 ]
 
-{ #category : #desktop }
+{ #category : 'desktop' }
 PolymorphSystemSettings class >> desktopImageLayout: aSymbol [
 	DesktopImageLayout := aSymbol.
 	self desktopBackgroundChanged
 ]
 
-{ #category : #desktop }
+{ #category : 'desktop' }
 PolymorphSystemSettings class >> desktopLogo [
 	^ DesktopLogo ifNil: [self showDesktopLogo ifTrue: [DesktopLogo := self pharoLogo]]
 ]
 
-{ #category : #desktop }
+{ #category : 'desktop' }
 PolymorphSystemSettings class >> desktopLogo: anImageMorph [
 	DesktopLogo := anImageMorph
 ]
 
-{ #category : #desktop }
+{ #category : 'desktop' }
 PolymorphSystemSettings class >> desktopLogoChanged [
 	self showDesktopLogo
 		ifFalse: [self setDesktopLogoWith: nil.
@@ -197,19 +198,19 @@ PolymorphSystemSettings class >> desktopLogoChanged [
 				do: [self setDesktopLogoWith: self pharoLogo]]
 ]
 
-{ #category : #desktop }
+{ #category : 'desktop' }
 PolymorphSystemSettings class >> desktopLogoFileName [
 	^ DesktopLogoFileName ifNil: [DesktopLogoFileName := '']
 ]
 
-{ #category : #desktop }
+{ #category : 'desktop' }
 PolymorphSystemSettings class >> desktopLogoFileName: aFileName [
 	DesktopLogoFileName = aFileName ifTrue: [^ self].
 	DesktopLogoFileName := aFileName.
 	self desktopLogoChanged
 ]
 
-{ #category : #desktop }
+{ #category : 'desktop' }
 PolymorphSystemSettings class >> desktopSettingsOn: aBuilder [
 	(aBuilder group: #desktopSettings)
 		label: 'Desktop';
@@ -244,7 +245,7 @@ PolymorphSystemSettings class >> desktopSettingsOn: aBuilder [
 				]]
 ]
 
-{ #category : #morphic }
+{ #category : 'morphic' }
 PolymorphSystemSettings class >> labelAreaLayoutSettingsOn: aBuilder [
 	<systemsettings>
 	(aBuilder pickOne: #labelAreaLayout)
@@ -262,7 +263,7 @@ If macOS, close/collapse/expand boxes are placed on the left, and menu control o
 If Windows/Linux, elements are placed in order: menu control, label, collapse/expand/close boxes.'
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 PolymorphSystemSettings class >> morphicHaloSettingsOn: aBuilder [
 	(aBuilder group: #halo)
 		label: 'Halo';
@@ -288,7 +289,7 @@ PolymorphSystemSettings class >> morphicHaloSettingsOn: aBuilder [
 		]
 ]
 
-{ #category : #morphic }
+{ #category : 'morphic' }
 PolymorphSystemSettings class >> morphicMenuSettingsOn: aBuilder [
 	(aBuilder group: #menu)
 		label: 'Menus';
@@ -325,7 +326,7 @@ PolymorphSystemSettings class >> morphicMenuSettingsOn: aBuilder [
 		]
 ]
 
-{ #category : #morphic }
+{ #category : 'morphic' }
 PolymorphSystemSettings class >> morphicSettingsOn: aBuilder [
 	(aBuilder group: #morphic)
 		label: 'Morphic';
@@ -368,7 +369,7 @@ PolymorphSystemSettings class >> morphicSettingsOn: aBuilder [
 				description: 'If true, select multiple Morphs in the world by dragging a selection box around them.']
 ]
 
-{ #category : #morphic }
+{ #category : 'morphic' }
 PolymorphSystemSettings class >> morphicWindowsSettingsOn: aBuilder [
 	(aBuilder group: #windows)
 		label: 'Windows';
@@ -408,12 +409,12 @@ PolymorphSystemSettings class >> morphicWindowsSettingsOn: aBuilder [
 				description: 'Set the default text field width of the text entry dialog window' ]
 ]
 
-{ #category : #desktop }
+{ #category : 'desktop' }
 PolymorphSystemSettings class >> pharoLogo [
 	^ ImageMorph withForm: self pharoLogoForm
 ]
 
-{ #category : #desktop }
+{ #category : 'desktop' }
 PolymorphSystemSettings class >> pharoLogoContents [
 	^ 'iVBORw0KGgoAAAANSUhEUgAAAWkAAAB5CAYAAAD72tBhAAAKQWlDQ1BJQ0MgUHJvZmlsZQAA
 SA2dlndUU9kWh8+9N73QEiIgJfQaegkg0jtIFQRRiUmAUAKGhCZ2RAVGFBEpVmRUwAFHhyJj
@@ -926,12 +927,12 @@ X6ArESACRIAIEAEiQASIABEgAkSACBABIkAEiAARIAJEgAgQASKwbQJ/AQb4me4AfccBAAAA
 AElFTkSuQmCC'
 ]
 
-{ #category : #desktop }
+{ #category : 'desktop' }
 PolymorphSystemSettings class >> pharoLogoForm [
 	^ Form fromBinaryStream: self pharoLogoContents base64Decoded readStream
 ]
 
-{ #category : #desktop }
+{ #category : 'desktop' }
 PolymorphSystemSettings class >> setDesktopLogoWith: aMorph [
 	self desktopLogo ifNotNil: [ self desktopLogo delete ].
 	self desktopLogo: aMorph.
@@ -947,19 +948,19 @@ PolymorphSystemSettings class >> setDesktopLogoWith: aMorph [
 				ifNotNil: [ self currentWorld addMorph: logo inFrontOf: self currentWorld backgroundMorph ] ]
 ]
 
-{ #category : #desktop }
+{ #category : 'desktop' }
 PolymorphSystemSettings class >> showDesktopLogo [
 	^ ShowDesktopLogo ifNil: [ShowDesktopLogo := true]
 ]
 
-{ #category : #desktop }
+{ #category : 'desktop' }
 PolymorphSystemSettings class >> showDesktopLogo: aBoolean [
 	ShowDesktopLogo = aBoolean ifTrue: [^ self].
 	ShowDesktopLogo := aBoolean.
 	self desktopLogoChanged
 ]
 
-{ #category : #sound }
+{ #category : 'sound' }
 PolymorphSystemSettings class >> soundSettingsOn: aBuilder [
 	(aBuilder setting: #soundEnabled)
 		label: 'Sound';
@@ -978,29 +979,29 @@ PolymorphSystemSettings class >> soundSettingsOn: aBuilder [
 						domainValues: self soundThemeClassChoices]]
 ]
 
-{ #category : #sound }
+{ #category : 'sound' }
 PolymorphSystemSettings class >> soundThemeClass [
 	^ SoundTheme current class
 ]
 
-{ #category : #sound }
+{ #category : 'sound' }
 PolymorphSystemSettings class >> soundThemeClass: aSoundThemeClass [
 	aSoundThemeClass ifNil: [^ self].
 	self soundThemeClass ~= aSoundThemeClass
 		ifTrue: [aSoundThemeClass beCurrent]
 ]
 
-{ #category : #sound }
+{ #category : 'sound' }
 PolymorphSystemSettings class >> soundThemeClassChoices [
 	^ SoundTheme allThemeClasses collect: [:c | c themeName -> c]
 ]
 
-{ #category : #morphic }
+{ #category : 'morphic' }
 PolymorphSystemSettings class >> uiThemeClass [
 	^ UITheme current class
 ]
 
-{ #category : #morphic }
+{ #category : 'morphic' }
 PolymorphSystemSettings class >> uiThemeClass: aUIThemeClass [
 	| themeClass |
 	themeClass := aUIThemeClass
@@ -1008,23 +1009,23 @@ PolymorphSystemSettings class >> uiThemeClass: aUIThemeClass [
 	 themeClass beCurrent
 ]
 
-{ #category : #morphic }
+{ #category : 'morphic' }
 PolymorphSystemSettings class >> uiThemeClassChoices [
 	^ UITheme allThemeClasses collect: [:c | c themeName -> c]
 ]
 
-{ #category : #desktop }
+{ #category : 'desktop' }
 PolymorphSystemSettings class >> useDesktopGradientFill [
 	^ UseDesktopGradientFill ifNil: [UseDesktopGradientFill := false]
 ]
 
-{ #category : #desktop }
+{ #category : 'desktop' }
 PolymorphSystemSettings class >> useDesktopGradientFill: aBoolean [
 	UseDesktopGradientFill := aBoolean.
 	self desktopBackgroundChanged
 ]
 
-{ #category : #morphic }
+{ #category : 'morphic' }
 PolymorphSystemSettings class >> windowPositionStrategySettingsOn: aBuilder [
 	<systemsettings>
 	(aBuilder pickOne: #usedStrategy)

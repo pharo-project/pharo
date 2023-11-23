@@ -1,6 +1,6 @@
-Extension { #name : #BracketMorph }
+Extension { #name : 'BracketMorph' }
 
-{ #category : #'*Athens-Morphic' }
+{ #category : '*Athens-Morphic' }
 BracketMorph >> createClosedPolygonPathFrom: aPointsArray on: anAthensCanvas [
 	^ anAthensCanvas
 		createPath: [ :builder |
@@ -12,7 +12,7 @@ BracketMorph >> createClosedPolygonPathFrom: aPointsArray on: anAthensCanvas [
 			builder ]
 ]
 
-{ #category : #'*Athens-Morphic' }
+{ #category : '*Athens-Morphic' }
 BracketMorph >> drawOnAthensCanvas: anAthensCanvas [
 	"Draw triangles at the edges."
 

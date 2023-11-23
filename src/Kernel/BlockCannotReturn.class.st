@@ -2,15 +2,17 @@
 This exception is thrown when a block tries to return but there is no home context.
 "
 Class {
-	#name : #BlockCannotReturn,
-	#superclass : #CannotReturn,
+	#name : 'BlockCannotReturn',
+	#superclass : 'CannotReturn',
 	#instVars : [
 		'home'
 	],
-	#category : #'Kernel-Exceptions'
+	#category : 'Kernel-Exceptions',
+	#package : 'Kernel',
+	#tag : 'Exceptions'
 }
 
-{ #category : #signalling }
+{ #category : 'signalling' }
 BlockCannotReturn class >> result: anObject from: homeContext [
 
 	^self new
@@ -19,12 +21,12 @@ BlockCannotReturn class >> result: anObject from: homeContext [
 		signal
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BlockCannotReturn >> home [
 	^ home
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BlockCannotReturn >> home: anObject [
 	home := anObject
 ]

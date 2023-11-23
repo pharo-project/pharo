@@ -1,11 +1,11 @@
-Extension { #name : #Boolean }
+Extension { #name : 'Boolean' }
 
-{ #category : #'*UnifiedFFI' }
+{ #category : '*UnifiedFFI' }
 Boolean class >> asExternalTypeOn: generator [
 	^ FFIBool asExternalTypeOn: generator
 ]
 
-{ #category : #'*UnifiedFFI' }
+{ #category : '*UnifiedFFI' }
 Boolean >> asExternalTypeOn: generator [
 	^ FFIConst value: self asBit
 ]

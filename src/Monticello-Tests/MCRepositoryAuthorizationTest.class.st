@@ -1,10 +1,12 @@
 Class {
-	#name : #MCRepositoryAuthorizationTest,
-	#superclass : #TestCase,
-	#category : #'Monticello-Tests-Repository'
+	#name : 'MCRepositoryAuthorizationTest',
+	#superclass : 'TestCase',
+	#category : 'Monticello-Tests-Repository',
+	#package : 'Monticello-Tests',
+	#tag : 'Repository'
 }
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 MCRepositoryAuthorizationTest >> assert: registry on: serverUrlString hasUser: nameString withPassword: passwordString [ 
 
 	registry repositoryAt: serverUrlString credentialsDo: [ :user :password |
@@ -12,14 +14,14 @@ MCRepositoryAuthorizationTest >> assert: registry on: serverUrlString hasUser: n
 		self assert: passwordString equals: password ].
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCRepositoryAuthorizationTest >> exampleServerUrl [
 	<sampleInstance>
 
 	^ 'http://www.squeaksource.com'.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCRepositoryAuthorizationTest >> testEmptyCredentials [
 
 	| repo |
@@ -29,7 +31,7 @@ MCRepositoryAuthorizationTest >> testEmptyCredentials [
 	self assert: repo password equals: ''.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCRepositoryAuthorizationTest >> testNoCredentials [
 
 	| repo |
@@ -38,7 +40,7 @@ MCRepositoryAuthorizationTest >> testNoCredentials [
 	self assert: repo password equals: ''.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCRepositoryAuthorizationTest >> testOverrideStoredCredentials [
 
 	| repo registry |
@@ -55,7 +57,7 @@ MCRepositoryAuthorizationTest >> testOverrideStoredCredentials [
 		registry removeCredentialsFor: self exampleServerUrl ].
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCRepositoryAuthorizationTest >> testStoredCredentials [
 
 	| repo registry |
@@ -71,7 +73,7 @@ MCRepositoryAuthorizationTest >> testStoredCredentials [
 		registry removeCredentialsFor: self exampleServerUrl ].
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCRepositoryAuthorizationTest >> testStoredCredentialsUsesMostSpecific [
 
 	| repo registry nestedRepo |

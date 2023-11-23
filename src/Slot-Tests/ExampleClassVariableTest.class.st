@@ -2,12 +2,14 @@
 Test for class variables
 "
 Class {
-	#name : #ExampleClassVariableTest,
-	#superclass : #SlotSilentTest,
-	#category : #'Slot-Tests-Examples'
+	#name : 'ExampleClassVariableTest',
+	#superclass : 'SlotSilentTest',
+	#category : 'Slot-Tests-Examples',
+	#package : 'Slot-Tests',
+	#tag : 'Examples'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 ExampleClassVariableTest >> testCreateClassWithClassVariable [
 	"Add class variable using the builder interface"
 
@@ -23,7 +25,7 @@ ExampleClassVariableTest >> testCreateClassWithClassVariable [
 	self assert: (aClass hasClassVarNamed: 'ClassVar')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ExampleClassVariableTest >> testCreateClassWithTwoClassVariable [
 	"Add class variable using the builder interface"
 
@@ -41,7 +43,7 @@ ExampleClassVariableTest >> testCreateClassWithTwoClassVariable [
 	self assert: (aClass hasClassVarNamed: 'ClassVar2')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ExampleClassVariableTest >> testMigrateClassVar [
 	"Add class variable using the builder interface and change it to another kind"
 

@@ -1,17 +1,18 @@
 Class {
-	#name : #EFLiteralValueExpressionTest,
-	#superclass : #EFTest,
-	#category : #'EnlumineurFormatter-Tests'
+	#name : 'EFLiteralValueExpressionTest',
+	#superclass : 'EFTest',
+	#category : 'EnlumineurFormatter-Tests',
+	#package : 'EnlumineurFormatter-Tests'
 }
 
-{ #category : #configurations }
+{ #category : 'configurations' }
 EFLiteralValueExpressionTest >> basicConfiguration [
 
 	^ self contextClass basicNew
 		formatCommentCloseToStatements: false
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFLiteralValueExpressionTest >> testNoExtraSpaces [
 	| source |
 	configurationSelector := #basicConfiguration.
@@ -19,17 +20,17 @@ EFLiteralValueExpressionTest >> testNoExtraSpaces [
 	self assert: source equals: '2'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFLiteralValueExpressionTest >> testNotLitteral [
 
 	| expr source |
-	expr := RBLiteralValueNode value: Transcript. 
+	expr := RBLiteralValueNode value: Object.
 	configurationSelector := #basicConfiguration.
 	source := self formatter format: expr.
 	self assert: source equals: '''<an unprintable nonliteral value>'''
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFLiteralValueExpressionTest >> testNumbers [
 	| source |
 	configurationSelector := #basicConfiguration.
@@ -37,7 +38,7 @@ EFLiteralValueExpressionTest >> testNumbers [
 	self assert: source equals: '3.141592653589793'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFLiteralValueExpressionTest >> testSpaces [
 	| source |
 	configurationSelector := #basicConfiguration.
@@ -45,7 +46,7 @@ EFLiteralValueExpressionTest >> testSpaces [
 	self assert: source equals: '2'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFLiteralValueExpressionTest >> testString [
 	| source |
 	configurationSelector := #basicConfiguration.
@@ -53,7 +54,7 @@ EFLiteralValueExpressionTest >> testString [
 	self assert: source equals: '''Pharo'''
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFLiteralValueExpressionTest >> testTrue [
 	| source |
 	configurationSelector := #basicConfiguration.

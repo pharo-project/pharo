@@ -4,31 +4,32 @@ the tutorialPlayer.
 
 "
 Class {
-	#name : #Lesson,
-	#superclass : #Object,
+	#name : 'Lesson',
+	#superclass : 'Object',
 	#instVars : [
 		'title',
 		'lesson'
 	],
-	#category : #'ProfStef-Core'
+	#category : 'ProfStef-Core',
+	#package : 'ProfStef-Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Lesson class >> title: aStringForTitle lesson: aStringForLesson [
 	^ self new title: aStringForTitle; lesson: aStringForLesson; yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Lesson >> lesson [
 	^ lesson ifNil: [lesson := '']
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Lesson >> lesson: aString [
 	lesson := aString
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 Lesson >> printOn: aStream [
 	super printOn: aStream.
 	aStream
@@ -37,12 +38,12 @@ Lesson >> printOn: aStream [
 		nextPutAll: ')'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Lesson >> title [
 	^ title ifNil: [title := '']
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Lesson >> title: aString [
 	title := aString
 ]

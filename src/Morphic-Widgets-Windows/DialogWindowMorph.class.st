@@ -4,21 +4,23 @@ Designed to be subclassed with content.
 Supports Escape key for cancel and Enter key for default button.
 "
 Class {
-	#name : #DialogWindowMorph,
-	#superclass : #StandardWindow,
+	#name : 'DialogWindowMorph',
+	#superclass : 'StandardWindow',
 	#instVars : [
 		'cancelled'
 	],
-	#category : #'Morphic-Widgets-Windows-Widgets'
+	#category : 'Morphic-Widgets-Windows-Widgets',
+	#package : 'Morphic-Widgets-Windows',
+	#tag : 'Widgets'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 DialogWindowMorph class >> initialize [
 
 	self deprecatedAliases: { #DialogWindow }
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 DialogWindowMorph >> acceptTextMorphs [
 	"Accept any text morphs except for those that have no edits."
 
@@ -28,7 +30,7 @@ DialogWindowMorph >> acceptTextMorphs [
 				p hasUnacceptedEdits]]) ifTrue: [p accept]]
 ]
 
-{ #category : #'top window' }
+{ #category : 'top window' }
 DialogWindowMorph >> activate [
 	"Set the default focus for now, will want to
 	remember it at some point."
@@ -40,47 +42,47 @@ DialogWindowMorph >> activate [
 				m takeKeyboardFocus]]
 ]
 
-{ #category : #theme }
+{ #category : 'theme' }
 DialogWindowMorph >> activeFillStyle [
 	"Return the active fillStyle for the receiver."
 
 	^self theme dialogWindowActiveFillStyleFor: self
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 DialogWindowMorph >> addInitialPanel [
 	"Add the panel."
 
 	self addMainPanel
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 DialogWindowMorph >> addMainPanel [
 	"Add the main panel."
 
 	self addMorph: self newMainPanel frame: (0@0 corner: 1@1)
 ]
 
-{ #category : #theme }
+{ #category : 'theme' }
 DialogWindowMorph >> animateClose [
 	"Animate closing."
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 DialogWindowMorph >> applyChanges [
 	"Apply the changes."
 
 	self acceptTextMorphs
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 DialogWindowMorph >> buttons [
 	"Answer the buttons in the button row"
 
 	^self paneMorphs last lastSubmorph submorphs
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DialogWindowMorph >> canBeMaximized [
 	"Answer whether we are not we can be maximised."
 
@@ -89,41 +91,41 @@ DialogWindowMorph >> canBeMaximized [
 		ifFalse: [false]
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 DialogWindowMorph >> cancel [
 	"Cancel and close."
 
 	self close
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DialogWindowMorph >> cancelled [
 	"Answer the value of cancelled"
 
 	^ cancelled
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DialogWindowMorph >> cancelled: anObject [
 	"Set the value of cancelled"
 
 	cancelled := anObject
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 DialogWindowMorph >> close [
 	"Close the window."
 
 	self delete
 ]
 
-{ #category : #keymapping }
+{ #category : 'keymapping' }
 DialogWindowMorph >> closeWindowAction [
 "closed by keyboard shortcut - act like 'cancel' "
 	self cancel
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 DialogWindowMorph >> defaultButton [
 	"Answer the default button."
 
@@ -133,7 +135,7 @@ DialogWindowMorph >> defaultButton [
 		ifAbsent: []
 ]
 
-{ #category : #'focus handling' }
+{ #category : 'focus handling' }
 DialogWindowMorph >> defaultFocusMorph [
 	"Answer the morph that should have the keyboard
 	focus by default when the dialog is opened."
@@ -144,20 +146,20 @@ DialogWindowMorph >> defaultFocusMorph [
 		ifNotNil: [:b | b enabled ifTrue: [b]]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DialogWindowMorph >> defaultIsResizeable [
 
 	^ false
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 DialogWindowMorph >> defaultLabel [
 	"Answer the default label for the receiver."
 
 	^'Dialog' translated
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 DialogWindowMorph >> doubleClick: event [
 	"Handle a double click. Maximize/restore the window.
 	Not for dialogs if not resizeable..."
@@ -165,31 +167,31 @@ DialogWindowMorph >> doubleClick: event [
 	self isResizeable ifTrue: [super doubleClick: event]
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 DialogWindowMorph >> escapePressed [
 	"Default is to cancel."
 
 	self cancel
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 DialogWindowMorph >> handlesKeyboard: evt [
 	"Return true if the receiver wishes to handle the given keyboard event"
 
 	(super handlesKeyboard: evt) ifTrue: [^true].
 	^evt keyCharacter = Character escape or: [
-		(self defaultButton notNil and: [
+		(self defaultButton isNotNil and: [
 			evt keyCharacter = Character cr])]
 ]
 
-{ #category : #theme }
+{ #category : 'theme' }
 DialogWindowMorph >> inactiveFillStyle [
 	"Return the active fillStyle for the receiver."
 
 	^self theme dialogWindowInactiveFillStyleFor: self
 ]
 
-{ #category : #'open/close' }
+{ #category : 'open/close' }
 DialogWindowMorph >> initialExtent [
 	"Answer the default extent for the receiver."
 
@@ -206,7 +208,7 @@ DialogWindowMorph >> initialExtent [
 	^ext
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DialogWindowMorph >> initialize [
 	"Initialize the receiver."
 
@@ -216,7 +218,7 @@ DialogWindowMorph >> initialize [
 		addInitialPanel
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DialogWindowMorph >> initializeLabelArea [
 	"Initialize the label area (titlebar) for the window."
 
@@ -225,19 +227,19 @@ DialogWindowMorph >> initializeLabelArea [
 	self replaceBoxes
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 DialogWindowMorph >> keyDown: evt [
 	"Check for return and escape keys."
 
 	super keyDown: evt.
-	(self defaultButton notNil and: [evt key = KeyboardKey enter or: [evt key = KeyboardKey keypadEnter]])
+	(self defaultButton isNotNil and: [evt key = KeyboardKey enter or: [evt key = KeyboardKey keypadEnter]])
 		ifTrue: [self returnPressed. ^true].
 
 	evt key = KeyboardKey escape ifTrue: [self escapePressed. ^true].
 	^false
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 DialogWindowMorph >> keyboardFocusChange: aBoolean [
 	"Set the focus to the default button."
 	super keyboardFocusChange: aBoolean.
@@ -246,7 +248,7 @@ DialogWindowMorph >> keyboardFocusChange: aBoolean [
 			b takeKeyboardFocus]]
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 DialogWindowMorph >> mainPanel [
 	"Anwer the main panel morph or nil if not yet present."
 
@@ -254,7 +256,7 @@ DialogWindowMorph >> mainPanel [
 		ifFalse: [self paneMorphs first]
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 DialogWindowMorph >> newButtonRow [
 	"Answer a new ok/cancel button row."
 
@@ -275,14 +277,14 @@ DialogWindowMorph >> newButtonRow [
 	^answer
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 DialogWindowMorph >> newButtons [
 	"Answer new buttons as appropriate."
 
 	^{self newOKButton isDefault: true. self newCancelButton}
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 DialogWindowMorph >> newContentMorph [
 	"Answer a new content morph."
 
@@ -292,7 +294,7 @@ DialogWindowMorph >> newContentMorph [
 		vResizing: #spaceFill
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 DialogWindowMorph >> newMainPanel [
 	"Answer a new main panel."
 
@@ -302,7 +304,7 @@ DialogWindowMorph >> newMainPanel [
 		yourself
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 DialogWindowMorph >> ok [
 	"Apply the changes and close."
 
@@ -312,28 +314,28 @@ DialogWindowMorph >> ok [
 		delete
 ]
 
-{ #category : #theme }
+{ #category : 'theme' }
 DialogWindowMorph >> preferredCornerStyle [
 	"Answer the preferred corner style."
 
 	^self theme dialogWindowPreferredCornerStyleFor: self
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 DialogWindowMorph >> returnPressed [
 	"Default is to do the default button."
 
 	(self defaultButton ifNil: [^self]) performAction
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DialogWindowMorph >> setFramesForLabelArea [
 	"Delegate to theme."
 
 	self theme configureDialogWindowLabelAreaFrameFor: self
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 DialogWindowMorph >> setLabelWidgetAllowance [
 	"Set the extra space required, in general, apart from the label.
 	No extra needed for dialogs."
@@ -341,7 +343,7 @@ DialogWindowMorph >> setLabelWidgetAllowance [
 	^labelWidgetAllowance :=  0
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 DialogWindowMorph >> title: aString [
 	"Set the window title."
 
@@ -350,7 +352,7 @@ DialogWindowMorph >> title: aString [
 	self minimumExtent: (((label width + 20 min: (Display width // 2)) max: self minimumExtent x)@ self minimumExtent y)
 ]
 
-{ #category : #theme }
+{ #category : 'theme' }
 DialogWindowMorph >> wantsRoundedCorners [
 	"Answer whether rounded corners are wanted."
 

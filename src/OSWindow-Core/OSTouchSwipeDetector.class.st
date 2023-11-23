@@ -2,34 +2,36 @@
 I am the abstract class for all the Swipe gesture detectors
 "
 Class {
-	#name : #OSTouchSwipeDetector,
-	#superclass : #OSTouchOneDirectionGestureDetector,
+	#name : 'OSTouchSwipeDetector',
+	#superclass : 'OSTouchOneDirectionGestureDetector',
 	#instVars : [
 		'minDistToBorder'
 	],
 	#classVars : [
 		'MinDistToBorder'
 	],
-	#category : #'OSWindow-Core-Gestures'
+	#category : 'OSWindow-Core-Gestures',
+	#package : 'OSWindow-Core',
+	#tag : 'Gestures'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 OSTouchSwipeDetector class >> initialize [
 	super initialize.
 	MinDistToBorder := 0.1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSTouchSwipeDetector class >> minDistToBorder [
 	^ MinDistToBorder
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSTouchSwipeDetector class >> minDistToBorder: aFloat [
 	MinDistToBorder := aFloat
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 OSTouchSwipeDetector class >> minDistToBorderSettingsOn: aBuilder [
 	<systemsettings>
 	(aBuilder setting: #minDistToBorder)
@@ -41,7 +43,7 @@ OSTouchSwipeDetector class >> minDistToBorderSettingsOn: aBuilder [
 		parent: #swipeGesture
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 OSTouchSwipeDetector class >> minDistanceBeforeDetectionSettingsOn: aBuilder [
 	<systemsettings>
 	(aBuilder setting: #minDistanceBeforeDetection)
@@ -53,7 +55,7 @@ OSTouchSwipeDetector class >> minDistanceBeforeDetectionSettingsOn: aBuilder [
 		parent: #swipeGesture
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 OSTouchSwipeDetector class >> touchSwipeSettingsOn: aBuilder [
 	<systemsettings>
 	(aBuilder group: #swipeGesture)
@@ -61,7 +63,7 @@ OSTouchSwipeDetector class >> touchSwipeSettingsOn: aBuilder [
 		parent: #touchGestures
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 OSTouchSwipeDetector >> areFingersCloseToABorder [
 	"0.5 represents half the screen in percentage"
 	| halfScreen fingersCenterTranslatedToScreenCenter |
@@ -73,12 +75,12 @@ OSTouchSwipeDetector >> areFingersCloseToABorder [
 		or: [ fingersCenterTranslatedToScreenCenter y > (halfScreen - minDistToBorder)  ]]
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 OSTouchSwipeDetector >> beginConditions [
 	^ super beginConditions and: [ self areFingersCloseToABorder ]
 ]
 
-{ #category : #factory }
+{ #category : 'factory' }
 OSTouchSwipeDetector >> createEventBeginning [
 	^ self eventClassBeginGesture new
 		timestamp: eventHandler lastUpdateTimestamp;
@@ -89,7 +91,7 @@ OSTouchSwipeDetector >> createEventBeginning [
 		yourself
 ]
 
-{ #category : #factory }
+{ #category : 'factory' }
 OSTouchSwipeDetector >> createEventDuringMove [
 	^ self eventClassMoveGesture new
 		timestamp: eventHandler lastUpdateTimestamp;
@@ -100,7 +102,7 @@ OSTouchSwipeDetector >> createEventDuringMove [
 		yourself
 ]
 
-{ #category : #factory }
+{ #category : 'factory' }
 OSTouchSwipeDetector >> createEventEnding [
 	| endClass |
 	endClass := self areFingersCloseToABorder ifTrue: [ self eventClassEndGesture ] ifFalse: [ self eventClassAbortGesture ].
@@ -113,27 +115,27 @@ OSTouchSwipeDetector >> createEventEnding [
 		yourself
 ]
 
-{ #category : #abstract }
+{ #category : 'abstract' }
 OSTouchSwipeDetector >> eventClassAbortGesture [
 	self subclassResponsibility
 ]
 
-{ #category : #abstract }
+{ #category : 'abstract' }
 OSTouchSwipeDetector >> eventClassBeginGesture [
 	self subclassResponsibility
 ]
 
-{ #category : #abstract }
+{ #category : 'abstract' }
 OSTouchSwipeDetector >> eventClassEndGesture [
 	self subclassResponsibility
 ]
 
-{ #category : #abstract }
+{ #category : 'abstract' }
 OSTouchSwipeDetector >> eventClassMoveGesture [
 	self subclassResponsibility
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OSTouchSwipeDetector >> initialize [
 	super initialize.
 	minDistToBorder := self class minDistToBorder

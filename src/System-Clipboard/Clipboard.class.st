@@ -1,134 +1,124 @@
 "
-The Clipboard class is the abstract superclass for the concrete platform specific clipboard. The legacy clipboard support using the VM supplied primitives is implemented by Clipboard/ExternalClipboard.
+I implement the entry point of the clipboard to the system.
 
-The Clipboard implements a basic buffering scheme for text. The currently selected text is also exported to the OS so that text can be copied from and to other applications. Commonly only a single instance is used (the default clipboard) but applications are free to use other than the default clipboard if necessary.
+One of my instance is used as a default null implementation, storing the copied values in an instance variable.
+
+A real OSWindowClipboard will replace me, but I am still in case something is using the clipboard when there is no real OSWindow.
 "
 Class {
-	#name : #Clipboard,
-	#superclass : #Object,
+	#name : 'Clipboard',
+	#superclass : 'Object',
 	#instVars : [
 		'contents',
-		'recent'
+		'recentClippings'
 	],
 	#classVars : [
 		'Default'
 	],
-	#category : #'System-Clipboard'
+	#category : 'System-Clipboard-Base',
+	#package : 'System-Clipboard',
+	#tag : 'Base'
 }
 
-{ #category : #accessing }
-Clipboard class >> chooseRecentClipping [  "Clipboard chooseRecentClipping"
-	"Choose by menu from among the recent clippings"
-	^self default chooseRecentClipping
+{ #category : 'accessing' }
+Clipboard class >> clipboardText [
+ 	<script: 'self clipboardText inspect'>
+
+	^ self default clipboardText
 ]
 
-{ #category : #accessing }
-Clipboard class >> clipboardText [ "Clipboard clipboardText"
-	^self default clipboardText.
+{ #category : 'accessing' }
+Clipboard class >> clipboardText: aTextOrString [
+
+	^ self default clipboardText: aTextOrString
 ]
 
-{ #category : #accessing }
-Clipboard class >> clipboardText: aText [ 
-	^self default clipboardText: aText
-]
-
-{ #category : #accessing }
+{ #category : 'accessing' }
 Clipboard class >> default [
-	^Default ifNil: [Default := Smalltalk os clipboardClass new].
+
+	^ Default ifNil: [ Default := self new ]
 ]
 
-{ #category : #initialization }
+{ #category : 'testing' }
+Clipboard class >> hasRecentClippings [
+ 	<script: 'self hasRecentClippings inspect'>
+
+	^ self default hasRecentClippings
+]
+
+{ #category : 'class initialization' }
 Clipboard class >> initialize [
+
 	self startUp: true.
-	SessionManager default 
-		registerSystemClassNamed: self name
+	SessionManager default registerSystemClassNamed: self name
 ]
 
-{ #category : #'system startup' }
+{ #category : 'accessing' }
+Clipboard class >> recentClippings [
+	"Return a collection of the last remembered clippings in LIFO order."
+
+	^ self default recentClippings
+]
+
+{ #category : 'class initialization' }
+Clipboard class >> reset [
+	<script>
+
+	Default := nil
+]
+
+{ #category : 'system startup' }
 Clipboard class >> shutDown: isImageQuitting [
 	"Pharo is shutting down. If this platform requires specific shutdown code, this is a great place to put it."
-
 ]
 
-{ #category : #'system startup' }
+{ #category : 'system startup' }
 Clipboard class >> startUp: isImageStarting [
 	"Pharo is starting up. If this platform requires specific initialization, this is a great place to put it."
-	isImageStarting
-		ifTrue: [Default := nil]
+
+	isImageStarting ifTrue: [ self reset ]
 ]
 
-{ #category : #accessing }
-Clipboard >> chooseRecentClipping [
-
-	"Choose by menu from among the recent clippings"
-
-	"Clipboard chooseRecentClipping"
-
-	recent ifNil: [ ^ nil ].
-	^ UIManager default
-		  chooseFrom: (recent collect: [ :txt | 
-				   ((txt asString contractTo: 50)
-					    copyReplaceAll: String cr
-					    with: '\') copyReplaceAll: String tab with: '|' ])
-		  values: recent
-]
-
-{ #category : #accessing }
+{ #category : 'accessing' }
 Clipboard >> clipboardText [
-	"Return the text currently in the clipboard. If the system clipboard is empty, or if it differs from the Smalltalk clipboard text, use the Smalltalk clipboard. This is done since (a) the Mac clipboard gives up on very large chunks of text and (b) since not all platforms support the notion of a clipboard."
 
-	| string decodedString |
-	string := self primitiveClipboardText.
-	(string isEmpty
-			or: [string = contents asString])
-		ifTrue: [^ contents].
-	decodedString := string asByteArray utf8Decoded.
-	decodedString := decodedString replaceAll: Character lf with: Character cr.
-	^ decodedString = contents asString
-		ifTrue: [contents]
-		ifFalse: [decodedString asText]
+	^ contents
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Clipboard >> clipboardText: text [
 
-	| string |
-	string := text asString.
 	self noteRecentClipping: text asText copyWithoutExternalReferences.
-	contents := text asText copyWithoutExternalReferences.
-	string := string utf8Encoded.
-	self primitiveClipboardText: string
+	contents := text asText copyWithoutExternalReferences
 ]
 
-{ #category : #initialization }
+{ #category : 'testing' }
+Clipboard >> hasRecentClippings [
+
+	^ self recentClippings notEmpty
+]
+
+{ #category : 'initialization' }
 Clipboard >> initialize [
 	super initialize.
-	contents := '' asText.
-	recent := OrderedCollection new
+	contents := '' asText
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Clipboard >> noteRecentClipping: text [
-	"Keep most recent clippings in a queue for pasteRecent (paste... command)"
-	text isEmpty ifTrue: [^ self].
-	text size > 50000 ifTrue: [^ self].
-	(recent includes: text) ifTrue: [^ self].
-	recent addFirst: text.
-	[recent size > 5] whileTrue: [recent removeLast].
+	"Keep most recent clippings - if not too large - in a queue to allow to paste them again
+ 	 (like with a 'paste...' command or other)"
 
+	text isEmpty ifTrue: [ ^ self ].
+	text size > 50000 ifTrue: [ ^ self ].
+	(self recentClippings includes: text) ifTrue: [ ^ self ].
+	self recentClippings addFirst: text.
+	[ self recentClippings size > 5 ] whileTrue: [ self recentClippings removeLast ]
 ]
 
-{ #category : #primitives }
-Clipboard >> primitiveClipboardText [
-	"Get the current clipboard text. Return the empty string if the primitive fails."
-	<primitive: 141>
-	^ ''
-]
+{ #category : 'accessing' }
+Clipboard >> recentClippings [
+	"Return a collection of the last remembered clippings in LIFO order."
 
-{ #category : #primitives }
-Clipboard >> primitiveClipboardText: aString [
-	"Set the current clipboard text to the given string."
-
-	<primitive: 141>
-	"don't fail if the primitive is not implemented"
+	^ recentClippings ifNil: [ recentClippings := OrderedCollection new ]
 ]

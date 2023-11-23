@@ -1,1 +1,1 @@
-Package { #name : #'NECompletion-Preferences' }
+Package { #name : 'NECompletion-Preferences' }

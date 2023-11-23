@@ -2,12 +2,14 @@
 Unit tests on ISO language definitions
 "
 Class {
-	#name : #ISOLanguageDefinitionTest,
-	#superclass : #TestCase,
-	#category : #'System-Localization-Tests-Utilities'
+	#name : 'ISOLanguageDefinitionTest',
+	#superclass : 'TestCase',
+	#category : 'System-Localization-Tests-Utilities',
+	#package : 'System-Localization-Tests',
+	#tag : 'Utilities'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 ISOLanguageDefinitionTest >> testISO2LanguageDefinition [
 
 	self
@@ -15,7 +17,7 @@ ISOLanguageDefinitionTest >> testISO2LanguageDefinition [
 		assert: (ISOLanguageDefinition iso2LanguageDefinition: 'fr') language equals: 'French'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ISOLanguageDefinitionTest >> testISO3LanguageDefinition [
 
 	self

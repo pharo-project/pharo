@@ -2,18 +2,20 @@
 I provide a test suite for Float values. Examine my tests to see how Floats should behave, and see how to use them.
 "
 Class {
-	#name : #FloatTest,
-	#superclass : #ClassTestCase,
-	#category : #'Kernel-Tests-Numbers'
+	#name : 'FloatTest',
+	#superclass : 'ClassTestCase',
+	#category : 'Kernel-Tests-Numbers',
+	#package : 'Kernel-Tests',
+	#tag : 'Numbers'
 }
 
-{ #category : #coverage }
+{ #category : 'coverage' }
 FloatTest >> classToBeTested [
 
 	^ Float
 ]
 
-{ #category : #'tests - arithmetic' }
+{ #category : 'tests - arithmetic' }
 FloatTest >> testAbs [
 
 	self assert: Float infinity abs equals: Float infinity.
@@ -24,7 +26,7 @@ FloatTest >> testAbs [
 	self assert: Float negativeInfinity abs equals: Float infinity
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FloatTest >> testAsScaledDecimal [
 
 	self
@@ -41,7 +43,7 @@ FloatTest >> testAsScaledDecimal [
 		equals: '9.999999999999995s15'
 ]
 
-{ #category : #'tests - conversion' }
+{ #category : 'tests - conversion' }
 FloatTest >> testCeiling [
 
 	self assert: 1.0 ceiling equals: 1.
@@ -50,7 +52,7 @@ FloatTest >> testCeiling [
 	self assert: -2.1 ceiling equals: -2
 ]
 
-{ #category : #'tests - compare' }
+{ #category : 'tests - compare' }
 FloatTest >> testComparisonWhenPrimitiveFails [
 	"This is related to http://bugs.squeak.org/view.php?id=7361"
 
@@ -79,13 +81,13 @@ FloatTest >> testComparisonWhenPrimitiveFails [
 	self assert: 0.5 ~= (3/4)
 ]
 
-{ #category : #'tests - arithmetic' }
+{ #category : 'tests - arithmetic' }
 FloatTest >> testContinuedFractions [
 	self assert: (Float pi asApproximateFractionAtOrder: 1) equals: (22/7).
 	self assert: (Float pi asApproximateFractionAtOrder: 3) equals: (355/113)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FloatTest >> testCopy [
 	"Elementary tests"
 
@@ -102,7 +104,7 @@ FloatTest >> testCopy [
 	self assert: Float negativeZero copy hex equals: Float negativeZero hex
 ]
 
-{ #category : #'tests - mathematical functions' }
+{ #category : 'tests - mathematical functions' }
 FloatTest >> testCopySignTo [
       "Set up"
 
@@ -133,7 +135,7 @@ FloatTest >> testCopySignTo [
               self assert: (aNegativeSign copySignTo: negz) sign equals: 0]
 ]
 
-{ #category : #'tests - arithmetic' }
+{ #category : 'tests - arithmetic' }
 FloatTest >> testDivide [
 
 	self assert: 1.5 / 2.0 equals: 0.75.
@@ -145,7 +147,7 @@ FloatTest >> testDivide [
 	self should: [ 1.2 / (1.3 - 1.3) ] raise: ZeroDivide
 ]
 
-{ #category : #'tests - printing' }
+{ #category : 'tests - printing' }
 FloatTest >> testFloatPrintPolicy [
 	"It is hard to test printing Floats reliably, but this at least covers the code path"
 
@@ -157,7 +159,7 @@ FloatTest >> testFloatPrintPolicy [
 	self assert: (pi beginsWith: '3.14159')
 ]
 
-{ #category : #'tests - conversion' }
+{ #category : 'tests - conversion' }
 FloatTest >> testFloatTruncated [
 	"(10 raisedTo: 16) asFloat has an exact representation (no round off error).
 	It should convert back to integer without loosing bits.
@@ -181,7 +183,7 @@ FloatTest >> testFloatTruncated [
 		self assert: x truncated equals: x asTrueFraction truncated ]
 ]
 
-{ #category : #'tests - conversion' }
+{ #category : 'tests - conversion' }
 FloatTest >> testFloor [
 
 	self assert: 1.0 floor equals: 1.
@@ -190,7 +192,7 @@ FloatTest >> testFloor [
 	self assert: -2.1 floor equals: -3
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FloatTest >> testFractionAsFloatWithUnderflow [
 	"test rounding to nearest even"
 
@@ -201,7 +203,7 @@ FloatTest >> testFractionAsFloatWithUnderflow [
 	self assert: (2 raisedTo: underflowPower) negated asFloat signBit = 1 description: 'a negative underflow should return a negative zero'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FloatTest >> testHash [
 	self assert: 2 = 2.0 ==> (2 hash = 2.0 hash).
 	self assert: 1 / 2 = 0.5 ==> ((1 / 2) hash = 0.5 hash).
@@ -209,7 +211,7 @@ FloatTest >> testHash [
 	Float infinity hash
 ]
 
-{ #category : #'tests - infinity behavior' }
+{ #category : 'tests - infinity behavior' }
 FloatTest >> testInfinity1 [
 
 	| i1  i2 |
@@ -219,7 +221,7 @@ FloatTest >> testInfinity1 [
 	"All infinities are equal. (This is a very substantial difference to NaN's, which are never equal."
 ]
 
-{ #category : #'tests - infinity behavior' }
+{ #category : 'tests - infinity behavior' }
 FloatTest >> testInfinity2 [
 	| i1 i2 |
 	i1 := 10000 exp.
@@ -231,7 +233,7 @@ FloatTest >> testInfinity2 [
 	"All infinities are signed. Negative infinity is not equal to Infinity"
 ]
 
-{ #category : #'tests - conversion' }
+{ #category : 'tests - conversion' }
 FloatTest >> testIntegerAsFloat [
 	"assert IEEE 754 round to nearest even mode is honoured"
 
@@ -241,14 +243,14 @@ FloatTest >> testIntegerAsFloat [
 	self assert: 16r1FFFFFFFFFFFF0800 asFloat equals: 16r1FFFFFFFFFFFF0000 asFloat	"nearest even is lower"
 ]
 
-{ #category : #'tests - zero behavior' }
+{ #category : 'tests - zero behavior' }
 FloatTest >> testIsZero [
 
 	self assert: 0.0 isZero.
 	self deny: 0.1 isZero
 ]
 
-{ #category : #'tests - compare' }
+{ #category : 'tests - compare' }
 FloatTest >> testLiteralEqual [
 
 	self deny: (0.0 literalEqual: 0.0 negated).
@@ -256,21 +258,21 @@ FloatTest >> testLiteralEqual [
 	self deny: (0.0 literalEqual: -0.0)
 ]
 
-{ #category : #'tests - characterization' }
+{ #category : 'tests - characterization' }
 FloatTest >> testMaxExactInteger [
 	self assert: Float maxExactInteger asFloat truncated equals: Float maxExactInteger.
 	0 to: 10000 do: [ :j | self assert: (Float maxExactInteger - j) asFloat truncated equals: Float maxExactInteger - j ].
 	self deny: (Float maxExactInteger + 1) asFloat truncated equals: Float maxExactInteger + 1
 ]
 
-{ #category : #'tests - NaN behavior' }
+{ #category : 'tests - NaN behavior' }
 FloatTest >> testNaN1 [
 	self assert: Float nan identicalTo: Float nan.
 	self deny: Float nan equals: Float nan
 	"a NaN is not equal to itself."
 ]
 
-{ #category : #'tests - NaN behavior' }
+{ #category : 'tests - NaN behavior' }
 FloatTest >> testNaN2 [
 	"Two NaN values are always considered to be different.
 	On an little-endian machine (32 bit Intel), Float nan is 16rFFF80000 16r00000000.
@@ -304,7 +306,7 @@ FloatTest >> testNaN2 [
 	self assert: nan1 identicalTo: nan1
 ]
 
-{ #category : #'tests - NaN behavior' }
+{ #category : 'tests - NaN behavior' }
 FloatTest >> testNaN3 [
 
    	| set item identitySet |
@@ -317,7 +319,7 @@ FloatTest >> testNaN3 [
 	"as a NaN is not equal to itself, it can not be retrieved from a set"
 ]
 
-{ #category : #'tests - NaN behavior' }
+{ #category : 'tests - NaN behavior' }
 FloatTest >> testNaN4 [
 
 	| dict |
@@ -327,7 +329,7 @@ FloatTest >> testNaN4 [
 	"as a NaN is not equal to itself, it can not be retrieved when it is used as a dictionary key"
 ]
 
-{ #category : #'tests - NaN behavior' }
+{ #category : 'tests - NaN behavior' }
 FloatTest >> testNaNCompare [
 	"IEEE 754 states that NaN cannot be ordered.
 	As a consequence, every arithmetic comparison involving a NaN SHOULD return false.
@@ -368,26 +370,26 @@ FloatTest >> testNaNCompare [
 		self assert: (comp2 ~= theNaN) description: warningMessage]
 ]
 
-{ #category : #'tests - NaN behavior' }
+{ #category : 'tests - NaN behavior' }
 FloatTest >> testNaNisLiteral [
 
 	self deny: Float nan isLiteral description: 'there is no literal representation of NaN'
 ]
 
-{ #category : #'tests - zero behavior' }
+{ #category : 'tests - zero behavior' }
 FloatTest >> testNegativeZeroAbs [
 
 	self assert: Float negativeZero abs sign positive description: 'the absolute value of a negative zero is zero'
 ]
 
-{ #category : #'tests - zero behavior' }
+{ #category : 'tests - zero behavior' }
 FloatTest >> testNegativeZeroSign [
 
 	self assert: Float negativeZero sign equals: 0. "Like any other zero, a negative zero has its sign being zero"
 	self assert: Float negativeZero signBit equals: 1 "But it can be distinguished with its signBit"
 ]
 
-{ #category : #'tests - printing' }
+{ #category : 'tests - printing' }
 FloatTest >> testPrintPaddedWithTo [
 	"The problem was caused by treating the format specifier as a number rather than
 	as a string, such the the number may be a Float subject to floating point rounding
@@ -409,13 +411,13 @@ FloatTest >> testPrintPaddedWithTo [
 	self assert: (1.0 printPaddedWith: $0 to: 2.5) equals: '01.00000'
 ]
 
-{ #category : #'tests - mathematical functions' }
+{ #category : 'tests - mathematical functions' }
 FloatTest >> testRaisedTo [
 
 	self should: [ -1.23 raisedTo: 1/4 ] raise: ArithmeticError
 ]
 
-{ #category : #'tests - conversion' }
+{ #category : 'tests - conversion' }
 FloatTest >> testReadFromManyDigits [
 	"A naive algorithm may interpret these representations as Infinity or NaN.
 	This is http://bugs.squeak.org/view.php?id=6982"
@@ -427,7 +429,7 @@ FloatTest >> testReadFromManyDigits [
 	self assert: (Number readFrom: s2) equals: 1
 ]
 
-{ #category : #'tests - conversion' }
+{ #category : 'tests - conversion' }
 FloatTest >> testReadingTooLargeExponents [
 	self assert: (Float readFrom: '7.5e333') equals: Float infinity.
 	self assert: (Float readFrom: '7.5e-333') equals: Float zero.
@@ -440,7 +442,7 @@ FloatTest >> testReadingTooLargeExponents [
 	self assert: (Float readFrom: '-7.5e-3333') equals: Float zero
 ]
 
-{ #category : #'tests - NaN behavior' }
+{ #category : 'tests - NaN behavior' }
 FloatTest >> testReciprocal [
 
 	self
@@ -452,7 +454,7 @@ FloatTest >> testReciprocal [
 	self should: [ 0.0 reciprocal ] raise: ZeroDivide
 ]
 
-{ #category : #'tests - conversion' }
+{ #category : 'tests - conversion' }
 FloatTest >> testRounded [
 
 	self assert: 0.9 rounded equals: 1.
@@ -467,7 +469,7 @@ FloatTest >> testRounded [
 	self assert: -1.5 rounded equals: -2
 ]
 
-{ #category : #'tests - compare' }
+{ #category : 'tests - compare' }
 FloatTest >> testSetOfFloat [
 	"Classical disagreement between hash and = did lead to a bug.
 	 This is a non regression test from http://bugs.squeak.org/view.php?id=3360"
@@ -478,7 +480,7 @@ FloatTest >> testSetOfFloat [
 	self assert: size3 = size4 description: 'The size of a Set should not depend on its capacity.'
 ]
 
-{ #category : #'tests - mathematical functions' }
+{ #category : 'tests - mathematical functions' }
 FloatTest >> testSign [
       "Set up"
 
@@ -520,7 +522,7 @@ FloatTest >> testSign [
               self assert: (negz sign: aNegativeSign) signBit equals: 1]
 ]
 
-{ #category : #'tests - printing' }
+{ #category : 'tests - printing' }
 FloatTest >> testStoreBase16 [
 	"This bug was reported in mantis http://bugs.squeak.org/view.php?id=6695"
 
@@ -529,7 +531,7 @@ FloatTest >> testStoreBase16 [
 		description: 'the radix prefix should not be omitted, except in base 10'
 ]
 
-{ #category : #'tests - printing' }
+{ #category : 'tests - printing' }
 FloatTest >> testStoreOn [
 	| float |
 	float := -1.2.
@@ -539,7 +541,7 @@ FloatTest >> testStoreOn [
 	self assert: (String streamContents: [ :s | float storeOn: s ]) equals: '1.2'
 ]
 
-{ #category : #'tests - conversion' }
+{ #category : 'tests - conversion' }
 FloatTest >> testStringAsNumber [
 	"This covers parsing in Number>>readFrom:"
 
@@ -558,7 +560,7 @@ FloatTest >> testStringAsNumber [
 	self assert: 1234.56 equals: aFloat
 ]
 
-{ #category : #'tests - conversion' }
+{ #category : 'tests - conversion' }
 FloatTest >> testTruncated [
 
 	self assert: 1.0 truncated equals: 1.
@@ -567,7 +569,7 @@ FloatTest >> testTruncated [
 	self assert: -2.1 truncated equals: -2
 ]
 
-{ #category : #'tests - zero behavior' }
+{ #category : 'tests - zero behavior' }
 FloatTest >> testZero1 [
 
 	self assert: Float negativeZero equals: 0 asFloat.
@@ -576,7 +578,7 @@ FloatTest >> testZero1 [
 	"The negative zero has a bit representation that is different from the bit representation of the positive zero. Nevertheless, both values are defined to be equal."
 ]
 
-{ #category : #'tests - arithmetic' }
+{ #category : 'tests - arithmetic' }
 FloatTest >> testZeroRaisedToNegativePower [
 	"this is a test related to http://bugs.squeak.org/view.php?id=6781"
 
@@ -584,7 +586,7 @@ FloatTest >> testZeroRaisedToNegativePower [
 	self should: [0.0 raisedTo: -1.0] raise: ZeroDivide
 ]
 
-{ #category : #'tests - zero behavior' }
+{ #category : 'tests - zero behavior' }
 FloatTest >> testZeroSignificandAsInteger [
 	"This is about http://bugs.squeak.org/view.php?id=6990"
 

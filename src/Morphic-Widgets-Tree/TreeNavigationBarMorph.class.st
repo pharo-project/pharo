@@ -6,8 +6,8 @@ You can see one of my subclass in action using:
 ClassListExample new open
 "
 Class {
-	#name : #TreeNavigationBarMorph,
-	#superclass : #BorderedMorph,
+	#name : 'TreeNavigationBarMorph',
+	#superclass : 'BorderedMorph',
 	#instVars : [
 		'treeMorph',
 		'pageSize',
@@ -15,10 +15,12 @@ Class {
 		'withSearch',
 		'pageSearchText'
 	],
-	#category : #'Morphic-Widgets-Tree-Pagination'
+	#category : 'Morphic-Widgets-Tree-Pagination',
+	#package : 'Morphic-Widgets-Tree',
+	#tag : 'Pagination'
 }
 
-{ #category : #icons }
+{ #category : 'icons' }
 TreeNavigationBarMorph class >> createIconMethods [
 	"self createIconMethods"
 	#('smallToLeft' 'smallToRight' 'smallToLeftEnd' 'smallToRightEnd' 'smallDieze' 'smallVerticalResizing')
@@ -27,18 +29,18 @@ TreeNavigationBarMorph class >> createIconMethods [
 			self class compile: (n, 'Icon', String cr, String tab, '^ ', form storeString) classified: #icons]
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 TreeNavigationBarMorph class >> initialize [
 
 	self deprecatedAliases: { #MorphTreeNavigationBar }
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TreeNavigationBarMorph class >> on: aTreeMorph pageSize: aPageSize [
 	^ self new treeMorph: aTreeMorph  pageSize: aPageSize
 ]
 
-{ #category : #icons }
+{ #category : 'icons' }
 TreeNavigationBarMorph class >> smallDiezeIcon [
 	^ (Form
 	extent: 16@16
@@ -47,7 +49,7 @@ TreeNavigationBarMorph class >> smallDiezeIcon [
 	offset: 0@0)
 ]
 
-{ #category : #icons }
+{ #category : 'icons' }
 TreeNavigationBarMorph class >> smallToLeftEndIcon [
 	^ (Form
 	extent: 16@16
@@ -56,7 +58,7 @@ TreeNavigationBarMorph class >> smallToLeftEndIcon [
 	offset: 0@0)
 ]
 
-{ #category : #icons }
+{ #category : 'icons' }
 TreeNavigationBarMorph class >> smallToLeftIcon [
 	^ (Form
 	extent: 16@16
@@ -65,7 +67,7 @@ TreeNavigationBarMorph class >> smallToLeftIcon [
 	offset: 0@0)
 ]
 
-{ #category : #icons }
+{ #category : 'icons' }
 TreeNavigationBarMorph class >> smallToRightEndIcon [
 	^ (Form
 	extent: 16@16
@@ -74,7 +76,7 @@ TreeNavigationBarMorph class >> smallToRightEndIcon [
 	offset: 0@0)
 ]
 
-{ #category : #icons }
+{ #category : 'icons' }
 TreeNavigationBarMorph class >> smallToRightIcon [
 	^ (Form
 	extent: 16@16
@@ -83,7 +85,7 @@ TreeNavigationBarMorph class >> smallToRightIcon [
 	offset: 0@0)
 ]
 
-{ #category : #icons }
+{ #category : 'icons' }
 TreeNavigationBarMorph class >> smallVerticalResizingIcon [
 	^ (Form
 	extent: 16@16
@@ -92,7 +94,7 @@ TreeNavigationBarMorph class >> smallVerticalResizingIcon [
 	offset: 0@0)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TreeNavigationBarMorph >> asDisabledForm: aForm [
 	| disa |
 	disa := aForm copy.
@@ -101,7 +103,7 @@ TreeNavigationBarMorph >> asDisabledForm: aForm [
 	^ disa
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TreeNavigationBarMorph >> basicButton [
 	| button |
 	^ (button := SimpleButtonMorph new)
@@ -121,7 +123,7 @@ TreeNavigationBarMorph >> basicButton [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TreeNavigationBarMorph >> basicIcon [
 	| button |
 	^ (button := IconicButtonMorph new)
@@ -141,12 +143,12 @@ TreeNavigationBarMorph >> basicIcon [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TreeNavigationBarMorph >> buildPanel [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TreeNavigationBarMorph >> buttonLabel: aLabel actionSelector: aSelector arguments: aCollection getEnabled: enableSelector help: helpText [
 
 	| b |
@@ -167,14 +169,14 @@ TreeNavigationBarMorph >> buttonLabel: aLabel actionSelector: aSelector argument
 	^ b
 ]
 
-{ #category : #navigation }
+{ #category : 'navigation' }
 TreeNavigationBarMorph >> changePageSize: aNumberOrNil [
 	aNumberOrNil
 		ifNotNil: [self updateForNewPageSize: aNumberOrNil]
 		ifNil: [treeMorph removePager]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TreeNavigationBarMorph >> computedBounds [
 	| tb tbw yGap |
 	tb := treeMorph bounds.
@@ -183,13 +185,13 @@ TreeNavigationBarMorph >> computedBounds [
 	^ (tb bottomLeft + (tbw @ (self computedHeight + yGap) negated)) corner: (tb bottomRight - ( (tbw * 2) @ yGap ))
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TreeNavigationBarMorph >> computedHeight [
 	^ computedHeight
 		ifNil: [computedHeight := self computedHeightFromContents + self layoutInset asPoint y + self cellInset asPoint y]
 ]
 
-{ #category : #navigation }
+{ #category : 'navigation' }
 TreeNavigationBarMorph >> computedHeightFromContents [
 	| h |
 	h := 0.
@@ -197,12 +199,12 @@ TreeNavigationBarMorph >> computedHeightFromContents [
 	^ h
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TreeNavigationBarMorph >> handlesMouseDown: anEvent [
 	^ true
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TreeNavigationBarMorph >> initialize [
 	super initialize.
 	self hResizing: #spaceFill;
@@ -217,28 +219,28 @@ TreeNavigationBarMorph >> initialize [
 		 borderColor: Color lightGray
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TreeNavigationBarMorph >> mouseDown: anEvent [
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TreeNavigationBarMorph >> nodeList [
 	^ treeMorph nodeList
 ]
 
-{ #category : #navigation }
+{ #category : 'navigation' }
 TreeNavigationBarMorph >> pageOfNodeIndex: anIndex [
 	^ (anIndex > 0 and: [anIndex <= self nodeList size])
 		ifTrue: [((anIndex - 1) // pageSize) + 1]
 		ifFalse: [nil]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TreeNavigationBarMorph >> pageSearchText [
 	^ pageSearchText ifNil: [pageSearchText := '']
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TreeNavigationBarMorph >> pageSearchText: aString [
 	| founds chosen chosenNode |
 	pageSearchText := aString.
@@ -267,17 +269,17 @@ TreeNavigationBarMorph >> pageSearchText: aString [
 					^ treeMorph scrollSelectionIntoView]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TreeNavigationBarMorph >> pageSize [
 	^ pageSize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TreeNavigationBarMorph >> pageSize: anInteger [
 	pageSize := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TreeNavigationBarMorph >> pageSizeFromString: aString [
 	| input |
 	input := aString asString trimBoth.
@@ -299,27 +301,27 @@ TreeNavigationBarMorph >> pageSizeFromString: aString [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TreeNavigationBarMorph >> pageSizeToString [
 	^ self pageSize asString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TreeNavigationBarMorph >> pagerColor [
 	^ treeMorph pagerColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TreeNavigationBarMorph >> preferedFont [
 	^ self balloonFont
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TreeNavigationBarMorph >> spacer: hsize [
 	^ (Morph new) color: Color transparent; extent: hsize @ (self hasSubmorphs  ifTrue: [self computedHeight] ifFalse: [(self preferedFont height + 8)]); yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TreeNavigationBarMorph >> textEntryLabel: aLabel get: getSel set: setSel help: helpText class: aClass [
 	^ RubPluggableTextFieldMorph new
 		on: self
@@ -331,39 +333,39 @@ TreeNavigationBarMorph >> textEntryLabel: aLabel get: getSel set: setSel help: h
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TreeNavigationBarMorph >> treeMorph: aTreeMorph [
 	treeMorph := aTreeMorph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TreeNavigationBarMorph >> treeMorph: aTreeMorph pageSize: anInteger [
 	self treeMorph: aTreeMorph.
 	self pageSize: anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TreeNavigationBarMorph >> updateContents [
 	self bounds: self computedBounds.
 	self color: treeMorph pagerColor
 ]
 
-{ #category : #navigation }
+{ #category : 'navigation' }
 TreeNavigationBarMorph >> updateForNewPageSize: aPageSize [
 	pageSize := aPageSize max: 1.
 	self changed: #pageSize
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 TreeNavigationBarMorph >> vScrollBarValue: scrollValue [
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TreeNavigationBarMorph >> withSearch [
 	^ withSearch ifNil: [withSearch := false]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TreeNavigationBarMorph >> withSearch: aBoolean [
 	withSearch := aBoolean.
 	self buildPanel

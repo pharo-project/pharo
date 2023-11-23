@@ -1,14 +1,16 @@
 Class {
-	#name : #RubTextFieldWithEntryCompletionExample,
-	#superclass : #Object,
+	#name : 'RubTextFieldWithEntryCompletionExample',
+	#superclass : 'Object',
 	#instVars : [
 		'pkgName',
 		'announcer'
 	],
-	#category : #'Rubric-Editing-Widgets-Examples'
+	#category : 'Rubric-Editing-Widgets-Examples',
+	#package : 'Rubric',
+	#tag : 'Editing-Widgets-Examples'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 RubTextFieldWithEntryCompletionExample class >> exampleOpen [
 	| st |
 	st := self new newScrolledText.
@@ -16,17 +18,17 @@ RubTextFieldWithEntryCompletionExample class >> exampleOpen [
 	^ st
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextFieldWithEntryCompletionExample >> announcer [
 	^ announcer ifNil: [ announcer := Announcer new ]
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 RubTextFieldWithEntryCompletionExample >> getMyMenu: aMenu [
 	^ nil
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 RubTextFieldWithEntryCompletionExample >> newScrolledText [
 	| st |
 	st := (RubPluggableTextFieldMorph new
@@ -43,10 +45,10 @@ RubTextFieldWithEntryCompletionExample >> newScrolledText [
 	^ st
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextFieldWithEntryCompletionExample >> packagesEntryCompletion [
 	| applicants |
-	applicants := RPackageOrganizer default packages
+	applicants := PackageOrganizer default packages
 		collect: [ :package | package packageName asString ].
 	^ EntryCompletion new
 		dataSourceBlock: [ :currText | applicants ];
@@ -54,18 +56,18 @@ RubTextFieldWithEntryCompletionExample >> packagesEntryCompletion [
 			 currApplicant asUppercase includesSubstring: currText asString asUppercase ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextFieldWithEntryCompletionExample >> pkgName [
 	^ pkgName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextFieldWithEntryCompletionExample >> pkgName: aPackageName [
 	pkgName := aPackageName.
 	^ true
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 RubTextFieldWithEntryCompletionExample >> readMySelection: aSelection [
 	^ 1 to: -1
 ]

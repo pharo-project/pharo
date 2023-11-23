@@ -2,91 +2,128 @@
 Notify about repackaging of a class
 "
 Class {
-	#name : #ClassRepackaged,
-	#superclass : #ClassAnnouncement,
+	#name : 'ClassRepackaged',
+	#superclass : 'ClassAnnouncement',
 	#instVars : [
 		'classRepackaged',
-		'newPackage',
-		'oldPackage'
+		'oldTag',
+		'newTag'
 	],
-	#category : #'System-Announcements-System-Packages'
+	#category : 'System-Announcements-System-Classes',
+	#package : 'System-Announcements',
+	#tag : 'System-Classes'
 }
 
-{ #category : #'instance creation' }
-ClassRepackaged class >> classRepackaged: aClass oldPackage: oldPackage newPackage: newPackage [
-	^self new
-			classRepackaged: aClass;
-			oldPackage: oldPackage;
-			newPackage: newPackage;
-			yourself
+{ #category : 'instance creation' }
+ClassRepackaged class >> classRepackaged: aClass oldTag: oldTag newTag: newTag [
+
+	^ self new
+		  classRepackaged: aClass;
+		  oldTag: oldTag;
+		  newTag: newTag;
+		  yourself
 ]
 
-{ #category : #testing }
+{ #category : 'class initialization' }
+ClassRepackaged class >> initialize [
+
+	self deprecatedAliases: { #ClassRecategorized }
+]
+
+{ #category : 'testing' }
 ClassRepackaged >> affectsMethods [
 	"methods belong to class which could be represented by tools as part of method"
 	^true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClassRepackaged >> affectsMethodsDefinedInClass: aClass [
 
 	^classRepackaged == aClass
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClassRepackaged >> affectsMethodsDefinedInPackage: aPackage [
 
-	^oldPackage == aPackage or: [ newPackage == aPackage ]
+	^self oldPackage == aPackage or: [ self newPackage == aPackage ]
 ]
 
-{ #category : #testing }
-ClassRepackaged >> affectsMethodsTaggedWith: tagName [
-	^classRepackaged tagsForMethods includes: tagName
+{ #category : 'testing' }
+ClassRepackaged >> affectsMethodsInProtocol: protocol [
+
+	^ classRepackaged protocolNames includes: protocol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassRepackaged >> classAffected [
 
 	^ classRepackaged
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassRepackaged >> classRepackaged [
 
 	^ classRepackaged
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassRepackaged >> classRepackaged: anObject [
 
 	classRepackaged := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassRepackaged >> newPackage [
 
-	^ newPackage
+	^ self newTag package
 ]
 
-{ #category : #accessing }
-ClassRepackaged >> newPackage: anObject [
+{ #category : 'accessing' }
+ClassRepackaged >> newTag [
 
-	newPackage := anObject
+	^ newTag
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
+ClassRepackaged >> newTag: anObject [
+
+	newTag := anObject
+]
+
+{ #category : 'accessing' }
 ClassRepackaged >> oldPackage [
 
-	^ oldPackage
+	^ self oldTag package
 ]
 
-{ #category : #accessing }
-ClassRepackaged >> oldPackage: anObject [
+{ #category : 'accessing' }
+ClassRepackaged >> oldTag [
 
-	oldPackage := anObject
+	^ oldTag
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
+ClassRepackaged >> oldTag: anObject [
+
+	oldTag := anObject
+]
+
+{ #category : 'accessing' }
+ClassRepackaged >> packageTagsAffected [
+
+	^ {
+		  self newTag.
+		  self oldTag }
+]
+
+{ #category : 'testing' }
+ClassRepackaged >> packagedChanged [
+
+	^ self oldPackage ~= self newPackage
+]
+
+{ #category : 'accessing' }
 ClassRepackaged >> packagesAffected [
-	^{oldPackage. newPackage}
+
+	^ { self oldPackage. self newPackage }
 ]

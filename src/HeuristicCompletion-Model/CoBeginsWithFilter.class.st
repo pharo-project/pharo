@@ -3,15 +3,17 @@ I am representing the filters with a begins with.
 
 "
 Class {
-	#name : #CoBeginsWithFilter,
-	#superclass : #CoFilter,
+	#name : 'CoBeginsWithFilter',
+	#superclass : 'CoFilter',
 	#instVars : [
 		'completionString'
 	],
-	#category : #'HeuristicCompletion-Model-Core'
+	#category : 'HeuristicCompletion-Model-Core',
+	#package : 'HeuristicCompletion-Model',
+	#tag : 'Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CoBeginsWithFilter class >> caseSensitive: aBoolean filterString: aString [
 
 	aBoolean ifTrue: [
@@ -24,19 +26,19 @@ CoBeginsWithFilter class >> caseSensitive: aBoolean filterString: aString [
 			yourself	]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoBeginsWithFilter >> completionString [
 
 	^ completionString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoBeginsWithFilter >> completionString: anObject [
 
 	completionString := anObject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CoBeginsWithFilter >> isLessNarrowThanNegation: anotherFilter [
 
 	^ false

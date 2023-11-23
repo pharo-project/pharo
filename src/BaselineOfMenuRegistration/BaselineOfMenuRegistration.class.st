@@ -5,12 +5,13 @@ Load type:
 - linear
 "
 Class {
-	#name : #BaselineOfMenuRegistration,
-	#superclass : #BaselineOf,
-	#category : #BaselineOfMenuRegistration
+	#name : 'BaselineOfMenuRegistration',
+	#superclass : 'BaselineOf',
+	#category : 'BaselineOfMenuRegistration',
+	#package : 'BaselineOfMenuRegistration'
 }
 
-{ #category : #baseline }
+{ #category : 'baseline' }
 BaselineOfMenuRegistration >> baseline: spec [ 
 	<baseline>
 	

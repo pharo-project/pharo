@@ -7,31 +7,33 @@ Instance Variables
 		
 "
 Class {
-	#name : #DAExtensionDependency,
-	#superclass : #DADependencyFromClass,
+	#name : 'DAExtensionDependency',
+	#superclass : 'DADependencyFromClass',
 	#instVars : [
 		'selector',
 		'method'
 	],
-	#category : #'Tool-DependencyAnalyser-Core'
+	#category : 'Tool-DependencyAnalyser-Core',
+	#package : 'Tool-DependencyAnalyser',
+	#tag : 'Core'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 DAExtensionDependency >> isExtensionDependency [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAExtensionDependency >> method [
 	^ method
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAExtensionDependency >> method: anObject [
 	method := anObject
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 DAExtensionDependency >> printReasonOn: aStream [
 	aStream
 		nextPutAll: self theClass name;
@@ -40,12 +42,12 @@ DAExtensionDependency >> printReasonOn: aStream [
 		nextPutAll: ' (extension)'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAExtensionDependency >> selector [
 	^ selector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAExtensionDependency >> selector: aSelector [
 	selector := aSelector
 ]

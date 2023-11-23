@@ -2,22 +2,24 @@
 Border style supporting dashed lines of configurable patterns and colours.
 "
 Class {
-	#name : #DashedBorderStyle,
-	#superclass : #SimpleBorderStyle,
+	#name : 'DashedBorderStyle',
+	#superclass : 'SimpleBorderStyle',
 	#instVars : [
 		'dashColors',
 		'dashLengths'
 	],
-	#category : #'Morphic-Base-Borders'
+	#category : 'Morphic-Base-Borders',
+	#package : 'Morphic-Base',
+	#tag : 'Borders'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 DashedBorderStyle class >> initialize [
 	"Deprecated in Pharo 11"
 	self deprecatedAliases: { #DashedBorder }
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 DashedBorderStyle class >> width: width dashColors: cols dashLengths: lens [
 	"Answer a new instance of the receiver with the given
 	width, colours and lengths."
@@ -27,21 +29,21 @@ DashedBorderStyle class >> width: width dashColors: cols dashLengths: lens [
 		dashColors: cols dashLengths: lens
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DashedBorderStyle >> dashColors [
 	"Answer the value of dashColors"
 
 	^ dashColors
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DashedBorderStyle >> dashColors: anObject [
 	"Set the value of dashColors"
 
 	dashColors := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DashedBorderStyle >> dashColors: cols dashLengths: lens [
 	"Set the colours and lengths."
 
@@ -51,21 +53,21 @@ DashedBorderStyle >> dashColors: cols dashLengths: lens [
 		dashLengths: lens
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DashedBorderStyle >> dashLengths [
 	"Answer the value of dashLengths"
 
 	^ dashLengths
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DashedBorderStyle >> dashLengths: anObject [
 	"Set the value of dashLengths"
 
 	dashLengths := anObject
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 DashedBorderStyle >> frameRectangle: aRectangle on: aCanvas [
 	"Frame the given rectangle on aCanvas"
 
@@ -78,7 +80,7 @@ DashedBorderStyle >> frameRectangle: aRectangle on: aCanvas [
 		dashes: self dashLengths
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DashedBorderStyle >> initialize [
 	"Initialize the receiver."
 
@@ -88,7 +90,7 @@ DashedBorderStyle >> initialize [
 		dashLengths: #(1 1)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DashedBorderStyle >> style [
 	"Answer #dashed."
 

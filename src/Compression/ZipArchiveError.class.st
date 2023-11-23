@@ -2,7 +2,9 @@
 I'm raised by ZipArchive when a trouble arrives.
 "
 Class {
-	#name : #ZipArchiveError,
-	#superclass : #Error,
-	#category : #'Compression-Archives'
+	#name : 'ZipArchiveError',
+	#superclass : 'Error',
+	#category : 'Compression-Archives',
+	#package : 'Compression',
+	#tag : 'Archives'
 }

@@ -3,16 +3,18 @@ I'm a scanned error.
 I can have multiple causes.
 "
 Class {
-	#name : #RBErrorToken,
-	#superclass : #RBValueToken,
+	#name : 'RBErrorToken',
+	#superclass : 'RBValueToken',
 	#instVars : [
 		'cause',
 		'location'
 	],
-	#category : #'AST-Core-Tokens'
+	#category : 'AST-Core-Tokens',
+	#package : 'AST-Core',
+	#tag : 'Tokens'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBErrorToken class >> value: value start: tokenStart cause: errorCause location: thePosition [
 	^ self new
 		value: value
@@ -22,27 +24,27 @@ RBErrorToken class >> value: value start: tokenStart cause: errorCause location:
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBErrorToken >> cause [
 	^ cause
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBErrorToken >> isError [
 	^true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBErrorToken >> location [
 	^ location
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBErrorToken >> location: anInteger [
 	location := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBErrorToken >> value: theValue start: tokenStart cause: errorCause location: errorPosition [
 	self value: theValue start: tokenStart.
 	location := errorPosition.

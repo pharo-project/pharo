@@ -4,8 +4,8 @@ Common superclass for Monticello tools
 Placeholder for a MCVersionCache for MCLazyVersionInfo
 "
 Class {
-	#name : #MCTool,
-	#superclass : #Model,
+	#name : 'MCTool',
+	#superclass : 'Model',
 	#instVars : [
 		'morph',
 		'label',
@@ -15,59 +15,45 @@ Class {
 	#classVars : [
 		'MCVersionCache'
 	],
-	#category : #'MonticelloGUI-Tools'
+	#category : 'MonticelloGUI-Tools',
+	#package : 'MonticelloGUI',
+	#tag : 'Tools'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 MCTool class >> flushMCVersionCache [
 	MCVersionCache := nil.
 	Smalltalk garbageCollect
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 MCTool class >> initMCVersionCache [
 	MCVersionCache := nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCTool class >> mcVersionCache [
 	^ MCVersionCache
 		ifNil: [ MCVersionCache := LRUCache new maximumWeight: 32 ]
 ]
 
-{ #category : #utilities }
-MCTool class >> newRepository [
-	"Create a new monticello repository"
-	| types index |
-	types := MCRepository allConcreteSubclasses asArray.
-	index := UIManager default chooseFrom: (types collect: [:ea | ea description])
-				title: 'Repository type:'.
-	^ index = 0 ifFalse: [(types at: index) morphicConfigure]
-]
-
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 MCTool >> accept [
 	" do nothing by default"
 ]
 
-{ #category : #utilities }
-MCTool >> allManagers [
-
-	^ MCWorkingCopy allManagers 
-]
-
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 MCTool >> answer: anObject [
 	modalValue := anObject.
 	self close.
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 MCTool >> arrowKey: aCharacter from: aPluggableListMorph [ 
 	"backstop"
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 MCTool >> buildWindow [
 	| window |
 	window := SystemWindow labelled: self label.
@@ -92,17 +78,17 @@ MCTool >> buildWindow [
 	^ window
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 MCTool >> buttonEnabled [
 	^ true
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 MCTool >> buttonRow [
 	^ self buttonRow: self buttonSpecs
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 MCTool >> buttonRow: specArray [
 	| aRow |
 	aRow := PanelMorph new.
@@ -129,33 +115,33 @@ MCTool >> buttonRow: specArray [
 	^ aRow
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 MCTool >> buttonSelected [
 	^ false
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 MCTool >> buttonSpecs [
 	^ #()
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 MCTool >> buttonState [
 	^ false
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 MCTool >> close [
 	self window delete
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 MCTool >> defaultAnnotationPaneHeight [ 
 	"Answer the receiver's preferred default height for new annotation panes."
 	^ 25
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 MCTool >> fillMenu: aMenu fromSpecs: anArray [
 	anArray do:
 		[:spec |
@@ -167,42 +153,42 @@ MCTool >> fillMenu: aMenu fromSpecs: anArray [
 	^ aMenu
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 MCTool >> findListMorph: aSymbol [
 	^ morph submorphs detect: [:ea | (ea respondsTo: #getListSelector) and: [ea getListSelector = aSymbol]] ifNone: []
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 MCTool >> findTextMorph: aSymbol [
 	^ morph submorphs detect: [:ea | (ea respondsTo: #getTextSelector) and: [ea getTextSelector = aSymbol]] ifNone: []
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 MCTool >> getMenu: aMenu [
 	^aMenu
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 MCTool >> initialExtent [
 	^ 500@500
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MCTool >> interactionModel [
 	^ self
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 MCTool >> label [
 	^ label ifNil: [self defaultLabel]
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 MCTool >> label: aString [
 	label := aString
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 MCTool >> listMorph: listSymbol [
 	^ self
 		listMorph: (listSymbol, 'List') asSymbol
@@ -210,7 +196,7 @@ MCTool >> listMorph: listSymbol [
 		menu: (listSymbol, 'ListMenu:') asSymbol
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 MCTool >> listMorph: listSymbol keystroke: keystrokeSymbol [
 	^ (self
 		listMorph: (listSymbol, 'List') asSymbol
@@ -220,7 +206,7 @@ MCTool >> listMorph: listSymbol keystroke: keystrokeSymbol [
 		yourself
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 MCTool >> listMorph: listSymbol selection: selectionSymbol [
 	^ PluggableListMorph
 		on: self
@@ -229,7 +215,7 @@ MCTool >> listMorph: listSymbol selection: selectionSymbol [
 		changeSelected: (selectionSymbol, ':') asSymbol
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 MCTool >> listMorph: listSymbol selection: selectionSymbol menu: menuSymbol [
 	^ PluggableListMorph
 		on: self
@@ -239,7 +225,7 @@ MCTool >> listMorph: listSymbol selection: selectionSymbol menu: menuSymbol [
 		menu: menuSymbol
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 MCTool >> listMorph: listSymbol selection: selectionSymbol menu: menuSymbol icon: iconSelector [
 	^ (PluggableIconListMorph
 		on: self
@@ -251,7 +237,7 @@ MCTool >> listMorph: listSymbol selection: selectionSymbol menu: menuSymbol icon
 			yourself
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 MCTool >> listMorph: listSymbol selection: selectionSymbol menu: menuSymbol keystroke: keystrokeSymbol [
 	^ (PluggableListMorph
 		on: self
@@ -263,20 +249,20 @@ MCTool >> listMorph: listSymbol selection: selectionSymbol menu: menuSymbol keys
 		yourself
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 MCTool >> menu [
 	" returns nil to let the editing mode offer the right menu"
 	^ nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCTool >> minimumExtent [
 	"Answer the minumum extent for the tool."
 	
 	^100@100
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 MCTool >> multiListMorph: listSymbol selection: selectionSymbol listSelection: listSelectionSymbol menu: menuSymbol [
 	^ PluggableListMorph
 		on: self
@@ -288,34 +274,34 @@ MCTool >> multiListMorph: listSymbol selection: selectionSymbol listSelection: l
 		menu: menuSymbol
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 MCTool >> performButtonAction: anActionSelector enabled: anEnabledSelector [
 	(self perform: anEnabledSelector) 
 		ifTrue: [ self perform: anActionSelector ]
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 MCTool >> preferredColor [  
 	^ (Color r: 0.627 g: 0.69 b: 0.976)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCTool >> selectedClassOrMetaClass [
 	^nil
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 MCTool >> setDefaultFocus [
 	"set the default focus on the morph elements.
 	specializ this in subclasses"
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 MCTool >> shoutAboutToStyle: aPluggableShoutMorphOrView [
 	^ false
 ]
 
-{ #category : #opening }
+{ #category : 'opening' }
 MCTool >> show [
 	"Open the tool returning the window."
 
@@ -325,7 +311,7 @@ MCTool >> show [
 	^ self window
 ]
 
-{ #category : #opening }
+{ #category : 'opening' }
 MCTool >> showLabelled: labelString [
 	
 	modal := false.
@@ -335,7 +321,7 @@ MCTool >> showLabelled: labelString [
 	^ self window.
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 MCTool >> showModally [
 	modal := true.
 	self window openModal.
@@ -343,12 +329,12 @@ MCTool >> showModally [
 	^ modalValue
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 MCTool >> summary: aString [
 	" do nothing by default"
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 MCTool >> textMorph: aSymbol [
 	| textMorph |
 	textMorph := RubPluggableTextMorph new
@@ -364,7 +350,7 @@ MCTool >> textMorph: aSymbol [
 	^ textMorph
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 MCTool >> treeMorph: listSymbol [
 	^ self
 		treeMorph: (listSymbol, 'Tree') asSymbol
@@ -372,7 +358,7 @@ MCTool >> treeMorph: listSymbol [
 		menu: (listSymbol, 'TreeMenu:') asSymbol
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 MCTool >> treeMorph: listSymbol selection: selectionSymbol menu: menuSymbol [
 	^ SimpleHierarchicalListMorph
 		on: self
@@ -382,12 +368,12 @@ MCTool >> treeMorph: listSymbol selection: selectionSymbol menu: menuSymbol [
 		menu: menuSymbol
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 MCTool >> widgetSpecs [
 	^ #()
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 MCTool >> window [
 	^ morph ifNil: [morph := self buildWindow]
 ]

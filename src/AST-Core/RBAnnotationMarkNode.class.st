@@ -19,72 +19,74 @@ AST validations and transformations (and most likely compiler plugins) have the 
 Note: the node is not a value nor a variable, it is a placeholder at best.
 "
 Class {
-	#name : #RBAnnotationMarkNode,
-	#superclass : #RBValueNode,
+	#name : 'RBAnnotationMarkNode',
+	#superclass : 'RBValueNode',
 	#instVars : [
 		'start',
 		'emitValueBlock'
 	],
-	#category : #'AST-Core-Nodes'
+	#category : 'AST-Core-Nodes',
+	#package : 'AST-Core',
+	#tag : 'Nodes'
 }
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 RBAnnotationMarkNode >> = anObject [
 	"All annotation marks are equivalent"
 	^self class = anObject class
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RBAnnotationMarkNode >> acceptVisitor: aProgramNodeVisitor [
 	^ aProgramNodeVisitor visitAnnotationMarkNode: self
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 RBAnnotationMarkNode >> hash [
 
 	^ self class hash
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBAnnotationMarkNode >> initialize [
 	super initialize.
 	start := 0
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBAnnotationMarkNode >> isAnnotationMark [
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBAnnotationMarkNode >> isHandled [
 
 	^ self emitValueBlock isNotNil
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBAnnotationMarkNode >> needsParenthesis [
 	^false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBAnnotationMarkNode >> precedence [
 	^0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBAnnotationMarkNode >> start: aPosition [
 	"Beware, start is in fact `startWithoutParentheses` as in RBValueNode, start includes parentheses"
 
 	start := aPosition
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBAnnotationMarkNode >> startWithoutParentheses [
 	^ start
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBAnnotationMarkNode >> stopWithoutParentheses [
 	^ start
 ]

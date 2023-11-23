@@ -1,1 +1,1 @@
-Package { #name : #UIManager }
+Package { #name : 'UIManager' }

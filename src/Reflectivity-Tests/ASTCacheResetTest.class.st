@@ -1,26 +1,28 @@
 Class {
-	#name : #ASTCacheResetTest,
-	#superclass : #TestCase,
+	#name : 'ASTCacheResetTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'cache',
 		'counter',
 		'link',
 		'node'
 	],
-	#category : #'Reflectivity-Tests-Base'
+	#category : 'Reflectivity-Tests-Base',
+	#package : 'Reflectivity-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #'tests - material' }
+{ #category : 'tests - material' }
 ASTCacheResetTest >> annotatedMethod [
 	^ 42
 ]
 
-{ #category : #'tests - material' }
+{ #category : 'tests - material' }
 ASTCacheResetTest >> increment [
 	counter := counter + 1
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ASTCacheResetTest >> setUp [
 	super setUp.
 	cache := ASTCache default copy.
@@ -32,14 +34,14 @@ ASTCacheResetTest >> setUp [
 	node link: link
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ASTCacheResetTest >> tearDown [
 	ASTCache default: cache.
 	node removeLink: link.
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ASTCacheResetTest >> testCacheResetPreserveLinks [
 	self annotatedMethod.
 	self assert: counter equals: 1.

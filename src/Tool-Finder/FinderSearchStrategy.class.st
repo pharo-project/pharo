@@ -4,15 +4,17 @@ I am an abstract class to define the behavior of the Finder related to the searc
 I implement a strategy design pattern and my subclasses will manage the different search modes.
 "
 Class {
-	#name : #FinderSearchStrategy,
-	#superclass : #Object,
+	#name : 'FinderSearchStrategy',
+	#superclass : 'Object',
 	#instVars : [
 		'finder'
 	],
-	#category : #'Tool-Finder-Base'
+	#category : 'Tool-Finder-Base',
+	#package : 'Tool-Finder',
+	#tag : 'Base'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FinderSearchStrategy class >> finder: aFinder [
 
 	^ self new
@@ -20,31 +22,31 @@ FinderSearchStrategy class >> finder: aFinder [
 		  yourself
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FinderSearchStrategy class >> isAbstract [
 
 	^ self = FinderSearchStrategy
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FinderSearchStrategy class >> strategyName [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FinderSearchStrategy class >> strategyNamed: aSymbol [
 
 	^ self subclasses detect: [ :class | class strategyName = aSymbol ]
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 FinderSearchStrategy >> constructDictionary [
 
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FinderSearchStrategy >> defaultExplanation [
 
 	^ 'The Finder can be used in 4 different ways:
@@ -63,44 +65,44 @@ The ''Select classes'' button opened a dialog window  to select which classes wi
 The ''All classes'' button is used to reset the classes selection.'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FinderSearchStrategy >> findSelectedClassIn: path [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FinderSearchStrategy >> findSelectedMethodIn: path [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FinderSearchStrategy >> finder [
 
 	^ finder
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FinderSearchStrategy >> finder: anObject [
 
 	finder := anObject.
 	self updateRegexUsage
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FinderSearchStrategy >> isClassesSearch [
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FinderSearchStrategy >> isPragmasSearch [
 
 	^ false
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 FinderSearchStrategy >> methodSearch: aSelectBlock [
 
 	| result |
@@ -114,13 +116,13 @@ FinderSearchStrategy >> methodSearch: aSelectBlock [
 	^ result
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FinderSearchStrategy >> sourceCodeClass: class method: method [
 
 	^ (class >> method) sourceCode
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FinderSearchStrategy >> updateRegexUsage [
 
 	finder enableUseRegEx

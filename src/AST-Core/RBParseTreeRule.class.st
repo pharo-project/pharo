@@ -8,66 +8,68 @@ Instance Variables:
 
 "
 Class {
-	#name : #RBParseTreeRule,
-	#superclass : #Object,
+	#name : 'RBParseTreeRule',
+	#superclass : 'Object',
 	#instVars : [
 		'searchTree',
 		'owner'
 	],
-	#category : #'AST-Core-Matching'
+	#category : 'AST-Core-Matching',
+	#package : 'AST-Core',
+	#tag : 'Matching'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBParseTreeRule class >> isAbstract [
 
 	^ self == RBParseTreeRule
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBParseTreeRule class >> methodSearch: aString [
 	^(self new)
 		methodSearchString: aString;
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBParseTreeRule class >> search: aString [
 	^(self new)
 		searchString: aString;
 		yourself
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBParseTreeRule >> canMatch: aProgramNode [
 	^true
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBParseTreeRule >> context [
 	^owner context
 ]
 
-{ #category : #matching }
+{ #category : 'matching' }
 RBParseTreeRule >> foundMatchFor: aProgramNode [
 	^aProgramNode
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBParseTreeRule >> methodSearchString: aString [
 	searchTree := self parserClass parseRewriteMethod: aString
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 RBParseTreeRule >> owner: aParseTreeSearcher [
 	owner := aParseTreeSearcher
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBParseTreeRule >> parserClass [
 	^ RBParser
 ]
 
-{ #category : #matching }
+{ #category : 'matching' }
 RBParseTreeRule >> performOn: aProgramNode [
 	self context empty.
 	^((searchTree match: aProgramNode inContext: self context)
@@ -78,12 +80,12 @@ RBParseTreeRule >> performOn: aProgramNode [
 			ifFalse: [nil]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBParseTreeRule >> searchString: aString [
 	searchTree := self parserClass parseRewriteExpression: aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBParseTreeRule >> sentMessages [
 	^searchTree sentMessages
 ]

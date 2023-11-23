@@ -2,15 +2,17 @@
 tests for Slots 
 "
 Class {
-	#name : #SlotTest,
-	#superclass : #TestCase,
+	#name : 'SlotTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'ivarForTesting'
 	],
-	#category : #'Slot-Tests-VariablesAndSlots'
+	#category : 'Slot-Tests-VariablesAndSlots',
+	#package : 'Slot-Tests',
+	#tag : 'VariablesAndSlots'
 }
 
-{ #category : #'tests - misc' }
+{ #category : 'tests - misc' }
 SlotTest >> testAsSlotCollection [
 
  	self assert: 'a b' asSlotCollection equals: {#a => InstanceVariableSlot. #b => InstanceVariableSlot}.
@@ -20,39 +22,39 @@ SlotTest >> testAsSlotCollection [
 	self should: ['iva|rG' asSlotCollection] raise: Error
 ]
 
-{ #category : #'tests - read/write' }
+{ #category : 'tests - read/write' }
 SlotTest >> testIsReadInMethod [
 
 	ivarForTesting printString.
 	self assert: ((self class slotNamed: #ivarForTesting) isReadIn: self class >> testSelector)
 ]
 
-{ #category : #'tests - testing' }
+{ #category : 'tests - testing' }
 SlotTest >> testIsReferenced [
 	self assert: (Point slotNamed: #x) isReferenced
 ]
 
-{ #category : #'tests - read/write' }
+{ #category : 'tests - read/write' }
 SlotTest >> testIsWrittenInMethod [
 
 	ivarForTesting := #test.
 	self assert: ((self class slotNamed: #ivarForTesting) isWrittenIn: self class >> testSelector)
 ]
 
-{ #category : #'tests - read/write' }
+{ #category : 'tests - read/write' }
 SlotTest >> testNotReadInMethod [
 
 	self deny: ((self class slotNamed: #ivarForTesting) isReadIn: self class >> testSelector)
 ]
 
-{ #category : #'tests - read/write' }
+{ #category : 'tests - read/write' }
 SlotTest >> testNotWrittenInMethodWhenItIsOnlyRead [
 
 	ivarForTesting printString.
 	self deny: ((self class slotNamed: #ivarForTesting) isWrittenIn: self class >> testSelector)
 ]
 
-{ #category : #'tests - properties' }
+{ #category : 'tests - properties' }
 SlotTest >> testPropertyAtPut [
 
 	| testValue ivar |
@@ -68,7 +70,7 @@ SlotTest >> testPropertyAtPut [
 	self assert: ivar properties isNil
 ]
 
-{ #category : #'tests - read/write' }
+{ #category : 'tests - read/write' }
 SlotTest >> testReadFromContext [
 
 	| slot |
@@ -78,7 +80,7 @@ SlotTest >> testReadFromContext [
 	self assert: (slot readInContext: thisContext) equals: #testValue
 ]
 
-{ #category : #'tests - properties' }
+{ #category : 'tests - properties' }
 SlotTest >> testRemoveProperty [
 	| ivar |
 	ivar := self class slotNamed: #ivarForTesting.
@@ -93,7 +95,7 @@ SlotTest >> testRemoveProperty [
 	self assert: ivar properties isNil
 ]
 
-{ #category : #'tests - misc' }
+{ #category : 'tests - misc' }
 SlotTest >> testScope [
 	| variable |
 	variable := self class slotNamed: #ivarForTesting.
@@ -102,13 +104,13 @@ SlotTest >> testScope [
 	self assert: (variable scope lookupVar: variable name) equals: variable
 ]
 
-{ #category : #'tests - misc' }
+{ #category : 'tests - misc' }
 SlotTest >> testSlotUsers [
 	self assert: (ToOneRelationSlot slotUsers includes: SlotExampleMovie).
 	self deny: (ToOneRelationSlot slotUsers includes: SlotExamplePerson)
 ]
 
-{ #category : #'tests - read/write' }
+{ #category : 'tests - read/write' }
 SlotTest >> testWriteToContext [
 
 	| slot |
@@ -118,7 +120,7 @@ SlotTest >> testWriteToContext [
 	self assert: ivarForTesting equals: #testValue
 ]
 
-{ #category : #'tests - misc' }
+{ #category : 'tests - misc' }
 SlotTest >> testisUsed [
 	self assert: InstanceVariableSlot isUsed.
 	self assert: IndexedSlot isUsed. "subclasses are users"

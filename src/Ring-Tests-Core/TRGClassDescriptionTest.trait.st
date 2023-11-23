@@ -1,9 +1,10 @@
 Trait {
-	#name : #TRGClassDescriptionTest,
-	#category : #'Ring-Tests-Core'
+	#name : 'TRGClassDescriptionTest',
+	#category : 'Ring-Tests-Core',
+	#package : 'Ring-Tests-Core'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 TRGClassDescriptionTest >> testCopyForBehaviorDefinitionForClassDescription [
 
 	| env aClass copy |
@@ -20,7 +21,7 @@ TRGClassDescriptionTest >> testCopyForBehaviorDefinitionForClassDescription [
 	self assert: (copy layout parent == copy)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TRGClassDescriptionTest >> testTypes [
 
 	| newBehavior |

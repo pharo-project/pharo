@@ -3,39 +3,41 @@ I am a DrTestPlugin.
 I create tests from executable comments and run these tests.
 "
 Class {
-	#name : #DTCommentToTestPlugin,
-	#superclass : #DrTestsPlugin,
-	#category : #'DrTests-CommentsToTests-Base'
+	#name : 'DTCommentToTestPlugin',
+	#superclass : 'DrTestsPlugin',
+	#category : 'DrTests-CommentsToTests-Base',
+	#package : 'DrTests-CommentsToTests',
+	#tag : 'Base'
 }
 
-{ #category : #'api - accessing' }
+{ #category : 'api - accessing' }
 DTCommentToTestPlugin class >> pluginName [
 	"The name of the plugin to be displayed in DrTests UI."
 	^ 'Executable comments checker'
 ]
 
-{ #category : #'api - accessing' }
+{ #category : 'api - accessing' }
 DTCommentToTestPlugin class >> pluginResultClass [
 	^ DTCommentToTestResult
 ]
 
-{ #category : #'api - accessing' }
+{ #category : 'api - accessing' }
 DTCommentToTestPlugin class >> weight [
 	"The lighter is a plugin, the higher it is displayed in the drop list for plugin selection."
 	^ 10
 ]
 
-{ #category : #'configuration building' }
+{ #category : 'configuration building' }
 DTCommentToTestPlugin >> buildConfigurationFrom: aDrTests [
 	^ DTCommentTestConfiguration items: aDrTests selectedItems packages: aDrTests packagesSelected
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 DTCommentToTestPlugin >> firstListLabel [
 	^ 'Packages'
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 DTCommentToTestPlugin >> itemsToBeAnalysedFor: packagesSelected [
 
 	"note `asSet` is used to avoid duplication if a class is defined/extended in more than one package"
@@ -45,30 +47,30 @@ DTCommentToTestPlugin >> itemsToBeAnalysedFor: packagesSelected [
 			  class hasDocComment or: [ class class hasDocComment ] ] ]
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 DTCommentToTestPlugin >> packagesAvailableForAnalysis [
-	^ RPackage organizer packages
-		select: [ :p | p definedClasses anySatisfy: [ :c | c isTestCase not ] ]
+
+	^ self packageOrganizer packages select: [ :p | p definedClasses anySatisfy: [ :c | c isTestCase not ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTCommentToTestPlugin >> pragmaForResultTrees [
 	^ #'dtCommentToTestResultTreeNamed:order:'
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 DTCommentToTestPlugin >> resultButtonHelp [
 	^ 'Browse the test selected in the result list.'
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 DTCommentToTestPlugin >> runForConfiguration: aDTpluginConfiguration [
 	^ self pluginResultClass new
 			testResults: (self runTestSuites: {aDTpluginConfiguration asTestSuite});
 			yourself
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 DTCommentToTestPlugin >> runSuite: aTestSuite withResult: aResult [
 	aTestSuite
 		when: TestAnnouncement
@@ -79,7 +81,7 @@ DTCommentToTestPlugin >> runSuite: aTestSuite withResult: aResult [
 		ensure: [ aTestSuite unsubscribe: TestAnnouncement ]
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 DTCommentToTestPlugin >> runTestSuites: testSuites [
 	| result |
 	result := TestAsserter classForTestResult new.
@@ -90,17 +92,17 @@ DTCommentToTestPlugin >> runTestSuites: testSuites [
 	^ result
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 DTCommentToTestPlugin >> secondListLabel [
 	^ 'Classes'
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 DTCommentToTestPlugin >> startButtonHelp [
 	^ 'Run selected tests.'
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 DTCommentToTestPlugin >> startButtonLabel [
 	^ 'Run Tests' translated
 ]

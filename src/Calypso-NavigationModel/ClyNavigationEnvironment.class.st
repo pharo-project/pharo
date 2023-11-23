@@ -112,8 +112,8 @@ Internal Representation and Key Implementation Points.
 	accessGuard:	<Mutex>
 "
 Class {
-	#name : #ClyNavigationEnvironment,
-	#superclass : #Object,
+	#name : 'ClyNavigationEnvironment',
+	#superclass : 'Object',
 	#instVars : [
 		'plugins',
 		'updateStrategy',
@@ -125,10 +125,12 @@ Class {
 	#classInstVars : [
 		'defaultGlobalEnvironments'
 	],
-	#category : #'Calypso-NavigationModel-Model'
+	#category : 'Calypso-NavigationModel-Model',
+	#package : 'Calypso-NavigationModel',
+	#tag : 'Model'
 }
 
-{ #category : #default }
+{ #category : 'default' }
 ClyNavigationEnvironment class >> defaultOver: aSystem [
 	defaultGlobalEnvironments ifNil: [ defaultGlobalEnvironments := IdentityDictionary new ].
 
@@ -138,7 +140,7 @@ ClyNavigationEnvironment class >> defaultOver: aSystem [
 			attachToSystem ]
 ]
 
-{ #category : #default }
+{ #category : 'default' }
 ClyNavigationEnvironment class >> installNewPlugin: anEnvironmentPluginClass [
 	defaultGlobalEnvironments ifNil: [ ^self ].
 
@@ -147,13 +149,13 @@ ClyNavigationEnvironment class >> installNewPlugin: anEnvironmentPluginClass [
 			ifTrue: [ each addPlugin: anEnvironmentPluginClass new]]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyNavigationEnvironment class >> over: aSystem [
 	^self new
 		system: aSystem
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 ClyNavigationEnvironment class >> reset [
 	"It will reset all caches and unsubscribe from system environment"
 	<script>
@@ -162,7 +164,7 @@ ClyNavigationEnvironment class >> reset [
 	defaultGlobalEnvironments := nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyNavigationEnvironment >> addPlugin: anEnvironmentPlugin [
 	plugins detect: [ :each | each class = anEnvironmentPlugin class ] ifFound: [ ^self ].
 
@@ -170,57 +172,57 @@ ClyNavigationEnvironment >> addPlugin: anEnvironmentPlugin [
 	plugins add: anEnvironmentPlugin
 ]
 
-{ #category : #'system changes' }
+{ #category : 'system changes' }
 ClyNavigationEnvironment >> announceChangesOf: aQueryResult [
 
 	updateStrategy announceChangesOf: aQueryResult
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ClyNavigationEnvironment >> asRBEnvironment [
 	^ self system environment
 ]
 
-{ #category : #'system subscription' }
+{ #category : 'system subscription' }
 ClyNavigationEnvironment >> attachToSystem [
 	system subscribe: self.
 	plugins do: [:each | each attachToSystem]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyNavigationEnvironment >> cachedResultOf: aQuery [
 
 	^queryCache at: aQuery ifAbsent: [ nil ]
 ]
 
-{ #category : #cleaning }
+{ #category : 'cleaning' }
 ClyNavigationEnvironment >> cleanGarbageInCache [
 
 	accessGuard critical: [
 		queryCache clyCleanGarbage]
 ]
 
-{ #category : #'system subscription' }
+{ #category : 'system subscription' }
 ClyNavigationEnvironment >> detachFromSystem [
 	system unsubscribe: self.
 	plugins do: [ :each | each detachFromSystem ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyNavigationEnvironment >> getPlugin: environmentPluginClass [
 	^plugins detect: [ :each | each class = environmentPluginClass ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyNavigationEnvironment >> getPlugin: environmentPluginClass ifAbsent: absentBlock [
 	^plugins detect: [ :each | each class = environmentPluginClass ] ifNone: absentBlock
 ]
 
-{ #category : #'system changes' }
+{ #category : 'system changes' }
 ClyNavigationEnvironment >> handleSystemChange: aSystemAnnouncement [
 
 	| todoList todoSize anyResult |
-	todoList := 	(queryCache values select: [ :each | each notNil ]) as: IdentitySet.
+	todoList := 	(queryCache values select: [ :each | each isNotNil ]) as: IdentitySet.
 	todoSize := 0.
 	[[todoSize = todoList size] whileFalse: [
 		todoSize := todoList size.
@@ -233,7 +235,7 @@ ClyNavigationEnvironment >> handleSystemChange: aSystemAnnouncement [
 		todoList remove: anyResult]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyNavigationEnvironment >> initialize [
 	super initialize.
 
@@ -244,7 +246,7 @@ ClyNavigationEnvironment >> initialize [
 	updateStrategy := ClyInstantEnvironmentUpdateStrategy new
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyNavigationEnvironment >> isQueryEmpty: aQuery [
 	| result |
 	result := queryCache at: aQuery ifAbsent: [ nil ].	"cache is weak dict where ifAbsentPut: not works"
@@ -253,17 +255,17 @@ ClyNavigationEnvironment >> isQueryEmpty: aQuery [
 	^ aQuery checkEmptyResult
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyNavigationEnvironment >> plugins [
 	^plugins
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyNavigationEnvironment >> pluginsDo: aBlock [
 	^plugins do: aBlock
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyNavigationEnvironment >> query: aQuery [
 
 	| result |
@@ -280,18 +282,18 @@ ClyNavigationEnvironment >> query: aQuery [
 	^result
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyNavigationEnvironment >> queryCache [
 	^queryCache
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyNavigationEnvironment >> querySystemFor: aTypedQuery [
 	aTypedQuery bindTo: self systemScope in: self.
 	^aTypedQuery execute
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyNavigationEnvironment >> setUpAvailablePlugins [
 
 	ClyEnvironmentPlugin allSubclasses
@@ -299,17 +301,17 @@ ClyNavigationEnvironment >> setUpAvailablePlugins [
 		thenDo: [ :each | self addPlugin: each new ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyNavigationEnvironment >> system [
 	^ system
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyNavigationEnvironment >> system: anObject [
 	system := anObject
 ]
 
-{ #category : #'system changes' }
+{ #category : 'system changes' }
 ClyNavigationEnvironment >> systemChanged: aSystemAnnouncement [
 
 	self updateUsing: ClyFullEnvironmentUpdateStrategy new by: [
@@ -317,12 +319,12 @@ ClyNavigationEnvironment >> systemChanged: aSystemAnnouncement [
 	]
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyNavigationEnvironment >> systemScope [
 	^ system asGlobalScopeIn: self
 ]
 
-{ #category : #'system changes' }
+{ #category : 'system changes' }
 ClyNavigationEnvironment >> updateUsing: newUpdateStrategy by: updateBlock [
 	"here is special logic to break current mutex when any error is signalled.
 	Without this logic fixing code inside spawned debugger will lead to deadlock
@@ -346,8 +348,8 @@ ClyNavigationEnvironment >> updateUsing: newUpdateStrategy by: updateBlock [
 	] ensure: [ newUpdateStrategy publishCollectedChanges]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyNavigationEnvironment >> withCachedQueriesDo: aBlock [
 
-	queryCache select: [ :each | each notNil ] thenDo: aBlock
+	queryCache select: [ :each | each isNotNil ] thenDo: aBlock
 ]

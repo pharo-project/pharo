@@ -2,8 +2,8 @@
 I am the abstract class for all the Pinch gesture detectors
 "
 Class {
-	#name : #OSTouchPinchDetector,
-	#superclass : #OSTouchDirectionnalGestureDetector,
+	#name : 'OSTouchPinchDetector',
+	#superclass : 'OSTouchDirectionnalGestureDetector',
 	#instVars : [
 		'maxDistanceBetweenFingersLine',
 		'fingersDistanceFromCenter'
@@ -11,27 +11,29 @@ Class {
 	#classVars : [
 		'MaxDistanceBetweenFingersLine'
 	],
-	#category : #'OSWindow-Core-Gestures'
+	#category : 'OSWindow-Core-Gestures',
+	#package : 'OSWindow-Core',
+	#tag : 'Gestures'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 OSTouchPinchDetector class >> initialize [
 	super initialize.
 	MaxDistanceBetweenFingersLine := 0.2.
 	MinDistanceBeforeDetection := 0.03
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSTouchPinchDetector class >> maxDistanceBetweenFingersLine [
 	^ MaxDistanceBetweenFingersLine
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSTouchPinchDetector class >> maxDistanceBetweenFingersLine: aNumber [
 	MaxDistanceBetweenFingersLine := aNumber
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 OSTouchPinchDetector class >> maxDistanceBetweenFingersLineSettingsOn: aBuilder [
 	<systemsettings>
 	(aBuilder setting: #maxDistanceBetweenFingersLine)
@@ -43,7 +45,7 @@ OSTouchPinchDetector class >> maxDistanceBetweenFingersLineSettingsOn: aBuilder 
 		parent: #pinchGesture
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 OSTouchPinchDetector class >> minDistanceBeforeDetectionSettingsOn: aBuilder [
 	<systemsettings>
 	(aBuilder setting: #minDistanceBeforeDetection)
@@ -55,7 +57,7 @@ OSTouchPinchDetector class >> minDistanceBeforeDetectionSettingsOn: aBuilder [
 		parent: #pinchGesture
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 OSTouchPinchDetector class >> touchPinchSettingsOn: aBuilder [
 	<systemsettings>
 	(aBuilder group: #pinchGesture)
@@ -63,7 +65,7 @@ OSTouchPinchDetector class >> touchPinchSettingsOn: aBuilder [
 		parent: #touchGestures
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 OSTouchPinchDetector >> areFingersLinesNotTooFarApart [
 	| firstFinger secondFinger minDistance |
 	firstFinger := self activeFingers first.
@@ -73,14 +75,14 @@ OSTouchPinchDetector >> areFingersLinesNotTooFarApart [
 	^ minDistance < maxDistanceBetweenFingersLine
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 OSTouchPinchDetector >> beginConditions [
 	^ super beginConditions
 		and: [ self areFingersLinesNotTooFarApart
 		and: [ self doesFingersGoesInOppositeDirection ]]
 ]
 
-{ #category : #factory }
+{ #category : 'factory' }
 OSTouchPinchDetector >> createEventBeginning [
 	fingersDistanceFromCenter := self fingersDistanceFromCenter.
 	^ self eventClassBeginGesture new
@@ -91,7 +93,7 @@ OSTouchPinchDetector >> createEventBeginning [
 		yourself
 ]
 
-{ #category : #factory }
+{ #category : 'factory' }
 OSTouchPinchDetector >> createEventDuringMove [
 	^ self eventClassMoveGesture new
 		timestamp: eventHandler lastUpdateTimestamp;
@@ -101,7 +103,7 @@ OSTouchPinchDetector >> createEventDuringMove [
 		yourself
 ]
 
-{ #category : #factory }
+{ #category : 'factory' }
 OSTouchPinchDetector >> createEventEnding [
 	^ self eventClassEndGesture new
 		timestamp: eventHandler lastUpdateTimestamp;
@@ -111,7 +113,7 @@ OSTouchPinchDetector >> createEventEnding [
 		yourself
 ]
 
-{ #category : #'event field' }
+{ #category : 'event field' }
 OSTouchPinchDetector >> dDist [
 	| oldDistance |
 	oldDistance := fingersDistanceFromCenter.
@@ -119,7 +121,7 @@ OSTouchPinchDetector >> dDist [
 	^ fingersDistanceFromCenter - oldDistance
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 OSTouchPinchDetector >> doesFingersGoesInOppositeDirection [
 	| fingersDirection direction |
 	fingersDirection := self activeFingers collect: [ :each | each direction ].
@@ -132,29 +134,29 @@ OSTouchPinchDetector >> doesFingersGoesInOppositeDirection [
 	^ fingersDirection anySatisfy: [ :finger | finger = direction negated ]
 ]
 
-{ #category : #abstract }
+{ #category : 'abstract' }
 OSTouchPinchDetector >> eventClassBeginGesture [
 	self subclassResponsibility
 ]
 
-{ #category : #abstract }
+{ #category : 'abstract' }
 OSTouchPinchDetector >> eventClassEndGesture [
 	self subclassResponsibility
 ]
 
-{ #category : #abstract }
+{ #category : 'abstract' }
 OSTouchPinchDetector >> eventClassMoveGesture [
 	self subclassResponsibility
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 OSTouchPinchDetector >> fingersDistanceFromCenter [
 	| centerOfAllFingers |
 	centerOfAllFingers := self centerOfAllFingers.
 	^ (self activeFingers collect: [ :each | centerOfAllFingers distanceTo: each lastPosition ]) sum
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OSTouchPinchDetector >> initialize [
 	super initialize.
 	maxDistanceBetweenFingersLine := self class maxDistanceBetweenFingersLine

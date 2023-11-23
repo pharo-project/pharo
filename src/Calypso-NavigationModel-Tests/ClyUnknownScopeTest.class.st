@@ -1,15 +1,16 @@
 Class {
-	#name : #ClyUnknownScopeTest,
-	#superclass : #ClyScopeTest,
-	#category : #'Calypso-NavigationModel-Tests'
+	#name : 'ClyUnknownScopeTest',
+	#superclass : 'ClyScopeTest',
+	#category : 'Calypso-NavigationModel-Tests',
+	#package : 'Calypso-NavigationModel-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClyUnknownScopeTest >> createSampleScope [
 	^ClyUnknownScope new
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyUnknownScopeTest >> testAdoptQuery [
 	| query adoptedQuery |
 	scope := self createSampleScope.
@@ -20,7 +21,7 @@ ClyUnknownScopeTest >> testAdoptQuery [
 	self assert: adoptedQuery identicalTo: query
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyUnknownScopeTest >> testConvertingToAnotherScopeClass [
 	| convertedScope |
 	scope := self createSampleScope.
@@ -30,7 +31,7 @@ ClyUnknownScopeTest >> testConvertingToAnotherScopeClass [
 	self assert: convertedScope identicalTo: scope
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyUnknownScopeTest >> testConvertingToNewBasis [
 	scope := self createSampleScope.
 
@@ -38,21 +39,21 @@ ClyUnknownScopeTest >> testConvertingToNewBasis [
 	self assert: scope basisObjects isEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyUnknownScopeTest >> testCreationUnifiedInstance [
 	scope := self createSampleScope.
 
 	self assert: scope asUnifiedInstance identicalTo: scope
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyUnknownScopeTest >> testGettingSingletonInstanceFromScratch [
 	ClyUnknownScope reset.
 
 	self assert: ClyUnknownScope instance identicalTo: ClyUnknownScope instance
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyUnknownScopeTest >> testHasEmptyBasisObjects [
 
 	scope := self createSampleScope.
@@ -60,7 +61,7 @@ ClyUnknownScopeTest >> testHasEmptyBasisObjects [
 	self assert: scope basisObjects isEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyUnknownScopeTest >> testIsBasedOnEmptyBasis [
 
 	scope := self createSampleScope.
@@ -68,7 +69,7 @@ ClyUnknownScopeTest >> testIsBasedOnEmptyBasis [
 	self assert: scope isBasedOnEmptyBasis
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyUnknownScopeTest >> testIsNotBasedOnAnyObject [
 
 	scope := self createSampleScope.
@@ -76,7 +77,7 @@ ClyUnknownScopeTest >> testIsNotBasedOnAnyObject [
 	self deny: (scope isBasedOn: #anyObject)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyUnknownScopeTest >> testIsNotBasedOnMultipleBasis [
 
 	scope := self createSampleScope.
@@ -84,7 +85,7 @@ ClyUnknownScopeTest >> testIsNotBasedOnMultipleBasis [
 	self deny: scope isBasedOnMultipleBasis
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyUnknownScopeTest >> testIsNotBasedOnSingleBasis [
 
 	scope := self createSampleScope.

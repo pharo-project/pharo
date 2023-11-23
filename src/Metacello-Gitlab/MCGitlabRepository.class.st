@@ -27,22 +27,23 @@ Internal Representation and Key Implementation Points.
 
 "
 Class {
-	#name : #MCGitlabRepository,
-	#superclass : #MCPrivateHostableRepository,
-	#category : #'Metacello-Gitlab'
+	#name : 'MCGitlabRepository',
+	#superclass : 'MCPrivateHostableRepository',
+	#category : 'Metacello-Gitlab',
+	#package : 'Metacello-Gitlab'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCGitlabRepository class >> basicDescription [
   ^ 'gitlab'
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCGitlabRepository class >> defaultHostname [
 	^ 'gitlab.com'
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCGitlabRepository >> projectTagsUrlFor: aProjectPath [
 	^ 'https://<1s>/api/v4/projects/<2s>/repository/tags' expandMacrosWith: self hostname with: aProjectPath
 ]

@@ -1,6 +1,6 @@
-Extension { #name : #SequenceableCollection }
+Extension { #name : 'SequenceableCollection' }
 
-{ #category : #'*Math-Operations-Extensions' }
+{ #category : '*Math-Operations-Extensions' }
 SequenceableCollection >> closeTo: aSequenceableCollection [
 	"Return true if all my elements are close to the elements of same index of the parameter"
 
@@ -9,7 +9,7 @@ SequenceableCollection >> closeTo: aSequenceableCollection [
 	^ self closeTo: aSequenceableCollection precision: Float defaultComparisonPrecision
 ]
 
-{ #category : #'*Math-Operations-Extensions' }
+{ #category : '*Math-Operations-Extensions' }
 SequenceableCollection >> closeTo: aSequenceableCollection precision: aPrecision [
 	"Return true if all my elements are close to the elements of same index of the parameter with a certain precision"
 

@@ -2,16 +2,18 @@
 I represent error and warning information on a AST node.
 "
 Class {
-	#name : #RBNotice,
-	#superclass : #Object,
+	#name : 'RBNotice',
+	#superclass : 'Object',
 	#instVars : [
 		'messageText',
 		'node'
 	],
-	#category : #'AST-Core-Notice'
+	#category : 'AST-Core-Notice',
+	#package : 'AST-Core',
+	#tag : 'Notice'
 }
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 RBNotice >> <= other [
 
 	self errorLevel = other errorLevel ifFalse: [
@@ -19,7 +21,7 @@ RBNotice >> <= other [
 	^ self position <= other position
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBNotice >> description [
 
 	^ String streamContents: [ :stream |
@@ -48,7 +50,7 @@ RBNotice >> description [
 						   truncateWithElipsisTo: 60) ] ]
 ]
 
-{ #category : #'error handling' }
+{ #category : 'error handling' }
 RBNotice >> errorLevel [
 
 	self isSyntaxError ifTrue: [ ^ 3 ].
@@ -57,68 +59,68 @@ RBNotice >> errorLevel [
 	^ 0
 ]
 
-{ #category : #inspecting }
+{ #category : 'inspecting' }
 RBNotice >> inspectionSource [
 
 	<inspectorPresentationOrder: 30 title: 'Source'>
 	^ node inspectionSource
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBNotice >> isError [
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBNotice >> isSyntaxError [
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBNotice >> isUndeclaredNotice [
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBNotice >> isWarning [
 
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBNotice >> messageText [
 
 	^ messageText
 ]
 
-{ #category : #signaling }
+{ #category : 'signaling' }
 RBNotice >> messageText: aString [
 
 	messageText := aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBNotice >> node [
 
 	^ node
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBNotice >> node: anObject [
 
 	node := anObject
 ]
 
-{ #category : #'error handling' }
+{ #category : 'error handling' }
 RBNotice >> position [
 
 	^ node start
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBNotice >> printOn: aStream [
 
 	aStream
@@ -130,7 +132,7 @@ RBNotice >> printOn: aStream [
 		nextPutAll: ')'
 ]
 
-{ #category : #signalling }
+{ #category : 'signalling' }
 RBNotice >> signalError [
 	"If a debugger is opened here, it means that a code error (syntax error or semantic error)
 	was uncaught while compiling some code.

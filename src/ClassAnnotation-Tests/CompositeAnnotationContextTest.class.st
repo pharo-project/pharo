@@ -1,10 +1,12 @@
 Class {
-	#name : #CompositeAnnotationContextTest,
-	#superclass : #TestCase,
-	#category : #'ClassAnnotation-Tests-Base'
+	#name : 'CompositeAnnotationContextTest',
+	#superclass : 'TestCase',
+	#category : 'ClassAnnotation-Tests-Base',
+	#package : 'ClassAnnotation-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 CompositeAnnotationContextTest >> testComparison [
 	self assert: Object asAnnotationContext , Array asAnnotationContext equals: Object asAnnotationContext , Array asAnnotationContext.
 	self assert: (Object asAnnotationContext , Array asAnnotationContext) hash equals: (Object asAnnotationContext , Array asAnnotationContext) hash.
@@ -12,7 +14,7 @@ CompositeAnnotationContextTest >> testComparison [
 	self deny: Object asAnnotationContext , Array asAnnotationContext equals: Object asAnnotationContext , String asAnnotationContext
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CompositeAnnotationContextTest >> testCreationByComma [
 
 	| context1 context2 context |
@@ -25,7 +27,7 @@ CompositeAnnotationContextTest >> testCreationByComma [
 	self assert: context parts equals: {context1. context2}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CompositeAnnotationContextTest >> testCreationByCommaWithCompatibleArgument [
 
 	| context1 context |
@@ -37,7 +39,7 @@ CompositeAnnotationContextTest >> testCreationByCommaWithCompatibleArgument [
 	self assert: context parts equals: {context1. Array asAnnotationContext}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CompositeAnnotationContextTest >> testCreationByCommaWithMultipleCompatipleContexts [
 
 	| context1 context |
@@ -51,7 +53,7 @@ CompositeAnnotationContextTest >> testCreationByCommaWithMultipleCompatipleConte
 		equals: {context1. Array asAnnotationContext. String asAnnotationContext}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CompositeAnnotationContextTest >> testCreationByCommaWithMultipleContexts [
 
 	| context1 context2 context context3 |

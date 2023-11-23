@@ -8,29 +8,31 @@ Nothing really complicated here.
 self open
 "
 Class {
-	#name : #TabExample,
-	#superclass : #Model,
+	#name : 'TabExample',
+	#superclass : 'Model',
 	#instVars : [
 		'manager',
 		'listModel',
 		'window'
 	],
-	#category : #'Morphic-Examples-Tabs'
+	#category : 'Morphic-Examples-Tabs',
+	#package : 'Morphic-Examples',
+	#tag : 'Tabs'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TabExample class >> open [
 	<script>
 	^ self new open
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TabExample >> addTabs [
 
 	self tabs do: [ :tab | manager addTab: tab ]
 ]
 
-{ #category : #'tabs creation' }
+{ #category : 'tabs creation' }
 TabExample >> blueMorphTab [
 	| tab |
 	tab := TabMorph
@@ -49,13 +51,13 @@ TabExample >> blueMorphTab [
 	^ tab
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TabExample >> delete [
 
 	window ifNotNil: [ window delete ]
 ]
 
-{ #category : #'tabs creation' }
+{ #category : 'tabs creation' }
 TabExample >> freshListTab [
 	<haltOrBreakpointForTesting>
 	^ (TabMorph
@@ -74,7 +76,7 @@ TabExample >> freshListTab [
 		yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TabExample >> initialize [
 
 	super initialize.
@@ -86,7 +88,7 @@ TabExample >> initialize [
 	listModel items: ((1 to: 1000) asOrderedCollection)
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TabExample >> open [
 	window := manager openInWindow.
 	window extent: 400 @ 300.
@@ -94,7 +96,7 @@ TabExample >> open [
 	self addTabs
 ]
 
-{ #category : #'tabs creation' }
+{ #category : 'tabs creation' }
 TabExample >> redMorphTab [
 	^ (LockableTabMorph
 		label: 'Red Morph'
@@ -107,7 +109,7 @@ TabExample >> redMorphTab [
 		yourself
 ]
 
-{ #category : #'tabs creation' }
+{ #category : 'tabs creation' }
 TabExample >> storedListTab [
 	^ TabMorph
 		label: 'Stored List Model'
@@ -115,7 +117,7 @@ TabExample >> storedListTab [
 		retrievingBlock: [ listModel build ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TabExample >> tabs [
 
 	^ OrderedCollection new
@@ -126,7 +128,7 @@ TabExample >> tabs [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TabExample >> window [
 
 	^ window

@@ -2,28 +2,30 @@
 SUnit tests for class SHStyleElement
 "
 Class {
-	#name : #SHStyleElementTest,
-	#superclass : #TestCase,
+	#name : 'SHStyleElementTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'element'
 	],
-	#category : #'Shout-Tests-Styling'
+	#category : 'Shout-Tests-Styling',
+	#package : 'Shout-Tests',
+	#tag : 'Styling'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 SHStyleElementTest >> setUp [
 	super setUp.
 	element := SHStyleElement withTokens: #(#self #super #true #false)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SHStyleElementTest >> testPrintOn [
 	self
 		assert: element printString
 		equals: 'a SHStyleElement tokens: #(#self #super #true #false)'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SHStyleElementTest >> testStyleForTable [
 	| table |
 	table := element styleForTable.

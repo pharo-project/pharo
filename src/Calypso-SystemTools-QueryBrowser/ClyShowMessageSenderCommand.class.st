@@ -9,49 +9,51 @@ Internal Representation and Key Implementation Points.
 	browser:		<ClyBrowser>
 "
 Class {
-	#name : #ClyShowMessageSenderCommand,
-	#superclass : #SycMessageCommand,
+	#name : 'ClyShowMessageSenderCommand',
+	#superclass : 'SycMessageCommand',
 	#instVars : [
 		'browser'
 	],
-	#category : #'Calypso-SystemTools-QueryBrowser-Commands-Queries'
+	#category : 'Calypso-SystemTools-QueryBrowser-Commands-Queries',
+	#package : 'Calypso-SystemTools-QueryBrowser',
+	#tag : 'Commands-Queries'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyShowMessageSenderCommand class >> forMethods: methods by: aBrowser [
 	^(self forMethods: methods)
 		browser: aBrowser
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyShowMessageSenderCommand class >> methodBrowserToolbarActivation [
 	<classAnnotation>
 
 	^ClyToolbarActivation byItemOf: ClyButtonToolbarGroup for: ClyMethod asCalypsoItemContext
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyShowMessageSenderCommand class >> methodMenuActivation [
 	<classAnnotation>
 
 	^CmdContextMenuActivation byItemOf: ClyQueryMenuGroup for: ClyMethod asCalypsoItemContext
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyShowMessageSenderCommand class >> methodShortcutActivation [
 	<classAnnotation>
 
 	^CmdShortcutActivation by: $n meta for: ClyMethod asCalypsoItemContext
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyShowMessageSenderCommand class >> sourceCodeMenuActivation [
 	<classAnnotation>
 
 	^SycSourceCodeMenuActivation byItemOf: ClyQueryMenuGroup for: ClySourceCodeContext
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyShowMessageSenderCommand class >> sourceCodeShortcutActivation [
 	"it is not supported yet.
 	One reason is that common text morph shorcuts are in priority.
@@ -62,27 +64,27 @@ ClyShowMessageSenderCommand class >> sourceCodeShortcutActivation [
 	^ClyShortcutCommandActivator by: $n meta for: ClySourceCodeContext"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyShowMessageSenderCommand >> browser [
 	^ browser
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyShowMessageSenderCommand >> browser: anObject [
 	browser := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyShowMessageSenderCommand >> defaultMenuIconName [
 	^ #smallFind
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyShowMessageSenderCommand >> defaultMenuItemName [
 	^'Senders'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyShowMessageSenderCommand >> execute [
 
 	| selectors |
@@ -90,7 +92,7 @@ ClyShowMessageSenderCommand >> execute [
 	browser spawnQueryBrowserOn: (ClyMessageSendersQuery ofAny: selectors)
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyShowMessageSenderCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 

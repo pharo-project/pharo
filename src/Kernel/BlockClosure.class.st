@@ -33,43 +33,45 @@ Common blocks (2/3 of the blocks) are optimized directly in the compiler and hav
 
 "
 Class {
-	#name : #BlockClosure,
-	#superclass : #Object,
-	#type : #variable,
+	#name : 'BlockClosure',
+	#superclass : 'Object',
+	#type : 'variable',
 	#instVars : [
 		'outerContext',
 		'compiledBlock',
 		'numArgs'
 	],
-	#category : #'Kernel-Methods'
+	#category : 'Kernel-Methods',
+	#package : 'Kernel',
+	#tag : 'Methods'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 BlockClosure class >> isAbstract [
 
 	^ self == BlockClosure
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BlockClosure >> argumentCount [
 	"Answer the number of arguments that must be used to evaluate this block"
-
-	^numArgs
+	<reflection: 'Message sending and code execution - Message send reification'>
+	^ numArgs
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BlockClosure >> argumentNames [
 	^ self sourceNode argumentNames
 ]
 
-{ #category : #scheduling }
+{ #category : 'scheduling' }
 BlockClosure >> asContext [
 	"Create a MethodContext that is ready to execute self.  Assumes self takes no args (if it does the args will be nil)"
 
 	^self asContextWithSender: nil
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 BlockClosure >> asContextWithSender: aContext [
 	"Inner private support method for evaluation.  Do not use unless you know what you're doing."
 
@@ -82,20 +84,20 @@ BlockClosure >> asContextWithSender: aContext [
 		privRefresh
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 BlockClosure >> asMinimalRepresentation [
 	"Answer the receiver."
 
 	^self
 ]
 
-{ #category : #exceptions }
+{ #category : 'exceptions' }
 BlockClosure >> assert [
 
 	self value ifFalse: [AssertionFailure signal: 'Assertion failed']
 ]
 
-{ #category : #exceptions }
+{ #category : 'exceptions' }
 BlockClosure >> assertWithDescription: aStringOrABlock [
 	| value |
 	self value
@@ -104,30 +106,30 @@ BlockClosure >> assertWithDescription: aStringOrABlock [
 	AssertionFailure signal: value
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 BlockClosure >> clearTemporariesOn: aContext [
 
 	(self numArgs + self numCopiedValues + 1) to: self numTemps do: [ :anIndex |
 		aContext tempAt: anIndex put: nil ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BlockClosure >> compiledBlock [
 	^ compiledBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BlockClosure >> compiledBlock: aCompiledMethod [
 	compiledBlock := aCompiledMethod
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BlockClosure >> copiedValueAt: i [
 	<primitive: 60>
 	^self basicAt: i
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 BlockClosure >> copyForSaving [
 	"Answer a copy of the receiver suitable for serialization.
 	 Notionally, if the receiver's outerContext has been returned from then nothing
@@ -137,45 +139,48 @@ BlockClosure >> copyForSaving [
 	^self shallowCopy postCopy
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 BlockClosure >> cull: anArg [
 	"Execute the receiver with one or zero arguments depending on the receiver"
 	"([ 12 ] cull: 13)>>> 12 "
 	"([:x | x + 12] cull: 3)>>> 15"
+	<reflection: 'Message sending and code execution - Runtime and Evaluation'>
 	^numArgs = 0
 		ifTrue: [self value]
 		ifFalse: [self value: anArg]
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 BlockClosure >> cull: firstArg cull: secondArg [
 	"Execute the receiver with one or two arguments depending on the receiver"
 	"([:x | x + 1] cull: 13 cull: 12) >>> 14
 	"
 	"([:x :y | x + y] cull: 3 cull: 2) >>> 5
 	"
+	<reflection: 'Message sending and code execution - Runtime and Evaluation'>
 	^numArgs < 2
 		ifTrue: [self cull: firstArg]
 		ifFalse: [self value: firstArg value: secondArg]
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 BlockClosure >> cull: firstArg cull: secondArg cull: thirdArg [
+	<reflection: 'Message sending and code execution - Runtime and Evaluation'>
 	^numArgs < 3
 		ifTrue: [self cull: firstArg cull: secondArg]
 		ifFalse: [self value: firstArg value: secondArg value: thirdArg]
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 BlockClosure >> cull: firstArg cull: secondArg cull: thirdArg cull: fourthArg [
 	"Execute the receiver with four or less arguments. Check cull:cull: for examples"
-
+	<reflection: 'Message sending and code execution - Runtime and Evaluation'>
 	^numArgs < 4
 		ifTrue: [self cull: firstArg cull: secondArg cull: thirdArg]
 		ifFalse: [self value: firstArg value: secondArg value: thirdArg value: fourthArg]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 BlockClosure >> doPrintOn: aStream [
 
 	| code |
@@ -186,7 +191,7 @@ BlockClosure >> doPrintOn: aStream [
 	aStream nextPutAll: code
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 BlockClosure >> doWhileFalse: conditionBlock [
 	"Evaluate the receiver once, then again as long the value of conditionBlock is false."
 
@@ -197,7 +202,7 @@ BlockClosure >> doWhileFalse: conditionBlock [
 	^ result
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 BlockClosure >> doWhileTrue: conditionBlock [
 	"Evaluate the receiver once, then again as long the value of conditionBlock is true."
 
@@ -208,27 +213,29 @@ BlockClosure >> doWhileTrue: conditionBlock [
 	^ result
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 BlockClosure >> durationToRun [
 	"Answer the duration taken to execute this block."
 
 	^ self timeToRun
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BlockClosure >> endPC [
 	^ self compiledBlock endPC
 ]
 
-{ #category : #exceptions }
+{ #category : 'exceptions' }
 BlockClosure >> ensure: aBlock [
 	"Evaluate a termination block after evaluating the receiver, regardless of
 	 whether the receiver's evaluation completes.  N.B.  This method is *not*
 	 implemented as a primitive.  Primitive 198 always fails.  The VM uses prim
 	 198 in a context's method as the mark for an ensure:/ifCurtailed: activation."
 
-	| complete returnValue |
+	| handler complete returnValue |
 	<primitive: 198>
+	"The handler should be in the first temporary to find it easily and support more complex unwind methods"
+	handler := aBlock.
 	returnValue := self valueNoContextSwitch.
 	complete ifNil:[
 		complete := true.
@@ -237,14 +244,14 @@ BlockClosure >> ensure: aBlock [
 	^ returnValue
 ]
 
-{ #category : #scheduling }
+{ #category : 'scheduling' }
 BlockClosure >> fork [
 	"Create and schedule a Process running the code in the receiver."
 
 	^ self newProcess resume
 ]
 
-{ #category : #scheduling }
+{ #category : 'scheduling' }
 BlockClosure >> forkAndWait [
 	"Suspend current process and execute self in new process, when it completes resume current process"
 
@@ -254,7 +261,7 @@ BlockClosure >> forkAndWait [
 	semaphore wait
 ]
 
-{ #category : #scheduling }
+{ #category : 'scheduling' }
 BlockClosure >> forkAt: priority [
 	"Create and schedule a Process running the code in the receiver at the given priority. Answer the newly created process."
 
@@ -263,7 +270,7 @@ BlockClosure >> forkAt: priority [
 		resume
 ]
 
-{ #category : #scheduling }
+{ #category : 'scheduling' }
 BlockClosure >> forkAt: priority named: name [
 
 	"Create and schedule a Process running the code in the receiver at the
@@ -277,7 +284,7 @@ BlockClosure >> forkAt: priority named: name [
 	^ forkedProcess resume
 ]
 
-{ #category : #scheduling }
+{ #category : 'scheduling' }
 BlockClosure >> forkNamed: aString [
 
 	"Create and schedule a Process running the code in the receiver and having the given name."
@@ -285,7 +292,7 @@ BlockClosure >> forkNamed: aString [
 	^ self newProcess name: aString; resume
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 BlockClosure >> hasMethodReturn [
 	self
 		deprecated: 'use #hasNonLocalReturn'
@@ -293,19 +300,19 @@ BlockClosure >> hasMethodReturn [
 	^self hasNonLocalReturn
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 BlockClosure >> hasNonLocalReturn [
 	"Answer whether the receiver has a method-return ('^') in its code."
 	self withAllBlocksDo: [ :each | each hasMethodReturn ifTrue: [ ^true ] ].
 	^false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BlockClosure >> home [
 	^ outerContext ifNotNil: [ outerContext home ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BlockClosure >> homeMethod [
 	"return the home method. If no #home is available due to no outerContext, use the compiledBlock"
 	^ (self home
@@ -313,7 +320,7 @@ BlockClosure >> homeMethod [
 		   ifNil: [ self compiledBlock ]) method
 ]
 
-{ #category : #exceptions }
+{ #category : 'exceptions' }
 BlockClosure >> ifCurtailed: aBlock [
 	"Evaluate the receiver with an abnormal termination action.
 	 Evaluate aBlock only if execution is unwound during execution
@@ -321,61 +328,63 @@ BlockClosure >> ifCurtailed: aBlock [
 	 not evaluate aBlock.  N.B.  This method is *not* implemented as a
 	 primitive.  Primitive 198 always fails.  The VM uses prim 198 in a
 	 context's method as the mark for an ensure:/ifCurtailed: activation."
-	| complete result |
+	| handler complete result |
 	<primitive: 198>
+	"The handler should be in the first temporary to find it easily and support more complex unwind methods"
+	handler := aBlock.
 	result := self valueNoContextSwitch.
 	complete := true.
 	^result
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 BlockClosure >> initialStackPointer [
 
 	^ self numTemps
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 BlockClosure >> isBlock [
 
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 BlockClosure >> isClean [
 	"for now we forward to the AST. When clean blocks are enabled, we can just return false
 	as CleanBlockClosure returns true"
 	^self sourceNode isClean
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 BlockClosure >> isClosure [
 	^true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 BlockClosure >> isDead [
 	"Has self finished"
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 BlockClosure >> isFullBlock [
 	^ true
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 BlockClosure >> isValid [
 	"Answer the receiver."
 
 	^true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BlockClosure >> method [
 	^ self compiledBlock
 ]
 
-{ #category : #scheduling }
+{ #category : 'scheduling' }
 BlockClosure >> newProcess [
 	"Answer a Process running the code in the receiver. The process is not
 	scheduled.
@@ -390,7 +399,7 @@ BlockClosure >> newProcess [
 		priority: Processor activePriority
 ]
 
-{ #category : #scheduling }
+{ #category : 'scheduling' }
 BlockClosure >> newProcessWith: anArray [
 	"Answer a Process running the code in the receiver. The receiver's block
 	arguments are bound to the contents of the argument, anArray. The
@@ -404,25 +413,25 @@ BlockClosure >> newProcessWith: anArray [
 		priority: Processor activePriority
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BlockClosure >> numArgs [
 	"Answer the number of arguments that must be used to evaluate this block"
-
+	<reflection: 'Message sending and code execution - Message send reification'>
 	^numArgs
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BlockClosure >> numArgs: n [
 	numArgs := n
 ]
 
-{ #category : #'error handling' }
+{ #category : 'error handling' }
 BlockClosure >> numArgsError: numArgsForInvocation [
 
 	ArgumentsCountMismatch signalExpectedArgumentsCount: numArgs calledArgumentsCount: numArgsForInvocation
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BlockClosure >> numCopiedValues [
 	"Answer the number of copied values of the receiver.  Since these are
 	 stored in the receiver's indexable fields this is the receiver's basic size.
@@ -433,12 +442,12 @@ BlockClosure >> numCopiedValues [
 	^self basicSize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BlockClosure >> numTemps [
 	^ self compiledBlock numTemps
 ]
 
-{ #category : #exceptions }
+{ #category : 'exceptions' }
 BlockClosure >> on: exception do: handlerAction [
 	"Evaluate the receiver in the scope of an exception handler.
 	The following primitive is just a marker used to find the error handling context.
@@ -447,7 +456,7 @@ BlockClosure >> on: exception do: handlerAction [
 	^ self value
 ]
 
-{ #category : #exceptions }
+{ #category : 'exceptions' }
 BlockClosure >> on: exception fork: handlerAction [
 	"Activate the receiver. In case of exception, fork a new process, which will handle an error.
 	An original process will continue running as if receiver evaluation finished and answered nil,
@@ -490,7 +499,7 @@ BlockClosure >> on: exception fork: handlerAction [
 			  nil ]
 ]
 
-{ #category : #exceptions }
+{ #category : 'exceptions' }
 BlockClosure >> on: exception fork: handlerAction return: answerAction [
 	"This is the same as #on:fork: but instead just fork and letting the flow continues, in
 	 case of an error it also evaluates answerAction and returns its result."
@@ -523,7 +532,7 @@ BlockClosure >> on: exception fork: handlerAction return: answerAction [
 		answerAction cull: exception ]
 ]
 
-{ #category : #exceptions }
+{ #category : 'exceptions' }
 BlockClosure >> onDNU: selector do: handleBlock [
 	"Catch MessageNotUnderstood exceptions but only those of the given selector (DNU stands for doesNotUnderstand:)"
 
@@ -534,7 +543,7 @@ BlockClosure >> onDNU: selector do: handleBlock [
 	  ]
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 BlockClosure >> onErrorDo: errorHandlerBlock [
 	"Evaluate the block represented by the receiver, and normally return it's value.  If an error occurs, the errorHandlerBlock is evaluated, and it's value is instead returned.  The errorHandlerBlock must accept zero or one parameter (the error object)."
 	"Examples:
@@ -548,17 +557,18 @@ BlockClosure >> onErrorDo: errorHandlerBlock [
 	^ self on: Error do: [:ex | errorHandlerBlock cull: ex]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BlockClosure >> outerContext [
+	<reflection: 'Message sending and code execution - Message send reification'>
 	^outerContext
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BlockClosure >> outerContext: ctxt [
 	outerContext := ctxt
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 BlockClosure >> printOn: aStream [
 
 	[self doPrintOn: aStream]
@@ -568,26 +578,26 @@ BlockClosure >> printOn: aStream [
 				nextPutAll: ' >' ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BlockClosure >> receiver [
 	^ self subclassResponsibility
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 BlockClosure >> reentrant [
 	"Answer a version of the recever that can be reentered.
 	 Closures are reentrant (unlike BlockContect) so simply answer self."
 	^self
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 BlockClosure >> repeat [
 	"Evaluate the receiver repeatedly, ending only if the block explicitly returns."
 
 	[self value. true] whileTrue
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 BlockClosure >> repeatWithGCIf: testBlock [
 	| ans |
 	"run the receiver, and if testBlock returns true, garbage collect and run the receiver again"
@@ -596,12 +606,13 @@ BlockClosure >> repeatWithGCIf: testBlock [
 	^ans
 ]
 
-{ #category : #accessing }
-BlockClosure >> sender [
+{ #category : 'accessing' }
+BlockClosure >> sender [	
+	<reflection: 'Message sending and code execution - Message send reification'>
 	^ self subclassResponsibility
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 BlockClosure >> simulateValueWithArguments: anArray caller: aContext [
 	"Simulate the valueWithArguments: primitive. Fail if anArray is not an array of the right arity."
 	| newContext |
@@ -622,22 +633,22 @@ BlockClosure >> simulateValueWithArguments: anArray caller: aContext [
 	^newContext
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BlockClosure >> startpc [
 	^ self compiledBlock initialPC
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BlockClosure >> startpcOrOuterCode [
 	^ compiledBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BlockClosure >> tempNames [
 	^ self sourceNode temporaryNames
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 BlockClosure >> value [
 	"Activate the receiver, creating a closure activation (MethodContext)
 	 whose closure is the receiver and whose caller is the sender of this
@@ -649,7 +660,7 @@ BlockClosure >> value [
 	^self primitiveFailed
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 BlockClosure >> value: firstArg [
 	"Activate the receiver, creating a closure activation (MethodContext)
 	 whose closure is the receiver and whose caller is the sender of this
@@ -667,7 +678,7 @@ BlockClosure >> value: firstArg [
 		ifFalse: [self primitiveFailed]
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 BlockClosure >> value: firstArg value: secondArg [
 	"Activate the receiver, creating a closure activation (MethodContext)
 	 whose closure is the receiver and whose caller is the sender of this
@@ -686,7 +697,7 @@ BlockClosure >> value: firstArg value: secondArg [
 		ifFalse: [self primitiveFailed]
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 BlockClosure >> value: firstArg value: secondArg value: thirdArg [
 	"Activate the receiver, creating a closure activation (MethodContext)
 	 whose closure is the receiver and whose caller is the sender of this
@@ -706,7 +717,7 @@ BlockClosure >> value: firstArg value: secondArg value: thirdArg [
 		ifFalse: [self primitiveFailed]
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 BlockClosure >> value: firstArg value: secondArg value: thirdArg value: fourthArg [
 	"Activate the receiver, creating a closure activation (MethodContext)
 	 whose closure is the receiver and whose caller is the sender of this
@@ -727,7 +738,7 @@ BlockClosure >> value: firstArg value: secondArg value: thirdArg value: fourthAr
 		ifFalse: [self primitiveFailed]
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 BlockClosure >> valueAfterWaiting: aDelay [
 	"Waits for a delay, then executes the block. Answers the process so you can terminate it"
 
@@ -741,7 +752,7 @@ BlockClosure >> valueAfterWaiting: aDelay [
 					print: self ] )
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 BlockClosure >> valueNoContextSwitch [
 	"An exact copy of BlockClosure>>value except that this version will not preempt
 	 the current process on block activation if a higher-priority process is runnable.
@@ -752,7 +763,7 @@ BlockClosure >> valueNoContextSwitch [
 	self primitiveFailed
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 BlockClosure >> valueNoContextSwitch: anArg [
 	"An exact copy of BlockClosure>>value: except that this version will not preempt
 	 the current process on block activation if a higher-priority process is runnable.
@@ -763,14 +774,14 @@ BlockClosure >> valueNoContextSwitch: anArg [
 	self primitiveFailed
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 BlockClosure >> valueSupplyingAnswer: anObject [
 	^ (anObject isCollection and: [anObject isString not])
 		ifTrue: [self valueSupplyingAnswers: {anObject}]
 		ifFalse: [self valueSupplyingAnswers: {{'*'. anObject}}]
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 BlockClosure >> valueSupplyingAnswers: aListOfPairs [
 	"evaluate the block using a list of questions / answers that might be called upon to
 	automatically respond to Object>>confirm: or FillInTheBlank requests"
@@ -798,13 +809,13 @@ BlockClosure >> valueSupplyingAnswers: aListOfPairs [
 						ifNotNil: [ notify resume: outerAnswer ] ] ]
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 BlockClosure >> valueSuppressingAllMessages [
 
 	^ self valueSuppressingMessages: #('*')
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 BlockClosure >> valueSuppressingMessages: aListOfStrings [
 
 	^ self
@@ -812,20 +823,20 @@ BlockClosure >> valueSuppressingMessages: aListOfStrings [
 		supplyingAnswers: #()
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 BlockClosure >> valueSuppressingMessages: aListOfStrings supplyingAnswers: aListOfPairs [
 
 	^ self valueSupplyingAnswers: aListOfPairs, (aListOfStrings collect: [:each | {each . true}])
 ]
 
-{ #category : #exceptions }
+{ #category : 'exceptions' }
 BlockClosure >> valueUninterruptably [
 	"Prevent remote returns from escaping the sender.  Even attempts to terminate (unwind) this process will be halted and the process will resume here.  A terminate message is needed for every one of these in the sender chain to get the entire process unwound."
 
 	^ self ifCurtailed: [^ self]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 BlockClosure >> valueUnpreemptively [
 	"Evaluate the receiver (block), without the possibility of preemption by higher priority processes. Use this facility VERY sparingly!"
 	"Think about using Block>>valueUninterruptably first, and think about using Semaphore>>critical: before that, and think about redesigning your application even before that!
@@ -845,7 +856,7 @@ BlockClosure >> valueUnpreemptively [
 	^result
 ]
 
-{ #category : #scheduling }
+{ #category : 'scheduling' }
 BlockClosure >> valueUnwindInContext: ctxt [ 
 	"Create a context for the unwind block and execute it on the unwind block's stack.
 	Note: using #value instead of #runUntilErrorOrReturnFrom: would lead to executing
@@ -857,7 +868,7 @@ BlockClosure >> valueUnwindInContext: ctxt [
 
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 BlockClosure >> valueWithArguments: anArray [
 	"Activate the receiver, creating a closure activation (MethodContext)
 	 whose closure is the receiver and whose caller is the sender of this
@@ -874,9 +885,10 @@ BlockClosure >> valueWithArguments: anArray [
 			^ self valueWithArguments: anArray asArray ]
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 BlockClosure >> valueWithEnoughArguments: anArray [
 	"call me with enough arguments from anArray"
+	<reflection: 'Message sending and code execution - Message send reification'>
 	| args |
 	(anArray size == self numArgs)
 		ifTrue: [ ^self valueWithArguments: anArray ].
@@ -890,13 +902,13 @@ BlockClosure >> valueWithEnoughArguments: anArray [
 	^ self valueWithArguments: args
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 BlockClosure >> valueWithExit [
 
 	^ self value: [ ^ nil ]
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 BlockClosure >> valueWithInterval: aDelay [
 	"Executes the block every x milliseconds specified in arguments. Answers the process, so you can terminate it"
 
@@ -910,7 +922,7 @@ BlockClosure >> valueWithInterval: aDelay [
 					print: self ] )
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 BlockClosure >> valueWithPossibleArgs: anArray [
 	"Execute the receiver with the correct number of arguments taken from the argument."
 	"([:x | x + 1] valueWithPossibleArgs: #( 13 12 15)) >>> 14
@@ -933,7 +945,7 @@ BlockClosure >> valueWithPossibleArgs: anArray [
 							ifFalse: [anArray copyFrom: 1 to: numArgs]])]
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 BlockClosure >> valueWithPossibleArgument: anArg [
 	"Evaluate the block represented by the receiver.
 	 If the block requires one argument, use anArg, if it requires more than one,
@@ -947,7 +959,7 @@ BlockClosure >> valueWithPossibleArgument: anArg [
 	^self valueWithArguments: a
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 BlockClosure >> valueWithin: aDuration onTimeout: timeoutBlock [
 	"Evaluate the receiver.
 	If the evaluation does not complete in less than aDuration evaluate the timeoutBlock instead"
@@ -981,7 +993,7 @@ BlockClosure >> valueWithin: aDuration onTimeout: timeoutBlock [
 				ifFalse:[ e pass]]
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 BlockClosure >> whileFalse [
 	"Ordinarily compiled in-line, and therefore not overridable.
 	This is in case the message is sent to other than a literal block.
@@ -990,7 +1002,7 @@ BlockClosure >> whileFalse [
 	self value ifFalse: [ self whileFalse ]
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 BlockClosure >> whileFalse: aBlock [
 	"Ordinarily compiled in-line, and therefore not overridable.
 	This is in case the message is sent to other than a literal block.
@@ -1000,19 +1012,20 @@ BlockClosure >> whileFalse: aBlock [
 	^ nil
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 BlockClosure >> whileNil: aBlock [
 	"Unlike #whileTrue/False: this is not compiled inline."
 	^ [self value isNil] whileTrue: [aBlock value]
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 BlockClosure >> whileNotNil: aBlock [
 	"Unlike #whileTrue/False: this is not compiled inline."
-	^ [self value notNil] whileTrue: [aBlock value]
+
+	^ [self value isNotNil] whileTrue: [aBlock value]
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 BlockClosure >> whileTrue [
 	"Ordinarily compiled in-line, and therefore not overridable.
 	This is in case the message is sent to other than a literal block.
@@ -1021,7 +1034,7 @@ BlockClosure >> whileTrue [
 	self value ifTrue: [ self whileTrue ]
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 BlockClosure >> whileTrue: aBlock [
 	"Ordinarily compiled in-line, and therefore not overridable.
 	This is in case the message is sent to other than a literal block.
@@ -1031,7 +1044,7 @@ BlockClosure >> whileTrue: aBlock [
 	^ nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BlockClosure >> withAllBlocksDo: aBlock [
 	self compiledBlock withAllBlocksDo: aBlock
 ]

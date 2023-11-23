@@ -1,15 +1,16 @@
 Class {
-	#name : #ClyAsyncRawQueryCursorTest,
-	#superclass : #ClyRawItemCursorTest,
-	#category : #'Calypso-NavigationModel-Tests'
+	#name : 'ClyAsyncRawQueryCursorTest',
+	#superclass : 'ClyRawItemCursorTest',
+	#category : 'Calypso-NavigationModel-Tests',
+	#package : 'Calypso-NavigationModel-Tests'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyAsyncRawQueryCursorTest class >> shouldInheritSelectors [
 	^true
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyAsyncRawQueryCursorTest >> createQuery [
 	^super createQuery semiAsync
 ]

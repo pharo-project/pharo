@@ -1,6 +1,6 @@
-Extension { #name : #CompiledMethod }
+Extension { #name : 'CompiledMethod' }
 
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
 CompiledMethod >> decompile [
 	^Smalltalk globals
 		at: #FBDDecompiler
@@ -9,39 +9,40 @@ CompiledMethod >> decompile [
 	self noSourceAvailable' ]
 ]
 
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
 CompiledMethod >> decompileIR [
 
 	^ IRBytecodeDecompiler new decompile: self
 ]
 
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
 CompiledMethod >> lookupVar: aString [
 	^self ast scope lookupVar: aString
 ]
 
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
 CompiledMethod >> methodNode [
 	"returns an AST for this method, do not cache it. (see #ast for the cached alternative)"
 	^self parseTree
 ]
 
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
 CompiledMethod >> recompile [
-	^ self methodClass recompile: self selector
+	^ self origin recompile: self selector
 ]
 
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
 CompiledMethod >> reformat [
-	self methodClass compile: self ast formattedCode classified:  self category
+
+	self methodClass compile: self ast formattedCode classified: self protocol
 ]
 
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
 CompiledMethod >> sourceNode [
 	^self ast
 ]
 
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
 CompiledMethod >> sourceNodeForPC: aPC [
 	^self sourceNode sourceNodeForPC: aPC
 ]

@@ -14,12 +14,13 @@ Web Service API:
 Part of Zinc HTTP Components
 "
 Class {
-	#name : #ZnTestRunnerDelegate,
-	#superclass : #Object,
-	#category : #'Zinc-HTTP-Examples'
+	#name : 'ZnTestRunnerDelegate',
+	#superclass : 'Object',
+	#category : 'Zinc-HTTP-Examples',
+	#package : 'Zinc-HTTP-Examples'
 }
 
-{ #category : #public }
+{ #category : 'public' }
 ZnTestRunnerDelegate class >> startInServerOn: port [
 	"Start a new server bound to port on the local network running a test runner web service"
 
@@ -32,7 +33,7 @@ ZnTestRunnerDelegate class >> startInServerOn: port [
 			yourself
 ]
 
-{ #category : #'request handling' }
+{ #category : 'request handling' }
 ZnTestRunnerDelegate >> handleGetRequest: request [
 	| testCaseClass selector result |
 	testCaseClass := Smalltalk globals
@@ -53,7 +54,7 @@ ZnTestRunnerDelegate >> handleGetRequest: request [
 		ifFalse: [ ZnResponse serverError: result printString ]
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 ZnTestRunnerDelegate >> handleRequest: request [
 	(request method = #GET
 		and: [
@@ -65,7 +66,7 @@ ZnTestRunnerDelegate >> handleRequest: request [
 	^ ZnResponse notFound: request uri
 ]
 
-{ #category : #'request handling' }
+{ #category : 'request handling' }
 ZnTestRunnerDelegate >> notFoundResponse: message [
 	^ ZnResponse new
 		statusLine: ZnStatusLine notFound;
@@ -74,7 +75,7 @@ ZnTestRunnerDelegate >> notFoundResponse: message [
 		yourself
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 ZnTestRunnerDelegate >> value: request [
 	"I implement the generic #value: message as equivalent to #handleRequest:"
 

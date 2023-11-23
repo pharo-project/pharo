@@ -2,25 +2,27 @@
 self open
 "
 Class {
-	#name : #RubWorkspaceExample,
-	#superclass : #Object,
+	#name : 'RubWorkspaceExample',
+	#superclass : 'Object',
 	#instVars : [
 		'textModel',
 		'announcer',
 		'bindings',
 		'mustDeclareVariables'
 	],
-	#category : #'Rubric-Editing-Widgets-Examples'
+	#category : 'Rubric-Editing-Widgets-Examples',
+	#package : 'Rubric',
+	#tag : 'Editing-Widgets-Examples'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 RubWorkspaceExample class >> exampleWindowWithScrolledText [
 	<sampleInstance>
 
 	^self open
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 RubWorkspaceExample class >> exampleWithCustomShortcut [
 
 	 |  window text |
@@ -39,18 +41,18 @@ RubWorkspaceExample class >> exampleWithCustomShortcut [
     window openInWorld
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RubWorkspaceExample class >> open [
 	<script>
 	(self windowWithScrolledText: (self new newScrolledText)) openInWorld
 ]
 
-{ #category : #'private - accessing' }
+{ #category : 'private - accessing' }
 RubWorkspaceExample class >> title [
 	^ 'Rubric workspace example'
 ]
 
-{ #category : #'private - utilities' }
+{ #category : 'private - utilities' }
 RubWorkspaceExample class >> windowWithScrolledText: aScrolledText [
 	| w |
 	w := StandardWindow new.
@@ -59,18 +61,18 @@ RubWorkspaceExample class >> windowWithScrolledText: aScrolledText [
 	^w
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubWorkspaceExample >> acceptString: aString [
 	textModel setText: aString asText.
 	 ^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubWorkspaceExample >> announcer [
 	^ announcer ifNil: [ announcer := Announcer new ]
 ]
 
-{ #category : #shout }
+{ #category : 'shout' }
 RubWorkspaceExample >> bindingOf: aString [
 
 	mustDeclareVariables
@@ -82,7 +84,7 @@ RubWorkspaceExample >> bindingOf: aString [
 	^ bindings associationAt: aString
 ]
 
-{ #category : #'code pane menu' }
+{ #category : 'code pane menu' }
 RubWorkspaceExample >> codePaneMenu: aMenu shifted: shifted [
 	"Note that unless we override perform:orSendTo:,
 	PluggableTextController will respond to all menu items in a
@@ -90,17 +92,17 @@ RubWorkspaceExample >> codePaneMenu: aMenu shifted: shifted [
 	"Not tested"
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 RubWorkspaceExample >> getText [
 	^ textModel getText
 ]
 
-{ #category : #shout }
+{ #category : 'shout' }
 RubWorkspaceExample >> hasBindingOf: aString [
 	^bindings includesKey: aString asSymbol
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RubWorkspaceExample >> initialize [
 	super initialize.
 	textModel := RubScrolledTextModel new
@@ -109,7 +111,7 @@ RubWorkspaceExample >> initialize [
 	mustDeclareVariables := false
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 RubWorkspaceExample >> newScrolledText [
 	| st |
 	st := textModel newScrolledText
@@ -123,12 +125,12 @@ RubWorkspaceExample >> newScrolledText [
 	^st
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 RubWorkspaceExample >> setText: aText from: aView [
 	^ self acceptString: aText string
 ]
 
-{ #category : #shout }
+{ #category : 'shout' }
 RubWorkspaceExample >> shoutAboutToStyle: ATextView [
 	^ true
 ]

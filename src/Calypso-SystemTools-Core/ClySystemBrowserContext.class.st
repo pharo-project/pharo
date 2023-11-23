@@ -43,27 +43,29 @@ And I implement simplified search requests:
 
 "
 Class {
-	#name : #ClySystemBrowserContext,
-	#superclass : #ClyBrowserContext,
-	#category : #'Calypso-SystemTools-Core-Contexts'
+	#name : 'ClySystemBrowserContext',
+	#superclass : 'ClyBrowserContext',
+	#category : 'Calypso-SystemTools-Core-Contexts',
+	#package : 'Calypso-SystemTools-Core',
+	#tag : 'Contexts'
 }
 
-{ #category : #'user requests' }
+{ #category : 'user requests' }
 ClySystemBrowserContext >> confirmUnusedClasses: variables [
 	^tool confirmUnusedClasses: variables
 ]
 
-{ #category : #'user requests' }
+{ #category : 'user requests' }
 ClySystemBrowserContext >> confirmUnusedVariables: variables [
 	^tool confirmUnusedVariables: variables
 ]
 
-{ #category : #'user requests' }
+{ #category : 'user requests' }
 ClySystemBrowserContext >> confirmUnusedVariablesInDefiningClass: variables [
 	^tool confirmUnusedVariablesInDefiningClass: variables
 ]
 
-{ #category : #'command execution' }
+{ #category : 'command execution' }
 ClySystemBrowserContext >> executeCommand: aCommand by: aCommandActivator [
 
 	aCommand isComplexRefactoring ifTrue: [
@@ -72,17 +74,17 @@ ClySystemBrowserContext >> executeCommand: aCommand by: aCommandActivator [
 	aCommand execute
 ]
 
-{ #category : #'selection-methods' }
+{ #category : 'selection-methods' }
 ClySystemBrowserContext >> firstSelectedMethod [
 	^self firstSelectedObjectIn: self selectedMethods
 ]
 
-{ #category : #'selection-classes' }
+{ #category : 'selection-classes' }
 ClySystemBrowserContext >> isClassSelected [
 	^self selectedClassItems notEmpty
 ]
 
-{ #category : #'selection-methods' }
+{ #category : 'selection-methods' }
 ClySystemBrowserContext >> isClassSideMethodSelected [
 
 	self isMethodSelected ifFalse: [ ^false].
@@ -91,7 +93,7 @@ ClySystemBrowserContext >> isClassSideMethodSelected [
 		each systemDefinition isInstanceSide not]
 ]
 
-{ #category : #'selection-methods' }
+{ #category : 'selection-methods' }
 ClySystemBrowserContext >> isExtensionMethodSelected [
 
 	self isMethodSelected ifFalse: [ ^false].
@@ -100,7 +102,7 @@ ClySystemBrowserContext >> isExtensionMethodSelected [
 		each systemDefinition isExtension]
 ]
 
-{ #category : #'selection-methods' }
+{ #category : 'selection-methods' }
 ClySystemBrowserContext >> isInstanceSideMethodSelected [
 
 	self isMethodSelected ifFalse: [ ^false].
@@ -109,61 +111,61 @@ ClySystemBrowserContext >> isInstanceSideMethodSelected [
 		each systemDefinition isInstanceSide ]
 ]
 
-{ #category : #'selection-messages' }
+{ #category : 'selection-messages' }
 ClySystemBrowserContext >> isMessageSelected [
 	^self isMethodSelected
 ]
 
-{ #category : #'selection-methods' }
+{ #category : 'selection-methods' }
 ClySystemBrowserContext >> isMethodSelected [
 	^self selectedMethodItems notEmpty
 ]
 
-{ #category : #'selection-packages' }
+{ #category : 'selection-packages' }
 ClySystemBrowserContext >> isPackageSelected [
 	^self selectedPackageItems notEmpty
 ]
 
-{ #category : #'selection-classes' }
+{ #category : 'selection-classes' }
 ClySystemBrowserContext >> lastSelectedClass [
 	^self lastSelectedObjectIn: self selectedClasses
 ]
 
-{ #category : #'selection-messages' }
+{ #category : 'selection-messages' }
 ClySystemBrowserContext >> lastSelectedMessage [
 	^SycMessageDescription ofMethod: self lastSelectedMethod
 ]
 
-{ #category : #'selection-methods' }
+{ #category : 'selection-methods' }
 ClySystemBrowserContext >> lastSelectedMethod [
 	^self lastSelectedObjectIn: self selectedMethods
 ]
 
-{ #category : #'selection-methods' }
+{ #category : 'selection-methods' }
 ClySystemBrowserContext >> lastSelectedMethodClass [
 	| lastMethodItem |
 	lastMethodItem := self lastSelectedObjectIn: self selectedMethodItems.
 	^lastMethodItem systemDefinition definingClass
 ]
 
-{ #category : #'selection-packages' }
+{ #category : 'selection-packages' }
 ClySystemBrowserContext >> lastSelectedPackage [
 	^self lastSelectedObjectIn: self selectedPackages
 ]
 
-{ #category : #'selection-methods' }
+{ #category : 'selection-methods' }
 ClySystemBrowserContext >> lastSelectedSourceNode [
 
 	^self lastSelectedMethod astForStylingInCalypso
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClySystemBrowserContext >> metaLevelScope [
 
 	^ nil
 ]
 
-{ #category : #'refactoring support' }
+{ #category : 'refactoring support' }
 ClySystemBrowserContext >> refactoringScopes [
 	"It returns default browser scope as first one which makes it default for users"
 	| allScopes defaultScope |
@@ -172,7 +174,7 @@ ClySystemBrowserContext >> refactoringScopes [
 	^(allScopes copyWithout: defaultScope) copyWithFirst: defaultScope
 ]
 
-{ #category : #'user requests' }
+{ #category : 'user requests' }
 ClySystemBrowserContext >> requestMultiplePackages: queryTitle [
 
 	^ tool searchDialog
@@ -180,7 +182,7 @@ ClySystemBrowserContext >> requestMultiplePackages: queryTitle [
 		from: ClyAllPackagesQuery sorted
 ]
 
-{ #category : #'user requests' }
+{ #category : 'user requests' }
 ClySystemBrowserContext >> requestMultipleVariables: queryTitle from: classes [
 
 	^tool searchDialog
@@ -189,17 +191,12 @@ ClySystemBrowserContext >> requestMultipleVariables: queryTitle from: classes [
 		inScope: (ClyClassScope ofAll: classes) withInheritedScope
 ]
 
-{ #category : #'user requests' }
+{ #category : 'user requests' }
 ClySystemBrowserContext >> requestRemoveClassStrategyFor: classes [
 	^tool requestRemoveClassStrategyFor: classes
 ]
 
-{ #category : #'user requests' }
-ClySystemBrowserContext >> requestRemoveMethodStrategyFor: methods [
-	^tool requestRemoveMethodStrategyFor: methods
-]
-
-{ #category : #'user requests' }
+{ #category : 'user requests' }
 ClySystemBrowserContext >> requestSimpleVariable: queryTitle from: classes [
 
 	^tool searchDialog
@@ -208,13 +205,13 @@ ClySystemBrowserContext >> requestSimpleVariable: queryTitle from: classes [
 		inScope: (ClyClassScope ofAll: classes) withInheritedScope
 ]
 
-{ #category : #'user requests' }
+{ #category : 'user requests' }
 ClySystemBrowserContext >> requestSingleClass: queryTitle [
 
 	^tool searchDialog requestSingleObject: queryTitle from: ClyAllClassesQuery sorted
 ]
 
-{ #category : #'user requests' }
+{ #category : 'user requests' }
 ClySystemBrowserContext >> requestSingleClass: queryTitle from: classCollection [
 	^tool searchDialog
 		requestSingleObject: queryTitle
@@ -222,52 +219,52 @@ ClySystemBrowserContext >> requestSingleClass: queryTitle from: classCollection 
 		inScope: (ClyClassScope ofAll: classCollection)
 ]
 
-{ #category : #'user requests' }
+{ #category : 'user requests' }
 ClySystemBrowserContext >> requestSinglePackage: queryTitle [
 	^tool searchDialog requestSingleObject: queryTitle from: ClyAllPackagesQuery sorted
 ]
 
-{ #category : #'selection-classes' }
+{ #category : 'selection-classes' }
 ClySystemBrowserContext >> selectedClassItems [
 	self subclassResponsibility
 ]
 
-{ #category : #'selection-classes' }
+{ #category : 'selection-classes' }
 ClySystemBrowserContext >> selectedClasses [
 	^self actualSelectionFrom: self selectedClassItems
 ]
 
-{ #category : #'selection-messages' }
+{ #category : 'selection-messages' }
 ClySystemBrowserContext >> selectedMessages [
 	^self selectedMethods collect: [ :each | SycMessageDescription ofMethod: each ]
 ]
 
-{ #category : #'selection-methods' }
+{ #category : 'selection-methods' }
 ClySystemBrowserContext >> selectedMethodItems [
 	self subclassResponsibility
 ]
 
-{ #category : #'selection-methods' }
+{ #category : 'selection-methods' }
 ClySystemBrowserContext >> selectedMethods [
 	^self actualSelectionFrom: self selectedMethodItems
 ]
 
-{ #category : #'selection-packages' }
+{ #category : 'selection-packages' }
 ClySystemBrowserContext >> selectedPackageItems [
 	self subclassResponsibility
 ]
 
-{ #category : #'selection-packages' }
+{ #category : 'selection-packages' }
 ClySystemBrowserContext >> selectedPackages [
 	^self actualSelectionFrom: self selectedPackageItems
 ]
 
-{ #category : #'tool controlling' }
+{ #category : 'tool controlling' }
 ClySystemBrowserContext >> showClass: aClass [
 	tool selectClass: aClass
 ]
 
-{ #category : #'tool controlling' }
+{ #category : 'tool controlling' }
 ClySystemBrowserContext >> showMessage: aMessageDescription renamedTo: newSelector [
 	| method newMethod |
 	method := aMessageDescription contextUser.
@@ -275,12 +272,12 @@ ClySystemBrowserContext >> showMessage: aMessageDescription renamedTo: newSelect
 	self showMethod: newMethod
 ]
 
-{ #category : #'tool controlling' }
+{ #category : 'tool controlling' }
 ClySystemBrowserContext >> showMethod: aMethod [
 	tool selectMethod: aMethod
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClySystemBrowserContext >> systemEnvironment [
 	^self system
 ]

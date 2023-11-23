@@ -2,12 +2,14 @@
 A test for supplying answer 
 "
 Class {
-	#name : #SupplyAnswerTest,
-	#superclass : #TestCase,
-	#category : #'Morphic-Tests-Widgets'
+	#name : 'SupplyAnswerTest',
+	#superclass : 'TestCase',
+	#category : 'Morphic-Tests-Widgets',
+	#package : 'Morphic-Tests',
+	#tag : 'Widgets'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 SupplyAnswerTest >> testChooseDirectory [
 	| tmpDirectory answer |
 	tmpDirectory := FileSystem / 'tmp'.
@@ -17,7 +19,7 @@ SupplyAnswerTest >> testChooseDirectory [
 	self assert: answer equals: tmpDirectory
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SupplyAnswerTest >> testFillInTheBlank [
 	| answer |
 	answer := [ MorphicUIManager new request: 'Your favorite color?' ] valueSupplyingAnswer: #('Your favorite color?' 'blue').
@@ -25,7 +27,7 @@ SupplyAnswerTest >> testFillInTheBlank [
 	self assert: answer equals: 'blue'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SupplyAnswerTest >> testInform [
 	| answer |
 	[ MorphicUIManager new inform: 'blah' ]

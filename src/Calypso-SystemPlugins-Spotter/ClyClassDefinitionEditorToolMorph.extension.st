@@ -1,6 +1,6 @@
-Extension { #name : #ClyClassDefinitionEditorToolMorph }
+Extension { #name : 'ClyClassDefinitionEditorToolMorph' }
 
-{ #category : #'*Calypso-SystemPlugins-Spotter' }
+{ #category : '*Calypso-SystemPlugins-Spotter' }
 ClyClassDefinitionEditorToolMorph >> simpleNameForSpotterMenu [
 	^'Class editor: ', self editingClass name
 ]

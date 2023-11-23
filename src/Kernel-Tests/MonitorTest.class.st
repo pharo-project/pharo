@@ -2,12 +2,14 @@
 SUnit tests for monitors
 "
 Class {
-	#name : #MonitorTest,
-	#superclass : #TestCase,
-	#category : #'Kernel-Tests-Processes'
+	#name : 'MonitorTest',
+	#superclass : 'TestCase',
+	#category : 'Kernel-Tests-Processes',
+	#package : 'Kernel-Tests',
+	#tag : 'Processes'
 }
 
-{ #category : #'tests - examples' }
+{ #category : 'tests - examples' }
 MonitorTest >> testExample1 [
 	| producer1 producer2 monitor goal work counter goalReached finished |
 	goal := (1 to: 1000) asOrderedCollection.
@@ -42,7 +44,7 @@ MonitorTest >> testExample1 [
 	self assert: goal equals: work
 ]
 
-{ #category : #'tests - examples' }
+{ #category : 'tests - examples' }
 MonitorTest >> testExample2 [
 	"Here is a second version that does not use a semaphore to inform the
 	forking process about termination of both forked processes"
@@ -89,7 +91,7 @@ MonitorTest >> testExample2 [
 	self assert: goal equals: work
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MonitorTest >> testWaitMaxMilliseconds [
 	| monitor |
 	monitor := Monitor new.

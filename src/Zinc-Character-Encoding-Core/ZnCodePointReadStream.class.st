@@ -8,17 +8,18 @@ Part of Zinc HTTP Components.
 
 "
 Class {
-	#name : #ZnCodePointReadStream,
-	#superclass : #ZnEncodedReadStream,
-	#category : #'Zinc-Character-Encoding-Core'
+	#name : 'ZnCodePointReadStream',
+	#superclass : 'ZnEncodedReadStream',
+	#category : 'Zinc-Character-Encoding-Core',
+	#package : 'Zinc-Character-Encoding-Core'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnCodePointReadStream >> collectionSpecies [
 	^ Array
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnCodePointReadStream >> nextElement [
 	^ self encoder nextCodePointFromStream: stream
 ]

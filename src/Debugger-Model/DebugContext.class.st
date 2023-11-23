@@ -30,20 +30,22 @@ topContext
 
 "
 Class {
-	#name : #DebugContext,
-	#superclass : #Object,
+	#name : 'DebugContext',
+	#superclass : 'Object',
 	#instVars : [
 		'context'
 	],
-	#category : #'Debugger-Model-Core'
+	#category : 'Debugger-Model-Core',
+	#package : 'Debugger-Model',
+	#tag : 'Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 DebugContext class >> forContext: aContext [
 	^ self new forContext: aContext
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DebugContext >> blockNotFoundDialog: aMethod with: aText [
 
 	| message result newMethod |
@@ -64,13 +66,13 @@ DebugContext >> blockNotFoundDialog: aMethod with: aText [
 	newMethod ifNotNil: [ self browseMethod: newMethod ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DebugContext >> browseMethod: aMethod [
 
 	aMethod browse
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DebugContext >> checkSelectorUnchanged: aSelector [
 	| unchanged |
 	unchanged := aSelector == self selectedMessageName
@@ -80,7 +82,7 @@ DebugContext >> checkSelectorUnchanged: aSelector [
 	^ unchanged
 ]
 
-{ #category : #'ui requests' }
+{ #category : 'ui requests' }
 DebugContext >> confirm: message trueChoice: trueChoice falseChoice: falseChoice [
 
 	^ UIManager default
@@ -89,7 +91,7 @@ DebugContext >> confirm: message trueChoice: trueChoice falseChoice: falseChoice
 		falseChoice: falseChoice
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DebugContext >> confirmOnTraitOverwrite: aSelector inClass: aClass [
 	"test if method originates from a trait and let the user choose which one should be change"
 
@@ -106,22 +108,22 @@ DebugContext >> confirmOnTraitOverwrite: aSelector inClass: aClass [
 	^ target
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DebugContext >> context [
 	^ context
 ]
 
-{ #category : #'evaluating actions' }
+{ #category : 'evaluating actions' }
 DebugContext >> evaluate: expression [
 	^ context compiler evaluate: expression
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DebugContext >> forContext: aContext [
 	context := aContext
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DebugContext >> locateClosureHomeWithContent: aText [
 	"In case the current context is a BlockContext locate the closureHome and ask the
 	user to validate the new context. If closureHome is not found or the user does not
@@ -141,12 +143,12 @@ DebugContext >> locateClosureHomeWithContent: aText [
 	^ context
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DebugContext >> receiver [
 	^ context receiver
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DebugContext >> receiverClass [
 	"Answer the class of the receiver.
 	It may differ from 'self selectedClass' "
@@ -154,7 +156,7 @@ DebugContext >> receiverClass [
 	^ context receiver class
 ]
 
-{ #category : #'evaluating actions' }
+{ #category : 'evaluating actions' }
 DebugContext >> recompileCurrentMethodTo: aText notifying: aNotifyer [
 	| classOrTraitOfMethod selector |
 
@@ -181,21 +183,21 @@ DebugContext >> recompileCurrentMethodTo: aText notifying: aNotifyer [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DebugContext >> selectedClass [
 	"Answer the class in which the current context's method was found."
 
 	^ context methodClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DebugContext >> selectedMessageCategoryName [
 	"Answer the name of the message category of the message of the current context."
 
 	^ self selectedClass protocolNameOfSelector: self selectedMessageName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DebugContext >> selectedMessageName [
 	"Answer the message selector of the current context.
 	 If the method is unbound we can still usefully answer its old selector."
@@ -203,7 +205,7 @@ DebugContext >> selectedMessageName [
 	^ context selector
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DebugContext >> source [
 	"Answer the source code of the currently selected context."
 	^ context sourceCode

@@ -2,18 +2,20 @@
 I resolve arguments strictly: if they have no type declaration I throw an exception.
 "
 Class {
-	#name : #FFIStrictResolutionMode,
-	#superclass : #Object,
-	#category : #'UnifiedFFI-Callouts'
+	#name : 'FFIStrictResolutionMode',
+	#superclass : 'Object',
+	#category : 'UnifiedFFI-Callouts',
+	#package : 'UnifiedFFI',
+	#tag : 'Callouts'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 FFIStrictResolutionMode >> isStrict [
 
 	^ true
 ]
 
-{ #category : #resolution }
+{ #category : 'resolution' }
 FFIStrictResolutionMode >> resolveUndeclaredTypeForArgument: aFFIValueArgument withResolver: aResolver [
 
 	aResolver unsupportedUntypedLiteral: aFFIValueArgument value

@@ -1,6 +1,6 @@
-Extension { #name : #Collection }
+Extension { #name : 'Collection' }
 
-{ #category : #'*Random-Core' }
+{ #category : '*Random-Core' }
 Collection >> atRandom [
 	"Answer a random element of the receiver.  Uses a shared random
 	number generator owned by class Collection.  If you use this a lot,
@@ -17,7 +17,7 @@ Collection >> atRandom [
 "
 ]
 
-{ #category : #'*Random-Core' }
+{ #category : '*Random-Core' }
 Collection >> atRandom: aGenerator [
 	"Answer a random element of the receiver. Uses aGenerator which
     should be kept by the user in a variable and used every time. Use
@@ -30,7 +30,7 @@ Collection >> atRandom: aGenerator [
 	self withIndexDo: [:each :index | index = rand ifTrue: [^each]]
 ]
 
-{ #category : #'*Random-Core' }
+{ #category : '*Random-Core' }
 Collection >> atRandom: aRandom weighting: aBlock [
 
 	"Retrieve an element with a probability related to the weighting block.
@@ -59,7 +59,7 @@ Collection >> atRandom: aRandom weighting: aBlock [
 	self error: 'This should not happen'
 ]
 
-{ #category : #'*Random-Core' }
+{ #category : '*Random-Core' }
 Collection >> atRandomWeighting: aBlock [
 
 	^ self atRandom: SharedRandom globalGenerator weighting: aBlock

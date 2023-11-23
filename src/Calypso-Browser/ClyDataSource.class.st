@@ -57,8 +57,8 @@ Internal Representation and Key Implementation Points.
 	lastFilteredDataSource: <ClyDataSource>
 "
 Class {
-	#name : #ClyDataSource,
-	#superclass : #FTDataSource,
+	#name : 'ClyDataSource',
+	#superclass : 'FTDataSource',
 	#instVars : [
 		'query',
 		'itemCursor',
@@ -71,22 +71,24 @@ Class {
 	#classVars : [
 		'UpdateScheduler'
 	],
-	#category : #'Calypso-Browser-DataSource'
+	#category : 'Calypso-Browser-DataSource',
+	#package : 'Calypso-Browser',
+	#tag : 'DataSource'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyDataSource class >> empty [
 
 	^ClyCollapsedDataSource on: ClyUnknownQuery instance
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyDataSource class >> on: aQuery [
 	^self new
 		query: aQuery
 ]
 
-{ #category : #'scheduling updates' }
+{ #category : 'scheduling updates' }
 ClyDataSource class >> scheduleUpdateOf: aDataSource [
 
 	UpdateScheduler ifNil: [ UpdateScheduler := ClyDataSourceUpdateScheduler new ].
@@ -94,13 +96,13 @@ ClyDataSource class >> scheduleUpdateOf: aDataSource [
 	UpdateScheduler register: aDataSource
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyDataSource >> allElements [
 	^(1 to: self numberOfRows) collect: [ :i |
 		self elementAt: i]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyDataSource >> cellColumn: column row: rowIndex [
 
 	| item |
@@ -108,7 +110,7 @@ ClyDataSource >> cellColumn: column row: rowIndex [
 	^column createCellFor: item in: queryView
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyDataSource >> close [
 	lastFilteredDataSource ifNotNil: [
 		lastFilteredDataSource close].
@@ -116,12 +118,12 @@ ClyDataSource >> close [
 	itemCursor := itemCursor close
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyDataSource >> collapse: aDataSourceItem [
 	self subclassResponsibility
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 ClyDataSource >> copyForBrowserStateSnapshot [
 
 	^self copy
@@ -129,12 +131,12 @@ ClyDataSource >> copyForBrowserStateSnapshot [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyDataSource >> countChildrenOf: aDataSourceItem [
 	self subclassResponsibility
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ClyDataSource >> createElementWith: anEnvironmentItem [
 
 	^self
@@ -142,32 +144,32 @@ ClyDataSource >> createElementWith: anEnvironmentItem [
 		ifAbsent: [ ClyDataSourceItem of: self value: anEnvironmentItem]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyDataSource >> definesChildren [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyDataSource >> depth [
 	^ depth
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyDataSource >> depth: anObject [
 	depth := anObject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyDataSource >> doesItemHaveChildren: aDataSourceItem [
 	self subclassResponsibility
 ]
 
-{ #category : #'drag and drop' }
+{ #category : 'drag and drop' }
 ClyDataSource >> dragTransferType [
 	^#CommanderDragAndDrop
 ]
 
-{ #category : #'drag and drop' }
+{ #category : 'drag and drop' }
 ClyDataSource >> dropElements: aPassenger index: rowIndex [
 	| dropTargetItem |
 	dropTargetItem := self elementAt: rowIndex.
@@ -175,31 +177,31 @@ ClyDataSource >> dropElements: aPassenger index: rowIndex [
 	^queryView dropPassenger: aPassenger at: dropTargetItem
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyDataSource >> expand: aDataSourceItem [
 	self subclassResponsibility
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyDataSource >> expansionChanged [
 	queryView restoreSelectedItems.
 	self tableRefresh.
 	self table resetFunction
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ClyDataSource >> findCachedElementWith: anEnvironmentItem ifAbsent: absentBlock [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyDataSource >> findDataSourceSameAs: aDataSource ifNone: noneBlock [
 	^(self isSameAs: aDataSource)
 		ifTrue: [ self ]
 		ifFalse: [ noneBlock value ]
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyDataSource >> findItemsSimilarTo: dataSourceItems [
 
 	| foundItems relatedItems |
@@ -210,7 +212,7 @@ ClyDataSource >> findItemsSimilarTo: dataSourceItems [
 	^foundItems collect: [:each | self createElementWith: each ]
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyDataSource >> findItemsWhere: conditionBlock [
 
 	| foundItems |
@@ -219,39 +221,39 @@ ClyDataSource >> findItemsWhere: conditionBlock [
 	^foundItems collect: [:each | self createElementWith: each ]
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyDataSource >> findItemsWith: actualObjects [
 
 	| foundItems |
 	foundItems := self itemCursor findItemsWith: actualObjects.
 
-	^foundItems select: #notNil thenCollect: [:each |
+	^foundItems select: #isNotNil thenCollect: [:each |
 		self createElementWith: each ]
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyDataSource >> forceFullUpdate [
 
 	itemCursor forceFullUpdate
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyDataSource >> getMetaProperty: aPropertyClass [
 	^self itemCursor getMetaProperty: aPropertyClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyDataSource >> globalPositionOf: childDataSourceItem [
 	self subclassResponsibility
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyDataSource >> hasMetaProperty: aPropertyClass [
 
 	^self itemCursor hasMetaProperty: aPropertyClass
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyDataSource >> initialize [
 	super initialize.
 	query := ClyUnknownQuery instance.
@@ -260,7 +262,7 @@ ClyDataSource >> initialize [
 	dirty := false
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 ClyDataSource >> initializeForBrowserStateSpanshot [
 	table := nil.
 	queryView := nil.
@@ -269,67 +271,67 @@ ClyDataSource >> initializeForBrowserStateSpanshot [
 	dirty := false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyDataSource >> isBasedOn: aQuery [
 
 	^query = aQuery
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyDataSource >> isBasedOnQueryOf: itemTypeClass [
 
 	^query retrievesItemsOfType: itemTypeClass
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyDataSource >> isClosed [
 	^itemCursor == ClyClosedBrowserCursor instance
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyDataSource >> isDirty [
 	^dirty
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyDataSource >> isEmpty [
 	^self itemCursor itemCount = 0
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyDataSource >> isExpanded: aDataSourceItem [
 	self subclassResponsibility
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyDataSource >> isInSameStateAs: anotherDataSource [
 
 	^self isSameAs: anotherDataSource
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyDataSource >> isParentCollapsed [
 	^self isParentExpanded not
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyDataSource >> isParentExpanded [
 	parentItem ifNil: [ ^true ].
 	^parentItem isExpanded
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyDataSource >> isParentRemoved [
 	parentItem ifNil: [ ^false ].
 	^parentItem isRemoved
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyDataSource >> isRoot [
 	^parentItem isNil
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyDataSource >> isSameAs: anotherDataSource [
 
 	self class == anotherDataSource class ifFalse: [ ^false ].
@@ -337,13 +339,13 @@ ClyDataSource >> isSameAs: anotherDataSource [
 	^self isBasedOn: anotherDataSource query
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyDataSource >> itemCursor [
 	dirty ifTrue: [ self runUpdate ].
 	^itemCursor
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyDataSource >> itemsChanged [
 	"Method is called when underlying query result was changed.
 	In that case we implement lazy updating
@@ -361,13 +363,13 @@ ClyDataSource >> itemsChanged [
 	self scheduleUpdate
 ]
 
-{ #category : #'context menu' }
+{ #category : 'context menu' }
 ClyDataSource >> menuColumn: column row: rowIndex [
 
 	^queryView menuColumn: column row: rowIndex
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyDataSource >> newDataSourceMatching: anItemFilter [
 	"IMPORTANT: DO NOT CALL IT FROM THE UI PROCESS"
 	"Any data source instance should be closed after usage.
@@ -389,12 +391,12 @@ ClyDataSource >> newDataSourceMatching: anItemFilter [
 	^lastFilteredDataSource
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyDataSource >> newSelectionWith: dataSourceItems [
 	^ClyDataSourceSelection fromRoot: self items: dataSourceItems
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyDataSource >> openOn: aQueryView [
 
 	self isClosed ifFalse: [ self close ].
@@ -405,58 +407,58 @@ ClyDataSource >> openOn: aQueryView [
 	dirty := false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyDataSource >> parentGlobalPosition [
 	^parentItem ifNil: [ 0 ] ifNotNil: [ parentItem globalPosition ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyDataSource >> parentItem [
 	^ parentItem
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyDataSource >> parentItem: anObject [
 	parentItem := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyDataSource >> query [
 	^ query
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyDataSource >> query: anObject [
 	query := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyDataSource >> queryEnvironment [
 	^query environment
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyDataSource >> queryResult [
 	^self itemCursor queryResult
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyDataSource >> queryView [
 	^ queryView
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyDataSource >> queryView: aQueryView [
 	queryView := aQueryView
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyDataSource >> realElementAt: anIndex [
 
 	^ (self elementAt: anIndex) browserItem
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ClyDataSource >> runUpdate [
 	self isClosed ifTrue: [^self].
 	dirty ifFalse: [ ^self ].
@@ -468,13 +470,13 @@ ClyDataSource >> runUpdate [
 	self tableRefresh
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyDataSource >> scheduleUpdate [
 
 	self class scheduleUpdateOf: self
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyDataSource >> searchText: aString [
 	"we search only original elements"
 	| found |
@@ -484,13 +486,13 @@ ClyDataSource >> searchText: aString [
 	^found ifFalse: [ #() ] ifTrue: [ {self itemCursor position}]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyDataSource >> toString: anItem [
 
 	^anItem  name
 ]
 
-{ #category : #'drag and drop' }
+{ #category : 'drag and drop' }
 ClyDataSource >> transferFor: dataSourceItems from: aMorph [
 	| selection passenger |
 	selection := dataSourceItems first rootDataSource
@@ -501,12 +503,12 @@ ClyDataSource >> transferFor: dataSourceItems from: aMorph [
 	^super transferFor: passenger from: aMorph
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ClyDataSource >> updateExpandingItems [
 	self subclassResponsibility
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ClyDataSource >> updateItems: dataSourceItems [
 	"I update given data source items with refreshed environment items	which belongs to same actual objects. If there is no actual object anymore for some of data source item I will put nil to it.
 	Then users should correctly process updated items"
@@ -516,7 +518,7 @@ ClyDataSource >> updateItems: dataSourceItems [
 		myItem updateItemWith: updatedBrowserItem  ]
 ]
 
-{ #category : #'drag and drop' }
+{ #category : 'drag and drop' }
 ClyDataSource >> wantsDropElements: aPassenger type: type index: rowIndex [
 	| dropTargetItem |
 	rowIndex = 0 | (rowIndex > self numberOfRows) ifTrue: [ ^false ].

@@ -23,8 +23,8 @@ p openInWorld.
 	p delete ] fork
 "
 Class {
-	#name : #ProgressBarMorph,
-	#superclass : #BorderedMorph,
+	#name : 'ProgressBarMorph',
+	#superclass : 'BorderedMorph',
 	#traits : 'TAbleToRotate',
 	#classTraits : 'TAbleToRotate classTrait',
 	#instVars : [
@@ -39,22 +39,24 @@ Class {
 		'DefaultHeight',
 		'DefaultWidth'
 	],
-	#category : #'Morphic-Base-ProgressBar'
+	#category : 'Morphic-Base-ProgressBar',
+	#package : 'Morphic-Base',
+	#tag : 'ProgressBar'
 }
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 ProgressBarMorph class >> defaultHeight: aNumber [
 
 	DefaultHeight := aNumber
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 ProgressBarMorph class >> defaultWidth: aNumber [
 
 	DefaultWidth := aNumber
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ProgressBarMorph class >> from: startNumber to: endNumber [
 
 	^ self new
@@ -62,14 +64,14 @@ ProgressBarMorph class >> from: startNumber to: endNumber [
 		endAt: endNumber
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 ProgressBarMorph class >> initialize [
 
 	self defaultWidth: 120.
 	self defaultHeight: 10
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ProgressBarMorph >> barFillStyle [
 	"Answer the fillStyle for the bar if present or
 	the theme menuTitleColor otherwise."
@@ -79,14 +81,14 @@ ProgressBarMorph >> barFillStyle [
 		ifAbsent: [ self theme menuTitleColor ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ProgressBarMorph >> barFillStyle: aFillStyle [
 	"Set the fillStyle for the bar."
 
 	^self setProperty: #barFillStyle toValue: aFillStyle
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ProgressBarMorph >> completedWidth [
 
 	| range fraction progress |
@@ -96,13 +98,13 @@ ProgressBarMorph >> completedWidth [
 	^ (fraction * self totalBarWidth) truncated
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProgressBarMorph >> decrement [
 
 	self value: self value - 1
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 ProgressBarMorph >> drawOn: aCanvas [
 	"Draw the receiver with the fill style for the bar, clipping to the inner bounds."
 
@@ -117,13 +119,13 @@ ProgressBarMorph >> drawOn: aCanvas [
 	self borderStyle frameRectangle: self bounds on: aCanvas
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ProgressBarMorph >> endAt: aNumber [
 
 	end := aNumber
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 ProgressBarMorph >> extent: aPoint [
 	"Update the bar fillStyle if appropriate."
 
@@ -134,13 +136,13 @@ ProgressBarMorph >> extent: aPoint [
 		self barFillStyle: ( self theme progressBarProgressFillStyleFor: self)]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProgressBarMorph >> increment [
 
 	self value: self value + 1
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ProgressBarMorph >> initialize [
 	"Initialize the receiver from the current theme."
 
@@ -158,7 +160,7 @@ ProgressBarMorph >> initialize [
 		extent: width@height  + (2 * self borderWidth)
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ProgressBarMorph >> privateMoveBy: delta [
 	"Update the bar fillStyle if appropriate."
 
@@ -168,25 +170,25 @@ ProgressBarMorph >> privateMoveBy: delta [
 	fill isOrientedFill ifTrue: [fill origin: fill origin + delta]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ProgressBarMorph >> startAt: aNumber [
 
 	value := start := aNumber
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ProgressBarMorph >> totalBarWidth [
 
 	^ self width - (2 * self borderWidth)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProgressBarMorph >> value [
 
 	^ value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProgressBarMorph >> value: aNumber [
 	|testWidth|
 	value := aNumber.

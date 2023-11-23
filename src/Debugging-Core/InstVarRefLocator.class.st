@@ -6,20 +6,21 @@ BlockContext allInstances collect: [ :x |
 ].
 "
 Class {
-	#name : #InstVarRefLocator,
-	#superclass : #InstructionClient,
+	#name : 'InstVarRefLocator',
+	#superclass : 'InstructionClient',
 	#instVars : [
 		'bingo'
 	],
-	#category : #'Debugging-Core'
+	#category : 'Debugging-Core',
+	#package : 'Debugging-Core'
 }
 
-{ #category : #validation }
+{ #category : 'validation' }
 InstVarRefLocator class >> check: aMethod [
 	^ self new check: aMethod
 ]
 
-{ #category : #validation }
+{ #category : 'validation' }
 InstVarRefLocator >> check: aMethod [
 	| scanner end |
 	scanner := InstructionStream on: aMethod.
@@ -31,7 +32,7 @@ InstVarRefLocator >> check: aMethod [
 	^false
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 InstVarRefLocator >> interpretNextInstructionUsing: aScanner [ 
 	
 	bingo := false.
@@ -39,19 +40,19 @@ InstVarRefLocator >> interpretNextInstructionUsing: aScanner [
 	^bingo
 ]
 
-{ #category : #'instruction decoding' }
+{ #category : 'instruction decoding' }
 InstVarRefLocator >> popIntoReceiverVariable: offset [ 
 
 	bingo := true
 ]
 
-{ #category : #'instruction decoding' }
+{ #category : 'instruction decoding' }
 InstVarRefLocator >> pushReceiverVariable: offset [
 
 	bingo := true
 ]
 
-{ #category : #'instruction decoding' }
+{ #category : 'instruction decoding' }
 InstVarRefLocator >> storeIntoReceiverVariable: offset [ 
 	bingo := true
 ]

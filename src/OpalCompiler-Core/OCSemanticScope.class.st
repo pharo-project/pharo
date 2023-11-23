@@ -26,28 +26,30 @@ Configuration methods like #class:, #context:, #receiver:, #noPattern: perform t
 
 "
 Class {
-	#name : #OCSemanticScope,
-	#superclass : #OCAbstractScope,
-	#category : #'OpalCompiler-Core-Semantics'
+	#name : 'OCSemanticScope',
+	#superclass : 'OCAbstractScope',
+	#category : 'OpalCompiler-Core-Semantics',
+	#package : 'OpalCompiler-Core',
+	#tag : 'Semantics'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 OCSemanticScope class >> isAbstract [
 	^self = OCSemanticScope
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OCSemanticScope >> allTemps [
 	^#()
 ]
 
-{ #category : #'code evaluation' }
+{ #category : 'code evaluation' }
 OCSemanticScope >> announceDoItEvaluation: aSourceString by: aSystemAnnouncer [
 
 	aSystemAnnouncer evaluated: aSourceString context: nil
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OCSemanticScope >> hasBindingThatBeginsWith: aString [
 
 	(self targetClass hasBindingThatBeginsWith: aString) ifTrue: [ ^true ].
@@ -55,12 +57,12 @@ OCSemanticScope >> hasBindingThatBeginsWith: aString [
 	^super hasBindingThatBeginsWith: aString
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OCSemanticScope >> isDoItScope [
 	^false
 ]
 
-{ #category : #lookup }
+{ #category : 'lookup' }
 OCSemanticScope >> lookupVar: name [
 
 	(self targetClass lookupVar: name) ifNotNil: [ :v | ^v ].

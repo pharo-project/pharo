@@ -2,12 +2,13 @@
 SUnit tests for key map builder
 "
 Class {
-	#name : #KMKeymapBuilderTest,
-	#superclass : #AbstractKeymappingTest,
-	#category : #'Keymapping-Tests'
+	#name : 'KMKeymapBuilderTest',
+	#superclass : 'AbstractKeymappingTest',
+	#category : 'Keymapping-Tests',
+	#package : 'Keymapping-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 KMKeymapBuilderTest >> testAddKeymapCreatesCategory [
 	self assertEmpty: KMRepository default categories.
 
@@ -22,7 +23,7 @@ KMKeymapBuilderTest >> testAddKeymapCreatesCategory [
 	self assert: KMRepository default categories size equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 KMKeymapBuilderTest >> testAddKeymapCreatesShortcut [
 	KMRepository default
 		initializeKeymap: #test
@@ -34,7 +35,7 @@ KMKeymapBuilderTest >> testAddKeymapCreatesShortcut [
 	self assert: (KMRepository default categoryForName: #Testing) allEntries size equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 KMKeymapBuilderTest >> testAttachKeymapAndExecuteExecutes [
 	| executed morphToTest |
 	executed := false.

@@ -19,28 +19,30 @@ Instance Variables
 direction:	Direction of the attempted selection
 "
 Class {
-	#name : #FTSelectionRejected,
-	#superclass : #FTAnnouncement,
+	#name : 'FTSelectionRejected',
+	#superclass : 'FTAnnouncement',
 	#instVars : [
 		'direction'
 	],
-	#category : #'Morphic-Widgets-FastTable-Announcement'
+	#category : 'Morphic-Widgets-FastTable-Announcement',
+	#package : 'Morphic-Widgets-FastTable',
+	#tag : 'Announcement'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FTSelectionRejected class >> withDirection: aDirection [
 	^ self new
 		direction: aDirection;
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTSelectionRejected >> direction [
 
 	^ direction
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTSelectionRejected >> direction: anObject [
 
 	direction := anObject

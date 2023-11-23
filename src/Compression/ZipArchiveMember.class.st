@@ -11,8 +11,8 @@ They can write their data to another stream either copying, compressing,
 or decompressing as desired.
 "
 Class {
-	#name : #ZipArchiveMember,
-	#superclass : #ArchiveMember,
+	#name : 'ZipArchiveMember',
+	#superclass : 'ArchiveMember',
 	#instVars : [
 		'lastModFileDateTime',
 		'fileAttributeFormat',
@@ -36,35 +36,37 @@ Class {
 	#pools : [
 		'ZipFileConstants'
 	],
-	#category : #'Compression-Archives'
+	#category : 'Compression-Archives',
+	#package : 'Compression',
+	#tag : 'Archives'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZipArchiveMember class >> newFromDirectory: aFileReference localName: localName [
 	^ZipDirectoryMember newFromDirectory: aFileReference localName: localName
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZipArchiveMember class >> newFromFile: aFileReference [
 	^ZipNewFileMember newFromFile: aFileReference
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZipArchiveMember class >> newFromString: aString named: aFileName [
 	^ZipStringMember newFrom: aString named: aFileName
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZipArchiveMember class >> newFromZipFile: stream named: fileName [
 	^ZipFileMember newFrom: stream named: fileName
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZipArchiveMember >> asDirectory [
 	^ZipDirectoryMember new copyFrom: self
 ]
 
-{ #category : #'extraction-ui' }
+{ #category : 'extraction-ui' }
 ZipArchiveMember >> askOverwriteOptionsUsing: aUIManager onYes: yesBlock onNo: noBlock onRetryWithOverwrite: retryWithOverwriteBlock onCancel: cancelBlock [
 	| index |
 	[ index := aUIManager chooseFrom: {'Yes, overwrite' . 'No, don''t overwrite' . 'Overwrite ALL files' . 'Cancel operation'} lines: #(2) title: fileName , ' already exists. Overwrite?'.
@@ -79,7 +81,7 @@ ZipArchiveMember >> askOverwriteOptionsUsing: aUIManager onYes: yesBlock onNo: n
 		ifTrue: [ cancelBlock value ]
 ]
 
-{ #category : #'accessing - spec fields' }
+{ #category : 'accessing - spec fields' }
 ZipArchiveMember >> bitFlag [
 	"Per .ZIP File Format Specification Version: 6.3.2:
 		2 bytes:
@@ -130,14 +132,14 @@ ZipArchiveMember >> bitFlag [
 	^ bitFlag
 ]
 
-{ #category : #'accessing - spec fields' }
+{ #category : 'accessing - spec fields' }
 ZipArchiveMember >> bitFlag: aNumber [
 	"See comment for #bitFlag"
 
 	bitFlag := aNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZipArchiveMember >> centralDirectoryHeaderSize [
 
 	| systemFileName systemFileComment systemCdExtraField |
@@ -147,13 +149,13 @@ ZipArchiveMember >> centralDirectoryHeaderSize [
 	^ 46 + systemFileName size + systemCdExtraField size + systemFileComment size
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZipArchiveMember >> clearExtraFields [
 	cdExtraField := ''.
 	localExtraField := ''
 ]
 
-{ #category : #'private - writing' }
+{ #category : 'private - writing' }
 ZipArchiveMember >> compressDataTo: aStream [
 	"Copy my deflated data to the given stream."
 	| encoder startPos endPos |
@@ -172,7 +174,7 @@ ZipArchiveMember >> compressDataTo: aStream [
 	crc32 := encoder crc
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZipArchiveMember >> compressedSize [
 	"Return the compressed size for this member.
 	This will not be set for members that were constructed from strings
@@ -180,7 +182,7 @@ ZipArchiveMember >> compressedSize [
 	^compressedSize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZipArchiveMember >> compressionMethod [
 	"Returns my compression method. This is the method that is
 	currently being used to compress my data.
@@ -191,7 +193,7 @@ ZipArchiveMember >> compressionMethod [
 	^compressionMethod
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZipArchiveMember >> contentStream [
 	"Answer my contents as a text stream.
 	Default is no conversion, since we don't know what the bytes mean."
@@ -199,7 +201,7 @@ ZipArchiveMember >> contentStream [
 	^self contentStreamFromEncoding: 'latin1'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZipArchiveMember >> contentStreamFromEncoding: encodingName [
 	"Answer my contents as a text stream.
 	Interpret the raw bytes with given encodingName"
@@ -209,14 +211,14 @@ ZipArchiveMember >> contentStreamFromEncoding: encodingName [
 			readStream
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 ZipArchiveMember >> contents [
 	"Answer my contents as a string."
 	^ ByteArray new: self uncompressedSize streamContents: [ :s |
 		self extractTo: s ]
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 ZipArchiveMember >> contentsFrom: start to: finish [
 	"Answer my contents as a string."
 	| s |
@@ -225,7 +227,7 @@ ZipArchiveMember >> contentsFrom: start to: finish [
 	^s contents
 ]
 
-{ #category : #'private - writing' }
+{ #category : 'private - writing' }
 ZipArchiveMember >> copyDataTo: aStream [
 
 	compressionMethod = CompressionStored ifTrue: [ ^self copyDataWithCRCTo: aStream ].
@@ -233,7 +235,7 @@ ZipArchiveMember >> copyDataTo: aStream [
 	self copyRawDataTo: aStream
 ]
 
-{ #category : #'private - writing' }
+{ #category : 'private - writing' }
 ZipArchiveMember >> copyDataWithCRCTo: aStream [
 	"Copy my data to aStream. Also set the CRC-32.
 	Only used when compressionMethod = desiredCompressionMethod = CompressionStored"
@@ -252,7 +254,7 @@ ZipArchiveMember >> copyDataWithCRCTo: aStream [
 	crc32 := crc32 bitXor: 16rFFFFFFFF
 ]
 
-{ #category : #'private - writing' }
+{ #category : 'private - writing' }
 ZipArchiveMember >> copyRawDataTo: aStream [
 
 	[ readDataRemaining > 0 ] whileTrue: [ | data |
@@ -261,7 +263,7 @@ ZipArchiveMember >> copyRawDataTo: aStream [
 		readDataRemaining := readDataRemaining - data size ]
 ]
 
-{ #category : #'private - writing' }
+{ #category : 'private - writing' }
 ZipArchiveMember >> copyRawDataTo: aStream from: start to: finish [
 
 	readDataRemaining := readDataRemaining min: finish - start + 1.
@@ -274,24 +276,24 @@ ZipArchiveMember >> copyRawDataTo: aStream from: start to: finish [
 		readDataRemaining := readDataRemaining - data size ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZipArchiveMember >> crc32 [
 	^crc32
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZipArchiveMember >> crc32String [
 	| hexString |
 	hexString := crc32 storeStringHex.
 	^('00000000' copyFrom: 1 to: 11 - (hexString size)) , (hexString copyFrom: 4 to: hexString size)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZipArchiveMember >> desiredCompressionLevel [
 	^desiredCompressionLevel
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZipArchiveMember >> desiredCompressionLevel: aNumber [
 	"Set my desiredCompressionLevel
 	This is the method that will be used to write.
@@ -313,7 +315,7 @@ ZipArchiveMember >> desiredCompressionLevel: aNumber [
 	^old
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZipArchiveMember >> desiredCompressionMethod [
 	"Get my desiredCompressionMethod.
 	This is the method that will be used to write"
@@ -321,7 +323,7 @@ ZipArchiveMember >> desiredCompressionMethod [
 	^desiredCompressionMethod
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZipArchiveMember >> desiredCompressionMethod: aNumber [
 	"Set my desiredCompressionMethod
 	This is the method that will be used to write.
@@ -344,17 +346,17 @@ ZipArchiveMember >> desiredCompressionMethod: aNumber [
 	^old
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZipArchiveMember >> endRead [
 	readDataRemaining := 0
 ]
 
-{ #category : #extraction }
+{ #category : 'extraction' }
 ZipArchiveMember >> extractInDirectory: dir [
 	self extractToFileNamed: self localFileName inDirectory: dir overwrite: true
 ]
 
-{ #category : #'extraction-ui' }
+{ #category : 'extraction-ui' }
 ZipArchiveMember >> extractInDirectory: aDirectory informingOverwrite: shouldOverwrite onSuccess: successBlock onRetryWithOverwrite: retryWithOverwriteBlock onFailedOverwrite: failedBlock onAbortOverwrite: abortBlock [
 	"Extract this entry into the given directory. Answer successBlock or call one of the other action blocks."
 
@@ -373,7 +375,7 @@ ZipArchiveMember >> extractInDirectory: aDirectory informingOverwrite: shouldOve
 		onAbortOverwrite: abortBlock
 ]
 
-{ #category : #'extraction-ui' }
+{ #category : 'extraction-ui' }
 ZipArchiveMember >> extractInDirectory: aDirectory overwrite: shouldOverwrite [
 	"Extract this entry into the given directory. Answer #okay, #failed, #abort, or #retryWithOverwrite."
 
@@ -386,14 +388,14 @@ ZipArchiveMember >> extractInDirectory: aDirectory overwrite: shouldOverwrite [
 		onAbortOverwrite: [ ^ #abort ]
 ]
 
-{ #category : #extraction }
+{ #category : 'extraction' }
 ZipArchiveMember >> extractInDirectory: dir withoutInformingOverwrite: overwrite [
 	"Extract myself to dir without informing user whether to overwrite existing file"
 
 	self extractToFileNamed: self localFileName inDirectory: dir overwrite: overwrite
 ]
 
-{ #category : #extraction }
+{ #category : 'extraction' }
 ZipArchiveMember >> extractTo: aStream [
 	| oldCompression |
 	self isEncrypted ifTrue: [ self error: 'encryption is unsupported' ].
@@ -404,7 +406,7 @@ ZipArchiveMember >> extractTo: aStream [
 	self endRead
 ]
 
-{ #category : #extraction }
+{ #category : 'extraction' }
 ZipArchiveMember >> extractTo: aStream from: start to: finish [
 	| oldCompression |
 	self isEncrypted ifTrue: [ self error: 'encryption is unsupported' ].
@@ -416,7 +418,7 @@ ZipArchiveMember >> extractTo: aStream from: start to: finish [
 	self endRead
 ]
 
-{ #category : #'private - extraction' }
+{ #category : 'private - extraction' }
 ZipArchiveMember >> extractToFile: aFile informingOverwrite: shouldOverwrite onSuccess: successBlock onRetryWithOverwrite: retryWithOverwriteBlock onFailedOverwrite: failedBlock onAbortOverwrite: abortBlock [
 	"Extract this entry into the given file. Answer successBlock or call one of the other action blocks."
 
@@ -442,17 +444,17 @@ ZipArchiveMember >> extractToFile: aFile informingOverwrite: shouldOverwrite onS
 	^ successBlock value
 ]
 
-{ #category : #extraction }
+{ #category : 'extraction' }
 ZipArchiveMember >> extractToFileNamed: aFileName [
 	self extractToFileNamed: aFileName inDirectory: FileSystem workingDirectory overwrite: true
 ]
 
-{ #category : #extraction }
+{ #category : 'extraction' }
 ZipArchiveMember >> extractToFileNamed: aLocalFileName inDirectory: dir [
 	self extractToFileNamed: aLocalFileName inDirectory: dir overwrite: true
 ]
 
-{ #category : #extraction }
+{ #category : 'extraction' }
 ZipArchiveMember >> extractToFileNamed: aLocalFileName inDirectory: dir overwrite: overwrite [
 	| file |
 	self isEncrypted
@@ -471,22 +473,22 @@ ZipArchiveMember >> extractToFileNamed: aLocalFileName inDirectory: dir overwrit
 						binaryWriteStreamDo: [ :stream | self extractTo: stream ] ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZipArchiveMember >> fileComment [
 	^fileComment
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZipArchiveMember >> fileComment: aString [
 	fileComment := aString
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZipArchiveMember >> hasDataDescriptor [
 	^ (self bitFlag bitAnd: 8)	~= 0 "GPBF:=HAS:=DATA:=DESCRIPTOR:=MASK"
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ZipArchiveMember >> initialize [
 	super initialize.
 	lastModFileDateTime := DateAndTime epoch.
@@ -509,18 +511,18 @@ ZipArchiveMember >> initialize [
 	self unixFileAttributes: DefaultFilePermissions
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZipArchiveMember >> isDirectory [
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZipArchiveMember >> isEncrypted [
 	"Return true if this member is encrypted (this is unsupported)"
 	^ (self bitFlag bitAnd: 1) ~= 0
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZipArchiveMember >> isTextFile [
 	"Returns true if I am a text file.
 	Note that this module does not currently do anything with this flag
@@ -530,7 +532,7 @@ ZipArchiveMember >> isTextFile [
 	^ (internalFileAttributes bitAnd: 1) ~= 0
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZipArchiveMember >> isTextFile: aBoolean [
 	"Set whether I am a text file.
 	Note that this module does not currently do anything with this flag
@@ -542,50 +544,50 @@ ZipArchiveMember >> isTextFile: aBoolean [
 		ifFalse: [ internalFileAttributes bitAnd: 1 bitInvert ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZipArchiveMember >> lastModTime [
 	"Return my last modification date"
 
 	^ lastModFileDateTime
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZipArchiveMember >> localFileName [
 	"Answer my fileName in terms of the local directory naming convention"
 	^ fileName copyReplaceAll: '/' with: FileSystem disk delimiter asString
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZipArchiveMember >> looksLikeDirectory [
 	^false
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZipArchiveMember >> mapPermissionsFromUnix: unixPerms [
 	"Take Unix permissions (e.g. 8r40755 for a directory) and put them in the high 16 bits. The low 16 bits are for DOS permissions"
 
 	^ unixPerms bitShift: 16
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZipArchiveMember >> mapPermissionsToUnix: zipPerms [
 	"Extract Unix permissions (the high 16 bits) from zip permissions. The low 16 bits are for DOS permissions"
 
 	^ zipPerms bitShift: -16
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZipArchiveMember >> modifiedAt: aDateAndTime [
 
 	lastModFileDateTime := aDateAndTime
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZipArchiveMember >> readRawChunk: n [
 	self subclassResponsibility
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZipArchiveMember >> rewindData [
 	readDataRemaining :=  (desiredCompressionMethod = CompressionDeflated
 		and: [ compressionMethod = CompressionDeflated ])
@@ -593,19 +595,19 @@ ZipArchiveMember >> rewindData [
 			ifFalse: [ uncompressedSize ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZipArchiveMember >> splitFileName [
 	"Answer my name split on slash boundaries. A directory will have a trailing empty string."
 	^ fileName findTokens: '/'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZipArchiveMember >> uncompressedSize [
 	"Return the uncompressed size for this member."
 	^uncompressedSize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZipArchiveMember >> unixFileAttributes [
 	"See comment at end"
 
@@ -640,7 +642,7 @@ And of course, the other 12 bits are for the permissions and setuid/setgid/stick
 #define S_ISVTX 0001000 /* save swapped text even after use"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZipArchiveMember >> unixFileAttributes: perms [
 	"See #unixFileAttributes comment"
 
@@ -653,7 +655,7 @@ ZipArchiveMember >> unixFileAttributes: perms [
 	^oldPerms
 ]
 
-{ #category : #'accessing - spec fields' }
+{ #category : 'accessing - spec fields' }
 ZipArchiveMember >> versionMadeBy [
 	"Per .ZIP File Format Specification Version: 6.3.2:
 		2 Bytes:
@@ -663,14 +665,14 @@ ZipArchiveMember >> versionMadeBy [
 	^ versionMadeBy
 ]
 
-{ #category : #'accessing - spec fields' }
+{ #category : 'accessing - spec fields' }
 ZipArchiveMember >> versionMadeBy: anInteger [
 	"See comment for #versionMadeBy"
 
 	versionMadeBy := anInteger
 ]
 
-{ #category : #'accessing - spec fields' }
+{ #category : 'accessing - spec fields' }
 ZipArchiveMember >> versionNeededToExtract [
 	"See .ZIP File Format Specification Version: 6.3.2.
 		For example, 2.0 means:
@@ -681,14 +683,14 @@ ZipArchiveMember >> versionNeededToExtract [
 	^ versionNeededToExtract
 ]
 
-{ #category : #'accessing - spec fields' }
+{ #category : 'accessing - spec fields' }
 ZipArchiveMember >> versionNeededToExtract: anInteger [
 	"See comment for #versionNeededToExtract"
 
 	versionNeededToExtract := anInteger
 ]
 
-{ #category : #'private - writing' }
+{ #category : 'private - writing' }
 ZipArchiveMember >> writeCentralDirectoryFileHeaderTo: aStream [
 	"C2 v3 V4 v5 V2"
 
@@ -729,7 +731,7 @@ ZipArchiveMember >> writeCentralDirectoryFileHeaderTo: aStream [
 	aStream nextPutAll: systemFileComment
 ]
 
-{ #category : #'private - writing' }
+{ #category : 'private - writing' }
 ZipArchiveMember >> writeDataDescriptorTo: aStream [
 	"This writes a data descriptor to the given stream.
 	Assumes that crc32, writeOffset, and uncompressedSize are
@@ -742,7 +744,7 @@ ZipArchiveMember >> writeDataDescriptorTo: aStream [
 	aStream nextLittleEndianNumber: 4 put: uncompressedSize
 ]
 
-{ #category : #'private - writing' }
+{ #category : 'private - writing' }
 ZipArchiveMember >> writeDataTo: aStream [
 	"Copy my (possibly inflated or deflated) data to the given stream.
 	This might do compression, decompression, or straight copying, depending
@@ -761,7 +763,7 @@ ZipArchiveMember >> writeDataTo: aStream [
 	self copyDataTo: aStream
 ]
 
-{ #category : #'private - writing' }
+{ #category : 'private - writing' }
 ZipArchiveMember >> writeDataTo: aStream from: start to: finish [
 	"Copy my (possibly inflated or deflated) data to the given stream.
 	But only the specified byte range.
@@ -781,7 +783,7 @@ ZipArchiveMember >> writeDataTo: aStream from: start to: finish [
 	self copyRawDataTo: aStream from: start to: finish
 ]
 
-{ #category : #'private - writing' }
+{ #category : 'private - writing' }
 ZipArchiveMember >> writeLocalFileHeaderTo: aStream [
 	"Write my local header to a file handle.
 	Stores the offset to the start of the header in my
@@ -809,7 +811,7 @@ ZipArchiveMember >> writeLocalFileHeaderTo: aStream [
 	aStream nextPutAll: localExtraField asByteArray
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 ZipArchiveMember >> writeTo: aStream [
 	"The header contains information about the data, including compressed size and CRC,
 	 that we do not know yet! So we leave room for the header, write the data, and go

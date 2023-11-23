@@ -1,6 +1,6 @@
-Extension { #name : #LabelMorph }
+Extension { #name : 'LabelMorph' }
 
-{ #category : #'*Athens-Morphic' }
+{ #category : '*Athens-Morphic' }
 LabelMorph >> drawOnAthensCanvas: aCanvas [
 	"Draw based on enablement."
 

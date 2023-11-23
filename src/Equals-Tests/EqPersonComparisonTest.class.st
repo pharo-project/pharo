@@ -1,10 +1,11 @@
 Class {
-	#name : #EqPersonComparisonTest,
-	#superclass : #TestCase,
-	#category : #'Equals-Tests'
+	#name : 'EqPersonComparisonTest',
+	#superclass : 'TestCase',
+	#category : 'Equals-Tests',
+	#package : 'Equals-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 EqPersonComparisonTest >> testComparisonOfStudentAndTeacherOfSameAgeShouldNotBeEqual [
 	| luc tom |
 	luc := EqTeacher name: 'Luc' age: 24.
@@ -13,7 +14,7 @@ EqPersonComparisonTest >> testComparisonOfStudentAndTeacherOfSameAgeShouldNotBeE
 	self deny: luc equals: tom
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EqPersonComparisonTest >> testComparisonOfStudentAndTeacherOfSameNameAndAgeShouldNotBeEquals [
 	| smith1 smith2 |
 	"Not equal beause instances of different classes"
@@ -23,7 +24,7 @@ EqPersonComparisonTest >> testComparisonOfStudentAndTeacherOfSameNameAndAgeShoul
 	self deny: smith1 equals: smith2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EqPersonComparisonTest >> testComparisonOfStudentOfDifferentAgeShouldNotBeEqual [
 	| luc tom |
 	
@@ -33,7 +34,7 @@ EqPersonComparisonTest >> testComparisonOfStudentOfDifferentAgeShouldNotBeEqual 
 	self deny: luc equals: tom
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EqPersonComparisonTest >> testComparisonOfStudentOfDifferentLevelShouldNotBeEqual [
 	| luc tom |
 	
@@ -45,7 +46,7 @@ EqPersonComparisonTest >> testComparisonOfStudentOfDifferentLevelShouldNotBeEqua
 	self deny: luc equals: tom
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EqPersonComparisonTest >> testComparisonOfStudentOfSameAgeAndLevelShouldBeEqual [
 	| luc tom |
 	

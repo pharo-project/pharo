@@ -7,18 +7,20 @@ I log this error by:
 
 "
 Class {
-	#name : #DebuggerEmmergencyLogger,
-	#superclass : #Object,
-	#category : #'Debugger-Model-Core'
+	#name : 'DebuggerEmmergencyLogger',
+	#superclass : 'Object',
+	#category : 'Debugger-Model-Core',
+	#package : 'Debugger-Model',
+	#tag : 'Core'
 }
 
-{ #category : #API }
+{ #category : 'API' }
 DebuggerEmmergencyLogger >> debugError: anError fromSession: aDebugSession [
 
 	self logError: anError forSession: aDebugSession
 ]
 
-{ #category : #API }
+{ #category : 'API' }
 DebuggerEmmergencyLogger >> logError: anError forSession: aDebugSession [
 
 	| errDescription errStream |

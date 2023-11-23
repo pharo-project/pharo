@@ -4,22 +4,24 @@ See BorderedMorph
 BorderedMorh new borderStyle: (BorderStyle inset width: 2); openInWorld.
 "
 Class {
-	#name : #BorderStyle,
-	#superclass : #Object,
+	#name : 'BorderStyle',
+	#superclass : 'Object',
 	#classVars : [
 		'Default'
 	],
-	#category : #'Morphic-Core-Borders'
+	#category : 'Morphic-Core-Borders',
+	#package : 'Morphic-Core',
+	#tag : 'Borders'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 BorderStyle class >> borderStyleChoices [
 	"Answer the superset of all supported borderStyle symbols"
 
 	^ #(simple inset raised complexAltFramed complexAltInset complexAltRaised complexFramed complexInset complexRaised)
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 BorderStyle class >> borderStyleForSymbol: sym [
 	"Answer a border style corresponding to the given symbol"
 
@@ -28,27 +30,27 @@ BorderStyle class >> borderStyleForSymbol: sym [
 	^ self perform: aSymbol
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 BorderStyle class >> color: aColor width: aNumber [
 	^self width: aNumber color: aColor
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 BorderStyle class >> default [
 	^Default ifNil:[Default := self new]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 BorderStyle class >> thinGray [
 	^ self width: 1 * self currentWorld displayScaleFactor color: Color gray
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 BorderStyle class >> width: aNumber [
 	^self width: aNumber color: Smalltalk ui theme borderColor
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 BorderStyle >> = aBorderStyle [
 	^self species = aBorderStyle species
 		and:[self style == aBorderStyle style
@@ -56,32 +58,32 @@ BorderStyle >> = aBorderStyle [
 		and:[self color = aBorderStyle color]]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BorderStyle >> baseColor [
 	^Color transparent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BorderStyle >> baseColor: aColor [
 	"Ignored"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BorderStyle >> color [
 	^Color transparent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BorderStyle >> color: aColor [
 	"Ignored"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BorderStyle >> colorsAtCorners [
 	^Array new: 4 withAll: self color
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BorderStyle >> dotOfSize: diameter forDirection: aDirection [
 	| form |
 	form := Form extent: diameter@diameter depth: Display depth.
@@ -89,25 +91,25 @@ BorderStyle >> dotOfSize: diameter forDirection: aDirection [
 	^form
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 BorderStyle >> drawLineFrom: startPoint to: stopPoint on: aCanvas [
 	^aCanvas line: startPoint to: stopPoint width: self width color: self color
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 BorderStyle >> frameOval: aRectangle on: aCanvas [
 	"Frame the given rectangle on aCanvas"
 	aCanvas frameOval: aRectangle width: self width color: self color
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 BorderStyle >> framePolygon: vertices on: aCanvas [
 	"Frame the given rectangle on aCanvas"
 	self framePolyline: vertices on: aCanvas.
 	self drawLineFrom: vertices last to: vertices first on: aCanvas
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 BorderStyle >> framePolyline: vertices on: aCanvas [
 	"Frame the given rectangle on aCanvas"
 
@@ -124,43 +126,43 @@ BorderStyle >> framePolyline: vertices on: aCanvas [
 			prev := next]
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 BorderStyle >> frameRectangle: aRectangle on: aCanvas [
 	"Frame the given rectangle on aCanvas"
 	aCanvas frameRectangle: aRectangle width: self width color: self color
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 BorderStyle >> hasFillStyle [
 	"Answer false."
 
 	^false
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 BorderStyle >> hash [
 	"hash is implemented because #= is implemented"
 	^self species hash bitXor: (self width hash bitXor: self color hash)
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 BorderStyle >> isBorderStyle [
 	^true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 BorderStyle >> isComplex [
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 BorderStyle >> isComposite [
 	"Answer false."
 
 	^false
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 BorderStyle >> printOn: aStream [
 	"Print a description of the
 	receiver on the given stream."
@@ -168,12 +170,12 @@ BorderStyle >> printOn: aStream [
 	self storeOn: aStream
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 BorderStyle >> releaseCachedState [
 	"Release any associated cached state"
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 BorderStyle >> storeOn: aStream [
 	"Store a reconstructable representation of the
 	receiver on the given stream."
@@ -188,27 +190,27 @@ BorderStyle >> storeOn: aStream [
 		nextPutAll: ')'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BorderStyle >> style [
 	^#none
 ]
 
-{ #category : #'color tracking' }
+{ #category : 'color tracking' }
 BorderStyle >> trackColorFrom: aMorph [
 	"If necessary, update our color to reflect a change in aMorphs color"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BorderStyle >> width [
 	^0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BorderStyle >> width: aNumber [
 	"Ignored"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BorderStyle >> widthForRounding [
 	^self width
 ]

@@ -2,23 +2,25 @@
 SUnit tests for WeakIdentityValueDictionaty
 "
 Class {
-	#name : #WeakIdentityValueDictionaryTest,
-	#superclass : #WeakValueDictionaryTest,
-	#category : #'Collections-Weak-Tests-Dictionaries'
+	#name : 'WeakIdentityValueDictionaryTest',
+	#superclass : 'WeakValueDictionaryTest',
+	#category : 'Collections-Weak-Tests-Dictionaries',
+	#package : 'Collections-Weak-Tests',
+	#tag : 'Dictionaries'
 }
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 WeakIdentityValueDictionaryTest >> canBeUnhealthy [
 	^ false
 ]
 
-{ #category : #coverage }
+{ #category : 'coverage' }
 WeakIdentityValueDictionaryTest >> classToBeTested [
 
 	^ WeakIdentityValueDictionary
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WeakIdentityValueDictionaryTest >> testIdentity [
 	| dict key |
 	dict := self classToBeTested new.

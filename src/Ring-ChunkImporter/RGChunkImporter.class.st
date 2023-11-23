@@ -3,36 +3,39 @@ I'm an object holding the result of loading a file containing Pharo code definit
 I create Ring definitions for the elements inside the chunk stream.
 "
 Class {
-	#name : #RGChunkImporter,
-	#superclass : #Object,
+	#name : 'RGChunkImporter',
+	#superclass : 'Object',
 	#instVars : [
 		'environment',
 		'package',
 		'doIts'
 	],
-	#category : #'Ring-ChunkImporter'
+	#category : 'Ring-ChunkImporter',
+	#package : 'Ring-ChunkImporter'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RGChunkImporter class >> fromFileNamed: fileName [
 
 	^ self new fromFileNamed: fileName; yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RGChunkImporter class >> fromStream: aStream [
 
 	^ self new fileInFrom: aStream; yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGChunkImporter >> allowedSelectors [
 
 	^ #(
 #ephemeronSubclass:instanceVariableNames:classVariableNames:package:
+#ephemeronSubclass:instanceVariableNames:classVariableNames:poolDictionaries:package:
 #ephemeronSubclass:instanceVariableNames:classVariableNames:poolDictionaries:category:
 
 #immediateSubclass:instanceVariableNames:classVariableNames:package:
+#immediateSubclass:instanceVariableNames:classVariableNames:category:
 #immediateSubclass:instanceVariableNames:classVariableNames:poolDictionaries:package:
 #immediateSubclass:uses:instanceVariableNames:classVariableNames:package:
 #immediateSubclass:uses:instanceVariableNames:classVariableNames:poolDictionaries:package:
@@ -101,7 +104,7 @@ instanceVariableNames:
 )
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RGChunkImporter >> classDefinition: aString with: chgRec [
 	| tokens theClass superclass |
 
@@ -136,7 +139,7 @@ RGChunkImporter >> classDefinition: aString with: chgRec [
 			sharedPools: ((tokens at: 11) findTokens: ' '). ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RGChunkImporter >> classNamed: className [
 
 	| behavior |
@@ -146,12 +149,12 @@ RGChunkImporter >> classNamed: className [
 		ifNil: [ self environment ensureClassNamed: className asSymbol. ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGChunkImporter >> classes [
 	^ package classes values
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RGChunkImporter >> createBehavior: subclassName superclassName: superclassName instanceVariableNames: instanceVariableNames classVariableNames: classVariableNames categoryName: categoryName packageName: packageName poolDictionariesNames: poolDictionariesNames layoutClass: layoutClass layoutDefinition: layoutDefinition slotsDefinition: slotsDefinition traits: traitsDefinition isTrait: isTrait hasNilSuperclass: hasNilSuperclass [
 
 	| behavior superclass |
@@ -224,7 +227,7 @@ RGChunkImporter >> createBehavior: subclassName superclassName: superclassName i
 		]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RGChunkImporter >> createTraitNamed: traitName [
 
 	| trait |
@@ -234,24 +237,24 @@ RGChunkImporter >> createTraitNamed: traitName [
 	^ trait
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGChunkImporter >> doIts [
 	^ doIts
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGChunkImporter >> environment [
 
 	^ environment
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGChunkImporter >> environment: anRGEnvironment [
 
 	environment := anRGEnvironment
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 RGChunkImporter >> fileInFrom: aStream [
 
 	| changes |
@@ -259,14 +262,14 @@ RGChunkImporter >> fileInFrom: aStream [
 	changes do: [ :change | change accept: self ]
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 RGChunkImporter >> fromFileNamed: aName [
 
 	package := RGPackageDefinition named: aName.
 	self fileInFrom: aName asFileReference readStream
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RGChunkImporter >> if: selectorParts in: ast includes: aSymbol do: aBlock [
 
 	| index |
@@ -275,7 +278,7 @@ RGChunkImporter >> if: selectorParts in: ast includes: aSymbol do: aBlock [
 	aBlock value: (ast arguments at: index)
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RGChunkImporter >> initialize [
 	super initialize.
 	environment := RGEnvironment new.
@@ -283,7 +286,7 @@ RGChunkImporter >> initialize [
 	doIts := Set new
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 RGChunkImporter >> isNilSuperclassDefinition: ast [
 
 	^ (ast isSequence)
@@ -295,7 +298,7 @@ RGChunkImporter >> isNilSuperclassDefinition: ast [
 		and: [((ast statements first arguments first value withoutPrefix: '#') = ast statements second receiver formattedCode)]]]]]]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RGChunkImporter >> metaClassDefinition: string with: chgRec [
 	| tokens theClass |
 
@@ -305,7 +308,7 @@ RGChunkImporter >> metaClassDefinition: string with: chgRec [
 	theClass classSide instanceVariables: (tokens fourth findTokens: ' ')
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RGChunkImporter >> metaTraitDefinition: string with: chgRec [
 	| tokens trait |
 
@@ -315,7 +318,7 @@ RGChunkImporter >> metaTraitDefinition: string with: chgRec [
 "	trait classSide definitionSource: string"
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RGChunkImporter >> msgClassComment: string with: chgRec [
 
 	| tokens theClass |
@@ -330,19 +333,19 @@ RGChunkImporter >> msgClassComment: string with: chgRec [
 		ifFalse:[ theClass ]) comment: tokens last asString ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGChunkImporter >> packages [
 
 	^ { package }
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RGChunkImporter >> scannedSource: aString [
 
 	^ Smalltalk compiler parseLiterals: aString
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RGChunkImporter >> slotNameFor: definitionAST [
 
 	^ (definitionAST respondsTo: #receiver)
@@ -350,7 +353,7 @@ RGChunkImporter >> slotNameFor: definitionAST [
 		ifFalse: [ definitionAST value  ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RGChunkImporter >> traitDefinition: aString with: chgRec [
 
 	| tokens trait |
@@ -361,7 +364,7 @@ RGChunkImporter >> traitDefinition: aString with: chgRec [
 	trait category: tokens last
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 RGChunkImporter >> visitClassCommentChunk: aChunk [
 
 	| class comment |
@@ -374,13 +377,13 @@ RGChunkImporter >> visitClassCommentChunk: aChunk [
 	class comment: comment
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 RGChunkImporter >> visitClassOrganizationChunk: aChunk [
 
 	"Do nothing with class organizations for the moment"
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 RGChunkImporter >> visitDoItChunk: aChunk [
 
 	| contents ast layoutClass selectorParts superclassName subclassName instanceVariableNames classVariableNames categoryName packageName poolDictionariesNames layoutDefinition slotsDefinition traitsDefinition isTrait hasNilSuperclass |
@@ -495,23 +498,22 @@ RGChunkImporter >> visitDoItChunk: aChunk [
 	doIts add: aChunk
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 RGChunkImporter >> visitMethodChunk: aChunk [
 
 	| theClass theMethod theProtocol |
 	theClass := self classNamed: aChunk behaviorName.
 	aChunk isMeta ifTrue: [ theClass := theClass classSide makeResolved ].
 
-	theMethod := theClass ensureLocalMethodNamed:
-		             aChunk methodSelector asSymbol.
-	theProtocol := theClass ensureProtocolNamed: aChunk category asSymbol.
+	theMethod := theClass ensureLocalMethodNamed: aChunk methodSelector asSymbol.
+	theProtocol := theClass ensureProtocolNamed: aChunk protocol asSymbol.
 	theMethod protocol: theProtocol.
 	theMethod sourceCode: aChunk contents.
 	theMethod author: (RGStampParser authorForStamp: aChunk stamp).
 	theMethod time: (RGStampParser timeForStamp: aChunk stamp)
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 RGChunkImporter >> visitStyleChunk: aChunk [
 
 	"Do nothing with styles"

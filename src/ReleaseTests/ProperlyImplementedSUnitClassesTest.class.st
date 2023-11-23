@@ -2,12 +2,14 @@
 This class checks if test classes have been properly implemented
 "
 Class {
-	#name : #ProperlyImplementedSUnitClassesTest,
-	#superclass : #TestCase,
-	#category : #'ReleaseTests-CleanCode'
+	#name : 'ProperlyImplementedSUnitClassesTest',
+	#superclass : 'TestCase',
+	#category : 'ReleaseTests-CleanCode',
+	#package : 'ReleaseTests',
+	#tag : 'CleanCode'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProperlyImplementedSUnitClassesTest >> testAndMakeSureSuperSetupIsCalledAsFirstMessageInSetupMethodsOfTestCases [
 	"Verify that each setUp method in a unit test starts with a call to super setUp as first message sent"
 
@@ -23,7 +25,7 @@ ProperlyImplementedSUnitClassesTest >> testAndMakeSureSuperSetupIsCalledAsFirstM
 	self assertEmpty: violating
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProperlyImplementedSUnitClassesTest >> testAndMakeSureSuperTearDownIsCalledAsLastMessageInTearDownMethodsOfTestCases [
 	"Verify that each tearDown method in a unit test ends with a call to super tearDown as last message sent"
 
@@ -40,7 +42,7 @@ ProperlyImplementedSUnitClassesTest >> testAndMakeSureSuperTearDownIsCalledAsLas
 	self assertEmpty: violating
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProperlyImplementedSUnitClassesTest >> testTestClassesShouldBeSingular [
 
 	| violations |

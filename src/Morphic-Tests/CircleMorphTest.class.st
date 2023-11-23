@@ -5,12 +5,14 @@ My fixtures are morph, a CircleMorph and world.
 
 "
 Class {
-	#name : #CircleMorphTest,
-	#superclass : #MorphTest,
-	#category : #'Morphic-Tests-Basic'
+	#name : 'CircleMorphTest',
+	#superclass : 'MorphTest',
+	#category : 'Morphic-Tests-Basic',
+	#package : 'Morphic-Tests',
+	#tag : 'Basic'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 CircleMorphTest >> setUp [
 	super setUp.
 	morph := CircleMorph new

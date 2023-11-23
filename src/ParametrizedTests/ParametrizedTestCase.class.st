@@ -49,15 +49,17 @@ The test Case should have a setter for
 Check the `PaSimpleMatrixExampleTest` and  `PaSelectedCasesExampleTest` to see how to use the different possible configurations.
 "
 Class {
-	#name : #ParametrizedTestCase,
-	#superclass : #TestCase,
+	#name : 'ParametrizedTestCase',
+	#superclass : 'TestCase',
 	#instVars : [
 		'parametersToUse'
 	],
-	#category : #'ParametrizedTests-Core'
+	#category : 'ParametrizedTests-Core',
+	#package : 'ParametrizedTests',
+	#tag : 'Core'
 }
 
-{ #category : #'building suites' }
+{ #category : 'building suites' }
 ParametrizedTestCase class >> buildSuite [
 
 	| expandedMatrix suite |
@@ -76,12 +78,12 @@ ParametrizedTestCase class >> buildSuite [
 	^ suite
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ParametrizedTestCase class >> isAbstract [
 	^ self name = #ParametrizedTestCase
 ]
 
-{ #category : #'building suites' }
+{ #category : 'building suites' }
 ParametrizedTestCase class >> testParameters [
 	"I'm the main hook to define configuration.
 	See addCase and forSelector:addOptions: on ParametrizedTestMatrix."
@@ -89,13 +91,13 @@ ParametrizedTestCase class >> testParameters [
 	^ ParametrizedTestMatrix new
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ParametrizedTestCase >> instanceVariablesToKeep [
 
 	^ super instanceVariablesToKeep, #('testSelector' 'parametersToUse')
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ParametrizedTestCase >> nameForReport [
 
 	parametersToUse ifNil: [ ^ super nameForReport ].
@@ -105,24 +107,24 @@ ParametrizedTestCase >> nameForReport [
 		parametersToUse printElementsOn: s ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ParametrizedTestCase >> parametersToUse [
 	^ parametersToUse ifNil: [#()]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ParametrizedTestCase >> parametersToUse: anObject [
 	parametersToUse := anObject
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ParametrizedTestCase >> printOn: aStream [
 
 	super printOn: aStream.
 	parametersToUse ifNotNil: [ parametersToUse printElementsOn: aStream.]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ParametrizedTestCase >> setUp [
 	super setUp.
 	self parametersToUse do: [ :aParameter | aParameter applyTo: self ].

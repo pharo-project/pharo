@@ -1,6 +1,6 @@
-Extension { #name : #Model }
+Extension { #name : 'Model' }
 
-{ #category : #'*Morphic-Core' }
+{ #category : '*Morphic-Core' }
 Model >> initialExtent [
 
 	^ RealEstateAgent standardWindowExtent

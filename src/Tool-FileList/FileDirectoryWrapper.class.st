@@ -1,39 +1,40 @@
 Class {
-	#name : #FileDirectoryWrapper,
-	#superclass : #ListItemWrapper,
+	#name : 'FileDirectoryWrapper',
+	#superclass : 'ListItemWrapper',
 	#instVars : [
 		'itemName',
 		'balloonText',
 		'hasContents'
 	],
-	#category : #'Tool-FileList'
+	#category : 'Tool-FileList',
+	#package : 'Tool-FileList'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FileDirectoryWrapper class >> with: anObject name: aString model: aModel [
 
 	^self new
 		setItem: anObject name: aString model: aModel
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 FileDirectoryWrapper >> asString [
 	 ^itemName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileDirectoryWrapper >> balloonText [
 
 	^balloonText
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileDirectoryWrapper >> balloonText: aStringOrNil [
 
 	balloonText := aStringOrNil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileDirectoryWrapper >> contents [
 
 	^((model directoriesFor: item)
@@ -42,12 +43,12 @@ FileDirectoryWrapper >> contents [
 			self class with: directory name: directory basename model: self ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileDirectoryWrapper >> directoriesFor: anItem [
 	^model directoriesFor: anItem
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileDirectoryWrapper >> hasContents [
 	"Return whether this directory has subfolders. The value is cached to
 	avoid a performance penalty.	Also for performance reasons, the code
@@ -67,7 +68,7 @@ FileDirectoryWrapper >> hasContents [
 	^ hasContents
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileDirectoryWrapper >> icon [
 	"Answer a form to be used as icon"
 
@@ -78,7 +79,7 @@ FileDirectoryWrapper >> icon [
 	^ self iconNamed: #smallOpen
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileDirectoryWrapper >> setItem: anObject name: aString model: aModel [
 
 	item := anObject.
@@ -87,7 +88,7 @@ FileDirectoryWrapper >> setItem: anObject name: aString model: aModel [
 	hasContents := nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileDirectoryWrapper >> settingSelector [
 
 	^#setSelectedDirectoryTo:

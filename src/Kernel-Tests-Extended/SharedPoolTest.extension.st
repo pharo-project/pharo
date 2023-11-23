@@ -1,13 +1,13 @@
-Extension { #name : #SharedPoolTest }
+Extension { #name : 'SharedPoolTest' }
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 SharedPoolTest >> testPoolUsers [
 	| result |
 	result := ChronologyConstants poolUsers.
 	self assert: result asSet equals: {Date. DateAndTime. Duration. Month. Time. TimeZone. Week. LocalTimeZone . AbstractTimeZone. ExampleForTestWithSharedPool } asSet
 ]
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 SharedPoolTest >> testmethodsAccessingPoolVariables [
 	| result |
 	result := ChronologyConstants methodsAccessingPoolVariables.
@@ -17,7 +17,7 @@ SharedPoolTest >> testmethodsAccessingPoolVariables [
 	self deny: (result includes: ClassTest>>#testSharedPoolOfVarNamed)
 ]
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 SharedPoolTest >> testusingMethods [
 	| result |
 	result := ChronologyConstants usingMethods.

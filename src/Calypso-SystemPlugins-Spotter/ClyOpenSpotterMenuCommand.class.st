@@ -5,25 +5,26 @@ This navigation brings an easy way to access all available panels and commands o
 activation is usually cmd+/ (because is close to the arrows)
 "
 Class {
-	#name : #ClyOpenSpotterMenuCommand,
-	#superclass : #ClyBrowserCommand,
-	#category : #'Calypso-SystemPlugins-Spotter'
+	#name : 'ClyOpenSpotterMenuCommand',
+	#superclass : 'ClyBrowserCommand',
+	#category : 'Calypso-SystemPlugins-Spotter',
+	#package : 'Calypso-SystemPlugins-Spotter'
 }
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyOpenSpotterMenuCommand class >> browserShortcutActivation [
 	<classAnnotation>
 
 	^ CmdShortcutActivation by: $h meta for: ClyBrowserContext
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyOpenSpotterMenuCommand class >> defaultMenuIconName [
 
 	^#smallFind
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyOpenSpotterMenuCommand class >> defaultMenuItemName [
 
 	^ String streamContents: [ :stream |
@@ -33,21 +34,21 @@ ClyOpenSpotterMenuCommand class >> defaultMenuItemName [
 			<< ')' ]
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyOpenSpotterMenuCommand class >> methodBrowserTabActivation [
 	<classAnnotation>
 	
 	^ ClyBrowserTabCommandActivation for: ClyMethod asCalypsoItemContext 
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyOpenSpotterMenuCommand class >> textToolShortcutActivation [
 	<classAnnotation>
 
 	^ CmdShortcutActivation by: $h meta for: ClyTextEditorContext
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyOpenSpotterMenuCommand >> execute [
 
 	Smalltalk tools spotter openOnOrigin: (ClySpotterModel on: browser)

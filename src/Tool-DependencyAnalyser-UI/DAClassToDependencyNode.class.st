@@ -1,48 +1,50 @@
 Class {
-	#name : #DAClassToDependencyNode,
-	#superclass : #DAClassNode,
+	#name : 'DAClassToDependencyNode',
+	#superclass : 'DAClassNode',
 	#instVars : [
 		'package'
 	],
-	#category : #'Tool-DependencyAnalyser-UI-Nodes'
+	#category : 'Tool-DependencyAnalyser-UI-Nodes',
+	#package : 'Tool-DependencyAnalyser-UI',
+	#tag : 'Nodes'
 }
 
-{ #category : #procotol }
+{ #category : 'procotol' }
 DAClassToDependencyNode >> childNodeClassFor: anItem [
 	 ^ anItem nodeClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAClassToDependencyNode >> children [
 	^ self dependencies
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAClassToDependencyNode >> dependencies [
 	^ self package dependenciesFrom: self content
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAClassToDependencyNode >> hasChildren [
 	^ self dependencies isNotEmpty
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAClassToDependencyNode >> icon [
-	^ self iconNamed: #confirmIcon
+	^ self iconNamed: #confirm
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAClassToDependencyNode >> package [
 	^ package
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAClassToDependencyNode >> package: anObject [
 	package := anObject
 ]
 
-{ #category : #'browse-nautilus' }
+{ #category : 'browse-nautilus' }
 DAClassToDependencyNode >> spawnNewBrowser [
 	self browseClass: self content browse
 ]

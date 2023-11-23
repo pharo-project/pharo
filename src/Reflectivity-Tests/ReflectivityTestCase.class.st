@@ -1,10 +1,12 @@
 Class {
-	#name : #ReflectivityTestCase,
-	#superclass : #AbstractEnvironmentTestCase,
-	#category : #'Reflectivity-Tests-Base'
+	#name : 'ReflectivityTestCase',
+	#superclass : 'AbstractEnvironmentTestCase',
+	#category : 'Reflectivity-Tests-Base',
+	#package : 'Reflectivity-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ReflectivityTestCase >> tearDown [
 	self class package methods do: [ :m |
 		m hasMetaLinks ifTrue: [

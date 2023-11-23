@@ -5,8 +5,8 @@ access to accessor methods.
 For example RBMoveMethodRefactoring uses me.
 "
 Class {
-	#name : #RBAbstractVariablesRefactoring,
-	#superclass : #RBRefactoring,
+	#name : 'RBAbstractVariablesRefactoring',
+	#superclass : 'RBRefactoring',
 	#instVars : [
 		'tree',
 		'fromClass',
@@ -17,10 +17,12 @@ Class {
 		'toClasses',
 		'ignore'
 	],
-	#category : #'Refactoring-Core-Refactorings-Unused'
+	#category : 'Refactoring-Core-Refactorings-Unused',
+	#package : 'Refactoring-Core',
+	#tag : 'Refactorings-Unused'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBAbstractVariablesRefactoring class >> model: aRBModel abstractVariablesIn: aBRProgramNode from: fromBehavior toAll: behaviorCollection [
 	^self
 		model: aRBModel
@@ -30,7 +32,7 @@ RBAbstractVariablesRefactoring class >> model: aRBModel abstractVariablesIn: aBR
 		ignoring: nil
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBAbstractVariablesRefactoring class >> model: aRBSmalltalk abstractVariablesIn: aBRProgramNode from: fromBehavior toAll: behaviorCollection ignoring: aVariableName [
 	^ self new
 		model: aRBSmalltalk;
@@ -41,7 +43,7 @@ RBAbstractVariablesRefactoring class >> model: aRBSmalltalk abstractVariablesIn:
 		yourself
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBAbstractVariablesRefactoring >> abstractClassVariable: aString [
 
 	| refactoring rewriter nonMetaClass |
@@ -51,7 +53,7 @@ RBAbstractVariablesRefactoring >> abstractClassVariable: aString [
 		               variable: aString
 		               class: nonMetaClass
 		               classVariable: true.
-	self performCompositeRefactoring: refactoring.
+	self generateChangesFor: refactoring.
 	rewriter := self parseTreeRewriter.
 	fromClass isMeta
 		ifTrue: [
@@ -70,7 +72,7 @@ RBAbstractVariablesRefactoring >> abstractClassVariable: aString [
 	(rewriter executeTree: tree) ifTrue: [ tree := rewriter tree ]
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBAbstractVariablesRefactoring >> abstractClassVariables [
 	| variables |
 	(classVarReaders isEmpty and: [ classVarWriters isEmpty ])
@@ -82,7 +84,7 @@ RBAbstractVariablesRefactoring >> abstractClassVariables [
 	variables do: [ :each | self abstractClassVariable: each ]
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBAbstractVariablesRefactoring >> abstractInstanceVariable: aString [
 
 	| refactoring rewriter |
@@ -91,7 +93,7 @@ RBAbstractVariablesRefactoring >> abstractInstanceVariable: aString [
 		               variable: aString
 		               class: fromClass
 		               classVariable: false.
-	self performCompositeRefactoring: refactoring.
+	self generateChangesFor: refactoring.
 	rewriter := self parseTreeRewriter.
 	rewriter
 		replace: aString , ' := ``@object'
@@ -102,7 +104,7 @@ RBAbstractVariablesRefactoring >> abstractInstanceVariable: aString [
 	(rewriter executeTree: tree) ifTrue: [ tree := rewriter tree ]
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBAbstractVariablesRefactoring >> abstractInstanceVariables [
 	| variables |
 	(instVarReaders isEmpty and: [ instVarWriters isEmpty ])
@@ -114,7 +116,7 @@ RBAbstractVariablesRefactoring >> abstractInstanceVariables [
 	variables do: [ :each | self abstractInstanceVariable: each ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBAbstractVariablesRefactoring >> abstractVariablesIn: aBRProgramNode from: fromBehavior toAll: behaviorCollection ignoring: aVariableName [
 	| poolRefactoring |
 	tree := aBRProgramNode.
@@ -127,19 +129,21 @@ RBAbstractVariablesRefactoring >> abstractVariablesIn: aBRProgramNode from: from
 				forMethod: tree
 				fromClass: fromClass
 				toClasses: toClasses.
-	self performCompositeRefactoring: poolRefactoring.
+	self generateChangesFor: poolRefactoring.
 	self computeVariablesToAbstract
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBAbstractVariablesRefactoring >> classVariableNames [
 	| nonMetaClass |
 	nonMetaClass := fromClass instanceSide.
 	^ (nonMetaClass allClassVariableNames collect: [ :each | each asString ]) asSet
 ]
 
-{ #category : #transforming }
+{ #category : 'for driver' }
 RBAbstractVariablesRefactoring >> computeVariablesToAbstract [
+	"should probably be moved to a driver"
+	
 	| searcher |
 	instVarReaders := Set new.
 	instVarWriters := Set new.
@@ -155,28 +159,39 @@ RBAbstractVariablesRefactoring >> computeVariablesToAbstract [
 	self removeDefinedClassVariables
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBAbstractVariablesRefactoring >> hasVariablesToAbstract [
 	^ instVarReaders notEmpty or: [ instVarWriters notEmpty or: [ classVarReaders notEmpty or: [ classVarWriters notEmpty ] ] ]
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBAbstractVariablesRefactoring >> instanceVariableNames [
 	^fromClass allInstanceVariableNames asSet
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBAbstractVariablesRefactoring >> parseTree [
 	^tree
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBAbstractVariablesRefactoring >> preconditions [
 
-	^ self emptyCondition
+	^ self trueCondition
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
+RBAbstractVariablesRefactoring >> privateTransform [
+	self hasVariablesToAbstract
+		ifTrue:
+			[self
+				refactoringWarning: 'This method has direct variable references which<n>will need to be converted to getter/setters.<n>Proceed anyway?'
+						expandMacros].
+	self abstractInstanceVariables.
+	self abstractClassVariables
+]
+
+{ #category : 'for driver' }
 RBAbstractVariablesRefactoring >> processAssignmentNode: aNode [
 	| varName |
 	varName := aNode variable name.
@@ -188,7 +203,7 @@ RBAbstractVariablesRefactoring >> processAssignmentNode: aNode [
 		ifTrue: [classVarWriters add: varName]
 ]
 
-{ #category : #transforming }
+{ #category : 'for driver' }
 RBAbstractVariablesRefactoring >> processReferenceNode: aNode [
 	| varName |
 	varName := aNode name.
@@ -200,8 +215,9 @@ RBAbstractVariablesRefactoring >> processReferenceNode: aNode [
 		ifTrue: [classVarReaders add: varName]
 ]
 
-{ #category : #transforming }
+{ #category : 'for driver' }
 RBAbstractVariablesRefactoring >> removeDefinedClassVariables [
+
 	| selectionBlock nonMetaClass |
 	nonMetaClass := fromClass instanceSide.
 	selectionBlock :=
@@ -210,18 +226,7 @@ RBAbstractVariablesRefactoring >> removeDefinedClassVariables [
 		detect:
 			[ :each |
 			(each instanceSide includesClass: (nonMetaClass whoDefinesClassVariable: varName)) not ]
-		ifNone: [ nil ]) notNil ].
+		ifNone: [ nil ]) isNotNil ].
 	classVarReaders := classVarReaders select: selectionBlock.
 	classVarWriters := classVarWriters select: selectionBlock
-]
-
-{ #category : #transforming }
-RBAbstractVariablesRefactoring >> transform [
-	self hasVariablesToAbstract
-		ifTrue:
-			[self
-				refactoringWarning: 'This method has direct variable references which<n>will need to be converted to getter/setters.<n>Proceed anyway?'
-						expandMacros].
-	self abstractInstanceVariables.
-	self abstractClassVariables
 ]

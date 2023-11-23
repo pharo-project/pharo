@@ -2,17 +2,19 @@
 I represent the execution of a ""rename method"" (RBRenameMethodRefactoring) refactoring.
 "
 Class {
-	#name : #EpRenameMethodRefactoring,
-	#superclass : #EpRefactoring,
+	#name : 'EpRenameMethodRefactoring',
+	#superclass : 'EpRefactoring',
 	#instVars : [
 		'oldSelector',
 		'newSelector',
 		'affectedClassName'
 	],
-	#category : #'Epicea-Model'
+	#category : 'Epicea-Model',
+	#package : 'Epicea',
+	#tag : 'Model'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 EpRenameMethodRefactoring class >> renameMethod: oldSelector in: affectedClassName to: newSelector [
 	^ self basicNew
 		initializeFrom: oldSelector
@@ -21,7 +23,7 @@ EpRenameMethodRefactoring class >> renameMethod: oldSelector in: affectedClassNa
 		yourself
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 EpRenameMethodRefactoring >> asRBRefactoring [
 	^ RBRenameMethodRefactoring
 		renameMethod: oldSelector
@@ -30,7 +32,7 @@ EpRenameMethodRefactoring >> asRBRefactoring [
 		permutation: #()
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 EpRenameMethodRefactoring >> initializeFrom: anOldSelector to: aNewSelector in: aClassName [
 	self initialize.
 
@@ -39,12 +41,12 @@ EpRenameMethodRefactoring >> initializeFrom: anOldSelector to: aNewSelector in: 
 	affectedClassName := aClassName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpRenameMethodRefactoring >> newSelector [
 	^ newSelector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpRenameMethodRefactoring >> oldSelector [
 	^ oldSelector
 ]

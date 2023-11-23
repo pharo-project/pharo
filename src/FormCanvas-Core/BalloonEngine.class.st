@@ -2,8 +2,8 @@
 BalloonEngine is the representative for the Balloon engine inside Squeak. For most purposes it should not be used directly but via BalloonCanvas since this ensures proper initialization and is polymorphic with other canvas uses.
 "
 Class {
-	#name : #BalloonEngine,
-	#superclass : #Object,
+	#name : 'BalloonEngine',
+	#superclass : 'Object',
 	#instVars : [
 		'workBuffer',
 		'span',
@@ -29,10 +29,12 @@ Class {
 	#pools : [
 		'BalloonEngineConstants'
 	],
-	#category : #'FormCanvas-Core-BalloonEngine'
+	#category : 'FormCanvas-Core-BalloonEngine',
+	#package : 'FormCanvas-Core',
+	#tag : 'BalloonEngine'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 BalloonEngine class >> allocateOrRecycleBuffer: initialSize [
 	"Try to recycly a buffer. If this is not possibly, create a new one."
 	| buffer |
@@ -43,20 +45,20 @@ BalloonEngine class >> allocateOrRecycleBuffer: initialSize [
 	^buffer ifNil:[BalloonBuffer new: initialSize]
 ]
 
-{ #category : #debugging }
+{ #category : 'debugging' }
 BalloonEngine class >> debug: aBoolean [
 	<script: 'BalloonEngine debug: (UIManager default confirm: ''Debug BalloonEngine?'')'>
 
 	Debug := aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BalloonEngine class >> defaultBitmapWidth [
 
 	^ 2048
 ]
 
-{ #category : #profiling }
+{ #category : 'profiling' }
 BalloonEngine class >> doProfileStats: aBool [
 	"Note: On Macintosh systems turning on profiling can significantly
 	degrade the performance of Balloon since we're using the high
@@ -67,7 +69,7 @@ BalloonEngine class >> doProfileStats: aBool [
 	^false
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 BalloonEngine class >> initialize [
 
 	BufferCache := WeakArray new: 1.
@@ -79,13 +81,13 @@ BalloonEngine class >> initialize [
 	Debug ifNil: [ Debug := false ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 BalloonEngine class >> primitiveSetBitBltPlugin: pluginName [
 	<primitive: 'primitiveSetBitBltPlugin' module: 'B2DPlugin'>
 	^nil
 ]
 
-{ #category : #profiling }
+{ #category : 'profiling' }
 BalloonEngine class >> printBezierStats [
 	<script>
 	self
@@ -117,7 +119,7 @@ BalloonEngine class >> printBezierStats [
 						nextPutAll: ' curves internally converted to lines' ])
 ]
 
-{ #category : #profiling }
+{ #category : 'profiling' }
 BalloonEngine class >> printStat: time count: n string: aString on: aStream [
 	aStream
 		cr;
@@ -133,7 +135,7 @@ BalloonEngine class >> printStat: time count: n string: aString on: aStream [
 		nextPutAll: aString
 ]
 
-{ #category : #profiling }
+{ #category : 'profiling' }
 BalloonEngine class >> printStats [
 	<script:
 		'
@@ -202,7 +204,7 @@ BalloonEngine class >> printStats [
 	self trace: string
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 BalloonEngine class >> recycleBuffer: balloonBuffer [
 	"Try to keep the buffer for later drawing operations."
 
@@ -213,30 +215,30 @@ BalloonEngine class >> recycleBuffer: balloonBuffer [
 	]
 ]
 
-{ #category : #profiling }
+{ #category : 'profiling' }
 BalloonEngine class >> resetBezierStats [
 	<script>
 	BezierStats := WordArray new: 4
 ]
 
-{ #category : #profiling }
+{ #category : 'profiling' }
 BalloonEngine class >> resetStats [
 	<script>
 	Times := WordArray new: 10.
 	Counts := WordArray new: 10
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BalloonEngine >> aaLevel [
 	^aaLevel ifNil:[1]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BalloonEngine >> aaLevel: anInteger [
 	aaLevel := (anInteger min: 4) max: 1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BalloonEngine >> aaTransform [
 	"Return a transformation for the current anti-aliasing level"
 	| matrix |
@@ -245,15 +247,20 @@ BalloonEngine >> aaTransform [
 	^matrix composedWith:(MatrixTransform2x3 withOffset: destOffset asFloatPoint)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BalloonEngine >> bitBlt [
 	^bitBlt
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BalloonEngine >> bitBlt: aBitBlt [
+
+	| width |
 	bitBlt := aBitBlt.
 	bitBlt ifNil: [^self].
+	width := bitBlt destForm width.
+	width <= 0 ifTrue: [ width := self class defaultBitmapWidth ].
+	span := Bitmap new: width + 1.
 	self class primitiveSetBitBltPlugin: bitBlt getPluginName.
 	self clipRect: bitBlt clipRect.
 	bitBlt
@@ -263,7 +270,7 @@ BalloonEngine >> bitBlt: aBitBlt [
 		combinationRule: (bitBlt destForm depth >= 8 ifTrue:[34] ifFalse:[Form paint])
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 BalloonEngine >> canProceedAfter: failureReason [
 	"Check if we can proceed after the failureReason indicated."
 	| newBuffer |
@@ -282,33 +289,33 @@ BalloonEngine >> canProceedAfter: failureReason [
 	^false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BalloonEngine >> clipRect [
 	^clipRect
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BalloonEngine >> clipRect: aRect [
 	clipRect := aRect truncated
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BalloonEngine >> colorTransform [
 	^colorTransform
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BalloonEngine >> colorTransform: aColorTransform [
 	colorTransform := aColorTransform
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 BalloonEngine >> copyBits [
-	(bitBlt notNil and:[bitBlt destForm notNil]) ifTrue:[bitBlt destForm unhibernate].
+	(bitBlt isNotNil and:[bitBlt destForm isNotNil]) ifTrue:[bitBlt destForm unhibernate].
 	self copyLoopFaster
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 BalloonEngine >> copyLoopFaster [
 	"This is a copy loop drawing one scan line at a time"
 	| edge fill reason |
@@ -326,7 +333,7 @@ BalloonEngine >> copyLoopFaster [
 	self primGetBezierStats: BezierStats
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 BalloonEngine >> copyLoopFastest [
 	"This is a copy loop drawing the entire image"
 	| edge fill reason |
@@ -344,28 +351,28 @@ BalloonEngine >> copyLoopFastest [
 	self primGetBezierStats: BezierStats
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BalloonEngine >> deferred [
 	^deferred
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BalloonEngine >> deferred: aBoolean [
 	deferred := aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BalloonEngine >> destOffset [
 	^destOffset
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BalloonEngine >> destOffset: aPoint [
 	destOffset := aPoint asIntegerPoint.
 	bitBlt destX: aPoint x; destY: aPoint y
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 BalloonEngine >> drawOval: rect fill: fillStyle borderWidth: borderWidth borderColor: borderColor transform: aMatrix [
 
 	| fills |
@@ -380,7 +387,7 @@ BalloonEngine >> drawOval: rect fill: fillStyle borderWidth: borderWidth borderC
 	self postFlushIfNeeded
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 BalloonEngine >> drawPolygon: points fill: fillStyle borderWidth: borderWidth borderColor: borderFill transform: aTransform [
 	| fills |
 	self edgeTransform: aTransform.
@@ -395,7 +402,7 @@ BalloonEngine >> drawPolygon: points fill: fillStyle borderWidth: borderWidth bo
 	self postFlushIfNeeded
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 BalloonEngine >> drawRectangle: rect fill: fillStyle borderWidth: borderWidth borderColor: borderColor transform: aMatrix [
 
 	| fills |
@@ -410,17 +417,17 @@ BalloonEngine >> drawRectangle: rect fill: fillStyle borderWidth: borderWidth bo
 	self postFlushIfNeeded
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BalloonEngine >> edgeTransform [
 	^edgeTransform
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BalloonEngine >> edgeTransform: aTransform [
 	edgeTransform := aTransform
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 BalloonEngine >> flush [
 	"Force all pending primitives onscreen"
 	workBuffer ifNil:[^self].
@@ -428,12 +435,11 @@ BalloonEngine >> flush [
 	self release
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 BalloonEngine >> initialize [
 
 	super initialize.
 
-	self initializeSpan.
 	externals := OrderedCollection new: 100.
 
 	self bitBlt: ((BitBlt toForm: Display)
@@ -444,18 +450,7 @@ BalloonEngine >> initialize [
 	deferred := false
 ]
 
-{ #category : #initialization }
-BalloonEngine >> initializeSpan [
-	| width |
-
-	"Get the display width to initialize width of the bitmap, if the width is zero or negative, use a default width"
-	width := Display width.
-	width <= 0 ifTrue:[ width := self class defaultBitmapWidth ].
-
-	span := Bitmap new: width
-]
-
-{ #category : #initialize }
+{ #category : 'initialize' }
 BalloonEngine >> postFlushIfNeeded [
 	"Force all pending primitives onscreen"
 	workBuffer ifNil:[^self].
@@ -464,7 +459,7 @@ BalloonEngine >> postFlushIfNeeded [
 		self release]
 ]
 
-{ #category : #'primitives - incremental' }
+{ #category : 'primitives - incremental' }
 BalloonEngine >> primAddActiveEdgeTableEntryFrom: edgeEntry [
 	"Add edge entry to the AET."
 	<primitive: 'primitiveAddActiveEdgeEntry' module: 'B2DPlugin'>
@@ -474,7 +469,7 @@ BalloonEngine >> primAddActiveEdgeTableEntryFrom: edgeEntry [
 	^self primitiveFailed
 ]
 
-{ #category : #'primitives - adding' }
+{ #category : 'primitives - adding' }
 BalloonEngine >> primAddBezierShape: points segments: nSegments fill: fillStyle lineWidth: lineWidth lineFill: lineFill [
 	<primitive: 'primitiveAddBezierShape' module: 'B2DPlugin'>
 	(self canProceedAfter: self primGetFailureReason) ifTrue:[
@@ -483,7 +478,7 @@ BalloonEngine >> primAddBezierShape: points segments: nSegments fill: fillStyle 
 	^self primitiveFailed
 ]
 
-{ #category : #'primitives - adding' }
+{ #category : 'primitives - adding' }
 BalloonEngine >> primAddBitmapFill: form colormap: cmap tile: tileFlag from: origin along: direction normal: normal xIndex: xIndex [
 	<primitive: 'primitiveAddBitmapFill' module: 'B2DPlugin'>
 	(self canProceedAfter: self primGetFailureReason) ifTrue:[
@@ -492,7 +487,7 @@ BalloonEngine >> primAddBitmapFill: form colormap: cmap tile: tileFlag from: ori
 	^self primitiveFailed
 ]
 
-{ #category : #'primitives - adding' }
+{ #category : 'primitives - adding' }
 BalloonEngine >> primAddGradientFill: colorRamp from: origin along: direction normal: normal radial: isRadial [
 	<primitive: 'primitiveAddGradientFill' module: 'B2DPlugin'>
 	(self canProceedAfter: self primGetFailureReason) ifTrue:[
@@ -505,7 +500,7 @@ BalloonEngine >> primAddGradientFill: colorRamp from: origin along: direction no
 	^self primitiveFailed
 ]
 
-{ #category : #'primitives - adding' }
+{ #category : 'primitives - adding' }
 BalloonEngine >> primAddOvalFrom: start to: end fillIndex: fillIndex borderWidth: width borderColor: pixelValue32 [
 	<primitive: 'primitiveAddOval' module: 'B2DPlugin'>
 	(self canProceedAfter: self primGetFailureReason) ifTrue:[
@@ -514,7 +509,7 @@ BalloonEngine >> primAddOvalFrom: start to: end fillIndex: fillIndex borderWidth
 	^self primitiveFailed
 ]
 
-{ #category : #'primitives - adding' }
+{ #category : 'primitives - adding' }
 BalloonEngine >> primAddPolygon: points segments: nSegments fill: fillStyle lineWidth: lineWidth lineFill: lineFill [
 	<primitive: 'primitiveAddPolygon' module: 'B2DPlugin'>
 	(self canProceedAfter: self primGetFailureReason) ifTrue:[
@@ -523,7 +518,7 @@ BalloonEngine >> primAddPolygon: points segments: nSegments fill: fillStyle line
 	^self primitiveFailed
 ]
 
-{ #category : #'primitives - adding' }
+{ #category : 'primitives - adding' }
 BalloonEngine >> primAddRectFrom: start to: end fillIndex: fillIndex borderWidth: width borderColor: pixelValue32 [
 	<primitive: 'primitiveAddRect' module: 'B2DPlugin'>
 	(self canProceedAfter: self primGetFailureReason) ifTrue:[
@@ -532,128 +527,128 @@ BalloonEngine >> primAddRectFrom: start to: end fillIndex: fillIndex borderWidth
 	^self primitiveFailed
 ]
 
-{ #category : #'primitives - incremental' }
+{ #category : 'primitives - incremental' }
 BalloonEngine >> primChangeActiveEdgeTableEntryFrom: edgeEntry [
 	"Change the entry in the active edge table from edgeEntry"
 	<primitive: 'primitiveChangedActiveEdgeEntry' module: 'B2DPlugin'>
 	^self primitiveFailed
 ]
 
-{ #category : #'primitives - misc' }
+{ #category : 'primitives - misc' }
 BalloonEngine >> primCopyBufferFrom: oldBuffer to: newBuffer [
 	"Copy the contents of oldBuffer into the (larger) newBuffer"
 	<primitive: 'primitiveCopyBuffer' module: 'B2DPlugin'>
 	^self primitiveFailed
 ]
 
-{ #category : #'primitives - incremental' }
+{ #category : 'primitives - incremental' }
 BalloonEngine >> primFinishedProcessing [
 	"Return true if there are no more entries in AET and GET and the last scan line has been displayed"
 	<primitive: 'primitiveFinishedProcessing' module: 'B2DPlugin'>
 	^self primitiveFailed
 ]
 
-{ #category : #'primitives - access' }
+{ #category : 'primitives - access' }
 BalloonEngine >> primFlushNeeded: aBoolean [
 	<primitive: 'primitiveNeedsFlushPut' module: 'B2DPlugin'>
 	^self primitiveFailed
 ]
 
-{ #category : #'primitives - access' }
+{ #category : 'primitives - access' }
 BalloonEngine >> primGetBezierStats: statsArray [
 	<primitive: 'primitiveGetBezierStats' module: 'B2DPlugin'>
 	^self primitiveFailed
 ]
 
-{ #category : #'primitives - access' }
+{ #category : 'primitives - access' }
 BalloonEngine >> primGetCounts: statsArray [
 	<primitive: 'primitiveGetCounts' module: 'B2DPlugin'>
 	^self primitiveFailed
 ]
 
-{ #category : #'primitives - access' }
+{ #category : 'primitives - access' }
 BalloonEngine >> primGetDepth [
 	<primitive: 'primitiveGetDepth' module: 'B2DPlugin'>
 	^self primitiveFailed
 ]
 
-{ #category : #'primitives - access' }
+{ #category : 'primitives - access' }
 BalloonEngine >> primGetFailureReason [
 	<primitive: 'primitiveGetFailureReason' module: 'B2DPlugin'>
 	^0
 ]
 
-{ #category : #'primitives - access' }
+{ #category : 'primitives - access' }
 BalloonEngine >> primGetTimes: statsArray [
 	<primitive: 'primitiveGetTimes' module: 'B2DPlugin'>
 	^self primitiveFailed
 ]
 
-{ #category : #'primitives - misc' }
+{ #category : 'primitives - misc' }
 BalloonEngine >> primInitializeBuffer: buffer [
 	<primitive: 'primitiveInitializeBuffer' module: 'B2DPlugin'>
 	^self primitiveFailed
 ]
 
-{ #category : #'primitives - incremental' }
+{ #category : 'primitives - incremental' }
 BalloonEngine >> primMergeFill: fillBitmap from: fill [
 	"Merge the filled bitmap into the current output buffer."
 	<primitive: 'primitiveMergeFillFrom' module: 'B2DPlugin'>
 	^self primitiveFailed
 ]
 
-{ #category : #'primitives - incremental' }
+{ #category : 'primitives - incremental' }
 BalloonEngine >> primRenderImage: edge with: fill [
 	"Start/Proceed rendering the current scan line"
 	<primitive: 'primitiveRenderImage' module: 'B2DPlugin'>
 	^self primitiveFailed
 ]
 
-{ #category : #'primitives - incremental' }
+{ #category : 'primitives - incremental' }
 BalloonEngine >> primRenderScanline: edge with: fill [
 	"Start/Proceed rendering the current scan line"
 	<primitive: 'primitiveRenderScanline' module: 'B2DPlugin'>
 	^self primitiveFailed
 ]
 
-{ #category : #'primitives - access' }
+{ #category : 'primitives - access' }
 BalloonEngine >> primSetAALevel: level [
 	"Set the AA level"
 	<primitive: 'primitiveSetAALevel' module: 'B2DPlugin'>
 	^self primitiveFailed
 ]
 
-{ #category : #'primitives - access' }
+{ #category : 'primitives - access' }
 BalloonEngine >> primSetClipRect: rect [
 	<primitive: 'primitiveSetClipRect' module: 'B2DPlugin'>
 	^self primitiveFailed
 ]
 
-{ #category : #'primitives - access' }
+{ #category : 'primitives - access' }
 BalloonEngine >> primSetColorTransform: transform [
 	<primitive: 'primitiveSetColorTransform' module: 'B2DPlugin'>
 	^self primitiveFailed
 ]
 
-{ #category : #'primitives - access' }
+{ #category : 'primitives - access' }
 BalloonEngine >> primSetDepth: depth [
 	<primitive: 'primitiveSetDepth' module: 'B2DPlugin'>
 	^self primitiveFailed
 ]
 
-{ #category : #'primitives - access' }
+{ #category : 'primitives - access' }
 BalloonEngine >> primSetEdgeTransform: transform [
 	<primitive: 'primitiveSetEdgeTransform' module: 'B2DPlugin'>
 	^self primitiveFailed
 ]
 
-{ #category : #'primitives - access' }
+{ #category : 'primitives - access' }
 BalloonEngine >> primSetOffset: point [
 	<primitive: 'primitiveSetOffset' module: 'B2DPlugin'>
 	^self primitiveFailed
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 BalloonEngine >> processStopReason: reason edge: edge fill: fill [
 	"The engine has stopped because of some reason.
 	Try to figure out how to respond and do the necessary actions."
@@ -685,7 +680,7 @@ BalloonEngine >> processStopReason: reason edge: edge fill: fill [
 	^self error:'Unkown stop reason in graphics engine'
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 BalloonEngine >> registerFill: aFillStyle [
 	"Register the given fill style."
 	| theForm |
@@ -714,17 +709,17 @@ BalloonEngine >> registerFill: aFillStyle [
 	^0
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 BalloonEngine >> registerFill: fill1 and: fill2 [
 	^self registerFills: { fill1 . fill2 }
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 BalloonEngine >> registerFills: fills [
 
 	| fillIndexList index fillIndex |
-	((colorTransform notNil and:[colorTransform isAlphaTransform]) or:[
-		fills anySatisfy: [:any| any notNil and:[any isTranslucent]]])
+	((colorTransform isNotNil and:[colorTransform isAlphaTransform]) or:[
+		fills anySatisfy: [:any| any isNotNil and:[any isTranslucent]]])
 			ifTrue:[	self flush.
 					self reset.
 					postFlushNeeded := true].
@@ -740,7 +735,7 @@ BalloonEngine >> registerFills: fills [
 	^fillIndexList
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 BalloonEngine >> release [
 	self class recycleBuffer: workBuffer.
 	workBuffer := nil.
@@ -748,7 +743,7 @@ BalloonEngine >> release [
 	super release
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 BalloonEngine >> reset [
 	workBuffer ifNil:[workBuffer := self class allocateOrRecycleBuffer: 10000].
 	self primInitializeBuffer: workBuffer.
@@ -760,7 +755,7 @@ BalloonEngine >> reset [
 	forms := #()
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 BalloonEngine >> resetIfNeeded [
 	workBuffer ifNil:[self reset].
 	self primSetEdgeTransform: edgeTransform.
@@ -769,7 +764,7 @@ BalloonEngine >> resetIfNeeded [
 	postFlushNeeded := false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BalloonEngine >> span [
 
 	^ span

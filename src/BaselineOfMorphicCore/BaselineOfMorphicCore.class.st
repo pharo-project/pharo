@@ -11,15 +11,16 @@ Installs:
 - minimal working Morphic subset without fonts support
 "
 Class {
-	#name : #BaselineOfMorphicCore,
-	#superclass : #BaselineOf,
+	#name : 'BaselineOfMorphicCore',
+	#superclass : 'BaselineOf',
 	#classVars : [
 		'Initialized'
 	],
-	#category : #BaselineOfMorphicCore
+	#category : 'BaselineOfMorphicCore',
+	#package : 'BaselineOfMorphicCore'
 }
 
-{ #category : #baseline }
+{ #category : 'baseline' }
 BaselineOfMorphicCore >> baseline: spec [ 
     
 	<baseline>
@@ -37,8 +38,8 @@ BaselineOfMorphicCore >> baseline: spec [
 		spec baseline: 'UnifiedFFI' with: [spec repository: repository].
 
 		spec package: 'System-Object Events'.
-		spec package: 'Collections-DoubleLinkedList'.
 		spec package: 'System-Caching'.
+		spec package: 'System-Clipboard'.		
 		spec package: 'Graphics-Canvas'.
 		spec package: 'FormCanvas-Core'.
 		spec package: 'Tool-Registry'.
@@ -48,7 +49,7 @@ BaselineOfMorphicCore >> baseline: spec [
 	].
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 BaselineOfMorphicCore >> postload: loader package: packageSpec [
 
 	| world hand |
@@ -100,8 +101,6 @@ BaselineOfMorphicCore >> postload: loader package: packageSpec [
 	ExternalDropHandler initialize.
 	PasteUpMorph initialize.
 	DefaultExternalDropHandler initialize.
-	
-	WorldMorph recompile.
 
 	Initialized := true.
 ]

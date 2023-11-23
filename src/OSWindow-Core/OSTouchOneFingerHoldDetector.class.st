@@ -4,12 +4,14 @@ I send these event back to my handler:
 	- OSTouchOneFingerHoldEvent
 "
 Class {
-	#name : #OSTouchOneFingerHoldDetector,
-	#superclass : #OSTouchHoldDetector,
-	#category : #'OSWindow-Core-Gestures'
+	#name : 'OSTouchOneFingerHoldDetector',
+	#superclass : 'OSTouchHoldDetector',
+	#category : 'OSWindow-Core-Gestures',
+	#package : 'OSWindow-Core',
+	#tag : 'Gestures'
 }
 
-{ #category : #creation }
+{ #category : 'creation' }
 OSTouchOneFingerHoldDetector >> createHoldEvent [
 	^ OSTouchOneFingerHoldEvent new
 		position: self centerOfAllFingers;
@@ -18,7 +20,7 @@ OSTouchOneFingerHoldDetector >> createHoldEvent [
 		yourself
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 OSTouchOneFingerHoldDetector >> necessaryFingers [
 	^ 1
 ]

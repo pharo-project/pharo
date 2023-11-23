@@ -1,6 +1,6 @@
-Extension { #name : #GlobalVariable }
+Extension { #name : 'GlobalVariable' }
 
-{ #category : #'*Shout' }
+{ #category : '*Shout' }
 GlobalVariable >> styleNameIn: aRBVariableNode [
 
 	^ #globalVar

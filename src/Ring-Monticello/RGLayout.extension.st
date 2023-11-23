@@ -1,6 +1,6 @@
-Extension { #name : #RGLayout }
+Extension { #name : 'RGLayout' }
 
-{ #category : #'*Ring-Monticello' }
+{ #category : '*Ring-Monticello' }
 RGLayout >> mcType [
 	^ self layoutName
 ]

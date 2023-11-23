@@ -1,6 +1,6 @@
-Extension { #name : #RBNotice }
+Extension { #name : 'RBNotice' }
 
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
 RBNotice >> reparator [
 
 	^ nil

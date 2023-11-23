@@ -12,39 +12,41 @@ FTEasyListMorph new
 	
 "
 Class {
-	#name : #FTEasyListMorph,
-	#superclass : #FTTableMorph,
-	#category : #'Morphic-Widgets-FastTable-Easy'
+	#name : 'FTEasyListMorph',
+	#superclass : 'FTTableMorph',
+	#category : 'Morphic-Widgets-FastTable-Easy',
+	#package : 'Morphic-Widgets-FastTable',
+	#tag : 'Easy'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTEasyListMorph >> display: aBlock [
 	self dataSource display: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTEasyListMorph >> elements: aSequenceableCollection [
 	self dataSource elements: aSequenceableCollection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTEasyListMorph >> header: aString [
 	self ensureAtLeastOneColumn.
 	self columns first id: aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTEasyListMorph >> icon: aBlock [
 	self dataSource icon: aBlock
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FTEasyListMorph >> initialize [
 	super initialize.
 	self dataSource: FTEasyListDataSource new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTEasyListMorph >> menu: aBlock [
 	self dataSource menu: aBlock
 ]

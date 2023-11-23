@@ -1,6 +1,6 @@
 Class {
-	#name : #RGTraitV2Strategy,
-	#superclass : #RGTraitV2DescriptionStrategy,
+	#name : 'RGTraitV2Strategy',
+	#superclass : 'RGTraitV2DescriptionStrategy',
 	#instVars : [
 		'comment',
 		'classVariables',
@@ -8,36 +8,38 @@ Class {
 		'sharedPools',
 		'classTrait'
 	],
-	#category : #'Ring-Core-Kernel'
+	#category : 'Ring-Core-Kernel',
+	#package : 'Ring-Core',
+	#tag : 'Kernel'
 }
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGTraitV2Strategy >> acceptVisitor: aVisitor [
 
 	^ aVisitor visitClass: self owner
 ]
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGTraitV2Strategy >> addClassVariable: anRGInstanceVariableDefinition [
 
 	self owner announceDefinitionChangeDuring: [
 		self privAddClassVariable: anRGInstanceVariableDefinition ]
 ]
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGTraitV2Strategy >> addSharedPool: anRGPoolVariable [
 
 	self owner announceDefinitionChangeDuring: [
 		self privAddSharedPool: anRGPoolVariable ]
 ]
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGTraitV2Strategy >> allClassVarNames [
 
 	^self allClassVariables collect:[ :cvar| cvar name ]
 ]
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGTraitV2Strategy >> allClassVariables [
 	"Answer a collection of the receiver's classVariables, including those defined its superclasses"
 
@@ -46,7 +48,7 @@ RGTraitV2Strategy >> allClassVariables [
 		ifFalse: [ self owner superclass allClassVariables, classVariables ]
 ]
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGTraitV2Strategy >> bindingOf: varName [
 
 	| aSymbol |
@@ -56,7 +58,7 @@ RGTraitV2Strategy >> bindingOf: varName [
 		 self environment bindingOf: aSymbol ]
 ]
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGTraitV2Strategy >> category [
 
 	^ self owner tags
@@ -69,7 +71,7 @@ RGTraitV2Strategy >> category [
 	"todo"
 ]
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGTraitV2Strategy >> category: aString [
 
 	| aTag |
@@ -89,31 +91,31 @@ RGTraitV2Strategy >> category: aString [
 	self announcer behaviorRecategorized: self."
 ]
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGTraitV2Strategy >> classSide [
 
 	^ self owner metaclass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGTraitV2Strategy >> classTrait [
 
 	^ self backend forBehavior classTraitFor: self owner
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGTraitV2Strategy >> classTrait: anRGMetatraitDefinition [
 
 	self backend forBehavior setClassTraitFor: self owner to: anRGMetatraitDefinition
 ]
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGTraitV2Strategy >> classVarNames [
 
 	^ self classVariables collect: [ :each | each name ]
 ]
 
-{ #category : #'class variables' }
+{ #category : 'class variables' }
 RGTraitV2Strategy >> classVariableDefinitionString [
 	"Answer a string that evaluates to the definition of the class Variables"
 
@@ -128,13 +130,13 @@ RGTraitV2Strategy >> classVariableDefinitionString [
 		str nextPutAll: ' }'. ]
 ]
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGTraitV2Strategy >> classVariables [
 
 	^ Array streamContents: [ :str | self classVariablesDo: [ :each | str nextPut: each ] ]
 ]
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGTraitV2Strategy >> classVariables: aCollectionOfSymbols [
 
 	self cleanClassVariables.
@@ -142,32 +144,32 @@ RGTraitV2Strategy >> classVariables: aCollectionOfSymbols [
 		self addClassVariable: (RGClassVariable named: classVarName asSymbol parent: self).]
 ]
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGTraitV2Strategy >> classVariablesDo: aBlock [
 
 	self backend forBehavior classVariablesFor: self owner do: aBlock
 ]
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGTraitV2Strategy >> cleanClassVariables [
 
 	self owner announceDefinitionChangeDuring: [
 		self backend forBehavior cleanClassVariablesFor: self owner ]
 ]
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGTraitV2Strategy >> cleanSharedPools [
 
 	self backend forBehavior cleanSharedPoolsFor: self owner
 ]
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGTraitV2Strategy >> comment [
 
 	^ self backend forBehavior commentFor: self owner
 ]
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGTraitV2Strategy >> comment: anRGComment [
 
 	self backend forBehavior setCommentFor: self owner to: anRGComment.
@@ -175,7 +177,7 @@ RGTraitV2Strategy >> comment: anRGComment [
 	self owner announcer behaviorCommentModified: self
 ]
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGTraitV2Strategy >> copyForBehaviorDefinitionPostCopy [
 
 	| newVariables newSharedPools |
@@ -194,37 +196,37 @@ RGTraitV2Strategy >> copyForBehaviorDefinitionPostCopy [
 	newSharedPools do: [ :each | self privAddSharedPool: each ]
 ]
 
-{ #category : #'default model values' }
+{ #category : 'default model values' }
 RGTraitV2Strategy >> defaultClassVariables [
 
 	^ OrderedCollection new
 ]
 
-{ #category : #'default model values' }
+{ #category : 'default model values' }
 RGTraitV2Strategy >> defaultComment [
 
 	^ self owner defaultCommentStubIn: self owner
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGTraitV2Strategy >> defaultMetaClass [
 
 	^ self owner environment backend createNewUnresolvedMetaclassFor: self owner
 ]
 
-{ #category : #'default model values' }
+{ #category : 'default model values' }
 RGTraitV2Strategy >> defaultPackage [
 
 	^ self owner defaultPackageStubIn: self environment
 ]
 
-{ #category : #'default model values' }
+{ #category : 'default model values' }
 RGTraitV2Strategy >> defaultSharedPools [
 
 	^ OrderedCollection new
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGTraitV2Strategy >> definition [
 	"Answer a String that defines the receiver"
 
@@ -243,7 +245,7 @@ RGTraitV2Strategy >> definition [
 				store: self category asString]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGTraitV2Strategy >> definitionWithSlots [
 
 	| aStream poolString|
@@ -281,7 +283,7 @@ RGTraitV2Strategy >> definitionWithSlots [
 	^ aStream contents
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RGTraitV2Strategy >> initialize [
 
 	super initialize.
@@ -292,7 +294,7 @@ RGTraitV2Strategy >> initialize [
 	sharedPools := self unresolvedValue: self defaultSharedPools
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RGTraitV2Strategy >> initializeUnresolved [
 
 	super initializeUnresolved.
@@ -303,7 +305,7 @@ RGTraitV2Strategy >> initializeUnresolved [
 	sharedPools := self unresolvedValue: self defaultSharedPools
 ]
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGTraitV2Strategy >> innerBindingOf: aSymbol [
 
 	self classVariables detect: [ :each | each name = aSymbol  ] ifFound: [ :found | ^ found ].
@@ -316,18 +318,24 @@ RGTraitV2Strategy >> innerBindingOf: aSymbol [
 	^ nil
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGTraitV2Strategy >> isClass [
 
 	^ true
 ]
 
-{ #category : #'default model values' }
+{ #category : 'testing' }
+RGTraitV2Strategy >> isTraitStrategy [
+
+	^ true
+]
+
+{ #category : 'default model values' }
 RGTraitV2Strategy >> makeResolved [
 
 
 	"try to set the correct name before resolving of it"
-	((self owner hasResolvedName not) and: [ self owner metaclass isRingResolved and: [ self metaclass hasResolvedName ] ]) ifTrue: [
+	((self owner hasResolvedName not) and: [ self owner metaclass isRingResolved and: [ self owner metaclass hasResolvedName ] ]) ifTrue: [
 		self owner pvtName: (self owner metaclass name withoutSuffix: ' class') asSymbol.
 		 ].
 
@@ -340,13 +348,13 @@ RGTraitV2Strategy >> makeResolved [
 	sharedPools := self sharedPools markAsRingResolved
 ]
 
-{ #category : #'accessing - backend' }
+{ #category : 'accessing - backend' }
 RGTraitV2Strategy >> package [
 
 	^ self backend forBehavior packageFor: self owner
 ]
 
-{ #category : #'accessing - backend' }
+{ #category : 'accessing - backend' }
 RGTraitV2Strategy >> package: anRGPackage [
 
 	| oldPackage |
@@ -355,29 +363,25 @@ RGTraitV2Strategy >> package: anRGPackage [
 	self owner announceDefinitionChangeDuring: [
 		self owner backend forBehavior setPackageFor: self owner to: anRGPackage.
 		self owner environment addPackage: anRGPackage.
-		(oldPackage hasResolved: #definedBehaviors)
-			ifTrue: [ oldPackage removeDefinedBehavior: self owner ].
-		anRGPackage addDefinedBehavior: self owner. ].
+		(oldPackage hasResolved: #definedBehaviors) ifTrue: [ oldPackage removeDefinedBehavior: self owner ].
+		anRGPackage addDefinedBehavior: self owner ].
 
-	self owner announce: (ClassRepackaged
-		classRepackaged: self owner
-		oldPackage: oldPackage
-		newPackage: anRGPackage)
+	self owner announce: (ClassRepackaged classRepackaged: self owner oldTag: oldPackage newTag: anRGPackage)
 ]
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGTraitV2Strategy >> privAddClassVariable: anRGInstanceVariableDefinition [
 
 	self backend forBehavior addClassVariable: anRGInstanceVariableDefinition to: self owner
 ]
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGTraitV2Strategy >> privAddSharedPool: anRGPoolVariable [
 
 	self backend forBehavior addSharedPool: anRGPoolVariable to: self owner
 ]
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGTraitV2Strategy >> pvtAddClassVariable: anRGInstanceVariableDefinition [
 
 	self owner environment verifyOwnership: anRGInstanceVariableDefinition.
@@ -388,7 +392,7 @@ RGTraitV2Strategy >> pvtAddClassVariable: anRGInstanceVariableDefinition [
 	classVariables add: anRGInstanceVariableDefinition
 ]
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGTraitV2Strategy >> pvtAddSharedPool: anRGPoolVariable [
 
 	self owner environment verifyOwnership: anRGPoolVariable.
@@ -399,13 +403,13 @@ RGTraitV2Strategy >> pvtAddSharedPool: anRGPoolVariable [
 	sharedPools add: anRGPoolVariable
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGTraitV2Strategy >> pvtClassTrait [
 
 	^ classTrait value
 ]
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGTraitV2Strategy >> pvtClassTrait: anRGMetatraitDefinition [
 
 	self owner environment verifyOwnership: anRGMetatraitDefinition.
@@ -413,31 +417,31 @@ RGTraitV2Strategy >> pvtClassTrait: anRGMetatraitDefinition [
 	^ classTrait := anRGMetatraitDefinition
 ]
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGTraitV2Strategy >> pvtClassVariablesDo: aBlock [
 
 	classVariables value do: aBlock
 ]
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGTraitV2Strategy >> pvtCleanClassVariables [
 
 	classVariables := self defaultClassVariables
 ]
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGTraitV2Strategy >> pvtCleanSharedPools [
 
 	sharedPools := self defaultSharedPools
 ]
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGTraitV2Strategy >> pvtComment [
 
 	^ comment value
 ]
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGTraitV2Strategy >> pvtComment: anRGComment [
 
 	self owner environment verifyOwnership: anRGComment.
@@ -445,13 +449,13 @@ RGTraitV2Strategy >> pvtComment: anRGComment [
 	^ comment := anRGComment
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGTraitV2Strategy >> pvtPackage [
 
 	^ package value
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGTraitV2Strategy >> pvtPackage: anRGPackage [
 
 	self owner environment verifyOwnership: anRGPackage.
@@ -459,7 +463,7 @@ RGTraitV2Strategy >> pvtPackage: anRGPackage [
 	^ package := anRGPackage
 ]
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGTraitV2Strategy >> pvtRemoveClassVariable: anRGInstanceVariableDefinition [
 
 	self owner environment verifyOwnership: anRGInstanceVariableDefinition.
@@ -467,7 +471,7 @@ RGTraitV2Strategy >> pvtRemoveClassVariable: anRGInstanceVariableDefinition [
 	classVariables remove: anRGInstanceVariableDefinition
 ]
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGTraitV2Strategy >> pvtRemoveSharedPool: anRGPoolVariableDefinition [
 
 	self owner environment verifyOwnership: anRGPoolVariableDefinition.
@@ -475,7 +479,7 @@ RGTraitV2Strategy >> pvtRemoveSharedPool: anRGPoolVariableDefinition [
 	sharedPools remove: anRGPoolVariableDefinition
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RGTraitV2Strategy >> pvtResolvableProperties [
 
 	^ super pvtResolvableProperties, {
@@ -486,27 +490,27 @@ RGTraitV2Strategy >> pvtResolvableProperties [
 	}
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 RGTraitV2Strategy >> pvtSharedPoolsDo: aBlock [
 
 	sharedPools value do: aBlock
 ]
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGTraitV2Strategy >> removeClassVariable: anRGInstanceVariableDefinition [
 
 	self owner announceDefinitionChangeDuring: [
 		self backend forBehavior removeClassVariable: anRGInstanceVariableDefinition from: self owner ]
 ]
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGTraitV2Strategy >> removeSharedPool: anRGPoolVariable [
 
 	self owner announceDefinitionChangeDuring: [
 		self backend forBehavior removeSharedPool: anRGPoolVariable from: self owner]
 ]
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGTraitV2Strategy >> sharedPoolNames [
 
 	| allSharedPools |
@@ -515,7 +519,7 @@ RGTraitV2Strategy >> sharedPoolNames [
 	^ allSharedPools asArray
 ]
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGTraitV2Strategy >> sharedPools [
 
 	| allSharedPools |
@@ -534,7 +538,7 @@ RGTraitV2Strategy >> sharedPools [
 	^ allSharedPools
 ]
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGTraitV2Strategy >> sharedPools: aCollectionOfSymbols [
 
 	self cleanSharedPools.
@@ -542,19 +546,19 @@ RGTraitV2Strategy >> sharedPools: aCollectionOfSymbols [
 		self addSharedPool: (RGPoolVariable named: poolName asSymbol parent: self).]
 ]
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGTraitV2Strategy >> sharedPoolsDo: aBlock [
 
 	self owner backend forBehavior sharedPoolsFor: self owner do: aBlock
 ]
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGTraitV2Strategy >> sibling [
 
 	^ self owner metaclass
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGTraitV2Strategy >> storeName [
 
 	^ 'RGClass'

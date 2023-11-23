@@ -2,22 +2,24 @@
 A node used to display a inheritance dependency in a tree.
 "
 Class {
-	#name : #DAInheritanceDependencyNode,
-	#superclass : #DAClassNode,
-	#category : #'Tool-DependencyAnalyser-UI-Nodes'
+	#name : 'DAInheritanceDependencyNode',
+	#superclass : 'DAClassNode',
+	#category : 'Tool-DependencyAnalyser-UI-Nodes',
+	#package : 'Tool-DependencyAnalyser-UI',
+	#tag : 'Nodes'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAInheritanceDependencyNode >> icon [
-	^ self iconNamed: #arrowUpIcon
+	^ self iconNamed: #arrowUp
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAInheritanceDependencyNode >> isClassToDependencyNode [
 	^ true
 ]
 
-{ #category : #'browse-nautilus' }
+{ #category : 'browse-nautilus' }
 DAInheritanceDependencyNode >> spawnNewBrowser [
 	self browseClass: self content superclass
 ]

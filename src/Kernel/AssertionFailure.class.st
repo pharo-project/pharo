@@ -2,7 +2,9 @@
 AsssertionFailure is the exception signaled from Object>>assert: when the assertion block evaluates to false.
 "
 Class {
-	#name : #AssertionFailure,
-	#superclass : #Error,
-	#category : #'Kernel-Exceptions'
+	#name : 'AssertionFailure',
+	#superclass : 'Error',
+	#category : 'Kernel-Exceptions',
+	#package : 'Kernel',
+	#tag : 'Exceptions'
 }

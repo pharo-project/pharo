@@ -1,17 +1,19 @@
 Class {
-	#name : #GreenTest,
-	#superclass : #MockTest,
-	#category : #'TestRunner-Tests-Utilities-Test'
+	#name : 'GreenTest',
+	#superclass : 'MockTest',
+	#category : 'TestRunner-Tests-Utilities-Test',
+	#package : 'TestRunner-Tests',
+	#tag : 'Utilities-Test'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 GreenTest >> testPass [
 
 	self skipOnPharoCITestingEnvironment.
 	self assert: true
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 GreenTest >> testPassAgain [
 
 	self skipOnPharoCITestingEnvironment.

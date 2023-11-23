@@ -2,36 +2,38 @@
 A HandleMorph provides mouse-up control behavior.
 "
 Class {
-	#name : #HandleMorph,
-	#superclass : #EllipseMorph,
+	#name : 'HandleMorph',
+	#superclass : 'EllipseMorph',
 	#instVars : [
 		'pointBlock',
 		'lastPointBlock'
 	],
-	#category : #'Morphic-Base-Widgets'
+	#category : 'Morphic-Base-Widgets',
+	#package : 'Morphic-Base',
+	#tag : 'Widgets'
 }
 
-{ #category : #iterating }
+{ #category : 'iterating' }
 HandleMorph >> forEachPointDo: aBlock [
 
 	pointBlock := aBlock
 ]
 
-{ #category : #iterating }
+{ #category : 'iterating' }
 HandleMorph >> forEachPointDo: aBlock lastPointDo: otherBlock [
 
 	pointBlock := aBlock.
 	lastPointBlock := otherBlock
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 HandleMorph >> initialize [
 
 	super initialize.
 	self extent: 8 @ 8
 ]
 
-{ #category : #'dropping/grabbing' }
+{ #category : 'dropping/grabbing' }
 HandleMorph >> justDroppedInto: aMorph event: anEvent [
 	"So that when the hand drops me (into the world) I go away"
 
@@ -43,7 +45,7 @@ HandleMorph >> justDroppedInto: aMorph event: anEvent [
 		delete
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 HandleMorph >> keyDown: evt [
 	"Check for cursor keys"
 
@@ -62,13 +64,13 @@ HandleMorph >> keyDown: evt [
 			self delete ]
 ]
 
-{ #category : #stepping }
+{ #category : 'stepping' }
 HandleMorph >> step [
 
 	pointBlock value: self center
 ]
 
-{ #category : #stepping }
+{ #category : 'stepping' }
 HandleMorph >> stepTime [
 	"Update every hundredth of a second."
 

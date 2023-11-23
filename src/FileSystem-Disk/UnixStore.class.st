@@ -2,45 +2,47 @@
 I'm a specific store for Unix file systems
 "
 Class {
-	#name : #UnixStore,
-	#superclass : #DiskStore,
-	#category : #'FileSystem-Disk-Store'
+	#name : 'UnixStore',
+	#superclass : 'DiskStore',
+	#category : 'FileSystem-Disk-Store',
+	#package : 'FileSystem-Disk',
+	#tag : 'Store'
 }
 
-{ #category : #public }
+{ #category : 'public' }
 UnixStore class >> delimiter [
 	^ $/
 ]
 
-{ #category : #current }
+{ #category : 'current' }
 UnixStore class >> isActiveClass [
 	^ Smalltalk os isUnix and: [ super isActiveClass ]
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 UnixStore class >> isCaseSensitive [
 	"except for OSX the default is case sensitive"
 	^ Smalltalk os isMacOSX not
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 UnixStore class >> maxFileNameLength [
 
 	^ 255
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 UnixStore class >> readOnlyVariant [
 
 	^ ReadOnlyUnixStore
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 UnixStore class >> separator [
 	^ $:
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 UnixStore >> checkName: aFileName fixErrors: fixing [
 	"Check if the file name contains any invalid characters"
 	| fName |
@@ -54,7 +56,7 @@ UnixStore >> checkName: aFileName fixErrors: fixing [
 	^ fName copyReplaceAll: self delimiter asString with: '#'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 UnixStore >> isHidden: aResolvable attributes: statAttributesArray [
 	"Answer a boolean indicating whether the file is hidden or not.
 	On Unix, use the file naming convention that file names beginning with a dot are not displayed"

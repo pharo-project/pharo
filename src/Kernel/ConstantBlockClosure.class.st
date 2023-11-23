@@ -17,13 +17,15 @@ This class implements 0-arg blocks, with correct error handling for args >0. Sub
 	
 "
 Class {
-	#name : #ConstantBlockClosure,
-	#superclass : #CleanBlockClosure,
-	#type : #variable,
-	#category : #'Kernel-Methods'
+	#name : 'ConstantBlockClosure',
+	#superclass : 'CleanBlockClosure',
+	#type : 'variable',
+	#category : 'Kernel-Methods',
+	#package : 'Kernel',
+	#tag : 'Methods'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ConstantBlockClosure class >> numArgs: numArgs literal: aLiteral [
 	| classToUse |
 	classToUse := numArgs caseOf:
@@ -38,37 +40,37 @@ ConstantBlockClosure class >> numArgs: numArgs literal: aLiteral [
 		literal: aLiteral
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ConstantBlockClosure >> literal: anObject [
 	 literal := anObject
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 ConstantBlockClosure >> value [
 	^literal
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 ConstantBlockClosure >> value: anObject [
 	self numArgsError: 1
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 ConstantBlockClosure >> value: firstArg value: secondArg [
 	self numArgsError: 2
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 ConstantBlockClosure >> value: firstArg value: secondArg value: thirdArg [
 	self numArgsError: 3
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 ConstantBlockClosure >> value: firstArg value: secondArg value: thirdArg value: fourthArg [
 	self numArgsError: 4
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 ConstantBlockClosure >> valueWithArguments: anArray [
 	(anArray size ~= 0) ifTrue: [self numArgsError: anArray size].
 	^literal

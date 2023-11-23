@@ -1,6 +1,6 @@
-Extension { #name : #Slot }
+Extension { #name : 'Slot' }
 
-{ #category : #'*Calypso-SystemTools-Core' }
+{ #category : '*Calypso-SystemTools-Core' }
 Slot >> asCalypsoVariableOf: declarationClass [
 
 	^ClyInstanceVariable on: self definedIn: self definingClass

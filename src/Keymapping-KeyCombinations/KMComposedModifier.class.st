@@ -4,87 +4,88 @@ I represent a composed key modifier. I contain a collection of modifiers that sh
 Look at my superclass for a more detailed explanaition.
 "
 Class {
-	#name : #KMComposedModifier,
-	#superclass : #KMModifier,
+	#name : 'KMComposedModifier',
+	#superclass : 'KMModifier',
 	#instVars : [
 		'modifiers'
 	],
-	#category : #'Keymapping-KeyCombinations'
+	#category : 'Keymapping-KeyCombinations',
+	#package : 'Keymapping-KeyCombinations'
 }
 
-{ #category : #combining }
+{ #category : 'combining' }
 KMComposedModifier >> + modified [
 	^ modified asKeyCombination modifiedBy: self
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 KMComposedModifier >> = aShortcut [
 	(aShortcut isKindOf: self class)
 		ifFalse: [^ false].
 	^ (aShortcut modifiers includesAll: modifiers) and: [ modifiers includesAll: aShortcut modifiers ]
 ]
 
-{ #category : #combining }
+{ #category : 'combining' }
 KMComposedModifier >> alt [
 	modifiers add: KMModifier alt
 ]
 
-{ #category : #combining }
+{ #category : 'combining' }
 KMComposedModifier >> command [
 	modifiers add: KMModifier command
 ]
 
-{ #category : #combining }
+{ #category : 'combining' }
 KMComposedModifier >> control [
 	modifiers add: KMModifier ctrl
 ]
 
-{ #category : #combining }
+{ #category : 'combining' }
 KMComposedModifier >> ctrl [
 	self control
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 KMComposedModifier >> hash [
 	^ modifiers hash
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 KMComposedModifier >> initialize [
 	super initialize.
 	modifiers := OrderedCollection new
 ]
 
-{ #category : #matching }
+{ #category : 'matching' }
 KMComposedModifier >> matchesEvent: aKeyboardEvent [
 	^ modifiers allSatisfy: [:modifier|
 		modifier matchesEvent: aKeyboardEvent]
 ]
 
-{ #category : #combining }
+{ #category : 'combining' }
 KMComposedModifier >> meta [
 	modifiers add: KMModifier meta
 ]
 
-{ #category : #combining }
+{ #category : 'combining' }
 KMComposedModifier >> modifiedBy: modifier [
 	modifiers add: modifier.
 	self updateIdentifier
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMComposedModifier >> modifiers [
 	^ modifiers
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 KMComposedModifier >> printOn: aStream [
 	modifiers
 		do: [ :modifier| modifier printOn: aStream ]
 		separatedBy: [ aStream << ' + ' ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 KMComposedModifier >> printOsRepresentationOn: aStream [
 	| modifiersSorted |
 	modifiersSorted := modifiers asSortedCollection: [ : a : b | a printingPosition < b printingPosition ].
@@ -93,19 +94,19 @@ KMComposedModifier >> printOsRepresentationOn: aStream [
 		separatedBy: [ aStream << $+ ]
 ]
 
-{ #category : #combining }
+{ #category : 'combining' }
 KMComposedModifier >> shift [
 	modifiers add: KMModifier shift
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 KMComposedModifier >> symbol [
 	^ String streamContents: [ :stream |
 		self modifiers do: [ :e |
 			stream << e symbol ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMComposedModifier >> updateIdentifier [
 	identifier := String streamContents: [ :aStream|
 			modifiers do: [ :modifier|

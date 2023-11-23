@@ -20,23 +20,25 @@ Internal Representation and Key Implementation Points.
 	textMorph:		<RubScrolledTextMorph>
 "
 Class {
-	#name : #ClyTextEditorToolMorph,
-	#superclass : #ClyBrowserToolMorph,
+	#name : 'ClyTextEditorToolMorph',
+	#superclass : 'ClyBrowserToolMorph',
 	#instVars : [
 		'textModel',
 		'textMorph',
 		'changesCancelRequested',
 		'applyingChanges'
 	],
-	#category : #'Calypso-Browser-TextEditors'
+	#category : 'Calypso-Browser-TextEditors',
+	#package : 'Calypso-Browser',
+	#tag : 'TextEditors'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyTextEditorToolMorph class >> isAbstract [
 	^self = ClyTextEditorToolMorph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyTextEditorToolMorph >> activationPriorityInNonActiveContext [
 
 	^applyingChanges
@@ -44,37 +46,37 @@ ClyTextEditorToolMorph >> activationPriorityInNonActiveContext [
 		ifFalse: [ super activationPriorityInNonActiveContext ]
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ClyTextEditorToolMorph >> applyChanges [
 	self subclassResponsibility
 ]
 
-{ #category : #'events handling' }
+{ #category : 'events handling' }
 ClyTextEditorToolMorph >> applyChangesBy: aBlock [
 
 	applyingChanges := true.
 	^aBlock ensure: [ applyingChanges := false]
 ]
 
-{ #category : #'rubric interaction model' }
+{ #category : 'rubric interaction model' }
 ClyTextEditorToolMorph >> bindingOf: aString [
 	^self selectedClassOrMetaClass bindingOf: aString
 ]
 
-{ #category : #'rubric interaction model' }
+{ #category : 'rubric interaction model' }
 ClyTextEditorToolMorph >> bindings [
 	"no additional bindings provided by the Requestor"
 	^#() asDictionary
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 ClyTextEditorToolMorph >> browserContextWasChanged [
 	"We should ignore any notifications during applying changes
 	because applied changes can cause them which can lead to wrong recursive updates"
 	applyingChanges ifFalse: [ super browserContextWasChanged ]
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ClyTextEditorToolMorph >> build [
 	self buildTextMorph.
 	textModel clearUndoManager.
@@ -86,19 +88,20 @@ ClyTextEditorToolMorph >> build [
 	self addMorph: textMorph
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ClyTextEditorToolMorph >> buildLeftSideBar [
 	textMorph withTextSegmentIcons
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ClyTextEditorToolMorph >> buildTextMorph [
+
 	textModel := RubScrolledTextModel new.
 	textModel interactionModel: self.
 	textMorph := textModel newScrolledText.
 	textMorph
-		width: self width; "build is performed in background when owner is not exist yet. But we need proper width to perform kind of styling/formatting if needed"
-		beWrapped;
+		width: self width;
+		"build is performed in background when owner is not exist yet. But we need proper width to perform kind of styling/formatting if needed"beWrapped;
 		font: StandardFonts codeFont;
 		editingMode: self editingMode.
 	CmdKMDispatcher attachedTo: textMorph textArea withCommandsFrom: self. "It overrides default text morph shortcuts with Commander"
@@ -106,7 +109,7 @@ ClyTextEditorToolMorph >> buildTextMorph [
 	textModel setInitialText: self editingText
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ClyTextEditorToolMorph >> cancelChanges [
 
 	changesCancelRequested := true.
@@ -115,7 +118,7 @@ ClyTextEditorToolMorph >> cancelChanges [
 	self rebuildStatusBar
 ]
 
-{ #category : #'events handling' }
+{ #category : 'events handling' }
 ClyTextEditorToolMorph >> changesAccepted [
 
 	| applied |
@@ -136,19 +139,19 @@ ClyTextEditorToolMorph >> changesAccepted [
 	]
 ]
 
-{ #category : #'events handling' }
+{ #category : 'events handling' }
 ClyTextEditorToolMorph >> changesAreAboutApply [
 	"it is a hook method to allow subclasses prepare state
 	just before applying changes"
 ]
 
-{ #category : #'events handling' }
+{ #category : 'events handling' }
 ClyTextEditorToolMorph >> changesCancelRequested: aRubCancelEditRequested [
 
 	changesCancelRequested := true
 ]
 
-{ #category : #'events handling' }
+{ #category : 'events handling' }
 ClyTextEditorToolMorph >> changesCancelled [
 
 	"Avoid clearing the dirty flag if the pending text differs from the current text (issue#11649)"
@@ -157,27 +160,27 @@ ClyTextEditorToolMorph >> changesCancelled [
 	self textUpdated
 ]
 
-{ #category : #contexts }
+{ #category : 'contexts' }
 ClyTextEditorToolMorph >> createCommandContext [
 	^self createTextContext
 ]
 
-{ #category : #contexts }
+{ #category : 'contexts' }
 ClyTextEditorToolMorph >> createTextContext [
 	^ClyTextEditorContext for: self
 ]
 
-{ #category : #'rubric interaction model' }
+{ #category : 'rubric interaction model' }
 ClyTextEditorToolMorph >> doItContext [
 	^nil
 ]
 
-{ #category : #'rubric interaction model' }
+{ #category : 'rubric interaction model' }
 ClyTextEditorToolMorph >> doItReceiver [
 	^self selectedClassOrMetaClass ifNotNil: [:class | class instanceSide]
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ClyTextEditorToolMorph >> editingMode [
 	| editingMode |
 	editingMode := ClyTextEditingMode browserTool: self.
@@ -187,12 +190,12 @@ ClyTextEditorToolMorph >> editingMode [
 	^editingMode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyTextEditorToolMorph >> editingText [
 	self subclassResponsibility
 ]
 
-{ #category : #'selecting text' }
+{ #category : 'selecting text' }
 ClyTextEditorToolMorph >> findAnyString: strings in: text [
 
 	| index |
@@ -203,55 +206,55 @@ ClyTextEditorToolMorph >> findAnyString: strings in: text [
 	^0 to: -1
 ]
 
-{ #category : #'rubric interaction model' }
+{ #category : 'rubric interaction model' }
 ClyTextEditorToolMorph >> hasBindingOf: aString [
 	^self selectedClassOrMetaClass 
 		ifNil: [ false ]
 		ifNotNil: [:class | class hasBindingOf: aString]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyTextEditorToolMorph >> hasUnacceptedEdits [
 	textMorph ifNil: [ ^false ].
 
 	^textMorph hasUnacceptedEdits
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyTextEditorToolMorph >> initialize [
 	super initialize.
 	changesCancelRequested := false.
 	applyingChanges := false
 ]
 
-{ #category : #'rubric interaction model' }
+{ #category : 'rubric interaction model' }
 ClyTextEditorToolMorph >> isScripting [
 	^true
 ]
 
-{ #category : #keymapping }
+{ #category : 'keymapping' }
 ClyTextEditorToolMorph >> kmDispatcher [
 
 	^ CmdKMDispatcher attachedTo: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyTextEditorToolMorph >> leftSideBar [
 	^textMorph rulerNamed: #textSegmentIcons
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyTextEditorToolMorph >> pendingText [
 	^textMorph text
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyTextEditorToolMorph >> pendingText: aText [
 	textMorph updateTextWith: aText.
 	textMorph hasUnacceptedEdits: true
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyTextEditorToolMorph >> resetStateForSnapshot [
 	super resetStateForSnapshot.
 
@@ -259,28 +262,28 @@ ClyTextEditorToolMorph >> resetStateForSnapshot [
 	textModel := nil
 ]
 
-{ #category : #'selecting text' }
+{ #category : 'selecting text' }
 ClyTextEditorToolMorph >> selectAnyString: strings [
 
 	textMorph setSelection: (self findAnyString: strings in: self pendingText)
 ]
 
-{ #category : #'rubric interaction model' }
+{ #category : 'rubric interaction model' }
 ClyTextEditorToolMorph >> selectedClassOrMetaClass [
 	^nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyTextEditorToolMorph >> selectedTextInterval [
 	^textMorph selectionInterval
 ]
 
-{ #category : #'rubric interaction model' }
+{ #category : 'rubric interaction model' }
 ClyTextEditorToolMorph >> shoutAboutToStyle: aMorph [
 	^self wantsTextStyling
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ClyTextEditorToolMorph >> subscribeOnTextChanges [
 
 	textMorph announcer
@@ -289,12 +292,12 @@ ClyTextEditorToolMorph >> subscribeOnTextChanges [
 		when: RubCancelEditRequested send: #changesCancelRequested: to: self
 ]
 
-{ #category : #'focus management' }
+{ #category : 'focus management' }
 ClyTextEditorToolMorph >> takeKeyboardFocus [
 	textMorph ifNotNil: [ textMorph takeKeyboardFocus]
 ]
 
-{ #category : #'events handling' }
+{ #category : 'events handling' }
 ClyTextEditorToolMorph >> textChanged: aTextChanged [
 
 	changesCancelRequested ifTrue: [
@@ -305,28 +308,28 @@ ClyTextEditorToolMorph >> textChanged: aTextChanged [
 	self updateDirtyState
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyTextEditorToolMorph >> textModel [
 	^textModel
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyTextEditorToolMorph >> textMorph [
 	^textMorph
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 ClyTextEditorToolMorph >> textUpdated [
 	self applyDecorations.
 	self updateDirtyState
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 ClyTextEditorToolMorph >> triggerUpdate [
 	applyingChanges ifFalse: [self update]
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 ClyTextEditorToolMorph >> update [
 	| unacceptedText newText |
 	super update.
@@ -344,13 +347,13 @@ ClyTextEditorToolMorph >> update [
 	textMorph changed
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyTextEditorToolMorph >> wantsStayInDifferentContext [
 
 	^ applyingChanges or: [ super wantsStayInDifferentContext ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyTextEditorToolMorph >> wantsTextStyling [
 	^true
 ]

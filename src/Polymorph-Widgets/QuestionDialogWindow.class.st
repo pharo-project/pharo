@@ -2,36 +2,38 @@
 A yes/no/cancel message dialog. Cancel (escape & return) is the default.
 "
 Class {
-	#name : #QuestionDialogWindow,
-	#superclass : #ProceedDialogWindow,
+	#name : 'QuestionDialogWindow',
+	#superclass : 'ProceedDialogWindow',
 	#instVars : [
 		'answer'
 	],
-	#category : #'Polymorph-Widgets-Windows'
+	#category : 'Polymorph-Widgets-Windows',
+	#package : 'Polymorph-Widgets',
+	#tag : 'Windows'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 QuestionDialogWindow >> answer [
 	"Answer the value of answer"
 
 	^ answer
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 QuestionDialogWindow >> answer: anObject [
 	"Set the value of answer"
 
 	answer := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 QuestionDialogWindow >> newButtons [
 	"Answer new buttons as appropriate."
 
 	^{self newYesButton. self newNoButton. self newCancelButton isDefault: true}
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 QuestionDialogWindow >> no [
 	"Answer no."
 
@@ -40,7 +42,7 @@ QuestionDialogWindow >> no [
 		ok
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 QuestionDialogWindow >> yes [
 	"Answer yes."
 

@@ -1,6 +1,6 @@
-Extension { #name : #Color }
+Extension { #name : 'Color' }
 
-{ #category : #'*Random-Core' }
+{ #category : '*Random-Core' }
 Color class >> random [
 	"Return a random color that isn't too dark or under-saturated."
 

@@ -2,20 +2,22 @@
 A Renraku event with a single critic.
 "
 Class {
-	#name : #ReSingleCritiqueEvent,
-	#superclass : #ReCritiqueEvent,
+	#name : 'ReSingleCritiqueEvent',
+	#superclass : 'ReCritiqueEvent',
 	#instVars : [
 		'critique'
 	],
-	#category : #'Renraku-Announcements'
+	#category : 'Renraku-Announcements',
+	#package : 'Renraku',
+	#tag : 'Announcements'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReSingleCritiqueEvent >> critique [
 	^ critique
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReSingleCritiqueEvent >> critique: aCritique [
 	critique := aCritique
 ]

@@ -2,17 +2,18 @@
 A SettingsStonWriterTest is a test class for testing the behavior of SettingsStonWriter
 "
 Class {
-	#name : #SettingsStonWriterTest,
-	#superclass : #TestCase,
+	#name : 'SettingsStonWriterTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'writer',
 		'fileStream',
 		'fileReference'
 	],
-	#category : #'System-Settings-Tests'
+	#category : 'System-Settings-Tests',
+	#package : 'System-Settings-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 SettingsStonWriterTest >> setUp [
 	super setUp.
 	fileReference := (FileSystem memory root / 'preferences.ston.txt') asFileReference.
@@ -21,26 +22,26 @@ SettingsStonWriterTest >> setUp [
 	writer stream: fileStream
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 SettingsStonWriterTest >> tearDown [
 	fileStream close.
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SettingsStonWriterTest >> testBasic [
 	"Checking that no error occur"
 
 	SettingsStonWriter new store
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SettingsStonWriterTest >> testEmptyStream [
 	fileStream flush.
 	self assertEmpty: fileReference contents
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SettingsStonWriterTest >> testStore [
 
 	| settingNode |
@@ -51,7 +52,7 @@ SettingsStonWriterTest >> testStore [
 	self assert: fileReference contents equals: (OSPlatform current lineEnding join: MockSettings oneStoredSettingSTONString lines)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SettingsStonWriterTest >> testStoreShouldNotCloseBackingStream [
 
 	| settingNode |
@@ -63,7 +64,7 @@ SettingsStonWriterTest >> testStoreShouldNotCloseBackingStream [
 	self assert: fileReference contents equals: (OSPlatform current lineEnding join: MockSettings oneStoredSettingSTONString lines)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SettingsStonWriterTest >> testStoreTwoObjects [
 
 	| settingNode1 settingNode2 |

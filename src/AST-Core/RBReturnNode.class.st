@@ -8,29 +8,31 @@ Instance Variables:
 
 "
 Class {
-	#name : #RBReturnNode,
-	#superclass : #RBProgramNode,
+	#name : 'RBReturnNode',
+	#superclass : 'RBProgramNode',
 	#instVars : [
 		'value',
 		'start'
 	],
-	#category : #'AST-Core-Nodes'
+	#category : 'AST-Core-Nodes',
+	#package : 'AST-Core',
+	#tag : 'Nodes'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBReturnNode class >> start: returnInteger value: aValueNode [
 	^self new
 		start: returnInteger;
 		value: aValueNode
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBReturnNode class >> value: aNode [
 	^self new
 		value: aNode
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 RBReturnNode >> = anObject [
 	self == anObject
 		ifTrue: [ ^ true ].
@@ -39,107 +41,107 @@ RBReturnNode >> = anObject [
 	^ self value = anObject value
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RBReturnNode >> acceptVisitor: aProgramNodeVisitor [
 	^ aProgramNodeVisitor visitReturnNode: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBReturnNode >> children [
 	^ { value }
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBReturnNode >> containsReturn [
 	^ true
 ]
 
-{ #category : #matching }
+{ #category : 'matching' }
 RBReturnNode >> copyInContext: aDictionary [
 	^ self class new
 		value: (self value copyInContext: aDictionary);
 		yourself
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 RBReturnNode >> equalTo: anObject withMapping: aDictionary [
 	^self class = anObject class
 		and: [self value equalTo: anObject value withMapping: aDictionary]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 RBReturnNode >> hash [
 	^self value hash
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBReturnNode >> initialize [
 	super initialize.
 
 	start := 0
 ]
 
-{ #category : #errors }
+{ #category : 'errors' }
 RBReturnNode >> isFaulty [
 	self isError ifTrue: [ ^ true ].
 	^self value isFaulty
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBReturnNode >> isReturn [
 	^true
 ]
 
-{ #category : #matching }
+{ #category : 'matching' }
 RBReturnNode >> match: aNode inContext: aDictionary [
 	aNode class = self class ifFalse: [^false].
 	^value match: aNode value inContext: aDictionary
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 RBReturnNode >> postCopy [
 	super postCopy.
 	self value: self value copy
 ]
 
-{ #category : #'adding-removing' }
+{ #category : 'adding-removing' }
 RBReturnNode >> removeNode: aNode [
 
 	self parent removeNode: self
 ]
 
-{ #category : #replacing }
+{ #category : 'replacing' }
 RBReturnNode >> replaceNode: aNode withNode: anotherNode [
 	value == aNode ifTrue: [ self value: anotherNode ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBReturnNode >> start [
 	^ start
 ]
 
-{ #category : #'accessing - token' }
+{ #category : 'accessing - token' }
 RBReturnNode >> start: anInteger [
 	start := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBReturnNode >> stop [
 	value ifNil:[^ 0].
 	^ value stop
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBReturnNode >> stop: anInteger [
 	self value stop: anInteger
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 RBReturnNode >> value [
 	^ value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBReturnNode >> value: anExpression [
 	value := anExpression.
 	value parent: self

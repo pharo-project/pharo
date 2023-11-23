@@ -8,46 +8,48 @@ Acknowledgement: some code borrowed from AJP.
 Part of Zinc HTTP Components.
 "
 Class {
-	#name : #ZnMultiPartFormDataEntity,
-	#superclass : #ZnEntity,
+	#name : 'ZnMultiPartFormDataEntity',
+	#superclass : 'ZnEntity',
 	#instVars : [
 		'parts',
 		'representation'
 	],
-	#category : #'Zinc-HTTP-Core'
+	#category : 'Zinc-HTTP-Core',
+	#package : 'Zinc-HTTP',
+	#tag : 'Core'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnMultiPartFormDataEntity class >> designatedMimeType [
 	^ ZnMimeType multiPartFormData
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnMultiPartFormDataEntity class >> matches: mimeType [
 	^ mimeType matches: 'multipart/*' asZnMimeType
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnMultiPartFormDataEntity >> addPart: mimePart [
 	self invalidateRepresentation.
 	self parts add: mimePart
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnMultiPartFormDataEntity >> computeRepresentation [
 	representation := ByteArray streamContents: [ :stream |
 		self writeRepresentationOn: (ZnBivalentWriteStream on: stream) ].
 	contentLength := representation size
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnMultiPartFormDataEntity >> contentLength [
 
 	contentLength ifNil: [ self computeRepresentation ].
 	^ contentLength
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnMultiPartFormDataEntity >> contentType: object [
 	"We only allow assignment compatible with our designated mime type.
 	The main/sub must be equal but the parameters must be allowed to be different"
@@ -58,12 +60,12 @@ ZnMultiPartFormDataEntity >> contentType: object [
 		ifTrue: [ contentType := newType ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnMultiPartFormDataEntity >> contents [
 	^ self parts
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnMultiPartFormDataEntity >> generateBoundary [
 	^ String streamContents: [ :stream | | letters |
 			stream nextPutAll: 'Boundary-Zn-'.
@@ -71,7 +73,7 @@ ZnMultiPartFormDataEntity >> generateBoundary [
 			8 timesRepeat: [ stream nextPut: letters atRandom ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnMultiPartFormDataEntity >> getBoundary [
 	"Return the multipart/form-data MIME part boundary.
 	This should really be there, set externally or internally.
@@ -80,24 +82,24 @@ ZnMultiPartFormDataEntity >> getBoundary [
 	^ (self contentType parameterAt: 'boundary') withoutQuoting
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ZnMultiPartFormDataEntity >> initialize [
 	super initialize.
 	self contentType: self mimeTypeWithBoundary
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnMultiPartFormDataEntity >> invalidateRepresentation [
 	representation := nil.
 	contentLength := nil
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnMultiPartFormDataEntity >> isEmpty [
 	^ parts isNil or: [ parts isEmpty ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnMultiPartFormDataEntity >> mimeTypeWithBoundary [
 	| mimeType |
 	mimeType := self class designatedMimeType copy.
@@ -105,7 +107,7 @@ ZnMultiPartFormDataEntity >> mimeTypeWithBoundary [
 	^ mimeType
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnMultiPartFormDataEntity >> parse: bytes boundary: boundary binary: binary [
 	| next start fullBoundary |
 	fullBoundary := '--' asByteArray, boundary.
@@ -127,33 +129,33 @@ ZnMultiPartFormDataEntity >> parse: bytes boundary: boundary binary: binary [
 			ifAbsent: [ bytes size ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnMultiPartFormDataEntity >> partNamed: fieldName [
 	^ self partNamed: fieldName ifNone: [ self error: 'Cannot find part named ', fieldName asString ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnMultiPartFormDataEntity >> partNamed: fieldName ifNone: block [
 
 	parts ifNil: block.
 	^ self parts detect: [ :each | each fieldName = fieldName ] ifNone: block
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnMultiPartFormDataEntity >> parts [
 
 	parts ifNil: [ parts := OrderedCollection new ].
 	^ parts
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 ZnMultiPartFormDataEntity >> partsDo: block [
 
 	parts ifNil: [ ^ self ].
 	parts do: block
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ZnMultiPartFormDataEntity >> printContentsOn: stream [
 	super printContentsOn: stream.
 	self isEmpty
@@ -162,7 +164,7 @@ ZnMultiPartFormDataEntity >> printContentsOn: stream [
 	self parts printElementsOn: stream
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 ZnMultiPartFormDataEntity >> readBinaryFrom: stream [
 	"Switch to streaming implementation later on"
 
@@ -178,7 +180,7 @@ ZnMultiPartFormDataEntity >> readBinaryFrom: stream [
 	self parse: bytes boundary: self getBoundary asByteArray binary: true
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 ZnMultiPartFormDataEntity >> readFrom: stream [
 	"Switch to streaming implementation later on"
 
@@ -194,7 +196,7 @@ ZnMultiPartFormDataEntity >> readFrom: stream [
 	self parse: bytes boundary: self getBoundary asByteArray binary: false
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 ZnMultiPartFormDataEntity >> writeOn: stream [
 
 	"We always go via our representation because we need a bivalent stream"
@@ -203,7 +205,7 @@ ZnMultiPartFormDataEntity >> writeOn: stream [
 	ZnUtils nextPutAll: representation on: stream
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 ZnMultiPartFormDataEntity >> writeRepresentationOn: stream [
 	| boundary |
 	boundary := self getBoundary.

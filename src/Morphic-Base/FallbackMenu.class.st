@@ -7,16 +7,18 @@ I include items to:
 * Custom: clients can add items to me by implementing #fallbackMenuOn:. Browse implementors for examples.
 "
 Class {
-	#name : #FallbackMenu,
-	#superclass : #Object,
+	#name : 'FallbackMenu',
+	#superclass : 'Object',
 	#instVars : [
 		'builder',
 		'client'
 	],
-	#category : #'Morphic-Base-Menus'
+	#category : 'Morphic-Base-Menus',
+	#package : 'Morphic-Base',
+	#tag : 'Menus'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FallbackMenu class >> when: aPragmaMenuBuilder fails: anObject [
 
 	^ self new
@@ -25,40 +27,39 @@ FallbackMenu class >> when: aPragmaMenuBuilder fails: anObject [
 			menu
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FallbackMenu >> builder: aPragmaMenuBuilder [
 
 	builder := aPragmaMenuBuilder
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FallbackMenu >> client: anObject [
 
 	client := anObject
 ]
 
-{ #category : #'menu actions' }
+{ #category : 'menu actions' }
 FallbackMenu >> debug [
 
 	"If we don't reset the builder after debugging, the fallback menu does not appear anymore"
 	[ builder menuSpec asMenuMorph ] ensure: [ builder reset ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FallbackMenu >> fallbackMenuExplanations [
+	"This is bad because to goes deep into the playground implementation but to improve this the playground should be improved..."
 
-	| workspace wsBindings |
-	wsBindings := Dictionary newFrom: { #menu-> self }.
-	workspace := Smalltalk tools workspace
-		openContents: '"Something is wrong with this menu.
+	| playground |
+	playground := Smalltalk tools workspace openContents: '"Something is wrong with this menu.
 To investigate just debug following expression:"
 menu debug'.
-	workspace
-		label: 'Fallback menu explanations';
-		setBindings: wsBindings
+	playground title: 'Fallback menu explanations'.
+	"This is not good but this is the best with the current playground implementation.."
+	playground presenter firstPage interactionModel addBinding: (WorkspaceVariable key: #menu value: self)
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FallbackMenu >> menu [
 	"Build the menu that is put up if something is going wrong with the menubuilder"
 

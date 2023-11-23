@@ -2,37 +2,39 @@
 I have instvar accesses and I have a super class with variables that I access
 "
 Class {
-	#name : #VariableBreakpointMockSubclass,
-	#superclass : #VariableBreakpointMockClass,
+	#name : 'VariableBreakpointMockSubclass',
+	#superclass : 'VariableBreakpointMockClass',
 	#instVars : [
 		'v2'
 	],
-	#category : #'Reflectivity-Tests-Data'
+	#category : 'Reflectivity-Tests-Data',
+	#package : 'Reflectivity-Tests',
+	#tag : 'Data'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 VariableBreakpointMockSubclass >> initialize [
 	super initialize.
 	v2 := 0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 VariableBreakpointMockSubclass >> instVarReads [
 	^v1 + v2
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 VariableBreakpointMockSubclass >> instVarWrites [
 	v1 := 4.
 	v2 := 2
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 VariableBreakpointMockSubclass >> v2 [
 	^ v2
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 VariableBreakpointMockSubclass >> v2: anObject [
 	v2 := anObject
 ]

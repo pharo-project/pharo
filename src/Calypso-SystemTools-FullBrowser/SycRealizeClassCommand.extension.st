@@ -1,6 +1,6 @@
-Extension { #name : #SycRealizeClassCommand }
+Extension { #name : 'SycRealizeClassCommand' }
 
-{ #category : #'*Calypso-SystemTools-FullBrowser' }
+{ #category : '*Calypso-SystemTools-FullBrowser' }
 SycRealizeClassCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
 

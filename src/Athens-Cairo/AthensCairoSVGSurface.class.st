@@ -7,12 +7,14 @@ Reference: https://cairographics.org/manual/cairo-SVG-Surfaces.html
 
 "
 Class {
-	#name : #AthensCairoSVGSurface,
-	#superclass : #AthensCairoExportSurface,
-	#category : #'Athens-Cairo-Surface'
+	#name : 'AthensCairoSVGSurface',
+	#superclass : 'AthensCairoExportSurface',
+	#category : 'Athens-Cairo-Surface',
+	#package : 'Athens-Cairo',
+	#tag : 'Surface'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 AthensCairoSVGSurface class >> createExportingTo: fileName width: width height: height [
 	^ self ffiCall: #(AthensCairoSVGSurface cairo_svg_surface_create (
 				String fileName,

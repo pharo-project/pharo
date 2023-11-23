@@ -4,12 +4,14 @@ I filter objects by name using given string filter.
 So I am compatible with objects which respond to the #name
 "
 Class {
-	#name : #ClyItemNameFilter,
-	#superclass : #ClyItemStringFilter,
-	#category : #'Calypso-NavigationModel-Model'
+	#name : 'ClyItemNameFilter',
+	#superclass : 'ClyItemStringFilter',
+	#category : 'Calypso-NavigationModel-Model',
+	#package : 'Calypso-NavigationModel',
+	#tag : 'Model'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyItemNameFilter >> matches: anEnvironmentItem [
 
 	^pattern matches: anEnvironmentItem calypsoName

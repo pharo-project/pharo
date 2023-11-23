@@ -2,12 +2,14 @@
 A trait for test purposes
 "
 Class {
-	#name : #WeakOrderedCollectionTest,
-	#superclass : #TestCase,
-	#category : #'Collections-Weak-Tests-Base'
+	#name : 'WeakOrderedCollectionTest',
+	#superclass : 'TestCase',
+	#category : 'Collections-Weak-Tests-Base',
+	#package : 'Collections-Weak-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 WeakOrderedCollectionTest >> testWeakOrderedCollectionAllGarbageCollected [
 	| anArray anotherObject weakOrderedCollection |
 
@@ -33,7 +35,7 @@ WeakOrderedCollectionTest >> testWeakOrderedCollectionAllGarbageCollected [
 	self assert: (weakOrderedCollection asSet includes: nil)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WeakOrderedCollectionTest >> testWeakOrderedCollectionSomeGarbageCollected [
 	| anArray anotherObject weakOrderedCollection |
 	anArray := OrderedCollection new.

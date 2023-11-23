@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+set -x
+set -e
+
 if [ $# -lt 1 ]
   then
     echo "This script needs at least one argument: a Pharo version."

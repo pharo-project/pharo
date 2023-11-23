@@ -10,86 +10,88 @@ Internal Representation and Key Implementation Points.
 	editingClass:		<Class>
 "
 Class {
-	#name : #ClyClassEditorToolMorph,
-	#superclass : #ClyTextEditorToolMorph,
+	#name : 'ClyClassEditorToolMorph',
+	#superclass : 'ClyTextEditorToolMorph',
 	#instVars : [
 		'editingClass'
 	],
-	#category : #'Calypso-SystemTools-Core-Editors-Classes'
+	#category : 'Calypso-SystemTools-Core-Editors-Classes',
+	#package : 'Calypso-SystemTools-Core',
+	#tag : 'Editors-Classes'
 }
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyClassEditorToolMorph class >> classTabActivation [
 	<classAnnotation>
 
 	^ClyTabActivationStrategyAnnotation for: ClyClass asCalypsoItemContext
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyClassEditorToolMorph class >> isAbstract [
 	^self = ClyClassEditorToolMorph
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyClassEditorToolMorph class >> shouldBeActivatedInContext: aBrowserContext [
 	^aBrowserContext isClassSelected
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyClassEditorToolMorph class >> tabOrder [
 	^ 10
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyClassEditorToolMorph >> attachToSystem [
 
 	browser system
 		when: (ClyClassChange of: editingClass) send: #triggerUpdate to: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyClassEditorToolMorph >> belongsToCurrentBrowserContext [
 
 	^(browser isClassSelected: editingClass)
 		or: [ browser isClassSelected: editingClass instanceSide ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyClassEditorToolMorph >> belongsToRemovedBrowserContext [
 	^editingClass isObsolete
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyClassEditorToolMorph >> detachFromSystem [
 
 	browser system unsubscribe: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyClassEditorToolMorph >> editingClass [
 	^editingClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyClassEditorToolMorph >> editingClass: anObject [
 	editingClass := anObject
 ]
 
-{ #category : #formatting }
+{ #category : 'formatting' }
 ClyClassEditorToolMorph >> formatSourceCode [
 	"Do nothing. MAybe in the future we could format the fluid class definition but for now we don't want errors"
 
 	
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyClassEditorToolMorph >> isSimilarTo: anotherBrowserTool [
 
 	(super isSimilarTo: anotherBrowserTool) ifFalse: [ ^false ].
 	^editingClass = anotherBrowserTool editingClass
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyClassEditorToolMorph >> isValidInContext: aClyFullBrowserContext [
 	self context class = aClyFullBrowserContext class
 		ifFalse: [ ^ false ].
@@ -101,17 +103,17 @@ ClyClassEditorToolMorph >> isValidInContext: aClyFullBrowserContext [
 		or: [  editingClass = aClyFullBrowserContext lastSelectedClass instanceSide ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyClassEditorToolMorph >> printContext [
 	^editingClass printSystemPath
 ]
 
-{ #category : #'rubric interaction model' }
+{ #category : 'rubric interaction model' }
 ClyClassEditorToolMorph >> selectedClassOrMetaClass [
 	^editingClass
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyClassEditorToolMorph >> setUpModelFromContext [
 
 	super setUpModelFromContext.

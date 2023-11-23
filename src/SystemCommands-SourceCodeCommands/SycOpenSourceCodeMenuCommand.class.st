@@ -3,33 +3,34 @@ I am a command to open special source code menu.
 I show in menu all commands annotated by SycSourceCodeMenuActivation
 "
 Class {
-	#name : #SycOpenSourceCodeMenuCommand,
-	#superclass : #SycOpenContextMenuCommand,
-	#category : #'SystemCommands-SourceCodeCommands'
+	#name : 'SycOpenSourceCodeMenuCommand',
+	#superclass : 'SycOpenContextMenuCommand',
+	#category : 'SystemCommands-SourceCodeCommands',
+	#package : 'SystemCommands-SourceCodeCommands'
 }
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycOpenSourceCodeMenuCommand >> activationStrategy [
 	^SycSourceCodeMenuActivation
 ]
 
-{ #category : #'context menu' }
+{ #category : 'context menu' }
 SycOpenSourceCodeMenuCommand >> cmCommandClass [
 
 	^ SycSourceCodeCmCommand
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycOpenSourceCodeMenuCommand >> defaultMenuIconName [
 	^#smallAuthoringTools
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycOpenSourceCodeMenuCommand >> defaultMenuItemName [
 	^'Source code'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycOpenSourceCodeMenuCommand >> execute [
 
 	context selectedTextInterval ifEmpty: [

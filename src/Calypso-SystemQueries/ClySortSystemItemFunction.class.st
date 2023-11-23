@@ -13,15 +13,17 @@ Internal Representation and Key Implementation Points.
 	functionsForTypes:		<Dictionary<Class, SortFunction>>
 "
 Class {
-	#name : #ClySortSystemItemFunction,
-	#superclass : #ClySortFunction,
+	#name : 'ClySortSystemItemFunction',
+	#superclass : 'ClySortFunction',
 	#instVars : [
 		'functionsForTypes'
 	],
-	#category : #'Calypso-SystemQueries-Queries'
+	#category : 'Calypso-SystemQueries-Queries',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Queries'
 }
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 ClySortSystemItemFunction >> collate: systemObject1 with: systemObject2 [
 
 	| function |
@@ -33,14 +35,14 @@ ClySortSystemItemFunction >> collate: systemObject1 with: systemObject2 [
 		threeWayCompareTo: systemObject2 calypsoEnvironmentType itemsSortOrderForCalypso
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClySortSystemItemFunction >> initialize [
 	super initialize.
 
 	functionsForTypes := IdentityDictionary new
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 ClySortSystemItemFunction >> sortFunctionFor: systemObject [
 
 	^functionsForTypes

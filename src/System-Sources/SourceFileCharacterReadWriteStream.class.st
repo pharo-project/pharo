@@ -2,16 +2,18 @@
 I am a read-write character stream. I am mainly used to open the Pharo source and changes files.
 "
 Class {
-	#name : #SourceFileCharacterReadWriteStream,
-	#superclass : #Object,
+	#name : 'SourceFileCharacterReadWriteStream',
+	#superclass : 'Object',
 	#instVars : [
 		'readStream',
 		'writeStream'
 	],
-	#category : #'System-Sources-Streams'
+	#category : 'System-Sources-Streams',
+	#package : 'System-Sources',
+	#tag : 'Streams'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SourceFileCharacterReadWriteStream class >> on: wrappedStream encoding: encoding [
 
 	^ self new
@@ -19,82 +21,82 @@ SourceFileCharacterReadWriteStream class >> on: wrappedStream encoding: encoding
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SourceFileCharacterReadWriteStream >> atEnd [
 
 	^ readStream atEnd
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SourceFileCharacterReadWriteStream >> close [
 
 	writeStream close
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SourceFileCharacterReadWriteStream >> closed [
 	^ writeStream closed
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SourceFileCharacterReadWriteStream >> collectionSpecies [
 	^ String
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SourceFileCharacterReadWriteStream >> cr [
 
 	writeStream cr
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SourceFileCharacterReadWriteStream >> ensureWrittenPosition: aPosition [
 	^ writeStream wrappedStream ensureWrittenPosition: aPosition
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SourceFileCharacterReadWriteStream >> flush [
 
 	writeStream flush
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SourceFileCharacterReadWriteStream >> isReadOnly [
 
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SourceFileCharacterReadWriteStream >> next [
 
 	^ readStream next
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SourceFileCharacterReadWriteStream >> next: anInteger [
 
 	^ readStream next: anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SourceFileCharacterReadWriteStream >> next: anInteger putAll: aString startingAt: startIndex [
 
 	^ writeStream next: anInteger putAll: aString startingAt: startIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SourceFileCharacterReadWriteStream >> nextPut: aCharacter [
 
 	^ writeStream nextPut: aCharacter
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SourceFileCharacterReadWriteStream >> nextPutAll: aString [
 
 	^ writeStream nextPutAll: aString
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SourceFileCharacterReadWriteStream >> on: aStream encoding: encoding [
 	| encoder |
 	encoder := encoding asZnCharacterEncoder.
@@ -102,66 +104,66 @@ SourceFileCharacterReadWriteStream >> on: aStream encoding: encoding [
 	writeStream := ZnCharacterWriteStream on: aStream encoding: encoder
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SourceFileCharacterReadWriteStream >> peek [
 
 	^ readStream peek
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SourceFileCharacterReadWriteStream >> position [
 
 	^ readStream position
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SourceFileCharacterReadWriteStream >> position: anInteger [
 
 	readStream position: anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SourceFileCharacterReadWriteStream >> print: object [
 	writeStream print: object
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SourceFileCharacterReadWriteStream >> readOnlyCopy [
 
 	^ readStream
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SourceFileCharacterReadWriteStream >> setToEnd [
 
 	writeStream setToEnd
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SourceFileCharacterReadWriteStream >> size [
 
 	^ readStream size
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SourceFileCharacterReadWriteStream >> skip: anInteger [
 
 	readStream skip: anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SourceFileCharacterReadWriteStream >> space [
 
 	writeStream space
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SourceFileCharacterReadWriteStream >> tab [
 
 	writeStream tab
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SourceFileCharacterReadWriteStream >> upToAll: aCollection [
 	"Answer a subcollection from the current access position to the occurrence (if any, but not inclusive) of aCollection. If aCollection is not in the stream, answer the entire rest of the stream."
 
@@ -185,7 +187,7 @@ SourceFileCharacterReadWriteStream >> upToAll: aCollection [
 		matched ifFalse: [ out nextPutAll: partialMatch contents ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SourceFileCharacterReadWriteStream >> upToEnd [
 
 	^ readStream upToEnd

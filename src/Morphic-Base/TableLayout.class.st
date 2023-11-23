@@ -41,16 +41,18 @@ Distribute morphs in row/column:
 
 "
 Class {
-	#name : #TableLayout,
-	#superclass : #LayoutPolicy,
+	#name : 'TableLayout',
+	#superclass : 'LayoutPolicy',
 	#instVars : [
 		'properties',
 		'minExtentCache'
 	],
-	#category : #'Morphic-Base-Layouts'
+	#category : 'Morphic-Base-Layouts',
+	#package : 'Morphic-Base',
+	#tag : 'Layouts'
 }
 
-{ #category : #nil }
+{ #category : 'nil' }
 TableLayout >> computeCellArrangement: cellHolder in: newBounds horizontal: aBool target: aMorph [
 	"Compute number of cells we can put in each row/column. The returned array contains a list of all the cells we can put into the row/column at each level.
 	Note: The arrangement is so that the 'x' value of each cell advances along the list direction and the 'y' value along the wrap direction. The returned arrangement has an extra cell at the start describing the width and height of the row."
@@ -90,7 +92,7 @@ TableLayout >> computeCellArrangement: cellHolder in: newBounds horizontal: aBoo
 		] ifFalse:[
 			sum := sum + (cell cellSize x).
 		].
-		((sum + (n * inset x)) > wrap and:[first notNil]) ifTrue:[
+		((sum + (n * inset x)) > wrap and:[first isNotNil]) ifTrue:[
 			"It doesn't fit and we're not starting a new line"
 			(spacing == #localSquare or:[spacing == #localRect]) ifTrue:[
 				spacing == #localSquare
@@ -140,7 +142,7 @@ TableLayout >> computeCellArrangement: cellHolder in: newBounds horizontal: aBoo
 	^output
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 TableLayout >> computeCellSizes: aMorph in: newBounds horizontal: aBool [
 	"Step 1: Compute the minimum extent for all the children of aMorph"
 	| cells block minSize maxSize maxCell |
@@ -173,7 +175,7 @@ TableLayout >> computeCellSizes: aMorph in: newBounds horizontal: aBool [
 	^maxCell -> cells contents
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 TableLayout >> computeExtraSpacing: arrangement in: newBounds horizontal: aBool target: aMorph [
 	"Compute the required extra spacing for laying out the cells"
 
@@ -312,7 +314,7 @@ TableLayout >> computeExtraSpacing: arrangement in: newBounds horizontal: aBool 
 											extra := (last := extra) + extraPerCell]]]]]
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 TableLayout >> computeGlobalCellArrangement: cells in: newBounds horizontal: aBool wrap: wrap spacing: spacing [
 	"Compute number of cells we can put in each row/column. The returned array contains a list of all the cells we can put into the row/column at each level.
 	Note: The arrangement is so that the 'x' value of each cell advances along the list direction and the 'y' value along the wrap direction. The returned arrangement has an extra cell at the start describing the width and height of the row."
@@ -346,13 +348,13 @@ TableLayout >> computeGlobalCellArrangement: cells in: newBounds horizontal: aBo
 	^output contents
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 TableLayout >> flushLayoutCache [
 	"Flush any cached information associated with the receiver"
 	minExtentCache := nil
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 TableLayout >> indexForInserting: aMorph at: aPoint in: owner [
 	"Return the insertion index based on the layout strategy defined for some morph. Used for drop insertion."
 
@@ -372,7 +374,7 @@ TableLayout >> indexForInserting: aMorph at: aPoint in: owner [
 	^index ifNil: [1]
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 TableLayout >> indexForInserting: aPoint inList: morphList horizontal: aBool target: aMorph [
 	| cmp1 cmp2 cmp3 noWrap |
 	properties := aMorph layoutProperties.
@@ -422,12 +424,12 @@ TableLayout >> indexForInserting: aPoint inList: morphList horizontal: aBool tar
 	^morphList size + 1
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TableLayout >> isTableLayout [
 	^true
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 TableLayout >> layout: aMorph in: box [
 	"Compute the layout for the given morph based on the new bounds"
 
@@ -474,10 +476,10 @@ TableLayout >> layout: aMorph in: box [
 		target: aMorph
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 TableLayout >> layoutLeftToRight: aMorph in: newBounds [
 	"An optimized left-to-right list layout"
-	| inset extent block posX posY centering extraPerCell amount minX minY maxX maxY n width extra last cell size height sum vFill first |
+	| inset extent block posX posY centering extraPerCell amount minX minY maxX maxY n width extra last cell size height sum vFill first submorphs |
 	size := properties minCellSize asPoint. minX := size x. minY := size y.
 	size := properties maxCellSize asPoint. maxX := size x. maxY := size y.
 	inset := properties cellInset asPoint x.
@@ -511,9 +513,13 @@ TableLayout >> layoutLeftToRight: aMorph in: newBounds [
 			sizeY > height ifTrue:[height := sizeY].
 		].
 	].
-	properties reverseTableCells
-		ifTrue:[aMorph submorphsReverseDo: block]
-		ifFalse:[aMorph submorphsDo: block].
+
+	submorphs := aMorph submorphs.
+	properties reverseTableCells ifTrue:[ submorphs := submorphs reversed ].
+	submorphs do: [ :each |
+		each visible 
+			ifTrue: [ block value: each ]
+			ifFalse: [ each privateBounds: (each bounds topLeft extent: 0@0) ] ].
 
 	n > 1 ifTrue:[width := width + (n-1 * inset)].
 
@@ -568,10 +574,10 @@ TableLayout >> layoutLeftToRight: aMorph in: newBounds [
 	]
 ]
 
-{ #category : #nil }
+{ #category : 'nil' }
 TableLayout >> layoutTopToBottom: aMorph in: newBounds [
 	"An optimized top-to-bottom list layout"
-	| inset extent block posX posY centering extraPerCell amount minX minY maxX maxY n height extra last cell size width sum vFill first |
+	| inset extent block posX posY centering extraPerCell amount minX minY maxX maxY n height extra last cell size width sum vFill first submorphs |
 	size := properties minCellSize asPoint. minX := size x. minY := size y.
 	size := properties maxCellSize asPoint. maxX := size x. maxY := size y.
 	inset := properties cellInset asPoint y.
@@ -605,9 +611,13 @@ TableLayout >> layoutTopToBottom: aMorph in: newBounds [
 			sizeX > width ifTrue:[width := sizeX].
 		].
 	].
-	properties reverseTableCells
-		ifTrue:[aMorph submorphsReverseDo: block]
-		ifFalse:[aMorph submorphsDo: block].
+
+	submorphs := aMorph submorphs.
+	properties reverseTableCells ifTrue:[ submorphs := submorphs reversed ].
+	submorphs do: [ :each |
+		each visible 
+			ifTrue: [ block value: each ]
+			ifFalse: [ each privateBounds: (each bounds topLeft extent: 0@0) ] ].
 
 	n > 1 ifTrue:[height := height + (n-1 * inset)].
 
@@ -662,7 +672,7 @@ TableLayout >> layoutTopToBottom: aMorph in: newBounds [
 	]
 ]
 
-{ #category : #nil }
+{ #category : 'nil' }
 TableLayout >> minExtentHorizontal: aMorph [
 	"Return the minimal size aMorph's children would require given the new bounds"
 	| inset minX minY maxX maxY n size width height |
@@ -689,7 +699,7 @@ TableLayout >> minExtentHorizontal: aMorph [
 	^minExtentCache := width @ height
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 TableLayout >> minExtentOf: aMorph in: box [
 
 	"Return the minimal size aMorph's children would require given the new bounds"
@@ -732,7 +742,7 @@ TableLayout >> minExtentOf: aMorph in: box [
 	^ minExtentCache
 ]
 
-{ #category : #nil }
+{ #category : 'nil' }
 TableLayout >> minExtentVertical: aMorph [
 	"Return the minimal size aMorph's children would require given the new bounds"
 	| inset minX minY maxX maxY n size width height |
@@ -759,7 +769,7 @@ TableLayout >> minExtentVertical: aMorph [
 	^minExtentCache := width @ height
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 TableLayout >> placeCells: arrangement in: newBounds horizontal: aBool target: aMorph [
 	"Place the morphs within the cells accordingly"
 

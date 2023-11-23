@@ -51,22 +51,24 @@ rid of it risks breaking code.  If it is there but does not harm then why get ri
 best Eliot Miranda 
 "
 Class {
-	#name : #Object,
-	#superclass : #ProtoObject,
+	#name : 'Object',
+	#superclass : 'ProtoObject',
 	#classVars : [
 		'DependentsFields'
 	],
-	#category : #'Kernel-Objects'
+	#category : 'Kernel-Objects',
+	#package : 'Kernel',
+	#tag : 'Objects'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 Object class >> flushDependents [
 	DependentsFields keysAndValuesDo:[:key :dep|
 		key ifNotNil:[key removeDependent: nil].
 	].
 ]
 
-{ #category : #documentation }
+{ #category : 'documentation' }
 Object class >> howToModifyPrimitives [
 	"You are allowed to write methods which specify primitives, but please use
 	caution.  If you make a subclass of a class which contains a primitive method,
@@ -117,21 +119,21 @@ Object class >> howToModifyPrimitives [
 	self error: 'comment only'
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 Object class >> initialize [
 	"Upon loading a class, this selector is not looked up.
 	If you want a class to be initialized upon loading, this class should define the selector #intialize explicitly"
 	DependentsFields ifNil:[ self initializeDependentsFields ]
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 Object class >> initializeDependentsFields [
 	<script: 'Object initialize'>
 
 	DependentsFields := WeakIdentityKeyDictionary new
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Object class >> newFrom: aSimilarObject [
 	"Create an object that has similar contents to aSimilarObject. If the classes have any instance variables with the same names, copy them across. If this is bad for a class, override this method."
 
@@ -140,7 +142,7 @@ Object class >> newFrom: aSimilarObject [
 		ifFalse: [self basicNew]) copySameFrom: aSimilarObject
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Object class >> newFromArray: anArray [
 
 	"Fast initialization from an Array.
@@ -151,7 +153,7 @@ Object class >> newFromArray: anArray [
 	^ self newFrom: anArray
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 Object class >> reInitializeDependentsFields [
 	<script>
 
@@ -162,7 +164,7 @@ Object class >> reInitializeDependentsFields [
 		keysAndValuesDo: [ :obj :deps | deps do: [ :d | obj addDependent: d ] ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Object class >> readFrom: textStringOrStream [
 	"Create an object based on the contents of textStringOrStream."
 
@@ -172,7 +174,7 @@ Object class >> readFrom: textStringOrStream [
 	^object
 ]
 
-{ #category : #documentation }
+{ #category : 'documentation' }
 Object class >> whatIsAPrimitive [
 	"Some messages in the system are responded to primitively. A primitive
 	response is performed directly by the interpreter rather than by evaluating
@@ -241,7 +243,7 @@ Object class >> whatIsAPrimitive [
 	self error: 'comment only'
 ]
 
-{ #category : #associating }
+{ #category : 'associating' }
 Object >> -> anObject [
 	"Answer an Association between self and anObject"
 	"The following example creates an association whose key is number 1 and value string 'one'."
@@ -254,7 +256,7 @@ Object >> -> anObject [
 	^ Association key: self value: anObject
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 Object >> = anObject [
 	"Answer whether the receiver and the argument represent the same
 	object. If = is redefined in any subclass, consider also redefining the
@@ -263,14 +265,14 @@ Object >> = anObject [
 	^ self == anObject
 ]
 
-{ #category : #finalization }
+{ #category : 'finalization' }
 Object >> actAsExecutor [
 	"Prepare the receiver to act as executor for any resources associated with it"
 
 	self breakDependents
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Object >> adaptToFloat: rcvr andCompare: selector [
 	"If I am involved in comparison with a Float.
 	Default behaviour is to process comparison as any other selectors."
@@ -278,7 +280,7 @@ Object >> adaptToFloat: rcvr andCompare: selector [
 	^ self adaptToFloat: rcvr andSend: selector
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Object >> adaptToFloat: rcvr andSend: selector [
 	"If no method has been provided for adapting an object to a Float,
 	then it may be adequate to simply adapt it to a number."
@@ -286,7 +288,7 @@ Object >> adaptToFloat: rcvr andSend: selector [
 	^ self adaptToNumber: rcvr andSend: selector
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Object >> adaptToFraction: rcvr andCompare: selector [
 	"If I am involved in comparison with a Fraction.
 	Default behaviour is to process comparison as any other selectors."
@@ -294,7 +296,7 @@ Object >> adaptToFraction: rcvr andCompare: selector [
 	^ self adaptToFraction: rcvr andSend: selector
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Object >> adaptToFraction: rcvr andSend: selector [
 	"If no method has been provided for adapting an object to a Fraction,
 	then it may be adequate to simply adapt it to a number."
@@ -302,7 +304,7 @@ Object >> adaptToFraction: rcvr andSend: selector [
 	^ self adaptToNumber: rcvr andSend: selector
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Object >> adaptToInteger: rcvr andCompare: selector [
 	"If I am involved in comparison with an Integer.
 	Default behaviour is to process comparison as any other selectors."
@@ -310,7 +312,7 @@ Object >> adaptToInteger: rcvr andCompare: selector [
 	^ self adaptToInteger: rcvr andSend: selector
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Object >> adaptToInteger: rcvr andSend: selector [
 	"If no method has been provided for adapting an object to a Integer,
 	then it may be adequate to simply adapt it to a number."
@@ -318,7 +320,7 @@ Object >> adaptToInteger: rcvr andSend: selector [
 	^ self adaptToNumber: rcvr andSend: selector
 ]
 
-{ #category : #dependencies }
+{ #category : 'dependencies' }
 Object >> addDependent: anObject [
 	"Make the given object one of the receiver's dependents."
 
@@ -329,7 +331,7 @@ Object >> addDependent: anObject [
 	^ anObject
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Object >> as: aSimilarClass [
 	"Create an object of class aSimilarClass that has similar contents to the receiver if the object is not already an instance of this class."
 
@@ -338,34 +340,34 @@ Object >> as: aSimilarClass [
 	^ aSimilarClass newFrom: self
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Object >> asCollectionElement [
 	"Answer an object, which can be put into a Set as element , wrapped
 	by one of SetElement instance, if necessary.
 	Default implementation is to answer self"
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Object >> asLink [
 	"Answer a string that represents the receiver."
 
 	^ ValueLink value: self
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Object >> asLinkPrepend: anObject [
 
 	^ self asLink asLinkPrepend: anObject
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Object >> asString [
 	"Answer a string that represents the receiver."
 
 	^ self printString
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 Object >> assert: aBlock [
 	"Throw an assertion error if aBlock does not evaluates to true.
 	We check for true explicitly to make the assertion fail for non booleans"
@@ -374,7 +376,7 @@ Object >> assert: aBlock [
 	self assert: aBlock description: 'Assertion failed'
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 Object >> assert: aBlock description: aStringOrBlock [
 	"Throw an assertion error if aBlock does not evaluates to true."
 
@@ -384,7 +386,7 @@ Object >> assert: aBlock description: aStringOrBlock [
 		AssertionFailure signal: aStringOrBlock value ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Object >> at: index [
 	"Primitive. Assumes receiver is indexable. Answer the value of an
 	indexable element in the receiver. Fail if the argument index is not an
@@ -400,7 +402,7 @@ Object >> at: index [
 	self errorNonIntegerIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Object >> at: index put: value [
 	"Primitive. Assumes receiver is indexable. Store the argument value in
 	the indexable element of the receiver indicated by index. Fail if the
@@ -420,7 +422,7 @@ Object >> at: index put: value [
 	self errorImproperStore
 ]
 
-{ #category : #'write barrier' }
+{ #category : 'write barrier' }
 Object >> attemptToAssign: value withIndex: index [
 	"Called by the VM when assigning an instance variable of an immutable object.
 	Upon return, executing will resume *after* the inst var assignment. If the inst var mutation has to be
@@ -433,7 +435,7 @@ Object >> attemptToAssign: value withIndex: index [
 	"CAN'T REACH"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Object >> basicAt: index [
 	"Primitive. Assumes receiver is indexable. Answer the value of an
 	indexable element in the receiver. Fail if the argument index is not an
@@ -450,7 +452,7 @@ Object >> basicAt: index [
 	self errorNonIntegerIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Object >> basicAt: index put: value [
 	"Primitive. Assumes receiver is indexable. Store the second argument
 	value in the indexable element of the receiver indicated by index. Fail
@@ -471,25 +473,25 @@ Object >> basicAt: index put: value [
 	self errorImproperStore
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Object >> basicSize [
 	"Primitive. Answer the number of indexable variables in the receiver.
 	This value is the same as the largest legal subscript. Essential. Do not
 	override in any subclass (except Context). See Object documentation whatIsAPrimitive."
-
+	<reflection: 'Class structural inspection - Instance variable inspection'>
 	<primitive: 62>
 	"The number of indexable fields of fixed-length objects is 0"
 	^0
 ]
 
-{ #category : #'write barrier' }
+{ #category : 'write barrier' }
 Object >> beReadOnlyLiteral [
 	"This is used by the compiler, it recurses into Arrays (see the override there)"
 	self isLiteral ifFalse: [ ^ self ].
 	self beReadOnlyObject
 ]
 
-{ #category : #'write barrier' }
+{ #category : 'write barrier' }
 Object >> beReadOnlyObject [
 	"If the VM supports read-only objects it will not write to read-only objects.
 	 An attempt to write to an instance variable of a read-only object will
@@ -500,18 +502,18 @@ Object >> beReadOnlyObject [
 	^self setIsReadOnlyObject: true
 ]
 
-{ #category : #'write barrier' }
+{ #category : 'write barrier' }
 Object >> beRecursivelyReadOnlyObject [
 	^self recursivelySetIsReadOnlyObject: true
 ]
 
-{ #category : #'write barrier' }
+{ #category : 'write barrier' }
 Object >> beRecursivelyWritableObject [
 
 	^ self recursivelySetIsReadOnlyObject: false
 ]
 
-{ #category : #'write barrier' }
+{ #category : 'write barrier' }
 Object >> beWritableObject [
 	"If the VM supports read-only objects it will not write to read-only objects.
 	 An attempt to write to an instance variable of a read-only object will
@@ -523,14 +525,14 @@ Object >> beWritableObject [
 	^ self setIsReadOnlyObject: false
 ]
 
-{ #category : #dependencies }
+{ #category : 'dependencies' }
 Object >> breakDependents [
 	"Remove all of the receiver's dependents."
 
 	self myDependents: nil
 ]
 
-{ #category : #dependencies }
+{ #category : 'dependencies' }
 Object >> canDiscardEdits [
 	"Answer true if none of the views on this model has unaccepted edits that matter."
 
@@ -540,7 +542,7 @@ Object >> canDiscardEdits [
 	^ true
 ]
 
-{ #category : #'casing-To be deprecated' }
+{ #category : 'casing-To be deprecated' }
 Object >> caseError [
 	"DO NOT USE THIS METHOD! It will be removed from Pharo."
 	"Report an error from an in-line or explicit case statement."
@@ -548,7 +550,7 @@ Object >> caseError [
 	self error: 'Case not found (', self printString, '), and no otherwise clause'
 ]
 
-{ #category : #'casing-To be deprecated' }
+{ #category : 'casing-To be deprecated' }
 Object >> caseOf: aBlockAssociationCollection [
 	"DO NOT USE THIS METHOD! It will be removed from Pharo."
 
@@ -565,7 +567,7 @@ Object >> caseOf: aBlockAssociationCollection [
 "#b caseOf: {[#a]->[1+1]. ['d' asSymbol]->[2+2]. [#c]->[3+3]}"
 ]
 
-{ #category : #'casing-To be deprecated' }
+{ #category : 'casing-To be deprecated' }
 Object >> caseOf: aBlockAssociationCollection otherwise: aBlock [
 	"DO NOT USE THIS METHOD! It will be removed from Pharo."
 
@@ -585,7 +587,7 @@ Object >> caseOf: aBlockAssociationCollection otherwise: aBlock [
 "#b caseOf: {[#a]->[1+1]. ['d' asSymbol]->[2+2]. [#c]->[3+3]} otherwise: [0]"
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 Object >> changed [
 	"Receiver changed in a general way; inform all the dependents by
 	sending each dependent an update: message."
@@ -593,7 +595,7 @@ Object >> changed [
 	self changed: self
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 Object >> changed: aParameter [
 	"Receiver changed. The change is denoted by the argument aParameter.
 	Usually the argument is a Symbol that is part of the dependent's change
@@ -602,7 +604,7 @@ Object >> changed: aParameter [
 	self dependents do: [:aDependent | aDependent update: aParameter]
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 Object >> changed: anAspect with: anObject [
 	"Receiver changed. The change is denoted by the argument anAspect.
 	Usually the argument is a Symbol that is part of the dependent's change
@@ -611,14 +613,14 @@ Object >> changed: anAspect with: anObject [
 	self dependents do: [:aDependent | aDependent update: anAspect with: anObject]
 ]
 
-{ #category : #introspection }
+{ #category : 'introspection' }
 Object >> className [
 	"Answer a string characterizing the receiver's class, for use in list views for example"
-
+	<reflection: 'Object Inspection - Accessing object class'>
 	^ self class name asString
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 Object >> clone [
 	"Answer a shallow copy of the receiver."
 	<primitive: 148 error: ec>
@@ -639,14 +641,14 @@ Object >> clone [
 	^newObject copyFrom: self
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 Object >> copy [
 	"Answer another instance just like the receiver. Subclasses typically override postCopy; they typically do not override shallowCopy. Copy is a template method in the sense of Design Patterns. So do not override it. Override postCopy instead. Pay attention that normally you should call postCopy of your superclass too."
 
 	^ self shallowCopy postCopy
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 Object >> copyFrom: anotherObject [
 	"Copy to myself all instance variables I have in common with anotherObject.  This is dangerous because it ignores an object's control over its own inst vars.  "
 
@@ -662,7 +664,7 @@ Object >> copyFrom: anotherObject [
 			self basicAt: ind put: (anotherObject basicAt: ind)]]
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 Object >> copySameFrom: otherObject [
 	"Copy to myself all instance variables named the same in otherObject.
 	This ignores otherObject's control over its own inst vars."
@@ -677,7 +679,7 @@ Object >> copySameFrom: otherObject [
 		self basicAt: i put: (otherObject basicAt: i)]
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 Object >> deepCopy [
 	"Answer a copy of the receiver with its own copy of each instance variable. deepCopy does a deep copy. It should never be overridden and only be used if you want to get these very specific semantics.
 It doesn't handle cycles, #veryDeepCopy does. In the future we will make it handle cycles and deprecate veryDeepCopy"
@@ -703,7 +705,7 @@ It doesn't handle cycles, #veryDeepCopy does. In the future we will make it hand
 	^newObject
 ]
 
-{ #category : #dependencies }
+{ #category : 'dependencies' }
 Object >> dependents [
 	"Answer a collection of objects that are 'dependent' on the receiver;
 	 that is, all objects that should be notified if the receiver changes."
@@ -711,7 +713,7 @@ Object >> dependents [
 	^ self myDependents ifNil: [#()]
 ]
 
-{ #category : #deprecation }
+{ #category : 'deprecation' }
 Object >> deprecated: anExplanationString [
 	"Warn that the sending method has been deprecated"
 
@@ -721,7 +723,7 @@ Object >> deprecated: anExplanationString [
 		signal
 ]
 
-{ #category : #deprecation }
+{ #category : 'deprecation' }
 Object >> deprecated: anExplanationString on: date in: version [
 	"Warn that the sending method has been deprecated"
 
@@ -733,7 +735,7 @@ Object >> deprecated: anExplanationString on: date in: version [
 		signal
 ]
 
-{ #category : #deprecation }
+{ #category : 'deprecation' }
 Object >> deprecated: anExplanationString on: date in: version transformWith: aRule [
 	"Automatically tranform the deprecated call"
 
@@ -746,7 +748,7 @@ Object >> deprecated: anExplanationString on: date in: version transformWith: aR
 		transform
 ]
 
-{ #category : #deprecation }
+{ #category : 'deprecation' }
 Object >> deprecated: anExplanationString on: date in: version transformWith: aRule when: conditionBlock [
 	"Automatically tranform the deprecated call if it matches the condition"
 
@@ -760,7 +762,7 @@ Object >> deprecated: anExplanationString on: date in: version transformWith: aR
 		transform
 ]
 
-{ #category : #deprecation }
+{ #category : 'deprecation' }
 Object >> deprecated: anExplanationString transformWith: aRule [
 	"Automatically tranform the deprecated call"
 
@@ -771,7 +773,7 @@ Object >> deprecated: anExplanationString transformWith: aRule [
 		transform
 ]
 
-{ #category : #deprecation }
+{ #category : 'deprecation' }
 Object >> deprecated: anExplanationString transformWith: aRule when: conditionBlock [
 	"Automatically tranform the deprecated call if it matches the condition"
 
@@ -783,14 +785,14 @@ Object >> deprecated: anExplanationString transformWith: aRule when: conditionBl
 		transform
 ]
 
-{ #category : #displaying }
+{ #category : 'displaying' }
 Object >> displayString [
 	"While printString is about to give a detailled information about an object, displayString is a message that should return a short string-based representation to be used by list and related UI frameworks. By default, simply return printString. Subclasses should not override this method but instead stream based method #displayStringOn:"
 
 	^ self displayStringLimitedTo: 1000
 ]
 
-{ #category : #displaying }
+{ #category : 'displaying' }
 Object >> displayStringLimitedTo: limit [
 	"Answer a String whose characters are a description of the receiver.
 	If you want to print without a character limit, use fullDisplayString."
@@ -798,7 +800,7 @@ Object >> displayStringLimitedTo: limit [
 	^ self printStringLimitedTo: limit using: [:s | self displayStringOn: s]
 ]
 
-{ #category : #displaying }
+{ #category : 'displaying' }
 Object >> displayStringOn: aStream [
 	"While #printOn: is about to give a detailled information about an object, #displayStringOn: is a message that should return a string-based representation to be used by list and related UI frameworks. By default, simply use printOn: method.
 	Subclasses should override this method instead of #displayString"
@@ -806,8 +808,10 @@ Object >> displayStringOn: aStream [
 	self printOn: aStream
 ]
 
-{ #category : #'reflective operations' }
+{ #category : 'reflective operations' }
 Object >> doesNotUnderstand: aMessage [
+
+	<reflection: 'Message sending and code execution - Control message passing'>
 	<debuggerCompleteToSender>
 	 "Handle the fact that there was an attempt to send the given message to the receiver but the receiver does not understand this message (typically sent from the machine when a message is sent to the receiver and no method is defined for that selector)."
 	"Testing: (3 activeProcess)"
@@ -822,7 +826,7 @@ Object >> doesNotUnderstand: aMessage [
 		ifFalse: [resumeValue]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Object >> enclosedElement [
 	"The receiver is included into a set as an element.
 	Since some objects require wrappers (see SetElement) to be able to be included into a Set,
@@ -831,49 +835,49 @@ Object >> enclosedElement [
 	Only SetElement instance or its subclasses allowed to answer something different than receiver itself"
 ]
 
-{ #category : #'error handling' }
+{ #category : 'error handling' }
 Object >> error [
 	"Throw a generic Error exception."
 	<debuggerCompleteToSender>
 	^ self error: 'Error!'
 ]
 
-{ #category : #'error handling' }
+{ #category : 'error handling' }
 Object >> error: aString [
 	"Throw a generic Error exception."
 	<debuggerCompleteToSender>
 	^ Error new signal: aString
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Object >> errorImproperStore [
 	"Create an error notification that an improper store was attempted."
 
 	self error: 'Improper store into indexable object'
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Object >> errorNonIntegerIndex [
 	"Create an error notification that an improper object was used as an index."
 
 	self error: 'only integers should be used as indices'
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Object >> errorNotIndexable [
 	"Create an error notification that the receiver is not indexable."
 
 	self error: ('Instances of {1} are not indexable' format: {self class name})
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Object >> errorSubscriptBounds: index [
 	"Create an error notification that an improper integer was used as an index."
 
 	SubscriptOutOfBounds signalFor: index
 ]
 
-{ #category : #finalization }
+{ #category : 'finalization' }
 Object >> executor [
 	"Return an object which can act as executor for finalization of the receiver"
 
@@ -884,73 +888,58 @@ Object >> executor [
 	^ self finalizer
 ]
 
-{ #category : #'error handling' }
+{ #category : 'error handling' }
 Object >> explicitRequirement [
 	"If one of the superclasses can perform the selector, we execute the method of that class, otherwise, the explicit requirement error is thrown"
+
 	<debuggerCompleteToSender>
-	| originalMethod originalArguments errorBlock originalReceiver callingContext originalSelector |
-	errorBlock := [ ^ self error: 'Explicitly required method' ].
-	callingContext := thisContext sender.
-	originalMethod := callingContext homeMethod.
-	originalMethod isFromTrait
-		ifFalse: [ errorBlock value].
-	originalReceiver := callingContext receiver.
-	originalSelector := originalMethod selector.
-	originalArguments := callingContext arguments.
-	originalReceiver class superclass
-		withAllSuperclassesDo: [ :superClass |
-			superClass
-				compiledMethodAt: originalSelector
-				ifPresent: [ :method |
-					(method isProvided or: [ method isFromTrait not ])
-						ifTrue: [ callingContext
-								return:
-									(method
-										valueWithReceiver: originalReceiver
-										arguments: originalArguments) ] ] ].
-	errorBlock value
+	| sender |
+	sender := thisContext sender.
+	[ sender return: (self perform: sender selector withArguments: sender arguments inSuperclass: sender methodClass superclass) ]
+		on: MessageNotUnderstood
+		do: [ self error: 'Explicitly required method' ]
 ]
 
-{ #category : #finalization }
+{ #category : 'finalization' }
 Object >> finalizationRegistry [
 	"Answer the finalization registry associated with the receiver."
 	
 	^ FinalizationRegistry default
 ]
 
-{ #category : #finalization }
+{ #category : 'finalization' }
 Object >> finalize [
 	"Finalize the resource associated with the receiver. This message should only be sent during the finalization process. There is NO garantuee that the resource associated with the receiver hasn't been free'd before so take care that you don't run into trouble - this all may happen with interrupt priority."
 ]
 
-{ #category : #finalization }
+{ #category : 'finalization' }
 Object >> finalizer [
 	"Return an object which can act as finalizer of the receiver"
 
 	^ self
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 Object >> flattenOn: aStream [
 
 	aStream nextPut: self
 ]
 
-{ #category : #displaying }
+{ #category : 'displaying' }
 Object >> fullDisplayString [
 	"Answer a String whose characters are a description of the receiver suitable for UI"
 
 	^ String streamContents: [:s | self displayStringOn: s]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 Object >> fullPrintString [
 	"Answer a String whose characters are a description of the receiver."
 
 	^ String streamContents: [:s | self printOn: s]
 ]
 
-{ #category : #halting }
+{ #category : 'halting' }
 Object >> halt [
 	"This is the typical message to use for inserting breakpoints during debugging."
 
@@ -958,13 +947,13 @@ Object >> halt [
 	Halt now
 ]
 
-{ #category : #halting }
+{ #category : 'halting' }
 Object >> halt: aString [
 	<debuggerCompleteToSender>
 	Halt now: aString
 ]
 
-{ #category : #halting }
+{ #category : 'halting' }
 Object >> haltFromCount: anInteger [
 	"Always halt after a count has been reached"
 
@@ -972,32 +961,32 @@ Object >> haltFromCount: anInteger [
 	Halt fromCount: anInteger
 ]
 
-{ #category : #halting }
+{ #category : 'halting' }
 Object >> haltIf: condition [
 	<debuggerCompleteToSender>
 
 	Halt if: condition
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Object >> haltIfNil [
 ]
 
-{ #category : #halting }
+{ #category : 'halting' }
 Object >> haltIfNotTest [
 	"Halt if execution was not started by a test. This is useful as this means one can just run tests undisturbed, while a execution for example from the Playground would be halted"
 	<debuggerCompleteToSender>
 	Halt ifNotTest
 ]
 
-{ #category : #halting }
+{ #category : 'halting' }
 Object >> haltIfTest [
 	"Halt if execution was started by a test. These #halts are just active in the tests, useful when you want to add a halt in methods that are executed a lot (e.g. collections)"
 	<debuggerCompleteToSender>
 	Halt ifTest
 ]
 
-{ #category : #halting }
+{ #category : 'halting' }
 Object >> haltOnCount: anInteger [
 	"Halts once when a count is reached"
 
@@ -1005,40 +994,40 @@ Object >> haltOnCount: anInteger [
 	Halt onCount: anInteger
 ]
 
-{ #category : #halting }
+{ #category : 'halting' }
 Object >> haltOnce [
 	<debuggerCompleteToSender>
 	Halt once
 ]
 
-{ #category : #'process termination handling' }
+{ #category : 'process termination handling' }
 Object >> handleProcessTerminationOfWaitingContext: suspendedContext [
 
 	^ suspendedContext
 ]
 
-{ #category : #'error handling' }
+{ #category : 'error handling' }
 Object >> handles: exception [
 	"This method exists in case a non exception class is the first arg in an on:do: (for instance using a exception class that is not loaded). We prefer this to raising an error during error handling itself. Also, semantically it makes sense that the exception handler is not active if its exception class is not loaded"
 
 	^ false
 ]
 
-{ #category : #'literal testing' }
+{ #category : 'literal testing' }
 Object >> hasLiteralSuchThat: testBlock [
 	"This is the end of the embedded structure path so return false."
 
 	^ false
 ]
 
-{ #category : #finalization }
+{ #category : 'finalization' }
 Object >> hasMultipleExecutors [
 	"All objects, except ObjectFinalizerCollection instances should answer false to this message"
 
 	^ false
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 Object >> hash [
 	"Answer a SmallInteger whose value is related to the receiver's identity.
 	May be overridden, and should be overridden in any classes that define = "
@@ -1046,31 +1035,31 @@ Object >> hash [
 	^ self identityHash
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 Object >> in: aBlock [
 	"Evaluate the given block with the receiver as its argument."
 
 	^ aBlock value: self
 ]
 
-{ #category : #introspection }
+{ #category : 'introspection' }
 Object >> instVarAt: index [
 	"Primitive. Answer a fixed variable in an object. The numbering of the variables
 	 corresponds to the named instance variables, followed by the indexed instance
 	 variables. Fail if the index is not an Integer or is not the index of a fixed
 	 variable or indexed variable. Essential. See Object documentation whatIsAPrimitive."
-
+	<reflection: 'Object Inspection - State inspection'>
 	<primitive: 173 error: ec>
 	self primitiveFailed
 ]
 
-{ #category : #introspection }
+{ #category : 'introspection' }
 Object >> instVarAt: index put: anObject [
 	"Primitive. Store a value into a fixed variable in an object. The numbering of the
 	 variables corresponds to the named instance variables, followed by the indexed
 	 instance variables. Fail if the index is not an Integer or is not the index of a fixed
 	 variable or indexed variable. Essential. See Object documentation whatIsAPrimitive."
-
+	<reflection: 'Object Inspection - State inspection'>
 	<primitive: 174 error: ec>
 	 (index isInteger
 		and: [ index between: 1 and: self class instSize + self basicSize])
@@ -1079,41 +1068,41 @@ Object >> instVarAt: index put: anObject [
 		ifTrue: [ ^ self modificationForbiddenFor: #instVarAt:put: index: index value: anObject ]
 ]
 
-{ #category : #introspection }
+{ #category : 'introspection' }
 Object >> instVarNamed: aStringOrSymbol [
 	"Return the value of the instance variable in me with that name.  Slow, but very useful.
 	We support here all slots (even non indexed) but raise a backward compatible exception"
-
+	<reflection: 'Object Inspection - State inspection'>
 	^ self class
 		slotNamed: aStringOrSymbol
 		ifFound: [ :slot | slot read: self ]
 		ifNone: [ InstanceVariableNotFound signalFor: aStringOrSymbol asString ]
 ]
 
-{ #category : #introspection }
+{ #category : 'introspection' }
 Object >> instVarNamed: aString put: aValue [
 	"Store into the value of the instance variable in me of that name. Slow, but very useful.
 	We support here all slots (even non indexed) but raise a backward compatible exception"
-
+	<reflection: 'Object Modification - State modification'>
 	^ self class
 		slotNamed: aString
 		ifFound: [ :slot | slot write: aValue to: self ]
 		ifNone: [ InstanceVariableNotFound signalFor: aString asString ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Object >> isArray [
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Object >> isAssociation [
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Object >> isBehavior [
 	"Return true if the receiver is a behavior.
 	Note: Do not override in any class except behavior."
@@ -1121,87 +1110,88 @@ Object >> isBehavior [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Object >> isBlock [
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Object >> isCharacter [
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Object >> isClass [
+	<reflection: 'Class structural inspection - Class/Metaclass shift'>
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Object >> isClassOrTrait [
-
+	<reflection: 'Class structural inspection - Class kind testing'>
 	^ self isClass or: [ self isTrait ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Object >> isClosure [
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Object >> isCollection [
 	"Return true if the receiver is some sort of Collection and responds to basic collection messages such as #size and #do:"
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Object >> isColor [
 	"Answer true if receiver is a Color. False by default."
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Object >> isColorForm [
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Object >> isCompiledBlock [
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Object >> isCompiledMethod [
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Object >> isContext [
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Object >> isDictionary [
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Object >> isEmbeddedBlock [
 	"Returns true for CleanBlockBlockClosure and CompiledBlock"
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Object >> isFloat [
 	"Overridden to return true in Float, natch"
 
@@ -1209,47 +1199,47 @@ Object >> isFloat [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Object >> isForm [
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Object >> isFraction [
 	"Answer true if the receiver is a Fraction."
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Object >> isHeap [
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Object >> isInteger [
 	"Overridden to return true in Integer."
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Object >> isInterval [
 
 	^ false
 ]
 
-{ #category : #'class membership' }
+{ #category : 'class membership' }
 Object >> isKindOf: aClass [
 	"Answer whether the class, aClass, is a superclass or class of the receiver.
 	The current implemementation allows for a Trait to be used as argument"
-
+	<reflection: 'Class structural inspection - Iterating and querying hierarchy'>
 	^ self class == aClass or: [ self class inheritsFrom: aClass ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Object >> isLiteral [
 
 	"Answer whether the receiver has a literal text form recognized by the compiler.
@@ -1260,57 +1250,57 @@ Object >> isLiteral [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Object >> isLiteral: alreadyVisited [
 
 	^ self isLiteral
 ]
 
-{ #category : #'class membership' }
+{ #category : 'class membership' }
 Object >> isMemberOf: aClass [
 	"Answer whether the receiver is an instance of the class, aClass."
-
+	<reflection: 'Class structural inspection - Iterating and querying hierarchy'>
 	^ self class == aClass
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Object >> isMessageSend [
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Object >> isMethodProperties [
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Object >> isMorph [
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Object >> isMorphicEvent [
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Object >> isNotNil [
 	"Coerces nil to false and everything else to true."
 
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Object >> isNumber [
 	"Overridden to return true in Number, natch"
 	^ false
 ]
 
-{ #category : #pinning }
+{ #category : 'pinning' }
 Object >> isPinned [
 	"self
 		deprecated: 'Please use #isPinnedInMemory instead'
@@ -1319,7 +1309,7 @@ Object >> isPinned [
 	^self isPinnedInMemory
 ]
 
-{ #category : #pinning }
+{ #category : 'pinning' }
 Object >> isPinnedInMemory [
 	"Answer if the receiver is pinned.  The VM's garbage collector routinely moves
 	 objects as it reclaims and compacts memory.  But it can also pin an object so
@@ -1329,14 +1319,14 @@ Object >> isPinnedInMemory [
 	^self primitiveFailed
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Object >> isPoint [
 	"Overridden to return true in Point."
 
 	^ false
 ]
 
-{ #category : #'write barrier' }
+{ #category : 'write barrier' }
 Object >> isReadOnlyObject [
 	"Answer if the receiver is read-only.
 	 If the VM supports read-only objects it will not write to read-only objects.
@@ -1348,13 +1338,13 @@ Object >> isReadOnlyObject [
 	^self isImmediateObject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Object >> isRectangle [
 
 	^ false
 ]
 
-{ #category : #'self evaluating' }
+{ #category : 'self evaluating' }
 Object >> isSelfEvaluating [
 
 	"A self evaluating object means that the string representation can be evaluated and give an identical object"
@@ -1362,76 +1352,77 @@ Object >> isSelfEvaluating [
 	^ self isLiteral
 ]
 
-{ #category : #'self evaluating' }
+{ #category : 'self evaluating' }
 Object >> isSelfEvaluating: alreadyVisited [
 
 	^ self isSelfEvaluating
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Object >> isStream [
 	"Return true if the receiver responds to the stream protocol"
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Object >> isString [
 	"Overridden to return true in String, natch"
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Object >> isSymbol [
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Object >> isSystemWindow [
 	"Answer whether the receiver is a SystemWindow"
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Object >> isText [
 
 	^ false
 ]
 
-{ #category : #flagging }
+{ #category : 'flagging' }
 Object >> isThisEverCalled [
 
 	^ self isThisEverCalled: thisContext sender printString
 ]
 
-{ #category : #flagging }
+{ #category : 'flagging' }
 Object >> isThisEverCalled: msg [
 	"Send this message, with some useful printable argument, from methods or branches of methods which you believe are never reached."
 
 	self error: 'This is indeed called: ' , msg printString
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Object >> isTrait [
+	<reflection: 'Class structural inspection - Class kind testing'>
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Object >> isVariableBinding [
 	"Return true if I represent a literal variable binding"
 	^false
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 Object >> literalEqual: other [
 
 	^ self class == other class and: [self = other]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 Object >> longPrintOn: aStream [
 	"Append to the argument, aStream, the names and values of all
 	of the receiver's instance variables."
@@ -1446,7 +1437,7 @@ Object >> longPrintOn: aStream [
 		 cr]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 Object >> longPrintOn: aStream limitedTo: sizeLimit indent: indent [
 	"Append to the argument, aStream, the names and values of all of the receiver's instance variables.  Limit is the length limit for each inst var."
 
@@ -1462,7 +1453,7 @@ Object >> longPrintOn: aStream limitedTo: sizeLimit indent: indent [
 		 cr]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 Object >> longPrintString [
 	"Answer a String whose characters are a description of the receiver."
 
@@ -1473,7 +1464,7 @@ Object >> longPrintString [
 	^ str ifEmpty: [ self printString , String cr ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 Object >> longPrintStringLimitedTo: aLimitValue [
 	"Answer a String whose characters are a description of the receiver."
 
@@ -1484,14 +1475,14 @@ Object >> longPrintStringLimitedTo: aLimitValue [
 	^ str ifEmpty: [ self printString , String cr ]
 ]
 
-{ #category : #dependencies }
+{ #category : 'dependencies' }
 Object >> myDependents [
 	"Private. Answer a list of all the receiver's dependents."
 
 	^ DependentsFields at: self ifAbsent: []
 ]
 
-{ #category : #dependencies }
+{ #category : 'dependencies' }
 Object >> myDependents: aCollectionOrNil [
 	"Private. Set (or remove) the receiver's dependents list."
 
@@ -1500,7 +1491,7 @@ Object >> myDependents: aCollectionOrNil [
 		ifNotNil: [DependentsFields at: self put: aCollectionOrNil]
 ]
 
-{ #category : #flagging }
+{ #category : 'flagging' }
 Object >> nominallyUnsent: aSelectorSymbol [
 	"From within the body of a method which is not formally sent within the system, but which you intend to have remain in the system (for potential manual invocation, or for documentation, or perhaps because it's sent by commented-out-code that you anticipate uncommenting out someday, send this message, with the selector itself as the argument.
 
@@ -1512,21 +1503,21 @@ This will serve two purposes:
 	false ifTrue: [self flag: #nominallyUnsent:]    "So that this method itself will appear to be sent"
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Object >> notNil [
 	"Coerces nil to false and everything else to true."
 
 	^true
 ]
 
-{ #category : #'error handling' }
+{ #category : 'error handling' }
 Object >> notYetImplemented [
 	"Announce that this message is not yet implemented"
 	<debuggerCompleteToSender>
 	NotYetImplemented signalFor: thisContext sender selector
 ]
 
-{ #category : #'error handling' }
+{ #category : 'error handling' }
 Object >> notify: aString [
 	"Create and schedule a Notifier with the argument as the message in
 	order to request confirmation before a process can proceed."
@@ -1534,95 +1525,96 @@ Object >> notify: aString [
 	Warning signal: aString
 ]
 
-{ #category : #'model - updating' }
+{ #category : 'model - updating' }
 Object >> okToChange [
 	"Allows a controller to ask this of any model"
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Object >> packageOrganizer [
 
 	^ self class packageOrganizer
 ]
 
-{ #category : #'message performing' }
+{ #category : 'message performing' }
 Object >> perform: aSymbol [
 	"Send the unary selector, aSymbol, to the receiver.
 	Fail if the number of arguments expected by the selector is not zero.
 	Primitive. Optional. See Object documentation whatIsAPrimitive."
-
+	<reflection: 'Message sending and code execution - Reflective message send'>
 	<primitive: 83>
 	^ self perform: aSymbol withArguments: #()
 ]
 
-{ #category : #'message performing' }
+{ #category : 'message performing' }
 Object >> perform: selector orSendTo: otherTarget [
 	"If I wish to intercept and handle selector myself, do it; else send it to otherTarget"
+	<reflection: 'Message sending and code execution - Reflective message send'>
 	^ (self respondsTo: selector) ifTrue: [self perform: selector] ifFalse: [otherTarget perform: selector]
 ]
 
-{ #category : #'message performing' }
+{ #category : 'message performing' }
 Object >> perform: aSymbol with: anObject [
 	"Send the selector, aSymbol, to the receiver with anObject as its argument.
 	Fail if the number of arguments expected by the selector is not one.
 	Primitive. Optional. See Object documentation whatIsAPrimitive."
-
+	<reflection: 'Message sending and code execution - Reflective message send'>
 	<primitive: 83>
 	^ self perform: aSymbol withArguments: {anObject}
 ]
 
-{ #category : #'message performing' }
+{ #category : 'message performing' }
 Object >> perform: aSymbol with: firstObject with: secondObject [
 	"Send the selector, aSymbol, to the receiver with the given arguments.
 	Fail if the number of arguments expected by the selector is not two.
 	Primitive. Optional. See Object documentation whatIsAPrimitive."
-
+	<reflection: 'Message sending and code execution - Reflective message send'>
 	<primitive: 83>
 	^ self perform: aSymbol withArguments: {firstObject . secondObject}
 ]
 
-{ #category : #'message performing' }
+{ #category : 'message performing' }
 Object >> perform: aSymbol with: firstObject with: secondObject with: thirdObject [
 	"Send the selector, aSymbol, to the receiver with the given arguments.
 	Fail if the number of arguments expected by the selector is not three.
 	Primitive. Optional. See Object documentation whatIsAPrimitive."
-
+	<reflection: 'Message sending and code execution - Reflective message send'>
 	<primitive: 83>
 	^ self perform: aSymbol
 		withArguments: {firstObject . secondObject . thirdObject}
 ]
 
-{ #category : #'message performing' }
+{ #category : 'message performing' }
 Object >> perform: aSymbol with: firstObject with: secondObject with: thirdObject with: fourthObject [
 	"Send the selector, aSymbol, to the receiver with the given arguments.
 	Fail if the number of arguments expected by the selector is not four.
 	Primitive. Optional. See Object documentation whatIsAPrimitive."
-
+	<reflection: 'Message sending and code execution - Reflective message send'>
 	<primitive: 83>
 	^ self perform: aSymbol
 		withArguments: {firstObject . secondObject . thirdObject . fourthObject}
 ]
 
-{ #category : #'message performing' }
+{ #category : 'message performing' }
 Object >> perform: selector withArguments: argArray [
 	"Send the selector, aSymbol, to the receiver with arguments in argArray.
 	Fail if the number of arguments expected by the selector
 	does not match the size of argArray.
 	Primitive. Optional. See Object documentation whatIsAPrimitive."
-
+	<reflection: 'Message sending and code execution - Reflective message send'>
 	<primitive: 84>
 	^ self perform: selector withArguments: argArray inSuperclass: self class
 ]
 
-{ #category : #'message performing' }
+{ #category : 'message performing' }
 Object >> perform: selector withArguments: argArray inSuperclass: lookupClass [
 	"NOTE:  This is just like perform:withArguments:, except that
 	the message lookup process begins, not with the receivers's class,
 	but with the supplied superclass instead.  It will fail if lookupClass
 	cannot be found among the receiver's superclasses.
 	Primitive. Essential. See Object documentation whatIsAPrimitive."
-
+	<reflection: 'Message sending and code execution - Reflective message send'>
 	<primitive: 100>
 	selector isSymbol
 		ifFalse: [ ^ self error: 'selector argument must be a Symbol' ].
@@ -1633,10 +1625,11 @@ Object >> perform: selector withArguments: argArray inSuperclass: lookupClass [
 	self primitiveFailed
 ]
 
-{ #category : #'message performing' }
+{ #category : 'message performing' }
 Object >> perform: selector withEnoughArguments: anArray [
 	"Send the selector, aSymbol, to the receiver with arguments in argArray.
 	Only use enough arguments for the arity of the selector; supply nils for missing ones."
+	<reflection: 'Message sending and code execution - Reflective message send'>
 	| numArgs args |
 	numArgs := selector numArgs.
 	anArray size == numArgs
@@ -1651,7 +1644,7 @@ Object >> perform: selector withEnoughArguments: anArray [
 	^ self perform: selector withArguments: args
 ]
 
-{ #category : #pinning }
+{ #category : 'pinning' }
 Object >> pin [
 	"self
 		deprecated: 'Please use #pinInMemory instead'
@@ -1660,7 +1653,7 @@ Object >> pin [
 	self pinInMemory
 ]
 
-{ #category : #pinning }
+{ #category : 'pinning' }
 Object >> pinInMemory [
 	"The VM's garbage collector routinely moves objects as it reclaims and compacts
 	 memory. But it can also pin an object so that it will not be moved, which can make
@@ -1669,36 +1662,36 @@ Object >> pinInMemory [
 	^self setPinnedInMemory: true
 ]
 
-{ #category : #'pointing to' }
+{ #category : 'pointing to' }
 Object >> pointsOnlyWeaklyTo: anObject [
 	"Assume, we already know that receiver points to an object,
 	answer true if receiver points only weakly to it "
-
+	<reflection: 'Chasing and swapping pointers - Find pointers to'>
 	self class isWeak ifFalse: [ ^ false ].
 	1 to: self class instSize do:
 		[:i | (self instVarAt: i) == anObject ifTrue: [^ false]].
 	^ true
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 Object >> postCopy [
 	"I'm a hook method in the sense of Design Patterns TemplateHook/Methods. I'm called by copy. self is a shallow copy, subclasses should copy fields as necessary to complete the full copy"
 
 	^ self
 ]
 
-{ #category : #'reflective operations' }
+{ #category : 'reflective operations' }
 Object >> primitiveChangeClassTo: anObject [
 	"Primitive. Change the class of the receiver into the class of the argument given that the format of the receiver matches the format of the argument's class. Fail if receiver or argument are SmallIntegers, or when the format of the receiver is different from the format of the argument's class, or when the arguments class is fixed and the receiver's size differs from the size that an instance of the argument's class should have.
 	Note: The primitive will fail in most cases that you think might work. This is mostly because of differences in the format. As an example, '(Array new: 3) primitiveChangeClassTo: Morph basicNew' would fail for two of the reasons mentioned above. Array is variable and Morph is fixed (different format - failure #1). Morph is a fixed-field-only object and the array is too short (failure #2)."
-
+	<reflection: 'Object Modification - Object class change'>
 	<primitive: 115>
 	self isReadOnlyObject
 		ifTrue: [ ^ self modificationForbiddenFor: #primitiveChangeClassTo: value: anObject ].
 	self primitiveFailed
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 Object >> printOn: aStream [
 	"Append to the argument, aStream, a sequence of characters that
 	identifies the receiver."
@@ -1710,7 +1703,7 @@ Object >> printOn: aStream [
 		nextPutAll: title
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 Object >> printString [
 	"Answer a String whose characters are a description of the receiver.
 	If you want to print without a character limit, use fullPrintString."
@@ -1718,14 +1711,14 @@ Object >> printString [
 	^ self printStringLimitedTo: 50000
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 Object >> printStringLimitedTo: limit [
 	"Answer a String whose characters are a description of the receiver.
 	If you want to print without a character limit, use fullPrintString."
 	^self printStringLimitedTo: limit using: [:s | self printOn: s]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 Object >> printStringLimitedTo: limit using: printBlock [
 	"Answer a String whose characters are a description of the receiver
 	produced by given printBlock. It ensures the result will be not bigger than given limit.
@@ -1736,7 +1729,7 @@ Object >> printStringLimitedTo: limit using: printBlock [
 	^ (limitedString truncateTo: limit - 4), '[..]'
 ]
 
-{ #category : #streaming }
+{ #category : 'streaming' }
 Object >> putOn: aStream [
 	"Write the receiver onto aStream.
 	In general we assume aStream accepts the receiver as element type.
@@ -1745,28 +1738,30 @@ Object >> putOn: aStream [
 	aStream nextPut: self
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 Object >> readFromString: aString [
 	"Create an object based on the contents of aString."
 	^ self readFrom: aString readStream
 ]
 
-{ #category : #introspection }
+{ #category : 'introspection' }
 Object >> readSlot: aSlot [
+	<reflection: 'Object Inspection - State inspection'>
 	^aSlot read: self
 ]
 
-{ #category : #introspection }
+{ #category : 'introspection' }
 Object >> readSlotNamed: aName [
+	<reflection: 'Object Inspection - State inspection'>
 	^(self class slotNamed: aName) read: self
 ]
 
-{ #category : #'write barrier' }
+{ #category : 'write barrier' }
 Object >> recursivelySetIsReadOnlyObject: aBoolean [
 	^self recursivelySetIsReadOnlyObject: aBoolean exceptObjectsIn: IdentitySet new
 ]
 
-{ #category : #'write barrier' }
+{ #category : 'write barrier' }
 Object >> recursivelySetIsReadOnlyObject: aBoolean exceptObjectsIn: alreadyDone [
 
 	"Handle self if not already done, and note it as done."
@@ -1788,19 +1783,19 @@ Object >> recursivelySetIsReadOnlyObject: aBoolean exceptObjectsIn: alreadyDone 
 			exceptObjectsIn: alreadyDone ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Object >> refersToLiteral: aLitteral [
 	^ self literalEqual: aLitteral
 ]
 
-{ #category : #dependencies }
+{ #category : 'dependencies' }
 Object >> release [
 	"Remove references to objects that may refer to the receiver. This message
 	should be overridden by subclasses with any cycles, in which case the
 	subclass should also include the expression super release."
 ]
 
-{ #category : #dependencies }
+{ #category : 'dependencies' }
 Object >> removeDependent: anObject [
 	"Remove the given object as one of the receiver's dependents."
 
@@ -1810,16 +1805,16 @@ Object >> removeDependent: anObject [
 	^ anObject
 ]
 
-{ #category : #'class membership' }
+{ #category : 'class membership' }
 Object >> respondsTo: aSymbol [
 	"Answer whether the receiver can understand the specified message selector
 	aSymbol (ie. will respond meaningfully when such a message is sent to the
 	receiver)."
-
+	<reflection: 'Class structural inspection - Selectors and methods inspection'>
 	^self class canUnderstand: aSymbol
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Object >> retrySetPinnedInMemory: aBoolean [
 	"Never use me directly use #setPinnedInMemory: instead"
 
@@ -1828,7 +1823,7 @@ Object >> retrySetPinnedInMemory: aBoolean [
 	^ self primitiveFailed
 ]
 
-{ #category : #finalization }
+{ #category : 'finalization' }
 Object >> retryWithGC: execBlock until: testBlock [
 	"Retry execBlock as long as testBlock returns false. Do an incremental GC after the first try, a full GC after the second try."
 	| blockValue |
@@ -1841,7 +1836,7 @@ Object >> retryWithGC: execBlock until: testBlock [
 	^execBlock value
 ]
 
-{ #category : #'write barrier' }
+{ #category : 'write barrier' }
 Object >> setIsReadOnlyObject: aBoolean [
 	"If the VM supports read-only objects it will not write to read-only objects.
 	 An attempt to write to an instance variable of a read-only object will
@@ -1857,7 +1852,7 @@ Object >> setIsReadOnlyObject: aBoolean [
 	^self primitiveFailed
 ]
 
-{ #category : #pinning }
+{ #category : 'pinning' }
 Object >> setPinned: aBoolean [
 	"self
 		deprecated: 'Please use #setPinnedInMemory: instead'
@@ -1866,7 +1861,7 @@ Object >> setPinned: aBoolean [
 	self setPinnedInMemory: aBoolean
 ]
 
-{ #category : #pinning }
+{ #category : 'pinning' }
 Object >> setPinnedInMemory: aBoolean [
 	"The VM's garbage collector routinely moves objects as it reclaims and compacts
 	 memory. But it can also pin an object so that it will not be moved around in memory,
@@ -1891,7 +1886,7 @@ Object >> setPinnedInMemory: aBoolean [
 	^ self retrySetPinnedInMemory: aBoolean
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 Object >> shallowCopy [
 	"Answer a copy of the receiver which shares the receiver's instance variables. It should never be overridden. I'm invoked from the copy template method. Subclasses that need to specialize the copy should specialize the postCopy hook method."
 
@@ -1915,14 +1910,14 @@ Object >> shallowCopy [
 	^ newObject
 ]
 
-{ #category : #'error handling' }
+{ #category : 'error handling' }
 Object >> shouldBeImplemented [
 	"Announce that this message should be implemented"
 	<debuggerCompleteToSender>
 	ShouldBeImplemented signalFor: thisContext sender selector
 ]
 
-{ #category : #'literal testing' }
+{ #category : 'literal testing' }
 Object >> shouldBePrintedAsLiteral [
 
 	"Only literals should be printed as literals"
@@ -1930,13 +1925,13 @@ Object >> shouldBePrintedAsLiteral [
 	^ self isLiteral
 ]
 
-{ #category : #'literal testing' }
+{ #category : 'literal testing' }
 Object >> shouldBePrintedAsLiteral: alreadyVisited [
 
 	^ self shouldBePrintedAsLiteral
 ]
 
-{ #category : #'error handling' }
+{ #category : 'error handling' }
 Object >> shouldNotImplement [
 	"Announce that, although the receiver inherits this message,
 	it should not implement it."
@@ -1944,18 +1939,19 @@ Object >> shouldNotImplement [
 	ShouldNotImplement signalFor: thisContext sender selector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Object >> size [
 	"Primitive. Answer the number of indexable variables in the receiver.
 	This value is the same as the largest legal subscript. Essential. See Object
 	documentation whatIsAPrimitive."
 
+	<reflection: 'Object Inspection - State inspection'>
 	<primitive: 62>
 	self class isVariable ifFalse: [self errorNotIndexable].
 	^ 0
 ]
 
-{ #category : #'memory usage' }
+{ #category : 'memory usage' }
 Object >> sizeInMemory [
 	self class isImmediateClass
 		ifTrue: [ ^ 0 ].
@@ -1964,16 +1960,16 @@ Object >> sizeInMemory [
 		ifFalse: [ self class byteSizeOfInstance ]
 ]
 
-{ #category : #'reflective operations' }
+{ #category : 'reflective operations' }
 Object >> someObject [
 	"Primitive. Answer the first object in the enumeration of all
 	 objects."
-
+	<reflection: 'Memory Scanning'>
 	<primitive: 138>
 	self primitiveFailed
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Object >> species [
 	"Answer the preferred class for reconstructing the receiver.  For example,
 	collections create new collections whenever enumeration messages such as
@@ -1984,7 +1980,7 @@ Object >> species [
 	^self class
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Object >> storeAt: offset inTempFrame: aContext [
 	"This message had to get sent to an expression already on the stack
 	as a Block argument being accessed by the debugger.
@@ -1992,7 +1988,7 @@ Object >> storeAt: offset inTempFrame: aContext [
 	^ aContext tempAt: offset put: self
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 Object >> storeOn: aStream [
 	"Append to the argument aStream a sequence of characters that is an
 	expression whose evaluation creates an object similar to the receiver."
@@ -2020,7 +2016,7 @@ Object >> storeOn: aStream [
 	aStream nextPutAll: ' yourself)'
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 Object >> storeString [
 	"Answer a String representation of the receiver from which the receiver
 	can be reconstructed."
@@ -2028,7 +2024,7 @@ Object >> storeString [
 	^ String streamContents: [:s | self storeOn: s]
 ]
 
-{ #category : #'error handling' }
+{ #category : 'error handling' }
 Object >> subclassResponsibility [
 	"This message sets up a framework for the behavior of the class' subclasses.
 	Announce that the subclass should have implemented this message."
@@ -2036,7 +2032,7 @@ Object >> subclassResponsibility [
 	SubclassResponsibility signalFor: thisContext sender selector
 ]
 
-{ #category : #finalization }
+{ #category : 'finalization' }
 Object >> toFinalizeSend: aSelector to: aFinalizer with: aResourceHandle [
 	"When I am finalized (e.g., garbage collected) close the associated resource handle by sending aSelector to the appropriate finalizer (the guy who knows how to get rid of the resource).
 	WARNING: Neither the finalizer nor the resource handle are allowed to reference me. If they do, then I will NEVER be garbage collected. Since this cannot be validated here, it is up to the client to make sure this invariant is not broken."
@@ -2052,12 +2048,12 @@ Object >> toFinalizeSend: aSelector to: aFinalizer with: aResourceHandle [
 				   argument: aResourceHandle)
 ]
 
-{ #category : #'error handling' }
+{ #category : 'error handling' }
 Object >> traitConflict [
 	self error: 'A class or trait does not properly resolve a conflict between multiple traits it uses.'
 ]
 
-{ #category : #pinning }
+{ #category : 'pinning' }
 Object >> unpin [
 	"self
 		deprecated: 'Please use #unpinInMemory instead'
@@ -2066,7 +2062,7 @@ Object >> unpin [
 	self unpinInMemory
 ]
 
-{ #category : #pinning }
+{ #category : 'pinning' }
 Object >> unpinInMemory [
 	"The VM's garbage collector routinely moves objects as it reclaims and compacts
 	 memory. But it can also pin an object so that it will not be moved, which can make
@@ -2075,7 +2071,7 @@ Object >> unpinInMemory [
 	^self setPinnedInMemory: false
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 Object >> update: aParameter [
 	"Receive a change notice from an object of whom the receiver is a
 	dependent. The default behavior is to do nothing; a subclass might want
@@ -2084,7 +2080,7 @@ Object >> update: aParameter [
 	^ self
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 Object >> update: anAspect with: anObject [
 	"Receive a change notice from an object of whom the receiver is a
 	dependent. The default behavior is to call update:,
@@ -2094,19 +2090,19 @@ Object >> update: anAspect with: anObject [
 	^ self update: anAspect
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 Object >> value [
 
 	^self
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 Object >> valueWithArguments: aSequenceOfArguments [
 
 	^self
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 Object >> veryDeepCopy [
 	"Do a complete tree copy using a dictionary.  An object in the tree twice is only copied once.  All references to the object in the copy of the tree will point to the new copy."
 
@@ -2119,7 +2115,7 @@ Object >> veryDeepCopy [
 	^ new
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 Object >> veryDeepCopyWith: deepCopier [
 	"Copy me and the entire tree of objects I point to.  An object in the tree twice is copied once, and both references point to him.  deepCopier holds a dictionary of objects we have seen.  Some classes refuse to be copied.  Some classes are picky about which fields get deep copied."
 
@@ -2167,36 +2163,38 @@ Object >> veryDeepCopyWith: deepCopier [
 	^ copyOfSelf
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 Object >> veryDeepFixupWith: deepCopier [
 	"I have no fields and no superclass.  Catch the super call."
 
 	"avoid to use me we will deprecate it in the future"
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 Object >> veryDeepInner: deepCopier [
 	"No special treatment for inst vars of my superclasses.  Override when some need to be weakly copied.  Object>>veryDeepCopyWith: will veryDeepCopy any inst var whose class does not actually define veryDeepInner:"
 
 	"avoid to use me we will deprecate it in the future"
 ]
 
-{ #category : #'model - updating' }
+{ #category : 'model - updating' }
 Object >> windowIsClosing [
 	"This message is used to inform a models that its window is closing. Most models do nothing, but some, such as the Debugger, must do some cleanup. Note that this mechanism must be used with care by models that support multiple views, since one view may be closed while others left open."
 ]
 
-{ #category : #introspection }
+{ #category : 'introspection' }
 Object >> writeSlot: aSlot value: anObject [
+	<reflection: 'Class structural modification - Slot modification'>
 	^aSlot write: anObject to: self
 ]
 
-{ #category : #introspection }
+{ #category : 'introspection' }
 Object >> writeSlotNamed: aName value: anObject [
+	<reflection: 'Class structural modification - Slot modification'>
 	^(self class slotNamed: aName) write: anObject to: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Object >> yourself [
 	"Answer self. The message yourself deserves a bit of explanation.
 	Sending yourself is handy to get the receiver of a message. It is especially useful when using a cascade since all the cascaded messages are send to the receiver. Let us look at an example.
@@ -2221,7 +2219,7 @@ Object >> yourself [
 	^self
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 Object >> ~= anObject [
 	"Answer whether the receiver and the argument do not represent the
 	same object."
@@ -2229,7 +2227,7 @@ Object >> ~= anObject [
 	^ self = anObject == false
 ]
 
-{ #category : #associating }
+{ #category : 'associating' }
 Object >> ~~> aValueLinkOrNil [
 
 	"Answer a link of the same class of `aValueLinkOrNil`; if that argument is nil,

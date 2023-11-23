@@ -11,87 +11,88 @@ Internal Representation and Key Implementation Points.
 	activator:		<CmdCommandActivator>
 "
 Class {
-	#name : #CmdCommandMenuItem,
-	#superclass : #CmdMenuItem,
+	#name : 'CmdCommandMenuItem',
+	#superclass : 'CmdMenuItem',
 	#instVars : [
 		'activator'
 	],
-	#category : #'Commander-Core'
+	#category : 'Commander-Core',
+	#package : 'Commander-Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CmdCommandMenuItem class >> activatingBy: aMenuCommandActivator [
 	^self new
 		activator: aMenuCommandActivator
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdCommandMenuItem >> activator [
 	^ activator
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdCommandMenuItem >> activator: anObject [
 	activator := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdCommandMenuItem >> command [
 	^ activator command
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdCommandMenuItem >> description [
 	^activator commandDescription
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 CmdCommandMenuItem >> executeCommand [
 	activator executeCommand
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdCommandMenuItem >> findGroupLike: menuGroupClass ifExists: aBlockClosure [
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdCommandMenuItem >> icon [
 	^activator menuItemIcon
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CmdCommandMenuItem >> includesCommand: aCommandClass [
 
 	^activator activatesCommand: aCommandClass
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CmdCommandMenuItem >> isActive [
 	^activator canExecuteCommand
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CmdCommandMenuItem >> isCommandItem [
 	^true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CmdCommandMenuItem >> isSimilarTo: aMenuItem [
 	^self class == aMenuItem class and: [
 		activator isSimilarTo: aMenuItem activator]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdCommandMenuItem >> name [
 	^activator menuItemName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdCommandMenuItem >> order [
 	^activator menuItemOrder
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 CmdCommandMenuItem >> printOn: aStream [
 	super printOn: aStream.
 	aStream nextPut: $(.
@@ -99,6 +100,6 @@ CmdCommandMenuItem >> printOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 CmdCommandMenuItem >> synchronizeContentWith: anotherMenuItem [
 ]

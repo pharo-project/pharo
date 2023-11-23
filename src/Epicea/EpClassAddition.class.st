@@ -2,15 +2,17 @@
 I represent the creation of a class.
 "
 Class {
-	#name : #EpClassAddition,
-	#superclass : #EpClassChange,
+	#name : 'EpClassAddition',
+	#superclass : 'EpClassChange',
 	#instVars : [
 		'class'
 	],
-	#category : #'Epicea-Model'
+	#category : 'Epicea-Model',
+	#package : 'Epicea',
+	#tag : 'Model'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 EpClassAddition class >> class: aClass [
 
 	^ self basicNew
@@ -18,31 +20,31 @@ EpClassAddition class >> class: aClass [
 		yourself
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpClassAddition >> accept: aVisitor [
 
 	^ aVisitor visitClassAddition: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpClassAddition >> behaviorAffected [
 
 	^ class
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpClassAddition >> behaviorAffectedName [
 
 	^ class name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpClassAddition >> classAdded [
 
 	^ class
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 EpClassAddition >> initializeClass: aClass [
 	self initialize.
 	class := aClass asEpiceaRingDefinition

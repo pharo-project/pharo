@@ -1,1 +1,1 @@
-Package { #name : #'Calypso-SystemQueries-Tests-PExtendedByP5' }
+Package { #name : 'Calypso-SystemQueries-Tests-PExtendedByP5' }

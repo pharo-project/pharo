@@ -9,20 +9,21 @@ ZdcSecurePOP3Client
 	limit: 5.
 "
 Class {
-	#name : #ZdcSecurePOP3Client,
-	#superclass : #POP3Client,
+	#name : 'ZdcSecurePOP3Client',
+	#superclass : 'POP3Client',
 	#instVars : [
 		'lineReader'
 	],
-	#category : #'Zodiac-Extra'
+	#category : 'Zodiac-Extra',
+	#package : 'Zodiac-Extra'
 }
 
-{ #category : #constants }
+{ #category : 'constants' }
 ZdcSecurePOP3Client class >> defaultPortForSSL [
 	^ 995
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 ZdcSecurePOP3Client class >> retrieveMessagesFromGMailAccount: accountAddress password: password limit: limit [
 	| pop3Client messages messageCount |
 	(pop3Client := self openOnHostNamed: 'smtp.gmail.com' port: self defaultPortForSSL)
@@ -37,7 +38,7 @@ ZdcSecurePOP3Client class >> retrieveMessagesFromGMailAccount: accountAddress pa
 	^ messages
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZdcSecurePOP3Client >> ensureConnection [
 	"Overwritten & refactored"
 
@@ -49,12 +50,12 @@ ZdcSecurePOP3Client >> ensureConnection [
 	self login
 ]
 
-{ #category : #'private - protocol' }
+{ #category : 'private - protocol' }
 ZdcSecurePOP3Client >> fetchNextResponse [
 	self lastResponse: self nextLineFromStream
 ]
 
-{ #category : #'private - protocol' }
+{ #category : 'private - protocol' }
 ZdcSecurePOP3Client >> getMultilineResponse [
 	"Get a multiple line response to the last command, filtering out LF characters.
 	A multiple line response ends with a line containing only a single period (.) character."
@@ -71,12 +72,12 @@ ZdcSecurePOP3Client >> getMultilineResponse [
 	^ response contents
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZdcSecurePOP3Client >> logVerbose: aString [
 	"self log: aString; log: Character cr"
 ]
 
-{ #category : #'private - protocol' }
+{ #category : 'private - protocol' }
 ZdcSecurePOP3Client >> nextLineFromStream [
 	| line |
 	line := lineReader nextLine.
@@ -84,7 +85,7 @@ ZdcSecurePOP3Client >> nextLineFromStream [
 	^ line
 ]
 
-{ #category : #'private - protocol' }
+{ #category : 'private - protocol' }
 ZdcSecurePOP3Client >> sendCommand: aString [
 	self logVerbose: aString.
 	self stream
@@ -93,19 +94,19 @@ ZdcSecurePOP3Client >> sendCommand: aString [
 		flush
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZdcSecurePOP3Client >> setupStream [
 	self setupStreamForSSL
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZdcSecurePOP3Client >> setupStreamForSSL [
 	self stream: (ZdcSecureSocketStream openConnectionToHost: self host port: self port).
 	self stream connect.
 	self logVerbose: 'SSL Connect OK.'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZdcSecurePOP3Client >> stream: aStream [
 	super stream: aStream.
 	lineReader := ZnLineReader on: self stream

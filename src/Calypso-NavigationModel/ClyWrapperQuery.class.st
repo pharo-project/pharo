@@ -11,40 +11,42 @@ Subclasses can use #actualQuery to access single subquery for convenience.
 I redefine #description to look like subquery by default.
 "
 Class {
-	#name : #ClyWrapperQuery,
-	#superclass : #ClyCompositeQuery,
-	#category : #'Calypso-NavigationModel-Query'
+	#name : 'ClyWrapperQuery',
+	#superclass : 'ClyCompositeQuery',
+	#category : 'Calypso-NavigationModel-Query',
+	#package : 'Calypso-NavigationModel',
+	#tag : 'Query'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyWrapperQuery class >> for: aQuery [
 	^self with: { aQuery }
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyWrapperQuery >> actualQuery [
 	^subqueries anyOne
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyWrapperQuery >> description [
 
 	^self actualQuery description
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyWrapperQuery >> printExtraInfoOn: aStream [
 
 	^aStream nextPutAll: self description
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyWrapperQuery >> subqueries: queriesCollection [
 	queriesCollection size = 1 ifFalse: [ self error: 'Wrapper query should include single subquery' ].
 	super subqueries: queriesCollection
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ClyWrapperQuery >> withResult: aQueryResult [
 
 	| newQuery |
@@ -53,7 +55,7 @@ ClyWrapperQuery >> withResult: aQueryResult [
 	^newQuery
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ClyWrapperQuery >> withSubqueries: newSubqueries [
 
 	^self copy

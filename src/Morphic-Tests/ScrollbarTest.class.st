@@ -1,10 +1,12 @@
 Class {
-	#name : #ScrollbarTest,
-	#superclass : #SliderTest,
-	#category : #'Morphic-Tests-Widgets'
+	#name : 'ScrollbarTest',
+	#superclass : 'SliderTest',
+	#category : 'Morphic-Tests-Widgets',
+	#package : 'Morphic-Tests',
+	#tag : 'Widgets'
 }
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 ScrollbarTest >> createSlider [
 
 	^ ScrollBarMorph new

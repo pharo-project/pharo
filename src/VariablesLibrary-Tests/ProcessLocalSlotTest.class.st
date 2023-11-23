@@ -1,10 +1,12 @@
 Class {
-	#name : #ProcessLocalSlotTest,
-	#superclass : #SlotSilentTest,
-	#category : #'VariablesLibrary-Tests-Tests'
+	#name : 'ProcessLocalSlotTest',
+	#superclass : 'SlotSilentTest',
+	#category : 'VariablesLibrary-Tests-Tests',
+	#package : 'VariablesLibrary-Tests',
+	#tag : 'Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessLocalSlotTest >> testIsPossibleToSetSlotInBlock [
 	<ignoreNotImplementedSelectors: #(slot1:)>
 	| slot writerString instance |
@@ -28,7 +30,7 @@ ProcessLocalSlotTest >> testIsPossibleToSetSlotInBlock [
 	self assert: (instance instVarNamed: #slot1) value equals: #test
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessLocalSlotTest >> testRead [
 	| slot |
 	<ignoreNotImplementedSelectors: #(slot1)>
@@ -43,7 +45,7 @@ ProcessLocalSlotTest >> testRead [
 	self assert: (slot read: aClass new) equals: nil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessLocalSlotTest >> testWriteAndReadCompiled [
 	| slot object |
 	<ignoreNotImplementedSelectors: #(slot1 slot1:)>
@@ -61,7 +63,7 @@ ProcessLocalSlotTest >> testWriteAndReadCompiled [
 	self assert: object slot1 equals: 3
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessLocalSlotTest >> testWriteAndReadReflective [
 	| slot object |
 	slot := #slot1 => ProcessLocalSlot.

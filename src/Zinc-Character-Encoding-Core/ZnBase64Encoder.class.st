@@ -30,8 +30,8 @@ I can be configured with
 Part of Zinc HTTP Components.
 "
 Class {
-	#name : #ZnBase64Encoder,
-	#superclass : #Object,
+	#name : 'ZnBase64Encoder',
+	#superclass : 'Object',
 	#instVars : [
 		'alphabet',
 		'inverse',
@@ -45,10 +45,11 @@ Class {
 		'DefaultAlphabet',
 		'DefaultInverse'
 	],
-	#category : #'Zinc-Character-Encoding-Core'
+	#category : 'Zinc-Character-Encoding-Core',
+	#package : 'Zinc-Character-Encoding-Core'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 ZnBase64Encoder class >> initialize [
 	DefaultAlphabet := String withAll: ($A to: $Z) , ($a to: $z) , ($0 to: $9) , #($+ $/).
 	DefaultInverse := Array new: 128.
@@ -58,14 +59,14 @@ ZnBase64Encoder class >> initialize [
 		DefaultInverse at: each + 1 put: (offset ifNotNil: [ offset - 1 ]) ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnBase64Encoder >> alphabet [
 	"Return the alphabet that I am using to encode byte values"
 
 	^ alphabet
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ZnBase64Encoder >> alphabet: string [
 	"Set the alphabet to use to string, containing 64 characters to represent 64 byte values.
 	I automatically compute the inverse used for fast decoding."
@@ -79,7 +80,7 @@ ZnBase64Encoder >> alphabet: string [
 		inverse at: each + 1 put: (offset ifNotNil: [ offset - 1 ]) ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ZnBase64Encoder >> beForURLEncoding [
 	"Configure me for 'base64url' encoding, used for filenames and URLs.
 	In particular I am using $- instead of $+ and $_ instead of $/
@@ -93,28 +94,28 @@ ZnBase64Encoder >> beForURLEncoding [
 	self whitespace: nil
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ZnBase64Encoder >> beLenient [
 	"Configure me to allow optional padding when decoding"
 
 	strict := false
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ZnBase64Encoder >> beStrict [
 	"Configure me to enforce padding when decoding"
 
 	strict := true
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ZnBase64Encoder >> breakLines [
 	"Configure me to break lines and insert newlines every 76 characters while encoding"
 
 	self breakLinesAt: 76
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ZnBase64Encoder >> breakLinesAt: length [
 	"Configure me to break lines at lenth, a multiple of 4, and insert newlines"
 
@@ -123,7 +124,7 @@ ZnBase64Encoder >> breakLinesAt: length [
 	lineEnd ifNil: [ self lineEndConvention: #crlf ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnBase64Encoder >> byteCountFor: string [
 	| n byteCount |
 	"This assumes there are no line breaks in string and that padding is used"
@@ -137,7 +138,7 @@ ZnBase64Encoder >> byteCountFor: string [
 		ifFalse: [ byteCount ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnBase64Encoder >> characterCountFor: bytes [
 	| n characterCount |
 	"This assumes that padding is used"
@@ -148,12 +149,12 @@ ZnBase64Encoder >> characterCountFor: bytes [
 		ifNotNil: [ characterCount + (characterCount // lineLength * lineEnd size) ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnBase64Encoder >> characterForValue: value [
 	^ alphabet at: value + 1
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ZnBase64Encoder >> decode: string [
 	"Decode a Base64 encoded string and return the resulting byte array"
 
@@ -163,7 +164,7 @@ ZnBase64Encoder >> decode: string [
 			self decode: string readStream to: byteStream ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnBase64Encoder >> decode: char1 and: char2 and: char3 and: char4 to: stream [
 	| v1 v2 v3 v4 |
 	v1 := self valueForCharacter: char1.
@@ -177,7 +178,7 @@ ZnBase64Encoder >> decode: char1 and: char2 and: char3 and: char4 to: stream [
 	stream nextPut: ((v3 bitAnd: 2r11) bitShift: 6) + v4
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ZnBase64Encoder >> decode: stringStream to: byteStream [
 	| char1 char2 char3 char4 |
 	[ stringStream atEnd ] whileFalse: [
@@ -192,7 +193,7 @@ ZnBase64Encoder >> decode: stringStream to: byteStream [
 		self decode: char1 and: char2 and: char3 and: char4 to: byteStream ]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ZnBase64Encoder >> encode: byteArray [
 	"Encode byteArray using Base64 encoding and return the resulting string"
 
@@ -202,7 +203,7 @@ ZnBase64Encoder >> encode: byteArray [
 			self encode: byteArray readStream to: stringStream ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnBase64Encoder >> encode: byte1 and: byte2 and: byte3 to: stream [
 	stream nextPut: (self characterForValue: (byte1 bitShift: -2)).
 	byte2
@@ -220,7 +221,7 @@ ZnBase64Encoder >> encode: byte1 and: byte2 and: byte3 to: stream [
 					stream nextPut: (self characterForValue: (byte3 bitAnd: 2r111111)) ] ]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ZnBase64Encoder >> encode: byteStream to: stringStream [
 	| byte1 byte2 byte3 count |
 	lineLength
@@ -243,7 +244,7 @@ ZnBase64Encoder >> encode: byteStream to: stringStream [
 						count := 0 ] ] ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ZnBase64Encoder >> initialize [
 	super initialize.
 	alphabet := DefaultAlphabet.
@@ -253,16 +254,16 @@ ZnBase64Encoder >> initialize [
 	self beStrict
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnBase64Encoder >> isLegalCharacter: character [
 	"Return true when character is part of my alphabet"
 
 	| code |
 	^ (code := character asciiValue) < 128
-			and: [ (inverse at: code + 1) notNil ]
+			and: [ (inverse at: code + 1) isNotNil ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnBase64Encoder >> isWhitespaceCharacter: character [
 	"Return true when character should be considered whitespace"
 
@@ -278,7 +279,7 @@ ZnBase64Encoder >> isWhitespaceCharacter: character [
 	^ false
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ZnBase64Encoder >> lineEndConvention: symbol [
 	"Set the end of line convention to be used.
 	Either #cr, #lf or #crlf (the default)."
@@ -287,14 +288,14 @@ ZnBase64Encoder >> lineEndConvention: symbol [
 	lineEnd := String perform: symbol
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ZnBase64Encoder >> noPadding [
 	"Configure me to output no padding"
 
 	self padding: nil
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ZnBase64Encoder >> padding: character [
 	"Configure me to use character as padding.
 	One or two padding character might be needed to complete each quad.
@@ -303,13 +304,13 @@ ZnBase64Encoder >> padding: character [
 	padding := character
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnBase64Encoder >> skipWhitespace: stream [
 	[ stream atEnd not and: [ (self isWhitespaceCharacter: stream peek) ] ]
 		whileTrue: [ stream next ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ZnBase64Encoder >> standardAlphabetWith: beforeLastCharacter and: lastCharacter [
 	"Typically more alphabets use the same first 62 characters, A-Z, a-z, 0-9,
 	and only differ in the last two characters used.
@@ -321,7 +322,7 @@ ZnBase64Encoder >> standardAlphabetWith: beforeLastCharacter and: lastCharacter 
 	^ self alphabet: (String withAll: characters)
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnBase64Encoder >> valueForCharacter: char [
 	| code |
 	(code := char asciiValue) < 128
@@ -331,7 +332,7 @@ ZnBase64Encoder >> valueForCharacter: char [
 	ZnCharacterEncodingError signal: 'Illegal Base64 input'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ZnBase64Encoder >> whitespace: mode [
 	"Set the whitespace mode:
 	nil is no whitespace allowed,

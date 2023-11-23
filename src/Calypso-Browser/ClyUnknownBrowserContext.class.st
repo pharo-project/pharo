@@ -4,7 +4,9 @@ I usually used as a stub in cases when context is not found or is not implemente
 Many browser extensions are defined for the specific context. And I allow to ignore all of them when given part of browser do not reifies real context
 "
 Class {
-	#name : #ClyUnknownBrowserContext,
-	#superclass : #CmdToolContext,
-	#category : #'Calypso-Browser-Contexts'
+	#name : 'ClyUnknownBrowserContext',
+	#superclass : 'CmdToolContext',
+	#category : 'Calypso-Browser-Contexts',
+	#package : 'Calypso-Browser',
+	#tag : 'Contexts'
 }

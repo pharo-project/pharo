@@ -2,32 +2,29 @@
 Abstract superclass for monticello tests
 "
 Class {
-	#name : #MCTestCase,
-	#superclass : #AbstractEnvironmentTestCase,
-	#category : #'Monticello-Tests-Base'
+	#name : 'MCTestCase',
+	#superclass : 'AbstractEnvironmentTestCase',
+	#category : 'Monticello-Tests-Base',
+	#package : 'Monticello-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCTestCase class >> isAbstract [
 	^ self = MCTestCase
 ]
 
-{ #category : #testing }
-MCTestCase class >> isUnitTest [
-	^false
-]
-
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCTestCase class >> resources [
 	^ Array with: MCSnapshotResource
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 MCTestCase >> assertPackage: actual matches: expected [
 	self assert: actual equals: expected
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 MCTestCase >> assertSnapshot: actual matches: expected [
 	| diff |
 	diff := actual patchRelativeToBase: expected.
@@ -35,14 +32,14 @@ MCTestCase >> assertSnapshot: actual matches: expected [
 
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 MCTestCase >> assertVersion: actual matches: expected [
 	self assertPackage: actual package matches: expected package.	
 	self assertVersionInfo: actual info matches: expected info.
 	self assertSnapshot: actual snapshot matches: expected snapshot.
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 MCTestCase >> assertVersionInfo: actual matches: expected [
 	self assert: actual name equals: expected name.
 	self assert: actual message equals: expected message.
@@ -50,118 +47,97 @@ MCTestCase >> assertVersionInfo: actual matches: expected [
 	actual ancestors with: expected ancestors do: [ :a :e | self assertVersionInfo: a matches: e ]
 ]
 
-{ #category : #compiling }
+{ #category : 'compiling' }
 MCTestCase >> change: aSelector toReturn: anObject [
-	self 
-		compileClass: self mockClassA 
-		source: aSelector, ' ^ ', anObject printString 
-		category: 'numeric'
+
+	self mockClassA compileSilently: aSelector , ' ^ ' , anObject printString classified: 'numeric'
 ]
 
-{ #category : #mocks }
+{ #category : 'mocks' }
 MCTestCase >> commentForClass: name [
 	^ 'This is a comment for ', name
 ]
 
-{ #category : #mocks }
+{ #category : 'mocks' }
 MCTestCase >> commentStampForClass: name [
 	^ 'tester-', name,  ' 1/1/2000 00:00'
 ]
 
-{ #category : #compiling }
-MCTestCase >> compileClass: aClass source: source category: category [
-	aClass compileSilently: source classified: category
-]
-
-{ #category : #mocks }
+{ #category : 'mocks' }
 MCTestCase >> mockCategoryName [
 	^ 'MonticelloMocks'
 ]
 
-{ #category : #mocks }
-MCTestCase >> mockClass: className super: superclassName [
-	^ MCClassDefinition
-		name:  className
-		superclassName:  superclassName
-		traitComposition: '{}'
-		classTraitComposition: '{}'
-		category: self mockCategoryName
-		instVarNames: #()
-		classVarNames: #()
-		poolDictionaryNames: #()
-		classInstVarNames: #()
-		type: #normal
-		comment: (self commentForClass: className)
-		commentStamp: (self commentStampForClass: className)
-]
-
-{ #category : #mocks }
+{ #category : 'mocks' }
 MCTestCase >> mockClassA [
 	^ testingEnvironment at: #MCMockClassA
 ]
 
-{ #category : #mocks }
+{ #category : 'mocks' }
 MCTestCase >> mockClassB [
 	^ testingEnvironment at: #MCMockClassB
 ]
 
-{ #category : #mocks }
+{ #category : 'mocks' }
 MCTestCase >> mockDependencies [
 	^ Array with: (MCVersionDependency package: self mockEmptyPackage info: (self mockVersionInfo: 'x'))
 ]
 
-{ #category : #mocks }
+{ #category : 'mocks' }
 MCTestCase >> mockEmptyPackage [
 	^ MCPackage named: 'Mock empty package'
 ]
 
-{ #category : #mocks }
+{ #category : 'mocks' }
 MCTestCase >> mockExtensionMethodCategory [
+
+	self deprecated: 'Use mockExtensionProtocol instead.' transformWith: '`@rcv mockExtensionMethodCategory' -> '`@rcv mockExtensionProtocol'.
+	^ self mockExtensionProtocol
+]
+
+{ #category : 'mocks' }
+MCTestCase >> mockExtensionProtocol [
 	^ '*MonticelloMocks'
 ]
 
-{ #category : #mocks }
+{ #category : 'mocks' }
 MCTestCase >> mockInstanceA [
 	^ self mockClassA new
 ]
 
-{ #category : #mocks }
+{ #category : 'mocks' }
 MCTestCase >> mockMessageString [
 	^ 'A version generated for testing purposes.'
 ]
 
-{ #category : #mocks }
+{ #category : 'mocks' }
 MCTestCase >> mockMethod: aSymbol class: className source: sourceString meta: aBoolean [
+
 	^ MCMethodDefinition
-		className: className
-		classIsMeta: aBoolean
-		selector:  aSymbol
-		category: 'as yet unclassified'
-		timeStamp: ''
-		source: sourceString
+		  className: className
+		  classIsMeta: aBoolean
+		  selector: aSymbol
+		  category: Protocol unclassified
+		  timeStamp: ''
+		  source: sourceString
 ]
 
-{ #category : #mocks }
-MCTestCase >> mockOverrideMethodCategory [
-	^ self mockExtensionMethodCategory, '-override'
-]
-
-{ #category : #mocks }
+{ #category : 'mocks' }
 MCTestCase >> mockPackage [
 	^ MCSnapshotResource mockPackage
 ]
 
-{ #category : #mocks }
+{ #category : 'mocks' }
 MCTestCase >> mockSnapshot [
 	^ MCSnapshotResource current snapshot
 ]
 
-{ #category : #mocks }
+{ #category : 'mocks' }
 MCTestCase >> mockToken: aSymbol [
 	^ MCMockDefinition token: aSymbol
 ]
 
-{ #category : #mocks }
+{ #category : 'mocks' }
 MCTestCase >> mockVersion [
 	^ MCVersion 
 		package: self mockPackage
@@ -169,12 +145,12 @@ MCTestCase >> mockVersion [
 		snapshot: self mockSnapshot
 ]
 
-{ #category : #mocks }
+{ #category : 'mocks' }
 MCTestCase >> mockVersionInfo [
 	^ self treeFrom: #(d ((b ((a))) (c)))
 ]
 
-{ #category : #mocks }
+{ #category : 'mocks' }
 MCTestCase >> mockVersionInfo: tag [ 
 	^ MCVersionInfo
 		name: self mockVersionName, '-', tag asString
@@ -187,7 +163,7 @@ MCTestCase >> mockVersionInfo: tag [
 
 ]
 
-{ #category : #mocks }
+{ #category : 'mocks' }
 MCTestCase >> mockVersionInfoWithAncestor: aVersionInfo [ 
 	^ MCVersionInfo
 		name: aVersionInfo name, '-child'
@@ -200,12 +176,12 @@ MCTestCase >> mockVersionInfoWithAncestor: aVersionInfo [
 
 ]
 
-{ #category : #mocks }
+{ #category : 'mocks' }
 MCTestCase >> mockVersionName [
 	^ 'MonticelloTest-xxx.1'
 ]
 
-{ #category : #mocks }
+{ #category : 'mocks' }
 MCTestCase >> mockVersionWithAncestor: aMCVersion [ 
 	^ MCVersion
 		package: self mockPackage
@@ -213,7 +189,7 @@ MCTestCase >> mockVersionWithAncestor: aMCVersion [
 		snapshot: self mockSnapshot
 ]
 
-{ #category : #mocks }
+{ #category : 'mocks' }
 MCTestCase >> mockVersionWithDependencies [
 	^ MCVersion 
 		package: self mockPackage
@@ -222,17 +198,17 @@ MCTestCase >> mockVersionWithDependencies [
 		dependencies: self mockDependencies
 ]
 
-{ #category : #compiling }
+{ #category : 'compiling' }
 MCTestCase >> restoreMocks [
 	self mockSnapshot updatePackage: self mockPackage
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 MCTestCase >> runCase [
 	MCCacheRepository disableCacheDuring: [ ^ super runCase ].
 ]
 
-{ #category : #mocks }
+{ #category : 'mocks' }
 MCTestCase >> treeFrom: anArray [
 
 	| name id |

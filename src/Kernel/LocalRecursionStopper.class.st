@@ -8,23 +8,25 @@ executes a block just once in a recursion in current process. If aBlock fork new
 A LocalRecursionStopper value is a collection of active methods which are currently called from within LocalRecrusionStopper>>#during: this means that recursion stopper can be used multiple places without one blocking the other
 "
 Class {
-	#name : #LocalRecursionStopper,
-	#superclass : #ProcessLocalVariable,
-	#category : #'Kernel-Processes'
+	#name : 'LocalRecursionStopper',
+	#superclass : 'ProcessLocalVariable',
+	#category : 'Kernel-Processes',
+	#package : 'Kernel',
+	#tag : 'Processes'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 LocalRecursionStopper class >> activeMethods [
 	^self value ifNil: [ self value: IdentitySet new. self value ]
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 LocalRecursionStopper class >> during: aBlock [
 	<debuggerCompleteToSender>
 	self stopMethod: thisContext sender homeMethod during: aBlock
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 LocalRecursionStopper class >> stopMethod: aMethod during: aBlock [
 
 	| activeMethods |

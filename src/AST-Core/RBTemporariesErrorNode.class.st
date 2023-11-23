@@ -6,12 +6,14 @@ the closure : | temporaries node .
 Forgetting the opening will be assumed to be a binary selector.
 "
 Class {
-	#name : #RBTemporariesErrorNode,
-	#superclass : #RBEnglobingErrorNode,
-	#category : #'AST-Core-Nodes - ErrorNodes'
+	#name : 'RBTemporariesErrorNode',
+	#superclass : 'RBEnglobingErrorNode',
+	#category : 'AST-Core-Nodes - ErrorNodes',
+	#package : 'AST-Core',
+	#tag : 'Nodes - ErrorNodes'
 }
 
-{ #category : #construction }
+{ #category : 'construction' }
 RBTemporariesErrorNode class >> error: aToken withNodes: aCollection [
 	"A RBTemporariesErrorNode can only be created from the opening token by choice.
 	 Since the closure is a |, the default assumption is that it's a binary selector."
@@ -21,17 +23,17 @@ RBTemporariesErrorNode class >> error: aToken withNodes: aCollection [
 		ifFalse: [ self new contents: aCollection; start: aToken start; stop: aCollection last stop; errorMessage: '''|'' or variable expected' ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBTemporariesErrorNode >> hasTemporaries [
 	^true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBTemporariesErrorNode >> isTemporariesError [
 	^true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBTemporariesErrorNode >> temporaries [
 	"Consider the content to act as bad temporaries variables"
 

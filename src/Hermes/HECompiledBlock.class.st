@@ -1,6 +1,6 @@
 Class {
-	#name : #HECompiledBlock,
-	#superclass : #HEExportedLiteral,
+	#name : 'HECompiledBlock',
+	#superclass : 'HEExportedLiteral',
 	#instVars : [
 		'encoderClassName',
 		'numArgs',
@@ -9,16 +9,18 @@ Class {
 		'bytecode',
 		'literals'
 	],
-	#category : #'Hermes-Model'
+	#category : 'Hermes-Model',
+	#package : 'Hermes',
+	#tag : 'Model'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HECompiledBlock class >> tag [
 
 	^ 28
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 HECompiledBlock >> asLiteralIn: anEnvironment [
 
 	| containingBlockOrMethod newBlock literalSpace previousBlock|
@@ -44,7 +46,7 @@ HECompiledBlock >> asLiteralIn: anEnvironment [
 	^ newBlock
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 HECompiledBlock >> doReadFrom: aReader [
 
 	| numberOfLiterals |
@@ -61,7 +63,7 @@ HECompiledBlock >> doReadFrom: aReader [
 	1 to: numberOfLiterals do: [ :idx | literals at:idx put: (HEExportedLiteral readFrom: aReader) ]
 ]
 
-{ #category : #compiling }
+{ #category : 'compiling' }
 HECompiledBlock >> headerFor: anEnvironment [
 	| encoderClass|
 	"When a method is deserialized its header should be recalculated"
@@ -70,7 +72,7 @@ HECompiledBlock >> headerFor: anEnvironment [
 	^ (CompiledMethod headerFlagForEncoder: encoderClass) + (numArgs bitShift: 24) + (numTemps bitShift: 18) + literals size + (hasPrimitive bitShift: 16)
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 HECompiledBlock >> instVarNamesForEqualityComparison [
 
 	^ self class allInstVarNames reject: [ :e | e = #value ]

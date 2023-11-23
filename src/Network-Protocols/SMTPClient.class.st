@@ -32,17 +32,19 @@ TURN <CRLF>
 
 "
 Class {
-	#name : #SMTPClient,
-	#superclass : #TelnetProtocolClient,
-	#category : #'Network-Protocols-Protocols'
+	#name : 'SMTPClient',
+	#superclass : 'TelnetProtocolClient',
+	#category : 'Network-Protocols-Protocols',
+	#package : 'Network-Protocols',
+	#tag : 'Protocols'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SMTPClient class >> defaultPortNumber [
 	^25
 ]
 
-{ #category : #'sending mail' }
+{ #category : 'sending mail' }
 SMTPClient class >> deliverMailFrom: fromAddress to: recipientList text: messageText usingServer: aString [
 	"Deliver a single email to a list of users and then close the connection.  For delivering multiple messages, it is best to create a single connection and send all mail over it
 	recipientList - a collection of simple internet style addresses -- no '<>' or '()' stuff
@@ -58,7 +60,7 @@ SMTPClient class >> deliverMailFrom: fromAddress to: recipientList text: message
 		ensure: [smtpClient close]
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 SMTPClient class >> example [
 	"SMTPClient example"
 
@@ -71,7 +73,7 @@ Hello from Pharo!
 '	usingServer: 'smtp.concentric.net'
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 SMTPClient class >> example2 [
 	"SMTPClient example2"
 
@@ -82,12 +84,12 @@ Hello from Pharo!
 '	usingServer: 'smtp.concentric.net'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SMTPClient class >> logFlag [
 	^#smtp
 ]
 
-{ #category : #'private - protocol' }
+{ #category : 'private - protocol' }
 SMTPClient >> data: messageData [
 	"send the data of a message"
 	"DATA <CRLF>"
@@ -111,12 +113,12 @@ SMTPClient >> data: messageData [
 	self checkResponse
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 SMTPClient >> encodeString: aString [
 	^ (aString encodeWith: #null) base64Encoded
 ]
 
-{ #category : #'private - protocol' }
+{ #category : 'private - protocol' }
 SMTPClient >> initiateSession [
 	"EHLO <SP> <domain> <CRLF>"
 
@@ -124,7 +126,7 @@ SMTPClient >> initiateSession [
 	self checkResponse
 ]
 
-{ #category : #'public protocol' }
+{ #category : 'public protocol' }
 SMTPClient >> localHostName [
 	"The local host name for purposes of identifying the the server.
  	If nil, NetNameResolver localHostName will be used."
@@ -132,7 +134,7 @@ SMTPClient >> localHostName [
  	^self connectionInfo at: #localHostName ifAbsent: [NetNameResolver localHostName]
 ]
 
-{ #category : #'public protocol' }
+{ #category : 'public protocol' }
 SMTPClient >> localHostName: aString [
 	"The local host name for purposes of identifying the the server.
  	If nil, NetNameResolver localHostName will be used."
@@ -140,7 +142,7 @@ SMTPClient >> localHostName: aString [
  	^self connectionInfo at: #localHostName put: aString
 ]
 
-{ #category : #'private - protocol' }
+{ #category : 'private - protocol' }
 SMTPClient >> login [
 	self initiateSession. "send EHLO first"
 	self user ifNil: [^self].
@@ -152,7 +154,7 @@ SMTPClient >> login [
 	self checkResponse
 ]
 
-{ #category : #'public protocol' }
+{ #category : 'public protocol' }
 SMTPClient >> mailFrom: sender to: recipientList text: messageText [
 	"deliver this mail to a list of users.  NOTE: the recipient list should be a collection of simple internet style addresses -- no '<>' or '()' stuff"
 
@@ -162,7 +164,7 @@ SMTPClient >> mailFrom: sender to: recipientList text: messageText [
 	self data: messageText
 ]
 
-{ #category : #'private - protocol' }
+{ #category : 'private - protocol' }
 SMTPClient >> quit [
 	"send a QUIT command.  This is polite to do, and indeed some servers might drop messages that don't have an associated QUIT"
 	"QUIT <CRLF>"
@@ -171,7 +173,7 @@ SMTPClient >> quit [
 	self checkResponse
 ]
 
-{ #category : #'private - protocol' }
+{ #category : 'private - protocol' }
 SMTPClient >> recipient: aRecipient [
 	"specify a recipient for the message.  aRecipient should be a bare email address"
 	"RCPT <SP> TO:<forward-path> <CRLF>"
@@ -180,7 +182,7 @@ SMTPClient >> recipient: aRecipient [
 	self checkResponse
 ]
 
-{ #category : #'public protocol' }
+{ #category : 'public protocol' }
 SMTPClient >> useHelo [
 	"If client use HELO instead of EHLO. HELO is the old protocol and
 	an old server may require it instead of EHLO."
@@ -188,7 +190,7 @@ SMTPClient >> useHelo [
 	^self connectionInfo at: #useHelo ifAbsent: [false]
 ]
 
-{ #category : #'public protocol' }
+{ #category : 'public protocol' }
 SMTPClient >> useHelo: aBoolean [
 	"Tell client to use HELO instead of EHLO. HELO is the old protocol and
 	an old server may require it instead of EHLO."

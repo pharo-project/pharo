@@ -40,8 +40,8 @@ Related methods:
 (reference https://wiki.libsdl.org/Tutorials/TextInput)
 "
 Class {
-	#name : #OSWindow,
-	#superclass : #Object,
+	#name : 'OSWindow',
+	#superclass : 'Object',
 	#instVars : [
 		'initialAttributes',
 		'eventHandler',
@@ -52,108 +52,110 @@ Class {
 	#classVars : [
 		'TraceEvents'
 	],
-	#category : #'OSWindow-Core-Base'
+	#category : 'OSWindow-Core-Base',
+	#package : 'OSWindow-Core',
+	#tag : 'Base'
 }
 
-{ #category : #'clipboard handling' }
+{ #category : 'clipboard handling' }
 OSWindow class >> clipboardText [
 	^ self validHandle clipboardText
 ]
 
-{ #category : #'clipboard handling' }
+{ #category : 'clipboard handling' }
 OSWindow class >> clipboardText: aString [
 	self validHandle clipboardText: aString
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OSWindow class >> createWithAttributes: attributes [
 	^ self createWithAttributes: attributes eventHandler: nil
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OSWindow class >> createWithAttributes: attributes eventHandler: eventHandler [
 	^ self basicNew initWithAttributes: attributes eventHandler: eventHandler
 ]
 
-{ #category : #finalization }
+{ #category : 'finalization' }
 OSWindow class >> finalizeResourceData: windowHandle [
 	windowHandle destroy.
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 OSWindow class >> initialize [ 
 
 	self traceEvents: false
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OSWindow class >> new [
 	^ self createWithAttributes: OSWindowAttributes new
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OSWindow class >> newWithNullDriver [
 	^ self createWithAttributes: OSWindowAttributes newWithNullDriver
 ]
 
-{ #category : #tracing }
+{ #category : 'tracing' }
 OSWindow class >> traceEvents: aBoolean [
 	TraceEvents := aBoolean
 ]
 
-{ #category : #'accessing - arguments' }
+{ #category : 'accessing - arguments' }
 OSWindow >> announcer [
 	^ announcer
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindow >> backendWindow [
 	^ backendWindow
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindow >> borderless [
 	^ self initialAttributes borderless: (self validHandle borderless)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindow >> borderless: aBoolean [
 	self validHandle borderless: aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindow >> bounds [
 	^ self initialAttributes bounds: (self validHandle bounds)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindow >> bounds: newBounds [
 	self validHandle bounds: newBounds
 ]
 
-{ #category : #'mouse capture' }
+{ #category : 'mouse capture' }
 OSWindow >> captureMouse [
 	self validHandle captureMouse
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OSWindow >> checkIsValid [
 
 	(backendWindow isNil or: [ backendWindow isValid not ]) ifTrue: [ self invalidHandle ].
 ]
 
-{ #category : #'clipboard handling' }
+{ #category : 'clipboard handling' }
 OSWindow >> clipboardText [
 	^ self validHandle clipboardText
 ]
 
-{ #category : #'clipboard handling' }
+{ #category : 'clipboard handling' }
 OSWindow >> clipboardText: aString [
 	^ self validHandle clipboardText: aString
 	
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OSWindow >> createWindow [
 	backendWindow ifNotNil: [ self error: 'The window is already created.' ].
 	
@@ -164,7 +166,7 @@ OSWindow >> createWindow [
 		backendWindow prepareExternalResourceForAutoRelease ]
 ]
 
-{ #category : #'dispatching events' }
+{ #category : 'dispatching events' }
 OSWindow >> deliverEvent: anEvent [
 	"TODO..."
 
@@ -173,7 +175,7 @@ OSWindow >> deliverEvent: anEvent [
 	eventHandler ifNotNil: [ eventHandler handleEvent: anEvent ].
 ]
 
-{ #category : #'dispatching events' }
+{ #category : 'dispatching events' }
 OSWindow >> deliverGlobalEvent: aGlobalEvent [
 	"TODO..."
 
@@ -182,7 +184,7 @@ OSWindow >> deliverGlobalEvent: aGlobalEvent [
 	eventHandler ifNotNil: [ eventHandler handleEvent: aGlobalEvent ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OSWindow >> destroy [
 	announcer  announce: DeleteWindowByCrossAnnouncement .
 	self validHandle destroy.
@@ -191,66 +193,66 @@ OSWindow >> destroy [
 	
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindow >> diagonalDPI [
 	^ self validHandle diagonalDPI
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindow >> eventHandler [
 	
 	^ eventHandler
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindow >> eventHandler: anObject [
 	
 	eventHandler := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindow >> extent [
 	^ self initialAttributes extent: (self validHandle extent)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindow >> extent: newExtent [
 	self validHandle extent: newExtent
 ]
 
-{ #category : #'window management' }
+{ #category : 'window management' }
 OSWindow >> focus [
 
 	self validHandle raise.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindow >> fullscreen: aBoolean [
 	self validHandle fullscreen: aBoolean
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OSWindow >> getFlags [
 	^ self validHandle getFlags
 ]
 
-{ #category : #visibility }
+{ #category : 'visibility' }
 OSWindow >> hide [
 	self checkIsValid .
 	backendWindow hide
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindow >> horizontalDPI [
 	^ self validHandle horizontalDPI
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindow >> icon: aForm [
 	self validHandle icon: aForm
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OSWindow >> initWithAttributes: attributes eventHandler: anEventHandle [
 	initialAttributes := attributes.
 	eventHandler := anEventHandle.
@@ -258,159 +260,159 @@ OSWindow >> initWithAttributes: attributes eventHandler: anEventHandle [
 	self initialize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindow >> initialAttributes [
 
 	^ initialAttributes
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OSWindow >> initialize [
 
 	announcer := Announcer new.
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OSWindow >> invalidHandle [
 	self error: 'Invalid window handle'
 ]
 
-{ #category : #'text input' }
+{ #category : 'text input' }
 OSWindow >> isTextInputActive [
 	"Check whether or not Unicode text input events are enabled"
 
 	^ self validHandle isTextInputActive
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OSWindow >> isValid [
 	 ^ backendWindow notNil and: [ backendWindow isValid ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OSWindow >> isVisible [
 	^ self isValid and: [backendWindow isVisible]
 ]
 
-{ #category : #'window management' }
+{ #category : 'window management' }
 OSWindow >> maximize [
 	self validHandle maximize.
 	initialAttributes maximized: true.
 ]
 
-{ #category : #'window management' }
+{ #category : 'window management' }
 OSWindow >> minimize [
 	self validHandle minimize.
 	initialAttributes minimized: true.
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OSWindow >> newAthensRenderer [
 	^ backendWindow ifNotNil: [backendWindow newAthensRenderer]
 ]
 
-{ #category : #factory }
+{ #category : 'factory' }
 OSWindow >> newFormRenderer: form [
 	^ backendWindow ifNotNil: [backendWindow newFormRenderer: form]
 ]
 
-{ #category : #factory }
+{ #category : 'factory' }
 OSWindow >> newGenericRenderer [
 	^ backendWindow ifNotNil: [backendWindow newGenericRenderer]
 ]
 
-{ #category : #factory }
+{ #category : 'factory' }
 OSWindow >> newOpenGLRenderer [
 	^ backendWindow ifNotNil: [backendWindow newOpenGLRenderer]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindow >> platformSpecificHandle [
 	^ self validHandle platformSpecificHandle
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindow >> position [
 	^ self initialAttributes position: (self validHandle position)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindow >> position: newPosition [
 	self validHandle position: newPosition
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 OSWindow >> processPendingEvents [
 	backendWindow processPendingEvents
 ]
 
-{ #category : #'mouse capture' }
+{ #category : 'mouse capture' }
 OSWindow >> releaseMouse [
 	self validHandle releaseMouse
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindow >> renderer [
 	^ backendWindow renderer
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindow >> renderer: aRenderer [
 	backendWindow renderer: aRenderer
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindow >> resizable [
 	^ self validHandle resizable
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindow >> resizable: aBoolean [
 	self validHandle resizable: aBoolean
 ]
 
-{ #category : #'window management' }
+{ #category : 'window management' }
 OSWindow >> restore [
 
 	self validHandle restore.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindow >> screenScaleFactor [
 	^ self validHandle screenScaleFactor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindow >> screenScaleFactorBaseDPI [
 	^ self validHandle screenScaleFactorBaseDPI
 ]
 
-{ #category : #'window management' }
+{ #category : 'window management' }
 OSWindow >> setDraggableArea: aRectangle [
 
 	^self validHandle setDraggableArea: aRectangle.
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OSWindow >> setJustCreatedHandle: aHandle [
 	"This method is to be called by a driver that needs to create the window in a critical section to prevent a race condition where some events such as expose could be missed."
 	backendWindow := aHandle
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindow >> setMouseCursor: cursorWithMask [
 	currentCursor == cursorWithMask ifTrue: [ ^ self ].
 	currentCursor := cursorWithMask.
 	self validHandle setMouseCursor: cursorWithMask
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindow >> setMouseCursor: cursor mask: mask [
 
 	self setMouseCursor: cursor mask: mask andScale: 1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindow >> setMouseCursor: cursor mask: mask andScale: scale [
 	currentCursor == cursor ifTrue: [ ^ self ].
 	currentCursor := cursor.
@@ -418,13 +420,13 @@ OSWindow >> setMouseCursor: cursor mask: mask andScale: scale [
 	self validHandle setMouseCursor: cursor mask: mask andScale: scale
 ]
 
-{ #category : #visibility }
+{ #category : 'visibility' }
 OSWindow >> show [
 	self checkIsValid .
 	backendWindow show
 ]
 
-{ #category : #'text input' }
+{ #category : 'text input' }
 OSWindow >> startTextInput [
 	"Start accepting Unicode text input events.
 	I will start accepting Unicode text input events in the focused window, and start emitting text input and text editing events.
@@ -434,7 +436,7 @@ OSWindow >> startTextInput [
 	self validHandle startTextInput
 ]
 
-{ #category : #'text input' }
+{ #category : 'text input' }
 OSWindow >> startTextInputAtRectangle: aRectangle [
 
 	"Start accepting Unicode text input events.
@@ -445,53 +447,53 @@ OSWindow >> startTextInputAtRectangle: aRectangle [
 	self validHandle startTextInputAtRectangle: aRectangle
 ]
 
-{ #category : #'text input' }
+{ #category : 'text input' }
 OSWindow >> stopTextInput [
 	"Stop receiving any text input events"
 
 	self validHandle stopTextInput
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindow >> title [
 	^ initialAttributes title: (self validHandle title)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindow >> title: aString [
 	self validHandle title: aString
 ]
 
-{ #category : #'window management' }
+{ #category : 'window management' }
 OSWindow >> toggleBorderOff [
 
 	self validHandle toggleBorderOff.
 ]
 
-{ #category : #'window management' }
+{ #category : 'window management' }
 OSWindow >> toggleBorderOn [
 
 	self validHandle toggleBorderOn.
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 OSWindow >> updateToNewResolution [
 	
 	self backendWindow updateToNewResolution
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OSWindow >> validHandle [
 	self checkIsValid.
 	^ backendWindow
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindow >> verticalDPI [
 	^ self validHandle verticalDPI
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindow >> windowId [
 	^ self validHandle windowId
 ]

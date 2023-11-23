@@ -1,16 +1,18 @@
 Class {
-	#name : #ProcessMonitorTestServiceTest,
-	#superclass : #TestExecutionEnvironmentTestCase,
-	#category : #'SUnit-Tests-Core'
+	#name : 'ProcessMonitorTestServiceTest',
+	#superclass : 'TestExecutionEnvironmentTestCase',
+	#category : 'SUnit-Tests-Core',
+	#package : 'SUnit-Tests',
+	#tag : 'Core'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ProcessMonitorTestServiceTest >> createTestService [
 
 	^ProcessMonitorTestService new
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ProcessMonitorTestServiceTest >> fork: aBlock [
 	"Here we simulate fork under TestExecutionEnvironment
 	which passes new process to all test services"
@@ -21,7 +23,7 @@ ProcessMonitorTestServiceTest >> fork: aBlock [
 	^newProcess
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ProcessMonitorTestServiceTest >> setUp [
 	super setUp.
 
@@ -31,7 +33,7 @@ ProcessMonitorTestServiceTest >> setUp [
 	executionEnvironment activated
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessMonitorTestServiceTest >> testAllowRunningBackgroundProcessesToFinish [
 
 	| semaphore processIsDone process |
@@ -47,7 +49,7 @@ ProcessMonitorTestServiceTest >> testAllowRunningBackgroundProcessesToFinish [
 	self assert: processIsDone
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessMonitorTestServiceTest >> testAllowRunningBackgroundProcessesToFinishButFailTestIfItCant [
 
 	| semaphore process wasResumed |
@@ -62,7 +64,7 @@ ProcessMonitorTestServiceTest >> testAllowRunningBackgroundProcessesToFinishButF
 	self assert: wasResumed
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessMonitorTestServiceTest >> testAlwaysPassBackgroundHalt [
 	| process haltWasPassed halt |
 	self flag: 'it fails runKernelTests on bootstrap image due to Process bug #6745'.
@@ -83,7 +85,7 @@ ProcessMonitorTestServiceTest >> testAlwaysPassBackgroundHalt [
 	self deny: (testService suspendedBackgroundFailures includesKey: process)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessMonitorTestServiceTest >> testCleanUpShouldNotTerminateAllFailedProcessesWhenSuchTerminationIsDisabled [
 	| process  |
 	process := self fork: [ testService suspendBackgroundFailure: Error new ].
@@ -96,7 +98,7 @@ ProcessMonitorTestServiceTest >> testCleanUpShouldNotTerminateAllFailedProcesses
 	self assert: testService forkedProcesses isEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessMonitorTestServiceTest >> testCleanUpShouldNotTerminateAllRunningProcessesWhenSuchTerminationIsDisabled [
 	| process  |
 	process := self fork: [ 10 seconds wait ].
@@ -108,7 +110,7 @@ ProcessMonitorTestServiceTest >> testCleanUpShouldNotTerminateAllRunningProcesse
 	self assert: testService forkedProcesses isEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessMonitorTestServiceTest >> testCleanUpShouldRestoreDefaultFailingLogicForRunningProcessesCase [
 
 	testService shouldFailTestLeavingProcesses: ProcessMonitorTestService shouldFailTestLeavingProcesses not.
@@ -118,7 +120,7 @@ ProcessMonitorTestServiceTest >> testCleanUpShouldRestoreDefaultFailingLogicForR
 	self assert: testService shouldFailTestLeavingProcesses equals: ProcessMonitorTestService shouldFailTestLeavingProcesses
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessMonitorTestServiceTest >> testCleanUpShouldRestoreProcessTerminationLogic [
 
 	testService shouldTerminateProcesses: ProcessMonitorTestService shouldTerminateProcesses not.
@@ -128,7 +130,7 @@ ProcessMonitorTestServiceTest >> testCleanUpShouldRestoreProcessTerminationLogic
 	self assert: testService shouldTerminateProcesses equals: ProcessMonitorTestService shouldTerminateProcesses
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessMonitorTestServiceTest >> testCleanUpShouldRestoreSuspensionLogic [
 
 	testService passBackgroundFailures.
@@ -138,7 +140,7 @@ ProcessMonitorTestServiceTest >> testCleanUpShouldRestoreSuspensionLogic [
 	self assert: testService shouldSuspendBackgroundFailures
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessMonitorTestServiceTest >> testCleanUpShouldTerminateAllFailedProcesses [
 	| process  |
 	process := self fork: [ testService suspendBackgroundFailure: Error new ].
@@ -150,7 +152,7 @@ ProcessMonitorTestServiceTest >> testCleanUpShouldTerminateAllFailedProcesses [
 	self assert: testService forkedProcesses isEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessMonitorTestServiceTest >> testCleanUpShouldTerminateAllRunningProcesses [
 	| process  |
 	process := self fork: [ 10 seconds wait ].
@@ -161,7 +163,7 @@ ProcessMonitorTestServiceTest >> testCleanUpShouldTerminateAllRunningProcesses [
 	self assert: testService forkedProcesses isEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessMonitorTestServiceTest >> testDisableRunningProcessesCleanupWhenPassBackgroundFailures [
 
 	testService passBackgroundFailures.
@@ -169,7 +171,7 @@ ProcessMonitorTestServiceTest >> testDisableRunningProcessesCleanupWhenPassBackg
 	self deny: testService shouldTerminateProcesses
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessMonitorTestServiceTest >> testDoesNotRaiseForkedProcessFailureWhenFailuresWerePassedAndMainProcessAlsoFails [
 
 	self fork: [ testService suspendBackgroundFailure: Error new.
@@ -181,7 +183,7 @@ ProcessMonitorTestServiceTest >> testDoesNotRaiseForkedProcessFailureWhenFailure
 	self shouldnt: [testService handleCompletedTest] raise: TestFailedByForkedProcess
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessMonitorTestServiceTest >> testDoesNotRaiseForkedProcessFailureWhenFailuresWerePassedAndProcessCompletes [
 
 	| process |
@@ -195,7 +197,7 @@ ProcessMonitorTestServiceTest >> testDoesNotRaiseForkedProcessFailureWhenFailure
 	self shouldnt: [testService handleCompletedTest] raise: TestFailedByForkedProcess
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessMonitorTestServiceTest >> testDoesNotRaiseForkedProcessFailureWhenThereWasOnlyMainProcessFailure [
 
 	testService handleException: Error new.
@@ -203,7 +205,7 @@ ProcessMonitorTestServiceTest >> testDoesNotRaiseForkedProcessFailureWhenThereWa
 	self shouldnt: [testService handleCompletedTest] raise: TestFailedByForkedProcess
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessMonitorTestServiceTest >> testDoesNotRaiseLeftRunningProcessWhenItAllowsThemToBe [
 
 	| process |
@@ -215,7 +217,7 @@ ProcessMonitorTestServiceTest >> testDoesNotRaiseLeftRunningProcessWhenItAllowsT
 	self deny: process isTerminated
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessMonitorTestServiceTest >> testDoesNotRaiseLeftRunningProcessWhenProcessWasOnlyCreated [
 
 	testService handleNewProcess: [  ] newProcess.
@@ -223,7 +225,7 @@ ProcessMonitorTestServiceTest >> testDoesNotRaiseLeftRunningProcessWhenProcessWa
 	self shouldnt: [testService handleCompletedTest] raise: TestLeftRunningProcess
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessMonitorTestServiceTest >> testDoesNotRaiseLeftRunningProcessWhenThereWasMainProcessFailure [
 
 	self fork: [ 10 seconds wait].
@@ -233,7 +235,7 @@ ProcessMonitorTestServiceTest >> testDoesNotRaiseLeftRunningProcessWhenThereWasM
 	self shouldnt: [testService handleCompletedTest] raise: TestLeftRunningProcess
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessMonitorTestServiceTest >> testFailTestWhenBackgroundFailureWasPassedButMainProcessCompletesSuccessfully [
 
 	self fork: [ testService suspendBackgroundFailure: Error new.
@@ -244,7 +246,7 @@ ProcessMonitorTestServiceTest >> testFailTestWhenBackgroundFailureWasPassedButMa
 	self should: [testService handleCompletedTest] raise: TestFailedByForkedProcess
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessMonitorTestServiceTest >> testFailTestWhenBackgroundProcessWasFailedDuringFinalTryToFinishItAtTestCompletionTime [
 	"ProcessMonitor tries to allow the left running processes to terminate during the test completion.
 	Such running processes can fail at this stage and this test is to cover this scenario.
@@ -269,7 +271,7 @@ ProcessMonitorTestServiceTest >> testFailTestWhenBackgroundProcessWasFailedDurin
 	self assert: processIsDone
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessMonitorTestServiceTest >> testFailTestWhenItIsCompletedWithBackgroundFailures [
 
 	self fork: [ testService suspendBackgroundFailure: Error new ].
@@ -277,7 +279,7 @@ ProcessMonitorTestServiceTest >> testFailTestWhenItIsCompletedWithBackgroundFail
 	self should: [testService handleCompletedTest] raise: TestFailedByForkedProcess
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessMonitorTestServiceTest >> testFailTestWhenItIsCompletedWithBackgroundFailuresAndRunningProcesses [
 
 	self fork: [ testService suspendBackgroundFailure: Error new ].
@@ -290,7 +292,7 @@ ProcessMonitorTestServiceTest >> testFailTestWhenItIsCompletedWithBackgroundFail
 		raise: TestLeftRunningProcess
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessMonitorTestServiceTest >> testFailTestWhenItIsCompletedWithRunningProcesses [
 
 	self fork: [ 10 seconds wait ].
@@ -298,7 +300,7 @@ ProcessMonitorTestServiceTest >> testFailTestWhenItIsCompletedWithRunningProcess
 	self should: [testService handleCompletedTest] raise: TestLeftRunningProcess
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessMonitorTestServiceTest >> testGettingBackgroundFailuresFromEnvironment [
 	| mainError backgroundError |
 	mainError := Error new messageText: 'mainProcessError'.
@@ -310,7 +312,7 @@ ProcessMonitorTestServiceTest >> testGettingBackgroundFailuresFromEnvironment [
 	self assertCollection: executionEnvironment backgroundFailures asSet hasSameElements: {backgroundError}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessMonitorTestServiceTest >> testGettingFailuresFromEnvironment [
 	| mainError backgroundError |
 	mainError := Error new messageText: 'mainProcessError'.
@@ -322,7 +324,7 @@ ProcessMonitorTestServiceTest >> testGettingFailuresFromEnvironment [
 	self assertCollection: executionEnvironment failures asSet hasSameElements: {mainError. backgroundError}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessMonitorTestServiceTest >> testGettingForkedProcessesFromEnvironment [
 
 	| process |
@@ -332,13 +334,13 @@ ProcessMonitorTestServiceTest >> testGettingForkedProcessesFromEnvironment [
 	self assert: executionEnvironment forkedProcesses asArray equals: {process}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessMonitorTestServiceTest >> testGettingServiceFromEnvironment [
 
 	self assert: executionEnvironment processMonitor identicalTo: testService
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessMonitorTestServiceTest >> testGettingServiceFromTestCase [
 
 	| actual |
@@ -349,7 +351,7 @@ ProcessMonitorTestServiceTest >> testGettingServiceFromTestCase [
 	self assert: actual identicalTo: testService
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessMonitorTestServiceTest >> testHasDefaultFailingStrategyForRunningProcesses [
 
 	testService := ProcessMonitorTestService new.
@@ -358,7 +360,7 @@ ProcessMonitorTestServiceTest >> testHasDefaultFailingStrategyForRunningProcesse
 	self assert: testService shouldFailTestLeavingProcesses equals: ProcessMonitorTestService shouldFailTestLeavingProcesses
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessMonitorTestServiceTest >> testHasDefaultTerminationStrategyForRunningProcesses [
 
 	testService := ProcessMonitorTestService new.
@@ -367,19 +369,19 @@ ProcessMonitorTestServiceTest >> testHasDefaultTerminationStrategyForRunningProc
 	self assert: testService shouldTerminateProcesses equals: ProcessMonitorTestService shouldTerminateProcesses
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessMonitorTestServiceTest >> testHasEmptyForkedProcessesByDefault [
 
 	self assert: testService forkedProcesses isEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessMonitorTestServiceTest >> testHasEmptySuspendedBackgroundFailuresByDefault [
 
 	self assert: testService suspendedBackgroundFailures isEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessMonitorTestServiceTest >> testIgnoreDirtyTestErrors [
 
 	testService handleException: TestLeftRunningProcess new.
@@ -389,7 +391,7 @@ ProcessMonitorTestServiceTest >> testIgnoreDirtyTestErrors [
 	self assert: testService testFailures isEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessMonitorTestServiceTest >> testIsMainTestProcessFailed [
 
 	executionEnvironment activated.
@@ -400,7 +402,7 @@ ProcessMonitorTestServiceTest >> testIsMainTestProcessFailed [
 	self assert: executionEnvironment isMainTestProcessFailed
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessMonitorTestServiceTest >> testIsTestProcessFailed [
 
 	| process |
@@ -411,7 +413,7 @@ ProcessMonitorTestServiceTest >> testIsTestProcessFailed [
 	self deny: (testService isTestProcessFailed: #anotherProcess)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessMonitorTestServiceTest >> testPassBackgroundFailuresWhenSuspensionLogicIsDisabled [
 	| process error errorWasPassed |
 	self flag: 'it fails runKernelTests on bootstrap image due to Process bug #6745'.
@@ -430,7 +432,7 @@ ProcessMonitorTestServiceTest >> testPassBackgroundFailuresWhenSuspensionLogicIs
 	self assert: process isTerminated description: 'process should be terminated now'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessMonitorTestServiceTest >> testRecordMainTestProcessError [
 
 	| error |
@@ -443,7 +445,7 @@ ProcessMonitorTestServiceTest >> testRecordMainTestProcessError [
 		equals: error
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessMonitorTestServiceTest >> testRecordMainTestProcessUnhandledError [
 
 	| error |
@@ -456,7 +458,7 @@ ProcessMonitorTestServiceTest >> testRecordMainTestProcessUnhandledError [
 		equals: error
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessMonitorTestServiceTest >> testResumeFailedProcessWhenItFailsTestWithUnhandledError [
 	"Test with background failures is failing with TestFailedByForkedProcess.
 	In case when it is unhandled (when we debug the test) it should resume all background failures"
@@ -473,7 +475,7 @@ ProcessMonitorTestServiceTest >> testResumeFailedProcessWhenItFailsTestWithUnhan
 	self assert: executed
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessMonitorTestServiceTest >> testResumeFailedProcessesWhenHaltIsSignaled [
 	| executed |
 	executed := false.
@@ -485,7 +487,7 @@ ProcessMonitorTestServiceTest >> testResumeFailedProcessesWhenHaltIsSignaled [
 	self deny: testService shouldSuspendBackgroundFailures
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessMonitorTestServiceTest >> testResumeFailedProcessesWhenHaltIsSignaledInBackground [
 	| processWithHalt executed |
 	executed := false.
@@ -499,7 +501,7 @@ ProcessMonitorTestServiceTest >> testResumeFailedProcessesWhenHaltIsSignaledInBa
 	self deny: testService shouldSuspendBackgroundFailures
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessMonitorTestServiceTest >> testResumeFailedProcessesWhenTestFailureIsUnhandled [
 	| executed |
 	executed := false.
@@ -513,13 +515,13 @@ ProcessMonitorTestServiceTest >> testResumeFailedProcessesWhenTestFailureIsUnhan
 	self deny: testService shouldSuspendBackgroundFailures
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessMonitorTestServiceTest >> testShouldSuspendBackgroundFailuresByDefault [
 
 	self assert: testService shouldSuspendBackgroundFailures
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessMonitorTestServiceTest >> testStoreAllForkedProcesses [
 
 	| process |
@@ -528,7 +530,7 @@ ProcessMonitorTestServiceTest >> testStoreAllForkedProcesses [
 	self assert: (testService forkedProcesses includes: process)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessMonitorTestServiceTest >> testSuspendBackgroundError [
 
 	| process error suspendedError |
@@ -542,7 +544,7 @@ ProcessMonitorTestServiceTest >> testSuspendBackgroundError [
 	self assert: suspendedError exception identicalTo: error
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProcessMonitorTestServiceTest >> testSuspendBackgroundWarning [
 
 	| process warning suspendedError |

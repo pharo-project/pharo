@@ -2,52 +2,53 @@
 I represent an executable check applied on an environment (groups of classes, methods... )
 "
 Class {
-	#name : #RBLintRule,
-	#superclass : #Object,
-	#category : #'Refactoring-Critics'
+	#name : 'RBLintRule',
+	#superclass : 'Object',
+	#category : 'Refactoring-Critics',
+	#package : 'Refactoring-Critics'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBLintRule class >> checksClass [
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBLintRule class >> checksMethod [
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBLintRule class >> checksPackage [
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBLintRule class >> enabled [
 	"compatibility to ReAbstractRule"
 	^true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBLintRule class >> enabled: aBoolean [
 	"compatibility to ReAbstractRule"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBLintRule class >> enabledSettingID [
 	^ (self name, '_enabled') asSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBLintRule class >> identifierMinorVersionNumber [
 	"This number identifies the version of the rule definition. Each time the rule is updated and its changes invalidates previous false positives identification (and as such should be reassessed by developers) the number should be increased."
 	^ 1
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBLintRule class >> isUsed [
 	"all my sublasses are used"
 	^self name = 'RBLintRule'
@@ -55,46 +56,46 @@ RBLintRule class >> isUsed [
 		ifFalse: [ true ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBLintRule class >> isVisible [
 	"Answer true if the class should be visible in the GUI."
 
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBLintRule class >> uniqueIdentifierNumber [
 	"This number should be unique and should change only when the rule completely change semantics"
 	^ 0
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RBLintRule >> basicCheck: anEntity [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBLintRule >> changes [
 	^ #()
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RBLintRule >> checkClass: aClass [
 	"Is a hook to specify a check that is performed at the class level"
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RBLintRule >> checkMethod: aMethod [
 	"Is a hook to specify a check that is performed at the method level"
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RBLintRule >> checkPackage: aPackage [
 	"Is a hook to specify a check that is performed at the pacakge level"
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBLintRule >> genericPatternForSelector: aSymbol [
 	^ String streamContents: [ :stream |
 		aSymbol keywords keysAndValuesDo: [ :index :value |
@@ -103,50 +104,50 @@ RBLintRule >> genericPatternForSelector: aSymbol [
 				ifTrue: [ stream space; nextPutAll: '`@object'; print: index ] ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBLintRule >> group [
 	^ 'Unclassified rules'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBLintRule >> hasConflicts [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBLintRule >> isArchitecturalRule [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBLintRule >> isComposite [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBLintRule >> isEmpty [
 	self subclassResponsibility
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBLintRule >> isTransformationRule [
 
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBLintRule >> leaves [
 	^ {self}
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBLintRule >> name [
 	"Answer a human readable name of the rule."
 
 	self subclassResponsibility
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBLintRule >> printOn: aStream [
 
 	super printOn: aStream.
@@ -157,38 +158,38 @@ RBLintRule >> printOn: aStream [
 			]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBLintRule >> problemCount [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBLintRule >> rationale [
 	"Answer an explanation of the rule, usually in one line. Long description can be obtained using longDescription."
 
 	^ self class comment
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RBLintRule >> resetResult [
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBLintRule >> result [
 	^ self subclassResponsibility
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RBLintRule >> run [
 	^ RBSmalllintChecker runRule: self
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RBLintRule >> runOnEnvironment: anEnvironment [
 	^ RBSmalllintChecker runRule: self onEnvironment: anEnvironment
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBLintRule >> severity [
 	"Answer the severity of issues reported by this rule. This method should return one of #error, #warning, or #information."
 

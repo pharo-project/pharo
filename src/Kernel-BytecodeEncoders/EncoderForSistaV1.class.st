@@ -264,17 +264,18 @@ literal which is a Smi
 
 "
 Class {
-	#name : #EncoderForSistaV1,
-	#superclass : #BytecodeEncoder,
-	#category : #'Kernel-BytecodeEncoders'
+	#name : 'EncoderForSistaV1',
+	#superclass : 'BytecodeEncoder',
+	#category : 'Kernel-BytecodeEncoders',
+	#package : 'Kernel-BytecodeEncoders'
 }
 
-{ #category : #'bytecode decoding' }
+{ #category : 'bytecode decoding' }
 EncoderForSistaV1 class >> backJumpBytecodeSize [
 	^ 4
 ]
 
-{ #category : #'compiled method support' }
+{ #category : 'compiled method support' }
 EncoderForSistaV1 class >> bindingReadScanBlockFor: litVarIndex using: scanner [
 	"Answer a block argument for InstructionStream>>scanFor: that answers true
 	 for reads of the value of the binding with zero-relative index litVarIndex.
@@ -293,7 +294,7 @@ EncoderForSistaV1 class >> bindingReadScanBlockFor: litVarIndex using: scanner [
 			and: [scanner secondByte + prevext = litVarIndex]]]
 ]
 
-{ #category : #'compiled method support' }
+{ #category : 'compiled method support' }
 EncoderForSistaV1 class >> bindingWriteScanBlockFor: litVarIndex using: scanner [
 	"Answer a block argument for InstructionStream>>scanFor: that answers true
 	 for writes of the value of the binding with zero-relative index litVarIndex.
@@ -311,7 +312,7 @@ EncoderForSistaV1 class >> bindingWriteScanBlockFor: litVarIndex using: scanner 
 	   and: [scanner secondByte + prevext = litVarIndex]]
 ]
 
-{ #category : #'instruction stream support' }
+{ #category : 'instruction stream support' }
 EncoderForSistaV1 class >> bytecodeSize: bytecode [
 	"Answer the number of bytes in the bytecode."
 	bytecode < 224 ifTrue: [^1].
@@ -319,14 +320,14 @@ EncoderForSistaV1 class >> bytecodeSize: bytecode [
 	^3
 ]
 
-{ #category : #'bytecode decoding' }
+{ #category : 'bytecode decoding' }
 EncoderForSistaV1 class >> callPrimitiveCode [
 	"Answer the call primitive bytecode, if it exists in the encoder's bytecode set, or nil if not.
 	 248	11111000 	iiiiiiii	mjjjjjjj	Call Primitive #iiiiiiii + (jjjjjjj * 256) m=1 means inlined primitive, no hard return after execution."
 	^248
 ]
 
-{ #category : #'compiled method support' }
+{ #category : 'compiled method support' }
 EncoderForSistaV1 class >> extensionsAt: bcpc in: method into: aTrinaryBlock [
 	"If the bytecode at pc is an extension then evaluate aBinaryBlock with the values of extA and extB and number of extension *bytes*.
 	 If the bytecode at pc is not extended then evaluate aBinaryBlock with 0 and 0.
@@ -364,12 +365,12 @@ EncoderForSistaV1 class >> extensionsAt: bcpc in: method into: aTrinaryBlock [
 	   Time millisecondsToRun: [1 to: n do: [:i| (byte bitAnd: 16rFE) = 16rE0 ifTrue: []]] }] #(#(297 599) #(702 671))"
 ]
 
-{ #category : #'compiled method support' }
+{ #category : 'compiled method support' }
 EncoderForSistaV1 class >> firstSpecialSelectorByte [
 	^ 16r5F
 ]
 
-{ #category : #'compiled method support' }
+{ #category : 'compiled method support' }
 EncoderForSistaV1 class >> instVarReadScanBlockFor: varIndexCode using: scanner [
 	"Answer a block argument for InstructionStream>>scanFor: that answers true
 	 for reads of the inst var with zero-relative index varIndexCode.
@@ -388,7 +389,7 @@ EncoderForSistaV1 class >> instVarReadScanBlockFor: varIndexCode using: scanner 
 			and: [scanner secondByte + prevext = varIndexCode]]]
 ]
 
-{ #category : #'compiled method support' }
+{ #category : 'compiled method support' }
 EncoderForSistaV1 class >> instVarWriteScanBlockFor: varIndexCode using: scanner [
 	"Answer a block argument for InstructionStream>>scanFor: that answers true
 	 for writes of the inst var with zero-relative index varIndexCode.
@@ -410,7 +411,7 @@ EncoderForSistaV1 class >> instVarWriteScanBlockFor: varIndexCode using: scanner
 		  and: [scanner secondByte + prevext = varIndexCode]]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EncoderForSistaV1 class >> instructionSizeAt: pc of: aMethod [
 
 	| tempPc bytecode accumulatedSize |
@@ -424,13 +425,13 @@ EncoderForSistaV1 class >> instructionSizeAt: pc of: aMethod [
 	^ accumulatedSize := accumulatedSize + (self bytecodeSize: bytecode)
 ]
 
-{ #category : #'instruction stream support' }
+{ #category : 'instruction stream support' }
 EncoderForSistaV1 class >> interpretNextInstructionFor: aClient in: anInstructionStream [
 	"Double-dispatch through the encoder to select the correct instruction set decoder."
 	^anInstructionStream interpretNextSistaV1InstructionFor: aClient
 ]
 
-{ #category : #'instruction stream support' }
+{ #category : 'instruction stream support' }
 EncoderForSistaV1 class >> isBlockReturnAt: pc in: method [
 	"Answer whether the bytecode at pc is a return from block."
 	"	93			01011101			BlockReturn nil
@@ -438,7 +439,7 @@ EncoderForSistaV1 class >> isBlockReturnAt: pc in: method [
 	^(self nonExtensionBytecodeAt: pc in: method) between: 93 and: 94
 ]
 
-{ #category : #'instruction stream support' }
+{ #category : 'instruction stream support' }
 EncoderForSistaV1 class >> isBranchIfFalseAt: pc in: method [
 	"Answer whether the bytecode at pc is a conditional branch-if-false."
 
@@ -449,7 +450,7 @@ EncoderForSistaV1 class >> isBranchIfFalseAt: pc in: method [
 	^byte >= 192 and: [byte <= 199 or: [byte = 239]]
 ]
 
-{ #category : #'instruction stream support' }
+{ #category : 'instruction stream support' }
 EncoderForSistaV1 class >> isBranchIfTrueAt: pc in: method [
 	"Answer whether the bytecode at pc is a conditional branch-if-true."
 
@@ -460,7 +461,7 @@ EncoderForSistaV1 class >> isBranchIfTrueAt: pc in: method [
 	^byte >= 184 and: [byte <= 191 or: [byte = 238]]
 ]
 
-{ #category : #'instruction stream support' }
+{ #category : 'instruction stream support' }
 EncoderForSistaV1 class >> isCreateBlockAt: pc in: method [
 	"Answer whether the bytecode at pc is a block creation bytecode."
 
@@ -468,10 +469,12 @@ EncoderForSistaV1 class >> isCreateBlockAt: pc in: method [
 
 	| byte |
 	byte := self nonExtensionBytecodeAt: pc in: method.
-	^ byte = 250
+	^ byte = 250 or: [
+		  (method sourceNodeForPC: pc) in: [ :node | "Clean blocks are created as PushConstant"
+			  node isBlock and: [ node isClean ] ] ]
 ]
 
-{ #category : #'block closure support' }
+{ #category : 'block closure support' }
 EncoderForSistaV1 class >> isCreateFullBlock: compiledBlock code: code at: pc [
 	^self extensionsAt: pc in: code into:
 		[:extA :extB :nExtBytes|
@@ -479,7 +482,7 @@ EncoderForSistaV1 class >> isCreateFullBlock: compiledBlock code: code at: pc [
 				compiledBlock == (code literalAt: (code at: pc + nExtBytes + 1) + (extA bitShift: 8) + 1)] ]
 ]
 
-{ #category : #'instruction stream support' }
+{ #category : 'instruction stream support' }
 EncoderForSistaV1 class >> isCreateFullBlockAt: pc in: code [
 	^ self
 		  extensionsAt: pc
@@ -488,14 +491,14 @@ EncoderForSistaV1 class >> isCreateFullBlockAt: pc in: code [
 		  (code at: pc + nExtBytes) = 16rF9 ]
 ]
 
-{ #category : #'instruction stream support' }
+{ #category : 'instruction stream support' }
 EncoderForSistaV1 class >> isExtension: bytecode [
 	"Answer if the bytecode is an extension bytecode, i.e. one that extends
 	 the range of the following bytecode."
 	^bytecode >= 16rE0 and: [bytecode <= 16rE1]
 ]
 
-{ #category : #'instruction stream support' }
+{ #category : 'instruction stream support' }
 EncoderForSistaV1 class >> isJumpAt: pc in: method [
 	"Answer whether the bytecode at pc is an (unconditional) jump."
 
@@ -507,14 +510,14 @@ EncoderForSistaV1 class >> isJumpAt: pc in: method [
 	^byte >= 176 and: [byte <= 183 or: [byte = 237]]
 ]
 
-{ #category : #'instruction stream support' }
+{ #category : 'instruction stream support' }
 EncoderForSistaV1 class >> isJustPopAt: pc in: method [
 	"Answer whether the bytecode at pc is a pop."
 
 	^(method at: pc) = 216 "216		11011000			Pop Stack Top"
 ]
 
-{ #category : #'instruction stream support' }
+{ #category : 'instruction stream support' }
 EncoderForSistaV1 class >> isPushTempAt: pc in: method [
 	"64-71		01000 iii			Push Temp #iii
 	 72-75		010010 ii			Push Temp #ii + 8
@@ -525,14 +528,14 @@ EncoderForSistaV1 class >> isPushTempAt: pc in: method [
 	^ byte = 229
 ]
 
-{ #category : #'instruction stream support' }
+{ #category : 'instruction stream support' }
 EncoderForSistaV1 class >> isRealSendAt: pc in: method [
 	"Answer whether the bytecode at pc is a real message-send, not blockCopy:."
 
 	^self isSendAt: pc in: method
 ]
 
-{ #category : #'instruction stream support' }
+{ #category : 'instruction stream support' }
 EncoderForSistaV1 class >> isReturnAt: pc in: method [
 	"Answer whether the bytecode at pc is a return from block."
 	"	88-91		010110 ii			Return Receiver/true/false/nil
@@ -542,14 +545,14 @@ EncoderForSistaV1 class >> isReturnAt: pc in: method [
 	^(self nonExtensionBytecodeAt: pc in: method) between: 88 and: 94
 ]
 
-{ #category : #'instruction stream support' }
+{ #category : 'instruction stream support' }
 EncoderForSistaV1 class >> isReturnTopFromMethodAt: pc in: method [
 	"Answer whether the bytecode at pc is a return stack top from method."
 
 	^(method at: pc) = 92
 ]
 
-{ #category : #'instruction stream support' }
+{ #category : 'instruction stream support' }
 EncoderForSistaV1 class >> isSendAt: pc in: method [
 	"Answer whether the bytecode at pc is a message-send."
 
@@ -572,7 +575,7 @@ EncoderForSistaV1 class >> isSendAt: pc in: method [
 		 or: [byte >= 234 and: [byte <= 235]]]
 ]
 
-{ #category : #'instruction stream support' }
+{ #category : 'instruction stream support' }
 EncoderForSistaV1 class >> isStoreAt: pc in: method [
 	"Answer whether the bytecode at pc is a store or store-pop."
 
@@ -597,7 +600,7 @@ EncoderForSistaV1 class >> isStoreAt: pc in: method [
 		 or: [(byte between: 252 and: 253)]]]
 ]
 
-{ #category : #'instruction stream support' }
+{ #category : 'instruction stream support' }
 EncoderForSistaV1 class >> isStorePopAt: pc in: method [
 	"Answer whether the bytecode at pc is a store or store-pop."
 
@@ -618,7 +621,7 @@ EncoderForSistaV1 class >> isStorePopAt: pc in: method [
 		 or: [byte = 253]]]
 ]
 
-{ #category : #'compiled method support' }
+{ #category : 'compiled method support' }
 EncoderForSistaV1 class >> literalIndexOfBytecodeAt: pc in: aCompiledMethod [
 	"	16-31		0001 i i i i				Push Literal Variable #iiii
 	 	32-63		001 i i i i i				Push Literal #iiiii
@@ -642,14 +645,14 @@ EncoderForSistaV1 class >> literalIndexOfBytecodeAt: pc in: aCompiledMethod [
 	^nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EncoderForSistaV1 class >> literalMethodBytecodes [
 	"#[32 92] means pushConstant: x, returnTop"
 
 	^ #[32 92]
 ]
 
-{ #category : #'compiled method support' }
+{ #category : 'compiled method support' }
 EncoderForSistaV1 class >> markerOrNilFor: aMethod [
 	"What is a marker method?  It is method with body like
 		'self subclassResponsibility' or '^ self subclassResponsibility'
@@ -678,7 +681,7 @@ EncoderForSistaV1 class >> markerOrNilFor: aMethod [
     	ifTrue: [aMethod literalAt: 1]
 ]
 
-{ #category : #scanning }
+{ #category : 'scanning' }
 EncoderForSistaV1 class >> method: method refersInBytecodeToLiteral: aLiteral specialSelectorIndex: specialOrNil [
 	"Answer if method refers to the literal aLiteral in the bytecode, as opposed to in its literal frame."
 
@@ -700,68 +703,54 @@ EncoderForSistaV1 class >> method: method refersInBytecodeToLiteral: aLiteral sp
 	*	232		11101000	iiiiiiii		Push Integer #iiiiiiii (+ Extend B * 256, where bbbbbbbb = sddddddd, e.g. -32768 = i=0, a=0, s=1)
 	*	233		11101001	iiiiiiii		Push Character #iiiiiiii (+ Extend B * 256)
 		249		11111001 	xxxxxxxx	syyyyyyy	Reserved for Push Float"
-	| byte extended scanner |
-	specialOrNil ifNotNil:
-		[byte := specialOrNil + 95.
-		^(InstructionStream on: method) scanFor: [:b| b = byte]].
-	extended := false.
-	aLiteral isInteger ifTrue:
-		[(aLiteral >= -32768 and: [aLiteral <= 32767]) ifFalse: [^false].
-		 scanner := InstructionStream on: method.
-		 (aLiteral >= 0 and: [aLiteral <= 255]) ifTrue:
-			[aLiteral <= 1 ifTrue:
-				[byte := aLiteral + 80.
-				 ^scanner scanFor: [:b| b = byte]].
-			 ^scanner scanFor:
-				[:b|
-				(b = 232
-				 and: [extended not
-				 and: [scanner secondByte = aLiteral]])
-				or: [extended := b = 225.
-					false]]].
-		 byte := (aLiteral bitShift: -8) bitAnd: 255.
-		^scanner scanFor:
-			[:b|
-			(b = 232
-			 and: [extended
-			 and: [scanner secondByte = (aLiteral bitAnd: 255)]])
-			or: [extended := b = 225 and: [scanner secondByte = byte].
-				false]]].
-	aLiteral isCharacter ifTrue:
-		[aLiteral asciiValue <= 65535 ifFalse: [^false].
-		 scanner := InstructionStream on: method.
-		 aLiteral asciiValue <= 255 ifTrue:
-			[^scanner scanFor:
-				[:b|
-				(b = 233
-				 and: [extended not
-				 and: [scanner secondByte = aLiteral]])
-				or: [extended := b = 225.
-					false]]].
-		 byte := (aLiteral bitShift: -8) bitAnd: 255.
-		^scanner scanFor:
-			[:b|
-			(b = 233
-			 and: [extended
-			 and: [scanner secondByte = (aLiteral bitAnd: 255)]])
-			or: [extended := b = 225 and: [scanner secondByte = byte].
-				false]]].
-	aLiteral == nil ifTrue:
-		[^(InstructionStream on: method) scanFor: [:b| b = 79 or: [b = 91 or: b = 93]]].
-	aLiteral == true ifTrue:
-		[^(InstructionStream on: method) scanFor: [:b| b = 77 or: [b = 89]]].
-	aLiteral == false ifTrue:
-		[^(InstructionStream on: method) scanFor: [:b| b = 78 or: [b = 90]]].
 
-	^false
+	| byte extended scanner |
+	specialOrNil ifNotNil: [
+		byte := specialOrNil + 95.
+		^ (InstructionStream on: method) scanFor: [ :b | b = byte ] ].
+	extended := false.
+	aLiteral isInteger ifTrue: [
+		(aLiteral >= -32768 and: [ aLiteral <= 32767 ]) ifFalse: [ ^ false ].
+		scanner := InstructionStream on: method.
+		(aLiteral >= 0 and: [ aLiteral <= 255 ]) ifTrue: [
+			aLiteral <= 1 ifTrue: [
+				byte := aLiteral + 80.
+				^ scanner scanFor: [ :b | b = byte ] ].
+			^ scanner scanFor: [ :b |
+				  (b = 232 and: [ extended not and: [ scanner secondByte = aLiteral ] ]) or: [
+					  extended := b = 225.
+					  false ] ] ].
+		byte := (aLiteral bitShift: -8) bitAnd: 255.
+		^ scanner scanFor: [ :b |
+			  (b = 232 and: [ extended and: [ scanner secondByte = (aLiteral bitAnd: 255) ] ]) or: [
+				  extended := b = 225 and: [ scanner secondByte = byte ].
+				  false ] ] ].
+	aLiteral isCharacter ifTrue: [
+		aLiteral asciiValue <= 65535 ifFalse: [ ^ false ].
+		scanner := InstructionStream on: method.
+		aLiteral asciiValue <= 255 ifTrue: [
+			^ scanner scanFor: [ :b |
+				  (b = 233 and: [ extended not and: [ scanner secondByte = aLiteral ] ]) or: [
+					  extended := b = 225.
+					  false ] ] ].
+		byte := (aLiteral bitShift: -8) bitAnd: 255.
+		^ scanner scanFor: [ :b |
+			  (b = 233 and: [ extended and: [ scanner secondByte = (aLiteral bitAnd: 255) ] ]) or: [
+				  extended := b = 225 and: [ scanner secondByte = byte ].
+				  false ] ] ].
+	aLiteral ifNil: [ ^ (InstructionStream on: method) scanFor: [ :b | b = 79 or: [ b = 91 or: b = 93 ] ] ].
+	aLiteral == true ifTrue: [ ^ (InstructionStream on: method) scanFor: [ :b | b = 77 or: [ b = 89 ] ] ].
+	aLiteral == false ifTrue: [ ^ (InstructionStream on: method) scanFor: [ :b | b = 78 or: [ b = 90 ] ] ].
+
+	^ false
 ]
 
-{ #category : #'block closure support' }
+{ #category : 'block closure support' }
 EncoderForSistaV1 class >> methodReturnBytecodes [
 	^ 88 to: 92
 ]
 
-{ #category : #'instruction stream support' }
+{ #category : 'instruction stream support' }
 EncoderForSistaV1 class >> nonExtensionBytecodeAt: pc in: method [
 	"Answer the actual bytecode at pc in method, skipping past any preceeding extensions."
 	| scanpc byte |
@@ -771,7 +760,7 @@ EncoderForSistaV1 class >> nonExtensionBytecodeAt: pc in: method [
 	^ byte
 ]
 
-{ #category : #'block closure support' }
+{ #category : 'block closure support' }
 EncoderForSistaV1 class >> numLocalTempsForBlockAt: startpc in: method [
 	"**	250		11111010 	eeiiikkk		jjjjjjjj		Push Closure Num Copied iii (+ExtA//16*8) Num Args kkk (+ ExtA\\16*8) BlockSize jjjjjjjj (+ExtB*256). ee = num extensions"
 	^ BlockLocalTempCounter
@@ -779,17 +768,17 @@ EncoderForSistaV1 class >> numLocalTempsForBlockAt: startpc in: method [
 		in: method
 ]
 
-{ #category : #'compiled method support' }
+{ #category : 'compiled method support' }
 EncoderForSistaV1 class >> prepareMethod: compiledMethod forSimulationWith: numArgs [
 	self shouldBeImplemented
 ]
 
-{ #category : #'bytecode decoding' }
+{ #category : 'bytecode decoding' }
 EncoderForSistaV1 class >> pushNilByte [
 	^ 79
 ]
 
-{ #category : #'compiled method support' }
+{ #category : 'compiled method support' }
 EncoderForSistaV1 class >> readsSelfFor: compiledMethod [
 	"Answer whether compiledMethod reads self"
 	| scanner |
@@ -798,7 +787,7 @@ EncoderForSistaV1 class >> readsSelfFor: compiledMethod [
 		[:instr |  instr = 76 or: [ instr = 88 ] ]
 ]
 
-{ #category : #'instruction stream support' }
+{ #category : 'instruction stream support' }
 EncoderForSistaV1 class >> readsThisContextFor: compiledMethod [
 	"Answer whether compiledMethod reads thisContext"
 	| scanner |
@@ -807,7 +796,7 @@ EncoderForSistaV1 class >> readsThisContextFor: compiledMethod [
 		[:instr |  instr = 82 ]
 ]
 
-{ #category : #'bytecode decoding' }
+{ #category : 'bytecode decoding' }
 EncoderForSistaV1 class >> selectorToSendOrItselfFor: anInstructionStream in: method at: pc [
 	"If anInstructionStream is at a send bytecode then answer the send's selector,
 	 otherwise answer anInstructionStream itself.  The rationale for answering
@@ -858,7 +847,7 @@ EncoderForSistaV1 class >> selectorToSendOrItselfFor: anInstructionStream in: me
 		 method literalAt: index + 1]
 ]
 
-{ #category : #'compiled method support' }
+{ #category : 'compiled method support' }
 EncoderForSistaV1 class >> sendsToSuperFor: compiledMethod [
 	"Answer whether the receiver sends any message to super."
 	| scanner |
@@ -866,12 +855,12 @@ EncoderForSistaV1 class >> sendsToSuperFor: compiledMethod [
 	^ scanner scanFor: [:instr |  instr = 235 ]
 ]
 
-{ #category : #'bytecode decoding' }
+{ #category : 'bytecode decoding' }
 EncoderForSistaV1 class >> specialLiterals [
 	^ #(true false nil 0 1)
 ]
 
-{ #category : #'bytecode decoding' }
+{ #category : 'bytecode decoding' }
 EncoderForSistaV1 class >> stackDeltaForPrimitive: primitiveIndex in: method [
 	"Answer the stack delta for the callPrimitive: bytecode (see my class comment).
 	 There is no delta for non-inlined primitives (its implicitly 0 - method numArgs).
@@ -881,7 +870,7 @@ EncoderForSistaV1 class >> stackDeltaForPrimitive: primitiveIndex in: method [
 		ifFalse: [primitiveIndex - 32768 // 1000]
 ]
 
-{ #category : #'instruction stream support' }
+{ #category : 'instruction stream support' }
 EncoderForSistaV1 class >> superSendScanBlockUsing: scanner [
 	"Answer a block argument for InstructionStream>>scanFor:
 	 that answers true for super sends."
@@ -893,13 +882,13 @@ EncoderForSistaV1 class >> superSendScanBlockUsing: scanner [
 	^[:instr | instr = 235]
 ]
 
-{ #category : #'bytecode decoding' }
+{ #category : 'bytecode decoding' }
 EncoderForSistaV1 class >> unusedBytecode [
 	"Answer the opcode of a single-byte unused bytecode, if it exists in the encoder's bytecode set, or nil if not."
 	^ 84
 ]
 
-{ #category : #'bytecode generation' }
+{ #category : 'bytecode generation' }
 EncoderForSistaV1 >> genBranchPopFalse: distance [
 	(distance > 0 and: [distance < 9]) ifTrue:
 		["192-199	11000 iii			Pop and Jump 0n False iii + 1 (i.e., 1 through 8)"
@@ -908,7 +897,7 @@ EncoderForSistaV1 >> genBranchPopFalse: distance [
 	^self genBranchPopFalseLong: distance
 ]
 
-{ #category : #'bytecode generation' }
+{ #category : 'bytecode generation' }
 EncoderForSistaV1 >> genBranchPopFalseLong: distance [
 	"239		11101111	iiiiiiii		Pop and Jump 0n False #iiiiiiii (+ Extend B * 256, where Extend B >= 0)	"
 	| distanceMod256 |
@@ -924,7 +913,7 @@ EncoderForSistaV1 >> genBranchPopFalseLong: distance [
 		nextPut: distanceMod256
 ]
 
-{ #category : #'bytecode generation' }
+{ #category : 'bytecode generation' }
 EncoderForSistaV1 >> genBranchPopTrue: distance [
 	(distance > 0 and: [distance < 9]) ifTrue:
 		["184-191	10111 iii			Pop and Jump 0n True iii + 1 (i.e., 1 through 8)"
@@ -933,7 +922,7 @@ EncoderForSistaV1 >> genBranchPopTrue: distance [
 	^self genBranchPopTrueLong: distance
 ]
 
-{ #category : #'bytecode generation' }
+{ #category : 'bytecode generation' }
 EncoderForSistaV1 >> genBranchPopTrueLong: distance [
 	"238		11101110	iiiiiiii		Pop and Jump 0n True #iiiiiiii (+ Extend B * 256, where Extend B >= 0)"
 	| distanceMod256 |
@@ -953,7 +942,7 @@ EncoderForSistaV1 >> genBranchPopTrueLong: distance [
 		nextPut: distanceMod256
 ]
 
-{ #category : #'extended bytecode generation' }
+{ #category : 'extended bytecode generation' }
 EncoderForSistaV1 >> genCallMappedInlinedPrimitive: primIndex [
 	"236		11101100	iiiiiiii		callMappedInlinedPrimitive [Sista specific]"
 	(primIndex < 0 or: [primIndex > 255]) ifTrue:
@@ -963,7 +952,7 @@ EncoderForSistaV1 >> genCallMappedInlinedPrimitive: primIndex [
 		nextPut: primIndex
 ]
 
-{ #category : #'bytecode generation' }
+{ #category : 'bytecode generation' }
 EncoderForSistaV1 >> genCallPrimitive: primitiveIndex [
 	"248		11111000	i i i i i i i i	0jjjjjjj		Call Primitive #iiiiiiii + (jjjjjjj * 256)"
 	"N.B. We could have made CallPrimitive a 2-byte code taking an extension, but that would
@@ -977,13 +966,13 @@ EncoderForSistaV1 >> genCallPrimitive: primitiveIndex [
 		nextPut: (primitiveIndex bitShift: -8)
 ]
 
-{ #category : #'bytecode generation' }
+{ #category : 'bytecode generation' }
 EncoderForSistaV1 >> genDup [
 	"83			01010011			Duplicate Stack Top"
 	stream nextPut: 83
 ]
 
-{ #category : #'bytecode generation' }
+{ #category : 'bytecode generation' }
 EncoderForSistaV1 >> genJump: distance [
 	(distance > 0 and: [distance < 9]) ifTrue:
 		["176-183	10110 iii			Jump iii + 1 (i.e., 1 through 8)"
@@ -993,7 +982,7 @@ EncoderForSistaV1 >> genJump: distance [
 	^self genJumpLong: distance
 ]
 
-{ #category : #'bytecode generation' }
+{ #category : 'bytecode generation' }
 EncoderForSistaV1 >> genJumpLong: distance [
 	"237		11101101	iiiiiiii		Jump #iiiiiiii (+ Extend B * 256, where bbbbbbbb = sddddddd, e.g. -32768 = i=0, a=0, s=1)"
 	(distance between: -32768 and: 32767) ifFalse:
@@ -1005,19 +994,19 @@ EncoderForSistaV1 >> genJumpLong: distance [
 		nextPut: (distance bitAnd: 255)
 ]
 
-{ #category : #'extended bytecode generation' }
+{ #category : 'extended bytecode generation' }
 EncoderForSistaV1 >> genNop [
 	"95			01011111			Nop"
 	stream nextPut: 95
 ]
 
-{ #category : #'bytecode generation' }
+{ #category : 'bytecode generation' }
 EncoderForSistaV1 >> genPop [
 	"216		11011000			Pop Stack Top"
 	stream nextPut: 216
 ]
 
-{ #category : #'bytecode generation' }
+{ #category : 'bytecode generation' }
 EncoderForSistaV1 >> genPushCharacter: aCharacterOrCode [
 	"233		11101001	i i i i i i i i	Push Character #iiiiiiii (+ Extend B * 256)"
 	"Why restrict the range to 16 bits when we could encode arbitrarily 32-bit Characters?
@@ -1036,7 +1025,7 @@ EncoderForSistaV1 >> genPushCharacter: aCharacterOrCode [
 		nextPut: (code bitAnd: 255)
 ]
 
-{ #category : #'bytecode generation' }
+{ #category : 'bytecode generation' }
 EncoderForSistaV1 >> genPushConsArray: size [
 	(size < 0 or: [size > 127]) ifTrue:
 		[^self outOfRangeError: 'size' index: size range: 0 to: 127].
@@ -1047,7 +1036,7 @@ EncoderForSistaV1 >> genPushConsArray: size [
 		nextPut: size + 128
 ]
 
-{ #category : #'extended bytecode generation' }
+{ #category : 'extended bytecode generation' }
 EncoderForSistaV1 >> genPushFullClosure: compiledBlockLiteralIndex numCopied: numCopied receiverOnStack: receiverOnStack outerContextNeeded: outerContextNeeded [
 	"*	249		11111001 	xxxxxxxx	siyyyyyy	push Closure Compiled block literal index xxxxxxxx (+ Extend A * 256) numCopied yyyyyy receiverOnStack: s = 1 ignoreOuterContext: i = 1"
 	| extendedIndex |
@@ -1064,7 +1053,7 @@ EncoderForSistaV1 >> genPushFullClosure: compiledBlockLiteralIndex numCopied: nu
 		nextPut: receiverOnStack asBit << 7 + (outerContextNeeded not asBit << 6) + numCopied
 ]
 
-{ #category : #'bytecode generation' }
+{ #category : 'bytecode generation' }
 EncoderForSistaV1 >> genPushInstVar: instVarIndex [
 	(instVarIndex between: 0 and: 15) ifTrue:
 		["0-15 	0000iiii 	Push Receiver Variable #iiii"
@@ -1073,7 +1062,7 @@ EncoderForSistaV1 >> genPushInstVar: instVarIndex [
 	self genPushInstVarLong: instVarIndex
 ]
 
-{ #category : #'bytecode generation' }
+{ #category : 'bytecode generation' }
 EncoderForSistaV1 >> genPushInstVarLong: instVarIndex [
 	"226		11100010	i i i i i i i i	Push Receiver Variable #iiiiiiii (+ Extend A * 256)"
 	"See also MaybeContextInstanceVariableNode"
@@ -1086,7 +1075,7 @@ EncoderForSistaV1 >> genPushInstVarLong: instVarIndex [
 		nextPut: instVarIndex \\ 256
 ]
 
-{ #category : #'bytecode generation' }
+{ #category : 'bytecode generation' }
 EncoderForSistaV1 >> genPushInteger: anInteger [
 	"80			01010000				Push 0
 	 81			01010001				Push 1
@@ -1104,7 +1093,7 @@ EncoderForSistaV1 >> genPushInteger: anInteger [
 		nextPut: (anInteger bitAnd: 255)
 ]
 
-{ #category : #'extended bytecode generation' }
+{ #category : 'extended bytecode generation' }
 EncoderForSistaV1 >> genPushIntegerLong: anInteger [
 	"232		11101000	i i i i i i i i	Push Integer #iiiiiiii (+ Extend B * 256, where bbbbbbbb = sddddddd, e.g. -32768 = i=0, a=0, s=1)"
 	"Why restrict the range to 16 bits when we could encode arbitrarily large integers?
@@ -1120,7 +1109,7 @@ EncoderForSistaV1 >> genPushIntegerLong: anInteger [
 		nextPut: (anInteger bitAnd: 255)
 ]
 
-{ #category : #'bytecode generation' }
+{ #category : 'bytecode generation' }
 EncoderForSistaV1 >> genPushLiteral: literalIndex [
 	| extendedIndex |
 	(literalIndex < 0 or: [literalIndex > 32768]) ifTrue:
@@ -1138,7 +1127,7 @@ EncoderForSistaV1 >> genPushLiteral: literalIndex [
 		nextPut: extendedIndex
 ]
 
-{ #category : #'bytecode generation' }
+{ #category : 'bytecode generation' }
 EncoderForSistaV1 >> genPushLiteralVar: literalIndex [
 	| extendedIndex |
 	(literalIndex < 0 or: [literalIndex > 32768]) ifTrue:
@@ -1156,7 +1145,7 @@ EncoderForSistaV1 >> genPushLiteralVar: literalIndex [
 		nextPut: extendedIndex
 ]
 
-{ #category : #'bytecode generation' }
+{ #category : 'bytecode generation' }
 EncoderForSistaV1 >> genPushNewArray: size [
 	(size < 0 or: [size > 127]) ifTrue:
 		[^self outOfRangeError: 'size' index: size range: 0 to: 127].
@@ -1167,13 +1156,13 @@ EncoderForSistaV1 >> genPushNewArray: size [
 		nextPut: size
 ]
 
-{ #category : #'bytecode generation' }
+{ #category : 'bytecode generation' }
 EncoderForSistaV1 >> genPushReceiver [
 	"76			01001100		Push Receiver"
 	stream nextPut: 76
 ]
 
-{ #category : #'bytecode generation' }
+{ #category : 'bytecode generation' }
 EncoderForSistaV1 >> genPushRemoteTemp: tempIndex inVectorAt: tempVectorIndex [
 	"251		11111011 	kkkkkkkk	sjjjjjjj		Push Temp At kkkkkkkk In Temp Vector At: jjjjjjj, s = 1 implies remote inst var access instead of remote temp vector access"
 	(tempIndex < 0 or: [tempIndex >= 256]) ifTrue:
@@ -1186,7 +1175,7 @@ EncoderForSistaV1 >> genPushRemoteTemp: tempIndex inVectorAt: tempVectorIndex [
 		nextPut: tempVectorIndex
 ]
 
-{ #category : #'bytecode generation' }
+{ #category : 'bytecode generation' }
 EncoderForSistaV1 >> genPushSpecialLiteral: aLiteral [
 	"77			01001101			Push true
 	 78			01001110			Push false
@@ -1209,7 +1198,7 @@ EncoderForSistaV1 >> genPushSpecialLiteral: aLiteral [
 	stream nextPut: 76 + index
 ]
 
-{ #category : #'bytecode generation' }
+{ #category : 'bytecode generation' }
 EncoderForSistaV1 >> genPushTemp: tempIndex [
 	(tempIndex < 0 or: [tempIndex > 63]) ifTrue:
 		[^self outOfRangeError: 'index' index: tempIndex range: 0 to: 63].
@@ -1224,13 +1213,13 @@ EncoderForSistaV1 >> genPushTemp: tempIndex [
 		nextPut: tempIndex
 ]
 
-{ #category : #'bytecode generation' }
+{ #category : 'bytecode generation' }
 EncoderForSistaV1 >> genPushThisContext [
 	"82			01010010			Push thisContext, (then e.g. Extend B 1 = push thisProcess)"
 	stream nextPut: 82
 ]
 
-{ #category : #'bytecode generation' }
+{ #category : 'bytecode generation' }
 EncoderForSistaV1 >> genPushThisProcess [
 	"82			01010010			Push thisContext, (then e.g. Extend B 1 = push thisProcess)"
 	stream nextPut: 225.
@@ -1238,13 +1227,13 @@ EncoderForSistaV1 >> genPushThisProcess [
 	stream nextPut: 82
 ]
 
-{ #category : #'bytecode generation' }
+{ #category : 'bytecode generation' }
 EncoderForSistaV1 >> genReturnReceiver [
 	"88-91		010110 ii			Return Receiver/true/false/nil"
 	stream nextPut: 88
 ]
 
-{ #category : #'bytecode generation' }
+{ #category : 'bytecode generation' }
 EncoderForSistaV1 >> genReturnSpecialLiteral: aLiteral [
 	"88-91		010110 ii			Return Receiver/true/false/nil"
 	| index |
@@ -1254,13 +1243,13 @@ EncoderForSistaV1 >> genReturnSpecialLiteral: aLiteral [
 	stream nextPut: 88 + index
 ]
 
-{ #category : #'bytecode generation' }
+{ #category : 'bytecode generation' }
 EncoderForSistaV1 >> genReturnTop [
 	"92		1011100		Return Stack Top From Message"
 	stream nextPut: 92
 ]
 
-{ #category : #'bytecode generation' }
+{ #category : 'bytecode generation' }
 EncoderForSistaV1 >> genReturnTopToCaller [
 	"94		01011110		Return Stack Top From Block [* return from enclosing block N, ExtA]"
 	"If extended, the least significant bit of the extension determines if we return to the caller or not
@@ -1277,7 +1266,7 @@ EncoderForSistaV1 >> genReturnTopToCaller [
 	stream nextPut: 94
 ]
 
-{ #category : #'bytecode generation' }
+{ #category : 'bytecode generation' }
 EncoderForSistaV1 >> genSend: selectorLiteralIndex numArgs: nArgs [
 	| extendedIndex extendedNArgs |
 	(selectorLiteralIndex < 0 or: [selectorLiteralIndex > 65535]) ifTrue:
@@ -1302,7 +1291,7 @@ EncoderForSistaV1 >> genSend: selectorLiteralIndex numArgs: nArgs [
 		nextPut: extendedNArgs + (extendedIndex * 8)
 ]
 
-{ #category : #'bytecode generation' }
+{ #category : 'bytecode generation' }
 EncoderForSistaV1 >> genSendDirectedSuper: selectorLiteralIndex numArgs: nArgs [
 	| extendedIndex |
 	(selectorLiteralIndex < 0 or: [selectorLiteralIndex > 65535]) ifTrue:
@@ -1320,7 +1309,7 @@ EncoderForSistaV1 >> genSendDirectedSuper: selectorLiteralIndex numArgs: nArgs [
 		nextPut: nArgs \\ 8 + (extendedIndex * 8)
 ]
 
-{ #category : #'bytecode generation' }
+{ #category : 'bytecode generation' }
 EncoderForSistaV1 >> genSendSpecial: specialSelectorIndex numArgs: nArgs [
 	self assert: (specialSelectorIndex between: 1 and: Smalltalk specialSelectorSize).
 	self assert: nArgs = (Smalltalk specialNargsAt: specialSelectorIndex).
@@ -1331,7 +1320,7 @@ EncoderForSistaV1 >> genSendSpecial: specialSelectorIndex numArgs: nArgs [
 	stream nextPut: specialSelectorIndex + 95
 ]
 
-{ #category : #'bytecode generation' }
+{ #category : 'bytecode generation' }
 EncoderForSistaV1 >> genSendSuper: selectorLiteralIndex numArgs: nArgs [
 	| extendedIndex extendedNArgs |
 	(selectorLiteralIndex < 0 or: [selectorLiteralIndex > 65535]) ifTrue:
@@ -1350,7 +1339,7 @@ EncoderForSistaV1 >> genSendSuper: selectorLiteralIndex numArgs: nArgs [
 		nextPut: extendedNArgs + (extendedIndex * 8)
 ]
 
-{ #category : #'bytecode generation' }
+{ #category : 'bytecode generation' }
 EncoderForSistaV1 >> genSignedSingleExtendB: extendedIndex [
 	(extendedIndex between: -128 and: 127) ifFalse:
 		[^self outOfRangeError: 'index' index: extendedIndex range: -128 to: 127].
@@ -1360,7 +1349,7 @@ EncoderForSistaV1 >> genSignedSingleExtendB: extendedIndex [
 		nextPut: (extendedIndex >= 0 ifTrue: [extendedIndex] ifFalse: [extendedIndex + 256])
 ]
 
-{ #category : #'bytecode generation' }
+{ #category : 'bytecode generation' }
 EncoderForSistaV1 >> genStoreInstVar: instVarIndex [
 	"243		11110011	iiiiiiii		Store Receiver Variable #iiiiiii (+ Extend A * 256)"
 	(instVarIndex < 0 or: [instVarIndex > 65535]) ifTrue:
@@ -1372,14 +1361,14 @@ EncoderForSistaV1 >> genStoreInstVar: instVarIndex [
 		nextPut: instVarIndex \\ 256
 ]
 
-{ #category : #'bytecode generation' }
+{ #category : 'bytecode generation' }
 EncoderForSistaV1 >> genStoreInstVarLong: instVarIndex [
 	"Only one instruction for inst var store, so there is no long encoding. However this is used only for MaybeContext object, there is no storeInstVar in the image for those and it is very unlikely that anyone would add some. So I did not add a different bytecode for such an uncommon case."
 	self genStorePopInstVarLong: instVarIndex.
 	self genPushInstVarLong: instVarIndex
 ]
 
-{ #category : #'bytecode generation' }
+{ #category : 'bytecode generation' }
 EncoderForSistaV1 >> genStoreLiteralVar: literalIndex [
 	"244		11110100	iiiiiiii		Store Literal Variable #iiiiiiii (+ Extend A * 256)"
 	(literalIndex < 0 or: [literalIndex > 32768]) ifTrue:
@@ -1391,7 +1380,7 @@ EncoderForSistaV1 >> genStoreLiteralVar: literalIndex [
 		nextPut: literalIndex \\ 256
 ]
 
-{ #category : #'bytecode generation' }
+{ #category : 'bytecode generation' }
 EncoderForSistaV1 >> genStorePopInstVar: instVarIndex [
 	"200-207	11001 iii			Pop and Store Receiver Variable #iii
 	 240		11110000	iiiiiiii	Pop and Store Receiver Variable #iiiiiii (+ Extend A * 256)"
@@ -1400,7 +1389,7 @@ EncoderForSistaV1 >> genStorePopInstVar: instVarIndex [
 	stream nextPut: 200 + instVarIndex
 ]
 
-{ #category : #'bytecode generation' }
+{ #category : 'bytecode generation' }
 EncoderForSistaV1 >> genStorePopInstVarLong: instVarIndex [
 	"240		11110000	iiiiiiii		Pop and Store Receiver Variable #iiiiiii (+ Extend A * 256)"
 	(instVarIndex < 0 or: [instVarIndex > 65535]) ifTrue:
@@ -1412,7 +1401,7 @@ EncoderForSistaV1 >> genStorePopInstVarLong: instVarIndex [
 		nextPut: instVarIndex \\ 256
 ]
 
-{ #category : #'bytecode generation' }
+{ #category : 'bytecode generation' }
 EncoderForSistaV1 >> genStorePopLiteralVar: literalIndex [
 	"241		11110001	iiiiiiii		Pop and Store Literal Variable #iiiiiiii (+ Extend A * 256)"
 	(literalIndex < 0 or: [literalIndex > 32768]) ifTrue:
@@ -1424,7 +1413,7 @@ EncoderForSistaV1 >> genStorePopLiteralVar: literalIndex [
 		nextPut: literalIndex \\ 256
 ]
 
-{ #category : #'bytecode generation' }
+{ #category : 'bytecode generation' }
 EncoderForSistaV1 >> genStorePopRemoteTemp: tempIndex inVectorAt: tempVectorIndex [
 	"*	253	(3)	11111101 	kkkkkkkk	sjjjjjjj		Pop and Store Temp At kkkkkkkk In Temp Vector At: jjjjjjj s = 1 implies remote inst var access instead of remote temp vector access"
 	(tempIndex < 0 or: [tempIndex >= 256]) ifTrue:
@@ -1437,7 +1426,7 @@ EncoderForSistaV1 >> genStorePopRemoteTemp: tempIndex inVectorAt: tempVectorInde
 		nextPut: tempVectorIndex
 ]
 
-{ #category : #'bytecode generation' }
+{ #category : 'bytecode generation' }
 EncoderForSistaV1 >> genStorePopTemp: tempIndex [
 	"208-215	11010 iii			Pop and Store Temporary Variable #iii
 	 242		11110010	iiiiiiii	Pop and Store Temporary Variable #iiiiiiii"
@@ -1451,7 +1440,7 @@ EncoderForSistaV1 >> genStorePopTemp: tempIndex [
 		nextPut: tempIndex
 ]
 
-{ #category : #'bytecode generation' }
+{ #category : 'bytecode generation' }
 EncoderForSistaV1 >> genStoreRemoteTemp: tempIndex inVectorAt: tempVectorIndex [
 	"*252	(3)	11111100 	kkkkkkkk	sjjjjjjj		Store Temp At kkkkkkkk In Temp Vector At: jjjjjjj s = 1 implies remote inst var access instead of remote temp vector access"
 	(tempIndex < 0 or: [tempIndex >= 256]) ifTrue:
@@ -1464,7 +1453,7 @@ EncoderForSistaV1 >> genStoreRemoteTemp: tempIndex inVectorAt: tempVectorIndex [
 		nextPut: tempVectorIndex
 ]
 
-{ #category : #'bytecode generation' }
+{ #category : 'bytecode generation' }
 EncoderForSistaV1 >> genStoreTemp: tempIndex [
 	"245		11110110	iiiiiiii		Store Temporary Variable #iiiiiiii"
 	(tempIndex < 0 or: [tempIndex > 63]) ifTrue:
@@ -1474,13 +1463,13 @@ EncoderForSistaV1 >> genStoreTemp: tempIndex [
 		nextPut: tempIndex
 ]
 
-{ #category : #'extended bytecode generation' }
+{ #category : 'extended bytecode generation' }
 EncoderForSistaV1 >> genTrap [
 	"217		11011001			Unconditionnal trap"
 	stream nextPut: 217
 ]
 
-{ #category : #'bytecode generation' }
+{ #category : 'bytecode generation' }
 EncoderForSistaV1 >> genTrapIfNotInstanceOf: literalIndex [
 	"*	236		11101100	iiiiiiii		Trap If Not Instance Of Behavior/Array Of Behavior #iiiiiiii (+ Extend A * 256, where Extend A >= 0)"
 
@@ -1495,7 +1484,7 @@ EncoderForSistaV1 >> genTrapIfNotInstanceOf: literalIndex [
 		nextPut: extendedIndex
 ]
 
-{ #category : #'bytecode generation' }
+{ #category : 'bytecode generation' }
 EncoderForSistaV1 >> genUnsignedMultipleExtendA: extendedIndex [
 	"224		11100000	aaaaaaaa	Extend A (Ext A = Ext A prev * 256 + Ext A)"
 	extendedIndex > 255 ifTrue:
@@ -1505,7 +1494,7 @@ EncoderForSistaV1 >> genUnsignedMultipleExtendA: extendedIndex [
 		nextPut: extendedIndex \\ 256
 ]
 
-{ #category : #'bytecode generation' }
+{ #category : 'bytecode generation' }
 EncoderForSistaV1 >> genUnsignedSingleExtendA: extendedIndex [
 	(extendedIndex between: 0 and: 255) ifFalse:
 		[^self outOfRangeError: 'index' index: extendedIndex range: 0 to: 255].
@@ -1515,7 +1504,7 @@ EncoderForSistaV1 >> genUnsignedSingleExtendA: extendedIndex [
 		nextPut: extendedIndex
 ]
 
-{ #category : #'bytecode generation' }
+{ #category : 'bytecode generation' }
 EncoderForSistaV1 >> genUnsignedSingleExtendB: extendedIndex [
 	(extendedIndex between: 0 and: 255) ifFalse:
 		[^self outOfRangeError: 'index' index: extendedIndex range: 0 to: 255].
@@ -1525,7 +1514,7 @@ EncoderForSistaV1 >> genUnsignedSingleExtendB: extendedIndex [
 		nextPut: extendedIndex
 ]
 
-{ #category : #'special literal encodings' }
+{ #category : 'special literal encodings' }
 EncoderForSistaV1 >> isSpecialLiteralForPush: literal [
 	^literal == false
 	  or: [literal == true
@@ -1534,12 +1523,12 @@ EncoderForSistaV1 >> isSpecialLiteralForPush: literal [
 	  or: [(literal isCharacter and: [literal asInteger between: 0 and: 65535])]]]]
 ]
 
-{ #category : #'special literal encodings' }
+{ #category : 'special literal encodings' }
 EncoderForSistaV1 >> sizePushFullClosure: compiledBlockLiteralIndex numCopied: numCopied [
 	^self sizeOpcodeSelector: #genPushFullClosure:numCopied: withArguments: {compiledBlockLiteralIndex.numCopied}
 ]
 
-{ #category : #'special literal encodings' }
+{ #category : 'special literal encodings' }
 EncoderForSistaV1 >> sizePushFullClosure: compiledBlockLiteralIndex numCopied: numCopied receiverOnStack: rcvrOnStack ignoreOuterContext: ignoreOuterContext [
 	^self sizeOpcodeSelector: #genPushFullClosure:numCopied:receiverOnStack:ignoreOuterContext: withArguments: {compiledBlockLiteralIndex.numCopied.rcvrOnStack.ignoreOuterContext}
 ]

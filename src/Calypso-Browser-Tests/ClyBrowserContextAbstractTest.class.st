@@ -1,13 +1,14 @@
 Class {
-	#name : #ClyBrowserContextAbstractTest,
-	#superclass : #TestCase,
+	#name : 'ClyBrowserContextAbstractTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'browser'
 	],
-	#category : #'Calypso-Browser-Tests'
+	#category : 'Calypso-Browser-Tests',
+	#package : 'Calypso-Browser-Tests'
 }
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 ClyBrowserContextAbstractTest >> allClyContextBut: contexts [
 
 	^ {  ClyFullBrowserPackageContext.
@@ -18,7 +19,7 @@ ClyBrowserContextAbstractTest >> allClyContextBut: contexts [
 		reject: [ :ctx | contexts includes: ctx ]
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 ClyBrowserContextAbstractTest >> classContext [
 
 	^ ClyFullBrowserClassContext new
@@ -27,7 +28,7 @@ ClyBrowserContextAbstractTest >> classContext [
 		yourself.
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 ClyBrowserContextAbstractTest >> classGroupContext [
 
 	^ ClyFullBrowserClassGroupContext new
@@ -36,13 +37,13 @@ ClyBrowserContextAbstractTest >> classGroupContext [
 		yourself.
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 ClyBrowserContextAbstractTest >> datasourceItemsWith: anObject named: aName [
 
 	^ { ClyDataSourceItem of: nil value: (ClyBrowserItem named: aName with: anObject) }
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 ClyBrowserContextAbstractTest >> deleteBrowser [
 
 	browser ifNotNil: [ 
@@ -50,22 +51,22 @@ ClyBrowserContextAbstractTest >> deleteBrowser [
 			window delete ] ]
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 ClyBrowserContextAbstractTest >> differentClassGroupContext [
+
 	| items |
-	
 	self deleteBrowser.
 	browser := ClyFullBrowserMorph open.
-	browser selectPackage: (RPackageOrganizer default packageNamed: #Kernel) atClassTag: 'Chronology'.
+	browser selectPackage: (PackageOrganizer default packageNamed: #Kernel) andTag: 'Chronology'.
 	items := browser classGroupSelection items.
 
 	^ ClyFullBrowserClassGroupContext new
-		tool: browser;
-		selectedItems: items;
-		yourself.
+		  tool: browser;
+		  selectedItems: items;
+		  yourself
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 ClyBrowserContextAbstractTest >> differentMethodContext [
 
 	^ self methodContext
@@ -73,7 +74,7 @@ ClyBrowserContextAbstractTest >> differentMethodContext [
 		yourself
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 ClyBrowserContextAbstractTest >> differentPackageContext [
 
 	^ self packageContext
@@ -81,14 +82,14 @@ ClyBrowserContextAbstractTest >> differentPackageContext [
 		yourself
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 ClyBrowserContextAbstractTest >> findBrowserTool: aClyToolMorphClass [
 	
 	^ browser tabManager tools 
 		detect: [ :aTool | aTool class = aClyToolMorphClass ]
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 ClyBrowserContextAbstractTest >> methodContext [
 
 	^ ClyFullBrowserMethodContext new
@@ -96,7 +97,7 @@ ClyBrowserContextAbstractTest >> methodContext [
 		yourself.
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 ClyBrowserContextAbstractTest >> methodGroupContext [
 
 	^ ClyFullBrowserMethodGroupContext new
@@ -104,15 +105,15 @@ ClyBrowserContextAbstractTest >> methodGroupContext [
 		yourself.
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 ClyBrowserContextAbstractTest >> openBrowserWithPackageAndClassGroupOnlySelected [
 
 	self deleteBrowser.
 	browser := ClyFullBrowserMorph open.
-	browser selectPackage: (RPackageOrganizer default packageNamed: #Kernel) atClassTag: 'BasicObjects'.
+	browser selectPackage: (PackageOrganizer default packageNamed: #Kernel) andTag: 'BasicObjects'.
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 ClyBrowserContextAbstractTest >> openBrowserWithPackageOnlySelected [
 
 	self deleteBrowser.
@@ -120,7 +121,7 @@ ClyBrowserContextAbstractTest >> openBrowserWithPackageOnlySelected [
 	browser selectPackage: self class package.
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 ClyBrowserContextAbstractTest >> packageContext [
 
 	^ ClyFullBrowserPackageContext new
@@ -129,7 +130,7 @@ ClyBrowserContextAbstractTest >> packageContext [
 		yourself.
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyBrowserContextAbstractTest >> setUp [
 	super setUp.
 	
@@ -138,7 +139,7 @@ ClyBrowserContextAbstractTest >> setUp [
 		selector: self class selectors anyOne.
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyBrowserContextAbstractTest >> tearDown [ 
 
 	self deleteBrowser.

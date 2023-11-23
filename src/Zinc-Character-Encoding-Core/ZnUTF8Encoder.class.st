@@ -7,17 +7,18 @@ Wikipedia reference http://en.wikipedia.org/wiki/UTF-8
 Part of Zinc HTTP Components.
 "
 Class {
-	#name : #ZnUTF8Encoder,
-	#superclass : #ZnUTFEncoder,
+	#name : 'ZnUTF8Encoder',
+	#superclass : 'ZnUTFEncoder',
 	#classVars : [
 		'ByteASCIISet',
 		'ByteUTF8Encoding',
 		'Default'
 	],
-	#category : #'Zinc-Character-Encoding-Core'
+	#category : 'Zinc-Character-Encoding-Core',
+	#package : 'Zinc-Character-Encoding-Core'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnUTF8Encoder class >> default [
 	"Return a cached instance of the most commonly used encoder,
 	which is faster than going via #newForEncoding: that does a subclass search"
@@ -25,14 +26,14 @@ ZnUTF8Encoder class >> default [
 	^ Default ifNil: [ Default := self new ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnUTF8Encoder class >> handlesEncoding: string [
 	"Return true when my instances handle the encoding described by string"
 
 	^ (self canonicalEncodingIdentifier: string) = 'utf8'
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 ZnUTF8Encoder class >> initialize [
 	| encoder stream |
 	ByteASCIISet := ByteArray new: 256.
@@ -52,26 +53,26 @@ ZnUTF8Encoder class >> initialize [
 				ByteUTF8Encoding at: each + 1 put: bytes ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnUTF8Encoder class >> knownEncodingIdentifiers [
 	^ #( utf8 )
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnUTF8Encoder class >> newForEncoding: string [
 	"No further parametrization needed"
 
 	^ self new
 ]
 
-{ #category : #'encoding - decoding' }
+{ #category : 'encoding - decoding' }
 ZnUTF8Encoder >> backOnStream: stream [
 	"Move back one character on stream"
 
 	[ (stream back bitAnd: 2r11000000) == 2r10000000 ] whileTrue
 ]
 
-{ #category : #'encoding - decoding' }
+{ #category : 'encoding - decoding' }
 ZnUTF8Encoder >> encodedByteCountForCodePoint: codePoint [
 	"Return how many bytes are needed to encode integer code point"
 
@@ -83,7 +84,7 @@ ZnUTF8Encoder >> encodedByteCountForCodePoint: codePoint [
 	^ 0
 ]
 
-{ #category : #'encoding - decoding' }
+{ #category : 'encoding - decoding' }
 ZnUTF8Encoder >> ensureAtBeginOfCodePointOnStream: stream [
 	"Ensure that the current position of stream is a the beginning of an encoded code point,
 	if not move further backwards. This is necessary when a position in the binary stream is set,
@@ -94,27 +95,27 @@ ZnUTF8Encoder >> ensureAtBeginOfCodePointOnStream: stream [
 	[ (stream peek bitAnd: 2r11000000) == 2r10000000 ] whileTrue: [ stream back ]
 ]
 
-{ #category : #'error handling' }
+{ #category : 'error handling' }
 ZnUTF8Encoder >> error: message [
 	^ ZnInvalidUTF8 signal: message
 ]
 
-{ #category : #'error handling' }
+{ #category : 'error handling' }
 ZnUTF8Encoder >> errorIllegalContinuationByte [
 	^ self error: 'Illegal continuation byte for utf-8 encoding'
 ]
 
-{ #category : #'error handling' }
+{ #category : 'error handling' }
 ZnUTF8Encoder >> errorIllegalLeadingByte [
 	^ self error: 'Illegal leading byte for utf-8 encoding'
 ]
 
-{ #category : #'error handling' }
+{ #category : 'error handling' }
 ZnUTF8Encoder >> errorOverlong [
 	^ self error: 'Overlong utf-8 encoding (non-shortest form)'
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnUTF8Encoder >> findFirstNonASCIIIn: string startingAt: offset [
 	"This calls a fast primitive. Note that string can be a ByteString or ByteArray"
 
@@ -125,19 +126,19 @@ ZnUTF8Encoder >> findFirstNonASCIIIn: string startingAt: offset [
 		startingAt: offset
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnUTF8Encoder >> identifier [
 	^ #utf8
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnUTF8Encoder >> isFixedLength [
 	"Return true when I am a fixed length encoding"
 
 	^ false
 ]
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 ZnUTF8Encoder >> next: count putAll: string startingAt: offset toStream: stream [
 	"Write count characters from string starting at offset to stream."
 	"Overwritten for performance reasons - create a fast path for byte strings"
@@ -147,7 +148,7 @@ ZnUTF8Encoder >> next: count putAll: string startingAt: offset toStream: stream 
 		ifFalse: [ super next: count putAll: string startingAt: offset toStream: stream ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnUTF8Encoder >> next: count putAllASCII: string startingAt: offset toStream: stream [
 	"Write count bytes from string starting at offset to stream,
 	assuming all characters are in the ASCII set and need no translation"
@@ -156,7 +157,7 @@ ZnUTF8Encoder >> next: count putAllASCII: string startingAt: offset toStream: st
 		stream nextPut: (string byteAt: index) ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnUTF8Encoder >> next: count putAllByteString: string startingAt: offset toStream: stream [
 	"A faster version when string is a ByteString"
 
@@ -178,7 +179,7 @@ ZnUTF8Encoder >> next: count putAllByteString: string startingAt: offset toStrea
 			self next: offset + count - lastIndex putAllASCII: string startingAt: lastIndex toStream: stream ]
 ]
 
-{ #category : #'encoding - decoding' }
+{ #category : 'encoding - decoding' }
 ZnUTF8Encoder >> nextCodePointFromStream: stream [
 	"Read and return the next integer code point from stream"
 
@@ -219,7 +220,7 @@ ZnUTF8Encoder >> nextCodePointFromStream: stream [
 	^ self errorIllegalLeadingByte
 ]
 
-{ #category : #'encoding - decoding' }
+{ #category : 'encoding - decoding' }
 ZnUTF8Encoder >> nextPutCodePoint: codePoint toStream: stream [
 	"Write the encoding for Integer code point to stream"
 
@@ -244,7 +245,7 @@ ZnUTF8Encoder >> nextPutCodePoint: codePoint toStream: stream [
 	^ self errorOutsideRange
 ]
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 ZnUTF8Encoder >> readInto: string startingAt: offset count: requestedCount fromStream: stream [
 	"Read requestedCount characters into string starting at offset,
 	returning the number read, there could be less available when stream is atEnd.
@@ -261,7 +262,7 @@ ZnUTF8Encoder >> readInto: string startingAt: offset count: requestedCount fromS
 	^ requestedCount
 ]
 
-{ #category : #'encoding - decoding' }
+{ #category : 'encoding - decoding' }
 ZnUTF8Encoder >> skipToBeginOfCodePointOnStream: stream [
 	"Ensure that the current position of stream is a the beginning of an encoded code point,
 	if not move further forward. This is necessary when a position in the binary stream is set,

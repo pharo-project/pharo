@@ -4,7 +4,8 @@ I am a mock used to simlify testing.
 A mock is an object that simulates the behavior of a real object or component in a controlled manner. It is used in unit testing to isolate the code being tested from its dependencies, allowing the code to be tested in isolation.
 "
 Class {
-	#name : #ClySubclassLOfSubclassMFromP3Mock,
-	#superclass : #ClySubclassMOfClass1FromP2Mock,
-	#category : #'Calypso-SystemQueries-Tests-P3WithSubclassFromP2'
+	#name : 'ClySubclassLOfSubclassMFromP3Mock',
+	#superclass : 'ClySubclassMOfClass1FromP2Mock',
+	#category : 'Calypso-SystemQueries-Tests-P3WithSubclassFromP2',
+	#package : 'Calypso-SystemQueries-Tests-P3WithSubclassFromP2'
 }

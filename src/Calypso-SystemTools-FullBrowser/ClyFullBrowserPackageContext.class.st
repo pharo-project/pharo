@@ -2,34 +2,36 @@
 I am a context of selected packages in full browser
 "
 Class {
-	#name : #ClyFullBrowserPackageContext,
-	#superclass : #ClyFullBrowserContext,
-	#category : #'Calypso-SystemTools-FullBrowser-Contexts'
+	#name : 'ClyFullBrowserPackageContext',
+	#superclass : 'ClyFullBrowserContext',
+	#category : 'Calypso-SystemTools-FullBrowser-Contexts',
+	#package : 'Calypso-SystemTools-FullBrowser',
+	#tag : 'Contexts'
 }
 
-{ #category : #'selection strategy' }
+{ #category : 'selection strategy' }
 ClyFullBrowserPackageContext class >> selectionStrategy [
 	<classAnnotation>
 
-	^ClyContextSelectionStrategyAnnotation for: ClyFullBrowserMorph selectionType: RPackage
+	^ClyContextSelectionStrategyAnnotation for: ClyFullBrowserMorph selectionType: Package
 ]
 
-{ #category : #'selection-class groups' }
+{ #category : 'selection-class groups' }
 ClyFullBrowserPackageContext >> isClassGroupSelected [
 	^false
 ]
 
-{ #category : #'selection-class groups' }
-ClyFullBrowserPackageContext >> isClassTagSelected [
+{ #category : 'selection-class groups' }
+ClyFullBrowserPackageContext >> isPackageTagSelected [
 	^false
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 ClyFullBrowserPackageContext >> lastSelectedClassGroup [
 	^self lastSelectedObject
 ]
 
-{ #category : #'selection-packages' }
+{ #category : 'selection-packages' }
 ClyFullBrowserPackageContext >> selectedPackageItems [
 	^selectedItems
 ]

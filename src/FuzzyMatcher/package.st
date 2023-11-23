@@ -1,1 +1,1 @@
-Package { #name : #FuzzyMatcher }
+Package { #name : 'FuzzyMatcher' }

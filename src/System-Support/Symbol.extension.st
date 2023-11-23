@@ -1,11 +1,11 @@
-Extension { #name : #Symbol }
+Extension { #name : 'Symbol' }
 
-{ #category : #'*System-Support' }
+{ #category : '*System-Support' }
 Symbol >> implementors [
 	^SystemNavigation new allImplementorsOf: self
 ]
 
-{ #category : #'*System-Support' }
+{ #category : '*System-Support' }
 Symbol >> senders [
 	^ SystemNavigation default allSendersOf: self
 ]

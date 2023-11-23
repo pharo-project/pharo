@@ -6,38 +6,39 @@ I contain a Form describing my image, a delay time in milliseconds that describe
 See AnimatedImageMorph for examples of how I am used.
 "
 Class {
-	#name : #AnimatedImageFrame,
-	#superclass : #Object,
+	#name : 'AnimatedImageFrame',
+	#superclass : 'Object',
 	#instVars : [
 		'form',
 		'delay',
 		'disposal',
 		'offset'
 	],
-	#category : #'Images-Animated'
+	#category : 'Images-Animated',
+	#package : 'Images-Animated'
 }
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 AnimatedImageFrame >> defaultDelay [
 	^ 66
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AnimatedImageFrame >> delay [
 	^ delay
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AnimatedImageFrame >> delay: aNumber [
 	delay := aNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AnimatedImageFrame >> disposal [
 	^ disposal
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AnimatedImageFrame >> disposal: aSymbol [
 	"Disposal must be one of:
 		#restoreBackground
@@ -50,17 +51,17 @@ AnimatedImageFrame >> disposal: aSymbol [
 	disposal := aSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AnimatedImageFrame >> form [
 	^ form
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AnimatedImageFrame >> form: aForm [
 	form := aForm
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AnimatedImageFrame >> initialize [
 	super initialize.
 	offset := 0 @ 0.
@@ -68,12 +69,12 @@ AnimatedImageFrame >> initialize [
 	disposal := #otherDisposal
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AnimatedImageFrame >> offset [
 	^ offset
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AnimatedImageFrame >> offset: aPoint [
 	"This represents the frame form's offset in the
 	parent image canvas"

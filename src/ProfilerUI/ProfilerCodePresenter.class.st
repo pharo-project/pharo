@@ -2,18 +2,20 @@
 I show the source code of the selected node in the profiler results tree
 "
 Class {
-	#name : #ProfilerCodePresenter,
-	#superclass : #SpCodePresenter,
-	#category : #'ProfilerUI-View'
+	#name : 'ProfilerCodePresenter',
+	#superclass : 'SpCodePresenter',
+	#category : 'ProfilerUI-View',
+	#package : 'ProfilerUI',
+	#tag : 'View'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ProfilerCodePresenter >> initialize [
 	super initialize.
 	self beNotEditable
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ProfilerCodePresenter >> methodOrBlock: methodOrBlock [
 
 	methodOrBlock ifNil: [

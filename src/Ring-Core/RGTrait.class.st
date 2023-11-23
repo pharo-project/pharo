@@ -2,24 +2,26 @@
 A factory that produces instances of RGBehavior composed with RGTraitStrategy
 "
 Class {
-	#name : #RGTrait,
-	#superclass : #RGBehaviorFactory,
-	#category : #'Ring-Core-Kernel'
+	#name : 'RGTrait',
+	#superclass : 'RGBehaviorFactory',
+	#category : 'Ring-Core-Kernel',
+	#package : 'Ring-Core',
+	#tag : 'Kernel'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RGTrait class >> newStrategy [
 
 	^ RGTraitStrategy basicNew
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RGTrait class >> newStrategyFor: anRGEnvironment [
 
 	^ (self strategyClassForVersion: anRGEnvironment version) basicNew
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RGTrait class >> strategyClassForVersion: aVersionNumber [
 
 	^ (aVersionNumber <= 6)

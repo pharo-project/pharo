@@ -57,33 +57,35 @@ Display deferUpdates: false.
 
 "
 Class {
-	#name : #ComplexBorderStyle,
-	#superclass : #SimpleBorderStyle,
+	#name : 'ComplexBorderStyle',
+	#superclass : 'SimpleBorderStyle',
 	#instVars : [
 		'style',
 		'colors',
 		'lineStyles'
 	],
-	#category : #'Morphic-Base-Borders'
+	#category : 'Morphic-Base-Borders',
+	#package : 'Morphic-Base',
+	#tag : 'Borders'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 ComplexBorderStyle class >> initialize [
 	"Deprecated in Pharo 11"
 	self deprecatedAliases: { #ComplexBorder }
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ComplexBorderStyle class >> style: aSymbol [
 	^self new style: aSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ComplexBorderStyle >> colors [
 	^colors ifNil:[colors := self computeColors]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ComplexBorderStyle >> colorsForDirection: direction [
 	"Return an array of colors describing the receiver in the given direction"
 
@@ -124,7 +126,7 @@ ComplexBorderStyle >> colorsForDirection: direction [
 	^colorArray
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ComplexBorderStyle >> computeAltFramedColors [
 	| base light dark w hw colorArray param |
 	base := self color asColor.
@@ -145,7 +147,7 @@ ComplexBorderStyle >> computeAltFramedColors [
 	^colorArray, colorArray
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ComplexBorderStyle >> computeAltInsetColors [
 	| base light dark w colorArray param hw |
 	base := self color asColor.
@@ -171,7 +173,7 @@ ComplexBorderStyle >> computeAltInsetColors [
 	^colorArray
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ComplexBorderStyle >> computeAltRaisedColors [
 	| base light dark w colorArray param hw |
 	base := self color asColor.
@@ -192,7 +194,7 @@ ComplexBorderStyle >> computeAltRaisedColors [
 	^colorArray
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ComplexBorderStyle >> computeColors [
 	width = 0 ifTrue:[^colors := #()].
 	style == #complexFramed ifTrue:[^self computeFramedColors].
@@ -204,7 +206,7 @@ ComplexBorderStyle >> computeColors [
 	self error:'Unknown border style: ', style printString
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ComplexBorderStyle >> computeFramedColors [
 	| base light dark w hw colorArray param |
 	base := self color asColor.
@@ -225,7 +227,7 @@ ComplexBorderStyle >> computeFramedColors [
 	^colorArray, colorArray
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ComplexBorderStyle >> computeInsetColors [
 	| base light dark w colorArray param hw |
 	base := self color asColor.
@@ -248,7 +250,7 @@ ComplexBorderStyle >> computeInsetColors [
 	^colorArray
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ComplexBorderStyle >> computeRaisedColors [
 	| base light dark w colorArray param hw |
 	base := self color asColor.
@@ -269,7 +271,7 @@ ComplexBorderStyle >> computeRaisedColors [
 	^colorArray
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 ComplexBorderStyle >> drawLineFrom: startPoint to: stopPoint on: aCanvas [
 	"Here we're using the balloon engine since this is much faster than BitBlt w/ brushes."
 
@@ -310,7 +312,7 @@ ComplexBorderStyle >> drawLineFrom: startPoint to: stopPoint on: aCanvas [
 				fillStyle: fill]
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 ComplexBorderStyle >> drawPolyPatchFrom: startPoint to: stopPoint on: aCanvas usingEnds: endsArray [
 
 	| cos sin tfm fill dir fsOrigin fsDirection points x y |
@@ -345,7 +347,7 @@ false ifTrue:[
 ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ComplexBorderStyle >> fillStyleForDirection: direction [
 	"Fill the given form describing the receiver's look at a particular direction"
 	| index fill dir |
@@ -365,7 +367,7 @@ ComplexBorderStyle >> fillStyleForDirection: direction [
 	^fill
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 ComplexBorderStyle >> framePolygon: vertices on: aCanvas [
 	| dir1 dir2 dir3 nrm1 nrm2 nrm3 point1 point2 point3
 	 cross1 cross2 pointA pointB pointC pointD w p1 p2 p3 p4 balloon ends pointE pointF |
@@ -439,7 +441,7 @@ ComplexBorderStyle >> framePolygon: vertices on: aCanvas [
 	balloon == aCanvas ifFalse:[balloon flush]
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 ComplexBorderStyle >> frameRectangle: aRectangle on: aCanvas [
 	"Note: This uses BitBlt since it's roughly a factor of two faster for rectangles"
 	| w h r |
@@ -460,7 +462,7 @@ ComplexBorderStyle >> frameRectangle: aRectangle on: aCanvas [
 	]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ComplexBorderStyle >> intersectFrom: startPt with: startDir to: endPt with: endDir [
 	"Compute the intersection of two lines. Return nil if either
 		* the intersection does not exist, or
@@ -481,35 +483,35 @@ ComplexBorderStyle >> intersectFrom: startPt with: startDir to: endPt with: endD
 	^(startPt x + (alpha * startDir x)) @ (startPt y + (alpha * startDir y))
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ComplexBorderStyle >> isComplex [
 	^true
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 ComplexBorderStyle >> releaseCachedState [
 	colors := nil.
 	lineStyles := nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ComplexBorderStyle >> style [
 	^style
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ComplexBorderStyle >> style: newStyle [
 	style == newStyle ifTrue:[^self].
 	style := newStyle.
 	self releaseCachedState
 ]
 
-{ #category : #'color tracking' }
+{ #category : 'color tracking' }
 ComplexBorderStyle >> trackColorFrom: aMorph [
 	baseColor ifNil:[self color: aMorph raisedColor]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ComplexBorderStyle >> widthForRounding [
 	^0
 ]

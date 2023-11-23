@@ -1,15 +1,16 @@
 Class {
-	#name : #ClySortedQueryResultTest,
-	#superclass : #ClyQueryNavigationResultTest,
-	#category : #'Calypso-NavigationModel-Tests'
+	#name : 'ClySortedQueryResultTest',
+	#superclass : 'ClyQueryNavigationResultTest',
+	#category : 'Calypso-NavigationModel-Tests',
+	#package : 'Calypso-NavigationModel-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClySortedQueryResultTest >> createQueryResult [
 	^ClySortedQueryResult using: ClySortByNameFunction ascending
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClySortedQueryResultTest >> testComparisonWithSortedResultBasedOnAnotherFunction [
 	| queryResult2 |
 	queryResult2 := ClySortedQueryResult using: #someAspect ascending.
@@ -17,7 +18,7 @@ ClySortedQueryResultTest >> testComparisonWithSortedResultBasedOnAnotherFunction
 	self deny: queryResult equals: queryResult2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClySortedQueryResultTest >> testFillingItems [
 
 	queryResult fillWith: {Object. Array. Point} "query sorts items by name".

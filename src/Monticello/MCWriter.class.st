@@ -2,35 +2,37 @@
 Common superclass for metacello writers
 "
 Class {
-	#name : #MCWriter,
-	#superclass : #Object,
+	#name : 'MCWriter',
+	#superclass : 'Object',
 	#instVars : [
 		'stream'
 	],
-	#category : #'Monticello-Storing'
+	#category : 'Monticello-Storing',
+	#package : 'Monticello',
+	#tag : 'Storing'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCWriter class >> extension [
 	^ self readerClass extension
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 MCWriter class >> on: aStream [
 	^ self new stream: aStream
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCWriter class >> readerClass [
 	^ self subclassResponsibility 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCWriter >> stream [
 	^ stream
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCWriter >> stream: aStream [
 	stream := aStream
 ]

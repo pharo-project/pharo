@@ -4,34 +4,36 @@ Utility class to test exceptions
 For a partial explaination of how this class is used, look at the comment of class ExceptionTests.
 "
 Class {
-	#name : #ExceptionTester,
-	#superclass : #Object,
+	#name : 'ExceptionTester',
+	#superclass : 'Object',
 	#instVars : [
 		'log',
 		'suiteLog',
 		'iterationsBeforeTimeout'
 	],
-	#category : #'Kernel-Tests-Exception'
+	#category : 'Kernel-Tests-Exception',
+	#package : 'Kernel-Tests',
+	#tag : 'Exception'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExceptionTester >> basicANSISignaledExceptionTestSelectors [
 
 	^#( simpleIsNestedTest simpleOuterTest doubleOuterTest doubleOuterPassTest doublePassOuterTest simplePassTest simpleResignalAsTest simpleResumeTest simpleRetryTest simpleRetryUsingTest simpleReturnTest)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExceptionTester >> basicTestSelectors [
 	^ #(#simpleEnsureTest #simpleEnsureTestWithNotification #simpleEnsureTestWithUparrow #simpleEnsureTestWithError #signalFromHandlerActionTest #resumableFallOffTheEndHandler #nonResumableFallOffTheEndHandler #doubleResumeTest #simpleTimeoutWithZeroDurationTest #simpleTimeoutTest simpleNoTimeoutTest)
 ]
 
-{ #category : #logging }
+{ #category : 'logging' }
 ExceptionTester >> clearLog [
 
 	log := nil
 ]
 
-{ #category : #logging }
+{ #category : 'logging' }
 ExceptionTester >> contents [
 
 	^( self log
@@ -44,55 +46,55 @@ ExceptionTester >> contents [
 				yourself] ) contents
 ]
 
-{ #category : #'pseudo actions' }
+{ #category : 'pseudo actions' }
 ExceptionTester >> doSomething [
 
 	self log: self doSomethingString
 ]
 
-{ #category : #'pseudo actions' }
+{ #category : 'pseudo actions' }
 ExceptionTester >> doSomethingElse [
 
 	self log: self doSomethingElseString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExceptionTester >> doSomethingElseString [
 
 	^'Do something else.'
 ]
 
-{ #category : #'pseudo actions' }
+{ #category : 'pseudo actions' }
 ExceptionTester >> doSomethingExceptional [
 
 	self log: self doSomethingExceptionalString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExceptionTester >> doSomethingExceptionalString [
 
 	^'Do something exceptional.'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExceptionTester >> doSomethingString [
 
 	^'Do something.'
 ]
 
-{ #category : #'pseudo actions' }
+{ #category : 'pseudo actions' }
 ExceptionTester >> doYetAnotherThing [
 
 	self log: self doYetAnotherThingString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExceptionTester >> doYetAnotherThingString [
 
 	^'Do yet another thing.'
 ]
 
-{ #category : #'signaledexception tests' }
+{ #category : 'signaledexception tests' }
 ExceptionTester >> doubleOuterPassTest [
 	"uses #resume"
 
@@ -109,7 +111,7 @@ ExceptionTester >> doubleOuterPassTest [
 				do: [:ex | self doYetAnotherThing. ex resume]
 ]
 
-{ #category : #'signaledexception results' }
+{ #category : 'signaledexception results' }
 ExceptionTester >> doubleOuterPassTestResults [
 
 	^OrderedCollection new
@@ -119,7 +121,7 @@ ExceptionTester >> doubleOuterPassTestResults [
 		yourself
 ]
 
-{ #category : #'signaledexception tests' }
+{ #category : 'signaledexception tests' }
 ExceptionTester >> doubleOuterTest [
 	"uses #resume"
 
@@ -136,7 +138,7 @@ ExceptionTester >> doubleOuterTest [
 				do: [:ex | self doYetAnotherThing. ex resume]
 ]
 
-{ #category : #'signaledexception tests' }
+{ #category : 'signaledexception tests' }
 ExceptionTester >> doublePassOuterTest [
 	"uses #resume"
 
@@ -153,7 +155,7 @@ ExceptionTester >> doublePassOuterTest [
 				do: [:ex | self doYetAnotherThing. ex resume]
 ]
 
-{ #category : #'signaledexception results' }
+{ #category : 'signaledexception results' }
 ExceptionTester >> doublePassOuterTestResults [
 
 	^OrderedCollection new
@@ -163,7 +165,7 @@ ExceptionTester >> doublePassOuterTestResults [
 		yourself
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ExceptionTester >> doubleResumeTest [
 
        [self doSomething.
@@ -175,7 +177,7 @@ ExceptionTester >> doubleResumeTest [
                do: [:ex | ex resume]
 ]
 
-{ #category : #results }
+{ #category : 'results' }
 ExceptionTester >> doubleResumeTestResults [
 
        ^OrderedCollection new
@@ -185,36 +187,36 @@ ExceptionTester >> doubleResumeTestResults [
                yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExceptionTester >> iterationsBeforeTimeout [
 
 	^ iterationsBeforeTimeout
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExceptionTester >> iterationsBeforeTimeout: anInteger [
 
 	iterationsBeforeTimeout := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExceptionTester >> log [
 	^ log ifNil: [ log := OrderedCollection new ]
 ]
 
-{ #category : #logging }
+{ #category : 'logging' }
 ExceptionTester >> log: aString [
 
 	self log add: aString
 ]
 
-{ #category : #logging }
+{ #category : 'logging' }
 ExceptionTester >> logTest: aSelector [
 
 	self suiteLog add: aSelector
 ]
 
-{ #category : #logging }
+{ #category : 'logging' }
 ExceptionTester >> logTestResult: aString [
 
 	| index |
@@ -224,19 +226,19 @@ ExceptionTester >> logTestResult: aString [
 		put: ((self suiteLog at: index), ' ', aString)
 ]
 
-{ #category : #'pseudo actions' }
+{ #category : 'pseudo actions' }
 ExceptionTester >> methodWithError [
 
 	MyTestError signal: self testString
 ]
 
-{ #category : #'pseudo actions' }
+{ #category : 'pseudo actions' }
 ExceptionTester >> methodWithNotification [
 
 	MyTestNotification signal: self testString
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ExceptionTester >> nonResumableFallOffTheEndHandler [
 
 	[self doSomething.
@@ -247,7 +249,7 @@ ExceptionTester >> nonResumableFallOffTheEndHandler [
 	self doYetAnotherThing
 ]
 
-{ #category : #results }
+{ #category : 'results' }
 ExceptionTester >> nonResumableFallOffTheEndHandlerResults [
 
 	^OrderedCollection new
@@ -257,7 +259,7 @@ ExceptionTester >> nonResumableFallOffTheEndHandlerResults [
 		yourself
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ExceptionTester >> resumableFallOffTheEndHandler [
 
 	[self doSomething.
@@ -268,7 +270,7 @@ ExceptionTester >> resumableFallOffTheEndHandler [
 	self doYetAnotherThing
 ]
 
-{ #category : #results }
+{ #category : 'results' }
 ExceptionTester >> resumableFallOffTheEndHandlerResults [
 
 	^OrderedCollection new
@@ -278,7 +280,7 @@ ExceptionTester >> resumableFallOffTheEndHandlerResults [
 		yourself
 ]
 
-{ #category : #suites }
+{ #category : 'suites' }
 ExceptionTester >> runAllTests [
 	"ExceptionTester new runAllTests"
 
@@ -287,7 +289,7 @@ ExceptionTester >> runAllTests [
 		runBasicANSISignaledExceptionTests
 ]
 
-{ #category : #suites }
+{ #category : 'suites' }
 ExceptionTester >> runBasicANSISignaledExceptionTests [
 
 	self basicANSISignaledExceptionTestSelectors
@@ -296,7 +298,7 @@ ExceptionTester >> runBasicANSISignaledExceptionTests [
 			self runTest: eachTestSelector]
 ]
 
-{ #category : #suites }
+{ #category : 'suites' }
 ExceptionTester >> runBasicTests [
 
 	self basicTestSelectors
@@ -305,7 +307,7 @@ ExceptionTester >> runBasicTests [
 			self runTest: eachTestSelector]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ExceptionTester >> runTest: aSelector [
 
 	| actualResult expectedResult |
@@ -325,7 +327,7 @@ ExceptionTester >> runTest: aSelector [
 		ifFalse: [self logTestResult: 'failed' ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ExceptionTester >> signalFromHandlerActionTest [
 
 	[self doSomething.
@@ -337,7 +339,7 @@ ExceptionTester >> signalFromHandlerActionTest [
 			MyTestError signal]
 ]
 
-{ #category : #results }
+{ #category : 'results' }
 ExceptionTester >> signalFromHandlerActionTestResults [
 
 	^OrderedCollection new
@@ -347,7 +349,7 @@ ExceptionTester >> signalFromHandlerActionTestResults [
 		yourself
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ExceptionTester >> simpleEnsureTest [
 
 	[self doSomething.
@@ -356,7 +358,7 @@ ExceptionTester >> simpleEnsureTest [
 			[self doYetAnotherThing]
 ]
 
-{ #category : #results }
+{ #category : 'results' }
 ExceptionTester >> simpleEnsureTestResults [
 
 	^OrderedCollection new
@@ -366,7 +368,7 @@ ExceptionTester >> simpleEnsureTestResults [
 		yourself
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ExceptionTester >> simpleEnsureTestWithError [
 
 	[self doSomething.
@@ -376,7 +378,7 @@ ExceptionTester >> simpleEnsureTestWithError [
 			[self doYetAnotherThing]
 ]
 
-{ #category : #results }
+{ #category : 'results' }
 ExceptionTester >> simpleEnsureTestWithErrorResults [
 
 	^OrderedCollection new
@@ -386,7 +388,7 @@ ExceptionTester >> simpleEnsureTestWithErrorResults [
 		yourself
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ExceptionTester >> simpleEnsureTestWithNotification [
 
 	[self doSomething.
@@ -396,7 +398,7 @@ ExceptionTester >> simpleEnsureTestWithNotification [
 			[self doYetAnotherThing]
 ]
 
-{ #category : #results }
+{ #category : 'results' }
 ExceptionTester >> simpleEnsureTestWithNotificationResults [
 
 	^OrderedCollection new
@@ -406,7 +408,7 @@ ExceptionTester >> simpleEnsureTestWithNotificationResults [
 		yourself
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ExceptionTester >> simpleEnsureTestWithUparrow [
 
 	[self doSomething.
@@ -416,7 +418,7 @@ ExceptionTester >> simpleEnsureTestWithUparrow [
 			[self doYetAnotherThing]
 ]
 
-{ #category : #results }
+{ #category : 'results' }
 ExceptionTester >> simpleEnsureTestWithUparrowResults [
 
 	^OrderedCollection new
@@ -426,7 +428,7 @@ ExceptionTester >> simpleEnsureTestWithUparrowResults [
 		yourself
 ]
 
-{ #category : #'signaledexception tests' }
+{ #category : 'signaledexception tests' }
 ExceptionTester >> simpleIsNestedTest [
 	"uses resignalAs:"
 
@@ -441,7 +443,7 @@ ExceptionTester >> simpleIsNestedTest [
 				exception resignalAs: MyTestNotification new ]]
 ]
 
-{ #category : #'signaledexception results' }
+{ #category : 'signaledexception results' }
 ExceptionTester >> simpleIsNestedTestResults [
 
 	^OrderedCollection new
@@ -451,7 +453,7 @@ ExceptionTester >> simpleIsNestedTestResults [
 		yourself
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ExceptionTester >> simpleNoTimeoutTest [
 
 	[ self doSomething ]
@@ -459,7 +461,7 @@ ExceptionTester >> simpleNoTimeoutTest [
 			[ self doSomethingElse ]
 ]
 
-{ #category : #results }
+{ #category : 'results' }
 ExceptionTester >> simpleNoTimeoutTestResults [
 
 	^OrderedCollection new
@@ -467,7 +469,7 @@ ExceptionTester >> simpleNoTimeoutTestResults [
 		yourself
 ]
 
-{ #category : #'signaledexception tests' }
+{ #category : 'signaledexception tests' }
 ExceptionTester >> simpleOuterTest [
 	"uses #resume"
 
@@ -481,7 +483,7 @@ ExceptionTester >> simpleOuterTest [
 				do: [:ex | self doYetAnotherThing. ex resume]
 ]
 
-{ #category : #'signaledexception results' }
+{ #category : 'signaledexception results' }
 ExceptionTester >> simpleOuterTestResults [
 
 	^OrderedCollection new
@@ -491,7 +493,7 @@ ExceptionTester >> simpleOuterTestResults [
 		yourself
 ]
 
-{ #category : #'signaledexception tests' }
+{ #category : 'signaledexception tests' }
 ExceptionTester >> simplePassTest [
 
 	[self doSomething.
@@ -504,7 +506,7 @@ ExceptionTester >> simplePassTest [
 			ex pass "expecting handler in #runTest:"]
 ]
 
-{ #category : #'signaledexception results' }
+{ #category : 'signaledexception results' }
 ExceptionTester >> simplePassTestResults [
 
 	^OrderedCollection new
@@ -514,7 +516,7 @@ ExceptionTester >> simplePassTestResults [
 		yourself
 ]
 
-{ #category : #'signaledexception tests' }
+{ #category : 'signaledexception tests' }
 ExceptionTester >> simpleResignalAsTest [
 	"ExceptionTester new simpleResignalAsTest"
 
@@ -526,7 +528,7 @@ ExceptionTester >> simpleResignalAsTest [
 			[:ex | ex resignalAs: MyTestError new]
 ]
 
-{ #category : #'signaledexception results' }
+{ #category : 'signaledexception results' }
 ExceptionTester >> simpleResignalAsTestResults [
 
 	^OrderedCollection new
@@ -535,7 +537,7 @@ ExceptionTester >> simpleResignalAsTestResults [
 		yourself
 ]
 
-{ #category : #'signaledexception tests' }
+{ #category : 'signaledexception tests' }
 ExceptionTester >> simpleResumeTest [
 
 	"see if we can resume twice"
@@ -554,7 +556,7 @@ ExceptionTester >> simpleResumeTest [
 			ex resume: 3]
 ]
 
-{ #category : #'signaledexception results' }
+{ #category : 'signaledexception results' }
 ExceptionTester >> simpleResumeTestResults [
 
 	"see if we can resume twice"
@@ -568,7 +570,7 @@ ExceptionTester >> simpleResumeTestResults [
 			yourself
 ]
 
-{ #category : #'signaledexception tests' }
+{ #category : 'signaledexception tests' }
 ExceptionTester >> simpleRetryTest [
 
 	| theMeaningOfLife |
@@ -585,7 +587,7 @@ ExceptionTester >> simpleRetryTest [
 				ex retry]
 ]
 
-{ #category : #'signaledexception results' }
+{ #category : 'signaledexception results' }
 ExceptionTester >> simpleRetryTestResults [
 
 	^OrderedCollection new
@@ -596,7 +598,7 @@ ExceptionTester >> simpleRetryTestResults [
 			yourself
 ]
 
-{ #category : #'signaledexception tests' }
+{ #category : 'signaledexception tests' }
 ExceptionTester >> simpleRetryUsingTest [
 
 	[self doSomething.
@@ -607,7 +609,7 @@ ExceptionTester >> simpleRetryUsingTest [
 			[:ex | ex retryUsing: [self doYetAnotherThing]]
 ]
 
-{ #category : #'signaledexception results' }
+{ #category : 'signaledexception results' }
 ExceptionTester >> simpleRetryUsingTestResults [
 
 	^OrderedCollection new
@@ -616,7 +618,7 @@ ExceptionTester >> simpleRetryUsingTestResults [
 			yourself
 ]
 
-{ #category : #'signaledexception tests' }
+{ #category : 'signaledexception tests' }
 ExceptionTester >> simpleReturnTest [
 
 	| it |
@@ -629,7 +631,7 @@ ExceptionTester >> simpleReturnTest [
 	it = 3 ifTrue: [self doYetAnotherThing]
 ]
 
-{ #category : #'signaledexception results' }
+{ #category : 'signaledexception results' }
 ExceptionTester >> simpleReturnTestResults [
 
 	^OrderedCollection new
@@ -638,7 +640,7 @@ ExceptionTester >> simpleReturnTestResults [
 		yourself
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ExceptionTester >> simpleTimeoutTest [
 
 	| n |
@@ -648,7 +650,7 @@ ExceptionTester >> simpleTimeoutTest [
 			self doSomethingElse ]
 ]
 
-{ #category : #results }
+{ #category : 'results' }
 ExceptionTester >> simpleTimeoutTestResults [
 
 	| things |
@@ -660,7 +662,7 @@ ExceptionTester >> simpleTimeoutTestResults [
 	^ things
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ExceptionTester >> simpleTimeoutWithZeroDurationTest [
 
 	[ self doSomething ]
@@ -668,7 +670,7 @@ ExceptionTester >> simpleTimeoutWithZeroDurationTest [
 			[ self doSomethingElse ]
 ]
 
-{ #category : #results }
+{ #category : 'results' }
 ExceptionTester >> simpleTimeoutWithZeroDurationTestResults [
 
 	^OrderedCollection new
@@ -676,21 +678,19 @@ ExceptionTester >> simpleTimeoutWithZeroDurationTestResults [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExceptionTester >> suiteLog [
 
-	suiteLog == nil
-		ifTrue: [suiteLog := OrderedCollection new].
-	^suiteLog
+	^ suiteLog ifNil: [ suiteLog := OrderedCollection new ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExceptionTester >> testString [
 
 	^'This is only a test.'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ExceptionTester >> warningTest [
 
 	self log: 'About to signal warning.'.

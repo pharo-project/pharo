@@ -7,7 +7,9 @@ SystemAnnouncer uniqueInstance
 	on: JobEnd send: #XXX to: whoever.
 "
 Class {
-	#name : #JobEnd,
-	#superclass : #JobAnnouncement,
-	#category : #'Jobs-Announcements'
+	#name : 'JobEnd',
+	#superclass : 'JobAnnouncement',
+	#category : 'Jobs-Announcements',
+	#package : 'Jobs',
+	#tag : 'Announcements'
 }

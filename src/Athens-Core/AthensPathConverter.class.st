@@ -22,35 +22,37 @@ and then finally to instance of AthensPolygonPath.
 
 "
 Class {
-	#name : #AthensPathConverter,
-	#superclass : #Object,
+	#name : 'AthensPathConverter',
+	#superclass : 'Object',
 	#instVars : [
 		'sourcePath',
 		'dest',
 		'endPoint'
 	],
-	#category : #'Athens-Core-Paths'
+	#category : 'Athens-Core-Paths',
+	#package : 'Athens-Core',
+	#tag : 'Paths'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 AthensPathConverter class >> dest: aDest [
 
 	^ self new dest: aDest
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 AthensPathConverter class >> source: aSource dest: aDest [
 	" answer a converted path from source to dest, using my instance as a converter"
 
 	^ self new source: aSource dest: aDest
 ]
 
-{ #category : #'converting path commands' }
+{ #category : 'converting path commands' }
 AthensPathConverter >> close: aPoint [
 	^ dest close: aPoint
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 AthensPathConverter >> convert: aSourcePath [
 
 	" iterate over segments and do conversion "
@@ -59,7 +61,7 @@ AthensPathConverter >> convert: aSourcePath [
 
 	segment := aSourcePath.
 
-	[ segment notNil ] whileTrue: [
+	[ segment isNotNil ] whileTrue: [
 		segment convertWith: self.
 		endPoint := segment endPoint.
 		segment := segment next.
@@ -68,33 +70,33 @@ AthensPathConverter >> convert: aSourcePath [
 	^ dest finish
 ]
 
-{ #category : #'converting path commands' }
+{ #category : 'converting path commands' }
 AthensPathConverter >> curveVia: pt1 to: pt2 [
 
 	^ dest curveVia: pt1 to: pt2
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensPathConverter >> dest: anObject [
 	dest := anObject
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 AthensPathConverter >> finish [
 	^ dest finish
 ]
 
-{ #category : #'converting path commands' }
+{ #category : 'converting path commands' }
 AthensPathConverter >> lineTo: aPoint [
 	^ dest lineTo: aPoint
 ]
 
-{ #category : #'converting path commands' }
+{ #category : 'converting path commands' }
 AthensPathConverter >> moveTo: aPoint [
 	^ dest moveTo: aPoint
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensPathConverter >> source: aSource dest: aDest [
 
 	sourcePath := aSource.

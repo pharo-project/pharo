@@ -2,77 +2,61 @@
 I answer a String that represents the new state of an EpEvent.
 "
 Class {
-	#name : #EpNewStateVisitor,
-	#superclass : #EpContentStringVisitor,
-	#category : #'EpiceaBrowsers-Visitors'
+	#name : 'EpNewStateVisitor',
+	#superclass : 'EpContentStringVisitor',
+	#category : 'EpiceaBrowsers-Visitors',
+	#package : 'EpiceaBrowsers',
+	#tag : 'Visitors'
 }
 
-{ #category : #visitor }
-EpNewStateVisitor >> visitBehaviorCategoryChange: aRecategorizationChange [
-
-	^ aRecategorizationChange newCategory
-]
-
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpNewStateVisitor >> visitBehaviorCommentChange: aChange [
 
 	^ aChange newComment asString
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpNewStateVisitor >> visitBehaviorNameChange: aClassRenameChange [
 
 	^ aClassRenameChange newName
 ]
 
-{ #category : #visitor }
-EpNewStateVisitor >> visitCategoryAddition: aClassCategoryCreatedChange [
+{ #category : 'visitor' }
+EpNewStateVisitor >> visitBehaviorRepackagedChange: aBehaviorRepackagedChange [
 
-	^ aClassCategoryCreatedChange categoryName
+	^ self printTag: aBehaviorRepackagedChange newTagName package: aBehaviorRepackagedChange newPackageName
 ]
 
-{ #category : #visitor }
-EpNewStateVisitor >> visitCategoryRegistration: aClassCategoryCreatedChange [
-
-	^ aClassCategoryCreatedChange categoryName
-]
-
-{ #category : #visitor }
-EpNewStateVisitor >> visitCategoryRename: aClassCategoryRenamedChange [
-
-	^ aClassCategoryRenamedChange newCategoryName
-]
-
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpNewStateVisitor >> visitClassAddition: aClassCreatedChange [
 
 	^ self stringForBehavior: aClassCreatedChange classAdded
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpNewStateVisitor >> visitClassModification: aModificationClassChange [
 
 	^ self stringForBehavior: aModificationClassChange newClass
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpNewStateVisitor >> visitExpressionEvaluation: anExpressionEvaluation [
 
 	^ anExpressionEvaluation expression
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpNewStateVisitor >> visitLogCommentModification: anEvent [
 	^ anEvent newComment
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpNewStateVisitor >> visitMethodAddition: aMethodCreatedChange [
 
 	^ self printProtocol: aMethodCreatedChange protocol sourceCode: aMethodCreatedChange sourceCode
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpNewStateVisitor >> visitMethodModification: aMethodModification [
 
 	^ self
@@ -80,25 +64,55 @@ EpNewStateVisitor >> visitMethodModification: aMethodModification [
 		sourceCode: aMethodModification newSourceCode
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
+EpNewStateVisitor >> visitPackageAddition: aPackageAddition [
+
+	^ aPackageAddition packageName
+]
+
+{ #category : 'visitor' }
+EpNewStateVisitor >> visitPackageRemoval: aPackageRemoval [
+
+	^ aPackageRemoval packageName
+]
+
+{ #category : 'visitor' }
+EpNewStateVisitor >> visitPackageRename: aPackageRename [
+
+	^ aPackageRename newPackageName
+]
+
+{ #category : 'visitor' }
+EpNewStateVisitor >> visitPackageTagAddition: aPackageTagAddition [
+
+	^ self printTag: aPackageTagAddition tagName package: aPackageTagAddition packageName
+]
+
+{ #category : 'visitor' }
+EpNewStateVisitor >> visitPackageTagRename: aPackageTagRename [
+
+	^ self printTag: aPackageTagRename newTagName package: aPackageTagRename packageName
+]
+
+{ #category : 'visitor' }
 EpNewStateVisitor >> visitProtocolAddition: aProtocolAddition [
 
 	^ aProtocolAddition protocol
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpNewStateVisitor >> visitRedo: aRedoEvent [
 
 	^ self displayBrowserOperation: aRedoEvent
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpNewStateVisitor >> visitTraitAddition: aTraitCreation [
 
 	^ self stringForBehavior: aTraitCreation traitAdded
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpNewStateVisitor >> visitTraitModification: aTraitModificationChange [
 
 	^ self stringForBehavior: aTraitModificationChange newTrait

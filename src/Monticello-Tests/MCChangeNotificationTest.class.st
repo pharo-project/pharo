@@ -1,26 +1,20 @@
 Class {
-	#name : #MCChangeNotificationTest,
-	#superclass : #MCTestCase,
+	#name : 'MCChangeNotificationTest',
+	#superclass : 'MCTestCase',
 	#instVars : [
 		'workingCopy'
 	],
-	#category : #'Monticello-Tests-Base'
+	#category : 'Monticello-Tests-Base',
+	#package : 'Monticello-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 MCChangeNotificationTest >> foreignMethod [
 	"see testForeignMethodModified"
 ]
 
-{ #category : #events }
-MCChangeNotificationTest >> modifiedEventFor: aSelector ofClass: aClass [
-
-	| method |
-	method := aClass compiledMethodAt: aSelector.
-	^ MethodModified methodChangedFrom: method to: method oldProtocol: nil
-]
-
-{ #category : #running }
+{ #category : 'running' }
 MCChangeNotificationTest >> setUp [
        "FIXME: Unregister Monticellomocks if it got created in another test
        (for example MCMethodDefinitionTest may create it implicitly).
@@ -33,33 +27,35 @@ MCChangeNotificationTest >> setUp [
                ifAbsent:[].
        PackageOrganizer default unregisterPackageNamed: 'MonticelloMocks'."
 		super setUp.	
-      workingCopy := MCWorkingCopy forPackage: self mockPackage.
+      workingCopy := MCWorkingCopy ensureForPackage: self mockPackage.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCChangeNotificationTest >> testCoreMethodModified [
-	| event |
+
+	| method |
 	workingCopy modified: false.
-	event := self modifiedEventFor: #one ofClass: self mockClassA.
-	MCWorkingCopy methodModified: event.
+	method := self mockClassA compiledMethodAt: #one.
+	MCWorkingCopy handleClassAndMethodsChange: (MethodModified methodChangedFrom: method to: method oldProtocol: nil).
 	self assert: workingCopy modified
 ]
 
-{ #category : #tests }
-MCChangeNotificationTest >> testExtMethodModified [
-	| event method |
+{ #category : 'tests' }
+MCChangeNotificationTest >> testExtensionMethodModified [
+
+	| method |
 	workingCopy modified: false.
-	method := workingCopy packageSet extensionMethods first.
-	event := self modifiedEventFor: method selector ofClass: method methodClass.
-	MCWorkingCopy methodModified: event.
+	method := workingCopy systemPackage extensionMethods first.
+	MCWorkingCopy handleClassAndMethodsChange: (MethodModified methodChangedFrom: method to: method oldProtocol: nil).
 	self assert: workingCopy modified
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCChangeNotificationTest >> testForeignMethodModified [
-	| event |
+
+	| method |
 	workingCopy modified: false.
-	event := self modifiedEventFor: #foreignMethod ofClass: self class.
-	MCWorkingCopy methodModified: event.
+	method := self class compiledMethodAt: #foreignMethod.
+	MCWorkingCopy handleClassAndMethodsChange: (MethodModified methodChangedFrom: method to: method oldProtocol: nil).
 	self deny: workingCopy modified
 ]

@@ -2,67 +2,69 @@
 my role is to record the movements of a finger and associate a color to this movement
 "
 Class {
-	#name : #SDL2TouchStateMachine,
-	#superclass : #Object,
+	#name : 'SDL2TouchStateMachine',
+	#superclass : 'Object',
 	#instVars : [
 		'first',
 		'finish',
 		'move',
 		'color'
 	],
-	#category : #'OSWindow-SDL2-Examples-Touch'
+	#category : 'OSWindow-SDL2-Examples-Touch',
+	#package : 'OSWindow-SDL2-Examples',
+	#tag : 'Touch'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SDL2TouchStateMachine class >> for:	anPosition [
 	^self new
 		first: anPosition;
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SDL2TouchStateMachine >> add: aPoint [
 	move add: aPoint
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SDL2TouchStateMachine >> color [
 	^color
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SDL2TouchStateMachine >> finish [
 	^ finish
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SDL2TouchStateMachine >> finish: anObject [
 	finish := anObject.
 	move add: anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SDL2TouchStateMachine >> first [
 	^ first
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SDL2TouchStateMachine >> first: anObject [
 	first := anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SDL2TouchStateMachine >> initialize [
 	move := OrderedCollection new.
 	color := Color random
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SDL2TouchStateMachine >> move [
 	^ move
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SDL2TouchStateMachine >> move: anObject [
 	move := anObject
 ]

@@ -1,21 +1,22 @@
 Class {
-	#name : #MetacelloStackCacheTestCase,
-	#superclass : #TestCase,
-	#category : #'Metacello-TestsCore'
+	#name : 'MetacelloStackCacheTestCase',
+	#superclass : 'TestCase',
+	#category : 'Metacello-TestsCore',
+	#package : 'Metacello-TestsCore'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloStackCacheTestCase >> cacheNil [
 
 	^MetacelloPlatform current 
 		stackCacheFor: #cacheNil
 		at: #key 
-		doing: [:cache | | value |
+		doing: [:cache |
 			cache at: #key put: nil.
 			self cacheNil ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloStackCacheTestCase >> cachedReturnOfValue [
 
 	^MetacelloPlatform current 
@@ -31,7 +32,7 @@ MetacelloStackCacheTestCase >> cachedReturnOfValue [
 			self cachedReturnOfValue ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloStackCacheTestCase >> collectionCacheKey [
 
 	| key |
@@ -49,7 +50,7 @@ MetacelloStackCacheTestCase >> collectionCacheKey [
 			self collectionCacheKey ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloStackCacheTestCase >> directReturnOfValue [
 
 	^MetacelloPlatform current 
@@ -63,7 +64,7 @@ MetacelloStackCacheTestCase >> directReturnOfValue [
 			self directReturnOfValue ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloStackCacheTestCase >> mixedStack [
 	^ MetacelloPlatform current
 		stackCacheFor: #mixed
@@ -79,7 +80,7 @@ MetacelloStackCacheTestCase >> mixedStack [
 			self mixedStack ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloStackCacheTestCase >> mixedStackCall [
 	^ MetacelloPlatform current
 		stackCacheFor: #mixedStack
@@ -94,32 +95,31 @@ MetacelloStackCacheTestCase >> mixedStackCall [
 			self mixedStackCall ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloStackCacheTestCase >> testCacheNil [
 	| x |
 	self assert: (x := self cacheNil) identicalTo: nil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloStackCacheTestCase >> testCachedReturn [
 	| x |
 	self assert: (x := self cachedReturnOfValue) identicalTo: 6
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloStackCacheTestCase >> testClearCache [
 	MetacelloPlatform current
 		stackCacheFor: #cached
 		at: #key
 		doing: [ :cache | 
-			| value |
 			cache at: #x put: 1.
 			self assert: (cache at: #x ifAbsent: [  ]) identicalTo: 1.
 			MetacelloClearStackCacheNotification signal.
 			self assert: (cache at: #x ifAbsent: [  ]) identicalTo: nil ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloStackCacheTestCase >> testCollectionCacheKey [
 	| x |
 	self assert: (Array with: self class with: (Array with: 'faux' with: 'foobar')) equals: (Array with: self class with: (Array with: 'faux' with: 'foobar')).
@@ -129,7 +129,7 @@ MetacelloStackCacheTestCase >> testCollectionCacheKey [
 	self assert: (x := self collectionCacheKey) identicalTo: 6
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloStackCacheTestCase >> testDefaultDictionary [
 
 	| defaultDictionary |
@@ -152,19 +152,19 @@ MetacelloStackCacheTestCase >> testDefaultDictionary [
 	self assert: (defaultDictionary includesKey: #mixedStack).
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloStackCacheTestCase >> testDirectReturn [
 	| x |
 	self assert: (x := self directReturnOfValue) identicalTo: 6
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloStackCacheTestCase >> testMixedStack [
 	| x |
 	self assert: (x := self mixedStack) identicalTo: 4
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloStackCacheTestCase >> testPrimeStackCache [
 	| cached collection cacheNil direct mixed mixedStack block defaultDictionary |
 	defaultDictionary := Dictionary new.

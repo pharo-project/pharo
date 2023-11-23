@@ -4,22 +4,24 @@ I'm a transformation of pixel values. I apply up to four masks and shifts to com
 I'm used when applying a BitBlt transfer, whenever pixels from a source to a destination have diferent depths. For further information refer to BitBlt class comments.
 "
 Class {
-	#name : #ColorMap,
-	#superclass : #Object,
+	#name : 'ColorMap',
+	#superclass : 'Object',
 	#instVars : [
 		'shifts',
 		'masks',
 		'colors'
 	],
-	#category : #'Colors-Base'
+	#category : 'Colors-Base',
+	#package : 'Colors',
+	#tag : 'Base'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ColorMap class >> colors: colorArray [
 	^self new setShifts: nil masks: nil colors: colorArray
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ColorMap class >> mapBitsFrom: srcBitMask to: dstBitMask [
 	"Return an array consisting of the shift and the mask for
 	mapping component values out of srcBitMask and into dstBitMask.
@@ -56,7 +58,7 @@ ColorMap class >> mapBitsFrom: srcBitMask to: dstBitMask [
 		with: mask
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ColorMap class >> mappingFrom: srcBitMasks to: dstBitMasks [
 	"Return a color map mapping from the array of source bit masks
 	to the array of dest bit masks."
@@ -81,34 +83,34 @@ ColorMap class >> mappingFrom: srcBitMasks to: dstBitMasks [
 		masks: masks
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ColorMap class >> mappingFromARGB: dstBitMasks [
 	"Return a ColorMap mapping from canonical ARGB space into dstBitMasks"
 	^self mappingFrom: #(16rFF0000 16rFF00 16rFF 16rFF000000) to: dstBitMasks
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ColorMap class >> mappingToARGB: srcBitMasks [
 	"Return a ColorMap mapping from srcBitMasks into canonical ARGB space"
 	^self mappingFrom: srcBitMasks to: #(16rFF0000 16rFF00 16rFF 16rFF000000)
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ColorMap class >> masks: maskArray shifts: shiftArray [
 	^self shifts: shiftArray masks: maskArray colors: nil
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ColorMap class >> shifts: shiftArray masks: maskArray [
 	^self shifts: shiftArray masks: maskArray colors: nil
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ColorMap class >> shifts: shiftArray masks: maskArray colors: colorArray [
 	^self new setShifts: shiftArray masks: maskArray colors: colorArray
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ColorMap >> = aColorMap [
 	"Return true if the receiver is equal to aColorMap"
 	self species == aColorMap species ifFalse:[^false].
@@ -118,88 +120,88 @@ ColorMap >> = aColorMap [
 			self masks = aColorMap masks]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ColorMap >> alphaMask [
 	^masks at: 4
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ColorMap >> alphaMask: value [
 	masks at: 4 put: value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ColorMap >> alphaShift [
 	^shifts at: 4
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ColorMap >> alphaShift: value [
 	shifts at: 4 put: value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ColorMap >> at: index [
 	^colors at: index
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ColorMap >> at: index put: value [
 	^colors at: index put: value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ColorMap >> blueMask [
 	^masks at: 3
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ColorMap >> blueMask: value [
 	masks at: 3 put: value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ColorMap >> blueShift [
 	^shifts at: 3
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ColorMap >> blueShift: value [
 	shifts at: 3 put: value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ColorMap >> colors [
 	^colors
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ColorMap >> greenMask [
 	^masks at: 2
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ColorMap >> greenMask: value [
 	masks at: 2 put: value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ColorMap >> greenShift [
 	^shifts at: 2
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ColorMap >> greenShift: value [
 	shifts at: 2 put: value
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ColorMap >> hash [
 	"Hash is re-implemented because #= is re-implemented"
 	^colors hash bitXor: (shifts hash bitXor: masks hash)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ColorMap >> inverseMap [
 	"Return the inverse map of the receiver"
 	| newMasks newShifts |
@@ -217,24 +219,25 @@ ColorMap >> inverseMap [
 		masks: newMasks contents
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ColorMap >> isColormap [
 	^true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ColorMap >> isFixed [
 	"Return true if the receiver does not use a lookup mechanism for pixel mapping"
 	^self isIndexed not
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ColorMap >> isIndexed [
 	"Return true if the receiver uses a lookup mechanism for pixel mapping"
-	^colors notNil
+
+	^ colors isNotNil
 ]
 
-{ #category : #'pixel mapping' }
+{ #category : 'pixel mapping' }
 ColorMap >> mapPixel: pixelValue [
 	"Perform a forward pixel mapping operation"
 
@@ -256,7 +259,7 @@ ColorMap >> mapPixel: pixelValue [
 	^ pv
 ]
 
-{ #category : #'pixel mapping' }
+{ #category : 'pixel mapping' }
 ColorMap >> mappingTo: aColorMap [
 	"Compute a new color map through the receiver and aColorMap.
 	Both maps are assumed to be mappings into canonical ARGB space"
@@ -275,12 +278,12 @@ ColorMap >> mappingTo: aColorMap [
 		colors: (colors collect: [ :pv | aColorMap pixelMap: pv ])
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ColorMap >> masks [
 	^masks
 ]
 
-{ #category : #'pixel mapping' }
+{ #category : 'pixel mapping' }
 ColorMap >> pixelMap: pixelValue [
 	"Perform a reverse pixel mapping operation"
 
@@ -300,40 +303,40 @@ ColorMap >> pixelMap: pixelValue [
 	^ pv
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ColorMap >> redMask [
 	^masks at: 1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ColorMap >> redMask: value [
 	masks at: 1 put: value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ColorMap >> redShift [
 	^shifts at: 1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ColorMap >> redShift: value [
 	shifts at: 1 put: value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ColorMap >> rgbaBitMasks [
 	"Return the rgba bit masks for the receiver"
 	^masks asArray with: shifts collect:[:m :s| m bitShift: s]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ColorMap >> setShifts: shiftArray masks: maskArray colors: colorArray [
 	shiftArray ifNotNil: [ shifts := shiftArray asIntegerArray ].
 	maskArray ifNotNil: [ masks := maskArray asWordArray ].
 	colorArray ifNotNil: [ colors := colorArray asWordArray ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ColorMap >> shifts [
 	^shifts
 ]

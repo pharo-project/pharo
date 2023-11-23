@@ -4,40 +4,42 @@ I am a command to move all methods of given method groups to another package.
 Internal Representation and Key Implementation Points.
 
     Instance Variables
-	package:		<RPackage>
+	package:		<Package>
 "
 Class {
-	#name : #ClyMoveMethodGroupsToPackageCommand,
-	#superclass : #ClyMethodGroupCommand,
+	#name : 'ClyMoveMethodGroupsToPackageCommand',
+	#superclass : 'ClyMethodGroupCommand',
 	#instVars : [
 		'package'
 	],
-	#category : #'Calypso-SystemTools-FullBrowser-Commands-MethodGroups'
+	#category : 'Calypso-SystemTools-FullBrowser-Commands-MethodGroups',
+	#package : 'Calypso-SystemTools-FullBrowser',
+	#tag : 'Commands-MethodGroups'
 }
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyMoveMethodGroupsToPackageCommand class >> fullBrowserContextMenuActivation [
 	<classAnnotation>
 
 	^CmdContextMenuActivation byRootGroupItemFor: ClyMethodGroup asCalypsoItemContext
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyMoveMethodGroupsToPackageCommand class >> fullBrowserDragAndDropActivation [
 	<classAnnotation>
 
 	^CmdDragAndDropActivation
 		for: ClyMethodGroup asCalypsoItemContext
-		toDropIn: RPackage asCalypsoItemContext
+		toDropIn: Package asCalypsoItemContext
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMoveMethodGroupsToPackageCommand >> defaultMenuItemName [
 
 	^'Convert to extension'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyMoveMethodGroupsToPackageCommand >> execute [
 
 	| repackagingCommand |
@@ -47,23 +49,23 @@ ClyMoveMethodGroupsToPackageCommand >> execute [
 		each removeWithMethods]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMoveMethodGroupsToPackageCommand >> package [
 	^ package
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMoveMethodGroupsToPackageCommand >> package: anObject [
 	package := anObject
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyMoveMethodGroupsToPackageCommand >> prepareExecutionInDropContext: aToolContext [
 	super prepareExecutionInDropContext: aToolContext.
 	package := aToolContext lastSelectedPackage
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyMoveMethodGroupsToPackageCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 

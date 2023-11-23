@@ -2,22 +2,24 @@
 I am a visitor to change temporaries and arguments to generic names (`tempMatch , `argMatch)
 "
 Class {
-	#name : #RBMatchVisitor,
-	#superclass : #RBProgramNodeVisitor,
+	#name : 'RBMatchVisitor',
+	#superclass : 'RBProgramNodeVisitor',
 	#instVars : [
 		'arguments',
 		'temporaries',
 		'difference'
 	],
-	#category : #'Refactoring-Core-Base'
+	#category : 'Refactoring-Core-Base',
+	#package : 'Refactoring-Core',
+	#tag : 'Base'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMatchVisitor >> difference [
 	^ difference
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBMatchVisitor >> initialize [
 	super initialize .
 	arguments := 0 .
@@ -25,14 +27,14 @@ RBMatchVisitor >> initialize [
 	difference := 0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMatchVisitor >> replace: temp with: aString [
 	|definingNode|
 	definingNode := temp whoDefines: temp name.
 	(RBParseTreeRewriter rename: temp name to: aString) executeTree: definingNode
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RBMatchVisitor >> visitBlockNode: aBlockNode [
 	aBlockNode arguments do: [ :arg |
 		self replace: arg with: ('tempMatch', temporaries  asString).
@@ -40,7 +42,7 @@ RBMatchVisitor >> visitBlockNode: aBlockNode [
 	super visitBlockNode: aBlockNode
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RBMatchVisitor >> visitMethodNode: aMethodNode [
 	aMethodNode arguments do: [ :arg |
 		difference := difference + (('argMatch', arguments  asString )size- (arg name asString )size + 2 ).
@@ -49,7 +51,7 @@ RBMatchVisitor >> visitMethodNode: aMethodNode [
 	super visitMethodNode: aMethodNode
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RBMatchVisitor >> visitSequenceNode: aSequenceNode [
 	|isMethod|
 	isMethod := aSequenceNode parent isMethod.

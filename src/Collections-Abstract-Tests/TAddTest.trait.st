@@ -2,29 +2,31 @@
 A trait for test purposes
 "
 Trait {
-	#name : #TAddTest,
-	#category : #'Collections-Abstract-Tests-Traits'
+	#name : 'TAddTest',
+	#category : 'Collections-Abstract-Tests-Traits',
+	#package : 'Collections-Abstract-Tests',
+	#tag : 'Traits'
 }
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TAddTest >> collectionWithElement [
 	"Returns a collection that already includes what is returned by #element."
 	^ self explicitRequirement
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TAddTest >> element [
 	"Returns an object that can be added to the collection returned by #collection."
 	^ self explicitRequirement
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TAddTest >> otherCollection [
 	"Returns a collection that does not include what is returned by #element."
 	^ self explicitRequirement
 ]
 
-{ #category : #'tests - fixture' }
+{ #category : 'tests - fixture' }
 TAddTest >> test0FixtureRequirementsOfTAddTest [
 
 	self collectionWithElement.
@@ -34,7 +36,7 @@ TAddTest >> test0FixtureRequirementsOfTAddTest [
 	self deny: (self otherCollection includes: self element)
 ]
 
-{ #category : #'tests - adding' }
+{ #category : 'tests - adding' }
 TAddTest >> testTAdd [
 	| added collection |
 	collection := self otherCollection.
@@ -45,7 +47,7 @@ TAddTest >> testTAdd [
 	self assert: (self collectionWithElement includes: self element)
 ]
 
-{ #category : #'tests - adding' }
+{ #category : 'tests - adding' }
 TAddTest >> testTAddAll [
 
 	| added collection toBeAdded |
@@ -56,7 +58,7 @@ TAddTest >> testTAddAll [
 	self assert: (collection includesAll: toBeAdded )
 ]
 
-{ #category : #'tests - adding' }
+{ #category : 'tests - adding' }
 TAddTest >> testTAddIfNotPresentWithElementAlreadyIn [
 
 	| added oldSize collection anElement |
@@ -71,7 +73,7 @@ TAddTest >> testTAddIfNotPresentWithElementAlreadyIn [
 	self assert: collection size equals: oldSize
 ]
 
-{ #category : #'tests - adding' }
+{ #category : 'tests - adding' }
 TAddTest >> testTAddIfNotPresentWithNewElement [
 
 	| added oldSize collection elem |
@@ -85,7 +87,7 @@ TAddTest >> testTAddIfNotPresentWithNewElement [
 	self assert: collection size equals: (oldSize + 1)
 ]
 
-{ #category : #'tests - adding' }
+{ #category : 'tests - adding' }
 TAddTest >> testTAddTwice [
 
 	| added oldSize collection anElement |
@@ -100,7 +102,7 @@ TAddTest >> testTAddTwice [
 	self assert: collection size equals: (oldSize + 2)
 ]
 
-{ #category : #'tests - adding' }
+{ #category : 'tests - adding' }
 TAddTest >> testTAddWithOccurrences [
 	| added oldSize collection anElement |
 	collection := self collectionWithElement.

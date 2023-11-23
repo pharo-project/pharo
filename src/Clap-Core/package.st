@@ -1,1 +1,1 @@
-Package { #name : #'Clap-Core' }
+Package { #name : 'Clap-Core' }

@@ -4,8 +4,8 @@ I delegate the calculation of the entries completely to a complishon object whic
 The complishonBuilder instance can be specialized or replaced to change the search heuristics.
 "
 Class {
-	#name : #CoCompletionContext,
-	#superclass : #Object,
+	#name : 'CoCompletionContext',
+	#superclass : 'Object',
 	#instVars : [
 		'engine',
 		'source',
@@ -16,10 +16,12 @@ Class {
 		'completion',
 		'completionToken'
 	],
-	#category : #'HeuristicCompletion-Model-SystemIntegration'
+	#category : 'HeuristicCompletion-Model-SystemIntegration',
+	#package : 'HeuristicCompletion-Model',
+	#tag : 'SystemIntegration'
 }
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 CoCompletionContext class >> engine: aCompletionEngine class: aClass source: aString position: anInteger [
 
 	^ self new
@@ -30,13 +32,13 @@ CoCompletionContext class >> engine: aCompletionEngine class: aClass source: aSt
 		yourself
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 CoCompletionContext >> activateEntryAt: anIndex [
 
 	(self entries at: anIndex) activateOn: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CoCompletionContext >> completion [
 
 	completion ifNotNil: [ ^ completion ].
@@ -47,12 +49,12 @@ CoCompletionContext >> completion [
 	^ completion
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoCompletionContext >> completion: anObject [
 	completion := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoCompletionContext >> completionAt: aNumber [
 	| entry |
 
@@ -62,152 +64,152 @@ CoCompletionContext >> completionAt: aNumber [
 		ifFalse: [ entry ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoCompletionContext >> completionBuilder [
 	^ completionBuilder
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoCompletionContext >> completionBuilder: anUndefinedObject [
 	completionBuilder := anUndefinedObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoCompletionContext >> completionClass [
 
 	^ completionClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoCompletionContext >> completionClass: aClass [
 
 	^ completionClass := aClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoCompletionContext >> completionToken [
 
 	^ completionToken
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoCompletionContext >> completionTokenStart [
 
 	^ completionTokenStart
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoCompletionContext >> doItContext [
 
 	^ engine doItContext
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoCompletionContext >> doItRequestor [
 
 	^ engine doItRequestor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoCompletionContext >> engine [
 	^ engine
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoCompletionContext >> engine: anObject [
 	engine := anObject.
 	completionTokenStart := anObject completionTokenStart.
 	completionToken := anObject completionToken
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoCompletionContext >> entries [
 
 	^ self completion first: 20
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoCompletionContext >> entryCount [
 	^ self entries size
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoCompletionContext >> environmentAt: aString ifPresent: aBlockClosure [
 
 	^ self systemNavigation environmentAt: aString ifPresent: aBlockClosure
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CoCompletionContext >> hasEntries [
 
 	^ self completion notEmpty
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 CoCompletionContext >> hasMessage [
 
 	^ false
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CoCompletionContext >> initialize [
 
 	super initialize.
 	completionBuilder := CoASTHeuristicsResultSetBuilder initializeOnContext: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CoCompletionContext >> isScripting [
 
-	^ engine notNil and: [ engine isScripting ]
+	^ engine isNotNil and: [ engine isScripting ]
 ]
 
-{ #category : #narrowing }
+{ #category : 'narrowing' }
 CoCompletionContext >> narrowWith: aString [
 
 	completionToken := aString.
 	self completion replaceFilterWith: (CoBeginsWithFilter caseSensitive: NECPreferences caseSensitive filterString: aString)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoCompletionContext >> position [
 	^ position
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoCompletionContext >> position: anObject [
 	position := anObject
 ]
 
-{ #category : #replacing }
+{ #category : 'replacing' }
 CoCompletionContext >> replaceTokenInEditorWith: aString [
 
 	engine replaceTokenInEditorWith: aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoCompletionContext >> source [
 	^ source
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoCompletionContext >> source: anObject [
 	source := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoCompletionContext >> systemNavigation [
 
 	^ CoSystemEnvironment new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoCompletionContext >> title [
 
 	^ ''
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoCompletionContext >> variableBindingNames [
 
 	^ self engine variableBindingNames

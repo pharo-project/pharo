@@ -1,6 +1,6 @@
-Extension { #name : #CopiedLocalVariable }
+Extension { #name : 'CopiedLocalVariable' }
 
-{ #category : #'*Shout' }
+{ #category : '*Shout' }
 CopiedLocalVariable >> styleNameIn: aRBVariableNode [
 
 	^ originalVar styleNameIn: aRBVariableNode

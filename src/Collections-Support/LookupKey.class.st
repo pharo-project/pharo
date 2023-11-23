@@ -2,56 +2,58 @@
 I represent a key for looking up entries in a data structure. Subclasses of me, such as Association, typically represent dictionary entries.
 "
 Class {
-	#name : #LookupKey,
-	#superclass : #Magnitude,
+	#name : 'LookupKey',
+	#superclass : 'Magnitude',
 	#instVars : [
 		'key'
 	],
-	#category : #'Collections-Support-Associations'
+	#category : 'Collections-Support-Associations',
+	#package : 'Collections-Support',
+	#tag : 'Associations'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 LookupKey class >> key: aKey [
 	"Answer an instance of me with the argument as the lookup up."
 
 	^self basicNew key: aKey
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 LookupKey >> < aLookupKey [
 	"Refer to the comment in Magnitude|<."
 
 	^key < aLookupKey key
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 LookupKey >> = aLookupKey [
 
 	^ self species = aLookupKey species and: [ key = aLookupKey key ]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 LookupKey >> hash [
 	"Hash is reimplemented because = is implemented."
 
 	^key hash
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LookupKey >> key [
 	"Answer the lookup key of the receiver."
 
 	^key
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LookupKey >> key: anObject [
 	"Store the argument, anObject, as the lookup key of the receiver."
 
 	key := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LookupKey >> name [
 
 	^ self key isString
@@ -59,7 +61,7 @@ LookupKey >> name [
 		ifFalse: [self key printString]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 LookupKey >> printOn: aStream [
 
 	key printOn: aStream

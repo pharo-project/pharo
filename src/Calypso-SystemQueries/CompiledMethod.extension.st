@@ -1,11 +1,11 @@
-Extension { #name : #CompiledMethod }
+Extension { #name : 'CompiledMethod' }
 
-{ #category : #'*Calypso-SystemQueries' }
+{ #category : '*Calypso-SystemQueries' }
 CompiledMethod >> calypsoEnvironmentType [
 	^ClyMethod
 ]
 
-{ #category : #'*Calypso-SystemQueries' }
+{ #category : '*Calypso-SystemQueries' }
 CompiledMethod >> isBigLiteralMethod [
 
 	^ self isLiteralMethod
@@ -13,7 +13,7 @@ CompiledMethod >> isBigLiteralMethod [
 				literal class isVariable and: [ literal size > 500 ] ] ]
 ]
 
-{ #category : #'*Calypso-SystemQueries' }
+{ #category : '*Calypso-SystemQueries' }
 CompiledMethod >> isLiteralMethod [
 
 	^ self bytecodes = self encoderClass literalMethodBytecodes

@@ -1,6 +1,6 @@
-Extension { #name : #ClyBrowserContext }
+Extension { #name : 'ClyBrowserContext' }
 
-{ #category : #'*Calypso-SystemPlugins-Spotter' }
+{ #category : '*Calypso-SystemPlugins-Spotter' }
 ClyBrowserContext >> asGoToSpotterCandidate [
 	^ClyGoToSpotterCandidate 
 		target: self activeQueryView
@@ -9,18 +9,18 @@ ClyBrowserContext >> asGoToSpotterCandidate [
 		using: [ self activeQueryView takeKeyboardFocus ]
 ]
 
-{ #category : #'*Calypso-SystemPlugins-Spotter' }
+{ #category : '*Calypso-SystemPlugins-Spotter' }
 ClyBrowserContext >> iconForSpotterMenu [
 	^self iconNameForSpotterMenu ifNotNil: [ :iconName |
 		Smalltalk ui iconNamed: iconName]
 ]
 
-{ #category : #'*Calypso-SystemPlugins-Spotter' }
+{ #category : '*Calypso-SystemPlugins-Spotter' }
 ClyBrowserContext >> iconNameForSpotterMenu [
 	^nil
 ]
 
-{ #category : #'*Calypso-SystemPlugins-Spotter' }
+{ #category : '*Calypso-SystemPlugins-Spotter' }
 ClyBrowserContext >> simpleNameForSpotterMenu [
 	^self class name
 ]

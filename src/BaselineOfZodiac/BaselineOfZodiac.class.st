@@ -1,10 +1,11 @@
 Class {
-	#name : #BaselineOfZodiac,
-	#superclass : #BaselineOf,
-	#category : #BaselineOfZodiac
+	#name : 'BaselineOfZodiac',
+	#superclass : 'BaselineOf',
+	#category : 'BaselineOfZodiac',
+	#package : 'BaselineOfZodiac'
 }
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfZodiac >> baseline: spec [
 	<baseline>
 	spec for: #'common' do: [

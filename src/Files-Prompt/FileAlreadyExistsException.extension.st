@@ -1,6 +1,6 @@
-Extension { #name : #FileAlreadyExistsException }
+Extension { #name : 'FileAlreadyExistsException' }
 
-{ #category : #'*Files-Prompt' }
+{ #category : '*Files-Prompt' }
 FileAlreadyExistsException >> defaultAction [
 	"The default action taken if the exception is signaled."
 

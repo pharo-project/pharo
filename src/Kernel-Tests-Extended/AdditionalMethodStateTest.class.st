@@ -2,15 +2,17 @@
 SUnit tests for AdditionalMethodState
 "
 Class {
-	#name : #AdditionalMethodStateTest,
-	#superclass : #TestCase,
+	#name : 'AdditionalMethodStateTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'amState'
 	],
-	#category : #'Kernel-Tests-Extended-Methods'
+	#category : 'Kernel-Tests-Extended-Methods',
+	#package : 'Kernel-Tests-Extended',
+	#tag : 'Methods'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 AdditionalMethodStateTest >> setUp [
 
 	| pragma |
@@ -20,7 +22,7 @@ AdditionalMethodStateTest >> setUp [
 	amState := AdditionalMethodState selector: #at: with: pragma copy
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AdditionalMethodStateTest >> testAnalogousCodeTo [
 	"create a fake traitSource association property"
 	| state |
@@ -34,7 +36,7 @@ AdditionalMethodStateTest >> testAnalogousCodeTo [
 		raise: MessageNotUnderstood
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AdditionalMethodStateTest >> testCopy [
 	| copy |
 	copy := amState copy.

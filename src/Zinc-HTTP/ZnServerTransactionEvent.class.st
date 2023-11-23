@@ -9,25 +9,26 @@ Instance Variables
 Note that this can be quite large since it includes the entities transferred. See ZnSimplifiedServerTransactionEvent for a more compact representation.
 "
 Class {
-	#name : #ZnServerTransactionEvent,
-	#superclass : #ZnServerLogEvent,
+	#name : 'ZnServerTransactionEvent',
+	#superclass : 'ZnServerLogEvent',
 	#instVars : [
 		'request',
 		'response',
 		'timing'
 	],
-	#category : #'Zinc-HTTP-Logging'
+	#category : 'Zinc-HTTP-Logging',
+	#package : 'Zinc-HTTP',
+	#tag : 'Logging'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnServerTransactionEvent >> duration [
 	^ timing totalDuration
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ZnServerTransactionEvent >> printContentsOn: stream [
 	super printContentsOn: stream.
-	stream space.
 	request requestLine printMethodAndUriOn: stream.
 	stream space; print: response code.
 	response hasEntity
@@ -36,32 +37,32 @@ ZnServerTransactionEvent >> printContentsOn: stream [
 	stream space; print: self duration; nextPutAll: 'ms'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnServerTransactionEvent >> request [
 	^ request
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnServerTransactionEvent >> request: anObject [
 	request := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnServerTransactionEvent >> response [
 	^ response
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnServerTransactionEvent >> response: anObject [
 	response := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnServerTransactionEvent >> timing [
 	^ timing
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnServerTransactionEvent >> timing: anObject [
 	timing := anObject
 ]

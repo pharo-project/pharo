@@ -1,10 +1,12 @@
 Class {
-	#name : #UnlimitedInstanceVariableSlotTest,
-	#superclass : #SlotSilentTest,
-	#category : #'Slot-Tests-Examples'
+	#name : 'UnlimitedInstanceVariableSlotTest',
+	#superclass : 'SlotSilentTest',
+	#category : 'Slot-Tests-Examples',
+	#package : 'Slot-Tests',
+	#tag : 'Examples'
 }
 
-{ #category : #'test - unlimited ivars' }
+{ #category : 'test - unlimited ivars' }
 UnlimitedInstanceVariableSlotTest >> testExampleIvarSlot [
 	| object slot |
 	<ignoreNotImplementedSelectors: #(slot1: slot1)>
@@ -25,7 +27,7 @@ UnlimitedInstanceVariableSlotTest >> testExampleIvarSlot [
 	self deny: object slot1
 ]
 
-{ #category : #'test - unlimited ivars' }
+{ #category : 'test - unlimited ivars' }
 UnlimitedInstanceVariableSlotTest >> testExampleTwoIvarSlots [
 	| object slot1 slot2 |
 	slot1 := #slot1 => UnlimitedInstanceVariableSlot.

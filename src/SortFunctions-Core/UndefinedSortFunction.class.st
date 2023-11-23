@@ -6,15 +6,16 @@ instance variables:
 	direction	<Integer>	-1 for sorting nil first, 1 for sorting nil last
 "
 Class {
-	#name : #UndefinedSortFunction,
-	#superclass : #ComposedSortFunction,
+	#name : 'UndefinedSortFunction',
+	#superclass : 'ComposedSortFunction',
 	#instVars : [
 		'direction'
 	],
-	#category : #'SortFunctions-Core'
+	#category : 'SortFunctions-Core',
+	#package : 'SortFunctions-Core'
 }
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 UndefinedSortFunction >> = anObject [
 	"Answer whether the receiver and anObject represent the same object."
 
@@ -26,37 +27,37 @@ UndefinedSortFunction >> = anObject [
 		and: [ direction = anObject direction ]
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 UndefinedSortFunction >> collate: anObject with: another [
 	anObject ifNil: [^another ifNil: [0] ifNotNil: [direction]].
 	another ifNil: [^direction negated].
 	^baseSortFunction collate: anObject with: another
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 UndefinedSortFunction >> direction [
 	^direction
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 UndefinedSortFunction >> hash [
 	"Answer an integer value that is related to the identity of the receiver."
 
 	^ super hash bitXor: direction hash
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 UndefinedSortFunction >> initialize [
 	super initialize.
 	direction := -1
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 UndefinedSortFunction >> undefinedFirst [
 	direction := -1
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 UndefinedSortFunction >> undefinedLast [
 	direction := 1
 ]

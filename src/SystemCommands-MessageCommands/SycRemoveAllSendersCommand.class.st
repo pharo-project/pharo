@@ -2,17 +2,18 @@
 I am a command to launch the Remove All Senders Refactoring: removes all possible senders from a method.
 "
 Class {
-	#name : #SycRemoveAllSendersCommand,
-	#superclass : #SycChangeMessageSignatureCommand,
-	#category : #'SystemCommands-MessageCommands'
+	#name : 'SycRemoveAllSendersCommand',
+	#superclass : 'SycChangeMessageSignatureCommand',
+	#category : 'SystemCommands-MessageCommands',
+	#package : 'SystemCommands-MessageCommands'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 SycRemoveAllSendersCommand class >> canBeExecutedInContext: aToolContext [
 	^ aToolContext isMethodSelected
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycRemoveAllSendersCommand >> createRefactoring [
 	|refactoring options|
 	refactoring := RBRemoveAllSendersRefactoring
@@ -24,12 +25,12 @@ SycRemoveAllSendersCommand >> createRefactoring [
 	^ refactoring
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycRemoveAllSendersCommand >> defaultMenuIconName [
 	^#remove
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycRemoveAllSendersCommand >> defaultMenuItemName [
 	^'Remove all senders'
 ]

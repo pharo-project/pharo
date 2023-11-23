@@ -2,57 +2,59 @@
 i am abstract OpenGL renderer facade. 
 "
 Class {
-	#name : #OSWindowGLRenderer,
-	#superclass : #OSWindowRenderer,
+	#name : 'OSWindowGLRenderer',
+	#superclass : 'OSWindowRenderer',
 	#classVars : [
 		'CurrentContext',
 		'CurrentWindow'
 	],
-	#category : #'OSWindow-Core-OpenGL'
+	#category : 'OSWindow-Core-OpenGL',
+	#package : 'OSWindow-Core',
+	#tag : 'OpenGL'
 }
 
-{ #category : #'context activation' }
+{ #category : 'context activation' }
 OSWindowGLRenderer >> asCurrentDo: aBlock [
 	^ self asCurrentDo: aBlock ifFailure: [ ]
 ]
 
-{ #category : #'context activation' }
+{ #category : 'context activation' }
 OSWindowGLRenderer >> asCurrentDo: aBlock ifFailure: aFailureBlock [
 	^ self withWindow: backendWindow do: aBlock ifFailure: aFailureBlock
 ]
 
-{ #category : #misc }
+{ #category : 'misc' }
 OSWindowGLRenderer >> getProcAddress: procName [
 	"Gets an OpenGL procedure address."
 	self subclassResponsibility
 ]
 
-{ #category : #misc }
+{ #category : 'misc' }
 OSWindowGLRenderer >> makeCurrent [
 	^ self makeCurrent: backendWindow
 ]
 
-{ #category : #misc }
+{ #category : 'misc' }
 OSWindowGLRenderer >> makeCurrent: aWindow [
 	self subclassResponsibility
 ]
 
-{ #category : #misc }
+{ #category : 'misc' }
 OSWindowGLRenderer >> swapBuffers [
 	^ self swapBuffers: backendWindow
 ]
 
-{ #category : #misc }
+{ #category : 'misc' }
 OSWindowGLRenderer >> swapBuffers: aWindow [
 	self subclassResponsibility
 ]
 
-{ #category : #'context activation' }
+{ #category : 'context activation' }
 OSWindowGLRenderer >> withWindow: aWindow do: aBlock [
 	^ self withWindow: aWindow do: aBlock ifFailure: []
 ]
 
-{ #category : #'context activation' }
+{ #category : 'context activation' }
 OSWindowGLRenderer >> withWindow: aWindow do: aBlock ifFailure: aFailureBlock [
 	| oldContext oldWindow |
 	OSWindowRenderThread uniqueInstance critical: [

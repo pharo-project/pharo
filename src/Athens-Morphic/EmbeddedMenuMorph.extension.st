@@ -1,6 +1,6 @@
-Extension { #name : #EmbeddedMenuMorph }
+Extension { #name : 'EmbeddedMenuMorph' }
 
-{ #category : #'*Athens-Morphic' }
+{ #category : '*Athens-Morphic' }
 EmbeddedMenuMorph >> drawOnAthensCanvas: anAthensCanvas [
 	"Draw the receiver on the canvas."
 

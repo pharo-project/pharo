@@ -2,12 +2,14 @@
 I define the type for FFIExternalArray objects.
 "
 Class {
-	#name : #FFIExternalArrayType,
-	#superclass : #FFIExternalReferenceType,
-	#category : #'UnifiedFFI-Types'
+	#name : 'FFIExternalArrayType',
+	#superclass : 'FFIExternalReferenceType',
+	#category : 'UnifiedFFI-Types',
+	#package : 'UnifiedFFI',
+	#tag : 'Types'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalArrayType >> instanceVariableName [
 	^ #handle
 ]

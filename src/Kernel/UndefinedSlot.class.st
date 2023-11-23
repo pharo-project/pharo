@@ -6,27 +6,29 @@ The UndefinedSlot ingores reads and write (it returns nil like undeclared variab
 access, it checks if the Slot has been loaded and if yes, it rebuilds the class definition.
 "
 Class {
-	#name : #UndefinedSlot,
-	#superclass : #Slot,
+	#name : 'UndefinedSlot',
+	#superclass : 'Slot',
 	#instVars : [
 		'ast',
 		'classIsRebuild'
 	],
-	#category : #'Kernel-Variables'
+	#category : 'Kernel-Variables',
+	#package : 'Kernel',
+	#tag : 'Variables'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 UndefinedSlot class >> named: aName ast: aSlotClassName [
 	^ (self named: aName) ast: aSlotClassName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 UndefinedSlot >> ast: aMessageNode [
 	classIsRebuild := false.
 	ast := aMessageNode
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 UndefinedSlot >> checkClassRebuild [
 	"break the recursion while rebuilding"
 	classIsRebuild ifTrue: [ ^ self].
@@ -38,25 +40,25 @@ UndefinedSlot >> checkClassRebuild [
 	self usingMethods do: [:each | each recompile]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 UndefinedSlot >> printOn: aStream [
 	"we print as the definition that could not be loaded"
 	aStream nextPutAll: ast formattedCode
 ]
 
-{ #category : #'meta-object-protocol' }
+{ #category : 'meta-object-protocol' }
 UndefinedSlot >> read: anObject [
 	"Undeclared slots read nil always, but check if they can repair the class"
 	 self checkClassRebuild.
 	^ nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 UndefinedSlot >> slotClassName [
 	^ast arguments first variable name
 ]
 
-{ #category : #'meta-object-protocol' }
+{ #category : 'meta-object-protocol' }
 UndefinedSlot >> write: aValue to: anObject [
 	"Undeclared slots ignore writes, but check if they can repair the class"
 	 self checkClassRebuild.

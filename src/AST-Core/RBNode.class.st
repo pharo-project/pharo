@@ -11,18 +11,20 @@ I'm a new player in the field, do not hesitate to improve me.
 
 "
 Class {
-	#name : #RBNode,
-	#superclass : #Object,
-	#category : #'AST-Core-Nodes'
+	#name : 'RBNode',
+	#superclass : 'Object',
+	#category : 'AST-Core-Nodes',
+	#package : 'AST-Core',
+	#tag : 'Nodes'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBNode class >> isAbstract [
 
 	^ self == RBNode
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RBNode >> acceptVisitor: aProgramNodeVisitor [
 	self subclassResponsibility
 ]

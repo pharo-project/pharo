@@ -1,1 +1,1 @@
-Package { #name : #BaselineOfMorphicCore }
+Package { #name : 'BaselineOfMorphicCore' }

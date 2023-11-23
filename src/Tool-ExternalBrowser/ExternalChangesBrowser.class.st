@@ -10,8 +10,8 @@ ExternalChangesBrowser openOn: Smalltalk changesFile fullName
 ]]]
 "
 Class {
-	#name : #ExternalChangesBrowser,
-	#superclass : #SpPresenter,
+	#name : 'ExternalChangesBrowser',
+	#superclass : 'SpPresenter',
 	#instVars : [
 		'changes',
 		'codePane',
@@ -20,17 +20,19 @@ Class {
 		'deselectAllButton',
 		'fileInSelectedButton'
 	],
-	#category : #'Tool-ExternalBrowser-Browsers'
+	#category : 'Tool-ExternalBrowser-Browsers',
+	#package : 'Tool-ExternalBrowser',
+	#tag : 'Browsers'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 ExternalChangesBrowser class >> browseRecentLog [
 	<example>
 
 	^ self openOnStream: SourceFiles changesFileStream
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 ExternalChangesBrowser class >> defaultLayout [
 	<spec: #default>
 
@@ -46,21 +48,21 @@ ExternalChangesBrowser class >> defaultLayout [
 		yourself
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 ExternalChangesBrowser class >> example1 [
 
 	<example>
 	self new open
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 ExternalChangesBrowser class >> example2 [
 	<example>
 
 	self openOn: Smalltalk changesFile fullName
 ]
 
-{ #category : #'file service' }
+{ #category : 'file service' }
 ExternalChangesBrowser class >> fileReaderServicesForFile: fullName suffix: suffix [
 	<fileService>
 
@@ -74,7 +76,7 @@ ExternalChangesBrowser class >> fileReaderServicesForFile: fullName suffix: suff
 	^services
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ExternalChangesBrowser class >> openOn: changeSetName [
 
 	self new
@@ -82,7 +84,7 @@ ExternalChangesBrowser class >> openOn: changeSetName [
 		open
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ExternalChangesBrowser class >> openOnFileName: aFileName [
 
 	self new
@@ -90,7 +92,7 @@ ExternalChangesBrowser class >> openOnFileName: aFileName [
 		open
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ExternalChangesBrowser class >> openOnStream: aStream [
 
 	| widget |
@@ -99,13 +101,13 @@ ExternalChangesBrowser class >> openOnStream: aStream [
 	widget open
 ]
 
-{ #category : #'tool registry' }
+{ #category : 'tool registry' }
 ExternalChangesBrowser class >> registerToolsOn: registry [
 
 	registry register: self as: #changeList
 ]
 
-{ #category : #'file service' }
+{ #category : 'file service' }
 ExternalChangesBrowser class >> serviceBrowseCSOrSTFile [
 	"Answer a service for opening a changelist browser on a file"
 
@@ -118,21 +120,21 @@ ExternalChangesBrowser class >> serviceBrowseCSOrSTFile [
 		argumentGetter: [ :stream | stream readStream ]
 ]
 
-{ #category : #'file service' }
+{ #category : 'file service' }
 ExternalChangesBrowser class >> services [
 	"Answer potential file services associated with this class"
 
 	^ { self serviceBrowseCSOrSTFile }
 ]
 
-{ #category : #icons }
+{ #category : 'icons' }
 ExternalChangesBrowser class >> taskbarIconName [
 	"Answer the icon for the receiver in a task bar."
 
 	^#smallSave
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 ExternalChangesBrowser >> buildMenu [
 
 	| aMenu |
@@ -153,7 +155,7 @@ ExternalChangesBrowser >> buildMenu [
 	^ aMenu
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 ExternalChangesBrowser >> canCompareToCurrent [
 
 	| aMethodDeclaration |
@@ -164,13 +166,13 @@ ExternalChangesBrowser >> canCompareToCurrent [
 	^ aMethodDeclaration targetClass includesSelector: aMethodDeclaration methodSelector
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ExternalChangesBrowser >> changeDescription: change [
 
 	^ change description
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ExternalChangesBrowser >> changeSetName: aFileName [
 
 	changeSet := CodeImporter fileNamed: aFileName.
@@ -178,19 +180,19 @@ ExternalChangesBrowser >> changeSetName: aFileName [
 	changes items: changeSet codeDeclarations
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExternalChangesBrowser >> changes [
 
 	^ changes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExternalChangesBrowser >> codePane [
 
 	^ codePane
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 ExternalChangesBrowser >> compareToCurrent: aMethodDeclaration [
 
 	| class sourceString |
@@ -198,7 +200,7 @@ ExternalChangesBrowser >> compareToCurrent: aMethodDeclaration [
 	sourceString := (class >> aMethodDeclaration methodSelector) sourceCode.
 
 	self
-		openComparisonFrom: aMethodDeclaration contents
+		openPolymorphComparisonFrom: aMethodDeclaration contents
 		to: sourceString
 		belongingTo: class
 		from: aMethodDeclaration
@@ -206,7 +208,7 @@ ExternalChangesBrowser >> compareToCurrent: aMethodDeclaration [
 		inWindowLabeled: 'Comparison to Current Version'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ExternalChangesBrowser >> connectPresenters [
 
 	changes display: [ :elem | self changeDescription: elem ].
@@ -220,25 +222,25 @@ ExternalChangesBrowser >> connectPresenters [
 	changes contextMenu: self buildMenu
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExternalChangesBrowser >> deselectAllButton [
 
 	^ deselectAllButton
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 ExternalChangesBrowser >> fileIn: aCodeDeclaration [
 
 	aCodeDeclaration do: #import
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExternalChangesBrowser >> fileInSelectedButton [
 
 	^ fileInSelectedButton
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ExternalChangesBrowser >> initializePresenters [
 
 
@@ -260,61 +262,28 @@ ExternalChangesBrowser >> initializePresenters [
 	codePane := self newCode
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ExternalChangesBrowser >> initializeWindow: aWindow [
 
 	aWindow initialExtent: 500@600.
 	aWindow title: 'Changes Browser'
 ]
 
-{ #category : #private }
-ExternalChangesBrowser >> openComparisonFrom: targetMethodSource
-					to: originalMethodSource
-					belongingTo: aClass
-					from: aChange
-					labeled: aLabel
-					inWindowLabeled: aWindowLabel [
-
-	| diffBuilder difference  |
-
-	PSMCPatchMorph usedByDefault
-		ifTrue: [ ^ self openPolymorphComparisonFrom: originalMethodSource
-					to: targetMethodSource
-					belongingTo: aClass
-					from: aChange
-					labeled: aLabel
-					inWindowLabeled: aWindowLabel   ].
-
-	diffBuilder :=  TextDiffBuilder
-			from: originalMethodSource
-			to: targetMethodSource.
-
-	difference := diffBuilder buildDisplayPatch.
-
-	UIManager default edit: difference label: aLabel
-]
-
-{ #category : #private }
-ExternalChangesBrowser >> openPolymorphComparisonFrom: targetMethodSource
-					to: originalMethodSource
-					belongingTo: aClass
-					from: aChange
-					labeled: aLabel
-					inWindowLabeled: aWindowLabel [
+{ #category : 'private' }
+ExternalChangesBrowser >> openPolymorphComparisonFrom: targetMethodSource to: originalMethodSource belongingTo: aClass from: aChange labeled: aLabel inWindowLabeled: aWindowLabel [
 
 	| diffMorph |
-
 	diffMorph := DiffChangeMorph
-		from: targetMethodSource
-		label: aChange stamp
-		to: originalMethodSource
-		label: (aClass compiledMethodAt: aChange methodSelector) timeStamp
-		contextClass: aClass.
+		             from: targetMethodSource
+		             label: aChange stamp
+		             to: originalMethodSource
+		             label: (aClass compiledMethodAt: aChange methodSelector) timeStamp
+		             contextClass: aClass.
 
 	diffMorph openInWindowLabeled: aWindowLabel
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExternalChangesBrowser >> selectAllButton [
 
 	^ selectAllButton

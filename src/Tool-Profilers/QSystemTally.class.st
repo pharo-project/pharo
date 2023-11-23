@@ -2,8 +2,8 @@
 Tally for assembling system profiles. It's a subclass of Link so we can chain tallies together in the receivers list.
 "
 Class {
-	#name : #QSystemTally,
-	#superclass : #Link,
+	#name : 'QSystemTally',
+	#superclass : 'Link',
 	#instVars : [
 		'class',
 		'method',
@@ -11,10 +11,12 @@ Class {
 		'tally',
 		'senders'
 	],
-	#category : #'Tool-Profilers-System'
+	#category : 'Tool-Profilers-System',
+	#package : 'Tool-Profilers',
+	#tag : 'System'
 }
 
-{ #category : #LICENSE }
+{ #category : 'LICENSE' }
 QSystemTally class >> LICENSE [
 	^'Project Squeak
 
@@ -32,7 +34,7 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.'
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 QSystemTally >> asArray [
 	| link |
 	^Array streamContents: [ :s |
@@ -44,13 +46,13 @@ QSystemTally >> asArray [
 	]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 QSystemTally >> asSortedCollection: aCollection [
 	"Create a sorted collection from the given input"
 	^aCollection asSortedCollection: [ :tA :tB | tA tally >= tB tally ]
 ]
 
-{ #category : #report }
+{ #category : 'report' }
 QSystemTally >> bump: hitCount fromSender: senderTally [
 	"Add this hitCount to the total, and include a reference to the
 	sender responsible for the increment"
@@ -59,25 +61,25 @@ QSystemTally >> bump: hitCount fromSender: senderTally [
 	senderTally ifNotNil: [ senders add: (senderTally copyWithTally: hitCount) ]
 ]
 
-{ #category : #tallying }
+{ #category : 'tallying' }
 QSystemTally >> bumpBy: count [
 	"Bump this tally by the specified amount"
 	tally := tally + count
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 QSystemTally >> class: aClass method: aCompiledMethod [
 	class := aClass.
 	method := aCompiledMethod.
 	tally := 0
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 QSystemTally >> copyWithTally: hitCount [
 	^ (QSystemTally new class: class method: method) bumpBy: hitCount
 ]
 
-{ #category : #report }
+{ #category : 'report' }
 QSystemTally >> fullPrintOn: aStream tallyExact: isExact orThreshold: perCent time: totalTime [
 	| threshold |
 	isExact ifFalse: [threshold := (perCent asFloat / 100 * tally) rounded].
@@ -97,28 +99,28 @@ QSystemTally >> fullPrintOn: aStream tallyExact: isExact orThreshold: perCent ti
 		time: totalTime
 ]
 
-{ #category : #report }
+{ #category : 'report' }
 QSystemTally >> getNewTabsFor: tabs [
 	^ tabs size < self maxTabs
 		ifTrue: [ tabs ]
 		ifFalse: [ (tabs select: [ :x | x = '[' ]) copyWith: '[' ]
 ]
 
-{ #category : #report }
+{ #category : 'report' }
 QSystemTally >> into: leafDict fromSender: senderTally [
 	| leafNode |
 	leafNode := leafDict at: method ifAbsentPut: [ QSystemTally new class: class method: method ].
 	leafNode bump: tally fromSender: senderTally
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 QSystemTally >> isPrimitives [
 	"Detect pseudo node used to carry tally of local hits"
 
 	^ method isNil
 ]
 
-{ #category : #report }
+{ #category : 'report' }
 QSystemTally >> leavesInto: leafDict fromSender: senderTally [
 	| rcvrs |
 	rcvrs := self sonsOver: 0.
@@ -130,7 +132,7 @@ QSystemTally >> leavesInto: leafDict fromSender: senderTally [
 					ifFalse: [node leavesInto: leafDict fromSender: self]]]
 ]
 
-{ #category : #report }
+{ #category : 'report' }
 QSystemTally >> leavesPrintOn: aStream tallyExact: isExact orThreshold: threshold time: totalTime [
 	"@TODO: Apparently, providing true as isExact will always produce an error "
 	| dict |
@@ -147,44 +149,44 @@ QSystemTally >> leavesPrintOn: aStream tallyExact: isExact orThreshold: threshol
 					node printOn: aStream total: tally totalTime: totalTime tallyExact: isExact ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 QSystemTally >> maxClassNameSize [
 	"Return the default maximum width of the class name alone"
 	^30
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 QSystemTally >> maxClassPlusSelectorSize [
 	"Return the default maximum width of the class plus selector together (not counting the '>>')"
 	^60
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 QSystemTally >> maxTabs [
 	"Return the default number of tabs after which leading white space is compressed"
 	^36
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 QSystemTally >> method [
 	"Answer the CompiledMethod associated with this tally"
 	^method
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 QSystemTally >> primitives: anInteger [
 	"Make the receiver be a node of unassigned primitives"
 	tally := anInteger.
 	method := nil. "indicates primitives"
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 QSystemTally >> printOn: aStream [
 	aStream print: class; nextPutAll: '>>'; print: (method ifNotNil:[method selector]).
 	aStream nextPutAll: ' -- '; print: tally
 ]
 
-{ #category : #report }
+{ #category : 'report' }
 QSystemTally >> printOn: aStream total: total totalTime: totalTime tallyExact: isExact [
 	| className myTally aClass percentage |
 	isExact ifTrue:[
@@ -212,7 +214,7 @@ QSystemTally >> printOn: aStream total: total totalTime: totalTime tallyExact: i
 	]
 ]
 
-{ #category : #report }
+{ #category : 'report' }
 QSystemTally >> sonsOver: threshold [
 	"Answer the sons with tallys over the given threshold"
 	"threshold is a number "
@@ -220,13 +222,13 @@ QSystemTally >> sonsOver: threshold [
 	^ receivers asArray select: [ :son | son tally > threshold ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 QSystemTally >> tally [
 	"Answer the tally count for this node"
 	^tally
 ]
 
-{ #category : #tallying }
+{ #category : 'tallying' }
 QSystemTally >> tally: context by: count [
 	"Explicitly tally the specified context and its stack."
 
@@ -235,7 +237,7 @@ QSystemTally >> tally: context by: count [
 		ifNotNil: [ :root | (self tally: root by: count) tallyPath: context by: count ]
 ]
 
-{ #category : #tallying }
+{ #category : 'tallying' }
 QSystemTally >> tallyMethod: aMethod by: count [
 	"Called explicitly and needs to decrement receiver's tally count"
 	| node |
@@ -250,7 +252,7 @@ QSystemTally >> tallyMethod: aMethod by: count [
 	^node bumpBy: count
 ]
 
-{ #category : #tallying }
+{ #category : 'tallying' }
 QSystemTally >> tallyPath: context by: count [
 	"Tally the context chain"
 
@@ -268,7 +270,7 @@ QSystemTally >> tallyPath: context by: count [
 	^ aTally bumpBy: count
 ]
 
-{ #category : #report }
+{ #category : 'report' }
 QSystemTally >> treePrintOn: aStream tabs: tabs thisTab: myTab total: total totalTime: totalTime tallyExact: isExact orThreshold: threshold [
 
 	"aStream contains the output of the print "

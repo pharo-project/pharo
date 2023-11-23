@@ -2,15 +2,17 @@
 SUnit tests to simulate and test mouse behavior
 "
 Class {
-	#name : #SimulateMouseTest,
-	#superclass : #AbstractUITestCase,
+	#name : 'SimulateMouseTest',
+	#superclass : 'AbstractUITestCase',
 	#instVars : [
 		'morph'
 	],
-	#category : #'SUnit-Support-UITesting-Tests-Base'
+	#category : 'SUnit-Support-UITesting-Tests-Base',
+	#package : 'SUnit-Support-UITesting-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 SimulateMouseTest >> menuOpenedDuring: aBlock [
 
 	| jailor |
@@ -19,14 +21,14 @@ SimulateMouseTest >> menuOpenedDuring: aBlock [
 	^ jailor menu
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 SimulateMouseTest >> tearDown [
 
 	morph delete.
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SimulateMouseTest >> testSimulateClick [
 
 	morph := TextMorph new contents: ''; openInWorld.
@@ -34,7 +36,7 @@ SimulateMouseTest >> testSimulateClick [
 	self assert: morph hasKeyboardFocus
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SimulateMouseTest >> testSimulateMiddleClick [
 
 	morph := MorphHandlingMiddleButton new openInWorld.
@@ -42,7 +44,7 @@ SimulateMouseTest >> testSimulateMiddleClick [
 	self assert: morph wasClickedWithMiddleButton
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SimulateMouseTest >> testSimulateRightClick [
 
 	| menu |
@@ -51,7 +53,7 @@ SimulateMouseTest >> testSimulateRightClick [
 	self assert: menu isNil not
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 SimulateMouseTest >> timeoutAfter: aDuration ifNot: aBlock [
 
 	| timer |
@@ -59,7 +61,7 @@ SimulateMouseTest >> timeoutAfter: aDuration ifNot: aBlock [
 	[ timer duration < aDuration and: [ aBlock value not ] ] whileTrue
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 SimulateMouseTest >> waitForMorphThat: aBlock [
 
 	self timeoutAfter: 2 seconds ifNot: [

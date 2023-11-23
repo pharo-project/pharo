@@ -11,12 +11,14 @@ It should create group instance using given scope. The class scope is given to b
 All my subclasses are not static by default. So they particupate in analysis of all methods in the scope
 "
 Class {
-	#name : #ClySingleMethodGroupProvider,
-	#superclass : #ClyMethodGroupProvider,
-	#category : #'Calypso-SystemQueries-Domain'
+	#name : 'ClySingleMethodGroupProvider',
+	#superclass : 'ClyMethodGroupProvider',
+	#category : 'Calypso-SystemQueries-Domain',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Domain'
 }
 
-{ #category : #'building groups' }
+{ #category : 'building groups' }
 ClySingleMethodGroupProvider >> buildGroupsFrom: aClassScope [
 
 	| methodQuery methodGroup |
@@ -29,23 +31,23 @@ ClySingleMethodGroupProvider >> buildGroupsFrom: aClassScope [
 	^Array with: methodGroup
 ]
 
-{ #category : #'building groups' }
+{ #category : 'building groups' }
 ClySingleMethodGroupProvider >> createMethodGroupFor: aMethodQuery from: aClassScope [
 
 	self subclassResponsibility
 ]
 
-{ #category : #'building groups' }
+{ #category : 'building groups' }
 ClySingleMethodGroupProvider >> createMethodQueryFrom: aClassScope [
 	self subclassResponsibility
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClySingleMethodGroupProvider >> isStatic [
 	^false
 ]
 
-{ #category : #'system changes' }
+{ #category : 'system changes' }
 ClySingleMethodGroupProvider >> providesGroupsAffectedBy: aSystemAnnouncement inScope: aClassScope [
 
 	| query |
@@ -53,7 +55,7 @@ ClySingleMethodGroupProvider >> providesGroupsAffectedBy: aSystemAnnouncement in
 	^query isResult: ClyUnknownQueryResult instance affectedBy: aSystemAnnouncement
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClySingleMethodGroupProvider >> shouldBuildGroupWith: aMethodQuery [
 
 	self isStatic ifFalse: [ ^true ].

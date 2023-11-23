@@ -4,20 +4,22 @@ I am an example for a class variable that stores the value in the variable. It b
 Read and write is done via #read and #write:.
 "
 Class {
-	#name : #ExampleClassVariableWithState,
-	#superclass : #ClassVariable,
+	#name : 'ExampleClassVariableWithState',
+	#superclass : 'ClassVariable',
 	#instVars : [
 		'state'
 	],
-	#category : #'Slot-Examples-ClassVariables'
+	#category : 'Slot-Examples-ClassVariables',
+	#package : 'Slot-Examples',
+	#tag : 'ClassVariables'
 }
 
-{ #category : #'meta-object-protocol' }
+{ #category : 'meta-object-protocol' }
 ExampleClassVariableWithState >> read [
 	^state
 ]
 
-{ #category : #'meta-object-protocol' }
+{ #category : 'meta-object-protocol' }
 ExampleClassVariableWithState >> write:	 anObject [
 	state := anObject
 ]

@@ -1,17 +1,19 @@
 Class {
-	#name : #OCASTWhileFalseTranslatorTest,
-	#superclass : #OCASTDoubleBlockTranslatorTest,
-	#category : #'OpalCompiler-Tests-AST'
+	#name : 'OCASTWhileFalseTranslatorTest',
+	#superclass : 'OCASTDoubleBlockTranslatorTest',
+	#category : 'OpalCompiler-Tests-AST',
+	#package : 'OpalCompiler-Tests',
+	#tag : 'AST'
 }
 
-{ #category : #'building suites' }
+{ #category : 'building suites' }
 OCASTWhileFalseTranslatorTest class >> testParameters [
 	^ super testParameters *
 		(ParametrizedTestMatrix new
-			forSelector: #optimization addOptions: { #optionInlineWhile . #optionInlineNone })
+			forSelector: #optimization addOptions: (self inliningOptionsFor: #optionInlineWhile))
 ]
 
-{ #category : #'tests - blocks - optimized' }
+{ #category : 'tests - blocks - optimized' }
 OCASTWhileFalseTranslatorTest >> testWhileFalseExecutesLeftBlock [
 	| result |
 	result := self
@@ -27,7 +29,7 @@ OCASTWhileFalseTranslatorTest >> testWhileFalseExecutesLeftBlock [
 	self assert: result equals: 5
 ]
 
-{ #category : #'tests - blocks - optimized' }
+{ #category : 'tests - blocks - optimized' }
 OCASTWhileFalseTranslatorTest >> testWhileFalseExecutesLeftBlockWithTemp [
 	| result |
 	result := self
@@ -46,7 +48,7 @@ OCASTWhileFalseTranslatorTest >> testWhileFalseExecutesLeftBlockWithTemp [
 	self assert: result equals: 5
 ]
 
-{ #category : #'tests - blocks - optimized' }
+{ #category : 'tests - blocks - optimized' }
 OCASTWhileFalseTranslatorTest >> testWhileFalseExecutesRightBlock [
 	| result |
 	result := self
@@ -62,7 +64,7 @@ OCASTWhileFalseTranslatorTest >> testWhileFalseExecutesRightBlock [
 	self assert: result equals: 5
 ]
 
-{ #category : #'tests - blocks - optimized' }
+{ #category : 'tests - blocks - optimized' }
 OCASTWhileFalseTranslatorTest >> testWhileFalseExecutesRightBlockWithTemp [
 	| result |
 	result := self
@@ -80,7 +82,7 @@ OCASTWhileFalseTranslatorTest >> testWhileFalseExecutesRightBlockWithTemp [
 	self assert: result equals: 5
 ]
 
-{ #category : #'tests - blocks - optimized' }
+{ #category : 'tests - blocks - optimized' }
 OCASTWhileFalseTranslatorTest >> testWhileFalseReturnsNil [
 	| result |
 	result := self

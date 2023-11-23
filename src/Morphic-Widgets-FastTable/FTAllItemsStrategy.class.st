@@ -39,16 +39,18 @@ Internal Representation and Key Implementation Points.
 
 "
 Class {
-	#name : #FTAllItemsStrategy,
-	#superclass : #FTTreeFunctionStrategy,
+	#name : 'FTAllItemsStrategy',
+	#superclass : 'FTTreeFunctionStrategy',
 	#instVars : [
 		'index',
 		'result'
 	],
-	#category : #'Morphic-Widgets-FastTable-Tree'
+	#category : 'Morphic-Widgets-FastTable-Tree',
+	#package : 'Morphic-Widgets-FastTable',
+	#tag : 'Tree'
 }
 
-{ #category : #action }
+{ #category : 'action' }
 FTAllItemsStrategy >> filter [
 	| items |
 	items := OrderedCollection new.
@@ -62,13 +64,13 @@ FTAllItemsStrategy >> filter [
 		children: dataSource childrenBlock
 ]
 
-{ #category : #action }
+{ #category : 'action' }
 FTAllItemsStrategy >> initializeNewSearch [
 	result := OrderedCollection new.
 	index := 1
 ]
 
-{ #category : #action }
+{ #category : 'action' }
 FTAllItemsStrategy >> matchingFilter: anItem [
 	((anItem children collect: [ :it | self matchingFilter: it ]) reject: #isNil)
 		ifNotEmpty:
@@ -81,7 +83,7 @@ FTAllItemsStrategy >> matchingFilter: anItem [
 	^ (pattern matchesIn: (self dataSource toString: anItem)) ifEmpty: [ nil ] ifNotEmpty: [ self newStaticItemFrom: anItem ]
 ]
 
-{ #category : #action }
+{ #category : 'action' }
 FTAllItemsStrategy >> newStaticItemFrom: anItem [
 	^ FTStaticBasicItem new
 		data: anItem data;
@@ -90,7 +92,7 @@ FTAllItemsStrategy >> newStaticItemFrom: anItem [
 		yourself
 ]
 
-{ #category : #action }
+{ #category : 'action' }
 FTAllItemsStrategy >> optionalOperations [
 	^ pattern isEmptyOrNil
 		ifTrue: [ self unexpandAllChildOf: dataSource rootItem.
@@ -98,14 +100,14 @@ FTAllItemsStrategy >> optionalOperations [
 		ifFalse: [ nil ]
 ]
 
-{ #category : #action }
+{ #category : 'action' }
 FTAllItemsStrategy >> realSearch [
 	self initializeNewSearch.
 	dataSource rootsItems do: [ :item | self searchIn: item ] displayingProgress: [ :each | 'Looking inside ' , each name ].
 	^ result asArray
 ]
 
-{ #category : #action }
+{ #category : 'action' }
 FTAllItemsStrategy >> searchIn: item [
 	| selfOrChildMatch |
 	selfOrChildMatch := false.
@@ -125,7 +127,7 @@ FTAllItemsStrategy >> searchIn: item [
 	^ selfOrChildMatch
 ]
 
-{ #category : #action }
+{ #category : 'action' }
 FTAllItemsStrategy >> unexpandAllChildOf: anItem [
 	anItem children
 		do: [ :item |

@@ -1,33 +1,37 @@
 Trait {
-	#name : #TRefactoringCommandSupport,
+	#name : 'TRefactoringCommandSupport',
 	#instVars : [
 		'model'
 	],
-	#category : #'SystemCommands-RefactoringSupport'
+	#category : 'SystemCommands-RefactoringSupport',
+	#package : 'SystemCommands-RefactoringSupport'
 }
 
-{ #category : #actions }
+{ #category : 'actions' }
 TRefactoringCommandSupport >> computeInvalidArgNamesForSelector: aSymbol [
+
 	| invalidArgNames |
 	invalidArgNames := Set new.
-	(model allImplementorsOf: aSymbol) do: [ :e | | cm |
-		cm:=(e realClass >> aSymbol).
-		invalidArgNames addAll: cm argumentNames;
-			addAll: cm origin instVarNames ].
+	(model allImplementorsOf: aSymbol) do: [ :e |
+		| mth |
+		mth := e realClass >> aSymbol.
+		invalidArgNames
+			addAll: mth argumentNames;
+			addAll: mth origin instVarNames ].
 	^ invalidArgNames
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TRefactoringCommandSupport >> initializeDefaultOptionsOf: refactoring [
 
 	NautilusRefactoring new refactoringOptions: refactoring
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TRefactoringCommandSupport >> setUpModelFromContext: aContext [
 	| browser scope |
 	browser := aContext browser.
 	scope := browser defaultNavigationScope.
 	scope isCurrentImage ifTrue: [ scope := RefactoringSettings scopeRefactoring ].
-	model := RBClassModelFactory rbNamespace onEnvironment: scope asRBEnvironment
+	model := RBNamespace onEnvironment: scope asRBEnvironment
 ]

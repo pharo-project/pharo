@@ -2,16 +2,18 @@
 I model a tree view that can be created on a DTPluginResult.
 "
 Class {
-	#name : #DTResultTreeView,
-	#superclass : #Object,
+	#name : 'DTResultTreeView',
+	#superclass : 'Object',
 	#instVars : [
 		'name',
 		'blockToExtractViewFromResult'
 	],
-	#category : #'DrTests-Model'
+	#category : 'DrTests-Model',
+	#package : 'DrTests',
+	#tag : 'Model'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 DTResultTreeView class >> name: aString blockToExtractViewFromResult: blockToExtractViewFromResult [
 	^ self new
 		name: aString;
@@ -19,27 +21,27 @@ DTResultTreeView class >> name: aString blockToExtractViewFromResult: blockToExt
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTResultTreeView >> blockToExtractViewFromResult [
 	^ blockToExtractViewFromResult
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTResultTreeView >> blockToExtractViewFromResult: anObject [
 	blockToExtractViewFromResult := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTResultTreeView >> name [
 	^ name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTResultTreeView >> name: anObject [
 	name := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTResultTreeView >> resultTreeFor: result [
 	result ifNil: [
 		^ DTTreeNode empty ].

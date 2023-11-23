@@ -2,12 +2,35 @@
 I am ZnBufferedReadStreamTests.
 "
 Class {
-	#name : #ZnBufferedReadStreamTest,
-	#superclass : #TestCase,
-	#category : #'Zinc-Character-Encoding-Tests'
+	#name : 'ZnBufferedReadStreamTest',
+	#superclass : 'TestCase',
+	#category : 'Zinc-Character-Encoding-Tests',
+	#package : 'Zinc-Character-Encoding-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
+ZnBufferedReadStreamTest >> testBack [
+	"Check that ZnBufferedReadStream>>#back behaves as expected"
+	<gtExample>
+	| stream source |
+
+	"Allocate a buffer larger than the default size (65536)"
+	self assert: ZnBufferedReadStream basicNew defaultBufferSize < 66000.
+	source := ByteArray new: 70000.
+	1 to: 70000 do: [ :i |
+		source at: i put: i \\ 256 ].
+
+	stream := ZnBufferedReadStream on: source readStream.
+	stream position: 1.
+	self assert: stream peek equals: (source at: 2).
+	self assert: stream back equals: (source at: 1).
+	"Position the stream beyond the end of the initial buffer"
+	stream position: 66000.
+	self assert: stream peek equals: (source at: 66001).
+	self assert: stream back equals: (source at: 66000).
+]
+
+{ #category : 'tests' }
 ZnBufferedReadStreamTest >> testBuffering [
 	| stream |
 	stream := ZnBufferedReadStream on: '01234567890123456789' readStream.
@@ -19,7 +42,7 @@ ZnBufferedReadStreamTest >> testBuffering [
 	self assert: stream atEnd
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnBufferedReadStreamTest >> testPeek [
 	| stream |
 	stream := ZnBufferedReadStream on: '0123456789' readStream.
@@ -33,7 +56,7 @@ ZnBufferedReadStreamTest >> testPeek [
 	self assert: stream next isNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnBufferedReadStreamTest >> testReadInto [
 	| stream buffer count |
 	stream := ZnBufferedReadStream on: '0123456789' readStream.
@@ -49,7 +72,7 @@ ZnBufferedReadStreamTest >> testReadInto [
 	self assert: buffer equals: '789123'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnBufferedReadStreamTest >> testReadIntoLarger [
 	| stream buffer count |
 	stream := ZnBufferedReadStream on: '0123456789' readStream.
@@ -60,7 +83,7 @@ ZnBufferedReadStreamTest >> testReadIntoLarger [
 	self assert: buffer equals: '0123456789'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnBufferedReadStreamTest >> testReadUpTo [
 	| stream |
 	stream := ZnBufferedReadStream on: '0123456789' readStream.
@@ -70,7 +93,7 @@ ZnBufferedReadStreamTest >> testReadUpTo [
 	self assert: stream atEnd
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnBufferedReadStreamTest >> testReadUpToEnd [
 	| stream |
 	stream := ZnBufferedReadStream on: '0123456789' readStream.
@@ -83,7 +106,7 @@ ZnBufferedReadStreamTest >> testReadUpToEnd [
 	self assert: stream atEnd
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnBufferedReadStreamTest >> testSetToEnd [
 	| stream source |
 	source := '0123456789'.

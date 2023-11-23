@@ -25,48 +25,50 @@ Internal Representation and Key Implementation Points.
 	itemsView:		<ClyQueryView>
 "
 Class {
-	#name : #ClyBrowserSearchDialogWindow,
-	#superclass : #DialogWindowMorph,
+	#name : 'ClyBrowserSearchDialogWindow',
+	#superclass : 'DialogWindowMorph',
 	#instVars : [
 		'browser',
 		'itemsView'
 	],
-	#category : #'Calypso-Browser-UI'
+	#category : 'Calypso-Browser-UI',
+	#package : 'Calypso-Browser',
+	#tag : 'UI'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyBrowserSearchDialogWindow class >> for: aBrowser [
 	^self new
 		browser: aBrowser
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserSearchDialogWindow >> browser [
 	^ browser
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserSearchDialogWindow >> browser: anObject [
 	browser := anObject
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyBrowserSearchDialogWindow >> changeStateBy: aBlock [
 	aBlock value
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyBrowserSearchDialogWindow >> changeStateOf: aQueryView by: aBlock [
 	aBlock value
 ]
 
-{ #category : #'events handling' }
+{ #category : 'events handling' }
 ClyBrowserSearchDialogWindow >> defaultFocusMorph [
 
 	^itemsView filterField ifNil: [ itemsView dataSource table ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ClyBrowserSearchDialogWindow >> findObjectsSameAsFilter [
 	itemsView dataSource numberOfRows = 1 ifTrue: [
 		"single element means that it was found by filter and we can use it without extra search"
@@ -75,19 +77,19 @@ ClyBrowserSearchDialogWindow >> findObjectsSameAsFilter [
 		ifNotEmpty: [ :foundItems | foundItems collect: [:each | each actualObject] ]
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyBrowserSearchDialogWindow >> ignoreNavigationDuring: aBlock [
 	aBlock value
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyBrowserSearchDialogWindow >> itemsChanged [
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyBrowserSearchDialogWindow >> newContentMorph [
 	itemsView := ClyQueryViewMorph for: self.
-	itemsView width: 250.
+	itemsView width: 250 scaledByDisplayScaleFactor.
 
 	itemsView whenDoubleClickDo: [:ann | self ok ].
 	itemsView whenEnterKeyPressedDo: [:ann | self ok ].
@@ -95,7 +97,7 @@ ClyBrowserSearchDialogWindow >> newContentMorph [
 	^itemsView
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ClyBrowserSearchDialogWindow >> openOn: aQuery selecting: items withTitle: dialogTitle thenDo: resultActionBlock [
 
 	self showItemsOf: aQuery.
@@ -121,19 +123,19 @@ ClyBrowserSearchDialogWindow >> openOn: aQuery selecting: items withTitle: dialo
 		ensure: [ itemsView closeDataSource]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ClyBrowserSearchDialogWindow >> openOn: aQuery withTitle: dialogTitle thenDo: resultActionBlock [
 
 	^ self openOn: aQuery selecting: #() withTitle: dialogTitle thenDo: resultActionBlock
 ]
 
-{ #category : #requests }
+{ #category : 'requests' }
 ClyBrowserSearchDialogWindow >> requestMultipleObjects: dialogTitle from: aQuery [
 
 	^ self requestMultipleObjects: dialogTitle from: aQuery selecting: #()
 ]
 
-{ #category : #requests }
+{ #category : 'requests' }
 ClyBrowserSearchDialogWindow >> requestMultipleObjects: dialogTitle from: aQuery inScope: aScope [
 
 	aScope bindTo: browser navigationEnvironment.
@@ -141,7 +143,7 @@ ClyBrowserSearchDialogWindow >> requestMultipleObjects: dialogTitle from: aQuery
 	^self requestMultipleObjects: dialogTitle from: (aScope adoptQuery: aQuery)
 ]
 
-{ #category : #requests }
+{ #category : 'requests' }
 ClyBrowserSearchDialogWindow >> requestMultipleObjects: dialogTitle from: aQuery selecting: items [
 
 	self
@@ -153,7 +155,7 @@ ClyBrowserSearchDialogWindow >> requestMultipleObjects: dialogTitle from: aQuery
 			^itemsView selection actualObjects]
 ]
 
-{ #category : #requests }
+{ #category : 'requests' }
 ClyBrowserSearchDialogWindow >> requestSingleObject: dialogTitle from: aQuery [
 
 	self
@@ -168,7 +170,7 @@ ClyBrowserSearchDialogWindow >> requestSingleObject: dialogTitle from: aQuery [
 			^itemsView selection lastSelectedItem actualObject]
 ]
 
-{ #category : #requests }
+{ #category : 'requests' }
 ClyBrowserSearchDialogWindow >> requestSingleObject: dialogTitle from: aQuery inScope: aScope [
 
 	aScope bindTo: browser navigationEnvironment.
@@ -176,7 +178,7 @@ ClyBrowserSearchDialogWindow >> requestSingleObject: dialogTitle from: aQuery in
 	^self requestSingleObject: dialogTitle from: (aScope adoptQuery: aQuery)
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ClyBrowserSearchDialogWindow >> showItemsOf: aQuery [
 
 	| actualQuery |

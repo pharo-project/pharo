@@ -2,33 +2,51 @@
 I am a command to remove given packages
 "
 Class {
-	#name : #SycRemovePackageCommand,
-	#superclass : #SycPackageCommand,
-	#category : #'SystemCommands-PackageCommands'
+	#name : 'SycRemovePackageCommand',
+	#superclass : 'SycPackageCommand',
+	#category : 'SystemCommands-PackageCommands',
+	#package : 'SystemCommands-PackageCommands'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycRemovePackageCommand class >> defaultMenuIconName [
 	^ #delete
 ]
 
-{ #category : #accessing }
-SycRemovePackageCommand >> defaultMenuIconName [
-	^#removeIcon
+{ #category : 'execution' }
+SycRemovePackageCommand >> applyResultInContext: aToolContext [
+	"Update the browser's title and method editor  after removal of a package"
+
+	| browserTool |
+	
+	super applyResultInContext: aToolContext.
+
+	browserTool := aToolContext tool.
+	aToolContext tool navigationEnvironment: ClyNavigationEnvironment currentImage.
+	browserTool 
+		updateWindowTitle;
+		updateMethodEditorAfterPackageRemoval.
+	
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
+SycRemovePackageCommand >> defaultMenuIconName [
+	^#remove
+]
+
+{ #category : 'accessing' }
 SycRemovePackageCommand >> defaultMenuItemName [
 	^'Remove'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycRemovePackageCommand >> execute [
 
-	packages do: [ :each | each removeFromSystem ]
+	self packages do: [ :each | each removeFromSystem ].
+	self packages: OrderedCollection new.
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycRemovePackageCommand >> prepareFullExecutionInContext: aToolContext [
 
 	| packagesWithClasses names answer |

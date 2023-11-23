@@ -32,59 +32,61 @@ Internal Representation and Key Implementation Points.
 
 "
 Class {
-	#name : #FTFunction,
-	#superclass : #Object,
+	#name : 'FTFunction',
+	#superclass : 'Object',
 	#instVars : [
 		'table'
 	],
-	#category : #'Morphic-Widgets-FastTable-Functions'
+	#category : 'Morphic-Widgets-FastTable-Functions',
+	#package : 'Morphic-Widgets-FastTable',
+	#tag : 'Functions'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 FTFunction class >> isAbstract [
 	^ self = FTFunction
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FTFunction class >> new [
 	self error: 'Use #table:'
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FTFunction class >> table: aFastTableMorph [
 	^ self basicNew
 		initializeTable: aFastTableMorph;
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTFunction >> beExplicit [
 	"This method is call by the FastTable if the user want the widget to be explicit. Describe what to do to be explicit."
 
 	self subclassResponsibility
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 FTFunction >> disable [
 	"I am call when a FastTable disable a function."
 
 	self subclassResponsibility
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FTFunction >> initializeTable: aTable [
 	table := aTable.
 	self initialize
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FTFunction >> isExplicit [
 	"See FTFunctionWithField to get an example."
 
 	self subclassResponsibility
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 FTFunction >> keyDown: anEvent [
 	"If the widget is implicit this method will be call if the user want to communicate with the widget."
 
@@ -92,31 +94,31 @@ FTFunction >> keyDown: anEvent [
 	^ false
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 FTFunction >> keyStroke: anEvent [
 	"If the widget is implicit this method will be call if the user want to communicate with the widget."
 
 	self subclassResponsibility
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FTFunction >> reset [
 	self subclassResponsibility
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FTFunction >> resizeContainerFrom: topLefPoint to: bottomRightPoint [
 	"I takes takes the bounds of the container of the Fast Table. I return a rectangle that is the bounds of the container."
 
 	self subclassResponsibility
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FTFunction >> resizeWidget [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTFunction >> showWidget [
 	"A FastTable can have a special function. Most of these functions are hidden by default. This method make them explicit.
 	For exemple a FastTable can have a search field. By default the user need to type to show it. With this method the widget should be alwayse visible.
@@ -125,7 +127,7 @@ FTFunction >> showWidget [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTFunction >> table [
 	^ table
 ]

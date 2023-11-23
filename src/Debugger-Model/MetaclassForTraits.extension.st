@@ -1,6 +1,6 @@
-Extension { #name : #MetaclassForTraits }
+Extension { #name : 'MetaclassForTraits' }
 
-{ #category : #'*Debugger-Model' }
+{ #category : '*Debugger-Model' }
 MetaclassForTraits >> canonicalArgumentName [
 
 	^ 'aTrait'

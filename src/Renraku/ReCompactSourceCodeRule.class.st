@@ -2,21 +2,23 @@
 A lint rule to check for unnecessary separators at end of source code lines and unnecessary dot at end of method
 "
 Class {
-	#name : #ReCompactSourceCodeRule,
-	#superclass : #ReAbstractRule,
+	#name : 'ReCompactSourceCodeRule',
+	#superclass : 'ReAbstractRule',
 	#classVars : [
 		'CriticizeFinalDotInMethodBody'
 	],
-	#category : #'Renraku-Rules'
+	#category : 'Renraku-Rules',
+	#package : 'Renraku',
+	#tag : 'Rules'
 }
 
-{ #category : #'testing - interest' }
+{ #category : 'testing - interest' }
 ReCompactSourceCodeRule class >> checksMethod [
 
 	^ true
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 ReCompactSourceCodeRule class >> compactSourceCodeSettingsOn: aBuilder [
 	<systemsettings>
 
@@ -29,13 +31,13 @@ ReCompactSourceCodeRule class >> compactSourceCodeSettingsOn: aBuilder [
 		target: self
 ]
 
-{ #category : #'settings - accessing' }
+{ #category : 'settings - accessing' }
 ReCompactSourceCodeRule class >> criticizeFinalDotInMethodBody [
 
 	^ CriticizeFinalDotInMethodBody ifNil: [ CriticizeFinalDotInMethodBody := true ]
 ]
 
-{ #category : #'settings - accessing' }
+{ #category : 'settings - accessing' }
 ReCompactSourceCodeRule class >> criticizeFinalDotInMethodBody: aBoolean [
 	"If true (default) the rule will lament about unnecessary dots at the end of method body.
 	 If false they will be ignored and kept"
@@ -43,20 +45,20 @@ ReCompactSourceCodeRule class >> criticizeFinalDotInMethodBody: aBoolean [
 	CriticizeFinalDotInMethodBody := aBoolean
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 ReCompactSourceCodeRule class >> initialize [
 
 	CriticizeFinalDotInMethodBody := true.
 	self enabled: false
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ReCompactSourceCodeRule >> basicCheck: aMethod [
 
 	^ ReMethodSourceCleaner isNecessaryToClean: aMethod allowFinalDot: self class criticizeFinalDotInMethodBody not
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ReCompactSourceCodeRule >> check: aMethod forCritiquesDo: aCriticBlock [
 
 	(self basicCheck: aMethod)
@@ -67,25 +69,25 @@ ReCompactSourceCodeRule >> check: aMethod forCritiquesDo: aCriticBlock [
 					by: self)  ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReCompactSourceCodeRule >> group [
 
 	^ 'Clean Code'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReCompactSourceCodeRule >> name [
 
 	^ 'Unnecessary characters found in method body'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ReCompactSourceCodeRule >> providesChange [
 
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReCompactSourceCodeRule >> severity [
 
 	^ #information

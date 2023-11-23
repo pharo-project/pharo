@@ -2,16 +2,18 @@
 A KMPartialMatch is an announcement raised when a partial match is completed
 "
 Class {
-	#name : #KMPartialMatch,
-	#superclass : #Announcement,
+	#name : 'KMPartialMatch',
+	#superclass : 'Announcement',
 	#instVars : [
 		'event',
 		'source'
 	],
-	#category : #'Keymapping-Core-Announcements'
+	#category : 'Keymapping-Core-Announcements',
+	#package : 'Keymapping-Core',
+	#tag : 'Announcements'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 KMPartialMatch class >> event: event from: source [
 
 	^ self new
@@ -20,22 +22,22 @@ KMPartialMatch class >> event: event from: source [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMPartialMatch >> event [
 	^ event
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMPartialMatch >> event: anObject [
 	event := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMPartialMatch >> source [
 	^ source
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMPartialMatch >> source: anObject [
 	source := anObject
 ]

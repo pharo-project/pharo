@@ -16,8 +16,8 @@ Code that wants to modify the AST without making sure the compiledMethod is in s
 
 "
 Class {
-	#name : #ASTCache,
-	#superclass : #Object,
+	#name : 'ASTCache',
+	#superclass : 'Object',
 	#instVars : [
 		'weakDictionary',
 		'statistics'
@@ -28,68 +28,70 @@ Class {
 	#classInstVars : [
 		'default'
 	],
-	#category : #'AST-Core-Parser'
+	#category : 'AST-Core-Parser',
+	#package : 'AST-Core',
+	#tag : 'Parser'
 }
 
-{ #category : #'private - announcements' }
+{ #category : 'private - announcements' }
 ASTCache class >> announceCacheReset [
 
-	SystemAnnouncer announce: ASTCacheReset new
+	self codeSupportAnnouncer announce: ASTCacheReset new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ASTCache class >> at: aCompiledMethod [
 	^ self default at: aCompiledMethod
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ASTCache class >> cacheMissStrategy [
 	^ CacheMissStrategy
 		ifNil: [ CacheMissStrategy := ASTCacheMissStrategy new ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ASTCache class >> cacheMissStrategy: aCacheMissStrategy [
 	^ CacheMissStrategy := aCacheMissStrategy
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ASTCache class >> default [
 	^ default ifNil: [
 		SessionManager default registerSystemClassNamed: self name.
 		default := self new ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ASTCache class >> default: anASTCache [
 	default := anASTCache
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 ASTCache class >> reset [
 	<script>
 	self default reset.
 	self announceCacheReset
 ]
 
-{ #category : #'system startup' }
+{ #category : 'system startup' }
 ASTCache class >> shutDown [
 	self reset
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 ASTCache >> addHit [
 
 	self statistics ifNotNil: [ statistics addHit ]
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 ASTCache >> addMiss [
 
 	self statistics ifNotNil: [ statistics addMiss ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ASTCache >> at: aCompiledMethod [
 
 	^ self
@@ -97,7 +99,7 @@ ASTCache >> at: aCompiledMethod [
 		  ifAbsentPut: [ self getASTFor: aCompiledMethod ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ASTCache >> at: aCompiledMethod ifAbsentPut: aBlock [
 	"Get an AST using strongly held information, or failback to aBlock (that might compute a new AST)"
 
@@ -123,7 +125,7 @@ ASTCache >> at: aCompiledMethod ifAbsentPut: aBlock [
 	^ self at: aCompiledMethod put: aBlock value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ASTCache >> at: aCompiledMethod put: aRBMethodNode [
 
 	"Cleanup weak AST. Note `associations` return a copy, so the iteration is safe"
@@ -140,27 +142,27 @@ ASTCache >> at: aCompiledMethod put: aRBMethodNode [
 	^ aRBMethodNode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ASTCache >> getASTFor: aCompiledMethod [
 
 	^ self class cacheMissStrategy getASTFor: aCompiledMethod
 ]
 
-{ #category : #'accessing - statistics' }
+{ #category : 'accessing - statistics' }
 ASTCache >> hitRatio [
 
 	self statistics ifNil: [ ^ 0 ].
 	^ self statistics hitRatio
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 ASTCache >> postCopy [
 
 	weakDictionary := weakDictionary copy.
 	statistics := statistics copy
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ASTCache >> printOn: aStream [
 
 	super printOn: aStream.
@@ -172,23 +174,21 @@ ASTCache >> printOn: aStream [
 		nextPut: $%
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ASTCache >> reset [
 	self weakDictionary removeAll.
 	weakDictionary := nil.
 	statistics := nil.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ASTCache >> statistics [
 
 	^ statistics ifNil: [ "CacheStatistics comes from another package. It does not worth the dependency"
-		  Smalltalk globals
-			  at: #CacheStatistics
-			  ifPresent: [ :CS | statistics := CS new ] ]
+		  self class environment at: #CacheStatistics ifPresent: [ :class | statistics := class new ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ASTCache >> weakDictionary [
 
 	^ weakDictionary ifNil: [

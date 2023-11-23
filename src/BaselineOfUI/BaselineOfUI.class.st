@@ -15,15 +15,16 @@ Installs:
 - some other packages
 "
 Class {
-	#name : #BaselineOfUI,
-	#superclass : #BaselineOf,
+	#name : 'BaselineOfUI',
+	#superclass : 'BaselineOf',
 	#classVars : [
 		'Initialized'
 	],
-	#category : #BaselineOfUI
+	#category : 'BaselineOfUI',
+	#package : 'BaselineOfUI'
 }
 
-{ #category : #baseline }
+{ #category : 'baseline' }
 BaselineOfUI >> baseline: spec [ 
     <baseline>
 
@@ -44,7 +45,6 @@ BaselineOfUI >> baseline: spec [
 		
 		spec package: 'StartupPreferences'.		
 		spec package: 'Transcript-Tool'.
-		spec package: 'Tool-Workspace'.
 		spec package: 'Morphic-Widgets-Tree'.
 
 		spec baseline: 'Keymapping' with: [ 
@@ -55,24 +55,19 @@ BaselineOfUI >> baseline: spec [
 	].
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 BaselineOfUI >> postload: loader package: packageSpec [
 
 	"Ignore pre and post loads if already executed"
 	Initialized = true ifTrue: [ ^ self ].
 
-	Smalltalk tools register: Workspace as: #browser.
-	Smalltalk tools register: Workspace as: #monticelloBrowser.
-	Smalltalk tools register: Workspace as: #fileList.
-	Smalltalk tools register: Workspace as: #changeList.	
-	
 	Smalltalk ui theme settings preferGradientFill: true.
 	PharoCommonTools initialize.
 
 	Initialized := true
 ]
 
-{ #category : #baseline }
+{ #category : 'baseline' }
 BaselineOfUI >> specBase: spec [
 	
 	spec baseline: 'SpecBase' with: [

@@ -1,6 +1,6 @@
-Extension { #name : #RGByteLayout }
+Extension { #name : 'RGByteLayout' }
 
-{ #category : #'*Ring-Monticello' }
+{ #category : '*Ring-Monticello' }
 RGByteLayout >> mcType [
 
 	^ #bytes

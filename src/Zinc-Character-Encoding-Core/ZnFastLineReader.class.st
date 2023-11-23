@@ -2,58 +2,59 @@
 I am ZnFastLineReader, a helper to efficiently read CR, LF or CRLF terminated lines from a character stream.
 "
 Class {
-	#name : #ZnFastLineReader,
-	#superclass : #Object,
+	#name : 'ZnFastLineReader',
+	#superclass : 'Object',
 	#instVars : [
 		'readStream',
 		'cr',
 		'lf',
 		'bufferStream'
 	],
-	#category : #'Zinc-Character-Encoding-Core'
+	#category : 'Zinc-Character-Encoding-Core',
+	#package : 'Zinc-Character-Encoding-Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnFastLineReader class >> on: characterReadStream [
 	^ self new
 		on: characterReadStream;
 		yourself
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnFastLineReader >> atEnd [
 	^ readStream atEnd
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 ZnFastLineReader >> beWide [
 	self bufferStream: (WideString new: 32) writeStream
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 ZnFastLineReader >> bufferStream: characterWriteStream [
 	^ bufferStream := characterWriteStream
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 ZnFastLineReader >> close [
 	readStream close
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ZnFastLineReader >> initialize [
 	super initialize.
 	cr := Character cr.
 	lf := Character lf
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnFastLineReader >> linesDo: block [
 
 	[ self atEnd ] whileFalse: [ self nextLine ifNotNil: block ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnFastLineReader >> nextLine [
 	"Read a CR, LF or CRLF terminated line, returning the contents of the line without the EOL. Return nil when the receiver is #atEnd."
 
@@ -70,12 +71,12 @@ ZnFastLineReader >> nextLine [
 						ifFalse: [  out nextPut: char ] ] ] ]
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 ZnFastLineReader >> on: characterReadStream [
 	readStream := characterReadStream
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnFastLineReader >> streamContents: block [
 	"Like readStream collectionSpecies streamContents: block
 	but reusing the underlying buffer for improved efficiency"

@@ -18,41 +18,43 @@ Internal Representation and Key Implementation Points.
 	actualResult:		<ClyQueryResult>
 "
 Class {
-	#name : #ClyQueryResultBrowserAdapter,
-	#superclass : #Object,
+	#name : 'ClyQueryResultBrowserAdapter',
+	#superclass : 'Object',
 	#instVars : [
 		'actualResult'
 	],
-	#category : #'Calypso-NavigationModel-Model'
+	#category : 'Calypso-NavigationModel-Model',
+	#package : 'Calypso-NavigationModel',
+	#tag : 'Model'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyQueryResultBrowserAdapter class >> for: aQueryResult [
 	^self new
 		actualResult: aQueryResult
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyQueryResultBrowserAdapter >> actualResult [
 	^ actualResult
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyQueryResultBrowserAdapter >> actualResult: anObject [
 	actualResult := anObject
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyQueryResultBrowserAdapter >> allItems [
 	^self wrapRawItems: actualResult allItems startingAt: 1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyQueryResultBrowserAdapter >> buildingQuery [
 	^actualResult buildingQuery
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyQueryResultBrowserAdapter >> createUpdateWithItemsStartingAt: startPosition count: cacheSize [
 	"it is important for remote scenario to call new metadata and new cache by single message.
 	In this case all required properties of metadata and cache will be transferred in one request using update instance"
@@ -65,12 +67,12 @@ ClyQueryResultBrowserAdapter >> createUpdateWithItemsStartingAt: startPosition c
 	^ClyBrowserQueryUpdate of: self withItems: itemCache
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyQueryResultBrowserAdapter >> environment [
 	^actualResult environment
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyQueryResultBrowserAdapter >> findItemsSimilarTo: sampleEnvironmentItems [
 	| rest found existingItem |
 	actualResult protectItemsWhile: [
@@ -89,7 +91,7 @@ ClyQueryResultBrowserAdapter >> findItemsSimilarTo: sampleEnvironmentItems [
 		^found]
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyQueryResultBrowserAdapter >> findItemsWith: actualObjects [
 	"it returnes environment items which represent actualObjects.
 	Result will be in same order as given actualObjects array.
@@ -109,17 +111,17 @@ ClyQueryResultBrowserAdapter >> findItemsWith: actualObjects [
 		^result]
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ClyQueryResultBrowserAdapter >> forceRebuild [
 	actualResult forceRebuild
 ]
 
-{ #category : #'system changes' }
+{ #category : 'system changes' }
 ClyQueryResultBrowserAdapter >> hasSubscriber: anObject [
 	^actualResult hasSubscriber: anObject
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyQueryResultBrowserAdapter >> itemsStartingAt: startIndex count: size [
 
 	^self
@@ -127,7 +129,7 @@ ClyQueryResultBrowserAdapter >> itemsStartingAt: startIndex count: size [
 		startingAt: startIndex
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyQueryResultBrowserAdapter >> itemsStartingWhere: conditionBlock count: size [
 
 	actualResult protectItemsWhile: [
@@ -139,7 +141,7 @@ ClyQueryResultBrowserAdapter >> itemsStartingWhere: conditionBlock count: size [
 	^#()
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyQueryResultBrowserAdapter >> itemsWhere: conditionBlock [
 	| found item |
 	actualResult protectItemsWhile: [
@@ -153,37 +155,37 @@ ClyQueryResultBrowserAdapter >> itemsWhere: conditionBlock [
 		^found]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyQueryResultBrowserAdapter >> metadata [
 	^actualResult metadata
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyQueryResultBrowserAdapter >> rawItems [
 	^actualResult rawItems
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyQueryResultBrowserAdapter >> rawItemsDo: aBlock [
 	actualResult rawItemsDo: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyQueryResultBrowserAdapter >> size [
 	^actualResult size
 ]
 
-{ #category : #'system changes' }
+{ #category : 'system changes' }
 ClyQueryResultBrowserAdapter >> subscribe: aBrowserQueryCursor [
 	actualResult subscribe: aBrowserQueryCursor
 ]
 
-{ #category : #'system changes' }
+{ #category : 'system changes' }
 ClyQueryResultBrowserAdapter >> unsubscribe: anObject [
 	actualResult unsubscribe: anObject
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ClyQueryResultBrowserAdapter >> wrapRawItems: objects startingAt: firstItemIndex [
 
 	| result |

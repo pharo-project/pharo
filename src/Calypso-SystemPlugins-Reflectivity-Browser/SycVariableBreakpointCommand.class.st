@@ -2,12 +2,14 @@
 Commands to install a variable breakpoint on all instances variables of the selected class.
 "
 Class {
-	#name : #SycVariableBreakpointCommand,
-	#superclass : #SycSingleClassCommand,
-	#category : #'Calypso-SystemPlugins-Reflectivity-Browser-VariableBreakpoints'
+	#name : 'SycVariableBreakpointCommand',
+	#superclass : 'SycSingleClassCommand',
+	#category : 'Calypso-SystemPlugins-Reflectivity-Browser-VariableBreakpoints',
+	#package : 'Calypso-SystemPlugins-Reflectivity-Browser',
+	#tag : 'VariableBreakpoints'
 }
 
-{ #category : #activation }
+{ #category : 'activation' }
 SycVariableBreakpointCommand class >> browserContextMenuActivation [
 	<classAnnotation>
 	^ CmdContextMenuActivation
@@ -16,22 +18,22 @@ SycVariableBreakpointCommand class >> browserContextMenuActivation [
 		for: ClyClass asCalypsoItemContext
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SycVariableBreakpointCommand class >> isAbstract [
 	^self == SycVariableBreakpointCommand
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycVariableBreakpointCommand >> defaultMenuIconName [
 	^ #halt
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycVariableBreakpointCommand >> execute [
 	self installVariableBreakpointInTargetClass
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycVariableBreakpointCommand >> installVariableBreakpointInTargetClass [
 	self subclassResponsibility
 ]

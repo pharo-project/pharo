@@ -2,27 +2,24 @@
 SUnit tests for the stopwatch 
 "
 Class {
-	#name : #StopwatchTest,
-	#superclass : #ClassTestCase,
+	#name : 'StopwatchTest',
+	#superclass : 'ClassTestCase',
 	#instVars : [
 		'aStopwatch',
 		'aDelay'
 	],
-	#category : #'Kernel-Tests-Extended-Chronology'
+	#category : 'Kernel-Tests-Extended-Chronology',
+	#package : 'Kernel-Tests-Extended',
+	#tag : 'Chronology'
 }
 
-{ #category : #testing }
-StopwatchTest class >> isUnitTest [
-	^false
-]
-
-{ #category : #coverage }
+{ #category : 'coverage' }
 StopwatchTest >> classToBeTested [
 
 	^ Stopwatch
 ]
 
-{ #category : #coverage }
+{ #category : 'coverage' }
 StopwatchTest >> selectorsToBeIgnored [
 
 	| private |
@@ -31,14 +28,14 @@ StopwatchTest >> selectorsToBeIgnored [
 	^ super selectorsToBeIgnored, private
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 StopwatchTest >> setUp [
 	super setUp.
 	aStopwatch := Stopwatch new.
 	aDelay := Delay forMilliseconds: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 StopwatchTest >> testChangingStatus [
 	aStopwatch activate.
 	self assert: aStopwatch isActive.
@@ -55,14 +52,14 @@ StopwatchTest >> testChangingStatus [
 	self assert: aStopwatch timespans size equals: 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 StopwatchTest >> testInitialStatus [
 	self assert: aStopwatch isSuspended.
 	self deny: aStopwatch isActive.
 	self assert: aStopwatch duration equals: 0 seconds
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 StopwatchTest >> testMultipleTimings [
 	aStopwatch activate.
 	aDelay wait.
@@ -74,7 +71,7 @@ StopwatchTest >> testMultipleTimings [
 	self assert: aStopwatch timespans first asDateAndTime <= aStopwatch timespans last asDateAndTime
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 StopwatchTest >> testNew [
 	| sw |
 	sw := Stopwatch new.
@@ -86,12 +83,12 @@ StopwatchTest >> testNew [
 		assertEmpty: sw timespans
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 StopwatchTest >> testPrintOn [
 	self assert: (String streamContents: [ :str | aStopwatch printOn: str ]) equals: 'a Stopwatch(suspended:0:00:00:00)'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 StopwatchTest >> testReActivate [
 
 	| sw |
@@ -105,7 +102,7 @@ StopwatchTest >> testReActivate [
 		assert: (sw isActive)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 StopwatchTest >> testReset [
 	| sw |
 	sw := Stopwatch new.
@@ -117,7 +114,7 @@ StopwatchTest >> testReset [
 		assertEmpty: sw timespans
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 StopwatchTest >> testSingleTiming [
 	| timeBefore |
 	timeBefore := DateAndTime now.
@@ -129,7 +126,7 @@ StopwatchTest >> testSingleTiming [
 	self assert: aStopwatch timespans first asDateAndTime <= aStopwatch end
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 StopwatchTest >> testStartStop [
 	| sw t1 t2 t3 t4 |
 	sw := Stopwatch new.

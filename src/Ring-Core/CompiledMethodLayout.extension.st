@@ -1,6 +1,6 @@
-Extension { #name : #CompiledMethodLayout }
+Extension { #name : 'CompiledMethodLayout' }
 
-{ #category : #'*Ring-Core' }
+{ #category : '*Ring-Core' }
 CompiledMethodLayout >> asRingMinimalDefinitionIn: anRGEnvironment [
 
 	^ anRGEnvironment backend definitionFor: self ifAbsentRegister: [

@@ -1,5 +1,4 @@
 
-	| remove |
 	"save and restart image here"
 	SessionManager default unregisterClassNamed: #GTSpotterEventRecorderSettings.
 	SessionManager default unregisterClassNamed: #FFICallbackThunk.
@@ -7,9 +6,8 @@
 	(Smalltalk classNamed: #AlienWeakTable)
 		allInstancesDo: [ :table | WeakArray removeWeakDependent: table ].
 	WeakArray removeWeakDependent: (Smalltalk classNamed: #Callback).
-	remove := #('Athens-Cairo' 'NativeBoost-Tests' 'NativeBoost-Examples' 'NativeBoost-Unix' 'NativeBoost-Win32' 'NativeBoost-Mac' 'NativeBoost-Core' 'NativeBoost-Pools' 'AsmJit-Tests' 'AsmJit-StackManagement' 'AsmJit-Operands' 'AsmJit-x86' 'AsmJit-Extension' 'AsmJit-Instructions' 'AsmJit-Core' 'Alien' 'FFI-MacOS' 'FFI-Tests' 'FFI-Unix' 'FFI-Win32').
-	remove
-		do: [ :packageName | (MCWorkingCopy forPackage: (MCPackage named: packageName)) unload ].
+	#('Athens-Cairo' 'NativeBoost-Tests' 'NativeBoost-Examples' 'NativeBoost-Unix' 'NativeBoost-Win32' 'NativeBoost-Mac' 'NativeBoost-Core' 'NativeBoost-Pools' 'AsmJit-Tests' 'AsmJit-StackManagement' 'AsmJit-Operands' 'AsmJit-x86' 'AsmJit-Extension' 'AsmJit-Instructions' 'AsmJit-Core' 'Alien' 'FFI-MacOS' 'FFI-Tests' 'FFI-Unix' 'FFI-Win32')
+		do: [ :packageName | (MCWorkingCopy forPackageNamed: packageName) unload ].
 	Smalltalk recreateSpecialObjectsArray.
 	Context initializePrimitiveSimulators.
 	SmalltalkImage current fixObsoleteReferences.
@@ -111,7 +109,6 @@
 	RecentMessageList stopNotifications.
 	NOCCompletionTable reset.
 	SystemAnnouncer uniqueInstance unsubscribe: NOCCompletionTable.
-	MCWorkingCopyBrowser allInstances do: [ :mcwcb | SystemAnnouncer uniqueInstance unsubscribe: mcwcb ].
 	ZnNetworkingUtils default secureSocketStreamClass: nil.
 	ZnNetworkingUtils default socketStreamClass: SocketStream.
 	TextConstants TextSharedInformation removeKey: #DefaultTextStyle.
@@ -128,7 +125,7 @@
 	tests
 		withIndexDo: [ :packageName :index | 
 			| wc |
-			wc := MCWorkingCopy forPackage: (MCPackage named: packageName).
+			wc := MCWorkingCopy forPackageNamed: packageName.
 			Stdio stdout
 				nextPutAll: index asString , '/' , tests size asString , ' - unloading ' , wc packageName;
 				lf.
@@ -136,7 +133,7 @@
 	unloadFirst
 		withIndexDo: [ :packageName :index | 
 			| wc |
-			wc := MCWorkingCopy forPackage: (MCPackage named: packageName).
+			wc := MCWorkingCopy forPackageNamed: packageName.
 			Stdio stdout
 				nextPutAll: index asString , '/' , tests size asString , ' - unloading ' , wc packageName;
 				lf.
@@ -146,7 +143,7 @@
 	" count unloading order and select packages with cyclic dependencies "
 	cyclic := OrderedCollection new.
 	[ deps := Dictionary new.
-	(MCWorkingCopy allManagers collect: #packageName)
+	(MCWorkingCopy allWorkingCopies collect: #packageName)
 		do: [ :packageName | 
 			| package |
 			package := RPackageSet named: packageName.
@@ -197,7 +194,7 @@
 	delete
 		withIndexDo: [ :packageName :index | 
 			| wc |
-			wc := MCWorkingCopy forPackage: (MCPackage named: packageName).
+			wc := MCWorkingCopy forPackageNamed: packageName.
 			Stdio stdout
 				nextPutAll: index asString , '/' , delete size asString , ' - unloading ' , packageName;
 				lf.
@@ -231,8 +228,8 @@
 	Job jobAnnouncer initialize.
 	EncodedCharSet initialize.
 	LanguageEnvironment resetKnownEnvironments.
-	RPackageOrganizer resetDefault.
-	bootstrappedPackages do: [ :packageName | RPackageOrganizer default registerPackageNamed: packageName ].
+	PackageOrganizer resetDefault.
+	bootstrappedPackages do: [ :packageName | PackageOrganizer default registerPackageNamed: packageName ].
 	(Smalltalk at: #Display) becomeForward: nil.
 	Smalltalk removeKey: #Display.
 	MCWorkingCopy allInstances do: [ :wc | wc repositoryGroup: nil ].
@@ -261,9 +258,9 @@
 	SmalltalkImage current fixObsoleteReferences.
 	3 timesRepeat: [ Smalltalk garbageCollect ].
 	UIManager default progressBarEnabled: true.
-	MCPackageManager allSubInstancesDo: [ :p | p unregister ].
-	SystemAnnouncer uniqueInstance unsubscribe: MCWorkingCopy.
-	delete := #('Ring-Deprecated-ChunkImporter' 'Zinc-Resource-Meta-Core' 'System-Changes' 'Ring-Deprecated-Core-Kernel' 'Ring-Deprecated-Core-Containers' 'RingChunkImporter' 'Compression' 'Monticello' 'Ring-Deprecated-Monticello').
+	MCWorkingCopy allSubInstancesDo: [ :p | p unregister ].
+	MCWorkingCopy unregisterForNotifications.
+	delete := #('Ring-Deprecated-ChunkImporter' 'Zinc-Resource-Meta-Core' 'System-Changes' 'Ring-Deprecated-Core-Kernel' 'Ring-Deprecated-Core-Containers' 'RingChunkImporter' 'Compression' 'Monticello' 'Monticello-Model' 'Ring-Deprecated-Monticello').
 	delete
 		do: [ :packageName | 
 			| mcPackage classes |

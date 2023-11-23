@@ -1,6 +1,6 @@
-Extension { #name : #ExternalAddress }
+Extension { #name : 'ExternalAddress' }
 
-{ #category : #'*Fuel-Core' }
+{ #category : '*Fuel-Core' }
 ExternalAddress >> fuelAccept: aGeneralMapper [
 	aGeneralMapper visitExternalAddress: self
 ]

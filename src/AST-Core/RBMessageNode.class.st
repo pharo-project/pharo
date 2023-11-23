@@ -10,8 +10,8 @@ Instance Variables:
 
 "
 Class {
-	#name : #RBMessageNode,
-	#superclass : #RBValueNode,
+	#name : 'RBMessageNode',
+	#superclass : 'RBValueNode',
 	#instVars : [
 		'receiver',
 		'selector',
@@ -19,10 +19,12 @@ Class {
 		'arguments',
 		'superOf'
 	],
-	#category : #'AST-Core-Nodes'
+	#category : 'AST-Core-Nodes',
+	#package : 'AST-Core',
+	#tag : 'Nodes'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBMessageNode class >> receiver: aValueNode selector: aSelector [
 	^self
 		receiver: aValueNode
@@ -30,7 +32,7 @@ RBMessageNode class >> receiver: aValueNode selector: aSelector [
 		arguments: #()
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBMessageNode class >> receiver: aValueNode selector: aSelector arguments: valueNodes [
 	^self
 		receiver: aValueNode
@@ -39,7 +41,7 @@ RBMessageNode class >> receiver: aValueNode selector: aSelector arguments: value
 		arguments: valueNodes
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBMessageNode class >> receiver: aValueNode selector: aSelector keywordsPositions: positionList arguments: valueNodes [
 	^(self new)
 		receiver: aValueNode
@@ -49,7 +51,7 @@ RBMessageNode class >> receiver: aValueNode selector: aSelector keywordsPosition
 		yourself
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 RBMessageNode >> = anObject [
 	self == anObject ifTrue: [^true].
 	self class = anObject class ifFalse: [^false].
@@ -61,30 +63,30 @@ RBMessageNode >> = anObject [
 	^true
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RBMessageNode >> acceptVisitor: aProgramNodeVisitor [
 	^ aProgramNodeVisitor visitMessageNode: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMessageNode >> argumentPartStrings [
 	"Return a collection of string representing the code of the argument."
 	^ arguments collect: [ :each | each formattedCode asString
 			"strangely enough literal formatted code is not a string" ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMessageNode >> arguments [
 	^arguments ifNil: [#()] ifNotNil: [arguments]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMessageNode >> arguments: argCollection [
 	arguments := argCollection.
 	arguments do: [:each | each parent: self]
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 RBMessageNode >> bestNodeFor: anInterval [
 	| comments |
 	(self intersectsInterval: anInterval) ifFalse: [ ^nil ] .
@@ -103,14 +105,14 @@ RBMessageNode >> bestNodeFor: anInterval [
 	^comments size ~= 1 ifTrue: [ self ] ifFalse: [ comments first ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMessageNode >> children [
 	^(OrderedCollection with: receiver)
 		addAll: arguments;
 		yourself
 ]
 
-{ #category : #matching }
+{ #category : 'matching' }
 RBMessageNode >> copyInContext: aDictionary [
 	^self class
 		receiver: (self receiver copyInContext: aDictionary)
@@ -118,19 +120,19 @@ RBMessageNode >> copyInContext: aDictionary [
 		arguments: (self arguments collect: [ :each | each copyInContext: aDictionary ])
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMessageNode >> debugHighlightStart [
 
 	^ self  keywordsPositions first
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMessageNode >> debugHighlightStop [
 
 	^ self stopWithoutParentheses
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 RBMessageNode >> equalTo: anObject withMapping: aDictionary [
 	self class = anObject class ifFalse: [^false].
 	((self receiver equalTo: anObject receiver withMapping: aDictionary)
@@ -141,103 +143,98 @@ RBMessageNode >> equalTo: anObject withMapping: aDictionary [
 	^true
 ]
 
-{ #category : #'fluid parser' }
-RBMessageNode >> handleMetaclassName: aCDFluidClassDefinitionParser [
-	aCDFluidClassDefinitionParser handleMetaclassNameFromMessage: self
-]
-
-{ #category : #comparing }
+{ #category : 'comparing' }
 RBMessageNode >> hash [
 	^ (self receiver hash bitXor: self selector hash) bitXor: (self hashForCollection: self arguments)
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBMessageNode >> isAnnotation [
 	^ self receiver isAnnotationMark
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBMessageNode >> isBinary [
 	^(self isUnary or: [self isKeyword]) not
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBMessageNode >> isCascaded [
 	^parent notNil and: [parent isCascade]
 ]
 
-{ #category : #'private - replacing' }
+{ #category : 'private - replacing' }
 RBMessageNode >> isContainmentReplacement: aNode [
 	^(self mappingFor: self receiver) = aNode
 		or: [self arguments anySatisfy: [:each | (self mappingFor: each) = aNode]]
 ]
 
-{ #category : #errors }
+{ #category : 'errors' }
 RBMessageNode >> isFaulty [
 	self isError ifTrue: [ ^ true ].
 	^self receiver isFaulty or: [self arguments anySatisfy: [:each | each isFaulty]]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBMessageNode >> isFirstCascaded [
 	^self isCascaded and: [parent messages first == self]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBMessageNode >> isHaltNode [
 
 	^ (#( #halt #halt: #haltIf: #haltOnce #haltIfNil #haltOnCount: ) includes: self selector) or: [
 		  self receiver isGlobalVariable and: [ self receiver variable value = Halt and: [ (Halt class selectorsInProtocol: #halting) includes: self selector ] ] ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBMessageNode >> isKeyword [
 	^ self selector isKeyword
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBMessageNode >> isMessage [
 	^true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBMessageNode >> isSelfSend [
 	^ self receiver isSelfVariable
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBMessageNode >> isSuperSend [
 	^ self receiver isSuperVariable
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBMessageNode >> isUnary [
 	^arguments isEmpty
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMessageNode >> keywords [
 	^ self selector keywords
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMessageNode >> keywordsIntervals [
 	^ self selector keywords
 		with: self keywordsPositions
 		collect: [ :keyword :start | start to: (start == 0 ifTrue: [ -1 ] ifFalse: [ start + keyword size - 1]) ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMessageNode >> keywordsPositions [
 	^keywordsPositions ifNil: [ IntegerArray new: self selector keywords size withAll: 0 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMessageNode >> keywordsPositions: aPositionsList [
 	keywordsPositions := aPositionsList ifNotNil: [:list| list asIntegerArray ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBMessageNode >> lastIsReturn [
 	(self isInlineIf or: [ self isInlineIfNil]) ifFalse: [ ^false ].
 	arguments size = 1 ifTrue: [ ^false ].
@@ -245,7 +242,7 @@ RBMessageNode >> lastIsReturn [
 		and: [ arguments last isBlock and: [ arguments last body lastIsReturn ]]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMessageNode >> leftmostChainReceiver [
 
 	^ self receiver isMessage
@@ -253,7 +250,7 @@ RBMessageNode >> leftmostChainReceiver [
 		ifFalse: [ self receiver ]
 ]
 
-{ #category : #matching }
+{ #category : 'matching' }
 RBMessageNode >> match: aNode inContext: aDictionary [
 	aNode class = self class ifFalse: [^false].
 	self selector = aNode selector ifFalse: [^false].
@@ -264,7 +261,7 @@ RBMessageNode >> match: aNode inContext: aDictionary [
 	^true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBMessageNode >> needsParenthesis [
 	^parent
 		ifNil: [false]
@@ -273,37 +270,37 @@ RBMessageNode >> needsParenthesis [
 				or: [self precedence = parent precedence and: [self isUnary not]]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMessageNode >> numArgs [
 	^self selector numArgs
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 RBMessageNode >> postCopy [
 	super postCopy.
 	self receiver: self receiver copy.
 	self arguments: (self arguments collect: [ :each | each copy ])
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMessageNode >> precedence [
 	^self isUnary
 		ifTrue: [1]
 		ifFalse: [self isKeyword ifTrue: [3] ifFalse: [2]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMessageNode >> receiver [
 	^receiver
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMessageNode >> receiver: aValueNode [
 	receiver := aValueNode.
 	receiver parent: self
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBMessageNode >> receiver: aValueNode selector: aSelector keywordsPositions: positionList arguments: valueNodes [
 	aSelector numArgs == valueNodes size
 		ifFalse:
@@ -316,26 +313,26 @@ RBMessageNode >> receiver: aValueNode selector: aSelector keywordsPositions: pos
 		keywordsPositions: positionList
 ]
 
-{ #category : #'adding-removing' }
+{ #category : 'adding-removing' }
 RBMessageNode >> removeFromTree [
 
 	self parent removeNode: self
 ]
 
-{ #category : #'adding-removing' }
+{ #category : 'adding-removing' }
 RBMessageNode >> removeNode: aNode [
 
 	self replaceNode: aNode withNode: aNode receiver
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMessageNode >> renameSelector: newSelector andArguments: varNodeCollection [
 	self
 		arguments: varNodeCollection;
 		selector: newSelector
 ]
 
-{ #category : #'private - replacing' }
+{ #category : 'private - replacing' }
 RBMessageNode >> replaceContainmentSourceWith: aNode [
 	| originalNode needsParenthesis |
 	needsParenthesis := aNode hasParentheses not and: [aNode needsParenthesis].
@@ -353,7 +350,7 @@ RBMessageNode >> replaceContainmentSourceWith: aNode [
 					with: (needsParenthesis ifTrue: [')'] ifFalse: ['']))
 ]
 
-{ #category : #replacing }
+{ #category : 'replacing' }
 RBMessageNode >> replaceNode: aNode withNode: anotherNode [
 	"If we're inside a cascade node and are changing the receiver, change all the receivers"
 
@@ -366,7 +363,7 @@ RBMessageNode >> replaceNode: aNode withNode: anotherNode [
 				collect: [:each | each == aNode ifTrue: [anotherNode] ifFalse: [each]])
 ]
 
-{ #category : #'private - replacing' }
+{ #category : 'private - replacing' }
 RBMessageNode >> replaceSourceWith: aNode [
 	(self isContainmentReplacement: aNode)
 		ifTrue: [^self replaceContainmentSourceWith: aNode].
@@ -374,7 +371,7 @@ RBMessageNode >> replaceSourceWith: aNode [
 	^self replaceSourceWithMessageNode: aNode
 ]
 
-{ #category : #'private - replacing' }
+{ #category : 'private - replacing' }
 RBMessageNode >> replaceSourceWithMessageNode: aNode [
 	| isBinaryToKeyword newSelectorParts  oldkeywordsIntervals|
 	self numArgs = aNode numArgs ifFalse: [^super replaceSourceWith: aNode].
@@ -419,12 +416,12 @@ RBMessageNode >> replaceSourceWithMessageNode: aNode [
 											ifFalse: [newSelectorParts at: index]))]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMessageNode >> selector [
 	^ selector value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMessageNode >> selector: aSelector [
 	keywordsPositions := nil.
 	selector := aSelector isString
@@ -433,7 +430,7 @@ RBMessageNode >> selector: aSelector [
 	selector parent: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMessageNode >> selectorAndArgumentNames [
 	"Returns the selector and argument names portion of a method as a string"
 
@@ -451,33 +448,33 @@ RBMessageNode >> selectorAndArgumentNames [
 								<< ' ']]) allButLast ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMessageNode >> selectorInterval [
 	| positions |
 	positions := self keywordsIntervals.
 	^positions first first to: positions last last
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMessageNode >> selectorNode [
 	^selector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMessageNode >> selectorParts [
 	"Returns a collection containing all the selector composing a message"
 
 	^ self keywords collect: [ :each | each asSymbol]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMessageNode >> sentMessages [
 	^ super sentMessages
 		add: self selector;
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMessageNode >> start: newStart [
 	| oldStart |
 
@@ -486,25 +483,25 @@ RBMessageNode >> start: newStart [
 	receiver start: newStart
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMessageNode >> startWithoutParentheses [
 	^receiver start
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMessageNode >> stopWithoutParentheses [
 	^arguments isEmpty
 		ifTrue: [self keywordsIntervals first last]
 		ifFalse: [arguments last stop]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMessageNode >> superOf [
 
 	^ superOf
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMessageNode >> superOf: anObject [
 
 	superOf := anObject

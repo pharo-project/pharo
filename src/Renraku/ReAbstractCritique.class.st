@@ -18,16 +18,18 @@ ReIntervalSourceAnchor stores the actual interval object which is set during ini
 ReSearchStringSourceAnchor stores a searchString which will be searched for in the entities source code on demand to find an interval of substring
 "
 Class {
-	#name : #ReAbstractCritique,
-	#superclass : #ReProperty,
+	#name : 'ReAbstractCritique',
+	#superclass : 'ReProperty',
 	#instVars : [
 		'rule',
 		'tinyHint'
 	],
-	#category : #'Renraku-Critiques'
+	#category : 'Renraku-Critiques',
+	#package : 'Renraku',
+	#tag : 'Critiques'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ReAbstractCritique class >> for: anEntity by: aRule [
 
 	^ self basicNew
@@ -36,13 +38,13 @@ ReAbstractCritique class >> for: anEntity by: aRule [
 		yourself
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ReAbstractCritique class >> isAbstract [
 
 	^self == ReAbstractCritique
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ReAbstractCritique class >> withAnchor: anAnchor by: aRule [
 
 	^ self basicNew
@@ -51,7 +53,7 @@ ReAbstractCritique class >> withAnchor: anAnchor by: aRule [
 		yourself
 ]
 
-{ #category : #'special instance creation' }
+{ #category : 'special instance creation' }
 ReAbstractCritique class >> withAnchor: anAnchor by: aRule hint: aString [
 
 	^ (self
@@ -61,7 +63,7 @@ ReAbstractCritique class >> withAnchor: anAnchor by: aRule hint: aString [
 		yourself
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 ReAbstractCritique >> actions [
 
 	| actions |
@@ -85,7 +87,7 @@ ReAbstractCritique >> actions [
 			action: [ :crit |
 				| changesBrowser |
 
-				changesBrowser := (ChangesBrowser changes: { crit change })
+				changesBrowser := (StChangesBrowserPresenter changes: { crit change })
 					extent: 500@400;
 					asModalWindow;
 					yourself.
@@ -104,18 +106,18 @@ ReAbstractCritique >> actions [
 	^ actions
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 ReAbstractCritique >> ban [
 	self entity ban: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReAbstractCritique >> change [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReAbstractCritique >> color [
 
 	^ ({
@@ -125,31 +127,31 @@ ReAbstractCritique >> color [
 	 } asDictionary at: rule severity ifAbsent: [ super color ]) alpha: 0.1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReAbstractCritique >> description [
 	^ rule rationale
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 ReAbstractCritique >> guidedBan [
 
 	ReCriticEngine guidedBy: self entity  ban: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReAbstractCritique >> icon [
 
 	^ self iconNamed: ('small', rule severity capitalized, 'Icon') asSymbol
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ReAbstractCritique >> initializeRule: aRule sourceAnchor: anAnchor [
 
 	self initializeSourceAnchor: anAnchor.
 	rule := aRule
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ReAbstractCritique >> initializeRule: aRule target: anEntity [
 
 	self
@@ -157,56 +159,56 @@ ReAbstractCritique >> initializeRule: aRule target: anEntity [
 		sourceAnchor: (ReSourceAnchor entity: anEntity)
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ReAbstractCritique >> isCritique [
 	^ true
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 ReAbstractCritique >> popDescriptionUp [
 	UIManager default longMessage: self description title: self title
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ReAbstractCritique >> printOn: aStream [
 
 	super printOn: aStream.
 	aStream nextPutAll: ' (', self title, ')'
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 ReAbstractCritique >> provideNegativeFeedback: aComment [
 	ReFeedbacker negativeFeedback: aComment about: self
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 ReAbstractCritique >> providePositiveFeedback: aComment [
 	ReFeedbacker positiveFeedback: aComment about: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ReAbstractCritique >> providesChange [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReAbstractCritique >> rule [
 	^ rule
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReAbstractCritique >> tinyHint [
 
 	^ tinyHint
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReAbstractCritique >> tinyHint: anObject [
 	tinyHint := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReAbstractCritique >> title [
 	^ (self tinyHint isNil or: [ self tinyHint isEmpty ])
 		ifTrue: [ rule name ]

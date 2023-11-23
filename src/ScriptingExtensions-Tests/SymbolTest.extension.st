@@ -1,13 +1,6 @@
-Extension { #name : #SymbolTest }
+Extension { #name : 'SymbolTest' }
 
-{ #category : #'*ScriptingExtensions-Tests' }
-SymbolTest >> testAsClass [
-	self
-		assert: #Symbol asClass
-		equals: Symbol
-]
-
-{ #category : #'*ScriptingExtensions-Tests' }
+{ #category : '*ScriptingExtensions-Tests' }
 SymbolTest >> testAsClassIfAbsent [
 
 	self
@@ -18,11 +11,19 @@ SymbolTest >> testAsClassIfAbsent [
 	self fail
 ]
 
-{ #category : #'*ScriptingExtensions-Tests' }
+{ #category : '*ScriptingExtensions-Tests' }
 SymbolTest >> testAsClassIfPresent [
 
 	#Symbol asClassIfPresent: [ :class |
 		self assert: class equals: Symbol ].
 
 	#'+' asClassIfPresent: [ ^ self fail ]
+]
+
+{ #category : '*ScriptingExtensions-Tests' }
+SymbolTest >> testAsClassInEnvironment [
+
+	self
+		assert: (#Symbol asClassInEnvironment: self class environment)
+		equals: Symbol
 ]

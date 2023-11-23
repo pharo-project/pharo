@@ -6,7 +6,9 @@ I am signalled by a watchdog process spawned by #duration:timeoutDo: and caught 
 I am not intended to be used elsewhere.
 "
 Class {
-	#name : #TimedOut,
-	#superclass : #Notification,
-	#category : #'Kernel-Exceptions'
+	#name : 'TimedOut',
+	#superclass : 'Notification',
+	#category : 'Kernel-Exceptions',
+	#package : 'Kernel',
+	#tag : 'Exceptions'
 }

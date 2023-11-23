@@ -2,33 +2,35 @@
 Drop list supporting morphs in list.
 "
 Class {
-	#name : #MorphDropListMorph,
-	#superclass : #DropListMorph,
-	#category : #'Polymorph-Widgets-Base'
+	#name : 'MorphDropListMorph',
+	#superclass : 'DropListMorph',
+	#category : 'Polymorph-Widgets-Base',
+	#package : 'Polymorph-Widgets',
+	#tag : 'Base'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MorphDropListMorph >> font [
 	"Answer the content font"
 
 	^self listFont
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MorphDropListMorph >> font: aFont [
 	"Set the list font"
 
 	self listFont: aFont
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MorphDropListMorph >> listMorphClass [
 	"Answer the class for a new list morph"
 
 	^PluggableMorphListMorph
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 MorphDropListMorph >> newContentMorph [
 	"Answer a new content morph"
 
@@ -45,12 +47,12 @@ MorphDropListMorph >> newContentMorph [
 		lock
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 MorphDropListMorph >> updateContentColor: paneColor [
 	"Change the content text color."
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MorphDropListMorph >> updateContents [
 	"Update the contents."
 

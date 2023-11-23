@@ -2,21 +2,22 @@
 A TickSelectionCheckboxMorph is a checkbox which propagate a bit more the events
 "
 Class {
-	#name : #TickSelectionCheckboxMorph,
-	#superclass : #CheckboxMorph,
+	#name : 'TickSelectionCheckboxMorph',
+	#superclass : 'CheckboxMorph',
 	#instVars : [
 		'index'
 	],
-	#category : #'Morphic-Widgets-TickList'
+	#category : 'Morphic-Widgets-TickList',
+	#package : 'Morphic-Widgets-TickList'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TickSelectionCheckboxMorph >> index: anIndex [
 
 	index := anIndex
 ]
 
-{ #category : #morph }
+{ #category : 'morph' }
 TickSelectionCheckboxMorph >> newButtonMorph [
 	"Answer a new button morph"
 
@@ -31,7 +32,7 @@ TickSelectionCheckboxMorph >> newButtonMorph [
 	^ instance
 ]
 
-{ #category : #event }
+{ #category : 'event' }
 TickSelectionCheckboxMorph >> pressed: anIndex [
 
 	self owner owner pressed: anIndex

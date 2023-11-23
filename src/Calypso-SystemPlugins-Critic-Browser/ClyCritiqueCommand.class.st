@@ -10,67 +10,68 @@ Internal Representation and Key Implementation Points.
 	critique:		<Object>
 "
 Class {
-	#name : #ClyCritiqueCommand,
-	#superclass : #CmdCommand,
+	#name : 'ClyCritiqueCommand',
+	#superclass : 'CmdCommand',
 	#instVars : [
 		'critique',
 		'analyzedObject'
 	],
-	#category : #'Calypso-SystemPlugins-Critic-Browser'
+	#category : 'Calypso-SystemPlugins-Critic-Browser',
+	#package : 'Calypso-SystemPlugins-Critic-Browser'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyCritiqueCommand class >> canBeExecutedInContext: aCriticContext [
 
 	^aCriticContext hasSelectedItems and: [
 		(aCriticContext lastSelectedItem isMarkedWith: ClyBackgroundProcessingTag) not]
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyCritiqueCommand class >> criticTableIconActivation [
 	<classAnnotation>
 
 	^ClyTableIconCommandActivation for: ReAbstractCritique asCalypsoItemContext
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyCritiqueCommand class >> isAbstract [
 	^self = ClyCritiqueCommand
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyCritiqueCommand >> analyzedObject [
 	^ analyzedObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyCritiqueCommand >> analyzedObject: anObject [
 	analyzedObject := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyCritiqueCommand >> critique [
 	^ critique
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyCritiqueCommand >> critique: anObject [
 	critique := anObject
 ]
 
-{ #category : #'table decoration' }
+{ #category : 'table decoration' }
 ClyCritiqueCommand >> decorateTableCell: anItemCellMorph with: aMorph [
 
 	aMorph setBalloonText: self description.
 	anItemCellMorph addExtraTool: aMorph
 ]
 
-{ #category : #'table decoration' }
+{ #category : 'table decoration' }
 ClyCritiqueCommand >> description [
 	^''
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyCritiqueCommand >> readParametersFromContext: aCriticContext [
 	super readParametersFromContext: aCriticContext.
 

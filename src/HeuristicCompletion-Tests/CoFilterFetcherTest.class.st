@@ -1,10 +1,12 @@
 Class {
-	#name : #CoFilterFetcherTest,
-	#superclass : #CoBasicFetcherWithElementsTest,
-	#category : #'HeuristicCompletion-Tests-Core'
+	#name : 'CoFilterFetcherTest',
+	#superclass : 'CoBasicFetcherWithElementsTest',
+	#category : 'HeuristicCompletion-Tests-Core',
+	#package : 'HeuristicCompletion-Tests',
+	#tag : 'Core'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 CoFilterFetcherTest >> setUp [
 
 	super setUp.

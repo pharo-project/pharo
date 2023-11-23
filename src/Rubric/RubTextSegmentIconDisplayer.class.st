@@ -1,28 +1,30 @@
 Class {
-	#name : #RubTextSegmentIconDisplayer,
-	#superclass : #RubScrolledTextSideRuler,
+	#name : 'RubTextSegmentIconDisplayer',
+	#superclass : 'RubScrolledTextSideRuler',
 	#instVars : [
 		'previouslyIn'
 	],
-	#category : #'Rubric-Editing-Widgets'
+	#category : 'Rubric-Editing-Widgets',
+	#package : 'Rubric',
+	#tag : 'Editing-Widgets'
 }
 
-{ #category : #querying }
+{ #category : 'querying' }
 RubTextSegmentIconDisplayer class >> key [
 	^ #textSegmentIcons
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextSegmentIconDisplayer >> backgroundColor [
 	^ self paragraphProvider lineNumbersBackgroundColor
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 RubTextSegmentIconDisplayer >> computedWidthFrom: aRectangle [
 	^  (self horizontalGapBefore + self itemWidth + self horizontalGapAfter + self verticalSeparatorWidth) truncated
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 RubTextSegmentIconDisplayer >> drawOn: aCanvas [
 	| visibleRectangle |
 	super drawOn: aCanvas.
@@ -38,7 +40,7 @@ RubTextSegmentIconDisplayer >> drawOn: aCanvas [
 			tl := self lineIndexForPoint: visibleRectangle topLeft.
 			br := self lineIndexForPoint: visibleRectangle bottomRight.
 			tl to: br do: [ :i |
-				((self paragraphProvider segmentsAtLine: i) select: [ :s | s icon notNil ])
+				((self paragraphProvider segmentsAtLine: i) select: [ :s | s icon isNotNil ])
 					ifNotEmpty: [ :segments |
 						| s pos |
 						s := segments first.
@@ -56,7 +58,7 @@ RubTextSegmentIconDisplayer >> drawOn: aCanvas [
 									dashes: {1. 1} ] ] ] ]
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 RubTextSegmentIconDisplayer >> drawOnAthensCanvas: anAthensCanvas [
 	| visibleRectangle |
 	super drawOnAthensCanvas: anAthensCanvas.
@@ -74,7 +76,7 @@ RubTextSegmentIconDisplayer >> drawOnAthensCanvas: anAthensCanvas [
 			tl := self lineIndexForPoint: visibleRectangle topLeft.
 			br := self lineIndexForPoint: visibleRectangle bottomRight.
 			tl to: br do: [ :i |
-				((self paragraphProvider segmentsAtLine: i) select: [ :s | s icon notNil ])
+				((self paragraphProvider segmentsAtLine: i) select: [ :s | s icon isNotNil ])
 					ifNotEmpty: [ :segments |
 						| s pos |
 						s := segments first.
@@ -99,61 +101,61 @@ RubTextSegmentIconDisplayer >> drawOnAthensCanvas: anAthensCanvas [
 								anAthensCanvas drawShape: path ] ] ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextSegmentIconDisplayer >> fontToUse [
 	^ RubAbstractTextArea lineNumbersFont
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubTextSegmentIconDisplayer >> handleMouseOver: anEvent [
 	| lineIndex |
 	super handleMouseOver: anEvent.
 	lineIndex := self lineIndexForPoint: anEvent position.
-	self mouseEnter: anEvent in: ( (self paragraphProvider segmentsAtLine: lineIndex) select: [ :s | s icon notNil ] ).
+	self mouseEnter: anEvent in: ( (self paragraphProvider segmentsAtLine: lineIndex) select: [ :s | s icon isNotNil ] ).
 	previouslyIn ifNotNil: [
 		previouslyIn showMouseHasLeaved.
 		previouslyIn := nil ]
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubTextSegmentIconDisplayer >> handlesMouseDown: evt [
 	^ true
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubTextSegmentIconDisplayer >> handlesMouseMove: evt [
 	^ true
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubTextSegmentIconDisplayer >> handlesMouseOver: evt [
 
 	^ true
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 RubTextSegmentIconDisplayer >> horizontalGapAfter [
 	^ 1 scaledByDisplayScaleFactor
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 RubTextSegmentIconDisplayer >> horizontalGapBefore [
 	^ 1 scaledByDisplayScaleFactor
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 RubTextSegmentIconDisplayer >> iconPositionOfSegment: aSegment [
 	^ (self left + self horizontalGapBefore) @ aSegment position y
 		translateBy: 0 negated @ (self offset y negated + self bounds top)
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RubTextSegmentIconDisplayer >> initialize [
 	super initialize.
 	self clipSubmorphs: false
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubTextSegmentIconDisplayer >> invokeIconMenuOfSegments: aSegmentList event: anEvent [
 	| menu |
 	aSegmentList ifEmpty: [ ^ self ].
@@ -174,22 +176,22 @@ RubTextSegmentIconDisplayer >> invokeIconMenuOfSegments: aSegmentList event: anE
 	menu invokeAt: (self iconPositionOfSegment: aSegmentList first) - (1 @ 4 negated) in: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextSegmentIconDisplayer >> itemWidth [
 	^ 16 scaledByDisplayScaleFactor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextSegmentIconDisplayer >> level [
 	^ 1
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubTextSegmentIconDisplayer >> mouseEnter: anEvent [
 	super mouseEnter: anEvent
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubTextSegmentIconDisplayer >> mouseEnter: anEvent in: aSegmentList [
 	aSegmentList ifEmpty: [ ^self ].
 	previouslyIn = aSegmentList first
@@ -198,7 +200,7 @@ RubTextSegmentIconDisplayer >> mouseEnter: anEvent in: aSegmentList [
 	self invokeIconMenuOfSegments: aSegmentList event: anEvent
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubTextSegmentIconDisplayer >> mouseLeave: anEvent [
 	previouslyIn
 		ifNotNil: [
@@ -206,17 +208,17 @@ RubTextSegmentIconDisplayer >> mouseLeave: anEvent [
 			previouslyIn := nil ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextSegmentIconDisplayer >> textColor [
 	^ self textArea lineNumbersTextColor
 ]
 
-{ #category : #structure }
+{ #category : 'structure' }
 RubTextSegmentIconDisplayer >> topRendererOrSelf [
 	^self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextSegmentIconDisplayer >> verticalSeparatorBounds [
 	| bnds  |
 	bnds := self bounds.
@@ -225,12 +227,12 @@ RubTextSegmentIconDisplayer >> verticalSeparatorBounds [
 		ifFalse: [ (bnds topLeft corner: bnds bottomLeft + (self verticalSeparatorWidth @ 0)) ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextSegmentIconDisplayer >> verticalSeparatorColor [
 	^ (self textArea backgroundColor contrastingBlackAndWhiteColor ) alpha: 0.3
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextSegmentIconDisplayer >> verticalSeparatorWidth [
 	^ 1 scaledByDisplayScaleFactor
 ]

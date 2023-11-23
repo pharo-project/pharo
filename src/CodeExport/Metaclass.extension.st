@@ -1,19 +1,19 @@
-Extension { #name : #Metaclass }
+Extension { #name : 'Metaclass' }
 
-{ #category : #'*CodeExport' }
+{ #category : '*CodeExport' }
 Metaclass >> fileOutInitializerOn: aStream [
 	(self includesSelector: #initialize) ifTrue:
 		[aStream cr.
 		aStream nextChunkPut: self soleInstance name , ' initialize']
 ]
 
-{ #category : #'*CodeExport' }
+{ #category : '*CodeExport' }
 Metaclass >> fileOutOn: aFileStream [
 
 	^ self fileOutOn: aFileStream initializing: true
 ]
 
-{ #category : #'*CodeExport' }
+{ #category : '*CodeExport' }
 Metaclass >> fileOutOn: aFileStream initializing: aBool [
 
 	super fileOutOn: aFileStream.
@@ -24,7 +24,7 @@ Metaclass >> fileOutOn: aFileStream initializing: aBool [
 		aFileStream cr ]
 ]
 
-{ #category : #'*CodeExport' }
+{ #category : '*CodeExport' }
 Metaclass >> nonTrivial [
 	"Answer whether the receiver has any methods or instance variables."
 

@@ -14,46 +14,48 @@ Internal Representation and Key Implementation Points.
 
 "
 Class {
-	#name : #FTStateBasedColumnSortingStrategy,
-	#superclass : #FTAbstractColumnSortingStrategy,
+	#name : 'FTStateBasedColumnSortingStrategy',
+	#superclass : 'FTAbstractColumnSortingStrategy',
 	#instVars : [
 		'state'
 	],
-	#category : #'Morphic-Widgets-FastTable-Sorting'
+	#category : 'Morphic-Widgets-FastTable-Sorting',
+	#package : 'Morphic-Widgets-FastTable',
+	#tag : 'Sorting'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTStateBasedColumnSortingStrategy >> ascendingSortFunction [
 	^ self subclassResponsibility
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FTStateBasedColumnSortingStrategy >> initialize [
 	super initialize.
 	self reset
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FTStateBasedColumnSortingStrategy >> reset [
 	self state: (FTUnsortedSortingState context: self)
 ]
 
-{ #category : #sorting }
+{ #category : 'sorting' }
 FTStateBasedColumnSortingStrategy >> sortDataSource: aDataSource [
 	self state sort: aDataSource
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTStateBasedColumnSortingStrategy >> sortingIcon [
 	^ self state sortingIcon
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTStateBasedColumnSortingStrategy >> state [
 	^ state
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTStateBasedColumnSortingStrategy >> state: anObject [
 	state := anObject
 ]

@@ -2,18 +2,19 @@
 I am an monticello repository implementation for the FTP protocol.
 "
 Class {
-	#name : #MCFtpRepository,
-	#superclass : #MCFileBasedRepository,
+	#name : 'MCFtpRepository',
+	#superclass : 'MCFileBasedRepository',
 	#instVars : [
 		'host',
 		'directory',
 		'user',
 		'password'
 	],
-	#category : #MonticelloRemoteRepositories
+	#category : 'MonticelloRemoteRepositories',
+	#package : 'MonticelloRemoteRepositories'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MCFtpRepository class >> basicFromUrl: aZnUrl [
 	^ self
 		host: (aZnUrl hasPort ifTrue: [ aZnUrl host, ':', aZnUrl port asString ] ifFalse: [ aZnUrl host ])
@@ -22,7 +23,7 @@ MCFtpRepository class >> basicFromUrl: aZnUrl [
 		password: (aZnUrl password ifNil: [ '' ])
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCFtpRepository class >> creationTemplate [
 	^
 'MCFtpRepository
@@ -33,12 +34,12 @@ MCFtpRepository class >> creationTemplate [
 	
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCFtpRepository class >> description [
 	^ 'FTP'
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MCFtpRepository class >> host: host directory: directory user: user password: password [
 	^ self new
 		host: host;
@@ -47,17 +48,17 @@ MCFtpRepository class >> host: host directory: directory user: user password: pa
 		password: password
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCFtpRepository class >> templateCreationSelector [
 	^ #host:directory:user:password: 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCFtpRepository class >> urlSchemes [
 	^ #(ftp)
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 MCFtpRepository >> clientDo: aBlock [
 	| client |
 	client := FTPClient openOnHostNamed: host.
@@ -66,29 +67,41 @@ MCFtpRepository >> clientDo: aBlock [
 	^ [aBlock value: client] ensure: [client close]
 ]
 
-{ #category : #required }
+{ #category : 'required' }
 MCFtpRepository >> description [
 	^ 'ftp://', host, '/', directory
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
+MCFtpRepository >> directory [
+
+	^directory
+]
+
+{ #category : 'accessing' }
 MCFtpRepository >> directory: dirPath [
 	directory := dirPath
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
+MCFtpRepository >> host [
+
+	^host
+]
+
+{ #category : 'accessing' }
 MCFtpRepository >> host: hostname [
 	host := hostname
 ]
 
-{ #category : #interface }
+{ #category : 'interface' }
 MCFtpRepository >> loadAllFileNames [
 	^ self clientDo:
 		[:client |
 		self parseDirectoryListing: client getDirectory]
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 MCFtpRepository >> parseDirectoryListing: aString [
 	| stream files line tokens |
 	stream := aString readStream.
@@ -100,12 +113,12 @@ MCFtpRepository >> parseDirectoryListing: aString [
 	^ files
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCFtpRepository >> password: passwordString [
 	password := passwordString
 ]
 
-{ #category : #required }
+{ #category : 'required' }
 MCFtpRepository >> readStreamForFileNamed: aString do: aBlock [
 	
 	^ self clientDo: [:client | 
@@ -113,12 +126,12 @@ MCFtpRepository >> readStreamForFileNamed: aString do: aBlock [
 		aBlock value: (client getFileNamed: aString) asByteArray readStream]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCFtpRepository >> user: userString [
 	user := userString
 ]
 
-{ #category : #required }
+{ #category : 'required' }
 MCFtpRepository >> writeStreamForFileNamed: aString replace: ignoreBoolean do: aBlock [
 
 	self clientDo:

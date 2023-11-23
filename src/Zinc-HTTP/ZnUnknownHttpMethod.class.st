@@ -6,32 +6,34 @@ I am resumable to allow non-standard methods.
 Part of Zinc HTTP Components. 
 "
 Class {
-	#name : #ZnUnknownHttpMethod,
-	#superclass : #ZnParseError,
+	#name : 'ZnUnknownHttpMethod',
+	#superclass : 'ZnParseError',
 	#instVars : [
 		'method'
 	],
-	#category : #'Zinc-HTTP-Exceptions'
+	#category : 'Zinc-HTTP-Exceptions',
+	#package : 'Zinc-HTTP',
+	#tag : 'Exceptions'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnUnknownHttpMethod class >> method: method [
 	^ self new
 		method: method;
 		yourself
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnUnknownHttpMethod >> isResumable [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnUnknownHttpMethod >> method [
 	^ method
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnUnknownHttpMethod >> method: anObject [
 	method := anObject
 ]

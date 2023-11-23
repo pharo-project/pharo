@@ -1,6 +1,6 @@
-Extension { #name : #FinderPragmasSearchStrategy }
+Extension { #name : 'FinderPragmasSearchStrategy' }
 
-{ #category : #'*Tool-Finder-UI' }
+{ #category : '*Tool-Finder-UI' }
 FinderPragmasSearchStrategy >> rootNodeClassForResult: aCollection [
 
 	^ FinderPragmaNode

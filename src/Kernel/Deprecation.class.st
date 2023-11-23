@@ -23,8 +23,8 @@ If the transformation is defined, the Warning will not signalled.
 
 "
 Class {
-	#name : #Deprecation,
-	#superclass : #Warning,
+	#name : 'Deprecation',
+	#superclass : 'Warning',
 	#instVars : [
 		'context',
 		'explanationString',
@@ -39,22 +39,24 @@ Class {
 		'RaiseWarning',
 		'ShowWarning'
 	],
-	#category : #'Kernel-Exceptions'
+	#category : 'Kernel-Exceptions',
+	#package : 'Kernel',
+	#tag : 'Exceptions'
 }
 
-{ #category : #logging }
+{ #category : 'logging' }
 Deprecation class >> activateTransformations [
 
 	^ Active ifNil: [ Active := true ]
 ]
 
-{ #category : #logging }
+{ #category : 'logging' }
 Deprecation class >> activateTransformations: aBoolean [
 
 	Active := aBoolean
 ]
 
-{ #category : #logging }
+{ #category : 'logging' }
 Deprecation class >> deprecationsWhile: aBlock [
 	"returns a log of all deprecated methods seen while executing aBlock"
 	| oldLog result |
@@ -67,34 +69,34 @@ Deprecation class >> deprecationsWhile: aBlock [
 	^result
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 Deprecation class >> initialize [
 	Log := nil "#deprecationsWhile: logs all deprecations here"
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 Deprecation class >> raiseWarning [
 	"If true, then a dialog is popup for each deprecated method invocation"
 	^ RaiseWarning ifNil: [RaiseWarning := true]
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 Deprecation class >> raiseWarning: aBoolean [
 	RaiseWarning := aBoolean
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 Deprecation class >> showWarning [
 	"If true, then a message is send to the Transcript for each deprecated method invocation"
 	^ ShowWarning ifNil: [ShowWarning := true]
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 Deprecation class >> showWarning: aBoolean [
 	ShowWarning := aBoolean
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 Deprecation >> = anObject [
 	^self class == anObject class
 	  and: [context = anObject context
@@ -103,32 +105,32 @@ Deprecation >> = anObject [
 			ifNotNil: [true]]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Deprecation >> condition: aBlock [
 	condition := aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Deprecation >> context: aContext [
 	context := aContext
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Deprecation >> contextOfDeprecatedMethod [
 	^context
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Deprecation >> contextOfSender [
 	^context sender
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Deprecation >> date: aDate [
 	deprecationDate := aDate
 ]
 
-{ #category : #handling }
+{ #category : 'handling' }
 Deprecation >> defaultAction [
 	Log
 		ifNotNil: [:log | log add: self].
@@ -137,40 +139,40 @@ Deprecation >> defaultAction [
 		ifTrue: [super defaultAction]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Deprecation >> deprecatedMethodName [
 	^self contextOfDeprecatedMethod homeMethod printString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Deprecation >> deprecationDate [
 
 	^ deprecationDate ifNil: [ 'unknown' ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Deprecation >> explanation: aString [
 	explanationString := aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Deprecation >> explanationString [
 
 	^ explanationString
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 Deprecation >> hash [
 	^(context ifNil: [explanationString]) hash
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Deprecation >> logTranscript [
 	self showWarning
 		ifTrue: [ DeprecationPerformedNotification signal: self messageText ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Deprecation >> messageText [
 	^String streamContents: [ :str |
 		self shouldTransform ifTrue: [
@@ -184,39 +186,39 @@ Deprecation >> messageText [
 		 	nextPutAll: explanationString]
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 Deprecation >> raiseWarning [
 	^ self class raiseWarning
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Deprecation >> rewriterClass [
 	^ self class environment at: #RBParseTreeRewriter ifAbsent: [ nil ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Deprecation >> rule: aRule [
 	rule := aRule
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Deprecation >> sendingMethodName [
 	^self contextOfSender homeMethod printString
 ]
 
-{ #category : #handling }
+{ #category : 'handling' }
 Deprecation >> shouldTransform [
 	self class activateTransformations ifFalse: [ ^false  ].
 	(condition isNil or: [ condition cull: self ]) ifFalse: [ ^false ].
 	^rule isNotNil
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 Deprecation >> showWarning [
 	^ self class showWarning
 ]
 
-{ #category : #handling }
+{ #category : 'handling' }
 Deprecation >> signal [
 	| pragma homeMethod |
 	homeMethod := context homeMethod.
@@ -227,7 +229,7 @@ Deprecation >> signal [
 	self transform
 ]
 
-{ #category : #handling }
+{ #category : 'handling' }
 Deprecation >> transform [
 	| node rewriteRule aMethod |
 	self shouldTransform ifFalse: [ ^ self signal].
@@ -248,12 +250,12 @@ Deprecation >> transform [
 		self logTranscript]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Deprecation >> version: aString [
 	versionString := aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Deprecation >> versionString [
 
 	^ versionString ifNil: [ 'unknown' ]

@@ -5,27 +5,29 @@ Signals that a name lookup operation failed.
 
 "
 Class {
-	#name : #NameLookupFailure,
-	#superclass : #NetworkError,
+	#name : 'NameLookupFailure',
+	#superclass : 'NetworkError',
 	#instVars : [
 		'hostName'
 	],
-	#category : #'Network-Kernel-Exceptions'
+	#category : 'Network-Kernel-Exceptions',
+	#package : 'Network-Kernel',
+	#tag : 'Exceptions'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 NameLookupFailure class >> hostName: aString [
 	^ self new hostName: aString
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 NameLookupFailure class >> signalFor: hostName [
 	"Create and signal a NameLookupFailure for hostName"
 
 	^ (self hostName: hostName) signal
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NameLookupFailure >> defaultAction [
 	"Backward compatibility"
 
@@ -36,24 +38,24 @@ NameLookupFailure >> defaultAction [
 		ifFalse: [ self retry ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NameLookupFailure >> hostName [
 	^ hostName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NameLookupFailure >> hostName: aString [
 	hostName := aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NameLookupFailure >> messageText [
 	"Overwritten to initialiaze the message text to a standard text if it has not yet been set"
 
 	^ messageText ifNil: [ messageText := self standardMessageText ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NameLookupFailure >> standardMessageText [
 	"Generate a standard textual description"
 

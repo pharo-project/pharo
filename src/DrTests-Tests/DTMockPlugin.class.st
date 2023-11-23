@@ -2,78 +2,79 @@
 A Mock object used in test
 "
 Class {
-	#name : #DTMockPlugin,
-	#superclass : #DrTestsPlugin,
+	#name : 'DTMockPlugin',
+	#superclass : 'DrTestsPlugin',
 	#instVars : [
 		'hasBeenRun'
 	],
-	#category : #'DrTests-Tests'
+	#category : 'DrTests-Tests',
+	#package : 'DrTests-Tests'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 DTMockPlugin class >> isAbstract [
 	^ self = DTMockPlugin
 ]
 
-{ #category : #'api - accessing' }
+{ #category : 'api - accessing' }
 DTMockPlugin class >> pluginName [
 
 	^ 'Mock plugin for test'
 ]
 
-{ #category : #'api - accessing' }
+{ #category : 'api - accessing' }
 DTMockPlugin class >> pluginResultClass [
 	^ DTMockPluginResult
 ]
 
-{ #category : #'api - accessing' }
+{ #category : 'api - accessing' }
 DTMockPlugin class >> weight [
 	^ 40
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTMockPlugin >> hasBeenRun [
 	^ hasBeenRun
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DTMockPlugin >> initialize [
 
 	super initialize.
 	hasBeenRun := false
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 DTMockPlugin >> packagesAvailableForAnalysis [
 	"This is a seleciton only for tests"
 
 	^ {self class package}
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTMockPlugin >> pragmaForResultTrees [
 	^ #'pragmaForTest:order:'
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 DTMockPlugin >> resultButtonHelp [
 
 	^ 'Result help?'
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 DTMockPlugin >> runForConfiguration: aDTpluginConfiguration [
 	hasBeenRun := true.
 	^ DTMockPluginResult new
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 DTMockPlugin >> startButtonHelp [
 
 	^ 'Help me!'
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 DTMockPlugin >> startButtonLabel [
 
 	^ 'Mock start'

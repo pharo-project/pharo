@@ -1,6 +1,6 @@
-Extension { #name : #Bag }
+Extension { #name : 'Bag' }
 
-{ #category : #'*STON-Core' }
+{ #category : '*STON-Core' }
 Bag class >> fromSton: stonReader [
 	"Read a map representation containing element/occurrences pairs"
 
@@ -11,7 +11,7 @@ Bag class >> fromSton: stonReader [
 	^ bag
 ]
 
-{ #category : #'*STON-Core' }
+{ #category : '*STON-Core' }
 Bag >> stonOn: stonWriter [
 	"Use a map with element-occurrences pairs as representation"
 

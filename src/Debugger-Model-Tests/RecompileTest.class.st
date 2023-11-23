@@ -1,10 +1,12 @@
 Class {
-	#name : #RecompileTest,
-	#superclass : #DebuggerTest,
-	#category : #'Debugger-Model-Tests-Core'
+	#name : 'RecompileTest',
+	#superclass : 'DebuggerTest',
+	#category : 'Debugger-Model-Tests-Core',
+	#package : 'Debugger-Model-Tests',
+	#tag : 'Core'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RecompileTest >> testRecompileDoIt [
 
 	| method node |
@@ -38,7 +40,7 @@ RecompileTest >> testRecompileDoIt [
 	self assert: (session interruptedContext tempNamed: #c) equals: 43
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RecompileTest >> testRecompileInstalled [
 
 	| method node |
@@ -79,7 +81,7 @@ RecompileTest >> testRecompileInstalled [
 	(self class >> #foo) removeFromSystem
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RecompileTest >> testRecompileUninstalled [
 
 	| method node |

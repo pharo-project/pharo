@@ -7,16 +7,18 @@ Instance Variables:
 
 "
 Class {
-	#name : #RBLiteralToken,
-	#superclass : #RBValueToken,
+	#name : 'RBLiteralToken',
+	#superclass : 'RBValueToken',
 	#instVars : [
 		'stopPosition',
 		'source'
 	],
-	#category : #'AST-Core-Tokens'
+	#category : 'AST-Core-Tokens',
+	#package : 'AST-Core',
+	#tag : 'Tokens'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBLiteralToken class >> value: anObject [
 	| literal |
 	literal := anObject class == Array
@@ -28,12 +30,12 @@ RBLiteralToken class >> value: anObject [
 		stop: nil
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBLiteralToken class >> value: aString start: anInteger stop: stopInteger [
 	^ self value: aString start: anInteger stop: stopInteger source: nil
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBLiteralToken class >> value: aString start: anInteger stop: stopInteger source: sourceText [
 	^(self new)
 		value: aString
@@ -43,37 +45,37 @@ RBLiteralToken class >> value: aString start: anInteger stop: stopInteger source
 		yourself
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBLiteralToken >> isLiteralToken [
 	^true
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBLiteralToken >> length [
 	^stopPosition - self start + 1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBLiteralToken >> realValue [
 	^value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBLiteralToken >> source [
 	^source
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBLiteralToken >> source: aString [
 	source := aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBLiteralToken >> stop: anObject [
 	stopPosition := anObject
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBLiteralToken >> storeOn: aStream [
 	value isSymbol
 		ifTrue:
@@ -91,7 +93,7 @@ RBLiteralToken >> storeOn: aStream [
 	value storeOn: aStream
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBLiteralToken >> value: aString start: anInteger stop: stopInteger [
 	value := aString.
 	sourcePointer := anInteger.

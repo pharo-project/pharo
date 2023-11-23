@@ -14,34 +14,36 @@ Internal Representation and Key Implementation Points.
 	textMorph:		<Object>
 "
 Class {
-	#name : #ClyTextMorphToolMorph,
-	#superclass : #Morph,
+	#name : 'ClyTextMorphToolMorph',
+	#superclass : 'Morph',
 	#instVars : [
 		'textMorph'
 	],
-	#category : #'Calypso-Browser-TextEditors'
+	#category : 'Calypso-Browser-TextEditors',
+	#package : 'Calypso-Browser',
+	#tag : 'TextEditors'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyTextMorphToolMorph class >> of: aTextMorph [
 	^self new
 		textMorph: aTextMorph
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyTextMorphToolMorph >> attachToTextMorph [
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyTextMorphToolMorph >> defaultColor [
 	^Color transparent
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyTextMorphToolMorph >> detachFromTextMorph [
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyTextMorphToolMorph >> initialize [
 	super initialize.
 	self
@@ -50,24 +52,24 @@ ClyTextMorphToolMorph >> initialize [
 		hResizing: #shrinkWrap
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyTextMorphToolMorph >> outOfWorld: aWorld [
 	super outOfWorld: aWorld.
 
 	self detachFromTextMorph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyTextMorphToolMorph >> textArea [
 	^ textMorph textArea
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyTextMorphToolMorph >> textMorph [
 	^ textMorph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyTextMorphToolMorph >> textMorph: aTextMorph [
 	textMorph := aTextMorph.
 	self attachToTextMorph

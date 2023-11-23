@@ -32,8 +32,8 @@ view openInWindow.
 ```
 "
 Class {
-	#name : #AthensSceneView,
-	#superclass : #Morph,
+	#name : 'AthensSceneView',
+	#superclass : 'Morph',
 	#instVars : [
 		'surface',
 		'scene',
@@ -42,21 +42,22 @@ Class {
 		'state',
 		'keepRefreshing'
 	],
-	#category : #'Athens-Morphic'
+	#category : 'Athens-Morphic',
+	#package : 'Athens-Morphic'
 }
 
-{ #category : #colors }
+{ #category : 'colors' }
 AthensSceneView >> backgroundColor [
 	^ Color gray
 ]
 
-{ #category : #'session management' }
+{ #category : 'session management' }
 AthensSceneView >> checkSession [
 	session == Smalltalk session ifFalse: [
 		self initializeForNewSession ]
 ]
 
-{ #category : #'session management' }
+{ #category : 'session management' }
 AthensSceneView >> createSurface [
 	| extent |
 	extent := self extent asIntegerPoint.
@@ -65,7 +66,7 @@ AthensSceneView >> createSurface [
 		ifFalse: [ AthensCairoSurface extent: extent]
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 AthensSceneView >> drawOn: canvas [
 	| px py |
 	canvas fillRectangle: bounds color: self backgroundColor.
@@ -86,36 +87,36 @@ AthensSceneView >> drawOn: canvas [
 				color: Color white ]
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 AthensSceneView >> handlesMouseDown: evt [
 	^ true
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 AthensSceneView >> handlesMouseOver: evt [
 	^ true
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 AthensSceneView >> handlesMouseWheel: event [
 	^ true
 ]
 
-{ #category : #'state tracking' }
+{ #category : 'state tracking' }
 AthensSceneView >> inState: stateName [
 
 
-	^ (state at: stateName ifAbsent: nil) notNil
+	^ (state at: stateName ifAbsent: nil) isNotNil
 ]
 
-{ #category : #'state tracking' }
+{ #category : 'state tracking' }
 AthensSceneView >> inState: stateName do: aBlock [
 
 
 	^ (state at: stateName ifAbsent: nil) ifNotNil: aBlock
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AthensSceneView >> initialize [
 
 	super initialize.
@@ -129,20 +130,20 @@ AthensSceneView >> initialize [
 	self extent: self minimumExtent
 ]
 
-{ #category : #'session management' }
+{ #category : 'session management' }
 AthensSceneView >> initializeForNewSession [
 	self createSurface.
 	session := Smalltalk session
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensSceneView >> keepRefreshing: aBoolean [
 	keepRefreshing := aBoolean.
 
 	keepRefreshing ifTrue: [  self startStepping ]
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 AthensSceneView >> layoutChanged [
 	"react on morph resize"
 	super layoutChanged.
@@ -152,12 +153,12 @@ AthensSceneView >> layoutChanged [
 	]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AthensSceneView >> minimumExtent [
 	^ 300@300
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 AthensSceneView >> mouseDown: evt [
 
 	| pos |
@@ -170,20 +171,20 @@ AthensSceneView >> mouseDown: evt [
 		 ]
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 AthensSceneView >> mouseEnter: evt [
 
 	self setState: #mouseIn
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 AthensSceneView >> mouseLeave: evt [
 	self
 		resetState: #mouseIn;
 		resetState: #panning
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 AthensSceneView >> mouseMove: evt [
 
 	self inState: #panning do: [ :startPanAndPos |
@@ -197,7 +198,7 @@ AthensSceneView >> mouseMove: evt [
 	]
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 AthensSceneView >> mouseUp: evt [
 
 	"self halt."
@@ -205,7 +206,7 @@ AthensSceneView >> mouseUp: evt [
 	self resetState: #panning
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 AthensSceneView >> mouseWheel: event [
 
 
@@ -228,7 +229,7 @@ AthensSceneView >> mouseWheel: event [
 	]
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 AthensSceneView >> renderScene [
 
 	self checkSession.
@@ -242,7 +243,7 @@ AthensSceneView >> renderScene [
 				ifFalse: [ scene renderOn: acanvas ] ] ]
 ]
 
-{ #category : #'state tracking' }
+{ #category : 'state tracking' }
 AthensSceneView >> resetState: stateName [
 
 	state at: stateName put: nil.
@@ -252,12 +253,12 @@ AthensSceneView >> resetState: stateName [
 	self changed
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensSceneView >> scene [
 	^ scene
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensSceneView >> scene: aScene [
 
 	scene := aScene.
@@ -265,7 +266,7 @@ AthensSceneView >> scene: aScene [
 	self changed
 ]
 
-{ #category : #'state tracking' }
+{ #category : 'state tracking' }
 AthensSceneView >> setState: stateName [
 
 	state at: stateName put: true.
@@ -275,7 +276,7 @@ AthensSceneView >> setState: stateName [
 	self changed
 ]
 
-{ #category : #'state tracking' }
+{ #category : 'state tracking' }
 AthensSceneView >> setState: stateName value: aValue [
 
 	state at: stateName put: aValue.
@@ -285,12 +286,12 @@ AthensSceneView >> setState: stateName value: aValue [
 	self changed
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 AthensSceneView >> showDebugInfo [
 	^ true
 ]
 
-{ #category : #'zoom animation' }
+{ #category : 'zoom animation' }
 AthensSceneView >> startZooming: zoom center: center [
 	| start end |
 
@@ -303,7 +304,7 @@ AthensSceneView >> startZooming: zoom center: center [
 	self startStepping
 ]
 
-{ #category : #stepping }
+{ #category : 'stepping' }
 AthensSceneView >> step [
 
 	self inState: #zooming do: [ :zoomState |
@@ -332,18 +333,18 @@ AthensSceneView >> step [
 	self changed
 ]
 
-{ #category : #stepping }
+{ #category : 'stepping' }
 AthensSceneView >> stepTime [
 	^ 0
 ]
 
-{ #category : #stepping }
+{ #category : 'stepping' }
 AthensSceneView >> stopStepping [
 	keepRefreshing ifFalse: [
 			^ super stopStepping ]
 ]
 
-{ #category : #'zoom animation' }
+{ #category : 'zoom animation' }
 AthensSceneView >> updateZoom: zoom cursor: cursorPoint [
 
 	| zoomState targetZoom start end now fraction newCenter |

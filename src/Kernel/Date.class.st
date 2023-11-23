@@ -41,55 +41,57 @@ birthday1 isOnOrBefore: birthday2.  ""true""
 
 "
 Class {
-	#name : #Date,
-	#superclass : #Timespan,
+	#name : 'Date',
+	#superclass : 'Timespan',
 	#pools : [
 		'ChronologyConstants'
 	],
-	#category : #'Kernel-Chronology'
+	#category : 'Kernel-Chronology',
+	#package : 'Kernel',
+	#tag : 'Chronology'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Date class >> fromDays: dayCount [
 	"Days since 1 January 1901"
 
 	^ self julianDayNumber: SqueakEpoch + dayCount
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Date class >> fromSeconds: seconds [
 	"Answer an instance of me which is 'seconds' seconds after January 1, 1901."
 
 	^ self starting: (DateAndTime fromSeconds: seconds)
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Date class >> starting: aDateAndTime [
 
 	^ super starting: (aDateAndTime midnight) duration: (Duration days: 1)
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Date class >> today [
 
 	^ self current
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Date >> asDate [
 	"(Date year: 2018 month: 9 day: 28) asDate printString >>> '28 September 2018'"
 
 	^ self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Date >> dayMonthYearDo: aBlock [
 	"Supply integers for day, month and year to aBlock and return the result"
 
 	^ start dayMonthYearDo: aBlock
 ]
 
-{ #category : #'comparing - ignore timezone' }
+{ #category : 'comparing - ignore timezone' }
 Date >> equals: aDate [
 	"Perform a time zone independent comparison of the dates, i.e. only compare day, month and year.
 	To compare with time zones, use #="
@@ -100,7 +102,7 @@ Date >> equals: aDate [
         [ self dayOfMonth = aDate dayOfMonth ] ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 Date >> printFormat: formatArray [
 	"Answer a String describing the receiver using the argument formatArray."
 
@@ -108,19 +110,19 @@ Date >> printFormat: formatArray [
 		self printOn: aStream format: formatArray ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 Date >> printOn: aStream [
 
  	self printOn: aStream format: #(1 2 3 $  3 1 )
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 Date >> printOn: aStream format: formatArray [
 
 	BasicDatePrinter default printDate: self format: formatArray on: aStream
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Date >> species [
 
 	^Timespan

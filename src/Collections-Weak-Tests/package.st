@@ -1,1 +1,1 @@
-Package { #name : #'Collections-Weak-Tests' }
+Package { #name : 'Collections-Weak-Tests' }

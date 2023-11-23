@@ -1,1 +1,1 @@
-Package { #name : #ParametrizedTests }
+Package { #name : 'ParametrizedTests' }

@@ -38,39 +38,41 @@ Internal Representation and Key Implementation Points.
 	hierarchy:		<ClyClassHierarchy>
 "
 Class {
-	#name : #ClyGroupedVariablesResult,
-	#superclass : #ClyBrowserQueryResult,
+	#name : 'ClyGroupedVariablesResult',
+	#superclass : 'ClyBrowserQueryResult',
 	#instVars : [
 		'hierarchy'
 	],
-	#category : #'Calypso-SystemQueries-Results'
+	#category : 'Calypso-SystemQueries-Results',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Results'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyGroupedVariablesResult class >> defaultHierarchy [
 
 	^ClySubclassHierarchy hierarchyForVariables
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyGroupedVariablesResult class >> isExpandedHierarchy [
 	^true
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyGroupedVariablesResult class >> withDefaultHierarchy [
 
 	^self withHierarchy: self defaultHierarchy
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyGroupedVariablesResult class >> withHierarchy: aClassHierarchy [
 
 	^self new
 		hierarchy: aClassHierarchy
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ClyGroupedVariablesResult >> = anObject [
 	"Answer whether the receiver and anObject represent the same object."
 
@@ -80,7 +82,7 @@ ClyGroupedVariablesResult >> = anObject [
 	^ hierarchy = anObject hierarchy
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ClyGroupedVariablesResult >> fillWith: variables [
 	| typedGroups |
 	typedGroups := self groupVariablesByTypeAndDefinition: variables.
@@ -88,12 +90,12 @@ ClyGroupedVariablesResult >> fillWith: variables [
 	self fillWithGroupedVariables: typedGroups
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ClyGroupedVariablesResult >> fillWithGroupedVariables: varsPerTypeAndDefiningClass [
 	self subclassResponsibility
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ClyGroupedVariablesResult >> fillWithVariables: varsPerClass type: varTypeClass [
 
 	| classMap vars declarationGroup varItem methodQueryScope |
@@ -113,7 +115,7 @@ ClyGroupedVariablesResult >> fillWithVariables: varsPerClass type: varTypeClass 
 	]
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ClyGroupedVariablesResult >> groupVariablesByTypeAndDefinition: variables [
 
 	| groups varsPerClass typedVars |
@@ -126,24 +128,24 @@ ClyGroupedVariablesResult >> groupVariablesByTypeAndDefinition: variables [
 	^groups
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ClyGroupedVariablesResult >> hash [
 	"Answer an integer value that is related to the identity of the receiver."
 
 	^super hash bitXor: hierarchy hash
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyGroupedVariablesResult >> hierarchy [
 	^ hierarchy
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyGroupedVariablesResult >> hierarchy: anObject [
 	hierarchy := anObject
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ClyGroupedVariablesResult >> queryScope [
 	^buildingQuery scope
 ]

@@ -2,35 +2,38 @@
 I am a command to add protocol scope to listScopes
 "
 Class {
-	#name : #SycAddProtocolScopeCommand,
-	#superclass : #SycProtocolCmCommand,
+	#name : 'SycAddProtocolScopeCommand',
+	#superclass : 'SycProtocolCmCommand',
 	#instVars : [
 		'class'
 	],
-	#category : #'SystemCommands-MethodCommands'
+	#category : 'SystemCommands-MethodCommands',
+	#package : 'SystemCommands-MethodCommands'
 }
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycAddProtocolScopeCommand >> execute [
+
 	| scope protocols |
 	self prepareFullExecution.
-	protocols := methodGroups select: [:each | each isKindOf: ClyTaggedMethodGroup]
-		thenCollect: [ :each | each tag].
+	protocols := methodGroups
+		             select: [ :methodGroup | methodGroup isKindOf: ClyMethodsInProtocolGroup ]
+		             thenCollect: [ :methodsInProtocolGroup | methodsInProtocolGroup protocol ].
 	scope := RBBrowserEnvironment new forClass: class protocols: protocols.
 	RefactoringSettings addScope: scope
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycAddProtocolScopeCommand >> icon [
 	^ self iconNamed: #add
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycAddProtocolScopeCommand >> name [
 	^ 'Add protocols to scope list'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycAddProtocolScopeCommand >> prepareFullExecution [
 	super prepareFullExecution.
 	class := context lastSelectedClass

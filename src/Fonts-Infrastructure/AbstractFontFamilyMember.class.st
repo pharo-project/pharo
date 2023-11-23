@@ -2,22 +2,24 @@
 Abstract member for a font family
 "
 Class {
-	#name : #AbstractFontFamilyMember,
-	#superclass : #Object,
+	#name : 'AbstractFontFamilyMember',
+	#superclass : 'Object',
 	#instVars : [
 		'family',
 		'styleName'
 	],
-	#category : #'Fonts-Infrastructure-Base'
+	#category : 'Fonts-Infrastructure-Base',
+	#package : 'Fonts-Infrastructure',
+	#tag : 'Base'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 AbstractFontFamilyMember class >> isAbstract [
 
 	^ self name = #AbstractFontFamilyMember
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 AbstractFontFamilyMember >> asLogicalFontOfPointSize: pointSize [
 
 	^LogicalFont
@@ -28,7 +30,7 @@ AbstractFontFamilyMember >> asLogicalFontOfPointSize: pointSize [
 		slantValue: self slantValue
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 AbstractFontFamilyMember >> closenessVector [
 
 	^ self
@@ -37,7 +39,7 @@ AbstractFontFamilyMember >> closenessVector [
 		  weight: self weightValue
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 AbstractFontFamilyMember >> closenessVectorForStretch: stretch slant: slant weight: weight [
 
 	| normalizedSlant |
@@ -50,19 +52,19 @@ AbstractFontFamilyMember >> closenessVectorForStretch: stretch slant: slant weig
 		  (weight - LogicalFont weightRegular / 100 * 5) }
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AbstractFontFamilyMember >> family [
 
 	^ family
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AbstractFontFamilyMember >> family: aFontFamily [
 
 	family := aFontFamily
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 AbstractFontFamilyMember >> isCloserMatchThan: otherMember toStretch: inputStretch weight: inputWeight slant: inputSlant [
 	| inputVector vector otherVector distance otherDistance dotProduct otherDotProduct |
 
@@ -94,38 +96,38 @@ AbstractFontFamilyMember >> isCloserMatchThan: otherMember toStretch: inputStret
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 AbstractFontFamilyMember >> isSimulatedStyle [
 	"Return false by default, subclasses can override when they simulate the style"
 
 	 ^false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AbstractFontFamilyMember >> slantValue [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AbstractFontFamilyMember >> stretchValue [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AbstractFontFamilyMember >> styleName [
 	"Answer the value of styleName"
 
 	^ styleName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AbstractFontFamilyMember >> styleName: anObject [
 	"Set the value of styleName"
 
 	styleName := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AbstractFontFamilyMember >> weightValue [
 	self subclassResponsibility
 ]

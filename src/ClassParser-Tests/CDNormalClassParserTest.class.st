@@ -1,26 +1,25 @@
 Class {
-	#name : #CDNormalClassParserTest,
-	#superclass : #CDClassDefinitionParserTest,
-	#category : #'ClassParser-Tests'
+	#name : 'CDNormalClassParserTest',
+	#superclass : 'CDClassDefinitionParserTest',
+	#category : 'ClassParser-Tests',
+	#package : 'ClassParser-Tests'
 }
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 CDNormalClassParserTest >> classDefinitionString [
 
-	^ '{superclassName} subclass: #{classname}
-		instanceVariableNames: ''{instvar1} {instvar2}''
-		classVariableNames: ''{classvar1} {classvar2}''
+	^ '{superclassName} << #{classname}
+		slots: {slots};
+		sharedVariables: {sharedVariables};
 		package: #MyPackage'
 			format: {
 				'classname' -> self className.
 				'superclassName' -> self superclassName.
-				'instvar1' -> self firstInstanceVariableName.
-				'instvar2' -> self secondInstanceVariableName.
-				'classvar1' -> self firstClassVariableName.
-				'classvar2' -> self secondClassVariableName. } asDictionary
+				'slots' -> self slotsArray.
+				'sharedVariables' -> self sharedVariablesArray } asDictionary
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 CDNormalClassParserTest >> testNormalClassHasFixedLayout [
 
 	self assert: classDefinition layoutClass equals: FixedLayout

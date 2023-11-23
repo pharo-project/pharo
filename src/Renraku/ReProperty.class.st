@@ -5,55 +5,57 @@ I define a basic interface of a #title and an #icon that can be used to display 
 I also have a source anchor with a reference to the actual class, method, or other source code entity that I am related to.
 "
 Class {
-	#name : #ReProperty,
-	#superclass : #Model,
+	#name : 'ReProperty',
+	#superclass : 'Model',
 	#instVars : [
 		'sourceAnchor'
 	],
-	#category : #'Renraku-Critiques'
+	#category : 'Renraku-Critiques',
+	#package : 'Renraku',
+	#tag : 'Critiques'
 }
 
-{ #category : #actions }
+{ #category : 'actions' }
 ReProperty >> actions [
 
 	^ #()
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReProperty >> color [
 
 	^ Color black alpha: 0.1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReProperty >> entity [
 	^ self sourceAnchor entity
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReProperty >> icon [
 
 	^ Form extent: 16@16 depth: 32
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ReProperty >> initializeSourceAnchor: anAnchor [
 
 	self initialize.
 	sourceAnchor := anAnchor
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ReProperty >> isCritique [
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReProperty >> sourceAnchor [
 	^ sourceAnchor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReProperty >> title [
 
 	^ self subclassResponsibility

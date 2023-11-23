@@ -5,26 +5,28 @@ I hold an optional clientId attribute.
 
 "
 Class {
-	#name : #ZnClientLogEvent,
-	#superclass : #ZnLogEvent,
+	#name : 'ZnClientLogEvent',
+	#superclass : 'ZnLogEvent',
 	#instVars : [
 		'clientId'
 	],
-	#category : #'Zinc-HTTP-Logging'
+	#category : 'Zinc-HTTP-Logging',
+	#package : 'Zinc-HTTP',
+	#tag : 'Logging'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnClientLogEvent >> clientId [
 	^ clientId
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnClientLogEvent >> clientId: anObject [
 	clientId := anObject
 ]
 
-{ #category : #printing }
-ZnClientLogEvent >> printContentsOn: stream [
-	super printContentsOn: stream.
+{ #category : 'printing' }
+ZnClientLogEvent >> printHeaderOn: stream [
+	super printHeaderOn: stream.
 	clientId ifNotNil: [ stream space; << clientId ]
 ]

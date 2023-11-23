@@ -1,21 +1,22 @@
 Class {
-	#name : #ClyOverridingMethodGroupProviderTest,
-	#superclass : #ClyMethodGroupProviderTest,
-	#category : #'Calypso-SystemPlugins-InheritanceAnalysis-Queries-Tests'
+	#name : 'ClyOverridingMethodGroupProviderTest',
+	#superclass : 'ClyMethodGroupProviderTest',
+	#category : 'Calypso-SystemPlugins-InheritanceAnalysis-Queries-Tests',
+	#package : 'Calypso-SystemPlugins-InheritanceAnalysis-Queries-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClyOverridingMethodGroupProviderTest >> classSampleWhichHasGroup [
 
 	^ClyClassWhichInheritsAbstractClassMock
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyOverridingMethodGroupProviderTest >> groupProviderClass [
 	^ClyOverridingMethodGroupProvider
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyOverridingMethodGroupProviderTest >> setUpEnvironment [
 	super setUpEnvironment.
 

@@ -13,15 +13,16 @@ DOS stores timestamps, in local time, as 32 bit integers with the following form
 References (with visual aids): http://blogs.msdn.com/b/oldnewthing/archive/2003/09/05/54806.aspx & http://mindprod.com/jgloss/zip.html
 "
 Class {
-	#name : #DosTimestamp,
-	#superclass : #Object,
+	#name : 'DosTimestamp',
+	#superclass : 'Object',
 	#instVars : [
 		'value'
 	],
-	#category : #'Kernel-Chronology-Extras'
+	#category : 'Kernel-Chronology-Extras',
+	#package : 'Kernel-Chronology-Extras'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 DosTimestamp class >> dateValueFrom: aDate [
 
 	| dosYear dosMonth dosDay |
@@ -31,13 +32,13 @@ DosTimestamp class >> dateValueFrom: aDate [
 	^ dosYear + dosMonth + dosDay
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DosTimestamp class >> epoch [
 
 	^ DateAndTime dosEpoch
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 DosTimestamp class >> fromDateAndTime: aDateAndTime [
 
 	| dateValue timeValue local |
@@ -47,13 +48,13 @@ DosTimestamp class >> fromDateAndTime: aDateAndTime [
 	^ self on: (dateValue << 16) + timeValue
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 DosTimestamp class >> on: anInteger [
 
 	^ self new initializeValue: anInteger
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DosTimestamp class >> timeValueFrom: aTime [
 
 	| dosHours dosMinutes dosSeconds |
@@ -63,19 +64,19 @@ DosTimestamp class >> timeValueFrom: aTime [
 	^ dosHours + dosMinutes + dosSeconds
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 DosTimestamp >> = rhs [
 
 	^ self value = rhs value
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 DosTimestamp >> asDateAndTime [
 
 	^ DateAndTime date: self date time: self time
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DosTimestamp >> date [
 	"See class comment for format details"
 
@@ -88,38 +89,38 @@ DosTimestamp >> date [
 	^ Date year: year month: month day: day
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DosTimestamp >> epoch [
 
 	^ self class epoch
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 DosTimestamp >> hash [
 
 	^ self value hash
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DosTimestamp >> high16Bits [
 
 	^ value >> 16
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DosTimestamp >> initializeValue: anInteger [
 
 	value := anInteger.
 	^ self
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DosTimestamp >> low16Bits [
 
 	^ value & 2r1111111111111111
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 DosTimestamp >> printOn: aStream [
 
 	aStream
@@ -129,7 +130,7 @@ DosTimestamp >> printOn: aStream [
 		nextPut: $)
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DosTimestamp >> time [
 	"See class comment for format details"
 
@@ -142,7 +143,7 @@ DosTimestamp >> time [
 	^ Time hour: hours minute: minutes second: seconds
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DosTimestamp >> value [
 
 	^ value

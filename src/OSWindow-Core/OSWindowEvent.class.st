@@ -2,7 +2,9 @@
 i am the root of various window events hierarchy
 "
 Class {
-	#name : #OSWindowEvent,
-	#superclass : #OSEvent,
-	#category : #'OSWindow-Core-Events'
+	#name : 'OSWindowEvent',
+	#superclass : 'OSEvent',
+	#category : 'OSWindow-Core-Events',
+	#package : 'OSWindow-Core',
+	#tag : 'Events'
 }

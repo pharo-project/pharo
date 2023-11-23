@@ -4,8 +4,8 @@ I represent the Fuel version number.
 I know how to parse and print the version number and how to compare it to another version.
 "
 Class {
-	#name : #FLVersion,
-	#superclass : #Object,
+	#name : 'FLVersion',
+	#superclass : 'Object',
 	#instVars : [
 		'major',
 		'minor',
@@ -14,10 +14,12 @@ Class {
 	#classVars : [
 		'Current'
 	],
-	#category : #'Fuel-Core-Configuration'
+	#category : 'Fuel-Core-Configuration',
+	#package : 'Fuel-Core',
+	#tag : 'Configuration'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLVersion class >> current [
 	^ Current ifNil: [
 		Current := self
@@ -26,7 +28,7 @@ FLVersion class >> current [
 			patch: 0 ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FLVersion class >> newWithMajor: majorNumber minor: minorNumber patch: patchNumber [
 	^ self basicNew
 		initializeWithMajor: majorNumber minor: minorNumber patch: patchNumber;
@@ -34,7 +36,7 @@ FLVersion class >> newWithMajor: majorNumber minor: minorNumber patch: patchNumb
 		yourself
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 FLVersion >> <= aVersion [
 	self class ~= aVersion class ifTrue: [ ^ false ].
 	
@@ -49,7 +51,7 @@ FLVersion >> <= aVersion [
 	^ true
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 FLVersion >> = aVersion [
 	^ super = aVersion or: [
 		self class = aVersion class and: [
@@ -58,29 +60,29 @@ FLVersion >> = aVersion [
 					self patch = aVersion patch ] ] ] ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FLVersion >> initializeWithMajor: majorNumber minor: minorNumber patch: patchNumber [
 	major := majorNumber.
 	minor := minorNumber.
 	patch := patchNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLVersion >> major [
 	^ major
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLVersion >> minor [
 	^ minor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLVersion >> patch [
 	^ patch
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 FLVersion >> printOn: aStream [
 	aStream
 		print: self major;

@@ -2,8 +2,8 @@
 A pluggable tree morph.
 "
 Class {
-	#name : #PluggableTreeMorph,
-	#superclass : #SimpleHierarchicalListMorph,
+	#name : 'PluggableTreeMorph',
+	#superclass : 'SimpleHierarchicalListMorph',
 	#instVars : [
 		'roots',
 		'selectedWrapper',
@@ -18,10 +18,12 @@ Class {
 		'wantsDropSelector',
 		'dragItemSelector'
 	],
-	#category : #'Morphic-Widgets-Pluggable-Tree'
+	#category : 'Morphic-Widgets-Pluggable-Tree',
+	#package : 'Morphic-Widgets-Pluggable',
+	#tag : 'Tree'
 }
 
-{ #category : #morphic }
+{ #category : 'morphic' }
 PluggableTreeMorph >> acceptDroppingMorph: aMorph event: evt [
 	| item dropTarget |
 
@@ -40,13 +42,13 @@ PluggableTreeMorph >> acceptDroppingMorph: aMorph event: evt [
 	Cursor normal show
 ]
 
-{ #category : #'node access' }
+{ #category : 'node access' }
 PluggableTreeMorph >> balloonTextForNode: node [
 	getHelpSelector ifNil:[^nil].
 	^model perform: getHelpSelector with: node item
 ]
 
-{ #category : #'node access' }
+{ #category : 'node access' }
 PluggableTreeMorph >> contentsOfNode: node [
 	| children |
 	getChildrenSelector ifNil:[^#()].
@@ -54,140 +56,140 @@ PluggableTreeMorph >> contentsOfNode: node [
 	^children collect:[:item| PluggableTreeItemNode with: item model: self]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableTreeMorph >> dragItemSelector [
 	^dragItemSelector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableTreeMorph >> dragItemSelector: aSymbol [
 	dragItemSelector := aSymbol.
 	aSymbol ifNotNil:[self dragEnabled: true]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableTreeMorph >> dropItemSelector [
 	^dropItemSelector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableTreeMorph >> dropItemSelector: aSymbol [
 	dropItemSelector := aSymbol.
 	aSymbol ifNotNil:[self dropEnabled: true]
 ]
 
-{ #category : #'node access' }
+{ #category : 'node access' }
 PluggableTreeMorph >> dropNode: srcNode on: dstNode [
 	dropItemSelector ifNil:[^nil].
 	model perform: dropItemSelector with: srcNode item with: dstNode item
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableTreeMorph >> getChildrenSelector [
 	^getChildrenSelector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableTreeMorph >> getChildrenSelector: aSymbol [
 	getChildrenSelector := aSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableTreeMorph >> getHelpSelector [
 	^getHelpSelector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableTreeMorph >> getHelpSelector: aSymbol [
 	getHelpSelector := aSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableTreeMorph >> getIconSelector [
 	^getIconSelector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableTreeMorph >> getIconSelector: aSymbol [
 	getIconSelector := aSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableTreeMorph >> getLabelSelector [
 	^getLabelSelector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableTreeMorph >> getLabelSelector: aSymbol [
 	getLabelSelector := aSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableTreeMorph >> getRootsSelector [
 	^getRootsSelector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableTreeMorph >> getRootsSelector: aSelector [
 	getRootsSelector := aSelector.
 	self update: getRootsSelector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableTreeMorph >> getSelectedPathSelector [
 	^getSelectedPathSelector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableTreeMorph >> getSelectedPathSelector: aSymbol [
 	getSelectedPathSelector := aSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableTreeMorph >> hasChildrenSelector [
 	^hasChildrenSelector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableTreeMorph >> hasChildrenSelector: aSymbol [
 	hasChildrenSelector := aSymbol
 ]
 
-{ #category : #'node access' }
+{ #category : 'node access' }
 PluggableTreeMorph >> hasNodeContents: node [
 	hasChildrenSelector ifNil: [ ^ node contents isNotEmpty ].
 	^ model perform: hasChildrenSelector with: node item
 ]
 
-{ #category : #'node access' }
+{ #category : 'node access' }
 PluggableTreeMorph >> iconOfNode: node [
 	getIconSelector ifNil:[^nil].
 	^model perform: getIconSelector with: node item
 ]
 
-{ #category : #'node access' }
+{ #category : 'node access' }
 PluggableTreeMorph >> isDraggableNode: node [
 	^true
 ]
 
-{ #category : #'node access' }
+{ #category : 'node access' }
 PluggableTreeMorph >> printNode: node [
 	getLabelSelector ifNil:[^node item printString].
 	^model perform: getLabelSelector with: node item
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableTreeMorph >> roots [
 	^roots
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableTreeMorph >> roots: anArray [
 	roots := anArray collect:[:item| PluggableTreeItemNode with: item model: self].
 	self list: roots
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 PluggableTreeMorph >> selectPath: path in: listItem [
 	path isEmpty ifTrue: [^self setSelectedMorph: nil].
 	listItem withSiblingsDo: [:each |
@@ -207,7 +209,7 @@ PluggableTreeMorph >> selectPath: path in: listItem [
 	^self setSelectedMorph: nil
 ]
 
-{ #category : #selection }
+{ #category : 'selection' }
 PluggableTreeMorph >> setSelectedMorph: aMorph [
 	selectedWrapper := aMorph complexContents.
 	self selection: selectedWrapper.
@@ -218,17 +220,17 @@ PluggableTreeMorph >> setSelectedMorph: aMorph [
 	]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableTreeMorph >> setSelectedSelector [
 	^setSelectionSelector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableTreeMorph >> setSelectedSelector: aSymbol [
 	setSelectionSelector := aSymbol
 ]
 
-{ #category : #morphic }
+{ #category : 'morphic' }
 PluggableTreeMorph >> startDrag: anEvent [
 	| aTransferMorph itemMorph passenger |
 
@@ -260,7 +262,7 @@ PluggableTreeMorph >> startDrag: anEvent [
 	anEvent hand releaseMouseFocus: self
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 PluggableTreeMorph >> update: what [
 	what ifNil:[^self].
 	what == getRootsSelector ifTrue:[
@@ -273,17 +275,17 @@ PluggableTreeMorph >> update: what [
 	^super update: what
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableTreeMorph >> wantsDropSelector [
 	^wantsDropSelector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableTreeMorph >> wantsDropSelector: aSymbol [
 	wantsDropSelector := aSymbol
 ]
 
-{ #category : #morphic }
+{ #category : 'morphic' }
 PluggableTreeMorph >> wantsDroppedMorph: aMorph event: anEvent [
 
 	aMorph dragTransferType == #dragTransfer ifFalse: [ ^ false ].
@@ -299,7 +301,7 @@ PluggableTreeMorph >> wantsDroppedMorph: aMorph event: anEvent [
 				with: aMorph passenger ]
 ]
 
-{ #category : #'node access' }
+{ #category : 'node access' }
 PluggableTreeMorph >> wantsDroppedNode: srcNode on: dstNode [
 	dropItemSelector ifNil:[^false].
 	wantsDropSelector ifNil:[^true].

@@ -2,51 +2,54 @@
 Wrapper for dependent package (use in TreePresenter)
 "
 Class {
-	#name : #DAPackageDependencyWrapper,
-	#superclass : #Object,
+	#name : 'DAPackageDependencyWrapper',
+	#superclass : 'Object',
 	#instVars : [
 		'daPackage'
 	],
-	#category : #'Tool-DependencyAnalyser-Core'
+	#category : 'Tool-DependencyAnalyser-Core',
+	#package : 'Tool-DependencyAnalyser',
+	#tag : 'Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 DAPackageDependencyWrapper class >> newWith: aPackage [
 	^ self new initializeFrom: aPackage
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 DAPackageDependencyWrapper >> <= other [
 	^ self daPackage <= other daPackage
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAPackageDependencyWrapper >> daPackage [
 	^ daPackage
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAPackageDependencyWrapper >> daPackage: anObject [
 	daPackage := anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DAPackageDependencyWrapper >> initializeFrom: aPackage [
 	super initialize.
 	self daPackage: aPackage
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAPackageDependencyWrapper >> packageName [
 	^ daPackage packageName
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 DAPackageDependencyWrapper >> printOn: aStream [
 	aStream nextPutAll: self packageName
 ]
 
-{ #category : #accessing }
-DAPackageDependencyWrapper >> rPackageSet [
-	^ daPackage rPackageSet
+{ #category : 'accessing' }
+DAPackageDependencyWrapper >> systemPackage [
+
+	^ daPackage systemPackage
 ]

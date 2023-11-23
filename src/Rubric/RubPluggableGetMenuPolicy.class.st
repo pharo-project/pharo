@@ -2,45 +2,47 @@
 I am used to get the correct menu of common text areas
 "
 Class {
-	#name : #RubPluggableGetMenuPolicy,
-	#superclass : #RubGetMenuPolicy,
+	#name : 'RubPluggableGetMenuPolicy',
+	#superclass : 'RubGetMenuPolicy',
 	#instVars : [
 		'getMenuSelector',
 		'menuProvider'
 	],
-	#category : #'Rubric-Editing-Core'
+	#category : 'Rubric-Editing-Core',
+	#package : 'Rubric',
+	#tag : 'Editing-Core'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubPluggableGetMenuPolicy >> getMenuSelector [
 	^ getMenuSelector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubPluggableGetMenuPolicy >> getMenuSelector: aSymbol [
 	getMenuSelector := aSymbol
 ]
 
-{ #category : #'accessing - menu' }
+{ #category : 'accessing - menu' }
 RubPluggableGetMenuPolicy >> lookupMenu [
 	(getMenuSelector isNil or: [ menuProvider isNil ])
 		ifTrue: [ ^ super lookupMenu ].
 	^ (WeakMessageSend receiver: menuProvider selector: getMenuSelector) cull: MenuMorph new cull: false
 ]
 
-{ #category : #'accessing - menu' }
+{ #category : 'accessing - menu' }
 RubPluggableGetMenuPolicy >> lookupShiftMenu [
 	(getMenuSelector isNil or: [ menuProvider isNil ])
 		ifTrue: [ ^ super lookupMenu ].
 	^ (WeakMessageSend receiver: menuProvider selector: getMenuSelector) cull: MenuMorph new cull: true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubPluggableGetMenuPolicy >> menuProvider [
 	^ menuProvider
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubPluggableGetMenuPolicy >> menuProvider: anObject [
 	menuProvider := anObject
 ]

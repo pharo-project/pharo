@@ -5,8 +5,8 @@ Example Usage:
 	MethodClassifier classify: MyClass >> #mySelector
 "
 Class {
-	#name : #MethodClassifier,
-	#superclass : #Object,
+	#name : 'MethodClassifier',
+	#superclass : 'Object',
 	#instVars : [
 		'protocol'
 	],
@@ -19,10 +19,12 @@ Class {
 		'pragmaMapping',
 		'exactMapping'
 	],
-	#category : #'Tool-Base-Utilities'
+	#category : 'Tool-Base-Utilities',
+	#package : 'Tool-Base',
+	#tag : 'Utilities'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 MethodClassifier class >> buildExactMapping [
 
 	exactMapping := Dictionary new
@@ -31,7 +33,7 @@ MethodClassifier class >> buildExactMapping [
 		                yourself
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MethodClassifier class >> buildKeywordSuffixMapping [
 	keywordSuffixMapping := Dictionary new
 		at: 'Add:' put: 'adding';
@@ -52,7 +54,7 @@ MethodClassifier class >> buildKeywordSuffixMapping [
 		yourself
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MethodClassifier class >> buildPragmaMapping [
 	pragmaMapping := Dictionary new
 		at: 'example' put: 'examples';
@@ -60,7 +62,7 @@ MethodClassifier class >> buildPragmaMapping [
 		yourself
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MethodClassifier class >> buildPrefixMapping [
 
 	prefixMapping := Dictionary new
@@ -112,29 +114,29 @@ MethodClassifier class >> buildPrefixMapping [
 		                 yourself
 ]
 
-{ #category : #classification }
+{ #category : 'classification' }
 MethodClassifier class >> classify: aMethod [
 	^ self new classify: aMethod
 ]
 
-{ #category : #classification }
+{ #category : 'classification' }
 MethodClassifier class >> classify: aMethod fallbackProtocol: fallbackProtocol [
 	^ self new classify: aMethod fallbackProtocol: fallbackProtocol
 ]
 
-{ #category : #classification }
+{ #category : 'classification' }
 MethodClassifier class >> classifyAll: aCollectionOfMethods [
 	^ self new classifyAll: aCollectionOfMethods
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MethodClassifier class >> clearMappings [
 
 	<script>
 	prefixMapping := keywordSuffixMapping := pragmaMapping := exactMapping := nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MethodClassifier class >> exactMapping [
 	"use a class inst var so subclasses can define custom mappings"
 
@@ -143,7 +145,7 @@ MethodClassifier class >> exactMapping [
 		  exactMapping ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MethodClassifier class >> keywordSuffixMapping [
 	"use a class inst var so subclasses can define custom mappings"
 	^ keywordSuffixMapping ifNil: [
@@ -151,7 +153,7 @@ MethodClassifier class >> keywordSuffixMapping [
 		keywordSuffixMapping]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MethodClassifier class >> pragmaMapping [
 	"use a class inst var so subclasses can define custom mappings"
 
@@ -160,7 +162,7 @@ MethodClassifier class >> pragmaMapping [
 		  pragmaMapping ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MethodClassifier class >> prefixMapping [
 	"use a class inst var so subclasses can define custom mappings"
 	^ prefixMapping ifNil: [
@@ -168,7 +170,7 @@ MethodClassifier class >> prefixMapping [
 		prefixMapping]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MethodClassifier class >> settingsOn: aBuilder [
 
 	<systemsettings>
@@ -180,31 +182,32 @@ MethodClassifier class >> settingsOn: aBuilder [
 		target: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MethodClassifier class >> shouldAlwaysClassify [
 	"When enabled I'll try to classify all new methods in the code browser instead of using the selected protocol."
 
 	^ ShouldAlwaysClassify ifNil: [ ShouldAlwaysClassify := false ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MethodClassifier class >> shouldAlwaysClassify: anObject [
 
 	ShouldAlwaysClassify := anObject
 ]
 
-{ #category : #classification }
+{ #category : 'classification' }
 MethodClassifier class >> suggestProtocolFor: aMethod [
-	^ (self new suggestProtocolFor: aMethod) ifNil: [ 'as yet unclassified' ]
+
+	^ (self new suggestProtocolFor: aMethod) ifNil: [ Protocol unclassified ]
 ]
 
-{ #category : #classification }
+{ #category : 'classification' }
 MethodClassifier >> classify: aMethod [
 
 	self classify: aMethod fallbackProtocol: nil
 ]
 
-{ #category : #classification }
+{ #category : 'classification' }
 MethodClassifier >> classify: aMethod fallbackProtocol: fallbackProtocol [
 	"fallback protocol is the protocol that was selected at method creation.
 	It will only be used if standard rules do not find a protocol for this method or if automatic classification is disabled.
@@ -218,7 +221,7 @@ MethodClassifier >> classify: aMethod fallbackProtocol: fallbackProtocol [
 	fallbackProtocol ifNotNil: [ aMethod protocol: fallbackProtocol ]
 ]
 
-{ #category : #classification }
+{ #category : 'classification' }
 MethodClassifier >> classifyAll: aCollectionOfMethods [
 
 	aCollectionOfMethods do: [ :method |
@@ -226,20 +229,20 @@ MethodClassifier >> classifyAll: aCollectionOfMethods [
 		self classify: method ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MethodClassifier >> listToFindProtocols [
 
 	^ #( #protocolInSuperclassProtocol: #protocolByKnownMapping: #protocolAccessorFor: #protocolByKnownKeywordSuffix: #protocolByKnownPragma:
 	     #protocolByKnownPrefix: #protocolByOtherImplementors: )
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MethodClassifier >> protocol [
 
 	^ protocol
 ]
 
-{ #category : #'classification-rules' }
+{ #category : 'classification-rules' }
 MethodClassifier >> protocolAccessorFor: aMethod [
 	" If the method is a setter or getter for a  "
 	| names selector |
@@ -256,19 +259,19 @@ MethodClassifier >> protocolAccessorFor: aMethod [
 	protocol := 'accessing'
 ]
 
-{ #category : #'classification-rules' }
+{ #category : 'classification-rules' }
 MethodClassifier >> protocolByKnownKeywordSuffix: aMethod [
 	(self protocolForKnownKeywordSuffixOfSelector: aMethod selector)
 		ifNotNil: [ :p | protocol := p ]
 ]
 
-{ #category : #'classification-rules' }
+{ #category : 'classification-rules' }
 MethodClassifier >> protocolByKnownMapping: aMethod [
 
 	self class exactMapping keysAndValuesDo: [ :selector :p | aMethod selector = selector ifTrue: [ protocol := p ] ]
 ]
 
-{ #category : #'classification-rules' }
+{ #category : 'classification-rules' }
 MethodClassifier >> protocolByKnownPragma: aMethod [
 	self class pragmaMapping
 		keysAndValuesDo: [ :pragma :p |
@@ -276,27 +279,28 @@ MethodClassifier >> protocolByKnownPragma: aMethod [
 				ifTrue: [ protocol := p] ]
 ]
 
-{ #category : #'classification-rules' }
+{ #category : 'classification-rules' }
 MethodClassifier >> protocolByKnownPrefix: aMethod [
 	(self protocolForKnownPrefixOfSelector: aMethod selector)
 		ifNotNil: [ :p | protocol := p ]
 ]
 
-{ #category : #'classification-rules' }
+{ #category : 'classification-rules' }
 MethodClassifier >> protocolByOtherImplementors: aMethod [
 
 	| protocolBag |
 	protocolBag := Bag new.
 
-	aMethod implementors ifEmpty: [ ^ self ] ifNotEmpty: [ :methods |
-		self flag: #CompileMethodProtocolMiration.
-		methods do: [ :method | ((method protocolName beginsWith: '*') or: [ method isClassified not ]) ifFalse: [ protocolBag add: method protocolName ] ] without: aMethod ].
+	aMethod implementors ifEmpty: [ ^ self ] ifNotEmpty: [ :implementor |
+		implementor
+			do: [ :method | (method isExtension or: [ method isClassified not ]) ifFalse: [ protocolBag add: method protocolName ] ]
+			without: aMethod ].
 
 	protocolBag ifEmpty: [ ^ self ].
 	protocol := protocolBag sortedCounts first value
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MethodClassifier >> protocolForKnownKeywordSuffixOfSelector: aSelector [
 	"Returns the protocol for the first keyword suffix that equals a keyword
 	from aSelector or that a keyword ends with or nil if there isn't one."
@@ -310,7 +314,7 @@ MethodClassifier >> protocolForKnownKeywordSuffixOfSelector: aSelector [
 	^ nil
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MethodClassifier >> protocolForKnownPrefixOfSelector: aSelector [
 	"Returns the protocol for the first prefix that equals aSelector or that
 	aSelector starts with if the prefix is followed by a non-lowercase char
@@ -327,18 +331,18 @@ MethodClassifier >> protocolForKnownPrefixOfSelector: aSelector [
 	^ nil
 ]
 
-{ #category : #'classification-rules' }
+{ #category : 'classification-rules' }
 MethodClassifier >> protocolInSuperclassProtocol: aMethod [
 
 	protocol := self superclassProtocol: aMethod
 ]
 
-{ #category : #reseting }
+{ #category : 'reseting' }
 MethodClassifier >> resetProtocol [
 	protocol := nil
 ]
 
-{ #category : #'smartSuggestions - support' }
+{ #category : 'smartSuggestions - support' }
 MethodClassifier >> suggestProtocolFor: aMethod [
 	| listToSearch index |
 	listToSearch := self listToFindProtocols.
@@ -349,7 +353,7 @@ MethodClassifier >> suggestProtocolFor: aMethod [
 	^ protocol
 ]
 
-{ #category : #classification }
+{ #category : 'classification' }
 MethodClassifier >> superclassProtocol: aMethod [
 
 	| currentClass |
@@ -359,8 +363,7 @@ MethodClassifier >> superclassProtocol: aMethod [
 		currentClass := currentClass superclass.
 		(currentClass includesSelector: aMethod selector) ifTrue: [
 			| possibleProtocol |
-			self flag: #CompileMethodProtocolMiration.
-			possibleProtocol := (currentClass >> aMethod selector) protocolName.
-			((possibleProtocol beginsWith: '*') or: possibleProtocol asSymbol = currentClass package name) ifFalse: [ ^ possibleProtocol ] ] ].
+			possibleProtocol := (currentClass >> aMethod selector) protocol.
+			(possibleProtocol isExtensionProtocol or: [ possibleProtocol name = currentClass package name ]) ifFalse: [ ^ possibleProtocol name ] ] ].
 	^ nil
 ]

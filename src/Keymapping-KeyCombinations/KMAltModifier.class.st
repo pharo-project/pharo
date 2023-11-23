@@ -2,29 +2,30 @@
 I represent the Alt key modifier. Look at my superclass for a more detailed explanaition.
 "
 Class {
-	#name : #KMAltModifier,
-	#superclass : #KMModifier,
-	#category : #'Keymapping-KeyCombinations'
+	#name : 'KMAltModifier',
+	#superclass : 'KMModifier',
+	#category : 'Keymapping-KeyCombinations',
+	#package : 'Keymapping-KeyCombinations'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMAltModifier >> eventCode [
 	^32
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 KMAltModifier >> initialize [
 	super initialize.
 	identifier := #a.
 	name := 'Alt'
 ]
 
-{ #category : #matching }
+{ #category : 'matching' }
 KMAltModifier >> matchesEvent: aKeyboardEvent [
 	^ aKeyboardEvent altKeyPressed
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 KMAltModifier >> printingPosition [
 	^2
 ]

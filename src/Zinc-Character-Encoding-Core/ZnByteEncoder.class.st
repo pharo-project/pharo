@@ -13,12 +13,13 @@ Note that most/all of these encodings should be considered legacy, with UTF-8 be
 Part of Zinc HTTP Components.
 "
 Class {
-	#name : #ZnByteEncoder,
-	#superclass : #ZnSimplifiedByteEncoder,
-	#category : #'Zinc-Character-Encoding-Core'
+	#name : 'ZnByteEncoder',
+	#superclass : 'ZnSimplifiedByteEncoder',
+	#category : 'Zinc-Character-Encoding-Core',
+	#package : 'Zinc-Character-Encoding-Core'
 }
 
-{ #category : #mappings }
+{ #category : 'mappings' }
 ZnByteEncoder class >> cp1250Mapping [
 	"self generateByteToUnicodeSpec: 'http://unicode.org/Public/MAPPINGS/VENDORS/MICSFT/WINDOWS/CP1250.TXT'"
 
@@ -41,7 +42,7 @@ ZnByteEncoder class >> cp1250Mapping [
 	16r0159 16r016F 16r00FA 16r0171 16r00FC 16r00FD 16r0163 16r02D9 )
 ]
 
-{ #category : #mappings }
+{ #category : 'mappings' }
 ZnByteEncoder class >> cp1251Mapping [
 	"self generateByteToUnicodeSpec: 'http://unicode.org/Public/MAPPINGS/VENDORS/MICSFT/WINDOWS/CP1251.TXT'"
 
@@ -64,7 +65,7 @@ ZnByteEncoder class >> cp1251Mapping [
 	16r0448 16r0449 16r044A 16r044B 16r044C 16r044D 16r044E 16r044F )
 ]
 
-{ #category : #mappings }
+{ #category : 'mappings' }
 ZnByteEncoder class >> cp1252Mapping [
 	"self generateByteToUnicodeSpec: 'http://unicode.org/Public/MAPPINGS/VENDORS/MICSFT/WINDOWS/CP1252.TXT'"
 
@@ -87,7 +88,7 @@ ZnByteEncoder class >> cp1252Mapping [
 	16r00F8 16r00F9 16r00FA 16r00FB 16r00FC 16r00FD 16r00FE 16r00FF )
 ]
 
-{ #category : #mappings }
+{ #category : 'mappings' }
 ZnByteEncoder class >> cp1253Mapping [
 	"self generateByteToUnicodeSpec: 'http://unicode.org/Public/MAPPINGS/VENDORS/MICSFT/WINDOWS/CP1253.TXT'"
 
@@ -110,7 +111,7 @@ ZnByteEncoder class >> cp1253Mapping [
 	16r03C8 16r03C9 16r03CA 16r03CB 16r03CC 16r03CD 16r03CE nil )
 ]
 
-{ #category : #mappings }
+{ #category : 'mappings' }
 ZnByteEncoder class >> cp1254Mapping [
 	"self generateByteToUnicodeSpec: 'http://unicode.org/Public/MAPPINGS/VENDORS/MICSFT/WINDOWS/CP1254.TXT'"
 
@@ -133,7 +134,7 @@ ZnByteEncoder class >> cp1254Mapping [
 	16r00F8 16r00F9 16r00FA 16r00FB 16r00FC 16r0131 16r015F 16r00FF )
 ]
 
-{ #category : #mappings }
+{ #category : 'mappings' }
 ZnByteEncoder class >> cp1255Mapping [
 	"self generateByteToUnicodeSpec: 'http://unicode.org/Public/MAPPINGS/VENDORS/MICSFT/WINDOWS/CP1255.TXT'"
 
@@ -156,7 +157,7 @@ ZnByteEncoder class >> cp1255Mapping [
 	16r05E8 16r05E9 16r05EA nil nil 16r200E 16r200F nil )
 ]
 
-{ #category : #mappings }
+{ #category : 'mappings' }
 ZnByteEncoder class >> cp1256Mapping [
 	"self generateByteToUnicodeSpec: 'http://unicode.org/Public/MAPPINGS/VENDORS/MICSFT/WINDOWS/CP1256.TXT'"
 
@@ -179,7 +180,7 @@ ZnByteEncoder class >> cp1256Mapping [
 	16r0651 16r00F9 16r0652 16r00FB 16r00FC 16r200E 16r200F 16r06D2 )
 ]
 
-{ #category : #mappings }
+{ #category : 'mappings' }
 ZnByteEncoder class >> cp1257Mapping [
 	"self generateByteToUnicodeSpec: 'http://unicode.org/Public/MAPPINGS/VENDORS/MICSFT/WINDOWS/CP1257.TXT'"
 
@@ -202,7 +203,7 @@ ZnByteEncoder class >> cp1257Mapping [
 	16r0173 16r0142 16r015B 16r016B 16r00FC 16r017C 16r017E 16r02D9 )
 ]
 
-{ #category : #mappings }
+{ #category : 'mappings' }
 ZnByteEncoder class >> cp1258Mapping [
 	"self generateByteToUnicodeSpec: 'http://unicode.org/Public/MAPPINGS/VENDORS/MICSFT/WINDOWS/CP1258.TXT'"
 
@@ -225,7 +226,7 @@ ZnByteEncoder class >> cp1258Mapping [
 	16r00F8 16r00F9 16r00FA 16r00FB 16r00FC 16r01B0 16r20AB 16r00FF )
 ]
 
-{ #category : #mappings }
+{ #category : 'mappings' }
 ZnByteEncoder class >> cp850Mapping [
 	"This is not included in the MS mappings on the Unicode site,
 	but still in modern use as the default codepage in
@@ -254,7 +255,7 @@ ZnByteEncoder class >> cp850Mapping [
 	16r00B0 16r00A8 16r00B7 16r00B9 16r00B3 16r00B2 16r25A0 16r00A0 )
 ]
 
-{ #category : #mappings }
+{ #category : 'mappings' }
 ZnByteEncoder class >> cp866Mapping [
 	"self generateByteToUnicodeSpec: 'http://unicode.org/Public/MAPPINGS/VENDORS/MICSFT/PC/CP866.TXT'"
 
@@ -277,7 +278,7 @@ ZnByteEncoder class >> cp866Mapping [
 	16r00B0 16r2219 16r00B7 16r221A 16r2116 16r00A4 16r25A0 16r00A0 )
 ]
 
-{ #category : #mappings }
+{ #category : 'mappings' }
 ZnByteEncoder class >> cp874Mapping [
 	"self generateByteToUnicodeSpec: 'http://unicode.org/Public/MAPPINGS/VENDORS/MICSFT/WINDOWS/CP874.TXT'"
 
@@ -300,7 +301,7 @@ ZnByteEncoder class >> cp874Mapping [
 	16r0E58 16r0E59 16r0E5A 16r0E5B nil nil nil nil )
 ]
 
-{ #category : #utilties }
+{ #category : 'utilties' }
 ZnByteEncoder class >> generateByteToUnicodeSpec: url [
 	"Return the formatted source code for an array mapping
 	the top 128 byte to unicode values from a Unicode.org url"
@@ -319,7 +320,7 @@ ZnByteEncoder class >> generateByteToUnicodeSpec: url [
 			stream nextPut: $); cr ]
 ]
 
-{ #category : #mappings }
+{ #category : 'mappings' }
 ZnByteEncoder class >> iso885910Mapping [
 	"self generateByteToUnicodeSpec: 'http://unicode.org/Public/MAPPINGS/ISO8859/8859-10.TXT'"
 
@@ -342,7 +343,7 @@ ZnByteEncoder class >> iso885910Mapping [
 	16r00F8 16r0173 16r00FA 16r00FB 16r00FC 16r00FD 16r00FE 16r0138 )
 ]
 
-{ #category : #mappings }
+{ #category : 'mappings' }
 ZnByteEncoder class >> iso885913Mapping [
 	"self generateByteToUnicodeSpec: 'http://unicode.org/Public/MAPPINGS/ISO8859/8859-13.TXT'"
 
@@ -365,7 +366,7 @@ ZnByteEncoder class >> iso885913Mapping [
 	16r0173 16r0142 16r015B 16r016B 16r00FC 16r017C 16r017E 16r2019 )
 ]
 
-{ #category : #mappings }
+{ #category : 'mappings' }
 ZnByteEncoder class >> iso885914Mapping [
 	"self generateByteToUnicodeSpec: 'http://unicode.org/Public/MAPPINGS/ISO8859/8859-14.TXT'"
 
@@ -388,7 +389,7 @@ ZnByteEncoder class >> iso885914Mapping [
 	16r00F8 16r00F9 16r00FA 16r00FB 16r00FC 16r00FD 16r0177 16r00FF )
 ]
 
-{ #category : #mappings }
+{ #category : 'mappings' }
 ZnByteEncoder class >> iso885915Mapping [
 	"self generateByteToUnicodeSpec: 'http://unicode.org/Public/MAPPINGS/ISO8859/8859-15.TXT'"
 
@@ -411,7 +412,7 @@ ZnByteEncoder class >> iso885915Mapping [
 	16r00F8 16r00F9 16r00FA 16r00FB 16r00FC 16r00FD 16r00FE 16r00FF )
 ]
 
-{ #category : #mappings }
+{ #category : 'mappings' }
 ZnByteEncoder class >> iso885916Mapping [
 	"self generateByteToUnicodeSpec: 'http://unicode.org/Public/MAPPINGS/ISO8859/8859-16.TXT'"
 
@@ -434,7 +435,7 @@ ZnByteEncoder class >> iso885916Mapping [
 	16r0171 16r00F9 16r00FA 16r00FB 16r00FC 16r0119 16r021B 16r00FF )
 ]
 
-{ #category : #mappings }
+{ #category : 'mappings' }
 ZnByteEncoder class >> iso88592Mapping [
 	"self generateByteToUnicodeSpec: 'http://unicode.org/Public/MAPPINGS/ISO8859/8859-2.TXT'"
 
@@ -457,7 +458,7 @@ ZnByteEncoder class >> iso88592Mapping [
 	16r0159 16r016F 16r00FA 16r0171 16r00FC 16r00FD 16r0163 16r02D9 )
 ]
 
-{ #category : #mappings }
+{ #category : 'mappings' }
 ZnByteEncoder class >> iso88593Mapping [
 	"self generateByteToUnicodeSpec: 'http://unicode.org/Public/MAPPINGS/ISO8859/8859-3.TXT'"
 
@@ -480,7 +481,7 @@ ZnByteEncoder class >> iso88593Mapping [
 	16r011D 16r00F9 16r00FA 16r00FB 16r00FC 16r016D 16r015D 16r02D9 )
 ]
 
-{ #category : #mappings }
+{ #category : 'mappings' }
 ZnByteEncoder class >> iso88594Mapping [
 	"self generateByteToUnicodeSpec: 'http://unicode.org/Public/MAPPINGS/ISO8859/8859-4.TXT'"
 
@@ -503,7 +504,7 @@ ZnByteEncoder class >> iso88594Mapping [
 	16r00F8 16r0173 16r00FA 16r00FB 16r00FC 16r0169 16r016B 16r02D9 )
 ]
 
-{ #category : #mappings }
+{ #category : 'mappings' }
 ZnByteEncoder class >> iso88595Mapping [
 	"self generateByteToUnicodeSpec: 'http://unicode.org/Public/MAPPINGS/ISO8859/8859-5.TXT'"
 
@@ -526,7 +527,7 @@ ZnByteEncoder class >> iso88595Mapping [
 	16r0458 16r0459 16r045A 16r045B 16r045C 16r00A7 16r045E 16r045F )
 ]
 
-{ #category : #mappings }
+{ #category : 'mappings' }
 ZnByteEncoder class >> iso88596Mapping [
 	"self generateByteToUnicodeSpec: 'http://unicode.org/Public/MAPPINGS/ISO8859/8859-6.TXT'"
 
@@ -549,7 +550,7 @@ ZnByteEncoder class >> iso88596Mapping [
 	nil nil nil nil nil nil nil nil )
 ]
 
-{ #category : #mappings }
+{ #category : 'mappings' }
 ZnByteEncoder class >> iso88597Mapping [
 	"self generateByteToUnicodeSpec: 'http://unicode.org/Public/MAPPINGS/ISO8859/8859-7.TXT'"
 
@@ -572,7 +573,7 @@ ZnByteEncoder class >> iso88597Mapping [
 	16r03C8 16r03C9 16r03CA 16r03CB 16r03CC 16r03CD 16r03CE nil )
 ]
 
-{ #category : #mappings }
+{ #category : 'mappings' }
 ZnByteEncoder class >> iso88598Mapping [
 	"self generateByteToUnicodeSpec: 'http://unicode.org/Public/MAPPINGS/ISO8859/8859-8.TXT'"
 
@@ -595,7 +596,7 @@ ZnByteEncoder class >> iso88598Mapping [
 	16r05E8 16r05E9 16r05EA nil nil 16r200E 16r200F nil )
 ]
 
-{ #category : #mappings }
+{ #category : 'mappings' }
 ZnByteEncoder class >> koi8rMapping [
 	"self generateByteToUnicodeSpec: 'http://unicode.org/Public/MAPPINGS/VENDORS/MISC/KOI8-R.TXT'"
 
@@ -618,7 +619,7 @@ ZnByteEncoder class >> koi8rMapping [
 	16r042C 16r042B 16r0417 16r0428 16r042D 16r0429 16r0427 16r042A )
 ]
 
-{ #category : #mappings }
+{ #category : 'mappings' }
 ZnByteEncoder class >> koi8uMapping [
 	"self generateByteToUnicodeSpec: 'http://unicode.org/Public/MAPPINGS/VENDORS/MISC/KOI8-U.TXT'"
 
@@ -641,7 +642,7 @@ ZnByteEncoder class >> koi8uMapping [
 	16r042C 16r042B 16r0417 16r0428 16r042D 16r0429 16r0427 16r042A )
 ]
 
-{ #category : #mappings }
+{ #category : 'mappings' }
 ZnByteEncoder class >> macCyrillicMapping [
 	"self generateByteToUnicodeSpec: 'http://unicode.org/Public/MAPPINGS/VENDORS/APPLE/CYRILLIC.TXT'"
 
@@ -664,7 +665,7 @@ ZnByteEncoder class >> macCyrillicMapping [
 	16r0448 16r0449 16r044A 16r044B 16r044C 16r044D 16r044E 16r20AC )
 ]
 
-{ #category : #mappings }
+{ #category : 'mappings' }
 ZnByteEncoder class >> macRomanMapping [
 	"self generateByteToUnicodeSpec: 'http://unicode.org/Public/MAPPINGS/VENDORS/APPLE/ROMAN.TXT'"
 
@@ -687,7 +688,7 @@ ZnByteEncoder class >> macRomanMapping [
 	16r00AF 16r02D8 16r02D9 16r02DA 16r00B8 16r02DD 16r02DB 16r02C7 )
 ]
 
-{ #category : #mappings }
+{ #category : 'mappings' }
 ZnByteEncoder class >> mappingToIdentifiers [
 	"Return a dictionay mapping from encoding specifications to a list of encoding names."
 
@@ -724,7 +725,7 @@ ZnByteEncoder class >> mappingToIdentifiers [
 		#macCyrillicMapping #('maccyrillic' 'xmaccyrillic') )
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnByteEncoder class >> newFromUrl: url [
 	"Instanciate a new encoder directly from a Unicode.org url"
 	"self newFromUrl: 'http://unicode.org/Public/MAPPINGS/ISO8859/8859-2.TXT'"
@@ -741,7 +742,7 @@ ZnByteEncoder class >> newFromUrl: url [
 		yourself
 ]
 
-{ #category : #utilties }
+{ #category : 'utilties' }
 ZnByteEncoder class >> parseUnicodeOrgSpec: url [
 	"Parse and return a mapping from byte to unicode values from url."
 	"Basic syntax: lines starting with # are comments, else first two fields are read as 0x hex values"
@@ -761,7 +762,7 @@ ZnByteEncoder class >> parseUnicodeOrgSpec: url [
 	^ mapping
 ]
 
-{ #category : #utilties }
+{ #category : 'utilties' }
 ZnByteEncoder class >> top128FromUnicodeSpec: mapping [
 	"Return an array mapping the top 128 byte to unicode values from a Unicode.org specification map"
 
@@ -770,7 +771,7 @@ ZnByteEncoder class >> top128FromUnicodeSpec: mapping [
 			stream nextPut: (mapping at: each ifAbsent: [ nil ]) ] ]
 ]
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 ZnByteEncoder >> decodeBytesIntoWideString: bytes [
 	"Variant of #decodeBytes: that is faster when you know upfront
 	that a WideString is probably needed"

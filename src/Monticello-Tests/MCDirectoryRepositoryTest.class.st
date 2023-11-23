@@ -1,13 +1,15 @@
 Class {
-	#name : #MCDirectoryRepositoryTest,
-	#superclass : #MCRepositoryTest,
+	#name : 'MCDirectoryRepositoryTest',
+	#superclass : 'MCRepositoryTest',
 	#instVars : [
 		'directory'
 	],
-	#category : #'Monticello-Tests-Repository'
+	#category : 'Monticello-Tests-Repository',
+	#package : 'Monticello-Tests',
+	#tag : 'Repository'
 }
 
-{ #category : #actions }
+{ #category : 'actions' }
 MCDirectoryRepositoryTest >> addVersion: aVersion [
 	
 	(directory / aVersion fileName) asFileReference
@@ -15,7 +17,7 @@ MCDirectoryRepositoryTest >> addVersion: aVersion [
 			aVersion fileOutOn: stream ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCDirectoryRepositoryTest >> directory [
 	directory ifNil:
 		[directory := 'mctest' asFileReference.
@@ -23,13 +25,13 @@ MCDirectoryRepositoryTest >> directory [
 	^ directory
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 MCDirectoryRepositoryTest >> setUp [
 	super setUp.
 	repository := MCDirectoryRepository new directory: self directory
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 MCDirectoryRepositoryTest >> tearDown [
 
 	self directory ensureDeleteAll.

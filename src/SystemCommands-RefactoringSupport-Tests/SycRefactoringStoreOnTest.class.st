@@ -1,41 +1,26 @@
 Class {
-	#name : #SycRefactoringStoreOnTest,
-	#superclass : #TestCase,
-	#category : #'SystemCommands-RefactoringSupport-Tests'
+	#name : 'SycRefactoringStoreOnTest',
+	#superclass : 'TestCase',
+	#category : 'SystemCommands-RefactoringSupport-Tests',
+	#package : 'SystemCommands-RefactoringSupport-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 SycRefactoringStoreOnTest >> testRemoveMessageArgumentCommandIsProperlyStoreOn [
 
 	| refactorings |
 	refactorings := SycRemoveMessageArgumentCommand new
 		originalMessage: (MockTreeTableItem >> #title:) ast;
 		argumentName: 'anObject';
+		refactoredClass: MockTreeTableItem;
 		asRefactorings.
 
 	self
-		assert: (String streamContents: [ :s | refactorings storeOn: s ])
-		equals: '((Array new: 1) at: 1 put: (RBRemoveParameterRefactoring removeParameter: ''anObject'' in: MockTreeTableItem selector: #title:); yourself)'
+		assert: (String streamContents: [ :s | refactorings first  storeOn: s ])
+		equals: '(RBRemoveParameterRefactoring removeParameter: ''anObject'' in: MockTreeTableItem selector: #title:)'
 ]
 
-{ #category : #tests }
-SycRefactoringStoreOnTest >> testSSycRenameMessageCommandIsProperlyStoreOn [
-
-	| refactorings node |
-
-	node := (MockTreeTableItem >> #title:) ast.
-
-	refactorings := SycRenameMessageCommand new
-		originalMessage: (SycMessageDescription ofMessageNode: node);
-		newSignature: (RBMethodName selector: #title: arguments: #('anObject')) ;
-		asRefactorings.
-
-	self
-		assert: (String streamContents: [ :s | refactorings storeOn: s ])
-		equals: '((Array new: 1) at: 1 put: (RBRenameMethodRefactoring renameMethod: #title: in: MockTreeTableItem to: #title: permutation: (1 to: 1)); yourself)'
-]
-
-{ #category : #tests }
+{ #category : 'tests' }
 SycRefactoringStoreOnTest >> testSycAddMessageArgumentCommandIsProperlyStoreOn [
 
 	| refactorings node newSelector |
@@ -46,6 +31,7 @@ SycRefactoringStoreOnTest >> testSycAddMessageArgumentCommandIsProperlyStoreOn [
 		permutation: #(1 -1).
 	refactorings := SycAddMessageArgumentCommand new
 		originalMessage: (SycMessageDescription ofMessageNode: node);
+		refactoredClass: MockTreeTableItem;
 		newSelector: newSelector;
 		asRefactorings.
 

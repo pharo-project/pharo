@@ -1,11 +1,12 @@
 Class {
-	#name : #ClySubclassWithTraitsOfClassWithTraits,
-	#superclass : #ClyClassWithTraits,
+	#name : 'ClySubclassWithTraitsOfClassWithTraits',
+	#superclass : 'ClyClassWithTraits',
 	#traits : 'ClyTraitChild3',
 	#classTraits : 'ClyTraitChild3 classTrait',
-	#category : #'Calypso-SystemPlugins-Traits-Queries-Tests-PWithTraits'
+	#category : 'Calypso-SystemPlugins-Traits-Queries-Tests-PWithTraits',
+	#package : 'Calypso-SystemPlugins-Traits-Queries-Tests-PWithTraits'
 }
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 ClySubclassWithTraitsOfClassWithTraits >> localMethodFromSubclass [
 ]

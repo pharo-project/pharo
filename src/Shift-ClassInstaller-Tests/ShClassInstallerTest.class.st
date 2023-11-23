@@ -1,6 +1,6 @@
 Class {
-	#name : #ShClassInstallerTest,
-	#superclass : #TestCase,
+	#name : 'ShClassInstallerTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'newClass',
 		'superClass',
@@ -8,33 +8,34 @@ Class {
 		'newClass2',
 		'superClass2'
 	],
-	#category : #'Shift-ClassInstaller-Tests'
+	#category : 'Shift-ClassInstaller-Tests',
+	#package : 'Shift-ClassInstaller-Tests'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ShClassInstallerTest >> generatedClassesPackageName [
 
-	^ 'Shift-ClassInstallerTests-GeneratedPackage'
+	^ #'GeneratedPackage-Shift-ClassInstallerTests'
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ShClassInstallerTest >> newClass: className slots: slots [
 	^ self newClass: className superclass: Object slots: slots
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ShClassInstallerTest >> newClass: className slots: slots metaclassSlots: metaclassSlots [
 
-	^ self newClass: className superclass: Object  slots: slots metaclassSlots: metaclassSlots
+	^ self newClass: className superclass: Object slots: slots metaclassSlots: metaclassSlots
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ShClassInstallerTest >> newClass: className superclass: aSuperclass slots: slots [
 
 	^ self newClass: className superclass: aSuperclass  slots: slots metaclassSlots: #()
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ShClassInstallerTest >> newClass: className superclass: aSuperclass slots: slots metaclassSlots: metaclassSlots [
 
 	^ ShiftClassInstaller make: [ :builder |
@@ -45,18 +46,17 @@ ShClassInstallerTest >> newClass: className superclass: aSuperclass slots: slots
 			  classSlots: metaclassSlots;
 			  sharedVariables: '';
 			  sharedPools: '';
-			  category: self generatedClassesPackageName ]
+			  package: self generatedClassesPackageName ]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ShClassInstallerTest >> tearDown [
 
-	(self generatedClassesPackageName asPackageIfAbsent: [ nil ]) ifNotNil: [ :package | package removeFromSystem ].
-
+	self packageOrganizer removePackage: self generatedClassesPackageName.
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ShClassInstallerTest >> testBuildingClassesWithSlotsClassifiesItsMethods [
 	"This is a regression test. 
 	What was happening before was that the slots were generating a method to initialize themselves and after that the old class organization was copied. The problem is that during the first class creation, this was reseting the protocol of the generated slot methods."
@@ -72,7 +72,7 @@ ShClassInstallerTest >> testBuildingClassesWithSlotsClassifiesItsMethods [
 	self assert: (newClass2 protocolOfSelector: #initialize) isNotNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ShClassInstallerTest >> testChangingASharedPoolUpdatesCorrectlyUsers [
 
 	newClass := ShiftClassInstaller make: [ :builder |
@@ -80,13 +80,13 @@ ShClassInstallerTest >> testChangingASharedPoolUpdatesCorrectlyUsers [
 			            name: #ShCITestSharedPool;
 			            superclass: SharedPool;
 			            sharedVariables: #( A B C );
-			            category: self generatedClassesPackageName ].
+			            package: self generatedClassesPackageName ].
 
 	newClass2 := ShiftClassInstaller make: [ :builder |
 		             builder
 			             name: #ShCITestClass;
 			             sharedPools: 'ShCITestSharedPool';
-			             category: self generatedClassesPackageName ].
+			             package: self generatedClassesPackageName ].
 
 	newClass2 compile: 'a ^A'.
 
@@ -97,28 +97,28 @@ ShClassInstallerTest >> testChangingASharedPoolUpdatesCorrectlyUsers [
 			            name: #ShCITestSharedPool;
 			            superclass: SharedPool;
 			            sharedVariables: #( A B C D );
-			            category: self generatedClassesPackageName ].
+			            package: self generatedClassesPackageName ].
 
 	self assert: ((newClass2 >> #a) literals at: 1) identicalTo: (newClass classVariableNamed: #A)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ShClassInstallerTest >> testChangingHierarchy [
 	"Testing that the changes in the superclasses are propagated to the subclasses"
 
-	superClass := self newClass:#ShCITestClass1 slots:#().
-	newClass := self newClass:#ShCITestClass2 superclass: superClass slots:#(aSlot).
+	superClass := self newClass: #ShCITestClass1 slots: #(  ).
+	newClass := self newClass: #ShCITestClass2 superclass: superClass slots: #( aSlot ).
 	self assert: newClass classLayout slotScope parentScope equals: superClass classLayout slotScope.
 
-	superClass2 := self newClass:#ShCITestClass0 slots:#(anotherSlot).
-	superClass := self newClass:#ShCITestClass1 superclass: superClass2 slots:#().
+	superClass2 := self newClass: #ShCITestClass0 slots: #( anotherSlot ).
+	superClass := self newClass: #ShCITestClass1 superclass: superClass2 slots: #(  ).
 
 	self assert: newClass classLayout slotScope parentScope equals: superClass classLayout slotScope.
 	self assert: superClass classLayout slotScope parentScope equals: superClass2 classLayout slotScope.
-	self assertCollection: (newClass allSlots collect: [:each | each name]) hasSameElements: #(aSlot anotherSlot)
+	self assertCollection: (newClass allSlots collect: [ :each | each name ]) hasSameElements: #( aSlot anotherSlot )
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ShClassInstallerTest >> testChangingSlotCallsInitializeSlotOnInstanceMigration [
 
 	| className someInstance |
@@ -133,40 +133,41 @@ ShClassInstallerTest >> testChangingSlotCallsInitializeSlotOnInstanceMigration [
 	self assert: (someInstance readSlotNamed: #someSlot) equals: 'initialized'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ShClassInstallerTest >> testChangingSuperclassInTheHierarchy [
 
-	superClass := self newClass:#ShCITestClass slots:#(var1 var2).
-	superClass2 := self newClass:#ShCITestClass2 slots:#().
-	subClass := self newClass:#ShCISubTestClass superclass: superClass2 slots:#().
+	superClass := self newClass: #ShCITestClass slots: #( var1 var2 ).
+	superClass2 := self newClass: #ShCITestClass2 slots: #(  ).
+	subClass := self newClass: #ShCISubTestClass superclass: superClass2 slots: #(  ).
 
-   superClass2 := self newClass:#ShCITestClass2 superclass: superClass slots:#().
+	superClass2 := self newClass: #ShCITestClass2 superclass: superClass slots: #(  ).
 
-	self deny: superClass subclasses isEmpty.
+	self denyEmpty: superClass subclasses.
 	self assertCollection: superClass2 subclasses equals: { subClass }.
 	self assertCollection: superClass subclasses equals: { superClass2 }.
 	self assert: subClass superclass equals: superClass2.
 	self assert: superClass2 superclass equals: superClass
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ShClassInstallerTest >> testChangingSuperclassToOther [
-	superClass := self newClass: #ShCITestClass slots: #(var1).
-	superClass2 := self newClass: #ShCITestClass2 slots: #().
-	subClass := self newClass: #ShCISubTestClass superclass: superClass2 slots: #().
 
-	subClass := self newClass: #ShCISubTestClass superclass: superClass slots: #().
+	superClass := self newClass: #ShCITestClass slots: #( var1 ).
+	superClass2 := self newClass: #ShCITestClass2 slots: #(  ).
+	subClass := self newClass: #ShCISubTestClass superclass: superClass2 slots: #(  ).
 
-	superClass2 := self newClass: #ShCITestClass2 superclass: superClass slots: #().
+	subClass := self newClass: #ShCISubTestClass superclass: superClass slots: #(  ).
+
+	superClass2 := self newClass: #ShCITestClass2 superclass: superClass slots: #(  ).
 
 	self denyEmpty: superClass subclasses.
 	self assertEmpty: superClass2 subclasses.
-	self assertCollection: superClass subclasses equals: {subClass . superClass2}.
+	self assertCollection: superClass subclasses equals: { subClass. superClass2 }.
 	self assert: subClass superclass equals: superClass.
 	self assert: superClass2 superclass equals: superClass
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ShClassInstallerTest >> testClassWithComment [
 
 	newClass := ShiftClassInstaller make: [ :builder |
@@ -176,7 +177,7 @@ ShClassInstallerTest >> testClassWithComment [
 			            slots: #(  );
 			            sharedVariables: '';
 			            sharedPools: '';
-			            category: self generatedClassesPackageName;
+			            package: self generatedClassesPackageName;
 			            comment: 'I have a comment';
 			            commentStamp: 'anStamp' ].
 
@@ -184,7 +185,7 @@ ShClassInstallerTest >> testClassWithComment [
 	self assert: newClass commentStamp equals: 'anStamp'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ShClassInstallerTest >> testClassWithSlotCallsInitializeSlotOnInstanceCreation [
 
 	| className someInstance |
@@ -197,18 +198,65 @@ ShClassInstallerTest >> testClassWithSlotCallsInitializeSlotOnInstanceCreation [
 	self assert: (someInstance readSlotNamed: #someSlot) equals: 'initialized'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ShClassInstallerTest >> testClassWithSlotHasInitializeMethodWithInitializeSlots [
 
 	| className |
 	className := #ShClassWithNormalSlots.
-	newClass := self newClass: className slots: { #someSlot => ShTestSlot }.
+	newClass := self newClass: className slots: { (#someSlot => ShTestSlot) }.
 
-	self assert: ((newClass >> #initialize) ast statements
-		includes: (RBParser parseExpression: 'self class initializeSlots: self'))
+	self assert: ((newClass >> #initialize) ast statements includes: (RBParser parseExpression: 'self class initializeSlots: self'))
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
+ShClassInstallerTest >> testCreatedClassWithAllElements [
+
+	newClass := ShiftClassInstaller make: [ :builder |
+		            builder
+			            name: #SHClass;
+			            superclass: Object;
+			            slots: { #a. #b };
+			            layout: WeakLayout;
+			            traits: { TViewModelMock };
+			            sharedVariables: { #AAA };
+			            sharedPools: { #TextConstants };
+			            tag: 'boring';
+			            package: self generatedClassesPackageName ].
+
+	self assert: newClass name equals: #SHClass.
+	self assert: newClass slots size equals: 2.
+	self assert: newClass slotNames equals: #( a b ).
+	self assert: newClass classLayout class equals: WeakLayout.
+	self assert: newClass traitComposition equals: { TViewModelMock } asTraitComposition.
+	self assert: newClass class traitComposition equals: { TViewModelMock classSide } asTraitComposition.
+	self assert: newClass classVarNames equals: #( AAA ).
+	self assertCollection: newClass sharedPools hasSameElements: { TextConstants }.
+	self assert: newClass package name equals: self generatedClassesPackageName.
+	self assert: newClass packageTag name equals: 'boring'
+]
+
+{ #category : 'tests' }
+ShClassInstallerTest >> testCreatingFullTraitHasAllElements [
+
+	newClass := ShiftClassInstaller make: [ :builder |
+		            builder
+			            beTrait;
+			            name: #TSHClass;
+			            slots: { #a. #b };
+			            traits: { TViewModelMock };
+			            tag: 'boring';
+			            package: self generatedClassesPackageName ].
+
+	self assert: newClass name equals: #TSHClass.
+	self assert: newClass slots size equals: 2.
+	self assert: newClass slotNames equals: #( a b ).
+	self assert: newClass traitComposition equals: { TViewModelMock } asTraitComposition.
+	self assert: newClass class traitComposition equals: { TViewModelMock classSide } asTraitComposition.
+	self assert: newClass package name equals: self generatedClassesPackageName.
+	self assert: newClass packageTag name equals: 'boring'
+]
+
+{ #category : 'tests' }
 ShClassInstallerTest >> testDuplicateClassPreserveClassSlots [
 
 	newClass := ShiftClassInstaller make: [ :builder |
@@ -216,7 +264,7 @@ ShClassInstallerTest >> testDuplicateClassPreserveClassSlots [
 			            name: #ShCITestClass;
 			            superclass: Object;
 			            classSlots: { (#aClassInstanceVariable => InstanceVariableSlot) };
-			            category: self generatedClassesPackageName ].
+			            package: self generatedClassesPackageName ].
 
 	newClass2 := newClass duplicateClassWithNewName: #ShCITestClass2.
 
@@ -224,7 +272,7 @@ ShClassInstallerTest >> testDuplicateClassPreserveClassSlots [
 	self assert: (newClass2 class slotNamed: #aClassInstanceVariable) class equals: InstanceVariableSlot
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ShClassInstallerTest >> testDuplicateClassPreserveMethods [
 
 	newClass := self newClass: #ShCITestClass slots: {#anInstanceVariable => BooleanSlot}.
@@ -237,7 +285,7 @@ ShClassInstallerTest >> testDuplicateClassPreserveMethods [
 	self assert: (newClass2 class includesSelector: #m2)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ShClassInstallerTest >> testDuplicateClassPreserveSlots [
 
 	newClass := self newClass: #ShCITestClass slots: {#anInstanceVariable => BooleanSlot}.
@@ -247,67 +295,112 @@ ShClassInstallerTest >> testDuplicateClassPreserveSlots [
 	self assert: (newClass2 slotNamed: #anInstanceVariable) class equals: BooleanSlot
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ShClassInstallerTest >> testDuplicatedInstanceVariable [
-	superClass := self newClass: #ShCITestClass1 slots: #(aSlot).
-	newClass := self newClass: #ShCITestClass2 superclass: superClass slots: #().
+
+	superClass := self newClass: #ShCITestClass1 slots: #( aSlot ).
+	newClass := self newClass: #ShCITestClass2 superclass: superClass slots: #(  ).
 
 	"The DuplicatedSlotName should not be resumable. If it is resume, the process will generate
    duplicated instance variables. The shadowing of IV is not possible in Pharo."
-	[ newClass := self newClass: #ShCITestClass2 superclass: superClass slots: #(aSlot).
+	[
+	newClass := self newClass: #ShCITestClass2 superclass: superClass slots: #( aSlot ).
 	self fail ]
 		on: DuplicatedSlotName
 		do: [ :ex | self deny: ex isResumable ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ShClassInstallerTest >> testDuplicatedInstanceVariableInSuperclass [
 
-	superClass := self newClass: #ShCITestClass1 slots: #().
-	newClass := self newClass: #ShCITestClass2 superclass: superClass slots: #(aSlot).
+	superClass := self newClass: #ShCITestClass1 slots: #(  ).
+	newClass := self newClass: #ShCITestClass2 superclass: superClass slots: #( aSlot ).
 
-	[ superClass := self newClass: #ShCITestClass1 slots: #(aSlot).
+	[
+	superClass := self newClass: #ShCITestClass1 slots: #( aSlot ).
 	self fail ]
 		on: DuplicatedSlotName
 		do: [ :ex | self deny: ex isResumable ].
-	self deny: ((superClass slots collect: [:e | e name]) includes: 'aSlot')
+	self deny: ((superClass slots collect: [ :e | e name ]) includes: 'aSlot')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ShClassInstallerTest >> testDuplicatedInstanceVariableInSuperclassMetaclass [
 
-	superClass := self newClass: #ShCITestClass1 slots: #() metaclassSlots: #().
+	superClass := self newClass: #ShCITestClass1 slots: #(  ) metaclassSlots: #(  ).
 	newClass := self
-		newClass: #ShCITestClass2 superclass: superClass
-		slots: #() metaclassSlots: #(aSlot).
+		            newClass: #ShCITestClass2
+		            superclass: superClass
+		            slots: #(  )
+		            metaclassSlots: #( aSlot ).
 
-	[ superClass := self newClass: #ShCITestClass1 slots: #() metaclassSlots: #(aSlot).
+	[
+	superClass := self newClass: #ShCITestClass1 slots: #(  ) metaclassSlots: #( aSlot ).
 	self fail ]
 		on: DuplicatedSlotName
 		do: [ :ex | self deny: ex isResumable ].
-	self deny: ((superClass class slots collect: [:e | e name]) includes: 'aSlot')
+	self deny: ((superClass class slots collect: [ :e | e name ]) includes: 'aSlot')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
+ShClassInstallerTest >> testInstallInSpecificEnvironment [
+
+	| newEnvironment |
+	newEnvironment := self class environment class new.
+	[
+	newClass := ShiftClassInstaller make: [ :builder |
+		            builder
+			            installingEnvironment: newEnvironment;
+			            name: #SHClassForTest;
+			            superclass: Object;
+			            package: self generatedClassesPackageName ].
+
+	self class environment at: #SHClassForTest ifPresent: [ self fail: 'The default environment should not have the class installed.' ].
+	newEnvironment at: #SHClassForTest ifAbsent: [ self fail: 'The default environment should not have the class installed.' ].
+
+	self assert: newClass environment identicalTo: newEnvironment.
+
+	self deny: (self packageOrganizer hasPackage: self generatedClassesPackageName).
+	self assert: (newEnvironment organization hasPackage: self generatedClassesPackageName) ] ensure: [ "The tear down will not remove the class in the other environment"
+		newEnvironment organization removePackage: self generatedClassesPackageName ]
+]
+
+{ #category : 'tests' }
+ShClassInstallerTest >> testInstallingWithAnEmptyTag [
+
+	newClass := ShiftClassInstaller make: [ :builder |
+		            builder
+			            name: #ShCITestEmptyTag;
+			            tag: '';
+			            package: self generatedClassesPackageName ].
+
+	self assert: newClass package name equals: self generatedClassesPackageName.
+	self assert: newClass packageTag isRoot.
+	self deny: newClass packageTag name equals: ''
+]
+
+{ #category : 'tests' }
 ShClassInstallerTest >> testModifyingClassKeepsOrganizationOfMethods [
-	newClass := self newClass: #ShCITestClass superclass: subClass slots: #().
+
+	newClass := self newClass: #ShCITestClass superclass: subClass slots: #(  ).
 
 	newClass compile: 'aMethod ^ 42' classified: #'useful-message' notifying: nil.
 	newClass class compile: 'aClassMethod ^ 21' classified: #'useful-message' notifying: nil.
 
-	self assert: (newClass >> #aMethod) protocol equals: #'useful-message'.
-	self assert: (newClass class >> #aClassMethod) protocol equals: #'useful-message'.
+	self assert: (newClass >> #aMethod) protocolName equals: #'useful-message'.
+	self assert: (newClass class >> #aClassMethod) protocolName equals: #'useful-message'.
 
-	newClass := self newClass: #ShCITestClass superclass: subClass slots: #(aSlot).
+	newClass := self newClass: #ShCITestClass superclass: subClass slots: #( aSlot ).
 
-	self assert: (newClass >> #aMethod) protocol equals: #'useful-message'.
-	self assert: (newClass class >> #aClassMethod) protocol equals: #'useful-message'
+	self assert: (newClass >> #aMethod) protocolName equals: #'useful-message'.
+	self assert: (newClass class >> #aClassMethod) protocolName equals: #'useful-message'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ShClassInstallerTest >> testModifyingClassSideInstances [
-	superClass := self newClass:#ShCITestClass slots:#(anInstanceVariable).
-	newClass := self newClass: #ShCITestSubClass superclass: superClass slots: #().
+
+	superClass := self newClass: #ShCITestClass slots: #( anInstanceVariable ).
+	newClass := self newClass: #ShCITestSubClass superclass: superClass slots: #(  ).
 
 	superClass class addInstVarNamed: #aVariable.
 
@@ -315,15 +408,16 @@ ShClassInstallerTest >> testModifyingClassSideInstances [
 	self assert: (newClass class hasSlotNamed: #aVariable)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ShClassInstallerTest >> testModifyingSuperclass [
-	superClass := self newClass:#ShCITestClass slots:#(anInstanceVariable).
-	newClass := self newClass: #ShCITestSubClass superclass: superClass slots: #().
+
+	superClass := self newClass: #ShCITestClass slots: #( anInstanceVariable ).
+	newClass := self newClass: #ShCITestSubClass superclass: superClass slots: #(  ).
 
 	superClass new instVarNamed: #anInstanceVariable.
 	newClass new instVarNamed: #anInstanceVariable.
 
-	superClass := self newClass:#ShCITestClass slots: #(anInstanceVariable otherVariable).
+	superClass := self newClass: #ShCITestClass slots: #( anInstanceVariable otherVariable ).
 
 	superClass new instVarNamed: #anInstanceVariable.
 	newClass new instVarNamed: #anInstanceVariable.
@@ -331,12 +425,13 @@ ShClassInstallerTest >> testModifyingSuperclass [
 	newClass new instVarNamed: #otherVariable
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ShClassInstallerTest >> testModifyingSuperclassInOtherOrder [
+
 	| obj |
-	superClass := self newClass:#ShCITestClass slots:#(anInstanceVariable).
-	subClass := self newClass:#ShCISubTestClass superclass: superClass slots:#(anSubInstanceVariable).
-	newClass := self newClass: #ShCITestSubClass superclass: subClass slots: #().
+	superClass := self newClass: #ShCITestClass slots: #( anInstanceVariable ).
+	subClass := self newClass: #ShCISubTestClass superclass: superClass slots: #( anSubInstanceVariable ).
+	newClass := self newClass: #ShCITestSubClass superclass: subClass slots: #(  ).
 
 	superClass new instVarNamed: #anInstanceVariable.
 	newClass new instVarNamed: #anInstanceVariable.
@@ -345,16 +440,39 @@ ShClassInstallerTest >> testModifyingSuperclassInOtherOrder [
 	obj instVarNamed: #anInstanceVariable put: 7.
 	obj instVarNamed: #anSubInstanceVariable put: 17.
 
-	superClass := self newClass:#ShCITestClass slots:#(otherVariable anInstanceVariable).
+	superClass := self newClass: #ShCITestClass slots: #( otherVariable anInstanceVariable ).
 
 	self assert: (obj instVarNamed: #anInstanceVariable) equals: 7.
 	self assert: (obj instVarNamed: #anSubInstanceVariable) equals: 17
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
+ShClassInstallerTest >> testRecompilingAClassKeepExtensionMethodsAsExtension [
+	"This is a regression test were recompiling a class was considering that all extension method became defined methods."
+
+	| extensionMethod |
+	newClass := self newClass: #ShCITestClass slots: {  }.
+
+	[
+	extensionMethod := newClass compiler
+		                   protocol: '*' , self generatedClassesPackageName , '2';
+		                   install: 'billy ^ #Billy'.
+
+	self assert: extensionMethod isExtension.
+	self assert: extensionMethod package name equals: self generatedClassesPackageName , '2'.
+
+	newClass := self newClass: #ShCITestClass slots: { #addedSlot }.
+
+	self assert: extensionMethod isExtension.
+	self assert: extensionMethod package name equals: self generatedClassesPackageName , '2' ] ensure: [
+		self packageOrganizer removePackage: self generatedClassesPackageName , '2' ]
+]
+
+{ #category : 'tests' }
 ShClassInstallerTest >> testTryingToModifyReadOnlyInstances [
+
 	| obj obj2 |
-	newClass := self newClass: #ShCITestClass slots: #(anInstanceVariable).
+	newClass := self newClass: #ShCITestClass slots: #( anInstanceVariable ).
 
 	obj := newClass new.
 	obj instVarNamed: #anInstanceVariable put: 7.
@@ -363,16 +481,17 @@ ShClassInstallerTest >> testTryingToModifyReadOnlyInstances [
 	obj2 := newClass new.
 	obj2 instVarNamed: #anInstanceVariable put: 17.
 
-	self newClass:#ShCITestClass slots:#(otherVariable anInstanceVariable).
+	self newClass: #ShCITestClass slots: #( otherVariable anInstanceVariable ).
 
 	self assert: obj isReadOnlyObject
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ShClassInstallerTest >> testTryingToModifyReadOnlySubInstances [
+
 	| obj obj2 |
-	superClass := self newClass: #ShCITestSuperClass slots: #(aSuperVariable).
-	newClass := self newClass: #ShCITestClass superclass: superClass slots: #(anInstanceVariable).
+	superClass := self newClass: #ShCITestSuperClass slots: #( aSuperVariable ).
+	newClass := self newClass: #ShCITestClass superclass: superClass slots: #( anInstanceVariable ).
 
 	obj := newClass new.
 	obj instVarNamed: #aSuperVariable put: 1.
@@ -383,7 +502,7 @@ ShClassInstallerTest >> testTryingToModifyReadOnlySubInstances [
 	obj2 instVarNamed: #aSuperVariable put: 11.
 	obj2 instVarNamed: #anInstanceVariable put: 17.
 
-	self newClass:#ShCITestClass slots:#(otherVariable anInstanceVariable).
+	self newClass: #ShCITestClass slots: #( otherVariable anInstanceVariable ).
 
 	self assert: obj isReadOnlyObject
 ]

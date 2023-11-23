@@ -1,15 +1,17 @@
 Class {
-	#name : #RestartTest,
-	#superclass : #DebuggerTest,
-	#category : #'Debugger-Model-Tests-Core'
+	#name : 'RestartTest',
+	#superclass : 'DebuggerTest',
+	#category : 'Debugger-Model-Tests-Core',
+	#package : 'Debugger-Model-Tests',
+	#tag : 'Core'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RestartTest >> stepA1 [
 	self stepA2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RestartTest >> stepA2 [
 	| a |
 	a := 1.
@@ -17,7 +19,7 @@ RestartTest >> stepA2 [
 	2+2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RestartTest >> testRestartTestShouldKeepTestGreen [
 
 	| testCaseForRestart failed finished |
@@ -40,7 +42,7 @@ RestartTest >> testRestartTestShouldKeepTestGreen [
 	self deny: failed
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RestartTest >> testRestartTestShouldPushNewValuesToTheStack [
 
 	| testCaseForRestart |
@@ -55,7 +57,7 @@ RestartTest >> testRestartTestShouldPushNewValuesToTheStack [
 	self assert: session interruptedContext top == testCaseForRestart testedValue
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RestartTest >> testStepRestartAndRestepTopContext [
 	"Get the execution to a context on method stepA2.
 	Step over in it to reach the end (and check that the temporary variable assignement works)

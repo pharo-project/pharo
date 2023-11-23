@@ -1,32 +1,34 @@
 Class {
-	#name : #ClySystemSearchDialogContext,
-	#superclass : #ClySystemBrowserContext,
-	#category : #'Calypso-SystemTools-Core-Contexts'
+	#name : 'ClySystemSearchDialogContext',
+	#superclass : 'ClySystemBrowserContext',
+	#category : 'Calypso-SystemTools-Core-Contexts',
+	#package : 'Calypso-SystemTools-Core',
+	#tag : 'Contexts'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClySystemSearchDialogContext >> browser [
 	^tool browser
 ]
 
-{ #category : #'selection-classes' }
+{ #category : 'selection-classes' }
 ClySystemSearchDialogContext >> selectedClassItems [
 	^self selectedItemsOfType: ClyClass
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ClySystemSearchDialogContext >> selectedItemsOfType: itemTypeClass [
 
 	^selectedItems select: [ :each |
 		each isBasedOnItemType: itemTypeClass ]
 ]
 
-{ #category : #'selection-methods' }
+{ #category : 'selection-methods' }
 ClySystemSearchDialogContext >> selectedMethodItems [
 	^self selectedItemsOfType: ClyMethod
 ]
 
-{ #category : #'selection-packages' }
+{ #category : 'selection-packages' }
 ClySystemSearchDialogContext >> selectedPackageItems [
-	^self selectedItemsOfType: RPackage
+	^self selectedItemsOfType: Package
 ]

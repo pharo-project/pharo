@@ -3,32 +3,34 @@ This is the History slot. It saves (by default 5) older values.
 The complete history can be read with #readHistory:
 "
 Class {
-	#name : #HistorySlot,
-	#superclass : #IndexedSlot,
+	#name : 'HistorySlot',
+	#superclass : 'IndexedSlot',
 	#instVars : [
 		'size'
 	],
-	#category : #'VariablesLibrary-Slots'
+	#category : 'VariablesLibrary-Slots',
+	#package : 'VariablesLibrary',
+	#tag : 'Slots'
 }
 
-{ #category : #'code generation' }
+{ #category : 'code generation' }
 HistorySlot >> emitValue: aMethodBuilder [
 	"for speed, we inline the #last send instead of calling the #read: method"
 	aMethodBuilder pushInstVar: index.
 	aMethodBuilder send: #last
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 HistorySlot >> initialize [
 	size := 5
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 HistorySlot >> initialize: anObject [
 	super write: (OrderedCollection with: nil) to: anObject
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 HistorySlot >> printOn: aStream [
 	aStream
 		store: self name;
@@ -38,42 +40,44 @@ HistorySlot >> printOn: aStream [
 		store: size
 ]
 
-{ #category : #'meta-object-protocol' }
+{ #category : 'meta-object-protocol' }
 HistorySlot >> rawRead: anObject [
 	"return the wrapper (the collection) used to store the value"
 	^super read: anObject
 ]
 
-{ #category : #'meta-object-protocol' }
+{ #category : 'meta-object-protocol' }
 HistorySlot >> read: anObject [
 	"we return the last value from the collection"
+	<reflection: 'Object Inspection - State inspection'>
 	^ (self rawRead: anObject) last
 ]
 
-{ #category : #'meta-object-protocol' }
+{ #category : 'meta-object-protocol' }
 HistorySlot >> readHistory: anObject [
 	"return the complete history"
 	^ self rawRead: anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HistorySlot >> size [
 	^ size
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HistorySlot >> size: anObject [
 	size := anObject
 ]
 
-{ #category : #'meta-object-protocol' }
+{ #category : 'meta-object-protocol' }
 HistorySlot >> wantsInitialization [
 
     ^ true
 ]
 
-{ #category : #'meta-object-protocol' }
+{ #category : 'meta-object-protocol' }
 HistorySlot >> write: aDictionary to: anObject [
+	<reflection: 'Object Modification - State modification'>
 	| history |
 	history := self rawRead: anObject.
 	history size >= size

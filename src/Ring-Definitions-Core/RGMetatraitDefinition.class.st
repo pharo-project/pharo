@@ -2,15 +2,17 @@
 RGMetatraitDefinition is a concrete representation of metaclasses of traits
 "
 Class {
-	#name : #RGMetatraitDefinition,
-	#superclass : #RGTraitDescriptionDefinition,
+	#name : 'RGMetatraitDefinition',
+	#superclass : 'RGTraitDescriptionDefinition',
 	#instVars : [
 		'baseClass'
 	],
-	#category : #'Ring-Definitions-Core-Base'
+	#category : 'Ring-Definitions-Core-Base',
+	#package : 'Ring-Definitions-Core',
+	#tag : 'Base'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 RGMetatraitDefinition class >> class: anORTraitDefinition [
 
 	^self new
@@ -18,43 +20,38 @@ RGMetatraitDefinition class >> class: anORTraitDefinition [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGMetatraitDefinition >> baseClass: anRGTraitDefinition [
 
 	baseClass:= anRGTraitDefinition.
 	self name: (baseClass name, ' classTrait') asSymbol
 ]
 
-{ #category : #accessing }
-RGMetatraitDefinition >> category [
-	^ self instanceSide category
-]
-
-{ #category : #'accessing - parallel hierarchy' }
+{ #category : 'accessing - parallel hierarchy' }
 RGMetatraitDefinition >> classSide [
 	"Return the metaclass of the couple class/metaclass. Useful to avoid explicit test."
 	^ self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGMetatraitDefinition >> environment [
 
 	^baseClass environment
 ]
 
-{ #category : #'accessing - parallel hierarchy' }
+{ #category : 'accessing - parallel hierarchy' }
 RGMetatraitDefinition >> instanceSide [
 	"Return the class of the couple class/metaclass. Useful to avoid explicit test."
 	^ baseClass
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGMetatraitDefinition >> isMeta [
 
 	^true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGMetatraitDefinition >> isSameRevisionAs: aRGMetatraitDefinition [
 	"This method look for equality of the properties of the receiver"
 
@@ -62,13 +59,19 @@ RGMetatraitDefinition >> isSameRevisionAs: aRGMetatraitDefinition [
 		and: [ self traitCompositionSource = aRGMetatraitDefinition traitCompositionSource ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGMetatraitDefinition >> package [
 
 	^baseClass package
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
+RGMetatraitDefinition >> packageTag [
+
+	^ baseClass packageTag
+]
+
+{ #category : 'accessing' }
 RGMetatraitDefinition >> realClass [
 
 	^baseClass realClass classSide

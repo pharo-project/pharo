@@ -1,6 +1,6 @@
-Extension { #name : #RBBrowserEnvironment }
+Extension { #name : 'RBBrowserEnvironment' }
 
-{ #category : #'*Calypso-NavigationModel' }
+{ #category : '*Calypso-NavigationModel' }
 RBBrowserEnvironment >> systemChanged: aSystemAnnouncement [
 
 	self updateUsing: ClyFullEnvironmentUpdateStrategy new by: [
@@ -8,7 +8,7 @@ RBBrowserEnvironment >> systemChanged: aSystemAnnouncement [
 	]
 ]
 
-{ #category : #'*Calypso-NavigationModel' }
+{ #category : '*Calypso-NavigationModel' }
 RBBrowserEnvironment >> updateStrategy [
 	^ updateStrategy ifNil: [ updateStrategy := ClyInstantEnvironmentUpdateStrategy new ]
 ]

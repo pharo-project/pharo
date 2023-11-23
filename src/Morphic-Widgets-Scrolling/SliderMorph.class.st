@@ -1,6 +1,6 @@
 Class {
-	#name : #SliderMorph,
-	#superclass : #ModelMorph,
+	#name : 'SliderMorph',
+	#superclass : 'ModelMorph',
 	#instVars : [
 		'slider',
 		'value',
@@ -10,16 +10,17 @@ Class {
 		'descending',
 		'dragging'
 	],
-	#category : #'Morphic-Widgets-Scrolling'
+	#category : 'Morphic-Widgets-Scrolling',
+	#package : 'Morphic-Widgets-Scrolling'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 SliderMorph class >> initialize [
 
 	self deprecatedAliases: { #Slider }
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 SliderMorph >> computeSlider [
 	| r |
 	r := self roomToMove.
@@ -35,53 +36,53 @@ SliderMorph >> computeSlider [
 	slider extent: self sliderExtent
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SliderMorph >> defaultBorderColor [
 	"answer the default border color/fill style for the receiver"
 	^ #inset
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SliderMorph >> defaultBorderWidth [
 	"answer the default border width for the receiver"
 	^ 1
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SliderMorph >> defaultBounds [
 "answer the default bounds for the receiver"
 	^ 0 @ 0 corner: 16 @ 100
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SliderMorph >> defaultColor [
 	"answer the default color/fill style for the receiver"
 	^ Color lightGray
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SliderMorph >> descending [
 	"It may happen that an instance variable is nil, for example, if an instance is in the image when the instance is introduced. This test should probably be removed."
 	^ descending == true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SliderMorph >> descending: aBoolean [
 	descending := aBoolean.
 	self value: value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SliderMorph >> dragging [
 	^ dragging
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SliderMorph >> dragging: aBoolean [
 	dragging := aBoolean
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 SliderMorph >> extent: newExtent [
 	newExtent = bounds extent ifTrue: [^ self].
 	bounds isWide
@@ -90,7 +91,7 @@ SliderMorph >> extent: newExtent [
 	self removeAllMorphs; initializeSlider
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SliderMorph >> initialize [
 	"initialize the state of the receiver"
 
@@ -101,7 +102,7 @@ SliderMorph >> initialize [
 	self initializeSlider
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SliderMorph >> initializeSlider [
 	slider := BorderedMorph newBounds: self totalSliderArea color: self theme baseColor.
 	sliderShadow := BorderedMorph newBounds: self totalSliderArea
@@ -123,7 +124,7 @@ SliderMorph >> initializeSlider [
 	self computeSlider
 ]
 
-{ #category : #'other events' }
+{ #category : 'other events' }
 SliderMorph >> mouseDownInSlider: event [
 	"When mouse down I start dragging, and change the border colors and show a shadow
 	on the original position."
@@ -144,7 +145,7 @@ SliderMorph >> mouseDownInSlider: event [
 	self dragging: true
 ]
 
-{ #category : #'other events' }
+{ #category : 'other events' }
 SliderMorph >> mouseUpInSlider: event [
 	"When mouse up, the dragging ends and the color is reseted to it's orignal
 	value and the shadow of original position is hidden."
@@ -162,17 +163,17 @@ SliderMorph >> mouseUpInSlider: event [
 	self dragging: false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SliderMorph >> pagingArea [
 	^self
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 SliderMorph >> roomToMove [
 	^ self totalSliderArea insetBy: (0@0 extent: self sliderExtent)
 ]
 
-{ #category : #scrolling }
+{ #category : 'scrolling' }
 SliderMorph >> scrollAbsolute: event [
 	| r p |
 	"If I'm not dragging I will do nothing."
@@ -198,7 +199,7 @@ SliderMorph >> scrollAbsolute: event [
 						ifFalse: [ (r bottom - p y) asFloat / r height ]) ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SliderMorph >> setSlider: aMorph withShadow: anotherMorph [
 
 
@@ -218,7 +219,7 @@ SliderMorph >> setSlider: aMorph withShadow: anotherMorph [
 	self computeSlider
 ]
 
-{ #category : #'model access' }
+{ #category : 'model access' }
 SliderMorph >> setValue: newValue [
 	"Called internally for propagation to model"
 	self value: newValue.
@@ -227,14 +228,14 @@ SliderMorph >> setValue: newValue [
 		]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SliderMorph >> setValueSelector: aSymbol [
 	"Directly set the selector to make more flexible."
 
 	setValueSelector := aSymbol
 ]
 
-{ #category : #'event testing' }
+{ #category : 'event testing' }
 SliderMorph >> simulateScrollAbsolute: aPointStart to: aPointEnd [
 	"Simulates a mouse moving from a given point to a destinationpoint"
 	| event |
@@ -249,91 +250,91 @@ SliderMorph >> simulateScrollAbsolute: aPointStart to: aPointEnd [
 	self scrollAbsolute:  event
 ]
 
-{ #category : #'event testing' }
+{ #category : 'event testing' }
 SliderMorph >> simulateSliderMiddleMouseDown [
 	"Simulate mouse button down with the left button (red button for left, blue for middle, yellow for right) into the Slider"
 
 	slider simulateMouseDownWith: MouseEvent blueButton
 ]
 
-{ #category : #'event testing' }
+{ #category : 'event testing' }
 SliderMorph >> simulateSliderMiddleMouseUp [
 	"Simulate mouse button up with the left button (red button for left, blue for middle, yellow for right) into the Slider"
 
 	slider simulateMouseUpWith: MouseEvent blueButton
 ]
 
-{ #category : #'event testing' }
+{ #category : 'event testing' }
 SliderMorph >> simulateSliderMouseDown [
 	"Simulate mouse button down with the left button (red button for left, blue for middle, yellow for right) into the Slider"
 
 	slider simulateMouseDownWith: MouseEvent redButton
 ]
 
-{ #category : #'event testing' }
+{ #category : 'event testing' }
 SliderMorph >> simulateSliderMouseUp [
 	"Simulate mouse button up with the left button (red button for left, blue for middle, yellow for right) into the Slider"
 
 	slider simulateMouseUpWith: MouseEvent redButton
 ]
 
-{ #category : #'event testing' }
+{ #category : 'event testing' }
 SliderMorph >> simulateSliderRightMouseDown [
 	"Simulate mouse button down with the left button (red button for left, blue for middle, yellow for right) into the Slider"
 
 	slider simulateMouseDownWith: MouseEvent yellowButton
 ]
 
-{ #category : #'event testing' }
+{ #category : 'event testing' }
 SliderMorph >> simulateSliderRightMouseUp [
 	"Simulate mouse button up with the left button (red button for left, blue for middle, yellow for right) into the Slider"
 
 	slider simulateMouseUpWith: MouseEvent yellowButton
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SliderMorph >> sliderColor [
 	"color scheme for the whole slider widget"
 	sliderColor ifNil: [^ (color alphaMixed: 0.7 with: Color white) slightlyLighter].
 	^ sliderColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SliderMorph >> sliderColor: newColor [
 
 	sliderColor := newColor.
 	slider ifNotNil: [slider color: sliderColor]
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 SliderMorph >> sliderExtent [
 	^ bounds isWide
 		ifTrue: [self sliderThickness @ self innerBounds height]
 		ifFalse: [self innerBounds width @ self sliderThickness]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SliderMorph >> sliderShadowColor [
 	^ self sliderColor alphaMixed: 0.2 with: self pagingArea color
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 SliderMorph >> sliderThickness [
 	^ 7
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SliderMorph >> thumbColor [
 	"Color of the draggable 'thumb'"
 	^ self sliderColor
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 SliderMorph >> totalSliderArea [
 	^ self innerBounds
 ]
 
-{ #category : #update }
+{ #category : 'update' }
 SliderMorph >> updateSliderBounds [
 	slider bounds: self totalSliderArea.
 	sliderShadow bounds: self totalSliderArea.
@@ -341,12 +342,12 @@ SliderMorph >> updateSliderBounds [
 	self computeSlider
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SliderMorph >> value [
 	^ value
 ]
 
-{ #category : #'model access' }
+{ #category : 'model access' }
 SliderMorph >> value: newValue [
 	"Drive the slider position externally..."
 	value := newValue min: 1.0 max: 0.0.

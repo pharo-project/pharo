@@ -2,8 +2,8 @@
 I am the abstract class for all the Hold gesture detectors
 "
 Class {
-	#name : #OSTouchHoldDetector,
-	#superclass : #OSTouchPunctualGestureDetector,
+	#name : 'OSTouchHoldDetector',
+	#superclass : 'OSTouchPunctualGestureDetector',
 	#instVars : [
 		'waitingTime',
 		'maxDistanceTravelled',
@@ -13,27 +13,29 @@ Class {
 		'MaxDistanceTravelled',
 		'WaitingTime'
 	],
-	#category : #'OSWindow-Core-Gestures'
+	#category : 'OSWindow-Core-Gestures',
+	#package : 'OSWindow-Core',
+	#tag : 'Gestures'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 OSTouchHoldDetector class >> initialize [
 	super initialize.
 	MaxDistanceTravelled := 0.02.
 	WaitingTime := 1000
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSTouchHoldDetector class >> maxDistanceTravelled [
 	^ MaxDistanceTravelled
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSTouchHoldDetector class >> maxDistanceTravelled: anObject [
 	MaxDistanceTravelled := anObject
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 OSTouchHoldDetector class >> maxDistanceTravelledSettingsOn: aBuilder [
 	<systemsettings>
 	(aBuilder setting: #maxDistanceTravelled)
@@ -45,7 +47,7 @@ OSTouchHoldDetector class >> maxDistanceTravelledSettingsOn: aBuilder [
 		parent: #holdGesture
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 OSTouchHoldDetector class >> touchHoldSettingsOn: aBuilder [
 	<systemsettings>
 	(aBuilder group: #holdGesture)
@@ -53,17 +55,17 @@ OSTouchHoldDetector class >> touchHoldSettingsOn: aBuilder [
 		parent: #touchGestures
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSTouchHoldDetector class >> waitingTime [
 	^ WaitingTime
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSTouchHoldDetector class >> waitingTime: anObject [
 	WaitingTime := anObject
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 OSTouchHoldDetector class >> waitingTimeSettingsOn: aBuilder [
 	<systemsettings>
 	(aBuilder setting: #waitingTime)
@@ -75,12 +77,12 @@ OSTouchHoldDetector class >> waitingTimeSettingsOn: aBuilder [
 		parent: #holdGesture
 ]
 
-{ #category : #creation }
+{ #category : 'creation' }
 OSTouchHoldDetector >> createHoldEvent [
 	self subclassResponsibility
 ]
 
-{ #category : #creation }
+{ #category : 'creation' }
 OSTouchHoldDetector >> createWaitingProcess [
 	^ [
 	(Delay forMilliseconds: waitingTime) wait.
@@ -88,7 +90,7 @@ OSTouchHoldDetector >> createWaitingProcess [
 		ifTrue: [ self sendToEventHandler: self createHoldEvent ] ] fork
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OSTouchHoldDetector >> initialize [
 	super initialize.
 	waitingTime := self class waitingTime.
@@ -96,12 +98,12 @@ OSTouchHoldDetector >> initialize [
 	process := Process new terminate
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 OSTouchHoldDetector >> necessaryFingers [
 	self subclassResponsibility
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OSTouchHoldDetector >> visitTouchPointerDownEvent: anEvent [
 	super visitTouchPointerDownEvent: anEvent.
 	eventHandler fingerCount = self necessaryFingers
@@ -109,7 +111,7 @@ OSTouchHoldDetector >> visitTouchPointerDownEvent: anEvent [
 		ifFalse: [ process terminate ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OSTouchHoldDetector >> visitTouchPointerUpEvent: anEvent [
 	super visitTouchPointerUpEvent: anEvent.
 	process terminate

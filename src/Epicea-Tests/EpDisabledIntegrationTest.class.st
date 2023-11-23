@@ -1,10 +1,12 @@
 Class {
-	#name : #EpDisabledIntegrationTest,
-	#superclass : #EpMonitorIntegrationTest,
-	#category : #'Epicea-Tests-Integration'
+	#name : 'EpDisabledIntegrationTest',
+	#superclass : 'EpMonitorIntegrationTest',
+	#category : 'Epicea-Tests-Integration',
+	#package : 'Epicea-Tests',
+	#tag : 'Integration'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpDisabledIntegrationTest >> testDisableDuring [
 	monitor enable.
 	self assert: monitor isEnabled.
@@ -16,7 +18,7 @@ EpDisabledIntegrationTest >> testDisableDuring [
 	self deny: monitor isEnabled
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpDisabledIntegrationTest >> testDisableDuringWithInterruption [
 
 	monitor enable.
@@ -31,7 +33,7 @@ EpDisabledIntegrationTest >> testDisableDuringWithInterruption [
 	self assert: monitor isEnabled
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpDisabledIntegrationTest >> testEnable [
 	monitor enable.
 
@@ -42,7 +44,7 @@ EpDisabledIntegrationTest >> testEnable [
 	self assert: (self countLogEventsWith: EpClassAddition) equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpDisabledIntegrationTest >> testIsEnabled [
 	self deny: monitor isEnabled.
 	monitor enable.
@@ -51,14 +53,14 @@ EpDisabledIntegrationTest >> testIsEnabled [
 	self deny: monitor isEnabled
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpDisabledIntegrationTest >> testWhenDisabledShouldNotLog [
 	classFactory newClass.
 
 	self assert: (self countLogEventsWith: EpClassAddition) equals: 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpDisabledIntegrationTest >> testWhenEnabledShouldLog [
 	monitor enable.
 
@@ -67,7 +69,7 @@ EpDisabledIntegrationTest >> testWhenEnabledShouldLog [
 	self assert: (self countLogEventsWith: EpClassAddition) equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpDisabledIntegrationTest >> testWhenEnabledTwiceShouldNotDuplicateEntries [
 	2 timesRepeat: [ monitor enable ].
 

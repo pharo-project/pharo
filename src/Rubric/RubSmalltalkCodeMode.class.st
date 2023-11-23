@@ -2,15 +2,17 @@
 I represent the mode to use for editing smalltalk code
 "
 Class {
-	#name : #RubSmalltalkCodeMode,
-	#superclass : #RubAbstractSmalltalkMode,
+	#name : 'RubSmalltalkCodeMode',
+	#superclass : 'RubAbstractSmalltalkMode',
 	#instVars : [
 		'classOrMetaclass'
 	],
-	#category : #'Rubric-Editing-Code'
+	#category : 'Rubric-Editing-Code',
+	#package : 'Rubric',
+	#tag : 'Editing-Code'
 }
 
-{ #category : #menu }
+{ #category : 'menu' }
 RubSmalltalkCodeMode class >> editingModeMenuOn: aBuilder [
 	"Specify the menu used to select an editing mode"
 
@@ -20,17 +22,17 @@ RubSmalltalkCodeMode class >> editingModeMenuOn: aBuilder [
 		action: [:model | model textArea editingMode: self new]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubSmalltalkCodeMode class >> label [
 	^ 'Smalltalk code'
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 RubSmalltalkCodeMode class >> menuKeyword [
 	^ #RubSmalltalkCodeMenu
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 RubSmalltalkCodeMode class >> menuOn: aBuilder [
 	"Specify the menu used when writing code."
 
@@ -144,53 +146,62 @@ RubSmalltalkCodeMode class >> menuOn: aBuilder [
 						iconName: #smallCancel ] ]
 ]
 
-{ #category : #shout }
+{ #category : 'shout' }
 RubSmalltalkCodeMode >> bindingOf: varName [
 	^ self model bindingOf: varName
 ]
 
-{ #category : #shout }
+{ #category : 'shout' }
 RubSmalltalkCodeMode >> bindings [
 	^ self model bindings
 ]
 
-{ #category : #shout }
+{ #category : 'shout' }
 RubSmalltalkCodeMode >> classOrMetaClass: aBehavior [
 	"set the classOrMetaClass in the receiver's styler to aBehavior"
 	classOrMetaclass := aBehavior.
 	self updateStyler
 ]
 
-{ #category : #helper }
+{ #category : 'helper' }
 RubSmalltalkCodeMode >> formatMethodCode [
+
 	| source tree formatted |
-	source := self textArea text asString.
-	tree := RBParser parseMethod: source onError: [ :msg :pos | ^ self ].
+	self textArea hasSelection
+		ifTrue: [
+			source := self textArea selection.
+			tree := self parseExpression: source ]
+		ifFalse: [
+			source := self textArea text.
+			tree := self parseSource: source ].
+	tree checkFaulty: [ :msg :pos |
+		^ self editor notify: msg at: pos + 1 in: source ].
 	formatted := tree formattedCodeIn: classOrMetaclass.
-	formatted = source
-		ifTrue: [ ^ self ].
-	self textArea updateTextWith: formatted
+	formatted = source ifTrue: [ ^ self ].
+	self textArea hasSelection
+		ifTrue: [ self textArea replaceSelectionWith: formatted ]
+		ifFalse: [ self textArea updateTextWith: formatted ]
 ]
 
-{ #category : #shout }
+{ #category : 'shout' }
 RubSmalltalkCodeMode >> hasBindingOf: aString [
-	" For the shout styler "
-	^ self model notNil and: [ self model hasBindingOf: aString ]
+	"For the shout styler"
+	^ self model isNotNil and: [ self model hasBindingOf: aString ]
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 RubSmalltalkCodeMode >> parseExpression: aString [
 
 	^RBParser parseFaultyExpression: aString
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 RubSmalltalkCodeMode >> parseSource: aString [
 
 	^RBParser parseFaultyMethod: aString
 ]
 
-{ #category : #shout }
+{ #category : 'shout' }
 RubSmalltalkCodeMode >> shoutAboutToStyle: myShoutStyler [
 	^ self model isNil
 		or: [
@@ -198,37 +209,37 @@ RubSmalltalkCodeMode >> shoutAboutToStyle: myShoutStyler [
 				or: [ self model interactionModel shoutAboutToStyle: self ] ]
 ]
 
-{ #category : #shout }
+{ #category : 'shout' }
 RubSmalltalkCodeMode >> shoutStyler [
 	^ self textArea shoutStyler
 ]
 
-{ #category : #shout }
+{ #category : 'shout' }
 RubSmalltalkCodeMode >> updateStyler [
 
 	self textArea ifNil: [ ^ self ].
 	self textArea shoutStyler ifNotNil: [ :s | s classOrMetaClass: classOrMetaclass ]
 ]
 
-{ #category : #update }
+{ #category : 'update' }
 RubSmalltalkCodeMode >> updateTextAreaWhenPlugged [
 	self withShoutStyler.
 	super updateTextAreaWhenPlugged
 ]
 
-{ #category : #update }
+{ #category : 'update' }
 RubSmalltalkCodeMode >> updateTextAreaWhenUnplugged [
 	self textArea withoutShoutStyler.
 	super updateTextAreaWhenUnplugged
 ]
 
-{ #category : #shout }
+{ #category : 'shout' }
 RubSmalltalkCodeMode >> withShoutStyler [
 	self textArea withDecoratorNamed: #shoutStyler.
 	self updateStyler
 ]
 
-{ #category : #shout }
+{ #category : 'shout' }
 RubSmalltalkCodeMode >> withoutShoutStyler [
 	self textArea withoutDecoratorNamed: #shoutStyler
 ]

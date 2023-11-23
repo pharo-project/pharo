@@ -10,17 +10,19 @@ https://github.com/forrestthewoods/lib_fts
 
 "
 Class {
-	#name : #FuzzyMatcher,
-	#superclass : #Object,
+	#name : 'FuzzyMatcher',
+	#superclass : 'Object',
 	#instVars : [
 		'pattern',
 		'lowercasePattern',
 		'indexes'
 	],
-	#category : #'FuzzyMatcher-Base'
+	#category : 'FuzzyMatcher-Base',
+	#package : 'FuzzyMatcher',
+	#tag : 'Base'
 }
 
-{ #category : #'utilities - api' }
+{ #category : 'utilities - api' }
 FuzzyMatcher class >> allMatching: aPattern in: aCollectionOfStrings [
 
 	| matcher |
@@ -30,7 +32,7 @@ FuzzyMatcher class >> allMatching: aPattern in: aCollectionOfStrings [
 	^ aCollectionOfStrings select: [:each | matcher matches: each ]
 ]
 
-{ #category : #'utilities - api' }
+{ #category : 'utilities - api' }
 FuzzyMatcher class >> allMatching: aPattern in: aCollectionOfStrings by: aBlockReturningString [
 
 	| matcher |
@@ -40,13 +42,13 @@ FuzzyMatcher class >> allMatching: aPattern in: aCollectionOfStrings by: aBlockR
 	^ aCollectionOfStrings select: [:each | matcher matches: (aBlockReturningString value: each) ]
 ]
 
-{ #category : #'utilities - api' }
+{ #category : 'utilities - api' }
 FuzzyMatcher class >> allSortedByScoreMatching: aPattern in: aCollectionOfStrings [
 
 	^ self allSortedByScoreMatching: aPattern in: aCollectionOfStrings by: [:each | each ]
 ]
 
-{ #category : #'utilities - api' }
+{ #category : 'utilities - api' }
 FuzzyMatcher class >> allSortedByScoreMatching: aPattern in: aCollectionOfStrings by: aBlockReturningString [
 
 	| matcher matches |
@@ -66,7 +68,7 @@ FuzzyMatcher class >> allSortedByScoreMatching: aPattern in: aCollectionOfString
 	^ matches collect: [:each | each value ] as: Array
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 FuzzyMatcher class >> pattern: aString [
 
 	^self new
@@ -74,37 +76,37 @@ FuzzyMatcher class >> pattern: aString [
 		yourself
 ]
 
-{ #category : #'scoring - bonus' }
+{ #category : 'scoring - bonus' }
 FuzzyMatcher >> adjacencyBonus [
 
 	^ 5
 ]
 
-{ #category : #'scoring - bonus' }
+{ #category : 'scoring - bonus' }
 FuzzyMatcher >> adjacencyIncrease [
 
 	^ 1.2
 ]
 
-{ #category : #'scoring - bonus' }
+{ #category : 'scoring - bonus' }
 FuzzyMatcher >> adjacentCaseEqualBonus [
 
 	^ 3
 ]
 
-{ #category : #'scoring - bonus' }
+{ #category : 'scoring - bonus' }
 FuzzyMatcher >> caseEqualBonus [
 
 	^ 7
 ]
 
-{ #category : #'scoring - bonus' }
+{ #category : 'scoring - bonus' }
 FuzzyMatcher >> firstLetterBonus [
 
 	^ 12
 ]
 
-{ #category : #'private - accessing' }
+{ #category : 'private - accessing' }
 FuzzyMatcher >> firstScore: aString at: anIndex [
 
 	| score |
@@ -120,7 +122,7 @@ FuzzyMatcher >> firstScore: aString at: anIndex [
 	^ score
 ]
 
-{ #category : #'private - accessing' }
+{ #category : 'private - accessing' }
 FuzzyMatcher >> indexScore [
 
 	| sum ramp |
@@ -139,7 +141,7 @@ FuzzyMatcher >> indexScore [
 	^ sum rounded
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FuzzyMatcher >> initialize [
 
 	super initialize.
@@ -147,19 +149,19 @@ FuzzyMatcher >> initialize [
 	indexes := #()
 ]
 
-{ #category : #'private - testing' }
+{ #category : 'private - testing' }
 FuzzyMatcher >> isSeparator: aCharacter [
 
 	^  #'_:' includes: aCharacter
 ]
 
-{ #category : #'scoring - penalty' }
+{ #category : 'scoring - penalty' }
 FuzzyMatcher >> leadingLetterPenalty [
 
 	^ -3
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 FuzzyMatcher >> match: aString ifScored: aBlock [
 
 	| score |
@@ -180,7 +182,7 @@ FuzzyMatcher >> match: aString ifScored: aBlock [
 	aBlock value: score
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 FuzzyMatcher >> matches: aString [
 
 	| idx |
@@ -201,19 +203,19 @@ FuzzyMatcher >> matches: aString [
 	^ true
 ]
 
-{ #category : #'scoring - penalty' }
+{ #category : 'scoring - penalty' }
 FuzzyMatcher >> maxLeadingLetterPenalty [
 
 	^ -9
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FuzzyMatcher >> pattern [
 
 	^ pattern
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FuzzyMatcher >> pattern: aString [
 
 	pattern := aString.
@@ -221,7 +223,7 @@ FuzzyMatcher >> pattern: aString [
 	indexes := Array new: pattern size
 ]
 
-{ #category : #'private - accessing' }
+{ #category : 'private - accessing' }
 FuzzyMatcher >> score: aString at: stringIndex patternAt: patternIndex [
 
 	| score prev |
@@ -245,13 +247,13 @@ FuzzyMatcher >> score: aString at: stringIndex patternAt: patternIndex [
 	^ score
 ]
 
-{ #category : #'scoring - bonus' }
+{ #category : 'scoring - bonus' }
 FuzzyMatcher >> separatorBonus [
 
 	^ 5
 ]
 
-{ #category : #'scoring - penalty' }
+{ #category : 'scoring - penalty' }
 FuzzyMatcher >> unmatchedLetterPenalty [
 
 	^ -1

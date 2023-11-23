@@ -1,10 +1,11 @@
 Class {
-	#name : #MetacelloMCProjectReferenceSpecTestCase,
-	#superclass : #MetacelloProjectReferenceSpecTestCase,
-	#category : #'Metacello-TestsMCCore'
+	#name : 'MetacelloMCProjectReferenceSpecTestCase',
+	#superclass : 'MetacelloProjectReferenceSpecTestCase',
+	#category : 'Metacello-TestsMCCore',
+	#package : 'Metacello-TestsMCCore'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloMCProjectReferenceSpecTestCase >> projectClass [
-    ^ MetacelloMCProject
+    ^ MetacelloProject
 ]

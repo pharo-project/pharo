@@ -2,12 +2,14 @@
 WideCharacterSetTest holds tests for WideCharacterSet
 "
 Class {
-	#name : #WideCharacterSetTest,
-	#superclass : #TestCase,
-	#category : #'Collections-Support-Tests-CharacterSets'
+	#name : 'WideCharacterSetTest',
+	#superclass : 'TestCase',
+	#category : 'Collections-Support-Tests-CharacterSets',
+	#package : 'Collections-Support-Tests',
+	#tag : 'CharacterSets'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 WideCharacterSetTest >> testAddingToCharacterSet [
 
 	| cs wcs wc |
@@ -37,7 +39,7 @@ WideCharacterSetTest >> testAddingToCharacterSet [
 	self should: [cs hash = wcs hash] description: 'If some objects are equal, then they should have same hash code'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WideCharacterSetTest >> testCopy [
     | theOriginal theCopy |
     theOriginal := WideCharacterSet newFrom: ('abc' copyWith: 300 asCharacter).
@@ -46,7 +48,7 @@ WideCharacterSetTest >> testCopy [
     ^self should: [theOriginal includes: $a] description: 'Changing the copy should not change the original'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WideCharacterSetTest >> testCreation [
 	"By now, only creation method is newFrom:"
 

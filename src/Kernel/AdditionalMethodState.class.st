@@ -1,19 +1,28 @@
 "
-I am class holding state for compiled methods. All my instance variables should be actually part of the CompiledMethod itself, but the current implementation of the VM doesn't allow this.  Currently I hold the selector and any pragmas or properties the compiled method has.  Pragmas and properties are stored in indexable fields; pragmas as instances of Pragma, properties as instances of Association.
+I am class holding state for compiled methods.
+All my instance variables should be actually part of the CompiledMethod itself, but the current implementation of the VM doesn't allow this.
+Currently I hold the selector and any pragmas or properties the compiled method has.  Pragmas and properties are stored in indexable fields; pragmas as instances of Pragma, properties as instances of Association.
 I am a reimplementation of much of MethodProperties, but eliminating the explicit properties and pragmas dictionaries.  Hence I answer true to isMethodProperties.
+
+The additional state is lost when we replace a method of a class (either by recompilation or installing a new version). But we might want to persist some properties from a method to another. In order to do that, some properties can be tagged ""to persist"" on my class side using #persistProperty:. Then the compiler will take care of migrating those properties.
 "
 Class {
-	#name : #AdditionalMethodState,
-	#superclass : #Object,
-	#type : #variable,
+	#name : 'AdditionalMethodState',
+	#superclass : 'Object',
+	#type : 'variable',
 	#instVars : [
 		'method',
 		'selector'
 	],
-	#category : #'Kernel-Methods'
+	#classVars : [
+		'PropertiesToPersist'
+	],
+	#category : 'Kernel-Methods',
+	#package : 'Kernel',
+	#tag : 'Methods'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 AdditionalMethodState class >> forMethod: aMethod selector: aSelector [
 	^(self new: 0)
 		selector: aSelector;
@@ -21,19 +30,39 @@ AdditionalMethodState class >> forMethod: aMethod selector: aSelector [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 AdditionalMethodState class >> forSelector: aSelector [
 	^(self new: 0)
 		selector: aSelector;
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 AdditionalMethodState class >> new [
 	^ self new: 0
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'accessing' }
+AdditionalMethodState class >> persistProperty: aSymbol [
+	"A property to persist is a property to migrate to a new compile method when we compile a new method replacing an old one in a class."
+
+	self propertiesToPersist add: aSymbol
+]
+
+{ #category : 'accessing' }
+AdditionalMethodState class >> propertiesToPersist [
+	"See class comment."
+
+	^ PropertiesToPersist ifNil: [ PropertiesToPersist := Set <- #( #extensionPackage #traitSource ) ]
+]
+
+{ #category : 'accessing' }
+AdditionalMethodState class >> propertiesToPersist: anObject [
+
+	PropertiesToPersist := anObject
+]
+
+{ #category : 'instance creation' }
 AdditionalMethodState class >> selector: aSelector with: aPropertyOrPragma [
 	^(self new: 1)
 		selector: aSelector;
@@ -41,7 +70,7 @@ AdditionalMethodState class >> selector: aSelector with: aPropertyOrPragma [
 		yourself
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 AdditionalMethodState >> analogousCodeTo: aMethodProperties [
 	| bs |
 	self class == aMethodProperties class ifFalse:
@@ -55,14 +84,14 @@ AdditionalMethodState >> analogousCodeTo: aMethodProperties [
 	^true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AdditionalMethodState >> at: aKey [
 	"Answer the property value or pragma associated with aKey."
 
 	^self at: aKey ifAbsent: [self error: 'not found']
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AdditionalMethodState >> at: aKey ifAbsent: aBlock [
 	"Answer the property value or pragma associated with aKey or,
 	 if aKey isn't found, answer the result of evaluating aBlock."
@@ -77,7 +106,7 @@ AdditionalMethodState >> at: aKey ifAbsent: aBlock [
 	^aBlock value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AdditionalMethodState >> at: aKey ifAbsentPut: aBlock [
 	"Answer the property value or pragma associated with aKey or,
 	 if aKey isn't found, answer the result of evaluating aBlock."
@@ -92,13 +121,13 @@ AdditionalMethodState >> at: aKey ifAbsentPut: aBlock [
 	^method propertyAt: aKey put: aBlock value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AdditionalMethodState >> at: aKey ifPresent: aBlock [
 	"Lookup the given key in the receiver. If it is present, answer the value of evaluating the given block with the value associated with the key. Otherwise, answer self."
 	^ aBlock value: (self at: aKey ifAbsent: [ ^ self ])
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AdditionalMethodState >> at: aKey put: aValue [
        "Replace the property value or pragma associated with aKey."
        | keyAlreadyExists |
@@ -119,7 +148,7 @@ AdditionalMethodState >> at: aKey put: aValue [
        ^ aValue
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 AdditionalMethodState >> copyWith: aPropertyOrPragma [ "<Association|Pragma>"
 	"Answer a copy of the receiver which includes aPropertyOrPragma"
 	| bs copy |
@@ -130,14 +159,14 @@ AdditionalMethodState >> copyWith: aPropertyOrPragma [ "<Association|Pragma>"
 	copy := self class basicNew: (bs := self basicSize) + 1.
 	1 to: bs do:
 		[:i|
-		copy basicAt: i put: (self basicAt: i) shallowCopy].
+		copy basicAt: i put: (self basicAt: i)].
 	copy basicAt: bs + 1 put: aPropertyOrPragma.
 	1 to: self class instSize do:
 		[:i| copy instVarAt: i put: (self instVarAt: i)].
 	^copy
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 AdditionalMethodState >> copyWithout: aPropertyOrPragma [ "<Association|Pragma>"
 	"Answer a copy of the receiver which no longer includes aPropertyOrPragma"
 	| bs copy offset |
@@ -150,13 +179,13 @@ AdditionalMethodState >> copyWithout: aPropertyOrPragma [ "<Association|Pragma>"
 		[:i|
 		(self basicAt: i) = aPropertyOrPragma
 			ifTrue: [offset := 1]
-			ifFalse: [copy basicAt: i - offset put: (self basicAt: i) shallowCopy]].
+			ifFalse: [copy basicAt: i - offset put: (self basicAt: i)]].
 	1 to: self class instSize do:
 		[:i| copy instVarAt: i put: (self instVarAt: i)].
 	^copy
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 AdditionalMethodState >> includes: aPropertyOrPragma [ "<Association|Pragma>"
 	"Test if the property or pragma is present."
 
@@ -167,7 +196,7 @@ AdditionalMethodState >> includes: aPropertyOrPragma [ "<Association|Pragma>"
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 AdditionalMethodState >> includesKey: aKey [
 	"Test if the property aKey or pragma with selector aKey is present."
 
@@ -178,7 +207,7 @@ AdditionalMethodState >> includesKey: aKey [
 	^false
 ]
 
-{ #category : #properties }
+{ #category : 'properties' }
 AdditionalMethodState >> includesProperty: aKey [
 	"Test if the property aKey is present."
 
@@ -191,17 +220,17 @@ AdditionalMethodState >> includesProperty: aKey [
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 AdditionalMethodState >> isEmpty [
 	^self basicSize = 0
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 AdditionalMethodState >> isMethodProperties [
 	^true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AdditionalMethodState >> keysAndValuesDo: aBlock [
 	"Enumerate the receiver with all the keys and values."
 
@@ -212,31 +241,31 @@ AdditionalMethodState >> keysAndValuesDo: aBlock [
 			ifFalse: [aBlock value: propertyOrPragma selector value: propertyOrPragma]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AdditionalMethodState >> method [
 
 	^method
 ]
 
-{ #category : #decompiling }
+{ #category : 'decompiling' }
 AdditionalMethodState >> method: aMethodNodeOrNil [
 	"For decompilation"
 	method := aMethodNodeOrNil
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 AdditionalMethodState >> notEmpty [
 	^self basicSize > 0
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 AdditionalMethodState >> postCopy [
 	"After copying we must duplicate any associations and pragmas so they don't end up being shared."
 	1 to: self basicSize do:
 		[:i| self basicAt: i put: (self basicAt: i) shallowCopy]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AdditionalMethodState >> pragmas [
 	"Return the Pragma objects. Properties are stored as Associations"
 	^ Array new: self basicSize streamContents: [ :pragmaStream |
@@ -246,7 +275,7 @@ AdditionalMethodState >> pragmas [
 				  pragmaStream nextPut: propertyOrPragma ] ] ]
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 AdditionalMethodState >> pragmasDo: aBlock [
 
 	1 to: self basicSize do: [ :i |
@@ -256,13 +285,13 @@ AdditionalMethodState >> pragmasDo: aBlock [
 			ifFalse: [ aBlock value: propertyOrPragma ] ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 AdditionalMethodState >> printOn: aStream [
 	super printOn: aStream.
 	aStream space; nextPut: $(; print: self identityHash; nextPut: $)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AdditionalMethodState >> properties [
 
 	| propertyStream |
@@ -274,14 +303,14 @@ AdditionalMethodState >> properties [
 	^IdentityDictionary newFromPairs: propertyStream contents
 ]
 
-{ #category : #properties }
+{ #category : 'properties' }
 AdditionalMethodState >> propertyAt: aKey [
 	"Answer the property value associated with aKey."
 
 	^ self propertyAt: aKey ifAbsent: [ self error: 'Property not found' ]
 ]
 
-{ #category : #properties }
+{ #category : 'properties' }
 AdditionalMethodState >> propertyAt: aKey ifAbsent: aBlock [
 	"Answer the property value associated with aKey or, if aKey isn't found, answer the result of evaluating aBlock."
 
@@ -294,7 +323,14 @@ AdditionalMethodState >> propertyAt: aKey ifAbsent: aBlock [
 	^aBlock value
 ]
 
-{ #category : #properties }
+{ #category : 'properties' }
+AdditionalMethodState >> propertyAt: aKey ifPresent: aBlock [
+	"Answer the property value associated with aKey or, if aKey is found, evaluate aBlock with it."
+
+	^ aBlock value: (self propertyAt: aKey ifAbsent: [ ^ self ])
+]
+
+{ #category : 'properties' }
 AdditionalMethodState >> propertyKeysAndValuesDo: aBlock [
 	"Enumerate the receiver with all the keys and values."
 
@@ -304,27 +340,27 @@ AdditionalMethodState >> propertyKeysAndValuesDo: aBlock [
 			[aBlock value: propertyOrPragma key value: propertyOrPragma value]]
 ]
 
-{ #category : #'properties-compatibility' }
+{ #category : 'properties-compatibility' }
 AdditionalMethodState >> propertyValueAt: aKey [
 	"use the version without ..Value, this methid is retained for compatibility"
 
 	^ self propertyAt: aKey
 ]
 
-{ #category : #'properties-compatibility' }
+{ #category : 'properties-compatibility' }
 AdditionalMethodState >> propertyValueAt: aKey ifAbsent: aBlock [
 	"use the version without ..Value, this methid is retained for compatibility"
 	^self propertyAt: aKey ifAbsent: aBlock
 ]
 
-{ #category : #properties }
+{ #category : 'properties' }
 AdditionalMethodState >> removeKey: aKey [
 	"Remove the property with aKey. Answer the property or raise an error if aKey isn't found."
 
 	^ self removeKey: aKey ifAbsent: [ self error: 'Property not found' ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AdditionalMethodState >> removeKey: aKey ifAbsent: aBlock [
 	"Remove the property with aKey. Answer the value or, if aKey isn't found, answer the result of evaluating aBlock."
 
@@ -339,17 +375,17 @@ AdditionalMethodState >> removeKey: aKey ifAbsent: aBlock [
 	^aBlock value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AdditionalMethodState >> selector [
 	^selector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AdditionalMethodState >> selector: aSymbol [
 	selector := aSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AdditionalMethodState >> setMethod: aMethod [
 	method := aMethod.
 	1 to: self basicSize do: [ :i |

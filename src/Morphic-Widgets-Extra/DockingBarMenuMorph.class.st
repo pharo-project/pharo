@@ -1,25 +1,26 @@
 Class {
-	#name : #DockingBarMenuMorph,
-	#superclass : #MenuMorph,
+	#name : 'DockingBarMenuMorph',
+	#superclass : 'MenuMorph',
 	#instVars : [
 		'activatorDockingBar'
 	],
-	#category : #'Morphic-Widgets-Extra'
+	#category : 'Morphic-Widgets-Extra',
+	#package : 'Morphic-Widgets-Extra'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DockingBarMenuMorph >> activatedFromDockingBar: aDockingBar [
 	activatorDockingBar := aDockingBar
 ]
 
-{ #category : #control }
+{ #category : 'control' }
 DockingBarMenuMorph >> activeSubmenu: aSubmenu [
 	super activeSubmenu: aSubmenu.
 	aSubmenu
 		ifNotNil: [activeSubMenu activatedFromDockingBar: nil]
 ]
 
-{ #category : #rounding }
+{ #category : 'rounding' }
 DockingBarMenuMorph >> roundedCorners [
 	"Return a list of those corners to round"
 	self wasActivatedFromDockingBar
@@ -37,7 +38,7 @@ DockingBarMenuMorph >> roundedCorners [
 	^ super roundedCorners
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 DockingBarMenuMorph >> veryDeepInner: deepCopier [
 	"Copy all of my instance variables.  Some need to be not copied at all, but shared.  	Warning!!  Every instance variable defined in this class must be handled.  We must also implement veryDeepFixupWith:.  See DeepCopier class comment."
 
@@ -45,8 +46,8 @@ DockingBarMenuMorph >> veryDeepInner: deepCopier [
 	activatorDockingBar := activatorDockingBar.  "Weakly copied"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DockingBarMenuMorph >> wasActivatedFromDockingBar [
 	"answer true if the receiver was activated from a docking bar"
-	^ activatorDockingBar notNil
+	^ activatorDockingBar isNotNil
 ]

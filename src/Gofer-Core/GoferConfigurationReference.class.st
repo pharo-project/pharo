@@ -2,42 +2,44 @@
 A GoferPackageReference refers to the latest version of a Monticello package representing a Metacello Configuration.
 "
 Class {
-	#name : #GoferConfigurationReference,
-	#superclass : #GoferPackageReference,
-	#category : #'Gofer-Core-References'
+	#name : 'GoferConfigurationReference',
+	#superclass : 'GoferPackageReference',
+	#category : 'Gofer-Core-References',
+	#package : 'Gofer-Core',
+	#tag : 'References'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GoferConfigurationReference >> configurationClass [
 
 	^ Smalltalk globals at: self configurationName asSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GoferConfigurationReference >> configurationName [
 
 	^ 'ConfigurationOf', name
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 GoferConfigurationReference >> isConfigurationReference [
 
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GoferConfigurationReference >> name [
 
 	^ self configurationName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GoferConfigurationReference >> packageName [
 
 	^ self configurationName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GoferConfigurationReference >> project [
 
 	^ self configurationClass project

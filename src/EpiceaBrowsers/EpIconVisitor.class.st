@@ -2,178 +2,191 @@
 I answer an icon for each EpEvent.
 "
 Class {
-	#name : #EpIconVisitor,
-	#superclass : #EpEntryContentVisitor,
-	#category : #'EpiceaBrowsers-Visitors'
+	#name : 'EpIconVisitor',
+	#superclass : 'EpEntryContentVisitor',
+	#category : 'EpiceaBrowsers-Visitors',
+	#package : 'EpiceaBrowsers',
+	#tag : 'Visitors'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 EpIconVisitor >> additionIcon [
-	^ self iconNamed: #changeAddIcon
+	^ self iconNamed: #changeAdd
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EpIconVisitor >> emptyIcon [
 	^ self iconNamed: #empty
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EpIconVisitor >> modificationIcon [
-	^ self iconNamed: #changeUpdateIcon
+	^ self iconNamed: #changeUpdate
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EpIconVisitor >> removalIcon [
-	^ self iconNamed: #changeRemoveIcon
+	^ self iconNamed: #changeRemove
 ]
 
-{ #category : #visitor }
-EpIconVisitor >> visitBehaviorCategoryChange: aClassRecategorizationChange [
-	^ self modificationIcon
-]
-
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpIconVisitor >> visitBehaviorCommentChange: aChange [
 	^ self modificationIcon
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpIconVisitor >> visitBehaviorCopy: anEvent [
-	^ self iconNamed: #configurationIcon
+	^ self iconNamed: #configuration
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpIconVisitor >> visitBehaviorNameChange: aClassRenamedChange [
 	^ self modificationIcon
 ]
 
-{ #category : #visitor }
-EpIconVisitor >> visitCategoryAddition: aCategoryChange [
-	^ self additionIcon
-]
-
-{ #category : #visitor }
-EpIconVisitor >> visitCategoryRegistration: aCategoryChange [
-
-	^ self additionIcon
-]
-
-{ #category : #visitor }
-EpIconVisitor >> visitCategoryRemoval: aCategoryChange [
-	^ self removalIcon
-]
-
-{ #category : #visitor }
-EpIconVisitor >> visitCategoryRename: aCategoryChange [
+{ #category : 'visitor' }
+EpIconVisitor >> visitBehaviorRepackagedChange: aBehaviorRepackagedChange [
 	^ self modificationIcon
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpIconVisitor >> visitClassAddition: aClassCreatedChange [
 	^ self additionIcon
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpIconVisitor >> visitClassModification: aModificationClassChange [
 	^ self modificationIcon
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpIconVisitor >> visitClassRemoval: aClassRemovedChange [
 	^ self removalIcon
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpIconVisitor >> visitEvent: anEvent [
 	^ self empty
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpIconVisitor >> visitExpressionEvaluation: anExpressionEvaluation [
 	^ self iconNamed: #workspace
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpIconVisitor >> visitLogCommentModification: aLogCommentModification [
-	^ self iconNamed: #announcementIcon
+	^ self iconNamed: #announcement
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpIconVisitor >> visitMethodAddition: aMethodCreatedChange [
 	^ self additionIcon
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpIconVisitor >> visitMethodModification: aMethodModified [
 	^ self modificationIcon
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpIconVisitor >> visitMethodRemoval: aMethodRemoved [
 	^ self removalIcon
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpIconVisitor >> visitMonticelloVersionSave: aChange [
 	^ self iconNamed: #package
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpIconVisitor >> visitMonticelloVersionsLoad: aMonticelloVersionLoaded [
 	^ self iconNamed: #package
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
+EpIconVisitor >> visitPackageAddition: aPackageAddition [
+
+	^ self additionIcon
+]
+
+{ #category : 'visitor' }
+EpIconVisitor >> visitPackageRemoval: aPackageRemoval [
+
+	^ self removalIcon
+]
+
+{ #category : 'visitor' }
+EpIconVisitor >> visitPackageRename: aPackageRename [
+	^ self modificationIcon
+]
+
+{ #category : 'visitor' }
+EpIconVisitor >> visitPackageTagAddition: aPackageTagAddition [
+	^ self additionIcon
+]
+
+{ #category : 'visitor' }
+EpIconVisitor >> visitPackageTagRemoval: aPackageTagRemoval [
+	^ self removalIcon
+]
+
+{ #category : 'visitor' }
+EpIconVisitor >> visitPackageTagRename: aPackageTagRename [
+	^ self modificationIcon
+]
+
+{ #category : 'visitor' }
 EpIconVisitor >> visitProtocolAddition: aProtocolChange [
 	^ self additionIcon
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpIconVisitor >> visitProtocolRemoval: aProtocolChange [
 	^ self removalIcon
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpIconVisitor >> visitRedo: aRedoEvent [
 	^ self iconNamed: #smallRedo
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpIconVisitor >> visitRefactoring: aRefactoring [
-	^ self iconNamed: #configurationIcon
+	^ self iconNamed: #configuration
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpIconVisitor >> visitSessionEnd: anEvent [
 	^ self iconNamed: #smallQuit
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpIconVisitor >> visitSessionSnapshot: aSnapshotChange [
 	^ self iconNamed: #smallSave
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpIconVisitor >> visitSessionStart: anEvent [
 	^ self iconNamed: #smallDoIt
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpIconVisitor >> visitTraitAddition: aTraitCreation [
 	^ self additionIcon
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpIconVisitor >> visitTraitModification: aTraitModificationChange [
 	^ self modificationIcon
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpIconVisitor >> visitTraitRemoval:  aTraitRemoval [
 	^ self removalIcon
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpIconVisitor >> visitUndo: anUndoEvent [
 	^ self iconNamed: #smallUndo
 ]

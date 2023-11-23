@@ -1,42 +1,43 @@
 Class {
-	#name : #ClyLongExampleQuery,
-	#superclass : #ClyReturningScopeBasisExampleQuery,
+	#name : 'ClyLongExampleQuery',
+	#superclass : 'ClyReturningScopeBasisExampleQuery',
 	#instVars : [
 		'executionSemaphore'
 	],
-	#category : #'Calypso-NavigationModel-Tests'
+	#category : 'Calypso-NavigationModel-Tests',
+	#package : 'Calypso-NavigationModel-Tests'
 }
 
-{ #category : #'items type' }
+{ #category : 'items type' }
 ClyLongExampleQuery class >> resultItemsType [
 	self shouldBeImplemented
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyLongExampleQuery >> buildResult: aQueryResult [
 	executionSemaphore wait.
 
 	super buildResult: aQueryResult
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyLongExampleQuery >> checkEmptyResult [
 	executionSemaphore wait.
 	super checkEmptyResult
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyLongExampleQuery >> delayExecution [
 	executionSemaphore consumeAllSignals
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyLongExampleQuery >> initialize [
 	super initialize.
 	executionSemaphore := Semaphore new
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyLongExampleQuery >> passExecution [
 	executionSemaphore signal
 ]

@@ -1,6 +1,6 @@
-Extension { #name : #BlockClosure }
+Extension { #name : 'BlockClosure' }
 
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
 BlockClosure >> sourceNode [
 	^ self compiledBlock sourceNodeInOuter
 ]

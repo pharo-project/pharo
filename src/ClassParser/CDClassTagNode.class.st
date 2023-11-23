@@ -18,26 +18,22 @@ Object subclass: #CDClassDefinitionParser
 ```
 "
 Class {
-	#name : #CDClassTagNode,
-	#superclass : #CDNode,
+	#name : 'CDClassTagNode',
+	#superclass : 'CDNode',
 	#instVars : [
 		'name'
 	],
-	#category : #'ClassParser-Model'
+	#category : 'ClassParser-Model',
+	#package : 'ClassParser',
+	#tag : 'Model'
 }
 
-{ #category : #visitor }
-CDClassTagNode >> acceptVisitor: aProgramNodeVisitor [
-
-	aProgramNodeVisitor visitTag: self
-]
-
-{ #category : #accessing }
+{ #category : 'accessing' }
 CDClassTagNode >> name [
 	^ name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CDClassTagNode >> name: aString [
 	name := aString
 ]

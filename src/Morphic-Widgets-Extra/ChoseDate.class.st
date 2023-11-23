@@ -2,16 +2,17 @@
 A ChoseDate is an announcement raised by the CalendarMorph
 "
 Class {
-	#name : #ChoseDate,
-	#superclass : #Announcement,
+	#name : 'ChoseDate',
+	#superclass : 'Announcement',
 	#instVars : [
 		'date',
 		'calendar'
 	],
-	#category : #'Morphic-Widgets-Extra'
+	#category : 'Morphic-Widgets-Extra',
+	#package : 'Morphic-Widgets-Extra'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ChoseDate class >> of: aDate from: aCalendarChooserMorph [
 
 	^ self new
@@ -19,25 +20,25 @@ ChoseDate class >> of: aDate from: aCalendarChooserMorph [
 		calendar: aCalendarChooserMorph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ChoseDate >> calendar [
 
 	^ calendar
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ChoseDate >> calendar: aCalendarChooserMorph [
 
 	calendar := aCalendarChooserMorph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ChoseDate >> date [
 
 	^ date
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ChoseDate >> date: aDate [
 
 	date := aDate

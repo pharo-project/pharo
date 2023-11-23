@@ -5,33 +5,35 @@ I should not be accessed directly, but by the accessor in Smalltalk or in  the c
 I have exactly the same interface than the main class installer.
 "
 Class {
-	#name : #ShiftAnonymousClassInstaller,
-	#superclass : #ShiftClassInstaller,
-	#category : #'Shift-ClassInstaller-Base'
+	#name : 'ShiftAnonymousClassInstaller',
+	#superclass : 'ShiftClassInstaller',
+	#category : 'Shift-ClassInstaller-Base',
+	#package : 'Shift-ClassInstaller',
+	#tag : 'Base'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ShiftAnonymousClassInstaller >> comment: newClass [
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ShiftAnonymousClassInstaller >> installInEnvironment: newClass [
 	^ self
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ShiftAnonymousClassInstaller >> installSubclassInSuperclass: newClass [
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ShiftAnonymousClassInstaller >> lookupOldClass [
 	^ self
 ]
 
-{ #category : #notifications }
+{ #category : 'notifications' }
 ShiftAnonymousClassInstaller >> notifyChanges [
 ]
 
-{ #category : #notifications }
-ShiftAnonymousClassInstaller >> recategorize: newClass to: category [
+{ #category : 'notifications' }
+ShiftAnonymousClassInstaller >> recategorize: newClass [
 ]

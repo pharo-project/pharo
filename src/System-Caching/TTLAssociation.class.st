@@ -7,36 +7,37 @@ I maintain a timestamp that gets updated each time my value changes.
 I decide myself when I am stale, using a cache defined default time to live.
 "
 Class {
-	#name : #TTLAssociation,
-	#superclass : #Association,
+	#name : 'TTLAssociation',
+	#superclass : 'Association',
 	#instVars : [
 		'timestamp'
 	],
-	#category : #'System-Caching'
+	#category : 'System-Caching',
+	#package : 'System-Caching'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 TTLAssociation >> isStale: timeToLive [
 	^ self now - timestamp >= timeToLive
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TTLAssociation >> key: aKey value: anObject [
 	super key: aKey value: anObject.
 	timestamp := self now
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TTLAssociation >> now [
 	^ Time totalSeconds
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TTLAssociation >> timestamp [
 	^ timestamp
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TTLAssociation >> value: anObject [
 	super value: anObject.
 	timestamp := self now

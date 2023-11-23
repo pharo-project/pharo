@@ -6,61 +6,63 @@ Users should use my singleton #instance on class side:
 	ClyUnknownQueryResult instance
 "
 Class {
-	#name : #ClyUnknownQueryResult,
-	#superclass : #ClyQueryResult,
+	#name : 'ClyUnknownQueryResult',
+	#superclass : 'ClyQueryResult',
 	#classInstVars : [
 		'instance'
 	],
-	#category : #'Calypso-NavigationModel-Result'
+	#category : 'Calypso-NavigationModel-Result',
+	#package : 'Calypso-NavigationModel',
+	#tag : 'Result'
 }
 
-{ #category : #singleton }
+{ #category : 'singleton' }
 ClyUnknownQueryResult class >> instance [
 	^instance ifNil: [instance := ClyUnknownQueryResult new]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyUnknownQueryResult >> adoptForBrowser [
 	^self
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ClyUnknownQueryResult >> beProtected [
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyUnknownQueryResult >> collectMetadata [
 	metadata := ClyQueryResultMetadata new
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyUnknownQueryResult >> defaultItems [
 	^#()
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ClyUnknownQueryResult >> fillWith: objects [
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyUnknownQueryResult >> findItemsSimilarTo: sampleEnvironmentItems [
 	^#()
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyUnknownQueryResult >> findItemsWith: aCollection [
 	^Array new: aCollection size withAll: nil
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ClyUnknownQueryResult >> forceLazyRebuild [
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ClyUnknownQueryResult >> forceRebuild [
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyUnknownQueryResult >> initialize [
 	super initialize.
 	needsRebuild := false.
@@ -68,24 +70,24 @@ ClyUnknownQueryResult >> initialize [
 	self collectMetadata
 ]
 
-{ #category : #'system changes' }
+{ #category : 'system changes' }
 ClyUnknownQueryResult >> itemsChanged [
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyUnknownQueryResult >> itemsStartingAt: startIndex count: size [
 	^#()
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ClyUnknownQueryResult >> protectAccessWhile: aBlock [
 	^aBlock value
 ]
 
-{ #category : #'system changes' }
+{ #category : 'system changes' }
 ClyUnknownQueryResult >> subscribe: anObject [
 ]
 
-{ #category : #'system changes' }
+{ #category : 'system changes' }
 ClyUnknownQueryResult >> unsubscribe: anObject [
 ]

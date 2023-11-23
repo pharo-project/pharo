@@ -1,10 +1,11 @@
 Class {
-	#name : #RGClassDescripitonStrategyTest,
-	#superclass : #RGTest,
-	#category : #'Ring-Tests-Core'
+	#name : 'RGClassDescripitonStrategyTest',
+	#superclass : 'RGTest',
+	#category : 'Ring-Tests-Core',
+	#package : 'Ring-Tests-Core'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGClassDescripitonStrategyTest >> checkBasicPropertiesOf: anRGBehavior [
 
 	self assert: anRGBehavior isBehavior.
@@ -14,7 +15,7 @@ RGClassDescripitonStrategyTest >> checkBasicPropertiesOf: anRGBehavior [
 	self assert: anRGBehavior layout isFixedLayout
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGClassDescripitonStrategyTest >> testAllSlots [
 
 	| env aSuperclass aSubclass |
@@ -30,7 +31,7 @@ RGClassDescripitonStrategyTest >> testAllSlots [
 	self assert: (aSubclass allSlots collect: [:each | each name]) equals: #(a b c d e f)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGClassDescripitonStrategyTest >> testClassDescriptionMakeResolved [
 
 	| anRGBehavior |
@@ -42,7 +43,7 @@ RGClassDescripitonStrategyTest >> testClassDescriptionMakeResolved [
 	self assert: (anRGBehavior hasResolved: #layout)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGClassDescripitonStrategyTest >> testClassDescriptionResolvableProperties [
 
 	| anRGBehavior |
@@ -52,7 +53,7 @@ RGClassDescripitonStrategyTest >> testClassDescriptionResolvableProperties [
 	self assert: (anRGBehavior pvtResolvableProperties asDictionary includesKey: #layout)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGClassDescripitonStrategyTest >> testCopyForBehaviorDefinitionPostCopy [
 	| anRGBehavior copy |
 	anRGBehavior := RGBehavior newClass.
@@ -63,7 +64,7 @@ RGClassDescripitonStrategyTest >> testCopyForBehaviorDefinitionPostCopy [
 	"	self deny: anRGBehavior behaviorStrategy layout == copy behaviorStrategy layout."
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGClassDescripitonStrategyTest >> testCreationByMethod [
 
 	| anRGBehavior |
@@ -72,7 +73,7 @@ RGClassDescripitonStrategyTest >> testCreationByMethod [
 	self checkBasicPropertiesOf: anRGBehavior
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGClassDescripitonStrategyTest >> testCreationByNamed [
 
 	| anRGBehavior |
@@ -82,7 +83,7 @@ RGClassDescripitonStrategyTest >> testCreationByNamed [
 	self assert: anRGBehavior name equals: #SomeClass
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGClassDescripitonStrategyTest >> testCreationByNamedParent [
 
 	| anRGBehavior parent |
@@ -94,7 +95,7 @@ RGClassDescripitonStrategyTest >> testCreationByNamedParent [
 	self assert: anRGBehavior parent equals: parent
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGClassDescripitonStrategyTest >> testCreationByParent [
 
 	| anRGBehavior parent |
@@ -106,7 +107,7 @@ RGClassDescripitonStrategyTest >> testCreationByParent [
 	self assert: anRGBehavior parent equals: parent
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGClassDescripitonStrategyTest >> testCreationByUnnamed [
 
 	| anRGBehavior |
@@ -116,7 +117,7 @@ RGClassDescripitonStrategyTest >> testCreationByUnnamed [
 	self assert: (anRGBehavior hasResolvedName) not
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGClassDescripitonStrategyTest >> testCreationByUnresolved [
 
 	| anRGBehavior |
@@ -127,7 +128,7 @@ RGClassDescripitonStrategyTest >> testCreationByUnresolved [
 	self assert: anRGBehavior isRingResolved not
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGClassDescripitonStrategyTest >> testCreationByUnresolvedNamed [
 
 	| anRGBehavior parent |
@@ -140,7 +141,7 @@ RGClassDescripitonStrategyTest >> testCreationByUnresolvedNamed [
 	self assert: anRGBehavior isRingResolved not
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGClassDescripitonStrategyTest >> testDefaultLayout [
 
 	| anRGBehavior |
@@ -149,7 +150,7 @@ RGClassDescripitonStrategyTest >> testDefaultLayout [
 	self assert: anRGBehavior defaultLayout isPointerLayout
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGClassDescripitonStrategyTest >> testDefaultMetaclass [
 
 	| anRGBehavior |
@@ -158,7 +159,7 @@ RGClassDescripitonStrategyTest >> testDefaultMetaclass [
 	self assert: anRGBehavior defaultMetaClass isMeta
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGClassDescripitonStrategyTest >> testEmtpyClassVariableString [
 
 	| anRGBehavior |
@@ -167,7 +168,7 @@ RGClassDescripitonStrategyTest >> testEmtpyClassVariableString [
 	self assert: anRGBehavior classVariablesString equals: ''
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGClassDescripitonStrategyTest >> testInstSize [
 
 	| anRGBehavior |
@@ -179,7 +180,7 @@ RGClassDescripitonStrategyTest >> testInstSize [
 	self assert: anRGBehavior instSize equals: 3
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGClassDescripitonStrategyTest >> testInstanceVariablesString [
 
 	| anRGBehavior |
@@ -191,7 +192,7 @@ RGClassDescripitonStrategyTest >> testInstanceVariablesString [
 	self assert: anRGBehavior instanceVariablesString equals: 'a b c'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGClassDescripitonStrategyTest >> testKindOfSubclass [
 
 	| anRGBehavior |
@@ -201,7 +202,7 @@ RGClassDescripitonStrategyTest >> testKindOfSubclass [
 	self assert: anRGBehavior kindOfSubclass equals: ' subclass: '
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGClassDescripitonStrategyTest >> testLayout [
 
 	| anRGBehavior |
@@ -210,7 +211,7 @@ RGClassDescripitonStrategyTest >> testLayout [
 	self assert: anRGBehavior layout isPointerLayout
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGClassDescripitonStrategyTest >> testLayoutSet [
 
 	| anRGBehavior layout |
@@ -221,7 +222,7 @@ RGClassDescripitonStrategyTest >> testLayoutSet [
 	self assert: anRGBehavior layout equals: layout
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGClassDescripitonStrategyTest >> testSetInstanceVariables [
 
 	| anRGBehavior |
@@ -233,7 +234,7 @@ RGClassDescripitonStrategyTest >> testSetInstanceVariables [
 	self assert: anRGBehavior instVarNames equals: #(a b c)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGClassDescripitonStrategyTest >> testSharedPools [
 
 	| anRGBehavior |
@@ -243,7 +244,7 @@ RGClassDescripitonStrategyTest >> testSharedPools [
 	self assert: anRGBehavior sharedPools isEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGClassDescripitonStrategyTest >> testUnresolvedClassGroupCreatorProperties [
 
 	| anRGBehavior |
@@ -254,7 +255,7 @@ RGClassDescripitonStrategyTest >> testUnresolvedClassGroupCreatorProperties [
 	self assert: (anRGBehavior metaclass superclass propertyNamed: #creator) equals: anRGBehavior
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGClassDescripitonStrategyTest >> testUnresolvedClassGroupRoleProperties [
 
 	| anRGBehavior |

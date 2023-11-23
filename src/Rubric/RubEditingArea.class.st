@@ -2,101 +2,103 @@
 I am the common class to use for editing text in an area
 "
 Class {
-	#name : #RubEditingArea,
-	#superclass : #RubAbstractTextArea,
+	#name : 'RubEditingArea',
+	#superclass : 'RubAbstractTextArea',
 	#instVars : [
 		'wrapped',
 		'editorClass'
 	],
-	#category : #'Rubric-Editing-Core'
+	#category : 'Rubric-Editing-Core',
+	#package : 'Rubric',
+	#tag : 'Editing-Core'
 }
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubEditingArea >> autoScroll: anEvent [
 	scrollPane ifNil: [ ^self ].
 	self scrollPivot  ifNil: [ ^self ].
 	scrollPane scrollWhenMouseMove: anEvent pivotPoint: self scrollPivot
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RubEditingArea >> beForPlainText [
 	self editingMode: RubPlainTextMode new
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RubEditingArea >> beForSmalltalkCode [
 	self editingMode: RubSmalltalkCodeMode new
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RubEditingArea >> beForSmalltalkCodeInClass: aClass [
 	self editingMode: (RubSmalltalkCodeMode new
 		classOrMetaClass: aClass;
 		yourself)
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RubEditingArea >> beForSmalltalkCodeWithDefaultFont [
 	self editingMode: RubSmalltalkCodeMode new.
 	self font: StandardFonts defaultFont
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RubEditingArea >> beForSmalltalkComment [
 	self editingMode: RubSmalltalkCommentMode new
 ]
 
-{ #category : #'public accessing' }
+{ #category : 'public accessing' }
 RubEditingArea >> beForSmalltalkScripting [
 	self editingMode: RubSmalltalkScriptingMode new
 ]
 
-{ #category : #'public accessing' }
+{ #category : 'public accessing' }
 RubEditingArea >> beForSmalltalkScriptingWithDefaultFont [
 	self editingMode: RubSmalltalkScriptingMode new.
 	self font: StandardFonts defaultFont
 ]
 
-{ #category : #'public accessing' }
+{ #category : 'public accessing' }
 RubEditingArea >> beNotWrapped [
 	self wrapped
 		ifTrue: [ self handleParagraphChange: [ self wrapped: false ] ]
 ]
 
-{ #category : #'public accessing' }
+{ #category : 'public accessing' }
 RubEditingArea >> beWrapped [
 	self wrapped
 		ifFalse: [ self handleParagraphChange: [ self wrapped: true ] ]
 ]
 
-{ #category : #binding }
+{ #category : 'binding' }
 RubEditingArea >> bindingOf: aString [
 	^ self editingMode bindingOf: aString
 ]
 
-{ #category : #styler }
+{ #category : 'styler' }
 RubEditingArea >> classOrMetaClass: aBehavior [
 	"set the classOrMetaClass in the receiver's styler to aBehavior"
 	self shoutStyler ifNotNil: [ :styler | styler classOrMetaClass: aBehavior]
 ]
 
-{ #category : #'error handling' }
+{ #category : 'error handling' }
 RubEditingArea >> doesNotUnderstand: aMessage [
 	"{aMessage . thisContext sender} inspectOnce."
 	^ aMessage sendTo: self editingMode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubEditingArea >> editorClass [
 	^ editorClass ifNil: [ editorClass := RubTextEditor ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubEditingArea >> editorClass: aClass [
 	editorClass := aClass
 ]
 
-{ #category : #highlighting }
+{ #category : 'highlighting' }
 RubEditingArea >> ensureAndGetNewHighlightSegmentFrom: startIndex to: stopIndex [
 
 	^ self
@@ -104,7 +106,7 @@ RubEditingArea >> ensureAndGetNewHighlightSegmentFrom: startIndex to: stopIndex 
 		addSegment: (RubHighlightSegmentMorph from: startIndex to: stopIndex)
 ]
 
-{ #category : #highlighting }
+{ #category : 'highlighting' }
 RubEditingArea >> ensureAndGetNewHoverHighlightSegmentFrom: startIndex to: stopIndex [
 
 	^ self
@@ -112,36 +114,36 @@ RubEditingArea >> ensureAndGetNewHoverHighlightSegmentFrom: startIndex to: stopI
 		addSegment: (RubHoverHighlightSegmentMorph from: startIndex to: stopIndex)
 ]
 
-{ #category : #highlighting }
+{ #category : 'highlighting' }
 RubEditingArea >> getHighlightSegment [
 
 	^ self getSegmentOfClass:  RubHighlightSegmentMorph
 ]
 
-{ #category : #highlighting }
+{ #category : 'highlighting' }
 RubEditingArea >> getHoverHighlightSegment [
 
 	^ self getSegmentOfClass: RubHoverHighlightSegmentMorph
 ]
 
-{ #category : #highlighting }
+{ #category : 'highlighting' }
 RubEditingArea >> getSegmentOfClass: aClass [
 
 	^ self segments detect: [ :each | each class = aClass ] ifNone: [ nil ]
 ]
 
-{ #category : #binding }
+{ #category : 'binding' }
 RubEditingArea >> hasBindingOf: aString [
 	^ self editingMode hasBindingOf: aString
 ]
 
-{ #category : #highlighting }
+{ #category : 'highlighting' }
 RubEditingArea >> hasHighlightSegment [
 
-	^ self getHighlightSegment notNil
+	^ self getHighlightSegment isNotNil
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubEditingArea >> mouseMove: evt [
 	| editEvt |
 	super mouseMove: evt.
@@ -158,78 +160,78 @@ RubEditingArea >> mouseMove: evt [
 		ifTrue: [ self stopSteppingSelector: #autoScroll: ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RubEditingArea >> newParagraph [
 	^ RubCurrentLineBarDecorator	next: (RubExtraSelectionDecorator next: super newParagraph)
 ]
 
-{ #category : #highlighting }
+{ #category : 'highlighting' }
 RubEditingArea >> removeHighlightSegment [
 
 	(self getHighlightSegment)
 		ifNotNil: [ :aSegment | aSegment delete ]
 ]
 
-{ #category : #highlighting }
+{ #category : 'highlighting' }
 RubEditingArea >> removeHoverHighlightSegment [
 
 	(self getHoverHighlightSegment)
 		ifNotNil: [ :aSegment | aSegment delete ]
 ]
 
-{ #category : #styler }
+{ #category : 'styler' }
 RubEditingArea >> shoutAboutToStyle: myself [
 
 	^self editingMode shoutAboutToStyle: myself
 ]
 
-{ #category : #styler }
+{ #category : 'styler' }
 RubEditingArea >> shoutStyler [
 	^ self decoratorNamed: #shoutStyler
 ]
 
-{ #category : #styler }
+{ #category : 'styler' }
 RubEditingArea >> textArea [
 	"for #whenTextAreaSelectionChanged:"
 	^self
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 RubEditingArea >> walkAlongDisplayedLine [
 	^ self class walkAlongDisplayedLine
 ]
 
-{ #category : #'accessing - decorators' }
+{ #category : 'accessing - decorators' }
 RubEditingArea >> withSecondarySelection [
 	self withDecoratorNamed: #secondarySelection
 ]
 
-{ #category : #'accessing - decorators' }
+{ #category : 'accessing - decorators' }
 RubEditingArea >> withSelectionBar [
 	self withDecoratorNamed: #selectionBar
 ]
 
-{ #category : #'accessing - decorators' }
+{ #category : 'accessing - decorators' }
 RubEditingArea >> withoutOpeningClosingDelimitersHighlight [
 	self withoutDecoratorNamed: #openingClosingDelimitersHighlight
 ]
 
-{ #category : #'accessing - decorators' }
+{ #category : 'accessing - decorators' }
 RubEditingArea >> withoutSelectionBar [
 	self withoutDecoratorNamed: #selectionBar
 ]
 
-{ #category : #styler }
+{ #category : 'styler' }
 RubEditingArea >> withoutShoutStyler [
 	self withoutDecoratorNamed: #shoutStyler
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubEditingArea >> wrapped [
 	^ wrapped ifNil: [ wrapped := false ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubEditingArea >> wrapped: aBoolean [
 	wrapped := aBoolean
 ]

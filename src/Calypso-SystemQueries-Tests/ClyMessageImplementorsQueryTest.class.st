@@ -1,34 +1,36 @@
 Class {
-	#name : #ClyMessageImplementorsQueryTest,
-	#superclass : #ClyMethodQueryTest,
-	#category : #'Calypso-SystemQueries-Tests-Queries'
+	#name : 'ClyMessageImplementorsQueryTest',
+	#superclass : 'ClyMethodQueryTest',
+	#category : 'Calypso-SystemQueries-Tests-Queries',
+	#package : 'Calypso-SystemQueries-Tests',
+	#tag : 'Queries'
 }
 
-{ #category : #'methods for tests' }
+{ #category : 'methods for tests' }
 ClyMessageImplementorsQueryTest class >> clyMessageImplementor1 [
 ]
 
-{ #category : #'methods for tests' }
+{ #category : 'methods for tests' }
 ClyMessageImplementorsQueryTest >> clyMessageImplementor1 [
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyMessageImplementorsQueryTest >> createQuery [
 	^ ClyMessageImplementorsQuery
 		of: self targetSelector
 		from: (ClyClassScope of: Object in: environment)
 ]
 
-{ #category : #'methods for tests' }
+{ #category : 'methods for tests' }
 ClyMessageImplementorsQueryTest >> messageImplementor2 [
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyMessageImplementorsQueryTest >> targetSelector [
 	^#clyMessageImplementor1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyMessageImplementorsQueryTest >> testCheckIfEmpty [
 	query scope: (ClyMethodScope of: (self class >> self targetSelector) in: environment).
 	self deny: query checkEmptyResult.
@@ -37,7 +39,7 @@ ClyMessageImplementorsQueryTest >> testCheckIfEmpty [
 	self assert: query checkEmptyResult
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyMessageImplementorsQueryTest >> testComparison [
 	self assert: (ClyMessageImplementorsQuery of: #message1) equals: (ClyMessageImplementorsQuery of: #message1).
 
@@ -46,7 +48,7 @@ ClyMessageImplementorsQueryTest >> testComparison [
 	self deny: (ClyMessageImplementorsQuery of: #message1) equals: (ClyMessageImplementorsQuery of: #message2)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyMessageImplementorsQueryTest >> testFromClassScope [
 
 	self queryFromScope: ClyBothMetaLevelClassScope of: self class.
@@ -56,7 +58,7 @@ ClyMessageImplementorsQueryTest >> testFromClassScope [
 	self assert: (resultItems identityIncludes: (self class classSide >> self targetSelector))
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyMessageImplementorsQueryTest >> testFromMethodScope [
 	self queryFromScope: ClyMethodScope ofAll: {(self class >> self targetSelector) . (self class >> #messageImplementor2)}.
 
@@ -64,7 +66,7 @@ ClyMessageImplementorsQueryTest >> testFromMethodScope [
 	self assert: resultItems first identicalTo: self class >> self targetSelector
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyMessageImplementorsQueryTest >> testFromPackageScope [
 
 	self queryFromScope: ClyPackageScope of: self class package.
@@ -75,7 +77,7 @@ ClyMessageImplementorsQueryTest >> testFromPackageScope [
 	self assert: (resultItems identityIncludes: self class superclass >> self targetSelector)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyMessageImplementorsQueryTest >> testFromSystemScope [
 
 	self queryFromScope: ClySystemEnvironmentScope of: ClySystemEnvironment currentImage.

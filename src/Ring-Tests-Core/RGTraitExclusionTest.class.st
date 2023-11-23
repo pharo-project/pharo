@@ -1,10 +1,11 @@
 Class {
-	#name : #RGTraitExclusionTest,
-	#superclass : #RGTest,
-	#category : #'Ring-Tests-Core'
+	#name : 'RGTraitExclusionTest',
+	#superclass : 'RGTest',
+	#category : 'Ring-Tests-Core',
+	#package : 'Ring-Tests-Core'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGTraitExclusionTest >> testAliasesCollection [
 
 	| traitAlias env alias1 alias2 alias3 |
@@ -37,7 +38,7 @@ RGTraitExclusionTest >> testAliasesCollection [
 	self assert: (traitAlias hasResolved: #aliases)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGTraitExclusionTest >> testExclusionsCollection [
 
 	| traitExclusion env exclusion1 exclusion2 exclusion3 |
@@ -45,32 +46,32 @@ RGTraitExclusionTest >> testExclusionsCollection [
 	traitExclusion := RGTraitExclusion unnamed.
 	env := traitExclusion environment.
 
-	self assert: traitExclusion exclusions isEmpty.
+	self assert: traitExclusion removedSelectors isEmpty.
 	self assert: (traitExclusion hasUnresolved: #exclusions).
 
 	exclusion1 := #m1.
 	traitExclusion addExclusion: exclusion1.
-	self assert: traitExclusion exclusions size equals: 1.
+	self assert: traitExclusion removedSelectors size equals: 1.
 
 	self assert: (traitExclusion hasResolved: #exclusions).
 
 	exclusion2 := #m2.
 	traitExclusion addExclusion: exclusion2.
-	self assert: traitExclusion exclusions size equals: 2.
+	self assert: traitExclusion removedSelectors size equals: 2.
 
 	exclusion3 := #m3.
 	traitExclusion addExclusion: exclusion3.
-	self assert: traitExclusion exclusions size equals: 3.
+	self assert: traitExclusion removedSelectors size equals: 3.
 
 	traitExclusion removeExclusion: exclusion3.
-	self assert: traitExclusion exclusions size equals: 2.
+	self assert: traitExclusion removedSelectors size equals: 2.
 
 	traitExclusion cleanExclusions.
-	self assert: traitExclusion exclusions isEmpty.
+	self assert: traitExclusion removedSelectors isEmpty.
 	self assert: (traitExclusion hasResolved: #exclusions)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGTraitExclusionTest >> testImplicitEnvironment [
 
 	| def def2 env |
@@ -98,7 +99,7 @@ RGTraitExclusionTest >> testImplicitEnvironment [
 	self assert: def parent transformations size equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGTraitExclusionTest >> testNewTraitAlias [
 
 	| traitAlias |
@@ -108,7 +109,7 @@ RGTraitExclusionTest >> testNewTraitAlias [
 	self assert: (traitAlias isTraitTransformation)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGTraitExclusionTest >> testNewTraitExlusion [
 
 	| traitExclusion |
@@ -118,7 +119,7 @@ RGTraitExclusionTest >> testNewTraitExlusion [
 	self assert: (traitExclusion isTraitTransformation)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGTraitExclusionTest >> testResolvingConsistency [
 
 	| anObject |
@@ -126,7 +127,7 @@ RGTraitExclusionTest >> testResolvingConsistency [
 	self checkClassesConsistency: anObject and: anObject makeResolved
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGTraitExclusionTest >> testUsedTraits [
 
 	| traitExclusion trait usedTraits |

@@ -1,13 +1,13 @@
-Extension { #name : #MenuMorph }
+Extension { #name : 'MenuMorph' }
 
-{ #category : #'*Tool-FileList' }
+{ #category : '*Tool-FileList' }
 MenuMorph >> addService: aService for: serviceUser [
 	"Append a menu item with the given service. If the item is selected, it will perform the given service."
 
 	aService addServiceFor: serviceUser toMenu: self
 ]
 
-{ #category : #'*Tool-FileList' }
+{ #category : '*Tool-FileList' }
 MenuMorph >> addServices: services for: served extraLines: linesArray [
 
 	services withIndexDo: [:service :i |

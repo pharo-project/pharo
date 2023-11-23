@@ -2,12 +2,14 @@
 CharacterSetTest holds tests for CharacterSet
 "
 Class {
-	#name : #CharacterSetTest,
-	#superclass : #TestCase,
-	#category : #'Collections-Support-Tests-CharacterSets'
+	#name : 'CharacterSetTest',
+	#superclass : 'TestCase',
+	#category : 'Collections-Support-Tests-CharacterSets',
+	#package : 'Collections-Support-Tests',
+	#tag : 'CharacterSets'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 CharacterSetTest >> testCopy [
     | theOriginal theCopy |
     theOriginal := CharacterSet newFrom: 'abc'.

@@ -1,6 +1,6 @@
-Extension { #name : #RBGlobalNode }
+Extension { #name : 'RBGlobalNode' }
 
-{ #category : #'*ClassDeprecation' }
+{ #category : '*ClassDeprecation' }
 RBGlobalNode >> deprecationTransform [
 	"Replaces itself with the deprecationTransformExpression of the refererred class."
 
@@ -19,14 +19,14 @@ RBGlobalNode >> deprecationTransform [
 			self ]
 ]
 
-{ #category : #'*ClassDeprecation' }
+{ #category : '*ClassDeprecation' }
 RBGlobalNode >> deprecationTransformMetaLink [
 	"Answers its deprecationTransformMetaLink, if any."
 
 	^ self links detect: [ :e | e isKindOf: ClassDeprecationMetaLink ]
 ]
 
-{ #category : #'*ClassDeprecation' }
+{ #category : '*ClassDeprecation' }
 RBGlobalNode >> hasDeprecationTransformMetaLink [
 	"Answers whether or not it has a deprecationTransformMetaLink."
 
@@ -34,7 +34,7 @@ RBGlobalNode >> hasDeprecationTransformMetaLink [
 		anySatisfy: [ :e | e isKindOf: ClassDeprecationMetaLink ]
 ]
 
-{ #category : #'*ClassDeprecation' }
+{ #category : '*ClassDeprecation' }
 RBGlobalNode >> installDeprecationTransformMetaLink [
 	"Installs a deprecationTransformMetaLink, if not already installed. Does nothing otherwise."
 
@@ -42,7 +42,7 @@ RBGlobalNode >> installDeprecationTransformMetaLink [
 		ifFalse: [ self link: ClassDeprecationMetaLink new ]
 ]
 
-{ #category : #'*ClassDeprecation' }
+{ #category : '*ClassDeprecation' }
 RBGlobalNode >> isDeprecatedTransformable [
 	"Answers whether or not it can be transformed with a deprecation transformation. Currently, only class references can be transformed."
 
@@ -50,7 +50,7 @@ RBGlobalNode >> isDeprecatedTransformable [
 		and: [ self binding value isDeprecatedTransformable ]
 ]
 
-{ #category : #'*ClassDeprecation' }
+{ #category : '*ClassDeprecation' }
 RBGlobalNode >> uninstallDeprecationTransformMetaLink [
 	"Uninstalls the deprecationTransformMetaLink, if already installed. Does nothing otherwise."
 

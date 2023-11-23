@@ -2,51 +2,67 @@
 I'm an abstract announcement for protocols
 "
 Class {
-	#name : #ProtocolAnnouncement,
-	#superclass : #SystemAnnouncement,
+	#name : 'ProtocolAnnouncement',
+	#superclass : 'SystemAnnouncement',
 	#instVars : [
 		'protocol',
 		'classReorganized'
 	],
-	#category : #'System-Announcements-System-Protocols'
+	#category : 'System-Announcements-System-Protocols',
+	#package : 'System-Announcements',
+	#tag : 'System-Protocols'
 }
 
-{ #category : #'class initialization' }
-ProtocolAnnouncement class >> in: aClass protocol: aProtocol [
+{ #category : 'instance creation' }
+ProtocolAnnouncement class >> class: aClass [
 
 	^ self new
 		  classReorganized: aClass;
+		  yourself
+]
+
+{ #category : 'instance creation' }
+ProtocolAnnouncement class >> in: aClass protocol: aProtocol [
+
+	^ (self class: aClass)
 		  protocol: aProtocol;
 		  yourself
 ]
 
-{ #category : #testing }
-ProtocolAnnouncement >> affectsMethodTagIn: aClass [
+{ #category : 'class initialization' }
+ProtocolAnnouncement class >> initialize [
 
-	^self classAffected == aClass
+	self deprecatedAliases: { #ClassReorganized }
 ]
 
-{ #category : #accessing }
+{ #category : 'testing' }
+ProtocolAnnouncement >> affectsProtocolsIn: aClass [
+
+	^ self classAffected == aClass
+]
+
+{ #category : 'accessing' }
 ProtocolAnnouncement >> classAffected [
-	^self classReorganized
+
+	^ self classReorganized
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProtocolAnnouncement >> classReorganized [
 	^ classReorganized
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProtocolAnnouncement >> classReorganized: anObject [
 	classReorganized := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProtocolAnnouncement >> protocol [
 	^ protocol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProtocolAnnouncement >> protocol: aString [
 	protocol := aString
 ]

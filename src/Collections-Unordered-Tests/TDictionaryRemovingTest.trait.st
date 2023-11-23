@@ -2,32 +2,34 @@
 A trait for test purposes
 "
 Trait {
-	#name : #TDictionaryRemovingTest,
-	#category : #'Collections-Unordered-Tests-Traits'
+	#name : 'TDictionaryRemovingTest',
+	#category : 'Collections-Unordered-Tests-Traits',
+	#package : 'Collections-Unordered-Tests',
+	#tag : 'Traits'
 }
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TDictionaryRemovingTest >> emptyDict [
 	self explicitRequirement
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TDictionaryRemovingTest >> keyNotInNonEmptyDict [
 " return a key not included in nonEmptyDict"
 	self explicitRequirement
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TDictionaryRemovingTest >> newEmptyDict [
 	self explicitRequirement
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TDictionaryRemovingTest >> nonEmptyDict [
 	self explicitRequirement
 ]
 
-{ #category : #'tests - fixture' }
+{ #category : 'tests - fixture' }
 TDictionaryRemovingTest >> test0FixtureDictionaryRemovingTest [
 	self nonEmptyDict.
 	self denyEmpty: self nonEmptyDict.
@@ -35,7 +37,7 @@ TDictionaryRemovingTest >> test0FixtureDictionaryRemovingTest [
 	self deny: (self nonEmptyDict keys includes: self keyNotInNonEmptyDict)
 ]
 
-{ #category : #'tests - removing' }
+{ #category : 'tests - removing' }
 TDictionaryRemovingTest >> testKeysAndValuesRemove [
 	| oldSize collection keyIn |
 
@@ -51,14 +53,14 @@ TDictionaryRemovingTest >> testKeysAndValuesRemove [
 	self should: [ collection at: keyIn  ] raise: Error
 ]
 
-{ #category : #'tests - removing' }
+{ #category : 'tests - removing' }
 TDictionaryRemovingTest >> testRemove [
 
 	self should: [self nonEmptyDict remove: nil] raise: Error.
 	self should: [self nonEmptyDict remove: nil ifAbsent: ['What ever here']] raise: Error
 ]
 
-{ #category : #'tests - removing' }
+{ #category : 'tests - removing' }
 TDictionaryRemovingTest >> testRemoveKey [
 
 	| collection oldSize keyIn |
@@ -73,7 +75,7 @@ TDictionaryRemovingTest >> testRemoveKey [
 	self should: [collection removeKey: self keyNotInNonEmptyDict ] raise: Error
 ]
 
-{ #category : #'tests - removing' }
+{ #category : 'tests - removing' }
 TDictionaryRemovingTest >> testRemoveKeyIfAbsent [
 
 	| collection oldSize keyIn value result |

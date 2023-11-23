@@ -1,6 +1,6 @@
-Extension { #name : #HashedCollection }
+Extension { #name : 'HashedCollection' }
 
-{ #category : #'*Fuel-Core' }
+{ #category : '*Fuel-Core' }
 HashedCollection >> fuelAfterMaterialization [
 
 	self rehash

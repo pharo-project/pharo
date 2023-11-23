@@ -1,17 +1,19 @@
 Class {
-	#name : #OCASTDoubleBranchConditionalTranslatorTest,
-	#superclass : #OCASTDoubleBlockTranslatorTest,
-	#category : #'OpalCompiler-Tests-AST'
+	#name : 'OCASTDoubleBranchConditionalTranslatorTest',
+	#superclass : 'OCASTDoubleBlockTranslatorTest',
+	#category : 'OpalCompiler-Tests-AST',
+	#package : 'OpalCompiler-Tests',
+	#tag : 'AST'
 }
 
-{ #category : #'building suites' }
+{ #category : 'building suites' }
 OCASTDoubleBranchConditionalTranslatorTest class >> testParameters [
 	^ super testParameters *
 		(ParametrizedTestMatrix new
-			forSelector: #optimization addOptions: { #optionInlineIf . #optionInlineIfNil . #optionInlineNone })
+			forSelector: #optimization addOptions: {#() . #(#optionInlineIf) . #(#optionInlineIfNil) . #( #optionInlineNone) . #(#optionInlineIf #optionInlineIfNil #optionInlineNone)})
 ]
 
-{ #category : #'tests - conditionals' }
+{ #category : 'tests - conditionals' }
 OCASTDoubleBranchConditionalTranslatorTest >> testFalseIfFalseIfTrueEvaluatesFalseBlock [
 
 	self
@@ -24,7 +26,7 @@ OCASTDoubleBranchConditionalTranslatorTest >> testFalseIfFalseIfTrueEvaluatesFal
 	self assert: instance iVar equals: 'false'
 ]
 
-{ #category : #'tests - conditionals' }
+{ #category : 'tests - conditionals' }
 OCASTDoubleBranchConditionalTranslatorTest >> testFalseIfFalseIfTrueReturnsFalseBlockValue [
 	| result |
 	result := self
@@ -36,7 +38,7 @@ OCASTDoubleBranchConditionalTranslatorTest >> testFalseIfFalseIfTrueReturnsFalse
 	self assert: result equals: 'false'
 ]
 
-{ #category : #'tests - conditionals' }
+{ #category : 'tests - conditionals' }
 OCASTDoubleBranchConditionalTranslatorTest >> testFalseIfTrueIfFalseEvaluatesFalseBlock [
 
 	self
@@ -49,7 +51,7 @@ OCASTDoubleBranchConditionalTranslatorTest >> testFalseIfTrueIfFalseEvaluatesFal
 	self assert: instance iVar equals: 'false'
 ]
 
-{ #category : #'tests - conditionals' }
+{ #category : 'tests - conditionals' }
 OCASTDoubleBranchConditionalTranslatorTest >> testFalseIfTrueIfFalseReturnsFalseBlockValue [
 	| result |
 	result := self
@@ -62,7 +64,7 @@ OCASTDoubleBranchConditionalTranslatorTest >> testFalseIfTrueIfFalseReturnsFalse
 	self assert: result equals: 'false'
 ]
 
-{ #category : #'tests - conditionals' }
+{ #category : 'tests - conditionals' }
 OCASTDoubleBranchConditionalTranslatorTest >> testTrueIfFalseIfTrueEvaluatesTrueBlock [
 
 	self
@@ -75,7 +77,7 @@ OCASTDoubleBranchConditionalTranslatorTest >> testTrueIfFalseIfTrueEvaluatesTrue
 	self assert: instance iVar equals: 'true'
 ]
 
-{ #category : #'tests - conditionals' }
+{ #category : 'tests - conditionals' }
 OCASTDoubleBranchConditionalTranslatorTest >> testTrueIfFalseIfTrueReturnsTrueBlockValue [
 	| result |
 	result := self
@@ -87,7 +89,7 @@ OCASTDoubleBranchConditionalTranslatorTest >> testTrueIfFalseIfTrueReturnsTrueBl
 	self assert: result equals: 'true'
 ]
 
-{ #category : #'tests - conditionals' }
+{ #category : 'tests - conditionals' }
 OCASTDoubleBranchConditionalTranslatorTest >> testTrueIfTrueIfFalseEvaluatesTrueBlock [
 
 	self
@@ -100,7 +102,7 @@ OCASTDoubleBranchConditionalTranslatorTest >> testTrueIfTrueIfFalseEvaluatesTrue
 	self assert: instance iVar equals: 'true'
 ]
 
-{ #category : #'tests - conditionals' }
+{ #category : 'tests - conditionals' }
 OCASTDoubleBranchConditionalTranslatorTest >> testTrueIfTrueIfFalseReturnsTrueBlockValue [
 	| result |
 	result := self

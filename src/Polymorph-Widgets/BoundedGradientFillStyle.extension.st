@@ -1,6 +1,6 @@
-Extension { #name : #BoundedGradientFillStyle }
+Extension { #name : 'BoundedGradientFillStyle' }
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 BoundedGradientFillStyle >> fillRectangle: aRectangle on: aCanvas [
 	"Fill the given rectangle on the given canvas with the receiver."
 

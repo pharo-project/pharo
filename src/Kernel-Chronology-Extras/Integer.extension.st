@@ -1,12 +1,12 @@
-Extension { #name : #Integer }
+Extension { #name : 'Integer' }
 
-{ #category : #'*Kernel-Chronology-Extras' }
+{ #category : '*Kernel-Chronology-Extras' }
 Integer >> asYear [
 
  	^ Year year: self
 ]
 
-{ #category : #'*Kernel-Chronology-Extras' }
+{ #category : '*Kernel-Chronology-Extras' }
 Integer >> tinyBenchmarks [
 
 	| t1 t2 r n1 n2 |

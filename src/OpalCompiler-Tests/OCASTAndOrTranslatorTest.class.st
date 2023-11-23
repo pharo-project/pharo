@@ -1,17 +1,20 @@
 Class {
-	#name : #OCASTAndOrTranslatorTest,
-	#superclass : #OCASTSingleBlockTranslatorTest,
-	#category : #'OpalCompiler-Tests-AST'
+	#name : 'OCASTAndOrTranslatorTest',
+	#superclass : 'OCASTSingleBlockTranslatorTest',
+	#category : 'OpalCompiler-Tests-AST',
+	#package : 'OpalCompiler-Tests',
+	#tag : 'AST'
 }
 
-{ #category : #'building suites' }
+{ #category : 'building suites' }
 OCASTAndOrTranslatorTest class >> testParameters [
-	^ super testParameters *
-		(ParametrizedTestMatrix new
-			forSelector: #optimization addOptions: { #optionInlineAndOr . #optionInlineNone })
+
+	^ super testParameters * (ParametrizedTestMatrix new
+		   forSelector: #optimization
+		   addOptions: (self inliningOptionsFor: #optionInlineAndOr))
 ]
 
-{ #category : #'tests - and & or' }
+{ #category : 'tests - and & or' }
 OCASTAndOrTranslatorTest >> testAndWithLeftFalseShortcircuitsRight [
 
 	self
@@ -22,7 +25,7 @@ OCASTAndOrTranslatorTest >> testAndWithLeftFalseShortcircuitsRight [
 	self assert: instance result equals: nil
 ]
 
-{ #category : #'tests - and & or' }
+{ #category : 'tests - and & or' }
 OCASTAndOrTranslatorTest >> testAndWithLeftTrueEvaluatesRight [
 
 	self
@@ -33,7 +36,7 @@ OCASTAndOrTranslatorTest >> testAndWithLeftTrueEvaluatesRight [
 	self assert: instance result equals: 17
 ]
 
-{ #category : #'tests - and & or' }
+{ #category : 'tests - and & or' }
 OCASTAndOrTranslatorTest >> testFalseAndAnythingReturnsFalse [
 
 	| result |
@@ -46,7 +49,7 @@ OCASTAndOrTranslatorTest >> testFalseAndAnythingReturnsFalse [
 	self deny: result
 ]
 
-{ #category : #'tests - and & or' }
+{ #category : 'tests - and & or' }
 OCASTAndOrTranslatorTest >> testFalseOrAnythingReturnsAnything [
 
 	| result |
@@ -59,7 +62,7 @@ OCASTAndOrTranslatorTest >> testFalseOrAnythingReturnsAnything [
 	self assert: result equals: 17
 ]
 
-{ #category : #'tests - and & or' }
+{ #category : 'tests - and & or' }
 OCASTAndOrTranslatorTest >> testOrWithLeftFalseEvaluatesRight [
 
 	self
@@ -70,7 +73,7 @@ OCASTAndOrTranslatorTest >> testOrWithLeftFalseEvaluatesRight [
 	self assert: instance result equals: 17
 ]
 
-{ #category : #'tests - and & or' }
+{ #category : 'tests - and & or' }
 OCASTAndOrTranslatorTest >> testOrWithLeftTrueShortcircuitsRight [
 
 	self
@@ -81,7 +84,7 @@ OCASTAndOrTranslatorTest >> testOrWithLeftTrueShortcircuitsRight [
 	self assert: instance result equals: nil
 ]
 
-{ #category : #'tests - and & or' }
+{ #category : 'tests - and & or' }
 OCASTAndOrTranslatorTest >> testTrueAndAnythingReturnsAnything [
 
 	| result |
@@ -94,7 +97,7 @@ OCASTAndOrTranslatorTest >> testTrueAndAnythingReturnsAnything [
 	self assert: result equals: 17
 ]
 
-{ #category : #'tests - and & or' }
+{ #category : 'tests - and & or' }
 OCASTAndOrTranslatorTest >> testTrueOrAnythingReturnsTrue [
 
 	| result |

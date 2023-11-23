@@ -1,6 +1,6 @@
-Extension { #name : #UndeclaredVariable }
+Extension { #name : 'UndeclaredVariable' }
 
-{ #category : #'*Shout' }
+{ #category : '*Shout' }
 UndeclaredVariable >> styleNameIn: aRBVariableNode [
 
 	^ (aRBVariableNode scope hasBindingThatBeginsWith: self name)

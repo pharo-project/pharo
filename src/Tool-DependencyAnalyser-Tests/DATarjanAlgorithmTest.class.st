@@ -1,6 +1,6 @@
 Class {
-	#name : #DATarjanAlgorithmTest,
-	#superclass : #TestCase,
+	#name : 'DATarjanAlgorithmTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'tarjanPackage',
 		'packageA',
@@ -13,22 +13,25 @@ Class {
 		'packageH',
 		'anArray'
 	],
-	#category : #'Tool-DependencyAnalyser-Tests-Algorithm'
+	#category : 'Tool-DependencyAnalyser-Tests-Algorithm',
+	#package : 'Tool-DependencyAnalyser-Tests',
+	#tag : 'Algorithm'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 DATarjanAlgorithmTest >> setUp [
+
 	super setUp.
 	tarjanPackage := AITarjan new.
 	anArray := Array new: 8.
-	packageA := DAPackage on: (RPackageSet named: 'A').
-	packageB := DAPackage on: (RPackageSet named: 'B').
-	packageC := DAPackage on: (RPackageSet named: 'C').
-	packageD := DAPackage on: (RPackageSet named: 'D').
-	packageE := DAPackage on: (RPackageSet named: 'E').
-	packageF := DAPackage on: (RPackageSet named: 'F').
-	packageG := DAPackage on: (RPackageSet named: 'G').
-	packageH := DAPackage on: (RPackageSet named: 'H').
+	packageA := DAPackage onPackageNamed: 'A'.
+	packageB := DAPackage onPackageNamed: 'B'.
+	packageC := DAPackage onPackageNamed: 'C'.
+	packageD := DAPackage onPackageNamed: 'D'.
+	packageE := DAPackage onPackageNamed: 'E'.
+	packageF := DAPackage onPackageNamed: 'F'.
+	packageG := DAPackage onPackageNamed: 'G'.
+	packageH := DAPackage onPackageNamed: 'H'.
 	anArray at: 1 put: packageA.
 	anArray at: 2 put: packageB.
 	anArray at: 3 put: packageC.
@@ -36,23 +39,23 @@ DATarjanAlgorithmTest >> setUp [
 	anArray at: 5 put: packageE.
 	anArray at: 6 put: packageF.
 	anArray at: 7 put: packageG.
-	anArray at: 8 put:packageH
+	anArray at: 8 put: packageH
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 DATarjanAlgorithmTest >> stackSize [
 	^ (tarjanPackage instVarNamed: 'stack') size
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DATarjanAlgorithmTest >> testNoOutgoingDependenciesAfterTarjan [
 	"test if we have 0 outgoing dependencies in each SCC after the algorithm"
 
 	| aRelation aCollection sccs |
 	aCollection := OrderedCollection withAll: (self packageOrganizer packages
-			                select: [ :package | '*Collections*' match: package packageName asString ]
-			                thenCollect: [ :package | package packageName ]).
-	aRelation := DAPackageRelationGraph onPackages: (aCollection collect: [ :each | DAPackage on: (RPackageSet named: each) ]).
+			                select: [ :package | '*Collections*' match: package name asString ]
+			                thenCollect: [ :package | package name ]).
+	aRelation := DAPackageRelationGraph onPackages: (aCollection collect: [ :each | DAPackage onPackageNamed: each ]).
 	aRelation
 		computeStaticDependencies;
 		removeInternalDependencies;
@@ -64,7 +67,7 @@ DATarjanAlgorithmTest >> testNoOutgoingDependenciesAfterTarjan [
 	self assert: (sccs anySatisfy: [ :scc | scc outgoing isEmpty ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DATarjanAlgorithmTest >> testRunTarjan [
 	"test the Tarjan algorithm on a simple graph with 8 nodes"
 	| aPDPackageRelation  sccs |

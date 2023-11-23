@@ -2,12 +2,14 @@
 I do quoted printable MIME decoding as specified in RFC 2047 """"MIME Part Three: Message Header Extensions for Non-ASCII Text"". See String>>decodeMimeHeader
 "
 Class {
-	#name : #RFC2047MimeConverter,
-	#superclass : #QuotedPrintableMimeConverter,
-	#category : #'Network-MIME-Converter'
+	#name : 'RFC2047MimeConverter',
+	#superclass : 'QuotedPrintableMimeConverter',
+	#category : 'Network-MIME-Converter',
+	#package : 'Network-MIME',
+	#tag : 'Converter'
 }
 
-{ #category : #'private - encoding' }
+{ #category : 'private - encoding' }
 RFC2047MimeConverter >> encodeChar: aChar to: aStream [
 
 	aChar = Character space
@@ -19,7 +21,7 @@ RFC2047MimeConverter >> encodeChar: aChar to: aStream [
 		nextPut: (Character digitValue: aChar asciiValue \\ 16)
 ]
 
-{ #category : #'private - encoding' }
+{ #category : 'private - encoding' }
 RFC2047MimeConverter >> encodeWord: aString [
 
 	(aString allSatisfy: [:c | c asciiValue < 128])
@@ -30,7 +32,7 @@ RFC2047MimeConverter >> encodeWord: aString [
 		stream nextPutAll: '?=']
 ]
 
-{ #category : #'private - encoding' }
+{ #category : 'private - encoding' }
 RFC2047MimeConverter >> isStructuredField: aString [
 
 	| fName |
@@ -40,7 +42,7 @@ RFC2047MimeConverter >> isStructuredField: aString [
 	^#('Sender' 'From' 'Reply-To' 'To' 'cc' 'bcc') anySatisfy: [:each | fName sameAs: each]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 RFC2047MimeConverter >> mimeDecode [
 	"Do conversion reading from mimeStream writing to dataStream. See String>>decodeMimeHeader"
 
@@ -55,7 +57,7 @@ RFC2047MimeConverter >> mimeDecode [
 	^ dataStream
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 RFC2047MimeConverter >> mimeEncode [
 	"Do conversion reading from dataStream writing to mimeStream. Break long lines and escape non-7bit chars."
 
@@ -77,7 +79,7 @@ RFC2047MimeConverter >> mimeEncode [
 	^ mimeStream
 ]
 
-{ #category : #'private - encoding' }
+{ #category : 'private - encoding' }
 RFC2047MimeConverter >> readWord [
 
 	| strm |

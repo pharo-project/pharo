@@ -16,12 +16,14 @@ Idea that most prioritized decorator should be able override visual effects from
 Important notice. The actual priority is defined by decorator classes in class side method #priority. I retrieve them when annotation is created
 "
 Class {
-	#name : #ClyTableDecorationStrategyAnnotation,
-	#superclass : #ClassAnnotation,
-	#category : #'Calypso-Browser-Table'
+	#name : 'ClyTableDecorationStrategyAnnotation',
+	#superclass : 'ClassAnnotation',
+	#category : 'Calypso-Browser-Table',
+	#package : 'Calypso-Browser',
+	#tag : 'Table'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 ClyTableDecorationStrategyAnnotation class >> createContainerForRegistry [
 	"Decoration with more priority should override applied changes of table row
 	which was produced by less prioritized decorations.
@@ -32,37 +34,37 @@ ClyTableDecorationStrategyAnnotation class >> createContainerForRegistry [
 	^SortedCollection sortBlock: #priority ascending
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyTableDecorationStrategyAnnotation >> annotatedClass: aTableDecoratorClass [
 	super annotatedClass: aTableDecoratorClass.
 
 	priority := aTableDecoratorClass priority
 ]
 
-{ #category : #decoration }
+{ #category : 'decoration' }
 ClyTableDecorationStrategyAnnotation >> decorateMainTableCell: anItemCellMorph inContext: itemContext [
 
 	annotatedClass decorateMainTableCell: anItemCellMorph inContext: itemContext
 ]
 
-{ #category : #decoration }
+{ #category : 'decoration' }
 ClyTableDecorationStrategyAnnotation >> decorateTableCell: anItemCellMorph inContext: itemContext [
 
 	annotatedClass decorateTableCell: anItemCellMorph inContext: itemContext
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyTableDecorationStrategyAnnotation >> isActiveInContext: aBrowserItemContext [
 	^(super isActiveInContext: aBrowserItemContext)
 		and: [ annotatedClass wantsDecorateTableCellInContext: aBrowserItemContext ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyTableDecorationStrategyAnnotation >> isForbidden [
 	^annotatedClass isAbstract
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyTableDecorationStrategyAnnotation >> printOn: aStream [
 	super printOn: aStream.
 

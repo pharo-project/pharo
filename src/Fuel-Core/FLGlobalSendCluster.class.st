@@ -21,15 +21,17 @@ So what will happen is that during serialization, the admin user won't be comple
 We test this feature in FLGlobalSendSerializationTest.
 "
 Class {
-	#name : #FLGlobalSendCluster,
-	#superclass : #FLGlobalCluster,
+	#name : 'FLGlobalSendCluster',
+	#superclass : 'FLGlobalCluster',
 	#instVars : [
 		'globalSends'
 	],
-	#category : #'Fuel-Core-Clusters-Global'
+	#category : 'Fuel-Core-Clusters-Global',
+	#package : 'Fuel-Core',
+	#tag : 'Clusters-Global'
 }
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 FLGlobalSendCluster >> add: anObject name: globalName selector: selector traceWith: anAnalysis [
 
 	self add: anObject traceWith: anAnalysis.
@@ -38,13 +40,13 @@ FLGlobalSendCluster >> add: anObject name: globalName selector: selector traceWi
 		ifAbsentPut: [ Association key: globalName value: selector ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 FLGlobalSendCluster >> initializeAnalyzing [
 	super initializeAnalyzing.
 	globalSends := IdentityDictionary new.
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLGlobalSendCluster >> materializeInstanceWith: aDecoder [
 
 	| global selector |
@@ -53,7 +55,7 @@ FLGlobalSendCluster >> materializeInstanceWith: aDecoder [
 	^ global perform: selector
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLGlobalSendCluster >> serializeInstance: anObject with: anEncoder [
 	
 	| globalSend |

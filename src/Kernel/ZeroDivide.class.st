@@ -2,40 +2,42 @@
 I am ZeroDivide, an ArithmeticError that may be signaled when a mathematical division by 0 is attempted.
 "
 Class {
-	#name : #ZeroDivide,
-	#superclass : #ArithmeticError,
+	#name : 'ZeroDivide',
+	#superclass : 'ArithmeticError',
 	#instVars : [
 		'dividend'
 	],
-	#category : #'Kernel-Exceptions'
+	#category : 'Kernel-Exceptions',
+	#package : 'Kernel',
+	#tag : 'Exceptions'
 }
 
-{ #category : #exceptioninstantiator }
+{ #category : 'exceptioninstantiator' }
 ZeroDivide class >> dividend: argument [
 	^self new dividend: argument; yourself
 ]
 
-{ #category : #signaling }
+{ #category : 'signaling' }
 ZeroDivide class >> signalWithDividend: aDividend [
 
 	^(self dividend: aDividend) signal
 ]
 
-{ #category : #exceptiondescription }
+{ #category : 'exceptiondescription' }
 ZeroDivide >> dividend [
 	"Answer the number that was being divided by zero."
 
 	^dividend
 ]
 
-{ #category : #exceptionbuilder }
+{ #category : 'exceptionbuilder' }
 ZeroDivide >> dividend: argument [
 	"Specify the number that was being divided by zero."
 
 	dividend := argument
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZeroDivide >> isResumable [
 	"Determine whether an exception is resumable."
 

@@ -6,22 +6,24 @@ My subclasses can be registred like this:
 	NoDebugger beCurrent
 "
 Class {
-	#name : #AbstractDebugger,
-	#superclass : #Object,
-	#category : #'Tools-Debugger'
+	#name : 'AbstractDebugger',
+	#superclass : 'Object',
+	#category : 'Tools-Debugger',
+	#package : 'Tools',
+	#tag : 'Debugger'
 }
 
-{ #category : #query }
+{ #category : 'query' }
 AbstractDebugger class >> beCurrent [
 	self isAbstract ifTrue: [ self error: 'Cannot register an abstract debugger' ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 AbstractDebugger class >> isAbstract [
 	^ self = AbstractDebugger
 ]
 
-{ #category : #'opening api' }
+{ #category : 'opening api' }
 AbstractDebugger class >> openOn: aDebugSession withFullView: aBool andNotification: aString [
 	self subclassResponsibility
 ]

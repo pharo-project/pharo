@@ -8,8 +8,8 @@ Example:
 -> a RBVariableEnvironment
 "
 Class {
-	#name : #RBVariableEnvironment,
-	#superclass : #RBBrowserEnvironmentWrapper,
+	#name : 'RBVariableEnvironment',
+	#superclass : 'RBBrowserEnvironmentWrapper',
 	#instVars : [
 		'instanceVariables',
 		'instanceVariableReaders',
@@ -17,16 +17,17 @@ Class {
 		'classVariables',
 		'selectorCache'
 	],
-	#category : #'Refactoring-Environment'
+	#category : 'Refactoring-Environment',
+	#package : 'Refactoring-Environment'
 }
 
-{ #category : #'accessing - defaults' }
+{ #category : 'accessing - defaults' }
 RBVariableEnvironment class >> defaultName [
 
 	^ 'Variables'
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBVariableEnvironment class >> on: anEnvironment readersOfInstanceVariable: aString in: aClass [
 	| newEnv |
 	newEnv := (self onEnvironment: anEnvironment)
@@ -39,7 +40,7 @@ RBVariableEnvironment class >> on: anEnvironment readersOfInstanceVariable: aStr
 	^newEnv
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBVariableEnvironment class >> on: anEnvironment referencesToClassVariable: aSymbol in: aClass [
 	| newEnv definingClass assoc |
 	newEnv := (self onEnvironment: anEnvironment)
@@ -54,7 +55,7 @@ RBVariableEnvironment class >> on: anEnvironment referencesToClassVariable: aSym
 	^newEnv
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBVariableEnvironment class >> on: anEnvironment referencesToInstanceVariable: aString in: aClass [
 	| newEnv |
 	newEnv := (self onEnvironment: anEnvironment)
@@ -68,7 +69,7 @@ RBVariableEnvironment class >> on: anEnvironment referencesToInstanceVariable: a
 	^newEnv
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBVariableEnvironment class >> on: anEnvironment writersOfInstanceVariable: aString in: aClass [
 	| newEnv |
 	newEnv := (self onEnvironment: anEnvironment)
@@ -81,7 +82,7 @@ RBVariableEnvironment class >> on: anEnvironment writersOfInstanceVariable: aStr
 	^newEnv
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBVariableEnvironment class >> readersOfInstanceVariable: aString in: aClass [
 	^ self
 		on: self default
@@ -89,7 +90,7 @@ RBVariableEnvironment class >> readersOfInstanceVariable: aString in: aClass [
 		in: aClass
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBVariableEnvironment class >> referencesToClassVariable: aSymbol in: aClass [
 	^ self
 		on: self default
@@ -97,7 +98,7 @@ RBVariableEnvironment class >> referencesToClassVariable: aSymbol in: aClass [
 		in: aClass
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBVariableEnvironment class >> referencesToInstanceVariable: aString in: aClass [
 	^ self
 		on: self default
@@ -105,7 +106,7 @@ RBVariableEnvironment class >> referencesToInstanceVariable: aString in: aClass 
 		in: aClass
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBVariableEnvironment class >> writersOfInstanceVariable: aString in: aClass [
 	^ self
 		on: self default
@@ -113,26 +114,26 @@ RBVariableEnvironment class >> writersOfInstanceVariable: aString in: aClass [
 		in: aClass
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBVariableEnvironment >> accessorMethods [
 	^#(#instanceVariables #instanceVariableReaders #instanceVariableWriters #classVariables)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBVariableEnvironment >> addClass: aClass classVariable: aSymbol [
 	(classVariables at: aClass name ifAbsentPut: [Set new]) add: aSymbol.
 	self flushCachesFor: aClass.
 	self addSearchString: aSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBVariableEnvironment >> addClass: aClass instanceVariable: aString [
 	(instanceVariables at: aClass name ifAbsentPut: [Set new]) add: aString.
 	self flushCachesFor: aClass.
 	self addSearchString: aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBVariableEnvironment >> addClass: aClass instanceVariableReader: aString [
 	(instanceVariableReaders at: aClass name ifAbsentPut: [Set new])
 		add: aString.
@@ -140,7 +141,7 @@ RBVariableEnvironment >> addClass: aClass instanceVariableReader: aString [
 	self addSearchString: aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBVariableEnvironment >> addClass: aClass instanceVariableWriter: aString [
 	(instanceVariableWriters at: aClass name ifAbsentPut: [Set new])
 		add: aString.
@@ -148,10 +149,10 @@ RBVariableEnvironment >> addClass: aClass instanceVariableWriter: aString [
 	self addSearchString: aString
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBVariableEnvironment >> allClassesDo: aBlock [
 	| classes instVarBlock |
-	classes := Set new.
+	classes := Set new: 4096.
 	instVarBlock :=
 			[:each |
 			| class |
@@ -164,15 +165,15 @@ RBVariableEnvironment >> allClassesDo: aBlock [
 			[:each |
 			| class |
 			class := self classForName: each.
-			class notNil
-				ifTrue:
+			class 
+				ifNotNil:
 					[classes
 						addAll: class withAllSubclasses;
 						addAll: class class withAllSubclasses]].
 	classes do: aBlock
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBVariableEnvironment >> classForName: aString [
 	| name isMeta class |
 	isMeta := aString includes: $ .
@@ -180,12 +181,12 @@ RBVariableEnvironment >> classForName: aString [
 		ifTrue: [ aString copyFrom: 1 to: (aString size - 6 max: 1) ]
 		ifFalse: [ aString ]) asSymbol.
 	class := self systemDictionary at: name ifAbsent: [ nil ].
-	^ (class notNil and: [ isMeta ])
+	^ (class isNotNil and: [ isMeta ])
 		ifTrue: [ class class ]
 		ifFalse: [ class ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBVariableEnvironment >> classNamesWithVariables [
 	| classNames |
 	classNames := Set new.
@@ -197,7 +198,7 @@ RBVariableEnvironment >> classNamesWithVariables [
 	^classNames
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBVariableEnvironment >> classVariableSelectorsFor: aClass [
 	| selectors classVars |
 	selectors := Set new.
@@ -206,7 +207,7 @@ RBVariableEnvironment >> classVariableSelectorsFor: aClass [
 			[:each |
 			| cls |
 			cls := self classForName: each.
-			(cls notNil and: [aClass instanceSide includesBehavior: cls])
+			(cls isNotNil and: [aClass instanceSide includesBehavior: cls])
 				ifTrue: [classVars addAll: (classVariables at: each)]].
 	classVars do:
 			[:each |
@@ -216,29 +217,29 @@ RBVariableEnvironment >> classVariableSelectorsFor: aClass [
 	^selectors
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBVariableEnvironment >> classVariables [
 	^classVariables
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBVariableEnvironment >> classVariables: anObject [
 	classVariables := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBVariableEnvironment >> classVariablesFor: aClass [
 	^classVariables at: aClass name ifAbsent: [#()]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBVariableEnvironment >> computeSelectorCacheFor: aClass [
 	^(self instanceVariableSelectorsFor: aClass)
 		addAll: (self classVariableSelectorsFor: aClass);
 		yourself
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 RBVariableEnvironment >> copyDictionary: aDictionary [
 	| copy |
 	copy := Dictionary new: aDictionary size.
@@ -246,7 +247,7 @@ RBVariableEnvironment >> copyDictionary: aDictionary [
 	^copy
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBVariableEnvironment >> environmentForClassVariable: aSymbol in: aClass [
 	| selectorEnvironment assoc block |
 	selectorEnvironment := RBSelectorEnvironment onEnvironment: self.
@@ -266,7 +267,7 @@ RBVariableEnvironment >> environmentForClassVariable: aSymbol in: aClass [
 	^selectorEnvironment
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBVariableEnvironment >> environmentForInstanceVariable: aString in: aClass [
 	| selectorEnvironment isReader isWriter |
 	selectorEnvironment := RBSelectorEnvironment onEnvironment: self.
@@ -293,7 +294,7 @@ RBVariableEnvironment >> environmentForInstanceVariable: aString in: aClass [
 	^selectorEnvironment
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBVariableEnvironment >> flushCachesFor: aClass [
 
 	selectorCache ifNil: [ ^ self ].
@@ -305,12 +306,7 @@ RBVariableEnvironment >> flushCachesFor: aClass [
 			]
 ]
 
-{ #category : #testing }
-RBVariableEnvironment >> includesCategory: aCategory [
-	^(self classNamesFor: aCategory) isNotEmpty
-]
-
-{ #category : #testing }
+{ #category : 'testing' }
 RBVariableEnvironment >> includesClass: aClass [
 	(super includesClass: aClass) ifFalse: [^false].
 	(instanceVariables includesKey: aClass name) ifTrue: [^true].
@@ -319,18 +315,19 @@ RBVariableEnvironment >> includesClass: aClass [
 		anySatisfy: [:each | self includesSelector: each in: aClass]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBVariableEnvironment >> includesProtocol: aProtocol in: aClass [
-	^(self selectorsFor: aProtocol in: aClass) isNotEmpty
+
+	^ (self selectorsFor: aProtocol in: aClass) isNotEmpty
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBVariableEnvironment >> includesSelector: aSymbol in: aClass [
 	^(environment includesSelector: aSymbol in: aClass)
 		and: [(self selectorCacheFor: aClass) includes: aSymbol]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBVariableEnvironment >> initialize [
 	super initialize.
 	instanceVariables := Dictionary new.
@@ -339,17 +336,17 @@ RBVariableEnvironment >> initialize [
 	instanceVariableWriters := Dictionary new
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBVariableEnvironment >> instanceVariableReaders [
 	^instanceVariableReaders
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBVariableEnvironment >> instanceVariableReaders: anObject [
 	instanceVariableReaders := anObject
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBVariableEnvironment >> instanceVariableSelectorsFor: aClass [
 	| selectors |
 	selectors := Set new.
@@ -362,33 +359,33 @@ RBVariableEnvironment >> instanceVariableSelectorsFor: aClass [
 					[:each |
 					| cls |
 					cls := self classForName: each.
-					(cls notNil and: [aClass includesBehavior: cls])
+					(cls isNotNil and: [aClass includesBehavior: cls])
 						ifTrue: [instVars addAll: ((self perform: var) at: each)]].
 			instVars do: [:each | selectors addAll: (aClass perform: sel with: each)]].
 	^selectors
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBVariableEnvironment >> instanceVariableWriters [
 	^instanceVariableWriters
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBVariableEnvironment >> instanceVariableWriters: anObject [
 	instanceVariableWriters := anObject
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBVariableEnvironment >> instanceVariables [
 	^instanceVariables
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBVariableEnvironment >> instanceVariables: anObject [
 	instanceVariables := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBVariableEnvironment >> instanceVariablesFor: aClass [
 	| vars name |
 	vars := Set new.
@@ -400,28 +397,23 @@ RBVariableEnvironment >> instanceVariablesFor: aClass [
 	^vars
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBVariableEnvironment >> isEmpty [
 	^ self accessorMethods allSatisfy: [ :each | (self perform: each) isEmpty ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBVariableEnvironment >> isVariableEnvironment [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBVariableEnvironment >> numberVariables [
 	^self accessorMethods inject: 0
 		into: [:sum :each | sum + ((self perform: each) inject: 0 into: [:s :e | s + e size])]
 ]
 
-{ #category : #accessing }
-RBVariableEnvironment >> packages [
-	^ self classes collect: [:each | each package]
-]
-
-{ #category : #copying }
+{ #category : 'copying' }
 RBVariableEnvironment >> postCopy [
 	super postCopy.
 	instanceVariables := self copyDictionary: instanceVariables.
@@ -431,12 +423,12 @@ RBVariableEnvironment >> postCopy [
 	selectorCache := nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBVariableEnvironment >> problemCount [
 	^self numberVariables
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBVariableEnvironment >> removeClass: aClass classVariable: aSymbol [
 	| vars |
 	vars := classVariables at: aClass name ifAbsent: [Set new].
@@ -445,7 +437,7 @@ RBVariableEnvironment >> removeClass: aClass classVariable: aSymbol [
 	self flushCachesFor: aClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBVariableEnvironment >> removeClass: aClass instanceVariable: aString [
 	| vars |
 	vars := instanceVariables at: aClass name ifAbsent: [Set new].
@@ -454,7 +446,7 @@ RBVariableEnvironment >> removeClass: aClass instanceVariable: aString [
 	self flushCachesFor: aClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBVariableEnvironment >> removeClass: aClass instanceVariableReader: aString [
 	| vars |
 	vars := instanceVariableReaders at: aClass name ifAbsent: [Set new].
@@ -463,7 +455,7 @@ RBVariableEnvironment >> removeClass: aClass instanceVariableReader: aString [
 	self flushCachesFor: aClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBVariableEnvironment >> removeClass: aClass instanceVariableWriter: aString [
 	| vars |
 	vars := instanceVariableWriters at: aClass name ifAbsent: [Set new].
@@ -472,18 +464,18 @@ RBVariableEnvironment >> removeClass: aClass instanceVariableWriter: aString [
 	self flushCachesFor: aClass
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBVariableEnvironment >> selectorCache [
 
 	^ selectorCache ifNil: [ selectorCache := Dictionary new ] ifNotNil: [ selectorCache ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBVariableEnvironment >> selectorCacheFor: aClass [
 	^self selectorCache at: aClass name ifAbsentPut: [ self computeSelectorCacheFor: aClass ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBVariableEnvironment >> storeOn: aStream [
 	aStream
 		nextPut: $(;

@@ -6,24 +6,26 @@ I can be used for generating and parsing.
 Part of Zinc HTTP Components.
 "
 Class {
-	#name : #ZnRequestLine,
-	#superclass : #Object,
+	#name : 'ZnRequestLine',
+	#superclass : 'Object',
 	#instVars : [
 		'method',
 		'uri',
 		'version'
 	],
-	#category : #'Zinc-HTTP-Core'
+	#category : 'Zinc-HTTP-Core',
+	#package : 'Zinc-HTTP',
+	#tag : 'Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnRequestLine class >> empty [
 	^ self new
 		version: ZnConstants defaultHTTPVersion;
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnRequestLine class >> method: method uri: uri [
 	^ self new
 		method: method;
@@ -32,14 +34,14 @@ ZnRequestLine class >> method: method uri: uri [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnRequestLine class >> readFrom: stream [
 	^ self new
 		readFrom: stream;
 		yourself
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ZnRequestLine >> = other [
 	self class = other class ifFalse: [ ^ false ].
 	^ self method = other method
@@ -47,41 +49,41 @@ ZnRequestLine >> = other [
 			and: [ self version = other version ] ]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ZnRequestLine >> hash [
 	^ (self method hash bitXor: self uri hash) bitXor: self version hash
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnRequestLine >> isHttp10 [
 	^ self version = 'HTTP/1.0'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnRequestLine >> isHttp11 [
 	^ self version = 'HTTP/1.1'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnRequestLine >> method [
 	^ method
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnRequestLine >> method: string [
 	method := ZnConstants knownHTTPMethods
 		detect: [ :each | each = string ]
 		ifNone: [ (ZnUnknownHttpMethod method: string) signal ]
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 ZnRequestLine >> postCopy [
 	uri := uri copy
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ZnRequestLine >> printMethodAndUriOn: stream [
-	(self method notNil and: [ self uri notNil ])
+	(self method isNotNil and: [ self uri isNotNil ])
 		ifFalse: [ ^ self ].
 	stream
 		nextPutAll: self method;
@@ -89,17 +91,17 @@ ZnRequestLine >> printMethodAndUriOn: stream [
 	self uri printPathQueryFragmentOn: stream
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ZnRequestLine >> printOn: stream [
 	super printOn: stream.
-	(self method notNil and: [ self uri notNil ])
+	(self method isNotNil and: [ self uri isNotNil ])
 		ifFalse: [ ^ self ].
 	stream nextPut: $(.
 	self printMethodAndUriOn: stream.
 	stream nextPut: $)
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 ZnRequestLine >> readFrom: stream [
 	| line lineStream |
 	line := (ZnLineReader on: stream) nextLine.
@@ -109,36 +111,36 @@ ZnRequestLine >> readFrom: stream [
 	self version: (lineStream upToEnd)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnRequestLine >> uri [
 	^ uri
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnRequestLine >> uri: anURI [
 	uri := anURI asZnUrl.
 	uri enforceKnownScheme
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnRequestLine >> uriPathQueryFragment [
 	^ String streamContents: [ :stream |
 			self uri printPathQueryFragmentOn: stream ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnRequestLine >> version [
 	^ version
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnRequestLine >> version: string [
 	version := ZnConstants knownHTTPVersions
 		detect: [ :each | each = string ]
 		ifNone: [ (ZnUnknownHttpVersion version: string) signal ]
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 ZnRequestLine >> writeOn: stream [
 	| writeStream |
 	writeStream := ZnBivalentWriteStream on: stream.

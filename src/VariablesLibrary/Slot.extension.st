@@ -1,6 +1,6 @@
-Extension { #name : #Slot }
+Extension { #name : 'Slot' }
 
-{ #category : #'*VariablesLibrary' }
+{ #category : '*VariablesLibrary' }
 Slot >> isObservableSlot [
 	
 	^ false

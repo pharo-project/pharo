@@ -15,39 +15,41 @@ Internal Representation and Key Implementation Points.
 	pattern:		<ClyStringPattern>
 "
 Class {
-	#name : #ClyMethodSourcesQuery,
-	#superclass : #ClyMethodQuery,
+	#name : 'ClyMethodSourcesQuery',
+	#superclass : 'ClyMethodQuery',
 	#instVars : [
 		'pattern'
 	],
-	#category : #'Calypso-SystemQueries-Queries'
+	#category : 'Calypso-SystemQueries-Queries',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Queries'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyMethodSourcesQuery class >> filteredBy: aStringPattern [
 	^self new
 		pattern: aStringPattern
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyMethodSourcesQuery class >> filteredBy: aStringPattern from: aScope [
 	^(self from: aScope)
 		pattern: aStringPattern
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyMethodSourcesQuery class >> withString: aString [
 
 	^self withString: aString caseSensitive: false
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyMethodSourcesQuery class >> withString: aString caseSensitive: aBool [
 
 	^self filteredBy: (ClySubstringPattern with: aString caseSensitive: aBool)
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyMethodSourcesQuery class >> withString: aString caseSensitive: aBool from: aScope [
 
 	^self
@@ -55,13 +57,13 @@ ClyMethodSourcesQuery class >> withString: aString caseSensitive: aBool from: aS
 		from: aScope
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyMethodSourcesQuery class >> withString: aString from: aScope [
 
 	^self withString: aString caseSensitive: false from: aScope
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ClyMethodSourcesQuery >> = anObject [
 	"Answer whether the receiver and anObject represent the same object."
 	self == anObject ifTrue: [ ^ true ].
@@ -69,37 +71,37 @@ ClyMethodSourcesQuery >> = anObject [
 	^ pattern = anObject pattern
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyMethodSourcesQuery >> description [
 
 	^'methods sources with ', pattern value printString
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ClyMethodSourcesQuery >> hash [
 	"Answer an integer value that is related to the identity of the receiver."
 
 	^super hash bitXor: pattern hash
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMethodSourcesQuery >> pattern [
 	^ pattern
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMethodSourcesQuery >> pattern: anObject [
 	pattern := anObject
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyMethodSourcesQuery >> printExtraInfoOn: aStream [
 	super printExtraInfoOn: aStream.
 
 	^aStream nextPutAll: pattern value
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyMethodSourcesQuery >> selectsMethod: aMethod [
 
 	^pattern matches: aMethod sourceCode

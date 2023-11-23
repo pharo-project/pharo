@@ -7,8 +7,8 @@ You can find an implementation of each figure in
 corresponding #figure<#>: method
 "
 Class {
-	#name : #AthensDemoMorph,
-	#superclass : #Morph,
+	#name : 'AthensDemoMorph',
+	#superclass : 'Morph',
 	#instVars : [
 		'surface',
 		'current',
@@ -16,10 +16,12 @@ Class {
 		'pharoLogo',
 		'esugBallon'
 	],
-	#category : #'Athens-Examples-Morphic'
+	#category : 'Athens-Examples-Morphic',
+	#package : 'Athens-Examples',
+	#tag : 'Morphic'
 }
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 AthensDemoMorph class >> roundedRectanglePathOn: aCanvas [
 
 	^ aCanvas createPath: [:builder |
@@ -36,44 +38,44 @@ AthensDemoMorph class >> roundedRectanglePathOn: aCanvas [
 			cwArcTo: 70@100 angle: 90 degreesToRadians ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensDemoMorph >> backColor [
 	^ Color white
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensDemoMorph >> carColor [
 	^ Color veryVeryLightGray
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensDemoMorph >> chasisDecoratorColor [
 	^ Color black
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensDemoMorph >> chasisLineColor [
 	^ Color white
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensDemoMorph >> coloredCarColor [
 	^ Color red
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensDemoMorph >> defaultExtent [
 	^ 400@400
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 AthensDemoMorph >> drawBackgroundOn: aCanvas [
 	aCanvas
 		setPaint: Color veryLightGray;
 		drawShape: (0 @ 0 extent: 1 @ 1)
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 AthensDemoMorph >> drawCarOn: aCanvas [
 
 	| p stroke wheel decorator |
@@ -130,7 +132,7 @@ AthensDemoMorph >> drawCarOn: aCanvas [
 		aCanvas draw
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 AthensDemoMorph >> drawOn: aCanvas [
 
 	self render.
@@ -139,7 +141,7 @@ AthensDemoMorph >> drawOn: aCanvas [
 		drawImage: surface asForm at: self bounds origin
 ]
 
-{ #category : #figures }
+{ #category : 'figures' }
 AthensDemoMorph >> figure10: aCanvas [
 	| ellipsePath patternPaint rectangle |
 	ellipsePath := aCanvas createPath: [ :builder |
@@ -165,14 +167,14 @@ AthensDemoMorph >> figure10: aCanvas [
 	aCanvas drawShape: rectangle
 ]
 
-{ #category : #figures }
+{ #category : 'figures' }
 AthensDemoMorph >> figure1: aCanvas [
 	aCanvas
 		setPaint: self carColor;
 		drawShape: (50@100 extent: 300@200)
 ]
 
-{ #category : #figures }
+{ #category : 'figures' }
 AthensDemoMorph >> figure2: aCanvas [
 	| path |
 	path := aCanvas createPath: [:builder |
@@ -193,7 +195,7 @@ AthensDemoMorph >> figure2: aCanvas [
 		drawShape: path
 ]
 
-{ #category : #figures }
+{ #category : 'figures' }
 AthensDemoMorph >> figure3: aCanvas [
 	| path |
 	path := aCanvas createPath: [:builder |
@@ -215,7 +217,7 @@ AthensDemoMorph >> figure3: aCanvas [
 		drawShape: path
 ]
 
-{ #category : #figures }
+{ #category : 'figures' }
 AthensDemoMorph >> figure4: aCanvas [
 	| path stroke |
 
@@ -232,7 +234,7 @@ AthensDemoMorph >> figure4: aCanvas [
 	aCanvas draw
 ]
 
-{ #category : #figures }
+{ #category : 'figures' }
 AthensDemoMorph >> figure5: aCanvas [
 	| wheels |
 	self figure4: aCanvas.
@@ -253,7 +255,7 @@ AthensDemoMorph >> figure5: aCanvas [
 		drawShape: wheels
 ]
 
-{ #category : #figures }
+{ #category : 'figures' }
 AthensDemoMorph >> figure6: aCanvas [
 	| linearGradient |
 
@@ -277,7 +279,7 @@ AthensDemoMorph >> figure6: aCanvas [
 	aCanvas draw
 ]
 
-{ #category : #figures }
+{ #category : 'figures' }
 AthensDemoMorph >> figure7: aCanvas [
 	| pt |
 
@@ -296,7 +298,7 @@ AthensDemoMorph >> figure7: aCanvas [
 		self drawCarOn: aCanvas ]
 ]
 
-{ #category : #figures }
+{ #category : 'figures' }
 AthensDemoMorph >> figure8: aCanvas [
 	| pt |
 	pt := aCanvas pathTransform.
@@ -313,7 +315,7 @@ AthensDemoMorph >> figure8: aCanvas [
 		self drawCarOn: aCanvas ]
 ]
 
-{ #category : #figures }
+{ #category : 'figures' }
 AthensDemoMorph >> figure9: aCanvas [
 	| ellipsePath patternPaint |
 	ellipsePath := aCanvas createPath: [ :builder |
@@ -336,7 +338,7 @@ AthensDemoMorph >> figure9: aCanvas [
 	aCanvas draw
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensDemoMorph >> figures [
 	^ #(
 	figure1:
@@ -352,7 +354,7 @@ AthensDemoMorph >> figures [
 	)
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AthensDemoMorph >> initialize [
 	| ref loadFileFailBlock |
 	super initialize.
@@ -371,7 +373,7 @@ AthensDemoMorph >> initialize [
 	self startStepping
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensDemoMorph >> nextFigure [
 
 	current := current + 1.
@@ -379,7 +381,7 @@ AthensDemoMorph >> nextFigure [
 	current > self figures size ifTrue: [ current := 1 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensDemoMorph >> prevFigure [
 
 	current := current - 1.
@@ -387,7 +389,7 @@ AthensDemoMorph >> prevFigure [
 	current < 1 ifTrue: [ current := self figures size ]
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 AthensDemoMorph >> render [
 
 	surface drawDuring: [:canvas |
@@ -399,18 +401,18 @@ AthensDemoMorph >> render [
 	]
 ]
 
-{ #category : #stepping }
+{ #category : 'stepping' }
 AthensDemoMorph >> step [
 	frame := frame + 1.
 	self changed
 ]
 
-{ #category : #stepping }
+{ #category : 'stepping' }
 AthensDemoMorph >> stepTime [
 	^ 0
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 AthensDemoMorph >> wheelColor [
 	^ Color brown darker
 ]

@@ -5,24 +5,25 @@ Pragma parameter is an actual expression which should be evaluated.
 So for execution I extract the argument from pragma and evaluate it using compiler. I do not use method itself.
 "
 Class {
-	#name : #ClyEvaluationScriptWithArgument,
-	#superclass : #ClyClassScript,
-	#category : #'Calypso-SystemPlugins-ClassScripts-Queries'
+	#name : 'ClyEvaluationScriptWithArgument',
+	#superclass : 'ClyClassScript',
+	#category : 'Calypso-SystemPlugins-ClassScripts-Queries',
+	#package : 'Calypso-SystemPlugins-ClassScripts-Queries'
 }
 
-{ #category : #'script detection' }
+{ #category : 'script detection' }
 ClyEvaluationScriptWithArgument class >> canBeProvidedByMethod: aMethod [
 	"Parametric script can be used in any method.
 	It is retrieved from pragma argument and method itself is not used for execution"
 	^ true
 ]
 
-{ #category : #'script detection' }
+{ #category : 'script detection' }
 ClyEvaluationScriptWithArgument class >> isImplementedByMethod: aMethod [
 	^ aMethod hasPragmaNamed: #script:
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyEvaluationScriptWithArgument >> executeOn: aClass [
 
 	| pragma |
@@ -32,7 +33,7 @@ ClyEvaluationScriptWithArgument >> executeOn: aClass [
 		evaluate: pragma arguments first
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyEvaluationScriptWithArgument >> isImplementedByClass: aClass [
 
 	^ aClass instanceSide includesBehavior: self implementorClass instanceSide

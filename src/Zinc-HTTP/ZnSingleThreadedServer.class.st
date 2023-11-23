@@ -13,8 +13,8 @@ I close connections after each request/response cycle.
 Part of Zinc HTTP Components.
 "
 Class {
-	#name : #ZnSingleThreadedServer,
-	#superclass : #ZnServer,
+	#name : 'ZnSingleThreadedServer',
+	#superclass : 'ZnServer',
 	#instVars : [
 		'process',
 		'serverSocket',
@@ -23,10 +23,12 @@ Class {
 	#classInstVars : [
 		'default'
 	],
-	#category : #'Zinc-HTTP-Client-Server'
+	#category : 'Zinc-HTTP-Client-Server',
+	#package : 'Zinc-HTTP',
+	#tag : 'Client-Server'
 }
 
-{ #category : #public }
+{ #category : 'public' }
 ZnSingleThreadedServer class >> adoptAsDefault: server [
 	"Adopt server as the default instance that we manage.
 	If there was a previous default, stop it.
@@ -36,7 +38,7 @@ ZnSingleThreadedServer class >> adoptAsDefault: server [
 	default := server
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 ZnSingleThreadedServer class >> default [
 	"Return the default instance that we manage.
 	Note that this is a class instance variable."
@@ -44,7 +46,7 @@ ZnSingleThreadedServer class >> default [
 	^ default
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 ZnSingleThreadedServer class >> defaultOn: portNumber [
 	"Return the default instance on a given port,
 	Keep a reference to it in a class instance variable.
@@ -59,12 +61,12 @@ ZnSingleThreadedServer class >> defaultOn: portNumber [
 			default stop; port: portNumber; yourself ]
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 ZnSingleThreadedServer class >> initialize [
 	default := nil
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 ZnSingleThreadedServer class >> on: aNumber [
 	"Instantiate and return a new listener on a given port,
 	send #start to it to start listening."
@@ -74,7 +76,7 @@ ZnSingleThreadedServer class >> on: aNumber [
 		yourself
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 ZnSingleThreadedServer class >> startDefaultOn: portNumber [
 	"Start and return the default instance on a given port.
 	Keep a reference to it in a class instance variable.
@@ -89,7 +91,7 @@ ZnSingleThreadedServer class >> startDefaultOn: portNumber [
 		yourself
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 ZnSingleThreadedServer class >> startOn: portNumber [
 	"Instanciate and return a new listener on a given port and start listening."
 
@@ -98,7 +100,7 @@ ZnSingleThreadedServer class >> startOn: portNumber [
 		yourself
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 ZnSingleThreadedServer class >> stopDefault [
 	"Stop and unregister the Default instance, if any, and clear it.
 	Return the stopped instance, if any."
@@ -110,14 +112,14 @@ ZnSingleThreadedServer class >> stopDefault [
 	^ server
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 ZnSingleThreadedServer >> acceptWaitTimeout [
 	"How many seconds to wait for a server socket listening for an accept ?"
 
 	^ 300
 ]
 
-{ #category : #'request handling' }
+{ #category : 'request handling' }
 ZnSingleThreadedServer >> augmentResponse: response forRequest: request [
 	"Our handler has produced response for request, manipulate the response before writing it"
 
@@ -129,7 +131,7 @@ ZnSingleThreadedServer >> augmentResponse: response forRequest: request [
 				ifFalse: [ response setTransferEncodingChunked ] ]
 ]
 
-{ #category : #'request handling' }
+{ #category : 'request handling' }
 ZnSingleThreadedServer >> authenticateAndDelegateRequest: request [
 	"Handle request and return a response.
 	If we have a delegate, pass the responsibility.
@@ -144,7 +146,7 @@ ZnSingleThreadedServer >> authenticateAndDelegateRequest: request [
 				ifNotNil: [ :delegate | delegate handleRequest: request ] ]
 ]
 
-{ #category : #'request handling' }
+{ #category : 'request handling' }
 ZnSingleThreadedServer >> authenticateRequest: request do: block [
 	"Validate request and execute block.
 	When our authenticator is not nil, pass the responsibility"
@@ -154,7 +156,7 @@ ZnSingleThreadedServer >> authenticateRequest: request do: block [
 		ifNotNil: [ :authenticator | authenticator authenticateRequest: request do: block ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnSingleThreadedServer >> closeDelegate [
 	self delegate
 		ifNotNil: [ :delegate |
@@ -162,7 +164,7 @@ ZnSingleThreadedServer >> closeDelegate [
 				ifTrue: [ delegate close ] ]
 ]
 
-{ #category : #'request handling' }
+{ #category : 'request handling' }
 ZnSingleThreadedServer >> executeOneRequestResponseOn: stream [
 	"Execute one single HTTP request / response cycle on stream in 3 steps:
 	#readRequest: #handleRequest: and #writeResponse:on:
@@ -177,7 +179,7 @@ ZnSingleThreadedServer >> executeOneRequestResponseOn: stream [
 	self logServerTransactionRequest: request response: response timing: timing
 ]
 
-{ #category : #'request handling' }
+{ #category : 'request handling' }
 ZnSingleThreadedServer >> handleRequest: request timing: timing [
 	"Handle request and return a response.
 	Do logging and timing. Set a dynamic variable referencing the server.
@@ -195,7 +197,7 @@ ZnSingleThreadedServer >> handleRequest: request timing: timing [
 	^ response
 ]
 
-{ #category : #'request handling' }
+{ #category : 'request handling' }
 ZnSingleThreadedServer >> handleRequestProtected: request [
 	"Handle request and return a response.
 	If a ZnRespond notification is signaled, return its response directly.
@@ -213,12 +215,12 @@ ZnSingleThreadedServer >> handleRequestProtected: request [
 					ZnResponse serverError: exception printString ] ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ZnSingleThreadedServer >> initialize [
 	self loggingOn
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnSingleThreadedServer >> initializeServerSocket [
 	"Set up a new server socket and listen on it"
 
@@ -231,22 +233,22 @@ ZnSingleThreadedServer >> initializeServerSocket [
 	self logServerSocketBound
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnSingleThreadedServer >> isListening [
 	"Return true when I have a valid server socket listening at the correct port"
 
-	^ self serverSocket notNil
+	^ self serverSocket isNotNil
 		and: [ self serverSocket isValid and: [ self serverSocket localPort = self port ] ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnSingleThreadedServer >> isRunning [
 	"Return true when I am running"
 
-	^ self process notNil and: [ self serverSocket notNil ]
+	^ self process isNotNil and: [ self serverSocket isNotNil ]
 ]
 
-{ #category : #'request handling' }
+{ #category : 'request handling' }
 ZnSingleThreadedServer >> listenLoop [
 	"We create a listening Socket, then wait for a connection.
 	After each connection we also check that the listening Socket is still valid
@@ -263,7 +265,7 @@ ZnSingleThreadedServer >> listenLoop [
 		ifCurtailed: [ self releaseServerSocket ]
 ]
 
-{ #category : #'private - logging' }
+{ #category : 'private - logging' }
 ZnSingleThreadedServer >> logConnectionAccepted: socket [
 	logLevel < 3 ifTrue: [ ^ nil ].
 	^ (self newLogEvent: ZnConnectionAcceptedEvent)
@@ -271,7 +273,7 @@ ZnSingleThreadedServer >> logConnectionAccepted: socket [
 		emit
 ]
 
-{ #category : #'private - logging' }
+{ #category : 'private - logging' }
 ZnSingleThreadedServer >> logConnectionClosed: socketStream [
 	logLevel < 3 ifTrue: [ ^ nil ].
 	socketStream socket ifNil: [ ^ nil ].
@@ -280,7 +282,7 @@ ZnSingleThreadedServer >> logConnectionClosed: socketStream [
 		emit
 ]
 
-{ #category : #'private logging' }
+{ #category : 'private - logging' }
 ZnSingleThreadedServer >> logConnectionRejected: socketStream [
 	logLevel < 3 ifTrue: [ ^ nil ].
 	^ (self newLogEvent: ZnConnectionRejectedEvent)
@@ -288,7 +290,7 @@ ZnSingleThreadedServer >> logConnectionRejected: socketStream [
 		emit
 ]
 
-{ #category : #logging }
+{ #category : 'logging' }
 ZnSingleThreadedServer >> logLevel: integer [
 	"Set the log level to integer.
 	0 - no logging
@@ -299,7 +301,7 @@ ZnSingleThreadedServer >> logLevel: integer [
 	logLevel := integer
 ]
 
-{ #category : #'private - logging' }
+{ #category : 'private - logging' }
 ZnSingleThreadedServer >> logRequest: request response: response handledStarted: initialMilliseconds [
 	^ logLevel < 3
 		ifTrue: [ Time millisecondsSince: initialMilliseconds ]
@@ -312,7 +314,7 @@ ZnSingleThreadedServer >> logRequest: request response: response handledStarted:
 				duration ]
 ]
 
-{ #category : #'private - logging' }
+{ #category : 'private - logging' }
 ZnSingleThreadedServer >> logRequestRead: request started: initialMilliseconds [
 	^ logLevel < 3
 		ifTrue: [ Time millisecondsSince: initialMilliseconds ]
@@ -324,7 +326,7 @@ ZnSingleThreadedServer >> logRequestRead: request started: initialMilliseconds [
 				duration ]
 ]
 
-{ #category : #'private - logging' }
+{ #category : 'private - logging' }
 ZnSingleThreadedServer >> logResponseWritten: response started: initialMilliseconds [
 	^ logLevel < 3
 		ifTrue: [ Time millisecondsSince: initialMilliseconds ]
@@ -336,21 +338,21 @@ ZnSingleThreadedServer >> logResponseWritten: response started: initialMilliseco
 				duration ]
 ]
 
-{ #category : #'private - logging' }
+{ #category : 'private - logging' }
 ZnSingleThreadedServer >> logServerGeneric: subject [
 	^ (self newLogEvent: ZnServerGenericLogEvent)
 		subject: subject;
 		emit
 ]
 
-{ #category : #'private - logging' }
+{ #category : 'private - logging' }
 ZnSingleThreadedServer >> logServerHandlerError: exception [
 	^ (self newLogEvent: ZnServerHandlerErrorEvent)
 		exception: exception;
 		emit
 ]
 
-{ #category : #'private - logging' }
+{ #category : 'private - logging' }
 ZnSingleThreadedServer >> logServerReadError: exception [
 	logLevel < 3 ifTrue: [ ^ nil ].
 	^ (self newLogEvent: ZnServerReadErrorEvent)
@@ -358,7 +360,7 @@ ZnSingleThreadedServer >> logServerReadError: exception [
 		emit
 ]
 
-{ #category : #'private - logging' }
+{ #category : 'private - logging' }
 ZnSingleThreadedServer >> logServerSocketBound [
 	logLevel < 1 ifTrue: [ ^ nil ].
 	^ (self newLogEvent: ZnServerSocketBoundEvent)
@@ -367,7 +369,7 @@ ZnSingleThreadedServer >> logServerSocketBound [
 		emit
 ]
 
-{ #category : #'private - logging' }
+{ #category : 'private - logging' }
 ZnSingleThreadedServer >> logServerSocketReleasedAddress: address port: port [
 	logLevel < 1 ifTrue: [ ^ nil ].
 	^ (self newLogEvent: ZnServerSocketReleasedEvent)
@@ -376,7 +378,7 @@ ZnSingleThreadedServer >> logServerSocketReleasedAddress: address port: port [
 		emit
 ]
 
-{ #category : #'private - logging' }
+{ #category : 'private - logging' }
 ZnSingleThreadedServer >> logServerTransactionRequest: request response: response timing: timing [
 	| logEventClass |
 	logLevel < 1 ifTrue: [ ^ nil ].
@@ -390,7 +392,7 @@ ZnSingleThreadedServer >> logServerTransactionRequest: request response: respons
 		emit
 ]
 
-{ #category : #'private - logging' }
+{ #category : 'private - logging' }
 ZnSingleThreadedServer >> logServerWriteError: exception [
 	logLevel < 3 ifTrue: [ ^ nil ].
 	^ (self newLogEvent: ZnServerWriteErrorEvent)
@@ -398,7 +400,7 @@ ZnSingleThreadedServer >> logServerWriteError: exception [
 		emit
 ]
 
-{ #category : #'private - logging' }
+{ #category : 'private - logging' }
 ZnSingleThreadedServer >> logStarted [
 	logLevel < 1 ifTrue: [ ^ nil ].
 	^ (self newLogEvent: ZnServerStartedEvent)
@@ -406,7 +408,7 @@ ZnSingleThreadedServer >> logStarted [
 		emit
 ]
 
-{ #category : #'private - logging' }
+{ #category : 'private - logging' }
 ZnSingleThreadedServer >> logStopped [
 	logLevel < 1 ifTrue: [ ^ nil ].
 	^ (self newLogEvent: ZnServerStoppedEvent)
@@ -414,7 +416,7 @@ ZnSingleThreadedServer >> logStopped [
 		emit
 ]
 
-{ #category : #logging }
+{ #category : 'logging' }
 ZnSingleThreadedServer >> logToTranscript [
 	"Setup logging to the Transcript.
 	If logging was completely off, turn it on"
@@ -423,28 +425,28 @@ ZnSingleThreadedServer >> logToTranscript [
 	ZnLogEvent logToTranscript
 ]
 
-{ #category : #logging }
+{ #category : 'logging' }
 ZnSingleThreadedServer >> loggingOff [
 	"Turn logging completely off - do not generate log events."
 
 	self logLevel: 0
 ]
 
-{ #category : #logging }
+{ #category : 'logging' }
 ZnSingleThreadedServer >> loggingOn [
 	"Turn full logging on - generate all log events"
 
 	self logLevel: 3
 ]
 
-{ #category : #'private - logging' }
+{ #category : 'private - logging' }
 ZnSingleThreadedServer >> newLogEvent: logEventClass [
 	^ logEventClass new
-		serverId: self route;
+		serverId: (self serverId ifNil: [ self route ]);
 		yourself
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnSingleThreadedServer >> noteAcceptWaitTimedOut [
 	"The accept wait on a server socket timed out (see #acceptWaitTimeout).
 	This can be used as an opportunity to do some periodic tasks."
@@ -452,7 +454,7 @@ ZnSingleThreadedServer >> noteAcceptWaitTimedOut [
 	self periodicTasks
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnSingleThreadedServer >> onRequestRespond: block [
 	"Convenience method to quickly set up a delegate.
 	On any incoming request, block will be executed with the request
@@ -461,7 +463,7 @@ ZnSingleThreadedServer >> onRequestRespond: block [
 	self delegate: (ZnValueDelegate with: block)
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnSingleThreadedServer >> periodicTasks [
 	"Every #acceptWaitTimeout seconds this method is called.
 	Note that during this time the server is not actively listening for connections."
@@ -469,17 +471,19 @@ ZnSingleThreadedServer >> periodicTasks [
 	sessionManager ifNotNil: [ sessionManager cleanupInvalidSessions ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ZnSingleThreadedServer >> printOn: stream [
 	super printOn: stream.
 	stream nextPut: $(.
 	stream nextPutAll: (self isRunning ifTrue: [ 'running' ] ifFalse: [ 'stopped' ]).
 	self port ifNotNil: [ :port | stream space; print: port ].
 	self bindingAddress ifNotNil: [ :bindingAddress | stream space; print: bindingAddress ].
+	self serverId ifNotNil: [ :id | stream space; print: id ].
+	self route ifNotNil: [ :id | stream space; print: id ].
 	stream nextPut: $)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnSingleThreadedServer >> process [
 	"Return the process that is running my main listening loop.
 	Will be nil when I am not running"
@@ -487,7 +491,7 @@ ZnSingleThreadedServer >> process [
 	^ process
 ]
 
-{ #category : #'request handling' }
+{ #category : 'request handling' }
 ZnSingleThreadedServer >> readRequest: stream timing: timing [
 	"Read a request from stream.
 	We add a virtual header containing the remote IP address of the client"
@@ -504,7 +508,7 @@ ZnSingleThreadedServer >> readRequest: stream timing: timing [
 	^ request
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnSingleThreadedServer >> releaseServerSocket [
 	"Release our server socket"
 
@@ -518,7 +522,7 @@ ZnSingleThreadedServer >> releaseServerSocket [
 	self logServerSocketReleasedAddress: address port: port
 ]
 
-{ #category : #'request handling' }
+{ #category : 'request handling' }
 ZnSingleThreadedServer >> serveConnectionOn: listeningSocket [
 	"We wait up to acceptWaitTimeout seconds for an incoming connection.
 	If we get one we wrap it in a SocketStream and #executeOneRequestResponseOn: on it.
@@ -537,13 +541,15 @@ ZnSingleThreadedServer >> serveConnectionOn: listeningSocket [
 			socket destroy ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnSingleThreadedServer >> serverProcessName [
 	^ String streamContents: [ :stream |
-		stream nextPutAll: self class name; nextPutAll: ' HTTP port '; print: self port ]
+		stream nextPutAll: self class name; nextPutAll: ' HTTP port '; print: self port.
+		self serverId ifNotNil: [ :id | stream space; << id ].
+		self route ifNotNil: [ :id | stream space; << id ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnSingleThreadedServer >> serverSocket [
 	"Return the server socket that I am using.
 	Will be nil when I am not running"
@@ -551,13 +557,13 @@ ZnSingleThreadedServer >> serverSocket [
 	^ serverSocket
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnSingleThreadedServer >> socketStreamOn: socket [
 	self logConnectionAccepted: socket.
 	^ ZnNetworkingUtils socketStreamOn: socket
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 ZnSingleThreadedServer >> start [
 	"Start me. I will start listening on my port for incoming HTTP connections.
 	If I am running, I will first stop and thus effectively restart"
@@ -570,7 +576,7 @@ ZnSingleThreadedServer >> start [
 	self logStarted
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 ZnSingleThreadedServer >> stop: unregister [
 	"Stop me. I will stop listening on my port for incoming HTTP connections.
 	If unregister is true, unregister me from the list of managed instances.
@@ -584,7 +590,7 @@ ZnSingleThreadedServer >> stop: unregister [
 	self logStopped
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnSingleThreadedServer >> withDefaultCharacterEncoderDo: block [
 	^ self defaultEncoder = ZnDefaultCharacterEncoder value
 			ifTrue: block
@@ -594,7 +600,7 @@ ZnSingleThreadedServer >> withDefaultCharacterEncoderDo: block [
 					during: block ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnSingleThreadedServer >> withDynamicVariablesDo: block [
 	^ ZnCurrentServer
 		value: self
@@ -602,7 +608,7 @@ ZnSingleThreadedServer >> withDynamicVariablesDo: block [
 			self localOptions conditionallyDuring: block ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnSingleThreadedServer >> withMaximumNumberOfDictionaryEntriesDo: block [
 	^ self maximumNumberOfDictionaryEntries = ZnMaximumNumberOfDictionaryEntries value
 			ifTrue: block
@@ -612,7 +618,7 @@ ZnSingleThreadedServer >> withMaximumNumberOfDictionaryEntriesDo: block [
 					during: block ]
 ]
 
-{ #category : #'request handling' }
+{ #category : 'request handling' }
 ZnSingleThreadedServer >> writeResponse: response on: stream timing: timing [
 	"Write response to stream and flush the stream"
 

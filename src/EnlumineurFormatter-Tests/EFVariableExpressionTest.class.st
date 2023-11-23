@@ -1,17 +1,18 @@
 Class {
-	#name : #EFVariableExpressionTest,
-	#superclass : #EFTest,
-	#category : #'EnlumineurFormatter-Tests'
+	#name : 'EFVariableExpressionTest',
+	#superclass : 'EFTest',
+	#category : 'EnlumineurFormatter-Tests',
+	#package : 'EnlumineurFormatter-Tests'
 }
 
-{ #category : #configuration }
+{ #category : 'configuration' }
 EFVariableExpressionTest >> basicConfiguration [
 
 	^ self contextClass basicNew
 		formatCommentCloseToStatements:false
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFVariableExpressionTest >> testNoExtraSpaces [
 	| source |
 	configurationSelector := #basicConfiguration.
@@ -19,7 +20,7 @@ EFVariableExpressionTest >> testNoExtraSpaces [
 	self assert: source equals: 'a'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFVariableExpressionTest >> testSpaces [
 	| source |
 	configurationSelector := #basicConfiguration.

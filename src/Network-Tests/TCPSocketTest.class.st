@@ -2,33 +2,35 @@
 SUnit tests for sockets
 "
 Class {
-	#name : #TCPSocketTest,
-	#superclass : #TestCase,
+	#name : 'TCPSocketTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'listenerSocket',
 		'clientSocket',
 		'serverSocket'
 	],
-	#category : #'Network-Tests-Kernel'
+	#category : 'Network-Tests-Kernel',
+	#package : 'Network-Tests',
+	#tag : 'Kernel'
 }
 
-{ #category : #setup }
+{ #category : 'setup' }
 TCPSocketTest >> listenerAddress [
 	^NetNameResolver loopBackAddress
 ]
 
-{ #category : #setup }
+{ #category : 'setup' }
 TCPSocketTest >> listenerPort [
 	^42324
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 TCPSocketTest >> setUp [
 	super setUp.
 	listenerSocket := Socket newTCP listenOn: self listenerPort backlogSize: 4 interface: self listenerAddress
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 TCPSocketTest >> tearDown [
 
 	listenerSocket ifNotNil:[listenerSocket destroy].
@@ -37,7 +39,7 @@ TCPSocketTest >> tearDown [
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TCPSocketTest >> testClientConnect [
 	"Tests a client socket connection"
 
@@ -47,7 +49,7 @@ TCPSocketTest >> testClientConnect [
 	self assert: clientSocket isConnected
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TCPSocketTest >> testDataReceive [
 	"Test data transfer and related methods"
 
@@ -59,7 +61,7 @@ TCPSocketTest >> testDataReceive [
 	self deny: serverSocket dataAvailable
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TCPSocketTest >> testDataSending [
 	"Test data transfer and related methods"
 
@@ -69,7 +71,7 @@ TCPSocketTest >> testDataSending [
 	self assert: clientSocket sendDone
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TCPSocketTest >> testLocalAddress [
 	"Tests the various localAddress values for sockets"
 
@@ -79,7 +81,7 @@ TCPSocketTest >> testLocalAddress [
 	self assert: serverSocket localAddress asSocketAddress equals: self listenerAddress
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TCPSocketTest >> testLocalPort [
 	"Tests the various localPort values for sockets"
 
@@ -89,7 +91,7 @@ TCPSocketTest >> testLocalPort [
 	self assert: serverSocket localPort > 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TCPSocketTest >> testRemoteAddress [
 	"Tests the various remoteAddress values for sockets"
 
@@ -99,7 +101,7 @@ TCPSocketTest >> testRemoteAddress [
 	self assert: serverSocket remoteAddress asSocketAddress equals: self listenerAddress
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TCPSocketTest >> testRemotePort [
 	"Tests the various remoteAddress values for sockets"
 
@@ -109,7 +111,7 @@ TCPSocketTest >> testRemotePort [
 	self assert: serverSocket remotePort > 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TCPSocketTest >> testServerAccept [
 	"Tests a server-side accept"
 

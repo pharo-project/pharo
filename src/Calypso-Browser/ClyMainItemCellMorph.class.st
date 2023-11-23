@@ -30,8 +30,8 @@ Internal Representation and Key Implementation Points.
 	fullIndentation: <Boolean>
 "
 Class {
-	#name : #ClyMainItemCellMorph,
-	#superclass : #ClyItemCellMorph,
+	#name : 'ClyMainItemCellMorph',
+	#superclass : 'ClyItemCellMorph',
 	#instVars : [
 		'item',
 		'definitionMorph',
@@ -39,21 +39,23 @@ Class {
 		'itemDepth',
 		'fullIndentation'
 	],
-	#category : #'Calypso-Browser-Table'
+	#category : 'Calypso-Browser-Table',
+	#package : 'Calypso-Browser',
+	#tag : 'Table'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyMainItemCellMorph class >> on: aDataSourceItem [
 	^self new
 		item: aDataSourceItem
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMainItemCellMorph >> actualObject [
 	^item actualObject
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ClyMainItemCellMorph >> addBarForFullIndentation [
 
 	| mainItemsCount absentItemsCount requiredWidth |
@@ -66,7 +68,7 @@ ClyMainItemCellMorph >> addBarForFullIndentation [
 	self addMorphBack: (self emptyBarWithWidth: requiredWidth)
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ClyMainItemCellMorph >> addBarForLabelIndentation [
 
 	| placeForExpansionRequired mainItemsCount absentItemsCount requiredWidth |
@@ -80,15 +82,15 @@ ClyMainItemCellMorph >> addBarForLabelIndentation [
 	self addMorphBack: (self emptyBarWithWidth: requiredWidth)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMainItemCellMorph >> addExtraIcon: iconName [
 
 	| icon |
-	icon := self iconNamed: iconName.
+	icon := self iconFormSetNamed: iconName.
 	^self addExtraTool: icon asMorph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMainItemCellMorph >> addExtraTool: aMorph [
 
 	extraToolMorphs ifNil: [ extraToolMorphs := OrderedCollection new].
@@ -96,17 +98,17 @@ ClyMainItemCellMorph >> addExtraTool: aMorph [
 	^aMorph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMainItemCellMorph >> browser [
 	^item browser
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMainItemCellMorph >> browserItem [
 	^item browserItem
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ClyMainItemCellMorph >> build [
 
 	fullIndentation
@@ -114,7 +116,7 @@ ClyMainItemCellMorph >> build [
 		ifFalse: [ self buildWithLabelIndentation  ]
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ClyMainItemCellMorph >> buildWithFullIndentation [
 
 	| expansionButton |
@@ -123,17 +125,17 @@ ClyMainItemCellMorph >> buildWithFullIndentation [
 		expansionButton := self currentExpansionButton.
 		self addMorphBack: expansionButton].
 	definitionMorph ifNotNil: [
-		definitionMorph width: 16.
+		definitionMorph width: 16 scaledByDisplayScaleFactor.
 		 self addMorphBack: definitionMorph].
 
 
 	self addMorphBack: label.
 	extraToolMorphs ifNotNil: [ extraToolMorphs do: [:each |
-			each width: 16.
+			each width: 16 scaledByDisplayScaleFactor.
 			 self addMorphBack: each  ] ]
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ClyMainItemCellMorph >> buildWithLabelIndentation [
 
 	| expansionButton |
@@ -151,7 +153,7 @@ ClyMainItemCellMorph >> buildWithLabelIndentation [
 			 self addMorphBack: each  ] ]
 ]
 
-{ #category : #buttons }
+{ #category : 'buttons' }
 ClyMainItemCellMorph >> collapsedButton [
 	^ IconicButtonMorph new
 		target: item;
@@ -163,7 +165,7 @@ ClyMainItemCellMorph >> collapsedButton [
 		borderWidth: 0
 ]
 
-{ #category : #buttons }
+{ #category : 'buttons' }
 ClyMainItemCellMorph >> currentExpansionButton [
 
 	item hasChildren ifFalse: [^FTTreeDataSource emptyMorph].
@@ -173,23 +175,23 @@ ClyMainItemCellMorph >> currentExpansionButton [
 		ifFalse: [self collapsedButton]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMainItemCellMorph >> definitionIcon: iconName [
 
 	| icon |
-	icon := self iconNamed: iconName.
+	icon := self iconFormSetNamed: iconName.
 	^self definitionMorph: icon asMorph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMainItemCellMorph >> definitionMorph: aMorph [
 
 	definitionMorph := aMorph.
-	definitionMorph width: 16.
+	definitionMorph width: 16 scaledByDisplayScaleFactor.
 	^definitionMorph
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ClyMainItemCellMorph >> emptyBarWithWidth: aNumber [
 	| bar |
 	bar := Morph new.
@@ -204,7 +206,7 @@ ClyMainItemCellMorph >> emptyBarWithWidth: aNumber [
 	^bar
 ]
 
-{ #category : #buttons }
+{ #category : 'buttons' }
 ClyMainItemCellMorph >> expandedButton [
 	^ IconicButtonMorph new
 		target: item;
@@ -216,34 +218,34 @@ ClyMainItemCellMorph >> expandedButton [
 		borderWidth: 0
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyMainItemCellMorph >> initialize [
 	super initialize.
 	fullIndentation := false.
-	self cellInset: 2@0
+	self cellInset: (2@0) scaledByDisplayScaleFactor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMainItemCellMorph >> item [
 	^ item
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMainItemCellMorph >> item: aDataSourceItem [
 	item := aDataSourceItem
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMainItemCellMorph >> itemDepth [
 	^itemDepth ifNil: [item depth]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMainItemCellMorph >> overrideItemDepthByDelta: delta [
 	^itemDepth := item depth + delta
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMainItemCellMorph >> useFullIndentation [
 	fullIndentation := true
 ]

@@ -11,8 +11,8 @@ Depths 1, 2, 4 and 8 bits go through a color map to put color on the screen, but
 
 "
 Class {
-	#name : #DisplayScreen,
-	#superclass : #Form,
+	#name : 'DisplayScreen',
+	#superclass : 'Form',
 	#instVars : [
 		'extraRegions'
 	],
@@ -22,16 +22,18 @@ Class {
 		'LastScreenModeSelected',
 		'ScreenSave'
 	],
-	#category : #'Graphics-Display Objects-Screen'
+	#category : 'Graphics-Display Objects-Screen',
+	#package : 'Graphics-Display Objects',
+	#tag : 'Screen'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DisplayScreen class >> actualScreenDepth [
 
 	^ Display depth
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DisplayScreen class >> actualScreenSize [
 	"Delegates to active world because it can be something else than the one provided by the VM"
 
@@ -39,7 +41,7 @@ DisplayScreen class >> actualScreenSize [
 	^ self currentWorld ifNil: [ 0 @ 0 ] ifNotNil: #actualScreenSize
 ]
 
-{ #category : #'display box access' }
+{ #category : 'display box access' }
 DisplayScreen class >> boundingBox [
 	"Answer the bounding box for the form representing the current display
 	screen."
@@ -47,7 +49,7 @@ DisplayScreen class >> boundingBox [
 	^Display boundingBox
 ]
 
-{ #category : #deferring }
+{ #category : 'deferring' }
 DisplayScreen class >> deferUpdates: aBoolean [
 	| wasDeferred |
 
@@ -56,7 +58,7 @@ DisplayScreen class >> deferUpdates: aBoolean [
 	^ wasDeferred
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 DisplayScreen class >> displaySettingsOn: aBuilder [
 	<systemsettings>
 	(aBuilder setting: #displayFullscreen)
@@ -69,7 +71,7 @@ DisplayScreen class >> displaySettingsOn: aBuilder [
 		default: false
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 DisplayScreen class >> initialize [
 
 	| display |
@@ -82,19 +84,19 @@ DisplayScreen class >> initialize [
 	self deferUpdates: false
 ]
 
-{ #category : #displaying }
+{ #category : 'displaying' }
 DisplayScreen >> addExtraRegion: aRectangle for: regionDrawer [
 	"Register the given rectangle as a region which is drawn by the specified region drawer. The region will be excluded from any updates when #forceDamageToScreen: is called. Note that the rectangle is only valid for a single update cycle; once #forceDamageToScreen: has been called, the region drawer and its region are being removed from the list"
 	extraRegions ifNil:[extraRegions := #()].
 	extraRegions := extraRegions copyWith: (Array with: regionDrawer with: aRectangle)
 ]
 
-{ #category : #deferring }
+{ #category : 'deferring' }
 DisplayScreen >> deferUpdates: aBoolean [
 	^self class deferUpdates: aBoolean
 ]
 
-{ #category : #deferring }
+{ #category : 'deferring' }
 DisplayScreen >> deferUpdatesIn: aRectangle while: aBlock [
 	| result |
 	(self class deferUpdates: true) ifTrue: [^aBlock value].
@@ -103,13 +105,13 @@ DisplayScreen >> deferUpdatesIn: aRectangle while: aBlock [
 	^result
 ]
 
-{ #category : #other }
+{ #category : 'other' }
 DisplayScreen >> displayChangeSignature [
 
 	^DisplayChangeSignature
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DisplayScreen >> findAnyDisplayDepth [
 	"Return any display depth that is supported on this system."
 	^self findAnyDisplayDepthIfNone:[
@@ -122,7 +124,7 @@ DisplayScreen >> findAnyDisplayDepth [
 	]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DisplayScreen >> findAnyDisplayDepthIfNone: aBlock [
 	"Return any display depth that is supported on this system.
 	If there is none, evaluate aBlock.
@@ -132,7 +134,7 @@ DisplayScreen >> findAnyDisplayDepthIfNone: aBlock [
 		ifNone: [ aBlock value ]
 ]
 
-{ #category : #displaying }
+{ #category : 'displaying' }
 DisplayScreen >> flash: aRectangle [
 	"Flash the area of the screen defined by the given rectangle."
 
@@ -141,7 +143,7 @@ DisplayScreen >> flash: aRectangle [
 	self reverse: aRectangle
 ]
 
-{ #category : #displaying }
+{ #category : 'displaying' }
 DisplayScreen >> flash: aRectangle andWait: msecs [
 	"Flash the area of the screen defined by the given rectangle."
 
@@ -153,7 +155,7 @@ DisplayScreen >> flash: aRectangle andWait: msecs [
 	(Delay forMilliseconds: msecs) wait
 ]
 
-{ #category : #displaying }
+{ #category : 'displaying' }
 DisplayScreen >> flashAll: rectangleList andWait: msecs [
 	"Flash the areas of the screen defined by the given rectangles."
 
@@ -165,12 +167,12 @@ DisplayScreen >> flashAll: rectangleList andWait: msecs [
 	(Delay forMilliseconds: msecs) wait
 ]
 
-{ #category : #other }
+{ #category : 'other' }
 DisplayScreen >> fullBoundingBox [
 	^ super boundingBox
 ]
 
-{ #category : #other }
+{ #category : 'other' }
 DisplayScreen >> fullscreen [
 	"Display fullscreen"
 
@@ -178,15 +180,15 @@ DisplayScreen >> fullscreen [
 	Display := ScreenSave
 ]
 
-{ #category : #'screen managing' }
+{ #category : 'screen managing' }
 DisplayScreen >> fullscreen: aBoolean [
 
-	SystemAnnouncer announce: (FullscreenAnnouncement new
-		displayScreen: self;
-		fullscreen: (LastScreenModeSelected := aBoolean))
+	self class codeSupportAnnouncer announce: (FullscreenAnnouncement new
+			 displayScreen: self;
+			 fullscreen: (LastScreenModeSelected := aBoolean))
 ]
 
-{ #category : #other }
+{ #category : 'other' }
 DisplayScreen >> fullscreenMode: aBoolean [
 	"On platforms that support it, set fullscreen mode to the value of the argument. (Note: you'll need to restore the Display after calling this primitive."
 	"Display fullscreenMode: true. Display newDepth: Display depth"
@@ -195,40 +197,40 @@ DisplayScreen >> fullscreenMode: aBoolean [
 	self primitiveFailed
 ]
 
-{ #category : #'screen managing' }
+{ #category : 'screen managing' }
 DisplayScreen >> fullscreenOff [
 
 	self fullscreen: false
 ]
 
-{ #category : #'screen managing' }
+{ #category : 'screen managing' }
 DisplayScreen >> fullscreenOn [
 
 	self fullscreen: true
 ]
 
-{ #category : #other }
+{ #category : 'other' }
 DisplayScreen >> height [
 	^ self boundingBox height
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DisplayScreen >> isDisplayScreen [
 	^true
 ]
 
-{ #category : #'screen managing' }
+{ #category : 'screen managing' }
 DisplayScreen >> isFullscreen [
 	^ self lastScreenModeSelected
 ]
 
-{ #category : #'screen managing' }
+{ #category : 'screen managing' }
 DisplayScreen >> lastScreenModeSelected [
 	^ LastScreenModeSelected
 		ifNil: [LastScreenModeSelected := false]
 ]
 
-{ #category : #other }
+{ #category : 'other' }
 DisplayScreen >> newDepth: pixelSize [
 	"
 	Display newDepth: 8.
@@ -240,13 +242,13 @@ DisplayScreen >> newDepth: pixelSize [
 	self restore
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DisplayScreen >> newDepthNoRestore: pixelSize [
 
 	UIManager default newDisplayDepthNoRestore: pixelSize
 ]
 
-{ #category : #other }
+{ #category : 'other' }
 DisplayScreen >> replacedBy: aForm do: aBlock [
 	"Permits normal display to draw on aForm instead of the display."
 
@@ -257,20 +259,20 @@ DisplayScreen >> replacedBy: aForm do: aBlock [
 	ScreenSave := nil
 ]
 
-{ #category : #other }
+{ #category : 'other' }
 DisplayScreen >> restore [
 
 	UIManager default restoreDisplay
 ]
 
-{ #category : #other }
+{ #category : 'other' }
 DisplayScreen >> restoreAfter: aBlock [
 	"Evaluate the block, wait for a mouse click, and then restore the screen."
 
 	UIManager default restoreDisplayAfter: aBlock
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DisplayScreen >> setExtent: aPoint depth: bitsPerPixel [  "DisplayScreen startUp"
 	"This method is critical.  If the setExtent fails, there will be no
 	proper display on which to show the error condition..."
@@ -298,38 +300,38 @@ DisplayScreen >> setExtent: aPoint depth: bitsPerPixel [  "DisplayScreen startUp
 					super setExtent: aPoint depth: self findAnyDisplayDepth ] ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DisplayScreen >> shutDown [
 	"Minimize Display memory saved in image"
 	self setExtent: 240@120 depth: depth
 ]
 
-{ #category : #other }
+{ #category : 'other' }
 DisplayScreen >> supportedDisplayDepths [
 	"Return all pixel depths supported on the current host platform."
 	^#(1 2 4 8 16 32 -1 -2 -4 -8 -16 -32) select: [:d | self supportsDisplayDepth: d]
 ]
 
-{ #category : #other }
+{ #category : 'other' }
 DisplayScreen >> supportsDisplayDepth: pixelDepth [
 	"Return true if this pixel depth is supported on the current host platform.
 	Primitive. Optional."
 	^#(1 2 4 8 16 32) includes: pixelDepth
 ]
 
-{ #category : #'screen managing' }
+{ #category : 'screen managing' }
 DisplayScreen >> toggleFullscreen [
 	self fullscreen: self isFullscreen not
 ]
 
-{ #category : #other }
+{ #category : 'other' }
 DisplayScreen >> usableArea [
 	"Answer the usable area of the receiver."
 
 	^ self boundingBox deepCopy
 ]
 
-{ #category : #other }
+{ #category : 'other' }
 DisplayScreen >> width [
 	^ self boundingBox width
 ]

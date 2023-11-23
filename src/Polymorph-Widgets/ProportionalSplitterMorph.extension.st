@@ -1,6 +1,6 @@
-Extension { #name : #ProportionalSplitterMorph }
+Extension { #name : 'ProportionalSplitterMorph' }
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 ProportionalSplitterMorph >> adoptPaneColor: paneColor [
 	"Change our color too."
 
@@ -8,7 +8,7 @@ ProportionalSplitterMorph >> adoptPaneColor: paneColor [
 	self fillStyle: self normalFillStyle
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 ProportionalSplitterMorph >> hasLeftOrTop: aMorph [
 	"Answer whether the receiver has the given morph
 	as one of of its left or top morphs."
@@ -16,7 +16,7 @@ ProportionalSplitterMorph >> hasLeftOrTop: aMorph [
 	^leftOrTop includes: aMorph
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 ProportionalSplitterMorph >> hasRightOrBottom: aMorph [
 	"Answer whether the receiver has the given morph
 	as one of of its right or bottom morphs."
@@ -24,7 +24,7 @@ ProportionalSplitterMorph >> hasRightOrBottom: aMorph [
 	^rightOrBottom includes: aMorph
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 ProportionalSplitterMorph >> hideLeftOrTop [
 	"Hide the receiver and all left or top morphs."
 
@@ -32,7 +32,7 @@ ProportionalSplitterMorph >> hideLeftOrTop [
 	leftOrTop do: [:m | m hide]
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 ProportionalSplitterMorph >> hideRightOrBottom [
 	"Hide the receiver and all right or bottom morphs."
 
@@ -40,7 +40,7 @@ ProportionalSplitterMorph >> hideRightOrBottom [
 	rightOrBottom do: [:m | m hide]
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 ProportionalSplitterMorph >> mouseUp: anEvent [
 	"Change the cursor back to normal if necessary and change the color back to normal."
 
@@ -53,14 +53,14 @@ ProportionalSplitterMorph >> mouseUp: anEvent [
 	self triggerEvent: #mouseUp
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 ProportionalSplitterMorph >> normalFillStyle [
 	"Return the normal fillStyle of the receiver."
 
 	^self theme splitterNormalFillStyleFor: self
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 ProportionalSplitterMorph >> noteNewOwner: o [
 	"Update the fill style."
 
@@ -68,7 +68,7 @@ ProportionalSplitterMorph >> noteNewOwner: o [
 	self defer: [self adoptPaneColor: self paneColor]
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 ProportionalSplitterMorph >> overlapsHorizontal: aSplitter [
 	"Answer whether the receiver overlaps the given splitter
 	in the horizontal plane."
@@ -76,7 +76,7 @@ ProportionalSplitterMorph >> overlapsHorizontal: aSplitter [
 	^aSplitter left <= self right and: [aSplitter right >= self left]
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 ProportionalSplitterMorph >> overlapsVertical: aSplitter [
 	"Answer whether the receiver overlaps the given splitter
 	in the vertical plane."
@@ -84,28 +84,28 @@ ProportionalSplitterMorph >> overlapsVertical: aSplitter [
 	^aSplitter top <= self bottom and: [aSplitter bottom >= self top]
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 ProportionalSplitterMorph >> pressedFillStyle [
 	"Return the pressed fillStyle of the receiver."
 
 	^self theme splitterPressedFillStyleFor: self
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 ProportionalSplitterMorph >> setGrabbedColor [
 	"Set the color of the receiver when it is grabbed."
 
 	self fillStyle: self pressedFillStyle
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 ProportionalSplitterMorph >> shouldDraw [
 	"Answer whether the receiver should be drawn."
 
 	^super shouldDraw or: [self class showSplitterHandles]
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 ProportionalSplitterMorph >> shouldInvalidateOnMouseTransition [
 	"Answer whether the receiver should be invalidated
 	when the mouse enters or leaves."
@@ -113,7 +113,7 @@ ProportionalSplitterMorph >> shouldInvalidateOnMouseTransition [
 	^self class showSplitterHandles
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 ProportionalSplitterMorph >> showLeftOrTop [
 	"Show the receiver and all left or top morphs."
 
@@ -121,7 +121,7 @@ ProportionalSplitterMorph >> showLeftOrTop [
 	leftOrTop do: [:m | m show]
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 ProportionalSplitterMorph >> showRightOrBottom [
 	"Show the receiver and all right or bottom morphs."
 

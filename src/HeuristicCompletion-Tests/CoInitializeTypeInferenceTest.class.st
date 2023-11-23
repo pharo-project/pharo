@@ -1,10 +1,12 @@
 Class {
-	#name : #CoInitializeTypeInferenceTest,
-	#superclass : #TestCase,
-	#category : #'HeuristicCompletion-Tests-Core'
+	#name : 'CoInitializeTypeInferenceTest',
+	#superclass : 'TestCase',
+	#category : 'HeuristicCompletion-Tests-Core',
+	#package : 'HeuristicCompletion-Tests',
+	#tag : 'Core'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoInitializeTypeInferenceTest >> testInferInstanceVariableNotUsedInInitializeHasNoType [
 
 	| types |
@@ -21,7 +23,7 @@ CoInitializeTypeInferenceTest >> testInferInstanceVariableNotUsedInInitializeHas
 	self assert: (types at: #b) isEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoInitializeTypeInferenceTest >> testInferInstanceVariableUsedInInitialize [
 
 	| types |
@@ -38,7 +40,7 @@ CoInitializeTypeInferenceTest >> testInferInstanceVariableUsedInInitialize [
 	self assertCollection: (types at: #a) hasSameElements: { SmallInteger }
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoInitializeTypeInferenceTest >> testInferUndefinedInstanceVariableUsedInInitialize [
 
 	| types |
@@ -55,7 +57,7 @@ CoInitializeTypeInferenceTest >> testInferUndefinedInstanceVariableUsedInInitial
 	self assertCollection: (types at: #a) hasSameElements: Set new
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoInitializeTypeInferenceTest >> testInferVariablesWithNoInitializeFindsNoTypes [
 
 	| types |

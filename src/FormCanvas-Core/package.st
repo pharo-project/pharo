@@ -1,1 +1,1 @@
-Package { #name : #'FormCanvas-Core' }
+Package { #name : 'FormCanvas-Core' }

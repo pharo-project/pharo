@@ -7,17 +7,18 @@ They should implement method:
 - analyzedObjectsDo: aBlock
 "
 Class {
-	#name : #ClyAllCritiqueQuery,
-	#superclass : #ClyCritiqueQuery,
-	#category : #'Calypso-SystemPlugins-Critic-Queries'
+	#name : 'ClyAllCritiqueQuery',
+	#superclass : 'ClyCritiqueQuery',
+	#category : 'Calypso-SystemPlugins-Critic-Queries',
+	#package : 'Calypso-SystemPlugins-Critic-Queries'
 }
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyAllCritiqueQuery >> analyzedObjectsDo: aBlock [
 	self subclassResponsibility
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyAllCritiqueQuery >> buildResult: aQueryResult [
 
 	| result |
@@ -28,7 +29,7 @@ ClyAllCritiqueQuery >> buildResult: aQueryResult [
 	aQueryResult fillWith: result
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyAllCritiqueQuery >> checkEmptyResult [
 
 	self analyzedObjectsDo: [ :each |
@@ -37,7 +38,7 @@ ClyAllCritiqueQuery >> checkEmptyResult [
 	^true
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyAllCritiqueQuery >> description [
 
 	^'all critiques'

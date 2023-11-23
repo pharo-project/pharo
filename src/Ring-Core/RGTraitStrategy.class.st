@@ -1,27 +1,29 @@
 Class {
-	#name : #RGTraitStrategy,
-	#superclass : #RGTraitDescriptionStrategy,
+	#name : 'RGTraitStrategy',
+	#superclass : 'RGTraitDescriptionStrategy',
 	#instVars : [
 		'classTrait',
 		'comment',
 		'package'
 	],
-	#category : #'Ring-Core-Kernel'
+	#category : 'Ring-Core-Kernel',
+	#package : 'Ring-Core',
+	#tag : 'Kernel'
 }
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGTraitStrategy >> acceptVisitor: aVisitor [
 
 	^ aVisitor visitTrait: self owner
 ]
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGTraitStrategy >> baseTrait [
 
 	^ self owner
 ]
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGTraitStrategy >> category [
 
 	^ self owner tags
@@ -34,7 +36,7 @@ RGTraitStrategy >> category [
 	"todo"
 ]
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGTraitStrategy >> category: aString [
 
 	| aTag |
@@ -54,31 +56,31 @@ RGTraitStrategy >> category: aString [
 	self announcer behaviorRecategorized: self."
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGTraitStrategy >> classSide [
 
 	^ self classTrait
 ]
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGTraitStrategy >> classTrait [
 
 	^ self backend forBehavior classTraitFor: self owner
 ]
 
-{ #category : #'private - backend access' }
+{ #category : 'private - backend access' }
 RGTraitStrategy >> classTrait: anRGMetatraitDefinition [
 
 	self backend forBehavior setClassTraitFor: self owner to: anRGMetatraitDefinition
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGTraitStrategy >> comment [
 
 	^ self backend forBehavior traitCommentFor: self owner
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGTraitStrategy >> comment: anRGComment [
 
 	self backend forBehavior setTraitCommentFor: self owner to: anRGComment.
@@ -86,25 +88,25 @@ RGTraitStrategy >> comment: anRGComment [
 	self owner announcer behaviorCommentModified: self owner
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGTraitStrategy >> defaultCategory [
 
 	^ nil
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGTraitStrategy >> defaultComment [
 
 	^ self owner defaultCommentStubIn: self owner
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGTraitStrategy >> defaultPackage [
 
 	^ self owner defaultPackageStubIn: self environment
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGTraitStrategy >> definition [
 	"Answer a String that defines the receiver"
 
@@ -118,13 +120,13 @@ RGTraitStrategy >> definition [
 				store: self owner category asString]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGTraitStrategy >> hasComment [
 
 	^ self comment isEmptyOrNil not
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RGTraitStrategy >> initialize [
 
 	super initialize.
@@ -134,7 +136,7 @@ RGTraitStrategy >> initialize [
 	package := self unresolvedValue: self defaultPackage
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGTraitStrategy >> initializeUnresolved [
 
 	super initializeUnresolved.
@@ -144,18 +146,18 @@ RGTraitStrategy >> initializeUnresolved [
 	package := self unresolvedValue: self defaultPackage
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGTraitStrategy >> instanceSide [
 	^ self baseTrait
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGTraitStrategy >> isTraitStrategy [
 
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGTraitStrategy >> makeResolved [
 
 
@@ -170,13 +172,13 @@ RGTraitStrategy >> makeResolved [
 	package := self package markAsRingResolved
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGTraitStrategy >> package [
 
 	^ self backend forBehavior traitPackageFor: self owner
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGTraitStrategy >> package: anRGPackage [
 
 	self announceDefinitionChangeDuring: [
@@ -185,13 +187,13 @@ RGTraitStrategy >> package: anRGPackage [
 		anRGPackage addDefinedBehavior: self owner. ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGTraitStrategy >> pvtClassTrait [
 
 	^ classTrait value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGTraitStrategy >> pvtClassTrait: anRGMetatraitDefinition [
 
 	self owner environment verifyOwnership: anRGMetatraitDefinition.
@@ -199,13 +201,13 @@ RGTraitStrategy >> pvtClassTrait: anRGMetatraitDefinition [
 	^ classTrait := anRGMetatraitDefinition
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGTraitStrategy >> pvtComment [
 
 	^ comment value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGTraitStrategy >> pvtComment: anRGComment [
 
 	self owner environment verifyOwnership: anRGComment.
@@ -213,13 +215,13 @@ RGTraitStrategy >> pvtComment: anRGComment [
 	^ comment := anRGComment
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGTraitStrategy >> pvtPackage [
 
 	^ package value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGTraitStrategy >> pvtPackage: anRGPackage [
 
 	self owner environment verifyOwnership: anRGPackage.
@@ -227,7 +229,7 @@ RGTraitStrategy >> pvtPackage: anRGPackage [
 	^ package := anRGPackage
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGTraitStrategy >> pvtResolvableProperties [
 
 	^ super pvtResolvableProperties, {
@@ -237,31 +239,31 @@ RGTraitStrategy >> pvtResolvableProperties [
    	}
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGTraitStrategy >> referencedBehaviors [
 
 	^ super referencedBehaviors, {self classTrait}
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGTraitStrategy >> referencedPackages [
 
 	^ Array with: package
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGTraitStrategy >> sibling [
 
 	^ self classTrait
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGTraitStrategy >> storeName [
 
 	^ 'RGTrait'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGTraitStrategy >> traitTransformationString [
 
 	^ self owner name

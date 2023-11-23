@@ -1,20 +1,22 @@
 Class {
-	#name : #CoBasicCompletionTest,
-	#superclass : #TestCase,
+	#name : 'CoBasicCompletionTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'completionClass',
 		'systemNavigation'
 	],
-	#category : #'HeuristicCompletion-Tests-Core'
+	#category : 'HeuristicCompletion-Tests-Core',
+	#package : 'HeuristicCompletion-Tests',
+	#tag : 'Core'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 CoBasicCompletionTest class >> isAbstract [
 
 	^ self == CoBasicCompletionTest
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoBasicCompletionTest >> assertCollectionOfEntry: aCollection equals: anotherCollection [
 
 	self assert: aCollection size equals: anotherCollection size.
@@ -23,7 +25,7 @@ CoBasicCompletionTest >> assertCollectionOfEntry: aCollection equals: anotherCol
 		self assertEntry: a equals: b ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoBasicCompletionTest >> assertEntry: anEntry equals: expectedEntry [
 
 	"Entries do not define equality :("
@@ -31,13 +33,13 @@ CoBasicCompletionTest >> assertEntry: anEntry equals: expectedEntry [
 	self assert: anEntry contents equals: expectedEntry contents
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoBasicCompletionTest >> completionClass [
 
 	^ completionClass
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoBasicCompletionTest >> innerASTNode [
 	| nodeInsideABlock |
 	RBMethodNode
@@ -56,7 +58,7 @@ CoBasicCompletionTest >> innerASTNode [
 	^ nodeInsideABlock
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 CoBasicCompletionTest >> setUp [
 
 	super setUp.
@@ -90,7 +92,7 @@ CoBasicCompletionTest >> setUp [
 		yourself
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoBasicCompletionTest >> systemNavigation [
 
 	^ systemNavigation

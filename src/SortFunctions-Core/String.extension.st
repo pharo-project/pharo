@@ -1,6 +1,6 @@
-Extension { #name : #String }
+Extension { #name : 'String' }
 
-{ #category : #'*SortFunctions-Core' }
+{ #category : '*SortFunctions-Core' }
 String >> threeWayCompareTo: aString [
 	"Do a three-way comparison between the receiver and anotherObject, returning
 	-1 if self < anotherObject

@@ -8,29 +8,31 @@ When I am installed in a class, #run:with:in: will compile a new compiledMethod 
 call #invalidate to force the installation of the ReflectiveMethod, and therefore code generation on the next execution.
 "
 Class {
-	#name : #ReflectiveMethod,
-	#superclass : #Object,
-	#type : #variable,
+	#name : 'ReflectiveMethod',
+	#superclass : 'Object',
+	#type : 'variable',
 	#instVars : [
 		'ast',
 		'compiledMethod',
 		'linkCount'
 	],
-	#category : #'Reflectivity-Core'
+	#category : 'Reflectivity-Core',
+	#package : 'Reflectivity',
+	#tag : 'Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ReflectiveMethod class >> on: aCompiledMethod [
 	^self new
 		compiledMethod: aCompiledMethod
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReflectiveMethod >> ast [
 	^ast
 ]
 
-{ #category : #evaluation }
+{ #category : 'evaluation' }
 ReflectiveMethod >> compileAST [
 	| method |
 	OCASTSemanticCleaner clean: ast.
@@ -45,36 +47,36 @@ ReflectiveMethod >> compileAST [
 	^method.
 ]
 
-{ #category : #evaluation }
+{ #category : 'evaluation' }
 ReflectiveMethod >> compileAndInstallCompiledMethod [
 	self wrapperNeeded ifTrue: [ self generatePrimitiveWrapper ].
 	self recompileAST.
 	self installCompiledMethod
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReflectiveMethod >> compiledMethod [
 	^compiledMethod
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReflectiveMethod >> compiledMethod: aCompiledMethod [
 
 	compiledMethod := aCompiledMethod.
 	ast := compiledMethod ast
 ]
 
-{ #category : #invalidate }
+{ #category : 'invalidate' }
 ReflectiveMethod >> createTwin [
 	"do nothing"
 ]
 
-{ #category : #invalidate }
+{ #category : 'invalidate' }
 ReflectiveMethod >> decreaseLinkCount [
 	linkCount := linkCount - 1
 ]
 
-{ #category : #invalidate }
+{ #category : 'invalidate' }
 ReflectiveMethod >> destroyTwin [
 	(ast hasProperty: #wrapperMethod) ifTrue: [  ast :=  compiledMethod parseTree].
 	self recompileAST.
@@ -83,18 +85,18 @@ ReflectiveMethod >> destroyTwin [
 	SystemAnnouncer uniqueInstance unsubscribe: self
 ]
 
-{ #category : #forwarding }
+{ #category : 'forwarding' }
 ReflectiveMethod >> doesNotUnderstand: aMessage [
 	^aMessage sendTo: compiledMethod
 ]
 
-{ #category : #forwarding }
+{ #category : 'forwarding' }
 ReflectiveMethod >> flushCache [
 	"See MethodDictionary class comment."
 	<primitive: 116>
 ]
 
-{ #category : #evaluation }
+{ #category : 'evaluation' }
 ReflectiveMethod >> generatePrimitiveWrapper [
 	| wrappedMethod send wrapperMethod assignmentNode |
 	wrappedMethod := self compileAST.
@@ -119,56 +121,61 @@ ReflectiveMethod >> generatePrimitiveWrapper [
 	ast := wrapperMethod
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ReflectiveMethod >> hasMetaLinks [
 	^self linkCount > 0
 ]
 
-{ #category : #invalidate }
+{ #category : 'invalidate' }
 ReflectiveMethod >> increaseLinkCount [
 	linkCount := self linkCount + 1
 ]
 
-{ #category : #invalidate }
+{ #category : 'invalidate' }
 ReflectiveMethod >> installCompiledMethod [
 	self installMethod: compiledMethod.
 	ASTCache default at: compiledMethod put: ast
 ]
 
-{ #category : #invalidate }
+{ #category : 'invalidate' }
 ReflectiveMethod >> installLink: aMetaLink [
 	self increaseLinkCount.
 	(self ast hasOption: #optionCompileOnLinkInstallation for: aMetaLink)
 		ifTrue: [ self compileAndInstallCompiledMethod ]
 ]
 
-{ #category : #invalidate }
+{ #category : 'invalidate' }
 ReflectiveMethod >> installMethod: aMethod [
 	"add to method dictionary"
 	ast methodClass methodDict at: aMethod selector put: aMethod
 ]
 
-{ #category : #invalidate }
+{ #category : 'invalidate' }
 ReflectiveMethod >> installReflectiveMethod [
 	self installMethod: self
 ]
 
-{ #category : #invalidate }
+{ #category : 'invalidate' }
 ReflectiveMethod >> invalidate [
 	"nop: I am already installed"
 ]
 
-{ #category : #accessing }
+{ #category : 'forwarding' }
+ReflectiveMethod >> isFromTrait [
+	^ compiledMethod isFromTrait
+]
+
+{ #category : 'accessing' }
 ReflectiveMethod >> linkCount [
 	^linkCount ifNil: [ linkCount := 0 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReflectiveMethod >> linkCount: aNumber [
 	linkCount := aNumber
 ]
 
-{ #category : #invalidate }
+{ #category : 'invalidate' }
 ReflectiveMethod >> metaLinkOptions [
 	^{
 	#invalidate -> #( + optionCompileOnLinkInstallation).
@@ -191,12 +198,18 @@ ReflectiveMethod >> metaLinkOptions [
 	}
 ]
 
-{ #category : #forwarding }
+{ #category : 'forwarding' }
 ReflectiveMethod >> methodClass: aClass [
 	^compiledMethod methodClass: aClass
 ]
 
-{ #category : #printing }
+{ #category : 'removing' }
+ReflectiveMethod >> package [
+
+	^ self extensionPackage ifNil: [ self origin package ]
+]
+
+{ #category : 'printing' }
 ReflectiveMethod >> printOn: aStream [
 	"Overrides method inherited from the byte arrayed collection."
 
@@ -207,7 +220,7 @@ ReflectiveMethod >> printOn: aStream [
 		nextPutAll: ' (ReflectiveMethod)'
 ]
 
-{ #category : #evaluation }
+{ #category : 'evaluation' }
 ReflectiveMethod >> recompileAST [
 
 	compiledMethod := self compileAST.
@@ -215,12 +228,18 @@ ReflectiveMethod >> recompileAST [
 	compiledMethod reflectiveMethod: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReflectiveMethod >> reflectiveMethod [
 	^self
 ]
 
-{ #category : #invalidate }
+{ #category : 'removing' }
+ReflectiveMethod >> removeFromPackage [
+
+	self isFromTrait ifFalse: [ self package ifNotNil: [ :package | package removeMethod: self ] ]
+]
+
+{ #category : 'invalidate' }
 ReflectiveMethod >> removeLink: aMetaLink [
 	(aMetaLink optionCompileOnLinkInstallation or: [ compiledMethod isRealPrimitive ])
 		ifTrue: [ self compileAndInstallCompiledMethod ]
@@ -229,7 +248,7 @@ ReflectiveMethod >> removeLink: aMetaLink [
 	self linkCount = 0 ifTrue: [ self destroyTwin ]
 ]
 
-{ #category : #evaluation }
+{ #category : 'evaluation' }
 ReflectiveMethod >> run: aSelector with: anArray in: aReceiver [
 	"we install the old one as the compiler might need it"
 	self installCompiledMethod.
@@ -237,38 +256,38 @@ ReflectiveMethod >> run: aSelector with: anArray in: aReceiver [
 	^aReceiver rFwithArgs: anArray executeMethod: compiledMethod
 ]
 
-{ #category : #forwarding }
+{ #category : 'forwarding' }
 ReflectiveMethod >> selector [
 	^compiledMethod selector
 ]
 
-{ #category : #forwarding }
+{ #category : 'forwarding' }
 ReflectiveMethod >> selector: aSymbol [
 	^compiledMethod selector: aSymbol
 ]
 
-{ #category : #spotter }
+{ #category : 'spotter' }
 ReflectiveMethod >> spotterActDefault [
 	^ self compiledMethod spotterActDefault
 ]
 
-{ #category : #spotter }
+{ #category : 'spotter' }
 ReflectiveMethod >> spotterItemsFor: aStep [
 	"do nothing for compiled method"
 ]
 
-{ #category : #spotter }
+{ #category : 'spotter' }
 ReflectiveMethod >> spotterPreviewIn: aComposite [
 	<spotterPreview: 10>
 	self compiledMethod spotterPreviewIn: aComposite
 ]
 
-{ #category : #spotter }
+{ #category : 'spotter' }
 ReflectiveMethod >> spotterSelectFor: aStep [
 	self compiledMethod spotterSelectFor: aStep
 ]
 
-{ #category : #evaluation }
+{ #category : 'evaluation' }
 ReflectiveMethod >> wrapperNeeded [
 	ast hasMetalink ifFalse: [ ^false ].
 	compiledMethod isRealPrimitive ifTrue: [ ^true ].

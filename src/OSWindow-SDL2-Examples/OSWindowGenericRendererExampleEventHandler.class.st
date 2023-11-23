@@ -2,37 +2,39 @@
 I am the event handler linked to the SDL2JoystickExample
 "
 Class {
-	#name : #OSWindowGenericRendererExampleEventHandler,
-	#superclass : #OSWindowEventVisitor,
+	#name : 'OSWindowGenericRendererExampleEventHandler',
+	#superclass : 'OSWindowEventVisitor',
 	#instVars : [
 		'example'
 	],
-	#category : #'OSWindow-SDL2-Examples-Examples'
+	#category : 'OSWindow-SDL2-Examples-Examples',
+	#package : 'OSWindow-SDL2-Examples',
+	#tag : 'Examples'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowGenericRendererExampleEventHandler >> example [
 	<sampleInstance>
 	^ example
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowGenericRendererExampleEventHandler >> example: anObject [
 	example := anObject
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OSWindowGenericRendererExampleEventHandler >> visitWindowCloseEvent: anEvent [
 	example destroy
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OSWindowGenericRendererExampleEventHandler >> visitWindowExposeEvent: anEvent [
 	example enqueueRender.
 	anEvent suppressDefaultAction
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OSWindowGenericRendererExampleEventHandler >> visitWindowFrameEvent: anEvent [
 	example ifNotNil: [ example update: Time millisecondClockValue *0.001. ].
 	example enqueueRender

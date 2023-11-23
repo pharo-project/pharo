@@ -1,15 +1,17 @@
 Class {
-	#name : #FTTableMorphTest,
-	#superclass : #TestCase,
+	#name : 'FTTableMorphTest',
+	#superclass : 'TestCase',
 	#traits : 'SpTMorphicUIRedrawer',
 	#classTraits : 'SpTMorphicUIRedrawer classTrait',
 	#instVars : [
 		'table'
 	],
-	#category : #'Morphic-Widgets-FastTable-Tests-Configuration'
+	#category : 'Morphic-Widgets-FastTable-Tests-Configuration',
+	#package : 'Morphic-Widgets-FastTable-Tests',
+	#tag : 'Configuration'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 FTTableMorphTest >> setUp [
 	super setUp.
 	table := FTTableMorph new.
@@ -17,13 +19,13 @@ FTTableMorphTest >> setUp [
 	self initializeSemaphore
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 FTTableMorphTest >> tearDown [
 	table delete.
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FTTableMorphTest >> testCanAlternateRowColors [
 	| rows oddRows oddColor evenRows evenColor |
 	table

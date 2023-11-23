@@ -2,8 +2,8 @@
 A PragmaMenuAndShortcutRegistrationItem is an item of a menu or keymap
 "
 Class {
-	#name : #PragmaMenuAndShortcutRegistrationItem,
-	#superclass : #Object,
+	#name : 'PragmaMenuAndShortcutRegistrationItem',
+	#superclass : 'Object',
 	#instVars : [
 		'item',
 		'action',
@@ -28,118 +28,120 @@ Class {
 		'shortcutName',
 		'keyText'
 	],
-	#category : #'MenuRegistration-Core'
+	#category : 'MenuRegistration-Core',
+	#package : 'MenuRegistration',
+	#tag : 'Core'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PragmaMenuAndShortcutRegistrationItem >> action [
 
 	^ action
 ]
 
-{ #category : #'menu protocol' }
+{ #category : 'menu protocol' }
 PragmaMenuAndShortcutRegistrationItem >> action: aBlock [
 
 	action := aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PragmaMenuAndShortcutRegistrationItem >> arguments [
 
 	^ arguments
 ]
 
-{ #category : #'menu protocol' }
+{ #category : 'menu protocol' }
 PragmaMenuAndShortcutRegistrationItem >> arguments: anArray [
 
 	arguments := anArray
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 PragmaMenuAndShortcutRegistrationItem >> category [
 
 	^ category
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 PragmaMenuAndShortcutRegistrationItem >> category: aByteSymbol [
 
 	category := aByteSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PragmaMenuAndShortcutRegistrationItem >> default [
 
 	^ default
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 PragmaMenuAndShortcutRegistrationItem >> default: aKMModifiedShortcut [
 
 	default := aKMModifiedShortcut
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PragmaMenuAndShortcutRegistrationItem >> enabled [
 
 	^ enabled
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PragmaMenuAndShortcutRegistrationItem >> enabled: aBoolean [
 
 	enabled := aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PragmaMenuAndShortcutRegistrationItem >> enabledBlock [
 
 	^ enabledBlock
 ]
 
-{ #category : #'menu protocol' }
+{ #category : 'menu protocol' }
 PragmaMenuAndShortcutRegistrationItem >> enabledBlock: aBlock [
 
 	enabledBlock := aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PragmaMenuAndShortcutRegistrationItem >> group [
 
 	^ group
 ]
 
-{ #category : #'menu protocol' }
+{ #category : 'menu protocol' }
 PragmaMenuAndShortcutRegistrationItem >> group: aSymbol [
 
 	group := aSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PragmaMenuAndShortcutRegistrationItem >> help [
 
 	^ help
 ]
 
-{ #category : #'menu protocol' }
+{ #category : 'menu protocol' }
 PragmaMenuAndShortcutRegistrationItem >> help: aString [
 
 	help := aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PragmaMenuAndShortcutRegistrationItem >> icon [
 
 	^ icon
 ]
 
-{ #category : #'menu protocol' }
+{ #category : 'menu protocol' }
 PragmaMenuAndShortcutRegistrationItem >> icon: anIcon [
 
 	icon := anIcon
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PragmaMenuAndShortcutRegistrationItem >> initialize [
 
 	super initialize.
@@ -147,149 +149,149 @@ PragmaMenuAndShortcutRegistrationItem >> initialize [
 	withSeparatorAfter := false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PragmaMenuAndShortcutRegistrationItem >> isWithSeparatorAfter [
 
 	^ withSeparatorAfter
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PragmaMenuAndShortcutRegistrationItem >> item [
 
 	^ item
 ]
 
-{ #category : #'menu protocol' }
+{ #category : 'menu protocol' }
 PragmaMenuAndShortcutRegistrationItem >> item: aSymbol [
 
 	item := aSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PragmaMenuAndShortcutRegistrationItem >> keyText [
 	^keyText
 ]
 
-{ #category : #'menu protocol' }
+{ #category : 'menu protocol' }
 PragmaMenuAndShortcutRegistrationItem >> keyText: aString [
 	keyText := aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PragmaMenuAndShortcutRegistrationItem >> label [
 
 	^ label
 ]
 
-{ #category : #'menu protocol' }
+{ #category : 'menu protocol' }
 PragmaMenuAndShortcutRegistrationItem >> label: aString [
 
 	label := aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PragmaMenuAndShortcutRegistrationItem >> order [
 
 	^ order
 ]
 
-{ #category : #'menu protocol' }
+{ #category : 'menu protocol' }
 PragmaMenuAndShortcutRegistrationItem >> order: anInteger [
 
 	order := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PragmaMenuAndShortcutRegistrationItem >> parent [
 
 	^ parent
 ]
 
-{ #category : #'menu protocol' }
+{ #category : 'menu protocol' }
 PragmaMenuAndShortcutRegistrationItem >> parent: aSymbol [
 
 	parent := aSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PragmaMenuAndShortcutRegistrationItem >> platform [
 
 	^ platform
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 PragmaMenuAndShortcutRegistrationItem >> platform: aSymbol [
 
 	platform := aSymbol
 ]
 
-{ #category : #'menu protocol' }
+{ #category : 'menu protocol' }
 PragmaMenuAndShortcutRegistrationItem >> precondition: aBlock [
 
 	precondition := aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PragmaMenuAndShortcutRegistrationItem >> selector [
 
 	^ selector
 ]
 
-{ #category : #'menu protocol' }
+{ #category : 'menu protocol' }
 PragmaMenuAndShortcutRegistrationItem >> selector: aSymbol [
 
 	selector := aSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PragmaMenuAndShortcutRegistrationItem >> shortcut [
 
 	^ shortcut
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 PragmaMenuAndShortcutRegistrationItem >> shortcut: aSymbol [
 
 	shortcut := aSymbol
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 PragmaMenuAndShortcutRegistrationItem >> shortcutName [
 
 	^shortcutName
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 PragmaMenuAndShortcutRegistrationItem >> shortcutName: aSymbol [
 
 	shortcutName := aSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PragmaMenuAndShortcutRegistrationItem >> target [
 
 	^ target
 ]
 
-{ #category : #'menu protocol' }
+{ #category : 'menu protocol' }
 PragmaMenuAndShortcutRegistrationItem >> target: aSymbol [
 
 	target := aSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PragmaMenuAndShortcutRegistrationItem >> with [
 
 	^ with
 ]
 
-{ #category : #'menu protocol' }
+{ #category : 'menu protocol' }
 PragmaMenuAndShortcutRegistrationItem >> with: aBlock [
 
 	with := aBlock
 ]
 
-{ #category : #'menu protocol' }
+{ #category : 'menu protocol' }
 PragmaMenuAndShortcutRegistrationItem >> withSeparatorAfter [
 
 	withSeparatorAfter := true

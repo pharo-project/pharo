@@ -1,20 +1,24 @@
 Class {
-	#name : #PBBootstrapLogger,
-	#superclass : #Object,
+	#name : 'PBBootstrapLogger',
+	#superclass : 'Object',
 	#instVars : [
 		'queue',
 		'logging'
 	],
-	#category : #Pharo30Bootstrap
+	#category : 'Pharo30Bootstrap',
+	#package : 'Pharo30Bootstrap'
 }
 
-{ #category : #'logging-Deprecated' }
+{ #category : 'logging-Deprecated' }
 PBBootstrapLogger >> basicLog: anItem [
 
-	Stdio stdout nextPutAll: anItem value asString ;cr; flush.
+	Stdio stdout
+		nextPutAll: anItem value asString;
+		lf;
+		flush
 ]
 
-{ #category : #'logging-Deprecated' }
+{ #category : 'logging-Deprecated' }
 PBBootstrapLogger >> initialize [
 
 	super initialize.
@@ -22,7 +26,7 @@ PBBootstrapLogger >> initialize [
 	logging := false.
 ]
 
-{ #category : #'logging-Deprecated' }
+{ #category : 'logging-Deprecated' }
 PBBootstrapLogger >> log: aLogStatement [
 
 	queue nextPut: aLogStatement.

@@ -1,6 +1,6 @@
-Extension { #name : #RGDefinition }
+Extension { #name : 'RGDefinition' }
 
-{ #category : #'*Tool-Base' }
+{ #category : '*Tool-Base' }
 RGDefinition >> tools [
 
 	^ Smalltalk tools

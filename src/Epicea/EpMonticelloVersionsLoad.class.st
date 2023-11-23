@@ -2,15 +2,17 @@
 I represent a Monticello ""Load Versions"" operation performed in the system.
 "
 Class {
-	#name : #EpMonticelloVersionsLoad,
-	#superclass : #EpEvent,
+	#name : 'EpMonticelloVersionsLoad',
+	#superclass : 'EpEvent',
 	#instVars : [
 		'versionNames'
 	],
-	#category : #'Epicea-Model'
+	#category : 'Epicea-Model',
+	#package : 'Epicea',
+	#tag : 'Model'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 EpMonticelloVersionsLoad class >> versionNames: aCollectionOfVersionNames [
 
 	^ self basicNew
@@ -18,64 +20,64 @@ EpMonticelloVersionsLoad class >> versionNames: aCollectionOfVersionNames [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 EpMonticelloVersionsLoad class >> versions: aCollectionOfVersions [
 
 	^ self versionNames: (aCollectionOfVersions collect: [ :version | version info name ])
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 EpMonticelloVersionsLoad >> = anObject [
 
 	^ (self class = anObject class)
 		and: [ self versionNames = anObject versionNames ]
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpMonticelloVersionsLoad >> accept: aChangeVisitor [
 	^ aChangeVisitor visitMonticelloVersionsLoad: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpMonticelloVersionsLoad >> affectedPackageName [
 	self flag: #pharoFixMe.	"FIX: imprecise answer"
 
 	^ self packageNames first
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 EpMonticelloVersionsLoad >> hash [
 
 	^ self class hash
 		bitXor: self versionNames hash
 ]
 
-{ #category : #initializing }
+{ #category : 'initializing' }
 EpMonticelloVersionsLoad >> initializeWith: aCollectionOfVersionNames [
 	self initialize.
 	versionNames := aCollectionOfVersionNames
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 EpMonticelloVersionsLoad >> isMonticelloVersionsLoad [
 
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpMonticelloVersionsLoad >> packageNames [
 
 	^ versionNames collect: [ :each | each copyUpToLast: $- ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 EpMonticelloVersionsLoad >> printOn: aStream [
 
 	super printOn: aStream.
 	versionNames printElementsOn: aStream
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpMonticelloVersionsLoad >> versionNames [
 	^ versionNames
 ]

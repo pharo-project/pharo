@@ -7,8 +7,8 @@ Use RubTextFieldMorph instead
 
 "
 Class {
-	#name : #RubPluggableTextFieldMorph,
-	#superclass : #RubTextFieldMorph,
+	#name : 'RubPluggableTextFieldMorph',
+	#superclass : 'RubTextFieldMorph',
 	#instVars : [
 		'default',
 		'getEnabledSelector',
@@ -16,10 +16,12 @@ Class {
 		'crAction',
 		'changedAction'
 	],
-	#category : #'Rubric-Compatibility-toBeDeprecated'
+	#category : 'Rubric-Compatibility-toBeDeprecated',
+	#package : 'Rubric',
+	#tag : 'Compatibility-toBeDeprecated'
 }
 
-{ #category : #'model protocol' }
+{ #category : 'model protocol' }
 RubPluggableTextFieldMorph >> acceptTextInModel [
 	"Inform the model that the receiver's textArea text should be accepted.
 	Answer true if the model accepted ok, false otherwise"
@@ -44,22 +46,22 @@ RubPluggableTextFieldMorph >> acceptTextInModel [
 	^ result
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubPluggableTextFieldMorph >> changedAction: aBlock [
 	changedAction := aBlock
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RubPluggableTextFieldMorph >> checkTextWithConverter [
 
 	|string|
 	self converter ifNil: [^ self].
 	string := self text asString.
-	(string isEmpty and: [self default notNil]) or: [
+	(string isEmpty and: [self default isNotNil]) or: [
 		hasValidText := self converter isStringValid: string]
 ]
 
-{ #category : #'model protocol' }
+{ #category : 'model protocol' }
 RubPluggableTextFieldMorph >> convertTo: aClass [
 
 	"Set the converter object class."
@@ -69,61 +71,61 @@ RubPluggableTextFieldMorph >> convertTo: aClass [
 		ifNotNil: [ self converter objectClass: aClass ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubPluggableTextFieldMorph >> converter [
 	"Answer the value of converter"
 
 	^ converter
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubPluggableTextFieldMorph >> converter: anObject [
 	"Set the value of converter"
 
 	converter := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubPluggableTextFieldMorph >> crAction: aMessageSend [
 	crAction := aMessageSend
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubPluggableTextFieldMorph >> default [
 	^ default
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubPluggableTextFieldMorph >> default: anObject [
 	default := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubPluggableTextFieldMorph >> getColorSelector [
 	^ self getBackgroundColorSelector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubPluggableTextFieldMorph >> getColorSelector: aSymbol [
 	self getBackgroundColorSelector: aSymbol.
 	self update: self getColorSelector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubPluggableTextFieldMorph >> getEnabledSelector [
 	"Answer the value of getEnabledSelector"
 
 	^ getEnabledSelector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubPluggableTextFieldMorph >> getEnabledSelector: aSymbol [
 	"Answer the value of getEnabledSelector"
 
 	getEnabledSelector := aSymbol
 ]
 
-{ #category : #'accessing - text' }
+{ #category : 'accessing - text' }
 RubPluggableTextFieldMorph >> getTextFromModel [
 
 	| newObj |
@@ -135,7 +137,7 @@ RubPluggableTextFieldMorph >> getTextFromModel [
 	^ ( self converter objectAsString: newObj ) ifNil: [ '' ] ifNotNil: [ :s | s shallowCopy ]
 ]
 
-{ #category : #'model protocol' }
+{ #category : 'model protocol' }
 RubPluggableTextFieldMorph >> hasValidText [
 	"Return true if the text is valid with respect to the converter."
 
@@ -144,14 +146,14 @@ RubPluggableTextFieldMorph >> hasValidText [
 	^ super hasValidText
 ]
 
-{ #category : #'model protocol' }
+{ #category : 'model protocol' }
 RubPluggableTextFieldMorph >> model: anObject [
 	super model: anObject.
 	anObject addDependent: self.
 	anObject addDependent: self textArea
 ]
 
-{ #category : #'set and get' }
+{ #category : 'set and get' }
 RubPluggableTextFieldMorph >> setTextAndAccept: aText [
 
 	self
@@ -160,14 +162,14 @@ RubPluggableTextFieldMorph >> setTextAndAccept: aText [
 		accept
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubPluggableTextFieldMorph >> textChanged [
 	super textChanged.
 	self checkTextWithConverter.
 	changedAction ifNotNil: [changedAction value: self getText ]
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 RubPluggableTextFieldMorph >> update: aSymbol [
 	aSymbol ifNil: [ ^ self ].
 	aSymbol == #flash
@@ -199,7 +201,7 @@ RubPluggableTextFieldMorph >> update: aSymbol [
 	^ self
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 RubPluggableTextFieldMorph >> updateEnabled [
 	"Update the enablement state."
 
@@ -208,7 +210,7 @@ RubPluggableTextFieldMorph >> updateEnabled [
 			self enabled: (self model perform: self getEnabledSelector)]]
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubPluggableTextFieldMorph >> whenReturnEntered: anAnnouncement [
 	super whenReturnEntered: anAnnouncement.
 	crAction ifNotNil: [ crAction cull: nil ]

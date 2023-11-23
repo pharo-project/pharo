@@ -3,8 +3,8 @@ I check on image startup that there is lost logs for current image and I open br
 I super usefull for recovering lost changes after image crash
 "
 Class {
-	#name : #EpLostChangesDetector,
-	#superclass : #Object,
+	#name : 'EpLostChangesDetector',
+	#superclass : 'Object',
 	#instVars : [
 		'hasLostChanges',
 		'lastSessionFileStore'
@@ -12,33 +12,35 @@ Class {
 	#classInstVars : [
 		'enabled'
 	],
-	#category : #'EpiceaBrowsers-Integration'
+	#category : 'EpiceaBrowsers-Integration',
+	#package : 'EpiceaBrowsers',
+	#tag : 'Integration'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpLostChangesDetector class >> enabled: aBoolean [
 
 	enabled := aBoolean
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 EpLostChangesDetector class >> initialize [
 	SessionManager default registerToolClassNamed: self name
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 EpLostChangesDetector class >> isEnabled [
 
 	^ enabled ifNil: [ enabled := true ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 EpLostChangesDetector class >> new [
 
 	^ self newWithLog: EpMonitor current log
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 EpLostChangesDetector class >> newWithLog: aLog [
 
 	^ self basicNew
@@ -46,7 +48,7 @@ EpLostChangesDetector class >> newWithLog: aLog [
 		yourself
 ]
 
-{ #category : #'system startup' }
+{ #category : 'system startup' }
 EpLostChangesDetector class >> startUp: isImageStarting [
 
 	| detector |
@@ -64,13 +66,13 @@ EpLostChangesDetector class >> startUp: isImageStarting [
 			ifTrue: [ detector openBrowserIfLostChanges ] ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 EpLostChangesDetector >> hasLostChanges [
 
 	^ hasLostChanges
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 EpLostChangesDetector >> initializeWithLog: aLog [
 
 	self initialize.
@@ -82,7 +84,7 @@ EpLostChangesDetector >> initializeWithLog: aLog [
 			ifNotNil: [ lastSessionFileStore isOutdated ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpLostChangesDetector >> lostChanges [
 
 	| freshLog lastSessionHeadReference entries |
@@ -98,7 +100,7 @@ EpLostChangesDetector >> lostChanges [
 	^ entries ifNotEmpty: [ entries allButLast reversed ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpLostChangesDetector >> openBrowserIfLostChanges [
 
 	| lostChanges lostChangesLog browser |

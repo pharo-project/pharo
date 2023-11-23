@@ -1,6 +1,6 @@
-Extension { #name : #Morph }
+Extension { #name : 'Morph' }
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 Morph >> addHalo: evt [
 	| halo |
 
@@ -13,7 +13,7 @@ Morph >> addHalo: evt [
 	^ halo
 ]
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 Morph >> addHandlesTo: aHaloMorph box: box [
 	"Add halo handles to the halo.  Apply the halo filter if appropriate"
 
@@ -30,7 +30,7 @@ Morph >> addHandlesTo: aHaloMorph box: box [
 	aHaloMorph innerTarget addOptionalHandlesTo: aHaloMorph box: box
 ]
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 Morph >> addWorldHandlesTo: aHaloMorph box: box [
 	aHaloMorph haloBox: box.
 	HaloMorph haloSpecificationsForWorld
@@ -38,19 +38,19 @@ Morph >> addWorldHandlesTo: aHaloMorph box: box [
 	aHaloMorph innerTarget addOptionalHandlesTo: aHaloMorph box: box
 ]
 
-{ #category : #'*Morphic-Base-keymapping' }
+{ #category : '*Morphic-Base-keymapping' }
 Morph >> allowsKeymapping [
 
 	^ self valueOfProperty: #allowsKeymapping ifAbsent: [ true]
 ]
 
-{ #category : #'*Morphic-Base-keymapping' }
+{ #category : '*Morphic-Base-keymapping' }
 Morph >> allowsKeymapping: aBoolean [
 
 	^ self setProperty: #allowsKeymapping toValue: aBoolean
 ]
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 Morph >> asText [
 
 	| anchor embedMorphSignal |
@@ -59,7 +59,7 @@ Morph >> asText [
     ^ Text string: embedMorphSignal attribute: anchor
 ]
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 Morph >> assureLayoutProperties [
 	| props |
 	props := self layoutProperties.
@@ -70,7 +70,7 @@ Morph >> assureLayoutProperties [
 	^props
 ]
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 Morph >> assureTableProperties [
 	| props |
 	props := self layoutProperties.
@@ -83,27 +83,27 @@ Morph >> assureTableProperties [
 	^props
 ]
 
-{ #category : #'*Morphic-Base-keymapping' }
+{ #category : '*Morphic-Base-keymapping' }
 Morph >> attachKeymapCategory: aCategory [
 	self kmDispatcher attachCategory: aCategory
 ]
 
-{ #category : #'*Morphic-Base-keymapping' }
+{ #category : '*Morphic-Base-keymapping' }
 Morph >> attachKeymapCategory: aCategoryName onProperty: aProperty [
 	self kmDispatcher attachCategory: aCategoryName onProperty: aProperty
 ]
 
-{ #category : #'*Morphic-Base-keymapping' }
+{ #category : '*Morphic-Base-keymapping' }
 Morph >> attachKeymapCategory: aCategoryName targetting: anObject [
 	self kmDispatcher attachCategory: aCategoryName targetting: anObject
 ]
 
-{ #category : #'*Morphic-Base-keymapping' }
+{ #category : '*Morphic-Base-keymapping' }
 Morph >> bindKeyCombination: aShortcut toAction: anAction [
 	self kmDispatcher bindKeyCombination: aShortcut asKeyCombination toAction: anAction
 ]
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 Morph >> borderColor: aColorOrSymbolOrNil [
 	"Unfortunately, the argument to borderColor could be more than 	just a color.
 	It could also be a symbol, in which case it is to be interpreted as a style identifier.
@@ -136,7 +136,7 @@ Morph >> borderColor: aColorOrSymbolOrNil [
 						ifFalse: [style]])
 ]
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 Morph >> borderWidth: aNumber [
 	| style |
 	style := self borderStyle.
@@ -147,7 +147,7 @@ Morph >> borderWidth: aNumber [
 		ifFalse: [ style width: aNumber. self changed ]
 ]
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 Morph >> changeCellInset: evt [
 	| handle |
 	handle := HandleMorph new forEachPointDo:[:newPoint |
@@ -156,7 +156,7 @@ Morph >> changeCellInset: evt [
 	handle startStepping
 ]
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 Morph >> changeLayoutInset: evt [
 	| handle |
 	handle := HandleMorph new forEachPointDo:[:newPoint |
@@ -165,7 +165,7 @@ Morph >> changeLayoutInset: evt [
 	handle startStepping
 ]
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 Morph >> changeMaxCellSize: evt [
 	| handle |
 	handle := HandleMorph new forEachPointDo:[:newPoint |
@@ -174,7 +174,7 @@ Morph >> changeMaxCellSize: evt [
 	handle startStepping
 ]
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 Morph >> changeMinCellSize: evt [
 	| handle |
 	handle := HandleMorph new forEachPointDo:[:newPoint |
@@ -183,71 +183,71 @@ Morph >> changeMinCellSize: evt [
 	handle startStepping
 ]
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 Morph >> changeProportionalLayout [
 	| layout |
-	((layout := self layoutPolicy) notNil and:[layout isProportionalLayout])
+	((layout := self layoutPolicy) isNotNil and:[layout isProportionalLayout])
 		ifTrue:[^self]. "already proportional layout"
 	self layoutPolicy: ProportionalLayout new.
 	self layoutChanged
 ]
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 Morph >> changeTableLayout [
 	| layout |
-	((layout := self layoutPolicy) notNil and:[layout isTableLayout])
+	((layout := self layoutPolicy) isNotNil and:[layout isTableLayout])
 		ifTrue:[^self]. "already table layout"
 	self layoutPolicy: TableLayout new.
 	self layoutChanged
 ]
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 Morph >> defaultBalloonColor [
 	^ Display depth <= 2
 		ifTrue: [Color white]
 		ifFalse: [BalloonMorph balloonColor]
 ]
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 Morph >> defaultBalloonFont [
 	^ BalloonMorph balloonFont
 ]
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 Morph >> defaultBitmapFillForm [
 	^ImageMorph defaultForm
 ]
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 Morph >> defaultLabel [
 	"Answer the default label to be used"
 	^ self printString truncateTo: 40
 ]
 
-{ #category : #'*Morphic-Base-keymapping' }
+{ #category : '*Morphic-Base-keymapping' }
 Morph >> detachAllKeymapCategories [
 
 	self kmDispatcher detachAllKeymapCategories
 ]
 
-{ #category : #'*Morphic-Base-keymapping' }
+{ #category : '*Morphic-Base-keymapping' }
 Morph >> detachKeymapCategory: aCategoryName [
 
 	self kmDispatcher detachKeymapCategory: aCategoryName
 ]
 
-{ #category : #'*Morphic-Base-keymapping' }
+{ #category : '*Morphic-Base-keymapping' }
 Morph >> detachKeymapCategory: aCategoryName targetting: anObject [
 
 	self kmDispatcher detachKeymapCategory: aCategoryName targetting: anObject
 ]
 
-{ #category : #'*Morphic-Base-keymapping' }
+{ #category : '*Morphic-Base-keymapping' }
 Morph >> dispatchKeystrokeForEvent: evt [
 	self kmDispatcher dispatchKeystroke: evt
 ]
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 Morph >> exportAs: anExtension using: aWriter [
 
 	| reference |
@@ -258,32 +258,32 @@ Morph >> exportAs: anExtension using: aWriter [
 	reference ifNotNil: [ aWriter putForm: self imageForm onFileNamed: reference ]
 ]
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 Morph >> exportAsBMP [
 
 	self exportAs: 'bmp' using: BMPReadWriter
 ]
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 Morph >> exportAsGIF [
 
 	self exportAs: 'gif' using: GIFReadWriter
 ]
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 Morph >> exportAsJPEG [
 	"Export the receiver's image as a JPEG"
 
 	self exportAs: 'jpeg' using: PluginBasedJPEGReadWriter
 ]
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 Morph >> exportAsPNG [
 
 	self exportAs: 'png' using: PNGReadWriter
 ]
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 Morph >> fillWithRamp: rampSpecsOrColor oriented: aRatio [
 	rampSpecsOrColor isColor
 		ifTrue: [self color: rampSpecsOrColor".
@@ -297,7 +297,7 @@ Morph >> fillWithRamp: rampSpecsOrColor oriented: aRatio [
 			self borderColor: (rampSpecsOrColor first value mixed: 0.5 with: rampSpecsOrColor last value) muchDarker]
 ]
 
-{ #category : #'*Morphic-Base-keymapping' }
+{ #category : '*Morphic-Base-keymapping' }
 Morph >> handleKeystrokeWithKeymappings: aKeystrokeEvent [
 
 	self allowsKeymapping ifTrue: [
@@ -305,40 +305,40 @@ Morph >> handleKeystrokeWithKeymappings: aKeystrokeEvent [
 	]
 ]
 
-{ #category : #'*Morphic-Base-keymapping' }
+{ #category : '*Morphic-Base-keymapping' }
 Morph >> hasKeymapCategoryNamed: aString [
 
 	^ self kmDispatcher targets anySatisfy: [ :e | e category name = aString ]
 ]
 
-{ #category : #'*Morphic-Base-keymapping' }
+{ #category : '*Morphic-Base-keymapping' }
 Morph >> initializeShortcuts: aKMDispatcher [
 	"Where we may attach keymaps or even on:do: local shortcuts if needed."
 
 	aKMDispatcher attachCategory: #MorphFocusCtrlNavigation
 ]
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 Morph >> isMenuItemMorph [
 	^false
 ]
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 Morph >> isMenuLineMorph [
 	^false
 ]
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 Morph >> isMenuMorph [
 	^false
 ]
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 Morph >> justDroppedInto: aMorph event: anEvent [
 	"This message is sent to a dropped morph after it has been dropped on -- and been accepted by -- a drop-sensitive morph"
 
 	| aWindow |
-	(self formerOwner notNil and: [self formerOwner ~~ aMorph])
+	(self formerOwner isNotNil and: [self formerOwner ~~ aMorph])
 		ifTrue: [self removeHalo].
 	self formerOwner: nil.
 	self formerPosition: nil.
@@ -353,7 +353,7 @@ Morph >> justDroppedInto: aMorph event: anEvent [
 			self removeProperty: #beFullyVisibleAfterDrop]
 ]
 
-{ #category : #'*Morphic-Base-keymapping' }
+{ #category : '*Morphic-Base-keymapping' }
 Morph >> kmDispatcher [
 	"When creating the KMDispatcher instance, load default shortcuts."
 
@@ -366,24 +366,24 @@ Morph >> kmDispatcher [
 			kmd ]
 ]
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 Morph >> newTransformationMorph [
 	^TransformationMorph new
 ]
 
-{ #category : #'*Morphic-Base-keymapping' }
+{ #category : '*Morphic-Base-keymapping' }
 Morph >> on: aShortcut do: anAction [
 
 	^ self bindKeyCombination: aShortcut toAction: anAction
 ]
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 Morph >> on: eventName send: selector to: recipient [
 	self eventHandler ifNil: [self eventHandler: MorphicEventHandler new].
 	self eventHandler on: eventName send: selector to: recipient
 ]
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 Morph >> on: eventName send: selector to: recipient withValue: value [
 	"NOTE: selector must take 3 arguments, of which value will be the *** FIRST ***"
 
@@ -391,13 +391,13 @@ Morph >> on: eventName send: selector to: recipient withValue: value [
 	self eventHandler on: eventName send: selector to: recipient withValue: value
 ]
 
-{ #category : #'*Morphic-Base-keymapping' }
+{ #category : '*Morphic-Base-keymapping' }
 Morph >> removeKeyCombination: aShortcut [
 
 	self kmDispatcher removeKeyCombination: aShortcut
 ]
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 Morph >> resizeMorph: evt [
 	| handle |
 	handle := HandleMorph new forEachPointDo: [ :newPoint | self extent: newPoint - self bounds topLeft ].
@@ -405,7 +405,7 @@ Morph >> resizeMorph: evt [
 	handle startStepping
 ]
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 Morph >> rowMorphForNode: aNode inColumn: aColumn [
 	| rm |
 	rm := Morph new color: Color transparent;
@@ -432,7 +432,7 @@ Morph >> rowMorphForNode: aNode inColumn: aColumn [
 	^ rm
 ]
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 Morph >> setArrowheads [
 	"Let the user edit the size of arrowheads for this object"
 
@@ -445,7 +445,7 @@ Morph >> setArrowheads [
 			[ self inform: 'Invalid input']
 ]
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 Morph >> setShadowOffset: evt [
 	| handle |
 	handle := HandleMorph new forEachPointDo:
@@ -454,7 +454,7 @@ Morph >> setShadowOffset: evt [
 	handle startStepping
 ]
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 Morph >> useBitmapFill [
 	"Make receiver use a solid fill style (e.g., a simple color)"
 	| fill |
@@ -465,7 +465,7 @@ Morph >> useBitmapFill [
 	self fillStyle: fill
 ]
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 Morph >> useGradientFill [
 	"Make receiver use a solid fill style (e.g., a simple color)"
 	| fill color1 color2 |

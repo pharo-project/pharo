@@ -1,37 +1,39 @@
 Class {
-	#name : #ClyShowTraitUsersCommand,
-	#superclass : #SycClassCommand,
+	#name : 'ClyShowTraitUsersCommand',
+	#superclass : 'SycClassCommand',
 	#instVars : [
 		'browser'
 	],
-	#category : #'Calypso-SystemTools-QueryBrowser-Commands-Queries'
+	#category : 'Calypso-SystemTools-QueryBrowser-Commands-Queries',
+	#package : 'Calypso-SystemTools-QueryBrowser',
+	#tag : 'Commands-Queries'
 }
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyShowTraitUsersCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
 
 	^CmdContextMenuActivation byItemOf: ClyQueryMenuGroup for: ClyFullBrowserClassContext
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyShowTraitUsersCommand >> browser [
 
 	^ browser
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyShowTraitUsersCommand >> browser: anObject [
 
 	browser := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyShowTraitUsersCommand >> defaultMenuItemName [
 	^'Show trait users'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyShowTraitUsersCommand >> execute [
 
 	classes first isTrait ifTrue: [
@@ -40,7 +42,7 @@ ClyShowTraitUsersCommand >> execute [
 				 as: (ClySortedQueryResult using: ClySortByNameFunction ascending)) ]
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyShowTraitUsersCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 

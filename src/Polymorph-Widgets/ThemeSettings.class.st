@@ -2,8 +2,8 @@
 Configurable basic settings for themes.
 "
 Class {
-	#name : #ThemeSettings,
-	#superclass : #Model,
+	#name : 'ThemeSettings',
+	#superclass : 'Model',
 	#instVars : [
 		'windowColor',
 		'selectionColor',
@@ -38,15 +38,17 @@ Class {
 		'findReplaceSelectionTextColor',
 		'labelAreaLayout'
 	],
-	#category : #'Polymorph-Widgets-Themes'
+	#category : 'Polymorph-Widgets-Themes',
+	#package : 'Polymorph-Widgets',
+	#tag : 'Themes'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeSettings >> animationSettings [
 	^ animationSettings ifNil: [animationSettings := AnimationSettings new]
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 ThemeSettings >> applySettingsFrom: aThemeSettings [
 	"Change the settings to be those of aThemeSettings."
 
@@ -56,7 +58,7 @@ ThemeSettings >> applySettingsFrom: aThemeSettings [
 		autoSelectionColor: aThemeSettings autoSelectionColor
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 ThemeSettings >> applyToDisplayedWindows [
 
 	(SystemWindow withAllSubclasses
@@ -65,28 +67,28 @@ ThemeSettings >> applyToDisplayedWindows [
 				thenDo: [ :dispSysWin | dispSysWin themeChanged ]
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 ThemeSettings >> autoMenuColor [
 	"Answer the value of autoMenuColor"
 
 	^autoMenuColor ifNil: [^false]
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 ThemeSettings >> autoMenuColor: aBoolean [
 	"Answer the value of autoMenuColor"
 
 	autoMenuColor := aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeSettings >> autoSelectionColor [
 	"Answer the value of autoSelectionColor"
 
 	^autoSelectionColor ifNil: [^true]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeSettings >> autoSelectionColor: anObject [
 	"Set the value of autoSelectionColor"
 
@@ -97,76 +99,76 @@ ThemeSettings >> autoSelectionColor: anObject [
 		changed: #selectionColor
 ]
 
-{ #category : #balloon }
+{ #category : 'balloon' }
 ThemeSettings >> balloonHelpDelayTime [
 	^ balloonHelpDelayTime ifNil: [balloonHelpDelayTime := 800]
 ]
 
-{ #category : #balloon }
+{ #category : 'balloon' }
 ThemeSettings >> balloonHelpDelayTime: anInteger [
 	balloonHelpDelayTime := anInteger
 ]
 
-{ #category : #balloon }
+{ #category : 'balloon' }
 ThemeSettings >> balloonHelpEnabled [
 	^ balloonHelpEnabled ifNil: [balloonHelpEnabled := true]
 ]
 
-{ #category : #balloon }
+{ #category : 'balloon' }
 ThemeSettings >> balloonHelpEnabled: aBoolean [
 	balloonHelpEnabled := aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeSettings >> basicSelectionColor [
 	"Answer the recorded selection color rather than derived."
 
 	^selectionColor
 ]
 
-{ #category : #button }
+{ #category : 'button' }
 ThemeSettings >> buttonColor [
 	"Answer the value of buttonColor"
 
 	^buttonColor ifNil: [self windowColor]
 ]
 
-{ #category : #button }
+{ #category : 'button' }
 ThemeSettings >> buttonColor: anObject [
 	"Set the value of buttonColor"
 
 	buttonColor := anObject
 ]
 
-{ #category : #button }
+{ #category : 'button' }
 ThemeSettings >> defaultButtonColor [
 	"Answer the default button colour."
 
 	^Color gray
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeSettings >> defaultScrollbarColor [
 	"Answer the default scrollbar colour."
 
 	^Color gray
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeSettings >> defaultSelectionColor [
 	"Answer the default selection colour."
 
 	^self defaultWindowColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeSettings >> defaultWindowColor [
 	"Answer the default window colour."
 
 	^ Color lightGray
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 ThemeSettings >> derivedMenuColor [
 	"Answer a selection colour based on the window color."
 
@@ -182,14 +184,14 @@ ThemeSettings >> derivedMenuColor [
 				ifFalse: [self menuColor]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeSettings >> derivedSelectionColor [
 	"Answer a selection colour based on the window color."
 
 	^self windowColor whiter lighter
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeSettings >> desktopImageLayout [
 	"Answer the layout symbol for any desktop image.
 	See AlphaImageMorph>>layoutSymbols."
@@ -197,7 +199,7 @@ ThemeSettings >> desktopImageLayout [
 	^desktopImageLayout ifNil: [desktopImageLayout := #scaled]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeSettings >> desktopImageLayout: aSymbol [
 	"Set the layout symbol for any desktop image.
 	See AlphaImageMorph>>layoutSymbols."
@@ -205,46 +207,46 @@ ThemeSettings >> desktopImageLayout: aSymbol [
 	desktopImageLayout := aSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeSettings >> fadedBackgroundWindows [
 	^ fadedBackgroundWindows ifNil: [fadedBackgroundWindows := true]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeSettings >> fadedBackgroundWindows: aBoolean [
 	fadedBackgroundWindows := aBoolean
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 ThemeSettings >> fallbackMenuColor [
 	"Answer the value of menuColor"
 
 	^ self preferGradientFill ifTrue: [Color lightGray] ifFalse: [Color lightGray muchLighter]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeSettings >> fastDragging [
 		^ fastDragging ifNil: [fastDragging := false]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeSettings >> fastDragging: aBoolean [
 		fastDragging := aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeSettings >> findReplaceSelectionColor [
 	"Answer the value of the selectionColor for find/replace"
 
 	^ findReplaceSelectionColor ifNil: [findReplaceSelectionColor := Color orange alpha: 0.4]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeSettings >> findReplaceSelectionColor: anColor [
 	findReplaceSelectionColor := anColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeSettings >> findReplaceSelectionTextColor [
 	"Answer the value of the selectionTextColor for find/replace"
 
@@ -252,24 +254,24 @@ ThemeSettings >> findReplaceSelectionTextColor [
 		ifNil: [ self findReplaceSelectionColor contrastingBlackAndWhiteColor ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeSettings >> findReplaceSelectionTextColor: aColor [
 	"Answer the value of the selectionTextColor for find/replace"
 
 	findReplaceSelectionTextColor := aColor
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 ThemeSettings >> flatMenu [
 		^ flatMenu ifNil: [flatMenu := false]
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 ThemeSettings >> flatMenu: aBoolean [
 		flatMenu := aBoolean
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 ThemeSettings >> fromConfiguration: tree [
 	"Update the settings from the given tree."
 
@@ -278,26 +280,26 @@ ThemeSettings >> fromConfiguration: tree [
 	(tree at: #selectionColor ifAbsent: []) ifNotNil: [:v | self selectionColor: v]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeSettings >> haveFindReplaceSelectionTextColor [
 
-	^ findReplaceSelectionTextColor notNil
+	^ findReplaceSelectionTextColor isNotNil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeSettings >> haveSecondarySelectionTextColor [
 	"Answer the value of selectionTextColor"
 
-	^ secondarySelectionTextColor notNil
+	^ secondarySelectionTextColor isNotNil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeSettings >> haveSelectionTextColor [
 
-	^ selectionTextColor notNil
+	^ selectionTextColor isNotNil
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ThemeSettings >> initialize [
 	"Initialize the receiver."
 
@@ -311,14 +313,14 @@ ThemeSettings >> initialize [
 		standardColorsOnly: false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeSettings >> labelAreaLayout [
 	"Answer the value of labelAreaLayout"
 
 	^labelAreaLayout  ifNil: [labelAreaLayout  := #platformDependent]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeSettings >> labelAreaLayout: aSelector [
 	"Set the value of labelAreaLayout"
 
@@ -326,24 +328,24 @@ ThemeSettings >> labelAreaLayout: aSelector [
 	self applyToDisplayedWindows
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeSettings >> manualSelectionColor [
 	"Answer the inverse of autoSelectionColor."
 
 	^self autoSelectionColor not
 ]
 
-{ #category : #balloon }
+{ #category : 'balloon' }
 ThemeSettings >> maxBalloonHelpLineLength [
 	^ maxBalloonHelpLineLength ifNil: [maxBalloonHelpLineLength := 40]
 ]
 
-{ #category : #balloon }
+{ #category : 'balloon' }
 ThemeSettings >> maxBalloonHelpLineLength: anInteger [
 	maxBalloonHelpLineLength := anInteger
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 ThemeSettings >> menuBorderColor [
 	"Answer the value of menuColor"
 
@@ -352,45 +354,45 @@ ThemeSettings >> menuBorderColor [
 		ifTrue: [ self derivedMenuColor twiceDarker ]
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 ThemeSettings >> menuBorderWidth [
 	"Answer the value of menuColor"
 
-	^ 2
+	^ 2 scaledByDisplayScaleFactor
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 ThemeSettings >> menuColor [
 	"Answer the value of menuColor"
 
 	^ menuColor ifNil: [self fallbackMenuColor]
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 ThemeSettings >> menuColor: anObject [
 	"Set the value of menuColor"
 
 	menuColor := anObject
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 ThemeSettings >> menuKeyboardControl [
 	^ true
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 ThemeSettings >> menuKeyboardFocusColor [
 	^ (Color r: 0.6 g: 1.0 b: 1.0)
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 ThemeSettings >> menuSelectionColor [
 	"Answer the value of menuSelectionColor"
 
 	^menuSelectionColor ifNil: [self derivedMenuColor darker]
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 ThemeSettings >> menuSelectionColor: aColor [
 	"Set the base value of menuSelectionColor.
 	If nil, actual color used will be based on derived menu color."
@@ -398,33 +400,33 @@ ThemeSettings >> menuSelectionColor: aColor [
 	menuSelectionColor := aColor
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 ThemeSettings >> menuSelectionTextColor [
 	"Answer the value of menuSelectionTextColor"
 
 	^menuSelectionTextColor ifNil: [menuSelectionTextColor := Color black]
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 ThemeSettings >> menuSelectionTextColor: aColor [
 	"Answer the value of menuSelectionTextColor"
 
 	menuSelectionTextColor := aColor
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 ThemeSettings >> menuShadowColor [
 	^ Color r: 0.0 g: 0.0 b: 0.0 alpha: 0.666
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 ThemeSettings >> menuTitleBorderColor [
 	^ self flatMenu
 		ifFalse: [#inset]
 		ifTrue: [self derivedMenuColor muchDarker]
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 ThemeSettings >> menuTitleColor [
 	"Answer the value of menuTitleColor"
 
@@ -438,40 +440,40 @@ ThemeSettings >> menuTitleColor [
 					ifFalse: [mc twiceDarker]]]
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 ThemeSettings >> menuTitleColor: anObject [
 	"Set the value of menuTitleColor"
 
 	menuTitleColor := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeSettings >> preferGradientFill [
 	"Answer the value of preferGradientFill "
 
 	^preferGradientFill  ifNil: [preferGradientFill := self preferGradientFillByDefault]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeSettings >> preferGradientFill: aBoolean [
 	"Set the value of preferGradientFill "
 
 	preferGradientFill  := aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeSettings >> preferGradientFillByDefault [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeSettings >> preferRoundCorner [
 	"Answer the value of preferRoundCorner"
 
 	^preferRoundCorner  ifNil: [preferRoundCorner := self preferRoundCornerByDefault]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeSettings >> preferRoundCorner: aBoolean [
 	"Set the value of preferRoundCorner"
 
@@ -479,59 +481,59 @@ ThemeSettings >> preferRoundCorner: aBoolean [
 	self applyToDisplayedWindows
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeSettings >> preferRoundCornerByDefault [
 	^ true
 ]
 
-{ #category : #progressbar }
+{ #category : 'progressbar' }
 ThemeSettings >> progressBarColor [
 	"Answer the value of progressBarColor"
 
 	^progressBarColor ifNil: [progressBarColor := self derivedMenuColor muchLighter]
 ]
 
-{ #category : #progressbar }
+{ #category : 'progressbar' }
 ThemeSettings >> progressBarColor: anObject [
 	"Set the value of progressBarColor"
 
 	progressBarColor := anObject
 ]
 
-{ #category : #progressbar }
+{ #category : 'progressbar' }
 ThemeSettings >> progressBarProgressColor [
 	"Answer the value of progressBarProgressColor"
 
 	^progressBarProgressColor ifNil: [self menuTitleColor]
 ]
 
-{ #category : #progressbar }
+{ #category : 'progressbar' }
 ThemeSettings >> progressBarProgressColor: anObject [
 	"Set the value of progressBarProgressColor"
 
 	progressBarProgressColor := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeSettings >> scrollBarThickness [
 	^ scrollBarThickness ifNil: [scrollBarThickness := 14]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeSettings >> scrollbarColor [
 	"Answer the value of scrollbarColor"
 
 	^scrollbarColor ifNil: [self windowColor]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeSettings >> scrollbarColor: anObject [
 	"Set the value of scrollbarColor"
 
 	scrollbarColor := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeSettings >> secondarySelectionTextColor [
 	"Answer the value of selectionTextColor"
 
@@ -539,24 +541,24 @@ ThemeSettings >> secondarySelectionTextColor [
 		ifNil: [self theme secondarySelectionColor contrastingBlackAndWhiteColor ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeSettings >> secondarySelectionTextColor: aColor [
 	"set the value of selectionTextColor"
 
 	secondarySelectionTextColor := aColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeSettings >> selectionBarColor [
 	^ selectionBarColor ifNil: [selectionBarColor := self selectionColor alpha: 0.06]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeSettings >> selectionBarColor: aColor [
 	selectionBarColor := aColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeSettings >> selectionColor [
 	"Answer the value of selectionColor"
 
@@ -567,49 +569,49 @@ ThemeSettings >> selectionColor [
 		ifFalse: [selectionColor ifNil: [selectionColor := Color r: 0.0 g: 0.0 b: 0.8 alpha: 0.25]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeSettings >> selectionColor: anObject [
 	"Set the value of selectionColor"
 	selectionColor := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeSettings >> selectionTextColor [
 	"Answer the value of selectionTextColor"
 
 	^selectionTextColor ifNil: [Color black ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeSettings >> selectionTextColor: aColor [
 	selectionTextColor := aColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeSettings >> standardColorsOnly [
 	"Answer the value of standardColorsOnly"
 
 	^standardColorsOnly ifNil: [^false]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeSettings >> standardColorsOnly: anObject [
 	"Set the value of standardColorsOnly"
 
 	standardColorsOnly := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeSettings >> tabAmongFields [
 	^ tabAmongFields ifNil: [tabAmongFields := true]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeSettings >> tabAmongFields: aBoolean [
 	tabAmongFields := aBoolean
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 ThemeSettings >> toConfiguration: tree [
 	"Update the tree from the receiver."
 
@@ -618,28 +620,28 @@ ThemeSettings >> toConfiguration: tree [
 	tree at: #selectionColor put: self basicSelectionColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeSettings >> unfocusedSelectionColor [
 	"Answer the value of selectionColor when the window have not the focus"
 
 	^ unfocusedSelectionColor ifNil: [unfocusedSelectionColor := self selectionColor alphaMixed: 0.7 with: Color veryLightGray lighter]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeSettings >> unfocusedSelectionColor: aColor [
 	"Answer the value of selectionColor when the window have not the focus"
 
 	unfocusedSelectionColor := aColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeSettings >> windowColor [
 	"Answer the value of windowColor"
 
 	^ windowColor ifNil: [Color lightGray]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeSettings >> windowColor: anObject [
 	"Set the value of windowColor"
 

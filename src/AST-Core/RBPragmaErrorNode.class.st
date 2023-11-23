@@ -6,12 +6,14 @@ the closure : < pragma node .
 Forgetting the opening will be assumed to be a binary selector.
 "
 Class {
-	#name : #RBPragmaErrorNode,
-	#superclass : #RBEnglobingErrorNode,
-	#category : #'AST-Core-Nodes - ErrorNodes'
+	#name : 'RBPragmaErrorNode',
+	#superclass : 'RBEnglobingErrorNode',
+	#category : 'AST-Core-Nodes - ErrorNodes',
+	#package : 'AST-Core',
+	#tag : 'Nodes - ErrorNodes'
 }
 
-{ #category : #construction }
+{ #category : 'construction' }
 RBPragmaErrorNode class >> error: aToken withNodes: aCollection [
 	"A RBPragmaErrorNode can only be created from the opening token by choice.
 	 Since the closure is a superior sign, the default assumption is that it's a binary selector."
@@ -21,12 +23,12 @@ RBPragmaErrorNode class >> error: aToken withNodes: aCollection [
 		ifFalse: [ self new contents: aCollection; start: aToken start; stop: aCollection last stop; errorMessage: '''>'' expected' ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBPragmaErrorNode >> isPragmaError [
 	^true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBPragmaErrorNode >> isPrimitive [
 	^false
 ]

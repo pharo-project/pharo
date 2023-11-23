@@ -4,24 +4,25 @@ I am a singleton object, subscribed to system events, to listen to the creation 
 When I listen one of those events, I reinitialize the KMRepository default instance and reload it with all declared keymaps.
 "
 Class {
-	#name : #KMPragmaKeymapBuilder,
-	#superclass : #Object,
+	#name : 'KMPragmaKeymapBuilder',
+	#superclass : 'Object',
 	#instVars : [
 		'model'
 	],
 	#classVars : [
 		'UniqueInstace'
 	],
-	#category : #'Keymapping-Pragmas'
+	#category : 'Keymapping-Pragmas',
+	#package : 'Keymapping-Pragmas'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 KMPragmaKeymapBuilder class >> initialize [
 
 	self uniqueInstance reset
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 KMPragmaKeymapBuilder class >> methodAnnouncementReceived: anAnnouncement [
 	| method |
 	method := anAnnouncement methodAffected.
@@ -31,12 +32,12 @@ KMPragmaKeymapBuilder class >> methodAnnouncementReceived: anAnnouncement [
 		ifTrue: [ self uniqueInstance reset ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 KMPragmaKeymapBuilder class >> pragmas [
 	^#(#keymap #keymap:)
 ]
 
-{ #category : #'system-events' }
+{ #category : 'system-events' }
 KMPragmaKeymapBuilder class >> registerInterestToSystemAnnouncement [
 	<systemEventRegistration>
 	SystemAnnouncer uniqueInstance
@@ -47,23 +48,23 @@ KMPragmaKeymapBuilder class >> registerInterestToSystemAnnouncement [
 		to: self
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 KMPragmaKeymapBuilder class >> release [
 	SystemAnnouncer uniqueInstance unsubscribe: self.
 	self uniqueInstance release
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 KMPragmaKeymapBuilder class >> uniqueInstance [
 	^UniqueInstace ifNil: [ UniqueInstace := self new ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMPragmaKeymapBuilder >> builder [
 	^ self
 ]
 
-{ #category : #'registrations handling' }
+{ #category : 'registrations handling' }
 KMPragmaKeymapBuilder >> collectRegistrations [
 	| menu |
 	menu := PragmaMenuAndShortcutRegistration model: self.
@@ -78,7 +79,7 @@ KMPragmaKeymapBuilder >> collectRegistrations [
 	self interpretRegistration: menu
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 KMPragmaKeymapBuilder >> interpretRegistration: aRegistration [
 
 	aRegistration handOutItems do: [:item || node |
@@ -99,28 +100,28 @@ KMPragmaKeymapBuilder >> interpretRegistration: aRegistration [
 					description: item help ]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMPragmaKeymapBuilder >> itemReceiver [
 	^ model
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMPragmaKeymapBuilder >> model [
 	^ model
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMPragmaKeymapBuilder >> model: anObject [
 	model := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMPragmaKeymapBuilder >> pragmaKeywords [
 	"Returns the pragmas keyword used to select pragmas"
 	^  self class pragmas
 ]
 
-{ #category : #'registrations handling' }
+{ #category : 'registrations handling' }
 KMPragmaKeymapBuilder >> pragmas [
 
 	"Return all pragmas which keyword is self pragmaKeyword"
@@ -129,13 +130,13 @@ KMPragmaKeymapBuilder >> pragmas [
 		  select: [ :prg | prg methodSelector numArgs = 1 ]
 ]
 
-{ #category : #dependencies }
+{ #category : 'dependencies' }
 KMPragmaKeymapBuilder >> release [
 	model := nil.
 	super release
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 KMPragmaKeymapBuilder >> reset [
 	self collectRegistrations
 ]

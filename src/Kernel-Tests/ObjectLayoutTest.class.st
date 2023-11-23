@@ -1,10 +1,12 @@
 Class {
-	#name : #ObjectLayoutTest,
-	#superclass : #TestCase,
-	#category : #'Kernel-Tests-Classes'
+	#name : 'ObjectLayoutTest',
+	#superclass : 'TestCase',
+	#category : 'Kernel-Tests-Classes',
+	#package : 'Kernel-Tests',
+	#tag : 'Classes'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 ObjectLayoutTest >> testLayoutForSubclassDefiningSymbol [
 
 	self assert: (ObjectLayout layoutForSubclassDefiningSymbol: #variableWordSubclass:) equals: WordLayout.

@@ -45,8 +45,8 @@ See also:
 
 "
 Class {
-	#name : #UUIDGenerator,
-	#superclass : #Object,
+	#name : 'UUIDGenerator',
+	#superclass : 'Object',
 	#instVars : [
 		'node',
 		'random',
@@ -56,10 +56,12 @@ Class {
 	#classVars : [
 		'Default'
 	],
-	#category : #'Network-UUID-Base'
+	#category : 'Network-UUID-Base',
+	#package : 'Network-UUID',
+	#tag : 'Base'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 UUIDGenerator class >> default [
 	"Return the default UUID generator.
 	Sharing an instance is more efficient and correct."
@@ -67,25 +69,28 @@ UUIDGenerator class >> default [
 	^ Default ifNil: [ Default := self new ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 UUIDGenerator class >> next [
 	"Return a UUID using the shared generator"
 
 	"self next"
 
-	"[ UUIDGenerator next ] bench"
+	self
+		deprecated:
+		'The UUIDGenerator method should not be used directly to generate new UUIDs'
+		transformWith: 'UUIDGenerator next' -> 'UUID new'.
 
-	^ self default next
+	^ UUID new
 ]
 
-{ #category : #'system startup' }
+{ #category : 'system startup' }
 UUIDGenerator class >> startUp [
 	"Whenever the image comes up, reset so that a new node ID is computed."
 
 	Default := nil
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 UUIDGenerator >> clockOn: stream [
 	"Write 8 bytes from the microsecond clock to stream"
 
@@ -95,7 +100,7 @@ UUIDGenerator >> clockOn: stream [
 		stream nextPut: (microseconds byteAt: each) ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 UUIDGenerator >> computeNodeIdentifier [
 	"Compute and return a 'node identifier', a 16 element byte array that should be unique to this image, vm, invocation, network, machine combination"
 
@@ -112,7 +117,7 @@ UUIDGenerator >> computeNodeIdentifier [
 	^ (MD5 hashMessage: nodeData) hash asByteArrayOfSize: 4
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 UUIDGenerator >> initialize [
 	super initialize.
 	random := Random new.
@@ -124,17 +129,18 @@ UUIDGenerator >> initialize [
 	counter := self nextRandom16
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 UUIDGenerator >> next [
 	"Return the next UUID, see my class comment"
 
-	| uuid |
-	uuid := UUID nilUUID.
-	self placeFields: uuid.
-	^ uuid
+	self
+		deprecated:
+		'The UUIDGenerator method should not be used directly to generate new UUIDs'
+		transformWith: '`@receiver next' -> 'UUID new'.
+	^ UUID new
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 UUIDGenerator >> nextCounter16 [
 	"Return the next 16-bit counter value with safe overflow"
 
@@ -142,14 +148,14 @@ UUIDGenerator >> nextCounter16 [
 	^ counter
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 UUIDGenerator >> nextRandom16 [
 	"Return the next 16-bit random value from my random generator"
 
 	^ (random nextInteger: 16r10000) - 1
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 UUIDGenerator >> placeFields: uuid [
 	"Fill the fields of uuid, effectively generating a new UUID in place, see my class comment"
 
@@ -164,14 +170,14 @@ UUIDGenerator >> placeFields: uuid [
 		self setVariantAndVersion: uuid ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 UUIDGenerator >> randomGenerator [
 	"Return the random generator that I use"
 
 	^ random
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 UUIDGenerator >> setVariantAndVersion: uuid [
 	"Set the version (top four most significant bits) to 0, an undefined version in RFC 4122"
 

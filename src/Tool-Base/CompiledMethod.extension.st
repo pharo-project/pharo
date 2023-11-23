@@ -1,6 +1,6 @@
-Extension { #name : #CompiledMethod }
+Extension { #name : 'CompiledMethod' }
 
-{ #category : #'*Tool-Base' }
+{ #category : '*Tool-Base' }
 CompiledMethod >> browse [
 
 	^ Smalltalk tools browser openOnClass: self methodClass selector: self selector

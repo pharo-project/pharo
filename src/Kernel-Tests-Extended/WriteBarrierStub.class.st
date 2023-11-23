@@ -2,8 +2,8 @@
 A stub for WriteBarrier to be used by tests
 "
 Class {
-	#name : #WriteBarrierStub,
-	#superclass : #Object,
+	#name : 'WriteBarrierStub',
+	#superclass : 'Object',
 	#instVars : [
 		'var1',
 		'var2',
@@ -16,72 +16,74 @@ Class {
 		'var9',
 		'var10'
 	],
-	#category : #'Kernel-Tests-Extended-WriteBarrier'
+	#category : 'Kernel-Tests-Extended-WriteBarrier',
+	#package : 'Kernel-Tests-Extended',
+	#tag : 'WriteBarrier'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WriteBarrierStub >> var1 [
 	^ var1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WriteBarrierStub >> var10 [
 	^ var10
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WriteBarrierStub >> var10: anObject [
 	var10 := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WriteBarrierStub >> var1: anObject [
 	var1 := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WriteBarrierStub >> var2 [
 
 	^ var2
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WriteBarrierStub >> var3 [
 
 	^ var3
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WriteBarrierStub >> var4 [
 
 	^ var4
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WriteBarrierStub >> var5 [
 
 	^ var5
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WriteBarrierStub >> var6 [
 
 	^ var6
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WriteBarrierStub >> var7 [
 
 	^ var7
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WriteBarrierStub >> var8 [
 
 	^ var8
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WriteBarrierStub >> var9 [
 
 	^ var9

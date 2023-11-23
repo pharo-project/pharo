@@ -2,8 +2,8 @@
 I am a keyboard event. I contain the char code of the event pressed, the modifiers pressed, and the keycode of the key pressed.
 "
 Class {
-	#name : #KeyboardEvent,
-	#superclass : #UserInputEvent,
+	#name : 'KeyboardEvent',
+	#superclass : 'UserInputEvent',
 	#instVars : [
 		'keyValue',
 		'charCode',
@@ -11,10 +11,12 @@ Class {
 		'key',
 		'supressNextKeyPress'
 	],
-	#category : #'Morphic-Core-Events'
+	#category : 'Morphic-Core-Events',
+	#package : 'Morphic-Core',
+	#tag : 'Events'
 }
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 KeyboardEvent >> = aMorphicEvent [
 	super = aMorphicEvent ifFalse:[^false].
 	buttons = aMorphicEvent buttons ifFalse: [^ false].
@@ -22,17 +24,17 @@ KeyboardEvent >> = aMorphicEvent [
 	^ true
 ]
 
-{ #category : #keymapping }
+{ #category : 'keymapping' }
 KeyboardEvent >> asKeyCombination [
 	^ KMKeyCombination fromKeyboardEvent: self
 ]
 
-{ #category : #keymapping }
+{ #category : 'keymapping' }
 KeyboardEvent >> asShortcut [
 	^ self asKeyCombination
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 KeyboardEvent >> hasSpecialCTRLKeyValue [
 "
 	4 - Character end
@@ -42,75 +44,75 @@ KeyboardEvent >> hasSpecialCTRLKeyValue [
 	^ self controlKeyPressed and: [ keyValue <= 26 & (keyValue ~= 4) & (keyValue ~= 1) ]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 KeyboardEvent >> hash [
 	^buttons hash + keyValue hash
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 KeyboardEvent >> initialize [
 
 	super initialize.
 	supressNextKeyPress := false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 KeyboardEvent >> isKeyDown [
 	^self type == #keyDown
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 KeyboardEvent >> isKeyUp [
 	^self type == #keyUp
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 KeyboardEvent >> isKeyboard [
 	^true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 KeyboardEvent >> isKeystroke [
 	^self type == #keystroke
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 KeyboardEvent >> isMouseMove [
 	^false
 ]
 
-{ #category : #keyboard }
+{ #category : 'keyboard' }
 KeyboardEvent >> key [
 	^ key ifNil: [key := Smalltalk os keyForValue: keyValue]
 ]
 
-{ #category : #keyboard }
+{ #category : 'keyboard' }
 KeyboardEvent >> key: aKeyboardKey [
 	key := aKeyboardKey
 ]
 
-{ #category : #keyboard }
+{ #category : 'keyboard' }
 KeyboardEvent >> keyCharacter [
 	"Answer the character corresponding this keystroke. This is defined only for keystroke events."
 
 	^Unicode value: charCode
 ]
 
-{ #category : #keyboard }
+{ #category : 'keyboard' }
 KeyboardEvent >> keyString [
 	"Answer the string value for this keystroke. This is defined only for keystroke events."
 
 	^ String streamContents: [ :s | self printKeyStringOn: s ]
 ]
 
-{ #category : #keyboard }
+{ #category : 'keyboard' }
 KeyboardEvent >> keyValue [
 	"Answer the ascii value for this keystroke. This is defined only for keystroke events."
 
 	^ keyValue
 ]
 
-{ #category : #keymapping }
+{ #category : 'keymapping' }
 KeyboardEvent >> modifiedCharacter [
 	self flag: #hack.
 	"Hack me.  When Ctrl is pressed, the key ascii value is not right and we have to do something ugly"
@@ -122,7 +124,7 @@ KeyboardEvent >> modifiedCharacter [
 				ifFalse: [ self keyCharacter ] ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 KeyboardEvent >> printKeyStringOn: aStream [
 	"Print a readable string representing the receiver on a given stream"
 
@@ -172,7 +174,7 @@ KeyboardEvent >> printKeyStringOn: aStream [
 	inBrackets ifTrue: [aStream nextPut: $> ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 KeyboardEvent >> printOn: aStream [
 	"Print the receiver on a stream"
 
@@ -183,17 +185,17 @@ KeyboardEvent >> printOn: aStream [
 	aStream nextPut: $]
 ]
 
-{ #category : #keyboard }
+{ #category : 'keyboard' }
 KeyboardEvent >> scanCode [
 	^scanCode
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 KeyboardEvent >> scanCode: anInt [
 	scanCode := anInt
 ]
 
-{ #category : #dispatching }
+{ #category : 'dispatching' }
 KeyboardEvent >> sentTo: anObject [
 	"Dispatch the receiver into anObject"
 	type == #keystroke ifTrue:[^anObject handleKeystroke: self].
@@ -202,7 +204,7 @@ KeyboardEvent >> sentTo: anObject [
 	^super sentTo: anObject
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 KeyboardEvent >> setType: aSymbol buttons: anInteger position: pos keyValue: aValue charCode: anInt hand: aHand stamp: stamp [
 	type := aSymbol.
 	buttons := anInteger.
@@ -214,7 +216,7 @@ KeyboardEvent >> setType: aSymbol buttons: anInteger position: pos keyValue: aVa
 	timeStamp := stamp
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 KeyboardEvent >> setType: aSymbol buttons: anInteger position: pos keyValue: aValue hand: aHand stamp: stamp [
 	type := aSymbol.
 	buttons := anInteger.
@@ -225,7 +227,7 @@ KeyboardEvent >> setType: aSymbol buttons: anInteger position: pos keyValue: aVa
 	timeStamp := stamp
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 KeyboardEvent >> storeOn: aStream [
 
 	aStream nextPutAll: type.
@@ -245,19 +247,19 @@ KeyboardEvent >> storeOn: aStream [
 	scanCode storeOn: aStream
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KeyboardEvent >> supressNextKeyPress [
 
 	^ supressNextKeyPress
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KeyboardEvent >> supressNextKeyPress: anObject [
 
 	supressNextKeyPress := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KeyboardEvent >> wasHandled [
 
 	^ super wasHandled or: [ supressNextKeyPress ]

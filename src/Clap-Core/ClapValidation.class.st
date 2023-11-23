@@ -3,17 +3,19 @@ I represent a validation criterium that various subjects might have to pass at a
 My subclasses implement specific validations for Clap parameters.
 "
 Class {
-	#name : #ClapValidation,
-	#superclass : #Object,
-	#category : #'Clap-Core-Validation'
+	#name : 'ClapValidation',
+	#superclass : 'Object',
+	#category : 'Clap-Core-Validation',
+	#package : 'Clap-Core',
+	#tag : 'Validation'
 }
 
-{ #category : #validation }
+{ #category : 'validation' }
 ClapValidation >> description [
 	^ self subclassResponsibility
 ]
 
-{ #category : #validation }
+{ #category : 'validation' }
 ClapValidation >> failureDescriptionFor: anObject [
 	^ String streamContents: [ :str |
 		str nextPutAll: 'Unrecognized arguments: '.
@@ -22,12 +24,12 @@ ClapValidation >> failureDescriptionFor: anObject [
 			separatedBy: [ str nextPutAll: ', ' ] ]
 ]
 
-{ #category : #validation }
+{ #category : 'validation' }
 ClapValidation >> matches: aClapExpression [
 	^ self subclassResponsibility
 ]
 
-{ #category : #validation }
+{ #category : 'validation' }
 ClapValidation >> validate: anObject [
 	^ ClapValidationDiagnostic of: self subject: anObject
 ]

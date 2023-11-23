@@ -1,15 +1,17 @@
 Class {
-	#name : #ClyLocalClassScopeTest,
-	#superclass : #ClyAbstractClassScopeTest,
-	#category : #'Calypso-SystemQueries-Tests-Scopes'
+	#name : 'ClyLocalClassScopeTest',
+	#superclass : 'ClyAbstractClassScopeTest',
+	#category : 'Calypso-SystemQueries-Tests-Scopes',
+	#package : 'Calypso-SystemQueries-Tests',
+	#tag : 'Scopes'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyLocalClassScopeTest class >> isAbstract [
 	^self = ClyLocalClassScopeTest
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyLocalClassScopeTest >> testConvertingToFullHierarchyScope [
 	| convertedScope inheritedScope |
 	scope := self createSampleScope.
@@ -25,7 +27,7 @@ ClyLocalClassScopeTest >> testConvertingToFullHierarchyScope [
 		ClySubclassScope ofAll: scope basisObjects localScope: scope class))
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyLocalClassScopeTest >> testConvertingToInheritedScope [
 	| convertedScope |
 	scope := self createSampleScope.
@@ -39,7 +41,7 @@ ClyLocalClassScopeTest >> testConvertingToInheritedScope [
 	self assert: convertedScope name equals: ClyClassScope inheritedScopeName
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyLocalClassScopeTest >> testConvertingToNewMetaLevel [
 	| convertedScope |
 	scope := self createSampleScope.
@@ -51,7 +53,7 @@ ClyLocalClassScopeTest >> testConvertingToNewMetaLevel [
 	self assert: convertedScope environment equals: environment
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyLocalClassScopeTest >> testConvertingToScopeIncludedInheritedScope [
 	| convertedScope inheritedScope |
 	scope := self createSampleScope.
@@ -65,7 +67,7 @@ ClyLocalClassScopeTest >> testConvertingToScopeIncludedInheritedScope [
 	self assert: (convertedScope subscopes includes: inheritedScope)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyLocalClassScopeTest >> testConvertingToScopeIncludedInheritingScope [
 	| convertedScope inheritingScope |
 	scope := self createSampleScope.

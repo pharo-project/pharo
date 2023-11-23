@@ -5,22 +5,24 @@ When asked to build a fetcher, I build the fetcher of the wrapped heuristic, and
 I'm created by the CoStatisticsHeuristicBuilder. See CoStatisticsHeuristicBuilder for more details.
 "
 Class {
-	#name : #CoStatisticsHeuristicWrapper,
-	#superclass : #CoASTNodeFetcherHeuristic,
+	#name : 'CoStatisticsHeuristicWrapper',
+	#superclass : 'CoASTNodeFetcherHeuristic',
 	#instVars : [
 		'wrapped',
 		'statistics'
 	],
-	#category : #'HeuristicCompletion-Model-Statistics'
+	#category : 'HeuristicCompletion-Model-Statistics',
+	#package : 'HeuristicCompletion-Model',
+	#tag : 'Statistics'
 }
 
-{ #category : #requests }
+{ #category : 'requests' }
 CoStatisticsHeuristicWrapper >> appliesForNode: aNode inContext: aContext [
 
 	^ wrapped appliesForNode: aNode inContext: aContext
 ]
 
-{ #category : #requests }
+{ #category : 'requests' }
 CoStatisticsHeuristicWrapper >> buildFetcherFor: aNode inContext: aContext [
 
 	| fetcher wrappedFetcher |
@@ -33,28 +35,28 @@ CoStatisticsHeuristicWrapper >> buildFetcherFor: aNode inContext: aContext [
 	^ wrappedFetcher
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CoStatisticsHeuristicWrapper >> isStatisticsHeuristicWrapper [
 
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoStatisticsHeuristicWrapper >> statistics [
 	^ statistics
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoStatisticsHeuristicWrapper >> statistics: anObject [
 	statistics := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoStatisticsHeuristicWrapper >> wrapped [
 	^ wrapped
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoStatisticsHeuristicWrapper >> wrapped: anObject [
 	wrapped := anObject
 ]

@@ -12,12 +12,14 @@ This class variable instead does the nil check as part of the variable read oper
 #name => LazyClassVariable defaultBlock: [ :object | 'a bloc, parameter is the class' ].
 "
 Class {
-	#name : #LazyClassVariable,
-	#superclass : #AbstractInitializedClassVariable,
-	#category : #'VariablesLibrary-ClassVariables'
+	#name : 'LazyClassVariable',
+	#superclass : 'AbstractInitializedClassVariable',
+	#category : 'VariablesLibrary-ClassVariables',
+	#package : 'VariablesLibrary',
+	#tag : 'ClassVariables'
 }
 
-{ #category : #'code generation' }
+{ #category : 'code generation' }
 LazyClassVariable >> emitValue: aMethodBuilder [
 	"generate bytecode for '<varname> ifNil: [<varname> := default cull: self]'"
 	aMethodBuilder
@@ -38,7 +40,7 @@ LazyClassVariable >> emitValue: aMethodBuilder [
 		jumpAheadTarget: #target
 ]
 
-{ #category : #'meta-object-protocol' }
+{ #category : 'meta-object-protocol' }
 LazyClassVariable >> read [
 	"if the value is nil, we evaluate the default block with the object as a potential parameter"
 	^ super read ifNil: [

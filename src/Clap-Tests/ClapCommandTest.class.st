@@ -1,15 +1,17 @@
 Class {
-	#name : #ClapCommandTest,
-	#superclass : #ClapParameterizedTest,
-	#category : #'Clap-Tests-Unit'
+	#name : 'ClapCommandTest',
+	#superclass : 'ClapParameterizedTest',
+	#category : 'Clap-Tests-Unit',
+	#package : 'Clap-Tests',
+	#tag : 'Unit'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClapCommandTest >> classToTest [
 	^ ClapCommand
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClapCommandTest >> testAddFlag [
 	| subject flag |
 	subject := self namedSubject.
@@ -19,7 +21,7 @@ ClapCommandTest >> testAddFlag [
 	self assert: (subject flags includes: flag)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClapCommandTest >> testAddSubcommand [
 	| subject cmd |
 	subject := self namedSubject.
@@ -29,7 +31,7 @@ ClapCommandTest >> testAddSubcommand [
 	self assert: (subject subcommands includes: cmd)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClapCommandTest >> testMatches [
 	| subject arg argv match |
 	subject := self namedSubject.
@@ -43,7 +45,7 @@ ClapCommandTest >> testMatches [
 	self assert: argv next equals: #remainder
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClapCommandTest >> testMatchesWithSingleFlag [
 	| subject argv match |
 	subject := self namedSubject.
@@ -57,7 +59,7 @@ ClapCommandTest >> testMatchesWithSingleFlag [
 	self assert: argv next equals: #remainder
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClapCommandTest >> testMatchesWithSinglePositional [
 	| subject argv match |
 	subject := self namedSubject.
@@ -77,7 +79,7 @@ ClapCommandTest >> testMatchesWithSinglePositional [
 	self assert: argv next equals: #remainder
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClapCommandTest >> testMatchesWithSingleSubcommand [
 	| subject argv match |
 	subject := self namedSubject.
@@ -91,7 +93,7 @@ ClapCommandTest >> testMatchesWithSingleSubcommand [
 	self assert: argv next equals: #remainder
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClapCommandTest >> testMatchingStopsAtWrongFlag [
 	| subject argv badFlag match |
 	subject := self namedSubject.
@@ -107,7 +109,7 @@ ClapCommandTest >> testMatchingStopsAtWrongFlag [
 		identicalTo: badFlag
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClapCommandTest >> testMismatchesDifferentAlias [
 	| subject argv badCommand match |
 	subject := self namedSubject.

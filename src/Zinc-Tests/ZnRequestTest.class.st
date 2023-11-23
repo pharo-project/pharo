@@ -1,10 +1,11 @@
 Class {
-	#name : #ZnRequestTest,
-	#superclass : #TestCase,
-	#category : #'Zinc-Tests'
+	#name : 'ZnRequestTest',
+	#superclass : 'TestCase',
+	#category : 'Zinc-Tests',
+	#package : 'Zinc-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnRequestTest >> testAcceptsEncodingGzip [
 	| request |
 	request := ZnRequest new.
@@ -12,7 +13,7 @@ ZnRequestTest >> testAcceptsEncodingGzip [
 	self assert: request acceptsEncodingGzip
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnRequestTest >> testBasicAuthenticate [
 	| request |
 	request := ZnRequest new.
@@ -27,7 +28,7 @@ ZnRequestTest >> testBasicAuthenticate [
 	self assert: request basicAuthentication asArray equals: #('user' ':colons:')
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnRequestTest >> testCookiesParsing [
 	| input request cookies testCookie1 testCookie2 |
 	input := 'GET /foo.html HTTP/1.1', String crlf,
@@ -41,14 +42,14 @@ ZnRequestTest >> testCookiesParsing [
 	testCookie1 := cookies detect: [ :each | each name = 'testCookie1' ].
 	testCookie2 := cookies detect: [ :each | each name = 'testCookie2' ].
 
-	self assert: testCookie1 notNil.
+	self assert: testCookie1 isNotNil.
 	self assert: testCookie1 value equals: '123'.
 
-	self assert: testCookie2 notNil.
+	self assert: testCookie2 isNotNil.
 	self assert: testCookie2 value equals: '321'.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnRequestTest >> testCookiesWriting [
 	| client testCookie1 testCookie2 cookies |
 	client := ZnClient new.
@@ -66,7 +67,7 @@ ZnRequestTest >> testCookiesWriting [
 	self assert: (cookies includes: testCookie2)
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnRequestTest >> testMergedFields [
 	| request form mergedFields |
 	request := ZnRequest post: 'http://host.com/foo?x=1&y=2&x=3'.
@@ -83,7 +84,7 @@ ZnRequestTest >> testMergedFields [
 	self assert: (mergedFields at: #z) sorted equals: #('100' '200')
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnRequestTest >> testReading [
 	| input request |
 	input := 'GET /foo.html HTTP/1.1', String crlf,
@@ -97,7 +98,7 @@ ZnRequestTest >> testReading [
 	self assert: request hasEntity not
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnRequestTest >> testReadingWithEntity [
 	| input request |
 	input := 'GET /foo.html HTTP/1.1', String crlf,
@@ -115,7 +116,7 @@ ZnRequestTest >> testReadingWithEntity [
 	self assert: request entity contents equals: '12345678'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnRequestTest >> testUrl [
 	| url request input |
 	url := 'http://zn.stfx.eu/zn/small.thml' asZnUrl.

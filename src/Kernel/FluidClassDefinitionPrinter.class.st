@@ -30,12 +30,14 @@ ClassDefinitionPrinter displayEmptySlots: true
 
 "
 Class {
-	#name : #FluidClassDefinitionPrinter,
-	#superclass : #ClassDefinitionPrinter,
-	#category : #'Kernel-ClassDefinitionPrinter'
+	#name : 'FluidClassDefinitionPrinter',
+	#superclass : 'ClassDefinitionPrinter',
+	#category : 'Kernel-ClassDefinitionPrinter',
+	#package : 'Kernel',
+	#tag : 'ClassDefinitionPrinter'
 }
 
-{ #category : #'definition double dispatch API' }
+{ #category : 'definition double dispatch API' }
 FluidClassDefinitionPrinter >> classDefinitionString [
 
 	"Next step
@@ -62,21 +64,21 @@ FluidClassDefinitionPrinter >> classDefinitionString [
 		  self packageOn: s ]
 ]
 
-{ #category : #printing }
-FluidClassDefinitionPrinter >> classDefinitionTemplateInPackage: aPackageName forClass: aClassName [
+{ #category : 'template' }
+FluidClassDefinitionPrinter >> classDefinitionTemplateInPackage: aPackageName named: aClassName [
 
 		^ String streamContents: [ :s |
-						s nextPutAll: 'Object << '. aClassName asSymbol printOn: s. s crtab.
+						s nextPutAll: 'Object << '; print: aClassName asSymbol; crtab.
 						s nextPutAll: 'layout: FixedLayout;'; crtab.
 						s nextPutAll: 'traits: {};'; crtab.
 						s nextPutAll: 'slots: {};'; crtab.
 						s nextPutAll: 'sharedVariables: {};'; crtab.
 						s nextPutAll: 'sharedPools: {};'; crtab.
 						s nextPutAll: 'tag: '''' ;';crtab.
-						s nextPutAll: 'package: ''', aPackageName, '''' ]
+						s nextPutAll: 'package: '''; nextPutAll: aPackageName; nextPutAll: '''' ]
 ]
 
-{ #category : #'elementary operations' }
+{ #category : 'elementary operations' }
 FluidClassDefinitionPrinter >> classVariableDefinitionsOn: aStream [
 	"Answer a string that evaluates to the definition of the class Variables"
 
@@ -96,29 +98,53 @@ FluidClassDefinitionPrinter >> classVariableDefinitionsOn: aStream [
 		aStream nextPutAll: '}'. ]
 ]
 
-{ #category : #template }
-FluidClassDefinitionPrinter >> compactClassDefinitionTemplateInPackage: aPackageName [
-	^ String streamContents: [ :s |
-			s nextPutAll: 'Object << #MyClass'; crtab.
-			s nextPutAll: 'slots: {};'; crtab.
-			s nextPutAll: 'sharedVariables: {};'; crtab.
-			s nextPutAll: 'package: ''', aPackageName, '''' ]
-]
-
-{ #category : #template }
-FluidClassDefinitionPrinter >> compactTraitDefinitionTemplateInPackage: aPackageName [
+{ #category : 'template' }
+FluidClassDefinitionPrinter >> compactClassDefinitionTemplateInPackage: aPackageName tag: aTagName [
 
 	^ String streamContents: [ :s |
 		  s
-			  nextPutAll: 'Trait << #TMyTrait';  crtab;
-			  nextPutAll: 'traits: {};'; crtab ;
-			  nextPutAll: 'slots: {};'; crtab ;
+			  nextPutAll: 'Object << #MyClass';
+			  crtab;
+			  nextPutAll: 'slots: {};';
+			  crtab;
+			  nextPutAll: 'sharedVariables: {};';
+			  crtab.
+		  aTagName ifNotNil: [
+			  s
+				  nextPutAll: 'tag: ';
+				  print: aTagName;
+				  nextPutAll: ';';
+				  crtab ].
+		  s
 			  nextPutAll: 'package: ''';
 			  nextPutAll: aPackageName;
 			  nextPutAll: '''' ]
 ]
 
-{ #category : #'expanded double dispatch API' }
+{ #category : 'template' }
+FluidClassDefinitionPrinter >> compactTraitDefinitionTemplateInPackage: aPackageName tag: aTagName [
+
+	^ String streamContents: [ :s |
+		  s
+			  nextPutAll: 'Trait << #TMyTrait';
+			  crtab;
+			  nextPutAll: 'traits: {};';
+			  crtab;
+			  nextPutAll: 'slots: {};';
+			  crtab.
+		  aTagName ifNotNil: [
+			  s
+				  nextPutAll: 'tag: ';
+				  print: aTagName;
+				  nextPutAll: ';';
+				  crtab ].
+		  s
+			  nextPutAll: 'package: ''';
+			  nextPutAll: aPackageName;
+			  nextPutAll: '''' ]
+]
+
+{ #category : 'expanded double dispatch API' }
 FluidClassDefinitionPrinter >> expandedDefinitionString [
 
 	^ String streamContents: [ :s | "in case of ProtoObject"
@@ -139,20 +165,16 @@ FluidClassDefinitionPrinter >> expandedDefinitionString [
 		  self slotsOn: s.
 		  self sharedVariablesOn: s.
 		  self sharedPoolsOn: s.
-
-		  (forClass package classTagForClass: forClass) ifNotNil: [ :t |
-			  | tag |
-			  tag := t name.
-			  tag = forClass package name
-				  ifTrue: [
-					  s
-						  crtab;
-						  nextPutAll: 'tag: '''';' ]
-				  ifFalse: [ self tagOn: s ] ].
+		  forClass packageTag isRoot
+			  ifTrue: [
+				  s
+					  crtab;
+					  nextPutAll: 'tag: '''';' ]
+			  ifFalse: [ self tagOn: s ].
 		  self packageOn: s ]
 ]
 
-{ #category : #'expanded double dispatch API' }
+{ #category : 'expanded double dispatch API' }
 FluidClassDefinitionPrinter >> expandedMetaclassDefinitionString [
 
 	^ String streamContents: [ :s |
@@ -178,7 +200,7 @@ FluidClassDefinitionPrinter >> expandedMetaclassDefinitionString [
 		  self slotDefinitionsOn: s ]
 ]
 
-{ #category : #'expanded double dispatch API' }
+{ #category : 'expanded double dispatch API' }
 FluidClassDefinitionPrinter >> expandedTraitClassDefinitionString [
 
 	^ String streamContents: [ :s |
@@ -199,40 +221,43 @@ FluidClassDefinitionPrinter >> expandedTraitClassDefinitionString [
 		  self slotDefinitionsOn: s ]
 ]
 
-{ #category : #'expanded double dispatch API' }
+{ #category : 'expanded double dispatch API' }
 FluidClassDefinitionPrinter >> expandedTraitDefinitionString [
 
 	^ String streamContents: [ :s |
-		| tag |
-		s nextPutAll: 'Trait'.
-		self msgAndClassNameOn: s.
+		  | tag |
+		  s nextPutAll: 'Trait'.
+		  self msgAndClassNameOn: s.
 
-		s crtab.
-		s nextPutAll: 'traits: '.
-		forClass hasTraitComposition
-			ifTrue: [ s nextPutAll: '{'; nextPutAll: forClass traitCompositionString; nextPutAll: '};' ]
-			ifFalse: [ s nextPutAll: '{};' ].
-		self slotsOn: s.
-		s crtab.
+		  s crtab.
+		  s nextPutAll: 'traits: '.
+		  forClass hasTraitComposition
+			  ifTrue: [
+				  s
+					  nextPutAll: '{';
+					  nextPutAll: forClass traitCompositionString;
+					  nextPutAll: '};' ]
+			  ifFalse: [ s nextPutAll: '{};' ].
+		  self slotsOn: s.
+		  s crtab.
 
-		(forClass package classTagForClass: forClass) ifNotNil: [:t |
-							tag := t name.
-							tag = forClass package name
-								ifFalse:  [
-									s nextPutAll: 'tag: ';
-					nextPut: $';
-					nextPutAll: tag asString ;
-					nextPutAll: ''';'.
-					s crtab
-				]].
+		  forClass packageTag ifNotNil: [ :t |
+			  tag := t name.
+			  tag = forClass package name ifFalse: [
+				  s
+					  nextPutAll: 'tag: ';
+					  nextPut: $';
+					  nextPutAll: tag asString;
+					  nextPutAll: ''';'.
+				  s crtab ] ].
 
-				s
-					nextPutAll: 'package: ''';
-					nextPutAll: forClass package packageName;
-					nextPutAll: '''' ]
+		  s
+			  nextPutAll: 'package: ''';
+			  nextPutAll: forClass package name;
+			  nextPutAll: '''' ]
 ]
 
-{ #category : #'definition double dispatch API' }
+{ #category : 'definition double dispatch API' }
 FluidClassDefinitionPrinter >> expandedTraitedMetaclassDefinitionString [
 
 	^ String streamContents:
@@ -245,7 +270,7 @@ FluidClassDefinitionPrinter >> expandedTraitedMetaclassDefinitionString [
 		self lastSlotsOn: strm]
 ]
 
-{ #category : #'elementary operations' }
+{ #category : 'elementary operations' }
 FluidClassDefinitionPrinter >> lastSlotsOn: s [
 
 	s crtab.
@@ -253,7 +278,7 @@ FluidClassDefinitionPrinter >> lastSlotsOn: s [
 	self slotDefinitionsOn: s
 ]
 
-{ #category : #'elementary operations' }
+{ #category : 'elementary operations' }
 FluidClassDefinitionPrinter >> lastTraitsOn: strm [
 	"uses: can the last part of a definition so watch out for terminating ;"
 
@@ -266,7 +291,7 @@ FluidClassDefinitionPrinter >> lastTraitsOn: strm [
 	forClass slots	ifNotEmpty: [ strm nextPutAll: ';' ] ]
 ]
 
-{ #category : #'elementary operations' }
+{ #category : 'elementary operations' }
 FluidClassDefinitionPrinter >> layoutOn: s [
 	"Layout is always followed by other message ultimately package: so it terminates with ;"
 	s
@@ -276,7 +301,7 @@ FluidClassDefinitionPrinter >> layoutOn: s [
 		nextPutAll: ';'
 ]
 
-{ #category : #'definition double dispatch API' }
+{ #category : 'definition double dispatch API' }
 FluidClassDefinitionPrinter >> metaclassDefinitionString [
 
 	^ String streamContents: [ :strm |
@@ -292,10 +317,12 @@ FluidClassDefinitionPrinter >> metaclassDefinitionString [
 									nextPutAll: forClass name ] ]
 			ifNil: [ strm nextPutAll: 'ProtoObject ' ].
 		self lastTraitsOn: strm.
-		forClass slots ifNotEmpty: [ self lastSlotsOn: strm ] ]
+		self class displayEmptySlots
+				ifTrue: [ self lastSlotsOn: strm ]
+		  		ifFalse: [forClass slots ifNotEmpty: [ self lastSlotsOn: strm ]]]
 ]
 
-{ #category : #'elementary operations' }
+{ #category : 'elementary operations' }
 FluidClassDefinitionPrinter >> msgAndClassNameOn: s [
 
 	s
@@ -303,18 +330,19 @@ FluidClassDefinitionPrinter >> msgAndClassNameOn: s [
 		nextPutAll: forClass name
 ]
 
-{ #category : #'elementary operations' }
+{ #category : 'elementary operations' }
 FluidClassDefinitionPrinter >> packageOn: s [
+	"The code to get the package name is not nice but it is possible we are asking the definition to a class that was uninstalled from the system and in that case it does not know its package anymore. And some code in the image expect to have the package of the class with the same name instead."
 
 	s
 		crtab;
-	 	nextPutAll: 'package: ';
+		nextPutAll: 'package: ';
 		nextPut: $';
-		nextPutAll: forClass package packageName;
+		nextPutAll: forClass package name;
 		nextPut: $'
 ]
 
-{ #category : #'elementary operations' }
+{ #category : 'elementary operations' }
 FluidClassDefinitionPrinter >> sharedPoolsOn: s [
 	"shared pool message is always followed by other message ultimately package: so it terminates with ;"
 	s
@@ -330,7 +358,7 @@ FluidClassDefinitionPrinter >> sharedPoolsOn: s [
 		nextPutAll: '};'
 ]
 
-{ #category : #'elementary operations' }
+{ #category : 'elementary operations' }
 FluidClassDefinitionPrinter >> sharedVariablesOn: s [
 	"shared variable is always followed by other message ultimately package: so it terminates with ;"
 	s
@@ -341,14 +369,14 @@ FluidClassDefinitionPrinter >> sharedVariablesOn: s [
 		nextPutAll: ';'
 ]
 
-{ #category : #'elementary operations' }
+{ #category : 'elementary operations' }
 FluidClassDefinitionPrinter >> slotDefinitionString [
 	"Answer a string that represents an executable description of my Slots"
 
 	^String streamContents: [ :str | self slotDefinitionsOn: str]
 ]
 
-{ #category : #'elementary operations' }
+{ #category : 'elementary operations' }
 FluidClassDefinitionPrinter >> slotDefinitionsOn: aStream [
 	"If the class has many instance variable print one slot per line, do the same for complex slots."
 
@@ -374,7 +402,7 @@ FluidClassDefinitionPrinter >> slotDefinitionsOn: aStream [
 	aStream nextPutAll: '}'
 ]
 
-{ #category : #'elementary operations' }
+{ #category : 'elementary operations' }
 FluidClassDefinitionPrinter >> slotShiftOn: aStream [
 
 	aStream
@@ -384,32 +412,27 @@ FluidClassDefinitionPrinter >> slotShiftOn: aStream [
 		tab
 ]
 
-{ #category : #'elementary operations' }
+{ #category : 'elementary operations' }
 FluidClassDefinitionPrinter >> slotsOn: s [
 	"uses: can the last part of a definition so watch out for terminating ;"
 
-	s crtab.
-	s nextPutAll: 'slots: '.
-	self slotDefinitionsOn: s.
+	self lastSlotsOn: s.
 	s nextPutAll: ';'
 ]
 
-{ #category : #'expanded double dispatch API' }
-FluidClassDefinitionPrinter >> tagOn: s [
+{ #category : 'expanded double dispatch API' }
+FluidClassDefinitionPrinter >> tagOn: aStream [
+	"We don't print if the tag is the root tag."
+	forClass packageTag isRoot ifTrue: [ ^ self ].
 
-	| tag |
-	(forClass package classTagForClass: forClass) ifNotNil: [ :t |
-		tag := t name.
-		tag = forClass package name ifFalse: [
-			s crtab.
-			s
-				nextPutAll: 'tag: ';
-				nextPut: $';
-				nextPutAll: tag asString;
-				nextPutAll: ''';' ] ]
+	aStream
+		crtab;
+		nextPutAll: 'tag: ''';
+		nextPutAll: forClass packageTag name asString;
+		nextPutAll: ''';'
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 FluidClassDefinitionPrinter >> testClassDefinitionTemplateInPackage: aPackageName [
 
 		^ String streamContents: [ :s |
@@ -419,7 +442,7 @@ FluidClassDefinitionPrinter >> testClassDefinitionTemplateInPackage: aPackageNam
 						s nextPutAll: 'package: ''', aPackageName, '''' ]
 ]
 
-{ #category : #'definition double dispatch API' }
+{ #category : 'definition double dispatch API' }
 FluidClassDefinitionPrinter >> traitDefinitionString [
 
 	^ String streamContents: [ :strm |
@@ -432,12 +455,13 @@ FluidClassDefinitionPrinter >> traitDefinitionString [
 			self packageOn: strm ]
 ]
 
-{ #category : #printing }
-FluidClassDefinitionPrinter >> traitDefinitionTemplateInPackage: aPackageName [
+{ #category : 'template' }
+FluidClassDefinitionPrinter >> traitDefinitionTemplateInPackage: aPackageName named: aTraitName [
 
 	^ String streamContents: [ :s |
 		  s
-			  nextPutAll: 'Trait << #TMyTrait';
+			  nextPutAll: 'Trait << ';
+			  print: aTraitName asSymbol;
 			  crtab.
 		  s
 			  nextPutAll: 'traits: {};';
@@ -454,7 +478,7 @@ FluidClassDefinitionPrinter >> traitDefinitionTemplateInPackage: aPackageName [
 			  nextPutAll: '''' ]
 ]
 
-{ #category : #'definition double dispatch API' }
+{ #category : 'definition double dispatch API' }
 FluidClassDefinitionPrinter >> traitedMetaclassDefinitionString [
 
 	^ String streamContents:
@@ -467,7 +491,7 @@ FluidClassDefinitionPrinter >> traitedMetaclassDefinitionString [
 		forClass slots ifNotEmpty: [ self lastSlotsOn: strm ]]
 ]
 
-{ #category : #'elementary operations' }
+{ #category : 'elementary operations' }
 FluidClassDefinitionPrinter >> traitsOn: strm [
 	"uses: can the last part of a definition so watch out for terminating ;"
 

@@ -18,8 +18,8 @@ Instance Variables:
 
 "
 Class {
-	#name : #RBMethodNode,
-	#superclass : #RBProgramNode,
+	#name : 'RBMethodNode',
+	#superclass : 'RBProgramNode',
 	#instVars : [
 		'scope',
 		'selector',
@@ -33,15 +33,17 @@ Class {
 		'compilationContext',
 		'bcToASTCache'
 	],
-	#category : #'AST-Core-Nodes'
+	#category : 'AST-Core-Nodes',
+	#package : 'AST-Core',
+	#tag : 'Nodes'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBMethodNode class >> selector: aSymbol [
 	^self selector: aSymbol arguments: #()
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBMethodNode class >> selector: aSymbol arguments: valueNodes [
 	^(self new)
 		selector: aSymbol;
@@ -49,7 +51,7 @@ RBMethodNode class >> selector: aSymbol arguments: valueNodes [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBMethodNode class >> selector: aSymbol arguments: variableNodes body: aSequenceNode [
 	^(self new)
 		arguments: variableNodes;
@@ -58,7 +60,7 @@ RBMethodNode class >> selector: aSymbol arguments: variableNodes body: aSequence
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBMethodNode class >> selector: aSymbol body: aSequenceNode [
 	^self
 		selector: aSymbol
@@ -66,7 +68,7 @@ RBMethodNode class >> selector: aSymbol body: aSequenceNode [
 		body: aSequenceNode
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBMethodNode class >> selector: aSymbol keywordsPositions: positionList arguments: valueNodes [
 	^(self new)
 		selector: aSymbol
@@ -75,7 +77,7 @@ RBMethodNode class >> selector: aSymbol keywordsPositions: positionList argument
 		yourself
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 RBMethodNode >> = anObject [
 	self == anObject ifTrue: [ ^ true ].
 	self class = anObject class ifFalse: [ ^ false ].
@@ -92,60 +94,60 @@ RBMethodNode >> = anObject [
 	^ true
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RBMethodNode >> acceptVisitor: aProgramNodeVisitor [
 	^ aProgramNodeVisitor visitMethodNode: self
 ]
 
-{ #category : #'adding-removing' }
+{ #category : 'adding-removing' }
 RBMethodNode >> addNode: aNode [
 	^ body addNode: aNode
 ]
 
-{ #category : #'adding-removing' }
+{ #category : 'adding-removing' }
 RBMethodNode >> addPragma: aPragmaNode [
 
 	pragmas := pragmas copyWith: aPragmaNode.
 	aPragmaNode parent: self
 ]
 
-{ #category : #replacing }
+{ #category : 'replacing' }
 RBMethodNode >> addReplacement: aStringReplacement [
 	replacements ifNil: [^self].
 	replacements add: aStringReplacement
 ]
 
-{ #category : #'adding-removing' }
+{ #category : 'adding-removing' }
 RBMethodNode >> addReturn [
 	^ body addReturn
 ]
 
-{ #category : #'adding-removing' }
+{ #category : 'adding-removing' }
 RBMethodNode >> addSelfReturn [
 	^ body addSelfReturn
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodNode >> allArgumentVariables [
 	^(self argumentNames asOrderedCollection)
 		addAll: super allArgumentVariables;
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodNode >> allDefinedVariables [
 	^(self argumentNames asOrderedCollection)
 		addAll: super allDefinedVariables;
 		yourself
 ]
 
-{ #category : #iterating }
+{ #category : 'iterating' }
 RBMethodNode >> allSequenceNodes [
 
 	^ self allChildren select: #isSequence
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodNode >> allStatements [
 	"return the statements including variable definition."
 	^ self temporaries asOrderedCollection copy
@@ -153,39 +155,39 @@ RBMethodNode >> allStatements [
 			yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodNode >> argumentNames [
 	^ self arguments collect: [:each | each name] as: Array
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodNode >> arguments [
 	^arguments
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodNode >> arguments: variableNodes [
 	arguments := variableNodes.
 	arguments do: [:each | each parent: self]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 RBMethodNode >> asSequenceNode [
 	^body
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodNode >> body [
 	^body
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodNode >> body: stmtsNode [
 	body := stmtsNode.
 	body parent: self
 ]
 
-{ #category : #'private - replacing' }
+{ #category : 'private - replacing' }
 RBMethodNode >> changeSourceSelector: oldSelector keywordsIntervals: oldIntervals arguments: oldArguments [
 	"If this is the same number of arguments, we try a one to one replacement of selector parts and arguments. If this is not the c
 ase try to rewrite the signature as a whole, what unfortunately drops the comments within the signature."
@@ -218,7 +220,7 @@ ase try to rewrite the signature as a whole, what unfortunately drops the commen
 		do: [ :ex | ex return ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodNode >> children [
 	^ OrderedCollection new
 		addAll: arguments;
@@ -227,22 +229,22 @@ RBMethodNode >> children [
 		yourself
 ]
 
-{ #category : #replacing }
+{ #category : 'replacing' }
 RBMethodNode >> clearReplacements [
 	replacements := nil
 ]
 
-{ #category : #'accessing - compiled method' }
+{ #category : 'accessing - compiled method' }
 RBMethodNode >> compilationContext [
 	^ compilationContext
 ]
 
-{ #category : #'accessing - compiled method' }
+{ #category : 'accessing - compiled method' }
 RBMethodNode >> compilationContext: aCompilationContext [
 	compilationContext := aCompilationContext
 ]
 
-{ #category : #'accessing - conceptual' }
+{ #category : 'accessing - conceptual' }
 RBMethodNode >> conceptualArgumentSize [
 	"Return the cumulted length of the parameters (yes parameters are called arguments in Pharo - not good!). It does not count spaces and the selectors.
 	Note that this length is based on the tree structure and not the source code. It does not reflect the selection interval but the space the selector would take if displayed on a single line without any space."
@@ -252,7 +254,7 @@ RBMethodNode >> conceptualArgumentSize [
 		into: [ :sum :each | sum + each name size ]
 ]
 
-{ #category : #'accessing - conceptual' }
+{ #category : 'accessing - conceptual' }
 RBMethodNode >> conceptualSelectorSize [
 	"Return the length of the selector. It does not take into length of parameters nor the spaces.
 	Note that this length is based on the tree structure and not the source code. It does not reflect the selection interval but the space the selector would take if displayed on a single line without any space."
@@ -260,7 +262,7 @@ RBMethodNode >> conceptualSelectorSize [
 	^ selector size
 ]
 
-{ #category : #'accessing - conceptual' }
+{ #category : 'accessing - conceptual' }
 RBMethodNode >> conceptualSignatureSize [
 	"Return the full length of the method signature (called with a strange name in Pharo: the patterned selector. Note that this length is based on the tree structure and not the source code. It does not reflect the selection interval but the space the signature would take if displayed on a single line."
 
@@ -272,7 +274,7 @@ RBMethodNode >> conceptualSignatureSize [
 		ifEmpty: [ 0 ])
 ]
 
-{ #category : #matching }
+{ #category : 'matching' }
 RBMethodNode >> copyInContext: aDictionary [
 	^ self class new
 		selector: self selector;
@@ -285,13 +287,13 @@ RBMethodNode >> copyInContext: aDictionary [
 		yourself
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBMethodNode >> defines: aName [
 	^ (arguments anySatisfy: [ :each | each name = aName ])
 		or: [ self pragmas anySatisfy: [ :pragma | pragma defines: aName ] ]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 RBMethodNode >> equalTo: anObject withMapping: aDictionary [
 	self class = anObject class ifFalse: [ ^ false ].
 	(self selector = anObject selector
@@ -308,7 +310,7 @@ RBMethodNode >> equalTo: anObject withMapping: aDictionary [
 	^ true
 ]
 
-{ #category : #'tree accessing' }
+{ #category : 'tree accessing' }
 RBMethodNode >> extractSubtreeWith: aSourceCode [
 	| extractedTree |
 	extractedTree := self parserClass
@@ -326,45 +328,45 @@ RBMethodNode >> extractSubtreeWith: aSourceCode [
 		ifNotNil: [ extractedTree parent: (self parentOfSubtree: extractedTree) ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodNode >> firstPrecodeComment [
 	self comments ifEmpty: [ ^nil ].
 	^ self comments first contents
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBMethodNode >> hasArgumentNamed: aString [
 	^ self arguments anySatisfy: [ :argument| argument name = aString ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBMethodNode >> hasArguments [
 
 	^ arguments isNotEmpty
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBMethodNode >> hasPragmaNamed: aSymbol [
 	self pragmaNamed: aSymbol ifAbsent: [ ^ false ].
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBMethodNode >> hasTemporaries [
 	^ self temporaries isNotEmpty
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBMethodNode >> hasTemporaryNamed: aString [
 	^ self temporaries anySatisfy: [ :temp| temp name = aString ]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 RBMethodNode >> hash [
 	^ ((self selector hash bitXor: (self hashForCollection: self arguments)) bitXor: (self hashForCollection: self pragmas)) bitXor: self body hash
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBMethodNode >> initialize [
 	arguments := #().
 	pragmas := #().
@@ -375,12 +377,12 @@ RBMethodNode >> initialize [
 	nodeReplacements := IdentityDictionary new
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBMethodNode >> isDoIt [
 	^false
 ]
 
-{ #category : #errors }
+{ #category : 'errors' }
 RBMethodNode >> isFaulty [
 	self isError ifTrue: [ ^ true ].
 	(self arguments anySatisfy: [:each | each isFaulty]) ifTrue:[ ^true].
@@ -388,59 +390,59 @@ RBMethodNode >> isFaulty [
 	^self body isFaulty
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBMethodNode >> isLast: aNode [
 	^body isLast: aNode
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBMethodNode >> isMethod [
 	^true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBMethodNode >> isPrimitive [
 	^ self pragmas anySatisfy: [ :each | each isPrimitive ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodNode >> keywords [
 	^ selector keywords
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodNode >> keywordsIntervals [
 	^selector keywords
 		with: self keywordsPositions
 		collect: [:keyword :start| start to: (start = 0 ifTrue: [ -1 ] ifFalse: [ start + keyword size - 1]) ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodNode >> keywordsPositions [
 	^keywordsPositions ifNil: [ (selector keywords collect: [:char| 0 ]) asIntegerArray ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodNode >> keywordsPositions: aPositionsList [
 	keywordsPositions := aPositionsList ifNotNil: [:list| list asIntegerArray ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBMethodNode >> lastIsReturn [
 	^body lastIsReturn
 ]
 
-{ #category : #replacing }
+{ #category : 'replacing' }
 RBMethodNode >> map: oldNode to: newNode [
 	nodeReplacements at: oldNode put: newNode
 ]
 
-{ #category : #replacing }
+{ #category : 'replacing' }
 RBMethodNode >> mappingFor: oldNode [
 	^nodeReplacements at: oldNode ifAbsent: [oldNode]
 ]
 
-{ #category : #matching }
+{ #category : 'matching' }
 RBMethodNode >> match: aNode inContext: aDictionary [
 	self class = aNode class ifFalse: [ ^ false ].
 	aDictionary at: '-source-' put: aNode source.
@@ -450,7 +452,7 @@ RBMethodNode >> match: aNode inContext: aDictionary [
 		and: [ body match: aNode body inContext: aDictionary ] ]
 ]
 
-{ #category : #matching }
+{ #category : 'matching' }
 RBMethodNode >> matchPragmas: matchNodes against: pragmaNodes inContext: aDictionary [
 	matchNodes isEmpty ifTrue: [
 		aDictionary at: '-pragmas-' put: pragmaNodes.
@@ -460,46 +462,28 @@ RBMethodNode >> matchPragmas: matchNodes against: pragmaNodes inContext: aDictio
 			matchNode match: pragmaNode inContext: aDictionary ] ]
 ]
 
-{ #category : #'accessing - compiled method' }
-RBMethodNode >> method [
-	
-	self deprecated: 'use compiledMethod' transformWith: '`@recv method' -> '`@recv compiledMethod'.
-	^ self compiledMethod
-]
-
-{ #category : #'accessing - compiled method' }
-RBMethodNode >> methodClass [
-
-	^ self scope ifNotNil: [ :s | s targetClass ]
-]
-
-{ #category : #'accessing - compiled method' }
-RBMethodNode >> methodClass: aClass [
-	self semanticScope: (OCMethodSemanticScope targetingClass: aClass)
-]
-
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodNode >> methodNode [
 	^self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodNode >> methodOrBlockNode [
 	^ self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodNode >> newSource [
 	replacements ifNil: [^self formattedCode].
 	^[self reformatSource] on: Error do: [:ex | ex return: self formattedCode]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodNode >> numArgs [
 	^self selector numArgs
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBMethodNode >> offsetIsComment: anOffset [
 	"check is the offset in the source part of a comment"
 
@@ -507,7 +491,7 @@ RBMethodNode >> offsetIsComment: anOffset [
 		anySatisfy: [ :comment | anOffset between: comment start and: comment stop ]
 ]
 
-{ #category : #'tree accessing' }
+{ #category : 'tree accessing' }
 RBMethodNode >> parentOfSubtree: subtree [
 
 	| sourceCode |
@@ -518,7 +502,7 @@ RBMethodNode >> parentOfSubtree: subtree [
 		ifNone: [ nil ]
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 RBMethodNode >> postCopy [
 	super postCopy.
 	self arguments: (self arguments collect: [ :each | each copy ]).
@@ -526,26 +510,26 @@ RBMethodNode >> postCopy [
 	self body: self body copy
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBMethodNode >> pragmaNamed: aSymbol [
 	^ self pragmaNamed: aSymbol ifAbsent: [ KeyNotFound signalFor: aSymbol  ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBMethodNode >> pragmaNamed: aSymbol ifAbsent: absentBlock [
 	^ self pragmas
 		detect: [ :pragma| pragma selector = aSymbol ]
 		ifNone: absentBlock
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBMethodNode >> pragmaNamed: aSymbol ifPresent: foundBlock [
 	^ self pragmas
 		detect: [ :pragma| pragma selector = aSymbol ]
 		ifFound: foundBlock
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBMethodNode >> pragmaNamed: aSymbol ifPresent: presentBlock ifAbsent: absentBlock [
 	^ self pragmas
 		detect: [ :pragma| pragma selector = aSymbol ]
@@ -553,28 +537,28 @@ RBMethodNode >> pragmaNamed: aSymbol ifPresent: presentBlock ifAbsent: absentBlo
 		ifNone: absentBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodNode >> pragmas [
 	^ pragmas
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodNode >> pragmas: aCollection [
 	pragmas := aCollection.
 	pragmas do: [ :each | each parent: self ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBMethodNode >> printOn: aStream [
 	aStream nextPutAll: self formattedCode
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBMethodNode >> references: aVariableName [
 	^body references: aVariableName
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBMethodNode >> reformatSource [
 	| stream newSource newTree |
 	stream := (String new: source size + 100) writeStream.
@@ -597,19 +581,19 @@ RBMethodNode >> reformatSource [
 	^ newSource
 ]
 
-{ #category : #'adding-removing' }
+{ #category : 'adding-removing' }
 RBMethodNode >> removePragma: aPragmaNode [
 
 	pragmas := pragmas copyWithout: aPragmaNode
 ]
 
-{ #category : #'adding-removing' }
+{ #category : 'adding-removing' }
 RBMethodNode >> removePragmaNamed: aPragmaName [
 
 	self pragmaNamed: aPragmaName ifPresent: [ :pragma | self removePragma: pragma ]
 ]
 
-{ #category : #'adding-removing' }
+{ #category : 'adding-removing' }
 RBMethodNode >> removeSubtree: aTree [
 
 	^ aTree isReturn
@@ -623,7 +607,7 @@ RBMethodNode >> removeSubtree: aTree [
 					  onInterval: aTree sourceInterval ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodNode >> renameSelector: newSelector andArguments: varNodeCollection [
 	| oldIntervals oldArguments oldSelector |
 	oldSelector := selector.
@@ -635,35 +619,35 @@ RBMethodNode >> renameSelector: newSelector andArguments: varNodeCollection [
 	self changeSourceSelector: oldSelector keywordsIntervals: oldIntervals arguments: oldArguments
 ]
 
-{ #category : #replacing }
+{ #category : 'replacing' }
 RBMethodNode >> replaceNode: aNode withNode: anotherNode [
 	aNode == body ifTrue: [self body: anotherNode].
 	self arguments: (arguments
 				collect: [:each | each == aNode ifTrue: [anotherNode] ifFalse: [each]])
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodNode >> scope [
 	^ scope
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodNode >> scope: aScopedNode [
 	scope := aScopedNode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodNode >> selector [
 	^ selector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodNode >> selector: aSelector [
 	keywordsPositions := nil.
 	selector := aSelector asSymbol
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBMethodNode >> selector: aSymbol keywordsPositions: positionList arguments: valueNodes [
 	self
 		arguments: valueNodes;
@@ -671,7 +655,7 @@ RBMethodNode >> selector: aSymbol keywordsPositions: positionList arguments: val
 		keywordsPositions: positionList
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodNode >> selectorAndArgumentNames [
 	"Returns the selector and argument names portion of a method as a string"
 
@@ -682,12 +666,12 @@ RBMethodNode >> selectorAndArgumentNames [
 			self source first: lastArgument start + (lastArgument name size - 1)]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodNode >> selectorParts [
 	^ self keywords collect: [:each | each asSymbol]
 ]
 
-{ #category : #'accessing compiled method' }
+{ #category : 'accessing compiled method' }
 RBMethodNode >> semanticScope: aSemanticScope [
 	compilationContext ifNil: [
 		compilationContext := aSemanticScope targetClass compiler compilationContext].
@@ -695,58 +679,58 @@ RBMethodNode >> semanticScope: aSemanticScope [
 	self compilationContext semanticScope: aSemanticScope
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodNode >> source [
 	^source
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodNode >> source: anObject [
 	source := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodNode >> sourceCode [
 	"compatibility to MethodNode"
 	^source
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodNode >> start [
 	^ 1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodNode >> statements [
 	^ self body statements
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodNode >> statements: aCollection [
 	self body statements: aCollection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodNode >> stop [
 	^(self sourceCode ifNotNil: [:src | src] ifNil: [ self formattedCode ]) size
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodNode >> temporaries [
 	^ self body temporaries
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodNode >> temporaryNames [
 	^ self body temporaryNames
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBMethodNode >> uses: aNode [
 	^body == aNode and: [aNode lastIsReturn]
 ]
 
-{ #category : #'tree accessing' }
+{ #category : 'tree accessing' }
 RBMethodNode >> variableWith: aSymbol [
 
 	| matcher block |

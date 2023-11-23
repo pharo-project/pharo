@@ -2,74 +2,74 @@
 I am a breakpoint installed on one or more instance variables of a class or of an object.
 "
 Class {
-	#name : #VariableBreakpoint,
-	#superclass : #Breakpoint,
+	#name : 'VariableBreakpoint',
+	#superclass : 'Breakpoint',
 	#instVars : [
 		'targetVariableNames',
 		'accessStrategy',
 		'isInstalled',
 		'targetClassOrMethod'
 	],
-	#category : #'Reflectivity-Breakpoints'
+	#category : 'Reflectivity-Breakpoints',
+	#package : 'Reflectivity',
+	#tag : 'Breakpoints'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 VariableBreakpoint class >> allSlotNamesFor: aClass [
 	^ aClass allSlots collect: [ :s | s name ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 VariableBreakpoint class >> newBreakpointForVariable: aVariableName forMethod: aCompiledMethod [
 	^ self new
 		targetClassOrMethod: aCompiledMethod;
 		targetVariableNames: (OrderedCollection with: aVariableName)
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 VariableBreakpoint class >> newBreakpointForVariable: aVariableName inClass: aClass [
 	^ self new
 		targetClassOrMethod: aClass;
 		targetVariableNames: (OrderedCollection with: aVariableName)
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 VariableBreakpoint class >> newForClass: aClass [
 	^ self new
 		targetClassOrMethod: aClass;
 		targetVariableNames: (self allSlotNamesFor: aClass)
 ]
 
-{ #category : #observers }
+{ #category : 'notifications' }
 VariableBreakpoint class >> notifyBreakpointHit: aBreakpoint inContext: aContext node: node [
-	| announcement |
-	announcement := BreakpointHit
-		on: aBreakpoint
-		nodes: {node}.
-	announcement valueOrNil: (node variableValueInContext: aContext).
-	SystemAnnouncer announce: announcement
+
+	self codeSupportAnnouncer announce: ((BreakpointHit on: aBreakpoint nodes: { node })
+			 valueOrNil: (node variableValueInContext: aContext);
+			 yourself)
 ]
 
-{ #category : #API }
+{ #category : 'API' }
 VariableBreakpoint class >> watchVariable: aVariableName inClass: aClassOrCompiledMethod [
 	^ (aClassOrCompiledMethod newBreakpointForVariable: aVariableName)
 		install
 ]
 
-{ #category : #'API - object-centric' }
+{ #category : 'API - object-centric' }
 VariableBreakpoint class >> watchVariable: aVariableName inObject: anObject [
 	^ (self newBreakpointForVariable: aVariableName inClass: anObject class)
 		scopeTo: anObject;
 		install
 ]
 
-{ #category : #API }
+{ #category : 'API' }
 VariableBreakpoint class >> watchVariableReads: aVariableName inClass: aClassOrCompiledMethod [
 	^ (aClassOrCompiledMethod newBreakpointForVariable: aVariableName)
 		accessStrategy: #read;
 		install
 ]
 
-{ #category : #'API - object-centric' }
+{ #category : 'API - object-centric' }
 VariableBreakpoint class >> watchVariableReads: aVariableName inObject: anObject [
 	^ (self newBreakpointForVariable: aVariableName inClass: anObject class)
 		accessStrategy: #read;
@@ -77,14 +77,14 @@ VariableBreakpoint class >> watchVariableReads: aVariableName inObject: anObject
 		install
 ]
 
-{ #category : #API }
+{ #category : 'API' }
 VariableBreakpoint class >> watchVariableWrites: aVariableName inClass: aClassOrCompiledMethod [
 	^ (aClassOrCompiledMethod newBreakpointForVariable: aVariableName)
 		accessStrategy: #write;
 		install
 ]
 
-{ #category : #'API - object-centric' }
+{ #category : 'API - object-centric' }
 VariableBreakpoint class >> watchVariableWrites: aVariableName inObject: anObject [
 	^ (self newBreakpointForVariable: aVariableName inClass: anObject class)
 		accessStrategy: #write;
@@ -92,26 +92,26 @@ VariableBreakpoint class >> watchVariableWrites: aVariableName inObject: anObjec
 		install
 ]
 
-{ #category : #API }
+{ #category : 'API' }
 VariableBreakpoint class >> watchVariablesInClass: aClass [
 	^ (self newForClass: aClass) install
 ]
 
-{ #category : #'API - object-centric' }
+{ #category : 'API - object-centric' }
 VariableBreakpoint class >> watchVariablesInObject: anObject [
 	^ (self newForClass: anObject class)
 		scopeTo: anObject;
 		install
 ]
 
-{ #category : #API }
+{ #category : 'API' }
 VariableBreakpoint class >> watchVariablesReadsInClass: aClass [
 	^ (self newForClass: aClass)
 		accessStrategy: #read;
 		install
 ]
 
-{ #category : #'API - object-centric' }
+{ #category : 'API - object-centric' }
 VariableBreakpoint class >> watchVariablesReadsInObject: anObject [
 	^ (self newForClass: anObject class)
 		accessStrategy: #read;
@@ -119,14 +119,14 @@ VariableBreakpoint class >> watchVariablesReadsInObject: anObject [
 		install
 ]
 
-{ #category : #API }
+{ #category : 'API' }
 VariableBreakpoint class >> watchVariablesWritesInClass: aClass [
 	^ (self newForClass: aClass)
 		accessStrategy: #write;
 		install
 ]
 
-{ #category : #'API - object-centric' }
+{ #category : 'API - object-centric' }
 VariableBreakpoint class >> watchVariablesWritesInObject: anObject [
 	^ (self newForClass: anObject class)
 		accessStrategy: #write;
@@ -134,17 +134,17 @@ VariableBreakpoint class >> watchVariablesWritesInObject: anObject [
 		install
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 VariableBreakpoint >> accessStrategy [
 	^ accessStrategy
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 VariableBreakpoint >> accessStrategy: anObject [
 	accessStrategy := anObject
 ]
 
-{ #category : #install }
+{ #category : 'install' }
 VariableBreakpoint >> breakLink [
 
 	^ super breakLink
@@ -152,7 +152,7 @@ VariableBreakpoint >> breakLink [
 		  yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 VariableBreakpoint >> initialize [
 	super initialize.
 	accessStrategy := #all.
@@ -160,7 +160,7 @@ VariableBreakpoint >> initialize [
 	isInstalled := false
 ]
 
-{ #category : #install }
+{ #category : 'install' }
 VariableBreakpoint >> install [
 	self isInstalled
 		ifTrue: [ ^ self ].
@@ -175,24 +175,24 @@ VariableBreakpoint >> install [
 	self class addBreakpoint: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 VariableBreakpoint >> isInstalled [
 	^isInstalled
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 VariableBreakpoint >> isVariableBreakpoint [
 	^true
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 VariableBreakpoint >> remove [
 	super remove.
 	targetInstance := nil.
 	isInstalled := false
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 VariableBreakpoint >> removeFromClass: aClass [
 
 	"If we're targeting a temp var in a method,
@@ -218,7 +218,7 @@ VariableBreakpoint >> removeFromClass: aClass [
 		do: [ :n | self link removeNode: n ]
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 VariableBreakpoint >> removeFromMethod: aMethod [
 
 	(self link nodes select: [ :n |
@@ -226,38 +226,38 @@ VariableBreakpoint >> removeFromMethod: aMethod [
 		self link removeNode: n ]
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 VariableBreakpoint >> removeFromNodeProperty [
 	 self link nodes do: [ :n | n removeBreakpoint: self ]
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 VariableBreakpoint >> scopeTo: anInstance [
 	super scopeTo: anInstance.
 	self condition: [ :ctx | ctx receiver == targetInstance ]
 ]
 
-{ #category : #install }
+{ #category : 'install' }
 VariableBreakpoint >> setAsNodeProperty [
 	 self link nodes do: [ :n | n addBreakpoint: self ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 VariableBreakpoint >> targetClassOrMethod [
 	^ targetClassOrMethod
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 VariableBreakpoint >> targetClassOrMethod: anObject [
 	targetClassOrMethod := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 VariableBreakpoint >> targetVariableNames [
 	^ targetVariableNames
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 VariableBreakpoint >> targetVariableNames: anObject [
 	targetVariableNames := anObject
 ]

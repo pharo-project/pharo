@@ -2,29 +2,30 @@
 I represent the Shift key modifier. Look at my superclass for a more detailed explanaition.
 "
 Class {
-	#name : #KMShiftModifier,
-	#superclass : #KMModifier,
-	#category : #'Keymapping-KeyCombinations'
+	#name : 'KMShiftModifier',
+	#superclass : 'KMModifier',
+	#category : 'Keymapping-KeyCombinations',
+	#package : 'Keymapping-KeyCombinations'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMShiftModifier >> eventCode [
 	^8
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 KMShiftModifier >> initialize [
 	super initialize.
 	identifier := #s.
 	name := 'Shift'
 ]
 
-{ #category : #matching }
+{ #category : 'matching' }
 KMShiftModifier >> matchesEvent: aKeyboardEvent [
 	^ aKeyboardEvent shiftPressed
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 KMShiftModifier >> printingPosition [
 	^4
 ]

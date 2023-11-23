@@ -2,12 +2,14 @@
 SUnit tests for class BMPReadWriter
 "
 Class {
-	#name : #BMPReadWriterTest,
-	#superclass : #TestCase,
-	#category : #'Graphics-Tests-Files'
+	#name : 'BMPReadWriterTest',
+	#superclass : 'TestCase',
+	#category : 'Graphics-Tests-Files',
+	#package : 'Graphics-Tests',
+	#tag : 'Files'
 }
 
-{ #category : #data }
+{ #category : 'data' }
 BMPReadWriterTest >> bmpData16bit [
 	"Created via:
 		'bmptest16b.bmp' asFileReference binaryReadStream upToEnd base64Encoded
@@ -18,7 +20,7 @@ BMPReadWriterTest >> bmpData16bit [
 AHwAfAAAAAAAAAAAAHwAfAB8AHwAAA==' base64Decoded
 ]
 
-{ #category : #data }
+{ #category : 'data' }
 BMPReadWriterTest >> bmpData24bit [
 	"Created via:
 		 'bmptest24.bmp' asFileReference binaryReadStream upToEnd base64Encoded
@@ -30,7 +32,7 @@ AP8AAP8AAP8AAP8A/wAA/wAA/wAA/wAAAP8AAP8AAP8AAP8A/wAA/wAA/wAA/wAAAP8AAP8A
 AAD/AAD/AAAAAAAAAAAAAAAAAAD/AAD/AAD/AAD/' base64Decoded
 ]
 
-{ #category : #data }
+{ #category : 'data' }
 BMPReadWriterTest >> bmpData32bit [
 	"Created via:
 		'bmptest32b.bmp'asFileReference binaryReadStream upToEnd base64Encoded
@@ -43,7 +45,7 @@ AAAAAAAA////AP///wD///8A////AAAA/wAAAP8AAAAAAAAAAAAAAAAAAAAAAAAA/wAAAP8A
 AAD/AAAA/wAAAAAAAAAAAAAAAAAAAAAAAAD/AAAA/wAAAP8AAAD/AAAA' base64Decoded
 ]
 
-{ #category : #data }
+{ #category : 'data' }
 BMPReadWriterTest >> bmpData4bit [
 	"Created via:
 		'bmptest4.bmp' asFileReference binaryReadStream upToEnd base64Encoded.
@@ -72,7 +74,7 @@ wMBgAMDAgADAwKAA8Pv/AKSgoACAgIAAAAD/AAD/AAAA//8A/wAAAP8A/wD//wAA////APr6
 AAAAAPn5+fk=' base64Decoded
 ]
 
-{ #category : #data }
+{ #category : 'data' }
 BMPReadWriterTest >> bmpData8bit [
 	"Created via:
 		 'bmptest8.bmp' asFileReference binaryReadStream upToEnd base64Encoded
@@ -101,7 +103,7 @@ wMBgAMDAgADAwKAA8Pv/AKSgoACAgIAAAAD/AAD/AAAA//8A/wAAAP8A/wD//wAA////APr6
 AAAAAPn5+fk=' base64Decoded
 ]
 
-{ #category : #data }
+{ #category : 'data' }
 BMPReadWriterTest >> bmpDataR5G6B5 [
 	"This is a BMP file based on BitmapV4Header which is currently unsupported."
 	"Created via:
@@ -113,7 +115,7 @@ APgAAOAHAAAfAAAAAAAAAOAH4AfgB+AHHwAfAB8AHwDgB+AH4AfgBx8AHwAfAB8A4AfgB///
 APgA+AAAAAAAAAAAAPgA+AD4APgAAAAAAAAAAAD4APgA+AD4AAA=' base64Decoded
 ]
 
-{ #category : #data }
+{ #category : 'data' }
 BMPReadWriterTest >> bmpDataX4R4G4B4 [
 	"This is a BMP file based on BitmapV4Header which is currently unsupported."
 	"Created via:
@@ -125,7 +127,7 @@ AA8AAPAAAAAPAAAAAAAAAPAA8ADwAPAADwAPAA8ADwDwAPAA8ADwAA8ADwAPAA8A8ADwAP8P
 AA8ADwAAAAAAAAAAAA8ADwAPAA8AAAAAAAAAAAAPAA8ADwAPAAA=' base64Decoded
 ]
 
-{ #category : #data }
+{ #category : 'data' }
 BMPReadWriterTest >> bmpDataX8R8G8B8 [
 	"This is a BMP file based on BitmapV4Header which is currently unsupported."
 	"Created via:
@@ -140,7 +142,7 @@ AAAAAAAAAAAAAAD/AAAA/wAAAP8AAAD/AAAAAAAAAAAAAAAAAAAAAAAAAP8AAAD/AAAA/wAA
 AP8AAA==' base64Decoded
 ]
 
-{ #category : #'tests - reading' }
+{ #category : 'tests - reading' }
 BMPReadWriterTest >> testBmp16Bit [
 	| reader form |
 	reader := BMPReadWriter new on: self bmpData16bit readStream.
@@ -153,7 +155,7 @@ BMPReadWriterTest >> testBmp16Bit [
 	self assert: (form pixelValueAt: 1 @ 1) equals: 32768
 ]
 
-{ #category : #'tests - reading' }
+{ #category : 'tests - reading' }
 BMPReadWriterTest >> testBmp24Bit [
 	| reader form |
 	reader := BMPReadWriter new on: (ReadStream on: self bmpData24bit).
@@ -165,7 +167,7 @@ BMPReadWriterTest >> testBmp24Bit [
 	self assert: (form pixelValueAt: 1 @ 1) equals: 16rFF000001
 ]
 
-{ #category : #'tests - reading' }
+{ #category : 'tests - reading' }
 BMPReadWriterTest >> testBmp32Bit [
 	| reader form |
 	reader := BMPReadWriter new on: self bmpData32bit readStream.
@@ -177,7 +179,7 @@ BMPReadWriterTest >> testBmp32Bit [
 	self assert: (form pixelValueAt: 1 @ 1) equals: 4278190080
 ]
 
-{ #category : #'tests - reading' }
+{ #category : 'tests - reading' }
 BMPReadWriterTest >> testBmp4Bit [
 	| reader form |
 	reader := BMPReadWriter new on: self bmpData4bit readStream.
@@ -189,7 +191,7 @@ BMPReadWriterTest >> testBmp4Bit [
 	self assert: (form colorAt: 4 @ 4) equals: Color white
 ]
 
-{ #category : #'tests - reading' }
+{ #category : 'tests - reading' }
 BMPReadWriterTest >> testBmp8Bit [
 	| reader form |
 	reader := BMPReadWriter new on: self bmpData8bit readStream.

@@ -1,1 +1,1 @@
-Package { #name : #'Rubric-SpecFindReplaceDialog' }
+Package { #name : 'Rubric-SpecFindReplaceDialog' }

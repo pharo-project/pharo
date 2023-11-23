@@ -13,43 +13,45 @@ macOS and linux take it as an uint8, windows takes it as a uint.
 Then, you want to use this to model the case.
 "
 Class {
-	#name : #FFIUBit,
-	#superclass : #FFIIntegerType,
-	#category : #'UnifiedFFI-Types'
+	#name : 'FFIUBit',
+	#superclass : 'FFIIntegerType',
+	#category : 'UnifiedFFI-Types',
+	#package : 'UnifiedFFI',
+	#tag : 'Types'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIUBit class >> externalType [
 	^ FFIArchitecture forCurrentArchitecture externalUBitType
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIUBit class >> externalTypeAlignment [
 
 	^ FFIArchitecture forCurrentArchitecture bitTypeAlignment
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIUBit class >> externalTypeSize [
 	^ FFIArchitecture forCurrentArchitecture bitTypeSize
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FFIUBit >> basicHandle: aHandle at: index [
 	^ aHandle platformUnsignedBitAt: index
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FFIUBit >> basicHandle: aHandle at: index put: value [
 	^ aHandle platformUnsignedBitAt: index put: value
 ]
 
-{ #category : #'private - emitting code' }
+{ #category : 'private - emitting code' }
 FFIUBit >> emitSelector [
 	^ 'platformUnsignedBitAt'
 ]
 
-{ #category : #'private - emitting code' }
+{ #category : 'private - emitting code' }
 FFIUBit >> offsetPointerReadFieldAt: offsetVariableName [
 	^ '^ExternalData
 		fromHandle: (handle {1}: {2})
@@ -59,7 +61,7 @@ FFIUBit >> offsetPointerReadFieldAt: offsetVariableName [
 		offsetVariableName }
 ]
 
-{ #category : #'emitting code' }
+{ #category : 'emitting code' }
 FFIUBit >> offsetReadFieldAt: offsetVariableName [
 	self isPointer ifTrue: [
 		^ self offsetPointerReadFieldAt: offsetVariableName ].
@@ -68,7 +70,7 @@ FFIUBit >> offsetReadFieldAt: offsetVariableName [
 		stream << '^handle ' << self emitSelector << ': ' << offsetVariableName ]
 ]
 
-{ #category : #'emitting code' }
+{ #category : 'emitting code' }
 FFIUBit >> offsetWriteFieldAt: offsetVariableName with: valueName [
 	self isPointer ifTrue: [
 		^ self externalTypeWithArity
@@ -81,14 +83,14 @@ FFIUBit >> offsetWriteFieldAt: offsetVariableName with: valueName [
 			<< ' put: ' << valueName ]
 ]
 
-{ #category : #'private - emitting code' }
+{ #category : 'private - emitting code' }
 FFIUBit >> pointerReadFieldAt: byteOffset [
 	"since offsetPointerReadFieldAt: receives a variable no matter what we use the trick of
 	 just passing the offset as a string... it will work :)"
 	^ self offsetPointerReadFieldAt: byteOffset asString
 ]
 
-{ #category : #'emitting code' }
+{ #category : 'emitting code' }
 FFIUBit >> readFieldAt: byteOffset [
 	self isPointer ifTrue: [
 		^ self pointerReadFieldAt: byteOffset ].
@@ -97,7 +99,7 @@ FFIUBit >> readFieldAt: byteOffset [
 		stream << '^handle ' << self emitSelector << ': ' << byteOffset asString ]
 ]
 
-{ #category : #'emitting code' }
+{ #category : 'emitting code' }
 FFIUBit >> writeFieldAt: byteOffset with: valueName [
 	self isPointer ifTrue: [
 		^ self externalTypeWithArity

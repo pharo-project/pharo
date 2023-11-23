@@ -2,11 +2,13 @@
 A trait for test purposes
 "
 Trait {
-	#name : #TConvertTest,
-	#category : #'Collections-Abstract-Tests-Traits'
+	#name : 'TConvertTest',
+	#category : 'Collections-Abstract-Tests-Traits',
+	#package : 'Collections-Abstract-Tests',
+	#tag : 'Traits'
 }
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 TConvertTest >> assertNoDuplicates: aCollection whenConvertedTo: aClass [
 
 	| result |
@@ -15,7 +17,7 @@ TConvertTest >> assertNoDuplicates: aCollection whenConvertedTo: aClass [
 	self collectionWithEqualElements do: [ :initial | self assert: (result occurrencesOf: initial) equals: 1 ]
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 TConvertTest >> assertNonDuplicatedContents: aCollection whenConvertedTo: aClass [
 
 	| result |
@@ -27,7 +29,7 @@ TConvertTest >> assertNonDuplicatedContents: aCollection whenConvertedTo: aClass
 	^ result
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 TConvertTest >> assertSameContents: aCollection whenConvertedTo: aClass [
 
 	| result |
@@ -35,19 +37,19 @@ TConvertTest >> assertSameContents: aCollection whenConvertedTo: aClass [
 	self assert: result size equals: aCollection size
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TConvertTest >> collectionWithoutEqualElements [
 " return a collection without equal elements"
 	^ self explicitRequirement
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TConvertTest >> integerCollectionWithoutEqualElements [
 " return a collection of integer without equal elements"
 	^ self explicitRequirement
 ]
 
-{ #category : #'tests - fixture' }
+{ #category : 'tests - fixture' }
 TConvertTest >> test0FixtureTConvertTest [
 	"A collection of number without equal elements:"
 
@@ -60,7 +62,7 @@ TConvertTest >> test0FixtureTConvertTest [
 	self assert: res = false
 ]
 
-{ #category : #'tests - converting' }
+{ #category : 'tests - converting' }
 TConvertTest >> testAsArray [
 
 	self
@@ -68,13 +70,13 @@ TConvertTest >> testAsArray [
 		whenConvertedTo: Array
 ]
 
-{ #category : #'tests - converting' }
+{ #category : 'tests - converting' }
 TConvertTest >> testAsBag [
 
 	self assertSameContents: self collectionWithoutEqualElements whenConvertedTo: Bag
 ]
 
-{ #category : #'tests - converting' }
+{ #category : 'tests - converting' }
 TConvertTest >> testAsByteArray [
 
 	| res |
@@ -88,7 +90,7 @@ TConvertTest >> testAsByteArray [
 	self assertSameContents: self integerCollectionWithoutEqualElements whenConvertedTo: ByteArray
 ]
 
-{ #category : #'tests - converting' }
+{ #category : 'tests - converting' }
 TConvertTest >> testAsIdentitySet [
 	"Test with a collection without equal elements :"
 
@@ -97,13 +99,13 @@ TConvertTest >> testAsIdentitySet [
 		whenConvertedTo: IdentitySet
 ]
 
-{ #category : #'tests - converting' }
+{ #category : 'tests - converting' }
 TConvertTest >> testAsOrderedCollection [
 
 	self assertSameContents: self collectionWithoutEqualElements whenConvertedTo: OrderedCollection
 ]
 
-{ #category : #'tests - converting' }
+{ #category : 'tests - converting' }
 TConvertTest >> testAsSet [
  	"Test with a collection without equal elements"
 

@@ -2,52 +2,54 @@
 I'm an abstract class grouping the behavior of the code declarations that will be installed in a behavior, such as methods, class comments, organizations...
 "
 Class {
-	#name : #BehaviorOwnedChunk,
-	#superclass : #CodeChunk,
+	#name : 'BehaviorOwnedChunk',
+	#superclass : 'CodeChunk',
 	#instVars : [
 		'behaviorName',
 		'isMeta'
 	],
-	#category : #'CodeImport-Chunks'
+	#category : 'CodeImport-Chunks',
+	#package : 'CodeImport',
+	#tag : 'Chunks'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 BehaviorOwnedChunk class >> isAbstract [
 
 	^ self == BehaviorOwnedChunk
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BehaviorOwnedChunk >> behaviorName [
 
 	^ behaviorName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BehaviorOwnedChunk >> behaviorName: aBehaviorName [
 
 	behaviorName := aBehaviorName
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 BehaviorOwnedChunk >> existsBehavior [
 
 	^ self class environment includesKey: behaviorName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BehaviorOwnedChunk >> isMeta [
 
 	^ isMeta
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BehaviorOwnedChunk >> isMeta: aBoolean [
 
 	isMeta := aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BehaviorOwnedChunk >> targetClass [
 
 	| target |

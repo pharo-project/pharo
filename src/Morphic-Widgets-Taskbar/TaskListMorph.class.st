@@ -3,8 +3,8 @@ Themed task list/switcher to select the topmost window. Use cmd + left or right 
 On Linux, release of the command key is not detected (vm issue), so press and release cmd again or move the mouse!
 "
 Class {
-	#name : #TaskListMorph,
-	#superclass : #Morph,
+	#name : 'TaskListMorph',
+	#superclass : 'Morph',
 	#instVars : [
 		'tasks',
 		'taskList',
@@ -13,10 +13,11 @@ Class {
 	#classVars : [
 		'KeepOpen'
 	],
-	#category : #'Morphic-Widgets-Taskbar'
+	#category : 'Morphic-Widgets-Taskbar',
+	#package : 'Morphic-Widgets-Taskbar'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TaskListMorph class >> from: aKeyboardEvent [
 
 	| instance |
@@ -27,23 +28,23 @@ TaskListMorph class >> from: aKeyboardEvent [
 	^ instance
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TaskListMorph class >> isNavigationEvent: aKeyboardEvent [
 
 	^ aKeyboardEvent asKeyCombination = Character tab alt or: [ aKeyboardEvent asKeyCombination = Character tab alt shift ]
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 TaskListMorph class >> keepOpen [
 	^ KeepOpen ifNil: [KeepOpen := false]
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 TaskListMorph class >> keepOpen: aBoolean [
 	KeepOpen := aBoolean
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 TaskListMorph class >> taskListSettingOn: aBuilder [
 	<systemsettings>
 	(aBuilder setting: #keepTaskListOpen)
@@ -55,14 +56,14 @@ TaskListMorph class >> taskListSettingOn: aBuilder [
 		target: self
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TaskListMorph >> activeTask [
 	"Answer the active task"
 
 	^self tasks detect: [:t | t isActive] ifNone: []
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TaskListMorph >> addMorphs [
 	"Add our morphs."
 
@@ -80,21 +81,21 @@ TaskListMorph >> addMorphs [
 	self layoutChanged
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TaskListMorph >> defaultPreviewExtent [
 	"Answer the default extent of the preview holder."
 
 	^(320@320) scaledByDisplayScaleFactor
 ]
 
-{ #category : #'open/close' }
+{ #category : 'open/close' }
 TaskListMorph >> doOpenInWorld: aWorld [
 	"Update the layout after opening."
 
 	aWorld addMorphCentered: self
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 TaskListMorph >> done [
 	"Close the tasklist and make the active task current."
 
@@ -102,14 +103,14 @@ TaskListMorph >> done [
 	self activeTask ifNotNil: [ :t | t activate ]
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 TaskListMorph >> handlesKeyboard: evt [
 	"Yes, we do it here."
 
 	^true
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TaskListMorph >> initialize [
 	"Initialize the receiver."
 
@@ -123,7 +124,7 @@ TaskListMorph >> initialize [
 		adoptPaneColor: self color
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TaskListMorph >> initializeAppearance [
 	"Initialize the appearance."
 
@@ -134,7 +135,7 @@ TaskListMorph >> initializeAppearance [
 		cornerStyle: (self theme taskbarThumbnailCornerStyleFor: self)
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TaskListMorph >> initializeLayout [
 	"Initialize the layout."
 
@@ -146,28 +147,28 @@ TaskListMorph >> initializeLayout [
 		extent: self minimumExtent
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TaskListMorph >> initializeTasks [
 	"Set up the current tasks."
 
 	self tasks: ((self currentWorld submorphs
 		collect: [:m | m taskbarTask])
-		select: [:m | m notNil]) asOrderedCollection
+		select: [:m | m isNotNil]) asOrderedCollection
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 TaskListMorph >> keepOpen [
 	^ self class keepOpen
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 TaskListMorph >> minimumExtent [
 	"Answer the minimum extent."
 
 	^self defaultPreviewExtent + 64
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TaskListMorph >> newPreviewMorph [
 	"Answer a new preview holder."
 	^ Morph new
@@ -176,7 +177,7 @@ TaskListMorph >> newPreviewMorph [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TaskListMorph >> newTasksMorph [
 	"Answer a new task list."
 
@@ -191,7 +192,7 @@ TaskListMorph >> newTasksMorph [
 		yourself
 ]
 
-{ #category : #'open/close' }
+{ #category : 'open/close' }
 TaskListMorph >> openInWorld: aWorld [
 
 	super openInWorld: aWorld.
@@ -199,7 +200,7 @@ TaskListMorph >> openInWorld: aWorld [
 		ifTrue: [self takeKeyboardFocus]
 ]
 
-{ #category : #'open/close' }
+{ #category : 'open/close' }
 TaskListMorph >> postOpenInWorld: aWorld [
 	"Update the layout after opening."
 
@@ -207,27 +208,27 @@ TaskListMorph >> postOpenInWorld: aWorld [
 	super postOpenInWorld: aWorld
 ]
 
-{ #category : #'open/close' }
+{ #category : 'open/close' }
 TaskListMorph >> preOpenInWorld: aWorld [
 
 	"Do nothing"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TaskListMorph >> preview [
 	"Answer the value of preview"
 
 	^ preview
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TaskListMorph >> preview: anObject [
 	"Set the value of preview"
 
 	preview := anObject
 ]
 
-{ #category : #cycling }
+{ #category : 'cycling' }
 TaskListMorph >> selectNextTask [
 	"Make the next task active."
 
@@ -237,7 +238,7 @@ TaskListMorph >> selectNextTask [
 					ifFalse: [self tasks first]])
 ]
 
-{ #category : #cycling }
+{ #category : 'cycling' }
 TaskListMorph >> selectPreviousTask [
 	"Make the previous task active."
 
@@ -247,7 +248,7 @@ TaskListMorph >> selectPreviousTask [
 					ifFalse: [self tasks last]])
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TaskListMorph >> selectTask: aTask [
 	"Make the given task active and update the buttons."
 
@@ -256,7 +257,7 @@ TaskListMorph >> selectTask: aTask [
 	self updateButtonsAndPreview
 ]
 
-{ #category : #stepping }
+{ #category : 'stepping' }
 TaskListMorph >> step [
 	"Check the sensor for the command key to see if we're done."
 
@@ -264,21 +265,21 @@ TaskListMorph >> step [
 		ifTrue: [self done]
 ]
 
-{ #category : #stepping }
+{ #category : 'stepping' }
 TaskListMorph >> stepTime [
 	"Check quickly."
 
 	^100
 ]
 
-{ #category : #'open/close' }
+{ #category : 'open/close' }
 TaskListMorph >> takesKeyboardFocus [
 	"Answer whether the receiver can normally take keyboard focus."
 
 	^true
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TaskListMorph >> taskClicked: aTask [
 	"A button for a task has been pressed.
 	Close after selecting."
@@ -287,35 +288,35 @@ TaskListMorph >> taskClicked: aTask [
 	self done
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TaskListMorph >> taskList [
 	"Answer the value of taskList"
 
 	^ taskList
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TaskListMorph >> taskList: anObject [
 	"Set the value of taskList"
 
 	taskList := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TaskListMorph >> tasks [
 	"Answer the value of tasks"
 
 	^ tasks
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TaskListMorph >> tasks: anObject [
 	"Set the value of tasks"
 
 	tasks := anObject
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TaskListMorph >> updateButtonsAndPreview [
 	"Update the buttons and the preview.."
 
@@ -326,7 +327,7 @@ TaskListMorph >> updateButtonsAndPreview [
 		[self center: self world center]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TaskListMorph >> updatePreview [
 	"Update the preview.."
 
@@ -337,7 +338,7 @@ TaskListMorph >> updatePreview [
 				ifNotNil: [:t | t morph taskThumbnailOfSize: self preview extent])
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TaskListMorph >> updateTaskButtons [
 	"Make buttons for the ordered tasks."
 

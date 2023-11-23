@@ -2,8 +2,8 @@
 A node in an AthensTreeView
 "
 Class {
-	#name : #AthensSimpleTreeNode,
-	#superclass : #Object,
+	#name : 'AthensSimpleTreeNode',
+	#superclass : 'Object',
 	#instVars : [
 		'children',
 		'box',
@@ -14,61 +14,63 @@ Class {
 		'originY',
 		'color'
 	],
-	#category : #'Athens-Examples-Utilities'
+	#category : 'Athens-Examples-Utilities',
+	#package : 'Athens-Examples',
+	#tag : 'Utilities'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensSimpleTreeNode >> box [
 
 	^ box
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensSimpleTreeNode >> box: anObject [
 
 	box := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensSimpleTreeNode >> children [
 	^ children
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensSimpleTreeNode >> children: aCollection [
 
 	children := aCollection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensSimpleTreeNode >> color [
 	^ color
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensSimpleTreeNode >> color: aColor [
 	color := aColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensSimpleTreeNode >> extent [
 
 	^ extent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensSimpleTreeNode >> extent: anObject [
 
 	extent := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensSimpleTreeNode >> height [
 
 	^ extent y
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AthensSimpleTreeNode >> layoutHorizontally: center [
 	| pos |
 	"position ourselves in the middle X"
@@ -83,7 +85,7 @@ AthensSimpleTreeNode >> layoutHorizontally: center [
 	]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensSimpleTreeNode >> layoutWidth [
 
 	^ layoutWidth ifNil: [
@@ -99,32 +101,32 @@ AthensSimpleTreeNode >> layoutWidth [
 	]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensSimpleTreeNode >> midBottom [
 	^ originX +(extent x *0.5) @ (originY + extent y)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensSimpleTreeNode >> midTop [
 	^ originX +(extent x *0.5) @ originY
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensSimpleTreeNode >> originX [
 	^ originX
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensSimpleTreeNode >> originY [
 	^ originY
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensSimpleTreeNode >> originY: aNumber [
 	originY := aNumber
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 AthensSimpleTreeNode >> renderOn: aCanvas [
 
 	aCanvas setPaint: color.
@@ -158,24 +160,24 @@ AthensSimpleTreeNode >> renderOn: aCanvas [
 	]
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 AthensSimpleTreeNode >> spacingBetweenChilds [
 	^ 10
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensSimpleTreeNode >> subject [
 
 	^ subject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensSimpleTreeNode >> subject: anObject [
 
 	subject := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensSimpleTreeNode >> width [
 
 	^ extent x

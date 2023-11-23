@@ -1,13 +1,15 @@
 Class {
-	#name : #SlotMigrationTest,
-	#superclass : #SlotSilentTest,
+	#name : 'SlotMigrationTest',
+	#superclass : 'SlotSilentTest',
 	#instVars : [
 		'instance'
 	],
-	#category : #'Slot-Tests-ClassBuilder'
+	#category : 'Slot-Tests-ClassBuilder',
+	#package : 'Slot-Tests',
+	#tag : 'ClassBuilder'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 SlotMigrationTest >> testAddSharedVariableKeepSubclasses [
 	"Reproduces fogbugz case 13028"
 
@@ -40,7 +42,7 @@ SlotMigrationTest >> testAddSharedVariableKeepSubclasses [
 	self assert: aClass subclasses anyOne identicalTo: anotherClass
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SlotMigrationTest >> testAddSlotAndMigrate [
 	"We create a class without slots and create an instance; then we add a slot and check the instance can hold a value."
 	aClass := self makeWithLayout: FixedLayout.
@@ -55,7 +57,7 @@ SlotMigrationTest >> testAddSlotAndMigrate [
 	aClass classLayout checkIntegrity
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SlotMigrationTest >> testAddSlotPropagateAndMigrate [
 	"We create a class without slots and a subclass, and create an instance of the latter; then we add a slot to superclass and check the instance can hold a value."
 
@@ -82,7 +84,7 @@ SlotMigrationTest >> testAddSlotPropagateAndMigrate [
 	subclass classLayout checkIntegrity
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SlotMigrationTest >> testAddTestSlot [
 	"We create a class without slots and create an instance; then we add a slot and check the instance can hold a value."
 	aClass := self makeWithLayout: FixedLayout andSlots: { #aSlot }.
@@ -97,7 +99,7 @@ SlotMigrationTest >> testAddTestSlot [
 	aClass classLayout checkIntegrity
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SlotMigrationTest >> testChangeLayoutTypeFromByte [
 
 	aClass := self makeWithLayout: ByteLayout.
@@ -112,7 +114,7 @@ SlotMigrationTest >> testChangeLayoutTypeFromByte [
 	self assert: aClass instVarNames equals: { #id. #name }
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SlotMigrationTest >> testChangeLayoutTypeToByte [
 	aClass := self makeWithLayout: FixedLayout andSlots: {#id . #name}.
 	"Change the layout of the class from pointer to bytes"
@@ -124,7 +126,7 @@ SlotMigrationTest >> testChangeLayoutTypeToByte [
 	self assertEmpty: aClass instVarNames
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SlotMigrationTest >> testChangeSuperclass [
 	"Define original hierarchy"
 
@@ -163,7 +165,7 @@ SlotMigrationTest >> testChangeSuperclass [
 	self assert: anotherClass superclass identicalTo: yetAnotherClass
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SlotMigrationTest >> testChangingFormatKeepsMethod [
 
 	aClass := self make: [ :builder |
@@ -185,7 +187,7 @@ SlotMigrationTest >> testChangingFormatKeepsMethod [
 	anotherClass classLayout checkIntegrity
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SlotMigrationTest >> testMigrateSlotWithInitialize [
 	"We create a class without slots, instantiate, then add a lot that wants to intialize the instance"
 	aClass := self makeWithLayout: FixedLayout andSlots: { }.
@@ -198,7 +200,7 @@ SlotMigrationTest >> testMigrateSlotWithInitialize [
 	aClass classLayout checkIntegrity
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SlotMigrationTest >> testMigrateTestSlot [
 	"We create a class with a Test slot, so its  value is shared between instances"
 	| instance2 |
@@ -215,7 +217,7 @@ SlotMigrationTest >> testMigrateTestSlot [
 	aClass classLayout checkIntegrity
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SlotMigrationTest >> testRedefineSuperclass [
 	"This case reproduces a MNU found loading Moose."
 
@@ -234,7 +236,7 @@ SlotMigrationTest >> testRedefineSuperclass [
 	class classLayout checkIntegrity
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SlotMigrationTest >> testRemoveSlotAndMigrate [
 	"We create a class with a slot and create an instance; then we remove the slot and check the instance doesn't hold the value."
 	aClass := self makeWithLayout: FixedLayout andSlots: { #aSlot }.
@@ -250,7 +252,7 @@ SlotMigrationTest >> testRemoveSlotAndMigrate [
 	aClass classLayout checkIntegrity
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SlotMigrationTest >> testRemoveTestSlot [
 	aClass := self makeWithLayout: FixedLayout andSlots: {#anotherSlot => ExampleSlotWithState. #aSlot }.
 
@@ -264,7 +266,7 @@ SlotMigrationTest >> testRemoveTestSlot [
 	aClass classLayout checkIntegrity
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SlotMigrationTest >> testReshapeByteVariableToPointerPropagatesToDeepHierarchy [
 
 	"create the original hierarchy"
@@ -313,7 +315,7 @@ SlotMigrationTest >> testReshapeByteVariableToPointerPropagatesToDeepHierarchy [
 		self assert: each isPointers description: each name, ' was not reshaped.' ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SlotMigrationTest >> testReshapeClassPropagatesToDeepHierarchy [
 	"Test reshaping a class which is head of a hierarchy of 4 levels"
 
@@ -380,7 +382,7 @@ SlotMigrationTest >> testReshapeClassPropagatesToDeepHierarchy [
 	yetYetAnotherClass classLayout checkIntegrity
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SlotMigrationTest >> testReshapePointerToByteVariablePropagatesToDeepHierarchy [
 
 	"create the original hierarchy"
@@ -428,7 +430,7 @@ SlotMigrationTest >> testReshapePointerToByteVariablePropagatesToDeepHierarchy [
 		self assert: each isBytes description: each name, ' was not reshaped.' ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SlotMigrationTest >> testReshapeSuperSuperClass [
 	| supersuperclass superclass subclass |
 	supersuperclass := self
@@ -482,7 +484,7 @@ SlotMigrationTest >> testReshapeSuperSuperClass [
 	supersuperclass classLayout checkIntegrity
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SlotMigrationTest >> testShiftSlotAndMigrate [
 
 	aClass := self makeWithLayout: FixedLayout andSlots: { #a. #c }.
@@ -511,7 +513,7 @@ SlotMigrationTest >> testShiftSlotAndMigrate [
 	aClass classLayout checkIntegrity
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SlotMigrationTest >> testSuperclassChangeLayoutType [
 	"This case reproduces a MNU found loading Moose."
 
@@ -533,7 +535,7 @@ SlotMigrationTest >> testSuperclassChangeLayoutType [
 	self assert: class classLayout isBits
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SlotMigrationTest >> testSwitchSlotsAndMigrate [
 
 	aClass := self makeWithLayout: FixedLayout andSlots: { #a. #b }.

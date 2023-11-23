@@ -1,15 +1,17 @@
 Class {
-	#name : #ClyGroupedVariablesTest,
-	#superclass : #ClyBrowserQueryResultTest,
-	#category : #'Calypso-SystemQueries-Tests-Results'
+	#name : 'ClyGroupedVariablesTest',
+	#superclass : 'ClyBrowserQueryResultTest',
+	#category : 'Calypso-SystemQueries-Tests-Results',
+	#package : 'Calypso-SystemQueries-Tests',
+	#tag : 'Results'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyGroupedVariablesTest class >> isAbstract [
 	^self = ClyGroupedVariablesTest
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 ClyGroupedVariablesTest >> assertVars: varNames [
 
 	| vars i var |
@@ -23,7 +25,7 @@ ClyGroupedVariablesTest >> assertVars: varNames [
 		i := i + 1]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyGroupedVariablesTest >> createQuery [
 	"ClyGroupedVariables should build variable method groups using query scope.
 	Scope is required to get methods from built groups which are visible only from these classes
@@ -34,12 +36,12 @@ ClyGroupedVariablesTest >> createQuery [
 	^ ClyAllClassesQuery from: scope
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 ClyGroupedVariablesTest >> meaningfullObjectToAssert: aBrowserItem [
 	^aBrowserItem actualObject class
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyGroupedVariablesTest >> testComparisonWithAnotherHierarchy [
 	| queryResult2 |
 	queryResult2 := self createQueryResult.

@@ -1,6 +1,6 @@
-Extension { #name : #Bag }
+Extension { #name : 'Bag' }
 
-{ #category : #'*Random-Core' }
+{ #category : '*Random-Core' }
 Bag >> atRandom: aGenerator [
 	"Answer a random element of the receiver. Uses aGenerator which
 	should be kept by the user in a variable and used every time. Use

@@ -2,27 +2,29 @@
 This filter only accepts code changes that are latest, i.e. that aren't overridden by other changes in the log more recently.
 "
 Class {
-	#name : #EpLatestCodeChangeFilter,
-	#superclass : #EpFilter,
+	#name : 'EpLatestCodeChangeFilter',
+	#superclass : 'EpFilter',
 	#instVars : [
 		'logBrowserModel'
 	],
-	#category : #'EpiceaBrowsers-Filters'
+	#category : 'EpiceaBrowsers-Filters',
+	#package : 'EpiceaBrowsers',
+	#tag : 'Filters'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpLatestCodeChangeFilter class >> title [
 
 	^ 'Show only latest changes'
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 EpLatestCodeChangeFilter >> = other [
 
 	^ self class = other class
 ]
 
-{ #category : #filtering }
+{ #category : 'filtering' }
 EpLatestCodeChangeFilter >> accepts: anOmEntry [
 
 	| finalReference log |
@@ -39,24 +41,24 @@ EpLatestCodeChangeFilter >> accepts: anOmEntry [
 	^ false "shouldn't happen"
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 EpLatestCodeChangeFilter >> hash [
 
 	^ self class hash
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpLatestCodeChangeFilter >> logBrowserModel [
 	^ logBrowserModel
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpLatestCodeChangeFilter >> logBrowserModel: anEpLogBrowserModel [
 
 	logBrowserModel := anEpLogBrowserModel
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpLatestCodeChangeFilter >> title [
 
 	^ self class title

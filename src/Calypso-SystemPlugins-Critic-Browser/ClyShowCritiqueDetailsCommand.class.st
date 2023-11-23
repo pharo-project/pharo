@@ -3,22 +3,23 @@ I am a command to show critique details.
 I just show the dialog with critique description and title
 "
 Class {
-	#name : #ClyShowCritiqueDetailsCommand,
-	#superclass : #ClyCritiqueCommand,
-	#category : #'Calypso-SystemPlugins-Critic-Browser'
+	#name : 'ClyShowCritiqueDetailsCommand',
+	#superclass : 'ClyCritiqueCommand',
+	#category : 'Calypso-SystemPlugins-Critic-Browser',
+	#package : 'Calypso-SystemPlugins-Critic-Browser'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyShowCritiqueDetailsCommand >> defaultMenuIconName [
 	^#smallQuestion
 ]
 
-{ #category : #'table decoration' }
+{ #category : 'table decoration' }
 ClyShowCritiqueDetailsCommand >> description [
 	^'View rationale behind the rule'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyShowCritiqueDetailsCommand >> execute [
 
 	UIManager default longMessage: critique description title: critique title

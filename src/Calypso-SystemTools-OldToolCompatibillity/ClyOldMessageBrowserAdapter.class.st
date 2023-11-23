@@ -20,8 +20,8 @@ Internal Representation and Key Implementation Points.
 	title:		<String>
 "
 Class {
-	#name : #ClyOldMessageBrowserAdapter,
-	#superclass : #Object,
+	#name : 'ClyOldMessageBrowserAdapter',
+	#superclass : 'Object',
 	#instVars : [
 		'messages',
 		'title',
@@ -29,23 +29,24 @@ Class {
 		'refreshingBlock',
 		'openedBrowser'
 	],
-	#category : #'Calypso-SystemTools-OldToolCompatibillity'
+	#category : 'Calypso-SystemTools-OldToolCompatibillity',
+	#package : 'Calypso-SystemTools-OldToolCompatibillity'
 }
 
-{ #category : #'tools registration' }
+{ #category : 'tools registration' }
 ClyOldMessageBrowserAdapter class >> beDefaultBrowser [
 	<script>
 	self registerToolsOn: Smalltalk tools
 ]
 
-{ #category : #opening }
+{ #category : 'opening' }
 ClyOldMessageBrowserAdapter class >> browse: methods [
 	^ self new
 		messages: methods;
 		open
 ]
 
-{ #category : #opening }
+{ #category : 'opening' }
 ClyOldMessageBrowserAdapter class >> browse: methods title: aString [
 	^ self new
 		messages: methods;
@@ -53,7 +54,7 @@ ClyOldMessageBrowserAdapter class >> browse: methods title: aString [
 		open
 ]
 
-{ #category : #opening }
+{ #category : 'opening' }
 ClyOldMessageBrowserAdapter class >> browse: methods title: aString autoSelect: aSelectString [
 	^ self new
 		messages: methods;
@@ -62,12 +63,12 @@ ClyOldMessageBrowserAdapter class >> browse: methods title: aString autoSelect: 
 		open
 ]
 
-{ #category : #opening }
+{ #category : 'opening' }
 ClyOldMessageBrowserAdapter class >> browseClasses: classes [
 	^ClyQueryBrowserMorph browseClasses: classes
 ]
 
-{ #category : #opening }
+{ #category : 'opening' }
 ClyOldMessageBrowserAdapter class >> browseImplementorsOf: aSymbol inNameResolver: methodContext [
 
 	^ ClyQueryBrowserMorph
@@ -75,50 +76,50 @@ ClyOldMessageBrowserAdapter class >> browseImplementorsOf: aSymbol inNameResolve
 		  inNameResolver: methodContext
 ]
 
-{ #category : #opening }
+{ #category : 'opening' }
 ClyOldMessageBrowserAdapter class >> browseSendersOf: aSymbol [
 	^ClyQueryBrowserMorph browseSendersOf: aSymbol
 ]
 
-{ #category : #'tools registration' }
+{ #category : 'tools registration' }
 ClyOldMessageBrowserAdapter class >> registerToolsOn: registry [
 	"Add ourselves to registry. See [Smalltalk tools]"
 	registry register: self as: #messageList
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyOldMessageBrowserAdapter >> autoSelect [
 	^ autoSelect
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyOldMessageBrowserAdapter >> autoSelect: anObject [
 	autoSelect := anObject
 ]
 
-{ #category : #opening }
+{ #category : 'opening' }
 ClyOldMessageBrowserAdapter >> close [
 	openedBrowser ifNotNil: #close
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyOldMessageBrowserAdapter >> initialize [
 	super initialize.
 
 	title := 'MessageBrowser'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyOldMessageBrowserAdapter >> messages [
 	^ messages
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyOldMessageBrowserAdapter >> messages: anObject [
 	messages := anObject
 ]
 
-{ #category : #opening }
+{ #category : 'opening' }
 ClyOldMessageBrowserAdapter >> open [
 	| query methods comments |
 	methods := messages
@@ -134,22 +135,22 @@ ClyOldMessageBrowserAdapter >> open [
 	openedBrowser := ClyQueryBrowserMorph openOn: query
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyOldMessageBrowserAdapter >> refreshingBlock [
 	^ refreshingBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyOldMessageBrowserAdapter >> refreshingBlock: anObject [
 	refreshingBlock := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyOldMessageBrowserAdapter >> title [
 	^ title
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyOldMessageBrowserAdapter >> title: anObject [
 	title := anObject
 ]

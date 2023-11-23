@@ -1,6 +1,6 @@
-Extension { #name : #TestSuite }
+Extension { #name : 'TestSuite' }
 
-{ #category : #'*SUnit-Visitor' }
+{ #category : '*SUnit-Visitor' }
 TestSuite >> acceptSUnitVisitor: aTSUnitVisitor [
 	^ aTSUnitVisitor visitTestSuite: self
 ]

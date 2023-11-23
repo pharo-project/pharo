@@ -36,8 +36,8 @@ Note that all combinations of the flags FFIFlagPointer, FFIFlagAtomic, and FFIFl
 
 "
 Class {
-	#name : #ExternalType,
-	#superclass : #Object,
+	#name : 'ExternalType',
+	#superclass : 'Object',
 	#instVars : [
 		'compiledSpec',
 		'referentClass',
@@ -53,32 +53,33 @@ Class {
 	#pools : [
 		'FFIConstants'
 	],
-	#category : #'FFI-Kernel'
+	#category : 'FFI-Kernel',
+	#package : 'FFI-Kernel'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 ExternalType class >> atomicTypeNamed: aString [
 	^AtomicTypes at: aString ifAbsent:[nil]
 ]
 
-{ #category : #'type constants' }
+{ #category : 'type constants' }
 ExternalType class >> bool [
 	^AtomicTypes at: 'bool'
 ]
 
-{ #category : #'type constants' }
+{ #category : 'type constants' }
 ExternalType class >> byte [
 	"byte defaults to unsigned byte"
 	^self unsignedByte
 ]
 
-{ #category : #'type constants' }
+{ #category : 'type constants' }
 ExternalType class >> char [
 	"char defaults to unsigned char"
 	^self unsignedChar
 ]
 
-{ #category : #housekeeping }
+{ #category : 'housekeeping' }
 ExternalType class >> cleanupUnusedTypes [
 	<script>
 
@@ -88,29 +89,29 @@ ExternalType class >> cleanupUnusedTypes [
 		value ifNil: [ StructTypes removeKey: key ifAbsent:[] ]]
 ]
 
-{ #category : #'type constants' }
+{ #category : 'type constants' }
 ExternalType class >> double [
 	^AtomicTypes at: 'double'
 ]
 
-{ #category : #'type constants' }
+{ #category : 'type constants' }
 ExternalType class >> float [
 	^AtomicTypes at: 'float'
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ExternalType class >> forceTypeNamed: aString [
 	^self newTypeNamed: aString force: true
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 ExternalType class >> initialize [
 	"ExternalType initialize"
 	self initializeFFIConstants.
 	self initializeDefaultTypes
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 ExternalType class >> initializeAtomicTypes [
 	"ExternalType initialize"
 	| atomicType byteSize type typeName |
@@ -144,28 +145,26 @@ ExternalType class >> initializeAtomicTypes [
 	]
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 ExternalType class >> initializeDefaultTypes [
 	"ExternalType initialize"
+
 	| type pointerType |
-	AtomicTypes = nil ifTrue:[
-		"Create new atomic types and setup the dictionaries"
+	AtomicTypes ifNil: [ "Create new atomic types and setup the dictionaries"
 		AtomicTypes := Dictionary new.
 		StructTypes := WeakValueDictionary new.
-		AtomicTypeNames valuesDo:[:k|
+		AtomicTypeNames valuesDo: [ :k |
 			type := self basicNew.
 			pointerType := self basicNew.
 			AtomicTypes at: k put: type.
 			type setReferencedType: pointerType.
-			pointerType setReferencedType: type.
-		].
-	].
+			pointerType setReferencedType: type ] ].
 	self initializeAtomicTypes.
-	self initializeStructureTypes.
+	self initializeStructureTypes
 	"AtomicTypes := nil"
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 ExternalType class >> initializeFFIConstants [
 	"ExternalType initialize"
 	FFIConstants initialize. "ensure proper initialization"
@@ -206,7 +205,7 @@ ExternalType class >> initializeFFIConstants [
 	yourself
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 ExternalType class >> initializeStructureTypes [
 	"ExternalType initialize"
 	| referentClass pointerType |
@@ -226,177 +225,173 @@ ExternalType class >> initializeStructureTypes [
 	]
 ]
 
-{ #category : #'type constants' }
+{ #category : 'type constants' }
 ExternalType class >> long [
 	^self signedLong
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ExternalType class >> new [
 	"Use either the type constants or #externalType for creating external types"
 	^self shouldNotImplement
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ExternalType class >> newTypeNamed: aString force: aBool [
+
 	| sym type referentClass pointerType |
+	StructTypes at: aString ifPresent: [ :aType | ^ aType ].
+	
 	sym := aString asSymbol.
-	type := StructTypes at: aString ifAbsent:[nil].
-	type == nil ifFalse:[^type].
-	referentClass := self environment at: sym ifAbsent:[nil].
-	(referentClass isBehavior and:[referentClass includesBehavior: ExternalStructure])
-		ifFalse:[referentClass := nil].
+	referentClass := self environment at: sym ifAbsent: [ nil ].
+	(referentClass isBehavior and: [ referentClass includesBehavior: ExternalStructure ]) ifFalse: [ referentClass := nil ].
 	"If we don't have a referent class and are not forced to create a type get out"
-	(referentClass == nil and:[aBool not]) ifTrue:[^nil].
-	type := self basicNew compiledSpec:
-		(WordArray with: self structureSpec).
-	pointerType := self basicNew compiledSpec:
-		(WordArray with: self pointerSpec).
+	(referentClass == nil and: [ aBool not ]) ifTrue: [ ^ nil ].
+	type := self basicNew compiledSpec: (WordArray with: self structureSpec).
+	pointerType := self basicNew compiledSpec: (WordArray with: self pointerSpec).
 	type setReferencedType: pointerType.
 	pointerType setReferencedType: type.
 	type newReferentClass: referentClass.
 	pointerType newReferentClass: referentClass.
 	StructTypes at: sym put: type.
-	^type
+	^ type
 ]
 
-{ #category : #housekeeping }
+{ #category : 'housekeeping' }
 ExternalType class >> noticeModificationOf: aClass [
 	"A subclass of ExternalStructure has been redefined.
 	Clean out any obsolete references to its type."
-	| type |
-	aClass isBehavior ifFalse:[^nil]. "how could this happen?"
-	aClass withAllSubclassesDo:[:cls|
-		type := StructTypes at: cls name ifAbsent:[nil].
-		type == nil ifFalse:[
+
+	aClass isBehavior ifFalse: [ ^ nil ]. "how could this happen?"
+	aClass withAllSubclassesDo: [ :cls |
+		StructTypes at: cls name ifPresent: [ :type |
 			type newReferentClass: cls.
-			type asPointerType newReferentClass: cls].
-	]
+			type asPointerType newReferentClass: cls ] ]
 ]
 
-{ #category : #housekeeping }
+{ #category : 'housekeeping' }
 ExternalType class >> noticeRemovalOf: aClass [
 	"A subclass of ExternalStructure is being removed.
 	Clean out any obsolete references to its type."
-	| type |
-	type := StructTypes at: aClass name ifAbsent:[nil].
-	type == nil ifFalse:[
+
+	StructTypes at: aClass name ifPresent: [ :type |
 		type newReferentClass: nil.
-		type asPointerType newReferentClass: nil]
+		type asPointerType newReferentClass: nil ]
 ]
 
-{ #category : #housekeeping }
+{ #category : 'housekeeping' }
 ExternalType class >> noticeRenamingOf: aClass from: oldName to: newName [
 	"An ExternalStructure has been renamed from oldName to newName.
 	Keep our type names in sync."
-	| type |
-	type := StructTypes at: oldName ifAbsent:[nil].
-	type == nil ifFalse:[StructTypes at: newName put: type].
-	StructTypes removeKey: oldName ifAbsent:[]
+
+	StructTypes at: oldName ifPresent: [ :type |
+		StructTypes at: newName put: type.
+		StructTypes removeKey: oldName ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ExternalType class >> pointerSpec [
 	^(Smalltalk wordSize bitOr: FFIFlagPointer)
 ]
 
-{ #category : #'type constants' }
+{ #category : 'type constants' }
 ExternalType class >> sbyte [
 	^self signedByte
 ]
 
-{ #category : #'type constants' }
+{ #category : 'type constants' }
 ExternalType class >> schar [
 	^self signedChar
 ]
 
-{ #category : #'type constants' }
+{ #category : 'type constants' }
 ExternalType class >> short [
 	^self signedShort
 ]
 
-{ #category : #'type constants' }
+{ #category : 'type constants' }
 ExternalType class >> signedByte [
 	^AtomicTypes at: 'sbyte'
 ]
 
-{ #category : #'type constants' }
+{ #category : 'type constants' }
 ExternalType class >> signedChar [
 	^AtomicTypes at: 'schar'
 ]
 
-{ #category : #'type constants' }
+{ #category : 'type constants' }
 ExternalType class >> signedLong [
 	^AtomicTypes at: 'long'
 ]
 
-{ #category : #'type constants' }
+{ #category : 'type constants' }
 ExternalType class >> signedLongLong [
 	^AtomicTypes at: 'longlong'
 ]
 
-{ #category : #'type constants' }
+{ #category : 'type constants' }
 ExternalType class >> signedShort [
 	^AtomicTypes at: 'short'
 ]
 
-{ #category : #'type constants' }
+{ #category : 'type constants' }
 ExternalType class >> string [
 	^(AtomicTypes at: 'char') asPointerType
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ExternalType class >> structTypeNamed: aSymbol [
-	aSymbol == nil ifTrue:[^nil].
-	^self newTypeNamed: aSymbol force: false
+
+	aSymbol ifNil: [ ^ nil ].
+	^ self newTypeNamed: aSymbol force: false
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ExternalType class >> structureSpec [
 	^FFIFlagStructure
 ]
 
-{ #category : #'type constants' }
+{ #category : 'type constants' }
 ExternalType class >> ulong [
 	^self unsignedLong
 ]
 
-{ #category : #'type constants' }
+{ #category : 'type constants' }
 ExternalType class >> unsignedByte [
 	^AtomicTypes at: 'byte'
 ]
 
-{ #category : #'type constants' }
+{ #category : 'type constants' }
 ExternalType class >> unsignedChar [
 	^AtomicTypes at: 'char'
 ]
 
-{ #category : #'type constants' }
+{ #category : 'type constants' }
 ExternalType class >> unsignedLong [
 	^AtomicTypes at: 'ulong'
 ]
 
-{ #category : #'type constants' }
+{ #category : 'type constants' }
 ExternalType class >> unsignedLongLong [
 	^AtomicTypes at: 'ulonglong'
 ]
 
-{ #category : #'type constants' }
+{ #category : 'type constants' }
 ExternalType class >> unsignedShort [
 	^AtomicTypes at: 'ushort'
 ]
 
-{ #category : #'type constants' }
+{ #category : 'type constants' }
 ExternalType class >> ushort [
 	^self unsignedShort
 ]
 
-{ #category : #'type constants' }
+{ #category : 'type constants' }
 ExternalType class >> void [
 	^AtomicTypes at: 'void'
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ExternalType >> asNonPointerType [
 	"convert the receiver into a non pointer type"
 
@@ -405,7 +400,7 @@ ExternalType >> asNonPointerType [
 		  ifFalse: [ self ]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ExternalType >> asPointerType [
 	"convert the receiver into a pointer type"
 
@@ -414,7 +409,7 @@ ExternalType >> asPointerType [
 		  ifFalse: [ referencedType ]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ExternalType >> asPointerType: anotherPointerSize [
 	"convert the receiver into a pointer type"
 	| type |
@@ -425,29 +420,29 @@ ExternalType >> asPointerType: anotherPointerSize [
 			[type copy pointerSize: anotherPointerSize; yourself]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExternalType >> atomicType [
 	^(self headerWord bitAnd: FFIAtomicTypeMask) >> FFIAtomicTypeShift
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExternalType >> byteSize [
 	"Return the size in bytes of this type"
 	^self headerWord bitAnd: FFIStructSizeMask
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExternalType >> compiledSpec [
 	"Return the compiled spec of the receiver"
 	^compiledSpec
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ExternalType >> compiledSpec: aWordArray [
 	compiledSpec := aWordArray
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ExternalType >> embeddedSpecWithSize: typeSize [
 	"Return a compiled spec for embedding in a new compiled spec."
 	| spec header |
@@ -460,24 +455,24 @@ ExternalType >> embeddedSpecWithSize: typeSize [
 	^spec
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ExternalType >> externalTypeName [
 	^'ExternalType ', (AtomicTypeNames at: self atomicType), ' asPointerType'
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ExternalType >> headerWord [
 	"Return the compiled header word"
 	^compiledSpec at: 1
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ExternalType >> isAtomic [
 	"Return true if the receiver describes a built-in type"
 	^self headerWord anyMask: FFIFlagAtomic
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ExternalType >> isIntegerType [
 	"Return true if the receiver is a built-in integer type"
 	| type |
@@ -485,39 +480,39 @@ ExternalType >> isIntegerType [
 	^type > FFITypeBool and:[type <= FFITypeUnsignedLongLong]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ExternalType >> isPointerType [
 	"Return true if the receiver represents a pointer type"
 	^self isStructureType not and:[self headerWord anyMask: FFIFlagPointer]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ExternalType >> isSigned [
 	"Return true if the receiver is a signed type.
 	Note: Only useful for integer types."
 	^self atomicType anyMask: 1
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ExternalType >> isStructureType [
 	"Return true if the receiver represents a structure type"
 	^self headerWord anyMask: FFIFlagStructure
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ExternalType >> isUnsigned [
 	"Return true if the receiver is an unsigned type.
 	Note: Only useful for integer types."
 	^self isSigned not
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ExternalType >> isVoid [
 	"Return true if the receiver describes a plain 'void' type"
 	^self isAtomic and:[self atomicType = 0]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ExternalType >> newReferentClass: aClass [
 
 	"The class I'm referencing has changed. Update my spec."
@@ -530,13 +525,13 @@ ExternalType >> newReferentClass: aClass [
 		ifNotNil: [ "my class has been changed - update my compiledSpec" referentClass compiledSpec ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExternalType >> pointerSize [
 	"Answer the pointer size of the receiver, if specified."
 	^pointerSize
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ExternalType >> pointerSize: anInteger [
 	| spec |
 	pointerSize := anInteger.
@@ -546,7 +541,7 @@ ExternalType >> pointerSize: anInteger [
 		 compiledSpec at: 1 put: (spec bitClear: FFIStructSizeMask) + anInteger]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ExternalType >> printAtomicType: spec on: aStream [
 	self assert: (spec anyMask: FFIFlagAtomic).
 	aStream nextPutAll: (#(	'void' 'unsigned char' 'unsigned char' 'signed char'
@@ -558,7 +553,7 @@ ExternalType >> printAtomicType: spec on: aStream [
 		[aStream nextPut: $*]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ExternalType >> printOn: aStream [
 
 	referentClass
@@ -568,7 +563,7 @@ ExternalType >> printOn: aStream [
 		ifTrue: [ aStream nextPut: $* ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ExternalType >> printStructureFieldStartingAt: initialSpecIndex withName: name inClass: structureClass on: aStream indent: indent [
 	"Print the structure's field starting at initialSpecIndex and answer the index in compiledSpec of the subsequent type."
 	| spec subStructureClassBinding |
@@ -607,10 +602,10 @@ ExternalType >> printStructureFieldStartingAt: initialSpecIndex withName: name i
 	^initialSpecIndex + 1
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ExternalType >> printTypedefOn: s [
 	s nextPutAll: 'typedef '.
-	(referentClass notNil
+	(referentClass isNotNil
 	 and: [(compiledSpec first bitClear: FFIStructSizeMask) = FFIFlagStructure])
 		ifTrue:
 			[| next |
@@ -634,7 +629,7 @@ ExternalType >> printTypedefOn: s [
 	s nextPutAll: (referentClass ifNotNil: [referentClass name] ifNil: ['foo'])
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ExternalType >> readFieldAt: byteOffset [
 	"Answer a string defining the accessor to an entity of the receiver type starting at the given byte offset.
 	 Private. Used for field definition only."
@@ -678,18 +673,18 @@ ExternalType >> readFieldAt: byteOffset [
 			space; print: byteOffset]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExternalType >> referentClass [
 	"Return the class specifying the receiver"
 	^referentClass
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ExternalType >> setReferencedType: aType [
 	referencedType := aType
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ExternalType >> storeOn: aStream [
 
 	referentClass
@@ -714,12 +709,12 @@ ExternalType >> storeOn: aStream [
 			]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ExternalType >> typedef [
 	^String streamContents: [:s| self printTypedefOn: s]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ExternalType >> writeFieldAt: byteOffset with: valueName [
 	"Answer a string defining the accessor to an entity of the receiver type starting at the given byte offset.
 	 Private. Used for field definition only."

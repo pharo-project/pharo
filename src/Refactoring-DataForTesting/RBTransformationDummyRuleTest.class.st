@@ -1,6 +1,6 @@
 Class {
-	#name : #RBTransformationDummyRuleTest,
-	#superclass : #RBFooDummyLintRuleTest,
+	#name : 'RBTransformationDummyRuleTest',
+	#superclass : 'RBFooDummyLintRuleTest',
 	#instVars : [
 		'rewriteRule',
 		'builder',
@@ -9,10 +9,12 @@ Class {
 	#classVars : [
 		'RecursiveSelfRule'
 	],
-	#category : #'Refactoring-DataForTesting-LittleHierarchy'
+	#category : 'Refactoring-DataForTesting-LittleHierarchy',
+	#package : 'Refactoring-DataForTesting',
+	#tag : 'LittleHierarchy'
 }
 
-{ #category : #transformations }
+{ #category : 'transformations' }
 RBTransformationDummyRuleTest class >> assignmentInIfTrue [
 	^self rewrite: #(
 			#('``@Boolean ifTrue: [`variable := ``@true] ifFalse: [`variable := ``@false]'
@@ -25,7 +27,7 @@ RBTransformationDummyRuleTest class >> assignmentInIfTrue [
 		name: 'Move variable assignment outside of single statement ifTrue:ifFalse: blocks'
 ]
 
-{ #category : #transformations }
+{ #category : 'transformations' }
 RBTransformationDummyRuleTest class >> atIfAbsent [
 	^self rewrite: #(
 			#('``@dictionary at: ``@key
@@ -53,7 +55,7 @@ RBTransformationDummyRuleTest class >> atIfAbsent [
 		name: 'at:ifAbsent: -> at:ifAbsentPut:'
 ]
 
-{ #category : #transformations }
+{ #category : 'transformations' }
 RBTransformationDummyRuleTest class >> betweenAnd [
 	^self rewrite: #(
 			#('``@a >= ``@b and: [``@a <= ``@c]' "->" '``@a between: ``@b and: ``@c')
@@ -76,12 +78,12 @@ RBTransformationDummyRuleTest class >> betweenAnd [
 		name: '"a >= b and: [a <= c]" -> "a between: b and: c"'
 ]
 
-{ #category : #cleanup }
+{ #category : 'cleanup' }
 RBTransformationDummyRuleTest class >> cleanUp [
 	self nuke
 ]
 
-{ #category : #transformations }
+{ #category : 'transformations' }
 RBTransformationDummyRuleTest class >> detectIfNone [
 	^self rewrite: #(
 			#('(``@collection detect: [:`each | | `@temps | ``@.Statements] ifNone: [nil]) isNil'
@@ -100,7 +102,7 @@ RBTransformationDummyRuleTest class >> detectIfNone [
 		name: 'detect:ifNone: -> contains:'
 ]
 
-{ #category : #transformations }
+{ #category : 'transformations' }
 RBTransformationDummyRuleTest class >> equalNil [
 	^self
 		rewrite: #(
@@ -112,7 +114,7 @@ RBTransformationDummyRuleTest class >> equalNil [
 		name: '= nil -> isNil AND ~= nil -> notNil'
 ]
 
-{ #category : #transformations }
+{ #category : 'transformations' }
 RBTransformationDummyRuleTest class >> guardClause [
 	^self
 		rewrite: #(
@@ -144,7 +146,7 @@ RBTransformationDummyRuleTest class >> guardClause [
 		name: 'Eliminate guarding clauses'
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 RBTransformationDummyRuleTest class >> initializeAfterLoad1 [
 	RecursiveSelfRule := self parseTreeSearcher.
 	RecursiveSelfRule
@@ -152,7 +154,7 @@ RBTransformationDummyRuleTest class >> initializeAfterLoad1 [
 				-> [:aNode :answer | true]
 ]
 
-{ #category : #transformations }
+{ #category : 'transformations' }
 RBTransformationDummyRuleTest class >> minMax [
 	^self rewrite: #(
 			#('``@a < ``@b ifTrue: [``@a] ifFalse: [``@b]'	"->"	'``@a min: ``@b')
@@ -183,7 +185,7 @@ RBTransformationDummyRuleTest class >> minMax [
 		name: 'Rewrite ifTrue:ifFalse: using min:/max:'
 ]
 
-{ #category : #transformations }
+{ #category : 'transformations' }
 RBTransformationDummyRuleTest class >> notElimination [
 	^self
 		rewrite: #(
@@ -214,12 +216,12 @@ RBTransformationDummyRuleTest class >> notElimination [
 		name: 'Eliminate unnecessary not''s'
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 RBTransformationDummyRuleTest class >> nuke [
 	RecursiveSelfRule := nil
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBTransformationDummyRuleTest class >> rewrite: stringArrays methods: aBoolean name: aName [
 	| rewriteRule |
 	rewriteRule := RBParseTreeRewriter new.
@@ -233,7 +235,7 @@ RBTransformationDummyRuleTest class >> rewrite: stringArrays methods: aBoolean n
 		yourself
 ]
 
-{ #category : #transformations }
+{ #category : 'transformations' }
 RBTransformationDummyRuleTest class >> showWhileBlocks [
 	^self
 		rewrite: #(
@@ -245,7 +247,7 @@ RBTransformationDummyRuleTest class >> showWhileBlocks [
 		name: 'Move assignment out of showWhile: blocks'
 ]
 
-{ #category : #transformations }
+{ #category : 'transformations' }
 RBTransformationDummyRuleTest class >> superSends [
 	^(self new)
 		name: 'Rewrite super messages to self messages when both refer to same method';
@@ -253,7 +255,7 @@ RBTransformationDummyRuleTest class >> superSends [
 		yourself
 ]
 
-{ #category : #transformations }
+{ #category : 'transformations' }
 RBTransformationDummyRuleTest class >> unwindBlocks [
 	^self
 		rewrite: #(
@@ -269,7 +271,7 @@ RBTransformationDummyRuleTest class >> unwindBlocks [
 		name: 'Move assignment out of unwind blocks'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBTransformationDummyRuleTest >> checkMethod: aSmalllintContext [
 	class := aSmalllintContext selectedClass.
 	(rewriteRule executeTree: aSmalllintContext parseTree) ifTrue:
@@ -280,42 +282,44 @@ RBTransformationDummyRuleTest >> checkMethod: aSmalllintContext [
 						classified: aSmalllintContext protocols]]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBTransformationDummyRuleTest >> hasConflicts [
 	^true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBTransformationDummyRuleTest >> isEmpty [
 	^builder changes isEmpty
 ]
 
-{ #category : #'as yet unclassified' }
-RBTransformationDummyRuleTest >> newUnclassifiedMethod [
+{ #category : 'accessing' }
+RBTransformationDummyRuleTest >> justAUnreferencedMethodForTesting [
+
+	^ 42
 ]
 
-{ #category : #rules }
+{ #category : 'rules' }
 RBTransformationDummyRuleTest >> parseTreeRewriter [
 	^ RBParseTreeRewriter new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBTransformationDummyRuleTest >> problemCount [
 	^builder problemCount
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBTransformationDummyRuleTest >> resetResult [
 	builder := RBRefactoryChangeManager changeFactory compositeRefactoryChange
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBTransformationDummyRuleTest >> rewriteUsing: searchReplacer [
 	rewriteRule := searchReplacer.
 	self resetResult
 ]
 
-{ #category : #rules }
+{ #category : 'rules' }
 RBTransformationDummyRuleTest >> superSends [
 	| rule |
 	rule := self parseTreeRewriter.
@@ -330,7 +334,7 @@ RBTransformationDummyRuleTest >> superSends [
 	self rewriteUsing: rule
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBTransformationDummyRuleTest >> viewResults [
 	"I reset the result so that we don't fill up memory with methods to compile in the builder."
 

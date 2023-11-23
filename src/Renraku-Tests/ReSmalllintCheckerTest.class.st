@@ -1,10 +1,11 @@
 Class {
-	#name : #ReSmalllintCheckerTest,
-	#superclass : #ReCodeBasedTestCase,
-	#category : #'Renraku-Tests'
+	#name : 'ReSmalllintCheckerTest',
+	#superclass : 'ReCodeBasedTestCase',
+	#category : 'Renraku-Tests',
+	#package : 'Renraku-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReSmalllintCheckerTest >> testRun [
 	| checker |
 

@@ -1,6 +1,6 @@
-Extension { #name : #StringMorph }
+Extension { #name : 'StringMorph' }
 
-{ #category : #'*Athens-Morphic' }
+{ #category : '*Athens-Morphic' }
 StringMorph >> drawOnAthensCanvas: canvas [
 	| bnd |
 "	bnd := self bounds.

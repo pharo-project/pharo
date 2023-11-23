@@ -1,6 +1,6 @@
-Extension { #name : #SycPushUpVariableCommand }
+Extension { #name : 'SycPushUpVariableCommand' }
 
-{ #category : #'*Calypso-SystemTools-FullBrowser' }
+{ #category : '*Calypso-SystemTools-FullBrowser' }
 SycPushUpVariableCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
 

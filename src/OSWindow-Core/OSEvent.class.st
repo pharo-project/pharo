@@ -6,48 +6,50 @@ Events can implement a default action, which will be performed after dispatch on
 unless they are suppressed using #suppressDefaultAction message.
 "
 Class {
-	#name : #OSEvent,
-	#superclass : #Object,
+	#name : 'OSEvent',
+	#superclass : 'Object',
 	#instVars : [
 		'window',
 		'suppressDefaultAction'
 	],
-	#category : #'OSWindow-Core-Events'
+	#category : 'OSWindow-Core-Events',
+	#package : 'OSWindow-Core',
+	#tag : 'Events'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OSEvent class >> for: aWindow [
 	^ self new window: aWindow; yourself
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 OSEvent >> accept: aVisitor [
 	self subclassResponsibility
 ]
 
-{ #category : #'default actions' }
+{ #category : 'default actions' }
 OSEvent >> defaultAction [
 	"do nothing by default"
 ]
 
-{ #category : #dispatching }
+{ #category : 'dispatching' }
 OSEvent >> deliver [
 	"deliver an event to its handler(s)"
 
 	^ window deliverEvent: self
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OSEvent >> initialize [
 	suppressDefaultAction := false
 ]
 
-{ #category : #'default actions' }
+{ #category : 'default actions' }
 OSEvent >> performDefaultAction [
 	suppressDefaultAction ifFalse: [  self defaultAction ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 OSEvent >> printOn: aStream [
 	super printOn: aStream.
 	window ifNotNil: [
@@ -57,17 +59,17 @@ OSEvent >> printOn: aStream [
 			nextPut:  $) ]
 ]
 
-{ #category : #'default actions' }
+{ #category : 'default actions' }
 OSEvent >> suppressDefaultAction [
 	suppressDefaultAction  := true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSEvent >> window [
 	^ window
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSEvent >> window: anOSWindow [
 	window := anOSWindow
 ]

@@ -3,40 +3,40 @@ I am a command to insert new superclass into my target class.
 I create new class using supeclass of my target class. And I replace superclass of target class with new created class
 "
 Class {
-	#name : #SycCmInsertSuperclassCommand,
-	#superclass : #SycCmNewClassCreationCommand,
-	#category : #'SystemCommands-ClassCommands'
+	#name : 'SycCmInsertSuperclassCommand',
+	#superclass : 'SycCmNewClassCreationCommand',
+	#category : 'SystemCommands-ClassCommands',
+	#package : 'SystemCommands-ClassCommands'
 }
 
-{ #category : #executing }
+{ #category : 'executing' }
 SycCmInsertSuperclassCommand >> executeRefactoring [
 
-	| refactoring |
-	refactoring := RBInsertNewClassRefactoring
-		addClass: newClassName
-		superclass: targetClass superclass asString
-		subclasses: {targetClass}
-		category: targetClass category.
-	refactoring asRefactoring execute
+	(RBInsertNewClassRefactoring className: newClassName)
+		superclass: targetClass superclass asString;
+		subclasses: { targetClass };
+		packageName: targetClass package name;
+		tagName: targetClass packageTag name;
+		execute
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycCmInsertSuperclassCommand >> icon [
 	^ self iconNamed: #smallLoadProject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SycCmInsertSuperclassCommand >> isApplicable [
 
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycCmInsertSuperclassCommand >> name [
 	^'Insert superclass'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycCmInsertSuperclassCommand >> order [
 	^ 30
 ]

@@ -1,6 +1,6 @@
-Extension { #name : #TestFailure }
+Extension { #name : 'TestFailure' }
 
-{ #category : #'*JenkinsTools-Core' }
+{ #category : '*JenkinsTools-Core' }
 TestFailure >> recordResultOf: aTestCase inHDTestReport: aHDTestReport [
 	
 	aHDTestReport recordFailure: self duringTest: aTestCase

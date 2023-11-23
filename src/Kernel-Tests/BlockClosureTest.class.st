@@ -2,22 +2,24 @@
 SUnit tests for BlockClosure
 "
 Class {
-	#name : #BlockClosureTest,
-	#superclass : #TestCase,
+	#name : 'BlockClosureTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'aBlock',
 		'contextOfaBlock'
 	],
-	#category : #'Kernel-Tests-Methods'
+	#category : 'Kernel-Tests-Methods',
+	#package : 'Kernel-Tests',
+	#tag : 'Methods'
 }
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 BlockClosureTest >> blockWithNonLocalReturn: resultObject [
 
 	^[ ^resultObject ]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 BlockClosureTest >> setUp [
 	super setUp.
 	"we reference self to force a full block"
@@ -25,7 +27,7 @@ BlockClosureTest >> setUp [
 	contextOfaBlock := thisContext
 ]
 
-{ #category : #'tests - evaluating' }
+{ #category : 'tests - evaluating' }
 BlockClosureTest >> testCull [
 	[  ] cull: 1.
 	[ :x |  ] cull: 1.
@@ -37,7 +39,7 @@ BlockClosureTest >> testCull [
 	self assert: ([ :x | x ] cull: 1) equals: 1
 ]
 
-{ #category : #'tests - evaluating' }
+{ #category : 'tests - evaluating' }
 BlockClosureTest >> testCullCull [
 	[  ] cull: 1 cull: 2.
 	[ :x |  ] cull: 1 cull: 2.
@@ -50,7 +52,7 @@ BlockClosureTest >> testCullCull [
 	self assert: ([ :x :y | y ] cull: 1 cull: 2) equals: 2
 ]
 
-{ #category : #'tests - evaluating' }
+{ #category : 'tests - evaluating' }
 BlockClosureTest >> testCullCullCull [
 	[  ] cull: 1 cull: 2 cull: 3.
 	[ :x |  ] cull: 1 cull: 2 cull: 3.
@@ -64,7 +66,7 @@ BlockClosureTest >> testCullCullCull [
 	self assert: ([ :x :y :z | z ] cull: 1 cull: 2 cull: 3) equals: 3
 ]
 
-{ #category : #'tests - evaluating' }
+{ #category : 'tests - evaluating' }
 BlockClosureTest >> testCullCullCullCull [
 	[  ]
 		cull: 1
@@ -140,7 +142,7 @@ BlockClosureTest >> testCullCullCullCull [
 		equals: 4
 ]
 
-{ #category : #'tests - evaluating' }
+{ #category : 'tests - evaluating' }
 BlockClosureTest >> testHasNonLocalReturn [
 
 	self assert: [ ^self  ] hasNonLocalReturn.
@@ -152,7 +154,7 @@ BlockClosureTest >> testHasNonLocalReturn [
 	self assert: [ #(1) do: [ ^self ] ] hasNonLocalReturn
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BlockClosureTest >> testHomeMethod [
 	<compilerOptions: #(+ #optionConstantBlockClosure) >
 	| block |
@@ -174,7 +176,7 @@ BlockClosureTest >> testHomeMethod [
 	self assert: block homeMethod equals: block compiledBlock outerCode method
 ]
 
-{ #category : #'tests - testing' }
+{ #category : 'tests - testing' }
 BlockClosureTest >> testIsClean [
 	| local |
 	local := #testIsClean.
@@ -186,12 +188,21 @@ BlockClosureTest >> testIsClean [
 	self assert: [:a :b| | s | s := a + b. s even] isClean. "accesses only local variables"
 	self deny: [^nil] isClean. "closes over home (^-return)"
 	self deny: [self] isClean. "closes over the receiver"
+	self deny: [ aBlock ] isClean. "accesses ivar"
 	self deny: [super testIsClean] isClean. "closes over the receiver"
 	self deny: [contextOfaBlock] isClean. "closes over the receiver (to access the inst var contextOfaBlockContext)"
 	self deny: [local] isClean. "closes over local variable of outer context"
+	
+	"an inner non-clean block does not mean that the outer block is not clean"
+	self assert: [ :x | x do: [ x + 1 ] ] isClean.
+	"but if we access self or return, it is"
+	self deny: [ :x | x do: [ ^x] ] isClean.
+	self deny: [ :x | x do: [ self] ] isClean.
+	self deny: [ :x | x do: [ super testIsClean ] ] isClean.
+	self deny: [ :x | x do: [ aBlock] ] isClean
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BlockClosureTest >> testLiteralEqual [
 	"Check that if we have two clean blocks with the same code, they are not #literalEqual:"
 	| methodToTest compiledBlocks |
@@ -211,7 +222,7 @@ BlockClosureTest >> testLiteralEqual [
 	self deny: compiledBlocks first equals: compiledBlocks second
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BlockClosureTest >> testNew [
 	self	should: [Context new: 5] raise: Error.
 	[Context new: 5]
@@ -222,7 +233,7 @@ BlockClosureTest >> testNew [
 		onErrorDo: [:error | self assert: error description equals: 'Error: Contexts must only be created with newForMethod:']
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BlockClosureTest >> testNoArguments [
 	| block1 block2 |
 	"avoid compile error in GemStone"
@@ -232,13 +243,13 @@ BlockClosureTest >> testNoArguments [
 	[ 10 timesRepeat: block2 ] onErrorDo: [ :err | self assert: err description equals: 'ArgumentsCountMismatch: This block accepts 2 arguments, but was called with 0 arguments.' ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BlockClosureTest >> testOnErrorDo [
 
 	self assert: ([1 foo ] onErrorDo: [:err | 'huh?']) equals: 'huh?'
 ]
 
-{ #category : #'tests - on-fork' }
+{ #category : 'tests - on-fork' }
 BlockClosureTest >> testOnFork [
 	"Test that if code runs without errors, there is no fork! "
 
@@ -252,7 +263,7 @@ BlockClosureTest >> testOnFork [
 	self assert: result2 isNil
 ]
 
-{ #category : #'tests - on-fork' }
+{ #category : 'tests - on-fork' }
 BlockClosureTest >> testOnForkErrorExecutesBlock [
 	"Test that if code runs with error, there is fork"
 
@@ -269,7 +280,7 @@ BlockClosureTest >> testOnForkErrorExecutesBlock [
 	self assert: result equals: 2
 ]
 
-{ #category : #'tests - on-fork' }
+{ #category : 'tests - on-fork' }
 BlockClosureTest >> testOnForkErrorOnSeparateProcess [
 	"Test that if code runs with error, there is fork"
 
@@ -283,7 +294,7 @@ BlockClosureTest >> testOnForkErrorOnSeparateProcess [
 	self deny: forkedProc identicalTo: Processor activeProcess
 ]
 
-{ #category : #'tests - on-fork' }
+{ #category : 'tests - on-fork' }
 BlockClosureTest >> testOnForkErrorReturnsNil [
 	"Test that if code runs with error, there is fork"
 
@@ -297,7 +308,7 @@ BlockClosureTest >> testOnForkErrorReturnsNil [
 	self assert: result isNil
 ]
 
-{ #category : #'tests - on-fork' }
+{ #category : 'tests - on-fork' }
 BlockClosureTest >> testOnForkErrorTakesLessThanOneSecond [
 	"Test that if code runs with error, there is fork"
 
@@ -316,7 +327,7 @@ BlockClosureTest >> testOnForkErrorTakesLessThanOneSecond [
 	self assert: timeout identicalTo: false
 ]
 
-{ #category : #'tests - on-fork' }
+{ #category : 'tests - on-fork' }
 BlockClosureTest >> testOnForkSplit [
 	"Test that when forking, the stack are split correctly (there is no any contexts referenced by both processes)"
 
@@ -329,7 +340,7 @@ BlockClosureTest >> testOnForkSplit [
 	[ 1/0 ] on: Exception fork: [  | ctx |
 		forkedContexts := IdentitySet new.
 		ctx := thisContext.
-		[ ctx notNil ] whileTrue: [ forkedContexts add: ctx. ctx := ctx sender ].
+		[ ctx isNotNil ] whileTrue: [ forkedContexts add: ctx. ctx := ctx sender ].
 		sema signal ].
 
 	timeout := (sema waitTimeoutSeconds: 1).
@@ -337,13 +348,13 @@ BlockClosureTest >> testOnForkSplit [
 
 	myContexts := IdentitySet new.
 	c := thisContext.
-	[ c notNil ] whileTrue: [ myContexts add: c. c := c sender ].
+	[ c isNotNil ] whileTrue: [ myContexts add: c. c := c sender ].
 
 	self assert: (myContexts noneSatisfy: [:b | forkedContexts includes: b ]) description: 'myContexts are not within forkedContexts'.
 	self assert: (forkedContexts noneSatisfy: [:b | myContexts includes: b ]) description: 'forkedContexts are not within myContexts'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BlockClosureTest >> testOneArgument [
 	| c |
 	c := OrderedCollection new.
@@ -352,12 +363,12 @@ BlockClosureTest >> testOneArgument [
 	[ c do: [ :arg1 :arg2 | 1 + 2 ] ] onErrorDo: [ :err | self assert: err description equals: 'ArgumentsCountMismatch: This block accepts 2 arguments, but was called with 1 argument.' ]
 ]
 
-{ #category : #'tests - printing' }
+{ #category : 'tests - printing' }
 BlockClosureTest >> testPrintOn [
 	self assert: (RBParser parseExpression: [ 1 + 2 ] printString) equals: (RBParser parseExpression: '[ 1 + 2 ]')
 ]
 
-{ #category : #'tests - printing' }
+{ #category : 'tests - printing' }
 BlockClosureTest >> testPrintOnBlockDefinedInMethodWithoutSourceCode [
 	| method block |
 	method := OpalCompiler new compile: 'method ^ [ 1 + 2 ]'.
@@ -369,7 +380,7 @@ BlockClosureTest >> testPrintOnBlockDefinedInMethodWithoutSourceCode [
 	self assert: (RBParser parseExpression: block printString) equals: (RBParser parseExpression: '[ 1 + 2 ]').
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BlockClosureTest >> testSetUp [
 	"Note: In addition to verifying that the setUp worked the way it was expected to, testSetUp is used to illustrate the meaning of the simple access methods, methods that are not normally otherwise 'tested'"
 
@@ -379,7 +390,7 @@ BlockClosureTest >> testSetUp [
 	self assert: (aBlock method isNil or: [ aBlock method isKindOf: CompiledCode ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BlockClosureTest >> testSupplyAnswerOfFillInTheBlank [
 	self
 		assert:
@@ -388,7 +399,7 @@ BlockClosureTest >> testSupplyAnswerOfFillInTheBlank [
 		equals: 'blue'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BlockClosureTest >> testSupplyAnswerOfFillInTheBlankUsingDefaultAnswer [
 	self
 		assert:
@@ -399,21 +410,21 @@ BlockClosureTest >> testSupplyAnswerOfFillInTheBlankUsingDefaultAnswer [
 		equals: 'red'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BlockClosureTest >> testSupplyAnswerThroughNestedBlocks [
 
 	self should: [true = ([[self confirm: 'You like Smalltalk?']
 		valueSupplyingAnswer: #('Blub' false)] valueSupplyingAnswer: #('Smalltalk' true))]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BlockClosureTest >> testSupplyAnswerUsingOnlySubstringOfQuestion [
 
 	self should: [false = ([self confirm: 'You like Smalltalk?']
 		valueSupplyingAnswer: #('like' false))]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BlockClosureTest >> testSupplyAnswerUsingRegexMatchOfQuestion [
 
 	(String includesSelector: #matchesRegex:) ifFalse: [^ self].
@@ -422,14 +433,14 @@ BlockClosureTest >> testSupplyAnswerUsingRegexMatchOfQuestion [
 		valueSupplyingAnswer: #('.*Smalltalk\?' true))]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BlockClosureTest >> testSupplyAnswerUsingTraditionalMatchOfQuestion [
 
 	self should: [true = ([self confirm: 'You like Smalltalk?']
 		valueSupplyingAnswer: #('*Smalltalk#' true))]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BlockClosureTest >> testSupplySameAnswerToAllQuestions [
 
 	self should: [true = ([self confirm: 'You like Smalltalk?'] valueSupplyingAnswer: true)].
@@ -437,7 +448,7 @@ BlockClosureTest >> testSupplySameAnswerToAllQuestions [
 	self should: [#(true true) = ([{self confirm: 'One'. self confirm: 'Two'}] valueSupplyingAnswer: true)]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BlockClosureTest >> testSupplySeveralAnswersToSeveralQuestions [
 
 	self should: [#(false true) = ([{self confirm: 'One'. self confirm: 'Two'}]
@@ -447,20 +458,20 @@ BlockClosureTest >> testSupplySeveralAnswersToSeveralQuestions [
 		valueSupplyingAnswers: #( ('One' true) ('Two' false) ))]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BlockClosureTest >> testSupplySpecificAnswerToQuestion [
 
 	self should: [false = ([self confirm: 'You like Smalltalk?']
 		valueSupplyingAnswer: #('You like Smalltalk?' false))]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BlockClosureTest >> testSuppressInform [
 
 	self should: [[nil inform: 'Should not see this message or this test failed!'] valueSuppressingAllMessages isNil]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BlockClosureTest >> testSuppressInformUsingStringMatchOptions [
 
 	self should: [([nil inform: 'Should not see this message or this test failed!'] valueSuppressingMessages: #('Should not see this message or this test failed!')) isNil].
@@ -470,7 +481,7 @@ BlockClosureTest >> testSuppressInformUsingStringMatchOptions [
 	self should: [([nil inform: 'Should not see this message or this test failed!'] valueSuppressingMessages: #('*message*failed#')) isNil]
 ]
 
-{ #category : #'tests - evaluating' }
+{ #category : 'tests - evaluating' }
 BlockClosureTest >> testValueWithArguments [
 
 	self shouldnt: [ aBlock valueWithArguments: #() ] raise: ArgumentsCountMismatch.
@@ -486,7 +497,7 @@ BlockClosureTest >> testValueWithArguments [
 			self assert: err calledArgumentsCount equals: 2 ]
 ]
 
-{ #category : #'tests - evaluating' }
+{ #category : 'tests - evaluating' }
 BlockClosureTest >> testValueWithArgumentsWithOrderedCollection [
 
 	self
@@ -508,12 +519,12 @@ BlockClosureTest >> testValueWithArgumentsWithOrderedCollection [
 			self assert: err calledArgumentsCount equals: 2 ]
 ]
 
-{ #category : #'tests - evaluating' }
+{ #category : 'tests - evaluating' }
 BlockClosureTest >> testValueWithExit [
 	self assert: [:exit | 1 ] valueWithExit equals: 1
 ]
 
-{ #category : #'tests - evaluating' }
+{ #category : 'tests - evaluating' }
 BlockClosureTest >> testValueWithExitBreak [
 	| val |
 	[ :break |
@@ -524,7 +535,7 @@ BlockClosureTest >> testValueWithExitBreak [
 	self assert: val equals: 4
 ]
 
-{ #category : #'tests - evaluating' }
+{ #category : 'tests - evaluating' }
 BlockClosureTest >> testValueWithExitContinue [
 	| val last |
 	val := 0.
@@ -539,7 +550,7 @@ BlockClosureTest >> testValueWithExitContinue [
 	self assert: last equals: 10
 ]
 
-{ #category : #'tests - evaluating' }
+{ #category : 'tests - evaluating' }
 BlockClosureTest >> testValueWithPossibleArgs [
 	| block blockWithArg blockWith2Arg |
 	block := [ 1 ].
@@ -556,7 +567,7 @@ BlockClosureTest >> testValueWithPossibleArgs [
 	self assert: (blockWith2Arg valueWithPossibleArgs: #(1 2 3)) equals: #(1 2)
 ]
 
-{ #category : #'tests - evaluating' }
+{ #category : 'tests - evaluating' }
 BlockClosureTest >> testValueWithPossibleArgument [
 	| block blockWithArg blockWith2Arg |
 	block := [ 1 ].

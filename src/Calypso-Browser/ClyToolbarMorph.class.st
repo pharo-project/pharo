@@ -20,28 +20,30 @@ Internal Representation and Key Implementation Points.
 	browser:		<ClyBrowser>
 "
 Class {
-	#name : #ClyToolbarMorph,
-	#superclass : #PanelMorph,
+	#name : 'ClyToolbarMorph',
+	#superclass : 'PanelMorph',
 	#instVars : [
 		'browser'
 	],
-	#category : #'Calypso-Browser-Toolbar'
+	#category : 'Calypso-Browser-Toolbar',
+	#package : 'Calypso-Browser',
+	#tag : 'Toolbar'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyToolbarMorph class >> of: aBrowser [
 	^self new
 		browser: aBrowser
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyToolbarMorph >> addNewItem: aMorph [
 
 	| offsetX offsetY |
 	offsetX := self submorphs
 		           inject: 0
 		           into: [ :sum :each | sum + each extent x ].
-	offsetY := 5.
+	offsetY := 5 scaledByDisplayScaleFactor.
 	self addMorphBack: aMorph.
 	self computeFullBounds.
 	self minHeight: self defaultHeight.
@@ -49,22 +51,22 @@ ClyToolbarMorph >> addNewItem: aMorph [
 			 aMorph extent x + offsetX @ (aMorph extent y + offsetY))
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyToolbarMorph >> browser [
 	^ browser
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyToolbarMorph >> browser: anObject [
 	browser := anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyToolbarMorph >> defaultHeight [
 	^ 30 * self currentWorld displayScaleFactor
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyToolbarMorph >> initialize [
 	super initialize.
 	"setting layoutPolicy to nil because existing layouts fix my owner's minimum width, hiding other widgets when the windows shrinks"
@@ -79,7 +81,7 @@ ClyToolbarMorph >> initialize [
 	self layoutChanged
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 ClyToolbarMorph >> updateItems [
 
 	| menu |

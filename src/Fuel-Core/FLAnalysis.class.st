@@ -9,8 +9,8 @@ An example of use is:
 
 "
 Class {
-	#name : #FLAnalysis,
-	#superclass : #Object,
+	#name : 'FLAnalysis',
+	#superclass : 'Object',
 	#traits : 'TFLConfigurable',
 	#classTraits : 'TFLConfigurable classTrait',
 	#instVars : [
@@ -20,40 +20,42 @@ Class {
 		'privateObjectStack',
 		'privateFirstMapper'
 	],
-	#category : #'Fuel-Core-Base'
+	#category : 'Fuel-Core-Base',
+	#package : 'Fuel-Core',
+	#tag : 'Base'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FLAnalysis class >> detectResponsibleAnalysis [
 	^ (self allSubclasses sort: [ :a :b | a priority <= b priority ])
 		detect: [ :class | class isResponsible ]
 		ifNone: [ self ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FLAnalysis class >> isResponsible [
 	^ self subclassResponsibility
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FLAnalysis class >> priority [
 	^ self subclassResponsibility
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FLAnalysis class >> run [
 	^ self detectResponsibleAnalysis new
 		run;
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLAnalysis >> clusterization [
 
 	^clusterization
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FLAnalysis >> initialize [
 	super initialize.
 	
@@ -66,7 +68,7 @@ FLAnalysis >> initialize [
 	self initializeMapperChains
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FLAnalysis >> initializeMapperChains [
 	| standardMappers allMappers |
 	standardMappers := self standardMappers.
@@ -79,27 +81,27 @@ FLAnalysis >> initializeMapperChains [
 	privateFirstMapper := standardMappers first
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 FLAnalysis >> mapAndTrace: anObject [
 	"Map an object to its cluster. Trace its references."
 
 	firstMapper mapAndTrace: anObject
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 FLAnalysis >> privateMapAndTrace: anObject [
 	"Map an object to its cluster. Trace its references."
 
 	privateFirstMapper mapAndTrace: anObject
 ]
 
-{ #category : #tracing }
+{ #category : 'tracing' }
 FLAnalysis >> privateTrace: anObject [
 
 	privateObjectStack push: anObject
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 FLAnalysis >> run [
 
 	objectStack push: self context object.
@@ -111,7 +113,7 @@ FLAnalysis >> run [
 		whileFalse: [ self privateMapAndTrace: privateObjectStack pop ].
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLAnalysis >> standardMappers [
 	^ {
 		FLLightGlobalMapper new.
@@ -120,7 +122,7 @@ FLAnalysis >> standardMappers [
 	}
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLAnalysis >> substitutionMappers [
 	^ self configuration substitutions collect: [ :assoc |
 		FLPluggableSubstitutionMapper 
@@ -128,7 +130,7 @@ FLAnalysis >> substitutionMappers [
 			substituteBy: assoc value ]
 ]
 
-{ #category : #tracing }
+{ #category : 'tracing' }
 FLAnalysis >> trace: anObject [
 	"It's possible to get here from #privateMapAndTrace: but then #mapAndTrace: will
 	not be sent again (see #run)"

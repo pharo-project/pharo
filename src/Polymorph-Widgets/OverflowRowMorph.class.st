@@ -21,17 +21,19 @@ Example:
 	
 "
 Class {
-	#name : #OverflowRowMorph,
-	#superclass : #PanelMorph,
+	#name : 'OverflowRowMorph',
+	#superclass : 'PanelMorph',
 	#instVars : [
 		'baseMorphs',
 		'moreButton',
 		'moreMorph'
 	],
-	#category : #'Polymorph-Widgets-Base'
+	#category : 'Polymorph-Widgets-Base',
+	#package : 'Polymorph-Widgets',
+	#tag : 'Base'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OverflowRowMorph >> adoptPaneColor: paneColor [
 	"Pass on to the list morph and border too."
 
@@ -43,7 +45,7 @@ OverflowRowMorph >> adoptPaneColor: paneColor [
 		m adoptPaneColor: paneColor]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OverflowRowMorph >> baseMorph: aRowMorph [
 	"Configure the receiver to match the specifications for the given morph and
 	store the given morph's submorphs for later reallocation."
@@ -57,28 +59,28 @@ OverflowRowMorph >> baseMorph: aRowMorph [
 	self fitBaseMorphs
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OverflowRowMorph >> baseMorphs [
 	"Answer the value of baseMorphs"
 
 	^ baseMorphs
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OverflowRowMorph >> baseMorphs: anObject [
 	"Set the value of baseMorphs"
 
 	baseMorphs := anObject
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OverflowRowMorph >> buttonWidth [
 	"Answer the width for the more button."
 
 	^self theme scrollbarThickness + 3
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OverflowRowMorph >> desiredMoreMorphPosition [
 	"Answer the position the more morph should be placed."
 
@@ -87,7 +89,7 @@ OverflowRowMorph >> desiredMoreMorphPosition [
 		ifFalse: [self moreButton boundsInWorld bottomRight - (self moreMorph width@0)]
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 OverflowRowMorph >> extent: aPoint [
 	"Refit the base morphs and potential 'more' button'"
 
@@ -97,7 +99,7 @@ OverflowRowMorph >> extent: aPoint [
 		"since possibly changing actual submorphs during layout processing"
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 OverflowRowMorph >> fitBaseMorphs [
 	"Replace the receiver's submorphs with the base morphs that
 	can fit in the receiver's bounds. Critically, morphs must be replaced in
@@ -119,14 +121,14 @@ OverflowRowMorph >> fitBaseMorphs [
 		proposed
 			removeMorph: (proposed submorphs at: proposed submorphs size - 1);
 			extent: proposed minExtent].
-	(proposed submorphCount = 1 and: [self moreButton owner notNil]) ifTrue: [
+	(proposed submorphCount = 1 and: [self moreButton owner isNotNil]) ifTrue: [
 		self moreButton hResizing: #spaceFill].
 	self
 		removeAllMorphs;
 		addAllMorphs: proposed submorphs
 ]
 
-{ #category : #showing }
+{ #category : 'showing' }
 OverflowRowMorph >> hideMore [
 	"Hide the morphs that don't fit."
 
@@ -136,7 +138,7 @@ OverflowRowMorph >> hideMore [
 				w invalidRect: self moreMorph bounds]]]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OverflowRowMorph >> initialize [
 	"Initialize the receiver."
 
@@ -149,46 +151,46 @@ OverflowRowMorph >> initialize [
 		vResizing: #shrinkWrap
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OverflowRowMorph >> moreButton [
 	"Answer the value of moreButton"
 
 	^ moreButton
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OverflowRowMorph >> moreButton: anObject [
 	"Set the value of moreButton"
 
 	moreButton := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OverflowRowMorph >> moreButtonLabel [
 	"Answer the label for the more button."
 
-	^AlphaImageMorph new image: (
+	^AlphaImageMorph new formSet: (
 		ScrollBarMorph
 			arrowOfDirection: #right
 			size: self buttonWidth
 			color: self paneColor darker)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OverflowRowMorph >> moreMorph [
 	"Answer the value of moreMorph"
 
 	^ moreMorph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OverflowRowMorph >> moreMorph: anObject [
 	"Set the value of moreMorph"
 
 	moreMorph := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OverflowRowMorph >> moreMorphs [
 	"Answer those base morphs that are not currently part of the
 	receiver's submorphs."
@@ -198,14 +200,14 @@ OverflowRowMorph >> moreMorphs [
 		ifNotEmpty: [self baseMorphs copyFrom: self submorphs size to: self baseMorphs size]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OverflowRowMorph >> moreVisible [
 	"Answer whether the more column is visible."
 
-	^(self moreMorph ifNil: [^false]) owner notNil
+	^(self moreMorph ifNil: [^false]) owner isNotNil
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OverflowRowMorph >> newMoreButton [
 	"Answer a new button for popping up the base morphs that are currently
 	unable to fit in the allotted space."
@@ -221,7 +223,7 @@ OverflowRowMorph >> newMoreButton [
 		extent: self buttonWidth asPoint
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OverflowRowMorph >> newPotentialMorph [
 	"Answer a morph for trialing potential layout."
 
@@ -231,7 +233,7 @@ OverflowRowMorph >> newPotentialMorph [
 	^potential
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 OverflowRowMorph >> outOfWorld: aWorld [
 	"Get rid of the more column if visible."
 
@@ -239,7 +241,7 @@ OverflowRowMorph >> outOfWorld: aWorld [
 	^super outOfWorld: aWorld
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OverflowRowMorph >> popMore [
 	"Hide / show the unshown base morphs."
 
@@ -248,7 +250,7 @@ OverflowRowMorph >> popMore [
 		ifFalse: [self hideMore]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OverflowRowMorph >> recreateMoreMorph [
 	"Answer a new morph showing the undisplayed base morphs.
 	Assign to moreMorph."
@@ -265,7 +267,7 @@ OverflowRowMorph >> recreateMoreMorph [
 	^self moreMorph
 ]
 
-{ #category : #showing }
+{ #category : 'showing' }
 OverflowRowMorph >> showMore [
 	"Show the morphs that don't fit."
 
@@ -274,7 +276,7 @@ OverflowRowMorph >> showMore [
 	self world addMorphInLayer: self moreMorph
 ]
 
-{ #category : #stepping }
+{ #category : 'stepping' }
 OverflowRowMorph >> step [
 	"Move the more column if it is showing."
 
@@ -285,7 +287,7 @@ OverflowRowMorph >> step [
 			ifFalse: [self hideMore]]
 ]
 
-{ #category : #stepping }
+{ #category : 'stepping' }
 OverflowRowMorph >> stepTime [
 	"Answer the desired time between steps in milliseconds."
 

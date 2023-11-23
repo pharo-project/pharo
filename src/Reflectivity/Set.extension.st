@@ -1,6 +1,6 @@
-Extension { #name : #Set }
+Extension { #name : 'Set' }
 
-{ #category : #'*Reflectivity' }
+{ #category : '*Reflectivity' }
 Set >> metaLinkOptions [
 	^{
 	#parseOptions: -> #( + optionCompileOnLinkInstallation).

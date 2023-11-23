@@ -2,12 +2,14 @@
 This class contains tests for class `AbstractFontProvider`
 "
 Class {
-	#name : #AbstractFontProviderTest,
-	#superclass : #TestCase,
-	#category : #'Fonts-Infrastructure-Tests-Base'
+	#name : 'AbstractFontProviderTest',
+	#superclass : 'TestCase',
+	#category : 'Fonts-Infrastructure-Tests-Base',
+	#package : 'Fonts-Infrastructure-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 AbstractFontProviderTest >> testIsAbstractClass [
 
 	self

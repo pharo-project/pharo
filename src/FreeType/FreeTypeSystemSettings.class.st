@@ -2,15 +2,17 @@
 Settings for the FreeType system
 "
 Class {
-	#name : #FreeTypeSystemSettings,
-	#superclass : #Model,
+	#name : 'FreeTypeSystemSettings',
+	#superclass : 'Model',
 	#classVars : [
 		'LoadFT2Library'
 	],
-	#category : #'FreeType-Settings'
+	#category : 'FreeType-Settings',
+	#package : 'FreeType',
+	#tag : 'Settings'
 }
 
-{ #category : #settings }
+{ #category : 'settings' }
 FreeTypeSystemSettings class >> freeTypeSettingsOn: aBuilder [
 	<systemsettings>
 	(aBuilder setting: #noFt2Library)
@@ -32,7 +34,7 @@ FreeTypeSystemSettings class >> freeTypeSettingsOn: aBuilder [
 		label: 'Use Free type';
 		description:
 			'If checked, it allows the usage of Freetype fonts and updates available fonts by scanning the current system';
-		precondition: [ FT2Library current notNil ];
+		precondition: [ FT2Library current isNotNil ];
 		parent: #appearance;
 		order: 3;
 		with: [ (aBuilder pickOne: #monitorType)
@@ -94,7 +96,7 @@ o NONE: use the original glyph shapes without snapping their features to pixel b
 						range: (0 to: 100 by: 10) ] ]
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 FreeTypeSystemSettings class >> ft2LibraryVersion [
 	^ Smalltalk ui theme
 		newLabelIn: self
@@ -103,17 +105,17 @@ FreeTypeSystemSettings class >> ft2LibraryVersion [
 		getEnabled: nil
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 FreeTypeSystemSettings class >> loadFt2Library [
 	^ LoadFT2Library ifNil: [LoadFT2Library := false]
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 FreeTypeSystemSettings class >> noFt2Library [
 	^ 'Free type fonts are not available'
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 FreeTypeSystemSettings class >> noFt2Library: aBoolean [
 
 	"ignore it for now"

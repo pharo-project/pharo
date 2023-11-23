@@ -2,18 +2,20 @@
 I return only methods which read given variables
 "
 Class {
-	#name : #ClyVariableReadersQuery,
-	#superclass : #ClyVariableReferencesQuery,
-	#category : #'Calypso-SystemQueries-Queries'
+	#name : 'ClyVariableReadersQuery',
+	#superclass : 'ClyVariableReferencesQuery',
+	#category : 'Calypso-SystemQueries-Queries',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Queries'
 }
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyVariableReadersQuery >> description [
 
 	^'readers of ', self printVariables
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyVariableReadersQuery >> doesMethod: aMethod useVar: aVariable [
 
 	^aVariable isReadIn: aMethod

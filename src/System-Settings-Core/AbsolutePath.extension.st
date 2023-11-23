@@ -1,6 +1,6 @@
-Extension { #name : #AbsolutePath }
+Extension { #name : 'AbsolutePath' }
 
-{ #category : #'*System-Settings-Core' }
+{ #category : '*System-Settings-Core' }
 AbsolutePath >> acceptSettings: aVisitor [
 	^ aVisitor visitAbsolutePath: self
 ]

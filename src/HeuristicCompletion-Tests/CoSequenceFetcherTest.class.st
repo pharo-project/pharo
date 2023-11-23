@@ -1,10 +1,12 @@
 Class {
-	#name : #CoSequenceFetcherTest,
-	#superclass : #CoBasicFetcherWithElementsTest,
-	#category : #'HeuristicCompletion-Tests-Core'
+	#name : 'CoSequenceFetcherTest',
+	#superclass : 'CoBasicFetcherWithElementsTest',
+	#category : 'HeuristicCompletion-Tests-Core',
+	#package : 'HeuristicCompletion-Tests',
+	#tag : 'Core'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 CoSequenceFetcherTest >> setUp [
 
 	super setUp.
@@ -21,13 +23,13 @@ CoSequenceFetcherTest >> setUp [
 		NECGlobalEntry contents: 'C' node: nil. }
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoSequenceFetcherTest >> testCompletionCompositionNextManyShouldStopAfterEndOfElements [
 
 	self assertCollectionOfEntry: (self fetcher next: 10) equals: expectedElements
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoSequenceFetcherTest >> testCompletionCompositionNextShouldReturnValuesOfSecondCompletionAfterFirst [
 
 	"Consume instance variables"
@@ -35,7 +37,7 @@ CoSequenceFetcherTest >> testCompletionCompositionNextShouldReturnValuesOfSecond
 	self assertEntry: self fetcher next equals: (NECGlobalEntry contents: 'A' node: nil)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoSequenceFetcherTest >> testNextManyAfterFirstSubfetcherShouldReturnCollectionWithSecondSubfetcherElements [
 
 	self

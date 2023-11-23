@@ -2,7 +2,9 @@
 NumberParser is parsing and building numbers from string/stream.
 "
 Class {
-	#name : #ManifestNumberParser,
-	#superclass : #PackageManifest,
-	#category : #'NumberParser-Manifest'
+	#name : 'ManifestNumberParser',
+	#superclass : 'PackageManifest',
+	#category : 'NumberParser-Manifest',
+	#package : 'NumberParser',
+	#tag : 'Manifest'
 }

@@ -2,16 +2,18 @@
 I represent the execution of a ""rename class"" (RBRenameClassRefactoring) refactoring.
 "
 Class {
-	#name : #EpRenameClassRefactoring,
-	#superclass : #EpRefactoring,
+	#name : 'EpRenameClassRefactoring',
+	#superclass : 'EpRefactoring',
 	#instVars : [
 		'newName',
 		'oldName'
 	],
-	#category : #'Epicea-Model'
+	#category : 'Epicea-Model',
+	#package : 'Epicea',
+	#tag : 'Model'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 EpRenameClassRefactoring class >> rename: oldName to: newName [
 	^ self basicNew
 		initializeFrom: oldName
@@ -19,7 +21,7 @@ EpRenameClassRefactoring class >> rename: oldName to: newName [
 		yourself
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 EpRenameClassRefactoring >> asRBRefactoring [
 
 	^ RBRenameClassRefactoring new
@@ -27,7 +29,7 @@ EpRenameClassRefactoring >> asRBRefactoring [
 		newName: newName
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 EpRenameClassRefactoring >> initializeFrom: anOldName to: aNewName [
 	self initialize.
 
@@ -35,12 +37,12 @@ EpRenameClassRefactoring >> initializeFrom: anOldName to: aNewName [
 	newName := aNewName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpRenameClassRefactoring >> newName [
 	^ newName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpRenameClassRefactoring >> oldName [
 	^ oldName
 ]

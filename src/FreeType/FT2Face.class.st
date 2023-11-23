@@ -18,8 +18,8 @@ charmap -- set by setCharmap
 
 "
 Class {
-	#name : #FT2Face,
-	#superclass : #FT2Handle,
+	#name : 'FT2Face',
+	#superclass : 'FT2Handle',
 	#instVars : [
 		'numFaces',
 		'faceIndex',
@@ -50,10 +50,12 @@ Class {
 	#pools : [
 		'FT2Types'
 	],
-	#category : #'FreeType-Base'
+	#category : 'FreeType-Base',
+	#package : 'FreeType',
+	#tag : 'Base'
 }
 
-{ #category : #finalization }
+{ #category : 'finalization' }
 FT2Face class >> finalizeResourceData: handle [
 
 	handle ifNil: [ ^ self ].
@@ -64,7 +66,7 @@ FT2Face class >> finalizeResourceData: handle [
 	handle beNull
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 FT2Face >> angle: angle scale: scale offset: aPoint [
 
 	| one matrix delta |
@@ -89,7 +91,7 @@ FT2Face >> angle: angle scale: scale offset: aPoint [
 	self primSetTransform: matrix delta: delta
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 FT2Face >> angle: angle scale: scale offset: aPoint slant: slant [
 
 	| one matrix delta slantOne |
@@ -116,7 +118,7 @@ FT2Face >> angle: angle scale: scale offset: aPoint slant: slant [
 	self primSetTransform: matrix delta: delta
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 FT2Face >> angle: angle scalePoint: scalePoint offset: aPoint [
 
 	| oneX oneY matrix delta |
@@ -142,7 +144,7 @@ FT2Face >> angle: angle scalePoint: scalePoint offset: aPoint [
 	self primSetTransform: matrix delta: delta
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 FT2Face >> angle: angle scalePoint: scalePoint offset: aPoint slant: slant [
 
 	| oneX oneY matrix delta slantOne|
@@ -170,25 +172,25 @@ FT2Face >> angle: angle scalePoint: scalePoint offset: aPoint slant: slant [
 	self primSetTransform: matrix delta: delta
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FT2Face >> ascender [
 
 	^ ascender
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FT2Face >> availableSizes [
 
 	^ availableSizes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FT2Face >> bbox [
 
 	^ bbox
 ]
 
-{ #category : #outlines }
+{ #category : 'outlines' }
 FT2Face >> characterOutline: aCharacter [
 
 	^ self
@@ -196,7 +198,7 @@ FT2Face >> characterOutline: aCharacter [
 		  flags: LoadIgnoreTransform
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FT2Face >> charmaps [
 	"Answer an Array of Strings naming the different character maps available for setCharMap:"
 
@@ -206,13 +208,13 @@ FT2Face >> charmaps [
 	^ charmaps
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FT2Face >> descender [
 
 	^ descender
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 FT2Face >> emboldenOutline: strength [
 	| returnCode outline faceRec |
 
@@ -225,98 +227,98 @@ FT2Face >> emboldenOutline: strength [
 		ifTrue: [ FT2Error errorCode: returnCode signal: 'Error embolding glyph' ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FT2Face >> encoding [
 
 	encoding ifNil: [ self getCharMap ].
 	^ encoding
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FT2Face >> faceFlags [
 
 	^ faceFlags
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FT2Face >> faceIndex [
 
 	^ faceIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FT2Face >> familyName [
 
 	^ familyName
 ]
 
-{ #category : #'private - ffi' }
+{ #category : 'private - ffi' }
 FT2Face >> ffiGetCharIndex: charIndex [
 
 	^ self ffiCall: #( FT_UInt FT_Get_Char_Index #( self , FT_ULong charIndex ) )
 ]
 
-{ #category : #'private - ffi' }
+{ #category : 'private - ffi' }
 FT2Face >> ffiGetKerningLeft: left_glyph right: right_glyph result: akerning [
 
 	self ffiCall: #(FT_Error FT_Get_Kerning(self, FT_UInt left_glyph, FT_UInt right_glyph, 2, FT_Vector *akerning ))
 ]
 
-{ #category : #'private - ffi' }
+{ #category : 'private - ffi' }
 FT2Face >> ffiGetPostscriptName [
 
 	self ffiCall: #(char* FT_Get_Postscript_Name(self))
 ]
 
-{ #category : #'private - ffi' }
+{ #category : 'private - ffi' }
 FT2Face >> ffiLoadChar: char_code flags: load_flags [
 
 	^ self ffiCall: #(FT_Error FT_Load_Char(self, FT_ULong char_code, FT_Int32 load_flags ))
 ]
 
-{ #category : #'private - ffi' }
+{ #category : 'private - ffi' }
 FT2Face >> ffiLoadGlyph: glyph_index flags: load_flags [
 
 	^ self ffiCall: #(FT_Error FT_Load_Glyph(self, FT_UInt glyph_index,FT_Int32 load_flags ))
 ]
 
-{ #category : #'private - ffi' }
+{ #category : 'private - ffi' }
 FT2Face >> ffiOutline: outline embolden: strength [
 
 	^ self ffiCall: #(FT_Error FT_Outline_Embolden(FT_Outline* outline, FT_Pos strength ))
 ]
 
-{ #category : #'private - ffi' }
+{ #category : 'private - ffi' }
 FT2Face >> ffiOutline: outline transformByMatrix: matrix [
 
 	^ self ffiCall: #(void FT_Outline_Transform( FT_Outline* outline, FT_Matrix* matrix ))
 ]
 
-{ #category : #'private - ffi' }
+{ #category : 'private - ffi' }
 FT2Face >> ffiSelectCharmap: encoding_value [
 
 	self ffiCall: #(FT_Error FT_Select_Charmap(self, FT_Encoding encoding_value ))
 ]
 
-{ #category : #'private - ffi' }
+{ #category : 'private - ffi' }
 FT2Face >> ffiSetPixelWidth: pixel_width height: pixel_height [
 
 	^ self ffiCall: #( long FT_Set_Pixel_Sizes #( self , FT_UInt pixel_width, FT_UInt pixel_height ) )
 ]
 
-{ #category : #'private - ffi' }
+{ #category : 'private - ffi' }
 FT2Face >> ffiTransformMatrix: matrix delta: delta [
 
 	self ffiCall: #(void FT_Set_Transform(self, FT_Matrix* matrix, FT_Vector* delta ))
 ]
 
-{ #category : #'private - ffi' }
+{ #category : 'private - ffi' }
 FT2Face >> ffiTranslateOutline: outline x: xOffset y: yOffset [
 
 	self ffiCall: #(void FT_Outline_Translate (FT_Outline * outline, FT_Pos xOffset, FT_Pos yOffset))
 ]
 
-{ #category : #glyphs }
+{ #category : 'glyphs' }
 FT2Face >> fillGlyph: aGlyphSlot [
 	| faceRec |
 
@@ -327,7 +329,7 @@ FT2Face >> fillGlyph: aGlyphSlot [
 	aGlyphSlot fillFromGlyphSlotRec: faceRec glyph
 ]
 
-{ #category : #charmaps }
+{ #category : 'charmaps' }
 FT2Face >> getCharMap [
 	|faceRec|
 	self isValid ifFalse: [ self error: 'The Face is not valid.' ].
@@ -339,7 +341,7 @@ FT2Face >> getCharMap [
 	encodingId := faceRec charmap encoding_id
 ]
 
-{ #category : #charmaps }
+{ #category : 'charmaps' }
 FT2Face >> getCharMapsInto: array [
 	| faceRec charmap external |
 
@@ -355,13 +357,13 @@ FT2Face >> getCharMapsInto: array [
 	^ array
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FT2Face >> glyph [
 	glyph ifNil: [ glyph := FT2GlyphSlot fromFace: self ].
 	^glyph
 ]
 
-{ #category : #glyphs }
+{ #category : 'glyphs' }
 FT2Face >> glyphOfCharacter: aCharacter [
 	"load a glyph with outline, glyph is not scaled "
 	| em aGlyph |
@@ -374,12 +376,12 @@ FT2Face >> glyphOfCharacter: aCharacter [
 	^aGlyph
 ]
 
-{ #category : #glyphs }
+{ #category : 'glyphs' }
 FT2Face >> glyphOfCharacter: aCharacter fontSize: fontSize [
 	^self glyphOfCharacter: aCharacter pixelSize: fontSize@fontSize
 ]
 
-{ #category : #glyphs }
+{ #category : 'glyphs' }
 FT2Face >> glyphOfCharacter: aCharacter pixelSize: pixelSize [
 	"load a glyph with outline, glyph is not scaled "
 	| aGlyph |
@@ -391,36 +393,40 @@ FT2Face >> glyphOfCharacter: aCharacter pixelSize: pixelSize [
 	^aGlyph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FT2Face >> height [
 	^height
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FT2Face >> isBold [
-	styleFlags == nil ifTrue:[^false].
-	^styleFlags allMask: StyleFlagBold
+
+	styleFlags ifNil: [ ^ false ].
+	^ styleFlags allMask: StyleFlagBold
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FT2Face >> isFixedWidth [
-	styleFlags == nil ifTrue:[^false].
-	^faceFlags allMask: 4 "FT_FACE_FLAG_FIXED_WIDTH"
+
+	styleFlags ifNil: [ ^ false ].
+	^ faceFlags allMask: 4 "FT_FACE_FLAG_FIXED_WIDTH"
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FT2Face >> isItalic [
-	styleFlags == nil ifTrue:[^false].
-	^styleFlags allMask: StyleFlagItalic
+
+	styleFlags ifNil: [ ^ false ].
+	^ styleFlags allMask: StyleFlagItalic
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FT2Face >> isRegular [
-	styleFlags == nil ifTrue:[^true].
-	^styleFlags = 0
+
+	styleFlags ifNil: [ ^ true ].
+	^ styleFlags = 0
 ]
 
-{ #category : #kerning }
+{ #category : 'kerning' }
 FT2Face >> kerningLeft: leftCharacter right: rightCharacter [
 
 	^ self
@@ -428,7 +434,7 @@ FT2Face >> kerningLeft: leftCharacter right: rightCharacter [
 		right: (self ffiGetCharIndex: rightCharacter asInteger)
 ]
 
-{ #category : #glyphs }
+{ #category : 'glyphs' }
 FT2Face >> loadCharacter: index flags: flags [
 
 	self primLoadCharacter: index flags: flags.
@@ -437,7 +443,7 @@ FT2Face >> loadCharacter: index flags: flags [
 		ifNotNil: [ glyph loadFrom: self ]
 ]
 
-{ #category : #outlines }
+{ #category : 'outlines' }
 FT2Face >> loadCharacterOutline: index flags: flags [
 
 	| em outline |
@@ -452,7 +458,7 @@ FT2Face >> loadCharacterOutline: index flags: flags [
 	^outline
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FT2Face >> loadFields [
 
 	| faceRect |
@@ -490,7 +496,7 @@ FT2Face >> loadFields [
 		        corner: (Point x: faceRect bbox xMax y: faceRect bbox yMax)
 ]
 
-{ #category : #glyphs }
+{ #category : 'glyphs' }
 FT2Face >> loadGlyph: index flags: flags [
 	| returnCode |
 
@@ -502,17 +508,17 @@ FT2Face >> loadGlyph: index flags: flags [
 		ifNotNil: [ glyph loadFrom: self ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FT2Face >> maxAdvanceHeight [
 	^maxAdvanceHeight
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FT2Face >> maxAdvanceWidth [
 	^maxAdvanceWidth
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FT2Face >> newFaceFromExternalMemory: aFreeTypeExternalMemory index: anInteger [
 
 	| memSize holder returnCode |
@@ -535,7 +541,7 @@ FT2Face >> newFaceFromExternalMemory: aFreeTypeExternalMemory index: anInteger [
 	self autoRelease
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FT2Face >> newFaceFromFile: file index: anInteger [
 
 	| holder returnCode fileName |
@@ -552,40 +558,40 @@ FT2Face >> newFaceFromFile: file index: anInteger [
 	self autoRelease
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FT2Face >> numCharmaps [
 
 	^ numCharmaps
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FT2Face >> numFaces [
 	^numFaces
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FT2Face >> numFixedSizes [
 	^numFixedSizes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FT2Face >> numGlyphs [
 	^numGlyphs
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FT2Face >> outline [
 	self validate.
 	^ FTOutline fromHandle: (FTFaceRec fromHandle: handle) glyph outline getHandle asExternalAddress
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FT2Face >> postscriptName [
 	self isValid ifFalse: [ ^ nil ].
 	^self ffiGetPostscriptName
 ]
 
-{ #category : #'private - primitives' }
+{ #category : 'private - primitives' }
 FT2Face >> primGetKerningLeft: leftGlyphIndex right: rightGlyphIndex [
 	| result returnCode |
 	result := FTVector new.
@@ -601,7 +607,7 @@ FT2Face >> primGetKerningLeft: leftGlyphIndex right: rightGlyphIndex [
 	^ result x @ result y
 ]
 
-{ #category : #'private - primitives' }
+{ #category : 'private - primitives' }
 FT2Face >> primLoadCharacter: index flags: flags [
 	| returnCode |
 	self validate.
@@ -609,7 +615,7 @@ FT2Face >> primLoadCharacter: index flags: flags [
 	returnCode ~= 0 ifTrue: [ FT2Error errorCode: returnCode signal: 'Error loading character' ]
 ]
 
-{ #category : #'private - primitives' }
+{ #category : 'private - primitives' }
 FT2Face >> primSetTransform: matrixWordArray delta: deltaWordArray [
 	"matrix is 16.16 fixed point
 		x' = x*m[0] + y*m[1]
@@ -634,7 +640,7 @@ FT2Face >> primSetTransform: matrixWordArray delta: deltaWordArray [
 	self ffiTransformMatrix: matrix delta: delta
 ]
 
-{ #category : #'private - primitives' }
+{ #category : 'private - primitives' }
 FT2Face >> primTransformGlyphSlotOutline:  anIntegerArray [
 
 	| faceRec outline matrix |
@@ -652,12 +658,12 @@ FT2Face >> primTransformGlyphSlotOutline:  anIntegerArray [
 	self ffiOutline: outline transformByMatrix: matrix
 ]
 
-{ #category : #'private - primitives' }
+{ #category : 'private - primitives' }
 FT2Face >> primTranslateGlyphSlotOutline:  anIntegerArray [
 	self ffiTranslateOutline: self outline x: (anIntegerArray at: 1) y: (anIntegerArray at: 2)
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 FT2Face >> printOn: aStream [
 
 	super printOn: aStream.
@@ -671,35 +677,34 @@ FT2Face >> printOn: aStream [
 		nextPut: $]
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 FT2Face >> renderGlyphIntoForm: aForm [
 	"render the current glyph (selected by loadChar/loadGlyph into the given form (1 or 8 bpp)"
 	self validate.
 	self renderGlyphIntoForm: aForm pixelMode: nil
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 FT2Face >> renderGlyphIntoForm: aForm pixelMode: pixelMode [
 	"render the current glyph (selected by loadChar/loadGlyph into the given form (1 or 8 bpp)
 	with pixel mode anInteger "
 
-	| ftBitmap buffer outline |
+	| ftBitmap outline |
 	ftBitmap := FTBitmap new.
 	outline := self outline.
 
-	buffer := ExternalAddress allocate: aForm bits byteSize.
-	1 to: aForm bits byteSize do: [ :i | buffer byteAt: i put: 0 ].
-	buffer autoRelease.
+	ExternalAddress allocate: aForm bits byteSize bytesDuring:[:buffer |
+		1 to: aForm bits byteSize do: [ :i | buffer byteAt: i put: 0 ].
 
-	ftBitmap setBuffer: buffer.
-	ftBitmap initializeFromForm: aForm pixelMode: pixelMode.
+		ftBitmap setBuffer: buffer.
+		ftBitmap initializeFromForm: aForm pixelMode: pixelMode.
 
-	FT2Library current getBitmap: ftBitmap getHandle fromOutline: outline getHandle.
+		FT2Library current getBitmap: ftBitmap getHandle fromOutline: outline getHandle.
 
-	aForm bits copyFromByteArray: (buffer copyFrom: 1 to: aForm bits byteSize)
+		aForm bits copyFromByteArray: (buffer copyFrom: 1 to: aForm bits byteSize) ]
 ]
 
-{ #category : #charmaps }
+{ #category : 'charmaps' }
 FT2Face >> setCharMap: encodingString [
 	| returnCode |
 
@@ -711,7 +716,7 @@ FT2Face >> setCharMap: encodingString [
 	self getCharMap
 ]
 
-{ #category : #glyphs }
+{ #category : 'glyphs' }
 FT2Face >> setPixelWidth: x height: y [
 
 	| returnCode |
@@ -721,22 +726,22 @@ FT2Face >> setPixelWidth: x height: y [
 	returnCode ~= 0 ifTrue: [ FT2Error errorCode: returnCode signal: 'Error setting the pixel width and height.' ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FT2Face >> size [
 	^size
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FT2Face >> styleFlags [
 	^styleFlags
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FT2Face >> styleName [
 	^styleName
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 FT2Face >> transform: aMatrix [
 
 	| matrix delta |
@@ -752,7 +757,7 @@ FT2Face >> transform: aMatrix [
 	self primSetTransform: matrix delta: delta
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 FT2Face >> transformOutlineAngle: angle scalePoint: scalePoint slant: slant [
 	| oneX oneY matrix  slantOne|
 	oneX := (16r10000 * scalePoint x) asInteger.
@@ -776,7 +781,7 @@ FT2Face >> transformOutlineAngle: angle scalePoint: scalePoint slant: slant [
 	self primTransformGlyphSlotOutline: matrix
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 FT2Face >> translateOutlineBy: aPoint [
 	| delta|
 	delta := IntegerArray new: 2.
@@ -785,22 +790,22 @@ FT2Face >> translateOutlineBy: aPoint [
 	self primTranslateGlyphSlotOutline: delta
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FT2Face >> underlinePosition [
 	^underlinePosition
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FT2Face >> underlineThickness [
 	^underlineThickness
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FT2Face >> unitsPerEm [
 	^unitsPerEm
 ]
 
-{ #category : #validation }
+{ #category : 'validation' }
 FT2Face >> validate [
 	"Do nothing, overridden in subclass FreeTypeFace>>#validate"
 ]

@@ -1,10 +1,11 @@
 Class {
-	#name : #BaselineOfReflectionMirrors,
-	#superclass : #BaselineOf,
-	#category : #BaselineOfReflectionMirrors
+	#name : 'BaselineOfReflectionMirrors',
+	#superclass : 'BaselineOf',
+	#category : 'BaselineOfReflectionMirrors',
+	#package : 'BaselineOfReflectionMirrors'
 }
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfReflectionMirrors >> baseline: spec [
 	<baseline>
 	spec for: #'common' do: [

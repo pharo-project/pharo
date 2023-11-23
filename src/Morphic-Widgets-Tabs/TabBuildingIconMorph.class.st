@@ -14,21 +14,23 @@ Internal Representation and Key Implementation Points.
     Implementation Points
 "
 Class {
-	#name : #TabBuildingIconMorph,
-	#superclass : #Morph,
+	#name : 'TabBuildingIconMorph',
+	#superclass : 'Morph',
 	#instVars : [
 		'progressIconMorph',
 		'progress'
 	],
-	#category : #'Morphic-Widgets-Tabs-Morphs'
+	#category : 'Morphic-Widgets-Tabs-Morphs',
+	#package : 'Morphic-Widgets-Tabs',
+	#tag : 'Morphs'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TabBuildingIconMorph >> currentIcon [
 	^TabMorph perform: (#refreshIcon, progress asString) asSymbol
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TabBuildingIconMorph >> initialize [
 	super initialize.
 	self
@@ -40,7 +42,7 @@ TabBuildingIconMorph >> initialize [
 	self extent: progressIconMorph extent
 ]
 
-{ #category : #stepping }
+{ #category : 'stepping' }
 TabBuildingIconMorph >> step [
 	progress := progress + 1.
 	progress > 10 ifTrue: [ progress := 1 ].
@@ -48,7 +50,7 @@ TabBuildingIconMorph >> step [
 	progressIconMorph form: self currentIcon
 ]
 
-{ #category : #stepping }
+{ #category : 'stepping' }
 TabBuildingIconMorph >> stepTime [
 
 	^ 100 "milliseconds"

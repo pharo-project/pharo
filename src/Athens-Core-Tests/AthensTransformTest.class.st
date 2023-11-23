@@ -2,22 +2,24 @@
 An AthensTransformTest is a test class for testing the behavior of AthensTransform
 "
 Class {
-	#name : #AthensTransformTest,
-	#superclass : #TestCase,
-	#category : #'Athens-Core-Tests-Transforms'
+	#name : 'AthensTransformTest',
+	#superclass : 'TestCase',
+	#category : 'Athens-Core-Tests-Transforms',
+	#package : 'Athens-Core-Tests',
+	#tag : 'Transforms'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 AthensTransformTest class >> isAbstract [
 	^ self == AthensTransformTest
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 AthensTransformTest >> newTransform [
 	^ self transformClass new
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AthensTransformTest >> testIdentity [
 	| transform |
 	transform := self newTransform.
@@ -30,7 +32,7 @@ AthensTransformTest >> testIdentity [
 	self assert: (transform transform: -2 @ -5) equals: -2 	@ -5
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AthensTransformTest >> testInvert [
 	| transform |
 	transform := self newTransform.
@@ -48,7 +50,7 @@ AthensTransformTest >> testInvert [
 	self assert: (transform transform: -2 @ -3) closeTo: -4 @ 0.6
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AthensTransformTest >> testLoadAffineTransform [
 	| transform affineTransform |
 	transform := self newTransform.
@@ -66,7 +68,7 @@ AthensTransformTest >> testLoadAffineTransform [
 	self assert: (transform transform: -2 @ -5) closeTo: 26 @ 3
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AthensTransformTest >> testLoadIdentity [
 	| transform |
 	transform := self newTransform.
@@ -82,7 +84,7 @@ AthensTransformTest >> testLoadIdentity [
 	self assert: (transform transform: -2 @ -5) equals: -2 	@ -5
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AthensTransformTest >> testRestoreAfter [
 	| transform |
 	transform := self newTransform.
@@ -111,7 +113,7 @@ AthensTransformTest >> testRestoreAfter [
 	self assert: (transform transform: -2 @ -5) closeTo: 26 @ 3
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AthensTransformTest >> testRotateByDegrees [
 	| transform |
 	transform := self newTransform.
@@ -141,7 +143,7 @@ AthensTransformTest >> testRotateByDegrees [
 	self assert: (transform transform: -2 @ -5) closeTo: 5 @ -2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AthensTransformTest >> testRotateByRadians [
 	| transform |
 	transform := self newTransform.
@@ -171,7 +173,7 @@ AthensTransformTest >> testRotateByRadians [
 	self assert: (transform transform: -2 @ -5) closeTo: 5 @ -2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AthensTransformTest >> testScaleBy [
 	| transform |
 	transform := self newTransform.
@@ -200,7 +202,7 @@ AthensTransformTest >> testScaleBy [
 	self assert: (transform transform: -2 @ -5) closeTo: 3 @ 7.5
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AthensTransformTest >> testScaleXY [
 	| transform |
 	transform := self newTransform.
@@ -229,7 +231,7 @@ AthensTransformTest >> testScaleXY [
 	self assert: (transform transform: -2 @ -5) closeTo: 3 @ 7.5
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AthensTransformTest >> testTransform [
 	| transform |
 	transform := self newTransform.
@@ -245,7 +247,7 @@ AthensTransformTest >> testTransform [
 	self assert: (transform transform: -2 @ -5) closeTo: 26 @ 3
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AthensTransformTest >> testTransformRectangle [
 	| transform |
 	transform := self newTransform.
@@ -262,7 +264,7 @@ AthensTransformTest >> testTransformRectangle [
 	self assert: (transform transformRectangle: (0@0 extent: 10@20)) closeTo: (-75@3 extent: 80@30)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AthensTransformTest >> testTransformXY [
 	| transform |
 	transform := self newTransform.
@@ -278,7 +280,7 @@ AthensTransformTest >> testTransformXY [
 	self assert: (transform transformX: -2 Y: -5) closeTo: 26 @ 3
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AthensTransformTest >> testTranslate [
 	| transform |
 	transform := self newTransform.
@@ -308,7 +310,7 @@ AthensTransformTest >> testTranslate [
 	self assert: (transform transform: -2 @ -5) equals: -1 	@ -3
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AthensTransformTest >> testTranslateBy [
 	| transform |
 	transform := self newTransform.
@@ -338,7 +340,7 @@ AthensTransformTest >> testTranslateBy [
 	self assert: (transform transform: -2 @ -5) equals: -1 	@ -3
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AthensTransformTest >> testTranslateXY [
 	| transform |
 	transform := self newTransform.
@@ -368,7 +370,7 @@ AthensTransformTest >> testTranslateXY [
 	self assert: (transform transform: -2 @ -5) equals: -1 	@ -3
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AthensTransformTest >> transformClass [
 	self subclassResponsibility
 ]

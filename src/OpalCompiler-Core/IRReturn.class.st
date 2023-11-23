@@ -2,23 +2,25 @@
 Instruction ""returnTop""
 "
 Class {
-	#name : #IRReturn,
-	#superclass : #IRInstruction,
-	#category : #'OpalCompiler-Core-IR-Nodes'
+	#name : 'IRReturn',
+	#superclass : 'IRInstruction',
+	#category : 'OpalCompiler-Core-IR-Nodes',
+	#package : 'OpalCompiler-Core',
+	#tag : 'IR-Nodes'
 }
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRReturn >> accept: aVisitor [
 	^ aVisitor visitReturn: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 IRReturn >> isReturn [
 
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRReturn >> nonBodySuccessorSequences [
 	^#()
 ]

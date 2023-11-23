@@ -1,12 +1,12 @@
-Extension { #name : #SmallInteger }
+Extension { #name : 'SmallInteger' }
 
-{ #category : #'*Fuel-Core' }
+{ #category : '*Fuel-Core' }
 SmallInteger >> fuelAccept: aGeneralMapper [
 
 	^aGeneralMapper visitSmallInteger: self
 ]
 
-{ #category : #'*Fuel-Core-Collections' }
+{ #category : '*Fuel-Core-Collections' }
 SmallInteger >> largeIdentityHash [
 	"Return an integer between 0 and 4095 based on all of my bits. Make sure that for nearby receivers the result will not be nearby with high probability."
 

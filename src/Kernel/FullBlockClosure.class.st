@@ -8,28 +8,30 @@ Instance Variables
 	receiver:		<Object>
 "
 Class {
-	#name : #FullBlockClosure,
-	#superclass : #BlockClosure,
-	#type : #variable,
+	#name : 'FullBlockClosure',
+	#superclass : 'BlockClosure',
+	#type : 'variable',
 	#instVars : [
 		'receiver'
 	],
-	#category : #'Kernel-Methods'
+	#category : 'Kernel-Methods',
+	#package : 'Kernel',
+	#tag : 'Methods'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FullBlockClosure >> receiver [
 	^ receiver
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FullBlockClosure >> receiver: anObject [
 	receiver := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FullBlockClosure >> sender [
 	"Answer the context that sent the message that created the receiver."
-
+	<reflection: 'Message sending and code execution - Message send reification'>
 	^outerContext sender
 ]

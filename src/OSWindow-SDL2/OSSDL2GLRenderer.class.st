@@ -2,18 +2,20 @@
 My instances implement OSWindowGLRenderer interface using SDL2 library
 "
 Class {
-	#name : #OSSDL2GLRenderer,
-	#superclass : #OSWindowGLRenderer,
+	#name : 'OSSDL2GLRenderer',
+	#superclass : 'OSWindowGLRenderer',
 	#instVars : [
 		'context'
 	],
 	#pools : [
 		'SDL2Constants'
 	],
-	#category : #'OSWindow-SDL2-OpenGL'
+	#category : 'OSWindow-SDL2-OpenGL',
+	#package : 'OSWindow-SDL2',
+	#tag : 'OpenGL'
 }
 
-{ #category : #finalization }
+{ #category : 'finalization' }
 OSSDL2GLRenderer class >> finalizeResourceData: windowAndContext [
 	| window context |
 	window := windowAndContext first.
@@ -26,12 +28,12 @@ OSSDL2GLRenderer class >> finalizeResourceData: windowAndContext [
 	]
 ]
 
-{ #category : #misc }
+{ #category : 'misc' }
 OSSDL2GLRenderer >> checkThread [
 OSWindowRenderThread isActiveThread ifFalse: [ ^ 'GL Renderer must be used inside the OSWindowRenderThread or a critical section' ]
 ]
 
-{ #category : #misc }
+{ #category : 'misc' }
 OSSDL2GLRenderer >> createContext [
 	self onRenderThreadBlocking: [
 		context := SDL2 glCreateContext: backendWindow sdl2Window .
@@ -42,7 +44,7 @@ OSSDL2GLRenderer >> createContext [
 	]
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 OSSDL2GLRenderer >> destroy [
 	self onRenderThreadBlocking: [
 		context ifNotNil: [ context delete ].
@@ -50,13 +52,13 @@ OSSDL2GLRenderer >> destroy [
 	]
 ]
 
-{ #category : #misc }
+{ #category : 'misc' }
 OSSDL2GLRenderer >> getProcAddress: procName [
 	self checkThread.
 	^ SDL2 glGetProcAddress: procName
 ]
 
-{ #category : #misc }
+{ #category : 'misc' }
 OSSDL2GLRenderer >> makeCurrent: aBackendWindow [
 	| windowHandle |
 	context ifNil: [ ^ false ].
@@ -67,7 +69,7 @@ OSSDL2GLRenderer >> makeCurrent: aBackendWindow [
 	^ (SDL2 glMakeCurrent: windowHandle context: context) == 0
 ]
 
-{ #category : #clipping }
+{ #category : 'clipping' }
 OSSDL2GLRenderer >> pixelExtent [
 	| w h |
 	backendWindow ifNil: [ ^ super pixelExtent ].
@@ -78,18 +80,18 @@ OSSDL2GLRenderer >> pixelExtent [
 	^ (w signedLongAt: 1) @ (h signedLongAt: 1)
 ]
 
-{ #category : #misc }
+{ #category : 'misc' }
 OSSDL2GLRenderer >> swapBuffers: aWindow [
 	self checkThread.
 	SDL2 glSwapWindow: aWindow sdl2Window
 ]
 
-{ #category : #'updating screen' }
+{ #category : 'updating screen' }
 OSSDL2GLRenderer >> updateAll [
 	"Do nothing here"
 ]
 
-{ #category : #'updating screen' }
+{ #category : 'updating screen' }
 OSSDL2GLRenderer >> updateRectangle: rectangle [
 	"Do nothing here"
 ]

@@ -3,35 +3,37 @@ My subclasses know how to render a Hiedra visualization (HiRuler) using Athens.
 
 "
 Class {
-	#name : #HiAbstractRenderer,
-	#superclass : #Object,
+	#name : 'HiAbstractRenderer',
+	#superclass : 'Object',
 	#instVars : [
 		'ruler',
 		'rowsInterval'
 	],
-	#category : #'Hiedra-UI'
+	#category : 'Hiedra-UI',
+	#package : 'Hiedra',
+	#tag : 'UI'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiAbstractRenderer >> cellWidth [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiAbstractRenderer >> formExtent [
 	"Answer the pixel extent for the form to be rendered (as a Point)."
 
 	^ self formWidth @ self formHeight
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiAbstractRenderer >> formHeight [
 	"Answer the height in pixels for the form to be rendered."
 
 	^ rowsInterval size * self rowHeight
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiAbstractRenderer >> formWidth [
 	"Answer the width in pixels for the form to be rendered."
 
@@ -39,19 +41,19 @@ HiAbstractRenderer >> formWidth [
 	^ (ruler numberOfColumns + 2) * self cellWidth
 ]
 
-{ #category : #API }
+{ #category : 'API' }
 HiAbstractRenderer >> newForm [
 	"Answer a new form, rendered with the current ruler and rowInterval."
 
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiAbstractRenderer >> rowHeight [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiAbstractRenderer >> rowWidthAt: rowIndex [
 	"Answer the width in pixels required by a row to be rendered."
 
@@ -59,22 +61,22 @@ HiAbstractRenderer >> rowWidthAt: rowIndex [
 	^ ((ruler numberOfColumnsAt: rowIndex) + 2) * self cellWidth
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiAbstractRenderer >> rowsInterval [
 	^ rowsInterval
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiAbstractRenderer >> rowsInterval: anObject [
 	rowsInterval := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiAbstractRenderer >> ruler [
 	^ ruler
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiAbstractRenderer >> ruler: aHiRuler [
 	ruler := aHiRuler
 ]

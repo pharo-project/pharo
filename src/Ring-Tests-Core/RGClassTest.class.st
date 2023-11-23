@@ -1,18 +1,19 @@
 Class {
-	#name : #RGClassTest,
-	#superclass : #RGTest,
+	#name : 'RGClassTest',
+	#superclass : 'RGTest',
 	#traits : 'TRGBehaviorTest + TRGClassDescriptionTest',
 	#classTraits : 'TRGBehaviorTest classTrait + TRGClassDescriptionTest classTrait',
-	#category : #'Ring-Tests-Core'
+	#category : 'Ring-Tests-Core',
+	#package : 'Ring-Tests-Core'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGClassTest >> behaviorClass [
 
 	^ RGClass
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGClassTest >> testClassSide [
 	| behavior |
 	behavior := RGClass unnamed.
@@ -20,7 +21,7 @@ RGClassTest >> testClassSide [
 	self assert: behavior metaclass classSide identicalTo: behavior metaclass
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGClassTest >> testClassVariablesCollection [
 
 	| class env classVariable1 classVariable2 classVariable3 |
@@ -61,7 +62,7 @@ RGClassTest >> testClassVariablesCollection [
 	self assert: (class hasResolved: #classVariables)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGClassTest >> testConversionToTrait [
 
 	| env behavior trait |
@@ -78,7 +79,7 @@ RGClassTest >> testConversionToTrait [
 	self assert: behavior isTrait
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGClassTest >> testCopyForBehaviorDefinitionForClass [
 	"test copying for instance variables from RGClass"
 
@@ -108,7 +109,7 @@ RGClassTest >> testCopyForBehaviorDefinitionForClass [
 	self assert: copy sharedPools anyOne name equals: #SomePool
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGClassTest >> testDefinition [
 	| env aClass |
 	env := RGEnvironment new.
@@ -127,7 +128,7 @@ RGClassTest >> testDefinition [
 	package: ''Kernel-Objects'''
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGClassTest >> testEnsureProtocol [
 
 	| behavior |
@@ -138,7 +139,7 @@ RGClassTest >> testEnsureProtocol [
 	self assert: behavior protocols first equals: #SomeProtocol
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGClassTest >> testEnvironmentStubs [
 
 	| package env |
@@ -151,7 +152,7 @@ RGClassTest >> testEnvironmentStubs [
 "
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGClassTest >> testPrinting [
 	| aClass |
 
@@ -160,7 +161,63 @@ RGClassTest >> testPrinting [
 	self assert: aClass printString equals: #Object
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
+RGClassTest >> testProtocolsForAllMethods [
+
+	| env class1 trait1 trait2 composition method1 method2 method3 method4 |
+
+	env := RGEnvironment new.
+	class1 := env ensureClassNamed: #Class1.
+	composition :=  RGTraitComposition parent: class1.
+	class1 traitComposition: composition.
+	trait1 := env ensureTraitNamed: #Trait1.
+	trait2 := env ensureTraitNamed: #Trait2.
+	composition addTransformation: trait1.
+	composition addTransformation: trait2.
+
+	method1 := class1 ensureLocalMethodNamed: #method1.
+	method1 tagWith: #tag1.
+	self assertCollection: class1 protocolsForAllMethods hasSameElements: #(#tag1).
+
+	method2 := trait1 ensureLocalMethodNamed: #method2.
+	method2 tagWith: #tag1.
+	self assertCollection: class1 protocolsForAllMethods hasSameElements: #(#tag1).
+
+	method3 := trait1 ensureLocalMethodNamed: #method3.
+	method3 tagWith: #tag2.
+	self assertCollection: class1 protocolsForAllMethods hasSameElements: #(#tag1 tag2).
+
+	method4 := trait1 ensureLocalMethodNamed: #method4.
+	method4 tagWith: #tag3.
+	self assertCollection: class1 protocolsForAllMethods hasSameElements: #(#tag1 tag2 tag3)
+]
+
+{ #category : 'tests' }
+RGClassTest >> testProtocolsForAllMethodsForClassWithoutTraits [
+
+	| class method1 method2 |
+
+	class := RGClass unnamed.
+
+	self assertEmpty: class protocolsForAllMethods.
+
+	method1 := class ensureLocalMethodNamed: #method1.
+	method2 := class ensureLocalMethodNamed: #method2.
+
+	self assertEmpty: class tagsForMethods.
+
+	method1 tagWith: #tag1.
+	self assertCollection: class protocolsForAllMethods hasSameElements: #(#tag1).
+
+	method2 tagWith: #tag1.
+	self assertCollection: class protocolsForAllMethods hasSameElements: #(#tag1).
+
+	method1 tagWith: #tag2.
+	self assertCollection: method1 tags sorted hasSameElements: #(#tag1 #tag2).
+	self assertCollection: class tagsForMethods sorted hasSameElements: #(#tag1 #tag2)
+]
+
+{ #category : 'tests' }
 RGClassTest >> testSharedPoolsCollection [
 
 	| class env sharedPool1 sharedPool2 sharedPool3 |
@@ -195,7 +252,7 @@ RGClassTest >> testSharedPoolsCollection [
 	self assert: (class hasResolved: #sharedPools)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGClassTest >> testTagsCollection [
 
 	| class env tag1 tag2 tag3 |
@@ -228,79 +285,23 @@ RGClassTest >> testTagsCollection [
 	self assert: (class hasResolved: #tags)
 ]
 
-{ #category : #tests }
-RGClassTest >> testTagsForAllMethods [
-
-	| env class1 trait1 trait2 composition method1 method2 method3 method4 |
-
-	env := RGEnvironment new.
-	class1 := env ensureClassNamed: #Class1.
-	composition :=  RGTraitComposition parent: class1.
-	class1 traitComposition: composition.
-	trait1 := env ensureTraitNamed: #Trait1.
-	trait2 := env ensureTraitNamed: #Trait2.
-	composition addTransformation: trait1.
-	composition addTransformation: trait2.
-
-	method1 := class1 ensureLocalMethodNamed: #method1.
-	method1 tagWith: #tag1.
-	self assertCollection: class1 tagsForAllMethods hasSameElements: #(#tag1).
-
-	method2 := trait1 ensureLocalMethodNamed: #method2.
-	method2 tagWith: #tag1.
-	self assertCollection: class1 tagsForAllMethods hasSameElements: #(#tag1).
-
-	method3 := trait1 ensureLocalMethodNamed: #method3.
-	method3 tagWith: #tag2.
-	self assertCollection: class1 tagsForAllMethods hasSameElements: #(#tag1 tag2).
-
-	method4 := trait1 ensureLocalMethodNamed: #method4.
-	method4 tagWith: #tag3.
-	self assertCollection: class1 tagsForAllMethods hasSameElements: #(#tag1 tag2 tag3)
-]
-
-{ #category : #tests }
-RGClassTest >> testTagsForAllMethodsForClassWithoutTraits [
-
-	| class method1 method2 |
-
-	class := RGClass unnamed.
-
-	self assert: class tagsForAllMethods isEmpty.
-
-	method1 := class ensureLocalMethodNamed: #method1.
-	method2 := class ensureLocalMethodNamed: #method2.
-
-	self assert: class tagsForMethods isEmpty.
-
-	method1 tagWith: #tag1.
-	self assertCollection: class tagsForAllMethods hasSameElements: #(#tag1).
-
-	method2 tagWith: #tag1.
-	self assertCollection: class tagsForAllMethods hasSameElements: #(#tag1).
-
-	method1 tagWith: #tag2.
-	self assertCollection: method1 tags sorted hasSameElements: #(#tag1 #tag2).
-	self assertCollection: class tagsForMethods sorted hasSameElements: #(#tag1 #tag2)
-]
-
-{ #category : #tests }
+{ #category : 'tests' }
 RGClassTest >> testTagsForMethods [
 
 	| class method1 method2 |
 
 	class := RGClass unnamed.
 
-	self assert: class tagsForMethods isEmpty.
+	self assertEmpty: class tagsForMethods.
 	self assert: (class hasUnresolved: #tagsForMethods).
 
 	method1 := class ensureLocalMethodNamed: #method1.
 	method2 := class ensureLocalMethodNamed: #method2.
 
-	self assert: class tagsForMethods isEmpty.
+	self assertEmpty: class tagsForMethods.
 	self assert: (class hasResolved: #tagsForMethods).
 
-	self assert: (class methodsTaggedWith: #tag1) isEmpty.
+	self assertEmpty: (class methodsTaggedWith: #tag1).
 
 	method1 tagWith: #tag1.
 	self assert: method1 tags equals: #(#tag1).
@@ -330,12 +331,12 @@ RGClassTest >> testTagsForMethods [
 	class removeLocalMethod: method2.
 	self assert: class tagsForMethods sorted equals: #(#tag1 #tag2 #tag3).
 
-	self assert: (class methodsTaggedWith: #tag1) isEmpty.
-	self assert: (class methodsTaggedWith: #tag2) isEmpty.
-	self assert: (class methodsTaggedWith: #tag3) isEmpty
+	self assertEmpty: (class methodsTaggedWith: #tag1).
+	self assertEmpty: (class methodsTaggedWith: #tag2).
+	self assertEmpty: (class methodsTaggedWith: #tag3)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGClassTest >> testTagsForMethodsCollection [
 
 	| class env tag1 tag2 tag3 |
@@ -367,7 +368,7 @@ RGClassTest >> testTagsForMethodsCollection [
 	self assert: (class hasResolved: #tagsForMethods)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGClassTest >> testTagsForMethodsRemoval [
 
 	| class method1 method2 |
@@ -392,7 +393,7 @@ RGClassTest >> testTagsForMethodsRemoval [
 	self assert: class tagsForMethods isEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGClassTest >> testTesting [
 
 	| env behavior |

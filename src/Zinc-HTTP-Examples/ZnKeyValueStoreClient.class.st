@@ -16,15 +16,16 @@ See ZnKeyValueStoreTest for an executable example.
 Part of Zinc HTTP Components.
 "
 Class {
-	#name : #ZnKeyValueStoreClient,
-	#superclass : #Object,
+	#name : 'ZnKeyValueStoreClient',
+	#superclass : 'Object',
 	#instVars : [
 		'httpClient'
 	],
-	#category : #'Zinc-HTTP-Examples'
+	#category : 'Zinc-HTTP-Examples',
+	#package : 'Zinc-HTTP-Examples'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnKeyValueStoreClient >> at: key [
 	"Return the value of key as stored on the server, raising a KeyNotFound when necessary"
 
@@ -36,7 +37,7 @@ ZnKeyValueStoreClient >> at: key [
 					ifFalse: [ exception pass ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnKeyValueStoreClient >> at: key ifAbsent: block [
 	"Return the value of key as stored on the server, evaluating block when not found"
 
@@ -48,7 +49,7 @@ ZnKeyValueStoreClient >> at: key ifAbsent: block [
 					ifFalse: [ exception pass ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnKeyValueStoreClient >> at: key put: value [
 	"Store value under key on the server, returning the URI"
 
@@ -57,14 +58,14 @@ ZnKeyValueStoreClient >> at: key put: value [
 		contents: value asString
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 ZnKeyValueStoreClient >> close [
 	httpClient ifNotNil: [
 		httpClient close.
 		httpClient := nil ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnKeyValueStoreClient >> contents [
 	"Return a Dictionary containing the full contents of the key-value store of the server"
 
@@ -80,7 +81,7 @@ ZnKeyValueStoreClient >> contents [
 	^ dictionary
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnKeyValueStoreClient >> httpClient [
 	"Return the HTTP client that I (re)use.
 	This ZnClient instance can be customized."
@@ -88,7 +89,7 @@ ZnKeyValueStoreClient >> httpClient [
 	^ httpClient ifNil: [ httpClient := self makeHttpClient ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnKeyValueStoreClient >> makeHttpClient [
 	^ ZnClient new
 		url: 'http://localhost:1701/kvstore';
@@ -100,7 +101,7 @@ ZnKeyValueStoreClient >> makeHttpClient [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnKeyValueStoreClient >> removeKey: key [
 	"Remove key from the server, if present, returning the URI"
 

@@ -2,12 +2,14 @@
 SUnit tests for shared queues
 "
 Class {
-	#name : #SharedQueueTest,
-	#superclass : #TestCase,
-	#category : #'Collections-Sequenceable-Tests-Base'
+	#name : 'SharedQueueTest',
+	#superclass : 'TestCase',
+	#category : 'Collections-Sequenceable-Tests-Base',
+	#package : 'Collections-Sequenceable-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 SharedQueueTest >> testBasics [
 	| q |
 	q := SharedQueue new.
@@ -20,7 +22,7 @@ SharedQueueTest >> testBasics [
 	self assert: q atEnd
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SharedQueueTest >> testContention1 [
 
 	| q r1 r2 |
@@ -38,7 +40,7 @@ SharedQueueTest >> testContention1 [
 	self should: [ q nextOrNil isNil ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SharedQueueTest >> testNextOrNilSuchThat [
 	| q item |
 	q := SharedQueue new.

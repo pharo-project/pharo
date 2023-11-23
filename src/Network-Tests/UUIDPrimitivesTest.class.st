@@ -2,12 +2,14 @@
 SUnit tests for UUIDPrimitives 
 "
 Class {
-	#name : #UUIDPrimitivesTest,
-	#superclass : #TestCase,
-	#category : #'Network-Tests-UUID'
+	#name : 'UUIDPrimitivesTest',
+	#superclass : 'TestCase',
+	#category : 'Network-Tests-UUID',
+	#package : 'Network-Tests',
+	#tag : 'UUID'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 UUIDPrimitivesTest >> testComparison [
 
 	|a b|
@@ -25,16 +27,16 @@ UUIDPrimitivesTest >> testComparison [
 	self assert: a > b
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 UUIDPrimitivesTest >> testCreation [
 	| uuid |
 	uuid := UUID new.
-	self assert: uuid size equals: 16.
+	self assert: uuid uuidData size equals: 16.
 	self deny: uuid isNilUUID.
 	self assert: uuid asString size equals: 36
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 UUIDPrimitivesTest >> testCreationEquality [
 	| uuid1 uuid2 |
 	uuid1 := UUID new.
@@ -45,20 +47,21 @@ UUIDPrimitivesTest >> testCreationEquality [
 	self deny: uuid1 hash equals: uuid2 hash
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 UUIDPrimitivesTest >> testCreationFromString [
+
 	| uuid string |
 	string := UUID nilUUID asString.
 	uuid := UUID fromString: string.
-	self assert: uuid size equals: 16.
+	self assert: uuid uuidData size equals: 16.
 	self assert: uuid equals: UUID nilUUID.
 	self assert: uuid isNilUUID.
 	self assert: uuid asString size equals: 36.
-	self assert: uuid asArray asSet size equals: 1.
-	self assert: (uuid asArray asSet asArray at: 1) equals: 0
+	self assert: uuid uuidData asArray asSet size equals: 1.
+	self assert: (uuid uuidData asArray asSet asArray at: 1) equals: 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 UUIDPrimitivesTest >> testCreationFromString36NotNil [
 	| uuid uuid36 |
 	uuid := UUID fromString: 'fedcba98-7654-3210-0123-456789abcdef'.
@@ -66,40 +69,41 @@ UUIDPrimitivesTest >> testCreationFromString36NotNil [
 	self assert: uuid equals: uuid36
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 UUIDPrimitivesTest >> testCreationFromString36With0 [
 	| uuid |
 	uuid := UUID fromString36: '0'.
 	self assert: uuid isNilUUID
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 UUIDPrimitivesTest >> testCreationFromString36WithNillUUID [
 
 	UUID fromString36: UUID nilUUID asString36
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 UUIDPrimitivesTest >> testCreationFromStringNotNil [
 	| uuid string |
 	string := UUID new asString.
 	uuid := UUID fromString: string.
-	self assert: uuid size equals: 16.
+	self assert: uuid uuidData size equals: 16.
 	self assert: uuid asString size equals: 36
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 UUIDPrimitivesTest >> testCreationNil [
+
 	| uuid |
 	uuid := UUID nilUUID.
-	self assert: uuid size equals: 16.
+	self assert: uuid uuidData size equals: 16.
 	self assert: uuid isNilUUID.
 	self assert: uuid asString size equals: 36.
-	self assert: uuid asArray asSet size equals: 1.
-	self assert: (uuid asArray asSet asArray at: 1) equals: 0
+	self assert: uuid uuidData asArray asSet size equals: 1.
+	self assert: (uuid uuidData asArray asSet asArray at: 1) equals: 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 UUIDPrimitivesTest >> testCreationNodeBased [
 
 
@@ -110,7 +114,7 @@ UUIDPrimitivesTest >> testCreationNodeBased [
 		self assert: ((uuid at: 9) bitAnd: 16rC0) equals: 16r80 ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 UUIDPrimitivesTest >> testDuplicationsKinda [
 	| check size |
 
@@ -122,7 +126,7 @@ UUIDPrimitivesTest >> testDuplicationsKinda [
 		check add: uuid]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 UUIDPrimitivesTest >> testOrder [
 	100
 		timesRepeat: [ | uuid1 uuid2 |
@@ -134,7 +138,7 @@ UUIDPrimitivesTest >> testOrder [
 					self deny: uuid1 equals: uuid2 ] ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 UUIDPrimitivesTest >> testUniqueness [
 	"Test uniqueness for a given number of generated values"
 

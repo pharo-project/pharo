@@ -1,6 +1,6 @@
-Extension { #name : #RBCreateAccessorsForVariableTransformation }
+Extension { #name : 'RBCreateAccessorsForVariableTransformation' }
 
-{ #category : #'*SystemCommands-VariableCommands' }
+{ #category : '*SystemCommands-VariableCommands' }
 RBCreateAccessorsForVariableTransformation class >> classVariableAnalog [
 	^ self
 ]

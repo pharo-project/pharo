@@ -30,17 +30,19 @@ instance variables
 
 "
 Class {
-	#name : #RBComment,
-	#superclass : #RBProgramNode,
+	#name : 'RBComment',
+	#superclass : 'RBProgramNode',
 	#instVars : [
 		'contents',
 		'start',
 		'stop'
 	],
-	#category : #'AST-Core-Nodes'
+	#category : 'AST-Core-Nodes',
+	#package : 'AST-Core',
+	#tag : 'Nodes'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBComment class >> with: aCommentToken [
 	"To respect the previously implemented comment node content,
 	 we strip the surrounding quotes of the comment."
@@ -49,7 +51,7 @@ RBComment class >> with: aCommentToken [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBComment class >> with: aString at: startPosition [
 
 	^ self with: (RBCommentToken
@@ -58,34 +60,34 @@ RBComment class >> with: aString at: startPosition [
 			   stop: startPosition + aString size - 1)
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 RBComment >> = anObject [
 	self == anObject ifTrue: [ ^true ].
 	^ self class = anObject class and: [ self contents = anObject contents ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RBComment >> acceptVisitor: aProgramNodeVisitor [
 
 	^ aProgramNodeVisitor visitCommentNode: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBComment >> contents [
 	^ contents
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 RBComment >> hash [
 	^ self contents hash
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBComment >> isCommentNode [
 	^true
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBComment >> printOn: aStream [
 	super printOn: aStream.
 	aStream nextPutAll: ' "'.
@@ -93,23 +95,23 @@ RBComment >> printOn: aStream [
 	aStream nextPutAll: '" '
 ]
 
-{ #category : #enumeration }
+{ #category : 'enumeration' }
 RBComment >> size [
 	^ contents size + 2 "must take into account quotation marks"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBComment >> start [
 	^ start
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBComment >> stop [
 	^ stop ifNil: [ start + self size - 1 ]
 			 ifNotNil: [ stop ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBComment >> with: aString from: aStartPosition to: aStopPosition [
 	start := aStartPosition.
 	stop := aStopPosition.

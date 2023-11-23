@@ -3,8 +3,8 @@ I build FFI method bytecodes for a call.
 
 "
 Class {
-	#name : #FFICalloutMethodBuilder,
-	#superclass : #Object,
+	#name : 'FFICalloutMethodBuilder',
+	#superclass : 'Object',
 	#instVars : [
 		'calloutAPI',
 		'requestor',
@@ -14,34 +14,36 @@ Class {
 		'library',
 		'fixedArgumentCount'
 	],
-	#category : #'UnifiedFFI-Callouts'
+	#category : 'UnifiedFFI-Callouts',
+	#package : 'UnifiedFFI',
+	#tag : 'Callouts'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FFICalloutMethodBuilder class >> calloutAPI: aCalloutAPI [
 	^ self basicNew
 		initializeCalloutAPI: aCalloutAPI;
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFICalloutMethodBuilder >> addFunctionResolveStrategy: aStrategy [
 	functionResolutionStrategies add: aStrategy
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FFICalloutMethodBuilder >> argumentNames [
 
 	^ self method argumentNames
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 FFICalloutMethodBuilder >> build: aBlock [
 	aBlock value: self.
 	^ self generate
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFICalloutMethodBuilder >> callType [
 	self callingConvention = #cdecl ifTrue: [ ^ 0 ].
 	self callingConvention = #stdcall ifTrue: [ ^ 1 ].
@@ -49,17 +51,17 @@ FFICalloutMethodBuilder >> callType [
 	self error: 'Invalid call convention!'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFICalloutMethodBuilder >> callingConvention [
 	^ self calloutAPI callingConvention
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFICalloutMethodBuilder >> calloutAPI [
 	^ calloutAPI
 ]
 
-{ #category : #'private - factory' }
+{ #category : 'private - factory' }
 FFICalloutMethodBuilder >> createFFICallout [
 	^ FFICallout new
 		sender: self sender;
@@ -67,13 +69,13 @@ FFICalloutMethodBuilder >> createFFICallout [
 		yourself
 ]
 
-{ #category : #'private - factory' }
+{ #category : 'private - factory' }
 FFICalloutMethodBuilder >> createFFICalloutLiteralFromSpec: functionSpec [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #compatibility }
+{ #category : 'compatibility' }
 FFICalloutMethodBuilder >> extractLibrary [
 	"Obtain the library to use"
 	| ffiLibrary |
@@ -86,24 +88,24 @@ FFICalloutMethodBuilder >> extractLibrary [
 	^ ffiLibrary
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFICalloutMethodBuilder >> fixedArgumentCount [
 
 	^ fixedArgumentCount
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFICalloutMethodBuilder >> fixedArgumentCount: anObject [
 
 	fixedArgumentCount := anObject
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FFICalloutMethodBuilder >> generate [
 	^ self generateMethodFromSpec: (self parseSignature: self signature)
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FFICalloutMethodBuilder >> generateFFICallout: builder spec: functionSpec ffiLibrary: ffiLibrary [
 
 	"Builds a method call"
@@ -124,7 +126,7 @@ FFICalloutMethodBuilder >> generateFFICallout: builder spec: functionSpec ffiLib
 		inCallout: self requestor
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FFICalloutMethodBuilder >> generateMethodFromSpec: functionSpec [
 	| ir ffiLibrary properties method |
 	functionSpec resolveUsing: self requestor.
@@ -152,25 +154,25 @@ FFICalloutMethodBuilder >> generateMethodFromSpec: functionSpec [
 	^method
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FFICalloutMethodBuilder >> initialize [
 	super initialize.
 	functionResolutionStrategies := FFIFunctionResolutionStrategy allSubclasses collect: [:aClass | aClass new].
 	fixedArgumentCount := 0
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FFICalloutMethodBuilder >> initializeCalloutAPI: aCalloutAPI [
 	calloutAPI := aCalloutAPI.
 	self initialize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFICalloutMethodBuilder >> library [
 	^ library
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFICalloutMethodBuilder >> library: aLibrary [
 	"A module can be a string with a path to the library or a reference to a class who is child
 	 of FFILibrary.
@@ -178,7 +180,7 @@ FFICalloutMethodBuilder >> library: aLibrary [
 	library := aLibrary
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFICalloutMethodBuilder >> libraryName [
 	"Answer the module name, who can come from a string with the path to the module or a
 	 reference to a class who is child of FFILibrary"
@@ -186,46 +188,46 @@ FFICalloutMethodBuilder >> libraryName [
 	^ self library asFFILibrary libraryName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFICalloutMethodBuilder >> method [
 	^ self sender homeMethod
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FFICalloutMethodBuilder >> parseSignature: aSignature [
 	^ FFIFunctionParser new
 		requestor: self requestor;
 		parseNamedFunction: aSignature
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFICalloutMethodBuilder >> requestor [
 	^ requestor ifNil: [ requestor := self createFFICallout ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFICalloutMethodBuilder >> requestor: anObject [
 	"The object who made the request for FFI.
 	 By default, NBFFICallout (check #requestor)"
 	requestor := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFICalloutMethodBuilder >> sender [
 	^ sender
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFICalloutMethodBuilder >> sender: anObject [
 	sender := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFICalloutMethodBuilder >> signature [
 	^ signature
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFICalloutMethodBuilder >> signature: anObject [
 	signature := anObject
 ]

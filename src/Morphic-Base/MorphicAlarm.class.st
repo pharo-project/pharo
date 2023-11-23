@@ -20,34 +20,36 @@ the alarm system has several distinctions:
 - Alarms with the same scheduled time are guaranteed to be executed in the order they were added
 "
 Class {
-	#name : #MorphicAlarm,
-	#superclass : #MessageSend,
+	#name : 'MorphicAlarm',
+	#superclass : 'MessageSend',
 	#instVars : [
 		'scheduledTime',
 		'numArgs'
 	],
-	#category : #'Morphic-Base-Events'
+	#category : 'Morphic-Base-Events',
+	#package : 'Morphic-Base',
+	#tag : 'Events'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MorphicAlarm class >> scheduledAt: scheduledTime receiver: aTarget selector: aSelector arguments: argArray [
 	^(self receiver: aTarget selector: aSelector arguments: argArray)
 		scheduledTime: scheduledTime
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MorphicAlarm >> scheduledTime [
 	"Return the time (in milliseconds) that the receiver is scheduled to be executed"
 	^scheduledTime
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MorphicAlarm >> scheduledTime: msecs [
 	"Set the time (in milliseconds) that the receiver is scheduled to be executed"
 	scheduledTime := msecs
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 MorphicAlarm >> value: anArgument [
 	| nArgs |
 	numArgs ifNil:[numArgs := selector numArgs].

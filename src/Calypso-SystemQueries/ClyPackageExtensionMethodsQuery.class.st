@@ -9,33 +9,35 @@ To instantiate my instances use following expressions:
 Internal Representation and Key Implementation Points.
 
     Instance Variables
-	package:		<RPackage>
+	package:		<Package>
 
 "
 Class {
-	#name : #ClyPackageExtensionMethodsQuery,
-	#superclass : #ClyMethodQuery,
+	#name : 'ClyPackageExtensionMethodsQuery',
+	#superclass : 'ClyMethodQuery',
 	#instVars : [
 		'package'
 	],
-	#category : #'Calypso-SystemQueries-Queries'
+	#category : 'Calypso-SystemQueries-Queries',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Queries'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyPackageExtensionMethodsQuery class >> of: aPackage [
 
 	^self new
 		package: aPackage
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyPackageExtensionMethodsQuery class >> of: aPackage from: aScope [
 
 	^(self from: aScope)
 		package: aPackage
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ClyPackageExtensionMethodsQuery >> = anObject [
 	"Answer whether the receiver and anObject represent the same object."
 
@@ -44,44 +46,44 @@ ClyPackageExtensionMethodsQuery >> = anObject [
 	^package = anObject package
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyPackageExtensionMethodsQuery >> description [
 
 	^'extension methods of ', package name
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ClyPackageExtensionMethodsQuery >> hash [
 	"Answer an integer value that is related to the identity of the receiver."
 
 	^ super hash bitXor: package hash
 ]
 
-{ #category : #'system changes' }
+{ #category : 'system changes' }
 ClyPackageExtensionMethodsQuery >> isResult: aQueryResult affectedBy: aSystemAnnouncement [
 
 	^(aSystemAnnouncement affectsMethodsDefinedInPackage: package)
 		and: [ scope includesMethodsAffectedBy: aSystemAnnouncement]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyPackageExtensionMethodsQuery >> package [
 	^ package
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyPackageExtensionMethodsQuery >> package: anObject [
 	package := anObject
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyPackageExtensionMethodsQuery >> printExtraInfoOn: aStream [
 	super printExtraInfoOn: aStream.
 
 	^aStream nextPutAll: package name
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyPackageExtensionMethodsQuery >> selectsMethod: aMethod [
 	^aMethod isExtension and: [ aMethod package = package ]
 ]

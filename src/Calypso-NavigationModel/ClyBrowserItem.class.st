@@ -108,8 +108,8 @@ Internal Representation and Key Implementation Points.
 
 "
 Class {
-	#name : #ClyBrowserItem,
-	#superclass : #Object,
+	#name : 'ClyBrowserItem',
+	#superclass : 'Object',
 	#instVars : [
 		'position',
 		'name',
@@ -119,56 +119,58 @@ Class {
 		'type',
 		'isPrepared'
 	],
-	#category : #'Calypso-NavigationModel-Model'
+	#category : 'Calypso-NavigationModel-Model',
+	#package : 'Calypso-NavigationModel',
+	#tag : 'Model'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyBrowserItem class >> named: aString with: anObject [
 	^self new
 		actualObject: anObject;
 		name: aString
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyBrowserItem class >> with: anObject [
 	^self new
 		actualObject: anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserItem >> actualObject [
 	^actualObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserItem >> actualObject: anObject [
 	actualObject := anObject.
 	type := anObject calypsoEnvironmentType
 ]
 
-{ #category : #preparation }
+{ #category : 'preparation' }
 ClyBrowserItem >> addProperty: aProperty [
 	properties add: aProperty
 ]
 
-{ #category : #preparation }
+{ #category : 'preparation' }
 ClyBrowserItem >> adoptForNewCalypsoQuery [
 
 	^self copy
 ]
 
-{ #category : #preparation }
+{ #category : 'preparation' }
 ClyBrowserItem >> asCalypsoBrowserItem [
 	^self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserItem >> calypsoName [
 
 	^ name
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 ClyBrowserItem >> copy [
 	| copy |
 	copy := super copy.
@@ -176,41 +178,41 @@ ClyBrowserItem >> copy [
 	^copy
 ]
 
-{ #category : #preparation }
+{ #category : 'preparation' }
 ClyBrowserItem >> decorateBy: anEnvironmentPlugin [
 
 	type decorateBrowserItem: self by: anEnvironmentPlugin
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserItem >> depth [
 	^ depth
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserItem >> depth: anObject [
 	depth := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserItem >> getProperty: propertyClass [
 
 	^properties detect: [ :each | each isKindOf: propertyClass ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserItem >> getProperty: propertyClass ifAbsent: absentBlock [
 
 	^properties detect: [ :each | each isKindOf: propertyClass ] ifNone: absentBlock
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyBrowserItem >> hasChildrenOf: itemTypeClass [
 
 	^self hasChildrenWhich: [ :childType | childType = itemTypeClass]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyBrowserItem >> hasChildrenWhich: aBlockWithChildType [
 
 	^properties anySatisfy: [ :each |
@@ -218,18 +220,18 @@ ClyBrowserItem >> hasChildrenWhich: aBlockWithChildType [
 			and: [ aBlockWithChildType value: each childrenType ] ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyBrowserItem >> hasProperty: propertyClass [
 
 	^properties anySatisfy: [ :each | each isKindOf: propertyClass ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyBrowserItem >> includesActualObject: anObject [
 	^ self actualObject == anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyBrowserItem >> initialize [
 	super initialize.
 
@@ -238,7 +240,7 @@ ClyBrowserItem >> initialize [
 	isPrepared := false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyBrowserItem >> isEqualTo: anotherBrowserItem [
 
 	type = anotherBrowserItem type ifFalse: [ ^false ].
@@ -246,28 +248,28 @@ ClyBrowserItem >> isEqualTo: anotherBrowserItem [
 	^type checkCalypsoItem: actualObject isEqualTo: anotherBrowserItem actualObject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyBrowserItem >> isMarkedWith: propertyClass [
 
 	^self hasProperty: propertyClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserItem >> isPrepared [
 	^ isPrepared
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserItem >> isPrepared: anObject [
 	isPrepared := anObject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyBrowserItem >> isRoot [
 	^depth = 0
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyBrowserItem >> isSameAs: anotherBrowserItem [
 
 	type = anotherBrowserItem type ifFalse: [ ^false ].
@@ -275,7 +277,7 @@ ClyBrowserItem >> isSameAs: anotherBrowserItem [
 	^type checkCalypsoItem: actualObject isSameAs: anotherBrowserItem actualObject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyBrowserItem >> isSimilarTo: anotherBrowserItem [
 
 	type = anotherBrowserItem type ifFalse: [ ^false ].
@@ -283,7 +285,7 @@ ClyBrowserItem >> isSimilarTo: anotherBrowserItem [
 	^name = anotherBrowserItem name or: [ self isEqualTo: anotherBrowserItem ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserItem >> localHierarchySize [
 
 	| property |
@@ -292,44 +294,44 @@ ClyBrowserItem >> localHierarchySize [
 	^property subtreeSize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserItem >> localHierarchySize: childrenCount [
 	childrenCount = 0 ifTrue: [ ^self ].
 
 	self addProperty: (ClyItemLocalHierarchyProperty size: childrenCount)
 ]
 
-{ #category : #preparation }
+{ #category : 'preparation' }
 ClyBrowserItem >> markWith: simpleTagClass [
 	self addProperty: simpleTagClass instance
 ]
 
-{ #category : #preparation }
+{ #category : 'preparation' }
 ClyBrowserItem >> markWithChildrenOf: anItemTypeClass [
 	self addProperty: (ClyItemChildrenTag childrenType: anItemTypeClass)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserItem >> name [
 	^name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserItem >> name: anObject [
 	name := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserItem >> position [
 	^ position
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserItem >> position: anObject [
 	position := anObject
 ]
 
-{ #category : #preparation }
+{ #category : 'preparation' }
 ClyBrowserItem >> prepareIn: aNavigationEnvironment [
 	isPrepared ifTrue: [ ^self ].
 
@@ -339,7 +341,7 @@ ClyBrowserItem >> prepareIn: aNavigationEnvironment [
 	isPrepared := true
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyBrowserItem >> printOn: aStream [
 	super printOn: aStream.
 	aStream nextPut: $(.
@@ -347,22 +349,22 @@ ClyBrowserItem >> printOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserItem >> properties [
 	^ properties
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserItem >> properties: anObject [
 	properties := anObject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyBrowserItem >> representsItemOfType: aClass [
 	^type isCalypsoItemType: aClass
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyBrowserItem >> representsObject: anObject [
 	actualObject == anObject ifTrue: [ ^true ].
 
@@ -371,7 +373,7 @@ ClyBrowserItem >> representsObject: anObject [
 	^type checkCalypsoItem: actualObject isSameAs: anObject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyBrowserItem >> representsObjectEqualTo: anObject [
 	actualObject == anObject ifTrue: [ ^true ].
 
@@ -380,12 +382,12 @@ ClyBrowserItem >> representsObjectEqualTo: anObject [
 	^type checkCalypsoItem: actualObject isEqualTo: anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserItem >> type [
 	^type
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserItem >> type: aClass [
 	type := aClass
 ]

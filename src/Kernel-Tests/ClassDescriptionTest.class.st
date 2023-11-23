@@ -5,23 +5,25 @@ This is the unit test for the class ClassDescription. Unit tests are a good way 
 	- the sunit class category
 "
 Class {
-	#name : #ClassDescriptionTest,
-	#superclass : #ClassTestCase,
-	#category : #'Kernel-Tests-Classes'
+	#name : 'ClassDescriptionTest',
+	#superclass : 'ClassTestCase',
+	#category : 'Kernel-Tests-Classes',
+	#package : 'Kernel-Tests',
+	#tag : 'Classes'
 }
 
-{ #category : #coverage }
+{ #category : 'coverage' }
 ClassDescriptionTest >> classToBeTested [
 
 	^ ClassDescription
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 ClassDescriptionTest >> compilationTestPackageName [
 	^ 'TestKernel-TemporaryTestPackageForTest'
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 ClassDescriptionTest >> createTestClass [
 
 	^ ((Object << #TemporaryMockClass)
@@ -29,16 +31,15 @@ ClassDescriptionTest >> createTestClass [
 		   package: self compilationTestPackageName) build
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClassDescriptionTest >> tearDown [
 
-	(RPackageOrganizer default packageNamed: self compilationTestPackageName ifAbsent: [ nil ])
-		ifNotNil: [ :package | package removeFromSystem ].
+	self packageOrganizer removePackage: self compilationTestPackageName.
 
 	super tearDown
 ]
 
-{ #category : #'tests - compilation' }
+{ #category : 'tests - compilation' }
 ClassDescriptionTest >> testAddSelectorWithMethodClassifyMethod [
 
 	| class method |
@@ -47,17 +48,16 @@ ClassDescriptionTest >> testAddSelectorWithMethodClassifyMethod [
 	method := class >> #wammawink.
 
 	self assert: method sourceCode equals: 'wammawink ^ self'.
-	self flag: #CompileMethodProtocolMiration.
-	self assert: method protocolName equals: Protocol unclassified.
+	self deny: method isClassified.
 	self assert: (class protocolOfSelector: #wammawink) name equals: Protocol unclassified
 ]
 
-{ #category : #'tests - slots' }
+{ #category : 'tests - slots' }
 ClassDescriptionTest >> testAllSlots [
 	self assert: Context allSlots size equals: 6
 ]
 
-{ #category : #'tests - compilation' }
+{ #category : 'tests - compilation' }
 ClassDescriptionTest >> testCompileClassified [
 
 	| class method |
@@ -70,7 +70,34 @@ ClassDescriptionTest >> testCompileClassified [
 	self assert: method protocolName equals: #protocol
 ]
 
-{ #category : #'tests - compilation' }
+{ #category : 'tests - compilation' }
+ClassDescriptionTest >> testCompileClassifiedWithNil [
+
+	| class method |
+	class := self createTestClass.
+
+	"During the first compilation if the protocol is nil we put it in Protocol unclassified."
+	class compile: 'foo ^3' classified: nil.
+	method := class >> #foo.
+
+	self assert: method sourceCode equals: 'foo ^3'.
+	self deny: method isClassified.
+
+	class compile: 'foo ^3' classified: #protocol.
+	method := class >> #foo.
+
+	self assert: method sourceCode equals: 'foo ^3'.
+	self assert: method protocolName equals: #protocol.
+
+	"If we give a nil protocol, we just keep the actual one."
+	class compile: 'foo ^3' classified: nil.
+	method := class >> #foo.
+
+	self assert: method sourceCode equals: 'foo ^3'.
+	self assert: method protocolName equals: #protocol
+]
+
+{ #category : 'tests - compilation' }
 ClassDescriptionTest >> testCompileClassifiedWithProtocolInstance [
 
 	| class method protocol |
@@ -81,11 +108,36 @@ ClassDescriptionTest >> testCompileClassifiedWithProtocolInstance [
 	method := class >> #foo.
 
 	self assert: method sourceCode equals: 'foo ^3'.
-	self flag: #CompileMethodProtocolMiration.
-	self assert: method protocolName equals: protocol name
+	self assert: method protocol identicalTo: protocol
 ]
 
-{ #category : #'tests - slots' }
+{ #category : 'tests - compilation' }
+ClassDescriptionTest >> testCompileClassifiedWithUnclassified [
+
+	| class method |
+	class := self createTestClass.
+
+	class compile: 'foo ^3' classified: Protocol unclassified.
+	method := class >> #foo.
+
+	self assert: method sourceCode equals: 'foo ^3'.
+	self deny: method isClassified.
+
+	class compile: 'foo ^3' classified: #protocol.
+	method := class >> #foo.
+
+	self assert: method sourceCode equals: 'foo ^3'.
+	self assert: method protocolName equals: #protocol.
+
+	"Protocol unclassified should work as any other protocol for the classification."
+	class compile: 'foo ^3' classified: Protocol unclassified.
+	method := class >> #foo.
+
+	self assert: method sourceCode equals: 'foo ^3'.
+	self deny: method isClassified
+]
+
+{ #category : 'tests - slots' }
 ClassDescriptionTest >> testDefinesSlotNamed [
 	self assert: (Point definesSlotNamed: #x).
 	self deny: (Point definesSlotNamed: #z).
@@ -94,7 +146,7 @@ ClassDescriptionTest >> testDefinesSlotNamed [
 	self deny: (ExampleForTest11 definesSlotNamed: #aSuperclassVariable)
 ]
 
-{ #category : #'tests - slots' }
+{ #category : 'tests - slots' }
 ClassDescriptionTest >> testDeprecatedAliases [
 
 	| class systemDictionary |
@@ -115,7 +167,7 @@ ClassDescriptionTest >> testDeprecatedAliases [
 	self assert: (systemDictionary lookupVar: #DeprecatedTemporaryMockClass) isDeprecated
 ]
 
-{ #category : #'tests - slots' }
+{ #category : 'tests - slots' }
 ClassDescriptionTest >> testDeprecatedAliasesAreRemovedByClassRemoval [
 
 	| class systemDictionary |
@@ -135,7 +187,7 @@ ClassDescriptionTest >> testDeprecatedAliasesAreRemovedByClassRemoval [
 	self deny: (systemDictionary includesKey: #DeprecatedTemporaryMockClass)
 ]
 
-{ #category : #'tests - slots' }
+{ #category : 'tests - slots' }
 ClassDescriptionTest >> testDeprecatedAliasesAreRemovedByClassRemovalSpecialCase [
 
 	| class systemDictionary |
@@ -159,7 +211,7 @@ ClassDescriptionTest >> testDeprecatedAliasesAreRemovedByClassRemovalSpecialCase
 		systemDictionary removeKey: #TemporaryMockClass2 ifAbsent: [ "Nothing it's just cleanup." ] ]
 ]
 
-{ #category : #'tests - slots' }
+{ #category : 'tests - slots' }
 ClassDescriptionTest >> testDeprecatedAliasesOnExistingNames [
 
 	| class systemDictionary |
@@ -171,51 +223,71 @@ ClassDescriptionTest >> testDeprecatedAliasesOnExistingNames [
 	self should: [ class deprecatedAliases: #( #TemporaryMockClass2 ) ] raise: Warning
 ]
 
-{ #category : #'tests - slots' }
+{ #category : 'tests - slots' }
 ClassDescriptionTest >> testHasSlot [
 	self assert: (ExampleForTest11 hasSlot: (ExampleForTest11 slotNamed: #aSuperclassVariable)).
 	self deny: (ExampleForTest11 definesSlot: (ExampleForTest11 slotNamed: #aSuperclassVariable))
 ]
 
-{ #category : #'tests - slots' }
+{ #category : 'tests - slots' }
 ClassDescriptionTest >> testHasSlotNamed [
 	self assert: (Context hasSlotNamed: #sender).
 	self assert: (Context hasSlotNamed: #method)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
+ClassDescriptionTest >> testIsInstalled [
+
+	| class |
+	class := self createTestClass.
+
+	self deny: class isInstalled description: 'The class was built but not installed so it should not be installed.'.
+
+	class := self class classInstaller make: [ :aBuilder |
+		         aBuilder
+			         fillFor: class;
+			         package: self compilationTestPackageName ].
+
+	self assert: class isInstalled description: 'The class got installed in the system and thus should be installed.'.
+
+	class removeFromSystem.
+
+	self deny: class isInstalled description: 'After removing a class it should be considered as not installed.'
+]
+
+{ #category : 'tests' }
 ClassDescriptionTest >> testMethods [
 	self assert: Object methods equals: Object methodDict values
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassDescriptionTest >> testNumberOfMethods [
 	self assert: Point numberOfMethods equals: Point localMethods size + Point class localMethods size
 ]
 
-{ #category : #'tests - slots' }
+{ #category : 'tests - slots' }
 ClassDescriptionTest >> testSlotNamed [
 	self assert: (Point slotNamed: #x) name equals: #x
 ]
 
-{ #category : #'tests - slots' }
+{ #category : 'tests - slots' }
 ClassDescriptionTest >> testSlotNames [
 	self assert: Point slotNames equals: #(x y)
 ]
 
-{ #category : #'tests - slots' }
+{ #category : 'tests - slots' }
 ClassDescriptionTest >> testSlots [
 	self assert: Context slots size equals: 6
 ]
 
-{ #category : #'tests - instance variables' }
+{ #category : 'tests - instance variables' }
 ClassDescriptionTest >> testclassThatDefinesInstVarNamed [
 	self assert: (Point classThatDefinesInstVarNamed: 'x') equals: Point.
 	self assert: (Class classThatDefinesInstVarNamed: 'methodDict') equals: Behavior.
 	self assert: (Point classThatDefinesInstVarNamed: 'methodDict') equals: nil
 ]
 
-{ #category : #'tests - instance variables' }
+{ #category : 'tests - instance variables' }
 ClassDescriptionTest >> testwhichSelectorsAccess [
 	self assert: ((Point whichSelectorsAccess: #y) includes: #y).
 	self deny: ((Point whichSelectorsAccess: #y) includes: #x).
@@ -224,7 +296,7 @@ ClassDescriptionTest >> testwhichSelectorsAccess [
 	self assert: ((Point whichSelectorsAccess: #doesNotExist) isEmpty)
 ]
 
-{ #category : #'tests - instance variables' }
+{ #category : 'tests - instance variables' }
 ClassDescriptionTest >> testwhichSelectorsRead [
 	self assert: ((Point whichSelectorsRead: #y) includes: #y).
 	self deny: ((Point whichSelectorsRead: #y) includes: #x).
@@ -232,7 +304,7 @@ ClassDescriptionTest >> testwhichSelectorsRead [
 	self assert: ((Point whichSelectorsRead: #doesNotExist) isEmpty)
 ]
 
-{ #category : #'tests - instance variables' }
+{ #category : 'tests - instance variables' }
 ClassDescriptionTest >> testwhichSelectorsWrite [
 	self assert: ((Point whichSelectorsWrite: #x) includes: #setX:setY:).
 	self deny: ((Point whichSelectorsWrite: #x) includes: #x).

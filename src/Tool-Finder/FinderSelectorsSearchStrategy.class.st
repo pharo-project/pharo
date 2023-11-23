@@ -2,18 +2,20 @@
 I am a Finder search mode used when looking for methods in the system.
 "
 Class {
-	#name : #FinderSelectorsSearchStrategy,
-	#superclass : #FinderSearchStrategy,
-	#category : #'Tool-Finder-Base'
+	#name : 'FinderSelectorsSearchStrategy',
+	#superclass : 'FinderSearchStrategy',
+	#category : 'Tool-Finder-Base',
+	#package : 'Tool-Finder',
+	#tag : 'Base'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FinderSelectorsSearchStrategy class >> strategyName [
 
 	^ #Selectors
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 FinderSelectorsSearchStrategy >> constructDictionary [
 
 	| result |
@@ -31,19 +33,15 @@ FinderSelectorsSearchStrategy >> constructDictionary [
 	finder resultDictionary: result
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FinderSelectorsSearchStrategy >> findSelectedClassIn: path [
 
 	^ path first isSingle
 		  ifTrue: [ path first itemMethod methodClass ]
-		  ifFalse: [
-			  path
-				  at: 2
-				  ifPresent: [ :node | node item ]
-				  ifAbsent: [ nil ] ]
+		  ifFalse: [ (path at: 2 ifAbsent: [ nil ]) ifNotNil: [ :node | node item ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FinderSelectorsSearchStrategy >> findSelectedMethodIn: path [
 
 	^ path first isSingle
@@ -51,7 +49,7 @@ FinderSelectorsSearchStrategy >> findSelectedMethodIn: path [
 		  ifFalse: [ path first item ]
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 FinderSelectorsSearchStrategy >> messageSearchBlock [
 
 	| exactMatch aString |
@@ -63,7 +61,7 @@ FinderSelectorsSearchStrategy >> messageSearchBlock [
 	^ (Symbol findInterned: (aString copyFrom: 2 to: aString size - 1)) ifNotNil: [ :aSymbol | [ :method | method selector = aSymbol ] ]
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 FinderSelectorsSearchStrategy >> messagesNameSearch [
 	"I'm searching for selectors"
 

@@ -2,86 +2,88 @@
 I am an abstract behavior that has a behavior strategy and and delegates all messages to it
 "
 Class {
-	#name : #RGBehaviorStrategyUser,
-	#superclass : #RGObject,
+	#name : 'RGBehaviorStrategyUser',
+	#superclass : 'RGObject',
 	#instVars : [
 		'behaviorStrategy'
 	],
-	#category : #'Ring-Core-Kernel'
+	#category : 'Ring-Core-Kernel',
+	#package : 'Ring-Core',
+	#tag : 'Kernel'
 }
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RGBehaviorStrategyUser >> acceptVisitor: aVisitor [
 
 	^ self behaviorStrategy acceptVisitor: aVisitor
 ]
 
-{ #category : #strategy }
+{ #category : 'strategy' }
 RGBehaviorStrategyUser >> addClassVariable: anRGInstanceVariableDefinition [
 
 	^ self behaviorStrategy addClassVariable: anRGInstanceVariableDefinition
 ]
 
-{ #category : #strategy }
+{ #category : 'strategy' }
 RGBehaviorStrategyUser >> addSharedPool: anRGPoolVariable [
 
 	^ self behaviorStrategy addSharedPool: anRGPoolVariable
 ]
 
-{ #category : #strategy }
+{ #category : 'strategy' }
 RGBehaviorStrategyUser >> allClassVarNames [
 
 	^ self behaviorStrategy allClassVarNames
 ]
 
-{ #category : #strategy }
+{ #category : 'strategy' }
 RGBehaviorStrategyUser >> allClassVariables [
 
 	^ self behaviorStrategy allClassVariables
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGBehaviorStrategyUser >> allSlots [
 
 	^ self behaviorStrategy allSlots
 ]
 
-{ #category : #'queries - other' }
+{ #category : 'queries - other' }
 RGBehaviorStrategyUser >> baseBehavior [
 
 	^ self behaviorStrategy baseBehavior
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGBehaviorStrategyUser >> baseClass [
 
 	^ self behaviorStrategy baseClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGBehaviorStrategyUser >> baseClass: anRGClass [
 
 	^ self behaviorStrategy baseClass: anRGClass
 ]
 
-{ #category : #strategy }
+{ #category : 'strategy' }
 RGBehaviorStrategyUser >> baseTrait [
 
 	^ self behaviorStrategy baseTrait
 ]
 
-{ #category : #strategy }
+{ #category : 'strategy' }
 RGBehaviorStrategyUser >> baseTrait: anRGClass [
 
 	^ self behaviorStrategy baseTrait: anRGClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGBehaviorStrategyUser >> behaviorStrategy [
 	^ behaviorStrategy
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGBehaviorStrategyUser >> behaviorStrategy: anObject [
 
 	| needsInitialization |
@@ -93,273 +95,273 @@ RGBehaviorStrategyUser >> behaviorStrategy: anObject [
 		behaviorStrategy initializeUnresolved ]
 ]
 
-{ #category : #strategy }
+{ #category : 'strategy' }
 RGBehaviorStrategyUser >> bindingOf: varName [
 
 	^ self behaviorStrategy bindingOf: varName
 ]
 
-{ #category : #strategy }
+{ #category : 'strategy' }
 RGBehaviorStrategyUser >> category [
 
 	^ self behaviorStrategy category
 ]
 
-{ #category : #strategy }
+{ #category : 'strategy' }
 RGBehaviorStrategyUser >> category: aString [
 
 	^ self behaviorStrategy category: aString
 ]
 
-{ #category : #strategy }
+{ #category : 'strategy' }
 RGBehaviorStrategyUser >> classSide [
 
 	^ self behaviorStrategy classSide
 ]
 
-{ #category : #strategy }
+{ #category : 'strategy' }
 RGBehaviorStrategyUser >> classTrait [
 
 	^ self behaviorStrategy classTrait
 ]
 
-{ #category : #strategy }
+{ #category : 'strategy' }
 RGBehaviorStrategyUser >> classTrait: anRGMetaclassTrait [
 
 	^ self behaviorStrategy classTrait: anRGMetaclassTrait
 ]
 
-{ #category : #strategy }
+{ #category : 'strategy' }
 RGBehaviorStrategyUser >> classVarNames [
 
 	^ self behaviorStrategy classVarNames
 ]
 
-{ #category : #strategy }
+{ #category : 'strategy' }
 RGBehaviorStrategyUser >> classVariableDefinitionString [
 
 	^ self behaviorStrategy classVariableDefinitionString
 ]
 
-{ #category : #strategy }
+{ #category : 'strategy' }
 RGBehaviorStrategyUser >> classVariables [
 
 	^ self behaviorStrategy classVariables
 ]
 
-{ #category : #strategy }
+{ #category : 'strategy' }
 RGBehaviorStrategyUser >> classVariables: aCollectionOfSymbols [
 
 	^ self behaviorStrategy classVariables: aCollectionOfSymbols
 ]
 
-{ #category : #strategy }
+{ #category : 'strategy' }
 RGBehaviorStrategyUser >> classVariablesDo: aBlock [
 
 	^ self behaviorStrategy classVariablesDo: aBlock
 ]
 
-{ #category : #strategy }
+{ #category : 'strategy' }
 RGBehaviorStrategyUser >> cleanClassVariables [
 
 	^ self behaviorStrategy cleanClassVariables
 ]
 
-{ #category : #strategy }
+{ #category : 'strategy' }
 RGBehaviorStrategyUser >> cleanSharedPools [
 
 	^ self behaviorStrategy cleanSharedPools
 ]
 
-{ #category : #strategy }
+{ #category : 'strategy' }
 RGBehaviorStrategyUser >> comment [
 
 	^ self behaviorStrategy comment
 ]
 
-{ #category : #strategy }
+{ #category : 'strategy' }
 RGBehaviorStrategyUser >> comment: anRGComment [
 
 	^ self behaviorStrategy comment: anRGComment
 ]
 
-{ #category : #strategy }
+{ #category : 'strategy' }
 RGBehaviorStrategyUser >> defaultMetaClass [
 
 	^ self behaviorStrategy defaultMetaClass
 ]
 
-{ #category : #'accessing - definition' }
+{ #category : 'accessing - definition' }
 RGBehaviorStrategyUser >> definition [
 
 	^ self behaviorStrategy definition
 ]
 
-{ #category : #strategy }
+{ #category : 'strategy' }
 RGBehaviorStrategyUser >> innerBindingOf: aSymbol [
 
 	^ self behaviorStrategy innerBindingOf: aSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGBehaviorStrategyUser >> instSize [
 
 	^ self behaviorStrategy instSize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGBehaviorStrategyUser >> instVarNames [
 	^ self behaviorStrategy instVarNames
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGBehaviorStrategyUser >> instanceSide [
 
 	^ self behaviorStrategy instanceSide
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGBehaviorStrategyUser >> instanceVariables: aCollectionOfSymbols [
 
 	^ self behaviorStrategy instanceVariables: aCollectionOfSymbols
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RGBehaviorStrategyUser >> instanceVariablesString [
 
 	^ self behaviorStrategy instanceVariablesString
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGBehaviorStrategyUser >> isClass [
 
 	^ self behaviorStrategy isClass
 ]
 
-{ #category : #'queries - testing' }
+{ #category : 'queries - testing' }
 RGBehaviorStrategyUser >> isMeta [
 	"By default a non-meta class is considered"
 
 	^ self behaviorStrategy isMeta
 ]
 
-{ #category : #'testing - types' }
+{ #category : 'testing - types' }
 RGBehaviorStrategyUser >> isMetaclass [
 
 	^ self behaviorStrategy isMetaclass
 ]
 
-{ #category : #'testing - types' }
+{ #category : 'testing - types' }
 RGBehaviorStrategyUser >> isMetaclassTrait [
 
 	^ self behaviorStrategy isMetaclassTrait
 ]
 
-{ #category : #strategy }
+{ #category : 'strategy' }
 RGBehaviorStrategyUser >> isTrait [
 
 	^ self behaviorStrategy isTrait
 ]
 
-{ #category : #'testing - class hierarchy' }
+{ #category : 'testing - class hierarchy' }
 RGBehaviorStrategyUser >> kindOfSubclass [
 	"Answer a String that is the keyword that describes the receiver's kind of subclass
 	Note: this is for printing the ST80 style class definiton, see #subclassDefiningSymbol"
 	^ self behaviorStrategy kindOfSubclass
 ]
 
-{ #category : #strategy }
+{ #category : 'strategy' }
 RGBehaviorStrategyUser >> layout [
 
 	^ self behaviorStrategy layout
 ]
 
-{ #category : #strategy }
+{ #category : 'strategy' }
 RGBehaviorStrategyUser >> layout: anRGLayout [
 
 	^ self behaviorStrategy layout: anRGLayout
 ]
 
-{ #category : #resolving }
+{ #category : 'resolving' }
 RGBehaviorStrategyUser >> makeResolved [
 
 	self behaviorStrategy makeResolved.
 	super makeResolved
 ]
 
-{ #category : #strategy }
+{ #category : 'strategy' }
 RGBehaviorStrategyUser >> package [
 
 	^ self behaviorStrategy package
 ]
 
-{ #category : #strategy }
+{ #category : 'strategy' }
 RGBehaviorStrategyUser >> package: anRGPackage [
 
 	^ self behaviorStrategy package: anRGPackage
 ]
 
-{ #category : #strategy }
+{ #category : 'strategy' }
 RGBehaviorStrategyUser >> referencedBehaviors [
 
 	^ self behaviorStrategy referencedBehaviors
 ]
 
-{ #category : #strategy }
+{ #category : 'strategy' }
 RGBehaviorStrategyUser >> referencedPackages [
 
 	^ self behaviorStrategy referencedPackages
 ]
 
-{ #category : #strategy }
+{ #category : 'strategy' }
 RGBehaviorStrategyUser >> removeClassVariable: anRGInstanceVariableDefinition [
 
 	^ self behaviorStrategy removeClassVariable: anRGInstanceVariableDefinition
 ]
 
-{ #category : #strategy }
+{ #category : 'strategy' }
 RGBehaviorStrategyUser >> removeSharedPool: anRGPoolVariable [
 
 	^ self behaviorStrategy removeSharedPool: anRGPoolVariable
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGBehaviorStrategyUser >> sharedPoolNames [
 
 	^ self behaviorStrategy sharedPoolNames
 ]
 
-{ #category : #strategy }
+{ #category : 'strategy' }
 RGBehaviorStrategyUser >> sharedPools [
 
 	^ self behaviorStrategy sharedPools
 ]
 
-{ #category : #strategy }
+{ #category : 'strategy' }
 RGBehaviorStrategyUser >> sharedPools: aCollectionOfSymbols [
 
 	^ self behaviorStrategy sharedPools: aCollectionOfSymbols
 ]
 
-{ #category : #strategy }
+{ #category : 'strategy' }
 RGBehaviorStrategyUser >> sharedPoolsDo: aBlock [
 
 	^ self behaviorStrategy sharedPoolsDo: aBlock
 ]
 
-{ #category : #strategy }
+{ #category : 'strategy' }
 RGBehaviorStrategyUser >> sibling [
 
 	^ self behaviorStrategy sibling
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RGBehaviorStrategyUser >> storeOn: aStream [
 
 	^ self behaviorStrategy storeOn: aStream
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGBehaviorStrategyUser >> theMetaClass [
 	self
 		deprecated: 'Please use #classSide instead'
@@ -368,7 +370,7 @@ RGBehaviorStrategyUser >> theMetaClass [
 	^ self classSide
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGBehaviorStrategyUser >> theNonMetaClass [
 
 	self
@@ -377,7 +379,7 @@ RGBehaviorStrategyUser >> theNonMetaClass [
 	^self instanceSide
 ]
 
-{ #category : #variables }
+{ #category : 'variables' }
 RGBehaviorStrategyUser >> trait [
 
 	"Because of API compatibility between traits and trait transformations"
@@ -385,7 +387,7 @@ RGBehaviorStrategyUser >> trait [
 	^ self behaviorStrategy trait
 ]
 
-{ #category : #strategy }
+{ #category : 'strategy' }
 RGBehaviorStrategyUser >> traitTransformationString [
 
 	^ self behaviorStrategy traitTransformationString

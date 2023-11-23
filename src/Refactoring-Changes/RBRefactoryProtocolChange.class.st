@@ -2,21 +2,22 @@
 RBRefactoryProtocolChange is responsible for adding or removing protocols in classes in a RB model
 "
 Class {
-	#name : #RBRefactoryProtocolChange,
-	#superclass : #RBRefactoryClassChange,
+	#name : 'RBRefactoryProtocolChange',
+	#superclass : 'RBRefactoryClassChange',
 	#instVars : [
 		'protocol'
 	],
-	#category : #'Refactoring-Changes'
+	#category : 'Refactoring-Changes',
+	#package : 'Refactoring-Changes'
 }
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBRefactoryProtocolChange >> displayProtocolName [
 
 	^ protocol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRefactoryProtocolChange >> protocol: aString [
 
 	protocol := aString

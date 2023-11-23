@@ -2,24 +2,26 @@
 SUnit tests for small dictionaries
 "
 Class {
-	#name : #SmallDictionaryTest,
-	#superclass : #DictionaryTest,
-	#category : #'Collections-Unordered-Tests-Dictionaries'
+	#name : 'SmallDictionaryTest',
+	#superclass : 'DictionaryTest',
+	#category : 'Collections-Unordered-Tests-Dictionaries',
+	#package : 'Collections-Unordered-Tests',
+	#tag : 'Dictionaries'
 }
 
-{ #category : #'building suites' }
+{ #category : 'building suites' }
 SmallDictionaryTest class >> shouldInheritSelectors [
 
 ^true
 ]
 
-{ #category : #coverage }
+{ #category : 'coverage' }
 SmallDictionaryTest >> classToBeTested [
 
 	^ SmallDictionary
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SmallDictionaryTest >> testAtUpdate [
 	| dict |
 	dict := SmallDictionary newFrom: {2->10. 100->5} .
@@ -29,7 +31,7 @@ SmallDictionaryTest >> testAtUpdate [
 	self should: [ dict at: 5 update: [ :v | v+1 ] ] raise: KeyNotFound
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SmallDictionaryTest >> testAtUpdateInitial [
 	| dict |
 	dict := SmallDictionary newFrom: {2->10. 100->5} .
@@ -39,7 +41,7 @@ SmallDictionaryTest >> testAtUpdateInitial [
 	self assert: (dict at: 2) equals: 20
 ]
 
-{ #category : #'tests - printing' }
+{ #category : 'tests - printing' }
 SmallDictionaryTest >> testStoreOn [
 	self
 		assert: self nonEmptyDict storeString

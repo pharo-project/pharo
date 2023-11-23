@@ -10,31 +10,32 @@ Part of Zinc HTTP Components.
 
 "
 Class {
-	#name : #ZnUTF32Encoder,
-	#superclass : #ZnEndianSensitiveUTFEncoder,
-	#category : #'Zinc-Character-Encoding-Core'
+	#name : 'ZnUTF32Encoder',
+	#superclass : 'ZnEndianSensitiveUTFEncoder',
+	#category : 'Zinc-Character-Encoding-Core',
+	#package : 'Zinc-Character-Encoding-Core'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnUTF32Encoder class >> handlesEncoding: string [
 	"Return true when my instances handle the encoding described by string"
 
 	^ self knownEncodingIdentifiers includes: (self canonicalEncodingIdentifier: string)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnUTF32Encoder class >> knownEncodingIdentifiers [
 	^ #( 'utf32' 'utf32be' 'utf32le' 'ucs4' 'ucs4be' 'ucs4le')
 ]
 
-{ #category : #'encoding - decoding' }
+{ #category : 'encoding - decoding' }
 ZnUTF32Encoder >> backOnStream: stream [
 	"Move back one character on stream"
 
 	4 timesRepeat: [ stream back ]
 ]
 
-{ #category : #'encoding - decoding' }
+{ #category : 'encoding - decoding' }
 ZnUTF32Encoder >> encodedByteCountForCodePoint: codePoint [
 	"Return how many bytes are needed to encode integer codePoint"
 
@@ -43,7 +44,7 @@ ZnUTF32Encoder >> encodedByteCountForCodePoint: codePoint [
 	^ 4
 ]
 
-{ #category : #'encoding - decoding' }
+{ #category : 'encoding - decoding' }
 ZnUTF32Encoder >> ensureAtBeginOfCodePointOnStream: stream [
 	"Ensure that the current position of stream is a the beginning of an encoded code point,
 	if not move further backwards. This is necessary when a position in the binary stream is set,
@@ -54,17 +55,17 @@ ZnUTF32Encoder >> ensureAtBeginOfCodePointOnStream: stream [
 	[ stream position \\ 4 = 0 ] whileFalse: [ stream back ]
 ]
 
-{ #category : #'error handling' }
+{ #category : 'error handling' }
 ZnUTF32Encoder >> errorIncomplete [
 	self error: 'Incomplete utf-32 encoding'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnUTF32Encoder >> identifier [
 	^ #utf32
 ]
 
-{ #category : #'encoding - decoding' }
+{ #category : 'encoding - decoding' }
 ZnUTF32Encoder >> nextCodePointFromStream: stream [
 	"Read and return the next integer code point from stream"
 
@@ -77,7 +78,7 @@ ZnUTF32Encoder >> nextCodePointFromStream: stream [
 	^ codePoint
 ]
 
-{ #category : #'encoding - decoding' }
+{ #category : 'encoding - decoding' }
 ZnUTF32Encoder >> nextPutCodePoint: codePoint toStream: stream [
 	"Write the encoding for integer code point to stream"
 
@@ -90,7 +91,7 @@ ZnUTF32Encoder >> nextPutCodePoint: codePoint toStream: stream [
 			self errorOutsideRange ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnUTF32Encoder >> processByteOrderMark: codePoint [
 	^ (codePoint = 16rFEFF or: [ codePoint = 16rFFFE0000 ])
 		ifTrue: [
@@ -100,7 +101,7 @@ ZnUTF32Encoder >> processByteOrderMark: codePoint [
 		ifFalse: [ false ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnUTF32Encoder >> readCodePointFrom: stream [
 	| byte1 byte2 byte3 byte4 |
 	byte1 := stream next.
@@ -116,7 +117,7 @@ ZnUTF32Encoder >> readCodePointFrom: stream [
 			(byte4 bitShift: 24) + (byte3 bitShift: 16) + (byte2 bitShift: 8) + byte1 ]
 ]
 
-{ #category : #'encoding - decoding' }
+{ #category : 'encoding - decoding' }
 ZnUTF32Encoder >> skipToBeginOfCodePointOnStream: stream [
 	"Ensure that the current position of stream is a the beginning of an encoded code point,
 	if not move further forward. This is necessary when a position in the binary stream is set,
@@ -127,7 +128,7 @@ ZnUTF32Encoder >> skipToBeginOfCodePointOnStream: stream [
 	[ stream position \\ 4 = 0 ] whileFalse: [ stream next ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnUTF32Encoder >> writeCodePoint: codePoint to: stream [
 	self isBigEndian
 		ifTrue: [

@@ -1,10 +1,11 @@
 Class {
-	#name : #BaselineOfDependencyAnalyzer,
-	#superclass : #BaselineOf,
-	#category : #BaselineOfDependencyAnalyzer
+	#name : 'BaselineOfDependencyAnalyzer',
+	#superclass : 'BaselineOf',
+	#category : 'BaselineOfDependencyAnalyzer',
+	#package : 'BaselineOfDependencyAnalyzer'
 }
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfDependencyAnalyzer >> baseline: spec [
 	<baseline>
 	
@@ -29,9 +30,9 @@ BaselineOfDependencyAnalyzer >> baseline: spec [
 			group: 'default' with: #('Core' 'Tests') ]
 ]
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfDependencyAnalyzer >> graphAlgorithms: spec [
 
 	spec baseline: 'AIGraphAlgorithms' with: [
-		spec repository: 'github://pharo-ai/graph-algorithms:v1.2.1/src' ]
+		spec repository: 'github://pharo-ai/graph-algorithms:v1.2.6/src' ]
 ]

@@ -1,1 +1,1 @@
-Package { #name : #'Calypso-SystemPlugins-Reflectivity-Browser' }
+Package { #name : 'Calypso-SystemPlugins-Reflectivity-Browser' }

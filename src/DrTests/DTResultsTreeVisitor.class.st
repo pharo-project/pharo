@@ -2,22 +2,24 @@
 I am an abstract visitor for the results tree of DrTests.
 "
 Class {
-	#name : #DTResultsTreeVisitor,
-	#superclass : #Object,
-	#category : #'DrTests-Visitors'
+	#name : 'DTResultsTreeVisitor',
+	#superclass : 'Object',
+	#category : 'DrTests-Visitors',
+	#package : 'DrTests',
+	#tag : 'Visitors'
 }
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 DTResultsTreeVisitor >> visit: anObject [
 	^ anObject acceptVisitor: self
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 DTResultsTreeVisitor >> visitDTTreeLeaf: aDTTreeLeaf [
 	^ self subclassResponsibility
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 DTResultsTreeVisitor >> visitDTTreeNode: aDTTreeNode [
 	^ aDTTreeNode subResults collect: [ :subResult | self visit: subResult ]
 ]

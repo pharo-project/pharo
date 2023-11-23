@@ -1,6 +1,6 @@
-Extension { #name : #BorderStyle }
+Extension { #name : 'BorderStyle' }
 
-{ #category : #'*Athens-Morphic' }
+{ #category : '*Athens-Morphic' }
 BorderStyle >> asAthensPaintOn: anAthensCanvas [
 	| stroke |
 	stroke := self color asStrokePaintOn: anAthensCanvas.

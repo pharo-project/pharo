@@ -2,17 +2,19 @@
 I am a graphical user interface for profiling code using both AndreasProfiler and TimeProfiler
 "
 Class {
-	#name : #ProfilerPresenter,
-	#superclass : #SpPresenter,
+	#name : 'ProfilerPresenter',
+	#superclass : 'SpPresenter',
 	#instVars : [
 		'inputPresenter',
 		'resultsPresenter',
 		'viewModel'
 	],
-	#category : #'ProfilerUI-View'
+	#category : 'ProfilerUI-View',
+	#package : 'ProfilerUI',
+	#tag : 'View'
 }
 
-{ #category : #layout }
+{ #category : 'layout' }
 ProfilerPresenter class >> defaultLayout [
 	^ SpPanedLayout newTopToBottom
 		  positionOfSlider: 20 percent;
@@ -21,7 +23,7 @@ ProfilerPresenter class >> defaultLayout [
 		  yourself
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 ProfilerPresenter class >> menuCommandOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #'Profiler')
@@ -32,19 +34,19 @@ ProfilerPresenter class >> menuCommandOn: aBuilder [
 		action: [self new open]
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 ProfilerPresenter class >> open [
 
 	<example>
 	^ self new open
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 ProfilerPresenter >> initExtent [
 	^ 800 @ 800
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ProfilerPresenter >> initializePresenters [
 
 	inputPresenter := self newInputPresenter.
@@ -53,7 +55,7 @@ ProfilerPresenter >> initializePresenters [
 		                    yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ProfilerPresenter >> initializeWindow: aWindowPresenter [
 	aWindowPresenter
 		title: self presenterTitle;
@@ -62,38 +64,38 @@ ProfilerPresenter >> initializeWindow: aWindowPresenter [
 		whenClosedDo: [ self unsubscribe ]
 ]
 
-{ #category : #'private - factory' }
+{ #category : 'private - factory' }
 ProfilerPresenter >> newInputPresenter [
 
 	^ ProfilerInputPresenter on: self viewModel
 ]
 
-{ #category : #'private - factory' }
+{ #category : 'private - factory' }
 ProfilerPresenter >> newResultsPresenter [
 
 	^ ProfilerResultsPresenter on: self viewModel
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 ProfilerPresenter >> presenterTitle [
 	^ 'Profiler'
 ]
 
-{ #category : #subscription }
+{ #category : 'subscription' }
 ProfilerPresenter >> subscribe [
 
 	resultsPresenter subscribeOnProfilingAnnouncements.
 	inputPresenter subscribeOnProfilingAnnouncements
 ]
 
-{ #category : #subscription }
+{ #category : 'subscription' }
 ProfilerPresenter >> unsubscribe [
 
 	resultsPresenter unsubscribeFromProfilingAnnouncements.
 	inputPresenter unsubscribeFromProfilingAnnouncements
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProfilerPresenter >> viewModel [
 
 	^ viewModel ifNil: [ viewModel := ProfilerModel new ]

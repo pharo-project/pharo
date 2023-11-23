@@ -2,12 +2,14 @@
 Tests for FuzzyMatcher. 
 "
 Class {
-	#name : #FuzzyMatcherTest,
-	#superclass : #TestCase,
-	#category : #'FuzzyMatcher-Tests-Tests'
+	#name : 'FuzzyMatcherTest',
+	#superclass : 'TestCase',
+	#category : 'FuzzyMatcher-Tests-Tests',
+	#package : 'FuzzyMatcher-Tests',
+	#tag : 'Tests'
 }
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 FuzzyMatcherTest >> assert: matcher scoreFor: aString equals: aBlockOrNumber [
 
 	matcher match: aString ifScored: [ :score |
@@ -17,13 +19,13 @@ FuzzyMatcherTest >> assert: matcher scoreFor: aString equals: aBlockOrNumber [
 	self error: 'Expected to match: ', aString
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 FuzzyMatcherTest >> newMatcher [
 
 	^ FuzzyMatcher new
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FuzzyMatcherTest >> testAllMatchingIn [
 
 	| input output |
@@ -34,7 +36,7 @@ FuzzyMatcherTest >> testAllMatchingIn [
 	self assert: output asArray equals: #('ogb' 'dog' 'FroG' 'hog')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FuzzyMatcherTest >> testAssumptions [
 
 	self
@@ -43,7 +45,7 @@ FuzzyMatcherTest >> testAssumptions [
 		assert: ('a' findString: 'a' startingAt: 2 caseSensitive: false) equals: 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FuzzyMatcherTest >> testChangePattern [
 
 	| matcher |
@@ -61,7 +63,7 @@ FuzzyMatcherTest >> testChangePattern [
 		deny: (matcher matches: '')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FuzzyMatcherTest >> testClassSideAPI [
 
 	"If the protocol is changed, so should the class comment."
@@ -78,7 +80,7 @@ FuzzyMatcherTest >> testClassSideAPI [
 		equals: #(baaa aaba Aaab aAaaB)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FuzzyMatcherTest >> testEmptyPattern [
 
 	| matcher |
@@ -91,7 +93,7 @@ FuzzyMatcherTest >> testEmptyPattern [
 		assert: matcher scoreFor: '   ' equals: 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FuzzyMatcherTest >> testIsSeparator [
 
 	| matcher |
@@ -104,7 +106,7 @@ FuzzyMatcherTest >> testIsSeparator [
 		deny: (matcher isSeparator: $a)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FuzzyMatcherTest >> testMatching [
 
 	| matcher |
@@ -117,7 +119,7 @@ FuzzyMatcherTest >> testMatching [
 		assert: (matcher matches: ',;:_-!"#¤%&/?+\()a')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FuzzyMatcherTest >> testScoreValues [
 
 	| matcher |
@@ -182,7 +184,7 @@ FuzzyMatcherTest >> testScoreValues [
 		]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FuzzyMatcherTest >> testSortedByScore [
 
 	| input output |

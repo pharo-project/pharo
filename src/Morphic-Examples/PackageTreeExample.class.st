@@ -2,19 +2,21 @@
 PackageTreeExample new open
 "
 Class {
-	#name : #PackageTreeExample,
-	#superclass : #MorphTreeModel,
-	#category : #'Morphic-Examples-MorphTreeWidget'
+	#name : 'PackageTreeExample',
+	#superclass : 'MorphTreeModel',
+	#category : 'Morphic-Examples-MorphTreeWidget',
+	#package : 'Morphic-Examples',
+	#tag : 'MorphTreeWidget'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 PackageTreeExample class >> example [
 	<sampleInstance>
 
 	^PackageTreeExample new open
 ]
 
-{ #category : #view }
+{ #category : 'view' }
 PackageTreeExample >> defaultTreeMorph [
 	^ super defaultTreeMorph
 			doubleClickSelector: #doubleClick;
@@ -22,18 +24,18 @@ PackageTreeExample >> defaultTreeMorph [
 			getMenuSelector: #menu:shifted:
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 PackageTreeExample >> doubleClick [
 	self selectedNode ifNotNil: [:n | n doubleClick]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PackageTreeExample >> keyStroke: anEvent from: aTreeMorph [
 	self selectedNode
 		ifNotNil: [:current | current keyStroke: anEvent from: aTreeMorph]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PackageTreeExample >> menu: menu shifted: b [
 	"Set up the menu to apply to the receiver's,
 	honoring the #shifted boolean"
@@ -41,17 +43,17 @@ PackageTreeExample >> menu: menu shifted: b [
 	^ menu
 ]
 
-{ #category : #showing }
+{ #category : 'showing' }
 PackageTreeExample >> open [
 	^ self openDialogWindowIn: self currentWorld title: 'Packages'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PackageTreeExample >> rootItems [
-	^ RPackageOrganizer default packages
+	^ PackageOrganizer default packages
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PackageTreeExample >> rootNodeClassFromItem: anItem [
 	^ PackageNodeExample
 ]

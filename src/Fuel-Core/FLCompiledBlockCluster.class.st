@@ -4,12 +4,14 @@ I am a cluster for CompiledBlock instances.
 Since Pharo 9 blocks can exist independently of an associated compiled method and, hence, require special treatment.
 "
 Class {
-	#name : #FLCompiledBlockCluster,
-	#superclass : #FLCompiledCodeCluster,
-	#category : #'Fuel-Core-Clusters'
+	#name : 'FLCompiledBlockCluster',
+	#superclass : 'FLCompiledCodeCluster',
+	#category : 'Fuel-Core-Clusters',
+	#package : 'Fuel-Core',
+	#tag : 'Clusters'
 }
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLCompiledBlockCluster >> afterMaterializationStepWith: aDecoder [
 	"Warn users that the method of a fully serialized block has changed.
 	The block can be evaluated but the current form of the method might
@@ -29,7 +31,7 @@ FLCompiledBlockCluster >> afterMaterializationStepWith: aDecoder [
 				and: block method selector ]
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLCompiledBlockCluster >> materializeInstanceWith: aDecoder [
 	| instance size header initialPC |
 	header := self decodeHeaderWith: aDecoder.
@@ -48,7 +50,7 @@ FLCompiledBlockCluster >> materializeInstanceWith: aDecoder [
 	^ instance
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLCompiledBlockCluster >> serializeInstance: aCompiledBlock with: anEncoder [
 	| header bytecode |
 	bytecode := aCompiledBlock bytecodes.
@@ -62,7 +64,7 @@ FLCompiledBlockCluster >> serializeInstance: aCompiledBlock with: anEncoder [
 		encodeBytes: bytecode
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLCompiledBlockCluster >> shouldWarnThatMethodChangedFor: aBlock [
 	| method currentMethod |
 	method := aBlock method.

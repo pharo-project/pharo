@@ -3,59 +3,61 @@ I'm a model for exposing method information.
 I'm an example to be used in FTExampleMethodListDataSource and FTExampleMethodTableDataSource.
 "
 Class {
-	#name : #FTExampleMethodModel,
-	#superclass : #Object,
+	#name : 'FTExampleMethodModel',
+	#superclass : 'Object',
 	#instVars : [
 		'method',
 		'actionIcon'
 	],
-	#category : #'Morphic-Widgets-FastTable-Examples'
+	#category : 'Morphic-Widgets-FastTable-Examples',
+	#package : 'Morphic-Widgets-FastTable',
+	#tag : 'Examples'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FTExampleMethodModel class >> method: aMethod [
 	^ self basicNew
 		initializeMethod: aMethod;
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FTExampleMethodModel class >> new [
 	self error: 'Use #method:'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTExampleMethodModel >> actionOn: aBrowser [
 	^ actionIcon ifNil: [ actionIcon := self createActionIconOn: aBrowser ]
 ]
 
-{ #category : #factory }
+{ #category : 'factory' }
 FTExampleMethodModel >> createActionIconOn: aBrowser [
 	^Smalltalk ui icons iconNamed: #scriptManager
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FTExampleMethodModel >> initializeMethod: aMethod [
 	self initialize.
 	method := aMethod
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTExampleMethodModel >> method [
 	^ method
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTExampleMethodModel >> name [
 	^ self method selector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTExampleMethodModel >> origin [
 	^ self method origin
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTExampleMethodModel >> protocol [
 	^ self method protocolName
 ]

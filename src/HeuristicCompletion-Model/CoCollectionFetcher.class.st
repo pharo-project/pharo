@@ -3,15 +3,17 @@ I'm a fetcher simply enumerating a collection of items defined using the collect
 Mainly used for testing.
 "
 Class {
-	#name : #CoCollectionFetcher,
-	#superclass : #CoFetcher,
+	#name : 'CoCollectionFetcher',
+	#superclass : 'CoFetcher',
 	#instVars : [
 		'collection'
 	],
-	#category : #'HeuristicCompletion-Model-Core'
+	#category : 'HeuristicCompletion-Model-Core',
+	#package : 'HeuristicCompletion-Model',
+	#tag : 'Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CoCollectionFetcher class >> onCollection: aCollection [
 
 	^ self new
@@ -19,12 +21,12 @@ CoCollectionFetcher class >> onCollection: aCollection [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoCollectionFetcher >> collection: aCollection [
 	collection := aCollection
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 CoCollectionFetcher >> entriesDo: aBlock [
 
 	collection do: aBlock

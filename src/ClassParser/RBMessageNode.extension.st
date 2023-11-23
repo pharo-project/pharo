@@ -1,7 +1,6 @@
-Extension { #name : #RBMessageNode }
+Extension { #name : 'RBMessageNode' }
 
-{ #category : #'*ClassParser' }
-RBMessageNode >> extractClassDefinitionFor: aFluidParser [
-
-	aFluidParser setAdequateClassDefinitionFrom: self
+{ #category : '*ClassParser' }
+RBMessageNode >> handleMetaclassName: aCDFluidClassDefinitionParser [
+	aCDFluidClassDefinitionParser handleMetaclassNameFromMessage: self
 ]

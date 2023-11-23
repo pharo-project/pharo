@@ -1,6 +1,6 @@
-Extension { #name : #ClyFullVisibilityLevel }
+Extension { #name : 'ClyFullVisibilityLevel' }
 
-{ #category : #'*Calypso-SystemTools-Core' }
+{ #category : '*Calypso-SystemTools-Core' }
 ClyFullVisibilityLevel >> decorateMethodGroupTableCell: anItemCellMorph of: groupItem [
 	| tool |
 	tool := ClyMethodVisibilityMorph for: anItemCellMorph browser level: self.

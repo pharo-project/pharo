@@ -18,25 +18,27 @@ Example:
 
 "
 Class {
-	#name : #STCommandLineHandler,
-	#superclass : #CommandLineHandler,
+	#name : 'STCommandLineHandler',
+	#superclass : 'CommandLineHandler',
 	#instVars : [
 		'sourceFiles'
 	],
-	#category : #'CodeImportCommandLineHandlers-Base'
+	#category : 'CodeImportCommandLineHandlers-Base',
+	#package : 'CodeImportCommandLineHandlers',
+	#tag : 'Base'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 STCommandLineHandler class >> commandName [
 	^ 'st'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 STCommandLineHandler class >> description [
 	^ 'Loads and executes .st source files'
 ]
 
-{ #category : #'handler selection' }
+{ #category : 'handler selection' }
 STCommandLineHandler class >> isResponsibleFor: aCommandLine [
 	"This handler is reponsible only for .st files"
 	(aCommandLine hasFileWithExtension: '.st')
@@ -44,7 +46,7 @@ STCommandLineHandler class >> isResponsibleFor: aCommandLine [
 	^ super isResponsibleFor: aCommandLine
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 STCommandLineHandler class >> printCodeError: aCodeError [
 	| stderr position contents errorLine errorMessage maxLineNumberSize lineNumber |
 
@@ -86,7 +88,7 @@ STCommandLineHandler class >> printCodeError: aCodeError [
 	]
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 STCommandLineHandler >> activate [
 	self activateHelp
 		ifTrue: [  ^ self ].
@@ -97,7 +99,7 @@ STCommandLineHandler >> activate [
 	self end
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 STCommandLineHandler >> end [
 	| quit  |
 
@@ -110,7 +112,7 @@ STCommandLineHandler >> end [
 		ifTrue: [ self exitSuccess ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 STCommandLineHandler >> handleError: error [
 	"for syntax errors we print more detailed error informations"
 
@@ -120,7 +122,7 @@ STCommandLineHandler >> handleError: error [
 	error pass
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 STCommandLineHandler >> handleError: error reference: aReference [
 	"Print a header before failing on an errro / syntax notification from the the script loaded by the given request"
 
@@ -135,14 +137,14 @@ STCommandLineHandler >> handleError: error reference: aReference [
 	error pass
 ]
 
-{ #category : #installing }
+{ #category : 'installing' }
 STCommandLineHandler >> handleErrorsDuring: aBlock reference: aReference [
 	aBlock
 		on: Error
 		do: [ :e | self handleError: e reference: aReference ]
 ]
 
-{ #category : #installing }
+{ #category : 'installing' }
 STCommandLineHandler >> installSourceFile: aReference [
 	"Install the source file given by aFileReference"
 	| codeImporter |
@@ -164,7 +166,7 @@ STCommandLineHandler >> installSourceFile: aReference [
 		reference: aReference
 ]
 
-{ #category : #installing }
+{ #category : 'installing' }
 STCommandLineHandler >> installSourceFiles [
 	"Install the previously loaded source files"
 
@@ -174,19 +176,19 @@ STCommandLineHandler >> installSourceFiles [
 	] ensure: [ sourceFiles := nil ]
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 STCommandLineHandler >> loadSourceFiles: anArray [
 	"Load all the source files in the given array."
 
 	sourceFiles := anArray collect: [ :each | File named: each ]
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 STCommandLineHandler >> selectSourceFiles [
 	self loadSourceFiles: (self commandLine allFilesWithExtension: '.st')
 ]
 
-{ #category : #installing }
+{ #category : 'installing' }
 STCommandLineHandler >> skipShebangFrom: readStream [
 	"Skip the shebang sequnce #! at the beginning of a bash file"
 

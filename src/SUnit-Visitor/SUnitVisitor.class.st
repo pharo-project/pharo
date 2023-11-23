@@ -6,27 +6,28 @@ At my level I  just define the API  a SUnit visitor should implement and some pa
 My subclasses should at least override #visitTestCase:. See SunitTestsCounter for a simple concrete example
 "
 Class {
-	#name : #SUnitVisitor,
-	#superclass : #Object,
-	#category : #'SUnit-Visitor'
+	#name : 'SUnitVisitor',
+	#superclass : 'Object',
+	#category : 'SUnit-Visitor',
+	#package : 'SUnit-Visitor'
 }
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 SUnitVisitor >> visit: anObject [
 	^ anObject acceptSUnitVisitor: self
 ]
 
-{ #category : #visiting }
-SUnitVisitor >> visitRPackage: aRPackage [
-	"Defines the behaviour while visiting a RPackage.
+{ #category : 'visiting' }
+SUnitVisitor >> visitRPackage: aPackage [
+	"Defines the behaviour while visiting a Package.
 	 The default implementation below is to visit all TestCase subclasses in the package.
 	"
-	^ aRPackage definedClasses
+	^ aPackage definedClasses
 		select: [ :class | (class isTestCase) and: [ class isAbstract not ] ]
 		thenCollect: [ :class | class acceptSUnitVisitor: self ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 SUnitVisitor >> visitRPackageSet: aRRPackageSet [
 	"Defines the behaviour while visiting a RPackageSet.
 	 The default implementation below is to visit all RPackages contained in the package set.
@@ -35,7 +36,7 @@ SUnitVisitor >> visitRPackageSet: aRRPackageSet [
 		collect: [ :package | package acceptSUnitVisitor: self ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 SUnitVisitor >> visitTestCase: aTestCase [
 	"Defines the behaviour while visiting a TestCase.
 	 This method must be overriden by concrete subclasses.
@@ -43,7 +44,7 @@ SUnitVisitor >> visitTestCase: aTestCase [
 	^ self subclassResponsibility
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 SUnitVisitor >> visitTestCaseClass: aTestCaseClass [
 	"Defines the behaviour while visiting a TestCase class.
 	 The default implementation below is to build the suite from local test selectors and visit the suite built.
@@ -52,7 +53,7 @@ SUnitVisitor >> visitTestCaseClass: aTestCaseClass [
 		acceptSUnitVisitor: self
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 SUnitVisitor >> visitTestSuite: aTestSuite [
 	"Defines the behaviour while visiting a TestSuite.
 	 The default implementation below is to iterate on the objects in #tests and return the results of the visit.

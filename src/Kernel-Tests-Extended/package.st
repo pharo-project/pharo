@@ -1,1 +1,1 @@
-Package { #name : #'Kernel-Tests-Extended' }
+Package { #name : 'Kernel-Tests-Extended' }

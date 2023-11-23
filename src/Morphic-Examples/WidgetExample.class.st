@@ -13,12 +13,14 @@ WidgetExamples exampleTextEntryWithCompletionDialog.
 WidgetExamples exampleWindowWithToolbars.
 "
 Class {
-	#name : #WidgetExample,
-	#superclass : #Model,
-	#category : #'Morphic-Examples-Widgets'
+	#name : 'WidgetExample',
+	#superclass : 'Model',
+	#category : 'Morphic-Examples-Widgets',
+	#package : 'Morphic-Examples',
+	#tag : 'Widgets'
 }
 
-{ #category : #'private - accessing' }
+{ #category : 'private - accessing' }
 WidgetExample class >> builder [
 	"Answer a morph that implements TEasilyThemed but without honouring modality
 	for the example dialogs."
@@ -27,7 +29,7 @@ WidgetExample class >> builder [
 	^ExampleBuilderMorph new
 ]
 
-{ #category : #'examples - cleanup' }
+{ #category : 'examples - cleanup' }
 WidgetExample class >> closeExampleDialogs [
 	"Close the example dialogs."
 	"self closeExampleDialogs"
@@ -35,7 +37,7 @@ WidgetExample class >> closeExampleDialogs [
 	DialogWindowMorph allSubInstances do: [:d | d cancel]
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 WidgetExample class >> colorControls [
 	"Open a window with examples of each of the color controls."
 	"self exampleColorControls"
@@ -62,7 +64,7 @@ WidgetExample class >> colorControls [
 	dialog openModal
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 WidgetExample class >> exampleBasicControls [
 	"Open a window with examples of each of the basic controls."
 	"self exampleBasicControls"
@@ -147,7 +149,7 @@ WidgetExample class >> exampleBasicControls [
 	dialog openModal
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 WidgetExample class >> exampleColorControls [
 	"Open a window with examples of each of the color controls."
 	"self exampleColorControls"
@@ -174,7 +176,7 @@ WidgetExample class >> exampleColorControls [
 	dialog openModal
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 WidgetExample class >> exampleDialogs [
 	"Open an example of each services dialog"
 	"self exampleDialogs"
@@ -195,7 +197,7 @@ WidgetExample class >> exampleDialogs [
 		questionWithoutCancel: 'Save image as well?' title: 'Exiting application'
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 WidgetExample class >> exampleGroups [
 	"Open a window with examples of each of the group type morphs."
 	"self exampleGroups"
@@ -276,7 +278,7 @@ WidgetExample class >> exampleGroups [
 	dialog openModal
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 WidgetExample class >> exampleOtherControls [
 	"Open a window with examples of each of the other controls."
 	"self exampleOtherControls"
@@ -345,7 +347,7 @@ WidgetExample class >> exampleOtherControls [
 	dialog openModal
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 WidgetExample class >> exampleTextEntryWithCompletionDialog [
 
 	| applicants entryCompletion |
@@ -364,7 +366,7 @@ WidgetExample class >> exampleTextEntryWithCompletionDialog [
 		entryCompletion: entryCompletion
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 WidgetExample class >> exampleWindowWithToolbars [
 	"Open an example window with toolbars."
 	"self exampleWindowWithToolbars"
@@ -445,7 +447,7 @@ WidgetExample class >> exampleWindowWithToolbars [
 		openInWorld
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 WidgetExample class >> initialize [
 
 	self deprecatedAliases: { #WidgetExamples }

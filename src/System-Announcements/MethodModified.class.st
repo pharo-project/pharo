@@ -1,19 +1,21 @@
 "
-This announcement is emitted when we RE-compile a method in a class or a trait, with: ClassDescription >> compile: or TraitDescription >> compile:. If the method is not yet registered in the class or the trait, the announcement will not be emitted.
+This announcement is emitted when we RE-compile a method in a class or a trait, with: ClassDescription >> compile:. If the method is not yet registered in the class or the trait, the announcement will not be emitted.
 
 The action of renaming a method will be handled by SystemMethodRemovedAnnouncement and SystemMethodAddedAnnouncement, since this refactoring is concretely composed by removing the old method and add a new with the new name  
 "
 Class {
-	#name : #MethodModified,
-	#superclass : #MethodAnnouncement,
+	#name : 'MethodModified',
+	#superclass : 'MethodAnnouncement',
 	#instVars : [
 		'oldMethod',
 		'oldProtocol'
 	],
-	#category : #'System-Announcements-System-Methods'
+	#category : 'System-Announcements-System-Methods',
+	#package : 'System-Announcements',
+	#tag : 'System-Methods'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MethodModified class >> methodChangedFrom: oldMethod to: newMethod oldProtocol: oldProtocol [
 	^ self new
 		method: newMethod;
@@ -22,53 +24,53 @@ MethodModified class >> methodChangedFrom: oldMethod to: newMethod oldProtocol: 
 		yourself
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MethodModified >> affectsMethod: aMethod [
 	^(super affectsMethod: aMethod) or: [oldMethod == aMethod]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MethodModified >> affectsMethodsDefinedInPackage: aPackage [
 
 	^(super affectsMethodsDefinedInPackage: aPackage) or: [
 		oldMethod package == aPackage ]
 ]
 
-{ #category : #testing }
-MethodModified >> affectsMethodsTaggedWith: tagName [
+{ #category : 'testing' }
+MethodModified >> affectsMethodsInProtocol: protocol [
 
-	^ (super affectsMethodsTaggedWith: tagName) or: [ self oldProtocol name = tagName ]
+	^ (super affectsMethodsInProtocol: protocol) or: [ self oldProtocol name = protocol ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MethodModified >> newMethod [
 
 	^ method
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MethodModified >> newProtocol [
 
 	^ self protocol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MethodModified >> oldMethod [
 	^ oldMethod
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MethodModified >> oldMethod: aCompiledMethod [
 	oldMethod := aCompiledMethod
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MethodModified >> oldProtocol [
 
 	^ oldProtocol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MethodModified >> oldProtocol: anObject [
 
 	oldProtocol := anObject

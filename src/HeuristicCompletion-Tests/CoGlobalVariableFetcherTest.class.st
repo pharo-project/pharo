@@ -1,10 +1,12 @@
 Class {
-	#name : #CoGlobalVariableFetcherTest,
-	#superclass : #CoBasicFetcherWithElementsTest,
-	#category : #'HeuristicCompletion-Tests-Core'
+	#name : 'CoGlobalVariableFetcherTest',
+	#superclass : 'CoBasicFetcherWithElementsTest',
+	#category : 'HeuristicCompletion-Tests-Core',
+	#package : 'HeuristicCompletion-Tests',
+	#tag : 'Core'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 CoGlobalVariableFetcherTest >> setUp [
 
 	super setUp.

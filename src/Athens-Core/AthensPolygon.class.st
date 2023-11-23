@@ -2,28 +2,30 @@
 i am special kind of shape which using only straight line segments, unlike from more generic paths.
 "
 Class {
-	#name : #AthensPolygon,
-	#superclass : #Object,
+	#name : 'AthensPolygon',
+	#superclass : 'Object',
 	#instVars : [
 		'contours',
 		'currentContour'
 	],
-	#category : #'Athens-Core-Paths'
+	#category : 'Athens-Core-Paths',
+	#package : 'Athens-Core',
+	#tag : 'Paths'
 }
 
-{ #category : #converting }
+{ #category : 'converting' }
 AthensPolygon >> finish [
 	"Finally convert contours to arrays"
 
 	contours := contours collect: [:ea | ea asArray ]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 AthensPolygon >> lineTo: aPoint [
 	currentContour add: aPoint
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 AthensPolygon >> moveTo: aPoint [
 	" create a new contour "
 
@@ -31,14 +33,14 @@ AthensPolygon >> moveTo: aPoint [
 	currentContour add: aPoint
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 AthensPolygon >> newContour [
 	contours ifNil: [ contours := OrderedCollection new ].
 
 	currentContour := contours add: OrderedCollection new
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 AthensPolygon >> paintFillsUsing: aPaint on: anAthensCanvas [
 
 	"This method is a part of rendering dispatch  Canvas->receiver->paint"

@@ -1,13 +1,14 @@
 Class {
-	#name : #MyClassUsingMockTest,
-	#superclass : #TestCase,
+	#name : 'MyClassUsingMockTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'mock'
 	],
-	#category : #'SUnit-MockObjects-Tests'
+	#category : 'SUnit-MockObjects-Tests',
+	#package : 'SUnit-MockObjects-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 MyClassUsingMockTest >> setUp [
 
 	super setUp.
@@ -21,7 +22,7 @@ MyClassUsingMockTest >> setUp [
 	
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 MyClassUsingMockTest >> testMeaningOfLife [
 
 	<ignoreNotImplementedSelectors: #(meaningOfLife secondMeaning)>
@@ -30,7 +31,7 @@ MyClassUsingMockTest >> testMeaningOfLife [
 	self assert: mock secondMeaning equals: 84
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 MyClassUsingMockTest >> testMeaningOfLifeIsFirst [
 
 	<ignoreNotImplementedSelectors: #( meaningOfLife secondMeaning )>
@@ -38,7 +39,7 @@ MyClassUsingMockTest >> testMeaningOfLifeIsFirst [
 	self assert: mock secondMeaning equals: 84
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 MyClassUsingMockTest >> testMeaningOfLifeIsSentOnce [
 	"A simple mock object can answer a message only once and in the same order."
 
@@ -46,7 +47,7 @@ MyClassUsingMockTest >> testMeaningOfLifeIsSentOnce [
 	self assert: mock meaningOfLife equals: 42
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 MyClassUsingMockTest >> testMeaningOfLifeIsSentTwice [
 
 	<ignoreNotImplementedSelectors: #( meaningOfLife )>
@@ -54,7 +55,7 @@ MyClassUsingMockTest >> testMeaningOfLifeIsSentTwice [
 	self should: [ self assert: mock meaningOfLife equals: 42 ] raise: TestFailure
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 MyClassUsingMockTest >> testVerifyChecksThatAllTheMessageGotSent [
 
 	<ignoreNotImplementedSelectors: #( meaningOfLife secondMeaning )>
@@ -63,7 +64,7 @@ MyClassUsingMockTest >> testVerifyChecksThatAllTheMessageGotSent [
 	self verify: mock
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 MyClassUsingMockTest >> testVerifyFailsWhenMessageShouldBeSent [
 
 	<ignoreNotImplementedSelectors: #( meaningOfLife )>

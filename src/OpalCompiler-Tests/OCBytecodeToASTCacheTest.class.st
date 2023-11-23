@@ -1,14 +1,16 @@
 Class {
-	#name : #OCBytecodeToASTCacheTest,
-	#superclass : #TestCase,
+	#name : 'OCBytecodeToASTCacheTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'cache',
 		'compiledMethod'
 	],
-	#category : #'OpalCompiler-Tests-Bytecode'
+	#category : 'OpalCompiler-Tests-Bytecode',
+	#package : 'OpalCompiler-Tests',
+	#tag : 'Bytecode'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 OCBytecodeToASTCacheTest >> setUp [
 	"Hooks that subclasses may override to define the fixture of test."
 	super setUp.
@@ -16,30 +18,30 @@ OCBytecodeToASTCacheTest >> setUp [
 	cache := OCBytecodeToASTCache generateForNode: compiledMethod ast
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 OCBytecodeToASTCacheTest >> testCacheInInterval: interval equalsNode: aNode [
 	interval do: [ :i |
 		self assert: (cache nodeForPC: i) identicalTo: aNode ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCBytecodeToASTCacheTest >> testCachedMethodNode [
 	self assert: cache methodOrBlockNode identicalTo: compiledMethod ast
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCBytecodeToASTCacheTest >> testFirstBCOffsetTest [
 	self assert: cache firstBcOffset equals: compiledMethod initialPC
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCBytecodeToASTCacheTest >> testFirstBCOffsetWithBlock [
 	compiledMethod := (MethodMapExamples >> #helperMethod14:).
 	cache := OCBytecodeToASTCache generateForNode: compiledMethod ast.
 	self assert: (cache nodeForPC: cache firstBcOffset) identicalTo: compiledMethod ast statements first receiver
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCBytecodeToASTCacheTest >> testFirstBCOffsetWithQuickReturn [
 	compiledMethod := ( MethodMapExamples >> #ivar).
 	cache := OCBytecodeToASTCache generateForNode: compiledMethod ast.
@@ -51,7 +53,7 @@ OCBytecodeToASTCacheTest >> testFirstBCOffsetWithQuickReturn [
 		self assert: (cache nodeForPC: pc) identicalTo: compiledMethod ast]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCBytecodeToASTCacheTest >> testFirstBcOffsetForNodeWhenMappedPcsAreEmpty [
 
 	| aimedNode pcsForAimedNode |
@@ -64,7 +66,7 @@ OCBytecodeToASTCacheTest >> testFirstBcOffsetForNodeWhenMappedPcsAreEmpty [
 	self assert: (cache firstBcOffsetForNode: aimedNode) equals: nil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCBytecodeToASTCacheTest >> testFirstBcOffsetForNodeWhenMappedPcsAreNotEmpty [
 
 	| aimedNode pcsForAimedNode |
@@ -79,7 +81,7 @@ OCBytecodeToASTCacheTest >> testFirstBcOffsetForNodeWhenMappedPcsAreNotEmpty [
 		equals: pcsForAimedNode first
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCBytecodeToASTCacheTest >> testHigherThanLastBCOffsetAccessTest [
 	| pc |
 	pc := cache lastBcOffset + 5.
@@ -89,7 +91,7 @@ OCBytecodeToASTCacheTest >> testHigherThanLastBCOffsetAccessTest [
 		identicalTo: compiledMethod ast
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCBytecodeToASTCacheTest >> testLastBCOffsetTest [
 	self
 		assert: cache lastBcOffset
@@ -98,7 +100,7 @@ OCBytecodeToASTCacheTest >> testLastBCOffsetTest [
 				bytecodeOffset
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCBytecodeToASTCacheTest >> testLastBcOffsetForNodeWhenMappedPcsAreEmpty [
 
 	| aimedNode pcsForAimedNode |
@@ -111,7 +113,7 @@ OCBytecodeToASTCacheTest >> testLastBcOffsetForNodeWhenMappedPcsAreEmpty [
 	self assert: (cache lastBcOffsetForNode: aimedNode) equals: nil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCBytecodeToASTCacheTest >> testLastBcOffsetForNodeWhenMappedPcsAreNotEmpty [
 
 	| aimedNode pcsForAimedNode |
@@ -126,14 +128,14 @@ OCBytecodeToASTCacheTest >> testLastBcOffsetForNodeWhenMappedPcsAreNotEmpty [
 		equals: pcsForAimedNode last
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCBytecodeToASTCacheTest >> testLowerThanFirstBCOffsetAccessTest [
 	self
 		testCacheInInterval: (0 to: cache firstBcOffset - 1)
 		equalsNode: compiledMethod ast
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCBytecodeToASTCacheTest >> testNodeForBCOffsetTest [
 	| pc mappedNode expectedNode |
 	self flag: #TODO. "we skip for now on 32 bit"
@@ -146,7 +148,7 @@ OCBytecodeToASTCacheTest >> testNodeForBCOffsetTest [
 	self assert: mappedNode stop equals: expectedNode stop
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCBytecodeToASTCacheTest >> testNodeForBCOffsetTestFull [
 	| pc mappedNode expectedNode blockNode |
 	self flag: #TODO. "we skip for now on 32 bit"
@@ -164,7 +166,7 @@ OCBytecodeToASTCacheTest >> testNodeForBCOffsetTestFull [
 	self assert: mappedNode stop equals: expectedNode stop
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCBytecodeToASTCacheTest >> testPcsForNode [
 
 	| aimedNode pcsForAimedNode |

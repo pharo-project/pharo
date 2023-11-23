@@ -5,15 +5,17 @@ I am DailyNonInteractiveTranscript, a NonInteractiveTranscript that writes to a 
 
 "
 Class {
-	#name : #DailyNonInteractiveTranscript,
-	#superclass : #NonInteractiveTranscript,
+	#name : 'DailyNonInteractiveTranscript',
+	#superclass : 'NonInteractiveTranscript',
 	#instVars : [
 		'date'
 	],
-	#category : #'Transcript-NonInteractive-Base'
+	#category : 'Transcript-NonInteractive-Base',
+	#package : 'Transcript-NonInteractive',
+	#tag : 'Base'
 }
 
-{ #category : #constants }
+{ #category : 'constants' }
 DailyNonInteractiveTranscript class >> defaultLogFileName [
 	"The default file name that will be used to write to.
 	This needs to have a slot where the date will come."
@@ -21,7 +23,7 @@ DailyNonInteractiveTranscript class >> defaultLogFileName [
 	^ 'PharoTranscript-{1}.log'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DailyNonInteractiveTranscript >> fileNameWithDate [
 	| newName |
 	newName := self fileName format: { date yyyymmdd }.
@@ -31,13 +33,13 @@ DailyNonInteractiveTranscript >> fileNameWithDate [
 	^ newName
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DailyNonInteractiveTranscript >> initialize [
 	super initialize.
 	date := Date today
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DailyNonInteractiveTranscript >> initializeStream [
 	"Open the file stream that I write to or connect to #stdout/#stderr.
 	I will use the platform line end convention.
@@ -52,7 +54,7 @@ DailyNonInteractiveTranscript >> initializeStream [
 				ifFalse: [ (File named: self fileNameWithDate) openForAppend ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DailyNonInteractiveTranscript >> stream [
 	"Overwritten to check if the date changed on each access"
 

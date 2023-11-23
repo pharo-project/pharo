@@ -12,8 +12,8 @@ RBMethodName selector: 'color:' arguments:{'aColor'}.
 (RBMethodName selector:'color' arguments:{}) isValid.
 "
 Class {
-	#name : #RBMethodName,
-	#superclass : #Model,
+	#name : 'RBMethodName',
+	#superclass : 'Model',
 	#instVars : [
 		'selector',
 		'arguments',
@@ -21,10 +21,12 @@ Class {
 		'permutation',
 		'renameMap'
 	],
-	#category : #'Refactoring-Core-Support'
+	#category : 'Refactoring-Core-Support',
+	#package : 'Refactoring-Core',
+	#tag : 'Support'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBMethodName class >> selector: aSymbol arguments: stringCollection [
 	^ self new
 			selector: aSymbol;
@@ -32,18 +34,18 @@ RBMethodName class >> selector: aSymbol arguments: stringCollection [
 			yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodName >> arguments [
 	^arguments
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodName >> arguments: nameCollection [
 	arguments := nameCollection.
 	self changed: #arguments
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBMethodName >> isValid [
 	"Return whether the receiver looks like a method with a selector in sync with the arguments in a possible class"
 
@@ -51,31 +53,31 @@ RBMethodName >> isValid [
 			and: [ selector numArgs = arguments size ]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodName >> newArgs [
 
 	^ newArgs ifNil: [ newArgs := { } ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodName >> newArgs: anObject [
 
 	newArgs := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodName >> permutation [
 
 	^ permutation ifNil: [ permutation := 1 to: arguments size ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodName >> permutation: anObject [
 
 	permutation := anObject
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBMethodName >> printOn: aStream [
 	| argumentStream |
 	self isValid
@@ -89,24 +91,24 @@ RBMethodName >> printOn: aStream [
 		aStream space; nextPutAll: argumentStream next ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodName >> renameMap [
 
 	^ renameMap ifNil: [ renameMap := {  } ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodName >> renameMap: anObject [
 
 	renameMap := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodName >> selector [
 	^selector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethodName >> selector: aSymbol [
 	selector := aSymbol asSymbol.
 	self changed: #selector

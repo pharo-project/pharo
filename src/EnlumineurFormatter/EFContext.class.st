@@ -4,8 +4,8 @@ I represent all the parameters that can modify a pretty printer.
 The goal is to make sure that we can have a better prettyprinter and replace the Basic pretty printer (configurationFormatter)
 "
 Class {
-	#name : #EFContext,
-	#superclass : #Object,
+	#name : 'EFContext',
+	#superclass : 'Object',
 	#instVars : [
 		'formatCommentWithStatements',
 		'indentsForKeywords',
@@ -45,66 +45,68 @@ Class {
 		'periodAtEndOfBlock',
 		'newLinesAfterMethodSignatureWithMethodComment'
 	],
-	#category : #'EnlumineurFormatter-Core'
+	#category : 'EnlumineurFormatter-Core',
+	#package : 'EnlumineurFormatter',
+	#tag : 'Core'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 EFContext >> configureMultiLineMessages [
 
 	multiLineMessages := self defaultMultiLineMessages
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 EFContext >> configureOneLineMessages [
 	oneLineMessages := self defaultOneLineMessages
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 EFContext >> defaultMultiLineMessages [
 
 	^ #(#ifTrue:ifFalse: #ifFalse:ifTrue: #ifTrue: #ifFalse: #on:do: #ensure: #ifCurtailed:)
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 EFContext >> defaultOneLineMessages [
   ^#(#to: #to:do: #to:by: #to:by:do:)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFContext >> formatCommentCloseToStatements [
 	^ formatCommentWithStatements
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFContext >> formatCommentCloseToStatements: aBoolean [
 	formatCommentWithStatements := aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFContext >> indentExtraSpaces [
 	^ indentExtraSpaces
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFContext >> indentExtraSpaces: anInteger [
 	"To set the number of spaces that represent an indent"
 
 	indentExtraSpaces := self stringFromSpaceNumber: anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFContext >> indentString [
 	"My value is set using numberOfSpacesInIndent: "
 	
 	^ indentString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFContext >> indentStyle [
 	^ indentStyle
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFContext >> indentStyle: aSymbol [
 	"Indent style can be either #tabulation or #space."
 	
@@ -114,17 +116,17 @@ EFContext >> indentStyle: aSymbol [
 		ifFalse: [ String tab ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFContext >> indentsForKeywords [
 	^ indentsForKeywords
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFContext >> indentsForKeywords: anInteger [
 	indentsForKeywords := anInteger
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 EFContext >> initialize [
   super initialize.
   self useBasicCommentFormat: true.
@@ -159,17 +161,17 @@ EFContext >> initialize [
   self numberOfSpacesInsideArray: 1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFContext >> keepBlockInMessage [
 	^ keepBlockInMessage
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFContext >> keepBlockInMessage: aBoolean [
 	keepBlockInMessage := aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFContext >> lineUpBlockBrackets [
 	"When true place a new line before closing a multiline block.
 	1 to: 4 do: [ Transcript
@@ -181,163 +183,163 @@ EFContext >> lineUpBlockBrackets [
 	^ lineUpBlockBrackets
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFContext >> lineUpBlockBrackets: aBoolean [
 	lineUpBlockBrackets := aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFContext >> maxLineLength [
 	^ maxLineLength
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFContext >> maxLineLength: anInteger [
 	maxLineLength := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFContext >> methodSignatureOnMultipleLines [
 	^ methodSignatureOnMultipleLines
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFContext >> methodSignatureOnMultipleLines: aBoolean [
 	methodSignatureOnMultipleLines := aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFContext >> minimumNewLinesBetweenStatements [
 	^ minimumNewLinesBetweenStatements
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFContext >> minimumNewLinesBetweenStatements: anInteger [
 	minimumNewLinesBetweenStatements := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFContext >> multiLineMessages [
 	^ multiLineMessages
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFContext >> multiLineMessages: anArray [
 	"In case the user entered a string representing array we convert it into array."
 	self flag: #tocheck. "we should change this logic. It is terrible, the UI should give us an array and not a string!"
 	multiLineMessages := self class compiler evaluate: anArray asString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFContext >> newLineAfterCascade [
 	^ newLineAfterCascade
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFContext >> newLineAfterCascade: aBoolean [
 	newLineAfterCascade := aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFContext >> newLineBeforeFirstCascade [
 	^ newLineBeforeFirstCascade
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFContext >> newLineBeforeFirstCascade: aBoolean [
 	newLineBeforeFirstCascade := aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFContext >> newLineBeforeFirstKeyword [
 	^ newLineBeforeFirstKeyword
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFContext >> newLineBeforeFirstKeyword: aBoolean [
 	newLineBeforeFirstKeyword := aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFContext >> numberOfArgumentsForMultiLine [
 	^ numberOfArgumentsForMultiLine
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFContext >> numberOfArgumentsForMultiLine: anInteger [
 	numberOfArgumentsForMultiLine := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFContext >> numberOfNewLinesAfterMethodComment [
 	^ numberOfNewLinesAfterMethodComment
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFContext >> numberOfNewLinesAfterMethodComment: anInteger [
 	numberOfNewLinesAfterMethodComment := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFContext >> numberOfNewLinesAfterMethodSignature [
 	^ newLinesAfterMethodSignature
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFContext >> numberOfNewLinesAfterMethodSignature: anInteger [
 	newLinesAfterMethodSignature := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFContext >> numberOfNewLinesAfterMethodSignatureWithMethodComment [
 
 	^ newLinesAfterMethodSignatureWithMethodComment
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFContext >> numberOfNewLinesAfterMethodSignatureWithMethodComment: anInteger [
 	newLinesAfterMethodSignatureWithMethodComment := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFContext >> numberOfNewLinesAfterTemporaries [
 	^ newLinesAfterTemporaries
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFContext >> numberOfNewLinesAfterTemporaries: anInteger [
 	newLinesAfterTemporaries := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFContext >> numberOfSpacesAfterCaretSymbolInReturn [
 	^ numberOfSpacesAfterCaretSymbolInReturn
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFContext >> numberOfSpacesAfterCaretSymbolInReturn: anInteger [
 	spacesAfterCaretSymbolInReturn := self stringFromSpaceNumber: anInteger.
 	numberOfSpacesAfterCaretSymbolInReturn := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFContext >> numberOfSpacesBeforeDotInDynamicArray [
 	^ numberOfSpacesBeforeDotInDynamicArray
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFContext >> numberOfSpacesBeforeDotInDynamicArray: anInteger [
 
 	spacesBeforeDotInDynamicArray := self stringFromSpaceNumber: anInteger.
 	numberOfSpacesBeforeDotInDynamicArray := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFContext >> numberOfSpacesInIndent [
 	^ numberOfSpacesInIndent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFContext >> numberOfSpacesInIndent: anInteger [
 	numberOfSpacesInIndent := anInteger.
 	indentString := self indentStyle = #space 
@@ -345,126 +347,126 @@ EFContext >> numberOfSpacesInIndent: anInteger [
 		ifFalse: [ String tab ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFContext >> numberOfSpacesInsideArray [
 	^ numberOfSpacesInsideArray
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFContext >> numberOfSpacesInsideArray: anInteger [
 	spacesInsideArray := self stringFromSpaceNumber: anInteger.
 	numberOfSpacesInsideArray := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFContext >> numberOfSpacesInsideBlock [
 	^ numberOfSpacesInsideBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFContext >> numberOfSpacesInsideBlock: anInteger [
 	spacesInsideBlocks := self stringFromSpaceNumber: anInteger.
 	numberOfSpacesInsideBlock := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFContext >> numberOfSpacesInsideParentheses [
 	^ numberOfSpacesInsideParentheses
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFContext >> numberOfSpacesInsideParentheses: anInteger [
 	spacesInsideParentheses := self stringFromSpaceNumber: anInteger.
 	numberOfSpacesInsideParentheses := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFContext >> oneLineMessages [
 	^ oneLineMessages
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFContext >> oneLineMessages: anArray [
 	"To be revisited latter. Apparently this trick is to convert strings into an array."
 	oneLineMessages := self class compiler evaluate: anArray asString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFContext >> periodAtEndOfBlock: aBoolean [
 	periodAtEndOfBlock := aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFContext >> periodAtEndOfMethod: aBoolean [
 	periodAtEndOfMethod := aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFContext >> periodsAtEndOfBlock [
 	^ periodAtEndOfBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFContext >> periodsAtEndOfMethod [
 	^ periodAtEndOfMethod
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFContext >> retainBlankLinesBeforeComments [
 	^ retainBlankLinesBeforeComments
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFContext >> retainBlankLinesBeforeComments: aBoolean [
 	retainBlankLinesBeforeComments := aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFContext >> retainBlankLinesBetweenStatements [
 	^ retainBlankLinesBetweenStatements
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFContext >> retainBlankLinesBetweenStatements: aBoolean [
 	retainBlankLinesBetweenStatements := aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFContext >> selectorAndArgumentCombinedMaxSize [
 	^ selectorAndArgumentCombinedMaxSize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFContext >> selectorAndArgumentCombinedMaxSize: anInteger [
 	selectorAndArgumentCombinedMaxSize := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFContext >> spacesAfterCaretSymbolInReturnString [
 	^ spacesAfterCaretSymbolInReturn
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFContext >> spacesBeforeDotInDynamicArray [ 
 	^ spacesBeforeDotInDynamicArray
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFContext >> spacesInsideArray [
 	^ spacesInsideArray
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFContext >> spacesInsideBlocksString [
 	^ spacesInsideBlocks
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFContext >> spacesInsideParenthesesString [
 	^ spacesInsideParentheses
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 EFContext >> storeOn: aStream [
 	aStream
 		nextPutAll: self class name;
@@ -481,18 +483,18 @@ EFContext >> storeOn: aStream [
 				cr ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFContext >> stringFromSpaceNumber: aNumber [
 	
 	^ String new: aNumber withAll: Character space
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFContext >> useBasicCommentFormat [
 	^ useBasicCommentFormat
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFContext >> useBasicCommentFormat: aBoolean [
 	useBasicCommentFormat := aBoolean
 ]

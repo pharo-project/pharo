@@ -5,7 +5,9 @@ FFIExternalPackedStructure got renamed in favor of FFIPackedStructure during Pha
 To see how to use myself, please check FFIPackedStructure
 "
 Class {
-	#name : #FFIExternalPackedStructure,
-	#superclass : #FFIPackedStructure,
-	#category : #'UnifiedFFI-Deprecated'
+	#name : 'FFIExternalPackedStructure',
+	#superclass : 'FFIPackedStructure',
+	#category : 'UnifiedFFI-Deprecated',
+	#package : 'UnifiedFFI',
+	#tag : 'Deprecated'
 }

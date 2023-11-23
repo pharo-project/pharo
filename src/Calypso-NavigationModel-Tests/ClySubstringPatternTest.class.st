@@ -1,10 +1,11 @@
 Class {
-	#name : #ClySubstringPatternTest,
-	#superclass : #ClyStringPatternTest,
-	#category : #'Calypso-NavigationModel-Tests'
+	#name : 'ClySubstringPatternTest',
+	#superclass : 'ClyStringPatternTest',
+	#category : 'Calypso-NavigationModel-Tests',
+	#package : 'Calypso-NavigationModel-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClySubstringPatternTest >> testCaseInsensitiveByDefault [
 
 	| pattern |
@@ -13,7 +14,7 @@ ClySubstringPatternTest >> testCaseInsensitiveByDefault [
 	self deny: pattern isCaseSensitive
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClySubstringPatternTest >> testCaseInsensitiveMathingString [
 
 	| pattern |
@@ -25,7 +26,7 @@ ClySubstringPatternTest >> testCaseInsensitiveMathingString [
 	self deny: (pattern matches: 'another string')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClySubstringPatternTest >> testCaseSensitiveMathingString [
 
 	| pattern |
@@ -36,7 +37,7 @@ ClySubstringPatternTest >> testCaseSensitiveMathingString [
 	self deny: (pattern matches: 'start substring end')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClySubstringPatternTest >> testComparison [
 	| pattern pattern2 |
 	pattern := ClySubstringPattern with: 'subString' caseSensitive: true.

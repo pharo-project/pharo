@@ -10,17 +10,19 @@ In this case the content (the receiver) is an error node (expected value).
 Beware that instances of this class can be the first element of ""messages"" on a faulty RBCascadeNode object.
 "
 Class {
-	#name : #RBInvalidCascadeErrorNode,
-	#superclass : #RBEnglobingErrorNode,
-	#category : #'AST-Core-Nodes - ErrorNodes'
+	#name : 'RBInvalidCascadeErrorNode',
+	#superclass : 'RBEnglobingErrorNode',
+	#category : 'AST-Core-Nodes - ErrorNodes',
+	#package : 'AST-Core',
+	#tag : 'Nodes - ErrorNodes'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBInvalidCascadeErrorNode >> isCascadeError [
 	^true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBInvalidCascadeErrorNode >> receiver [
 	^ contents first
 ]

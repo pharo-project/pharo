@@ -39,29 +39,31 @@ If the reader process wants to return the object from the last item in the linke
 Once the reader process has retrieved the object it sets the dummy item's next variable to the first item in the linked list, making the queue avilable again to other processes.
 "
 Class {
-	#name : #WaitfreeQueue,
-	#superclass : #AtomicCollection,
+	#name : 'WaitfreeQueue',
+	#superclass : 'AtomicCollection',
 	#instVars : [
 		'tail',
 		'dummy'
 	],
-	#category : #'Collections-Atomic-Base'
+	#category : 'Collections-Atomic-Base',
+	#package : 'Collections-Atomic',
+	#tag : 'Base'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 WaitfreeQueue class >> new: anInteger [
 	"Just to match SharedQueue protocol"
 	^self new
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 WaitfreeQueue class >> withAll: aCollection [
 	"Answer an instance of the receiver initialized with the supplied collection of items"
 
 	^ self new initializeWithAll: aCollection
 ]
 
-{ #category : #'private - accessing' }
+{ #category : 'private - accessing' }
 WaitfreeQueue >> dummy [
 	"Answer the dummy entry of the receiver.
 	This is internal state and is only for automated unit testing"
@@ -69,7 +71,7 @@ WaitfreeQueue >> dummy [
 	^dummy
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WaitfreeQueue >> findFirst: aBlock [
 	"Note, this method only for backward compatibility. It duplicating the semantics of #nextOrNilSuchThat: completely.
 	Use #nextOrNilSuchThat: instead "
@@ -78,12 +80,12 @@ WaitfreeQueue >> findFirst: aBlock [
 	^ self nextOrNilSuchThat: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WaitfreeQueue >> flush [
 	self flush: [:ea | ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WaitfreeQueue >> flush: aFlushBlock [
 	"Process all currently available items, passing each item to a flush block.
 	If there is another process, which currently fetching items from queue, or queue is empty,
@@ -113,7 +115,7 @@ WaitfreeQueue >> flush: aFlushBlock [
 	] repeat
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WaitfreeQueue >> flushAllSuchThat: aBlock [
 	"Remove from the queue all objects that satisfy aBlock.
 	Note, the operation is no-op, if queue is currently in the middle of extraction by other process"
@@ -139,14 +141,14 @@ WaitfreeQueue >> flushAllSuchThat: aBlock [
 	] repeat
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 WaitfreeQueue >> initialize [
 	dummy := AtomicQueueItem new.
 	dummy object: dummy.
 	tail := dummy
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 WaitfreeQueue >> initializeWithAll: aCollection [
 	"Initialize the receiver with the supplied items (AtomicQueueItem).
 	This method is not thread safe and should only be used for initialising the queue prior to normal operation (and is normally used only for testing)."
@@ -157,7 +159,7 @@ WaitfreeQueue >> initializeWithAll: aCollection [
 	tail := aCollection last
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WaitfreeQueue >> isEmpty [
 	"Answer true if queue contains at least one element.
 	Note, that answer is non-deterministic, because sender could be interrupted at any moment,
@@ -180,7 +182,7 @@ WaitfreeQueue >> isEmpty [
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WaitfreeQueue >> itemCount [
 	"Answer the number of items in the queue including zombies.
 	If queue is currently in the middle of extraction by other process, give a (very) approximate answer.
@@ -203,7 +205,7 @@ WaitfreeQueue >> itemCount [
 	^ count
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WaitfreeQueue >> nextIfNone: aBlock [
 	"Attempt to fetch the next item from queue. Evaluate a block if attempt is failed i.e. there is no items available or queue is locked by another process"
 
@@ -227,14 +229,14 @@ WaitfreeQueue >> nextIfNone: aBlock [
 	^ result
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WaitfreeQueue >> nextOrNil [
 	"Fetch next item from queue, or nil if queue is either empty or in the middle of extraction by other process.
 	If queue can contain a nil as element, use #nextIfNone: instead "
 	^ self nextIfNone: nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WaitfreeQueue >> nextOrNilSuchThat: aBlock [
 	"Fetch an object from queue that satisfies aBlock, skipping (but not removing) any intermediate objects.
 	If no object has been found, answer <nil> and leave me intact.
@@ -288,7 +290,7 @@ WaitfreeQueue >> nextOrNilSuchThat: aBlock [
 	] repeat
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WaitfreeQueue >> nextPut: value [
 	" Add new item to queue "
 	| item oldTail |
@@ -309,7 +311,7 @@ WaitfreeQueue >> nextPut: value [
 	^ value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WaitfreeQueue >> peek [
 	"Answer the object that was sent through the receiver first and has not
 	yet been received by anyone but do not remove it from the receiver.
@@ -334,7 +336,7 @@ WaitfreeQueue >> peek [
 	^ result
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 WaitfreeQueue >> printOn: aStream [
 
 	aStream
@@ -344,7 +346,7 @@ WaitfreeQueue >> printOn: aStream [
 	 	nextPutAll: ' items'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WaitfreeQueue >> removeAll [
 	"
 	This message makes no sense in concurrent environment. There is no way to guarantee that when this method returns to sender, the queue will remain empty,
@@ -355,7 +357,7 @@ WaitfreeQueue >> removeAll [
 	self flush
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WaitfreeQueue >> size [
 	"Answer the size of queue.
 	If queue is currently in the middle of extraction by other process, give a (very) approximate answer.
@@ -378,7 +380,7 @@ WaitfreeQueue >> size [
 	^ count
 ]
 
-{ #category : #'private - accessing' }
+{ #category : 'private - accessing' }
 WaitfreeQueue >> tail [
 	"Answer the tail entry of the receiver.
 	This is internal state and is only for automated unit testing"

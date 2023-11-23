@@ -8,26 +8,28 @@ Entities can encode and decode themselves to and from binary streams.
 Part of Zinc HTTP Components.
 "
 Class {
-	#name : #ZnEntity,
-	#superclass : #Object,
+	#name : 'ZnEntity',
+	#superclass : 'Object',
 	#instVars : [
 		'contentType',
 		'contentLength'
 	],
-	#category : #'Zinc-HTTP-Core'
+	#category : 'Zinc-HTTP-Core',
+	#package : 'Zinc-HTTP',
+	#tag : 'Core'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnEntity class >> byteArrayEntityClass [
 	^ ZnByteArrayEntity
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnEntity class >> bytes: bytes [
 	^ self byteArrayEntityClass bytes: bytes
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnEntity class >> concreteSubclassForType: mimeType binary: forceBinary [
 	"Answer the concrete ZnEntity subclass that handles mimeType"
 
@@ -40,7 +42,7 @@ ZnEntity class >> concreteSubclassForType: mimeType binary: forceBinary [
 				ifFalse: [ self stringEntityClass ] ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnEntity class >> designatedMimeType [
 	"Answer the mime type we are designated to handle.
 	See #concreteSubclassForType: "
@@ -48,24 +50,24 @@ ZnEntity class >> designatedMimeType [
 	self subclassResponsibility
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnEntity class >> html: html [
 	^ self stringEntityClass html: html
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnEntity class >> json: text [
 	^ self stringEntityClass json: text
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnEntity class >> matches: mimeType [
 	"Return whether a given mimeType can be handled by instances of the receiver"
 
 	^ mimeType matches: self designatedMimeType
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnEntity class >> readBinaryFrom: stream usingType: mimeType andLength: length [
 	"Create and return a new buffered entity of mimeType and length from stream.
 	The concrete subclass depends on mimeType, but textual type will remain binary"
@@ -77,7 +79,7 @@ ZnEntity class >> readBinaryFrom: stream usingType: mimeType andLength: length [
 	^ newEntity
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnEntity class >> readFrom: stream usingType: mimeType andLength: length [
 	"Create and return a new buffered entity of mimeType and length from stream.
 	The concrete subclass depends on mimeType"
@@ -89,22 +91,22 @@ ZnEntity class >> readFrom: stream usingType: mimeType andLength: length [
 	^ newEntity
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnEntity class >> stringEntityClass [
 	^ ZnStringEntity
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnEntity class >> text: text [
 	^ self stringEntityClass text: text
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnEntity class >> textCRLF: text [
 	^ self text: text, String crlf
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnEntity class >> type: type [
 	"Create a new entity with a given mime type and (currently) undetermined length"
 
@@ -113,7 +115,7 @@ ZnEntity class >> type: type [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnEntity class >> type: type length: length [
 	"Create a new entity with a given mime type and length"
 
@@ -123,7 +125,7 @@ ZnEntity class >> type: type length: length [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnEntity class >> with: object [
 	"Create a new entity holding object.
 	Currently works for strings and byte arrays.
@@ -134,7 +136,7 @@ ZnEntity class >> with: object [
 		ifFalse: [ self bytes: object ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnEntity class >> with: object type: type [
 	"Create a new entity holding object.
 	Currently works for strings and byte arrays.
@@ -145,46 +147,46 @@ ZnEntity class >> with: object type: type [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnEntity class >> xml: text [
 	^ self stringEntityClass xml: text
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ZnEntity >> = other [
 	self class = other class ifFalse: [ ^ false ].
 	^ self contentType = other contentType and: [ self contentLength = other contentLength ]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ZnEntity >> asByteArray [
 	"Return the ByteArray that is the binary, encoded representation of the receiver"
 
 	^ ByteArray streamContents: [ :stream | self writeOn: stream ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 ZnEntity >> close [
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnEntity >> contentLength [
 	"Content length can be nil when it is (currently) unknown."
 
 	^ contentLength
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnEntity >> contentLength: integer [
 	contentLength := integer
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnEntity >> contentType [
 	^ contentType
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnEntity >> contentType: object [
 	"We only allow assignment compatible with our designated mime type"
 
@@ -197,32 +199,32 @@ ZnEntity >> contentType: object [
 				ifTrue: [ contentType := newType ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnEntity >> contents [
 	self subclassResponsibility
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnEntity >> hasContentLength [
-	^ contentLength notNil
+	^ contentLength isNotNil
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnEntity >> hasContentType [
-	^ contentType notNil
+	^ contentType isNotNil
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ZnEntity >> hash [
 	^ self contentType hash bitXor: self contentLength hash
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnEntity >> isEmpty [
 	self subclassResponsibility
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ZnEntity >> printContentTypeAndLengthOn: stream [
 	self hasContentType ifTrue: [
 		stream print: self contentType; space ].
@@ -230,12 +232,12 @@ ZnEntity >> printContentTypeAndLengthOn: stream [
 		stream print: self contentLength; nextPut: $B ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ZnEntity >> printContentsOn: stream [
 	self printContentTypeAndLengthOn: stream
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ZnEntity >> printOn: stream [
 	super printOn: stream.
 	stream nextPut: $(.
@@ -243,17 +245,17 @@ ZnEntity >> printOn: stream [
 	stream nextPut: $)
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 ZnEntity >> readBinaryFrom: stream [
 	self readFrom: stream
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 ZnEntity >> readFrom: stream [
 	self subclassResponsibility
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 ZnEntity >> writeOn: stream [
 	self subclassResponsibility
 ]

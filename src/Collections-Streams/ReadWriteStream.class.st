@@ -2,12 +2,14 @@
 I represent an accessor for a sequence of objects. My instances can both read and store objects.
 "
 Class {
-	#name : #ReadWriteStream,
-	#superclass : #WriteStream,
-	#category : #'Collections-Streams-Base'
+	#name : 'ReadWriteStream',
+	#superclass : 'WriteStream',
+	#category : 'Collections-Streams-Base',
+	#package : 'Collections-Streams',
+	#tag : 'Base'
 }
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ReadWriteStream >> = other [
 
 	(self class == ReadWriteStream and: [other class == ReadWriteStream]) ifFalse: [
@@ -15,26 +17,26 @@ ReadWriteStream >> = other [
 	^ self position = other position and: [self contents = other contents]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReadWriteStream >> contents [
 
 	readLimit := readLimit max: position.
 	^ collection copyFrom: 1 to: readLimit
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ReadWriteStream >> hash [
 
 	self class == ReadWriteStream ifFalse: [^ super hash].
 	^ (self position + readLimit + 53) hash
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReadWriteStream >> name [
 	^ 'a stream'   "for fileIn compatibility"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReadWriteStream >> next [
 	"Primitive. Return the next object in the Stream represented by the
 	receiver. Fail if the collection of this stream is not an Array or a String.
@@ -48,7 +50,7 @@ ReadWriteStream >> next [
 		ifFalse: [^collection at: (position := position + 1)]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReadWriteStream >> next: anInteger [
 	"Answer the next anInteger elements of my collection.  overriden for efficiency"
 
@@ -61,7 +63,7 @@ ReadWriteStream >> next: anInteger [
 	^ans
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReadWriteStream >> readInto: aCollection startingAt: startIndex count: n [
 	"Read n objects into the given collection.
 	Return number of elements that have been read."
@@ -77,7 +79,7 @@ ReadWriteStream >> readInto: aCollection startingAt: startIndex count: n [
 	^ max
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ReadWriteStream >> readStream [
 	"polymorphic with SequenceableCollection.  Return self"
 

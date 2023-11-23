@@ -2,139 +2,141 @@
 I am an implementation of the generic API for native window rendering that does nothing.
 "
 Class {
-	#name : #OSWindowNullGenericRenderer,
-	#superclass : #OSWindowGenericRenderer,
-	#category : #'OSWindow-Core-Renderer'
+	#name : 'OSWindowNullGenericRenderer',
+	#superclass : 'OSWindowGenericRenderer',
+	#category : 'OSWindow-Core-Renderer',
+	#package : 'OSWindow-Core',
+	#tag : 'Renderer'
 }
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 OSWindowNullGenericRenderer >> clear [
 	"Do nothing"
 ]
 
-{ #category : #clipping }
+{ #category : 'clipping' }
 OSWindowNullGenericRenderer >> clippingBounds: aRectangle [
 	"Nothing required here"
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 OSWindowNullGenericRenderer >> color: aColor [
 	"Do nothing"
 ]
 
-{ #category : #resources }
+{ #category : 'resources' }
 OSWindowNullGenericRenderer >> createRenderTargetTextureWithExtent: anExtent [
 	^ nil
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 OSWindowNullGenericRenderer >> drawLine: startPoint end: endPoint [
 	"Do nothing"
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 OSWindowNullGenericRenderer >> drawPoint: aPoint [
 	"Do nothing"
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 OSWindowNullGenericRenderer >> drawRectangle: aRectangle [
 	"Do nothing"
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 OSWindowNullGenericRenderer >> drawString: aString from: firstIndex to: lastIndex in: bounds font: fontOrNil color: c underline: underline underlineColor: uc strikethrough: strikethrough strikethroughColor: sc kern: kern [
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 OSWindowNullGenericRenderer >> drawTexture: texture in: rectangle [
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 OSWindowNullGenericRenderer >> drawTexture: texture rectangle: sourceRectangle in: destRectangle [
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 OSWindowNullGenericRenderer >> fillRectangle: aRectangle [
 	"Do nothing"
 ]
 
-{ #category : #resources }
+{ #category : 'resources' }
 OSWindowNullGenericRenderer >> getOrCreateRenderTargetTextureFor: anObject withExtent: anExtent [
 	^ nil
 ]
 
-{ #category : #resources }
+{ #category : 'resources' }
 OSWindowNullGenericRenderer >> getOrCreateStaticTextureFromForm: from [
 	^ nil
 ]
 
-{ #category : #resources }
+{ #category : 'resources' }
 OSWindowNullGenericRenderer >> getOrCreateTextureFor: anObject withExtent: anExtent [
 	^ nil
 ]
 
-{ #category : #resources }
+{ #category : 'resources' }
 OSWindowNullGenericRenderer >> getRenderTargetTextureForObjectOrNil: anObject [
 	^ nil
 ]
 
-{ #category : #resources }
+{ #category : 'resources' }
 OSWindowNullGenericRenderer >> getTextureForObjectOrNil: anObject [
 	^ nil
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 OSWindowNullGenericRenderer >> present [
 	"Do nothing"
 ]
 
-{ #category : #'updating screen' }
+{ #category : 'updating screen' }
 OSWindowNullGenericRenderer >> updateAll [
 	"Do nothing"
 ]
 
-{ #category : #'updating screen' }
+{ #category : 'updating screen' }
 OSWindowNullGenericRenderer >> updateRectangle: rectangle [
 	"Do nothing"
 ]
 
-{ #category : #'updating screen' }
+{ #category : 'updating screen' }
 OSWindowNullGenericRenderer >> updateRectangles: aCollectionOfRectangles [
 	"Do nothing"
 ]
 
-{ #category : #'blending mode' }
+{ #category : 'blending mode' }
 OSWindowNullGenericRenderer >> useAdditiveColorBlending [
 ]
 
-{ #category : #'blending mode' }
+{ #category : 'blending mode' }
 OSWindowNullGenericRenderer >> useCompositeAlphaBlending [
 ]
 
-{ #category : #'blending mode' }
+{ #category : 'blending mode' }
 OSWindowNullGenericRenderer >> useModulatingColorBlending [
 ]
 
-{ #category : #'blending mode' }
+{ #category : 'blending mode' }
 OSWindowNullGenericRenderer >> useNoBlending [
 ]
 
-{ #category : #'blending mode' }
+{ #category : 'blending mode' }
 OSWindowNullGenericRenderer >> usePremultipliedCompositeAlphaBlending [
 ]
 
-{ #category : #'blending mode' }
+{ #category : 'blending mode' }
 OSWindowNullGenericRenderer >> useSubpixelFontFirstPassBlending [
 	"Do nothing here"
 ]
 
-{ #category : #'blending mode' }
+{ #category : 'blending mode' }
 OSWindowNullGenericRenderer >> useSubpixelFontSecondPassBlending [
 	"Do nothing here"
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 OSWindowNullGenericRenderer >> withRenderTarget: aRenderTargetTexture do: aBlock [
 	^ aBlock value
 ]

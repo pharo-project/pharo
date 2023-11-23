@@ -1,28 +1,24 @@
 Class {
-	#name : #FluidClassDefinitionPrinterTest,
-	#superclass : #CommonClassDefinitionPrinterTest,
-	#category : #'Kernel-Tests-Fluid'
+	#name : 'FluidClassDefinitionPrinterTest',
+	#superclass : 'CommonClassDefinitionPrinterTest',
+	#category : 'Kernel-Tests-Fluid',
+	#package : 'Kernel-Tests',
+	#tag : 'Fluid'
 }
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 FluidClassDefinitionPrinterTest >> expandedForClass: aClass [
 
 	^ aClass expandedDefinitionStringFor: (FluidClassDefinitionPrinter for: aClass)
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 FluidClassDefinitionPrinterTest >> forClass: aClass [
-	^ (FluidClassDefinitionPrinter for: aClass) definitionString
+
+	^ (ClassDefinitionPrinter fluid for: aClass) definitionString
 ]
 
-{ #category : #running }
-FluidClassDefinitionPrinterTest >> setUp [
-
-	super setUp.
-	ClassDefinitionPrinter showFluidClassDefinition: true
-]
-
-{ #category : #'tests - classes' }
+{ #category : 'tests - classes' }
 FluidClassDefinitionPrinterTest >> testArray [
 
 	self
@@ -33,7 +29,7 @@ FluidClassDefinitionPrinterTest >> testArray [
 	package: ''Collections-Sequenceable'''
 ]
 
-{ #category : #'tests - classes' }
+{ #category : 'tests - classes' }
 FluidClassDefinitionPrinterTest >> testArrayedCollectionWithPoolDictionary [
 
 	self assert: (self forClass: ExampleForTestWithSharedPool) equals: 'ArrayedCollection << #ExampleForTestWithSharedPool
@@ -42,7 +38,7 @@ FluidClassDefinitionPrinterTest >> testArrayedCollectionWithPoolDictionary [
 	package: ''Kernel-Tests'''
 ]
 
-{ #category : #'tests - classes' }
+{ #category : 'tests - classes' }
 FluidClassDefinitionPrinterTest >> testByteString [
 
 	self assert: (self forClass: ByteString) equals: 'String << #ByteString
@@ -52,7 +48,7 @@ FluidClassDefinitionPrinterTest >> testByteString [
 	package: ''Collections-Strings'''
 ]
 
-{ #category : #'tests - classes' }
+{ #category : 'tests - classes' }
 FluidClassDefinitionPrinterTest >> testByteStringClass [
 
 	self
@@ -60,7 +56,7 @@ FluidClassDefinitionPrinterTest >> testByteStringClass [
 		equals: 'String class << ByteString class'
 ]
 
-{ #category : #'tests - classes' }
+{ #category : 'tests - classes' }
 FluidClassDefinitionPrinterTest >> testChronologyConstants [
 
 	self
@@ -71,32 +67,17 @@ FluidClassDefinitionPrinterTest >> testChronologyConstants [
 	package: ''Kernel'''
 ]
 
-{ #category : #'tests - complex slots' }
-FluidClassDefinitionPrinterTest >> testClassDefinitionWithComplexSlotShouldBeDisplayedAsFluid [
-
-	ClassDefinitionPrinter showFluidClassDefinition: false.
-	self assert: MockWithComplexSlot needsSlotClassDefinition.
-
-	self
-		assert: (self forClass: MockWithComplexSlot)
-		equals: 'Object << #MockWithComplexSlot
-	slots: { #aComplexSlot => ObservableSlot };
-	tag: ''Fluid'';
-	package: ''Kernel-Tests'''
-]
-
-{ #category : #'tests - template' }
+{ #category : 'tests - template' }
 FluidClassDefinitionPrinterTest >> testCompactClassTemplate [
 
-	self
-		assert: (FluidClassDefinitionPrinter new compactClassDefinitionTemplateInPackage: 'Kernel')
-		equals:  'Object << #MyClass
+	self assert: (FluidClassDefinitionPrinter new compactClassDefinitionTemplateInPackage: 'Kernel' tag: #Basic) equals: 'Object << #MyClass
 	slots: {};
 	sharedVariables: {};
+	tag: #Basic;
 	package: ''Kernel'''
 ]
 
-{ #category : #'tests - complex slots' }
+{ #category : 'tests - complex slots' }
 FluidClassDefinitionPrinterTest >> testDefinitionWithComplexSlot [
 	"Fluid definition support complex slots."
 
@@ -106,7 +87,7 @@ FluidClassDefinitionPrinterTest >> testDefinitionWithComplexSlot [
 	package: ''Kernel-Tests'''
 ]
 
-{ #category : #'tests - unnecessary values' }
+{ #category : 'tests - unnecessary values' }
 FluidClassDefinitionPrinterTest >> testDisplayEmptySlots [
 	"I would like to be able to test if I provide too many empty values that
 	the default empty values are just ignored."
@@ -121,7 +102,7 @@ FluidClassDefinitionPrinterTest >> testDisplayEmptySlots [
 	package: ''_UnpackagedPackage'''
 ]
 
-{ #category : #'tests - unnecessary values' }
+{ #category : 'tests - unnecessary values' }
 FluidClassDefinitionPrinterTest >> testDoesNotDisplayEmptySlots [
 
 	| class |
@@ -134,7 +115,7 @@ FluidClassDefinitionPrinterTest >> testDoesNotDisplayEmptySlots [
 	package: ''_UnpackagedPackage'''
 ]
 
-{ #category : #'tests - expanded' }
+{ #category : 'tests - expanded' }
 FluidClassDefinitionPrinterTest >> testExpandedEmptyLayoutClass [
 
 	self
@@ -144,7 +125,7 @@ FluidClassDefinitionPrinterTest >> testExpandedEmptyLayoutClass [
 	slots: { #instance }'
 ]
 
-{ #category : #'tests - expanded' }
+{ #category : 'tests - expanded' }
 FluidClassDefinitionPrinterTest >> testExpandedOnClassWithoutTag [
 
 	self
@@ -159,7 +140,7 @@ FluidClassDefinitionPrinterTest >> testExpandedOnClassWithoutTag [
 	package: ''Kernel-BytecodeEncoders'''
 ]
 
-{ #category : #'tests - expanded' }
+{ #category : 'tests - expanded' }
 FluidClassDefinitionPrinterTest >> testExpandedPoint [
 
 	self
@@ -174,7 +155,7 @@ FluidClassDefinitionPrinterTest >> testExpandedPoint [
 	package: ''Kernel'''
 ]
 
-{ #category : #'tests - expanded' }
+{ #category : 'tests - expanded' }
 FluidClassDefinitionPrinterTest >> testExpandedPointClass [
 
 	self
@@ -184,7 +165,7 @@ FluidClassDefinitionPrinterTest >> testExpandedPointClass [
 	slots: {}'
 ]
 
-{ #category : #'tests - expanded' }
+{ #category : 'tests - expanded' }
 FluidClassDefinitionPrinterTest >> testExpandedProtoObject [
 
 	self
@@ -199,7 +180,7 @@ FluidClassDefinitionPrinterTest >> testExpandedProtoObject [
 	package: ''Kernel'''
 ]
 
-{ #category : #'tests - expanded' }
+{ #category : 'tests - expanded' }
 FluidClassDefinitionPrinterTest >> testExpandedProtoObjectClass [
 
 	self
@@ -209,7 +190,7 @@ FluidClassDefinitionPrinterTest >> testExpandedProtoObjectClass [
 	slots: {}'
 ]
 
-{ #category : #'tests - expanded' }
+{ #category : 'tests - expanded' }
 FluidClassDefinitionPrinterTest >> testExpandedTime [
 
 	self
@@ -224,7 +205,7 @@ FluidClassDefinitionPrinterTest >> testExpandedTime [
 	package: ''Kernel'''
 ]
 
-{ #category : #'tests - template' }
+{ #category : 'tests - template' }
 FluidClassDefinitionPrinterTest >> testFullClassTemplate [
 
 	self
@@ -239,7 +220,7 @@ FluidClassDefinitionPrinterTest >> testFullClassTemplate [
 	package: ''Kernel'''
 ]
 
-{ #category : #'tests - metaclasses' }
+{ #category : 'tests - metaclasses' }
 FluidClassDefinitionPrinterTest >> testMetaclass [
 
 	self assert: (self forClass: Metaclass) equals: 'ClassDescription << #Metaclass
@@ -248,14 +229,14 @@ FluidClassDefinitionPrinterTest >> testMetaclass [
 	package: ''Kernel'''
 ]
 
-{ #category : #'tests - metaclasses' }
+{ #category : 'tests - metaclasses' }
 FluidClassDefinitionPrinterTest >> testMetaclassClass [
 
 	self assert: (self forClass: Metaclass class) equals:
  'ClassDescription class << Metaclass class'
 ]
 
-{ #category : #'tests - classes' }
+{ #category : 'tests - classes' }
 FluidClassDefinitionPrinterTest >> testPoint [
 
 	self assert: (self forClass: Point) equals: 'Object << #Point
@@ -264,7 +245,7 @@ FluidClassDefinitionPrinterTest >> testPoint [
 	package: ''Kernel'''
 ]
 
-{ #category : #'tests - unnecessary values' }
+{ #category : 'tests - unnecessary values' }
 FluidClassDefinitionPrinterTest >> testPointMinimalInformation [
 	"I would like to be able to test if I provide too many empty values that
 	the default empty values are just ignored."
@@ -280,7 +261,7 @@ FluidClassDefinitionPrinterTest >> testPointMinimalInformation [
 	package: ''_UnpackagedPackage'''
 ]
 
-{ #category : #'tests - classes' }
+{ #category : 'tests - classes' }
 FluidClassDefinitionPrinterTest >> testProtoObject [
 
 	self assert: (self forClass: ProtoObject) equals: 'nil << #ProtoObject
@@ -288,13 +269,13 @@ FluidClassDefinitionPrinterTest >> testProtoObject [
 	package: ''Kernel'''
 ]
 
-{ #category : #'tests - classes' }
+{ #category : 'tests - classes' }
 FluidClassDefinitionPrinterTest >> testProtoObjectClass [
 
 	self assert: (self forClass: ProtoObject class) equals: 'Class class << ProtoObject class'
 ]
 
-{ #category : #'tests - metaclasses' }
+{ #category : 'tests - metaclasses' }
 FluidClassDefinitionPrinterTest >> testSystemAnnouncerClass [
 
 	self assert: (self forClass: SystemAnnouncer class) equals: 'Announcer class << SystemAnnouncer class

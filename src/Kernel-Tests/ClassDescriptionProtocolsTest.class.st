@@ -2,18 +2,14 @@
 I am a test case responsible of testing ClassDescription protocol management.
 "
 Class {
-	#name : #ClassDescriptionProtocolsTest,
-	#superclass : #ProtocolTest,
-	#category : #'Kernel-Tests-Classes'
+	#name : 'ClassDescriptionProtocolsTest',
+	#superclass : 'AbstractClassDescriptionTest',
+	#category : 'Kernel-Tests-Classes',
+	#package : 'Kernel-Tests',
+	#tag : 'Classes'
 }
 
-{ #category : #private }
-ClassDescriptionProtocolsTest >> performTest [
-
-	SystemAnnouncer uniqueInstance suspendAllWhile: [ super performTest ]
-]
-
-{ #category : #tests }
+{ #category : 'tests' }
 ClassDescriptionProtocolsTest >> testAddProtocol [
 
 	class addProtocol: #titan.
@@ -21,7 +17,7 @@ ClassDescriptionProtocolsTest >> testAddProtocol [
 	self assert: (class hasProtocol: #titan)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassDescriptionProtocolsTest >> testAddProtocolWithExistingProtocol [
 
 	| titan |
@@ -33,7 +29,7 @@ ClassDescriptionProtocolsTest >> testAddProtocolWithExistingProtocol [
 	self assert: (class addProtocol: #titan) identicalTo: titan
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassDescriptionProtocolsTest >> testAddProtocolWithProtocolFromOtherClass [
 
 	| titan |
@@ -47,7 +43,7 @@ ClassDescriptionProtocolsTest >> testAddProtocolWithProtocolFromOtherClass [
 	self deny: (class protocolNamed: #titan) identicalTo: titan
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassDescriptionProtocolsTest >> testAddProtocolWithRealProtocol [
 
 	| titan |
@@ -59,7 +55,7 @@ ClassDescriptionProtocolsTest >> testAddProtocolWithRealProtocol [
 	self assert: (class addProtocol: titan) identicalTo: titan
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassDescriptionProtocolsTest >> testClassifyUnder [
 
 	"Lets create a new protocol via classification"
@@ -88,7 +84,28 @@ ClassDescriptionProtocolsTest >> testClassifyUnder [
 	self assertCollection: (class selectorsInProtocol: #beast) hasSameElements: #( #edalyn )
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
+ClassDescriptionProtocolsTest >> testClassifyUnderExtensionFromTheSamePackage [
+	"If we classify a method as an extension of it's own package, we expect it to end up unclassified."
+
+	self
+		should: [
+			class compiler
+				protocol: ('*' , class package name) asSymbol;
+				install: 'king ^ 1' ]
+		raise: ExtensionPointsOwningPackageNotification.
+	[
+	class compiler
+		protocol: ('*' , class package name) asSymbol;
+		install: 'king ^ 1' ]
+		on: ExtensionPointsOwningPackageNotification
+		do: [ :e | e resume ].
+
+	self deny: (class >> #king) isClassified.
+	self deny: (class >> #king) protocol isExtensionProtocol
+]
+
+{ #category : 'tests' }
 ClassDescriptionProtocolsTest >> testClassifyUnderUnclassified [
 	"Ensure unclassified is acting as any other protocol because that was not the case in the past."
 
@@ -118,7 +135,7 @@ ClassDescriptionProtocolsTest >> testClassifyUnderUnclassified [
 	self assertCollection: class uncategorizedSelectors hasSameElements: #( #king #luz )
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassDescriptionProtocolsTest >> testClassifyUnderWithNil [
 	"Set the base for the test"
 	| unclassified|
@@ -134,15 +151,15 @@ ClassDescriptionProtocolsTest >> testClassifyUnderWithNil [
 	self assertCollection: class protocolNames hasSameElements: { Protocol unclassified . #human }.
 	self assertCollection: (class selectorsInProtocol: #human) hasSameElements: #( #luz ).
 	
-	"Now let's test the behavior if we already have a protocol.
-	The behavior should change to not change the protocol but this test will ensure that the change is intentional and not a regression."
+	"In case we classify under nil while the method already has a protocol, we do not want to update the protocol."
 	class classify: #luz under: nil.
 
-	self assertCollection: class protocolNames hasSameElements: { Protocol unclassified }.
-	self assertCollection: class uncategorizedSelectors hasSameElements: #( #king #luz ).
+	self assertCollection: class protocolNames hasSameElements: { Protocol unclassified . #human }.
+	self assertCollection: class uncategorizedSelectors hasSameElements: #( #king ).
+	self assertCollection: (class selectorsInProtocol: #human) hasSameElements: #( #luz )
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassDescriptionProtocolsTest >> testClassifyUnderWithProtocol [
 
 	"Lets create a new protocol via classification"
@@ -153,7 +170,7 @@ ClassDescriptionProtocolsTest >> testClassifyUnderWithProtocol [
 	self assertCollection: (class selectorsInProtocol: #which) hasSameElements: #( #edalyn #luz )
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassDescriptionProtocolsTest >> testClassifyUnderWithProtocolFromOtherClass [
 
 	| which |
@@ -166,7 +183,7 @@ ClassDescriptionProtocolsTest >> testClassifyUnderWithProtocolFromOtherClass [
 	self deny: (class protocolNamed: #which) identicalTo: which
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassDescriptionProtocolsTest >> testEnsureProtocol [
 
 	| protocol outsideProtocol |
@@ -192,7 +209,7 @@ ClassDescriptionProtocolsTest >> testEnsureProtocol [
 			Protocol unclassified }
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassDescriptionProtocolsTest >> testExtensionProtocols [
 
 	| extensionPackageName |
@@ -202,10 +219,10 @@ ClassDescriptionProtocolsTest >> testExtensionProtocols [
 	class addProtocol: '*' , extensionPackageName.
 
 	self assertCollection: class extensionProtocols hasSameElements: { (class protocolNamed: '*' , extensionPackageName) } ] ensure: [
-		(extensionPackageName asPackageIfAbsent: [ nil ]) ifNotNil: [ :package | package removeFromSystem ] ]
+		self packageOrganizer removePackage: extensionPackageName ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassDescriptionProtocolsTest >> testHasProtocol [
 
 	class addProtocol: #titan.
@@ -216,14 +233,14 @@ ClassDescriptionProtocolsTest >> testHasProtocol [
 	self deny: (class hasProtocol: (Protocol named: #human))
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassDescriptionProtocolsTest >> testHasProtocolWithProtocolFromOtherClass [
 
 	class addProtocol: #titan.
 	self assert: (class hasProtocol: (Protocol named: #titan))
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassDescriptionProtocolsTest >> testHasProtocolWithRealProtocol [
 
 	class addProtocol: #titan.
@@ -231,7 +248,7 @@ ClassDescriptionProtocolsTest >> testHasProtocolWithRealProtocol [
 	self deny: (class hasProtocol: (Protocol named: #human))
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassDescriptionProtocolsTest >> testProtocolNameOfSelector [
 
 	class compiler
@@ -243,7 +260,7 @@ ClassDescriptionProtocolsTest >> testProtocolNameOfSelector [
 	self assert: (class protocolNameOfSelector: #luz) isNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassDescriptionProtocolsTest >> testProtocolNamed [
 
 	| titanProtocol |
@@ -252,7 +269,7 @@ ClassDescriptionProtocolsTest >> testProtocolNamed [
 	self should: [ class protocolNamed: #human ] raise: NotFound
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassDescriptionProtocolsTest >> testProtocolNamedIfAbsent [
 
 	| titanProtocol |
@@ -261,7 +278,7 @@ ClassDescriptionProtocolsTest >> testProtocolNamedIfAbsent [
 	self assert: [ class protocolNamed: #human ifAbsent: [ true ] ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassDescriptionProtocolsTest >> testProtocolNames [
 
 	class addProtocol: #titan.
@@ -275,7 +292,7 @@ ClassDescriptionProtocolsTest >> testProtocolNames [
 	self assertCollection: class protocolNames hasSameElements: #( #human #witch )
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassDescriptionProtocolsTest >> testProtocolOfSelector [
 
 	class compiler
@@ -288,7 +305,7 @@ ClassDescriptionProtocolsTest >> testProtocolOfSelector [
 	self assert: (class protocolOfSelector: #luz) isNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassDescriptionProtocolsTest >> testProtocols [
 
 	class addProtocol: #titan.
@@ -302,7 +319,7 @@ ClassDescriptionProtocolsTest >> testProtocols [
 	self assertCollection: class protocols hasSameElements: (#( #human #witch ) collect: [ :protocolName | class protocolNamed: protocolName ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassDescriptionProtocolsTest >> testRemoveFromProtocols [
 
 	class classify: #amity under: #witch.
@@ -318,7 +335,7 @@ ClassDescriptionProtocolsTest >> testRemoveFromProtocols [
 	self deny: (class hasProtocol: #witch)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassDescriptionProtocolsTest >> testRemoveNonexistentSelectorsFromProtocols [
 
 	class compiler
@@ -349,7 +366,7 @@ ClassDescriptionProtocolsTest >> testRemoveNonexistentSelectorsFromProtocols [
 	self assertCollection: (class protocolNamed: #human) methodSelectors hasSameElements: #( luz )
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassDescriptionProtocolsTest >> testRemoveProtocol [
 
 	class addProtocol: #titan.
@@ -371,7 +388,7 @@ ClassDescriptionProtocolsTest >> testRemoveProtocol [
 	self deny: (class isLocalSelector: #king)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassDescriptionProtocolsTest >> testRemoveProtocolIfEmpty [
 
 	class addProtocol: #titan.
@@ -392,14 +409,14 @@ ClassDescriptionProtocolsTest >> testRemoveProtocolIfEmpty [
 	self assertCollection: class protocolNames hasSameElements: #( #titan #witch )
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassDescriptionProtocolsTest >> testRemoveProtocolIfEmptyOnNonExistingProtocol [
 
 	self deny: (class hasProtocol: #titan).
 	self shouldnt: [ class removeProtocolIfEmpty: #titan ] raise: Error
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassDescriptionProtocolsTest >> testRemoveProtocolIfEmptyWithProtocolFromOtherClass [
 
 	class addProtocol: #titan.
@@ -416,7 +433,7 @@ ClassDescriptionProtocolsTest >> testRemoveProtocolIfEmptyWithProtocolFromOtherC
 	self assert: class protocolNames size equals: 3
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassDescriptionProtocolsTest >> testRemoveProtocolIfEmptyWithRealProtocol [
 
 	class addProtocol: #titan.
@@ -437,14 +454,14 @@ ClassDescriptionProtocolsTest >> testRemoveProtocolIfEmptyWithRealProtocol [
 	self assertCollection: class protocolNames hasSameElements: #( #titan #witch )
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassDescriptionProtocolsTest >> testRemoveProtocolOnNonExistingProtocol [
 
 	self deny: (class hasProtocol: #titan).
 	self shouldnt: [ class removeProtocol: #titan ] raise: Error
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassDescriptionProtocolsTest >> testRemoveProtocolWithRealProtocol [
 
 	class addProtocol: #titan.
@@ -466,7 +483,7 @@ ClassDescriptionProtocolsTest >> testRemoveProtocolWithRealProtocol [
 	self deny: (class isLocalSelector: #king)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassDescriptionProtocolsTest >> testRenameProtocolAs [
 
 	class compiler
@@ -483,7 +500,32 @@ ClassDescriptionProtocolsTest >> testRenameProtocolAs [
 	self assertCollection: (class selectorsInProtocol: #titan) hasSameElements: #( #king )
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
+ClassDescriptionProtocolsTest >> testRenameProtocolAsAnExtensionOfThePackageContainingTheClass [
+	"We should not be able to have a protocol that is an extension of the package containing the class"
+
+	| extension |
+	class compiler
+		protocol: #demon;
+		install: 'king ^1'.
+
+	extension := '*' , class package name.
+
+	self assert: (class hasProtocol: #demon).
+	self deny: (class hasProtocol: extension).
+	self assertCollection: (class selectorsInProtocol: #demon) hasSameElements: #( #king ).
+
+	self should: [ class renameProtocol: #demon as: extension ] raise: ExtensionPointsOwningPackageNotification.
+	[ class renameProtocol: #demon as: extension ]
+		on: ExtensionPointsOwningPackageNotification
+		do: [ :e | e resume ].
+
+	self assert: (class hasProtocol: #demon).
+	self deny: (class hasProtocol: extension).
+	self assertCollection: (class selectorsInProtocol: #demon) hasSameElements: #( #king )
+]
+
+{ #category : 'tests' }
 ClassDescriptionProtocolsTest >> testRenameProtocolAsWithExistingProtocol [
 
 	class
@@ -501,7 +543,7 @@ ClassDescriptionProtocolsTest >> testRenameProtocolAsWithExistingProtocol [
 	self assertCollection: (class selectorsInProtocol: #titan) hasSameElements: #( #king )
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassDescriptionProtocolsTest >> testRenameProtocolAsWithExistingProtocolWithProtocol [
 
 	| titan demon |
@@ -523,7 +565,7 @@ ClassDescriptionProtocolsTest >> testRenameProtocolAsWithExistingProtocolWithPro
 	self assertCollection: demon methodSelectors hasSameElements: #( #king )
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassDescriptionProtocolsTest >> testRenameProtocolAsWithNil [
 
 	class classify: #king under: #demon.
@@ -539,7 +581,7 @@ ClassDescriptionProtocolsTest >> testRenameProtocolAsWithNil [
 	self assertCollection: (class selectorsInProtocol: #demon) hasSameElements: #( #king )
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassDescriptionProtocolsTest >> testRenameProtocolAsWithNil2 [
 
 	class classify: #king under: #demon.
@@ -555,7 +597,7 @@ ClassDescriptionProtocolsTest >> testRenameProtocolAsWithNil2 [
 	self assertCollection: (class selectorsInProtocol: #demon) hasSameElements: #( #king )
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassDescriptionProtocolsTest >> testRenameProtocolAsWithNil3 [
 
 	class classify: #king under: #demon.
@@ -571,7 +613,7 @@ ClassDescriptionProtocolsTest >> testRenameProtocolAsWithNil3 [
 	self assertCollection: (class selectorsInProtocol: #demon) hasSameElements: #( #king )
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassDescriptionProtocolsTest >> testRenameProtocolAsWithNonExistingProtocol [
 
 	class classify: #king under: #demon.
@@ -587,7 +629,7 @@ ClassDescriptionProtocolsTest >> testRenameProtocolAsWithNonExistingProtocol [
 	self assertCollection: (class selectorsInProtocol: #demon) hasSameElements: #( #king )
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassDescriptionProtocolsTest >> testRenameProtocolAsWithProtocol [
 
 	| demon titan |
@@ -605,7 +647,7 @@ ClassDescriptionProtocolsTest >> testRenameProtocolAsWithProtocol [
 	self assertCollection: titan methodSelectors hasSameElements: #( #king )
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassDescriptionProtocolsTest >> testSelectorsInProtocol [
 
 	self assertEmpty: (class selectorsInProtocol: #titan).
@@ -617,7 +659,7 @@ ClassDescriptionProtocolsTest >> testSelectorsInProtocol [
 	self assertCollection: (class selectorsInProtocol: #titan) hasSameElements: #( #king )
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassDescriptionProtocolsTest >> testSelectorsInProtocolWithRealProtocol [
 
 	self assertEmpty: (Protocol named: #titan).

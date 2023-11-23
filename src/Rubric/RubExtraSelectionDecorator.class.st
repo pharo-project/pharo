@@ -1,26 +1,28 @@
 Class {
-	#name : #RubExtraSelectionDecorator,
-	#superclass : #RubParagraphDecorator,
+	#name : 'RubExtraSelectionDecorator',
+	#superclass : 'RubParagraphDecorator',
 	#instVars : [
 		'findReplaceRanges',
 		'findReplaceShapes',
 		'secondarySelectionShapes'
 	],
-	#category : #'Rubric-Editing-Core'
+	#category : 'Rubric-Editing-Core',
+	#package : 'Rubric',
+	#tag : 'Editing-Core'
 }
 
-{ #category : #querying }
+{ #category : 'querying' }
 RubExtraSelectionDecorator class >> key [
 	^ #findReplaceSelection
 ]
 
-{ #category : #computation }
+{ #category : 'computation' }
 RubExtraSelectionDecorator >> cleanUpText [
 	self text removeAttribute: RubTextSelectionColor findReplaceSelection.
 	self text removeAttribute: RubTextSelectionColor secondarySelection
 ]
 
-{ #category : #computation }
+{ #category : 'computation' }
 RubExtraSelectionDecorator >> computeFindReplaceShapesFrom: topLeft to: bottomRight [
 	| topLeftBlk |
 	findReplaceShapes := nil.
@@ -41,7 +43,7 @@ RubExtraSelectionDecorator >> computeFindReplaceShapesFrom: topLeft to: bottomRi
 	^ findReplaceShapes
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 RubExtraSelectionDecorator >> computeSecondarySelectionShapesFrom: topLeft to: bottomRight [
 	| primary secondarySelRanges otherRanges topLeftBlk |
 	primary := self primarySelectionInterval.
@@ -66,13 +68,13 @@ RubExtraSelectionDecorator >> computeSecondarySelectionShapesFrom: topLeft to: b
 				borderColor: RubTextSelectionColor secondarySelection backgroundColor muchDarker]
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 RubExtraSelectionDecorator >> computeSelectionShapesFor: aRectangle [
 	self computeFindReplaceShapesFrom: aRectangle topLeft to: aRectangle bottomRight.
 	self computeSecondarySelectionShapesFrom: aRectangle topLeft to: aRectangle bottomRight
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 RubExtraSelectionDecorator >> drawAllSelectionShapesOn: aCanvas [
 
 	findReplaceShapes ifNotNil: [
@@ -88,13 +90,13 @@ RubExtraSelectionDecorator >> drawAllSelectionShapesOn: aCanvas [
 	]
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 RubExtraSelectionDecorator >> drawAllSelectionShapesOnAthensCanvas: anAthensCanvas [
 	findReplaceShapes ifNotNil: [ findReplaceShapes do: [ :selblock | self drawSelectionShape: selblock onAthensCanvas: anAthensCanvas ] ].
 	secondarySelectionShapes ifNotNil: [ secondarySelectionShapes do: [ :selblock | self drawSelectionShape:  selblock onAthensCanvas: anAthensCanvas] ]
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 RubExtraSelectionDecorator >> drawOn: aCanvas [
 
 	(Display depth < 3 or: [ aCanvas isShadowDrawing ]) ifTrue: [ ^ self ].
@@ -104,7 +106,7 @@ RubExtraSelectionDecorator >> drawOn: aCanvas [
 	self drawAllSelectionShapesOn: aCanvas
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 RubExtraSelectionDecorator >> drawOnAthensCanvas: anAthensCanvas [
 	super drawOnAthensCanvas: anAthensCanvas.
 	self computeSelectionShapesFor: anAthensCanvas clipRect.
@@ -112,7 +114,7 @@ RubExtraSelectionDecorator >> drawOnAthensCanvas: anAthensCanvas [
 	self drawAllSelectionShapesOnAthensCanvas: anAthensCanvas
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 RubExtraSelectionDecorator >> drawSelectionShape: aSelBlock on: aCanvas [
 	"Display a SelectionShape if it does not overlap vith the regular selection"
 
@@ -137,7 +139,7 @@ RubExtraSelectionDecorator >> drawSelectionShape: aSelBlock on: aCanvas [
 	aSelBlock drawOn: aCanvas
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 RubExtraSelectionDecorator >> drawSelectionShape: aSelBlock onAthensCanvas: anAthensCanvas [
 	"Display a SelectionShape if it does not overlap vith the regular selection"
 	| startIdx stopIdx  |
@@ -158,26 +160,26 @@ RubExtraSelectionDecorator >> drawSelectionShape: aSelBlock onAthensCanvas: anAt
 	aSelBlock drawOnAthensCanvas: anAthensCanvas
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubExtraSelectionDecorator >> findRegex [
 	^ self paragraph textArea ifNotNil: [ :textArea | textArea findRegex ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RubExtraSelectionDecorator >> hasValidSelection [
 
 	| paragraph |
 
 	paragraph := self paragraph ifNil: [ ^false ].
 
-	^paragraph selectionStart notNil and: [
-		paragraph selectionStop notNil and: [
+	^paragraph selectionStart isNotNil and: [
+		paragraph selectionStop isNotNil and: [
 			paragraph selectionStart ~= paragraph selectionStop
 		]
 	]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubExtraSelectionDecorator >> primarySelectionInterval [
 
 	self paragraph ifNotNil: [ :paragraph |

@@ -22,33 +22,35 @@ FTStaticBasicItem new
  
 "
 Class {
-	#name : #FTStaticBasicItem,
-	#superclass : #FTBasicItem,
-	#category : #'Morphic-Widgets-FastTable-Tree'
+	#name : 'FTStaticBasicItem',
+	#superclass : 'FTBasicItem',
+	#category : 'Morphic-Widgets-FastTable-Tree',
+	#package : 'Morphic-Widgets-FastTable',
+	#tag : 'Tree'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTStaticBasicItem >> calculateChildren [
 	"Not for this item."
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTStaticBasicItem >> children [
 	^ children
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTStaticBasicItem >> children: aCollectionsOfItems [
 	children := aCollectionsOfItems
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 FTStaticBasicItem >> dataSource: anObject [
 	dataSource := anObject.
 	children do: [ :item | item dataSource: anObject ]
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 FTStaticBasicItem >> updateData [
 	"Static Item cannot do it."
 ]

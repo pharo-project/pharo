@@ -1,10 +1,12 @@
 Class {
-	#name : #MetacelloAllowConflictingProjectUpgrade,
-	#superclass : #MetacelloResolveProjectUpgrade,
-	#category : #'Metacello-Core-Scripts'
+	#name : 'MetacelloAllowConflictingProjectUpgrade',
+	#superclass : 'MetacelloResolveProjectUpgrade',
+	#category : 'Metacello-Core-Scripts',
+	#package : 'Metacello-Core',
+	#tag : 'Scripts'
 }
 
-{ #category : #'exception handling' }
+{ #category : 'exception handling' }
 MetacelloAllowConflictingProjectUpgrade >> defaultAction [
   self existingProjectRegistration locked
     ifTrue: [ 
@@ -16,12 +18,12 @@ MetacelloAllowConflictingProjectUpgrade >> defaultAction [
         , ' and ' , self newProjectRegistration printString
 ]
 
-{ #category : #handlers }
+{ #category : 'handlers' }
 MetacelloAllowConflictingProjectUpgrade >> handleResolutionFor: aScriptEngine [
     ^ aScriptEngine handleConflict: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloAllowConflictingProjectUpgrade >> operationString [
   ^ 'load with conflicts'
 ]

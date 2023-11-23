@@ -4,12 +4,14 @@ I use the SystemNavigation to get all symbols and then filtering them.
 See the #entriesDo:
 "
 Class {
-	#name : #CoGlobalSymbolFetcher,
-	#superclass : #CoGlobalFetcher,
-	#category : #'HeuristicCompletion-Model-Fetchers'
+	#name : 'CoGlobalSymbolFetcher',
+	#superclass : 'CoGlobalFetcher',
+	#category : 'HeuristicCompletion-Model-Fetchers',
+	#package : 'HeuristicCompletion-Model',
+	#tag : 'Fetchers'
 }
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 CoGlobalSymbolFetcher >> entriesDo: aBlock [
 
 	self systemNavigation

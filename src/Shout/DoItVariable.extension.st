@@ -1,6 +1,6 @@
-Extension { #name : #DoItVariable }
+Extension { #name : 'DoItVariable' }
 
-{ #category : #'*Shout' }
+{ #category : '*Shout' }
 DoItVariable >> styleNameIn: aRBVariableNode [
 
 	^ self actualVariable styleNameIn: aRBVariableNode

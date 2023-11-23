@@ -1,6 +1,6 @@
-Extension { #name : #FreeTypeSystemSettings }
+Extension { #name : 'FreeTypeSystemSettings' }
 
-{ #category : #'*FreeType-Graphics' }
+{ #category : '*FreeType-Graphics' }
 FreeTypeSystemSettings class >> loadFt2Library: aBoolean [
 	(LoadFT2Library = aBoolean)
 		ifTrue: [ ^ self ].

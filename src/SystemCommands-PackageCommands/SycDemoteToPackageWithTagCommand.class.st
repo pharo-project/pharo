@@ -2,12 +2,13 @@
 I am a command to demote given packages into the package with tag
 "
 Class {
-	#name : #SycDemoteToPackageWithTagCommand,
-	#superclass : #SycPackageCommand,
-	#category : #'SystemCommands-PackageCommands'
+	#name : 'SycDemoteToPackageWithTagCommand',
+	#superclass : 'SycPackageCommand',
+	#category : 'SystemCommands-PackageCommands',
+	#package : 'SystemCommands-PackageCommands'
 }
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycDemoteToPackageWithTagCommand >> applyResultInContext: aBrowserContext [
 
 	| lastPackage newPackage tag |
@@ -15,18 +16,18 @@ SycDemoteToPackageWithTagCommand >> applyResultInContext: aBrowserContext [
 
 	newPackage := (lastPackage name copyUpToLast: $-) asPackage.
 	tag := lastPackage name last: lastPackage name size - newPackage name size - 1.
-	aBrowserContext showPackage: newPackage atClassTag: tag asSymbol
+	aBrowserContext showPackage: newPackage tag: tag asSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycDemoteToPackageWithTagCommand >> defaultMenuItemName [
 	^'Demote to package with tag'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycDemoteToPackageWithTagCommand >> execute [
 
 	packages
-		select: [ :each | each name includes: $- ]
-		thenDo: [ :each | each demoteToTagInPackageNamed: (each name copyUpToLast: $-) ]
+		select: [ :package | package name includes: $- ]
+		thenDo: [ :package | package demoteToTagInPackage ]
 ]

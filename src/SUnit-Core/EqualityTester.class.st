@@ -2,12 +2,14 @@
 I provide a simple way to test the equality properties of any object.
 "
 Class {
-	#name : #EqualityTester,
-	#superclass : #PrototypeTester,
-	#category : #'SUnit-Core-Utilities'
+	#name : 'EqualityTester',
+	#superclass : 'PrototypeTester',
+	#category : 'SUnit-Core-Utilities',
+	#package : 'SUnit-Core',
+	#tag : 'Utilities'
 }
 
-{ #category : #operation }
+{ #category : 'operation' }
 EqualityTester >> resultFor: runs [
 	"Test that equality is the same over runs and answer the result"
 

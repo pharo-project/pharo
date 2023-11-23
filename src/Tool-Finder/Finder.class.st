@@ -5,8 +5,8 @@ I'm compute the search string and I construct a resultDictionary.
 Then I throw events everywhere and my views are redrawn.
 "
 Class {
-	#name : #Finder,
-	#superclass : #Object,
+	#name : 'Finder',
+	#superclass : 'Object',
 	#instVars : [
 		'searchingString',
 		'selectedMethod',
@@ -17,17 +17,19 @@ Class {
 		'useRegEx',
 		'searchStrategy'
 	],
-	#category : #'Tool-Finder-Base'
+	#category : 'Tool-Finder-Base',
+	#package : 'Tool-Finder',
+	#tag : 'Base'
 }
 
-{ #category : #'tools registry' }
+{ #category : 'tools registry' }
 Finder class >> registerToolsOn: registry [
 	"Add ourselves to registry. See [Smalltalk tools]"
 
 	registry register: self as: #finder
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Finder >> constructDictionary [
 	"I construct the adequate dictionary regarding the search mode"
 
@@ -37,7 +39,7 @@ Finder >> constructDictionary [
 	self searchStrategy constructDictionary ] asJob run
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Finder >> currentSearchMode [
 	"Getter"
 
@@ -50,7 +52,7 @@ Finder >> currentSearchMode [
 	^ self searchStrategy class strategyName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Finder >> currentSearchMode: aSymbol [
 	"Setter"
 
@@ -62,36 +64,36 @@ Finder >> currentSearchMode: aSymbol [
 	self constructDictionary
 ]
 
-{ #category : #default }
+{ #category : 'default' }
 Finder >> defaultEnvironment [
 	 ^ RBBrowserEnvironment new
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Finder >> disableUseRegEx [
 	"send a disable useRegEx dropbox event"
 	^ self triggerEvent: #disableUseRegEx
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Finder >> enableUseRegEx [
 	"send an 'enableUseRegEx' dropbox event"
 	^ self triggerEvent: #enableUseRegEx
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Finder >> environment [
 
 	 ^ environment
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Finder >> environment: aCollection [
 
 	 environment := aCollection
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 Finder >> initialize [
 
 	super initialize.
@@ -103,25 +105,25 @@ Finder >> initialize [
 	useRegEx := false
 ]
 
-{ #category : #checkbox }
+{ #category : 'checkbox' }
 Finder >> isClassSearch [
 
 	^ self searchStrategy isClassesSearch
 ]
 
-{ #category : #checkbox }
+{ #category : 'checkbox' }
 Finder >> isPragmasSearch [
 
 	^ self searchStrategy isPragmasSearch
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Finder >> packagesSelection [
 	"I should be a selection of classes"
 	^packagesSelection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Finder >> packagesSelection: aCollection [
 	"I change the classes selection, then I rebuild the result dictionary"
 
@@ -129,20 +131,20 @@ Finder >> packagesSelection: aCollection [
 	self constructDictionary
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Finder >> resetEnvironment [
 	"I send an event when I reset the environment"
 	self environment: self defaultEnvironment.
 	self triggerEvent: #resetEnvironment
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Finder >> resultDictionary [
 	"I should answer a dictionary"
 	^resultDictionary
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Finder >> resultDictionary: aDictionary [
 	"When the result dictionary is update, I send an event through the whole universe"
 
@@ -153,25 +155,25 @@ Finder >> resultDictionary: aDictionary [
 	self triggerEvent: #updateSourceCode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Finder >> searchStrategy [
 
 	^ searchStrategy
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Finder >> searchStrategy: anObject [
 
 	searchStrategy := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Finder >> searchingString [
 
 	^searchingString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Finder >> searchingString: aString [
 	"When the search string is modified (in fact, when I make a search) I rebuild the result dictionary"
 
@@ -179,39 +181,39 @@ Finder >> searchingString: aString [
 	self constructDictionary
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Finder >> searchingStringSilently: aString [
 
 	searchingString := aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Finder >> selectedClass [
 
 	^selectedClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Finder >> selectedClass: aClass [
 	"When the class seletion is changed, I send an event to UI"
 	selectedClass := aClass.
 	self triggerEvent: #updateSelectedClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Finder >> selectedMethod [
 	"I should answer a CompiledMethod"
 	^selectedMethod
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Finder >> selectedMethod: aMethod [
 	"When the method seletion is changed, I send an event to UI"
 	selectedMethod := aMethod.
 	self triggerEvent: #updateSelectedMethod
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Finder >> selection: aSelectionHolder [
 	"anObject is a selection holder"
 
@@ -232,13 +234,13 @@ Finder >> selection: aSelectionHolder [
 	self triggerEvent: #updateSourceCode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Finder >> useRegEx [
 	"I should answer a boolean that tells whether regExpression should be taken into account"
 	 ^ useRegEx
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Finder >> useRegEx: aBoolean [
 
 	useRegEx := aBoolean

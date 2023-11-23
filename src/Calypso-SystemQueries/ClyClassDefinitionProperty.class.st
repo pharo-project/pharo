@@ -6,18 +6,20 @@ You can create me by:
 	ClyClassDefinitionProperty of: aClass
 "
 Class {
-	#name : #ClyClassDefinitionProperty,
-	#superclass : #ClyItemDefinitionProperty,
-	#category : #'Calypso-SystemQueries-Properties'
+	#name : 'ClyClassDefinitionProperty',
+	#superclass : 'ClyItemDefinitionProperty',
+	#category : 'Calypso-SystemQueries-Properties',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Properties'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyClassDefinitionProperty class >> of: aClass [
 
 	^self package: aClass package class: aClass
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyClassDefinitionProperty >> printDefinition [
 	^definingPackageItem name
 ]

@@ -16,41 +16,43 @@ Use the following methods in the initialization to setup your subclass:
 you may use #afterCheck:mappings: to do a post-matching validation of a matched node and mapping of wildcards.
 "
 Class {
-	#name : #ReNodeMatchRule,
-	#superclass : #RePatternCodeRule,
+	#name : 'ReNodeMatchRule',
+	#superclass : 'RePatternCodeRule',
 	#instVars : [
 		'matchers'
 	],
-	#category : #'Renraku-Rules-Rewrite'
+	#category : 'Renraku-Rules-Rewrite',
+	#package : 'Renraku',
+	#tag : 'Rules-Rewrite'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ReNodeMatchRule class >> isAbstract [
 
 	 ^ self = ReNodeMatchRule
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ReNodeMatchRule class >> isVisible [
 
 	^ self name ~= #ReNodeMatchRule
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 ReNodeMatchRule >> addMatchingExpression: aString [
 	"add a string of rewrite expression to be matched by rule"
 
 	matchers add: (RBParser parseRewriteExpression: aString)
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 ReNodeMatchRule >> addMatchingMethod: aString [
 	"add a string of rewrite expression which should be parsed as a method"
 
 	matchers add: (RBParser parseRewriteMethod: aString)
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ReNodeMatchRule >> check: aNode forCritiquesDo: aCriticBlock [
 
 	matchers do: [ :matcher |
@@ -65,20 +67,20 @@ ReNodeMatchRule >> check: aNode forCritiquesDo: aCriticBlock [
 			onFailure: [  ] ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ReNodeMatchRule >> initialize [
 	super initialize.
 	matchers := Set new
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 ReNodeMatchRule >> matches: aString [
 	"add a string of rewrite expression to be matched by rule"
 
 	self addMatchingExpression: aString
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 ReNodeMatchRule >> matchesAny: aStringCollection [
 	"add a collection of rewrite expression strings to be matched by the rule"
 

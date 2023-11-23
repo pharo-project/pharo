@@ -1,6 +1,6 @@
-Extension { #name : #Color }
+Extension { #name : 'Color' }
 
-{ #category : #'*System-CommandLine-TextSupport' }
+{ #category : '*System-CommandLine-TextSupport' }
 Color >> closestXTermPixelValue [
 	| index |
 	"Return the nearest approximation to this color for 256 xterm color."

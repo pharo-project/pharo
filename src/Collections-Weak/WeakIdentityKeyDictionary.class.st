@@ -7,12 +7,14 @@ WeakKeyAssociation are implemented as ephemerons and get mourned when their key 
 On mourn, the association asks the container to remove itself.
 "
 Class {
-	#name : #WeakIdentityKeyDictionary,
-	#superclass : #IdentityDictionary,
-	#category : #'Collections-Weak-Dictionaries'
+	#name : 'WeakIdentityKeyDictionary',
+	#superclass : 'IdentityDictionary',
+	#category : 'Collections-Weak-Dictionaries',
+	#package : 'Collections-Weak',
+	#tag : 'Dictionaries'
 }
 
-{ #category : #adding }
+{ #category : 'adding' }
 WeakIdentityKeyDictionary >> add: anAssociation [
 	
 	"Installs a copy of the association in myself.
@@ -25,7 +27,7 @@ WeakIdentityKeyDictionary >> add: anAssociation [
 	^ anAssociation
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WeakIdentityKeyDictionary >> at: key put: anObject [
 	"Set the value at key to be anObject.  If key is not found, create a
 	new entry for key and set is value to anObject. Answer anObject."
@@ -39,7 +41,7 @@ WeakIdentityKeyDictionary >> at: key put: anObject [
 	^ anObject
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 WeakIdentityKeyDictionary >> postCopy [
 	"Must copy the associations and tell them I (the copy) am their new container"
 

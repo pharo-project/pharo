@@ -4,18 +4,19 @@ Writer for Cypress format
 see https://github.com/CampSmalltalk/Cypress
 "
 Class {
-	#name : #MCFileTreeStCypressWriter,
-	#superclass : #MCFileTreeStSnapshotWriter,
+	#name : 'MCFileTreeStCypressWriter',
+	#superclass : 'MCFileTreeStSnapshotWriter',
 	#instVars : [
 		'fileStream'
 	],
 	#classInstVars : [
 		'specials'
 	],
-	#category : #'MonticelloFileTree-Core'
+	#category : 'MonticelloFileTree-Core',
+	#package : 'MonticelloFileTree-Core'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCFileTreeStCypressWriter class >> fileNameForSelector: selector [
   ^ (selector includes: $:)
     ifTrue: [ 
@@ -43,14 +44,14 @@ MCFileTreeStCypressWriter class >> fileNameForSelector: selector [
 
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 MCFileTreeStCypressWriter class >> initialize [
     "Force initialization of specials ..."
 
     specials := nil
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCFileTreeStCypressWriter class >> initializeSpecials [
     | map |
     map := Dictionary new.
@@ -75,23 +76,23 @@ MCFileTreeStCypressWriter class >> initializeSpecials [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCFileTreeStCypressWriter class >> monticelloMetaDirName [
     ^ 'monticello.meta'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCFileTreeStCypressWriter class >> specials [
     ^ specials ifNil: [ specials := self initializeSpecials ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCFileTreeStCypressWriter >> fileNameForSelector: selector [
   ^ self class fileNameForSelector: selector
 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCFileTreeStCypressWriter >> fileNameMapFor: aMethodDefinitionCollection [
   "https://github.com/dalehenrich/filetree/issues/92"
 
@@ -143,23 +144,23 @@ MCFileTreeStCypressWriter >> fileNameMapFor: aMethodDefinitionCollection [
   ^ filenameMetaMap
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MCFileTreeStCypressWriter >> propertyFileExtension [
   ^ self repository propertyFileExtension
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCFileTreeStCypressWriter >> setFileStream: aStream [
     super setFileStream: aStream.
     fileStream := aStream
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 MCFileTreeStCypressWriter >> writeClassComment: definition [
     fileStream nextPutAll: definition comment withUnixLineEndings
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 MCFileTreeStCypressWriter >> writeClassDefinition: definition [
     | properties |
     properties := Dictionary new.
@@ -185,7 +186,7 @@ MCFileTreeStCypressWriter >> writeClassDefinition: definition [
     STON put: properties asJsonOnStreamPretty: fileStream
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 MCFileTreeStCypressWriter >> writeClassDefinition: definition to: classPath [
   self
     writeInDirectoryName: classPath
@@ -207,7 +208,7 @@ MCFileTreeStCypressWriter >> writeClassDefinition: definition to: classPath [
           (self methodDefinitions at: definition className ifAbsent: [ #() ]) ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MCFileTreeStCypressWriter >> writeDefinitions: aCollection [
   | classDirExtension extensionClasses extensionMethodDefinitions extensionMethodMap methodHolders |
   self writeBasicDefinitions: aCollection.
@@ -273,7 +274,7 @@ MCFileTreeStCypressWriter >> writeDefinitions: aCollection [
 
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 MCFileTreeStCypressWriter >> writeExtensionClassDefinition: definition [
     | properties |
     properties := Dictionary new.
@@ -281,7 +282,7 @@ MCFileTreeStCypressWriter >> writeExtensionClassDefinition: definition [
     STON put: properties asJsonOnStreamPretty: fileStream
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 MCFileTreeStCypressWriter >> writeExtensionClassDefinition: definition to: classPath [
   self
     writeInDirectoryName: classPath
@@ -290,20 +291,21 @@ MCFileTreeStCypressWriter >> writeExtensionClassDefinition: definition to: class
     visit: [ self writeExtensionClassDefinition: definition ]
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 MCFileTreeStCypressWriter >> writeMethodDefinition: definition [
-    fileStream
-        nextPutAll: definition category;
-        lf;
-        nextPutAll: definition source withUnixLineEndings
+
+	fileStream
+		nextPutAll: definition protocol;
+		lf;
+		nextPutAll: definition source withUnixLineEndings
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 MCFileTreeStCypressWriter >> writeMethodDefinition: methodDefinition to: methodPath [
   self shouldNotImplement
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 MCFileTreeStCypressWriter >> writeMethodDefinition: methodDefinition to: methodPath filename: filename [
   self
     writeInDirectoryName: methodPath
@@ -312,7 +314,7 @@ MCFileTreeStCypressWriter >> writeMethodDefinition: methodDefinition to: methodP
     visit: [ self writeMethodDefinition: methodDefinition ]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 MCFileTreeStCypressWriter >> writeMethodProperties: classMethodDefinitions [
     "Issue 33: https://github.com/dalehenrich/filetree/issues/33"
 
@@ -328,7 +330,7 @@ MCFileTreeStCypressWriter >> writeMethodProperties: classMethodDefinitions [
     STON put: properties asJsonOnStreamPretty: fileStream
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MCFileTreeStCypressWriter >> writePropertiesFile [
   | properties |
   properties := Dictionary new.
@@ -347,7 +349,7 @@ MCFileTreeStCypressWriter >> writePropertiesFile [
     visit: [ STON put: (Dictionary new) asJsonOnStreamPretty: fileStream ]
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 MCFileTreeStCypressWriter >> writeTraitDefinition: definition [
     | properties compositionString |
     properties := Dictionary new.
@@ -369,7 +371,7 @@ MCFileTreeStCypressWriter >> writeTraitDefinition: definition [
     STON put: properties asJsonOnStreamPretty: fileStream
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 MCFileTreeStCypressWriter >> writeTraitDefinition: definition to: classPath [
   self
     writeInDirectoryName: classPath

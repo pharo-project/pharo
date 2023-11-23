@@ -1,10 +1,11 @@
 Class {
-	#name : #ClyConcreteGroupCritiquesTest,
-	#superclass : #ClyFilteringCritiqueQueryTest,
-	#category : #'Calypso-SystemPlugins-Critic-Queries-Tests'
+	#name : 'ClyConcreteGroupCritiquesTest',
+	#superclass : 'ClyFilteringCritiqueQueryTest',
+	#category : 'Calypso-SystemPlugins-Critic-Queries-Tests',
+	#package : 'Calypso-SystemPlugins-Critic-Queries-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClyConcreteGroupCritiquesTest >> createQuery [
 	| exampleCritique |
 	exampleCritique := self methodWithCritiques critiques anyOne.
@@ -15,7 +16,7 @@ ClyConcreteGroupCritiquesTest >> createQuery [
 		byGroup: exampleCritique rule group
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyConcreteGroupCritiquesTest >> testCheckIfEmpty [
 
 	query scope: self scopeWithoutCritiques.
@@ -29,7 +30,7 @@ ClyConcreteGroupCritiquesTest >> testCheckIfEmpty [
 	self assert: query checkEmptyResult
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyConcreteGroupCritiquesTest >> testComparisonWithQueryOfAnotherGroup [
 	| query2 |
 	query2 := self createQuery.
@@ -38,7 +39,7 @@ ClyConcreteGroupCritiquesTest >> testComparisonWithQueryOfAnotherGroup [
 	self deny: query equals: query2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyConcreteGroupCritiquesTest >> testExecution [
 
 	self executeQuery.
@@ -46,7 +47,7 @@ ClyConcreteGroupCritiquesTest >> testExecution [
 	self assert: resultItems size equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyConcreteGroupCritiquesTest >> testExecutionWhenNoCritiquesFromRequiredGroup [
 
 	query groupName: 'wrong group'.

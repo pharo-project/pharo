@@ -1,10 +1,12 @@
 Class {
-	#name : #CoTypedReceiverMessageHeuristic,
-	#superclass : #CoASTNodeFetcherHeuristic,
-	#category : #'HeuristicCompletion-Model-Heuristics'
+	#name : 'CoTypedReceiverMessageHeuristic',
+	#superclass : 'CoASTNodeFetcherHeuristic',
+	#category : 'HeuristicCompletion-Model-Heuristics',
+	#package : 'HeuristicCompletion-Model',
+	#tag : 'Heuristics'
 }
 
-{ #category : #requests }
+{ #category : 'requests' }
 CoTypedReceiverMessageHeuristic >> appliesForNode: aNode inContext: aContext [
 
 	^ aNode receiver
@@ -13,7 +15,7 @@ CoTypedReceiverMessageHeuristic >> appliesForNode: aNode inContext: aContext [
 		  ifAbsent: [ false ]
 ]
 
-{ #category : #requests }
+{ #category : 'requests' }
 CoTypedReceiverMessageHeuristic >> buildFetcherFor: aRBMessageNode inContext: aContext [
 
 	^ self

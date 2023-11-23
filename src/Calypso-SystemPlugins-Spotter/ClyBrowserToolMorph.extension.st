@@ -1,6 +1,6 @@
-Extension { #name : #ClyBrowserToolMorph }
+Extension { #name : 'ClyBrowserToolMorph' }
 
-{ #category : #'*Calypso-SystemPlugins-Spotter' }
+{ #category : '*Calypso-SystemPlugins-Spotter' }
 ClyBrowserToolMorph >> asGoToSpotterCandidate [
 
 	^ClyGoToSpotterCandidate 
@@ -10,7 +10,7 @@ ClyBrowserToolMorph >> asGoToSpotterCandidate [
 		using: [ self selectAsMainTab; takeKeyboardFocus ]
 ]
 
-{ #category : #'*Calypso-SystemPlugins-Spotter' }
+{ #category : '*Calypso-SystemPlugins-Spotter' }
 ClyBrowserToolMorph >> simpleNameForSpotterMenu [
 
 	^self defaultTitle

@@ -1,6 +1,6 @@
-Extension { #name : #CmdCommandMenuItem }
+Extension { #name : 'CmdCommandMenuItem' }
 
-{ #category : #'*Commander-Spec2-Compatibility' }
+{ #category : '*Commander-Spec2-Compatibility' }
 CmdCommandMenuItem >> addToMenuPresenter: aSpMenuPresenter [
 	aSpMenuPresenter
 		addItem: [ :anItem |
@@ -13,7 +13,7 @@ CmdCommandMenuItem >> addToMenuPresenter: aSpMenuPresenter [
 				self getShortcutTipForMenuItem ifNotNil: [ :shortcut | anItem shortcut: shortcut ] ]
 ]
 
-{ #category : #'*Commander-Spec2-Compatibility' }
+{ #category : '*Commander-Spec2-Compatibility' }
 CmdCommandMenuItem >> getShortcutTipForMenuItem [
  	^activator getShortcutTipForMenuItem
 ]

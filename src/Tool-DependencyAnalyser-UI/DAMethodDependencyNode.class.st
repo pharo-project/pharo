@@ -4,12 +4,14 @@ Indeed these two nodes have the same behavior to browse the dependency in the br
 
 "
 Class {
-	#name : #DAMethodDependencyNode,
-	#superclass : #DANode,
-	#category : #'Tool-DependencyAnalyser-UI-Nodes'
+	#name : 'DAMethodDependencyNode',
+	#superclass : 'DANode',
+	#category : 'Tool-DependencyAnalyser-UI-Nodes',
+	#package : 'Tool-DependencyAnalyser-UI',
+	#tag : 'Nodes'
 }
 
-{ #category : #'browse-nautilus' }
+{ #category : 'browse-nautilus' }
 DAMethodDependencyNode >> selectInBrowser [
 	self selectMethod: self content method
 ]

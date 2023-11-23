@@ -6,23 +6,25 @@ I have the common UI definition of the dependency analyzer (left side panel, wit
 - and cycle detection
 "
 Class {
-	#name : #DAPackageTreePresenter,
-	#superclass : #SpPresenter,
+	#name : 'DAPackageTreePresenter',
+	#superclass : 'SpPresenter',
 	#instVars : [
 		'tree',
 		'buttonRefresh',
 		'browser'
 	],
-	#category : #'Tool-DependencyAnalyser-UI-Core'
+	#category : 'Tool-DependencyAnalyser-UI-Core',
+	#package : 'Tool-DependencyAnalyser-UI',
+	#tag : 'Core'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 DAPackageTreePresenter class >> isAbstract [
 
 	^self == DAPackageTreePresenter
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 DAPackageTreePresenter >> addDependenciesOptionsFor: selectedNodes on: menuGroup [
 	| namesOfSelected |
 	(self areClassToDependencyNodes: selectedNodes)
@@ -35,7 +37,7 @@ DAPackageTreePresenter >> addDependenciesOptionsFor: selectedNodes on: menuGroup
 						action: [ self openTreeFor: namesOfSelected ]) ]
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 DAPackageTreePresenter >> addPackageOptionsFor: selectedNodes on: menuGroup [
 
 	| selectedPackageNames |
@@ -56,60 +58,60 @@ DAPackageTreePresenter >> addPackageOptionsFor: selectedNodes on: menuGroup [
 						 open ]) ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DAPackageTreePresenter >> areClassToDependencyNodes: aCollectionOfItem [
 	^ aCollectionOfItem allSatisfy: [ :node |  node isClassToDependencyNode ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DAPackageTreePresenter >> arePackageNodes: aCollectionOfItem [
 	^ aCollectionOfItem allSatisfy: [ :node |  node isPackageNode ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DAPackageTreePresenter >> browseReference [
 	self selectedItemFromTree isReferenceNode ifTrue: [
 			self selectedItemFromTree browseReference
 		 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAPackageTreePresenter >> browser [
 	^ browser
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DAPackageTreePresenter >> buildRoots [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAPackageTreePresenter >> buttonRefresh [
 	^ buttonRefresh
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 DAPackageTreePresenter >> close [
 	browser windowIsClosing
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DAPackageTreePresenter >> connectPresenters [
 
 	buttonRefresh action: [ self refresh ]
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 DAPackageTreePresenter >> defaultFormat [
 	^ #png
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DAPackageTreePresenter >> ifGraphVizAbsent: aBlock [
 	Smalltalk at: #GVGraphViz ifAbsent: aBlock
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DAPackageTreePresenter >> initializePresenters [
 	tree := self newTree
 		beMultipleSelection;
@@ -128,7 +130,7 @@ DAPackageTreePresenter >> initializePresenters [
 	browser := Smalltalk tools browser onDefaultEnvironment
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 DAPackageTreePresenter >> loadMenuForSelectedItem [
 
 	| menu selectedNodes |
@@ -143,7 +145,7 @@ DAPackageTreePresenter >> loadMenuForSelectedItem [
 	^ menu
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 DAPackageTreePresenter >> openTreeFor: namesOfSelected [
 
 	| treeToOpen relationGraph window |
@@ -164,28 +166,28 @@ DAPackageTreePresenter >> openTreeFor: namesOfSelected [
 		open
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 DAPackageTreePresenter >> refresh [
 	self subclassResponsibility
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 DAPackageTreePresenter >> saveGraphAndOpenWith: graphvizGenerator [
 	graphvizGenerator saveDotFileAndGenerateForType: self defaultFormat.
 	^ graphvizGenerator openWith: self defaultFormat
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 DAPackageTreePresenter >> selectedItemFromTree [
 	^ self tree selectedItem
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAPackageTreePresenter >> selectedItemsFromTree [
 	^ self tree selectedItems
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAPackageTreePresenter >> tree [
 	^ tree
 ]

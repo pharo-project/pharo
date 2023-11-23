@@ -2,17 +2,19 @@
 Superclass to show how to use OSWindow properly with athens
 "
 Class {
-	#name : #SDL2AthensExample,
-	#superclass : #Object,
+	#name : 'SDL2AthensExample',
+	#superclass : 'Object',
 	#instVars : [
 		'renderer',
 		'drawingProcess',
 		'window'
 	],
-	#category : #'OSWindow-SDL2-Examples-Examples'
+	#category : 'OSWindow-SDL2-Examples-Examples',
+	#package : 'OSWindow-SDL2-Examples',
+	#tag : 'Examples'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SDL2AthensExample >> createDrawingProcess [
 	^ [
 	[
@@ -20,35 +22,35 @@ SDL2AthensExample >> createDrawingProcess [
 	self redrawAndUpdateSurface ] repeat ] fork
 ]
 
-{ #category : #factory }
+{ #category : 'factory' }
 SDL2AthensExample >> createEventHandler [
 	"You should override this method with your own event handler"
 	^ OSWindowAthensExampleEventHandler new
 		athensExample: self
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 SDL2AthensExample >> defaultExtent [
 	^ 500@500
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 SDL2AthensExample >> destroy [
 	"This function must be called when the window is closed"
 	drawingProcess terminate
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SDL2AthensExample >> initializeFromSurface [
 	"Here we put all the things that needs the surface to be initialized."
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SDL2AthensExample >> maxFPS [
 	^ 60
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SDL2AthensExample >> open [
 	| attrs |
 	attrs := OSWindowAttributes new.
@@ -68,18 +70,18 @@ SDL2AthensExample >> open [
 	drawingProcess := self createDrawingProcess
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 SDL2AthensExample >> redraw [
 	^self subclassResponsibility
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 SDL2AthensExample >> redrawAndUpdateSurface [
 	self redraw.
 	self updateSurface
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 SDL2AthensExample >> updateSurface [
 	renderer
 		updateAll;

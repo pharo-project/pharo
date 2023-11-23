@@ -1,1 +1,1 @@
-Package { #name : #'Tools-CodeNavigation' }
+Package { #name : 'Tools-CodeNavigation' }

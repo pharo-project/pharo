@@ -1,6 +1,6 @@
-Extension { #name : #BlockClosure }
+Extension { #name : 'BlockClosure' }
 
-{ #category : #'*System-Announcements' }
+{ #category : '*System-Announcements' }
 BlockClosure >> valueWithoutNotifications [
 	^SystemAnnouncer uniqueInstance suspendAllWhile: self
 ]

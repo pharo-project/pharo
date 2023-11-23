@@ -9,16 +9,18 @@ A debugger failure references:
 
 "
 Class {
-	#name : #OupsDebuggerFailure,
-	#superclass : #Exception,
+	#name : 'OupsDebuggerFailure',
+	#superclass : 'Exception',
 	#instVars : [
 		'failedDebugger',
 		'innerException'
 	],
-	#category : #'Debugger-Oups-Exceptions'
+	#category : 'Debugger-Oups-Exceptions',
+	#package : 'Debugger-Oups',
+	#tag : 'Exceptions'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OupsDebuggerFailure class >> of: aDebugger on: anException [
 
 	<debuggerCompleteToSender>
@@ -27,33 +29,33 @@ OupsDebuggerFailure class >> of: aDebugger on: anException [
 		  yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OupsDebuggerFailure >> debugger: aDebugger exception: anException [
 	failedDebugger := aDebugger.
 	innerException := anException
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OupsDebuggerFailure >> failedDebugger [
 	^ failedDebugger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OupsDebuggerFailure >> innerException [
 	^ innerException
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OupsDebuggerFailure >> isDebuggerFailure [
 	^true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OupsDebuggerFailure >> isHandleableBy: aDebugger [
 	^ aDebugger ~= failedDebugger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OupsDebuggerFailure >> originException [
 	^ innerException originException
 ]

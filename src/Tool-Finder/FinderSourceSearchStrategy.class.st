@@ -2,18 +2,20 @@
 I am a Finder search mode used to look for a string inside the whole Pharo image source code.
 "
 Class {
-	#name : #FinderSourceSearchStrategy,
-	#superclass : #FinderSearchStrategy,
-	#category : #'Tool-Finder-Base'
+	#name : 'FinderSourceSearchStrategy',
+	#superclass : 'FinderSearchStrategy',
+	#category : 'Tool-Finder-Base',
+	#package : 'Tool-Finder',
+	#tag : 'Base'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FinderSourceSearchStrategy class >> strategyName [
 
 	^ #Source
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 FinderSourceSearchStrategy >> constructDictionary [
 
 	| result |
@@ -33,22 +35,19 @@ FinderSourceSearchStrategy >> constructDictionary [
 	finder resultDictionary: result
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FinderSourceSearchStrategy >> findSelectedClassIn: path [
 
-	^ path
-		  at: 2
-		  ifPresent: [ :node | node item ]
-		  ifAbsent: [ nil ]
+	^ (path at: 2 ifAbsent: [ nil ]) ifNotNil: [ :node | node item ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FinderSourceSearchStrategy >> findSelectedMethodIn: path [
 
 	^ path first item
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 FinderSourceSearchStrategy >> sourceRegexSearch [
 
 	| regex |
@@ -56,7 +55,7 @@ FinderSourceSearchStrategy >> sourceRegexSearch [
 	^ self methodSearch: [ :method | regex search: method sourceCode ]
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 FinderSourceSearchStrategy >> sourceStringSearch [
 
 	^ self methodSearch: [ :method | method sourceCode includesSubstring: finder searchingString caseSensitive: false ]

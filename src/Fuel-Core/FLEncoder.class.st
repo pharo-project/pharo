@@ -2,8 +2,8 @@
 I am an abstraction used by the serialization algorithm to encode the graph in a stream.
 "
 Class {
-	#name : #FLEncoder,
-	#superclass : #Object,
+	#name : 'FLEncoder',
+	#superclass : 'Object',
 	#traits : 'TFLConfigurable',
 	#classTraits : 'TFLConfigurable classTrait',
 	#instVars : [
@@ -14,32 +14,34 @@ Class {
 		'globalEnvironment',
 		'substitutionIndexes'
 	],
-	#category : #'Fuel-Core-Base'
+	#category : 'Fuel-Core-Base',
+	#package : 'Fuel-Core',
+	#tag : 'Base'
 }
 
-{ #category : #encoding }
+{ #category : 'encoding' }
 FLEncoder >> encodeBitmap: aBitmap [ 
 	"Append to the receiver an Integer as the next two bytes."
 	aBitmap writeOn: stream.
 ]
 
-{ #category : #encoding }
+{ #category : 'encoding' }
 FLEncoder >> encodeByte: aSmallInteger [ 
 	self encodeUint8: aSmallInteger
 ]
 
-{ #category : #encoding }
+{ #category : 'encoding' }
 FLEncoder >> encodeBytes: aBytesObject [
 	stream nextBytesPutAll: aBytesObject
 ]
 
-{ #category : #encoding }
+{ #category : 'encoding' }
 FLEncoder >> encodeClusterClass: aClusterClass [ 
 
 	self encodeString: aClusterClass name
 ]
 
-{ #category : #encoding }
+{ #category : 'encoding' }
 FLEncoder >> encodeInt24: aSmallInteger [
 	"SmallInteger is 31 / 63 bits. Hence, we can store a full 24 bit signed integer.
 	We only have to restore the two's complement of the remaining higher bits when
@@ -47,7 +49,7 @@ FLEncoder >> encodeInt24: aSmallInteger [
 	self encodeUint24: aSmallInteger
 ]
 
-{ #category : #encoding }
+{ #category : 'encoding' }
 FLEncoder >> encodeInt32: aSmallInteger [
 	"SmallInteger is 31 / 63 bits. We could encode 32 bit signed integers in theory but
 	that would mean that we could receive large integers as input, which shouldn't happen.
@@ -60,7 +62,7 @@ FLEncoder >> encodeInt32: aSmallInteger [
 	self encodeUint32: (aSmallInteger bitAnd: 16r7FFFFFFF)
 ]
 
-{ #category : #encoding }
+{ #category : 'encoding' }
 FLEncoder >> encodeInt64: aSmallInteger [
 	"SmallInteger is 31 / 63 bits. We could encode 64 bit signed integers in theory but
 	that would mean that we could receive large integers as input, which shouldn't happen.
@@ -75,7 +77,7 @@ FLEncoder >> encodeInt64: aSmallInteger [
 	self encodeUint64: (aSmallInteger bitAnd: 16r1FFFFFFFFFFFFFFF)
 ]
 
-{ #category : #encoding }
+{ #category : 'encoding' }
 FLEncoder >> encodeReferenceTo: anObject [
 	| index |
 	index := substitutionIndexes
@@ -87,19 +89,19 @@ FLEncoder >> encodeReferenceTo: anObject [
 	indexStream nextIndexPut: index
 ]
 
-{ #category : #encoding }
+{ #category : 'encoding' }
 FLEncoder >> encodeReferenceToClusterObjectClass: aClass [ 
 	indexStream nextIndexPut: (objectsIndexes
 		at: aClass
 		ifAbsent: [ FLObjectNotFound signalWith: aClass ])
 ]
 
-{ #category : #encoding }
+{ #category : 'encoding' }
 FLEncoder >> encodeSignature [
 	self encodeBytes: self configuration signature asByteArray
 ]
 
-{ #category : #encoding }
+{ #category : 'encoding' }
 FLEncoder >> encodeString: aString [
 	| length |
 	(length := aString size) < 192
@@ -111,7 +113,7 @@ FLEncoder >> encodeString: aString [
 	stream nextBytesPutAll: aString
 ]
 
-{ #category : #encoding }
+{ #category : 'encoding' }
 FLEncoder >> encodeUint16: aSmallInteger [ 
 	"Append to the receiver an Integer as the next 2 bytes."
 	stream
@@ -119,7 +121,7 @@ FLEncoder >> encodeUint16: aSmallInteger [
 		nextPut: (aSmallInteger bitAnd: 255)
 ]
 
-{ #category : #encoding }
+{ #category : 'encoding' }
 FLEncoder >> encodeUint24: aSmallInteger [ 
 	"Append to the receiver an Integer as the next 3 bytes."
 	stream		
@@ -128,7 +130,7 @@ FLEncoder >> encodeUint24: aSmallInteger [
 		nextPut: (aSmallInteger bitAnd: 255)
 ]
 
-{ #category : #encoding }
+{ #category : 'encoding' }
 FLEncoder >> encodeUint32: aSmallInteger [ 
 	"Append to the receiver an Integer as the next 4 bytes."
 	stream		
@@ -138,7 +140,7 @@ FLEncoder >> encodeUint32: aSmallInteger [
 		nextPut: (aSmallInteger bitAnd: 255)
 ]
 
-{ #category : #encoding }
+{ #category : 'encoding' }
 FLEncoder >> encodeUint64: aSmallInteger [ 
 	"Append to the receiver an Integer as the next 8 bytes."
 	stream	
@@ -152,13 +154,13 @@ FLEncoder >> encodeUint64: aSmallInteger [
 		nextPut: (aSmallInteger bitAnd: 255)
 ]
 
-{ #category : #encoding }
+{ #category : 'encoding' }
 FLEncoder >> encodeUint8: aSmallInteger [ 
 	"Append to the receiver an Integer as the next byte."
 	stream nextPut: (aSmallInteger bitAnd: 255)
 ]
 
-{ #category : #encoding }
+{ #category : 'encoding' }
 FLEncoder >> encodeVersion [
 	| version |
 	version := self configuration version.
@@ -168,39 +170,39 @@ FLEncoder >> encodeVersion [
 		encodeByte: version patch
 ]
 
-{ #category : #encoding }
+{ #category : 'encoding' }
 FLEncoder >> encodeWeakReferenceTo: anObject [
 
 	indexStream 
 		nextIndexPut: (objectsIndexes at: anObject ifAbsent: [objectsIndexes at: nil])
 ]
 
-{ #category : #encoding }
+{ #category : 'encoding' }
 FLEncoder >> encodeWords: aWordsObject [
 	stream nextWordsPut: aWordsObject
 ]
 
-{ #category : #encoding }
+{ #category : 'encoding' }
 FLEncoder >> encodeYourself [
 	self
 		encodeUint32: objectCount;
-		encodeUint32: FLPlatform current isBigEndian asBit
+		encodeUint32: EndianDetector isBigEndian asBit
 ]
 
-{ #category : #encoding }
+{ #category : 'encoding' }
 FLEncoder >> flush [
 
 	^ stream flush.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLEncoder >> globalEnvironment [
 	"Answer a dictionary where the look up for global symbols will be done during serialization."
 	
 	^ globalEnvironment
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FLEncoder >> initialize [
 	super initialize.
 	
@@ -209,12 +211,12 @@ FLEncoder >> initialize [
 	self context registerFinalizer: [ self flush ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLEncoder >> objectCount [
 	^ objectCount
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLEncoder >> objectCount: aNumber [
 	objectCount := aNumber.
 	objectsIndexes := FLLargeIdentityDictionary new.
@@ -222,12 +224,12 @@ FLEncoder >> objectCount: aNumber [
 	indexStream := FLIndexStream on: stream digits: aNumber bytesCount
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLEncoder >> objectsIndexes [
 	^ objectsIndexes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLEncoder >> substitutionIndexes [
 	^ substitutionIndexes
 ]

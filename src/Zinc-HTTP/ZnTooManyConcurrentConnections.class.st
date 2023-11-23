@@ -6,7 +6,9 @@ When this threshold is reached, a 503 Service Unavailable response will be sent 
 Part of Zinc HTTP Components.
 "
 Class {
-	#name : #ZnTooManyConcurrentConnections,
-	#superclass : #Error,
-	#category : #'Zinc-HTTP-Exceptions'
+	#name : 'ZnTooManyConcurrentConnections',
+	#superclass : 'Error',
+	#category : 'Zinc-HTTP-Exceptions',
+	#package : 'Zinc-HTTP',
+	#tag : 'Exceptions'
 }

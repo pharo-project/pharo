@@ -8,17 +8,18 @@ My concrete subclasses handle the possible actions when a user attempts to remov
 	- Cancel the action
 "
 Class {
-	#name : #SycRemoveClassStrategy,
-	#superclass : #Object,
-	#category : #'SystemCommands-ClassCommands'
+	#name : 'SycRemoveClassStrategy',
+	#superclass : 'Object',
+	#category : 'SystemCommands-ClassCommands',
+	#package : 'SystemCommands-ClassCommands'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 SycRemoveClassStrategy class >> canExecuteWithReferences: hasReferences subclasses: hasSubclasses users: hasUsers [
 	self subclassResponsibility
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SycRemoveClassStrategy class >> createForBrowser: aBrowser references: hasReferences subclasses: hasSubclasses users: hasUsers [
 
 	| strategies |
@@ -32,34 +33,34 @@ SycRemoveClassStrategy class >> createForBrowser: aBrowser references: hasRefere
 	^strategies
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SycRemoveClassStrategy class >> isAbstract [
 	^self == SycRemoveClassStrategy
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SycRemoveClassStrategy class >> newForBrowser: aBrowser [
 
 	^self new
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycRemoveClassStrategy >> execute: aSycRemoveClassCommand [
 	self subclassResponsibility
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SycRemoveClassStrategy >> isComplexRefactoring [
 	^false
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycRemoveClassStrategy >> orderForBrowser [
 	"by default any new strategy will be at the end"
 	^1000
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycRemoveClassStrategy >> userRequestString [
 	self subclassResponsibility
 ]

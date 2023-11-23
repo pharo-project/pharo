@@ -1,1 +1,1 @@
-Package { #name : #PerformMessageCommandLineHandler }
+Package { #name : 'PerformMessageCommandLineHandler' }

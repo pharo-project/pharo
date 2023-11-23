@@ -12,21 +12,22 @@ Internal Representation and Key Implementation Points.
 	critiqueQuery:		<ClyCritiqueQuery>
 "
 Class {
-	#name : #ClyAllProblemMethodQuery,
-	#superclass : #ClyMethodQuery,
+	#name : 'ClyAllProblemMethodQuery',
+	#superclass : 'ClyMethodQuery',
 	#instVars : [
 		'critiqueQuery'
 	],
-	#category : #'Calypso-SystemPlugins-Critic-Queries'
+	#category : 'Calypso-SystemPlugins-Critic-Queries',
+	#package : 'Calypso-SystemPlugins-Critic-Queries'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyAllProblemMethodQuery class >> from: aScope withCritiquesFrom: aCritiqueQuery [
 	^(self from: aScope)
 		critiqueQuery: aCritiqueQuery
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyAllProblemMethodQuery class >> from: aScope withCritiquesFromGroup: critiqueGroupName [
 	^self
 		from: aScope
@@ -34,7 +35,7 @@ ClyAllProblemMethodQuery class >> from: aScope withCritiquesFromGroup: critiqueG
 			filter: ClyAllMethodCritiqueQuery new from: aScope byGroup: critiqueGroupName)
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ClyAllProblemMethodQuery >> = anObject [
 	"Answer whether the receiver and anObject represent the same object."
 
@@ -44,7 +45,7 @@ ClyAllProblemMethodQuery >> = anObject [
 	^critiqueQuery = anObject critiqueQuery
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyAllProblemMethodQuery >> buildResult: aQueryResult [
 
 	| critiques methods |
@@ -55,42 +56,42 @@ ClyAllProblemMethodQuery >> buildResult: aQueryResult [
 	aQueryResult fillWith: methods
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyAllProblemMethodQuery >> checkEmptyResult [
 
 	^critiqueQuery hasEmptyResult
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyAllProblemMethodQuery >> critiqueQuery [
 	^ critiqueQuery
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyAllProblemMethodQuery >> critiqueQuery: aCritiqueQuery [
 	critiqueQuery := scope adoptQuery: aCritiqueQuery
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyAllProblemMethodQuery >> description [
 
 	^'problem methods (', critiqueQuery description, ')'
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ClyAllProblemMethodQuery >> hash [
 	"Answer an integer value that is related to the identity of the receiver."
 
 	^super hash bitXor: critiqueQuery hash
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyAllProblemMethodQuery >> initialize [
 	super initialize.
 	critiqueQuery := ClyAllMethodCritiqueQuery new
 ]
 
-{ #category : #'system changes' }
+{ #category : 'system changes' }
 ClyAllProblemMethodQuery >> isResult: aQueryResult affectedBy: aSystemAnnouncement [
 
 	aSystemAnnouncement affectsCritiques ifFalse: [ ^false ].
@@ -105,26 +106,26 @@ ClyAllProblemMethodQuery >> isResult: aQueryResult affectedBy: aSystemAnnounceme
 	^false
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyAllProblemMethodQuery >> loadCritiquesAsync [
 
 	^critiqueQuery async execute
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyAllProblemMethodQuery >> printExtraInfoOn: aStream [
 	super printExtraInfoOn: aStream.
 
 	aStream nextPutAll: critiqueQuery description
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyAllProblemMethodQuery >> scope: aScope [
 	super scope: aScope.
 	critiqueQuery scope: aScope
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyAllProblemMethodQuery >> selectsMethod: aMethod [
 	| critiques |
 	critiques := self loadCritiquesAsync.

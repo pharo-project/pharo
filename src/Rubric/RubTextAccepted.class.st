@@ -2,12 +2,14 @@
 I am raised when the text has been accepted
 "
 Class {
-	#name : #RubTextAccepted,
-	#superclass : #RubMorphAnnouncement,
-	#category : #'Rubric-Editing-Announcements'
+	#name : 'RubTextAccepted',
+	#superclass : 'RubMorphAnnouncement',
+	#category : 'Rubric-Editing-Announcements',
+	#package : 'Rubric',
+	#tag : 'Editing-Announcements'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubTextAccepted >> text [
 	^ morph textArea text
 ]

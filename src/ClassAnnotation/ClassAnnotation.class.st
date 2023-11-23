@@ -184,8 +184,8 @@ For example shortcut annotations based on Commander are available in setting bro
 	activeContext:		<AnnotationContext>
 "
 Class {
-	#name : #ClassAnnotation,
-	#superclass : #Object,
+	#name : 'ClassAnnotation',
+	#superclass : 'Object',
 	#instVars : [
 		'annotatedClass',
 		'declarationSelector',
@@ -195,10 +195,11 @@ Class {
 	#classInstVars : [
 		'redefinedInstances'
 	],
-	#category : #ClassAnnotation
+	#category : 'ClassAnnotation',
+	#package : 'ClassAnnotation'
 }
 
-{ #category : #'queries-contextual' }
+{ #category : 'queries-contextual' }
 ClassAnnotation class >> activeInstancesFor: aClass inContext: anAnnotationUser do: aBlock [
 	"it will enumerate all my registered instances active for given anAnnotationUser
 	which are annotating given aClass"
@@ -209,7 +210,7 @@ ClassAnnotation class >> activeInstancesFor: aClass inContext: anAnnotationUser 
 		thenDo: aBlock
 ]
 
-{ #category : #'queries-contextual' }
+{ #category : 'queries-contextual' }
 ClassAnnotation class >> activeInstancesInContext: anAnnotationUser [
 	"it will return all my registered instances which should be active for given anAnnotationUser"
 
@@ -217,7 +218,7 @@ ClassAnnotation class >> activeInstancesInContext: anAnnotationUser [
 		select: [ :each | each isActiveInContext: anAnnotationUser ]
 ]
 
-{ #category : #'queries-contextual' }
+{ #category : 'queries-contextual' }
 ClassAnnotation class >> activeInstancesInContext: anAnnotationUser do: aBlock [
 	"it will enumerate all my registered instances which should be active for given anAnnotationUser"
 
@@ -226,7 +227,7 @@ ClassAnnotation class >> activeInstancesInContext: anAnnotationUser do: aBlock [
 		thenDo: aBlock
 ]
 
-{ #category : #redefining }
+{ #category : 'redefining' }
 ClassAnnotation class >> cleanRedefinedGarbage [
 	"We should remove here all obsolete annotations which not exist in cache anymore.
 	It can happen for several reasons:
@@ -239,25 +240,25 @@ ClassAnnotation class >> cleanRedefinedGarbage [
 		do: [ :each | redefinedInstances removeKey: each ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ClassAnnotation class >> createContainerForRegistry [
 	^SortedCollection sortBlock: #priority descending
 ]
 
-{ #category : #'queries-general' }
+{ #category : 'queries-general' }
 ClassAnnotation class >> findAllAnnotationsFor: aClass [
 
 	^self registry allAnnotating: aClass
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClassAnnotation class >> for: anAnnotationContextOrCompatible [
 	"For example argument can be a class which represents the context"
 	^ self new
 		activeContext: anAnnotationContextOrCompatible asAnnotationContext
 ]
 
-{ #category : #'for tests' }
+{ #category : 'for tests' }
 ClassAnnotation class >> for: aContext withAnnotatedClass: aClass [
 	"This method is created to be used in tests.
 	Normally annotatedClass is initialized by system during annotation registry building"
@@ -266,7 +267,7 @@ ClassAnnotation class >> for: aContext withAnnotatedClass: aClass [
 		annotatedClass: aClass
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClassAnnotation class >> isInstanceRedefined: aClassAnnotation [
 
 	redefinedInstances ifNil: [ ^false ].
@@ -274,13 +275,13 @@ ClassAnnotation class >> isInstanceRedefined: aClassAnnotation [
 	^redefinedInstances includesKey: aClassAnnotation
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClassAnnotation class >> isInstanceRegistered: aClassAnnotation [
 
 	^self registry includesAnnotation: aClassAnnotation
 ]
 
-{ #category : #redefining }
+{ #category : 'redefining' }
 ClassAnnotation class >> redefineInstance: aClassAnnotation by: aBlock [
 	| redefined |
 	redefinedInstances ifNil: [ redefinedInstances := Dictionary new ].
@@ -291,7 +292,7 @@ ClassAnnotation class >> redefineInstance: aClassAnnotation by: aBlock [
 	aBlock cull: aClassAnnotation
 ]
 
-{ #category : #redefining }
+{ #category : 'redefining' }
 ClassAnnotation class >> redefinedInstanceFor: aClassAnnotation [
 	"It returnes the annotation instance which is redefined by given annotation"
 	redefinedInstances ifNil: [ ^self error: 'Given annotation is not redefined!' ].
@@ -300,14 +301,14 @@ ClassAnnotation class >> redefinedInstanceFor: aClassAnnotation [
 		at: aClassAnnotation ifAbsent: [ self error: 'Given annotation is not redefined!' ]
 ]
 
-{ #category : #redefining }
+{ #category : 'redefining' }
 ClassAnnotation class >> redefinedInstances [
 	self cleanRedefinedGarbage.
 
 	^redefinedInstances ifNil: [ #() ]
 ]
 
-{ #category : #redefining }
+{ #category : 'redefining' }
 ClassAnnotation class >> redefiningInstanceFor: aClassAnnotation [
 	"It returnes the annotation instance which redefines given default collected annotation"
 
@@ -319,26 +320,26 @@ ClassAnnotation class >> redefiningInstanceFor: aClassAnnotation [
 	^assoc key
 ]
 
-{ #category : #redefining }
+{ #category : 'redefining' }
 ClassAnnotation class >> redefiningInstances [
 	redefinedInstances ifNil: [ ^#() ].
 
 	^self redefinedInstances keys
 ]
 
-{ #category : #'queries-general' }
+{ #category : 'queries-general' }
 ClassAnnotation class >> registeredInstances [
 
 	^self registry allInstancesOf: self
 ]
 
-{ #category : #'queries-general' }
+{ #category : 'queries-general' }
 ClassAnnotation class >> registeredInstancesDo: aBlock [
 
 	self registeredInstances do: aBlock
 ]
 
-{ #category : #'queries-general' }
+{ #category : 'queries-general' }
 ClassAnnotation class >> registeredInstancesFor: aClass [
 	"it will return all my registered instances which are annotating given aClass"
 
@@ -346,19 +347,19 @@ ClassAnnotation class >> registeredInstancesFor: aClass [
 		select: [ :each | each annotates: aClass ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ClassAnnotation class >> registry [
 
 	^ClassAnnotationRegistry default
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ClassAnnotation class >> resetCache [
 	<script>
 	ClassAnnotationRegistry reset
 ]
 
-{ #category : #redefining }
+{ #category : 'redefining' }
 ClassAnnotation class >> revertRedefinedInstanceFor: aClassAnnotation [
 	redefinedInstances ifNil: [ ^self].
 
@@ -366,14 +367,14 @@ ClassAnnotation class >> revertRedefinedInstanceFor: aClassAnnotation [
 	self resetCache
 ]
 
-{ #category : #redefining }
+{ #category : 'redefining' }
 ClassAnnotation class >> revertRedefinedInstances [
 
 	redefinedInstances := nil.
 	self resetCache
 ]
 
-{ #category : #redefining }
+{ #category : 'redefining' }
 ClassAnnotation class >> updateRedefinedInstance: aClassAnnotation [
 	"It updates actual redefined instance of annotation.
 	It sets given annotation as new value.
@@ -388,7 +389,7 @@ ClassAnnotation class >> updateRedefinedInstance: aClassAnnotation [
 	redefinedInstances at: aClassAnnotation put: aClassAnnotation
 ]
 
-{ #category : #'queries-contextual' }
+{ #category : 'queries-contextual' }
 ClassAnnotation class >> visibleInstancesFor: aClass inContext: anAnnotationUser do: aBlock [
 	"it will enumerate all my registered instances visible for given anAnnotationUser
 	which are annotating given aClass"
@@ -399,7 +400,7 @@ ClassAnnotation class >> visibleInstancesFor: aClass inContext: anAnnotationUser
 		thenDo: aBlock
 ]
 
-{ #category : #'queries-contextual' }
+{ #category : 'queries-contextual' }
 ClassAnnotation class >> visibleInstancesInContext: anAnnotationUser [
 	"it will return all my registered instances which should be visible for given anAnnotationUser"
 
@@ -407,7 +408,7 @@ ClassAnnotation class >> visibleInstancesInContext: anAnnotationUser [
 		select: [ :each | each isVisibleInContext: anAnnotationUser ]
 ]
 
-{ #category : #'queries-contextual' }
+{ #category : 'queries-contextual' }
 ClassAnnotation class >> visibleInstancesInContext: anAnnotationUser do: aBlock [
 	"it will enumerate all my registered instances which should be visible for given anAnnotationUser"
 
@@ -416,7 +417,7 @@ ClassAnnotation class >> visibleInstancesInContext: anAnnotationUser do: aBlock 
 		thenDo: aBlock
 ]
 
-{ #category : #'for tests' }
+{ #category : 'for tests' }
 ClassAnnotation class >> withAnnotatedClass: aClass [
 	"This method is created to be used in tests.
 	Normally annotatedClass is initialized by system during annotation registry building"
@@ -425,7 +426,7 @@ ClassAnnotation class >> withAnnotatedClass: aClass [
 		annotatedClass: aClass
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ClassAnnotation >> = anObject [
 	"Answer whether the receiver and anObject represent the same object."
 
@@ -437,54 +438,54 @@ ClassAnnotation >> = anObject [
 		and: [ declarationSelector = anObject declarationSelector ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassAnnotation >> activeContext [
 	^ activeContext
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassAnnotation >> activeContext: aContextDefinition [
 	activeContext := aContextDefinition
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassAnnotation >> annotatedClass [
 	^ annotatedClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassAnnotation >> annotatedClass: anObject [
 	annotatedClass := anObject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClassAnnotation >> annotates: aClass [
 	^annotatedClass == aClass
 ]
 
-{ #category : #redefining }
+{ #category : 'redefining' }
 ClassAnnotation >> asRedefinedInstance [
 	"it is a hook method to allow subclasses copy extra state if needed
 	to keep redefined instance in safe"
 	^self copy
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassAnnotation >> declarationMethod [
 	^annotatedClass classSide lookupSelector: declarationSelector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassAnnotation >> declarationSelector [
 	^ declarationSelector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassAnnotation >> declarationSelector: anObject [
 	declarationSelector := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassAnnotation >> freshInstance [
 	"Returnes new annotation instance by evaluating declaration method.
 	So new fresh instance will be return which can be different then current one"
@@ -492,19 +493,19 @@ ClassAnnotation >> freshInstance [
 	^annotatedClass perform: declarationSelector
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ClassAnnotation >> hash [
 	"Answer an integer value that is related to the identity of the receiver."
 
 	^ annotatedClass hash bitXor: declarationSelector hash
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassAnnotation >> id [
 	^annotatedClass name, '>>', declarationSelector
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClassAnnotation >> initialize [
 	super initialize.
 
@@ -512,7 +513,7 @@ ClassAnnotation >> initialize [
 	activeContext := NullAnnotationContext instance
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClassAnnotation >> isActiveInContext: anAnnotationUser [
 	"The annotation can be active only when it is visible for given user.
 	But other conditions can be required for concrete type of annotation.
@@ -523,7 +524,7 @@ ClassAnnotation >> isActiveInContext: anAnnotationUser [
 	^self isVisibleInContext: anAnnotationUser
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClassAnnotation >> isForbidden [
 	"Subclasses can forbid annotating of particular classes.
 	For exampe abstract classes can be forbidden.
@@ -532,18 +533,18 @@ ClassAnnotation >> isForbidden [
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClassAnnotation >> isObsolete [
 
 	^(self class isInstanceRegistered: self) not
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClassAnnotation >> isRedefined [
 	^self class isInstanceRedefined: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClassAnnotation >> isSimilarTo: anotherClassAnnotation [
 
 	^self class = anotherClassAnnotation class
@@ -551,14 +552,14 @@ ClassAnnotation >> isSimilarTo: anotherClassAnnotation [
 			and: [activeContext = anotherClassAnnotation activeContext]]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClassAnnotation >> isVisibleInContext: anAnnotationUser [
 	"Annotation is only visible for users which are described by activeContext"
 
 	^activeContext describes: anAnnotationUser
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClassAnnotation >> printDeclarationOn: aStream [
 
 	aStream
@@ -569,42 +570,42 @@ ClassAnnotation >> printDeclarationOn: aStream [
 		nextPut: $)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassAnnotation >> priority [
 	^ priority
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassAnnotation >> priority: anObject [
 	priority := anObject
 ]
 
-{ #category : #redefining }
+{ #category : 'redefining' }
 ClassAnnotation >> redefineBy: modifierBlock [
 
 	^self class redefineInstance: self by: modifierBlock
 ]
 
-{ #category : #redefining }
+{ #category : 'redefining' }
 ClassAnnotation >> redefinedInstance [
 
 	^self class redefinedInstanceFor: self
 ]
 
-{ #category : #redefining }
+{ #category : 'redefining' }
 ClassAnnotation >> redefiningInstance [
 
 	^self class redefiningInstanceFor: self
 ]
 
-{ #category : #redefining }
+{ #category : 'redefining' }
 ClassAnnotation >> revertRedefinedInstance [
 
 	^self revertRedefinedInstanceIfAbsent: [
 		self error: 'Redefined annotation not exists anymore!']
 ]
 
-{ #category : #redefining }
+{ #category : 'redefining' }
 ClassAnnotation >> revertRedefinedInstanceIfAbsent: absentBlock [
 
 	self class revertRedefinedInstanceFor: self.
@@ -612,7 +613,7 @@ ClassAnnotation >> revertRedefinedInstanceIfAbsent: absentBlock [
 		detect: [ :each | each = self ] ifNone: absentBlock
 ]
 
-{ #category : #redefining }
+{ #category : 'redefining' }
 ClassAnnotation >> updateRedefinedInstance [
 
 	self class updateRedefinedInstance: self

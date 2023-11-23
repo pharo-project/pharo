@@ -1,6 +1,6 @@
-Extension { #name : #PackageManifest }
+Extension { #name : 'PackageManifest' }
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 PackageManifest class >> systemIconName [
 
 	^ #packageColored

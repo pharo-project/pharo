@@ -1,1 +1,1 @@
-Package { #name : #BaselineOfGeneralTests }
+Package { #name : 'BaselineOfGeneralTests' }

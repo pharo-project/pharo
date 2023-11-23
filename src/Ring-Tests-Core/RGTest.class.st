@@ -1,10 +1,11 @@
 Class {
-	#name : #RGTest,
-	#superclass : #TestCase,
-	#category : #'Ring-Tests-Core'
+	#name : 'RGTest',
+	#superclass : 'TestCase',
+	#category : 'Ring-Tests-Core',
+	#package : 'Ring-Tests-Core'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGTest >> checkClassesConsistency: object1 and: object2 [
 
 	"check if instance variables have the same types (after sending of #value)"
@@ -15,7 +16,7 @@ RGTest >> checkClassesConsistency: object1 and: object2 [
 		var -> (object2 instVarNamed: var) value class ])
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RGTest >> checkHierarchyConsistencyOf: anRGClass [
 	"prove that all relations between class, superclass, metaclass and superclass metaclass are consistent"
 
@@ -34,7 +35,7 @@ RGTest >> checkHierarchyConsistencyOf: anRGClass [
 	self assert: anRGClass superclass metaclass metaclass identicalTo: anRGClass superclass metaclass
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RGTest >> checkImplicitSingleClassEnvironmentOf: anRGClass [
 
 	self deny: (anRGClass isRingResolved).
@@ -49,7 +50,7 @@ RGTest >> checkImplicitSingleClassEnvironmentOf: anRGClass [
 	self checkHierarchyConsistencyOf: anRGClass
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RGTest >> checkImplicitSingleTraitEnvironmentOf: anRGTrait [
 	self assert: anRGTrait environment ask behaviors size equals: 10.
 	self assert: anRGTrait environment ask packages size equals: 5.
@@ -61,7 +62,7 @@ RGTest >> checkImplicitSingleTraitEnvironmentOf: anRGTrait [
 	self assert: anRGTrait classTrait superclass identicalTo: anRGTrait classTrait superclass
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGTest >> checkIncompatible: aBlock [
 
 	"prove that the block tries to do an action not suitable for a particular behavior strategy"

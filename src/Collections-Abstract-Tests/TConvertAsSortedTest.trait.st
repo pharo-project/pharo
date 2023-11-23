@@ -2,23 +2,25 @@
 A trait for test purposes
 "
 Trait {
-	#name : #TConvertAsSortedTest,
-	#category : #'Collections-Abstract-Tests-Traits'
+	#name : 'TConvertAsSortedTest',
+	#category : 'Collections-Abstract-Tests-Traits',
+	#package : 'Collections-Abstract-Tests',
+	#tag : 'Traits'
 }
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TConvertAsSortedTest >> collectionWithSortableElements [
 " return a collection elements that can be sorte ( understanding message ' < '  or ' > ')"
 	^ self explicitRequirement
 ]
 
-{ #category : #'tests - fixture' }
+{ #category : 'tests - fixture' }
 TConvertAsSortedTest >> test0FixtureConverAsSortedTest [
 	self collectionWithSortableElements.
 	self denyEmpty: self collectionWithSortableElements
 ]
 
-{ #category : #'tests - as sorted collection' }
+{ #category : 'tests - as sorted collection' }
 TConvertAsSortedTest >> testAsSortedArray [
 
 	| result collection |
@@ -29,7 +31,7 @@ TConvertAsSortedTest >> testAsSortedArray [
 	self assert: result size = collection size
 ]
 
-{ #category : #'tests - as sorted collection' }
+{ #category : 'tests - as sorted collection' }
 TConvertAsSortedTest >> testAsSortedCollection [
 
 	| aCollection result |
@@ -44,7 +46,7 @@ TConvertAsSortedTest >> testAsSortedCollection [
 	self assert: result size = aCollection size
 ]
 
-{ #category : #'tests - as sorted collection' }
+{ #category : 'tests - as sorted collection' }
 TConvertAsSortedTest >> testAsSortedCollectionWithSortBlock [
 
 	| result tmp |

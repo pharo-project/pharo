@@ -1,15 +1,16 @@
 Class {
-	#name : #ClyExpectedFailedTestMethodsQueryTest,
-	#superclass : #ClyMethodQueryTest,
-	#category : #'Calypso-SystemPlugins-SUnit-Queries-Tests'
+	#name : 'ClyExpectedFailedTestMethodsQueryTest',
+	#superclass : 'ClyMethodQueryTest',
+	#category : 'Calypso-SystemPlugins-SUnit-Queries-Tests',
+	#package : 'Calypso-SystemPlugins-SUnit-Queries-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClyExpectedFailedTestMethodsQueryTest >> createQuery [
 	^ClyExpectedFailedTestMethodsQuery from: ClyClassScope of: ClyTestedClassMockTest in: environment
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyExpectedFailedTestMethodsQueryTest >> testCheckIfEmpty [
 	query scope: (ClyMethodScope
 		of: ClyTestedClassMockTest >> #testExpectedFailure in: environment).
@@ -20,7 +21,7 @@ ClyExpectedFailedTestMethodsQueryTest >> testCheckIfEmpty [
 	self assert: query checkEmptyResult
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyExpectedFailedTestMethodsQueryTest >> testFromTwoMethods [
 
 	self queryFromScope: ClyMethodScope ofAll: {
@@ -30,13 +31,13 @@ ClyExpectedFailedTestMethodsQueryTest >> testFromTwoMethods [
 	self assert: foundSelectors sorted asArray equals: #(testExpectedFailure)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyExpectedFailedTestMethodsQueryTest >> testNotSelectsMethodWithoutExpectedFailurePragma [
 
 	self deny: (query selectsMethod: ClyTestedClassMockTest >> #testOne)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyExpectedFailedTestMethodsQueryTest >> testSelectsTestMethodWithExpectedFailurePragma [
 
 	self assert: (query selectsMethod: ClyTestedClassMockTest >> #testExpectedFailure)

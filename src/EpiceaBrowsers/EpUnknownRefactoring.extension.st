@@ -1,6 +1,6 @@
-Extension { #name : #EpUnknownRefactoring }
+Extension { #name : 'EpUnknownRefactoring' }
 
-{ #category : #'*EpiceaBrowsers' }
+{ #category : '*EpiceaBrowsers' }
 EpUnknownRefactoring >> summaryOn: aWriteStream [
 	"Write a string summarizing myself."
 

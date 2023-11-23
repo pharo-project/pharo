@@ -6,36 +6,38 @@ trigger this announcement.
 I provide the old and new window size.
 "
 Class {
-	#name : #WindowResizing,
-	#superclass : #WindowAnnouncement,
+	#name : 'WindowResizing',
+	#superclass : 'WindowAnnouncement',
 	#instVars : [
 		'oldSize',
 		'newSize'
 	],
-	#category : #'Morphic-Widgets-Windows-Announcements'
+	#category : 'Morphic-Widgets-Windows-Announcements',
+	#package : 'Morphic-Widgets-Windows',
+	#tag : 'Announcements'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 WindowResizing >> isResized [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WindowResizing >> newSize [
 	^ newSize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WindowResizing >> newSize: anObject [
 	newSize := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WindowResizing >> oldSize [
 	^ oldSize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WindowResizing >> oldSize: anObject [
 	oldSize := anObject
 ]

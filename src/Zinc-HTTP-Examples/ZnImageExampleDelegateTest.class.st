@@ -2,12 +2,13 @@
 Functional unit tests for ZnImageExample
 "
 Class {
-	#name : #ZnImageExampleDelegateTest,
-	#superclass : #TestCase,
-	#category : #'Zinc-HTTP-Examples'
+	#name : 'ZnImageExampleDelegateTest',
+	#superclass : 'TestCase',
+	#category : 'Zinc-HTTP-Examples',
+	#package : 'Zinc-HTTP-Examples'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 ZnImageExampleDelegateTest >> image [
 	^ ZnClient new
 		beOneShot;
@@ -15,7 +16,7 @@ ZnImageExampleDelegateTest >> image [
 		entity
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnImageExampleDelegateTest >> testDefaultImage [
 	self withServerDo: [ :server |
 		| client |
@@ -28,7 +29,7 @@ ZnImageExampleDelegateTest >> testDefaultImage [
 		client close ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnImageExampleDelegateTest >> testMainPage [
 	self withServerDo: [ :server |
 		| client |
@@ -41,7 +42,7 @@ ZnImageExampleDelegateTest >> testMainPage [
 		client close ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnImageExampleDelegateTest >> testUpload [
 	self withServerDo: [ :server |
 		| image client |
@@ -58,7 +59,7 @@ ZnImageExampleDelegateTest >> testUpload [
 		client close ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnImageExampleDelegateTest >> withServerDo: block [
 	ZnServer withOSAssignedPortDo: [ :server |
 		server delegate: ZnImageExampleDelegate new.

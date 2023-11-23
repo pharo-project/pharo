@@ -2,17 +2,19 @@
 I implement a service for browsing Epicea logs.
 "
 Class {
-	#name : #EpOmbuFileReaderService,
-	#superclass : #Object,
-	#category : #'EpiceaBrowsers-Integration'
+	#name : 'EpOmbuFileReaderService',
+	#superclass : 'Object',
+	#category : 'EpiceaBrowsers-Integration',
+	#package : 'EpiceaBrowsers',
+	#tag : 'Integration'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 EpOmbuFileReaderService class >> browseLogInFileNamed: fileName [
 	(EpLog freshFromFile: fileName asFileReference) browseEvents
 ]
 
-{ #category : #'System-FileRegistry' }
+{ #category : 'System-FileRegistry' }
 EpOmbuFileReaderService class >> fileReaderServicesForFile: fullName suffix: suffix [
 	<fileService>
 
@@ -22,12 +24,12 @@ EpOmbuFileReaderService class >> fileReaderServicesForFile: fullName suffix: suf
 	^ { self service }
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EpOmbuFileReaderService class >> fileSuffix [
 	^ OmFileStore defaultFileSuffix
 ]
 
-{ #category : #'System-FileRegistry' }
+{ #category : 'System-FileRegistry' }
 EpOmbuFileReaderService class >> service [
 	^ SimpleServiceEntry
 		provider: self

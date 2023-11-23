@@ -2,25 +2,27 @@
 A label that underdraws to the top-left and/or bottom-right with a lighter and/or darker colour to the receiver.
 "
 Class {
-	#name : #EmbossedStringMorph,
-	#superclass : #StringMorph,
+	#name : 'EmbossedStringMorph',
+	#superclass : 'StringMorph',
 	#instVars : [
 		'style',
 		'trackPaneColor'
 	],
-	#category : #'Morphic-Base-Basic'
+	#category : 'Morphic-Base-Basic',
+	#package : 'Morphic-Base',
+	#tag : 'Basic'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EmbossedStringMorph >> adoptPaneColor: paneColor [
 	"Set the color."
 
-	(paneColor notNil and: [self trackPaneColor])
+	(paneColor isNotNil and: [self trackPaneColor])
 		ifTrue: [self color: paneColor].
 	super adoptPaneColor: paneColor
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 EmbossedStringMorph >> drawOn: aCanvas [
 	"Draw the hi/lowlights too."
 
@@ -47,7 +49,7 @@ EmbossedStringMorph >> drawOn: aCanvas [
 					font: self fontToUse color: self color]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 EmbossedStringMorph >> initWithContents: aString font: aFont emphasis: emphasisCode [
 	"Grrr, why do they do basicNew?"
 
@@ -57,7 +59,7 @@ EmbossedStringMorph >> initWithContents: aString font: aFont emphasis: emphasisC
 		trackPaneColor: true
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 EmbossedStringMorph >> initialize [
 	"Initialize the receiver."
 
@@ -67,21 +69,21 @@ EmbossedStringMorph >> initialize [
 		trackPaneColor: true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EmbossedStringMorph >> measureContents [
 	"Measure the contents for fitting. Add 2@2 for hi/lowlights."
 
 	^super measureContents + 2
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EmbossedStringMorph >> style [
 	"Answer the value of style"
 
 	^ style
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EmbossedStringMorph >> style: anObject [
 	"Set the value of style"
 
@@ -89,21 +91,21 @@ EmbossedStringMorph >> style: anObject [
 	self changed
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EmbossedStringMorph >> styleSymbols [
 	"Answer the valid styles."
 
 	^#(plain inset insetNoHighlight raised raisedNoHighlight)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EmbossedStringMorph >> trackPaneColor [
 	"Answer the value of trackPaneColor"
 
 	^ trackPaneColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EmbossedStringMorph >> trackPaneColor: anObject [
 	"Set the value of trackPaneColor"
 

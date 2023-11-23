@@ -1,6 +1,6 @@
-Extension { #name : #DoubleByteLayout }
+Extension { #name : 'DoubleByteLayout' }
 
-{ #category : #'*Ring-Core' }
+{ #category : '*Ring-Core' }
 DoubleByteLayout >> asRingMinimalDefinitionIn: anRGEnvironment [
 
 	^ anRGEnvironment backend definitionFor: self ifAbsentRegister: [

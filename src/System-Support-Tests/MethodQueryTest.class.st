@@ -2,12 +2,14 @@
 Unit tests for queries on methods
 "
 Class {
-	#name : #MethodQueryTest,
-	#superclass : #TestCase,
-	#category : #'System-Support-Tests-Base'
+	#name : 'MethodQueryTest',
+	#superclass : 'TestCase',
+	#category : 'System-Support-Tests-Base',
+	#package : 'System-Support-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 MethodQueryTest >> testReferencedClasses [
 
 	| refs |

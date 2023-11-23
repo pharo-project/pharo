@@ -8,8 +8,8 @@ The  mapped  parameters tells if the button index have been mapped into a standa
 The hasMapping parameters tells if this joystick is generating a mapped version of the event.
 "
 Class {
-	#name : #OSJoyButtonEvent,
-	#superclass : #OSEvent,
+	#name : 'OSJoyButtonEvent',
+	#superclass : 'OSEvent',
 	#instVars : [
 		'which',
 		'button',
@@ -17,140 +17,142 @@ Class {
 		'mapped',
 		'hasMapping'
 	],
-	#category : #'OSWindow-Core-Events'
+	#category : 'OSWindow-Core-Events',
+	#package : 'OSWindow-Core',
+	#tag : 'Events'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSJoyButtonEvent >> button [
 
 	^ button
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSJoyButtonEvent >> button: anObject [
 
 	button := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSJoyButtonEvent >> hasMapping [
 	^ hasMapping
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSJoyButtonEvent >> hasMapping: anObject [
 	hasMapping := anObject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OSJoyButtonEvent >> isButtonA [
 	^ button == 0
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OSJoyButtonEvent >> isButtonB [
 	^ button == 1
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OSJoyButtonEvent >> isButtonBack [
 	^ button == 4
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OSJoyButtonEvent >> isButtonGuide [
 	^ button == 5
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OSJoyButtonEvent >> isButtonStart [
 	^ button == 6
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OSJoyButtonEvent >> isButtonX [
 	^ button == 2
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OSJoyButtonEvent >> isButtonY [
 	^ button == 3
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OSJoyButtonEvent >> isDigitalPadDown [
 	^ button == 12
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OSJoyButtonEvent >> isDigitalPadLeft [
 	^ button == 13
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OSJoyButtonEvent >> isDigitalPadRight [
 	^ button == 14
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OSJoyButtonEvent >> isDigitalPadUp [
 	^ button == 11
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OSJoyButtonEvent >> isLeftShoulder [
 	^ button == 9
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OSJoyButtonEvent >> isLeftStick [
 	^ button == 7
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OSJoyButtonEvent >> isPreferredEvent [
 	^ mapped or: hasMapping not
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OSJoyButtonEvent >> isRightShoulder [
 	^ button == 10
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OSJoyButtonEvent >> isRightStick [
 	^ button == 8
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSJoyButtonEvent >> mapped [
 	^ mapped
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSJoyButtonEvent >> mapped: anObject [
 	mapped := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSJoyButtonEvent >> pressed [
 
 	^ pressed
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSJoyButtonEvent >> pressed: anObject [
 
 	pressed := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSJoyButtonEvent >> which [
 
 	^ which
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSJoyButtonEvent >> which: anObject [
 
 	which := anObject

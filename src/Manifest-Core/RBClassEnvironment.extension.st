@@ -1,6 +1,6 @@
-Extension { #name : #RBClassEnvironment }
+Extension { #name : 'RBClassEnvironment' }
 
-{ #category : #'*Manifest-Core' }
+{ #category : '*Manifest-Core' }
 RBClassEnvironment >> smallLintCritics [
 	^ self allClasses
 ]

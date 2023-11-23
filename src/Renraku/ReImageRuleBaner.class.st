@@ -2,12 +2,14 @@
 A pluggable functionality used to ban rules in the image scale
 "
 Class {
-	#name : #ReImageRuleBaner,
-	#superclass : #Object,
-	#category : #'Renraku-Utility'
+	#name : 'ReImageRuleBaner',
+	#superclass : 'Object',
+	#category : 'Renraku-Utility',
+	#package : 'Renraku',
+	#tag : 'Utility'
 }
 
-{ #category : #actions }
+{ #category : 'actions' }
 ReImageRuleBaner class >> ban: aCritique [
 
 	ReSystemAnnouncer uniqueInstance
@@ -18,7 +20,7 @@ ReImageRuleBaner class >> ban: aCritique [
 	aCritique rule class enabled: false
 ]
 
-{ #category : #properties }
+{ #category : 'properties' }
 ReImageRuleBaner class >> reBanName [
 	^ 'The whole image'
 ]

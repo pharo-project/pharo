@@ -9,32 +9,34 @@ Internal Representation and Key Implementation Points.
 	methodDataSource:		<ClyDataSource>
 "
 Class {
-	#name : #ClyRunTestsFromMethodDataSourceCommand,
-	#superclass : #ClyTestCommand,
+	#name : 'ClyRunTestsFromMethodDataSourceCommand',
+	#superclass : 'ClyTestCommand',
 	#instVars : [
 		'methodDataSource'
 	],
-	#category : #'Calypso-SystemPlugins-SUnit-Browser-Commands'
+	#category : 'Calypso-SystemPlugins-SUnit-Browser-Commands',
+	#package : 'Calypso-SystemPlugins-SUnit-Browser',
+	#tag : 'Commands'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyRunTestsFromMethodDataSourceCommand class >> canBeExecutedInContext: aBrowserContext [
 
 	^aBrowserContext browser resultView dataSource hasMetaProperty: ClyTestResultProperty
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyRunTestsFromMethodDataSourceCommand class >> isAbstract [
 	^self = ClyRunTestsFromMethodDataSourceCommand
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyRunTestsFromMethodDataSourceCommand class >> menuOrder [
 	<classAnnotationDependency>
 	^10000
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyRunTestsFromMethodDataSourceCommand class >> queryBrowserToolbarActivation [
 	<classAnnotation>
 
@@ -42,13 +44,13 @@ ClyRunTestsFromMethodDataSourceCommand class >> queryBrowserToolbarActivation [
 		byItemOf: ClyButtonToolbarGroup order: self menuOrder for: ClyQueryBrowserContext
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyRunTestsFromMethodDataSourceCommand >> buildTestSuite [
 
 	self subclassResponsibility
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyRunTestsFromMethodDataSourceCommand >> execute [
 	| testSuite result |
 	testSuite := self buildTestSuite.
@@ -62,20 +64,20 @@ ClyRunTestsFromMethodDataSourceCommand >> execute [
 		with: 'Tests complete'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyRunTestsFromMethodDataSourceCommand >> hasTestResult [
 
 	^methodDataSource hasMetaProperty: ClyTestResultProperty
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyRunTestsFromMethodDataSourceCommand >> readParametersFromContext: aBrowserContext [
 	super readParametersFromContext: aBrowserContext.
 
 	methodDataSource := aBrowserContext browser resultView dataSource
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyRunTestsFromMethodDataSourceCommand >> testMethodsDo: aBlock [
 
 	methodDataSource queryResult rawItemsDo: [ :eachMethod |
@@ -83,7 +85,7 @@ ClyRunTestsFromMethodDataSourceCommand >> testMethodsDo: aBlock [
 			ifTrue: [ aBlock value: eachMethod]]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyRunTestsFromMethodDataSourceCommand >> testResult [
 
 	^methodDataSource getMetaProperty: ClyTestResultProperty

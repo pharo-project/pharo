@@ -2,46 +2,48 @@
 I am a storage of shortcuts. I store and provide facilities to access named and annonimous shortcuts.
 "
 Class {
-	#name : #KMStorage,
-	#superclass : #Object,
+	#name : 'KMStorage',
+	#superclass : 'Object',
 	#instVars : [
 		'namedRegistry',
 		'anonymousRegistry'
 	],
-	#category : #'Keymapping-Core-Base'
+	#category : 'Keymapping-Core-Base',
+	#package : 'Keymapping-Core',
+	#tag : 'Base'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMStorage >> , aKMStorage [
 	^self class new
 		addAll: self keymaps;
 		addAll: aKMStorage keymaps
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMStorage >> add: aKeymap [
 	aKeymap hasName
 		ifTrue: [ namedRegistry at: aKeymap name put: aKeymap ]
 		ifFalse: [ anonymousRegistry add: aKeymap ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMStorage >> addAll: keymaps [
 	keymaps do: [ :km | self add: km ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMStorage >> hasKeymapNamed: aKmName [
 	^namedRegistry includesKey: aKmName
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 KMStorage >> initialize [
 	anonymousRegistry := Set new.
 	namedRegistry := Dictionary new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMStorage >> keymapForShortcut: aShortcut [
 
 	^ namedRegistry
@@ -52,24 +54,24 @@ KMStorage >> keymapForShortcut: aShortcut [
 				ifNone: [ nil ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMStorage >> keymapNamed: aKmName [
 	^namedRegistry at: aKmName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMStorage >> keymaps [
 	^anonymousRegistry , namedRegistry values
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMStorage >> remove: aKeymap [
 	aKeymap hasName
 		ifTrue: [ namedRegistry removeKey: aKeymap name ]
 		ifFalse: [ anonymousRegistry remove: aKeymap ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMStorage >> size [
 	^self keymaps size
 ]

@@ -1,6 +1,6 @@
-Extension { #name : #RBPatternMethodNode }
+Extension { #name : 'RBPatternMethodNode' }
 
-{ #category : #'*Renraku' }
+{ #category : '*Renraku' }
 RBPatternMethodNode >> pattern [
 
 	^ self selector

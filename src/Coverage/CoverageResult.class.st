@@ -7,29 +7,31 @@ They contains the set of covered methods and sequence nodes.
 The original CoverageCollector is known so that usfull information (like `CoverageResult>>#percentage`) can be computed.
 "
 Class {
-	#name : #CoverageResult,
-	#superclass : #Object,
+	#name : 'CoverageResult',
+	#superclass : 'Object',
 	#instVars : [
 		'collector',
 		'methods',
 		'nodes'
 	],
-	#category : #'Coverage-Base'
+	#category : 'Coverage-Base',
+	#package : 'Coverage',
+	#tag : 'Base'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoverageResult >> collector [
 
 	^ collector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoverageResult >> collector: anObject [
 
 	collector := anObject
 ]
 
-{ #category : #computation }
+{ #category : 'computation' }
 CoverageResult >> crown [
 
 	| uncoveredMethods uncoveredSelectors crown |
@@ -62,38 +64,38 @@ CoverageResult >> crown [
 	^ crown
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoverageResult >> methods [
 
 	^ methods
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoverageResult >> methods: anObject [
 
 	methods := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoverageResult >> nodes [
 
 	^ nodes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoverageResult >> nodes: anObject [
 
 	nodes := anObject
 ]
 
-{ #category : #computation }
+{ #category : 'computation' }
 CoverageResult >> percentage [
 
 	collector nodes isEmpty ifTrue: [ ^ Float nan ].
 	^ 100.0 * nodes size / collector nodes size
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 CoverageResult >> printOn: aStream [
 
 	super printOn: aStream.
@@ -110,13 +112,13 @@ CoverageResult >> printOn: aStream [
 
 ]
 
-{ #category : #computation }
+{ #category : 'computation' }
 CoverageResult >> uncoveredMethods [
 
 	^ collector methods \ methods
 ]
 
-{ #category : #computation }
+{ #category : 'computation' }
 CoverageResult >> uncoveredNodes [
 
 	^ collector nodes \ nodes

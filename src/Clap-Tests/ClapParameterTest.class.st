@@ -1,49 +1,51 @@
 Class {
-	#name : #ClapParameterTest,
-	#superclass : #TestCase,
-	#category : #'Clap-Tests-Unit'
+	#name : 'ClapParameterTest',
+	#superclass : 'TestCase',
+	#category : 'Clap-Tests-Unit',
+	#package : 'Clap-Tests',
+	#tag : 'Unit'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClapParameterTest class >> isAbstract [
 	^ self = ClapParameterTest
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClapParameterTest class >> shouldInheritSelectors [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClapParameterTest >> classToTest [
 	^ self subclassResponsibility
 ]
 
-{ #category : #'tests - fixture' }
+{ #category : 'tests - fixture' }
 ClapParameterTest >> namedSubject [
 	^ self classToTest id: self subjectName asSymbol
 ]
 
-{ #category : #'tests - fixture' }
+{ #category : 'tests - fixture' }
 ClapParameterTest >> subjectName [
 	^ 'foo'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClapParameterTest >> testCanonicalName [
 	self
 		assert: self namedSubject canonicalName
 		equals: self subjectName asString
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClapParameterTest >> testIdentifierDerivedFromCanonicalName [
 	self
 		assert: self namedSubject identifier
 		equals: self subjectName asSymbol
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClapParameterTest >> testMismatchesAtEnd [
 	| subject argv match |
 	subject := self namedSubject.
@@ -57,7 +59,7 @@ ClapParameterTest >> testMismatchesAtEnd [
 		identicalTo: subject
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClapParameterTest >> testSubjectIdentifier [
 	| subject |
 	subject := self classToTest id: #subjectId.

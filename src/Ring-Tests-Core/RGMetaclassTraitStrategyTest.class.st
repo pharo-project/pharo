@@ -1,10 +1,11 @@
 Class {
-	#name : #RGMetaclassTraitStrategyTest,
-	#superclass : #RGTest,
-	#category : #'Ring-Tests-Core'
+	#name : 'RGMetaclassTraitStrategyTest',
+	#superclass : 'RGTest',
+	#category : 'Ring-Tests-Core',
+	#package : 'Ring-Tests-Core'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGMetaclassTraitStrategyTest >> testCreationByMethod [
 
 	| anRGBehavior |
@@ -14,7 +15,7 @@ RGMetaclassTraitStrategyTest >> testCreationByMethod [
 	self assert: (anRGBehavior behaviorStrategy isMetaclassTraitStrategy)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGMetaclassTraitStrategyTest >> testKind [
 
 	| strategy |
@@ -26,7 +27,7 @@ RGMetaclassTraitStrategyTest >> testKind [
 	self assert: strategy isMetaclassTraitStrategy
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGMetaclassTraitStrategyTest >> testResolvingConsistency [
 
 	| anObject |

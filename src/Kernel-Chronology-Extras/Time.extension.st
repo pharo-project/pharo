@@ -1,6 +1,6 @@
-Extension { #name : #Time }
+Extension { #name : 'Time' }
 
-{ #category : #'*Kernel-Chronology-Extras' }
+{ #category : '*Kernel-Chronology-Extras' }
 Time class >> benchmarkMillisecondClock [
 	"Benchmark the time spent in a call to Time>>millisecondClockValue.
 	On the VM level this tests the efficiency of calls to ioMSecs()."
@@ -44,7 +44,7 @@ Running this benchmark will not give any useful result.' ].
 	  , ' microseconds per call to Time>>millisecondClockValue'
 ]
 
-{ #category : #'*Kernel-Chronology-Extras' }
+{ #category : '*Kernel-Chronology-Extras' }
 Time class >> benchmarkPrimitiveResponseDelay [
 	"Benchmark the overhead for primitive dispatches with an active Delay.
 	On the VM level, this tests the efficiency of ioLowResMSecs."
@@ -115,7 +115,7 @@ Running this benchmark will not give any useful result.'].
 		' microseconds overhead per primitive call'
 ]
 
-{ #category : #'*Kernel-Chronology-Extras' }
+{ #category : '*Kernel-Chronology-Extras' }
 Time class >> dateAndTimeFromSeconds: secondCountSinceEpoch [
 
 	| dateAndTime |
@@ -123,19 +123,19 @@ Time class >> dateAndTimeFromSeconds: secondCountSinceEpoch [
  	^ { dateAndTime asDate .  dateAndTime asTime }
 ]
 
-{ #category : #'*Kernel-Chronology-Extras' }
+{ #category : '*Kernel-Chronology-Extras' }
 Time class >> fromString: aString [
 	^ self readFrom: aString readStream
 ]
 
-{ #category : #'*Kernel-Chronology-Extras' }
+{ #category : '*Kernel-Chronology-Extras' }
 Time class >> hour: hour minute: minute second: second [
 	"Answer a Time"
 
  	^ self hour: hour minute: minute second: second nanoSecond: 0
 ]
 
-{ #category : #'*Kernel-Chronology-Extras' }
+{ #category : '*Kernel-Chronology-Extras' }
 Time class >> hour: hour minute: minute second: second  nano: nano [
 
 	| nanoMultiplicative |
@@ -145,7 +145,7 @@ Time class >> hour: hour minute: minute second: second  nano: nano [
  	^ self hour: hour minute: minute second: second nanoSecond: nano * nanoMultiplicative
 ]
 
-{ #category : #'*Kernel-Chronology-Extras' }
+{ #category : '*Kernel-Chronology-Extras' }
 Time class >> hour: hour minute: minute second: second  nanoSecond: nanoCount [
 	"Answer a Time - only second precision for now"
 
@@ -158,13 +158,13 @@ Time class >> hour: hour minute: minute second: second  nanoSecond: nanoCount [
 		nanoSeconds: nanoCount
 ]
 
-{ #category : #'*Kernel-Chronology-Extras' }
+{ #category : '*Kernel-Chronology-Extras' }
 Time class >> midnight [
 
 	^ self seconds: 0
 ]
 
-{ #category : #'*Kernel-Chronology-Extras' }
+{ #category : '*Kernel-Chronology-Extras' }
 Time class >> milliseconds: currentTime since: lastTime [
 	"Answer the elapsed time since last recorded in milliseconds.
 	Compensate for rollover."
@@ -176,7 +176,7 @@ Time class >> milliseconds: currentTime since: lastTime [
 		ifFalse: [delta]
 ]
 
-{ #category : #'*Kernel-Chronology-Extras' }
+{ #category : '*Kernel-Chronology-Extras' }
 Time class >> millisecondsSince: lastTime [
  	"Answer the elapsed time since last recorded in milliseconds.
  	Compensate for rollover."
@@ -184,20 +184,20 @@ Time class >> millisecondsSince: lastTime [
  	^self milliseconds: self millisecondClockValue since: lastTime
 ]
 
-{ #category : #'*Kernel-Chronology-Extras' }
+{ #category : '*Kernel-Chronology-Extras' }
 Time class >> millisecondsToRun: timedBlock [
 	"Answer the number of milliseconds timedBlock takes to return its value."
 
 	^(self microsecondsToRun: timedBlock) // 1e3
 ]
 
-{ #category : #'*Kernel-Chronology-Extras' }
+{ #category : '*Kernel-Chronology-Extras' }
 Time class >> noon [
 
 	^ self seconds: (SecondsInDay / 2)
 ]
 
-{ #category : #'*Kernel-Chronology-Extras' }
+{ #category : '*Kernel-Chronology-Extras' }
 Time class >> readFrom: aStream [
 
 	"Read a Time from the stream in the form:
@@ -241,7 +241,7 @@ Time class >> readFrom: aStream [
 		  nanoSecond: nanos
 ]
 
-{ #category : #'*Kernel-Chronology-Extras' }
+{ #category : '*Kernel-Chronology-Extras' }
 Time >> to: anEnd [
 	"Answer a Timespan. anEnd must respond to #asDateAndTime"
 

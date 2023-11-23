@@ -2,8 +2,8 @@
 Displays a colour with alpha against a white, hatched and black background.
 "
 Class {
-	#name : #ColorPresenterMorph,
-	#superclass : #ModelMorph,
+	#name : 'ColorPresenterMorph',
+	#superclass : 'ModelMorph',
 	#instVars : [
 		'contentMorph',
 		'labelMorph',
@@ -13,24 +13,25 @@ Class {
 	#classVars : [
 		'HatchForm'
 	],
-	#category : #'Morphic-Widgets-ColorPicker'
+	#category : 'Morphic-Widgets-ColorPicker',
+	#package : 'Morphic-Widgets-ColorPicker'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 ColorPresenterMorph class >> example [
 	<sampleInstance>
 
 	^ (ColorPresenterMorph on: (BorderedMorph new) color: #color) openInWorld
 ]
 
-{ #category : #'graphics constants' }
+{ #category : 'graphics constants' }
 ColorPresenterMorph class >> hatchForm [
 	"Answer a form showing a grid hatch pattern."
 
 	^HatchForm ifNil: [HatchForm := self newHatchForm]
 ]
 
-{ #category : #'graphics constants' }
+{ #category : 'graphics constants' }
 ColorPresenterMorph class >> newHatchForm [
 	"Answer a new hatch form."
 
@@ -41,7 +42,7 @@ ColorPresenterMorph class >> newHatchForm [
 	offset: 0@0)
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ColorPresenterMorph class >> on: anObject color: getSel [
 	"Answer a new instance of the receiver on the given model using
 	the given selectors as the interface."
@@ -53,42 +54,42 @@ ColorPresenterMorph class >> on: anObject color: getSel [
 		color: getSel
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ColorPresenterMorph >> contentMorph [
 	"Answer the value of contentMorph"
 
 	^ contentMorph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ColorPresenterMorph >> contentMorph: anObject [
 	"Set the value of contentMorph"
 
 	contentMorph := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ColorPresenterMorph >> getColorSelector [
 	"Answer the value of getColorSelector"
 
 	^ getColorSelector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ColorPresenterMorph >> getColorSelector: anObject [
 	"Set the value of getColorSelector"
 
 	getColorSelector := anObject
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ColorPresenterMorph >> hatchForm [
 	"Answer a form showing a grid hatch pattern."
 
 	^self class hatchForm
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ColorPresenterMorph >> initialize [
 	"Initialize the receiver."
 
@@ -102,21 +103,21 @@ ColorPresenterMorph >> initialize [
 		addMorphBack: self contentMorph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ColorPresenterMorph >> labelMorph [
 	"Answer the value of labelMorph"
 
 	^ labelMorph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ColorPresenterMorph >> labelMorph: anObject [
 	"Set the value of labelMorph"
 
 	labelMorph := anObject
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ColorPresenterMorph >> newContentMorph [
 	"Answer a new content morph"
 
@@ -130,7 +131,7 @@ ColorPresenterMorph >> newContentMorph [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ColorPresenterMorph >> newHatchMorph [
 	"Answer a new morph showing a grid hatch pattern."
 
@@ -151,14 +152,14 @@ ColorPresenterMorph >> newHatchMorph [
 		fullFrame: (0@0 corner: 1@1) asLayoutFrame
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ColorPresenterMorph >> newLabelMorph [
 	"Answer a new label morph"
 
 	^Morph new
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ColorPresenterMorph >> on: anObject color: getColSel [
 	"Set the receiver to the given model parameterized by the given message selectors."
 
@@ -168,7 +169,7 @@ ColorPresenterMorph >> on: anObject color: getColSel [
 		updateColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ColorPresenterMorph >> setColor: aColor [
 	"Update the colour of the labels."
 
@@ -176,21 +177,21 @@ ColorPresenterMorph >> setColor: aColor [
 	self solidLabelMorph color: aColor beOpaque
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ColorPresenterMorph >> solidLabelMorph [
 	"Answer the value of solidLabelMorph"
 
 	^ solidLabelMorph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ColorPresenterMorph >> solidLabelMorph: anObject [
 	"Set the value of solidLabelMorph"
 
 	solidLabelMorph := anObject
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 ColorPresenterMorph >> update: aSymbol [
 	"Refer to the comment in View|update:."
 
@@ -199,7 +200,7 @@ ColorPresenterMorph >> update: aSymbol [
 		^ self]
 ]
 
-{ #category : #'private - layout' }
+{ #category : 'private - layout' }
 ColorPresenterMorph >> updateColor [
 	"Update the color state."
 

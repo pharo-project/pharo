@@ -2,12 +2,14 @@
 tests related to environment
 "
 Class {
-	#name : #OCEnvironmentScopeTest,
-	#superclass : #TestCase,
-	#category : #'OpalCompiler-Tests-Semantic'
+	#name : 'OCEnvironmentScopeTest',
+	#superclass : 'TestCase',
+	#category : 'OpalCompiler-Tests-Semantic',
+	#package : 'OpalCompiler-Tests',
+	#tag : 'Semantic'
 }
 
-{ #category : #'tests - environment' }
+{ #category : 'tests - environment' }
 OCEnvironmentScopeTest >> testCompileWithEnvironment [
 	"testing compiling with environments other then Smalltalk globals. Note: the class in the environment has to point to the environment. And we have to compile for a class in the environment"
 
@@ -31,7 +33,7 @@ OCEnvironmentScopeTest >> testCompileWithEnvironment [
 	self should: [ method valueWithReceiver: nil arguments: #() ] raise: UndeclaredVariableRead
 ]
 
-{ #category : #'test - production - environment' }
+{ #category : 'test - production - environment' }
 OCEnvironmentScopeTest >> testCompileWithProductionEnvironment [
 	| environment method return |
 	environment := {#CompiledMethod -> MyCompiledMethodForTesting} asDictionary.

@@ -35,16 +35,18 @@ So includes: can generally be done faster (also sped up byusing a special primit
 and removal of objects does not have to do extensive cleanup if object was part of a chain.
 "
 Class {
-	#name : #FLLargeIdentitySet,
-	#superclass : #FLLargeIdentityHashedCollection,
+	#name : 'FLLargeIdentitySet',
+	#superclass : 'FLLargeIdentityHashedCollection',
 	#instVars : [
 		'array',
 		'includesNil'
 	],
-	#category : #'Fuel-Core-Collections'
+	#category : 'Fuel-Core-Collections',
+	#package : 'Fuel-Core',
+	#tag : 'Collections'
 }
 
-{ #category : #adding }
+{ #category : 'adding' }
 FLLargeIdentitySet >> add: anObject [
 
 	| hash |
@@ -78,7 +80,7 @@ FLLargeIdentitySet >> add: anObject [
 	^anObject
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 FLLargeIdentitySet >> addIfNotPresent: anObject ifPresentDo: aBlock [
 
 	| hash |
@@ -114,7 +116,7 @@ FLLargeIdentitySet >> addIfNotPresent: anObject ifPresentDo: aBlock [
 	^anObject
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 FLLargeIdentitySet >> do: aBlock [
 
 	tally = 0 ifTrue: [ ^self ].
@@ -126,7 +128,7 @@ FLLargeIdentitySet >> do: aBlock [
 			aBlock value: (subArray at: index) ] ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FLLargeIdentitySet >> includes: anObject [
 
 	anObject ifNil: [ ^includesNil ].
@@ -135,7 +137,7 @@ FLLargeIdentitySet >> includes: anObject [
 		ifNotNil: [ :list | list fuelPointsTo: anObject ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FLLargeIdentitySet >> initialize [
 
 	super initialize.
@@ -143,7 +145,7 @@ FLLargeIdentitySet >> initialize [
 	includesNil := false
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 FLLargeIdentitySet >> postCopy [
 
 	super postCopy.
@@ -153,7 +155,7 @@ FLLargeIdentitySet >> postCopy [
 			array at: index put: list copy ] ]
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 FLLargeIdentitySet >> remove: anObject ifAbsent: aBlock [
 
 	| list hash size |

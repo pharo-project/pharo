@@ -2,8 +2,8 @@
 I am a handle for a SDL2 texture created by an OSSDL2GenericRenderer.
 "
 Class {
-	#name : #OSSDL2WindowRendererTexture,
-	#superclass : #OSWindowRendererTexture,
+	#name : 'OSSDL2WindowRendererTexture',
+	#superclass : 'OSWindowRendererTexture',
 	#instVars : [
 		'extent',
 		'handle'
@@ -11,35 +11,37 @@ Class {
 	#pools : [
 		'SDL2Constants'
 	],
-	#category : #'OSWindow-SDL2-Rendering'
+	#category : 'OSWindow-SDL2-Rendering',
+	#package : 'OSWindow-SDL2',
+	#tag : 'Rendering'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSSDL2WindowRendererTexture >> extent [
 	^ extent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSSDL2WindowRendererTexture >> extent: anObject [
 	extent := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSSDL2WindowRendererTexture >> handle [
 	^ handle
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSSDL2WindowRendererTexture >> handle: anObject [
 	handle := anObject
 ]
 
-{ #category : #'texture manipulation' }
+{ #category : 'texture manipulation' }
 OSSDL2WindowRendererTexture >> uploadAthensSurface: athensSurface [
 	handle updateTexturePixels: athensSurface getDataPtr pitch: athensSurface stride
 ]
 
-{ #category : #'texture manipulation' }
+{ #category : 'texture manipulation' }
 OSSDL2WindowRendererTexture >> uploadForm: aForm [
 	| convertedForm |
 	convertedForm := aForm asFormOfDepth: 32.

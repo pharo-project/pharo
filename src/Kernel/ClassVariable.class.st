@@ -9,32 +9,34 @@ Note: PoolVariable is not modeled as it's own subclass to allow all special kind
 as pool variables.
 "
 Class {
-	#name : #ClassVariable,
-	#superclass : #LiteralVariable,
+	#name : 'ClassVariable',
+	#superclass : 'LiteralVariable',
 	#instVars : [
 		'owningClass',
 		'definingClass'
 	],
-	#category : #'Kernel-Variables'
+	#category : 'Kernel-Variables',
+	#package : 'Kernel',
+	#tag : 'Variables'
 }
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 ClassVariable >> acceptVisitor: aProgramNodeVisitor node: aNode [
 	^ aProgramNodeVisitor visitClassVariableNode: aNode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassVariable >> definingClass [
 	"if a Variable is from a Trait is installed in a class, we store the orginal class of the trait here"
 	^ definingClass ifNil: [ self owningClass ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassVariable >> definingClass: anObject [
 	definingClass := anObject
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClassVariable >> definitionOn: aStream [
 	"non special globals are defined by the symbol"
 	^self needsFullDefinition
@@ -42,47 +44,47 @@ ClassVariable >> definitionOn: aStream [
 		ifFalse: [ self name printOn: aStream ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClassVariable >> definitionString [
 	"Every subclass that adds state must redefine either this method or #printOn:"
 	^ String streamContents: [:s | self definitionOn: s]
 ]
 
-{ #category : #'code generation' }
+{ #category : 'code generation' }
 ClassVariable >> emitStore: methodBuilder [
 
 	methodBuilder storeIntoLiteralVariable: self
 ]
 
-{ #category : #'code generation' }
+{ #category : 'code generation' }
 ClassVariable >> emitValue: methodBuilder [
 
 	methodBuilder pushLiteralVariable: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClassVariable >> isAccessedBy: aBehavior [
 
 	^ (aBehavior hasMethodAccessingVariable: self) or: [ aBehavior class hasMethodAccessingVariable: self ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClassVariable >> isClassVariable [
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClassVariable >> isDefinedByOwningClass [
 
 	^ self owningClass = self definingClass
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClassVariable >> isPoolVariable [
 	^ self definingClass isPool
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClassVariable >> isReferenced [
 
 	(self definingClass withAllSubclasses anySatisfy: [ :behavior | self isAccessedBy: behavior ]) ifTrue: [ ^ true ].
@@ -94,24 +96,24 @@ ClassVariable >> isReferenced [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClassVariable >> needsFullDefinition [
 	"only ClassVariable can use a simplified definition"
 
 	^ self class ~= ClassVariable
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassVariable >> owningClass [
 	^ owningClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassVariable >> owningClass: anObject [
 	owningClass := anObject
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClassVariable >> possiblyUsingClasses [
 
 	| classes |
@@ -127,7 +129,7 @@ ClassVariable >> possiblyUsingClasses [
 	^ classes
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClassVariable >> printOn: aStream [
 	"Every subclass that adds state must redefine either this method or #definitionString"
 	aStream
@@ -136,7 +138,7 @@ ClassVariable >> printOn: aStream [
 		nextPutAll: self class name
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClassVariable >> usingMethods [
 	^self possiblyUsingClasses flatCollect: [ :class | class whichMethodsReferTo: self ]
 ]

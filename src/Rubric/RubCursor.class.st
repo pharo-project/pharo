@@ -2,8 +2,8 @@
 I represent a cursor for the mouse 
 "
 Class {
-	#name : #RubCursor,
-	#superclass : #Morph,
+	#name : 'RubCursor',
+	#superclass : 'Morph',
 	#instVars : [
 		'stayVisible',
 		'invisibleCursorColor',
@@ -16,50 +16,52 @@ Class {
 		'FixedColor',
 		'Period'
 	],
-	#category : #'Rubric-Editing-Core'
+	#category : 'Rubric-Editing-Core',
+	#package : 'Rubric',
+	#tag : 'Editing-Core'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubCursor class >> cursorWithFixedColor [
 	^ FixedColor ifNil: [ FixedColor := false ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubCursor class >> cursorWithFixedColor: aBoolean [
 	FixedColor := aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubCursor class >> defaultColor [
 	^ DefaultColor ifNil: [ DefaultColor := Color lightGray ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubCursor class >> defaultColor: aColor [
 	DefaultColor := aColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubCursor class >> defaultWidth [
 	^ DefaultWidth ifNil: [ DefaultWidth := 2 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubCursor class >> defaultWidth: anInteger [
 	DefaultWidth := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubCursor class >> period [
 	^ Period ifNil: [ Period :=  700 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubCursor class >> period: anInteger [
 	Period :=  anInteger
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 RubCursor class >> rubricSettingsOn: aBuilder [
 	<systemsettings>
 	(aBuilder group: #'Rubric cursor')
@@ -91,14 +93,14 @@ RubCursor class >> rubricSettingsOn: aBuilder [
 						range: (0 to: 1000) ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RubCursor >> aboutToBeRemoved [
 	self beNotVisible.
 	self removeAlarm.
 	self textArea announcer unsubscribe: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubCursor >> actualCursorColor [
 	self textArea readOnly ifTrue: [ ^ Color transparent ].
 	^ (self textArea hasFocus and: [ self stayVisible not ])
@@ -106,13 +108,13 @@ RubCursor >> actualCursorColor [
 		ifTrue: [ self visibleCursorColor ]
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RubCursor >> addAlarm [
 
 	self addAlarmAt: self period
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RubCursor >> addAlarmAt: millisecs [
 	self removeAlarm.
 	(self stayVisible not and: [ self textArea hasFocus ])
@@ -126,34 +128,34 @@ RubCursor >> addAlarmAt: millisecs [
 				at: Time millisecondClockValue + millisecs ]
 ]
 
-{ #category : #blinking }
+{ #category : 'blinking' }
 RubCursor >> beNotVisible [
 	self color = self invisibleCursorColor
 		ifFalse: [ self color: self invisibleCursorColor ]
 ]
 
-{ #category : #blinking }
+{ #category : 'blinking' }
 RubCursor >> beVisible [
 	self color = self invisibleCursorColor
 		ifTrue: [ self color: self actualCursorColor ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RubCursor >> defaultBounds [
 	^ 0 @ 0 corner: 0 @ 0
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RubCursor >> defaultColor [
 	^ Color transparent
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RubCursor >> defaultVisibleCursorColor [
 	^ self theme textColor
 ]
 
-{ #category : #blinking }
+{ #category : 'blinking' }
 RubCursor >> ensureFor: millisecs [
 	self removeAlarm.
 	self beVisible.
@@ -161,7 +163,7 @@ RubCursor >> ensureFor: millisecs [
 		ifTrue: [ self addAlarmAt: millisecs ]
 ]
 
-{ #category : #blinking }
+{ #category : 'blinking' }
 RubCursor >> hideShow [
 	self textArea canChangeText
 		ifFalse: [ ^ self beNotVisible ].
@@ -174,17 +176,17 @@ RubCursor >> hideShow [
 		ifFalse: [ self beVisible ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubCursor >> invisibleCursorColor [
 	^ invisibleCursorColor ifNil: [ invisibleCursorColor := Color transparent ]
 ]
 
-{ #category : #blinking }
+{ #category : 'blinking' }
 RubCursor >> isBlinkingCursor [
 	^ self period > 0
 ]
 
-{ #category : #'submorphs - accessing' }
+{ #category : 'submorphs - accessing' }
 RubCursor >> noteNewOwner: aMorph [
 	super noteNewOwner: aMorph.
 	self textArea announcer when: MorphGotFocus send: #whenGotFocus: to: self.
@@ -194,60 +196,60 @@ RubCursor >> noteNewOwner: aMorph [
 	self textArea announcer when: RubTextStyleChanged send: #whenTextAreaTextStyleChanged: to: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubCursor >> period [
 	^ period ifNil: [ period := self class period ]
 ]
 
-{ #category : #blinking }
+{ #category : 'blinking' }
 RubCursor >> removeAlarm [
 	self world
 		ifNotNil: [ :wld |
 			wld removeAlarm: #hideShow for: self ]
 ]
 
-{ #category : #blinking }
+{ #category : 'blinking' }
 RubCursor >> startBlinking [
 	self beVisible.
 	self ensureFor: 1000
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubCursor >> stayVisible [
 	^ stayVisible ifNil: [ stayVisible := false ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubCursor >> stayVisible: aBoolean [
 	stayVisible := aBoolean.
 	self color: self visibleCursorColor
 ]
 
-{ #category : #blinking }
+{ #category : 'blinking' }
 RubCursor >> switchColor [
 	self color = self invisibleCursorColor
 		ifTrue: [ self color: self actualCursorColor ]
 		ifFalse: [ self beNotVisible ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubCursor >> textArea [
 	^ owner
 ]
 
-{ #category : #structure }
+{ #category : 'structure' }
 RubCursor >> topRendererOrSelf [
 	^owner topRendererOrSelf
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RubCursor >> unplug [
 	self removeAlarm.
 	self textArea announcer unsubscribe: self.
 	super unplug
 ]
 
-{ #category : #'private - layout' }
+{ #category : 'private - layout' }
 RubCursor >> updateBounds [
 	| x line |
 	self textArea ifNil: [ ^self ].
@@ -258,7 +260,7 @@ RubCursor >> updateBounds [
 	self extent: self class defaultWidth @ (line height + 1)
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubCursor >> updateVisibility [
 	(self textArea isNil or: [ self textArea canChangeText not ])
 		ifTrue: [ ^ self beNotVisible ].
@@ -269,25 +271,25 @@ RubCursor >> updateVisibility [
 	self changed
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubCursor >> visibleCursorColor [
 	self class cursorWithFixedColor
 		ifTrue: [ ^ self class defaultColor ].
 	^ visibleCursorColor ifNil: [ self defaultVisibleCursorColor ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubCursor >> visibleCursorColor: aColor [
 	visibleCursorColor := aColor
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubCursor >> whenGotFocus: anAnnouncement [
 	self updateBounds.
 	self updateVisibility
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubCursor >> whenLostFocus: anAnnouncement [
 	self stayVisible
 		ifFalse: [
@@ -295,18 +297,18 @@ RubCursor >> whenLostFocus: anAnnouncement [
 			self beNotVisible ]
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubCursor >> whenTextAreaExtentChanged: anAnnouncement [
 	self updateBounds
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubCursor >> whenTextAreaSelectionChanged: anAnnouncement [
 	self updateBounds.
 	self updateVisibility
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubCursor >> whenTextAreaTextStyleChanged: anAnnouncement [
 	self updateBounds
 ]

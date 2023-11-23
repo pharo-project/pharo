@@ -1,41 +1,43 @@
 Class {
-	#name : #ClyVariableReferencesQueryTest,
-	#superclass : #ClyVariableReferencesTest,
+	#name : 'ClyVariableReferencesQueryTest',
+	#superclass : 'ClyVariableReferencesTest',
 	#instVars : [
 		'var2'
 	],
-	#category : #'Calypso-SystemQueries-Tests-Queries'
+	#category : 'Calypso-SystemQueries-Tests-Queries',
+	#package : 'Calypso-SystemQueries-Tests',
+	#tag : 'Queries'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClyVariableReferencesQueryTest >> queryClass [
 	^ClyVariableReferencesQuery
 ]
 
-{ #category : #'methods for tests' }
+{ #category : 'methods for tests' }
 ClyVariableReferencesQueryTest >> reference1OfVar1 [
 
 	^referencedVar1
 ]
 
-{ #category : #'methods for tests' }
+{ #category : 'methods for tests' }
 ClyVariableReferencesQueryTest >> reference2OfVar1 [
 
 	referencedVar1 := #testValue
 ]
 
-{ #category : #'methods for tests' }
+{ #category : 'methods for tests' }
 ClyVariableReferencesQueryTest >> referenceOfAnotherVar [
 
 	^var2
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyVariableReferencesQueryTest >> targetVarName [
 	^#referencedVar1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyVariableReferencesQueryTest >> testCheckIfEmpty [
 	query scope: (ClyMethodScope of: self class >> #reference1OfVar1 in: environment).
 	self deny: query checkEmptyResult.
@@ -44,7 +46,7 @@ ClyVariableReferencesQueryTest >> testCheckIfEmpty [
 	self assert: query checkEmptyResult
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyVariableReferencesQueryTest >> testForClassVariable [
 
 	| classVar |
@@ -56,7 +58,7 @@ ClyVariableReferencesQueryTest >> testForClassVariable [
 	self assert: foundSelectors equals: #(instanceSideClassVar1Reader instanceSideClassVar1Writer)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyVariableReferencesQueryTest >> testForSharedClassVariable [
 
 	| classVar |
@@ -67,7 +69,7 @@ ClyVariableReferencesQueryTest >> testForSharedClassVariable [
 	self assert: resultItems notEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyVariableReferencesQueryTest >> testFromClassScope [
 
 	self queryFromScope: ClyClassScope of: self class.
@@ -76,7 +78,7 @@ ClyVariableReferencesQueryTest >> testFromClassScope [
 	self assert: foundSelectors equals: #(reference1OfVar1 reference2OfVar1)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyVariableReferencesQueryTest >> testFromMethodScope [
 	self queryFromScope: ClyMethodScope ofAll: {(self class >> #reference1OfVar1) . (self class >> #referenceOfAnotherVar)}.
 
@@ -84,7 +86,7 @@ ClyVariableReferencesQueryTest >> testFromMethodScope [
 	self assert: resultItems first identicalTo: self class >> #reference1OfVar1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyVariableReferencesQueryTest >> testFromPackageScope [
 
 	self queryFromScope: ClyPackageScope of: self class package.

@@ -1,22 +1,24 @@
 Class {
-	#name : #MetacelloScriptRegistryExecutor,
-	#superclass : #MetacelloScriptExecutor,
-	#category : #'Metacello-Core-Scripts'
+	#name : 'MetacelloScriptRegistryExecutor',
+	#superclass : 'MetacelloScriptExecutor',
+	#category : 'Metacello-Core-Scripts',
+	#package : 'Metacello-Core',
+	#tag : 'Scripts'
 }
 
-{ #category : #'actions api' }
+{ #category : 'actions api' }
 MetacelloScriptRegistryExecutor >> prime [
 ]
 
-{ #category : #'execution callback' }
+{ #category : 'execution callback' }
 MetacelloScriptRegistryExecutor >> projectSpecSelectBlock [
   ^ [ :projectSpec | projectSpec notNil ]
 ]
 
-{ #category : #'actions api' }
+{ #category : 'actions api' }
 MetacelloScriptRegistryExecutor >> remove [
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MetacelloScriptRegistryExecutor >> reset [
 ]

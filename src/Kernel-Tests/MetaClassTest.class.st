@@ -1,10 +1,12 @@
 Class {
-	#name : #MetaClassTest,
-	#superclass : #TestCase,
-	#category : #'Kernel-Tests-Classes'
+	#name : 'MetaClassTest',
+	#superclass : 'TestCase',
+	#category : 'Kernel-Tests-Classes',
+	#package : 'Kernel-Tests',
+	#tag : 'Classes'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetaClassTest >> testHasBindingThatBeginsWith [
 	self assert: (SmalltalkImage class hasBindingThatBeginsWith: 'Compiler').
 	self assert: (SmalltalkImage class hasBindingThatBeginsWith: 'Object').
@@ -13,14 +15,14 @@ MetaClassTest >> testHasBindingThatBeginsWith [
 	self assert: (TimeZone class hasBindingThatBeginsWith: 'DaysInMo')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetaClassTest >> testHasClassVarNamed [
 
 	self assert: (Object class hasClassVarNamed: #DependentsFields).
 	self deny: (Object class hasClassVarNamed: #CompilerClass)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetaClassTest >> testclassVarNames [
 
 	self assert: (Object class classVarNames includes: #DependentsFields).

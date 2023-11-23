@@ -6,28 +6,30 @@ Subclasses should define concrete condition which all retrieved methods should s
 Scope should support #methodsDo: which I use to collect and filter all available methods.
 "
 Class {
-	#name : #ClyMethodQuery,
-	#superclass : #ClyTypedQuery,
-	#category : #'Calypso-SystemQueries-Queries'
+	#name : 'ClyMethodQuery',
+	#superclass : 'ClyTypedQuery',
+	#category : 'Calypso-SystemQueries-Queries',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Queries'
 }
 
-{ #category : #'items type' }
+{ #category : 'items type' }
 ClyMethodQuery class >> resultItemsType [
 	^ClyMethod
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyMethodQuery >> buildResult: aQueryResult [
+
 	| filteredMethods |
 	filteredMethods := OrderedCollection new.
 
-	scope methodsDo: [ :each |
-		(self selectsMethod: each) ifTrue: [filteredMethods add: each]].
+	scope methodsDo: [ :each | (self selectsMethod: each) ifTrue: [ filteredMethods add: each ] ].
 
 	aQueryResult fillWith: filteredMethods
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyMethodQuery >> checkEmptyResult [
 
 	scope methodsDo: [ :each |
@@ -36,30 +38,30 @@ ClyMethodQuery >> checkEmptyResult [
 	^true
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyMethodQuery >> collectMetadataOf: aQueryResult by: anEnvironmentPlugin [
 	anEnvironmentPlugin collectMetadataOfMethods: aQueryResult
 ]
 
-{ #category : #'system changes' }
+{ #category : 'system changes' }
 ClyMethodQuery >> isAffectedByChangedMethod: aMethod [
 
 	^self selectsMethod: aMethod
 ]
 
-{ #category : #'system changes' }
+{ #category : 'system changes' }
 ClyMethodQuery >> isResult: aQueryResult affectedBy: aSystemAnnouncement [
 
 	^(aSystemAnnouncement canAffectResultOfMethodQuery: self)
 		and: [ scope includesMethodsAffectedBy: aSystemAnnouncement]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyMethodQuery >> retrievesItem: aMethod [
 	^self selectsMethod: aMethod
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyMethodQuery >> selectsMethod: aMethod [
 	self subclassResponsibility
 ]

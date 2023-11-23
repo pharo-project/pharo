@@ -1,1 +1,1 @@
-Package { #name : #'Text-Diff-Tests' }
+Package { #name : 'Text-Diff-Tests' }

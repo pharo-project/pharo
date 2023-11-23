@@ -2,32 +2,33 @@
 I am a mock to emulate a refactoring scope.
 "
 Class {
-	#name : #SycMockScope,
-	#superclass : #Object,
+	#name : 'SycMockScope',
+	#superclass : 'Object',
 	#instVars : [
 		'content'
 	],
-	#category : #'SystemCommands-RefactoringSupport-Tests'
+	#category : 'SystemCommands-RefactoringSupport-Tests',
+	#package : 'SystemCommands-RefactoringSupport-Tests'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycMockScope class >> content: aCollection [
 	^ self new
 		content: aCollection;
 		yourself
 ]
 
-{ #category : #transform }
+{ #category : 'transform' }
 SycMockScope >> asRBEnvironment [
 	^ SycMockEnvironment with: content
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycMockScope >> content [
 	^ content
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycMockScope >> content: anArray [
 
 	content := anArray collect: [ :each |

@@ -1,11 +1,11 @@
-Extension { #name : #Rectangle }
+Extension { #name : 'Rectangle' }
 
-{ #category : #'*Rubric' }
+{ #category : '*Rubric' }
 Rectangle >> privateSetCorner: bottomRight [
 	corner := bottomRight
 ]
 
-{ #category : #'*Rubric' }
+{ #category : '*Rubric' }
 Rectangle >> privateSetOrigin: topLeft [
 	origin := topLeft
 ]

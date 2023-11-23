@@ -1,6 +1,6 @@
-Extension { #name : #FloatTest }
+Extension { #name : 'FloatTest' }
 
-{ #category : #'*Kernel-Tests-WithCompiler' }
+{ #category : '*Kernel-Tests-WithCompiler' }
 FloatTest >> testStoreOnRoundTrip [
 	"If storeOn: prints exactly and the parser avoid cumulating round off Errors,
 	then Float should be read back exactly.

@@ -1,12 +1,13 @@
 Class {
-	#name : #RGEnvironmentBackendTest,
-	#superclass : #RGBackendTest,
+	#name : 'RGEnvironmentBackendTest',
+	#superclass : 'RGBackendTest',
 	#traits : 'TRGReadOnlyTest',
 	#classTraits : 'TRGReadOnlyTest classTrait',
-	#category : #'Ring-Tests-Core'
+	#category : 'Ring-Tests-Core',
+	#package : 'Ring-Tests-Core'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGEnvironmentBackendTest >> testAST [
 
 	| method anAst |
@@ -18,7 +19,7 @@ RGEnvironmentBackendTest >> testAST [
 	self assert: (anAst lastIsReturn)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGEnvironmentBackendTest >> testCreationOfDefinitions [
 	| env1 method |
 	env1 := RGEnvironment new.
@@ -31,7 +32,7 @@ RGEnvironmentBackendTest >> testCreationOfDefinitions [
 	self assert: method environment identicalTo: env1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGEnvironmentBackendTest >> testDefaultEnvironmentContent [
 
 	| env |
@@ -45,7 +46,7 @@ RGEnvironmentBackendTest >> testDefaultEnvironmentContent [
 "
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGEnvironmentBackendTest >> testDefinitionsIdentity [
 	| env1 |
 	env1 := RGEnvironment new.
@@ -55,7 +56,7 @@ RGEnvironmentBackendTest >> testDefinitionsIdentity [
 	self assert: (Object >> #isRGObject ensureRingDefinitionIn: env1) parent identicalTo: (Object >> #isRGObject ensureRingDefinitionIn: env1) parent
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGEnvironmentBackendTest >> testImplicitEnvironmentContentForClassDefinition [
 
 	| def def2 env |
@@ -90,7 +91,7 @@ RGEnvironmentBackendTest >> testImplicitEnvironmentContentForClassDefinition [
 	self deny: (def2 superclass metaclass isRingResolved)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGEnvironmentBackendTest >> testImplicitEnvironmentContentForMetaclassDefinition [
 
 	| def env baseClass|
@@ -115,7 +116,7 @@ RGEnvironmentBackendTest >> testImplicitEnvironmentContentForMetaclassDefinition
 	self deny: (baseClass superclass metaclass isRingResolved)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGEnvironmentBackendTest >> testImplicitEnvironmentContentForMethodDefinition [
 
 	| def env |

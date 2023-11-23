@@ -2,16 +2,18 @@
 A critique which know which node should be replaced by another one. This critiques are used first of all in rewrite rules.
 "
 Class {
-	#name : #ReReplaceNodeCritique,
-	#superclass : #ReAbstractCritique,
+	#name : 'ReReplaceNodeCritique',
+	#superclass : 'ReAbstractCritique',
 	#instVars : [
 		'oldNode',
 		'newNode'
 	],
-	#category : #'Renraku-Critiques'
+	#category : 'Renraku-Critiques',
+	#package : 'Renraku',
+	#tag : 'Critiques'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ReReplaceNodeCritique class >> rule: aRule achor: anAnchor oldNode: aNode newNode: anotherNode [
 
 	^ self basicNew
@@ -21,7 +23,7 @@ ReReplaceNodeCritique class >> rule: aRule achor: anAnchor oldNode: aNode newNod
 		newNode: anotherNode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReReplaceNodeCritique >> change [
 	"creates new AST by replacing the node. Then the 'add method' change is generated from new AST"
 
@@ -38,7 +40,7 @@ ReReplaceNodeCritique >> change [
 		in: self entity  methodClass
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ReReplaceNodeCritique >> initializeRule: aRule sourceAnchor: anAnchor oldNode: aNode newNode: anotherNode [
 
 	self initializeRule: aRule sourceAnchor: anAnchor.
@@ -46,7 +48,7 @@ ReReplaceNodeCritique >> initializeRule: aRule sourceAnchor: anAnchor oldNode: a
 	newNode := anotherNode
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ReReplaceNodeCritique >> providesChange [
 
 	^ self entity isCompiledMethod

@@ -2,12 +2,14 @@
 A PBVersionInfoTest is a test class for testing the behavior of PBVersionInfo
 "
 Class {
-	#name : #PBVersionInfoTest,
-	#superclass : #TestCase,
-	#category : 'Pharo30Bootstrap-Tests'
+	#name : 'PBVersionInfoTest',
+	#superclass : 'TestCase',
+	#category : 'Pharo30Bootstrap-Tests',
+	#package : 'Pharo30Bootstrap',
+	#tag : 'Tests'
 }
 
-{ #category : #'test-default-values' }
+{ #category : 'test-default-values' }
 PBVersionInfoTest >> testDefaultBuildIsUnknown [
 
 	| versionInfo |
@@ -15,7 +17,7 @@ PBVersionInfoTest >> testDefaultBuildIsUnknown [
 	self assert: versionInfo buildNumber equals: -1
 ]
 
-{ #category : #'test-default-values' }
+{ #category : 'test-default-values' }
 PBVersionInfoTest >> testDefaultCommitHashIsUnknown [
 
 	| versionInfo |
@@ -23,7 +25,7 @@ PBVersionInfoTest >> testDefaultCommitHashIsUnknown [
 	self assert: versionInfo commitHash equals: 'UNKNOWN_COMMIT'.
 ]
 
-{ #category : #'test-default-values' }
+{ #category : 'test-default-values' }
 PBVersionInfoTest >> testDefaultMinorVersionIsZero [
 
 	| versionInfo |
@@ -31,7 +33,7 @@ PBVersionInfoTest >> testDefaultMinorVersionIsZero [
 	self assert: versionInfo minor equals: 0.
 ]
 
-{ #category : #'test-default-values' }
+{ #category : 'test-default-values' }
 PBVersionInfoTest >> testDefaultPatchVersionIsZero [
 
 	| versionInfo |
@@ -39,7 +41,7 @@ PBVersionInfoTest >> testDefaultPatchVersionIsZero [
 	self assert: versionInfo patch equals: 0.
 ]
 
-{ #category : #'test-default-values' }
+{ #category : 'test-default-values' }
 PBVersionInfoTest >> testDefaultSuffixIsEmpty [
 
 	| versionInfo |
@@ -47,7 +49,7 @@ PBVersionInfoTest >> testDefaultSuffixIsEmpty [
 	self assert: versionInfo suffix equals: nil.
 ]
 
-{ #category : #'test-semantic-version' }
+{ #category : 'test-semantic-version' }
 PBVersionInfoTest >> testFromIncompleteSemanticVersionStartingWithV [
 
 	| versionInfo |
@@ -59,7 +61,7 @@ PBVersionInfoTest >> testFromIncompleteSemanticVersionStartingWithV [
 	self assert: versionInfo suffix equals: 'alpha'.
 ]
 
-{ #category : #'test-git-long-describe' }
+{ #category : 'test-git-long-describe' }
 PBVersionInfoTest >> testFromLongDescribeWithNumberOfCommitsExtractsCommitHash [
 
 	| versionInfo |
@@ -67,7 +69,7 @@ PBVersionInfoTest >> testFromLongDescribeWithNumberOfCommitsExtractsCommitHash [
 	self assert: versionInfo commitHash equals: '975b'.
 ]
 
-{ #category : #'test-git-long-describe' }
+{ #category : 'test-git-long-describe' }
 PBVersionInfoTest >> testFromLongDescribeWithNumberOfCommitsExtractsSemanticVersion [
 
 	| versionInfo |
@@ -80,7 +82,7 @@ PBVersionInfoTest >> testFromLongDescribeWithNumberOfCommitsExtractsSemanticVers
 	self assert: versionInfo commitHash equals: '975b'.
 ]
 
-{ #category : #'test-git-long-describe' }
+{ #category : 'test-git-long-describe' }
 PBVersionInfoTest >> testFromLongDescribeWithSuffix [
 
 	| versionInfo |
@@ -93,7 +95,7 @@ PBVersionInfoTest >> testFromLongDescribeWithSuffix [
 	self assert: versionInfo commitHash equals: '975b'.
 ]
 
-{ #category : #'test-semantic-version' }
+{ #category : 'test-semantic-version' }
 PBVersionInfoTest >> testFromSemanticVersionStartingWithV [
 
 	| versionInfo |
@@ -105,7 +107,7 @@ PBVersionInfoTest >> testFromSemanticVersionStartingWithV [
 	self assert: versionInfo suffix equals: 'alpha'.
 ]
 
-{ #category : #'test-semantic-version' }
+{ #category : 'test-semantic-version' }
 PBVersionInfoTest >> testFromSemanticVersionStartingWithoutV [
 
 	| versionInfo |
@@ -117,13 +119,13 @@ PBVersionInfoTest >> testFromSemanticVersionStartingWithoutV [
 	self assert: versionInfo suffix equals: 'alpha'.
 ]
 
-{ #category : #'test-semantic-version' }
+{ #category : 'test-semantic-version' }
 PBVersionInfoTest >> testFromSemanticVersionWithInvalidMajorFails [
 
 	self should: [ PBVersionInfo fromSemanticVersion: 'Invalid-alpha' ] raise: Error.
 ]
 
-{ #category : #'test-semantic-version' }
+{ #category : 'test-semantic-version' }
 PBVersionInfoTest >> testFromSemanticVersionWithoutSuffix [
 
 	| versionInfo |
@@ -135,7 +137,7 @@ PBVersionInfoTest >> testFromSemanticVersionWithoutSuffix [
 	self assert: versionInfo suffix equals: nil.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PBVersionInfoTest >> testGivenBuildIsGiven [
 
 	| versionInfo |
@@ -144,7 +146,7 @@ PBVersionInfoTest >> testGivenBuildIsGiven [
 	self assert: versionInfo buildNumber equals: 200.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PBVersionInfoTest >> testGivenCommitHashIsGiven [
 
 	| versionInfo |
@@ -153,7 +155,7 @@ PBVersionInfoTest >> testGivenCommitHashIsGiven [
 	self assert: versionInfo commitHash equals: 'abcabcabcabcabcabc'.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PBVersionInfoTest >> testGivenMinorVersionIsGiven [
 
 	| versionInfo |
@@ -162,7 +164,7 @@ PBVersionInfoTest >> testGivenMinorVersionIsGiven [
 	self assert: versionInfo minor equals: 17.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PBVersionInfoTest >> testGivenPatchVersionIsGiven [
 
 	| versionInfo |
@@ -171,7 +173,7 @@ PBVersionInfoTest >> testGivenPatchVersionIsGiven [
 	self assert: versionInfo patch equals: 88.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PBVersionInfoTest >> testGivenSuffixIsGiven [
 
 	| versionInfo |
@@ -180,19 +182,19 @@ PBVersionInfoTest >> testGivenSuffixIsGiven [
 	self assert: versionInfo suffix equals: 'SNAPSHOT'.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PBVersionInfoTest >> testNilMajorVersionFails [
 
 	self should: [ PBVersionInfo major: nil ] raise: Error
 ]
 
-{ #category : #'test-default-values' }
+{ #category : 'test-default-values' }
 PBVersionInfoTest >> testNoDefaultMajorVersionFails [
 
 	self should: [ PBVersionInfo new ] raise: Error
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PBVersionInfoTest >> testProvidedMajorVersionIsStored [
 
 	| versionInfo |

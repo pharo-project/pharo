@@ -2,16 +2,18 @@
 I am an IdentityDictionary optimized for including a large number of elements.
 "
 Class {
-	#name : #FLLargeIdentityDictionary,
-	#superclass : #FLLargeIdentityHashedCollection,
+	#name : 'FLLargeIdentityDictionary',
+	#superclass : 'FLLargeIdentityHashedCollection',
 	#instVars : [
 		'keys',
 		'values'
 	],
-	#category : #'Fuel-Core-Collections'
+	#category : 'Fuel-Core-Collections',
+	#package : 'Fuel-Core',
+	#tag : 'Collections'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLLargeIdentityDictionary >> at: key [
 	self
 		at: key
@@ -19,7 +21,7 @@ FLLargeIdentityDictionary >> at: key [
 		ifAbsent: [ self errorKeyNotFound: key ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLLargeIdentityDictionary >> at: key ifAbsent: aBlock [
 	^ self
 		at: key
@@ -27,7 +29,7 @@ FLLargeIdentityDictionary >> at: key ifAbsent: aBlock [
 		ifAbsent: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLLargeIdentityDictionary >> at: key ifAbsentPut: aBlock [ 
 	"Return the value at the given key. 
 	If key is not included in the receiver store the result 
@@ -36,7 +38,7 @@ FLLargeIdentityDictionary >> at: key ifAbsentPut: aBlock [
 	^ self at: key ifAbsent: [self at: key put: aBlock value]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLLargeIdentityDictionary >> at: key ifPresent: presentBlock [
 	^ self
 		at: key
@@ -44,7 +46,7 @@ FLLargeIdentityDictionary >> at: key ifPresent: presentBlock [
 		ifAbsent: []
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLLargeIdentityDictionary >> at: key ifPresent: presentBlock ifAbsent: absentBlock [
 	| hash |
 	(keys at: (hash := key largeIdentityHash \\ 4096 + 1)) ifNotNil: [ :keyList | 
@@ -54,7 +56,7 @@ FLLargeIdentityDictionary >> at: key ifPresent: presentBlock ifAbsent: absentBlo
 	^ absentBlock value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLLargeIdentityDictionary >> at: key put: value [
 
 	| hash |
@@ -94,19 +96,19 @@ FLLargeIdentityDictionary >> at: key put: value [
 	^value
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 FLLargeIdentityDictionary >> do: aBlock [
 
 	^self valuesDo: aBlock
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FLLargeIdentityDictionary >> errorKeyNotFound: aKey [
 
 	KeyNotFound signalFor: aKey
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FLLargeIdentityDictionary >> includesKey: key [
 
 	| hash |
@@ -121,7 +123,7 @@ FLLargeIdentityDictionary >> includesKey: key [
 					false ] ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FLLargeIdentityDictionary >> initialize [
 
 	super initialize.
@@ -129,14 +131,14 @@ FLLargeIdentityDictionary >> initialize [
 	values := Array new: 4096
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLLargeIdentityDictionary >> keys [
 
 	^Array new: tally streamContents: [ :stream |
 		self keysDo: [ :key | stream nextPut: key ] ]
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 FLLargeIdentityDictionary >> keysAndValuesDo: aBlock [
 
 	tally = 0 ifTrue: [ ^self ].
@@ -150,7 +152,7 @@ FLLargeIdentityDictionary >> keysAndValuesDo: aBlock [
 				value: (valueArray at: index) ] ]
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 FLLargeIdentityDictionary >> keysDo: aBlock [
 
 	tally = 0 ifTrue: [ ^self ].
@@ -161,7 +163,7 @@ FLLargeIdentityDictionary >> keysDo: aBlock [
 			aBlock value: (keyArray at: index) ] ]
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 FLLargeIdentityDictionary >> postCopy [
 
 	super postCopy.
@@ -173,7 +175,7 @@ FLLargeIdentityDictionary >> postCopy [
 			values at: index put: (values at: index) copy ] ]
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 FLLargeIdentityDictionary >> removeKey: key ifAbsent: aBlock [
 
 	| hash |
@@ -210,14 +212,14 @@ FLLargeIdentityDictionary >> removeKey: key ifAbsent: aBlock [
 	^aBlock value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLLargeIdentityDictionary >> values [
 
 	^Array new: tally streamContents: [ :stream |
 		self valuesDo: [ :value | stream nextPut: value ] ]
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 FLLargeIdentityDictionary >> valuesDo: aBlock [
 
 	tally = 0 ifTrue: [ ^self ].

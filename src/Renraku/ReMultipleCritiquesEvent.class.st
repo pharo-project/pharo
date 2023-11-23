@@ -2,20 +2,22 @@
 A Renraku event with multiple critics.
 "
 Class {
-	#name : #ReMultipleCritiquesEvent,
-	#superclass : #ReCritiqueEvent,
+	#name : 'ReMultipleCritiquesEvent',
+	#superclass : 'ReCritiqueEvent',
 	#instVars : [
 		'critiques'
 	],
-	#category : #'Renraku-Announcements'
+	#category : 'Renraku-Announcements',
+	#package : 'Renraku',
+	#tag : 'Announcements'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReMultipleCritiquesEvent >> critiques [
 	^ critiques
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReMultipleCritiquesEvent >> critiques: aCollection [
 	critiques := aCollection
 ]

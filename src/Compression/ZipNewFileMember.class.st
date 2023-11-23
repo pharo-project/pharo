@@ -3,35 +3,37 @@ ZipNewFileMember instances are used to represent files that are going to be writ
 Their data comes from external file streams.
 "
 Class {
-	#name : #ZipNewFileMember,
-	#superclass : #ZipArchiveMember,
+	#name : 'ZipNewFileMember',
+	#superclass : 'ZipArchiveMember',
 	#instVars : [
 		'externalFileName',
 		'stream',
 		'reference'
 	],
-	#category : #'Compression-Archives'
+	#category : 'Compression-Archives',
+	#package : 'Compression',
+	#tag : 'Archives'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZipNewFileMember class >> newFromFile: aFileReference [
 
 	^ self new from: aFileReference
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ZipNewFileMember >> close [
 	stream ifNotNil:[stream close]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ZipNewFileMember >> endRead [
 
 	super endRead.
 	self close
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ZipNewFileMember >> from: aFileReference [
 
 	| entry |
@@ -45,7 +47,7 @@ ZipNewFileMember >> from: aFileReference [
 	self modifiedAt: entry modificationTime
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ZipNewFileMember >> initialize [
 	super initialize.
 	externalFileName := ''.
@@ -53,13 +55,13 @@ ZipNewFileMember >> initialize [
 	self mapPermissionsFromUnix: DefaultFilePermissions
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZipNewFileMember >> readRawChunk: n [
 	stream ifNil: [ stream := reference binaryReadStream ].
 	^stream next: n
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZipNewFileMember >> usesFile: aFileReferenceOrFileName [
 	"Do I require aFileName? That is, do I care if it's clobbered?"
 	^externalFileName asFileReference = aFileReferenceOrFileName asFileReference

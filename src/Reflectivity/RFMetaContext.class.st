@@ -2,47 +2,49 @@
 I model the meta level when activating a MetaLink.
 "
 Class {
-	#name : #RFMetaContext,
-	#superclass : #Object,
+	#name : 'RFMetaContext',
+	#superclass : 'Object',
 	#instVars : [
 		'level'
 	],
-	#category : #'Reflectivity-Contexts'
+	#category : 'Reflectivity-Contexts',
+	#package : 'Reflectivity',
+	#tag : 'Contexts'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RFMetaContext class >> current [
 	ActiveMetaContext value ifNil:[ActiveMetaContext value: self basicNew initialize].
 	^ActiveMetaContext value
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 RFMetaContext class >> reset [
 	ActiveMetaContext value: self new
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RFMetaContext >> initialize [
  level := 0
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RFMetaContext >> isActive: n [
 	^level = n
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RFMetaContext >> isMeta [
 	^level > 0
 ]
 
-{ #category : #level }
+{ #category : 'level' }
 RFMetaContext >> shiftLevelDown [
 	level := (level - 1) max: 0.
 	self assert: level >=0
 ]
 
-{ #category : #level }
+{ #category : 'level' }
 RFMetaContext >> shiftLevelUp [
 	level := level + 1
 ]

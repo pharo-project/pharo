@@ -4,38 +4,37 @@ I mainly give access to methds in the package.
 I am required because packages and methods are not polymorphic.
 "
 Class {
-	#name : #CoBenchmarkPackage,
-	#superclass : #Object,
+	#name : 'CoBenchmarkPackage',
+	#superclass : 'Object',
 	#instVars : [
 		'package'
 	],
-	#category : #'HeuristicCompletion-Model-Benchmarks'
+	#category : 'HeuristicCompletion-Model-Benchmarks',
+	#package : 'HeuristicCompletion-Model',
+	#tag : 'Benchmarks'
 }
 
-{ #category : #'instance creation' }
-CoBenchmarkPackage class >> on: aRPackage [
+{ #category : 'instance creation' }
+CoBenchmarkPackage class >> on: aPackage [
 
 	^ self new
-		package: aRPackage;
+		package: aPackage;
 		yourself
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 CoBenchmarkPackage >> methodsDo: aBlockClosure [
 
-	package definedClassesDo: [ :each | | class |
-		class := self class environment at: each.
-		class isTrait ifFalse: [
-			(package definedMethodsForClass: class) do: aBlockClosure] ]
+	package definedClasses do: [ :class | class isTrait ifFalse: [ (package definedMethodsForClass: class) do: aBlockClosure ] ]
 ]
 
-{ #category : #accessing }
-CoBenchmarkPackage >> package: aRPackage [
+{ #category : 'accessing' }
+CoBenchmarkPackage >> package: aPackage [
 
-	package := aRPackage
+	package := aPackage
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 CoBenchmarkPackage >> printOn: aStream [
 
 	aStream print: package name

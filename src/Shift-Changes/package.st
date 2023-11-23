@@ -1,1 +1,1 @@
-Package { #name : #'Shift-Changes' }
+Package { #name : 'Shift-Changes' }

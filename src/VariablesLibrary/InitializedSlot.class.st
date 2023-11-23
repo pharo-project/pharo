@@ -8,19 +8,21 @@ I am showing how a slot can initialize itself on object creation.
 #name => InitializedSlot defaultBlock: [ :object | 'a bloc, parameter is the instance' ].
 "
 Class {
-	#name : #InitializedSlot,
-	#superclass : #AbstractInitializedSlot,
-	#category : #'VariablesLibrary-Slots'
+	#name : 'InitializedSlot',
+	#superclass : 'AbstractInitializedSlot',
+	#category : 'VariablesLibrary-Slots',
+	#package : 'VariablesLibrary',
+	#tag : 'Slots'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 InitializedSlot >> initialize: anObject [
 	default isBlock
 		ifTrue: [ self write: (default cull: anObject) to: anObject ]
 		ifFalse: [ self write: default to: anObject ]
 ]
 
-{ #category : #'meta-object-protocol' }
+{ #category : 'meta-object-protocol' }
 InitializedSlot >> wantsInitialization [
 	^ true
 ]

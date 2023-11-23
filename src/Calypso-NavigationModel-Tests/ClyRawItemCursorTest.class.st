@@ -1,21 +1,22 @@
 Class {
-	#name : #ClyRawItemCursorTest,
-	#superclass : #ClyBrowserQueryCursorTest,
-	#category : #'Calypso-NavigationModel-Tests'
+	#name : 'ClyRawItemCursorTest',
+	#superclass : 'ClyBrowserQueryCursorTest',
+	#category : 'Calypso-NavigationModel-Tests',
+	#package : 'Calypso-NavigationModel-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClyRawItemCursorTest >> createQueryResult [
 	^ClyRawQueryResult new
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyRawItemCursorTest >> rawResultItems [
 
 	^queryResult items
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyRawItemCursorTest >> testAllItems [
 	| allItems unprepared |
 	allItems := cursor retrieveAll.
@@ -27,7 +28,7 @@ ClyRawItemCursorTest >> testAllItems [
 	self assert: (allItems collect: [:each | each position]) asArray equals: (1 to: queryResult size) asArray
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyRawItemCursorTest >> testHasResultAdapterOverActualQueryResult [
 
 	self assert: cursor queryResult class equals: ClyQueryResultBrowserAdapter.

@@ -6,23 +6,25 @@ DelayBenchmark provides a means for evaluating modifications.  This is fairly ba
 Over a number of trials the amount of concurrent delays is increased.  The durations are randomly pre-generated into an array to avoid that overhead in the trials.  A fixed seed is used to try and improve comparisons between runs. Uncomment the additional seeds to provide better averaging of results.
 "
 Class {
-	#name : #DelayBenchmark,
-	#superclass : #Object,
+	#name : 'DelayBenchmark',
+	#superclass : 'Object',
 	#classVars : [
 		'EnterCount',
 		'ExitCount',
 		'Running'
 	],
-	#category : #'Kernel-Tests-Delays'
+	#category : 'Kernel-Tests-Delays',
+	#package : 'Kernel-Tests',
+	#tag : 'Delays'
 }
 
-{ #category : #action }
+{ #category : 'action' }
 DelayBenchmark class >> run [
 	"DelayBenchmark run"
 	self new bench
 ]
 
-{ #category : #action }
+{ #category : 'action' }
 DelayBenchmark class >> runAll [
 	"DelayBenchmark runAll"
 
@@ -30,7 +32,7 @@ DelayBenchmark class >> runAll [
 		do: [ :delaySchedulerClass | self new bench: delaySchedulerClass ]
 ]
 
-{ #category : #benchmarks }
+{ #category : 'benchmarks' }
 DelayBenchmark >> bench [
 	"DelayBenchmark runAll."
 
@@ -66,7 +68,7 @@ DelayBenchmark >> bench [
 	completed wait
 ]
 
-{ #category : #benchmarks }
+{ #category : 'benchmarks' }
 DelayBenchmark >> bench: aDelaySchedulerClass [
 	| schedulerClassToRestore |
 
@@ -78,7 +80,7 @@ DelayBenchmark >> bench: aDelaySchedulerClass [
 	] ensure: [ Delay delaySchedulerClass: schedulerClassToRestore]
 ]
 
-{ #category : #support }
+{ #category : 'support' }
 DelayBenchmark >> generateDelayProcesses: numberConcurrent priority: priority maxDuration: maxDuration fromSeed: seed [
 	| randomGenerator sampleDurations sampleIndex |
 	"Pre-generate a series of random durations to remove such time for such generation from trial"
@@ -108,7 +110,7 @@ DelayBenchmark >> generateDelayProcesses: numberConcurrent priority: priority ma
 			]
 ]
 
-{ #category : #support }
+{ #category : 'support' }
 DelayBenchmark >> trialConcurrent: numberConcurrentDelays priority: priority maxDuration: maxDuration fromSeed: seed [
 
 	| delayProcesses |

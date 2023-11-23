@@ -1,6 +1,6 @@
-Extension { #name : #ClyCompositeQuery }
+Extension { #name : 'ClyCompositeQuery' }
 
-{ #category : #'*Calypso-SystemQueries' }
+{ #category : '*Calypso-SystemQueries' }
 ClyCompositeQuery >> withMetaLevelScope: aScopeClass [
 	| newSubqueries |
 	newSubqueries := subqueries collect: [ :each |

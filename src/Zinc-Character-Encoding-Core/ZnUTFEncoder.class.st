@@ -2,19 +2,20 @@
 I am ZnUTFEncoder. I am a ZnCharacterEncoder. My subclasses deal with the full range of Unicode character code points.
 "
 Class {
-	#name : #ZnUTFEncoder,
-	#superclass : #ZnCharacterEncoder,
-	#category : #'Zinc-Character-Encoding-Core'
+	#name : 'ZnUTFEncoder',
+	#superclass : 'ZnCharacterEncoder',
+	#category : 'Zinc-Character-Encoding-Core',
+	#package : 'Zinc-Character-Encoding-Core'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnUTFEncoder class >> handlesEncoding: string [
 	"Return true when my instances handle the encoding described by string"
 
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnUTFEncoder >> byteOrderMark [
 	"The code point of the Unicode Byte-Order-Mark or BOM character.
 	See https://en.wikipedia.org/wiki/Byte_order_mark"
@@ -22,7 +23,7 @@ ZnUTFEncoder >> byteOrderMark [
 	^ 16rFEFF
 ]
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 ZnUTFEncoder >> decodeBytes: bytes [
 	"Overridden to prevent the automagic switch from ByteString to WideString
 	and the slow #becomeForward: in there. See also #decodeBytesIntoWideString:"
@@ -40,7 +41,7 @@ ZnUTFEncoder >> decodeBytes: bytes [
 			stream nextPut: (Character value: codePoint) ] ]
 ]
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 ZnUTFEncoder >> decodeBytesIntoWideString: bytes [
 	"Variant of #decodeBytes: that is faster when you know upfront that a WideString is probably needed"
 
@@ -51,7 +52,7 @@ ZnUTFEncoder >> decodeBytesIntoWideString: bytes [
 			stream nextPut: (self nextFromStream: byteStream) ] ]
 ]
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 ZnUTFEncoder >> encodeStringWithByteOrderMark: string [
 	"Encode string and return the resulting byte array.
 	Always add a Unicode byte order mark (BOM) in front."
@@ -61,19 +62,19 @@ ZnUTFEncoder >> encodeStringWithByteOrderMark: string [
 		self next: string size putAll: string startingAt: 1 toStream: stream ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnUTFEncoder >> isSurrogateCodePoint: codePoint [
 	"Surrogate Code Points should not be encoded or decoded because they are not Unicode scalar values"
 
 	^ codePoint between: 16rD800 and: 16rDFFF
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnUTFEncoder >> maximumUTFCode [
 	^ 16r10FFFF
 ]
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 ZnUTFEncoder >> nextPutByteOrderMarkToStream: stream [
 	"Write the encoded byte-order-mark (BOM) to stream"
 

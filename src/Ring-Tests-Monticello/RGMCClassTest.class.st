@@ -1,10 +1,11 @@
 Class {
-	#name : #RGMCClassTest,
-	#superclass : #RGMCTest,
-	#category : #'Ring-Tests-Monticello'
+	#name : 'RGMCClassTest',
+	#superclass : 'RGMCTest',
+	#category : 'Ring-Tests-Monticello',
+	#package : 'Ring-Tests-Monticello'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGMCClassTest >> testClassesWithTraits [
 
 	"classes without special slots"
@@ -17,14 +18,14 @@ RGMCClassTest >> testClassesWithTraits [
 		thenDo: [ :each | self testClass: each ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGMCClassTest >> testNormalClass [
 
 	"a class with instance variables, class variables and class instance variables"
 	self testClass: MCMockClassB
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGMCClassTest >> testNormalKernelClasses [
 
 	"classes without special slots"
@@ -33,7 +34,7 @@ RGMCClassTest >> testNormalKernelClasses [
 		self testClass: each]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGMCClassTest >> testSpecialClasses [
 
 	"classes without special slots"

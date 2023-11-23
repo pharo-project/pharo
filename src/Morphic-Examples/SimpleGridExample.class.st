@@ -2,24 +2,26 @@
 SimpleGridExample new open
 "
 Class {
-	#name : #SimpleGridExample,
-	#superclass : #MorphTreeModel,
-	#category : #'Morphic-Examples-MorphTreeWidget'
+	#name : 'SimpleGridExample',
+	#superclass : 'MorphTreeModel',
+	#category : 'Morphic-Examples-MorphTreeWidget',
+	#package : 'Morphic-Examples',
+	#tag : 'MorphTreeWidget'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 SimpleGridExample class >> example [
 
 	SimpleGridExample new open
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SimpleGridExample >> open [
 	(self treeMorph buildContents;
 		embeddedInMorphicWindowLabeled: 'Simple grid example') openInWorld
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SimpleGridExample >> rootItems [
 	^ rootItems ifNil: [rootItems := (1 to: 1000)
 		collect: [:i | PersonDataExample
@@ -29,12 +31,12 @@ SimpleGridExample >> rootItems [
 				married: false] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SimpleGridExample >> rootNodeClassFromItem: anItem [
 	^ SimpleGridNodeExample
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 SimpleGridExample >> treeMorph [
 	| treeMorph |
 	treeMorph := (self treeMorphClass on: self)

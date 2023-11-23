@@ -4,14 +4,16 @@ Prevents yellow button menu.
 Uses TEasilyThemed for easy theme access to subclasses.
 "
 Class {
-	#name : #StandardWindow,
-	#superclass : #SystemWindow,
+	#name : 'StandardWindow',
+	#superclass : 'SystemWindow',
 	#traits : 'TEasilyThemed - {#theme}',
 	#classTraits : 'TEasilyThemed classTrait',
-	#category : #'Morphic-Widgets-Windows-Widgets'
+	#category : 'Morphic-Widgets-Windows-Widgets',
+	#package : 'Morphic-Widgets-Windows',
+	#tag : 'Widgets'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 StandardWindow class >> newWithTheme: aUITheme [
 	"Answer a new window with the given theme."
 
@@ -20,21 +22,21 @@ StandardWindow class >> newWithTheme: aUITheme [
 		initialize
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 StandardWindow >> defaultColor [
 	"Answer the default color/fill style for the receiver"
 
 	^self theme windowColor
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 StandardWindow >> defaultLabel [
 	"Answer the default label for the receiver."
 
 	^'Window' translated
 ]
 
-{ #category : #'open/close' }
+{ #category : 'open/close' }
 StandardWindow >> delete [
 	"If fullscreen remove the owner too."
 
@@ -47,7 +49,7 @@ StandardWindow >> delete [
 		ifFalse: [super delete]
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 StandardWindow >> flash [
 	"Flash the window."
 
@@ -83,7 +85,7 @@ StandardWindow >> flash [
 	] fork
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 StandardWindow >> initialize [
 	"Initialize the receiver."
 
@@ -93,14 +95,14 @@ StandardWindow >> initialize [
 		setWindowColor: self defaultColor
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 StandardWindow >> isActive [
 	"Answer active if fullscreen too."
 
 	^self isFullscreen or: [super isActive]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 StandardWindow >> isFullscreen [
 	"Answer whether the window should be draw as fullscreen, i.e.
 	no title bar or borders."
@@ -108,7 +110,7 @@ StandardWindow >> isFullscreen [
 	^self owner isKindOf: FullscreenMorph
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 StandardWindow >> layoutBounds [
 	"Bounds of pane area only."
 
@@ -117,7 +119,7 @@ StandardWindow >> layoutBounds [
 		ifFalse: [super layoutBounds]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StandardWindow >> model: anObject [
 	"Reset the minimum extent."
 
@@ -125,7 +127,7 @@ StandardWindow >> model: anObject [
 	self title: self title
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 StandardWindow >> mouseMove: evt [
 	"Handle a mouse-move event"
 
@@ -133,7 +135,7 @@ StandardWindow >> mouseMove: evt [
 	^super mouseMove: evt
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 StandardWindow >> newTextEntryFor: aModel getText: getSel setText: setSel help: helpText [
 	"Answer a text entry for the given model."
 
@@ -147,12 +149,12 @@ StandardWindow >> newTextEntryFor: aModel getText: getSel setText: setSel help: 
 		help: helpText
 ]
 
-{ #category : #'submorphs - accessing' }
+{ #category : 'submorphs - accessing' }
 StandardWindow >> noteNewOwner: aMorph [
 	"Go fullscreen if needed."
 
 	super noteNewOwner: aMorph.
-	(self isFullscreen and: [labelArea owner notNil]) ifTrue: [
+	(self isFullscreen and: [labelArea owner isNotNil]) ifTrue: [
 		self
 			beWithoutGrips;
 			removeLabelArea;
@@ -161,14 +163,14 @@ StandardWindow >> noteNewOwner: aMorph [
 			ifTrue: [self submorphs first roundedCorners: #()]]
 ]
 
-{ #category : #'open/close' }
+{ #category : 'open/close' }
 StandardWindow >> open [
 	"Where else would you want to open it?."
 
 	self openInWorld
 ]
 
-{ #category : #'open/close' }
+{ #category : 'open/close' }
 StandardWindow >> openFullscreen [
 	"Open the receiver in a FullscreenMorph."
 
@@ -177,7 +179,7 @@ StandardWindow >> openFullscreen [
 		openInWorld
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 StandardWindow >> openedFullscreen [
 	"Should activate and update the layout."
 
@@ -185,26 +187,26 @@ StandardWindow >> openedFullscreen [
 	self activate
 ]
 
-{ #category : #'open/close' }
+{ #category : 'open/close' }
 StandardWindow >> postOpenInWorld: aWorld [
 
 	self allMorphs do: [:m | m layoutChanged].
 	super postOpenInWorld: aWorld
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 StandardWindow >> title [
 
 	^self label
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 StandardWindow >> title: aString [
 
 	self setLabel: aString
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 StandardWindow >> wantsRoundedCorners [
 	"Check to see if the property is set first."
 
@@ -213,7 +215,7 @@ StandardWindow >> wantsRoundedCorners [
 		ifFalse: [^super wantsRoundedCorners]
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 StandardWindow >> withText: aStringOrText label: title [
 
 	self title: title.
@@ -225,7 +227,7 @@ StandardWindow >> withText: aStringOrText label: title [
 	self themeChanged
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 StandardWindow >> yellowButtonActivity: shiftState [
 	"Do nothing."
 	^ false

@@ -2,17 +2,19 @@
 Example for a package method node
 "
 Class {
-	#name : #PackageMethodNodeExample,
-	#superclass : #PackageAbstractNodeExample,
-	#category : #'Morphic-Examples-MorphTreeWidget'
+	#name : 'PackageMethodNodeExample',
+	#superclass : 'PackageAbstractNodeExample',
+	#category : 'Morphic-Examples-MorphTreeWidget',
+	#package : 'Morphic-Examples',
+	#tag : 'MorphTreeWidget'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PackageMethodNodeExample >> browseItem [
 	Smalltalk tools browser openOnClass: self itemClass  selector: self selector
 ]
 
-{ #category : #results }
+{ #category : 'results' }
 PackageMethodNodeExample >> compiledMethod [
 	^ self itemClass
 		compiledMethodAt: self selector
@@ -21,12 +23,12 @@ PackageMethodNodeExample >> compiledMethod [
 				ifAbsent: []]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 PackageMethodNodeExample >> itemClass [
 	^ self parentNode parentNode item
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PackageMethodNodeExample >> selector [
 	^ self item
 ]

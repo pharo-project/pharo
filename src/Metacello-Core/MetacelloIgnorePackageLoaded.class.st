@@ -1,19 +1,21 @@
 Class {
-	#name : #MetacelloIgnorePackageLoaded,
-	#superclass : #Notification,
+	#name : 'MetacelloIgnorePackageLoaded',
+	#superclass : 'Notification',
 	#instVars : [
 		'packageSpec'
 	],
-	#category : #'Metacello-Core-Exceptions-Notifications'
+	#category : 'Metacello-Core-Exceptions-Notifications',
+	#package : 'Metacello-Core',
+	#tag : 'Exceptions-Notifications'
 }
 
-{ #category : #signalling }
+{ #category : 'signalling' }
 MetacelloIgnorePackageLoaded class >> signal: aMetacelloPackageSpec [
 
 	^(self new packageSpec: aMetacelloPackageSpec) signal
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloIgnorePackageLoaded >> defaultAction [
   "Default action is to NOT ignore whether or not the package is loaded. 
    Basically allow for package level ignoreImage. "
@@ -21,13 +23,13 @@ MetacelloIgnorePackageLoaded >> defaultAction [
   ^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloIgnorePackageLoaded >> packageSpec [
 
    ^packageSpec
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloIgnorePackageLoaded >> packageSpec: anObject [
 
    packageSpec := anObject

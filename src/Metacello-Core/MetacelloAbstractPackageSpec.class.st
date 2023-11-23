@@ -1,16 +1,18 @@
 Class {
-	#name : #MetacelloAbstractPackageSpec,
-	#superclass : #MetacelloSpec,
+	#name : 'MetacelloAbstractPackageSpec',
+	#superclass : 'MetacelloSpec',
 	#instVars : [
 		'name',
 		'requires',
 		'includes',
 		'answers'
 	],
-	#category : #'Metacello-Core-Specs'
+	#category : 'Metacello-Core-Specs',
+	#package : 'Metacello-Core',
+	#tag : 'Specs'
 }
 
-{ #category : #adding }
+{ #category : 'adding' }
 MetacelloAbstractPackageSpec >> addToMetacelloPackages: aMetacelloPackagesSpec [
 
 	aMetacelloPackagesSpec addMember: 
@@ -20,19 +22,19 @@ MetacelloAbstractPackageSpec >> addToMetacelloPackages: aMetacelloPackagesSpec [
 			yourself)
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloAbstractPackageSpec >> answers [
 
 	^answers ifNil: [ answers := #() ].
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloAbstractPackageSpec >> answers: aListOfPairs [
 
 	self setAnswers: aListOfPairs
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MetacelloAbstractPackageSpec >> configMethodBodyOn: aStream hasName: hasName cascading: cascading indent: indent [
 
 	| hasCascading hasRequires hasIncludes hasAnswers |
@@ -78,60 +80,88 @@ MetacelloAbstractPackageSpec >> configMethodBodyOn: aStream hasName: hasName cas
 				ifFalse: [ aStream nextPut: $) ]].
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MetacelloAbstractPackageSpec >> configMethodCascadeOn: aStream member: aMember last: lastCascade indent: indent [
 
 	self subclassResponsibility
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MetacelloAbstractPackageSpec >> configMethodOn: aStream for: aValue selector: selector cascading: cascading cascade: cascade indent: indent [
 
 	| valuePrintString |
-	aValue == nil ifTrue: [ ^self ].
-	cascading ifTrue: [ aStream cr; tab: indent ].
+	aValue ifNil: [ ^ self ].
+	cascading ifTrue: [
+		aStream
+			cr;
+			tab: indent ].
 	valuePrintString := aValue value isSymbol
-		ifTrue: [ '#' , aValue value asString printString ]
-		ifFalse: [ aValue value printString ].
-	aStream  nextPutAll: selector, valuePrintString.
+		                    ifTrue: [ '#' , aValue value asString printString ]
+		                    ifFalse: [ aValue value printString ].
+	aStream nextPutAll: selector , valuePrintString.
 	cascade ifTrue: [ aStream nextPut: $; ]
 ]
 
-{ #category : #testing }
+{ #category : 'querying' }
+MetacelloAbstractPackageSpec >> file [ 
+	"MetacelloPackageSpec compatibility"
+	
+	^nil
+]
+
+{ #category : 'accessing' }
+MetacelloAbstractPackageSpec >> getFile [
+	"MetacelloPackageSpec compatibility"
+
+	^ nil
+]
+
+{ #category : 'testing' }
 MetacelloAbstractPackageSpec >> hasRepository [
     ^ false
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloAbstractPackageSpec >> includeSpecNamesForPackageOrdering: aVersionSpec [
   ^ self specs: self includesForPackageOrdering forPackageOrdering: aVersionSpec
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloAbstractPackageSpec >> includes [
 
-	includes == nil ifTrue: [ includes := #() ].
-	^includes
+	^ includes ifNil: [ includes := #(  ) ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloAbstractPackageSpec >> includes: aCollection [
 
 	aCollection setIncludesInMetacelloPackage: self
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloAbstractPackageSpec >> includesForPackageOrdering [
   ^ #()
 ]
 
-{ #category : #printing }
+{ #category : 'querying' }
+MetacelloAbstractPackageSpec >> isPackageLoaded [
+
+	^ false
+]
+
+{ #category : 'printing' }
 MetacelloAbstractPackageSpec >> label [
 
 	^self name
 ]
 
-{ #category : #merging }
+{ #category : 'loading' }
+MetacelloAbstractPackageSpec >> loadUsing: aLoader gofer: gofer [
+
+	^self subclassResponsibility
+]
+
+{ #category : 'merging' }
 MetacelloAbstractPackageSpec >> mergeIntoMetacelloPackages: aMetacelloPackagesSpec [
 
 	aMetacelloPackagesSpec addMember: 
@@ -141,7 +171,7 @@ MetacelloAbstractPackageSpec >> mergeIntoMetacelloPackages: aMetacelloPackagesSp
 			yourself)
 ]
 
-{ #category : #merging }
+{ #category : 'merging' }
 MetacelloAbstractPackageSpec >> mergeMap [
 
 	| map |
@@ -152,43 +182,39 @@ MetacelloAbstractPackageSpec >> mergeMap [
 	^map
 ]
 
-{ #category : #merging }
+{ #category : 'merging' }
 MetacelloAbstractPackageSpec >> mergeSpec: anotherSpec [
 
-	| newSpec map anotherRequires anotherIncludes anotherAnswers |
+	| newSpec map |
 	newSpec := super mergeSpec: anotherSpec.
 	map := anotherSpec mergeMap.
-	anotherSpec name ~~ nil 
-		ifTrue: [ newSpec name: anotherSpec name ].
-	(anotherRequires := map at: #requires) ~~ nil
-		ifTrue: [ newSpec setRequires: self requires, anotherRequires ].
-	(anotherIncludes := map at: #includes) ~~ nil
-		ifTrue: [ newSpec setIncludes: self includes, anotherIncludes ].
-	(anotherAnswers := map at: #answers) ~~ nil
-		ifTrue: [ newSpec setAnswers: self answers, anotherAnswers ].
-	^newSpec
+	anotherSpec name ifNotNil: [ newSpec name: anotherSpec name ].
+	(map at: #requires) ifNotNil: [ :anotherRequires | newSpec setRequires: self requires , anotherRequires ].
+	(map at: #includes) ifNotNil: [ :anotherIncludes | newSpec setIncludes: self includes , anotherIncludes ].
+	(map at: #answers) ifNotNil: [ :anotherAnswers | newSpec setAnswers: self answers , anotherAnswers ].
+	^ newSpec
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloAbstractPackageSpec >> name [
 
 	^name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloAbstractPackageSpec >> name: aString [
     ((aString at: 1) isSeparator or: [ (aString at: aString size) isSeparator ])
         ifTrue: [ self error: 'Names are not allowed to have leading or trailing blanks: ' , aString printString ].
     name := aString
 ]
 
-{ #category : #merging }
+{ #category : 'merging' }
 MetacelloAbstractPackageSpec >> nonOverridable [
 
 	^#( includes requires answers )
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 MetacelloAbstractPackageSpec >> postCopy [
 
 	super postCopy.
@@ -197,19 +223,19 @@ MetacelloAbstractPackageSpec >> postCopy [
 	answers := answers copy.
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 MetacelloAbstractPackageSpec >> projectDo: projectBlock packageDo: packageBlock groupDo: groupBlock [
 
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloAbstractPackageSpec >> referencedSpec [
 
 	^self
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 MetacelloAbstractPackageSpec >> removeFromMetacelloPackages: aMetacelloPackagesSpec [
 
 	aMetacelloPackagesSpec addMember: 
@@ -219,59 +245,81 @@ MetacelloAbstractPackageSpec >> removeFromMetacelloPackages: aMetacelloPackagesS
 			yourself)
 ]
 
-{ #category : #private }
+{ #category : 'loading' }
+MetacelloAbstractPackageSpec >> repositorySpecs [
+
+	^#()
+]
+
+{ #category : 'private' }
 MetacelloAbstractPackageSpec >> requiredSpecNamesForPackageOrdering: aVersionSpec [
   ^ (self requiredSpecsForPackageOrdering: aVersionSpec)
     collect: [ :spec | spec name ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloAbstractPackageSpec >> requiredSpecsForPackageOrdering: aVersionSpec [
   ^ self specs: self requires forPackageOrdering: aVersionSpec
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloAbstractPackageSpec >> requires [
 
-	requires == nil ifTrue: [ requires := #() ].
-	^requires
+	^ requires ifNil: [ requires := #(  ) ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloAbstractPackageSpec >> requires: aCollection [
 
 	aCollection setRequiresInMetacelloPackage: self
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloAbstractPackageSpec >> requiresSpecsForPackageOrdering: aVersionSpec [
   ^ {self}
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloAbstractPackageSpec >> resolveSpecsForPackageOrdering: aVersionSpec [
   ^ {self}
 ]
 
-{ #category : #private }
+{ #category : 'private' }
+MetacelloAbstractPackageSpec >> resolveToLoadableSpec [
+
+	^self
+]
+
+{ #category : 'private' }
+MetacelloAbstractPackageSpec >> resolveToPackagesAndProjectsIn: aVersionSpec  visited: visited [
+  ^ self resolveToPackagesIn: aVersionSpec visited: visited
+]
+
+{ #category : 'private' }
+MetacelloAbstractPackageSpec >> resolveToPackagesIn: aVersionSpec visited: visited [
+
+	^self subclassResponsibility
+]
+
+{ #category : 'private' }
 MetacelloAbstractPackageSpec >> setAnswers: aCollection [
 
 	answers := aCollection
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloAbstractPackageSpec >> setIncludes: aCollection [
 
 	includes := aCollection
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloAbstractPackageSpec >> setRequires: aCollection [
 
 	requires := aCollection
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloAbstractPackageSpec >> specs: specNames forPackageOrdering: aVersionSpec [
   | packageOrProjectSpecs |
   packageOrProjectSpecs := Set new.
@@ -296,4 +344,11 @@ MetacelloAbstractPackageSpec >> specs: specNames forPackageOrdering: aVersionSpe
           packageOrProjectSpecs
             addAll: (spec resolveSpecsForPackageOrdering: aVersionSpec) ] ].
   ^ packageOrProjectSpecs
+]
+
+{ #category : 'querying' }
+MetacelloAbstractPackageSpec >> version [ 
+	"MetacelloPackageSpec compatibility"
+	
+	^nil
 ]

@@ -2,36 +2,38 @@
 I'm a side button to be used with a text field to open an entry completion list 
 "
 Class {
-	#name : #RubDropListButtonRuler,
-	#superclass : #RubScrolledTextSideRuler,
+	#name : 'RubDropListButtonRuler',
+	#superclass : 'RubScrolledTextSideRuler',
 	#instVars : [
 		'downArrowBtn'
 	],
-	#category : #'Rubric-Editing-Widgets'
+	#category : 'Rubric-Editing-Widgets',
+	#package : 'Rubric',
+	#tag : 'Editing-Widgets'
 }
 
-{ #category : #querying }
+{ #category : 'querying' }
 RubDropListButtonRuler class >> key [
 	^ #dropListButton
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 RubDropListButtonRuler >> computedWidthFrom: aRectangle [
 	^ downArrowBtn width
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RubDropListButtonRuler >> initialize [
 	super initialize.
 	side := #right
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubDropListButtonRuler >> level [
 	^ 1
 ]
 
-{ #category : #'submorphs - accessing' }
+{ #category : 'submorphs - accessing' }
 RubDropListButtonRuler >> noteNewOwner: aMorph [
 	| downArrow |
 	super noteNewOwner: aMorph.

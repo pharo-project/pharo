@@ -4,7 +4,9 @@ I can be used to resolve item properties in background process when it is too sl
 Tools can indicate it with special animation
 "
 Class {
-	#name : #ClyBackgroundProcessingTag,
-	#superclass : #ClySimpleTag,
-	#category : #'Calypso-NavigationModel-Model'
+	#name : 'ClyBackgroundProcessingTag',
+	#superclass : 'ClySimpleTag',
+	#category : 'Calypso-NavigationModel-Model',
+	#package : 'Calypso-NavigationModel',
+	#tag : 'Model'
 }

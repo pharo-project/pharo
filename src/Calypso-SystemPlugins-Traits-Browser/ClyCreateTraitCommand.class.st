@@ -6,50 +6,51 @@ I just ask user to type trait definition in dialog window. Then I compile trait 
 Internal Representation and Key Implementation Points.
 
     Instance Variables
-	package:		<RPackage>
+	package:		<Package>
 	classTag:		<Symcol>
 
 "
 Class {
-	#name : #ClyCreateTraitCommand,
-	#superclass : #ClyBrowserCommand,
+	#name : 'ClyCreateTraitCommand',
+	#superclass : 'ClyBrowserCommand',
 	#instVars : [
 		'package',
-		'classTag'
+		'packageTag'
 	],
-	#category : #'Calypso-SystemPlugins-Traits-Browser'
+	#category : 'Calypso-SystemPlugins-Traits-Browser',
+	#package : 'Calypso-SystemPlugins-Traits-Browser'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyCreateTraitCommand class >> canBeExecutedInContext: aBrowserContext [
 	(super canBeExecutedInContext: aBrowserContext) ifFalse: [ ^false ].
 
 	^aBrowserContext isPackageSelected
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyCreateTraitCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
 
 	^CmdContextMenuActivation byRootGroupItemOrder: 3 for: ClyFullBrowserClassContext
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyCreateTraitCommand >> defaultMenuIconName [
 	^#trait
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyCreateTraitCommand >> defaultMenuItemName [
 	^'New trait'
 ]
 
-{ #category : #'command execution' }
+{ #category : 'command execution' }
 ClyCreateTraitCommand >> execute [
 	| traitDefinition category resultTrait |
 	category := package name.
-	classTag ifNotNil: [ category := category , '-' , classTag ].
-	traitDefinition := ClassDefinitionPrinter new traitDefinitionTemplateInPackage: category.
+	packageTag ifNotNil: [ category := category , '-' , packageTag ].
+	traitDefinition := ClassDefinitionPrinter fluid traitDefinitionTemplateInPackage: category.
 	traitDefinition := UIManager default
 		                   multiLineRequest: 'Define trait:'
 		                   initialAnswer: traitDefinition
@@ -62,11 +63,11 @@ ClyCreateTraitCommand >> execute [
 	resultTrait ifNotNil: [ browser selectClass: resultTrait ]
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyCreateTraitCommand >> prepareFullExecutionInContext: aBrowserContext [
 	super prepareFullExecutionInContext: aBrowserContext.
 
 	package := aBrowserContext lastSelectedPackage.
-	aBrowserContext isClassTagSelected ifTrue: [
-		classTag := aBrowserContext lastSelectedClassTag]
+	aBrowserContext isPackageTagSelected ifTrue: [
+		packageTag := aBrowserContext lastSelectedPackageTag]
 ]

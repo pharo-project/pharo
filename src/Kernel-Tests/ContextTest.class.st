@@ -11,8 +11,8 @@ nonActiveBlockContext  - the Context of a block whose home context is not in its
 
 "
 Class {
-	#name : #ContextTest,
-	#superclass : #TestCase,
+	#name : 'ContextTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'aCompiledMethod',
 		'aReceiver',
@@ -26,29 +26,31 @@ Class {
 		'Block',
 		'classVarForTestLookupSymbol'
 	],
-	#category : #'Kernel-Tests-Methods'
+	#category : 'Kernel-Tests-Methods',
+	#package : 'Kernel-Tests',
+	#tag : 'Methods'
 }
 
-{ #category : #'closures for testing' }
+{ #category : 'closures for testing' }
 ContextTest class >> contextWithTempForTesting [
 	| string |
 	string := 'test'.
 	^ [self class. string asUppercase] asContext
 ]
 
-{ #category : #helper }
+{ #category : 'helper' }
 ContextTest class >> createBlock [
 	"we reference self to force a full block"
 	^ [ self . thisContext ]
 ]
 
-{ #category : #helper }
+{ #category : 'helper' }
 ContextTest class >> returnNonActiveContextOfBlock [
 	Block := self createBlock.
 	^ Block value
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ContextTest >> privRestartArgBlockTest [
 	"This tests may loop endlessly if incorrect, so call it from another method testing it does not time out"
 
@@ -69,7 +71,7 @@ ContextTest >> privRestartArgBlockTest [
 			b ] value: 10)
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ContextTest >> privRestartBlockArgsNoRemoteTempsTest [
 	"This tests may loop endlessly if incorrect, so call it from another method testing it does not time out"
 
@@ -88,7 +90,7 @@ ContextTest >> privRestartBlockArgsNoRemoteTempsTest [
 			b ] value: 10 value: true)
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ContextTest >> privRestartBlockTest [
 	"This tests may loop endlessly if incorrect, so call it from another method testing it does not time out"
 
@@ -109,7 +111,7 @@ ContextTest >> privRestartBlockTest [
 			b ] value
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ContextTest >> setUp [
 
 	super setUp.
@@ -124,19 +126,19 @@ ContextTest >> setUp [
 		                  arguments: { anArgument }
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ContextTest >> tearDown [
 	aMethodContext stepIntoQuickMethod: false.
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ContextTest >> testActivateReturnValue [
 	self assert: ((aSender activateReturn: aMethodContext value: #()) isKindOf: Context).
 	self assert: (aSender activateReturn: aMethodContext value: #()) receiver equals: aMethodContext
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ContextTest >> testActiveHome [
 	| block |
 	"Active BlockContext Home And ActiveHome"
@@ -154,7 +156,7 @@ ContextTest >> testActiveHome [
 	self assert: (nonActiveBlockContext activeHome) isNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ContextTest >> testAstScope [
 
 	| scope |
@@ -170,13 +172,13 @@ ContextTest >> testAstScope [
 	self deny: scope isBlockScope
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ContextTest >> testFindContextSuchThat [
 	self assert: (aMethodContext findContextSuchThat: [ :each | true ]) printString equals: aMethodContext printString.
 	self assert: (aMethodContext hasContext: aMethodContext)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ContextTest >> testHasNonLocalReturn [
 	"the method has a non-local return, in some block inside"
 	self assert: thisContext method hasNonLocalReturn.
@@ -191,29 +193,29 @@ ContextTest >> testHasNonLocalReturn [
 	[ self assert: thisContext hasNonLocalReturn. ^ self ] value.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ContextTest >> testHome [
 
 	self assert: aMethodContext home identicalTo: aMethodContext.
 	[ self assert: thisContext home identicalTo:  thisContext sender] value
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ContextTest >> testHomeMethod [
 
 	self assert: aMethodContext homeMethod identicalTo: aMethodContext home method.
 	[ self assert: thisContext homeMethod identicalTo:  thisContext home method] value
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ContextTest >> testMethodContext [
 
-	self assert: aMethodContext home notNil.
-	self assert: aMethodContext receiver notNil.
+	self assert: aMethodContext home isNotNil.
+	self assert: aMethodContext receiver isNotNil.
 	self assert: (aMethodContext method isKindOf: CompiledMethod)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ContextTest >> testMethodContextPrintDetails [
 
 	self
@@ -230,7 +232,7 @@ ContextTest >> testMethodContextPrintDetails [
 '
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ContextTest >> testNoStepIntoQuickMethod [
 
 	|newContext |
@@ -251,13 +253,13 @@ ContextTest >> testNoStepIntoQuickMethod [
 	self assert: newContext identicalTo: aMethodContext
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ContextTest >> testNonActiveBlockContextHome [
 	nonActiveBlockContext := self class returnNonActiveContextOfBlock.
 	self assert: (nonActiveBlockContext home) isNotNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ContextTest >> testReturn [
 	"Why am I overriding setUp? Because sender must be thisContext, i.e, testReturn, not setUp."
 
@@ -269,7 +271,7 @@ ContextTest >> testReturn [
 	self assert: (aMethodContext return: 5) equals: 5
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ContextTest >> testSetUp [
 	"Note: In addition to verifying that the setUp worked the way it was expected to, testSetUp is used to illustrate the meaning of the simple access methods, methods that are not normally otherwise 'tested'"
 
@@ -281,7 +283,7 @@ ContextTest >> testSetUp [
 	self assert: aMethodContext client printString equals: 'ContextTest>>#testSetUp'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ContextTest >> testStepIntoQuickMethod [
 
 	|newContext quickMethod|
@@ -314,13 +316,13 @@ ContextTest >> testStepIntoQuickMethod [
 	self assert: newContext pc equals: (quickMethod initialPC + 3)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ContextTest >> testStepIntoQuickMethodBoolean [
 
 	self deny: aMethodContext stepIntoQuickMethod
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ContextTest >> testStepIntoQuickMethodInCompiledBlock [
 
 	|newContext|
@@ -331,7 +333,7 @@ ContextTest >> testStepIntoQuickMethodInCompiledBlock [
 	self assert: newContext method stepIntoQuickMethods
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ContextTest >> testStepIntoReturnSelfMethod [
 
 	|newContext quickMethod|
@@ -365,7 +367,7 @@ ContextTest >> testStepIntoReturnSelfMethod [
 	self assert: newContext pc equals: (quickMethod initialPC + 3)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ContextTest >> testSteppingAQuickMethod [
 
 	|newContext|
@@ -390,7 +392,7 @@ ContextTest >> testSteppingAQuickMethod [
 	self assert: newContext identicalTo: aMethodContext
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ContextTest >> testSteppingReturnSelfMethod [
 
 	|newContext|
@@ -412,7 +414,7 @@ ContextTest >> testSteppingReturnSelfMethod [
 	self assert: newContext identicalTo: aMethodContext
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ContextTest >> verifyJumpWithSelector: selector [
 	| guineaPig normalStackp readOnlyStackp |
 	guineaPig := SimulationMock new.

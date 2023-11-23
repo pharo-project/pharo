@@ -2,46 +2,48 @@
 I am a command to generate accessors for all inst vars of given classes
 "
 Class {
-	#name : #SycGenerateAllInstVarAccessorsCommand,
-	#superclass : #SycClassCommand,
-	#category : #'SystemCommands-ClassCommands'
+	#name : 'SycGenerateAllInstVarAccessorsCommand',
+	#superclass : 'SycClassCommand',
+	#category : 'SystemCommands-ClassCommands',
+	#package : 'SystemCommands-ClassCommands'
 }
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycGenerateAllInstVarAccessorsCommand >> asRefactorings [
 
 	| refactorings |
 	refactorings := classes flatCollect: [ :eachClass |
-		eachClass	 slots collect: [:var |
-				|accesorRefactoring|
-			accesorRefactoring :=  RBAddVariableAccessorTransformation instanceVariable: var name class:  eachClass .
-			accesorRefactoring asRefactoring
-			]].
-	^refactorings
+		                eachClass slots collect: [ :var |
+			                | accesorRefactoring |
+			                accesorRefactoring := RBAddVariableAccessorTransformation
+				                                      instanceVariable: var name
+				                                      class: eachClass.
+			                accesorRefactoring ] ].
+	^ refactorings
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycGenerateAllInstVarAccessorsCommand >> defaultMenuIconName [
 	^ #smallAdd
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycGenerateAllInstVarAccessorsCommand >> defaultMenuItemName [
 	^'Generate accessors'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycGenerateAllInstVarAccessorsCommand >> execute [
 
 	self executeRefactorings
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SycGenerateAllInstVarAccessorsCommand >> isComplexRefactoring [
 	^true
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycGenerateAllInstVarAccessorsCommand >> prepareFullExecutionInContext: aToolContext [
 
 	super prepareFullExecutionInContext: aToolContext.

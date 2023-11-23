@@ -2,58 +2,60 @@
 I am delivered when the per-pixel resolution measured in DPI of a window is changed.
 "
 Class {
-	#name : #OSWindowResolutionChangeEvent,
-	#superclass : #OSWindowEvent,
+	#name : 'OSWindowResolutionChangeEvent',
+	#superclass : 'OSWindowEvent',
 	#instVars : [
 		'screenScaleFactor',
 		'horizontalDPI',
 		'verticalDPI',
 		'diagonalDPI'
 	],
-	#category : #'OSWindow-Core-Events'
+	#category : 'OSWindow-Core-Events',
+	#package : 'OSWindow-Core',
+	#tag : 'Events'
 }
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 OSWindowResolutionChangeEvent >> accept: visitor [
 	^ visitor visitWindowResolutionChangeEvent: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowResolutionChangeEvent >> diagonalDPI [
 	^ diagonalDPI
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowResolutionChangeEvent >> diagonalDPI: anObject [
 	diagonalDPI := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowResolutionChangeEvent >> horizontalDPI [
 	^ horizontalDPI
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowResolutionChangeEvent >> horizontalDPI: anObject [
 	horizontalDPI := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowResolutionChangeEvent >> screenScaleFactor [
 	^ screenScaleFactor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowResolutionChangeEvent >> screenScaleFactor: anObject [
 	screenScaleFactor := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowResolutionChangeEvent >> verticalDPI [
 	^ verticalDPI
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowResolutionChangeEvent >> verticalDPI: anObject [
 	verticalDPI := anObject
 ]

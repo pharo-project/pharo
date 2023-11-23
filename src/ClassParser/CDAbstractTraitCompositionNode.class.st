@@ -3,25 +3,27 @@ Traits (unit of methods) can be composed out of other traits using + between tra
 I'm the common superclass for all the implied nodes.
 "
 Class {
-	#name : #CDAbstractTraitCompositionNode,
-	#superclass : #CDNode,
-	#category : #'ClassParser-Model'
+	#name : 'CDAbstractTraitCompositionNode',
+	#superclass : 'CDNode',
+	#category : 'ClassParser-Model',
+	#package : 'ClassParser',
+	#tag : 'Model'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 CDAbstractTraitCompositionNode class >> isAbstract [
 
 	^ self == CDAbstractTraitCompositionNode
 ]
 
-{ #category : #composing }
+{ #category : 'composing' }
 CDAbstractTraitCompositionNode >> + aNode [
 
 	^ CDTraitCompositionSequenceNode new
 		sequence: { self . aNode }
 ]
 
-{ #category : #combining }
+{ #category : 'combining' }
 CDAbstractTraitCompositionNode >> - aCollection [
 
 	^ CDTraitExclusionNode new
@@ -29,7 +31,7 @@ CDAbstractTraitCompositionNode >> - aCollection [
 		exclusions: aCollection
 ]
 
-{ #category : #composing }
+{ #category : 'composing' }
 CDAbstractTraitCompositionNode >> -- aCollection [
 
 	^ CDTraitSlotRemoveNode new
@@ -37,7 +39,7 @@ CDAbstractTraitCompositionNode >> -- aCollection [
 		removedSlots: aCollection
 ]
 
-{ #category : #composing }
+{ #category : 'composing' }
 CDAbstractTraitCompositionNode >> @ aCollection [
 
 	^ CDTraitAliasNode new
@@ -45,7 +47,7 @@ CDAbstractTraitCompositionNode >> @ aCollection [
 		aliases: aCollection
 ]
 
-{ #category : #composing }
+{ #category : 'composing' }
 CDAbstractTraitCompositionNode >> @@ aCollection [
 
 	^ CDTraitSlotRenameNode new
@@ -53,13 +55,13 @@ CDAbstractTraitCompositionNode >> @@ aCollection [
 		renames: aCollection
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CDAbstractTraitCompositionNode >> isTraitComposition [
 
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CDAbstractTraitCompositionNode >> isTraitNode [
 	^false
 ]

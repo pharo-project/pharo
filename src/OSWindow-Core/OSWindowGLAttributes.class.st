@@ -2,8 +2,8 @@
 I holding a set of OpenGL attributes, used to initialize an opengl rendering context for a window.
 "
 Class {
-	#name : #OSWindowGLAttributes,
-	#superclass : #Object,
+	#name : 'OSWindowGLAttributes',
+	#superclass : 'Object',
 	#instVars : [
 		'redSize',
 		'blueSize',
@@ -32,70 +32,72 @@ Class {
 		'DefaultStencilSize',
 		'DefaultSwapControl'
 	],
-	#category : #'OSWindow-Core-OpenGL'
+	#category : 'OSWindow-Core-OpenGL',
+	#package : 'OSWindow-Core',
+	#tag : 'OpenGL'
 }
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 OSWindowGLAttributes class >> defaultAlphaSize [
 	^ DefaultAlphaSize
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 OSWindowGLAttributes class >> defaultBlueSize [
 	^ DefaultBlueSize
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 OSWindowGLAttributes class >> defaultDepthSize [
 	^ DefaultDepthSize
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 OSWindowGLAttributes class >> defaultDoubleBuffer [
 	^ DefaultDoubleBuffer
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 OSWindowGLAttributes class >> defaultGreenSize [
 	^ DefaultGreenSize
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 OSWindowGLAttributes class >> defaultMajorVersion [
 	^ DefaultMajorVersion
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 OSWindowGLAttributes class >> defaultMinorVersion [
 	^ DefaultMinorVersion
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 OSWindowGLAttributes class >> defaultProfileType [
 	^ DefaultProfileType
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 OSWindowGLAttributes class >> defaultRedSize [
 	^ DefaultRedSize
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 OSWindowGLAttributes class >> defaultSRGBFramebuffer [
 	^ DefaultSRGBFramebuffer
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 OSWindowGLAttributes class >> defaultStencilSize [
 	^ DefaultStencilSize
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 OSWindowGLAttributes class >> defaultSwapControl [
 	^ DefaultSwapControl
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 OSWindowGLAttributes class >> initialize [
 	DefaultRedSize := 5.
 	DefaultGreenSize := 5.
@@ -111,82 +113,82 @@ OSWindowGLAttributes class >> initialize [
 	DefaultSRGBFramebuffer := false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowGLAttributes >> alphaSize [
 
 	^ alphaSize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowGLAttributes >> alphaSize: anObject [
 
 	alphaSize := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowGLAttributes >> blueSize [
 
 	^ blueSize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowGLAttributes >> blueSize: anObject [
 
 	blueSize := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowGLAttributes >> depthSize [
 
 	^ depthSize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowGLAttributes >> depthSize: anObject [
 
 	depthSize := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowGLAttributes >> doubleBuffer [
 
 	^ doubleBuffer
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowGLAttributes >> doubleBuffer: anObject [
 
 	doubleBuffer := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowGLAttributes >> greenSize [
 
 	^ greenSize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowGLAttributes >> greenSize: anObject [
 
 	greenSize := anObject
 ]
 
-{ #category : #'profile selection' }
+{ #category : 'profile selection' }
 OSWindowGLAttributes >> hasCompatibilityProfile [
 	^ self profileType = #compatibility
 ]
 
-{ #category : #'profile selection' }
+{ #category : 'profile selection' }
 OSWindowGLAttributes >> hasCoreProfile [
 	^ self profileType = #core
 ]
 
-{ #category : #'profile selection' }
+{ #category : 'profile selection' }
 OSWindowGLAttributes >> hasESProfile [
 	^ self profileType = #es
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OSWindowGLAttributes >> initialize [
 	redSize := DefaultRedSize.
 	greenSize := DefaultGreenSize.
@@ -202,64 +204,64 @@ OSWindowGLAttributes >> initialize [
 	srgbFramebuffer := DefaultSRGBFramebuffer
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowGLAttributes >> majorVersion [
 	^ majorVersion
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowGLAttributes >> majorVersion: anObject [
 	majorVersion := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowGLAttributes >> minorVersion [
 	^ minorVersion
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowGLAttributes >> minorVersion: anObject [
 	minorVersion := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowGLAttributes >> profileType [
 	^ profileType
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowGLAttributes >> profileType: anObject [
 	profileType := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowGLAttributes >> redSize [
 
 	^ redSize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowGLAttributes >> redSize: anObject [
 
 	redSize := anObject
 ]
 
-{ #category : #'profile selection' }
+{ #category : 'profile selection' }
 OSWindowGLAttributes >> setCompatibilityProfile [
 	self profileType: #compatibility
 ]
 
-{ #category : #'profile selection' }
+{ #category : 'profile selection' }
 OSWindowGLAttributes >> setCoreProfile [
 	self profileType: #core
 ]
 
-{ #category : #'profile selection' }
+{ #category : 'profile selection' }
 OSWindowGLAttributes >> setESProfile [
 	self profileType: #es
 ]
 
-{ #category : #'profile selection' }
+{ #category : 'profile selection' }
 OSWindowGLAttributes >> setForOpenGLES20 [
 	self
 		setESProfile;
@@ -267,7 +269,7 @@ OSWindowGLAttributes >> setForOpenGLES20 [
 		minorVersion: 0
 ]
 
-{ #category : #'profile selection' }
+{ #category : 'profile selection' }
 OSWindowGLAttributes >> setForOpenGLES30 [
 	self
 		setESProfile;
@@ -275,33 +277,33 @@ OSWindowGLAttributes >> setForOpenGLES30 [
 		minorVersion: 0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowGLAttributes >> srgbFramebuffer [
 	^ srgbFramebuffer
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowGLAttributes >> srgbFramebuffer: anObject [
 	srgbFramebuffer := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowGLAttributes >> stencilSize [
 	^ stencilSize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowGLAttributes >> stencilSize: aStencilSize [
 	stencilSize := aStencilSize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowGLAttributes >> swapControl [
 
 	^ swapControl
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowGLAttributes >> swapControl: anObject [
 
 	swapControl := anObject

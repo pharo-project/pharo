@@ -2,31 +2,33 @@
 I am delivered when user drop something into the window (of course, if there's a drag and drop support by underlaying platform).
 "
 Class {
-	#name : #OSWindowDropEvent,
-	#superclass : #OSWindowEvent,
+	#name : 'OSWindowDropEvent',
+	#superclass : 'OSWindowEvent',
 	#instVars : [
 		'filePath',
 		'timestamp'
 	],
-	#category : #'OSWindow-Core-Events'
+	#category : 'OSWindow-Core-Events',
+	#package : 'OSWindow-Core',
+	#tag : 'Events'
 }
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 OSWindowDropEvent >> accept: aVisitor [
 	^ aVisitor visitWindowDropEvent: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowDropEvent >> filePath [
 	^ filePath
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowDropEvent >> filePath: anObject [
 	filePath := anObject
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 OSWindowDropEvent >> printOn: aStream [
 	super printOn: aStream.
 	aStream
@@ -35,12 +37,12 @@ OSWindowDropEvent >> printOn: aStream [
 		nextPut: $'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowDropEvent >> timestamp [
 	^ timestamp
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowDropEvent >> timestamp: anObject [
 	timestamp := anObject
 ]

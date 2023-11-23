@@ -76,15 +76,17 @@ Example:
 
 "
 Class {
-	#name : #RGElementDefinition,
-	#superclass : #RGDefinition,
+	#name : 'RGElementDefinition',
+	#superclass : 'RGDefinition',
 	#instVars : [
 		'parent'
 	],
-	#category : #'Ring-Definitions-Core-Base'
+	#category : 'Ring-Definitions-Core-Base',
+	#package : 'Ring-Definitions-Core',
+	#tag : 'Base'
 }
 
-{ #category : #'parsing stamp' }
+{ #category : 'parsing stamp' }
 RGElementDefinition class >> basicParseAuthorAliasFrom: aString [
 	"Parse an alias/name of the author from a string that is extracted from a source file. If there is no alias/name we return emtpy string."
 
@@ -121,7 +123,7 @@ RGElementDefinition class >> basicParseAuthorAliasFrom: aString [
 		do: [ :e | unknown ]
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 RGElementDefinition class >> class: aRGBehaviorDefinition [
 	"The argument is a ring object and serves as the parent of a method, variable or class comment"
 
@@ -130,38 +132,38 @@ RGElementDefinition class >> class: aRGBehaviorDefinition [
 		yourself
 ]
 
-{ #category : #'elements-annotations' }
+{ #category : 'elements-annotations' }
 RGElementDefinition class >> classNameKey [
 
 	^#className
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGElementDefinition class >> isAbstract [
 
 	^ self == RGElementDefinition
 ]
 
-{ #category : #'elements-annotations' }
-RGElementDefinition class >> isMetaSideKey [
+{ #category : 'elements-annotations' }
+RGElementDefinition class >> isMetaKey [
 
-	^#isMetaSide
+	^#isMeta
 ]
 
-{ #category : #'parsing stamp' }
+{ #category : 'parsing stamp' }
 RGElementDefinition class >> parseAuthorAliasFrom: aString [
 	"Allows other applications  to treat a different empty alias by overriding this method"
 
 	^self basicParseAuthorAliasFrom: aString
 ]
 
-{ #category : #'parsing stamp' }
+{ #category : 'parsing stamp' }
 RGElementDefinition class >> parseTimestampFrom: aString [
 
 	^self parseTimestampFrom: aString default: nil
 ]
 
-{ #category : #'parsing stamp' }
+{ #category : 'parsing stamp' }
 RGElementDefinition class >> parseTimestampFrom: aString default: anObject [
 	"Parse a date-time from a timestamp-string that is extracted from a source file. If there is no timestamp, or we cannot make sense of it, we return the default value."
 
@@ -193,7 +195,7 @@ RGElementDefinition class >> parseTimestampFrom: aString default: anObject [
 		do: [ :e | unknown ]
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 RGElementDefinition class >> realClass: aClass [
 	"The argument is a Smalltalk class and the parent of a method, variable, class comment.
 	However it is not set as parent but only its name and scope (instance/class)"
@@ -203,61 +205,61 @@ RGElementDefinition class >> realClass: aClass [
 		yourself
 ]
 
-{ #category : #'elements-annotations' }
+{ #category : 'elements-annotations' }
 RGElementDefinition class >> sourcePointerKey [
 
 	^#sourcePointer
 ]
 
-{ #category : #'elements-annotations' }
+{ #category : 'elements-annotations' }
 RGElementDefinition class >> statusKey [
 
 	^#statusKey
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 RGElementDefinition >> = aRGElementDefinition [
 	"This method look for equality of the properties of the receiver"
 	"Verifies the class and the parentName of the receiver"
 
 	^self class = aRGElementDefinition class
 		and:[ self parentName == aRGElementDefinition parentName
-			and:[ self isMetaSide = aRGElementDefinition isMetaSide ] ]
+			and:[ self isMeta = aRGElementDefinition isMeta ] ]
 ]
 
-{ #category : #'backward compatibility' }
+{ #category : 'backward compatibility' }
 RGElementDefinition >> actualClass [
 	"returns the Smalltalk class of the receiver"
 
 	^ self realClass
 ]
 
-{ #category : #'class element specific api' }
+{ #category : 'class element specific api' }
 RGElementDefinition >> className [
 
 	^ self parentName
 ]
 
-{ #category : #'class element specific api' }
+{ #category : 'class element specific api' }
 RGElementDefinition >> className: aName [
 
 	^ self parentName: aName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGElementDefinition >> fullName: aString [
 
 	^ self annotationNamed: self class fullNameKey put: aString asSymbol
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 RGElementDefinition >> hash [
 	"Hash is re-implemented because #= is re-implemented"
 
-	^self class hash bitXor: (self parentName hash bitXor: self isMetaSide hash)
+	^self class hash bitXor: (self parentName hash bitXor: self isMeta hash)
 ]
 
-{ #category : #'generic parent api' }
+{ #category : 'generic parent api' }
 RGElementDefinition >> instanceSideParentName [
 	"Rejects the prefix ' class' or ' classTrait' of the parentName"
 	| index |
@@ -271,29 +273,43 @@ RGElementDefinition >> instanceSideParentName [
 		to: index - 1) asSymbol
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGElementDefinition >> isDefined [
 	"isDefined when the receiver has its realClass defined in the system"
 
-	^self realClass notNil
+	^self realClass isNotNil
 ]
 
-{ #category : #accessing }
-RGElementDefinition >> isMetaSide [
+{ #category : 'accessing' }
+RGElementDefinition >> isMeta [
 	"Even thought several class elements do not define this property (ie. class variables, pool variables) they understand it"
 	"This is a derived property from the class definining the receiver and thus its value is kept as an annotation"
 	"Default value is false"
 
-	^self annotationNamed: self class isMetaSideKey ifAbsentPut: [ false ]
+	^self annotationNamed: self class isMetaKey ifAbsentPut: [ false ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
+RGElementDefinition >> isMeta: aBoolean [
+
+	self annotationNamed: self class isMetaKey put: aBoolean
+]
+
+{ #category : 'accessing' }
+RGElementDefinition >> isMetaSide [
+	self
+		deprecated: 'Use isMeta instead'
+		transformWith: '`@receiver isMetaSide' -> '`@receiver isMeta'.
+	^ self isMeta
+]
+
+{ #category : 'accessing' }
 RGElementDefinition >> isMetaSide: aBoolean [
 
-	self annotationNamed: self class isMetaSideKey put: aBoolean
+	self isMeta: aBoolean
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGElementDefinition >> isSameRevisionAs: aRGElementDefinition [
 	"This method look for equality of the properties of the receiver"
 	"Verifies the class and the parentName of the receiver"
@@ -302,19 +318,19 @@ RGElementDefinition >> isSameRevisionAs: aRGElementDefinition [
 		and:[ self parentName == aRGElementDefinition parentName ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGElementDefinition >> package [
 	^ self parent ifNotNil: [ :p | p package ]
 ]
 
-{ #category : #'generic parent api' }
+{ #category : 'generic parent api' }
 RGElementDefinition >> parent [
 	"The parent of a class definition element: method, comment and variable is the class definition. This method retrieves the class that defines such element"
 
 	^ parent
 ]
 
-{ #category : #'generic parent api' }
+{ #category : 'generic parent api' }
 RGElementDefinition >> parent: aRGBehaviorDefinition [
 	"Set the class associated to the receiver"
 
@@ -322,27 +338,27 @@ RGElementDefinition >> parent: aRGBehaviorDefinition [
 	self setParentInfo: aRGBehaviorDefinition
 ]
 
-{ #category : #'generic parent api' }
+{ #category : 'generic parent api' }
 RGElementDefinition >> parentName [
 	"Retrieves the name of the class defining the receiver. Its value is kept as an annotation"
 
 	^ self annotationNamed: self class classNameKey
 ]
 
-{ #category : #'generic parent api' }
+{ #category : 'generic parent api' }
 RGElementDefinition >> parentName: aString [
 
 	self annotationNamed: self class classNameKey put: aString asSymbol
 ]
 
-{ #category : #'class element specific api' }
+{ #category : 'class element specific api' }
 RGElementDefinition >> realClass [
 	"Retrieves the Class/Trait/.. object in the System corresponding to the class of the this element."
 
 	^ self realParent
 ]
 
-{ #category : #'generic parent api' }
+{ #category : 'generic parent api' }
 RGElementDefinition >> realParent [
 	"Retrieves the Class/Trait/.. object in the System corresponding to the class of the this element."
 
@@ -350,22 +366,22 @@ RGElementDefinition >> realParent [
 		          ifNotNil: [ self parent realClass ]
 		          ifNil: [ self rootEnvironment classNamed: self parentName ].
 	parent ifNil: [ ^ nil ].
-	
-	self isMetaSide ifTrue: [ parent := parent classSide ].
+
+	self isMeta ifTrue: [ parent := parent classSide ].
 	^ parent
 ]
 
-{ #category : #'class element specific api' }
+{ #category : 'class element specific api' }
 RGElementDefinition >> ringClass [
 	"Return the ring definition of the class containing the receiver."
 
 	^ self parent
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RGElementDefinition >> setParentInfo: anObject [
 	"anObject is aRGBehaviorDefinition or aClass/aTrait"
 
 	self parentName: anObject name.
-	self isMetaSide: anObject isMeta
+	self isMeta: anObject isMeta
 ]

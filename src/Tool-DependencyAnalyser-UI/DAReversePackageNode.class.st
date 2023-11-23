@@ -2,33 +2,30 @@
 A DAReversePackageNode is a node to display a package in the tree during a reverse analysis.
 "
 Class {
-	#name : #DAReversePackageNode,
-	#superclass : #DAAbstractPackageNode,
-	#category : #'Tool-DependencyAnalyser-UI-Nodes'
+	#name : 'DAReversePackageNode',
+	#superclass : 'DAAbstractPackageNode',
+	#category : 'Tool-DependencyAnalyser-UI-Nodes',
+	#package : 'Tool-DependencyAnalyser-UI',
+	#tag : 'Nodes'
 }
 
-{ #category : #api }
+{ #category : 'api' }
 DAReversePackageNode >> childNodeClassFor: anItem [
 	^ DAReverseDependentPackageNode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAReversePackageNode >> children [
 	^ (self content usersOfPackage
 		collect: [ :each | each asPackageDependencyWrapper ]) asSortedCollection
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DAReversePackageNode >> hasChildren [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAReversePackageNode >> icon [
 	^ self iconNamed: #package
-]
-
-{ #category : #accessing }
-DAReversePackageNode >> rPackage [
-	^ self content rPackageSet
 ]

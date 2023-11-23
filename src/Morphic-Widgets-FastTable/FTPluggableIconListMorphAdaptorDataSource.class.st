@@ -2,8 +2,8 @@
 I'm a datasource to interpret messages in teh form provided for a PluggableIconListMorph.
 "
 Class {
-	#name : #FTPluggableIconListMorphAdaptorDataSource,
-	#superclass : #FTDataSource,
+	#name : 'FTPluggableIconListMorphAdaptorDataSource',
+	#superclass : 'FTDataSource',
 	#instVars : [
 		'model',
 		'getListSelector',
@@ -15,10 +15,12 @@ Class {
 		'dropItemSelector',
 		'wantsDropSelector'
 	],
-	#category : #'Morphic-Widgets-FastTable-PluggableAdaptor'
+	#category : 'Morphic-Widgets-FastTable-PluggableAdaptor',
+	#package : 'Morphic-Widgets-FastTable',
+	#tag : 'PluggableAdaptor'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTPluggableIconListMorphAdaptorDataSource >> cellColumn: column row: rowIndex [
 	| object text icon |
 	object := self elementAt: rowIndex.
@@ -30,7 +32,7 @@ FTPluggableIconListMorphAdaptorDataSource >> cellColumn: column row: rowIndex [
 	^ self createCellText: text icon: icon
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FTPluggableIconListMorphAdaptorDataSource >> createCellText: aString icon: anIcon [
 	| text icon cell |
 	text := aString.
@@ -49,12 +51,12 @@ FTPluggableIconListMorphAdaptorDataSource >> createCellText: aString icon: anIco
 	^ cell
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTPluggableIconListMorphAdaptorDataSource >> dragTransferType [
 	^ self getListElementSelector
 ]
 
-{ #category : #'drag and drop' }
+{ #category : 'drag and drop' }
 FTPluggableIconListMorphAdaptorDataSource >> dropElements: aCollection index: rowIndex [
 	self dropItemSelector ifNil: [ ^ self ].
 	self model
@@ -63,17 +65,17 @@ FTPluggableIconListMorphAdaptorDataSource >> dropElements: aCollection index: ro
 		with: rowIndex
 ]
 
-{ #category : #'accessing - selectors' }
+{ #category : 'accessing - selectors' }
 FTPluggableIconListMorphAdaptorDataSource >> dropItemSelector [
 	^ dropItemSelector
 ]
 
-{ #category : #'accessing - selectors' }
+{ #category : 'accessing - selectors' }
 FTPluggableIconListMorphAdaptorDataSource >> dropItemSelector: aSelector [
 	dropItemSelector := aSelector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTPluggableIconListMorphAdaptorDataSource >> elementAt: rowIndex [
 	^ self getListElementSelector
 		ifNotNil: [
@@ -82,69 +84,69 @@ FTPluggableIconListMorphAdaptorDataSource >> elementAt: rowIndex [
 			(self model perform: self getListSelector) at: rowIndex  ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FTPluggableIconListMorphAdaptorDataSource >> elementWrapped: object [
 	^ self wrapSelector
 		ifNotNil: [ :selector | self model perform: selector with: object ]
 		ifNil: [ object ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTPluggableIconListMorphAdaptorDataSource >> elements [
 	^self model getList
 ]
 
-{ #category : #'accessing - selectors' }
+{ #category : 'accessing - selectors' }
 FTPluggableIconListMorphAdaptorDataSource >> getIconSelector [
 	^ getIconSelector
 ]
 
-{ #category : #'accessing - selectors' }
+{ #category : 'accessing - selectors' }
 FTPluggableIconListMorphAdaptorDataSource >> getIconSelector: anObject [
 	getIconSelector := anObject
 ]
 
-{ #category : #'accessing - selectors' }
+{ #category : 'accessing - selectors' }
 FTPluggableIconListMorphAdaptorDataSource >> getListElementSelector [
 	^ getListElementSelector
 ]
 
-{ #category : #'accessing - selectors' }
+{ #category : 'accessing - selectors' }
 FTPluggableIconListMorphAdaptorDataSource >> getListElementSelector: anObject [
 	getListElementSelector := anObject
 ]
 
-{ #category : #'accessing - selectors' }
+{ #category : 'accessing - selectors' }
 FTPluggableIconListMorphAdaptorDataSource >> getListSelector [
 	^ getListSelector
 ]
 
-{ #category : #'accessing - selectors' }
+{ #category : 'accessing - selectors' }
 FTPluggableIconListMorphAdaptorDataSource >> getListSelector: anObject [
 	getListSelector := anObject
 ]
 
-{ #category : #'accessing - selectors' }
+{ #category : 'accessing - selectors' }
 FTPluggableIconListMorphAdaptorDataSource >> getListSizeSelector [
 	^ getListSizeSelector
 ]
 
-{ #category : #'accessing - selectors' }
+{ #category : 'accessing - selectors' }
 FTPluggableIconListMorphAdaptorDataSource >> getListSizeSelector: anObject [
 	getListSizeSelector := anObject
 ]
 
-{ #category : #'accessing - selectors' }
+{ #category : 'accessing - selectors' }
 FTPluggableIconListMorphAdaptorDataSource >> getMenuSelector [
 	^ getMenuSelector
 ]
 
-{ #category : #'accessing - selectors' }
+{ #category : 'accessing - selectors' }
 FTPluggableIconListMorphAdaptorDataSource >> getMenuSelector: anObject [
 	getMenuSelector := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTPluggableIconListMorphAdaptorDataSource >> menuColumn: column row: rowIndex [
 	| menu |
 
@@ -159,17 +161,17 @@ FTPluggableIconListMorphAdaptorDataSource >> menuColumn: column row: rowIndex [
 		with: false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTPluggableIconListMorphAdaptorDataSource >> model [
 	^ model
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTPluggableIconListMorphAdaptorDataSource >> model: anObject [
 	model := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTPluggableIconListMorphAdaptorDataSource >> newDataSourceMatching: aFTFilter [
 	| newElements wrappedItem text newDataSource modelCopy |
 	newElements := self elements select: [ :each |
@@ -186,7 +188,7 @@ FTPluggableIconListMorphAdaptorDataSource >> newDataSourceMatching: aFTFilter [
 	^newDataSource
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTPluggableIconListMorphAdaptorDataSource >> numberOfRows [
 	^ self model
 		ifNotNil: [
@@ -196,7 +198,7 @@ FTPluggableIconListMorphAdaptorDataSource >> numberOfRows [
 		ifNil: [ 0 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTPluggableIconListMorphAdaptorDataSource >> searchText: aString [
 	| search text result |
 	aString isEmptyOrNil ifTrue: [ ^ #() ].
@@ -209,12 +211,12 @@ FTPluggableIconListMorphAdaptorDataSource >> searchText: aString [
 	^ result asArray
 ]
 
-{ #category : #'drag and drop' }
+{ #category : 'drag and drop' }
 FTPluggableIconListMorphAdaptorDataSource >> transferFor: passenger from: aMorph [
     ^(self model transferFor: passenger from: self table) build
 ]
 
-{ #category : #'drag and drop' }
+{ #category : 'drag and drop' }
 FTPluggableIconListMorphAdaptorDataSource >> wantsDropElements: aCollection type: type index: rowIndex [
 	self dropItemSelector ifNil: [ ^ false ].
 	self wantsDropSelector ifNil: [ ^ true ].
@@ -223,22 +225,22 @@ FTPluggableIconListMorphAdaptorDataSource >> wantsDropElements: aCollection type
 		with: aCollection
 ]
 
-{ #category : #'accessing - selectors' }
+{ #category : 'accessing - selectors' }
 FTPluggableIconListMorphAdaptorDataSource >> wantsDropSelector [
 	^ wantsDropSelector
 ]
 
-{ #category : #'accessing - selectors' }
+{ #category : 'accessing - selectors' }
 FTPluggableIconListMorphAdaptorDataSource >> wantsDropSelector: aSelector [
 	wantsDropSelector := aSelector
 ]
 
-{ #category : #'accessing - selectors' }
+{ #category : 'accessing - selectors' }
 FTPluggableIconListMorphAdaptorDataSource >> wrapSelector [
 	^ wrapSelector
 ]
 
-{ #category : #'accessing - selectors' }
+{ #category : 'accessing - selectors' }
 FTPluggableIconListMorphAdaptorDataSource >> wrapSelector: anObject [
 	wrapSelector := anObject
 ]

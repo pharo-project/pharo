@@ -6,17 +6,19 @@ I am used by CmdMenuGroup to build toolbar items:
 	menuGroup buildBrowserToolbar: aToolbar
 "
 Class {
-	#name : #ClyToolbarSeparatorMorph,
-	#superclass : #Morph,
-	#category : #'Calypso-Browser-Toolbar'
+	#name : 'ClyToolbarSeparatorMorph',
+	#superclass : 'Morph',
+	#category : 'Calypso-Browser-Toolbar',
+	#package : 'Calypso-Browser',
+	#tag : 'Toolbar'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyToolbarSeparatorMorph >> defaultColor [
 	^Color transparent
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyToolbarSeparatorMorph >> initialize [
 	| separator |
 	super initialize.
@@ -24,7 +26,7 @@ ClyToolbarSeparatorMorph >> initialize [
 		changeTableLayout;
 		hResizing: #shrinkWrap;
 		vResizing: #shrinkWrap;
-		layoutInset: 4@0.
+		layoutInset: (4@0) scaledByDisplayScaleFactor.
 	separator := self theme newLabelIn: self label: '|'.
 
 	self addMorph: separator

@@ -10,8 +10,8 @@ VM side, it creates a thread and installs a worker there, responsible to collect
 
 "
 Class {
-	#name : #TFWorker,
-	#superclass : #TFRunner,
+	#name : 'TFWorker',
+	#superclass : 'TFRunner',
 	#instVars : [
 		'name',
 		'semaphorePoolHolder'
@@ -19,16 +19,18 @@ Class {
 	#classVars : [
 		'Default'
 	],
-	#category : #'ThreadedFFI-Worker'
+	#category : 'ThreadedFFI-Worker',
+	#package : 'ThreadedFFI',
+	#tag : 'Worker'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFWorker class >> default [
 
 	^ Default ifNil: [ Default := self named: 'default' ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TFWorker class >> finalizeResourceData: anArray [
 
 	| handle semaphorePool |
@@ -42,7 +44,7 @@ TFWorker class >> finalizeResourceData: anArray [
 	handle beNull
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TFWorker class >> named: aName [
 
 	^ self new
@@ -51,14 +53,14 @@ TFWorker class >> named: aName [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFWorker >> doInitialize [
 
 	super doInitialize.
 	self primitiveCreateWorker
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 TFWorker >> executeFunction: aTFExternalFunction withArguments: arguments usingSemaphore: anInteger [
 
 	<primitive: 'primitiveWorkerCallout' error: ec>
@@ -66,26 +68,26 @@ TFWorker >> executeFunction: aTFExternalFunction withArguments: arguments usingS
 	self primitiveFailed
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TFWorker >> initialize [
 
 	super initialize.
 	semaphorePoolHolder := Array new: 1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFWorker >> name [
 
 	^ name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFWorker >> name: aName [
 
 	name := aName
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TFWorker >> newSemaphorePool [
 
 	"We need to keep a reference to the semaphorePool in an array. Because the array is passed to the finalization registry.
@@ -95,7 +97,7 @@ TFWorker >> newSemaphorePool [
 	^ semaphorePoolHolder at: 1
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TFWorker >> primitiveCreateWorker [
 
 	<primitive: 'primitiveCreateWorker'>
@@ -103,7 +105,7 @@ TFWorker >> primitiveCreateWorker [
 	^ self primitiveFailed
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TFWorker >> primitiveReleaseWorker [
 
 	<primitive: 'primitiveReleaseWorker'>
@@ -111,7 +113,7 @@ TFWorker >> primitiveReleaseWorker [
 	^ self primitiveFailed
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 TFWorker >> readReturnValueFromTask: anExternalAddress [
 
 	<primitive: 'primitiveWorkerExtractReturnValue' error: ec>
@@ -119,7 +121,7 @@ TFWorker >> readReturnValueFromTask: anExternalAddress [
 	self primitiveFailed
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 TFWorker >> release [
 
 	"We need to ensure the semaphorePool is always released"
@@ -134,13 +136,13 @@ TFWorker >> release [
 	super release
 ]
 
-{ #category : #'external resource management' }
+{ #category : 'external resource management' }
 TFWorker >> resourceData [
 
 	^ { handle. semaphorePoolHolder }
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TFWorker >> semaphorePool: aValue [
 
 	semaphorePool := aValue

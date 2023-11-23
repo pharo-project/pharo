@@ -1,6 +1,6 @@
-Extension { #name : #CmdCommand }
+Extension { #name : 'CmdCommand' }
 
-{ #category : #'*Commander-Spec2-Compatibility' }
+{ #category : '*Commander-Spec2-Compatibility' }
 CmdCommand class >> defaultHelp [
 	^ self defaultMenuItemName
 ]

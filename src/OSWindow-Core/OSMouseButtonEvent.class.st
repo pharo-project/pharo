@@ -2,32 +2,34 @@
 i am the root of various mouse button events.
 "
 Class {
-	#name : #OSMouseButtonEvent,
-	#superclass : #OSMouseEvent,
+	#name : 'OSMouseButtonEvent',
+	#superclass : 'OSMouseEvent',
 	#instVars : [
 		'button'
 	],
-	#category : #'OSWindow-Core-Events'
+	#category : 'OSWindow-Core-Events',
+	#package : 'OSWindow-Core',
+	#tag : 'Events'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSMouseButtonEvent >> button [
 
 	^ button
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSMouseButtonEvent >> button: anObject [
 
 	button := anObject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OSMouseButtonEvent >> isWheel [
 	^ self button > 3
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 OSMouseButtonEvent >> printOn: stream [
 	super printOn: stream.
 	stream
@@ -35,7 +37,7 @@ OSMouseButtonEvent >> printOn: stream [
 		print: button
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSMouseButtonEvent >> wheelDirection [
 	"If button is wheel button (>3), answer direction (#up/#down)"
 	^ self button = 4

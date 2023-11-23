@@ -2,8 +2,8 @@
 A FreeType font
 "
 Class {
-	#name : #FreeTypeFont,
-	#superclass : #AbstractFont,
+	#name : 'FreeTypeFont',
+	#superclass : 'AbstractFont',
 	#instVars : [
 		'face',
 		'pointSize',
@@ -22,10 +22,12 @@ Class {
 		'FT2Constants',
 		'FreeTypeCacheConstants'
 	],
-	#category : #'FreeType-Fonts'
+	#category : 'FreeType-Fonts',
+	#package : 'FreeType',
+	#tag : 'Fonts'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FreeTypeFont class >> forLogicalFont: aLogicalFont fileInfo: aFreeTypeFileInfoAbstract [
 	| pointSize index |
 	pointSize := aLogicalFont pointSize.
@@ -43,31 +45,31 @@ FreeTypeFont class >> forLogicalFont: aLogicalFont fileInfo: aFreeTypeFileInfoAb
 				index: index]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FreeTypeFont class >> fromBytes: aByteArray pointSize: anInteger [
 	^self fromBytes: aByteArray pointSize: anInteger index: 0
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FreeTypeFont class >> fromBytes: aByteArray pointSize: anInteger  index: i [
 	^self new
 		setFace: (FreeTypeFace fromBytes: aByteArray index: i) pointSize: anInteger;
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FreeTypeFont class >> fromFile: aFileName pointSize: anInteger [
 	^ self fromFile: aFileName pointSize: anInteger index: 0
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FreeTypeFont class >> fromFile: aFileName pointSize: anInteger index: i [
 	^self new
 		setFace: (FreeTypeFace fromFile: aFileName index: i) pointSize: anInteger;
 		yourself
 ]
 
-{ #category : #measuring }
+{ #category : 'measuring' }
 FreeTypeFont >> ascent [
 	| asc desc h |
 	cachedAscent ifNotNil:[^cachedAscent].
@@ -79,13 +81,13 @@ FreeTypeFont >> ascent [
 	^cachedAscent := h - desc
 ]
 
-{ #category : #measuring }
+{ #category : 'measuring' }
 FreeTypeFont >> basicAscent [
 
 	^(self face ascender * self pixelSize // self face unitsPerEm)
 ]
 
-{ #category : #'glyph lookup' }
+{ #category : 'glyph lookup' }
 FreeTypeFont >> characterFormAt: aCharacter [
 	FreeTypeSettings current
 		forceNonSubPixelDuring:[
@@ -96,7 +98,7 @@ FreeTypeFont >> characterFormAt: aCharacter [
 				subpixelPosition: 0]
 ]
 
-{ #category : #'glyph lookup' }
+{ #category : 'glyph lookup' }
 FreeTypeFont >> characterRenderingOptimizedFormAt: aCharacter [
 	FreeTypeSettings current useSubPixelAntiAliasing ifFalse: [ ^ super characterRenderingOptimizedFormAt: aCharacter ].
 
@@ -107,43 +109,43 @@ FreeTypeFont >> characterRenderingOptimizedFormAt: aCharacter [
 		subpixelPosition: 0) withAlphaExtractedFromSubpixelRendering
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeFont >> characterWidthCache [
 
 	^ characterWidthCache ifNil: [ characterWidthCache := IdentityDictionary new ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeFont >> clearCachedMetrics [
 
 	widthAndKernedWidthCache := characterWidthCache := cachedHeight := cachedAscent := cachedDescent := subPixelPositioned := nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeFont >> defaultSimulatedItalicSlant [
 	^0.22
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeFont >> depth [
 
 	^ 32
 ]
 
-{ #category : #measuring }
+{ #category : 'measuring' }
 FreeTypeFont >> descent [
 	^cachedDescent ifNil:[
 		cachedDescent := ((self face descender * self pixelSize // self face unitsPerEm) negated) ]
 ]
 
-{ #category : #measuring }
+{ #category : 'measuring' }
 FreeTypeFont >> descentKern [
 	"should have default in AbstractFont"
 	^0
 ]
 
-{ #category : #displaying }
-FreeTypeFont >> displayStrikeoutOn: aDisplayContext from: baselineStartPoint to: baselineEndPoint [
+{ #category : 'displaying' }
+FreeTypeFont >> displayStrikeoutOn: aDisplayContext from: baselineStartPoint to: baselineEndPoint scale: scale [
 	| top bottom strikeoutThickness s e |
 
 	"the strikeout size/position for TrueType fonts should really come from the TT_OS2 table.
@@ -153,25 +155,13 @@ FreeTypeFont >> displayStrikeoutOn: aDisplayContext from: baselineStartPoint to:
 	top := ((self face ascender / 4) * self pixelSize / self face unitsPerEm) negated - (strikeoutThickness/2).
 	top := top rounded.
 	bottom := top + strikeoutThickness ceiling.
-	s := baselineStartPoint + (0@top).
-	e := baselineEndPoint + (0@bottom).
+	s := baselineStartPoint + (0@(top * scale)).
+	e := baselineEndPoint + (0@(bottom * scale)).
 	self displayLineGlyphOn: aDisplayContext from: s to: e
 ]
 
-{ #category : #displaying }
-FreeTypeFont >> displayString: aString on: aDisplayContext from: startIndex to: stopIndex at: aPoint kern: kernDelta [
-
-	^self displayString: aString
-		on: aDisplayContext
-		from: startIndex
-		to: stopIndex
-		at: aPoint
-		kern: kernDelta
-		baselineY: aPoint y  + self ascent
-]
-
-{ #category : #displaying }
-FreeTypeFont >> displayString: aString on: aBitBlt from: startIndex to: stopIndex at: aPoint kern: kernDelta baselineY: baselineY [
+{ #category : 'displaying' }
+FreeTypeFont >> displayString: aString on: aBitBlt from: startIndex to: stopIndex at: aPoint kern: kernDelta baselineY: baselineY scale: scale [
 	| glyph  depth foreColorVal foreColorAlpha originalColorMap clr subPixelPosition widthAndKernedWidth char nextChar floatDestX  destX destY offset gammaTable gammaInverseTable useRule41 |
 
 	useRule41 := FreeTypeSettings current useSubPixelAntiAliasing and: [aBitBlt destForm depth >= 8].
@@ -207,7 +197,8 @@ FreeTypeFont >> displayString: aString on: aBitBlt from: startIndex to: stopInde
 			glyphOf: char
 			destDepth: depth
 			colorValue: foreColorVal
-			subpixelPosition: subPixelPosition.
+			subpixelPosition: subPixelPosition
+			scale: scale.
 		aBitBlt sourceForm: glyph.
 		offset := glyph offset.
 		aBitBlt destX: destX + offset x.
@@ -230,49 +221,49 @@ FreeTypeFont >> displayString: aString on: aBitBlt from: startIndex to: stopInde
 			widthAndKernedWidthOfLeft: char
 			right: nextChar
 			into: widthAndKernedWidth.
-		floatDestX := floatDestX + (widthAndKernedWidth at: 2) + kernDelta.
+		floatDestX := floatDestX + (((widthAndKernedWidth at: 2) + kernDelta) * scale).
 		destX := floatDestX ].
 	aBitBlt colorMap: originalColorMap.
 	^ destX @ destY
 ]
 
-{ #category : #displaying }
-FreeTypeFont >> displayUnderlineOn: aDisplayContext from: baselineStartPoint to: baselineEndPoint [
+{ #category : 'displaying' }
+FreeTypeFont >> displayUnderlineOn: aDisplayContext from: baselineStartPoint to: baselineEndPoint scale: scale [
 	| underlineTop underlineBottom underlineThickness s e |
 
 	underlineThickness := (self face underlineThickness * self pixelSize / self face unitsPerEm).
 	underlineTop := (self face underlinePosition * self pixelSize / self face unitsPerEm) negated - (underlineThickness/2).
 	underlineTop := underlineTop rounded + 1.  "needs the +1 , possibly because glyph origins are moved down by 1 so that their baselines line up with strike fonts"
 	underlineBottom := underlineTop + underlineThickness ceiling.
-	s := baselineStartPoint + (0@underlineTop).
-	e := baselineEndPoint + (0@(underlineBottom)).
+	s := baselineStartPoint + (0@(underlineTop * scale)).
+	e := baselineEndPoint + (0@(underlineBottom * scale)).
 	self displayLineGlyphOn: aDisplayContext from: s to: e
 ]
 
-{ #category : #emphasis }
+{ #category : 'emphasis' }
 FreeTypeFont >> emphasized: code [
 	"empty stub, see https://github.com/pharo-project/pharo/issues/7550"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeFont >> face [
 	"Validate, and answer, the receiver's face"
 
 	^face validate
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeFont >> face: aFace [
 	face := aFace
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeFont >> familyName [
 
 	^face familyName
 ]
 
-{ #category : #measuring }
+{ #category : 'measuring' }
 FreeTypeFont >> getLinearWidthOf: aCharacter [
 	| em glyph la charCode |
 
@@ -309,7 +300,7 @@ FreeTypeFont >> getLinearWidthOf: aCharacter [
 	^la
 ]
 
-{ #category : #measuring }
+{ #category : 'measuring' }
 FreeTypeFont >> getWidthOf: aCharacter [
 	"Glyphs are either 1 or 8 bit deep. For 32 bpp we use 8 bits, otherwise 1"
 	| em glyph hintingFlags flags charCode |
@@ -342,24 +333,38 @@ FreeTypeFont >> getWidthOf: aCharacter [
 		ifFalse:[ glyph advance x]
 ]
 
-{ #category : #'glyph lookup' }
+{ #category : 'glyph lookup' }
 FreeTypeFont >> glyphOf: aCharacter colorValue: aColorValue mono: monoBoolean subpixelPosition: sub [
 
-	^FreeTypeCache current
+	^ self glyphOf: aCharacter colorValue: aColorValue mono: monoBoolean subpixelPosition: sub scale: 1
+]
+
+{ #category : 'glyph lookup' }
+FreeTypeFont >> glyphOf: aCharacter colorValue: aColorValue mono: monoBoolean subpixelPosition: sub scale: scale [
+
+	^ FreeTypeCache current
 		atFont: self
 		charCode: aCharacter asUnicode asInteger
 		type: ((1+sub) << 32) + aColorValue
+		scale: scale
 		ifAbsentPut: [
 			FreeTypeGlyphRenderer current
 				glyphOf: aCharacter
 				colorValue: aColorValue
 				mono: monoBoolean
 				subpixelPosition: sub
-				font: self]
+				font: self
+				scale: scale ]
 ]
 
-{ #category : #'glyph lookup' }
+{ #category : 'glyph lookup' }
 FreeTypeFont >> glyphOf: aCharacter destDepth: destDepth colorValue: aColorValue subpixelPosition: sub [
+
+	^ self glyphOf: aCharacter destDepth: destDepth colorValue: aColorValue subpixelPosition: sub scale: 1
+]
+
+{ #category : 'glyph lookup' }
+FreeTypeFont >> glyphOf: aCharacter destDepth: destDepth colorValue: aColorValue subpixelPosition: sub scale: scale [
 	"sub can be between 0 and 63 and denotes the sub-pixel position of the glyph"
 	| validSub |
 	validSub := self isSubPixelPositioned
@@ -371,7 +376,8 @@ FreeTypeFont >> glyphOf: aCharacter destDepth: destDepth colorValue: aColorValue
 				subGlyphOf: aCharacter
 				colorValue: aColorValue
 				mono: FreeTypeSettings current monoHinting
-				subpixelPosition: validSub]
+				subpixelPosition: validSub
+				scale: scale]
 		ifFalse:[
 			(destDepth >= 8 and:[FreeTypeSettings current useSubPixelAntiAliasing])
 				ifTrue:[
@@ -379,16 +385,18 @@ FreeTypeFont >> glyphOf: aCharacter destDepth: destDepth colorValue: aColorValue
 						mode41GlyphOf: aCharacter
 						colorValue: aColorValue
 						mono: FreeTypeSettings current monoHinting
-						subpixelPosition: validSub]
+						subpixelPosition: validSub
+						scale: scale]
 				ifFalse:[
 					self
 						glyphOf: aCharacter
 						colorValue: aColorValue
 						mono: FreeTypeSettings current monoHinting
-						subpixelPosition: validSub]]
+						subpixelPosition: validSub
+						scale: scale]]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FreeTypeFont >> hasDistinctGlyphsForAll: asciiString [
 	"Answer true if the receiver has glyphs for all the characters
 	in asciiString and no single glyph is shared by more than one character, false otherwise.
@@ -406,7 +414,7 @@ FreeTypeFont >> hasDistinctGlyphsForAll: asciiString [
 	^true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FreeTypeFont >> hasGlyphsForAll: asciiString [
 	"Answer true if the receiver has glyphs for all the characters
 	in asciiString, false otherwise.
@@ -419,29 +427,29 @@ FreeTypeFont >> hasGlyphsForAll: asciiString [
 	^true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FreeTypeFont >> hasSubPixelAntiAliasing [
 	^ FreeTypeSettings current useSubPixelAntiAliasing
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 FreeTypeFont >> hash [
 	^pointSize hash
 ]
 
-{ #category : #measuring }
+{ #category : 'measuring' }
 FreeTypeFont >> height [
 
 	^cachedHeight ifNil:[
 		cachedHeight := (self face height * self pixelSize / self face unitsPerEm) ceiling ]
 ]
 
-{ #category : #measuring }
+{ #category : 'measuring' }
 FreeTypeFont >> hintedKerningLeft: leftChar right: rightChar [
 	^(self linearKerningLeft: leftChar right: rightChar) rounded
 ]
 
-{ #category : #measuring }
+{ #category : 'measuring' }
 FreeTypeFont >> hintedWidthOf: aCharacter [
 	"retrieve advance width for character. try to use cached glyph if possible"
 	| charCode answer |
@@ -451,68 +459,68 @@ FreeTypeFont >> hintedWidthOf: aCharacter [
 		atFont: self
 		charCode: charCode
 		type: FreeTypeCacheWidth
+		scale: 1
 		ifAbsentPut: [self getWidthOf: aCharacter].
 	^answer
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FreeTypeFont >> initialize: aFont [
 
 	self face: aFont face
 ]
 
-{ #category : #displaying }
-FreeTypeFont >> installOn: aBitBlt foregroundColor: foreColor backgroundColor: backColor [
+{ #category : 'displaying' }
+FreeTypeFont >> installOn: aBitBlt foregroundColor: foreColor backgroundColor: backColor scale: scale [
 
-	| |
-	"fcolor := foreColor pixelValueForDepth: 32."
-	aBitBlt installFreeTypeFont: self foregroundColor: foreColor backgroundColor: backColor
+	aBitBlt installFreeTypeFont: self foregroundColor: foreColor backgroundColor: backColor scale: scale
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FreeTypeFont >> isBold [
 	^(simulatedEmphasis == nil and:[self face isBold])
 		or:[self isSimulatedBold]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FreeTypeFont >> isFixedWidth [
 	^self face isFixedWidth
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FreeTypeFont >> isItalic [
 	^(simulatedEmphasis == nil and:[self face isItalic])
 		or:[self isSimulatedItalic]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FreeTypeFont >> isRegular [
 	^(simulatedEmphasis == nil and:[self face isRegular])
 		or: [self isSimulatedRegular]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FreeTypeFont >> isSimulatedBold [
 	^self simulatedEmphasis anyMask: 1
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FreeTypeFont >> isSimulatedItalic [
 	^self simulatedEmphasis anyMask: 2
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FreeTypeFont >> isSimulatedRegular [
 	^simulatedEmphasis = 0
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FreeTypeFont >> isSimulatedStyle [
-	^simulatedEmphasis notNil
+
+	^ simulatedEmphasis isNotNil
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FreeTypeFont >> isSubPixelPositioned [
 	"Answer true if the receiver is currently using subpixel positioned
 	glyphs, false otherwise. This affects how padded space sizes are calculated
@@ -523,7 +531,7 @@ FreeTypeFont >> isSubPixelPositioned [
 	^self subPixelPositioned
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FreeTypeFont >> isSymbolFont [
 	| charmaps |
 	symbolFont ifNotNil:[^symbolFont].
@@ -533,26 +541,26 @@ FreeTypeFont >> isSymbolFont [
 	^symbolFont := false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FreeTypeFont >> isTTCFont [
 	"not really - look for senders of this"
 	^true
 ]
 
-{ #category : #measuring }
+{ #category : 'measuring' }
 FreeTypeFont >> kerningLeft: leftChar right: rightChar [
 	^self isSubPixelPositioned
 		ifTrue: [self linearKerningLeft: leftChar right: rightChar]
 		ifFalse:[self hintedKerningLeft: leftChar right: rightChar]
 ]
 
-{ #category : #measuring }
+{ #category : 'measuring' }
 FreeTypeFont >> lineGrid [
 
 	^self height
 ]
 
-{ #category : #measuring }
+{ #category : 'measuring' }
 FreeTypeFont >> linearKerningLeft: leftChar right: rightChar [
 	| f  l r |
 
@@ -579,7 +587,7 @@ FreeTypeFont >> linearKerningLeft: leftChar right: rightChar [
 	^(f kerningLeft: l right: r) x asFloat *  self pixelSize / f unitsPerEm
 ]
 
-{ #category : #measuring }
+{ #category : 'measuring' }
 FreeTypeFont >> linearWidthOf: aCharacter [
 	"retrieve linear advance width for character. try to use cached glyph if possible.
 	This is the scaled, unrounded advance width."
@@ -590,51 +598,53 @@ FreeTypeFont >> linearWidthOf: aCharacter [
 		atFont: self
 		charCode: charCode
 		type: FreeTypeCacheLinearWidth
+		scale: 1
 		ifAbsentPut: [self getLinearWidthOf: aCharacter].
 	^answer
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeFont >> maxAscii [
 	"should have default in AbstractFont"
 	^SmallInteger maxVal
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeFont >> minAscii [
 	"should have default in AbstractFont"
 	^0
 ]
 
-{ #category : #'glyph lookup' }
-FreeTypeFont >> mode41GlyphOf: aCharacter colorValue: aColorValue mono: monoBoolean subpixelPosition: sub [
+{ #category : 'glyph lookup' }
+FreeTypeFont >> mode41GlyphOf: aCharacter colorValue: aColorValue mono: monoBoolean subpixelPosition: sub scale: scale [
 
-	| |
-	^FreeTypeCache current
+	^ FreeTypeCache current
 		atFont: self
 		charCode: aCharacter asUnicode asInteger
 		type: (FreeTypeCacheGlyph + sub)
+		scale: scale
 		ifAbsentPut: [
 			FreeTypeGlyphRenderer current
 				mode41GlyphOf: aCharacter
 				colorValue: aColorValue
 				mono: monoBoolean
 				subpixelPosition: sub
-				font: self]
+				font: self
+				scale: scale ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeFont >> mutex [
 
 	^ mutex ifNil: [ mutex := Semaphore forMutualExclusion ]
 ]
 
-{ #category : #measuring }
+{ #category : 'measuring' }
 FreeTypeFont >> pixelSize [
 	^pixelSize ifNil:[pixelSize := super pixelSize rounded]
 ]
 
-{ #category : #notifications }
+{ #category : 'notifications' }
 FreeTypeFont >> pixelsPerInchChanged [
 	"the TextStyle pixels per inch setting has changed"
 
@@ -643,22 +653,22 @@ FreeTypeFont >> pixelsPerInchChanged [
 	FreeTypeCache current removeAllForFont: self
 ]
 
-{ #category : #measuring }
+{ #category : 'measuring' }
 FreeTypeFont >> pointSize [
 	^pointSize
 ]
 
-{ #category : #measuring }
+{ #category : 'measuring' }
 FreeTypeFont >> pointSize: aSize [
 	pointSize := aSize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeFont >> postscriptName [
 	^self face postscriptName
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 FreeTypeFont >> printOn: aStream [
 
 	aStream
@@ -672,19 +682,19 @@ FreeTypeFont >> printOn: aStream [
 		nextPut: $)
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FreeTypeFont >> releaseCachedState [
 	face releaseCachedState.
 	FreeTypeCache current removeAllForFont: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeFont >> setFace: aFreetypeFace pointSize: anInteger [
 	face := aFreetypeFace.
 	pointSize := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeFont >> simulatedBoldStrength [
 	"Answer the amount by which glyphs need to be emboldened/lightened
 	according to the receiver's simulated emphasis and the face's real emphasis"
@@ -698,7 +708,7 @@ FreeTypeFont >> simulatedBoldStrength [
 	^0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeFont >> simulatedEmphasis [
 	"Answer the simulatedEmphasis.
 	This is
@@ -709,7 +719,7 @@ FreeTypeFont >> simulatedEmphasis [
 	^simulatedEmphasis ifNil:[0]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeFont >> simulatedEmphasis: anIntegerOrNil [
 	"Set the simulatedEmphasis.
 	This is
@@ -721,7 +731,7 @@ FreeTypeFont >> simulatedEmphasis: anIntegerOrNil [
 	simulatedEmphasis := anIntegerOrNil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeFont >> simulatedItalicSlant [
 	"Answer the slant that needs to be added to italicize/un-italicize
 	glyphs according to the receiver's simulated emphasis and the face's
@@ -736,33 +746,35 @@ FreeTypeFont >> simulatedItalicSlant [
 	^0
 ]
 
-{ #category : #metrics }
+{ #category : 'metrics' }
 FreeTypeFont >> strikeoutThickness [
 	^ self underlineThickness
 ]
 
-{ #category : #metrics }
+{ #category : 'metrics' }
 FreeTypeFont >> strikeoutTop [
 	^ (((self face ascender / 4) * self pixelSize / self face unitsPerEm) negated - (self strikeoutThickness/2)) rounded
 ]
 
-{ #category : #'glyph lookup' }
-FreeTypeFont >> subGlyphOf: aCharacter colorValue: aColorValue mono: monoBoolean subpixelPosition: sub [
+{ #category : 'glyph lookup' }
+FreeTypeFont >> subGlyphOf: aCharacter colorValue: aColorValue mono: monoBoolean subpixelPosition: sub scale: scale [
 
-	^FreeTypeCache current
+	^ FreeTypeCache current
 		atFont: self
 		charCode: aCharacter asUnicode asInteger
 		type: FreeTypeCacheGlyphLCD + sub
+		scale: scale
 		ifAbsentPut: [
 			FreeTypeGlyphRenderer current
 				subGlyphOf: aCharacter
 				colorValue: aColorValue
 				mono: monoBoolean
 				subpixelPosition: sub
-				font: self]
+				font: self
+				scale: scale ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FreeTypeFont >> subPixelPositioned [
 	"Answer true if the receiver is currently using subpixel positioned
 	glyphs, false otherwise. This affects how padded space sizes are calculated
@@ -774,37 +786,37 @@ FreeTypeFont >> subPixelPositioned [
 			subPixelPositioned := settings hinting not or:[settings lightHinting]]
 ]
 
-{ #category : #metrics }
+{ #category : 'metrics' }
 FreeTypeFont >> underlineThickness [
 	^ self face underlineThickness * self pixelSize / self face unitsPerEm
 ]
 
-{ #category : #metrics }
+{ #category : 'metrics' }
 FreeTypeFont >> underlineTop [
 	^ ((self face underlinePosition * self pixelSize / self face unitsPerEm) negated - (self underlineThickness/2)) rounded + 1 "needs the +1 , possibly because glyph origins are moved down by 1 so that their baselines line up with strike fonts"
 ]
 
-{ #category : #measuring }
+{ #category : 'measuring' }
 FreeTypeFont >> unicodeToMacRoman: aCharacter [
 
 	^ (#macroman asZnCharacterEncoder decodeAsCodePoints: { aCharacter codePoint }) first
 ]
 
-{ #category : #validation }
+{ #category : 'validation' }
 FreeTypeFont >> validate [
 	self face validate
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeFont >> veryDeepCopyWith: deepCopier [
 ]
 
-{ #category : #measuring }
+{ #category : 'measuring' }
 FreeTypeFont >> widthAndKernedWidthCache [
 	^widthAndKernedWidthCache ifNil:[widthAndKernedWidthCache := Dictionary new]
 ]
 
-{ #category : #measuring }
+{ #category : 'measuring' }
 FreeTypeFont >> widthAndKernedWidthOfLeft: leftCharacter right: rightCharacterOrNil into: aTwoElementArray [
 	"Set the first element of aTwoElementArray to the width of leftCharacter and
 	the second element to the width of left character when kerned with
@@ -827,7 +839,7 @@ FreeTypeFont >> widthAndKernedWidthOfLeft: leftCharacter right: rightCharacterOr
 	^aTwoElementArray
 ]
 
-{ #category : #measuring }
+{ #category : 'measuring' }
 FreeTypeFont >> widthOf: aCharacter [
 	"retrieve advance width for character. try to use cached glyph if possible"
 
@@ -837,7 +849,7 @@ FreeTypeFont >> widthOf: aCharacter [
 			  ifFalse: [ self hintedWidthOf: aCharacter ] ]
 ]
 
-{ #category : #measuring }
+{ #category : 'measuring' }
 FreeTypeFont >> widthOfString: aString from: startIndex to: stopIndex [
 	"Measure the length of the given string between start and stop index.
 	Currently this allows for the right side bearing of the last char, but does not allow for the left side bearing of the first char. We really need a new method - boundingBoxOfString that allows for both. Senders of this will also need to know the LSB of the first char, and position their text accordingly"

@@ -1,15 +1,17 @@
 Class {
-	#name : #ClyAllVariablesQueryTest,
-	#superclass : #ClyVariableQueryTest,
-	#category : #'Calypso-SystemQueries-Tests-Queries'
+	#name : 'ClyAllVariablesQueryTest',
+	#superclass : 'ClyVariableQueryTest',
+	#category : 'Calypso-SystemQueries-Tests-Queries',
+	#package : 'Calypso-SystemQueries-Tests',
+	#tag : 'Queries'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClyAllVariablesQueryTest >> createQuery [
 	^ClyAllVariablesQuery from: ClyClassScope of: ClyClass2FromP1Mock in: environment
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyAllVariablesQueryTest >> testCheckIfEmpty [
 	query scope: (ClyClassScope of: ClyClass2FromP1Mock in: environment).
 	self deny: query checkEmptyResult.
@@ -18,7 +20,7 @@ ClyAllVariablesQueryTest >> testCheckIfEmpty [
 	self assert: query checkEmptyResult
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyAllVariablesQueryTest >> testFromSingleClass [
 
 	| varNames |

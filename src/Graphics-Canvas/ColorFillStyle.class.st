@@ -2,16 +2,18 @@
 Simple fillstyle that draws a color at the specified origin with option extent.
 "
 Class {
-	#name : #ColorFillStyle,
-	#superclass : #SolidFillStyle,
+	#name : 'ColorFillStyle',
+	#superclass : 'SolidFillStyle',
 	#instVars : [
 		'origin',
 		'extent'
 	],
-	#category : #'Graphics-Canvas-Fills'
+	#category : 'Graphics-Canvas-Fills',
+	#package : 'Graphics-Canvas',
+	#tag : 'Fills'
 }
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ColorFillStyle >> = anObject [
 
 	^ super = anObject
@@ -19,21 +21,21 @@ ColorFillStyle >> = anObject [
 			and: [ extent = anObject extent ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ColorFillStyle >> extent [
 	"Answer the value of extent"
 
 	^ extent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ColorFillStyle >> extent: anObject [
 	"Set the value of extent"
 
 	extent := anObject
 ]
 
-{ #category : #operating }
+{ #category : 'operating' }
 ColorFillStyle >> fillRectangle: aRectangle on: aCanvas [
 	"Fill the given rectangle on the given canvas with the receiver."
 
@@ -43,21 +45,21 @@ ColorFillStyle >> fillRectangle: aRectangle on: aCanvas [
 	aCanvas fillRectangle: (o corner: c) basicFillStyle: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ColorFillStyle >> isOrientedFill [
 	"Answer true if origin is not nil so that morph movement adjusts origin."
 
-	^self origin notNil
+	^self origin isNotNil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ColorFillStyle >> origin [
 	"Answer the value of origin"
 
 	^ origin
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ColorFillStyle >> origin: anObject [
 	"Set the value of origin"
 

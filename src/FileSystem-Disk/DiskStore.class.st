@@ -3,8 +3,8 @@ I am an abstract superclass for disk store implementations. My subclasses provid
 
 "
 Class {
-	#name : #DiskStore,
-	#superclass : #FileSystemStore,
+	#name : 'DiskStore',
+	#superclass : 'FileSystemStore',
 	#instVars : [
 		'maxFileNameLength'
 	],
@@ -12,10 +12,12 @@ Class {
 		'CurrentFS',
 		'DefaultWorkingDirectory'
 	],
-	#category : #'FileSystem-Disk-Store'
+	#category : 'FileSystem-Disk-Store',
+	#package : 'FileSystem-Disk',
+	#tag : 'Store'
 }
 
-{ #category : #current }
+{ #category : 'current' }
 DiskStore class >> activeClass [
 
 	| writableClass |
@@ -28,7 +30,7 @@ DiskStore class >> activeClass [
 		ifTrue: [ writableClass readOnlyVariant ]
 ]
 
-{ #category : #'system startup' }
+{ #category : 'system startup' }
 DiskStore class >> checkVMVersion [
 	"Display a warning if the VM is too old"
 	| displayError |
@@ -38,23 +40,23 @@ DiskStore class >> checkVMVersion [
 	] on: Error do: [ :e| displayError value ]
 ]
 
-{ #category : #current }
+{ #category : 'current' }
 DiskStore class >> createDefault [
 	^ self new
 ]
 
-{ #category : #current }
+{ #category : 'current' }
 DiskStore class >> current [
 	^ self currentFileSystem store
 ]
 
-{ #category : #current }
+{ #category : 'current' }
 DiskStore class >> currentFileSystem [
 	^ CurrentFS ifNil: [
 		CurrentFS := FileSystem store: self activeClass createDefault]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiskStore class >> defaultWorkingDirectory [
 	"Ask the VM for the default working directory.
 	Clients should normally use the instance side method which caches this value."
@@ -64,28 +66,30 @@ DiskStore class >> defaultWorkingDirectory [
 	^(Path from: pathString delimiter: self delimiter)
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 DiskStore class >> delimiter [
 	^ self current delimiter
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 DiskStore class >> initialize [
+
 	SessionManager default
 		registerSystemClassNamed: self name
+		atPriority: 90
 ]
 
-{ #category : #current }
+{ #category : 'current' }
 DiskStore class >> isActiveClass [
 	^ self delimiter = File delimiter
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 DiskStore class >> maxFileNameLength [
 	self subclassResponsibility
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 DiskStore class >> readOnlyVariant [
 
 	"return a class variant for read-only store. It should be properly defined in my subclasses"
@@ -93,31 +97,31 @@ DiskStore class >> readOnlyVariant [
 	^ self subclassResponsibility
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 DiskStore class >> reset [
 	DefaultWorkingDirectory := nil.
 	CurrentFS := nil
 ]
 
-{ #category : #current }
+{ #category : 'current' }
 DiskStore class >> resetAsReadOnly [
 
 	self currentFileSystem beReadOnly
 ]
 
-{ #category : #current }
+{ #category : 'current' }
 DiskStore class >> resetAsWritable [
 
 	self currentFileSystem beWritable
 ]
 
-{ #category : #'system startup' }
+{ #category : 'system startup' }
 DiskStore class >> shutDown: quitting [
 	"Force to detect filesystem after image restart"
 	self reset
 ]
 
-{ #category : #'system startup' }
+{ #category : 'system startup' }
 DiskStore class >> startUp: resuming [
 	self checkVMVersion.
 	resuming
@@ -125,7 +129,7 @@ DiskStore class >> startUp: resuming [
 	DefaultWorkingDirectory := self defaultWorkingDirectory
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 DiskStore class >> writableVariant [
 
 	"return a class variant for read-only store. It should be properly defined in my subclasses"
@@ -133,43 +137,43 @@ DiskStore class >> writableVariant [
 	^ self
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 DiskStore >> = other [
 	^ self species = other species
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiskStore >> accessTimeOf: aPath [
 	"Return the date of last access of the File described by aPath"
 
 	^DateAndTime fromInternalTime: (File fileAttribute: (self stringFromPath: aPath) number: 9)
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 DiskStore >> asReadOnlyStore [
 
 	^ self class readOnlyVariant createDefault
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 DiskStore >> asWritableStore [
 
 	^ self class writableVariant createDefault
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DiskStore >> basenameFromEntry: entry [
 	^ entry at: 1
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DiskStore >> basicCreationTimeOf: anEntry [
 	"The entry contains the seconds since the epoch in local time"
 
 	^ (DateAndTime fromSeconds: (anEntry at: 2) offset: 0) translateTo: DateAndTime localOffset
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DiskStore >> basicEntry: directoryEntry path: aPath nodesDo: aBlock [
 	| encodedPathString index entry pathString |
 
@@ -187,7 +191,7 @@ DiskStore >> basicEntry: directoryEntry path: aPath nodesDo: aBlock [
 			entry := File lookupEntryIn: encodedPathString index: index ]
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 DiskStore >> basicEntryAt: aPath [
 	| encodedPath encodedBasename |
 
@@ -198,7 +202,7 @@ DiskStore >> basicEntryAt: aPath [
 		ifNil: [ #badDirectoryPath ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DiskStore >> basicIsDirectory: aNode [
 	| mask statAttributes |
 
@@ -208,18 +212,18 @@ DiskStore >> basicIsDirectory: aNode [
 	^(mask bitAnd: File s_IFMT) = File s_IFDIR
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DiskStore >> basicIsFile: anEntry [
 	^ (anEntry at: 4) not
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DiskStore >> basicModificationTimeOf: anEntry [
 	"The entry contains the seconds since the epoch in local time"
 	^ (DateAndTime fromSeconds: (anEntry at: 3) offset: 0) translateTo: DateAndTime localOffset
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 DiskStore >> basicOpen: aPath writable: aBoolean [
 	| string encoded |
 	string := self stringFromPath: aPath.
@@ -227,19 +231,19 @@ DiskStore >> basicOpen: aPath writable: aBoolean [
 	^ File open: encoded writable: aBoolean
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DiskStore >> basicPosixPermissions: anEntry [
 	^ (anEntry size >= 6)
 		ifTrue: [ anEntry at: 6 ]
 		ifFalse: [ nil ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DiskStore >> basicSizeOf: anEntry [
 	^ (anEntry at: 5)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiskStore >> changeTimeOf: aPath [
 	"Answer the time the metadata of aPath was last changed.
 	On platforms that don't support change time, use the modification time."
@@ -251,7 +255,7 @@ DiskStore >> changeTimeOf: aPath [
 	^DateAndTime fromInternalTime: time
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 DiskStore >> checkName: aFileName fixErrors: fixErrors [
 	"Check a string aFileName for validity as a file name. Answer the original file name if it is valid. If the name is not valid (e.g., it is too long or contains illegal characters) and fixing is false, raise an error. If fixing is true, fix the name (usually by truncating and/or tranforming characters), and answer the corrected name. The default behavior is just to truncate the name to the maximum length for this platform. Subclasses can do any kind of checking and correction appropriate for their platform."
 
@@ -265,7 +269,7 @@ DiskStore >> checkName: aFileName fixErrors: fixErrors [
 	^ aFileName
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 DiskStore >> createDirectory: path [
 	"Create a directory for the argument path.
 	If the path refers to an existing file, raise FileExists.
@@ -290,7 +294,7 @@ DiskStore >> createDirectory: path [
 	^ self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiskStore >> creationTimeOf: aPath [
 	"Answer the creation time of aPath.  If the platform doesn't support creation time, use change time"
 
@@ -300,7 +304,7 @@ DiskStore >> creationTimeOf: aPath [
 	^DateAndTime fromInternalTime: time
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiskStore >> defaultWorkingDirectory [
 	"Answer the default working directory, which is defined as the directory where the image resides."
 
@@ -308,28 +312,31 @@ DiskStore >> defaultWorkingDirectory [
 		ifNil: [ self class defaultWorkingDirectory ]
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 DiskStore >> delete: path [
-	| pathString |
+	"Delete the supplied path on the receiver"
+	| pathString isSymlink |
 
-	((self exists: path) or: [ self isSymlink: path ])
+	isSymlink := self isSymlink: path.
+	((self exists: path) or: [ isSymlink ])
 		ifFalse: [ ^ FileDoesNotExistException signalWith: path ].
 
 	pathString := self stringFromPath: path.
 
-	(self isDirectory: path) ifTrue:
+	"Symbolic links answer true to isDirectory:, but must be deleted as a regular file"
+	((self isDirectory: path) and: [ isSymlink not ]) ifTrue:
 		[ File deleteDirectory: (File encodePathString: pathString) ]
 	ifFalse:
 		[ File deleteFile: pathString ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiskStore >> deviceIdOf: aPath [
 	"Return the device id of the file at aPath"
 	^File fileAttribute: (self stringFromPath: aPath) number: 4
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 DiskStore >> directoryAt: aPath  directoryNodesDo: aBlock [
 	^ self
 		directoryAt: aPath
@@ -338,7 +345,7 @@ DiskStore >> directoryAt: aPath  directoryNodesDo: aBlock [
 				ifTrue: [ aBlock value: node ]]
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 DiskStore >> directoryAt: aPath fileNodesDo: aBlock [
 	^ self
 		directoryAt: aPath
@@ -347,7 +354,7 @@ DiskStore >> directoryAt: aPath fileNodesDo: aBlock [
 				ifFalse: [ aBlock value: node ]]
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 DiskStore >> directoryAt: aPath ifAbsent: absentBlock nodesDo: aBlock [
 
 	^[ self directoryAt: aPath nodesDo: aBlock ]
@@ -355,7 +362,7 @@ DiskStore >> directoryAt: aPath ifAbsent: absentBlock nodesDo: aBlock [
 		do: [ absentBlock value ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DiskStore >> directoryAt: aPath nodesDo: aBlock [
 
 	| pathString openDir dirPointer entryData fileName attributes targetName |
@@ -375,7 +382,7 @@ DiskStore >> directoryAt: aPath nodesDo: aBlock [
 		dirPointer := openDir.
 		entryData := File primReaddir: dirPointer ].
 	[
-		[ entryData notNil ] whileTrue:
+		[ entryData isNotNil ] whileTrue:
 			[
 				fileName := entryData first.
 				entryData at: 1 put: (File decodePathString: fileName).
@@ -389,7 +396,7 @@ DiskStore >> directoryAt: aPath nodesDo: aBlock [
 	] ensure: [ File primClosedir: dirPointer ]
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 DiskStore >> entryFromNode: node path: path for: aFileSystem [
 
 	| entryPath |
@@ -399,104 +406,104 @@ DiskStore >> entryFromNode: node path: path for: aFileSystem [
 		statAttributes: (node at: 2)
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 DiskStore >> exists: aPath [
 
 	aPath isRoot ifTrue: [ ^true ].
 	^File exists: (self stringFromPath: aPath)
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 DiskStore >> file: path posixPermissions: anInteger [
 	"Set the mode of pathString to anInteger (as defined by chmod())"
 
 	^File file:(self stringFromPath: path) posixPermissions: anInteger
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 DiskStore >> file: path symlinkUid: uidInteger gid: gidInteger [
 	"Set the owner and group of path by numeric id."
 
 	^File file: (self stringFromPath: path) symlinkUid: uidInteger gid: gidInteger
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 DiskStore >> file: path uid: uidInteger gid: gidInteger [
 	"Set the owner and group of path by numeric id."
 
 	^File file: (self stringFromPath: path) uid: uidInteger gid: gidInteger
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 DiskStore >> forReferencePrintOn: aStream [
 	aStream nextPutAll: 'File @ '
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiskStore >> gidOf: aPath [
 	"Return the gid of the File described by aPath"
 	^File fileAttribute: (self stringFromPath: aPath) number: 7
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiskStore >> handleClass [
 	^ FileHandle
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 DiskStore >> hash [
 	^ self species hash
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DiskStore >> initialize [
 	super initialize.
 	maxFileNameLength := Smalltalk vm maxFilenameLength ifNil: [ 255 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiskStore >> inodeOf: aPath [
 	"Return the inode number of the File described by aPath"
 	^File fileAttribute: (self stringFromPath: aPath) number: 3
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DiskStore >> isBlock: aPath [
 	"Answer a boolean indicating whether the supplied path is a Block file"
 	^File isBlock: (self stringFromPath: aPath)
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DiskStore >> isCharacter: aPath [
 	"Answer a boolean indicating whether the supplied path is a Character file"
 	^File isCharacter: (self stringFromPath: aPath)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiskStore >> isDirectory: aPath [
 	"Answer a boolean indicating whether the supplied path is a Directory file"
 	^aPath isRoot or: [File isDirectory: (self stringFromPath: aPath)]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DiskStore >> isDiskFileSystem [
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DiskStore >> isExecutable: aPath [
 	"Answer a boolean indicating whether the supplied path is executable"
 
 	^File isExecutable: (self stringFromPath: aPath)
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DiskStore >> isFIFO: aPath [
 	"Answer a boolean indicating whether the supplied path is a FIFO file (pipe)"
 	^File isFIFO: (self stringFromPath: aPath)
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DiskStore >> isFile: aPath [
 	"Answer a boolean indicating whether the supplied path is a file, i.e. not a directory"
 
@@ -504,25 +511,25 @@ DiskStore >> isFile: aPath [
 	^File isFile: (self stringFromPath: aPath)
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DiskStore >> isReadable: aPath [
 
 	^File isReadable: (self stringFromPath: aPath)
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DiskStore >> isRegular: aPath [
 	"Answer a boolean indicating whether the supplied path is a Regular file"
 	^File isRegular: (self stringFromPath: aPath)
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DiskStore >> isSocket: aPath [
 	"Answer a boolean indicating whether the supplied path is a Socket file"
 	^File isSocket: (self stringFromPath: aPath)
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 DiskStore >> isSymlink: aPath [
 	"Answer a boolean indicating whether aPath is a symbolic link"
 
@@ -530,51 +537,51 @@ DiskStore >> isSymlink: aPath [
 	^File isSymlink: (self stringFromPath: aPath)
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DiskStore >> isWritable [
 
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DiskStore >> isWritable: aPath [
 
 	^File isWritable: (self stringFromPath: aPath)
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 DiskStore >> maxFileNameLength [
 	^ maxFileNameLength
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiskStore >> modificationTimeOf: aPath [
 	"Return the date of last modification of the File described by aPath"
 
 	^DateAndTime fromInternalTime: (File fileAttribute: (self stringFromPath: aPath) number: 10)
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DiskStore >> nodeAt: aPath ifPresent: presentBlock ifAbsent: absentBlock [
 	"FileSystemStore provides a general implementation of the attributes originally supported by FilePlugin.  This assumes always retrieving a set of attributes and accessing the required attribute.  However this is expensive for the disk system (one or more Arrays has to be instantiated and garbage collected for a single attribute).  FileAttributesPlugin allows file attributes to be retrieved one at a time, so this method should never be used for DiskStore"
 
 	^self shouldNotImplement
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiskStore >> numberOfHardLinks: aPath [
 	"Return the number of hard links for the File described by aPath"
 	^File fileAttribute: (self stringFromPath: aPath) number: 5
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiskStore >> permissions: aPath [
 	"Answer the FileSystemPermissions for the supplied path"
 
 	^FileSystemPermission posixPermissions: (File posixPermissions: (self stringFromPath: aPath))
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 DiskStore >> rename: sourcePath to: destinationPath [
 
 	| sourcePathString encodedSourcePathString targetPathString encodedTargetPathString |
@@ -585,7 +592,7 @@ DiskStore >> rename: sourcePath to: destinationPath [
 	^ File rename: encodedSourcePathString to: encodedTargetPathString
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DiskStore >> rootEntry [
 	"Answer a pseudo Directory Entry for the root directory"
 
@@ -596,18 +603,18 @@ DiskStore >> rootEntry [
 			yourself
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DiskStore >> rootNode [
 	^ #('' 0 0 true 0 8r555)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiskStore >> sizeOf: aPath [
 	"Return the size of the File described by aPath"
 	^File fileAttribute: (self stringFromPath: aPath) number: 8
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiskStore >> uidOf: aPath [
 	"Return the uid of the File described by aPath"
 	^File fileAttribute: (self stringFromPath: aPath) number: 6

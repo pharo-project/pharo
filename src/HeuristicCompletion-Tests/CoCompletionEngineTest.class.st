@@ -1,33 +1,34 @@
 Class {
-	#name : #CoCompletionEngineTest,
-	#superclass : #CompletionEngineTest,
-	#category : #'HeuristicCompletion-Tests'
+	#name : 'CoCompletionEngineTest',
+	#superclass : 'CompletionEngineTest',
+	#category : 'HeuristicCompletion-Tests',
+	#package : 'HeuristicCompletion-Tests'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 CoCompletionEngineTest class >> shouldInheritSelectors [
 
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoCompletionEngineTest >> doItContext [
 
 	^ nil
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CoCompletionEngineTest >> hasBindingOf: aSymbol [
 	^ false
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 CoCompletionEngineTest >> newCompletionEngine [
 
 	^ CoCompletionEngine new
 ]
 
-{ #category : #'tests - interaction' }
+{ #category : 'tests - interaction' }
 CoCompletionEngineTest >> testCmdCtrlLeft [
 
 	self setEditorTextWithCaret: 'self asOrder|ed'.
@@ -52,7 +53,7 @@ CoCompletionEngineTest >> testCmdCtrlLeft [
 	self deny: controller isMenuOpen
 ]
 
-{ #category : #'tests - interaction' }
+{ #category : 'tests - interaction' }
 CoCompletionEngineTest >> testCmdCtrlRight [
 
 	self setEditorTextWithCaret: 'self asOrder|ed trac'.
@@ -77,7 +78,7 @@ CoCompletionEngineTest >> testCmdCtrlRight [
 	self deny: controller isMenuOpen
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoCompletionEngineTest >> testCompleteSuper [
 
 	| entries |
@@ -156,7 +157,7 @@ CoCompletionEngineTest >> testCompleteSuper [
 	self assertEmpty: entries
 ]
 
-{ #category : #'tests - interaction' }
+{ #category : 'tests - interaction' }
 CoCompletionEngineTest >> testEndClosesCompletionContext [
 
 	| text |
@@ -173,7 +174,7 @@ CoCompletionEngineTest >> testEndClosesCompletionContext [
 	self deny: controller hasCompletionContext
 ]
 
-{ #category : #'tests - interaction' }
+{ #category : 'tests - interaction' }
 CoCompletionEngineTest >> testEndGoesToEndOfLine [
 
 	| text |
@@ -190,7 +191,7 @@ CoCompletionEngineTest >> testEndGoesToEndOfLine [
 	self assert: editor caret equals: text size + 1
 ]
 
-{ #category : #'tests - interaction' }
+{ #category : 'tests - interaction' }
 CoCompletionEngineTest >> testExitingWordClosesCompletionContext [
 
 	self setEditorTextWithCaret: 'self mEthOdThatDoesNotExis|t toto'.
@@ -226,7 +227,7 @@ CoCompletionEngineTest >> testExitingWordClosesCompletionContext [
 	self deny: controller hasCompletionContext
 ]
 
-{ #category : #'tests - interaction' }
+{ #category : 'tests - interaction' }
 CoCompletionEngineTest >> testHomeClosesCompletionContext [
 
 	| text |
@@ -243,7 +244,7 @@ CoCompletionEngineTest >> testHomeClosesCompletionContext [
 	self deny: controller hasCompletionContext
 ]
 
-{ #category : #'tests - interaction' }
+{ #category : 'tests - interaction' }
 CoCompletionEngineTest >> testHomeGoesToStartOfLine [
 
 	| text |
@@ -260,7 +261,7 @@ CoCompletionEngineTest >> testHomeGoesToStartOfLine [
 	self assert: editor caret equals: 1
 ]
 
-{ #category : #'tests - interaction' }
+{ #category : 'tests - interaction' }
 CoCompletionEngineTest >> testInitialCompletionEngineHasNoContext [
 
 	"If we did no interaction, no completion context should be initialized"
@@ -274,7 +275,7 @@ CoCompletionEngineTest >> testInitialCompletionEngineHasNoContext [
 	self deny: controller hasCompletionContext
 ]
 
-{ #category : #'tests - interaction' }
+{ #category : 'tests - interaction' }
 CoCompletionEngineTest >> testLeftWithoutResultsBroadensSelection [
 
 	| text |
@@ -291,7 +292,7 @@ CoCompletionEngineTest >> testLeftWithoutResultsBroadensSelection [
 	self assert: controller context completionToken equals: 'mEthOdThatDoesNotExis'
 ]
 
-{ #category : #'tests - interaction' }
+{ #category : 'tests - interaction' }
 CoCompletionEngineTest >> testLeftWithoutResultsDoesNotCloseContext [
 
 	| text firstContext |
@@ -309,7 +310,7 @@ CoCompletionEngineTest >> testLeftWithoutResultsDoesNotCloseContext [
 	self assert: controller context equals: firstContext
 ]
 
-{ #category : #'tests - interaction' }
+{ #category : 'tests - interaction' }
 CoCompletionEngineTest >> testOpenMenuCreatesCompletionContext [
 
 	| text |
@@ -324,7 +325,7 @@ CoCompletionEngineTest >> testOpenMenuCreatesCompletionContext [
 	self assert: controller hasCompletionContext
 ]
 
-{ #category : #'tests - interaction' }
+{ #category : 'tests - interaction' }
 CoCompletionEngineTest >> testTypeCharacterWithoutResultsDoesNotCloseContext [
 
 	| text firstContext |
@@ -342,7 +343,7 @@ CoCompletionEngineTest >> testTypeCharacterWithoutResultsDoesNotCloseContext [
 	self assert: controller context equals: firstContext
 ]
 
-{ #category : #'tests - interaction' }
+{ #category : 'tests - interaction' }
 CoCompletionEngineTest >> testTypeCharacterWithoutResultsNarrowsSelection [
 
 	| text |

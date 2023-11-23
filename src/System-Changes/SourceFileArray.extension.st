@@ -1,35 +1,35 @@
-Extension { #name : #SourceFileArray }
+Extension { #name : 'SourceFileArray' }
 
-{ #category : #'*System-Changes' }
-SourceFileArray >> changeRecordsFor: aMethodDefinition [
+{ #category : '*System-Changes' }
+SourceFileArray >> changeRecordsFor: aMethod [
 
 	^ self
-		changeRecordsFrom: aMethodDefinition sourcePointer
-		className: aMethodDefinition methodClass instanceSide name
-		isMeta: aMethodDefinition methodClass isMeta
+		changeRecordsFrom: aMethod sourcePointer
+		className: aMethod methodClass instanceSide name
+		isMeta: aMethod methodClass isMeta
 ]
 
-{ #category : #'*System-Changes' }
-SourceFileArray >> changeRecordsFor: aMethodDefinition detect: aUnaryBlock [
+{ #category : '*System-Changes' }
+SourceFileArray >> changeRecordsFor: aMethod detect: aUnaryBlock [
 	"Try to detect the most recent ChangeRecord that satisfies aUnaryBlock. Answer nil if none satisfies."
 
-	self changeRecordsFor: aMethodDefinition do: [ :changeRecord |
+	self changeRecordsFor: aMethod do: [ :changeRecord |
 		(aUnaryBlock value: changeRecord protocol) ifTrue: [ ^ changeRecord ] ].
 	^ nil
 ]
 
-{ #category : #'*System-Changes' }
-SourceFileArray >> changeRecordsFor: aMethodDefinition do: aUnaryBlock [
+{ #category : '*System-Changes' }
+SourceFileArray >> changeRecordsFor: aMethod do: aUnaryBlock [
 	"Evaluate aUnaryBlock with each of the ChangeRecords of aMethodDefinition. Most recent changes are evaluated first."
 
 	^ self
-		changeRecordsFrom: aMethodDefinition sourcePointer
-		className: aMethodDefinition instanceSideParentName
-		isMeta: aMethodDefinition isMetaSide
+		changeRecordsFrom: aMethod sourcePointer
+		className: aMethod methodClass instanceSide name
+		isMeta: aMethod methodClass isMeta
 		do: aUnaryBlock
 ]
 
-{ #category : #'*System-Changes' }
+{ #category : '*System-Changes' }
 SourceFileArray >> changeRecordsFrom: initialSourcePointer className: theNonMetaClassName isMeta: classIsMeta [
 	"Answer the ChangeRecords of a method or class comment, starting from the initialSourcePointer.
 	Most recent changes go first."
@@ -46,7 +46,7 @@ SourceFileArray >> changeRecordsFrom: initialSourcePointer className: theNonMeta
 	^ changeRecords
 ]
 
-{ #category : #'*System-Changes' }
+{ #category : '*System-Changes' }
 SourceFileArray >> changeRecordsFrom: initialSourcePointer className: theNonMetaClassName isMeta: classIsMeta do: aUnaryBlock [
 	"Evaluate aUnaryBlock with each of the ChangeRecords of a method or class comment, starting from the initialSourcePointer.
 	Most recent changes are evaluated first."
@@ -59,7 +59,7 @@ SourceFileArray >> changeRecordsFrom: initialSourcePointer className: theNonMeta
 		| file previousFilePosition previousFileIndex preamble stamp protocol preambleTokens |
 		file := sourceFilesCopy fileAt: fileIndex ifAbsent: [ ^ self ].
 
-		[ filePosition notNil & file notNil ]
+		[ filePosition isNotNil & file isNotNil ]
 			whileTrue: [
 				file position: (0 max: filePosition - 150).	"Skip back to before the preamble"
 				[ file position < (filePosition - 1) ] whileTrue: [

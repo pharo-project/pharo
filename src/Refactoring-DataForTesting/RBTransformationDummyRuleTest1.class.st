@@ -1,10 +1,12 @@
 Class {
-	#name : #RBTransformationDummyRuleTest1,
-	#superclass : #RBFooDummyLintRuleTest1,
-	#category : #'Refactoring-DataForTesting-LittleHierarchy'
+	#name : 'RBTransformationDummyRuleTest1',
+	#superclass : 'RBFooDummyLintRuleTest1',
+	#category : 'Refactoring-DataForTesting-LittleHierarchy',
+	#package : 'Refactoring-DataForTesting',
+	#tag : 'LittleHierarchy'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBTransformationDummyRuleTest1 >> openEditor [
 	| rules |
 	rules := self failedRules.

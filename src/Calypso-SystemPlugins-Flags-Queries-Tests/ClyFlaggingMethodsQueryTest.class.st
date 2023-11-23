@@ -1,15 +1,16 @@
 Class {
-	#name : #ClyFlaggingMethodsQueryTest,
-	#superclass : #ClyMethodQueryTest,
-	#category : #'Calypso-SystemPlugins-Flags-Queries-Tests'
+	#name : 'ClyFlaggingMethodsQueryTest',
+	#superclass : 'ClyMethodQueryTest',
+	#category : 'Calypso-SystemPlugins-Flags-Queries-Tests',
+	#package : 'Calypso-SystemPlugins-Flags-Queries-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClyFlaggingMethodsQueryTest >> createQuery [
 	^ClyFlaggingMethodsQuery from: ClyClassScope of: Object in: environment
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyFlaggingMethodsQueryTest >> testCheckIfEmpty [
 	query scope: (ClyMethodScope
 		of: (ClyClassWithFlags >> #methodWithFlag)
@@ -22,7 +23,7 @@ ClyFlaggingMethodsQueryTest >> testCheckIfEmpty [
 	self assert: query checkEmptyResult
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyFlaggingMethodsQueryTest >> testFromTwoMethods [
 
 	self queryFromScope: ClyMethodScope ofAll: {
@@ -32,13 +33,13 @@ ClyFlaggingMethodsQueryTest >> testFromTwoMethods [
 	self assert: foundSelectors sorted asArray equals: #(methodWithFlag)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyFlaggingMethodsQueryTest >> testNotSelectsMethodWithoutFlag [
 
 	self deny: (query selectsMethod: ClyClassWithFlags >> #methodWithoutFlag)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyFlaggingMethodsQueryTest >> testSelectsMethodWithFlag [
 
 	self assert: (query selectsMethod: ClyClassWithFlags >> #methodWithFlag)

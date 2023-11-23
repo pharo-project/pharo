@@ -2,35 +2,37 @@
 This keeps track of the stack count for the BytecodeGenerator.
 "
 Class {
-	#name : #IRStackCount,
-	#superclass : #Object,
+	#name : 'IRStackCount',
+	#superclass : 'Object',
 	#instVars : [
 		'start',
 		'position',
 		'length'
 	],
-	#category : #'OpalCompiler-Core-Bytecode'
+	#category : 'OpalCompiler-Core-Bytecode',
+	#package : 'OpalCompiler-Core',
+	#tag : 'Bytecode'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 IRStackCount class >> new [
 
 	^ super new startAt: 0
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 IRStackCount class >> newOn: stack [
 
 	^ self startAt: stack position
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 IRStackCount class >> startAt: pos [
 
 	^ self new startAt: pos
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 IRStackCount >> = other [
 
 	^ self class == other class
@@ -39,19 +41,19 @@ IRStackCount >> = other [
 	  and: [length = other size]]]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 IRStackCount >> hash [
 
 	^ position hash bitXor: (length hash bitXor: start hash)
 ]
 
-{ #category : #results }
+{ #category : 'results' }
 IRStackCount >> length [
 
 	^length
 ]
 
-{ #category : #results }
+{ #category : 'results' }
 IRStackCount >> linkTo: stackOrNil [
 
 	stackOrNil ifNil: [^  self class newOn: self].
@@ -60,26 +62,26 @@ IRStackCount >> linkTo: stackOrNil [
 		ifFalse: [self error: 'stack out of sync in bytecode generator']
 ]
 
-{ #category : #affecting }
+{ #category : 'affecting' }
 IRStackCount >> pop [
 
 	^ self pop: 1
 ]
 
-{ #category : #affecting }
+{ #category : 'affecting' }
 IRStackCount >> pop: n [
 
 	(position := position - n) < 0
 		ifTrue: [self error: 'stack underflow in bytecode generator']
 ]
 
-{ #category : #results }
+{ #category : 'results' }
 IRStackCount >> position [
 
 	^position
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 IRStackCount >> printOn: aStream [
 
 	super printOn: aStream.
@@ -89,30 +91,30 @@ IRStackCount >> printOn: aStream [
 		nextPutAll: ' max '; print: length
 ]
 
-{ #category : #affecting }
+{ #category : 'affecting' }
 IRStackCount >> push [
 	^ self push: 1
 ]
 
-{ #category : #affecting }
+{ #category : 'affecting' }
 IRStackCount >> push: n [
 	(position := position + n) > length
 		ifTrue: [length := position]
 ]
 
-{ #category : #results }
+{ #category : 'results' }
 IRStackCount >> size [
 
 	^length
 ]
 
-{ #category : #results }
+{ #category : 'results' }
 IRStackCount >> start [
 
 	^ start
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 IRStackCount >> startAt: pos [
 
 	start := position := length := pos

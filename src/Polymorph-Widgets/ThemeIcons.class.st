@@ -20,22 +20,25 @@ NOTE: ""name"" is the branch name in the repository.
 
 "
 Class {
-	#name : #ThemeIcons,
-	#superclass : #Object,
+	#name : 'ThemeIcons',
+	#superclass : 'Object',
 	#instVars : [
 		'name',
 		'url',
-		'icons',
+		'iconsPerScale',
 		'scale',
+		'formSetsCache',
 		'reportNotFound'
 	],
 	#classVars : [
 		'Current'
 	],
-	#category : #'Polymorph-Widgets-Themes'
+	#category : 'Polymorph-Widgets-Themes',
+	#package : 'Polymorph-Widgets',
+	#tag : 'Themes'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeIcons class >> availablePacks [
 	"Retrieve all packs available in local disk"
 	^ { self current }, (self destinationPath exists
@@ -46,12 +49,12 @@ ThemeIcons class >> availablePacks [
 		ifFalse: [ #() ])
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeIcons class >> baseUrl [
 	^ 'https://github.com/pharo-project/pharo-icon-packs/archive' asUrl
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 ThemeIcons class >> createFetchButtonUpdating: listMorph [
 	^ (Smalltalk ui theme
 		newButtonIn: self
@@ -69,7 +72,7 @@ ThemeIcons class >> createFetchButtonUpdating: listMorph [
 		yourself
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 ThemeIcons class >> createIconPackList [
 	^ (Smalltalk ui theme
 		newDropListIn: Morph new
@@ -86,7 +89,7 @@ ThemeIcons class >> createIconPackList [
 		yourself
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 ThemeIcons class >> createSettingRow [
 	| list |
 	^ Smalltalk ui theme
@@ -96,25 +99,26 @@ ThemeIcons class >> createSettingRow [
 			self createFetchButtonUpdating: list }
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ThemeIcons class >> current [
 	"WARNING: Direct access to this method is ill-adviced, use Smalltalk ui icons instead."
 	^ Current ifNil: [ Current := self loadDefault ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ThemeIcons class >> current: aPack [
+
 	aPack hasIcons ifFalse: [ aPack loadIconsFromUrl ].
 	Current := aPack.
-	SystemAnnouncer announce: IconSetChanged
+	self codeSupportAnnouncer announce: IconSetChanged
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeIcons class >> destinationPath [
-	^ 'icon-packs' asFileReference
+	^ FileLocator localDirectory / 'icon-packs'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeIcons class >> fetchPacks [
 	"Retrieve all packs available from repository"
 	| jsonList |
@@ -136,7 +140,7 @@ ThemeIcons class >> fetchPacks [
 		as: Array
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ThemeIcons class >> loadDefault [
 	^ self new
 	name: 'svgPack';
@@ -144,19 +148,19 @@ ThemeIcons class >> loadDefault [
 	yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ThemeIcons class >> named: aString [
 	^ self new name: aString
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 ThemeIcons class >> reset [
 	<script>
 
 	Current := nil
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 ThemeIcons class >> settingsOn: aBuilder [
 	<systemsettings>
 
@@ -169,7 +173,7 @@ ThemeIcons class >> settingsOn: aBuilder [
 		dialog: [ self createSettingRow ]
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 ThemeIcons class >> uiFetchPacks [
 	| choosenPacks remotePacks |
 
@@ -190,68 +194,76 @@ ThemeIcons class >> uiFetchPacks [
 			each downloadFromUrl ]]
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 ThemeIcons class >> wrapIconPack: aPack [
 	^ aPack name
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ThemeIcons >> = anotherObject [
 
 	^ self species = anotherObject species
 		and: [ self name = anotherObject name ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeIcons >> allIconNames [
 	"Returns the names of all the available icons"
 	^ self icons keys
 ]
 
-{ #category : #accessing }
+{ #category : 'private' }
+ThemeIcons >> basicIconFormSetNamed: aSymbol [
+
+	| displayScaleFactor |
+
+	^ ((formSetsCache ifNil: [ formSetsCache := Dictionary new ])
+		at: (displayScaleFactor := self currentWorld displayScaleFactor)
+		ifAbsentPut: [ IdentityDictionary new ])
+			at: aSymbol ifAbsentPut: [
+				self icons at: aSymbol
+					ifPresent: [ :form |
+						| allForms scaledForm |
+						allForms := OrderedCollection new.
+						iconsPerScale do: [ :icons | icons at: aSymbol ifPresent: [ :otherForm | allForms add: otherForm ] ].
+						allForms add: (scaledForm := form scaledToSize: form extent * (displayScaleFactor / self scale)).
+						FormSet extent: scaledForm extent depth: scaledForm depth forms: (Array withAll: allForms) ]
+					ifAbsent: [ ^ nil ] ]
+]
+
+{ #category : 'accessing' }
 ThemeIcons >> beCurrent [
 	self class current: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeIcons >> beNotReportNotFound [
 	reportNotFound := false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeIcons >> beReportNotFound [
 	reportNotFound := true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeIcons >> blankIcon [
-	^ self blankIconOfWidth: 16
+
+	^ self blankIconFormSet asForm
 ]
 
-{ #category : #utilities }
-ThemeIcons >> blankIconOfWidth: aNumber [
+{ #category : 'accessing' }
+ThemeIcons >> blankIconFormSet [
 
-	"We hard-code the most used cases to avoid symbol creation"
-
-	aNumber == 16 ifTrue: [ ^ self icons
-		at: #blank16
-		ifAbsentPut: [Form extent: 16 @ 1 depth: 8] ].
-
-	aNumber == 10 ifTrue: [ ^ self icons
-		at: #blank10
-		ifAbsentPut: [Form extent: 10 @ 1 depth: 8] ].
-
-	^ self icons
-		at: ('blank-' , aNumber asString) asSymbol
-		ifAbsentPut: [Form extent: aNumber @ 1 depth: 8]
+	^ self iconFormSetNamed: #blank
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ThemeIcons >> defaultUrl [
 	^ self class baseUrl / (self name, '.zip')
 ]
 
-{ #category : #'reflective operations' }
+{ #category : 'reflective operations' }
 ThemeIcons >> doesNotUnderstand: aMessage [
 	"WARNING: This is "
 	aMessage selector isUnary
@@ -259,7 +271,7 @@ ThemeIcons >> doesNotUnderstand: aMessage [
 	^ super doesNotUnderstand: aMessage
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 ThemeIcons >> downloadFromUrl [
 	| zipArchive |
 	self class destinationPath ensureCreateDirectory.
@@ -273,7 +285,7 @@ ThemeIcons >> downloadFromUrl [
 	^ zipArchive
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 ThemeIcons >> form16x16FromContents: aByteArray [
 	^ Form
 	extent: 16@16
@@ -282,119 +294,152 @@ ThemeIcons >> form16x16FromContents: aByteArray [
 	offset: 0@0
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ThemeIcons >> hasIcons [
 	^ self icons notEmpty
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ThemeIcons >> hash [
 
 	^ self name hash
 ]
 
-{ #category : #accessing }
-ThemeIcons >> iconNamed: aSymbol [
+{ #category : 'accessing' }
+ThemeIcons >> iconFormSetNamed: aSymbol [
+
 	^ (self
-		iconNamed: aSymbol
+		iconFormSetNamed: aSymbol
 		ifNone: [
 			self isReportingNotFound
 				ifTrue: [
 					self crTrace: (aSymbol, ' icon not found!').
-					self notFoundIcon scaledByDisplayScaleFactor ]
-				ifFalse: [ self blankIcon scaledByDisplayScaleFactor ]])
+					self notFoundIconFormSet ]
+				ifFalse: [ self blankIconFormSet ]])
 ]
 
-{ #category : #accessing }
-ThemeIcons >> iconNamed: aSymbol ifNone: aBlock [
+{ #category : 'accessing' }
+ThemeIcons >> iconFormSetNamed: aSymbol ifNone: aBlock [
 
-	self icons at: aSymbol asSymbol ifPresent: [ :icon | ^ icon scaledToSize: icon extent * (self currentWorld displayScaleFactor / self scale) ].
+	(self basicIconFormSetNamed: aSymbol asSymbol) ifNotNil: [ :icon | ^ icon ].
 	"Trying the old way"
 
+	
 	((aSymbol endsWith: 'Icon') or: [ (aSymbol endsWith: 'Form') ]) ifTrue: [
-		self icons
-			at: (aSymbol allButLast: 4) asSymbol
-			ifPresent: [ :icon | ^ icon scaledToSize: icon extent * (self currentWorld displayScaleFactor / self scale) ]
+		(self basicIconFormSetNamed: (aSymbol allButLast: 4) asSymbol)
+			ifNotNil: [ :icon | 
+				('Using old icon name, please rename ', aSymbol printString) traceCr.
+				^ icon ]
 	].
 
 	^ aBlock value
 ]
 
-{ #category : #accessing }
-ThemeIcons >> icons [
-	^ icons ifNil: [ icons := Dictionary new: 0 ]
+{ #category : 'accessing' }
+ThemeIcons >> iconNamed: aSymbol [
+
+	^ (self iconFormSetNamed: aSymbol) asForm
 ]
 
-{ #category : #testing }
+{ #category : 'accessing' }
+ThemeIcons >> iconNamed: aSymbol ifNone: aBlock [
+
+	^ (self iconFormSetNamed: aSymbol ifNone: [ ^ aBlock value ]) asForm
+]
+
+{ #category : 'accessing' }
+ThemeIcons >> icons [
+
+	^ self iconsPerScale at: scale ifAbsentPut: [ IdentityDictionary new ]
+]
+
+{ #category : 'accessing' }
+ThemeIcons >> iconsPerScale [
+
+	^ iconsPerScale ifNil: [ iconsPerScale := Dictionary new ]
+]
+
+{ #category : 'testing' }
 ThemeIcons >> isReportingNotFound [
 	^ reportNotFound ifNil: [ reportNotFound := false ]
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 ThemeIcons >> loadIconsFromUrl [
 
 	^ self loadIconsFromUrlUsingScale: 1
 ]
 
-{ #category : #loading }
+{ #category : 'loading' }
 ThemeIcons >> loadIconsFromUrlUsingScale: newScale [
-	| newIcons zipArchive |
+	| newIconsPerScale zipArchive |
 
-	newIcons := IdentityDictionary new.
+	newIconsPerScale := Dictionary new.
 	zipArchive := self downloadFromUrl.
 
-	(((FileSystem zip: zipArchive) open workingDirectory allChildrenMatching: '*scale' , newScale asFloat asString) anyOne
-	allChildrenMatching: '*.png')
-		reject: [ :each | each base beginsWith: '.' ]
-		thenDo: [ :each |
-			[ newIcons
-				at: each base asSymbol
-				put: (self readPNGFrom: each) ]
-			on: Error do: [ :e | self crTrace: each fullName, ' not a PNG, skipping.'  ]].
-	icons := newIcons.
+	((FileSystem zip: zipArchive) open workingDirectory allChildrenMatching: 'png-scale*') do: [ :directory |
+		| newIcons |
+		newIconsPerScale
+			at: (Float readFrom: (directory basename copyFrom: 10 to: directory basename size))
+			put: (newIcons := IdentityDictionary new).
+		(directory allChildrenMatching: '*.png')
+			reject: [ :each | each base beginsWith: '.' ]
+			thenDo: [ :each |
+				[ newIcons
+					at: each base asSymbol
+					put: (self readPNGFrom: each) ]
+				on: Error do: [ :e | self crTrace: ('{1} not a PNG, skipping.' format: { each fullName }) ] ] ].
+	newIconsPerScale keysAndValuesDo: [ :iconsScale :icons |
+		icons at: #notFound ifAbsentPut: [ Color red iconOrThumbnailOfSize: 16 * iconsScale ] ].
+	iconsPerScale := newIconsPerScale.
 	scale := newScale
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeIcons >> name [
 	^ name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeIcons >> name: aName [
 	name := aName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeIcons >> notFoundIcon [
-	^ self icons
-		at: #notFoundIcon
-		ifAbsentPut: [ Color red iconOrThumbnailOfSize: 16 ]
+
+	^ self notFoundIconFormSet asForm
 ]
 
-{ #category : #printing }
+{ #category : 'accessing' }
+ThemeIcons >> notFoundIconFormSet [
+
+	^ self iconFormSetNamed: #notFound ifNone: [ FormSet form: (Form extent: 0@0) ]
+]
+
+{ #category : 'printing' }
 ThemeIcons >> printOn: stream [
 	super printOn: stream.
 	stream << $( << self name << $)
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ThemeIcons >> readPNGFrom: aReference [
 	^ aReference binaryReadStreamDo: [ :stream |
 		PNGReadWriter formFromStream: stream ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeIcons >> scale [
 	^ scale ifNil: [ scale := 1 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeIcons >> url [
 	^ url ifNil: [ url := self defaultUrl ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ThemeIcons >> url: aStringOrUrl [
 	url := aStringOrUrl ifNotNil: [ aStringOrUrl asUrl ]
 ]

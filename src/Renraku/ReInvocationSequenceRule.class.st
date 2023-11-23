@@ -10,21 +10,23 @@ ReRuleManager reset
 to make changes take place!!!!!!!!!!!!!!!!
 "
 Class {
-	#name : #ReInvocationSequenceRule,
-	#superclass : #ReAbstractRule,
+	#name : 'ReInvocationSequenceRule',
+	#superclass : 'ReAbstractRule',
 	#instVars : [
 		'preConditions',
 		'postConditions'
 	],
-	#category : #'Renraku-Rules'
+	#category : 'Renraku-Rules',
+	#package : 'Renraku',
+	#tag : 'Rules'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 ReInvocationSequenceRule class >> checksNode [
 	^ true
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 ReInvocationSequenceRule class >> exampleSequenceMethods [
 	<sampleInstance>
 
@@ -34,21 +36,21 @@ ReInvocationSequenceRule class >> exampleSequenceMethods [
 		add: #edges requiresPreSend: #nodes
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ReInvocationSequenceRule class >> isVisible [
 
 	^ self name ~= #ReInvocationSequenceRule and: [
 		super isVisible ]
 ]
 
-{ #category : #compiling }
+{ #category : 'compiling' }
 ReInvocationSequenceRule class >> noteCompilationOf: aSelector meta: isMeta [
 
 	 aSelector == #initialize & isMeta not ifTrue: [
 		ReRuleManager reset ]
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 ReInvocationSequenceRule >> add: preSelectors requiresPostSend: postSelectors [
 
 	postConditions add: (
@@ -57,7 +59,7 @@ ReInvocationSequenceRule >> add: preSelectors requiresPostSend: postSelectors [
 			after: postSelectors)
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 ReInvocationSequenceRule >> add: postSelectors requiresPreSend: preSelectors [
 
 	preConditions add: (
@@ -66,7 +68,7 @@ ReInvocationSequenceRule >> add: postSelectors requiresPreSend: preSelectors [
 			after: postSelectors)
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ReInvocationSequenceRule >> check: aNode forCritiquesDo: aCriticBlock [
 
 	aNode isMethod ifFalse: [ ^ self ].
@@ -75,7 +77,7 @@ ReInvocationSequenceRule >> check: aNode forCritiquesDo: aCriticBlock [
 	(self postCheck: aNode forCriticsDo: aCriticBlock)
 ]
 
-{ #category : #'critic creation' }
+{ #category : 'critic creation' }
 ReInvocationSequenceRule >> critic: aCriticClass for: ast at: node regarding: sequence [
 
 	^ aCriticClass
@@ -88,7 +90,7 @@ ReInvocationSequenceRule >> critic: aCriticClass for: ast at: node regarding: se
 		condition: sequence
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ReInvocationSequenceRule >> initialize [
 	super initialize.
 
@@ -96,13 +98,13 @@ ReInvocationSequenceRule >> initialize [
 	postConditions := Set new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReInvocationSequenceRule >> name [
 
 	^ 'Invocation order incorect'
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ReInvocationSequenceRule >> postCheck: anAST forCriticsDo: aCriticBlock [
 	| remainingPostConditions encounteredCritics |
 	postConditions ifEmpty: [ ^ false ].
@@ -130,13 +132,13 @@ ReInvocationSequenceRule >> postCheck: anAST forCriticsDo: aCriticBlock [
 	^ encounteredCritics
 ]
 
-{ #category : #'critic creation' }
+{ #category : 'critic creation' }
 ReInvocationSequenceRule >> postCriticFor: ast at: node regarding: sequence [
 
 	^ self critic: ReLaterInvocationCritique for: ast at: node regarding: sequence
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ReInvocationSequenceRule >> preCheck: anAST forCriticsDo: aCriticBlock [
 	| remainingPreConditions encounteredCritics |
 
@@ -164,7 +166,7 @@ ReInvocationSequenceRule >> preCheck: anAST forCriticsDo: aCriticBlock [
 	^ encounteredCritics
 ]
 
-{ #category : #'critic creation' }
+{ #category : 'critic creation' }
 ReInvocationSequenceRule >> preCriticFor: ast at: node regarding: sequence [
 
 	^ self critic: RePriorInvocationCritique for: ast at: node regarding: sequence

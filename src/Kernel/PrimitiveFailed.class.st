@@ -2,12 +2,14 @@
 I am PrimitiveFailed, an exception signaled when a primitive fails.
 "
 Class {
-	#name : #PrimitiveFailed,
-	#superclass : #SelectorException,
-	#category : #'Kernel-Exceptions'
+	#name : 'PrimitiveFailed',
+	#superclass : 'SelectorException',
+	#category : 'Kernel-Exceptions',
+	#package : 'Kernel',
+	#tag : 'Exceptions'
 }
 
-{ #category : #printing }
+{ #category : 'printing' }
 PrimitiveFailed >> standardMessageText [
 	"Generate a standard textual description"
 

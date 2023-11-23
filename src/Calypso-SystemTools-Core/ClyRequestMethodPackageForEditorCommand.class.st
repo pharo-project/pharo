@@ -2,32 +2,34 @@
 I am a command to request package from the user which should be used as editing method package
 "
 Class {
-	#name : #ClyRequestMethodPackageForEditorCommand,
-	#superclass : #ClyMethodEditorCommand,
-	#category : #'Calypso-SystemTools-Core-Editors-Methods'
+	#name : 'ClyRequestMethodPackageForEditorCommand',
+	#superclass : 'ClyMethodEditorCommand',
+	#category : 'Calypso-SystemTools-Core-Editors-Methods',
+	#package : 'Calypso-SystemTools-Core',
+	#tag : 'Editors-Methods'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyRequestMethodPackageForEditorCommand class >> canBeExecutedInMethodEditor: aTool [
 
 	^ true
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyRequestMethodPackageForEditorCommand class >> methodEditorShorcutActivation [
 	<classAnnotation>
 
 	^CmdShortcutActivation by: $e meta, $p meta for: ClyTextEditorContext
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyRequestMethodPackageForEditorCommand >> defaultMenuItemName [
 	^'Select method package'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyRequestMethodPackageForEditorCommand >> execute [
 	| packageEditor |
-	packageEditor := methodEditor tagsAndPackageEditor.
+	packageEditor := methodEditor protocolAndPackageEditor.
 	packageEditor requestChangeBy: [ packageEditor requestPackage]
 ]

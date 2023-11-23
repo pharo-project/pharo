@@ -5,15 +5,15 @@ Instance variables :
 
 - dependencies : a collection of `DAPackageDependency` (actually the nodes of a graph dependency, from a source DAPackage to a target DAPackage)
 - included : says if the DAPackage is included or not, at the beginning, in the set of packages.
-- rpackage : the instance of asRPackageSet 	
+- systemPackage : the instance of the package in the system if it is loaded 	
 - inStack : useful for tarjan algorithm and cycle algorithm. It avoids stack access
 - tarjanIndex and tarjanLowLink : integer for the tarjan algorithm.
 - bfsParent : see cycle algorithm
 - seen : says if all dependencies have been added to the Package
 "
 Class {
-	#name : #DAPackage,
-	#superclass : #Object,
+	#name : 'DAPackage',
+	#superclass : 'Object',
 	#instVars : [
 		'dependencies',
 		'included',
@@ -22,94 +22,97 @@ Class {
 		'tarjanLowLink',
 		'bfsParent',
 		'seen',
-		'rPackageSet'
+		'systemPackage',
+		'packageName'
 	],
-	#category : #'Tool-DependencyAnalyser-Core'
+	#category : 'Tool-DependencyAnalyser-Core',
+	#package : 'Tool-DependencyAnalyser',
+	#tag : 'Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 DAPackage class >> new [
 	self shouldNotImplement
 ]
 
-{ #category : #'instance creation' }
-DAPackage class >> on: aRPackageSet [
-	^ self basicNew initializeWithPackage: aRPackageSet; yourself
-]
-
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 DAPackage class >> onPackageNamed: aString [
-	^ self on: (RPackageSet named: aString)
+	"In the future we should manage different environment and not go into the global one."
+
+	^ self basicNew
+		  initializeWithPackage: (self packageOrganizer packageNamed: aString ifAbsent: [ nil ]);
+		  packageName: aString;
+		  yourself
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 DAPackage >> <= aPackage [
 	^ (self packageName asString) <= (aPackage packageName asString)
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 DAPackage >> = aPackage [
 	(aPackage isKindOf: self class)
 		ifFalse: [ ^ false ].
 	^ self packageName = aPackage packageName
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 DAPackage >> add: aDependency [
 	^ dependencies add: aDependency
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 DAPackage >> asDependentPackageWrapperOn: relationGraph [
 	^ DADependentPackageWrapper newWith: self on: relationGraph
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 DAPackage >> asPackageDependencyWrapper [
 	^ DAPackageDependencyWrapper newWith: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAPackage >> beIncluded [
 	included := true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAPackage >> beSeen [
 	seen := true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAPackage >> bfsParent [
 	^ bfsParent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAPackage >> bfsParent: aBfsParent [
 	bfsParent := aBfsParent
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DAPackage >> clearDependencies [
 	dependencies := OrderedCollection new
 ]
 
-{ #category : #dependencies }
+{ #category : 'dependencies' }
 DAPackage >> compositeDependencyTo: aPackage [
 	^ self dependencies detect: [ :dependency | dependency target = aPackage ] ifNone: [ nil ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAPackage >> dependencies [
 	^ dependencies
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAPackage >> dependencies: anObject [
 	dependencies := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAPackage >> dependenciesFrom: aClass [
 	| dependenciesFrom |
 	dependenciesFrom := OrderedCollection new.
@@ -119,7 +122,7 @@ DAPackage >> dependenciesFrom: aClass [
 	^ dependenciesFrom
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAPackage >> dependenciesSize [
 
 	^ self dependencies
@@ -129,31 +132,31 @@ DAPackage >> dependenciesSize [
 				]
 ]
 
-{ #category : #dependencies }
+{ #category : 'dependencies' }
 DAPackage >> dependenciesSizeTo: aPackage [
 	| dependency |
 	dependency := dependencies detect: [ :each | each target packageName = aPackage packageName ].
 	^ dependency ifNotNil: [ dependency numberOfDependencies ] ifNil: [ 0 ]
 ]
 
-{ #category : #dependencies }
+{ #category : 'dependencies' }
 DAPackage >> dependenciesTo: aPackage [
 	^ dependencies select: [ :each | each target packageName = aPackage ]
 ]
 
-{ #category : #dependencies }
+{ #category : 'dependencies' }
 DAPackage >> dependentPackages [
 	^ self dependencies
 			inject: Set new
 			into: [ :dependents :each | dependents add: each target; yourself ]
 ]
 
-{ #category : #dependencies }
+{ #category : 'dependencies' }
 DAPackage >> dependentPackagesSize [
 	^ dependencies size
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 DAPackage >> displayString [
 	| numberOfExtension |
 	numberOfExtension := self extensionDependenciesSize.
@@ -169,38 +172,39 @@ DAPackage >> displayString [
 			nextPutAll: ' extension dependencies)' ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAPackage >> extensionDependenciesSize [
 	^ self dependencies
 		inject: 0
 		into: [ :sum :each | sum + each extensionDependenciesSize ]
 ]
 
-{ #category : #dependencies }
+{ #category : 'dependencies' }
 DAPackage >> extensionDependenciesSizeTo: aPackage [
 	^ (self compositeDependencyTo: aPackage) extensionDependenciesSize
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 DAPackage >> hash [
 	^ self packageName hash
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAPackage >> inStack: aBoolean [
 	inStack := aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAPackage >> included: anObject [
 	included := anObject
 ]
 
-{ #category : #initialization }
-DAPackage >> initializeWithPackage: aRPackageSet [
+{ #category : 'initialization' }
+DAPackage >> initializeWithPackage: aPackage [
+
 	self initialize.
 	self clearDependencies.
-	rPackageSet := aRPackageSet.
+	systemPackage := aPackage.
 	included := false.
 	inStack := false.
 	seen := false.
@@ -208,86 +212,83 @@ DAPackage >> initializeWithPackage: aRPackageSet [
 	tarjanLowLink := -1
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DAPackage >> isInStack [
 	^ inStack
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DAPackage >> isIncluded [
 	^ included
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DAPackage >> isSeen [
 
 	^ seen
 ]
 
-{ #category : #tarjan }
+{ #category : 'tarjan' }
 DAPackage >> isTarjanUndefined [
 	^ tarjanIndex = -1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAPackage >> packageName [
-	^ self rPackageSet packageName
+
+	^ packageName
 ]
 
-{ #category : #printing }
+{ #category : 'accessing' }
+DAPackage >> packageName: anObject [
+	packageName := anObject
+]
+
+{ #category : 'printing' }
 DAPackage >> printOn: aStream [
 	aStream
 		nextPutAll: 'Dependencies on: ';
 		nextPutAll: self packageName
 ]
 
-{ #category : #accessing }
-DAPackage >> rPackage [
-	^ self rPackageSet packages first
-]
-
-{ #category : #accessing }
-DAPackage >> rPackageSet [
-	^ rPackageSet
-]
-
-{ #category : #accessing }
-DAPackage >> rPackageSet: anObject [
-	rPackageSet := anObject
-]
-
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAPackage >> referenceDependenciesFrom: aClass [
 
 	^ (self dependenciesFrom: aClass) select: [ :each | each isReferenceDependency ]
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 DAPackage >> remove: aDependency [
 	^ dependencies remove: aDependency
 ]
 
-{ #category : #dependencies }
+{ #category : 'dependencies' }
 DAPackage >> removeAllInternal [
 	dependencies := dependencies reject: [ :each | each isInternal ]
 ]
 
-{ #category : #tarjan }
+{ #category : 'accessing' }
+DAPackage >> systemPackage [
+
+	^ systemPackage
+]
+
+{ #category : 'tarjan' }
 DAPackage >> tarjanIndex [
 	^ tarjanIndex
 ]
 
-{ #category : #tarjan }
+{ #category : 'tarjan' }
 DAPackage >> tarjanIndex: aTarjanIndex [
 	tarjanIndex := aTarjanIndex
 ]
 
-{ #category : #tarjan }
+{ #category : 'tarjan' }
 DAPackage >> tarjanLowLink [
 	^ tarjanLowLink
 ]
 
-{ #category : #tarjan }
+{ #category : 'tarjan' }
 DAPackage >> tarjanLowLink: aTarjanLowLink [
 	tarjanLowLink := aTarjanLowLink
 ]

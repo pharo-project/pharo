@@ -18,33 +18,34 @@ Internal Representation and Key Implementation Points.
 	rootGroup:		<CmdMenuGroup class>
 "
 Class {
-	#name : #CmdMenu,
-	#superclass : #Object,
+	#name : 'CmdMenu',
+	#superclass : 'Object',
 	#instVars : [
 		'rootGroup',
 		'activationStrategyClass'
 	],
-	#category : #'Commander-Core'
+	#category : 'Commander-Core',
+	#package : 'Commander-Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CmdMenu class >> activatedBy: aCommandActivationStrategyClass [
 
 	^self new
 		activationStrategyClass: aCommandActivationStrategyClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdMenu >> activationStrategyClass [
 	^ activationStrategyClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdMenu >> activationStrategyClass: anObject [
 	activationStrategyClass := anObject
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 CmdMenu >> buildCommandItemInContext: aToolContext activatingBy: anActivationStrategy [
 
 	| commandActivator group |
@@ -54,7 +55,7 @@ CmdMenu >> buildCommandItemInContext: aToolContext activatingBy: anActivationStr
 	group addItem: (CmdCommandMenuItem activatingBy: commandActivator)
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 CmdMenu >> buildInContext: aToolContext [
 
 	activationStrategyClass
@@ -63,7 +64,7 @@ CmdMenu >> buildInContext: aToolContext [
 			self buildCommandItemInContext: aToolContext activatingBy: activation]
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 CmdMenu >> ensureGroup: menuGroupClass [
 
 	| parentGroup group |
@@ -76,7 +77,7 @@ CmdMenu >> ensureGroup: menuGroupClass [
 	^group
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdMenu >> groupsWithCommandLike: aCommandClass [
 
 	| result |
@@ -86,24 +87,24 @@ CmdMenu >> groupsWithCommandLike: aCommandClass [
 	^result
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CmdMenu >> initialize [
 	super initialize.
 
 	rootGroup := CmdRootMenuGroup new
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CmdMenu >> isActive [
 	^rootGroup isActive
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CmdMenu >> isEmpty [
 	^rootGroup isEmpty
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdMenu >> itemsWithCommandLike: aCommandClass [
 	| groups |
 	groups := self groupsWithCommandLike: aCommandClass.
@@ -111,17 +112,17 @@ CmdMenu >> itemsWithCommandLike: aCommandClass [
 		flatCollect: [ :each | { each. each commandItemLike: aCommandClass } ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdMenu >> rootGroup [
 	^ rootGroup
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdMenu >> rootGroup: anObject [
 	rootGroup := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdMenu >> rootItems [
 	^rootGroup contents
 ]

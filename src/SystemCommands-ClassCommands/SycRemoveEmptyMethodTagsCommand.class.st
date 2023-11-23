@@ -2,28 +2,29 @@
 I am a command to clean all unused method tags (empty protocols) of given classes
 "
 Class {
-	#name : #SycRemoveEmptyMethodTagsCommand,
-	#superclass : #SycClassCommand,
-	#category : #'SystemCommands-ClassCommands'
+	#name : 'SycRemoveEmptyMethodTagsCommand',
+	#superclass : 'SycClassCommand',
+	#category : 'SystemCommands-ClassCommands',
+	#package : 'SystemCommands-ClassCommands'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycRemoveEmptyMethodTagsCommand >> defaultMenuIconName [
 	^#delete
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycRemoveEmptyMethodTagsCommand >> defaultMenuItemName [
 	^'Remove empty protocols'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycRemoveEmptyMethodTagsCommand >> execute [
 
 	classes do: [ :class | class removeEmptyProtocols ]
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycRemoveEmptyMethodTagsCommand >> prepareFullExecutionInContext: aToolContext [
 
 	super prepareFullExecutionInContext: aToolContext.

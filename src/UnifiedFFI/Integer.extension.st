@@ -1,6 +1,6 @@
-Extension { #name : #Integer }
+Extension { #name : 'Integer' }
 
-{ #category : #'*UnifiedFFI' }
+{ #category : '*UnifiedFFI' }
 Integer >> asExternalTypeOn: generator [
 
 	^ FFIConst
@@ -8,7 +8,7 @@ Integer >> asExternalTypeOn: generator [
 		type: (generator resolveType: #int32)
 ]
 
-{ #category : #'*UnifiedFFI' }
+{ #category : '*UnifiedFFI' }
 Integer >> pointer [
 	^ (ByteArray new: FFIExternalType pointerSize)
 		unsignedLongAt: 1 put: self;

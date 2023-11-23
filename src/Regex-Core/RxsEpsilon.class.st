@@ -4,12 +4,14 @@
 This is an empty string.  It terminates some of the recursive constructs.
 "
 Class {
-	#name : #RxsEpsilon,
-	#superclass : #RxsNode,
-	#category : #'Regex-Core-Nodes'
+	#name : 'RxsEpsilon',
+	#superclass : 'RxsNode',
+	#category : 'Regex-Core-Nodes',
+	#package : 'Regex-Core',
+	#tag : 'Nodes'
 }
 
-{ #category : #building }
+{ #category : 'building' }
 RxsEpsilon >> dispatchTo: aBuilder [
 	"Inform the matcher of the kind of the node, and it
 	will do whatever it has to."
@@ -17,7 +19,7 @@ RxsEpsilon >> dispatchTo: aBuilder [
 	^aBuilder syntaxEpsilon
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RxsEpsilon >> isNullable [
 	"See comment in the superclass."
 

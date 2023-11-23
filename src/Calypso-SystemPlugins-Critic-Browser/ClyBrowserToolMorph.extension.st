@@ -1,6 +1,6 @@
-Extension { #name : #ClyBrowserToolMorph }
+Extension { #name : 'ClyBrowserToolMorph' }
 
-{ #category : #'*Calypso-SystemPlugins-Critic-Browser' }
+{ #category : '*Calypso-SystemPlugins-Critic-Browser' }
 ClyBrowserToolMorph >> supportsCriticDecoration [
 	^false
 ]

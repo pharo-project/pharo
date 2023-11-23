@@ -8,16 +8,18 @@ Acknowledgement: some code borrowed from AJP.
 Part of Zinc HTTP Components.
 "
 Class {
-	#name : #ZnMimePart,
-	#superclass : #Object,
+	#name : 'ZnMimePart',
+	#superclass : 'Object',
 	#instVars : [
 		'headers',
 		'entity'
 	],
-	#category : #'Zinc-HTTP-Core'
+	#category : 'Zinc-HTTP-Core',
+	#package : 'Zinc-HTTP',
+	#tag : 'Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnMimePart class >> fieldName: fieldName entity: entity [
 	^ self new
 		setContentDisposition: 'form-data;name="', fieldName, '"';
@@ -25,7 +27,7 @@ ZnMimePart class >> fieldName: fieldName entity: entity [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnMimePart class >> fieldName: fieldName fileName: fileName entity: entity [
 	"Pathnames are often silenty encoded using UTF-8,
 	this is a no-op for ASCII, but will fail on Latin-1 and others"
@@ -38,7 +40,7 @@ ZnMimePart class >> fieldName: fieldName fileName: fileName entity: entity [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnMimePart class >> fieldName: fieldName fileNamed: fileName [
 	| mimeType size fileStream entity baseName |
 	mimeType := ZnMimeType forFilenameExtension: (ZnFileSystemUtils extensionFor: fileName).
@@ -50,39 +52,39 @@ ZnMimePart class >> fieldName: fieldName fileNamed: fileName [
 	^ self fieldName: fieldName fileName: baseName entity: entity
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnMimePart class >> fieldName: fieldName value: fieldValue [
 	^ self
 		fieldName: fieldName
 		entity: (ZnEntity with: fieldValue)
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnMimePart class >> readBinaryFrom: stream [
 	^ self new
 		readBinaryFrom: stream;
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnMimePart class >> readFrom: stream [
 	^ self new
 		readFrom: stream;
 		yourself
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ZnMimePart >> = other [
 	self class = other class ifFalse: [ ^ false ].
 	^ self headers = other headers and: [ self entity = other entity ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnMimePart >> contentDisposition [
 	^ self headers at: 'Content-Disposition' ifAbsent: [ nil ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnMimePart >> contentDispositionValues [
 	| contentDisposition values start semiColonIndex |
 	( contentDisposition := self contentDisposition ) ifNil: [ ^ #() ].
@@ -99,27 +101,27 @@ ZnMimePart >> contentDispositionValues [
 	^ values
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnMimePart >> contentLength [
 	self hasEntity ifTrue: [ ^ self entity contentLength ].
 	(self hasHeaders and: [ self headers hasContentLength ]) ifTrue: [ ^ self headers contentLength ].
 	^ nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnMimePart >> contentType [
 	self hasEntity ifTrue: [ ^ self entity contentType ].
 	(self hasHeaders and: [ self headers hasContentType ]) ifTrue: [ ^ self headers contentType ].
 	^ nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnMimePart >> contents [
 
 	^ entity ifNil: [ nil ] ifNotNil: [ entity contents ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnMimePart >> detectContentDispositionValue: aString [
 	self contentDispositionValues do: [ :each |
 		((each beginsWith: aString)
@@ -129,19 +131,19 @@ ZnMimePart >> detectContentDispositionValue: aString [
 	^ nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnMimePart >> entity [
 	^ entity
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnMimePart >> entity: object [
 	entity := object.
 	self headers isDescribingEntity ifFalse: [
 		self headers acceptEntityDescription: object ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnMimePart >> entityReaderOn: stream [
 	^ ZnEntityReader new
 		headers: self headers;
@@ -150,7 +152,7 @@ ZnMimePart >> entityReaderOn: stream [
 		yourself
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnMimePart >> entityWriterOn: stream [
 	^ ZnEntityWriter new
 		headers: self headers;
@@ -158,26 +160,26 @@ ZnMimePart >> entityWriterOn: stream [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnMimePart >> fieldName [
 	^ self detectContentDispositionValue: 'name'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnMimePart >> fieldValue [
 	^ self hasEntity
 		ifTrue: [ self entity contents ]
 		ifFalse: [ nil ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnMimePart >> fieldValueString [
 	^ self fieldValue
 		ifNil: [ String empty ]
 		ifNotNil: [ :value | value asString ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnMimePart >> fileName [
 	"Pathnames are often silenty encoded using UTF-8,
 	this is a no-op for ASCII, but will fail on Latin-1 and others"
@@ -186,46 +188,47 @@ ZnMimePart >> fileName [
 		ifNotNil: [ :encodedFileName | encodedFileName asByteArray utf8Decoded ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnMimePart >> hasEntity [
-	^ self entity notNil
+	^ self entity isNotNil
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnMimePart >> hasHeaders [
-	^ headers notNil and: [ self headers isEmpty not ]
+
+	^ headers isNotNil and: [ self headers isNotEmpty ]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ZnMimePart >> hash [
 	^ self headers hash bitXor: self entity hash
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnMimePart >> headers [
 
 	headers ifNil: [ headers := ZnHeaders new ].
 	^ headers
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnMimePart >> headers: object [
 	headers := object
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 ZnMimePart >> headersDo: twoArgumentBlock [
 	self hasHeaders
 		ifTrue: [ self headers headersDo: twoArgumentBlock ]
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 ZnMimePart >> postCopy [
 	headers := headers copy.
 	"Note that we don't copy the entity, see also #resetEntity: and ZnClient>>#resetEntity"
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ZnMimePart >> printOn: stream [
 	super printOn: stream.
 	stream nextPut: $(.
@@ -234,7 +237,7 @@ ZnMimePart >> printOn: stream [
 	stream nextPut: $)
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 ZnMimePart >> readBinaryFrom: stream [
 	| entityReader |
 	self headers: (ZnHeaders readFrom: stream).
@@ -243,18 +246,18 @@ ZnMimePart >> readBinaryFrom: stream [
 	self entity: entityReader readEntity
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 ZnMimePart >> readFrom: stream [
 	self headers: (ZnHeaders readFrom: stream).
 	self entity: (self entityReaderOn: stream) readEntity
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnMimePart >> setContentDisposition: value [
 	^ self headers at: 'Content-Disposition' put: value
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 ZnMimePart >> writeOn: stream [
 	self headers writeOn: stream.
 	stream nextPutAll: String crlf.

@@ -4,34 +4,36 @@ I am the configuration for materialization.
 I hold all the configuration information necessary for materializing objects.
 "
 Class {
-	#name : #FLMaterializer,
-	#superclass : #FLConfiguration,
-	#category : #'Fuel-Core-Public'
+	#name : 'FLMaterializer',
+	#superclass : 'FLConfiguration',
+	#category : 'Fuel-Core-Public',
+	#package : 'Fuel-Core',
+	#tag : 'Public'
 }
 
-{ #category : #'accessing-defaults' }
+{ #category : 'accessing-defaults' }
 FLMaterializer class >> defaultMethodChangedWarningDisabled [
 	^ false
 ]
 
-{ #category : #'accessing-defaults' }
+{ #category : 'accessing-defaults' }
 FLMaterializer class >> defaultShouldMaterializeHeaderOnly [
 	^ false
 ]
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 FLMaterializer class >> materializeFrom: aStream [
 	^ self new
 		onStream: aStream;
 		materializeRoot
 ]
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 FLMaterializer class >> materializeFromByteArray: aByteArray [
 	^ self materializeFrom: aByteArray readStream
 ]
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 FLMaterializer class >> materializeFromFileNamed: aFilePath [
 	^ self new
 		filePath: aFilePath;
@@ -39,26 +41,26 @@ FLMaterializer class >> materializeFromFileNamed: aFilePath [
 
 ]
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 FLMaterializer class >> materializeHeaderFrom: aStream [
 	^ self new
 		onStream: aStream;
 		materializeHeader
 ]
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 FLMaterializer class >> materializeHeaderFromByteArray: aByteArray [
 	^ self materializeHeaderFrom: aByteArray readStream
 ]
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 FLMaterializer class >> materializeHeaderFromFileNamed: aFilePath [
 	^ self new
 		filePath: aFilePath;
 		materializeHeader
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FLMaterializer >> basicMigrateClassNamed: aSymbol toClass: aClass variables: aDictionary [
 	self
 		validateMigrationFrom: aSymbol
@@ -70,7 +72,7 @@ FLMaterializer >> basicMigrateClassNamed: aSymbol toClass: aClass variables: aDi
 		variables: aDictionary)
 ]
 
-{ #category : #configuring }
+{ #category : 'configuring' }
 FLMaterializer >> disableMethodChangedWarning [
 	"Setting this to true will prevent Fuel from signalling FLMethodChanged exceptions
 	when the method of a block has changed upon materialization."
@@ -80,20 +82,20 @@ FLMaterializer >> disableMethodChangedWarning [
 		put: true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FLMaterializer >> isMethodChangedWarningDisabled [
 	^ map
 		at: #methodChangedWarningDisabled
 		ifAbsent: [ self class defaultMethodChangedWarningDisabled ]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 FLMaterializer >> materialize [
 	^ self useDuring: [
 		FLMaterialization run ]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 FLMaterializer >> materializeHeader [
 	map
 		at: #shouldMaterializeHeaderOnly
@@ -102,7 +104,7 @@ FLMaterializer >> materializeHeader [
 	^ self materialize header
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 FLMaterializer >> materializeObjectCollection [
 	map
 		at: #hasMultipleObjects
@@ -111,12 +113,12 @@ FLMaterializer >> materializeObjectCollection [
 	^ self materialize
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 FLMaterializer >> materializeRoot [
 	^ self materialize root
 ]
 
-{ #category : #'configuring-migrations' }
+{ #category : 'configuring-migrations' }
 FLMaterializer >> migrateClassNamed: aSymbol toClass: aClassOrSymbol [
 	"Use aClassOrSymbol instead of aSymbol after materialization. This only changes the class name.
 	The target class is expected to exist in the target system's global environment.
@@ -133,7 +135,7 @@ FLMaterializer >> migrateClassNamed: aSymbol toClass: aClassOrSymbol [
 		variables: Dictionary new
 ]
 
-{ #category : #'configuring-migrations' }
+{ #category : 'configuring-migrations' }
 FLMaterializer >> migrateClassNamed: aSymbol toClass: aClassOrSymbol variables: aDictionary [
 	"Use aClassOrSymbol instead of aSymbol after materialization and migrate variable names as defined in 
 	aDictionary. The new class is expected to exist in the target system's global environment.
@@ -170,7 +172,7 @@ FLMaterializer >> migrateClassNamed: aSymbol toClass: aClassOrSymbol variables: 
 		variables: aDictionary
 ]
 
-{ #category : #'configuring-migrations' }
+{ #category : 'configuring-migrations' }
 FLMaterializer >> migrateClassNamed: aSymbol variables: aDictionary [
 	"Migrates variable names as defined in aDictionary.
 	Variables are expected to be unchanged with exception to those in aDictionary. Extra variables will 
@@ -186,26 +188,29 @@ FLMaterializer >> migrateClassNamed: aSymbol variables: aDictionary [
 		variables: aDictionary
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLMaterializer >> migrations [
 	^ map
 		at: #migrations
 		ifAbsentPut: [ OrderedCollection new ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FLMaterializer >> shouldMaterializeHeaderOnly [
 	^ map
 		at: #shouldMaterializeHeaderOnly
 		ifAbsent: [ self class defaultShouldMaterializeHeaderOnly ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FLMaterializer >> streamFactoryForFilePath: aString [
-	^ [ FLPlatform current readStreamForFilePath: aString ]
+	^ [
+	  (File named: aString) readStream
+		  binary;
+		  yourself ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FLMaterializer >> validateMigrationArgumentsFrom: aSymbol to: aClassOrSymbol variables: aDictionary [
 	aSymbol isString ifFalse: [
 		FLConfigurationError signal: 'Source must be a symbol' ].
@@ -218,7 +223,7 @@ FLMaterializer >> validateMigrationArgumentsFrom: aSymbol to: aClassOrSymbol var
 		FLConfigurationError signal: 'Variable map must be a dictionary' ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FLMaterializer >> validateMigrationFrom: aSymbol to: aClass [
 	aSymbol isString ifFalse: [
 		FLConfigurationError signal: 'Source class name must be a symbol' ].

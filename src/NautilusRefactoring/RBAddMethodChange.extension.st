@@ -1,6 +1,6 @@
-Extension { #name : #RBAddMethodChange }
+Extension { #name : 'RBAddMethodChange' }
 
-{ #category : #'*NautilusRefactoring' }
+{ #category : '*NautilusRefactoring' }
 RBAddMethodChange >> accept: aText notifying: aController [
 	"Just to make sure that it compiles, try with the standard compiler."
 

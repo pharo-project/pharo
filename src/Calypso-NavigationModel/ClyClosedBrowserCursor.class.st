@@ -7,38 +7,40 @@ My singleton instance is supposed to be used:
 	ClyClosedBrowserCursor instance
 "
 Class {
-	#name : #ClyClosedBrowserCursor,
-	#superclass : #Object,
+	#name : 'ClyClosedBrowserCursor',
+	#superclass : 'Object',
 	#classInstVars : [
 		'instance'
 	],
-	#category : #'Calypso-NavigationModel-Model'
+	#category : 'Calypso-NavigationModel-Model',
+	#package : 'Calypso-NavigationModel',
+	#tag : 'Model'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyClosedBrowserCursor class >> instance [
 	^instance ifNil: [ instance := self new ]
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyClosedBrowserCursor >> close [
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyClosedBrowserCursor >> findItemsWith: aCollection [
 	^Array new: aCollection size withAll: nil
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyClosedBrowserCursor >> hasMetaProperty: aPropertyClass [
 	^false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyClosedBrowserCursor >> itemCount [
 	^0
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyClosedBrowserCursor >> updateItemCache [
 ]

@@ -1,23 +1,25 @@
 Class {
-	#name : #ClyClassExternalReferencesQueryTest,
-	#superclass : #ClyMethodQueryTest,
-	#category : #'Calypso-SystemQueries-Tests-Queries'
+	#name : 'ClyClassExternalReferencesQueryTest',
+	#superclass : 'ClyMethodQueryTest',
+	#category : 'Calypso-SystemQueries-Tests-Queries',
+	#package : 'Calypso-SystemQueries-Tests',
+	#tag : 'Queries'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClyClassExternalReferencesQueryTest >> createQuery [
 	^ ClyClassExternalReferencesQuery
 		to: self referencedClass
 		from: (ClyClassScope of: Object in: environment)
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyClassExternalReferencesQueryTest >> referencedClass [
 	"Use an explicit reference instead of 'self class'"
 	^ClyClassExternalReferencesQueryTest
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyClassExternalReferencesQueryTest >> testFromSystemScope [
 
 	self queryFromScope: ClySystemEnvironmentScope of: ClySystemEnvironment currentImage.

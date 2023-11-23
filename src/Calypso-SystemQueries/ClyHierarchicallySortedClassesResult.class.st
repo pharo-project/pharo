@@ -19,15 +19,17 @@ I also provide converting methods to get inverse hierarchy result or sorted by a
 
 "
 Class {
-	#name : #ClyHierarchicallySortedClassesResult,
-	#superclass : #ClyBrowserQueryResult,
+	#name : 'ClyHierarchicallySortedClassesResult',
+	#superclass : 'ClyBrowserQueryResult',
 	#instVars : [
 		'hierarchy'
 	],
-	#category : #'Calypso-SystemQueries-Results'
+	#category : 'Calypso-SystemQueries-Results',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Results'
 }
 
-{ #category : #'building items' }
+{ #category : 'building items' }
 ClyHierarchicallySortedClassesResult class >> buildItemsFrom: classes [
 
 	| classesHierarchy |
@@ -37,18 +39,18 @@ ClyHierarchicallySortedClassesResult class >> buildItemsFrom: classes [
 	^classesHierarchy items
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyHierarchicallySortedClassesResult class >> isExpandedHierarchy [
 	^true
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyHierarchicallySortedClassesResult class >> with: aClassHierarchy [
 	^self new
 		hierarchy: aClassHierarchy
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ClyHierarchicallySortedClassesResult >> = anObject [
 	"Answer whether the receiver and anObject represent the same object."
 
@@ -57,7 +59,7 @@ ClyHierarchicallySortedClassesResult >> = anObject [
 	^ hierarchy = anObject hierarchy
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ClyHierarchicallySortedClassesResult >> buildItemFor: aClass from: aHierarchyMap depth: currentDepth [
 
 	| item childDepth children subTreeSize childItem |
@@ -74,7 +76,7 @@ ClyHierarchicallySortedClassesResult >> buildItemFor: aClass from: aHierarchyMap
 	^item
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ClyHierarchicallySortedClassesResult >> fillWith: classes [
 
 	| hierarchyMap |
@@ -85,37 +87,37 @@ ClyHierarchicallySortedClassesResult >> fillWith: classes [
 		self buildItemFor: root from: hierarchyMap depth: 0]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ClyHierarchicallySortedClassesResult >> hash [
 	"Answer an integer value that is related to the identity of the receiver."
 
 	^super hash bitXor: hierarchy hash
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyHierarchicallySortedClassesResult >> hierarchy [
 	^ hierarchy
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyHierarchicallySortedClassesResult >> hierarchy: anObject [
 	hierarchy := anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyHierarchicallySortedClassesResult >> initialize [
 	super initialize.
 
 	hierarchy := ClySubclassHierarchy new
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ClyHierarchicallySortedClassesResult >> sortedBy: aSortFunction [
 	^self copy
 		hierarchy: (hierarchy sortedBy: aSortFunction)
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ClyHierarchicallySortedClassesResult >> withInverseHierarchy [
 	^self copy
 		hierarchy: hierarchy inverted

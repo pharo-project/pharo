@@ -2,12 +2,14 @@
 SUnit test class for nested dictionaries
 "
 Class {
-	#name : #NestedDictionaryTest,
-	#superclass : #TestCase,
-	#category : #'Collections-Unordered-Tests-Dictionaries'
+	#name : 'NestedDictionaryTest',
+	#superclass : 'TestCase',
+	#category : 'Collections-Unordered-Tests-Dictionaries',
+	#package : 'Collections-Unordered-Tests',
+	#tag : 'Dictionaries'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 NestedDictionaryTest >> testAtAtIfAbsent [
 	| d |
 	d := Dictionary new.
@@ -21,7 +23,7 @@ NestedDictionaryTest >> testAtAtIfAbsent [
 	self assert: (d at: #fop666 at: [ 1 / 0 ] ifAbsent: [ 666 ]) equals: 666
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 NestedDictionaryTest >> testAtAtIfAbsentPut [
 	| d |
 	d := Dictionary new.
@@ -34,7 +36,7 @@ NestedDictionaryTest >> testAtAtIfAbsentPut [
 	self assert: (d at: #first42 at: #second42) equals: 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 NestedDictionaryTest >> testAtAtOnIdentityDictinary [
 
 	| dct key1 key2 subDct |
@@ -52,7 +54,7 @@ NestedDictionaryTest >> testAtAtOnIdentityDictinary [
 		assert: (subDct at: key2) equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 NestedDictionaryTest >> testAtAtPut [
 	| d |
 	d := Dictionary new.
@@ -63,7 +65,7 @@ NestedDictionaryTest >> testAtAtPut [
 	self assert: (d at: #fop at: #below1) equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 NestedDictionaryTest >> testAtAtputEffectivelyPutAValue [
 	| d |
 	d := Dictionary new.
@@ -71,7 +73,7 @@ NestedDictionaryTest >> testAtAtputEffectivelyPutAValue [
 	self assert: (d at: #top at: #below1) equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 NestedDictionaryTest >> testAtAtputHasLastPutLastStayBehavior [
 	| d |
 	d := Dictionary new.

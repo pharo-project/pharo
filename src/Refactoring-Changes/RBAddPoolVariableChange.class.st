@@ -2,12 +2,14 @@
 I am a refactoring for a pool  variable addition. My changes are executed on the instance side.
 "
 Class {
-	#name : #RBAddPoolVariableChange,
-	#superclass : #RBRefactoryVariableChange,
-	#category : #'Refactoring-Changes-Changes-Variables'
+	#name : 'RBAddPoolVariableChange',
+	#superclass : 'RBRefactoryVariableChange',
+	#category : 'Refactoring-Changes-Changes-Variables',
+	#package : 'Refactoring-Changes',
+	#tag : 'Changes-Variables'
 }
 
-{ #category : #converting }
+{ #category : 'converting' }
 RBAddPoolVariableChange >> asUndoOperation [
 
 	^ changeFactory
@@ -15,14 +17,14 @@ RBAddPoolVariableChange >> asUndoOperation [
 		  from: self changeClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBAddPoolVariableChange >> changeClass: aBehavior [
 
 	super changeClass: aBehavior.
 	isMeta := false
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBAddPoolVariableChange >> changeString [
 
 	^ 'Add pool variable <1s> to <2s>'
@@ -30,7 +32,7 @@ RBAddPoolVariableChange >> changeString [
 		  with: self displayClassName
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBAddPoolVariableChange >> changeSymbol [
 
 	^ #addSharedPoolNamed:

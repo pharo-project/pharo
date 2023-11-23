@@ -4,8 +4,8 @@ There are different kinds of runners.
 Each has different policies to run the FFI calls and callbacks.
 "
 Class {
-	#name : #TFRunner,
-	#superclass : #FFIExternalReference,
+	#name : 'TFRunner',
+	#superclass : 'FFIExternalReference',
 	#instVars : [
 		'callbackInvocationStack',
 		'stackProtect',
@@ -13,10 +13,12 @@ Class {
 		'semaphorePool',
 		'callbackReturnSemaphore'
 	],
-	#category : #'ThreadedFFI-Worker'
+	#category : 'ThreadedFFI-Worker',
+	#package : 'ThreadedFFI',
+	#tag : 'Worker'
 }
 
-{ #category : #errors }
+{ #category : 'errors' }
 TFRunner >> cannotReturnCallbackFromOldSession: aCallbackInvocation [
 
 	^ TFInvalidSessionCallbackReturn new
@@ -24,7 +26,7 @@ TFRunner >> cannotReturnCallbackFromOldSession: aCallbackInvocation [
 		signal
 ]
 
-{ #category : #errors }
+{ #category : 'errors' }
 TFRunner >> cannotReturnCallbackInWrongOrder: aCallbackInvocation [
 
 	^ TFIncorrectOrderCallbackReturn new
@@ -33,7 +35,7 @@ TFRunner >> cannotReturnCallbackInWrongOrder: aCallbackInvocation [
 		signal
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 TFRunner >> doInitialize [
 
 	callbackInvocationStack := Stack new.
@@ -42,26 +44,26 @@ TFRunner >> doInitialize [
 	semaphorePool := self newSemaphorePool
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 TFRunner >> ensureInitialized [
 	"Only initialize if the image has been restarted and thus I have no handle"
 	self isNull ifTrue: [ self doInitialize ]
 ]
 
-{ #category : #errors }
+{ #category : 'errors' }
 TFRunner >> exceptionHandler [
 
 	^ exceptionHandler ifNil: [
 		exceptionHandler := TFForkCallbackExceptionHandler new ]
 ]
 
-{ #category : #errors }
+{ #category : 'errors' }
 TFRunner >> exceptionHandler: anExceptionHandler [
 
 	exceptionHandler := anExceptionHandler
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 TFRunner >> executeCallback: aCallbackInvocation [
 	"Entry point to execute a callback invocation.
 	Runs the callback in a separate green thread and stack it.
@@ -75,25 +77,25 @@ TFRunner >> executeCallback: aCallbackInvocation [
 	aCallbackInvocation callback runStrategy executeCallback: aCallbackInvocation on: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFRunner >> forCallback [
 
 	^ self
 ]
 
-{ #category : #errors }
+{ #category : 'errors' }
 TFRunner >> handleExceptionDuring: aBlock [
 
 	self exceptionHandler handleExceptionDuring: aBlock
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 TFRunner >> invokeFunction: aTFExternalFunction [
 
 	^ self invokeFunction: aTFExternalFunction withArguments: #()
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 TFRunner >> invokeFunction: aTFExternalFunction withArguments: aCollection [
 
 	^ (TFPooledExternalAsyncCall forFunction: aTFExternalFunction)
@@ -101,7 +103,7 @@ TFRunner >> invokeFunction: aTFExternalFunction withArguments: aCollection [
 		executeOn: self
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TFRunner >> newSemaphorePool [
 
 	^ TFPool
@@ -110,7 +112,7 @@ TFRunner >> newSemaphorePool [
 		releaseBlock: #release "This is ugly... but do not change it to a block, if you change it to a block it will have a reference to self. Creating a loop in the references and leaking memory"
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TFRunner >> primitivePerformWorkerCall: aTFExternalFunction
 		withArguments: argumentHolder
 		withReturnHolder: aReturnHolder
@@ -119,7 +121,7 @@ TFRunner >> primitivePerformWorkerCall: aTFExternalFunction
 	^ self subclassResponsibility
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 TFRunner >> release [
 
 	semaphorePool ifNotNil: [
@@ -133,7 +135,7 @@ TFRunner >> release [
 		callbackInvocationStack := nil ]
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 TFRunner >> returnCallback: aCallbackInvocation [
 	"Entry point to return a callback invocation.
 	Check the callbackInvocation stack to see if the given invocation is the last one.
@@ -166,14 +168,14 @@ TFRunner >> returnCallback: aCallbackInvocation [
 	self returnCallback: aCallbackInvocation
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFRunner >> semaphorePool [
 
 	self ensureInitialized.
 	^ semaphorePool
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFRunner >> semaphorePoolSize [
 
 	^ 5

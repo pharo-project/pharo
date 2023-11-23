@@ -1,10 +1,12 @@
 Class {
-	#name : #CoSuperMessageHeuristicTest,
-	#superclass : #TestCase,
-	#category : #'HeuristicCompletion-Tests-Heuristics'
+	#name : 'CoSuperMessageHeuristicTest',
+	#superclass : 'TestCase',
+	#category : 'HeuristicCompletion-Tests-Heuristics',
+	#package : 'HeuristicCompletion-Tests',
+	#tag : 'Heuristics'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoSuperMessageHeuristicTest >> testDoesApplyForMethodNodeInContextWithNilclass [
 
 	self deny: (CoSuperMessageHeuristic new
@@ -14,7 +16,7 @@ CoSuperMessageHeuristicTest >> testDoesApplyForMethodNodeInContextWithNilclass [
 			yourself))
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoSuperMessageHeuristicTest >> testDoesApplyForMethodNodeInContextWithSuperclass [
 
 	self assert: (CoSuperMessageHeuristic new
@@ -24,7 +26,7 @@ CoSuperMessageHeuristicTest >> testDoesApplyForMethodNodeInContextWithSuperclass
 			yourself))
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoSuperMessageHeuristicTest >> testDoesApplyForSuperMessageSendNodes [
 
 	self assert: (CoSuperMessageHeuristic new
@@ -32,7 +34,7 @@ CoSuperMessageHeuristicTest >> testDoesApplyForSuperMessageSendNodes [
 		inContext: nil)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoSuperMessageHeuristicTest >> testDoesNotApplyForMethodNodeInContextWithNoSuperclass [
 
 	self deny: (CoSuperMessageHeuristic new
@@ -42,7 +44,7 @@ CoSuperMessageHeuristicTest >> testDoesNotApplyForMethodNodeInContextWithNoSuper
 			yourself))
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoSuperMessageHeuristicTest >> testDoesNotApplyForNonSuperMessageSendNodes [
 
 	self deny: (CoSuperMessageHeuristic new

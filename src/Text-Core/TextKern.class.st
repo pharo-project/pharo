@@ -14,33 +14,35 @@ TextMorph new
 	openInWindow.
 "
 Class {
-	#name : #TextKern,
-	#superclass : #TextAttribute,
+	#name : 'TextKern',
+	#superclass : 'TextAttribute',
 	#instVars : [
 		'kern',
 		'active'
 	],
-	#category : #'Text-Core-Attributes'
+	#category : 'Text-Core-Attributes',
+	#package : 'Text-Core',
+	#tag : 'Attributes'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TextKern class >> kern: kernValue [
 	^ self new kern: kernValue
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 TextKern >> = other [
 	^ (other class == self class)
 		and: [other kern = kern]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextKern >> dominatedByCmd0 [
 	"Cmd-0 should turn off kerning"
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextKern >> dominates: other [
 	"NOTE: The use of active in this code is specific to its use in the method
 		Text class addAttribute: att toArray: others"
@@ -49,34 +51,34 @@ TextKern >> dominates: other [
 	^ false
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 TextKern >> hash [
 	"#hash is re-implemented because #= is re-implemented"
 	^kern hash
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TextKern >> isKern [
 	^true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextKern >> kern [
 	^ kern
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextKern >> kern: kernValue [
 	kern := kernValue.
 	self reset
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TextKern >> reset [
 	active := true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextKern >> set [
 	^ active
 ]

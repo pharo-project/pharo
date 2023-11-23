@@ -17,22 +17,24 @@ For more information about my usage, check `OrderedDictionary` and `Dictionary` 
 ```
 "
 Class {
-	#name : #OrderedIdentityDictionary,
-	#superclass : #OrderedDictionary,
-	#category : #'Collections-Sequenceable-Ordered'
+	#name : 'OrderedIdentityDictionary',
+	#superclass : 'OrderedDictionary',
+	#category : 'Collections-Sequenceable-Ordered',
+	#package : 'Collections-Sequenceable',
+	#tag : 'Ordered'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OrderedIdentityDictionary >> dictionaryClass [
 	^ IdentityDictionary
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OrderedIdentityDictionary >> indexOfKey: aKey ifAbsent: aBlock [
 	^ self identityIndexOfKey: aKey ifAbsent: aBlock
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OrderedIdentityDictionary >> orderedKeysIndexOf: aKey [
 	^ orderedKeys identityIndexOf: aKey
 ]

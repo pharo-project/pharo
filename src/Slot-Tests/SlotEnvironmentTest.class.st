@@ -1,10 +1,12 @@
 Class {
-	#name : #SlotEnvironmentTest,
-	#superclass : #SlotSilentTest,
-	#category : #'Slot-Tests-ClassBuilder'
+	#name : 'SlotEnvironmentTest',
+	#superclass : 'SlotSilentTest',
+	#category : 'Slot-Tests-ClassBuilder',
+	#package : 'Slot-Tests',
+	#tag : 'ClassBuilder'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 SlotEnvironmentTest >> testBasicEnvironment [
 	| environment |
 	environment := SystemDictionary new.

@@ -2,36 +2,38 @@
 I am an error raised when extending a class with an incompatible layout.
 "
 Class {
-	#name : #IncompatibleLayoutConflict,
-	#superclass : #ClassBuilderError,
+	#name : 'IncompatibleLayoutConflict',
+	#superclass : 'ClassBuilderError',
 	#instVars : [
 		'layout',
 		'subType'
 	],
-	#category : #'Slot-Core-Exception'
+	#category : 'Slot-Core-Exception',
+	#package : 'Slot-Core',
+	#tag : 'Exception'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IncompatibleLayoutConflict >> layout [
 	^ layout
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IncompatibleLayoutConflict >> layout: anObject [
 	layout := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IncompatibleLayoutConflict >> messageText [
 	^ 'Class with ', layout class name, ' cannot be extended as ', subType
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IncompatibleLayoutConflict >> subType [
 	^ subType
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IncompatibleLayoutConflict >> subType: anObject [
 	subType := anObject
 ]

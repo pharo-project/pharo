@@ -3,12 +3,14 @@ I am a scope of packages which shows only objects which packages extend.
 I see all extended classes and extension methods
 "
 Class {
-	#name : #ClyPackageExtensionScope,
-	#superclass : #ClyTypedScope,
-	#category : #'Calypso-SystemQueries-Scopes'
+	#name : 'ClyPackageExtensionScope',
+	#superclass : 'ClyTypedScope',
+	#category : 'Calypso-SystemQueries-Scopes',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Scopes'
 }
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyPackageExtensionScope >> classesDo: aBlock [
 	self packagesDo: [ :package |
 		package extendedClasses
@@ -16,19 +18,19 @@ ClyPackageExtensionScope >> classesDo: aBlock [
 			thenDo: aBlock]
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyPackageExtensionScope >> methodsDo: aBlock [
 
 	self packagesDo: [ :package |
 		package extensionMethods do: aBlock ]
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyPackageExtensionScope >> packagesDo: aBlock [
 	basisObjects do: aBlock
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyPackageExtensionScope >> printBasisObject: aPackage on: aStream [
 
 	aStream nextPutAll: aPackage name

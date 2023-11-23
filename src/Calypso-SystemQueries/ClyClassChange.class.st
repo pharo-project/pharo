@@ -19,31 +19,33 @@ Internal Representation and Key Implementation Points.
 	affectedClass:		<Class>
 "
 Class {
-	#name : #ClyClassChange,
-	#superclass : #Object,
+	#name : 'ClyClassChange',
+	#superclass : 'Object',
 	#instVars : [
 		'affectedClass'
 	],
-	#category : #'Calypso-SystemQueries-Domain'
+	#category : 'Calypso-SystemQueries-Domain',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Domain'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyClassChange class >> of: aClass [
 	^self new
 		affectedClass: aClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyClassChange >> affectedClass [
 	^ affectedClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyClassChange >> affectedClass: anObject [
 	affectedClass := anObject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyClassChange >> handlesAnnouncement: anAnnouncement [
 
 	^anAnnouncement affectsClass: affectedClass

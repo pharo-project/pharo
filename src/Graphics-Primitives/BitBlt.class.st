@@ -44,8 +44,8 @@ The colorMap, if specified, must be a either word array (ie Bitmap) with 2^n ele
 	Colors can be remapped at the same depth.  Sometimes a Form is in terms of colors that are not the standard colors for this depth, for example in a GIF file.  Convert the Form to a MaskedForm and send colorMap: the list of colors that the picture is in terms of.  MaskedForm will use the colorMap when copying to the display or another Form. (Note also that a Form can be copied to itself, and transformed in the process, if a non-nil colorMap is supplied.)
 "
 Class {
-	#name : #BitBlt,
-	#superclass : #Object,
+	#name : 'BitBlt',
+	#superclass : 'Object',
 	#instVars : [
 		'destForm',
 		'sourceForm',
@@ -67,10 +67,12 @@ Class {
 		'CachedFontColorMaps',
 		'ColorConvertingMaps'
 	],
-	#category : #'Graphics-Primitives-BitBlt'
+	#category : 'Graphics-Primitives-BitBlt',
+	#package : 'Graphics-Primitives',
+	#tag : 'BitBlt'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 BitBlt class >> bitPeekerFromForm: sourceForm [
 	"Answer an instance to be used extract individual pixels from the given Form. The destination for a 1x1 copyBits will be the low order bits of (bits at: 1)."
 	| pixPerWord |
@@ -89,7 +91,7 @@ BitBlt class >> bitPeekerFromForm: sourceForm [
 		clipRect: (0 @ 0 extent: pixPerWord @ 1)
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 BitBlt class >> bitPokerToForm: destForm [
 	"Answer an instance to be used for valueAt: aPoint put: pixValue.
 	The source for a 1x1 copyBits will be the low order of (bits at: 1)"
@@ -109,14 +111,14 @@ BitBlt class >> bitPokerToForm: destForm [
 		clipRect: (0 @ 0 extent: destForm extent)
 ]
 
-{ #category : #cleanup }
+{ #category : 'cleanup' }
 BitBlt class >> cleanUp [
 	"Flush caches"
 
 	self recreateColorMaps
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 BitBlt class >> destForm: df sourceForm: sf fillColor: hf combinationRule: cr destOrigin: destOrigin sourceOrigin: sourceOrigin extent: extent clipRect: clipRect [
 	"Answer an instance of me with values set according to the arguments."
 
@@ -131,7 +133,7 @@ BitBlt class >> destForm: df sourceForm: sf fillColor: hf combinationRule: cr de
 		clipRect: clipRect
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 BitBlt class >> destForm: df sourceForm: sf halftoneForm: hf combinationRule: cr destOrigin: destOrigin sourceOrigin: sourceOrigin extent: extent clipRect: clipRect [
 	"Answer an instance of me with values set according to the arguments."
 
@@ -146,7 +148,7 @@ BitBlt class >> destForm: df sourceForm: sf halftoneForm: hf combinationRule: cr
 		clipRect: clipRect
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 BitBlt class >> initialize [
 
 	self recreateColorMaps.
@@ -155,17 +157,17 @@ BitBlt class >> initialize [
 	SessionManager default registerGuiClassNamed: #Color
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 BitBlt class >> recreateColorMaps [
 	CachedFontColorMaps := ColorConvertingMaps := nil
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 BitBlt class >> toForm: aForm [
 	^ self new setDestForm: aForm
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BitBlt >> clipBy: aRectangle [
 	| aPoint right bottom |
 	right := clipX + clipWidth.
@@ -182,7 +184,7 @@ BitBlt >> clipBy: aRectangle [
 	clipHeight < 0 ifTrue: [ clipHeight := 0 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BitBlt >> clipByX1: x1 y1: y1 x2: x2 y2: y2 [
 	| right bottom |
 	right := clipX + clipWidth.
@@ -197,18 +199,18 @@ BitBlt >> clipByX1: x1 y1: y1 x2: x2 y2: y2 [
 	clipHeight < 0 ifTrue: [ clipHeight := 0 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BitBlt >> clipHeight [
 	^clipHeight
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BitBlt >> clipHeight: anInteger [
 	"Set the receiver's clipping area height to be the argument, anInteger."
 	clipHeight := anInteger
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 BitBlt >> clipRange [
 	"clip and adjust source origin and extent appropriately"
 	"first in x"
@@ -271,14 +273,14 @@ BitBlt >> clipRange [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BitBlt >> clipRect [
 	"Answer the receiver's clipping area rectangle."
 
 	^clipX @ clipY extent: clipWidth @ clipHeight
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BitBlt >> clipRect: aRectangle [
 	"Set the receiver's clipping area rectangle to be the argument, aRectangle."
 	clipX := aRectangle left truncated.
@@ -287,42 +289,42 @@ BitBlt >> clipRect: aRectangle [
 	clipHeight := aRectangle bottom truncated - clipY
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BitBlt >> clipWidth [
 	^clipWidth
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BitBlt >> clipWidth: anInteger [
 	"Set the receiver's clipping area width to be the argument, anInteger."
 	clipWidth := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BitBlt >> clipX [
 	^clipX
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BitBlt >> clipX: anInteger [
 	"Set the receiver's clipping area top left x coordinate to be the argument,
 	anInteger."
 	clipX := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BitBlt >> clipY [
 	^clipY
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BitBlt >> clipY: anInteger [
 	"Set the receiver's clipping area top left y coordinate to be the argument,
 	anInteger."
 	clipY := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BitBlt >> color [
 	"Return the current fill color as a Color.
 	 Gives the wrong answer if the halftoneForm is a complex pattern of more than one word."
@@ -331,7 +333,7 @@ BitBlt >> color [
 	^ Color colorFromPixelValue: halftoneForm first depth: destForm depth
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 BitBlt >> colorConvertingMap: targetColor from: sourceDepth to: destDepth keepSubPixelAA: keepSubPix [
 	| srcIndex map mapsForSource mapsForSourceAndDest |
 	ColorConvertingMaps class == Array ifFalse: [ ColorConvertingMaps := (1 to: 10) collect: [ :i | Array new: 32 ] ].
@@ -356,25 +358,25 @@ BitBlt >> colorConvertingMap: targetColor from: sourceDepth to: destDepth keepSu
 	^ map
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BitBlt >> colorMap [
 	^ colorMap
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BitBlt >> colorMap: map [
 	"See last part of BitBlt comment."
 	colorMap := map
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BitBlt >> combinationRule: anInteger [
 	"Set the receiver's combination rule to be the argument, anInteger, a
 	number in the range 0-15."
 	combinationRule := anInteger
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 BitBlt >> copy: destRectangle from: sourcePt in: srcForm [
 	| destOrigin |
 	sourceForm := srcForm.
@@ -390,12 +392,13 @@ BitBlt >> copy: destRectangle from: sourcePt in: srcForm [
 	self copyBits
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 BitBlt >> copy: destRectangle from: sourcePt in: srcForm fillColor: hf rule: rule [
 	"Specify a Color to fill, not a Form."
+
 	| destOrigin |
 	sourceForm := srcForm.
-	self fillColor: hf.	"sets halftoneForm"
+	self fillColor: hf. "sets halftoneForm"
 	combinationRule := rule.
 	destOrigin := destRectangle origin.
 	destX := destOrigin x.
@@ -404,11 +407,11 @@ BitBlt >> copy: destRectangle from: sourcePt in: srcForm fillColor: hf rule: rul
 	sourceY := sourcePt y.
 	width := destRectangle width.
 	height := destRectangle height.
-	srcForm == nil ifFalse: [ colorMap := srcForm colormapIfNeededFor: destForm ].
+	srcForm ifNotNil: [ colorMap := srcForm colormapIfNeededFor: destForm ].
 	^ self copyBits
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 BitBlt >> copy: destRectangle from: sourcePt in: srcForm halftoneForm: hf rule: rule [
 	| destOrigin |
 	sourceForm := srcForm.
@@ -424,7 +427,7 @@ BitBlt >> copy: destRectangle from: sourcePt in: srcForm halftoneForm: hf rule: 
 	self copyBits
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 BitBlt >> copyBits [
 	"Primitive. Perform the movement of bits from the source form to the
 	destination form. Fail if any variables are not of the right type (Integer,
@@ -461,7 +464,7 @@ BitBlt >> copyBits [
 	combinationRule = Form oldErase1bitShape ifTrue: [ ^ self eraseBits ].
 
 	"Check if BitBlt doesn't support full color maps"
-	(colorMap notNil and: [ colorMap isColormap ]) ifTrue:
+	(colorMap isNotNil and: [ colorMap isColormap ]) ifTrue:
 		[ colorMap := colorMap colors.
 		^ self copyBits ].
 	"Check if clipping gots us way out of range"
@@ -474,7 +477,7 @@ BitBlt >> copyBits [
 	^ self copyBitsAgain
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 BitBlt >> copyBitsAgain [
 	"Primitive. See BitBlt|copyBits, also a Primitive. Essential. See Object
 	documentation whatIsAPrimitive."
@@ -483,7 +486,7 @@ BitBlt >> copyBitsAgain [
 	self primitiveFailed
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 BitBlt >> copyBitsFrom: x0 to: x1 at: y [
 	destX := x0.
 	destY := y.
@@ -492,7 +495,7 @@ BitBlt >> copyBitsFrom: x0 to: x1 at: y [
 	self copyBits
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 BitBlt >> copyBitsTranslucent: factor [
 	"This entry point to BitBlt supplies an extra argument to specify translucency
 	for operations 30 and 31.  The argument must be an integer between 0 and 255."
@@ -510,13 +513,13 @@ BitBlt >> copyBitsTranslucent: factor [
 	self primitiveFailed  "Later do nicer error recovery -- share copyBits recovery"
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 BitBlt >> copyForm: srcForm to: destPt rule: rule [
 	^ self copyForm: srcForm to: destPt rule: rule
 		colorMap: (srcForm colormapIfNeededFor: destForm)
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 BitBlt >> copyForm: srcForm to: destPt rule: rule color: color [
 	sourceForm := srcForm.
 	halftoneForm := color.
@@ -530,7 +533,7 @@ BitBlt >> copyForm: srcForm to: destPt rule: rule color: color [
 	self copyBits
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 BitBlt >> copyForm: srcForm to: destPt rule: rule colorMap: map [
 	sourceForm := srcForm.
 	halftoneForm := nil.
@@ -545,7 +548,7 @@ BitBlt >> copyForm: srcForm to: destPt rule: rule colorMap: map [
 	self copyBits
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 BitBlt >> copyForm: srcForm to: destPt rule: rule fillColor: color [
 	sourceForm := srcForm.
 	self fillColor: color.	"sets halftoneForm"
@@ -559,7 +562,7 @@ BitBlt >> copyForm: srcForm to: destPt rule: rule fillColor: color [
 	self copyBits
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 BitBlt >> copyFrom: sourceRectangle in: srcForm to: destPt [
 	| sourceOrigin |
 	sourceForm := srcForm.
@@ -576,12 +579,12 @@ BitBlt >> copyFrom: sourceRectangle in: srcForm to: destPt [
 	self copyBits
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BitBlt >> destForm [
 	^ destForm
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BitBlt >> destOrigin: aPoint [
 	"Set the receiver's destination top left coordinates to be those of the
 	argument, aPoint."
@@ -589,14 +592,14 @@ BitBlt >> destOrigin: aPoint [
 	destY := aPoint y
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BitBlt >> destRect [
 	"The rectangle we are about to blit to or just blitted to.  "
 
 	^ destX @ destY extent: width @ height
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BitBlt >> destRect: aRectangle [
 	"Set the receiver's destination form top left coordinates to be the origin of
 	the argument, aRectangle, and set the width and height of the receiver's
@@ -607,14 +610,14 @@ BitBlt >> destRect: aRectangle [
 	height := aRectangle height
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BitBlt >> destX: anInteger [
 	"Set the top left x coordinate of the receiver's destination form to be the
 	argument, anInteger."
 	destX := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BitBlt >> destX: x destY: y width: w height: h [
 	"Combined init message saves 3 sends from DisplayScanner"
 	destX := x.
@@ -623,20 +626,20 @@ BitBlt >> destX: x destY: y width: w height: h [
 	height := h
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BitBlt >> destY: anInteger [
 	"Set the top left y coordinate of the receiver's destination form to be the
 	argument, anInteger."
 	destY := anInteger
 ]
 
-{ #category : #'line drawing' }
+{ #category : 'line drawing' }
 BitBlt >> drawFrom: startPoint to: stopPoint [
 
 	 ^ self drawFrom: startPoint to: stopPoint withFirstPoint: true
 ]
 
-{ #category : #'line drawing' }
+{ #category : 'line drawing' }
 BitBlt >> drawFrom: startPoint to: stopPoint withFirstPoint: drawFirstPoint [
 	"Draw a line whose end points are startPoint and stopPoint.
 	The line is formed by repeatedly calling copyBits at every
@@ -674,7 +677,7 @@ BitBlt >> drawFrom: startPoint to: stopPoint withFirstPoint: drawFirstPoint [
 		forwards ]) ifTrue: [ self copyBits ]
 ]
 
-{ #category : #'line drawing' }
+{ #category : 'line drawing' }
 BitBlt >> drawLoopX: xDelta Y: yDelta [
 	"Primitive. Implements the Bresenham plotting algorithm (IBM Systems
 	Journal, Vol. 4 No. 1, 1965). It chooses a principal direction, and
@@ -716,7 +719,7 @@ BitBlt >> drawLoopX: xDelta Y: yDelta [
 					i < px ifTrue: [ self copyBits ] ] ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 BitBlt >> eraseBits [
 	"Perform the erase operation, which puts 0's in the destination
 	wherever the source (which is assumed to be just 1 bit deep)
@@ -735,7 +738,7 @@ BitBlt >> eraseBits [
 	colorMap := oldMap
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 BitBlt >> fill: destRect fillColor: grayForm rule: rule [
 	"Fill with a Color, not a Form."
 	sourceForm := nil.
@@ -750,12 +753,12 @@ BitBlt >> fill: destRect fillColor: grayForm rule: rule [
 	self copyBits
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BitBlt >> fillColor [
 	^ halftoneForm
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BitBlt >> fillColor: aColorOrPattern [
 	"The destForm will be filled with this color or pattern of colors.  May be an old Color, a new type Color, a Bitmap (see BitBlt comment), a Pattern, or a Form."
 
@@ -764,34 +767,34 @@ BitBlt >> fillColor: aColorOrPattern [
 	halftoneForm := destForm bitPatternFor: aColorOrPattern
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 BitBlt >> getPluginName [
 	"Private. Return the name of the plugin representing BitBlt.
 	Used for dynamically switching between different BB representations only."
 	^'BitBltPlugin'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BitBlt >> halftoneForm [
 	"Returns the receivers half tone form. See class commment."
 
 	^halftoneForm
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BitBlt >> halftoneForm: aBitmap [
 	"Sets the receivers half tone form. See class commment."
 
 	halftoneForm := aBitmap
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BitBlt >> height: anInteger [
 	"Set the receiver's destination form height to be the argument, anInteger."
 	height := anInteger
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 BitBlt >> paintBits [
 	"Perform the paint operation, which requires two calls to BitBlt."
 	| color oldMap saveRule |
@@ -826,7 +829,7 @@ dot := Form dotOfSize: 32.
 		colorMap: (Bitmap with: 0 with: 16rFFFFFFFF)) copyBits"
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 BitBlt >> pixelAt: aPoint [
 	"Assumes this BitBlt has been set up specially (see the init message,
 	BitBlt bitPeekerFromForm:.  Returns the pixel at aPoint."
@@ -840,7 +843,7 @@ BitBlt >> pixelAt: aPoint [
 	^ destForm bits at: 1
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 BitBlt >> pixelAt: aPoint put: pixelValue [
 	"Assumes this BitBlt has been set up specially (see the init message,
 	BitBlt bitPokerToForm:.  Overwrites the pixel at aPoint."
@@ -859,7 +862,7 @@ bb := (BitBlt bitPokerToForm: Display).
 "
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 BitBlt >> primDisplayString: aString from: startIndex to: stopIndex map: glyphMap xTable: xTable kern: kernDelta [
 	| ascii |
 	<primitive:'primitiveDisplayString' module:'BitBltPlugin'>
@@ -875,7 +878,7 @@ BitBlt >> primDisplayString: aString from: startIndex to: stopIndex map: glyphMa
 			destX := destX + width + kernDelta ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 BitBlt >> roundVariables [
 	| maxVal minVal |
 	maxVal := SmallInteger maxVal.
@@ -912,7 +915,7 @@ BitBlt >> roundVariables [
 		max: minVal
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 BitBlt >> setDestForm: df [
 	| bb |
 	bb := df boundingBox.
@@ -923,12 +926,13 @@ BitBlt >> setDestForm: df [
 	clipHeight := bb height
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 BitBlt >> setDestForm: df sourceForm: sf fillColor: hf combinationRule: cr destOrigin: destOrigin sourceOrigin: sourceOrigin extent: extent clipRect: clipRect [
+
 	| aPoint |
 	destForm := df.
 	sourceForm := sf.
-	self fillColor: hf.	"sets halftoneForm"
+	self fillColor: hf. "sets halftoneForm"
 	combinationRule := cr.
 	destX := destOrigin x.
 	destY := destOrigin y.
@@ -942,22 +946,22 @@ BitBlt >> setDestForm: df sourceForm: sf fillColor: hf combinationRule: cr destO
 	aPoint := clipRect corner.
 	clipWidth := aPoint x - clipX.
 	clipHeight := aPoint y - clipY.
-	sourceForm == nil ifFalse: [ colorMap := sourceForm colormapIfNeededFor: destForm ]
+	sourceForm ifNotNil: [ colorMap := sourceForm colormapIfNeededFor: destForm ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BitBlt >> sourceForm [
 
 	^ sourceForm
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BitBlt >> sourceForm: aForm [
 	"Set the receiver's source form to be the argument, aForm."
 	sourceForm := aForm
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BitBlt >> sourceOrigin: aPoint [
 	"Set the receiver's source form coordinates to be those of the argument,
 	aPoint."
@@ -965,7 +969,7 @@ BitBlt >> sourceOrigin: aPoint [
 	sourceY := aPoint y
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BitBlt >> sourceRect: aRectangle [
 	"Set the receiver's source form top left x and y, width and height to be
 	the top left coordinate and extent of the argument, aRectangle."
@@ -975,31 +979,31 @@ BitBlt >> sourceRect: aRectangle [
 	height := aRectangle height
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BitBlt >> sourceX: anInteger [
 	"Set the receiver's source form top left x to be the argument, anInteger."
 	sourceX := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BitBlt >> sourceY: anInteger [
 	"Set the receiver's source form top left y to be the argument, anInteger."
 	sourceY := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BitBlt >> tallyMap [
 	"Return the map used for tallying pixels"
 	^colorMap
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BitBlt >> tallyMap: aBitmap [
 	"Install the map used for tallying pixels"
 	colorMap := aBitmap
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BitBlt >> width: anInteger [
 	"Set the receiver's destination form width to be the argument, anInteger."
 	width := anInteger

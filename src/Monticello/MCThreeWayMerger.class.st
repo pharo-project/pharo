@@ -4,18 +4,20 @@ Operations are subclasses of MCPatchOperation:  addition (MCAddition), modificat
 
 "
 Class {
-	#name : #MCThreeWayMerger,
-	#superclass : #MCMerger,
+	#name : 'MCThreeWayMerger',
+	#superclass : 'Object',
 	#instVars : [
 		'index',
 		'operations',
 		'provisions',
 		'redundantAdds'
 	],
-	#category : #'Monticello-Merging'
+	#category : 'Monticello-Merging',
+	#package : 'Monticello',
+	#tag : 'Merging'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MCThreeWayMerger class >> base: aSnapshot patch: aPatch [
 	aPatch isEmpty ifTrue: [MCNoChangesException signal].
 	^ self new
@@ -25,12 +27,12 @@ MCThreeWayMerger class >> base: aSnapshot patch: aPatch [
 		
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MCThreeWayMerger class >> base: aSnapshot target: targetSnapshot ancestor: ancestorSnapshot [
 	^ self base: aSnapshot patch: (targetSnapshot patchRelativeToBase: ancestorSnapshot)
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 MCThreeWayMerger >> addBaseSnapshot: aSnapshot [
 	aSnapshot definitions do:
 		[:ea |
@@ -38,7 +40,12 @@ MCThreeWayMerger >> addBaseSnapshot: aSnapshot [
 		provisions addAll: ea provisions]
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
+MCThreeWayMerger >> addConflictWithOperation: anOperation [
+	self operations add: anOperation beConflict
+]
+
+{ #category : 'operations' }
 MCThreeWayMerger >> addDefinition: aDefinition [
 	index
 		definitionLike: aDefinition
@@ -55,29 +62,74 @@ MCThreeWayMerger >> addDefinition: aDefinition [
 		ifAbsent: [self addOperation: (MCAddition of: aDefinition)]
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 MCThreeWayMerger >> addOperation: anOperation [
 	self operations add: anOperation
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 MCThreeWayMerger >> applyPatch: aPatch [
 	aPatch applyTo: self
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
+MCThreeWayMerger >> applyTo: anObject [
+	self isMerged ifFalse: [self error: 'You must resolve all the conflicts first'].
+	self operations do: [:ea | ea applyTo: anObject]
+]
+
+{ #category : 'operations' }
 MCThreeWayMerger >> baseSnapshot [
 	^ (MCSnapshot fromDefinitions: index definitions)
 ]
 
-{ #category : #initialization }
+{ #category : 'accessing' }
+MCThreeWayMerger >> conflicts [	
+	^ self operations select: #isConflict
+
+]
+
+{ #category : 'testing' }
+MCThreeWayMerger >> hasConflicts [
+	^ self conflicts notEmpty
+]
+
+{ #category : 'initialization' }
 MCThreeWayMerger >> initialize [
 	super initialize.
 	index := MCDefinitionIndex new.
 	provisions := Set new
 ]
 
-{ #category : #operations }
+{ #category : 'testing' }
+MCThreeWayMerger >> isMerged [
+	^ self conflicts allSatisfy: [:ea | ea isResolved]
+]
+
+{ #category : 'operations' }
+MCThreeWayMerger >> load [
+	| loader |
+	loader := MCPackageLoader new.
+	loader provisions addAll: self provisions.
+	self applyTo: loader.
+	loader load
+]
+
+{ #category : 'operations' }
+MCThreeWayMerger >> loadWithNameLike: baseName [
+	| loader |
+	loader := MCPackageLoader new.
+	loader provisions addAll: self provisions.
+	self applyTo: loader.
+	loader loadWithNameLike: baseName
+]
+
+{ #category : 'accessing' }
+MCThreeWayMerger >> mergedSnapshot [
+	^ MCPatcher apply: self to: self baseSnapshot
+]
+
+{ #category : 'operations' }
 MCThreeWayMerger >> modificationConflictForDefinition: aDefinition [
 	^ self conflicts 
 		detect: [:ea |
@@ -86,7 +138,7 @@ MCThreeWayMerger >> modificationConflictForDefinition: aDefinition [
 		ifNone: []
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 MCThreeWayMerger >> modifyDefinition: baseDefinition to: targetDefinition [
 	index
 		definitionLike: baseDefinition
@@ -99,22 +151,22 @@ MCThreeWayMerger >> modifyDefinition: baseDefinition to: targetDefinition [
 		ifAbsent: [self addConflictWithOperation: (MCAddition of: targetDefinition)]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCThreeWayMerger >> operations [
 	^ operations ifNil: [operations := OrderedCollection new]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCThreeWayMerger >> provisions [
 	^ provisions
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 MCThreeWayMerger >> redundantAdds [
 	^ redundantAdds ifNil: [redundantAdds := Set new]
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 MCThreeWayMerger >> removalForDefinition: aDefinition [
 	^ operations ifNotNil:
 		[operations
@@ -122,7 +174,7 @@ MCThreeWayMerger >> removalForDefinition: aDefinition [
 			ifNone: []]
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 MCThreeWayMerger >> removeDefinition: aDefinition [
 	index
 		definitionLike: aDefinition
@@ -138,7 +190,7 @@ MCThreeWayMerger >> removeDefinition: aDefinition [
 		ifAbsent: []
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 MCThreeWayMerger >> removeOperation: anOperation [
 	operations remove: anOperation
 ]

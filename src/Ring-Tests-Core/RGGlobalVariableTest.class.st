@@ -1,10 +1,11 @@
 Class {
-	#name : #RGGlobalVariableTest,
-	#superclass : #RGTest,
-	#category : #'Ring-Tests-Core'
+	#name : 'RGGlobalVariableTest',
+	#superclass : 'RGTest',
+	#category : 'Ring-Tests-Core',
+	#package : 'Ring-Tests-Core'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGGlobalVariableTest >> testGlobalVariableImplicitEnvironment [
 	| globalVariable |
 	globalVariable := RGGlobalVariable unnamed.
@@ -13,7 +14,7 @@ RGGlobalVariableTest >> testGlobalVariableImplicitEnvironment [
 	self assert: globalVariable environment ask globalVariables anyOne identicalTo: globalVariable
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGGlobalVariableTest >> testNewGlobalVariable [
 
 	| classVariable |
@@ -23,7 +24,7 @@ RGGlobalVariableTest >> testNewGlobalVariable [
 	self assert: (classVariable isGlobalVariable)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGGlobalVariableTest >> testResolvingConsistency [
 
 	| anObject |

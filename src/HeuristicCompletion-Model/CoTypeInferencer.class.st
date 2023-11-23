@@ -3,8 +3,8 @@ I am a simple type inferencer that is depth-bound.
 That is, I infer a method up to a certain level of the callgraph.
 "
 Class {
-	#name : #CoTypeInferencer,
-	#superclass : #RBProgramNodeVisitor,
+	#name : 'CoTypeInferencer',
+	#superclass : 'RBProgramNodeVisitor',
 	#instVars : [
 		'returnType',
 		'variables',
@@ -15,16 +15,18 @@ Class {
 		'receiverClass',
 		'argumentVariables'
 	],
-	#category : #'HeuristicCompletion-Model-InitializeInferenceHeuristic'
+	#category : 'HeuristicCompletion-Model-InitializeInferenceHeuristic',
+	#package : 'HeuristicCompletion-Model',
+	#tag : 'InitializeInferenceHeuristic'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoTypeInferencer >> arguments: aCollection [
 
 	arguments := aCollection
 ]
 
-{ #category : #inference }
+{ #category : 'inference' }
 CoTypeInferencer >> cleanupTypes [
 
 	| unknownType |
@@ -33,7 +35,7 @@ CoTypeInferencer >> cleanupTypes [
 		e remove: unknownType ifAbsent: [ "nothing" ] ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 CoTypeInferencer >> ensureTypeOfArgumentVariable: aVariableName [
 
 	^ argumentVariables
@@ -41,7 +43,7 @@ CoTypeInferencer >> ensureTypeOfArgumentVariable: aVariableName [
 		ifAbsentPut: [ Set new ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 CoTypeInferencer >> ensureTypeOfTemporaryVariable: aVariableName [
 
 	^ temporaryVariables
@@ -49,7 +51,7 @@ CoTypeInferencer >> ensureTypeOfTemporaryVariable: aVariableName [
 		ifAbsentPut: [ Set new ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 CoTypeInferencer >> ensureTypeOfVariable: aVariableName [
 
 	^ variables
@@ -57,13 +59,13 @@ CoTypeInferencer >> ensureTypeOfVariable: aVariableName [
 		ifAbsentPut: [ Set new ]
 ]
 
-{ #category : #inference }
+{ #category : 'inference' }
 CoTypeInferencer >> inferFrom: aClass [
 
 	self inferFrom: aClass typeGetters: true
 ]
 
-{ #category : #inference }
+{ #category : 'inference' }
 CoTypeInferencer >> inferFrom: aClass typeGetters: aBoolean [
 
 	receiverClass := aClass.
@@ -79,7 +81,7 @@ CoTypeInferencer >> inferFrom: aClass typeGetters: aBoolean [
 	self cleanupTypes
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 CoTypeInferencer >> inferMessageReturn: aRBMessageNode receiverType: type argumentTypes: argumentTypes [
 
 	| lookupClass inferer |
@@ -111,7 +113,7 @@ CoTypeInferencer >> inferMessageReturn: aRBMessageNode receiverType: type argume
 		returnType
 ]
 
-{ #category : #inference }
+{ #category : 'inference' }
 CoTypeInferencer >> inferMethod: aMethod [
 
 	method := aMethod.
@@ -120,7 +122,7 @@ CoTypeInferencer >> inferMethod: aMethod [
 	method ast acceptVisitor: self
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CoTypeInferencer >> initialize [
 
 	super initialize.
@@ -133,17 +135,17 @@ CoTypeInferencer >> initialize [
 	returnType add: CoUnknownType new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoTypeInferencer >> level [
 	^ level
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoTypeInferencer >> level: anObject [
 	level := anObject
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 CoTypeInferencer >> lookupVariableType: aVariableName [
 
 	^ variables
@@ -154,17 +156,17 @@ CoTypeInferencer >> lookupVariableType: aVariableName [
 				ifAbsent: [ self ensureTypeOfTemporaryVariable: aVariableName ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoTypeInferencer >> receiverClass: aClass [
 	receiverClass := aClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoTypeInferencer >> returnType [
 	^ returnType
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 CoTypeInferencer >> stackMessage: aBlock level: aNewLevel [
 
 	| previousLevel previousMethod previousTemporaries previousArguments |
@@ -180,7 +182,7 @@ CoTypeInferencer >> stackMessage: aBlock level: aNewLevel [
 		argumentVariables := previousArguments ]
 ]
 
-{ #category : #inference }
+{ #category : 'inference' }
 CoTypeInferencer >> tryInferSelector: aSelector [
 
 	"Try to infer types from a selector in the current class.
@@ -192,29 +194,29 @@ CoTypeInferencer >> tryInferSelector: aSelector [
 	self inferMethod: foundMethod
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoTypeInferencer >> variables [
 	^ variables
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoTypeInferencer >> variables: aCollection [
 	variables := aCollection
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 CoTypeInferencer >> visitArgumentNode: aRBArgumentNode [
 
 	^ self ensureTypeOfArgumentVariable: aRBArgumentNode name
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 CoTypeInferencer >> visitArrayNode: aRBArrayNode [
 
 	^ { Array }
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 CoTypeInferencer >> visitAssignmentNode: aRBAssignmentNode [
 
 	| types |
@@ -223,7 +225,7 @@ CoTypeInferencer >> visitAssignmentNode: aRBAssignmentNode [
 		yourself
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 CoTypeInferencer >> visitBlockNode: aRBBlockNode [
 
 	"Just visit the contents"
@@ -234,7 +236,7 @@ CoTypeInferencer >> visitBlockNode: aRBBlockNode [
 	^ last
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 CoTypeInferencer >> visitCascadeNode: aRBCascadeNode [
 
 	| receiverType last |
@@ -246,7 +248,7 @@ CoTypeInferencer >> visitCascadeNode: aRBCascadeNode [
 	^ last
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 CoTypeInferencer >> visitGlobalNode: aRBGlobalNode [
 
 	| binding |
@@ -254,25 +256,25 @@ CoTypeInferencer >> visitGlobalNode: aRBGlobalNode [
 	^ { binding class }
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 CoTypeInferencer >> visitInstanceVariableNode: aRBInstanceVariableNode [
 
 	^ self ensureTypeOfVariable: aRBInstanceVariableNode name
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 CoTypeInferencer >> visitLiteralArrayNode: aRBLiteralArrayNode [
 
 	^ self visitArrayNode: aRBLiteralArrayNode
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 CoTypeInferencer >> visitLiteralValueNode: aRBLiteralValueNode [
 
 	^ { aRBLiteralValueNode value class }
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 CoTypeInferencer >> visitMessageNode: aRBMessageNode [
 
 	| receiverType |
@@ -282,7 +284,7 @@ CoTypeInferencer >> visitMessageNode: aRBMessageNode [
 		receiverType: receiverType
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 CoTypeInferencer >> visitMessageNode: aRBMessageNode receiverType: receiverType [
 
 	| argumentTypes |
@@ -320,7 +322,7 @@ CoTypeInferencer >> visitMessageNode: aRBMessageNode receiverType: receiverType 
 				ifFalse: [level - 1]) ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 CoTypeInferencer >> visitMethodNode: aRBMethodNode [
 
 	aRBMethodNode arguments withIndexDo: [ :each :index |
@@ -334,7 +336,7 @@ CoTypeInferencer >> visitMethodNode: aRBMethodNode [
 			ifFalse: [ returnType add: method methodClass ] ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 CoTypeInferencer >> visitReturnNode: aRBReturnNode [
 
 	^ returnType
@@ -342,31 +344,31 @@ CoTypeInferencer >> visitReturnNode: aRBReturnNode [
 		yourself
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 CoTypeInferencer >> visitSelfNode: aRBSelfNode [
 
 	^ { receiverClass }
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 CoTypeInferencer >> visitSuperNode: aRBSuperNode [
 
 	^ self visitSelfNode: aRBSuperNode
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 CoTypeInferencer >> visitTemporaryNode: aRBTemporaryNode [
 
 	^ self ensureTypeOfTemporaryVariable: aRBTemporaryNode name
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 CoTypeInferencer >> visitThisContextNode: aRBThisContextNode [
 
 	^ { Context }
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 CoTypeInferencer >> visitVariableNode: aRBVariableNode [
 
 	^ self ensureTypeOfVariable: aRBVariableNode name

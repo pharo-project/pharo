@@ -1,6 +1,6 @@
-Extension { #name : #ClyBrowserMorph }
+Extension { #name : 'ClyBrowserMorph' }
 
-{ #category : #'*Calypso-SystemTools-Core' }
+{ #category : '*Calypso-SystemTools-Core' }
 ClyBrowserMorph >> allowSilentlyRemoveMethods: methods whichHaveSenders: senders [
 
 	| singleSender sendersCount |
@@ -12,7 +12,7 @@ ClyBrowserMorph >> allowSilentlyRemoveMethods: methods whichHaveSenders: senders
 	^singleSender == methods first
 ]
 
-{ #category : #'*Calypso-SystemTools-Core' }
+{ #category : '*Calypso-SystemTools-Core' }
 ClyBrowserMorph >> confirmEmptySystemQuery: aQuery [
 
 	| showResult result |
@@ -26,7 +26,7 @@ ClyBrowserMorph >> confirmEmptySystemQuery: aQuery [
 	^false
 ]
 
-{ #category : #'*Calypso-SystemTools-Core' }
+{ #category : '*Calypso-SystemTools-Core' }
 ClyBrowserMorph >> confirmEmptySystemQuery: aQuery excluding: classes [
 
 	| showResult result |
@@ -40,7 +40,7 @@ ClyBrowserMorph >> confirmEmptySystemQuery: aQuery excluding: classes [
 	^Array with: false with: showResult
 ]
 
-{ #category : #'*Calypso-SystemTools-Core' }
+{ #category : '*Calypso-SystemTools-Core' }
 ClyBrowserMorph >> confirmUnusedClasses: classes [
 	"Returns a vector of size 2
 	The first value is TRUE when it doesn't have any reference, subclass or is used (for traits), otherwise is FALSE.
@@ -66,7 +66,7 @@ ClyBrowserMorph >> confirmUnusedClasses: classes [
 	^noUsers
 ]
 
-{ #category : #'*Calypso-SystemTools-Core' }
+{ #category : '*Calypso-SystemTools-Core' }
 ClyBrowserMorph >> confirmUnusedVariables: variables [
 
 	| refQuery |
@@ -75,7 +75,7 @@ ClyBrowserMorph >> confirmUnusedVariables: variables [
 	^self confirmEmptySystemQuery: refQuery
 ]
 
-{ #category : #'*Calypso-SystemTools-Core' }
+{ #category : '*Calypso-SystemTools-Core' }
 ClyBrowserMorph >> confirmUnusedVariablesInDefiningClass: variables [
 
 	| refQuery classScope |
@@ -85,17 +85,17 @@ ClyBrowserMorph >> confirmUnusedVariablesInDefiningClass: variables [
 	^self confirmEmptySystemQuery: refQuery
 ]
 
-{ #category : #'*Calypso-SystemTools-Core' }
+{ #category : '*Calypso-SystemTools-Core' }
 ClyBrowserMorph >> decorateMethodEditor: aMethodEditor [
 ]
 
-{ #category : #'*Calypso-SystemTools-Core' }
+{ #category : '*Calypso-SystemTools-Core' }
 ClyBrowserMorph >> isMethodSelected: aMethod [
 
 	^self methodSelection includesActualObject: aMethod
 ]
 
-{ #category : #'*Calypso-SystemTools-Core' }
+{ #category : '*Calypso-SystemTools-Core' }
 ClyBrowserMorph >> requestRemoveClassStrategyFor: classes [
 
 	| result strategies title |
@@ -116,28 +116,4 @@ ClyBrowserMorph >> requestRemoveClassStrategyFor: classes [
 		          title: title.
 
 	^ result ifNil: [ SycNotRemoveClassStrategy new ]
-]
-
-{ #category : #'*Calypso-SystemTools-Core' }
-ClyBrowserMorph >> requestRemoveMethodStrategyFor: methods [
-	| selectors result strategies caption  senders senderCount plural |
-
-	selectors := (methods collect: [ :each | each selector ] as: IdentitySet) asArray.
-
-	senders := (ClyMessageSendersQuery ofAny: selectors from: self defaultNavigationScope) execute.
-	(self allowSilentlyRemoveMethods: methods whichHaveSenders: senders)
-		ifTrue: [ ^SycSilentlyRemoveMethodStrategy new ].
-
-	strategies := SycRemoveMethodStrategy createAllForBrowser: self.
-	senderCount := senders size.
-	plural := '' asPluralBasedOn: senderCount.
-
-	caption := selectors size > 1
-		ifTrue: [ 'There are {1} sender{2}' format: {senderCount. plural}]
-		ifFalse: ['The message #{1} has {2} sender{3}' format: {selectors anyOne. senderCount. plural}].
-
-	result := UIManager default
-		chooseFrom: (strategies collect: [:each | each userRequestString]) values: strategies title: caption.
-
-	^result ifNil: [ SycNotRemoveMethodStrategy new ]
 ]

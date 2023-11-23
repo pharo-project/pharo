@@ -4,18 +4,19 @@ I return all method from given scope which override methods from inherited class
 To detect overriding method I use inheritanceAnalyzer which caches this information
 "
 Class {
-	#name : #ClyOverridingMethodsQuery,
-	#superclass : #ClyInheritanceAnalysisMethodQuery,
-	#category : #'Calypso-SystemPlugins-InheritanceAnalysis-Queries'
+	#name : 'ClyOverridingMethodsQuery',
+	#superclass : 'ClyInheritanceAnalysisMethodQuery',
+	#category : 'Calypso-SystemPlugins-InheritanceAnalysis-Queries',
+	#package : 'Calypso-SystemPlugins-InheritanceAnalysis-Queries'
 }
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyOverridingMethodsQuery >> description [
 
 	^'overriding methods'
 ]
 
-{ #category : #'system changes' }
+{ #category : 'system changes' }
 ClyOverridingMethodsQuery >> isAffectedByChangedMethod: aMethod [
 	| selector |
 
@@ -27,7 +28,7 @@ ClyOverridingMethodsQuery >> isAffectedByChangedMethod: aMethod [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyOverridingMethodsQuery >> selectsMethod: aMethod [
 	^scope inheritanceAnalyzer isMethodOverriding: aMethod
 ]

@@ -4,58 +4,59 @@ I am a command to add new class tag into the package.
 Internal Representation and Key Implementation Points.
 
     Instance Variables
-	package:		<RPackage>
+	package:		<Package>
 	tagName:		<String>
 
 "
 Class {
-	#name : #SycAddNewClassTagCommand,
-	#superclass : #CmdCommand,
+	#name : 'SycAddNewClassTagCommand',
+	#superclass : 'CmdCommand',
 	#instVars : [
 		'package',
 		'tagName'
 	],
-	#category : #'SystemCommands-PackageCommands'
+	#category : 'SystemCommands-PackageCommands',
+	#package : 'SystemCommands-PackageCommands'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 SycAddNewClassTagCommand class >> canBeExecutedInContext: aToolContext [
 	^aToolContext isPackageSelected
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycAddNewClassTagCommand >> applyResultInContext: aToolContext [
 	super applyResultInContext: aToolContext.
-	aToolContext showPackage: package atClassTag: tagName
+	aToolContext showPackage: package tag: tagName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycAddNewClassTagCommand >> defaultMenuIconName [
 	^#add
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycAddNewClassTagCommand >> defaultMenuItemName [
 	^'New tag'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycAddNewClassTagCommand >> execute [
 
-	package addClassTag: tagName
+	package ensureTag: tagName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycAddNewClassTagCommand >> package [
 	^ package
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycAddNewClassTagCommand >> package: anObject [
 	package := anObject
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycAddNewClassTagCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 	package := aToolContext lastSelectedPackage.
@@ -67,12 +68,12 @@ SycAddNewClassTagCommand >> prepareFullExecutionInContext: aToolContext [
 	tagName isEmptyOrNil ifTrue: [ CmdCommandAborted signal ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycAddNewClassTagCommand >> tagName [
 	^ tagName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycAddNewClassTagCommand >> tagName: anObject [
 	tagName := anObject
 ]

@@ -3,22 +3,24 @@ I am command line test runner.
 I run a TestSuite and outpout the progress in a terminal friendly way with XTerm characters.
 "
 Class {
-	#name : #VTermTestRunner,
-	#superclass : #CommandLineTestRunner,
-	#category : #'SUnit-UI-Headless'
+	#name : 'VTermTestRunner',
+	#superclass : 'CommandLineTestRunner',
+	#category : 'SUnit-UI-Headless',
+	#package : 'SUnit-UI',
+	#tag : 'Headless'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 VTermTestRunner >> createStderr [
 	^ VTermOutputDriver stderr
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 VTermTestRunner >> createStdout [
 	^ VTermOutputDriver stdout
 ]
 
-{ #category : #helper }
+{ #category : 'helper' }
 VTermTestRunner >> print: aLongErrorMesssage short: aShortErrorMesssage of: aTestCase [
 	| testCaseString longMessage shortMessage offset cr |
 
@@ -44,7 +46,7 @@ VTermTestRunner >> print: aLongErrorMesssage short: aShortErrorMesssage of: aTes
 	self stdout << cr
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 VTermTestRunner >> printProgress [
 	| string |
 	string := '[',currentTest asString, '/', maxTest asString,']'.
@@ -52,7 +54,7 @@ VTermTestRunner >> printProgress [
 		startOfLine; right: (80 - string size); nextPutAll: string
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 VTermTestRunner >> printTestCase: aTestCase [
 	self stderr
 		startOfLine; clearToEnd; green;
@@ -60,17 +62,17 @@ VTermTestRunner >> printTestCase: aTestCase [
 	self printProgress
 ]
 
-{ #category : #helper }
+{ #category : 'helper' }
 VTermTestRunner >> recordPassOf: aTestCase [
 ]
 
-{ #category : #helper }
+{ #category : 'helper' }
 VTermTestRunner >> writeError: anError of: aTestCase [
 	self stderr red.
 	super writeError: anError of: aTestCase
 ]
 
-{ #category : #helper }
+{ #category : 'helper' }
 VTermTestRunner >> writeFailure: anError of: aTestCase [
 	self stderr yellow.
 	^ super writeFailure: anError of: aTestCase

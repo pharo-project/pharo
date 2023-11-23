@@ -2,31 +2,33 @@
 I'm an event related to the host window, only dispatched to the World. 
 "
 Class {
-	#name : #WindowEvent,
-	#superclass : #MorphicEvent,
+	#name : 'WindowEvent',
+	#superclass : 'MorphicEvent',
 	#instVars : [
 		'action',
 		'rectangle'
 	],
-	#category : #'Morphic-Core-Events'
+	#category : 'Morphic-Core-Events',
+	#package : 'Morphic-Core',
+	#tag : 'Events'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WindowEvent >> action [
 	^action
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WindowEvent >> action: aValue [
 	action := aValue
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 WindowEvent >> isWindowEvent [
 	^true
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 WindowEvent >> printOn: aStream [
 
 	aStream nextPut: $[.
@@ -35,23 +37,23 @@ WindowEvent >> printOn: aStream [
 	aStream nextPut: $]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WindowEvent >> rectangle [
 	^rectangle
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WindowEvent >> rectangle: aValue [
 	rectangle := aValue
 ]
 
-{ #category : #dispatching }
+{ #category : 'dispatching' }
 WindowEvent >> sentTo:anObject [
 	"Dispatch the receiver into anObject"
 	^anObject handleWindowEvent: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WindowEvent >> type [
 	"This should match the definitions in sq.h"
 	^#(

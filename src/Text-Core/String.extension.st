@@ -1,20 +1,20 @@
-Extension { #name : #String }
+Extension { #name : 'String' }
 
-{ #category : #'*Text-Core' }
+{ #category : '*Text-Core' }
 String >> asStringOrText [
 	"Answer this string."
 
 	^ self
 ]
 
-{ #category : #'*Text-Core' }
+{ #category : '*Text-Core' }
 String >> asText [
 	"Answer a Text whose string is the receiver."
 
 	^Text fromString: self
 ]
 
-{ #category : #'*Text-Core' }
+{ #category : '*Text-Core' }
 String >> encompassLine: anInterval [
 	"Return an interval that includes anInterval, and that comprises one or several whole paragraphs in the receiver.
 	Answer starts at the position following a cr (or eventually 1) and ends before a cr (or eventually at self size)
@@ -25,7 +25,7 @@ String >> encompassLine: anInterval [
 	^left to: right
 ]
 
-{ #category : #'*Text-Core' }
+{ #category : '*Text-Core' }
 String >> encompassParagraph: anInterval [
 	"Return an interval that includes anInterval, and that comprises one or several whole paragraphs in the receiver.
 	Answer starts at the position following a cr (or eventually 1) and ends at a cr (or eventually at self size).
@@ -36,7 +36,7 @@ String >> encompassParagraph: anInterval [
 	^left to: right
 ]
 
-{ #category : #'*Text-Core' }
+{ #category : '*Text-Core' }
 String >> endOfParagraphBefore: aNumber [
 	"Return the index of the last Character cr before position aNumber, or zero if this is the first paragraph.
 	'ddd' endOfParagraphBefore: 3

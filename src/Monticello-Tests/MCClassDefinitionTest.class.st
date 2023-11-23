@@ -1,20 +1,22 @@
 Class {
-	#name : #MCClassDefinitionTest,
-	#superclass : #MCTestCase,
-	#category : #'Monticello-Tests-Base'
+	#name : 'MCClassDefinitionTest',
+	#superclass : 'MCTestCase',
+	#category : 'Monticello-Tests-Base',
+	#package : 'Monticello-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #'private - accessing' }
+{ #category : 'private - accessing' }
 MCClassDefinitionTest class >> classAComment [
 	^ 'This is a mock class. The Monticello tests manipulated it to simulate a developer modifying code in the image.'
 ]
 
-{ #category : #'private - accessing' }
+{ #category : 'private - accessing' }
 MCClassDefinitionTest class >> classACommentStamp [
 	^  'cwp 8/10/2003 16:43'
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MCClassDefinitionTest class >> restoreClassAComment [
 	"This is an utility class to restore the class comment in a mock class used by the test"
 	<script>
@@ -24,24 +26,35 @@ MCClassDefinitionTest class >> restoreClassAComment [
 		ifPresent: [ :a | a comment: self classAComment stamp: self classACommentStamp ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCClassDefinitionTest >> classAComment [
 	^ self class classAComment
 ]
 
-{ #category : #running }
-MCClassDefinitionTest >> setUp [
-	super setUp.
-	testingEnvironment at: #MCMockClassC ifPresent: [ :c | c removeFromSystem ]
+{ #category : 'tests' }
+MCClassDefinitionTest >> mockClass: className super: superclassName [
+
+	^ (MCClassDefinition named: className)
+		  superclassName: superclassName;
+		  packageName: self packageForTestName;
+		  comment: (self commentForClass: className);
+		  commentStamp: (self commentStampForClass: className);
+		  yourself
 ]
 
-{ #category : #running }
+{ #category : 'private' }
+MCClassDefinitionTest >> packageForTestName [
+	^ 'Generated-Monticello-Tests'
+]
+
+{ #category : 'running' }
 MCClassDefinitionTest >> tearDown [
-	testingEnvironment at: #MCMockClassC ifPresent: [ :c | c removeFromSystem ].
+
+	self packageOrganizer removePackage: self packageForTestName.
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCClassDefinitionTest >> testCannotLoad [
 	| d |
 	self deny: (Smalltalk hasClassNamed: 'MCMockClassC').
@@ -50,7 +63,7 @@ MCClassDefinitionTest >> testCannotLoad [
 	self deny: (Smalltalk hasClassNamed: 'MCMockClassC').
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCClassDefinitionTest >> testComparison [
 	| d1 d2 d3 d4 |
 	d1 := self mockClass: 'A' super: 'X'.
@@ -68,7 +81,7 @@ MCClassDefinitionTest >> testComparison [
 	self deny: (d4 isRevisionOf: d2).
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCClassDefinitionTest >> testCreation [
 	| d |
 	d :=  self mockClassA asClassDefinition.
@@ -84,14 +97,14 @@ MCClassDefinitionTest >> testCreation [
 	self assert: d commentStamp equals: self mockClassA commentStamp
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCClassDefinitionTest >> testDefinitionString [
 	| d |
 	d := self mockClassA asClassDefinition.
 	self assert: d definitionString equals: self mockClassA oldDefinition.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCClassDefinitionTest >> testEquals [
 	| a b |
 	a := self mockClass: 'ClassA' super: 'SuperA'.
@@ -99,26 +112,48 @@ MCClassDefinitionTest >> testEquals [
 	self assert: a equals: b
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCClassDefinitionTest >> testEqualsSensitivity [
-	| message a b defA args defB |
-	
-	message := MessageSend 
-		receiver: MCClassDefinition 
-		selector:#name:superclassName:traitComposition:classTraitComposition:category:instVarNames:classVarNames:poolDictionaryNames:classInstVarNames:type:comment:commentStamp:.
-	
-	a := #(ClassA SuperA '{}' '{}' CategoryA #(iVarA) #(CVarA) #(PoolA) #(ciVarA) typeA 'A comment' 'A').
-	b := #(ClassB SuperB 'T' 'T classTrait' CategoryB #(iVarB) #(CVarB) #(PoolB) #(ciVarB) typeB 'B comment' 'B').
 
-	defA := message valueWithArguments: a.
-	1 to: 8 do: [ :index | 
-		args := a copy.
-		args at: index put: (b at: index).
-		defB := message valueWithArguments: args.
-		self deny: defA equals: defB ]
+	| defA defB |
+	defA := (MCClassDefinition named: 'ClassA')
+		        superclassName: 'SuperA';
+		        packageName: 'PackageA';
+		        instVarNames: #( iVarA );
+		        classVarNames: #( cVarB );
+		        poolDictionaryNames: #( PoolA );
+		        classInstVarNames: #( ciVarA );
+		        type: #typeA;
+		        comment: 'A comment';
+		        yourself.
+
+	defB := defA copy name: 'ClassB'.
+	self deny: defA equals: defB.
+	defB := defA copy superclassName: 'SuperB'.
+	self deny: defA equals: defB.
+	defB := defA copy packageName: 'PackageB'.
+	self deny: defA equals: defB.
+	defB := defA copy traitComposition: 'T'.
+	self deny: defA equals: defB.
+	defB := defA copy classTraitComposition: 'T'.
+	self deny: defA equals: defB.
+	defB := defA copy category: 'CategoryB'.
+	self deny: defA equals: defB.
+	defB := defA copy instVarNames: #( iVarB ).
+	self deny: defA equals: defB.
+	defB := defA copy classVarNames: #( cVarB ).
+	self deny: defA equals: defB.
+	defB := defA copy poolDictionaryNames: #( PoolB ).
+	self deny: defA equals: defB.
+	defB := defA copy classInstVarNames: #( ciVarB ).
+	self deny: defA equals: defB.
+	defB := defA copy type: 'typeB'.
+	self deny: defA equals: defB.
+	defB := defA copy comment: 'B comment'.
+	self deny: defA equals: defB
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCClassDefinitionTest >> testKindOfSubclass [
 	| classes |
 	classes := {self mockClassA. String. Context. WeakArray. Float. CompiledMethod. DoubleByteArray . DoubleWordArray }.
@@ -128,8 +163,9 @@ MCClassDefinitionTest >> testKindOfSubclass [
 	].
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCClassDefinitionTest >> testLoadAndUnload [
+
 	| d c |
 	d := self mockClass: 'MCMockClassC' super: 'Object'.
 	d load.
@@ -140,32 +176,21 @@ MCClassDefinitionTest >> testLoadAndUnload [
 	self assertEmpty: c instVarNames.
 	self assertEmpty: c classVarNames.
 	self assertEmpty: c sharedPools.
-	self assert: c category equals: self mockCategoryName.
+	self assert: c category equals: self packageForTestName.
 	self assert: c comment equals: (self commentForClass: 'MCMockClassC').
 	self assert: c commentStamp equals: (self commentStampForClass: 'MCMockClassC').
 	d unload.
 	self deny: (testingEnvironment hasClassNamed: 'MCMockClassC')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCClassDefinitionTest >> testValidTraitComposition [
 	"Related to http://code.google.com/p/pharo/issues/detail?id=2148"
 
 	| d className cls |
 	className := 'MCMockClassC'.
-	d := MCClassDefinition
-		name: className
-		superclassName: 'Object'
-		traitComposition: '{MCTraitMock1}'
-		classTraitComposition: '{}'
-		category: self mockCategoryName
-		instVarNames: #()
-		classVarNames: #()
-		poolDictionaryNames: #()
-		classInstVarNames: #()
-		type: #normal
-		comment: (self commentForClass: className)
-		commentStamp: (self commentStampForClass: className).
+	d := self mockClass: className super: 'Object'.
+	d traitComposition: '{MCTraitMock1}'.
 	d load.
 	self assert: (testingEnvironment hasClassNamed: 'MCMockClassC').
 	cls := testingEnvironment at: #MCMockClassC.
@@ -173,82 +198,50 @@ MCClassDefinitionTest >> testValidTraitComposition [
 	self assert: ((testingEnvironment at: #MCMockClassC) traitComposition allTraits includes: MCTraitMock1)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCClassDefinitionTest >> testValidTraitComposition2 [
 	"Related to http://code.google.com/p/pharo/issues/detail?id=2148"
 
-	| d className cls |
+	| d className class |
 	className := 'MCMockClassC'.
-	d := MCClassDefinition
-		name: className
-		superclassName: 'Object'
-		traitComposition: 'MCTraitMock1'
-		classTraitComposition: '{}'
-		category: self mockCategoryName
-		instVarNames: #()
-		classVarNames: #()
-		poolDictionaryNames: #()
-		classInstVarNames: #()
-		type: #normal
-		comment: (self commentForClass: className)
-		commentStamp: (self commentStampForClass: className).
+	d := self mockClass: className super: 'Object'.
+	d traitComposition: '{MCTraitMock1}'.
 	d load.
 	self assert: (testingEnvironment hasClassNamed: 'MCMockClassC').
-	cls := testingEnvironment at: #MCMockClassC.
-	self assert: (cls includesSelector: #c1).
+	class := testingEnvironment at: #MCMockClassC.
+	self assert: (class includesSelector: #c1).
 	self assert: ((testingEnvironment at: #MCMockClassC) traitComposition allTraits includes: MCTraitMock1)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCClassDefinitionTest >> testValidTraitComposition3 [
 	"Related to http://code.google.com/p/pharo/issues/detail?id=2148"
 
-	| d className cls |
+	| d className class |
 	className := 'MCMockClassC'.
-	d := MCClassDefinition
-		name: className
-		superclassName: 'Object'
-		traitComposition: 'MCTraitMock1 + MCTraitMock2'
-		classTraitComposition: '{}'
-		category: self mockCategoryName
-		instVarNames: #()
-		classVarNames: #()
-		poolDictionaryNames: #()
-		classInstVarNames: #()
-		type: #normal
-		comment: (self commentForClass: className)
-		commentStamp: (self commentStampForClass: className).
+	d := self mockClass: className super: 'Object'.
+	d traitComposition: 'MCTraitMock1 + MCTraitMock2'.
 	d load.
 	self assert: (testingEnvironment hasClassNamed: 'MCMockClassC').
-	cls := testingEnvironment at: #MCMockClassC.
-	self assert: (cls includesSelector: #c1).
-	self assert: (cls includesSelector: #c2).
+	class := testingEnvironment at: #MCMockClassC.
+	self assert: (class includesSelector: #c1).
+	self assert: (class includesSelector: #c2).
 	self assert: ((testingEnvironment at: #MCMockClassC) traitComposition allTraits includes: MCTraitMock1).
 	self assert: ((testingEnvironment at: #MCMockClassC) traitComposition allTraits includes: MCTraitMock2)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCClassDefinitionTest >> testValidTraitComposition4 [
 	"Related to http://code.google.com/p/pharo/issues/detail?id=2598"
 
 	| d className cls |
 	className := 'MCMockClassC'.
-	d := MCClassDefinition
-		name: className
-		superclassName: 'Object'
-		traitComposition: 'MCTraitMock1 - {#c1}'
-		classTraitComposition: '{}'
-		category: self mockCategoryName
-		instVarNames: #()
-		classVarNames: #()
-		poolDictionaryNames: #()
-		classInstVarNames: #()
-		type: #normal
-		comment: (self commentForClass: className)
-		commentStamp: (self commentStampForClass: className).
+	d := self mockClass: className super: 'Object'.
+	d traitComposition: 'MCTraitMock1 - {#c1}'.
+
 	d load.
 	self assert: (testingEnvironment hasClassNamed: 'MCMockClassC').
 	cls := testingEnvironment at: #MCMockClassC.
-	self assert: (cls selectors includesAll: {#c}).
-	self deny: (cls selectors includesAnyOf: {#c1})
+	self assert: (cls selectors includesAll: { #c }).
+	self deny: (cls selectors includesAnyOf: { #c1 })
 ]

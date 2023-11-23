@@ -10,8 +10,8 @@ Some queries are
 	SystemVersion current	highestUpdate
 "
 Class {
-	#name : #SystemVersion,
-	#superclass : #Object,
+	#name : 'SystemVersion',
+	#superclass : 'Object',
 	#instVars : [
 		'date',
 		'highestUpdate',
@@ -26,22 +26,24 @@ Class {
 	#classVars : [
 		'Current'
 	],
-	#category : #'System-Support-Image'
+	#category : 'System-Support-Image',
+	#package : 'System-Support',
+	#tag : 'Image'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SystemVersion class >> current [
 	^Current ifNil: [Current := self new]
 ]
 
-{ #category : #'private - accessing' }
+{ #category : 'private - accessing' }
 SystemVersion class >> invalidBuildNumber [
 	"Return -1 to depict an invalid build number (allows to also accept 0 as build number)"
 
 	^ -1
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SystemVersion class >> major: major minor: minor patch: patch [
 	"Create a new instance of the receiver with the given major minor number.
 
@@ -51,7 +53,7 @@ SystemVersion class >> major: major minor: minor patch: patch [
 	^self major: major minor: minor patch: patch suffix: ''
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SystemVersion class >> major: major minor: minor patch: patch suffix: aString [
 	"Create a new instance of the receiver with the given major minor number and suffix.
 
@@ -61,7 +63,7 @@ SystemVersion class >> major: major minor: minor patch: patch suffix: aString [
 	^self major: major minor: minor patch: patch suffix: aString build: self invalidBuildNumber
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SystemVersion class >> major: major minor: minor patch: patch suffix: aString build: build [
 	"Create a new instance of the receiver with the given major minor number and suffix.
 
@@ -77,7 +79,7 @@ SystemVersion class >> major: major minor: minor patch: patch suffix: aString bu
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SystemVersion class >> major: major minor: minor patch: patch suffix: aString build: build commitHash: hashString [
 	"Create a new instance of the receiver with the given major minor number and suffix.
 
@@ -94,19 +96,19 @@ SystemVersion class >> major: major minor: minor patch: patch suffix: aString bu
 		yourself
 ]
 
-{ #category : #'accessing - properties' }
+{ #category : 'accessing - properties' }
 SystemVersion >> build [
 
 	 ^build
 ]
 
-{ #category : #'accessing - properties' }
+{ #category : 'accessing - properties' }
 SystemVersion >> build: aBuildNumber [
 
 	build := aBuildNumber
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SystemVersion >> calculateHighestUpdate [
 	|result|
 	result := (major * 10000) + (minor * 1000).
@@ -114,14 +116,14 @@ SystemVersion >> calculateHighestUpdate [
 	^result
 ]
 
-{ #category : #'accessing - properties' }
+{ #category : 'accessing - properties' }
 SystemVersion >> commitHash [
 	"Answer the hash of a Git commit from which the image was bootstrapped, e.g. '9ce829e86f978a84fa68df20008a3c1ee52e1fae'"
 
 	^ commitHash
 ]
 
-{ #category : #'accessing - properties' }
+{ #category : 'accessing - properties' }
 SystemVersion >> commitHash: aString [
 
 	"Set the hash of a Git commit from which the image was bootstrapped"
@@ -129,67 +131,67 @@ SystemVersion >> commitHash: aString [
 	commitHash := aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SystemVersion >> commitHashShort [
 	"Answer the shorten hash of a Git commit from which the image was bootstrapped, e.g. '9ce829e"
 
 	^ commitHash ifNotNil: [ commitHash first: (7 min: commitHash size) ]
 ]
 
-{ #category : #'accessing - properties' }
+{ #category : 'accessing - properties' }
 SystemVersion >> date [
 	^date
 ]
 
-{ #category : #'accessing - properties' }
+{ #category : 'accessing - properties' }
 SystemVersion >> date: newDate [
 	date := newDate
 ]
 
-{ #category : #'accessing - version strings' }
+{ #category : 'accessing - version strings' }
 SystemVersion >> datedVersion [
 	" E.g. 'Pharo2.0a of ''18 April 2012''' "
 
 	^ self version asString , ' of ' , self date printString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SystemVersion >> dottedMajorMinor [
 
 	^ self majorMinor: '.'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SystemVersion >> dottedMajorMinorPatch [
 
 	^ self majorMinorPatch: '.'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SystemVersion >> hasMetadataIdentifiers [
 	"Return true if we have metadata identifiers (see rule 10 on semver.org) that need to be separated with a + sign"
 
 	^self suffix notEmpty | self hasValidBuildNumber | self commitHash notEmpty
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SystemVersion >> hasValidBuildNumber [
 	"Return true if we have a valid build number"
 
 	 ^self build ~= self class invalidBuildNumber
 ]
 
-{ #category : #compatibility }
+{ #category : 'compatibility' }
 SystemVersion >> highestUpdate [
 	 ^highestUpdate ifNil: [ highestUpdate := self calculateHighestUpdate ]
 ]
 
-{ #category : #compatibility }
+{ #category : 'compatibility' }
 SystemVersion >> highestUpdate: anInteger [
 	highestUpdate := anInteger
 ]
 
-{ #category : #'accessing - version strings' }
+{ #category : 'accessing - version strings' }
 SystemVersion >> imageVersionString [
 	"Print the version compatible with naming the image."
 
@@ -210,7 +212,7 @@ SystemVersion >> imageVersionString [
 	]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SystemVersion >> initialize [
 	super initialize.
 	type := 'Pharo'.
@@ -223,21 +225,21 @@ SystemVersion >> initialize [
 	date := Date today
 ]
 
-{ #category : #'accessing - properties' }
+{ #category : 'accessing - properties' }
 SystemVersion >> major [
 	"Answer the major number of a version. 1 in '1.2'"
 
 	^ major
 ]
 
-{ #category : #'accessing - properties' }
+{ #category : 'accessing - properties' }
 SystemVersion >> major: anInteger [
 	"Set the major part of the receiver"
 
 	major := anInteger
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 SystemVersion >> majorMinor: aSeparatingString [
 	"Return the major/minor version number of the form XaSeparatingStringY, without any 'alpha' or 'beta' or other suffix."
 	"SystemVersion current majorMinor: '-'"
@@ -250,7 +252,7 @@ SystemVersion >> majorMinor: aSeparatingString [
 			nextPutAll: self minor printString ]
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 SystemVersion >> majorMinorPatch: aSeparatingString [
 	"Return the major/minor/patch version number of the form XaSeparatingStringY, without any 'alpha' or 'beta' or other suffix."
 	"SystemVersion current majorMinorPatch: '-'"
@@ -265,42 +267,42 @@ SystemVersion >> majorMinorPatch: aSeparatingString [
 			nextPutAll: self patch printString ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SystemVersion >> majorMinorVersion [
 
 	^ self type, self dottedMajorMinorPatch
 ]
 
-{ #category : #'accessing - properties' }
+{ #category : 'accessing - properties' }
 SystemVersion >> minor [
 	"Answer the minor number of a version. 2 in '1.2'"
 
 	^ minor
 ]
 
-{ #category : #'accessing - properties' }
+{ #category : 'accessing - properties' }
 SystemVersion >> minor: anInteger [
 	"Set the minor part of the receiver"
 
 	minor := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SystemVersion >> patch [
 	^ patch
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SystemVersion >> patch: anObject [
 	patch := anObject
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 SystemVersion >> printOn: stream [
 	stream nextPutAll: self imageVersionString
 ]
 
-{ #category : #'accessing - version strings' }
+{ #category : 'accessing - version strings' }
 SystemVersion >> shortVersionString [
 	"Print a short version string."
 
@@ -316,42 +318,42 @@ SystemVersion >> shortVersionString [
 			nextPutAll: self suffix ]
 ]
 
-{ #category : #'accessing - properties' }
+{ #category : 'accessing - properties' }
 SystemVersion >> suffix [
 	"Answer the suffix (alpha, beta, rc  of a version. beta in '1.2beta'"
 
 	^ suffix
 ]
 
-{ #category : #'accessing - properties' }
+{ #category : 'accessing - properties' }
 SystemVersion >> suffix: anObject [
 	"Set the value of suffix"
 
 	suffix := anObject
 ]
 
-{ #category : #'accessing - properties' }
+{ #category : 'accessing - properties' }
 SystemVersion >> type [
 	"Answer the value of type"
 
 	^ type
 ]
 
-{ #category : #'accessing - properties' }
+{ #category : 'accessing - properties' }
 SystemVersion >> type: anObject [
 	"Set the value of type"
 
 	type := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SystemVersion >> version [
 	"Answer the short version string. If the receiver needs upgrading, do it."
 
 	^self shortVersionString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SystemVersion >> versionWithoutPatch [
 
 	^ self type , (self majorMinor: '.')

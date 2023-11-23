@@ -5,8 +5,8 @@ Open with:
 self open
 "
 Class {
-	#name : #EpDashboardPresenter,
-	#superclass : #SpPresenter,
+	#name : 'EpDashboardPresenter',
+	#superclass : 'SpPresenter',
 	#instVars : [
 		'monitor',
 		'createLogButton',
@@ -14,10 +14,12 @@ Class {
 		'openSettingsButton',
 		'currentSessionInfoPresenter'
 	],
-	#category : #'EpiceaBrowsers-UI-Dashboard'
+	#category : 'EpiceaBrowsers-UI-Dashboard',
+	#package : 'EpiceaBrowsers',
+	#tag : 'UI-Dashboard'
 }
 
-{ #category : #layout }
+{ #category : 'layout' }
 EpDashboardPresenter class >> defaultLayout [
 	^ SpBoxLayout newTopToBottom
 		add: #currentSessionInfoPresenter;
@@ -33,7 +35,7 @@ EpDashboardPresenter class >> defaultLayout [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 EpDashboardPresenter class >> open [
 	^ self new
 		refresh;
@@ -41,26 +43,27 @@ EpDashboardPresenter class >> open [
 		yourself
 ]
 
-{ #category : #icons }
+{ #category : 'icons' }
 EpDashboardPresenter class >> taskbarIconName [
 	^ #config
 ]
 
-{ #category : #specs }
+{ #category : 'specs' }
 EpDashboardPresenter class >> title [
 
 	^ 'Epicea - Dashboard'
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 EpDashboardPresenter >> createNewSessionLog [
 
 	| fileNameOrNil sessionStore |
 	sessionStore := self monitor sessionStore.
 
-	fileNameOrNil := UIManager default
-		request: 'Enter a file name (without extension) for the new log.'
-		initialAnswer: sessionStore nextStoreName.
+	fileNameOrNil := self application newRequest
+		title: 'Enter a file name (without extension) for the new log.';
+		text: sessionStore nextStoreName;
+		openModal.
 	fileNameOrNil ifNil: [ ^ self ].
 
 	(self monitor sessionStore existsStoreNamed: fileNameOrNil)
@@ -71,23 +74,23 @@ EpDashboardPresenter >> createNewSessionLog [
 			self refresh ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 EpDashboardPresenter >> initializeCreateLogButton [
 	createLogButton
-		icon: (self iconNamed: #addIcon);
+		icon: (self iconNamed: #add);
 		help: 'Start recording into new Log';
 		label: 'New session';
 		action: [ self createNewSessionLog ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 EpDashboardPresenter >> initializeEnableMonitorButton [
 	enableMonitorButton
 		help: 'Enable/disable the Epicea Monitor. When enabled, it logs code changes (and some IDE events such as MC load/save and refactorings) performed in this Pharo session.';
 		action: [ self monitor enabled: enableMonitorButton state not ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 EpDashboardPresenter >> initializeOpenSettingsButton [
 	openSettingsButton
 		help: 'Open Epicea''s system settings';
@@ -96,7 +99,7 @@ EpDashboardPresenter >> initializeOpenSettingsButton [
 		action: [ self openSettingsBrowser ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 EpDashboardPresenter >> initializePresenter [
 	super initializePresenter.
 
@@ -104,12 +107,12 @@ EpDashboardPresenter >> initializePresenter [
 	self initializeRefreshEnableMonitorButtonModelOnMonitorUpdate
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 EpDashboardPresenter >> initializeRefreshEnableMonitorButtonModelOnMonitorUpdate [
 	self monitor announcer weak when: EpMonitorStateUpdated send: #refreshEnableMonitorButtonPresenter to: self
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 EpDashboardPresenter >> initializeWidgets [
 	currentSessionInfoPresenter := self newText.
 	enableMonitorButton := self newButton.
@@ -123,7 +126,7 @@ EpDashboardPresenter >> initializeWidgets [
 	currentSessionInfoPresenter enabled: false
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 EpDashboardPresenter >> initializeWindow: aWindowPresenter [
 	aWindowPresenter
 		title: 'Epicea - Dashboard';
@@ -131,39 +134,39 @@ EpDashboardPresenter >> initializeWindow: aWindowPresenter [
 		whenClosedDo: [ self monitor announcer unsubscribe: self ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpDashboardPresenter >> monitor [
 
 	^ monitor ifNil: [ EpMonitor current ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpDashboardPresenter >> monitor: anEpMonitor [
 
 	monitor := anEpMonitor.
 	self refreshEnableMonitorButtonPresenter
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 EpDashboardPresenter >> openSettingsBrowser [
 	"Inspired on Glamour's code"
 
 	| settingsBrowser settingsWindow |
 	settingsBrowser := SettingBrowser new
-		changePackageSet: (RPackage organizer packageNamed: 'EpiceaBrowsers') asOrderedCollection;
-		yourself.
+		                   changePackageSet: (self packageOrganizer packageNamed: 'EpiceaBrowsers') asOrderedCollection;
+		                   yourself.
 	settingsWindow := settingsBrowser open.
 	settingsWindow position: Display extent - settingsWindow extent // 2.
 	settingsBrowser expandAll
 ]
 
-{ #category : #refreshing }
+{ #category : 'refreshing' }
 EpDashboardPresenter >> refresh [
 	self refreshEnableMonitorButtonPresenter.
 	self refreshCurrentSessionInfoPresenter
 ]
 
-{ #category : #refreshing }
+{ #category : 'refreshing' }
 EpDashboardPresenter >> refreshCurrentSessionInfoPresenter [
 	| sessionStore text |
 	sessionStore := self monitor sessionStore.
@@ -183,7 +186,7 @@ EpDashboardPresenter >> refreshCurrentSessionInfoPresenter [
 	currentSessionInfoPresenter text: text
 ]
 
-{ #category : #refreshing }
+{ #category : 'refreshing' }
 EpDashboardPresenter >> refreshEnableMonitorButtonPresenter [
 	enableMonitorButton
 		state: self monitor isEnabled;
@@ -191,7 +194,7 @@ EpDashboardPresenter >> refreshEnableMonitorButtonPresenter [
 		icon: (self iconNamed: self monitor statusIcon)
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 EpDashboardPresenter >> updatePresenter [
 
 	self refresh

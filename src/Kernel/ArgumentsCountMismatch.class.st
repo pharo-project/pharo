@@ -3,16 +3,18 @@ I am an error that is signalled in a case when a block is invoked with arguments
 
 "
 Class {
-	#name : #ArgumentsCountMismatch,
-	#superclass : #Error,
+	#name : 'ArgumentsCountMismatch',
+	#superclass : 'Error',
 	#instVars : [
 		'expectedArgumentsCount',
 		'calledArgumentsCount'
 	],
-	#category : #'Kernel-Exceptions'
+	#category : 'Kernel-Exceptions',
+	#package : 'Kernel',
+	#tag : 'Exceptions'
 }
 
-{ #category : #signalling }
+{ #category : 'signalling' }
 ArgumentsCountMismatch class >> signalExpectedArgumentsCount: expected calledArgumentsCount: called [
 
 	self new
@@ -21,34 +23,34 @@ ArgumentsCountMismatch class >> signalExpectedArgumentsCount: expected calledArg
 		signal
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ArgumentsCountMismatch >> calledArgumentsCount [
 	^ calledArgumentsCount
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ArgumentsCountMismatch >> calledArgumentsCount: anObject [
 	calledArgumentsCount := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ArgumentsCountMismatch >> expectedArgumentsCount [
 	^ expectedArgumentsCount
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ArgumentsCountMismatch >> expectedArgumentsCount: anObject [
 	expectedArgumentsCount := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ArgumentsCountMismatch >> messageText [
 
 	^ 'This block accepts ', (self printArgumentsCount: expectedArgumentsCount),
 			', but was called with ', (self printArgumentsCount: calledArgumentsCount), '.'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ArgumentsCountMismatch >> printArgumentsCount: aNumber [
 
 	^ aNumber printString, ' argument', (aNumber = 1 ifTrue: [''] ifFalse:['s'])

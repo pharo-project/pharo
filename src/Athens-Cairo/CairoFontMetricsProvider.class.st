@@ -2,8 +2,8 @@
 Provide font metrics (Cairo)
 "
 Class {
-	#name : #CairoFontMetricsProvider,
-	#superclass : #Object,
+	#name : 'CairoFontMetricsProvider',
+	#superclass : 'Object',
 	#traits : 'TCairoLibrary',
 	#classTraits : 'TCairoLibrary classTrait',
 	#instVars : [
@@ -17,10 +17,12 @@ Class {
 	#pools : [
 		'AthensCairoDefinitions'
 	],
-	#category : #'Athens-Cairo-Text'
+	#category : 'Athens-Cairo-Text',
+	#package : 'Athens-Cairo',
+	#tag : 'Text'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 CairoFontMetricsProvider >> applyKerningOn: aGlyphs of: aString from: start to: end [
 	|kerning  previous|
 	kerning := 0.
@@ -33,12 +35,12 @@ CairoFontMetricsProvider >> applyKerningOn: aGlyphs of: aString from: start to: 
 		previous := current ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CairoFontMetricsProvider >> cairoFont [
 	^ cairoFont
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 CairoFontMetricsProvider >> convertString: utf8String len: strlen ofFont: aScaledFont toGlyphs: glyphs numGlyphs: numGlyphs x: x y: y [
 "
 all of this for using
@@ -58,7 +60,7 @@ http://www.cairographics.org/manual/cairo-User-Fonts.html#cairo-user-scaled-font
 			NULL))
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CairoFontMetricsProvider >> extentsOf: aString [
 	|glyphs|
 	glyphs := self glyphsOf: aString.
@@ -66,40 +68,40 @@ CairoFontMetricsProvider >> extentsOf: aString [
 	^ glyphExtents
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CairoFontMetricsProvider >> font: aFont [
 	font := aFont asFreetypeFont.
 	cairoFont :=	CairoScaledFont fromFreetypeFont: font.
 	extents := cairoFont extents
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CairoFontMetricsProvider >> fontAscent [
 	^ extents ascent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CairoFontMetricsProvider >> fontHeight [
 	^ extents height
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 CairoFontMetricsProvider >> freeGlyphs: glyphs [
 	^ self ffiCall: #( void cairo_glyph_free (void *glyphs))
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CairoFontMetricsProvider >> getGlyphWidth: aCharacter [
 	cairoFont getExtentsOf: (utfConverter convertChar: aCharacter) into: glyphExtents.
 	^ glyphExtents x_advance
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 CairoFontMetricsProvider >> glyphsOf: aString [
 	^ self glyphsOf: aString from: 1 to: aString size
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 CairoFontMetricsProvider >> glyphsOf: aString from: start to: end [
 	| len ptr glyphs lenValue glyphsSize utf8Len error |
 
@@ -134,7 +136,7 @@ CairoFontMetricsProvider >> glyphsOf: aString from: start to: end [
 	^ glyphs
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CairoFontMetricsProvider >> initialize [
 	utfConverter := CairoUTF8Converter new.
 	glyphExtents := CairoTextExtents new.

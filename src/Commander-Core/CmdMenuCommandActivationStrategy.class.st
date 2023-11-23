@@ -28,17 +28,18 @@ Internal Representation and Key Implementation Points.
 	menuItemOrder:		<Number>
 "
 Class {
-	#name : #CmdMenuCommandActivationStrategy,
-	#superclass : #CmdCommandActivationStrategy,
+	#name : 'CmdMenuCommandActivationStrategy',
+	#superclass : 'CmdCommandActivationStrategy',
 	#instVars : [
 		'menuItemOrder',
 		'menuGroup',
 		'menuItemName'
 	],
-	#category : #'Commander-Core'
+	#category : 'Commander-Core',
+	#package : 'Commander-Core'
 }
 
-{ #category : #'menu creation' }
+{ #category : 'menu creation' }
 CmdMenuCommandActivationStrategy class >> buildMenuInContext: aToolContext [
 	| menu |
 	menu := CmdMenu activatedBy: self.
@@ -46,95 +47,95 @@ CmdMenuCommandActivationStrategy class >> buildMenuInContext: aToolContext [
 	^ menu
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CmdMenuCommandActivationStrategy class >> byItem: itemName of: menuGroupClass for: aToolContextClass [
 	^(self byItemOf: menuGroupClass for: aToolContextClass)
 		 menuItemName: itemName
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CmdMenuCommandActivationStrategy class >> byItem: itemName of: menuGroupClass order: aNumber for: aToolContextClass [
 	^(self byItemOf: menuGroupClass order: aNumber for: aToolContextClass)
 		menuItemName: itemName
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CmdMenuCommandActivationStrategy class >> byItemOf: menuGroupClass for: aToolContextClass [
 	^(self for: aToolContextClass)
 		 menuGroup: menuGroupClass
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CmdMenuCommandActivationStrategy class >> byItemOf: menuGroupClass order: aNumber for: aToolContextClass [
 	^(self byItemOf: menuGroupClass for: aToolContextClass)
 		menuItemOrder: aNumber
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CmdMenuCommandActivationStrategy class >> byRootGroupItem: itemName for: aToolContextClass [
 	^(self byRootGroupItemFor: aToolContextClass)
 		menuItemName: itemName
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CmdMenuCommandActivationStrategy class >> byRootGroupItem: itemName order: aNumber for: aToolContextClass [
 	^(self byRootGroupItemOrder: aNumber for: aToolContextClass)
 		menuItemName: itemName
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CmdMenuCommandActivationStrategy class >> byRootGroupItemFor: aToolContextClass [
 	^self byItemOf: CmdRootMenuGroup for: aToolContextClass
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CmdMenuCommandActivationStrategy class >> byRootGroupItemOrder: aNumber for: aToolContextClass [
 	^self byItemOf: CmdRootMenuGroup order: aNumber for: aToolContextClass
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CmdMenuCommandActivationStrategy >> initialize [
 	super initialize.
 	menuItemOrder := 1000.
 	menuGroup := CmdRootMenuGroup
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdMenuCommandActivationStrategy >> menuGroup [
 	^ menuGroup
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdMenuCommandActivationStrategy >> menuGroup: anObject [
 	menuGroup := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdMenuCommandActivationStrategy >> menuItemName [
 	^ menuItemName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdMenuCommandActivationStrategy >> menuItemName: anObject [
 	menuItemName := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdMenuCommandActivationStrategy >> menuItemNameFor: aCommand [
 	^ menuItemName ifNil: [ aCommand defaultMenuItemName ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdMenuCommandActivationStrategy >> menuItemOrder [
 	^ menuItemOrder
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdMenuCommandActivationStrategy >> menuItemOrder: anObject [
 	menuItemOrder := anObject
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 CmdMenuCommandActivationStrategy >> printOn: aStream [
 	super printOn: aStream.
 	aStream nextPut: $(.

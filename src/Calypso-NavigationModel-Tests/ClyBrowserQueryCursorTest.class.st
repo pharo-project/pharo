@@ -1,37 +1,38 @@
 Class {
-	#name : #ClyBrowserQueryCursorTest,
-	#superclass : #ClyAbstractNavigationEnvironmentTest,
+	#name : 'ClyBrowserQueryCursorTest',
+	#superclass : 'ClyAbstractNavigationEnvironmentTest',
 	#instVars : [
 		'cursor',
 		'queryResult',
 		'itemObserver'
 	],
-	#category : #'Calypso-NavigationModel-Tests'
+	#category : 'Calypso-NavigationModel-Tests',
+	#package : 'Calypso-NavigationModel-Tests'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyBrowserQueryCursorTest class >> isAbstract [
 	^self = ClyBrowserQueryCursorTest
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyBrowserQueryCursorTest >> createQuery [
 	^ClyReturningScopeBasisExampleQuery
 		from: (ClyExampleScope ofAll: {Array. Object. String} in: environment)
 		as: self createQueryResult
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyBrowserQueryCursorTest >> createQueryResult [
 	self subclassResponsibility
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyBrowserQueryCursorTest >> rawResultItems [
 	self subclassResponsibility
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyBrowserQueryCursorTest >> setUp [
 	| query |
 	super setUp.
@@ -41,14 +42,14 @@ ClyBrowserQueryCursorTest >> setUp [
 	cursor := queryResult openBrowserCursorFor: itemObserver
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyBrowserQueryCursorTest >> testClosing [
 
 	cursor close.
 	self deny: (queryResult hasSubscriber: itemObserver)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyBrowserQueryCursorTest >> testCurrentItem [
 
 	| item |
@@ -59,7 +60,7 @@ ClyBrowserQueryCursorTest >> testCurrentItem [
 	self assert: item position equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyBrowserQueryCursorTest >> testFindItemsSimilarToOthers [
 
 	| found |
@@ -71,7 +72,7 @@ ClyBrowserQueryCursorTest >> testFindItemsSimilarToOthers [
 	self assert: found first position equals: (self rawResultItems indexOf: Array)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyBrowserQueryCursorTest >> testFindItemsSimilarToOthersWhenTheyAreNotInCache [
 
 	| found |
@@ -84,7 +85,7 @@ ClyBrowserQueryCursorTest >> testFindItemsSimilarToOthersWhenTheyAreNotInCache [
 	self assert: found first position equals: (self rawResultItems indexOf: Array)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyBrowserQueryCursorTest >> testFindItemsUsingPredicate [
 
 	| allItems |
@@ -96,7 +97,7 @@ ClyBrowserQueryCursorTest >> testFindItemsUsingPredicate [
 	self assert: allItems first position equals: (self rawResultItems indexOf: Array)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyBrowserQueryCursorTest >> testFindItemsUsingPredicateWhenTheyAreNotInCache [
 
 	| allItems |
@@ -109,7 +110,7 @@ ClyBrowserQueryCursorTest >> testFindItemsUsingPredicateWhenTheyAreNotInCache [
 	self assert: allItems first position equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyBrowserQueryCursorTest >> testFindItemsWithActualObjects [
 
 	| found |
@@ -123,7 +124,7 @@ ClyBrowserQueryCursorTest >> testFindItemsWithActualObjects [
 	self assert: found second position equals: (self rawResultItems indexOf: Array)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyBrowserQueryCursorTest >> testFindItemsWithActualObjectsWhenTheyAreNotInCache [
 
 	| found |
@@ -138,7 +139,7 @@ ClyBrowserQueryCursorTest >> testFindItemsWithActualObjectsWhenTheyAreNotInCache
 	self assert: found second position equals: (self rawResultItems indexOf: Array)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyBrowserQueryCursorTest >> testMoveToItemWhichNotSatisfiesCondition [
 
 	| found |
@@ -151,7 +152,7 @@ ClyBrowserQueryCursorTest >> testMoveToItemWhichNotSatisfiesCondition [
 	self assert: cursor position equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyBrowserQueryCursorTest >> testMoveToItemWhichSatisfiesCondition [
 
 	| found |
@@ -162,7 +163,7 @@ ClyBrowserQueryCursorTest >> testMoveToItemWhichSatisfiesCondition [
 	self assert: cursor currentItem actualObject equals: Object
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyBrowserQueryCursorTest >> testMoveToItemWhichSatisfiesConditionWhenItNotExistsInCache [
 
 	| found |
@@ -174,7 +175,7 @@ ClyBrowserQueryCursorTest >> testMoveToItemWhichSatisfiesConditionWhenItNotExist
 	self assert: cursor currentItem actualObject equals: Object
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyBrowserQueryCursorTest >> testOpeningShouldSubscribeObserver [
 
 	self assert: (queryResult hasSubscriber: itemObserver).

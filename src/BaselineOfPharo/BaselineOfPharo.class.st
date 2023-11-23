@@ -1,13 +1,18 @@
+"
+This is a primary baseline to load Pharo base libraries, the IDE as well as projects that are managed in own repository (so called ""external projects"") and other
+"
 Class {
-	#name : #BaselineOfPharo,
-	#superclass : #BaselineOf,
+	#name : 'BaselineOfPharo',
+	#superclass : 'BaselineOf',
 	#classVars : [
 		'ExternalProjects'
 	],
-	#category : #BaselineOfPharo
+	#category : 'BaselineOfPharo-Base',
+	#package : 'BaselineOfPharo',
+	#tag : 'Base'
 }
 
-{ #category : #'external projects' }
+{ #category : 'accessing - external projects' }
 BaselineOfPharo class >> beautifulComments [
 	<externalProject>
 
@@ -18,13 +23,13 @@ BaselineOfPharo class >> beautifulComments [
 		version: 'Pharo12'
 ]
 
-{ #category : #'repository urls' }
+{ #category : 'repository urls' }
 BaselineOfPharo class >> beautifulCommentsRepository [
 
 	^ (self externalProjectNamed: 'BeautifulComments') repository
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 BaselineOfPharo class >> declareExternalProjects [
 
 	^ (Pragma allNamed: #externalProject in: self class)
@@ -35,7 +40,7 @@ BaselineOfPharo class >> declareExternalProjects [
 		as: Array
 ]
 
-{ #category : #'external projects' }
+{ #category : 'accessing - external projects' }
 BaselineOfPharo class >> documentBrowser [
 	<externalProject>
 	
@@ -46,27 +51,28 @@ BaselineOfPharo class >> documentBrowser [
 		version: 'Pharo12'
 ]
 
-{ #category : #'repository urls' }
+{ #category : 'repository urls' }
 BaselineOfPharo class >> documentBrowserRepository [
 
 	^ (self externalProjectNamed: 'DocumentBrowser') repository
 ]
 
-{ #category : #'external projects' }
+{ #category : 'accessing - external projects' }
 BaselineOfPharo class >> externalProjectNamed: aName [
 
 	^ self externalProjects 
 		detect: [ :each | each name = aName ]
 ]
 
-{ #category : #'external projects' }
+{ #category : 'accessing' }
 BaselineOfPharo class >> externalProjects [
+	<script: 'self externalProjects inspect'>
 
 	^ ExternalProjects ifNil: [ 
 		ExternalProjects := self declareExternalProjects ]
 ]
 
-{ #category : #'external projects' }
+{ #category : 'accessing - external projects' }
 BaselineOfPharo class >> iceberg [
 	<externalProject>
 
@@ -78,13 +84,13 @@ BaselineOfPharo class >> iceberg [
 		sourceDir: nil
 ]
 
-{ #category : #'repository urls' }
+{ #category : 'repository urls' }
 BaselineOfPharo class >> icebergRepository [
 
 	^ (self externalProjectNamed: 'Iceberg') repository
 ]
 
-{ #category : #'external projects' }
+{ #category : 'accessing - external projects' }
 BaselineOfPharo class >> microdown [
 	<externalProject>
 	
@@ -95,13 +101,13 @@ BaselineOfPharo class >> microdown [
 		version: 'Pharo12'
 ]
 
-{ #category : #'repository urls' }
+{ #category : 'repository urls' }
 BaselineOfPharo class >> microdownRepository [
 
 	^ (self externalProjectNamed: 'Microdown') repository
 ]
 
-{ #category : #'external projects' }
+{ #category : 'accessing - external projects' }
 BaselineOfPharo class >> newTools [
 	<externalProject>
 
@@ -112,30 +118,30 @@ BaselineOfPharo class >> newTools [
 		version: 'Pharo12'
 ]
 
-{ #category : #'repository urls' }
+{ #category : 'repository urls' }
 BaselineOfPharo class >> newToolsRepository [
 
 	^ (self externalProjectNamed: 'NewTools') repository
 ]
 
-{ #category : #'external projects' }
+{ #category : 'accessing - external projects' }
 BaselineOfPharo class >> roassal [
-	<externalProject>	
-		
-	^ PharoExternalProject 
-		newName: 'Roassal3' 
-		owner: 'ObjectProfile' 
-		project: 'Roassal3' 
-		version: 'v0.9.9m'
+	<externalProject>
+
+	^ PharoExternalProject
+		  newName: 'Roassal'
+		  owner: 'pharo-graphics'
+		  project: 'Roassal'
+		  version: 'v1.05b'
 ]
 
-{ #category : #'repository urls' }
-BaselineOfPharo class >> roassal3Repository [
+{ #category : 'repository urls' }
+BaselineOfPharo class >> roassalRepository [
 
-	^ (self externalProjectNamed: 'Roassal3') repository
+	^ (self externalProjectNamed: 'Roassal') repository
 ]
 
-{ #category : #'external projects' }
+{ #category : 'accessing - external projects' }
 BaselineOfPharo class >> spec [
 	<externalProject>
 
@@ -146,13 +152,13 @@ BaselineOfPharo class >> spec [
 		version: 'Pharo12'
 ]
 
-{ #category : #'repository urls' }
+{ #category : 'repository urls' }
 BaselineOfPharo class >> specRepository [
 
 	^ (self externalProjectNamed: 'Spec2') repository
 ]
 
-{ #category : #'external projects' }
+{ #category : 'accessing - external projects' }
 BaselineOfPharo class >> welcomeBrowser [
 	<externalProject>
 	
@@ -163,34 +169,35 @@ BaselineOfPharo class >> welcomeBrowser [
 		version: 'Pharo12'
 ]
 
-{ #category : #'repository urls' }
+{ #category : 'repository urls' }
 BaselineOfPharo class >> welcomeBrowserRepository [
 
 	^ (self externalProjectNamed: 'WelcomeBrowser') repository
 ]
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfPharo >> baseline: spec [
 	<baseline>
+
 	| repository |
 	repository := self packageRepositoryURL.
 
 	spec for: #common do: [
-		spec postLoadDoIt: #'postload:package:'.
-		spec baseline: 'BaseLibraries' with: [spec repository: repository].
-		
-		spec baseline: 'IDE' with: [spec repository: repository].
-		spec baseline: 'Calypso' with: [ 
-			spec repository: repository; loads: #('IcebergSupport'). ].
-		
-		spec package: 'Deprecated12'.
-		
-		spec package: 'FluidClassBuilder'.
-		spec package: 'FluidClassBuilder-Tests' with: [ spec requires: 'FluidClassBuilder' ].
-	]
+		spec postLoadDoIt: #postload:package:.
+		spec baseline: 'BaseLibraries' with: [ spec repository: repository ].
+
+		spec baseline: 'IDE' with: [ spec repository: repository ].
+		spec baseline: 'Calypso' with: [
+			spec
+				repository: repository;
+				loads: #( 'IcebergSupport' ) ].
+
+		spec
+			package: 'Gofer-Deprecated';
+			package: 'Deprecated12' ]
 ]
 
-{ #category : #baseline }
+{ #category : 'actions' }
 BaselineOfPharo >> postload: loader package: packageSpec [
 	"If we added a github token for the build, we remove it."
 
@@ -200,7 +207,7 @@ BaselineOfPharo >> postload: loader package: packageSpec [
 		credential password = token ifTrue: [ (Smalltalk classNamed: #IceCredentialStore) current removePlainTextCredential: credential ].
 		'Removing credential.' traceCr ].
 
-	"Load the WelcomeBrowser as last step"
-		(self class environment classNamed: #StWelcomeBrowser)
-			ifNotNil: [ :aClass | aClass openForRelease ]
+	"Open the WelcomeBrowser as last step"
+	(self class environment classNamed: #StWelcomeBrowser)
+		ifNotNil: [ :aClass | aClass openForRelease ]
 ]

@@ -5,30 +5,32 @@ So projects tree in the full browser shifts children together with collapsing it
 I am always applied to the projects
 "
 Class {
-	#name : #ClyProjectTableIndentationDecorator,
-	#superclass : #ClyTableDecorator,
-	#category : #'Calypso-SystemTools-FullBrowser-UI'
+	#name : 'ClyProjectTableIndentationDecorator',
+	#superclass : 'ClyTableDecorator',
+	#category : 'Calypso-SystemTools-FullBrowser-UI',
+	#package : 'Calypso-SystemTools-FullBrowser',
+	#tag : 'UI'
 }
 
-{ #category : #decoration }
+{ #category : 'decoration' }
 ClyProjectTableIndentationDecorator class >> decorateMainTableCell: anItemCellMorph of: aDataSourceItem [
 	super decorateMainTableCell: anItemCellMorph of: aDataSourceItem.
 
 	anItemCellMorph useFullIndentation
 ]
 
-{ #category : #decoration }
+{ #category : 'decoration' }
 ClyProjectTableIndentationDecorator class >> decorateTableCell: anItemCellMorph of: aDataSourceItem [
 ]
 
-{ #category : #decoration }
+{ #category : 'decoration' }
 ClyProjectTableIndentationDecorator class >> decorationStrategy [
 	<classAnnotation>
 
 	^ClyTableDecorationStrategyAnnotation for: ClyFullBrowserContext
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyProjectTableIndentationDecorator class >> wantsDecorateTableCellOf: aDataSourceItem [
-	^aDataSourceItem rootParentItem isBasedOnItemType: ClyManagedProject
+	^aDataSourceItem rootParentItem isBasedOnItemType: Project
 ]

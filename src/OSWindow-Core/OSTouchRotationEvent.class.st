@@ -2,25 +2,27 @@
 Superclass of all rotation events
 "
 Class {
-	#name : #OSTouchRotationEvent,
-	#superclass : #OSTouchComplexEvent,
+	#name : 'OSTouchRotationEvent',
+	#superclass : 'OSTouchComplexEvent',
 	#instVars : [
 		'dTheta'
 	],
-	#category : #'OSWindow-Core-Events-Touch'
+	#category : 'OSWindow-Core-Events-Touch',
+	#package : 'OSWindow-Core',
+	#tag : 'Events-Touch'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSTouchRotationEvent class >> id [
 	^ #rotate
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSTouchRotationEvent >> dTheta [
 	^ dTheta
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSTouchRotationEvent >> dTheta: anObject [
 	dTheta := anObject
 ]

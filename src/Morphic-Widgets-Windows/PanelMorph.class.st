@@ -2,12 +2,14 @@
 A container morph that tracks the owner's pane colour unless an explicit fillStyle is specified. Additionally allows hooking of mouseOver events (no button down).
 "
 Class {
-	#name : #PanelMorph,
-	#superclass : #BorderedMorph,
-	#category : #'Morphic-Widgets-Windows-Widgets'
+	#name : 'PanelMorph',
+	#superclass : 'BorderedMorph',
+	#category : 'Morphic-Widgets-Windows-Widgets',
+	#package : 'Morphic-Widgets-Windows',
+	#tag : 'Widgets'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PanelMorph >> adoptPaneColor: paneColor [
 	"Change our color too."
 
@@ -18,7 +20,7 @@ PanelMorph >> adoptPaneColor: paneColor [
 	self borderStyle baseColor: paneColor darker
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 PanelMorph >> checkMorphsLeftOrTopFrom: splitter [
 	| index size |
 
@@ -37,7 +39,7 @@ PanelMorph >> checkMorphsLeftOrTopFrom: splitter [
 		index := index + 1 ]
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 PanelMorph >> checkMorphsLeftOrTopFrom: splitter size: size [
 	| index |
 
@@ -55,7 +57,7 @@ PanelMorph >> checkMorphsLeftOrTopFrom: splitter size: size [
 		index := index + 1 ]
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 PanelMorph >> checkMorphsRightOrBottomFrom: splitter [
 	| index |
 
@@ -70,7 +72,7 @@ PanelMorph >> checkMorphsRightOrBottomFrom: splitter [
 		index := index - 1 ]
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 PanelMorph >> checkSplitters [
 
 	(self submorphsSatisfying: [ :e | e isKindOf: ProportionalSplitterMorph ])
@@ -79,28 +81,28 @@ PanelMorph >> checkSplitters [
 			self checkMorphsRightOrBottomFrom: splitter ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PanelMorph >> defaultBorderWidth [
 	"Answer the default border width for the receiver."
 
 	^0
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 PanelMorph >> defaultColor [
 	"Answer the default color for the receiver."
 
 	^Color transparent
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 PanelMorph >> enabled: aBoolean [
 	"Pass on to submorphs."
 
 	self submorphsDo: [:m | m enabled: aBoolean]
 ]
 
-{ #category : #'events-processing' }
+{ #category : 'events-processing' }
 PanelMorph >> handleMouseOver: anEvent [
 	"System level event handling."
 
@@ -110,7 +112,7 @@ PanelMorph >> handleMouseOver: anEvent [
 		self mouseOver: anEvent]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PanelMorph >> initialize [
 	"Initialize the receiver."
 
@@ -120,7 +122,7 @@ PanelMorph >> initialize [
 		beSticky "stop being grabbed"
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 PanelMorph >> interactionState: aSymbol [
 	"Pass on to submorphs."
 
@@ -129,7 +131,7 @@ PanelMorph >> interactionState: aSymbol [
 			m interactionState: aSymbol]]
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 PanelMorph >> isResizeableMorph: submorph forSplitter: e [
 	| done |
 	done := e splitsTopAndBottom
@@ -138,7 +140,7 @@ PanelMorph >> isResizeableMorph: submorph forSplitter: e [
 	^ done
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 PanelMorph >> mouseOver: anEvent [
 	"Handle a mouseOver event, meaning the mouse just moved within the receiver
 	with no button pressed. The default response is to let my eventHandler, if any, handle it."
@@ -147,7 +149,7 @@ PanelMorph >> mouseOver: anEvent [
 		[self eventHandler mouseOver: anEvent fromMorph: self]
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 PanelMorph >> newHSplitter [
 
 	^ ProportionalSplitterMorph new
@@ -155,7 +157,7 @@ PanelMorph >> newHSplitter [
 			setProperty: #model toValue: self
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 PanelMorph >> newHSplitterAt: anIndex [
 
 	| above frame splitter index size |
@@ -169,14 +171,14 @@ PanelMorph >> newHSplitterAt: anIndex [
 	self privateAddMorph: splitter atIndex: (size - anIndex + 2)
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 PanelMorph >> newVSplitter [
 
 	^ ProportionalSplitterMorph new
 			setProperty: #model toValue: self
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 PanelMorph >> newVSplitterAt: anIndex [
 	| left frame splitter index size |
 

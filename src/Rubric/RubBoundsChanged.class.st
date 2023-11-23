@@ -2,20 +2,22 @@
 I am an abstract announcement relates to text area bounds changing
 "
 Class {
-	#name : #RubBoundsChanged,
-	#superclass : #RubMorphAnnouncement,
+	#name : 'RubBoundsChanged',
+	#superclass : 'RubMorphAnnouncement',
 	#instVars : [
 		'previousBounds'
 	],
-	#category : #'Rubric-Editing-Announcements'
+	#category : 'Rubric-Editing-Announcements',
+	#package : 'Rubric',
+	#tag : 'Editing-Announcements'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubBoundsChanged >> previousBounds [
 	^ previousBounds
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubBoundsChanged >> previousBounds: anObject [
 	previousBounds := anObject
 ]

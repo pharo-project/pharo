@@ -2,25 +2,27 @@
 I am a mock class for testing in announcers
 "
 Class {
-	#name : #AnnouncerSubscriberMockA,
-	#superclass : #Object,
+	#name : 'AnnouncerSubscriberMockA',
+	#superclass : 'Object',
 	#instVars : [
 		'announcer'
 	],
-	#category : #'Announcements-Core-Tests-Mocks'
+	#category : 'Announcements-Core-Tests-Mocks',
+	#package : 'Announcements-Core-Tests',
+	#tag : 'Mocks'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AnnouncerSubscriberMockA >> announcer [
 	^ announcer
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AnnouncerSubscriberMockA >> announcer: anAnnouncer [
 	announcer := anAnnouncer
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 AnnouncerSubscriberMockA >> registerEvents [
 
 	self announcer when: AnnouncementMockA do: [ nil ] for: self

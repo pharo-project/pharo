@@ -2,8 +2,8 @@
 I am a panel in the ProfilerPresenter containing the profiling process results together with parameters to filter these results
 "
 Class {
-	#name : #ProfilerResultsPresenter,
-	#superclass : #SpPresenter,
+	#name : 'ProfilerResultsPresenter',
+	#superclass : 'SpPresenter',
 	#instVars : [
 		'treeTable',
 		'viewModel',
@@ -18,10 +18,12 @@ Class {
 		'reportButton',
 		'showAsRootButton'
 	],
-	#category : #'ProfilerUI-View'
+	#category : 'ProfilerUI-View',
+	#package : 'ProfilerUI',
+	#tag : 'View'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 ProfilerResultsPresenter >> doItNode [
 
 	| selectorsPath doItNode |
@@ -42,33 +44,33 @@ ProfilerResultsPresenter >> doItNode [
 	^ doItNode
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 ProfilerResultsPresenter >> handleProfilingFinished [
 
 	| doItNode |
-	UIManager default defer: [
+	self defer: [
 		self enabled: true.
 
-		viewModel showLeavesOnly ifFalse: [
-			"select do it node and expand tree"
+		viewModel showLeavesOnly ifFalse: [ "select do it node and expand tree"
 			doItNode := self doItNode.
 			doItNode
-				ifNil: [ 	self inform: 'The excecution time was too short! No measurements taken' ]
+				ifNil: [
+					self inform:
+						'The excecution time was too short! No measurements taken' ]
 				ifNotNil: [
 					treeTable selectPath: doItNode path scrollToSelection: true.
-					viewModel setTallyRoot: doItNode ]
-		].
+					viewModel setTallyRoot: doItNode ] ].
 		viewModel announcer announce:
 			ProfilingResultsDisplayedAnnouncement new ]
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 ProfilerResultsPresenter >> handleProfilingStarted [
 	self enabled: false.
 	navigationToolbar reset
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 ProfilerResultsPresenter >> handleSelectionChanged [
 	| navButton node |
 	node := treeTable selectedItem.
@@ -89,7 +91,7 @@ ProfilerResultsPresenter >> handleSelectionChanged [
 	navButton selectedObject: node
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 ProfilerResultsPresenter >> handleTreeRootChanged: event [
 
 	| nodeToSelect pathToSelect |
@@ -118,7 +120,7 @@ ProfilerResultsPresenter >> handleTreeRootChanged: event [
 	treeTable selectPath: pathToSelect scrollToSelection: true
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ProfilerResultsPresenter >> initializeActions [
 
 	treeTable
@@ -147,7 +149,7 @@ ProfilerResultsPresenter >> initializeActions [
 		viewModel showLeavesOnly: item value ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ProfilerResultsPresenter >> initializePresenters [
 
 	| h |
@@ -178,7 +180,7 @@ ProfilerResultsPresenter >> initializePresenters [
 	self initializeActions
 ]
 
-{ #category : #'private - factory' }
+{ #category : 'private - factory' }
 ProfilerResultsPresenter >> newBrowseButton [
 
 	^ self newButton
@@ -189,7 +191,7 @@ ProfilerResultsPresenter >> newBrowseButton [
 		  yourself
 ]
 
-{ #category : #'private - factory' }
+{ #category : 'private - factory' }
 ProfilerResultsPresenter >> newConfigurationSectionLayout [
 
 	^ SpBoxLayout newTopToBottom
@@ -219,30 +221,30 @@ ProfilerResultsPresenter >> newConfigurationSectionLayout [
 		  yourself
 ]
 
-{ #category : #'private - factory' }
+{ #category : 'private - factory' }
 ProfilerResultsPresenter >> newProfilerCode [
 
 	^ self instantiate: ProfilerCodePresenter
 ]
 
-{ #category : #'private - factory' }
+{ #category : 'private - factory' }
 ProfilerResultsPresenter >> newProfilerNumberInput [
 	^ self instantiate: ProfilerNumberInput
 ]
 
-{ #category : #'private - factory' }
+{ #category : 'private - factory' }
 ProfilerResultsPresenter >> newProfilerToolbar [
 
 	^ self instantiate: ProfilerToolbarPresenter
 ]
 
-{ #category : #'private - factory' }
+{ #category : 'private - factory' }
 ProfilerResultsPresenter >> newProfilerTreeTable [
 
 	^ ProfilerTreeTablePresenter on: viewModel
 ]
 
-{ #category : #'private - factory' }
+{ #category : 'private - factory' }
 ProfilerResultsPresenter >> newReportButton [
 
 	^ self newButton
@@ -252,7 +254,7 @@ ProfilerResultsPresenter >> newReportButton [
 		yourself
 ]
 
-{ #category : #'private - factory' }
+{ #category : 'private - factory' }
 ProfilerResultsPresenter >> newShowAsRootButton [
 
 	^ self newButton
@@ -263,7 +265,7 @@ ProfilerResultsPresenter >> newShowAsRootButton [
 		  yourself
 ]
 
-{ #category : #'private - factory' }
+{ #category : 'private - factory' }
 ProfilerResultsPresenter >> newThresholdExpandInput [
 
 	^ self newProfilerNumberInput
@@ -272,7 +274,7 @@ ProfilerResultsPresenter >> newThresholdExpandInput [
 		  yourself
 ]
 
-{ #category : #'private - factory' }
+{ #category : 'private - factory' }
 ProfilerResultsPresenter >> newThresholdFilterInput [
 
 	^ self newProfilerNumberInput
@@ -281,7 +283,7 @@ ProfilerResultsPresenter >> newThresholdFilterInput [
 		  yourself
 ]
 
-{ #category : #'private - factory' }
+{ #category : 'private - factory' }
 ProfilerResultsPresenter >> newTreeVisualizationDropList [
 	| items |
 	items := {
@@ -298,13 +300,13 @@ ProfilerResultsPresenter >> newTreeVisualizationDropList [
 		                yourself
 ]
 
-{ #category : #'accessing - model' }
+{ #category : 'accessing - model' }
 ProfilerResultsPresenter >> setModelBeforeInitialization: aDomainObject [
 
 	viewModel := aDomainObject
 ]
 
-{ #category : #subscription }
+{ #category : 'subscription' }
 ProfilerResultsPresenter >> subscribeOnProfilingAnnouncements [
 
 	viewModel announcer
@@ -313,13 +315,13 @@ ProfilerResultsPresenter >> subscribeOnProfilingAnnouncements [
 		when: ProfilerResultsTreeRootChangedAnnouncement send: #handleTreeRootChanged: to: self
 ]
 
-{ #category : #subscription }
+{ #category : 'subscription' }
 ProfilerResultsPresenter >> unsubscribeFromProfilingAnnouncements [
 
 	viewModel announcer unsubscribe: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProfilerResultsPresenter >> viewModel [
 
 	^ viewModel

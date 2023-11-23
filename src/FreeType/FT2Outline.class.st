@@ -15,8 +15,8 @@ instVar: flags - a set of bit flags used to characterize the outline and give hi
 
 "
 Class {
-	#name : #FT2Outline,
-	#superclass : #Object,
+	#name : 'FT2Outline',
+	#superclass : 'Object',
 	#instVars : [
 		'contoursSize',
 		'pointsSize',
@@ -24,10 +24,12 @@ Class {
 		'tags',
 		'contours'
 	],
-	#category : #'FreeType-Base'
+	#category : 'FreeType-Base',
+	#package : 'FreeType',
+	#tag : 'Base'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 FT2Outline >> allocateArrays [
 	" allocate the arrays for the primLoadArraysFrom:"
 	points := 	IntegerArray new: pointsSize * 2.
@@ -35,7 +37,7 @@ FT2Outline >> allocateArrays [
 	contours := 	ShortIntegerArray new: contoursSize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FT2Outline >> contoursCollection [
 	"returns a list of contours with tag => points list pairs"
 	| allPoints result start end |
@@ -53,13 +55,13 @@ FT2Outline >> contoursCollection [
 	^result
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FT2Outline >> pointCollection [
 
 	^(1 to: pointsSize * 2 by: 2) collect: [ :i | ((points at: i) / 64) @ ((points at: i + 1) / 64)]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FT2Outline >> primLoadArraysFrom: anFT2Face [
 	| outline contoursArray pointsArray |
 	outline := anFT2Face outline.
@@ -76,7 +78,7 @@ FT2Outline >> primLoadArraysFrom: anFT2Face [
 	]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FT2Outline >> primLoadSizesFrom: anFT2Face [
 
 	contoursSize := anFT2Face outline n_contours.

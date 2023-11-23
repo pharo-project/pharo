@@ -1,6 +1,6 @@
-Extension { #name : #RBVariableNode }
+Extension { #name : 'RBVariableNode' }
 
-{ #category : #'*Reflectivity' }
+{ #category : '*Reflectivity' }
 RBVariableNode >> variableValueInContext: aContext [
 	^ variable readInContext: aContext
 ]

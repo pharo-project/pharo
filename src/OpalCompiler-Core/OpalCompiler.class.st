@@ -26,8 +26,8 @@ Smalltalk compiler
 This returns a CompiledMethod.
 "
 Class {
-	#name : #OpalCompiler,
-	#superclass : #Object,
+	#name : 'OpalCompiler',
+	#superclass : 'Object',
 	#instVars : [
 		'ast',
 		'source',
@@ -39,15 +39,18 @@ Class {
 		'logged',
 		'changeStamp',
 		'protocol',
-		'requestor'
+		'requestor',
+		'priorMethod'
 	],
 	#classInstVars : [
 		'overlayEnvironment'
 	],
-	#category : #'OpalCompiler-Core-FrontEnd'
+	#category : 'OpalCompiler-Core-FrontEnd',
+	#package : 'OpalCompiler-Core',
+	#tag : 'FrontEnd'
 }
 
-{ #category : #overlay }
+{ #category : 'overlay' }
 OpalCompiler class >> compilerClasses [
 	"here the classes for the overlay can changed. the default is just the compiler"
 	^self package definedClasses
@@ -57,7 +60,7 @@ OpalCompiler class >> compilerClasses [
 	"
 ]
 
-{ #category : #options }
+{ #category : 'options' }
 OpalCompiler class >> compilerSettingsOn: aBuilder [
 	<systemsettings>
 	(aBuilder group: #compiler)
@@ -72,12 +75,12 @@ OpalCompiler class >> compilerSettingsOn: aBuilder [
 				CompilationContext compilerSettingsOn: aBuilder]
 ]
 
-{ #category : #overlay }
+{ #category : 'overlay' }
 OpalCompiler class >> createAndEnableOverlay [
 	^self overlayIsActive
 ]
 
-{ #category : #overlay }
+{ #category : 'overlay' }
 OpalCompiler class >> createAndEnableOverlay: aBoolean [
 
 	aBoolean = self overlayIsActive ifTrue: [ ^self ].
@@ -86,7 +89,7 @@ OpalCompiler class >> createAndEnableOverlay: aBoolean [
 		ifFalse: [ self stopUsingOverlayForDevelopment   ]
 ]
 
-{ #category : #'old - deprecated' }
+{ #category : 'old - deprecated' }
 OpalCompiler class >> evaluate: textOrString [
 	self
 		deprecated: 'Please use new compiler API instead'
@@ -96,28 +99,28 @@ OpalCompiler class >> evaluate: textOrString [
 		evaluate
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 OpalCompiler class >> isActive [
 	^Smalltalk compilerClass == self
 ]
 
-{ #category : #overlay }
+{ #category : 'overlay' }
 OpalCompiler class >> overlayEnvironment [
 	^overlayEnvironment ifNil: [ overlayEnvironment := Dictionary new ]
 ]
 
-{ #category : #overlay }
+{ #category : 'overlay' }
 OpalCompiler class >> overlayIsActive [
 	^overlayEnvironment notNil
 ]
 
-{ #category : #overlay }
+{ #category : 'overlay' }
 OpalCompiler class >> overlayStep1CopyClasses [
 	"now we put a copy of all the classes into the environment"
 	self compilerClasses do: [ :class | self overlayEnvironment at: class name put: class copy ]
 ]
 
-{ #category : #overlay }
+{ #category : 'overlay' }
 OpalCompiler class >> overlayStep2Recompile [
 	"now we recompile the classes in the environment with itself as an overlay"
 	self overlayEnvironment valuesDo: [ :class |
@@ -129,7 +132,7 @@ OpalCompiler class >> overlayStep2Recompile [
 					class addSelectorSilently: method selector withMethod: newMethod ] ]
 ]
 
-{ #category : #overlay }
+{ #category : 'overlay' }
 OpalCompiler class >> overlayStep3FixSuperclassPointers [
 	"make sure superclass pointers are correct"
     self overlayEnvironment valuesDo: [ :class |
@@ -137,14 +140,14 @@ OpalCompiler class >> overlayStep3FixSuperclassPointers [
 				ifTrue: [ class superclass: (self overlayEnvironment at: class superclass name)]]
 ]
 
-{ #category : #overlay }
+{ #category : 'overlay' }
 OpalCompiler class >> overlayStep4SetImageCompiler [
 	"make the copy the default compiler for the image"
 	SmalltalkImage compilerClass: (self overlayEnvironment at: #OpalCompiler).
 	ASTCache reset
 ]
 
-{ #category : #overlay }
+{ #category : 'overlay' }
 OpalCompiler class >> overlayStep5UpdateInstances [
 	"transform existing instances to be instances of the overlay"
 	self compilerClasses do: [ :class |
@@ -152,20 +155,20 @@ OpalCompiler class >> overlayStep5UpdateInstances [
 			(self overlayEnvironment at: class name) adoptInstance: object ]]
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 OpalCompiler class >> recompileAll [
 	"Recompile all classes and traits in the system."
 
 	Smalltalk image recompile
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 OpalCompiler class >> register [
 
 	SmalltalkImage current compilerClass: self
 ]
 
-{ #category : #overlay }
+{ #category : 'overlay' }
 OpalCompiler class >> startUsingOverlayForDevelopment [
 	"this method sets up an overlay so we can change the compiler package without breaking the compiler"
 
@@ -180,7 +183,7 @@ OpalCompiler class >> startUsingOverlayForDevelopment [
 		overlayStep5UpdateInstances
 ]
 
-{ #category : #overlay }
+{ #category : 'overlay' }
 OpalCompiler class >> stopUsingOverlayForDevelopment [
 	"set compiler back to normal and throw away overlay environment"
 
@@ -190,28 +193,28 @@ OpalCompiler class >> stopUsingOverlayForDevelopment [
 	ASTCache reset
 ]
 
-{ #category : #plugins }
-
+{ #category : 'plugins' }
 OpalCompiler >> addParsePlugin: aClass [
 	self compilationContext addParseASTTransformationPlugin: aClass
 ]
 
-{ #category : #plugins }
+{ #category : 'plugins' }
 OpalCompiler >> addPlugin: aClass [
 	self compilationContext addASTTransformationPlugin: aClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OpalCompiler >> ast [
 
 	^ ast
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OpalCompiler >> ast: anObject [
 
 	ast := anObject.
 	source := ast source.
+	ast compiledMethod ifNotNil: [ :method | self priorMethod: method ].
 
 	"If a compilation context exists in the AST, we use this one.
 	Otherwise, we assign our"
@@ -220,18 +223,18 @@ OpalCompiler >> ast: anObject [
 		ifNotNil: [ self compilationContext: ast compilationContext ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OpalCompiler >> bindings [
 	^ self compilationContext bindings
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OpalCompiler >> bindings: aDictionary [
 	"allows to define additional binding, note: Globals are not shadowed"
 	self compilationContext bindings: aDictionary
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OpalCompiler >> buildOuterScope [
 	| newScope |
 
@@ -249,30 +252,30 @@ OpalCompiler >> buildOuterScope [
 	^newScope
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OpalCompiler >> callParsePlugins [
 	| plugins |
 
 	plugins := compilationContext astParseTransformPlugins ifEmpty: [ ^ self ].
 	plugins sort: [ :a :b | a priority > b priority ]. "priority 0 is sorted last"
-	plugins do: [ :each | ast := each transform: ast ]
+	plugins do: [ :each | ast := each transform: ast "In case I fail during the loading of code, check OCASTComplierPlugin class comment."]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OpalCompiler >> callPlugins [
 	| plugins |
 
 	plugins := compilationContext astTransformPlugins ifEmpty: [ ^self ].
 	plugins sort: [ :a :b | a priority > b priority ]. "priority 0 is sorted last"
-	plugins do: [ :each | ast := each transform: ast ]
+	plugins do: [ :each | ast := each transform: ast "In case I fail during the loading of code, check OCASTComplierPlugin class comment."]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OpalCompiler >> changeStamp: aString [ 
 	changeStamp := aString
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OpalCompiler >> checkNotice: aNotice [
 	"This method handles all the logic of error handling.
 	
@@ -335,32 +338,32 @@ OpalCompiler >> checkNotice: aNotice [
 	^ true "Error was resumed, so we consider it's OK to continue"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OpalCompiler >> class: aClass [
 	self compilationContext class: aClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OpalCompiler >> compilationContext [
 	^ compilationContext ifNil: [ compilationContext := self compilationContextClass default ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OpalCompiler >> compilationContext: anObject [
 	compilationContext := anObject
 ]
 
-{ #category : #plugins }
+{ #category : 'plugins' }
 OpalCompiler >> compilationContextClass [
 	^compilationContextClass ifNil: [ CompilationContext  ]
 ]
 
-{ #category : #plugins }
+{ #category : 'plugins' }
 OpalCompiler >> compilationContextClass: aClass [
 	compilationContextClass := aClass
 ]
 
-{ #category : #'public access' }
+{ #category : 'public access' }
 OpalCompiler >> compile [
 
 	| result |
@@ -376,7 +379,7 @@ OpalCompiler >> compile [
 	^ self generateMethod
 ]
 
-{ #category : #'public access' }
+{ #category : 'public access' }
 OpalCompiler >> compile: textOrString [
 
 	^self
@@ -384,18 +387,18 @@ OpalCompiler >> compile: textOrString [
 		compile
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OpalCompiler >> compiledMethodClass: aClass [
 
 	self compilationContext compiledMethodClass: aClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OpalCompiler >> compiledMethodTrailer: bytes [
 	self deprecated: 'CompiledMethodTrailer has been removed in Pharo12. Just set the sourcePointer after compiling, see class comment of the deprecated class CompiledMethodTrailer'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OpalCompiler >> context: aContext [
 	"Prepare self to parse/compile/evaluate according to a context.
 	This impacts the scope (for name resolutions) and toggles `isScripting` to true.
@@ -411,7 +414,7 @@ OpalCompiler >> context: aContext [
 	self semanticScope: (OCContextualDoItSemanticScope targetingContext: aContext)
 ]
 
-{ #category : #'public access' }
+{ #category : 'public access' }
 OpalCompiler >> decompileMethod: aCompiledMethod [
 	^ Smalltalk globals
 		at: #FBDDecompiler
@@ -421,7 +424,7 @@ OpalCompiler >> decompileMethod: aCompiledMethod [
 		ifAbsent: [ RBMethodNode errorMethodNode: aCompiledMethod selector errorMessage: 'No decompiler available'. ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OpalCompiler >> doSemanticAnalysis [
 
 	|scope|
@@ -438,18 +441,18 @@ OpalCompiler >> doSemanticAnalysis [
 	^ ast
 ]
 
-{ #category : #plugins }
+{ #category : 'plugins' }
 OpalCompiler >> encoderClass: aClass [
 	self compilationContext encoderClass: aClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OpalCompiler >> environment: anEnvironment [
 	"Set the environment (dictionary of class, traits and globals) used during the compilation"
 	self compilationContext environment: anEnvironment
 ]
 
-{ #category : #'public access' }
+{ #category : 'public access' }
 OpalCompiler >> evaluate [
 	"Compiles the sourceStream into a parse tree, then generates code into
 	 a method. If aContext is not nil, the text can refer to temporaries in that
@@ -472,7 +475,7 @@ OpalCompiler >> evaluate [
 	^ value
 ]
 
-{ #category : #'public access' }
+{ #category : 'public access' }
 OpalCompiler >> evaluate: textOrString [
 
 	^self
@@ -480,24 +483,24 @@ OpalCompiler >> evaluate: textOrString [
 		evaluate
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OpalCompiler >> failBlock [
 
 	^ failBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OpalCompiler >> failBlock: aBlock [
 
 	failBlock := aBlock
 ]
 
-{ #category : #'public access' }
+{ #category : 'public access' }
 OpalCompiler >> format [
 	^self parse formattedCode
 ]
 
-{ #category : #'public access' }
+{ #category : 'public access' }
 OpalCompiler >> format: textOrString [
 
 	^self
@@ -505,7 +508,7 @@ OpalCompiler >> format: textOrString [
 		format
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OpalCompiler >> generateIR [
 	| ir |
 
@@ -526,7 +529,7 @@ OpalCompiler >> generateIR [
 	^ ir
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OpalCompiler >> generateMethod [
 
 	| method ir |
@@ -537,50 +540,58 @@ OpalCompiler >> generateMethod [
 	ir := self generateIR.
 	method := ir compiledMethod.
 
-	ast compiledMethod: method.	
+	ast compiledMethod: method.
+	ast propertyAt: #Undeclareds ifPresent: [ :undeclareds | undeclareds do: [ :var | var registerMethod: method ] ].
 	method propertyAt: #source put: source.
-	self compilationContext noPattern ifTrue: [
-		method propertyAt: #ast put: ast ]. "Keep AST for scripts (for the moment)"
+	self compilationContext noPattern ifTrue: [ method propertyAt: #ast put: ast ]. "Keep AST for scripts (for the moment)"
+
+	"If the prior method was not set explicitly, we set it because we will need it if we are not in the first compilation"
+	self priorMethod ifNil: [
+		self methodClass ifNotNil: [ :class | "In case the method comes from a trait, we ignore it because it means we are overriding the trait method in the class"
+			class compiledMethodAt: method selector ifPresent: [ :aMethod | aMethod isFromTrait ifFalse: [ self priorMethod: aMethod ] ] ] ].
+
+	"In case we are not compiling the method for the first time, we want to ensure that some properties are kept."
+	self priorMethod ifNotNil: [ priorMethod migratePersistingPropertiesIn: method ].
 	^ method
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 OpalCompiler >> install [
 	"Compile and install a method in a class"
 
 	| class method logSource |
-	class := self semanticScope targetClass.
+	class := self methodClass.
 	self assert: class isNotNil.
 
-	method := self compile.
-	method ifNil: [ ^ method ].
+	method := self compile ifNil: [ ^ nil ].
 
-	protocol := class ensureProtocol: protocol.
 	changeStamp ifNil: [ changeStamp := Author changeStamp ].
-	logSource := self logged ifNil: [ class acceptsLoggingOfCompilation ].
-
-	logSource ifTrue: [
-		class
-			logMethodSource: source
-			forMethod: method
-			inProtocol: protocol
-			withStamp: changeStamp ].
+	logSource := self logged ifNil: [ true ].
+	protocol := protocol ifNil: [ self priorMethod ifNotNil: [ self priorMethod protocol ] ].
 
 	class addAndClassifySelector: method selector withMethod: method inProtocol: protocol.
+
+	logSource ifTrue: [ "For the log we do not use `protocol` because in case it is nil, we keep the current classification or we classify under uncategorize in the method is not present in a protocol yet. So we ask to the method its protocol after classifying it."
+		method
+			putSource: source
+			class: class
+			protocol: method protocol
+			withStamp: changeStamp
+			priorMethod: self priorMethod ].
 
 	class instanceSide noteCompilationOf: method meta: class isClassSide.
 
 	^ method
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 OpalCompiler >> install: aSource [
 
 	self source: aSource.
 	^ self install
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OpalCompiler >> isInteractive [
 
 	self requestor ifNil: [ ^ false ].
@@ -591,29 +602,35 @@ OpalCompiler >> isInteractive [
 		  ifFalse: [ true ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OpalCompiler >> isScripting [
 	^ self semanticScope isDoItScope
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OpalCompiler >> isScripting: aBoolean [
 
 	(aBoolean and: [ self isScripting not ]) ifTrue: [
 		self semanticScope: OCReceiverDoItSemanticScope targetingNilReceiver ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OpalCompiler >> logged [
 	^ logged
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OpalCompiler >> logged: aBoolean [
 	logged := aBoolean
 ]
 
-{ #category : #testing }
+{ #category : 'accessing' }
+OpalCompiler >> methodClass [
+
+	^ self semanticScope targetClass
+]
+
+{ #category : 'testing' }
 OpalCompiler >> needRequestorScope [
 	"The requestor scope allows the requestor to bind exsiting and new variables, like worspaces variables.
 	Modern requestors should not register temselves but use `bindings:`."
@@ -624,7 +641,7 @@ OpalCompiler >> needRequestorScope [
 	^ self requestor needRequestorScope
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OpalCompiler >> noPattern: aBoolean [
 
 	self
@@ -634,7 +651,7 @@ OpalCompiler >> noPattern: aBoolean [
 	self isScripting: aBoolean
 ]
 
-{ #category : #'public access' }
+{ #category : 'public access' }
 OpalCompiler >> options: anOptionsArray [
 
 	"Compatibility for those options"
@@ -643,7 +660,7 @@ OpalCompiler >> options: anOptionsArray [
 	self compilationContext parseOptions: anOptionsArray
 ]
 
-{ #category : #'public access' }
+{ #category : 'public access' }
 OpalCompiler >> parse [
 
 	| parser |
@@ -672,7 +689,7 @@ OpalCompiler >> parse [
 	^ ast
 ]
 
-{ #category : #'public access' }
+{ #category : 'public access' }
 OpalCompiler >> parse: textOrString [
 
 	^self
@@ -680,65 +697,78 @@ OpalCompiler >> parse: textOrString [
 		parse
 ]
 
-{ #category : #'public access' }
+{ #category : 'public access' }
 OpalCompiler >> parseLiterals: aString [
 	^self parserClass parseLiterals: aString
 ]
 
-{ #category : #'public access' }
+{ #category : 'public access' }
 OpalCompiler >> parseScript: aString [
 
 	self isScripting: true.
 	^ self parse: aString
 ]
 
-{ #category : #'public access' }
+{ #category : 'public access' }
 OpalCompiler >> parseSelector: aString [
 	"Answer the message selector for the argument, aString, which should parse successfully up to the temporary declaration or the end of the method header."
 
 	^[self parserClass parseMethodPattern: aString] on: Error do: [nil]
 ]
 
-{ #category : #plugins }
+{ #category : 'plugins' }
 OpalCompiler >> parserClass [
 	^self compilationContext parserClass
 ]
 
-{ #category : #'public access' }
+{ #category : 'public access' }
 OpalCompiler >> permitFaulty [
 
 	^ permitFaulty
 ]
 
-{ #category : #'public access' }
+{ #category : 'public access' }
 OpalCompiler >> permitFaulty: aBoolean [
 
 	permitFaulty := aBoolean
 ]
 
-{ #category : #'public access' }
+{ #category : 'public access' }
 OpalCompiler >> permitUndeclared [
 
 	^ permitUndeclared
 ]
 
-{ #category : #'public access' }
+{ #category : 'public access' }
 OpalCompiler >> permitUndeclared: aBoolean [
 
 	permitUndeclared := aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
+OpalCompiler >> priorMethod [
+
+	^ priorMethod
+]
+
+{ #category : 'accessing' }
+OpalCompiler >> priorMethod: aCompiledMethod [
+	"Setting the prior method all Opal to conserve some informations from a previous method to the new compiled method easily. For example it can keep some properties or the protocol."
+
+	priorMethod := aCompiledMethod
+]
+
+{ #category : 'accessing' }
 OpalCompiler >> productionEnvironment: anObject [
 	self compilationContext productionEnvironment: anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OpalCompiler >> protocol: aProtocol [ 
 	protocol := aProtocol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OpalCompiler >> receiver [
 
 	^ self semanticScope ifNotNil: [ :scope |
@@ -747,7 +777,7 @@ OpalCompiler >> receiver [
 			  ifFalse: [ nil ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OpalCompiler >> receiver: anObject [
 
 	"Note: some clients set up a `receiver:` AFTER setting up a `context:`
@@ -757,36 +787,36 @@ OpalCompiler >> receiver: anObject [
 	self semanticScope: (OCReceiverDoItSemanticScope targetingReceiver: anObject)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OpalCompiler >> requestor [
 	^ requestor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OpalCompiler >> requestor: aRequestor [
 	requestor := aRequestor
 ]
 
-{ #category : #plugins }
+{ #category : 'plugins' }
 OpalCompiler >> requestorScopeClass: aClass [
 	"clients can set their own subclass of OCRequestorScope if needed"
 	self compilationContext requestorScopeClass: aClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OpalCompiler >> semanticScope [
 	^self compilationContext semanticScope
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OpalCompiler >> semanticScope: anObject [
 	self compilationContext semanticScope: anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OpalCompiler >> source: aString [
+	"source should be a string, but call contents for old clients that send streams. Some users can also send text and so we transform it into a string. If we don't do this transformation, the compiled method #sourceCode method will return a Text instead of a String which can break its users."
 
-	"source should be a string, but call contents for old clients that send streams"
-	source := aString contents.
+	source := aString contents asString.
 	ast := nil
 ]

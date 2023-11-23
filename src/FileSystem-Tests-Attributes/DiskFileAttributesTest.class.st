@@ -5,18 +5,20 @@ As Pharo doesn't yet provide a mechanism to set the attributes, pick a few well 
 
 "
 Class {
-	#name : #DiskFileAttributesTest,
-	#superclass : #TestCase,
-	#category : #'FileSystem-Tests-Attributes-Tests'
+	#name : 'DiskFileAttributesTest',
+	#superclass : 'TestCase',
+	#category : 'FileSystem-Tests-Attributes-Tests',
+	#package : 'FileSystem-Tests-Attributes',
+	#tag : 'Tests'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiskFileAttributesTest class >> resources [
 
 	^Array with: DiskFileAttributesTestsResource
 ]
 
-{ #category : #'private - helpers' }
+{ #category : 'private - helpers' }
 DiskFileAttributesTest >> attributesCollection [
 	"Answer an array of FileAttributes for the test resource file.
 	This is currently a single entry, but leaving the infrastructure in place in case it is extended."
@@ -26,14 +28,14 @@ DiskFileAttributesTest >> attributesCollection [
 	}
 ]
 
-{ #category : #'private - helpers' }
+{ #category : 'private - helpers' }
 DiskFileAttributesTest >> attributesCollectionDo: aBlock [
 	"Evaluate the supplied block for each of the attribute cache modes"
 
 	^self attributesCollection do: aBlock
 ]
 
-{ #category : #'private - helpers' }
+{ #category : 'private - helpers' }
 DiskFileAttributesTest >> collectionAssert: aBlock [
 	"Evaluate the assertion block for each of the FileAttribute cache modes"
 
@@ -41,7 +43,7 @@ DiskFileAttributesTest >> collectionAssert: aBlock [
 		[ :each | self assert: (aBlock value: each) ]
 ]
 
-{ #category : #'private - helpers' }
+{ #category : 'private - helpers' }
 DiskFileAttributesTest >> collectionAssert: aBlock equals: expected [
 	"Evaluate the assertion block for each of the FileAttribute cache modes"
 
@@ -49,7 +51,7 @@ DiskFileAttributesTest >> collectionAssert: aBlock equals: expected [
 		[ :each | self assert: (aBlock value: each) equals: expected ]
 ]
 
-{ #category : #'private - helpers' }
+{ #category : 'private - helpers' }
 DiskFileAttributesTest >> tempFileEntry [
 
 	| file |
@@ -58,13 +60,13 @@ DiskFileAttributesTest >> tempFileEntry [
 	^DiskDirectoryEntry reference: file
 ]
 
-{ #category : #'private - helpers' }
+{ #category : 'private - helpers' }
 DiskFileAttributesTest >> tempFileResource [
 
 	^DiskFileAttributesTestsResource current
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DiskFileAttributesTest >> testAccessTime [
 
 	| resource accessTime |
@@ -76,7 +78,7 @@ DiskFileAttributesTest >> testAccessTime [
 		]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DiskFileAttributesTest >> testCreationTime [
 
 	| resource creationTime |
@@ -88,7 +90,7 @@ DiskFileAttributesTest >> testCreationTime [
 		]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DiskFileAttributesTest >> testExists [
 
 	| file |
@@ -96,7 +98,7 @@ DiskFileAttributesTest >> testExists [
 	self assert: (DiskDirectoryEntry exists: file path in: file fileSystem)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DiskFileAttributesTest >> testExistsNot [
 
 	| file |
@@ -104,13 +106,13 @@ DiskFileAttributesTest >> testExistsNot [
 	self deny: (DiskDirectoryEntry exists: file path in: file fileSystem)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DiskFileAttributesTest >> testFileSize [
 
 	self collectionAssert: [ :each | each size ] equals: 72
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DiskFileAttributesTest >> testFromPlatformPath [
 
 	| testString platformByteArray nativeByteArray |
@@ -126,19 +128,19 @@ DiskFileAttributesTest >> testFromPlatformPath [
 	self assert: nativeByteArray utf8Decoded equals: testString
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DiskFileAttributesTest >> testIsBlock [
 
 	self collectionAssert: [ :each | each isBlock ] equals: false
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DiskFileAttributesTest >> testIsCharacter [
 
 	self collectionAssert: [ :each | each isCharacter ] equals: false
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DiskFileAttributesTest >> testIsDirectory [
 
 	| file |
@@ -148,56 +150,56 @@ DiskFileAttributesTest >> testIsDirectory [
 	self assert: (DiskDirectoryEntry reference: file) isDirectory
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DiskFileAttributesTest >> testIsExecutable [
 	| file |
 	file := FileLocator vmBinary resolve.
 	self assert: (DiskDirectoryEntry reference: file) isExecutable
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DiskFileAttributesTest >> testIsFIFO [
 
 	self collectionAssert: [ :each | each isFIFO ] equals: false
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DiskFileAttributesTest >> testIsHidden [
 
 	self collectionAssert: [ :each | each isHidden ] equals: false
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DiskFileAttributesTest >> testIsReadable [
 
 	self collectionAssert: [ :each | each isReadable ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DiskFileAttributesTest >> testIsRegular [
 
 	self collectionAssert: [ :each | each isRegular ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DiskFileAttributesTest >> testIsSocket [
 
 	self collectionAssert: [ :each | each isSocket ] equals: false
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DiskFileAttributesTest >> testIsSymlink [
 
 	self collectionAssert: [ :each | each isSymlink ] equals: false
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DiskFileAttributesTest >> testIsWriteable [
 
 	self collectionAssert: [ :each | each isWritable ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DiskFileAttributesTest >> testModificationTime [
 
 	| resource modificationTime |
@@ -209,7 +211,7 @@ DiskFileAttributesTest >> testModificationTime [
 		]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DiskFileAttributesTest >> testNLink [
 	"Assume that there is only one hard link to the just created temporary file"
 
@@ -219,53 +221,61 @@ DiskFileAttributesTest >> testNLink [
 		[ self collectionAssert: [ :each | each numberOfHardLinks ] equals: 1 ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DiskFileAttributesTest >> testPermissions [
 
 	| fileReference oldPermissions newPermissions |
-
-	fileReference := (FileLocator temp / ('FileAttributesTests-', UUIDGenerator next asString, '.txt')) resolve.
+	fileReference := (FileLocator temp
+	                  /
+	                  ('FileAttributesTests-' , UUID new asString
+	                   , '.txt')) resolve.
 
 	fileReference createFile.
 	[
-		oldPermissions := self tempFileEntry permissions.
-		newPermissions := FileSystemPermission posixPermissions: 8r007.
-		"Check that the existing permissions don't happen to match the test permissions"
-		self assert: oldPermissions ~= newPermissions.
+	oldPermissions := self tempFileEntry permissions.
+	newPermissions := FileSystemPermission posixPermissions: 8r007.
+	"Check that the existing permissions don't happen to match the test permissions"
+	self assert: oldPermissions ~= newPermissions.
 
-		"Setting permissions aren't supported on Windows"
-		OSPlatform current isWindows ifTrue: [
-			self should: [ fileReference permissions: newPermissions ] raise: Error ]
+	"Setting permissions aren't supported on Windows"
+	OSPlatform current isWindows
+		ifTrue: [
+			self
+				should: [ fileReference permissions: newPermissions ]
+				raise: Error ]
 		ifFalse: [
 			fileReference permissions: newPermissions.
-			self assert: fileReference permissions equals: newPermissions ].
-	] ensure: [ fileReference delete ]
+			self assert: fileReference permissions equals: newPermissions ] ]
+		ensure: [ fileReference delete ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DiskFileAttributesTest >> testSymlinkUidGid [
 
 	| fileReference oldUid oldGid |
-
-	fileReference := FileLocator temp / ('FileAttributesTests-', UUIDGenerator next asString, '.txt').
+	fileReference := FileLocator temp
+	                 /
+	                 ('FileAttributesTests-' , UUID new asString , '.txt').
 	fileReference createFile.
 	[
-		oldUid := fileReference uid.
-		oldGid := fileReference gid.
+	oldUid := fileReference uid.
+	oldGid := fileReference gid.
 
-		"Setting ownership isn't supported on Windows"
-		OSPlatform current isWindows ifTrue: [
-			self should: [ fileReference symlinkUid: nil gid: nil ] raise: Error ]
-		ifFalse: [
-			"Since we can't reliably determine new test ids, call the method without changing values.
+	"Setting ownership isn't supported on Windows"
+	OSPlatform current isWindows
+		ifTrue: [
+			self
+				should: [ fileReference symlinkUid: nil gid: nil ]
+				raise: Error ]
+		ifFalse: [ "Since we can't reliably determine new test ids, call the method without changing values.
 			This will at least test that the primitive can be called and doesn't do something unexpected."
 			fileReference symlinkUid: nil gid: nil.
 			self assert: fileReference uid equals: oldUid.
-			self assert: fileReference gid equals: oldGid ].
-	] ensure: [ fileReference delete ]
+			self assert: fileReference gid equals: oldGid ] ] ensure: [
+		fileReference delete ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DiskFileAttributesTest >> testTargetFile [
 
 	"The temporary file isn't a symbolic link, so the targetFile is not supported"
@@ -273,7 +283,7 @@ DiskFileAttributesTest >> testTargetFile [
 		self should: [ each targetFileReference ] raise: FileAttributeNotSupported ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DiskFileAttributesTest >> testToPlatformPath [
 
 	| testString platformByteArray expectedByteArray |
@@ -289,25 +299,26 @@ DiskFileAttributesTest >> testToPlatformPath [
 	self assert: platformByteArray equals: expectedByteArray
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DiskFileAttributesTest >> testUidGid [
 
 	| fileReference oldUid oldGid |
-
-	fileReference := FileLocator temp / ('FileAttributesTests-', UUIDGenerator next asString, '.txt').
+	fileReference := FileLocator temp
+	                 /
+	                 ('FileAttributesTests-' , UUID new asString , '.txt').
 	fileReference createFile.
 	[
-		oldUid := fileReference uid.
-		oldGid := fileReference gid.
+	oldUid := fileReference uid.
+	oldGid := fileReference gid.
 
-		"Setting ownership isn't supported on Windows"
-		OSPlatform current isWindows ifTrue: [
-			self should: [ fileReference uid: nil gid: nil ] raise: Error ]
-		ifFalse: [
-			"Since we can't reliably determine new test ids, call the method without changing values.
+	"Setting ownership isn't supported on Windows"
+	OSPlatform current isWindows
+		ifTrue: [
+		self should: [ fileReference uid: nil gid: nil ] raise: Error ]
+		ifFalse: [ "Since we can't reliably determine new test ids, call the method without changing values.
 			This will at least test that the primitive can be called and doesn't do something unexpected."
 			fileReference uid: nil gid: nil.
 			self assert: fileReference uid equals: oldUid.
-			self assert: fileReference gid equals: oldGid ].
-	] ensure: [ fileReference delete ]
+			self assert: fileReference gid equals: oldGid ] ] ensure: [
+		fileReference delete ]
 ]

@@ -2,18 +2,20 @@
 I provide a test suite for SmallInteger values. Examine my tests to see how SmallIntegers should behave, and see how to use them.
 "
 Class {
-	#name : #SmallIntegerTest,
-	#superclass : #ClassTestCase,
-	#category : #'Kernel-Tests-Numbers'
+	#name : 'SmallIntegerTest',
+	#superclass : 'ClassTestCase',
+	#category : 'Kernel-Tests-Numbers',
+	#package : 'Kernel-Tests',
+	#tag : 'Numbers'
 }
 
-{ #category : #coverage }
+{ #category : 'coverage' }
 SmallIntegerTest >> classToBeTested [
 
 	^ SmallInteger
 ]
 
-{ #category : #'tests - arithmetic' }
+{ #category : 'tests - arithmetic' }
 SmallIntegerTest >> testAbs [
 
 	self assert: SmallInteger maxVal abs equals: SmallInteger maxVal.
@@ -25,13 +27,13 @@ SmallIntegerTest >> testAbs [
 		equals: SmallInteger minVal negated
 ]
 
-{ #category : #'tests - Class Methods' }
+{ #category : 'tests - Class Methods' }
 SmallIntegerTest >> testBasicNew [
 
 	self should: [SmallInteger basicNew] raise: self defaultTestError
 ]
 
-{ #category : #'tests - operations' }
+{ #category : 'tests - operations' }
 SmallIntegerTest >> testBitAnd [
 	| onezero zeroone ones |
 	onezero := 2r1010101.
@@ -44,7 +46,7 @@ SmallIntegerTest >> testBitAnd [
 	self assert: (onezero bitAnd: 0)       equals: 0
 ]
 
-{ #category : #'tests - operations' }
+{ #category : 'tests - operations' }
 SmallIntegerTest >> testBitOr [
 	| onezero zeroone ones |
 	onezero := 2r1010101.
@@ -57,7 +59,7 @@ SmallIntegerTest >> testBitOr [
 	self assert: (onezero bitOr: 0)       equals: onezero
 ]
 
-{ #category : #'tests - operations' }
+{ #category : 'tests - operations' }
 SmallIntegerTest >> testBitShift [
 
 	self assert: (2r11 bitShift: 1) equals: 2r110.
@@ -67,7 +69,7 @@ SmallIntegerTest >> testBitShift [
 	self assert: (2r11 bitShift: -2) equals: 0
 ]
 
-{ #category : #'tests - operations' }
+{ #category : 'tests - operations' }
 SmallIntegerTest >> testBitXOr [
 	| onezero zeroone ones |
 	onezero := 2r1010101.
@@ -79,7 +81,7 @@ SmallIntegerTest >> testBitXOr [
 	self assert: (onezero bitXor: 0)       equals: onezero
 ]
 
-{ #category : #'tests - Class Methods' }
+{ #category : 'tests - Class Methods' }
 SmallIntegerTest >> testByteAt [
 
 	| number |
@@ -89,7 +91,7 @@ SmallIntegerTest >> testByteAt [
 	self assert: (number byteAt: 3) equals: 16rAB
 ]
 
-{ #category : #'tests - operations' }
+{ #category : 'tests - operations' }
 SmallIntegerTest >> testCeiling [
 	self assert: 2 ceiling equals: 2.
 	self assert: -2 ceiling equals: -2.
@@ -97,7 +99,7 @@ SmallIntegerTest >> testCeiling [
 	self assert: -2.1 ceiling equals: -2
 ]
 
-{ #category : #'tests - arithmetic' }
+{ #category : 'tests - arithmetic' }
 SmallIntegerTest >> testDivide [
 	self assert: 2 / 1 equals: 2.
 	self assert: (3 / 2) isFraction.
@@ -105,7 +107,7 @@ SmallIntegerTest >> testDivide [
 	self should: [ 1 / 0 ] raise: ZeroDivide
 ]
 
-{ #category : #'tests - operations' }
+{ #category : 'tests - operations' }
 SmallIntegerTest >> testGcd [
 
 	"trick case: a = b"
@@ -118,31 +120,31 @@ SmallIntegerTest >> testGcd [
    self assert: (624129 gcd: 2061517) equals: 18913
 ]
 
-{ #category : #'tests - other' }
+{ #category : 'tests - other' }
 SmallIntegerTest >> testIsNotAbstract [
 
 	self deny: SmallInteger isAbstract
 ]
 
-{ #category : #'tests - Class Methods' }
+{ #category : 'tests - Class Methods' }
 SmallIntegerTest >> testMaxVal [
 	Smalltalk vm wordSize = 4 ifTrue: [ self assert: SmallInteger maxVal equals: 16r3FFFFFFF ].
 	Smalltalk vm wordSize = 8 ifTrue: [ self assert: SmallInteger maxVal equals: 16rFFFFFFFFFFFFFFF ]
 ]
 
-{ #category : #'tests - Class Methods' }
+{ #category : 'tests - Class Methods' }
 SmallIntegerTest >> testMinVal [
 	Smalltalk vm wordSize = 4 ifTrue: [ self assert: SmallInteger minVal equals: -16r40000000 ].
 	Smalltalk vm wordSize = 8 ifTrue: [ self assert: SmallInteger minVal equals: -16r1000000000000000 ]
 ]
 
-{ #category : #'tests - Class Methods' }
+{ #category : 'tests - Class Methods' }
 SmallIntegerTest >> testNew [
 
 	self should: [SmallInteger new] raise: self defaultTestError
 ]
 
-{ #category : #'tests - printing' }
+{ #category : 'tests - printing' }
 SmallIntegerTest >> testPrintPaddedWith [
 	self assert: (123 printPaddedWith: $0 to: 10 base: 2) equals: '0001111011'.
 	self assert: (123 printPaddedWith: $0 to: 10 base: 8) equals: '0000000173'.
@@ -150,7 +152,7 @@ SmallIntegerTest >> testPrintPaddedWith [
 	self assert: (123 printPaddedWith: $0 to: 10 base: 16) equals: '000000007B'
 ]
 
-{ #category : #'tests - printing' }
+{ #category : 'tests - printing' }
 SmallIntegerTest >> testPrintString [
 	self assert: 1 printString equals: '1'.
 	self assert: -1 printString equals: '-1'.
@@ -182,7 +184,7 @@ SmallIntegerTest >> testPrintString [
 		ifTrue: [ self assert: SmallInteger maxVal decimalDigitLength equals: 19 ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SmallIntegerTest >> testQuo [
 	self should: [ 1 quo: 0] raise: ZeroDivide.
 	self assert: ( 1 quo: 2) equals:  0.

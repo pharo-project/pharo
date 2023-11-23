@@ -1,6 +1,6 @@
-Extension { #name : #AbstractLayout }
+Extension { #name : 'AbstractLayout' }
 
-{ #category : #'*Fuel-Core' }
+{ #category : '*Fuel-Core' }
 AbstractLayout >> hasSlotScope [
 	^ false
 ]

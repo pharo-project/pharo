@@ -1,1 +1,1 @@
-Package { #name : #'Metacello-Gitlab-Tests' }
+Package { #name : 'Metacello-Gitlab-Tests' }

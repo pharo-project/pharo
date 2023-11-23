@@ -8,26 +8,28 @@ Instance Variables:
 
 "
 Class {
-	#name : #RBCascadeNode,
-	#superclass : #RBValueNode,
+	#name : 'RBCascadeNode',
+	#superclass : 'RBValueNode',
 	#instVars : [
 		'messages',
 		'semicolons'
 	],
-	#category : #'AST-Core-Nodes'
+	#category : 'AST-Core-Nodes',
+	#package : 'AST-Core',
+	#tag : 'Nodes'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBCascadeNode class >> messages: messageNodes [
 	^self new messages: messageNodes
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBCascadeNode class >> messages: messageNodes semicolons: integerCollection [
 	^self new messages: messageNodes semicolons: integerCollection
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 RBCascadeNode >> = anObject [
 	self == anObject ifTrue: [^true].
 	self class = anObject class ifFalse: [^false].
@@ -36,12 +38,12 @@ RBCascadeNode >> = anObject [
 	^true
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RBCascadeNode >> acceptVisitor: aProgramNodeVisitor [
 	^ aProgramNodeVisitor visitCascadeNode: self
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 RBCascadeNode >> bestNodeFor: anInterval [
 	| selectedChildren |
 	(self intersectsInterval: anInterval) ifFalse: [ ^nil ] .
@@ -54,24 +56,24 @@ RBCascadeNode >> bestNodeFor: anInterval [
 	^selectedChildren detect: [:each | true] ifNone: [nil]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCascadeNode >> children [
 	^ messages
 ]
 
-{ #category : #matching }
+{ #category : 'matching' }
 RBCascadeNode >> copyInContext: aDictionary [
 	^ self class new
 		messages: (self copyList: self messages inContext: aDictionary);
 		yourself
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBCascadeNode >> directlyUses: aNode [
 	^messages last = aNode and: [self isDirectlyUsed]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 RBCascadeNode >> equalTo: anObject withMapping: aDictionary [
 	self class = anObject class ifFalse: [^false].
 	self messages size = anObject messages size ifFalse: [^false].
@@ -81,28 +83,23 @@ RBCascadeNode >> equalTo: anObject withMapping: aDictionary [
 	^true
 ]
 
-{ #category : #'fluid parser' }
-RBCascadeNode >> handleMetaclassName: aCDFluidClassDefinitionParser [
-	aCDFluidClassDefinitionParser handleMetaclassNameFromCascade: self
-]
-
-{ #category : #comparing }
+{ #category : 'comparing' }
 RBCascadeNode >> hash [
 	^ self hashForCollection: self messages
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBCascadeNode >> isCascade [
 	^true
 ]
 
-{ #category : #errors }
+{ #category : 'errors' }
 RBCascadeNode >> isFaulty [
 	self isError ifTrue: [ ^ true ].
 	^self messages anySatisfy: [:each | each isFaulty ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCascadeNode >> leftmostChainReceiver [
 
 	^ self receiver isMessage
@@ -110,7 +107,7 @@ RBCascadeNode >> leftmostChainReceiver [
 		ifFalse: [ self receiver ]
 ]
 
-{ #category : #matching }
+{ #category : 'matching' }
 RBCascadeNode >> match: aNode inContext: aDictionary [
 	aNode class = self class ifFalse: [^false].
 	^self
@@ -119,74 +116,74 @@ RBCascadeNode >> match: aNode inContext: aDictionary [
 		inContext: aDictionary
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCascadeNode >> messages [
 	^messages
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCascadeNode >> messages: messageNodeCollection [
 	messages := messageNodeCollection.
 	messages do: [:each | each parent: self]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBCascadeNode >> messages: messageNodes semicolons: integerCollection [
 	self messages: messageNodes.
 	semicolons := integerCollection
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBCascadeNode >> needsParenthesis [
 	^parent
 		ifNil: [false]
 		ifNotNil: [self precedence > parent precedence]
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 RBCascadeNode >> postCopy [
 	super postCopy.
 	self messages: (self messages collect: [ :each | each copy ])
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCascadeNode >> precedence [
 	^4
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCascadeNode >> receiver [
 	^self messages first receiver
 ]
 
-{ #category : #'adding-removing' }
+{ #category : 'adding-removing' }
 RBCascadeNode >> removeNode: aNode [
 
 	self messages remove: aNode ifAbsent: [ ]
 ]
 
-{ #category : #replacing }
+{ #category : 'replacing' }
 RBCascadeNode >> replaceNode: aNode withNode: anotherNode [
 	self messages: (messages
 				collect: [:each | each == aNode ifTrue: [anotherNode] ifFalse: [each]])
 ]
 
-{ #category : #'accessing - token' }
+{ #category : 'accessing - token' }
 RBCascadeNode >> semicolons [
 	^ semicolons
 ]
 
-{ #category : #'accessing - token' }
+{ #category : 'accessing - token' }
 RBCascadeNode >> semicolons: anArray [
 	semicolons := anArray
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCascadeNode >> startWithoutParentheses [
 	^messages first start
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCascadeNode >> statementComments [
 	| statementComments |
 	statementComments := OrderedCollection withAll: self comments.
@@ -198,17 +195,17 @@ RBCascadeNode >> statementComments [
 	^statementComments asSortedCollection: [:a :b | a start < b start]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCascadeNode >> stopWithoutParentheses [
 	^messages last stop
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBCascadeNode >> uses: aNode [
 	^messages last = aNode and: [self isUsed]
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 RBCascadeNode >> whichNodeIsContainedBy: anInterval [
 	| selectedChildren |
 	(self intersectsInterval: anInterval) ifFalse: [^nil].

@@ -49,37 +49,39 @@ filter
 	
 "
 Class {
-	#name : #PragmaCollector,
-	#superclass : #Model,
+	#name : 'PragmaCollector',
+	#superclass : 'Model',
 	#instVars : [
 		'collected',
 		'filter',
 		'announcing',
 		'selectors'
 	],
-	#category : #'PragmaCollector-Base'
+	#category : 'PragmaCollector-Base',
+	#package : 'PragmaCollector',
+	#tag : 'Base'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 PragmaCollector class >> filter: aOneArgValuable [
 	"Create a PragmaCollector that filters all system pragmas"
 	"Note: If you know whoch pragma selectors are interesting, better use selectors:filter: to create the instance, this avoids the need to iterate over all Pragmas"
 	^ self new filter: aOneArgValuable
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 PragmaCollector class >> selectors: anArray [
 	"Create a PragmaCollector that looks for Pragmas with the specified selectors"
 	^ self new selectors: anArray
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 PragmaCollector class >> selectors: anArray filter: aBlock [
 	"Create a PragmaCollector that looks for Pragmas with the specified selectors, filter using aBlock"
 	^ (self new selectors: anArray) filter: aBlock
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 PragmaCollector >> addPragma: aPragma [
 	"if aPragma is to be kept, then add it and announce"
 	(self keepPragma: aPragma) ifFalse: [ ^ self ].
@@ -87,7 +89,7 @@ PragmaCollector >> addPragma: aPragma [
 	self announce: (PragmaAdded pragma: aPragma)
 ]
 
-{ #category : #'system changes' }
+{ #category : 'system changes' }
 PragmaCollector >> addedEventOccurs: anEvent [
 	"method adding event occured: if the
 	concerned method contains a pragma then
@@ -97,19 +99,19 @@ PragmaCollector >> addedEventOccurs: anEvent [
 		do: [ :pragma | self addPragma: pragma ]
 ]
 
-{ #category : #subscription }
+{ #category : 'subscription' }
 PragmaCollector >> announce: anAnnouncement [
 	"see Announcements packages"
 
 	self announcing ifTrue:	[ self announcer announce: anAnnouncement ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PragmaCollector >> announcing [
 	^ announcing ifNil: [ announcing := true ]
 ]
 
-{ #category : #'system changes' }
+{ #category : 'system changes' }
 PragmaCollector >> classRemovedEventOccurs: anEvent [
 	"a class has been removed: first see if the class is not my class
 	because then I must be unplugged from system event notifications"
@@ -120,77 +122,77 @@ PragmaCollector >> classRemovedEventOccurs: anEvent [
 		do: [:handler | self removePragma: handler]
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 PragmaCollector >> collect: aBlock [
 	^ self collected collect: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PragmaCollector >> collected [
 	^ collected ifNil: [collected := OrderedCollection new]
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 PragmaCollector >> detect: aBlock [
 	^ self collected detect: aBlock ifNone:[]
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 PragmaCollector >> do: aBlock [
 	self collected do: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PragmaCollector >> filter [
 	^ filter ifNil: [filter := [:prg | true]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PragmaCollector >> filter: aOneArgValuable [
 	filter := aOneArgValuable
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 PragmaCollector >> ifNotEmpty: aBlock [
 	self collected ifNotEmpty: aBlock
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PragmaCollector >> initialize [
 	super initialize.
 	self installSystemNotifications
 ]
 
-{ #category : #'system changes' }
+{ #category : 'system changes' }
 PragmaCollector >> installSystemNotifications [
 	"Allows myself to be kept up-to-date regarding system changes"
 
-	SystemAnnouncer uniqueInstance unsubscribe: self.
+	self noMoreNotifications.
 
-	SystemAnnouncer uniqueInstance weak
-			when: ClassRemoved send: #classRemovedEventOccurs: to: self;
-			when: MethodRemoved send: #removedEventOccurs: to: self;
-			when: MethodAdded send: #addedEventOccurs: to: self;
-			when: MethodModified send: #modifiedEventOccurs: to: self
+	self class codeChangeAnnouncer weak
+		when: ClassRemoved send: #classRemovedEventOccurs: to: self;
+		when: MethodRemoved send: #removedEventOccurs: to: self;
+		when: MethodAdded send: #addedEventOccurs: to: self;
+		when: MethodModified send: #modifiedEventOccurs: to: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 PragmaCollector >> isEmpty [
 	^ self collected isEmpty
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 PragmaCollector >> isNotEmpty [
 	^ self collected isNotEmpty
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 PragmaCollector >> keepPragma: aPragma [
 	(selectors notNil and: [(selectors includes: aPragma selector) not ]) ifTrue: [ ^ false ].
 	^ self filter value: aPragma
 ]
 
-{ #category : #'system changes' }
+{ #category : 'system changes' }
 PragmaCollector >> modifiedEventOccurs: anEvent [
 	"
 	a method has been updated: try to update an handler:
@@ -217,7 +219,7 @@ PragmaCollector >> modifiedEventOccurs: anEvent [
 		ifNotNil: [ :found | self removePragma: found ]
 ]
 
-{ #category : #'system changes' }
+{ #category : 'system changes' }
 PragmaCollector >> noMoreAnnounceWhile: aBlock [
 	"unplug the announcer during aBlock"
 	| oldAnnouncing |
@@ -227,25 +229,26 @@ PragmaCollector >> noMoreAnnounceWhile: aBlock [
 		ensure: [announcing := oldAnnouncing]
 ]
 
-{ #category : #'system changes' }
+{ #category : 'system changes' }
 PragmaCollector >> noMoreNotifications [
 	"Do not receiver any system change notification anymore"
-	SystemAnnouncer uniqueInstance unsubscribe: self
+
+	self class codeChangeAnnouncer unsubscribe: self
 ]
 
-{ #category : #'system changes' }
+{ #category : 'system changes' }
 PragmaCollector >> noMoreNotificationsWhile: aBlock [
 	"don not receive any system change notification during aBloc"
 	self noMoreNotifications.
 	[ aBlock value ] ensure: [ self installSystemNotifications ]
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 PragmaCollector >> noneSatisfy: aBlock [
 	^ self collected noneSatisfy: aBlock
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 PragmaCollector >> pragmaWithSelector: aSelector inClass: aClass [
 	"return the handler corresponding to a pragma method which selector is aSelector in class aClass"
 
@@ -253,25 +256,25 @@ PragmaCollector >> pragmaWithSelector: aSelector inClass: aClass [
 		detect: [ :prag | prag methodClass = aClass and: [ prag methodSelector = aSelector ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PragmaCollector >> pragmas [
 	^ selectors
 		ifNil: [ Pragma all ]
 		ifNotNil: [ selectors flatCollect: [:each | Pragma allNamed: each ] ]
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 PragmaCollector >> pragmasOfClass: aClass [
 	"return all handlers of class aClass"
 	^ self	select: [:prag | prag methodClass = aClass ]
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 PragmaCollector >> reject: aBlock [
 	^ self collected reject: aBlock
 ]
 
-{ #category : #'dependents access' }
+{ #category : 'dependents access' }
 PragmaCollector >> release [
 	self noMoreNotifications.
 	self destroyAnnouncer.
@@ -279,14 +282,14 @@ PragmaCollector >> release [
 	super release
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 PragmaCollector >> removePragma: aPragma [
 	"remove an handler an announce it"
 	self collected remove: aPragma ifAbsent: [].
 	self announce: (PragmaRemoved pragma: aPragma)
 ]
 
-{ #category : #'system changes' }
+{ #category : 'system changes' }
 PragmaCollector >> removedEventOccurs: anEvent [
 	"a method has been removed, remove any corresponding handler if found"
 
@@ -297,7 +300,7 @@ PragmaCollector >> removedEventOccurs: anEvent [
 		ifNotNil: [ :found | self removePragma: found ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PragmaCollector >> reset [
 	"reinitialize current system settings"
 	self
@@ -308,48 +311,48 @@ PragmaCollector >> reset [
 	self announce: (PragmaCollectorReset collector: self)
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 PragmaCollector >> select: aBlock [
 	^ self collected select: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PragmaCollector >> selectors [
 	^selectors
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PragmaCollector >> selectors: anArray [
 	selectors := anArray
 ]
 
-{ #category : #subscription }
+{ #category : 'subscription' }
 PragmaCollector >> unsubscribe: anObject [
 	"see Announcements packages"
 	self announcer unsubscribe: anObject
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 PragmaCollector >> updatePragma: aPragma [
 	"only announce that the pragma has been updated"
 	self announcer announce: (PragmaUpdated pragma: aPragma)
 ]
 
-{ #category : #subscription }
+{ #category : 'subscription' }
 PragmaCollector >> when: anAnnouncement send: aSelector to: anObject [
 	"see Announcements packages"
 
 	self announcer when: anAnnouncement send: aSelector to: anObject
 ]
 
-{ #category : #subscription }
+{ #category : 'subscription' }
 PragmaCollector >> whenChangedSend: aSelector to: anObject [
 	"record a change listener"
 
 	self when: PragmaAnnouncement send: aSelector to: anObject
 ]
 
-{ #category : #subscription }
+{ #category : 'subscription' }
 PragmaCollector >> whenResetSend: aSelector to: anObject [
 	"record a change listener"
 

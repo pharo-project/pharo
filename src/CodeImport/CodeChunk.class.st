@@ -2,78 +2,80 @@
 I'm the abstract superclass of all the code declarations that should exist in an exported file.
 "
 Class {
-	#name : #CodeChunk,
-	#superclass : #Object,
+	#name : 'CodeChunk',
+	#superclass : 'Object',
 	#instVars : [
 		'contents'
 	],
-	#category : #'CodeImport-Chunks'
+	#category : 'CodeImport-Chunks',
+	#package : 'CodeImport',
+	#tag : 'Chunks'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CodeChunk class >> contents: someContents [
 	^self new
 			contents: someContents;
 			yourself
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CodeChunk class >> isAbstract [
 
 	^ self == CodeChunk
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 CodeChunk >> accept: aVisitor [
 
 	^ aVisitor visitCodeChunk: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CodeChunk >> contents [
 	^ contents
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CodeChunk >> contents: anObject [
 	contents := anObject
 ]
 
-{ #category : #importing }
+{ #category : 'importing' }
 CodeChunk >> import [
 	self importFor: nil logSource: true
 ]
 
-{ #category : #importing }
+{ #category : 'importing' }
 CodeChunk >> importFor: aRequestor logSource: logSource [
 	self import
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CodeChunk >> isClassCommentDeclaration [
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CodeChunk >> isClassOrganizationDeclaration [
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CodeChunk >> isDoItDeclaration [
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CodeChunk >> isMethodDeclaration [
 
 	^ false
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 CodeChunk >> printOn: aStream [
 	super printOn: aStream.
 	aStream nextPut: $(.

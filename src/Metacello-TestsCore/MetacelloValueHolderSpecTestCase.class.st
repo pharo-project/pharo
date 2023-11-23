@@ -1,10 +1,12 @@
 Class {
-	#name : #MetacelloValueHolderSpecTestCase,
-	#superclass : #MetacelloSpecTestCase,
-	#category : #'Metacello-TestsCore-Specs'
+	#name : 'MetacelloValueHolderSpecTestCase',
+	#superclass : 'MetacelloSpecTestCase',
+	#category : 'Metacello-TestsCore-Specs',
+	#package : 'Metacello-TestsCore',
+	#tag : 'Specs'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloValueHolderSpecTestCase >> testValueHolderMergeSpec [
 	| valueHolderA valueHolderB valueHolder |
 	valueHolderA := self valueHolderSpec
@@ -17,7 +19,7 @@ MetacelloValueHolderSpecTestCase >> testValueHolderMergeSpec [
 	self assert: valueHolder value equals: 1.1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloValueHolderSpecTestCase >> testValueHolderSpec [
 	| valueHolder |
 	valueHolder := self valueHolderSpec

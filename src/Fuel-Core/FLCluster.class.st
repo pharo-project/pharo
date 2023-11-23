@@ -2,24 +2,26 @@
 I represent a cluster of objects grouped by some specific similarity. I know how to serialize and materialize them all together.
 "
 Class {
-	#name : #FLCluster,
-	#superclass : #Object,
-	#category : #'Fuel-Core-Clusters'
+	#name : 'FLCluster',
+	#superclass : 'Object',
+	#category : 'Fuel-Core-Clusters',
+	#package : 'Fuel-Core',
+	#tag : 'Clusters'
 }
 
-{ #category : #analyzing }
+{ #category : 'analyzing' }
 FLCluster class >> clusterBucketIn: aClusterization [
 	"Answer in which clusters bucket place this cluster. This defines the sort order in which the clusters will be ordered. See FLAnalyzer >> clusteredObjects for more information."
 
 	self subclassResponsibility
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FLCluster class >> new [
 	self error: 'Use another instance creation message.'
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FLCluster class >> newAnalyzing [
 
 	^ self basicNew
@@ -27,7 +29,7 @@ FLCluster class >> newAnalyzing [
 		yourself.
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FLCluster class >> newMaterializing [
 
 	^ self basicNew
@@ -35,84 +37,84 @@ FLCluster class >> newMaterializing [
 		yourself.
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLCluster >> afterMaterializationStepWith: aDecoder [
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLCluster >> clusterMaterializeStepWith: aDecoder [
 	"Materialize cluster stuff"
 ]
 
-{ #category : #analyzing }
+{ #category : 'analyzing' }
 FLCluster >> clusterReferencesDo: aBlock [
 	"Evaluate a block with each object referenced by the cluster"
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLCluster >> clusterSerializeStepWith: anEncoder [
 	"Serialize cluster stuff"
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 FLCluster >> fuelAccept: aGeneralMapper [
 	^ aGeneralMapper visitSubstitution: self by: nil
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 FLCluster >> initializeAnalyzing [
 
 	self initialize.
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 FLCluster >> initializeMaterializing [
 
 	self initialize.
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLCluster >> materializeInstancesStepWith: aDecoder [
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLCluster >> materializePostInstancesStepWith: aDecoder [
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLCluster >> materializeReferencesStepWith: aDecoder [
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLCluster >> objects [
 	"Answer the objects that this cluster groups."
 
 	self subclassResponsibility
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLCluster >> prepareObjectsStep [
 	"Prepare for Fuel serialization."
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLCluster >> registerIndexesOn: anEncoder [
 	"Maps objects with indexes in the dictionary."
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLCluster >> serializeInstancesStepWith: anEncoder [
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLCluster >> serializePostInstancesStepWith: anEncoder [
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLCluster >> serializeReferencesStepWith: anEncoder [
 ]
 
-{ #category : #analyzing }
+{ #category : 'analyzing' }
 FLCluster >> traceWith: anAnalysis [ 
 
 	self clusterReferencesDo: [ :aChild | anAnalysis privateTrace: aChild ]

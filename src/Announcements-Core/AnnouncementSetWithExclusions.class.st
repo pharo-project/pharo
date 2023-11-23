@@ -13,15 +13,17 @@ Internal Representation and Key Implementation Points.
 	exclusions:		<OrderedCollection>
 "
 Class {
-	#name : #AnnouncementSetWithExclusions,
-	#superclass : #AnnouncementSet,
+	#name : 'AnnouncementSetWithExclusions',
+	#superclass : 'AnnouncementSet',
 	#instVars : [
 		'exclusions'
 	],
-	#category : #'Announcements-Core-Collections'
+	#category : 'Announcements-Core-Collections',
+	#package : 'Announcements-Core',
+	#tag : 'Collections'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 AnnouncementSetWithExclusions >> addExclusion: anAnnouncement [
 	"Add anAnnouncement as an exclusion to me.
 	I will explicitly not handle my exclusion announcements."
@@ -29,7 +31,7 @@ AnnouncementSetWithExclusions >> addExclusion: anAnnouncement [
 	^ exclusions add: anAnnouncement
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 AnnouncementSetWithExclusions >> handlesAnnouncement: anAnnouncement [
 	"Return true when I will handle anAnnouncement.
 	I extend my superclass behavior by explicitly
@@ -39,14 +41,14 @@ AnnouncementSetWithExclusions >> handlesAnnouncement: anAnnouncement [
 			and: [ exclusions noneSatisfy: [ :each | each handlesAnnouncement: anAnnouncement ] ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AnnouncementSetWithExclusions >> initialize [
 
 	super initialize.
 	exclusions := OrderedCollection new
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AnnouncementSetWithExclusions >> initialize: aNumber [
 
 	super initialize: aNumber.

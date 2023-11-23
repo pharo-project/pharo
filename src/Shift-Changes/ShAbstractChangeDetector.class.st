@@ -9,42 +9,46 @@ I am responsible of adding the changes to the builder..
 Check the initialization of the builder in the ShiftClassBuilder and in the ShDefaultBuilderEnhancer to see when the comparers are registered in the Shift class builder.
 "
 Class {
-	#name : #ShAbstractChangeDetector,
-	#superclass : #Object,
+	#name : 'ShAbstractChangeDetector',
+	#superclass : 'Object',
 	#instVars : [
 		'builder'
 	],
-	#category : #'Shift-Changes'
+	#category : 'Shift-Changes',
+	#package : 'Shift-Changes'
 }
 
-{ #category : #comparing }
-ShAbstractChangeDetector class >> compareClass: oldClass with: aBuilder [
-	| aComparer changes |
-	aComparer := self new.
-	aComparer builder: aBuilder.
+{ #category : 'comparing' }
+ShAbstractChangeDetector class >> builder: aBuilder [
 
-	changes := aComparer compareClass.
-
-	changes do:[:e | aBuilder addChange: e]
+	^ self new
+		  builder: aBuilder;
+		  yourself
 ]
 
-{ #category : #testing }
+{ #category : 'comparing' }
+ShAbstractChangeDetector class >> compareClass: oldClass with: aBuilder [
+
+	(self builder: aBuilder) compareClass do: [ :change | aBuilder addChange: change ]
+]
+
+{ #category : 'testing' }
 ShAbstractChangeDetector class >> isAbstract [
 
 	^ self == ShAbstractChangeDetector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ShAbstractChangeDetector >> builder [
 	^ builder
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ShAbstractChangeDetector >> builder: anObject [
 	builder := anObject
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ShAbstractChangeDetector >> compareClass [
 	^ self subclassResponsibility
 ]

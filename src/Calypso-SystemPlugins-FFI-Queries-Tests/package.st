@@ -1,1 +1,1 @@
-Package { #name : #'Calypso-SystemPlugins-FFI-Queries-Tests' }
+Package { #name : 'Calypso-SystemPlugins-FFI-Queries-Tests' }

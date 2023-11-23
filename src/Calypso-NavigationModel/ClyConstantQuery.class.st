@@ -16,39 +16,41 @@ Internal Representation and Key Implementation Points.
 
 "
 Class {
-	#name : #ClyConstantQuery,
-	#superclass : #ClyTypedQuery,
+	#name : 'ClyConstantQuery',
+	#superclass : 'ClyTypedQuery',
 	#instVars : [
 		'resultItems'
 	],
-	#category : #'Calypso-NavigationModel-Query'
+	#category : 'Calypso-NavigationModel-Query',
+	#package : 'Calypso-NavigationModel',
+	#tag : 'Query'
 }
 
-{ #category : #'items type' }
+{ #category : 'items type' }
 ClyConstantQuery class >> resultItemsType [
 	self shouldNotImplement
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyConstantQuery class >> returning: objects [
 	^self new
 		resultItems: objects
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyConstantQuery class >> returning: objects as: aQueryResult [
 	^self new
 		resultItems: objects;
 		requiredResult: aQueryResult
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyConstantQuery class >> returning: objects from: aScope [
 	^(self from: aScope)
 		resultItems: objects
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ClyConstantQuery >> = anObject [
 	"Answer whether the receiver and anObject represent the same object."
 
@@ -58,32 +60,32 @@ ClyConstantQuery >> = anObject [
 	^ resultItems = anObject resultItems
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ClyConstantQuery >> async [
 	^self
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyConstantQuery >> buildResult: aQueryResult [
 	aQueryResult fillWith: resultItems
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyConstantQuery >> checkEmptyResult [
 	^resultItems isEmpty
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyConstantQuery >> collectMetadataOf: aQueryResult by: anEnvironmentPlugin [
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyConstantQuery >> description [
 
 	^', ' join: (resultItems collect: [:each | each printAsConstantQueryItem])
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyConstantQuery >> execute [
 	| result |
 	result := self prepareNewResult.
@@ -92,52 +94,52 @@ ClyConstantQuery >> execute [
 	^result
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyConstantQuery >> fullDescription [
 	"Constant query do not depends on scope. And in many cases it is default empty scope.
 	So scope here is useless and confusing information. And we just return simple description"
 	^self description
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ClyConstantQuery >> hash [
 	"Answer an integer value that is related to the identity of the receiver."
 
 	^super hash bitXor: resultItems hash
 ]
 
-{ #category : #'system changes' }
+{ #category : 'system changes' }
 ClyConstantQuery >> isResult: aQueryResult affectedBy: aSystemAnnouncement [
 	^false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyConstantQuery >> resultItems [
 	^ resultItems
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyConstantQuery >> resultItems: anObject [
 	resultItems := anObject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyConstantQuery >> retrievesItem: anObject [
 	^resultItems includes: anObject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyConstantQuery >> retrievesItemsOfType: itemTypeClass [
 	^resultItems anySatisfy: [ :each |
 		each calypsoEnvironmentType = itemTypeClass  ]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ClyConstantQuery >> semiAsync [
 	^self
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ClyConstantQuery >> withMetaLevelScope: aScopeClass [
 	^self withScope: (scope withMetaLevel: aScopeClass)
 ]

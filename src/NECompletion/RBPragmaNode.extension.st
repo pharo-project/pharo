@@ -1,6 +1,6 @@
-Extension { #name : #RBPragmaNode }
+Extension { #name : 'RBPragmaNode' }
 
-{ #category : #'*NECompletion' }
+{ #category : '*NECompletion' }
 RBPragmaNode >> completionEntries: offset [
 	^Symbol allSymbols
 		select: [ :each | each beginsWith: self selector]

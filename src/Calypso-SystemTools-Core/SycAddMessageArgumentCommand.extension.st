@@ -1,6 +1,6 @@
-Extension { #name : #SycAddMessageArgumentCommand }
+Extension { #name : 'SycAddMessageArgumentCommand' }
 
-{ #category : #'*Calypso-SystemTools-Core' }
+{ #category : '*Calypso-SystemTools-Core' }
 SycAddMessageArgumentCommand class >> methodContextMenuActivation [
 	<classAnnotation>
 

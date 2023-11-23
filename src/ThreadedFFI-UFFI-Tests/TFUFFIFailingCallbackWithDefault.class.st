@@ -2,24 +2,25 @@
 I am a failing callback with default value for test usage only
 "
 Class {
-	#name : #TFUFFIFailingCallbackWithDefault,
-	#superclass : #TFUFFIAbstractCallback,
-	#category : #'ThreadedFFI-UFFI-Tests'
+	#name : 'TFUFFIFailingCallbackWithDefault',
+	#superclass : 'TFUFFIAbstractCallback',
+	#category : 'ThreadedFFI-UFFI-Tests',
+	#package : 'ThreadedFFI-UFFI-Tests'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TFUFFIFailingCallbackWithDefault >> initialize [
 
 	self signature: #(int (int)) block: [ :a | self error: 'An error in a callback' ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TFUFFIFailingCallbackWithDefault >> returnOnError [
 
 	^ -1
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TFUFFIFailingCallbackWithDefault >> shouldDebugExceptions [
 
 	^ false

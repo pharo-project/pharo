@@ -7,8 +7,8 @@ LastContact		Time of that contact (totalSeconds).
 haveNetwork	returns true, false, or #expired.  True means there was contact in the last 30 minutes.  False means contact failed or was false last time we asked.  Get out of false state by making contact with a server in some way (FileList or updates).
 "
 Class {
-	#name : #NetNameResolver,
-	#superclass : #Object,
+	#name : 'NetNameResolver',
+	#superclass : 'Object',
 	#classVars : [
 		'DefaultHostName',
 		'HaveNetwork',
@@ -19,15 +19,17 @@ Class {
 		'ResolverSemaphore',
 		'ResolverUninitialized'
 	],
-	#category : #'Network-Kernel-Base'
+	#category : 'Network-Kernel-Base',
+	#package : 'Network-Kernel',
+	#tag : 'Base'
 }
 
-{ #category : #lookups }
+{ #category : 'lookups' }
 NetNameResolver class >> addressForName: aString [
 	^self addressForName: aString timeout: 60
 ]
 
-{ #category : #lookups }
+{ #category : 'lookups' }
 NetNameResolver class >> addressForName: hostName timeout: secs [
 	"Look up the given host name and return its address. Return nil if the address is not found in the given number of seconds."
 	"NetNameResolver addressForName: 'create.ucsb.edu' timeout: 30"
@@ -56,7 +58,7 @@ NetNameResolver class >> addressForName: hostName timeout: secs [
 	^ result asSocketAddress
 ]
 
-{ #category : #'address string utils' }
+{ #category : 'address string utils' }
 NetNameResolver class >> addressFromIPv6String: aString [
 	"Return a ByteArray corresponding to an IPv6 address in text format"
 	| stream headStream headBytes tailStream tailBytes hextets |
@@ -85,11 +87,14 @@ NetNameResolver class >> addressFromIPv6String: aString [
 	^ headBytes,tailBytes
 ]
 
-{ #category : #'address string utils' }
+{ #category : 'address string utils' }
 NetNameResolver class >> addressFromString: addressString [
 	"Return the internet address represented by the given string. The string should contain four positive decimal integers delimited by periods, commas, or spaces, where each integer represents one address byte. Return nil if the string is not a host address in an acceptable format."
+
 	"NetNameResolver addressFromString: '1.2.3.4'"
+
 	"NetNameResolver addressFromString: '1,2,3,4'"
+
 	"NetNameResolver addressFromString: '1 2 3 4'"
 
 	| newAddr s byte delimiter |
@@ -101,18 +106,16 @@ NetNameResolver class >> addressFromString: addressString [
 	newAddr := ByteArray new: 4.
 	s := ReadStream on: addressString.
 	s skipSeparators.
-	1 to: 4 do: [:i |
-		byte := self readDecimalByteFrom: s.
-		byte = nil ifTrue: [^ nil].
+	1 to: 4 do: [ :i |
+		byte := (self readDecimalByteFrom: s) ifNil: [ ^ nil ].
 		newAddr at: i put: byte.
 		i < 4 ifTrue: [
 			delimiter := s next.
-			((delimiter = $.) or: [(delimiter = $,) or: [delimiter = $ ]])
-				ifFalse: [^ nil]]].
+			(delimiter = $. or: [ delimiter = $, or: [ delimiter = $  ] ]) ifFalse: [ ^ nil ] ] ].
 	^ newAddr
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 NetNameResolver class >> findLongestIPv6ZerosIn: aCollection [
 	"Given a collection of Integers, find the longest (or leftmost)
 	range of contiguous consecutive zero values (if any).
@@ -177,7 +180,7 @@ NetNameResolver class >> findLongestIPv6ZerosIn: aCollection [
 	^ ranges at: firstLargest
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 NetNameResolver class >> initialize [
 	"Note: On the Mac, the name resolver is asynchronous, but can only handle one request at a time. On other platforms, such as Unix, the resolver is synchronous; a call to, say, the name lookup primitive will block all image processes until it returns."
 
@@ -193,7 +196,7 @@ NetNameResolver class >> initialize [
 	ResolverMutex := Mutex new
 ]
 
-{ #category : #'network initialization' }
+{ #category : 'network initialization' }
 NetNameResolver class >> initializeNetwork [
 	"Initialize the network drivers and record the semaphore to be used by the resolver. Do nothing if the network is already initialized.."
 	"NetNameResolver initializeNetwork"
@@ -223,7 +226,7 @@ NetNameResolver class >> initializeNetwork [
 	^successful or: [NoNetworkError signal: 'failed network initialization']
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 NetNameResolver class >> isConnected [
 	"Dirty, but avoids fixing the plugin bug"
 
@@ -233,7 +236,7 @@ NetNameResolver class >> isConnected [
 	^ true
 ]
 
-{ #category : #lookups }
+{ #category : 'lookups' }
 NetNameResolver class >> localAddressString [
 	"Return a string representing the local host address as four decimal bytes delimited with decimal points."
 	"NetNameResolver localAddressString"
@@ -241,7 +244,7 @@ NetNameResolver class >> localAddressString [
 	^ NetNameResolver stringFromAddress: NetNameResolver localHostAddress
 ]
 
-{ #category : #lookups }
+{ #category : 'lookups' }
 NetNameResolver class >> localHostAddress [
 	"Return the local address of this host."
 	"NetNameResolver localHostAddress"
@@ -254,7 +257,7 @@ NetNameResolver class >> localHostAddress [
 	^ (primAddress = #[0 0 0 0] ifTrue: [ #[127 0 0 1] ] ifFalse: [ primAddress ]) asSocketAddress
 ]
 
-{ #category : #lookups }
+{ #category : 'lookups' }
 NetNameResolver class >> localHostName [
 	"Return the local name of this host."
 
@@ -269,17 +272,17 @@ NetNameResolver class >> localHostName [
 		do: [ self loopBackName ]
 ]
 
-{ #category : #lookups }
+{ #category : 'lookups' }
 NetNameResolver class >> loopBackAddress [
 	^self addressForName: self loopBackName
 ]
 
-{ #category : #lookups }
+{ #category : 'lookups' }
 NetNameResolver class >> loopBackName [
 	^'localhost'
 ]
 
-{ #category : #lookups }
+{ #category : 'lookups' }
 NetNameResolver class >> nameForAddress: hostAddress timeout: secs [
 	"Look up the given host address and return its name. Return nil if the lookup fails or is not completed in the given number of seconds. Depends on the given host address being known to the gateway, which may not be the case for dynamically allocated addresses."
 	"NetNameResolver
@@ -302,7 +305,7 @@ NetNameResolver class >> nameForAddress: hostAddress timeout: secs [
 	^result
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 NetNameResolver class >> primAbortLookup [
 	"Abort the current lookup operation, freeing the name resolver for the next query."
 
@@ -310,7 +313,7 @@ NetNameResolver class >> primAbortLookup [
 	self primitiveFailed
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 NetNameResolver class >> primAddressLookupResult [
 	"Return the host name found by the last host address lookup. Returns nil if the last lookup was unsuccessful."
 
@@ -318,98 +321,98 @@ NetNameResolver class >> primAddressLookupResult [
 	self primitiveFailed
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 NetNameResolver class >> primGetAddressInfoFamily [
 
 	<primitive: 'primitiveResolverGetAddressInfoFamily' module: 'SocketPlugin'>
 	self primitiveFailed
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 NetNameResolver class >> primGetAddressInfoHost: hostName service: servName flags: flags family: family type: type protocol: protocol [
 
 	<primitive: 'primitiveResolverGetAddressInfo' module: 'SocketPlugin'>
 	self primitiveFailed
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 NetNameResolver class >> primGetAddressInfoNext [
 
 	<primitive: 'primitiveResolverGetAddressInfoNext' module: 'SocketPlugin'>
 	self primitiveFailed
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 NetNameResolver class >> primGetAddressInfoProtocol [
 
 	<primitive: 'primitiveResolverGetAddressInfoProtocol' module: 'SocketPlugin'>
 	self primitiveFailed
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 NetNameResolver class >> primGetAddressInfoResult: socketAddress [
 
 	<primitive: 'primitiveResolverGetAddressInfoResult' module: 'SocketPlugin'>
 	self primitiveFailed
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 NetNameResolver class >> primGetAddressInfoSize [
 
 	<primitive: 'primitiveResolverGetAddressInfoSize' module: 'SocketPlugin'>
 	self primitiveFailed
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 NetNameResolver class >> primGetAddressInfoType [
 
 	<primitive: 'primitiveResolverGetAddressInfoType' module: 'SocketPlugin'>
 	self primitiveFailed
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 NetNameResolver class >> primGetNameInfoHostResult: aString [
 
  	<primitive: 'primitiveResolverGetNameInfoHostResult' module: 'SocketPlugin'>
  	self primitiveFailed
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 NetNameResolver class >> primGetNameInfoHostSize [
 
  	<primitive: 'primitiveResolverGetNameInfoHostSize' module: 'SocketPlugin'>
  	self primitiveFailed
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 NetNameResolver class >> primGetNameInfoServiceResult: aString [
 
  	<primitive: 'primitiveResolverGetNameInfoServiceResult' module: 'SocketPlugin'>
  	self primitiveFailed
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 NetNameResolver class >> primGetNameInfoServiceSize [
 
  	<primitive: 'primitiveResolverGetNameInfoServiceSize' module: 'SocketPlugin'>
  	self primitiveFailed
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 NetNameResolver class >> primHostNameResult: aString [
 
  	<primitive: 'primitiveResolverHostNameResult' module: 'SocketPlugin'>
  	self primitiveFailed
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 NetNameResolver class >> primHostNameSize [
 
  	<primitive: 'primitiveResolverHostNameSize' module: 'SocketPlugin'>
  	self primitiveFailed
 ]
 
-{ #category : #'network initialization' }
+{ #category : 'network initialization' }
 NetNameResolver class >> primInitializeNetwork: resolverSemaIndex [
 	"Initialize the network drivers on platforms that need it, such as the Macintosh, and return nil if network initialization failed or the reciever if it succeeds. Since mobile computers may not always be connected to a network, this method should NOT be called automatically at startup time; rather, it should be called when first starting a networking application. It is a noop if the network driver has already been initialized. If non-zero, resolverSemaIndex is the index of a VM semaphore to be associated with the network name resolver. This semaphore will be signalled when the resolver status changes, such as when a name lookup query is completed."
 	"Note: some platforms (e.g., Mac) only allow only one name lookup query at a time, so a manager process should be used to serialize resolver lookup requests."
@@ -418,7 +421,7 @@ NetNameResolver class >> primInitializeNetwork: resolverSemaIndex [
 	^ nil  "return nil if primitive fails"
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 NetNameResolver class >> primLocalAddress [
 	"Return the local address of this host."
 
@@ -426,7 +429,7 @@ NetNameResolver class >> primLocalAddress [
 	self primitiveFailed
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 NetNameResolver class >> primNameLookupResult [
 	"Return the host address found by the last host name lookup. Returns nil if the last lookup was unsuccessful."
 
@@ -434,7 +437,7 @@ NetNameResolver class >> primNameLookupResult [
 	self primitiveFailed
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 NetNameResolver class >> primNameResolverError [
 	"Return an integer reflecting the error status of the last network name resolver request. Zero means no error."
 
@@ -442,7 +445,7 @@ NetNameResolver class >> primNameResolverError [
 	self primitiveFailed
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 NetNameResolver class >> primNameResolverStatus [
 	"Return an integer reflecting the status of the network name resolver. For a list of possible values, see the comment in the 'initialize' method of this class."
 
@@ -450,7 +453,7 @@ NetNameResolver class >> primNameResolverStatus [
 	self primitiveFailed
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 NetNameResolver class >> primStartLookupOfAddress: hostAddr [
 	"Look up the given host address in the Domain Name Server to find its name. This call is asynchronous. To get the results, wait for it to complete or time out and then use primAddressLookupResult."
 
@@ -458,7 +461,7 @@ NetNameResolver class >> primStartLookupOfAddress: hostAddr [
 	self primitiveFailed
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 NetNameResolver class >> primStartLookupOfName: hostName [
 	"Look up the given host name in the Domain Name Server to find its address. This call is asynchronous. To get the results, wait for it to complete or time out and then use primNameLookupResult."
 
@@ -466,7 +469,7 @@ NetNameResolver class >> primStartLookupOfName: hostName [
 	self primitiveFailed
 ]
 
-{ #category : #lookups }
+{ #category : 'lookups' }
 NetNameResolver class >> promptUserForHostAddress [
 	"Ask the user for a host name and return its address."
 	"NetNameResolver promptUserForHostAddress"
@@ -474,7 +477,7 @@ NetNameResolver class >> promptUserForHostAddress [
 	^ NetNameResolver promptUserForHostAddressDefault: ''
 ]
 
-{ #category : #lookups }
+{ #category : 'lookups' }
 NetNameResolver class >> promptUserForHostAddressDefault: defaultName [
 	"Ask the user for a host name and return its address. If the default name is the empty string, use the last host name as the default."
 
@@ -493,7 +496,7 @@ NetNameResolver class >> promptUserForHostAddressDefault: defaultName [
 	^ serverAddr
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 NetNameResolver class >> putIPv6HexIntegers: aCollection on: aWriteStream [
 	"Given a collection of Integers, convert them to
 	hex strings and join them with the ':' separator
@@ -504,7 +507,7 @@ NetNameResolver class >> putIPv6HexIntegers: aCollection on: aWriteStream [
 		separatedBy: [ aWriteStream nextPut: $: ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 NetNameResolver class >> readDecimalByteFrom: aStream [
 	"Read a positive, decimal integer from the given stream. Stop when a non-digit or end-of-stream is encountered. Return nil if stream is not positioned at a decimal digit or if the integer value read exceeds 255.
 JMM - 000503 fixed didn't work correctly"
@@ -524,24 +527,24 @@ JMM - 000503 fixed didn't work correctly"
 	^ value
 ]
 
-{ #category : #lookups }
+{ #category : 'lookups' }
 NetNameResolver class >> resolverError [
 	^self primNameResolverError
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 NetNameResolver class >> resolverMutex [
 	"This must have been initialized by class initialization.
 	If a failure occurs due to mutex not being properly initialized, do NOT solve it by lazy initialization, or you WILLl introduce a race condition"
 	^ResolverMutex
 ]
 
-{ #category : #lookups }
+{ #category : 'lookups' }
 NetNameResolver class >> resolverStatus [
 	^self primNameResolverStatus
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 NetNameResolver class >> splitIPv6HextetsOn: aString [
 	"Respond with a collection of hextet strings extracted
 	from a single string in IPv6 format. These are separated
@@ -567,7 +570,7 @@ NetNameResolver class >> splitIPv6HextetsOn: aString [
 	^ result
 ]
 
-{ #category : #'address string utils' }
+{ #category : 'address string utils' }
 NetNameResolver class >> stringFromAddress: addr [
 	"Return a string representing the given host address as four decimal bytes delimited with decimal points."
 	"NetNameResolver stringFromAddress: NetNameResolver localHostAddress"
@@ -585,7 +588,7 @@ NetNameResolver class >> stringFromAddress: addr [
 	^ s contents
 ]
 
-{ #category : #'address string utils' }
+{ #category : 'address string utils' }
 NetNameResolver class >> stringFromIPv6Address: aByteArray [
 	"Respond with a correctly formatted IPv6 string
 	parsed from the incoming ByteArray.
@@ -646,7 +649,7 @@ NetNameResolver class >> stringFromIPv6Address: aByteArray [
 	^ writeStream contents
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 NetNameResolver class >> waitForCompletionUntil: deadline [
 	"Wait up to the given number of seconds for the resolver to be ready to accept a new request. Return true if the resolver is ready, false if the network is not initialized or the resolver does not become free within the given time period."
 
@@ -658,7 +661,7 @@ NetNameResolver class >> waitForCompletionUntil: deadline [
 			false ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 NetNameResolver class >> waitForResolverNonBusyUntil: deadline [
 	"Wait up to the given number of seconds for the resolver to be non busy.
 	Return the resolver state."
@@ -673,7 +676,7 @@ NetNameResolver class >> waitForResolverNonBusyUntil: deadline [
 	^ status
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 NetNameResolver class >> waitForResolverReadyUntil: deadline [
 	"Wait up to the given number of seconds for the resolver to be ready to accept a new request. Return true if the resolver is not busy, false if the network is not initialized or the resolver does not become free within the given time period."
 

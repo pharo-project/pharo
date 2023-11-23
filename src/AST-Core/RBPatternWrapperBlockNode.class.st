@@ -5,48 +5,50 @@ Instance Variables:
 	wrappedNode	<RBProgramNode>	The original pattern node to match
 "
 Class {
-	#name : #RBPatternWrapperBlockNode,
-	#superclass : #RBPatternBlockNode,
+	#name : 'RBPatternWrapperBlockNode',
+	#superclass : 'RBPatternBlockNode',
 	#instVars : [
 		'wrappedNode'
 	],
-	#category : #'AST-Core-Pattern'
+	#category : 'AST-Core-Pattern',
+	#package : 'AST-Core',
+	#tag : 'Pattern'
 }
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RBPatternWrapperBlockNode >> acceptVisitor: aProgramNodeVisitor [
 	^aProgramNodeVisitor visitPatternWrapperBlockNode: self
 ]
 
-{ #category : #matching }
+{ #category : 'matching' }
 RBPatternWrapperBlockNode >> copyInContext: aDictionary [
 	"I don't know what this would mean, so ignore it."
 
 	^ wrappedNode copyInContext: aDictionary
 ]
 
-{ #category : #matching }
+{ #category : 'matching' }
 RBPatternWrapperBlockNode >> match: aNode inContext: aDictionary [
 	(wrappedNode match: aNode inContext: aDictionary) ifFalse: [^false].
 	^super match: aNode inContext: aDictionary
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBPatternWrapperBlockNode >> precedence [
 	^1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBPatternWrapperBlockNode >> sentMessages [
 	^ wrappedNode sentMessages
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBPatternWrapperBlockNode >> wrappedNode [
 	^wrappedNode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBPatternWrapperBlockNode >> wrappedNode: aRBProgramNode [
 	wrappedNode := aRBProgramNode.
 	aRBProgramNode parent: self

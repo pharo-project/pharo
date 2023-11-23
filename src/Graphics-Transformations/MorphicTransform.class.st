@@ -2,59 +2,60 @@
 This class implements simple translation, scaling and rotation for points, as well as inverse transformations.  These transformations are used in TransformMorphs (clipping scrollers) and TransformationMorphs (general flex-morph wrappers) to map, eg, global mouse coords into local coords, and to invert, eg, local damage rectangles into global damage rectangles.
 "
 Class {
-	#name : #MorphicTransform,
-	#superclass : #DisplayTransform,
+	#name : 'MorphicTransform',
+	#superclass : 'DisplayTransform',
 	#instVars : [
 		'offset',
 		'angle',
 		'scale'
 	],
-	#category : #'Graphics-Transformations'
+	#category : 'Graphics-Transformations',
+	#package : 'Graphics-Transformations'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MorphicTransform class >> identity [
 
 	^ self offset: 0@0 angle: 0.0 scale: 1.0
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MorphicTransform class >> new [
 
 	^ self offset: 0@0
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MorphicTransform class >> offset: aPoint [
 
 	^ self offset: aPoint angle: 0.0 scale: 1.0
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MorphicTransform class >> offset: aPoint angle: radians scale: aNumberOrPoint [
 
 	^ self basicNew setOffset: aPoint angle: radians scale: aNumberOrPoint
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MorphicTransform >> angle [
 	^ angle
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 MorphicTransform >> asMatrixTransform2x3 [
 	^((MatrixTransform2x3 withRotation: angle radiansToDegrees negated) composedWithLocal:
 		(MatrixTransform2x3 withScale: scale))
 			offset: offset negated
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 MorphicTransform >> asMorphicTransform [
 
 	^ self
 ]
 
-{ #category : #transformations }
+{ #category : 'transformations' }
 MorphicTransform >> composedWith: aTransform [
 	"Return a new transform that has the effect of transforming points first by the receiver and then by the argument."
 
@@ -64,7 +65,7 @@ MorphicTransform >> composedWith: aTransform [
 							localTransform: aTransform
 ]
 
-{ #category : #composing }
+{ #category : 'composing' }
 MorphicTransform >> composedWithLocal: aTransform [
 	aTransform isIdentity ifTrue:[^self].
 	self isIdentity ifTrue:[^aTransform].
@@ -76,13 +77,13 @@ MorphicTransform >> composedWithLocal: aTransform [
 	^super composedWithLocal: aTransform
 ]
 
-{ #category : #'transforming points' }
+{ #category : 'transforming points' }
 MorphicTransform >> globalPointToLocal: aPoint [
 	"Transform aPoint from global coordinates into local coordinates"
 	^self transform: aPoint
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MorphicTransform >> inverseTransformation [
 	"Return the inverse transformation of the receiver"
 	^MorphicTransform
@@ -91,7 +92,7 @@ MorphicTransform >> inverseTransformation [
 		scale: scale reciprocal
 ]
 
-{ #category : #transformations }
+{ #category : 'transformations' }
 MorphicTransform >> invert: aPoint [
 	"Transform the given point from local to global coordinates."
 	| p3 p2 |
@@ -101,7 +102,7 @@ MorphicTransform >> invert: aPoint [
 	^ p2 - offset
 ]
 
-{ #category : #transformations }
+{ #category : 'transformations' }
 MorphicTransform >> invertBoundsRect: aRectangle [
 	"Return a rectangle whose coordinates have been transformed
 	from local back to global coordinates.  NOTE: if the transformation
@@ -116,44 +117,44 @@ MorphicTransform >> invertBoundsRect: aRectangle [
 			outerRect topLeft - (1 @ 1) corner: outerRect bottomRight + (2 @ 2) ]
 ]
 
-{ #category : #transformations }
+{ #category : 'transformations' }
 MorphicTransform >> invertRect: aRectangle [
 
 	self error: 'method name changed to emphasize enclosing bounds'.
 	^ self invertBoundsRect: aRectangle
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MorphicTransform >> isIdentity [
 	"Return true if the receiver is the identity transform; that is, if applying to a point returns the point itself."
 
 	^ self isPureTranslation and: [offset = (0@0)]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MorphicTransform >> isMorphicTransform [
 	^true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MorphicTransform >> isPureTranslation [
 	"Return true if the receiver specifies no rotation or scaling."
 
 	^ angle = 0.0 and: [scale = 1.0]
 ]
 
-{ #category : #'transforming points' }
+{ #category : 'transforming points' }
 MorphicTransform >> localPointToGlobal: aPoint [
 	"Transform aPoint from global coordinates into local coordinates"
 	^self invert: aPoint
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MorphicTransform >> offset [
 	^ offset
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MorphicTransform >> printOn: aStream [
 	super printOn: aStream.
 	aStream nextPut:$(;
@@ -163,41 +164,41 @@ MorphicTransform >> printOn: aStream [
 		nextPut:$)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MorphicTransform >> scale [
 	^ scale
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MorphicTransform >> setAngle: radians [
 	angle := radians
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 MorphicTransform >> setIdentiy [
 	scale := 1.0.
 	offset := 0 @ 0.
 	angle := 0.0
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MorphicTransform >> setOffset: aPoint [
 	offset := aPoint
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MorphicTransform >> setOffset: aPoint angle: radians scale: aNumberOrPoint [
 	offset := aPoint.
 	angle := radians.
 	scale := aNumberOrPoint
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MorphicTransform >> setScale: aNumberOrPoint [
 	scale := aNumberOrPoint
 ]
 
-{ #category : #transformations }
+{ #category : 'transformations' }
 MorphicTransform >> transform: aPoint [
 	"Transform the given point from global to local coordinates."
 	| p2 p3 |
@@ -207,7 +208,7 @@ MorphicTransform >> transform: aPoint [
 	^ p3
 ]
 
-{ #category : #transformations }
+{ #category : 'transformations' }
 MorphicTransform >> transformBoundsRect: aRectangle [
 	"Return a rectangle whose coordinates have been transformed
 	from global to local coordinates.  NOTE: if the transformation
@@ -222,17 +223,17 @@ MorphicTransform >> transformBoundsRect: aRectangle [
 			outerRect topLeft - (1 @ 1) corner: outerRect bottomRight + (2 @ 2) ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MorphicTransform >> withAngle: radians [
 	^ self copy setAngle: radians
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MorphicTransform >> withOffset: aPoint [
 	^ self copy setOffset: aPoint
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MorphicTransform >> withScale: aNumberOrPoint [
 	^ self copy setScale: aNumberOrPoint
 ]

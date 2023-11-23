@@ -1,1 +1,1 @@
-Package { #name : #'Calypso-SystemPlugins-Undeclared-Queries' }
+Package { #name : 'Calypso-SystemPlugins-Undeclared-Queries' }

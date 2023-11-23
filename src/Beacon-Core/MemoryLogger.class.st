@@ -21,8 +21,8 @@ This signal logger simply records the signals that it receives.
 ```
 "
 Class {
-	#name : #MemoryLogger,
-	#superclass : #SignalLogger,
+	#name : 'MemoryLogger',
+	#superclass : 'SignalLogger',
 	#instVars : [
 		'recordings',
 		'announcer',
@@ -33,10 +33,12 @@ Class {
 		'WritePeriod',
 		'WriteProcess'
 	],
-	#category : #'Beacon-Core-Loggers'
+	#category : 'Beacon-Core-Loggers',
+	#package : 'Beacon-Core',
+	#tag : 'Loggers'
 }
 
-{ #category : #saving }
+{ #category : 'saving' }
 MemoryLogger class >> fromStonFile: aFileReference [
 
 	| logger |
@@ -48,14 +50,14 @@ MemoryLogger class >> fromStonFile: aFileReference [
 	^logger
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 MemoryLogger class >> reset [
 	<script>
 
 	self instance reset
 ]
 
-{ #category : #saving }
+{ #category : 'saving' }
 MemoryLogger class >> startAutoSaving [
 	"Write the default instance to a file every WritePeriod"
 	<script>
@@ -67,7 +69,7 @@ MemoryLogger class >> startAutoSaving [
 		                named: self class name , ' auto-save'
 ]
 
-{ #category : #saving }
+{ #category : 'saving' }
 MemoryLogger class >> stopAutoSaving [
 	"Terminate writing the default instance to a file every WritePeriod"
 	<script>
@@ -80,7 +82,7 @@ MemoryLogger class >> stopAutoSaving [
 	WriteProcess := nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MemoryLogger class >> writeFilename [
 
 	^ WriteFilename ifNil: [
@@ -92,13 +94,13 @@ MemoryLogger class >> writeFilename [
 				                   << '.stgz' ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MemoryLogger class >> writeFilename: aFilename [
 
 	WriteFilename := aFilename
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MemoryLogger class >> writeLoop [
 	"Write the default instance out to a file every WritePeriod"
 
@@ -106,26 +108,26 @@ MemoryLogger class >> writeLoop [
 	self writePeriod wait ] repeat
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MemoryLogger class >> writePeriod [
 
 	^ WritePeriod ifNil: [ WritePeriod := 60 seconds ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MemoryLogger class >> writePeriod: aDuration [
 
 	WritePeriod := aDuration
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MemoryLogger >> announcer [
 	"The announcer announces to potential watchers (typically viewers)
 	that a new signal was recorded"
 	^ announcer
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MemoryLogger >> initialize [
 	super initialize.
 	mutex := Mutex new.
@@ -133,7 +135,7 @@ MemoryLogger >> initialize [
 	announcer := Announcer new
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MemoryLogger >> nextPut: aSignal [
 	mutex critical: [
 		recordings add: aSignal ].
@@ -144,7 +146,7 @@ MemoryLogger >> nextPut: aSignal [
 	self announcer announce: aSignal
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MemoryLogger >> recordings [
 	"It answers a copy of the recorded collection to not grant
 	access to the users to a shared resource that should only be
@@ -152,7 +154,7 @@ MemoryLogger >> recordings [
 	^ recordings copy
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 MemoryLogger >> reset [
 	"it simply removes all recordings without
 	affecting the running status of the logger"
@@ -160,7 +162,7 @@ MemoryLogger >> reset [
 		recordings := OrderedCollection new ]
 ]
 
-{ #category : #'ston persistence' }
+{ #category : 'ston persistence' }
 MemoryLogger >> saveStonFile: aFileReference [
 
 	"Save the receiver to the supplied file name"

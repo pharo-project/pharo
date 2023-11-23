@@ -2,42 +2,44 @@
 I am a command to remove method group with containing methods
 "
 Class {
-	#name : #ClyRemoveMethodGroupCommand,
-	#superclass : #ClyMethodGroupCommand,
-	#category : #'Calypso-SystemTools-FullBrowser-Commands-MethodGroups'
+	#name : 'ClyRemoveMethodGroupCommand',
+	#superclass : 'ClyMethodGroupCommand',
+	#category : 'Calypso-SystemTools-FullBrowser-Commands-MethodGroups',
+	#package : 'Calypso-SystemTools-FullBrowser',
+	#tag : 'Commands-MethodGroups'
 }
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyRemoveMethodGroupCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
 
 	^CmdContextMenuActivation byRootGroupItemOrder: 100000 for: ClyFullBrowserMethodGroupContext
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyRemoveMethodGroupCommand class >> fullBrowserShortcutActivation [
 	<classAnnotation>
 
 	^CmdShortcutActivation removalFor: ClyFullBrowserMethodGroupContext
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyRemoveMethodGroupCommand >> defaultMenuIconName [
-	^#removeIcon
+	^#remove
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyRemoveMethodGroupCommand >> defaultMenuItemName [
-	^'Remove'
+	^'Remove 2222'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyRemoveMethodGroupCommand >> execute [
 
 	methodGroups do: #removeWithMethods
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyRemoveMethodGroupCommand >> prepareFullExecutionInContext: aToolContext [
 	| tagsString confirmed |
 	super prepareFullExecutionInContext: aToolContext.
@@ -45,7 +47,7 @@ ClyRemoveMethodGroupCommand >> prepareFullExecutionInContext: aToolContext [
 	tagsString := ', ' join: (methodGroups collect: [:each | each name]).
 	(methodGroups anySatisfy: [ :each | each methodsSize > 0])
 		ifTrue: [
-			confirmed := UIManager default
+			confirmed := self
 					confirm: 'Are you sure you want to remove methods tagged with ', tagsString, '?'.
 			confirmed ifFalse: [CmdCommandAborted signal]]
 ]

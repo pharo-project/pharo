@@ -2,44 +2,46 @@
 I'm a type to handle structures. 
 "
 Class {
-	#name : #FFIExternalStructureType,
-	#superclass : #FFIExternalType,
+	#name : 'FFIExternalStructureType',
+	#superclass : 'FFIExternalType',
 	#instVars : [
 		'objectClass'
 	],
-	#category : #'UnifiedFFI-Types'
+	#category : 'UnifiedFFI-Types',
+	#package : 'UnifiedFFI',
+	#tag : 'Types'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 FFIExternalStructureType class >> naturalPointerArity [
 	^ 1
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FFIExternalStructureType class >> objectClass: aClass [
 	^ self basicNew
 		initializeObjectClass: aClass;
 		yourself
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FFIExternalStructureType >> basicHandle: aHandle at: index [
 
 	^ self objectClass fromHandle: (aHandle referenceStructAt: index length: self externalTypeSize)
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FFIExternalStructureType >> basicHandle: aHandle at: index put: value [
 	^ LibC memCopy: value getHandle to: aHandle + (index - 1) size: self externalTypeSize
 ]
 
-{ #category : #callbacks }
+{ #category : 'callbacks' }
 FFIExternalStructureType >> callbackReturnOn: callbackContext for: anObject [
 
 	^ self error: 'Cannot return an external structure by copy. It is not yet implemented'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalStructureType >> callbackValueFor: anAlien at: index [
 	"This is the value for a callback.
 	since the callbacks comunicates as Aliens, I receive the struct, but with an Alien
@@ -48,12 +50,12 @@ FFIExternalStructureType >> callbackValueFor: anAlien at: index [
 	^ self objectClass fromHandle: anAlien asExternalAddress
 ]
 
-{ #category : #'stack parameter classification' }
+{ #category : 'stack parameter classification' }
 FFIExternalStructureType >> emitFlatStructureLayoutFieldInto: flatStructureLayout [
 	objectClass emitFlatStructureLayoutFieldInto: flatStructureLayout
 ]
 
-{ #category : #'emitting code' }
+{ #category : 'emitting code' }
 FFIExternalStructureType >> emitReturn: aBuilder resultTempVar: resultVar context: aContext inCallout: aCallout [
 
 	aCallout shouldAutoReleaseReturnedValue ifTrue: [
@@ -64,71 +66,71 @@ FFIExternalStructureType >> emitReturn: aBuilder resultTempVar: resultVar contex
 	^ aBuilder returnTop
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalStructureType >> externalType [
 	^ ExternalType structTypeNamed: self objectClass name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalStructureType >> externalTypeAlignment [
 	^ self objectClass structureAlignment
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalStructureType >> externalTypeSize [
 	^ self objectClass structureSize
 ]
 
-{ #category : #extracting }
+{ #category : 'extracting' }
 FFIExternalStructureType >> extractFromCallbackOn: aCallbackArgumentReader [
 
 	aCallbackArgumentReader extractStructType: self
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FFIExternalStructureType >> initializeObjectClass: aClass [
 	objectClass := aClass.
 	self initialize
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FFIExternalStructureType >> isExternalStructure [
 
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalStructureType >> objectClass [
 	^ objectClass
 ]
 
-{ #category : #'emitting code' }
+{ #category : 'emitting code' }
 FFIExternalStructureType >> offsetReadFieldAt: offsetVariableName [
 	"Return a string defining the accessor to an entity of the receiver type starting at the given byte offset. "
 	self isPointer ifTrue: [ ^ super offsetReadFieldAt: offsetVariableName ].
 	^ self offsetReadReferenceAt: offsetVariableName
 ]
 
-{ #category : #'emitting code' }
+{ #category : 'emitting code' }
 FFIExternalStructureType >> offsetReadReferenceAt: offsetVariableName [
 	^ '^ {1} fromHandle: (handle referenceStructAt: {2} length: {1} byteSize)'
 		format: { self objectClass name. offsetVariableName }
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FFIExternalStructureType >> prepareAsSelfFromCalloutDeclaration [
 	"self starts with pointer arity 1 (regardless how is declared later)"
 	self pointerArity: 1
 ]
 
-{ #category : #'emitting code' }
+{ #category : 'emitting code' }
 FFIExternalStructureType >> readFieldAt: byteOffset [
 	"Return a string defining the accessor to an entity of the receiver type starting at the given byte offset. "
 	self isPointer ifTrue: [ ^ super readFieldAt: byteOffset ].
 	^ self readReferenceAt: byteOffset
 ]
 
-{ #category : #'emitting code' }
+{ #category : 'emitting code' }
 FFIExternalStructureType >> readReferenceAt: byteOffset [
 	^ '^ {1} fromHandle: (handle referenceStructAt: {2} length: {1} byteSize)'
 		format: {
@@ -136,7 +138,7 @@ FFIExternalStructureType >> readReferenceAt: byteOffset [
 			byteOffset }
 ]
 
-{ #category : #'stack parameter classification' }
+{ #category : 'stack parameter classification' }
 FFIExternalStructureType >> stackValueParameterClass [
 	^ #structure
 ]

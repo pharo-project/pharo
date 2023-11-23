@@ -1,16 +1,18 @@
 Class {
-	#name : #ClyUntaggedClassesQueryTest,
-	#superclass : #ClyClassQueryTest,
-	#category : #'Calypso-SystemQueries-Tests-Queries'
+	#name : 'ClyUntaggedClassesQueryTest',
+	#superclass : 'ClyClassQueryTest',
+	#category : 'Calypso-SystemQueries-Tests-Queries',
+	#package : 'Calypso-SystemQueries-Tests',
+	#tag : 'Queries'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClyUntaggedClassesQueryTest >> createQuery [
 	^ ClyUntaggedClassesQuery
 		from: (ClyClassScope of: Object in: environment)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyUntaggedClassesQueryTest >> testCheckIfEmpty [
 	query scope: (ClyClassScope of: ClyClass6UntaggedFromP5Mock in: environment).
 	self deny: query checkEmptyResult.
@@ -19,7 +21,7 @@ ClyUntaggedClassesQueryTest >> testCheckIfEmpty [
 	self assert: query checkEmptyResult
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyUntaggedClassesQueryTest >> testFromThreeClasses [
 
 	self queryFromScope: ClyClassScope ofAll: {
@@ -28,13 +30,13 @@ ClyUntaggedClassesQueryTest >> testFromThreeClasses [
 	self assert: resultItems asSet equals: {ClyClass6UntaggedFromP5Mock. ClyClass1FromP1Mock} asSet
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyUntaggedClassesQueryTest >> testNotSelectsTaggedClass [
 
 	self deny: (query selectsClass: ClyClass7WithTag1FromP5Mock)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyUntaggedClassesQueryTest >> testSelectsClassWithoutTags [
 
 	self assert: (query selectsClass: ClyClass6UntaggedFromP5Mock)

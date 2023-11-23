@@ -29,8 +29,8 @@ Implementation remarks
 
 "
 Class {
-	#name : #EFFormatter,
-	#superclass : #RBAbstractFormatter,
+	#name : 'EFFormatter',
+	#superclass : 'RBAbstractFormatter',
 	#instVars : [
 		'codeStream',
 		'indent',
@@ -44,97 +44,100 @@ Class {
 		'DefaultPrettyPrintContext',
 		'FormatAsYouReadPolicy'
 	],
-	#category : #'EnlumineurFormatter-Core'
+	#category : 'EnlumineurFormatter-Core',
+	#package : 'EnlumineurFormatter',
+	#tag : 'Core'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 EFFormatter class >> announceASettingChange [
-	SystemAnnouncer announce: EFSettingChanged
+
+	self codeSupportAnnouncer announce: EFSettingChanged
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EFFormatter class >> defaultPrettyPrintContext [
 	^ DefaultPrettyPrintContext
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter class >> defaultPrettyPrintContext: aContext [ 
 	DefaultPrettyPrintContext := aContext
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 EFFormatter class >> format: aParseTree [ 
 	^self format: aParseTree withIndents: 0
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 EFFormatter class >> format: aParseTree withIndents: anInteger [ 
 	^ self new
 		indent: anInteger;
 		format: aParseTree
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter class >> formatAsYouReadPolicy [
 	^ FormatAsYouReadPolicy
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter class >> formatAsYouReadPolicy: anObject [
 	FormatAsYouReadPolicy := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter class >> formatCommentCloseToStatements [
 	^ DefaultPrettyPrintContext formatCommentCloseToStatements
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter class >> formatCommentCloseToStatements: aBoolean [
 	DefaultPrettyPrintContext formatCommentCloseToStatements: aBoolean.
 	self announceASettingChange
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter class >> indentString [
 	^ DefaultPrettyPrintContext indentString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter class >> indentStyle [
 	^ DefaultPrettyPrintContext indentStyle
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter class >> indentStyle: aSymbole [
 	DefaultPrettyPrintContext indentStyle: aSymbole.
 	self announceASettingChange
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter class >> indentsForKeywords [
 	^ DefaultPrettyPrintContext indentsForKeywords
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter class >> indentsForKeywords: anInteger [
 	DefaultPrettyPrintContext indentsForKeywords: anInteger.
 	self announceASettingChange
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 EFFormatter class >> initialize [
 
 	FormatAsYouReadPolicy := false.
 	DefaultPrettyPrintContext := EFContext new
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EFFormatter class >> isPrettyPrinter [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter class >> keepBlockInMessage [
 	"Return a boolean for 
 		1 to: 4 do: [ :i | 
@@ -147,293 +150,293 @@ EFFormatter class >> keepBlockInMessage [
 	^ DefaultPrettyPrintContext keepBlockInMessage
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter class >> keepBlockInMessage: aBoolean [
 	DefaultPrettyPrintContext keepBlockInMessage: aBoolean.
 	self announceASettingChange
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter class >> lineUpBlockBrackets [
 	^ DefaultPrettyPrintContext lineUpBlockBrackets
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter class >> lineUpBlockBrackets: aBoolean [
 	DefaultPrettyPrintContext lineUpBlockBrackets: aBoolean.
 	self announceASettingChange
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter class >> maxLineLength [
 	^ DefaultPrettyPrintContext maxLineLength
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter class >> maxLineLength: anInteger [
 	DefaultPrettyPrintContext maxLineLength: anInteger.
 	self announceASettingChange
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter class >> methodSignatureOnMultipleLines [
 	^ DefaultPrettyPrintContext methodSignatureOnMultipleLines
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter class >> methodSignatureOnMultipleLines: aBoolean [
 	DefaultPrettyPrintContext methodSignatureOnMultipleLines: aBoolean.
 	self announceASettingChange
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter class >> minimumNewLinesBetweenStatements [
 	^ DefaultPrettyPrintContext minimumNewLinesBetweenStatements
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter class >> minimumNewLinesBetweenStatements: anInteger [
 	DefaultPrettyPrintContext minimumNewLinesBetweenStatements: anInteger.
 	self announceASettingChange
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter class >> multiLineMessages [
 	^ DefaultPrettyPrintContext multiLineMessages printString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter class >> multiLineMessages: aString [
 	DefaultPrettyPrintContext multiLineMessages: (self compiler evaluate: aString).
 	self announceASettingChange
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter class >> newLineAfterCascade [
 	^ DefaultPrettyPrintContext newLineAfterCascade
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter class >> newLineAfterCascade: aBoolean [
 	DefaultPrettyPrintContext newLineAfterCascade: aBoolean.
 	self announceASettingChange
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter class >> newLineBeforeFirstCascade [
 	^ DefaultPrettyPrintContext newLineBeforeFirstCascade
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter class >> newLineBeforeFirstCascade: aBoolean [
 	DefaultPrettyPrintContext newLineBeforeFirstCascade: aBoolean.
 	self announceASettingChange
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter class >> newLineBeforeFirstKeyword [
 	^ DefaultPrettyPrintContext newLineBeforeFirstKeyword
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter class >> newLineBeforeFirstKeyword: aBoolean [
 	DefaultPrettyPrintContext newLineBeforeFirstKeyword: aBoolean.
 	self announceASettingChange
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter class >> numberOfArgumentsForMultiLine [
 	^ DefaultPrettyPrintContext numberOfArgumentsForMultiLine
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter class >> numberOfArgumentsForMultiLine: anInteger [
 	DefaultPrettyPrintContext numberOfArgumentsForMultiLine: anInteger.
 	self announceASettingChange
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter class >> numberOfNewLinesAfterMethodComment [
 	^ DefaultPrettyPrintContext numberOfNewLinesAfterMethodComment
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter class >> numberOfNewLinesAfterMethodComment: anInteger [
 	DefaultPrettyPrintContext numberOfNewLinesAfterMethodComment: anInteger.
 	self announceASettingChange
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter class >> numberOfNewLinesAfterMethodSignature [
 	^ DefaultPrettyPrintContext numberOfNewLinesAfterMethodSignature
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter class >> numberOfNewLinesAfterMethodSignature: anInteger [
 	DefaultPrettyPrintContext numberOfNewLinesAfterMethodSignature: anInteger.
 	self announceASettingChange
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter class >> numberOfNewLinesAfterMethodSignatureWithMethodComment [
 	^ DefaultPrettyPrintContext numberOfNewLinesAfterMethodSignatureWithMethodComment
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter class >> numberOfNewLinesAfterMethodSignatureWithMethodComment: anInteger [
 	DefaultPrettyPrintContext numberOfNewLinesAfterMethodSignatureWithMethodComment: anInteger.
 	self announceASettingChange
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter class >> numberOfNewLinesAfterTemporaries [
 	^ DefaultPrettyPrintContext numberOfNewLinesAfterTemporaries
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter class >> numberOfNewLinesAfterTemporaries: anInteger [
 	DefaultPrettyPrintContext numberOfNewLinesAfterTemporaries: anInteger.
 	self announceASettingChange
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter class >> numberOfSpacesAfterCaretSymbolInReturn [
 	^ DefaultPrettyPrintContext numberOfSpacesAfterCaretSymbolInReturn
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter class >> numberOfSpacesAfterCaretSymbolInReturn: anInteger [
 	DefaultPrettyPrintContext numberOfSpacesAfterCaretSymbolInReturn: anInteger.
 	self announceASettingChange
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter class >> numberOfSpacesBeforeDotInDynamicArray [
 	^ DefaultPrettyPrintContext numberOfSpacesBeforeDotInDynamicArray
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter class >> numberOfSpacesInIndent [
 	^ DefaultPrettyPrintContext numberOfSpacesInIndent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter class >> numberOfSpacesInIndent: anInteger [
 	DefaultPrettyPrintContext numberOfSpacesInIndent: anInteger.
 	self announceASettingChange
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter class >> numberOfSpacesInsideArray [
 	^ DefaultPrettyPrintContext numberOfSpacesInsideArray
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter class >> numberOfSpacesInsideArray: anInteger [
 	DefaultPrettyPrintContext numberOfSpacesInsideArray: anInteger.
 	self announceASettingChange
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter class >> numberOfSpacesInsideBlock [
 	^ DefaultPrettyPrintContext numberOfSpacesInsideBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter class >> numberOfSpacesInsideBlock: anInteger [
 	DefaultPrettyPrintContext numberOfSpacesInsideBlock: anInteger.
 	self announceASettingChange
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter class >> numberOfSpacesInsideParentheses [
 	^ DefaultPrettyPrintContext numberOfSpacesInsideParentheses
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter class >> numberOfSpacesInsideParentheses: anInteger [
 	DefaultPrettyPrintContext numberOfSpacesInsideParentheses: anInteger.
 	self announceASettingChange
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter class >> oneLineMessages [
 	^ DefaultPrettyPrintContext oneLineMessages
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter class >> oneLineMessages: aString [
 	DefaultPrettyPrintContext oneLineMessages: (self compiler evaluate: aString).
 	self announceASettingChange
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter class >> periodAtEndOfBlock: aBoolean [
 	DefaultPrettyPrintContext periodAtEndOfBlock: aBoolean.
 	self announceASettingChange
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter class >> periodAtEndOfMethod: aBoolean [
 	DefaultPrettyPrintContext periodAtEndOfMethod: aBoolean.
 	self announceASettingChange
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter class >> periodsAtEndOfBlock [
 	^ DefaultPrettyPrintContext periodsAtEndOfBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter class >> periodsAtEndOfMethod [
 	^ DefaultPrettyPrintContext periodsAtEndOfMethod
 ]
 
-{ #category : #priority }
+{ #category : 'priority' }
 EFFormatter class >> priority [
 	
 	^ 10
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter class >> retainBlankLinesBeforeComments [
 	^ DefaultPrettyPrintContext retainBlankLinesBeforeComments
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter class >> retainBlankLinesBeforeComments: aBoolean [
 	DefaultPrettyPrintContext retainBlankLinesBeforeComments: aBoolean.
 	self announceASettingChange
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter class >> retainBlankLinesBetweenStatements [
 	^ DefaultPrettyPrintContext retainBlankLinesBetweenStatements
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter class >> retainBlankLinesBetweenStatements: aBoolean [
 	DefaultPrettyPrintContext retainBlankLinesBetweenStatements: aBoolean.
 	self announceASettingChange
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter class >> selectorAndArgumentCombinedMaxSize [
 	^ DefaultPrettyPrintContext selectorAndArgumentCombinedMaxSize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter class >> selectorAndArgumentCombinedMaxSize: anInteger [
 	DefaultPrettyPrintContext selectorAndArgumentCombinedMaxSize: anInteger.
 	self announceASettingChange
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter class >> settingGroup [
 	^ #Enlumineur
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 EFFormatter class >> settingsAlignBlockBrackets: aBuilder [
 
 	(aBuilder setting: #lineUpBlockBrackets)
@@ -456,7 +459,7 @@ When lineUpBlockBrackets is set to false
 '
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 EFFormatter class >> settingsCommentCloseToStatement: aBuilder [
 	
 	(aBuilder setting: #formatCommentCloseToStatements)
@@ -471,7 +474,7 @@ When formatCommentCloseToStatements is set to false
  1+1"We do an addition". 2+2'
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 EFFormatter class >> settingsIndentStyle: aBuilder [
 
 	(aBuilder pickOne: #indentStyle)
@@ -484,7 +487,7 @@ aBoolean
 	ifFalse:[^0] is the result for tabulation.'
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 EFFormatter class >> settingsIndentsForKeywords: aBuilder [ 
 	
 	(aBuilder setting: #indentsForKeywords)
@@ -498,7 +501,7 @@ aBoolean:
 is the result for 2 indents'
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 EFFormatter class >> settingsKeepBlockInMessage: aBuilder [
 	
 	(aBuilder setting: #keepBlockInMessage)
@@ -521,7 +524,7 @@ When keepBlockInMessage is false:
 '
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 EFFormatter class >> settingsMaxLineLength: aBuilder [
 
 	(aBuilder setting: #maxLineLength)
@@ -534,7 +537,7 @@ For example:
 is the result for 14'
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 EFFormatter class >> settingsMethodSignatureOnMultipleLines: aBuilder [
 
 	(aBuilder setting: #methodSignatureOnMultipleLines)
@@ -551,7 +554,7 @@ myMethod: arg1
 is the result of having methodSignatureOnMultipleLines set to true and selectorAndArgumentCombinedMaxSize set to 6'
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 EFFormatter class >> settingsMinimumNewLinesBetweenStatements: aBuilder [
 
 	(aBuilder setting: #minimumNewLinesBetweenStatements)
@@ -568,7 +571,7 @@ The following is obtained by setting minimumNewLinesBetweenStatements to 2.
 '
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 EFFormatter class >> settingsMultiLineMessages: aBuilder [
 
 	(aBuilder setting: #multiLineMessages)
@@ -583,7 +586,7 @@ aBoolean
 is the result if #ifTrue:ifFalse is in the array'
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 EFFormatter class >> settingsNewLineAfterCascade: aBuilder [
 
 	(aBuilder setting: #newLineAfterCascade)
@@ -605,7 +608,7 @@ OrderedCollection new
 '
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 EFFormatter class >> settingsNewLineBeforeFirstCascade: aBuilder [
 
 	(aBuilder setting: #newLineBeforeFirstCascade)
@@ -628,7 +631,7 @@ OrderedCollection new
 '
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 EFFormatter class >> settingsNewLineBeforeFirstKeyword: aBuilder [
 
 	(aBuilder setting: #newLineBeforeFirstKeyword)
@@ -649,7 +652,7 @@ When newLineBeforeFirstKeyword is set to false
 '
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 EFFormatter class >> settingsNewLinesAfterMethodComment: aBuilder [
 
 	(aBuilder setting: #numberOfNewLinesAfterMethodComment)
@@ -666,7 +669,7 @@ myMethod
 '
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 EFFormatter class >> settingsNewLinesAfterMethodSignature: aBuilder [
 
 	(aBuilder setting: #numberOfNewLinesAfterMethodSignature)
@@ -681,7 +684,7 @@ myMethod: arg
 '
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 EFFormatter class >> settingsNewLinesAfterMethodSignatureWithMethodComment: aBuilder [
 
 	(aBuilder setting: #numberOfNewLinesAfterMethodSignatureWithMethodComment)
@@ -697,7 +700,7 @@ myMethod: arg
 '
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 EFFormatter class >> settingsNewLinesAfterTemporaries: aBuilder [
 
 	(aBuilder setting: #numberOfNewLinesAfterTemporaries)
@@ -713,7 +716,7 @@ myMethod
 '
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 EFFormatter class >> settingsNumberOfArgumentsForMultiLine: aBuilder [ 
 	
 	(aBuilder setting: #numberOfArgumentsForMultiLine)
@@ -729,7 +732,7 @@ For example when set to 2 we obtain
 '
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 EFFormatter class >> settingsNumberOfSpacesInIndent:aBuilder [
 
 	(aBuilder setting: #numberOfSpacesInIndent)
@@ -745,7 +748,7 @@ aBoolean
 '
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 EFFormatter class >> settingsOn: aBuilder [
 	<systemsettings>
 	
@@ -787,7 +790,7 @@ EFFormatter class >> settingsOn: aBuilder [
 				settingsUseBasicCommentFormat: aBuilder]
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 EFFormatter class >> settingsOneLineMessages: aBuilder [
 
 	(aBuilder setting: #oneLineMessages)
@@ -800,7 +803,7 @@ If we include #todo: in the oneLineMessages we get
 1 to: 4 do: [ :i | Transcript show: i ]'
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 EFFormatter class >> settingsPeriodsAtEndOfBlock: aBuilder [
 
 	(aBuilder setting: #periodsAtEndOfBlock)
@@ -815,7 +818,7 @@ Example: when set to true
 '.
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 EFFormatter class >> settingsPeriodsAtEndOfMethod: aBuilder [
 
 	(aBuilder setting: #periodsAtEndOfMethod)
@@ -831,7 +834,7 @@ myMethod
 '
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 EFFormatter class >> settingsRetainBlankLinesBeforeComments: aBuilder [
 
 	(aBuilder setting: #retainBlankLinesBeforeComments)
@@ -849,7 +852,7 @@ For example, when set to true the formatter will not change the following
 '
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 EFFormatter class >> settingsRetainBlankLinesBetweenStatements: aBuilder [
 
 	(aBuilder setting: #retainBlankLinesBetweenStatements)
@@ -868,7 +871,7 @@ c := a + b
 '
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 EFFormatter class >> settingsSelectorAndArgumentCombinedMaxSize: aBuilder [
 
 	(aBuilder setting: #selectorAndArgumentCombinedMaxSize)
@@ -885,7 +888,7 @@ myMethod: argument1
 	and methodSignatureOnMultipleLines is set to true'
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 EFFormatter class >> settingsSpacesAfterCaretSymbolInReturn: aBuilder [ 
 
 	(aBuilder setting: #numberOfSpacesAfterCaretSymbolInReturn)
@@ -895,7 +898,7 @@ EFFormatter class >> settingsSpacesAfterCaretSymbolInReturn: aBuilder [
 For example: ^   self is the result for 3 spaces'.
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 EFFormatter class >> settingsSpacesBeforeDotInDynamicArray: aBuilder [
 
 	(aBuilder setting: #numberOfSpacesBeforeDotInDynamicArray)
@@ -906,7 +909,7 @@ for example, when set to one space: {1 . 2 . 3},
 when set to zero space: {1. 2. 3}'
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 EFFormatter class >> settingsSpacesInsideArray: aBuilder [
 
 	(aBuilder setting: #numberOfSpacesInsideArray)
@@ -920,7 +923,7 @@ For example, we get the following wehn set to 3 spaces:
 '
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 EFFormatter class >> settingsSpacesInsideBlocks: aBuilder [
 
 	(aBuilder setting: #numberOfSpacesInsideBlock)
@@ -932,7 +935,7 @@ For example, when set to 3 spaces we get
 [   :i | Transcript show: i   ]'
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 EFFormatter class >> settingsSpacesInsideParentheses: aBuilder [
 
 	(aBuilder setting: #numberOfSpacesInsideParentheses)
@@ -942,7 +945,7 @@ EFFormatter class >> settingsSpacesInsideParentheses: aBuilder [
 For example: (   1 + 2   ) is the result for 3 spaces'
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 EFFormatter class >> settingsUseBasicCommentFormat: aBuilder [
 
 	(aBuilder setting: #useBasicCommentFormat)
@@ -951,33 +954,33 @@ EFFormatter class >> settingsUseBasicCommentFormat: aBuilder [
 		description: 'Leave the comment unchanged and do not resize comment.'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter class >> spacesAfterCaretSymbolInReturnString [
 	^ DefaultPrettyPrintContext spacesAfterCaretSymbolInReturnString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter class >> spacesInsideBlocksString [
 	^ DefaultPrettyPrintContext spacesInsideBlocksString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter class >> spacesInsideParenthesesString [
 	^ DefaultPrettyPrintContext spacesInsideParenthesesString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter class >> useBasicCommentFormat [
 	^ DefaultPrettyPrintContext useBasicCommentFormat
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter class >> useBasicCommentFormat: aBoolean [
 	DefaultPrettyPrintContext useBasicCommentFormat: aBoolean.
 	self announceASettingChange
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EFFormatter >> addNewLinesBeforeStatementStartingAt: anInteger [ 
 	| newLines |
 	newLines := self minimumNewLinesBetweenStatements 
@@ -989,7 +992,7 @@ EFFormatter >> addNewLinesBeforeStatementStartingAt: anInteger [
 		ifFalse: [ self newLines: newLines ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EFFormatter >> addSpaceIfNeededForLastArgument: aPragmaNode [
 	aPragmaNode isUnary
 		ifTrue: [ ^ self ].
@@ -997,7 +1000,7 @@ EFFormatter >> addSpaceIfNeededForLastArgument: aPragmaNode [
 		ifTrue: [ self space ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EFFormatter >> areArgumentsTooLong: anArray [
 
 	| size |
@@ -1005,7 +1008,7 @@ EFFormatter >> areArgumentsTooLong: anArray [
 	^ self isLineTooLongWithNewCharacters: size
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EFFormatter >> basicFormatCommentFor: aComment [
 	codeStream
 		nextPut: $";
@@ -1013,7 +1016,7 @@ EFFormatter >> basicFormatCommentFor: aComment [
 		nextPut: $"
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EFFormatter >> bracketWith: bracketString around: aBlock [
 	bracketString isEmpty
 		ifTrue: [ ^ aBlock value ].
@@ -1022,7 +1025,7 @@ EFFormatter >> bracketWith: bracketString around: aBlock [
 		ensure: [ codeStream nextPut: bracketString last ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EFFormatter >> bracketWith: bracketString around: aBlock indentExtraSpaces: anInteger [
 	bracketString isEmpty
 		ifTrue: [ ^ aBlock value ].
@@ -1031,36 +1034,36 @@ EFFormatter >> bracketWith: bracketString around: aBlock indentExtraSpaces: anIn
 		ensure: [ codeStream nextPut: bracketString last ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EFFormatter >> characterSeparatorMethodSignatureFor: aMethodNode [
 	^ (self needsMethodSignatureOnMultipleLinesFor: aMethodNode)
 			ifTrue: [ self newLine ]
 			ifFalse: [ self space ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EFFormatter >> cleanSpacesAtTheEnd [
 
 	[ codeStream peekLast = Character space ] whileTrue: [
 		codeStream back ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter >> codeStream [
 	^ codeStream
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter >> codeStream: anObject [
 	codeStream := anObject
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EFFormatter >> currentLineLength [
 	^ codeStream position - lineStart
 ]
 
-{ #category : #'private - formatting' }
+{ #category : 'private - formatting' }
 EFFormatter >> firstSeparatorShouldNotPassLine: aMessageNode [
 	"predicate that tells if the keyword should be forced to be on the same line."
 
@@ -1069,7 +1072,7 @@ EFFormatter >> firstSeparatorShouldNotPassLine: aMessageNode [
 				or: [ self newLineBeforeFirstKeyword not ] ]
 ]
 
-{ #category : #'public interface' }
+{ #category : 'public interface' }
 EFFormatter >> format: aParseTree [
 	
 	self initializeCodeStream.
@@ -1078,7 +1081,7 @@ EFFormatter >> format: aParseTree [
 	^ codeStream contents
 ]
 
-{ #category : #'private - formatting' }
+{ #category : 'private - formatting' }
 EFFormatter >> formatArray: anArrayNode [
 	| current |
 	codeStream nextPutAll: self spacesInsideArray.
@@ -1105,7 +1108,7 @@ EFFormatter >> formatArray: anArrayNode [
 	codeStream nextPutAll: self spacesInsideArray
 ]
 
-{ #category : #'private - formatting' }
+{ #category : 'private - formatting' }
 EFFormatter >> formatArrayBody: aSequenceNode [
 	| statements |
 	statements := aSequenceNode statements.
@@ -1120,7 +1123,7 @@ EFFormatter >> formatArrayBody: aSequenceNode [
 			ifTrue: [ self addNewLinesBeforeStatementStartingAt: (statements at: i + 1) start ] ]
 ]
 
-{ #category : #'private - formatting' }
+{ #category : 'private - formatting' }
 EFFormatter >> formatBlock2: aBlockNode [
  
 	"This is a change to speed up and avoid the use of willBeMultiline: 
@@ -1156,7 +1159,7 @@ EFFormatter >> formatBlock2: aBlockNode [
 		ifFalse: [ codeStream nextPutAll: self spacesInsideBlocksString ]
 ]
 
-{ #category : #'private - formatting' }
+{ #category : 'private - formatting' }
 EFFormatter >> formatBlock: aBlockNode [
 	" see formatBlock2: for a possible alternate and faster definition."
 
@@ -1178,7 +1181,7 @@ EFFormatter >> formatBlock: aBlockNode [
 		ifFalse: [ codeStream nextPutAll: self spacesInsideBlocksString ]
 ]
 
-{ #category : #'private - formatting' }
+{ #category : 'private - formatting' }
 EFFormatter >> formatBlockArgumentsFor: aBlockNode [
 
 	| onAnotherLine args |
@@ -1195,28 +1198,28 @@ EFFormatter >> formatBlockArgumentsFor: aBlockNode [
 	codeStream nextPutAll: '| '
 ]
 
-{ #category : #'private - formatting' }
+{ #category : 'private - formatting' }
 EFFormatter >> formatBlockCommentFor: aBlockNode [
   aBlockNode comments do: [:each |  self basicFormatCommentFor: each.
         (self isNonEmptySingleLineBlock: aBlockNode) ifTrue: [ self space ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter >> formatCommentCloseToStatements [
 	^ context formatCommentCloseToStatements
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter >> formatCommentCloseToStatements: aBoolean [
 	context formatCommentCloseToStatements: aBoolean
 ]
 
-{ #category : #'private - formatting' }
+{ #category : 'private - formatting' }
 EFFormatter >> formatCommentsFor: aNode [
   aNode comments do: [:each |  self basicFormatCommentFor: each ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EFFormatter >> formatMessageNode: aMessageNode [
   ^String streamContents: [:messageStream |  self with: aMessageNode selectorParts and: aMessageNode arguments do: [:selector :arg |  messageStream
                  nextPutAll: selector;
@@ -1224,7 +1227,7 @@ EFFormatter >> formatMessageNode: aMessageNode [
                  nextPutAll: (self formattedSourceFor: arg) ] separatedBy: [ messageStream space ] ]
 ]
 
-{ #category : #'private - formatting' }
+{ #category : 'private - formatting' }
 EFFormatter >> formatMethodBodyFor: aMethodNode [
 	self
 		indentAround:
@@ -1237,7 +1240,7 @@ EFFormatter >> formatMethodBodyFor: aMethodNode [
 			self visitNode: aMethodNode body ]
 ]
 
-{ #category : #'private - formatting' }
+{ #category : 'private - formatting' }
 EFFormatter >> formatMethodCommentFor: aMethodNode [
   aMethodNode comments do: [:each |  
 				self useBasicCommentFormat 
@@ -1246,7 +1249,7 @@ EFFormatter >> formatMethodCommentFor: aMethodNode [
         		self newLines: self numberOfNewLinesAfterMethodComment ]
 ]
 
-{ #category : #'private - formatting' }
+{ #category : 'private - formatting' }
 EFFormatter >> formatMethodPatternFor: aMethodNode [
 	aMethodNode arguments isEmpty
 		ifTrue: [ codeStream nextPutAll: aMethodNode selector ]
@@ -1256,7 +1259,7 @@ EFFormatter >> formatMethodPatternFor: aMethodNode [
 				ifFalse: [ self privateFormatMethodPatternMonoLineFor: aMethodNode ] ]
 ]
 
-{ #category : #'private - formatting' }
+{ #category : 'private - formatting' }
 EFFormatter >> formatPragmasFor: aMethodNode [
 
 	aMethodNode pragmas do: [ :each |
@@ -1264,7 +1267,7 @@ EFFormatter >> formatPragmasFor: aMethodNode [
 		self newLine ]
 ]
 
-{ #category : #'private - formatting' }
+{ #category : 'private - formatting' }
 EFFormatter >> formatSelectorAndArguments: aMessageNode [
 	"We are formatting a message and here we are about to format the message selector and its arguments."
 	
@@ -1291,7 +1294,7 @@ EFFormatter >> formatSelectorAndArguments: aMessageNode [
 						ifFalse: [ [ self space ] ]) ]
 ]
 
-{ #category : #'private - formatting' }
+{ #category : 'private - formatting' }
 EFFormatter >> formatSelectorAndArguments: aMessageNode firstSeparator: firstBlock restSeparator: restBlock [
   | separatorBlock i |
   i := 0.
@@ -1305,7 +1308,7 @@ EFFormatter >> formatSelectorAndArguments: aMessageNode firstSeparator: firstBlo
               ((self willBeMultiline: argument) and: [ i < aMessageNode selectorParts size ]) ifTrue: [ separatorBlock := self newLine ] ] ]
 ]
 
-{ #category : #'private - formatting' }
+{ #category : 'private - formatting' }
 EFFormatter >> formatSequenceNodeStatementsFor: aSequenceNode [
 	| statements |
 	statements := aSequenceNode statements.
@@ -1327,14 +1330,14 @@ EFFormatter >> formatSequenceNodeStatementsFor: aSequenceNode [
 			ifTrue: [ self addNewLinesBeforeStatementStartingAt: (statements at: i + 1) start ] ]
 ]
 
-{ #category : #'private - formatting' }
+{ #category : 'private - formatting' }
 EFFormatter >> formatSingleArrayElement: aRBNode [ 
 	"Imagine that you have {1 factorial}, you do not want an ending period. This method is only invoked on the last array element."
 	
 	self visitNode: aRBNode
 ]
 
-{ #category : #'private - formatting' }
+{ #category : 'private - formatting' }
 EFFormatter >> formatStatementCommentsFor: aStatementNode [
 	self formatCommentCloseToStatements
 		ifFalse: [ ^ self ].
@@ -1351,7 +1354,7 @@ EFFormatter >> formatStatementCommentsFor: aStatementNode [
 				ifFalse: [ self resizeCommentFor: each startingAt: self currentLineLength ]]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EFFormatter >> formatTemporariesFor: aSequenceNode [
 	aSequenceNode hasTemporaries
 		ifFalse: [ ^ self ].
@@ -1370,7 +1373,7 @@ EFFormatter >> formatTemporariesFor: aSequenceNode [
 	self newLines: self numberOfNewLinesAfterTemporaries
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EFFormatter >> formattedSourceFor: aNode [
 
 	^ lookAheadCode at: aNode ifAbsentPut: [ 
@@ -1381,7 +1384,7 @@ EFFormatter >> formattedSourceFor: aNode [
 			format: aNode ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EFFormatter >> handleLineForArgument: anArgument [
   | isLineTooLong |
   isLineTooLong := self isLineTooLongWithNode: anArgument.
@@ -1389,57 +1392,57 @@ EFFormatter >> handleLineForArgument: anArgument [
   self visitNode: anArgument
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EFFormatter >> handleLineForSelector: selector withSeparatorBlock: aBlock [
 	(self isLineTooLongWithString: selector)
 		ifTrue: [ self newLine ]
 		ifFalse: [ aBlock value ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EFFormatter >> hasAMultiLineMessageArgument: anArgumentsCollection [
   ^anArgumentsCollection anySatisfy: [:each |  self isInCascadeNode ifTrue: [ self indent: 0 around: [ self willBeMultiline: each ] ] ifFalse: [ self indent: self indentsForKeywords + 1 around: [ self willBeMultiline: each ] ] ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EFFormatter >> headOfBlockNotEmpty: aBlockNode [
 
 	^ aBlockNode arguments isNotEmpty or: [aBlockNode comments isNotEmpty]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter >> indent [
 	^ indent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter >> indent: anInteger [
 
 	indent := anInteger
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EFFormatter >> indent: anInteger around: aBlock [ 
 	self indent: self indent + anInteger.
 	^aBlock ensure: [self indent: self indent - anInteger]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EFFormatter >> indentAround: aBlock [ 
 	self indent: 1 around: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter >> indentExtraSpaces [
 	^ context indentExtraSpaces
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter >> indentExtraSpaces: anInteger [
 	context indentExtraSpaces: anInteger
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EFFormatter >> indentExtraSpaces: anInteger around: aBlock [
 	| previousIndentExtraSpacesSize |
 	previousIndentExtraSpacesSize := self indentExtraSpaces size.
@@ -1448,22 +1451,22 @@ EFFormatter >> indentExtraSpaces: anInteger around: aBlock [
 		ensure: [ self indentExtraSpaces: previousIndentExtraSpacesSize ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter >> indentString [
 	^ context indentString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter >> indentStyle [
 	^ context indentStyle
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter >> indentStyle: aSymbole [
 	context indentStyle: aSymbole
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter >> indentTimesRepeat: anInteger [
 	
 	anInteger timesRepeat: 
@@ -1471,17 +1474,17 @@ EFFormatter >> indentTimesRepeat: anInteger [
 	codeStream nextPutAll: self indentExtraSpaces
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter >> indentsForKeywords [
 	^ context indentsForKeywords
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter >> indentsForKeywords: anInteger [
 	context indentsForKeywords: anInteger
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 EFFormatter >> initialize [
 	super initialize.
 	lineStart := 0.
@@ -1492,13 +1495,13 @@ EFFormatter >> initialize [
 	self initializeTemporaryLookAheadCode
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 EFFormatter >> initializeCodeStream [
 
   codeStream := ReadWriteStream on: (String new: 256)
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 EFFormatter >> initializeTemporaryLookAheadCode [
 
 	lookAheadCode := IdentityDictionary new
@@ -1507,35 +1510,35 @@ EFFormatter >> initializeTemporaryLookAheadCode [
 	However on simple methods it is still faster than using a Dictionary."
 ]
 
-{ #category : #'public interface' }
+{ #category : 'public interface' }
 EFFormatter >> installNewContext: aContext [
 	
 	context := aContext
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter >> isInCascadeNode [
 	^ isInCascadeNode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter >> isInCascadeNode: aBoolean [
 	isInCascadeNode := aBoolean
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EFFormatter >> isLineTooLongWithNewCharacters: aNumber [
 	"Is the length of the current line + the length of the first fragment of code until a new line is >= the max line length"
 	
 	^ self currentLineLength + aNumber >= self maxLineLength
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EFFormatter >> isLineTooLongWithNode: aNode [
   ^self isLineTooLongWithString: (self formattedSourceFor: aNode)
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EFFormatter >> isLineTooLongWithString: aString [
 	"Is the length of the current line + the length of the first fragment of code until a new line is >= the max line length"
 	
@@ -1543,7 +1546,7 @@ EFFormatter >> isLineTooLongWithString: aString [
 		>= self maxLineLength
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EFFormatter >> isMultiLineMessage: aMessageNode [
 	(self multiLineMessages includes: aMessageNode selector)
 		ifTrue: [ ^ true ].
@@ -1556,12 +1559,12 @@ EFFormatter >> isMultiLineMessage: aMessageNode [
 	^ self isLineTooLongWithString: (self formatMessageNode: aMessageNode) contents
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EFFormatter >> isNonEmptySingleLineBlock: aBlockNode [
   ^((self willBeMultiline: aBlockNode body) or: [ aBlockNode body statements isEmpty ]) not
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter >> keepBlockInMessage [
 	"Return a boolean for 
 		1 to: 4 do: [ :i | 
@@ -1574,22 +1577,22 @@ EFFormatter >> keepBlockInMessage [
 	^ context keepBlockInMessage
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter >> keepBlockInMessage: aBoolean [
 	context keepBlockInMessage: aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter >> lineStart [
 	^ lineStart
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter >> lineStart: anObject [
 	lineStart := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter >> lineUpBlockBrackets [
 	"Return whether a new line should be added before closing a multiline block.
 	1 to: 4 do: [ Transcript
@@ -1600,68 +1603,68 @@ EFFormatter >> lineUpBlockBrackets [
 	^ context lineUpBlockBrackets
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter >> lineUpBlockBrackets: aBoolean [
 	context lineUpBlockBrackets: aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter >> lookAheadCode [
 	^ lookAheadCode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter >> lookAheadCode: anObject [
 	lookAheadCode := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter >> maxLineLength [
 	^ context maxLineLength
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter >> maxLineLength: anInteger [
 	context maxLineLength: anInteger
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EFFormatter >> messageHasMultilineArgumentBeforeAnotherArgument: aMessageNode [
   aMessageNode arguments doWithIndex: [:each :i |  (self willBeMultiline: each) ifTrue: [ ^i < aMessageNode arguments size ] ].
   ^false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter >> methodSignatureOnMultipleLines [
 	^ context methodSignatureOnMultipleLines
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter >> methodSignatureOnMultipleLines: aBoolean [
 	context methodSignatureOnMultipleLines: aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter >> minimumNewLinesBetweenStatements [
 	^ context minimumNewLinesBetweenStatements
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter >> minimumNewLinesBetweenStatements: anInteger [
 	context minimumNewLinesBetweenStatements: anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter >> multiLineMessages [
 	^ context multiLineMessages
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter >> multiLineMessages: anArray [
 	context multiLineMessages: anArray
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EFFormatter >> needsMethodSignatureOnMultipleLinesFor: aMethodNode [
 	| cpt |
 	cpt := 0.
@@ -1673,7 +1676,7 @@ EFFormatter >> needsMethodSignatureOnMultipleLinesFor: aMethodNode [
 		ifFalse: [ false ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EFFormatter >> needsParenthesisFor: aNode [
 	| parent grandparent |
 	aNode ifNil: [ ^ false ].
@@ -1709,22 +1712,22 @@ EFFormatter >> needsParenthesisFor: aNode [
 	^ false
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EFFormatter >> newLine [
 	self newLines: 1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter >> newLineAfterCascade [
 	^ context newLineAfterCascade
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter >> newLineAfterCascade: aBoolean [
 	context newLineAfterCascade: aBoolean
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EFFormatter >> newLineBefore [
 	"predicate which return true if there where a newLine in the code stream just before the current position"
 
@@ -1736,27 +1739,27 @@ EFFormatter >> newLineBefore [
 	^ self codeStream contents lines last = currentIndentationString contents
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter >> newLineBeforeFirstCascade [
 	^ context newLineBeforeFirstCascade
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter >> newLineBeforeFirstCascade: aBoolean [
 	context newLineBeforeFirstCascade: aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter >> newLineBeforeFirstKeyword [
 	^ context newLineBeforeFirstKeyword
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter >> newLineBeforeFirstKeyword: aBoolean [
 	context newLineBeforeFirstKeyword: aBoolean
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EFFormatter >> newLines: anInteger [
 	"Add a number of new lines and in addition store the position of the latest new lines in the stream so that latter we can compute the current line length."
 
@@ -1766,7 +1769,7 @@ EFFormatter >> newLines: anInteger [
 	self indentTimesRepeat: self indent
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EFFormatter >> newLinesBeforeStartingAt: anIndex [
 	| count cr lf index char |
 	originalSource ifNil: [ ^ 0 ].
@@ -1789,142 +1792,142 @@ EFFormatter >> newLinesBeforeStartingAt: anIndex [
 	^ count
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter >> numberOfArgumentsForMultiLine [
 	^ context numberOfArgumentsForMultiLine
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter >> numberOfArgumentsForMultiLine: anInteger [
 	context numberOfArgumentsForMultiLine: anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter >> numberOfNewLinesAfterMethodComment [
 	^ context numberOfNewLinesAfterMethodComment
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter >> numberOfNewLinesAfterMethodComment: anInteger [
 	context numberOfNewLinesAfterMethodComment: anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter >> numberOfNewLinesAfterMethodSignature [
 	^ context numberOfNewLinesAfterMethodSignature
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter >> numberOfNewLinesAfterMethodSignature: anInteger [
 	context numberOfNewLinesAfterMethodSignature: anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter >> numberOfNewLinesAfterMethodSignatureWithMethodComment [
 	^ context numberOfNewLinesAfterMethodSignatureWithMethodComment
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter >> numberOfNewLinesAfterMethodSignatureWithMethodComment: anInteger [
 	context numberOfNewLinesAfterMethodSignatureWithMethodComment: anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter >> numberOfNewLinesAfterTemporaries [
 	^ context numberOfNewLinesAfterTemporaries
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter >> numberOfNewLinesAfterTemporaries: anInteger [
 	context numberOfNewLinesAfterTemporaries: anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter >> numberOfSpacesAfterCaretSymbolInReturn [
 	^ context numberOfSpacesAfterCaretSymbolInReturn
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter >> numberOfSpacesAfterCaretSymbolInReturn: anInteger [
 	context numberOfSpacesAfterCaretSymbolInReturn: anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter >> numberOfSpacesInIndent [
 	^ context numberOfSpacesInIndent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter >> numberOfSpacesInIndent: anInteger [
 	context numberOfSpacesInIndent: anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter >> numberOfSpacesInsideArray [
 	^ context numberOfSpacesInsideArray
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter >> numberOfSpacesInsideArray: anInteger [
 	context numberOfSpacesInsideArray: anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter >> numberOfSpacesInsideBlock [
 	^ context numberOfSpacesInsideBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter >> numberOfSpacesInsideBlock: anInteger [
 	context numberOfSpacesInsideBlock: anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter >> numberOfSpacesInsideParentheses [
 	^ context numberOfSpacesInsideParentheses
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter >> numberOfSpacesInsideParentheses: anInteger [
 	context numberOfSpacesInsideParentheses: anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter >> oneLineMessages [
 	^ context oneLineMessages
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter >> oneLineMessages: anArray [
 	context oneLineMessages: anArray
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter >> periodAtEndOfBlock: aBoolean [
 	context periodAtEndOfBlock: aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter >> periodAtEndOfMethod: aBoolean [
 	context periodAtEndOfMethod: aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter >> periodsAtEndOfBlock [
 	^ context periodsAtEndOfBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter >> periodsAtEndOfMethod [
 	^ context periodsAtEndOfMethod
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EFFormatter >> pragmaArgumentNeedsSeparator: anArgumentNode [
 	^ anArgumentNode value isSymbol and: [ anArgumentNode value isBinary ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EFFormatter >> privateFormatMethodPatternMonoLineFor: aMethodNode [
 	self
 		with: aMethodNode selectorParts
@@ -1936,7 +1939,7 @@ EFFormatter >> privateFormatMethodPatternMonoLineFor: aMethodNode [
 		separatedBy: [ self characterSeparatorMethodSignatureFor: aMethodNode ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EFFormatter >> privateFormatMethodPatternMultiLineFor: aMethodNode [
 	| selectors arguments |
 	arguments := aMethodNode arguments.
@@ -1958,7 +1961,7 @@ EFFormatter >> privateFormatMethodPatternMultiLineFor: aMethodNode [
 
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 EFFormatter >> resizeComment: aComment withFirstLineShorterOf: anIndex [
 	| cutComment firstLine currentCharPos contents |
 	currentCharPos := 1.
@@ -1975,7 +1978,7 @@ EFFormatter >> resizeComment: aComment withFirstLineShorterOf: anIndex [
 	self resizeStringDependingOnWindowSizeFor: cutComment
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 EFFormatter >> resizeCommentFor: aComment startingAt: anIndex [
 	codeStream nextPut: $".
 	"Hack to keep the right comment in pop up like cmd n, cmd m..."
@@ -1992,7 +1995,7 @@ EFFormatter >> resizeCommentFor: aComment startingAt: anIndex [
 	codeStream nextPut: $"
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 EFFormatter >> resizeStringDependingOnWindowSizeFor: aComment [
 	| resizedComment |
 	resizedComment := (aComment contents escapeCharacter: $") withNoLineLongerThan: self maxLineLength.
@@ -2002,100 +2005,100 @@ EFFormatter >> resizeStringDependingOnWindowSizeFor: aComment [
 			ifTrue: [ self indentTimesRepeat: self indent  ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter >> retainBlankLinesBeforeComments [
 	^ context retainBlankLinesBeforeComments
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter >> retainBlankLinesBeforeComments: aBoolean [
 	context retainBlankLinesBeforeComments: aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter >> retainBlankLinesBetweenStatements [
 	^ context retainBlankLinesBetweenStatements
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter >> retainBlankLinesBetweenStatements: aBoolean [
 	context retainBlankLinesBetweenStatements: aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter >> selectorAndArgumentCombinedMaxSize [
 	^ context selectorAndArgumentCombinedMaxSize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter >> selectorAndArgumentCombinedMaxSize: anInteger [
 	context selectorAndArgumentCombinedMaxSize: anInteger
 ]
 
-{ #category : #'private - formatting' }
+{ #category : 'private - formatting' }
 EFFormatter >> shouldPassNewLineAfterHeadOfBlock: aBlockNode [
 	^  aBlockNode headIsNotEmpty or: [ self keepBlockInMessage ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EFFormatter >> space [
 	codeStream space
 ]
 
-{ #category : #'private - formatting' }
+{ #category : 'private - formatting' }
 EFFormatter >> spaceAndFormatComments: aNode [
 	aNode comments ifNotEmpty: [ self space ].
 	self formatCommentsFor: aNode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter >> spacesAfterCaretSymbolInReturnString [
 	^ context spacesAfterCaretSymbolInReturnString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter >> spacesBeforeDotInDynamicArray [ 
 	^ context spacesBeforeDotInDynamicArray
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter >> spacesInsideArray [
 	^ context spacesInsideArray
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter >> spacesInsideBlocksString [
 	^ context spacesInsideBlocksString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter >> spacesInsideParenthesesString [
 	"Set via numberOfSpacesInsideParentheses: "
 	^ context spacesInsideParenthesesString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter >> useBasicCommentFormat [ 
 	^ context useBasicCommentFormat
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EFFormatter >> useBasicCommentFormat: aBoolean [
 	context useBasicCommentFormat: aBoolean
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 EFFormatter >> visitAnnotationMarkNode: aRBAnnotationValueNode [
 
 	codeStream nextPut: $@
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 EFFormatter >> visitArrayNode: anArrayNode [
 	self bracketWith: '{}' around: [ self formatArray: anArrayNode ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 EFFormatter >> visitAssignmentNode: anAssignmentNode [
 	| var |
 	var := anAssignmentNode variable.
@@ -2106,14 +2109,14 @@ EFFormatter >> visitAssignmentNode: anAssignmentNode [
 		around: [ self visitNode: anAssignmentNode value ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 EFFormatter >> visitBlockNode: aBlockNode [
 	self
 		bracketWith: '[]'
 		around: [ self formatBlock: aBlockNode ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 EFFormatter >> visitCascadeNode: aCascadeNode [
 	self isInCascadeNode: true.
 	self visitNode: aCascadeNode receiver.
@@ -2140,7 +2143,7 @@ EFFormatter >> visitCascadeNode: aCascadeNode [
 	self isInCascadeNode: false
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 EFFormatter >> visitEnglobingErrorNode: aNode [
 
 	aNode isTemporariesError ifTrue: [
@@ -2157,7 +2160,7 @@ EFFormatter >> visitEnglobingErrorNode: aNode [
 		self writeString: aNode valueAfter ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 EFFormatter >> visitLiteralArrayNode: aRBArrayLiteralNode [
 	| brackets current |
 	codeStream nextPut: $#.
@@ -2179,26 +2182,26 @@ EFFormatter >> visitLiteralArrayNode: aRBArrayLiteralNode [
 					codeStream nextPutAll: self spacesInsideArray ] ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 EFFormatter >> visitLiteralNode: aLiteralNode [
 	aLiteralNode value isLiteral
 		ifFalse: [ self writeString: '''<an unprintable nonliteral value>''' ]
 		ifTrue: [ self writeString: aLiteralNode sourceText ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 EFFormatter >> visitMessageNode: aMessageNode [
 	self visitNode: aMessageNode receiver.
 	self formatSelectorAndArguments: aMessageNode
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 EFFormatter >> visitMethodNode: aMethodNode [ 
 	self formatMethodPatternFor: aMethodNode.
 	self formatMethodBodyFor: aMethodNode
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 EFFormatter >> visitNode: aNode [
 	| needsParenthesis |
 	needsParenthesis := self needsParenthesisFor: aNode.
@@ -2218,12 +2221,12 @@ EFFormatter >> visitNode: aNode [
 		indentExtraSpaces: (needsParenthesis ifTrue: [ 1 + self numberOfSpacesInsideParentheses ] ifFalse:[ 0 ])
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 EFFormatter >> visitParseErrorNode: aNode [
 	self writeString: aNode value
 ]
 
-{ #category : #'visiting - patterns' }
+{ #category : 'visiting - patterns' }
 EFFormatter >> visitPatternBlockNode: aRBPatternBlockNode [ 
 	codeStream nextPut: $`.
 	self 
@@ -2231,7 +2234,7 @@ EFFormatter >> visitPatternBlockNode: aRBPatternBlockNode [
 		around: [self formatBlock: aRBPatternBlockNode]
 ]
 
-{ #category : #'visiting - patterns' }
+{ #category : 'visiting - patterns' }
 EFFormatter >> visitPatternWrapperBlockNode: aRBPatternWrapperBlockNode [
 	self visitNode: aRBPatternWrapperBlockNode wrappedNode.
 	codeStream nextPut: $`.
@@ -2240,7 +2243,7 @@ EFFormatter >> visitPatternWrapperBlockNode: aRBPatternWrapperBlockNode [
 		around: [self formatBlock: aRBPatternWrapperBlockNode]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 EFFormatter >> visitPragmaNode: aPragmaNode [
 
 	| hackNoBrackets |
@@ -2258,7 +2261,7 @@ EFFormatter >> visitPragmaNode: aPragmaNode [
 	hackNoBrackets ifFalse: [ codeStream nextPut: $> ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 EFFormatter >> visitReturnNode: aReturnNode [
 	codeStream
 		nextPut: $^;
@@ -2268,7 +2271,7 @@ EFFormatter >> visitReturnNode: aReturnNode [
 		around: [ self visitNode: aReturnNode value ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 EFFormatter >> visitSequenceNode: aSequenceNode [
 	self formatTemporariesFor: aSequenceNode.
 	aSequenceNode comments
@@ -2277,17 +2280,17 @@ EFFormatter >> visitSequenceNode: aSequenceNode [
 	self formatSequenceNodeStatementsFor: aSequenceNode
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 EFFormatter >> visitVariableNode: aVariableNode [ 
 	codeStream nextPutAll: aVariableNode name
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EFFormatter >> willBeMultiline: aNode [
   ^(self formattedSourceFor: aNode) includes: Character cr
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 EFFormatter >> with: firstCollection and: secondCollection do: aBlock separatedBy: separatorBlock [
 	firstCollection isEmpty
 		ifTrue: [ ^ self ].
@@ -2297,7 +2300,7 @@ EFFormatter >> with: firstCollection and: secondCollection do: aBlock separatedB
 		aBlock value: (firstCollection at: i) value: (secondCollection at: i) ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EFFormatter >> writeString: aString [
 	"Write the argument in the code stream and in addition maintent the line start position so that we can later compute the current line length."
 	| index |

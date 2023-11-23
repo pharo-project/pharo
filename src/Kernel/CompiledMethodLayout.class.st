@@ -5,19 +5,21 @@ Unlike default Object layouts, CompiledMethods define a custom format integer si
 See CompiledMethod for more details.
 "
 Class {
-	#name : #CompiledMethodLayout,
-	#superclass : #ObjectLayout,
-	#category : #'Kernel-Layout'
+	#name : 'CompiledMethodLayout',
+	#superclass : 'ObjectLayout',
+	#category : 'Kernel-Layout',
+	#package : 'Kernel',
+	#tag : 'Layout'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CompiledMethodLayout class >> extending: superLayout scope: aScope host: aClass [
 	^ superLayout extendCompiledMethod
 		host: aClass;
 		yourself
 ]
 
-{ #category : #description }
+{ #category : 'description' }
 CompiledMethodLayout class >> subclassDefiningSymbol [
 	"Answer a keyword that describes the receiver's kind of subclass
 	Note: this is for printing the ST80 style class definiton, usage makes no sense for anything
@@ -26,12 +28,12 @@ CompiledMethodLayout class >> subclassDefiningSymbol [
 	^#variableByteSubclass:
 ]
 
-{ #category : #extending }
+{ #category : 'extending' }
 CompiledMethodLayout >> extend [
 	self error: 'CompiledMethodLayout can not be extendend'
 ]
 
-{ #category : #format }
+{ #category : 'format' }
 CompiledMethodLayout >> instanceSpecification [
 	 ^ 24
 ]

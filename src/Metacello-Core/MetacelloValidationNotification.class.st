@@ -1,29 +1,31 @@
 Class {
-	#name : #MetacelloValidationNotification,
-	#superclass : #Notification,
+	#name : 'MetacelloValidationNotification',
+	#superclass : 'Notification',
 	#instVars : [
 		'issue'
 	],
-	#category : #'Metacello-Core-Exceptions-Notifications'
+	#category : 'Metacello-Core-Exceptions-Notifications',
+	#package : 'Metacello-Core',
+	#tag : 'Exceptions-Notifications'
 }
 
-{ #category : #exceptioninstantiator }
+{ #category : 'exceptioninstantiator' }
 MetacelloValidationNotification class >> signal: aMetacelloValidationIssue [
 
 	^ self new signal: aMetacelloValidationIssue
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloValidationNotification >> issue [
 	^ issue
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloValidationNotification >> issue: anObject [
 	issue := anObject
 ]
 
-{ #category : #signaling }
+{ #category : 'signaling' }
 MetacelloValidationNotification >> signal: aMetacelloValidationIssue [
 
 	self issue: aMetacelloValidationIssue.

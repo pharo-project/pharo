@@ -2,38 +2,40 @@
 i implement AthensTransform protocol using cairo-specific functions.
 "
 Class {
-	#name : #AthensCairoTransform,
-	#superclass : #AthensTransform,
+	#name : 'AthensCairoTransform',
+	#superclass : 'AthensTransform',
 	#traits : 'TCairoLibrary',
 	#classTraits : 'TCairoLibrary classTrait',
 	#instVars : [
 		'canvas'
 	],
-	#category : #'Athens-Cairo-Transforms'
+	#category : 'Athens-Cairo-Transforms',
+	#package : 'Athens-Cairo',
+	#tag : 'Transforms'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 AthensCairoTransform class >> for: cairoCanvas [
 	^ self new canvas: cairoCanvas
 ]
 
-{ #category : #initializing }
+{ #category : 'initializing' }
 AthensCairoTransform >> canvas: aCairoCanvas [
 	canvas := aCairoCanvas
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 AthensCairoTransform >> loadIdentity [
 	^ self ffiCall: #(
 		void cairo_identity_matrix (AthensCairoCanvas canvas) )
 ]
 
-{ #category : #transformations }
+{ #category : 'transformations' }
 AthensCairoTransform >> moveTo: aPoint [
 	self moveToX: aPoint x asFloat Y: aPoint y asFloat
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 AthensCairoTransform >> moveToX: px Y: py [
 	^ self ffiCall: #(
 		void cairo_move_to (AthensCairoCanvas canvas,
@@ -41,14 +43,14 @@ AthensCairoTransform >> moveToX: px Y: py [
                                                          double py))
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 AthensCairoTransform >> primRotateByRadians: angle [
 	^ self ffiCall: #(
 		void cairo_rotate (AthensCairoCanvas canvas,
                                                          double angle))
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 AthensCairoTransform >> primScaleX: fx Y: fy [
 	^ self ffiCall: #(
 		void cairo_scale (AthensCairoCanvas canvas,
@@ -56,7 +58,7 @@ AthensCairoTransform >> primScaleX: fx Y: fy [
                                                          double fy))
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 AthensCairoTransform >> primTransformX: x Y: y [
 	^ self ffiCall: #(
 		void cairo_user_to_device (AthensCairoCanvas canvas,
@@ -64,7 +66,7 @@ AthensCairoTransform >> primTransformX: x Y: y [
                                                          NBFloatPtr y) )
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 AthensCairoTransform >> primTranslateX: px Y: py [
 
 	^ self ffiCall: #(
@@ -73,35 +75,35 @@ AthensCairoTransform >> primTranslateX: px Y: py [
                                                          double py))
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 AthensCairoTransform >> restore [
 	^ self ffiCall: #(void cairo_restore(AthensCairoCanvas canvas))
 ]
 
-{ #category : #transformations }
+{ #category : 'transformations' }
 AthensCairoTransform >> restoreAfter: aBlock [
 	self save.
 	aBlock ensure:  [ self restore ]
 ]
 
-{ #category : #transformations }
+{ #category : 'transformations' }
 AthensCairoTransform >> rotateByDegrees: angle [
 
 	^ self rotateByRadians: angle degreesToRadians
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 AthensCairoTransform >> rotateByRadians: angle [
 
 	^ self primRotateByRadians: angle asFloat
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 AthensCairoTransform >> save [
 	^ self ffiCall: #(void cairo_save (AthensCairoCanvas canvas))
 ]
 
-{ #category : #transformations }
+{ #category : 'transformations' }
 AthensCairoTransform >> scaleBy: aScalarOrPoint [
 	| double |
 	aScalarOrPoint isPoint
@@ -114,13 +116,13 @@ AthensCairoTransform >> scaleBy: aScalarOrPoint [
 			self scaleX: double Y: double ]
 ]
 
-{ #category : #transformation }
+{ #category : 'transformation' }
 AthensCairoTransform >> scaleX: fx Y: fy [
 
 	^ self primScaleX: fx asFloat Y: fy asFloat
 ]
 
-{ #category : #'vector - transform' }
+{ #category : 'vector - transform' }
 AthensCairoTransform >> transform: aPoint [
 	| x y |
 	x := ByteArray new: 8.
@@ -131,12 +133,12 @@ AthensCairoTransform >> transform: aPoint [
 	^ (x doubleAt: 1) @ (y doubleAt: 1)
 ]
 
-{ #category : #transformations }
+{ #category : 'transformations' }
 AthensCairoTransform >> translateBy: aPoint [
 	self translateX: aPoint x Y: aPoint y
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 AthensCairoTransform >> translateX: px Y: py [
 
 	^ self primTranslateX: px asFloat Y: py asFloat

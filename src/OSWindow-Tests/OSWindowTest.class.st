@@ -2,12 +2,14 @@
 An OSWindowTest is a test class for testing the behavior of OSWindow
 "
 Class {
-	#name : #OSWindowTest,
-	#superclass : #TestCase,
-	#category : #'OSWindow-Tests-Tests'
+	#name : 'OSWindowTest',
+	#superclass : 'TestCase',
+	#category : 'OSWindow-Tests-Tests',
+	#package : 'OSWindow-Tests',
+	#tag : 'Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 OSWindowTest >> testCreatingWindow [
 
 	| window attributes |
@@ -18,7 +20,7 @@ OSWindowTest >> testCreatingWindow [
 	self assert: (window isValid)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OSWindowTest >> testNewWindowDefaults [
 	| window |
 	window := OSWindow newWithNullDriver.
@@ -28,7 +30,7 @@ OSWindowTest >> testNewWindowDefaults [
 		ensure: [ window destroy ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OSWindowTest >> testSettingUpWindow [
 
 	| window |
@@ -44,7 +46,7 @@ OSWindowTest >> testSettingUpWindow [
 	self deny: window isValid
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OSWindowTest >> testTraceEvents [
 	"We do not trace events by default"
 

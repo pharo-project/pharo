@@ -2,15 +2,17 @@
 I represent a removal of a method in a class or a trait.
 "
 Class {
-	#name : #EpMethodRemoval,
-	#superclass : #EpMethodChange,
+	#name : 'EpMethodRemoval',
+	#superclass : 'EpMethodChange',
 	#instVars : [
 		'method'
 	],
-	#category : #'Epicea-Model'
+	#category : 'Epicea-Model',
+	#package : 'Epicea',
+	#tag : 'Model'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 EpMethodRemoval class >> method: aCompiledMethod [
 
 	^ self basicNew
@@ -18,50 +20,50 @@ EpMethodRemoval class >> method: aCompiledMethod [
 		yourself
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpMethodRemoval >> accept: aVisitor [
 
 	^ aVisitor visitMethodRemoval: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpMethodRemoval >> affectedPackageName [
 
 	^ method package
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 EpMethodRemoval >> initializeWithMethod: aCompiledMethod [
 
 	self initialize.
 	method := aCompiledMethod asEpiceaRingDefinition
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpMethodRemoval >> methodAffected [
 
 	^ method
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpMethodRemoval >> methodRemoved [
 
 	^ method
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpMethodRemoval >> protocol [
 
 	^ method protocol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpMethodRemoval >> selector [
 
 	^ method selector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpMethodRemoval >> sourceCode [
 
 	^ method sourceCode

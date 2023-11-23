@@ -5,12 +5,14 @@ If there is a value for the variable, create a fetcher for messages of its class
 See my superclass for details.
 "
 Class {
-	#name : #CoVariableValueMessageHeuristic,
-	#superclass : #CoVariableMessageHeuristic,
-	#category : #'HeuristicCompletion-Model-Heuristics'
+	#name : 'CoVariableValueMessageHeuristic',
+	#superclass : 'CoVariableMessageHeuristic',
+	#category : 'HeuristicCompletion-Model-Heuristics',
+	#package : 'HeuristicCompletion-Model',
+	#tag : 'Heuristics'
 }
 
-{ #category : #requests }
+{ #category : 'requests' }
 CoVariableValueMessageHeuristic >> buildFetcherFor: aRBMessageNode inContext: aContext [
 
 	"Try to fetch the real value of the variable from the context"
@@ -25,7 +27,7 @@ CoVariableValueMessageHeuristic >> buildFetcherFor: aRBMessageNode inContext: aC
 	^ CoEmptyFetcher new
 ]
 
-{ #category : #requests }
+{ #category : 'requests' }
 CoVariableValueMessageHeuristic >> valueOfVariable: aName inContext: completionContext ifPresent: aBlock [
 
 	| binding |

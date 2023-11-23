@@ -2,62 +2,64 @@
 Common superclass of Gofer operations
 "
 Class {
-	#name : #GoferOperation,
-	#superclass : #Object,
+	#name : 'GoferOperation',
+	#superclass : 'Object',
 	#instVars : [
 		'gofer',
 		'model'
 	],
-	#category : #'Gofer-Core-Operations'
+	#category : 'Gofer-Core-Operations',
+	#package : 'Gofer-Core',
+	#tag : 'Operations'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 GoferOperation class >> isAbstract [
 
 	^ self == GoferOperation
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GoferOperation class >> new [
 	self error: 'Gofer operations can only work on Gofer instances.'
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GoferOperation class >> on: aGofer [
 	^ self basicNew initializeOn: aGofer
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GoferOperation >> defaultModel [
 	^ nil
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 GoferOperation >> execute [
 	"Execute the receiving action."
 
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GoferOperation >> gofer [
 	"Answer the Gofer instance that triggered this operation."
 
 	^ gofer
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GoferOperation >> initialize [
 	model := self defaultModel
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GoferOperation >> initializeOn: aGofer [
 	gofer := aGofer.
 	self initialize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GoferOperation >> model [
 	"Answer the Monticello model of this operation."
 

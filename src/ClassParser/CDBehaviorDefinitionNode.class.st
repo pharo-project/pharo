@@ -2,8 +2,8 @@
 I contain the methods shared between class and meta class definition.
 "
 Class {
-	#name : #CDBehaviorDefinitionNode,
-	#superclass : #CDNode,
+	#name : 'CDBehaviorDefinitionNode',
+	#superclass : 'CDNode',
 	#instVars : [
 		'classNameNode',
 		'slotNodes',
@@ -11,38 +11,40 @@ Class {
 		'className',
 		'layoutClass'
 	],
-	#category : #'ClassParser-Model'
+	#category : 'ClassParser-Model',
+	#package : 'ClassParser',
+	#tag : 'Model'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 CDBehaviorDefinitionNode class >> isAbstract [
 	^ self == CDBehaviorDefinitionNode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CDBehaviorDefinitionNode >> addSlot: aCDSlotNode [
 
 	slotNodes add: aCDSlotNode.
 	self addChild: aCDSlotNode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CDBehaviorDefinitionNode >> classDefinitionNode [
 	^self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CDBehaviorDefinitionNode >> className [
 
 	^ className
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CDBehaviorDefinitionNode >> className: aClassName [
 	className := aClassName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CDBehaviorDefinitionNode >> className: aName astNode: astNode [
 
 	className := aName.
@@ -50,94 +52,96 @@ CDBehaviorDefinitionNode >> className: aName astNode: astNode [
 	self addChild: astNode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CDBehaviorDefinitionNode >> classNameNode [
 
 	^ classNameNode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CDBehaviorDefinitionNode >> classNameNode: aClassNameNode [
 	classNameNode := aClassNameNode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CDBehaviorDefinitionNode >> classNameNode: aNode astNode: astNode [
 
 	classNameNode := aNode.
 	self addChild: aNode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CDBehaviorDefinitionNode >> existingClassIfAbsent: aBlock [
 
 	^self classNameNode existingClassIfAbsent: aBlock
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CDBehaviorDefinitionNode >> hasTraitComposition [
 
 	^ traitDefinition isNotNil
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CDBehaviorDefinitionNode >> initialize [
+
 	super initialize.
-	slotNodes := OrderedCollection new
+	slotNodes := OrderedCollection new.
+	layoutClass := FixedLayout
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CDBehaviorDefinitionNode >> isClassSide [
 	^ self subclassResponsibility
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CDBehaviorDefinitionNode >> isInstanceSide [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CDBehaviorDefinitionNode >> layoutClass [
 
 	^ layoutClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CDBehaviorDefinitionNode >> layoutClass: aClass [
 	layoutClass := aClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CDBehaviorDefinitionNode >> selector [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CDBehaviorDefinitionNode >> slotNodes [
 
 	^ slotNodes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CDBehaviorDefinitionNode >> slots [
 
 	^ slotNodes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CDBehaviorDefinitionNode >> slots: aCollection [
 
 	slotNodes := aCollection.
 	aCollection do: [ :each | self addChild: each ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CDBehaviorDefinitionNode >> traitDefinition [
 
 	^traitDefinition
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CDBehaviorDefinitionNode >> traitDefinition: aNode [
 
 	traitDefinition := aNode.

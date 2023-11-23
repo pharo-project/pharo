@@ -10,42 +10,44 @@ For example, this are the sizes according architecture:
 So we model long as a special type and we use platform speciphic settings.
 "
 Class {
-	#name : #FFIULong,
-	#superclass : #FFIIntegerType,
-	#category : #'UnifiedFFI-Types'
+	#name : 'FFIULong',
+	#superclass : 'FFIIntegerType',
+	#category : 'UnifiedFFI-Types',
+	#package : 'UnifiedFFI',
+	#tag : 'Types'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIULong class >> externalType [
 	^ FFIArchitecture forCurrentArchitecture externalULongType
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIULong class >> externalTypeAlignment [
 	^ OSPlatform current ffiLongAlignment
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIULong class >> externalTypeSize [
 	^ FFIArchitecture forCurrentArchitecture longTypeSize
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FFIULong >> basicHandle: aHandle at: index [
 	^ aHandle platformUnsignedLongAt: index
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FFIULong >> basicHandle: aHandle at: index put: value [
 	^ aHandle platformUnsignedLongAt: index put: value
 ]
 
-{ #category : #'private - emitting code' }
+{ #category : 'private - emitting code' }
 FFIULong >> emitSelector [
 	^ 'platformUnsignedLongAt'
 ]
 
-{ #category : #'private - emitting code' }
+{ #category : 'private - emitting code' }
 FFIULong >> offsetPointerReadFieldAt: offsetVariableName [
 	^ '^ExternalData
 		fromHandle: (handle {1}: {2})
@@ -55,7 +57,7 @@ FFIULong >> offsetPointerReadFieldAt: offsetVariableName [
 		offsetVariableName }
 ]
 
-{ #category : #'emitting code' }
+{ #category : 'emitting code' }
 FFIULong >> offsetReadFieldAt: offsetVariableName [
 	self isPointer ifTrue: [
 		^ self offsetPointerReadFieldAt: offsetVariableName ].
@@ -64,7 +66,7 @@ FFIULong >> offsetReadFieldAt: offsetVariableName [
 		stream << '^handle ' << self emitSelector << ': ' << offsetVariableName ]
 ]
 
-{ #category : #'emitting code' }
+{ #category : 'emitting code' }
 FFIULong >> offsetWriteFieldAt: offsetVariableName with: valueName [
 	self isPointer ifTrue: [
 		^ self externalTypeWithArity
@@ -77,14 +79,14 @@ FFIULong >> offsetWriteFieldAt: offsetVariableName with: valueName [
 			<< ' put: ' << valueName ]
 ]
 
-{ #category : #'private - emitting code' }
+{ #category : 'private - emitting code' }
 FFIULong >> pointerReadFieldAt: byteOffset [
 	"since offsetPointerReadFieldAt: receives a variable no matter what we use the trick of
 	 just passing the offset as a string... it will work :)"
 	^ self offsetPointerReadFieldAt: byteOffset asString
 ]
 
-{ #category : #'emitting code' }
+{ #category : 'emitting code' }
 FFIULong >> readFieldAt: byteOffset [
 	self isPointer ifTrue: [
 		^ self pointerReadFieldAt: byteOffset ].
@@ -93,7 +95,7 @@ FFIULong >> readFieldAt: byteOffset [
 		stream << '^handle ' << self emitSelector << ': ' << byteOffset asString ]
 ]
 
-{ #category : #'emitting code' }
+{ #category : 'emitting code' }
 FFIULong >> writeFieldAt: byteOffset with: valueName [
 	self isPointer ifTrue: [
 		^ self externalTypeWithArity

@@ -2,17 +2,19 @@
 I am the superclass of a hierarchy of morph specialized in allowing the user to resize or rearrange windows and panes.
 "
 Class {
-	#name : #AbstractResizerMorph,
-	#superclass : #Morph,
+	#name : 'AbstractResizerMorph',
+	#superclass : 'Morph',
 	#instVars : [
 		'dotColor',
 		'handleColor',
 		'lastMouse'
 	],
-	#category : #'Morphic-Widgets-Windows-Resizing'
+	#category : 'Morphic-Widgets-Windows-Resizing',
+	#package : 'Morphic-Widgets-Windows',
+	#tag : 'Resizing'
 }
 
-{ #category : #actions }
+{ #category : 'actions' }
 AbstractResizerMorph >> adoptPaneColor: paneColor [
 	"Just get the resizer fill style for the theme."
 
@@ -20,50 +22,50 @@ AbstractResizerMorph >> adoptPaneColor: paneColor [
 	self fillStyle: (self theme resizerGripNormalFillStyleFor: self)
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 AbstractResizerMorph >> dotColor [
 
 	^ dotColor ifNil: [self setDefaultColors. dotColor]
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 AbstractResizerMorph >> handleColor [
 
 	^ handleColor ifNil: [self setDefaultColors. handleColor]
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 AbstractResizerMorph >> handlesMouseDown: anEvent [
 
 	^ true
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 AbstractResizerMorph >> handlesMouseOver: anEvent [
 
 	^ true
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AbstractResizerMorph >> initialize [
 
 	super initialize.
 	self color: Color transparent
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 AbstractResizerMorph >> isCursorOverHandle [
 
 	^ true
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 AbstractResizerMorph >> mouseDown: anEvent [
 
 	lastMouse := anEvent cursorPoint
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 AbstractResizerMorph >> mouseEnter: anEvent [
 
 	self isCursorOverHandle ifTrue:
@@ -72,7 +74,7 @@ AbstractResizerMorph >> mouseEnter: anEvent [
 		anEvent hand showTemporaryCursor: self resizeCursor]
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 AbstractResizerMorph >> mouseLeave: anEvent [
 
 	anEvent hand showTemporaryCursor: nil.
@@ -81,7 +83,7 @@ AbstractResizerMorph >> mouseLeave: anEvent [
 	"avoid unnecessary invalidation"
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 AbstractResizerMorph >> mouseUp: anEvent [
 	"Change the cursor back to normal if necessary."
 
@@ -92,34 +94,34 @@ AbstractResizerMorph >> mouseUp: anEvent [
 			changed]
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 AbstractResizerMorph >> resizeCursor [
 
 	self subclassResponsibility
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 AbstractResizerMorph >> setDefaultColors [
 
 	handleColor := Color lightGray lighter lighter.
 	dotColor := Color gray lighter
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 AbstractResizerMorph >> setInverseColors [
 
 	handleColor := Color lightGray.
 	dotColor := Color white
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 AbstractResizerMorph >> shouldDraw [
 	"Answer whether the resizer should be drawn."
 
 	^self fillStyle isTransparent not
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 AbstractResizerMorph >> shouldInvalidateOnMouseTransition [
 	"Answer whether the resizer should be invalidated
 	when the mouse enters or leaves."

@@ -2,12 +2,14 @@
 My class-side protocol initializes System Settings' stuff.
 "
 Class {
-	#name : #EpSettings,
-	#superclass : #Object,
-	#category : #'EpiceaBrowsers-Integration'
+	#name : 'EpSettings',
+	#superclass : 'Object',
+	#category : 'EpiceaBrowsers-Integration',
+	#package : 'EpiceaBrowsers',
+	#tag : 'Integration'
 }
 
-{ #category : #'system settings' }
+{ #category : 'system settings' }
 EpSettings class >> groupSettingsOn: aBuilder [
 
 	<systemsettings>
@@ -17,19 +19,19 @@ EpSettings class >> groupSettingsOn: aBuilder [
 		parent: #tools
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpSettings class >> lostEventsDetectorEnabled [
 
 	^ EpLostChangesDetector isEnabled
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpSettings class >> lostEventsDetectorEnabled: aBoolean [
 
 	EpLostChangesDetector enabled: aBoolean
 ]
 
-{ #category : #'system settings' }
+{ #category : 'system settings' }
 EpSettings class >> lostEventsDetectorEnabledSettingOn: aBuilder [
 
 	<systemsettings>
@@ -41,19 +43,19 @@ EpSettings class >> lostEventsDetectorEnabledSettingOn: aBuilder [
 		target: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpSettings class >> monitorEnabled [
 
 	^ EpMonitor current isEnabled
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpSettings class >> monitorEnabled: aBoolean [
 
 	EpMonitor current enabled: aBoolean
 ]
 
-{ #category : #'system settings' }
+{ #category : 'system settings' }
 EpSettings class >> monitorEnabledSettingOn: aBuilder [
 
 	<systemsettings>
@@ -65,19 +67,19 @@ EpSettings class >> monitorEnabledSettingOn: aBuilder [
 		target: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpSettings class >> storeNameStrategyClass [
 
 	^ OmSessionStore storeNameStrategy class
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpSettings class >> storeNameStrategyClass: aStrategyClass [
 
 	OmSessionStore storeNameStrategy: aStrategyClass new
 ]
 
-{ #category : #'system settings' }
+{ #category : 'system settings' }
 EpSettings class >> storeNameStrategySettingsOn: aBuilder [
 
 	<systemsettings>
@@ -90,19 +92,19 @@ EpSettings class >> storeNameStrategySettingsOn: aBuilder [
 		domainValues: OmSessionStoreNamingStrategy availableStrategies
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpSettings class >> writingDeferDuration [
 
 	^ EpMonitor current writingDeferDuration asMilliSeconds
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpSettings class >> writingDeferDuration: aSmallInteger [
 
 	^ EpMonitor current writingDeferDuration: aSmallInteger milliSeconds
 ]
 
-{ #category : #'system settings' }
+{ #category : 'system settings' }
 EpSettings class >> writingDeferDurationSettingOn: aBuilder [
 
 	<systemsettings>

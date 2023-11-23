@@ -1,1 +1,1 @@
-Package { #name : #'Fonts-Infrastructure-Tests' }
+Package { #name : 'Fonts-Infrastructure-Tests' }

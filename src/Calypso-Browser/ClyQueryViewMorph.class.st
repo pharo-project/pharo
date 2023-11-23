@@ -102,8 +102,8 @@ Internal Representation and Key Implementation Points.
 	treeStructure: <Array of<Association>>
 "
 Class {
-	#name : #ClyQueryViewMorph,
-	#superclass : #Morph,
+	#name : 'ClyQueryViewMorph',
+	#superclass : 'Morph',
 	#instVars : [
 		'table',
 		'browser',
@@ -121,27 +121,29 @@ Class {
 	#classVars : [
 		'DragAndDropDelay'
 	],
-	#category : #'Calypso-Browser-Table'
+	#category : 'Calypso-Browser-Table',
+	#package : 'Calypso-Browser',
+	#tag : 'Table'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyQueryViewMorph class >> dragAndDropDelay [
 	"Modified by settings CodeBrowsing/Calypso: self classSide >> #settingsDragAndDropDelayOn:"
 	^ DragAndDropDelay
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyQueryViewMorph class >> dragAndDropDelay: aNumber [
 	DragAndDropDelay := aNumber
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyQueryViewMorph class >> for: aBrowser [
 	^self new
 		browser: aBrowser
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 ClyQueryViewMorph class >> settingsDragAndDropDelayOn: aBuilder [
 	<systemsettings>
 	(aBuilder setting: #dragAndDropDelay)
@@ -154,7 +156,7 @@ Expects an integer giving the number of miliseconds';
 		target: self
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyQueryViewMorph >> activateFilterWith: patternString [
 
 	self initiateUIChangeBy: [
@@ -164,7 +166,7 @@ ClyQueryViewMorph >> activateFilterWith: patternString [
 		self updateSelection ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyQueryViewMorph >> addColumn: columnId [
 
 	| newColumn |
@@ -173,44 +175,44 @@ ClyQueryViewMorph >> addColumn: columnId [
 	^newColumn
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyQueryViewMorph >> adoptForDialog [
 	(self areItemsLoaded and: [self itemCount < 10])
-		ifTrue: [ self height: 100 ]
-		ifFalse: [ self height: 300; enableFilterUsing: ClyRegexPattern new]
+		ifTrue: [ self height: 100 scaledByDisplayScaleFactor ]
+		ifFalse: [ self height: 300 scaledByDisplayScaleFactor; enableFilterUsing: ClyRegexPattern new]
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyQueryViewMorph >> allowsDeselection: aBool [
 	table allowsDeselection: aBool
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyQueryViewMorph >> areItemsLoaded [
 	^(self dataSource hasMetaProperty: ClyBackgroundProcessingTag) not
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyQueryViewMorph >> browser [
 	^ browser
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyQueryViewMorph >> browser: anObject [
 	browser := anObject
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyQueryViewMorph >> changeStateBy: aBlock [
 	browser changeStateOf: self by: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyQueryViewMorph >> changesWasInitiatedByUser [
 	^changesWasInitiatedByUser
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyQueryViewMorph >> closeDataSource [
 
 	table initialDataSource ifNil: [ ^self dataSource close ].
@@ -226,12 +228,12 @@ ClyQueryViewMorph >> closeDataSource [
 	but it is not done in fast table"
 ]
 
-{ #category : #context }
+{ #category : 'context' }
 ClyQueryViewMorph >> createCommandContext [
 	^self createSelectionContext
 ]
 
-{ #category : #'drag and drop support' }
+{ #category : 'drag and drop support' }
 ClyQueryViewMorph >> createDragPassengerFor: aSelection [
 	| context |
 	context := self createSelectionContextOf: aSelection.
@@ -239,23 +241,23 @@ ClyQueryViewMorph >> createDragPassengerFor: aSelection [
 	^CmdDragAndDropActivation createDragPassengerInContext: context
 ]
 
-{ #category : #context }
+{ #category : 'context' }
 ClyQueryViewMorph >> createSelectionContext [
 	^self createSelectionContextOf: self selection
 ]
 
-{ #category : #context }
+{ #category : 'context' }
 ClyQueryViewMorph >> createSelectionContextOf: aSelection [
 
 	^ClyContextSelectionStrategyAnnotation selectContextOf: aSelection for: browser
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyQueryViewMorph >> dataSource [
 	^table dataSource
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyQueryViewMorph >> dataSource: aDataSource [
 
 	self changeStateBy: [
@@ -265,17 +267,17 @@ ClyQueryViewMorph >> dataSource: aDataSource [
 	]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyQueryViewMorph >> dataSourceClass [
 	^ dataSourceClass ifNil: [ ClyCollapsedDataSource ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyQueryViewMorph >> dataSourceClass: aClass [
 	dataSourceClass := aClass
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyQueryViewMorph >> decorateMainTableCell: anItemCellMorph of: aDataSourceItem [
 	| context |
 	context := ClyContextSelectionStrategyAnnotation selectContextOfSingleItem: aDataSourceItem for: browser.
@@ -284,7 +286,7 @@ ClyQueryViewMorph >> decorateMainTableCell: anItemCellMorph of: aDataSourceItem 
 		strategy decorateMainTableCell: anItemCellMorph inContext: context]
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyQueryViewMorph >> decorateTableCell: anItemCellMorph of: aDataSourceItem [
 	| context |
 	context := ClyContextSelectionStrategyAnnotation selectContextOfSingleItem: aDataSourceItem for: browser.
@@ -293,23 +295,23 @@ ClyQueryViewMorph >> decorateTableCell: anItemCellMorph of: aDataSourceItem [
 		strategy decorateTableCell: anItemCellMorph inContext: context]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyQueryViewMorph >> defaultColor [
 	^Color transparent
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyQueryViewMorph >> definesTree [
 	^treeStructure notEmpty
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyQueryViewMorph >> displayMainColumnBy: cellAndItemBlock [
 
 	self mainColumn displayBlock: cellAndItemBlock
 ]
 
-{ #category : #'drag and drop support' }
+{ #category : 'drag and drop support' }
 ClyQueryViewMorph >> dropPassenger: aPassanger at: aDataSourceItem [
 	| context |
 	context := self createSelectionContextOf: aDataSourceItem asSelection.
@@ -317,36 +319,36 @@ ClyQueryViewMorph >> dropPassenger: aPassanger at: aDataSourceItem [
 	^aPassanger dropInContext: context
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyQueryViewMorph >> enableCollapsingOfPreexpandedItems [
 	dataSourceClass := ClyExpandedDataSource
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyQueryViewMorph >> enableFilter [
 
 	self enableFilter: ClyItemNameFilter
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyQueryViewMorph >> enableFilter: anItemStringFilterClass [
 
 	self enableFilterWithFactory: (ClyTableFilterFactory of: anItemStringFilterClass)
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyQueryViewMorph >> enableFilter: anItemStringFilterClass using: aStringPattern [
 
 	self enableFilterWithFactory: (ClyTableFilterFactory of: anItemStringFilterClass using: aStringPattern)
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyQueryViewMorph >> enableFilterUsing: aStringPattern [
 
 	self enableFilter: ClyItemNameFilter using: aStringPattern
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyQueryViewMorph >> enableFilterWithFactory: aTableFilterFactory [
 
 	table
@@ -354,7 +356,7 @@ ClyQueryViewMorph >> enableFilterWithFactory: aTableFilterFactory [
 		explicitFunction
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyQueryViewMorph >> ensureSelectedItem [
 
 	| selectionIndex |
@@ -362,21 +364,21 @@ ClyQueryViewMorph >> ensureSelectedItem [
 	self dataSource isEmpty ifTrue: [ ^self ].
 
 	selectionIndex := 1.
-	(desiredSelection notNil and: [desiredSelection isEmpty not]) ifTrue: [
+	(desiredSelection isNotNil and: [desiredSelection isEmpty not]) ifTrue: [
 		selectionIndex := desiredSelection lastSelectedItem globalPosition
 									min: self dataSource numberOfRows ].
 	self selection selectItems: {self dataSource elementAt: selectionIndex}.
 	self ensureVisibleSelection
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyQueryViewMorph >> ensureSelectedItemIfNeeded [
 
 	table allowsDeselection ifFalse: [ self ensureSelectedItem ].
 	self ensureVisibleSelection
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyQueryViewMorph >> ensureVisibleSelection [
 
 	self selection isEmpty ifFalse: [ ^self ].
@@ -387,19 +389,19 @@ ClyQueryViewMorph >> ensureVisibleSelection [
 	UIManager default defer: [self selection ensureVisibleLastItem]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyQueryViewMorph >> filterField [
 	^ table filterField
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyQueryViewMorph >> findAllItemsBy: aBlockWithDataSource [
 	self
 		findAllItemsBy: aBlockWithDataSource
 		stopLookupWhen: [:result | false "by default we always look into both data source if exists"]
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyQueryViewMorph >> findAllItemsBy: aBlockWithDataSource stopLookupWhen: stopCondition [
 	| result fullResult |
 	result := aBlockWithDataSource value: self dataSource.
@@ -418,7 +420,7 @@ ClyQueryViewMorph >> findAllItemsBy: aBlockWithDataSource stopLookupWhen: stopCo
 	^fullResult
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyQueryViewMorph >> findItemsSameAsFilter [
 
 	| filterString |
@@ -426,13 +428,13 @@ ClyQueryViewMorph >> findItemsSameAsFilter [
 	^self dataSource findItemsWhere:  [:each | each name asLowercase = filterString ]
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyQueryViewMorph >> findItemsWhere: conditionBlock [
 
 	^self findAllItemsBy: [ :ds | ds findItemsWhere: conditionBlock]
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyQueryViewMorph >> findItemsWith: actualObjects [
 
 	^self
@@ -440,7 +442,7 @@ ClyQueryViewMorph >> findItemsWith: actualObjects [
 		stopLookupWhen: [:result | result size = actualObjects size]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyQueryViewMorph >> grabSelectionAt: rowIndex [
 	| selectedItems |
 	(table isIndexSelected: rowIndex)
@@ -451,18 +453,18 @@ ClyQueryViewMorph >> grabSelectionAt: rowIndex [
 	^ self newSelectionWith: selectedItems
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyQueryViewMorph >> hasKeyboardFocus [
 	^super hasKeyboardFocus or: [ table hasKeyboardFocus  ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyQueryViewMorph >> hasRealQuery [
 
 	^self query ~~ ClyUnknownQuery instance
 ]
 
-{ #category : #'drag and drop support' }
+{ #category : 'drag and drop support' }
 ClyQueryViewMorph >> hasUserBeenFocusingOnItem: aSelectedItem [
 
 	targetDropItem ifNil: [ ^ false ].
@@ -472,25 +474,25 @@ ClyQueryViewMorph >> hasUserBeenFocusingOnItem: aSelectedItem [
 	^ self class dragAndDropDelay * 1000 < (Time microsecondsSince: hoverOverDropItemStartTime)
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyQueryViewMorph >> highlightItemsWhich: predicateBlock [
 
 	highlighting selectItemsWhere: predicateBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyQueryViewMorph >> hoverOverDropItemStartTime [
 
 	^ hoverOverDropItemStartTime
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyQueryViewMorph >> hoverOverDropItemStartTime: anObject [
 
 	hoverOverDropItemStartTime := anObject
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyQueryViewMorph >> ignoreNavigationDuring: aBlock [
 
 	| selector |
@@ -499,7 +501,7 @@ ClyQueryViewMorph >> ignoreNavigationDuring: aBlock [
 	aBlock ensure: [ navigationSelector := selector ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyQueryViewMorph >> initialize [
 	super initialize.
 	self changeTableLayout.
@@ -512,7 +514,7 @@ ClyQueryViewMorph >> initialize [
 	self setUpDataSource: ClyDataSource empty
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyQueryViewMorph >> initializeTable [
 	table := FTTableMorph new.
 	table allowsDeselection: true.
@@ -528,7 +530,7 @@ ClyQueryViewMorph >> initializeTable [
 	self addMorph: table
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyQueryViewMorph >> initiateUIChangeBy: aBlock [
 	"We need to distingish UI state changes produced by user or by tool itself.
 	This method setup special flag which shows that all following operations are performed by tool.
@@ -539,14 +541,14 @@ ClyQueryViewMorph >> initiateUIChangeBy: aBlock [
 	aBlock ensure: [ changesWasInitiatedByUser := true ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyQueryViewMorph >> isFilterActive [
 	table initialDataSource ifNil: [ ^false ].
 
 	^self dataSource ~~ table initialDataSource
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyQueryViewMorph >> isFilterChanged [
 	"when user filters the table in the filter field
 	the table resets selection and sets the new data source.
@@ -560,7 +562,7 @@ ClyQueryViewMorph >> isFilterChanged [
 	^selection rootDataSource ~~ self dataSource
 ]
 
-{ #category : #'drag and drop support' }
+{ #category : 'drag and drop support' }
 ClyQueryViewMorph >> isReadyToExpandForDrop: aSelectedItem [
 	"/!\ Although the selector sounds like a tester, it is modifying the state upon returning true/
 
@@ -575,17 +577,17 @@ ClyQueryViewMorph >> isReadyToExpandForDrop: aSelectedItem [
 	^ self userNowFocusesOn: newFocus
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyQueryViewMorph >> itemAt: rowIndex [
 	^self dataSource elementAt: rowIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyQueryViewMorph >> itemCount [
 	^self dataSource numberOfRows
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 ClyQueryViewMorph >> itemsChangedIn: aDataSource [
 	| selectionWasEmpty |
 	self refreshAsyncState.
@@ -597,20 +599,20 @@ ClyQueryViewMorph >> itemsChangedIn: aDataSource [
 	browser itemsChanged
 ]
 
-{ #category : #keymapping }
+{ #category : 'keymapping' }
 ClyQueryViewMorph >> kmDispatcher [
 
 	^ CmdKMDispatcher attachedTo: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyQueryViewMorph >> mainColumn [
 	"Answer the main column in table"
 
 	^ table columns detect: #isMainColumn
 ]
 
-{ #category : #'menu building' }
+{ #category : 'menu building' }
 ClyQueryViewMorph >> menuColumn: column row: rowIndex [
 
 	| menuSelection context |
@@ -621,7 +623,7 @@ ClyQueryViewMorph >> menuColumn: column row: rowIndex [
 	^CmdContextMenuActivation buildContextMenuFor: self inContext: context
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyQueryViewMorph >> moveMainColumnAtTheEnd [
 
 	| mainColumn |
@@ -629,22 +631,22 @@ ClyQueryViewMorph >> moveMainColumnAtTheEnd [
 	table columns: (table columns copyWithout: mainColumn), {mainColumn}
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyQueryViewMorph >> neverRestoreSelection [
 	shouldRestoreSelection := false
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyQueryViewMorph >> newSelectionWith: dataSourceItems [
 	^self dataSource newSelectionWith: dataSourceItems
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyQueryViewMorph >> query [
 	^self dataSource query
 ]
 
-{ #category : #'tree support' }
+{ #category : 'tree support' }
 ClyQueryViewMorph >> queryToExpand: aDataSourceItem ifAbsent: absentBlock [
 
 	| itemTypeAndQuerySelector |
@@ -657,7 +659,7 @@ ClyQueryViewMorph >> queryToExpand: aDataSourceItem ifAbsent: absentBlock [
 		with: self dataSource queryEnvironment
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyQueryViewMorph >> refreshAsyncState [
 	(self findA: ClyActivityAnimationIconMorph) ifNotNil: #delete.
 
@@ -665,17 +667,17 @@ ClyQueryViewMorph >> refreshAsyncState [
 		self addMorph: (ClyActivityAnimationIconMorph label: 'loading items') ]
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyQueryViewMorph >> refreshTable [
 	table refresh
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyQueryViewMorph >> requestNavigationBy: aBlock [
 	navigationSelector := aBlock
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyQueryViewMorph >> restoreSelectedItems [
 
 	self initiateUIChangeBy: [
@@ -683,7 +685,7 @@ ClyQueryViewMorph >> restoreSelectedItems [
 	highlighting restoreTableSelection
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyQueryViewMorph >> selectLastItem [
 
 	| rowsCount |
@@ -694,7 +696,7 @@ ClyQueryViewMorph >> selectLastItem [
 	UIManager default defer: [self selection ensureVisibleLastItem]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyQueryViewMorph >> selection [
 	"following logic fixes the case when filter is applied on table without selected items.
 	In that case selectionChanged is not triggered and existing selection is not updated.
@@ -706,7 +708,7 @@ ClyQueryViewMorph >> selection [
 	^selection
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 ClyQueryViewMorph >> selectionChanged [
 	"This method is called by two reasons:
 		- user selects the item
@@ -730,7 +732,7 @@ ClyQueryViewMorph >> selectionChanged [
 	self triggerClickCommands
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 ClyQueryViewMorph >> selectionRejected: announcement [
 	"Called when a selection is performed outside the table bounds"
 	announcement direction = #left ifTrue: [
@@ -743,7 +745,7 @@ ClyQueryViewMorph >> selectionRejected: announcement [
 	]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyQueryViewMorph >> setUpDataSource: aDataSource [
 	table dataSource: aDataSource.
 	table initialDataSource: nil. "We should always cleanup initial data source when set up new one. And it is required to restart filter process if it was terminated before"
@@ -757,7 +759,7 @@ ClyQueryViewMorph >> setUpDataSource: aDataSource [
 	self ensureSelectedItemIfNeeded
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyQueryViewMorph >> showDesiredSelection [
 
 	self initiateUIChangeBy: [
@@ -766,7 +768,7 @@ ClyQueryViewMorph >> showDesiredSelection [
 		desiredSelection restoreCurrentSelection: selection]
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyQueryViewMorph >> showQueries: queries as: aQueryResult [
 
 	| fullQuery |
@@ -775,41 +777,42 @@ ClyQueryViewMorph >> showQueries: queries as: aQueryResult [
 	self showQuery: fullQuery
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyQueryViewMorph >> showQuery: aQuery [
 
-	| dataSource |
 	self initiateUIChangeBy: [
-		dataSource := self dataSourceClass on: aQuery.
-		self dataSource: dataSource.
-		self ensureSelectedItemIfNeeded]
+		| oldDataSource |
+		oldDataSource := self dataSource.
+		self dataSource: (self dataSourceClass on: aQuery).
+		self transferExpansionStateFrom: oldDataSource.
+		self ensureSelectedItemIfNeeded ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyQueryViewMorph >> showsItemsFromMultipleScope [
 
 	^self query isExecutedFromMultipleScope
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyQueryViewMorph >> showsItemsFromQuery: aTypedQueryClass [
 
 	^self query executesQuery: aTypedQueryClass
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyQueryViewMorph >> showsItemsFromScope: aTypedScopeClass [
 
 	^self query isExecutedFromScope: aTypedScopeClass
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyQueryViewMorph >> showsItemsOfType: itemTypeClass [
 
 	^self query retrievesItemsOfType: itemTypeClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyQueryViewMorph >> snapshotState [
 
 	| dataSourceSnapshot |
@@ -820,57 +823,75 @@ ClyQueryViewMorph >> snapshotState [
 		selection: (selection copyForBrowserStateSnapshotOf: dataSourceSnapshot)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyQueryViewMorph >> table [
 	^table
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyQueryViewMorph >> takeKeyboardFocus [
 	table takeKeyboardFocus
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyQueryViewMorph >> targetDropItem [
 
 	^ targetDropItem
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyQueryViewMorph >> targetDropItem: anObject [
 
 	targetDropItem := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'queries' }
+ClyQueryViewMorph >> transferExpansionStateFrom: oldDataSource [
+
+	| itemsSelector actionSelector newItems |
+	(oldDataSource isKindOf: ClyExpandedDataSource) ifTrue: [
+		itemsSelector := #collapsedItems.
+		actionSelector := #collapse ].
+	(oldDataSource isKindOf: ClyCollapsedDataSource) ifTrue: [
+		itemsSelector := #expandedItems.
+		actionSelector := #expand ].
+	itemsSelector ifNil: [ ^ self ].
+	newItems := self dataSource itemCursor findItemsSimilarTo:
+		            ((oldDataSource perform: itemsSelector) collect: [ :each |
+			             each browserItem ]).
+	newItems do: [ :each |
+		(self dataSource createElementWith: each) perform: actionSelector ]
+]
+
+{ #category : 'accessing' }
 ClyQueryViewMorph >> treeStructure [
 	^ treeStructure
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyQueryViewMorph >> treeStructure: anObject [
 	treeStructure := anObject
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 ClyQueryViewMorph >> triggerClickCommands [
 
 	CmdClickActivation executeCommandInContext: self createSelectionContext
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 ClyQueryViewMorph >> triggerDoubleClickCommands [
 
 	CmdDoubleClickActivation executeCommandInContext: self createSelectionContext
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyQueryViewMorph >> update [
 
 	self dataSource forceFullUpdate
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyQueryViewMorph >> updateSelectedItemsOf: aDataSource [
 
 	| actualSelectionChanged |
@@ -884,7 +905,7 @@ ClyQueryViewMorph >> updateSelectedItemsOf: aDataSource [
 		^actualSelectionChanged]
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyQueryViewMorph >> updateSelection [
 	| selectedItems |
 	"in some conditions table returnes bad index 0 which should not happens normaly.
@@ -900,7 +921,7 @@ ClyQueryViewMorph >> updateSelection [
 						ifNotNil: [ desiredSelection checkItemsOfCurrentSelection: selection ] ] ]
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 ClyQueryViewMorph >> updateSelectionForNewFilter [
 	"This method is supposed to update selection instance for new filtered data source.
 	And it tries to recover previously selected items using desired selection.
@@ -911,14 +932,14 @@ ClyQueryViewMorph >> updateSelectionForNewFilter [
 
 	self initiateUIChangeBy: [
 		self updateSelection.
-		(desiredSelection notNil and: [ desiredSelection isEmpty not ]) ifTrue: [
+		(desiredSelection isNotNil and: [ desiredSelection isEmpty not ]) ifTrue: [
 			"We should never restore empty selection when filter was changed"
 			desiredSelection restoreCurrentSelection: selection]].
 
 	^(selection isSameAs: oldSelection) not
 ]
 
-{ #category : #'drag and drop support' }
+{ #category : 'drag and drop support' }
 ClyQueryViewMorph >> userNowFocusesOn: aSelectedItem [
 	"if this is true, then we're not ready to expand, and we do not want to update the time."
 	(targetDropItem isNotNil and: [ aSelectedItem isNotNil
@@ -930,7 +951,7 @@ ClyQueryViewMorph >> userNowFocusesOn: aSelectedItem [
 	^ targetDropItem isNil
 ]
 
-{ #category : #'drag and drop support' }
+{ #category : 'drag and drop support' }
 ClyQueryViewMorph >> wantsDropPassenger: aPassenger at: dropTargetItem [
 	| context |
 
@@ -946,25 +967,25 @@ ClyQueryViewMorph >> wantsDropPassenger: aPassenger at: dropTargetItem [
 	^ true
 ]
 
-{ #category : #'events subscription' }
+{ #category : 'events subscription' }
 ClyQueryViewMorph >> whenDoubleClickDo: aBlock [
 
 	table onAnnouncement: FTStrongSelectionChanged do: aBlock
 ]
 
-{ #category : #'events subscription' }
+{ #category : 'events subscription' }
 ClyQueryViewMorph >> whenEnterKeyPressedDo: aBlock [
 
 	table bindKeyCombination: Character cr asShortcut toAction: aBlock
 ]
 
-{ #category : #'events subscription' }
+{ #category : 'events subscription' }
 ClyQueryViewMorph >> whenEscapeKeyPressedDo: aBlock [
 
 	table bindKeyCombination: Character escape asShortcut toAction: aBlock
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyQueryViewMorph >> windowIsClosing [
 	self closeDataSource
 ]

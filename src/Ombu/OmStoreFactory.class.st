@@ -2,8 +2,8 @@
 I provide a facade to create and reuse OmStore hierarchy instances.
 "
 Class {
-	#name : #OmStoreFactory,
-	#superclass : #Object,
+	#name : 'OmStoreFactory',
+	#superclass : 'Object',
 	#instVars : [
 		'nullStore',
 		'storeByPath'
@@ -11,22 +11,24 @@ Class {
 	#classInstVars : [
 		'current'
 	],
-	#category : #'Ombu-Stores'
+	#category : 'Ombu-Stores',
+	#package : 'Ombu',
+	#tag : 'Stores'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmStoreFactory class >> current [
 
 	^ current ifNil: [ current := self new ]
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 OmStoreFactory class >> initialize [
 
 	SessionManager default registerSystemClassNamed: self name
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 OmStoreFactory class >> reset [
 	"
 	self reset
@@ -35,25 +37,25 @@ OmStoreFactory class >> reset [
 	current := nil
 ]
 
-{ #category : #'system startup' }
+{ #category : 'system startup' }
 OmStoreFactory class >> shutDown: aboutToQuit [
 
 	aboutToQuit ifTrue: [ self reset ]
 ]
 
-{ #category : #'system startup' }
+{ #category : 'system startup' }
 OmStoreFactory class >> startUp: isImageStarting [
 
 	isImageStarting ifTrue: [ self reset ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmStoreFactory >> defaultDirectory [
 
 	^ OmSessionStore defaultBaseLocator asFileReference
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmStoreFactory >> fromFile: aFileReference [
 
 	^ self
@@ -61,20 +63,20 @@ OmStoreFactory >> fromFile: aFileReference [
 		inDirectory: aFileReference parent
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OmStoreFactory >> initialize [
 	super initialize.
 
 	storeByPath := WeakValueDictionary new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmStoreFactory >> named: aGlobalName [
 
 	^ self named: aGlobalName inDirectory: self defaultDirectory
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmStoreFactory >> named: aGlobalName inDirectory: aDirectory [
 
 	| fileReference |
@@ -89,7 +91,7 @@ OmStoreFactory >> named: aGlobalName inDirectory: aDirectory [
 			newStore ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OmStoreFactory >> newStoreNamed: aGlobalName in: aDirectory [
 
 	^ OmBlockFileStore
@@ -97,7 +99,7 @@ OmStoreFactory >> newStoreNamed: aGlobalName in: aDirectory [
 		inDirectory: aDirectory
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmStoreFactory >> null [
 
 	^ nullStore ifNil: [ nullStore := OmNullStore new ]

@@ -7,21 +7,23 @@ Instance variables:
 
 "
 Class {
-	#name : #PluggableDictionary,
-	#superclass : #Dictionary,
+	#name : 'PluggableDictionary',
+	#superclass : 'Dictionary',
 	#instVars : [
 		'hashBlock',
 		'equalBlock'
 	],
-	#category : #'Collections-Unordered-Dictionaries'
+	#category : 'Collections-Unordered-Dictionaries',
+	#package : 'Collections-Unordered',
+	#tag : 'Dictionaries'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableDictionary class >> integerDictionary [
 	^ self new hashBlock: [:integer | integer hash \\ 1064164 * 1009]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 PluggableDictionary >> = aDictionary [
 	"Two dictionaries are equal if
 	 (a) they are the same 'kind' of thing.
@@ -40,45 +42,45 @@ PluggableDictionary >> = aDictionary [
 	^true
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 PluggableDictionary >> copyEmpty [
 	^super copyEmpty
 		hashBlock: hashBlock;
 		equalBlock: equalBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableDictionary >> equalBlock [
 	"Return the block used for comparing the elements in the receiver."
 	^equalBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableDictionary >> equalBlock: aBlock [
 	"Set a new equality block. The block must accept two arguments and return true if the argumets are considered to be equal, false otherwise"
 	equalBlock := aBlock
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 PluggableDictionary >> hash [
 	"hashBlock is used to hash keys for lookup, not the dictionary itself, but its hash is still
 	considered."
 	^ (super hash bitXor: self equalBlock hash) bitXor: self hashBlock hash
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableDictionary >> hashBlock [
 	"Return the block used for hashing the keys in the receiver."
 	^hashBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableDictionary >> hashBlock: aBlock [
 	"Set a new hash block. The block must accept one argument and must return the hash value of the given argument."
 	hashBlock := aBlock
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 PluggableDictionary >> scanFor: anObject [
 	"Scan the key array for the first slot containing either a nil
 (indicating
@@ -107,7 +109,7 @@ overridden
 	^ 0"No match AND no empty slot"
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 PluggableDictionary >> scanForEmptySlotFor: aKey [
 	"Scan the key array for the first slot containing an empty slot (indicated by a nil). Answer the index of that slot. This method will be overridden in various subclasses that have different interpretations for matching elements."
 

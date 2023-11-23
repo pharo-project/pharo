@@ -1,1 +1,1 @@
-Package { #name : #'Calypso-Browser' }
+Package { #name : 'Calypso-Browser' }

@@ -4,8 +4,8 @@ I send these event back to my handler:
 	- OSTouchOneFingerDoubleTapEvent
 "
 Class {
-	#name : #OSTouchOneFingerDoubleTapDetector,
-	#superclass : #OSTouchPunctualGestureDetector,
+	#name : 'OSTouchOneFingerDoubleTapDetector',
+	#superclass : 'OSTouchPunctualGestureDetector',
 	#instVars : [
 		'doubleTouchSpeed',
 		'maxDistanceBetweenEachTouch',
@@ -18,20 +18,22 @@ Class {
 		'DoubleTouchSpeed',
 		'MaxDistance'
 	],
-	#category : #'OSWindow-Core-Gestures'
+	#category : 'OSWindow-Core-Gestures',
+	#package : 'OSWindow-Core',
+	#tag : 'Gestures'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSTouchOneFingerDoubleTapDetector class >> doubleTouchSpeed [
 	^ DoubleTouchSpeed
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSTouchOneFingerDoubleTapDetector class >> doubleTouchSpeed: anObject [
 	DoubleTouchSpeed := anObject
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 OSTouchOneFingerDoubleTapDetector class >> doubleTouchSpeedSettingsOn: aBuilder [
 	<systemsettings>
 	(aBuilder setting: #doubleTouchSpeed)
@@ -43,24 +45,24 @@ OSTouchOneFingerDoubleTapDetector class >> doubleTouchSpeedSettingsOn: aBuilder 
 		parent: #doubleTapGesture
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 OSTouchOneFingerDoubleTapDetector class >> initialize [
 	super initialize.
 	DoubleTouchSpeed := 700.
 	MaxDistance := 0.05
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSTouchOneFingerDoubleTapDetector class >> maxDistance [
 	^ MaxDistance
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSTouchOneFingerDoubleTapDetector class >> maxDistance: anObject [
 	MaxDistance := anObject
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 OSTouchOneFingerDoubleTapDetector class >> maxDistanceSettingsOn: aBuilder [
 	<systemsettings>
 	(aBuilder setting: #maxDistance)
@@ -72,7 +74,7 @@ OSTouchOneFingerDoubleTapDetector class >> maxDistanceSettingsOn: aBuilder [
 		parent: #doubleTapGesture
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 OSTouchOneFingerDoubleTapDetector class >> touchDoubleTapSettingsOn: aBuilder [
 	<systemsettings>
 	(aBuilder group: #doubleTapGesture)
@@ -80,7 +82,7 @@ OSTouchOneFingerDoubleTapDetector class >> touchDoubleTapSettingsOn: aBuilder [
 		parent: #touchGestures
 ]
 
-{ #category : #'gesture detection' }
+{ #category : 'gesture detection' }
 OSTouchOneFingerDoubleTapDetector >> checkDoubleTouch [
 	(timestamp - previousTimestamp < doubleTouchSpeed
 		and: [ (position distanceTo: previousPosition) < maxDistanceBetweenEachTouch ])
@@ -89,14 +91,14 @@ OSTouchOneFingerDoubleTapDetector >> checkDoubleTouch [
 	self reinitialize
 ]
 
-{ #category : #creation }
+{ #category : 'creation' }
 OSTouchOneFingerDoubleTapDetector >> createEvent [
 	^ OSTouchOneFingerDoubleTapEvent new
 		position: position;
 		yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OSTouchOneFingerDoubleTapDetector >> initialize [
 	super initialize.
 	doubleTouchSpeed := self class doubleTouchSpeed.
@@ -104,13 +106,13 @@ OSTouchOneFingerDoubleTapDetector >> initialize [
 	self reinitialize
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 OSTouchOneFingerDoubleTapDetector >> reinitialize [
 	position := 0@0.
 	timestamp := 0
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OSTouchOneFingerDoubleTapDetector >> visitTouchPointerDownEvent: anEvent [
 	super visitTouchPointerDownEvent: anEvent.
 	previousPosition := position.

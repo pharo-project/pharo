@@ -1,26 +1,26 @@
 Class {
-	#name : #CDVariableClassParserTest,
-	#superclass : #CDClassDefinitionParserTest,
-	#category : #'ClassParser-Tests'
+	#name : 'CDVariableClassParserTest',
+	#superclass : 'CDClassDefinitionParserTest',
+	#category : 'ClassParser-Tests',
+	#package : 'ClassParser-Tests'
 }
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 CDVariableClassParserTest >> classDefinitionString [
 
-	^ '{superclassName} variableSubclass: #{classname}
-		instanceVariableNames: ''{instvar1} {instvar2}''
-		classVariableNames: ''{classvar1} {classvar2}''
+	^ '{superclassName} << #{classname}
+		layout: VariableLayout;
+		slots: {slots};
+		sharedVariables: {sharedVariables};
 		package: #MyPackage'
 			format: {
 				'classname' -> self className.
 				'superclassName' -> self superclassName.
-				'instvar1' -> self firstInstanceVariableName.
-				'instvar2' -> self secondInstanceVariableName.
-				'classvar1' -> self firstClassVariableName.
-				'classvar2' -> self secondClassVariableName. } asDictionary
+				'slots' -> self slotsArray.
+				'sharedVariables' -> self sharedVariablesArray } asDictionary
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 CDVariableClassParserTest >> testVariableClassIsVariable [
 
 	self assert: classDefinition layoutClass equals: VariableLayout

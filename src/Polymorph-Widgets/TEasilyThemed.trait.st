@@ -2,18 +2,20 @@
 Trait providing useful theme-related methods.
 "
 Trait {
-	#name : #TEasilyThemed,
-	#category : #'Polymorph-Widgets-Traits'
+	#name : 'TEasilyThemed',
+	#category : 'Polymorph-Widgets-Traits',
+	#package : 'Polymorph-Widgets',
+	#tag : 'Traits'
 }
 
-{ #category : #services }
+{ #category : 'services' }
 TEasilyThemed >> abort: aStringOrText [
 	"Open an error dialog."
 
 	^self abort: aStringOrText title: 'Error' translated
 ]
 
-{ #category : #services }
+{ #category : 'services' }
 TEasilyThemed >> abort: aStringOrText title: aString [
 	"Open an error dialog."
 
@@ -23,14 +25,14 @@ TEasilyThemed >> abort: aStringOrText title: aString [
 		title: aString
 ]
 
-{ #category : #services }
+{ #category : 'services' }
 TEasilyThemed >> alert: aStringOrText [
 	"Open an alert dialog."
 
 	^self alert: aStringOrText title: 'Alert' translated
 ]
 
-{ #category : #services }
+{ #category : 'services' }
 TEasilyThemed >> alert: aStringOrText title: aString [
 	"Open an alert dialog."
 
@@ -40,7 +42,7 @@ TEasilyThemed >> alert: aStringOrText title: aString [
 		configure: [:d | ]
 ]
 
-{ #category : #services }
+{ #category : 'services' }
 TEasilyThemed >> alert: aStringOrText title: aString configure: aBlock [
 	"Open an alert dialog.
 	Configure the dialog with the 1 argument block
@@ -53,7 +55,7 @@ TEasilyThemed >> alert: aStringOrText title: aString configure: aBlock [
 		configure: aBlock
 ]
 
-{ #category : #services }
+{ #category : 'services' }
 TEasilyThemed >> centeredAlert: aStringOrText title: aString configure: aBlock [
 	"Open an alert dialog.
 	Configure the dialog with the 1 argument block
@@ -66,14 +68,14 @@ TEasilyThemed >> centeredAlert: aStringOrText title: aString configure: aBlock [
 		configure: aBlock
 ]
 
-{ #category : #services }
+{ #category : 'services' }
 TEasilyThemed >> chooseColor [
 	"Answer the result of a color selector dialog ."
 
 	^self chooseColor: Color black
 ]
 
-{ #category : #services }
+{ #category : 'services' }
 TEasilyThemed >> chooseColor: aColor [
 	"Answer the result of a color selector dialog with the given color."
 
@@ -83,7 +85,7 @@ TEasilyThemed >> chooseColor: aColor [
 		color: aColor
 ]
 
-{ #category : #services }
+{ #category : 'services' }
 TEasilyThemed >> chooseColor: aColor title: title [
 	"Answer the result of a color selector dialog with the given title and initial colour."
 
@@ -93,7 +95,7 @@ TEasilyThemed >> chooseColor: aColor title: title [
 		color: aColor
 ]
 
-{ #category : #services }
+{ #category : 'services' }
 TEasilyThemed >> chooseDirectory: title [
 	"Answer the result of a file dialog with the given title, answer a directory."
 
@@ -102,7 +104,7 @@ TEasilyThemed >> chooseDirectory: title [
 		path: nil
 ]
 
-{ #category : #services }
+{ #category : 'services' }
 TEasilyThemed >> chooseDirectory: title path: path [
 	"Answer the result of a file dialog with the given title, answer a directory."
 
@@ -112,7 +114,7 @@ TEasilyThemed >> chooseDirectory: title path: path [
 		path: path
 ]
 
-{ #category : #services }
+{ #category : 'services' }
 TEasilyThemed >> chooseDropList: aStringOrText list: aList [
 	"Open a drop list chooser dialog."
 
@@ -122,7 +124,7 @@ TEasilyThemed >> chooseDropList: aStringOrText list: aList [
 		list: aList
 ]
 
-{ #category : #services }
+{ #category : 'services' }
 TEasilyThemed >> chooseDropList: aStringOrText title: aString list: aList [
 	"Open a drop list chooser dialog."
 
@@ -133,7 +135,7 @@ TEasilyThemed >> chooseDropList: aStringOrText title: aString list: aList [
 		list: aList
 ]
 
-{ #category : #services }
+{ #category : 'services' }
 TEasilyThemed >> chooseExistingFileReference: title extensions: exts path: path [
 	"Answer the result of a file name chooser dialog with the given title, extensions
 	to show, path and preview type."
@@ -145,7 +147,7 @@ TEasilyThemed >> chooseExistingFileReference: title extensions: exts path: path 
 		preview: nil
 ]
 
-{ #category : #services }
+{ #category : 'services' }
 TEasilyThemed >> chooseExistingFileReference: title extensions: exts path: path preview: preview [
 	"Answer the result of a file name chooser dialog with the given title, extensions
 	to show, path and preview type."
@@ -158,14 +160,14 @@ TEasilyThemed >> chooseExistingFileReference: title extensions: exts path: path 
 		preview: preview
 ]
 
-{ #category : #services }
+{ #category : 'services' }
 TEasilyThemed >> chooseFont [
 	"Answer the result of a font selector dialog."
 
 	^self chooseFont: nil
 ]
 
-{ #category : #services }
+{ #category : 'services' }
 TEasilyThemed >> chooseFont: aFont [
 	"Answer the result of a font selector dialog with the given initial font."
 
@@ -175,7 +177,7 @@ TEasilyThemed >> chooseFont: aFont [
 		font: aFont
 ]
 
-{ #category : #services }
+{ #category : 'services' }
 TEasilyThemed >> chooseForSaveFileReference: title extensions: exts path: path [
 	"Answer the result of a file name chooser dialog with the given title, extensions
 	to show, path and preview type."
@@ -187,7 +189,7 @@ TEasilyThemed >> chooseForSaveFileReference: title extensions: exts path: path [
 		preview: nil
 ]
 
-{ #category : #services }
+{ #category : 'services' }
 TEasilyThemed >> chooseForSaveFileReference: title extensions: exts path: path preview: preview [
 	"Answer the result of a file name chooser dialog with the given title, extensions
 	to show, path and preview type."
@@ -200,14 +202,14 @@ TEasilyThemed >> chooseForSaveFileReference: title extensions: exts path: path p
 		preview: preview
 ]
 
-{ #category : #services }
+{ #category : 'services' }
 TEasilyThemed >> deny: aStringOrText [
 	"Open a denial dialog."
 
 	^self deny: aStringOrText title: 'Access Denied' translated
 ]
 
-{ #category : #services }
+{ #category : 'services' }
 TEasilyThemed >> deny: aStringOrText title: aString [
 	"Open a denial dialog."
 
@@ -217,7 +219,7 @@ TEasilyThemed >> deny: aStringOrText title: aString [
 		title: aString
 ]
 
-{ #category : #services }
+{ #category : 'services' }
 TEasilyThemed >> longMessage: aStringOrText title: aString [
 	"Open a (long) message dialog."
 
@@ -227,14 +229,14 @@ TEasilyThemed >> longMessage: aStringOrText title: aString [
 		title: aString
 ]
 
-{ #category : #services }
+{ #category : 'services' }
 TEasilyThemed >> message: aStringOrText [
 	"Open a message dialog."
 
 	^self message: aStringOrText title: 'Information' translated
 ]
 
-{ #category : #services }
+{ #category : 'services' }
 TEasilyThemed >> message: aStringOrText title: aString [
 	"Open a message dialog."
 
@@ -244,7 +246,7 @@ TEasilyThemed >> message: aStringOrText title: aString [
 		title: aString
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newAlphaImage: aForm help: helpText [
 	"Answer an alpha image morph."
 
@@ -254,7 +256,7 @@ TEasilyThemed >> newAlphaImage: aForm help: helpText [
 		help: helpText
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newAlphaSelector: aModel getAlpha: getSel setAlpha: setSel help: helpText [
 	"Answer an alpha channel selector with the given selectors."
 
@@ -266,7 +268,7 @@ TEasilyThemed >> newAlphaSelector: aModel getAlpha: getSel setAlpha: setSel help
 		help: helpText
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newAutoAcceptTextEntryFor: aModel get: getSel set: setSel class: aClass getEnabled: enabledSel font: aFont help: helpText [
 	"Answer a text entry for the given model."
 
@@ -281,7 +283,7 @@ TEasilyThemed >> newAutoAcceptTextEntryFor: aModel get: getSel set: setSel class
 		help: helpText
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newAutoAcceptTextEntryFor: aModel get: getSel set: setSel class: aClass getEnabled: enabledSel font: aFont help: helpText entryCompletion: anEntryCompletion [
 	"Answer a text entry for the given model."
 
@@ -297,7 +299,7 @@ TEasilyThemed >> newAutoAcceptTextEntryFor: aModel get: getSel set: setSel class
 		entryCompletion: anEntryCompletion
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newAutoAcceptTextEntryFor: aModel get: getSel set: setSel class: aClass getEnabled: enabledSel help: helpText [
 	"Answer a text entry for the given model."
 
@@ -311,7 +313,7 @@ TEasilyThemed >> newAutoAcceptTextEntryFor: aModel get: getSel set: setSel class
 		help: helpText
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newAutoAcceptTextEntryFor: aModel get: getSel set: setSel class: aClass getEnabled: enabledSel help: helpText entryCompletion: anEntryCompletion [
 	"Answer a text entry for the given model."
 
@@ -326,7 +328,7 @@ TEasilyThemed >> newAutoAcceptTextEntryFor: aModel get: getSel set: setSel class
 		entryCompletion: anEntryCompletion
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newAutoAcceptTextEntryFor: aModel getText: getSel setText: setSel getEnabled: enabledSel font: aFont help: helpText [
 	"Answer a text entry for the given model."
 
@@ -341,7 +343,7 @@ TEasilyThemed >> newAutoAcceptTextEntryFor: aModel getText: getSel setText: setS
 		help: helpText
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newAutoAcceptTextEntryFor: aModel getText: getSel setText: setSel getEnabled: enabledSel font: aFont help: helpText entryCompletion: anEntryCompletion [
 	"Answer a text entry for the given model."
 
@@ -357,7 +359,7 @@ TEasilyThemed >> newAutoAcceptTextEntryFor: aModel getText: getSel setText: setS
 		entryCompletion: anEntryCompletion
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newAutoAcceptTextEntryFor: aModel getText: getSel setText: setSel getEnabled: enabledSel help: helpText [
 	"Answer a text entry for the given model."
 
@@ -371,7 +373,7 @@ TEasilyThemed >> newAutoAcceptTextEntryFor: aModel getText: getSel setText: setS
 		help: helpText
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newBalloonHelp: aTextStringOrMorph for: aMorph [
 	"Answer a new balloon help with the given contents for aMorph
 	at a given corner."
@@ -383,7 +385,7 @@ TEasilyThemed >> newBalloonHelp: aTextStringOrMorph for: aMorph [
 		corner: #bottomLeft
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newBalloonHelp: aTextStringOrMorph for: aMorph corner: cornerSymbol [
 	"Answer a new balloon help with the given contents for aMorph
 	at a given corner."
@@ -395,7 +397,7 @@ TEasilyThemed >> newBalloonHelp: aTextStringOrMorph for: aMorph corner: cornerSy
 		corner: cornerSymbol
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newBracketSliderFor: aModel getValue: getSel setValue: setSel min: minValue max: maxValue quantum: quantum getEnabled: enabledSel help: helpText [
 	"Answer a bracket slider with the given selectors."
 
@@ -411,7 +413,7 @@ TEasilyThemed >> newBracketSliderFor: aModel getValue: getSel setValue: setSel m
 		help: helpText
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newBracketSliderFor: aModel getValue: getSel setValue: setSel min: minValue max: maxValue quantum: quantum help: helpText [
 	"Answer a bracket slider with the given selectors."
 
@@ -426,7 +428,7 @@ TEasilyThemed >> newBracketSliderFor: aModel getValue: getSel setValue: setSel m
 		help: helpText
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newButtonFor: aModel action: actionSel getEnabled: enabledSel label: stringOrText help: helpText [
 	"Answer a new button."
 
@@ -440,7 +442,7 @@ TEasilyThemed >> newButtonFor: aModel action: actionSel getEnabled: enabledSel l
 		help: helpText
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newButtonFor: aModel action: actionSel label: stringOrText help: helpText [
 	"Answer a new button."
 
@@ -454,7 +456,7 @@ TEasilyThemed >> newButtonFor: aModel action: actionSel label: stringOrText help
 		help: helpText
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newButtonFor: aModel getState: stateSel action: actionSel arguments: args getEnabled: enabledSel getLabel: labelSel help: helpText [
 	"Answer a new button."
 
@@ -468,7 +470,7 @@ TEasilyThemed >> newButtonFor: aModel getState: stateSel action: actionSel argum
 		help: helpText
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newButtonFor: aModel getState: stateSel action: actionSel arguments: args getEnabled: enabledSel label: stringOrText help: helpText [
 	"Answer a new button."
 
@@ -482,7 +484,7 @@ TEasilyThemed >> newButtonFor: aModel getState: stateSel action: actionSel argum
 		help: helpText
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newButtonFor: aModel getState: stateSel action: actionSel arguments: args getEnabled: enabledSel labelForm: aForm help: helpText [
 	"Answer a new button."
 
@@ -496,7 +498,7 @@ TEasilyThemed >> newButtonFor: aModel getState: stateSel action: actionSel argum
 		help: helpText
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newButtonLabel: aString [
 	"Answer a new button text label."
 
@@ -506,7 +508,7 @@ TEasilyThemed >> newButtonLabel: aString [
 		getEnabled: nil
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newButtonLabelFor: aModel label: aString getEnabled: enabledSel [
 	"Answer a new button text label."
 
@@ -517,14 +519,14 @@ TEasilyThemed >> newButtonLabelFor: aModel label: aString getEnabled: enabledSel
 		getEnabled: enabledSel
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newCancelButton [
 	"Answer a new cancel button."
 
 	^self newCancelButtonFor: self
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newCancelButtonFor: aModel [
 	"Answer a new cancel button."
 
@@ -533,7 +535,7 @@ TEasilyThemed >> newCancelButtonFor: aModel [
 		for: aModel
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newCheckboxFor: aModel getSelected: getSel setSelected: setSel getEnabled: enabledSel getLabel: labelSel help: helpText [
 	"Answer a checkbox with the given label."
 
@@ -547,7 +549,7 @@ TEasilyThemed >> newCheckboxFor: aModel getSelected: getSel setSelected: setSel 
 		help: helpText
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newCheckboxFor: aModel getSelected: getSel setSelected: setSel getEnabled: enabledSel label: stringOrText help: helpText [
 	"Answer a checkbox with the given label."
 
@@ -561,7 +563,7 @@ TEasilyThemed >> newCheckboxFor: aModel getSelected: getSel setSelected: setSel 
 		help: helpText
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newCheckboxFor: aModel getSelected: getSel setSelected: setSel label: stringOrText help: helpText [
 	"Answer a checkbox with the given label."
 
@@ -575,14 +577,14 @@ TEasilyThemed >> newCheckboxFor: aModel getSelected: getSel setSelected: setSel 
 		help: helpText
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newCloseButton [
 	"Answer a new close button."
 
 	^self newCloseButtonFor: self
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newCloseButtonFor: aModel [
 	"Answer a new close button."
 
@@ -591,7 +593,7 @@ TEasilyThemed >> newCloseButtonFor: aModel [
 		for: aModel
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newCloseControlFor: aModel action: aValuable help: helpText [
 	"Answer a new cancel button."
 
@@ -602,7 +604,7 @@ TEasilyThemed >> newCloseControlFor: aModel action: aValuable help: helpText [
 		help: helpText
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newColorChooserFor: aModel getColor: getSel setColor: setSel getEnabled: enabledSel help: helpText [
 	"Answer a color chooser with the given selectors."
 
@@ -615,7 +617,7 @@ TEasilyThemed >> newColorChooserFor: aModel getColor: getSel setColor: setSel ge
 		help: helpText
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newColorChooserFor: aModel getColor: getSel setColor: setSel help: helpText [
 	"Answer a color chooser with the given selectors."
 
@@ -628,7 +630,7 @@ TEasilyThemed >> newColorChooserFor: aModel getColor: getSel setColor: setSel he
 		help: helpText
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newColorPresenterFor: aModel getColor: getSel help: helpText [
 	"Answer a color presenter with the given selectors."
 
@@ -639,7 +641,7 @@ TEasilyThemed >> newColorPresenterFor: aModel getColor: getSel help: helpText [
 		help: helpText
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newColumn: controls [
 	"Answer a morph laid out with a column of controls."
 
@@ -648,7 +650,7 @@ TEasilyThemed >> newColumn: controls [
 		for: controls
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newDialogPanel [
 	"Answer a new main dialog panel."
 
@@ -656,7 +658,7 @@ TEasilyThemed >> newDialogPanel [
 		newDialogPanelIn: self
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newDropListFor: aModel list: listSel getSelected: getSel setSelected: setSel getEnabled: enabledSel help: helpText [
 	"Answer a drop list for the given model."
 
@@ -671,7 +673,7 @@ TEasilyThemed >> newDropListFor: aModel list: listSel getSelected: getSel setSel
 		help: helpText
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newDropListFor: aModel list: listSel getSelected: getSel setSelected: setSel getEnabled: enabledSel useIndex: useIndex help: helpText [
 	"Answer a drop list for the given model."
 
@@ -686,7 +688,7 @@ TEasilyThemed >> newDropListFor: aModel list: listSel getSelected: getSel setSel
 		help: helpText
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newDropListFor: aModel list: listSel getSelected: getSel setSelected: setSel help: helpText [
 	"Answer a drop list for the given model."
 
@@ -700,7 +702,7 @@ TEasilyThemed >> newDropListFor: aModel list: listSel getSelected: getSel setSel
 		help: helpText
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newEditableDropListFor: aModel list: listSel getSelected: getSel setSelected: setSel addToList: addSel class: aClass default: defaultValue ghostText: ghostText getEnabled: enabledSel useIndex: useIndex help: helpText [
 	"Answer an editable drop list for the given model."
 
@@ -719,7 +721,7 @@ TEasilyThemed >> newEditableDropListFor: aModel list: listSel getSelected: getSe
 		help: helpText
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newEditableDropListFor: aModel list: listSel getSelected: getSel setSelected: setSel addToList: addSel ghostText: ghostText getEnabled: enabledSel help: helpText [
 	"Answer an editable drop list for the given model."
 
@@ -738,7 +740,7 @@ TEasilyThemed >> newEditableDropListFor: aModel list: listSel getSelected: getSe
 		help: helpText
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newEmbeddedMenu [
 	"Answer a new menu."
 
@@ -747,7 +749,7 @@ TEasilyThemed >> newEmbeddedMenu [
 		for: self
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newExpander: aString [
 	"Answer an expander with the given label."
 
@@ -757,7 +759,7 @@ TEasilyThemed >> newExpander: aString [
 		forAll: #()
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newExpander: aString for: aControl [
 	"Answer an expander with the given label and control."
 
@@ -767,7 +769,7 @@ TEasilyThemed >> newExpander: aString for: aControl [
 		forAll: {aControl}
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newExpander: aString forAll: controls [
 	"Answer an expander with the given label and controls."
 
@@ -777,7 +779,7 @@ TEasilyThemed >> newExpander: aString forAll: controls [
 		forAll: controls
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newFuzzyLabel: aString [
 	"Answer a new fuzzy label."
 
@@ -790,7 +792,7 @@ TEasilyThemed >> newFuzzyLabel: aString [
 		getEnabled: nil
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newFuzzyLabelFor: aModel label: aString getEnabled: enabledSel [
 	"Answer a new fuzzy label."
 
@@ -803,7 +805,7 @@ TEasilyThemed >> newFuzzyLabelFor: aModel label: aString getEnabled: enabledSel 
 		getEnabled: enabledSel
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newFuzzyLabelFor: aModel label: aString offset: offset alpha: alpha getEnabled: enabledSel [
 	"Answer a new fuzzy label."
 
@@ -816,7 +818,7 @@ TEasilyThemed >> newFuzzyLabelFor: aModel label: aString offset: offset alpha: a
 		getEnabled: enabledSel
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newGroupbox [
 	"Answer a plain groupbox."
 
@@ -824,7 +826,7 @@ TEasilyThemed >> newGroupbox [
 		newGroupboxIn: self
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newGroupbox: aString [
 	"Answer a groupbox with the given label."
 
@@ -833,7 +835,7 @@ TEasilyThemed >> newGroupbox: aString [
 		label: aString
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newGroupbox: aString for: control [
 	"Answer a groupbox with the given label and control."
 
@@ -843,7 +845,7 @@ TEasilyThemed >> newGroupbox: aString for: control [
 		for: control
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newGroupbox: aString forAll: controls [
 	"Answer a groupbox with the given label and controls."
 
@@ -853,7 +855,7 @@ TEasilyThemed >> newGroupbox: aString forAll: controls [
 		forAll: controls
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newGroupboxFor: control [
 	"Answer a plain groupbox with the given control."
 
@@ -862,7 +864,7 @@ TEasilyThemed >> newGroupboxFor: control [
 		for: control
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newGroupboxForAll: controls [
 	"Answer a plain groupbox with the given controls."
 
@@ -871,7 +873,7 @@ TEasilyThemed >> newGroupboxForAll: controls [
 		forAll: controls
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newHSVASelector: aColor help: helpText [
 	"Answer a hue-saturation-volume selector with the given color."
 
@@ -881,7 +883,7 @@ TEasilyThemed >> newHSVASelector: aColor help: helpText [
 		help: helpText
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newHSVSelector: aColor help: helpText [
 	"Answer a hue-saturation-volume selector with the given color."
 
@@ -891,7 +893,7 @@ TEasilyThemed >> newHSVSelector: aColor help: helpText [
 		help: helpText
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newHueSelector: aModel getHue: getSel setHue: setSel help: helpText [
 	"Answer a hue selector with the given selectors."
 
@@ -903,7 +905,7 @@ TEasilyThemed >> newHueSelector: aModel getHue: getSel setHue: setSel help: help
 		help: helpText
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newImage: aForm [
 	"Answer a new image."
 
@@ -912,7 +914,7 @@ TEasilyThemed >> newImage: aForm [
 		form: aForm
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newImage: aForm size: aPoint [
 	"Answer a new image."
 
@@ -922,7 +924,7 @@ TEasilyThemed >> newImage: aForm size: aPoint [
 		size: aPoint
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newImageFor: aModel get: getSel help: helpText [
 	"Answer a text entry for the given model."
 
@@ -933,7 +935,7 @@ TEasilyThemed >> newImageFor: aModel get: getSel help: helpText [
 		help: helpText
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newIncrementalSliderFor: aModel getValue: getSel setValue: setSel min: min max: max quantum: quantum getEnabled: enabledSel help: helpText [
 	"Answer an inremental slider with the given selectors."
 
@@ -949,7 +951,7 @@ TEasilyThemed >> newIncrementalSliderFor: aModel getValue: getSel setValue: setS
 		help: helpText
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newLabel: aString [
 	"Answer a new text label."
 
@@ -959,7 +961,7 @@ TEasilyThemed >> newLabel: aString [
 		getEnabled: nil
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newLabelFor: aModel getLabel: labelSel getEnabled: enabledSel [
 	"Answer a new text label."
 
@@ -970,7 +972,7 @@ TEasilyThemed >> newLabelFor: aModel getLabel: labelSel getEnabled: enabledSel [
 		getEnabled: enabledSel
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newLabelFor: aModel label: aString getEnabled: enabledSel [
 	"Answer a new text label."
 
@@ -981,7 +983,7 @@ TEasilyThemed >> newLabelFor: aModel label: aString getEnabled: enabledSel [
 		getEnabled: enabledSel
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newLabelGroup: labelsAndControls [
 	"Answer a morph laid out with a column of labels and a column of associated controls.
 	Controls having a vResizing value of #spaceFill will
@@ -992,7 +994,7 @@ TEasilyThemed >> newLabelGroup: labelsAndControls [
 		for: labelsAndControls
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newLabelGroup: labelsAndControls font: aFont labelColor: aColor [
 	"Answer a morph laid out with a column of labels and a column of associated controls.
 	Controls having a vResizing value of #spaceFill will
@@ -1005,7 +1007,7 @@ TEasilyThemed >> newLabelGroup: labelsAndControls font: aFont labelColor: aColor
 		labelColor: aColor
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newListFor: aModel list: listSelector selected: getSelector changeSelected: setSelector getEnabled: enabledSel help: helpText [
 	"Answer a list for the given model."
 
@@ -1019,7 +1021,7 @@ TEasilyThemed >> newListFor: aModel list: listSelector selected: getSelector cha
 		help: helpText
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newListFor: aModel list: listSelector selected: getSelector changeSelected: setSelector help: helpText [
 	"Answer a list for the given model."
 
@@ -1032,7 +1034,7 @@ TEasilyThemed >> newListFor: aModel list: listSelector selected: getSelector cha
 		help: helpText
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newListFor: aModel list: listSelector selected: getSelector changeSelected: setSelector icon: iconSelector getEnabled: enabledSel help: helpText [
 	"Answer a list for the given model."
 
@@ -1047,7 +1049,7 @@ TEasilyThemed >> newListFor: aModel list: listSelector selected: getSelector cha
 		help: helpText
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newMenu [
 	"Answer a new menu."
 
@@ -1056,7 +1058,7 @@ TEasilyThemed >> newMenu [
 		for: self
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newMenuFor: aModel [
 	"Answer a new menu."
 
@@ -1065,7 +1067,7 @@ TEasilyThemed >> newMenuFor: aModel [
 		for: aModel
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newMorphDropListFor: aModel list: listSel getSelected: getSel setSelected: setSel getEnabled: enabledSel help: helpText [
 	"Answer a morph drop list for the given model."
 
@@ -1079,7 +1081,7 @@ TEasilyThemed >> newMorphDropListFor: aModel list: listSel getSelected: getSel s
 		help: helpText
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newMorphDropListFor: aModel list: listSel getSelected: getSel setSelected: setSel getEnabled: enabledSel useIndex: useIndex help: helpText [
 	"Answer a morph drop list for the given model."
 
@@ -1094,7 +1096,7 @@ TEasilyThemed >> newMorphDropListFor: aModel list: listSel getSelected: getSel s
 		help: helpText
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newMorphDropListFor: aModel list: listSel getSelected: getSel setSelected: setSel help: helpText [
 	"Answer a morph drop list for the given model."
 
@@ -1108,7 +1110,7 @@ TEasilyThemed >> newMorphDropListFor: aModel list: listSel getSelected: getSel s
 		help: helpText
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newMorphListFor: aModel list: listSelector getSelected: getSelector setSelected: setSelector getEnabled: enabledSel help: helpText [
 	"Answer a morph list for the given model."
 
@@ -1122,7 +1124,7 @@ TEasilyThemed >> newMorphListFor: aModel list: listSelector getSelected: getSele
 		help: helpText
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newMorphListFor: aModel list: listSelector getSelected: getSelector setSelected: setSelector help: helpText [
 	"Answer a morph list for the given model."
 
@@ -1135,7 +1137,7 @@ TEasilyThemed >> newMorphListFor: aModel list: listSelector getSelected: getSele
 		help: helpText
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newMultistateButton [
 	"Answer a new multistate button morph.
 	To be usable it needs to have fill styles assigned to various states along
@@ -1145,14 +1147,14 @@ TEasilyThemed >> newMultistateButton [
 		newMultistateButtonIn: self
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newNoButton [
 	"Answer a new No button."
 
 	^self newNoButtonFor: self
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newNoButtonFor: aModel [
 	"Answer a new No button."
 
@@ -1161,14 +1163,14 @@ TEasilyThemed >> newNoButtonFor: aModel [
 		for: aModel
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newOKButton [
 	"Answer a new OK button."
 
 	^self newOKButtonFor: self
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newOKButtonFor: aModel [
 	"Answer a new OK button."
 
@@ -1177,7 +1179,7 @@ TEasilyThemed >> newOKButtonFor: aModel [
 		getEnabled: nil
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newOKButtonFor: aModel getEnabled: enabledSel [
 	"Answer a new OK button."
 
@@ -1187,7 +1189,7 @@ TEasilyThemed >> newOKButtonFor: aModel getEnabled: enabledSel [
 		getEnabled: enabledSel
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newOverflowRowForAll: aCollectionOfMorphs [
 	"Answer a new overflow row morph that provides a drop down for
 	the given contents that are unable to fit the bounds."
@@ -1197,7 +1199,7 @@ TEasilyThemed >> newOverflowRowForAll: aCollectionOfMorphs [
 		forAll: aCollectionOfMorphs
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newPanel [
 	"Answer a new panel."
 
@@ -1205,7 +1207,7 @@ TEasilyThemed >> newPanel [
 		newPanelIn: self
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newPluggableDialogWindow [
 	"Answer a new pluggable dialog."
 
@@ -1213,7 +1215,7 @@ TEasilyThemed >> newPluggableDialogWindow [
 		newPluggableDialogWindow: 'Dialog'
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newPluggableDialogWindow: title [
 	"Answer a new pluggable dialog with the given content."
 
@@ -1222,7 +1224,7 @@ TEasilyThemed >> newPluggableDialogWindow: title [
 		for: nil
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newPluggableDialogWindow: title for: contentMorph [
 	"Answer a new pluggable dialog with the given content."
 
@@ -1232,7 +1234,7 @@ TEasilyThemed >> newPluggableDialogWindow: title for: contentMorph [
 		for: contentMorph
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newRadioButtonFor: aModel getSelected: getSel setSelected: setSel getEnabled: enabledSel label: stringOrText help: helpText [
 	"Answer a checkbox (radio button appearance) with the given label."
 
@@ -1246,7 +1248,7 @@ TEasilyThemed >> newRadioButtonFor: aModel getSelected: getSel setSelected: setS
 		help: helpText
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newRadioButtonFor: aModel getSelected: getSel setSelected: setSel label: stringOrText help: helpText [
 	"Answer a checkbox (radio button appearance) with the given label."
 
@@ -1259,7 +1261,7 @@ TEasilyThemed >> newRadioButtonFor: aModel getSelected: getSel setSelected: setS
 		help: helpText
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newRow [
 	"Answer a morph laid out as a row."
 
@@ -1268,7 +1270,7 @@ TEasilyThemed >> newRow [
 		for: #()
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newRow: controls [
 	"Answer a morph laid out with a row of controls."
 
@@ -1277,7 +1279,7 @@ TEasilyThemed >> newRow: controls [
 		for: controls
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newSVSelector: aColor help: helpText [
 	"Answer a saturation-volume selector with the given color."
 
@@ -1287,7 +1289,7 @@ TEasilyThemed >> newSVSelector: aColor help: helpText [
 		help: helpText
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newScrollPaneFor: aMorph [
 	"Answer a new scroll pane morph to scroll the given morph."
 
@@ -1296,7 +1298,7 @@ TEasilyThemed >> newScrollPaneFor: aMorph [
 		for: aMorph
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newSeparator [
 	"Answer an horizontal separator."
 
@@ -1304,7 +1306,7 @@ TEasilyThemed >> newSeparator [
 		newSeparatorIn: self
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newSliderFor: aModel getValue: getSel setValue: setSel getEnabled: enabledSel help: helpText [
 	"Answer a slider with the given selectors."
 
@@ -1320,7 +1322,7 @@ TEasilyThemed >> newSliderFor: aModel getValue: getSel setValue: setSel getEnabl
 		help: helpText
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newSliderFor: aModel getValue: getSel setValue: setSel help: helpText [
 	"Answer a slider with the given selectors."
 
@@ -1336,7 +1338,7 @@ TEasilyThemed >> newSliderFor: aModel getValue: getSel setValue: setSel help: he
 		help: helpText
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newSliderFor: aModel getValue: getSel setValue: setSel min: min max: max quantum: quantum getEnabled: enabledSel help: helpText [
 	"Answer a slider with the given selectors."
 
@@ -1352,7 +1354,7 @@ TEasilyThemed >> newSliderFor: aModel getValue: getSel setValue: setSel min: min
 		help: helpText
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newStack [
 	"Answer a morph laid out as a stack."
 
@@ -1361,7 +1363,7 @@ TEasilyThemed >> newStack [
 		for: #()
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newStack: controls [
 	"Answer a morph laid out with a stack of controls."
 
@@ -1370,7 +1372,7 @@ TEasilyThemed >> newStack: controls [
 		for: controls
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newString: aStringOrText [
 	"Answer a new embossed string."
 
@@ -1381,7 +1383,7 @@ TEasilyThemed >> newString: aStringOrText [
 		style: #plain
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newString: aStringOrText font: aFont style: aStyle [
 	"Answer a new embossed string."
 
@@ -1392,7 +1394,7 @@ TEasilyThemed >> newString: aStringOrText font: aFont style: aStyle [
 		style: aStyle
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newString: aStringOrText style: aStyle [
 	"Answer a new embossed string."
 
@@ -1403,7 +1405,7 @@ TEasilyThemed >> newString: aStringOrText style: aStyle [
 		style: aStyle
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newTabGroup: labelsAndPages [
 	"Answer a tab group with the given tab labels associated with pages."
 
@@ -1412,7 +1414,7 @@ TEasilyThemed >> newTabGroup: labelsAndPages [
 		for: labelsAndPages
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newText: aStringOrText [
 	"Answer a new text."
 
@@ -1421,7 +1423,7 @@ TEasilyThemed >> newText: aStringOrText [
 		text: aStringOrText
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newTextEditorFor: aModel getText: getSel setText: setSel [
 	"Answer a text editor for the given model."
 
@@ -1432,7 +1434,7 @@ TEasilyThemed >> newTextEditorFor: aModel getText: getSel setText: setSel [
 		getEnabled: nil
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newTextEditorFor: aModel getText: getSel setText: setSel getEnabled: enabledSel [
 	"Answer a text editor for the given model."
 
@@ -1444,7 +1446,7 @@ TEasilyThemed >> newTextEditorFor: aModel getText: getSel setText: setSel getEna
 		menu: nil
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newTextEditorFor: aModel getText: getSel setText: setSel getEnabled: enabledSel menu: menuSelector [
 	"Answer a text editor for the given model."
 
@@ -1457,7 +1459,7 @@ TEasilyThemed >> newTextEditorFor: aModel getText: getSel setText: setSel getEna
 		menu: menuSelector
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newTextEntryFor: aModel get: getSel set: setSel class: aClass getEnabled: enabledSel help: helpText [
 	"Answer a text entry for the given model."
 
@@ -1471,7 +1473,7 @@ TEasilyThemed >> newTextEntryFor: aModel get: getSel set: setSel class: aClass g
 		help: helpText
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newTextEntryFor: aModel getText: getSel setText: setSel getEnabled: enabledSel help: helpText [
 	"Answer a text entry for the given model."
 
@@ -1485,7 +1487,7 @@ TEasilyThemed >> newTextEntryFor: aModel getText: getSel setText: setSel getEnab
 		help: helpText
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newTextEntryFor: aModel getText: getSel setText: setSel getEnabled: enabledSel help: helpText entryCompletion: anEntryCompletion [
 
 	"Answer a text entry for the given model."
@@ -1501,7 +1503,7 @@ TEasilyThemed >> newTextEntryFor: aModel getText: getSel setText: setSel getEnab
 		entryCompletion: anEntryCompletion
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newTextEntryFor: aModel getText: getSel setText: setSel help: helpText [
 	"Answer a text entry for the given model."
 
@@ -1514,7 +1516,7 @@ TEasilyThemed >> newTextEntryFor: aModel getText: getSel setText: setSel help: h
 		help: helpText
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newTitle: aString for: control [
 	"Answer a morph laid out with a column with a title."
 
@@ -1524,7 +1526,7 @@ TEasilyThemed >> newTitle: aString for: control [
 		for: control
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newToolDockingBar [
 	"Answer a tool docking bar."
 
@@ -1532,7 +1534,7 @@ TEasilyThemed >> newToolDockingBar [
 		newToolDockingBarIn: self
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newToolSpacer [
 	"Answer a tool spacer."
 
@@ -1540,7 +1542,7 @@ TEasilyThemed >> newToolSpacer [
 		newToolSpacerIn: self
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newToolbar [
 	"Answer a toolbar."
 
@@ -1548,7 +1550,7 @@ TEasilyThemed >> newToolbar [
 		newToolbarIn: self
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newToolbar: controls [
 	"Answer a toolbar with the given controls."
 
@@ -1557,7 +1559,7 @@ TEasilyThemed >> newToolbar: controls [
 		for: controls
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newToolbarHandle [
 	"Answer a toolbar handle."
 
@@ -1565,7 +1567,7 @@ TEasilyThemed >> newToolbarHandle [
 		newToolbarHandleIn: self
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newTreeFor: aModel list: listSelector selected: getSelector changeSelected: setSelector [
 	"Answer a new tree morph."
 
@@ -1577,7 +1579,7 @@ TEasilyThemed >> newTreeFor: aModel list: listSelector selected: getSelector cha
 		changeSelected: setSelector
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newVerticalSeparator [
 	"Answer a vertical separator."
 
@@ -1585,7 +1587,7 @@ TEasilyThemed >> newVerticalSeparator [
 		newVerticalSeparatorIn: self
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newWindowFor: aModel title: titleString [
 	"Answer a new window morph."
 
@@ -1595,14 +1597,14 @@ TEasilyThemed >> newWindowFor: aModel title: titleString [
 		title: titleString
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newYesButton [
 	"Answer a new Yes button."
 
 	^self newYesButtonFor: self
 ]
 
-{ #category : #controls }
+{ #category : 'controls' }
 TEasilyThemed >> newYesButtonFor: aModel [
 	"Answer a new yes button."
 
@@ -1611,14 +1613,14 @@ TEasilyThemed >> newYesButtonFor: aModel [
 		for: aModel
 ]
 
-{ #category : #services }
+{ #category : 'services' }
 TEasilyThemed >> proceed: aStringOrText [
 	"Open a proceed dialog."
 
 	^self proceed: aStringOrText title: 'Proceed' translated
 ]
 
-{ #category : #services }
+{ #category : 'services' }
 TEasilyThemed >> proceed: aStringOrText title: aString [
 	"Open a proceed dialog and answer true if not cancelled, false otherwise."
 
@@ -1628,14 +1630,14 @@ TEasilyThemed >> proceed: aStringOrText title: aString [
 		title: aString
 ]
 
-{ #category : #services }
+{ #category : 'services' }
 TEasilyThemed >> question: aStringOrText [
 	"Open a question dialog."
 
 	^self question: aStringOrText title: 'Question' translated
 ]
 
-{ #category : #services }
+{ #category : 'services' }
 TEasilyThemed >> question: aStringOrText title: aString [
 	"Open a question dialog and answer true if yes,
 	false if no and nil if cancelled."
@@ -1646,14 +1648,14 @@ TEasilyThemed >> question: aStringOrText title: aString [
 		title: aString
 ]
 
-{ #category : #services }
+{ #category : 'services' }
 TEasilyThemed >> questionWithoutCancel: aStringOrText [
 	"Open a question dialog."
 
 	^self questionWithoutCancel: aStringOrText title: 'Question' translated
 ]
 
-{ #category : #services }
+{ #category : 'services' }
 TEasilyThemed >> questionWithoutCancel: aStringOrText title: aString [
 	"Open a question dialog and answer true if yes,
 	false if no and nil if cancelled."
@@ -1664,14 +1666,14 @@ TEasilyThemed >> questionWithoutCancel: aStringOrText title: aString [
 		title: aString
 ]
 
-{ #category : #services }
+{ #category : 'services' }
 TEasilyThemed >> textEntry: aStringOrText [
 	"Open a text entry dialog."
 
 	^self textEntry: aStringOrText title: 'Entry' translated
 ]
 
-{ #category : #services }
+{ #category : 'services' }
 TEasilyThemed >> textEntry: aStringOrText title: aString [
 	"Open a text entry dialog."
 
@@ -1681,7 +1683,7 @@ TEasilyThemed >> textEntry: aStringOrText title: aString [
 		entryText: ''
 ]
 
-{ #category : #services }
+{ #category : 'services' }
 TEasilyThemed >> textEntry: aStringOrText title: aString entryText: defaultEntryText [
 	"Open a text entry dialog."
 
@@ -1692,7 +1694,7 @@ TEasilyThemed >> textEntry: aStringOrText title: aString entryText: defaultEntry
 		entryText: defaultEntryText
 ]
 
-{ #category : #theme }
+{ #category : 'theme' }
 TEasilyThemed >> theme [
 	"Answer the ui theme that provides controls."
 

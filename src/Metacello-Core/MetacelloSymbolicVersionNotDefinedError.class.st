@@ -1,10 +1,12 @@
 Class {
-	#name : #MetacelloSymbolicVersionNotDefinedError,
-	#superclass : #MetacelloSymbolicVersionDoesNotExistError,
-	#category : #'Metacello-Core-Exceptions-Errors'
+	#name : 'MetacelloSymbolicVersionNotDefinedError',
+	#superclass : 'MetacelloSymbolicVersionDoesNotExistError',
+	#category : 'Metacello-Core-Exceptions-Errors',
+	#package : 'Metacello-Core',
+	#tag : 'Exceptions-Errors'
 }
 
-{ #category : #printing }
+{ #category : 'printing' }
 MetacelloSymbolicVersionNotDefinedError >> description [
     "Return a textual description of the exception."
 

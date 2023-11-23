@@ -1,16 +1,18 @@
 "
 I represent the type of any kind of classes or traits.
-I am introduced to abstract actual class implementation where in live system it would be Behavior or TraitBehavior.
+I am introduced to abstract actual class implementation where in live system it would be Behavior.
 So when Calypso build browser items for classes or traits their type is supposed to be me.
 Look at class references to discover all compatible class definitions
 "
 Class {
-	#name : #ClyClass,
-	#superclass : #Object,
-	#category : #'Calypso-SystemQueries-Domain'
+	#name : 'ClyClass',
+	#superclass : 'Object',
+	#category : 'Calypso-SystemQueries-Domain',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Domain'
 }
 
-{ #category : #'item convertation' }
+{ #category : 'item convertation' }
 ClyClass class >> convertToCalypsoBrowserItem: aClass [
 
 	| item |
@@ -19,31 +21,32 @@ ClyClass class >> convertToCalypsoBrowserItem: aClass [
 	^item
 ]
 
-{ #category : #'item decoration' }
+{ #category : 'item decoration' }
 ClyClass class >> decorateBrowserItem: aBrowserItem by: anEnvironmentPlugin [
 	^ anEnvironmentPlugin
 		decorateBrowserItem: aBrowserItem
 		ofClass: aBrowserItem actualObject
 ]
 
-{ #category : #sorting }
+{ #category : 'sorting' }
 ClyClass class >> defaultSortFunctionForCalypso [
 	^ClySortByNameFunction ascending
 ]
 
-{ #category : #sorting }
+{ #category : 'sorting' }
 ClyClass class >> itemsSortOrderForCalypso [
 	^2
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyClass class >> match: aClass forQueryBrowserFilter: aQueryBrowserFilter [
 
 	(aQueryBrowserFilter matchesString: aClass name) ifTrue: [ ^true ].
 	^aQueryBrowserFilter matchesString: aClass package name
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyClass class >> printSystemPathTo: aClass [
-	^aClass package name
+
+	^ aClass package name
 ]

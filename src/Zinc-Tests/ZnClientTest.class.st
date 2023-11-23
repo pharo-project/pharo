@@ -1,20 +1,21 @@
 Class {
-	#name : #ZnClientTest,
-	#superclass : #TestCase,
-	#category : #'Zinc-Tests'
+	#name : 'ZnClientTest',
+	#superclass : 'TestCase',
+	#category : 'Zinc-Tests',
+	#package : 'Zinc-Tests'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnClientTest >> smallHtmlUrl [
 	^ 'http://zn.stfx.eu/zn/small.html' asZnUrl
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnClientTest >> t3EasyGeoIPUrl [
 	^ 'http://easy.t3-platform.net/rest/geo-ip' asZnUrl
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnClientTest >> testConnectionClose [
 	self withServerDo: [ :server | | client |
 		server onRequestRespond: [ :request |
@@ -29,7 +30,7 @@ ZnClientTest >> testConnectionClose [
 		self assert: client connection isNil ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnClientTest >> testConnectionCloseOnReuseTimeout [
 	| client firstSocket secondSocket|
 	client := ZnClient new.
@@ -47,7 +48,7 @@ ZnClientTest >> testConnectionCloseOnReuseTimeout [
 		client close ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnClientTest >> testConstruction [
 	| client |
 	(client := ZnClient new)
@@ -65,7 +66,7 @@ ZnClientTest >> testConstruction [
 	self assert: (client request headers at: 'X-token') equals: 'ABCDEF'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnClientTest >> testCookies [
 	| client |
 	self
@@ -98,7 +99,7 @@ ZnClientTest >> testCookies [
 			client close ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnClientTest >> testCustomUserAgentString [
 	self withServerDo: [ :server | | client |
 		"change ZnClient's local options"
@@ -134,7 +135,7 @@ ZnClientTest >> testCustomUserAgentString [
 		 ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnClientTest >> testDownloadSmallHTML [
 	| client |
 	ZnFileSystemUtils deleteIfExists: self smallHtmlUrl pathSegments last.
@@ -161,7 +162,7 @@ ZnClientTest >> testDownloadSmallHTML [
 	ZnFileSystemUtils deleteIfExists: self smallHtmlUrl pathSegments last
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnClientTest >> testGetAfterPost [
 	self withServerDo: [ :server | | client |
 		server onRequestRespond: [ :request |
@@ -193,7 +194,7 @@ ZnClientTest >> testGetAfterPost [
 		client close ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnClientTest >> testGetForm [
 	| client |
 	self withServerDo: [ :server |
@@ -208,7 +209,7 @@ ZnClientTest >> testGetForm [
 		self assert: (client contents includesSubstring: 'secret') ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnClientTest >> testGetGeoIP [
 	| result client |
 	result := (client := ZnClient new)
@@ -228,7 +229,7 @@ ZnClientTest >> testGetGeoIP [
 	client close
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnClientTest >> testGetLargeWideStringHTML [
 	| client text |
 	text := '<html>{1}<h1>Czech in Czech is {2}e{3}tina.</h1>{1}</html>'
@@ -246,7 +247,7 @@ ZnClientTest >> testGetLargeWideStringHTML [
 		client close ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnClientTest >> testGetSmallHTML [
 	| client |
 	(client := ZnClient new)
@@ -261,7 +262,7 @@ ZnClientTest >> testGetSmallHTML [
 	self deny: client isConnected
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnClientTest >> testGetSmallHTMLBinary [
 	| client html bytes |
 	(client := ZnClient new)
@@ -285,7 +286,7 @@ ZnClientTest >> testGetSmallHTMLBinary [
 	client close
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnClientTest >> testGetSmallHTMLOneShot [
 	| client |
 	(client := ZnClient new)
@@ -298,7 +299,7 @@ ZnClientTest >> testGetSmallHTMLOneShot [
 	self deny: client isConnected
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnClientTest >> testGetSmallHTMLStreaming [
 	| client result contents |
 	result := (client := ZnClient new)
@@ -314,7 +315,7 @@ ZnClientTest >> testGetSmallHTMLStreaming [
 	client close
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnClientTest >> testGetSmallHTMLTwice [
 	| client |
 	(client := ZnClient new)
@@ -332,7 +333,7 @@ ZnClientTest >> testGetSmallHTMLTwice [
 	client close
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnClientTest >> testGetSmallHTMLUrlConstruction [
 	| client |
 	(client := ZnClient new)
@@ -346,7 +347,7 @@ ZnClientTest >> testGetSmallHTMLUrlConstruction [
 	client close
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnClientTest >> testGetStreamingConnectionClose [
 	self withServerDo: [ :server |
 		| client result contents |
@@ -367,7 +368,7 @@ ZnClientTest >> testGetStreamingConnectionClose [
 		client close ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnClientTest >> testGetWideStringHTML [
 	| client text |
 	text := '<html><h1>Czech is in Czech {1}e{2}tina.</h1></html>' format: { 269 asCharacter. 353 asCharacter}.
@@ -381,7 +382,7 @@ ZnClientTest >> testGetWideStringHTML [
 		client close ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnClientTest >> testHeadSmallHTML [
 	| client |
 	self withServerDo: [ :server |
@@ -395,7 +396,7 @@ ZnClientTest >> testHeadSmallHTML [
 		client close ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnClientTest >> testIfFailNonExistingHost [
 	| client |
 	"Note that when there is an HTTP proxy set, there will be no direct Error"
@@ -412,7 +413,7 @@ ZnClientTest >> testIfFailNonExistingHost [
 	self fail
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnClientTest >> testIfFailNotFound [
 	| client |
 	(client := ZnClient new)
@@ -428,7 +429,7 @@ ZnClientTest >> testIfFailNotFound [
 	self fail
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnClientTest >> testIfFailWrongType [
 	| client |
 	(client := ZnClient new)
@@ -442,7 +443,7 @@ ZnClientTest >> testIfFailWrongType [
 	self fail
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnClientTest >> testIfModifiedSinceNotModified [
 	| client  response |
 	(client := ZnClient new) host: 'stfx.eu'.
@@ -456,7 +457,7 @@ ZnClientTest >> testIfModifiedSinceNotModified [
 		self assert: response hasEntity not ] ensure: [ client close ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnClientTest >> testJsonRESTGet [
 	| client |
 	self class environment at: #STONJSON ifAbsent: [ ^ self skip ].
@@ -473,7 +474,7 @@ ZnClientTest >> testJsonRESTGet [
 		client close ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnClientTest >> testJsonRESTPost [
 	| client |
 	self class environment at: #STONJSON ifAbsent: [ ^ self skip ].
@@ -492,7 +493,7 @@ ZnClientTest >> testJsonRESTPost [
 		client close ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnClientTest >> testLogging [
 	| client logEventCollection count |
 	logEventCollection := OrderedCollection new.
@@ -511,7 +512,7 @@ ZnClientTest >> testLogging [
 	self assert: logEventCollection anyOne clientId equals: #C1
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnClientTest >> testOptions [
 	| client |
 	self withServerDo: [ :server |
@@ -530,7 +531,7 @@ ZnClientTest >> testOptions [
 		client close ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnClientTest >> testPatch [
 	| client |
 	self withServerDo: [ :server |
@@ -549,7 +550,7 @@ ZnClientTest >> testPatch [
 		client close ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnClientTest >> testPostForm [
 	| client |
 	self withServerDo: [ :server |
@@ -564,7 +565,7 @@ ZnClientTest >> testPostForm [
 		self assert: (client contents includesSubstring: 'secret') ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnClientTest >> testPostMultipart [
 	| client filename |
 	ZnFileSystemUtils deleteIfExists: 'testPostMultiPart.txt'.
@@ -583,7 +584,7 @@ ZnClientTest >> testPostMultipart [
 	ZnFileSystemUtils deleteIfExists: 'testPostMultiPart.txt'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnClientTest >> testPostMultipartBinary [
 	| client filename |
 	ZnFileSystemUtils deleteIfExists: 'testPostMultiPart.bin'.
@@ -602,7 +603,7 @@ ZnClientTest >> testPostMultipartBinary [
 	ZnFileSystemUtils deleteIfExists: 'testPostMultiPart.bin'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnClientTest >> testPostMultipartNonASCII [
 	| client filename |
 	ZnFileSystemUtils deleteIfExists: 'testPostMultiPart.txt'.
@@ -621,7 +622,7 @@ ZnClientTest >> testPostMultipartNonASCII [
 	ZnFileSystemUtils deleteIfExists: 'testPostMultiPart.txt'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnClientTest >> testPostTwice [
 	| client |
 	self withServerDo: [ :server |
@@ -640,7 +641,7 @@ ZnClientTest >> testPostTwice [
 		client close ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnClientTest >> testPrepareRequest [
 	| client |
 	self withServerDo: [ :server |
@@ -660,7 +661,7 @@ ZnClientTest >> testPrepareRequest [
 		client close ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnClientTest >> testProgress [
 	"[ :bar |
 		bar title: 'Downloading Sources...'.
@@ -683,7 +684,7 @@ ZnClientTest >> testProgress [
 		raise: HTTPProgress
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnClientTest >> testProgressNoIfFail [
 	self
 		should: [
@@ -695,7 +696,7 @@ ZnClientTest >> testProgressNoIfFail [
 		raise: HTTPProgress
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnClientTest >> testQueryGoogle [
 	| client |
 	(client := ZnClient new)
@@ -710,7 +711,7 @@ ZnClientTest >> testQueryGoogle [
 	client close
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnClientTest >> testRedirect [
 	| client response target |
 	target := 'http://zn.stfx.eu'.
@@ -732,7 +733,7 @@ ZnClientTest >> testRedirect [
 	self assert: response isRedirect
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnClientTest >> testRedirectDontFollow [
 	| client target |
 	target := 'http://zn.stfx.eu'.
@@ -747,7 +748,7 @@ ZnClientTest >> testRedirectDontFollow [
 	client close
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnClientTest >> testRedirectWithCookies [
 	self withServerDo: [ :server | | client cookie |
 		server onRequestRespond: [ :request |
@@ -758,7 +759,7 @@ ZnClientTest >> testRedirectWithCookies [
 						yourself ]
 				ifFalse: [
 					cookie := request cookies detect: [ :each | each name = 'session' ] ifNone: [ nil ].
-					(request uri firstPathSegment = 'two' and: [ cookie notNil and: [ cookie value = '123456' ] ])
+					(request uri firstPathSegment = 'two' and: [ cookie isNotNil and: [ cookie value = '123456' ] ])
 						ifTrue: [ ZnResponse ok: (ZnEntity text: 'OK!') ]
 		 				ifFalse: [ ZnResponse badRequest: request ] ] ].
 		(client := ZnClient new)
@@ -769,7 +770,7 @@ ZnClientTest >> testRedirectWithCookies [
 		client close ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnClientTest >> testRedirectWithCustomHeader [
 	self withServerDo: [ :server | | client |
 		server onRequestRespond: [ :request |
@@ -792,7 +793,7 @@ ZnClientTest >> testRedirectWithCustomHeader [
 		client close ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnClientTest >> testRelativeRedirect [
 	self withServerDo: [ :server | | client |
 		server onRequestRespond: [ :request |
@@ -810,7 +811,7 @@ ZnClientTest >> testRelativeRedirect [
 		client close ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnClientTest >> testRelativeRedirect307 [
 	self withServerDo: [ :server | | client |
 		server onRequestRespond: [ :request |
@@ -830,7 +831,7 @@ ZnClientTest >> testRelativeRedirect307 [
 		client close ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnClientTest >> testRelativeRedirectUp [
 	self withServerDo: [ :server | | client |
 		server onRequestRespond: [ :request |
@@ -848,7 +849,7 @@ ZnClientTest >> testRelativeRedirectUp [
 		client close ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnClientTest >> testSpecialPosts [
 	self withServerDo: [ :server |
 		{ ZnEntity with: 'A'. ZnEntity with: #[ 42 ]. ZnEntity with: ''. ZnEntity with: #[ ] }
@@ -872,7 +873,7 @@ ZnClientTest >> testSpecialPosts [
 				self assert: (each isEmpty or: [client contents includesSubstring: each printString ]) ] ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnClientTest >> testTimeout [
 	self withServerDo: [ :server |
 		self
@@ -886,7 +887,7 @@ ZnClientTest >> testTimeout [
 			raise: ConnectionTimedOut ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnClientTest >> testUploadSmallDocument [
 	self withServerDo: [ :server | | client contents path |
 		path := ZnFileSystemUtils fullNameFor: 'small.txt'.
@@ -909,7 +910,7 @@ ZnClientTest >> testUploadSmallDocument [
 		ZnFileSystemUtils deleteIfExists: 'small.txt' ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnClientTest >> testUsernamePassword [
 	self withServerDo: [ :server | | client |
 		server authenticator: (ZnBasicAuthenticator username: 'foo' password: 'secret').
@@ -927,7 +928,7 @@ ZnClientTest >> testUsernamePassword [
 		client close ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnClientTest >> testUsernamePasswordInUserInfo [
 	self withServerDo: [ :server | | url client |
 		server authenticator: (ZnBasicAuthenticator username: 'foo' password: 'secret').
@@ -940,7 +941,7 @@ ZnClientTest >> testUsernamePasswordInUserInfo [
 		client close ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnClientTest >> testUsernamePasswordTwice [
 	self withServerDo: [ :server | | client |
 		server authenticator: (ZnBasicAuthenticator username: 'foo' password: 'secret').
@@ -957,7 +958,7 @@ ZnClientTest >> testUsernamePasswordTwice [
 		client close ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnClientTest >> withServerDo: block [
 	ZnServer withOSAssignedPortDo: block
 ]

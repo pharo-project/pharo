@@ -1,6 +1,6 @@
-Extension { #name : #MessageTally }
+Extension { #name : 'MessageTally' }
 
-{ #category : #'*ProfilerUI' }
+{ #category : '*ProfilerUI' }
 MessageTally >> asTallyModel [
 	^ TallyModelTime new
 		item: self;

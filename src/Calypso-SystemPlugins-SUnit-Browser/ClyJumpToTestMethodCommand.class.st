@@ -15,8 +15,8 @@ Internal Representation and Key Implementation Points.
 
 "
 Class {
-	#name : #ClyJumpToTestMethodCommand,
-	#superclass : #SycMethodCommand,
+	#name : 'ClyJumpToTestMethodCommand',
+	#superclass : 'SycMethodCommand',
 	#traits : 'TClyGenerateTestClass',
 	#classTraits : 'TClyGenerateTestClass classTrait',
 	#instVars : [
@@ -24,39 +24,50 @@ Class {
 		'browser',
 		'systemEnvironment'
 	],
-	#category : #'Calypso-SystemPlugins-SUnit-Browser-Commands'
+	#category : 'Calypso-SystemPlugins-SUnit-Browser-Commands',
+	#package : 'Calypso-SystemPlugins-SUnit-Browser',
+	#tag : 'Commands'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyJumpToTestMethodCommand class >> canBeExecutedInContext: aBrowserContext [
+
+	aBrowserContext isQueryBrowserContext
+		ifTrue: [ ^ false ].
+	^ self hasInstanceSelectedItemsIn: aBrowserContext.
+]
+
+{ #category : 'testing' }
+ClyJumpToTestMethodCommand class >> hasInstanceSelectedItemsIn: aBrowserContext [
+
 	^ aBrowserContext isInstanceSideMethodSelected and: [ aBrowserContext selectedItems anySatisfy: [ :each | (each hasProperty: ClyTestResultProperty) not ] ]
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyJumpToTestMethodCommand class >> methodMenuActivation [
 	<classAnnotation>
 	^ CmdContextMenuActivation byItemOf: ClySUnitMethodMenuGroup order: 10 for: ClyMethod asCalypsoItemContext
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyJumpToTestMethodCommand class >> methodShortcutActivation [
 	<classAnnotation>
 	^ CmdShortcutActivation by: $h meta , $j meta for: ClyMethod asCalypsoItemContext
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyJumpToTestMethodCommand >> defaultMenuItemName [
 	^ 'Jump to test method'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyJumpToTestMethodCommand >> execute [
 	self methods do: [ :method | self generateTestMethodFor: method ].
 
 	testMethodToBrowse ifNotNil: [ :testMethod | browser selectMethod: testMethod ]
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyJumpToTestMethodCommand >> generateTestMethodFor: aMethod [
 	[
 	| testClass selector |
@@ -70,7 +81,7 @@ ClyJumpToTestMethodCommand >> generateTestMethodFor: aMethod [
 		do: [ :ex | self inform: 'Impossible to create test class for ' , ex baseClass printString , '.' ]
 ]
 
-{ #category : #action }
+{ #category : 'action' }
 ClyJumpToTestMethodCommand >> generateTestMethodNamed: aSymbol in: aClass [
 	| body |
 	body := '{1}
@@ -80,19 +91,19 @@ ClyJumpToTestMethodCommand >> generateTestMethodNamed: aSymbol in: aClass [
 	aClass compile: body classified: 'tests'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyJumpToTestMethodCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 	browser := aToolContext browser.
 	systemEnvironment := aToolContext systemEnvironment
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyJumpToTestMethodCommand >> systemEnvironment [
 	^ systemEnvironment
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyJumpToTestMethodCommand >> testMethodNameFor: aMethod [
 	^ aMethod selector asTestSelector
 ]

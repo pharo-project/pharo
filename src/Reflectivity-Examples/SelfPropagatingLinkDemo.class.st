@@ -13,28 +13,29 @@ if we now execute the code
 inspec the instance of SelfPropagatingLinkDemo to see which methods have been visited by the link
 "
 Class {
-	#name : #SelfPropagatingLinkDemo,
-	#superclass : #Object,
+	#name : 'SelfPropagatingLinkDemo',
+	#superclass : 'Object',
 	#instVars : [
 		'methodsvisited',
 		'link'
 	],
-	#category : #'Reflectivity-Examples'
+	#category : 'Reflectivity-Examples',
+	#package : 'Reflectivity-Examples'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SelfPropagatingLinkDemo >> initialize [
 
 	methodsvisited := OrderedCollection new
 ]
 
-{ #category : #displaying }
+{ #category : 'displaying' }
 SelfPropagatingLinkDemo >> installOnAllSendsInMethod: aMethod [
 	methodsvisited add: aMethod.
 	aMethod sendNodes do: [ :sendNode | (sendNode hasMetalink: self link) ifFalse: [sendNode link: self link]]
 ]
 
-{ #category : #displaying }
+{ #category : 'displaying' }
 SelfPropagatingLinkDemo >> link [
 	^link := link ifNil: [MetaLink new
 		metaObject: self;
@@ -42,7 +43,7 @@ SelfPropagatingLinkDemo >> link [
 		arguments: #(methodToExecute)]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SelfPropagatingLinkDemo >> methodsvisited [
 	^ methodsvisited
 ]

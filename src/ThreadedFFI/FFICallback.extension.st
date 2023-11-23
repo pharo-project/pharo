@@ -1,30 +1,30 @@
-Extension { #name : #FFICallback }
+Extension { #name : 'FFICallback' }
 
-{ #category : #'*ThreadedFFI' }
+{ #category : '*ThreadedFFI' }
 FFICallback >> beFailed [
 
 	^ self backendCallback beFailed
 ]
 
-{ #category : #'*ThreadedFFI' }
+{ #category : '*ThreadedFFI' }
 FFICallback >> beSuccess [
 
 	^ self backendCallback beSuccess
 ]
 
-{ #category : #'*ThreadedFFI' }
+{ #category : '*ThreadedFFI' }
 FFICallback >> isSuccess [
 
 	^ self backendCallback isSuccess
 ]
 
-{ #category : #'*ThreadedFFI' }
+{ #category : '*ThreadedFFI' }
 FFICallback >> tfPointerAddress [
 
 	^ self getHandle tfPointerAddress
 ]
 
-{ #category : #'*ThreadedFFI' }
+{ #category : '*ThreadedFFI' }
 FFICallback >> tfPrintString [
 
 	^ block printString

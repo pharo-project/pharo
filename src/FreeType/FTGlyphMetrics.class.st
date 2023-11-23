@@ -2,8 +2,8 @@
 I Implement the `FT_Glyph_Metrics` type
 "
 Class {
-	#name : #FTGlyphMetrics,
-	#superclass : #FFIExternalStructure,
+	#name : 'FTGlyphMetrics',
+	#superclass : 'FFIExternalStructure',
 	#classVars : [
 		'OFFSET_HEIGHT',
 		'OFFSET_HORIADVANCE',
@@ -17,10 +17,12 @@ Class {
 	#pools : [
 		'FT2Types'
 	],
-	#category : #'FreeType-Bindings'
+	#category : 'FreeType-Bindings',
+	#package : 'FreeType',
+	#tag : 'Bindings'
 }
 
-{ #category : #'field definition' }
+{ #category : 'field definition' }
 FTGlyphMetrics class >> fieldsDesc [
 
 	"self rebuildFieldAccessors"
@@ -38,112 +40,112 @@ FTGlyphMetrics class >> fieldsDesc [
     FT_Pos  vertAdvance;)
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 FTGlyphMetrics >> height [
 	"This method was automatically generated"
 
 	^ handle platformLongAt: OFFSET_HEIGHT
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 FTGlyphMetrics >> height: anObject [
 	"This method was automatically generated"
 
 	^ handle platformLongAt: OFFSET_HEIGHT put: anObject
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 FTGlyphMetrics >> horiAdvance [
 	"This method was automatically generated"
 
 	^ handle platformLongAt: OFFSET_HORIADVANCE
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 FTGlyphMetrics >> horiAdvance: anObject [
 	"This method was automatically generated"
 
 	^ handle platformLongAt: OFFSET_HORIADVANCE put: anObject
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 FTGlyphMetrics >> horiBearingX [
 	"This method was automatically generated"
 
 	^ handle platformLongAt: OFFSET_HORIBEARINGX
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 FTGlyphMetrics >> horiBearingX: anObject [
 	"This method was automatically generated"
 
 	^ handle platformLongAt: OFFSET_HORIBEARINGX put: anObject
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 FTGlyphMetrics >> horiBearingY [
 	"This method was automatically generated"
 
 	^ handle platformLongAt: OFFSET_HORIBEARINGY
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 FTGlyphMetrics >> horiBearingY: anObject [
 	"This method was automatically generated"
 
 	^ handle platformLongAt: OFFSET_HORIBEARINGY put: anObject
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 FTGlyphMetrics >> vertAdvance [
 	"This method was automatically generated"
 
 	^ handle platformLongAt: OFFSET_VERTADVANCE
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 FTGlyphMetrics >> vertAdvance: anObject [
 	"This method was automatically generated"
 
 	^ handle platformLongAt: OFFSET_VERTADVANCE put: anObject
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 FTGlyphMetrics >> vertBearingX [
 	"This method was automatically generated"
 
 	^ handle platformLongAt: OFFSET_VERTBEARINGX
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 FTGlyphMetrics >> vertBearingX: anObject [
 	"This method was automatically generated"
 
 	^ handle platformLongAt: OFFSET_VERTBEARINGX put: anObject
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 FTGlyphMetrics >> vertBearingY [
 	"This method was automatically generated"
 
 	^ handle platformLongAt: OFFSET_VERTBEARINGY
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 FTGlyphMetrics >> vertBearingY: anObject [
 	"This method was automatically generated"
 
 	^ handle platformLongAt: OFFSET_VERTBEARINGY put: anObject
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 FTGlyphMetrics >> width [
 	"This method was automatically generated"
 
 	^ handle platformLongAt: OFFSET_WIDTH
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 FTGlyphMetrics >> width: anObject [
 	"This method was automatically generated"
 

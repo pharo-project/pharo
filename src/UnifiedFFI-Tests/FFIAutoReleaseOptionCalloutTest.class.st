@@ -1,10 +1,12 @@
 Class {
-	#name : #FFIAutoReleaseOptionCalloutTest,
-	#superclass : #TestCase,
-	#category : #'UnifiedFFI-Tests-Tests'
+	#name : 'FFIAutoReleaseOptionCalloutTest',
+	#superclass : 'TestCase',
+	#category : 'UnifiedFFI-Tests-Tests',
+	#package : 'UnifiedFFI-Tests',
+	#tag : 'Tests'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FFIAutoReleaseOptionCalloutTest >> newFFIMethodWithSignature: signature doing: aBlock options: options [
 
 	| calloutAPI methodBuilder |
@@ -23,7 +25,7 @@ FFIAutoReleaseOptionCalloutTest >> newFFIMethodWithSignature: signature doing: a
 				sender: methodBuilder ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFIAutoReleaseOptionCalloutTest >> testExternalObject [
 
 	self
@@ -33,7 +35,7 @@ FFIAutoReleaseOptionCalloutTest >> testExternalObject [
 			FFIExternalResourceManager uniqueInstance includes: return ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFIAutoReleaseOptionCalloutTest >> testExternalStructure [
 
 	self
@@ -43,7 +45,7 @@ FFIAutoReleaseOptionCalloutTest >> testExternalStructure [
 			ExternalAddress finalizationRegistry includes: return getHandle ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFIAutoReleaseOptionCalloutTest >> testNotYetImplementedOnString [
 
 	self
@@ -57,7 +59,7 @@ FFIAutoReleaseOptionCalloutTest >> testNotYetImplementedOnString [
 		description: 'Not yet implemented'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFIAutoReleaseOptionCalloutTest >> testOnFFIMethodWithSignature: anArray doing: mockedFunctionReturn checkWith: aBlockToTestIfAutoReleaseWasDone [
 
 	| return method |
@@ -80,7 +82,7 @@ FFIAutoReleaseOptionCalloutTest >> testOnFFIMethodWithSignature: anArray doing: 
 		description: 'With the option, autoRelease was performed'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFIAutoReleaseOptionCalloutTest >> testVoidPointer [
 
 	self

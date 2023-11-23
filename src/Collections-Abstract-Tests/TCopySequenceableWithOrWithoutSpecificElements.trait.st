@@ -2,23 +2,25 @@
 A trait for test purposes
 "
 Trait {
-	#name : #TCopySequenceableWithOrWithoutSpecificElements,
-	#category : #'Collections-Abstract-Tests-Traits'
+	#name : 'TCopySequenceableWithOrWithoutSpecificElements',
+	#category : 'Collections-Abstract-Tests-Traits',
+	#package : 'Collections-Abstract-Tests',
+	#tag : 'Traits'
 }
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TCopySequenceableWithOrWithoutSpecificElements >> indexInNonEmpty [
 	"Return an index between bounds of 'nonEmpty'"
 
 	^self explicitRequirement
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TCopySequenceableWithOrWithoutSpecificElements >> nonEmpty [
 	self explicitRequirement
 ]
 
-{ #category : #'tests - fixture' }
+{ #category : 'tests - fixture' }
 TCopySequenceableWithOrWithoutSpecificElements >> test0FixtureCopyWithOrWithoutSpecificElementsTest [
 
 	self nonEmpty.
@@ -28,7 +30,7 @@ TCopySequenceableWithOrWithoutSpecificElements >> test0FixtureCopyWithOrWithoutS
 	self assert: self indexInNonEmpty <= self nonEmpty size
 ]
 
-{ #category : #'tests - copying with or without' }
+{ #category : 'tests - copying with or without' }
 TCopySequenceableWithOrWithoutSpecificElements >> testCopyWithFirst [
 
 	| index element result |
@@ -45,7 +47,7 @@ TCopySequenceableWithOrWithoutSpecificElements >> testCopyWithFirst [
 	self assert: (result at: i) = ( self nonEmpty at: ( i - 1 ))]
 ]
 
-{ #category : #'tests - copying with or without' }
+{ #category : 'tests - copying with or without' }
 TCopySequenceableWithOrWithoutSpecificElements >> testCopyWithSequenceable [
 
 	| result index element |
@@ -60,7 +62,7 @@ TCopySequenceableWithOrWithoutSpecificElements >> testCopyWithSequenceable [
 		[ :i | self assert: (result at: i) equals: ( self nonEmpty at: i)]
 ]
 
-{ #category : #'tests - copying with or without' }
+{ #category : 'tests - copying with or without' }
 TCopySequenceableWithOrWithoutSpecificElements >> testCopyWithoutFirst [
 
 	| result |
@@ -72,7 +74,7 @@ TCopySequenceableWithOrWithoutSpecificElements >> testCopyWithoutFirst [
 		[:el :i | self assert: (result at: i) equals: (self nonEmpty at: (i + 1))]
 ]
 
-{ #category : #'tests - copying with or without' }
+{ #category : 'tests - copying with or without' }
 TCopySequenceableWithOrWithoutSpecificElements >> testCopyWithoutIndex [
 
 	| result index |
@@ -89,7 +91,7 @@ TCopySequenceableWithOrWithoutSpecificElements >> testCopyWithoutIndex [
 	self assert: result size equals: (self nonEmpty size - 1)
 ]
 
-{ #category : #'tests - copying with or without' }
+{ #category : 'tests - copying with or without' }
 TCopySequenceableWithOrWithoutSpecificElements >> testForceToPaddingStartWith [
 
 	| result element |
@@ -107,7 +109,7 @@ TCopySequenceableWithOrWithoutSpecificElements >> testForceToPaddingStartWith [
 	self assert: result size = (self nonEmpty size + 2)
 ]
 
-{ #category : #'tests - copying with or without' }
+{ #category : 'tests - copying with or without' }
 TCopySequenceableWithOrWithoutSpecificElements >> testForceToPaddingWith [
 
 	| result element |

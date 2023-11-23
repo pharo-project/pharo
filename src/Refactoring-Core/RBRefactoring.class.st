@@ -25,43 +25,39 @@ A RBRefactoringManager  is used to collect the executed refactorings and provide
 
 "
 Class {
-	#name : #RBRefactoring,
-	#superclass : #RBAbstractTransformation,
-	#category : #'Refactoring-Core-Refactorings'
+	#name : 'RBRefactoring',
+	#superclass : 'RBAbstractTransformation',
+	#category : 'Refactoring-Core-Refactorings',
+	#package : 'Refactoring-Core',
+	#tag : 'Refactorings'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBRefactoring class >> isAbstract [
 
 	^ self == RBRefactoring
 ]
 
-{ #category : #'accessing signal' }
+{ #category : 'accessing signal' }
 RBRefactoring class >> preconditionSignal [
 	^ RBRefactoringError , RBRefactoringWarning
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 RBRefactoring >> asRefactoring [
+
+	self deprecated: 'This method is a no-op and can be removed' transformWith: '`@rec asRefactoring' -> '`@rec'.
 	^ self
 ]
 
-{ #category : #utilities }
-RBRefactoring >> associationForClassVariable: aName in: aClass ifAbsent: aBlock [
-	"Return the class variable association of class aClass"
-
-	^aClass realClass classPool associationAt: aName asSymbol
-		ifAbsent: [aClass realClass classPool associationAt: aName asString ifAbsent: aBlock]
-]
-
-{ #category : #testing }
+{ #category : 'testing' }
 RBRefactoring >> canReferenceVariable: aString in: aClass [
 	(aClass definesVariable: aString) ifTrue: [^true].
 	(self model includesGlobal: aString asSymbol) ifTrue: [^true].
 	^(self poolVariableNamesFor: aClass) includes: aString
 ]
 
-{ #category : #support }
+{ #category : 'support' }
 RBRefactoring >> checkClass: aRBClass selector: aSelector using: aMatcher [
 	| parseTree |
 	parseTree := aRBClass parseTreeForSelector: aSelector.
@@ -69,30 +65,17 @@ RBRefactoring >> checkClass: aRBClass selector: aSelector using: aMatcher [
 	^aMatcher answer
 ]
 
-{ #category : #preconditions }
-RBRefactoring >> checkPreconditions [
-
-	| conditions block |
-	conditions := self preconditions.
-	conditions check ifTrue: [ ^ self ].
-	block := conditions errorBlock.
-	block
-		ifNotNil: [
-		self refactoringWarning: conditions errorString with: block ]
-		ifNil: [ self refactoringError: conditions errorString ]
-]
-
-{ #category : #private }
+{ #category : 'private' }
 RBRefactoring >> classObjectFor: anObject [
 
 	(anObject isBehavior or: [ anObject isTrait ]) ifTrue: [
 		^ self model classFor: anObject ].
 	anObject isString ifTrue: [
-		^ self model classNamed: anObject asSymbol ].
+		^ self model classNamed: anObject ].
 	^ anObject
 ]
 
-{ #category : #support }
+{ #category : 'support' }
 RBRefactoring >> convertAllReferencesToClass: aRBClass using: searchReplacer [
 	self model allReferencesToClass: aRBClass
 		do:
@@ -103,7 +86,7 @@ RBRefactoring >> convertAllReferencesToClass: aRBClass using: searchReplacer [
 				using: searchReplacer]
 ]
 
-{ #category : #support }
+{ #category : 'support' }
 RBRefactoring >> convertClasses: classSet select: aBlock using: searchReplacer [
 	classSet do:
 			[:aClass |
@@ -115,7 +98,7 @@ RBRefactoring >> convertClasses: classSet select: aBlock using: searchReplacer [
 						using: searchReplacer]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRefactoring >> copyOptionsFrom: aDictionary [
 	| dict |
 	dict := self options.
@@ -130,25 +113,18 @@ RBRefactoring >> copyOptionsFrom: aDictionary [
 	self options: dict
 ]
 
-{ #category : #transforming }
-RBRefactoring >> execute [
+{ #category : 'transforming' }
+RBRefactoring >> generateChangesFor: aRefactoring [
+	"I will generate changes and save them in the model, BUT I will not apply them!
+	Use me when a refactorings is composed of multiple other refactorings"
 
-	self primitiveExecute.
-	self performChanges
+	"Execute the argument but passing the receiver options to that refactoring"
+	aRefactoring copyOptionsFrom: self options.
+	aRefactoring model: self model.
+	aRefactoring generateChanges
 ]
 
-{ #category : #transforming }
-RBRefactoring >> model [
-
-	^ model
-		ifNil: [ model := ( RBClassModelFactory rbNamespace onEnvironment: self defaultEnvironment )
-				name: self printString;
-				yourself
-			]
-		ifNotNil: [ model ]
-]
-
-{ #category : #private }
+{ #category : 'private' }
 RBRefactoring >> onError: aBlock do: errorBlock [
 	^aBlock on: self class preconditionSignal
 		do:
@@ -157,34 +133,7 @@ RBRefactoring >> onError: aBlock do: errorBlock [
 			ex return: nil]
 ]
 
-{ #category : #transforming }
-RBRefactoring >> performChanges [
-
-	RBRefactoryChangeManager instance
-		performChange: self changes;
-		addUndoPointer: RBRefactoryChangeManager nextCounter
-]
-
-{ #category : #transforming }
-RBRefactoring >> performCompositeRefactoring: aRefactoring [
-	aRefactoring copyOptionsFrom: self options.
-	aRefactoring primitiveExecute
-]
-
-{ #category : #transforming }
-RBRefactoring >> performCompositeRefactoringThroughWarning: aRefactoring [
-	[ aRefactoring copyOptionsFrom: self options.
-	aRefactoring primitiveExecute ]
-	on: RBRefactoringWarning do: [ :ex | ex resume ]
-]
-
-{ #category : #private }
-RBRefactoring >> primitiveExecute [
-	self checkPreconditions.
-	self transform
-]
-
-{ #category : #removing }
+{ #category : 'removing' }
 RBRefactoring >> removeReturnsOf: parseTree [
 	| rewriter |
 	rewriter := self parseTreeRewriter.
@@ -194,7 +143,7 @@ RBRefactoring >> removeReturnsOf: parseTree [
 	^ parseTree
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RBRefactoring >> safeMethodNameFor: aClass basedOn: aString [
 	"Creates an unused method name containing aString"
 
@@ -214,7 +163,7 @@ RBRefactoring >> safeMethodNameFor: aClass basedOn: aString [
 	^ newString asSymbol
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBRefactoring >> safeVariableNameFor: aClass temporaries: allTempVars basedOn: aString [
 	| baseString i newString |
 	newString := baseString := aString.
@@ -226,7 +175,7 @@ RBRefactoring >> safeVariableNameFor: aClass temporaries: allTempVars basedOn: a
 	^ newString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRefactoring >> setOption: aSymbol toUse: aBlock [
 	| dict |
 	dict := self options.
@@ -235,7 +184,13 @@ RBRefactoring >> setOption: aSymbol toUse: aBlock [
 	self options: dict
 ]
 
-{ #category : #private }
+{ #category : 'transforming' }
+RBRefactoring >> transform [ 
+
+	self deprecated: 'Use privateTransform instead' transformWith: '`@rec transform' -> '`@rec privateTransform'
+]
+
+{ #category : 'private' }
 RBRefactoring >> uniqueMethodNameFor: anInteger [
 	| before after index name |
 	before := 'a'.
@@ -244,12 +199,12 @@ RBRefactoring >> uniqueMethodNameFor: anInteger [
 	index := 0.
 
 	[name := before , index printString , after.
-	(Symbol findInterned: name) notNil]
+	(Symbol findInterned: name) isNotNil]
 			whileTrue: [index := index + 1].
 	^name asSymbol
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RBRefactoring >> whichVariableNode: aParseTree inInterval: anInterval name: aName [
 	| matcher block |
 	matcher := self parseTreeSearcher.

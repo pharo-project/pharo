@@ -2,12 +2,13 @@
 I am NonInteractiveTranscriptTests
 "
 Class {
-	#name : #NonInteractiveTranscriptTest,
-	#superclass : #TestCase,
-	#category : #'Transcript-NonInteractive-Tests'
+	#name : 'NonInteractiveTranscriptTest',
+	#superclass : 'TestCase',
+	#category : 'Transcript-NonInteractive-Tests',
+	#package : 'Transcript-NonInteractive-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 NonInteractiveTranscriptTest >> testAppend [
 	| log transcript |
 	log := 'test.log' asFileReference.
@@ -25,7 +26,7 @@ NonInteractiveTranscriptTest >> testAppend [
 	log ensureDelete
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 NonInteractiveTranscriptTest >> testSimple [
 	| log transcript |
 	log := 'test.log' asFileReference.
@@ -40,12 +41,12 @@ NonInteractiveTranscriptTest >> testSimple [
 	log ensureDelete
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 NonInteractiveTranscriptTest >> testStderr [
 	NonInteractiveTranscript stderr << 'Pharo writing to the standard error'; cr; flush
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 NonInteractiveTranscriptTest >> testStdout [
 	NonInteractiveTranscript stdout << 'Pharo writing to the standard output'; cr; flush
 ]

@@ -7,22 +7,24 @@ Instance Variables:
 
 "
 Class {
-	#name : #RBSelectorNode,
-	#superclass : #RBValueNode,
+	#name : 'RBSelectorNode',
+	#superclass : 'RBValueNode',
 	#instVars : [
 		'value',
 		'keywordPositions'
 	],
-	#category : #'AST-Core-Nodes'
+	#category : 'AST-Core-Nodes',
+	#package : 'AST-Core',
+	#tag : 'Nodes'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBSelectorNode class >> value: aString [
 
 	^ self value: aString keywordPositions: #(0)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBSelectorNode class >> value: aString keywordPositions: keywordPositions [
 
 	^ self new
@@ -31,56 +33,56 @@ RBSelectorNode class >> value: aString keywordPositions: keywordPositions [
 		yourself
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 RBSelectorNode >> = anObject [
 	self == anObject ifTrue: [^true].
 	^ self class = anObject class and: [ self value = anObject value ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RBSelectorNode >> acceptVisitor: aProgramNodeVisitor [
 	^ aProgramNodeVisitor visitSelectorNode: self
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 RBSelectorNode >> hash [
 	^ self value hash
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBSelectorNode >> isSelector [
 	^true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBSelectorNode >> keywordPositions [
 
 	^ keywordPositions
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBSelectorNode >> keywordPositions: positions [
 
 	keywordPositions := positions
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBSelectorNode >> keywords [
 
 	^ value keywords
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBSelectorNode >> needsParenthesis [
 	^false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBSelectorNode >> numArgs [
 	^ value numArgs
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBSelectorNode >> printOn: aStream [
 
 	aStream
@@ -90,23 +92,23 @@ RBSelectorNode >> printOn: aStream [
 		<< ')'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBSelectorNode >> startWithoutParentheses [
 	^ keywordPositions first
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBSelectorNode >> stopWithoutParentheses [
 
 	^ self keywordPositions last + self keywords last size
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBSelectorNode >> value [
 	^value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBSelectorNode >> value: aString [
 	value := aString asSymbol
 ]

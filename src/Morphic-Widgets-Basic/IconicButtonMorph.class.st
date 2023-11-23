@@ -2,8 +2,8 @@
 A ""Simple Button"" in which the appearance is provided by a Form.
 "
 Class {
-	#name : #IconicButtonMorph,
-	#superclass : #SimpleButtonMorph,
+	#name : 'IconicButtonMorph',
+	#superclass : 'SimpleButtonMorph',
 	#instVars : [
 		'graphicalMorph',
 		'oldBorderStyle',
@@ -12,16 +12,18 @@ Class {
 	#classVars : [
 		'DefaultGraphics'
 	],
-	#category : #'Morphic-Widgets-Basic-Buttons'
+	#category : 'Morphic-Widgets-Basic-Buttons',
+	#package : 'Morphic-Widgets-Basic',
+	#tag : 'Buttons'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IconicButtonMorph class >> defaultGraphics [
 
 	^ DefaultGraphics ifNil: [ DefaultGraphics := (Form extent: 20 @ 1 depth: 8)]
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 IconicButtonMorph class >> initialize [
 
 	DefaultGraphics := self defaultGraphics.
@@ -29,32 +31,32 @@ IconicButtonMorph class >> initialize [
 	self deprecatedAliases: { #IconicButton }
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 IconicButtonMorph >> addLabelItemsTo: aCustomMenu hand: aHandMorph [
 	"don't do the inherited behavior, since there is no textual label in this case"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IconicButtonMorph >> borderInset [
 	self borderStyle: (BorderStyle inset width: 2)
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 IconicButtonMorph >> borderNormal [
 	self borderStyle: (BorderStyle width: 2 color: Color transparent)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IconicButtonMorph >> borderRaised [
 	self borderStyle: (BorderStyle raised width: 2)
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 IconicButtonMorph >> borderThick [
 	self borderStyle: (BorderStyle width: 2 color: self raisedColor twiceDarker)
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 IconicButtonMorph >> buttonSetup [
 	self actWhen: #buttonUp.
 	self cornerStyle: #rounded.
@@ -66,13 +68,13 @@ IconicButtonMorph >> buttonSetup [
 	self on: #mouseUp send: #borderRaised to: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IconicButtonMorph >> defaultGraphics [
 
 	^  DefaultGraphics
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 IconicButtonMorph >> extent: newExtent [
 	"Update the graphic position to keep centered."
 
@@ -80,25 +82,25 @@ IconicButtonMorph >> extent: newExtent [
 	graphicalMorph ifNotNil: [graphicalMorph position: self center - (graphicalMorph extent // 2)]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IconicButtonMorph >> extraBorder [
 
 	^ 6 * self currentWorld displayScaleFactor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IconicButtonMorph >> graphicalMorph [
 
 	^ graphicalMorph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IconicButtonMorph >> graphicalMorph: aMorph [
 	self addMorph: aMorph.
 	aMorph lock
 ]
 
-{ #category : #'mouse events' }
+{ #category : 'mouse events' }
 IconicButtonMorph >> handlesMouseOver: anEvent [
 	"Answer true, otherwise what is all that
 	#mouseEnter:/#mouseLeave: stuff about?"
@@ -106,32 +108,32 @@ IconicButtonMorph >> handlesMouseOver: anEvent [
 	^true
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 IconicButtonMorph >> initialize [
 	super initialize.
 	self useSquareCorners
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 IconicButtonMorph >> interactSelector [
 
 	 ^ #interact
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IconicButtonMorph >> labelFromString: aString [
 	"Make an iconic label from aString"
 
 	self labelGraphic: (StringMorph contents: aString) imageForm
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IconicButtonMorph >> labelGraphic [
 
 	^ graphicalMorph form
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IconicButtonMorph >> labelGraphic: aForm [
 	"Changed to look for any image morph rather than just a sketch."
 
@@ -143,7 +145,7 @@ IconicButtonMorph >> labelGraphic: aForm [
 	graphicalMorph lock
 ]
 
-{ #category : #'mouse events' }
+{ #category : 'mouse events' }
 IconicButtonMorph >> mouseDown: evt [
 	"Partial workaraound for broken MouseOverHandler.
 	Remove the border on mouse down if mouse focus has changed."
@@ -153,7 +155,7 @@ IconicButtonMorph >> mouseDown: evt [
 		ifTrue: [ self mouseLeave: evt ]
 ]
 
-{ #category : #'mouse events' }
+{ #category : 'mouse events' }
 IconicButtonMorph >> mouseEnter: evt [
 	"Remember the old border style."
 
@@ -161,7 +163,7 @@ IconicButtonMorph >> mouseEnter: evt [
 	self borderStyle: self mouseOverBorderStyle
 ]
 
-{ #category : #'mouse events' }
+{ #category : 'mouse events' }
 IconicButtonMorph >> mouseLeave: evt [
 	"Reinstate the old border style."
 
@@ -170,7 +172,7 @@ IconicButtonMorph >> mouseLeave: evt [
 	oldBorderStyle := nil
 ]
 
-{ #category : #'mouse events' }
+{ #category : 'mouse events' }
 IconicButtonMorph >> mouseOverBorderStyle [
 	"Answer the border style to use whilst the mouse
 	is over the receiver."
@@ -178,7 +180,7 @@ IconicButtonMorph >> mouseOverBorderStyle [
 	^mouseOverBorderStyle ifNil: [BorderStyle thinGray]
 ]
 
-{ #category : #'mouse events' }
+{ #category : 'mouse events' }
 IconicButtonMorph >> mouseOverBorderStyle: aBorderStyle [
 	"Set the border style to use whilst the mouse
 	is over the receiver."
@@ -186,17 +188,17 @@ IconicButtonMorph >> mouseOverBorderStyle: aBorderStyle [
 	mouseOverBorderStyle := aBorderStyle
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 IconicButtonMorph >> setDefaultLabel [
 	self labelGraphic: self class defaultGraphics
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IconicButtonMorph >> shedSelvedge [
 	self extent: (self extent - (6@6))
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 IconicButtonMorph >> stationarySetup [
 
 	self actWhen: #startDrag.
@@ -209,13 +211,13 @@ IconicButtonMorph >> stationarySetup [
 	self on: #mouseUp send: #borderThick to: self
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 IconicButtonMorph >> themeChanged [
 
 	"do nothing for now"
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 IconicButtonMorph >> update: aSelector [
 
 	aSelector = self interactSelector

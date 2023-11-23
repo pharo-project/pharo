@@ -2,17 +2,19 @@
 The titlebar area for and ExpanderMorph. Includes title label and expand/collapse button.
 "
 Class {
-	#name : #ExpanderTitleMorph,
-	#superclass : #PanelMorph,
+	#name : 'ExpanderTitleMorph',
+	#superclass : 'PanelMorph',
 	#instVars : [
 		'labelMorph',
 		'buttonMorph',
 		'expanded'
 	],
-	#category : #'Polymorph-Widgets-Base'
+	#category : 'Polymorph-Widgets-Base',
+	#package : 'Polymorph-Widgets',
+	#tag : 'Base'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExpanderTitleMorph >> adoptPaneColor: paneColor [
 	"Update the fill styles, corner styles, label colour
 	and expansion button indicator."
@@ -26,21 +28,21 @@ ExpanderTitleMorph >> adoptPaneColor: paneColor [
 	self changed: #expandLabel
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExpanderTitleMorph >> buttonMorph [
 	"Answer the value of buttonMorph"
 
 	^ buttonMorph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExpanderTitleMorph >> buttonMorph: anObject [
 	"Set the value of buttonMorph"
 
 	buttonMorph := anObject
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ExpanderTitleMorph >> buttonWidth [
 	"Answer based on scrollbar size."
 
@@ -48,32 +50,32 @@ ExpanderTitleMorph >> buttonWidth [
 		max: self theme expanderTitleControlButtonWidth
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExpanderTitleMorph >> defaultBorderStyle [
 	"Answer the default border style for the receiver."
 
 	^BorderStyle raised width: 1
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ExpanderTitleMorph >> expandLabel [
 	"Answer the label for the expand button."
 
-	^AlphaImageMorph new image: (
+	^AlphaImageMorph new formSet: (
 		ScrollBarMorph
 			arrowOfDirection: (self expanded ifTrue: [#top] ifFalse: [#bottom])
 			size: self buttonWidth - 3
 			color: self paneColor darker)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExpanderTitleMorph >> expanded [
 	"Answer the value of expanded"
 
 	^ expanded
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExpanderTitleMorph >> expanded: aBoolean [
 	"Set the value of expanded"
 
@@ -83,7 +85,7 @@ ExpanderTitleMorph >> expanded: aBoolean [
 		changed: #expandLabel
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 ExpanderTitleMorph >> extent: aPoint [
 	"Set the receiver's extent to value provided.
 	Update the gradient fills."
@@ -96,7 +98,7 @@ ExpanderTitleMorph >> extent: aPoint [
 	^answer
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExpanderTitleMorph >> font [
 	"Answer the label font"
 
@@ -104,7 +106,7 @@ ExpanderTitleMorph >> font [
 		ifTrue: [self labelMorph font]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExpanderTitleMorph >> font: aFont [
 	"Set the label font"
 
@@ -112,7 +114,7 @@ ExpanderTitleMorph >> font: aFont [
 		ifTrue: [self labelMorph font: aFont]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ExpanderTitleMorph >> initialize [
 	"Initialize the receiver."
 
@@ -131,14 +133,14 @@ ExpanderTitleMorph >> initialize [
 		on: #mouseUp send: #toggleExpanded to: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExpanderTitleMorph >> labelMorph [
 	"Answer the value of labelMorph"
 
 	^ labelMorph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExpanderTitleMorph >> labelMorph: anObject [
 	"Set the value of labelMorph.
 	need to wrap to provide clipping!"
@@ -158,7 +160,7 @@ ExpanderTitleMorph >> labelMorph: anObject [
 			addMorph: labelMorph)]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ExpanderTitleMorph >> newExpandButtonMorph [
 	"Answer a new expand button."
 
@@ -173,7 +175,7 @@ ExpanderTitleMorph >> newExpandButtonMorph [
 		extent: self buttonWidth asPoint
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ExpanderTitleMorph >> newLabelMorph [
 	"Answer a new label morph for the receiver."
 
@@ -182,14 +184,14 @@ ExpanderTitleMorph >> newLabelMorph [
 		vResizing: #shrinkWrap
 ]
 
-{ #category : #style }
+{ #category : 'style' }
 ExpanderTitleMorph >> normalFillStyle [
 	"Return the normal fillStyle of the receiver."
 
 	^self theme expanderTitleNormalFillStyleFor: self
 ]
 
-{ #category : #style }
+{ #category : 'style' }
 ExpanderTitleMorph >> themeChanged [
 	"Update the button corner style from default
 	to match the receiver."
@@ -198,7 +200,7 @@ ExpanderTitleMorph >> themeChanged [
 	self buttonMorph cornerStyle: self cornerStyle
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 ExpanderTitleMorph >> titleText [
 	"Answer the text if the title morph is capable."
 
@@ -207,7 +209,7 @@ ExpanderTitleMorph >> titleText [
 		ifFalse: ['']
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ExpanderTitleMorph >> titleText: aStringOrText [
 	"Set the text if the title morph is capable."
 
@@ -215,7 +217,7 @@ ExpanderTitleMorph >> titleText: aStringOrText [
 		ifTrue: [self labelMorph contents: aStringOrText]
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ExpanderTitleMorph >> toggleExpanded [
 	"Toggle the expanded state."
 

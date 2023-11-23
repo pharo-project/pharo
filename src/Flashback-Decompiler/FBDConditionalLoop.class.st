@@ -4,25 +4,27 @@ I represent a conditional loop (typically, a for or while loop). In addition to 
 exitCondition <Smi> pc of the conditional jump where the execution flows exits the loop body.
 "
 Class {
-	#name : #FBDConditionalLoop,
-	#superclass : #FBDLoop,
+	#name : 'FBDConditionalLoop',
+	#superclass : 'FBDLoop',
 	#instVars : [
 		'exitCondition'
 	],
-	#category : #'Flashback-Decompiler-Utilities'
+	#category : 'Flashback-Decompiler-Utilities',
+	#package : 'Flashback-Decompiler',
+	#tag : 'Utilities'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FBDConditionalLoop >> exitCondition [
 	^ exitCondition
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FBDConditionalLoop >> exitCondition: anObject [
 	exitCondition := anObject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FBDConditionalLoop >> isConditionalLoop [
 	^ true
 ]

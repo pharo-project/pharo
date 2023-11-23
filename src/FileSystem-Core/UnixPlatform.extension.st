@@ -1,6 +1,6 @@
-Extension { #name : #UnixPlatform }
+Extension { #name : 'UnixPlatform' }
 
-{ #category : #'*FileSystem-Core' }
+{ #category : '*FileSystem-Core' }
 UnixPlatform >> potentialLocationsOfSourcesFile [
 	^ { Smalltalk vm directory. FileLocator userData }
 ]

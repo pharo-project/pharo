@@ -2,18 +2,26 @@
 I am a finder search mode used when searching the system based on a example
 "
 Class {
-	#name : #FinderExamplesSearchStrategy,
-	#superclass : #FinderSearchStrategy,
-	#category : #'Tool-Finder-Base'
+	#name : 'FinderExamplesSearchStrategy',
+	#superclass : 'FinderSearchStrategy',
+	#category : 'Tool-Finder-Base',
+	#package : 'Tool-Finder',
+	#tag : 'Base'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
+FinderExamplesSearchStrategy class >> parseAsNodes: anExpression [
+
+	^ (RBParser parseExpression: '{', anExpression , '}') statements asArray
+]
+
+{ #category : 'accessing' }
 FinderExamplesSearchStrategy class >> strategyName [
 
 	^ #Examples
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FinderExamplesSearchStrategy >> computeWithMethodFinder [
 	"Compute the selectors for the single example of receiver and args, in the very top pane"
 
@@ -21,7 +29,7 @@ FinderExamplesSearchStrategy >> computeWithMethodFinder [
 	(finder searchingString includes: $.) ifFalse: [ ^ #(  ) ]. "delete trailing period. This should be fixed in the Parser!"
 	data := finder searchingString trimRight: [ :char | char isSeparator or: [ char = $. ] ].
 
-	[ dataObjects := Smalltalk compiler evaluate: '{' , data , '}' ]
+	[ dataObjects := self class parseAsNodes: data. dataObjects do: #evaluate. ]
 		on: CodeError , RuntimeSyntaxError
 		do: [ :e |
 			self inform: 'Error: ' , e messageText.
@@ -39,7 +47,7 @@ FinderExamplesSearchStrategy >> computeWithMethodFinder [
 	^ result
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 FinderExamplesSearchStrategy >> constructDictionary [
 
 	| result listOfResults listOfSelectors |
@@ -62,7 +70,7 @@ FinderExamplesSearchStrategy >> constructDictionary [
 	finder resultDictionary: result
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FinderExamplesSearchStrategy >> defaultExplanation [
 
 	^ 'Use an example to find a method in the system.
@@ -124,28 +132,25 @@ This will find the message #dayOfWeekName
 The Method Finder is not trying all methods in the system so if it will find nothing, a method with requested behavior may still exist. '
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FinderExamplesSearchStrategy >> findSelectedClassIn: path [
 
-	^ path
-		  at: 2
-		  ifPresent: [ :node | node item ]
-		  ifAbsent: [ nil ]
+	^ (path at: 2 ifAbsent: [ nil ]) ifNotNil: [ :node | node item ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FinderExamplesSearchStrategy >> findSelectedMethodIn: path [
 
 	^ path first item
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FinderExamplesSearchStrategy >> sourceCodeClass: class method: method [
 
 	^ (class >> method selector) sourceCode
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FinderExamplesSearchStrategy >> updateRegexUsage [
 
 	finder disableUseRegEx

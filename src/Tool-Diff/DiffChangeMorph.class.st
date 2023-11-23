@@ -2,16 +2,18 @@
 A morph to display text differences
 "
 Class {
-	#name : #DiffChangeMorph,
-	#superclass : #ComposableMorph,
+	#name : 'DiffChangeMorph',
+	#superclass : 'ComposableMorph',
 	#instVars : [
 		'diffMorph',
 		'descriptionMorph'
 	],
-	#category : #'Tool-Diff-Morphs'
+	#category : 'Tool-Diff-Morphs',
+	#package : 'Tool-Diff',
+	#tag : 'Morphs'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 DiffChangeMorph class >> example [
 	<example>
 	(DiffChangeMorph
@@ -24,7 +26,7 @@ DiffChangeMorph class >> example [
 		contextClass: nil) openInWindow
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 DiffChangeMorph class >> from: old label: oldLabel to: new label: newLabel contextClass: aClass [
 	"Answer a new instance of the receiver with the given
 	old and new text and descriptions."
@@ -37,7 +39,7 @@ DiffChangeMorph class >> from: old label: oldLabel to: new label: newLabel conte
 		toDescription: newLabel
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 DiffChangeMorph >> adoptPaneColor: paneColor [
 	"Change the fill styles on the descriptions."
 
@@ -47,7 +49,7 @@ DiffChangeMorph >> adoptPaneColor: paneColor [
 	self updateDescriptionFillStyle: paneColor
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DiffChangeMorph >> buildUI [
 
 	|descriptionHeight|
@@ -67,49 +69,49 @@ DiffChangeMorph >> buildUI [
 		updateDescriptionFillStyle: self paneColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiffChangeMorph >> defaultTitle [
 	"Answer the default title label for the receiver."
 
 	^'Change Diff' translated
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiffChangeMorph >> descriptionMorph [
 	"Answer the value of descriptionMorph"
 
 	^ descriptionMorph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiffChangeMorph >> descriptionMorph: anObject [
 	"Set the value of descriptionMorph"
 
 	descriptionMorph := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiffChangeMorph >> diffMorph [
 	"Answer the value of diffMorph"
 
 	^ diffMorph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiffChangeMorph >> diffMorph: anObject [
 	"Set the value of diffMorph"
 
 	diffMorph := anObject
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 DiffChangeMorph >> diffMorphClass [
 	"Answer a the class to use for a new diff morph."
 
 	^DiffMorph
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 DiffChangeMorph >> from: old to: new contextClass: aClass [
 	"Set the old (src) and new (dst) text."
 
@@ -119,7 +121,7 @@ DiffChangeMorph >> from: old to: new contextClass: aClass [
 		contextClass: aClass
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 DiffChangeMorph >> fromDescription: aString [
 	"Set the description for the left-hand side of the patch,
 	typically 'currently in image'."
@@ -127,27 +129,27 @@ DiffChangeMorph >> fromDescription: aString [
 	self fromDescriptionMorph contents: aString
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 DiffChangeMorph >> fromDescriptionMorph [
 	"Answer the morph for the source description."
 
 	^self descriptionMorph firstSubmorph firstSubmorph
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 DiffChangeMorph >> initialExtent [
 	"Answer the initial extent for the receiver."
 
 	^RealEstateAgent standardWindowExtent
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DiffChangeMorph >> initialize [
 	super initialize.
 	self buildUI
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 DiffChangeMorph >> newDescriptionMorph [
 	"Answer a new morph for the descriptions of the source and destination."
 
@@ -162,7 +164,7 @@ DiffChangeMorph >> newDescriptionMorph [
 		borderStyle: (self theme listNormalBorderStyleFor: self)
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 DiffChangeMorph >> newDiffMorph [
 	"Answer a new morph for the source difference."
 
@@ -172,7 +174,7 @@ DiffChangeMorph >> newDiffMorph [
 		yourself
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 DiffChangeMorph >> toDescription: aString [
 	"Set the description for the right-hand side of the patch,
 	typically 'incoming' or 'changed'."
@@ -180,14 +182,14 @@ DiffChangeMorph >> toDescription: aString [
 	self toDescriptionMorph contents: aString
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 DiffChangeMorph >> toDescriptionMorph [
 	"Answer the morph for the destination description."
 
 	^self descriptionMorph lastSubmorph firstSubmorph
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 DiffChangeMorph >> updateDescriptionFillStyle: aColor [
 	"Change the colours on the descriptions."
 

@@ -2,30 +2,32 @@
 I am an abstract class to get the correct menu of a text area
 "
 Class {
-	#name : #RubGetMenuPolicy,
-	#superclass : #Object,
+	#name : 'RubGetMenuPolicy',
+	#superclass : 'Object',
 	#instVars : [
 		'textArea'
 	],
-	#category : #'Rubric-Editing-Core'
+	#category : 'Rubric-Editing-Core',
+	#package : 'Rubric',
+	#tag : 'Editing-Core'
 }
 
-{ #category : #'accessing - menu' }
+{ #category : 'accessing - menu' }
 RubGetMenuPolicy >> lookupMenu [
 	^ textArea lookupMenu
 ]
 
-{ #category : #'accessing - menu' }
+{ #category : 'accessing - menu' }
 RubGetMenuPolicy >> lookupShiftMenu [
 	^ textArea lookupShiftMenu
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubGetMenuPolicy >> textArea [
 	^ textArea
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubGetMenuPolicy >> textArea: aTextArea [
 	textArea := aTextArea
 ]

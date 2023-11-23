@@ -1,10 +1,11 @@
 Class {
-	#name : #TFBasicTypeMarshallingInCallbacksTest,
-	#superclass : #TFTestCase,
-	#category : #'ThreadedFFI-Tests'
+	#name : 'TFBasicTypeMarshallingInCallbacksTest',
+	#superclass : 'TFTestCase',
+	#category : 'ThreadedFFI-Tests',
+	#package : 'ThreadedFFI-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeMarshallingInCallbacksTest >> assertCharType: aType named: name [
 
 	| callbackGotValue |
@@ -12,7 +13,7 @@ TFBasicTypeMarshallingInCallbacksTest >> assertCharType: aType named: name [
 	self assert: callbackGotValue equals: $A
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeMarshallingInCallbacksTest >> assertIntType: aType named: name value: aValue [
 
 	| callbackGotValue |
@@ -20,19 +21,19 @@ TFBasicTypeMarshallingInCallbacksTest >> assertIntType: aType named: name value:
 	self assert: callbackGotValue equals: aValue
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeMarshallingInCallbacksTest >> assertSignedIntType: aType named: name [
 
 	self assertIntType: aType named: name value: -65
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeMarshallingInCallbacksTest >> assertUnsignedIntType: aType named: name [
 
 	self assertIntType: aType named: name value: 65
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeMarshallingInCallbacksTest >> call: typeName type: type value: aValue [
 
 	| callback fun received |
@@ -54,13 +55,13 @@ TFBasicTypeMarshallingInCallbacksTest >> call: typeName type: type value: aValue
 	^ received
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeMarshallingInCallbacksTest >> testChar [
 
 	self assertCharType: TFBasicType schar named: 'char'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeMarshallingInCallbacksTest >> testDouble [
 
 	| received |
@@ -68,7 +69,7 @@ TFBasicTypeMarshallingInCallbacksTest >> testDouble [
 	self assert: received equals: 2.7
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeMarshallingInCallbacksTest >> testFloat [
 
 	| received |
@@ -76,7 +77,7 @@ TFBasicTypeMarshallingInCallbacksTest >> testFloat [
 	self assert: (received between: 2.6999 and: 2.7001)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeMarshallingInCallbacksTest >> testPointer [
 
 	| bytes received |
@@ -87,85 +88,85 @@ TFBasicTypeMarshallingInCallbacksTest >> testPointer [
 	] ensure: [ bytes free ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeMarshallingInCallbacksTest >> testSignedInt [
 
 	self assertSignedIntType: TFBasicType sint named: 'int'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeMarshallingInCallbacksTest >> testSignedInt16 [
 
 	self assertSignedIntType: TFBasicType sint16 named: 'int16_t'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeMarshallingInCallbacksTest >> testSignedInt32 [
 
 	self assertSignedIntType: TFBasicType sint32 named: 'int32_t'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeMarshallingInCallbacksTest >> testSignedInt64 [
 
 	self assertSignedIntType: TFBasicType sint64 named: 'int64_t'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeMarshallingInCallbacksTest >> testSignedInt8 [
 
 	self assertSignedIntType: TFBasicType sint8 named: 'int8_t'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeMarshallingInCallbacksTest >> testSignedLong [
 
 	self assertSignedIntType: TFBasicType slong named: 'long'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeMarshallingInCallbacksTest >> testSignedShort [
 
 	self assertSignedIntType: TFBasicType sshort named: 'short'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeMarshallingInCallbacksTest >> testUnsignedInt [
 
 	self assertUnsignedIntType: TFBasicType uint named: 'uint'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeMarshallingInCallbacksTest >> testUnsignedInt16 [
 
 	self assertUnsignedIntType: TFBasicType uint16 named: 'uint16_t'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeMarshallingInCallbacksTest >> testUnsignedInt32 [
 
 	self assertUnsignedIntType: TFBasicType uint32 named: 'uint32_t'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeMarshallingInCallbacksTest >> testUnsignedInt64 [
 
 	self assertUnsignedIntType: TFBasicType uint64 named: 'uint64_t'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeMarshallingInCallbacksTest >> testUnsignedInt8 [
 
 	self assertUnsignedIntType: TFBasicType uint8 named: 'uint8_t'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeMarshallingInCallbacksTest >> testUnsignedLong [
 
 	self assertUnsignedIntType: TFBasicType ulong named: 'ulong'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFBasicTypeMarshallingInCallbacksTest >> testUnsignedShort [
 
 	self assertUnsignedIntType: TFBasicType ushort named: 'ushort'

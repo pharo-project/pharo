@@ -2,17 +2,19 @@
 This exception is raised when accessing deprecated slots
 "
 Class {
-	#name : #SlotDeprecation,
-	#superclass : #Deprecation,
-	#category : #'VariablesLibrary-DeprecatedSlot'
+	#name : 'SlotDeprecation',
+	#superclass : 'Deprecation',
+	#category : 'VariablesLibrary-DeprecatedSlot',
+	#package : 'VariablesLibrary',
+	#tag : 'DeprecatedSlot'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SlotDeprecation >> explanationString [
 	^explanationString ifNil: [ '' ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SlotDeprecation >> messageText [
 	^ String
 		streamContents: [ :str |
@@ -20,7 +22,7 @@ SlotDeprecation >> messageText [
 				nextPutAll: 'The instance variable ';
 				nextPutAll: context receiver name;
 				nextPutAll: ' accessed in ';
-				nextPutAll: context sender method name;
+				nextPutAll: context sender homeMethod name;
 				nextPutAll: ' has been deprecated. ';
 				nextPutAll: self explanationString ]
 ]

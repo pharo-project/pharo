@@ -9,22 +9,24 @@ I implement the #saveContentsToFile: URL operation for HTTP(S) urls, which downl
 Part of Zinc HTTP Components.
 "
 Class {
-	#name : #ZnHttpSaveContentsToFile,
-	#superclass : #ZnUrlOperation,
-	#category : #'Zinc-HTTP-Client-Server'
+	#name : 'ZnHttpSaveContentsToFile',
+	#superclass : 'ZnUrlOperation',
+	#category : 'Zinc-HTTP-Client-Server',
+	#package : 'Zinc-HTTP',
+	#tag : 'Client-Server'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnHttpSaveContentsToFile class >> operation [
 	^ #saveContentsToFile:
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnHttpSaveContentsToFile class >> schemes [
 	^ #( #http #https )
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ZnHttpSaveContentsToFile >> performOperation [
 	"Download the HTTP(S) resource specified by url to the file in argument.
 	Return a file reference on the file that's just been downloaded.

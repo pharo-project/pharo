@@ -7,19 +7,21 @@ Instances of classes using this kind of layout have only a minimum given size. I
 References held in the variable part are held weakly and might be nilled out by the garbage collector at any time. References in the named section are held strongly as in the default layout.
 "
 Class {
-	#name : #WeakLayout,
-	#superclass : #PointerLayout,
-	#category : #'Kernel-Layout'
+	#name : 'WeakLayout',
+	#superclass : 'PointerLayout',
+	#category : 'Kernel-Layout',
+	#package : 'Kernel',
+	#tag : 'Layout'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 WeakLayout class >> extending: superLayout scope: aScope host: aClass [
 	^ (superLayout extendWeak: aScope)
 		host: aClass;
 		yourself
 ]
 
-{ #category : #description }
+{ #category : 'description' }
 WeakLayout class >> subclassDefiningSymbol [
 	"Answer a keyword that describes the receiver's kind of subclass
 	Note: this is for printing the ST80 style class definiton, usage makes no sense for anything
@@ -27,17 +29,17 @@ WeakLayout class >> subclassDefiningSymbol [
 	^#weakSubclass:
 ]
 
-{ #category : #format }
+{ #category : 'format' }
 WeakLayout >> instanceSpecification [
 	^ 4
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 WeakLayout >> isVariable [
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 WeakLayout >> isWeak [
 	^ true
 ]

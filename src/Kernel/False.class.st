@@ -4,12 +4,14 @@ False defines the behavior of its single instance, false -- logical negation. No
 Be aware however that most of these methods are not sent as real messages in normal use. Most are inline coded by the compiler as test and jump bytecodes - avoiding the overhead of the full message sends. So simply redefining these methods here will have no effect.
 "
 Class {
-	#name : #False,
-	#superclass : #Boolean,
-	#category : #'Kernel-Objects'
+	#name : 'False',
+	#superclass : 'Boolean',
+	#category : 'Kernel-Objects',
+	#package : 'Kernel',
+	#tag : 'Objects'
 }
 
-{ #category : #'logical operations' }
+{ #category : 'logical operations' }
 False >> & aBoolean [
 	"Evaluating conjunction -- answer false since receiver is false."
 	"false & true >>> false"
@@ -18,7 +20,7 @@ False >> & aBoolean [
 	^self
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 False >> and: alternativeBlock [
 	"Nonevaluating conjunction -- answer with false since the receiver is false."
 	"(false and: [true]) >>> false"
@@ -27,7 +29,7 @@ False >> and: alternativeBlock [
 	^self
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 False >> asBit [
 	"Answer 0 since the receiver is false."
 	"false asBit >>> 0"
@@ -35,7 +37,7 @@ False >> asBit [
 	^ 0
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 False >> ifFalse: alternativeBlock [
 	"Answer the value of alternativeBlock. Execution does not actually
 	reach here because the expression is compiled in-line."
@@ -44,7 +46,7 @@ False >> ifFalse: alternativeBlock [
 	^alternativeBlock value
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 False >> ifFalse: falseAlternativeBlock ifTrue: trueAlternativeBlock [
 	"Answer the value of falseAlternativeBlock. Execution does not
 	actually reach here because the expression is compiled in-line."
@@ -53,7 +55,7 @@ False >> ifFalse: falseAlternativeBlock ifTrue: trueAlternativeBlock [
 	^falseAlternativeBlock value
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 False >> ifTrue: alternativeBlock [
 	"Since the condition is false, answer the value of the false alternative,
 	which is nil. Execution does not actually reach here because the
@@ -63,7 +65,7 @@ False >> ifTrue: alternativeBlock [
 	^nil
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 False >> ifTrue: trueAlternativeBlock ifFalse: falseAlternativeBlock [
 	"Answer the value of falseAlternativeBlock. Execution does not
 	actually reach here because the expression is compiled in-line."
@@ -72,7 +74,7 @@ False >> ifTrue: trueAlternativeBlock ifFalse: falseAlternativeBlock [
 	^falseAlternativeBlock value
 ]
 
-{ #category : #'logical operations' }
+{ #category : 'logical operations' }
 False >> not [
 	"Negation -- answer true since the receiver is false."
 	"false not >>> true"
@@ -80,7 +82,7 @@ False >> not [
 	^true
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 False >> or: alternativeBlock [
 	"Nonevaluating disjunction -- answer value of alternativeBlock."
 	"(false or: [true]) >>> true"
@@ -89,13 +91,13 @@ False >> or: alternativeBlock [
 	^alternativeBlock value
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 False >> printOn: aStream [
 
 	aStream nextPutAll: 'false'
 ]
 
-{ #category : #'logical operations' }
+{ #category : 'logical operations' }
 False >> xor: alternativeBlock [
 	"Answer the value of the alternativeBlock since the receiver is false."
 	"(false xor: [true]) >>> true"
@@ -104,7 +106,7 @@ False >> xor: alternativeBlock [
 	^ alternativeBlock value
 ]
 
-{ #category : #'logical operations' }
+{ #category : 'logical operations' }
 False >> | aBoolean [
 	"Evaluating disjunction (OR) -- answer with the argument, aBoolean, since the receiver is false."
 	"false | true >>> true"

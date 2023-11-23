@@ -1,10 +1,11 @@
 Class {
-	#name : #RGMCTraitCompositionVisitorTest,
-	#superclass : #RGTest,
-	#category : #'Ring-Tests-Core'
+	#name : 'RGMCTraitCompositionVisitorTest',
+	#superclass : 'RGTest',
+	#category : 'Ring-Tests-Core',
+	#package : 'Ring-Tests-Core'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGMCTraitCompositionVisitorTest >> testAlias [
 
 	| composition result |
@@ -22,7 +23,7 @@ RGMCTraitCompositionVisitorTest >> testAlias [
 	self assert: result first aliases first equals: (#a -> #c)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGMCTraitCompositionVisitorTest >> testAliasWithMultipleAliases [
 
 	| composition result |
@@ -42,7 +43,7 @@ RGMCTraitCompositionVisitorTest >> testAliasWithMultipleAliases [
 	self assert: result first aliases second equals: (#c: -> #d:)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGMCTraitCompositionVisitorTest >> testClassTrait [
 
 	| composition result |
@@ -55,7 +56,7 @@ RGMCTraitCompositionVisitorTest >> testClassTrait [
 	self assert: (result collect: [:each | each name]) equals: #('Trait1 classTrait' 'Trait2 classTrait') asOrderedCollection
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGMCTraitCompositionVisitorTest >> testComplexDefinition [
 	| composition result |
 	composition := RGTraitComposition unnamed.
@@ -80,11 +81,11 @@ RGMCTraitCompositionVisitorTest >> testComplexDefinition [
 	self assert: result third isRGObject.
 	self assert: result third subject isTrait.
 	self assert: result third subject name equals: #Trait3.
-	self assert: result third exclusions isCollection.
-	self assert: result third exclusions asArray equals: #(#e #f:)
+	self assert: result third removedSelectors isCollection.
+	self assert: result third removedSelectors asArray equals: #(#e #f:)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGMCTraitCompositionVisitorTest >> testEmpty [
 
 	| composition result |
@@ -102,55 +103,7 @@ RGMCTraitCompositionVisitorTest >> testEmpty [
 	self assert: result isEmpty
 ]
 
-{ #category : #tests }
-RGMCTraitCompositionVisitorTest >> testExclusion [
-	| composition result |
-	composition := RGTraitComposition unnamed.
-	result := RGTraitCompositionVisitor new parse: 'Trait2 - {#c}' for: composition.
-
-	self assert: result isCollection.
-	self assert: (result allSatisfy: #isTraitExclusion).
-	self assert: (result allSatisfy: #isRGObject).
-	self assert: result size equals: 1.
-	self assert: result first subject isTrait.
-	self assert: result first subject name equals: #Trait2.
-	self assert: result first exclusions isCollection.
-	self assert: result first exclusions asArray equals: #(#c)
-]
-
-{ #category : #tests }
-RGMCTraitCompositionVisitorTest >> testExclusionWithLiteralArray [
-	| composition result |
-	composition := RGTraitComposition unnamed.
-	result := RGTraitCompositionVisitor new parse: 'Trait2 - #(c)' for: composition.
-
-	self assert: result isCollection.
-	self assert: (result allSatisfy: #isTraitExclusion).
-	self assert: (result allSatisfy: #isRGObject).
-	self assert: result size equals: 1.
-	self assert: result first subject isTrait.
-	self assert: result first subject name equals: #Trait2.
-	self assert: result first exclusions isCollection.
-	self assert: result first exclusions asArray equals: #(#c)
-]
-
-{ #category : #tests }
-RGMCTraitCompositionVisitorTest >> testExclusionWithMultipleExclusions [
-	| composition result |
-	composition := RGTraitComposition unnamed.
-	result := RGTraitCompositionVisitor new parse: 'Trait2 - {#a. #b:. #c:d:}' for: composition.
-
-	self assert: result isCollection.
-	self assert: (result allSatisfy: #isTraitExclusion).
-	self assert: (result allSatisfy: #isRGObject).
-	self assert: result size equals: 1.
-	self assert: result first subject isTrait.
-	self assert: result first subject name equals: #Trait2.
-	self assert: result first exclusions isCollection.
-	self assert: result first exclusions asArray equals: #(#a #b: #c:d:)
-]
-
-{ #category : #tests }
+{ #category : 'tests' }
 RGMCTraitCompositionVisitorTest >> testMultipleTraits [
 
 	| composition result |
@@ -166,7 +119,55 @@ RGMCTraitCompositionVisitorTest >> testMultipleTraits [
 	self assert: (result collect: [:each | each name ]) equals: #(Trait1 Trait2 Trait3 Trait4) asOrderedCollection
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
+RGMCTraitCompositionVisitorTest >> testRemovedSelectors [
+	| composition result |
+	composition := RGTraitComposition unnamed.
+	result := RGTraitCompositionVisitor new parse: 'Trait2 - {#c}' for: composition.
+
+	self assert: result isCollection.
+	self assert: (result allSatisfy: #isTraitExclusion).
+	self assert: (result allSatisfy: #isRGObject).
+	self assert: result size equals: 1.
+	self assert: result first subject isTrait.
+	self assert: result first subject name equals: #Trait2.
+	self assert: result first removedSelectors isCollection.
+	self assert: result first removedSelectors asArray equals: #(#c)
+]
+
+{ #category : 'tests' }
+RGMCTraitCompositionVisitorTest >> testRemovedSelectorsWithLiteralArray [
+	| composition result |
+	composition := RGTraitComposition unnamed.
+	result := RGTraitCompositionVisitor new parse: 'Trait2 - #(c)' for: composition.
+
+	self assert: result isCollection.
+	self assert: (result allSatisfy: #isTraitExclusion).
+	self assert: (result allSatisfy: #isRGObject).
+	self assert: result size equals: 1.
+	self assert: result first subject isTrait.
+	self assert: result first subject name equals: #Trait2.
+	self assert: result first removedSelectors isCollection.
+	self assert: result first removedSelectors asArray equals: #(#c)
+]
+
+{ #category : 'tests' }
+RGMCTraitCompositionVisitorTest >> testRemovedSelectorsWithMultipleSelectors [
+	| composition result |
+	composition := RGTraitComposition unnamed.
+	result := RGTraitCompositionVisitor new parse: 'Trait2 - {#a. #b:. #c:d:}' for: composition.
+
+	self assert: result isCollection.
+	self assert: (result allSatisfy: #isTraitExclusion).
+	self assert: (result allSatisfy: #isRGObject).
+	self assert: result size equals: 1.
+	self assert: result first subject isTrait.
+	self assert: result first subject name equals: #Trait2.
+	self assert: result first removedSelectors isCollection.
+	self assert: result first removedSelectors asArray equals: #(#a #b: #c:d:)
+]
+
+{ #category : 'tests' }
 RGMCTraitCompositionVisitorTest >> testSingleTrait [
 
 	| composition result |
@@ -180,7 +181,7 @@ RGMCTraitCompositionVisitorTest >> testSingleTrait [
 	self assert: (result collect: [:each | each name]) equals: #(Trait1) asOrderedCollection
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGMCTraitCompositionVisitorTest >> testTwoTraits [
 
 	| composition result |

@@ -1,6 +1,6 @@
-Extension { #name : #EpEvent }
+Extension { #name : 'EpEvent' }
 
-{ #category : #'*EpiceaBrowsers' }
+{ #category : '*EpiceaBrowsers' }
 EpEvent >> previewedApplyEvents [
 
 	^ #()

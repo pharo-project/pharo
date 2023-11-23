@@ -66,8 +66,8 @@ While I don't have a very deep understanding of the above mentioned method, I wa
 
 "
 Class {
-	#name : #Paragraph,
-	#superclass : #Object,
+	#name : 'Paragraph',
+	#superclass : 'Object',
 	#instVars : [
 		'text',
 		'textStyle',
@@ -92,20 +92,22 @@ Class {
 	#classVars : [
 		'InsertionPointColor'
 	],
-	#category : #'Morphic-Base-Text Support'
+	#category : 'Morphic-Base-Text Support',
+	#package : 'Morphic-Base',
+	#tag : 'Text Support'
 }
 
-{ #category : #settings }
+{ #category : 'settings' }
 Paragraph class >> insertionPointColor [
 	^ InsertionPointColor ifNil: [InsertionPointColor := (Color r: 0.0 g: 0.0 b: 0.8 alpha: 0.8)]
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 Paragraph class >> insertionPointColor: aColor [
 	InsertionPointColor := aColor
 ]
 
-{ #category : #refreshing }
+{ #category : 'refreshing' }
 Paragraph class >> refreshAllCompositions [
 	"This method will re-compose all paragraphs in system.
 	 This is potentially an expensive operation (and is used just in one case: when you change the
@@ -115,7 +117,7 @@ Paragraph class >> refreshAllCompositions [
 	self currentWorld restoreMorphicDisplay
 ]
 
-{ #category : #editing }
+{ #category : 'editing' }
 Paragraph >> actionAttributesUnder: aClickPoint event: anEvent do: aBlock [
 	| startBlock |
 	startBlock := self characterBlockAtPoint: aClickPoint.
@@ -131,7 +133,7 @@ Paragraph >> actionAttributesUnder: aClickPoint event: anEvent do: aBlock [
 			boxes detect: [ :each | each containsPoint: aClickPoint ] ifFound: [ aBlock cull: attribute cull: boxes ] ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Paragraph >> adjustBottomY [
 
 	| heights bottomY verticalSize |
@@ -141,14 +143,14 @@ Paragraph >> adjustBottomY [
 	container := container withBottom: bottomY
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Paragraph >> adjustLineIndicesBy: delta [
 
 	firstCharacterIndex := firstCharacterIndex + delta.
 	lines do: [ :line | line slide: delta ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Paragraph >> adjustRightX [
 
 	| shrink |
@@ -157,7 +159,7 @@ Paragraph >> adjustRightX [
 	container := container withRight: maxRightX
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Paragraph >> adjustedFirstCharacterIndex [
 	"Return the index in the text where this paragraph WOULD begin if nothing had changed, except the size of the text -- ie if there have only been an insertion of deletion in the preceding morphs"
 
@@ -165,63 +167,107 @@ Paragraph >> adjustedFirstCharacterIndex [
 	^ text size - offsetToEnd
 ]
 
-{ #category : #selection }
+{ #category : 'selection' }
 Paragraph >> buildSelectionBlocksFrom: topLeft to: bottomRight [
+
 	| viewedString primary topLeftBlk bottomRightBlk findReplaceIntervals secondarySelectionIntervals startIdx stopIdx |
-	Display depth = 1
-		ifTrue: [ ^ self ].
-	Display depth = 2
-		ifTrue: [ ^ self ].
-	primary := selectionStart notNil
-		ifTrue: [ selectionStart stringIndex to: selectionStop stringIndex - 1 ]
-		ifFalse: [ 0 to: -1 ].
+	Display depth = 1 ifTrue: [ ^ self ].
+	Display depth = 2 ifTrue: [ ^ self ].
+	primary := selectionStart
+		           ifNotNil: [
+		           selectionStart stringIndex to:
+		           selectionStop stringIndex - 1 ]
+		           ifNil: [ 0 to: -1 ].
 	topLeftBlk := self characterBlockAtPoint: topLeft.
 	bottomRightBlk := self characterBlockAtPoint: bottomRight.
 	startIdx := topLeftBlk stringIndex.
 	stopIdx := bottomRightBlk stringIndex.
 	viewedString := (self text copyFrom: startIdx to: stopIdx) asString.
-	self theme currentSettings haveSecondarySelectionTextColor
-		ifTrue: [ self text removeAttribute: TextSelectionColor secondarySelection ].
-	self theme currentSettings haveFindReplaceSelectionTextColor
-		ifTrue: [ self text removeAttribute: TextSelectionColor findReplaceSelection ].
-	findReplaceIntervals := #().
-	extraSelectionBlocks := Array
-		streamContents: [ :strm |
-			findReplaceSelectionRegex
-				ifNotNil: [
-					findReplaceIntervals := findReplaceSelectionRegex matchingRangesIn: viewedString.
-					findReplaceIntervals := (findReplaceIntervals collect: [ :r | r + topLeftBlk stringIndex - 1 ])
-						reject: [ :r | primary size > 0 and: [ (r includes: primary first) or: [ primary includes: r first ] ] ].
-					findReplaceIntervals
-						do: [ :r |
-							self theme currentSettings haveFindReplaceSelectionTextColor
-								ifTrue: [ self text addAttribute: TextSelectionColor findReplaceSelection from: r first to: r last ].
-							strm
-								nextPut:
-									(ParagraphSelectionBlock
-										first: (self characterBlockForIndex: r first)
-										last: (self characterBlockForIndex: r last + 1)
-										color: self findReplaceSelectionColor) ] ].
-			secondarySelection
-				ifNotNil: [
-					secondarySelectionIntervals := (secondarySelection
-						reject: [ :i | (findReplaceIntervals includes: i) or: [ i = primary or: [ i first > self text size ] ] ])
-						collect: [ :i | i first to: (i last min: self text size) ].
-					secondarySelectionIntervals
-						do: [ :r |
-							self theme currentSettings haveSecondarySelectionTextColor
-								ifTrue: [ self text addAttribute: TextSelectionColor secondarySelection from: r first to: r last ].
-							strm
-								nextPut:
-									(ParagraphSelectionBlock
-										first: (self characterBlockForIndex: r first)
-										last: (self characterBlockForIndex: r last + 1)
-										color: self secondarySelectionColor) ] ] ].
+	self theme currentSettings haveSecondarySelectionTextColor ifTrue: [
+		self text removeAttribute: TextSelectionColor secondarySelection ].
+	self theme currentSettings haveFindReplaceSelectionTextColor ifTrue: [
+		self text removeAttribute: TextSelectionColor findReplaceSelection ].
+	findReplaceIntervals := #(  ).
+	extraSelectionBlocks := Array streamContents: [ :strm |
+		                        findReplaceSelectionRegex ifNotNil: [
+			                        findReplaceIntervals := findReplaceSelectionRegex
+				                                                matchingRangesIn:
+				                                                viewedString.
+			                        findReplaceIntervals := (findReplaceIntervals
+				                                                 collect: [ :r |
+				                                                 r
+				                                                 +
+				                                                 topLeftBlk
+					                                                 stringIndex - 1 ])
+				                                                reject: [ :r |
+					                                                primary size > 0
+						                                                and: [
+						                                                (r includes:
+							                                                 primary first)
+							                                                or: [
+							                                                primary
+								                                                includes:
+								                                                r first ] ] ].
+			                        findReplaceIntervals do: [ :r |
+				                        self theme currentSettings
+					                        haveFindReplaceSelectionTextColor
+					                        ifTrue: [
+						                        self text
+							                        addAttribute:
+							                        TextSelectionColor findReplaceSelection
+							                        from: r first
+							                        to: r last ].
+				                        strm nextPut: (ParagraphSelectionBlock
+						                         first:
+						                         (self characterBlockForIndex: r first)
+						                         last:
+						                         (self characterBlockForIndex:
+							                          r last + 1)
+						                         color: self findReplaceSelectionColor) ] ].
+		                        secondarySelection ifNotNil: [
+			                        secondarySelectionIntervals := (secondarySelection
+				                                                        reject: [
+					                                                        :i |
+					                                                        (findReplaceIntervals
+						                                                         includes:
+						                                                         i) or: [
+						                                                        i
+						                                                        =
+						                                                        primary
+							                                                        or: [
+							                                                        i first
+							                                                        >
+							                                                        self
+								                                                        text
+								                                                        size ] ] ])
+				                                                       collect: [
+				                                                       :i |
+				                                                       i first
+				                                                       to:
+				                                                       (i last
+					                                                        min:
+					                                                        self text
+						                                                        size) ].
+			                        secondarySelectionIntervals do: [ :r |
+				                        self theme currentSettings
+					                        haveSecondarySelectionTextColor ifTrue: [
+					                        self text
+						                        addAttribute:
+						                        TextSelectionColor secondarySelection
+						                        from: r first
+						                        to: r last ].
+				                        strm nextPut: (ParagraphSelectionBlock
+						                         first:
+						                         (self characterBlockForIndex: r first)
+						                         last:
+						                         (self characterBlockForIndex:
+							                          r last + 1)
+						                         color: self secondarySelectionColor) ] ] ].
 	findReplaceSelectionRegex := nil.
 	secondarySelection := nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Paragraph >> caretRect [
 	"The rectangle in which the caret was last drawn,
 	 or nil if the last drawing drew a range-selection rather than insertion point."
@@ -229,20 +275,18 @@ Paragraph >> caretRect [
 	^ caretRect
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Paragraph >> caretWidth [
 
-	^ TextEditor dumbbellCursor
-		  ifTrue: [ 2 ]
-		  ifFalse: [ 0 ]
+	^ 0
 ]
 
-{ #category : #alignment }
+{ #category : 'alignment' }
 Paragraph >> centered [
 	textStyle centered
 ]
 
-{ #category : #selection }
+{ #category : 'selection' }
 Paragraph >> characterBlockAtPoint: aPoint [
 	"Answer a CharacterBlock for the character in the text at aPoint."
 	| line |
@@ -252,7 +296,7 @@ Paragraph >> characterBlockAtPoint: aPoint [
 		in: line
 ]
 
-{ #category : #selection }
+{ #category : 'selection' }
 Paragraph >> characterBlockForIndex: index [
 	"Answer a CharacterBlock for the character in text at index."
 	| line |
@@ -262,7 +306,7 @@ Paragraph >> characterBlockForIndex: index [
 		in: line
 ]
 
-{ #category : #editing }
+{ #category : 'editing' }
 Paragraph >> click: anEvent for: model controller: editor [
 	"Give sensitive text a chance to fire.  Display flash: (100@100 extent: 100@100)."
 
@@ -282,7 +326,7 @@ Paragraph >> click: anEvent for: model controller: editor [
 	^ action
 ]
 
-{ #category : #composition }
+{ #category : 'composition' }
 Paragraph >> compose: t style: ts from: startingIndex in: textContainer [
 	text := t.
 	textStyle := ts.
@@ -292,7 +336,7 @@ Paragraph >> compose: t style: ts from: startingIndex in: textContainer [
 	self composeAll
 ]
 
-{ #category : #composition }
+{ #category : 'composition' }
 Paragraph >> composeAll [
 	^ self
 		multiComposeLinesFrom: firstCharacterIndex
@@ -303,14 +347,14 @@ Paragraph >> composeAll [
 		atY: container top
 ]
 
-{ #category : #composition }
+{ #category : 'composition' }
 Paragraph >> composeAllStartingAt: characterIndex [
 	firstCharacterIndex := characterIndex.
 	offsetToEnd := text size - firstCharacterIndex.
 	self composeAll
 ]
 
-{ #category : #composition }
+{ #category : 'composition' }
 Paragraph >> composeLinesFrom: start to: stop delta: delta into: lineColl priorLines: priorLines
 	atY: startingY [
 	"While the section from start to stop has changed, composition may ripple all the way to the end of the text.  However in a rectangular container, if we ever find a line beginning with the same character as before (ie corresponding to delta in the old lines), then we can just copy the old lines from there to the end of the container, with adjusted indices and y-values"
@@ -332,23 +376,23 @@ Paragraph >> composeLinesFrom: start to: stop delta: delta into: lineColl priorL
 	^ maxRightX := newResult second
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Paragraph >> composer [
 	^ composer ifNil: [composer := TextComposer new]
 ]
 
-{ #category : #composition }
+{ #category : 'composition' }
 Paragraph >> compositionRectangle [
 	^ container
 ]
 
-{ #category : #selection }
+{ #category : 'selection' }
 Paragraph >> containsPoint: aPoint [
 	^ (lines at: (self lineIndexForPoint: aPoint)) rectangle
 		containsPoint: aPoint
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 Paragraph >> deepCopy [
 	"Don't want to copy the container (etc) or fonts in the TextStyle."
 	| new |
@@ -359,14 +403,14 @@ Paragraph >> deepCopy [
 	^ new
 ]
 
-{ #category : #selection }
+{ #category : 'selection' }
 Paragraph >> defaultCharacterBlock [
 	^ (CharacterBlock new stringIndex: firstCharacterIndex text: text
 			topLeft: lines first topLeft extent: 0 @ 0)
 		textLine: lines first
 ]
 
-{ #category : #display }
+{ #category : 'display' }
 Paragraph >> displayExtraSelectionOn: aCanvas [
 	"Send all visible lines to the displayScanner for display"
 
@@ -383,22 +427,22 @@ Paragraph >> displayExtraSelectionOn: aCanvas [
 					do: [:selblock | self displaySelectionBlock: selblock inLine: line on: aCanvas]]]
 ]
 
-{ #category : #display }
+{ #category : 'display' }
 Paragraph >> displayOn: aCanvas using: displayScanner at: somePosition [
 	"Send all visible lines to the displayScanner for display"
 	| visibleRectangle offset leftInRun line |
 	visibleRectangle := aCanvas clipRect.
-	offset := (somePosition - positionWhenComposed) truncated.
+	offset := (somePosition - (positionWhenComposed * displayScanner scale)) truncated.
 	leftInRun := 0.
-	(self lineIndexForPoint: visibleRectangle topLeft)
-		to: (self lineIndexForPoint: visibleRectangle bottomRight)
+	(self lineIndexForPoint: visibleRectangle topLeft scale: displayScanner scale)
+		to: (self lineIndexForPoint: visibleRectangle bottomRight scale: displayScanner scale)
 		do: [:i | line := lines at: i.
-			self displaySelectionInLine: line on: aCanvas.
+			self displaySelectionInLine: line on: aCanvas scale: displayScanner scale.
 			line first <= line last ifTrue:
 				[leftInRun := displayScanner displayLine: line offset: offset leftInRun: leftInRun]]
 ]
 
-{ #category : #display }
+{ #category : 'display' }
 Paragraph >> displaySelectionBarOn: aCanvas [
 	| visibleRectangle line |
 	selectionStart ifNil: [^ self].
@@ -409,11 +453,11 @@ Paragraph >> displaySelectionBarOn: aCanvas [
 	aCanvas fillRectangle: (visibleRectangle left @ line top corner: visibleRectangle right @ line bottom) color: self selectionBarColor
 ]
 
-{ #category : #display }
+{ #category : 'display' }
 Paragraph >> displaySelectionBlock: aSelBlock inLine: line on: aCanvas [
 	"Display a SelectionBlock if it does not overlap vith the regular selection"
 
-	(selectionStart notNil and: [selectionStop notNil and: [selectionStart ~= selectionStop]])
+	(selectionStart isNotNil and: [selectionStop isNotNil and: [selectionStart ~= selectionStop]])
 		ifTrue: [	| startIdx stopIdx selSartIdx selStopIdx selBlockRange selRange |
 			startIdx := aSelBlock first stringIndex.
 			stopIdx := aSelBlock last stringIndex.
@@ -427,8 +471,14 @@ Paragraph >> displaySelectionBlock: aSelBlock inLine: line on: aCanvas [
 	aSelBlock displayInLine: line on: aCanvas
 ]
 
-{ #category : #display }
+{ #category : 'display' }
 Paragraph >> displaySelectionInLine: line on: aCanvas [
+
+	^ self displaySelectionInLine: line on: aCanvas scale: 1
+]
+
+{ #category : 'display' }
+Paragraph >> displaySelectionInLine: line on: aCanvas scale: scale [
 	| leftX rightX w caretColor |
 	selectionStart ifNil: [^self].	"No selection"
 	aCanvas isShadowDrawing ifTrue: [ ^self ].	"don't draw selection with shadow"
@@ -466,31 +516,31 @@ Paragraph >> displaySelectionInLine: line on: aCanvas [
 					[:i |
 					"Draw caret triangles at top and bottom"
 
-					aCanvas fillRectangle: ((leftX - w + i - 1) @ (line top + i - 1)
-								extent: ((w - i) * 2 + 3) @ 1)
+					aCanvas fillRectangle: (((leftX - w + i - 1) @ (line top + i - 1)
+								extent: ((w - i) * 2 + 3) @ 1) scaleBy: scale)
 						color: caretColor.
-					aCanvas fillRectangle: ((leftX - w + i - 1) @ (line bottom - i)
-								extent: ((w - i) * 2 + 3) @ 1)
+					aCanvas fillRectangle: (((leftX - w + i - 1) @ (line bottom - i)
+								extent: ((w - i) * 2 + 3) @ 1) scaleBy: scale)
 						color: caretColor].
-			aCanvas fillRectangle: (leftX @ line top corner: rightX @ line bottom)
+			aCanvas fillRectangle: ((leftX @ line top corner: rightX @ line bottom) scaleBy: scale)
 				color: caretColor]
 		ifFalse:
 			[caretRect := nil.
-			aCanvas fillRectangle: (leftX @ line top corner: rightX @ line bottom)
+			aCanvas fillRectangle: ((leftX @ line top corner: rightX @ line bottom) scaleBy: scale)
 				color: self selectionColor]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Paragraph >> extent [
 	^ container width @ (lines last bottom - lines first top)
 ]
 
-{ #category : #selection }
+{ #category : 'selection' }
 Paragraph >> extraSelectionChanged [
 	refreshExtraSelection := true
 ]
 
-{ #category : #selection }
+{ #category : 'selection' }
 Paragraph >> extraSelectionRects [
 	"Return an array of rectangles representing the findReplace and the secondary selection regions."
 	^ Array streamContents: [:strm |
@@ -499,7 +549,7 @@ Paragraph >> extraSelectionRects [
 				blocks do: [:selBlock | strm nextPutAll: (self selectionRectsFrom: selBlock first to: selBlock last)]]]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Paragraph >> fastFindFirstLineSuchThat: lineBlock [
 	"Perform a binary search of the lines array and return the index
 	of the first element for which lineBlock evaluates as true.
@@ -518,38 +568,38 @@ Paragraph >> fastFindFirstLineSuchThat: lineBlock [
 	^ low
 ]
 
-{ #category : #selection }
+{ #category : 'selection' }
 Paragraph >> findReplaceSelectionColor [
 	^  self theme currentSettings findReplaceSelectionColor
 ]
 
-{ #category : #selection }
+{ #category : 'selection' }
 Paragraph >> findReplaceSelectionRegex: aRegex [
 	findReplaceSelectionRegex := aRegex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Paragraph >> firstCharacterIndex [
 	^ firstCharacterIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Paragraph >> focused [
 	^ focused ifNil: [focused := false]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Paragraph >> focused: aBoolean [
 	focused := aBoolean
 ]
 
-{ #category : #selection }
+{ #category : 'selection' }
 Paragraph >> hasExtraSelection [
 	"Return true if I've some findReplace or secondary selection"
 	^ extraSelectionBlocks isEmptyOrNil not
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Paragraph >> indentationOfLineIndex: lineIndex ifBlank: aBlock [
 	"Answer the number of leading tabs in the line at lineIndex.  If there are
 	 no visible characters, pass the number of tabs to aBlock and return its value.
@@ -566,13 +616,13 @@ Paragraph >> indentationOfLineIndex: lineIndex ifBlank: aBlock [
 	^(text string copyFrom: first to: last) indentationIfBlank: aBlock
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 Paragraph >> initialize [
 	super initialize.
 	self positionWhenComposed: 0 @ 0
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 Paragraph >> insertionPointColor [
 	self focused ifFalse: [^ Color transparent].
 	^ Display depth <= 2
@@ -580,44 +630,50 @@ Paragraph >> insertionPointColor [
 		ifFalse: [self class insertionPointColor]
 ]
 
-{ #category : #alignment }
+{ #category : 'alignment' }
 Paragraph >> justified [
 	textStyle justified
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Paragraph >> lastCharacterIndex [
 	^ lines last last
 ]
 
-{ #category : #alignment }
+{ #category : 'alignment' }
 Paragraph >> leftFlush [
 	textStyle leftFlush
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Paragraph >> lineIndexForCharacter: index [
 	"Answer the index of the line in which to select the character at index."
 	^ (self fastFindFirstLineSuchThat: [:line | line first > index]) - 1 max: 1
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Paragraph >> lineIndexForPoint: aPoint [
+
+	^ self lineIndexForPoint: aPoint scale: 1
+]
+
+{ #category : 'private' }
+Paragraph >> lineIndexForPoint: aPoint scale: scale [
 	"Answer the index of the line in which to select the character nearest to aPoint."
 	| i py |
 	py := aPoint y truncated.
 
 	"Find the first line at this y-value"
-	i := (self fastFindFirstLineSuchThat: [:line | line bottom > py]) min: lines size.
+	i := (self fastFindFirstLineSuchThat: [:line | (line bottom * scale) > py]) min: lines size.
 
 	"Now find the first line at this x-value"
-	[i < lines size and: [(lines at: i+1) top = (lines at: i) top
-				and: [aPoint x >= (lines at: i+1) left]]]
+	[i < lines size and: [((lines at: i+1) top * scale) = ((lines at: i) top * scale)
+				and: [aPoint x >= ((lines at: i+1) left * scale)]]]
 		whileTrue: [i := i + 1].
 	^ i
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Paragraph >> lineIndexOfCharacterIndex: characterIndex [
 	"Answer the line index for a given characterIndex."
 	"apparently the selector changed with NewParagraph"
@@ -625,17 +681,17 @@ Paragraph >> lineIndexOfCharacterIndex: characterIndex [
 	^self lineIndexForCharacter: characterIndex
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Paragraph >> lines [
 	^ lines ifNil: [ ^ Array new ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Paragraph >> maxRightX [
 	^ maxRightX
 ]
 
-{ #category : #editing }
+{ #category : 'editing' }
 Paragraph >> move: anEvent for: model controller: editor [
 	"Give sensitive text a chance to fire.  Display flash: (100@100 extent: 100@100)."
 
@@ -656,7 +712,7 @@ Paragraph >> move: anEvent for: model controller: editor [
 	^ action
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Paragraph >> moveBy: delta [
 	lines do: [:line | line moveBy: delta].
 	positionWhenComposed ifNotNil:[
@@ -664,7 +720,7 @@ Paragraph >> moveBy: delta [
 	container := container translateBy: delta
 ]
 
-{ #category : #composition }
+{ #category : 'composition' }
 Paragraph >> multiComposeLinesFrom: start to: stop delta: delta into: lineColl priorLines: priorLines atY: startingY [
 	"While the section from start to stop has changed, composition may
 	ripple all the way to the end of the text. However in a rectangular
@@ -689,18 +745,18 @@ Paragraph >> multiComposeLinesFrom: start to: stop delta: delta into: lineColl p
 	^ maxRightX := newResult second
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Paragraph >> numberOfLines [
 
 	^lines size
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Paragraph >> positionWhenComposed: pos [
 	positionWhenComposed := pos
 ]
 
-{ #category : #composition }
+{ #category : 'composition' }
 Paragraph >> recomposeFrom: start to: stop delta: delta [
 	"Recompose this paragraph. The altered portion is between start and
 	stop. Recomposition may continue to the end of the text, due to a
@@ -734,71 +790,71 @@ Paragraph >> recomposeFrom: start to: stop delta: delta [
 		atY: (lines at: startLine) top
 ]
 
-{ #category : #editing }
+{ #category : 'editing' }
 Paragraph >> replaceFrom: start to: stop with: aText [
 	"Edit the text, and then recompose the lines."
 	text replaceFrom: start to: stop with: aText.
 	self recomposeFrom: start to: start + aText size - 1 delta: aText size - (stop-start+1)
 ]
 
-{ #category : #editing }
+{ #category : 'editing' }
 Paragraph >> replaceFrom: start to: stop with: aText displaying: displayBoolean [
 	"Edit the text, and then recompose the lines."
 	text replaceFrom: start to: stop with: aText.
 	self recomposeFrom: start to: start + aText size - 1 delta: aText size - (stop-start+1)
 ]
 
-{ #category : #alignment }
+{ #category : 'alignment' }
 Paragraph >> rightFlush [
 	textStyle rightFlush
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Paragraph >> secondarySelection [
 	^ secondarySelection
 ]
 
-{ #category : #selection }
+{ #category : 'selection' }
 Paragraph >> secondarySelection: aSubstring [
 	secondarySelection := aSubstring
 ]
 
-{ #category : #selection }
+{ #category : 'selection' }
 Paragraph >> secondarySelectionColor [
 	^  self theme secondarySelectionColor
 ]
 
-{ #category : #selection }
+{ #category : 'selection' }
 Paragraph >> selectionBarColor [
 	^ self theme  selectionBarColor
 ]
 
-{ #category : #selection }
+{ #category : 'selection' }
 Paragraph >> selectionColor [
 	^ self focused
 		ifTrue: [ self theme selectionColor]
 		ifFalse: [ self theme unfocusedSelectionColor ]
 ]
 
-{ #category : #selection }
+{ #category : 'selection' }
 Paragraph >> selectionColor: aColor [
 	"ignored"
 ]
 
-{ #category : #selection }
+{ #category : 'selection' }
 Paragraph >> selectionContainsPoint: aPoint [
 	"return whether the current selection contains the given point"
 	^ self selectionRects anySatisfy: [ :rect| rect containsPoint: aPoint ]
 ]
 
-{ #category : #selection }
+{ #category : 'selection' }
 Paragraph >> selectionRects [
 	"Return an array of rectangles representing the selection region."
 	selectionStart ifNil: [^ Array new].
 	^ self selectionRectsFrom: selectionStart to: selectionStop
 ]
 
-{ #category : #selection }
+{ #category : 'selection' }
 Paragraph >> selectionRectsFrom: characterBlock1 to: characterBlock2 [
 	"Return an array of rectangles representing the area between the two character blocks given as arguments."
 	| line1 line2 rects cb1 cb2 w |
@@ -829,48 +885,48 @@ Paragraph >> selectionRectsFrom: characterBlock1 to: characterBlock2 [
 	^ rects
 ]
 
-{ #category : #selection }
+{ #category : 'selection' }
 Paragraph >> selectionStart: startBlock selectionStop: stopBlock [
 	selectionStart := startBlock.
 	selectionStop := stopBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Paragraph >> showCaret [
 	^showCaret ifNil:[true]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Paragraph >> showCaret: aBool [
 	showCaret := aBool
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Paragraph >> string [
 	^ text string
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Paragraph >> text [
 	^ text
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Paragraph >> textOwner: ignored [  "See TextOnCurve"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Paragraph >> textStyle [
 	^ textStyle
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Paragraph >> textStyle: aTextStyle [
 	"Set the style by which the receiver should display its text."
 	textStyle := aTextStyle
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Paragraph >> textStyle: ts lines: l text: t [
 	"Private -- just a service for deepCopy"
 	textStyle := ts.
@@ -878,18 +934,18 @@ Paragraph >> textStyle: ts lines: l text: t [
 	text := t
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Paragraph >> theme [
 	^ Smalltalk ui theme
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Paragraph >> wantsColumnBreaks [
 
 	^wantsColumnBreaks
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Paragraph >> wantsColumnBreaks: aBoolean [
 
 	wantsColumnBreaks := aBoolean

@@ -2,22 +2,24 @@
 I'm an signed short type.
 "
 Class {
-	#name : #FFIInt16,
-	#superclass : #FFIUInt16,
-	#category : #'UnifiedFFI-Types'
+	#name : 'FFIInt16',
+	#superclass : 'FFIUInt16',
+	#category : 'UnifiedFFI-Types',
+	#package : 'UnifiedFFI',
+	#tag : 'Types'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIInt16 class >> externalType [
 	^ ExternalType short
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FFIInt16 >> basicHandle: aHandle at: index [
 	^ aHandle signedShortAt: index
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FFIInt16 >> basicHandle: aHandle at: index put: value [
 	^ aHandle signedShortAt: index put: value
 ]

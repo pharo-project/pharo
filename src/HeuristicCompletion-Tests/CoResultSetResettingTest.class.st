@@ -1,21 +1,23 @@
 Class {
-	#name : #CoResultSetResettingTest,
-	#superclass : #CoBasicCompletionTest,
+	#name : 'CoResultSetResettingTest',
+	#superclass : 'CoBasicCompletionTest',
 	#instVars : [
 		'completion',
 		'mockFilter'
 	],
-	#category : #'HeuristicCompletion-Tests-Core'
+	#category : 'HeuristicCompletion-Tests-Core',
+	#package : 'HeuristicCompletion-Tests',
+	#tag : 'Core'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 CoResultSetResettingTest >> setUp [
 
 	super setUp.
 	completion := CoResultSet fetcher: (mockFilter := CoMockFetcherToRecordResets new)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoResultSetResettingTest >> testBroadenFilterShouldResetTheFilter [
 
 	completion replaceFilterWith: (CoCaseInsensitiveBeginsWithFilter filterString: 'BA').
@@ -27,7 +29,7 @@ CoResultSetResettingTest >> testBroadenFilterShouldResetTheFilter [
 		equals: 1 + 1 "There is the initial one, and then the reset after setting a new one"
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoResultSetResettingTest >> testNarrowingFilterShouldNotResetTheFilter [
 
 	completion replaceFilterWith: (CoCaseInsensitiveBeginsWithFilter filterString: 'BA').

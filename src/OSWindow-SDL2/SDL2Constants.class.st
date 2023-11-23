@@ -2,8 +2,8 @@
 Pool of various SDL2 library constants
 "
 Class {
-	#name : #SDL2Constants,
-	#superclass : #SharedPool,
+	#name : 'SDL2Constants',
+	#superclass : 'SharedPool',
 	#classVars : [
 		'AUDIO_F32',
 		'AUDIO_F32LSB',
@@ -508,21 +508,23 @@ Class {
 		'SDL_WINDOW_RESIZABLE',
 		'SDL_WINDOW_SHOWN'
 	],
-	#category : #'OSWindow-SDL2-Bindings'
+	#category : 'OSWindow-SDL2-Bindings',
+	#package : 'OSWindow-SDL2',
+	#tag : 'Bindings'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 SDL2Constants class >> SDL_BUTTON: button [
 	^ (1 << ((button)-1))
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 SDL2Constants class >> definePixelFormat_type: type order: order layout: playout bits: bits bytes: bytes [
 	^ ((1 << 28) | ((type) << 24) | ((order) << 20) | ((playout) << 16) |
      	    ((bits) << 8) | ((bytes) << 0))
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 SDL2Constants class >> initialize [
 	"
 	self initialize
@@ -546,7 +548,7 @@ SDL2Constants class >> initialize [
 		initializeWM
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 SDL2Constants class >> initializeAudio [
 	SDL_AUDIO_MASK_BITSIZE := 16rFF.
 
@@ -575,7 +577,7 @@ SDL2Constants class >> initializeAudio [
 	SDL_AUDIO_ALLOW_ANY_CHANGE         := (SDL_AUDIO_ALLOW_FREQUENCY_CHANGE|SDL_AUDIO_ALLOW_FORMAT_CHANGE|SDL_AUDIO_ALLOW_CHANNELS_CHANGE|SDL_AUDIO_ALLOW_SAMPLES_CHANGE)
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 SDL2Constants class >> initializeCommon [
 	SDL_INIT_TIMER := 16r00000001.
 	SDL_INIT_AUDIO := 16r00000010.
@@ -591,7 +593,7 @@ SDL2Constants class >> initializeCommon [
 	SDL_ENABLE := 1
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 SDL2Constants class >> initializeEvent [
     SDL_FIRSTEVENT := 0.
     SDL_QUIT           := 16r100.
@@ -664,7 +666,7 @@ SDL2Constants class >> initializeEvent [
     SDL_LASTEVENT    := 16rFFFF
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 SDL2Constants class >> initializeGameController [
 	SDL_CONTROLLER_AXIS_INVALID := -1.
 	SDL_CONTROLLER_AXIS_LEFTX := 0.
@@ -694,7 +696,7 @@ SDL2Constants class >> initializeGameController [
 	SDL_CONTROLLER_BUTTON_MAX := 15
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 SDL2Constants class >> initializeKeyboard [
     KMOD_NONE := 16r0000.
     KMOD_LSHIFT := 16r0001.
@@ -716,7 +718,7 @@ SDL2Constants class >> initializeKeyboard [
 	KMOD_GUI    := (KMOD_LGUI | KMOD_RGUI)
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 SDL2Constants class >> initializeKeycodes [
 	SDLK_UNKNOWN	:= 16r0000.
 	SDLK_RETURN	:= 16r000D.
@@ -790,7 +792,7 @@ SDL2Constants class >> initializeKeycodes [
 	SDLK_z	:= 16r007A
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 SDL2Constants class >> initializeKeycodes2 [
 	SDLK_CAPSLOCK	:= 16r40000039.
 	SDLK_F1	:= 16r4000003A.
@@ -868,7 +870,7 @@ SDL2Constants class >> initializeKeycodes2 [
 	SDLK_KP_EQUALSAS400	:= 16r40000086
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 SDL2Constants class >> initializeKeycodes3 [
 	SDLK_ALTERASE	:= 16r40000099.
 	SDLK_SYSREQ	:= 16r4000009A.
@@ -964,7 +966,7 @@ SDL2Constants class >> initializeKeycodes3 [
 	SDLK_SLEEP	:= 16r4000011A
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 SDL2Constants class >> initializeMouse [
 	SDL_BUTTON_LEFT 	:= 1.
 	SDL_BUTTON_MIDDLE	:=  2.
@@ -978,7 +980,7 @@ SDL2Constants class >> initializeMouse [
 	SDL_BUTTON_X2MASK  := self SDL_BUTTON: SDL_BUTTON_X2
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 SDL2Constants class >> initializeOpenGL [
     SDL_GL_RED_SIZE	:= 0.
     SDL_GL_GREEN_SIZE	:= 1.
@@ -1007,14 +1009,14 @@ SDL2Constants class >> initializeOpenGL [
     SDL_GL_FRAMEBUFFER_SRGB_CAPABLE := 23
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 SDL2Constants class >> initializeOpenGLProfile [
 	 SDL_GL_CONTEXT_PROFILE_CORE           := 1.
     SDL_GL_CONTEXT_PROFILE_COMPATIBILITY  := 2.
     SDL_GL_CONTEXT_PROFILE_ES             := 4
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 SDL2Constants class >> initializePixelFormat [
 	"
 	Pixel format related constants
@@ -1071,7 +1073,7 @@ SDL2Constants class >> initializePixelFormat [
 	SDL_PIXELFORMAT_ARGB8888 := self definePixelFormat_type: SDL_PIXELTYPE_PACKED32 order: SDL_PACKEDORDER_ARGB layout: SDL_PACKEDLAYOUT_8888 bits: 32 bytes: 4
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 SDL2Constants class >> initializeRenderer [
 	"
 	Renderer related constants.
@@ -1105,7 +1107,7 @@ SDL2Constants class >> initializeRenderer [
 	SDL_BLENDFACTOR_ONE_MINUS_DST_ALPHA := 16rA. "1-dstA. 1-dstA. 1-dstA. 1-dstA"
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 SDL2Constants class >> initializeTexture [
 	"
 	Texture related constants.
@@ -1115,7 +1117,7 @@ SDL2Constants class >> initializeTexture [
       SDL_TEXTUREACCESS_TARGET := 2
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 SDL2Constants class >> initializeWM [
 	"
 	Window Manager related constants.
@@ -1133,7 +1135,7 @@ SDL2Constants class >> initializeWM [
 	SDL_SYSWM_ANDROID := 9
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 SDL2Constants class >> initializeWindow [
 	"
 	Window related constants.
@@ -1174,4 +1176,10 @@ SDL2Constants class >> initializeWindow [
     SDL_WINDOWEVENT_FOCUS_GAINED		:= 12.
     SDL_WINDOWEVENT_FOCUS_LOST		:= 13.
     SDL_WINDOWEVENT_CLOSE			:= 14
+]
+
+{ #category : 'initialization' }
+SDL2Constants >> initialize [
+		<ignoreUnusedClassVariables: #( SDL_GL_SWAP_CONTROL )>
+		super initialize.
 ]

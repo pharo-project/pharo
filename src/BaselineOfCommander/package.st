@@ -1,1 +1,1 @@
-Package { #name : #BaselineOfCommander }
+Package { #name : 'BaselineOfCommander' }

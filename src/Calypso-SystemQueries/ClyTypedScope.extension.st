@@ -1,6 +1,6 @@
-Extension { #name : #ClyTypedScope }
+Extension { #name : 'ClyTypedScope' }
 
-{ #category : #'*Calypso-SystemQueries' }
+{ #category : '*Calypso-SystemQueries' }
 ClyTypedScope >> canDetectAffectOnClassesBy: aSystemAnnouncement [
 	"it is special hook to allow particular scopes define that all items should be checked.
 	For example class hierarchy scope could not track that removed class was in hierarchy
@@ -9,27 +9,33 @@ ClyTypedScope >> canDetectAffectOnClassesBy: aSystemAnnouncement [
 	^true
 ]
 
-{ #category : #'*Calypso-SystemQueries' }
-ClyTypedScope >> includesClassGroupsAffectedBy: aSystemAnnouncement [
-
-	^false
-]
-
-{ #category : #'*Calypso-SystemQueries' }
+{ #category : '*Calypso-SystemQueries' }
 ClyTypedScope >> includesClassesAffectedBy: aSystemAnnouncement [
 
 	^basisObjects anySatisfy: [ :each |
 		each includesClassesAffectedBy: aSystemAnnouncement ]
 ]
 
-{ #category : #'*Calypso-SystemQueries' }
+{ #category : '*Calypso-SystemQueries' }
 ClyTypedScope >> includesMethodsAffectedBy: aSystemAnnouncement [
 
 	^basisObjects anySatisfy: [ :each |
 		each includesMethodsAffectedBy: aSystemAnnouncement ]
 ]
 
-{ #category : #'*Calypso-SystemQueries' }
+{ #category : '*Calypso-SystemQueries' }
+ClyTypedScope >> includesPackageTagsAffectedBy: aSystemAnnouncement [
+
+	^false
+]
+
+{ #category : '*Calypso-SystemQueries' }
+ClyTypedScope >> includesPackagesAffectedBy: aClyAsyncQueryIsDone [
+
+	^ false
+]
+
+{ #category : '*Calypso-SystemQueries' }
 ClyTypedScope >> includesVariablesAffectedBy: aSystemAnnouncement [
 	^false
 ]

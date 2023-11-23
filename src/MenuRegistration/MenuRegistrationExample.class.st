@@ -6,12 +6,14 @@ I'm here to show you how to use the menu registration. See class side methods an
 
 "
 Class {
-	#name : #MenuRegistrationExample,
-	#superclass : #Object,
-	#category : #'MenuRegistration-Example'
+	#name : 'MenuRegistrationExample',
+	#superclass : 'Object',
+	#category : 'MenuRegistration-Example',
+	#package : 'MenuRegistration',
+	#tag : 'Example'
 }
 
-{ #category : #'menu declaring' }
+{ #category : 'menu declaring' }
 MenuRegistrationExample class >> mostUsedToolsOn: aBuilder [
 	<worldMenuExample>
 	(aBuilder group: #Tools)
@@ -28,7 +30,7 @@ MenuRegistrationExample class >> mostUsedToolsOn: aBuilder [
 			]
 ]
 
-{ #category : #'menu declaring' }
+{ #category : 'menu declaring' }
 MenuRegistrationExample class >> myOwnCoolMenuRegistrationOn: aBuilder [
 	<worldMenuExample>
 	(aBuilder item: #MyOwnCoolMenu)
@@ -42,7 +44,7 @@ MenuRegistrationExample class >> myOwnCoolMenuRegistrationOn: aBuilder [
 				arguments: #('yep, my own cool tool can be also opened from a world sub-menu ! :)')]
 ]
 
-{ #category : #'menu declaring' }
+{ #category : 'menu declaring' }
 MenuRegistrationExample class >> myOwnCoolToolRegistrationOn: aBuilder [
 	<worldMenuExample>
 	(aBuilder item: #MyOwnCoolTool)
@@ -53,7 +55,7 @@ MenuRegistrationExample class >> myOwnCoolToolRegistrationOn: aBuilder [
 		arguments: #('yep, my own cool tool can be opened from the world menu ! :)')
 ]
 
-{ #category : #'menu declaring' }
+{ #category : 'menu declaring' }
 MenuRegistrationExample class >> pharoItemsOn: aBuilder [
 	<worldMenuExample>
 	(aBuilder group: #QuitPharo)
@@ -70,36 +72,36 @@ MenuRegistrationExample class >> pharoItemsOn: aBuilder [
 						help: (triplet size > 2 ifTrue: [triplet third] ifFalse: [nil])]]
 ]
 
-{ #category : #'menu declaring' }
+{ #category : 'menu declaring' }
 MenuRegistrationExample class >> pragmaKeyword [
 	^ #worldMenuExample
 ]
 
-{ #category : #'menu actions' }
+{ #category : 'menu actions' }
 MenuRegistrationExample class >> quitSession [
 	Smalltalk
 		snapshot: (UIManager default confirm: 'Save changes before quitting?' translated orCancel: [ ^ self ])
 		andQuit: true
 ]
 
-{ #category : #'menu actions' }
+{ #category : 'menu actions' }
 MenuRegistrationExample class >> saveAndQuit [
 	Smalltalk snapshot: true andQuit: true
 ]
 
-{ #category : #'menu actions' }
+{ #category : 'menu actions' }
 MenuRegistrationExample class >> saveAs [
 	Smalltalk saveAs
 ]
 
-{ #category : #'menu declaring' }
+{ #category : 'menu declaring' }
 MenuRegistrationExample class >> theme [
 	"Answer the ui theme that provides controls."
 
 	^ Smalltalk ui theme
 ]
 
-{ #category : #'menu declaring' }
+{ #category : 'menu declaring' }
 MenuRegistrationExample class >> toolsOn: aBuilder [
 	<worldMenuExample>
 	(aBuilder item: #Tools)

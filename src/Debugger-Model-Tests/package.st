@@ -1,1 +1,1 @@
-Package { #name : #'Debugger-Model-Tests' }
+Package { #name : 'Debugger-Model-Tests' }

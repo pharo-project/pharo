@@ -2,28 +2,30 @@
 Tests for FFICalloutMethodBuilder
 "
 Class {
-	#name : #FFICalloutMethodBuilderTest,
-	#superclass : #TestCase,
+	#name : 'FFICalloutMethodBuilderTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'architecture'
 	],
-	#category : #'UnifiedFFI-Tests-Tests'
+	#category : 'UnifiedFFI-Tests-Tests',
+	#package : 'UnifiedFFI-Tests',
+	#tag : 'Tests'
 }
 
-{ #category : #factory }
+{ #category : 'factory' }
 FFICalloutMethodBuilderTest >> builder [
 	^ (TFCalloutAPI inUFFIContext: nil) newBuilder
 		requestor: FFICalloutMethodBuilderTestRequestor new;
 		yourself
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 FFICalloutMethodBuilderTest >> setUp [
 	super setUp.
 	architecture := FFIArchitecture forCurrentArchitecture
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFICalloutMethodBuilderTest >> testAllAtomicTypesCall [
 	| result tfFunction |
 
@@ -36,7 +38,7 @@ FFICalloutMethodBuilderTest >> testAllAtomicTypesCall [
 				methodClass: Object;
 				yourself )].
 
-	self assert: result notNil.
+	self assert: result isNotNil.
 	self assert: result isCompiledMethod.
 	self assert: result primitive equals: 0.
 
@@ -59,7 +61,7 @@ FFICalloutMethodBuilderTest >> testAllAtomicTypesCall [
 		TFBasicType uint16}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFICalloutMethodBuilderTest >> testCallCreateObject [
 	| result |
 
@@ -73,7 +75,7 @@ FFICalloutMethodBuilderTest >> testCallCreateObject [
 				methodClass: FFICalloutObjectForTest;
 				yourself )].
 
-	self assert: result notNil.
+	self assert: result isNotNil.
 	self assert: result isCompiledMethod.
 	self assert: result primitive equals: 0.
 	self assert: result literals second functionName equals: 'method1'.
@@ -81,7 +83,7 @@ FFICalloutMethodBuilderTest >> testCallCreateObject [
 	self assert: result literals second definition parameterTypes first equals: TFBasicType sint32
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFICalloutMethodBuilderTest >> testCallReturningEnumeration [
 	| result tfFunction |
 
@@ -95,7 +97,7 @@ FFICalloutMethodBuilderTest >> testCallReturningEnumeration [
 				methodClass: FFICalloutObjectForTest;
 				yourself )].
 
-	self assert: result notNil.
+	self assert: result isNotNil.
 	self assert: result isCompiledMethod.
 	self assert: result primitive equals: 0.
 
@@ -105,7 +107,7 @@ FFICalloutMethodBuilderTest >> testCallReturningEnumeration [
 	self assert: tfFunction definition returnType equals: TFBasicType uint32
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFICalloutMethodBuilderTest >> testCallSimple [
 	| result tfFunction |
 
@@ -118,7 +120,7 @@ FFICalloutMethodBuilderTest >> testCallSimple [
 				methodClass: Object;
 				yourself )].
 
-	self assert: result notNil.
+	self assert: result isNotNil.
 	self assert: result isCompiledMethod.
 	self assert: result primitive equals: 0.
 	tfFunction := result literals second.
@@ -128,7 +130,7 @@ FFICalloutMethodBuilderTest >> testCallSimple [
 	self assert: tfFunction definition parameterTypes asArray equals: { TFBasicType sint32 }
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFICalloutMethodBuilderTest >> testCallWithConstant [
 	| result tfFunction |
 
@@ -141,7 +143,7 @@ FFICalloutMethodBuilderTest >> testCallWithConstant [
 				methodClass: Object;
 				yourself )].
 
-	self assert: result notNil.
+	self assert: result isNotNil.
 	self assert: result isCompiledMethod.
 	self assert: result primitive equals: 0.
 
@@ -152,7 +154,7 @@ FFICalloutMethodBuilderTest >> testCallWithConstant [
 	self assert: tfFunction definition parameterTypes asArray equals: { TFBasicType sint32. TFBasicType uint32 }
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFICalloutMethodBuilderTest >> testCallWithObject [
 	| result tfFunction |
 
@@ -166,7 +168,7 @@ FFICalloutMethodBuilderTest >> testCallWithObject [
 				methodClass: FFICalloutObjectForTest;
 				yourself )].
 
-	self assert: result notNil.
+	self assert: result isNotNil.
 	self assert: result isCompiledMethod.
 	self assert: result primitive equals: 0.
 	tfFunction := result literals second.
@@ -176,7 +178,7 @@ FFICalloutMethodBuilderTest >> testCallWithObject [
 	self assert: tfFunction definition parameterTypes last equals: TFBasicType pointer
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFICalloutMethodBuilderTest >> testCallWithPointer [
 	| result tfFunction |
 
@@ -189,7 +191,7 @@ FFICalloutMethodBuilderTest >> testCallWithPointer [
 				methodClass: Object;
 				yourself )].
 
-	self assert: result notNil.
+	self assert: result isNotNil.
 	self assert: result isCompiledMethod.
 	self assert: result primitive equals: 0.
 
@@ -200,7 +202,7 @@ FFICalloutMethodBuilderTest >> testCallWithPointer [
 	self assert: tfFunction definition parameterTypes last equals: TFBasicType pointer
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFICalloutMethodBuilderTest >> testCallWithPointerPointer [
 	| result tfFunction |
 
@@ -213,7 +215,7 @@ FFICalloutMethodBuilderTest >> testCallWithPointerPointer [
 				methodClass: Object;
 				yourself )].
 
-	self assert: result notNil.
+	self assert: result isNotNil.
 	self assert: result isCompiledMethod.
 	self assert: result primitive equals: 0.
 
@@ -224,7 +226,7 @@ FFICalloutMethodBuilderTest >> testCallWithPointerPointer [
 	self assert: tfFunction definition parameterTypes last equals: TFBasicType pointer
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFICalloutMethodBuilderTest >> testCallWithSelf [
 	| result tfFunction |
 
@@ -238,7 +240,7 @@ FFICalloutMethodBuilderTest >> testCallWithSelf [
 				methodClass: FFICalloutObjectForTest;
 				yourself )].
 
-	self assert: result notNil.
+	self assert: result isNotNil.
 	self assert: result isCompiledMethod.
 	self assert: result primitive equals: 0.
 

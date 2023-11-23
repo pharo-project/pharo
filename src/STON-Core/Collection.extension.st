@@ -1,6 +1,6 @@
-Extension { #name : #Collection }
+Extension { #name : 'Collection' }
 
-{ #category : #'*STON-Core' }
+{ #category : '*STON-Core' }
 Collection class >> fromSton: stonReader [
 	"For collections we chose to instanciate based a list of elements using #add:
 	This is not the best or most correct solution for all subclasses though,
@@ -13,7 +13,7 @@ Collection class >> fromSton: stonReader [
 	^ collection
 ]
 
-{ #category : #'*STON-Core' }
+{ #category : '*STON-Core' }
 Collection >> stonOn: stonWriter [
 	"For collections we chose to write a list of elements as delivered by #do:
 	This is not the best or most correct solution for all subclasses though,

@@ -3,17 +3,19 @@ Tests for the AsciiCharSet class.  The invariant is that AsciiCharSet is  a subs
 have behaviour consisetent with Unicode.
 "
 Class {
-	#name : #AsciiCharsetTest,
-	#superclass : #TestCase,
-	#category : #'Kernel-Tests-Extended-Charset'
+	#name : 'AsciiCharsetTest',
+	#superclass : 'TestCase',
+	#category : 'Kernel-Tests-Extended-Charset',
+	#package : 'Kernel-Tests-Extended',
+	#tag : 'Charset'
 }
 
-{ #category : #helper }
+{ #category : 'helper' }
 AsciiCharsetTest >> classUnderTest [
 	^ AsciiCharset
 ]
 
-{ #category : #'generated tests' }
+{ #category : 'generated tests' }
 AsciiCharsetTest >> testIsCasedLetter [
 	"Exhaustively check that the charset under test behaves like Unicode"
 
@@ -25,7 +27,7 @@ AsciiCharsetTest >> testIsCasedLetter [
 		self assert: (Unicode isCasedLetter: ch) equals: (charset isCasedLetter: ch) ]
 ]
 
-{ #category : #'generated tests' }
+{ #category : 'generated tests' }
 AsciiCharsetTest >> testIsClosePunctuation [
 	"Exhaustively check that the charset under test behaves like Unicode"
 
@@ -39,7 +41,7 @@ AsciiCharsetTest >> testIsClosePunctuation [
 			equals: (charset isClosePunctuation: ch) ]
 ]
 
-{ #category : #'generated tests' }
+{ #category : 'generated tests' }
 AsciiCharsetTest >> testIsConnectorPunctuation [
 
 	"Exhaustively check that the charset under test behaves like Unicode"
@@ -52,7 +54,7 @@ AsciiCharsetTest >> testIsConnectorPunctuation [
 		self assert: (Unicode isConnectorPunctuation: ch) equals: (charset isConnectorPunctuation: ch) ]
 ]
 
-{ #category : #'generated tests' }
+{ #category : 'generated tests' }
 AsciiCharsetTest >> testIsControlOther [
 
 	"Exhaustively check that the charset under test behaves like Unicode"
@@ -65,7 +67,7 @@ AsciiCharsetTest >> testIsControlOther [
 		self assert: (Unicode isControlOther: ch) equals: (charset isControlOther: ch) ]
 ]
 
-{ #category : #'generated tests' }
+{ #category : 'generated tests' }
 AsciiCharsetTest >> testIsCurrencySymbol [
 
 	"Exhaustively check that the charset under test behaves like Unicode"
@@ -78,7 +80,7 @@ AsciiCharsetTest >> testIsCurrencySymbol [
 		self assert: (Unicode isCurrencySymbol: ch) equals: (charset isCurrencySymbol: ch) ]
 ]
 
-{ #category : #'generated tests' }
+{ #category : 'generated tests' }
 AsciiCharsetTest >> testIsDashPunctuation [
 
 	"Exhaustively check that the charset under test behaves like Unicode"
@@ -91,7 +93,7 @@ AsciiCharsetTest >> testIsDashPunctuation [
 		self assert: (Unicode isDashPunctuation: ch) equals: (charset isDashPunctuation: ch) ]
 ]
 
-{ #category : #'generated tests' }
+{ #category : 'generated tests' }
 AsciiCharsetTest >> testIsDecimalDigit [
 
 	"Exhaustively check that the charset under test behaves like Unicode"
@@ -104,7 +106,7 @@ AsciiCharsetTest >> testIsDecimalDigit [
 		self assert: (Unicode isDecimalDigit: ch) equals: (charset isDecimalDigit: ch) ]
 ]
 
-{ #category : #'generated tests' }
+{ #category : 'generated tests' }
 AsciiCharsetTest >> testIsDigit [
 
 	"Exhaustively check that the charset under test behaves like Unicode"
@@ -117,7 +119,7 @@ AsciiCharsetTest >> testIsDigit [
 		self assert: (Unicode isDigit: ch) equals: (charset isDigit: ch) ]
 ]
 
-{ #category : #'generated tests' }
+{ #category : 'generated tests' }
 AsciiCharsetTest >> testIsEnclosingMark [
 
 	"Exhaustively check that the charset under test behaves like Unicode"
@@ -130,7 +132,7 @@ AsciiCharsetTest >> testIsEnclosingMark [
 		self assert: (Unicode isEnclosingMark: ch) equals: (charset isEnclosingMark: ch) ]
 ]
 
-{ #category : #'generated tests' }
+{ #category : 'generated tests' }
 AsciiCharsetTest >> testIsFinalQuote [
 
 	"Exhaustively check that the charset under test behaves like Unicode"
@@ -143,7 +145,7 @@ AsciiCharsetTest >> testIsFinalQuote [
 		self assert: (Unicode isFinalQuote: ch) equals: (charset isFinalQuote: ch) ]
 ]
 
-{ #category : #'generated tests' }
+{ #category : 'generated tests' }
 AsciiCharsetTest >> testIsFormatOther [
 
 	"Exhaustively check that the charset under test behaves like Unicode"
@@ -156,7 +158,7 @@ AsciiCharsetTest >> testIsFormatOther [
 		self assert: (Unicode isFormatOther: ch) equals: (charset isFormatOther: ch) ]
 ]
 
-{ #category : #'generated tests' }
+{ #category : 'generated tests' }
 AsciiCharsetTest >> testIsInitialQuote [
 
 	"Exhaustively check that the charset under test behaves like Unicode"
@@ -169,7 +171,7 @@ AsciiCharsetTest >> testIsInitialQuote [
 		self assert: (Unicode isInitialQuote: ch) equals: (charset isInitialQuote: ch) ]
 ]
 
-{ #category : #'generated tests' }
+{ #category : 'generated tests' }
 AsciiCharsetTest >> testIsLetter [
 
 	"Exhaustively check that the charset under test behaves like Unicode"
@@ -182,7 +184,7 @@ AsciiCharsetTest >> testIsLetter [
 		self assert: (Unicode isLetter: ch) equals: (charset isLetter: ch) ]
 ]
 
-{ #category : #'generated tests' }
+{ #category : 'generated tests' }
 AsciiCharsetTest >> testIsLetterModifier [
 
 	"Exhaustively check that the charset under test behaves like Unicode"
@@ -195,7 +197,7 @@ AsciiCharsetTest >> testIsLetterModifier [
 		self assert: (Unicode isLetterModifier: ch) equals: (charset isLetterModifier: ch) ]
 ]
 
-{ #category : #'generated tests' }
+{ #category : 'generated tests' }
 AsciiCharsetTest >> testIsLetterNumber [
 
 	"Exhaustively check that the charset under test behaves like Unicode"
@@ -208,7 +210,7 @@ AsciiCharsetTest >> testIsLetterNumber [
 		self assert: (Unicode isLetterNumber: ch) equals: (charset isLetterNumber: ch) ]
 ]
 
-{ #category : #'generated tests' }
+{ #category : 'generated tests' }
 AsciiCharsetTest >> testIsLineSeparator [
 
 	"Exhaustively check that the charset under test behaves like Unicode"
@@ -221,7 +223,7 @@ AsciiCharsetTest >> testIsLineSeparator [
 		self assert: (Unicode isLineSeparator: ch) equals: (charset isLineSeparator: ch) ]
 ]
 
-{ #category : #'generated tests' }
+{ #category : 'generated tests' }
 AsciiCharsetTest >> testIsLowercase [
 
 	"Exhaustively check that the charset under test behaves like Unicode"
@@ -234,7 +236,7 @@ AsciiCharsetTest >> testIsLowercase [
 		self assert: (Unicode isLowercase: ch) equals: (charset isLowercase: ch) ]
 ]
 
-{ #category : #'generated tests' }
+{ #category : 'generated tests' }
 AsciiCharsetTest >> testIsMathSymbol [
 
 	"Exhaustively check that the charset under test behaves like Unicode"
@@ -247,7 +249,7 @@ AsciiCharsetTest >> testIsMathSymbol [
 		self assert: (Unicode isMathSymbol: ch) equals: (charset isMathSymbol: ch) ]
 ]
 
-{ #category : #'generated tests' }
+{ #category : 'generated tests' }
 AsciiCharsetTest >> testIsModifierSymbol [
 
 	"Exhaustively check that the charset under test behaves like Unicode"
@@ -260,7 +262,7 @@ AsciiCharsetTest >> testIsModifierSymbol [
 		self assert: (Unicode isModifierSymbol: ch) equals: (charset isModifierSymbol: ch) ]
 ]
 
-{ #category : #'generated tests' }
+{ #category : 'generated tests' }
 AsciiCharsetTest >> testIsNonspacingMark [
 	"Exhaustively check that the charset under test behaves like Unicode"
 
@@ -274,7 +276,7 @@ AsciiCharsetTest >> testIsNonspacingMark [
 			equals: (charset isNonspacingMark: ch) ]
 ]
 
-{ #category : #'generated tests' }
+{ #category : 'generated tests' }
 AsciiCharsetTest >> testIsOpenPunctuation [
 	"Exhaustively check that the charset under test behaves like Unicode"
 
@@ -288,7 +290,7 @@ AsciiCharsetTest >> testIsOpenPunctuation [
 			equals: (charset isOpenPunctuation: ch) ]
 ]
 
-{ #category : #'generated tests' }
+{ #category : 'generated tests' }
 AsciiCharsetTest >> testIsOtherLetter [
 	"Exhaustively check that the charset under test behaves like Unicode"
 
@@ -302,7 +304,7 @@ AsciiCharsetTest >> testIsOtherLetter [
 			equals: (charset isOtherLetter: ch) ]
 ]
 
-{ #category : #'generated tests' }
+{ #category : 'generated tests' }
 AsciiCharsetTest >> testIsOtherNumber [
 	"Exhaustively check that the charset under test behaves like Unicode"
 
@@ -316,7 +318,7 @@ AsciiCharsetTest >> testIsOtherNumber [
 			equals: (charset isOtherNumber: ch) ]
 ]
 
-{ #category : #'generated tests' }
+{ #category : 'generated tests' }
 AsciiCharsetTest >> testIsOtherPunctuation [
 	"Exhaustively check that the charset under test behaves like Unicode"
 
@@ -330,7 +332,7 @@ AsciiCharsetTest >> testIsOtherPunctuation [
 			equals: (charset isOtherPunctuation: ch) ]
 ]
 
-{ #category : #'generated tests' }
+{ #category : 'generated tests' }
 AsciiCharsetTest >> testIsOtherSymbol [
 	"Exhaustively check that the charset under test behaves like Unicode"
 
@@ -344,7 +346,7 @@ AsciiCharsetTest >> testIsOtherSymbol [
 			equals: (charset isOtherSymbol: ch) ]
 ]
 
-{ #category : #'generated tests' }
+{ #category : 'generated tests' }
 AsciiCharsetTest >> testIsParagraphSeparator [
 	"Exhaustively check that the charset under test behaves like Unicode"
 
@@ -358,7 +360,7 @@ AsciiCharsetTest >> testIsParagraphSeparator [
 			equals: (charset isParagraphSeparator: ch) ]
 ]
 
-{ #category : #'generated tests' }
+{ #category : 'generated tests' }
 AsciiCharsetTest >> testIsPrivateOther [
 	"Exhaustively check that the charset under test behaves like Unicode"
 
@@ -372,7 +374,7 @@ AsciiCharsetTest >> testIsPrivateOther [
 			equals: (charset isPrivateOther: ch) ]
 ]
 
-{ #category : #'generated tests' }
+{ #category : 'generated tests' }
 AsciiCharsetTest >> testIsSpaceSeparator [
 	"Exhaustively check that the charset under test behaves like Unicode"
 
@@ -386,7 +388,7 @@ AsciiCharsetTest >> testIsSpaceSeparator [
 			equals: (charset isSpaceSeparator: ch) ]
 ]
 
-{ #category : #'generated tests' }
+{ #category : 'generated tests' }
 AsciiCharsetTest >> testIsSpacingCombiningMark [
 	"Exhaustively check that the charset under test behaves like Unicode"
 
@@ -400,7 +402,7 @@ AsciiCharsetTest >> testIsSpacingCombiningMark [
 			equals: (charset isSpacingCombiningMark: ch) ]
 ]
 
-{ #category : #'generated tests' }
+{ #category : 'generated tests' }
 AsciiCharsetTest >> testIsSurrogateOther [
 	"Exhaustively check that the charset under test behaves like Unicode"
 
@@ -414,7 +416,7 @@ AsciiCharsetTest >> testIsSurrogateOther [
 			equals: (charset isSurrogateOther: ch) ]
 ]
 
-{ #category : #'generated tests' }
+{ #category : 'generated tests' }
 AsciiCharsetTest >> testIsTitlecaseLetter [
 	"Exhaustively check that the charset under test behaves like Unicode"
 
@@ -428,7 +430,7 @@ AsciiCharsetTest >> testIsTitlecaseLetter [
 			equals: (charset isTitlecaseLetter: ch) ]
 ]
 
-{ #category : #'generated tests' }
+{ #category : 'generated tests' }
 AsciiCharsetTest >> testIsUppercase [
 	"Exhaustively check that the charset under test behaves like Unicode"
 

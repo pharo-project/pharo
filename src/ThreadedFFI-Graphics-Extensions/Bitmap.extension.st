@@ -1,6 +1,6 @@
-Extension { #name : #Bitmap }
+Extension { #name : 'Bitmap' }
 
-{ #category : #'*ThreadedFFI-Graphics-Extensions' }
+{ #category : '*ThreadedFFI-Graphics-Extensions' }
 Bitmap >> tfPointerAddress [
 
 	self pinInMemory.

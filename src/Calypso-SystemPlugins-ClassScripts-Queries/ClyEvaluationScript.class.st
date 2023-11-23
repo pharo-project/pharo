@@ -2,12 +2,13 @@
 I represent class side methods with pragma <script>
 "
 Class {
-	#name : #ClyEvaluationScript,
-	#superclass : #ClyClassScript,
-	#category : #'Calypso-SystemPlugins-ClassScripts-Queries'
+	#name : 'ClyEvaluationScript',
+	#superclass : 'ClyClassScript',
+	#category : 'Calypso-SystemPlugins-ClassScripts-Queries',
+	#package : 'Calypso-SystemPlugins-ClassScripts-Queries'
 }
 
-{ #category : #'script detection' }
+{ #category : 'script detection' }
 ClyEvaluationScript class >> isImplementedByMethod: aMethod [
 	^ aMethod hasPragmaNamed: #script
 ]

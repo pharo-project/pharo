@@ -1,6 +1,6 @@
-Extension { #name : #ExternalAddress }
+Extension { #name : 'ExternalAddress' }
 
-{ #category : #'*ThreadedFFI' }
+{ #category : '*ThreadedFFI' }
 ExternalAddress >> tfPointerAddress [
 
 	^ self

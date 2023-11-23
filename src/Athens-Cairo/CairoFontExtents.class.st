@@ -22,8 +22,8 @@ double max_y_advance;
 	the maximum distance in the Y direction that the origin is advanced for any glyph in the font. This will be zero for normal fonts used for horizontal writing. (The scripts of East Asia are sometimes written vertically.)
 "
 Class {
-	#name : #CairoFontExtents,
-	#superclass : #FFIExternalStructure,
+	#name : 'CairoFontExtents',
+	#superclass : 'FFIExternalStructure',
 	#classVars : [
 		'OFFSET_ASCENT',
 		'OFFSET_DESCENT',
@@ -32,10 +32,12 @@ Class {
 		'OFFSET_MAX_Y_ADVANCE',
 		'OFFSET_WIDTH'
 	],
-	#category : #'Athens-Cairo-Text'
+	#category : 'Athens-Cairo-Text',
+	#package : 'Athens-Cairo',
+	#tag : 'Text'
 }
 
-{ #category : #'field definition' }
+{ #category : 'field definition' }
 CairoFontExtents class >> fieldsDesc [
 	"self rebuildFieldAccessors"
 	^ #(
@@ -48,73 +50,73 @@ CairoFontExtents class >> fieldsDesc [
 	)
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 CairoFontExtents >> ascent [
 	"This method was automatically generated"
 	^handle doubleAt: OFFSET_ASCENT
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 CairoFontExtents >> ascent: anObject [
 	"This method was automatically generated"
 	handle doubleAt: OFFSET_ASCENT put: anObject
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 CairoFontExtents >> descent [
 	"This method was automatically generated"
 	^handle doubleAt: OFFSET_DESCENT
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 CairoFontExtents >> descent: anObject [
 	"This method was automatically generated"
 	handle doubleAt: OFFSET_DESCENT put: anObject
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 CairoFontExtents >> height [
 	"This method was automatically generated"
 	^handle doubleAt: OFFSET_HEIGHT
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 CairoFontExtents >> height: anObject [
 	"This method was automatically generated"
 	handle doubleAt: OFFSET_HEIGHT put: anObject
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 CairoFontExtents >> max_x_advance [
 	"This method was automatically generated"
 	^handle doubleAt: OFFSET_MAX_X_ADVANCE
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 CairoFontExtents >> max_x_advance: anObject [
 	"This method was automatically generated"
 	handle doubleAt: OFFSET_MAX_X_ADVANCE put: anObject
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 CairoFontExtents >> max_y_advance [
 	"This method was automatically generated"
 	^handle doubleAt: OFFSET_MAX_Y_ADVANCE
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 CairoFontExtents >> max_y_advance: anObject [
 	"This method was automatically generated"
 	handle doubleAt: OFFSET_MAX_Y_ADVANCE put: anObject
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 CairoFontExtents >> width [
 	"This method was automatically generated"
 	^handle doubleAt: OFFSET_WIDTH
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 CairoFontExtents >> width: anObject [
 	"This method was automatically generated"
 	handle doubleAt: OFFSET_WIDTH put: anObject

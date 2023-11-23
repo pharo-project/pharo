@@ -10,25 +10,27 @@ collector
 
 "
 Class {
-	#name : #PragmaCollectorReset,
-	#superclass : #Announcement,
+	#name : 'PragmaCollectorReset',
+	#superclass : 'Announcement',
 	#instVars : [
 		'collector'
 	],
-	#category : #'PragmaCollector-Announcements'
+	#category : 'PragmaCollector-Announcements',
+	#package : 'PragmaCollector',
+	#tag : 'Announcements'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 PragmaCollectorReset class >> collector: aCollector [
 	^ self new collector: aCollector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PragmaCollectorReset >> collector [
 	^collector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PragmaCollectorReset >> collector: aCollector [
 	collector := aCollector
 ]

@@ -2,12 +2,14 @@
 Default superclass for application about dialogs.
 "
 Class {
-	#name : #AboutDialogWindow,
-	#superclass : #LongMessageDialogWindow,
-	#category : #'Polymorph-Widgets-Windows'
+	#name : 'AboutDialogWindow',
+	#superclass : 'LongMessageDialogWindow',
+	#category : 'Polymorph-Widgets-Windows',
+	#package : 'Polymorph-Widgets',
+	#tag : 'Windows'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 AboutDialogWindow class >> open [
 	<script>
 
@@ -16,7 +18,7 @@ AboutDialogWindow class >> open [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 AboutDialogWindow class >> openForPharo [
 	<script>
 	| text dialog width |
@@ -27,7 +29,7 @@ AboutDialogWindow class >> openForPharo [
 			width := width
 				max: (self theme textFont widthOfStringOrText: l) ].
 	dialog := self new entryText: text.
-	dialog iconMorph image: (self iconNamed: #pharo).
+	dialog iconMorph formSet: (self iconFormSetNamed: #pharo).
 	dialog title: 'About Pharo'.
 	dialog open.
 	dialog textMorph
@@ -37,7 +39,7 @@ AboutDialogWindow class >> openForPharo [
 	dialog position: 25 @ 25
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 AboutDialogWindow >> defaultLabel [
 	"Answer the default label for the receiver."
 

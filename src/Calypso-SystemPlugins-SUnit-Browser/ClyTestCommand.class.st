@@ -2,17 +2,19 @@
 I am a root of hierarchy of commands to run any kind of tests
 "
 Class {
-	#name : #ClyTestCommand,
-	#superclass : #CmdCommand,
-	#category : #'Calypso-SystemPlugins-SUnit-Browser-Commands'
+	#name : 'ClyTestCommand',
+	#superclass : 'CmdCommand',
+	#category : 'Calypso-SystemPlugins-SUnit-Browser-Commands',
+	#package : 'Calypso-SystemPlugins-SUnit-Browser',
+	#tag : 'Commands'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyTestCommand class >> isAbstract [
 	^self = ClyTestCommand
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyTestCommand >> applyResultInContext: aToolContext [
 	super applyResultInContext: aToolContext.
 	"Following code forces browser update to not wait for deferred updating logic
@@ -22,13 +24,13 @@ ClyTestCommand >> applyResultInContext: aToolContext [
 	aToolContext activeQueryView dataSource runUpdate
 ]
 
-{ #category : #'context menu support' }
+{ #category : 'context menu support' }
 ClyTestCommand >> defaultMenuIcon [
 
 	^self testResult createIcon
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyTestCommand >> notifyUserAboutResults: testResult with: message [
 
 	| color |
@@ -47,7 +49,7 @@ ClyTestCommand >> notifyUserAboutResults: testResult with: message [
 		labelColor: Color black
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyTestCommand >> testResult [
 	self subclassResponsibility
 ]

@@ -2,37 +2,39 @@
 reify args
 "
 Class {
-	#name : #RFArgumentsReification,
-	#superclass : #RFReification,
-	#category : #'Reflectivity-Reifications'
+	#name : 'RFArgumentsReification',
+	#superclass : 'RFReification',
+	#category : 'Reflectivity-Reifications',
+	#package : 'Reflectivity',
+	#tag : 'Reifications'
 }
 
-{ #category : #'plugin interface' }
+{ #category : 'plugin interface' }
 RFArgumentsReification class >> entities [
 	^{RBMessageNode. RBMethodNode. RBSequenceNode}
 ]
 
-{ #category : #'plugin interface' }
+{ #category : 'plugin interface' }
 RFArgumentsReification class >> key [
 	^#arguments
 ]
 
-{ #category : #generate }
+{ #category : 'generate' }
 RFArgumentsReification >> genForRBMessageNode [
 	^RBVariableNode named: self varName
 ]
 
-{ #category : #generate }
+{ #category : 'generate' }
 RFArgumentsReification >> genForRBMethodNode [
 	^RBVariableNode named: self varName
 ]
 
-{ #category : #generate }
+{ #category : 'generate' }
 RFArgumentsReification >> genForRBSequenceNode [
 	^RBVariableNode named: self varName
 ]
 
-{ #category : #preamble }
+{ #category : 'preamble' }
 RFArgumentsReification >> preambleForMessage: aNode [
 	| preamble arguments |
 	preamble := OrderedCollection new.
@@ -55,7 +57,7 @@ RFArgumentsReification >> preambleForMessage: aNode [
 	^ preamble
 ]
 
-{ #category : #preamble }
+{ #category : 'preamble' }
 RFArgumentsReification >> preambleForMethod: aNode [
 	| preamble arguments |
 	preamble := OrderedCollection new.
@@ -65,7 +67,7 @@ RFArgumentsReification >> preambleForMethod: aNode [
 	^ preamble
 ]
 
-{ #category : #preamble }
+{ #category : 'preamble' }
 RFArgumentsReification >> preambleSequence: aNode [
 	| preamble arguments |
 	preamble := OrderedCollection new.
@@ -75,7 +77,7 @@ RFArgumentsReification >> preambleSequence: aNode [
 	^ preamble
 ]
 
-{ #category : #generate }
+{ #category : 'generate' }
 RFArgumentsReification >> varName [
 	^#RFArgumentsReificationVar
 ]

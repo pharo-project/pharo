@@ -1,14 +1,15 @@
 Class {
-	#name : #ClassDeprecationMetaLinkTest,
-	#superclass : #ClassDeprecationTest,
+	#name : 'ClassDeprecationMetaLinkTest',
+	#superclass : 'ClassDeprecationTest',
 	#instVars : [
 		'referencingIntermediateSource',
 		'metaLink'
 	],
-	#category : #'ClassDeprecation-Tests'
+	#category : 'ClassDeprecation-Tests',
+	#package : 'ClassDeprecation-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClassDeprecationMetaLinkTest >> setUp [
 	super setUp.
 	metaLink := ClassDeprecationMetaLink new.
@@ -21,7 +22,7 @@ ClassDeprecationMetaLinkTest >> setUp [
 	referencingClass compile: referencingOriginalSource
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassDeprecationMetaLinkTest >> testDeprecationTransform [
 	| globalNode |
 	globalNode := (self globalNodes: referencingClass >> #references)
@@ -40,7 +41,7 @@ ClassDeprecationMetaLinkTest >> testDeprecationTransform [
 		equals: referencingIntermediateSource
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClassDeprecationMetaLinkTest >> testSetUp [
 	self assert: metaLink control equals: #before.
 	self assert: metaLink metaObject equals: metaLink.

@@ -1,6 +1,6 @@
-Extension { #name : #WinPlatform }
+Extension { #name : 'WinPlatform' }
 
-{ #category : #'*System-Sources' }
+{ #category : '*System-Sources' }
 WinPlatform >> potentialLocationsOfSourcesFile [
 	^ {(Smalltalk vm directory)}
 ]

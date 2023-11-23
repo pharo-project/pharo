@@ -21,24 +21,26 @@ To query a set of available paint modes, supported by backend, use #availableMod
 
 "
 Class {
-	#name : #AthensPaintMode,
-	#superclass : #Object,
-	#category : #'Athens-Core-Paints'
+	#name : 'AthensPaintMode',
+	#superclass : 'Object',
+	#category : 'Athens-Core-Paints',
+	#package : 'Athens-Core',
+	#tag : 'Paints'
 }
 
-{ #category : #modes }
+{ #category : 'modes' }
 AthensPaintMode >> add [
 	self notAvailable
 ]
 
-{ #category : #modes }
+{ #category : 'modes' }
 AthensPaintMode >> atop [
 	"Set 'atop' painting mode "
 
 	self notAvailable
 ]
 
-{ #category : #capabilities }
+{ #category : 'capabilities' }
 AthensPaintMode >> availableModes [
 	"Answer a collection of paint mode names, currently supported by backend.
 	Different backends may support different sets of paint modes.
@@ -48,7 +50,7 @@ AthensPaintMode >> availableModes [
 	^ #()
 ]
 
-{ #category : #modes }
+{ #category : 'modes' }
 AthensPaintMode >> clear [
 	"Set 'clear' drawing mode.
 
@@ -57,28 +59,28 @@ AthensPaintMode >> clear [
 	self notAvailable
 ]
 
-{ #category : #modes }
+{ #category : 'modes' }
 AthensPaintMode >> colorBurn [
 	self notAvailable
 ]
 
-{ #category : #modes }
+{ #category : 'modes' }
 AthensPaintMode >> colorDodge [
 	self notAvailable
 ]
 
-{ #category : #modes }
+{ #category : 'modes' }
 AthensPaintMode >> darken [
 	self notAvailable
 ]
 
-{ #category : #'default mode' }
+{ #category : 'default mode' }
 AthensPaintMode >> default [
 	"Set the default paint mode. The default paint mode in Athens, is 'over' "
 	^ self over
 ]
 
-{ #category : #modes }
+{ #category : 'modes' }
 AthensPaintMode >> dest [
 	"Set 'dest' drawing mode.
 
@@ -87,93 +89,93 @@ AthensPaintMode >> dest [
 	self notAvailable
 ]
 
-{ #category : #modes }
+{ #category : 'modes' }
 AthensPaintMode >> destAtop [
 
 	self notAvailable
 ]
 
-{ #category : #modes }
+{ #category : 'modes' }
 AthensPaintMode >> destIn [
 
 	self notAvailable
 ]
 
-{ #category : #modes }
+{ #category : 'modes' }
 AthensPaintMode >> destOut [
 
 	self notAvailable
 ]
 
-{ #category : #modes }
+{ #category : 'modes' }
 AthensPaintMode >> destOver [
 
 	self notAvailable
 ]
 
-{ #category : #modes }
+{ #category : 'modes' }
 AthensPaintMode >> difference [
 	self notAvailable
 ]
 
-{ #category : #modes }
+{ #category : 'modes' }
 AthensPaintMode >> exclusion [
 	self notAvailable
 ]
 
-{ #category : #modes }
+{ #category : 'modes' }
 AthensPaintMode >> hardLight [
 	self notAvailable
 ]
 
-{ #category : #modes }
+{ #category : 'modes' }
 AthensPaintMode >> hslColor [
 	self notAvailable
 ]
 
-{ #category : #modes }
+{ #category : 'modes' }
 AthensPaintMode >> hslHue [
 	self notAvailable
 ]
 
-{ #category : #modes }
+{ #category : 'modes' }
 AthensPaintMode >> hslLuminosity [
 	self notAvailable
 ]
 
-{ #category : #modes }
+{ #category : 'modes' }
 AthensPaintMode >> hslSaturation [
 	self notAvailable
 ]
 
-{ #category : #modes }
+{ #category : 'modes' }
 AthensPaintMode >> in [
 	self notAvailable
 ]
 
-{ #category : #modes }
+{ #category : 'modes' }
 AthensPaintMode >> lighten [
 	self notAvailable
 ]
 
-{ #category : #modes }
+{ #category : 'modes' }
 AthensPaintMode >> multiply [
 	self notAvailable
 ]
 
-{ #category : #errors }
+{ #category : 'errors' }
 AthensPaintMode >> notAvailable [
 	^ self error: 'A requested paint mode is not supported by backend'
 ]
 
-{ #category : #modes }
+{ #category : 'modes' }
 AthensPaintMode >> out [
 	"Set 'out' painting mode "
 
 	self notAvailable
 ]
 
-{ #category : #modes }
+{ #category : 'modes' }
 AthensPaintMode >> over [
 	"Set 'over' drawing mode. This is default paint mode.
 
@@ -182,34 +184,34 @@ AthensPaintMode >> over [
 	self notAvailable
 ]
 
-{ #category : #modes }
+{ #category : 'modes' }
 AthensPaintMode >> overlay [
 	self notAvailable
 ]
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 AthensPaintMode >> restoreAfter: aBlock [
 	"Restore current paint mode after evaluating a block"
 
 	self subclassResponsibility
 ]
 
-{ #category : #modes }
+{ #category : 'modes' }
 AthensPaintMode >> saturate [
 	self notAvailable
 ]
 
-{ #category : #modes }
+{ #category : 'modes' }
 AthensPaintMode >> screen [
 	self notAvailable
 ]
 
-{ #category : #modes }
+{ #category : 'modes' }
 AthensPaintMode >> softLight [
 	self notAvailable
 ]
 
-{ #category : #modes }
+{ #category : 'modes' }
 AthensPaintMode >> source [
 	"Set 'source' drawing mode.
 
@@ -218,7 +220,7 @@ AthensPaintMode >> source [
 	self notAvailable
 ]
 
-{ #category : #modes }
+{ #category : 'modes' }
 AthensPaintMode >> xor [
 	self notAvailable
 ]

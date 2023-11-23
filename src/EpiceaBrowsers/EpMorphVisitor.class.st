@@ -2,30 +2,32 @@
 I answer a morph for each EpEvent.
 "
 Class {
-	#name : #EpMorphVisitor,
-	#superclass : #EpEntryContentVisitor,
-	#category : #'EpiceaBrowsers-Visitors'
+	#name : 'EpMorphVisitor',
+	#superclass : 'EpEntryContentVisitor',
+	#category : 'EpiceaBrowsers-Visitors',
+	#package : 'EpiceaBrowsers',
+	#tag : 'Visitors'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 EpMorphVisitor >> displayBehavior: aString [
 
 	^ { self morphFactory emphasizedStringFor: aString }
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EpMorphVisitor >> displayBehavior: aClassName method: aSelector [
 
 	^ (self displayBehavior: aClassName), (self displayOperation: '»'), (self displayString: aSelector)
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EpMorphVisitor >> displayBehaviorComment: aClassName [
 
 	^ (self displayBehavior: aClassName), (self displayOperation: 'comment')
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EpMorphVisitor >> displayBrowserOperation: aBrowserOperationEvent [
 
 	^ self displayOperation: (
@@ -33,19 +35,13 @@ EpMorphVisitor >> displayBrowserOperation: aBrowserOperationEvent [
 			stream nextPutAll: aBrowserOperationEvent title ])
 ]
 
-{ #category : #private }
-EpMorphVisitor >> displayCategory: aCategoryName [
-
-	^ (self displayOperation: 'Package tag'), (self displayString: aCategoryName asString)
-]
-
-{ #category : #private }
+{ #category : 'private' }
 EpMorphVisitor >> displayClass: aClassName protocol: aProtocolName [
 
 	^ (self displayBehavior: aClassName), (self displayOperation: 'protocol'), (self displayString: aProtocolName)
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EpMorphVisitor >> displayOperation: aString [
 
 	^ self
@@ -53,48 +49,49 @@ EpMorphVisitor >> displayOperation: aString [
 		color: self morphFactory softerTextColor
 ]
 
-{ #category : #private }
+{ #category : 'private' }
+EpMorphVisitor >> displayPackage: aPackageName [
+
+	^ (self displayOperation: 'Package') , (self displayString: aPackageName asString)
+]
+
+{ #category : 'private' }
 EpMorphVisitor >> displayString: aString [
 
 	^ { aString asMorph }
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EpMorphVisitor >> displayString: aString color: aColor [
 
 	^ { self morphFactory stringFor: aString color: aColor }
 ]
 
-{ #category : #private }
+{ #category : 'private' }
+EpMorphVisitor >> displayTag: aTagName inPackage: aPackageName [
+
+	^ (self displayOperation: 'Tag') , (self displayString: aTagName) , (self displayOperation: ' in package') , (self displayString: aPackageName)
+]
+
+{ #category : 'private' }
 EpMorphVisitor >> morphFactory [
 
 	^ EpMorphFactory default
 ]
 
-{ #category : #visitor }
-EpMorphVisitor >> visitBehaviorCategoryChange: aClassRecategorizationChange [
-
-	^	(self displayOperation: 'Move'),
-		(self displayBehavior: aClassRecategorizationChange behaviorAffectedName),
-		(self displayOperation: 'from tag'),
-		(self displayString: aClassRecategorizationChange oldCategory),
-		(self displayOperation: 'to'),
-		(self displayString: aClassRecategorizationChange newCategory)
-]
-
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpMorphVisitor >> visitBehaviorCommentChange: aChange [
 
 	^ self displayBehaviorComment: aChange behaviorAffectedName
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpMorphVisitor >> visitBehaviorCopy: aClassCopy [
 
 	^ (self displayBehavior: aClassCopy definition name), (self displayOperation: 'copyNamed:'), (self displayBehavior: '#', aClassCopy newName)
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpMorphVisitor >> visitBehaviorNameChange: aClassRenamedChange [
 
 	^	(self displayOperation: 'Rename'),
@@ -103,46 +100,27 @@ EpMorphVisitor >> visitBehaviorNameChange: aClassRenamedChange [
 		(self displayString: aClassRenamedChange newName)
 ]
 
-{ #category : #visitor }
-EpMorphVisitor >> visitCategoryAddition: aCategoryChange [
+{ #category : 'visitor' }
+EpMorphVisitor >> visitBehaviorRepackagedChange: aBehaviorRepackagedChange [
 
-	^ self displayCategory: aCategoryChange categoryName
+	^ (self displayOperation: 'Move ') , (self displayBehavior: aBehaviorRepackagedChange behaviorAffectedName) , (self displayOperation: 'from ')
+	  , (self displayTag: aBehaviorRepackagedChange oldTagName inPackage: aBehaviorRepackagedChange oldPackageName) , (self displayOperation: ' to ')
+	  , (self displayTag: aBehaviorRepackagedChange newTagName inPackage: aBehaviorRepackagedChange newPackageName)
 ]
 
-{ #category : #visitor }
-EpMorphVisitor >> visitCategoryRegistration: aCategoryChange [
-
-	^ self displayCategory: aCategoryChange categoryName
-]
-
-{ #category : #visitor }
-EpMorphVisitor >> visitCategoryRemoval: aCategoryChange [
-
-	^ self displayCategory: aCategoryChange categoryName
-]
-
-{ #category : #visitor }
-EpMorphVisitor >> visitCategoryRename: aCategoryChange [
-
-	^	(self displayOperation: 'Rename tag'),
-		(self displayString: aCategoryChange oldCategoryName),
-		(self displayOperation: 'as'),
-		(self displayString: aCategoryChange newCategoryName )
-]
-
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpMorphVisitor >> visitClassChange: aChange [
 
 	^ self displayBehavior: aChange behaviorAffectedName
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpMorphVisitor >> visitEvent: anEvent [
 
 	^ self displayString: ''
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpMorphVisitor >> visitExpressionEvaluation: anExpressionEvaluation [
 
 	^ (self displayOperation: 'DoIt:'), (self displayString:
@@ -150,13 +128,13 @@ EpMorphVisitor >> visitExpressionEvaluation: anExpressionEvaluation [
 			withSeparatorsCompacted)
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpMorphVisitor >> visitLogCommentModification: aLogCommentModification [
 
 	^ self displayString: aLogCommentModification comment printString
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpMorphVisitor >> visitMethodAddition: aMethodCreatedChange [
 
 	^ self
@@ -164,7 +142,7 @@ EpMorphVisitor >> visitMethodAddition: aMethodCreatedChange [
 		method: aMethodCreatedChange methodAdded selector
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpMorphVisitor >> visitMethodModification: aMethodModified [
 
 	^ self
@@ -172,7 +150,7 @@ EpMorphVisitor >> visitMethodModification: aMethodModified [
 		method: aMethodModified oldMethod selector
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpMorphVisitor >> visitMethodRemoval: aMethodRemoved [
 
 	^ self
@@ -180,7 +158,7 @@ EpMorphVisitor >> visitMethodRemoval: aMethodRemoved [
 		method: aMethodRemoved methodRemoved selector
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpMorphVisitor >> visitMonticelloVersionSave: aChange [
 
 	^	(self displayOperation: 'MC save'),
@@ -189,32 +167,70 @@ EpMorphVisitor >> visitMonticelloVersionSave: aChange [
 		(self displayString: aChange repositoryDescription asString)
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpMorphVisitor >> visitMonticelloVersionsLoad: aMonticelloVersionLoaded [
 
 	^	(self displayOperation: 'MC load'),
 		(self displayString: aMonticelloVersionLoaded versionNames asCommaStringAnd)
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
+EpMorphVisitor >> visitPackageAddition: aPackageAddition [
+
+	^ self displayPackage: aPackageAddition packageName
+]
+
+{ #category : 'visitor' }
+EpMorphVisitor >> visitPackageRemoval: aPackageRemoval [
+
+	^ self displayPackage: aPackageRemoval packageName
+]
+
+{ #category : 'visitor' }
+EpMorphVisitor >> visitPackageRename: aPackageRename [
+
+	^ (self displayOperation: 'Rename package') , (self displayString: aPackageRename oldPackageName) , (self displayOperation: 'as')
+	  , (self displayString: aPackageRename newPackageName)
+]
+
+{ #category : 'visitor' }
+EpMorphVisitor >> visitPackageTagAddition: aPackageTagAddition [
+
+	^ self displayTag: aPackageTagAddition tagName inPackage: aPackageTagAddition packageName
+]
+
+{ #category : 'visitor' }
+EpMorphVisitor >> visitPackageTagRemoval: aPackageTagRemoval [
+
+	^ self displayTag: aPackageTagRemoval tagName inPackage: aPackageTagRemoval packageName
+]
+
+{ #category : 'visitor' }
+EpMorphVisitor >> visitPackageTagRename: aPackageTagRename [
+
+	^ (self displayOperation: 'Rename tag') , (self displayString: aPackageTagRename oldTagName) , (self displayOperation: 'as')
+	  , (self displayString: aPackageTagRename newTagName) , (self displayOperation: 'in package') , (self displayString: aPackageTagRename packageName)
+]
+
+{ #category : 'visitor' }
 EpMorphVisitor >> visitProtocolAddition: aProtocolChange [
 
 	^ self displayClass: aProtocolChange behaviorAffectedName protocol: aProtocolChange protocol
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpMorphVisitor >> visitProtocolRemoval: aProtocolChange [
 
 	^ self displayClass: aProtocolChange behaviorAffectedName protocol: aProtocolChange protocol
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpMorphVisitor >> visitRedo: aRedoEvent [
 
 	^ self displayBrowserOperation: aRedoEvent
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpMorphVisitor >> visitRefactoring: aRefactoring [
 
 	^  (self displayOperation: 'Refactoring: '),
@@ -222,34 +238,34 @@ EpMorphVisitor >> visitRefactoring: aRefactoring [
 			aRefactoring summaryOn: aStream ]))
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpMorphVisitor >> visitSessionEnd: anEvent [
 
 	^ (self displayOperation: 'End:'),
 		(self displayString: anEvent imageName)
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpMorphVisitor >> visitSessionSnapshot: anEvent [
 
 	^ (self displayOperation: 'Snapshot:'),
 		(self displayString: anEvent imageName)
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpMorphVisitor >> visitSessionStart: anEvent [
 
 	^ (self displayOperation: 'Start:'),
 		(self displayString: anEvent imageName)
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpMorphVisitor >> visitTraitChange: aChange [
 
 	^ self displayBehavior: aChange behaviorAffectedName
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpMorphVisitor >> visitUndo: anUndoEvent [
 
 	^ self displayBrowserOperation: anUndoEvent

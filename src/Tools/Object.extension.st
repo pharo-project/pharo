@@ -1,31 +1,32 @@
-Extension { #name : #Object }
+Extension { #name : 'Object' }
 
-{ #category : #'*Tools' }
+{ #category : '*Tools' }
 Object >> basicInspect [
 	"Create and schedule an Inspector in which the user can examine the receiver's variables.
 	Return the receiver. For getting the inspector, use #basicInspector"
 	Smalltalk tools basicInspector inspect: self
 ]
 
-{ #category : #'*Tools' }
+{ #category : '*Tools' }
 Object >> basicInspector [
 	"Create and schedule a basic Inspector in which the user can examine the receiver's variables.
 	Return the inspector. For getting the object itself, use #basicInspect"
 	^ Smalltalk tools basicInspector inspect: self
 ]
 
-{ #category : #'*Tools' }
+{ #category : '*Tools' }
 Object >> browse [
+	
 	^ Smalltalk tools browser openOnClass: self class
 ]
 
-{ #category : #'*Tools' }
+{ #category : '*Tools' }
 Object >> browseHierarchy [
 
 	self systemNavigation browseHierarchy: self class
 ]
 
-{ #category : #'*Tools' }
+{ #category : '*Tools' }
 Object >> inspect [
 	"Create and schedule an Inspector in which the user can examine the receiver's variables.
 	Return the receiver. For getting the inspector, use #inspector"
@@ -34,7 +35,7 @@ Object >> inspect [
 	Smalltalk tools inspector inspect: self
 ]
 
-{ #category : #'*Tools' }
+{ #category : '*Tools' }
 Object >> inspectOnce [
 	"Inspect unless we have already done it once.
 	Return the object which was inspected."
@@ -48,14 +49,14 @@ Object >> inspectOnce [
 	^ self
 ]
 
-{ #category : #'*Tools' }
+{ #category : '*Tools' }
 Object >> inspectWithLabel: aLabel [
 	"Create and schedule an Inspector in which the user can examine the receiver's variables."
 
 	^ Smalltalk tools inspector inspect: self label: aLabel
 ]
 
-{ #category : #'*Tools' }
+{ #category : '*Tools' }
 Object >> inspector [
 
 	"Create and schedule an Inspector in which the user can examine the receiver's variables.
@@ -66,7 +67,7 @@ Object >> inspector [
 	^Smalltalk tools inspector inspect: self
 ]
 
-{ #category : #'*Tools-FileList' }
+{ #category : '*Tools-FileList' }
 Object class >> services [
 	"Backstop"
 	^#()

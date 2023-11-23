@@ -3,68 +3,70 @@ I reprensent a package assembly (i.e. a set of packages).
 I collect all dependencies related to the assembly parts.
 "
 Class {
-	#name : #DAAssemblyNode,
-	#superclass : #DANode,
+	#name : 'DAAssemblyNode',
+	#superclass : 'DANode',
 	#instVars : [
 		'dependencies'
 	],
-	#category : #'Tool-DependencyAnalyser-UI-Nodes'
+	#category : 'Tool-DependencyAnalyser-UI-Nodes',
+	#package : 'Tool-DependencyAnalyser-UI',
+	#tag : 'Nodes'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 DAAssemblyNode class >> newWith: aCollection [
 	^ self basicNew
 		initializeWith: aCollection;
 		yourself
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 DAAssemblyNode >> childNodeClassFor: anItem [
 	^ DADependentPackageNode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAAssemblyNode >> children [
 	^ dependencies
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAAssemblyNode >> daPackage [
 	^ self parentNode daPackage
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAAssemblyNode >> dependencies [
 	^ dependencies
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DAAssemblyNode >> hasChildren [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAAssemblyNode >> icon [
-	^ self iconNamed: #forwardIcon
+	^ self iconNamed: #forward
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DAAssemblyNode >> includes: aPackageName [
 	^ (self dependencies collect: [:aDep | aDep packageName]) includes: aPackageName
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DAAssemblyNode >> initializeWith: aCollection [
 	self initialize.
 	dependencies := aCollection
 ]
 
-{ #category : #displaying }
+{ #category : 'displaying' }
 DAAssemblyNode >> label [
 	^ self content
 ]
 
-{ #category : #'browse-nautilus' }
+{ #category : 'browse-nautilus' }
 DAAssemblyNode >> selectInBrowser [
 	"nothing to browse"
 ]

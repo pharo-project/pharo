@@ -1,6 +1,6 @@
-Extension { #name : #CompiledCode }
+Extension { #name : 'CompiledCode' }
 
-{ #category : #'*Debugging-Core' }
+{ #category : '*Debugging-Core' }
 CompiledCode >> abstractBytecodeMessageAt: pc [
 	"Answer the abstract bytecode message at pc in the receiver."
 	^[(InstructionStream new method: self pc: pc) interpretNextInstructionFor: nil]
@@ -8,7 +8,7 @@ CompiledCode >> abstractBytecodeMessageAt: pc [
 		do: [:ex| ex message]
 ]
 
-{ #category : #'*Debugging-Core' }
+{ #category : '*Debugging-Core' }
 CompiledCode >> abstractBytecodeMessagesFrom: startpc to: endpc do: aBlock [
 	"Evaluate aBlock with the sequence of abstract bytecodes from startpc through endpc in the receiver"
 	| scanner |
@@ -27,20 +27,20 @@ CompiledCode >> abstractBytecodeMessagesFrom: startpc to: endpc do: aBlock [
 	 msgs"
 ]
 
-{ #category : #'*Debugging-Core' }
+{ #category : '*Debugging-Core' }
 CompiledCode >> bytecodeSizeForPc: pc [
 	"Returns the size of the bytecode at the given pc"
 
 	^ self encoderClass bytecodeSize: (self at: pc)
 ]
 
-{ #category : #'*Debugging-Core' }
+{ #category : '*Debugging-Core' }
 CompiledCode >> hasInstVarRef [
 	self localHasInstVarRef ifTrue: [ ^ true ].
 	^ self innerCompiledBlocksAnySatisfy: [ :cb | cb hasInstVarRef ]
 ]
 
-{ #category : #'*Debugging-Core' }
+{ #category : '*Debugging-Core' }
 CompiledCode >> localHasInstVarRef [
 	"Answer whether the method references an instance variable."
 
@@ -48,7 +48,7 @@ CompiledCode >> localHasInstVarRef [
 	^ InstVarRefLocator check: self
 ]
 
-{ #category : #'*Debugging-Core' }
+{ #category : '*Debugging-Core' }
 CompiledCode >> pcPreviousTo: pc [
 	| scanner prevPc |
 	pc > self endPC ifTrue: [^self endPC].
@@ -59,13 +59,13 @@ CompiledCode >> pcPreviousTo: pc [
 	^prevPc
 ]
 
-{ #category : #'*Debugging-Core' }
+{ #category : '*Debugging-Core' }
 CompiledCode >> rangeForPC: aPC [	
  	"return which code to hightlight in the debugger"		
  	^(self sourceNodeForPC: aPC) debugHighlightRange
 ]
 
-{ #category : #'*Debugging-Core' }
+{ #category : '*Debugging-Core' }
 CompiledCode >> symbolicBytecodes [
 	"Answer Collection that contains of all the byte codes in a method as an instance of SymbolicInstruction"
 

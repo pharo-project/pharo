@@ -1,6 +1,6 @@
-Extension { #name : #DateAndTimeTest }
+Extension { #name : 'DateAndTimeTest' }
 
-{ #category : #'*Kernel-Tests-Extended' }
+{ #category : '*Kernel-Tests-Extended' }
 DateAndTimeTest >> testAsDateAndTime [
 	| localOffset localOffsetSuffix |
 	#('-1199-01-05T20:33:14.321-05:00'

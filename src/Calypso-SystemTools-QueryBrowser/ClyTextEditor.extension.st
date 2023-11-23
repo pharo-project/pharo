@@ -1,6 +1,6 @@
-Extension { #name : #ClyTextEditor }
+Extension { #name : 'ClyTextEditor' }
 
-{ #category : #'*Calypso-SystemTools-QueryBrowser' }
+{ #category : '*Calypso-SystemTools-QueryBrowser' }
 ClyTextEditor >> classCommentsContainingIt [
 	"Open a browser class comments which contain the current selection somewhere in them."
 
@@ -11,7 +11,7 @@ ClyTextEditor >> classCommentsContainingIt [
 	self browser spawnQueryBrowserOn: query
 ]
 
-{ #category : #'*Calypso-SystemTools-QueryBrowser' }
+{ #category : '*Calypso-SystemTools-QueryBrowser' }
 ClyTextEditor >> classNamesContainingIt [
 	"Open a browser on classes whose names contain the selected string"
 
@@ -22,7 +22,7 @@ ClyTextEditor >> classNamesContainingIt [
 	self browser spawnQueryBrowserOn: query
 ]
 
-{ #category : #'*Calypso-SystemTools-QueryBrowser' }
+{ #category : '*Calypso-SystemTools-QueryBrowser' }
 ClyTextEditor >> implementorsOf: selectedSelector [
 
 	self browser
@@ -30,7 +30,7 @@ ClyTextEditor >> implementorsOf: selectedSelector [
 		inNameResolver: self browserTool selectedClassOrMetaClass
 ]
 
-{ #category : #'*Calypso-SystemTools-QueryBrowser' }
+{ #category : '*Calypso-SystemTools-QueryBrowser' }
 ClyTextEditor >> implementorsOfIt [
 
 	| selector |
@@ -39,7 +39,7 @@ ClyTextEditor >> implementorsOfIt [
 	self implementorsOf: selector
 ]
 
-{ #category : #'*Calypso-SystemTools-QueryBrowser' }
+{ #category : '*Calypso-SystemTools-QueryBrowser' }
 ClyTextEditor >> methodSourceContainingIt [
 	"Open a browser class comments which contain the current selection somewhere in them."
 
@@ -50,7 +50,7 @@ ClyTextEditor >> methodSourceContainingIt [
 	self browser spawnQueryBrowserOn: query
 ]
 
-{ #category : #'*Calypso-SystemTools-QueryBrowser' }
+{ #category : '*Calypso-SystemTools-QueryBrowser' }
 ClyTextEditor >> referencesTo: aVariableName [
 	"Open a references browser on the given symbol"
 	| class var |
@@ -65,16 +65,17 @@ ClyTextEditor >> referencesTo: aVariableName [
 	self browser browseReferencesTo: aVariableName asSymbol inNameResolver: class
 ]
 
-{ #category : #'*Calypso-SystemTools-QueryBrowser' }
+{ #category : '*Calypso-SystemTools-QueryBrowser' }
 ClyTextEditor >> referencesToIt [
+
 	| selector |
 	"self lineSelectAndEmptyCheck: [^ self]."
-	(selector := self selectedSelector) == nil ifTrue: [^ textArea flash].
+	(selector := self selectedSelector) ifNil: [ ^ textArea flash ].
 
 	self referencesTo: selector
 ]
 
-{ #category : #'*Calypso-SystemTools-QueryBrowser' }
+{ #category : '*Calypso-SystemTools-QueryBrowser' }
 ClyTextEditor >> sendersOf: selectedSelector [
 
 	self browser
@@ -82,7 +83,7 @@ ClyTextEditor >> sendersOf: selectedSelector [
 		inNameResolver: self browserTool selectedClassOrMetaClass
 ]
 
-{ #category : #'*Calypso-SystemTools-QueryBrowser' }
+{ #category : '*Calypso-SystemTools-QueryBrowser' }
 ClyTextEditor >> sendersOfIt [
 
 	| selector |

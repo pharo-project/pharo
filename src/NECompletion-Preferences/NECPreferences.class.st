@@ -5,8 +5,8 @@ It is the same for NECompletion and NOCompletion (and other potential completion
 
 "
 Class {
-	#name : #NECPreferences,
-	#superclass : #Object,
+	#name : 'NECPreferences',
+	#superclass : 'Object',
 	#classInstVars : [
 		'enabled',
 		'caseSensitive',
@@ -22,101 +22,102 @@ Class {
 		'smartCharactersWithDoubleSpace',
 		'showCompletionDetails'
 	],
-	#category : #'NECompletion-Preferences'
+	#category : 'NECompletion-Preferences',
+	#package : 'NECompletion-Preferences'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 NECPreferences class >> availableEngines [
 	^ CompletionEngine allSubclasses
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NECPreferences class >> availablePopupShortcuts [
 	^ {Character space shift . Character tab asKeyCombination}
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 NECPreferences class >> availableSorters [
 	^ CompletionSorter subclasses
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NECPreferences class >> backgroundColor [
 	^ backgroundColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NECPreferences class >> backgroundColor: aColor [
 	backgroundColor := aColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NECPreferences class >> caseSensitive [
 	^ caseSensitive
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NECPreferences class >> caseSensitive: aBoolean [
 	caseSensitive := aBoolean
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 NECPreferences class >> defaultBackgroundColor [
 	^ self theme menuColor
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 NECPreferences class >> defaultPopupDelay [
 	^ 200
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 NECPreferences class >> defaultPopupShortcut [
 	^ Character tab asShortcut
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 NECPreferences class >> defaultPopupShowAutomatic [
 	^ true
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 NECPreferences class >> defaultShowCompletionDetails [
 
 	^ true
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 NECPreferences class >> defaultSpaceAfterCompletion [
 	^ true
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 NECPreferences class >> defaultUseEnterToAccept [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NECPreferences class >> enabled [
 	^ enabled
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NECPreferences class >> enabled: aBoolean [
 	enabled := aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NECPreferences class >> expandPrefixes [
 	^ expandPrefixes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NECPreferences class >> expandPrefixes: aBoolean [
 	expandPrefixes := aBoolean
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 NECPreferences class >> initialize [
 	enabled := true.
 	caseSensitive := true.
@@ -143,37 +144,37 @@ NECPreferences class >> initialize [
 	NECEntry spaceAfterCompletion: true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NECPreferences class >> popupAutomaticDelay [
 	^ popupAutomaticDelay
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NECPreferences class >> popupAutomaticDelay: anObject [
 	popupAutomaticDelay := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NECPreferences class >> popupShowAutomatic [
 	^ popupShowAutomatic
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NECPreferences class >> popupShowAutomatic: aBoolean [
 	popupShowAutomatic := aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NECPreferences class >> popupShowWithShortcut [
 	^ popupShowWithShortcut
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NECPreferences class >> popupShowWithShortcut: anObject [
 	popupShowWithShortcut := anObject
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 NECPreferences class >> settingsOn: aBuilder [
 	<systemsettings>
 	(aBuilder setting: #'Code Completion')
@@ -252,74 +253,74 @@ NECPreferences class >> settingsOn: aBuilder [
 					 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NECPreferences class >> showCompletionDetails [
 	^ showCompletionDetails
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NECPreferences class >> showCompletionDetails: aBoolean [
 	showCompletionDetails := aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NECPreferences class >> smartCharacters [
 	^ smartCharacters
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NECPreferences class >> smartCharacters: aBoolean [
 	smartCharacters := aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NECPreferences class >> smartCharactersMapping [
 	^ smartCharactersMapping
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NECPreferences class >> smartCharactersMapping: aDictionary [
 	smartCharactersMapping := aDictionary
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NECPreferences class >> smartCharactersWithDoubleSpace [
 	^ smartCharactersWithDoubleSpace
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NECPreferences class >> smartCharactersWithDoubleSpace: aString [
 	smartCharactersWithDoubleSpace := aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NECPreferences class >> smartCharactersWithSingleSpace [
 	^ smartCharactersWithSingleSpace
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NECPreferences class >> smartCharactersWithSingleSpace: aString [
 	smartCharactersWithSingleSpace := aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NECPreferences class >> spaceAfterCompletion [
 
 	^ NECEntry spaceAfterCompletion
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NECPreferences class >> theme [
 	self flag: #SmalltalkReference.
 	^ Smalltalk ui theme
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NECPreferences class >> useEnterToAccept [
 	^ useEnterToAccept
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NECPreferences class >> useEnterToAccept: aBoolean [
 	useEnterToAccept := aBoolean
 ]

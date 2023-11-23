@@ -4,42 +4,44 @@ I model the pushArray bytecode.
 Used for setting up the temp vectors and for the brace array construct: { }.
 "
 Class {
-	#name : #IRPushArray,
-	#superclass : #IRInstruction,
+	#name : 'IRPushArray',
+	#superclass : 'IRInstruction',
 	#instVars : [
 		'size',
 		'cons'
 	],
-	#category : #'OpalCompiler-Core-IR-Nodes'
+	#category : 'OpalCompiler-Core-IR-Nodes',
+	#package : 'OpalCompiler-Core',
+	#tag : 'IR-Nodes'
 }
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRPushArray >> accept: aVisitor [
 	^ aVisitor visitPushArray: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRPushArray >> cons [
 	^ cons
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRPushArray >> cons: aBool [
 	cons := aBool
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 IRPushArray >> initialize [
 	size := 0.
 	cons := false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRPushArray >> size [
 	^ size
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRPushArray >> size: aSmallInteger [
 	size := aSmallInteger
 ]

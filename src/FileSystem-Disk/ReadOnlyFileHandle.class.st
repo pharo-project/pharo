@@ -2,17 +2,19 @@
 I am a file handle on a read-only store.
 "
 Class {
-	#name : #ReadOnlyFileHandle,
-	#superclass : #FileHandle,
-	#category : #'FileSystem-Disk-Base'
+	#name : 'ReadOnlyFileHandle',
+	#superclass : 'FileHandle',
+	#category : 'FileSystem-Disk-Base',
+	#package : 'FileSystem-Disk',
+	#tag : 'Base'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ReadOnlyFileHandle >> isWritable [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ReadOnlyFileHandle >> setReference: aReference writable: aBoolean [
 
 	reference := aReference resolve.
@@ -23,7 +25,7 @@ ReadOnlyFileHandle >> setReference: aReference writable: aBoolean [
 	writable := aBoolean
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ReadOnlyFileHandle >> truncateTo: anInteger [
 
 	ReadOnlyFileException signal: 'Attempt to truncate file ', reference pathString, ' on a read-only file system'.

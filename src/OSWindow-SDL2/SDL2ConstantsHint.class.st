@@ -3,8 +3,8 @@ I contain configure HINTS.
 All HINTS can be seen here: https://wiki.libsdl.org/CategoryHints
 "
 Class {
-	#name : #SDL2ConstantsHint,
-	#superclass : #SharedPool,
+	#name : 'SDL2ConstantsHint',
+	#superclass : 'SharedPool',
 	#classVars : [
 		'SDL_HINT_ACCELEROMETER_AS_JOYSTICK',
 		'SDL_HINT_ALLOW_TOPMOST',
@@ -70,10 +70,12 @@ Class {
 		'SDL_HINT_XINPUT_ENABLED',
 		'SDL_HINT_XINPUT_USE_OLD_JOYSTICK_MAPPING'
 	],
-	#category : #'OSWindow-SDL2-Bindings'
+	#category : 'OSWindow-SDL2-Bindings',
+	#package : 'OSWindow-SDL2',
+	#tag : 'Bindings'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 SDL2ConstantsHint class >> initialize [
 	SDL_HINT_FRAMEBUFFER_ACCELERATION   := 'SDL_FRAMEBUFFER_ACCELERATION'.
 	SDL_HINT_RENDER_DRIVER              := 'SDL_RENDER_DRIVER'.

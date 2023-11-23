@@ -17,8 +17,8 @@ Then the methods for all the classes and traits.
 And then the extension methods.
 "
 Class {
-	#name : #HEPackage,
-	#superclass : #HEAbstractExported,
+	#name : 'HEPackage',
+	#superclass : 'HEAbstractExported',
 	#instVars : [
 		'version',
 		'packageName',
@@ -26,40 +26,42 @@ Class {
 		'extensionMethods',
 		'traits'
 	],
-	#category : #'Hermes-Model'
+	#category : 'Hermes-Model',
+	#package : 'Hermes',
+	#tag : 'Model'
 }
 
-{ #category : #formatting }
+{ #category : 'formatting' }
 HEPackage class >> formatVersion [
-	^ 2
+	^ 3
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 HEPackage >> addClass: anExportedClass [
 	classes add: anExportedClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEPackage >> classes [
 	^ classes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEPackage >> classes: anObject [
 	classes := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEPackage >> extensionMethods [
 	^ extensionMethods
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEPackage >> extensionMethods: anObject [
 	extensionMethods := anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 HEPackage >> initialize [
 	version := self class formatVersion.
 	classes := OrderedCollection new.
@@ -68,17 +70,17 @@ HEPackage >> initialize [
 	extensionMethods := OrderedCollection new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEPackage >> packageName [
 	^ packageName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEPackage >> packageName: anObject [
 	packageName := anObject
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 HEPackage >> printOn: aStream [
 	aStream
 		nextPutAll: 'HEPackage ( ';
@@ -86,12 +88,12 @@ HEPackage >> printOn: aStream [
 		nextPutAll: ' )'
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 HEPackage >> readClassFrom: aReader [
 	classes add: (HEClass readFrom: aReader)
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 HEPackage >> readFrom: aReader [
 	| numberOfTraits numberOfClasses numberOfExtensionMethods |
 	version := aReader readInt32.
@@ -110,17 +112,17 @@ HEPackage >> readFrom: aReader [
 	1 to: numberOfExtensionMethods do: [ :idx | extensionMethods add: (HEMethod readFrom: aReader) ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEPackage >> traits [
 	^ traits
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEPackage >> traits: anObject [
 	traits := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEPackage >> version [
 	^ version
 ]

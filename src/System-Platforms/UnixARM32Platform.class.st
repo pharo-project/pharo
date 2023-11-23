@@ -2,12 +2,14 @@
 I represent the specifics of running Unix in a ARM32 processor
 "
 Class {
-	#name : #UnixARM32Platform,
-	#superclass : #Unix32Platform,
-	#category : #'System-Platforms-Unix'
+	#name : 'UnixARM32Platform',
+	#superclass : 'Unix32Platform',
+	#category : 'System-Platforms-Unix',
+	#package : 'System-Platforms',
+	#tag : 'Unix'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 UnixARM32Platform class >> isActivePlatform [
 
 	^ (Smalltalk vm operatingSystemName = 'unix')

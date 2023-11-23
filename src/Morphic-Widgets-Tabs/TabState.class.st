@@ -9,15 +9,17 @@ I have tree responsibilities:
 	- provide the next state for each change (disable, enable, selected)
 "
 Class {
-	#name : #TabState,
-	#superclass : #Object,
+	#name : 'TabState',
+	#superclass : 'Object',
 	#instVars : [
 		'tab'
 	],
-	#category : #'Morphic-Widgets-Tabs-States'
+	#category : 'Morphic-Widgets-Tabs-States',
+	#package : 'Morphic-Widgets-Tabs',
+	#tag : 'States'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TabState class >> tab: tab [
 
 	^ self new
@@ -25,13 +27,13 @@ TabState class >> tab: tab [
 		yourself
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 TabState >> backgroundColor [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 TabState >> buildBorderVertices [
 	| borderVertices |
 
@@ -45,54 +47,54 @@ TabState >> buildBorderVertices [
 	^ borderVertices
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 TabState >> buildVerticesFrom: borderVertices [
 
 	^ borderVertices
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 TabState >> enabled [
 
 	^ false
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 TabState >> isEnabledMatchingTheState: aBoolean [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 TabState >> isSelectedMatchingTheState: aBoolean [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 TabState >> newStateForEnabled: aBoolean [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 TabState >> newStateForSelected: aBoolean [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 TabState >> selected [
 
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TabState >> tab [
 	^ tab
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TabState >> tab: anObject [
 
 	tab := anObject

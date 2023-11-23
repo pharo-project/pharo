@@ -2,44 +2,48 @@
 I'm just a class with inst var and accesses to it
 "
 Class {
-	#name : #VariableBreakpointMockClass,
-	#superclass : #Object,
+	#name : 'VariableBreakpointMockClass',
+	#superclass : 'Object',
 	#instVars : [
 		'v1'
 	],
 	#classVars : [
 		'ClassVar'
 	],
-	#category : #'Reflectivity-Tests-Breakpoints'
+	#category : 'Reflectivity-Tests-Breakpoints',
+	#package : 'Reflectivity-Tests',
+	#tag : 'Breakpoints'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 VariableBreakpointMockClass >> classVarRead [
 	^ClassVar
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 VariableBreakpointMockClass >> classVarWrite [
 	^ClassVar := 1
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 VariableBreakpointMockClass >> initialize [
 	v1 := 0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 VariableBreakpointMockClass >> methodWithTempsAndArg: arg [
 	| temp |
 	temp := arg.
 	^ temp
 ]
 
-{ #category : #accessing }
-VariableBreakpointMockClass >> v1 [ ^v1
+{ #category : 'accessing' }
+VariableBreakpointMockClass >> v1 [
+
+	^ v1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 VariableBreakpointMockClass >> v1: anObject [
 	v1 := anObject
 ]

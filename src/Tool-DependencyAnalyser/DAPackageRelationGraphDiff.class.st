@@ -6,25 +6,27 @@ A PDPackageRelationGraphDiff do the diff between two PDPackageRelationGraph (an 
  - which dependencies added/removed from a dependent package.
 "
 Class {
-	#name : #DAPackageRelationGraphDiff,
-	#superclass : #Object,
+	#name : 'DAPackageRelationGraphDiff',
+	#superclass : 'Object',
 	#instVars : [
 		'oldRelationGraph',
 		'newRelationGraph',
 		'packagesDiff',
 		'dependentPackagesDiff'
 	],
-	#category : #'Tool-DependencyAnalyser-Diff'
+	#category : 'Tool-DependencyAnalyser-Diff',
+	#package : 'Tool-DependencyAnalyser',
+	#tag : 'Diff'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 DAPackageRelationGraphDiff class >> loadFrom: aSerializeFile [
 	^ self new oldRelationGraph: (FLMaterializer new
 		filePath: aSerializeFile;
 		materializeRoot)
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DAPackageRelationGraphDiff class >> loadFrom: aSerializeFile with: newRelationGraph [
 	^ self new
 		oldRelationGraph: (FLMaterializer new
@@ -33,7 +35,7 @@ DAPackageRelationGraphDiff class >> loadFrom: aSerializeFile with: newRelationGr
 		newRelationGraph: newRelationGraph
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 DAPackageRelationGraphDiff >> addNewDependentPackage: package from: parent [
 	^ dependentPackagesDiff
 		add:
@@ -45,7 +47,7 @@ DAPackageRelationGraphDiff >> addNewDependentPackage: package from: parent [
 		yourself
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 DAPackageRelationGraphDiff >> addNewPackage: seenPackage [
 	^ packagesDiff
 		add:
@@ -55,7 +57,7 @@ DAPackageRelationGraphDiff >> addNewPackage: seenPackage [
 		yourself
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 DAPackageRelationGraphDiff >> addRemovedDependentPackage: package from: parent [
 	^ dependentPackagesDiff
 		add:
@@ -67,7 +69,7 @@ DAPackageRelationGraphDiff >> addRemovedDependentPackage: package from: parent [
 		yourself
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 DAPackageRelationGraphDiff >> addRemovedPackage: seenPackage [
 	^ packagesDiff
 		add:
@@ -77,7 +79,7 @@ DAPackageRelationGraphDiff >> addRemovedPackage: seenPackage [
 		yourself
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 DAPackageRelationGraphDiff >> addUndeterminateDependentPackage: aPackage from: parent [
 	^ dependentPackagesDiff
 		add:
@@ -88,7 +90,7 @@ DAPackageRelationGraphDiff >> addUndeterminateDependentPackage: aPackage from: p
 		yourself
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 DAPackageRelationGraphDiff >> addUndeterminatePackage: aPackage [
 	^ packagesDiff
 		add:
@@ -98,33 +100,33 @@ DAPackageRelationGraphDiff >> addUndeterminatePackage: aPackage [
 				yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAPackageRelationGraphDiff >> dependentPackagesDiff [
 	^ dependentPackagesDiff
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAPackageRelationGraphDiff >> dependentPackagesDiffNew [
 	^ dependentPackagesDiff select: [ :each | each isNew ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAPackageRelationGraphDiff >> dependentPackagesDiffRemoved [
 	^ dependentPackagesDiff select: [ :each | each isRemoved ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAPackageRelationGraphDiff >> dependentPackagesDiffUnderteminate [
 	^ dependentPackagesDiff select: [ :each | each isUnderteminate ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DAPackageRelationGraphDiff >> initialize [
 	packagesDiff := OrderedCollection new.
 	dependentPackagesDiff := OrderedCollection new
 ]
 
-{ #category : #searching }
+{ #category : 'searching' }
 DAPackageRelationGraphDiff >> lookUpForNewDependentPackages: newDependentPackages with: oldDependentPackages from: aPackage [
 
 	| newDependent |
@@ -132,7 +134,7 @@ DAPackageRelationGraphDiff >> lookUpForNewDependentPackages: newDependentPackage
 	newDependent do: [ :each | self addNewDependentPackage: each from: aPackage ]
 ]
 
-{ #category : #searching }
+{ #category : 'searching' }
 DAPackageRelationGraphDiff >> lookUpForNewPackages [
 
 	| newPackages |
@@ -140,7 +142,7 @@ DAPackageRelationGraphDiff >> lookUpForNewPackages [
 	newPackages do: [ :each | self addNewPackage: each ]
 ]
 
-{ #category : #searching }
+{ #category : 'searching' }
 DAPackageRelationGraphDiff >> lookUpForRemovedDependentPackages: oldDependentPackages with: newDependentPackages from: aPackage [
 
 	| removed |
@@ -148,7 +150,7 @@ DAPackageRelationGraphDiff >> lookUpForRemovedDependentPackages: oldDependentPac
 	removed do: [ :each | self addRemovedDependentPackage: each from: aPackage ]
 ]
 
-{ #category : #searching }
+{ #category : 'searching' }
 DAPackageRelationGraphDiff >> lookUpForRemovedPackages [
 	| old |
 	old := oldRelationGraph seenPackages reject: [ :each |  newRelationGraph includesSeenPackage: each ].
@@ -157,7 +159,7 @@ DAPackageRelationGraphDiff >> lookUpForRemovedPackages [
 		 ]
 ]
 
-{ #category : #searching }
+{ #category : 'searching' }
 DAPackageRelationGraphDiff >> lookUpForUndeterminateDependentPackagesFrom: parent [
 	| oldDependentPackages undeterminates |
 	oldDependentPackages := (oldRelationGraph packageAt: parent packageName) dependentPackages.
@@ -167,25 +169,25 @@ DAPackageRelationGraphDiff >> lookUpForUndeterminateDependentPackagesFrom: paren
 	undeterminates do: [ :each | self addUndeterminateDependentPackage: each from: parent ]
 ]
 
-{ #category : #searching }
+{ #category : 'searching' }
 DAPackageRelationGraphDiff >> lookUpForUndeterminatePackages [
 	| undeterminates |
 	undeterminates := oldRelationGraph seenPackages reject: [ :package | self removedPackagesIncludes: package ].
 	undeterminates do: [ :each | self addUndeterminatePackage: each ]
 ]
 
-{ #category : #searching }
+{ #category : 'searching' }
 DAPackageRelationGraphDiff >> make [
 	self
 		makePackagesDiff;
 		makeDependentPackagesDiff
 ]
 
-{ #category : #searching }
+{ #category : 'searching' }
 DAPackageRelationGraphDiff >> makeDependenciesDiff [
 ]
 
-{ #category : #searching }
+{ #category : 'searching' }
 DAPackageRelationGraphDiff >> makeDependentPackagesDiff [
 	"we're just looking at the package undeterminate"
 	"every dependent packages are removed or new in older or new packages"
@@ -194,7 +196,7 @@ DAPackageRelationGraphDiff >> makeDependentPackagesDiff [
 		 ]
 ]
 
-{ #category : #searching }
+{ #category : 'searching' }
 DAPackageRelationGraphDiff >> makeDependentPackagesDiffOn: aPackage [
 
 	| oldDependentPackages newDependentPackages  |
@@ -207,7 +209,7 @@ DAPackageRelationGraphDiff >> makeDependentPackagesDiffOn: aPackage [
 	self lookUpForUndeterminateDependentPackagesFrom: aPackage
 ]
 
-{ #category : #searching }
+{ #category : 'searching' }
 DAPackageRelationGraphDiff >> makePackagesDiff [
 	"lookUp for new and remove packages"
 
@@ -217,72 +219,72 @@ DAPackageRelationGraphDiff >> makePackagesDiff [
 		 lookUpForUndeterminatePackages
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAPackageRelationGraphDiff >> newRelationGraph [
 	^ newRelationGraph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAPackageRelationGraphDiff >> newRelationGraph: anObject [
 	newRelationGraph := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAPackageRelationGraphDiff >> oldRelationGraph [
 	^ oldRelationGraph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAPackageRelationGraphDiff >> oldRelationGraph: anObject [
 	oldRelationGraph := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAPackageRelationGraphDiff >> packageDiffNamed: aName [
 	^ self packagesDiff detect: [ :item | item content packageName = aName ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAPackageRelationGraphDiff >> packagesDiff [
 	^ packagesDiff
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAPackageRelationGraphDiff >> packagesDiffNew [
 	^ packagesDiff select: [ :each | each isNew ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAPackageRelationGraphDiff >> packagesDiffNewSize [
 	^ self packagesDiffNew size
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAPackageRelationGraphDiff >> packagesDiffRemoved [
 	^ packagesDiff select: [ :each | each isRemoved ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAPackageRelationGraphDiff >> packagesDiffRemovedSize [
 	^ self packagesDiffRemoved size
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAPackageRelationGraphDiff >> packagesDiffToDisplay [
 	^ packagesDiff select: [ :each | each canBeDisplay ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAPackageRelationGraphDiff >> packagesDiffUnderteminate [
 	^ packagesDiff select: [ :each | each isUnderteminate  ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAPackageRelationGraphDiff >> packagesDiffUnderteminateSize [
 	^ self packagesDiffUnderteminate size
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DAPackageRelationGraphDiff >> removedDependentPackagesIncludes: aPackage from: parent [
 	^ self dependentPackagesDiffRemoved
 		detect: [ :package | package content = aPackage and: [ package parent = parent ] ]
@@ -290,7 +292,7 @@ DAPackageRelationGraphDiff >> removedDependentPackagesIncludes: aPackage from: p
 		ifNone: [ false ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DAPackageRelationGraphDiff >> removedPackagesIncludes: seenPackage [
 
 	^ self packagesDiffRemoved detect: [ :each | each content = seenPackage ]

@@ -4,8 +4,8 @@ I am a copy of class ClassDeprecationMetaLinkFunctionalTest. This comment is cop
 This class contains tests
 "
 Class {
-	#name : #ClassDeprecationTest,
-	#superclass : #TestCase,
+	#name : 'ClassDeprecationTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'systemAdditions',
 		'wasEnabled',
@@ -16,10 +16,11 @@ Class {
 		'replacementClass',
 		'oldAuthorFullName'
 	],
-	#category : #'ClassDeprecation-Tests'
+	#category : 'ClassDeprecation-Tests',
+	#package : 'ClassDeprecation-Tests'
 }
 
-{ #category : #adding }
+{ #category : 'adding' }
 ClassDeprecationTest >> addClassNamed: aSymbol [
 	| class |
 	class := Object
@@ -31,7 +32,7 @@ ClassDeprecationTest >> addClassNamed: aSymbol [
 	^ class
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 ClassDeprecationTest >> deprecateClass: aClass [
 	aClass classSide
 		compile:
@@ -39,7 +40,7 @@ ClassDeprecationTest >> deprecateClass: aClass [
 	^ true'
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 ClassDeprecationTest >> deprecateClass: aClass transformTo: aString [
 	aClass classSide
 		compile:
@@ -50,18 +51,18 @@ ClassDeprecationTest >> deprecateClass: aClass transformTo: aString [
 	^ true'
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 ClassDeprecationTest >> deprecateNotClass: aClass [
 	(aClass classSide >> #isDeprecated) removeFromSystem
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassDeprecationTest >> globalNodes: aCompiledMethod [
 	^ aCompiledMethod ast allChildren
 		select: [ :e | e isVariable and: [ e isGlobal ] ]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClassDeprecationTest >> setUp [
 	super setUp.
 	oldAuthorFullName := Author fullNamePerSe.
@@ -92,7 +93,7 @@ ClassDeprecationTest >> setUp [
 	ClassDeprecationForTestReferencing}'.
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClassDeprecationTest >> tearDown [
 	super tearDown.
 	[ systemAdditions isEmpty ]

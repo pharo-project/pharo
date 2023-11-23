@@ -4,8 +4,8 @@ The morph that displays the list in a PluggableListMorph.  It is ""lazy"" becaus
 I will cache the maximum width of my items in maxWidth to avoid this potentially expensive and frequent computation.
 "
 Class {
-	#name : #LazyListMorph,
-	#superclass : #Morph,
+	#name : 'LazyListMorph',
+	#superclass : 'Morph',
 	#instVars : [
 		'listItems',
 		'font',
@@ -14,22 +14,24 @@ Class {
 		'listSource',
 		'maxWidth'
 	],
-	#category : #'Morphic-Widgets-Pluggable-Lists'
+	#category : 'Morphic-Widgets-Pluggable-Lists',
+	#package : 'Morphic-Widgets-Pluggable',
+	#tag : 'Lists'
 }
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 LazyListMorph >> adjustHeight [
 	"private.  Adjust our height to match that of the underlying list"
 	self height: (listItems size max: 1) * font height
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 LazyListMorph >> adjustWidth [
 	"private.  Adjust our width to match that of the underlying list"
 	self width: ((listSource width max: self hUnadjustedScrollRange) + 20)
 ]
 
-{ #category : #'row management' }
+{ #category : 'row management' }
 LazyListMorph >> backgroundColorForRow: row [
 	"Answer the color for the row text."
 	^ (self isRowSelected: row )
@@ -37,13 +39,13 @@ LazyListMorph >> backgroundColorForRow: row [
 		ifFalse: [ self theme backgroundColor ]
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 LazyListMorph >> bottomVisibleRowForCanvas: aCanvas [
         "return the bottom visible row in aCanvas's clip rectangle"
         ^self rowAtLocation: aCanvas clipRect bottomLeft
 ]
 
-{ #category : #'row management' }
+{ #category : 'row management' }
 LazyListMorph >> colorForRow: row [
 	"Answer the color for the row text."
 
@@ -52,7 +54,7 @@ LazyListMorph >> colorForRow: row [
 		ifFalse: [ self theme listTextColor ]
 ]
 
-{ #category : #'row management' }
+{ #category : 'row management' }
 LazyListMorph >> display: item atRow: row on: aCanvas [
 	"Display the given item at the given row on the given
 	canvas."
@@ -78,7 +80,7 @@ LazyListMorph >> display: item atRow: row on: aCanvas [
 				dashes: #(1 1) ]
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 LazyListMorph >> drawBackgroundForPotentialDrop: row on: aCanvas [
 	| selectionDrawBounds |
 	"shade the background darker, if this row is a potential drop target"
@@ -88,7 +90,7 @@ LazyListMorph >> drawBackgroundForPotentialDrop: row on: aCanvas [
 	aCanvas fillRectangle: selectionDrawBounds color:  self color muchLighter darker
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 LazyListMorph >> drawBackgroundForRow: row on: aCanvas color: aColor [
 	| frame  |
 	"shade the background darker, if this row is selected"
@@ -98,19 +100,19 @@ LazyListMorph >> drawBackgroundForRow: row on: aCanvas color: aColor [
 		color: aColor
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 LazyListMorph >> drawBackgroundForSearchedRow: row on: aCanvas [
 
 	self drawBackgroundForRow: row on: aCanvas color: listSource secondarySelectionColor
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 LazyListMorph >> drawBackgroundForSelectedRow: row on: aCanvas [
 
 	self drawBackgroundForRow: row on: aCanvas color: listSource selectionColorToUse
 ]
 
-{ #category : #'list management' }
+{ #category : 'list management' }
 LazyListMorph >> drawBoundsForRow: row [
 	"calculate the bounds that row should be drawn at.  This might be outside our bounds!"
 
@@ -124,7 +126,7 @@ LazyListMorph >> drawBoundsForRow: row [
 	^ drawBounds
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 LazyListMorph >> drawOn: aCanvas [
 	listItems isEmpty
 		ifTrue: [^ self].
@@ -157,7 +159,7 @@ LazyListMorph >> drawOn: aCanvas [
 		ifTrue: [self highlightPotentialDropRow: listSource potentialDropRow on: aCanvas]
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 LazyListMorph >> drawSelectionOn: aCanvas [
 	"Draw the selection background."
 
@@ -166,7 +168,7 @@ LazyListMorph >> drawSelectionOn: aCanvas [
 	self drawBackgroundForSelectedRow: selectedRow on: aCanvas
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 LazyListMorph >> drawSeparatorAfter: aRow on: aCanvas [
 
 	| frame rectangle height separatorColor |
@@ -177,26 +179,26 @@ LazyListMorph >> drawSeparatorAfter: aRow on: aCanvas [
 	aCanvas fillRectangle: rectangle color:  separatorColor
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 LazyListMorph >> font [
 	"return the font used for drawing.  The response is never nil"
 	^font
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 LazyListMorph >> font: newFont [
 	font := (newFont ifNil: [ TextStyle default defaultFont ]).
 	self adjustHeight.
 	self changed
 ]
 
-{ #category : #'list access' }
+{ #category : 'list access' }
 LazyListMorph >> getListItem: index [
 	"grab a list item directly from the model"
 	^listSource getListItem: index
 ]
 
-{ #category : #'list access' }
+{ #category : 'list access' }
 LazyListMorph >> getListSize [
 	"return the number of items in the list"
 	^listSource
@@ -204,7 +206,7 @@ LazyListMorph >> getListSize [
 		ifNotNil: [ :source | source getListSize]
 ]
 
-{ #category : #'row management' }
+{ #category : 'row management' }
 LazyListMorph >> hUnadjustedScrollRange [
 "Ok, this is a bit messed up. We need to return the width of the widest item in the list. If we grab every item in the list, it defeats the purpose of LazyListMorph. If we don't, then we don't know the size.
 
@@ -233,7 +235,7 @@ This is a compromise -- find the widest of the first 30 items, then double it, T
 	^maxWidth
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 LazyListMorph >> highlightPotentialDropRow: row  on: aCanvas [
 	| drawBounds  |
 	drawBounds := self drawBoundsForRow: row.
@@ -241,7 +243,7 @@ LazyListMorph >> highlightPotentialDropRow: row  on: aCanvas [
 	aCanvas frameRectangle: drawBounds color: Color blue
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 LazyListMorph >> initialize [
 	super initialize.
 	self color: self theme textColor.
@@ -251,15 +253,16 @@ LazyListMorph >> initialize [
 	self adjustHeight
 ]
 
-{ #category : #'row management' }
+{ #category : 'row management' }
 LazyListMorph >> isRowSelected: row [
 	"Answer true if the arg row is selected"
-	^ ((selectedRow notNil
+
+	^ ((selectedRow isNotNil
 				and: [row = selectedRow])
 			or: [listSource itemSelectedAmongMultiple: row])
 ]
 
-{ #category : #'list access' }
+{ #category : 'list access' }
 LazyListMorph >> item: index [
 	"return the index-th item, using the 'listItems' cache"
 	| newItem itemWidth |
@@ -278,7 +281,7 @@ LazyListMorph >> item: index [
 	^listItems at: index
 ]
 
-{ #category : #'row management' }
+{ #category : 'row management' }
 LazyListMorph >> listChanged [
 	"set newList to be the list of strings to display"
 	listItems := Array new: self getListSize withAll: nil.
@@ -291,21 +294,21 @@ LazyListMorph >> listChanged [
 	self changed
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 LazyListMorph >> listSource: aListSource [
 	"set the source of list items -- typically a PluggableListMorph"
 	listSource := aListSource.
 	self listChanged
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LazyListMorph >> mouseDownRow [
 	"Answer the row that should have mouse down highlighting if any."
 
 	^self valueOfProperty: #mouseDownRow
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LazyListMorph >> mouseDownRow: anInteger [
 	"Set the row that should have mouse down highlighting or nil if none."
 
@@ -315,7 +318,7 @@ LazyListMorph >> mouseDownRow: anInteger [
 	self mouseDownRowFrameChanged
 ]
 
-{ #category : #'row management' }
+{ #category : 'row management' }
 LazyListMorph >> mouseDownRowFrameChanged [
 	"Invalidate frame of the current mouse down row if any."
 
@@ -325,7 +328,7 @@ LazyListMorph >> mouseDownRowFrameChanged [
 	self invalidRect: frame
 ]
 
-{ #category : #'list management' }
+{ #category : 'list management' }
 LazyListMorph >> rowAtLocation: aPoint [
 	"return the number of the row at aPoint"
 	| y |
@@ -334,7 +337,7 @@ LazyListMorph >> rowAtLocation: aPoint [
 	^((y - self top // (font height)) + 1) min: listItems size max: 0
 ]
 
-{ #category : #'row management' }
+{ #category : 'row management' }
 LazyListMorph >> selectRow: index [
 	"Select the index-th row."
 
@@ -342,13 +345,13 @@ LazyListMorph >> selectRow: index [
 	self invalidRect: (self selectionFrameForRow: index)
 ]
 
-{ #category : #'list management' }
+{ #category : 'list management' }
 LazyListMorph >> selectedRow [
 	"return the currently selected row, or nil if none is selected"
 	^selectedRow
 ]
 
-{ #category : #'row management' }
+{ #category : 'row management' }
 LazyListMorph >> selectedRow: index [
 	"Select the index-th row.  if nil, remove the current selection."
 
@@ -357,7 +360,7 @@ LazyListMorph >> selectedRow: index [
 	selectedRow ifNotNil: [self selectionFrameChanged]
 ]
 
-{ #category : #'row management' }
+{ #category : 'row management' }
 LazyListMorph >> selectionFrameChanged [
 	"Invalidate frame of the current selection if any."
 
@@ -369,7 +372,7 @@ LazyListMorph >> selectionFrameChanged [
 	self invalidRect: frame
 ]
 
-{ #category : #'row management' }
+{ #category : 'row management' }
 LazyListMorph >> selectionFrameForRow: row [
 	"Answer the selection frame rectangle."
 
@@ -383,13 +386,13 @@ LazyListMorph >> selectionFrameForRow: row [
 	^frame
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 LazyListMorph >> topVisibleRowForCanvas: aCanvas [
         "return the top visible row in aCanvas's clip rectangle"
         ^self rowAtLocation: aCanvas clipRect topLeft
 ]
 
-{ #category : #'row management' }
+{ #category : 'row management' }
 LazyListMorph >> unselectRow: index [
 	"Unselect the index-th row."
 
@@ -397,7 +400,7 @@ LazyListMorph >> unselectRow: index [
 	self invalidRect: (self selectionFrameForRow: index)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LazyListMorph >> userString [
 	"Do I have a text string to be searched on?"
 

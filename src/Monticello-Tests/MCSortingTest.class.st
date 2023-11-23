@@ -1,25 +1,18 @@
 Class {
-	#name : #MCSortingTest,
-	#superclass : #TestCase,
-	#category : #'Monticello-Tests-Sorting'
+	#name : 'MCSortingTest',
+	#superclass : 'TestCase',
+	#category : 'Monticello-Tests-Sorting',
+	#package : 'Monticello-Tests',
+	#tag : 'Sorting'
 }
 
-{ #category : #testing }
-MCSortingTest class >> isUnitTest [
-	^false
-]
-
-{ #category : #building }
+{ #category : 'building' }
 MCSortingTest >> classNamed: aSymbol [
-	^ MCClassDefinition
-		name: aSymbol
-		superclassName: #Object
-		category: ''
-		instVarNames: #()
-		comment: ''
+
+	^ MCClassDefinition named: aSymbol
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 MCSortingTest >> methodNamed: aSymbol class: className meta: aBoolean [
 	^ MCMethodDefinition
 		className: className
@@ -30,12 +23,12 @@ MCSortingTest >> methodNamed: aSymbol class: className meta: aBoolean [
 		source: ''
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MCSortingTest >> sortDefinitions: aCollection [
 	^ aCollection asSortedCollection asArray
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 MCSortingTest >> sortKeyFor: aDefinition [
 	^ String streamContents:
 		[:s |
@@ -44,7 +37,7 @@ MCSortingTest >> sortKeyFor: aDefinition [
 			separatedBy: [s nextPut: $.]]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCSortingTest >> testConsistentSorting [
 
 	| definitions shuffledAndSorted |
@@ -55,7 +48,7 @@ MCSortingTest >> testConsistentSorting [
 	self assert: shuffledAndSorted asSet size equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCSortingTest >> testSortOrder [
 	| aA aAm aB bA bB A B cA bAm cAm |
 	aA := self methodNamed: #a class: #A meta: false.

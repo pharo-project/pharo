@@ -5,18 +5,20 @@ no way to change the value inside such a block, but it is possible to
 temporarirly rebind it in a nested manner.
 "
 Class {
-	#name : #DynamicVariable,
-	#superclass : #ProcessSpecificVariable,
-	#category : #'Kernel-Processes'
+	#name : 'DynamicVariable',
+	#superclass : 'ProcessSpecificVariable',
+	#category : 'Kernel-Processes',
+	#package : 'Kernel',
+	#tag : 'Processes'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DynamicVariable class >> value: anObject during: aBlock [
 
 	^ self soleInstance value: anObject during: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DynamicVariable >> value: anObject during: aBlock [
 	| activeProcess oldValue |
 	activeProcess := Processor activeProcess.

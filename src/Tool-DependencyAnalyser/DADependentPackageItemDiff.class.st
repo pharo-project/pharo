@@ -2,30 +2,32 @@
 A PDDependentPackageItemDiff is a object which represent a dependent package who added/modified/removed from an old analysis.
 "
 Class {
-	#name : #DADependentPackageItemDiff,
-	#superclass : #DAAbstractItemDiff,
+	#name : 'DADependentPackageItemDiff',
+	#superclass : 'DAAbstractItemDiff',
 	#instVars : [
 		'parent'
 	],
-	#category : #'Tool-DependencyAnalyser-Diff'
+	#category : 'Tool-DependencyAnalyser-Diff',
+	#package : 'Tool-DependencyAnalyser',
+	#tag : 'Diff'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 DADependentPackageItemDiff >> hasChanged [
 	^ self isNew or: [ self isRemoved ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DADependentPackageItemDiff >> parent [
 	^ parent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DADependentPackageItemDiff >> parent: anObject [
 	parent := anObject
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 DADependentPackageItemDiff >> printOn: aStream [
 	aStream
 		nextPutAll: content packageName;

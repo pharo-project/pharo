@@ -1,6 +1,6 @@
-Extension { #name : #FreeTypeFont }
+Extension { #name : 'FreeTypeFont' }
 
-{ #category : #'*FreeType-Graphics' }
+{ #category : '*FreeType-Graphics' }
 FreeTypeFont >> displayLineGlyphOn: aDisplayContext from: startPoint to: endPoint [
 	|  oldCombinationRule oldHalftoneForm originalColorMap clr depth foreColorVal foreColorAlpha glyph width height
 	startPointX startPointY endPointX endPointY foreColor |

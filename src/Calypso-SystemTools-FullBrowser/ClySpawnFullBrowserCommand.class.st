@@ -11,57 +11,59 @@ Internal Representation and Key Implementation Points.
 
 "
 Class {
-	#name : #ClySpawnFullBrowserCommand,
-	#superclass : #CmdCommand,
+	#name : 'ClySpawnFullBrowserCommand',
+	#superclass : 'CmdCommand',
 	#instVars : [
 		'browser'
 	],
-	#category : #'Calypso-SystemTools-FullBrowser-Commands-Queries'
+	#category : 'Calypso-SystemTools-FullBrowser-Commands-Queries',
+	#package : 'Calypso-SystemTools-FullBrowser',
+	#tag : 'Commands-Queries'
 }
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClySpawnFullBrowserCommand class >> browserMenuActivation [
 	<classAnnotation>
 
 	^CmdContextMenuActivation byItemOf: ClyQueryMenuGroup for: ClySystemBrowserContext
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClySpawnFullBrowserCommand class >> browserShortcutActivation [
 	<classAnnotation>
 
 	^CmdShortcutActivation by: $b meta for: ClySystemBrowserContext
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClySpawnFullBrowserCommand class >> canBeExecutedInContext: aToolContext [
 	^aToolContext hasSelectedItems
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClySpawnFullBrowserCommand class >> fullBrowserDoubleClickMenuActivation [
 	<classAnnotation>
 
 	^CmdDoubleClickActivation for: ClyFullBrowserContext
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClySpawnFullBrowserCommand >> defaultMenuIconName [
 	^#glamorousBrowse
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClySpawnFullBrowserCommand >> defaultMenuItemName [
 	^'Browse'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClySpawnFullBrowserCommand >> execute [
 
 	browser spawnFullBrowser
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClySpawnFullBrowserCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 

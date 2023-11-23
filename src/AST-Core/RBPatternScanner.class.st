@@ -3,12 +3,14 @@ RBPatternScanner is a subclass of RBScanner that allows the extended syntax of p
 
 "
 Class {
-	#name : #RBPatternScanner,
-	#superclass : #RBScanner,
-	#category : #'AST-Core-Parser'
+	#name : 'RBPatternScanner',
+	#superclass : 'RBScanner',
+	#category : 'AST-Core-Parser',
+	#package : 'AST-Core',
+	#tag : 'Parser'
 }
 
-{ #category : #'private - scanning' }
+{ #category : 'private - scanning' }
 RBPatternScanner >> scanPatternVariable [
 	buffer nextPut: currentCharacter.
 	self step.
@@ -24,7 +26,7 @@ RBPatternScanner >> scanPatternVariable [
 	^self scanIdentifierOrKeyword
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBPatternScanner >> scanToken [
 	currentCharacter = PatternVariableCharacter
 		ifTrue: [^self scanPatternVariable].

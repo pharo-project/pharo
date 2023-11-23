@@ -2,32 +2,34 @@
 I am a dispatcher that dispatches the global keymappings.
 "
 Class {
-	#name : #KMGlobalDispatcher,
-	#superclass : #Object,
+	#name : 'KMGlobalDispatcher',
+	#superclass : 'Object',
 	#instVars : [
 		'dispatcher'
 	],
-	#category : #'Keymapping-Core-Dispatching'
+	#category : 'Keymapping-Core-Dispatching',
+	#package : 'Keymapping-Core',
+	#tag : 'Dispatching'
 }
 
-{ #category : #dispatching }
+{ #category : 'dispatching' }
 KMGlobalDispatcher >> dispatch: anEventBuffer [
 	dispatcher
 		dispatch: anEventBuffer
 		inCategories: KMRepository default globalCategories
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 KMGlobalDispatcher >> dispatcher: aDispatcher [
 	dispatcher := aDispatcher
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 KMGlobalDispatcher >> isGlobalDispatcher [
 	^true
 ]
 
-{ #category : #iterating }
+{ #category : 'iterating' }
 KMGlobalDispatcher >> nextForKmChain: aKMDispatchChain [
 	^aKMDispatchChain target
 ]

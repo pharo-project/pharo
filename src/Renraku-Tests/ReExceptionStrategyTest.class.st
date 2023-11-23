@@ -1,10 +1,11 @@
 Class {
-	#name : #ReExceptionStrategyTest,
-	#superclass : #TestCase,
-	#category : #'Renraku-Tests'
+	#name : 'ReExceptionStrategyTest',
+	#superclass : 'TestCase',
+	#category : 'Renraku-Tests',
+	#package : 'Renraku-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReExceptionStrategyTest >> testSettingDescription [
 
 	ReExceptionStrategy allSubclassesDo: [ :strategy |

@@ -1,10 +1,11 @@
 Class {
-	#name : #ZnResponseTest,
-	#superclass : #TestCase,
-	#category : #'Zinc-Tests'
+	#name : 'ZnResponseTest',
+	#superclass : 'TestCase',
+	#category : 'Zinc-Tests',
+	#package : 'Zinc-Tests'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnResponseTest >> testAbsoluteCreated [
 	| response uri |
 	uri := 'http://www.example.com:8888/something/else/foo.txt'.
@@ -16,7 +17,7 @@ ZnResponseTest >> testAbsoluteCreated [
 	self assert: (response entity contents includesSubstring: uri)
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnResponseTest >> testAbsoluteRedirect [
 	| response uri |
 	uri := 'http://foo.com:8080/something/else/foo.txt?key=123'.
@@ -29,7 +30,7 @@ ZnResponseTest >> testAbsoluteRedirect [
 	self assert: (response entity contents includesSubstring: uri)
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnResponseTest >> testCookie [
 	| response cookie1  responseString |
 	response := ZnResponse ok: (ZnStringEntity html: '<h1>hello world</h1>').
@@ -45,7 +46,7 @@ ZnResponseTest >> testCookie [
 	self assert: (responseString includesSubstring: 'Set-Cookie: testCookie1=123')
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnResponseTest >> testCookies [
 	| response cookie1 cookie2 responseString |
 	response := ZnResponse ok: (ZnStringEntity html: '<h1>hello world</h1>').
@@ -68,7 +69,7 @@ ZnResponseTest >> testCookies [
 	self assert: (responseString includesSubstring: 'Set-Cookie: testCookie2=321').
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnResponseTest >> testCreated [
 	| response uri |
 	uri := '/something/else/foo.txt'.
@@ -80,7 +81,7 @@ ZnResponseTest >> testCreated [
 	self assert: (response entity contents includesSubstring: uri)
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnResponseTest >> testDefaultUTF8Encoding [
 	| json entity response bytes result |
 	"Even if we do not specificy UTF-8 explicitly, it should be the default"
@@ -92,7 +93,7 @@ ZnResponseTest >> testDefaultUTF8Encoding [
 	self assert: result entity contents equals: json
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnResponseTest >> testIsError [
 	| response |
 	response := ZnResponse ok: (ZnStringEntity html: '<h1>hello world</h1>').
@@ -103,7 +104,7 @@ ZnResponseTest >> testIsError [
 	self assert: response isError not
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnResponseTest >> testNotFound [
 	| response |
 	response := ZnResponse notFound: 'http:///secret.txt'.
@@ -113,7 +114,7 @@ ZnResponseTest >> testNotFound [
 	self assert: (response entity contents includesSubstring: 'secret.txt')
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnResponseTest >> testRedirect [
 	| response uri |
 	uri := '/something/else/foo.txt'.
@@ -133,7 +134,7 @@ ZnResponseTest >> testRedirect [
 	self assert: (response entity contents includesSubstring: uri)
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnResponseTest >> testSlashdotGzipChunked [
 	| request stream response contents |
 	(request := ZnRequest get: 'http://slashdot.org')
@@ -155,7 +156,7 @@ ZnResponseTest >> testSlashdotGzipChunked [
 	self assert: ((contents includesSubstring: 'Slashdot') or: [ contents includesSubstring: 'refresh' ])
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnResponseTest >> testWritingBinary [
 	| response bytes string |
 	response := ZnResponse ok: (ZnEntity text: 'Okay').
@@ -165,7 +166,7 @@ ZnResponseTest >> testWritingBinary [
 	self assert: (string includesSubstring: 'Okay')
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnResponseTest >> testWritingCharacter [
 	| response string |
 	response := ZnResponse ok: (ZnEntity text: 'Okay').

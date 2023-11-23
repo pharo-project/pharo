@@ -15,30 +15,32 @@ executionFlow value: true
 
 "
 Class {
-	#name : #Continuation,
-	#superclass : #Object,
+	#name : 'Continuation',
+	#superclass : 'Object',
 	#instVars : [
 		'values'
 	],
-	#category : #'Kernel-Methods'
+	#category : 'Kernel-Methods',
+	#package : 'Kernel',
+	#tag : 'Methods'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Continuation class >> current [
 	^ self fromContext: thisContext sender
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Continuation class >> currentDo: aBlock [
 	^ aBlock value: (self fromContext: thisContext sender)
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Continuation class >> fromContext: aStack [
 	^self new initializeFromContext: aStack
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Continuation class >> try: tryBlock or: orBlock or: orrBlock otherwise: elseBlock [
 	^ self
 		try: tryBlock
@@ -49,7 +51,7 @@ Continuation class >> try: tryBlock or: orBlock or: orrBlock otherwise: elseBloc
 				otherwise: [ :rr :r | elseBlock cull: rr cull: r cull: res ] ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Continuation class >> try: tryBlock or: orBlock otherwise: elseBlock [
 	"	^ self
 		currentDo: [ :success |
@@ -68,7 +70,7 @@ Continuation class >> try: tryBlock or: orBlock otherwise: elseBlock [
 				otherwise: [ :lastRes | elseBlock cull: lastRes cull: res ] ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Continuation class >> try: tryBlock otherwise: elseBlock [
 	^ self
 		currentDo: [ :success |
@@ -78,12 +80,12 @@ Continuation class >> try: tryBlock otherwise: elseBlock [
 			elseBlock cull: localResult ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Continuation >> initializeFromContext: aContext [
 	| valueStream context |
 	valueStream := WriteStream on: (Array new: 20).
 	context := aContext.
-	[context notNil] whileTrue:
+	[context isNotNil] whileTrue:
 		[valueStream nextPut: context.
 		1 to: context class instSize do: [:i | valueStream nextPut: (context instVarAt: i)].
 		1 to: context size do: [:i | valueStream nextPut: (context at: i)].
@@ -91,12 +93,12 @@ Continuation >> initializeFromContext: aContext [
 	values := valueStream contents
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Continuation >> numArgs [
 	^ 1
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Continuation >> restoreValues [
 	| valueStream context |
 	valueStream := values readStream.
@@ -106,19 +108,20 @@ Continuation >> restoreValues [
 		1 to: context size do: [:i | context at: i put: valueStream next]]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Continuation >> terminate: aContext [
+
 	| context |
 	context := aContext.
-	[context notNil] whileTrue: [context := context swapSender: nil]
+	[ context isNotNil ] whileTrue: [ context := context swapSender: nil ]
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 Continuation >> value [
 	self value: nil
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 Continuation >> value: anObject [
 	"Invoke the continuation and answer anObject as return value."
 
@@ -128,7 +131,7 @@ Continuation >> value: anObject [
 	^ anObject
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 Continuation >> valueWithArguments: anArray [
 	anArray size = 1
 		ifFalse: [ ^ self error: 'continuations can only be resumed with one argument' ].

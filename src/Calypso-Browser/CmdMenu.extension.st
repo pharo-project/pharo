@@ -1,18 +1,18 @@
-Extension { #name : #CmdMenu }
+Extension { #name : 'CmdMenu' }
 
-{ #category : #'*Calypso-Browser' }
+{ #category : '*Calypso-Browser' }
 CmdMenu >> buildBrowserNotebookActions [
 
 	^ rootGroup buildBrowserNotebookActions
 ]
 
-{ #category : #'*Calypso-Browser' }
+{ #category : '*Calypso-Browser' }
 CmdMenu >> buildBrowserTabActions [
 
 	^rootGroup buildBrowserTabActions
 ]
 
-{ #category : #'*Calypso-Browser' }
+{ #category : '*Calypso-Browser' }
 CmdMenu >> buildBrowserToolbar: aToolbar [
 
 	rootGroup buildBrowserToolbar: aToolbar

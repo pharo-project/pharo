@@ -4,64 +4,66 @@ An Exit is an exception that quit the image without saving with a given success 
 Exit signalFaillure: 'something went wrong'
 "
 Class {
-	#name : #Exit,
-	#superclass : #Exception,
+	#name : 'Exit',
+	#superclass : 'Exception',
 	#instVars : [
 		'status'
 	],
-	#category : #'System-CommandLine-Exceptions'
+	#category : 'System-CommandLine-Exceptions',
+	#package : 'System-CommandLine',
+	#tag : 'Exceptions'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Exit class >> failure [
 	^ self status: 1
 ]
 
-{ #category : #signalling }
+{ #category : 'signalling' }
 Exit class >> signalFailure [
  	^ self failure signal
 ]
 
-{ #category : #signalling }
+{ #category : 'signalling' }
 Exit class >> signalFailure: aMessage [
  	^ self failure signal: aMessage
 ]
 
-{ #category : #signalling }
+{ #category : 'signalling' }
 Exit class >> signalSuccess [
  	^self success signal
 ]
 
-{ #category : #signalling }
+{ #category : 'signalling' }
 Exit class >> signalSuccess: aMessage [
  	^self success signal: aMessage
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Exit class >> status: aPositiveInteger [
 	^ self new
 		status: aPositiveInteger;
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Exit class >> success [
 	^ self status: 0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Exit >> defaultAction [
  	self messageText isEmpty
 		ifFalse: [ self printMessage ].
 	Smalltalk exit: self status
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Exit >> isSuccess [
 	^self status = 0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Exit >> printMessage [
 	|stderr|
 	stderr := VTermOutputDriver stderr.
@@ -71,18 +73,18 @@ Exit >> printMessage [
 		clear
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 Exit >> printOn: aStream [
 	super printOn: aStream.
 	aStream space print: self status
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Exit >> status [
 	^ status
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Exit >> status: anInteger [
 	status := anInteger
 ]

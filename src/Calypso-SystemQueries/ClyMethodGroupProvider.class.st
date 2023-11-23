@@ -9,22 +9,24 @@ But subclasses can specify that group should be always present using method #isS
 Static groups are not depends the count of methods which they provide
 "
 Class {
-	#name : #ClyMethodGroupProvider,
-	#superclass : #Object,
-	#category : #'Calypso-SystemQueries-Domain'
+	#name : 'ClyMethodGroupProvider',
+	#superclass : 'Object',
+	#category : 'Calypso-SystemQueries-Domain',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Domain'
 }
 
-{ #category : #'building groups' }
+{ #category : 'building groups' }
 ClyMethodGroupProvider >> buildGroupsFrom: aClassScope [
 	self subclassResponsibility
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyMethodGroupProvider >> isStatic [
 	^true
 ]
 
-{ #category : #'system changes' }
+{ #category : 'system changes' }
 ClyMethodGroupProvider >> providesGroupsAffectedBy: aSystemAnnouncement inScope: aClassScope [
 
 	aClassScope classesDo: [ :each |

@@ -2,26 +2,28 @@
 I represent an operation done in a EpLogBrowser.
 "
 Class {
-	#name : #EpLogBrowserOperation,
-	#superclass : #EpEvent,
+	#name : 'EpLogBrowserOperation',
+	#superclass : 'EpEvent',
 	#instVars : [
 		'entryReferences'
 	],
-	#category : #'Epicea-Model'
+	#category : 'Epicea-Model',
+	#package : 'Epicea',
+	#tag : 'Model'
 }
 
-{ #category : #triggering }
+{ #category : 'triggering' }
 EpLogBrowserOperation >> asEpiceaEvent [
 
 	^ self
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 EpLogBrowserOperation >> copyWithEntryReferences: aCollectionOfEntryReferences [
 	^self subclassResponsibility
 ]
 
-{ #category : #triggering }
+{ #category : 'triggering' }
 EpLogBrowserOperation >> doInJob: aBlock [
 	"Evaluate the block. This is a workaround to make Job consider me as the Job's owner."
 
@@ -30,18 +32,18 @@ EpLogBrowserOperation >> doInJob: aBlock [
 		run
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpLogBrowserOperation >> entryReferences [
 	^ entryReferences
 ]
 
-{ #category : #initializing }
+{ #category : 'initializing' }
 EpLogBrowserOperation >> initializeWith: aCollectionOfEntryReferences [
 	self initialize.
 	entryReferences := aCollectionOfEntryReferences
 ]
 
-{ #category : #triggering }
+{ #category : 'triggering' }
 EpLogBrowserOperation >> isEpiceaInterestingJobOwner [
 
 	^ true

@@ -4,21 +4,23 @@ I represent a syntax or a semantic error in some pharo code.
 My instances are signaled by the parser or the compiler.
 "
 Class {
-	#name : #CodeError,
-	#superclass : #Error,
+	#name : 'CodeError',
+	#superclass : 'Error',
 	#instVars : [
 		'notice'
 	],
-	#category : #'AST-Core-Exception'
+	#category : 'AST-Core-Exception',
+	#package : 'AST-Core',
+	#tag : 'Exception'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CodeError >> description [
 
 	^ self class name , ':' , self notice description
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CodeError >> errorCode [
 
 	self
@@ -28,7 +30,7 @@ CodeError >> errorCode [
 	^ self sourceCode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CodeError >> errorMessage [
 
 	self
@@ -38,59 +40,59 @@ CodeError >> errorMessage [
 	^ messageText
 ]
 
-{ #category : #'private - testing' }
+{ #category : 'private - testing' }
 CodeError >> isResumable [
 
 	"When resumed, faulty AST are produced"
 	^true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CodeError >> location [
 
 	^ self position
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CodeError >> messageText [
 
 	^ self notice messageText
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CodeError >> methodClass [
 	^ self methodNode methodClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CodeError >> methodNode [
 	^ self node methodNode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CodeError >> node [
 	^ self notice node
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CodeError >> notice [
 
 	^ notice
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CodeError >> notice: anObject [
 
 	notice := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CodeError >> position [
 
 	^ self notice position
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CodeError >> sourceCode [
 
 	^ self methodNode sourceCode

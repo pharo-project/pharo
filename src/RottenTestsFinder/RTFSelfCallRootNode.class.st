@@ -7,33 +7,35 @@ For this purpose, I store
 - #subCalls : A collection of selfcall nodes.
 "
 Class {
-	#name : #RTFSelfCallRootNode,
-	#superclass : #Object,
+	#name : 'RTFSelfCallRootNode',
+	#superclass : 'Object',
 	#instVars : [
 		'compiledMethod',
 		'subCalls'
 	],
-	#category : #'RottenTestsFinder-SelfInterpreter'
+	#category : 'RottenTestsFinder-SelfInterpreter',
+	#package : 'RottenTestsFinder',
+	#tag : 'SelfInterpreter'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RTFSelfCallRootNode class >> compiledMethod: aCompiledMethod [
 	^ self new
 		compiledMethod: aCompiledMethod;
 		yourself
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RTFSelfCallRootNode >> acceptVisitor: aRTFSelfCallVisitor [
 	^ aRTFSelfCallVisitor visitRTFSelfCallRootNode: self
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 RTFSelfCallRootNode >> addCall: aRTFSelfCallNode [
 	self subCalls add: aRTFSelfCallNode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RTFSelfCallRootNode >> allCompiledMethods [
 	"Returns all compiled methods in the call tree."
 	| visitor |
@@ -42,28 +44,28 @@ RTFSelfCallRootNode >> allCompiledMethods [
 	^ visitor compiledMethods
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RTFSelfCallRootNode >> canLeadToAssertPrimitive [
 	^ self acceptVisitor: RTFLeadsToAssertPrimitiveCallChecker new
 ]
 
-{ #category : #cleaning }
+{ #category : 'cleaning' }
 RTFSelfCallRootNode >> cleanSubTreesNotLeadingToAssertPrimitive [
 	self acceptVisitor: RTFSelfCallTreeCleaner new.
 	^ self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RTFSelfCallRootNode >> compiledMethod [
 	^ compiledMethod
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RTFSelfCallRootNode >> compiledMethod: anObject [
 	compiledMethod := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RTFSelfCallRootNode >> helperCompiledMethodCalled [
 	| visitor |
 	visitor := RTFHelperCallsCollector new.
@@ -71,30 +73,30 @@ RTFSelfCallRootNode >> helperCompiledMethodCalled [
 	^ visitor helperCalls
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RTFSelfCallRootNode >> helperMaxDepth [
 	^ self acceptVisitor: RTFMaxHelperDepthComputer new
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RTFSelfCallRootNode >> initialize [
 	super initialize.
 	self subCalls: OrderedCollection new
 ]
 
-{ #category : #metalinks }
+{ #category : 'metalinks' }
 RTFSelfCallRootNode >> installMetalinks [
 	"Recursively install metalinks on all subnodes of the tree."
 	self acceptVisitor: RTFRecursiveMetalinksInstaller new
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RTFSelfCallRootNode >> isCallToAssertPrimitive [
 	"Returns true if the CompiledMethod I hold is an assertion primitive."
 	^ RottenTestsFinder assertionCompiledMethods includes: self compiledMethod
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RTFSelfCallRootNode >> primitiveCompiledMethodCalled [
 	| visitor |
 	visitor := RTFPrimitiveCallsCollector new.
@@ -102,7 +104,7 @@ RTFSelfCallRootNode >> primitiveCompiledMethodCalled [
 	^ visitor primitiveCalls
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RTFSelfCallRootNode >> printOn: aStream [
 	super printOn: aStream.
 	aStream
@@ -112,17 +114,17 @@ RTFSelfCallRootNode >> printOn: aStream [
 		<< $)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RTFSelfCallRootNode >> subCalls [
 	^ subCalls
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RTFSelfCallRootNode >> subCalls: anObject [
 	subCalls := anObject
 ]
 
-{ #category : #metalinks }
+{ #category : 'metalinks' }
 RTFSelfCallRootNode >> uninstallMetalinks [
 	"Recursively uninstall metalinks on all subnodes of the tree."
 	self acceptVisitor: RTFRecursiveMetalinksUninstaller new

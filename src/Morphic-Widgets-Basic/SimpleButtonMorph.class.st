@@ -30,8 +30,8 @@ Another example: a button which quits the image without saving it.
 
 "
 Class {
-	#name : #SimpleButtonMorph,
-	#superclass : #BorderedMorph,
+	#name : 'SimpleButtonMorph',
+	#superclass : 'BorderedMorph',
 	#traits : 'TAbleToRotate',
 	#classTraits : 'TAbleToRotate classTrait',
 	#instVars : [
@@ -42,10 +42,12 @@ Class {
 		'oldColor',
 		'label'
 	],
-	#category : #'Morphic-Widgets-Basic-Buttons'
+	#category : 'Morphic-Widgets-Basic-Buttons',
+	#package : 'Morphic-Widgets-Basic',
+	#tag : 'Buttons'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SimpleButtonMorph class >> newWithLabel: labelString [
 
 	^(self new)
@@ -53,14 +55,14 @@ SimpleButtonMorph class >> newWithLabel: labelString [
 		yourself
 ]
 
-{ #category : #'submorphs - add/remove' }
+{ #category : 'submorphs - add/remove' }
 SimpleButtonMorph >> actWhen [
 	"acceptable symbols:  #buttonDown, #buttonUp, and #whilePressed"
 
 	^ actWhen
 ]
 
-{ #category : #'submorphs - add/remove' }
+{ #category : 'submorphs - add/remove' }
 SimpleButtonMorph >> actWhen: condition [
 	"Accepts symbols:  #buttonDown, #buttonUp, and #whilePressed, #startDrag"
 	actWhen := condition.
@@ -69,13 +71,13 @@ SimpleButtonMorph >> actWhen: condition [
 		ifTrue:[self on: #startDrag send: #doButtonAction to: self]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SimpleButtonMorph >> actionSelector [
 
 	^ actionSelector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SimpleButtonMorph >> actionSelector: aSymbolOrString [
 
 	(nil = aSymbolOrString or:
@@ -86,7 +88,7 @@ SimpleButtonMorph >> actionSelector: aSymbolOrString [
 	actionSelector := aSymbolOrString asSymbol
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 SimpleButtonMorph >> addCustomMenuItems: aCustomMenu hand: aHandMorph [
 
 	super addCustomMenuItems: aCustomMenu hand: aHandMorph.
@@ -97,12 +99,12 @@ SimpleButtonMorph >> addCustomMenuItems: aCustomMenu hand: aHandMorph [
 	self addTargetingMenuItems: aCustomMenu hand: aHandMorph
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 SimpleButtonMorph >> addLabelItemsTo: aCustomMenu hand: aHandMorph [
 	aCustomMenu add: 'change label' selector: #setLabel
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 SimpleButtonMorph >> addTargetingMenuItems: aCustomMenu hand: aHandMorph [
 	"Add targeting menu items"
 	aCustomMenu addLine.
@@ -111,48 +113,48 @@ SimpleButtonMorph >> addTargetingMenuItems: aCustomMenu hand: aHandMorph [
 		ifNotNil: [aCustomMenu add: 'clear target' translated selector: #clearTarget]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SimpleButtonMorph >> arguments [
 
 	^ arguments
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SimpleButtonMorph >> arguments: aCollection [
 
 	arguments := aCollection asArray copy
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 SimpleButtonMorph >> clearTarget [
 
 	target := nil
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SimpleButtonMorph >> defaultLabel [
 	^ 'Flash'
 ]
 
-{ #category : #button }
+{ #category : 'button' }
 SimpleButtonMorph >> doButtonAction [
 	"Perform the action of this button. Subclasses may override this method. The default behavior is to send the button's actionSelector to its target object with its arguments."
 
-	(target notNil and: [actionSelector notNil])
+	(target isNotNil and: [actionSelector isNotNil])
 		ifTrue:
 			[Cursor normal
 				showWhile: [target perform: actionSelector withArguments: arguments]].
 	actWhen == #startDrag ifTrue: [oldColor ifNotNil: [self color: oldColor]]
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 SimpleButtonMorph >> extent: newExtent [
 
 	super extent: newExtent.
 	label ifNotNil: [label position: self center - (label extent // 2)]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SimpleButtonMorph >> fitContents [
 	| aMorph aCenter |
 	aCenter := self center.
@@ -163,29 +165,29 @@ SimpleButtonMorph >> fitContents [
 	aMorph position: aCenter - (aMorph extent // 2)
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 SimpleButtonMorph >> handlesMouseDown: evt [
 	^  true
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 SimpleButtonMorph >> handlesMouseStillDown: evt [
 	^actWhen == #whilePressed
 ]
 
-{ #category : #balloon }
+{ #category : 'balloon' }
 SimpleButtonMorph >> helpText [
 
 	^ self balloonText
 ]
 
-{ #category : #balloon }
+{ #category : 'balloon' }
 SimpleButtonMorph >> helpText: aString [
 
 	self setBalloonText: aString
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SimpleButtonMorph >> initialize [
 	super initialize.
 
@@ -199,22 +201,22 @@ SimpleButtonMorph >> initialize [
 	self setDefaultLabel
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SimpleButtonMorph >> isDefault [
 	^ self extension isDefault
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SimpleButtonMorph >> label [
 	^ label contents
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SimpleButtonMorph >> label: aString [
 	self label: aString font: StandardFonts buttonFont
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SimpleButtonMorph >> label: aString font: aFont [
 
 	label ifNotNil: [label delete].
@@ -225,7 +227,7 @@ SimpleButtonMorph >> label: aString font: aFont [
 	label lock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SimpleButtonMorph >> labelString: aString [
 
 	label ifNil: [self label: aString]
@@ -234,7 +236,7 @@ SimpleButtonMorph >> labelString: aString [
 			self fitContents]
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 SimpleButtonMorph >> mouseDown: evt [
 
 	super mouseDown: evt.
@@ -246,25 +248,25 @@ SimpleButtonMorph >> mouseDown: evt [
 	self mouseStillDown: evt
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 SimpleButtonMorph >> mouseMove: evt [
 	actWhen == #buttonDown ifTrue: [^ self].
 	self updateVisualState: evt
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 SimpleButtonMorph >> mouseStillDown: evt [
 	actWhen == #whilePressed ifFalse:[^self].
 	(self containsPoint: evt cursorPoint) ifTrue:[self doButtonAction]
 ]
 
-{ #category : #'events-processing' }
+{ #category : 'events-processing' }
 SimpleButtonMorph >> mouseStillDownStepRate [
 	"Answer how often I want the #handleMouseStillDown: stepped"
 	^200
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 SimpleButtonMorph >> mouseUp: evt [
 	super mouseUp: evt.
 	oldColor ifNotNil:
@@ -279,7 +281,7 @@ SimpleButtonMorph >> mouseUp: evt [
 				ifFalse: [ self mouseLeave: evt "This is a balk. Note that we have left." ]]
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 SimpleButtonMorph >> setActWhen [
 	| selections |
 	selections := #(#buttonDown #buttonUp #whilePressed #startDrag ).
@@ -289,7 +291,7 @@ SimpleButtonMorph >> setActWhen [
 				title: 'Choose one of the following conditions' translated
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 SimpleButtonMorph >> setActionSelector [
 
 	| newSel |
@@ -301,7 +303,7 @@ the target when this button is pressed' translated
 	newSel isEmptyOrNil ifFalse: [self actionSelector: newSel]
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 SimpleButtonMorph >> setArguments [
 	| newArgs newArgsArray |
 	newArgs := UIManager default
@@ -317,12 +319,12 @@ when this button is pressed separated by periods' translated
 			self arguments: newArgsArray ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SimpleButtonMorph >> setDefaultLabel [
 	self label: self defaultLabel
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 SimpleButtonMorph >> setLabel [
 
 	| newLabel |
@@ -332,7 +334,7 @@ SimpleButtonMorph >> setLabel [
 	newLabel isEmptyOrNil ifFalse: [self labelString: newLabel]
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 SimpleButtonMorph >> setTarget: evt [
 	| rootMorphs |
 	rootMorphs := self world rootMorphsAt: evt hand targetPoint.
@@ -340,19 +342,19 @@ SimpleButtonMorph >> setTarget: evt [
 				ifTrue: [rootMorphs second]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SimpleButtonMorph >> target [
 
 	^ target
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SimpleButtonMorph >> target: anObject [
 
 	target := anObject
 ]
 
-{ #category : #theme }
+{ #category : 'theme' }
 SimpleButtonMorph >> themeChanged [
 
 	self
@@ -365,13 +367,13 @@ SimpleButtonMorph >> themeChanged [
 	super themeChanged
 ]
 
-{ #category : #theme }
+{ #category : 'theme' }
 SimpleButtonMorph >> themedFillStyle [
 
 	^self theme buttonNormalFillStyleFor: self
 ]
 
-{ #category : #'visual properties' }
+{ #category : 'visual properties' }
 SimpleButtonMorph >> updateVisualState: evt [
 
 	oldColor ifNotNil: [
@@ -381,7 +383,7 @@ SimpleButtonMorph >> updateVisualState: evt [
 				ifFalse: [oldColor])]
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 SimpleButtonMorph >> veryDeepFixupWith: deepCopier [
 	"If target and arguments fields were weakly copied, fix them here.  If they were in the tree being copied, fix them up, otherwise point to the originals!!"
 
@@ -391,7 +393,7 @@ SimpleButtonMorph >> veryDeepFixupWith: deepCopier [
 		deepCopier references at: each ifAbsent: [each]]
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 SimpleButtonMorph >> veryDeepInner: deepCopier [
 	"Copy all of my instance variables.  Some need to be not copied at all, but shared.  	Warning!!  Every instance variable defined in this class must be handled.  We must also implement veryDeepFixupWith:.  See DeepCopier class comment."
 

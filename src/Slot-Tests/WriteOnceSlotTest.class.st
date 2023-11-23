@@ -2,12 +2,14 @@
 Automated tests for WriteOnceSlot
 "
 Class {
-	#name : #WriteOnceSlotTest,
-	#superclass : #SlotSilentTest,
-	#category : #'Slot-Tests-Examples'
+	#name : 'WriteOnceSlotTest',
+	#superclass : 'SlotSilentTest',
+	#category : 'Slot-Tests-Examples',
+	#package : 'Slot-Tests',
+	#tag : 'Examples'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 WriteOnceSlotTest >> testClassSide [
 	"test that we can change a normal slot into a WriteOnceSlot. Tests class side slot init"
 	| slot |
@@ -19,7 +21,7 @@ WriteOnceSlotTest >> testClassSide [
 	self assert: (aClass class hasSlotNamed: #slot1)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WriteOnceSlotTest >> testRead [
 	| slot |
 	<ignoreNotImplementedSelectors: #(slot1)>
@@ -31,7 +33,7 @@ WriteOnceSlotTest >> testRead [
 	self assert: aClass new slot1 equals: nil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WriteOnceSlotTest >> testWriteAndRead [
 	| slot object |
 	<ignoreNotImplementedSelectors: #(slot1: slot1)>
@@ -46,7 +48,7 @@ WriteOnceSlotTest >> testWriteAndRead [
 	self assert: object slot1 equals: 3
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WriteOnceSlotTest >> testWriteTwice [
 	| slot object |
 	<ignoreNotImplementedSelectors: #(slot1: slot1)>

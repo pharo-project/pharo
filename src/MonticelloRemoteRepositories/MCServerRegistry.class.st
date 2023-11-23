@@ -2,31 +2,32 @@
 Registry for metacello servers
 "
 Class {
-	#name : #MCServerRegistry,
-	#superclass : #Object,
+	#name : 'MCServerRegistry',
+	#superclass : 'Object',
 	#instVars : [
 		'registry'
 	],
 	#classInstVars : [
 		'uniqueInstance'
 	],
-	#category : #MonticelloRemoteRepositories
+	#category : 'MonticelloRemoteRepositories',
+	#package : 'MonticelloRemoteRepositories'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MCServerRegistry class >> uniqueInstance [
 
 	^ uniqueInstance ifNil: [ uniqueInstance := self new ].
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MCServerRegistry >> initialize [
 
 	super initialize.
 	registry := Dictionary new.
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 MCServerRegistry >> on: repositoryUrl beUser: nameString withPassword: passwordString [
 
 	| credentials |
@@ -34,7 +35,7 @@ MCServerRegistry >> on: repositoryUrl beUser: nameString withPassword: passwordS
 	registry at: repositoryUrl put: credentials.
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MCServerRegistry >> repositoryAt: urlString credentialsDo: aBlock [
 
 

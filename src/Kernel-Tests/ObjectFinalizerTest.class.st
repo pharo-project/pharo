@@ -1,10 +1,12 @@
 Class {
-	#name : #ObjectFinalizerTest,
-	#superclass : #TestCase,
-	#category : #'Kernel-Tests-Finalization'
+	#name : 'ObjectFinalizerTest',
+	#superclass : 'TestCase',
+	#category : 'Kernel-Tests-Finalization',
+	#package : 'Kernel-Tests',
+	#tag : 'Finalization'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 ObjectFinalizerTest >> testFinalizationOfMultipleResources [
 	"Test that finalizers for multiple resources registered will be ran when
 	object is finalized"
@@ -25,6 +27,11 @@ ObjectFinalizerTest >> testFinalizationOfMultipleResources [
 	self deny: resource2 first.
 	"Trigger finalization"
 	objToFinalize := nil.
+
+	"Many finalizers on the same object are triggered one at a time.
+	When the GC triggers one finalizer, the reference becomes strong and it cannot trigger the second one.
+	=> Run two GCs to trigger both finalizers."
+	Smalltalk garbageCollect.
 	Smalltalk garbageCollect.
 	self assert: resource1 first.
 	self assert: resource2 first

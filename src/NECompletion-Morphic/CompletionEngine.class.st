@@ -16,8 +16,8 @@ I'm invoked before and after a keystroke. Check method `handleKeystrokeBefore: e
 The completion occurs in specific character position. The editor is responsible for determining such positions: look at senders of `atCompletionPosition`.
 "
 Class {
-	#name : #CompletionEngine,
-	#superclass : #Object,
+	#name : 'CompletionEngine',
+	#superclass : 'Object',
 	#instVars : [
 		'contextClass',
 		'menuMorph',
@@ -29,31 +29,32 @@ Class {
 	#classVars : [
 		'ContextClass'
 	],
-	#category : #'NECompletion-Morphic'
+	#category : 'NECompletion-Morphic',
+	#package : 'NECompletion-Morphic'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompletionEngine class >> contextClass [
 	^ContextClass ifNil: [ CompletionContext ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompletionEngine class >> contextClass: aClass [
 	ContextClass := aClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompletionEngine class >> isCompletionEnabled [
 	^NECPreferences enabled
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 CompletionEngine >> browse [
 
-	menuMorph ifNil: [ ^ false ] ifNotNil: [ ^ menuMorph browse ]
+	^ menuMorph ifNil: [ false ] ifNotNil: [ menuMorph browse ]
 ]
 
-{ #category : #'menu morph' }
+{ #category : 'menu morph' }
 CompletionEngine >> closeMenu [
 	self stopCompletionDelay.
 	menuMorph
@@ -61,14 +62,14 @@ CompletionEngine >> closeMenu [
 	menuMorph := nil
 ]
 
-{ #category : #replacement }
+{ #category : 'replacement' }
 CompletionEngine >> completionToken [
 
 	"Return the word just before the caret"
 	^ (self editor text copyFrom: self completionTokenStart to: self editor caret - 1) asString
 ]
 
-{ #category : #replacement }
+{ #category : 'replacement' }
 CompletionEngine >> completionTokenStart [
 	"This is the position in the editor where the completion token starts"
 	self editor caret <= 1 ifTrue: [ ^ self editor caret ].
@@ -76,23 +77,23 @@ CompletionEngine >> completionTokenStart [
 	^ self editor previousWord: self editor caret
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompletionEngine >> context [
 	^context ifNil: [ context := self createContext ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 CompletionEngine >> contextClass [
 
 	^ contextClass ifNil: [ self class contextClass ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompletionEngine >> contextClass: aClass [
 	contextClass := aClass
 ]
 
-{ #category : #'menu morph' }
+{ #category : 'menu morph' }
 CompletionEngine >> createContext [
 
 	| class |
@@ -104,18 +105,18 @@ CompletionEngine >> createContext [
 		position: editor caret - 1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompletionEngine >> editor [
 	^ editor
 ]
 
-{ #category : #keyboard }
+{ #category : 'keyboard' }
 CompletionEngine >> handleKeyDownAfter: aKeyboardEvent editor: aParagraphEditor [
 
 	^ self updateCompletionAfterEdition: aParagraphEditor
 ]
 
-{ #category : #keyboard }
+{ #category : 'keyboard' }
 CompletionEngine >> handleKeyDownBefore: aKeyboardEvent editor: anEditor [
 	"I return a boolean.
 	true when I have handled the event and no futher processing is needed by the caller.
@@ -178,13 +179,13 @@ CompletionEngine >> handleKeyDownBefore: aKeyboardEvent editor: anEditor [
 	^ false
 ]
 
-{ #category : #keyboard }
+{ #category : 'keyboard' }
 CompletionEngine >> handleKeystrokeAfter: aKeyboardEvent editor: aParagraphEditor [
 
 	^ self updateCompletionAfterEdition: aParagraphEditor
 ]
 
-{ #category : #keyboard }
+{ #category : 'keyboard' }
 CompletionEngine >> handleKeystrokeBefore: aKeyboardEvent editor: anEditor [
 	"I return a boolean.
 	true when I have handled the event and no futher processing is needed by the caller.
@@ -209,7 +210,7 @@ CompletionEngine >> handleKeystrokeBefore: aKeyboardEvent editor: anEditor [
 	^ false
 ]
 
-{ #category : #keyboard }
+{ #category : 'keyboard' }
 CompletionEngine >> handleKeystrokeWithoutMenu: aKeyboardEvent [
 	"I handle resetting the completion menu, and I return true when I handle an event."
 
@@ -223,35 +224,35 @@ CompletionEngine >> handleKeystrokeWithoutMenu: aKeyboardEvent [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CompletionEngine >> hasCompletionContext [
 
-	^ context notNil
+	^ context isNotNil
 ]
 
-{ #category : #'menu morph' }
+{ #category : 'menu morph' }
 CompletionEngine >> hasDetail [
 
 	^ self isMenuOpen and: [ menuMorph hasDetail ]
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 CompletionEngine >> hideDetail [
 
 	menuMorph hideDetail
 ]
 
-{ #category : #keyboard }
+{ #category : 'keyboard' }
 CompletionEngine >> invalidateEditorMorph [
 		editor morph invalidRect: editor morph bounds
 ]
 
-{ #category : #'menu morph' }
+{ #category : 'menu morph' }
 CompletionEngine >> isMenuOpen [
-	^menuMorph notNil
+	^menuMorph isNotNil
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CompletionEngine >> isScripting [
 
 	^ self editor
@@ -259,7 +260,7 @@ CompletionEngine >> isScripting [
 		ifNil: [ false ]
 ]
 
-{ #category : #keyboard }
+{ #category : 'keyboard' }
 CompletionEngine >> leftArrow [
 	"I return false when the arrow is at its left-most position.
 	Otherwise i return true."
@@ -271,18 +272,18 @@ CompletionEngine >> leftArrow [
 	^ true
 ]
 
-{ #category : #'menu morph' }
+{ #category : 'menu morph' }
 CompletionEngine >> menuClosed [
 	menuMorph := nil.
 	context := nil
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 CompletionEngine >> menuMorphClass [
 	^ NECMenuMorph
 ]
 
-{ #category : #keyboard }
+{ #category : 'keyboard' }
 CompletionEngine >> newSmartCharacterInsertionStringForLeft: left right: right [
 	((NECPreferences smartCharactersWithDoubleSpace includes: left) or: [
 	(NECPreferences smartCharactersWithDoubleSpace includes: right)])
@@ -297,34 +298,34 @@ CompletionEngine >> newSmartCharacterInsertionStringForLeft: left right: right [
 	^ String with: left with: right
 ]
 
-{ #category : #'menu morph' }
+{ #category : 'menu morph' }
 CompletionEngine >> openMenu [
 
 	self openMenuForced: true
 
 ]
 
-{ #category : #'menu morph' }
+{ #category : 'menu morph' }
 CompletionEngine >> openMenuForced: forced [
 
 	| theMenu theContext |
 	self stopCompletionDelay.
-
+	
 	theContext := self createContext.
 	(forced or: [ theContext hasEntries ]) ifFalse: [ ^ self ].
 	context := theContext.
 	
 	theMenu := self menuMorphClass
-				engine: self
-				position: (editor selectionPosition: self completionToken).
-
-	theMenu isClosed ifFalse: [ 
-		menuMorph := theMenu.
-		NECPreferences showCompletionDetails ifTrue: [ 
-			theMenu showDetail ] ]
+		           engine: self
+		           position:
+		           (editor selectionPosition: self completionToken).
+		
+	theMenu isClosed ifTrue: [ ^ self ].
+	menuMorph := theMenu.
+	NECPreferences showCompletionDetails ifTrue: [ theMenu showDetail ]
 ]
 
-{ #category : #replacement }
+{ #category : 'replacement' }
 CompletionEngine >> replaceTokenInEditorWith: aString [
 	"Main API with the completion context.
 
@@ -367,7 +368,7 @@ CompletionEngine >> replaceTokenInEditorWith: aString [
 	self editor morph invalidRect: self editor morph bounds
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 CompletionEngine >> resetCompletionDelay [
 	"Open the popup after 100ms and only after certain characters"
 	self stopCompletionDelay.
@@ -381,7 +382,7 @@ CompletionEngine >> resetCompletionDelay [
 		] fork
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 CompletionEngine >> setEditor: anObject [
 	editor ifNotNil: [
 		"make sure we unsubscribe from old editor"
@@ -391,13 +392,13 @@ CompletionEngine >> setEditor: anObject [
 	editor morph onAnnouncement: MorphClosePopups send: #closeMenu to: self
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 CompletionEngine >> showDetail [
 
 	menuMorph showDetail
 ]
 
-{ #category : #keyboard }
+{ #category : 'keyboard' }
 CompletionEngine >> smartBackspace [
 	| opposite currentText currentEditor smartCharacter |
 
@@ -432,12 +433,12 @@ CompletionEngine >> smartBackspace [
 	^ true
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 CompletionEngine >> smartCharacterOppositeOf: char ifAbsent: aBlock [
 	^(self smartCharactersMapping at: char ifAbsent: [ ^aBlock value ]) key
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 CompletionEngine >> smartCharacterPairFor: char ifAbsent: aBlock [
 	| left right |
 
@@ -449,12 +450,12 @@ CompletionEngine >> smartCharacterPairFor: char ifAbsent: aBlock [
  	^ left -> right
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 CompletionEngine >> smartCharacterShouldClose: char [
 	^(self smartCharactersMapping at: char ifAbsent: [ ^false ]) value
 ]
 
-{ #category : #keyboard }
+{ #category : 'keyboard' }
 CompletionEngine >> smartCharacterWithEvent: anEvent [
 	"char is extracted from anEvent, anEvent is passed because we may need it.
 	We may remove char if this is not costly."
@@ -499,17 +500,17 @@ CompletionEngine >> smartCharacterWithEvent: anEvent [
 	^ true
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 CompletionEngine >> smartCharacters [
 	^ NECPreferences smartCharacters
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 CompletionEngine >> smartCharactersMapping [
 	^ NECPreferences smartCharactersMapping
 ]
 
-{ #category : #keyboard }
+{ #category : 'keyboard' }
 CompletionEngine >> smartInputWithEvent: anEvent [
 	"aCharacter is extracted from anEvent, anEvent is passed because we may need it.
 	We may remove aCharacter if this is not costly."
@@ -520,7 +521,7 @@ CompletionEngine >> smartInputWithEvent: anEvent [
 	^ self smartCharacterWithEvent: anEvent
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 CompletionEngine >> smartInverseMapping [
 	^ inverseMapping ifNil: [
 		inverseMapping := Dictionary new.
@@ -529,7 +530,7 @@ CompletionEngine >> smartInverseMapping [
 		inverseMapping ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 CompletionEngine >> smartNeedExtraRemoveIn: currentText for: opposite [
 	"Test if smart remove need to remove an extra character when the smart character
 	 is equal to its opposite"
@@ -539,7 +540,7 @@ CompletionEngine >> smartNeedExtraRemoveIn: currentText for: opposite [
 	^true
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 CompletionEngine >> smartNeedExtraRemoveIn: currentText for: smartCharacter opposite: opposite at: position [
 	"Test if we need to remove an extra character when removing a smart character (any kind of smart character)"
 
@@ -557,7 +558,7 @@ CompletionEngine >> smartNeedExtraRemoveIn: currentText for: smartCharacter oppo
 	^ true
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 CompletionEngine >> smartNeedExtraRemovePairedIn: currentText for: smartCharacter opposite: opposite at: position [
 	"Test if we need to remove an extra character when removed a paired smart character.
 	 A paired smart character is any smart character who has an opposite who is diferent to itself: [], ()"
@@ -585,7 +586,7 @@ CompletionEngine >> smartNeedExtraRemovePairedIn: currentText for: smartCharacte
 	^true
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 CompletionEngine >> smartStartIndexIn: currentText for: smartCharacter  opposite: opposite  at: position [
 
 	(position - 1) to: 1 by: -1 do: [ :index | | char |
@@ -596,14 +597,14 @@ CompletionEngine >> smartStartIndexIn: currentText for: smartCharacter  opposite
 	^0
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 CompletionEngine >> stopCompletionDelay [
 
     completionDelay ifNotNil: [
         completionDelay isTerminating ifFalse: [ completionDelay terminate ] ]
 ]
 
-{ #category : #keyboard }
+{ #category : 'keyboard' }
 CompletionEngine >> updateCompletionAfterEdition: aParagraphEditor [
 
 	(aParagraphEditor isNil or: [ self isMenuOpen not ]) ifTrue: [

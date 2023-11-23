@@ -1,6 +1,6 @@
-Extension { #name : #PositionableStream }
+Extension { #name : 'PositionableStream' }
 
-{ #category : #'*Compression' }
+{ #category : '*Compression' }
 PositionableStream >> asZLibReadStream [
 	^ZLibReadStream on: collection from: position+1 to: readLimit
 ]

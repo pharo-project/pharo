@@ -2,12 +2,14 @@
 Testing class
 "
 Class {
-	#name : #PaCasesMatrixTest,
-	#superclass : #PaAbstractExampleTest,
-	#category : #'ParametrizedTests-Tests'
+	#name : 'PaCasesMatrixTest',
+	#superclass : 'PaAbstractExampleTest',
+	#category : 'ParametrizedTests-Tests',
+	#package : 'ParametrizedTests',
+	#tag : 'Tests'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 PaCasesMatrixTest class >> testParameters [
 
 	^ ParametrizedTestMatrix new

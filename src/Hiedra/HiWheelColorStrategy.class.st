@@ -2,42 +2,44 @@
 I map nodes and links of a ruler to colors depending on the branches. Check HiBranchMapping to see how to decide what's the branch of a node or link.
 "
 Class {
-	#name : #HiWheelColorStrategy,
-	#superclass : #HiAbstractColorStrategy,
+	#name : 'HiWheelColorStrategy',
+	#superclass : 'HiAbstractColorStrategy',
 	#instVars : [
 		'branchMapping',
 		'colorByBranch',
 		'colorWheel'
 	],
-	#category : #'Hiedra-UI'
+	#category : 'Hiedra-UI',
+	#package : 'Hiedra',
+	#tag : 'UI'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 HiWheelColorStrategy >> branchMapping [
 	^ branchMapping
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiWheelColorStrategy >> colorForLink: aHiLink [
 	^ colorByBranch at: (branchMapping branchAtLink: aHiLink)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiWheelColorStrategy >> colorForNode: aHiNode [
 	^ colorByBranch at: (branchMapping branchAtNode: aHiNode)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiWheelColorStrategy >> colorWheel [
 	^ colorWheel ifNil: [ colorWheel := self defaultColorWheel ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiWheelColorStrategy >> colorWheel: aCollectionOfColors [
 	colorWheel := aCollectionOfColors
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiWheelColorStrategy >> defaultColorWheel [
 	| referenceColor |
 	referenceColor := Smalltalk ui theme textColor.
@@ -48,12 +50,12 @@ HiWheelColorStrategy >> defaultColorWheel [
 		collect: [ :each | each mixed: 0.75 with: referenceColor ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiWheelColorStrategy >> defaultColorWheelSize [
 	^ 10
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 HiWheelColorStrategy >> newColorGenerator [
 	^ Generator
 		on: [ :generator |
@@ -63,7 +65,7 @@ HiWheelColorStrategy >> newColorGenerator [
 			nextIndex := (nextIndex + 1) \\ self colorWheel size + 1 ] repeat ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiWheelColorStrategy >> ruler: aHiRuler [
 	aHiRuler ifNil: [ ^self ].
 

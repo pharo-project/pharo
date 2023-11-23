@@ -14,20 +14,24 @@ To get back to the normal situation, execute
   ChangesLog reset.
 "
 Class {
-	#name : #NoChangesLog,
-	#superclass : #ChangesLog,
-	#category : #'System-Sources-Changes-Log'
+	#name : 'NoChangesLog',
+	#superclass : 'ChangesLog',
+	#category : 'System-Sources-Changes-Log',
+	#package : 'System-Sources',
+	#tag : 'Changes-Log'
 }
 
-{ #category : #singleton }
+{ #category : 'singleton' }
 NoChangesLog class >> install [
+
+	self reset.
 	DefaultInstance := self new
 ]
 
-{ #category : #logging }
+{ #category : 'logging' }
 NoChangesLog >> logChange: aStringOrText [
 ]
 
-{ #category : #logging }
+{ #category : 'logging' }
 NoChangesLog >> logSnapshot: save andQuit: quit [
 ]

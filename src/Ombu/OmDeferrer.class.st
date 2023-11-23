@@ -2,8 +2,8 @@
 I schedule and postpone a message send until the specified duration passed.
 "
 Class {
-	#name : #OmDeferrer,
-	#superclass : #Object,
+	#name : 'OmDeferrer',
+	#superclass : 'Object',
 	#instVars : [
 		'process',
 		'lastSchedule',
@@ -11,10 +11,12 @@ Class {
 		'selector',
 		'object'
 	],
-	#category : #'Ombu-Common'
+	#category : 'Ombu-Common',
+	#package : 'Ombu',
+	#tag : 'Common'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 OmDeferrer class >> initialize [
 	"
 	self initialize
@@ -22,13 +24,13 @@ OmDeferrer class >> initialize [
 	SessionManager default registerUserClassNamed: self name
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OmDeferrer class >> new [
 
 	^ self shouldNotImplement
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OmDeferrer class >> send: selector to: object after: aDuration [
 
 	^ self basicNew
@@ -37,25 +39,25 @@ OmDeferrer class >> send: selector to: object after: aDuration [
 		duration: aDuration
 ]
 
-{ #category : #'system startup' }
+{ #category : 'system startup' }
 OmDeferrer class >> shutDown: quitting [
 	"Force my instances to flush before image quits"
 
 	self allInstancesDo: [:each | each flush ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmDeferrer >> duration [
 	^ duration
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmDeferrer >> duration: aDuration [
 
 	duration := aDuration
 ]
 
-{ #category : #scheduling }
+{ #category : 'scheduling' }
 OmDeferrer >> flush [
 
 	process ifNotNil: [
@@ -64,7 +66,7 @@ OmDeferrer >> flush [
 	]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OmDeferrer >> initializeWithSelector: aSelector object: anObject duration: aDuration [
 
 	self initialize.
@@ -73,17 +75,17 @@ OmDeferrer >> initializeWithSelector: aSelector object: anObject duration: aDura
 	duration := aDuration
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmDeferrer >> object [
 	^ object
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmDeferrer >> object: anObject [
 	object := anObject
 ]
 
-{ #category : #scheduling }
+{ #category : 'scheduling' }
 OmDeferrer >> runMessageProcess [
 	process := [
 		"Loop until enough time passed since last #schedule"
@@ -95,7 +97,7 @@ OmDeferrer >> runMessageProcess [
 	] fork
 ]
 
-{ #category : #scheduling }
+{ #category : 'scheduling' }
 OmDeferrer >> schedule [
 	lastSchedule := DateAndTime now.
 
@@ -105,17 +107,17 @@ OmDeferrer >> schedule [
 		DefaultExecutionEnvironment beActiveDuring: [ self runMessageProcess ]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmDeferrer >> selector [
 	^ selector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmDeferrer >> selector: anObject [
 	selector := anObject
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OmDeferrer >> sendMessage [
 
 	object perform: selector

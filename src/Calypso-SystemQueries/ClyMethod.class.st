@@ -5,12 +5,14 @@ So when Calypso build browser items for methods their type is supposed to be me.
 Look at class references to discover all compatible method definitions.
 "
 Class {
-	#name : #ClyMethod,
-	#superclass : #Object,
-	#category : #'Calypso-SystemQueries-Domain'
+	#name : 'ClyMethod',
+	#superclass : 'Object',
+	#category : 'Calypso-SystemQueries-Domain',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Domain'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyMethod class >> checkCalypsoItem: aCompiledMethod isEqualTo: anotherCompiledMethod [
 	aCompiledMethod == anotherCompiledMethod ifTrue: [ ^true ].
 
@@ -18,7 +20,7 @@ ClyMethod class >> checkCalypsoItem: aCompiledMethod isEqualTo: anotherCompiledM
 		and: [ aCompiledMethod selector == anotherCompiledMethod selector ]
 ]
 
-{ #category : #'item convertation' }
+{ #category : 'item convertation' }
 ClyMethod class >> convertToCalypsoBrowserItem: aMethod [
 
 	| item |
@@ -27,24 +29,24 @@ ClyMethod class >> convertToCalypsoBrowserItem: aMethod [
 	^item
 ]
 
-{ #category : #'item decoration' }
+{ #category : 'item decoration' }
 ClyMethod class >> decorateBrowserItem: aBrowserItem by: anEnvironmentPlugin [
 	^ anEnvironmentPlugin
 		decorateBrowserItem: aBrowserItem
 		ofMethod: aBrowserItem actualObject
 ]
 
-{ #category : #sorting }
+{ #category : 'sorting' }
 ClyMethod class >> defaultSortFunctionForCalypso [
 	^ClySortMethodBySelectorFunction ascending
 ]
 
-{ #category : #sorting }
+{ #category : 'sorting' }
 ClyMethod class >> itemsSortOrderForCalypso [
 	^1
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyMethod class >> match: aMethod forQueryBrowserFilter: aQueryBrowserFilter [
 
 	(aQueryBrowserFilter matchesString: aMethod selector) ifTrue: [ ^true ].
@@ -52,7 +54,7 @@ ClyMethod class >> match: aMethod forQueryBrowserFilter: aQueryBrowserFilter [
 	^aQueryBrowserFilter matchesString: aMethod package name
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyMethod class >> printSystemPathTo: aMethod [
 	^aMethod origin package name, ' / ' , aMethod origin name
 ]

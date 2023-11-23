@@ -1,6 +1,6 @@
-Extension { #name : #CoonsPaintPatch }
+Extension { #name : 'CoonsPaintPatch' }
 
-{ #category : #'*Athens-Cairo' }
+{ #category : '*Athens-Cairo' }
 CoonsPaintPatch >> addToCairoMeshGradientPaint: meshGradientPaint [
 	meshGradientPaint
 		beginPatch;

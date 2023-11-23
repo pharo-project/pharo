@@ -2,48 +2,49 @@
 A FinderMethodNode is a node used by the FinderUI's tree representing a Method
 "
 Class {
-	#name : #FinderMethodNode,
-	#superclass : #FinderNode,
-	#category : #'Tool-Finder-UI'
+	#name : 'FinderMethodNode',
+	#superclass : 'FinderNode',
+	#category : 'Tool-Finder-UI',
+	#package : 'Tool-Finder-UI'
 }
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 FinderMethodNode >> addInspectMenuItem: menu [
 
 	self hasParentNode ifTrue: [ ^ super addInspectMenuItem: menu ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FinderMethodNode >> browse [
 	self item isSymbol	ifTrue: [
 		^ SystemNavigation new browseAllImplementorsOf: self item ].
 	self item browse
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FinderMethodNode >> browseClass [
 
 	^ Smalltalk tools browser openOnClass: self parentNode item selector: self item
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FinderMethodNode >> browseImplementors [
 	SystemNavigation new browseAllImplementorsOf: self selector
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FinderMethodNode >> browseSenders [
 
 	SystemNavigation new browseSendersOf: self selector name: 'Senders of ', self selector autoSelect: self selector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FinderMethodNode >> childNodeClassFromItem: anItem [
 	"I answer the class of my children nodes (if I have some)"
 	^ FinderClassNode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FinderMethodNode >> childrenItems [
 	"I search the children, if I have not got any, I call my super method"
 
@@ -54,18 +55,18 @@ FinderMethodNode >> childrenItems [
 	^ self model resultDictionary at: self item ifAbsent: [ ^ super childrenItems ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FinderMethodNode >> inspectItem [
 	self hasParentNode ifTrue: [ (self parentNode item compiledMethodAt: self item) inspect ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FinderMethodNode >> isSingle [
 
 	^ false
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 FinderMethodNode >> keyDown: anEvent [
 	(anEvent controlKeyPressed or: [ anEvent commandKeyPressed ]) ifFalse: [ ^ false ].
 	anEvent keyCharacter == $n ifTrue: [ ^ self browseSenders ].
@@ -73,7 +74,7 @@ FinderMethodNode >> keyDown: anEvent [
 	^ super keyDown: anEvent
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 FinderMethodNode >> menu: menu shifted: aBoolean [
 
 	menu
@@ -89,7 +90,7 @@ FinderMethodNode >> menu: menu shifted: aBoolean [
 	^ super menu: menu shifted: aBoolean
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FinderMethodNode >> selector [
 	^ self item
 ]

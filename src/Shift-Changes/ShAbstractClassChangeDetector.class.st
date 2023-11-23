@@ -10,8 +10,8 @@ By default I have a  comparer. This is a block to compare the values from the ol
 The subclasses can provide another comparer if they need to. 
 "
 Class {
-	#name : #ShAbstractClassChangeDetector,
-	#superclass : #ShAbstractChangeDetector,
+	#name : 'ShAbstractClassChangeDetector',
+	#superclass : 'ShAbstractChangeDetector',
 	#instVars : [
 		'oldValue',
 		'newValue',
@@ -19,16 +19,17 @@ Class {
 		'classAccessor',
 		'comparer'
 	],
-	#category : #'Shift-Changes'
+	#category : 'Shift-Changes',
+	#package : 'Shift-Changes'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ShAbstractClassChangeDetector class >> isAbstract [
 
 	^ self == ShAbstractClassChangeDetector
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ShAbstractClassChangeDetector >> compareClass [
 	oldValue := classAccessor value: builder oldClass.
 	newValue := builderAccessor value: builder.
@@ -38,7 +39,7 @@ ShAbstractClassChangeDetector >> compareClass [
 		ifFalse: [ self newChanges ]
 ]
 
-{ #category : #changes }
+{ #category : 'changes' }
 ShAbstractClassChangeDetector >> compareSlotCollection: a with: b [
 
 	(a size = b size) ifFalse: [ ^ false].
@@ -49,13 +50,13 @@ ShAbstractClassChangeDetector >> compareSlotCollection: a with: b [
 	^ true
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ShAbstractClassChangeDetector >> initialize [
 	super initialize.
 	comparer := [:a :b | a = b ]
 ]
 
-{ #category : #changes }
+{ #category : 'changes' }
 ShAbstractClassChangeDetector >> newChanges [
 	^ {ShClassChanged new
 		builder: builder;

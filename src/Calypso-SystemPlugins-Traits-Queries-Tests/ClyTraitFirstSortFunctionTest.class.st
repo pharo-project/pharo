@@ -1,10 +1,11 @@
 Class {
-	#name : #ClyTraitFirstSortFunctionTest,
-	#superclass : #ClySortFunctionTest,
-	#category : #'Calypso-SystemPlugins-Traits-Queries-Tests'
+	#name : 'ClyTraitFirstSortFunctionTest',
+	#superclass : 'ClySortFunctionTest',
+	#category : 'Calypso-SystemPlugins-Traits-Queries-Tests',
+	#package : 'Calypso-SystemPlugins-Traits-Queries-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyTraitFirstSortFunctionTest >> testAscending [
 
 	function := ClyTraitFirstSortFunction ascending.

@@ -17,15 +17,16 @@ I implement the following API or resources
 Part of Zinc HTTP Components.
 "
 Class {
-	#name : #ZnImageExampleDelegate,
-	#superclass : #Object,
+	#name : 'ZnImageExampleDelegate',
+	#superclass : 'Object',
 	#instVars : [
 		'image'
 	],
-	#category : #'Zinc-HTTP-Examples'
+	#category : 'Zinc-HTTP-Examples',
+	#package : 'Zinc-HTTP-Examples'
 }
 
-{ #category : #public }
+{ #category : 'public' }
 ZnImageExampleDelegate class >> installInDefaultServer [
 	"Assuming the default server has the default delegate,
 	install ourself under /image"
@@ -34,19 +35,19 @@ ZnImageExampleDelegate class >> installInDefaultServer [
 		map: 'image' to: self new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnImageExampleDelegate >> downloadPharoLogo [
 	^ ZnClient new beOneShot
 		get: 'http://pharo.org/web/files/pharo.png';
 		entity
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnImageExampleDelegate >> form [
 	^ self formForImageEntity: self image
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnImageExampleDelegate >> formForImageEntity: imageEntity [
 	"Parse the actual bytes of imageEntity and return a Form."
 
@@ -58,7 +59,7 @@ ZnImageExampleDelegate >> formForImageEntity: imageEntity [
 	^ parser nextImage
 ]
 
-{ #category : #'request handling' }
+{ #category : 'request handling' }
 ZnImageExampleDelegate >> handleGetRequest: request [
 	"GET /image - Serve an HTML page showing our image and a form to upload a new one.
 	GET /image?raw=true - Serve the last image directly"
@@ -70,7 +71,7 @@ ZnImageExampleDelegate >> handleGetRequest: request [
 			ZnResponse ok: self image ]
 ]
 
-{ #category : #'request handling' }
+{ #category : 'request handling' }
 ZnImageExampleDelegate >> handlePostRequest: request [
 	"POST /image <multipart form data with file part> - change the image and show the result.
 	Do full error checking before accepting the newly uploaded image"
@@ -83,14 +84,14 @@ ZnImageExampleDelegate >> handlePostRequest: request [
 		partNamed: #file
 		ifNone: badRequest.
 	newImage := part entity.
-	(newImage notNil and: [ newImage contentType matches: 'image/*' asZnMimeType ])
+	(newImage isNotNil and: [ newImage contentType matches: 'image/*' asZnMimeType ])
 		ifFalse: badRequest.
 	[ self formForImageEntity: newImage ] on: Error do: badRequest.
 	image := newImage.
 	^ ZnResponse redirect: #image
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 ZnImageExampleDelegate >> handleRequest: request [
 	"Dispatch between GET and POST on /image"
 
@@ -105,7 +106,7 @@ ZnImageExampleDelegate >> handleRequest: request [
 	^ ZnResponse notFound: request uri
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnImageExampleDelegate >> html [
 	^ ZnHtmlOutputStream streamContents: [ :html |
 		 html page: 'Image' do: [
@@ -119,7 +120,7 @@ ZnImageExampleDelegate >> html [
 						tag: #input attributes: #(type submit value Upload) ] ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnImageExampleDelegate >> image [
 	"Return the current image entity.
 	Use a default when not yet set."
@@ -127,7 +128,7 @@ ZnImageExampleDelegate >> image [
 	^ image ifNil: [ image := self downloadPharoLogo ]
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 ZnImageExampleDelegate >> value: request [
 	"I implement the generic #value: message as equivalent to #handleRequest:"
 

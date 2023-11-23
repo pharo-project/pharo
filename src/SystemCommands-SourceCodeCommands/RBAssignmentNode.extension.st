@@ -1,6 +1,6 @@
-Extension { #name : #RBAssignmentNode }
+Extension { #name : 'RBAssignmentNode' }
 
-{ #category : #'*SystemCommands-SourceCodeCommands' }
+{ #category : '*SystemCommands-SourceCodeCommands' }
 RBAssignmentNode >> displaySourceCode [
 	^ ':='
 ]

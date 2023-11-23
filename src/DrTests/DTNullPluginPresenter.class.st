@@ -1,15 +1,17 @@
 Class {
-	#name : #DTNullPluginPresenter,
-	#superclass : #SpPresenter,
-	#category : #'DrTests-Spec'
+	#name : 'DTNullPluginPresenter',
+	#superclass : 'SpPresenter',
+	#category : 'DrTests-Spec',
+	#package : 'DrTests',
+	#tag : 'Spec'
 }
 
-{ #category : #layout }
+{ #category : 'layout' }
 DTNullPluginPresenter >> defaultLayout [
 
 	^ SpBoxLayout newHorizontal
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 DTNullPluginPresenter >> updateUI [
 ]

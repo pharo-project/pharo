@@ -20,28 +20,30 @@ s theNest value: 42.
 And the value will be set in the StructA instance, not in a copy as before. 
 "
 Class {
-	#name : #FFIExternalStructureReferenceHandle,
-	#superclass : #Object,
+	#name : 'FFIExternalStructureReferenceHandle',
+	#superclass : 'Object',
 	#instVars : [
 		'handle',
 		'startOffset'
 	],
-	#category : #'UnifiedFFI-External-StructureHandling'
+	#category : 'UnifiedFFI-External-StructureHandling',
+	#package : 'UnifiedFFI',
+	#tag : 'External-StructureHandling'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FFIExternalStructureReferenceHandle class >> handle: aHandle offset: aNumber [
 	^ self basicNew
 		initializeHandle: aHandle offset: aNumber;
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FFIExternalStructureReferenceHandle class >> new [
 	self error: 'Use #handle:offset:'
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 FFIExternalStructureReferenceHandle >> asExternalPointer [
 	"Convert the receiver assuming that it describes a pointer to an object."
 	^(ExternalAddress new)
@@ -52,192 +54,192 @@ FFIExternalStructureReferenceHandle >> asExternalPointer [
 	yourself
 ]
 
-{ #category : #compatibility }
+{ #category : 'compatibility' }
 FFIExternalStructureReferenceHandle >> beNull [
 	"this is referenced so this operation does not has sense.
 	 Included to provide polymophism"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalStructureReferenceHandle >> booleanAt: byteOffset [
 	^ handle booleanAt: startOffset + byteOffset
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalStructureReferenceHandle >> booleanAt: byteOffset put: value [
 	^ handle booleanAt: startOffset + byteOffset put: value
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 FFIExternalStructureReferenceHandle >> copyFrom: start to: stop [
 	^ handle copyFrom: start + startOffset to: stop + startOffset
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalStructureReferenceHandle >> doubleAt: byteOffset [
 	^ handle doubleAt: startOffset + byteOffset
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalStructureReferenceHandle >> doubleAt: byteOffset put: value [
 	^ handle doubleAt: startOffset + byteOffset put: value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalStructureReferenceHandle >> floatAt: byteOffset [
 	^ handle floatAt: startOffset + byteOffset
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalStructureReferenceHandle >> floatAt: byteOffset put: value [
 	^ handle floatAt: startOffset + byteOffset put: value
 ]
 
-{ #category : #compatibility }
+{ #category : 'compatibility' }
 FFIExternalStructureReferenceHandle >> free [
 	"this is referenced so this operation does not has sense.
 	 Included to provide polymophism"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalStructureReferenceHandle >> getHandle [
 	^ handle
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FFIExternalStructureReferenceHandle >> initializeHandle: aHandle offset: aNumber [
 	self initialize.
 	handle := aHandle.
 	startOffset := aNumber - 1 "starting offset is zero based"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalStructureReferenceHandle >> integerAt: byteOffset put: value size: nBytes signed: aBoolean [
 	^ handle integerAt: startOffset + byteOffset put: value size: nBytes signed: aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalStructureReferenceHandle >> integerAt: byteOffset size: nBytes signed: aBoolean [
 	^ handle integerAt: startOffset + byteOffset size: nBytes signed: aBoolean
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FFIExternalStructureReferenceHandle >> isExternalAddress [
 	^ handle isExternalAddress
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FFIExternalStructureReferenceHandle >> isNull [
 	self flag: #pharoTodo. "This is probably wrong"
 	^ handle isNull
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalStructureReferenceHandle >> platformLongAt: byteOffset [
 	^ handle platformLongAt: startOffset + byteOffset
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalStructureReferenceHandle >> platformLongAt: byteOffset put: value [
 	^ handle platformLongAt: startOffset + byteOffset put: value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalStructureReferenceHandle >> platformSizeTAt: byteOffset [
 	^ handle platformSizeTAt: startOffset + byteOffset
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalStructureReferenceHandle >> platformSizeTAt: byteOffset put: aValue [
 	^ handle platformSizeTAt: startOffset + byteOffset put: aValue
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalStructureReferenceHandle >> platformUnsignedLongAt: byteOffset [
 	^ handle platformUnsignedLongAt: startOffset + byteOffset
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalStructureReferenceHandle >> platformUnsignedLongAt: byteOffset put: value [
 	^ handle platformUnsignedLongAt: startOffset + byteOffset put: value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalStructureReferenceHandle >> pointerAt: byteOffset [
 	^ handle pointerAt: startOffset + byteOffset
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalStructureReferenceHandle >> pointerAt: byteOffset put: value [
 	^ handle pointerAt: startOffset + byteOffset put: value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalStructureReferenceHandle >> referenceStructAt: byteOffset length: length [
 	^ handle referenceStructAt: startOffset + byteOffset length: length
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalStructureReferenceHandle >> replaceFrom: start to: stop with: replacement startingAt: repStart [
 	^ handle replaceFrom: start + startOffset to: stop + startOffset with: replacement startingAt: repStart
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalStructureReferenceHandle >> signedByteAt: byteOffset [
 	^ handle signedByteAt: startOffset + byteOffset
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalStructureReferenceHandle >> signedByteAt: byteOffset put: value [
 	^ handle signedByteAt: startOffset + byteOffset put: value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalStructureReferenceHandle >> signedCharAt: byteOffset [
 	^ handle signedCharAt: startOffset + byteOffset
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalStructureReferenceHandle >> signedCharAt: byteOffset put: value [
 	^ handle signedCharAt: startOffset + byteOffset put: value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalStructureReferenceHandle >> signedLongAt: byteOffset [
 	^ handle signedLongAt: startOffset + byteOffset
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalStructureReferenceHandle >> signedLongAt: byteOffset put: value [
 	^ handle signedLongAt: startOffset + byteOffset put: value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalStructureReferenceHandle >> signedLongLongAt: byteOffset [
 	^ handle signedLongLongAt: startOffset + byteOffset
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalStructureReferenceHandle >> signedLongLongAt: byteOffset put: value [
 	^ handle signedLongLongAt: startOffset + byteOffset put: value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalStructureReferenceHandle >> signedShortAt: byteOffset [
 	^ handle signedShortAt: startOffset + byteOffset
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalStructureReferenceHandle >> signedShortAt: byteOffset put: value [
 	^ handle signedShortAt: startOffset + byteOffset put: value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalStructureReferenceHandle >> structAt: byteOffset length: length [
 	^ handle structAt: startOffset + byteOffset length: length
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalStructureReferenceHandle >> structAt: byteOffset put: value length: length [
 	"Store a structure of the given length starting at the indicated byte offset."
 	1 to: length do:[:i|
@@ -245,62 +247,62 @@ FFIExternalStructureReferenceHandle >> structAt: byteOffset put: value length: l
 	^value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalStructureReferenceHandle >> unsignedByteAt: byteOffset [
 	^ handle unsignedByteAt: startOffset + byteOffset
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalStructureReferenceHandle >> unsignedByteAt: byteOffset put: value [
 	^ handle unsignedByteAt: startOffset + byteOffset put: value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalStructureReferenceHandle >> unsignedCharAt: byteOffset [
 	^ handle unsignedCharAt: startOffset + byteOffset
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalStructureReferenceHandle >> unsignedCharAt: byteOffset put: value [
 	^ handle unsignedCharAt: startOffset + byteOffset put: value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalStructureReferenceHandle >> unsignedLongAt: byteOffset [
 	^ handle unsignedLongAt: startOffset + byteOffset
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalStructureReferenceHandle >> unsignedLongAt: byteOffset put: value [
 	^ handle unsignedLongAt: startOffset + byteOffset put: value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalStructureReferenceHandle >> unsignedLongLongAt: byteOffset [
 	^ handle unsignedLongLongAt: startOffset + byteOffset
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalStructureReferenceHandle >> unsignedLongLongAt: byteOffset put: value [
 	^ handle unsignedLongLongAt: startOffset + byteOffset put: value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalStructureReferenceHandle >> unsignedShortAt: byteOffset [
 	^ handle unsignedShortAt: startOffset + byteOffset
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalStructureReferenceHandle >> unsignedShortAt: byteOffset put: value [
 	^ handle unsignedShortAt: startOffset + byteOffset put: value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalStructureReferenceHandle >> voidAt: byteOffset [
 	^ handle voidAt: startOffset + byteOffset
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalStructureReferenceHandle >> voidAt: byteOffset put: value [
 	^ handle voidAt: startOffset + byteOffset put: value
 ]

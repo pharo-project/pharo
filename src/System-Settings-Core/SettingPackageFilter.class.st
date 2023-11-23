@@ -8,28 +8,30 @@ packages
 	- The collection of PackageInfo the filter is currently using
 "
 Class {
-	#name : #SettingPackageFilter,
-	#superclass : #SettingFilter,
+	#name : 'SettingPackageFilter',
+	#superclass : 'SettingFilter',
 	#instVars : [
 		'packages'
 	],
-	#category : #'System-Settings-Core-Filter'
+	#category : 'System-Settings-Core-Filter',
+	#package : 'System-Settings-Core',
+	#tag : 'Filter'
 }
 
-{ #category : #filtering }
+{ #category : 'filtering' }
 SettingPackageFilter >> keepSettingTreeNode: aSettingNode [
 	| rp |
-	^ (rp := aSettingNode receiverPackage) notNil and: [self packages includes: rp]
+	^ (rp := aSettingNode receiverPackage) isNotNil and: [self packages includes: rp]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SettingPackageFilter >> packages [
 	"Answer the value of packages"
 
 	^ packages
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SettingPackageFilter >> packages: aCollectionOfPackageInfo [
 	"Set the value of packages"
 

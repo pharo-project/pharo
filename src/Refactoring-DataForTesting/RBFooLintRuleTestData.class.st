@@ -1,13 +1,12 @@
 Class {
-	#name : #RBFooLintRuleTestData,
-	#superclass : #RBLintRuleTestData,
-	#instVars : [
-		'result'
-	],
-	#category : #'Refactoring-DataForTesting-LittleHierarchy'
+	#name : 'RBFooLintRuleTestData',
+	#superclass : 'RBLintRuleTestData',
+	#category : 'Refactoring-DataForTesting-LittleHierarchy',
+	#package : 'Refactoring-DataForTesting',
+	#tag : 'LittleHierarchy'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : 'accessing' }
 RBFooLintRuleTestData >> foo [
 	^ 6
 ]

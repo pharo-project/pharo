@@ -2,26 +2,28 @@
 I am a critique that will propose to the user to remove a method.
 "
 Class {
-	#name : #ReRemoveMethodCritique,
-	#superclass : #ReAbstractCritique,
-	#category : #'Renraku-Critiques'
+	#name : 'ReRemoveMethodCritique',
+	#superclass : 'ReAbstractCritique',
+	#category : 'Renraku-Critiques',
+	#package : 'Renraku',
+	#tag : 'Critiques'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ReRemoveMethodCritique class >> for: anEntity selector: aSelector by: aRule [
 	^ (self for: anEntity by: aRule)
 		tinyHint: aSelector;
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReRemoveMethodCritique >> change [
 	^ (RBRefactoryChangeFactory instance)
 		removeMethod: self tinyHint
 		from: self entity
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ReRemoveMethodCritique >> providesChange [
 	^ true
 ]

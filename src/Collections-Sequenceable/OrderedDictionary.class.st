@@ -29,26 +29,28 @@ Instance Variables
 I base my implementation on a Dictionary and when I need to execute an action where the order of the values is important I use the keys in my ordered collection.
 "
 Class {
-	#name : #OrderedDictionary,
-	#superclass : #Collection,
+	#name : 'OrderedDictionary',
+	#superclass : 'Collection',
 	#instVars : [
 		'dictionary',
 		'orderedKeys'
 	],
-	#category : #'Collections-Sequenceable-Ordered'
+	#category : 'Collections-Sequenceable-Ordered',
+	#package : 'Collections-Sequenceable',
+	#tag : 'Ordered'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OrderedDictionary class >> new [
 	^ self new: 10
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OrderedDictionary class >> new: aCapacity [
 	^ self basicNew initialize: aCapacity
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OrderedDictionary class >> newFrom: anAssociationCollection [
 	| newDictionary |
 
@@ -60,7 +62,7 @@ OrderedDictionary class >> newFrom: anAssociationCollection [
 	^ newDictionary
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OrderedDictionary class >> newFromKeys: keys andValues: values [
 	"Create a dictionary from the keys and values arguments which should have the same length."
 
@@ -72,7 +74,7 @@ OrderedDictionary class >> newFromKeys: keys andValues: values [
 	^ dict
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OrderedDictionary class >> newFromPairs: aSequenceableCollection [
 	| newDictionary |
 
@@ -84,7 +86,7 @@ OrderedDictionary class >> newFromPairs: aSequenceableCollection [
 	^ newDictionary
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 OrderedDictionary >> = anObject [
 	self == anObject
 		ifTrue: [^ true].
@@ -99,7 +101,7 @@ OrderedDictionary >> = anObject [
 	^ true
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 OrderedDictionary >> add: anAssociation [
 	| oldSize |
 
@@ -113,7 +115,7 @@ OrderedDictionary >> add: anAssociation [
 	^ anAssociation
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 OrderedDictionary >> addAll: anAssociationCollection [
 	"Since Collection implements #associationsDo:, this method can accept
 	any collection of associations including Arrays and OrderedCollections"
@@ -122,27 +124,27 @@ OrderedDictionary >> addAll: anAssociationCollection [
 	^ anAssociationCollection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OrderedDictionary >> associationAt: aKey [
 	^ dictionary associationAt: aKey
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OrderedDictionary >> associationAt: aKey ifAbsent: aBlock [
 	^ dictionary associationAt: aKey ifAbsent: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OrderedDictionary >> associationAt: aKey ifPresent: aBlock [
 	^ dictionary associationAt: aKey ifPresent: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OrderedDictionary >> associationAt: key ifPresent: aPresentBlock ifAbsent: anAbsentBlock [
 	^ dictionary associationAt: key ifPresent: aPresentBlock ifAbsent: anAbsentBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OrderedDictionary >> associations [
 	| associations i |
 
@@ -154,22 +156,22 @@ OrderedDictionary >> associations [
 	^ associations
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 OrderedDictionary >> associationsDo: aBlock [
 	self keysDo: [:each | aBlock value: (self associationAt: each)]
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 OrderedDictionary >> associationsSelect: aBlock [
 	^ self species newFrom: (self associations select: aBlock)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OrderedDictionary >> at: aKey [
 	^ dictionary at: aKey
 ]
 
-{ #category : #'nested dictionaries' }
+{ #category : 'nested dictionaries' }
 OrderedDictionary >> at: firstKey at: secondKey [
 	"Return the object stored in the second dictionary at secondKey. The second dictionary is accessed via the key firstKey."
 
@@ -184,7 +186,7 @@ OrderedDictionary >> at: firstKey at: secondKey [
 	^ self at: firstKey at: secondKey ifAbsent: [ self errorKeyNotFound: secondKey ]
 ]
 
-{ #category : #'nested dictionaries' }
+{ #category : 'nested dictionaries' }
 OrderedDictionary >> at: firstKey at: secondKey ifAbsent: aZeroArgBlock [
 		"Return the object stored in the second dictionary at secondKey. The second dictionary is accessed via the key firstKey. Execute aZeroArgBlock in case one of the key is wrong."
 
@@ -193,40 +195,40 @@ OrderedDictionary >> at: firstKey at: secondKey ifAbsent: aZeroArgBlock [
 	^ subDictionary at: secondKey ifAbsent: aZeroArgBlock
 ]
 
-{ #category : #'nested dictionaries' }
+{ #category : 'nested dictionaries' }
 OrderedDictionary >> at: firstKey at: secondKey ifAbsentPut: aZeroArgBlock [
 	"Return the object stored in the second dictionary at secondKey. The second dictionary is accessed via the key firstKey. If firstKey is not defined, set a new dictionary for the second key and set the value of aZeroArgBlock execution. If firstKey is defined and not second key set the value of aZeroArgBlock execution. See NestedDictionaryTest for examples."
 
 	| subDictionary |
-	subDictionary := self at: firstKey ifAbsentPut: [ self species new ].
+	subDictionary := self at: firstKey ifAbsentPut: [ self copyEmpty ].
 	^ subDictionary at: secondKey ifAbsentPut: aZeroArgBlock
 ]
 
-{ #category : #'nested dictionaries' }
+{ #category : 'nested dictionaries' }
 OrderedDictionary >> at: firstKey at: secondKey put: aValue [
 	"Set a value at secondKey in the dictionary returned by firstKey."
 
 	| subDictionary |
-	subDictionary := self at: firstKey ifAbsentPut: [ self species new ].
+	subDictionary := self at: firstKey ifAbsentPut: [ self copyEmpty ].
 	^ subDictionary at: secondKey put: aValue
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OrderedDictionary >> at: aKey ifAbsent: aBlock [
 	^ dictionary at: aKey ifAbsent: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OrderedDictionary >> at: aKey ifAbsentPut: aBlock [
 	^ self at: aKey ifAbsent: [self at: aKey put: aBlock value]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OrderedDictionary >> at: aKey ifPresent: aBlock [
 	^ dictionary at: aKey ifPresent: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OrderedDictionary >> at: aKey ifPresent: aPresentBlock ifAbsent: anAbsentBlock [
 	^ dictionary
 		at: aKey
@@ -234,7 +236,7 @@ OrderedDictionary >> at: aKey ifPresent: aPresentBlock ifAbsent: anAbsentBlock [
 		ifAbsent: anAbsentBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OrderedDictionary >> at: aKey ifPresent: aPresentBlock ifAbsentPut: anAbsentBlock [
 	^ dictionary
 		at: aKey
@@ -242,7 +244,7 @@ OrderedDictionary >> at: aKey ifPresent: aPresentBlock ifAbsentPut: anAbsentBloc
 		ifAbsent: [ self at: aKey put: anAbsentBlock value ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OrderedDictionary >> at: aKey put: aValue [
 	| oldSize |
 
@@ -256,13 +258,13 @@ OrderedDictionary >> at: aKey put: aValue [
 	^ aValue
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OrderedDictionary >> at: key update: updateBlock [
 	"I am used to update the value at a given key, or if the key does not exist, to throw an error"
 	self at: key update: updateBlock initial: [ KeyNotFound signalFor: key ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OrderedDictionary >> at: key update: updateBlock initial: initBlocktOrValue [
 	"I am used to update the value at a given key. The updateBlock is passed
 	the existing value, and the result of the block is stored back.
@@ -275,29 +277,29 @@ OrderedDictionary >> at: key update: updateBlock initial: initBlocktOrValue [
 		ifNotNil: [ self at: key put: (updateBlock value: val) ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OrderedDictionary >> bindingOf: varName [
 	^ self associationAt: varName ifAbsent: [nil]
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 OrderedDictionary >> bindingsDo: aBlock [
 	self associationsDo: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OrderedDictionary >> capacity [
 	^ dictionary capacity
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 OrderedDictionary >> collect: aBlock [
 	^ self species newFrom:
 		(self associations collect: [:each |
 			each key -> (aBlock value: each value)])
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 OrderedDictionary >> declare: aKey from: aDictionary [
 	(self includesKey: aKey)
 		ifTrue: [^ self].
@@ -309,27 +311,27 @@ OrderedDictionary >> declare: aKey from: aDictionary [
 		ifFalse: [self add: aKey -> nil]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OrderedDictionary >> dictionary [
 	^ dictionary
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OrderedDictionary >> dictionaryClass [
 	^ Dictionary
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 OrderedDictionary >> do: aBlock [
 	self valuesDo: aBlock
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OrderedDictionary >> errorInvalidIndex: anIndex [
 	SubscriptOutOfBounds signalFor: anIndex
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OrderedDictionary >> growOrderedKeys [
 	orderedKeys :=
 		(Array new: ((orderedKeys size * 1.5) asInteger max: 10))
@@ -339,22 +341,22 @@ OrderedDictionary >> growOrderedKeys [
 			startingAt: 1
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OrderedDictionary >> hasBindingThatBeginsWith: aString [
 	^ dictionary hasBindingThatBeginsWith: aString
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 OrderedDictionary >> hash [
 	^ dictionary hash
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OrderedDictionary >> identityIndexOfKey: aKey [
 	^ self identityIndexOfKey: aKey ifAbsent: [0]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OrderedDictionary >> identityIndexOfKey: aKey ifAbsent: aBlock [
 	1 to: self size do: [:i |
 		(orderedKeys at: i) == aKey
@@ -362,32 +364,32 @@ OrderedDictionary >> identityIndexOfKey: aKey ifAbsent: aBlock [
 	^ aBlock value
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OrderedDictionary >> includes: anObject [
 	^ dictionary includes: anObject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OrderedDictionary >> includesAssociation: anAssociation [
 	^ dictionary includesAssociation: anAssociation
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OrderedDictionary >> includesIdentity: anObject [
 	^ dictionary includesIdentity: anObject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OrderedDictionary >> includesKey: aKey [
 	^ dictionary includesKey: aKey
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OrderedDictionary >> indexOfKey: aKey [
 	^ self indexOfKey: aKey ifAbsent: [0]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OrderedDictionary >> indexOfKey: aKey ifAbsent: aBlock [
 	1 to: self size do: [:i |
 		(orderedKeys at: i) = aKey
@@ -395,70 +397,70 @@ OrderedDictionary >> indexOfKey: aKey ifAbsent: aBlock [
 	^ aBlock value
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OrderedDictionary >> initialize: aCapacity [
 	dictionary := self dictionaryClass new: aCapacity.
 	orderedKeys := Array new: aCapacity
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OrderedDictionary >> isDictionary [
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OrderedDictionary >> isHealthy [
 	^ dictionary isHealthy
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OrderedDictionary >> keyAtIdentityValue: aValue [
 	^ dictionary keyAtIdentityValue: aValue
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OrderedDictionary >> keyAtIdentityValue: aValue ifAbsent: aBlock [
 	^ dictionary keyAtIdentityValue: aValue ifAbsent: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OrderedDictionary >> keyAtIndex: anIndex [
 	^ self keyAtIndex: anIndex ifAbsent: [self errorInvalidIndex: anIndex]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OrderedDictionary >> keyAtIndex: anIndex ifAbsent: aBlock [
 	^ (anIndex > 0 and: [ anIndex <= self size ])
 		ifTrue: [ orderedKeys at: anIndex ]
 		ifFalse: [ aBlock value ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OrderedDictionary >> keyAtValue: aValue [
 	^ dictionary keyAtValue: aValue
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OrderedDictionary >> keyAtValue: aValue ifAbsent: aBlock [
 	^ dictionary keyAtValue: aValue ifAbsent: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OrderedDictionary >> keyForIdentity: anObject [
 	^ dictionary keyForIdentity: anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OrderedDictionary >> keys [
 	^ orderedKeys copyFrom: 1 to: self size
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 OrderedDictionary >> keysAndValuesDo: aBlock [
 	self keysDo: [:each | aBlock value: each value: (self at: each)]
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 OrderedDictionary >> keysAndValuesRemove: aTwoArgumentBlock [
 	| removedAssociations |
 
@@ -469,27 +471,27 @@ OrderedDictionary >> keysAndValuesRemove: aTwoArgumentBlock [
 	removedAssociations do: [:each | self removeKey: each key]
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 OrderedDictionary >> keysDo: aBlock [
 	1 to: self size do: [:i | aBlock value: (orderedKeys at: i)]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OrderedDictionary >> keysSortedSafely [
 	^ dictionary keysSortedSafely
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OrderedDictionary >> orderedKeys [
 	^ orderedKeys
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OrderedDictionary >> orderedKeysIndexOf: aKey [
 	^ orderedKeys indexOf: aKey
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OrderedDictionary >> orderedKeysRemove: aRemovedKey [
 	| index |
 
@@ -509,13 +511,13 @@ OrderedDictionary >> orderedKeysRemove: aRemovedKey [
 		put: nil
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 OrderedDictionary >> postCopy [
 	orderedKeys := orderedKeys copy.
 	dictionary := dictionary copy
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 OrderedDictionary >> printElementsOn: aStream [
 	aStream nextPut: $(.
 	self size > 100
@@ -533,18 +535,18 @@ OrderedDictionary >> printElementsOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 OrderedDictionary >> remove: anObject ifAbsent: aBlock [
 	self shouldNotImplement
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 OrderedDictionary >> removeAll [
 	1 to: self size do: [:i | orderedKeys at: i put: nil].
 	dictionary removeAll
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 OrderedDictionary >> removeKey: aKey [
 	| value |
 
@@ -553,7 +555,7 @@ OrderedDictionary >> removeKey: aKey [
 	^ value
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 OrderedDictionary >> removeKey: aKey ifAbsent: aBlock [
 	| oldSize value |
 
@@ -564,7 +566,7 @@ OrderedDictionary >> removeKey: aKey ifAbsent: aBlock [
 	^ value
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 OrderedDictionary >> removeKeys: aKeyCollection [
 	"Fast removal of multiple keys; returns self to avoid
 	having to create a removed value collection and does not
@@ -597,18 +599,18 @@ OrderedDictionary >> removeKeys: aKeyCollection [
 						ifAbsent: [nil]]]
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 OrderedDictionary >> select: aBlock [
 	^ self species newFrom:
 		(self associations select: [:each | aBlock value: each value])
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OrderedDictionary >> size [
 	^ dictionary size
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 OrderedDictionary >> storeOn: aStream [
 	aStream << '((' << self class name << ' new)'.
 	self associations
@@ -623,12 +625,12 @@ OrderedDictionary >> storeOn: aStream [
 	aStream << ')'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OrderedDictionary >> values [
 	^ self associations collect: [:each | each value]
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 OrderedDictionary >> valuesDo: aBlock [
 	self keysDo: [:each | aBlock value: (self at: each)]
 ]

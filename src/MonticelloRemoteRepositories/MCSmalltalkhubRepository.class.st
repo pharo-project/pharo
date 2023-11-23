@@ -3,21 +3,22 @@ I am specialized version of an MCHttpRepository for http://smalltalkhub.com.
 I support a faster mcz listing that does not rely on parsing an html size.
 "
 Class {
-	#name : #MCSmalltalkhubRepository,
-	#superclass : #MCHttpRepository,
+	#name : 'MCSmalltalkhubRepository',
+	#superclass : 'MCHttpRepository',
 	#instVars : [
 		'owner',
 		'project'
 	],
-	#category : #MonticelloRemoteRepositories
+	#category : 'MonticelloRemoteRepositories',
+	#package : 'MonticelloRemoteRepositories'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCSmalltalkhubRepository class >> baseURL [
 	^ self smalltalkhubUrl, 'mc/'
 ]
 
-{ #category : #'creation template' }
+{ #category : 'creation template' }
 MCSmalltalkhubRepository class >> creationTemplate [
 	^self creationTemplateOwner: ''
 		project: ''
@@ -26,7 +27,7 @@ MCSmalltalkhubRepository class >> creationTemplate [
 
 ]
 
-{ #category : #'creation template' }
+{ #category : 'creation template' }
 MCSmalltalkhubRepository class >> creationTemplateOwner: owner project: project user: user password: password [
 	^ String streamContents: [ :s|
 		s 
@@ -37,22 +38,22 @@ MCSmalltalkhubRepository class >> creationTemplateOwner: owner project: project 
 			tab; nextPutAll: 'password: '; print: password ].
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCSmalltalkhubRepository class >> description [
 	^ 'smalltalkhub.com'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCSmalltalkhubRepository class >> hostName [
 	^ 'smalltalkhub.com'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCSmalltalkhubRepository class >> isResponsibleFor: aUrl [
 	^ aUrl includesSubstring: self hostName
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MCSmalltalkhubRepository class >> owner: owner project: project [ 
 	^ self
 		owner: owner
@@ -61,7 +62,7 @@ MCSmalltalkhubRepository class >> owner: owner project: project [
 		password: String empty
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MCSmalltalkhubRepository class >> owner: owner project: project user: user password: password [
 	^ self new
 		owner: owner;
@@ -71,18 +72,18 @@ MCSmalltalkhubRepository class >> owner: owner project: project user: user passw
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCSmalltalkhubRepository class >> smalltalkhubUrl [
 	^ 'http://', self hostName, '/'
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 MCSmalltalkhubRepository >> asCreationTemplate [
 	^self class 
 		creationTemplateOwner: self owner project: self project user: user password: password
 ]
 
-{ #category : #interface }
+{ #category : 'interface' }
 MCSmalltalkhubRepository >> includesFileNamed: aString [
 	"avoid the slower default method and simply do a head request "
 	self httpClient
@@ -95,13 +96,13 @@ MCSmalltalkhubRepository >> includesFileNamed: aString [
 	^ true
 ]
 
-{ #category : #interface }
+{ #category : 'interface' }
 MCSmalltalkhubRepository >> includesVersionNamed: aString [
 	"directly do a filename check since the server only stores mcz"
 	^ self includesFileNamed: aString, '.mcz'
 ]
 
-{ #category : #interface }
+{ #category : 'interface' }
 MCSmalltalkhubRepository >> loadAllFileNames [
 	| client |
 	client := self httpClient.
@@ -114,12 +115,12 @@ MCSmalltalkhubRepository >> loadAllFileNames [
 	^ self parseFileNamesFromStream: client contents
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCSmalltalkhubRepository >> location [
 	^ 'http://smalltalkhub.com/mc/', self owner, '/', self project, '/main/' 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCSmalltalkhubRepository >> location: aUrlString [
 	| pathSegments |
 	(self class isResponsibleFor: aUrlString)
@@ -130,37 +131,37 @@ MCSmalltalkhubRepository >> location: aUrlString [
 	self project: pathSegments second.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCSmalltalkhubRepository >> locationWithTrailingSlash [
 	^ self location
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCSmalltalkhubRepository >> owner [
 	
 	^ owner
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCSmalltalkhubRepository >> owner: aString [
 	
 	owner := aString
 ]
 
-{ #category : #interface }
+{ #category : 'interface' }
 MCSmalltalkhubRepository >> parseFileNamesFromStream: aNewLineDelimitedString [
 	^ aNewLineDelimitedString 
 		ifNil: [ ^ OrderedCollection new ]
 		ifNotNil: [ aNewLineDelimitedString substrings: String crlf ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCSmalltalkhubRepository >> project [
 	
 	^ project
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCSmalltalkhubRepository >> project: aString [
 	
 	project := aString

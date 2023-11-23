@@ -6,8 +6,8 @@ I am composed of a TabBar and a Morph used as a canvas to render the morph repre
 I am very stupid (as you can see only four methods). I just listen to selected tab, and render it
 "
 Class {
-	#name : #TabManagerMorph,
-	#superclass : #PanelMorph,
+	#name : 'TabManagerMorph',
+	#superclass : 'PanelMorph',
 	#instVars : [
 		'toolbar',
 		'container',
@@ -15,10 +15,12 @@ Class {
 		'processes',
 		'model'
 	],
-	#category : #'Morphic-Widgets-Tabs-Morphs'
+	#category : 'Morphic-Widgets-Tabs-Morphs',
+	#package : 'Morphic-Widgets-Tabs',
+	#tag : 'Morphs'
 }
 
-{ #category : #'private - contents' }
+{ #category : 'private - contents' }
 TabManagerMorph >> addLastTabContents: aTab among: size delta: delta [
 	| process |
 
@@ -36,7 +38,7 @@ TabManagerMorph >> addLastTabContents: aTab among: size delta: delta [
 	process ifNotNil: [ processes add: process ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TabManagerMorph >> addMorphs [
 
 	self
@@ -63,7 +65,7 @@ TabManagerMorph >> addMorphs [
 				yourself)
 ]
 
-{ #category : #'private - contents' }
+{ #category : 'private - contents' }
 TabManagerMorph >> addSplitterOn: tabs delta: delta [
 	| leftProcess rightProcess |
 	tabs overlappingPairsWithIndexDo: [ :left :right :index |
@@ -90,12 +92,12 @@ TabManagerMorph >> addSplitterOn: tabs delta: delta [
 	rightProcess ifNotNil: [ processes add: rightProcess ]
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 TabManagerMorph >> addTab: aTab [
 	toolbar addTab: aTab
 ]
 
-{ #category : #'private - contents' }
+{ #category : 'private - contents' }
 TabManagerMorph >> addTabContents: tab at: index delta: delta [
 	| process |
 	process := tab
@@ -117,68 +119,68 @@ TabManagerMorph >> addTabContents: tab at: index delta: delta [
 	process ifNotNil: [ processes add: process ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TabManagerMorph >> adoptPaneColor: aColor [
 	"Prevent submorphs to be polluted by window color"
 
 	self color: aColor
 ]
 
-{ #category : #'private - actions' }
+{ #category : 'private - actions' }
 TabManagerMorph >> barDeleted: aBar [
 
 	self close
 ]
 
-{ #category : #'private - drawing' }
+{ #category : 'private - drawing' }
 TabManagerMorph >> borderColor [
 	^ self theme borderColor
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 TabManagerMorph >> canBeClosed [
 	^ toolbar canBeClosed
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TabManagerMorph >> cleanProcesses [
 
 	processes do: [ :each | each terminate ].
 	processes removeAll
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 TabManagerMorph >> close [
 
 	self canBeClosed ifFalse: [ ^ self ].
 	self delete
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 TabManagerMorph >> closeAllTabs [
 	toolbar closeAllTabs
 ]
 
-{ #category : #'private - drawing' }
+{ #category : 'private - drawing' }
 TabManagerMorph >> containerColor [
 	^ self theme lightBaseColor
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 TabManagerMorph >> delete [
 
 	super delete.
 	self triggerEvent: #tabManagerDeleted with: self
 ]
 
-{ #category : #'private - actions' }
+{ #category : 'private - actions' }
 TabManagerMorph >> deleteSelectedTabs [
 	toolbar selectedTab
 		ifNotNil: [ toolbar deleteSelectedTabs ]
 		ifNil: [ self owner takeKeyboardFocus ]
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 TabManagerMorph >> drawLinesOn: aCanvas [
 	self flag: #pharoTodo. "this method, I don't know what's is for."
 	"aCanvas
@@ -198,19 +200,19 @@ TabManagerMorph >> drawLinesOn: aCanvas [
 		color: self borderColor"
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 TabManagerMorph >> drawSubmorphsOn: aCanvas [
 	super drawSubmorphsOn: aCanvas.
 	self drawLinesOn: aCanvas
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TabManagerMorph >> emptyTabColor: aColor [
 
 	contentsWrapper color: aColor
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TabManagerMorph >> initialize [
 
 	super initialize.
@@ -234,25 +236,25 @@ TabManagerMorph >> initialize [
 	self addMorphs
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TabManagerMorph >> minExtent [
 
 	^ (100@50) * self displayScaleFactor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TabManagerMorph >> model [
 
 	^ model
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TabManagerMorph >> model: aModel [
 
 	model := aModel
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TabManagerMorph >> registerBarActions [
 
 	toolbar
@@ -266,7 +268,7 @@ TabManagerMorph >> registerBarActions [
 		when: #tabEmptyContents send: #tabEmptyContents: to: self
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TabManagerMorph >> registerShortcuts [
 
 	self
@@ -281,37 +283,37 @@ TabManagerMorph >> registerShortcuts [
 	self bindKeyCombination: $0 meta toAction: [ self selectLastTab ]
 ]
 
-{ #category : #'private - actions' }
+{ #category : 'private - actions' }
 TabManagerMorph >> selectLastTab [
 
 	toolbar selectLastTab
 ]
 
-{ #category : #'private - actions' }
+{ #category : 'private - actions' }
 TabManagerMorph >> selectNext [
 
 	toolbar selectNext
 ]
 
-{ #category : #'private - actions' }
+{ #category : 'private - actions' }
 TabManagerMorph >> selectPrevious [
 
 	toolbar selectPrevious
 ]
 
-{ #category : #'private - actions' }
+{ #category : 'private - actions' }
 TabManagerMorph >> selectTabAt: index [
 
 	toolbar selectTabAt: index ifAbsent: []
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 TabManagerMorph >> selectedTab [
 
 	^ toolbar selectedTab
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TabManagerMorph >> setMultipleContents [
 	| tabs size delta |
 
@@ -327,7 +329,7 @@ TabManagerMorph >> setMultipleContents [
 	self addSplitterOn: tabs delta: delta
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TabManagerMorph >> setTabContentFrom: aTab [
 	| process |
 
@@ -342,62 +344,62 @@ TabManagerMorph >> setTabContentFrom: aTab [
 	process ifNotNil: [ processes add: process ]
 ]
 
-{ #category : #compatbility }
+{ #category : 'compatbility' }
 TabManagerMorph >> setTabs: aBlock [
 	self tabs: aBlock value
 ]
 
-{ #category : #'private - actions' }
+{ #category : 'private - actions' }
 TabManagerMorph >> tabAddedToSelection: aTab [
 
 	self setMultipleContents
 ]
 
-{ #category : #'private - actions' }
+{ #category : 'private - actions' }
 TabManagerMorph >> tabEmptyContents: aTab [
 	"My bar already filtered the tab, so here I am sure the tab is the selected tab"
 
 	contentsWrapper removeAllMorphs
 ]
 
-{ #category : #'private - actions' }
+{ #category : 'private - actions' }
 TabManagerMorph >> tabRefreshed: aTab [
 	"Here we know that aTab is the selected tab"
 
 	self setMultipleContents
 ]
 
-{ #category : #'private - actions' }
+{ #category : 'private - actions' }
 TabManagerMorph >> tabRemovedFromSelection: aTab [
 
 	self setMultipleContents
 ]
 
-{ #category : #'private - actions' }
+{ #category : 'private - actions' }
 TabManagerMorph >> tabResetSelection: aTab [
 
 	self setTabContentFrom: aTab
 ]
 
-{ #category : #'private - actions' }
+{ #category : 'private - actions' }
 TabManagerMorph >> tabSelected: aTab [
 
 	self setTabContentFrom: aTab.
 	self triggerEvent: #tabSelected with: aTab
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 TabManagerMorph >> tabs: aCollection [
 
 	toolbar tabs: aCollection
 ]
 
-{ #category : #'private - actions' }
+{ #category : 'private - actions' }
 TabManagerMorph >> tabsChanged [
 	"Nothing to do"
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TabManagerMorph >> themeChanged [
 	super themeChanged.
 	toolbar themeChanged.
@@ -410,7 +412,7 @@ TabManagerMorph >> themeChanged [
 		changed
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TabManagerMorph >> useSortedTabsBy: sortBlock [
 	toolbar useSortedTabsBy: sortBlock
 ]

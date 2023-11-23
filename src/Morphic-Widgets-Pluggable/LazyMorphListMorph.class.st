@@ -2,25 +2,27 @@
 Support for morph lists in PluggableMorphListMorph.
 "
 Class {
-	#name : #LazyMorphListMorph,
-	#superclass : #LazyListMorph,
-	#category : #'Morphic-Widgets-Pluggable-Lists'
+	#name : 'LazyMorphListMorph',
+	#superclass : 'LazyListMorph',
+	#category : 'Morphic-Widgets-Pluggable-Lists',
+	#package : 'Morphic-Widgets-Pluggable',
+	#tag : 'Lists'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 LazyMorphListMorph >> adjustHeight [
 	"private.  Adjust our height to match the length of the underlying list.
 	Automatic with table layout."
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 LazyMorphListMorph >> adjustWidth [
 	"private.  Adjust our height to match the length of the underlying list"
 
 	self width: (listSource innerBounds width max: self hUnadjustedScrollRange)
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 LazyMorphListMorph >> display: item  atRow: row on: aCanvas [
 	"Display the given item at the given row on the given canvas."
 
@@ -35,7 +37,7 @@ LazyMorphListMorph >> display: item  atRow: row on: aCanvas [
 		 dashes: #(1 1)
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 LazyMorphListMorph >> drawBoundsForRow: row [
 	"Calculate the bounds that row should be drawn at.  This might be outside our bounds!"
 
@@ -44,7 +46,7 @@ LazyMorphListMorph >> drawBoundsForRow: row [
 	^(listItems at: row) bounds
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 LazyMorphListMorph >> drawSubmorphsOn: aCanvas [
 	"Display submorphs back to front"
 
@@ -59,7 +61,7 @@ LazyMorphListMorph >> drawSubmorphsOn: aCanvas [
 		ifFalse: [drawBlock value: aCanvas]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LazyMorphListMorph >> hUnadjustedScrollRange [
 	"Answer the width of the widest item."
 
@@ -71,7 +73,7 @@ LazyMorphListMorph >> hUnadjustedScrollRange [
 	^maxWidth
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 LazyMorphListMorph >> initialize [
 	"Initialize the receiver."
 
@@ -84,7 +86,7 @@ LazyMorphListMorph >> initialize [
 		hResizing: #rigid
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LazyMorphListMorph >> listChanged [
 	"set newList to be the list of strings to display"
 	listItems := (1 to: self getListSize) collect: [:i |
@@ -102,7 +104,7 @@ LazyMorphListMorph >> listChanged [
 	self changed
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LazyMorphListMorph >> rowAtLocation: aPoint [
 	"return the number of the row at aPoint"
 
@@ -114,14 +116,14 @@ LazyMorphListMorph >> rowAtLocation: aPoint [
 	^listItems size
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LazyMorphListMorph >> selectRow: index [
 	"select the index-th row"
 	selectedRows add: index.
 	self invalidRect: (self drawBoundsForRow: index)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LazyMorphListMorph >> selectionFrameForRow: row [
 	"Answer the selection frame rectangle."
 
@@ -137,13 +139,13 @@ LazyMorphListMorph >> selectionFrameForRow: row [
 	^frame
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LazyMorphListMorph >> userString [
 	"Do I have a text string to be searched on?"
 
 	^ String
 		streamContents: [ :stream |
 			1 to: self getListSize do: [ :i |
-				(self getListItem: i) submorphs detect: [ :morph | morph userString notNil ] ifFound: [ :morph | stream nextPutAll: morph userString ].
+				(self getListItem: i) submorphs detect: [ :morph | morph userString isNotNil ] ifFound: [ :morph | stream nextPutAll: morph userString ].
 				stream cr ] ]
 ]

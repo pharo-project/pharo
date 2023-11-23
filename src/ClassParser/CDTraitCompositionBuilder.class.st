@@ -4,18 +4,20 @@ I am in charge of building a Trait composition.
 aTraitCompositionNode is composed of TraitNode.
 "
 Class {
-	#name : #CDTraitCompositionBuilder,
-	#superclass : #Object,
-	#category : #'ClassParser-Model'
+	#name : 'CDTraitCompositionBuilder',
+	#superclass : 'Object',
+	#category : 'ClassParser-Model',
+	#package : 'ClassParser',
+	#tag : 'Model'
 }
 
-{ #category : #building }
+{ #category : 'building' }
 CDTraitCompositionBuilder >> buildFrom: aNode [
 
 	^ aNode acceptVisitor: self
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 CDTraitCompositionBuilder >> visitArrayNode: aRBArrayNode [
 	| parent argumentName |
 	self flag: #todo.
@@ -43,38 +45,38 @@ CDTraitCompositionBuilder >> visitArrayNode: aRBArrayNode [
 			ifFalse: [ each receiver value -> each arguments first value ] ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 CDTraitCompositionBuilder >> visitGlobalNode: aRBGlobalNode [
 
 	^self visitVariableNode: aRBGlobalNode
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 CDTraitCompositionBuilder >> visitGlobalVariableNode: aRBGlobalNode [
 
 	^self visitVariableNode: aRBGlobalNode
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 CDTraitCompositionBuilder >> visitLiteralNode: aRBLiteralValueNode [
 
 	^ aRBLiteralValueNode value
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 CDTraitCompositionBuilder >> visitLiteralValueNode: aRBLiteralValueNode [
 	"Redirect the message by default to #visitLiteralNode: for retrocompatibility (pharo 8)"
 
 	^ self visitLiteralNode: aRBLiteralValueNode
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 CDTraitCompositionBuilder >> visitLiteralVariableNode: aRBGlobalNode [
 
 	^self visitVariableNode: aRBGlobalNode
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 CDTraitCompositionBuilder >> visitMessageNode: aRBMessageNode [
 
 	| node receiver argument |
@@ -94,7 +96,7 @@ CDTraitCompositionBuilder >> visitMessageNode: aRBMessageNode [
 	^ node
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 CDTraitCompositionBuilder >> visitVariableNode: aRBVariableNode [
 
 	^ CDTraitNode new

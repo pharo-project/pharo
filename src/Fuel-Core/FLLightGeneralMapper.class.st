@@ -2,12 +2,14 @@
 I know how to map an object to its default cluster. I can map every object.
 "
 Class {
-	#name : #FLLightGeneralMapper,
-	#superclass : #FLMapper,
-	#category : #'Fuel-Core-Mappers'
+	#name : 'FLLightGeneralMapper',
+	#superclass : 'FLMapper',
+	#category : 'Fuel-Core-Mappers',
+	#package : 'Fuel-Core',
+	#tag : 'Mappers'
 }
 
-{ #category : #'protected-mapping' }
+{ #category : 'protected-mapping' }
 FLLightGeneralMapper >> clusterClassForSmallInteger: aSmallInteger [
 
 	aSmallInteger >= 0 ifTrue: [
@@ -26,38 +28,31 @@ FLLightGeneralMapper >> clusterClassForSmallInteger: aSmallInteger [
 	self error: 'SmallInteger is out of range'
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 FLLightGeneralMapper >> mapAndTrace: anObject [
 
 	anObject fuelAccept: self
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 FLLightGeneralMapper >> visitBytesObject: anObject [
 
 	self mapAndTraceByObjectClass: anObject to: FLByteObjectCluster
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 FLLightGeneralMapper >> visitClass: aClass [
 	self
 		mapAndTraceByClusterName: aClass
 		to: FLGlobalClassCluster
 ]
 
-{ #category : #visiting }
-FLLightGeneralMapper >> visitClassTrait: aClassTrait [
-	self
-		mapAndTraceByClusterName: aClassTrait
-		to: FLGlobalMetaclassCluster
-]
-
-{ #category : #visiting }
+{ #category : 'visiting' }
 FLLightGeneralMapper >> visitClassVariable: aClassVariable [
 	self visitFixedObject: aClassVariable
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 FLLightGeneralMapper >> visitCompiledBlock: aCompiledBlock [
 	self
 		mapAndTraceByClusterName: aCompiledBlock
@@ -66,106 +61,106 @@ FLLightGeneralMapper >> visitCompiledBlock: aCompiledBlock [
 			ifFalse: [ FLGlobalCompiledBlockCluster ])
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 FLLightGeneralMapper >> visitCompiledMethod: aCompiledMethod [
 	self
 		mapAndTraceByClusterName: aCompiledMethod
 		to: FLGlobalCompiledMethodCluster
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 FLLightGeneralMapper >> visitDictionary: aDictionary [
 
 	self mapAndTraceByObjectClass: aDictionary to: FLDictionaryCollectionCluster
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 FLLightGeneralMapper >> visitExternalAddress: anObject [
 	self
 		mapAndTraceByObjectClass: anObject
 		to: FLExternalAddressCluster
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 FLLightGeneralMapper >> visitFixedObject: anObject [
 
 	self mapAndTraceByObjectClass: anObject to: FLFixedObjectCluster
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 FLLightGeneralMapper >> visitGlobalSend: anObject name: globalName selector: aSymbol [
 
 	(self clusterKeyedByClusterName: FLGlobalSendCluster)
 		add: anObject name: globalName selector: aSymbol traceWith: analysis
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 FLLightGeneralMapper >> visitGlobalVariable: aGlobalVariable [
 	self visitFixedObject: aGlobalVariable
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 FLLightGeneralMapper >> visitHookPrimitive: anObject [
 
 	self mapAndTraceByObjectClass: anObject to: FLHookPrimitiveCluster
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 FLLightGeneralMapper >> visitMetaclass: aMetaclass [
 	self
 		mapAndTraceByClusterName: aMetaclass
 		to: FLGlobalMetaclassCluster
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 FLLightGeneralMapper >> visitMetaclassForTraits: aMetaclass [
 	self
 		mapAndTraceByClusterName: aMetaclass
 		to: FLGlobalMetaclassCluster
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 FLLightGeneralMapper >> visitMethodContext: aMethodContext [
 
 	self mapAndTraceByObjectClass: aMethodContext to: FLContextCluster
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 FLLightGeneralMapper >> visitNotSerializable: anObject [
 	FLNotSerializable signalWith: anObject
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 FLLightGeneralMapper >> visitPoint: aPoint [
 
 	self mapAndTraceByClusterName: aPoint to: FLPointCluster
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 FLLightGeneralMapper >> visitRectangle: aRectangle [
 
 	self mapAndTraceByClusterName: aRectangle to: FLRectangleCluster
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 FLLightGeneralMapper >> visitSimpleCollection: aCollection [
 	self mapAndTraceByObjectClass: aCollection to: FLSimpleCollectionCluster
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 FLLightGeneralMapper >> visitSmallInteger: aSmallInteger [
 
 	self mapAndTraceByClusterName: aSmallInteger to: (self clusterClassForSmallInteger: aSmallInteger)
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 FLLightGeneralMapper >> visitSubstitution: anObject by: anotherObject [
 
 	(self clusterKeyedByClusterName: FLSubstitutionCluster)
 		add: anObject substitutedBy: anotherObject traceWith: analysis
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 FLLightGeneralMapper >> visitSubstitution: anObject by: anotherObject onRecursionDo: aBlock [
 
 	| cluster |
@@ -180,33 +175,33 @@ FLLightGeneralMapper >> visitSubstitution: anObject by: anotherObject onRecursio
 				traceWith: analysis ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 FLLightGeneralMapper >> visitTrait: aTrait [
 	self
 		mapAndTraceByClusterName: aTrait
 		to: FLGlobalClassCluster
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 FLLightGeneralMapper >> visitTraitedMetaclass: aMetaclass [
 	self
 		mapAndTraceByClusterName: aMetaclass
 		to: FLGlobalMetaclassCluster
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 FLLightGeneralMapper >> visitVariableObject: anObject [
 
 	self mapAndTraceByObjectClass: anObject to: FLVariableObjectCluster
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 FLLightGeneralMapper >> visitWeakObject: anObject [
 
 	self mapAndTraceByObjectClass: anObject to: FLWeakVariableObjectCluster
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 FLLightGeneralMapper >> visitWordsObject: anObject [
 
 	self mapAndTraceByObjectClass: anObject to: FLWordObjectCluster

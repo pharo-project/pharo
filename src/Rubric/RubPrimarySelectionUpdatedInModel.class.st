@@ -2,7 +2,9 @@
 I am raised when the selection changes in the model side
 "
 Class {
-	#name : #RubPrimarySelectionUpdatedInModel,
-	#superclass : #RubAnnouncement,
-	#category : #'Rubric-Editing-Announcements'
+	#name : 'RubPrimarySelectionUpdatedInModel',
+	#superclass : 'RubAnnouncement',
+	#category : 'Rubric-Editing-Announcements',
+	#package : 'Rubric',
+	#tag : 'Editing-Announcements'
 }

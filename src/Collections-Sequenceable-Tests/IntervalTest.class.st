@@ -2,10 +2,10 @@
 SUnit tests for intervals
 "
 Class {
-	#name : #IntervalTest,
-	#superclass : #CollectionRootTest,
-	#traits : 'TSortTest - {#testSort. #testSortUsingSortBlock} + TCloneTest + TIncludesWithIdentityCheckTest + TSequencedElementAccessTest + TIterateSequencedReadableTest + TSequencedConcatenationTest + TSubCollectionAccess + TAsStringCommaAndDelimiterSequenceableTest + TIndexAccess + TPrintOnSequencedTest + TConvertTest + (TCopySequenceableWithReplacement - {#testCopyReplaceAllWithManyOccurrence. #collectionWith2TimeSubcollection}) + TCopySequenceableWithOrWithoutSpecificElements + (TCopySequenceableSameContents - {#testShuffled}) + (TCopyPartOfSequenceable - {#testCopyEmptyMethod}) + TCopyTest + TBeginsEndsWith + TConvertAsSortedTest + TSequencedStructuralEqualityTest + TOccurrencesTest + TSequenceableTruncatedToSize',
-	#classTraits : 'TSortTest classTrait + TCloneTest classTrait + TIncludesWithIdentityCheckTest classTrait + TSequencedElementAccessTest classTrait + TIterateSequencedReadableTest classTrait + TSequencedConcatenationTest classTrait + TSubCollectionAccess classTrait + TAsStringCommaAndDelimiterSequenceableTest classTrait + TIndexAccess classTrait + TPrintOnSequencedTest classTrait + TConvertTest classTrait + TCopySequenceableWithReplacement classTrait + TCopySequenceableWithOrWithoutSpecificElements classTrait + TCopySequenceableSameContents classTrait + TCopyPartOfSequenceable classTrait + TCopyTest classTrait + TBeginsEndsWith classTrait + TConvertAsSortedTest classTrait + TSequencedStructuralEqualityTest classTrait + TOccurrencesTest classTrait + TSequenceableTruncatedToSize classTrait',
+	#name : 'IntervalTest',
+	#superclass : 'CollectionRootTest',
+	#traits : 'TSortTest - {#testSort. #testSortUsingSortBlock} + TCloneTest + TIncludesWithIdentityCheckTest + TSequencedElementAccessTest + TIterateSequencedReadableTest + TSequencedConcatenationTest + TSubCollectionAccess + TAsStringCommaAndDelimiterSequenceableTest + TIndexAccess + TPrintOnSequencedTest + TConvertTest + (TCopySequenceableWithReplacement - {#testCopyReplaceAllWithManyOccurrence. #collectionWith2TimeSubcollection}) + TCopySequenceableWithOrWithoutSpecificElements + (TCopySequenceableSameContents - {#testShuffled}) + (TCopyPartOfSequenceable - {#testCopyEmptyMethod}) + TCopyTest + TBeginsEndsWith + TConvertAsSortedTest + TSequencedStructuralEqualityTest + TOccurrencesTest + TSequenceableTruncatedToSize + (TCreationWithTest - {#testOfSize. #testWithAll. #testWith. #testWithWith. #testWithWithWith. #testWithWithWithWith. #testWithWithWithWithWith})',
+	#classTraits : 'TSortTest classTrait + TCloneTest classTrait + TIncludesWithIdentityCheckTest classTrait + TSequencedElementAccessTest classTrait + TIterateSequencedReadableTest classTrait + TSequencedConcatenationTest classTrait + TSubCollectionAccess classTrait + TAsStringCommaAndDelimiterSequenceableTest classTrait + TIndexAccess classTrait + TPrintOnSequencedTest classTrait + TConvertTest classTrait + TCopySequenceableWithReplacement classTrait + TCopySequenceableWithOrWithoutSpecificElements classTrait + TCopySequenceableSameContents classTrait + TCopyPartOfSequenceable classTrait + TCopyTest classTrait + TBeginsEndsWith classTrait + TConvertAsSortedTest classTrait + TSequencedStructuralEqualityTest classTrait + TOccurrencesTest classTrait + TSequenceableTruncatedToSize classTrait + TCreationWithTest classTrait',
 	#instVars : [
 		'empty',
 		'nonEmpty',
@@ -24,261 +24,270 @@ Class {
 		'collectionOfLargeIntegers',
 		'collectionWith5Elements'
 	],
-	#category : #'Collections-Sequenceable-Tests-Base'
+	#category : 'Collections-Sequenceable-Tests-Base',
+	#package : 'Collections-Sequenceable-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 IntervalTest >> accessCollection [
 	^ -2 to: 14 by: 4
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 IntervalTest >> anotherElementNotIn [
 	^ 42
 ]
 
-{ #category : #coverage }
+{ #category : 'coverage' }
 IntervalTest >> classToBeTested [
 
 	^ Interval
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 IntervalTest >> collection [
 	^ nonEmpty
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 IntervalTest >> collectionClass [
 	"Return the class to be used to create instances of the class tested"
 
 	^ Interval
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 IntervalTest >> collectionInForIncluding [
 	^ nonEmpty copyWithout: (self nonEmpty last)
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 IntervalTest >> collectionMoreThan1NoDuplicates [
 	" return a collection of size 5 without equal elements"
 	^ nonEmpty
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
+IntervalTest >> collectionMoreThan5Elements [
+" return a collection including at least 5 elements"
+
+	^ collectionWith5Elements
+]
+
+{ #category : 'requirements' }
 IntervalTest >> collectionNotIncluded [
 	^ (nonEmpty last + 1) to: (nonEmpty last +5)
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 IntervalTest >> collectionOfFloat [
 	^collectionOfFloat
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 IntervalTest >> collectionWith1TimeSubcollection [
 	^ collectionWithSubCollection
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 IntervalTest >> collectionWith5Elements [
 
 	^ collectionWith5Elements
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 IntervalTest >> collectionWithCopyNonIdentical [
 	" return a collection that include elements for which 'copy' return a different object (this is not the case of SmallInteger)"
 	^ collectionOfLargeIntegers
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 IntervalTest >> collectionWithElementsToRemove [
 
 	^ subCollectionInNonEmpty
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 IntervalTest >> collectionWithSortableElements [
 " return a collection elements that can be sorte ( understanding message ' < '  or ' > ')"
 	^ self nonEmpty
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 IntervalTest >> collectionWithoutEqualElements [
 	^ nonEmpty
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 IntervalTest >> collectionWithoutNilElements [
 " return a collection that doesn't includes a nil element  and that doesn't includes equal elements'"
 	^ collectionWithoutNil
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 IntervalTest >> doWithoutNumber [
 
 	^ 6
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 IntervalTest >> elementInCollectionOfFloat [
 	^ collectionOfFloat anyOne
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 IntervalTest >> elementInForElementAccessing [
 " return an element inculded in 'accessCollection '"
 	^ self accessCollection anyOne
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 IntervalTest >> elementInForIncludesTest [
 
 	^ elementIn
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 IntervalTest >> elementInForIndexAccess [
 	^ self accessCollection  anyOne
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 IntervalTest >> elementInForIndexAccessing [
 
 	^ elementIn
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 IntervalTest >> elementNotIn [
 	^elementNotIn
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 IntervalTest >> elementNotInForElementAccessing [
 " return an element not included in 'accessCollection' "
 	^ elementNotIn
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 IntervalTest >> elementNotInForIndexAccessing [
 
 	^elementNotIn
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 IntervalTest >> elementNotInForOccurrences [
 	^ 9
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 IntervalTest >> elementToAdd [
 	^ elementNotIn
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 IntervalTest >> empty [
 
 	^ empty
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 IntervalTest >> expectedSizeAfterReject [
 	"Number of even elements in #collection"
 	^ 3
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 IntervalTest >> firstCollection [
 	^ nonEmpty
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 IntervalTest >> firstEven [
 	"Returns the first even number of #collection"
 	^ -2
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 IntervalTest >> firstOdd [
 	"Returns the first odd number of #collection"
 	^ -5
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 IntervalTest >> indexInForCollectionWithoutDuplicates [
 	^ 2
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 IntervalTest >> indexInNonEmpty [
 	"Return an index between bounds of 'nonEmpty'"
 
 	^ 2
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 IntervalTest >> integerCollection [
 	^ nonEmpty
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 IntervalTest >> integerCollectionWithoutEqualElements [
 	^ 1 to: 23
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 IntervalTest >> moreThan3Elements [
 	" return a collection including atLeast 3 elements"
 	^ nonEmpty
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 IntervalTest >> moreThan4Elements [
 
 " return a collection including at leat 4 elements"
 	^ nonEmpty
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 IntervalTest >> nonEmpty [
 
 	^ nonEmpty
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 IntervalTest >> nonEmpty1Element [
 
 	^ nonEmpty1Element
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 IntervalTest >> nonEmptyMoreThan1Element [
 	^nonEmpty
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 IntervalTest >> oldSubCollection [
 	^ subCollection
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 IntervalTest >> replacementCollection [
 	^ 5 to: 7
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 IntervalTest >> result [
 	^ {SmallInteger . SmallInteger . SmallInteger . SmallInteger . SmallInteger . SmallInteger}
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 IntervalTest >> secondCollection [
 	^anotherCollection
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 IntervalTest >> setUp [
 	super setUp.
 	empty := (1 to: 0).
@@ -299,31 +308,31 @@ IntervalTest >> setUp [
 	collectionWith5Elements := 1 to: 5
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 IntervalTest >> sizeCollection [
 	"Answers a collection whose #size is 4"
 	^ 1 to: 4
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 IntervalTest >> sortedInAscendingOrderCollection [
 	"Return a collection sorted in ascending order"
 	^ anotherCollection
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 IntervalTest >> speciesClass [
 
 	^ Array
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 IntervalTest >> subCollectionNotIn [
 
 	^subCollectionNotIn
 ]
 
-{ #category : #'tests - fixture' }
+{ #category : 'tests - fixture' }
 IntervalTest >> test0IndexAccessingTest [
 	self accessCollection.
 	self assert: self accessCollection size equals: 5.
@@ -337,12 +346,12 @@ IntervalTest >> test0IndexAccessingTest [
 	self collectionOfFloat do: [ :each | self deny: each class equals: SmallInteger ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 IntervalTest >> testAdd [
 	self assert: (1 to: 10) + 5 equals: (6 to: 15)
 ]
 
-{ #category : #'tests - indexable access' }
+{ #category : 'tests - indexable access' }
 IntervalTest >> testAllButFirstElements [
 	| abf col |
 	col := self accessCollection.
@@ -351,7 +360,7 @@ IntervalTest >> testAllButFirstElements [
 	self assert: abf size + 2 equals: col size
 ]
 
-{ #category : #'tests - indexable access' }
+{ #category : 'tests - indexable access' }
 IntervalTest >> testAllButLastElements [
 	| abf col |
 	col := self accessCollection.
@@ -360,7 +369,7 @@ IntervalTest >> testAllButLastElements [
 	self assert: abf size + 2 equals: col size
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 IntervalTest >> testAsInterval [
 	"This is the same as newFrom:"
 
@@ -373,7 +382,7 @@ IntervalTest >> testAsInterval [
 		description: 'This is not an arithmetic progression'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 IntervalTest >> testAt [
 	self assert: ((1 to: 10) at: 1) equals: 1.
 	self assert: ((1 to: 10) at: 3) equals: 3.
@@ -381,7 +390,7 @@ IntervalTest >> testAt [
 	self assert: ((1 to: 10 by: 2) at: 3) equals: 5
 ]
 
-{ #category : #'tests - indexable access' }
+{ #category : 'tests - indexable access' }
 IntervalTest >> testAtWrap [
 	"
 	self assert: (self accessCollection at: 1) = 1.
@@ -396,7 +405,7 @@ IntervalTest >> testAtWrap [
 	self assert: (self accessCollection atWrap: 1 + self accessCollection size) equals: (self accessCollection at: 1)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 IntervalTest >> testCollectThenSelectLocal [
 	| letters vowels |
 	letters := 'abcdefghijklmnopqrstuvwxyz'.
@@ -404,7 +413,7 @@ IntervalTest >> testCollectThenSelectLocal [
 	self assert: (vowels hasEqualElements: 'aeiou')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 IntervalTest >> testDo [
 	| s i |
 	s := OrderedCollection new.
@@ -413,7 +422,7 @@ IntervalTest >> testDo [
 	self assert: (s hasEqualElements: i)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 IntervalTest >> testEquals [
 	self assert: (3 to: 5) equals: #(3 4 5).
 	self deny: (3 to: 5) equals: #(3 5).
@@ -424,7 +433,7 @@ IntervalTest >> testEquals [
 	self deny: #() equals: (3 to: 5)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 IntervalTest >> testEquals2 [
 	self assert: (3 to: 5) equals: #(3 4 5).
 	self deny: (3 to: 5) equals: #(3 5).
@@ -435,14 +444,14 @@ IntervalTest >> testEquals2 [
 	self deny: #() equals: (3 to: 5)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 IntervalTest >> testEquals3 [
 	self assert: (3 to: 5 by: 2) first equals: (3 to: 6 by: 2) first.
 	self assert: (3 to: 5 by: 2) last equals: (3 to: 6 by: 2) last.
 	self assert: (3 to: 5 by: 2) equals: (3 to: 6 by: 2)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 IntervalTest >> testEquals4 [
 	self assert: (3 to: 5 by: 2) equals: #(3 5).
 	self deny: (3 to: 5 by: 2) equals: #(3 4 5).
@@ -453,7 +462,7 @@ IntervalTest >> testEquals4 [
 	self deny: #() equals: (3 to: 5 by: 2)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 IntervalTest >> testEquals5 [
 	"Interval>>= and Interval>>hash do not match #11070"
 	self assert: (2 to: 10 by: 3) equals: (2 to: 9 by: 3).
@@ -463,14 +472,14 @@ IntervalTest >> testEquals5 [
 	self deny: (2 to: 10 by: 3) hash equals: (2 to: 10 by: 4) hash
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 IntervalTest >> testExtent [
 	self assert: (1 to: 10) extent equals: 9.
 	self assert: (1 to: 10 by: 2) extent equals: 9.
 	self assert: (1 to: -1) extent equals: -2
 ]
 
-{ #category : #'tests - includes' }
+{ #category : 'tests - includes' }
 IntervalTest >> testIdentityIncludes [
 	" test the comportement in presence of elements 'includes' but not 'identityIncludes' "
 
@@ -483,7 +492,7 @@ IntervalTest >> testIdentityIncludes [
 	self deny: (collection identityIncludes: element)
 ]
 
-{ #category : #'tests - includes' }
+{ #category : 'tests - includes' }
 IntervalTest >> testIncludesElementIsNotThere [
 
 	self deny: (self nonEmpty includes: self elementNotInForOccurrences).
@@ -491,13 +500,13 @@ IntervalTest >> testIncludesElementIsNotThere [
 	self deny: (self empty includes: self elementNotInForOccurrences)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 IntervalTest >> testInclusion [
 	"Non regression test for another bug of fuzzy inclusion"
 	self deny: ((1.0 to: 3.0 by: 1.0 successor) includes: 3.0) description: 'The last element of this Interval is closed to 2'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 IntervalTest >> testInclusionBug1603 [
 	"This test is by german morales.
 	It is about mantis bug 1603"
@@ -507,7 +516,7 @@ IntervalTest >> testInclusionBug1603 [
  		  includes: 250000000000000). "same as above with 14 zeros appended"
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 IntervalTest >> testInclusionBug6455 [
 	"This test is about mantis bug http://bugs.squeak.org/view.php?id=6455
 	It should work as long as Fuzzy inclusion test feature for Interval of Float is maintained.
@@ -517,7 +526,7 @@ IntervalTest >> testInclusionBug6455 [
 	self assert: ((0 to: Float pi by: Float pi / 100) includes: Float pi * (3/100))
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 IntervalTest >> testIndexOfBug1602 [
 	"This test is by german morales.
 	It is about mantis bug 1602"
@@ -527,7 +536,7 @@ IntervalTest >> testIndexOfBug1602 [
  		  indexOf: 250000000000000) = 0. "same as above with 14 zeros appended"
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 IntervalTest >> testIndexOfBug6455 [
 	"This test is about mantis bug http://bugs.squeak.org/view.php?id=6455
 	It should work as long as Fuzzy inclusion test feature for Interval of Float is maintained.
@@ -537,7 +546,7 @@ IntervalTest >> testIndexOfBug6455 [
 	self assert: ((0 to: Float pi by: Float pi / 100) indexOf: Float pi * (3 / 100)) equals: 4
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 IntervalTest >> testInfiniteLoopBug6456 [
 	"This is a non regression test against mantis bug #6456.
 	Some Float interval size was not consistent with do: loop.
@@ -551,7 +560,7 @@ IntervalTest >> testInfiniteLoopBug6456 [
 	interval do: [:each | self assert: (counter := counter + 1) <= size]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 IntervalTest >> testIntervalStoreOn [
 	"this is a test for http://bugs.squeak.org/view.php?id=4378"
 
@@ -561,7 +570,7 @@ IntervalTest >> testIntervalStoreOn [
 	self assert: interval1 size equals: interval2 size
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 IntervalTest >> testInvalid [
 	"empty, impossible ranges"
 
@@ -579,37 +588,37 @@ IntervalTest >> testInvalid [
 	self should: [ 1 to: 1 by: 0 ] raise: DomainError
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 IntervalTest >> testIsEvaluating [
 	self assert: (1 to: 10) isSelfEvaluating.
 	self assert: (1 to: 10 by: 2) isSelfEvaluating
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 IntervalTest >> testIsInterval [
 	self assert: (1 to: 10) isInterval.
 	self assert: (1 to: 10 by: 2) isInterval
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 IntervalTest >> testLast [
 	self assert: (1 to: 10) last equals: 10.
 	self assert: (1 to: 10 by: 2) last equals: 9
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 IntervalTest >> testMinus [
 	self assert: (1 to: 10) - 5 equals: (-4 to: 5)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 IntervalTest >> testNewFrom [
 	self assert: (Interval newFrom: (1 to: 1)) equals: (1 to: 1).
 	self assert: (Interval newFrom: #(1)) equals: (1 to: 1).
 	self assert: (Interval newFrom: #()) equals: (1 to: 0)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 IntervalTest >> testNumericTypes [
 
 	self assert: ((3 asNumber) to: 5) equals: #(3 4 5).
@@ -623,7 +632,7 @@ IntervalTest >> testNumericTypes [
 	self assert: (1/2 to: 5/2 by: 1/2) equals: {1/2 . 1 . 3/2 . 2 . 5/2}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 IntervalTest >> testOtherNewFrom [
 	self assert: (Interval newFrom: #(1 2 3)) equals: (1 to: 3).
 	self assert: (Interval newFrom: #(33 5 -23)) equals: (33 to: -23 by: -28).
@@ -638,7 +647,7 @@ IntervalTest >> testOtherNewFrom [
 	self assert: (#() as: Interval) equals: (1 to: 0)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 IntervalTest >> testPermutationsDo [
 	| i oc |
 	i := 1.234 to: 4.234.
@@ -648,7 +657,7 @@ IntervalTest >> testPermutationsDo [
 	^ oc
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 IntervalTest >> testPrintOn [
 
 	| printed allElementsAsString |
@@ -667,7 +676,7 @@ IntervalTest >> testPrintOn [
 			, self nonEmpty increment asString , ')'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 IntervalTest >> testRangeIncludes [
 
 	self assert: ((1 to: 10) rangeIncludes: 3).
@@ -684,7 +693,7 @@ IntervalTest >> testRangeIncludes [
 	self deny: ((10 to: 1) rangeIncludes: -3)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 IntervalTest >> testReverseDo [
 	| s i |
 	s := OrderedCollection new.
@@ -695,7 +704,7 @@ IntervalTest >> testReverseDo [
 		assert: (s hasEqualElements: i)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 IntervalTest >> testReverseUnevenDo [
 	| s i |
 	s := OrderedCollection new.
@@ -706,7 +715,7 @@ IntervalTest >> testReverseUnevenDo [
 		assert: (s hasEqualElements: i)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 IntervalTest >> testShuffled [
 
 	| i is |
@@ -718,7 +727,7 @@ IntervalTest >> testShuffled [
 	self assert: (i includesAll: is)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 IntervalTest >> testUnevenDo [
 	| s i |
 	s := OrderedCollection new.
@@ -729,7 +738,7 @@ IntervalTest >> testUnevenDo [
 		assert: (s hasEqualElements: i)
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 IntervalTest >> unsortedCollection [
 " retur a collection that is not yat sorted"
 	^ (10 to: 1 by: -2)

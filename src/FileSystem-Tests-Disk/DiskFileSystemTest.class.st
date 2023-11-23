@@ -2,24 +2,26 @@
 SUnit tests for the disk filesystem
 "
 Class {
-	#name : #DiskFileSystemTest,
-	#superclass : #FileSystemTest,
-	#category : #'FileSystem-Tests-Disk-Base'
+	#name : 'DiskFileSystemTest',
+	#superclass : 'FileSystemTest',
+	#category : 'FileSystem-Tests-Disk-Base',
+	#package : 'FileSystem-Tests-Disk',
+	#tag : 'Base'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DiskFileSystemTest >> createFileSystem [
 	^ FileSystem store: (DiskStore activeClass createDefault)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DiskFileSystemTest >> testDefaultWorkingDirectory [
 	| ref |
 	ref := filesystem workingDirectory.
 	self assert: ('File @ ' , OSPlatform current currentWorkingDirectoryPath beginsWith: ref asString)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DiskFileSystemTest >> testEntriesHaveAttributes [
 	"Disk entries returned by FileReference>>entries should be pre-loaded with statAttributes"
 
@@ -32,24 +34,24 @@ DiskFileSystemTest >> testEntriesHaveAttributes [
 	self assert: (entries select: [ :each | (each instVarNamed: 'statAttributes') isNil ]) isEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DiskFileSystemTest >> testEqual [
 	| other |
 	other := self createFileSystem.
 	self assert: filesystem equals: other
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DiskFileSystemTest >> testIsDirectory [
 	self assert: (filesystem isDirectory: FileLocator imageDirectory resolve path)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DiskFileSystemTest >> testIsDiskFileSystem [
 	self assert: filesystem isDiskFileSystem
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DiskFileSystemTest >> testLongFilename [
 	"Test that long file names (in Win32 terms, i.e. < 260 characters) are working"
 
@@ -73,7 +75,7 @@ DiskFileSystemTest >> testLongFilename [
 		ensure: [ dir1 ensureDeleteAll ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DiskFileSystemTest >> testMoveMemoryToDisk [
 	"Test moving a file from the memory filesystem to the disk filesystem.
 	This ensures that the copyAndDelete:to: is called correctly."

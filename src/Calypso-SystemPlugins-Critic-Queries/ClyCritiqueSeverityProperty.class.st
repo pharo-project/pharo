@@ -15,23 +15,24 @@ Internal Representation and Key Implementation Points.
 	name:		<String>
 "
 Class {
-	#name : #ClyCritiqueSeverityProperty,
-	#superclass : #ClyProperty,
+	#name : 'ClyCritiqueSeverityProperty',
+	#superclass : 'ClyProperty',
 	#instVars : [
 		'name',
 		'color'
 	],
-	#category : #'Calypso-SystemPlugins-Critic-Queries'
+	#category : 'Calypso-SystemPlugins-Critic-Queries',
+	#package : 'Calypso-SystemPlugins-Critic-Queries'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyCritiqueSeverityProperty class >> default [
 	^self new
 		name: #information;
 		color: Color blue
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyCritiqueSeverityProperty class >> of: aCritique [
 
 	^self new
@@ -39,38 +40,38 @@ ClyCritiqueSeverityProperty class >> of: aCritique [
 		color: aCritique color
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyCritiqueSeverityProperty >> color [
 	^ color
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyCritiqueSeverityProperty >> color: anObject [
 	color := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyCritiqueSeverityProperty >> iconName [
 	^ 'small', name capitalized
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyCritiqueSeverityProperty >> isMoreImportantThan: anotherSeverity [
 
 	^self level > anotherSeverity level
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyCritiqueSeverityProperty >> level [
 	^ #(information warning error) indexOf: name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyCritiqueSeverityProperty >> name [
 	^ name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyCritiqueSeverityProperty >> name: anObject [
 	name := anObject
 ]

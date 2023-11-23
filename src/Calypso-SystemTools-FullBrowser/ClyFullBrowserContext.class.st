@@ -10,51 +10,43 @@ Instance Variables
 	metaLevelScope:		<ClyMetaLevelClassScope>
 "
 Class {
-	#name : #ClyFullBrowserContext,
-	#superclass : #ClySystemBrowserContext,
+	#name : 'ClyFullBrowserContext',
+	#superclass : 'ClySystemBrowserContext',
 	#instVars : [
 		'metaLevelScope'
 	],
-	#category : #'Calypso-SystemTools-FullBrowser-Contexts'
+	#category : 'Calypso-SystemTools-FullBrowser-Contexts',
+	#package : 'Calypso-SystemTools-FullBrowser',
+	#tag : 'Contexts'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyFullBrowserContext >> currentMetaLevelOf: aClass [
 	^metaLevelScope metaLevelOf: aClass
 ]
 
-{ #category : #'selection-packages' }
-ClyFullBrowserContext >> isClassTagSelected [
-	| groups |
-	groups := tool classGroupSelection.
-	groups isEmpty ifTrue: [ ^false ].
-	^groups lastSelectedItem type isBasedOnClassTag
-]
-
-{ #category : #'selection-method groups' }
+{ #category : 'selection-method groups' }
 ClyFullBrowserContext >> isMethodGroupSelected [
 	^self selectedMethodGroupItems notEmpty
 ]
 
-{ #category : #'selection-method groups' }
-ClyFullBrowserContext >> isMethodTagSelected [
+{ #category : 'selection-packages' }
+ClyFullBrowserContext >> isPackageTagSelected [
+	| groups |
+	groups := tool classGroupSelection.
+	groups isEmpty ifTrue: [ ^false ].
+	^groups lastSelectedItem type isBasedOnPackageTag
+]
+
+{ #category : 'selection-method groups' }
+ClyFullBrowserContext >> isProtocolSelected [
 
 	self isMethodGroupSelected ifFalse: [ ^false ].
 
-	^self selectedMethodGroupClass isBasedOnMethodTag
+	^self selectedMethodGroupClass isBasedOnProtocol
 ]
 
-{ #category : #'selection-projects' }
-ClyFullBrowserContext >> isProjectChildSelected [
-	^self selectedProjectChildItems notEmpty
-]
-
-{ #category : #'selection-projects' }
-ClyFullBrowserContext >> isProjectSelected [
-	^self selectedProjectItems notEmpty
-]
-
-{ #category : #'selection-method groups' }
+{ #category : 'selection-method groups' }
 ClyFullBrowserContext >> isSelectedMethodGroupEditable [
 
 	self isMethodGroupSelected ifFalse: [ ^false ].
@@ -62,124 +54,92 @@ ClyFullBrowserContext >> isSelectedMethodGroupEditable [
 	^self selectedMethodGroupClass isEditableGroup
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyFullBrowserContext >> isSimilarTo: anotherBrowserContext [
 	^(super isSimilarTo: anotherBrowserContext)
 		and: [ metaLevelScope == anotherBrowserContext metaLevelScope ]
 ]
 
-{ #category : #'selection-packages' }
-ClyFullBrowserContext >> lastSelectedClassTag [
-	| tagItem |
-	tagItem := tool classGroupSelection items
-		detect: [ :each | each type isBasedOnClassTag ].
-	^tagItem name
-]
-
-{ #category : #'selection-method groups' }
+{ #category : 'selection-method groups' }
 ClyFullBrowserContext >> lastSelectedMethodGroup [
 	^self lastSelectedObjectIn: self selectedMethodGroups
 ]
 
-{ #category : #'selection-projects' }
-ClyFullBrowserContext >> lastSelectedProject [
-	^self lastSelectedObjectIn: self selectedProjects
+{ #category : 'selection-packages' }
+ClyFullBrowserContext >> lastSelectedPackageTag [
+
+	^ (tool classGroupSelection items detect: [ :each | each type isBasedOnPackageTag ]) name
 ]
 
-{ #category : #'selection-projects' }
-ClyFullBrowserContext >> lastSelectedProjectChild [
-	^self lastSelectedObjectIn: self selectedProjectChildren
-]
-
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyFullBrowserContext >> metaLevelScope [
 	^ metaLevelScope
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyFullBrowserContext >> metaLevelScope: anObject [
 	metaLevelScope := anObject
 ]
 
-{ #category : #'selection-classes' }
+{ #category : 'selection-classes' }
 ClyFullBrowserContext >> selectedClassItems [
 	^tool classSelection items
 ]
 
-{ #category : #'selection-classes' }
+{ #category : 'selection-classes' }
 ClyFullBrowserContext >> selectedClassSide [
 	"The browser (tool) has selected classes but the side from where browser show it can be instance side of class side.
 	So this method return actual 'meta side' of selected class"
 	^ tool currentMetaLevelOf: self lastSelectedClass
 ]
 
-{ #category : #'selection-method groups' }
+{ #category : 'selection-method groups' }
 ClyFullBrowserContext >> selectedMethodGroupClass [
 
 	^(self lastSelectedObjectIn: self selectedMethodGroupItems) type
 ]
 
-{ #category : #'selection-method groups' }
+{ #category : 'selection-method groups' }
 ClyFullBrowserContext >> selectedMethodGroupItems [
 	^tool methodGroupSelection items
 ]
 
-{ #category : #'selection-method groups' }
+{ #category : 'selection-method groups' }
 ClyFullBrowserContext >> selectedMethodGroups [
 	^self actualSelectionFrom: self selectedMethodGroupItems
 ]
 
-{ #category : #'selection-methods' }
+{ #category : 'selection-methods' }
 ClyFullBrowserContext >> selectedMethodItems [
 	^tool methodSelection items
 ]
 
-{ #category : #'selection-packages' }
+{ #category : 'selection-packages' }
 ClyFullBrowserContext >> selectedPackageItems [
 	^tool packageSelection items
 ]
 
-{ #category : #'selection-projects' }
-ClyFullBrowserContext >> selectedProjectChildItems [
-	^tool projectChildrenSelection items
-]
-
-{ #category : #'selection-projects' }
-ClyFullBrowserContext >> selectedProjectChildren [
-	^self actualSelectionFrom: self selectedProjectChildItems
-]
-
-{ #category : #'selection-projects' }
-ClyFullBrowserContext >> selectedProjectItems [
-	^tool projectSelection items
-]
-
-{ #category : #'selection-projects' }
-ClyFullBrowserContext >> selectedProjects [
-	^self actualSelectionFrom: self selectedProjectItems
-]
-
-{ #category : #'tool controlling' }
-ClyFullBrowserContext >> showMethodTag: tagName [
-	tool selectMethodGroupNamed: tagName
-]
-
-{ #category : #'tool controlling' }
+{ #category : 'tool controlling' }
 ClyFullBrowserContext >> showPackage: aPackage [
 	tool selectPackage: aPackage
 ]
 
-{ #category : #'tool controlling' }
-ClyFullBrowserContext >> showPackage: aPackage atClassTag: tagName [
-	tool selectPackage: aPackage atClassTag: tagName
+{ #category : 'tool controlling' }
+ClyFullBrowserContext >> showPackage: aPackage tag: tagName [
+	tool selectPackage: aPackage andTag: tagName
 ]
 
-{ #category : #'tool controlling' }
+{ #category : 'tool controlling' }
+ClyFullBrowserContext >> showProtocol: protocolName [
+	tool selectMethodGroupNamed: protocolName
+]
+
+{ #category : 'tool controlling' }
 ClyFullBrowserContext >> showVariableNamed: varName [
 	tool selectVariableNamed: varName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyFullBrowserContext >> tool: aBrowser [
 	super tool: aBrowser.
 	metaLevelScope := aBrowser metaLevelScope

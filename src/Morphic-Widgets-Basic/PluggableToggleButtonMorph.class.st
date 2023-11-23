@@ -19,20 +19,22 @@ PluggableToggleButtonMorph new
 
 "
 Class {
-	#name : #PluggableToggleButtonMorph,
-	#superclass : #PluggableButtonMorph,
+	#name : 'PluggableToggleButtonMorph',
+	#superclass : 'PluggableButtonMorph',
 	#instVars : [
 		'pressed'
 	],
-	#category : #'Morphic-Widgets-Basic-Buttons'
+	#category : 'Morphic-Widgets-Basic-Buttons',
+	#package : 'Morphic-Widgets-Basic',
+	#tag : 'Buttons'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableToggleButtonMorph >> bePressed [
 	self pressed: true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableToggleButtonMorph >> icon [
 	| originalIcon |
 	originalIcon := super icon.
@@ -42,18 +44,18 @@ PluggableToggleButtonMorph >> icon [
 		ifFalse: [ originalIcon ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PluggableToggleButtonMorph >> initialize [
 	pressed := false.
 	super initialize
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 PluggableToggleButtonMorph >> isPressed [
 	^ pressed
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableToggleButtonMorph >> on: anObject getState: getStateSel action: actionSel label: labelSel icon: iconSel menu: menuSel [
 	"Set up the pluggable parameters.
 	Update label and state."
@@ -68,7 +70,7 @@ PluggableToggleButtonMorph >> on: anObject getState: getStateSel action: actionS
 	self pressed: super getModelState
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableToggleButtonMorph >> performAction: event [
 	"Inform the model that this button has been pressed. Sent by the controller when this button
 	 is pressed. If the button's actionSelector takes any arguments, they are obtained
@@ -91,7 +93,7 @@ PluggableToggleButtonMorph >> performAction: event [
 		withArguments: (arguments copyWithFirst: self isPressed)
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 PluggableToggleButtonMorph >> pressed: aBoolean [
 	pressed := aBoolean.
 	self update: (getLabelSelector ifNil: [ getIconSelector ])

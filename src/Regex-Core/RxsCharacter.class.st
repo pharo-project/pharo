@@ -7,27 +7,29 @@ Instance variables:
 	character		<Character>
 "
 Class {
-	#name : #RxsCharacter,
-	#superclass : #RxsNode,
+	#name : 'RxsCharacter',
+	#superclass : 'RxsNode',
 	#instVars : [
 		'character'
 	],
-	#category : #'Regex-Core-Nodes'
+	#category : 'Regex-Core-Nodes',
+	#package : 'Regex-Core',
+	#tag : 'Nodes'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RxsCharacter class >> with: aCharacter [
 
 	^self new initializeCharacter: aCharacter
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RxsCharacter >> character [
 
 	^character
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RxsCharacter >> dispatchTo: aMatcher [
 	"Inform the matcher of the kind of the node, and it
 	will do whatever it has to."
@@ -35,7 +37,7 @@ RxsCharacter >> dispatchTo: aMatcher [
 	^aMatcher syntaxCharacter: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RxsCharacter >> enumerateTo: aSet ignoringCase: aBoolean [
 
 	aBoolean
@@ -46,21 +48,21 @@ RxsCharacter >> enumerateTo: aSet ignoringCase: aBoolean [
 		ifFalse: [aSet add: character]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RxsCharacter >> initializeCharacter: aCharacter [
 	"See class comment for instance variable description."
 
 	character := aCharacter
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RxsCharacter >> isAtomic [
 	"A character is always atomic."
 
 	^true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RxsCharacter >> isEnumerable [
 
 	^true

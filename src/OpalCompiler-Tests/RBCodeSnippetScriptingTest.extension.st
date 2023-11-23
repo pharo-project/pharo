@@ -1,6 +1,6 @@
-Extension { #name : #RBCodeSnippetScriptingTest }
+Extension { #name : 'RBCodeSnippetScriptingTest' }
 
-{ #category : #'*OpalCompiler-Tests' }
+{ #category : '*OpalCompiler-Tests' }
 RBCodeSnippetScriptingTest >> testEvaluateFailBlock [
 
 	| runBlock error |
@@ -21,7 +21,7 @@ RBCodeSnippetScriptingTest >> testEvaluateFailBlock [
 			self testExecuteBlock: runBlock ]
 ]
 
-{ #category : #'*OpalCompiler-Tests' }
+{ #category : '*OpalCompiler-Tests' }
 RBCodeSnippetScriptingTest >> testEvaluateFaulty [
 
 	| runBlock |
@@ -35,7 +35,7 @@ RBCodeSnippetScriptingTest >> testEvaluateFaulty [
 	self testExecuteBlock: runBlock
 ]
 
-{ #category : #'*OpalCompiler-Tests' }
+{ #category : '*OpalCompiler-Tests' }
 RBCodeSnippetScriptingTest >> testEvaluateOnError [
 
 	| runBlock value |
@@ -51,7 +51,7 @@ RBCodeSnippetScriptingTest >> testEvaluateOnError [
 		ifFalse: [ self testExecuteBlock: runBlock ]
 ]
 
-{ #category : #'*OpalCompiler-Tests' }
+{ #category : '*OpalCompiler-Tests' }
 RBCodeSnippetScriptingTest >> testEvaluateOnErrorResume [
 
 	| runBlock value |

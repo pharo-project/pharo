@@ -9,25 +9,27 @@ To get the current platform, you can evaluate:
 OSPlatform current.
 "
 Class {
-	#name : #Win64Platform,
-	#superclass : #WinPlatform,
-	#category : #'System-Platforms-Windows'
+	#name : 'Win64Platform',
+	#superclass : 'WinPlatform',
+	#category : 'System-Platforms-Windows',
+	#package : 'System-Platforms',
+	#tag : 'Windows'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 Win64Platform class >> isActivePlatform [
 	"Answer whether the receiver is the active platform"
 	^ Smalltalk vm operatingSystemName = 'Win32' and: [
 		  Smalltalk vm is64bit ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 Win64Platform >> accept: aVisitor [
 
 	^ aVisitor visitWindows64: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Win64Platform >> isWin64 [
 	^ true
 ]

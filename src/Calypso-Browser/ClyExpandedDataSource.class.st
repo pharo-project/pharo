@@ -8,15 +8,17 @@ Internal Representation and Key Implementation Points.
 	collapsedItems:		<SortedCollection of: ClyDataSourceItem>	sorted by item position
 "
 Class {
-	#name : #ClyExpandedDataSource,
-	#superclass : #ClyDataSource,
+	#name : 'ClyExpandedDataSource',
+	#superclass : 'ClyDataSource',
 	#instVars : [
 		'collapsedItems'
 	],
-	#category : #'Calypso-Browser-DataSource'
+	#category : 'Calypso-Browser-DataSource',
+	#package : 'Calypso-Browser',
+	#tag : 'DataSource'
 }
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyExpandedDataSource >> collapse: aDataSourceItem [
 	queryView changeStateBy: [
 		collapsedItems removeAllSuchThat: [ :each |
@@ -26,17 +28,17 @@ ClyExpandedDataSource >> collapse: aDataSourceItem [
 		self expansionChanged]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyExpandedDataSource >> collapsedItems [
 	^collapsedItems
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyExpandedDataSource >> collapsedItems: items [
 	collapsedItems := items
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyExpandedDataSource >> countChildrenOf: aDataSourceItem [
 	| environmentItem |
 	environmentItem := aDataSourceItem browserItem.
@@ -44,12 +46,12 @@ ClyExpandedDataSource >> countChildrenOf: aDataSourceItem [
 	^environmentItem localHierarchySize
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyExpandedDataSource >> definesChildren [
 	^true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyExpandedDataSource >> doesItemHaveChildren: aDataSourceItem [
 	| environmentItem |
 	environmentItem := aDataSourceItem browserItem.
@@ -57,7 +59,7 @@ ClyExpandedDataSource >> doesItemHaveChildren: aDataSourceItem [
 	^environmentItem localHierarchySize > 0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyExpandedDataSource >> elementAt: rowIndex [
 	| localIndex |
 	localIndex := rowIndex.
@@ -74,7 +76,7 @@ ClyExpandedDataSource >> elementAt: rowIndex [
 	^ClyDataSourceItem of: self value: self itemCursor currentItem
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyExpandedDataSource >> expand: aDataSourceItem [
 	queryView changeStateBy: [
 		collapsedItems remove: aDataSourceItem.
@@ -82,7 +84,7 @@ ClyExpandedDataSource >> expand: aDataSourceItem [
 		self expansionChanged]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ClyExpandedDataSource >> findCachedElementWith: anEnvironmentItem ifAbsent: absentBlock [
 
 	^collapsedItems
@@ -90,7 +92,7 @@ ClyExpandedDataSource >> findCachedElementWith: anEnvironmentItem ifAbsent: abse
 		ifNone: absentBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyExpandedDataSource >> globalPositionOf: childDataSourceItem [
 
 	| result |
@@ -103,14 +105,14 @@ ClyExpandedDataSource >> globalPositionOf: childDataSourceItem [
 	^result + childDataSourceItem position
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyExpandedDataSource >> initialize [
 	super initialize.
 
 	collapsedItems := SortedCollection sortBlock: [ :a :b | a position < b position ]
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 ClyExpandedDataSource >> initializeForBrowserStateSpanshot [
 	| copy |
 	super initializeForBrowserStateSpanshot.
@@ -119,13 +121,13 @@ ClyExpandedDataSource >> initializeForBrowserStateSpanshot [
 	collapsedItems := copy asSortedCollection: [ :a :b | a position < b position ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyExpandedDataSource >> isExpanded: aDataSourceItem [
 
 	^(collapsedItems includes: aDataSourceItem) not
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyExpandedDataSource >> isInSameStateAs: anotherDataSource [
 
 	(super isInSameStateAs: anotherDataSource) ifFalse: [ ^false ].
@@ -136,13 +138,13 @@ ClyExpandedDataSource >> isInSameStateAs: anotherDataSource [
 			myItem isSameAs: anotherItem ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyExpandedDataSource >> numberOfRows [
 	^self itemCursor itemCount
 		- (collapsedItems sum: [ :each | each childrenCount ])
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ClyExpandedDataSource >> updateExpandingItems [
 	self updateItems: collapsedItems.
 	collapsedItems := collapsedItems reject: [ :each | each isRemoved ]

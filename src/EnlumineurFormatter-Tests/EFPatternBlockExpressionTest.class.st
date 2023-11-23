@@ -1,20 +1,21 @@
 Class {
-	#name : #EFPatternBlockExpressionTest,
-	#superclass : #EFBlockExpressionTest,
-	#category : #'EnlumineurFormatter-Tests'
+	#name : 'EFPatternBlockExpressionTest',
+	#superclass : 'EFBlockExpressionTest',
+	#category : 'EnlumineurFormatter-Tests',
+	#package : 'EnlumineurFormatter-Tests'
 }
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 EFPatternBlockExpressionTest >> closeBracket [
 	^'}'
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 EFPatternBlockExpressionTest >> openBracket [
 	^'`{'
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 EFPatternBlockExpressionTest >> parserClass [
 	^ RBPatternParser
 ]

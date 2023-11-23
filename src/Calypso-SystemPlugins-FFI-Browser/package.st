@@ -1,1 +1,1 @@
-Package { #name : #'Calypso-SystemPlugins-FFI-Browser' }
+Package { #name : 'Calypso-SystemPlugins-FFI-Browser' }

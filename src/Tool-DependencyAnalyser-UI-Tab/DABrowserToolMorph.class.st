@@ -3,32 +3,33 @@ I represent a tool in the System Browser when a Package is selected.
 I display an extra-tab to show dependencies of the selected package.
 "
 Class {
-	#name : #DABrowserToolMorph,
-	#superclass : #ClyBrowserToolMorph,
+	#name : 'DABrowserToolMorph',
+	#superclass : 'ClyBrowserToolMorph',
 	#instVars : [
 		'presenter',
 		'analyzedPackage'
 	],
-	#category : #'Tool-DependencyAnalyser-UI-Tab'
+	#category : 'Tool-DependencyAnalyser-UI-Tab',
+	#package : 'Tool-DependencyAnalyser-UI-Tab'
 }
 
-{ #category : #activation }
+{ #category : 'activation' }
 DABrowserToolMorph class >> packageActivation [
 	<classAnnotation>
-	^ ClyTabActivationStrategyAnnotation for: RPackage asCalypsoItemContext
+	^ ClyTabActivationStrategyAnnotation for: Package asCalypsoItemContext
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DABrowserToolMorph class >> tabOrder [
 	^ -10
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DABrowserToolMorph >> analyzedPackage [
 	^ analyzedPackage
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 DABrowserToolMorph >> build [
 
 	presenter := DATabPackageDependenciesPresenter on: analyzedPackage.
@@ -38,7 +39,7 @@ DABrowserToolMorph >> build [
 		fullFrame: LayoutFrame identity
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DABrowserToolMorph >> daPackageFor: aPackageName [
 
 	^ DADependencyChecker new 
@@ -46,33 +47,33 @@ DABrowserToolMorph >> daPackageFor: aPackageName [
 		daPackageFor: aPackageName
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DABrowserToolMorph >> defaultIconName [
 
 	^ #objects
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DABrowserToolMorph >> defaultTitle [
 
 	^ 'Dependencies'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DABrowserToolMorph >> isSimilarTo: anotherBrowserTool [
 	(super isSimilarTo: anotherBrowserTool) ifFalse: [ ^false ].
 	^ self analyzedPackage = anotherBrowserTool analyzedPackage
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DABrowserToolMorph >> isValidInContext: aClyFullBrowserContext [
-	self context class = aClyFullBrowserContext class
-		ifFalse: [ ^ false ].
 
-	^ self analyzedPackage rPackageSet packageName = aClyFullBrowserContext lastSelectedClassGroup name
+	self context class = aClyFullBrowserContext class ifFalse: [ ^ false ].
+
+	^ self analyzedPackage packageName = aClyFullBrowserContext lastSelectedClassGroup name
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DABrowserToolMorph >> setUpModelFromContext [
 
 	analyzedPackage := self daPackageFor: context lastSelectedClassGroup name

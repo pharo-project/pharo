@@ -1,6 +1,6 @@
-Extension { #name : #Array }
+Extension { #name : 'Array' }
 
-{ #category : #'*ParametrizedTests' }
+{ #category : '*ParametrizedTests' }
 Array >> asTestMatrix [
 
 	| matrix |

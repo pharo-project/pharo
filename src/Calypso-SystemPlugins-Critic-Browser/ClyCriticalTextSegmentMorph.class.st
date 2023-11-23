@@ -2,16 +2,17 @@
 I am a slight modification of the rubric text segment morph which creates custom menu items for displaying critiques
 "
 Class {
-	#name : #ClyCriticalTextSegmentMorph,
-	#superclass : #RubTextSegmentMorph,
+	#name : 'ClyCriticalTextSegmentMorph',
+	#superclass : 'RubTextSegmentMorph',
 	#instVars : [
 		'entity',
 		'critique'
 	],
-	#category : #'Calypso-SystemPlugins-Critic-Browser'
+	#category : 'Calypso-SystemPlugins-Critic-Browser',
+	#package : 'Calypso-SystemPlugins-Critic-Browser'
 }
 
-{ #category : #actions }
+{ #category : 'actions' }
 ClyCriticalTextSegmentMorph >> addItemToMenu: aMenu [
 	| listItem |
 	listItem := ClyCritiqueMenuItemMorph new
@@ -45,22 +46,22 @@ ClyCriticalTextSegmentMorph >> addItemToMenu: aMenu [
 	^ aMenu addMenuItem: listItem
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyCriticalTextSegmentMorph >> critique [
 	^ critique
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyCriticalTextSegmentMorph >> critique: anObject [
 	critique := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyCriticalTextSegmentMorph >> entity [
 	^ entity
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyCriticalTextSegmentMorph >> entity: anObject [
 	entity := anObject
 ]

@@ -1,6 +1,6 @@
-Extension { #name : #Collection }
+Extension { #name : 'Collection' }
 
-{ #category : #'*Keymapping-KeyCombinations' }
+{ #category : '*Keymapping-KeyCombinations' }
 Collection >> asKeyCombination [
 	| shortcut |
 	self size = 1 ifTrue: [ ^self first asKeyCombination ].
@@ -10,7 +10,7 @@ Collection >> asKeyCombination [
 	^shortcut
 ]
 
-{ #category : #'*Keymapping-KeyCombinations' }
+{ #category : '*Keymapping-KeyCombinations' }
 Collection >> asShortcut [
 	^ self asKeyCombination
 ]

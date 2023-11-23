@@ -1,11 +1,11 @@
-Extension { #name : #CompiledMethod }
+Extension { #name : 'CompiledMethod' }
 
-{ #category : #'*System-Support' }
+{ #category : '*System-Support' }
 CompiledMethod >> implementors [
 	^ SystemNavigation default allImplementorsOf: self selector
 ]
 
-{ #category : #'*System-Support' }
+{ #category : '*System-Support' }
 CompiledMethod >> referencedClasses [
 
 	"Return classes that are directly referenced by this method.
@@ -21,7 +21,7 @@ CompiledMethod >> referencedClasses [
 	^ result
 ]
 
-{ #category : #'*System-Support' }
+{ #category : '*System-Support' }
 CompiledMethod >> senders [
 	^ SystemNavigation default allSendersOf: self selector
 ]

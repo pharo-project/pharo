@@ -1,6 +1,6 @@
-Extension { #name : #StartupPreferencesLoader }
+Extension { #name : 'StartupPreferencesLoader' }
 
-{ #category : #'*System-Settings-Browser' }
+{ #category : '*System-Settings-Browser' }
 StartupPreferencesLoader class >> startupGeneralPrefererencesFolderMenuOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #SystemStartupFolder)
@@ -12,7 +12,7 @@ StartupPreferencesLoader class >> startupGeneralPrefererencesFolderMenuOn: aBuil
 		iconName: #smallOpen
 ]
 
-{ #category : #'*System-Settings-Browser' }
+{ #category : '*System-Settings-Browser' }
 StartupPreferencesLoader class >> startupLoaderMenuOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #SystemStartupLoader)
@@ -25,7 +25,7 @@ StartupPreferencesLoader class >> startupLoaderMenuOn: aBuilder [
 	aBuilder withSeparatorAfter
 ]
 
-{ #category : #'*System-Settings-Browser' }
+{ #category : '*System-Settings-Browser' }
 StartupPreferencesLoader class >> startupPreferencesVersionFolderMenuOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #SystemStartupFolder)
@@ -39,7 +39,7 @@ StartupPreferencesLoader class >> startupPreferencesVersionFolderMenuOn: aBuilde
 		iconName: #smallOpen
 ]
 
-{ #category : #'*System-Settings-Browser' }
+{ #category : '*System-Settings-Browser' }
 StartupPreferencesLoader class >> systemStartupMenuOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #SystemStartup)

@@ -5,7 +5,7 @@ So you can write code like this:
 
 	SystemAnnouncer uniqueInstance when: (ClyPackageChange of: aPackage) do: [ :ann | ann logCr ].
 	
-I provide more general subscription logic than subscribing on base RPackageAnnouncement class. Many other events can be also related to package changes like class creation. They are not covered by RPackageAnnouncement hierarchy.
+I provide more general subscription logic than subscribing on base Package Announcement class. Many other events can be also related to package changes like class creation. They are not covered by PackageAnnouncement hierarchy.
 I reuse logic of queries how they detect that their result is affected by system changes: 
 	
 	ClyPackageChange>>handlesAnnouncement: anAnnouncement 
@@ -16,34 +16,36 @@ I am used by class editor tools to be updated when editing class is changed.
 Internal Representation and Key Implementation Points.
 
     Instance Variables
-	affectedPackage:		<RPackage>
+	affectedPackage:		<Package>
 "
 Class {
-	#name : #ClyPackageChange,
-	#superclass : #Object,
+	#name : 'ClyPackageChange',
+	#superclass : 'Object',
 	#instVars : [
 		'affectedPackage'
 	],
-	#category : #'Calypso-SystemQueries-Domain'
+	#category : 'Calypso-SystemQueries-Domain',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Domain'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyPackageChange class >> of: aPackage [
 	^self new
 		affectedPackage: aPackage
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyPackageChange >> affectedPackage [
 	^ affectedPackage
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyPackageChange >> affectedPackage: anObject [
 	affectedPackage := anObject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyPackageChange >> handlesAnnouncement: anAnnouncement [
 
 	^anAnnouncement affectsPackage: affectedPackage

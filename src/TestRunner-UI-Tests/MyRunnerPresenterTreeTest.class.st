@@ -1,40 +1,41 @@
 Class {
-	#name : #MyRunnerPresenterTreeTest,
-	#superclass : #TestCase,
+	#name : 'MyRunnerPresenterTreeTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'testRunnerUI'
 	],
-	#category : #'TestRunner-UI-Tests'
+	#category : 'TestRunner-UI-Tests',
+	#package : 'TestRunner-UI-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 MyRunnerPresenterTreeTest >> setUp [
 
 	super setUp.
 	testRunnerUI := TestRunnerTreePresenter new
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 MyRunnerPresenterTreeTest >> testANewTestRunnerPresenterShouldntHaveAnyClassInClassesPresenter [
 
 	self assert:
 		testRunnerUI classesPresenter listPresenter items isEmpty
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 MyRunnerPresenterTreeTest >> testANewTestRunnerPresenterShouldntHaveAnyResultDescription [
 
 	self assert: testRunnerUI resultDescriptionPresenter text isEmpty
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 MyRunnerPresenterTreeTest >> testANewTestRunnerPresenterShouldntHaveAnySelectedPackage [
 
 	self assert:
 		testRunnerUI packagesPresenter listPresenter selectedItem isNil
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 MyRunnerPresenterTreeTest >> testClassesPresenterContainsTestCasesFromTheSelectedPackages [
 
 	| expectedNumberOfClasses aPackage |
@@ -51,13 +52,13 @@ MyRunnerPresenterTreeTest >> testClassesPresenterContainsTestCasesFromTheSelecte
 		equals: expectedNumberOfClasses
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 MyRunnerPresenterTreeTest >> testInitilyTheResultPresenterItemsShouldBeEmpty [
 
 	self assert: testRunnerUI resultItemsPresenter roots isEmpty
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 MyRunnerPresenterTreeTest >> testItemSelectionInPackagePresenter [
 
 	self assert: testRunnerUI packagesPresenter selectedItem isNil.
@@ -66,7 +67,7 @@ MyRunnerPresenterTreeTest >> testItemSelectionInPackagePresenter [
 	self deny: testRunnerUI packagesPresenter selectedItem isNil
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 MyRunnerPresenterTreeTest >> testResultDescriptionPresenterShouldContainsTheTestsExecutionStats [
 
 	| aPackage aClass expectedDescription |

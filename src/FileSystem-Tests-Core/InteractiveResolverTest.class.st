@@ -2,22 +2,24 @@
 SUnit tests for InteractiveResolver
 "
 Class {
-	#name : #InteractiveResolverTest,
-	#superclass : #FileSystemResolverTest,
-	#category : #'FileSystem-Tests-Core-Resolver'
+	#name : 'InteractiveResolverTest',
+	#superclass : 'FileSystemResolverTest',
+	#category : 'FileSystem-Tests-Core-Resolver',
+	#package : 'FileSystem-Tests-Core',
+	#tag : 'Resolver'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 InteractiveResolverTest >> createResolver [
 	^ InteractiveResolver new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 InteractiveResolverTest >> home [
 	^ FileLocator imageDirectory resolve
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 InteractiveResolverTest >> testCached [
 	[ resolver resolve: #home ]
 		on: ResolutionRequest
@@ -25,7 +27,7 @@ InteractiveResolverTest >> testCached [
 	self assertOriginResolves: #home
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 InteractiveResolverTest >> testNew [
 	[ self assertOriginResolves: #home ]
 		on: ResolutionRequest

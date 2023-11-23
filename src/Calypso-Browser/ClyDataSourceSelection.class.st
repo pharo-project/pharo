@@ -33,28 +33,32 @@ Internal Representation and Key Implementation Points.
 	rootDataSource:		<ClyDataSource>
 "
 Class {
-	#name : #ClyDataSourceSelection,
-	#superclass : #Object,
+	#name : 'ClyDataSourceSelection',
+	#superclass : 'Object',
+	#traits : 'TIsEmpty',
+	#classTraits : 'TIsEmpty classTrait',
 	#instVars : [
 		'items',
 		'rootDataSource'
 	],
-	#category : #'Calypso-Browser-DataSource'
+	#category : 'Calypso-Browser-DataSource',
+	#package : 'Calypso-Browser',
+	#tag : 'DataSource'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyDataSourceSelection class >> fromRoot: aDataSource items: dataSourceItems [
 	^self new
 		rootDataSource: aDataSource;
 		items: dataSourceItems
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyDataSourceSelection >> actualObjects [
 	^items collect: [:each | each actualObject]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ClyDataSourceSelection >> asDesiredSelection [
 
 	| itemsCopy |
@@ -62,14 +66,14 @@ ClyDataSourceSelection >> asDesiredSelection [
 	^ClyDesiredSelection fromRoot: rootDataSource items: itemsCopy
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ClyDataSourceSelection >> asItemsScope: aTypedScope [
 	| actualItems |
 	actualItems := self uniformActualObjects.
 	^ aTypedScope ofAll: actualItems in: rootDataSource queryEnvironment
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ClyDataSourceSelection >> asSelectedItemsOf: itemTypeClass [
 
 	| resultItems |
@@ -80,7 +84,7 @@ ClyDataSourceSelection >> asSelectedItemsOf: itemTypeClass [
 	^self class fromRoot: self rootDataSource items: resultItems
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ClyDataSourceSelection >> asSelectedParentsOf: itemTypeClass [
 
 	| parents resultItems currentItems resultSet lastSelectedItem |
@@ -106,7 +110,7 @@ ClyDataSourceSelection >> asSelectedParentsOf: itemTypeClass [
 	^self class fromRoot: self rootDataSource items: resultItems
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ClyDataSourceSelection >> asSelectedRoots [
 
 	| roots lastSelectedRoot resultItems |
@@ -124,13 +128,13 @@ ClyDataSourceSelection >> asSelectedRoots [
 	^self class fromRoot: self rootDataSource items: resultItems
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyDataSourceSelection >> beEmpty [
 
 	self selectItems: { }
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 ClyDataSourceSelection >> copyForBrowserStateSnapshotOf: aDataSource [
 
 	| copy |
@@ -140,7 +144,7 @@ ClyDataSourceSelection >> copyForBrowserStateSnapshotOf: aDataSource [
 	^copy
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyDataSourceSelection >> detachedItems [
 	"Selection manages own items in the way that they should not be in long use from outside.
 	For example when items data source is changed my items could have null environment item inside
@@ -151,14 +155,14 @@ ClyDataSourceSelection >> detachedItems [
 	^items collect: [:each | each copy]
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyDataSourceSelection >> ensureVisibleLastItem [
 
 	"in fact first selection index is last selected item"
 	rootDataSource table ensureVisibleFirstSelection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyDataSourceSelection >> groupItemsByType [
 
 	| groups |
@@ -171,29 +175,29 @@ ClyDataSourceSelection >> groupItemsByType [
 	^groups
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyDataSourceSelection >> groupItemsByTypeAndDo: typeAndItemsBlock [
 
 	self groupItemsByType keysAndValuesDo: typeAndItemsBlock
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyDataSourceSelection >> hasSelectedItems [
 	^self isEmpty not
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyDataSourceSelection >> includesActualObject: anObject [
 	^items anySatisfy: [ :each | each includesActualObject: anObject ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyDataSourceSelection >> includesItemsOf: itemTypeClass [
 
 	^items anySatisfy: [ :each | each isBasedOnItemType: itemTypeClass ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyDataSourceSelection >> isBasedOnItemType: aClass [
 
 	^self isEmpty
@@ -201,17 +205,17 @@ ClyDataSourceSelection >> isBasedOnItemType: aClass [
 		ifFalse: [ self lastSelectedItem isBasedOnItemType: aClass  ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyDataSourceSelection >> isEmpty [
 	^items isEmpty
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyDataSourceSelection >> isMultipleSelected [
 	^items size > 1
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyDataSourceSelection >> isSameAs: anotherSelection [
 
 	self size = anotherSelection size ifFalse: [ ^false ].
@@ -222,28 +226,28 @@ ClyDataSourceSelection >> isSameAs: anotherSelection [
 	^true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyDataSourceSelection >> isSingleSelected [
 	^items size = 1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyDataSourceSelection >> items [
 	^ items
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyDataSourceSelection >> items: anObject [
 	items := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyDataSourceSelection >> lastSelectedItem [
 
 	^items first " it is related to ordering logic in FastTable"
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyDataSourceSelection >> printOn: aStream [
 	super printOn: aStream.
 
@@ -253,7 +257,7 @@ ClyDataSourceSelection >> printOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyDataSourceSelection >> restoreDesiredSelectionWith: newDataSourceItems silently: aBool [
 
 	items := newDataSourceItems.
@@ -263,7 +267,7 @@ ClyDataSourceSelection >> restoreDesiredSelectionWith: newDataSourceItems silent
 	aBool ifFalse: [self ensureVisibleLastItem]
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyDataSourceSelection >> restoreTableSelection [
 	| actualSelectionChanged |
 	actualSelectionChanged := items anySatisfy: #isRemoved.
@@ -273,7 +277,7 @@ ClyDataSourceSelection >> restoreTableSelection [
 	^actualSelectionChanged
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyDataSourceSelection >> restoreTableSelectionSilently: silentSelection [
 
 	| selectionIndexes |
@@ -286,17 +290,17 @@ ClyDataSourceSelection >> restoreTableSelectionSilently: silentSelection [
 		silently: silentSelection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyDataSourceSelection >> rootDataSource [
 	^ rootDataSource
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyDataSourceSelection >> rootDataSource: anObject [
 	rootDataSource := anObject
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyDataSourceSelection >> selectItems: dataSourceItems [
 
 	| newSelectionIsSame |
@@ -308,7 +312,7 @@ ClyDataSourceSelection >> selectItems: dataSourceItems [
 	self ensureVisibleLastItem
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyDataSourceSelection >> selectItemsWhere: conditionBlock [
 
 	| newItems |
@@ -316,7 +320,7 @@ ClyDataSourceSelection >> selectItemsWhere: conditionBlock [
 	self selectItems: newItems
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyDataSourceSelection >> selectItemsWith: actualObjects [
 
 	| newItems |
@@ -324,7 +328,7 @@ ClyDataSourceSelection >> selectItemsWith: actualObjects [
 	self selectItems: newItems
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ClyDataSourceSelection >> setUpSelectedRows: indexes in: aTableMorph silently: silentSelection [
 	silentSelection
 		ifTrue: [ aTableMorph basicSelectIndexes: indexes ]
@@ -333,12 +337,12 @@ ClyDataSourceSelection >> setUpSelectedRows: indexes in: aTableMorph silently: s
 			aTableMorph selectIndexes: indexes ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyDataSourceSelection >> size [
 	^items size
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyDataSourceSelection >> uniformActualObjects [
 
 	| lastItem |
@@ -350,7 +354,7 @@ ClyDataSourceSelection >> uniformActualObjects [
 		ifFalse: [{lastItem actualObject}]
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyDataSourceSelection >> updateIfDirty [
 
 	rootDataSource isDirty ifTrue: [ rootDataSource runUpdate ].
@@ -358,7 +362,7 @@ ClyDataSourceSelection >> updateIfDirty [
 		ifTrue: [ each ownerDataSource runUpdate] ]
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyDataSourceSelection >> updateItemsWhichBelongsTo: aDataSource [
 	| relatedItems actualSelectionChanged |
 	relatedItems := items select: [ :each | each belongsToDataSource: aDataSource].

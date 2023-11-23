@@ -1,6 +1,6 @@
-Extension { #name : #PositionableStream }
+Extension { #name : 'PositionableStream' }
 
-{ #category : #'*Fuel-Core' }
+{ #category : '*Fuel-Core' }
 PositionableStream >> fuelNextWordsInto: aWordObject [ 
 	"This method is the same as nextWordsInto: but the restoreEndianness is only done if needed"
 	| blt pos source byteSize |

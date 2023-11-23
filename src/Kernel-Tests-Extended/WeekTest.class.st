@@ -2,22 +2,24 @@
 SUnit tests for weeks
 "
 Class {
-	#name : #WeekTest,
-	#superclass : #ClassTestCase,
+	#name : 'WeekTest',
+	#superclass : 'ClassTestCase',
 	#instVars : [
 		'week',
 		'restoredStartDay'
 	],
-	#category : #'Kernel-Tests-Extended-Chronology'
+	#category : 'Kernel-Tests-Extended-Chronology',
+	#package : 'Kernel-Tests-Extended',
+	#tag : 'Chronology'
 }
 
-{ #category : #coverage }
+{ #category : 'coverage' }
 WeekTest >> classToBeTested [
 
 	^ Week
 ]
 
-{ #category : #coverage }
+{ #category : 'coverage' }
 WeekTest >> selectorsToBeIgnored [
 
 	| deprecated private special |
@@ -29,7 +31,7 @@ WeekTest >> selectorsToBeIgnored [
 	^ super selectorsToBeIgnored, deprecated, private, special
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 WeekTest >> setUp [
 	"June 1998, 5th week"
 
@@ -39,7 +41,7 @@ WeekTest >> setUp [
 	week := Week starting: '4 July 1998' asDate
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 WeekTest >> tearDown [
 
 	Week startDay: restoredStartDay.
@@ -47,7 +49,7 @@ WeekTest >> tearDown [
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WeekTest >> testByWeekNumber [
 	"Check some week dates, and check that the week starts on Monday
 	 even though Week >> startDay is set to Sunday in setUp."
@@ -68,18 +70,18 @@ WeekTest >> testByWeekNumber [
 	self assert: week start dayOfWeek equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WeekTest >> testByWeekNumberInCurrentYear [
 	week := Week week: 2.
 	self assert: week year asYear equals: Year current
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WeekTest >> testDayNames [
 	self assert: Week dayNames equals: #(#Sunday #Monday #Tuesday #Wednesday #Thursday #Friday #Saturday)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WeekTest >> testEnumerating [
 	| days |
 	days := OrderedCollection new.
@@ -90,7 +92,7 @@ WeekTest >> testEnumerating [
 	self assertEmpty: days
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WeekTest >> testIndexOfDay [
 	| days |
 	days := #(#Sunday #Monday #Tuesday #Wednesday #Thursday #Friday #Saturday).
@@ -105,7 +107,7 @@ WeekTest >> testIndexOfDay [
 	self assert: (Week indexOfDay: #Sunnyday) equals: 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WeekTest >> testInquiries [
 	self
 		assert: week start asDate equals: '28 June 1998' asDate;
@@ -114,7 +116,7 @@ WeekTest >> testInquiries [
 		assert: week duration equals: 7 days
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WeekTest >> testNameOfDay [
 	| days |
 	days := #(#Sunday #Monday #Tuesday #Wednesday #Thursday #Friday #Saturday).
@@ -126,7 +128,7 @@ WeekTest >> testNameOfDay [
 	self should: [ Week nameOfDay: #Sunday ] raise: self defaultTestError
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WeekTest >> testOffset [
 	"Check that the offset is maintained when creating a new instance of Month from a DateAndTime"
 
@@ -137,7 +139,7 @@ WeekTest >> testOffset [
 	self assert: newWeek asDateAndTime offset equals: dt offset
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WeekTest >> testPreviousNext [
 	self
 		assert: week next equals: (Week starting: '6 July 1998' asDate);

@@ -1,11 +1,11 @@
-Extension { #name : #FTFilterFunction }
+Extension { #name : 'FTFilterFunction' }
 
-{ #category : #'*Calypso-Browser' }
+{ #category : '*Calypso-Browser' }
 FTFilterFunction >> field [
 	^field
 ]
 
-{ #category : #'*Calypso-Browser' }
+{ #category : '*Calypso-Browser' }
 FTFilterFunction >> filterNowWith: patternString [
 	pattern := patternString.
 	self field setText: pattern.
@@ -13,22 +13,22 @@ FTFilterFunction >> filterNowWith: patternString [
 	self filter
 ]
 
-{ #category : #'*Calypso-Browser' }
+{ #category : '*Calypso-Browser' }
 FTFilterFunction >> initialDataSource [
 	^initialDataSource
 ]
 
-{ #category : #'*Calypso-Browser' }
+{ #category : '*Calypso-Browser' }
 FTFilterFunction >> initialDataSource: aDataSource [
 	initialDataSource := aDataSource
 ]
 
-{ #category : #'*Calypso-Browser' }
+{ #category : '*Calypso-Browser' }
 FTFilterFunction >> pattern [
 	^pattern
 ]
 
-{ #category : #'*Calypso-Browser' }
+{ #category : '*Calypso-Browser' }
 FTFilterFunction >> terminateFilterProcess [
 	isEditingSemaphore ifNotNil: [ isEditingSemaphore terminateProcess ]
 ]

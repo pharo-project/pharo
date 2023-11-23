@@ -5,36 +5,38 @@ Abstract super class for protocol clients
 
 "
 Class {
-	#name : #ProtocolClientError,
-	#superclass : #Error,
+	#name : 'ProtocolClientError',
+	#superclass : 'Error',
 	#instVars : [
 		'protocolInstance'
 	],
-	#category : #'Network-Protocols-Exceptions'
+	#category : 'Network-Protocols-Exceptions',
+	#package : 'Network-Protocols',
+	#tag : 'Exceptions'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ProtocolClientError class >> protocolInstance: aProtocolInstance [
 	^self new protocolInstance: aProtocolInstance
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProtocolClientError >> messageText [
 	^super messageText
 		ifNil: [self response]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProtocolClientError >> protocolInstance [
 	^protocolInstance
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProtocolClientError >> protocolInstance: aProtocolInstance [
 	protocolInstance := aProtocolInstance
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProtocolClientError >> response [
 	^self protocolInstance lastResponse
 ]

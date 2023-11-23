@@ -1,10 +1,11 @@
 Class {
-	#name : #RGClassVariableTest,
-	#superclass : #RGTest,
-	#category : #'Ring-Tests-Core'
+	#name : 'RGClassVariableTest',
+	#superclass : 'RGTest',
+	#category : 'Ring-Tests-Core',
+	#package : 'Ring-Tests-Core'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGClassVariableTest >> testClassVariableImplicitEnvironment [
 
 	| classVariable |
@@ -18,7 +19,7 @@ RGClassVariableTest >> testClassVariableImplicitEnvironment [
 	self checkImplicitSingleClassEnvironmentOf: classVariable parent
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGClassVariableTest >> testNewClassVariable [
 
 	| classVariable |
@@ -37,7 +38,7 @@ RGClassVariableTest >> testNewClassVariable [
 	self assert: (classVariable isClassVariable)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGClassVariableTest >> testResolvingConsistency [
 
 	| anObject |

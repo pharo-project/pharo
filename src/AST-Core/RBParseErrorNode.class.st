@@ -11,8 +11,8 @@ The return value is either valid nodes representing the AST, or nodes representi
 
 "
 Class {
-	#name : #RBParseErrorNode,
-	#superclass : #RBValueNode,
+	#name : 'RBParseErrorNode',
+	#superclass : 'RBValueNode',
 	#instVars : [
 		'errorMessage',
 		'value',
@@ -20,72 +20,74 @@ Class {
 		'stop',
 		'errorPosition'
 	],
-	#category : #'AST-Core-Nodes - ErrorNodes'
+	#category : 'AST-Core-Nodes - ErrorNodes',
+	#package : 'AST-Core',
+	#tag : 'Nodes - ErrorNodes'
 }
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 RBParseErrorNode >> = anObject [
 	self == anObject ifTrue: [^true].
 	self class = anObject class ifFalse: [^false].
 	^anObject value = value and: [ anObject errorMessage = errorMessage ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RBParseErrorNode >> acceptVisitor: aProgramNodeVisitor [
 	^ aProgramNodeVisitor visitParseErrorNode: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBParseErrorNode >> arguments [
 
 	"A parse error node has no arguments"
 	^ #()
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBParseErrorNode >> binding: anOCTempVariable [
 	"only for compatibility"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBParseErrorNode >> body: aSequenceNode [
 	"I am not a valid MethodNode, but go one with parsing"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBParseErrorNode >> errorMessage [
 	^ errorMessage
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBParseErrorNode >> errorMessage: anObject [
 	errorMessage := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBParseErrorNode >> errorPosition [
 
 	^ errorPosition
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBParseErrorNode >> errorPosition: anObject [
 
 	errorPosition := anObject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBParseErrorNode >> hasTemporaries [
 
 	^ false
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 RBParseErrorNode >> hash [
 	^ (self value hash bitXor: self errorMessage hash)
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBParseErrorNode >> initialize [
 
 	super initialize.
@@ -93,94 +95,94 @@ RBParseErrorNode >> initialize [
 	self addNotice: (RBSyntaxErrorNotice new)
 ]
 
-{ #category : #errors }
+{ #category : 'errors' }
 RBParseErrorNode >> isError [
 	^true
 ]
 
-{ #category : #errors }
+{ #category : 'errors' }
 RBParseErrorNode >> isFaulty [
 	^true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBParseErrorNode >> isParseError [
 	^true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBParseErrorNode >> isUnary [
 
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBParseErrorNode >> name [
 	"be polymorphic with variable nodes"
 
 	^ ''
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBParseErrorNode >> needsParenthesis [
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBParseErrorNode >> selector [
 	"A parse error node has an empty selector"
 	^ #''
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBParseErrorNode >> selectorParts [
 
 	^ #()
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBParseErrorNode >> source: aString [
 	"I am not a valid MethodNode, but go one with parsing"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBParseErrorNode >> start: aPosition [
 	"Beware, start is in fact `startWithoutParentheses` as in RBValueNode, start includes parentheses"
 
 	start := aPosition
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBParseErrorNode >> startWithoutParentheses [
 	^ start
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBParseErrorNode >> stop: aStopPosition [
 	"Beware, stop is in fact `stopWithoutParentheses` as in RBValueNode, stop includes parentheses"
 
 	stop := aStopPosition
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBParseErrorNode >> stopWithoutParentheses [
 	^ stop
 		ifNil: [start + value size - 1]
 		ifNotNil: [ stop ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBParseErrorNode >> temporaries [
 
 	^ #()
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 RBParseErrorNode >> value [
 	^value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBParseErrorNode >> value: aString [
 	value := aString
 ]

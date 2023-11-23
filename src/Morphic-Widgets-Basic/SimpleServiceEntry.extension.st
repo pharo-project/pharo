@@ -1,6 +1,6 @@
-Extension { #name : #SimpleServiceEntry }
+Extension { #name : 'SimpleServiceEntry' }
 
-{ #category : #'*Morphic-Widgets-Basic' }
+{ #category : '*Morphic-Widgets-Basic' }
 SimpleServiceEntry >> buttonToTriggerIn: aFileList [
 	"Answer a button that will trigger the receiver service in a file list"
 

@@ -6,17 +6,19 @@ aDuration = 91 days
 aTimeSpan= 91 days, starting December 25, 2004, midnight
 "
 Class {
-	#name : #TimespanDoSpanAYearTest,
-	#superclass : #TestCase,
+	#name : 'TimespanDoSpanAYearTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'aTimespan',
 		'aDuration',
 		'aDate'
 	],
-	#category : #'Kernel-Tests-Extended-Chronology'
+	#category : 'Kernel-Tests-Extended-Chronology',
+	#package : 'Kernel-Tests-Extended',
+	#tag : 'Chronology'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 TimespanDoSpanAYearTest >> setUp [
 	super setUp.
 	aDate := DateAndTime year: 2004 month: 12 day: 25 hour: 0 minute: 0 second: 0.
@@ -25,7 +27,7 @@ TimespanDoSpanAYearTest >> setUp [
 	aTimespan := Timespan starting: aDate duration: aDuration
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimespanDoSpanAYearTest >> testMonthsDo [
 	| monthArray |
 	monthArray := Array
@@ -37,7 +39,7 @@ TimespanDoSpanAYearTest >> testMonthsDo [
 	self assert: aTimespan months equals: monthArray
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimespanDoSpanAYearTest >> testNext [
 	self
 		assert: aTimespan next
@@ -54,7 +56,7 @@ TimespanDoSpanAYearTest >> testNext [
 				duration: aDuration)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimespanDoSpanAYearTest >> testWeeksDo [
 	| weeks weekArray |
 	weeks := aTimespan weeks.
@@ -71,7 +73,7 @@ TimespanDoSpanAYearTest >> testWeeksDo [
 	self assert: aTimespan weeks equals: weekArray
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TimespanDoSpanAYearTest >> testYearsDo [
 	| yearArray |
 	yearArray := Array

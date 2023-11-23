@@ -2,36 +2,38 @@
 SUnit tests for generating argument names
 "
 Class {
-	#name : #ArgumentNamesTest,
-	#superclass : #TestCase,
-	#category : #'Debugger-Model-Tests-Core'
+	#name : 'ArgumentNamesTest',
+	#superclass : 'TestCase',
+	#category : 'Debugger-Model-Tests-Core',
+	#package : 'Debugger-Model-Tests',
+	#tag : 'Core'
 }
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 ArgumentNamesTest >> argumentNameFor: anObject shouldBe: aString [
 
 	self assert: anObject class canonicalArgumentName equals: aString
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 ArgumentNamesTest >> argumentNameForInstanceOf: aClass shouldBe: aString [
 
 	self assert: aClass canonicalArgumentName equals: aString
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ArgumentNamesTest >> testAPrefixForClassNameStartingWithConsonant [
 
 	self testCollection
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ArgumentNamesTest >> testAnPrefixForClassNameStartingWithVowel [
 
 	self testInteger
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ArgumentNamesTest >> testClass [
 
 	self argumentNameForInstanceOf: Class shouldBe: 'aClass'.
@@ -39,32 +41,32 @@ ArgumentNamesTest >> testClass [
 	self argumentNameFor: Collection shouldBe: 'aClass'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ArgumentNamesTest >> testCollection [
 
 	self argumentNameForInstanceOf: Collection shouldBe: 'aCollection'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ArgumentNamesTest >> testDefault [
 
 	self argumentNameForInstanceOf: Object shouldBe: 'anObject'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ArgumentNamesTest >> testInteger [
 
 	self argumentNameForInstanceOf: Integer shouldBe: 'anInteger'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ArgumentNamesTest >> testNumber [
 
 	self argumentNameForInstanceOf: Number shouldBe: 'aNumber'.
 	self argumentNameForInstanceOf: Float shouldBe: 'aNumber'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ArgumentNamesTest >> testString [
 
 	self argumentNameForInstanceOf: String shouldBe: 'aString'.

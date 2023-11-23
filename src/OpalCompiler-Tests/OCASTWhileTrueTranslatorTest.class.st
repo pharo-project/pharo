@@ -1,17 +1,19 @@
 Class {
-	#name : #OCASTWhileTrueTranslatorTest,
-	#superclass : #OCASTDoubleBlockTranslatorTest,
-	#category : #'OpalCompiler-Tests-AST'
+	#name : 'OCASTWhileTrueTranslatorTest',
+	#superclass : 'OCASTDoubleBlockTranslatorTest',
+	#category : 'OpalCompiler-Tests-AST',
+	#package : 'OpalCompiler-Tests',
+	#tag : 'AST'
 }
 
-{ #category : #'building suites' }
+{ #category : 'building suites' }
 OCASTWhileTrueTranslatorTest class >> testParameters [
 	^ super testParameters *
 		(ParametrizedTestMatrix new
-			forSelector: #optimization addOptions: { #optionInlineWhile . #optionInlineNone })
+			forSelector: #optimization addOptions: (self inliningOptionsFor: #optionInlineWhile))
 ]
 
-{ #category : #'tests - blocks - optimized' }
+{ #category : 'tests - blocks - optimized' }
 OCASTWhileTrueTranslatorTest >> testWhileTrueExecutesLeftBlock [
 	| result |
 	result := self
@@ -27,7 +29,7 @@ OCASTWhileTrueTranslatorTest >> testWhileTrueExecutesLeftBlock [
 	self assert: result equals: 5
 ]
 
-{ #category : #'tests - blocks - optimized' }
+{ #category : 'tests - blocks - optimized' }
 OCASTWhileTrueTranslatorTest >> testWhileTrueExecutesLeftBlockWithTemp [
 	| result |
 	result := self
@@ -46,7 +48,7 @@ OCASTWhileTrueTranslatorTest >> testWhileTrueExecutesLeftBlockWithTemp [
 	self assert: result equals: 5
 ]
 
-{ #category : #'tests - blocks - optimized' }
+{ #category : 'tests - blocks - optimized' }
 OCASTWhileTrueTranslatorTest >> testWhileTrueExecutesRightBlock [
 	| result |
 	result := self
@@ -62,7 +64,7 @@ OCASTWhileTrueTranslatorTest >> testWhileTrueExecutesRightBlock [
 	self assert: result equals: 5
 ]
 
-{ #category : #'tests - blocks - optimized' }
+{ #category : 'tests - blocks - optimized' }
 OCASTWhileTrueTranslatorTest >> testWhileTrueExecutesRightBlockWithTemp [
 	| result |
 	result := self
@@ -81,7 +83,7 @@ OCASTWhileTrueTranslatorTest >> testWhileTrueExecutesRightBlockWithTemp [
 	self assert: result equals: 5
 ]
 
-{ #category : #'tests - blocks - optimized' }
+{ #category : 'tests - blocks - optimized' }
 OCASTWhileTrueTranslatorTest >> testWhileTrueReturnsNil [
 	| result |
 	result := self

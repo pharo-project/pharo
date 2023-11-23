@@ -1,6 +1,6 @@
-Extension { #name : #RBMethodNode }
+Extension { #name : 'RBMethodNode' }
 
-{ #category : #'*SystemCommands-SourceCodeCommands' }
+{ #category : '*SystemCommands-SourceCodeCommands' }
 RBMethodNode >> displaySourceCode [
 	^ self selector
 ]

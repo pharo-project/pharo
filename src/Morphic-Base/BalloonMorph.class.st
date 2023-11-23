@@ -9,8 +9,8 @@ Moreover, if mouseOverEnabled is true (see class msg), then the Hand will arrang
 Balloons should not be duplicated with veryDeepCopy unless their target is also duplicated at the same time.
 "
 Class {
-	#name : #BalloonMorph,
-	#superclass : #PolygonMorph,
+	#name : 'BalloonMorph',
+	#superclass : 'PolygonMorph',
 	#instVars : [
 		'target',
 		'offsetFromTarget',
@@ -20,31 +20,33 @@ Class {
 	#classVars : [
 		'BalloonColor'
 	],
-	#category : #'Morphic-Base-Widgets'
+	#category : 'Morphic-Base-Widgets',
+	#package : 'Morphic-Base',
+	#tag : 'Widgets'
 }
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 BalloonMorph class >> balloonColor [
 	^ BalloonColor ifNil: [BalloonColor := self defaultBalloonColor]
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 BalloonMorph class >> balloonFont [
 	^ StandardFonts balloonFont
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 BalloonMorph class >> balloonFont: aFont [
 	StandardFonts balloonFont: aFont
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 BalloonMorph class >> defaultBalloonColor [
 
 	^ (Color fromArray: #(0.85 0.9 1.0 )) twiceLighter alpha: 0.95
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 BalloonMorph class >> getBestLocation: vertices for: morph corner: cornerName [
 	| rect maxArea verts rectCorner morphPoint mbc a mp dir bestVerts result usableArea |
 	"Choose rect independantly of vertice order or size. Would be nice it this took into account curveBounds but it does not."
@@ -69,7 +71,7 @@ BalloonMorph class >> getBestLocation: vertices for: morph corner: cornerName [
 	^ result
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 BalloonMorph class >> getTextMorph: aStringOrMorph for: balloonOwner [
 	"Construct text morph."
 	| m text |
@@ -85,7 +87,7 @@ BalloonMorph class >> getTextMorph: aStringOrMorph for: balloonOwner [
 	^ m
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 BalloonMorph class >> getVertices: bounds [
 	"Construct vertices for a balloon up and to left of anchor"
 
@@ -96,26 +98,26 @@ BalloonMorph class >> getVertices: bounds [
 		with: corners first + (0 - bounds width // 4 @ (bounds height // 2))) , corners
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 BalloonMorph class >> initialize [
 
 	self setBalloonColorTo: self defaultBalloonColor.
 	self balloonFont: StandardFonts defaultFont
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 BalloonMorph class >> setBalloonColorTo: aColor [
 
 	aColor ifNotNil: [ BalloonColor := aColor ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 BalloonMorph class >> string: str for: morph [
 
 	^ self string: str for: morph corner: #bottomLeft
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 BalloonMorph class >> string: str for: morph corner: cornerName [
 	"Make up and return a balloon for morph. Find the quadrant that
 	clips the text the least, using cornerName as a tie-breaker. tk 9/12/97"
@@ -136,54 +138,54 @@ BalloonMorph class >> string: str for: morph corner: cornerName [
 		  yourself
 ]
 
-{ #category : #menus }
+{ #category : 'menus' }
 BalloonMorph >> adjustedCenter [
 	"Return the center of the original textMorph box within the balloon."
 
 	^ (self vertices last: 4) average rounded
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BalloonMorph >> balloonColor [
 
 	^ balloonColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BalloonMorph >> balloonColor: aColor [
 
 	balloonColor := aColor.
 	self color: aColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BalloonMorph >> balloonOwner [
 
 	^ balloonOwner
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 BalloonMorph >> defaultBorderColor [
 	"Answer the default border color/fill style for the receiver"
 
 	^ self defaultColor muchDarker
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 BalloonMorph >> defaultBorderWidth [
 	"Answer the default border width for the receiver"
 
 	^ 1
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 BalloonMorph >> defaultColor [
 	"Answer the default color/fill style for the receiver"
 
 	^ self balloonColor
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 BalloonMorph >> initialize [
 	"Initialize the state of the receiver"
 
@@ -193,7 +195,7 @@ BalloonMorph >> initialize [
 	offsetFromTarget := 0@0
 ]
 
-{ #category : #'wiw support' }
+{ #category : 'wiw support' }
 BalloonMorph >> morphicLayerNumber [
 	"Helpful for insuring some morphs always appear in front of or behind others.
 	smaller numbers are in front. Balloons are very front-like things"
@@ -201,7 +203,7 @@ BalloonMorph >> morphicLayerNumber [
 	^ 5
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 BalloonMorph >> popUpFor: aMorph hand: aHand [
 	"Pop up the receiver as balloon help for the given hand"
 
@@ -209,7 +211,7 @@ BalloonMorph >> popUpFor: aMorph hand: aHand [
 	self popUpForHand: aHand
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 BalloonMorph >> popUpForHand: aHand [
 	"Pop up the receiver as balloon help for the given hand"
 
@@ -226,21 +228,21 @@ BalloonMorph >> popUpForHand: aHand [
 	aHand balloonHelp: self
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 BalloonMorph >> setTarget: aMorph [
 
 	(target := aMorph) ifNotNil: [
 		offsetFromTarget := self position - target position ]
 ]
 
-{ #category : #stepping }
+{ #category : 'stepping' }
 BalloonMorph >> step [
 	"Move with target."
 
 	target ifNotNil: [ self position: target position + offsetFromTarget ]
 ]
 
-{ #category : #stepping }
+{ #category : 'stepping' }
 BalloonMorph >> stepTime [
 
 	^ 0 "every cycle"

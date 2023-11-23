@@ -1,10 +1,12 @@
 Class {
-	#name : #ClassAnnotationTestCase,
-	#superclass : #TestCase,
-	#category : #'ClassAnnotation-Tests-Base'
+	#name : 'ClassAnnotationTestCase',
+	#superclass : 'TestCase',
+	#category : 'ClassAnnotation-Tests-Base',
+	#package : 'ClassAnnotation-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClassAnnotationTestCase class >> isAbstract [
 	^self == ClassAnnotationTestCase
 ]

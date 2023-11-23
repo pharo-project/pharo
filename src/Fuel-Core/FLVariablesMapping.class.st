@@ -8,8 +8,8 @@ Cases tolerated are:
 
 "
 Class {
-	#name : #FLVariablesMapping,
-	#superclass : #Object,
+	#name : 'FLVariablesMapping',
+	#superclass : 'Object',
 	#instVars : [
 		'mapping',
 		'theClass',
@@ -17,10 +17,12 @@ Class {
 		'references',
 		'possibleTraitVariables'
 	],
-	#category : #'Fuel-Core-Clusters'
+	#category : 'Fuel-Core-Clusters',
+	#package : 'Fuel-Core',
+	#tag : 'Clusters'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FLVariablesMapping class >> materializing: aClass from: aDecoder [
 	
 	^ self basicNew
@@ -29,7 +31,7 @@ FLVariablesMapping class >> materializing: aClass from: aDecoder [
 		yourself.
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FLVariablesMapping class >> newAnalyzing: anAnalysis references: aCollection [
 
 	^ self basicNew
@@ -38,7 +40,7 @@ FLVariablesMapping class >> newAnalyzing: anAnalysis references: aCollection [
 		yourself
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLVariablesMapping >> initializeAnalyzing [
 
 	notIgnoredVariables := self instanceVariableNamesToSerialize.
@@ -47,7 +49,7 @@ FLVariablesMapping >> initializeAnalyzing [
 		collect: [ :name | theClass instVarIndexFor: name ].
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLVariablesMapping >> initializeMaterializingFrom: aDecoder [
 	notIgnoredVariables := (1 to: aDecoder nextEncodedByte) collect: [ :index |
 		aDecoder nextEncodedString ].
@@ -56,28 +58,27 @@ FLVariablesMapping >> initializeMaterializingFrom: aDecoder [
 		theClass
 			instVarIndexFor: name
 			ifAbsent: [ nil ] ].
-	
+
 	"Don't allocate unnecessary space for the dictionary if we don't need it."
-	FLPlatform current hasStatefulTraits ifFalse: [ ^ self ].
 	(mapping includes: nil) ifFalse: [ ^ self ].
-	
+
 	possibleTraitVariables := Dictionary new
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 FLVariablesMapping >> initializeWithClass: aClass [
 	self initialize.
 	theClass := aClass
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 FLVariablesMapping >> initializeWithClass: aClass references: aCollection [
 	self initialize.
 	theClass := aClass.
 	references := aCollection
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FLVariablesMapping >> instanceVariableNamesToSerialize [
 
 	| ignoredInstanceVariableNames instanceVariableNamesToSerialize |
@@ -91,7 +92,7 @@ FLVariablesMapping >> instanceVariableNamesToSerialize [
 	^ instanceVariableNamesToSerialize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLVariablesMapping >> map: sourceName to: destinationName [
 
 	| indexOfVariableToMap |
@@ -104,28 +105,27 @@ FLVariablesMapping >> map: sourceName to: destinationName [
 				ifAbsent: [self error: 'Bad variable destination.'])].
 ]
 
-{ #category : #'serialize/materialize' }
-FLVariablesMapping >> materializeReferencesOf: anObject with: aDecoder [ 
-	mapping withIndexDo: [ :varIndex :index | 
-			| reference |
-			reference := aDecoder nextEncodedReference.
-			varIndex
-				ifNotNil: [
-					anObject 
-						instVarAt: varIndex
-						put: reference ]
-				ifNil: [
-					FLPlatform current hasStatefulTraits ifTrue: [
-						"Since the variables from traits will only become known
-						after the references have been fully materialized we
-						don't yet know whether this variable is to be ignored
-						or might be needed later"
-						possibleTraitVariables
-							at: (notIgnoredVariables at: index)
-							put: reference ] ] ]
+{ #category : 'serialize/materialize' }
+FLVariablesMapping >> materializeReferencesOf: anObject with: aDecoder [
+	mapping withIndexDo: [ :varIndex :index |
+		| reference |
+		reference := aDecoder nextEncodedReference.
+		varIndex
+			ifNotNil: [
+				anObject
+					instVarAt: varIndex
+					put: reference ]
+			ifNil: [
+				"Since the variables from traits will only become known
+				after the references have been fully materialized we
+				don't yet know whether this variable is to be ignored
+				or might be needed later"
+				possibleTraitVariables
+					at: (notIgnoredVariables at: index)
+					put: reference ] ]
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLVariablesMapping >> materializeTraitVariablesWith: anObject [
 	"If there are any trait variables, store their values.
 	Only at this point do we know that we have trait variables
@@ -133,10 +133,10 @@ FLVariablesMapping >> materializeTraitVariablesWith: anObject [
 	fully loaded first.
 	
 	See FLBehaviorCluster>>installLayout:withFormat:variableNames:into:
-	and Behavior>>fuelRecomputeSlotScopeWithTraits."
-	FLPlatform current hasStatefulTraits ifFalse: [ ^ self ].
+	and ClassDescription>>fuelRecomputeSlotScopeWithTraits."
+
 	possibleTraitVariables ifNil: [ ^ self ].
-	
+
 	anObject class traitComposition slots do: [ :slot |
 		| index |
 		index := anObject class instVarIndexFor: slot name.
@@ -148,25 +148,25 @@ FLVariablesMapping >> materializeTraitVariablesWith: anObject [
 					ifAbsent: nil) ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLVariablesMapping >> references [
 	^ references
 ]
 
-{ #category : #analyzing }
+{ #category : 'analyzing' }
 FLVariablesMapping >> referencesOf: anObject do: aBlock [
 
 	mapping do: [ :index | aBlock value: (anObject instVarAt: index) ].
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLVariablesMapping >> serializeOn: anEncoder [
 
 	anEncoder encodeByte: notIgnoredVariables size.	
 	notIgnoredVariables do: [ :name | anEncoder encodeString: name ].
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLVariablesMapping >> serializeReferencesOf: anObject with: anEncoder [ 
 
 	(self references at: anObject ifAbsent: [ ^ self ]) do: [ :value |

@@ -1,15 +1,16 @@
 Class {
-	#name : #ClyFFIMethodGroupProviderTest,
-	#superclass : #ClyMethodGroupProviderTest,
-	#category : #'Calypso-SystemPlugins-FFI-Queries-Tests'
+	#name : 'ClyFFIMethodGroupProviderTest',
+	#superclass : 'ClyMethodGroupProviderTest',
+	#category : 'Calypso-SystemPlugins-FFI-Queries-Tests',
+	#package : 'Calypso-SystemPlugins-FFI-Queries-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClyFFIMethodGroupProviderTest >> classSampleWhichHasGroup [
 	^ClyClassWithFFIMethods
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyFFIMethodGroupProviderTest >> groupProviderClass [
 	^ClyFFIMethodGroupProvider
 ]

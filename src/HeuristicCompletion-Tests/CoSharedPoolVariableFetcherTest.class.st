@@ -1,10 +1,12 @@
 Class {
-	#name : #CoSharedPoolVariableFetcherTest,
-	#superclass : #CoBasicFetcherWithElementsTest,
-	#category : #'HeuristicCompletion-Tests-Core'
+	#name : 'CoSharedPoolVariableFetcherTest',
+	#superclass : 'CoBasicFetcherWithElementsTest',
+	#category : 'HeuristicCompletion-Tests-Core',
+	#package : 'HeuristicCompletion-Tests',
+	#tag : 'Core'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 CoSharedPoolVariableFetcherTest >> setUp [
 
 	super setUp.

@@ -7,12 +7,14 @@ exist independantly of an associated CompiledMethod and store their own bytecode
 See FLBlockClosureSerializationTest>>testBlockClosureChangeDifferentBytecodes and #testBlockClosureChangeSameBytecodes.
 "
 Class {
-	#name : #FLGlobalCompiledBlockCluster,
-	#superclass : #FLGlobalCompiledCodeCluster,
-	#category : #'Fuel-Core-Clusters-Global'
+	#name : 'FLGlobalCompiledBlockCluster',
+	#superclass : 'FLGlobalCompiledCodeCluster',
+	#category : 'Fuel-Core-Clusters-Global',
+	#package : 'Fuel-Core',
+	#tag : 'Clusters-Global'
 }
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLGlobalCompiledBlockCluster >> materializeInstanceWith: aDecoder [
 	| methodClass selector method literalIndex |
 	methodClass := self materializeGlobalClassFrom: aDecoder.
@@ -28,7 +30,7 @@ FLGlobalCompiledBlockCluster >> materializeInstanceWith: aDecoder [
 		ifFalse: [ method literalAt: literalIndex ]
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLGlobalCompiledBlockCluster >> serializeInstance: aCompiledBlock with: anEncoder [
 	"The method will be looked up on the existing class upon materialization
 	and the block will be compiled as part of that method (possibly with a different

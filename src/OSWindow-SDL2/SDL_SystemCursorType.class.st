@@ -20,8 +20,8 @@ typedef enum {
 ```
 "
 Class {
-	#name : #'SDL_SystemCursorType',
-	#superclass : #FFIEnumeration,
+	#name : 'SDL_SystemCursorType',
+	#superclass : 'FFIEnumeration',
 	#classVars : [
 		'SDL_NUM_SYSTEM_CURSORS',
 		'SDL_SYSTEM_CURSOR_ARROW',
@@ -37,75 +37,77 @@ Class {
 		'SDL_SYSTEM_CURSOR_WAIT',
 		'SDL_SYSTEM_CURSOR_WAITARROW'
 	],
-	#category : #'OSWindow-SDL2-Bindings'
+	#category : 'OSWindow-SDL2-Bindings',
+	#package : 'OSWindow-SDL2',
+	#tag : 'Bindings'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SDL_SystemCursorType class >> SDL_NUM_SYSTEM_CURSORS [
 	^ SDL_NUM_SYSTEM_CURSORS
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SDL_SystemCursorType class >> SDL_SYSTEM_CURSOR_ARROW [
 	^ SDL_SYSTEM_CURSOR_ARROW
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SDL_SystemCursorType class >> SDL_SYSTEM_CURSOR_CROSSHAIR [
 	^ SDL_SYSTEM_CURSOR_CROSSHAIR
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SDL_SystemCursorType class >> SDL_SYSTEM_CURSOR_HAND [
 	^ SDL_SYSTEM_CURSOR_HAND
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SDL_SystemCursorType class >> SDL_SYSTEM_CURSOR_IBEAM [
 	^ SDL_SYSTEM_CURSOR_IBEAM
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SDL_SystemCursorType class >> SDL_SYSTEM_CURSOR_NO [
 	^ SDL_SYSTEM_CURSOR_NO
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SDL_SystemCursorType class >> SDL_SYSTEM_CURSOR_SIZEALL [
 	^ SDL_SYSTEM_CURSOR_SIZEALL
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SDL_SystemCursorType class >> SDL_SYSTEM_CURSOR_SIZENESW [
 	^ SDL_SYSTEM_CURSOR_SIZENESW
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SDL_SystemCursorType class >> SDL_SYSTEM_CURSOR_SIZENS [
 	^ SDL_SYSTEM_CURSOR_SIZENS
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SDL_SystemCursorType class >> SDL_SYSTEM_CURSOR_SIZENWSE [
 	^ SDL_SYSTEM_CURSOR_SIZENWSE
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SDL_SystemCursorType class >> SDL_SYSTEM_CURSOR_SIZEWE [
 	^ SDL_SYSTEM_CURSOR_SIZEWE
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SDL_SystemCursorType class >> SDL_SYSTEM_CURSOR_WAIT [
 	^ SDL_SYSTEM_CURSOR_WAIT
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SDL_SystemCursorType class >> SDL_SYSTEM_CURSOR_WAITARROW [
 	^ SDL_SYSTEM_CURSOR_WAITARROW
 ]
 
-{ #category : #'enum declaration' }
+{ #category : 'enum declaration' }
 SDL_SystemCursorType class >> enumDecl [
 
 	^ #( SDL_SYSTEM_CURSOR_ARROW 			0
@@ -123,7 +125,7 @@ SDL_SystemCursorType class >> enumDecl [
         SDL_NUM_SYSTEM_CURSORS				12)
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 SDL_SystemCursorType class >> initialize [
 	self initializeEnumeration.
 
@@ -132,7 +134,7 @@ SDL_SystemCursorType class >> initialize [
 	^ {1}' format: {e asString}) classified: #accessing	]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 SDL_SystemCursorType >> printOn: stream [
 	super printOn: stream.
 	stream nextPut: $(;

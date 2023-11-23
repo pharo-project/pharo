@@ -61,8 +61,8 @@ watcher kill.
 ```
 "
 Class {
-	#name : #TKTService,
-	#superclass : #Object,
+	#name : 'TKTService',
+	#superclass : 'Object',
 	#instVars : [
 		'worker',
 		'stopRequested',
@@ -71,10 +71,12 @@ Class {
 		'recursiveTask',
 		'currentDelay'
 	],
-	#category : #'TaskIt-Services'
+	#category : 'TaskIt-Services',
+	#package : 'TaskIt',
+	#tag : 'Services'
 }
 
-{ #category : #starting }
+{ #category : 'starting' }
 TKTService >> doStop [
 	self tearDown.
 	(TKTNewProcessTaskRunner new
@@ -83,32 +85,32 @@ TKTService >> doStop [
 			stopCallbacks do: [ :each | each value: r ] ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TKTService >> initialize [
 	super initialize.
 	self stepDelay: 500 milliSeconds
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TKTService >> isRunning [
 	worker ifNil: [ ^ false ].
 	^ worker isRunning
 ]
 
-{ #category : #stepping }
+{ #category : 'stepping' }
 TKTService >> iterateService [
 	self stepService.
 	currentDelay := stepDelay asDelay.
 	currentDelay wait
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TKTService >> kill [
 	TKTConfiguration serviceManager removeService: self.
 	worker stop
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TKTService >> launch [
 
 	self name ifNil: [ self error: 'A name should be provided for a service' ].
@@ -119,56 +121,55 @@ TKTService >> launch [
 	self scheduleRecursiveTask
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TKTService >> name [
 
 	self subclassResponsibility
 ]
 
-{ #category : #starting }
+{ #category : 'starting' }
 TKTService >> onStoppedDo: aCallback [
 
 	stopCallbacks add: aCallback
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TKTService >> priority [
 	^ self worker priority
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TKTService >> priority: anInteger [
 	self worker priority: anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TKTService >> process [
 	^worker process
 ]
 
-{ #category : #starting }
+{ #category : 'starting' }
 TKTService >> restart [
 	self stop.
-	0.5 second wait.
 	stopRequested := false.
 	stopCallbacks := Set new.
 	self start
 ]
 
-{ #category : #starting }
+{ #category : 'starting' }
 TKTService >> scheduleRecursiveTask [
 	stopRequested
 		ifTrue: [ worker schedule: [ self doStop ] ]
 		ifFalse: [ worker schedule: recursiveTask ]
 ]
 
-{ #category : #stepping }
+{ #category : 'stepping' }
 TKTService >> setUp [
 
 	"Hook"
 ]
 
-{ #category : #starting }
+{ #category : 'starting' }
 TKTService >> start [
 	stopRequested := false.
 	stopCallbacks := Set new.
@@ -179,23 +180,23 @@ TKTService >> start [
 	TKTConfiguration serviceManager startService: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TKTService >> stepDelay [
 	^ stepDelay
 ]
 
-{ #category : #starting }
+{ #category : 'starting' }
 TKTService >> stepDelay: aTimeDelay [
 	stepDelay := aTimeDelay
 ]
 
-{ #category : #stepping }
+{ #category : 'stepping' }
 TKTService >> stepService [
 
 	self subclassResponsibility
 ]
 
-{ #category : #starting }
+{ #category : 'starting' }
 TKTService >> stop [
 	| futureStop |
 	futureStop := TKTFuture new.
@@ -206,13 +207,13 @@ TKTService >> stop [
 	^ futureStop
 ]
 
-{ #category : #stepping }
+{ #category : 'stepping' }
 TKTService >> tearDown [
 
 	"Hook"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TKTService >> worker [
 	^ worker ifNil: [ worker :=  TKTWorker new]
 ]

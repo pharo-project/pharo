@@ -2,34 +2,36 @@
 I am a binding in a Workspace. Used for non-defined temps
 "
 Class {
-	#name : #WorkspaceVariable,
-	#superclass : #LiteralVariable,
-	#category : #'Kernel-Variables'
+	#name : 'WorkspaceVariable',
+	#superclass : 'LiteralVariable',
+	#category : 'Kernel-Variables',
+	#package : 'Kernel',
+	#tag : 'Variables'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 WorkspaceVariable >> allowsShadowing [
 	^true
 ]
 
-{ #category : #'code generation' }
+{ #category : 'code generation' }
 WorkspaceVariable >> emitStore: methodBuilder [
 
 	methodBuilder storeIntoLiteralVariable: self
 ]
 
-{ #category : #'code generation' }
+{ #category : 'code generation' }
 WorkspaceVariable >> emitValue: methodBuilder [
 
 	methodBuilder pushLiteralVariable: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 WorkspaceVariable >> isReferenced [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 WorkspaceVariable >> isWorkspaceVariable [
 	^ true
 ]

@@ -1,10 +1,11 @@
 Class {
-	#name : #ClyFilterQueryTest,
-	#superclass : #ClyWrapQueryTest,
-	#category : #'Calypso-NavigationModel-Tests'
+	#name : 'ClyFilterQueryTest',
+	#superclass : 'ClyWrapQueryTest',
+	#category : 'Calypso-NavigationModel-Tests',
+	#package : 'Calypso-NavigationModel-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyFilterQueryTest >> createQuery [
 	^ ClyFilterQuery
 		for: (ClyReturningScopeBasisExampleQuery
@@ -12,12 +13,12 @@ ClyFilterQueryTest >> createQuery [
 		filter: (ClyItemNameFilter substringPattern: 'FilterQueryTest')
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyFilterQueryTest >> queryClass [
 	^ClyFilterQuery
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyFilterQueryTest >> testConvertingWithNewScopeBasisShouldKeepFilter [
 	| convertedQuery |
 
@@ -26,7 +27,7 @@ ClyFilterQueryTest >> testConvertingWithNewScopeBasisShouldKeepFilter [
 	self assert: convertedQuery itemFilter equals: query itemFilter
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyFilterQueryTest >> testConvertingWithNewScopeShouldKeepFilter [
 	| newScope convertedQuery |
 	newScope := ClyExample2Scope of: #someBasis in: environment.
@@ -36,7 +37,7 @@ ClyFilterQueryTest >> testConvertingWithNewScopeShouldKeepFilter [
 	self assert: convertedQuery itemFilter equals: query itemFilter
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyFilterQueryTest >> testExecution [
 	| scope mainQuery |
 	scope := ClyExampleScope ofAll: {self class superclass. self class} in: environment.
@@ -49,7 +50,7 @@ ClyFilterQueryTest >> testExecution [
 	self assert: resultItems first equals: self class
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyFilterQueryTest >> testExecutionOverExistingQuery [
 	| scope mainQuery |
 	scope := ClyExampleScope ofAll: {self class superclass. self class} in: environment.

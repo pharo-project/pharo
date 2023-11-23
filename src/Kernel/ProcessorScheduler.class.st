@@ -7,8 +7,8 @@ NB: DelayBasicScheduler is THE HIGHEST priority code which is run in Pharo. See 
 
 "
 Class {
-	#name : #ProcessorScheduler,
-	#superclass : #Object,
+	#name : 'ProcessorScheduler',
+	#superclass : 'Object',
 	#instVars : [
 		'quiescentProcessLists',
 		'activeProcess'
@@ -25,10 +25,12 @@ Class {
 		'UserInterruptPriority',
 		'UserSchedulingPriority'
 	],
-	#category : #'Kernel-Processes'
+	#category : 'Kernel-Processes',
+	#package : 'Kernel',
+	#tag : 'Processes'
 }
 
-{ #category : #'background process' }
+{ #category : 'background process' }
 ProcessorScheduler class >> idleProcess [
 	"A default background process which is invisible. During the idle time, the delays may not wake up."
 
@@ -36,7 +38,7 @@ ProcessorScheduler class >> idleProcess [
 		[self relinquishProcessorForMicroseconds: IdleTime]
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 ProcessorScheduler class >> idleTime [
 
 	"The default idle time for the Pharo process in case of inactivity. In idle mode, the system can be awakened by a signal. This value can limit the minimal delay time."
@@ -44,13 +46,13 @@ ProcessorScheduler class >> idleTime [
 	^ IdleTime
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 ProcessorScheduler class >> idleTime: microsecondsCount [
 
 	IdleTime := microsecondsCount
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 ProcessorScheduler class >> idleTimeSettingOn: aBuilder [
 	<systemsettings>
 
@@ -62,7 +64,7 @@ ProcessorScheduler class >> idleTimeSettingOn: aBuilder [
 		description: 'Detault idle time for the Pharo process in case of inactivity. In idle mode, the system can be awakened by a signal. This value can limit the minimal delay time.'
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 ProcessorScheduler class >> initialize [
 	"ProcessorScheduler initialize."
 
@@ -77,7 +79,7 @@ ProcessorScheduler class >> initialize [
 	IdleTime := 50000
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ProcessorScheduler class >> new [
 	"New instances of ProcessorScheduler should not be created."
 
@@ -86,7 +88,7 @@ ProcessorScheduler class >> new [
 the integrity of the system depends on a unique scheduler'
 ]
 
-{ #category : #'background process' }
+{ #category : 'background process' }
 ProcessorScheduler class >> relinquishProcessorForMicroseconds: anInteger [
 	"Platform specific. This primitive is used to return processor cycles to the host operating system when Pharo's idle process is running (i.e., when no other Pharo process is runnable). On some platforms, this primitive causes the entire Pharo application to sleep for approximately the given number of microseconds. No Pharo process can run while the Pharo application is sleeping, even if some external event makes it runnable. On the Macintosh, this primitive simply calls GetNextEvent() to give other applications a chance to run. On platforms without a host operating system, it does nothing. This primitive should not be used to add pauses to a Pharo process; use a Delay instead."
 
@@ -94,7 +96,7 @@ ProcessorScheduler class >> relinquishProcessorForMicroseconds: anInteger [
 	"don't fail if primitive is not implemented, just do nothing"
 ]
 
-{ #category : #'background process' }
+{ #category : 'background process' }
 ProcessorScheduler class >> startUp [
 	"Install a background process of the lowest possible priority that is always runnable."
 	"Details: The virtual machine requires that there is always some runnable process that can be scheduled; this background process ensures that this is the case."
@@ -107,14 +109,14 @@ ProcessorScheduler class >> startUp [
 	BackgroundProcess resume
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProcessorScheduler >> activePriority [
 	"Answer the priority level of the currently running Process."
 
 	^self activeProcess priority
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProcessorScheduler >> activeProcess [
 	"Answers the currently running Process.
 	It can be just pretending to be the active process
@@ -123,7 +125,7 @@ ProcessorScheduler >> activeProcess [
 	^activeProcess effectiveProcess
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ProcessorScheduler >> anyProcessesAbove: highestPriority [
 	"Do any instances of Process exist with higher priorities?"
 
@@ -132,13 +134,13 @@ ProcessorScheduler >> anyProcessesAbove: highestPriority [
 		"If anyone ever makes a subclass of Process, be sure to use allSubInstances."
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProcessorScheduler >> backgroundProcess [
 	"Answer the background process"
 	^ BackgroundProcess
 ]
 
-{ #category : #'priority names' }
+{ #category : 'priority names' }
 ProcessorScheduler >> highIOPriority [
 	"Answer the priority at which the most time critical input/output
 	processes should run. An example is the process handling input from a
@@ -147,7 +149,7 @@ ProcessorScheduler >> highIOPriority [
 	^HighIOPriority
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProcessorScheduler >> highestPriority [
 	"Answer the number of priority levels currently available for use."
 	"NB: If you are looking to set a priority when forking a process, please use the methods in 'priority names' protocol"
@@ -155,7 +157,7 @@ ProcessorScheduler >> highestPriority [
 	^quiescentProcessLists size
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProcessorScheduler >> highestPriority: newHighestPriority [
 	"Change the number of priority levels currently available for use."
 
@@ -172,29 +174,37 @@ ProcessorScheduler >> highestPriority: newHighestPriority [
 	quiescentProcessLists := newProcessLists
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ProcessorScheduler >> interpriorityYield: modifiedProcess [
-
 	"The original yield only works within processes of the same priority.
 	The primitive does not try to resume a process in a higher priority.
-	By forcing the creation of a new process and suspending this one,
-	we force the rescheduling of processes.
+	By suspending and resuming the modified process, we force it to be rescheduled.
+	When modifying the active process, we must handle the resume from a forked process.
+	We must also be careful not to resume a process that was suspended to begin with.
+	(In particular, processes all receive #priority: as part of their creation, before
+	it is safe to resume them.)
 
 	This message should not be used directly.
 	The only application so far is when changing the priority of a process.
 	"
 
-	modifiedProcess isActiveProcess ifFalse: [ ^ self ].
-	[ modifiedProcess resume ] fork.
-	modifiedProcess suspend
+	modifiedProcess isActiveProcess
+		ifTrue: [
+			[ modifiedProcess resume ] fork.
+			modifiedProcess suspend ]
+		ifFalse: [
+			(modifiedProcess suspendingList isKindOf: ProcessList) ifTrue: [
+				modifiedProcess
+					suspend;
+					resume ] ]
 ]
 
-{ #category : #'self evaluating' }
+{ #category : 'self evaluating' }
 ProcessorScheduler >> isSelfEvaluating [
 	^self == Processor
 ]
 
-{ #category : #'priority names' }
+{ #category : 'priority names' }
 ProcessorScheduler >> lowIOPriority [
 	"Answer the priority at which most input/output processes should run.
 	Examples are the process handling input from the user (keyboard,
@@ -203,13 +213,13 @@ ProcessorScheduler >> lowIOPriority [
 	^LowIOPriority
 ]
 
-{ #category : #'priority names' }
+{ #category : 'priority names' }
 ProcessorScheduler >> lowestPriority [
 	"Return the lowest priority that is allowed with the scheduler"
 	^SystemRockBottomPriority
 ]
 
-{ #category : #'CPU usage tally' }
+{ #category : 'CPU usage tally' }
 ProcessorScheduler >> nextReadyProcess [
 
 	quiescentProcessLists reverseDo: [ :list |
@@ -218,7 +228,7 @@ ProcessorScheduler >> nextReadyProcess [
 	^ nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProcessorScheduler >> preemptedProcess [
 	"Return the process that the currently active process just preempted."
 
@@ -231,13 +241,13 @@ ProcessorScheduler >> preemptedProcess [
 	"Processor preemptedProcess"
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ProcessorScheduler >> printOn: aStream [
 	self isSelfEvaluating ifFalse: [^super printOn: aStream].
 	aStream nextPutAll: #Processor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProcessorScheduler >> realActiveProcess [
 	"Answers the real currently running Process (ignoring any effective process installed).
 	Method should be used carefully only in specific low level parts of the system.
@@ -249,7 +259,7 @@ ProcessorScheduler >> realActiveProcess [
 	^activeProcess
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 ProcessorScheduler >> remove: aProcess ifAbsent: aBlock [
 	"Remove aProcess from the list on which it is waiting for the processor
 	and answer aProcess. If it is not waiting, evaluate aBlock."
@@ -259,7 +269,7 @@ ProcessorScheduler >> remove: aProcess ifAbsent: aBlock [
 	^aProcess
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProcessorScheduler >> scanSchedule: aBlock startingAt: topPriority [
 	"Iterate over scheduled processes  list, starting from topPriority down to lowest one. "
 
@@ -271,7 +281,7 @@ ProcessorScheduler >> scanSchedule: aBlock startingAt: topPriority [
 	]
 ]
 
-{ #category : #'process state change' }
+{ #category : 'process state change' }
 ProcessorScheduler >> suspendFirstAt: aPriority [
 	"Suspend the first Process that is waiting to run with priority aPriority."
 
@@ -279,7 +289,7 @@ ProcessorScheduler >> suspendFirstAt: aPriority [
 		  ifNone: [self error: 'No Process to suspend']
 ]
 
-{ #category : #'process state change' }
+{ #category : 'process state change' }
 ProcessorScheduler >> suspendFirstAt: aPriority ifNone: noneBlock [
 	"Suspend the first Process that is waiting to run with priority aPriority. If
 	no Process is waiting, evaluate the argument, noneBlock."
@@ -289,7 +299,7 @@ ProcessorScheduler >> suspendFirstAt: aPriority ifNone: noneBlock [
 			ifNotEmpty: [ :aList | aList first suspend ]
 ]
 
-{ #category : #'priority names' }
+{ #category : 'priority names' }
 ProcessorScheduler >> systemBackgroundPriority [
 	"Answer the priority at which system background processes should run.
 	Examples are an incremental garbage collector or status checker."
@@ -297,7 +307,7 @@ ProcessorScheduler >> systemBackgroundPriority [
 	^SystemBackgroundPriority
 ]
 
-{ #category : #'CPU usage tally' }
+{ #category : 'CPU usage tally' }
 ProcessorScheduler >> tallyCPUUsageFor: seconds [
 	"Start a high-priority process that will tally the next ready process for the given
 	number of seconds. Answer a Block that will return the tally (a Bag) after the task
@@ -305,7 +315,7 @@ ProcessorScheduler >> tallyCPUUsageFor: seconds [
 	^self tallyCPUUsageFor: seconds every: 10
 ]
 
-{ #category : #'CPU usage tally' }
+{ #category : 'CPU usage tally' }
 ProcessorScheduler >> tallyCPUUsageFor: seconds every: msec [
 	"Start a high-priority process that will tally the next ready process for the given
 	number of seconds. Answer a Block that will return the tally (a Bag) after the task
@@ -327,14 +337,14 @@ ProcessorScheduler >> tallyCPUUsageFor: seconds every: msec [
 	^[ sem wait. tally ]
 ]
 
-{ #category : #'process state change' }
+{ #category : 'process state change' }
 ProcessorScheduler >> terminateActive [
 	"Terminate the process that is currently running."
 
 	self activeProcess doTerminationFromYourself
 ]
 
-{ #category : #'process state change' }
+{ #category : 'process state change' }
 ProcessorScheduler >> terminateRealActive [
 	"IMPORTANT: Do not step over this method in the debugger (normally you will never do it) because it will terminate the UIProcess of the debugger instead of the process under the debugger.
 	Method should not be used by users. It is only for specific low level places of the system like a normal process termination.
@@ -366,7 +376,7 @@ ProcessorScheduler >> terminateRealActive [
 	activeProcess doTerminationFromYourself
 ]
 
-{ #category : #'priority names' }
+{ #category : 'priority names' }
 ProcessorScheduler >> timingPriority [
 	"Answer the priority at which the system processes keeping track of real
 	time should run."
@@ -376,14 +386,14 @@ ProcessorScheduler >> timingPriority [
 	^TimingPriority
 ]
 
-{ #category : #'priority names' }
+{ #category : 'priority names' }
 ProcessorScheduler >> userBackgroundPriority [
 	"Answer the priority at which user background processes should run."
 
 	^UserBackgroundPriority
 ]
 
-{ #category : #'priority names' }
+{ #category : 'priority names' }
 ProcessorScheduler >> userInterruptPriority [
 	"Answer the priority at which user processes desiring immediate service
 	should run. Processes run at this level will preempt the window
@@ -392,20 +402,20 @@ ProcessorScheduler >> userInterruptPriority [
 	^UserInterruptPriority
 ]
 
-{ #category : #'priority names' }
+{ #category : 'priority names' }
 ProcessorScheduler >> userSchedulingPriority [
 	"Answer the priority at which the window scheduler should run."
 
 	^UserSchedulingPriority
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProcessorScheduler >> waitingProcessesAt: aPriority [
 	"Return the list of processes at the given priority level."
 	^quiescentProcessLists at: aPriority
 ]
 
-{ #category : #'process state change' }
+{ #category : 'process state change' }
 ProcessorScheduler >> yield [
 	"Give other Processes at the current priority a chance to run."
 

@@ -13,17 +13,19 @@ PaSimpleMatrixExampleTest class >> testParameters
 
 "
 Class {
-	#name : #PaSimpleMatrixExampleTest,
-	#superclass : #ParametrizedTestCase,
+	#name : 'PaSimpleMatrixExampleTest',
+	#superclass : 'ParametrizedTestCase',
 	#instVars : [
 		'collectionClass',
 		'item1',
 		'item2'
 	],
-	#category : #'ParametrizedTests-Examples'
+	#category : 'ParametrizedTests-Examples',
+	#package : 'ParametrizedTests',
+	#tag : 'Examples'
 }
 
-{ #category : #'building suites' }
+{ #category : 'building suites' }
 PaSimpleMatrixExampleTest class >> testParameters [
 
 	^ ParametrizedTestMatrix new
@@ -32,37 +34,37 @@ PaSimpleMatrixExampleTest class >> testParameters [
 		forSelector: #collectionClass addOptions: 	{ Set. Bag. OrderedCollection }
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PaSimpleMatrixExampleTest >> collectionClass [
 	^ collectionClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PaSimpleMatrixExampleTest >> collectionClass: anObject [
 	collectionClass := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PaSimpleMatrixExampleTest >> item1 [
 	^ item1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PaSimpleMatrixExampleTest >> item1: anObject [
 	item1 := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PaSimpleMatrixExampleTest >> item2 [
 	^ item2
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PaSimpleMatrixExampleTest >> item2: anObject [
 	item2 := anObject
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PaSimpleMatrixExampleTest >> testAdd [
 
 	| aCollection |
@@ -73,7 +75,7 @@ PaSimpleMatrixExampleTest >> testAdd [
 	self assert: aCollection size equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PaSimpleMatrixExampleTest >> testAddAndRemove [
 
 	| aCollection |
@@ -90,7 +92,7 @@ PaSimpleMatrixExampleTest >> testAddAndRemove [
 	self assert: aCollection size equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PaSimpleMatrixExampleTest >> testIncludes [
 
 	| aCollection |

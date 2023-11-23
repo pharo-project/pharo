@@ -2,27 +2,29 @@
 I implement how to read entries from a stream using Fuel serializer.
 "
 Class {
-	#name : #OmFuelEntryReader,
-	#superclass : #OmEntryReader,
+	#name : 'OmFuelEntryReader',
+	#superclass : 'OmEntryReader',
 	#instVars : [
 		'materializer'
 	],
-	#category : #'Ombu-Persistence'
+	#category : 'Ombu-Persistence',
+	#package : 'Ombu',
+	#tag : 'Persistence'
 }
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 OmFuelEntryReader >> entryPositionsDo: aBlock [
 
 	self shouldBeImplemented
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OmFuelEntryReader >> initialize [
 	super initialize.
 	materializer := FLMaterializer new
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 OmFuelEntryReader >> nextEntry [
 	^ materializer
 		onStream: stream;

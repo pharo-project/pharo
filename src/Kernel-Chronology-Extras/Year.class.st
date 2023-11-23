@@ -2,30 +2,31 @@
 I represent a year.
 "
 Class {
-	#name : #Year,
-	#superclass : #Timespan,
-	#category : #'Kernel-Chronology-Extras'
+	#name : 'Year',
+	#superclass : 'Timespan',
+	#category : 'Kernel-Chronology-Extras',
+	#package : 'Kernel-Chronology-Extras'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Year class >> currentYear [
   "Return the current year"
   ^ Date today asYear
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Year class >> currentYearNumber [
     "Return the current year number"
     ^ Date today year
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Year class >> daysInYear: yearInteger [
 
 	^ 365 + ((self isLeapYear: yearInteger) ifTrue: [1] ifFalse: [0])
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Year class >> isLeapYear: aYearInteger [
 
 
@@ -38,7 +39,7 @@ Year class >> isLeapYear: aYearInteger [
 	^ ((adjustedYear \\ 4 ~= 0) or: [(adjustedYear \\ 100 = 0) and: [adjustedYear \\ 400 ~= 0]]) not
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Year class >> starting: aDateAndTime duration: aDuration [
 	"Return a new year, starting from the beginning the year the given DateAndTime is in."
 	| aYear |
@@ -49,52 +50,52 @@ Year class >> starting: aDateAndTime duration: aDuration [
 		duration: (Duration days: (self daysInYear: aYear))
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Year class >> year: aYear [
 
 	^ self starting: (DateAndTime year: aYear month: 1 day: 1)
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Year >> asYear [
 
 	^ self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Year >> daysInMonth [
 
 	^ Date daysInMonth
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Year >> daysInMonth: aMonthNumber [
     "Returns the days in month for a given month in the context of the receiver"
 
     ^ (DateAndTime year: self year month: aMonthNumber day:1) asMonth daysInMonth
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Year >> daysInYear [
 
 	^ self duration days
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Year >> firstThursday [
 	"Return the year's first Thursday.
 	According to the ISO 8601 definition, the first week starts with the year's first Thursday (week day number 5)"
 	^ self start + ((5 - self start dayOfWeek + 7) rem: 7) days
 ]
 
-{ #category : #changes }
+{ #category : 'changes' }
 Year >> previous [
 	"This implementation handles leap years correctly"
 
 	^ self class year: (self year - 1)
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 Year >> printOn: aStream [
 
 	aStream nextPutAll: 'a Year ('.
@@ -102,7 +103,7 @@ Year >> printOn: aStream [
 	aStream nextPutAll: ')'
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Year >> species [
 
 	^Timespan

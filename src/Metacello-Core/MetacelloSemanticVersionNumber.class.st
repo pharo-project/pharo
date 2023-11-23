@@ -91,17 +91,19 @@ http://creativecommons.org/licenses/by/3.0/
 
 "
 Class {
-	#name : #MetacelloSemanticVersionNumber,
-	#superclass : #Magnitude,
+	#name : 'MetacelloSemanticVersionNumber',
+	#superclass : 'Magnitude',
 	#instVars : [
 		'normalVersion',
 		'preReleaseVersion',
 		'buildVersion'
 	],
-	#category : #'Metacello-Core-Model'
+	#category : 'Metacello-Core-Model',
+	#package : 'Metacello-Core',
+	#tag : 'Model'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloSemanticVersionNumber class >> extractNumericComponent: subString forPattern: forPattern [
     "$. separated components are integers"
 
@@ -116,7 +118,7 @@ MetacelloSemanticVersionNumber class >> extractNumericComponent: subString forPa
         ifFalse: [ subString ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MetacelloSemanticVersionNumber class >> fromString: aString [
   | svn |
   svn := self fromString: aString forPattern: false.
@@ -124,7 +126,7 @@ MetacelloSemanticVersionNumber class >> fromString: aString [
   ^ svn
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MetacelloSemanticVersionNumber class >> fromString: aString forPattern: forPattern [
   | preRelease build versionString identifierCount normalEnd preReleaseEnd normalComponents preReleaseComponents buildComponents |
   normalComponents := OrderedCollection new.
@@ -195,7 +197,7 @@ MetacelloSemanticVersionNumber class >> fromString: aString forPattern: forPatte
     yourself
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloSemanticVersionNumber class >> integerFromString: aString [
   aString
     detect: [ :char | char isDigit not ]
@@ -215,7 +217,7 @@ MetacelloSemanticVersionNumber class >> integerFromString: aString [
         , aString asString
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloSemanticVersionNumber class >> isSemanticIdentifier: aString [
     "whether the receiver is composed entirely of alphanumerics"
 
@@ -228,7 +230,7 @@ MetacelloSemanticVersionNumber class >> isSemanticIdentifier: aString [
     ^ true
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloSemanticVersionNumber class >> validateVersionNumber: svn against: aString [
   svn printString = aString
     ifFalse: [ 
@@ -237,21 +239,21 @@ MetacelloSemanticVersionNumber class >> validateVersionNumber: svn against: aStr
           'The printString of a semantic version number should be equal to the source version string' ]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MetacelloSemanticVersionNumber >> < aMetacelloVersionNumber [
     aMetacelloVersionNumber species = self species
         ifFalse: [ ^ false ].
     ^ self compareLessThan: aMetacelloVersionNumber
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MetacelloSemanticVersionNumber >> = aMetacelloVersionNumber [
     aMetacelloVersionNumber species = self species
         ifFalse: [ ^ false ].
     ^ self compareEqualTo: aMetacelloVersionNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloSemanticVersionNumber >> approximateBase [
 
 	| base |
@@ -260,23 +262,18 @@ MetacelloSemanticVersionNumber >> approximateBase [
 	^base
 ]
 
-{ #category : #converting }
-MetacelloSemanticVersionNumber >> asMetacelloSemanticVersionNumber [
-    ^ self
-]
-
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloSemanticVersionNumber >> buildVersion [
     buildVersion ifNil: [ buildVersion := #() ].
     ^ buildVersion
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloSemanticVersionNumber >> buildVersion: anObject [
 	buildVersion := anObject
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloSemanticVersionNumber >> compareEqualTo: aMetacelloVersionNumber [
     aMetacelloVersionNumber species = self species
         ifFalse: [ ^ false ].
@@ -287,7 +284,7 @@ MetacelloSemanticVersionNumber >> compareEqualTo: aMetacelloVersionNumber [
     ^ self compareEqualTo: self buildVersion other: aMetacelloVersionNumber buildVersion
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloSemanticVersionNumber >> compareEqualTo: myComponents other: otherComponents [
     | mySize |
     mySize := myComponents size.
@@ -299,34 +296,30 @@ MetacelloSemanticVersionNumber >> compareEqualTo: myComponents other: otherCompo
     ^ true
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloSemanticVersionNumber >> compareLessThan: aMetacelloVersionNumber [
-    | myComponents otherComponents defaultResult |
-    aMetacelloVersionNumber species = self species
-        ifFalse: [ ^ false ].
-    myComponents := self normalVersion.
-    otherComponents := aMetacelloVersionNumber normalVersion.
-    defaultResult := true.
-    (self compareEqualTo: myComponents other: otherComponents)
-        ifTrue: [ defaultResult := false ]
-        ifFalse: [ 
-            (self compareLessThan: myComponents other: otherComponents version: #'normal')
-                ifFalse: [ ^ false ] ].
-    myComponents := self preReleaseVersion.
-    otherComponents := aMetacelloVersionNumber preReleaseVersion.
-    (self compareEqualTo: myComponents other: otherComponents)
-        ifTrue: [ 
-            myComponents size > 0
-                ifTrue: [ defaultResult := false ] ]
-        ifFalse: [ ^ self compareLessThan: myComponents other: otherComponents version: #'preRelease' ].
-    myComponents := self buildVersion.
-    otherComponents := aMetacelloVersionNumber buildVersion.
-    ^ (self compareEqualTo: myComponents other: otherComponents)
-        ifTrue: [ defaultResult ]
-        ifFalse: [ self compareLessThan: myComponents other: otherComponents version: #'build' ]
+
+	| myComponents otherComponents defaultResult |
+	aMetacelloVersionNumber species = self species ifFalse: [ ^ false ].
+	myComponents := self normalVersion.
+	otherComponents := aMetacelloVersionNumber normalVersion.
+	defaultResult := true.
+	(self compareEqualTo: myComponents other: otherComponents)
+		ifTrue: [ defaultResult := false ]
+		ifFalse: [ (self compareLessThan: myComponents other: otherComponents version: #normal) ifFalse: [ ^ false ] ].
+	myComponents := self preReleaseVersion.
+	otherComponents := aMetacelloVersionNumber preReleaseVersion.
+	(self compareEqualTo: myComponents other: otherComponents)
+		ifTrue: [ myComponents size > 0 ifTrue: [ defaultResult := false ] ]
+		ifFalse: [ ^ self compareLessThan: myComponents other: otherComponents version: #preRelease ].
+	myComponents := self buildVersion.
+	otherComponents := aMetacelloVersionNumber buildVersion.
+	^ (self compareEqualTo: myComponents other: otherComponents)
+		  ifTrue: [ defaultResult ]
+		  ifFalse: [ self compareLessThan: myComponents other: otherComponents version: #build ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloSemanticVersionNumber >> compareLessThan: myComponents other: otherComponents version: version [
 	| mySize aSize commonSize count more |
 	mySize := myComponents size.
@@ -353,7 +346,7 @@ MetacelloSemanticVersionNumber >> compareLessThan: myComponents other: otherComp
 			true ]
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 MetacelloSemanticVersionNumber >> copyFrom: start to: stop [ 
 	"Answer a copy of a subset of the receiver, starting from element at 
 	index start until element at index stop."
@@ -368,22 +361,22 @@ MetacelloSemanticVersionNumber >> copyFrom: start to: stop [
 	^new
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 MetacelloSemanticVersionNumber >> decrementMajorVersion [
   self decrementNormalVersionAt: 1
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 MetacelloSemanticVersionNumber >> decrementMinorVersion [
   self decrementNormalVersionAt: 2
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 MetacelloSemanticVersionNumber >> decrementMinorVersionNumber [
   self decrementNormalVersionAt: 3
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloSemanticVersionNumber >> decrementNormalVersionAt: index [
   | int col |
   col := self normalVersion.
@@ -392,19 +385,19 @@ MetacelloSemanticVersionNumber >> decrementNormalVersionAt: index [
     ifTrue: [ col at: index put: int - 1 ]
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 MetacelloSemanticVersionNumber >> decrementPatchVersion [
   self decrementNormalVersionAt: 3
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 MetacelloSemanticVersionNumber >> do: aBlock [ 
 	"Refer to the comment in Collection|do:."
 	1 to: self size do:
 		[:index | aBlock value: (self at: index)]
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 MetacelloSemanticVersionNumber >> do: elementBlock separatedBy: separatorBlock [
 	"Evaluate the elementBlock for all elements in the receiver,
 	and evaluate the separatorBlock between."
@@ -419,27 +412,27 @@ MetacelloSemanticVersionNumber >> do: elementBlock separatedBy: separatorBlock [
 		elementBlock value: each]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MetacelloSemanticVersionNumber >> hash [
     ^ self versionComponents hash
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 MetacelloSemanticVersionNumber >> incrementMajorVersion [
   self incrementNormalVersionAt: 1
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 MetacelloSemanticVersionNumber >> incrementMinorVersion [
   self incrementNormalVersionAt: 2
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 MetacelloSemanticVersionNumber >> incrementMinorVersionNumber [
   self incrementNormalVersionAt: 3
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloSemanticVersionNumber >> incrementNormalVersionAt: index [
   | int col |
   col := self normalVersion.
@@ -447,12 +440,12 @@ MetacelloSemanticVersionNumber >> incrementNormalVersionAt: index [
   col at: index put: int + 1
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 MetacelloSemanticVersionNumber >> incrementPatchVersion [
   self incrementNormalVersionAt: 3
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MetacelloSemanticVersionNumber >> match: aVersionPattern [
     "Answer whether the version number of the receiver matches the given pattern string.
 
@@ -493,36 +486,36 @@ MetacelloSemanticVersionNumber >> match: aVersionPattern [
     ^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloSemanticVersionNumber >> normalVersion [
     normalVersion ifNil: [ normalVersion := #() ].
     ^ normalVersion
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloSemanticVersionNumber >> normalVersion: anObject [
 	normalVersion := anObject
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 MetacelloSemanticVersionNumber >> postCopy [
   normalVersion := normalVersion copy.
   preReleaseVersion := preReleaseVersion copy.
   buildVersion := buildVersion copy
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloSemanticVersionNumber >> preReleaseVersion [
     preReleaseVersion ifNil: [ preReleaseVersion := #() ].
     ^ preReleaseVersion
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloSemanticVersionNumber >> preReleaseVersion: anObject [
 	preReleaseVersion := anObject
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MetacelloSemanticVersionNumber >> print: components prefix: prefixChar on: aStream [
     | beforeFirst |
     beforeFirst := true.
@@ -536,19 +529,19 @@ MetacelloSemanticVersionNumber >> print: components prefix: prefixChar on: aStre
             aStream nextPutAll: component asString ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MetacelloSemanticVersionNumber >> printOn: aStream [
     self print: self normalVersion prefix: nil on: aStream.
     self print: self preReleaseVersion prefix: $- on: aStream.
     self print: self buildVersion prefix: $+ on: aStream
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloSemanticVersionNumber >> versionComponents [
     ^ self normalVersion , self preReleaseVersion , self buildVersion
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloSemanticVersionNumber >> versionString [
 
 	| strm |
@@ -557,7 +550,7 @@ MetacelloSemanticVersionNumber >> versionString [
 	^strm contents
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MetacelloSemanticVersionNumber >> ~> aMetacelloVersionNumber [
 
 	aMetacelloVersionNumber size == 1 ifTrue: [ ^false ].

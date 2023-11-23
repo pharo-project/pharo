@@ -2,37 +2,38 @@
 Colour selector featuring a saturation/volume area, hue selection strip and alpha selection strip.
 "
 Class {
-	#name : #HSVAColorSelectorMorph,
-	#superclass : #Morph,
+	#name : 'HSVAColorSelectorMorph',
+	#superclass : 'Morph',
 	#instVars : [
 		'hsvMorph',
 		'aMorph'
 	],
-	#category : #'Morphic-Widgets-ColorPicker'
+	#category : 'Morphic-Widgets-ColorPicker',
+	#package : 'Morphic-Widgets-ColorPicker'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HSVAColorSelectorMorph >> aMorph [
 	"Answer the value of aMorph"
 
 	^ aMorph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HSVAColorSelectorMorph >> aMorph: anObject [
 	"Set the value of aMorph"
 
 	aMorph := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HSVAColorSelectorMorph >> alphaSelected: aFloat [
 	"The alpha has changed."
 
 	self triggerSelectedColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HSVAColorSelectorMorph >> colorSelected: aColor [
 	"A color has been selected. Set the base color for the alpha channel."
 
@@ -40,28 +41,28 @@ HSVAColorSelectorMorph >> colorSelected: aColor [
 	self triggerSelectedColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HSVAColorSelectorMorph >> defaultColor [
 	"Answer the default color/fill style for the receiver."
 
 	^Color transparent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HSVAColorSelectorMorph >> hsvMorph [
 	"Answer the value of hsvMorph"
 
 	^ hsvMorph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HSVAColorSelectorMorph >> hsvMorph: anObject [
 	"Set the value of hsvMorph"
 
 	hsvMorph := anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 HSVAColorSelectorMorph >> initialize [
 	"Initialize the receiver."
 
@@ -77,7 +78,7 @@ HSVAColorSelectorMorph >> initialize [
 	self aMorph color: self hsvMorph selectedColor
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 HSVAColorSelectorMorph >> newAColorMorph [
 	"Answer a new alpha color morph."
 
@@ -89,7 +90,7 @@ HSVAColorSelectorMorph >> newAColorMorph [
 		extent: 24@24
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 HSVAColorSelectorMorph >> newHSVColorMorph [
 	"Answer a new hue/saturation/volume color morph."
 
@@ -99,14 +100,14 @@ HSVAColorSelectorMorph >> newHSVColorMorph [
 		when: #colorSelected send: #colorSelected: to: self
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 HSVAColorSelectorMorph >> selectedColor [
 	"Answer the selected color."
 
 	^self hsvMorph selectedColor alpha: self aMorph value
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 HSVAColorSelectorMorph >> selectedColor: aColor [
 	"Set the hue and sv components."
 
@@ -114,7 +115,7 @@ HSVAColorSelectorMorph >> selectedColor: aColor [
 	self hsvMorph selectedColor: aColor beOpaque
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 HSVAColorSelectorMorph >> triggerSelectedColor [
 	"Trigger the event for the selected colour"
 

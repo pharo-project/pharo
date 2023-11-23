@@ -1,10 +1,12 @@
 Class {
-	#name : #CoverageCollectorTest,
-	#superclass : #TestCase,
-	#category : #'Coverage-Tests'
+	#name : 'CoverageCollectorTest',
+	#superclass : 'TestCase',
+	#category : 'Coverage-Tests',
+	#package : 'Coverage',
+	#tag : 'Tests'
 }
 
-{ #category : #example }
+{ #category : 'example' }
 CoverageCollectorTest >> methodCallMethods [
 
 	self methodEmpty.
@@ -13,15 +15,15 @@ CoverageCollectorTest >> methodCallMethods [
 	self methodManyBlocks
 ]
 
-{ #category : #example }
+{ #category : 'example' }
 CoverageCollectorTest >> methodCallee [
 ]
 
-{ #category : #example }
+{ #category : 'example' }
 CoverageCollectorTest >> methodEmpty [
 ]
 
-{ #category : #example }
+{ #category : 'example' }
 CoverageCollectorTest >> methodManyBlocks [
 
 	| i |
@@ -42,7 +44,7 @@ CoverageCollectorTest >> methodManyBlocks [
 		j ]
 ]
 
-{ #category : #example }
+{ #category : 'example' }
 CoverageCollectorTest >> methodNotCalled [
 
 	"Not expected to be called"
@@ -50,13 +52,13 @@ CoverageCollectorTest >> methodNotCalled [
 	self methodCallee.
 ]
 
-{ #category : #example }
+{ #category : 'example' }
 CoverageCollectorTest >> methodOnlyReturn [
 
 	^1
 ]
 
-{ #category : #example }
+{ #category : 'example' }
 CoverageCollectorTest >> methodTwoPaths: aBoolean [
 
 	aBoolean ifTrue: [ 1 ].
@@ -64,7 +66,7 @@ CoverageCollectorTest >> methodTwoPaths: aBoolean [
 	^4.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoverageCollectorTest >> testBasicCoverage [
 
 	| cov res |
@@ -76,7 +78,7 @@ CoverageCollectorTest >> testBasicCoverage [
 	self assert: res uncoveredMethods asArray equals: { (Rectangle >> #intersect:) }
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoverageCollectorTest >> testCallgraph [
 
 	| cov graph |
@@ -86,7 +88,7 @@ CoverageCollectorTest >> testCallgraph [
 	self assert: graph size equals: 21
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoverageCollectorTest >> testExample [
 
 	| collector coverage |
@@ -102,7 +104,7 @@ CoverageCollectorTest >> testExample [
 	self assert: coverage nodes size equals: 6 "Covered paths are also available"
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoverageCollectorTest >> testNoCoverage [
 
 	| cov res |
@@ -113,7 +115,7 @@ CoverageCollectorTest >> testNoCoverage [
 	self assert: res percentage equals: 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoverageCollectorTest >> testNodeCoverage [
 
 	| cov res |
@@ -147,7 +149,7 @@ CoverageCollectorTest >> testNodeCoverage [
 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoverageCollectorTest >> testNodeCoverage2 [
 
 	| cov res |
@@ -165,7 +167,7 @@ CoverageCollectorTest >> testNodeCoverage2 [
 	self assert: res uncoveredNodes size equals: 6.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoverageCollectorTest >> testNodeDistancesFrom [
 
 	| cov graph target distances |
@@ -178,7 +180,7 @@ CoverageCollectorTest >> testNodeDistancesFrom [
 	self assert: (distances values sorted) equals: { 0. 1. 1. 1. 1. 1. 2. 2. 2. 2. 2. 2. 2}.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoverageCollectorTest >> testNodeDistancesTo [
 
 	| cov graph target distances |
@@ -191,7 +193,7 @@ CoverageCollectorTest >> testNodeDistancesTo [
 	self assert: (distances values sorted) equals: { 0. 1. 1. 1. 2. 3}.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoverageCollectorTest >> testNothingToCover [
 
 	| cov res |

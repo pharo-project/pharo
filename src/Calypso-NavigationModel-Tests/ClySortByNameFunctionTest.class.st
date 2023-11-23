@@ -1,10 +1,11 @@
 Class {
-	#name : #ClySortByNameFunctionTest,
-	#superclass : #ClySortFunctionTest,
-	#category : #'Calypso-NavigationModel-Tests'
+	#name : 'ClySortByNameFunctionTest',
+	#superclass : 'ClySortFunctionTest',
+	#category : 'Calypso-NavigationModel-Tests',
+	#package : 'Calypso-NavigationModel-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClySortByNameFunctionTest >> testAscending [
 
 	function := ClySortByNameFunction ascending.
@@ -14,7 +15,7 @@ ClySortByNameFunctionTest >> testAscending [
 	self assert: (function value: Object value: Object )
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClySortByNameFunctionTest >> testDescending [
 
 	function := ClySortByNameFunction descending.

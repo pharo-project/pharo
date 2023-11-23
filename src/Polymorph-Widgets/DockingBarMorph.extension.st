@@ -1,6 +1,6 @@
-Extension { #name : #DockingBarMorph }
+Extension { #name : 'DockingBarMorph' }
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 DockingBarMorph >> themeChanged [
 	self
 		color: self defaultColor;

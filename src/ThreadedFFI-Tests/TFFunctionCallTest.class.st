@@ -1,13 +1,14 @@
 Class {
-	#name : #TFFunctionCallTest,
-	#superclass : #TFTestCase,
+	#name : 'TFFunctionCallTest',
+	#superclass : 'TFTestCase',
 	#pools : [
 		'TFAbiTypes'
 	],
-	#category : #'ThreadedFFI-Tests'
+	#category : 'ThreadedFFI-Tests',
+	#package : 'ThreadedFFI-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFFunctionCallTest >> testCallbackAsFunction [
 
 	| callback fun definition returnValue |
@@ -31,7 +32,7 @@ TFFunctionCallTest >> testCallbackAsFunction [
 	self assert: returnValue equals: 3.0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFFunctionCallTest >> testCallbackInLoop [
 
 	| callback fun returnValue |
@@ -54,7 +55,7 @@ TFFunctionCallTest >> testCallbackInLoop [
 	self assert: returnValue equals: 42
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFFunctionCallTest >> testCallbackInSingleFunction [
 
 	| callback fun returnValue |
@@ -77,7 +78,7 @@ TFFunctionCallTest >> testCallbackInSingleFunction [
 	self assert: returnValue equals: 5
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFFunctionCallTest >> testCallingFunctionWithW64CallingConvention [
 
 	| fun returnValue |
@@ -99,7 +100,7 @@ TFFunctionCallTest >> testCallingFunctionWithW64CallingConvention [
 	self assert: returnValue equals: 55
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFFunctionCallTest >> testVariadicFunctionWithOneFixedAndTwoOptional [
 
 	| fun return buffer aString |
@@ -123,7 +124,7 @@ TFFunctionCallTest >> testVariadicFunctionWithOneFixedAndTwoOptional [
 	self assert: return equals: 3
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFFunctionCallTest >> testWithFloatAndDouble [
 	| fun return |
 
@@ -139,7 +140,7 @@ TFFunctionCallTest >> testWithFloatAndDouble [
 	self assert: return equals: 3.5
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFFunctionCallTest >> testWithTwoInts [
 
 	| fun return |
@@ -156,7 +157,7 @@ TFFunctionCallTest >> testWithTwoInts [
 	self assert: return equals: 5
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFFunctionCallTest >> testWithoutArguments [
 
 	self assert: self shortCallout equals: 42

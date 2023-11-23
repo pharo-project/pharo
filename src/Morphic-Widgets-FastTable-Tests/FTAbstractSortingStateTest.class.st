@@ -2,42 +2,44 @@
 A FTAbstractSortingStateTest is a test class for testing the behavior of FTAbstractSortingState
 "
 Class {
-	#name : #FTAbstractSortingStateTest,
-	#superclass : #TestCase,
+	#name : 'FTAbstractSortingStateTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'state'
 	],
-	#category : #'Morphic-Widgets-FastTable-Tests-Sorting'
+	#category : 'Morphic-Widgets-FastTable-Tests-Sorting',
+	#package : 'Morphic-Widgets-FastTable-Tests',
+	#tag : 'Sorting'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 FTAbstractSortingStateTest class >> isAbstract [
 	^ self = FTAbstractSortingStateTest
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FTAbstractSortingStateTest class >> shouldInheritSelectors [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTAbstractSortingStateTest >> actualClass [
 	^ self subclassResponsibility
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 FTAbstractSortingStateTest >> dataSourceForTesting [
 	^ FTTableMorph new
 		dataSource: (FTSimpleDataSource elements: self elementsForTestDataSource);
 		dataSource
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 FTAbstractSortingStateTest >> elementsForTestDataSource [
 	^ #(2 4 7 1 5 8 6 9 10 3)
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 FTAbstractSortingStateTest >> setUp [
 	super setUp.
 	state := self actualClass
@@ -48,12 +50,12 @@ FTAbstractSortingStateTest >> setUp [
 	state context state: state
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FTAbstractSortingStateTest >> testExecuteSortingOn [
 	self subclassResponsibility
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FTAbstractSortingStateTest >> testSort [
 	| dataSource |
 	dataSource := self dataSourceForTesting.

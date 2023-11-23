@@ -2,16 +2,18 @@
 I am a warning about the definition of a new Undeclared variable. I may be quite common during loading of packages that do not have (or cannot have) clean dependencies structure or are loaded in wrong order.
 "
 Class {
-	#name : #NewUndeclaredWarning,
-	#superclass : #SystemNotification,
+	#name : 'NewUndeclaredWarning',
+	#superclass : 'SystemNotification',
 	#instVars : [
 		'undeclaredName',
 		'originName'
 	],
-	#category : #'Kernel-Exceptions'
+	#category : 'Kernel-Exceptions',
+	#package : 'Kernel',
+	#tag : 'Exceptions'
 }
 
-{ #category : #exceptioninstantiator }
+{ #category : 'exceptioninstantiator' }
 NewUndeclaredWarning class >> signal: undeclaredName in: originName [
 
 	^ self new
@@ -20,7 +22,7 @@ NewUndeclaredWarning class >> signal: undeclaredName in: originName [
 		signal
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NewUndeclaredWarning >> messageText [
 	^String streamContents: [ :str |
 		originName putOn: str.
@@ -29,22 +31,22 @@ NewUndeclaredWarning >> messageText [
 		str nextPutAll: ' is Undeclared)' ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NewUndeclaredWarning >> originName [
 	^ originName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NewUndeclaredWarning >> originName: anObject [
 	originName := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NewUndeclaredWarning >> undeclaredName [
 	^ undeclaredName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NewUndeclaredWarning >> undeclaredName: anObject [
 	undeclaredName := anObject
 ]

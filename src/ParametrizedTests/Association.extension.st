@@ -1,6 +1,6 @@
-Extension { #name : #Association }
+Extension { #name : 'Association' }
 
-{ #category : #'*ParametrizedTests' }
+{ #category : '*ParametrizedTests' }
 Association >> asTestParameter [
 
 	^ ParametrizedTestExpandedParameter new

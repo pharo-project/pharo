@@ -2,18 +2,20 @@
 SUnit tests for LIFO queues
 "
 Class {
-	#name : #LIFOQueueTest,
-	#superclass : #TestCase,
-	#category : #'Collections-Atomic-Tests-Base'
+	#name : 'LIFOQueueTest',
+	#superclass : 'TestCase',
+	#category : 'Collections-Atomic-Tests-Base',
+	#package : 'Collections-Atomic-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 LIFOQueueTest >> newQueue [
 
 	^ LIFOQueue new
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LIFOQueueTest >> testBasics [
 	| q |
 	q := self newQueue.
@@ -29,7 +31,7 @@ LIFOQueueTest >> testBasics [
 	self assert: q nextOrNil isNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LIFOQueueTest >> testContention1 [
 
 	| q r1 r2 |
@@ -51,7 +53,7 @@ LIFOQueueTest >> testContention1 [
 	self assert: q nextOrNil isNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LIFOQueueTest >> testHeavyContention [
 	"run 10 threads, pushing new values to queue,
 	and 10 threads pullung values from queue,

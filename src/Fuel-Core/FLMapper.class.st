@@ -2,18 +2,20 @@
 The purpose of my hierarchy is to map objects with clusters.
 "
 Class {
-	#name : #FLMapper,
-	#superclass : #Object,
+	#name : 'FLMapper',
+	#superclass : 'Object',
 	#traits : 'TFLConfigurable',
 	#classTraits : 'TFLConfigurable classTrait',
 	#instVars : [
 		'next',
 		'analysis'
 	],
-	#category : #'Fuel-Core-Mappers'
+	#category : 'Fuel-Core-Mappers',
+	#package : 'Fuel-Core',
+	#tag : 'Mappers'
 }
 
-{ #category : #'protected-mapping' }
+{ #category : 'protected-mapping' }
 FLMapper >> clusterInstanceOf: aClusterClass keyInBucket: clusterKey factory: clusterFactory [
 
 	| bucket |
@@ -26,7 +28,7 @@ FLMapper >> clusterInstanceOf: aClusterClass keyInBucket: clusterKey factory: cl
 				yourself ].
 ]
 
-{ #category : #'protected-mapping' }
+{ #category : 'protected-mapping' }
 FLMapper >> clusterKeyedByClusterName: aClusterClass [
 
 	^ self
@@ -34,7 +36,7 @@ FLMapper >> clusterKeyedByClusterName: aClusterClass [
 		factory:  [ aClusterClass newAnalyzing ]
 ]
 
-{ #category : #'protected-mapping' }
+{ #category : 'protected-mapping' }
 FLMapper >> clusterKeyedByClusterName: aClusterClass factory: clusterFactory [
 
 	^ self
@@ -43,7 +45,7 @@ FLMapper >> clusterKeyedByClusterName: aClusterClass factory: clusterFactory [
 		factory: clusterFactory
 ]
 
-{ #category : #'protected-mapping' }
+{ #category : 'protected-mapping' }
 FLMapper >> clusterKeyedByObjectClass: clusterClass class: objectClass [
 
 	^ self 
@@ -52,39 +54,39 @@ FLMapper >> clusterKeyedByObjectClass: clusterClass class: objectClass [
 		factory: [ clusterClass newAnalyzing: objectClass ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FLMapper >> initialize [
 	super initialize.
 	
 	analysis := self context analysis
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 FLMapper >> mapAndTrace: anObject [
 
 	self subclassResponsibility
 ]
 
-{ #category : #'protected-mapping' }
+{ #category : 'protected-mapping' }
 FLMapper >> mapAndTraceByClusterName: anObject to: aClusterClass [
 
 	(self clusterKeyedByClusterName: aClusterClass)
 		add: anObject traceWith: analysis
 ]
 
-{ #category : #'protected-mapping' }
+{ #category : 'protected-mapping' }
 FLMapper >> mapAndTraceByObjectClass: anObject to: aClusterClass [
 
 	(self clusterKeyedByObjectClass: aClusterClass class: anObject class)
 		add: anObject traceWith: analysis
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLMapper >> next: anObject [
 	next := anObject
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 FLMapper >> visitSubstitution: anObject by: aSubstitute [
 	next
 		visitSubstitution: anObject

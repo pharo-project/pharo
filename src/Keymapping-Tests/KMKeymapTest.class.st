@@ -2,17 +2,18 @@
 SUnit tests for the key map
 "
 Class {
-	#name : #KMKeymapTest,
-	#superclass : #AbstractKeymappingTest,
-	#category : #'Keymapping-Tests'
+	#name : 'KMKeymapTest',
+	#superclass : 'AbstractKeymappingTest',
+	#category : 'Keymapping-Tests',
+	#package : 'Keymapping-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 KMKeymapTest >> keymapContainer [
 	^ KMRepository default
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 KMKeymapTest >> testExecute [
 	| bm flag category |
 	category := KMCategory named: #TestFoo.
@@ -30,7 +31,7 @@ KMKeymapTest >> testExecute [
 	self assert: flag
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 KMKeymapTest >> testMatching [
 	| category blockAction a b c p|
 

@@ -1,21 +1,22 @@
 Class {
-	#name : #ClyBrowserStateTest,
-	#superclass : #ClyNavigationHistoryTest,
-	#category : #'Calypso-SystemTools-FullBrowser-Tests'
+	#name : 'ClyBrowserStateTest',
+	#superclass : 'ClyNavigationHistoryTest',
+	#category : 'Calypso-SystemTools-FullBrowser-Tests',
+	#package : 'Calypso-SystemTools-FullBrowser-Tests'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyBrowserStateTest class >> isAbstract [
 	^self == ClyBrowserStateTest
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyBrowserStateTest >> snapshotState [
 
 	navigationState := browser snapshotState
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyBrowserStateTest >> testRetrievesStateOfAllNavigationViews [
 
 	self snapshotState.
@@ -23,7 +24,7 @@ ClyBrowserStateTest >> testRetrievesStateOfAllNavigationViews [
 	self assert: navigationState viewStates size equals: browser navigationViews size
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyBrowserStateTest >> testSelectedTabsAreNotBuild [
 
 	| tab |
@@ -33,7 +34,7 @@ ClyBrowserStateTest >> testSelectedTabsAreNotBuild [
 	self deny: tab isBuilt
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyBrowserStateTest >> testSelectedTabsWithoutBrowser [
 
 	| tab |
@@ -43,7 +44,7 @@ ClyBrowserStateTest >> testSelectedTabsWithoutBrowser [
 	self assert: tab browser isNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyBrowserStateTest >> testSelectedTabsWithoutContext [
 
 	| tab |
@@ -53,7 +54,7 @@ ClyBrowserStateTest >> testSelectedTabsWithoutContext [
 	self assert: tab context isNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyBrowserStateTest >> testSelectedTabsWithoutOwner [
 
 	| tab |

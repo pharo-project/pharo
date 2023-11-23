@@ -1,13 +1,15 @@
 Class {
-	#name : #RubSelectionTest,
-	#superclass : #TestCase,
+	#name : 'RubSelectionTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'editor'
 	],
-	#category : #'Rubric-Tests-Base'
+	#category : 'Rubric-Tests-Base',
+	#package : 'Rubric-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 RubSelectionTest >> setUp [
 
 	super setUp.
@@ -16,7 +18,7 @@ RubSelectionTest >> setUp [
 	editor addString: 'abcde fghi jklm'
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RubSelectionTest >> testCaretAtBeginningHasNoWordAtCaret [
 
 	editor selectAt: 1.
@@ -24,7 +26,7 @@ RubSelectionTest >> testCaretAtBeginningHasNoWordAtCaret [
 	self assert: editor wordAtCaret isEmpty
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RubSelectionTest >> testCaretInBetweenTwoWordsHasNoWordAtCaret [
 
 	"Words are abcde fghi. Put caret after space, just before $f"
@@ -33,7 +35,7 @@ RubSelectionTest >> testCaretInBetweenTwoWordsHasNoWordAtCaret [
 	self assert: editor wordAtCaret isEmpty
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RubSelectionTest >> testCaretInTheEndOfSecondWordHasSecondWordUpToCaret [
 
 	"Words are abcde fghi. Put caret after space, just before $i"
@@ -42,7 +44,7 @@ RubSelectionTest >> testCaretInTheEndOfSecondWordHasSecondWordUpToCaret [
 	self assert: editor wordAtCaret equals: 'fghi'
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RubSelectionTest >> testCaretInTheEndOfWordHasWordUpToCaret [
 
 	"Word is abcde. Put caret after $e"
@@ -51,7 +53,7 @@ RubSelectionTest >> testCaretInTheEndOfWordHasWordUpToCaret [
 	self assert: editor wordAtCaret equals: 'abcde'
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RubSelectionTest >> testCaretInTheMiddleOfSecondWordHasSecondWordUpToCaret [
 
 	"Words are abcde fghi. Put caret after space, just before $i"
@@ -60,7 +62,7 @@ RubSelectionTest >> testCaretInTheMiddleOfSecondWordHasSecondWordUpToCaret [
 	self assert: editor wordAtCaret equals: 'fgh'
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RubSelectionTest >> testCaretInTheMiddleOfWordHasWordUpToCaret [
 
 	"Word is abcde. Put caret after $c"

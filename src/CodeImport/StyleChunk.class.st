@@ -4,24 +4,26 @@ I'm the declaration of a style stuff into a file.  I'm not really used, but I'm 
 Sending me the #import message does nothing :).
 "
 Class {
-	#name : #StyleChunk,
-	#superclass : #CodeChunk,
-	#category : #'CodeImport-Chunks'
+	#name : 'StyleChunk',
+	#superclass : 'CodeChunk',
+	#category : 'CodeImport-Chunks',
+	#package : 'CodeImport',
+	#tag : 'Chunks'
 }
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 StyleChunk >> accept: aVisitor [
 
 	^ aVisitor visitStyleChunk: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StyleChunk >> description [
 
 	^ 'Style'
 ]
 
-{ #category : #importing }
+{ #category : 'importing' }
 StyleChunk >> importFor: aRequestor logSource: logSource [
 	"Nothing to do with style declarations"
 ]

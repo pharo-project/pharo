@@ -13,56 +13,65 @@ Internal Representation and Key Implementation Points.
 	testClass:		<aClass>		Test class corresponding to the class I was activated with
 "
 Class {
-	#name : #ClyJumpToTestClassCommand,
-	#superclass : #SycSingleClassCommand,
+	#name : 'ClyJumpToTestClassCommand',
+	#superclass : 'SycSingleClassCommand',
 	#traits : 'TClyGenerateTestClass',
 	#classTraits : 'TClyGenerateTestClass classTrait',
 	#instVars : [
 		'browser',
 		'systemEnvironment'
 	],
-	#category : #'Calypso-SystemPlugins-SUnit-Browser-Commands'
+	#category : 'Calypso-SystemPlugins-SUnit-Browser-Commands',
+	#package : 'Calypso-SystemPlugins-SUnit-Browser',
+	#tag : 'Commands'
 }
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyJumpToTestClassCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
 
 	^ CmdContextMenuActivation byRootGroupItemOrder: 5 for: ClyFullBrowserClassContext
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyJumpToTestClassCommand class >> fullBrowserShortcutActivation [
 	<classAnnotation>
 
 	^ CmdShortcutActivation by: $g meta, $j meta for: ClyFullBrowserClassContext
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyJumpToTestClassCommand >> defaultMenuIconName [
 	^#jump
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyJumpToTestClassCommand >> defaultMenuItemName [
 	^ 'Jump to test class'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyJumpToTestClassCommand >> execute [
+
+	self systemEnvironment 
+		classNamed: (self testClassNameFor: targetClass)
+		ifAbsent: [
+			(self confirm: 'Do you want to create a test class for: ' , targetClass asString )
+				ifFalse: [ ^ self ] ].
+
 	[ browser selectClass: (self testClassFor: targetClass) ]
 		on: ClyInvalidClassForTestClassGeneration
 		do: [ :ex | self inform: 'Cannot generate test class for ' , ex baseClass printString , '.' ]
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyJumpToTestClassCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 	browser := aToolContext browser.
 	systemEnvironment := aToolContext systemEnvironment
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyJumpToTestClassCommand >> systemEnvironment [
 	^ systemEnvironment
 ]

@@ -3,17 +3,19 @@ I represent a nameless command, serving as the root of the command hierarchy and
 My subcommands are effectively the main commands available to the user.
 "
 Class {
-	#name : #ClapRoot,
-	#superclass : #ClapCommand,
-	#category : #'Clap-Core-Specification'
+	#name : 'ClapRoot',
+	#superclass : 'ClapCommand',
+	#category : 'Clap-Core-Specification',
+	#package : 'Clap-Core',
+	#tag : 'Specification'
 }
 
-{ #category : #'matching - testing' }
+{ #category : 'matching - testing' }
 ClapRoot >> canMatchWith: word [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClapRoot >> matchClass [
 	^ ClapCompositeMatch
 ]

@@ -1,16 +1,18 @@
 Class {
-	#name : #ClyInstanceSideScopeTest,
-	#superclass : #ClyLocalClassScopeTest,
-	#category : #'Calypso-SystemQueries-Tests-Scopes'
+	#name : 'ClyInstanceSideScopeTest',
+	#superclass : 'ClyLocalClassScopeTest',
+	#category : 'Calypso-SystemQueries-Tests-Scopes',
+	#package : 'Calypso-SystemQueries-Tests',
+	#tag : 'Scopes'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClyInstanceSideScopeTest >> scopeClass [
 
 	^ClyInstanceSideScope
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyInstanceSideScopeTest >> testClassEnumeration [
 	scope := ClyInstanceSideScope ofAll: {ClyClass1FromP1Mock classSide. ClyClass2FromP1Mock}.
 
@@ -19,7 +21,7 @@ ClyInstanceSideScopeTest >> testClassEnumeration [
 	self assert: result asArray equals: {ClyClass1FromP1Mock. ClyClass2FromP1Mock}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyInstanceSideScopeTest >> testMethodsEnumerationWhenBasisIsClass [
 
 	| expected |
@@ -29,7 +31,7 @@ ClyInstanceSideScopeTest >> testMethodsEnumerationWhenBasisIsClass [
 	self assert: result sorted asArray equals: expected sorted asArray
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyInstanceSideScopeTest >> testMethodsEnumerationWhenBasisIsMetaclass [
 
 	| expected |
@@ -39,7 +41,7 @@ ClyInstanceSideScopeTest >> testMethodsEnumerationWhenBasisIsMetaclass [
 	self assert: result sorted asArray equals: expected sorted asArray
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyInstanceSideScopeTest >> testMethodsEnumerationWhenBasisIsTraitedClass [
 
 	| expected |
@@ -49,7 +51,7 @@ ClyInstanceSideScopeTest >> testMethodsEnumerationWhenBasisIsTraitedClass [
 	self assert: result sorted asArray equals: expected sorted asArray
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyInstanceSideScopeTest >> testMethodsEnumerationWhenBasisIsTraitedClassClasSide [
 
 	| expected |

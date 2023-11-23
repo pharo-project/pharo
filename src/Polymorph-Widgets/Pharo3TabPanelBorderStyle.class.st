@@ -2,18 +2,20 @@
 Specialized border for TabGroup. Does not draw border beneath the selectd tab and only draws on top.
 "
 Class {
-	#name : #Pharo3TabPanelBorderStyle,
-	#superclass : #TabPanelBorderStyle,
-	#category : #'Polymorph-Widgets-Themes'
+	#name : 'Pharo3TabPanelBorderStyle',
+	#superclass : 'TabPanelBorderStyle',
+	#category : 'Polymorph-Widgets-Themes',
+	#package : 'Polymorph-Widgets',
+	#tag : 'Themes'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 Pharo3TabPanelBorderStyle class >> initialize [
 
 	self deprecatedAliases: { #Pharo3TabPanelBorder }
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 Pharo3TabPanelBorderStyle >> frameRectangle: aRectangle on: aCanvas [
 	"Draw the border taking the currently selected tab into account.
 	Only works for top-positioned tabs for the moment."

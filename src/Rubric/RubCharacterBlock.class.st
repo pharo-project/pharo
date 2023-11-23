@@ -1,15 +1,17 @@
 Class {
-	#name : #RubCharacterBlock,
-	#superclass : #Object,
+	#name : 'RubCharacterBlock',
+	#superclass : 'Object',
 	#instVars : [
 		'surface',
 		'stringIndex',
 		'textLine'
 	],
-	#category : #'Rubric-TextScanning'
+	#category : 'Rubric-TextScanning',
+	#package : 'Rubric',
+	#tag : 'TextScanning'
 }
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 RubCharacterBlock >> < aCharacterBlock [
 	"Answer whether the string index of the receiver precedes that of
 	aCharacterBlock."
@@ -17,7 +19,7 @@ RubCharacterBlock >> < aCharacterBlock [
 	^stringIndex < aCharacterBlock stringIndex
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 RubCharacterBlock >> <= aCharacterBlock [
 	"Answer whether the string index of the receiver does not come after that
 	of aCharacterBlock."
@@ -25,13 +27,13 @@ RubCharacterBlock >> <= aCharacterBlock [
 	^(self > aCharacterBlock) not
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 RubCharacterBlock >> = aCharacterBlock [
 	^ self species = aCharacterBlock species
 		and: [ stringIndex = aCharacterBlock stringIndex ]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 RubCharacterBlock >> > aCharacterBlock [
 	"Answer whether the string index of the receiver comes after that of
 	aCharacterBlock."
@@ -39,7 +41,7 @@ RubCharacterBlock >> > aCharacterBlock [
 	^aCharacterBlock < self
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 RubCharacterBlock >> >= aCharacterBlock [
 	"Answer whether the string index of the receiver does not precede that of
 	aCharacterBlock."
@@ -47,65 +49,65 @@ RubCharacterBlock >> >= aCharacterBlock [
 	^(self < aCharacterBlock) not
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubCharacterBlock >> area [
 	^ surface area
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubCharacterBlock >> areasOutside: aRectangle [
 	^ surface areasOutside: aRectangle
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubCharacterBlock >> bottom [
 	^ surface bottom
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubCharacterBlock >> bottomLeft [
 	^ surface bottomLeft
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubCharacterBlock >> bottomRight [
 	^ surface bottomRight
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubCharacterBlock >> corner [
 	^ surface corner
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubCharacterBlock >> distance: aCharacterBlock [
 	"It returns absolute distance between two CharacterBlocks."
 	^ (self stringIndex - aCharacterBlock stringIndex) abs
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubCharacterBlock >> extent [
 	^ surface extent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubCharacterBlock >> height [
 	^ surface height
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RubCharacterBlock >> insetBy: aPoint [
 	"Change the corner positions of the receiver so that its area translates by
 	the amount defined by the argument, aPoint."
 	^ self copy surface: (surface insetBy: aPoint)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubCharacterBlock >> left [
 	^ surface left
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 RubCharacterBlock >> max: aCharacterBlock [
 	aCharacterBlock ifNil: [ ^ self ].
 	^ aCharacterBlock > self
@@ -113,7 +115,7 @@ RubCharacterBlock >> max: aCharacterBlock [
 		ifFalse: [ self ]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 RubCharacterBlock >> min: aCharacterBlock [
 	aCharacterBlock ifNil: [ ^ self ].
 	^ aCharacterBlock < self
@@ -121,19 +123,19 @@ RubCharacterBlock >> min: aCharacterBlock [
 		ifFalse: [ self ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RubCharacterBlock >> moveBy: aPoint [
 	"Change the corner positions of the receiver so that its area translates by
 	the amount defined by the argument, aPoint."
 	surface := surface translateBy: aPoint
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubCharacterBlock >> origin [
 	^ surface origin
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RubCharacterBlock >> printOn: aStream [
 	aStream nextPutAll: 'a CharacterBlock with index '.
 	stringIndex printOn: aStream.
@@ -147,87 +149,87 @@ RubCharacterBlock >> printOn: aStream [
 			textLine printOn: aStream ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RubCharacterBlock >> privateSetCorner: aPoint [
 	self surface privateSetCorner: aPoint
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RubCharacterBlock >> privateSetOrigin: aPoint [
 	self surface privateSetOrigin: aPoint
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubCharacterBlock >> right [
 	^ surface right
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubCharacterBlock >> stringIndex [
 	"Answer the position of the receiver in the string it indexes."
 
 	^stringIndex
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RubCharacterBlock >> stringIndex: anInteger topLeft: topLeft extent: extent [
 	stringIndex := anInteger.
 	surface := topLeft extent: extent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubCharacterBlock >> surface [
 	^ surface
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubCharacterBlock >> surface: aRectangle [
 	surface := aRectangle
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubCharacterBlock >> textLine [
 	^ textLine
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubCharacterBlock >> textLine: aLine [
 	textLine := aLine
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubCharacterBlock >> top [
 	^ surface top
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubCharacterBlock >> topLeft [
 	^ surface topLeft
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubCharacterBlock >> topRight [
 	^ surface topRight
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RubCharacterBlock >> translateBy: aPoint [
 	"Change the corner positions of the receiver so that its area translates by
 	the amount defined by the argument, aPoint."
 	^ self copy moveBy: aPoint
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubCharacterBlock >> width [
 	^ surface width
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubCharacterBlock >> withLeft: anInteger [
 	^ self copy surface: (surface withLeft: anInteger)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubCharacterBlock >> withRight: anInteger [
 	^ self copy surface: (surface withRight: anInteger)
 ]

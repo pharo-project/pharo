@@ -1,1 +1,1 @@
-Package { #name : #Compression }
+Package { #name : 'Compression' }

@@ -106,23 +106,25 @@ I extend my parent functionality by adding:
 - ...
 "
 Class {
-	#name : #FFIStructure,
-	#superclass : #ExternalStructure,
+	#name : 'FFIStructure',
+	#superclass : 'ExternalStructure',
 	#classVars : [
 		'LastCompilationPlatform'
 	],
 	#classInstVars : [
 		'externalStructureAlignment'
 	],
-	#category : #'UnifiedFFI-Objects'
+	#category : 'UnifiedFFI-Objects',
+	#package : 'UnifiedFFI',
+	#tag : 'Objects'
 }
 
-{ #category : #converting }
+{ #category : 'converting' }
 FFIStructure class >> asExternalTypeOn: generator [
 	^ FFIExternalStructureType objectClass: self
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FFIStructure class >> compileFields: specArray withAccessors: aSymbol [
 	| offset fieldSpec defineBoolean|
 	defineBoolean := aSymbol = #always.
@@ -149,7 +151,7 @@ FFIStructure class >> compileFields: specArray withAccessors: aSymbol [
 	^ compiledSpec
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FFIStructure class >> defineFieldAccessorsFor: fieldName startingAt: byteOffset type: type [
 	"Define read/write accessors for the given field.
 	 This method is equivallent to his parent, but it changes a couple of things:
@@ -174,7 +176,7 @@ FFIStructure class >> defineFieldAccessorsFor: fieldName startingAt: byteOffset 
 		classified: self generatedFieldProtocolName
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FFIStructure class >> defineFieldAccessorsFor: fieldName type: type [
 	"Define read/write accessors for the given field.
 	 This method is equivallent to his parent, but it changes a couple of things:
@@ -199,7 +201,7 @@ FFIStructure class >> defineFieldAccessorsFor: fieldName type: type [
 		classified: self generatedFieldProtocolName
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FFIStructure class >> defineFieldOffset: fieldName value: offset [
 	"Add offset values to classPool."
 	| offsetVarName |
@@ -212,7 +214,7 @@ FFIStructure class >> defineFieldOffset: fieldName value: offset [
 			self classVarNamed: offsetVarName put: offset ]
 ]
 
-{ #category : #'register marshalling' }
+{ #category : 'register marshalling' }
 FFIStructure class >> emitFlatStructureLayoutInto: flatStructureLayout [
 	flatStructureLayout alignTo: self structureAlignment.
 	self fieldSpec fieldsAndTypesDo: [ :field :type |
@@ -221,24 +223,24 @@ FFIStructure class >> emitFlatStructureLayoutInto: flatStructureLayout [
 	flatStructureLayout alignTo: self structureAlignment
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FFIStructure class >> externalNew [
 	"Create an instance of the receiver on the external heap"
 	^self fromHandle: (ExternalAddress allocate: self structureSize)
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FFIStructure class >> fieldSpec [
 	^ FFIExternalStructureFieldParser new
 		parseFields: self fieldsDesc structure: self
 ]
 
-{ #category : #'field definition' }
+{ #category : 'field definition' }
 FFIStructure class >> fields [
 	^ self fieldsDesc
 ]
 
-{ #category : #'field definition' }
+{ #category : 'field definition' }
 FFIStructure class >> fieldsDesc [
 	"override this method in a subclass to get an automatically generated
 	field accessors.
@@ -254,7 +256,7 @@ FFIStructure class >> fieldsDesc [
 	^ #()
 ]
 
-{ #category : #'register marshalling' }
+{ #category : 'register marshalling' }
 FFIStructure class >> flatStructureLayout [
 	| result |
 	result := FFIExternalStructureFlatLayout new.
@@ -262,7 +264,7 @@ FFIStructure class >> flatStructureLayout [
 	^ result
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FFIStructure class >> fromHandle: aHandle [
 	"Offsets are calculated when specs are compiled, but sometimes there is a possibility that
 	 user access them before actually using the compiled spec, so I need to be sure they are
@@ -272,17 +274,17 @@ FFIStructure class >> fromHandle: aHandle [
 	^ (super fromHandle: aHandle) initialize
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FFIStructure class >> generatedFieldProtocolName [
 	^ 'accessing - structure variables'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FFIStructure class >> isNormalAlignedStructure [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIStructure class >> nestedStructures [
 
 	"Retuns the direct nested structures of this structure"
@@ -291,17 +293,17 @@ FFIStructure class >> nestedStructures [
 		thenCollect: [ :each | each objectClass ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FFIStructure class >> offsetFieldPrefix [
 	^ 'OFFSET'
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FFIStructure class >> offsetVariableNameFor: fieldName [
 	^ (self offsetFieldPrefix, '_', fieldName asUppercase) asSymbol
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FFIStructure class >> rebuildFieldAccessors [
 
 	Author useAuthor: 'UFFIGenerator' during: [
@@ -311,20 +313,20 @@ FFIStructure class >> rebuildFieldAccessors [
 			withAccessors: #always]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FFIStructure class >> removeAllOffsetVariables [
-	self classPool keys
-		select: [ :each | each beginsWith: 'OFFSET_' ]
-		thenDo: [ :each | self removeClassVarNamed: each ]
+	self classVariables 
+		select: [ :variable | variable name beginsWith: 'OFFSET_' ]
+		thenDo: [ :variable | self removeClassVariable: variable ]
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 FFIStructure class >> reset [
 	"Reset this structure and all its nested structures"
 	self resetStructureIfNotIn: Set new
 ]
 
-{ #category : #'class management' }
+{ #category : 'class management' }
 FFIStructure class >> resetAllStructures [
 	"Reset the offsets of all structures.
 	This is required when there is a platform change since type sizes and padding rules change.
@@ -342,7 +344,7 @@ FFIStructure class >> resetAllStructures [
 	self allSubclassesDo: [ :each | each resetStructureIfNotIn: alreadyReset ]
 ]
 
-{ #category : #'class management' }
+{ #category : 'class management' }
 FFIStructure class >> resetStructureIfNotIn: alreadyReset [
 	"Reset myself by recompiling all my fields.
 
@@ -356,25 +358,25 @@ FFIStructure class >> resetStructureIfNotIn: alreadyReset [
 	self compileFields
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIStructure class >> structureAlignment [
 	externalStructureAlignment ifNil: [ self compileFields ].
 	^ externalStructureAlignment
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIStructure class >> structureSize [
 	^ self byteSize
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 FFIStructure >> pointer [
 	self getHandle isExternalAddress
 		ifFalse: [ self error: 'Structures need to be moved to external memory space before passing them as pointers.' ].
 	^ self getHandle pointer
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 FFIStructure >> printOn: aStream [
 	"Append to the argument, aStream, the names and values of all the record's variables."
 	super printOn: aStream.

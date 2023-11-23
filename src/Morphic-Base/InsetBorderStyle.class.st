@@ -2,18 +2,20 @@
 see BorderedMorph
 "
 Class {
-	#name : #InsetBorderStyle,
-	#superclass : #SimpleBorderStyle,
-	#category : #'Morphic-Base-Borders'
+	#name : 'InsetBorderStyle',
+	#superclass : 'SimpleBorderStyle',
+	#category : 'Morphic-Base-Borders',
+	#package : 'Morphic-Base',
+	#tag : 'Borders'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 InsetBorderStyle class >> initialize [
 	"Deprecated in Pharo 11"
 	self deprecatedAliases: { #InsetBorder }
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 InsetBorderStyle >> bottomRightColor [
 	"Changed from direct access to color since, if nil,
 	self color is transparent."
@@ -23,7 +25,7 @@ InsetBorderStyle >> bottomRightColor [
 		ifFalse: [self color lighter]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 InsetBorderStyle >> colorsAtCorners [
 	| c c14 c23 |
 	c := self color.
@@ -31,12 +33,12 @@ InsetBorderStyle >> colorsAtCorners [
 	^Array with: c23 with: c14 with: c14 with: c23
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 InsetBorderStyle >> style [
 	^#inset
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 InsetBorderStyle >> topLeftColor [
 	"Changed from direct access to color since, if nil,
 	self color is transparent."
@@ -46,7 +48,7 @@ InsetBorderStyle >> topLeftColor [
 		ifFalse: [self color darker]
 ]
 
-{ #category : #'color tracking' }
+{ #category : 'color tracking' }
 InsetBorderStyle >> trackColorFrom: aMorph [
 	baseColor ifNil:[self color: aMorph insetColor]
 ]

@@ -2,17 +2,19 @@
 STONTestUser2 extends STONTestUser with explicit implementations of #fromSton: and #stonOn:
 "
 Class {
-	#name : #STONTestUser2,
-	#superclass : #STONTestUser,
-	#category : #'STON-Tests-Support'
+	#name : 'STONTestUser2',
+	#superclass : 'STONTestUser',
+	#category : 'STON-Tests-Support',
+	#package : 'STON-Tests',
+	#tag : 'Support'
 }
 
-{ #category : #'ston-core' }
+{ #category : 'ston-core' }
 STONTestUser2 class >> stonName [
 	^ #TestUser2
 ]
 
-{ #category : #'ston-core' }
+{ #category : 'ston-core' }
 STONTestUser2 >> fromSton: stonReader [
 	stonReader parseMapDo: [ :key :value |
 		key = #username ifTrue: [ username := value ].
@@ -20,7 +22,7 @@ STONTestUser2 >> fromSton: stonReader [
 		key = #enabled ifTrue: [ enabled := value ] ]
 ]
 
-{ #category : #'ston-core' }
+{ #category : 'ston-core' }
 STONTestUser2 >> stonOn: stonWriter [
 	stonWriter writeObject: self streamMap: [ :dictionary |
 		dictionary

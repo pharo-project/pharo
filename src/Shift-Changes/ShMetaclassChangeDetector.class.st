@@ -2,12 +2,13 @@
 I am responsible of detecting when a class changes its metaclass.
 "
 Class {
-	#name : #ShMetaclassChangeDetector,
-	#superclass : #ShAbstractClassChangeDetector,
-	#category : #'Shift-Changes'
+	#name : 'ShMetaclassChangeDetector',
+	#superclass : 'ShAbstractClassChangeDetector',
+	#category : 'Shift-Changes',
+	#package : 'Shift-Changes'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ShMetaclassChangeDetector >> initialize [
 	super initialize.
 	builderAccessor := [ :e | e metaclassClass ].
@@ -15,7 +16,7 @@ ShMetaclassChangeDetector >> initialize [
 	comparer := [ :a :b |  a name = b name ]
 ]
 
-{ #category : #changes }
+{ #category : 'changes' }
 ShMetaclassChangeDetector >> newChanges [
 
 	^ {(ShInstanceShapeChanged new

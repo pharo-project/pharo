@@ -2,18 +2,20 @@
 I am a Finder search mode used when looking for the pragmas in the system.
 "
 Class {
-	#name : #FinderPragmasSearchStrategy,
-	#superclass : #FinderSearchStrategy,
-	#category : #'Tool-Finder-Base'
+	#name : 'FinderPragmasSearchStrategy',
+	#superclass : 'FinderSearchStrategy',
+	#category : 'Tool-Finder-Base',
+	#package : 'Tool-Finder',
+	#tag : 'Base'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FinderPragmasSearchStrategy class >> strategyName [
 
 	^ #Pragmas
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 FinderPragmasSearchStrategy >> constructDictionary [
 
 	| dictionary |
@@ -30,31 +32,25 @@ FinderPragmasSearchStrategy >> constructDictionary [
 	finder resultDictionary: dictionary
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FinderPragmasSearchStrategy >> findSelectedClassIn: path [
 
-	^ path
-		  at: 3
-		  ifPresent: [ :node | node item ]
-		  ifAbsent: [ nil ]
+	^ (path at: 3 ifAbsent: [ nil ]) ifNotNil: [ :node | node item ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FinderPragmasSearchStrategy >> findSelectedMethodIn: path [
 
-	^ path
-		  at: 2
-		  ifPresent: [ :node | node item ]
-		  ifAbsent: [ nil ]
+	^ (path at: 2 ifAbsent: [ nil ]) ifNotNil: [ :node | node item ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FinderPragmasSearchStrategy >> isPragmasSearch [
 
 	^ true
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 FinderPragmasSearchStrategy >> pragmaSearch [
 
 	| result byCondition |

@@ -1,6 +1,6 @@
-Extension { #name : #FFIExternalStructureType }
+Extension { #name : 'FFIExternalStructureType' }
 
-{ #category : #'*ThreadedFFI-UFFI' }
+{ #category : '*ThreadedFFI-UFFI' }
 FFIExternalStructureType >> tfExternalType [
 	^ TFStructType
 		forClass: objectClass
@@ -9,7 +9,7 @@ FFIExternalStructureType >> tfExternalType [
 				flatCollect: [ :aField | aField tfExternalTypeForStructureWithArity ])
 ]
 
-{ #category : #'*ThreadedFFI-UFFI' }
+{ #category : '*ThreadedFFI-UFFI' }
 FFIExternalStructureType >> tfExternalTypeWithArity [
 
 	self pointerArity = 1

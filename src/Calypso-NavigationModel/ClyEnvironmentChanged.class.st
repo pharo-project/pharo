@@ -2,7 +2,9 @@
 I am announced when query result when it is changed due to occured system change
 "
 Class {
-	#name : #ClyEnvironmentChanged,
-	#superclass : #Announcement,
-	#category : #'Calypso-NavigationModel-Model'
+	#name : 'ClyEnvironmentChanged',
+	#superclass : 'Announcement',
+	#category : 'Calypso-NavigationModel-Model',
+	#package : 'Calypso-NavigationModel',
+	#tag : 'Model'
 }

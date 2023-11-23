@@ -2,8 +2,8 @@
 I am concrete implementation of Athens surface which using balloon engine for rendering. 
 "
 Class {
-	#name : #AthensBalloonSurface,
-	#superclass : #AthensSurface,
+	#name : 'AthensBalloonSurface',
+	#superclass : 'AthensSurface',
 	#instVars : [
 		'form',
 		'mask',
@@ -15,17 +15,19 @@ Class {
 		'strokeTransform',
 		'engine'
 	],
-	#category : #'Athens-Balloon-Surface'
+	#category : 'Athens-Balloon-Surface',
+	#package : 'Athens-Balloon',
+	#tag : 'Surface'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 AthensBalloonSurface class >> extent: aPoint [
 	"Create a new surface with given extent."
 
 	^ self new form: (Form extent: aPoint depth: 32)
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 AthensBalloonSurface >> asAthensPaintOn: aCanvas [
 
 	^ AthensBalloonImagePaint new
@@ -33,25 +35,25 @@ AthensBalloonSurface >> asAthensPaintOn: aCanvas [
 		  yourself
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 AthensBalloonSurface >> asForm [
 
 	^ form
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 AthensBalloonSurface >> clear [
 
 	^ self clearForm
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 AthensBalloonSurface >> clearForm [
 
 	form bits: ( Bitmap new: form bits size)
 ]
 
-{ #category : #clipping }
+{ #category : 'clipping' }
 AthensBalloonSurface >> clipBy: aRectangle during: aBlock [
 
 	| oldRect transformedClip|
@@ -62,13 +64,13 @@ AthensBalloonSurface >> clipBy: aRectangle during: aBlock [
 	aBlock ensure: [ engine clipRect: oldRect ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensBalloonSurface >> clipRect [
 
 	^ engine clipRect
 ]
 
-{ #category : #paints }
+{ #category : 'paints' }
 AthensBalloonSurface >> createCircularGradient: colorRamp center: aCenter radius: aRadius [
 
 	^ AthensBalloonRadialGradient new
@@ -78,13 +80,13 @@ AthensBalloonSurface >> createCircularGradient: colorRamp center: aCenter radius
 		yourself
 ]
 
-{ #category : #paints }
+{ #category : 'paints' }
 AthensBalloonSurface >> createFormPaint: aForm [
 
 	^ AthensBalloonImagePaint new form: aForm
 ]
 
-{ #category : #paints }
+{ #category : 'paints' }
 AthensBalloonSurface >> createLinearGradient: colorRamp start: pt1 stop: pt2 [
 
 	^ AthensBalloonLinearGradient new
@@ -94,7 +96,7 @@ AthensBalloonSurface >> createLinearGradient: colorRamp start: pt1 stop: pt2 [
 		yourself
 ]
 
-{ #category : #paths }
+{ #category : 'paths' }
 AthensBalloonSurface >> createPath: aPathCreatingBlock [
 	"Create a path from provided path builder instance"
 
@@ -105,49 +107,49 @@ AthensBalloonSurface >> createPath: aPathCreatingBlock [
 	^ AthensBalloonPath new convertFromBuilder: builder
 ]
 
-{ #category : #paints }
+{ #category : 'paints' }
 AthensBalloonSurface >> createRadialGradient: colorRamp center: aCenter radius: aRadius focalPoint: fp [
 
 	^ self createCircularGradient: colorRamp center: aCenter radius: aRadius
 ]
 
-{ #category : #paints }
+{ #category : 'paints' }
 AthensBalloonSurface >> createSolidColorPaint: aColor [
 
 	^ AthensBalloonSolidColorPaint new color: aColor
 ]
 
-{ #category : #paints }
+{ #category : 'paints' }
 AthensBalloonSurface >> createStrokePaintFor: aPaint [
 
 	^ AthensBalloonStrokePaint new fillPaint: aPaint
 ]
 
-{ #category : #masking }
+{ #category : 'masking' }
 AthensBalloonSurface >> disableMask [
 
 	maskEnabled := false
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 AthensBalloonSurface >> drawImage: aForm [
 
 	engine drawImage: aForm transform: imageTransform
 ]
 
-{ #category : #masking }
+{ #category : 'masking' }
 AthensBalloonSurface >> enableMask [
 
 	maskEnabled := true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensBalloonSurface >> engine [
 
 	^ engine
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 AthensBalloonSurface >> fillBezierShape: contours color: aColor [
 
 	engine
@@ -156,19 +158,19 @@ AthensBalloonSurface >> fillBezierShape: contours color: aColor [
 		fillBezierShape: contours
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 AthensBalloonSurface >> fillBezierShape: anArray color: aColor width: aSmallInteger [
 
 	self shouldBeImplemented
 ]
 
-{ #category : #'rendering dispatch' }
+{ #category : 'rendering dispatch' }
 AthensBalloonSurface >> fillPath: aPath withSolidColor: aColor [
 
 	self fillBezierShape: aPath contoursForFilling color: aColor
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 AthensBalloonSurface >> fillRectangle: rect color: aColor [
 
 	engine
@@ -177,31 +179,31 @@ AthensBalloonSurface >> fillRectangle: rect color: aColor [
 		fillRectangle: rect
 ]
 
-{ #category : #'rendering dispatch' }
+{ #category : 'rendering dispatch' }
 AthensBalloonSurface >> fillRectangle: aRectangle withSolidColor: aColor [
 
 	self fillRectangle: aRectangle color: aColor
 ]
 
-{ #category : #'accessing - matrices' }
+{ #category : 'accessing - matrices' }
 AthensBalloonSurface >> fillTransform [
 
 	^ fillTransform
 ]
 
-{ #category : #'accessing - matrices' }
+{ #category : 'accessing - matrices' }
 AthensBalloonSurface >> fillTransform: anObject [
 
 	fillTransform := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensBalloonSurface >> form [
 
 	^ form
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensBalloonSurface >> form: aForm [
 
 	form := aForm.
@@ -216,19 +218,19 @@ AthensBalloonSurface >> form: aForm [
 		reset
 ]
 
-{ #category : #fonts }
+{ #category : 'fonts' }
 AthensBalloonSurface >> getFreetypeFontRendererFor: aFreeTypeFont [
 
 	^ FT2GlyphRenderer forFont: aFreeTypeFont surface: self
 ]
 
-{ #category : #'accessing - matrices' }
+{ #category : 'accessing - matrices' }
 AthensBalloonSurface >> imageTransform [
 
 	^ imageTransform
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AthensBalloonSurface >> initialize [
 
 	super initialize.
@@ -241,32 +243,32 @@ AthensBalloonSurface >> initialize [
 	maskEnabled := false
 ]
 
-{ #category : #masking }
+{ #category : 'masking' }
 AthensBalloonSurface >> maskEnabled [
 
 	^ maskEnabled
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensBalloonSurface >> paintTransform [
 
 	^ paintTransform
 ]
 
-{ #category : #'accessing - matrices' }
+{ #category : 'accessing - matrices' }
 AthensBalloonSurface >> pathTransform [
 
 	^ pathTransform
 ]
 
-{ #category : #'accessing - matrices' }
+{ #category : 'accessing - matrices' }
 AthensBalloonSurface >> pathTransform: anObject [
 
 	pathTransform := anObject copy.
 	engine edgeTransform: pathTransform
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 AthensBalloonSurface >> strokeBezierShape: contours color: aColor width: aWidth [
 
 	engine
@@ -275,7 +277,7 @@ AthensBalloonSurface >> strokeBezierShape: contours color: aColor width: aWidth 
 		strokeBezierShape: contours width: aWidth
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 AthensBalloonSurface >> strokeRectangle: rect color: aColor width: aWidth [
 
 	engine
@@ -284,13 +286,13 @@ AthensBalloonSurface >> strokeRectangle: rect color: aColor width: aWidth [
 		strokeRectangle: rect width: aWidth
 ]
 
-{ #category : #'accessing - matrices' }
+{ #category : 'accessing - matrices' }
 AthensBalloonSurface >> strokeTransform [
 
 	^ strokeTransform
 ]
 
-{ #category : #'accessing - matrices' }
+{ #category : 'accessing - matrices' }
 AthensBalloonSurface >> strokeTransform: anObject [
 
 	strokeTransform := anObject

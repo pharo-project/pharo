@@ -8,28 +8,25 @@ I provide suitable methods for subclasses to move methods to package:
 Subclasses should just decide what package it should be. 
 "
 Class {
-	#name : #SycMethodRepackagingCommand,
-	#superclass : #SycMethodCommand,
-	#category : #'SystemCommands-MethodCommands'
+	#name : 'SycMethodRepackagingCommand',
+	#superclass : 'SycMethodCommand',
+	#category : 'SystemCommands-MethodCommands',
+	#package : 'SystemCommands-MethodCommands'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 SycMethodRepackagingCommand class >> isAbstract [
 	^self = SycMethodRepackagingCommand
 ]
 
-{ #category : #execution }
-SycMethodRepackagingCommand >> moveMethod: aMethod toPackage: aPackage [
+{ #category : 'categories' }
+SycMethodRepackagingCommand >> classifyMethod: aMethod [
 
-	| existingPackage willBeExtension |
-	existingPackage := aMethod package.
-	existingPackage == aPackage ifTrue: [ ^ self ].
+	aMethod protocol: (self newProtocolFor: aMethod)
+]
 
-	aMethod isExtension ifTrue: [ aMethod untagFrom: ('*' , existingPackage name) asSymbol ].
+{ #category : 'categories' }
+SycMethodRepackagingCommand >> newProtocolFor: aMethod [
 
-	willBeExtension := aPackage ~~ aMethod origin package.
-	aPackage addMethod: aMethod.
-	willBeExtension
-		ifTrue: [ aMethod tagWith: ('*' , aPackage name) asSymbol ]
-		ifFalse: [ self tagMethod: aMethod ]
+	^ self asCommandActivator context requestProtocol: 'New protocol name for: ' , aMethod name suggesting: (MethodClassifier suggestProtocolFor: aMethod)
 ]

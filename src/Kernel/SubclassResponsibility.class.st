@@ -2,12 +2,14 @@
 I am SubclassResponsibility, an exception signaled when an inherited method should have been implemented in a subclass but was not.
 "
 Class {
-	#name : #SubclassResponsibility,
-	#superclass : #SelectorException,
-	#category : #'Kernel-Exceptions'
+	#name : 'SubclassResponsibility',
+	#superclass : 'SelectorException',
+	#category : 'Kernel-Exceptions',
+	#package : 'Kernel',
+	#tag : 'Exceptions'
 }
 
-{ #category : #printing }
+{ #category : 'printing' }
 SubclassResponsibility >> standardMessageText [
 	"Generate a standard textual description"
 

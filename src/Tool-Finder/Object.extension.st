@@ -1,6 +1,6 @@
-Extension { #name : #Object }
+Extension { #name : 'Object' }
 
-{ #category : #'*Tool-Finder' }
+{ #category : '*Tool-Finder' }
 Object class >> approvedSelectorsForMethodFinder [
 
 	^ #(at: basicAt: basicSize yourself size
@@ -9,7 +9,7 @@ Object class >> approvedSelectorsForMethodFinder [
 	   )
 ]
 
-{ #category : #'*Tool-Finder' }
+{ #category : '*Tool-Finder' }
 Object >> closeTo: anObject [
 	"Do not use this Method! It is a workaround for MethodFinder"
 

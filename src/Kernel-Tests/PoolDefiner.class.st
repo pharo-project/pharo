@@ -2,16 +2,18 @@
 A pool used for testing purposes
 "
 Class {
-	#name : #PoolDefiner,
-	#superclass : #SharedPool,
+	#name : 'PoolDefiner',
+	#superclass : 'SharedPool',
 	#classVars : [
 		'AnAuthor',
 		'Gloups'
 	],
-	#category : #'Kernel-Tests-Classes'
+	#category : 'Kernel-Tests-Classes',
+	#package : 'Kernel-Tests',
+	#tag : 'Classes'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 PoolDefiner class >> initialize [
 
 	Gloups := 42.

@@ -2,12 +2,14 @@
 I special variable query result which filter only class variables and represent them as ClyVariableMethodGroup instances in hierarchical order
 "
 Class {
-	#name : #ClyGroupedClassVariablesResult,
-	#superclass : #ClyGroupedVariablesResult,
-	#category : #'Calypso-SystemQueries-Results'
+	#name : 'ClyGroupedClassVariablesResult',
+	#superclass : 'ClyGroupedVariablesResult',
+	#category : 'Calypso-SystemQueries-Results',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Results'
 }
 
-{ #category : #building }
+{ #category : 'building' }
 ClyGroupedClassVariablesResult >> fillWithGroupedVariables: varsPerTypeAndDefiningClass [
 
 	varsPerTypeAndDefiningClass at: ClyClassVariable ifPresent: [:classVarsPerClass |

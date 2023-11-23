@@ -1,6 +1,6 @@
-Extension { #name : #ClyConcreteCritiqueMethodGroup }
+Extension { #name : 'ClyConcreteCritiqueMethodGroup' }
 
-{ #category : #'*Calypso-SystemPlugins-Critic-Browser' }
+{ #category : '*Calypso-SystemPlugins-Critic-Browser' }
 ClyConcreteCritiqueMethodGroup >> decorateTableCell: anItemCellMorph of: groupItem [
 
 	anItemCellMorph definitionIcon: ruleSeverity iconName

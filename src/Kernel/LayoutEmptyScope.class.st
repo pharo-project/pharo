@@ -2,66 +2,68 @@
 I am the last layout scope in a scope chain.
 "
 Class {
-	#name : #LayoutEmptyScope,
-	#superclass : #AbstractLayoutScope,
+	#name : 'LayoutEmptyScope',
+	#superclass : 'AbstractLayoutScope',
 	#classInstVars : [
 		'instance'
 	],
-	#category : #'Kernel-Layout'
+	#category : 'Kernel-Layout',
+	#package : 'Kernel',
+	#tag : 'Layout'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LayoutEmptyScope class >> instance [
 	^ instance ifNil: [ instance := self new ]
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 LayoutEmptyScope >> allSlotsDo: aBlock [
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LayoutEmptyScope >> allVisibleSlots [
 	^ OrderedCollection new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LayoutEmptyScope >> fieldSize [
 	^ 0
 ]
 
-{ #category : #flattening }
+{ #category : 'flattening' }
 LayoutEmptyScope >> flattenIn: aCollection [
 	"Nothing to add"
 
 	^ aCollection
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 LayoutEmptyScope >> hasBindingThatBeginsWith: aString [
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 LayoutEmptyScope >> hasFields [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 LayoutEmptyScope >> hasSlots [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 LayoutEmptyScope >> ifNotEmpty: aBlock [
 	"This scope is empty so we do nothing"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LayoutEmptyScope >> ownFieldSize [
 	^ 0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LayoutEmptyScope >> visibleSlots [
 	^ #()
 ]

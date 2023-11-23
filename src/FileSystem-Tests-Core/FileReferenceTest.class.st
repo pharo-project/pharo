@@ -2,28 +2,30 @@
 SUnit tests for file reference
 "
 Class {
-	#name : #FileReferenceTest,
-	#superclass : #TestCase,
-	#type : #variable,
+	#name : 'FileReferenceTest',
+	#superclass : 'TestCase',
+	#type : 'variable',
 	#instVars : [
 		'filesystem'
 	],
-	#category : #'FileSystem-Tests-Core-Base'
+	#category : 'FileSystem-Tests-Core-Base',
+	#package : 'FileSystem-Tests-Core',
+	#tag : 'Base'
 }
 
-{ #category : #support }
+{ #category : 'support' }
 FileReferenceTest >> createFile: aPath [
 	filesystem ensureCreateDirectory: aPath parent.
 	(filesystem resolve: aPath) writeStream close
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 FileReferenceTest >> setUp [
 	super setUp.
 	filesystem := FileSystem memory
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testAllChildren [
 	"allChildren returns all the files and folders recursively nested in a reference"
 	| ref children |
@@ -43,7 +45,7 @@ FileReferenceTest >> testAllChildren [
 		ensure: [ (filesystem / 'alpha') ensureDeleteAll ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testAllDirectories [
 	"allDirectories returns all folders recursively nested in a reference"
 	| ref children |
@@ -63,7 +65,7 @@ FileReferenceTest >> testAllDirectories [
 		ensure: [ (filesystem / 'alpha') ensureDeleteAll ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testAllEntries [
 	| ref entries |
 	[ filesystem createDirectory: '/alpha'.
@@ -80,7 +82,7 @@ FileReferenceTest >> testAllEntries [
 		ensure: [ (filesystem / 'alpha') ensureDeleteAll ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testAsAbsoluteConverted [
 	"Converts a relative reference to absolute, and asserts
 	that it's absolute and still has the same path."
@@ -92,14 +94,14 @@ FileReferenceTest >> testAsAbsoluteConverted [
 	self assert: (absolute path at: 1) equals: 'plonk'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testAsAbsoluteIdentity [
 	| ref |
 	ref := filesystem / 'plonk'.
 	self assert: ref asAbsolute identicalTo: ref
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testAsFileLocatorOrReferenceReturnsALocatorWhenStringRefersToAKnownOrigin [
 	| fileRef locator |
 	fileRef := (FileLocator home / 'foo') asFileReference.
@@ -114,7 +116,7 @@ FileReferenceTest >> testAsFileLocatorOrReferenceReturnsALocatorWhenStringRefers
 		equals: fileRef fullName
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testAsFileLocatorOrReferenceReturnsAReferenceWhenStringDoesNotReferToAKnownOrigin [
 	| fileRef result |
 	fileRef := '/foo' asFileReference.
@@ -126,14 +128,14 @@ FileReferenceTest >> testAsFileLocatorOrReferenceReturnsAReferenceWhenStringDoes
 		equals: fileRef
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testAsReference [
 	| ref |
 	ref := filesystem * 'plonk'.
 	self assert: ref asFileReference identicalTo: ref
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testBaseAndExtension [
 	| noExtension simpleExtension complexExtension |
 	noExtension := filesystem * 'plonk'.
@@ -150,7 +152,7 @@ FileReferenceTest >> testBaseAndExtension [
 	self assert: complexExtension extension equals: 'txt'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testBasename [
 	| ref |
 	ref := filesystem root.
@@ -161,7 +163,7 @@ FileReferenceTest >> testBasename [
 	self assert: ref basename equals: 'griffle.taz'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testBasenameWithoutExtension [
 
 	| ref |
@@ -187,7 +189,7 @@ FileReferenceTest >> testBasenameWithoutExtension [
 	self assert: (ref basenameWithoutExtension: 'taz') equals: 'griffle.taz.zork'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testCanonicalization [
 
 	| ref |
@@ -211,10 +213,16 @@ FileReferenceTest >> testCanonicalization [
 	self assert: ref path segments equals: #('a' 'c').
 
 	ref := '/a/b/../c' asFileReference canonicalize.
+	self assert: ref path segments equals: #('a' 'c').
+
+	ref := '/..' asFileReference canonicalize.
+	self assertEmpty: ref path segments.
+
+	ref := '/../a/b/../c' asFileReference canonicalize.
 	self assert: ref path segments equals: #('a' 'c')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testChildDirectories [
 	| childDirectories |
 	[ filesystem createDirectory: '/beta'.
@@ -235,7 +243,7 @@ FileReferenceTest >> testChildDirectories [
 			(filesystem / 'epsilon') ensureDelete ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testChildFiles [
 	| childFiles |
 	[ filesystem createDirectory: '/beta'.
@@ -254,7 +262,7 @@ FileReferenceTest >> testChildFiles [
 			(filesystem / 'epsilon') ensureDelete ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testChildOfPath [
 	| parent  child |
 	parent := Path / 'griffle'.
@@ -263,7 +271,7 @@ FileReferenceTest >> testChildOfPath [
 	self deny: (parent isChildOf: child)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testChildOfReference [
 	| parent  child |
 	parent := filesystem / 'griffle'.
@@ -272,7 +280,7 @@ FileReferenceTest >> testChildOfReference [
 	self deny: (parent isChildOf: child)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testChildren [
 	| ref children |
 	[ filesystem createDirectory: '/alpha'.
@@ -289,7 +297,7 @@ FileReferenceTest >> testChildren [
 		ensure: [ (filesystem / 'alpha') ensureDeleteAll ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testCommaAddsExtension [
 	| ref result |
 	ref := filesystem * 'plonk'.
@@ -297,7 +305,7 @@ FileReferenceTest >> testCommaAddsExtension [
 	self assert: result basename equals: 'plonk.griffle'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testCommaAddsExtensionAgain [
 	| ref result |
 	ref := filesystem * 'plonk.griffle'.
@@ -305,28 +313,28 @@ FileReferenceTest >> testCommaAddsExtensionAgain [
 	self assert: result basename equals: 'plonk.griffle.nurp'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testContainsLocator [
 	| ref |
 	ref := FileLocator imageDirectory resolve parent.
 	self assert: (ref contains: FileLocator image)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testContainsPath [
 	| ref |
 	ref := filesystem  * 'griffle'.
 	self assert: (ref contains: (ref / 'nurp') path)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testContainsReference [
 	| ref |
 	ref := filesystem * 'griffle'.
 	self assert: (ref contains: ref / 'nurp')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testContents [
 	| ref contents |
 	contents := '12345 abcdf!'.
@@ -336,7 +344,7 @@ FileReferenceTest >> testContents [
 		ensure: [ ref ensureDelete ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testDeleteAll [
 	"allChildren returns all the files and folders recursively nested in a reference"
 	[ | ref |
@@ -353,7 +361,7 @@ FileReferenceTest >> testDeleteAll [
 		ensure: [ (filesystem / 'alpha') ensureDeleteAll ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testDeleteAllChildren [
 	"allChildren returns all the files and folders recursively nested in a reference"
 	[ | ref |
@@ -370,7 +378,7 @@ FileReferenceTest >> testDeleteAllChildren [
 		ensure: [ (filesystem / 'alpha') ensureDeleteAll ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testDeleteIfAbsent [
 	| flag reference |
 	flag := false.
@@ -387,7 +395,7 @@ FileReferenceTest >> testDeleteIfAbsent [
 		ensure: [ reference ensureDelete ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testDoesContainReferenceFileSystem [
 	| ref other |
 	ref := filesystem * 'griffle'.
@@ -395,7 +403,7 @@ FileReferenceTest >> testDoesContainReferenceFileSystem [
 	self assert: (ref contains: other)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testDoesNotContainReferenceWhenUsingDifferentInstancesOfMemoryFileSystem [
 	| ref other |
 	ref := filesystem * 'griffle'.
@@ -403,21 +411,21 @@ FileReferenceTest >> testDoesNotContainReferenceWhenUsingDifferentInstancesOfMem
 	self deny: (ref contains: other)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testDoesntContainLocator [
 	| ref |
 	ref := filesystem * 'griffle'.
 	self deny: (ref contains: FileLocator image)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testDoesntContainPath [
 	| ref |
 	ref := filesystem * 'griffle'.
 	self deny: (ref contains: (Path * 'nurp'))
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testDoesntContainReferencePath [
 	| ref other |
 	ref := filesystem * 'griffle'.
@@ -425,7 +433,7 @@ FileReferenceTest >> testDoesntContainReferencePath [
 	self deny: (ref contains: other)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testEnsureDelete [
 	| reference |
 	reference := filesystem / 'plonk'.	"Deletes the file if it exists"
@@ -436,7 +444,7 @@ FileReferenceTest >> testEnsureDelete [
 		ensure: [ reference ensureDelete ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testEnsureDeleteAll [
 	| reference childReference |
 	reference := filesystem / 'plonk'.	"Deletes the file if it exists"
@@ -451,7 +459,7 @@ FileReferenceTest >> testEnsureDeleteAll [
 		ensure: [ reference ensureDeleteAll ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testEnsureDeleteNonEmptyDirectory [
 	| reference childReference |
 	reference := filesystem / 'plonk'.	"Deletes the file if it exists"
@@ -464,7 +472,7 @@ FileReferenceTest >> testEnsureDeleteNonEmptyDirectory [
 		ensure: [ reference ensureDeleteAll ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testEntries [
 	[ | ref entries |
 	filesystem createDirectory: '/alpha'.
@@ -480,7 +488,7 @@ FileReferenceTest >> testEntries [
 		ensure: [ (filesystem / 'alpha') ensureDeleteAll ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testEqual [
 	| a b |
 	a := filesystem * 'plonk'.
@@ -489,7 +497,7 @@ FileReferenceTest >> testEqual [
 	self assert: a equals: b
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 FileReferenceTest >> testEqualAbsoluteRelativePath [
 	| a b |
 
@@ -498,7 +506,7 @@ FileReferenceTest >> testEqualAbsoluteRelativePath [
 	self assert: a  equals: b
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testEqualityRelativeVsAbsolute [
 
 	| f1 f2 |
@@ -508,7 +516,7 @@ FileReferenceTest >> testEqualityRelativeVsAbsolute [
 	self assert: f1 equals: f2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testExists [
 	| reference |
 	reference := filesystem / 'plonk'.
@@ -519,7 +527,7 @@ FileReferenceTest >> testExists [
 		ensure: [ reference ensureDelete ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testGlob [
 	[ | ref children |
 	filesystem createDirectory: '/alpha'.
@@ -536,7 +544,7 @@ FileReferenceTest >> testGlob [
 		ensure: [ (filesystem / 'alpha') ensureDeleteAll ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testGrandchildOfReference [
 	| griffle  nurb |
 	griffle := filesystem / 'griffle'.
@@ -545,7 +553,7 @@ FileReferenceTest >> testGrandchildOfReference [
 	self deny: (nurb isChildOf: griffle)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testHasChildren [
 	[ | ref |
 	filesystem createDirectory: '/alpha'.
@@ -560,7 +568,7 @@ FileReferenceTest >> testHasChildren [
 		ensure: [ (filesystem / 'alpha') ensureDeleteAll ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testHasDirectories [
 	[ | ref |
 	filesystem createDirectory: '/alpha'.
@@ -574,7 +582,7 @@ FileReferenceTest >> testHasDirectories [
 		ensure: [ (filesystem / 'alpha') ensureDeleteAll ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testHasFiles [
 	[ | ref |
 	filesystem createDirectory: '/alpha'.
@@ -589,7 +597,7 @@ FileReferenceTest >> testHasFiles [
 		ensure: [ (filesystem / 'alpha') ensureDeleteAll ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testIfAbsent [
 	| reference |
 	reference := filesystem / 'plonk'.
@@ -600,7 +608,7 @@ FileReferenceTest >> testIfAbsent [
 		ensure: [ reference ensureDelete ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testIfExists [
 	| reference |
 	reference := filesystem / 'plonk'.
@@ -611,7 +619,7 @@ FileReferenceTest >> testIfExists [
 		ensure: [ reference ensureDelete ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testIfExistsIfAbsent [
 	| reference |
 	reference := filesystem / 'plonk'.
@@ -622,7 +630,7 @@ FileReferenceTest >> testIfExistsIfAbsent [
 		ensure: [ reference ensureDelete ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testIndicator [
 	| ref |
 	ref := filesystem * 'plonk' / 'griffle'.
@@ -644,37 +652,60 @@ FileReferenceTest >> testIndicator [
 		ensure: [ ref delete ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testIsAbsolute [
 	self assert: (filesystem / 'plonk') isAbsolute
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
+FileReferenceTest >> testIsHidden [
+	| hiddenFolder hiddenFile |
+	self deny: filesystem root isHidden.
+	
+	hiddenFolder := (filesystem root / '.hidden') ensureCreateDirectory.
+	self assert: hiddenFolder isHidden.
+
+	hiddenFile := (filesystem root / '.hidden.txt') ensureCreateFile.
+	self assert: hiddenFile isHidden.	
+]
+
+{ #category : 'tests' }
+FileReferenceTest >> testIsHiddenWithRealFilesystem [
+	"For a real file system we can only check files that are visible by default. For any other we check in #testIsHidden"
+	
+	"Check a file on real file system"
+	self deny: FileLocator vmBinary asFileReference isHidden.
+
+	"Check a directory on real file system"
+	self deny: FileSystem workingDirectory isHidden
+]
+
+{ #category : 'tests' }
 FileReferenceTest >> testIsNotAbsolute [
 	self deny: (filesystem * 'plonk') isAbsolute
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testIsNotRelative [
 	self deny: (filesystem / 'plonk') isRelative
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testIsNotRoot [
 	self deny: (filesystem / 'plonk') isRoot
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testIsRelative [
 	self assert: (filesystem * 'plonk') isRelative
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testIsRoot [
 	self assert: (filesystem root) isRoot
 ]
 
-{ #category : #'tests - handy utils' }
+{ #category : 'tests - handy utils' }
 FileReferenceTest >> testLastFilesForExtension [
 	"This test verifies that we have the following ordering: 3 4 5 33 49 51 101"
 	| childFiles |
@@ -696,7 +727,7 @@ FileReferenceTest >> testLastFilesForExtension [
 			ensure: [ (filesystem / 'dir') ensureDeleteAll ]
 ]
 
-{ #category : #'tests - handy utils' }
+{ #category : 'tests - handy utils' }
 FileReferenceTest >> testLastFilesForExtensionBrokenPattern [
 	"when a file does not follow the pattern name.number.extension, it should be filtered out."
 	[ filesystem createDirectory: 'dir'.
@@ -712,7 +743,7 @@ FileReferenceTest >> testLastFilesForExtensionBrokenPattern [
 	] ensure: [ (filesystem / 'dir') ensureDeleteAll ]
 ]
 
-{ #category : #'tests - handy utils' }
+{ #category : 'tests - handy utils' }
 FileReferenceTest >> testLastFilesForExtensionNegativeTesting [
 	"When there is no file with the given pattern, then an error should be raised."
 
@@ -728,7 +759,7 @@ FileReferenceTest >> testLastFilesForExtensionNegativeTesting [
 	] ensure: [ (filesystem / 'dir') ensureDeleteAll ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testMakeRelative [
 
 	| parent child relative |
@@ -738,7 +769,7 @@ FileReferenceTest >> testMakeRelative [
 	self assert: relative equals: (Path * 'plonk' / 'nurb')
 ]
 
-{ #category : #'tests - handy utils' }
+{ #category : 'tests - handy utils' }
 FileReferenceTest >> testNextNameForExtension [
 
 	| childFiles dir |
@@ -775,7 +806,7 @@ FileReferenceTest >> testNextNameForExtension [
 		ensure: [ (filesystem / 'dir') ensureDeleteAll ]
 ]
 
-{ #category : #'tests - handy utils' }
+{ #category : 'tests - handy utils' }
 FileReferenceTest >> testNextNameForExtensionBrokenPattern [
 
 	| childFiles |
@@ -797,7 +828,7 @@ filesystem / 'dir' / 'games.51.ston' writeStreamDo: [ :stream | stream nextPutAl
 			ensure: [ (filesystem / 'dir') ensureDeleteAll ]
 ]
 
-{ #category : #'tests - handy utils' }
+{ #category : 'tests - handy utils' }
 FileReferenceTest >> testNextNameForExtensionNegativeTesting [
 	"When there is no file with the given pattern, then we default patterned name should be returned."
 
@@ -813,8 +844,8 @@ FileReferenceTest >> testNextNameForExtensionNegativeTesting [
 	] ensure: [ (filesystem / 'dir') ensureDeleteAll ]
 ]
 
-{ #category : #tests }
-FileReferenceTest >> testNextVersion [
+{ #category : 'tests' }
+FileReferenceTest >> testNextVersionAlphabeticFilename [
 
 	| fs file versions |
 
@@ -825,7 +856,34 @@ FileReferenceTest >> testNextVersion [
 			file createFile.
 			stream nextPut: file basename.
 			file := file nextVersion. ] ].
-	self assert: versions equals: #('file.name' 'file.1.name' 'file.2.name' 'file.3.name' 'file.4.name').
+	self 
+		assert: versions 
+		equals: #('file.name' 'file.1.name' 'file.2.name' 'file.3.name' 'file.4.name').
+
+]
+
+{ #category : 'tests' }
+FileReferenceTest >> testNextVersionAlphabeticVersionedFilename [
+
+	| fs file versions |
+
+	fs := FileSystem memory.
+	file := fs / 'file.000.name'.
+	versions := Array streamContents: [ :stream |
+		5 timesRepeat: [
+			file createFile.
+			stream nextPut: file basename.
+			file := file nextVersion. ] ].
+	self 
+		assert: versions 
+		equals: #('file.000.name' 'file.1.name' 'file.2.name' 'file.3.name' 'file.4.name').
+
+]
+
+{ #category : 'tests' }
+FileReferenceTest >> testNextVersionAlphanumericFilename [
+
+	| fs file versions |
 
 	fs := FileSystem memory.
 	file := fs / 'file123.name.ext'.
@@ -834,7 +892,19 @@ FileReferenceTest >> testNextVersion [
 			file createFile.
 			stream nextPut: file basename.
 			file := file nextVersion. ] ].
-	self assert: versions equals: #('file123.name.ext' 'file123.name.1.ext' 'file123.name.2.ext' 'file123.name.3.ext' 'file123.name.4.ext').
+
+	self 
+		assert: versions 
+		equals: #('file123.name.ext' 'file123.name.1.ext' 'file123.name.2.ext' 'file123.name.3.ext' 'file123.name.4.ext').
+
+
+
+]
+
+{ #category : 'tests' }
+FileReferenceTest >> testNextVersionNumericFilename [
+
+	| fs file versions |
 
 	fs := FileSystem memory.
 	file := fs / '123.ext'.
@@ -843,10 +913,16 @@ FileReferenceTest >> testNextVersion [
 			file createFile.
 			stream nextPut: file basename.
 			file := file nextVersion. ] ].
-	self assert: versions equals: #('123.ext' '123.1.ext' '123.2.ext' '123.3.ext' '123.4.ext')
+	
+	self
+		assert: versions 
+		equals: #('123.ext' '123.1.ext' '123.2.ext' '123.3.ext' '123.4.ext')
+
+
+
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testParent [
 	| ref parent |
 	ref := filesystem * 'plonk' / 'griffle'.
@@ -855,7 +931,7 @@ FileReferenceTest >> testParent [
 	self assert: (parent path at: 1) equals: 'plonk'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testParentResolutionWithAbsoluteReference [
 	| base relative absolute |
 	base := filesystem / '/plonk' / 'pinto'.
@@ -867,7 +943,7 @@ FileReferenceTest >> testParentResolutionWithAbsoluteReference [
 	self assert: (absolute path at: 2) equals: 'zonk'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testParentResolutionWithPath [
 	| base relative absolute |
 	base := filesystem / 'plonk' / 'pinto'.
@@ -877,7 +953,7 @@ FileReferenceTest >> testParentResolutionWithPath [
 	self assert: absolute path segments equals: #('plonk' 'pinto' '..' 'griffle' 'zonk')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testParentResolutionWithReference [
 	| base relative absolute |
 	base := (filesystem / 'plonk' / 'pinto').
@@ -887,7 +963,7 @@ FileReferenceTest >> testParentResolutionWithReference [
 	self assert: absolute path segments equals: #('plonk' 'pinto' '..' 'griffle' 'zonk')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testParentResolutionWithRemoteReference [
 	| base relative absolute |
 	base := filesystem / 'plonk' / 'pinto'.
@@ -897,7 +973,7 @@ FileReferenceTest >> testParentResolutionWithRemoteReference [
 	self assert: absolute path segments equals: #('plonk' 'pinto' '..' 'griffle' 'zonk')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testParentUpTo [
 	| base a b c |
 	[
@@ -915,7 +991,7 @@ FileReferenceTest >> testParentUpTo [
 	]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testPathRelativeTo [
 	| parent childPath relative |
 	parent := filesystem / 'griffle'.
@@ -924,7 +1000,7 @@ FileReferenceTest >> testPathRelativeTo [
 	self assert: relative equals: (Path * 'plonk' / 'nurb')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testReadStream [
 	| ref stream path |
 	path := Path * 'plonk'.
@@ -935,7 +1011,7 @@ FileReferenceTest >> testReadStream [
 		ensure: [ ref delete ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testReadStreamDo [
 	| ref path |
 	path := Path * 'plonk'.
@@ -945,7 +1021,7 @@ FileReferenceTest >> testReadStreamDo [
 		ensure: [ ref delete ]
 ]
 
-{ #category : #'tests stream' }
+{ #category : 'tests stream' }
 FileReferenceTest >> testReadStreamDoNotFound [
 	| ref |
 	ref := filesystem / 'plonk'.
@@ -954,7 +1030,7 @@ FileReferenceTest >> testReadStreamDoNotFound [
 		raise: FileDoesNotExistException
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testReadStreamDoifAbsent [
 	| ref path |
 	path := Path * 'plonk'.
@@ -964,7 +1040,7 @@ FileReferenceTest >> testReadStreamDoifAbsent [
 		ensure: [ ref ensureDelete ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testReadStreamDoifAbsentNot [
 	| ref pass |
 	pass := false.
@@ -975,7 +1051,7 @@ FileReferenceTest >> testReadStreamDoifAbsentNot [
 	self assert: pass
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testReadStreamIfAbsent [
 	| ref stream path |
 	path := Path * 'plonk'.
@@ -986,7 +1062,7 @@ FileReferenceTest >> testReadStreamIfAbsent [
 		ensure: [ ref ensureDelete ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testReadStreamNotFound [
 	| ref  |
 	ref := filesystem * 'plonk'.
@@ -995,7 +1071,7 @@ FileReferenceTest >> testReadStreamNotFound [
 		raise: FileDoesNotExistException
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testRelativeToPath [
 	| parentPath child relative |
 	parentPath := Path / 'griffle'.
@@ -1004,7 +1080,7 @@ FileReferenceTest >> testRelativeToPath [
 	self assert: relative equals: (Path * 'plonk' / 'nurb')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testRelativeToReference [
 	| parent child relative |
 	parent := filesystem / 'griffle'.
@@ -1013,7 +1089,7 @@ FileReferenceTest >> testRelativeToReference [
 	self assert: relative equals: (Path * 'plonk' / 'nurb')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testRename [
 	| file tmp originalFullName |
 	[ file := (FileLocator imageDirectory / 'oldName') ensureCreateFile.
@@ -1027,7 +1103,7 @@ FileReferenceTest >> testRename [
 			tmp deleteAll ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testRenameTargetExists [
 
 	| existingFile fileToRename |
@@ -1040,21 +1116,21 @@ FileReferenceTest >> testRenameTargetExists [
 			fileToRename delete ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testResolve [
 	| ref |
 	ref := filesystem / 'griffle'.
 	self assert: ref resolve identicalTo: ref
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testRootParent [
 	| root |
 	root := filesystem root.
 	self assert: root parent identicalTo: root
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testRootReference [
 	"Check that the root entry contains sensible values.
 	On Windows this requires a pseudo entry to be available."
@@ -1071,7 +1147,7 @@ FileReferenceTest >> testRootReference [
 	self deny: rootReference isWritable
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testSiblingOfReference [
 	| griffle  nurb |
 	griffle := filesystem / 'griffle'.
@@ -1080,7 +1156,7 @@ FileReferenceTest >> testSiblingOfReference [
 	self deny: (nurb isChildOf: griffle)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testSimpleResolution [
 	| base relative absolute |
 	base := filesystem / 'plonk'.
@@ -1092,7 +1168,7 @@ FileReferenceTest >> testSimpleResolution [
 	self assert: (absolute path at: 3) equals: 'zonk'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testSlash [
 	| ref result |
 	ref := filesystem * 'plonk'.
@@ -1103,7 +1179,79 @@ FileReferenceTest >> testSlash [
 	self assert: (result path at: 2) equals: 'griffle'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
+FileReferenceTest >> testSymbolicLink [
+	"The delete visitor should not follow symbolic links and should delete them as a file."
+	| tempDir aDir bDir symbolicLink symlinkCommand status |
+
+	OSPlatform current isWindows ifTrue: [ ^ self ].
+
+	[ tempDir := FileReference newTempFilePrefix: 'testSymbolLinkTargetPath' suffix: 'dir'.
+	self deny: tempDir exists.
+	tempDir ensureCreateDirectory.
+	aDir := tempDir / 'a'.
+	bDir := tempDir / 'a/b'.
+	(bDir / 'c/d') ensureCreateDirectory.
+	symbolicLink := bDir / 'c/sl'.
+
+	symlinkCommand := 'cd ', (bDir / 'c') fullName, ' && ln -s ', aDir fullName, ' sl'.
+	status := LibC uniqueInstance system: symlinkCommand.
+	status = 0 ifFalse: [ self error: 'Unable to create symbolic link' ].
+
+	self assert: symbolicLink isSymlink.
+	self assert: symbolicLink isDirectory.
+	self assert: symbolicLink targetFileReference equals: aDir.
+	bDir ensureDeleteAll.
+	self assert: aDir exists.
+	self deny: bDir exists ]
+			ensure: [ tempDir ensureDeleteAll ].
+
+]
+
+{ #category : 'tests' }
+FileReferenceTest >> testSymbolicLinkInMemory [
+	"Confirm that in-memory files behave as expected with symbolic link requests.
+	That is... symbolic links aren't supported, to #isSymlink always returns false and the targetFileReference is always the original file"
+	| file |
+
+	file := FileSystem memory root / 'a.file'.
+	file writeStreamDo: [ :s | s << 'hello, world' ].
+
+	self deny: file isSymlink.
+	self assert: file targetFileReference equals: file.
+]
+
+{ #category : 'tests' }
+FileReferenceTest >> testSymbolicLinkTargetPath [
+	<gtExample>
+	| tempDir dDir symbolicLink symlinkCommand status |
+
+	OSPlatform current isWindows ifTrue: [ ^ self ].
+
+	[ tempDir := FileReference newTempFilePrefix: 'testSymbolLinkTargetPath' suffix: 'dir'.
+	tempDir ensureCreateDirectory.
+	dDir := tempDir / 'a/b/c/d'.
+	dDir ensureCreateDirectory.
+	symbolicLink := tempDir / 'a/sl'.
+
+	symlinkCommand := 'cd ', (tempDir / 'a') fullName, ' && ln -s ', dDir fullName, ' sl'.
+	status := LibC uniqueInstance system: symlinkCommand.
+	status = 0 ifFalse: [ self error: 'Unable to create symbolic link' ].
+
+	self assert: symbolicLink isSymlink.
+	self assert: (tempDir / 'a/sl/../abc') canonicalize path
+		equals: (tempDir / 'a/b/c/abc') path.
+
+	"Symbolic link operations shouldn't raise an error if the target doesn't exist"
+	dDir deleteAll.
+	self assert: symbolicLink isSymlink.
+	self assert: (tempDir / 'a/sl/../abc') canonicalize path
+		equals: (tempDir / 'a/b/c/abc') path ]
+			ensure: [ tempDir ensureDeleteAll ].
+
+]
+
+{ #category : 'tests' }
 FileReferenceTest >> testTempFilePrefixSuffix [
 	| fileRef |
 	fileRef := FileReference newTempFilePrefix: 'FileReference' suffix: 'Test'.
@@ -1111,7 +1259,7 @@ FileReferenceTest >> testTempFilePrefixSuffix [
 	self assert: fileRef exists not
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testUnequalContent [
 	| a b |
 	a := filesystem * 'plonk'.
@@ -1119,7 +1267,7 @@ FileReferenceTest >> testUnequalContent [
 	self deny: a equals: b
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testUnequalSize [
 	| a b |
 	a := filesystem * 'plonk'.
@@ -1127,7 +1275,7 @@ FileReferenceTest >> testUnequalSize [
 	self deny: a equals: b
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testUpToAll [
 	| testString filename  |
 	testString := 'ße'.
@@ -1145,7 +1293,7 @@ FileReferenceTest >> testUpToAll [
 	ensure: [ filename asFileReference ensureDelete ]
 ]
 
-{ #category : #'tests - handy utils' }
+{ #category : 'tests - handy utils' }
 FileReferenceTest >> testVersionNumberForComplexFileName [
 
 	| dir |
@@ -1158,7 +1306,7 @@ FileReferenceTest >> testVersionNumberForComplexFileName [
 	] 	ensure: [ (filesystem / 'dir') ensureDeleteAll ]
 ]
 
-{ #category : #'tests - handy utils' }
+{ #category : 'tests - handy utils' }
 FileReferenceTest >> testVersionNumberForExtension [
 
 	| childFiles dir |
@@ -1195,8 +1343,8 @@ FileReferenceTest >> testVersionNumberForExtension [
 		ensure: [ (filesystem / 'dir') ensureDeleteAll ]
 ]
 
-{ #category : #tests }
-FileReferenceTest >> testWithExtentionAddsExtension [
+{ #category : 'tests' }
+FileReferenceTest >> testWithExtensionAddsExtension [
 	| ref result |
 	ref := filesystem * 'plonk'.
 	result := ref withExtension: 'griffle'.
@@ -1204,8 +1352,8 @@ FileReferenceTest >> testWithExtentionAddsExtension [
 	self assert: result basename equals: 'plonk.griffle'
 ]
 
-{ #category : #tests }
-FileReferenceTest >> testWithExtentionReplacesExtension [
+{ #category : 'tests' }
+FileReferenceTest >> testWithExtensionReplacesExtension [
 	| ref result |
 	ref := filesystem * 'plonk.griffle'.
 	result := ref withExtension: 'nurp'.
@@ -1213,7 +1361,7 @@ FileReferenceTest >> testWithExtentionReplacesExtension [
 	self assert: result basename equals: 'plonk.nurp'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testWithoutExtension [
 	| ref newRef |
 	ref := filesystem * 'plonk' / 'griffle.txt'.
@@ -1222,7 +1370,7 @@ FileReferenceTest >> testWithoutExtension [
 	self assert: newRef basename equals: 'griffle'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testWorkingDirectoryParent [
 	| wd |
 	wd := filesystem referenceTo: Path workingDirectory.
@@ -1230,7 +1378,7 @@ FileReferenceTest >> testWorkingDirectoryParent [
 	self assert: (wd parent path at: 1) equals: '..'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testWriteStream [
 	| ref stream |
 	ref := filesystem / 'plonk'.
@@ -1239,14 +1387,14 @@ FileReferenceTest >> testWriteStream [
 		ensure: [ ref ensureDelete ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testWriteStreamDo [
 	| ref |
 	ref := filesystem / 'plonk'.
 	[ ref writeStreamDo: [ :stream | self deny: stream isNil ] ] ensure: [ ref ensureDelete ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testWriteStreamDoExists [
 	| ref path |
 	path := Path * 'plonk'.
@@ -1256,14 +1404,14 @@ FileReferenceTest >> testWriteStreamDoExists [
 		ensure: [ ref ensureDelete ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testWriteStreamDoifPresent [
 	| ref |
 	ref := filesystem / 'plonk'.
 	[ ref writeStreamDo: [ :stream | self deny: stream isNil ] ifPresent: [ self signalFailure: 'The file does not exist!' ] ] ensure: [ ref ensureDelete ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testWriteStreamDoifPresentNot [
 	| ref pass path |
 	pass := false.
@@ -1275,7 +1423,7 @@ FileReferenceTest >> testWriteStreamDoifPresentNot [
 		ensure: [ ref ensureDelete ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testWriteStreamExists [
 	| ref stream path |
 	path := Path * 'plonk'.
@@ -1286,7 +1434,7 @@ FileReferenceTest >> testWriteStreamExists [
 		ensure: [ ref ensureDelete ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testWriteStreamifPresent [
 	| ref stream |
 	ref := filesystem / 'plonk'.
@@ -1295,7 +1443,7 @@ FileReferenceTest >> testWriteStreamifPresent [
 		ensure: [ ref ensureDelete ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceTest >> testWriteStreamifPresentExists [
 	| ref pass path |
 	pass := false.

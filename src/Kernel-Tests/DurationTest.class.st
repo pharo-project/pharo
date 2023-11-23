@@ -2,21 +2,23 @@
 SUnit tests for class  Duration
 "
 Class {
-	#name : #DurationTest,
-	#superclass : #ClassTestCase,
+	#name : 'DurationTest',
+	#superclass : 'ClassTestCase',
 	#instVars : [
 		'aDuration'
 	],
-	#category : #'Kernel-Tests-Chronology'
+	#category : 'Kernel-Tests-Chronology',
+	#package : 'Kernel-Tests',
+	#tag : 'Chronology'
 }
 
-{ #category : #coverage }
+{ #category : 'coverage' }
 DurationTest >> classToBeTested [
 
 	^ Duration
 ]
 
-{ #category : #coverage }
+{ #category : 'coverage' }
 DurationTest >> selectorsToBeIgnored [
 
 	| private |
@@ -25,19 +27,19 @@ DurationTest >> selectorsToBeIgnored [
 	^ super selectorsToBeIgnored, private
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 DurationTest >> setUp [
 	super setUp.
 	aDuration := Duration days: 1 hours: 2 minutes: 3 seconds: 4 nanoSeconds: 5
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DurationTest >> testAbs [
 	self assert: aDuration abs equals: aDuration.
 	self assert: (Duration nanoSeconds: -5) abs equals: (Duration nanoSeconds: 5)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DurationTest >> testAsDay [
 	| full half quarter |
 	full := Duration minutes: 60 * 24.
@@ -52,18 +54,18 @@ DurationTest >> testAsDay [
 	self assert: 0.4 day + 0.6 day equals: 1 day
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DurationTest >> testAsDelay [
 	self deny: aDuration asDelay equals: aDuration
 	"want to come up with a more meaningful test"
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DurationTest >> testAsDuration [
 	self assert: aDuration asDuration equals: aDuration
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DurationTest >> testAsMicroseconds [
 
 	self assert: (Duration nanoSeconds: 1000000) asMicroseconds equals: 1000.
@@ -81,7 +83,7 @@ DurationTest >> testAsMicroseconds [
 	self assert: (Duration microSeconds: -3775000) asNanoSeconds equals: -3775000000
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DurationTest >> testAsMilliSecond [
 	self
 		assert: 1 milliSecond equals: (1 / 1000) second;
@@ -90,7 +92,7 @@ DurationTest >> testAsMilliSecond [
 		assert: 500 milliSecond equals: (1 / 2) second
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DurationTest >> testAsMilliSeconds [
 	self assert: (Duration nanoSeconds: 1000000) asMilliSeconds equals: 1.
 	self assert: (Duration seconds: 1) asMilliSeconds equals: 1000.
@@ -103,7 +105,7 @@ DurationTest >> testAsMilliSeconds [
 	self assert: (Duration milliSeconds: -3775) nanoSeconds equals: -775000000
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DurationTest >> testAsMinute [
 	| full half quarter |
 	full := Duration seconds: 60.
@@ -118,14 +120,14 @@ DurationTest >> testAsMinute [
 	self assert: 0.4 minute + 0.6 minute equals: 1 minute
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DurationTest >> testAsNanoSeconds [
 	self assert: (Duration nanoSeconds: 1) asNanoSeconds equals: 1.
 	self assert: (Duration seconds: 1) asNanoSeconds equals: 1000000000.
 	self assert: aDuration asNanoSeconds equals: 93784000000005
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DurationTest >> testAsSecond [
 	| full half quarter |
 	full := Duration seconds: 1.
@@ -140,7 +142,7 @@ DurationTest >> testAsSecond [
 	self assert: 0.4 second + 0.6 second equals: 1 second
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DurationTest >> testAsSeconds [
 	self assert: (Duration nanoSeconds: 1000000000) asSeconds equals: 1.
 	self assert: (Duration seconds: 1) asSeconds equals: 1.
@@ -149,7 +151,7 @@ DurationTest >> testAsSeconds [
 	self assert: (1 / 2) asSeconds equals: (Duration milliSeconds: 500)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DurationTest >> testAsWeek [
 	| full half quarter |
 	full := Duration days: 7.
@@ -164,7 +166,7 @@ DurationTest >> testAsWeek [
 	self assert: 0.4 week + 0.6 week equals: 1 week
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DurationTest >> testAsWeeks [
 	| full half quarter |
 	full := Duration days: 7.
@@ -179,21 +181,21 @@ DurationTest >> testAsWeeks [
 	self assert: 1.4 weeks + 1.6 weeks equals: 3 weeks
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DurationTest >> testAsYear [
 	self
 		assert: 1 year days equals: 365;
 		assert: 0.5 year asHours equals: 364 / 2 * 24 + 12
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DurationTest >> testAsYears [
 	self
 		assert: 2 years days equals: 730;
 		assert: 0.5 year asHours equals: 364 / 2 * 24 + 12
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DurationTest >> testComparing [
 	| d1 d2 d3 |
 	d1 := Duration seconds: 10 nanoSeconds: 1.
@@ -207,13 +209,13 @@ DurationTest >> testComparing [
 		assert: d1 < d3
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DurationTest >> testDays [
 	self assert: aDuration days equals: 1.
 	self assert: (Duration days: 1) days equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DurationTest >> testDivide [
 	self assert: aDuration / aDuration equals: 1.
 	self
@@ -236,7 +238,7 @@ DurationTest >> testDivide [
 				nanoSeconds: 10)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DurationTest >> testEqualsSign [
 
 	self
@@ -266,12 +268,12 @@ DurationTest >> testEqualsSign [
 	self deny: (Time seconds: 1) equals: (Duration seconds: 1)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DurationTest >> testFromString [
 	self assert: aDuration equals: (Duration fromString: '1:02:03:04.000000005')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DurationTest >> testHash [
 	self
 		assert: aDuration hash
@@ -284,13 +286,13 @@ DurationTest >> testHash [
 				nanoSeconds: 5) hash
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DurationTest >> testHours [
 	self assert: aDuration hours equals: 2.
 	self assert: (Duration hours: 2) hours equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DurationTest >> testHumanReadablePrintString [
 	self assert: 0 seconds humanReadablePrintString equals: '0 seconds'.
 	self assert: 1 second humanReadablePrintString equals: '1 second'.
@@ -308,26 +310,26 @@ DurationTest >> testHumanReadablePrintString [
 	self shouldnt: [ 17.6782 years humanReadablePrintString ] raise: MessageNotUnderstood
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DurationTest >> testIntegerDivision [
 	self assert: aDuration // aDuration equals: 1.
 	self assert: aDuration // 2 equals: aDuration / 2
 	"is there ever a case where this is not true, since precision is always to the nano second?"
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DurationTest >> testIsZero [
 	self assert: Duration zero isZero.
 	self assert: (Duration seconds: 0) isZero
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DurationTest >> testLessThan [
 	self assert: aDuration  < (aDuration + 1 day ).
 	self deny: aDuration < aDuration
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DurationTest >> testMicroSeconds [
 	#(#(5 0 5000) #(1000005 1 5000) #(-5 0 -5000) #(-1000005 -1 -5000) #(1234000567 1234 567000) #(-1234000567 -1234 -567000))
 		do: [ :each |
@@ -338,7 +340,7 @@ DurationTest >> testMicroSeconds [
 	"argument (milliseconds)        seconds nanoseconds"
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DurationTest >> testMilliSeconds [
 	#(#(5 0 5000000) #(1005 1 5000000) #(-5 0 -5000000) #(-1005 -1 -5000000) #(1234567 1234 567000000) #(-1234567 -1234 -567000000))
 		do: [ :each |
@@ -349,7 +351,7 @@ DurationTest >> testMilliSeconds [
 	"argument (milliseconds)        seconds nanoseconds"
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DurationTest >> testMinus [
 	self assert: aDuration - aDuration equals: (Duration seconds: 0).
 	self
@@ -405,13 +407,13 @@ DurationTest >> testMinus [
 				nanoSeconds: 5)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DurationTest >> testMinutes [
 	self assert: aDuration minutes equals: 3.
 	self assert: (Duration minutes: 3) minutes equals: 3
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DurationTest >> testModulo [
 	| d1 d2 d3 |
 	d1 := 11.5 seconds.
@@ -441,7 +443,7 @@ DurationTest >> testModulo [
 				nanoSeconds: 1)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DurationTest >> testMultiplication [
 
 	self assert: aDuration * 1 equals: aDuration.
@@ -456,7 +458,7 @@ DurationTest >> testMultiplication [
 	self assert: 1 nanoSecond * 1.99 equals: 1 nanoSecond
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DurationTest >> testMultiply [
 	self
 		assert: aDuration * 2
@@ -469,7 +471,7 @@ DurationTest >> testMultiply [
 				nanoSeconds: 10)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DurationTest >> testNanoSecond [
 	self
 		assert: (Duration nanoSeconds: 5) equals: 5 nanoSecond;
@@ -477,30 +479,30 @@ DurationTest >> testNanoSecond [
 		assert: (1 / 2) nanoSecond equals: (Duration nanoSeconds: 0.5)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DurationTest >> testNanoSeconds [
 	self assert: aDuration nanoSeconds equals: 5.
 	self assert: (Duration nanoSeconds: 5) nanoSeconds equals: 5
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DurationTest >> testNegated [
 	self assert: aDuration + aDuration negated equals: (Duration seconds: 0)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DurationTest >> testNegative [
 	self deny: aDuration negative.
 	self assert: aDuration negated negative
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DurationTest >> testNew [
 	"self assert: Duration new =  (Duration seconds: 0)."
     "new is not valid as a creation method: MessageNotUnderstood: UndefinedObject>>quo:, where Duration seconds is nil"
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DurationTest >> testNormalizeNanoSeconds [
 	"Subtraction of two DateAndTime values may result in a request to
 	create a Duration with negative nanoseconds and positive seconds.
@@ -522,7 +524,7 @@ DurationTest >> testNormalizeNanoSeconds [
 	self assert: (Duration seconds: -1 nanoSeconds: 100000000) printString equals: '-0:00:00:00.9'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DurationTest >> testNumberConvenienceMethods [
 	self
 		assert: 1 week equals: (Duration days: 7);
@@ -541,7 +543,7 @@ DurationTest >> testNumberConvenienceMethods [
 		assert: -1 nanoSecond equals: (Duration nanoSeconds: -1)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DurationTest >> testPlus [
 	self assert: aDuration + 0 hours equals: aDuration.
 	self
@@ -555,24 +557,24 @@ DurationTest >> testPlus [
 				nanoSeconds: 10)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DurationTest >> testPositive [
 	self assert: (Duration nanoSeconds: 0) positive.
 	self assert: aDuration positive.
 	self deny: aDuration negated positive
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DurationTest >> testPrintHumanReadableOn [
 	self testHumanReadablePrintString
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DurationTest >> testPrintOn [
 	self assert: (String streamContents: [ :str | aDuration printOn: str ]) equals: '1:02:03:04.000000005'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DurationTest >> testQuotient [
 	| d1 d2 q |
 	d1 := 11.5 seconds.
@@ -583,24 +585,24 @@ DurationTest >> testQuotient [
 	self assert: q equals: 3
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DurationTest >> testReadFrom [
 	self assert: aDuration equals: (Duration readFrom: '1:02:03:04.000000005' readStream)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DurationTest >> testReadFromBogus [
 
 	self should: [Duration readFrom: '+0:01:02' readStream] raise: Error.
 	"Seconds should be supplied as per ANSI 5.8.2.16: [-]D:HH:MM:SS[.S]"
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DurationTest >> testReadFromMillisecond [
 	self assert: (Duration readFrom: '0:00:00:00.001 ' readStream) nanoSeconds equals: 1000000
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DurationTest >> testReadFromNoException [
 
 	#(	'0:00:00:00'
@@ -618,7 +620,7 @@ DurationTest >> testReadFromNoException [
 		'+0:01:02:3') do: [:each | each asDuration printString = each]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DurationTest >> testRoundTo [
 	self assert: (5 minutes + 37 seconds roundTo: 2 minutes) equals: 6 minutes.
 
@@ -651,7 +653,7 @@ DurationTest >> testRoundTo [
 				nanoSeconds: 0)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DurationTest >> testSeconds [
 	self assert: aDuration seconds equals: 4.
 	self assert: (Duration nanoSeconds: 2) seconds equals: 0.
@@ -674,14 +676,14 @@ DurationTest >> testSeconds [
 		equals: 1 * 24 * 60 * 60 + (2 * 60 * 60) + (3 * 60) + 4
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DurationTest >> testSecondsNanoSeconds [
 	self assert: (Duration seconds: 0 nanoSeconds: 5) equals: (Duration nanoSeconds: 5).
 	"not sure I should include in sunit since its Private "
 	self assert: (aDuration seconds: 0 nanoSeconds: 1) equals: (Duration nanoSeconds: 1)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DurationTest >> testStar [
 
 	self assert: aDuration * 1 equals: aDuration.
@@ -696,19 +698,19 @@ DurationTest >> testStar [
 	self assert: 1 nanoSecond * 1.99 equals: 1 nanoSecond
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DurationTest >> testStoreOn [
 	| stream |
 	aDuration storeOn: (stream := (String new: 20) writeStream).
 	self assert: stream contents equals: '(Duration seconds: 93784 nanoSeconds: 5)'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DurationTest >> testTicks [
 	self assert: aDuration ticks equals: #(1 7384 5)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DurationTest >> testTotalSeconds [
 	self assert: 0 seconds totalSeconds equals: 0.
 	self assert: 1 second totalSeconds equals: 1.
@@ -719,7 +721,7 @@ DurationTest >> testTotalSeconds [
 	self assert: 1 second negated totalSeconds equals: -1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DurationTest >> testTruncateTo [
 	self assert: (5 minutes + 37 seconds truncateTo: 2 minutes) equals: 4 minutes.
 	self
@@ -751,33 +753,33 @@ DurationTest >> testTruncateTo [
 				nanoSeconds: 0)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DurationTest >> testWeeks [
 	self assert: (Duration weeks: 1) days equals: 7
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DurationTest >> testWholeMicroseconds [
 	self assert: 0 seconds wholeMicroseconds equals: 0.
 	self assert: 1 second wholeMicroseconds equals: 0.
 	self assert: 1002003004 nanoSeconds wholeMicroseconds equals: 3
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DurationTest >> testWholeMilliseconds [
 	self assert: 0 seconds wholeMilliseconds equals: 0.
 	self assert: 1 second wholeMilliseconds equals: 0.
 	self assert: 1002003004 nanoSeconds wholeMilliseconds equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DurationTest >> testWholeNanoseconds [
 	self assert: 0 seconds wholeNanoseconds equals: 0.
 	self assert: 1 second wholeNanoseconds equals: 0.
 	self assert: 1002003004 nanoSeconds wholeNanoseconds equals: 4
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DurationTest >> testZero [
 	self assert: Duration zero equals: (Duration seconds: 0)
 ]

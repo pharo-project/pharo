@@ -2,11 +2,13 @@
 I implement methods that a decorator object understand.
 "
 Trait {
-	#name : #CmTDecorator,
-	#category : #'Commander2-Traits'
+	#name : 'CmTDecorator',
+	#category : 'Commander2-Traits',
+	#package : 'Commander2',
+	#tag : 'Traits'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CmTDecorator classSide >> decorate: anObject [
 	"Create a decorator decorating anObject."
 	^ self new
@@ -14,7 +16,7 @@ CmTDecorator classSide >> decorate: anObject [
 		yourself
 ]
 
-{ #category : #decorating }
+{ #category : 'decorating' }
 CmTDecorator >> decorate: anObject [
 	"Decorate anObject. To be defined by users of this trait."
 	self explicitRequirement

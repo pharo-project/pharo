@@ -1,6 +1,6 @@
-Extension { #name : #Class }
+Extension { #name : 'Class' }
 
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
 Class >> classSideCompiler [
 	"Redefine this method if you want to customize the compiler for class-side methods"
 	^self classSideCompilerClass new
@@ -8,7 +8,7 @@ Class >> classSideCompiler [
 		class: self classSide
 ]
 
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
 Class >> classSideCompilerClass [
 	"Redefine this method if you want to customize the compiler class for class-side methods"
 	^ Smalltalk compilerClass

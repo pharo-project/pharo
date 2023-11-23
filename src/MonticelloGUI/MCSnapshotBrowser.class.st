@@ -2,8 +2,8 @@
 Browser for snapshots
 "
 Class {
-	#name : #MCSnapshotBrowser,
-	#superclass : #MCCodeTool,
+	#name : 'MCSnapshotBrowser',
+	#superclass : 'MCCodeTool',
 	#instVars : [
 		'categorySelection',
 		'classSelection',
@@ -11,15 +11,17 @@ Class {
 		'methodSelection',
 		'switch'
 	],
-	#category : #'MonticelloGUI-Tools'
+	#category : 'MonticelloGUI-Tools',
+	#package : 'MonticelloGUI',
+	#tag : 'Tools'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MCSnapshotBrowser class >> forSnapshot: aSnapshot [
 	^ self new snapshot: aSnapshot
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCSnapshotBrowser >> allClassNames [
 	^ (items 
 		select: [:ea | (ea isOrganizationDefinition | ea isScriptDefinition) not]
@@ -27,19 +29,19 @@ MCSnapshotBrowser >> allClassNames [
 
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 MCSnapshotBrowser >> buttonSpecs [
 	^ #(('instance' switchBeInstance 'show instance' buttonEnabled switchIsInstance)
 		('?' switchBeComment 'show comment' buttonEnabled switchIsComment)
 		('class' switchBeClass 'show class' buttonEnabled switchIsClass))
 ]
 
-{ #category : #listing }
+{ #category : 'listing' }
 MCSnapshotBrowser >> categoryList [
 	^ self visibleCategories
 ]
 
-{ #category : #menus }
+{ #category : 'menus' }
 MCSnapshotBrowser >> categoryListMenu: aMenu [ 
 	categorySelection
 		ifNotNil: [aMenu
@@ -50,12 +52,12 @@ MCSnapshotBrowser >> categoryListMenu: aMenu [
 	^ aMenu
 ]
 
-{ #category : #selecting }
+{ #category : 'selecting' }
 MCSnapshotBrowser >> categorySelection [
 	^ categorySelection ifNil: [0] ifNotNil: [self visibleCategories indexOf: categorySelection]
 ]
 
-{ #category : #selecting }
+{ #category : 'selecting' }
 MCSnapshotBrowser >> categorySelection: aNumber [
 	categorySelection := aNumber = 0 ifFalse: [self visibleCategories at: aNumber].
 	self classSelection: 0.
@@ -64,7 +66,7 @@ MCSnapshotBrowser >> categorySelection: aNumber [
 
 ]
 
-{ #category : #text }
+{ #category : 'text' }
 MCSnapshotBrowser >> classCommentString [
 	^ items
 		detect: [ :ea | ea isClassDefinition and: [ ea className = classSelection ] ]
@@ -72,7 +74,7 @@ MCSnapshotBrowser >> classCommentString [
 		ifNone: [ '' ]
 ]
 
-{ #category : #text }
+{ #category : 'text' }
 MCSnapshotBrowser >> classDefinitionString [
 	| defs |
 	defs := items select: [:ea | (ea isClassDefinition or: [ea isClassDefinitionExtension])
@@ -87,12 +89,12 @@ MCSnapshotBrowser >> classDefinitionString [
 	].
 ]
 
-{ #category : #listing }
+{ #category : 'listing' }
 MCSnapshotBrowser >> classList [
 	^ self visibleClasses
 ]
 
-{ #category : #menus }
+{ #category : 'menus' }
 MCSnapshotBrowser >> classListMenu: aMenu [ 
 	classSelection ifNil: [ ^aMenu ].
 	super classListMenu: aMenu.
@@ -103,12 +105,12 @@ MCSnapshotBrowser >> classListMenu: aMenu [
 	^ aMenu
 ]
 
-{ #category : #selecting }
+{ #category : 'selecting' }
 MCSnapshotBrowser >> classSelection [
 	^ classSelection ifNil: [0] ifNotNil: [self visibleClasses indexOf: classSelection]
 ]
 
-{ #category : #selecting }
+{ #category : 'selecting' }
 MCSnapshotBrowser >> classSelection: aNumber [
 	classSelection := aNumber = 0 ifFalse: [self visibleClasses at: aNumber].
 	self protocolSelection: 0.
@@ -118,44 +120,44 @@ MCSnapshotBrowser >> classSelection: aNumber [
 
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 MCSnapshotBrowser >> defaultLabel [
 	^ 'Snapshot Browser'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCSnapshotBrowser >> extensionClassNames [
 	^ (self allClassNames difference: self packageClassNames) asSortedCollection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCSnapshotBrowser >> extensionsCategory [
 	^ '*Extensions'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCSnapshotBrowser >> hasExtensions [
 	^self extensionClassNames notEmpty
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 MCSnapshotBrowser >> initialExtent [
 	^ 650@400.
 ]
 
-{ #category : #menus }
+{ #category : 'menus' }
 MCSnapshotBrowser >> inspectSelection [
 	^ self methodSelection inspect
 ]
 
-{ #category : #menus }
+{ #category : 'menus' }
 MCSnapshotBrowser >> loadCategorySelection [
 	"Load the entire selected category"
 	categorySelection ifNil: [ ^self ].
 	self methodsForSelectedClassCategory do: [ :m | m load ].
 ]
 
-{ #category : #menus }
+{ #category : 'menus' }
 MCSnapshotBrowser >> loadClassSelection [
 	classSelection ifNil: [ ^ self ].
 	self packageClasses
@@ -165,19 +167,19 @@ MCSnapshotBrowser >> loadClassSelection [
 			self methodsForSelectedClass do: [ :m | m load ] ]
 ]
 
-{ #category : #menus }
+{ #category : 'menus' }
 MCSnapshotBrowser >> loadMethodSelection [
 	methodSelection ifNil: [ ^self ].
 	methodSelection load.
 ]
 
-{ #category : #menus }
+{ #category : 'menus' }
 MCSnapshotBrowser >> loadProtocolSelection [
 	protocolSelection ifNil: [ ^self ].
 	self methodsForSelectedProtocol do: [ :m | m load ].
 ]
 
-{ #category : #text }
+{ #category : 'text' }
 MCSnapshotBrowser >> metaclassDefinitionString [
 	| defs |
 	defs := items select: [:ea | (ea isClassDefinition or: [ea isClassDefinitionExtension])
@@ -192,12 +194,12 @@ MCSnapshotBrowser >> metaclassDefinitionString [
 	].
 ]
 
-{ #category : #listing }
+{ #category : 'listing' }
 MCSnapshotBrowser >> methodList [
 	^ self visibleMethods collect: [:ea | ea selector]
 ]
 
-{ #category : #menus }
+{ #category : 'menus' }
 MCSnapshotBrowser >> methodListMenu: aMenu [ 
 	super methodListMenu: aMenu.
 	( self selectedMessageName notNil and: [ methodSelection isLoadable ] )
@@ -205,27 +207,26 @@ MCSnapshotBrowser >> methodListMenu: aMenu [
 	^ aMenu
 ]
 
-{ #category : #selecting }
+{ #category : 'selecting' }
 MCSnapshotBrowser >> methodSelection [
 	^ methodSelection
 			ifNil: [0] 
 			ifNotNil: [self visibleMethods indexOf: methodSelection]
 ]
 
-{ #category : #selecting }
+{ #category : 'selecting' }
 MCSnapshotBrowser >> methodSelection: aNumber [
 	methodSelection := aNumber = 0 ifFalse: [self visibleMethods at: aNumber].
 	self changed: #methodSelection; changed: #text.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCSnapshotBrowser >> methodsForSelectedClass [
-	^ items select: [:ea | (ea className = classSelection) 
-							and: [ea isMethodDefinition
-									and: [ea classIsMeta = self switchIsClass]]].
+
+	^ items select: [ :ea | ea className = classSelection and: [ ea isMethodDefinition and: [ ea classIsMeta = self switchIsClass ] ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCSnapshotBrowser >> methodsForSelectedClassCategory [
 	| visibleClasses |
 	visibleClasses := self visibleClasses.
@@ -234,39 +235,39 @@ MCSnapshotBrowser >> methodsForSelectedClassCategory [
 									and: [ea classIsMeta = self switchIsClass]]].
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCSnapshotBrowser >> methodsForSelectedProtocol [
 	| methods |
 	protocolSelection ifNil: [^ Array new].
 	methods := self methodsForSelectedClass asOrderedCollection.
 	(protocolSelection = '-- all --') 
-		ifFalse: [methods removeAllSuchThat: [:ea | ea category ~= protocolSelection]].
+		ifFalse: [methods removeAllSuchThat: [:ea | ea protocol ~= protocolSelection]].
 	^ methods 
 	
 								
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCSnapshotBrowser >> packageClassNames [
 	^ self packageClasses collect: [:ea | ea className]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCSnapshotBrowser >> packageClasses [
 	^ items select: [:ea | ea isClassDefinition]
 ]
 
-{ #category : #listing }
+{ #category : 'listing' }
 MCSnapshotBrowser >> packageOrganizations [
 	^ items select: [:ea | ea isOrganizationDefinition]
 ]
 
-{ #category : #listing }
+{ #category : 'listing' }
 MCSnapshotBrowser >> protocolList [
 	^ self visibleProtocols
 ]
 
-{ #category : #menus }
+{ #category : 'menus' }
 MCSnapshotBrowser >> protocolListMenu: aMenu [ 
 	protocolSelection
 		ifNotNil: [aMenu
@@ -275,14 +276,14 @@ MCSnapshotBrowser >> protocolListMenu: aMenu [
 	^ aMenu
 ]
 
-{ #category : #selecting }
+{ #category : 'selecting' }
 MCSnapshotBrowser >> protocolSelection [
 	^ protocolSelection 
 		ifNil: [0]
 		ifNotNil: [self visibleProtocols indexOf: protocolSelection]
 ]
 
-{ #category : #selecting }
+{ #category : 'selecting' }
 MCSnapshotBrowser >> protocolSelection: anInteger [
 	protocolSelection := (anInteger = 0 ifFalse: [self visibleProtocols at: anInteger]).
 	self methodSelection: 0.
@@ -290,7 +291,7 @@ MCSnapshotBrowser >> protocolSelection: anInteger [
 		changed: #methodList.
 ]
 
-{ #category : #text }
+{ #category : 'text' }
 MCSnapshotBrowser >> scriptDefinitionString [
 	| defs |
 	defs := items select: [:ea | ea isScriptDefinition].
@@ -305,13 +306,13 @@ MCSnapshotBrowser >> scriptDefinitionString [
 			separatedBy: [stream cr]].
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCSnapshotBrowser >> selectedClass [
 	classSelection ifNil: [ ^ nil ].
 	^ Smalltalk globals at: classSelection ifAbsent: [ nil ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCSnapshotBrowser >> selectedClassOrMetaClass [
 	| class |
 	classSelection ifNil: [ ^ nil ].
@@ -321,18 +322,18 @@ MCSnapshotBrowser >> selectedClassOrMetaClass [
 		ifFalse: [ class ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCSnapshotBrowser >> selectedMessageCategoryName [
 	^protocolSelection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCSnapshotBrowser >> selectedMessageName [
 	^methodSelection ifNotNil: [^ methodSelection selector ].
 
 ]
 
-{ #category : #switch }
+{ #category : 'switch' }
 MCSnapshotBrowser >> signalSwitchChanged [
 	self protocolSelection: 0.
 	self 
@@ -344,47 +345,47 @@ MCSnapshotBrowser >> signalSwitchChanged [
 		changed: #text.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCSnapshotBrowser >> snapshot: aSnapshot [
 	items := aSnapshot definitions asSortedCollection.
 	self categorySelection: 0.
 ]
 
-{ #category : #switch }
+{ #category : 'switch' }
 MCSnapshotBrowser >> switchBeClass [
 	switch := #class.
 	self signalSwitchChanged.
 ]
 
-{ #category : #switch }
+{ #category : 'switch' }
 MCSnapshotBrowser >> switchBeComment [
 	switch := #comment.
 	self signalSwitchChanged.
 ]
 
-{ #category : #switch }
+{ #category : 'switch' }
 MCSnapshotBrowser >> switchBeInstance [
 	switch := #instance.
 	self signalSwitchChanged.
 ]
 
-{ #category : #switch }
+{ #category : 'switch' }
 MCSnapshotBrowser >> switchIsClass [
 	^ switch = #class
 ]
 
-{ #category : #switch }
+{ #category : 'switch' }
 MCSnapshotBrowser >> switchIsComment [
 	^ switch = #comment.
 ]
 
-{ #category : #switch }
+{ #category : 'switch' }
 MCSnapshotBrowser >> switchIsInstance [
 	switch ifNil: [switch := #instance].
 	^ switch = #instance.
 ]
 
-{ #category : #text }
+{ #category : 'text' }
 MCSnapshotBrowser >> text [
 	self switchIsComment ifTrue: [ ^ self classCommentString ].
 	methodSelection ifNotNil: [ ^ methodSelection source ].
@@ -397,12 +398,12 @@ MCSnapshotBrowser >> text [
 	^ ''
 ]
 
-{ #category : #text }
+{ #category : 'text' }
 MCSnapshotBrowser >> text: aTextOrString [
 	self changed: #text
 ]
 
-{ #category : #listing }
+{ #category : 'listing' }
 MCSnapshotBrowser >> visibleCategories [
 	^ ((self packageOrganizations flatCollect: [ :ea | ea categories ]),
 		(self packageClasses collect: [ :ea | ea category ]),
@@ -410,7 +411,7 @@ MCSnapshotBrowser >> visibleCategories [
 				asSet asSortedCollection
 ]
 
-{ #category : #listing }
+{ #category : 'listing' }
 MCSnapshotBrowser >> visibleClasses [
 	^ categorySelection = self extensionsCategory
 		ifTrue: [self extensionClassNames]
@@ -419,14 +420,14 @@ MCSnapshotBrowser >> visibleClasses [
 					thenCollect: [:ea | ea className]].
 ]
 
-{ #category : #listing }
+{ #category : 'listing' }
 MCSnapshotBrowser >> visibleMethods [
 	^ classSelection 
 		ifNil: [#()]
 		ifNotNil: [self methodsForSelectedProtocol]
 ]
 
-{ #category : #listing }
+{ #category : 'listing' }
 MCSnapshotBrowser >> visibleProtocols [
 
 	| methods |
@@ -435,7 +436,7 @@ MCSnapshotBrowser >> visibleProtocols [
 	^ (methods collect: [ :ea | ea category ]) asSet asSortedCollection
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 MCSnapshotBrowser >> widgetSpecs [
 
 	 ^#(

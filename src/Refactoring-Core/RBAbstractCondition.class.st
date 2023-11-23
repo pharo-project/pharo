@@ -12,61 +12,53 @@ RBCondition.
 Instances of RBConditions are created by factory methods on its class side.
 "
 Class {
-	#name : #RBAbstractCondition,
-	#superclass : #Object,
+	#name : 'RBAbstractCondition',
+	#superclass : 'Object',
 	#instVars : [
 		'errorMacro'
 	],
-	#category : #'Refactoring-Core-Conditions'
+	#category : 'Refactoring-Core-Conditions',
+	#package : 'Refactoring-Core',
+	#tag : 'Conditions'
 }
 
-{ #category : #'logical operations' }
+{ #category : 'logical operations' }
 RBAbstractCondition >> & aCondition [
 	^RBConjunctiveCondition new left: self right: aCondition
 ]
 
-{ #category : #checking }
+{ #category : 'checking' }
 RBAbstractCondition >> check [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
-RBAbstractCondition >> errorBlock [
-	^self errorBlockFor: false
-]
-
-{ #category : #private }
-RBAbstractCondition >> errorBlockFor: aBoolean [
-	^nil
-]
-
-{ #category : #private }
+{ #category : 'private' }
 RBAbstractCondition >> errorMacro [
 
 	^ errorMacro ifNil: [ 'unknown' ] ifNotNil: [ errorMacro ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBAbstractCondition >> errorMacro: aString [
 	errorMacro := aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBAbstractCondition >> errorString [
 	^self errorStringFor: false
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBAbstractCondition >> errorStringFor: aBoolean [
 	^self errorMacro expandMacrosWith: aBoolean
 ]
 
-{ #category : #'logical operations' }
+{ #category : 'logical operations' }
 RBAbstractCondition >> not [
 	^RBNegationCondition on: self
 ]
 
-{ #category : #'logical operations' }
+{ #category : 'logical operations' }
 RBAbstractCondition >> | aCondition [
 	"(A | B) = (A not & B not) not"
 

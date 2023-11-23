@@ -2,8 +2,8 @@
 I create a new more compact changes files with a single version of each method in the image.
 "
 Class {
-	#name : #PharoChangesCondenser,
-	#superclass : #Object,
+	#name : 'PharoChangesCondenser',
+	#superclass : 'Object',
 	#instVars : [
 		'newChangesFile',
 		'stream',
@@ -11,16 +11,17 @@ Class {
 		'remoteStringMap',
 		'sourceStreams'
 	],
-	#category : #'System-SourcesCondenser'
+	#category : 'System-SourcesCondenser',
+	#package : 'System-SourcesCondenser'
 }
 
-{ #category : #helper }
+{ #category : 'helper' }
 PharoChangesCondenser class >> condense [
 	^ self new
 		condense
 ]
 
-{ #category : #'private - 3 installing' }
+{ #category : 'private - 3 installing' }
 PharoChangesCondenser >> backupOldChanges [
 	| changesFile |
 
@@ -28,7 +29,7 @@ PharoChangesCondenser >> backupOldChanges [
 	changesFile moveTo: (changesFile , 'bak') asFileReference nextVersion
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 PharoChangesCondenser >> basicCondense [
 	self
 		condenseClassesAndTraits;
@@ -37,12 +38,12 @@ PharoChangesCondenser >> basicCondense [
   stream flush
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 PharoChangesCondenser >> commentRemoteStringFor: org [
 	^ org commentSourcePointer ifNotNil: [:ptr | SourceFiles remoteStringAt: ptr]
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 PharoChangesCondenser >> condense [
 	job := [
 		newChangesFile writeStreamDo: [ :aStream |
@@ -59,7 +60,7 @@ PharoChangesCondenser >> condense [
 		run
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 PharoChangesCondenser >> condenseClassOrTrait: classOrTrait [
 	self writeClassComment: classOrTrait.
 
@@ -72,13 +73,13 @@ PharoChangesCondenser >> condenseClassOrTrait: classOrTrait [
 			ifTrue: [ self writeMethodSource: method ]]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 PharoChangesCondenser >> condenseClassesAndTraits [
 	Smalltalk allClassesAndTraitsDo: [ :classOrTrait |
 		self condenseClassOrTrait: classOrTrait	]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PharoChangesCondenser >> fileIndex [
 	"Return the index into the SourceFiles:
 	1: the .sources file
@@ -86,12 +87,12 @@ PharoChangesCondenser >> fileIndex [
 	^ 2
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PharoChangesCondenser >> initialize [
 	self reset
 ]
 
-{ #category : #'private - 3 installing' }
+{ #category : 'private - 3 installing' }
 PharoChangesCondenser >> installNewChangesFile [
 
 	SourceFiles changesFileStream close.
@@ -101,24 +102,24 @@ PharoChangesCondenser >> installNewChangesFile [
 	Smalltalk openSourceFiles
 ]
 
-{ #category : #helper }
+{ #category : 'helper' }
 PharoChangesCondenser >> nextChunkDo: aBlock [
 	(ChunkWriteStream on: stream) nextPut: (String streamContents: aBlock)
 ]
 
-{ #category : #helper }
+{ #category : 'helper' }
 PharoChangesCondenser >> nextCommentChunkDo: aBlock [
 	stream cr; nextPut: $!.
 	self nextChunkDo: aBlock.
 	stream cr
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PharoChangesCondenser >> originalFile [
 	^ Smalltalk changesFile asFileReference
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PharoChangesCondenser >> reset [
 	remoteStringMap := IdentityDictionary new.
 	newChangesFile := self temporaryFile.
@@ -129,14 +130,14 @@ PharoChangesCondenser >> reset [
 			with: PharoFilesOpener default changesFileOrNil
 ]
 
-{ #category : #'private - testing' }
+{ #category : 'private - testing' }
 PharoChangesCondenser >> shouldCondenseMethod: aMethod [
 	"Only write methods with changes in the current file (not .sources)"
 
 	^ (SourceFiles fileIndexFromSourcePointer: aMethod sourcePointer) == 2
 ]
 
-{ #category : #'private - 2 swapping' }
+{ #category : 'private - 2 swapping' }
 PharoChangesCondenser >> swapClassComment: classOrTrait [
 	remoteStringMap
 		at: classOrTrait
@@ -144,7 +145,7 @@ PharoChangesCondenser >> swapClassComment: classOrTrait [
 			classOrTrait commentSourcePointer: remoteString sourcePointer]
 ]
 
-{ #category : #'private - 2 swapping' }
+{ #category : 'private - 2 swapping' }
 PharoChangesCondenser >> swapSourcePointerOfClassOrTrait: classOrTrait [
 
 	self swapClassComment: classOrTrait.
@@ -156,14 +157,14 @@ PharoChangesCondenser >> swapSourcePointerOfClassOrTrait: classOrTrait [
 		self swapSourcePointerOfMethod: method ]
 ]
 
-{ #category : #'private - 2 swapping' }
+{ #category : 'private - 2 swapping' }
 PharoChangesCondenser >> swapSourcePointerOfMethod: method [
 
 	remoteStringMap at: method ifPresent: [ :remoteString |
 		method setSourcePointer: remoteString sourcePointer ]
 ]
 
-{ #category : #'private - 2 swapping' }
+{ #category : 'private - 2 swapping' }
 PharoChangesCondenser >> swapSourcePointers [
 	job
 		title: 'Swapping source pointers';
@@ -174,18 +175,18 @@ PharoChangesCondenser >> swapSourcePointers [
 		self swapSourcePointerOfClassOrTrait: classOrTrait ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PharoChangesCondenser >> temporaryFile [
 	^ (Smalltalk changesFile, 'new') nextVersion
 ]
 
-{ #category : #'private - 3 installing' }
+{ #category : 'private - 3 installing' }
 PharoChangesCondenser >> updateQuitPosition [
 
 	Smalltalk lastQuitLogPosition: stream position
 ]
 
-{ #category : #'private - 1 writing' }
+{ #category : 'private - 1 writing' }
 PharoChangesCondenser >> writeClassComment: aClass [
 	| commentRemoteString stamp |
 
@@ -207,14 +208,14 @@ PharoChangesCondenser >> writeClassComment: aClass [
 		for: aClass
 ]
 
-{ #category : #'private - 1 writing' }
+{ #category : 'private - 1 writing' }
 PharoChangesCondenser >> writeMethodSource: aMethod [
 
 	self nextCommentChunkDo: [ :strm |
 		strm
 			nextPutAll: aMethod methodClass name;
 			nextPutAll: ' methodsFor: ';
-			store: aMethod category asString;
+			store: aMethod protocolName asString;
 			nextPutAll: ' stamp: ';
 			store: aMethod timeStamp ].
 
@@ -225,7 +226,7 @@ PharoChangesCondenser >> writeMethodSource: aMethod [
 	stream nextPutAll: ' !'; cr
 ]
 
-{ #category : #'private - 1 writing' }
+{ #category : 'private - 1 writing' }
 PharoChangesCondenser >> writeRemoteString: aString for: reference [
 
 	| remoteString |

@@ -19,21 +19,23 @@ Internal Representation and Key Implementation Points.
 	itemFilter:		<ClyItemFilter>
 "
 Class {
-	#name : #ClyFilterQuery,
-	#superclass : #ClyWrapperQuery,
+	#name : 'ClyFilterQuery',
+	#superclass : 'ClyWrapperQuery',
 	#instVars : [
 		'itemFilter'
 	],
-	#category : #'Calypso-NavigationModel-Query'
+	#category : 'Calypso-NavigationModel-Query',
+	#package : 'Calypso-NavigationModel',
+	#tag : 'Query'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyFilterQuery class >> for: originalQuery filter: aClyItemFilter [
 	^(self with: {originalQuery})
 		itemFilter: aClyItemFilter
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ClyFilterQuery >> = anObject [
 	"Answer whether the receiver and anObject represent the same object."
 
@@ -42,7 +44,7 @@ ClyFilterQuery >> = anObject [
 	^ itemFilter = anObject itemFilter
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyFilterQuery >> buildResult: aQueryResult [
 
 	| fullResult filteredItems |
@@ -53,24 +55,24 @@ ClyFilterQuery >> buildResult: aQueryResult [
 	aQueryResult items: filteredItems
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyFilterQuery >> description [
 	^super description, ' filtered by ', itemFilter printCriteria
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ClyFilterQuery >> hash [
 	"Answer an integer value that is related to the identity of the receiver."
 
 	^super hash bitXor: itemFilter hash
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyFilterQuery >> itemFilter [
 	^ itemFilter
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyFilterQuery >> itemFilter: anObject [
 	itemFilter := anObject
 ]

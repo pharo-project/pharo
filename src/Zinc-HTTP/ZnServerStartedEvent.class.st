@@ -3,26 +3,28 @@ ZnServerStartedEvent notes the startup of an HTTP server is complete.
 
 "
 Class {
-	#name : #ZnServerStartedEvent,
-	#superclass : #ZnServerLogEvent,
+	#name : 'ZnServerStartedEvent',
+	#superclass : 'ZnServerLogEvent',
 	#instVars : [
 		'description'
 	],
-	#category : #'Zinc-HTTP-Logging'
+	#category : 'Zinc-HTTP-Logging',
+	#package : 'Zinc-HTTP',
+	#tag : 'Logging'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnServerStartedEvent >> description [
 	^ description
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnServerStartedEvent >> description: anObject [
 	description := anObject
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ZnServerStartedEvent >> printContentsOn: stream [
 	super printContentsOn: stream.
-	stream << ' Started '; << description
+	stream << 'Started '; << description
 ]

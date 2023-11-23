@@ -9,25 +9,27 @@ Rectangle subclass: #CharacterBlock
 	package: 'Text-Scanning-Base'
 "
 Class {
-	#name : #DAPoolDictionaryDependency,
-	#superclass : #DADependencyFromClass,
+	#name : 'DAPoolDictionaryDependency',
+	#superclass : 'DADependencyFromClass',
 	#instVars : [
 		'poolDictionary'
 	],
-	#category : #'Tool-DependencyAnalyser-Core'
+	#category : 'Tool-DependencyAnalyser-Core',
+	#package : 'Tool-DependencyAnalyser',
+	#tag : 'Core'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAPoolDictionaryDependency >> poolDictionary [
 	^ poolDictionary
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAPoolDictionaryDependency >> poolDictionary: aClass [
 	poolDictionary := aClass
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 DAPoolDictionaryDependency >> printReasonOn: aStream [
 	aStream
 		nextPutAll: self theClass name;

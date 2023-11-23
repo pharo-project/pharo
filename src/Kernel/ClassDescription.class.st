@@ -9,37 +9,33 @@ I add a number of facilities to basic Behaviors:
 I am an abstract class, in particular, my facilities are intended for inheritance by two subclasses, Class and Metaclass.
 "
 Class {
-	#name : #ClassDescription,
-	#superclass : #Behavior,
+	#name : 'ClassDescription',
+	#superclass : 'Behavior',
 	#instVars : [
 		'protocols'
 	],
-	#category : #'Kernel-Classes'
+	#category : 'Kernel-Classes',
+	#package : 'Kernel',
+	#tag : 'Classes'
 }
 
-{ #category : #compiling }
-ClassDescription >> acceptsLoggingOfCompilation [
-	"Answer whether the receiver's method submisions and class defintions should be logged to the changes file and to the current change set.  The metaclass follows the rule of the class itself
-	Weird name is so that it will come lexically before #compile, so that a clean build can make it through."
+{ #category : 'testing' }
+ClassDescription class >> isAbstract [
 
-	^ true
+	^ self == ClassDescription
 ]
 
-{ #category : #'accessing - method dictionary' }
+{ #category : 'accessing - method dictionary' }
 ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod inProtocol: protocol [
 
+	<reflection: 'Class structural modification - Selector/Method modification'>
 	| priorMethod priorOrigin oldProtocol newProtocol |
 	self compiledMethodAt: selector ifPresent: [ :method |
 		priorMethod := method.
 		priorOrigin := method origin ].
 
 	oldProtocol := self protocolOfSelector: selector.
-	SystemAnnouncer uniqueInstance suspendAllWhile: [ "The next part is really ugly with the double if.. BUT! I will fix that in a new PR soon... I want to remove the usage of `Protocol unclassified` as a way to say 'Do not upatde the protocol' because this is counter intuitive."
-		self classify: selector under: ((protocol isString
-				  ifTrue: [ protocol ]
-				  ifFalse: [ protocol name ]) = Protocol unclassified
-				 ifTrue: [ oldProtocol ]
-				 ifFalse: [ protocol ]) ].
+	self codeChangeAnnouncer prevent: MethodRecategorized during: [ self classify: selector under: protocol ].
 	newProtocol := self protocolOfSelector: selector.
 
 	self addSelectorSilently: selector withMethod: compiledMethod.
@@ -47,25 +43,22 @@ ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod 
 	self isAnonymous ifTrue: [ ^ self ].
 
 	(priorMethod isNil or: [ priorOrigin ~= compiledMethod origin ])
-		ifTrue: [ SystemAnnouncer uniqueInstance methodAdded: compiledMethod ]
+		ifTrue: [
+			(self packageOrganizer packageForProtocol: newProtocol from: self) addMethod: compiledMethod.
+			self codeChangeAnnouncer announce: (MethodAdded method: compiledMethod) ]
 		ifFalse: [ "If protocol changed and someone is from different package, I need to throw a method recategorized"
-			self
-				notifyRepackage: selector
-				method: compiledMethod
-				oldProtocol: oldProtocol
-				newProtocol: newProtocol.
-
-			SystemAnnouncer uniqueInstance methodChangedFrom: priorMethod to: compiledMethod oldProtocol: oldProtocol ]
+			newProtocol = oldProtocol ifFalse: [ self announceRecategorizationOf: compiledMethod oldProtocol: oldProtocol ].
+			self codeChangeAnnouncer announce: (MethodModified methodChangedFrom: priorMethod to: compiledMethod oldProtocol: oldProtocol) ]
 ]
 
-{ #category : #'instance variables' }
+{ #category : 'instance variables' }
 ClassDescription >> addInstVarNamed: aString [
 	"Add the argument, aString, as one of the receiver's instance variables."
-
+	<reflection: 'Class structural modification - Instance variable modification'>
 	self subclassResponsibility
 ]
 
-{ #category : #protocols }
+{ #category : 'protocols' }
 ClassDescription >> addProtocol: aProtocol [
 
 	| oldProtocols protocol protocolName |
@@ -79,54 +72,49 @@ ClassDescription >> addProtocol: aProtocol [
 
 	protocols := protocols copyWith: protocol.
 
-	SystemAnnouncer announce: (ProtocolAdded in: self protocol: protocol).
-	SystemAnnouncer announce: (ClassReorganized class: self).
+	"For now extensions are managed via protocols. If the protocol represent an extension we need to make sure the corresponding package exists."
+	protocol isExtensionProtocol ifTrue: [ self packageOrganizer ensurePackageOfExtensionProtocol: protocol ].
+	self codeChangeAnnouncer  announce: (ProtocolAdded in: self protocol: protocol).
 	^ protocol
 ]
 
-{ #category : #'accessing - method dictionary' }
+{ #category : 'accessing - method dictionary' }
 ClassDescription >> addSelector: selector withMethod: compiledMethod [
-
-	| priorMethodOrNil oldProtocol |
-	priorMethodOrNil := self compiledMethodAt: selector ifAbsent: [ nil ].
-	oldProtocol := self protocolOfSelector: selector.
-
-	"If there is no old protocol, then we want to ensure the method is at least in Protocol unclassified to not have protocolless methods."
-	oldProtocol ifNil: [ SystemAnnouncer uniqueInstance suspendAllWhile: [ self classify: selector under: nil ] ].
-
-	self addSelectorSilently: selector withMethod: compiledMethod.
-	priorMethodOrNil
-		ifNil: [ SystemAnnouncer uniqueInstance methodAdded: compiledMethod ]
-		ifNotNil: [ SystemAnnouncer uniqueInstance methodChangedFrom: priorMethodOrNil to: compiledMethod oldProtocol: oldProtocol ]
+	<reflection: 'Class structural modification - Selector/Method modification'>
+	self addAndClassifySelector: selector withMethod: compiledMethod inProtocol: nil
 ]
 
-{ #category : #'accessing - method dictionary' }
+{ #category : 'accessing - method dictionary' }
 ClassDescription >> addSelectorSilently: selector withMethod: compiledMethod [
+
+	<reflection: 'Class structural modification - Selector/Method modification'>
 	super addSelectorSilently: selector withMethod: compiledMethod.
 	self instanceSide noteAddedSelector: selector meta: self isMeta
 ]
 
-{ #category : #'instance variables' }
+{ #category : 'instance variables' }
 ClassDescription >> addSlot: aSlot [
 
+	<reflection: 'Class structural modification - Slot modification'>
 	^self subclassResponsibility
 ]
 
-{ #category : #'accessing - instances and variables' }
+{ #category : 'accessing - instances and variables' }
 ClassDescription >> allInstVarNames [
 	"Answer an Array of the receiver's instance variable names."
+	<reflection: 'Class structural inspection - Instance variable inspection'>
 
 	^self allSlots collect: [ :each | each name ] as: Array
 ]
 
-{ #category : #'instance variables' }
+{ #category : 'instance variables' }
 ClassDescription >> allInstVarNamesEverywhere [
 	"Answer the set of inst var names used by the receiver, all superclasses, and all subclasses"
-
+	<reflection: 'Class structural inspection - Instance variable inspection'>
 	^ self withAllSuperAndSubclasses flatCollectAsSet: [ :cls | cls instVarNames ]
 ]
 
-{ #category : #'obsolete subclasses' }
+{ #category : 'obsolete subclasses' }
 ClassDescription >> allLocalCallsOn: aSymbol [
 	"Answer all the methods that call on aSymbol, anywhere in my class hierarchy."
 
@@ -134,40 +122,51 @@ ClassDescription >> allLocalCallsOn: aSymbol [
 			(class thoroughWhichMethodsReferTo: aSymbol), (class class thoroughWhichMethodsReferTo: aSymbol)]
 ]
 
-{ #category : #'accessing - method dictionary' }
+{ #category : 'accessing - method dictionary' }
 ClassDescription >> allSelectorsInProtocol: protocol [
 	"Answer a list of all the method selectors of the receiver and all its superclasses that are in the protocol as parameter."
 
 	^ self withAllSuperclasses flatCollectAsSet: [ :class | class selectorsInProtocol: protocol ]
 ]
 
-{ #category : #'pool variable' }
+{ #category : 'pool variable' }
 ClassDescription >> allSharedPools [
 	"Answer an ordered collection of the shared pools the receiver shares, including those defined  in the superclasses of the receiver."
-
+	<reflection: 'Class structural inspection - Shared pool inspection'>
 	^ OrderedCollection new
 ]
 
-{ #category : #slots }
+{ #category : 'slots' }
 ClassDescription >> allSlots [
+	<reflection: 'Class structural inspection - Slot inspection'>
 	^self classLayout allVisibleSlots
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 ClassDescription >> allUnreferencedInstanceVariables [
 	"Return a list of the instance variables known to the receiver which are not referenced"
 
 	^ self allSlots reject: [:slot | slot isReferenced]
 ]
 
-{ #category : #authors }
+{ #category : 'accessing - method dictionary' }
+ClassDescription >> announceRecategorizationOf: compiledMethod oldProtocol: oldProtocol [
+
+	"We do not want to do anything when it comes from Traits."
+	compiledMethod isFromTrait ifTrue: [ ^ self ].
+
+	self packageOrganizer repackageMethod: compiledMethod oldProtocol: oldProtocol newProtocol: compiledMethod protocol.
+	self codeChangeAnnouncer announce: (MethodRecategorized method: compiledMethod oldProtocol: oldProtocol)
+]
+
+{ #category : 'authors' }
 ClassDescription >> authors [
 	"Returns a bag representing the author frequency based on the latest version of the methods of the receiver."
 
 	^(self methods, self classSide methods) collect: [ :each | each author ] as: Bag
 ]
 
-{ #category : #'accessing - deprecated parallel hierarchy' }
+{ #category : 'accessing - deprecated parallel hierarchy' }
 ClassDescription >> baseClass [
 	"This method is deprecated so consider to migrate."
 	self deprecated:  'Please use #instanceSide instead' transformWith:  '`@receiver baseClass'
@@ -175,7 +174,7 @@ ClassDescription >> baseClass [
 	^ self instanceSide
 ]
 
-{ #category : #'accessing - comment' }
+{ #category : 'accessing - comment' }
 ClassDescription >> classCommentBlank [
 	"Classes can override this method to show another template."
 
@@ -225,32 +224,25 @@ Internal Representation and Key Implementation Points.'.
 	^ stream contents
 ]
 
-{ #category : #'accessing - parallel hierarchy' }
+{ #category : 'accessing - parallel hierarchy' }
 ClassDescription >> classSide [
 	"Return the metaclass of the couple class/metaclass. Useful to avoid explicit test."
 	"Point classSide >>> Point class"
 	"Point class classSide >>> Point class"
-
+	<reflection: 'Class structural inspection - Class/Metaclass shift'>
 	^ self subclassResponsibility
 ]
 
-{ #category : #'instance variables' }
-ClassDescription >> classThatDefinesClassVariable: classVarName [
-	"Answer the class that defines the given class variable"
-
-	(self classPool includesKey: classVarName asSymbol) ifTrue: [^ self].
-	^self superclass ifNotNil: [self superclass classThatDefinesClassVariable: classVarName]
-]
-
-{ #category : #'instance variables' }
+{ #category : 'instance variables' }
 ClassDescription >> classThatDefinesInstVarNamed: instVarName [
+	<reflection: 'Class structural inspection - Instance variable inspection'>
 	^self
 		slotNamed: instVarName
 		 ifFound: [ :slot | slot definingClass  ]
 		 ifNone: nil
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClassDescription >> classVariablesOn: aStream [
 	"Write my class variable names separated by spaces on the argument."
 
@@ -259,18 +251,28 @@ ClassDescription >> classVariablesOn: aStream [
 		separatedBy: [ aStream space ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClassDescription >> classVariablesString [
 	"Answer a string of my class variable names separated by spaces."
 
 	^ String streamContents: [ :stream | self classVariablesOn: stream ]
 ]
 
-{ #category : #protocols }
+{ #category : 'protocols' }
 ClassDescription >> classify: selector under: aProtocol [
 
 	| oldProtocol newProtocol |
-	(newProtocol := self ensureProtocol: aProtocol) = (oldProtocol := self protocolOfSelector: selector) ifTrue: [ ^ self ].
+	oldProtocol := self protocolOfSelector: selector.
+
+	"In case the method is already classified and we say to classify it under nil, we do not update the protocol."
+	(aProtocol isNil and: [ oldProtocol isNotNil ]) ifTrue: [ ^ self ].
+	
+	"If we try to classify the method as an extension of its own package, just unclassify the method to avoid any weird state where the method could be considered as an extension or not depending on the interpretation."
+	(self isProtocolExtensionFromTheSamePackage: aProtocol) ifTrue: [
+		ExtensionPointsOwningPackageNotification signalFor: self package name.
+		^ self classify: selector under: Protocol unclassified ].
+
+	(newProtocol := self ensureProtocol: aProtocol) = oldProtocol ifTrue: [ ^ self ].
 
 	oldProtocol ifNotNil: [
 		oldProtocol removeMethodSelector: selector.
@@ -282,7 +284,7 @@ ClassDescription >> classify: selector under: aProtocol [
 	oldProtocol ifNotNil: [ self notifyOfRecategorizedSelector: selector from: oldProtocol to: newProtocol ]
 ]
 
-{ #category : #compiling }
+{ #category : 'compiling' }
 ClassDescription >> compile: sourceCode classified: protocol [
 	"Compile the source code in the context of the receiver and install the result in the receiver's method dictionary under the given protocol (this can be a protocol or a protocol name).
 	
@@ -291,13 +293,13 @@ ClassDescription >> compile: sourceCode classified: protocol [
 	^ self compile: sourceCode classified: protocol notifying: nil
 ]
 
-{ #category : #compiling }
+{ #category : 'compiling' }
 ClassDescription >> compile: sourceCode classified: protcol notifying: requestor [
 
 	^ self compile: sourceCode classified: protcol withStamp: Author changeStamp notifying: requestor
 ]
 
-{ #category : #compiling }
+{ #category : 'compiling' }
 ClassDescription >> compile: sourceCode classified: protocol withStamp: changeStamp notifying: requestor [
 
 	^ self
@@ -305,10 +307,10 @@ ClassDescription >> compile: sourceCode classified: protocol withStamp: changeSt
 		  classified: protocol
 		  withStamp: changeStamp
 		  notifying: requestor
-		  logSource: self acceptsLoggingOfCompilation
+		  logSource: true
 ]
 
-{ #category : #compiling }
+{ #category : 'compiling' }
 ClassDescription >> compile: sourceCode classified: protocol withStamp: changeStamp notifying: requestor logSource: logSource [
 
 	| method |
@@ -326,35 +328,35 @@ ClassDescription >> compile: sourceCode classified: protocol withStamp: changeSt
 	^ method selector
 ]
 
-{ #category : #compiling }
+{ #category : 'compiling' }
 ClassDescription >> compile: sourceCode notifying: requestor [
 	"Refer to the comment in Behavior|compile:notifying:."
 
-	^ self compile: sourceCode classified: Protocol unclassified notifying: requestor
+	^ self compile: sourceCode classified: nil notifying: requestor
 ]
 
-{ #category : #compiling }
+{ #category : 'compiling' }
 ClassDescription >> compileSilently: sourceCode [
 	"Compile the code and classify the resulting method in the given protocol, leaving no trail in the system log, nor in any change set, nor in the 'recent submissions' list. This should only be used when you know for sure that the compilation will succeed."
 
 	^ self compileSilently: sourceCode classified: 'not defined protocol' notifying: nil
 ]
 
-{ #category : #compiling }
+{ #category : 'compiling' }
 ClassDescription >> compileSilently: sourceCode classified: protocolName [
 	"Compile the code and classify the resulting method in the given protocol, leaving no trail in the system log, nor in any change set, nor in the 'recent submissions' list. This should only be used when you know for sure that the compilation will succeed."
 
 	^ self compileSilently: sourceCode classified: protocolName notifying: nil
 ]
 
-{ #category : #compiling }
+{ #category : 'compiling' }
 ClassDescription >> compileSilently: sourceCode classified: protocolName notifying: requestor [
 	"Compile the code and classify the resulting method in the given protocol, leaving no trail in the system log, nor in any change set, nor in the 'recent submissions' list."
 
-	^ SystemAnnouncer uniqueInstance suspendAllWhile: [ self compile: sourceCode classified: protocolName notifying: requestor ]
+	^ self codeChangeAnnouncer suspendAllWhile: [ self compile: sourceCode classified: protocolName notifying: requestor ]
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 ClassDescription >> copyAllMethodsFrom: originClass [
 	"Install a copy of each methods of originClass in myself under the same protocol."
 
@@ -368,21 +370,22 @@ ClassDescription >> copyAllMethodsFrom: originClass [
 		self compile: aMethod sourceCode classified: aMethod protocol ]
 ]
 
-{ #category : #slots }
+{ #category : 'slots' }
 ClassDescription >> definesSlot: aSlot [
 	"Return true whether the receiver defines an instance variable named aString"
-
+	<reflection: 'Object Inspection - Slot inspection'>
 	^ self slots identityIncludes: aSlot
 ]
 
-{ #category : #slots }
+{ #category : 'slots' }
 ClassDescription >> definesSlotNamed: aString [
 	"Return true whether the receiver defines an instance variable named aString."
+	<reflection: 'Class structural inspection - Slot inspection'>
 
 	^ self slotNames includes: aString
 ]
 
-{ #category : #'file in/out' }
+{ #category : 'file in/out' }
 ClassDescription >> definition [
 	"Answer a String that defines the receiver."
 	self
@@ -391,27 +394,27 @@ ClassDescription >> definition [
 	^ self definitionString
 ]
 
-{ #category : #fileout }
+{ #category : 'fileout' }
 ClassDescription >> definitionPrinter [
 	"Return a configurated printer associated with the current class definition format."
 
 	^ ClassDefinitionPrinter for: self
 ]
 
-{ #category : #fileout }
+{ #category : 'fileout' }
 ClassDescription >> definitionString [
 	"Return the string of the class definition, each of my subclass may tell the printer how to printer it. A kind of double dispatch since we have multiple printers and multiple entities to be printed."
 
 	^ self definitionPrinter definitionString
 ]
 
-{ #category : #fileout }
+{ #category : 'fileout' }
 ClassDescription >> definitionStringFor: aConfiguredPrinter [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #dependencies }
+{ #category : 'dependencies' }
 ClassDescription >> dependentClasses [
 	"Return the list of classes used myself"
 
@@ -424,21 +427,19 @@ ClassDescription >> dependentClasses [
 	"We unify a class and its metaclass"
 	self methods , self classSide methods do: [ :method |
 		method literalsDo: [ :literal | "We also check if the method is not an extension"
-			self flag: #CompileMethodProtocolMiration.
-			(literal isVariableBinding and: [ literal isGlobalClassNameBinding and: [ method protocolName isNotEmpty and: [ method protocolName first ~= $* ] ] ])
-				ifTrue: [ classes add: literal value ] ] ].
+			(literal isVariableBinding and: [ literal isGlobalClassNameBinding and: [ method isExtension not ] ]) ifTrue: [ classes add: literal value ] ] ].
 
 	^ classes asArray
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassDescription >> deprecatedAliases [
 	"I return a potential list of alias names for myself that are deprecated."
 
 	^ self propertyAt: #deprecatedAliases ifAbsent: [ {  } ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassDescription >> deprecatedAliases: aCollection [
 	"I allow one to declare deperecated names for myself. Typically, in case I get renamed, I can be used to declare the old name as a deprecated name.
 	Compared to the use of #isDeprecated, I have some advantages such as:
@@ -466,7 +467,7 @@ ClassDescription >> deprecatedAliases: aCollection [
 		(environment lookupVar: deprecatedName) isDeprecated: true ]
 ]
 
-{ #category : #'queries - protocols' }
+{ #category : 'queries - protocols' }
 ClassDescription >> ensureProtocol: aProtocol [
 	"I can take a Protocol or a protocol name as paramater.
 	
@@ -478,31 +479,40 @@ ClassDescription >> ensureProtocol: aProtocol [
 	^ self addProtocol: aProtocol
 ]
 
-{ #category : #private }
-ClassDescription >> errorCategoryName [
-	self error: 'Category name must be a String'
-]
-
-{ #category : #fileout }
+{ #category : 'fileout' }
 ClassDescription >> expandedDefinitionString [
 	"Return the string of the class definition, each of my subclass may tell the printer how to printer it. A kind of double dispatch since we have multiple printers and multiple entities to be printed."
 
 	^ self expandedDefinitionStringFor: (self definitionPrinter for: self)
 ]
 
-{ #category : #fileout }
+{ #category : 'fileout' }
 ClassDescription >> expandedDefinitionStringFor: aPrinter [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #protocols }
+{ #category : 'accessing - packages' }
+ClassDescription >> extendingPackages [
+	"the extending packages of a class are the packages that extend it."
+
+	^ (self localMethods , self classSide localMethods
+		   select: [ :each | each isExtension ]
+		   thenCollect: [ :each | each extensionPackage ]) asIdentitySet
+]
+
+{ #category : 'protocols' }
 ClassDescription >> extensionProtocols [
 
 	^ self protocols select: [ :protocol | protocol isExtensionProtocol ]
 ]
 
-{ #category : #'instance variables' }
+{ #category : 'accessing - packages' }
+ClassDescription >> extensionSelectors [
+	^ self extendingPackages flatCollect: [ :each | each extensionSelectorsForClass: self ]
+]
+
+{ #category : 'instance variables' }
 ClassDescription >> forceNewFrom: anArray [
     "Create a new instance of the class and fill
     its instance variables up with the array."
@@ -516,77 +526,79 @@ ClassDescription >> forceNewFrom: anArray [
     ^ object
 ]
 
-{ #category : #'accessing - parallel hierarchy' }
+{ #category : 'accessing - parallel hierarchy' }
 ClassDescription >> hasClassSide [
+	<reflection: 'Class structural inspection - Class/Metaclass shift'>
 	^self subclassResponsibility
 ]
 
-{ #category : #'instance variables' }
+{ #category : 'instance variables' }
 ClassDescription >> hasInstVarNamed: aString [
 	"Return true whether the receiver defines an instance variable named aString."
-
+	<reflection: 'Class structural inspection - Instance variable inspection'>
 	^ self instVarNames includes: aString
 ]
 
-{ #category : #protocols }
+{ #category : 'protocols' }
 ClassDescription >> hasProtocol: aProtocol [
 
 	^ self protocolNames includes: (aProtocol isString ifTrue: [ aProtocol ] ifFalse: [ aProtocol name ])
 ]
 
-{ #category : #'pool variable' }
+{ #category : 'pool variable' }
 ClassDescription >> hasSharedPools [
 	"Only a class may have shared pools"
+	<reflection: 'Class structural inspection - Shared pool inspection'>
 	^ false
 ]
 
-{ #category : #slots }
+{ #category : 'slots' }
 ClassDescription >> hasSlot: aSlot [
 	"Return true whether the receivers hierarchy defines an instance variable named aString."
 
 	^ self allSlots identityIncludes: aSlot
 ]
 
-{ #category : #slots }
+{ #category : 'slots' }
 ClassDescription >> hasSlotNamed: aString [
 	"Return true whether the receiver defines an instance variable named aString.
 	this includes non-visible slots"
-
+	<reflection: 'Class structural inspection - Slot inspection'>
 	^ self classLayout hasSlotNamed: aString
 ]
 
-{ #category : #'pool variable' }
+{ #category : 'pool variable' }
 ClassDescription >> includesSharedPoolNamed:  aSharedPoolString [
 	"Answer whether the receiver uses the shared pool named aSharedPoolString"
-
+	<reflection: 'Class structural inspection - Shared pool inspection'>
 	^ self sharedPools anySatisfy: [:each | each name = aSharedPoolString]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClassDescription >> initialize [
 
 	super initialize.
 	self resetProtocols
 ]
 
-{ #category : #'instance variables' }
+{ #category : 'instance variables' }
 ClassDescription >> instVarIndexFor: instVarName [
 	"Answer the index of the named instance variable."
-
+	<reflection: 'Class structural inspection - Instance variable inspection'>
 	^self instVarIndexFor: instVarName ifAbsent: 0
 ]
 
-{ #category : #'instance variables' }
+{ #category : 'instance variables' }
 ClassDescription >> instVarIndexFor: instVarName ifAbsent: aBlock [
 	"Answer the index of the named instance variable."
-
+	<reflection: 'Class structural inspection - Instance variable inspection'>
 	^self
 		slotNamed: instVarName
 		ifFound: [ :slot | slot isVirtual ifTrue: [aBlock value] ifFalse: [slot index]]
 		ifNone: aBlock
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ClassDescription >> instVarMappingFrom: oldClass [
 	"Return the mapping from instVars of oldClass to new class that is used for converting old instances of oldClass."
 	| oldInstVarNames |
@@ -595,23 +607,23 @@ ClassDescription >> instVarMappingFrom: oldClass [
 			collect: [:instVarName | oldInstVarNames indexOf: instVarName]
 ]
 
-{ #category : #'instance variables' }
+{ #category : 'instance variables' }
 ClassDescription >> instVarNames [
 	"Answer an Array of the receiver's instance variable names."
-
+	<reflection: 'Class structural inspection - Instance variable inspection'>
 	^self slots collect: [ :each | each name ]
 ]
 
-{ #category : #'accessing - parallel hierarchy' }
+{ #category : 'accessing - parallel hierarchy' }
 ClassDescription >> instanceSide [
 	"Return the class of the couple class/metaclass. Useful to avoid explicit test."
 	"Point instanceSide >>> Point"
 	"Point class instanceSide >>> Point"
-
+	<reflection: 'Class structural inspection - Class/Metaclass shift'>
 	^ self subclassResponsibility
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClassDescription >> instanceVariablesOn: aStream [
 	"Write my instance variable names separated by spaces on the argument."
 
@@ -620,63 +632,95 @@ ClassDescription >> instanceVariablesOn: aStream [
 		separatedBy: [ aStream space ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClassDescription >> instanceVariablesString [
 	"Answer a string of my instance variable names separated by spaces."
 
 	^ String streamContents: [ :stream | self instanceVariablesOn: stream ]
 ]
 
-{ #category : #'accessing - parallel hierarchy' }
+{ #category : 'accessing - parallel hierarchy' }
 ClassDescription >> isClassSide [
 	"Return true whether the receiver is a metaclass (in a couple class/metaclass sense)."
+	<reflection: 'Class structural inspection - Class/Metaclass shift'>
 	"Point isClassSide >>> false"
 	"Point class isClassSide >>> true"
 
 	^self == self classSide
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClassDescription >> isDeprecated [
 	^ self package isDeprecated
 ]
 
-{ #category : #'accessing - parallel hierarchy' }
+{ #category : 'testing' }
+ClassDescription >> isExtended [
+
+	^ self extendingPackages isEmpty
+]
+
+{ #category : 'testing' }
+ClassDescription >> isExtendedInPackage: aPackage [
+	"returns true if aPackage defines an extension to this class"
+	^ aPackage extendsClass: self
+]
+
+{ #category : 'testing' }
+ClassDescription >> isInstalled [
+	"Return true if I am installed in the system (which is equivalent to me been part of my package organizer). Else, return false."
+
+	^ self packageOrganizer isClassInstalled: self
+]
+
+{ #category : 'accessing - parallel hierarchy' }
 ClassDescription >> isInstanceSide [
 	"Return true whether the receiver is a class (in a couple class/metaclass sense)."
 	"Point isInstanceSide >>> true"
 	"Point class isInstanceSide >>> false"
-
+	<reflection: 'Class structural inspection - Class/Metaclass shift'>
 	^ self isClassSide not
 ]
 
-{ #category : #testing }
-ClassDescription >> isLocalMethodsProtocol: aProtocol [
-	aProtocol methodSelectors ifEmpty: [ ^ true ].
-
-	^ aProtocol methodSelectors anySatisfy: [ :each | self isLocalSelector: each ]
-]
-
-{ #category : #testing }
+{ #category : 'testing' }
 ClassDescription >> isLocalSelector: aSelector [
 
+	<reflection: 'Class structural inspection - Selectors and methods inspection'>
 	^ self methodDict includesKey: aSelector
 ]
 
-{ #category : #'accessing - deprecated parallel hierarchy' }
+{ #category : 'accessing - deprecated parallel hierarchy' }
 ClassDescription >> isMeta [
+	<reflection: 'Class structural inspection - Class kind testing'>
 	^self isClassSide
 ]
 
-{ #category : #testing }
+{ #category : 'private' }
+ClassDescription >> isProtocolExtensionFromTheSamePackage: aProtocol [
+	"I return true if the protocol as parameter is an extension protocol and the concerned package is my origin package."
+
+	| protocolName |
+	aProtocol ifNil: [ ^ false ].
+
+	protocolName := aProtocol isString
+		                ifTrue: [ aProtocol ]
+		                ifFalse: [ aProtocol name ].
+
+	"If it is not an extension then there is no problem"
+	protocolName first = $* ifFalse: [ ^ false ].
+
+	^ (self packageOrganizer packageMatchingExtensionName: protocolName allButFirst) = self package
+]
+
+{ #category : 'testing' }
 ClassDescription >> isTaggedWith: aSymbol [
 
-	^ self packageTag
+	^ self packageTagName
 		  ifNil: [ false ]
 		  ifNotNil: [ :tag | tag = aSymbol ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ClassDescription >> linesOfCode [
 	"An approximate measure of lines of code.
 	Includes comments, but excludes blank lines."
@@ -688,36 +732,27 @@ ClassDescription >> linesOfCode [
 		ifFalse: [ lines + self classSide linesOfCode ]
 ]
 
-{ #category : #slots }
+{ #category : 'slots' }
 ClassDescription >> localSlots [
+	<reflection: 'Class structural inspection - Slot inspection'>
 
 	^ self slots select: [ :aSlot | aSlot isDefinedByOwningClass ]
 ]
 
-{ #category : #protocols }
+{ #category : 'protocols' }
 ClassDescription >> methodsInProtocol: protocol [
 
 	^ (self selectorsInProtocol: protocol) collect: [ :selector | self compiledMethodAt: selector ]
 ]
 
-{ #category : #'accessing - tags' }
-ClassDescription >> methodsTaggedWith: aSymbol [
-	"Any method could be tagged with multiple symbols for user purpose.
-	And class contains all method tags which used or not used yet by methods.
-	This method select all methods marked by given tag.
-	Tags are not inherited from traits. So we only select local methods"
-
-	^self localMethods select: [ :each | each isTaggedWith: aSymbol ]
-]
-
-{ #category : #slots }
+{ #category : 'slots' }
 ClassDescription >> needsSlotClassDefinition [
     "return true if we define something else than InstanceVariableSlots or normal class variables"
 
     ^ self slotsNeedFullDefinition or: [ self class slotsNeedFullDefinition ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ClassDescription >> newInstanceFrom: oldInstance variable: variable size: instSize [
 	"Create a new instance of the receiver based on the given old instance.
 	The supplied map contains a mapping of the old instVar names into
@@ -742,7 +777,7 @@ ClassDescription >> newInstanceFrom: oldInstance variable: variable size: instSi
 	^ new
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ClassDescription >> newInstanceFrom: oldInstance variable: variable size: instSize map: map [
 	"Create a new instance of the receiver based on the given old instance.
 	The supplied map contains a mapping of the old instVar names into
@@ -762,42 +797,25 @@ ClassDescription >> newInstanceFrom: oldInstance variable: variable size: instSi
 	^new
 ]
 
-{ #category : #'accessing - method dictionary' }
+{ #category : 'accessing - method dictionary' }
 ClassDescription >> noteAddedSelector: aSelector meta: isMeta [
 	"A hook allowing some classes to react to adding of certain selectors"
 ]
 
-{ #category : #compiling }
+{ #category : 'compiling' }
 ClassDescription >> noteCompilationOf: aSelector meta: isMeta [
 	"A hook allowing some classes to react to recompilation of certain selectors"
 ]
 
-{ #category : #'organization updating' }
+{ #category : 'organization updating' }
 ClassDescription >> notifyOfRecategorizedSelector: selector from: oldProtocol to: newProtocol [
 	"If compiled method is not there, it meens it has been removed, not recategorized... so I skip
 	 the method recategorized announce"
 
-	self compiledMethodAt: selector ifPresent: [ :method | SystemAnnouncer uniqueInstance methodRecategorized: method oldProtocol: oldProtocol ]
+	self compiledMethodAt: selector ifPresent: [ :method | self announceRecategorizationOf: method oldProtocol: oldProtocol ]
 ]
 
-{ #category : #private }
-ClassDescription >> notifyRepackage: selector method: compiledMethod oldProtocol: oldProtocol newProtocol: newProtocol [
-
-	| oldPackage newPackage |
-	newProtocol = oldProtocol ifTrue: [ ^ self ].
-
-	"This indirection is because we need to abstract RPackage from the kernel"
-	self class environment at: #RPackage ifPresent: [ :rPackageClass |
-		newPackage := rPackageClass organizer packageForProtocol: newProtocol name inClass: self.
-		oldPackage := rPackageClass organizer packageForProtocol: oldProtocol name inClass: self.
-
-		"Announce recategorization"
-		newPackage = oldPackage ifFalse: [ SystemAnnouncer uniqueInstance methodRepackaged: compiledMethod from: oldPackage to: newPackage ] ].
-
-	SystemAnnouncer uniqueInstance methodRecategorized: compiledMethod oldProtocol: oldProtocol
-]
-
-{ #category : #private }
+{ #category : 'private' }
 ClassDescription >> numberOfMethods [
 	"count all methods that are local (not comming from a trait)"
 	| num |
@@ -807,14 +825,14 @@ ClassDescription >> numberOfMethods [
 		ifFalse: [ num + self classSide numberOfMethods ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClassDescription >> obsolete [
 	"Make the receiver obsolete."
 	self superclass removeSubclass: self.
 	super obsolete
 ]
 
-{ #category : #'file in/out' }
+{ #category : 'file in/out' }
 ClassDescription >> oldDefinition [
 
 	^ ClassDefinitionPrinter legacy
@@ -822,7 +840,7 @@ ClassDescription >> oldDefinition [
 		definitionString
 ]
 
-{ #category : #'file in/out' }
+{ #category : 'file in/out' }
 ClassDescription >> oldPharoDefinition [
 
 	^ ClassDefinitionPrinter oldPharo
@@ -830,12 +848,64 @@ ClassDescription >> oldPharoDefinition [
 		definitionString
 ]
 
-{ #category : #printing }
+{ #category : 'accessing' }
+ClassDescription >> package [
+
+	^ self subclassResponsibility
+]
+
+{ #category : 'accessing - packages' }
+ClassDescription >> package: aPackage [
+
+	^ (self packageOrganizer ensurePackage: aPackage) addClass: self
+]
+
+{ #category : 'accessing - packages' }
+ClassDescription >> package: aPackage tag: aTag [
+
+	^ (self packageOrganizer ensureTag: aTag inPackage: aPackage) addClass: self
+]
+
+{ #category : 'accessing - packages' }
+ClassDescription >> packageName [
+
+	^ self package ifNotNil: [ :package | package name ]
+]
+
+{ #category : 'accessing' }
+ClassDescription >> packageTag [
+	"Package tags are sub categories of packages to have a better organization of the packages."
+
+	^ self subclassResponsibility
+]
+
+{ #category : 'accessing - packages' }
+ClassDescription >> packageTag: aTag [
+	(aTag isString ifTrue: [ self package ensureTag: aTag ] ifFalse: [ aTag ]) addClass: self
+]
+
+{ #category : 'accessing - packages' }
+ClassDescription >> packageTagName [
+	"Package tags are sub categories of packages to have a better organization of the packages. I return the name of my package tag.."
+
+	^ self packageTag name
+]
+
+{ #category : 'accessing - packages' }
+ClassDescription >> packages [
+	"the extending packages of a class are the packages that extend it."
+
+	^ self extendingPackages
+		  add: self package;
+		  yourself
+]
+
+{ #category : 'printing' }
 ClassDescription >> printOn: aStream [
 	aStream nextPutAll: self name
 ]
 
-{ #category : #protocols }
+{ #category : 'protocols' }
 ClassDescription >> protocolNameOfSelector: aSelector [
 	"Return the protocol name including the method of the same name as the selector.
 	If the class does not includes a method of this name, returns nil. Maybe this should be changed for an error in the future."
@@ -843,13 +913,13 @@ ClassDescription >> protocolNameOfSelector: aSelector [
 	^ (self protocolOfSelector: aSelector) ifNotNil: [ :protocol | protocol name ]
 ]
 
-{ #category : #protocols }
+{ #category : 'protocols' }
 ClassDescription >> protocolNamed: aString [
 
 	^ self protocolNamed: aString ifAbsent: [ NotFound signalFor: aString ]
 ]
 
-{ #category : #protocols }
+{ #category : 'protocols' }
 ClassDescription >> protocolNamed: aString ifAbsent: aBlock [
 
 	^ self protocols
@@ -857,14 +927,14 @@ ClassDescription >> protocolNamed: aString ifAbsent: aBlock [
 		  ifNone: aBlock
 ]
 
-{ #category : #protocols }
+{ #category : 'protocols' }
 ClassDescription >> protocolNames [
 	"Return the list of all the protocol names included in this class."
 
 	^ self protocols collect: [ :protocol | protocol name ]
 ]
 
-{ #category : #protocols }
+{ #category : 'protocols' }
 ClassDescription >> protocolOfSelector: aSelector [
 	"Return the protocol including the method of the same name as the selector.
 	If the class does not includes a method of this name, returns nil. Maybe this should be changed for an error in the future."
@@ -874,7 +944,7 @@ ClassDescription >> protocolOfSelector: aSelector [
 		  ifNone: [ nil ]
 ]
 
-{ #category : #protocols }
+{ #category : 'protocols' }
 ClassDescription >> protocols [
 	"I return all the protocols contained in me.
 	In the past I was returning the protocol names but now I am returning the instances directly. If you want to deal with the names you can use #protocolNames."
@@ -882,43 +952,42 @@ ClassDescription >> protocols [
 	^ protocols
 ]
 
-{ #category : #protocols }
+{ #category : 'protocols' }
 ClassDescription >> protocols: aCollection [
 	
 	protocols := aCollection
 ]
 
-{ #category : #compiling }
+{ #category : 'compiling' }
 ClassDescription >> reformatAll [
 	"Reformat all methods in this class"
 
 	self methods do: [ :method | method reformat ]
 ]
 
-{ #category : #protocols }
+{ #category : 'protocols' }
 ClassDescription >> removeEmptyProtocols [
 	"We copy protocols because it is usually bad to remove elements of a collection while iterating on it"
 
 	self protocols copy do: [ :protocol | self removeProtocolIfEmpty: protocol ]
 ]
 
-{ #category : #protocols }
+{ #category : 'protocols' }
 ClassDescription >> removeFromProtocols: aSelector [
 
 	(self protocolOfSelector: aSelector) ifNotNil: [ :protocol |
 		protocol removeMethodSelector: aSelector.
-		self removeProtocolIfEmpty: protocol.
-		self notifyOfRecategorizedSelector: aSelector from: protocol to: nil ]
+		self removeProtocolIfEmpty: protocol ]
 ]
 
-{ #category : #'instance variables' }
+{ #category : 'instance variables' }
 ClassDescription >> removeInstVarNamed: aString [
 	"Remove the argument, aString, as one of the receiver's instance variables."
-
+	<reflection: 'Class structural modification - Instance variable modification'>
 	^self removeSlot: (self slotNamed: aString)
 ]
 
-{ #category : #protocols }
+{ #category : 'protocols' }
 ClassDescription >> removeNonexistentSelectorsFromProtocols [
 	"For each protocol, remove the selectors that are not present in the class."
 
@@ -928,19 +997,28 @@ ClassDescription >> removeNonexistentSelectorsFromProtocols [
 			thenDo: [ :selector | self removeFromProtocols: selector ] ]
 ]
 
-{ #category : #protocols }
+{ #category : 'accessing - packages' }
+ClassDescription >> removePackageTag [
+	"Removing a package tag is the same as moving it to the root tag that is the uncategorized tag."
+
+	| package |
+	package := self package.
+	package moveClass: self toTag: package rootTag
+]
+
+{ #category : 'protocols' }
 ClassDescription >> removeProtocol: aProtocol [
 	"Remove all methods present in the given protocol (or protocol name) and remove the protocol.
 	Does nothing if the protocol does not exists."
 
+	| protocol |
 	(self hasProtocol: aProtocol) ifFalse: [ ^ self ].
-
-	(self ensureProtocol: aProtocol) in: [ :protocol |
-		protocol methodSelectors do: [ :sel | self removeSelector: sel ].
-		self removeProtocolIfEmpty: protocol ]
+	protocol := self ensureProtocol: aProtocol.
+	protocol methodSelectors do: [ :sel | self removeSelector: sel ].
+	self removeProtocolIfEmpty: protocol 
 ]
 
-{ #category : #protocols }
+{ #category : 'protocols' }
 ClassDescription >> removeProtocolIfEmpty: aProtocol [
 	"I take a protocol or a protocol name and remvoe it if it is empty."
 
@@ -953,87 +1031,75 @@ ClassDescription >> removeProtocolIfEmpty: aProtocol [
 
 	oldProtocolNames := self protocolNames.
 	protocols := protocols copyWithout: protocol.
-	SystemAnnouncer announce: (ProtocolRemoved in: self protocol: protocol).
-	SystemAnnouncer announce: (ClassReorganized class: self)
+	self codeChangeAnnouncer  announce: (ProtocolRemoved in: self protocol: protocol)
 ]
 
-{ #category : #'accessing - method dictionary' }
+{ #category : 'accessing - method dictionary' }
 ClassDescription >> removeSelector: selector [
 	"Remove the message whose selector is given from the method
 	dictionary of the receiver, if it is there. Answer nil otherwise."
 
-	| priorMethod priorProtocol origin |
-	priorMethod := self compiledMethodAt: selector ifAbsent: [ ^ nil ].
-	origin := priorMethod origin.
-	priorProtocol := self protocolOfSelector: selector.
+	<reflection: 'Class structural modification - Selector/Method modification'>
+	| method origin |
+	method := self compiledMethodAt: selector ifAbsent: [ ^ nil ].
+	origin := method origin.
+
+	"Save the protocol in the properties so that method can still answer their protocol after been removed."
+	method propertyAt: #protocol put: (self protocolOfSelector: selector).
+	method removeFromPackage.
 	self removeFromProtocols: selector.
 
 	super removeSelector: selector.
 
-	SystemAnnouncer uniqueInstance methodRemoved: priorMethod protocol: priorProtocol origin: origin
+	self codeChangeAnnouncer methodRemoved: method origin: origin
 ]
 
-{ #category : #'instance variables' }
+{ #category : 'instance variables' }
 ClassDescription >> removeSlot: aSlot [
-
+	<reflection: 'Class structural modification - Slot modification'>
 	^self subclassResponsibility
 ]
 
-{ #category : #protocols }
+{ #category : 'protocols' }
 ClassDescription >> renameProtocol: anOldProtocol as: aNewProtocol [
 
 	| oldProtocol newProtocol |
 	(aNewProtocol isNil or: [ anOldProtocol isNil ]) ifTrue: [ ^ self ].
 
 	(self hasProtocol: anOldProtocol) ifFalse: [ ^ self ].
+	
+	"We should not be able to have a protocol that is an extension of the same class so let's skip the rename."
+	(self isProtocolExtensionFromTheSamePackage: aNewProtocol) ifTrue: [ 
+		ExtensionPointsOwningPackageNotification signalFor: self package name.
+		^ self ].
 
-	"We will announce the class reorganized later in this method. No need to duplicate the same announcement."
-	SystemAnnouncer uniqueInstance prevent: ClassReorganized during: [
 		oldProtocol := self ensureProtocol: anOldProtocol.
+		newProtocol := self ensureProtocol: aNewProtocol.
 
-		"This method still contains a hack. We do not announce the creation of the new protocol and removal of the old protocol if the new protocol does not exist in the class yet.
-	This is due to the fact that RPackage currently has a bug while listening to those events. We need to locate and fix this bug in order to do all announcements..."
-		(self hasProtocol: aNewProtocol)
-			ifTrue: [
-				newProtocol := self ensureProtocol: aNewProtocol.
+		oldProtocol = newProtocol ifTrue: [ ^ self ].
 
-				oldProtocol = newProtocol ifTrue: [ ^ self ].
-
-				newProtocol addAllMethodsFrom: oldProtocol ]
-			ifFalse: [ "Ideally the code in the #ifTrue: should be executed all the time and the #ifFalse: should be removed."
-				| newProtocolName |
-				newProtocolName := aNewProtocol isString
-					                   ifTrue: [ aNewProtocol ]
-					                   ifFalse: [ aNewProtocol name ].
-				oldProtocol name = newProtocolName ifTrue: [ ^ self ].
-				newProtocol := oldProtocol copy
-					               name: newProtocolName;
-					               yourself.
-				protocols := protocols copyWith: newProtocol ].
+		newProtocol addAllMethodsFrom: oldProtocol.
 		oldProtocol resetMethodSelectors.
-		self removeProtocolIfEmpty: oldProtocol ].
+		self removeProtocolIfEmpty: oldProtocol.
 
-	"Announce the changes in the system"
-	SystemAnnouncer announce: (ClassReorganized class: self).
-
-	"I need to notify also the selector changes, otherwise RPackage will not notice"
+	"I need to notify also the selector changes, otherwise Package will not notice"
 	newProtocol methodSelectors do: [ :each | self notifyOfRecategorizedSelector: each from: oldProtocol to: newProtocol ]
 ]
 
-{ #category : #organization }
+{ #category : 'organization' }
 ClassDescription >> reorganize [
 	"During fileIn, !Rectangle reorganize! allows Rectangle to seize control and treat the next chunk as its organization.  See the transfer of control where ReadWriteStream fileIn calls scanFrom:"
 
 	^ self
 ]
 
-{ #category : #protocols }
+{ #category : 'protocols' }
 ClassDescription >> resetProtocols [
 
 	protocols := Array new
 ]
 
-{ #category : #protocols }
+{ #category : 'protocols' }
 ClassDescription >> selectorsInProtocol: aProtocol [
 	"Answer a list of the selectors of the receiver that are in specific protocol (or protocol name)"
 
@@ -1042,14 +1108,14 @@ ClassDescription >> selectorsInProtocol: aProtocol [
 	^ (self ensureProtocol: aProtocol) methodSelectors
 ]
 
-{ #category : #'pool variable' }
+{ #category : 'pool variable' }
 ClassDescription >> sharedPoolOfVarNamed: aString [
 	"Only classes may have shared pools"
-
+	<reflection: 'Class structural inspection - Shared pool inspection'>
 	^ nil
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClassDescription >> sharedPoolString [
 	"Answer a string of my shared pools separated by spaces."
 
@@ -1057,19 +1123,20 @@ ClassDescription >> sharedPoolString [
 		self sharedPoolStringOn: stream ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClassDescription >> sharedPoolStringOn: aStream [
 	"Write my shared pools separated by dots on argument, aStream."
 
 	self sharedPools do:  [ :p | aStream nextPutAll: p name ] separatedBy: [ aStream nextPutAll: ' . ' ]
 ]
 
-{ #category : #'pool variable' }
+{ #category : 'pool variable' }
 ClassDescription >> sharedPools [
+	<reflection: 'Class structural inspection - Shared pool inspection'>
 	^ OrderedCollection new
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClassDescription >> sharedPoolsOn: aStream [
 	"Answer a string of my shared pool names separated by spaces."
 
@@ -1084,7 +1151,7 @@ ClassDescription >> sharedPoolsOn: aStream [
 			separatedBy: [ aStream space ]
 ]
 
-{ #category : #'pool variable' }
+{ #category : 'pool variable' }
 ClassDescription >> sharedPoolsString [
 	"Answer a string of my shared pool names separated by spaces."
 
@@ -1100,52 +1167,57 @@ ClassDescription >> sharedPoolsString [
 			separatedBy: [ stream space ] ]
 ]
 
-{ #category : #slots }
+{ #category : 'slots' }
 ClassDescription >> slotNamed: aName [
+	<reflection: 'Class structural inspection - Slot inspection'>
 	^self classLayout resolveSlot: aName asSymbol
 ]
 
-{ #category : #slots }
+{ #category : 'slots' }
 ClassDescription >> slotNamed: aName ifFound: foundBlock [
+	<reflection: 'Class structural inspection - Slot inspection'>
 	^self slotNamed: aName ifFound: foundBlock ifNone: [ "do nothing" ]
 ]
 
-{ #category : #slots }
+{ #category : 'slots' }
 ClassDescription >> slotNamed: aName ifFound: foundBlock ifNone: exceptionBlock [
+	<reflection: 'Class structural inspection - Slot inspection'>
 	^self classLayout resolveSlot: aName ifFound: foundBlock ifNone: exceptionBlock
 ]
 
-{ #category : #slots }
+{ #category : 'slots' }
 ClassDescription >> slotNames [
+	<reflection: 'Class structural inspection - Slot inspection'>
 	^self slots collect: [ :each | each name ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassDescription >> slots [
+	<reflection: 'Class structural inspection - Slot inspection'>
 	^self classLayout visibleSlots
 ]
 
-{ #category : #slots }
+{ #category : 'slots' }
 ClassDescription >> slotsNeedFullDefinition [
 	"return true if we define something else than InstanceVariableSlots"
 	^self slots anySatisfy: [ :each | each needsFullDefinition ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ClassDescription >> spaceUsed [
 	^super spaceUsed + (self hasClassSide
 		ifTrue: [self classSide spaceUsed]
 		ifFalse: [0])
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClassDescription >> storeOn: aStream [
 	"Classes and Metaclasses have global names."
 
 	aStream nextPutAll: self name
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClassDescription >> superclass: aSuperclass layout: aLayout [
 	layout := aLayout.
 
@@ -1155,7 +1227,7 @@ ClassDescription >> superclass: aSuperclass layout: aLayout [
 		format: aLayout format
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClassDescription >> superclass: aClass methodDictionary: mDict format: fmt [
 	"Basic initialization of the receiver"
 
@@ -1163,7 +1235,7 @@ ClassDescription >> superclass: aClass methodDictionary: mDict format: fmt [
 	self resetProtocols
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClassDescription >> superclass: aSuperclass withLayoutType: layoutType slots: slotArray [
 	| superLayout newScope newLayout |
 	superLayout := aSuperclass
@@ -1177,45 +1249,7 @@ ClassDescription >> superclass: aSuperclass withLayoutType: layoutType slots: sl
 		layout: newLayout
 ]
 
-{ #category : #'accessing - tags' }
-ClassDescription >> tagWith: aSymbol [
-	| package packageTag |
-	"Any class or trait could be tagged by multiple symbols for user purpose.
-	For now we could only model single tag with RPackageTag"
-
-	package := self package.
-	packageTag := package addClassTag: aSymbol.
-	packageTag addClass: self
-]
-
-{ #category : #'accessing - tags' }
-ClassDescription >> tags [
-
-	| packageTag |
-	"Any class or trait could be tagged by multiple symbols for user purpose.
-	For now we only define API to manage them on top of RPackageTag"
-	packageTag := self package classTagForClass: self.
-	packageTag ifNil: [ ^ #(  ) ].
-	packageTag isRoot ifTrue: [ ^ #(  ) ].
-
-	^ { packageTag name }
-]
-
-{ #category : #'accessing - tags' }
-ClassDescription >> tagsForMethods [
-	"Any method could be tagged with multiple symbols for user purpose.
-	And class contains all method tags which used or not used yet by methods.
-	For now we could only implemented it on top of Protocol.
-	It supposed to not include any method tags inherited from Traits
-	which is opposite to current Protocol implementation.
-	And extension protocol is not treated as tag"
-	| allProtocols |
-	allProtocols := self protocols reject: [ :each | each isUnclassifiedProtocol | each isExtensionProtocol ].
-
-	^ allProtocols select: [ :each | self isLocalMethodsProtocol: each ] thenCollect: #name
-]
-
-{ #category : #'accessing - deprecated parallel hierarchy' }
+{ #category : 'accessing - deprecated parallel hierarchy' }
 ClassDescription >> theMetaClass [
 	"This method is deprecated so consider to migrate."
 	self deprecated:  'Please use #classSide instead' transformWith:  '`@receiver theMetaClass'
@@ -1223,7 +1257,7 @@ ClassDescription >> theMetaClass [
 	^ self classSide
 ]
 
-{ #category : #'accessing - deprecated parallel hierarchy' }
+{ #category : 'accessing - deprecated parallel hierarchy' }
 ClassDescription >> theNonMetaClass [
 	"This method is deprecated so consider to migrate."
 	self deprecated:  'Please use #instanceSide instead' transformWith:  '`@receiver theNonMetaClass'
@@ -1231,48 +1265,67 @@ ClassDescription >> theNonMetaClass [
 	^ self instanceSide
 ]
 
-{ #category : #'accessing - method dictionary' }
+{ #category : 'accessing - method dictionary' }
 ClassDescription >> uncategorizedSelectors [
 
 	^ self selectorsInProtocol: Protocol unclassified
 ]
 
-{ #category : #'accessing - tags' }
-ClassDescription >> untagFrom: aSymbol [
-	| package packageTag |
-	"Any class or trait could be tagged by multiple symbols for user purpose.
-	For now we could only model single tag with RPackageTag"
-	package := self package.
-	packageTag := package classTagForClass: self.
-	packageTag ifNil: [ ^#() ].
-	packageTag isRoot ifTrue: [ ^#() ].
-	packageTag name = aSymbol ifFalse: [ ^self ].
-	packageTag removeClass: self.
-	package addClass: self
-]
-
-{ #category : #'pool variable' }
+{ #category : 'pool variable' }
 ClassDescription >> usesLocalPoolVarNamed: aString [
+	<reflection: 'Class structural inspection - Shared pool inspection'>
 	^false
 ]
 
-{ #category : #'pool variable' }
+{ #category : 'pool variable' }
 ClassDescription >> usesPoolVarNamed: aString [
 	"Only classes may use a pool variable named: aString"
-
+	<reflection: 'Class structural inspection - Shared pool inspection'>
 	^ false
 ]
 
-{ #category : #compiling }
+{ #category : 'compiling' }
 ClassDescription >> wantsChangeSetLogging [
 	"Answer whether code submitted for the receiver should be remembered by the changeSet mechanism."
 
 	^ true
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
+ClassDescription >> whichMethodsAccess: instVarName [
+	"Answer the methods that access the argument, instVarName, as a named instance variable. Pay attention the instVarName variable should be used e.g., be part of a return, message send or assignment else the compiler optimize it away and the method will not return it."
+
+	^ self
+		slotNamed: instVarName
+		ifFound: [ :slot | self methods select: [ :m | slot isAccessedIn: m ] ]
+		ifNone: [ #() ]
+]
+
+{ #category : 'queries' }
+ClassDescription >> whichMethodsRead: instVarName [
+	"Answer the selectors whose methods read the argument, instVarName, as a named instance variable.
+	Pay attention the instVarName variable should be used e.g., be part of a return, message send or assignment else the compiler optimize it away and the method will not return it."
+
+	^ self
+		slotNamed: instVarName
+		ifFound: [ :slot | self methods select: [ :m | slot isReadIn: m ] ]
+		ifNone: [ #() ]
+]
+
+{ #category : 'queries' }
+ClassDescription >> whichMethodsWrite: instVarName [
+	"Answer the selectors whose methods write the argument, instVarName, as a named instance variable.
+	Pay attention the instVarName variable should be used e.g., be part of a return, message send or assignment else the compiler optimize it away and the method will not return it."
+
+	^ self
+		slotNamed: instVarName
+		ifFound: [ :slot | self methods select: [ :m | slot isWrittenIn: m ] ]
+		ifNone: [ #() ]
+]
+
+{ #category : 'queries' }
 ClassDescription >> whichSelectorsAccess: instVarName [
-	"Answer the selectors whose methods access the argument, instVarName, as a named instance variable."
+	"Answer the selectors whose methods access the argument, instVarName, as a named instance variable. Pay attention the instVarName variable should be used e.g., be part of a return, message send or assignment else the compiler optimize it away and the method will not return it."
 
 	^ self
 		slotNamed: instVarName
@@ -1280,9 +1333,10 @@ ClassDescription >> whichSelectorsAccess: instVarName [
 		ifNone: [ #() ]
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClassDescription >> whichSelectorsRead: instVarName [
-	"Answer the selectors whose methods read the argument, instVarName, as a named instance variable."
+	"Answer the selectors whose methods read the argument, instVarName, as a named instance variable.
+	Pay attention the instVarName variable should be used e.g., be part of a return, message send or assignment else the compiler optimize it away and the method will not return it."
 
 	^ self
 		slotNamed: instVarName
@@ -1290,9 +1344,10 @@ ClassDescription >> whichSelectorsRead: instVarName [
 		ifNone: [ #() ]
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClassDescription >> whichSelectorsWrite: instVarName [
-	"Answer the selectors whose methods write the argument, instVarName, as a named instance variable"
+	"Answer the selectors whose methods write the argument, instVarName, as a named instance variable.
+	Pay attention the instVarName variable should be used e.g., be part of a return, message send or assignment else the compiler optimize it away and the method will not return it."
 
 	^ self
 		slotNamed: instVarName

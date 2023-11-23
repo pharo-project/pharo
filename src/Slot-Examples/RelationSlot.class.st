@@ -19,23 +19,25 @@ targetClass
 
 "
 Class {
-	#name : #RelationSlot,
-	#superclass : #InstanceVariableSlot,
+	#name : 'RelationSlot',
+	#superclass : 'InstanceVariableSlot',
 	#instVars : [
 		'targetClass',
 		'inverseName',
 		'inverseSlot'
 	],
-	#category : #'Slot-Examples-Associations'
+	#category : 'Slot-Examples-Associations',
+	#package : 'Slot-Examples',
+	#tag : 'Associations'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RelationSlot class >> named: aSymbol inverse: anInverseSymbol inClass: aTargetClassOrSymbol [
 
 	^(super named: aSymbol) inverse: anInverseSymbol inClass: aTargetClassOrSymbol
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 RelationSlot >> = anObject [
 
 	^super = anObject and: [
@@ -43,7 +45,7 @@ RelationSlot >> = anObject [
 			inverseName = anObject inverseName ] ]
 ]
 
-{ #category : #internal }
+{ #category : 'internal' }
 RelationSlot >> addAssociationFrom: ownerObject to: otherObject [
 	"A new reference from <ownerObject> to <otherObject> is created. Here we update the other
 	side of the association. If the other side is a ToOne association this means that an other
@@ -51,23 +53,19 @@ RelationSlot >> addAssociationFrom: ownerObject to: otherObject [
 
 	self inverseSlot isToOneSlot
 		ifTrue: [
-			| oldObject |
-			oldObject := inverseSlot read: otherObject.
-			oldObject notNil
-				ifTrue: [ inverseSlot removeAssociationFrom: otherObject to: oldObject ].
+			(inverseSlot read: otherObject) ifNotNil: [ :oldObject | inverseSlot removeAssociationFrom: otherObject to: oldObject ].
 			inverseSlot writeInverse: ownerObject to: otherObject ]
-		ifFalse: [
-			(inverseSlot read: otherObject) inverseAdd: ownerObject ]
+		ifFalse: [ (inverseSlot read: otherObject) inverseAdd: ownerObject ]
 ]
 
-{ #category : #internal }
+{ #category : 'internal' }
 RelationSlot >> checkValue: aValue [
 
 	(aValue isKindOf: self targetClass)
 		ifFalse: [ self error: 'Invalid value' ]
 ]
 
-{ #category : #'code generation' }
+{ #category : 'code generation' }
 RelationSlot >> emitStore: aMethodBuilder [
 	"This bytecode does the following:
 		self updateOld: (self read: anObject) new: newValue in: anObject.
@@ -87,13 +85,13 @@ RelationSlot >> emitStore: aMethodBuilder [
 		storeInstVar: index
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RelationSlot >> hasInverse [
 
 	^inverseName notNil
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 RelationSlot >> hasSameDefinitionAs: otherSlot [
 	"need to implement as superclass implements it"
 	^ (super hasSameDefinitionAs: otherSlot)
@@ -101,44 +99,44 @@ RelationSlot >> hasSameDefinitionAs: otherSlot [
 		and: [ inverseName = otherSlot inverseName ] ]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 RelationSlot >> hash [
 	^ ((self species hash bitXor: self name hash)
 			bitXor: (self index ifNil: [ 0 ]))
 				bitXor: self targetClassName hash
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RelationSlot >> inClass: aTargetClassOrSymbol [
 
 	targetClass := aTargetClassOrSymbol
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RelationSlot >> inverse: anInverseSymbol inClass: aTargetClassOrSymbol [
 	self inClass: aTargetClassOrSymbol.
 	inverseName := anInverseSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RelationSlot >> inverseName [
 
 	^inverseName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RelationSlot >> inverseSlot [
 
 	^inverseSlot ifNil: [ self linkUp. inverseSlot ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RelationSlot >> isToOneSlot [
 
 	^false
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RelationSlot >> linkUp [
 
 	inverseSlot := self targetClass slotNamed: inverseName.
@@ -149,7 +147,7 @@ RelationSlot >> linkUp [
 		ifFalse: [ self error: 'Invalid association: inverse names do not match' ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RelationSlot >> printOn: aStream [
 	aStream
 		store: self name;
@@ -165,7 +163,7 @@ RelationSlot >> printOn: aStream [
 		store: self targetClassName
 ]
 
-{ #category : #internal }
+{ #category : 'internal' }
 RelationSlot >> removeAssociationFrom: ownerObject to: otherObject [
 	"A reference from <ownerObject> to <otherObject> is removed. Here we update the other
 	side of the association. If the other side is a ToOne association set the value to nil,
@@ -176,7 +174,7 @@ RelationSlot >> removeAssociationFrom: ownerObject to: otherObject [
 		ifFalse: [ (inverseSlot read: otherObject) inverseRemove: ownerObject ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RelationSlot >> targetClass [
 
 	targetClass isSymbol
@@ -187,7 +185,7 @@ RelationSlot >> targetClass [
 	^targetClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RelationSlot >> targetClassName [
 
 	^targetClass isSymbol

@@ -7,60 +7,62 @@ Internal Representation and Key Implementation Points.
 	classGroup:		<ClyClassGroup>
 "
 Class {
-	#name : #ClyRemoveClassGroupCommand,
-	#superclass : #CmdCommand,
+	#name : 'ClyRemoveClassGroupCommand',
+	#superclass : 'CmdCommand',
 	#instVars : [
 		'classGroup'
 	],
-	#category : #'Calypso-SystemTools-FullBrowser-Commands-Class groups'
+	#category : 'Calypso-SystemTools-FullBrowser-Commands-Class groups',
+	#package : 'Calypso-SystemTools-FullBrowser',
+	#tag : 'Commands-Class groups'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyRemoveClassGroupCommand class >> canBeExecutedInContext: aToolContext [
-	^aToolContext isClassTagSelected
+	^aToolContext isPackageTagSelected
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyRemoveClassGroupCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
 
 	^CmdContextMenuActivation byRootGroupItemOrder: 10000 for: ClyFullBrowserClassGroupContext
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyRemoveClassGroupCommand class >> fullBrowserShortcutActivation [
 	<classAnnotation>
 
 	^CmdShortcutActivation removalFor: ClyFullBrowserClassGroupContext
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyRemoveClassGroupCommand >> classGroup [
 	^ classGroup
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyRemoveClassGroupCommand >> classGroup: anObject [
 	classGroup := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyRemoveClassGroupCommand >> defaultMenuIconName [
-	^#removeIcon
+	^#remove
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyRemoveClassGroupCommand >> defaultMenuItemName [
 	^'Remove'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyRemoveClassGroupCommand >> execute [
 
 	classGroup removeWithClasses
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyRemoveClassGroupCommand >> prepareFullExecutionInContext: aToolContext [
 	| confirmed |
 	super prepareFullExecutionInContext: aToolContext.
@@ -68,7 +70,6 @@ ClyRemoveClassGroupCommand >> prepareFullExecutionInContext: aToolContext [
 	classGroup := aToolContext lastSelectedClassGroup.
 
 	classGroup classesSize > 0 ifTrue: [
-		confirmed := UIManager default
-			confirm: 'Are you sure you want to remove all classes in group ', classGroup name, '?'.
+		confirmed := self confirm: 'Are you sure you want to remove all classes in group ', classGroup name, '?'.
 		confirmed ifFalse: [CmdCommandAborted signal]]
 ]

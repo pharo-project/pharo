@@ -47,8 +47,8 @@ Note: if a line breaks on a space, a linefeed or a carriage return, then the spa
 If there is a carriage return - linefeed pair, the pair is integrated to the line as if it were a single line break for compatibility with legacy software.
 "
 Class {
-	#name : #CompositionScanner,
-	#superclass : #CharacterScanner,
+	#name : 'CompositionScanner',
+	#superclass : 'CharacterScanner',
 	#instVars : [
 		'spaceX',
 		'spaceIndex',
@@ -60,15 +60,11 @@ Class {
 		'nextIndexAfterLineBreak',
 		'wantsColumnBreaks'
 	],
-	#category : #'Text-Scanning'
+	#category : 'Text-Scanning',
+	#package : 'Text-Scanning'
 }
 
-{ #category : #testing }
-CompositionScanner >> canComputeDefaultLineHeight [
-	^ rightMargin notNil
-]
-
-{ #category : #'stop conditions' }
+{ #category : 'stop conditions' }
 CompositionScanner >> columnBreak [
 
 	"Answer true. Set up values for the text line interval currently being
@@ -82,7 +78,7 @@ CompositionScanner >> columnBreak [
 	^true
 ]
 
-{ #category : #scanning }
+{ #category : 'scanning' }
 CompositionScanner >> composeFrom: startIndex inRectangle: lineRectangle
 	firstLine: firstLine leftSide: leftSide rightSide: rightSide [
 	"Answer an instance of TextLineInterval that represents the next line in the paragraph."
@@ -119,18 +115,7 @@ CompositionScanner >> composeFrom: startIndex inRectangle: lineRectangle
 		baseline: baseline + textStyle leading
 ]
 
-{ #category : #scanning }
-CompositionScanner >> computeDefaultLineHeight [
-	"Compute the default line height for a potentially empty text"
-
-	^ rightMargin notNil
-		ifTrue: [ lastIndex := 1.
-			self setFont.
-			lineHeight + textStyle leading ]
-		ifFalse: [ textStyle lineGrid ]
-]
-
-{ #category : #'stop conditions' }
+{ #category : 'stop conditions' }
 CompositionScanner >> cr [
 	"Answer true. Set up values for the text line interval currently being
 	composed."
@@ -145,7 +130,7 @@ CompositionScanner >> cr [
 	^true
 ]
 
-{ #category : #'stop conditions' }
+{ #category : 'stop conditions' }
 CompositionScanner >> crossedX [
 	"There is a word that has fallen across the right edge of the composition
 	rectangle. This signals the need for wrapping which is done to the last
@@ -167,12 +152,7 @@ CompositionScanner >> crossedX [
 	^self wrapHere
 ]
 
-{ #category : #accessing }
-CompositionScanner >> doesTheLineBreaksAfterLastChar [
-	^nextIndexAfterLineBreak > text size
-]
-
-{ #category : #'stop conditions' }
+{ #category : 'stop conditions' }
 CompositionScanner >> endOfRun [
 	"Answer true if scanning has reached the end of the paragraph.
 	Otherwise step conditions (mostly install potential new font) and answer
@@ -190,13 +170,13 @@ CompositionScanner >> endOfRun [
 			false ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CompositionScanner >> initialize [
 	wantsColumnBreaks := false.
 	super initialize
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 CompositionScanner >> placeEmbeddedObject: anchoredMorph [
 	| w descent |
 	"Workaround: The following should really use #textAnchorType"
@@ -212,7 +192,7 @@ CompositionScanner >> placeEmbeddedObject: anchoredMorph [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompositionScanner >> rightX [
 	"Meaningful only when a line has just been composed -- refers to the
 	line most recently composed. This is a subtrefuge to allow for easy
@@ -223,7 +203,13 @@ CompositionScanner >> rightX [
 	^spaceX
 ]
 
-{ #category : #'text attributes' }
+{ #category : 'accessing' }
+CompositionScanner >> scale [
+
+	^ 1
+]
+
+{ #category : 'text attributes' }
 CompositionScanner >> setActualFont: aFont [
 
 	"Keep track of max height and ascent for auto lineheight"
@@ -242,7 +228,7 @@ CompositionScanner >> setActualFont: aFont [
 			]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 CompositionScanner >> setStopConditions [
 	"Set the font and the stop conditions for the current run."
 
@@ -252,7 +238,7 @@ CompositionScanner >> setStopConditions [
 		ifFalse: [CompositionStopConditions]
 ]
 
-{ #category : #'stop conditions' }
+{ #category : 'stop conditions' }
 CompositionScanner >> space [
 	"Record left x and character index of the space character just encountered.
 	Used for wrap-around. Answer whether the character has crossed the
@@ -270,7 +256,7 @@ CompositionScanner >> space [
 	^false
 ]
 
-{ #category : #'stop conditions' }
+{ #category : 'stop conditions' }
 CompositionScanner >> tab [
 	"Advance destination x according to tab settings in the paragraph's
 	textStyle. Answer whether the character has crossed the right edge of
@@ -284,13 +270,13 @@ CompositionScanner >> tab [
 	^false
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 CompositionScanner >> wantsColumnBreaks: aBoolean [
 
 	wantsColumnBreaks := aBoolean
 ]
 
-{ #category : #'stop conditions' }
+{ #category : 'stop conditions' }
 CompositionScanner >> wrapAtLastBreakable [
 	"Wrap the line before last encountered breakable character."
 	pendingKernX := 0.
@@ -303,7 +289,7 @@ CompositionScanner >> wrapAtLastBreakable [
 	^true
 ]
 
-{ #category : #'stop conditions' }
+{ #category : 'stop conditions' }
 CompositionScanner >> wrapAtLastSpace [
 	"Wrap the line before last encountered space"
 
@@ -335,7 +321,7 @@ CompositionScanner >> wrapAtLastSpace [
 	^true
 ]
 
-{ #category : #'stop conditions' }
+{ #category : 'stop conditions' }
 CompositionScanner >> wrapHere [
 	"Wrap the line before current character."
 	pendingKernX := 0.

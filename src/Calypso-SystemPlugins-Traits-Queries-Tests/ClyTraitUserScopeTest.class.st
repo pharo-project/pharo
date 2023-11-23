@@ -1,16 +1,17 @@
 Class {
-	#name : #ClyTraitUserScopeTest,
-	#superclass : #ClyClassHierarchyScopeTest,
-	#category : #'Calypso-SystemPlugins-Traits-Queries-Tests'
+	#name : 'ClyTraitUserScopeTest',
+	#superclass : 'ClyClassHierarchyScopeTest',
+	#category : 'Calypso-SystemPlugins-Traits-Queries-Tests',
+	#package : 'Calypso-SystemPlugins-Traits-Queries-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClyTraitUserScopeTest >> scopeClass [
 
 	^ClyTraitUserScope
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyTraitUserScopeTest >> testClassEnumeration [
 	scope := ClyTraitUserScope of: ClyTraitRoot1.
 
@@ -22,7 +23,7 @@ ClyTraitUserScopeTest >> testClassEnumeration [
 		ClySubclassWithTraitsOfClassWithTraits} asSet
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyTraitUserScopeTest >> testMethodsEnumeration [
 	scope := ClyTraitUserScope of: ClyTraitRoot1.
 
@@ -35,7 +36,7 @@ ClyTraitUserScopeTest >> testMethodsEnumeration [
 	self deny: (result includesAll: ClyTraitRoot1 classSide localMethods)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyTraitUserScopeTest >> testMethodsEnumerationWhenBothMetaLevels [
 
 	scope := ClyTraitUserScope of: ClyTraitRoot1 localScope: ClyBothMetaLevelClassScope.

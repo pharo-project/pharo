@@ -1,10 +1,12 @@
 Class {
-	#name : #CoCompletionEngineCodeSnippetTest,
-	#superclass : #RBCodeSnippetTest,
-	#category : #'HeuristicCompletion-Tests-Core'
+	#name : 'CoCompletionEngineCodeSnippetTest',
+	#superclass : 'RBCodeSnippetTest',
+	#category : 'HeuristicCompletion-Tests-Core',
+	#package : 'HeuristicCompletion-Tests',
+	#tag : 'Core'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoCompletionEngineCodeSnippetTest >> testCompletion [
 	"Smoke test for completion. Try to get completion entries on each position for each code snippet.
 	This single test is a little slow (~15s) so it is in its own subclass."

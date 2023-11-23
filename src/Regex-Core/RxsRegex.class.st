@@ -8,22 +8,24 @@ Instance variables:
 	regex		<RxsRegex | RxsEpsilon>
 "
 Class {
-	#name : #RxsRegex,
-	#superclass : #RxsNode,
+	#name : 'RxsRegex',
+	#superclass : 'RxsNode',
 	#instVars : [
 		'branch',
 		'regex'
 	],
-	#category : #'Regex-Core-Nodes'
+	#category : 'Regex-Core-Nodes',
+	#package : 'Regex-Core',
+	#tag : 'Nodes'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RxsRegex >> branch [
 
 	^branch
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RxsRegex >> dispatchTo: aMatcher [
 	"Inform the matcher of the kind of the node, and it
 	will do whatever it has to."
@@ -31,7 +33,7 @@ RxsRegex >> dispatchTo: aMatcher [
 	^aMatcher syntaxRegex: self
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RxsRegex >> initializeBranch: aBranch regex: aRegex [
 	"See class comment for instance variable description."
 
@@ -39,13 +41,13 @@ RxsRegex >> initializeBranch: aBranch regex: aRegex [
 	regex := aRegex
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RxsRegex >> isNullable [
 
-	^branch isNullable or: [regex notNil and: [regex isNullable]]
+	^branch isNullable or: [regex isNotNil and: [regex isNullable]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RxsRegex >> regex [
 	^regex
 ]

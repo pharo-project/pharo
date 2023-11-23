@@ -1,6 +1,6 @@
-Extension { #name : #RBProgramNodeVisitor }
+Extension { #name : 'RBProgramNodeVisitor' }
 
-{ #category : #'*ClassParser' }
+{ #category : '*ClassParser' }
 RBProgramNodeVisitor >> visitSlotInitializationNode: aSlotInitializationNode [
 
 	^aSlotInitializationNode

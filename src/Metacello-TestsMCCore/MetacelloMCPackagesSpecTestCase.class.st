@@ -1,15 +1,16 @@
 Class {
-	#name : #MetacelloMCPackagesSpecTestCase,
-	#superclass : #MetacelloPackagesSpecTestCase,
-	#category : #'Metacello-TestsMCCore'
+	#name : 'MetacelloMCPackagesSpecTestCase',
+	#superclass : 'MetacelloPackagesSpecTestCase',
+	#category : 'Metacello-TestsMCCore',
+	#package : 'Metacello-TestsMCCore'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloMCPackagesSpecTestCase >> projectClass [
-    ^ MetacelloMCProject
+    ^ MetacelloProject
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloMCPackagesSpecTestCase >> testAddPackageA [
 	"used by MetacelloAbstractVersionConstructor>>package: and MetacelloAbstractVersionConstructor>>package:overrides:"
 
@@ -45,7 +46,7 @@ MetacelloMCPackagesSpecTestCase >> testAddPackageA [
 	self assert: package postLoadDoIt value identicalTo: nil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloMCPackagesSpecTestCase >> testAddPackageB [
 	"used by MetacelloAbstractVersionConstructor>>package: and MetacelloAbstractVersionConstructor>>package:overrides:"
 
@@ -78,7 +79,7 @@ MetacelloMCPackagesSpecTestCase >> testAddPackageB [
 	self assert: package postLoadDoIt value identicalTo: nil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloMCPackagesSpecTestCase >> testAddPackageC [
     "used by MetacelloAbstractVersionConstructor>>package: and MetacelloAbstractVersionConstructor>>package:overrides:"
 
@@ -94,7 +95,7 @@ MetacelloMCPackagesSpecTestCase >> testAddPackageC [
     packages packageNamed: 'Tests' ifAbsent: [ self assert: false ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloMCPackagesSpecTestCase >> testAddPackageD [
     "used by MetacelloAbstractVersionConstructor>>package: and MetacelloAbstractVersionConstructor>>package:overrides:"
 
@@ -104,7 +105,7 @@ MetacelloMCPackagesSpecTestCase >> testAddPackageD [
     packages packageNamed: 'Platform' ifAbsent: [ self assert: false ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloMCPackagesSpecTestCase >> testCopyToPackage [
 	"not currently used by MetacelloAbstractVersionConstructor"
 
@@ -137,7 +138,7 @@ MetacelloMCPackagesSpecTestCase >> testCopyToPackage [
 	self assert: package postLoadDoIt value identicalTo: #postLoadDoIt
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloMCPackagesSpecTestCase >> testMergePackageA [
 	"used by MetacelloAbstractVersionConstructor>>package:with:"
 
@@ -173,7 +174,7 @@ MetacelloMCPackagesSpecTestCase >> testMergePackageA [
 	self assert: package postLoadDoIt value identicalTo: #postLoadDoIt
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloMCPackagesSpecTestCase >> testMergePackageB [
 	"used by MetacelloAbstractVersionConstructor>>package:with:"
 
@@ -209,7 +210,7 @@ MetacelloMCPackagesSpecTestCase >> testMergePackageB [
 	self assert: package postLoadDoIt value identicalTo: #postLoadDoIt
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloMCPackagesSpecTestCase >> testMergePackageD [
     "used by MetacelloAbstractVersionConstructor>>package:with:"
 
@@ -222,7 +223,7 @@ MetacelloMCPackagesSpecTestCase >> testMergePackageD [
     packages packageNamed: 'Tests' ifAbsent: [ self assert: false ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloMCPackagesSpecTestCase >> testRemovePackageA [
     "used by MetacelloAbstractVersionConstructor>>removePackage:"
 
@@ -249,7 +250,7 @@ MetacelloMCPackagesSpecTestCase >> testRemovePackageA [
     self assert: removed
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloMCPackagesSpecTestCase >> testRemovePackageB [
     "used by MetacelloAbstractVersionConstructor>>removePackage:"
 
@@ -276,7 +277,7 @@ MetacelloMCPackagesSpecTestCase >> testRemovePackageB [
     self assert: removed
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloMCPackagesSpecTestCase >> testRemovePackageC [
     "used by MetacelloAbstractVersionConstructor>>removePackage:"
 
@@ -299,7 +300,7 @@ MetacelloMCPackagesSpecTestCase >> testRemovePackageC [
     self assert: removed
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloMCPackagesSpecTestCase >> testRemovePackageD [
     "used by MetacelloAbstractVersionConstructor>>removePackage:"
 

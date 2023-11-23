@@ -7,47 +7,51 @@ The current format of a CompiledCode is as follows:
 	header (4 bytes)
 	literals (4 bytes each)
 	bytecodes  (variable)
-	trailer (variable)
+	trailer (0 for blocks, see #trailerSize for methods)
 
 The header describes the compiled code. It's a small integer with the following format: 
 
 sign bit 	1 bit: 	if set, the method is encoded in the SecondaryBytecodeSet, else in the PrimaryBytecodeSet (See class variables) 
-(index 0)	15 bits:	number of literals
+(index 0)		15 bits:	number of literals
 (index 16)	1 bit:	requires counters (in the sista JIT, methods marked this way cannot trip)
 (index 17)	1 bit:	whether a large frame size is needed
 (index 18)	6 bits:	number of temporary variables
 (index 24)	4 bits:	number of arguments to the method
 (index 28)	1 bit:	has primitive
-(index 29)	1 bit:	flag bit, ignored by the VM
+(index 29)	1 bit:	user flag bit, ignored by the VM
 
-The trailer encodes how to fetch the method's sources. See CompiledMethodTrailer.
+For the user flag bit, use #clearFlag, #flag, #setFlag. Take care: do not change it for methods currently being executed, the prefered way is to do it as part of compilation (e.g. using a compiler plugin).
+
+The trailer encodes a sourcePointer to fetch the method's sources.
 "
 Class {
-	#name : #CompiledCode,
-	#superclass : #ByteArray,
-	#type : #compiledMethod,
+	#name : 'CompiledCode',
+	#superclass : 'ByteArray',
+	#type : 'compiledMethod',
 	#classVars : [
 		'LargeFrame',
 		'PrimaryBytecodeSetEncoderClass',
 		'SecondaryBytecodeSetEncoderClass',
 		'SmallFrame'
 	],
-	#category : #'Kernel-Methods'
+	#category : 'Kernel-Methods',
+	#package : 'Kernel',
+	#tag : 'Methods'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CompiledCode class >> basicNew [
 
 	self error: 'CompiledMethods and CompiledBlocks may only be created with newMethod:header:'
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CompiledCode class >> basicNew: size [
 
 	self error: 'CompiledMethods and CompiledBlocks may only be created with newMethod:header:'
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CompiledCode class >> newMethod: numberOfBytes header: headerWord [
 	"Primitive. Answer an instance of me. The number of literals (and other
 	 information) is specified by the headerWord (see my class comment).
@@ -63,7 +67,7 @@ CompiledCode class >> newMethod: numberOfBytes header: headerWord [
 	^self primitiveFailed
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 CompiledCode >> = aCompiledMethod [
 	"Answer whether the receiver implements the same code as aCompiledMethod."
 
@@ -83,14 +87,14 @@ CompiledCode >> = aCompiledMethod [
 	^ true
 ]
 
-{ #category : #scanning }
+{ #category : 'scanning' }
 CompiledCode >> accessesField: varIndex [
 	"Answer whether the receiver accesses the instance variable indexed by the argument."
 
 	^ (self readsField: varIndex) or: [ self writesField: varIndex ]
 ]
 
-{ #category : #scanning }
+{ #category : 'scanning' }
 CompiledCode >> accessesRef: literalVariable [
 	"Answer whether this method accesses the LiteralVariable"
 	"we do not need to call readsRef: or #writesRef:, as if the variable
@@ -99,12 +103,12 @@ CompiledCode >> accessesRef: literalVariable [
 	^ self hasLiteral: literalVariable
 ]
 
-{ #category : #scanning }
+{ #category : 'scanning' }
 CompiledCode >> accessesSlot: aSlot [
 	^aSlot isAccessedIn: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompiledCode >> allBlocks [
 	| all |
 	all := IdentitySet new.
@@ -112,7 +116,7 @@ CompiledCode >> allBlocks [
 	^all
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompiledCode >> allBlocksDo: aBlock [
 
 	self literals
@@ -120,7 +124,7 @@ CompiledCode >> allBlocksDo: aBlock [
 		thenDo: [ :aLiteral | aLiteral withAllBlocksDo: aBlock  ]
 ]
 
-{ #category : #literals }
+{ #category : 'literals' }
 CompiledCode >> allLiterals [
 	"Answer an Array of the literals referenced by the receiver.
 	 including superclass + selector/properties"
@@ -131,12 +135,12 @@ CompiledCode >> allLiterals [
 	^literals
 ]
 
-{ #category : #'source code management' }
+{ #category : 'source code management' }
 CompiledCode >> argumentNames [
 	^ self propertyAt: #argumentNames ifAbsent: [ self ast argumentNames ]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 CompiledCode >> asOrderedCollection [
 	"We should override it because most of collection methods are not working for CompiledMethod. And it can't be normally converted into OrderedCollection.
 	It is special class which needs to be ByteArray by VM. But it is not behaves like ByteArray from user perspective"
@@ -144,13 +148,13 @@ CompiledCode >> asOrderedCollection [
 	^OrderedCollection with: self
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 CompiledCode >> asString [
 
 	  ^self sourceCode
 ]
 
-{ #category : #'source code management' }
+{ #category : 'source code management' }
 CompiledCode >> author [
 	"Answer the author of the current version of the receiver. retrieved from the sources or changes file. Answer the empty string if no time stamp is available."
 
@@ -163,7 +167,7 @@ CompiledCode >> author [
 	^''
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompiledCode >> bytecode [
 	self
 		deprecated: 'Changed selector for coherency'
@@ -172,7 +176,7 @@ CompiledCode >> bytecode [
 	^ self bytecodes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompiledCode >> bytecodes [
 	"Answer an ByteArray of the btyecode of the method."
 
@@ -187,14 +191,14 @@ CompiledCode >> bytecodes [
 	^bytecode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompiledCode >> clearFlag [
 	"Clear the user-level flag bit"
 
-	self objectAt: 1 put: (self header bitAnd: (1 << 29) bitInvert)
+	self objectAt: 1 put: (self header bitAt: 29 put: 0)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompiledCode >> clearSignFlag [
 	"Clear the sign flag bit.  The sign flag bit may be
 	 used by the VM to select an alternate bytecode set."
@@ -203,7 +207,7 @@ CompiledCode >> clearSignFlag [
 		[self objectAt: 1 put: self header - SmallInteger minVal]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompiledCode >> comment [
 	"Return the first comment of the receiver"
 	"(self>>#comment) comment"
@@ -211,7 +215,7 @@ CompiledCode >> comment [
 	^ self ast firstPrecodeComment
 ]
 
-{ #category : #'source code management' }
+{ #category : 'source code management' }
 CompiledCode >> definitionString [
 
 	"Polymorphic to class definitionString"
@@ -219,19 +223,19 @@ CompiledCode >> definitionString [
 	^ self sourceCode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompiledCode >> encoderClass [
 	^ self signFlag
 		ifTrue: [ SecondaryBytecodeSetEncoderClass ]
 		ifFalse: [ PrimaryBytecodeSetEncoderClass ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompiledCode >> endPC [
 	^ self subclassResponsibility
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 CompiledCode >> equivalentTo: aCompiledMethod [
 	^self = aCompiledMethod
 	or: [self class == aCompiledMethod class
@@ -240,20 +244,28 @@ CompiledCode >> equivalentTo: aCompiledMethod [
 		and: [self methodNode = aCompiledMethod methodNode ]]]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
+CompiledCode >> extensionPackage [
+	"Private method - Do not use it if you don't know what to do. 
+	In case I am in an extension, I return the package containing me. Else return nil."
+
+	^ self originMethod propertyAt: #extensionPackage ifAbsent: [ nil ]
+]
+
+{ #category : 'accessing' }
 CompiledCode >> flag [
 	"Answer the user-level flag bit"
 
-	^((self header bitShift: -29) bitAnd: 1) = 1
+	^(self header bitAt: 29) = 1
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 CompiledCode >> flattenOn: aStream [
 	"We do not flatten code into bytecode/literals but add the whole object"
 	aStream nextPut: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompiledCode >> frameSize [
 	"Answer the size of temporary frame needed to run the receiver."
 	"NOTE:  Versions 2.7 and later use two sizes of contexts."
@@ -263,7 +275,7 @@ CompiledCode >> frameSize [
 		ifFalse: [LargeFrame]
 ]
 
-{ #category : #literals }
+{ #category : 'literals' }
 CompiledCode >> hasLiteral: literal [
 	"Answer whether the receiver references the argument, literal."
 	1 to: self numLiterals - self literalsToSkip do: "exclude superclass + selector/properties"
@@ -274,7 +286,7 @@ CompiledCode >> hasLiteral: literal [
 	^false
 ]
 
-{ #category : #literals }
+{ #category : 'literals' }
 CompiledCode >> hasLiteralSuchThat: litBlock [
 	"Answer true if litBlock returns true for any literal in this method, even if embedded in array structure."
 	1 to: self numLiterals - self literalsToSkip do: "exclude header and methodClass or outerCode"
@@ -287,18 +299,19 @@ CompiledCode >> hasLiteralSuchThat: litBlock [
 	^false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompiledCode >> hasPragmaNamed: arg1 [
+	<reflection: 'Class structural inspection - Pragma'>
 	^ self subclassResponsibility
 ]
 
-{ #category : #literals }
+{ #category : 'literals' }
 CompiledCode >> hasSelector: selector [
 	"Answers true if the method refers to the selector"
 	^ self hasSelector: selector specialSelectorIndex: (Smalltalk specialSelectorIndexOrNil: selector)
 ]
 
-{ #category : #literals }
+{ #category : 'literals' }
 CompiledCode >> hasSelector: selector specialSelectorIndex: specialOrNil [
 	"Answers true if the method refers to the selector.
 	 If you don't know what's a special selector, use #hasSelector:.
@@ -315,18 +328,18 @@ CompiledCode >> hasSelector: selector specialSelectorIndex: specialOrNil [
 	^false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompiledCode >> hasSourceCode [
 	^ self subclassResponsibility
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CompiledCode >> hasTemporaries [
 	"Fast check that does not scan the bytecode, nor reifies the AST"
 	^ (self numTemps - self numArgs) > 0
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 CompiledCode >> hash [
 	"CompiledMethod>>#= compares code, i.e. same literals and same bytecode.
 	 So we look at the header, methodClass and some bytes between initialPC and endPC,
@@ -346,7 +359,7 @@ CompiledCode >> hash [
 	"(CompiledMethod>>#hash) hash"
 ]
 
-{ #category : #literals }
+{ #category : 'literals' }
 CompiledCode >> header [
 	"Answer the word containing the information about the form of the
 	receiver and the form of the context needed to run the receiver."
@@ -354,7 +367,7 @@ CompiledCode >> header [
 	^self objectAt: 1
 ]
 
-{ #category : #literals }
+{ #category : 'literals' }
 CompiledCode >> headerDescription [
 	"Answer a description containing the information about the form of the
 	receiver and the form of the context needed to run the receiver."
@@ -381,7 +394,7 @@ CompiledCode >> headerDescription [
 	^ s contents
 ]
 
-{ #category : #literals }
+{ #category : 'literals' }
 CompiledCode >> indexOfLiteral: literal [
 	"Answer the literal index of the argument, literal, or zero if none."
 	1 to: self numLiterals - self literalsToSkip "exclude superclass + selector/properties"
@@ -391,20 +404,20 @@ CompiledCode >> indexOfLiteral: literal [
 	^0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompiledCode >> initialPC [
 	"Answer the program counter for the receiver's first bytecode."
 
 	^ (self numLiterals + 1) * Smalltalk wordSize + 1
 ]
 
-{ #category : #literals }
+{ #category : 'literals' }
 CompiledCode >> innerCompiledBlocksAnySatisfy: aBlock [
 	self innerCompiledBlocksDo: [ :cb | (aBlock value: cb) ifTrue: [ ^ true ] ].
 	^ false
 ]
 
-{ #category : #literals }
+{ #category : 'literals' }
 CompiledCode >> innerCompiledBlocksDo: aBlock [
 	"We ignore the enclosing compiled code in compiled block by ignoring the last literal"
 	1 to: self numLiterals - self literalsToSkip do:
@@ -413,77 +426,77 @@ CompiledCode >> innerCompiledBlocksDo: aBlock [
 		lit isEmbeddedBlock ifTrue: [ aBlock value: lit ] ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CompiledCode >> isCollection [
 	"We should override it because most of collection methods are not working for CompiledMethod. It is special class which needs to be ByteArray by VM. But it is not behaves like ByteArray from user perspective.
 	And some tools uses isCollection check for specific behaviour which will fail for CompiledMethod"
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CompiledCode >> isDoIt [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CompiledCode >> isExternalCallPrimitive [
 	^self primitive = 120
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompiledCode >> isInstalled [
 	^ self subclassResponsibility
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CompiledCode >> isNamedPrimitive [
 	^self primitive = 117
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CompiledCode >> isPrimitive [
 	^self primitive > 0
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CompiledCode >> isQuick [
 	"Answer whether the receiver is a quick return (of self or of an instance
 	variable)."
 	^ self primitive between: 256 and: 519
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CompiledCode >> isRealPrimitive [
 	^self isPrimitive and: [ self isQuick not ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CompiledCode >> isReturnSelf [
 	"Answer whether the receiver is a quick return of self."
 
 	^ self primitive = 256
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CompiledCode >> isReturnSpecial [
 	"Answer whether the receiver is a quick return of self or constant."
 
 	^ self primitive between: 256 and: 263
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompiledCode >> isTestMethod [
 	^ self subclassResponsibility
 ]
 
-{ #category : #literals }
+{ #category : 'literals' }
 CompiledCode >> literalAt: index [
 	"Answer the literal indexed by the argument."
 
 	^self objectAt: index + 1
 ]
 
-{ #category : #literals }
+{ #category : 'literals' }
 CompiledCode >> literalAt: index put: value [
 	"Replace the literal indexed by the first argument with the second
 	argument. Answer the second argument."
@@ -491,7 +504,7 @@ CompiledCode >> literalAt: index put: value [
 	^self objectAt: index + 1 put: value
 ]
 
-{ #category : #literals }
+{ #category : 'literals' }
 CompiledCode >> literals [
 
 	"Answer an Array of the literals referenced by the receiver.
@@ -506,20 +519,20 @@ CompiledCode >> literals [
 	^ literals
 ]
 
-{ #category : #literals }
+{ #category : 'literals' }
 CompiledCode >> literalsAt: anIndex [
 	"All literals are shifted of one slot. First slot is the method header"
 	^ self objectAt: anIndex + 1
 ]
 
-{ #category : #literals }
+{ #category : 'literals' }
 CompiledCode >> literalsDo: aBlock [
 	"Evaluate aBlock for each of the literals referenced by the receiver."
 	1 to: self numLiterals - self literalsToSkip do:
 		[:index | aBlock value: (self literalAt: index)]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompiledCode >> literalsEvenTheOnesInTheInnerBlocks [
 
 	| literals numberLiterals |
@@ -535,16 +548,16 @@ CompiledCode >> literalsEvenTheOnesInTheInnerBlocks [
 	^ literals asArray
 ]
 
-{ #category : #literals }
+{ #category : 'literals' }
 CompiledCode >> literalsToSkip [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #scanning }
+{ #category : 'scanning' }
 CompiledCode >> localMessages [
 	"Answer a Set of all the message selectors sent by this method."
-
+	<reflection: 'Structural queries on methods - Method element references'>
 	| scanner aSet |
 	aSet := IdentitySet new.
 	scanner := InstructionStream on: self.
@@ -554,7 +567,7 @@ CompiledCode >> localMessages [
 	^aSet
 ]
 
-{ #category : #scanning }
+{ #category : 'scanning' }
 CompiledCode >> localReadsRef: literalAssociation [
 	"Answer whether the receiver loads the argument."
 	| litIndex scanner |
@@ -564,19 +577,19 @@ CompiledCode >> localReadsRef: literalAssociation [
 	^(scanner := InstructionStream on: self) scanFor: (self encoderClass bindingReadScanBlockFor: litIndex using: scanner)
 ]
 
-{ #category : #scanning }
+{ #category : 'scanning' }
 CompiledCode >> localReadsSelf [
 	^ self encoderClass readsSelfFor: self
 ]
 
-{ #category : #scanning }
+{ #category : 'scanning' }
 CompiledCode >> localReadsThisContext [
 	^ self encoderClass readsThisContextFor: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CompiledCode >> localSendsAnySelectorOf: aCollection [
-
+	<reflection: 'Structural queries on methods - Method element references'>
 	self literalsDo: [ :lit |
 		(lit isSymbol and: [ aCollection includes: lit ])
 			ifTrue: [ ^ self messages includesAny: aCollection ]
@@ -585,12 +598,12 @@ CompiledCode >> localSendsAnySelectorOf: aCollection [
 	^ false
 ]
 
-{ #category : #scanning }
+{ #category : 'scanning' }
 CompiledCode >> localSendsToSuper [
 	^ self encoderClass sendsToSuperFor: self
 ]
 
-{ #category : #scanning }
+{ #category : 'scanning' }
 CompiledCode >> localWritesRef: literalAssociation [
 	"Answer whether the receiver stores into the argument."
 	| litIndex scanner |
@@ -600,7 +613,7 @@ CompiledCode >> localWritesRef: literalAssociation [
 	^(scanner := InstructionStream on: self) scanFor: (self encoderClass bindingWriteScanBlockFor: litIndex using: scanner)
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 CompiledCode >> longPrintOn: aStream [
 	"List of all the byte codes in a method with a short description of each"
 
@@ -616,31 +629,32 @@ CompiledCode >> longPrintOn: aStream [
 	self symbolicBytecodes do: [ :each | each printOn: aStream ] separatedBy: [ aStream cr ]
 ]
 
-{ #category : #scanning }
+{ #category : 'scanning' }
 CompiledCode >> messages [
 	"Answer a Set of all the message selectors sent by this method."
+	<reflection: 'Structural queries on methods - Method element references'>
 	| aSet |
 	aSet := self localMessages.
 	self innerCompiledBlocksDo: [ :cb | aSet := aSet , cb messages ].
 	^ aSet
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompiledCode >> method [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompiledCode >> methodClass [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompiledCode >> methodNode [
 	^ self subclassResponsibility
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CompiledCode >> needsFrameSize: newFrameSize [
 	"Set the largeFrameBit to accomodate the newFrameSize"
 	(self numTemps + newFrameSize) > LargeFrame ifTrue:
@@ -649,27 +663,27 @@ CompiledCode >> needsFrameSize: newFrameSize [
 		or: [ self primitive = 84 "perform:withArguments:"])
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompiledCode >> numArgs [
 	"Answer the number of arguments the receiver takes."
-
+	<reflection: 'Class structural inspection - Selectors and methods inspection'>
 	^ (self header bitShift: -24) bitAnd: 16r0F
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompiledCode >> numLiterals [
 	"Answer the number of literals used by the receiver."
 	^self header bitAnd: 16r7FFF
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompiledCode >> numTemps [
 	"Answer the number of temporary variables used by the receiver."
 
 	^ (self header bitShift: -18) bitAnd: 16r3F
 ]
 
-{ #category : #literals }
+{ #category : 'literals' }
 CompiledCode >> objectAt: index [
 	"Primitive. Answer the method header (if index=1) or a literal (if index
 	>1) from the receiver. Essential. See Object documentation
@@ -679,7 +693,7 @@ CompiledCode >> objectAt: index [
 	self primitiveFailed
 ]
 
-{ #category : #literals }
+{ #category : 'literals' }
 CompiledCode >> objectAt: index put: value [
 	"Primitive. Store the value argument into a literal in the receiver. An
 	index of 2 corresponds to the first literal. Fails if the index is less than 2
@@ -692,22 +706,31 @@ CompiledCode >> objectAt: index put: value [
 	self primitiveFailed
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompiledCode >> origin [
 	^ self methodClass findOriginClassOf: self method
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompiledCode >> originMethod [
 	^ self methodClass findOriginMethodOf: self method
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
+CompiledCode >> package [
+	"This method returns the package this method belongs to. It takes into account classes and traits.
+	If the method is in no package, returns nil"
+	self isDoIt ifTrue: [ ^ nil ].
+	^ self extensionPackage ifNil: [ self origin package ]
+]
+
+{ #category : 'accessing' }
 CompiledCode >> pragmas [
+	<reflection: 'Class structural inspection - Pragma'>
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompiledCode >> primitive [
 	"Answer the primitive index associated with the receiver.
 	 Zero indicates that this is not a primitive method."
@@ -717,7 +740,7 @@ CompiledCode >> primitive [
 		ifFalse: [0]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 CompiledCode >> primitiveErrorVariableName [
 	"Answer the primitive error code temp name, or nil if none."
 	self isPrimitive ifTrue:
@@ -729,17 +752,17 @@ CompiledCode >> primitiveErrorVariableName [
 	^nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompiledCode >> properties [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompiledCode >> propertyAt: aString ifAbsent: aFullBlockClosure [
 	^ aFullBlockClosure value
 ]
 
-{ #category : #scanning }
+{ #category : 'scanning' }
 CompiledCode >> readsField: varIndex [
 	"Answer whether the receiver loads the instance variable indexed by the argument."
 	| varIndexCode scanner |
@@ -748,14 +771,14 @@ CompiledCode >> readsField: varIndex [
 	^ self innerCompiledBlocksAnySatisfy: [ :cb | cb readsField: varIndex ]
 ]
 
-{ #category : #scanning }
+{ #category : 'scanning' }
 CompiledCode >> readsRef: literalAssociation [
 	"Answer whether the receiver loads the argument."
 	(self localReadsRef: literalAssociation) ifTrue: [ ^ true ].
 	^ self innerCompiledBlocksAnySatisfy: [ :cb | cb readsRef: literalAssociation ]
 ]
 
-{ #category : #scanning }
+{ #category : 'scanning' }
 CompiledCode >> readsSelf [
 	"Answer whether compiledMethod reads self, look into embedded blocks, too"
 	self isReturnSelf ifTrue: [ ^ true ].
@@ -763,19 +786,19 @@ CompiledCode >> readsSelf [
 	^ self innerCompiledBlocksAnySatisfy: [ :cb | cb readsSelf]
 ]
 
-{ #category : #scanning }
+{ #category : 'scanning' }
 CompiledCode >> readsSlot: aSlot [
 	^aSlot isReadIn: self
 ]
 
-{ #category : #scanning }
+{ #category : 'scanning' }
 CompiledCode >> readsThisContext [
 	"Answer whether compiledMethod reads thisContext, look into embedded blocks, too"
 	self localReadsThisContext ifTrue: [ ^ true ].
 	^ self innerCompiledBlocksAnySatisfy: [ :cb | cb readsThisContext]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CompiledCode >> refersToLiteral: aLiteral [
 	"Answer true if any literal in this method is literal,
 	even if embedded in array structure."
@@ -789,7 +812,7 @@ CompiledCode >> refersToLiteral: aLiteral [
 	^ false
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 CompiledCode >> sameLiteralsAs: method [
 	"Compare my literals to those of method. This is needed to compare compiled methods."
 
@@ -831,7 +854,7 @@ CompiledCode >> sameLiteralsAs: method [
 	                ifFalse: [literal1 = literal2]]
 ]
 
-{ #category : #scanning }
+{ #category : 'scanning' }
 CompiledCode >> scanFor: byte [
 	"Answer whether the receiver contains the argument as a bytecode."
 
@@ -841,37 +864,46 @@ Smalltalk browseAllSelect: [:m | m scanFor: 134]
 "
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompiledCode >> scanner [
 
 	^ InstructionStream on: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompiledCode >> selector [
+
+	<reflection: 'Class structural inspection - Selectors and methods inspection'>
 	^ self subclassResponsibility
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CompiledCode >> sendsAnySelectorOf: aCollection [
 
 	(self localSendsAnySelectorOf: aCollection) ifTrue: [ ^ true ].
 	^ self innerCompiledBlocksAnySatisfy: [ :cb | cb sendsAnySelectorOf: aCollection ]
 ]
 
-{ #category : #literals }
+{ #category : 'literals' }
 CompiledCode >> sendsSelector: aSymbol [
 	"Answer whether the method sends a particular selector"
 	^ self messages includes: aSymbol
 ]
 
-{ #category : #scanning }
+{ #category : 'scanning' }
 CompiledCode >> sendsToSuper [
 	self localSendsToSuper ifTrue: [ ^ true ].
 	^ self innerCompiledBlocksAnySatisfy: [ :cb | cb sendsToSuper ]
 ]
 
-{ #category : #initialization }
+{ #category : 'accessing' }
+CompiledCode >> setFlag [
+	"set the user-level flag bit"
+
+	self objectAt: 1 put: (self header bitAt: 29 put: 1)
+]
+
+{ #category : 'initialization' }
 CompiledCode >> setFrameBit: boolean [
 	"true for large frame, else false"
 	| largeFrameBit newHeader |
@@ -881,7 +913,7 @@ CompiledCode >> setFrameBit: boolean [
 	self objectAt: 1 put: newHeader
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompiledCode >> setSignFlag [
 	"Set the sign flag bit.  The sign flag bit may be
 	 used by the VM to select an alternate bytecode set."
@@ -890,7 +922,7 @@ CompiledCode >> setSignFlag [
 		[self objectAt: 1 put: self header + SmallInteger minVal]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompiledCode >> signFlag [
 	"Answer the sign flag bit.  The sign flag bit may be
 	 used by the VM to select an alternate bytecode set."
@@ -898,45 +930,45 @@ CompiledCode >> signFlag [
 	^ self header < 0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompiledCode >> sourceCode [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompiledCode >> sourceNode [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompiledCode >> sourceNodeForPC: arg1 [
 	^ self subclassResponsibility
 ]
 
-{ #category : #'source code management' }
+{ #category : 'source code management' }
 CompiledCode >> sourcePointer [
 	^ self subclassResponsibility
 ]
 
-{ #category : #'source code management' }
+{ #category : 'source code management' }
 CompiledCode >> stamp [
 
 	^ self timeStamp
 ]
 
-{ #category : #'debugger support' }
+{ #category : 'debugger support' }
 CompiledCode >> stepIntoQuickMethods [
 	^self propertyAt: #stepIntoQuickMethod ifAbsent: [ false ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 CompiledCode >> symbolic [
 	"Answer a String that contains a list of all the byte codes in a method with a short description of each."
 
 	^self longPrintString
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 CompiledCode >> timeStamp [
 	"Answer the authoring time-stamp for the given method, retrieved from the sources or changes file. Answer the empty string if no time stamp is available."
 	"(CompiledMethod compiledMethodAt: #timeStamp) timeStamp"
@@ -944,17 +976,17 @@ CompiledCode >> timeStamp [
 	^ SourceFiles timeStampAt: self sourcePointer
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CompiledCode >> usesPrimaryBytecodeSet [
 	^ self header >= 0
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CompiledCode >> usesSecondaryBytecodeSet [
 	^ self header < 0
 ]
 
-{ #category : #cleaning }
+{ #category : 'cleaning' }
 CompiledCode >> voidCogVMState [
 	"Tell the VM to remove all references to any machine code form of the method.
 	 This primitive must be called whenever a method is in use and modified.  This is
@@ -967,7 +999,7 @@ CompiledCode >> voidCogVMState [
 	^self flushCache
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompiledCode >> withAllBlocks [
 	| all |
 	all := IdentitySet new.
@@ -975,14 +1007,14 @@ CompiledCode >> withAllBlocks [
 	^all
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompiledCode >> withAllBlocksDo: aBlock [
 
 	aBlock value: self.
 	self allBlocksDo: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompiledCode >> withAllNestedLiteralsDo: aBlockClosure [
 	"This method traverses all the nested literals.
 	As a Block or Method can have literals in the nested blocks.
@@ -992,7 +1024,7 @@ CompiledCode >> withAllNestedLiteralsDo: aBlockClosure [
 		aCompiledCode literals do: aBlockClosure ]
 ]
 
-{ #category : #scanning }
+{ #category : 'scanning' }
 CompiledCode >> writesField: varIndex [
 	"Answer whether the receiver stores into the instance variable indexed by the argument."
 
@@ -1002,14 +1034,14 @@ CompiledCode >> writesField: varIndex [
 	^ self innerCompiledBlocksAnySatisfy: [ :cb | cb writesField: varIndex ]
 ]
 
-{ #category : #scanning }
+{ #category : 'scanning' }
 CompiledCode >> writesRef: literalAssociation [
 	"Answer whether the receiver stores into the argument."
 	(self localWritesRef: literalAssociation) ifTrue: [ ^ true ].
 	^ self innerCompiledBlocksAnySatisfy: [ :cb | cb writesRef: literalAssociation ]
 ]
 
-{ #category : #scanning }
+{ #category : 'scanning' }
 CompiledCode >> writesSlot: aSlot [
 	^aSlot isWrittenIn: self
 ]

@@ -1,6 +1,6 @@
-Extension { #name : #Form }
+Extension { #name : 'Form' }
 
-{ #category : #'*Graphics-Files-FileRegistry' }
+{ #category : '*Graphics-Files-FileRegistry' }
 Form class >> fileReaderServicesForFile: fullName suffix: suffix [
 	<fileService>
 
@@ -10,7 +10,7 @@ Form class >> fileReaderServicesForFile: fullName suffix: suffix [
 		ifFalse: [#()]
 ]
 
-{ #category : #'*Graphics-Files' }
+{ #category : '*Graphics-Files' }
 Form class >> fromBase64String: aBase64EncodedString [
 	"Convenient method to instantiate a Form from an image content encoded in base64 (used to store image data in a method for example".
 	"Encoded string can be obtained with:
@@ -19,7 +19,7 @@ Form class >> fromBase64String: aBase64EncodedString [
 	^ self fromBinaryStream: aBase64EncodedString base64Decoded asByteArray readStream
 ]
 
-{ #category : #'*Graphics-Files' }
+{ #category : '*Graphics-Files' }
 Form class >> fromBinaryStream: aBinaryStream [
 
 	"Read a Form or ColorForm from given file, using the first byte of the file to guess its format. Currently handles: GIF, uncompressed BMP, and new DisplayObject writeOn: formats, JPEG, and PCX. Return nil if the file could not be read or was of an unrecognized format."
@@ -34,7 +34,7 @@ Form class >> fromBinaryStream: aBinaryStream [
 	^ ImageReadWriter formFromStream: aBinaryStream
 ]
 
-{ #category : #'*Graphics-Files' }
+{ #category : '*Graphics-Files' }
 Form class >> fromFileNamed: fileName [
 	"Read a Form or ColorForm from the given file."
 
@@ -42,7 +42,7 @@ Form class >> fromFileNamed: fileName [
 			binaryReadStreamDo: [ :in | self fromBinaryStream: in ]
 ]
 
-{ #category : #'*Graphics-Files-FileRegistry' }
+{ #category : '*Graphics-Files-FileRegistry' }
 Form class >> openImageInWindow: fullName [
 	"Handle five file formats: GIF, JPG, PNG, Form storeOn: (run coded), and
 	BMP. Fail if file format is not recognized."
@@ -52,7 +52,7 @@ Form class >> openImageInWindow: fullName [
 	(ImageMorph withForm: image) openInWorld
 ]
 
-{ #category : #'*Graphics-Files' }
+{ #category : '*Graphics-Files' }
 Form >> readNativeResourceFrom: byteStream [
 	| img |
 	img := [ ImageReadWriter formFromStream: byteStream ]
@@ -67,7 +67,7 @@ Form >> readNativeResourceFrom: byteStream [
 		ifFalse: [ img displayOn: self ]
 ]
 
-{ #category : #'*Graphics-Files' }
+{ #category : '*Graphics-Files' }
 Form >> readResourceFrom: aStream [
 	"Store a resource representation of the receiver on aStream.
 	Must be specific to the receiver so that no code is filed out."
@@ -100,12 +100,12 @@ Form >> readResourceFrom: aStream [
 				to: bits size]
 ]
 
-{ #category : #'*Graphics-Files' }
+{ #category : '*Graphics-Files' }
 Form >> resourceTag [
 	^'FORM'
 ]
 
-{ #category : #'*Graphics-Files-FileRegistry' }
+{ #category : '*Graphics-Files-FileRegistry' }
 Form class >> serviceImageAsBackground [
 	"Answer a service for setting the desktop background from a given graphical file's contents"
 	<formService>
@@ -117,7 +117,7 @@ Form class >> serviceImageAsBackground [
 		buttonLabel: 'Background'
 ]
 
-{ #category : #'*Graphics-Files-FileRegistry' }
+{ #category : '*Graphics-Files-FileRegistry' }
 Form class >> serviceOpenImageInWindow [
 	"Answer a service for opening a graphic in a window"
 	<formService>
@@ -129,7 +129,7 @@ Form class >> serviceOpenImageInWindow [
 		buttonLabel: 'Open'
 ]
 
-{ #category : #'*Graphics-Files-FileRegistry' }
+{ #category : '*Graphics-Files-FileRegistry' }
 Form class >> services [
 	"Defines what options are available when a user drags and drop an image file (jpeg, png...) onto the pharo image. These options are defined by methods with the #formService pragma on this class."
 	| services |
@@ -142,13 +142,13 @@ Form class >> services [
 	^ services asArray
 ]
 
-{ #category : #'*Graphics-Files-FileRegistry' }
+{ #category : '*Graphics-Files-FileRegistry' }
 Form class >> setBackgroundFromImageFileNamed: aFileName [
 
 	(self fromFileNamed: aFileName) setAsBackground
 ]
 
-{ #category : #'*Graphics-Files' }
+{ #category : '*Graphics-Files' }
 Form >> storeResourceOn: aStream [
 	"Store a resource representation of the receiver on aStream.
 	Must be specific to the receiver so that no code is filed out."
@@ -165,12 +165,12 @@ Form >> storeResourceOn: aStream [
 	aStream nextPutAll: bits
 ]
 
-{ #category : #'*Graphics-Files' }
+{ #category : '*Graphics-Files' }
 Form >> writeBMPfileNamed: fName [  "Display writeBMPfileNamed: 'display.bmp'"
 	BMPReadWriter putForm: self onFileNamed: fName
 ]
 
-{ #category : #'*Graphics-Files' }
+{ #category : '*Graphics-Files' }
 Form >> writeJPEGfileNamed: fileName [
 	"Write a JPEG file to the given filename using default settings"
 
@@ -182,7 +182,7 @@ Form fromUser writeJPEGfileNamed: 'yourPatch.jpeg'
 "
 ]
 
-{ #category : #'*Graphics-Files' }
+{ #category : '*Graphics-Files' }
 Form >> writeJPEGfileNamed: fileName  progressive: aBoolean [
 	"Write a JPEG file to the given filename using default settings.  Make it progressive or not, depending on the boolean argument"
 
@@ -194,14 +194,14 @@ Form fromUser writeJPEGfileNamed: 'yourPatch.jpeg' progressive: true
 "
 ]
 
-{ #category : #'*Graphics-Files' }
+{ #category : '*Graphics-Files' }
 Form >> writeOnMovie: file [
 	"Write just my bits on the file."
 	self unhibernate.
 	bits writeUncompressedOn: file
 ]
 
-{ #category : #'*Graphics-Files' }
+{ #category : '*Graphics-Files' }
 Form >> writePNGFileNamed: fileName [
 	PNGReadWriter putForm: self onFileNamed: fileName
 ]

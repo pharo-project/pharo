@@ -2,17 +2,19 @@
 A NECEntryDescription is a holder for some information to be displayed.
 "
 Class {
-	#name : #NECEntryDescription,
-	#superclass : #Object,
+	#name : 'NECEntryDescription',
+	#superclass : 'Object',
 	#instVars : [
 		'title',
 		'description',
 		'label'
 	],
-	#category : #'NECompletion-Model'
+	#category : 'NECompletion-Model',
+	#package : 'NECompletion',
+	#tag : 'Model'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 NECEntryDescription class >> label: firstString [
 	^ self new
 		label: firstString
@@ -20,7 +22,7 @@ NECEntryDescription class >> label: firstString [
 		description: nil
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 NECEntryDescription class >> label: firstString title: secondString description: thirdString [
 	^ self new
 		label: firstString
@@ -28,25 +30,25 @@ NECEntryDescription class >> label: firstString title: secondString description:
 		description: thirdString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NECEntryDescription >> description [
   (description isNil or: [ description isEmpty ]) ifTrue: [ ^'-' ].
   ^description
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NECEntryDescription >> label [
 	^ label
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 NECEntryDescription >> label: firstString title: secondString description: thirdString [
 	label := firstString.
 	title := secondString.
 	description := thirdString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NECEntryDescription >> title [
 	^ title
 ]

@@ -1,6 +1,6 @@
-Extension { #name : #ClyCompositeScopeTest }
+Extension { #name : 'ClyCompositeScopeTest' }
 
-{ #category : #'*Calypso-SystemQueries-Tests' }
+{ #category : '*Calypso-SystemQueries-Tests' }
 ClyCompositeScopeTest >> testConvertingToInheritedScope [
 	| convertedScope |
 	scope := ClyCompositeScope on: {
@@ -19,7 +19,7 @@ ClyCompositeScopeTest >> testConvertingToInheritedScope [
 	self assert: convertedScope name equals: ClyClassScope inheritedScopeName
 ]
 
-{ #category : #'*Calypso-SystemQueries-Tests' }
+{ #category : '*Calypso-SystemQueries-Tests' }
 ClyCompositeScopeTest >> testConvertingToInheritingScope [
 	| convertedScope |
 	scope := ClyCompositeScope on: {
@@ -38,7 +38,7 @@ ClyCompositeScopeTest >> testConvertingToInheritingScope [
 	self assert: convertedScope name equals: ClyClassScope inheritingScopeName
 ]
 
-{ #category : #'*Calypso-SystemQueries-Tests' }
+{ #category : '*Calypso-SystemQueries-Tests' }
 ClyCompositeScopeTest >> testConvertingToInterestingClassScope [
 	| convertedScope |
 	scope := ClyCompositeScope on: {
@@ -56,7 +56,7 @@ ClyCompositeScopeTest >> testConvertingToInterestingClassScope [
 	self assert: convertedScope environment equals: environment
 ]
 
-{ #category : #'*Calypso-SystemQueries-Tests' }
+{ #category : '*Calypso-SystemQueries-Tests' }
 ClyCompositeScopeTest >> testConvertingToInterestingClassScopeShouldKeepScopeName [
 	| convertedScope |
 	scope := ClyCompositeScope on: {
@@ -68,7 +68,7 @@ ClyCompositeScopeTest >> testConvertingToInterestingClassScopeShouldKeepScopeNam
 	self assert: convertedScope name equals: 'test scope'
 ]
 
-{ #category : #'*Calypso-SystemQueries-Tests' }
+{ #category : '*Calypso-SystemQueries-Tests' }
 ClyCompositeScopeTest >> testConvertingToNewMetaLevel [
 	| convertedScope |
 	scope := ClyCompositeScope on: {
@@ -93,7 +93,7 @@ ClyCompositeScopeTest >> testConvertingToNewMetaLevel [
 		equals: {environment} asSet
 ]
 
-{ #category : #'*Calypso-SystemQueries-Tests' }
+{ #category : '*Calypso-SystemQueries-Tests' }
 ClyCompositeScopeTest >> testConvertingToNewMetaLevelShouldKeepScopeName [
 	| convertedScope |
 	scope := ClyCompositeScope on: {

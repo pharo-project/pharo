@@ -12,21 +12,23 @@ Internal Representation and Key Implementation Points.
 	displayBlock:		<BlockClosure>	two argument block
 "
 Class {
-	#name : #ClyTableColumn,
-	#superclass : #FTColumn,
+	#name : 'ClyTableColumn',
+	#superclass : 'FTColumn',
 	#instVars : [
 		'displayBlock'
 	],
-	#category : #'Calypso-Browser-Table'
+	#category : 'Calypso-Browser-Table',
+	#package : 'Calypso-Browser',
+	#tag : 'Table'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyTableColumn class >> id: id displayBlock: aBlock [
 	^(self id: id)
 		displayBlock: aBlock
 ]
 
-{ #category : #'cells creation' }
+{ #category : 'cells creation' }
 ClyTableColumn >> createCellFor: aDataSourceItem in: aQueryView [
 
 	| cell |
@@ -37,28 +39,28 @@ ClyTableColumn >> createCellFor: aDataSourceItem in: aQueryView [
 	^cell
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyTableColumn >> displayBlock [
 	^ displayBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyTableColumn >> displayBlock: anObject [
 	displayBlock := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyTableColumn >> displayItemName [
 	self displayItemPropertyBy: [ :item | item name ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyTableColumn >> displayItemPropertyBy: propertyBlock [
 	displayBlock := [ :cell :item |
 		cell label contents: (propertyBlock value: item browserItem) ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyTableColumn >> isMainColumn [
 
 	^ false

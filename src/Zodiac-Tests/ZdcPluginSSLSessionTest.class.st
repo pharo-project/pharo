@@ -3,21 +3,22 @@ ZdcPluginSSLSession Tests tests ZdcPluginSSLSession.
 
 "
 Class {
-	#name : #ZdcPluginSSLSessionTest,
-	#superclass : #TestCase,
+	#name : 'ZdcPluginSSLSessionTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'session'
 	],
-	#category : #'Zodiac-Tests'
+	#category : 'Zodiac-Tests',
+	#package : 'Zodiac-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ZdcPluginSSLSessionTest >> setUp [
 	super setUp.
 	session := ZdcPluginSSLSession new
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ZdcPluginSSLSessionTest >> tearDown [
 
 	session destroy.
@@ -25,7 +26,7 @@ ZdcPluginSSLSessionTest >> tearDown [
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZdcPluginSSLSessionTest >> testCertificateName [
 
 	self assert: session certificateName equals: nil.
@@ -43,7 +44,7 @@ ZdcPluginSSLSessionTest >> testCertificateName [
 	self assert: session certificateName equals: nil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZdcPluginSSLSessionTest >> testServerName [
 
 	[ session serverName; serverName: nil ] on: PrimitiveFailed do: [ ^ self skip ].

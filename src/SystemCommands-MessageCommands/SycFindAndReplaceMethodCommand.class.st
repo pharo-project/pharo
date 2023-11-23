@@ -2,26 +2,27 @@
 I am a command to find and replace selector in a range of methods, with a call to itself
 "
 Class {
-	#name : #SycFindAndReplaceMethodCommand,
-	#superclass : #SycChangeMessageSignatureCommand,
-	#category : #'SystemCommands-MessageCommands'
+	#name : 'SycFindAndReplaceMethodCommand',
+	#superclass : 'SycChangeMessageSignatureCommand',
+	#category : 'SystemCommands-MessageCommands',
+	#package : 'SystemCommands-MessageCommands'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 SycFindAndReplaceMethodCommand class >> canBeExecutedInContext: aToolContext [
 	^ aToolContext isMethodSelected
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycFindAndReplaceMethodCommand class >> defaultMenuIconName [
 	^#smallFind
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycFindAndReplaceMethodCommand >> applyResultInContext: aToolContext [
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycFindAndReplaceMethodCommand >> createRefactoring [
 
 	^ RBFindAndReplaceTransformation
@@ -31,17 +32,24 @@ SycFindAndReplaceMethodCommand >> createRefactoring [
 		inWholeHierarchy: self searchInTheWholeHierarchy
 ]
 
-{ #category : #execution }
+{ #category : 'accessing' }
 SycFindAndReplaceMethodCommand >> defaultMenuItemName [
-	^'Find and replace'
+
+	^ self refactoringClass menuItemString
 ]
 
-{ #category : #execution }
+{ #category : 'factory method' }
+SycFindAndReplaceMethodCommand >> refactoringClass [
+
+	^ RBFindAndReplaceTransformation
+]
+
+{ #category : 'execution' }
 SycFindAndReplaceMethodCommand >> resultMessageSelector [
 	^ nil
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SycFindAndReplaceMethodCommand >> searchInTheWholeHierarchy [
 
 	^ originalMessage contextUser origin subclasses

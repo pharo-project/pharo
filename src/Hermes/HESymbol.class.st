@@ -4,17 +4,19 @@ I just extend the HEByteString representation.
 I just add a conversion from String to Symbol after reading the value.
 "
 Class {
-	#name : #HESymbol,
-	#superclass : #HEByteString,
-	#category : #'Hermes-Model'
+	#name : 'HESymbol',
+	#superclass : 'HEByteString',
+	#category : 'Hermes-Model',
+	#package : 'Hermes',
+	#tag : 'Model'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HESymbol class >> tag [
 	^ 9
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 HESymbol >> doConvertValue: aValue [
 	^ aValue asSymbol
 ]

@@ -2,12 +2,14 @@
 SUnit test for PharoDocComment
 "
 Class {
-	#name : #PharoDocCommentTest,
-	#superclass : #TestCase,
-	#category : #'PharoDocComment-Tests-Base'
+	#name : 'PharoDocCommentTest',
+	#superclass : 'TestCase',
+	#category : 'PharoDocComment-Tests-Base',
+	#package : 'PharoDocComment-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 PharoDocCommentTest >> testAssociation [
 
 	|association|
@@ -17,7 +19,7 @@ PharoDocCommentTest >> testAssociation [
 		assert: association value equals: 7
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PharoDocCommentTest >> testExpression [
 	"3 + 4 >>> 7"
 	| node |
@@ -28,7 +30,7 @@ PharoDocCommentTest >> testExpression [
 	(CommentTestCase for: node) testIt
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PharoDocCommentTest >> testExpressionNoAssociation [
 
 	"This one is not syntaxically valid since the last statement is not the triple >"
@@ -41,7 +43,7 @@ PharoDocCommentTest >> testExpressionNoAssociation [
 	self should: [ (CommentTestCase for: node) testIt ] raise: Error
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PharoDocCommentTest >> testExpressionNoAssociation2 [
 
 	"This one is syntaxically valid, but does not return an association at runtime."
@@ -54,7 +56,7 @@ PharoDocCommentTest >> testExpressionNoAssociation2 [
 	self should: [ (CommentTestCase for: node) testIt ] raise: TestFailure
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PharoDocCommentTest >> testExpressionReferencingSelf [
 
 	"This one shows that self is correclty bound to the class"
@@ -67,7 +69,7 @@ PharoDocCommentTest >> testExpressionReferencingSelf [
 	(CommentTestCase for: node) testIt
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PharoDocCommentTest >> testExpressionRuntimeError [
 	"nil + nil >>> nil"
 	| node |
@@ -77,7 +79,7 @@ PharoDocCommentTest >> testExpressionRuntimeError [
 	self should: [ (CommentTestCase for: node) testIt ] raise: Error
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PharoDocCommentTest >> testExpressionSyntaxError [
 	"3 + 4) >>> 7"
 	| node |
@@ -90,7 +92,7 @@ PharoDocCommentTest >> testExpressionSyntaxError [
 	self should: [ (CommentTestCase for: node) testIt ] raise: CodeError
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PharoDocCommentTest >> testExpressionZero [
 
 	"This one feels like a doc comment but there is no real triple > message send in the AST."
@@ -103,7 +105,7 @@ PharoDocCommentTest >> testExpressionZero [
 	self should: [ (CommentTestCase for: node) testIt ] raise: Error
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PharoDocCommentTest >> testMultipleDocComments [
 	"3 + 4 >>> 7"
 	"1 + 2 >>> 3."
@@ -114,7 +116,7 @@ PharoDocCommentTest >> testMultipleDocComments [
 	self assert: espression evaluate equals: 3->3
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PharoDocCommentTest >> testMultipleDocCommentsInOneComment [
 	"3 + 4 >>> 7.
 	1 + 2 >>> 3."
@@ -125,7 +127,7 @@ PharoDocCommentTest >> testMultipleDocCommentsInOneComment [
 	self should: [ (CommentTestCase for: node) testIt ] raise: Error
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PharoDocCommentTest >> testNestedComments [
 	"3 + 4 ""the sum"" >>> ""is seven"" 7 "
 	| node |
@@ -136,7 +138,7 @@ PharoDocCommentTest >> testNestedComments [
 	(CommentTestCase for: node) testIt
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PharoDocCommentTest >> testNestedInsanity [
 	"""Seriously, you should not do what follows""
 		""3 + 4 """"a nested executable comment with a nested nested comment

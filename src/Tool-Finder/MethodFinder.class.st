@@ -12,35 +12,40 @@ Then, it will lookup in the receiver's hierarchy the approuved and forbidden met
 NewMethodFinder new findMethodsByExampleInput: #( 1 2 ) andExpectedResult: 3
 "
 Class {
-	#name : #MethodFinder,
-	#superclass : #Object,
-	#category : #'Tool-Finder-MethodFinder\r\t'
+	#name : 'MethodFinder',
+	#superclass : 'Object',
+	#category : 'Tool-Finder-MethodFinder',
+	#package : 'Tool-Finder',
+	#tag : 'MethodFinder'
 }
 
-{ #category : #'public access' }
+{ #category : 'public access' }
 MethodFinder >> findMethodsByExampleInput: inputCollection andExpectedResult: expectedResult [
 	"Search for methods which giving each elements of input returns the corresponding elements of outputs."
-
-	^ (self possibleSolutionsForInput: inputCollection)
-			select: [ :send | send resultIn: expectedResult ]
+	
+	^ (self possibleSolutionsForInput: inputCollection) select: [ :send |
+		 
+		  send resultIn: expectedResult evaluate ]
 ]
 
-{ #category : #'public access' }
+{ #category : 'public access' }
 MethodFinder >> possibleSolutionsForInput: inputCollection [
+
 	| sends |
+	
 	sends := OrderedCollection new.
-	inputCollection
-		permutationsDo: [ :permutation |
-			| foundPermutationSends args receiver |
-			args := permutation allButFirst.
-			receiver := permutation first.
-			foundPermutationSends := (receiver class
-				allSelectorsToTestInMethodFinderWithArity: inputCollection size - 1)
-				collect:
-					[ :method | MethodFinderSend
-									receiver: receiver deepCopy
-									selector: method
-									withArguments: args deepCopy ].
-			sends addAll: foundPermutationSends ].
+	inputCollection permutationsDo: [ :permutation |
+		| foundPermutationSends args receiver |
+		args := permutation allButFirst.
+		receiver := permutation first.
+		foundPermutationSends := (receiver evaluate class
+			                          allSelectorsToTestInMethodFinderWithArity:
+			                          inputCollection size - 1) collect: [
+			                         :method |
+			                         MethodFinderSend
+				                         receiver: receiver evaluate
+				                         selector: method
+				                         withArguments: (args collect: #evaluate) ].
+		sends addAll: foundPermutationSends ].
 	^ sends
 ]

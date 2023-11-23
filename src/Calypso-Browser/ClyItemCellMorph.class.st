@@ -9,26 +9,28 @@ Internal Representation and Key Implementation Points.
 	label:		<Morph>
 "
 Class {
-	#name : #ClyItemCellMorph,
-	#superclass : #FTCellMorph,
+	#name : 'ClyItemCellMorph',
+	#superclass : 'FTCellMorph',
 	#instVars : [
 		'label'
 	],
-	#category : #'Calypso-Browser-Table'
+	#category : 'Calypso-Browser-Table',
+	#package : 'Calypso-Browser',
+	#tag : 'Table'
 }
 
-{ #category : #building }
+{ #category : 'building' }
 ClyItemCellMorph >> build [
 	self addMorphBack: label
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyItemCellMorph >> initialize [
 	super initialize.
 	label := StringMorph new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyItemCellMorph >> label [
 	^ label
 ]

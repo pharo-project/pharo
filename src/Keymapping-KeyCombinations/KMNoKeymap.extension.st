@@ -1,6 +1,6 @@
-Extension { #name : #KMNoKeymap }
+Extension { #name : 'KMNoKeymap' }
 
-{ #category : #'*Keymapping-KeyCombinations' }
+{ #category : '*Keymapping-KeyCombinations' }
 KMNoKeymap >> shortcut [
 	^ KMNoShortcut new
 ]

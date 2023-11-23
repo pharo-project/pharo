@@ -1,56 +1,103 @@
 Class {
-	#name : #HaltTest,
-	#superclass : #TestCase,
-	#category : #'Debugging-Utils-Tests'
+	#name : 'HaltTest',
+	#superclass : 'TestCase',
+	#category : 'Debugging-Utils-Tests',
+	#package : 'Debugging-Utils-Tests'
 }
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 HaltTest >> a [
 	self b
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 HaltTest >> a1 [
 	self b1
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 HaltTest >> b [
 	<haltOrBreakpointForTesting>
 	self haltIf: #testHaltIf
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 HaltTest >> b1 [
 	<haltOrBreakpointForTesting>
 	self haltIf: #testasdasdfHaltIf
 ]
 
-{ #category : #helpers }
+{ #category : 'tests' }
+HaltTest >> haltFromCount [
+	<haltOrBreakpointForTesting>
+
+	| anObject haltCount |
+	anObject := Object new.
+
+	"Halts regardless of whether HaltOnce is false for the image"
+	self shouldHaltWhen: [ anObject haltFromCount: 1 ].
+
+	"Should halt if executed enough times"	
+	self shouldHaltAfter: 2 times: [ anObject haltFromCount: 2 ].
+	
+	"Should still halt if executed again after the count is reached"	
+	self shouldHaltAfter: 2 times: [ anObject haltFromCount: 2 ].
+	
+	"Should not halt if not executed enough times"	
+	self shouldntHaltAfter: 2 times: [ anObject haltFromCount: 3 ].
+	
+	"Should continue halting after the count is reached"
+	haltCount := 0.
+	10 timesRepeat: [ [ anObject haltFromCount: 3 ]
+				on: Halt
+				do: [ haltCount := haltCount + 1 ] ].
+	self assert: haltCount equals: 8
+]
+
+{ #category : 'tests' }
+HaltTest >> haltOnCount [
+	<haltOrBreakpointForTesting>
+
+	| anObject haltCount |
+	anObject := Object new.
+
+	"Should not halt if not executed enough times"
+	self shouldntHaltAfter: 2 times: [ anObject haltOnCount: 3 ].
+	self shouldHaltAfter: 3 times: [ anObject haltOnCount: 3 ].
+
+	"Should stop halting after the count is reached"
+	haltCount := 0.
+	10 timesRepeat: [ [ anObject haltOnCount: 3 ]
+				on: Halt
+				do: [ haltCount := haltCount + 1 ] ].
+	self assert: haltCount equals: 1
+]
+
+{ #category : 'helpers' }
 HaltTest >> shouldHaltAfter: aNumber times: aBlock [
 	
 	self shouldHaltWhen: [ aNumber timesRepeat: aBlock ].
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 HaltTest >> shouldHaltWhen: aBlock [
 
 	self should: aBlock raise: Halt.
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 HaltTest >> shouldntHaltAfter: aNumber times: aBlock [
 	
 	self shouldntHaltWhen: [ aNumber timesRepeat: aBlock ].
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 HaltTest >> shouldntHaltWhen: aBlock [
 
 	self shouldnt: aBlock raise: Halt.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HaltTest >> testContainsHalt [
 	
 	| annonClass |
@@ -77,34 +124,19 @@ HaltTest >> testContainsHalt [
 	assert: (annonClass >> #m5) containsHalt
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HaltTest >> testHaltFromCount [
+
 	<haltOrBreakpointForTesting>
-
-	| anObject haltCount |
-	anObject := Object new.
-	thisContext method recompile. "reset state of #halOnce here"
-	"Halts regardless of whether HaltOnce is false for the image"
-	self shouldHaltWhen: [ anObject haltFromCount: 1 ].
-
-	"Should halt if executed enough times"	
-	self shouldHaltAfter: 2 times: [ anObject haltFromCount: 2 ].
 	
-	"Should still halt if executed again after the count is reached"	
-	self shouldHaltAfter: 2 times: [ anObject haltFromCount: 2 ].
+	"Test is in another method due to recompilation is necessary to restart the halt counters"
+	self haltFromCount.
 	
-	"Should not halt if not executed enough times"	
-	self shouldntHaltAfter: 2 times: [ anObject haltFromCount: 3 ].
-	
-	"Should continue halting after the count is reached"
-	haltCount := 0.
-	10 timesRepeat: [ [ anObject haltFromCount: 3 ]
-				on: Halt
-				do: [ haltCount := haltCount + 1 ] ].
-	self assert: haltCount equals: 8
+	"Recompiling this test method itself has problems on debuging (specifically on (un)install metalinks for breakpoints)"
+	(self class >> #haltFromCount) recompile "Recompile for next execution"
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HaltTest >> testHaltIf [
 	<haltOrBreakpointForTesting>
 
@@ -124,34 +156,26 @@ HaltTest >> testHaltIf [
 	self shouldntHaltWhen: [self haltIf: [:receiver | receiver class ~= self class]].
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HaltTest >> testHaltIfNil [
 	<haltOrBreakpointForTesting>
 
 	self should: [ nil haltIfNil] raise: Halt
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HaltTest >> testHaltOnCount [
+
 	<haltOrBreakpointForTesting>
-
-	| anObject haltCount |
-	anObject := Object new.
-	thisContext method recompile.
-
-	"Should not halt if not executed enough times"
-	self shouldntHaltAfter: 2 times: [ anObject haltOnCount: 3 ].
-	self shouldHaltAfter: 3 times: [ anObject haltOnCount: 3 ].
-
-	"Should stop halting after the count is reached"
-	haltCount := 0.
-	10 timesRepeat: [ [ anObject haltOnCount: 3 ]
-				on: Halt
-				do: [ haltCount := haltCount + 1 ] ].
-	self assert: haltCount equals: 1
+	
+	"Test is in another method due to recompilation is necessary to restart the halt counters"
+	self haltOnCount.
+	
+	"Recompiling this test method itself has problems on debuging (specifically on (un)install metalinks for breakpoints)"
+	(self class >> #haltOnCount) recompile "Recompile for next execution"
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HaltTest >> testHaltOnce [
 	<haltOrBreakpointForTesting>
 	| anObject block |

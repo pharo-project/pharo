@@ -1,16 +1,17 @@
 Class {
-	#name : #ClyAllProblemMethodsTest,
-	#superclass : #ClyMethodQueryTest,
-	#category : #'Calypso-SystemPlugins-Critic-Queries-Tests'
+	#name : 'ClyAllProblemMethodsTest',
+	#superclass : 'ClyMethodQueryTest',
+	#category : 'Calypso-SystemPlugins-Critic-Queries-Tests',
+	#package : 'Calypso-SystemPlugins-Critic-Queries-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClyAllProblemMethodsTest >> createQuery [
 	^ClyAllProblemMethodQuery
 		from: ClyClassScope of: ClyClassWithProblemMethods in: environment
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyAllProblemMethodsTest >> testCheckIfEmpty [
 	query scope: (ClyMethodScope
 		of: (ClyClassWithProblemMethods >> #methodWithHalt) in: environment).
@@ -22,7 +23,7 @@ ClyAllProblemMethodsTest >> testCheckIfEmpty [
 	self assert: query checkEmptyResult
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyAllProblemMethodsTest >> testExecution [
 
 	self executeQuery.
@@ -30,19 +31,19 @@ ClyAllProblemMethodsTest >> testExecution [
 	self assert: foundSelectors equals: #(methodWithHalt methodWithHalt2)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyAllProblemMethodsTest >> testNotSelectsMethodWithCritiquesWhenTheyNotComputedYet [
 
 	self deny: (query selectsMethod: (ClyClassWithProblemMethods >> #methodWithHalt))
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyAllProblemMethodsTest >> testNotSelectsMethodWithoutCritiques [
 
 	self deny: (query selectsMethod: (ClyClassWithProblemMethods >> #methodWithoutCritiques))
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyAllProblemMethodsTest >> testSelectsMethodWithCritiquesWhenTheyExistAndComputedInAdvance [
 
 	| critiques |

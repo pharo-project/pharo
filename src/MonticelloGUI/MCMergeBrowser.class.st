@@ -2,23 +2,26 @@
 Browser to merge changes
 "
 Class {
-	#name : #MCMergeBrowser,
-	#superclass : #MCPatchBrowser,
+	#name : 'MCMergeBrowser',
+	#superclass : 'MCCodeTool',
 	#instVars : [
 		'conflicts',
-		'merger'
+		'merger',
+		'selection'
 	],
-	#category : #'MonticelloGUI-Tools'
+	#category : 'MonticelloGUI-Tools',
+	#package : 'MonticelloGUI',
+	#tag : 'Tools'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MCMergeBrowser class >> resolveConflictsInMerger: aMerger [
 	| inst |
 	inst := self new merger: aMerger.
 	^ inst showModally ifNil: [false]
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 MCMergeBrowser >> buttonSpecs [
 	^ #((Merge merge 'Proceed with the merge' canMerge)
 		 (Cancel cancel 'Cancel the merge')
@@ -29,17 +32,32 @@ MCMergeBrowser >> buttonSpecs [
 )
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MCMergeBrowser >> canMerge [
 	^ merger isMerged
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MCMergeBrowser >> cancel [
 	self answer: false
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
+MCMergeBrowser >> changeSetNameForInstall [
+	"Answer the name of the change set into which my selection will be installed.
+	Derive this from my label.
+	If I have no label, use the current change set."
+
+	| tokens |
+	label ifNil: [ ^ChangeSet current name ].
+	tokens := label findTokens: ' '.
+	tokens removeAllFoundIn: { 'changes'. 'between'. 'and' }.
+	(tokens size = 3 and: [ tokens second = '<working' ]) ifTrue: [ ^tokens first, '-to-working' ].
+	tokens size = 2 ifFalse: [ ^'InstalledPatches' ].
+	^'{1}-to-{2}' format: tokens 
+]
+
+{ #category : 'actions' }
 MCMergeBrowser >> chooseAllNewerConflicts [
 	"Notify the potential new state of canMerge."
 	
@@ -47,7 +65,7 @@ MCMergeBrowser >> chooseAllNewerConflicts [
 	self changed: #text; changed: #list; changed: #canMerge
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MCMergeBrowser >> chooseAllOlderConflicts [
 	"Notify the potential new state of canMerge."
 	
@@ -55,7 +73,7 @@ MCMergeBrowser >> chooseAllOlderConflicts [
 	self changed: #text; changed: #list; changed: #canMerge
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MCMergeBrowser >> chooseAllUnchosenLocal [
 	"Notify the potential new state of canMerge."
 	
@@ -63,7 +81,7 @@ MCMergeBrowser >> chooseAllUnchosenLocal [
 	self changed: #text; changed: #list; changed: #canMerge
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MCMergeBrowser >> chooseAllUnchosenRemote [
 	"Notify the potential new state of canMerge."
 	
@@ -71,7 +89,7 @@ MCMergeBrowser >> chooseAllUnchosenRemote [
 	self changed: #text; changed: #list; changed: #canMerge
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MCMergeBrowser >> chooseLocal [
 	"Notify the potential new state of canMerge."
 	
@@ -80,7 +98,7 @@ MCMergeBrowser >> chooseLocal [
 		self changed: #text; changed: #list; changed: #canMerge]
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MCMergeBrowser >> chooseRemote [
 	"Notify the potential new state of canMerge."
 	
@@ -89,26 +107,26 @@ MCMergeBrowser >> chooseRemote [
 		self changed: #text; changed: #list; changed: #canMerge]
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MCMergeBrowser >> clearChoice [
 	self conflictSelectionDo:
 		[selection clearChoice.
 		self changed: #text; changed: #list]
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MCMergeBrowser >> conflictSelectionDo: aBlock [
 	self selectionIsConflicted
 		ifTrue: aBlock
 		ifFalse: [self inform: 'You must have a conflict selected']
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 MCMergeBrowser >> defaultLabel [
 	^ 'Merge Browser'
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MCMergeBrowser >> getConflictMenu: aMenu [
 	selection remoteChosen
 		ifTrue: [aMenu add: 'Undo keep change' target: self selector: #clearChoice]
@@ -119,7 +137,7 @@ MCMergeBrowser >> getConflictMenu: aMenu [
 	^ aMenu
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'morphic ui' }
 MCMergeBrowser >> getMenu: aMenu [
 	selection ifNil: [^ aMenu].
 	^ self selectionIsConflicted
@@ -127,52 +145,143 @@ MCMergeBrowser >> getMenu: aMenu [
 		ifFalse: [self getOperationMenu: aMenu]
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MCMergeBrowser >> getOperationMenu: aMenu [
 	^ aMenu
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MCMergeBrowser >> innerButtonRow [
 	^ self buttonRow:
 		#((Keep chooseRemote 'keep the selected change' selectionIsConflicted)
 		  (Reject chooseLocal 'reject the selected change' selectionIsConflicted))
 ]
 
-{ #category : #accessing }
+{ #category : 'actions' }
+MCMergeBrowser >> installSelection [
+	| loader |
+	selection ifNotNil:
+		[loader := MCPackageLoader new.
+		selection applyTo: loader.
+		loader loadWithName: self changeSetNameForInstall ]
+]
+
+{ #category : 'selecting' }
+MCMergeBrowser >> invert [
+	items := items collect: [:ea | ea inverse].
+	self changed: #list; changed: #text; changed: #selection
+]
+
+{ #category : 'accessing' }
 MCMergeBrowser >> items [
 	^ conflicts, items
 ]
 
-{ #category : #actions }
+{ #category : 'accessing' }
+MCMergeBrowser >> list [
+	^ self items collect: [:ea | ea summary]
+]
+
+{ #category : 'actions' }
 MCMergeBrowser >> merge [
 	merger isMerged
 		ifFalse: [self inform: 'You must resolve all the conflicts first']
 		ifTrue: [self answer: true] 
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MCMergeBrowser >> merger: aMerger [
 	merger := aMerger.
 	items := aMerger operations asSortedCollection.
 	conflicts := aMerger conflicts sort: [:a :b | a operation <= b operation].
 ]
 
-{ #category : #'morphic ui' }
-MCMergeBrowser >> selection: aNumber [
-	"Notify change of conflicts too."
-	
-	super selection: aNumber.
-	self changed: #selectionIsConflicted
+{ #category : 'accessing' }
+MCMergeBrowser >> patch: aPatch [
+	items := aPatch operations asSortedCollection
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
+MCMergeBrowser >> revertSelection [
+	| loader |
+	selection ifNotNil:
+		[loader := MCPackageLoader new.
+		selection inverse applyTo: loader.
+		loader loadWithName: self changeSetNameForInstall ]
+]
+
+{ #category : 'subclassresponsibility' }
+MCMergeBrowser >> selectedClass [
+	| definition |
+	selection ifNil: [ ^ nil ].
+	(definition := selection definition) ifNil: [ ^ nil ].
+	definition isMethodDefinition
+		ifFalse: [ ^ nil ].
+	^ Smalltalk globals at: definition className ifAbsent: [  ]
+]
+
+{ #category : 'subclassresponsibility' }
+MCMergeBrowser >> selectedClassOrMetaClass [
+	| definition |
+	selection ifNil: [ ^nil ].
+	(definition := selection definition) ifNil: [ ^nil ].
+	definition isMethodDefinition ifFalse: [ ^nil ].
+	^definition actualClass
+]
+
+{ #category : 'subclassresponsibility' }
+MCMergeBrowser >> selectedMessageCategoryName [
+	| definition |
+	selection ifNil: [ ^nil ].
+	(definition := selection definition) ifNil: [ ^nil ].
+	definition isMethodDefinition ifFalse: [ ^nil ].
+	^definition category
+]
+
+{ #category : 'subclassresponsibility' }
+MCMergeBrowser >> selectedMessageName [
+	| definition |
+	selection ifNil: [ ^nil ].
+	(definition := selection definition) ifNil: [ ^nil ].
+	definition isMethodDefinition ifFalse: [ ^nil ].
+	^definition  selector
+]
+
+{ #category : 'selecting' }
+MCMergeBrowser >> selection [
+	^ selection 
+		ifNil: [0]
+		ifNotNil: [self items indexOf: selection]
+]
+
+{ #category : 'morphic ui' }
+MCMergeBrowser >> selection: aNumber [
+	"Notify change of conflicts too."
+
+	selection := aNumber = 0 ifFalse: [ self items at: aNumber ].
+	self
+		changed: #selection;
+		changed: #text;
+		changed: #selectionIsConflicted
+]
+
+{ #category : 'actions' }
 MCMergeBrowser >> selectionIsConflicted [
 	selection ifNil: [ ^ false ].
 	^ selection isConflict
 ]
 
-{ #category : #'morphic ui' }
+{ #category : 'text' }
+MCMergeBrowser >> text [
+	^ selection ifNil: [''] ifNotNil: [selection source]
+]
+
+{ #category : 'text' }
+MCMergeBrowser >> text: aTextOrString [
+	self changed: #text
+]
+
+{ #category : 'morphic ui' }
 MCMergeBrowser >> widgetSpecs [
 	"ToolBuilder doesn't know about innerButtonRow. Made explicit here."
 

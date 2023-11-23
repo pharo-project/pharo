@@ -12,42 +12,44 @@ Instances of myself is answered by FLMaterializer>>materialize, #materializeObje
 Use #header, #root and #additionalObjectAt: to retrieve objects from a materialization. If my instance was the answer to #materializeObjectCollection you can retrieve all of the objects with #objects and the respective headers with #headers.
 "
 Class {
-	#name : #FLMaterializedObjects,
-	#superclass : #Object,
+	#name : 'FLMaterializedObjects',
+	#superclass : 'Object',
 	#instVars : [
 		'objects',
 		'roots',
 		'headers'
 	],
-	#category : #'Fuel-Core-Base'
+	#category : 'Fuel-Core-Base',
+	#package : 'Fuel-Core',
+	#tag : 'Base'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLMaterializedObjects >> addHeader: aHeader [
 	headers add: aHeader
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLMaterializedObjects >> addObjects: aCollection [
 	objects add: aCollection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLMaterializedObjects >> addRoot: anObject [
 	roots add: anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLMaterializedObjects >> additionalObjectAt: anObject [
 	^ self header additionalObjectAt: anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLMaterializedObjects >> header [
 	^ headers last
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FLMaterializedObjects >> initialize [
 	super initialize.
 	
@@ -56,17 +58,17 @@ FLMaterializedObjects >> initialize [
 	objects := OrderedCollection new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLMaterializedObjects >> objects [
 	^ objects last
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLMaterializedObjects >> root [
 	^ roots last
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLMaterializedObjects >> roots [
 	^ roots
 ]

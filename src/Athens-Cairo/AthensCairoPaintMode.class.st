@@ -5,8 +5,8 @@ for the list and description of paint modes supported by Cairo library, see
 http://cairographics.org/operators/
 "
 Class {
-	#name : #AthensCairoPaintMode,
-	#superclass : #AthensPaintMode,
+	#name : 'AthensCairoPaintMode',
+	#superclass : 'AthensPaintMode',
 	#traits : 'TCairoLibrary',
 	#classTraits : 'TCairoLibrary classTrait',
 	#instVars : [
@@ -15,22 +15,24 @@ Class {
 	#pools : [
 		'AthensCairoDefinitions'
 	],
-	#category : #'Athens-Cairo-Paints'
+	#category : 'Athens-Cairo-Paints',
+	#package : 'Athens-Cairo',
+	#tag : 'Paints'
 }
 
-{ #category : #modes }
+{ #category : 'modes' }
 AthensCairoPaintMode >> add [
 
 	^ self setOperator: CAIRO_OPERATOR_ADD
 ]
 
-{ #category : #modes }
+{ #category : 'modes' }
 AthensCairoPaintMode >> atop [
 
 	^ self setOperator: CAIRO_OPERATOR_ATOP
 ]
 
-{ #category : #capabilities }
+{ #category : 'capabilities' }
 AthensCairoPaintMode >> availableModes [
 
 	^ #(
@@ -66,12 +68,12 @@ AthensCairoPaintMode >> availableModes [
 	)
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AthensCairoPaintMode >> canvas: aCanvas [
 	canvas := aCanvas
 ]
 
-{ #category : #modes }
+{ #category : 'modes' }
 AthensCairoPaintMode >> clear [
 	"Set 'clear' drawing mode.
 
@@ -80,25 +82,25 @@ AthensCairoPaintMode >> clear [
 	^ self setOperator: CAIRO_OPERATOR_CLEAR
 ]
 
-{ #category : #modes }
+{ #category : 'modes' }
 AthensCairoPaintMode >> colorBurn [
 
 	^ self setOperator: CAIRO_OPERATOR_COLOR_BURN
 ]
 
-{ #category : #modes }
+{ #category : 'modes' }
 AthensCairoPaintMode >> colorDodge [
 
 	^ self setOperator: CAIRO_OPERATOR_COLOR_DODGE
 ]
 
-{ #category : #modes }
+{ #category : 'modes' }
 AthensCairoPaintMode >> darken [
 
 	^ self setOperator: CAIRO_OPERATOR_DARKEN
 ]
 
-{ #category : #modes }
+{ #category : 'modes' }
 AthensCairoPaintMode >> dest [
 	"Set 'dest' drawing mode.
 
@@ -107,103 +109,103 @@ AthensCairoPaintMode >> dest [
 	^ self setOperator: CAIRO_OPERATOR_DEST
 ]
 
-{ #category : #modes }
+{ #category : 'modes' }
 AthensCairoPaintMode >> destAtop [
 
 	^ self setOperator: CAIRO_OPERATOR_DEST_ATOP
 ]
 
-{ #category : #modes }
+{ #category : 'modes' }
 AthensCairoPaintMode >> destIn [
 
 	^ self setOperator: CAIRO_OPERATOR_DEST_IN
 ]
 
-{ #category : #modes }
+{ #category : 'modes' }
 AthensCairoPaintMode >> destOut [
 
 	^ self setOperator: CAIRO_OPERATOR_DEST_OUT
 ]
 
-{ #category : #modes }
+{ #category : 'modes' }
 AthensCairoPaintMode >> destOver [
 
 	^ self setOperator: CAIRO_OPERATOR_DEST_OVER
 ]
 
-{ #category : #modes }
+{ #category : 'modes' }
 AthensCairoPaintMode >> difference [
 
 	^ self setOperator: CAIRO_OPERATOR_DIFFERENCE
 ]
 
-{ #category : #modes }
+{ #category : 'modes' }
 AthensCairoPaintMode >> exclusion [
 
 	^ self setOperator: CAIRO_OPERATOR_EXCLUSION
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AthensCairoPaintMode >> getOperator [
 	^ self ffiCall: #(
 		cairo_operator_t cairo_get_operator (AthensCairoCanvas canvas) )
 ]
 
-{ #category : #modes }
+{ #category : 'modes' }
 AthensCairoPaintMode >> hardLight [
 
 	^ self setOperator: CAIRO_OPERATOR_HARD_LIGHT
 ]
 
-{ #category : #modes }
+{ #category : 'modes' }
 AthensCairoPaintMode >> hslColor [
 
 	^ self setOperator: CAIRO_OPERATOR_HSL_COLOR
 ]
 
-{ #category : #modes }
+{ #category : 'modes' }
 AthensCairoPaintMode >> hslHue [
 
 	^ self setOperator: CAIRO_OPERATOR_HSL_HUE
 ]
 
-{ #category : #modes }
+{ #category : 'modes' }
 AthensCairoPaintMode >> hslLuminosity [
 
 	^ self setOperator: CAIRO_OPERATOR_HSL_LUMINOSITY
 ]
 
-{ #category : #modes }
+{ #category : 'modes' }
 AthensCairoPaintMode >> hslSaturation [
 
 	^ self setOperator: CAIRO_OPERATOR_HSL_SATURATION
 ]
 
-{ #category : #modes }
+{ #category : 'modes' }
 AthensCairoPaintMode >> in [
 
 	^ self setOperator: CAIRO_OPERATOR_IN
 ]
 
-{ #category : #modes }
+{ #category : 'modes' }
 AthensCairoPaintMode >> lighten [
 
 	^ self setOperator: CAIRO_OPERATOR_LIGHTEN
 ]
 
-{ #category : #modes }
+{ #category : 'modes' }
 AthensCairoPaintMode >> multiply [
 
 	^ self setOperator: CAIRO_OPERATOR_MULTIPLY
 ]
 
-{ #category : #modes }
+{ #category : 'modes' }
 AthensCairoPaintMode >> out [
 
 	^ self setOperator: CAIRO_OPERATOR_OUT
 ]
 
-{ #category : #modes }
+{ #category : 'modes' }
 AthensCairoPaintMode >> over [
 	"Set 'over' drawing mode. This is default paint mode.
 
@@ -212,13 +214,13 @@ AthensCairoPaintMode >> over [
 	^ self setOperator: CAIRO_OPERATOR_OVER
 ]
 
-{ #category : #modes }
+{ #category : 'modes' }
 AthensCairoPaintMode >> overlay [
 
 	^ self setOperator: CAIRO_OPERATOR_OVERLAY
 ]
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 AthensCairoPaintMode >> restoreAfter: aBlock [
 	| op |
 	op := self getOperator.
@@ -226,30 +228,30 @@ AthensCairoPaintMode >> restoreAfter: aBlock [
 	aBlock ensure: [ self setOperator: op ]
 ]
 
-{ #category : #modes }
+{ #category : 'modes' }
 AthensCairoPaintMode >> saturate [
 
 	^ self setOperator: CAIRO_OPERATOR_SATURATE
 ]
 
-{ #category : #modes }
+{ #category : 'modes' }
 AthensCairoPaintMode >> screen [
 
 	^ self setOperator: CAIRO_OPERATOR_SCREEN
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AthensCairoPaintMode >> setOperator: aCairoOperatorT [
 	^ self ffiCall: #(void cairo_set_operator (AthensCairoCanvas canvas, cairo_operator_t aCairoOperatorT) )
 ]
 
-{ #category : #modes }
+{ #category : 'modes' }
 AthensCairoPaintMode >> softLight [
 
 	^ self setOperator: CAIRO_OPERATOR_SOFT_LIGHT
 ]
 
-{ #category : #modes }
+{ #category : 'modes' }
 AthensCairoPaintMode >> source [
 	"Set 'source' drawing mode.
 
@@ -258,7 +260,7 @@ AthensCairoPaintMode >> source [
 	^ self setOperator: CAIRO_OPERATOR_SOURCE
 ]
 
-{ #category : #modes }
+{ #category : 'modes' }
 AthensCairoPaintMode >> xor [
 
 	^ self setOperator: CAIRO_OPERATOR_XOR

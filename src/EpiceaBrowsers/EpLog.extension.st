@@ -1,13 +1,13 @@
-Extension { #name : #EpLog }
+Extension { #name : 'EpLog' }
 
-{ #category : #'*EpiceaBrowsers' }
+{ #category : '*EpiceaBrowsers' }
 EpLog >> browseEvents [
 	"Browse all events from my head."
 
 	^ EpLogBrowserPresenter openWithLog: self
 ]
 
-{ #category : #'*EpiceaBrowsers' }
+{ #category : '*EpiceaBrowsers' }
 EpLog >> browseVersionsOf: aMethod [
 	"Browse all versions of aMethod from my head."
 

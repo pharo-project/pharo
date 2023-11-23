@@ -2,12 +2,13 @@
 I am a simple callback used by the tests
 "
 Class {
-	#name : #TFUFFIIncrementCallback,
-	#superclass : #TFUFFIAbstractCallback,
-	#category : #'ThreadedFFI-UFFI-Tests'
+	#name : 'TFUFFIIncrementCallback',
+	#superclass : 'TFUFFIAbstractCallback',
+	#category : 'ThreadedFFI-UFFI-Tests',
+	#package : 'ThreadedFFI-UFFI-Tests'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TFUFFIIncrementCallback >> initialize [
 
 	self signature: #(int (int)) block: [ :a | a + 1 ]

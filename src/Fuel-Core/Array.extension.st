@@ -1,6 +1,6 @@
-Extension { #name : #Array }
+Extension { #name : 'Array' }
 
-{ #category : #'*Fuel-Core' }
+{ #category : '*Fuel-Core' }
 Array >> fuelAccept: aGeneralMapper [
 	
 	"This IF is because there are subclasses of Array that are weak. If we do not put this IF, all subclasses fuel be using the #visitVariableObject:, loosing the capability of the weak

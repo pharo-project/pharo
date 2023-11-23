@@ -1,6 +1,6 @@
-Extension { #name : #Heap }
+Extension { #name : 'Heap' }
 
-{ #category : #'*Kernel-Processes' }
+{ #category : '*Kernel-Processes' }
 Heap >> removeFirstOrNil [
 	"Remove the first element from the receiver"
 	self isEmpty ifTrue:  [ ^nil ].

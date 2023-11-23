@@ -1,6 +1,6 @@
 Class {
-	#name : #RBDummyLintRuleTest,
-	#superclass : #Object,
+	#name : 'RBDummyLintRuleTest',
+	#superclass : 'Object',
 	#instVars : [
 		'name',
 		'foo1'
@@ -11,38 +11,40 @@ Class {
 	#pools : [
 		'TextConstants'
 	],
-	#category : #'Refactoring-DataForTesting-LittleHierarchy'
+	#category : 'Refactoring-DataForTesting-LittleHierarchy',
+	#package : 'Refactoring-DataForTesting',
+	#tag : 'LittleHierarchy'
 }
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 RBDummyLintRuleTest class >> parseTreeSearcher [
 	^ self parseTreeSearcherClass new
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 RBDummyLintRuleTest class >> parseTreeSearcherClass [
 	^ RBParseTreeSearcher
 ]
 
-{ #category : #foo }
+{ #category : 'foo' }
 RBDummyLintRuleTest class >> someFooMethod [
 	^ 'does nothing here:)'
 ]
 
-{ #category : #foo }
+{ #category : 'foo' }
 RBDummyLintRuleTest class >> someOtherFooMethod [
 	^ 'does nothing here even better:)'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBDummyLintRuleTest >> checkClass: aSmalllintContext [
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBDummyLintRuleTest >> checkMethod: aSmalllintContext [
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBDummyLintRuleTest >> displayName [
 	| nameStream |
 	nameStream := WriteStream on: (String new: 64).
@@ -53,51 +55,55 @@ RBDummyLintRuleTest >> displayName [
 	^nameStream contents
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBDummyLintRuleTest >> failedRules [
 	^self isEmpty
 		ifTrue: [#()]
 		ifFalse: [Array with: self]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBDummyLintRuleTest >> hasConflicts [
 	^false
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBDummyLintRuleTest >> initialize [
+
+	<ignoreUnusedVariables: #( #foo1 )>
+	<ignoreUnusedClassVariables: #( Foo1 )>
+	super initialize.
 	name := ''
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBDummyLintRuleTest >> isComposite [
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBDummyLintRuleTest >> isEmpty [
 	self subclassResponsibility
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBDummyLintRuleTest >> junk [
 	^ RBClassDataForRefactoringTest printString
 		copyFrom: 1
 		to: CR
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBDummyLintRuleTest >> name [
 	^name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBDummyLintRuleTest >> name: aString [
 	name := aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBDummyLintRuleTest >> openEditor [
 	| rules |
 	rules := self failedRules.
@@ -105,34 +111,34 @@ RBDummyLintRuleTest >> openEditor [
 	rules size == 1 ifTrue: [^rules first viewResults]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBDummyLintRuleTest >> printOn: aStream [
 
 	name ifNil: [ super printOn: aStream ] ifNotNil: [ aStream nextPutAll: name ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBDummyLintRuleTest >> problemCount [
 	^self subclassResponsibility
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBDummyLintRuleTest >> resetResult [
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBDummyLintRuleTest >> run [
 	^Object printOn: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBDummyLintRuleTest >> someOtherDemoMethod [
 	| temp |
 	temp := self new.
 	^ temp junk
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBDummyLintRuleTest >> viewResults [
 	self subclassResponsibility
 ]

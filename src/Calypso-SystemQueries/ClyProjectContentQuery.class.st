@@ -4,42 +4,43 @@ The actual objects are depends on project implementation. Look at ClyManagedProj
 
 "
 Class {
-	#name : #ClyProjectContentQuery,
-	#superclass : #ClyTypedQuery,
-	#category : #'Calypso-SystemQueries-Queries'
+	#name : 'ClyProjectContentQuery',
+	#superclass : 'ClyTypedQuery',
+	#category : 'Calypso-SystemQueries-Queries',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Queries'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyProjectContentQuery class >> resultItemsType [
-	^ClyProjectChildItem
+
+	^ Project
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyProjectContentQuery >> buildResult: aQueryResult [
 
 	| allItems |
 	allItems := OrderedCollection new.
 
-	scope projectsDo: [ :each |
-		allItems addAll: each items  ].
+	scope packagesDo: [ :each | allItems add: each ].
 
 	aQueryResult fillWith: allItems
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyProjectContentQuery >> checkEmptyResult [
 
-	scope projectsDo: [ :each |
-		each items ifNotEmpty: [ ^false ]  ].
-	^true
+	scope packagesDo: [ :each | ^ false ].
+	^ true
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyProjectContentQuery >> collectMetadataOf: aQueryResult by: anEnvironmentPlugin [
 ]
 
-{ #category : #'system changes' }
+{ #category : 'system changes' }
 ClyProjectContentQuery >> isResult: aQueryResult affectedBy: aSystemAnnouncement [
-	self flag: #todo.
-	^false
+
+	^scope includesPackagesAffectedBy: aSystemAnnouncement
 ]

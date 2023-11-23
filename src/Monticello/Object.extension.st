@@ -1,13 +1,13 @@
-Extension { #name : #Object }
+Extension { #name : 'Object' }
 
-{ #category : #'*Monticello-Storing' }
+{ #category : '*Monticello-Storing' }
 Object >> comeFullyUpOnReload: smartRefStream [
 	"Normally this read-in object is exactly what we want to store."
 
 	^ self
 ]
 
-{ #category : #'*Monticello-Storing' }
+{ #category : '*Monticello-Storing' }
 Object >> readDataFrom: aDataStream size: varsOnDisk [
 	"Fill in the fields of self based on the contents of aDataStream.  Return self.
 	 Read in the instance-variables written by Object>>storeDataOn:.
@@ -33,7 +33,7 @@ Object >> readDataFrom: aDataStream size: varsOnDisk [
 			on (super readDataFrom: aDataStream size: anInteger)"
 ]
 
-{ #category : #'*Monticello-Storing' }
+{ #category : '*Monticello-Storing' }
 Object >> storeDataOn: aDataStream [
 	"Store myself on a DataStream.  Answer self.  This is a low-level DataStream/ReferenceStream method. See also objectToStoreOnDataStream.  NOTE: This method must send 'aDataStream beginInstance:size:' and then (nextPut:/nextPutWeak:) its subobjects.  readDataFrom:size: reads back what we write here."
 	| cntInstVars cntIndexedVars |

@@ -5,27 +5,29 @@ This is the unit test for the class SecureHashAlgorithm. Unit tests are a good w
 	- the sunit class category
 "
 Class {
-	#name : #SHA1Test,
-	#superclass : #ClassTestCase,
+	#name : 'SHA1Test',
+	#superclass : 'ClassTestCase',
 	#instVars : [
 		'hash'
 	],
-	#category : #'System-Hashing-Tests-SHA1'
+	#category : 'System-Hashing-Tests-SHA1',
+	#package : 'System-Hashing-Tests',
+	#tag : 'SHA1'
 }
 
-{ #category : #coverage }
+{ #category : 'coverage' }
 SHA1Test >> classToBeTested [
 
 	^ SHA1
 ]
 
-{ #category : #'testing - examples' }
+{ #category : 'testing - examples' }
 SHA1Test >> testEmptyInput [
 
 	self assert: ((SHA1 new hashMessage: '') asInteger radix: 16) equals: 'DA39A3EE5E6B4B0D3255BFEF95601890AFD80709'
 ]
 
-{ #category : #'testing - examples' }
+{ #category : 'testing - examples' }
 SHA1Test >> testExample2 [
 	"This is the second example from the specification document (FIPS PUB 180-1)"
 
@@ -33,7 +35,7 @@ SHA1Test >> testExample2 [
 	self assert: hash equals: (ByteArray readHexFrom: '84983E441C3BD26EBAAE4AA1F95129E5E54670F1')
 ]
 
-{ #category : #'testing - examples' }
+{ #category : 'testing - examples' }
 SHA1Test >> testExample3 [
 	"This is the third example from the specification document (FIPS PUB 180-1).
 	This example may take several minutes."
@@ -42,7 +44,7 @@ SHA1Test >> testExample3 [
 	self assert: hash asInteger equals: 16r34AA973CD4C4DAA4F61EEB2BDBAD27316534016F
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SHA1Test >> testLargeCharacterStream [
 	"Regression test"
 

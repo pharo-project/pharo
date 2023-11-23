@@ -2,8 +2,8 @@
 I represent the table of values used to decode Huffman entropy-encoded bitstreams.  From the JFIF file header entropy values, I build a derived table of codes and values for faster decoding.
 "
 Class {
-	#name : #JPEGHuffmanTable,
-	#superclass : #Object,
+	#name : 'JPEGHuffmanTable',
+	#superclass : 'Object',
 	#instVars : [
 		'bits',
 		'values',
@@ -17,38 +17,39 @@ Class {
 		'BitBufferSize',
 		'Lookahead'
 	],
-	#category : #'Graphics-Files'
+	#category : 'Graphics-Files',
+	#package : 'Graphics-Files'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 JPEGHuffmanTable class >> initialize [
 
 	Lookahead := 8.
 	BitBufferSize := 16
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 JPEGHuffmanTable class >> lookahead [
 
 	^ Lookahead
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JPEGHuffmanTable >> bits: anObject [
 	bits := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JPEGHuffmanTable >> lookaheadBits [
 	^lookaheadBits
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JPEGHuffmanTable >> lookaheadSymbol [
 	^lookaheadSymbol
 ]
 
-{ #category : #computation }
+{ #category : 'computation' }
 JPEGHuffmanTable >> makeDerivedTables [
 	| huffSize huffCode code si index lookbits |
 	mincode := Array new: 16.
@@ -126,18 +127,18 @@ JPEGHuffmanTable >> makeDerivedTables [
 					index := index + 1 ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JPEGHuffmanTable >> maxcode [
 	^maxcode
 ]
 
-{ #category : #computation }
+{ #category : 'computation' }
 JPEGHuffmanTable >> valueForCode: code length: length [
 
 	^ values at: ((valptr at: length) + code - (mincode at: length))
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JPEGHuffmanTable >> values: anObject [
 	values := anObject
 ]

@@ -2,12 +2,14 @@
 SUnit tests for forked processes in test resources
 "
 Class {
-	#name : #TestResourceWithForkedProcessTestCase,
-	#superclass : #TestCase,
-	#category : #'SUnit-Tests-Core'
+	#name : 'TestResourceWithForkedProcessTestCase',
+	#superclass : 'TestCase',
+	#category : 'SUnit-Tests-Core',
+	#package : 'SUnit-Tests',
+	#tag : 'Core'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TestResourceWithForkedProcessTestCase class >> resources [
 
 	"Answer the TestResource class having a forked process"
@@ -15,7 +17,7 @@ TestResourceWithForkedProcessTestCase class >> resources [
 	^ Array with: WithForkedProcessTestResource
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TestResourceWithForkedProcessTestCase >> testFirst [
 
 	"Test whether the TestResource's forked process is not terminated.
@@ -27,7 +29,7 @@ TestResourceWithForkedProcessTestCase >> testFirst [
 		description: 'A forked process within a TestResource should not be terminated'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TestResourceWithForkedProcessTestCase >> testSecond [
 
 	"Test whether the TestResource's forked process is not terminated between tests"

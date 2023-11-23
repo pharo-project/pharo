@@ -2,22 +2,23 @@
 I'm a morph that shows the source codes of a compiled method 
 "
 Class {
-	#name : #ReflectivityCodeMorph,
-	#superclass : #Morph,
+	#name : 'ReflectivityCodeMorph',
+	#superclass : 'Morph',
 	#instVars : [
 		'textModel',
 		'compiledMethod'
 	],
-	#category : #'Reflectivity-Examples'
+	#category : 'Reflectivity-Examples',
+	#package : 'Reflectivity-Examples'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ReflectivityCodeMorph class >> compiledMethod: aCompiledMethod [
 
 	^self new addSourceCode: aCompiledMethod; yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReflectivityCodeMorph >> addSourceCode: aCompiledMethod [
 	|editor|
 
@@ -30,34 +31,34 @@ ReflectivityCodeMorph >> addSourceCode: aCompiledMethod [
 	self addMorph: editor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReflectivityCodeMorph >> compiledMethod [
 	^ compiledMethod
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReflectivityCodeMorph >> compiledMethod: anObject [
 	compiledMethod := anObject
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 ReflectivityCodeMorph >> defaultBounds [
 "answer the default bounds for the receiver"
 	^ 0 @ 0 corner: 200 @ 40
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 ReflectivityCodeMorph >> defaultColor [
 	^Color veryLightGray
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 ReflectivityCodeMorph >> drawOn: aCanvas [
 	super drawOn: aCanvas.
 	self drawTitleOn: aCanvas
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 ReflectivityCodeMorph >> drawTitleOn: aCanvas [
 	aCanvas drawString: self compiledMethod methodClass asString
 		in: (self bounds insetBy: (Margin left: 10 top: 10 right: 2 bottom: 10))
@@ -65,12 +66,12 @@ ReflectivityCodeMorph >> drawTitleOn: aCanvas [
 		color: self theme textColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReflectivityCodeMorph >> familyName [
 	^'Source Sans Pro'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ReflectivityCodeMorph >> initialize [
 
 	super initialize.
@@ -85,7 +86,7 @@ ReflectivityCodeMorph >> initialize [
 		cellInset: 1
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ReflectivityCodeMorph >> newScrolledText [
 	| scrolledText |
 	scrolledText := self textModel
@@ -97,14 +98,14 @@ ReflectivityCodeMorph >> newScrolledText [
 	^ scrolledText
 ]
 
-{ #category : #shout }
+{ #category : 'shout' }
 ReflectivityCodeMorph >> shoutAboutToStyle: aTextView [
 
 	aTextView classOrMetaClass: self compiledMethod methodClass.
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReflectivityCodeMorph >> textModel [
 	^ textModel ifNil: [ textModel := RubScrolledTextModel new interactionModel: self ]
 ]

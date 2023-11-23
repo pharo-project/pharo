@@ -1,1 +1,1 @@
-Package { #name : #BaselineOfProfilerUI }
+Package { #name : 'BaselineOfProfilerUI' }

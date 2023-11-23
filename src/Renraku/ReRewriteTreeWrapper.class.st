@@ -2,15 +2,17 @@
 A concrete wrapper implementation that uses a rewrite expression to create a new node
 "
 Class {
-	#name : #ReRewriteTreeWrapper,
-	#superclass : #ReRewriteWrapper,
+	#name : 'ReRewriteTreeWrapper',
+	#superclass : 'ReRewriteWrapper',
 	#instVars : [
 		'tree'
 	],
-	#category : #'Renraku-Rules-Rewrite'
+	#category : 'Renraku-Rules-Rewrite',
+	#package : 'Renraku',
+	#tag : 'Rules-Rewrite'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ReRewriteTreeWrapper class >> on: aTree [
 
 	^ self basicNew
@@ -18,12 +20,12 @@ ReRewriteTreeWrapper class >> on: aTree [
 		yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ReRewriteTreeWrapper >> initializeTree: aTree [
 	tree := aTree
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 ReRewriteTreeWrapper >> rewriten: aNode with: aMap [
 
 	^ tree copyInContext: aMap

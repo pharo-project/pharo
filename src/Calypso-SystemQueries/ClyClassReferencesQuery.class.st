@@ -14,43 +14,45 @@ And in addition I provide more readable methods to instantiate my instances from
 	ClyClassReferences toAny: {Array. String} from: aScope.
 "
 Class {
-	#name : #ClyClassReferencesQuery,
-	#superclass : #ClyVariableReferencesQuery,
-	#category : #'Calypso-SystemQueries-Queries'
+	#name : 'ClyClassReferencesQuery',
+	#superclass : 'ClyVariableReferencesQuery',
+	#category : 'Calypso-SystemQueries-Queries',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Queries'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyClassReferencesQuery class >> to: aClass [
 
 	^self of: aClass
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyClassReferencesQuery class >> to: aClass from: aScope [
 
 	^self of: aClass from: aScope
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyClassReferencesQuery class >> toAny: classes [
 
 	^self ofAny: classes
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyClassReferencesQuery class >> toAny: classes from: aScope [
 
 	^self ofAny: classes from: aScope
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyClassReferencesQuery >> doesMethod: aMethod useVar: aVariable [
 	(super doesMethod: aMethod useVar: aVariable) ifTrue: [ ^true ].
 
 	^aMethod hasSelector: aVariable name asSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyClassReferencesQuery >> variableQuery: aClassQuery [
 	super variableQuery: (aClassQuery withResult: ClyClassBindingsResult new)
 ]

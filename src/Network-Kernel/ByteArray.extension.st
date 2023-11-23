@@ -1,6 +1,6 @@
-Extension { #name : #ByteArray }
+Extension { #name : 'ByteArray' }
 
-{ #category : #'*Network-Kernel' }
+{ #category : '*Network-Kernel' }
 ByteArray >> asSocketAddress [
 	^SocketAddress fromOldByteAddress: self
 ]

@@ -3,32 +3,34 @@ I represent a free-form parameter which is passed as a single shell word and rec
 
 "
 Class {
-	#name : #ClapPositional,
-	#superclass : #ClapParameter,
-	#category : #'Clap-Core-Specification'
+	#name : 'ClapPositional',
+	#superclass : 'ClapParameter',
+	#category : 'Clap-Core-Specification',
+	#package : 'Clap-Core',
+	#tag : 'Specification'
 }
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 ClapPositional class >> basicMeaning [
 	^ [ :match | match word ]
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 ClapPositional >> addTo: parentParameter [
 	^ parentParameter addPositional: self
 ]
 
-{ #category : #'matching - testing' }
+{ #category : 'matching - testing' }
 ClapPositional >> canMatchWith: word [
 	^ (word beginsWith: '-') not
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClapPositional >> matchClass [
 	^ ClapWordMatch
 ]
 
-{ #category : #documenting }
+{ #category : 'documenting' }
 ClapPositional >> synopsisOn: aStream [
 	^ aStream
 			nextPut: $<;

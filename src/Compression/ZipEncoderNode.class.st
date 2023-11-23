@@ -13,8 +13,8 @@ Instance variables:
 
 "
 Class {
-	#name : #ZipEncoderNode,
-	#superclass : #Object,
+	#name : 'ZipEncoderNode',
+	#superclass : 'Object',
 	#instVars : [
 		'value',
 		'frequency',
@@ -25,38 +25,40 @@ Class {
 		'left',
 		'right'
 	],
-	#category : #'Compression-Streams'
+	#category : 'Compression-Streams',
+	#package : 'Compression',
+	#tag : 'Streams'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZipEncoderNode class >> value: v frequency: f height: h [
 	^self new setValue: v frequency: f height: h
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZipEncoderNode >> bitLength [
 	^ bitLength ifNil: [ 0 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZipEncoderNode >> code [
 	^ code ifNil: [ 0 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZipEncoderNode >> code: aCode [
 	[ aCode >= 0 and: [ (1 bitShift: bitLength) > aCode ] ] assert.
 	code := aCode
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZipEncoderNode >> computeHeight [
 	^ height := self isLeaf
 		ifTrue: [ 0 ]
 		ifFalse: [ (left computeHeight max: right computeHeight) + 1 ]
 ]
 
-{ #category : #encoding }
+{ #category : 'encoding' }
 ZipEncoderNode >> encodeBitLength: blCounts from: aTree [
 
 	| index |
@@ -73,55 +75,55 @@ ZipEncoderNode >> encodeBitLength: blCounts from: aTree [
 			]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZipEncoderNode >> frequency [
 	^frequency
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZipEncoderNode >> frequency: aNumber [
 	frequency := aNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZipEncoderNode >> height [
 	^height
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZipEncoderNode >> isLeaf [
 	^left isNil
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZipEncoderNode >> leafNodes [
 	^ self isLeaf
 		ifTrue: [ Array with: self ]
 		ifFalse: [ left leafNodes , right leafNodes ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZipEncoderNode >> left [
 	^left
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZipEncoderNode >> left: aNode [
 	aNode parent: self.
 	left := aNode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZipEncoderNode >> parent [
 	^parent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZipEncoderNode >> parent: aNode [
 	parent := aNode
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ZipEncoderNode >> printOn: aStream [
 	super printOn: aStream.
 	aStream nextPut:$(;
@@ -133,18 +135,18 @@ ZipEncoderNode >> printOn: aStream [
 	nextPut:$)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZipEncoderNode >> right [
 	^right
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZipEncoderNode >> right: aNode [
 	aNode parent: self.
 	right := aNode
 ]
 
-{ #category : #encoding }
+{ #category : 'encoding' }
 ZipEncoderNode >> rotateToHeight: maxHeight [
 	"Rotate the tree to achieve maxHeight depth"
 	| newParent |
@@ -183,19 +185,19 @@ ZipEncoderNode >> rotateToHeight: maxHeight [
 	^parent
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZipEncoderNode >> setBitLengthTo: bl [
 	bitLength := bl
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZipEncoderNode >> setValue: v frequency: f height: h [
 	value := v.
 	frequency := f.
 	height := h
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZipEncoderNode >> value [
 	^value
 ]

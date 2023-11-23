@@ -2,21 +2,23 @@
 i represent a path shape in balloon backend
 "
 Class {
-	#name : #AthensBalloonPath,
-	#superclass : #AthensPath,
+	#name : 'AthensBalloonPath',
+	#superclass : 'AthensPath',
 	#instVars : [
 		'contours'
 	],
-	#category : #'Athens-Balloon-Path'
+	#category : 'Athens-Balloon-Path',
+	#package : 'Athens-Balloon',
+	#tag : 'Path'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensBalloonPath >> contours [
 
 	^ contours
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 AthensBalloonPath >> contoursForFilling [
 	"Answer a collection of contours, ready for filling by balloon engine"
 
@@ -30,20 +32,20 @@ AthensBalloonPath >> contoursForFilling [
 					  contour first } ] ]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 AthensBalloonPath >> contoursForStroke [
 	"Answer a collection of contours, ready for stroking by balloon engine"
 
 	^ contours collect: [ :contour | contour asArray ]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 AthensBalloonPath >> convertFromBuilder: aBuilder [
 
 	| segment cContours |
 	segment := aBuilder pathStart.
 
-	[ segment notNil ] whileTrue: [
+	[ segment isNotNil ] whileTrue: [
 		segment visitWith: self.
 		segment := segment next ].
 
@@ -53,7 +55,7 @@ AthensBalloonPath >> convertFromBuilder: aBuilder [
 	contours := cContours
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AthensBalloonPath >> duplicateLastPoint [
 
 	contours last size < 2 ifFalse: [
@@ -61,20 +63,20 @@ AthensBalloonPath >> duplicateLastPoint [
 		contours last add: contours last last ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensBalloonPath >> numContours [
 
 	^ contours size
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 AthensBalloonPath >> paintFillsUsing: aPaint on: anAthensCanvas [
 	"This method is a part of rendering dispatch  Canvas->receiver->paint"
 
 	^ aPaint athensFillPath: self on: anAthensCanvas
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 AthensBalloonPath >> visitCloseSegment: closeSegment [
 	"See if its already closed"
 
@@ -85,7 +87,7 @@ AthensBalloonPath >> visitCloseSegment: closeSegment [
 			add: closeSegment endPoint ]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 AthensBalloonPath >> visitLineSegment: line [
 
 	self duplicateLastPoint.
@@ -94,7 +96,7 @@ AthensBalloonPath >> visitLineSegment: line [
 		add: line endPoint
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 AthensBalloonPath >> visitMoveSegment: seg [
 
 	contours ifNil: [ contours := OrderedCollection new ].
@@ -103,7 +105,7 @@ AthensBalloonPath >> visitMoveSegment: seg [
 	contours last add: seg endPoint
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 AthensBalloonPath >> visitQuadSegment: quadSegment [
 
 	self duplicateLastPoint.

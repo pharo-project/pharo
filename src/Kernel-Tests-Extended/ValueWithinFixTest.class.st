@@ -2,12 +2,14 @@
 SUnit tests for a fix on #valueWithin:
 "
 Class {
-	#name : #ValueWithinFixTest,
-	#superclass : #TestCase,
-	#category : #'Kernel-Tests-Extended-Processes'
+	#name : 'ValueWithinFixTest',
+	#superclass : 'TestCase',
+	#category : 'Kernel-Tests-Extended-Processes',
+	#package : 'Kernel-Tests-Extended',
+	#tag : 'Processes'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 ValueWithinFixTest >> testValueWithinNonLocalReturnFixReal [
 	"The real test for the fix is just as obscure as the original problem"
 
@@ -23,7 +25,7 @@ ValueWithinFixTest >> testValueWithinNonLocalReturnFixReal [
 	]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ValueWithinFixTest >> testValueWithinNonLocalReturnFixSimply [
 	"The simple version to test the fix"
 
@@ -31,7 +33,7 @@ ValueWithinFixTest >> testValueWithinNonLocalReturnFixSimply [
 	(Delay forMilliseconds: 50) wait
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ValueWithinFixTest >> testValueWithinTimingBasic [
 	"Test timing of valueWithin:onTimeout:"
 	| time |
@@ -42,7 +44,7 @@ ValueWithinFixTest >> testValueWithinTimingBasic [
 	self assert: time < 1000 milliSeconds
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ValueWithinFixTest >> testValueWithinTimingNestedInner [
 	"Test nested timing of valueWithin:onTimeout:"
 	| time |
@@ -55,7 +57,7 @@ ValueWithinFixTest >> testValueWithinTimingNestedInner [
 	self assert: time < 500 milliSeconds
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ValueWithinFixTest >> testValueWithinTimingNestedOuter [
 	"Test nested timing of valueWithin:onTimeout:"
 	| time |
@@ -70,7 +72,7 @@ ValueWithinFixTest >> testValueWithinTimingNestedOuter [
 	self assert: time < 5000 milliSeconds
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ValueWithinFixTest >> testValueWithinTimingRepeat [
 	"Test timing of valueWithin:onTimeout:"
 	| time |
@@ -82,7 +84,7 @@ ValueWithinFixTest >> testValueWithinTimingRepeat [
 	self assert: time < 500 milliSeconds
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ValueWithinFixTest >> valueWithinNonLocalReturn [
 	"Do a non-local return from a valueWithin: block"
 	[^self] valueWithin: 20 milliSeconds onTimeout:[]

@@ -10,33 +10,35 @@ see:
 	- the sunit class category
 "
 Class {
-	#name : #ReadWriteStreamTest,
-	#superclass : #ClassTestCase,
-	#category : #'Collections-Streams-Tests-Base'
+	#name : 'ReadWriteStreamTest',
+	#superclass : 'ClassTestCase',
+	#category : 'Collections-Streams-Tests-Base',
+	#package : 'Collections-Streams-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #coverage }
+{ #category : 'coverage' }
 ReadWriteStreamTest >> classToBeTested [
 
 	^ ReadWriteStream
 ]
 
-{ #category : #'accessing - defaults' }
+{ #category : 'accessing - defaults' }
 ReadWriteStreamTest >> emptyByteStream [
 	^ ReadWriteStream on: (ByteArray new: 4096)
 ]
 
-{ #category : #'accessing - defaults' }
+{ #category : 'accessing - defaults' }
 ReadWriteStreamTest >> emptyStream [
 	^ ReadWriteStream on: (String new: 4096)
 ]
 
-{ #category : #'accessing - defaults' }
+{ #category : 'accessing - defaults' }
 ReadWriteStreamTest >> streamOnString [
 	^ ReadWriteStream with: 'abcde'
 ]
 
-{ #category : #'tests - testing' }
+{ #category : 'tests - testing' }
 ReadWriteStreamTest >> testAtEnd [
 	| stream |
 	stream := self emptyStream.
@@ -47,7 +49,7 @@ ReadWriteStreamTest >> testAtEnd [
 	self deny: stream atEnd
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReadWriteStreamTest >> testConstructionUsingWith [
 	"Use the with: constructor."
 
@@ -56,7 +58,7 @@ ReadWriteStreamTest >> testConstructionUsingWith [
 	self assert: (aStream contents = #(1 2)) description: 'Ensure correct initialization.'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReadWriteStreamTest >> testContents [
 	| stream |
 	stream := self emptyStream.
@@ -75,7 +77,7 @@ ReadWriteStreamTest >> testContents [
 	self assert: stream contents equals: 'abc' asByteArray
 ]
 
-{ #category : #'tests - testing' }
+{ #category : 'tests - testing' }
 ReadWriteStreamTest >> testIsEmpty [
 	| stream |
 	stream := self emptyStream.
@@ -88,13 +90,13 @@ ReadWriteStreamTest >> testIsEmpty [
 	self deny: stream isEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReadWriteStreamTest >> testNew [
 
 	self should: [ ReadWriteStream new ] raise: Error
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReadWriteStreamTest >> testNext [
 	| stream |
 	stream := self emptyStream.
@@ -115,7 +117,7 @@ ReadWriteStreamTest >> testNext [
 	self assert: (stream next: 2) equals: 'cd' asByteArray
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReadWriteStreamTest >> testNextPut [
 	| stream |
 	stream := self emptyStream.
@@ -126,7 +128,7 @@ ReadWriteStreamTest >> testNextPut [
 	self assert: stream contents equals: 'a' asByteArray
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReadWriteStreamTest >> testNextPutAll [
 	| stream |
 	stream := self emptyStream.
@@ -140,7 +142,7 @@ ReadWriteStreamTest >> testNextPutAll [
 	self assert: stream contents equals: 'abc' asByteArray
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReadWriteStreamTest >> testPeek [
 	| stream |
 	stream := self emptyStream.
@@ -157,7 +159,7 @@ ReadWriteStreamTest >> testPeek [
 	self assert: stream peek equals: 97
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReadWriteStreamTest >> testPosition [
 	| stream |
 	stream := self emptyStream.
@@ -200,7 +202,7 @@ ReadWriteStreamTest >> testPosition [
 	self assert: stream atEnd
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReadWriteStreamTest >> testReset [
 	| stream |
 	stream := self emptyStream.
@@ -225,7 +227,7 @@ ReadWriteStreamTest >> testReset [
 	self assert: stream next equals: 97
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReadWriteStreamTest >> testSkip [
 	| stream |
 	stream := self emptyStream.
@@ -240,7 +242,7 @@ ReadWriteStreamTest >> testSkip [
 	self assert: (stream skip: 2; peek) equals: 99
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReadWriteStreamTest >> testTab [
 	| stream |
 	stream := self emptyStream.
@@ -248,7 +250,7 @@ ReadWriteStreamTest >> testTab [
 	self assert: stream contents first equals: Character tab
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReadWriteStreamTest >> testUpTo [
 	| stream |
 	stream := self emptyStream.
@@ -277,7 +279,7 @@ ReadWriteStreamTest >> testUpTo [
 	self assert: stream atEnd
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReadWriteStreamTest >> testUpToEnd [
 	| stream |
 	stream := self emptyStream.

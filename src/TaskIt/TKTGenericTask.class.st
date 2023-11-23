@@ -2,25 +2,27 @@
 I am a generic task that can be created from a valuable
 "
 Class {
-	#name : #TKTGenericTask,
-	#superclass : #TKTTask,
+	#name : 'TKTGenericTask',
+	#superclass : 'TKTTask',
 	#instVars : [
 		'valuable'
 	],
-	#category : #'TaskIt-Kernel'
+	#category : 'TaskIt-Kernel',
+	#package : 'TaskIt',
+	#tag : 'Kernel'
 }
 
-{ #category : #executing }
+{ #category : 'executing' }
 TKTGenericTask >> evaluateOn: aTaskExecution [
 	^ valuable value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TKTGenericTask >> valuable [
 	^ valuable
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TKTGenericTask >> valuable: aValuable [
 	valuable := aValuable
 ]

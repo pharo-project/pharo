@@ -1,6 +1,6 @@
-Extension { #name : #FFITypeArrayType }
+Extension { #name : 'FFITypeArrayType' }
 
-{ #category : #'*ThreadedFFI-UFFI' }
+{ #category : '*ThreadedFFI-UFFI' }
 FFITypeArrayType >> tfExternalTypeForStructure [
 
 	^ Array new: self objectClass numberOfElements withAll: self objectClass type tfExternalTypeWithArity

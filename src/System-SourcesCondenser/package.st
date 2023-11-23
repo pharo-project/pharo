@@ -1,1 +1,1 @@
-Package { #name : #'System-SourcesCondenser' }
+Package { #name : 'System-SourcesCondenser' }

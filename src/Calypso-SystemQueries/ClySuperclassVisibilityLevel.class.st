@@ -8,12 +8,14 @@ My instances are created using following method:
 	ClySuperclassVisibilityLevel of: aClassScope toShow: aClass
 "
 Class {
-	#name : #ClySuperclassVisibilityLevel,
-	#superclass : #ClyMethodVisibilityLevel,
-	#category : #'Calypso-SystemQueries-Domain'
+	#name : 'ClySuperclassVisibilityLevel',
+	#superclass : 'ClyMethodVisibilityLevel',
+	#category : 'Calypso-SystemQueries-Domain',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Domain'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClySuperclassVisibilityLevel class >> of: aClassScope toShow: aClass [
 	^(self of: aClassScope)
 		extraClassScope: (aClassScope asScope: ClyClassScope of: aClass)

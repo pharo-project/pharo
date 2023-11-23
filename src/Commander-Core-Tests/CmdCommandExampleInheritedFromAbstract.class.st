@@ -1,5 +1,6 @@
 Class {
-	#name : #CmdCommandExampleInheritedFromAbstract,
-	#superclass : #CmdAbstractCommandExample,
-	#category : #'Commander-Core-Tests'
+	#name : 'CmdCommandExampleInheritedFromAbstract',
+	#superclass : 'CmdAbstractCommandExample',
+	#category : 'Commander-Core-Tests',
+	#package : 'Commander-Core-Tests'
 }

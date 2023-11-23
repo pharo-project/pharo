@@ -11,8 +11,8 @@ I only implement a small part of  CompiledMethod interface, that is used for ref
 
 "
 Class {
-	#name : #RBMethod,
-	#superclass : #RBEntity,
+	#name : 'RBMethod',
+	#superclass : 'RBEntity',
 	#instVars : [
 		'compiledMethod',
 		'class',
@@ -20,10 +20,12 @@ Class {
 		'source',
 		'isFromTrait'
 	],
-	#category : #'Refactoring-Core-Model'
+	#category : 'Refactoring-Core-Model',
+	#package : 'Refactoring-Core',
+	#tag : 'Model'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBMethod class >> for: aRBClass fromMethod: aCompiledMethod andSelector: aSymbol [
 	^ self new
 		modelClass: aRBClass;
@@ -32,7 +34,7 @@ RBMethod class >> for: aRBClass fromMethod: aCompiledMethod andSelector: aSymbol
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBMethod class >> for: aRBClass source: aString selector: aSelector [
 	^(self new)
 		modelClass: aRBClass;
@@ -41,12 +43,17 @@ RBMethod class >> for: aRBClass source: aString selector: aSelector [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
+RBMethod >> argumentNames [
+	^ self ast argumentNames
+]
+
+{ #category : 'accessing' }
 RBMethod >> ast [
 	^ self parseTree
 ]
 
-{ #category : #compiling }
+{ #category : 'compiling' }
 RBMethod >> compileTree: aBRMethodNode [
 	| method sourceCode change |
 	sourceCode := aBRMethodNode newSource.
@@ -62,17 +69,17 @@ RBMethod >> compileTree: aBRMethodNode [
 	^ change
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethod >> isFromTrait [
 	^ isFromTrait ifNil: [ isFromTrait := false ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethod >> isFromTrait: anObject [
 	isFromTrait := anObject
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBMethod >> literal: anObject containsReferenceTo: aSymbol [
 	anObject = aSymbol
 		ifTrue: [ ^ true ].
@@ -81,40 +88,42 @@ RBMethod >> literal: anObject containsReferenceTo: aSymbol [
 	^ anObject anySatisfy: [ :each | self literal: each containsReferenceTo: aSymbol ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethod >> method [
 	^compiledMethod
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethod >> method: aCompiledMethod [
 	compiledMethod := aCompiledMethod.
 	self isFromTrait: compiledMethod isFromTrait
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethod >> methodClass [
 
 	^ class
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethod >> modelClass [
 	^class
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethod >> modelClass: aRBClass [
 	class := aRBClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethod >> package [
+
 	compiledMethod ifNotNil: [ ^ compiledMethod package name ].
-	^ class category
+
+	^ class packageName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethod >> parseTree [
 	| tree |
 	tree := self parserClass
@@ -124,17 +133,17 @@ RBMethod >> parseTree [
 	^ tree
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBMethod >> parseTreeSearcherClass [
 	^ RBParseTreeSearcher
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBMethod >> parserTreeSearcher [
 	^ self parseTreeSearcherClass new
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBMethod >> printOn: aStream [
 	class printOn: aStream.
 	aStream
@@ -142,12 +151,12 @@ RBMethod >> printOn: aStream [
 		nextPutAll: self selector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethod >> protocols [
 	^ self modelClass protocolsFor: self selector
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBMethod >> refersToClassNamed: aSymbol [
 	| searcher |
 	searcher := self parserTreeSearcher.
@@ -156,7 +165,7 @@ RBMethod >> refersToClassNamed: aSymbol [
 		or: [ self refersToSymbol: aSymbol ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBMethod >> refersToSymbol: aSymbol [
 	| searcher |
 	searcher := self parserTreeSearcher.
@@ -174,7 +183,7 @@ RBMethod >> refersToSymbol: aSymbol [
 	^ searcher executeTree: self parseTree initialAnswer: false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBMethod >> refersToVariable: aString [
 	| searcher tree |
 	tree := self parseTree.
@@ -191,22 +200,22 @@ RBMethod >> refersToVariable: aString [
 	^ searcher executeTree: self parseTree initialAnswer: false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethod >> selector [
 	^ selector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethod >> selector: aSymbol [
 	selector := aSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethod >> source [
 	^ source ifNil: [ source := (class realClass sourceCodeAt: selector) asString ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBMethod >> source: aString [
 	source := aString
 ]

@@ -2,17 +2,18 @@
 A BreakpointTest is a test class for testing the behavior of Breakpoint
 "
 Class {
-	#name : #BreakpointTest,
-	#superclass : #TestCase,
+	#name : 'BreakpointTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'previousBreakpoints',
 		'cls',
 		'oldSystemAnnouncer'
 	],
-	#category : #'Reflectivity-Tools-Tests'
+	#category : 'Reflectivity-Tools-Tests',
+	#package : 'Reflectivity-Tools-Tests'
 }
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 BreakpointTest >> newDummyClass [
 
 	^ self class classInstaller make: [ :aBuilder |
@@ -21,12 +22,12 @@ BreakpointTest >> newDummyClass [
 			  package: 'DummyPackage' ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BreakpointTest >> parserClass [
 	^ RBParser
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 BreakpointTest >> setUp [
 	super setUp.
 	cls := self newDummyClass.
@@ -37,19 +38,18 @@ BreakpointTest >> setUp [
 	Breakpoint all removeAll
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 BreakpointTest >> tearDown [
-	| pkg |
+
 	Breakpoint removeAll.
 	Breakpoint all addAll: previousBreakpoints.
 	SystemAnnouncer announcer: oldSystemAnnouncer.
 	cls ifNotNil: [ cls isObsolete ifFalse: [ cls removeFromSystem ] ].
-	pkg := 'DummyPackage' asPackageIfAbsent: [ ].
-	pkg ifNotNil: [ pkg removeFromSystem ].
+	self packageOrganizer removePackage: 'DummyPackage'.
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BreakpointTest >> testAddRemoveBreakpoint [
 	| bp method |
 	cls compile: 'dummy ^42'.
@@ -69,7 +69,7 @@ BreakpointTest >> testAddRemoveBreakpoint [
 	self assert: (cls >> #dummy) bytecodes equals: method bytecodes
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BreakpointTest >> testAddRemoveBreakpointKeepTimeStamp [
 
 	| bp timeStamp |
@@ -92,7 +92,7 @@ BreakpointTest >> testAddRemoveBreakpointKeepTimeStamp [
 	self assert: (cls >> #dummy) timeStamp equals: timeStamp
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BreakpointTest >> testBreakInContextNode [
 
 	|observer breakpoint|
@@ -100,12 +100,12 @@ BreakpointTest >> testBreakInContextNode [
 	Breakpoint registerObserver: observer.
 	breakpoint := Breakpoint new.
 	self should: [breakpoint breakInContext: self node: #node] raise: Break.
-	self assert: observer tag notNil.
+	self assert: observer tag isNotNil.
 	self assert: observer tag breakpoint identicalTo: breakpoint.
 	self assertCollection: observer tag nodes equals: #(#node)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BreakpointTest >> testBreakLink [
 	|breakpoint link|
 	breakpoint := Breakpoint new.
@@ -116,7 +116,7 @@ BreakpointTest >> testBreakLink [
 	self assertCollection: link arguments equals: #(#context #node)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BreakpointTest >> testBreakLinkOnce [
 	|breakpoint|
 	breakpoint := Breakpoint new.
@@ -125,7 +125,7 @@ BreakpointTest >> testBreakLinkOnce [
 	self assert: (breakpoint once)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BreakpointTest >> testBreakOnceInContext [
 
 	|observer breakpoint|
@@ -138,7 +138,7 @@ BreakpointTest >> testBreakOnceInContext [
 	self shouldnt: [breakpoint breakInContext: self node: #node] raise: Break
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BreakpointTest >> testBreakpointEnabled [
 	| breakpoint |
 	breakpoint := Breakpoint new.
@@ -149,7 +149,7 @@ BreakpointTest >> testBreakpointEnabled [
 	self assert: breakpoint isEnabled
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BreakpointTest >> testBreakpointInitialization [
 	|bp|
 	bp := Breakpoint new.
@@ -157,7 +157,7 @@ BreakpointTest >> testBreakpointInitialization [
 	self deny: bp isObjectCentric
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BreakpointTest >> testBreakpointNodeProperty [
 	|breakpoint|
 	cls compile: 'dummy ^42'.
@@ -171,7 +171,7 @@ BreakpointTest >> testBreakpointNodeProperty [
 	self deny: (cls >> #dummy) ast hasBreakpoint
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BreakpointTest >> testDisableEnableBreakpoint [
 	| breakpoint |
 	breakpoint := Breakpoint new.
@@ -182,7 +182,7 @@ BreakpointTest >> testDisableEnableBreakpoint [
 	self should: [breakpoint breakInContext: self node: #node] raise: Break
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BreakpointTest >> testMessageSend_conditionBlockProducerMethodAST [
 	self
 		assert:
@@ -194,7 +194,7 @@ BreakpointTest >> testMessageSend_conditionBlockProducerMethodAST [
 					'conditionBlockGenerator ^[ :ThisContext | Breakpoint checkBreakConditionValue: ((ThisContext readVariableNamed: #val) msg: (ThisContext readVariableNamed: #arg))]')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BreakpointTest >> testModifyMethodWithBreakpoint [
 	cls compile: 'dummy ^42'.
 	self assertEmpty: Breakpoint all.
@@ -207,7 +207,7 @@ BreakpointTest >> testModifyMethodWithBreakpoint [
 	self assertEmpty: Breakpoint all
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BreakpointTest >> testObjectCentricAPI [
 	|object1 object2|
 	object1 := ReflectivityExamples new.
@@ -219,7 +219,7 @@ BreakpointTest >> testObjectCentricAPI [
 	self shouldnt: [object2 exampleAssignment] raise: Break
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BreakpointTest >> testObjectCentricASTAPI [
 	|object1 object2 ast|
 	object1 := ReflectivityExamples new.
@@ -232,7 +232,7 @@ BreakpointTest >> testObjectCentricASTAPI [
 	self shouldnt: [object2 exampleAssignment] raise: Break
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BreakpointTest >> testObjectCentricBreakpoint [
 	|bp object1 object2 ast|
 	bp := Breakpoint new.
@@ -251,7 +251,7 @@ BreakpointTest >> testObjectCentricBreakpoint [
 	self shouldnt: [object1 exampleAssignment] raise: Break
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BreakpointTest >> testObjectCentricObjectAPI [
 	|object1 object2|
 	object1 := ReflectivityExamples new.
@@ -263,7 +263,7 @@ BreakpointTest >> testObjectCentricObjectAPI [
 	self shouldnt: [object2 exampleAssignment] raise: Break
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BreakpointTest >> testRemoveBreakpointWithRemoveFrom [
 	|bp node |
 	cls compile: 'dummy ^42'.
@@ -276,7 +276,7 @@ BreakpointTest >> testRemoveBreakpointWithRemoveFrom [
 	self assertEmpty: Breakpoint all
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BreakpointTest >> testRemoveClassWithBreakpoint [
 	cls compile: 'dummy ^42'.
 	self assertEmpty: Breakpoint all.
@@ -289,7 +289,7 @@ BreakpointTest >> testRemoveClassWithBreakpoint [
 	self assertEmpty: Breakpoint all
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BreakpointTest >> testRemoveMethodWithBreakpoint [
 	cls compile: 'dummy ^42'.
 	self assertEmpty: Breakpoint all.
@@ -304,7 +304,7 @@ BreakpointTest >> testRemoveMethodWithBreakpoint [
 		assertEmpty: Breakpoint all
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BreakpointTest >> testScopeTo [
 	|bp object|
 	bp := Breakpoint new.
@@ -315,7 +315,7 @@ BreakpointTest >> testScopeTo [
 	self assert: bp isObjectCentric
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BreakpointTest >> testSelf_conditionBlockProducerMethodAST [
 	self
 		assert:
@@ -327,7 +327,7 @@ BreakpointTest >> testSelf_conditionBlockProducerMethodAST [
 					'conditionBlockGenerator ^[ :ThisContext | Breakpoint checkBreakConditionValue: ThisContext receiver ]')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BreakpointTest >> testSetAsBreakpointProperty [
 	| node breakpoint breakpoint2 |
 	node := RBProgramNode new.
@@ -349,7 +349,7 @@ BreakpointTest >> testSetAsBreakpointProperty [
 	self deny: node hasBreakpoint
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BreakpointTest >> testSimpleCondition_conditionBlockProducerMethodAST [
 	self
 		assert:
@@ -361,7 +361,7 @@ BreakpointTest >> testSimpleCondition_conditionBlockProducerMethodAST [
 					'conditionBlockGenerator ^[ :ThisContext | Breakpoint checkBreakConditionValue: true ]')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BreakpointTest >> testSuperSendNoArg_conditionBlockProducerMethodAST [
 	self
 		assert:
@@ -373,7 +373,7 @@ BreakpointTest >> testSuperSendNoArg_conditionBlockProducerMethodAST [
 					'conditionBlockGenerator ^[ :ThisContext | Breakpoint checkBreakConditionValue: (ThisContext receiver perform: #msg withArguments: {} inSuperclass: ThisContext receiver class superclass)]')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BreakpointTest >> testSuperSendWithArgs_conditionBlockProducerMethodAST [
 	self
 		assert:
@@ -385,7 +385,7 @@ BreakpointTest >> testSuperSendWithArgs_conditionBlockProducerMethodAST [
 					'conditionBlockGenerator ^[ :ThisContext | Breakpoint checkBreakConditionValue: (ThisContext receiver perform: #foo:bar: withArguments: {ThisContext readVariableNamed: #arg1. ThisContext readVariableNamed: #arg2.} inSuperclass: ThisContext receiver class superclass)]')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BreakpointTest >> testTargetInstanceGarbageCollected [
 	|bp object|
 	bp := Breakpoint new.
@@ -398,7 +398,7 @@ BreakpointTest >> testTargetInstanceGarbageCollected [
 	self deny: bp isObjectCentric
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BreakpointTest >> testUninstallFromGarbageCollectedInstance [
 	|bp object ast|
 	bp := Breakpoint new.
@@ -415,7 +415,7 @@ BreakpointTest >> testUninstallFromGarbageCollectedInstance [
 	self shouldnt: [ bp remove ] raise: Error
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BreakpointTest >> testUpdateMethod [
 	| bp method |
 	"test that, if we install a breakpoint and edit the method, it is removed correctly"
@@ -435,7 +435,7 @@ BreakpointTest >> testUpdateMethod [
 	self assertEmpty: Breakpoint all
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BreakpointTest >> testVariableLookup_conditionBlockProducerMethodAST [
 	self
 		assert:
@@ -447,7 +447,7 @@ BreakpointTest >> testVariableLookup_conditionBlockProducerMethodAST [
 					'conditionBlockGenerator ^[ :ThisContext | Breakpoint checkBreakConditionValue: (ThisContext readVariableNamed: #var)]')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BreakpointTest >> testVariableNamedThisContext_conditionBlockProducerMethodAST [
 	self
 		assert:
@@ -459,7 +459,7 @@ BreakpointTest >> testVariableNamedThisContext_conditionBlockProducerMethodAST [
 					'conditionBlockGenerator ^[ :ThisContext | Breakpoint checkBreakConditionValue: (ThisContext readVariableNamed: #ThisContext)]')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BreakpointTest >> testthisContext_conditionBlockProducerMethodAST [
 	self
 		assert:

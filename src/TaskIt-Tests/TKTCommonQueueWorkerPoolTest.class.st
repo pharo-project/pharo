@@ -1,22 +1,12 @@
 Class {
-	#name : #TKTCommonQueueWorkerPoolTest,
-	#superclass : #TKTTestCase,
-	#category : #'TaskIt-Tests-Worker'
+	#name : 'TKTCommonQueueWorkerPoolTest',
+	#superclass : 'TKTTestCase',
+	#category : 'TaskIt-Tests-Worker',
+	#package : 'TaskIt-Tests',
+	#tag : 'Worker'
 }
 
-{ #category : #testing }
-TKTCommonQueueWorkerPoolTest >> expectedFailures [
-
-	"This tests fail on P7"
-	SystemVersion current major <= 7 ifTrue: [
-		^ #(
-		testWorkerPoolWorkersAreStoppedAfterPoolsCollection
-		testWorkerPoolWorkersProcessesAreStoppedAfterPoolsCollection
-		) ].
-	^ #()
-]
-
-{ #category : #tests }
+{ #category : 'tests' }
 TKTCommonQueueWorkerPoolTest >> testWorkerPoolCretesWorkersWhenExecutingATask [
 	| pool |
 	pool := TKTCommonQueueWorkerPool new.
@@ -27,7 +17,7 @@ TKTCommonQueueWorkerPoolTest >> testWorkerPoolCretesWorkersWhenExecutingATask [
 	self assert: pool workers notEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TKTCommonQueueWorkerPoolTest >> testWorkerPoolDoesNotExceedPoolSize [
 	| pool |
 	pool := TKTCommonQueueWorkerPool new.
@@ -38,7 +28,7 @@ TKTCommonQueueWorkerPoolTest >> testWorkerPoolDoesNotExceedPoolSize [
 	self assert: pool size <=  4
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TKTCommonQueueWorkerPoolTest >> testWorkerPoolDoesNotExceedPoolSizeWhenSchedulingTasksInParallel [
 	| pool totalTasks futures |
 	pool := TKTCommonQueueWorkerPool new.
@@ -52,7 +42,7 @@ TKTCommonQueueWorkerPoolTest >> testWorkerPoolDoesNotExceedPoolSizeWhenSchedulin
 	self assert: pool size <= 10
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TKTCommonQueueWorkerPoolTest >> testWorkerPoolStopStopsWorkers [
 
 	| pool |
@@ -68,7 +58,7 @@ TKTCommonQueueWorkerPoolTest >> testWorkerPoolStopStopsWorkers [
 	pool workers do: [ :worker | self deny: worker isRunning ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TKTCommonQueueWorkerPoolTest >> testWorkerPoolWorkersAreStoppedAfterPoolsCollection [
 
 	| pool workerProcess |
@@ -85,7 +75,7 @@ TKTCommonQueueWorkerPoolTest >> testWorkerPoolWorkersAreStoppedAfterPoolsCollect
 	self assertWithGarbageCollect: [ workerProcess first isNil ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TKTCommonQueueWorkerPoolTest >> testWorkerPoolWorkersProcessesAreStoppedAfterPoolsCollection [
 
 	| pool workerProcess |
@@ -100,7 +90,7 @@ TKTCommonQueueWorkerPoolTest >> testWorkerPoolWorkersProcessesAreStoppedAfterPoo
 	self assertWithGarbageCollect: [ workerProcess first isNil ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TKTCommonQueueWorkerPoolTest >> testWorkerPoolWorkersProcessesAreTerminatedAfterPoolsCollection [
 
 	| pool workerProcess |

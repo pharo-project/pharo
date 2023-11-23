@@ -39,8 +39,8 @@ My instances are created on the browser:
 ```	
 "
 Class {
-	#name : #ClyNotebookManager,
-	#superclass : #Object,
+	#name : 'ClyNotebookManager',
+	#superclass : 'Object',
 	#instVars : [
 		'browser',
 		'tabMorph',
@@ -50,16 +50,18 @@ Class {
 		'desiredSelection',
 		'shouldSkipCurrentDesiredSelection'
 	],
-	#category : #'Calypso-Browser-Tabs'
+	#category : 'Calypso-Browser-Tabs',
+	#package : 'Calypso-Browser',
+	#tag : 'Tabs'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyNotebookManager class >> of: aBrowser [
 	^self new
 		browser: aBrowser
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ClyNotebookManager >> activationPriorityOf: aBrowserTool [
 	| priority |
 
@@ -72,13 +74,13 @@ ClyNotebookManager >> activationPriorityOf: aBrowserTool [
 		ifFalse: [ priority ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyNotebookManager >> activeStatusBar [
 
 	^ self selectedTools first statusBar
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ClyNotebookManager >> addTool: aBrowserTool [
 	| tab |
 
@@ -91,7 +93,7 @@ ClyNotebookManager >> addTool: aBrowserTool [
 		onDoubleClick: [ browser toggleFullWindowTabs ]
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 ClyNotebookManager >> basicUpdateTools [
 		| needsNewSelection selectedTools currentTools |
 
@@ -104,17 +106,17 @@ ClyNotebookManager >> basicUpdateTools [
 			ifTrue: [ self restoreSelectedTools: selectedTools]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyNotebookManager >> browser [
 	^ browser
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyNotebookManager >> browser: anObject [
 	browser := anObject
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ClyNotebookManager >> buildToolsOn: toolsList for: aBrowserContext [
 	| tool |
 	ClyTabActivationStrategyAnnotation
@@ -125,7 +127,7 @@ ClyNotebookManager >> buildToolsOn: toolsList for: aBrowserContext [
 			toolsList add: tool ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ClyNotebookManager >> closeTab: tab [
 
 	tab model okToClose ifFalse: [ ^ self ].
@@ -133,18 +135,18 @@ ClyNotebookManager >> closeTab: tab [
 	self tabDeleted: tab
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyNotebookManager >> countToolsSimilarTo: aBrowserTool [
 
 	^ tools count: [ :each | each class = aBrowserTool class ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyNotebookManager >> desiredSelection [
 	^ desiredSelection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyNotebookManager >> desiredSelection: toolClasses [
 	| currentSelection |
 
@@ -155,7 +157,7 @@ ClyNotebookManager >> desiredSelection: toolClasses [
 	shouldSkipCurrentDesiredSelection := false "it is one time option"
 ]
 
-{ #category : #'focus management' }
+{ #category : 'focus management' }
 ClyNotebookManager >> focusActiveTab [
 	| activeTool |
 
@@ -165,7 +167,7 @@ ClyNotebookManager >> focusActiveTab [
 	activeTool ifNotNil: [ tabMorph page: activeTool containerTab ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyNotebookManager >> initialize [
 	super initialize.
 
@@ -185,20 +187,20 @@ ClyNotebookManager >> initialize [
 		vResizing: #spaceFill
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 ClyNotebookManager >> okToChange [
 
 	(tools anySatisfy: #hasUnacceptedEdits) ifFalse: [ ^ true ].
 	^browser confirmDiscardChanges
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ClyNotebookManager >> overridenPriorityOf: aBrowserTool [
 
 	^selectionPriorities at: aBrowserTool class ifAbsent: [ aBrowserTool activationPriority  ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ClyNotebookManager >> pageChanged: ann [
 	| selectedTool oldSelectedTools browserState |
 
@@ -221,7 +223,7 @@ ClyNotebookManager >> pageChanged: ann [
 		and: oldSelectedTools first
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ClyNotebookManager >> removeTool: aTool [
 
 	self flag: #TODO. "Why sometimes is not there?"
@@ -230,14 +232,14 @@ ClyNotebookManager >> removeTool: aTool [
 	self tabDeleted: aTool containerTab
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyNotebookManager >> requiresNewDesiredSelection [
 	desiredSelection ifEmpty: [ ^false ].
 
 	^(self selectedTools allSatisfy: [ :each | desiredSelection includes: each class]) not
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 ClyNotebookManager >> restoreBrowserState: aBrowserState [
 	| existingTools |
 	"Browser state do only hold selected tabs.
@@ -246,14 +248,14 @@ ClyNotebookManager >> restoreBrowserState: aBrowserState [
 
 	existingTools := aBrowserState selectedTabs
 		collect: [ :oldTool | tools detect: [ :each | each isSimilarTo: oldTool ] ifNone: [ nil ] ]
-		thenSelect: #notNil.
+		thenSelect: #isNotNil.
 
 	existingTools ifEmpty: [ ^ self ].
 	self tabMorph page: existingTools first.
 	existingTools allButFirstDo: [ :each | each selectAsExtraTab ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ClyNotebookManager >> restoreSelectedTools: selectedTools [
 	| mainTool extraTools |
 
@@ -283,7 +285,7 @@ ClyNotebookManager >> restoreSelectedTools: selectedTools [
 	"mainTool waitBuildCompletion" "to avoid blinking we try to wait a little bit until mainly selected tab wiull be build. When it is built fast it will look like no background building was happen"
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ClyNotebookManager >> restoreSelectionOfExtraTool: aBrowserTool [
 
 	aBrowserTool hasUnacceptedEdits ifFalse: [ aBrowserTool selectAsExtraTab. ^self ].
@@ -293,7 +295,7 @@ ClyNotebookManager >> restoreSelectionOfExtraTool: aBrowserTool [
 		ifFalse: [aBrowserTool deselectTab]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ClyNotebookManager >> selectMainTool [
 	| desiredTools mainTool |
 
@@ -308,7 +310,7 @@ ClyNotebookManager >> selectMainTool [
 	^ mainTool
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyNotebookManager >> selectedTools [
 
 	^ tabMorph page
@@ -316,7 +318,7 @@ ClyNotebookManager >> selectedTools [
 		ifNil: [ #() ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ClyNotebookManager >> selectsTools: toolsArray [
 
 	| selectedTools |
@@ -327,22 +329,22 @@ ClyNotebookManager >> selectsTools: toolsArray [
 		toolsArray anySatisfy: [ :each | existingTool isSimilarTo: each ]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyNotebookManager >> shouldSkipCurrentDesiredSelection [
 	^ shouldSkipCurrentDesiredSelection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyNotebookManager >> shouldSkipCurrentDesiredSelection: anObject [
 	shouldSkipCurrentDesiredSelection := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyNotebookManager >> skipCurrentDesiredSelection [
 	shouldSkipCurrentDesiredSelection := true
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ClyNotebookManager >> swapPrioritiesBetween: aTool1 and: aTool2 [
 	| priority1 priority2 |
 
@@ -355,7 +357,7 @@ ClyNotebookManager >> swapPrioritiesBetween: aTool1 and: aTool2 [
 	selectionPriorities at: aTool2 class put: priority1
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ClyNotebookManager >> tabDeleted: aTab [
 	| removedTool |
 
@@ -365,13 +367,13 @@ ClyNotebookManager >> tabDeleted: aTab [
 	removedTool cleanAfterRemove
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyNotebookManager >> tabMorph [
 
 	^ tabMorph
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ClyNotebookManager >> tabOrderOf: anObject [
 
 	^ anObject model
@@ -379,17 +381,17 @@ ClyNotebookManager >> tabOrderOf: anObject [
 		ifNil: [ 0 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyNotebookManager >> tools [
 	^ tools
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyNotebookManager >> tools: anObject [
 	tools := anObject
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 ClyNotebookManager >> updateTabs [
 	| toRemove toInstall recycler |
 
@@ -410,20 +412,20 @@ ClyNotebookManager >> updateTabs [
 	tools do: [ :each | each browserContextWasChanged ]
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 ClyNotebookManager >> updateTools [
 
 	self updateToolsBy: [
 		self basicUpdateTools ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ClyNotebookManager >> updateToolsBy: aBlock [
 	updatingStarted := true.
 	aBlock ensure: [ updatingStarted := false ]
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 ClyNotebookManager >> updateToolsForChangedEnvironment [
 	| currentState |
 	currentState := OrderedCollection new: tools size.
@@ -436,13 +438,13 @@ ClyNotebookManager >> updateToolsForChangedEnvironment [
 	currentState do: [ :each | each key isManagedByUser: each value ]
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 ClyNotebookManager >> windowIsClosing [
 
 	tools do: [ :each | each cleanAfterRemove ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyNotebookManager >> withTool: aToolClass do: aBlock [
 	| tool |
 	tool := tools detect: [ :each | each isKindOf: aToolClass ].

@@ -15,20 +15,22 @@ Internal Representation and Key Implementation Points.
 
 "
 Class {
-	#name : #ClyInheritedMethodGroup,
-	#superclass : #ClyMethodGroup,
+	#name : 'ClyInheritedMethodGroup',
+	#superclass : 'ClyMethodGroup',
 	#instVars : [
 		'visibilityLevels'
 	],
-	#category : #'Calypso-SystemQueries-Domain'
+	#category : 'Calypso-SystemQueries-Domain',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Domain'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyInheritedMethodGroup class >> priority [
 	^10
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyInheritedMethodGroup class >> withMethodQuery: aMethodQuery andClassesInheritedFrom: aClassScope [
 	| subgroupsQuery |
 	subgroupsQuery := ClyAllClassesQuery
@@ -39,7 +41,7 @@ ClyInheritedMethodGroup class >> withMethodQuery: aMethodQuery andClassesInherit
 		visibilityLevels: { ClyFullVisibilityLevel of: aClassScope }
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyInheritedMethodGroup class >> withMethodsInheritedFrom: aClassScope [
 
 	^self
@@ -47,7 +49,7 @@ ClyInheritedMethodGroup class >> withMethodsInheritedFrom: aClassScope [
 		andClassesInheritedFrom: aClassScope
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyInheritedMethodGroup class >> withMethodsOf: aClass toShowIn: aClassScope [
 
 	| methodQuery |
@@ -58,7 +60,7 @@ ClyInheritedMethodGroup class >> withMethodsOf: aClass toShowIn: aClassScope [
 		visibilityLevels: { ClySuperclassVisibilityLevel of: aClassScope toShow: aClass }
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyInheritedMethodGroup >> includesMethod: aMethod [
 	"Original version:
 		^self methodQuery retrievesItem: aMethod
@@ -69,17 +71,17 @@ ClyInheritedMethodGroup >> includesMethod: aMethod [
 	^ true
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ClyInheritedMethodGroup >> removeWithMethods [
 	self error: 'You should not remove inherited methods'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyInheritedMethodGroup >> visibilityLevels [
 	^ visibilityLevels
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyInheritedMethodGroup >> visibilityLevels: levelCollection [
 	visibilityLevels := levelCollection reject: [ :each | each isRedundant ]
 ]

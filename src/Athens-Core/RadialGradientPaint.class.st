@@ -10,17 +10,19 @@ Also check the comment of my superclass to know better how and when you can use 
 
 "
 Class {
-	#name : #RadialGradientPaint,
-	#superclass : #GradientPaint,
+	#name : 'RadialGradientPaint',
+	#superclass : 'GradientPaint',
 	#instVars : [
 		'center',
 		'radius',
 		'focalPoint'
 	],
-	#category : #'Athens-Core-Paints'
+	#category : 'Athens-Core-Paints',
+	#package : 'Athens-Core',
+	#tag : 'Paints'
 }
 
-{ #category : #converting }
+{ #category : 'converting' }
 RadialGradientPaint >> asAthensPaintOn: aCanvas [
 	^ aCanvas surface
 		createRadialGradient:  colorRamp
@@ -29,37 +31,37 @@ RadialGradientPaint >> asAthensPaintOn: aCanvas [
 		focalPoint: focalPoint
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RadialGradientPaint >> center [
 
 	^ center
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RadialGradientPaint >> center: aPoint [
 
 	center := aPoint
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RadialGradientPaint >> focalPoint [
 
 	^ focalPoint
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RadialGradientPaint >> focalPoint: aPoint [
 
 	focalPoint := aPoint
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RadialGradientPaint >> radius [
 
 	^ radius
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RadialGradientPaint >> radius: aNumber [
 
 	radius := aNumber

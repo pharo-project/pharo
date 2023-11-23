@@ -2,18 +2,20 @@
 SUnit tests for Behavior
 "
 Class {
-	#name : #BehaviorTest,
-	#superclass : #ClassTestCase,
-	#category : #'Kernel-Tests-Classes'
+	#name : 'BehaviorTest',
+	#superclass : 'ClassTestCase',
+	#category : 'Kernel-Tests-Classes',
+	#package : 'Kernel-Tests',
+	#tag : 'Classes'
 }
 
-{ #category : #coverage }
+{ #category : 'coverage' }
 BehaviorTest >> classToBeTested [
 
 	^ Behavior
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BehaviorTest >> sampleMessageWithFirstArgument: firstArgument "This is a comment intended to explain arg1"
    andInterleavedCommentBeforeSecondArgument: secondArgument [
 
@@ -24,7 +26,7 @@ BehaviorTest >> sampleMessageWithFirstArgument: firstArgument "This is a comment
 	^thisIsAnUnusedTemp
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BehaviorTest >> testAllInstVarNames [
 
 	self assert: Point allInstVarNames equals: #( x y ).
@@ -38,7 +40,7 @@ BehaviorTest >> testAllInstVarNames [
 			 behavior allInstVarNames size = behavior allSlots size ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BehaviorTest >> testAllMethods [
 	| allMethods nonOverridenMethods |
 	allMethods := IdentitySet new
@@ -53,14 +55,14 @@ BehaviorTest >> testAllMethods [
 	self assert: (allMethods includesAll: nonOverridenMethods)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BehaviorTest >> testAllSelectors [
 	self assert: ProtoObject allSelectors asSet equals: ProtoObject selectors asSet.
 	self assert: Object allSelectors asSet equals: (Object selectors asSet union: ProtoObject selectors).
 	self assert: (Object allSelectorsBelow: ProtoObject) asSet equals: Object selectors asSet
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BehaviorTest >> testAllSelectorsAbove [
 
 	|sels |
@@ -71,7 +73,7 @@ BehaviorTest >> testAllSelectorsAbove [
 	self assert: (sels includes: #cannotInterpret: )
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BehaviorTest >> testAllSelectorsAboveUntil [
 
 	|sels |
@@ -82,14 +84,14 @@ BehaviorTest >> testAllSelectorsAboveUntil [
 	self deny: (sels includes: #cannotInterpret: )
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BehaviorTest >> testBehaviornewnewShouldNotCrash [
 
 	Behavior new new.
 	"still not working correctly but at least does not crash the image"
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BehaviorTest >> testBinding [
 	self assert: Object binding value equals: Object.
 	self assert: Object binding key equals: #Object.
@@ -101,7 +103,33 @@ BehaviorTest >> testBinding [
 	self assert: Object class binding key isNil
 ]
 
-{ #category : #'tests - queries' }
+{ #category : 'tests' }
+BehaviorTest >> testDefinedMethods [
+
+	[
+	ExampleForTest1 compile: 'extensionMethod ' classified: '*AGeneratedPackageForTest'.
+	self assertCollection: ExampleForTest1 localMethods hasSameElements: {
+			(ExampleForTest1 >> #aSuperclassVariable).
+			(ExampleForTest1 >> #aSuperclassVariable:).
+			(ExampleForTest1 >> #extensionMethod) }.
+
+	self assertCollection: ExampleForTest1 definedMethods hasSameElements: {
+			(ExampleForTest1 >> #aSuperclassVariable).
+			(ExampleForTest1 >> #aSuperclassVariable:) } ] ensure: [ self packageOrganizer removePackage: 'AGeneratedPackageForTest' ]
+]
+
+{ #category : 'tests' }
+BehaviorTest >> testDefinedSelectors [
+
+	[
+	ExampleForTest1 compile: 'extensionMethod ' classified: '*AGeneratedPackageForTest'.
+	self assertCollection: ExampleForTest1 localSelectors hasSameElements: #( #aSuperclassVariable #aSuperclassVariable: #extensionMethod ).
+
+	self assertCollection: ExampleForTest1 definedSelectors hasSameElements: #( #aSuperclassVariable #aSuperclassVariable: ) ] ensure: [
+		self packageOrganizer removePackage: 'AGeneratedPackageForTest' ]
+]
+
+{ #category : 'tests - queries' }
 BehaviorTest >> testDefinedVariables [
 	self assert: Behavior new definedVariables isEmpty.
 	self assert: Point definedVariables equals: Point instanceVariables.
@@ -109,7 +137,7 @@ BehaviorTest >> testDefinedVariables [
 	self assert: (SmalltalkImage definedVariables includes: (SmalltalkImage classVariableNamed: #CompilerClass))
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BehaviorTest >> testHasAbstractMethods [
 	self deny: Object hasAbstractMethods.
 	self deny: Object class hasAbstractMethods.
@@ -124,7 +152,7 @@ BehaviorTest >> testHasAbstractMethods [
 	self assert: ObjectLayout class hasAbstractMethods
 ]
 
-{ #category : #'tests - properties' }
+{ #category : 'tests - properties' }
 BehaviorTest >> testHasProperty [
 	| testValue |
 	testValue := Date today.
@@ -135,7 +163,7 @@ BehaviorTest >> testHasProperty [
 	self deny: (self class hasProperty: #testKeySelector)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BehaviorTest >> testIncludesMethod [
 	self assert: (Object includesMethod: Object>>#halt).
 	self deny: (Class includesMethod: Object>>#halt).
@@ -144,46 +172,56 @@ BehaviorTest >> testIncludesMethod [
 	self deny: (LookupKey includesMethod: Point>>#x)
 ]
 
-{ #category : #metrics }
+{ #category : 'metrics' }
 BehaviorTest >> testInstSize [
 	self assert: Object instSize equals: 0.
 	self assert: Point instSize equals: 2.
 	self assert: Metaclass instSize equals: 6
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BehaviorTest >> testIsAbstract [
 
 	self deny: Behavior isAbstract.
-	self deny: Behavior class isAbstract.
-	self deny: ClassDescription isAbstract.
-	self deny: ClassDescription class isAbstract.
-
+	self assert: ClassDescription isAbstract.
+	
 	self deny: Class isAbstract.
-	self deny: Class class isAbstract.
-	self deny: Object isAbstract.
-	self deny: Object class isAbstract
+	self deny: Object isAbstract
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BehaviorTest >> testIsReferenced [
 	self assert: Object isReferenced.
 	self deny: Object class isReferenced
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BehaviorTest >> testIsRootInEnvironment [
 	self assert: ProtoObject isRootInEnvironment.
 	self deny: Object isRootInEnvironment
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BehaviorTest >> testIsUsed [
 	self assert: Object isUsed.
 	self assert: Object class isUsed
 ]
 
-{ #category : #'tests - queries' }
+{ #category : 'tests' }
+BehaviorTest >> testLocalMethods [
+
+	self assertCollection: ExampleForTest1 localMethods hasSameElements: {
+			(ExampleForTest1 >> #aSuperclassVariable).
+			(ExampleForTest1 >> #aSuperclassVariable:) }
+]
+
+{ #category : 'tests' }
+BehaviorTest >> testLocalSelectors [
+
+	self assertCollection: ExampleForTest1 localSelectors hasSameElements: #( #aSuperclassVariable #aSuperclassVariable: )
+]
+
+{ #category : 'tests - queries' }
 BehaviorTest >> testMethodsAccessingSlot [
 	| numberViaSlot numberViaIVar |
 	"Check the source code availability to do not fail on images without sources"
@@ -194,7 +232,7 @@ BehaviorTest >> testMethodsAccessingSlot [
 	self assert: numberViaSlot equals: numberViaIVar
 ]
 
-{ #category : #'tests - queries' }
+{ #category : 'tests - queries' }
 BehaviorTest >> testMethodsReadingSlot [
 	| numberViaSlot numberViaIVar |
 	"Check the source code availability to do not fail on images without sources"
@@ -205,7 +243,7 @@ BehaviorTest >> testMethodsReadingSlot [
 	self assert: numberViaSlot equals: numberViaIVar
 ]
 
-{ #category : #'tests - queries' }
+{ #category : 'tests - queries' }
 BehaviorTest >> testMethodsWritingSlot [
 	| numberViaSlot numberViaIVar |
 	"Check the source code availability to do not fail on images without sources"
@@ -217,7 +255,7 @@ BehaviorTest >> testMethodsWritingSlot [
 	self assert: numberViaSlot equals: numberViaIVar
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BehaviorTest >> testNonObsoleteClass [
 	"Does it work on not-obsolete classes?"
 	self assert: Object nonObsoleteClass equals: Object.
@@ -225,14 +263,14 @@ BehaviorTest >> testNonObsoleteClass [
 	in ObsoleteTest>>#testClassObsolete"
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 BehaviorTest >> testOriginalName [
 	"Does it work on not-obsolete classes?"
 	self assert: Object originalName equals: #Object.
 	"The case for obsolete classes is tested in ObsoleteTest>>#testClassObsolete"
 ]
 
-{ #category : #'tests - properties' }
+{ #category : 'tests - properties' }
 BehaviorTest >> testPropertyValueAtPut [
 	| testValue |
 	testValue := Date today.
@@ -243,65 +281,15 @@ BehaviorTest >> testPropertyValueAtPut [
 	self class removeProperty: #testKeySelector
 ]
 
-{ #category : #'tests - properties' }
+{ #category : 'tests - properties' }
 BehaviorTest >> testRemoveProperty [
 	self class propertyAt: #testKeySelector put: 1.
 	self class removeProperty: #testKeySelector.
 	self assert: (self class propertyAt: #testKeySelector) equals: nil
 ]
 
-{ #category : #'tests - queries' }
-BehaviorTest >> testallMethodsAccessingSlot [
-	| methods |
-	"Check the source code availability to do not fail on images without sources"
-	(Point>>#x) hasSourceCode ifFalse: [ ^ self ].
-
-
-	methods := LookupKey allMethodsAccessingSlot: (LookupKey slotNamed: #key).
-	self assert: (methods includes: (Association >>#key:value:))
-]
-
-{ #category : #'tests - queries' }
-BehaviorTest >> testallMethodsReadingSlot [
-	| methods |
-	"Check the source code availability to do not fail on images without sources"
-	(Point>>#x) hasSourceCode ifFalse: [ ^ self ].
-
-	methods := LookupKey allMethodsReadingSlot: (LookupKey slotNamed: #key).
-	self assert: (methods includes: (LookupKey >>#=))
-]
-
-{ #category : #'tests - queries' }
-BehaviorTest >> testallMethodsWritingSlot [
-	| methods |
-	"Check the source code availability to do not fail on images without sources"
-	(Point>>#x) hasSourceCode ifFalse: [ ^ self ].
-
-
-	methods := LookupKey allMethodsWritingSlot: (LookupKey slotNamed: #key).
-	self assert: (methods includes: (Association >>#key:value:))
-]
-
-{ #category : #tests }
-BehaviorTest >> testallSuperclassesIncluding [
-
-	|cls |
-	cls := ArrayedCollection allSuperclassesIncluding: Collection.
-	self deny: (cls includes: ArrayedCollection).
-	self deny: (cls includes: Object).
-	self assert: (cls includes: Collection).
-	self assert: (cls includes: SequenceableCollection)
-]
-
-{ #category : #tests }
-BehaviorTest >> testsourceCodeTemplateFor [
-	"check for distictive source code templates for class-side and instance-side"
-	self assert: ((Object sourceCodeTemplate) includesSubstring: 'instance-side method').
-	self assert: ((Object class sourceCodeTemplate) includesSubstring: 'class-side method')
-]
-
-{ #category : #'tests - queries' }
-BehaviorTest >> testthoroughWhichMethodsReferTo [
+{ #category : 'tests - queries' }
+BehaviorTest >> testThoroughWhichMethodsReferTo [
 	| array |
 	array := #(thisIsOnlyHereIntestthoroughWhichMethodsReferTo).
 	"normal case"
@@ -311,11 +299,13 @@ BehaviorTest >> testthoroughWhichMethodsReferTo [
 	"we dive into literal arrays"
 	self assert: (self class thoroughWhichMethodsReferTo: array first) notEmpty.
 	"and we are false for non existing symbols"
-	self assert: (self class thoroughWhichMethodsReferTo: ('this', 'doesNotExist') asSymbol) isEmpty
+	self assert: (self class thoroughWhichMethodsReferTo: ('this', 'doesNotExist') asSymbol) isEmpty.
+	"we can search for Literal Variable references, but it is faster to use the non-thorough version"
+	self assert: (self class thoroughWhichSelectorsReferTo: Point binding) notEmpty
 ]
 
-{ #category : #'tests - queries' }
-BehaviorTest >> testthoroughWhichMethodsReferToSpecialIndex [
+{ #category : 'tests - queries' }
+BehaviorTest >> testThoroughWhichMethodsReferToSpecialIndex [
 	| array |
 	array := #(thisIsOnlyHereIntestthoroughWhichMethodsReferTo).
 	"normal case"
@@ -326,4 +316,70 @@ BehaviorTest >> testthoroughWhichMethodsReferToSpecialIndex [
 	self assert: (self class thoroughWhichMethodsReferTo: array first specialIndex: nil) notEmpty.
 	"and we are false for non existing symbols"
 	self assert: (self class thoroughWhichMethodsReferTo: ('this', 'doesNotExist') asSymbol specialIndex: nil) isEmpty
+]
+
+{ #category : 'tests - queries' }
+BehaviorTest >> testThoroughWhichSelectorsReferTo [
+	| array |
+	array := #(thisIsOnlyHereIntestthoroughWhichSelectorsReferTo).
+	"normal case"
+	self assert: (Point thoroughWhichSelectorsReferTo: #x) notEmpty.
+	"we understand send bytecodes for special selectors"
+	self assert: (Point thoroughWhichSelectorsReferTo: #+) notEmpty.
+	"we dive into literal arrays"
+	self assert: (self class thoroughWhichSelectorsReferTo: array first) notEmpty.
+	"and we are false for non existing symbols"
+	self assert: (self class thoroughWhichSelectorsReferTo: ('this', 'doesNotExist') asSymbol) isEmpty.
+	"we can search for Literal Variable references, but it is faster to use the non-thorough version"
+	self assert: (self class thoroughWhichSelectorsReferTo: Point binding) notEmpty
+]
+
+{ #category : 'tests - queries' }
+BehaviorTest >> testallMethodsAccessingSlot [
+	| methods |
+	"Check the source code availability to do not fail on images without sources"
+	(Point>>#x) hasSourceCode ifFalse: [ ^ self ].
+
+
+	methods := LookupKey allMethodsAccessingSlot: (LookupKey slotNamed: #key).
+	self assert: (methods includes: (Association >>#key:value:))
+]
+
+{ #category : 'tests - queries' }
+BehaviorTest >> testallMethodsReadingSlot [
+	| methods |
+	"Check the source code availability to do not fail on images without sources"
+	(Point>>#x) hasSourceCode ifFalse: [ ^ self ].
+
+	methods := LookupKey allMethodsReadingSlot: (LookupKey slotNamed: #key).
+	self assert: (methods includes: (LookupKey >>#=))
+]
+
+{ #category : 'tests - queries' }
+BehaviorTest >> testallMethodsWritingSlot [
+	| methods |
+	"Check the source code availability to do not fail on images without sources"
+	(Point>>#x) hasSourceCode ifFalse: [ ^ self ].
+
+
+	methods := LookupKey allMethodsWritingSlot: (LookupKey slotNamed: #key).
+	self assert: (methods includes: (Association >>#key:value:))
+]
+
+{ #category : 'tests' }
+BehaviorTest >> testallSuperclassesIncluding [
+
+	|cls |
+	cls := ArrayedCollection allSuperclassesIncluding: Collection.
+	self deny: (cls includes: ArrayedCollection).
+	self deny: (cls includes: Object).
+	self assert: (cls includes: Collection).
+	self assert: (cls includes: SequenceableCollection)
+]
+
+{ #category : 'tests' }
+BehaviorTest >> testsourceCodeTemplateFor [
+	"check for distictive source code templates for class-side and instance-side"
+	self assert: ((Object sourceCodeTemplate) includesSubstring: 'instance-side method').
+	self assert: ((Object class sourceCodeTemplate) includesSubstring: 'class-side method')
 ]

@@ -4,21 +4,23 @@ I am ZnCredential, an abstract class representing credentials in a domain and re
 Part of Zinc HTTP Components.
 "
 Class {
-	#name : #ZnCredential,
-	#superclass : #Object,
+	#name : 'ZnCredential',
+	#superclass : 'Object',
 	#instVars : [
 		'domain',
 		'realm'
 	],
-	#category : #'Zinc-HTTP-Support'
+	#category : 'Zinc-HTTP-Support',
+	#package : 'Zinc-HTTP',
+	#tag : 'Support'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnCredential class >> authName [
 	self subclassResponsibility
 ]
 
-{ #category : #'accessing - class hierarchy' }
+{ #category : 'accessing - class hierarchy' }
 ZnCredential class >> findHandlerFor: anAuthHeader [
 	| type i |
 	i := anAuthHeader indexOf: Character space.
@@ -28,7 +30,7 @@ ZnCredential class >> findHandlerFor: anAuthHeader [
 	^ nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnCredential class >> findRealmFor: anAuthHeader [
 	(anAuthHeader substrings: ',') do: [ :token |
 		"String>>trimBoth: is a grease method, so not sure if we should be using it."
@@ -37,32 +39,32 @@ ZnCredential class >> findRealmFor: anAuthHeader [
 	^ nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnCredential >> authToken [
 	^ self authTokenForUrl: nil method: nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnCredential >> authTokenForUrl: urlObject method: method [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnCredential >> domain [
 	^ domain
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnCredential >> domain: anObject [
 	domain := anObject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnCredential >> isComplete [
 	^ self subclassResponsibility
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ZnCredential >> linkToAuthRequest: aHeader [
 	"Link this credential to the WWW-Authenticate request in the provided header.
 	Used for authentication methods which require parameters provided by the server
@@ -70,17 +72,17 @@ ZnCredential >> linkToAuthRequest: aHeader [
 	realm := self class findRealmFor: aHeader
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnCredential >> realm [
 	^ realm ifNil: [ realm := '' ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnCredential >> realm: anObject [
 	realm := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnCredential >> setAuthorizationHeader: headers for: urlObject method: method [
 	headers at: 'Authorization' put: self authToken
 ]

@@ -5,15 +5,17 @@ This is the unit test for the class InstVarRefLocator. Unit tests are a good way
 	- the sunit class category
 "
 Class {
-	#name : #InstVarRefLocatorTest,
-	#superclass : #TestCase,
+	#name : 'InstVarRefLocatorTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'tt'
 	],
-	#category : #'Kernel-Tests-Extended-Methods'
+	#category : 'Kernel-Tests-Extended-Methods',
+	#package : 'Kernel-Tests-Extended',
+	#tag : 'Methods'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 InstVarRefLocatorTest >> example1 [
 	<sampleInstance>
 	| ff |
@@ -21,7 +23,7 @@ InstVarRefLocatorTest >> example1 [
 	^ ff
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 InstVarRefLocatorTest >> example2 [
 	<sampleInstance>
 	| ff |
@@ -30,7 +32,7 @@ InstVarRefLocatorTest >> example2 [
 	^ ff
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 InstVarRefLocatorTest >> hasInstVarRef: aMethod [
 	"Answer whether the receiver references an instance variable."
 
@@ -46,7 +48,7 @@ InstVarRefLocatorTest >> hasInstVarRef: aMethod [
 	^false
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 InstVarRefLocatorTest >> testExample1 [
 	| method |
 
@@ -54,7 +56,7 @@ InstVarRefLocatorTest >> testExample1 [
 	self assert: (self hasInstVarRef: method)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 InstVarRefLocatorTest >> testExample2 [
 	| method |
 
@@ -62,7 +64,7 @@ InstVarRefLocatorTest >> testExample2 [
 	self deny: (self hasInstVarRef: method)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 InstVarRefLocatorTest >> testInstructions [
 	Object methods
 		do: [ :method |

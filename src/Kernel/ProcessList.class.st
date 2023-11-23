@@ -7,27 +7,29 @@ I am a linked list that contains processes as Nodes. My implementation is tied t
 My main user is ProcessScheduler, which contains an array with instances of myself. Each entry in that array a priority for processes. Processes are queues in each process list by the VM automatically.
 "
 Class {
-	#name : #ProcessList,
-	#superclass : #SequenceableCollection,
+	#name : 'ProcessList',
+	#superclass : 'SequenceableCollection',
 	#instVars : [
 		'firstLink',
 		'lastLink'
 	],
-	#category : #'Kernel-Processes'
+	#category : 'Kernel-Processes',
+	#package : 'Kernel',
+	#tag : 'Processes'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ProcessList class >> new: anInt [
 	"LinkedList don't need capacity"
 	^self new
 ]
 
-{ #category : #'stream creation' }
+{ #category : 'stream creation' }
 ProcessList class >> new: size streamContents: aBlock [
 	^ self withAll: (super new: size streamContents: aBlock)
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ProcessList class >> newFrom: aCollection [
 	"Answer an instance with same elements as aCollection."
 	^self new
@@ -35,19 +37,19 @@ ProcessList class >> newFrom: aCollection [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProcessList class >> streamSpecies [
 	^ Array
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 ProcessList >> add: aLinkOrObject [
 	"Add aLink to the end of the receiver's list. Answer aLink."
 
 	^self addLast: aLinkOrObject
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 ProcessList >> add: link after: otherLinkOrObject [
 	"Add otherLink  after link in the list. Answer aLink."
 
@@ -56,7 +58,7 @@ ProcessList >> add: link after: otherLinkOrObject [
 	^ self add: link afterLink: otherLink
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 ProcessList >> add: aLinkOrObject afterLink: otherLink [
 
 	"Add otherLink  after link in the list. Answer aLink."
@@ -70,7 +72,7 @@ ProcessList >> add: aLinkOrObject afterLink: otherLink [
 	^aLink
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 ProcessList >> add: link before: otherLinkOrObject [
 	"Add otherLink  after link in the list. Answer aLink."
 
@@ -79,7 +81,7 @@ ProcessList >> add: link before: otherLinkOrObject [
 	^ self add: link beforeLink: otherLink
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 ProcessList >> add: aLinkOrObject beforeLink: otherLink [
 
 	| currentLink|
@@ -100,7 +102,7 @@ ProcessList >> add: aLinkOrObject beforeLink: otherLink [
 	^ self errorNotFound: otherLink
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 ProcessList >> addFirst: aLinkOrObject [
 	"Add aLink to the beginning of the receiver's list. Answer aLink."
 
@@ -112,7 +114,7 @@ ProcessList >> addFirst: aLinkOrObject [
 	^ aLink
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 ProcessList >> addLast: aLinkOrObject [
 	"Add aLink to the end of the receiver's list. Answer aLink."
 
@@ -125,19 +127,19 @@ ProcessList >> addLast: aLinkOrObject [
 	^ aLink
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProcessList >> at: index [
 
 	^(self linkAt: index) value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProcessList >> at: index put: anObject [
 
 	^self at: index putLink: (self linkOf: anObject ifAbsent: [anObject asLink])
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProcessList >> at: index putLink: aLink [
 	| previousLink nextLink |
 	"Please don't put a link which is already in the list, or you will create an infinite loop"
@@ -167,7 +169,7 @@ ProcessList >> at: index putLink: aLink [
 	^ aLink
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 ProcessList >> collect: aBlock [
 	"Evaluate aBlock with each of the receiver's elements as the argument.
 	Collect the resulting values into a collection like the receiver. Answer
@@ -182,7 +184,7 @@ ProcessList >> collect: aBlock [
 	^ newCollection
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 ProcessList >> collect: collectBlock thenSelect: selectBlock [
 	"Optimized version of SequenceableCollection>>#collect:#thenSelect:"
 
@@ -196,12 +198,12 @@ ProcessList >> collect: collectBlock thenSelect: selectBlock [
 	^ newCollection
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 ProcessList >> copyWith: newElement [
 	^self copy add: newElement; yourself
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 ProcessList >> copyWithout: oldElement [
 	|newInst|
 	newInst := self class new.
@@ -209,7 +211,7 @@ ProcessList >> copyWithout: oldElement [
 	^newInst
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 ProcessList >> do: aBlock [
 
 	| aLink |
@@ -219,14 +221,14 @@ ProcessList >> do: aBlock [
 		 aLink := aLink nextLink]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProcessList >> first [
 	"Answer the first link. Create an error notification if the receiver is
 	empty."
 ^self firstLink value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProcessList >> firstLink [
 	"Answer the first link. Create an error notification if the receiver is
 	empty."
@@ -235,7 +237,7 @@ ProcessList >> firstLink [
 	^firstLink
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ProcessList >> indexOf: anElement startingAt: start ifAbsent: exceptionBlock [
 	"Answer the index of the first occurrence of anElement after start
 	within the receiver. If the receiver does not contain anElement,
@@ -251,13 +253,13 @@ ProcessList >> indexOf: anElement startingAt: start ifAbsent: exceptionBlock [
 	^exceptionBlock value
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ProcessList >> isEmpty [
 
 	^firstLink isNil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProcessList >> last [
 	"Answer the last link. Create an error notification if the receiver is
 	empty."
@@ -266,7 +268,7 @@ ProcessList >> last [
 	^self lastLink value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProcessList >> lastLink [
 	"Answer the last link. Create an error notification if the receiver is
 	empty."
@@ -275,13 +277,13 @@ ProcessList >> lastLink [
 	^lastLink
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ProcessList >> linkAt: index [
 
 	^self linkAt: index ifAbsent: [ self errorSubscriptBounds: index]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ProcessList >> linkAt: index ifAbsent: errorBlock [
 
 	| i |
@@ -291,14 +293,14 @@ ProcessList >> linkAt: index ifAbsent: errorBlock [
 	^ errorBlock value
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ProcessList >> linkOf: anObject [
 	^ self
 		linkOf: anObject
 		ifAbsent: [self error: 'No such element']
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ProcessList >> linkOf: anObject ifAbsent: errorBlock [
 
 	self
@@ -307,7 +309,7 @@ ProcessList >> linkOf: anObject ifAbsent: errorBlock [
 	^ errorBlock value
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 ProcessList >> linksDo: aBlock [
 
 	| aLink |
@@ -318,7 +320,7 @@ ProcessList >> linksDo: aBlock [
 		aLink := aLink nextLink]
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 ProcessList >> postCopy [
 	| aLink |
 	super postCopy.
@@ -328,7 +330,7 @@ ProcessList >> postCopy [
 		lastLink := aLink]
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 ProcessList >> remove: aLinkOrObject ifAbsent: aBlock [
 	"Remove aLink from the receiver. If it is not there, answer the result of evaluating aBlock."
 
@@ -338,14 +340,14 @@ ProcessList >> remove: aLinkOrObject ifAbsent: aBlock [
 	^aLinkOrObject
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 ProcessList >> removeAll [
 	"Implementation note: this has to be fast"
 
 	firstLink := lastLink := nil
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 ProcessList >> removeAllSuchThat: aBlock [
 	"Evaluate aBlock for each element and remove all that elements from
 	the receiver for that aBlock evaluates to true.  For LinkedLists, it's safe to use do:."
@@ -353,7 +355,7 @@ ProcessList >> removeAllSuchThat: aBlock [
 	self do: [:each | (aBlock value: each) ifTrue: [self remove: each]]
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 ProcessList >> removeFirst [
 	"Remove the first element and answer it. If the receiver is empty, create
 	an error notification."
@@ -368,7 +370,7 @@ ProcessList >> removeFirst [
 	^oldLink value
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 ProcessList >> removeLast [
 	"Remove the receiver's last element and answer it. If the receiver is
 	empty, create an error notification."
@@ -387,34 +389,34 @@ ProcessList >> removeLast [
 	^oldLink value
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 ProcessList >> removeLink: aLink [
 	^self removeLink: aLink ifAbsent: [self error: 'no such method!']
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 ProcessList >> removeLink: aLink ifAbsent: aBlock [
 	"Remove aLink from the receiver. If it is not there, answer the result of
 	evaluating aBlock."
 
 	| tempLink |
 	aLink == firstLink
-		ifTrue: [firstLink := aLink nextLink.
-				aLink == lastLink
-					ifTrue: [lastLink := nil]]
-		ifFalse: [tempLink := firstLink.
-				[tempLink == nil ifTrue: [^aBlock value].
-				 tempLink nextLink == aLink]
-					whileFalse: [tempLink := tempLink nextLink].
-				tempLink nextLink: aLink nextLink.
-				aLink == lastLink
-					ifTrue: [lastLink := tempLink]].
+		ifTrue: [
+			firstLink := aLink nextLink.
+			aLink == lastLink ifTrue: [ lastLink := nil ] ]
+		ifFalse: [
+			tempLink := firstLink.
+			[
+			tempLink ifNil: [ ^ aBlock value ].
+			tempLink nextLink == aLink ] whileFalse: [ tempLink := tempLink nextLink ].
+			tempLink nextLink: aLink nextLink.
+			aLink == lastLink ifTrue: [ lastLink := tempLink ] ].
 	"Not nilling the link enables us to delete while iterating"
 	"aLink nextLink: nil."
-	^aLink
+	^ aLink
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 ProcessList >> select: aBlock [
 	"Reimplemennt #select: for speedup on linked lists.
 	The super implemention accesses the linkes by index, thus causing an O(n^2)"
@@ -427,7 +429,7 @@ ProcessList >> select: aBlock [
 	^newCollection
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 ProcessList >> select: selectBlock thenCollect: collectBlock [
 	"Optimized version of SequenceableCollection>>#select:thenCollect:"
 
@@ -440,7 +442,7 @@ ProcessList >> select: selectBlock thenCollect: collectBlock [
 	^ newCollection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProcessList >> size [
 	"Answer how many elements the receiver contains."
 
@@ -450,13 +452,13 @@ ProcessList >> size [
 	^ tally
 ]
 
-{ #category : #enumerating }
+{ #category : 'private' }
 ProcessList >> species [
 
 	^ Array
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProcessList >> swap: ix1 with: ix2 [
 	"Reimplemented, super would create an infinite loop"
 	| minIx maxIx link1Prev link2Prev link1 link2 link1Next link2Next newLink2Next |
@@ -488,7 +490,7 @@ ProcessList >> swap: ix1 with: ix2 [
 	link2 nextLink: newLink2Next
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ProcessList >> validIndex: index [
 	 ^index > 0
 			and: [index <= self size]

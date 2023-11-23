@@ -2,16 +2,18 @@
 A TextTest is a test class for testing the behavior of Text
 "
 Class {
-	#name : #TextTest,
-	#superclass : #TestCase,
+	#name : 'TextTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'text',
 		'string'
 	],
-	#category : #'Text-Tests-Base'
+	#category : 'Text-Tests-Base',
+	#package : 'Text-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 TextTest >> example1: size [
 	<sampleInstance>
 	^(TextStream on: (Text new: size))
@@ -21,7 +23,7 @@ TextTest >> example1: size [
 		contents
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 TextTest >> example2 [
 	<sampleInstance>
 	^(TextStream on: (Text new: 50))
@@ -31,7 +33,7 @@ TextTest >> example2 [
 		contents
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 TextTest >> replacementExample3 [
   "For a Text t, the following assertion should always hold:
      t string size = t run size
@@ -47,7 +49,7 @@ TextTest >> replacementExample3 [
    text replaceFrom: startPos to: startPos + length - 1 with: replacement startingAt: startPosInRep
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 TextTest >> setUp [
 	super setUp.
 	string := 'Pharo is cool'.
@@ -58,7 +60,7 @@ TextTest >> setUp [
 	text addAttribute: TextColor red from: 7 to: 13
 ]
 
-{ #category : #'tests - error' }
+{ #category : 'tests - error' }
 TextTest >> testAddAttributeFromTo [
 	"Adding attributes before begining"
 	text := 'foo' asText.
@@ -68,7 +70,7 @@ TextTest >> testAddAttributeFromTo [
 	self should: [ text addAttribute: TextColor red from: 2 to: text size + 1 ] raise: Error
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextTest >> testAdjacentRunsWithIdentitcalAttributes [
 	"This test verifies that adjacent runs with identical attributes are coalesced."
 
@@ -84,7 +86,7 @@ TextTest >> testAdjacentRunsWithIdentitcalAttributes [
 	self assert: text runs runs size = 1 & (text runs size = text string size)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextTest >> testAppend [
 	| receiver argument result expectedResult |
 	"Append text without attribute"
@@ -108,25 +110,25 @@ TextTest >> testAppend [
 	self assert: result runs equals: expectedResult runs
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextTest >> testAsNumber [
 	self assert: '123' asText asNumber equals: 123.
 	self assert: '1.23e2' asText asNumber equals: 123.
 	self assert: '2r1000' asText asNumber equals: 8
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextTest >> testAsString [
 	self assert: text asString equals: 'Pharo is cool'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextTest >> testAt [
 	string withIndexDo: [ :char :index |
 		self assert: (text at: index) equals: char]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextTest >> testAtPut [
 	text at: 2 put: $H.
 	text at: 3 put: $A.
@@ -135,7 +137,7 @@ TextTest >> testAtPut [
 	self assert: text string equals: 'PHARO is cool'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextTest >> testExampleText1 [
 	"Inspired by a bug report from Tim Olson.
 	Text attributes are lost when the stream collection is expanded.
@@ -150,7 +152,7 @@ TextTest >> testExampleText1 [
 	self assert: atts1 equals: atts2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextTest >> testExampleText2 [
 	"a Text looses its attributes when it is reversed "
 
@@ -160,14 +162,14 @@ TextTest >> testExampleText2 [
 	self assert: text1 runs equals: text2 runs
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextTest >> testFindStringStartingAt [
 	self assert: (text findString: 'Pharo' startingAt: 1) equals: 1.
 	self assert: (text findString: 'cool' startingAt: 1) equals: 10.
 	self assert: (text findString: 'Pharo' startingAt: 2) equals: 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextTest >> testFindStringStartingAtCaseSensitive [
 	self assert: (text findString: 'pharo' startingAt: 1 caseSensitive: false) equals: 1.
 	self assert: (text findString: 'pharo' startingAt: 1 caseSensitive: true) equals: 0.
@@ -176,7 +178,7 @@ TextTest >> testFindStringStartingAtCaseSensitive [
 	self assert: (text findString: 'COOL' startingAt: 1  caseSensitive: true) equals: 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextTest >> testGtDisplayOn [
 
 	| hello exp res |
@@ -186,7 +188,7 @@ TextTest >> testGtDisplayOn [
 	self assert: res equals: exp
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextTest >> testHowManyMatch [
 	self assert: (text howManyMatch: 'Pharo') equals: 5.
 	self assert: (text howManyMatch: 'Pha') equals: 3.
@@ -196,7 +198,7 @@ TextTest >> testHowManyMatch [
 	self assert: (text howManyMatch: 'cool') equals: 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextTest >> testIncludesSubstring [
 	"Test that Text correctly checks that the supplied substring is present (case sensitive)."
 	self assert: ('testing this string' asText includesSubstring: 'ring').
@@ -206,7 +208,7 @@ TextTest >> testIncludesSubstring [
 	self deny: ('kjdsnlksjdf' asText includesSubstring: 'K')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextTest >> testIncludesSubstringCaseSensitive [
 	"Test that Text correctly checks that the supplied substring is present,
 	 both case sensitive and case insensitive."
@@ -217,13 +219,13 @@ TextTest >> testIncludesSubstringCaseSensitive [
 	self assert: ('123éàôüöß' asText includesSubstring: 'ÀÔ' caseSensitive: false)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextTest >> testLineCount [
 	text := Text streamContents: [:str | str << 'Pharo' << Character cr << 'is' << Character cr << 'cool'].
 	self assert: text lineCount equals: 3
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextTest >> testPrepend [
 	| receiver argument result expectedResult |
 	"Prepend text without attribute"
@@ -247,7 +249,7 @@ TextTest >> testPrepend [
 	self assert: result runs equals: expectedResult runs
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextTest >> testRangeOfStartingAt [
 	self assert: (text rangeOf: TextEmphasis bold startingAt: 1) equals: (1 to: 5).
 	"even an index at beginning of the range, it returns the whole interval"
@@ -264,7 +266,7 @@ TextTest >> testRangeOfStartingAt [
 	self deny: (text rangeOf: TextEmphasis underlined startingAt: 5) equals: (7 to: 8)
 ]
 
-{ #category : #'tests - error' }
+{ #category : 'tests - error' }
 TextTest >> testRemoveAttribute [
 	"Removing attribute before the beginning"
 	text := Text string: 'foo' attribute: TextColor red.
@@ -274,7 +276,7 @@ TextTest >> testRemoveAttribute [
 	self should: [ text addAttribute: TextColor red from: 2 to: text size + 1 ] raise: Error
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextTest >> testReplaceFromToWith [
 	| anotherText bold|
 	bold := TextEmphasis bold.
@@ -290,7 +292,7 @@ TextTest >> testReplaceFromToWith [
 		self assert: attr first equals: bold ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextTest >> testReplacementAtStartPos1 [
 	"For a Text t, the following assertion should always hold:
      t string size = t run size
@@ -304,7 +306,7 @@ TextTest >> testReplacementAtStartPos1 [
 	self assert: text string size equals: text runs size
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextTest >> testReplacementAtStartPos2 [
   	"For a Text t, the following assertion should always hold:
      t string size = t run size
@@ -318,7 +320,7 @@ TextTest >> testReplacementAtStartPos2 [
 	self assert: text string size equals: text runs size
 ]
 
-{ #category : #'tests - error' }
+{ #category : 'tests - error' }
 TextTest >> testReplacementAtStartPos3 [
 	"For a Text t, the following assertion should always hold:
 		t string size = t run size
@@ -332,7 +334,7 @@ TextTest >> testReplacementAtStartPos3 [
   self should: [ text replaceFrom: 1 to: length with: replacement startingAt: 1] raise: Error
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextTest >> testRuns [
 	| attributes |
 	attributes := RunArray new: 13 withAll: TextColor red.
@@ -345,24 +347,24 @@ TextTest >> testRuns [
 	self should: [ text runs: attributes ] raise: Error
 ]
 
-{ #category : #'tests - error' }
+{ #category : 'tests - error' }
 TextTest >> testSettingRunsOfWrongSize [
 	|  newRuns |
 	newRuns := text runs copyReplaceFrom: 2 to: 1 with: (Array with: TextColor red).
 	self should: [text runs: newRuns] raise: Error
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextTest >> testSize [
 	self assert: text size equals: 13
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextTest >> testString [
 	self assert: text string equals: 'Pharo is cool'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextTest >> testTextEmphasisRangeDetection1 [
 	"This tests the detection of the range of a text attribute."
 	| startPos boldStyle |
@@ -393,7 +395,7 @@ TextTest >> testTextEmphasisRangeDetection1 [
 					ifFalse: [range first = idx & range isEmpty]])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextTest >> testTextEmphasisRangeDetection2 [
 	"This tests the detection of the range of a text attribute.
 	 Here the searched attribute spans three runs. The objective of the test is whether the entire
@@ -426,7 +428,7 @@ TextTest >> testTextEmphasisRangeDetection2 [
 						ifFalse: [range first = idx & range isEmpty]])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextTest >> testTextEmphasisRangeDetection3 [
 	"This tests the detection of the range of a text attribute.
     Here the searched attribute spans three runs. The the range to be detected begins at text position 	 1. The objective of the test is whether the entire range is always found."
@@ -468,7 +470,7 @@ TextTest >> testTextEmphasisRangeDetection3 [
                     [range first = idx & range isEmpty]])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextTest >> testTextEmphasisRangeDetection4 [
 	"This tests the detection of the range of a text attribute.
 	 Here the searched attribute spans three runs. The the range to be detected extends to
@@ -511,7 +513,7 @@ TextTest >> testTextEmphasisRangeDetection4 [
                   ifFalse: [range first = idx & range isEmpty]])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextTest >> testTextReplacement1 [
 	"For a Text t, the following assertion should always hold:
      t string size = t run size
@@ -527,7 +529,7 @@ TextTest >> testTextReplacement1 [
    self assert: text string size equals: text runs size
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextTest >> testTextReplacement2 [
 	"For a Text t, the following assertion should always hold:
      	t string size = t run size
@@ -544,7 +546,7 @@ TextTest >> testTextReplacement2 [
 	self assert: text string size equals: text runs size
 ]
 
-{ #category : #'tests - error' }
+{ #category : 'tests - error' }
 TextTest >> testTextReplacement3 [
 	"For a Text t, the following assertion should always hold:
 		t string size = t run size
@@ -553,7 +555,7 @@ TextTest >> testTextReplacement3 [
 	self should: [ self replacementExample3 ] raise: Error
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextTest >> testUnembellished [
 	| anotherText |
 	self deny: text unembellished.

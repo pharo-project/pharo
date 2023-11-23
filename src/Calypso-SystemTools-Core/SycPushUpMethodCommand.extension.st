@@ -1,13 +1,13 @@
-Extension { #name : #SycPushUpMethodCommand }
+Extension { #name : 'SycPushUpMethodCommand' }
 
-{ #category : #'*Calypso-SystemTools-Core' }
+{ #category : '*Calypso-SystemTools-Core' }
 SycPushUpMethodCommand class >> methodContextMenuActivation [
 	<classAnnotation>
 
 	^ SycMethodMenuActivation byRootGroupItemOrder: 10 for: ClyMethod asCalypsoItemContext
 ]
 
-{ #category : #'*Calypso-SystemTools-Core' }
+{ #category : '*Calypso-SystemTools-Core' }
 SycPushUpMethodCommand class >> methodShortcutActivation [
 	<classAnnotation>
 

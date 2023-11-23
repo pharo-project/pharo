@@ -1,6 +1,6 @@
-Extension { #name : #MCAddition }
+Extension { #name : 'MCAddition' }
 
-{ #category : #'*MonticelloGUI' }
+{ #category : '*MonticelloGUI' }
 MCAddition >> summary [
 
 	^ definition summary

@@ -1,13 +1,13 @@
-Extension { #name : #SHRBTextStyler }
+Extension { #name : 'SHRBTextStyler' }
 
-{ #category : #'*PharoDocComment' }
+{ #category : '*PharoDocComment' }
 SHRBTextStyler >> styleDocComment: aRBComment [
 	aRBComment pharoDocCommentNodes
 		do: [ :pharoDocComment |
 			self styleDocExpression: pharoDocComment expression in: aRBComment. ]
 ]
 
-{ #category : #'*PharoDocComment' }
+{ #category : '*PharoDocComment' }
 SHRBTextStyler >> styleDocExpression: aPharoDocExpression in: aRBComment [
 
 	| expressionText expressionNode off |
@@ -28,7 +28,7 @@ SHRBTextStyler >> styleDocExpression: aPharoDocExpression in: aRBComment [
 			off := off + 1 ] ]
 ]
 
-{ #category : #'*PharoDocComment' }
+{ #category : '*PharoDocComment' }
 SHRBTextStyler >> visitMethodComments: aNode [
 
 	PharoDocCommentNode docCommentEnabled ifTrue: [ aNode comments do: [ :comment | self styleDocComment: comment ] ]

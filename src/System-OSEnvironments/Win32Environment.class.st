@@ -13,17 +13,19 @@ I use FFI calls to manage encodings. Pharo strings are first encoded in utf8 and
 See Win32WideString
 "
 Class {
-	#name : #Win32Environment,
-	#superclass : #OSEnvironment,
-	#category : #'System-OSEnvironments-Platforms'
+	#name : 'Win32Environment',
+	#superclass : 'OSEnvironment',
+	#category : 'System-OSEnvironments-Platforms',
+	#package : 'System-OSEnvironments',
+	#tag : 'Platforms'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 Win32Environment class >> isDefaultFor: aPlatform [
 	^ aPlatform isWindows
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Win32Environment >> at: aKey ifAbsent: aBlock [
 	"The primitive on Windows currently uses the ascii version of the Windows API.
 	In such chase try to get value of the environment variable using FFI."
@@ -31,7 +33,7 @@ Win32Environment >> at: aKey ifAbsent: aBlock [
 	^ self getEnvVariable: aKey bufferSize: 500 ifAbsent: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Win32Environment >> at: aKey put: aValue [
 	"The primitive on Windows currently uses the ascii version of the Windows API.
 	In such chase try to set the value of the environment variable using FFI."
@@ -46,7 +48,7 @@ Win32Environment >> at: aKey put: aValue [
 		self error: 'An error occurred while setting environment variable ', aKey asString, ' to ', aValue asString ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Win32Environment >> doGetEnvVariable: aVariableName bufferSize: aSize ifAbsent: aBlock isRetry: isRetry [
 	| name buffer return lastErrCode |
 
@@ -81,24 +83,24 @@ Win32Environment >> doGetEnvVariable: aVariableName bufferSize: aSize ifAbsent: 
 	^ buffer asString
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Win32Environment >> environmentStrings [
 	 ^ self ffiCall: #( void * GetEnvironmentStringsW () )
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Win32Environment >> ffiLibraryName [
 
 	^ #Kernel32
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Win32Environment >> getEnvVariable: aVariableName bufferSize: aSize ifAbsent: aBlock [
 
 	^ self doGetEnvVariable: aVariableName bufferSize: aSize ifAbsent: aBlock isRetry: false
 ]
 
-{ #category : #enumeration }
+{ #category : 'enumeration' }
 Win32Environment >> keysAndValuesDo: aBlock [
 	"Under windows the environemtn variables are a single big String."
 
@@ -116,13 +118,13 @@ Win32Environment >> keysAndValuesDo: aBlock [
 	environmentStrings := environmentStrings + win32WideString byteSize ] repeat
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Win32Environment >> removeEnvironmentVariable: nameString [
 
 	 ^ self ffiCall: #( int SetEnvironmentVariableW ( Win32WideString nameString, 0 ) )
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Win32Environment >> removeKey: aKey [
 	"The primitive on Windows currently uses the ascii version of the Windows API.
 	In such chase try to get value of the environment variable using FFI."
@@ -135,7 +137,7 @@ Win32Environment >> removeKey: aKey [
 		self error: 'An error occurred while removing environment variable ', aKey asString ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Win32Environment >> setEnv: nameString value: valueString [
 	"This method calls the the platform specific set environment routine"
 
@@ -144,7 +146,7 @@ Win32Environment >> setEnv: nameString value: valueString [
 		module: #Kernel32
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Win32Environment >> setEnvironmentVariable: nameString value: valueString [
 
 	 ^ self ffiCall: #( int SetEnvironmentVariableW ( Win32WideString nameString, Win32WideString valueString ) )

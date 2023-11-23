@@ -11,18 +11,19 @@ Installs:
 - SUnit without GUI
 "
 Class {
-	#name : #BaselineOfSUnit,
-	#superclass : #BaselineOf,
-	#category : #BaselineOfSUnit
+	#name : 'BaselineOfSUnit',
+	#superclass : 'BaselineOf',
+	#category : 'BaselineOfSUnit',
+	#package : 'BaselineOfSUnit'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BaselineOfSUnit class >> defaultPackageNames [
 
 	^ self packagesOfGroupNamed: #default
 ]
 
-{ #category : #baseline }
+{ #category : 'baseline' }
 BaselineOfSUnit >> baseline: spec [
 	<baseline>
 	spec for: #common
@@ -56,7 +57,7 @@ BaselineOfSUnit >> baseline: spec [
 				group: 'default' with: #('SUnit-Core' 'SUnit-Core-Traits' 'SUnit-Tests' 'JenkinsTools-Core' 'JenkinsTools-ExtraReports' 'SUnit-MockObjects') ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BaselineOfSUnit >> repository [
 	^ self packageRepositoryURL
 ]

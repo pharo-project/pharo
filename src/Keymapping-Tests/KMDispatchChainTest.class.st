@@ -2,12 +2,13 @@
 SUnit tests for testing the dispatch chain
 "
 Class {
-	#name : #KMDispatchChainTest,
-	#superclass : #AbstractKeymappingTest,
-	#category : #'Keymapping-Tests'
+	#name : 'KMDispatchChainTest',
+	#superclass : 'AbstractKeymappingTest',
+	#category : 'Keymapping-Tests',
+	#package : 'Keymapping-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 KMDispatchChainTest >> testGlobalIsFirst [
 	| chain first |
 	first := nil.
@@ -16,7 +17,7 @@ KMDispatchChainTest >> testGlobalIsFirst [
 	self assert: first isGlobalDispatcher
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 KMDispatchChainTest >> testPassesOnTheTarget [
 	| chain dispatcher passed |
 	dispatcher := KMDispatcher target: Morph new.
@@ -26,7 +27,7 @@ KMDispatchChainTest >> testPassesOnTheTarget [
 	self assert: passed
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 KMDispatchChainTest >> testTargetDoesNotIterateTheNil [
 	| chain |
 	chain := KMDispatchChain from: (KMGlobalDispatcher new) andDispatcher: (KMDispatcher new).

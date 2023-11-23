@@ -1,25 +1,28 @@
 Class {
-	#name : #DAPackageCycleTest,
-	#superclass : #TestCase,
+	#name : 'DAPackageCycleTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'aPDPackageCycle',
 		'packageA',
 		'packageB',
 		'packageC'
 	],
-	#category : #'Tool-DependencyAnalyser-Tests-Packages'
+	#category : 'Tool-DependencyAnalyser-Tests-Packages',
+	#package : 'Tool-DependencyAnalyser-Tests',
+	#tag : 'Packages'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 DAPackageCycleTest >> setUp [
+
 	super setUp.
 	aPDPackageCycle := DAPackageCycle new.
-	packageA := DAPackage on: (RPackageSet named:'A').
-	packageB := DAPackage on: (RPackageSet named:'B').
-	packageC := DAPackage on: (RPackageSet named:'C')
+	packageA := DAPackage onPackageNamed: 'A'.
+	packageB := DAPackage onPackageNamed: 'B'.
+	packageC := DAPackage onPackageNamed: 'C'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DAPackageCycleTest >> testIsAtLeastInCycle [
 	| aCollectionOfPDPackage |
 	aCollectionOfPDPackage  := OrderedCollection new.
@@ -37,25 +40,28 @@ DAPackageCycleTest >> testIsAtLeastInCycle [
 	self deny: (aPDPackageCycle isAtLeastInCycle: aCollectionOfPDPackage)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DAPackageCycleTest >> testIsInCycle [
 	aPDPackageCycle addPackage: packageA.
 	self assert: (aPDPackageCycle isInCycle: packageA)
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 DAPackageCycleTest >> testRemoveOutgoingDependencies [
+
 	| firstPackage secondPackage outgoingPackage otherOutgoingPackage |
-	firstPackage := DAPackage on: (RPackageSet named: 'A').
-	secondPackage := DAPackage on: (RPackageSet named: 'B').
-	outgoingPackage := DAPackage on: (RPackageSet named: 'C').
-	otherOutgoingPackage := DAPackage on: (RPackageSet named: 'D').
+	firstPackage := DAPackage onPackageNamed: 'A'.
+	secondPackage := DAPackage onPackageNamed: 'B'.
+	outgoingPackage := DAPackage onPackageNamed: 'C'.
+	otherOutgoingPackage := DAPackage onPackageNamed: 'D'.
 	firstPackage add: (DACompositeDependency from: firstPackage to: secondPackage).
 	firstPackage add: (DACompositeDependency from: firstPackage to: outgoingPackage).
 	firstPackage add: (DACompositeDependency from: firstPackage to: otherOutgoingPackage).
 	secondPackage add: (DACompositeDependency from: secondPackage to: firstPackage).
 	secondPackage add: (DACompositeDependency from: secondPackage to: outgoingPackage).
-	aPDPackageCycle addPackage: firstPackage; addPackage: secondPackage.
+	aPDPackageCycle
+		addPackage: firstPackage;
+		addPackage: secondPackage.
 	aPDPackageCycle removeOutgoingDependencies.
 	"at this point, package A and B does not have dependency with C and D, because C is not in the cycle"
 	"self halt."
@@ -63,7 +69,7 @@ DAPackageCycleTest >> testRemoveOutgoingDependencies [
 	self deny: (aPDPackageCycle hasOutgoingDependencies: secondPackage)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DAPackageCycleTest >> testReversedCycle [
 	aPDPackageCycle
 		addPackage: packageA;
@@ -76,10 +82,11 @@ DAPackageCycleTest >> testReversedCycle [
 	self assert: (aPDPackageCycle packageAt: 3) equals: packageA
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DAPackageCycleTest >> testSizeOfCycles [
+
 	self assert: aPDPackageCycle size equals: 0.
-	aPDPackageCycle addPackage: (DAPackage on: (RPackageSet named: 'Kernel')).
-	aPDPackageCycle addPackage: (DAPackage on: (RPackageSet named: 'Collections-Abstract')).
+	aPDPackageCycle addPackage: (DAPackage onPackageNamed: 'Kernel').
+	aPDPackageCycle addPackage: (DAPackage onPackageNamed: 'Collections-Abstract').
 	self assert: aPDPackageCycle size equals: 2
 ]

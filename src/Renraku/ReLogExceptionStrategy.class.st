@@ -2,12 +2,14 @@
 Report exception as a property (critique) which can be debuged afterwards
 "
 Class {
-	#name : #ReLogExceptionStrategy,
-	#superclass : #ReExceptionStrategy,
-	#category : #'Renraku-Utility'
+	#name : 'ReLogExceptionStrategy',
+	#superclass : 'ReExceptionStrategy',
+	#category : 'Renraku-Utility',
+	#package : 'Renraku',
+	#tag : 'Utility'
 }
 
-{ #category : #'error handling' }
+{ #category : 'error handling' }
 ReLogExceptionStrategy class >> handle: anException about: anEntity forPropertiesDo: aBlock [
 
 	aBlock value: (
@@ -16,13 +18,13 @@ ReLogExceptionStrategy class >> handle: anException about: anEntity forPropertie
 			with: anException)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReLogExceptionStrategy class >> strategyDescription [
 
 	^ 'Report exception as a property (critique) which can be debuged afterwards.'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReLogExceptionStrategy class >> strategyTitle [
 
 	^ 'Log Exception'

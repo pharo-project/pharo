@@ -21,31 +21,34 @@ Internal Representation and Key Implementation Points.
 	updateQueue:		<AtomicSharedQueue>
 "
 Class {
-	#name : #ClyDataSourceUpdateScheduler,
-	#superclass : #Object,
+	#name : 'ClyDataSourceUpdateScheduler',
+	#superclass : 'Object',
 	#instVars : [
 		'updateQueue',
 		'process'
 	],
-	#category : #'Calypso-Browser-DataSource'
+	#category : 'Calypso-Browser-DataSource',
+	#package : 'Calypso-Browser',
+	#tag : 'DataSource'
 }
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyDataSourceUpdateScheduler >> ensureRunning [
-	(process notNil and: [ process isTerminated not ]) ifTrue: [ ^self].
+
+	(process isNotNil and: [ process isTerminated not ]) ifTrue: [ ^self].
 
 	process := [ self processQueue ]
 		forkAt: Processor userBackgroundPriority + 1 named: 'Calypso update'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyDataSourceUpdateScheduler >> initialize [
 	super initialize.
 
 	updateQueue := AtomicSharedQueue new
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyDataSourceUpdateScheduler >> processQueue [
 
 	 [| available next |
@@ -55,14 +58,14 @@ ClyDataSourceUpdateScheduler >> processQueue [
     ] repeat
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyDataSourceUpdateScheduler >> register: aDataSource [
 
 	updateQueue nextPut: aDataSource.
 	self ensureRunning
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyDataSourceUpdateScheduler >> runUpdateFor: dataSources [
 
 	UIManager default defer: [

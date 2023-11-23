@@ -9,34 +9,35 @@ The default maximum is 16.
 Using compute, a selector or block, applied to a value, different calculation can be made. Consider for example #sizeInMemory.
 "
 Class {
-	#name : #CacheWeight,
-	#superclass : #Object,
+	#name : 'CacheWeight',
+	#superclass : 'Object',
 	#instVars : [
 		'total',
 		'maximum',
 		'compute'
 	],
-	#category : #'System-Caching'
+	#category : 'System-Caching',
+	#package : 'System-Caching'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CacheWeight >> add: value [
 	| weight |
 	weight := compute cull: value.
 	total := total + weight
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CacheWeight >> compute [
 	^ compute
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 CacheWeight >> compute: valuable [
 	compute := valuable
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CacheWeight >> initialize [
 	super initialize.
 	total := 0.
@@ -44,34 +45,34 @@ CacheWeight >> initialize [
 	compute := [ 1 ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CacheWeight >> isBelowMaximum [
 	^ total <= maximum
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CacheWeight >> maximum [
 	^ maximum
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 CacheWeight >> maximum: integer [
 	maximum := integer
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CacheWeight >> remove: value [
 	| weight |
 	weight := compute cull: value.
 	total := total - weight
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CacheWeight >> reset [
 	total := 0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CacheWeight >> total [
 	^ total
 ]

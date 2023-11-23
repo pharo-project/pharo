@@ -1,6 +1,6 @@
-Extension { #name : #SycInlineAllSendersMessageCommand }
+Extension { #name : 'SycInlineAllSendersMessageCommand' }
 
-{ #category : #'*Calypso-SystemTools-Core' }
+{ #category : '*Calypso-SystemTools-Core' }
 SycInlineAllSendersMessageCommand class >> methodContextMenuActivation [
 	<classAnnotation>
 

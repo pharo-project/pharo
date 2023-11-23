@@ -13,51 +13,53 @@ The system wide global shared random generator will be reset at system start up 
 
 "
 Class {
-	#name : #SharedRandom,
-	#superclass : #Random,
+	#name : 'SharedRandom',
+	#superclass : 'Random',
 	#instVars : [
 		'mutex'
 	],
 	#classInstVars : [
 		'global'
 	],
-	#category : #'Random-Core-Base'
+	#category : 'Random-Core-Base',
+	#package : 'Random-Core',
+	#tag : 'Base'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SharedRandom class >> globalGenerator [
 	"Return the system wide global shared random generator."
 
 	^ global ifNil: [ global := self new ]
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 SharedRandom class >> reset [
 	global := nil
 ]
 
-{ #category : #'system startup' }
+{ #category : 'system startup' }
 SharedRandom class >> startUp [
 	self reset
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SharedRandom >> initialize [
 	super initialize.
 	mutex := Semaphore forMutualExclusion
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SharedRandom >> next [
 	^ mutex critical: [ super next ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SharedRandom >> next: anInteger into: anArray [
     ^ mutex critical: [ super next: anInteger into: anArray ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SharedRandom >> nextInteger: anInteger [
     ^ mutex critical: [ super nextInteger: anInteger ]
 ]

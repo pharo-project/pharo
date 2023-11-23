@@ -2,55 +2,57 @@
 Derivated from Stephan Pair's LargeArray, but to hold a sparse table, in which most of the entries are the same default value, it uses some tricks.
 "
 Class {
-	#name : #SparseLargeTable,
-	#superclass : #ArrayedCollection,
-	#type : #variable,
+	#name : 'SparseLargeTable',
+	#superclass : 'ArrayedCollection',
+	#type : 'variable',
 	#instVars : [
 		'base',
 		'size',
 		'chunkSize',
 		'defaultValue'
 	],
-	#category : #'Collections-Sequenceable-Sparse'
+	#category : 'Collections-Sequenceable-Sparse',
+	#package : 'Collections-Sequenceable',
+	#tag : 'Sparse'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SparseLargeTable class >> defaultChunkSize [
 
 	^100
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SparseLargeTable class >> defaultChunkSizeForFiles [
 
 	^8000
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SparseLargeTable class >> new: size [
 
 	^self new: size chunkSize: self defaultChunkSize
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SparseLargeTable class >> new: size chunkSize: chunkSize [
 
 	^self new: size chunkSize: chunkSize arrayClass: Array
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SparseLargeTable class >> new: size chunkSize: chunkSize arrayClass: aClass [
 
 	^self new: size chunkSize: chunkSize arrayClass: Array base: 1
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SparseLargeTable class >> new: size chunkSize: chunkSize arrayClass: aClass base: b [
 
 	^self new: size chunkSize: chunkSize arrayClass: Array base: 1 defaultValue: nil
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SparseLargeTable class >> new: size chunkSize: chunkSize arrayClass: aClass base: b defaultValue: d [
 
 	| basicSize |
@@ -61,7 +63,7 @@ SparseLargeTable class >> new: size chunkSize: chunkSize arrayClass: aClass base
 		yourself
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SparseLargeTable >> allDefaultValueSubtableAt: index [
 
 	| t |
@@ -73,7 +75,7 @@ SparseLargeTable >> allDefaultValueSubtableAt: index [
 	^ true
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SparseLargeTable >> analyzeSpaceSaving [
 
 	| total elems tablesTotal nonNilTables |
@@ -96,45 +98,45 @@ SparseLargeTable >> analyzeSpaceSaving [
 	]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SparseLargeTable >> arrayClass [
 
 	^(self basicAt: 1) class
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SparseLargeTable >> at: index [
 
 	self pvtCheckIndex: index.
 	^self noCheckAt: index
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SparseLargeTable >> at: index put: value [
 
 	self pvtCheckIndex: index.
 	^self noCheckAt: index put: value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SparseLargeTable >> base [
 
 	^ base
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SparseLargeTable >> chunkSize [
 
 	^chunkSize
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 SparseLargeTable >> copyEmpty [
 	"Answer a copy of the receiver that contains no elements."
 	^self speciesNew: 0
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SparseLargeTable >> initChunkSize: aChunkSize size: aSize arrayClass: aClass base: b defaultValue: d [
 
 	| lastChunkSize |
@@ -150,7 +152,7 @@ SparseLargeTable >> initChunkSize: aChunkSize size: aSize arrayClass: aClass bas
 		ifFalse: [self basicAt: self basicSize put: (aClass new: lastChunkSize withAll: defaultValue)]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SparseLargeTable >> noCheckAt: index [
 	| chunkIndex t |
 
@@ -161,7 +163,7 @@ SparseLargeTable >> noCheckAt: index [
 	^ t at: (index - base + 1 - (chunkIndex - 1 * chunkSize))
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SparseLargeTable >> noCheckAt: index put: value [
 
 	| chunkIndex t |
@@ -172,13 +174,13 @@ SparseLargeTable >> noCheckAt: index put: value [
 	^ t at: (index - base + 1 - (chunkIndex - 1 * chunkSize)) put: value
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 SparseLargeTable >> postCopy [
 	super postCopy.
 	1 to: self basicSize do: [:i | self basicAt: i put: (self basicAt: i) copy]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 SparseLargeTable >> printElementsOn: aStream [
 	| element |
 	aStream nextPut: $(.
@@ -187,7 +189,7 @@ SparseLargeTable >> printElementsOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 SparseLargeTable >> printOn: aStream [
 
 	(#(String) includes: self arrayClass name)
@@ -195,13 +197,13 @@ SparseLargeTable >> printOn: aStream [
 	^super printOn: aStream
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SparseLargeTable >> privateSize: s [
 
 	size := s
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SparseLargeTable >> pvtCheckIndex: index [
 
 	index isInteger ifFalse: [self errorNonIntegerIndex].
@@ -209,7 +211,7 @@ SparseLargeTable >> pvtCheckIndex: index [
 	index > size ifTrue: [self errorSubscriptBounds: index]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SparseLargeTable >> similarInstance [
 
 	^self class
@@ -218,7 +220,7 @@ SparseLargeTable >> similarInstance [
 		arrayClass: self arrayClass
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SparseLargeTable >> similarInstance: newSize [
 
 	^self class
@@ -227,25 +229,25 @@ SparseLargeTable >> similarInstance: newSize [
 		arrayClass: self arrayClass
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SparseLargeTable >> similarSpeciesInstance [
 
 	^self similarInstance
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SparseLargeTable >> similarSpeciesInstance: newSize [
 
 	^self similarInstance: newSize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SparseLargeTable >> size [
 
 	^size
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SparseLargeTable >> speciesNew [
 
 	^self species
@@ -254,7 +256,7 @@ SparseLargeTable >> speciesNew [
 		arrayClass: self arrayClass
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SparseLargeTable >> speciesNew: newSize [
 
 	^self species
@@ -263,7 +265,7 @@ SparseLargeTable >> speciesNew: newSize [
 		arrayClass: self arrayClass
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 SparseLargeTable >> storeOn: aStream [
 
 	| x |
@@ -279,7 +281,7 @@ SparseLargeTable >> storeOn: aStream [
 	^super storeOn: aStream
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SparseLargeTable >> zapDefaultOnlyEntries [
 
 	1 to: self basicSize do: [:i |

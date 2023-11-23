@@ -1,42 +1,44 @@
 Class {
-	#name : #StepThroughTest,
-	#superclass : #DebuggerTest,
-	#category : #'Debugger-Model-Tests-Core'
+	#name : 'StepThroughTest',
+	#superclass : 'DebuggerTest',
+	#category : 'Debugger-Model-Tests-Core',
+	#package : 'Debugger-Model-Tests',
+	#tag : 'Core'
 }
 
-{ #category : #helper }
+{ #category : 'helper' }
 StepThroughTest >> evalBlockThenReturnOne: aBlock [
 	aBlock value.
 	^1
 ]
 
-{ #category : #helper }
+{ #category : 'helper' }
 StepThroughTest >> stepA1 [
 	self evalBlockThenReturnOne: [ self stepA2 ]
 ]
 
-{ #category : #helper }
+{ #category : 'helper' }
 StepThroughTest >> stepA2 [
 	^ 2+2
 ]
 
-{ #category : #helper }
+{ #category : 'helper' }
 StepThroughTest >> stepB1 [
 	self stepB2.
 	self stepB3
 ]
 
-{ #category : #helper }
+{ #category : 'helper' }
 StepThroughTest >> stepB2 [
 	^ 42
 ]
 
-{ #category : #helper }
+{ #category : 'helper' }
 StepThroughTest >> stepB3 [
 	^ 43
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 StepThroughTest >> testStepThrough [
 	"In a context c, define a block b, send a message to another method to get b evaluated.
 	Testing that a step through on this message send moves the execution to the point where the block b is about to be evaluated."
@@ -64,7 +66,7 @@ StepThroughTest >> testStepThrough [
 	self assert: node selector equals: #stepA2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 StepThroughTest >> testStepThroughDoesTheSameThingAsStepOverWhenNoBlockIsInvolved [
 	"Testing that when no block is involved, a step through moves the execution to the same point a step over would"
 	| node |
@@ -98,7 +100,7 @@ StepThroughTest >> testStepThroughDoesTheSameThingAsStepOverWhenNoBlockIsInvolve
 	self assert: node selector equals: #stepB3
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 StepThroughTest >> testStepThroughUntilTermination [
 	"Stepping over a message node brings the execution to the next node in the same method."
 	self settingUpSessionAndProcessAndContextForBlock: [ self stepA1 ].

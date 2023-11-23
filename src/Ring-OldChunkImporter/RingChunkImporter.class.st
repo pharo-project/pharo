@@ -6,61 +6,69 @@ Heavily inspired from FilePackage.
 see example method class side 
 "
 Class {
-	#name : #RingChunkImporter,
-	#superclass : #Object,
+	#name : 'RingChunkImporter',
+	#superclass : 'Object',
 	#instVars : [
 		'package',
 		'doIts'
 	],
-	#category : #'Ring-OldChunkImporter-Base'
+	#category : 'Ring-OldChunkImporter-Base',
+	#package : 'Ring-OldChunkImporter',
+	#tag : 'Base'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 RingChunkImporter class >> example [
+
 	| internalStream |
 	internalStream := (String new: 1000) writeStream.
-	self packageOrganizer
-		fileOutCategory: 'Ring-Deprecated-ChunkImporter-Base'
-		on: internalStream.
-	(RingChunkImporter fromStream: internalStream contents readStream)
-		inspect
+	((self packageOrganizer packageNamed: 'Ring-Deprecated-ChunkImporter') classTagNamed: #Base) fileOutOn: internalStream.
+	(self fromStream: internalStream contents readStream) inspect
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RingChunkImporter class >> fromFileNamed: fileName [
 
 	^ self new fromFileNamed: fileName; yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RingChunkImporter class >> fromStream: aStream [
 
 	^ self new fileInFrom: aStream; yourself
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RingChunkImporter >> classDefinition: aString with: chgRec [
-	| tokens theClass |
 
+	| tokens theClass converter |
 	tokens := self scannedSource: aString.
 	theClass := self classNamed: tokens third.
-	theClass superclassName: tokens first;
-			 definitionSource: aString;
-			 category: tokens last.
+	theClass
+		superclassName: tokens first;
+		definitionSource: aString.
 
-	tokens size = 11
-	ifTrue:[ theClass instanceVariables: (tokens fifth findTokens: ' ');
-			 	classVariables: (tokens seventh findTokens: ' ');
-				 sharedPools: (tokens ninth findTokens: ' ') ].
+	converter := CategoryConverter category: tokens last.
 
-	tokens size = 13
-	ifTrue:[ theClass traitCompositionSource: (tokens fifth);
-				instanceVariables: (tokens seventh findTokens: ' ');
-			 	classVariables: (tokens ninth findTokens: ' ');
-				 sharedPools: ((tokens at: 11) findTokens: ' ') ]
+	theClass
+		package: (RGPackageDefinition named: converter packageName);
+		packageTag: converter tagName.
+
+	tokens size = 11 ifTrue: [
+		theClass
+			instanceVariables: (tokens fifth findTokens: ' ');
+			classVariables: (tokens seventh findTokens: ' ');
+			sharedPools: (tokens ninth findTokens: ' ') ].
+
+	tokens size = 13 ifTrue: [
+		theClass
+			traitCompositionSource: tokens fifth;
+			instanceVariables: (tokens seventh findTokens: ' ');
+			classVariables: (tokens ninth findTokens: ' ');
+			sharedPools: ((tokens at: 11) findTokens: ' ') ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RingChunkImporter >> classNamed: className [
 
 	(package includesClassNamed: className)
@@ -68,12 +76,12 @@ RingChunkImporter >> classNamed: className [
 	^ self createClassNamed: className
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RingChunkImporter >> classes [
 	^ package classes values
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RingChunkImporter >> createClassNamed: className [
 	| rgClass |
 	rgClass := RGClassDefinition named: className.
@@ -82,7 +90,7 @@ RingChunkImporter >> createClassNamed: className [
 	^ rgClass
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RingChunkImporter >> createTraitNamed: traitName [
 
 	| trait |
@@ -92,12 +100,12 @@ RingChunkImporter >> createTraitNamed: traitName [
 	^ trait
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RingChunkImporter >> doIts [
 	^ doIts
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 RingChunkImporter >> fileInFrom: aStream [
 
 	| changes |
@@ -105,21 +113,21 @@ RingChunkImporter >> fileInFrom: aStream [
 	changes do: [ :change | change accept: self ]
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 RingChunkImporter >> fromFileNamed: aName [
 
 	package := RGPackageDefinition named: aName.
 	self fileInFrom: aName asFileReference readStream
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RingChunkImporter >> initialize [
 	super initialize.
 	package := RGPackageDefinition named: 'ChangeSet'.
 	doIts := Set new
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RingChunkImporter >> metaClassDefinition: string with: chgRec [
 	| tokens theClass |
 
@@ -130,7 +138,7 @@ RingChunkImporter >> metaClassDefinition: string with: chgRec [
 			  instanceVariables: (tokens fourth findTokens: ' ')
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RingChunkImporter >> metaTraitDefinition: string with: chgRec [
 	| tokens trait |
 
@@ -143,7 +151,7 @@ RingChunkImporter >> metaTraitDefinition: string with: chgRec [
 	trait classSide definitionSource: string
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RingChunkImporter >> msgClassComment: string with: chgRec [
 
 	| tokens theClass |
@@ -158,13 +166,13 @@ RingChunkImporter >> msgClassComment: string with: chgRec [
 		ifFalse:[ theClass ]) comment: tokens last asString ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RingChunkImporter >> packages [
 
 	^ { package }
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RingChunkImporter >> removedMethod: string with: aChunk [
 
 	| orClass tokens |
@@ -177,26 +185,31 @@ RingChunkImporter >> removedMethod: string with: aChunk [
 	doIts add: aChunk
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RingChunkImporter >> scannedSource: aString [
 
 	^ Smalltalk compiler parseLiterals: aString
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RingChunkImporter >> traitDefinition: aString with: chgRec [
 
-	| tokens trait |
+	| tokens trait converter |
 	tokens := self scannedSource: aString.
 	trait := self classNamed: tokens third.
-	trait isTrait
-		ifFalse: [ trait:= self createTraitNamed: tokens third ].
-	trait superclassName: tokens first;
-			 definitionSource: aString;
-			 category: tokens last
+	trait isTrait ifFalse: [ trait := self createTraitNamed: tokens third ].
+	trait
+		superclassName: tokens first;
+		definitionSource: aString.
+
+	converter := CategoryConverter category: tokens last.
+
+	trait
+		package: (RGPackageDefinition named: converter packageName);
+		packageTag: converter tagName
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 RingChunkImporter >> visitClassCommentChunk: aChunk [
 
 	(self classNamed: aChunk behaviorName)
@@ -204,13 +217,13 @@ RingChunkImporter >> visitClassCommentChunk: aChunk [
 		stamp: aChunk stamp
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 RingChunkImporter >> visitClassOrganizationChunk: aChunk [
 
 	"Do nothing with class organizations for the moment"
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 RingChunkImporter >> visitDoItChunk: aChunk [
 
 	| contents |
@@ -232,25 +245,23 @@ RingChunkImporter >> visitDoItChunk: aChunk [
 	doIts add: aChunk
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 RingChunkImporter >> visitMethodChunk: aChunk [
 
 	| theClass theMethod |
-	theClass:= self classNamed: aChunk behaviorName.
-	theMethod := (RGMethodDefinition
-						class: theClass
-						selector: aChunk methodSelector)
-							protocol: aChunk category;
-							sourceCode: aChunk contents;
-							stamp: aChunk stamp.
+	theClass := self classNamed: aChunk behaviorName.
+	theMethod := (RGMethodDefinition class: theClass selector: aChunk methodSelector)
+		             protocol: aChunk protocol;
+		             sourceCode: aChunk contents;
+		             stamp: aChunk stamp.
 	aChunk isMeta
 		ifTrue: [
-			theMethod isMetaSide: true.
-			theClass classSide addMethod: theMethod. ]
-		ifFalse:[ theClass addMethod: theMethod ]
+			theMethod isMeta: true.
+			theClass classSide addMethod: theMethod ]
+		ifFalse: [ theClass addMethod: theMethod ]
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 RingChunkImporter >> visitStyleChunk: aChunk [
 
 	"Do nothing with styles"

@@ -2,29 +2,30 @@
 I a command to show in browser a hierarchy of traits which are used by selected classes
 "
 Class {
-	#name : #ClySwitchToTraitUsersCommand,
-	#superclass : #ClySwitchTraitHierarchyModeCommand,
-	#category : #'Calypso-SystemPlugins-Traits-Browser'
+	#name : 'ClySwitchToTraitUsersCommand',
+	#superclass : 'ClySwitchTraitHierarchyModeCommand',
+	#category : 'Calypso-SystemPlugins-Traits-Browser',
+	#package : 'Calypso-SystemPlugins-Traits-Browser'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClySwitchToTraitUsersCommand class >> canBeExecutedInContext: aToolContext [
 	(super canBeExecutedInContext: aToolContext) ifFalse: [ ^false ].
 
 	^aToolContext isTraitSelected
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClySwitchToTraitUsersCommand >> defaultMenuItemName [
 	^'Users'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClySwitchToTraitUsersCommand >> requiredQueryResult [
 	^ClyTraitUserHierarchy new asQueryResult
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClySwitchToTraitUsersCommand >> traitScopeClass [
 	^ClyTraitUserScope
 ]

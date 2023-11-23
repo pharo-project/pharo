@@ -2,29 +2,40 @@
 I am a command to move method to the class side of defining class
 "
 Class {
-	#name : #SycMoveMethodsToClassSideCommand,
-	#superclass : #SycMethodCommand,
-	#category : #'SystemCommands-MethodCommands'
+	#name : 'SycMoveMethodsToClassSideCommand',
+	#superclass : 'SycMethodCommand',
+	#instVars : [
+		'refactoringScopes'
+	],
+	#category : 'SystemCommands-MethodCommands',
+	#package : 'SystemCommands-MethodCommands'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 SycMoveMethodsToClassSideCommand class >> canBeExecutedInContext: aToolContext [
 	^(super canBeExecutedInContext: aToolContext)
 		and: [ aToolContext isInstanceSideMethodSelected ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycMoveMethodsToClassSideCommand >> defaultMenuIconName [
 	^ #smallRedo
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycMoveMethodsToClassSideCommand >> defaultMenuItemName [
 	^'Move to class side'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycMoveMethodsToClassSideCommand >> execute [
 
-	(RBMoveMethodsToClassSideDriver model: model methods: methods) execute
+	(RBMoveMethodsToClassSideDriver scopes: refactoringScopes methods: methods) runRefactoring
+]
+
+{ #category : 'execution' }
+SycMoveMethodsToClassSideCommand >> prepareFullExecutionInContext: aToolContext [
+
+	super prepareFullExecutionInContext: aToolContext.
+	refactoringScopes := aToolContext refactoringScopes
 ]

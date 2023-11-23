@@ -2,22 +2,24 @@
 A trait for test purposes
 "
 Trait {
-	#name : #TDictionaryAssociationAccessTest,
-	#category : #'Collections-Unordered-Tests-Traits'
+	#name : 'TDictionaryAssociationAccessTest',
+	#category : 'Collections-Unordered-Tests-Traits',
+	#package : 'Collections-Unordered-Tests',
+	#tag : 'Traits'
 }
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TDictionaryAssociationAccessTest >> keyNotIn [
 " return a key not included in nonEmpty"
 self explicitRequirement
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TDictionaryAssociationAccessTest >> nonEmpty [
 ^ self explicitRequirement
 ]
 
-{ #category : #'tests - fixture' }
+{ #category : 'tests - fixture' }
 TDictionaryAssociationAccessTest >> test0FixtureDictionaryAssocitionAccess [
 	self nonEmpty.
 	self denyEmpty: self nonEmpty.
@@ -25,7 +27,7 @@ TDictionaryAssociationAccessTest >> test0FixtureDictionaryAssocitionAccess [
 	self deny: (self nonEmpty keys includes: self keyNotIn)
 ]
 
-{ #category : #'tests - dictionary assocition access' }
+{ #category : 'tests - dictionary assocition access' }
 TDictionaryAssociationAccessTest >> testAssociationAt [
 	| collection keyIn result |
 	collection := self nonEmpty.
@@ -37,7 +39,7 @@ TDictionaryAssociationAccessTest >> testAssociationAt [
 	self assert: result value equals: (collection at: keyIn)
 ]
 
-{ #category : #'tests - dictionary assocition access' }
+{ #category : 'tests - dictionary assocition access' }
 TDictionaryAssociationAccessTest >> testAssociationAtError [
 
 	| collection nonExistantKey |
@@ -47,7 +49,7 @@ TDictionaryAssociationAccessTest >> testAssociationAtError [
 	self should: [collection associationAt: nonExistantKey] raise: Error
 ]
 
-{ #category : #'tests - dictionary assocition access' }
+{ #category : 'tests - dictionary assocition access' }
 TDictionaryAssociationAccessTest >> testAssociationAtIfAbsent [
 
 	| collection keyIn result |
@@ -62,7 +64,7 @@ TDictionaryAssociationAccessTest >> testAssociationAtIfAbsent [
 	self assert: (collection associationAt: self keyNotIn  ifAbsent: [888] ) = 888
 ]
 
-{ #category : #'tests - dictionary assocition access' }
+{ #category : 'tests - dictionary assocition access' }
 TDictionaryAssociationAccessTest >> testAssociationAtIfPresent [
 
 	| collection keyIn result |
@@ -85,7 +87,7 @@ TDictionaryAssociationAccessTest >> testAssociationAtIfPresent [
 	self assert: result isNil
 ]
 
-{ #category : #'tests - dictionary assocition access' }
+{ #category : 'tests - dictionary assocition access' }
 TDictionaryAssociationAccessTest >> testAssociationAtIfPresentifAbsent [
 	| collection keyIn found |
 	found := false.

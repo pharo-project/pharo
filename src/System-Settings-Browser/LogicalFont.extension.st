@@ -1,11 +1,11 @@
-Extension { #name : #LogicalFont }
+Extension { #name : 'LogicalFont' }
 
-{ #category : #'*System-Settings-Browser' }
+{ #category : '*System-Settings-Browser' }
 LogicalFont >> acceptSettings: aVisitor [
 	^ aVisitor visitLogicalFont: self
 ]
 
-{ #category : #'*System-Settings-Browser' }
+{ #category : '*System-Settings-Browser' }
 LogicalFont >> settingStoreOn: aStream [
 	aStream nextPut: $(.
 	aStream nextPutAll: self class name.
@@ -30,7 +30,7 @@ LogicalFont >> settingStoreOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : #'*System-Settings-Browser' }
+{ #category : '*System-Settings-Browser' }
 LogicalFont >> withSizeIncrementedBy: anInteger [
 	^ self class
 		familyName: self familyName

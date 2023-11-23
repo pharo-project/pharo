@@ -1,6 +1,6 @@
-Extension { #name : #TextStyle }
+Extension { #name : 'TextStyle' }
 
-{ #category : #'*FreeType-Morphic' }
+{ #category : '*FreeType-Morphic' }
 TextStyle class >> emphasisMenuForFont: font target: target selector: selector highlight: currentEmphasis [
 	"Offer a font emphasis menu for the given style. If one is selected, pass that font to target with a call to selector. The fonts will be displayed in that font. Answer nil if no derivatives exist"
 

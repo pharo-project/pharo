@@ -1,14 +1,16 @@
 Class {
-	#name : #MetacelloVersionDoesNotExistError,
-	#superclass : #Error,
+	#name : 'MetacelloVersionDoesNotExistError',
+	#superclass : 'Error',
 	#instVars : [
 		'project',
 		'versionString'
 	],
-	#category : #'Metacello-Core-Exceptions-Errors'
+	#category : 'Metacello-Core-Exceptions-Errors',
+	#package : 'Metacello-Core',
+	#tag : 'Exceptions-Errors'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MetacelloVersionDoesNotExistError class >> project: aMetacelloProject versionString: aVersionString [
 
 	^(self new)
@@ -17,7 +19,7 @@ MetacelloVersionDoesNotExistError class >> project: aMetacelloProject versionStr
 		yourself
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MetacelloVersionDoesNotExistError >> description [
     "Return a textual description of the exception."
 
@@ -25,22 +27,22 @@ MetacelloVersionDoesNotExistError >> description [
         , '. Possible versions include: ' , self possibleVersions printString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionDoesNotExistError >> possibleVersions [
     ^ self project symbolicVersionSymbols , (self project versions collect: [ :each | each versionString ])
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionDoesNotExistError >> project [
 	^ project
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionDoesNotExistError >> project: anObject [
 	project := anObject
 ]
 
-{ #category : #Signaling }
+{ #category : 'Signaling' }
 MetacelloVersionDoesNotExistError >> signal [
   "GemStone needs this to print exception correctly"
 
@@ -48,12 +50,12 @@ MetacelloVersionDoesNotExistError >> signal [
   ^ super signal
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionDoesNotExistError >> versionString [
 	^ versionString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionDoesNotExistError >> versionString: anObject [
 	versionString := anObject
 ]

@@ -3,42 +3,43 @@ I am a DrTestPlugin.
 I show the time that takes execute the test and the result of the tests.
 "
 Class {
-	#name : #DTTestsProfilingPlugin,
-	#superclass : #DrTestsPlugin,
-	#category : #'DrTests-TestsProfiling'
+	#name : 'DTTestsProfilingPlugin',
+	#superclass : 'DrTestsPlugin',
+	#category : 'DrTests-TestsProfiling',
+	#package : 'DrTests-TestsProfiling'
 }
 
-{ #category : #'api - accessing' }
+{ #category : 'api - accessing' }
 DTTestsProfilingPlugin class >> pluginName [
 	^ 'Tests Profiler'
 ]
 
-{ #category : #'api - accessing' }
+{ #category : 'api - accessing' }
 DTTestsProfilingPlugin class >> pluginResultClass [
 	^ DTTestsProfilingResult
 ]
 
-{ #category : #'api - accessing' }
+{ #category : 'api - accessing' }
 DTTestsProfilingPlugin class >> weight [
  ^ 5
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 DTTestsProfilingPlugin >> firstListLabel [
 	^ 'Packages'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTTestsProfilingPlugin >> pragmaForResultTrees [
 	^ #'drTestsProfilingResultTreeNamed:order:'
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 DTTestsProfilingPlugin >> resultButtonHelp [
 	^ 'Browse the test selected in the results list.' translated
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 DTTestsProfilingPlugin >> runForConfiguration: aDTpluginConfiguration [
 	| results profilerVisitor |
 	profilerVisitor := DTTestsProfilerVisitor new.
@@ -50,17 +51,17 @@ DTTestsProfilingPlugin >> runForConfiguration: aDTpluginConfiguration [
 	^ results
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 DTTestsProfilingPlugin >> secondListLabel [
 	^ 'Tests Cases'
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 DTTestsProfilingPlugin >> startButtonHelp [
 	^ 'Run tests selected.' translated
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 DTTestsProfilingPlugin >> startButtonLabel [
 	^ 'Profile Tests' translated
 ]

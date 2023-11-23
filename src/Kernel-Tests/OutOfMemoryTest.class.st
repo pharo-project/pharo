@@ -1,34 +1,36 @@
 Class {
-	#name : #OutOfMemoryTest,
-	#superclass : #TestCase,
+	#name : 'OutOfMemoryTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'oldValue'
 	],
-	#category : #'Kernel-Tests-Exception'
+	#category : 'Kernel-Tests-Exception',
+	#package : 'Kernel-Tests',
+	#tag : 'Exception'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 OutOfMemoryTest >> setUp [
 
 	super setUp.
 	oldValue := Smalltalk vm maxOldSpaceSize: 2 * 1024 *1024 * 1024
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 OutOfMemoryTest >> tearDown [
 
 	Smalltalk vm maxOldSpaceSize: oldValue.
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OutOfMemoryTest >> testErrorProducedByAllocatingInTheImage [
 
 	"I generate an error when executing the allocation."
 	self should: [ ByteArray new: 100 * 1000 * 1000000 ] raise: OutOfMemory
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OutOfMemoryTest >> testSignalOfTheLowSpaceFromTheVM [
 
 	| s |

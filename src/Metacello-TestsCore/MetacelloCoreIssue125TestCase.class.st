@@ -1,10 +1,12 @@
 Class {
-	#name : #MetacelloCoreIssue125TestCase,
-	#superclass : #TestCase,
-	#category : #'Metacello-TestsCore-Configs'
+	#name : 'MetacelloCoreIssue125TestCase',
+	#superclass : 'TestCase',
+	#category : 'Metacello-TestsCore-Configs',
+	#package : 'Metacello-TestsCore',
+	#tag : 'Configs'
 }
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 MetacelloCoreIssue125TestCase >> baseline200: spec [
     <version: '2.0-baseline'>
     spec
@@ -28,7 +30,7 @@ MetacelloCoreIssue125TestCase >> baseline200: spec [
             spec group: 'Core' with: #('Example Project') ]
 ]
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 MetacelloCoreIssue125TestCase >> baseline300: spec [
     <version: '3.0-baseline' imports: #('2.0-baseline')>
     spec
@@ -48,13 +50,13 @@ MetacelloCoreIssue125TestCase >> baseline300: spec [
             spec group: 'Core' with: #('Extra Project') ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloCoreIssue125TestCase >> project [
 
 	^self projectWith: #()
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloCoreIssue125TestCase >> projectWith: projectAttributes [
     | project |
     "Construct Metacello project"
@@ -64,7 +66,7 @@ MetacelloCoreIssue125TestCase >> projectWith: projectAttributes [
     ^ project
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloCoreIssue125TestCase >> testForDoListAtrribute1Active [
 	"https://github.com/dalehenrich/metacello-work/issues/125"
 
@@ -96,7 +98,7 @@ spec
 	self assert: expected equals: actual
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloCoreIssue125TestCase >> testForDoListAtrribute2Active [
 	"https://github.com/dalehenrich/metacello-work/issues/125"
 
@@ -128,7 +130,7 @@ spec
 	self assert: expected equals: actual
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloCoreIssue125TestCase >> testForDoListAttribute1Atrribute2Active [
 	"https://github.com/dalehenrich/metacello-work/issues/125"
 
@@ -168,7 +170,7 @@ spec
 	self assert: expected equals: actual
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloCoreIssue125TestCase >> testForDoListNotActive [
 	"https://github.com/dalehenrich/metacello-work/issues/125"
 

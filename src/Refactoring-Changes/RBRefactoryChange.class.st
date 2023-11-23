@@ -4,117 +4,120 @@ All I have is a name for the refactoring, but I can perform one or more refactor
 I am a composite object. To know about my components, ask me with #changes and #changesSize. 
 "
 Class {
-	#name : #RBRefactoryChange,
-	#superclass : #Object,
+	#name : 'RBRefactoryChange',
+	#superclass : 'Object',
 	#instVars : [
 		'name',
 		'changeFactory',
 		'onSystemDictionary'
 	],
-	#category : #'Refactoring-Changes-Base'
+	#category : 'Refactoring-Changes-Base',
+	#package : 'Refactoring-Changes',
+	#tag : 'Base'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRefactoryChange >> changeForClass: aClassName selector: aSelector [
 
 	^ nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRefactoryChange >> changeForMetaclass: aClassName selector: aSelector [
 
 	^ nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRefactoryChange >> changeStamp [
 
 	^ Author changeStamp
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBRefactoryChange >> changeString [
 	^self class name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRefactoryChange >> changes [
 
 	^ Array with: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRefactoryChange >> changesSize [
 
 	^ 1
 ]
 
-{ #category : #displaying }
+{ #category : 'displaying' }
 RBRefactoryChange >> displayString [
 
 	^ name ifNil: [ self changeString ] ifNotNil: [ name ]
 ]
 
-{ #category : #'performing-changes' }
+{ #category : 'performing-changes' }
 RBRefactoryChange >> execute [
 	^self executeNotifying: []
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBRefactoryChange >> executeNotifying: aBlock [
 	self subclassResponsibility
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBRefactoryChange >> initialize [
 	super initialize.
 	onSystemDictionary := Smalltalk globals.
 	changeFactory := RBRefactoryChangeManager changeFactory
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRefactoryChange >> name [
 
 	^ name ifNil: [ self changeString ] ifNotNil: [ name ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBRefactoryChange >> name: aString [
+	
 	name := aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRefactoryChange >> nameToDisplay [
 
 	^ self name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRefactoryChange >> oldVersionTextToDisplay [
 
 	^ ''
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRefactoryChange >> onSystemDictionary [
 
 	^ onSystemDictionary
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRefactoryChange >> onSystemDictionary: anObject [
 
 	onSystemDictionary := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRefactoryChange >> renameChangesForClass: oldClassName to: newClassName [
 	"We're in the middle of performing a rename operation. If we stored the class name, we need to change the class name to the new name to perform the compiles."
 
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBRefactoryChange >> textToDisplay [
 
 	^ self name

@@ -20,38 +20,40 @@ There are several operation with browser which can be performed using me:
 - restoreBrowserState, it should be implemented by subclasses whey they should recover browser state which is described by context instance
 "
 Class {
-	#name : #ClyBrowserContext,
-	#superclass : #CmdToolContext,
+	#name : 'ClyBrowserContext',
+	#superclass : 'CmdToolContext',
 	#instVars : [
 		'selectedItems'
 	],
-	#category : #'Calypso-Browser-Contexts'
+	#category : 'Calypso-Browser-Contexts',
+	#package : 'Calypso-Browser',
+	#tag : 'Contexts'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyBrowserContext class >> of: selectedItems for: aBrowser [
 	^(self for: aBrowser)
 		selectedItems: selectedItems
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyBrowserContext class >> ofSelection: aSelection for: aBrowser [
 	^self of: aSelection detachedItems for: aBrowser
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserContext >> activeQueryView [
 
 	^self browser navigationViews detect: [ :each |
 		each createSelectionContext class = self class ]
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 ClyBrowserContext >> actualSelectionFrom: browserItemCollection [
 	^browserItemCollection collect: [ :each | each actualObject ]
 ]
 
-{ #category : #'drag and drop' }
+{ #category : 'drag and drop' }
 ClyBrowserContext >> asDraggableMorph [
 	^(String streamContents: [ :s|
 		selectedItems
@@ -59,12 +61,12 @@ ClyBrowserContext >> asDraggableMorph [
 			separatedBy: [ s space ]]) asStringMorph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserContext >> browser [
 	^tool
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 ClyBrowserContext >> copyForBrowserStateSnapshot [
 
 	^self copy
@@ -72,29 +74,29 @@ ClyBrowserContext >> copyForBrowserStateSnapshot [
 		yourself
 ]
 
-{ #category : #'accessing - context' }
+{ #category : 'accessing - context' }
 ClyBrowserContext >> currentMetaLevelOf: aClass [
 	"we do not model class side vs instance side"
 	^aClass
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 ClyBrowserContext >> firstSelectedObjectIn: selectedObjects [
 	^selectedObjects last
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyBrowserContext >> hasSelectedItems [
 	^selectedItems notEmpty
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyBrowserContext >> initialize [
 	super initialize.
 	selectedItems := #()
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 ClyBrowserContext >> initializeForBrowserStateSnapshot [
 
 	selectedItems := selectedItems collect: [ :each | each copyForBrowserStateSnapshot ].
@@ -102,14 +104,14 @@ ClyBrowserContext >> initializeForBrowserStateSnapshot [
 	tool := nil
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyBrowserContext >> isAboutBrowserItemType: itemTypeClass [
 
 	^selectedItems anySatisfy: [ :each |
 		each type isCalypsoItemType: itemTypeClass ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyBrowserContext >> isAboutSelectedItem: aDataSourceItem [
 	"It can be just last line: #isEqualTo:.
 	But in remote scenario it could lead to few messages to underlying remote objects.
@@ -122,7 +124,13 @@ ClyBrowserContext >> isAboutSelectedItem: aDataSourceItem [
 	^selectedItems anySatisfy: [ :each | each isEqualTo: aDataSourceItem  ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
+ClyBrowserContext >> isQueryBrowserContext [
+
+	^ false.
+]
+
+{ #category : 'testing' }
 ClyBrowserContext >> isSimilarTo: anotherBrowserContext [
 	self class = anotherBrowserContext class ifFalse: [ ^false ].
 
@@ -133,57 +141,59 @@ ClyBrowserContext >> isSimilarTo: anotherBrowserContext [
 		anotherBrowserContext isAboutSelectedItem: each]
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 ClyBrowserContext >> lastSelectedItem [
 	^selectedItems first
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 ClyBrowserContext >> lastSelectedObject [
 	^self lastSelectedItem actualObject
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 ClyBrowserContext >> lastSelectedObjectIn: selectedObjects [
 	^selectedObjects first
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserContext >> navigationEnvironment [
 	^self browser navigationEnvironment
 ]
 
-{ #category : #'browser state' }
+{ #category : 'browser state' }
 ClyBrowserContext >> restoreBrowserState [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserContext >> selectedItems [
 	^ selectedItems
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserContext >> selectedItems: anObject [
 	selectedItems := anObject
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 ClyBrowserContext >> selectedObjects [
 	^self actualSelectionFrom: selectedItems
 ]
 
-{ #category : #'tool controlling' }
-ClyBrowserContext >> showMethodTag: aString [
+{ #category : 'tool controlling' }
+ClyBrowserContext >> showProtocol: protocolName [
 	"Default is to do nothing"
+
+	
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserContext >> system [
 	^tool system
 ]
 
-{ #category : #'browser state' }
+{ #category : 'browser state' }
 ClyBrowserContext >> updateBrowser [
 	self browser update
 ]

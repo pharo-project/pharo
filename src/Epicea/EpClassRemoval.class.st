@@ -2,15 +2,17 @@
 I represent the removal of a class.
 "
 Class {
-	#name : #EpClassRemoval,
-	#superclass : #EpClassChange,
+	#name : 'EpClassRemoval',
+	#superclass : 'EpClassChange',
 	#instVars : [
 		'classRemoved'
 	],
-	#category : #'Epicea-Model'
+	#category : 'Epicea-Model',
+	#package : 'Epicea',
+	#tag : 'Model'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 EpClassRemoval class >> class: aClassRemoved [
 
 	^ self basicNew
@@ -18,30 +20,30 @@ EpClassRemoval class >> class: aClassRemoved [
 		yourself
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpClassRemoval >> accept: aVisitor [
 
 	^ aVisitor visitClassRemoval: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpClassRemoval >> behaviorAffected [
 	^ classRemoved
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpClassRemoval >> behaviorAffectedName [
 
 	^ self behaviorAffected ifNotNil: #name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpClassRemoval >> classRemoved [
 
 	^ classRemoved
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 EpClassRemoval >> doesOverride: aCodeChange [
 
 	^ (super doesOverride: aCodeChange) or: [
@@ -49,7 +51,7 @@ EpClassRemoval >> doesOverride: aCodeChange [
 		aCodeChange behaviorAffectedName = self behaviorAffectedName ]]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 EpClassRemoval >> initializeClassRemoved: aRemovedClass [
 
 	self initialize.

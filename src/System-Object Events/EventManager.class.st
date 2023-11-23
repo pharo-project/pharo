@@ -6,18 +6,20 @@ An interested object is said to be a dependant on the target object.  Registerin
 Classic uses of an EventManager are to implement the Observer Pattern, see ChangeNotification or the MorphicModel as examples.
 "
 Class {
-	#name : #EventManager,
-	#superclass : #Object,
+	#name : 'EventManager',
+	#superclass : 'Object',
 	#instVars : [
 		'actionMap'
 	],
 	#classVars : [
 		'ActionMaps'
 	],
-	#category : #'System-Object Events-Base'
+	#category : 'System-Object Events-Base',
+	#package : 'System-Object Events',
+	#tag : 'Base'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EventManager class >> actionMapFor: anObject [
 
     ^self actionMaps
@@ -25,37 +27,38 @@ EventManager class >> actionMapFor: anObject [
         ifAbsent: [self createActionMap]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EventManager class >> actionMaps [
 
 	^ActionMaps ifNil: [ActionMaps := WeakIdentityKeyDictionary new]
 ]
 
-{ #category : #cleanup }
+{ #category : 'cleanup' }
 EventManager class >> cleanUp: aggressive [
 	"Dump all ActionMaps but only when we're aggressively cleaning"
 
 	aggressive ifTrue: [ActionMaps := nil]
 ]
 
-{ #category : #cleanup }
+{ #category : 'cleanup' }
 EventManager class >> flushEvents [
 	"EventManager flushEvents"
 
-	self actionMaps keysAndValuesDo:[:rcvr :evtDict| rcvr ifNotNil:[
-		"make sure we don't modify evtDict while enumerating"
-		evtDict keysDo: [:evtName| | msgSet |
-			msgSet := evtDict at: evtName ifAbsent:[nil].
-			(msgSet == nil) ifTrue:[rcvr removeActionsForEvent: evtName]]]]
+	self actionMaps keysAndValuesDo: [ :rcvr :evtDict |
+		rcvr ifNotNil: [ "make sure we don't modify evtDict while enumerating"
+			evtDict keysDo: [ :evtName |
+				| msgSet |
+				msgSet := evtDict at: evtName ifAbsent: [ nil ].
+				msgSet ifNil: [ rcvr removeActionsForEvent: evtName ] ] ] ]
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 EventManager class >> initialize [
 
 	SessionManager default registerSystemClassNamed: self name
 ]
 
-{ #category : #releasing }
+{ #category : 'releasing' }
 EventManager class >> releaseActionMapFor: anObject [
 
 	self actionMaps
@@ -63,12 +66,12 @@ EventManager class >> releaseActionMapFor: anObject [
 		ifAbsent: []
 ]
 
-{ #category : #'system startup' }
+{ #category : 'system startup' }
 EventManager class >> shutDown [
 	self flushEvents
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EventManager class >> updateableActionMapFor: anObject [
 
     ^self actionMaps
@@ -76,14 +79,14 @@ EventManager class >> updateableActionMapFor: anObject [
         ifAbsentPut: [self createActionMap]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EventManager >> actionMap [
 	^ actionMap
 		ifNil:  [ self createActionMap ]
 		ifNotNil: [ actionMap ]
 ]
 
-{ #category : #'dependents access' }
+{ #category : 'dependents access' }
 EventManager >> addDependent: anObject [
 	"Make the given object one of the receiver's dependents."
 
@@ -94,14 +97,14 @@ EventManager >> addDependent: anObject [
 	^anObject
 ]
 
-{ #category : #'dependents access' }
+{ #category : 'dependents access' }
 EventManager >> breakDependents [
 	"Remove all of the receiver's dependents."
 
 	self removeActionsForEvent: self changedEventSelector
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 EventManager >> changed: aParameter [
 	"Receiver changed. The change is denoted by the argument aParameter.
 	Usually the argument is a Symbol that is part of the dependent's change
@@ -112,13 +115,13 @@ EventManager >> changed: aParameter [
 		with: aParameter
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EventManager >> changedEventSelector [
 
 	^#changed:
 ]
 
-{ #category : #'dependents access' }
+{ #category : 'dependents access' }
 EventManager >> dependents [
 
 	^(self actionSequenceForEvent: self changedEventSelector) asSet
@@ -126,20 +129,20 @@ EventManager >> dependents [
 			[:each | each receiver]
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 EventManager >> postCopy [
 
 	super postCopy.
 	self releaseActionMap
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EventManager >> releaseActionMap [
 
     actionMap := nil
 ]
 
-{ #category : #'dependents access' }
+{ #category : 'dependents access' }
 EventManager >> removeDependent: anObject [
 	"Remove the given object as one of the receiver's dependents."
 
@@ -149,13 +152,13 @@ EventManager >> removeDependent: anObject [
 	^ anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EventManager >> updateEventSelector [
 
 	^#update:
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EventManager >> updateableActionMap [
 	actionMap
 		ifNil: [ actionMap := self createActionMap ].

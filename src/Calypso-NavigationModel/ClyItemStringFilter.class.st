@@ -14,31 +14,33 @@ Internal Representation and Key Implementation Points.
 	pattern:		<ClyStringPattern>
 "
 Class {
-	#name : #ClyItemStringFilter,
-	#superclass : #ClyItemFilter,
+	#name : 'ClyItemStringFilter',
+	#superclass : 'ClyItemFilter',
 	#instVars : [
 		'pattern'
 	],
-	#category : #'Calypso-NavigationModel-Model'
+	#category : 'Calypso-NavigationModel-Model',
+	#package : 'Calypso-NavigationModel',
+	#tag : 'Model'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyItemStringFilter class >> pattern: aStringPattern [
 	^self new
 		pattern: aStringPattern
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyItemStringFilter class >> regexPattern: regexString [
 	^self 	pattern: (ClyRegexPattern with: regexString)
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyItemStringFilter class >> substringPattern: aString [
 	^self 	pattern: (ClySubstringPattern with: aString)
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ClyItemStringFilter >> = anObject [
 	"Answer whether the receiver and anObject represent the same object."
 
@@ -49,30 +51,30 @@ ClyItemStringFilter >> = anObject [
 	^ pattern = anObject pattern
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ClyItemStringFilter >> hash [
 	"Answer an integer value that is related to the identity of the receiver."
 
 	^ pattern hash
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyItemStringFilter >> pattern [
 	^ pattern
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyItemStringFilter >> pattern: anObject [
 	pattern := anObject
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyItemStringFilter >> printCriteria [
 
 	^pattern value
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyItemStringFilter >> printOn: aStream [
 	super printOn: aStream.
 

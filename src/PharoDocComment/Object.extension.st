@@ -1,6 +1,6 @@
-Extension { #name : #Object }
+Extension { #name : 'Object' }
 
-{ #category : #'*PharoDocComment' }
+{ #category : '*PharoDocComment' }
 Object >> >>> anObject [
 
 	"Return a pair. It is handy to support the tweaking of pharo doc expression. A pharo doc expression is a comment as the following one:"

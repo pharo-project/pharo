@@ -4,18 +4,20 @@ I implement an heuristic for variables accessible from the instance side, such a
 See my superclass for details.
 "
 Class {
-	#name : #CoInstanceAccessibleVariablesHeuristic,
-	#superclass : #CoASTNodeFetcherHeuristic,
-	#category : #'HeuristicCompletion-Model-Heuristics'
+	#name : 'CoInstanceAccessibleVariablesHeuristic',
+	#superclass : 'CoASTNodeFetcherHeuristic',
+	#category : 'HeuristicCompletion-Model-Heuristics',
+	#package : 'HeuristicCompletion-Model',
+	#tag : 'Heuristics'
 }
 
-{ #category : #requests }
+{ #category : 'requests' }
 CoInstanceAccessibleVariablesHeuristic >> appliesForNode: aNode inContext: aContext [
 
-	^ aContext completionClass notNil
+	^ aContext completionClass isNotNil
 ]
 
-{ #category : #requests }
+{ #category : 'requests' }
 CoInstanceAccessibleVariablesHeuristic >> buildFetcherFor: astNode inContext: completionContext [
 
 	| ivFetcher cvFetcher |

@@ -1,1 +1,1 @@
-Package { #name : #'SystemCommands-MethodCommands-Tests' }
+Package { #name : 'SystemCommands-MethodCommands-Tests' }

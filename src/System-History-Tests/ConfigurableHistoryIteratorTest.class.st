@@ -1,20 +1,21 @@
 Class {
-	#name : #ConfigurableHistoryIteratorTest,
-	#superclass : #TestCase,
+	#name : 'ConfigurableHistoryIteratorTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'historyList',
 		'saved'
 	],
-	#category : #'System-History-Tests'
+	#category : 'System-History-Tests',
+	#package : 'System-History-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ConfigurableHistoryIteratorTest >> setUp [
 	super setUp.
 	historyList := ConfigurableHistoryIterator undo: [ :integer | saved := integer ] redo: [ :integer | saved := integer asString ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ConfigurableHistoryIteratorTest >> testHasNext [
 	historyList register: 3.
 
@@ -25,7 +26,7 @@ ConfigurableHistoryIteratorTest >> testHasNext [
 	self assert: historyList hasNext
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ConfigurableHistoryIteratorTest >> testHasPrevious [
 	historyList register: 3.
 
@@ -36,7 +37,7 @@ ConfigurableHistoryIteratorTest >> testHasPrevious [
 	self deny: historyList hasPrevious
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ConfigurableHistoryIteratorTest >> testRedo [
 	historyList register: 3.
 	historyList register: 5.
@@ -61,7 +62,7 @@ ConfigurableHistoryIteratorTest >> testRedo [
 	self should: [ historyList redo ] raise: NothingToRedo
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ConfigurableHistoryIteratorTest >> testRedoIfEmpty [
 	historyList register: 3.
 
@@ -79,7 +80,7 @@ ConfigurableHistoryIteratorTest >> testRedoIfEmpty [
 	self assert: saved isNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ConfigurableHistoryIteratorTest >> testRegister [
 	historyList register: 3.
 	self assert: historyList size equals: 1.
@@ -90,7 +91,7 @@ ConfigurableHistoryIteratorTest >> testRegister [
 	self assert: historyList current identicalTo: 5
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ConfigurableHistoryIteratorTest >> testRegisterClearRedo [
 	historyList register: 3.
 	historyList register: 5.
@@ -106,7 +107,7 @@ ConfigurableHistoryIteratorTest >> testRegisterClearRedo [
 	self deny: historyList hasNext
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ConfigurableHistoryIteratorTest >> testUndo [
 	historyList register: 3.
 	historyList register: 5.
@@ -128,7 +129,7 @@ ConfigurableHistoryIteratorTest >> testUndo [
 	self should: [ historyList undo ] raise: NothingToUndo
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ConfigurableHistoryIteratorTest >> testUndoIfEmpty [
 	historyList register: 3.
 

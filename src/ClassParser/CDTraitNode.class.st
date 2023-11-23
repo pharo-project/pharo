@@ -2,31 +2,33 @@
 I represent a simple Trait. (no composition, alias, exclusion)
 "
 Class {
-	#name : #CDTraitNode,
-	#superclass : #CDAbstractTraitCompositionNode,
+	#name : 'CDTraitNode',
+	#superclass : 'CDAbstractTraitCompositionNode',
 	#instVars : [
 		'name'
 	],
-	#category : #'ClassParser-Model'
+	#category : 'ClassParser-Model',
+	#package : 'ClassParser',
+	#tag : 'Model'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 CDTraitNode >> isTraitNode [
 
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CDTraitNode >> name [
 	^name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CDTraitNode >> name: aString [
 	name := aString
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 CDTraitNode >> toString [
 	^ self name
 ]

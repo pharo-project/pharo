@@ -2,38 +2,40 @@
 I modelt the scope of a block
 "
 Class {
-	#name : #OCBlockScope,
-	#superclass : #OCAbstractMethodScope,
-	#category : #'OpalCompiler-Core-Semantics'
+	#name : 'OCBlockScope',
+	#superclass : 'OCAbstractMethodScope',
+	#category : 'OpalCompiler-Core-Semantics',
+	#package : 'OpalCompiler-Core',
+	#tag : 'Semantics'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 OCBlockScope >> hasEscapingVars [
-	^ (copiedVars isEmpty and: [tempVector isEmpty]) not
+	^ self inComingCopiedVarNames isNotEmpty
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OCBlockScope >> inComingCopiedVarNames [
 	^ self copiedVarNames intersection: outerScope copiedVarNames
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OCBlockScope >> isBlockScope [
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OCBlockScope >> isInsideOptimizedLoop [
 	^ self outerScope isInsideOptimizedLoop
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OCBlockScope >> isOptimized [
 
 	^ false
 ]
 
-{ #category : #lookup }
+{ #category : 'lookup' }
 OCBlockScope >> nextOuterScopeContextOf: aContext [
 
 	"Returns the next context to lookup a variable name from within outer scope.

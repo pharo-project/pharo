@@ -25,42 +25,44 @@ previousToken
 
 "
 Class {
-	#name : #EntryCompletion,
-	#superclass : #Object,
+	#name : 'EntryCompletion',
+	#superclass : 'Object',
 	#instVars : [
 		'dataSourceBlock',
 		'filterBlock',
 		'chooseBlock',
 		'chooser'
 	],
-	#category : #'Polymorph-Widgets-Utilities'
+	#category : 'Polymorph-Widgets-Utilities',
+	#package : 'Polymorph-Widgets',
+	#tag : 'Utilities'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EntryCompletion >> choose: aToken [
 	chooseBlock
 		ifNotNil: [self closeChooser.
 			chooseBlock value: aToken]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EntryCompletion >> chooseBlock [
 
 	^ chooseBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EntryCompletion >> chooseBlock: aBlock [
 
 	chooseBlock := aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EntryCompletion >> chooser [
 	^ chooser
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EntryCompletion >> chooserWith: aToken [
 	| applicants |
 	applicants  := self filteredValuesWith: aToken.
@@ -75,54 +77,54 @@ EntryCompletion >> chooserWith: aToken [
 	^ chooser
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EntryCompletion >> closeChooser [
 	chooser
 		ifNotNil: [chooser close.
 			chooser := nil]
 ]
 
-{ #category : #'events - handling' }
+{ #category : 'events - handling' }
 EntryCompletion >> closeIfNotNeeded: aMorph [
 
 	(chooser isNotNil and:[ chooser hasKeyboardFocus or: [ aMorph hasKeyboardFocus ] ]) ifFalse: [ self closeChooser ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EntryCompletion >> dataSourceBlock [
 	^ dataSourceBlock ifNil: [dataSourceBlock := [:token | #()]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EntryCompletion >> dataSourceBlock: aBlock [
 	dataSourceBlock := aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EntryCompletion >> filterBlock [
 
 	^ filterBlock ifNil: [filterBlock := [:currApplicant  :currText | true]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EntryCompletion >> filterBlock: aBlock [
 
 	filterBlock := aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EntryCompletion >> filteredValuesWith: aToken [
 	^ (self dataSourceBlock value: aToken)
 		select: [:v | aToken isNil or: [aToken isEmpty or: [v isNil or: [self filterBlock value: v value: aToken]]]]
 ]
 
-{ #category : #'events - handling' }
+{ #category : 'events - handling' }
 EntryCompletion >> handlesKeyboard: anEvent [
 	^ anEvent keyCharacter = Character arrowDown
 		or: [anEvent keyCharacter = Character escape]
 ]
 
-{ #category : #'events - handling' }
+{ #category : 'events - handling' }
 EntryCompletion >> keystroke: anEvent from: aMorph [
 	(self handlesKeyboard: anEvent)
 		ifFalse: [ ^ false ].
@@ -137,18 +139,18 @@ EntryCompletion >> keystroke: anEvent from: aMorph [
 	^ chooser ifNil: [ false ] ifNotNil: [ chooser keyStroke: anEvent ]
 ]
 
-{ #category : #'events - handling' }
+{ #category : 'events - handling' }
 EntryCompletion >> keystrokeInChooser: anEvent [
 	anEvent keyCharacter = Character escape
 		ifTrue: [ chooser := nil ]
 ]
 
-{ #category : #'events - handling' }
+{ #category : 'events - handling' }
 EntryCompletion >> mouseDownFromTextMorph: anEvent [
 	self closeChooser
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EntryCompletion >> openChooserWith: aToken from: aFieldMorph [
 	self closeChooser.
 	self chooserWith: aToken.
@@ -166,7 +168,7 @@ EntryCompletion >> openChooserWith: aToken from: aFieldMorph [
 	^ chooser
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EntryCompletion >> openChooserWithAllOrCloseFrom: aFieldMorph [
 	chooser
 		ifNotNil: [self closeChooser]
@@ -175,12 +177,12 @@ EntryCompletion >> openChooserWithAllOrCloseFrom: aFieldMorph [
 	^ chooser
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EntryCompletion >> positionChooser [
 	"Position the chooser to fit on the display."
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EntryCompletion >> positionChooser: aChooser [
         "Position the list morph to fit on the display."
 
@@ -191,7 +193,7 @@ EntryCompletion >> positionChooser: aChooser [
                                         bounds: (aChooser boundsInWorld bottomLeft extent: aChooser width @ aChooser listHeight)]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EntryCompletion >> setChooserWith: aToken labels: labels [
 	chooser
 		ifNil: [chooser := IdentifierChooserMorph

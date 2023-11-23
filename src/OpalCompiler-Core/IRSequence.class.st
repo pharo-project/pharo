@@ -2,27 +2,29 @@
 A sequence is corresponds to a block in the control flow graph.
 "
 Class {
-	#name : #IRSequence,
-	#superclass : #Object,
+	#name : 'IRSequence',
+	#superclass : 'Object',
 	#instVars : [
 		'sequence',
 		'orderNumber',
 		'method'
 	],
-	#category : #'OpalCompiler-Core-IR-Nodes'
+	#category : 'OpalCompiler-Core-IR-Nodes',
+	#package : 'OpalCompiler-Core',
+	#tag : 'IR-Nodes'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 IRSequence class >> orderNumber: aNumber [
 	^self new orderNumber: aNumber
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 IRSequence >> , otherCollection [
 	^sequence, otherCollection
 ]
 
-{ #category : #optimizing }
+{ #category : 'optimizing' }
 IRSequence >> absorbJumpToSingleInstr: alreadySeen [
 	"Collapse jumps to single return instructions into caller"
 
@@ -42,12 +44,12 @@ IRSequence >> absorbJumpToSingleInstr: alreadySeen [
 	seqs do: [:instrs | instrs ifNotNil: [:i | i absorbJumpToSingleInstr: alreadySeen]]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 IRSequence >> accept: aVisitor [
 	^ aVisitor visitSequence: self
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 IRSequence >> add: anInstruction [
 
 	sequence add: anInstruction.
@@ -55,7 +57,7 @@ IRSequence >> add: anInstruction [
 	^anInstruction
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 IRSequence >> add: instr after: another [
 
 	sequence add: instr after: another.
@@ -63,103 +65,103 @@ IRSequence >> add: instr after: another [
 	^instr
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 IRSequence >> add: instr before: another [
 	sequence add: instr before: another.
 	instr sequence: self.
 	^instr
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 IRSequence >> addAll: aCollection [
 	^sequence addAll: aCollection
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 IRSequence >> addAllFirst: aCollection [
 	^sequence addAllFirst: aCollection
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 IRSequence >> addInstructions: aCollection [
 
 	^aCollection do: [:instr | self add: instr]
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 IRSequence >> addInstructions: aCollection after: anInstruction [
 
 	^aCollection reverseDo: [:instr | self add: instr after: anInstruction]
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 IRSequence >> addInstructions: aCollection before: anInstruction [
 
 	aCollection do: [:instr | self add: instr before: anInstruction]
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 IRSequence >> addLast: anInstruction [
 	^self add: anInstruction
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRSequence >> after: o [
 	^sequence after: o
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRSequence >> at: index [
 	^sequence at: index
 ]
 
-{ #category : #inspector }
+{ #category : 'inspector' }
 IRSequence >> children [
 	^sequence
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 IRSequence >> contains: aBlock [
 	^sequence contains: aBlock
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 IRSequence >> detect: aBlock [
 	^sequence detect: aBlock
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 IRSequence >> do: aBlock [
 	^sequence do: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRSequence >> first [
 	^sequence first
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 IRSequence >> ifEmpty: aBlock [
 	^sequence ifEmpty: aBlock
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 IRSequence >> ifNotEmpty: aBlock [
 	^sequence ifNotEmpty: aBlock
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 IRSequence >> initialize [
 	sequence := OrderedCollection new
 ]
 
-{ #category : #'successor sequences' }
+{ #category : 'successor sequences' }
 IRSequence >> instructionsDo: aBlock [
 
 	^self withAllSuccessorsDo: [:seq | seq do: aBlock]
 ]
 
-{ #category : #'successor sequences' }
+{ #category : 'successor sequences' }
 IRSequence >> instructionsForDecompiling [
 
 	| irInstructions |
@@ -168,17 +170,17 @@ IRSequence >> instructionsForDecompiling [
 	^irInstructions
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 IRSequence >> isEmpty [
 	^sequence isEmpty
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRSequence >> last [
 	^sequence last
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 IRSequence >> longPrintOn: stream [
 
 	[IRPrinter new
@@ -187,19 +189,19 @@ IRSequence >> longPrintOn: stream [
 	] onDNU: #orderNumber do: [:ex | ex resume: ex receiver]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRSequence >> method [
 
 	^method
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRSequence >> method: aIRMethod [
 
 	method := aIRMethod
 ]
 
-{ #category : #'successor sequences' }
+{ #category : 'successor sequences' }
 IRSequence >> nextSequence [
 
 	| sequences i |
@@ -209,32 +211,32 @@ IRSequence >> nextSequence [
 	^ sequences at: i + 1
 ]
 
-{ #category : #'successor sequences' }
+{ #category : 'successor sequences' }
 IRSequence >> nonBodySuccessorSequences [
 
 	sequence isEmpty ifTrue: [^ #()].
 	^ sequence last nonBodySuccessorSequences
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 IRSequence >> notEmpty [
 	^sequence notEmpty
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRSequence >> orderNumber [
 	"Sequences are sorted by this number"
 
 	^ orderNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRSequence >> orderNumber: num [
 	"Sequences are sorted by this number"
 	orderNumber := num
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 IRSequence >> printOn: stream [
 
 	stream nextPutAll: 'an '.
@@ -245,28 +247,28 @@ IRSequence >> printOn: stream [
 	stream nextPut: $)
 ]
 
-{ #category : #replacing }
+{ #category : 'replacing' }
 IRSequence >> remove: aNode [
 	aNode sequence: nil.
 	sequence remove: aNode ifAbsent: [self error]
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 IRSequence >> removeFirst [
 	^sequence removeFirst
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 IRSequence >> removeLast [
 	^sequence removeLast
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 IRSequence >> removeLast: n [
 	^sequence removeLast: n
 ]
 
-{ #category : #replacing }
+{ #category : 'replacing' }
 IRSequence >> replaceNode: aNode withNode: anotherNode [
 
 	| index |
@@ -274,45 +276,45 @@ IRSequence >> replaceNode: aNode withNode: anotherNode [
 	sequence at: index put: (anotherNode sequence: self)
 ]
 
-{ #category : #replacing }
+{ #category : 'replacing' }
 IRSequence >> replaceNode: aNode withNodes: aCollection [
 
 	self addInstructions: aCollection before: aNode.
 	sequence remove: aNode ifAbsent: [self error]
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 IRSequence >> reverseDo: aBlock [
 	^sequence reverseDo: aBlock
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 IRSequence >> select: aBlock [
 	^sequence select: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRSequence >> sequence [
 	^sequence
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IRSequence >> size [
 	^sequence size
 ]
 
-{ #category : #inspector }
+{ #category : 'inspector' }
 IRSequence >> sourceInterval [
 	^self sequence first sourceInterval first to: self sequence last sourceInterval last
 ]
 
-{ #category : #inspector }
+{ #category : 'inspector' }
 IRSequence >> sourceNode [
 	"we should do better here"
 	^RBSequenceNode new
 ]
 
-{ #category : #manipulating }
+{ #category : 'manipulating' }
 IRSequence >> splitAfter: instruction [
 
 	| newSeq index next |
@@ -331,14 +333,14 @@ IRSequence >> splitAfter: instruction [
 	^ newSeq
 ]
 
-{ #category : #'successor sequences' }
+{ #category : 'successor sequences' }
 IRSequence >> successorSequences [
 
 	sequence isEmpty ifTrue: [^ #()].
 	^ sequence last successorSequences
 ]
 
-{ #category : #'successor sequences' }
+{ #category : 'successor sequences' }
 IRSequence >> withAllSuccessors [
 	"Return me and all my successors sorted by sequence orderNumber"
 
@@ -348,14 +350,14 @@ IRSequence >> withAllSuccessors [
 	^ list asSortedCollection: [:x :y | x orderNumber <= y orderNumber]
 ]
 
-{ #category : #'successor sequences' }
+{ #category : 'successor sequences' }
 IRSequence >> withAllSuccessorsDo: block [
 	"Iterate over me and all my successors only once"
 
 	self withAllSuccessorsDo: block alreadySeen: IdentitySet new
 ]
 
-{ #category : #'successor sequences' }
+{ #category : 'successor sequences' }
 IRSequence >> withAllSuccessorsDo: block alreadySeen: set [
 	"Iterate over me and all my successors only once"
 
@@ -366,14 +368,14 @@ IRSequence >> withAllSuccessorsDo: block alreadySeen: set [
 		seq ifNotNil: [seq withAllSuccessorsDo: block alreadySeen: set]]
 ]
 
-{ #category : #'successor sequences' }
+{ #category : 'successor sequences' }
 IRSequence >> withNonBodySuccessorsDo: block [
 	"Iterate over me and all my successors only once"
 
 	self withNonBodySuccessorsDo: block alreadySeen: IdentitySet new
 ]
 
-{ #category : #'successor sequences' }
+{ #category : 'successor sequences' }
 IRSequence >> withNonBodySuccessorsDo: block alreadySeen: set [
 	"Iterate over me and all my successors only once"
 

@@ -14,16 +14,18 @@ Accessing to the parsed nodes contained inside the node is the method 'content'.
 
 "
 Class {
-	#name : #RBEnglobingErrorNode,
-	#superclass : #RBParseErrorNode,
+	#name : 'RBEnglobingErrorNode',
+	#superclass : 'RBParseErrorNode',
 	#instVars : [
 		'valueAfter',
 		'contents'
 	],
-	#category : #'AST-Core-Nodes - ErrorNodes'
+	#category : 'AST-Core-Nodes - ErrorNodes',
+	#package : 'AST-Core',
+	#tag : 'Nodes - ErrorNodes'
 }
 
-{ #category : #construction }
+{ #category : 'construction' }
 RBEnglobingErrorNode class >> error: aToken withNodes: aCollection [
 
 	"Realise a selection between the different englobing error node classes possible according to the
@@ -49,7 +51,7 @@ RBEnglobingErrorNode class >> error: aToken withNodes: aCollection [
 		errorMessage: 'complementary of''',aToken value,''' expected'
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBEnglobingErrorNode class >> from: aParseErrorNode contents: anArrayOfNodes [
 	"Transform a simple error node into a englobing one while preserving most information"
 
@@ -69,29 +71,29 @@ RBEnglobingErrorNode class >> from: aParseErrorNode contents: anArrayOfNodes [
 		contents: anArrayOfNodes
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RBEnglobingErrorNode >> acceptVisitor: aVisitor [
 
 	^ aVisitor visitEnglobingErrorNode: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBEnglobingErrorNode >> children [
 	^ contents
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBEnglobingErrorNode >> contents [
 	^contents
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBEnglobingErrorNode >> contents: aCollection [
 	contents := aCollection.
 	aCollection do: [:each | each parent: self ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBEnglobingErrorNode >> initialize [
 
 	super initialize.
@@ -100,12 +102,12 @@ RBEnglobingErrorNode >> initialize [
 	valueAfter := ''
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBEnglobingErrorNode >> isEnglobingError [
 	^true
 ]
 
-{ #category : #replacing }
+{ #category : 'replacing' }
 RBEnglobingErrorNode >> replaceNode: aNode withNode: anotherNode [
 
 	self contents: (contents collect: [ :each |
@@ -114,18 +116,18 @@ RBEnglobingErrorNode >> replaceNode: aNode withNode: anotherNode [
 				 ifFalse: [ each ] ])
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBEnglobingErrorNode >> stop: anInterger [
 	stop := anInterger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBEnglobingErrorNode >> valueAfter [
 
 	^ valueAfter
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBEnglobingErrorNode >> valueAfter: anObject [
 
 	valueAfter := anObject

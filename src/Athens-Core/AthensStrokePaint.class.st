@@ -73,41 +73,43 @@ Dashes:
 		it will fill the path using continuous stroke (no gaps). 
 "
 Class {
-	#name : #AthensStrokePaint,
-	#superclass : #AthensPaint,
+	#name : 'AthensStrokePaint',
+	#superclass : 'AthensPaint',
 	#instVars : [
 		'fillPaint',
 		'width',
 		'miterLimit'
 	],
-	#category : #'Athens-Core-Paints'
+	#category : 'Athens-Core-Paints',
+	#package : 'Athens-Core',
+	#tag : 'Paints'
 }
 
-{ #category : #converting }
+{ #category : 'converting' }
 AthensStrokePaint >> asStrokePaintOn: aCanvas [
 	"receiver is stroke paint already"
 	^ self
 ]
 
-{ #category : #'setting - cap styles' }
+{ #category : 'setting - cap styles' }
 AthensStrokePaint >> capButt [
 	"Set this paint to use butt cap style"
 	self subclassResponsibility
 ]
 
-{ #category : #'setting - cap styles' }
+{ #category : 'setting - cap styles' }
 AthensStrokePaint >> capRound [
 	"Set this paint to use round cap style"
 	self subclassResponsibility
 ]
 
-{ #category : #'setting - cap styles' }
+{ #category : 'setting - cap styles' }
 AthensStrokePaint >> capSquare [
 	"Set this paint to use square cap style"
 	self subclassResponsibility
 ]
 
-{ #category : #'setting - dashes' }
+{ #category : 'setting - dashes' }
 AthensStrokePaint >> dashes: anAlternateCollectionOfLenghts offset: anOffset [
 
 	'self dashes: #( "fill" 20  "gap" 10 "fill" 35 "gap" 30) offset: 0. '.
@@ -115,43 +117,43 @@ AthensStrokePaint >> dashes: anAlternateCollectionOfLenghts offset: anOffset [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensStrokePaint >> fillPaint: anObject [
 
 	fillPaint := anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AthensStrokePaint >> initialize [
 	super initialize.
 	self setDefaults
 ]
 
-{ #category : #'setting - join styles' }
+{ #category : 'setting - join styles' }
 AthensStrokePaint >> joinBevel [
 	"Set receiver to use bevel join style"
 	self subclassResponsibility
 ]
 
-{ #category : #'setting - join styles' }
+{ #category : 'setting - join styles' }
 AthensStrokePaint >> joinMiter [
 	"Set receiver to use miter join style"
 	self subclassResponsibility
 ]
 
-{ #category : #'setting - join styles' }
+{ #category : 'setting - join styles' }
 AthensStrokePaint >> joinRound [
 	"Set receiver to use round join style"
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensStrokePaint >> miterLimit: anObject [
 
 	miterLimit := anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AthensStrokePaint >> setDefaults [
 
 	"Set the default values for strokes"
@@ -162,12 +164,12 @@ AthensStrokePaint >> setDefaults [
 		miterLimit: 4.0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensStrokePaint >> width [
 	^ width
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensStrokePaint >> width: anObject [
 	"set the stroke width"
 	width := anObject

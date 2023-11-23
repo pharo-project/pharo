@@ -2,17 +2,19 @@
 Example for a class list node
 "
 Class {
-	#name : #ClassListNodeExample,
-	#superclass : #MorphTreeNodeModel,
-	#category : #'Morphic-Examples-MorphTreeWidget'
+	#name : 'ClassListNodeExample',
+	#superclass : 'MorphTreeNodeModel',
+	#category : 'Morphic-Examples-MorphTreeWidget',
+	#package : 'Morphic-Examples',
+	#tag : 'MorphTreeWidget'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassListNodeExample >> browseItem [
 	Smalltalk tools browser openOnClass: self item
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 ClassListNodeExample >> classButton [
 	^ (self theme
 		newButtonIn: self
@@ -27,7 +29,7 @@ ClassListNodeExample >> classButton [
 			yourself
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 ClassListNodeExample >> commentText [
 
 	^ (self theme newTextIn: self text: self item comment)
@@ -36,22 +38,17 @@ ClassListNodeExample >> commentText [
 		yourself
 ]
 
-{ #category : #accessing }
-ClassListNodeExample >> exploreItem [
-	self inspect
-]
-
-{ #category : #menu }
+{ #category : 'menu' }
 ClassListNodeExample >> icon [
-	^ self iconNamed: #smallExpertIcon
+	^ self iconNamed: #smallExpert
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassListNodeExample >> inspectItem [
 	self inspect
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassListNodeExample >> keyStroke: anEvent from: aTreeMorph [
 	| c |
 	c := anEvent keyCharacter.
@@ -59,12 +56,10 @@ ClassListNodeExample >> keyStroke: anEvent from: aTreeMorph [
 		ifTrue: [self browseItem. ^ true].
 	c = $i
 		ifTrue: [self inspectItem. ^ true].
-	c = $I
-		ifTrue: [self exploreItem. ^ true].
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassListNodeExample >> menu: menu shifted: b [
 	menu
 		add: 'Browse (b)'
@@ -73,9 +68,5 @@ ClassListNodeExample >> menu: menu shifted: b [
 	menu
 		add: 'Inspect (i)'
 		target: self
-		selector: #inspectItem.
-	menu
-		add: 'Explore (I)'
-		target: self
-		selector: #exploreItem
+		selector: #inspectItem
 ]

@@ -1,6 +1,6 @@
-Extension { #name : #RGMethod }
+Extension { #name : 'RGMethod' }
 
-{ #category : #'*Ring-Monticello' }
+{ #category : '*Ring-Monticello' }
 RGMethod >> asMCDefinition [
 
 	^ MCMethodDefinition

@@ -1,10 +1,11 @@
 Class {
-	#name : #RGEnvironmentQueryInterfaceTest,
-	#superclass : #RGTest,
-	#category : #'Ring-Tests-Core'
+	#name : 'RGEnvironmentQueryInterfaceTest',
+	#superclass : 'RGTest',
+	#category : 'Ring-Tests-Core',
+	#package : 'Ring-Tests-Core'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RGEnvironmentQueryInterfaceTest >> testCachingBehaviors [
 
 	| env behavior |

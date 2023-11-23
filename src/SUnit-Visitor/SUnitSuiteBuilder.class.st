@@ -2,38 +2,39 @@
 I  am a visitor that builds a TestSuite.
 "
 Class {
-	#name : #SUnitSuiteBuilder,
-	#superclass : #SUnitVisitor,
-	#category : #'SUnit-Visitor'
+	#name : 'SUnitSuiteBuilder',
+	#superclass : 'SUnitVisitor',
+	#category : 'SUnit-Visitor',
+	#package : 'SUnit-Visitor'
 }
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 SUnitSuiteBuilder >> suiteNamed: aString withTests: tests [
 	^ (TestSuite named: aString)
 		addTests: tests;
 		yourself
 ]
 
-{ #category : #visiting }
-SUnitSuiteBuilder >> visitRPackage: aRPackage [
+{ #category : 'visiting' }
+SUnitSuiteBuilder >> visitRPackage: aPackage [
 	^ self
-		suiteNamed: aRPackage name
-		withTests: (super visitRPackage: aRPackage)
+		suiteNamed: aPackage name
+		withTests: (super visitRPackage: aPackage)
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 SUnitSuiteBuilder >> visitRPackageSet: aRPackageSet [
 	^ self
 		suiteNamed: aRPackageSet packageName
 		withTests: (super visitRPackageSet: aRPackageSet)
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 SUnitSuiteBuilder >> visitTestCase: aTestCase [
 	^ aTestCase
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 SUnitSuiteBuilder >> visitTestSuite: aTestSuite [
 	^ aTestSuite
 ]

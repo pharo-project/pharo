@@ -1,6 +1,6 @@
-Extension { #name : #FinderSourceSearchStrategy }
+Extension { #name : 'FinderSourceSearchStrategy' }
 
-{ #category : #'*Tool-Finder-UI' }
+{ #category : '*Tool-Finder-UI' }
 FinderSourceSearchStrategy >> rootNodeClassForResult: aCollection [
 
 	^ FinderMethodNode

@@ -1,10 +1,11 @@
 Class {
-	#name : #BaselineOfReferenceFinder,
-	#superclass : #BaselineOf,
-	#category : #BaselineOfReferenceFinder
+	#name : 'BaselineOfReferenceFinder',
+	#superclass : 'BaselineOf',
+	#category : 'BaselineOfReferenceFinder',
+	#package : 'BaselineOfReferenceFinder'
 }
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfReferenceFinder >> baseline: spec [
 	<baseline>
 	spec for: #'common' do: [

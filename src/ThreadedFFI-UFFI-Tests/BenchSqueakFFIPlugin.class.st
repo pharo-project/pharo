@@ -2,24 +2,26 @@
 I am a simple class to benchmark the old squeak FFI implementation
 "
 Class {
-	#name : #BenchSqueakFFIPlugin,
-	#superclass : #Object,
-	#category : #'ThreadedFFI-UFFI-Tests-Benchs'
+	#name : 'BenchSqueakFFIPlugin',
+	#superclass : 'Object',
+	#category : 'ThreadedFFI-UFFI-Tests-Benchs',
+	#package : 'ThreadedFFI-UFFI-Tests',
+	#tag : 'Benchs'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 BenchSqueakFFIPlugin >> doCallWith: aFloat another: aDouble [
 
 	^ self ffiCall: #(float sumAFloatAndADouble(float aFloat, double aDouble))
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BenchSqueakFFIPlugin >> ffiLibraryName [
 
 	^ 'libTestLibrary.dylib'
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 BenchSqueakFFIPlugin >> runCall [
 	<script: 'self new runCall'>
 	| return |

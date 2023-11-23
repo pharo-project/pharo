@@ -14,7 +14,9 @@ The main class to use is Job. Here is an example:
 		] ]  asJob run
 "
 Class {
-	#name : #ManifestJobs,
-	#superclass : #PackageManifest,
-	#category : #'Jobs-Manifest'
+	#name : 'ManifestJobs',
+	#superclass : 'PackageManifest',
+	#category : 'Jobs-Manifest',
+	#package : 'Jobs',
+	#tag : 'Manifest'
 }

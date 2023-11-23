@@ -4,16 +4,18 @@ I am a refactoring for creating a method from a code fragment and then find all 
 You can select an interval of some code in a method and call this refactoring to create a new method implementing that code and replace the code by calling this method instead. Then find occurrences of extracted method in all class methods and replace the duplicated code by calling extracted method istead.
 "
 Class {
-	#name : #RBExtractMethodAndOccurrences,
-	#superclass : #RBMethodRefactoring,
+	#name : 'RBExtractMethodAndOccurrences',
+	#superclass : 'RBMethodRefactoring',
 	#instVars : [
 		'extractionInterval',
 		'selector'
 	],
-	#category : #'Refactoring-Core-Refactorings'
+	#category : 'Refactoring-Core-Refactorings',
+	#package : 'Refactoring-Core',
+	#tag : 'Refactorings'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBExtractMethodAndOccurrences class >> extract: anInterval from: aSelector in: aClass [
 	^self new
 		extract: anInterval
@@ -21,7 +23,7 @@ RBExtractMethodAndOccurrences class >> extract: anInterval from: aSelector in: a
 		in: aClass
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBExtractMethodAndOccurrences class >> model: aRBSmalltalk extract: anInterval from: aSelector in: aClass [
 	^ self new
 		model: aRBSmalltalk;
@@ -31,14 +33,14 @@ RBExtractMethodAndOccurrences class >> model: aRBSmalltalk extract: anInterval f
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBExtractMethodAndOccurrences >> extract: anInterval from: aSelector in: aClass [
 	class := self classObjectFor: aClass.
 	selector := aSelector.
 	extractionInterval := anInterval
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBExtractMethodAndOccurrences >> extractMethod [
 
 	| refactoring |
@@ -47,17 +49,17 @@ RBExtractMethodAndOccurrences >> extractMethod [
 		               extract: extractionInterval
 		               from: selector
 		               in: class.
-	self performCompositeRefactoring: refactoring.
+	self generateChangesFor: refactoring.
 	^ refactoring newExtractedSelector
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBExtractMethodAndOccurrences >> extractMethodClass [
 
 	^ RBExtractMethodRefactoring
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBExtractMethodAndOccurrences >> findImplementorOf: aSelector [
 	(class directlyDefinesMethod: aSelector) ifTrue: [ ^ true ].
 	class superclass ifNotNil: [
@@ -67,13 +69,13 @@ RBExtractMethodAndOccurrences >> findImplementorOf: aSelector [
 	^ false
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBExtractMethodAndOccurrences >> findOccurrencesClass [
 
 	^ RBFindAndReplaceTransformation
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBExtractMethodAndOccurrences >> findOccurrencesOf: aSelector [
 
 	| refactoring |
@@ -84,24 +86,31 @@ RBExtractMethodAndOccurrences >> findOccurrencesOf: aSelector [
 				               find: aSelector
 				               of: class
 				               inWholeHierarchy: self shouldSearchInHierarchy.
-			self performCompositeRefactoring: refactoring ]
+			self generateChangesFor: refactoring ]
 		ifFalse: [
 			self refactoringError:
 				aSelector , ' is not a valid selector name.' ]
 ]
 
-{ #category : #preconditions }
+{ #category : 'preconditions' }
 RBExtractMethodAndOccurrences >> preconditions [
 
-	^ self emptyCondition
+	^ self trueCondition
 ]
 
-{ #category : #asserting }
+{ #category : 'transforming' }
+RBExtractMethodAndOccurrences >> privateTransform [
+	| newExtractedSelector |
+	newExtractedSelector := self extractMethod.
+	self findOccurrencesOf: newExtractedSelector
+]
+
+{ #category : 'asserting' }
 RBExtractMethodAndOccurrences >> shouldSearchInHierarchy [
 	^(self options at: #searchInWholeHierarchy) value: self value: class
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBExtractMethodAndOccurrences >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.
@@ -113,11 +122,4 @@ RBExtractMethodAndOccurrences >> storeOn: aStream [
 		nextPutAll: ' in: '.
 	class storeOn: aStream.
 	aStream nextPut: $)
-]
-
-{ #category : #transforming }
-RBExtractMethodAndOccurrences >> transform [
-	| newExtractedSelector |
-	newExtractedSelector := self extractMethod.
-	self findOccurrencesOf: newExtractedSelector
 ]

@@ -1,1 +1,1 @@
-Package { #name : #Rubric }
+Package { #name : 'Rubric' }

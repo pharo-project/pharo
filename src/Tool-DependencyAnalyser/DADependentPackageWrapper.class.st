@@ -2,36 +2,38 @@
 Other wrapper for dependent package (use in TreePresenter). Useful in reverse analysis.
 "
 Class {
-	#name : #DADependentPackageWrapper,
-	#superclass : #Object,
+	#name : 'DADependentPackageWrapper',
+	#superclass : 'Object',
 	#instVars : [
 		'pdPackage',
 		'relationGraph'
 	],
-	#category : #'Tool-DependencyAnalyser-Core'
+	#category : 'Tool-DependencyAnalyser-Core',
+	#package : 'Tool-DependencyAnalyser',
+	#tag : 'Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 DADependentPackageWrapper class >> newWith: aPackage on: relationGraph [
 	^ self new initializeFrom: aPackage on: relationGraph
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 DADependentPackageWrapper >> <= other [
 	^ self daPackage <= other daPackage
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DADependentPackageWrapper >> daPackage [
 	^ pdPackage
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DADependentPackageWrapper >> daPackage: anObject [
 	pdPackage := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DADependentPackageWrapper >> dependenciesSize [
 	| usersOf |
 	usersOf := self usersOfPackage.
@@ -40,7 +42,7 @@ DADependentPackageWrapper >> dependenciesSize [
 			 into: [ :sum :each | sum + (each dependenciesSizeTo: self daPackage) ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DADependentPackageWrapper >> extensionDependenciesSize [
 	| usersOf |
 	usersOf := self usersOfPackage.
@@ -49,18 +51,18 @@ DADependentPackageWrapper >> extensionDependenciesSize [
 			into: [ :sum :each | sum + (each extensionDependenciesSizeTo: self daPackage) ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DADependentPackageWrapper >> initializeFrom: aPackage on: aRelationGraph [
 	pdPackage := aPackage.
 	relationGraph :=aRelationGraph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DADependentPackageWrapper >> packageName [
 	^ self daPackage packageName
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 DADependentPackageWrapper >> printOn: aStream [
 	| numberOfExtension |
 	numberOfExtension := self extensionDependenciesSize.
@@ -77,27 +79,27 @@ DADependentPackageWrapper >> printOn: aStream [
 		nextPutAll: ')'
 ]
 
-{ #category : #accessing }
-DADependentPackageWrapper >> rPackageSet [
-	^ pdPackage rPackageSet
-]
-
-{ #category : #accessing }
+{ #category : 'accessing' }
 DADependentPackageWrapper >> relationGraph [
 	^ relationGraph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DADependentPackageWrapper >> relationGraph: anObject [
 	relationGraph := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
+DADependentPackageWrapper >> systemPackage [
+	^ pdPackage systemPackage
+]
+
+{ #category : 'accessing' }
 DADependentPackageWrapper >> usersOfPackage [
 	^ relationGraph usersOf: pdPackage
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DADependentPackageWrapper >> usersOfPackageSize [
 	^ self usersOfPackage size
 ]

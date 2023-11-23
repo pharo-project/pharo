@@ -1,6 +1,6 @@
-Extension { #name : #RBAnnotationMarkNode }
+Extension { #name : 'RBAnnotationMarkNode' }
 
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
 RBAnnotationMarkNode >> emitValue: methodBuilder [
 
 	emitValueBlock ifNotNil: [ ^ emitValueBlock value: methodBuilder ].
@@ -10,13 +10,13 @@ RBAnnotationMarkNode >> emitValue: methodBuilder [
 		send: #signalSyntaxError:
 ]
 
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
 RBAnnotationMarkNode >> emitValueBlock [
 
 	^ emitValueBlock
 ]
 
-{ #category : #'*OpalCompiler-Core' }
+{ #category : '*OpalCompiler-Core' }
 RBAnnotationMarkNode >> emitValueBlock: anObject [
 
 	emitValueBlock := anObject

@@ -1,10 +1,11 @@
 Class {
-	#name : #ZnNewLineWriterStreamTest,
-	#superclass : #TestCase,
-	#category : #'Zinc-Character-Encoding-Tests'
+	#name : 'ZnNewLineWriterStreamTest',
+	#superclass : 'TestCase',
+	#category : 'Zinc-Character-Encoding-Tests',
+	#package : 'Zinc-Character-Encoding-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnNewLineWriterStreamTest >> testClose [
 	| string result znstream |
 	string := 'abcčřž' , String cr.
@@ -17,7 +18,7 @@ ZnNewLineWriterStreamTest >> testClose [
 	self assert: result equals: string
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZnNewLineWriterStreamTest >> testNextPut [
 	"Ensure that the line ends are written correctly"
 

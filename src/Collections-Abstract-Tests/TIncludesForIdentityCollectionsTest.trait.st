@@ -2,23 +2,25 @@
 A trait for test purposes
 "
 Trait {
-	#name : #TIncludesForIdentityCollectionsTest,
-	#category : #'Collections-Abstract-Tests-Traits'
+	#name : 'TIncludesForIdentityCollectionsTest',
+	#category : 'Collections-Abstract-Tests-Traits',
+	#package : 'Collections-Abstract-Tests',
+	#tag : 'Traits'
 }
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TIncludesForIdentityCollectionsTest >> identityCollectionWithElementsCopyNotIdentical [
 	" return a collection including elements for which #copy return a new object "
 	^ self explicitRequirement
 ]
 
-{ #category : #'tests - fixture' }
+{ #category : 'tests - fixture' }
 TIncludesForIdentityCollectionsTest >> test0FixtureInludesForIdentityCollectionsTest [
 	self identityCollectionWithElementsCopyNotIdentical.
 	self identityCollectionWithElementsCopyNotIdentical do: [ :each | self deny: each == each copy ]
 ]
 
-{ #category : #'tests - including for identity collections' }
+{ #category : 'tests - including for identity collections' }
 TIncludesForIdentityCollectionsTest >> testIdentityIncludesForIdentityCollections [
 	" test the comportement in presence of elements 'includes' but not 'identityIncludes' "
 	" can not be used by collections that can't include elements for wich copy doesn't return another instance "
@@ -28,7 +30,7 @@ TIncludesForIdentityCollectionsTest >> testIdentityIncludesForIdentityCollection
 	self deny: (collection identityIncludes: element)
 ]
 
-{ #category : #'tests - including for identity collections' }
+{ #category : 'tests - including for identity collections' }
 TIncludesForIdentityCollectionsTest >> testIncludesAllOfForIdentityCollections [
 
 	| collection copyCollection |
@@ -40,7 +42,7 @@ TIncludesForIdentityCollectionsTest >> testIncludesAllOfForIdentityCollections [
 	self deny: (collection includesAll: {  (copyCollection anyOne)  })
 ]
 
-{ #category : #'tests - including for identity collections' }
+{ #category : 'tests - including for identity collections' }
 TIncludesForIdentityCollectionsTest >> testIncludesAnyOfForIdentityCollections [
 
 	| collection copyCollection |
@@ -51,7 +53,7 @@ TIncludesForIdentityCollectionsTest >> testIncludesAnyOfForIdentityCollections [
 	self assert: (collection includesAny: {  (collection anyOne)  })
 ]
 
-{ #category : #'tests - including for identity collections' }
+{ #category : 'tests - including for identity collections' }
 TIncludesForIdentityCollectionsTest >> testIncludesForIdentityCollections [
 
 	| collection element elementCopy |

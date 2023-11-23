@@ -6,18 +6,20 @@ Also, any other object can play the role of paint, as long as it implements the 
 See other implementors of #asAthensPaintOn:, such as Color and Form.
 "
 Class {
-	#name : #AthensAbstractPaint,
-	#superclass : #Object,
-	#category : #'Athens-Core-Paints'
+	#name : 'AthensAbstractPaint',
+	#superclass : 'Object',
+	#category : 'Athens-Core-Paints',
+	#package : 'Athens-Core',
+	#tag : 'Paints'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 AthensAbstractPaint class >> isAbstract [
 
 	^ self == AthensAbstractPaint
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 AthensAbstractPaint >> asAthensPaintOn: aCanvas [
 	^ self
 ]

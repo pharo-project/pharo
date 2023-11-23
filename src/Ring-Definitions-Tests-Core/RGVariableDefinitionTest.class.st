@@ -2,12 +2,14 @@
 SUnit tests for variable definitions
 "
 Class {
-	#name : #RGVariableDefinitionTest,
-	#superclass : #TestCase,
-	#category : #'Ring-Definitions-Tests-Core-Base'
+	#name : 'RGVariableDefinitionTest',
+	#superclass : 'TestCase',
+	#category : 'Ring-Definitions-Tests-Core-Base',
+	#package : 'Ring-Definitions-Tests-Core',
+	#tag : 'Base'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGVariableDefinitionTest >> testClassInstanceVariable [
 	| instVar newClass metaClass |
 	instVar := RGClassInstanceVariableDefinition named: 'sizes'.
@@ -16,7 +18,7 @@ RGVariableDefinitionTest >> testClassInstanceVariable [
 	self assert: instVar isVariable.
 	self assert: instVar name equals: 'sizes'.
 	self assert: instVar parent isNil.
-	self assert: instVar isMetaSide.
+	self assert: instVar isMeta.
 
 	newClass := RGClassDefinition named: #OrderedCollection.
 	newClass withMetaclass.
@@ -26,7 +28,7 @@ RGVariableDefinitionTest >> testClassInstanceVariable [
 	self assert: metaClass instanceVariables size equals: 1
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGVariableDefinitionTest >> testClassVariable [
 	| instVar newClass |
 	instVar := RGClassVariableDefinition named: 'DependentsFields'.
@@ -35,7 +37,7 @@ RGVariableDefinitionTest >> testClassVariable [
 	self assert: instVar isVariable.
 	self assert: instVar name equals: 'DependentsFields'.
 	self assert: instVar parent isNil.
-	self assert: instVar isMetaSide not.
+	self assert: instVar isMeta not.
 
 	newClass := RGClassDefinition named: #Object.
 	instVar := (RGClassVariableDefinition named: 'DependentsFields') parent: newClass.
@@ -47,7 +49,7 @@ RGVariableDefinitionTest >> testClassVariable [
 	self assert: newClass classVariables size equals: 1
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGVariableDefinitionTest >> testInstanceVariable [
 	| instVar newClass |
 	instVar := RGInstanceVariableDefinition named: 'size'.
@@ -56,7 +58,7 @@ RGVariableDefinitionTest >> testInstanceVariable [
 	self assert: instVar isVariable.
 	self assert: instVar name equals: 'size'.
 	self assert: instVar parent isNil.
-	self assert: instVar isMetaSide not.
+	self assert: instVar isMeta not.
 
 	newClass := RGClassDefinition named: #OrderedCollection.
 	instVar := newClass addInstVarNamed: 'array'.
@@ -64,7 +66,7 @@ RGVariableDefinitionTest >> testInstanceVariable [
 	self assert: newClass instanceVariables size equals: 1
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGVariableDefinitionTest >> testPoolVariable [
 	| poolVar newClass |
 	poolVar := RGPoolVariableDefinition named: 'TextConstants'.
@@ -73,7 +75,7 @@ RGVariableDefinitionTest >> testPoolVariable [
 	self assert: poolVar isVariable.
 	self assert: poolVar name equals: 'TextConstants'.
 	self assert: poolVar parent isNil.
-	self assert: poolVar isMetaSide not.
+	self assert: poolVar isMeta not.
 
 	newClass := RGClassDefinition named: #OrderedCollection.
 	poolVar := (RGPoolVariableDefinition named: 'TextConstants') parent: newClass.
@@ -84,7 +86,7 @@ RGVariableDefinitionTest >> testPoolVariable [
 	self assert: newClass sharedPools size equals: 1
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGVariableDefinitionTest >> testVariableEquality [
 	| variable1 variable2 |
 	variable1 := OrderedCollection asRingDefinition instanceVariableNamed: #array.

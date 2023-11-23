@@ -2,26 +2,28 @@
 I represent the class side of a Trait. I may dissapear. All trait are instances of MetaclassForTraits.
 "
 Class {
-	#name : #CDClassTraitNode,
-	#superclass : #CDAbstractTraitCompositionNode,
+	#name : 'CDClassTraitNode',
+	#superclass : 'CDAbstractTraitCompositionNode',
 	#instVars : [
 		'name'
 	],
-	#category : #'ClassParser-Model'
+	#category : 'ClassParser-Model',
+	#package : 'ClassParser',
+	#tag : 'Model'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 CDClassTraitNode >> isTraitNode [
 
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CDClassTraitNode >> name [
 	^ name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CDClassTraitNode >> name: aString [
 	name := aString
 ]

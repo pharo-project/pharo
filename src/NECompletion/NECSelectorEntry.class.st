@@ -2,15 +2,17 @@
 I represent a selector of a method
 "
 Class {
-	#name : #NECSelectorEntry,
-	#superclass : #NECSymbolEntry,
+	#name : 'NECSelectorEntry',
+	#superclass : 'NECSymbolEntry',
 	#instVars : [
 		'selector'
 	],
-	#category : #'NECompletion-Model'
+	#category : 'NECompletion-Model',
+	#package : 'NECompletion',
+	#tag : 'Model'
 }
 
-{ #category : #'ui related' }
+{ #category : 'ui related' }
 NECSelectorEntry >> browse [
 	| class |
 	class := node receiver propertyAt: #type ifAbsent: nil.
@@ -28,7 +30,7 @@ NECSelectorEntry >> browse [
 			true ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 NECSelectorEntry >> findMethodAndDo: foundBlock ifAbsent: notfoundBlock [
 	| theClass result implementors |
 	theClass := node isMessage
@@ -46,7 +48,7 @@ NECSelectorEntry >> findMethodAndDo: foundBlock ifAbsent: notfoundBlock [
 	^ foundBlock value: result
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NECSelectorEntry >> label [
 	node isMessage ifFalse: [ ^ '' ].
 
@@ -57,13 +59,13 @@ NECSelectorEntry >> label [
 		ifAbsent:  [ 'class' ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NECSelectorEntry >> selector [
 
 	^ selector ifNil: [ contents ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NECSelectorEntry >> selector: anObject [
 
 	selector := anObject

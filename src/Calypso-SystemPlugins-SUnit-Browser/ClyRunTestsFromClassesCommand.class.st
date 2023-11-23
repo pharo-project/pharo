@@ -2,23 +2,25 @@
 I run all selected test cases
 "
 Class {
-	#name : #ClyRunTestsFromClassesCommand,
-	#superclass : #ClyRunTestsFromSelectedItemsCommand,
-	#category : #'Calypso-SystemPlugins-SUnit-Browser-Commands'
+	#name : 'ClyRunTestsFromClassesCommand',
+	#superclass : 'ClyRunTestsFromSelectedItemsCommand',
+	#category : 'Calypso-SystemPlugins-SUnit-Browser-Commands',
+	#package : 'Calypso-SystemPlugins-SUnit-Browser',
+	#tag : 'Commands'
 }
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyRunTestsFromClassesCommand class >> contextClass [
 	^ClyClass asCalypsoItemContext
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyRunTestsFromClassesCommand >> execute [
 
 	testItems do: [ :each | self runTestCase: each actualObject]
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyRunTestsFromClassesCommand >> runTestCase: testCase [
 
 	| testResult |

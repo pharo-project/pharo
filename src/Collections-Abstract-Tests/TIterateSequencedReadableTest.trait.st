@@ -2,22 +2,24 @@
 A trait for test purposes
 "
 Trait {
-	#name : #TIterateSequencedReadableTest,
-	#category : #'Collections-Abstract-Tests-Traits'
+	#name : 'TIterateSequencedReadableTest',
+	#category : 'Collections-Abstract-Tests-Traits',
+	#package : 'Collections-Abstract-Tests',
+	#tag : 'Traits'
 }
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TIterateSequencedReadableTest >> empty [
 	^self explicitRequirement
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TIterateSequencedReadableTest >> nonEmptyMoreThan1Element [
 " return a collection that doesn't includes equal elements' and doesn't include nil elements'"
 	^self explicitRequirement
 ]
 
-{ #category : #'tests - fixture' }
+{ #category : 'tests - fixture' }
 TIterateSequencedReadableTest >> test0FixtureIterateSequencedReadableTest [
 	| res |
 	self nonEmptyMoreThan1Element.
@@ -31,7 +33,7 @@ TIterateSequencedReadableTest >> test0FixtureIterateSequencedReadableTest [
 	self deny: res
 ]
 
-{ #category : #'tests - iterate on sequenced reable collections' }
+{ #category : 'tests - iterate on sequenced reable collections' }
 TIterateSequencedReadableTest >> testAllButFirstDo [
 
 	| result |
@@ -46,7 +48,7 @@ TIterateSequencedReadableTest >> testAllButFirstDo [
 	self assert: result size=(self nonEmptyMoreThan1Element size-1)
 ]
 
-{ #category : #'tests - iterate on sequenced reable collections' }
+{ #category : 'tests - iterate on sequenced reable collections' }
 TIterateSequencedReadableTest >> testAllButLastDo [
 
 	| result |
@@ -61,7 +63,7 @@ TIterateSequencedReadableTest >> testAllButLastDo [
 	self assert: result size=(self nonEmptyMoreThan1Element  size-1)
 ]
 
-{ #category : #'tests - iterate on sequenced reable collections' }
+{ #category : 'tests - iterate on sequenced reable collections' }
 TIterateSequencedReadableTest >> testCollectFromTo [
 
 	| result |
@@ -75,21 +77,21 @@ TIterateSequencedReadableTest >> testCollectFromTo [
 	self assert: result size = (self nonEmptyMoreThan1Element size - 1)
 ]
 
-{ #category : #'tests - iterate on sequenced reable collections' }
+{ #category : 'tests - iterate on sequenced reable collections' }
 TIterateSequencedReadableTest >> testDetectSequenced [
 	"Testing that detect keep the first element returning true for sequenceable collections"
 
 	| element result |
 	element := self nonEmptyMoreThan1Element at: 1.
-	result := self nonEmptyMoreThan1Element  detect: [:each | each notNil ].
+	result := self nonEmptyMoreThan1Element  detect: [:each | each isNotNil ].
 	self assert: result equals: element
 ]
 
-{ #category : #'tests - iterate on sequenced reable collections' }
+{ #category : 'tests - iterate on sequenced reable collections' }
 TIterateSequencedReadableTest >> testDo [
 ]
 
-{ #category : #'tests - iterate on sequenced reable collections' }
+{ #category : 'tests - iterate on sequenced reable collections' }
 TIterateSequencedReadableTest >> testFindFirst [
 
 	| element result |
@@ -99,7 +101,7 @@ TIterateSequencedReadableTest >> testFindFirst [
 	self assert: result equals: 1
 ]
 
-{ #category : #'tests - iterate on sequenced reable collections' }
+{ #category : 'tests - iterate on sequenced reable collections' }
 TIterateSequencedReadableTest >> testFindFirstNotIn [
 
 	| result |
@@ -108,7 +110,7 @@ TIterateSequencedReadableTest >> testFindFirstNotIn [
 	self assert: result equals: 0
 ]
 
-{ #category : #'tests - iterate on sequenced reable collections' }
+{ #category : 'tests - iterate on sequenced reable collections' }
 TIterateSequencedReadableTest >> testFindLast [
 
 	| element result |
@@ -118,7 +120,7 @@ TIterateSequencedReadableTest >> testFindLast [
 	self assert: result equals: self nonEmptyMoreThan1Element size
 ]
 
-{ #category : #'tests - iterate on sequenced reable collections' }
+{ #category : 'tests - iterate on sequenced reable collections' }
 TIterateSequencedReadableTest >> testFindLastNotIn [
 
 	| result |
@@ -127,7 +129,7 @@ TIterateSequencedReadableTest >> testFindLastNotIn [
 	self assert: result equals: 0
 ]
 
-{ #category : #'tests - iterate on sequenced reable collections' }
+{ #category : 'tests - iterate on sequenced reable collections' }
 TIterateSequencedReadableTest >> testFromToDo [
 
 	| result |
@@ -141,7 +143,7 @@ TIterateSequencedReadableTest >> testFromToDo [
 	self assert: result size = (self nonEmptyMoreThan1Element size - 1)
 ]
 
-{ #category : #'tests - iterate on sequenced reable collections' }
+{ #category : 'tests - iterate on sequenced reable collections' }
 TIterateSequencedReadableTest >> testGroupsOfAtATimeCollect [
 	| groupsOf2 |
 	self assertEmpty: (self empty groupsOf: 2 atATimeCollect: [ :x | x ]).
@@ -158,7 +160,7 @@ TIterateSequencedReadableTest >> testGroupsOfAtATimeCollect [
 	self assert: (groupsOf2 allSatisfy: [ :array | array size = 3 ])
 ]
 
-{ #category : #'tests - iterate on sequenced reable collections' }
+{ #category : 'tests - iterate on sequenced reable collections' }
 TIterateSequencedReadableTest >> testKeysAndValuesDo [
 	"| result |
 	result:= OrderedCollection new.
@@ -189,7 +191,7 @@ TIterateSequencedReadableTest >> testKeysAndValuesDo [
 	self assert: indexes size equals: self nonEmptyMoreThan1Element size
 ]
 
-{ #category : #'tests - iterate on sequenced reable collections' }
+{ #category : 'tests - iterate on sequenced reable collections' }
 TIterateSequencedReadableTest >> testKeysAndValuesDoEmpty [
 	| result |
 	result := OrderedCollection new.
@@ -199,7 +201,7 @@ TIterateSequencedReadableTest >> testKeysAndValuesDoEmpty [
 	self assertEmpty: result
 ]
 
-{ #category : #'tests - iterate on sequenced reable collections' }
+{ #category : 'tests - iterate on sequenced reable collections' }
 TIterateSequencedReadableTest >> testPairsCollect [
 	| index result |
 	index := 0.
@@ -212,7 +214,7 @@ TIterateSequencedReadableTest >> testPairsCollect [
 	result do: [ :each | self assert: each ]
 ]
 
-{ #category : #'tests - iterate on sequenced reable collections' }
+{ #category : 'tests - iterate on sequenced reable collections' }
 TIterateSequencedReadableTest >> testPairsDo [
 
 	| index |
@@ -229,7 +231,7 @@ TIterateSequencedReadableTest >> testPairsDo [
 		ifFalse:[ self assert: index equals: (self nonEmptyMoreThan1Element size+1) ]
 ]
 
-{ #category : #'tests - iterate on sequenced reable collections' }
+{ #category : 'tests - iterate on sequenced reable collections' }
 TIterateSequencedReadableTest >> testReverseDo [
 	| result |
 	result := OrderedCollection new.
@@ -240,7 +242,7 @@ TIterateSequencedReadableTest >> testReverseDo [
 		self assert: (result at: i)=(self nonEmpty at:(self nonEmpty size-i+1))]
 ]
 
-{ #category : #'tests - iterate on sequenced reable collections' }
+{ #category : 'tests - iterate on sequenced reable collections' }
 TIterateSequencedReadableTest >> testReverseDoEmpty [
 	| result |
 	result := OrderedCollection new.
@@ -249,7 +251,7 @@ TIterateSequencedReadableTest >> testReverseDoEmpty [
 	self assertEmpty: result
 ]
 
-{ #category : #'tests - iterate on sequenced reable collections' }
+{ #category : 'tests - iterate on sequenced reable collections' }
 TIterateSequencedReadableTest >> testReverseWithDo [
 
 	| firstCollection secondCollection index |
@@ -266,7 +268,7 @@ TIterateSequencedReadableTest >> testReverseWithDo [
 			(index := index - 1)]
 ]
 
-{ #category : #'tests - iterate on sequenced reable collections' }
+{ #category : 'tests - iterate on sequenced reable collections' }
 TIterateSequencedReadableTest >> testWithCollect [
 
 	| result firstCollection secondCollection index  |
@@ -286,13 +288,13 @@ TIterateSequencedReadableTest >> testWithCollect [
 	self assert: result size = secondCollection size
 ]
 
-{ #category : #'tests - iterate on sequenced reable collections' }
+{ #category : 'tests - iterate on sequenced reable collections' }
 TIterateSequencedReadableTest >> testWithCollectError [
 
 	self should: [ self nonEmptyMoreThan1Element with: self empty collect:[:a :b | ]] raise: Error
 ]
 
-{ #category : #'tests - iterate on sequenced reable collections' }
+{ #category : 'tests - iterate on sequenced reable collections' }
 TIterateSequencedReadableTest >> testWithDo [
 
 	| firstCollection secondCollection index |
@@ -308,13 +310,13 @@ TIterateSequencedReadableTest >> testWithDo [
 		self assert: (secondCollection at: index) equals: b ]
 ]
 
-{ #category : #'tests - iterate on sequenced reable collections' }
+{ #category : 'tests - iterate on sequenced reable collections' }
 TIterateSequencedReadableTest >> testWithDoError [
 
 	self should: [self nonEmptyMoreThan1Element with: self empty do:[:a :b | ]] raise: Error
 ]
 
-{ #category : #'tests - iterate on sequenced reable collections' }
+{ #category : 'tests - iterate on sequenced reable collections' }
 TIterateSequencedReadableTest >> testWithIndexCollect [
 
 	| result index collection |
@@ -329,7 +331,7 @@ TIterateSequencedReadableTest >> testWithIndexCollect [
 	self assert: result size equals: collection size
 ]
 
-{ #category : #'tests - iterate on sequenced reable collections' }
+{ #category : 'tests - iterate on sequenced reable collections' }
 TIterateSequencedReadableTest >> testWithIndexDo [
 
 	|  indexes elements |

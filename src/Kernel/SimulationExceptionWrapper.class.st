@@ -2,28 +2,30 @@
 Notify about an exception while simulating an execution
 "
 Class {
-	#name : #SimulationExceptionWrapper,
-	#superclass : #Exception,
+	#name : 'SimulationExceptionWrapper',
+	#superclass : 'Exception',
 	#instVars : [
 		'exception'
 	],
-	#category : #'Kernel-Exceptions'
+	#category : 'Kernel-Exceptions',
+	#package : 'Kernel',
+	#tag : 'Exceptions'
 }
 
-{ #category : #signalling }
+{ #category : 'signalling' }
 SimulationExceptionWrapper class >> signalForException: anError [
 
 	^ self new
 		exception: anError
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SimulationExceptionWrapper >> exception [
 
 	^ exception
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SimulationExceptionWrapper >> exception: anObject [
 
 	exception := anObject

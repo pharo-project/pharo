@@ -1,6 +1,6 @@
 Class {
-	#name : #ReflectivityTest,
-	#superclass : #ReflectivityTestCase,
+	#name : 'ReflectivityTest',
+	#superclass : 'ReflectivityTestCase',
 	#instVars : [
 		'count',
 		'tag',
@@ -8,32 +8,34 @@ Class {
 		'link2',
 		'cache'
 	],
-	#category : #'Reflectivity-Tests-Base'
+	#category : 'Reflectivity-Tests-Base',
+	#package : 'Reflectivity-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #tagging }
+{ #category : 'tagging' }
 ReflectivityTest >> increase [
 	count := count + 1
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ReflectivityTest >> setUp [
 	super setUp.
 	count := 0.
 	cache := ASTCache default
 ]
 
-{ #category : #tagging }
+{ #category : 'tagging' }
 ReflectivityTest >> tagExec [
 	tag := #yes
 ]
 
-{ #category : #tagging }
+{ #category : 'tagging' }
 ReflectivityTest >> tagExec: aTag [
 	tag := aTag
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ReflectivityTest >> tearDown [
 	link ifNotNil: [link uninstall].
 	link2 ifNotNil: [link2 uninstall].
@@ -43,7 +45,7 @@ ReflectivityTest >> tearDown [
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReflectivityTest >> testDisableLink [
 	| node instance |
 	node := (ReflectivityExamples >> #exampleWithArg:) ast.
@@ -59,7 +61,7 @@ ReflectivityTest >> testDisableLink [
 	self assert: count equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReflectivityTest >> testDisableThenCleanASTCacheThenEnableLink [
 	| node instance |
 	node := (ReflectivityExamples >> #exampleWithArg:) ast.
@@ -80,7 +82,7 @@ ReflectivityTest >> testDisableThenCleanASTCacheThenEnableLink [
 	self assert: count equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReflectivityTest >> testDisableThenEnableLink [
 	| node instance |
 	node := (ReflectivityExamples >> #exampleWithArg:) ast.
@@ -100,7 +102,7 @@ ReflectivityTest >> testDisableThenEnableLink [
 	self assert: link condition isNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReflectivityTest >> testDisableThenEnableLinkWithCondition [
 	| node instance |
 	node := (ReflectivityExamples >> #exampleWithArg:) ast.
@@ -121,7 +123,7 @@ ReflectivityTest >> testDisableThenEnableLinkWithCondition [
 	self assert: link condition equals: false
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReflectivityTest >> testTwoLinksUninstallOne [
 	| node instance |
 	node := (ReflectivityExamples >> #exampleWithArg:) ast.

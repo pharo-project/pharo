@@ -13,8 +13,8 @@ Please note, that depending on driver used, some attributes can be ignored by dr
 The preferableDriver attribute is special, that it allows user to bypass the default driver selection mechanism and tell directly, which driver shall be used for creating a window.
 "
 Class {
-	#name : #OSWindowAttributes,
-	#superclass : #Object,
+	#name : 'OSWindowAttributes',
+	#superclass : 'Object',
 	#instVars : [
 		'position',
 		'extent',
@@ -43,60 +43,62 @@ Class {
 		'DefaultVisible',
 		'DefaultWindowCentered'
 	],
-	#category : #'OSWindow-Core-Base'
+	#category : 'OSWindow-Core-Base',
+	#package : 'OSWindow-Core',
+	#tag : 'Base'
 }
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 OSWindowAttributes class >> defaultBorderless [
 	^ DefaultBorderless
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 OSWindowAttributes class >> defaultExtent [
 	^ DefaultExtent
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 OSWindowAttributes class >> defaultFullscreen [
 	^ DefaultFullscreen
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 OSWindowAttributes class >> defaultMaximized [
 	^ DefaultMaximized
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 OSWindowAttributes class >> defaultMinimized [
 	^ DefaultMinimized
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 OSWindowAttributes class >> defaultPosition [
 	^ DefaultPosition
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 OSWindowAttributes class >> defaultResizable [
 	^ DefaultResizable
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 OSWindowAttributes class >> defaultTitle [
 	^ DefaultTitle
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 OSWindowAttributes class >> defaultVisible [
 	^ DefaultVisible
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 OSWindowAttributes class >> defaultWindowCentered [
 	^ DefaultWindowCentered
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 OSWindowAttributes class >> initialize [
 	"
 	self initialize
@@ -114,33 +116,33 @@ OSWindowAttributes class >> initialize [
 	DefaultMinimized := false.
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OSWindowAttributes class >> newWithNullDriver [
 	^ self new preferableDriver: OSNullWindowDriver new; yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowAttributes >> applyTo: window [
 	window title: self title;
 		icon: self icon.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowAttributes >> borderless [
 	^ borderless
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowAttributes >> borderless: anObject [
 	^ borderless := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowAttributes >> bounds [
 	^ position extent: extent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowAttributes >> bounds: aRectangle [
 
 	self position: aRectangle origin.
@@ -149,7 +151,7 @@ OSWindowAttributes >> bounds: aRectangle [
 	^ aRectangle
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OSWindowAttributes >> createWindowHandleFor: osWindow [
 	^ (preferableDriver
 		ifNil: [ preferableDriver := OSWindowDriver current ])
@@ -157,58 +159,58 @@ OSWindowAttributes >> createWindowHandleFor: osWindow [
 		osWindow: osWindow
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowAttributes >> extent [
 	^ extent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowAttributes >> extent: newExtent [
 	^ extent := newExtent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowAttributes >> fullscreen [
 	
 	^ fullscreen
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowAttributes >> fullscreen: anObject [
 	
 	fullscreen := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowAttributes >> glAttributes [
 	
 	^ glAttributes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowAttributes >> glAttributes: anObject [
 	
 	glAttributes := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowAttributes >> height [
 	^ extent y
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowAttributes >> icon [
 	
 	^ icon
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowAttributes >> icon: anObject [
 	
 	icon := anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OSWindowAttributes >> initialize [
 	visible := self class defaultVisible.
 	position := self class defaultPosition.
@@ -223,111 +225,111 @@ OSWindowAttributes >> initialize [
 	maximized := self class defaultMaximized
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowAttributes >> maximized [
 	^ maximized
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowAttributes >> maximized: aBoolean [
 	maximized := aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowAttributes >> minimized [
 	^ minimized
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowAttributes >> minimized: aBoolean [
 	minimized := aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowAttributes >> position [
 	^ position
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowAttributes >> position: aPoint [
 	^ position := aPoint
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowAttributes >> preferableDriver [
 	
 	^ preferableDriver
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowAttributes >> preferableDriver: anObject [
 	
 	preferableDriver := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowAttributes >> resizable [
 	^ resizable
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowAttributes >> resizable: aBoolean [
 	resizable := aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowAttributes >> screenId [
 	^ screenId
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowAttributes >> screenId: newScreenId [
 	screenId := newScreenId
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowAttributes >> title [
 	
 	^ title
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowAttributes >> title: anObject [
 	
 	title := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowAttributes >> visible [
 	^ visible
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowAttributes >> visible: aBoolean [
 	visible := aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowAttributes >> width [
 	^ extent x
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowAttributes >> windowCentered [
 	^ windowCentered
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowAttributes >> windowCentered: aBoolean [
 	windowCentered := aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowAttributes >> x [
 	^ position x
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowAttributes >> y [
 	^ position y
 ]

@@ -3,7 +3,9 @@ FileAttributeNotSupported is signaled when an attempt is made to request an attr
 
 "
 Class {
-	#name : #FileAttributeNotSupported,
-	#superclass : #FileSystemError,
-	#category : #'FileSystem-Core-Kernel'
+	#name : 'FileAttributeNotSupported',
+	#superclass : 'FileSystemError',
+	#category : 'FileSystem-Core-Kernel',
+	#package : 'FileSystem-Core',
+	#tag : 'Kernel'
 }

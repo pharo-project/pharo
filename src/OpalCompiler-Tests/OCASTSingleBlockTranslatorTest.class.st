@@ -1,19 +1,21 @@
 Class {
-	#name : #OCASTSingleBlockTranslatorTest,
-	#superclass : #OCASTTranslatorTest,
+	#name : 'OCASTSingleBlockTranslatorTest',
+	#superclass : 'OCASTTranslatorTest',
 	#instVars : [
 		'extractBlockInTemp'
 	],
-	#category : #'OpalCompiler-Tests-AST'
+	#category : 'OpalCompiler-Tests-AST',
+	#package : 'OpalCompiler-Tests',
+	#tag : 'AST'
 }
 
-{ #category : #'building suites' }
+{ #category : 'building suites' }
 OCASTSingleBlockTranslatorTest class >> isAbtract [
 
 	^ self == OCASTSingleBlockTranslatorTest
 ]
 
-{ #category : #'building suites' }
+{ #category : 'building suites' }
 OCASTSingleBlockTranslatorTest class >> testParameters [
 
 	^ super testParameters *
@@ -22,24 +24,24 @@ OCASTSingleBlockTranslatorTest class >> testParameters [
 			yourself)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OCASTSingleBlockTranslatorTest >> extractBlockInTemp [
 
 	^ extractBlockInTemp	ifNil: [ extractBlockInTemp := false ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OCASTSingleBlockTranslatorTest >> extractBlockInTemp: aBoolean [
 	extractBlockInTemp := aBoolean
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCASTSingleBlockTranslatorTest >> testComposedExample: template withBlock: blockCode [
 
 	^ self testComposedExample: template withBlock: blockCode withArguments: #()
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCASTSingleBlockTranslatorTest >> testComposedExample: template withBlock: blockCode withArguments: arguments [
 
 	^ self
@@ -49,13 +51,13 @@ OCASTSingleBlockTranslatorTest >> testComposedExample: template withBlock: block
 		withArguments: arguments
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCASTSingleBlockTranslatorTest >> testComposedExample: template withTemps: temps withBlock: blockCode [
 
 	^ self testComposedExample: template  withTemps: temps withBlock: blockCode withArguments: #()
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCASTSingleBlockTranslatorTest >> testComposedExample: template  withTemps: temps withBlock: blockCode withArguments: arguments [
 	| declaration argument source methodTemps |
 	methodTemps := OrderedCollection withAll: temps.

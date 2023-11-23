@@ -1,6 +1,6 @@
-Extension { #name : #PasteUpMorph }
+Extension { #name : 'PasteUpMorph' }
 
-{ #category : #'*Athens-Morphic' }
+{ #category : '*Athens-Morphic' }
 PasteUpMorph >> drawOnAthensCanvas: aCanvas [
 	"Draw in order:
 	- background color

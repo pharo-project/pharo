@@ -3,20 +3,22 @@ I provide a simple mapping from high-level commands to low-level terminal charac
 
 "
 Class {
-	#name : #Termcap,
-	#superclass : #Object,
+	#name : 'Termcap',
+	#superclass : 'Object',
 	#instVars : [
 		'cache'
 	],
-	#category : #'System-CommandLine-Utilities'
+	#category : 'System-CommandLine-Utilities',
+	#package : 'System-CommandLine',
+	#tag : 'Utilities'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 Termcap >> flush [
 	cache removeAll
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Termcap >> getent: aString [
 	"The tgetent routine loads the entry for name.
 	It returns 1 on success,
@@ -31,19 +33,19 @@ Termcap >> getent: aString [
 	Error signal: 'Cannot interact with tput yet'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Termcap >> getflag: aString [
 	"^ (PipeableOSProcess command: 'tput ', aString) output"
 	Error signal: 'Cannot interact with tput yet'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Termcap >> getnum: aString [
 	"^ (PipeableOSProcess command: 'tput ', aString) output asInteger"
 	^ Error signal: 'Cannot interact with the terminal yet'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Termcap >> getstr: aString [
 	^ cache
 		at: aString
@@ -52,13 +54,13 @@ Termcap >> getstr: aString [
 			^ Error signal: 'Terminal capability ', aString, ' not found' ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 Termcap >> initialize [
 	cache := Dictionary new.
 	self initializeDefaultSequences
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 Termcap >> initializeDefaultSequences [
 	"Until we have decent OSProcess support we precache the most common sequences"
 	| esc |
@@ -76,7 +78,7 @@ Termcap >> initializeDefaultSequences [
 	cache at: #cr put: (esc, String cr)
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 Termcap >> reset [
 	self flag: 'TODO implement once we have OSProcess'.
 	"self getent: (OSProcess thisOSProcess environmentAt: #TERM)"

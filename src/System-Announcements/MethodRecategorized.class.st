@@ -5,15 +5,17 @@ This announcement will be emitted when:
 	=> a method is RE-categorized in a protocol of a trait or a class, using Organizer>>classify:under:.  If the method is classify under its current protocol, the announcement will not be emitted
 "
 Class {
-	#name : #MethodRecategorized,
-	#superclass : #MethodAnnouncement,
+	#name : 'MethodRecategorized',
+	#superclass : 'MethodAnnouncement',
 	#instVars : [
 		'oldProtocol'
 	],
-	#category : #'System-Announcements-System-Methods'
+	#category : 'System-Announcements-System-Methods',
+	#package : 'System-Announcements',
+	#tag : 'System-Methods'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MethodRecategorized class >> method: aCompiledMethod oldProtocol: anOldProtocol [
 
 	^self new
@@ -22,37 +24,37 @@ MethodRecategorized class >> method: aCompiledMethod oldProtocol: anOldProtocol 
 		yourself
 ]
 
-{ #category : #testing }
-MethodRecategorized >> affectsMethodsTaggedWith: tagName [
+{ #category : 'testing' }
+MethodRecategorized >> affectsMethodsInProtocol: protocol [
 
-	^ (super affectsMethodsTaggedWith: tagName) or: [ self oldProtocol name = tagName ]
+	^ (super affectsMethodsInProtocol: protocol) or: [ self oldProtocol name = protocol ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MethodRecategorized >> methodRecategorized [
 
 	^ method
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MethodRecategorized >> newProtocol [
 
 	^ self protocol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MethodRecategorized >> oldProtocol [
 
 	^ oldProtocol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MethodRecategorized >> oldProtocol: anObject [
 
 	oldProtocol := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MethodRecategorized >> protocolsAffected [
 	^{self newProtocol. self oldProtocol}
 ]

@@ -1,29 +1,29 @@
-Extension { #name : #WinPlatform }
+Extension { #name : 'WinPlatform' }
 
-{ #category : #'*UnifiedFFI' }
+{ #category : '*UnifiedFFI' }
 WinPlatform >> ffiCallingConvention [
 	^ #stdcall
 ]
 
-{ #category : #'*UnifiedFFI' }
+{ #category : '*UnifiedFFI' }
 WinPlatform >> ffiFloat64Alignment [
 	"Windows structure double alignment is 8.
 	 Check here: https://msdn.microsoft.com/en-us/library/aa290049(v=vs.71).aspx"
 	^ 8
 ]
 
-{ #category : #'*UnifiedFFI' }
+{ #category : '*UnifiedFFI' }
 WinPlatform >> ffiLibraryName: aLibrary [
 	^ aLibrary win32LibraryName
 ]
 
-{ #category : #'*UnifiedFFI' }
+{ #category : '*UnifiedFFI' }
 WinPlatform >> ffiLongAlignment [
 	"In Windows, sizeof(long) == 4 always."
 	^ 4
 ]
 
-{ #category : #'*UnifiedFFI' }
+{ #category : '*UnifiedFFI' }
 WinPlatform >> isTranslated [
 	"Tells if a program is emulated through WOW64.
 	WOW64 is the x86 emulator that allows 32-bit Windows-based applications to run seamlessly on 64-bit Windows. This allows for 32-bit (x86) Windows applications to run seamlessly in 64-bit (x64) Windows, as well as for 32-bit (x86) and 32-bit (ARM) Windows applications to run seamlessly in 64-bit (ARM64) Windows."
@@ -31,7 +31,7 @@ WinPlatform >> isTranslated [
 	^ self environment includesKey: 'PROCESSOR_ARCHITEW6432'
 ]
 
-{ #category : #'*UnifiedFFI' }
+{ #category : '*UnifiedFFI' }
 WinPlatform >> processorArchitecture [
 	"Will return the processor architecture:
 	 AMD64

@@ -2,12 +2,14 @@
 The abstract protocol for most display primitives that are used by Views for presenting information on the screen.
 "
 Class {
-	#name : #DisplayObject,
-	#superclass : #Object,
-	#category : #'Graphics-Display Objects-Common'
+	#name : 'DisplayObject',
+	#superclass : 'Object',
+	#category : 'Graphics-Display Objects-Common',
+	#package : 'Graphics-Display Objects',
+	#tag : 'Common'
 }
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 DisplayObject >> align: alignmentPoint with: relativePoint [
 	"Translate the receiver's offset such that alignmentPoint aligns with
 	relativePoint."
@@ -15,7 +17,7 @@ DisplayObject >> align: alignmentPoint with: relativePoint [
 	self offset: (self offset translateBy: relativePoint - alignmentPoint)
 ]
 
-{ #category : #'accessing - display box' }
+{ #category : 'accessing - display box' }
 DisplayObject >> boundingBox [
 	"Answer the rectangular area that represents the boundaries of the
 	receiver's space of information."
@@ -23,13 +25,13 @@ DisplayObject >> boundingBox [
 	^self computeBoundingBox
 ]
 
-{ #category : #'accessing - display box' }
+{ #category : 'accessing - display box' }
 DisplayObject >> center [
 
 	^ self boundingBox center
 ]
 
-{ #category : #'accessing - display box' }
+{ #category : 'accessing - display box' }
 DisplayObject >> computeBoundingBox [
 	"Answer the rectangular area that represents the boundaries of the
 	receiver's area for displaying information. This is the primitive for
@@ -38,14 +40,14 @@ DisplayObject >> computeBoundingBox [
 	self subclassResponsibility
 ]
 
-{ #category : #'displaying - display' }
+{ #category : 'displaying - display' }
 DisplayObject >> display [
 	"Display the receiver on the Display at location 0,0."
 
 	self displayOn: Display
 ]
 
-{ #category : #'displaying - generic' }
+{ #category : 'displaying - generic' }
 DisplayObject >> displayAt: aDisplayPoint [
 	"Display the receiver located at aDisplayPoint with default settings for
 	the displayMedium, rule and halftone."
@@ -57,7 +59,7 @@ DisplayObject >> displayAt: aDisplayPoint [
 		fillColor: nil
 ]
 
-{ #category : #'displaying - generic' }
+{ #category : 'displaying - generic' }
 DisplayObject >> displayOn: aDisplayMedium [
 	"Simple default display in order to see the receiver in the upper left
 	corner of screen."
@@ -65,7 +67,7 @@ DisplayObject >> displayOn: aDisplayMedium [
 	self displayOn: aDisplayMedium at: 0 @ 0
 ]
 
-{ #category : #'displaying - generic' }
+{ #category : 'displaying - generic' }
 DisplayObject >> displayOn: aDisplayMedium at: aDisplayPoint [
 	"Display the receiver located at aDisplayPoint with default settings for
 	rule and halftone."
@@ -77,7 +79,7 @@ DisplayObject >> displayOn: aDisplayMedium at: aDisplayPoint [
 		fillColor: nil
 ]
 
-{ #category : #'displaying - generic' }
+{ #category : 'displaying - generic' }
 DisplayObject >> displayOn: aDisplayMedium at: aDisplayPoint clippingBox: clipRectangle [
 	"Display the receiver located at aDisplayPoint with default settings for
 	rule and halftone. Information to be displayed must be confined to the
@@ -90,7 +92,7 @@ DisplayObject >> displayOn: aDisplayMedium at: aDisplayPoint clippingBox: clipRe
 		fillColor: nil
 ]
 
-{ #category : #'displaying - generic' }
+{ #category : 'displaying - generic' }
 DisplayObject >> displayOn: aDisplayMedium at: aDisplayPoint clippingBox: clipRectangle rule: ruleInteger fillColor: aForm [
 	"This is the basic display primitive for graphic display objects. Display
 	the receiver located at aDisplayPoint with rule, ruleInteger, and mask,
@@ -100,7 +102,7 @@ DisplayObject >> displayOn: aDisplayMedium at: aDisplayPoint clippingBox: clipRe
 	self subclassResponsibility
 ]
 
-{ #category : #'displaying - generic' }
+{ #category : 'displaying - generic' }
 DisplayObject >> displayOn: aDisplayMedium at: aDisplayPoint rule: ruleInteger [
 	"Display the receiver located at aPoint with default setting for the
 	halftone and clippingBox."
@@ -112,13 +114,13 @@ DisplayObject >> displayOn: aDisplayMedium at: aDisplayPoint rule: ruleInteger [
 		fillColor: nil
 ]
 
-{ #category : #'displaying - generic' }
+{ #category : 'displaying - generic' }
 DisplayObject >> displayOnPort: port at: location rule: rule [
 
 	port copyForm: self to: location rule: rule
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DisplayObject >> extent [
 	"Answer the point that represents the width and height of the receiver's
 	bounding box."
@@ -126,7 +128,7 @@ DisplayObject >> extent [
 	^self boundingBox extent
 ]
 
-{ #category : #'displaying - display' }
+{ #category : 'displaying - display' }
 DisplayObject >> follow: locationBlock while: durationBlock [
    "Move an image around on the Display. Restore the background
    continuously without causing flashing. The argument, locationBlock,
@@ -139,7 +141,7 @@ DisplayObject >> follow: locationBlock while: durationBlock [
    ^ self follow: locationBlock while: durationBlock bitsBehind: bitsBehind startingLoc: loc
 ]
 
-{ #category : #'displaying - display' }
+{ #category : 'displaying - display' }
 DisplayObject >> follow: locationBlock while: durationBlock bitsBehind: initialBitsBehind startingLoc: loc [
    "Move an image around on the Display. Restore the background continuously without causing flashing. The argument, locationBlock, supplies each new location, and the argument, durationBlock, supplies true to continue or false to stop. This variant takes the bitsBehind as an input argument, and returns the final saved saved bits as method value."
 
@@ -182,7 +184,7 @@ DisplayObject >> follow: locationBlock while: durationBlock bitsBehind: initialB
 	^ save1 displayOn: Display at: location
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DisplayObject >> height [
 	"Answer the number that represents the height of the receiver's
 	bounding box."
@@ -190,7 +192,7 @@ DisplayObject >> height [
 	^self boundingBox height
 ]
 
-{ #category : #'accessing - display box' }
+{ #category : 'accessing - display box' }
 DisplayObject >> initialExtent [
 	"Included here for when a FormView is being opened
 	as a window.  (4@4) covers border widths."
@@ -198,13 +200,13 @@ DisplayObject >> initialExtent [
 	^ self extent + (4@4)
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DisplayObject >> isTransparent [
 
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DisplayObject >> offset [
 	"Answer the amount by which the receiver should be offset when it is
 	displayed or its position is tested."
@@ -212,14 +214,14 @@ DisplayObject >> offset [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DisplayObject >> offset: aPoint [
 	"Set the amount by which the receiver's position is offset."
 
 	^self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DisplayObject >> relativeRectangle [
 	"Answer a Rectangle whose top left corner is the receiver's offset position
 	and whose width and height are the same as the receiver."
@@ -227,21 +229,21 @@ DisplayObject >> relativeRectangle [
 	^Rectangle origin: self offset extent: self extent
 ]
 
-{ #category : #'truncation and round off' }
+{ #category : 'truncation and round off' }
 DisplayObject >> rounded [
 	"Convert the offset of the receiver to integer coordinates."
 
 	self offset: self offset rounded
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 DisplayObject >> scaleBy: aPoint [
 	"Scale the receiver's offset by aPoint."
 
 	self offset: (self offset scaleBy: aPoint)
 ]
 
-{ #category : #'displaying - display' }
+{ #category : 'displaying - display' }
 DisplayObject >> slideFrom: startPoint to: stopPoint nSteps: nSteps delay: milliSecs [
 	"Slide this object across the display over the given number of steps, pausing for the given number of milliseconds after each step."
 	"Note: Does not display at the first point, but does at the last."
@@ -259,7 +261,7 @@ DisplayObject >> slideFrom: startPoint to: stopPoint nSteps: nSteps delay: milli
 			(i := i + 1) < nSteps]
 ]
 
-{ #category : #'displaying - display' }
+{ #category : 'displaying - display' }
 DisplayObject >> slideWithFirstFrom: startPoint to: stopPoint nSteps: nSteps delay: milliSecs [
 	"Slide this object across the display over the given number of steps,
 	pausing for the given number of milliseconds after each step."
@@ -275,14 +277,14 @@ DisplayObject >> slideWithFirstFrom: startPoint to: stopPoint nSteps: nSteps del
 			(i := i + 1) <= nSteps]
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 DisplayObject >> translateBy: aPoint [
 	"Translate the receiver's offset."
 
 	self offset: (self offset translateBy: aPoint)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DisplayObject >> width [
 	"Answer the number that represents the width of the receiver's bounding
 	box."

@@ -42,8 +42,8 @@ fullBocksWithReturn size  ""2198""
 
 "
 Class {
-	#name : #RBBlockNode,
-	#superclass : #RBValueNode,
+	#name : 'RBBlockNode',
+	#superclass : 'RBValueNode',
 	#instVars : [
 		'left',
 		'right',
@@ -54,10 +54,12 @@ Class {
 		'scope',
 		'bcToASTCache'
 	],
-	#category : #'AST-Core-Nodes'
+	#category : 'AST-Core-Nodes',
+	#package : 'AST-Core',
+	#tag : 'Nodes'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBBlockNode class >> arguments: argNodes body: sequenceNode [
 	^(self new)
 		arguments: argNodes;
@@ -65,12 +67,12 @@ RBBlockNode class >> arguments: argNodes body: sequenceNode [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBBlockNode class >> body: sequenceNode [
 	^self arguments: #() body: sequenceNode
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 RBBlockNode >> = anObject [
 	self == anObject ifTrue: [^true].
 	self class = anObject class ifFalse: [^false].
@@ -80,26 +82,26 @@ RBBlockNode >> = anObject [
 	^true
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RBBlockNode >> acceptVisitor: aProgramNodeVisitor [
 	^ aProgramNodeVisitor visitBlockNode: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBBlockNode >> allArgumentVariables [
 	^(self argumentNames asOrderedCollection)
 		addAll: super allArgumentVariables;
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBBlockNode >> allDefinedVariables [
 	^(self argumentNames asOrderedCollection)
 		addAll: super allDefinedVariables;
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBBlockNode >> allStatements [
 	"including temp variable definition."
 	^ self temporaries asOrderedCollection copy
@@ -107,33 +109,33 @@ RBBlockNode >> allStatements [
 			yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBBlockNode >> argumentNames [
 	^ self arguments collect: [:each | each name] as: Array
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBBlockNode >> arguments [
 	^arguments
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBBlockNode >> arguments: argCollection [
 	arguments := argCollection.
 	arguments do: [:each | each parent: self ]
 ]
 
-{ #category : #'accessing - token' }
+{ #category : 'accessing - token' }
 RBBlockNode >> bar [
 	^ bar
 ]
 
-{ #category : #'accessing - token' }
+{ #category : 'accessing - token' }
 RBBlockNode >> bar: anInteger [
 	bar := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBBlockNode >> blockVariables [
 	| vars |
 	vars := super blockVariables asOrderedCollection.
@@ -141,33 +143,33 @@ RBBlockNode >> blockVariables [
 	^vars
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBBlockNode >> body [
 	^body
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBBlockNode >> body: stmtsNode [
 	body := stmtsNode.
 	body parent: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBBlockNode >> children [
 	^ arguments copyWith: body
 ]
 
-{ #category : #'accessing - token' }
+{ #category : 'accessing - token' }
 RBBlockNode >> colons [
 	^ colons
 ]
 
-{ #category : #'accessing - token' }
+{ #category : 'accessing - token' }
 RBBlockNode >> colons: anArray [
 	colons := anArray
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBBlockNode >> constantValue [
 	self isConstant ifFalse: [ self error: 'block is not constant' ].
 	^ body statements
@@ -175,7 +177,7 @@ RBBlockNode >> constantValue [
 		ifNotEmpty: [:statements | statements first value ]
 ]
 
-{ #category : #matching }
+{ #category : 'matching' }
 RBBlockNode >> copyInContext: aDictionary [
 	^ self class new
 		arguments: (self copyList: self arguments inContext: aDictionary);
@@ -183,17 +185,17 @@ RBBlockNode >> copyInContext: aDictionary [
 		yourself
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBBlockNode >> defines: aName [
 	^arguments anySatisfy: [:each | each name = aName]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBBlockNode >> directlyUses: aNode [
 	^false
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 RBBlockNode >> equalTo: anObject withMapping: aDictionary [
 	self class = anObject class ifFalse: [^false].
 	self arguments size = anObject arguments size ifFalse: [^false].
@@ -206,46 +208,46 @@ RBBlockNode >> equalTo: anObject withMapping: aDictionary [
 	^true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBBlockNode >> hasArgumentNamed: aString [
 	^ self arguments anySatisfy: [ :argument| argument name = aString ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBBlockNode >> hasArguments [
 
 	^ arguments isNotEmpty
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBBlockNode >> hasBlockReturn [
 	^ self body lastIsReturn
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBBlockNode >> hasTemporaries [
 
 	^ self temporaries isNotEmpty
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBBlockNode >> hasTemporaryNamed: aString [
 	^ self temporaries anySatisfy: [ :temp| temp name = aString ]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 RBBlockNode >> hash [
 	^ (self hashForCollection: self arguments) bitXor: self body hash
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBBlockNode >> headIsNotEmpty [
 	"Return true whether the receiver has some arguments or comments"
 
 	^ arguments isNotEmpty or: [ self comments isNotEmpty ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBBlockNode >> initialize [
 	super initialize.
 
@@ -255,13 +257,13 @@ RBBlockNode >> initialize [
 	right := 0
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBBlockNode >> isBlock [
 
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBBlockNode >> isConstant [
 	"is the block just returning a literal?"
 	^ body statements
@@ -269,38 +271,38 @@ RBBlockNode >> isConstant [
 		ifNotEmpty: [:statements | statements first isLiteralNode ]
 ]
 
-{ #category : #errors }
+{ #category : 'errors' }
 RBBlockNode >> isFaulty [
 	self isError ifTrue: [ ^ true ].
 	^(self arguments anySatisfy: [:each | each isFaulty] ) or: [ self body isFaulty]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBBlockNode >> isImmediateNode [
 	^true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBBlockNode >> isLast: aNode [
 	^body isLast: aNode
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBBlockNode >> lastIsReturn [
 	^ false
 ]
 
-{ #category : #'accessing - token' }
+{ #category : 'accessing - token' }
 RBBlockNode >> left [
 	^ left
 ]
 
-{ #category : #'accessing - token' }
+{ #category : 'accessing - token' }
 RBBlockNode >> left: anInteger [
 	left := anInteger
 ]
 
-{ #category : #matching }
+{ #category : 'matching' }
 RBBlockNode >> match: aNode inContext: aDictionary [
 	aNode class = self class ifFalse: [^false].
 	^(self
@@ -310,104 +312,104 @@ RBBlockNode >> match: aNode inContext: aDictionary [
 			and: [body match: aNode body inContext: aDictionary]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBBlockNode >> methodOrBlockNode [
 	^ self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBBlockNode >> needsParenthesis [
 	^false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBBlockNode >> numArgs [
 	^ self arguments size
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 RBBlockNode >> postCopy [
 	super postCopy.
 	self arguments: (self arguments collect: [ :each | each copy ]).
 	self body: self body copy
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBBlockNode >> precedence [
 	^0
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBBlockNode >> references: aVariableName [
 	^body references: aVariableName
 ]
 
-{ #category : #'adding-removing' }
+{ #category : 'adding-removing' }
 RBBlockNode >> removeTemporaryNamed: aName [
 
 	self body removeTemporaryNamed: aName
 ]
 
-{ #category : #replacing }
+{ #category : 'replacing' }
 RBBlockNode >> replaceNode: aNode withNode: anotherNode [
 	body == aNode ifTrue: [self body: anotherNode].
 	self arguments: (arguments
 				collect: [:each | each == aNode ifTrue: [anotherNode] ifFalse: [each]])
 ]
 
-{ #category : #'accessing - token' }
+{ #category : 'accessing - token' }
 RBBlockNode >> right [
 	^ right
 ]
 
-{ #category : #'accessing - token' }
+{ #category : 'accessing - token' }
 RBBlockNode >> right: anInteger [
 	right := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBBlockNode >> scope [
 	^ scope
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBBlockNode >> scope: aScopedNode [
 	scope := aScopedNode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBBlockNode >> startWithoutParentheses [
 	^ left
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBBlockNode >> statementComments [
 	"this is used for formatting comments for this node as a statement, but I don't have a single statement comment, my comments are place within the block code"
 
 	^ ''
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBBlockNode >> statements [
 	^ self body statements
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBBlockNode >> stopWithoutParentheses [
 	^ right
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBBlockNode >> temporaries [
 	^ self body temporaries
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBBlockNode >> temporaryNames [
 	^ self body temporaryNames
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBBlockNode >> uses: aNode [
 	aNode = body ifFalse: [^false].
 	^parent isMessage

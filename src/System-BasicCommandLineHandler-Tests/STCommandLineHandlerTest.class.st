@@ -1,16 +1,18 @@
 Class {
-	#name : #STCommandLineHandlerTest,
-	#superclass : #ClassTestCase,
-	#category : #'System-BasicCommandLineHandler-Tests-Base'
+	#name : 'STCommandLineHandlerTest',
+	#superclass : 'ClassTestCase',
+	#category : 'System-BasicCommandLineHandler-Tests-Base',
+	#package : 'System-BasicCommandLineHandler-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #coverage }
+{ #category : 'coverage' }
 STCommandLineHandlerTest >> classToBeTested [
 
 	^ STCommandLineHandler
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STCommandLineHandlerTest >> testCommandLineHandlerCondition [
 	| commandLine reference |
 
@@ -25,7 +27,7 @@ STCommandLineHandlerTest >> testCommandLineHandlerCondition [
 	ensure: [ reference delete ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STCommandLineHandlerTest >> testInstallSourceFilesFail [
 	| codeLoader |
 
@@ -37,7 +39,7 @@ STCommandLineHandlerTest >> testInstallSourceFilesFail [
 	self should: [ codeLoader installSourceFiles ] raise: Error
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STCommandLineHandlerTest >> testLoadSourceFiles [
 	| codeLoader |
 
@@ -52,7 +54,7 @@ STCommandLineHandlerTest >> testLoadSourceFiles [
 	self assert: ((codeLoader instVarNamed: 'sourceFiles') allSatisfy: [ :each | each isKindOf: File ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STCommandLineHandlerTest >> testSelectSourceFiles [
 	| codeLoader commandLine |
 

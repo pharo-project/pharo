@@ -2,22 +2,24 @@
 This class tests the OrderedDictionary class. It is separate from DictionaryTest to test that accessing, enumerating, and printing methods preserve the order that keys were inserted in.
 "
 Class {
-	#name : #OrderedDictionaryTest,
-	#superclass : #TestCase,
+	#name : 'OrderedDictionaryTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'nonIdentityOrderedAssociations',
 		'identityOrderedAssociations'
 	],
-	#category : #'Collections-Sequenceable-Tests-Ordered'
+	#category : 'Collections-Sequenceable-Tests-Ordered',
+	#package : 'Collections-Sequenceable-Tests',
+	#tag : 'Ordered'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 OrderedDictionaryTest class >> shouldInheritSelectors [
 
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OrderedDictionaryTest >> absentKey [
 
 	^self isTestingIdentityDictionary
@@ -25,12 +27,12 @@ OrderedDictionaryTest >> absentKey [
 		ifFalse: [ self nonIdentityAbsentKey ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OrderedDictionaryTest >> absentValue [
 	^ 'absentValue'
 ]
 
-{ #category : #assertions }
+{ #category : 'assertions' }
 OrderedDictionaryTest >> assertDictionary: aFirstDictionary doesNotEqual: aSecondDictionary [
 	"Test symmetric inequality"
 
@@ -39,7 +41,7 @@ OrderedDictionaryTest >> assertDictionary: aFirstDictionary doesNotEqual: aSecon
 		deny: aSecondDictionary equals: aFirstDictionary
 ]
 
-{ #category : #assertions }
+{ #category : 'assertions' }
 OrderedDictionaryTest >> assertDictionary: aFirstDictionary equals: aSecondDictionary [
 	"Test reflixive and symmetric equality."
 
@@ -50,7 +52,7 @@ OrderedDictionaryTest >> assertDictionary: aFirstDictionary equals: aSecondDicti
 		assert: aSecondDictionary equals: aFirstDictionary
 ]
 
-{ #category : #assertions }
+{ #category : 'assertions' }
 OrderedDictionaryTest >> assertIsArray: anArray withElements: aCollection [
 
 	self
@@ -58,7 +60,7 @@ OrderedDictionaryTest >> assertIsArray: anArray withElements: aCollection [
 		assert: anArray equals: aCollection asArray
 ]
 
-{ #category : #assertions }
+{ #category : 'assertions' }
 OrderedDictionaryTest >> assertIsDictionary: aFirstDictionary copiedFrom: aSecondDictionary withOrderedAssociations: anAssociationCollection [
 	self
 		deny: aFirstDictionary identicalTo: aSecondDictionary;
@@ -71,7 +73,7 @@ OrderedDictionaryTest >> assertIsDictionary: aFirstDictionary copiedFrom: aSecon
 	self assertIsDictionary: aFirstDictionary withOrderedAssociations: anAssociationCollection
 ]
 
-{ #category : #assertions }
+{ #category : 'assertions' }
 OrderedDictionaryTest >> assertIsDictionary: anObject withOrderedAssociations: anAssociationCollection [
 	"Tests that anObject is an instance of the correct dictionary class
 	with the specified ordered associations"
@@ -93,7 +95,7 @@ OrderedDictionaryTest >> assertIsDictionary: anObject withOrderedAssociations: a
 			self assert: (anObject associations at: i) value equals: each value ]
 ]
 
-{ #category : #assertions }
+{ #category : 'assertions' }
 OrderedDictionaryTest >> assertIsDictionary: anObject withUnorderedAssociations: anAssociationCollection [
 	"Tests that anObject is an instance of the correct dictionary class
 	with the specified associations, but ignoring the order"
@@ -104,7 +106,7 @@ OrderedDictionaryTest >> assertIsDictionary: anObject withUnorderedAssociations:
 	anAssociationCollection do: [ :each | self assert: (anObject includesAssociation: each) ]
 ]
 
-{ #category : #assertions }
+{ #category : 'assertions' }
 OrderedDictionaryTest >> assertKey: aKey wasRemovedfrom: aDictionary [
 
 	self deny: (aDictionary includesKey: aKey).
@@ -115,61 +117,61 @@ OrderedDictionaryTest >> assertKey: aKey wasRemovedfrom: aDictionary [
 				ifFalse: [each = aKey])]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OrderedDictionaryTest >> changedOrderedAssociations [
 
 	^ self orderedAssociations collect: [:each | each key -> self newValue]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OrderedDictionaryTest >> changedOrderedAssociationsFirst: anInteger [
 
 	^ self changedOrderedAssociations first: anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OrderedDictionaryTest >> collectClass [
 
 	^ Array
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OrderedDictionaryTest >> defaultCapacity [
 
 	^ self emptyInternalDictionary capacity
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OrderedDictionaryTest >> dictionaryClass [
 
 	^ OrderedDictionary
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OrderedDictionaryTest >> dictionaryWithOrderedAssociations [
 
 	^ self dictionaryClass newFrom: self orderedAssociations
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OrderedDictionaryTest >> emptyDictionary [
 
 	^ self dictionaryClass new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OrderedDictionaryTest >> emptyInternalDictionary [
 
 	^ self internalDictionaryClass new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OrderedDictionaryTest >> identityAbsentKey [
 
 	^ self orderedKeys first copy
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OrderedDictionaryTest >> identityOrderedAssociations [
 	"Returns ordered associations to use for identity dictionaries.
 	The keys are all #= equal but #== different, so only an
@@ -189,7 +191,7 @@ OrderedDictionaryTest >> identityOrderedAssociations [
 	^ identityOrderedAssociations collect: [:each | each copy]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OrderedDictionaryTest >> internalDictionaryClass [
 
 	^self isTestingIdentityDictionary
@@ -197,31 +199,31 @@ OrderedDictionaryTest >> internalDictionaryClass [
 		ifFalse: [ Dictionary]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OrderedDictionaryTest >> internalDictionaryWithAssociations [
 
 	^ self internalDictionaryClass newFrom: self orderedAssociations
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OrderedDictionaryTest >> isTestingIdentityDictionary [
 
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OrderedDictionaryTest >> newValue [
 
 	^ 'newValue'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OrderedDictionaryTest >> nonIdentityAbsentKey [
 
 	^ 'absentKey'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OrderedDictionaryTest >> nonIdentityOrderedAssociations [
 	"Returns ordered associations to use for non-identity dictionaries.
 	The keys are all #= and #== different and are returned out of their
@@ -240,56 +242,56 @@ OrderedDictionaryTest >> nonIdentityOrderedAssociations [
 	^ nonIdentityOrderedAssociations collect: [:each | each copy]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OrderedDictionaryTest >> orderedAssociations [
 	^self isTestingIdentityDictionary
 		ifTrue: [ self identityOrderedAssociations ]
 		ifFalse: [ self nonIdentityOrderedAssociations ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OrderedDictionaryTest >> orderedAssociationsAllButFirst: anInteger [
 
 	^ self orderedAssociations allButFirst: anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OrderedDictionaryTest >> orderedAssociationsFirst: anInteger [
 
 	^ self orderedAssociations first: anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OrderedDictionaryTest >> orderedKeys [
 
 	^ self orderedAssociations collect: [:each | each key]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OrderedDictionaryTest >> orderedKeysFirst: anInteger [
 
 	^ self orderedKeys first: anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OrderedDictionaryTest >> orderedValues [
 
 	^ self orderedAssociations collect: [:each | each value]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OrderedDictionaryTest >> orderedValuesFirst: anInteger [
 
 	^ self orderedValues first: anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OrderedDictionaryTest >> otherOrderedDictionaryClasses [
 
 	^ OrderedDictionary withAllSubclasses copyWithout: self dictionaryClass
 ]
 
-{ #category : #assertions }
+{ #category : 'assertions' }
 OrderedDictionaryTest >> should: aBlock enumerate: aCollection [
 	| enumerated |
 
@@ -298,7 +300,7 @@ OrderedDictionaryTest >> should: aBlock enumerate: aCollection [
 	self assert: enumerated equals: aCollection asOrderedCollection
 ]
 
-{ #category : #assertions }
+{ #category : 'assertions' }
 OrderedDictionaryTest >> should: aBlock enumerate: aFirstCollection and: aSecondCollection [
 	| firstEnumerated secondEnumerated |
 
@@ -312,7 +314,7 @@ OrderedDictionaryTest >> should: aBlock enumerate: aFirstCollection and: aSecond
 		assert: secondEnumerated equals: aSecondCollection asOrderedCollection
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OrderedDictionaryTest >> testAdd [
 	| dictionary |
 	dictionary := self emptyDictionary.
@@ -341,7 +343,7 @@ OrderedDictionaryTest >> testAdd [
 			self assertIsDictionary: dictionary withOrderedAssociations: (self changedOrderedAssociationsFirst: i) , (self orderedAssociationsAllButFirst: i) ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OrderedDictionaryTest >> testAddAll [
 	| dictionary addedAssociations |
 	dictionary := self emptyDictionary.
@@ -361,7 +363,7 @@ OrderedDictionaryTest >> testAddAll [
 	self assertIsDictionary: dictionary withOrderedAssociations: self changedOrderedAssociations
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OrderedDictionaryTest >> testAssociationAt [
 	| dictionary |
 	dictionary := self emptyDictionary.
@@ -373,7 +375,7 @@ OrderedDictionaryTest >> testAssociationAt [
 			self assert: (dictionary associationAt: each key) equals: each ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OrderedDictionaryTest >> testAssociationAtIfAbsent [
 	| dictionary |
 
@@ -391,7 +393,7 @@ OrderedDictionaryTest >> testAssociationAtIfAbsent [
 				ifAbsent: [self fail]) equals: each]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OrderedDictionaryTest >> testAssociationAtIfPresent [
 	| dictionary |
 
@@ -414,7 +416,7 @@ OrderedDictionaryTest >> testAssociationAtIfPresent [
 				ifPresent: [self newValue]) equals: self newValue]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OrderedDictionaryTest >> testAssociations [
 	| dictionary |
 
@@ -429,7 +431,7 @@ OrderedDictionaryTest >> testAssociations [
 			withElements: (self orderedAssociationsFirst: i)]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OrderedDictionaryTest >> testAssociationsDo [
 
 	| dictionary |
@@ -444,7 +446,7 @@ OrderedDictionaryTest >> testAssociationsDo [
 			enumerate: (self orderedAssociationsFirst: i)]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OrderedDictionaryTest >> testAssociationsSelect [
 	| dictionary |
 
@@ -461,7 +463,7 @@ OrderedDictionaryTest >> testAssociationsSelect [
 					selectedAssociations includes: each])]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OrderedDictionaryTest >> testAt [
 	| dictionary |
 
@@ -475,7 +477,7 @@ OrderedDictionaryTest >> testAt [
 		self assert: (dictionary at: each key) equals: each value]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OrderedDictionaryTest >> testAtIfAbsent [
 	| dictionary |
 
@@ -493,7 +495,7 @@ OrderedDictionaryTest >> testAtIfAbsent [
 				ifAbsent: [self fail]) equals: each value]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OrderedDictionaryTest >> testAtIfAbsentPut [
 	| dictionary |
 
@@ -512,7 +514,7 @@ OrderedDictionaryTest >> testAtIfAbsentPut [
 			withElements: (self orderedKeysFirst: i) ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OrderedDictionaryTest >> testAtIfPresent [
 	| dictionary |
 	dictionary := self emptyDictionary.
@@ -526,7 +528,7 @@ OrderedDictionaryTest >> testAtIfPresent [
 			self assert: (dictionary at: each key ifPresent: [ self newValue ]) equals: self newValue ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OrderedDictionaryTest >> testAtIfPresentIfAbsent [
 	| dictionary |
 
@@ -552,7 +554,7 @@ OrderedDictionaryTest >> testAtIfPresentIfAbsent [
 				ifAbsent: [self fail]) equals: self newValue]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OrderedDictionaryTest >> testAtIfPresentIfAbsentPut [
 	| dictionary |
 
@@ -573,7 +575,7 @@ OrderedDictionaryTest >> testAtIfPresentIfAbsentPut [
 			withElements: (self orderedKeysFirst: i) ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OrderedDictionaryTest >> testAtPut [
 	| dictionary |
 
@@ -599,7 +601,7 @@ OrderedDictionaryTest >> testAtPut [
 				(self orderedAssociationsAllButFirst: i)]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OrderedDictionaryTest >> testAtUpdate [
 	| dict |
 	dict := OrderedDictionary newFrom: {2->10. 100->5} .
@@ -609,7 +611,7 @@ OrderedDictionaryTest >> testAtUpdate [
 	self should: [ dict at: 5 update: [ :v | v+1 ] ] raise: KeyNotFound
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OrderedDictionaryTest >> testAtUpdateInitial [
 	| dict |
 	dict := OrderedDictionary  newFrom: {2->10. 100->5} .
@@ -619,7 +621,7 @@ OrderedDictionaryTest >> testAtUpdateInitial [
 	self assert: (dict at: 2) equals: 20
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OrderedDictionaryTest >> testBindingsDo [
 	| dictionary |
 
@@ -634,7 +636,7 @@ OrderedDictionaryTest >> testBindingsDo [
 			enumerate: (self orderedAssociationsFirst: i)]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OrderedDictionaryTest >> testCapacity [
 	"The current Dictionary implementation allocates more than specified.
 	The amount allocated may change in the future but it likely won't ever
@@ -660,7 +662,7 @@ OrderedDictionaryTest >> testCapacity [
 			raise: Error]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OrderedDictionaryTest >> testCollect [
 	| dictionary |
 
@@ -673,7 +675,7 @@ OrderedDictionaryTest >> testCollect [
 			(self orderedAssociations collect: [:each | each key -> each value hash])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OrderedDictionaryTest >> testCopy [
 	| dictionary copy |
 
@@ -688,7 +690,7 @@ OrderedDictionaryTest >> testCopy [
 		withOrderedAssociations: self orderedAssociations
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OrderedDictionaryTest >> testCopyEmpty [
 	| dictionary copy |
 
@@ -703,23 +705,7 @@ OrderedDictionaryTest >> testCopyEmpty [
 		withOrderedAssociations: #()
 ]
 
-{ #category : #tests }
-OrderedDictionaryTest >> testDeclareFrom [
-	| dictionary otherDictionary |
-	dictionary := self emptyDictionary.
-	otherDictionary := self dictionaryWithOrderedAssociations.
-	self orderedKeys do: [ :each | self assert: (dictionary declare: each from: otherDictionary) identicalTo: dictionary ].
-	self assertIsDictionary: dictionary withOrderedAssociations: self orderedAssociations.
-	self assertEmpty: otherDictionary.
-
-	self orderedKeys
-		do: [ :each |
-			otherDictionary add: each -> self newValue.
-			self assert: (dictionary declare: each from: otherDictionary) identicalTo: dictionary ].
-	self assertIsDictionary: dictionary withOrderedAssociations: self orderedAssociations
-]
-
-{ #category : #tests }
+{ #category : 'tests' }
 OrderedDictionaryTest >> testDictionary [
 	| dictionary |
 	dictionary := self emptyDictionary.
@@ -733,7 +719,7 @@ OrderedDictionaryTest >> testDictionary [
 		assert: dictionary dictionary equals: self internalDictionaryWithAssociations
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OrderedDictionaryTest >> testDictionaryPublicProtocolCompatibility [
 
 	| dictionary |
@@ -746,7 +732,7 @@ OrderedDictionaryTest >> testDictionaryPublicProtocolCompatibility [
 			thenDo: [ :protocol | (assoc value selectorsInProtocol: protocol) do: [ :each | self assert: (assoc key respondsTo: each) ] ] ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OrderedDictionaryTest >> testDo [
 	| dictionary |
 
@@ -761,7 +747,7 @@ OrderedDictionaryTest >> testDo [
 			enumerate: (self orderedValuesFirst: i)]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OrderedDictionaryTest >> testEquals [
 	| dictionaryOne dictionaryTwo |
 
@@ -794,7 +780,7 @@ OrderedDictionaryTest >> testEquals [
 		equals: dictionaryTwo
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OrderedDictionaryTest >> testEqualsDictionary [
 	self
 		assertDictionary: self emptyDictionary
@@ -805,7 +791,7 @@ OrderedDictionaryTest >> testEqualsDictionary [
 		doesNotEqual: self internalDictionaryWithAssociations
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OrderedDictionaryTest >> testEqualsOtherOrderedDictionaries [
 	self otherOrderedDictionaryClasses do: [:each |
 		self
@@ -816,7 +802,7 @@ OrderedDictionaryTest >> testEqualsOtherOrderedDictionaries [
 			doesNotEqual: (each newFrom: self orderedAssociations)]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OrderedDictionaryTest >> testHash [
 	| dictionary otherDictionary internalDictionary otherInternalDictionary |
 	dictionary := self emptyDictionary.
@@ -837,7 +823,7 @@ OrderedDictionaryTest >> testHash [
 			self assert: dictionary hash equals: otherDictionary hash ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OrderedDictionaryTest >> testIdentityIndexOfKey [
 	| dictionary |
 
@@ -851,7 +837,7 @@ OrderedDictionaryTest >> testIdentityIndexOfKey [
 			assert: (dictionary identityIndexOfKey: each key copy) equals: 0]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OrderedDictionaryTest >> testIdentityIndexOfKeyIfAbsent [
 	| dictionary |
 	dictionary := self emptyDictionary.
@@ -864,7 +850,7 @@ OrderedDictionaryTest >> testIdentityIndexOfKeyIfAbsent [
 			self assert: (dictionary identityIndexOfKey: each key copy ifAbsent: [ self absentValue ]) equals: self absentValue ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OrderedDictionaryTest >> testIncludes [
 	| dictionary |
 
@@ -876,7 +862,7 @@ OrderedDictionaryTest >> testIncludes [
 		self assert: (dictionary includes: each value)]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OrderedDictionaryTest >> testIncludesAssociation [
 	| dictionary |
 
@@ -892,7 +878,7 @@ OrderedDictionaryTest >> testIncludesAssociation [
 			assert: (dictionary includesAssociation: each key -> each value)]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OrderedDictionaryTest >> testIncludesIdentity [
 	| dictionary |
 
@@ -906,7 +892,7 @@ OrderedDictionaryTest >> testIncludesIdentity [
 			deny: (dictionary includesIdentity: each value copy)]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OrderedDictionaryTest >> testIncludesKey [
 	| dictionary |
 
@@ -918,7 +904,7 @@ OrderedDictionaryTest >> testIncludesKey [
 		self assert: (dictionary includesKey: each key)]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OrderedDictionaryTest >> testIndexOfKey [
 	| dictionary |
 
@@ -930,7 +916,7 @@ OrderedDictionaryTest >> testIndexOfKey [
 		self assert: (dictionary indexOfKey: each key) equals: i]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OrderedDictionaryTest >> testIndexOfKeyIfAbsent [
 	| dictionary |
 
@@ -948,12 +934,12 @@ OrderedDictionaryTest >> testIndexOfKeyIfAbsent [
 				ifAbsent: [self fail]) equals: i]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OrderedDictionaryTest >> testIsDictionary [
 	self assert: self dictionaryClass new isDictionary
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OrderedDictionaryTest >> testKeyAtIdentityValue [
 	| dictionary |
 
@@ -970,7 +956,7 @@ OrderedDictionaryTest >> testKeyAtIdentityValue [
 			raise: Error]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OrderedDictionaryTest >> testKeyAtIdentityValueIfAbsent [
 	| dictionary |
 
@@ -992,7 +978,7 @@ OrderedDictionaryTest >> testKeyAtIdentityValueIfAbsent [
 				ifAbsent: [self absentKey]) equals: self absentKey]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OrderedDictionaryTest >> testKeyAtIndex [
 	| dictionary |
 
@@ -1009,7 +995,7 @@ OrderedDictionaryTest >> testKeyAtIndex [
 		self assert: (dictionary keyAtIndex: i) equals: each key]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OrderedDictionaryTest >> testKeyAtIndexIfAbsent [
 	| dictionary |
 
@@ -1031,7 +1017,7 @@ OrderedDictionaryTest >> testKeyAtIndexIfAbsent [
 				ifAbsent: [self fail]) equals: each key]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OrderedDictionaryTest >> testKeyAtValue [
 	| dictionary |
 
@@ -1045,7 +1031,7 @@ OrderedDictionaryTest >> testKeyAtValue [
 		self assert: (dictionary keyAtValue: each value) equals: each key]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OrderedDictionaryTest >> testKeyAtValueIfAbsent [
 	| dictionary |
 
@@ -1063,7 +1049,7 @@ OrderedDictionaryTest >> testKeyAtValueIfAbsent [
 				ifAbsent: [self fail]) equals: each key]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OrderedDictionaryTest >> testKeyForIdentity [
 	| dictionary |
 
@@ -1077,7 +1063,7 @@ OrderedDictionaryTest >> testKeyForIdentity [
 			assert: (dictionary keyForIdentity: each value copy) isNil]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OrderedDictionaryTest >> testKeys [
 	| dictionary |
 
@@ -1092,7 +1078,7 @@ OrderedDictionaryTest >> testKeys [
 			withElements: (self orderedKeysFirst: i)]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OrderedDictionaryTest >> testKeysAndValuesDo [
 	| dictionary |
 
@@ -1109,7 +1095,7 @@ OrderedDictionaryTest >> testKeysAndValuesDo [
 			and: (self orderedValuesFirst: i)]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OrderedDictionaryTest >> testKeysAndValuesRemove [
 	| dictionary |
 	dictionary := self dictionaryWithOrderedAssociations.
@@ -1134,7 +1120,7 @@ OrderedDictionaryTest >> testKeysAndValuesRemove [
 	self assertEmpty: dictionary
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OrderedDictionaryTest >> testKeysDo [
 	| dictionary |
 
@@ -1149,7 +1135,7 @@ OrderedDictionaryTest >> testKeysDo [
 			enumerate: (self orderedKeysFirst: i)]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OrderedDictionaryTest >> testKeysSortedSafely [
 	| dictionary |
 
@@ -1165,7 +1151,7 @@ OrderedDictionaryTest >> testKeysSortedSafely [
 			withElements: (self orderedKeysFirst: i) sorted]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OrderedDictionaryTest >> testNewFrom [
 	| dictionary |
 
@@ -1183,7 +1169,7 @@ OrderedDictionaryTest >> testNewFrom [
 		withUnorderedAssociations: self orderedAssociations
 ]
 
-{ #category : #'tests - creation' }
+{ #category : 'tests - creation' }
 OrderedDictionaryTest >> testNewFromKeysAndValues2 [
 
 	| dict newDict |
@@ -1196,7 +1182,7 @@ OrderedDictionaryTest >> testNewFromKeysAndValues2 [
 		self assert: (newDict at: k) equals: v ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OrderedDictionaryTest >> testNewFromPairs [
 	| pairs |
 
@@ -1214,7 +1200,7 @@ OrderedDictionaryTest >> testNewFromPairs [
 				(self orderedAssociationsFirst: (i / 2) floor)]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OrderedDictionaryTest >> testOccurrencesOf [
 	| dictionary |
 
@@ -1227,7 +1213,7 @@ OrderedDictionaryTest >> testOccurrencesOf [
 		self assert: (dictionary occurrencesOf: self newValue) equals: i]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OrderedDictionaryTest >> testRemoveAll [
 	| dictionary removedKeys |
 	dictionary := self dictionaryWithOrderedAssociations.
@@ -1239,7 +1225,7 @@ OrderedDictionaryTest >> testRemoveAll [
 	removedKeys do: [ :each | self assertKey: each wasRemovedfrom: dictionary ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OrderedDictionaryTest >> testRemoveKey [
 	| dictionary |
 
@@ -1258,7 +1244,7 @@ OrderedDictionaryTest >> testRemoveKey [
 			raise: Error]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OrderedDictionaryTest >> testRemoveKeyIfAbsent [
 	| dictionary |
 	dictionary := self dictionaryWithOrderedAssociations.
@@ -1271,7 +1257,7 @@ OrderedDictionaryTest >> testRemoveKeyIfAbsent [
 			self assert: (dictionary removeKey: each key ifAbsent: [ self absentValue ]) equals: self absentValue ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OrderedDictionaryTest >> testRemoveKeys [
 	0 to: self orderedAssociations size do: [ :i |
 		| dictionary keysToRemove |
@@ -1285,7 +1271,7 @@ OrderedDictionaryTest >> testRemoveKeys [
 		self assertIsDictionary: dictionary withOrderedAssociations: (self orderedAssociationsAllButFirst: i) ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OrderedDictionaryTest >> testSelect [
 	| dictionary |
 
@@ -1302,7 +1288,7 @@ OrderedDictionaryTest >> testSelect [
 					selectedValues includes: each value])]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OrderedDictionaryTest >> testSize [
 	| dictionary |
 
@@ -1318,7 +1304,7 @@ OrderedDictionaryTest >> testSize [
 		self assert: dictionary size equals: (i - 1)]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OrderedDictionaryTest >> testStoreOn [
 	| print |
 	print := String streamContents: [ :s | self orderedAssociations storeOn: s ].
@@ -1327,7 +1313,7 @@ OrderedDictionaryTest >> testStoreOn [
 	self assertDictionary: (self class compiler evaluate: print) equals: self emptyDictionary
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OrderedDictionaryTest >> testValues [
 	| dictionary |
 
@@ -1342,7 +1328,7 @@ OrderedDictionaryTest >> testValues [
 			withElements: (self orderedValuesFirst: i)]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OrderedDictionaryTest >> testValuesDo [
 	| dictionary |
 

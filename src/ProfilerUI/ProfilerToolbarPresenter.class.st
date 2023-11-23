@@ -3,15 +3,17 @@ I am a toolbar used to navigate the results tree of the profiling.
 My items are the buttons I contain which can be clicked by users
 "
 Class {
-	#name : #ProfilerToolbarPresenter,
-	#superclass : #SpToolbarPresenter,
+	#name : 'ProfilerToolbarPresenter',
+	#superclass : 'SpToolbarPresenter',
 	#instVars : [
 		'selectedItem'
 	],
-	#category : #'ProfilerUI-View'
+	#category : 'ProfilerUI-View',
+	#package : 'ProfilerUI',
+	#tag : 'View'
 }
 
-{ #category : #'adding-removing items' }
+{ #category : 'adding-removing items' }
 ProfilerToolbarPresenter >> ensureItemWith: aTallyModel [
 
 	| newItem |
@@ -25,7 +27,7 @@ ProfilerToolbarPresenter >> ensureItemWith: aTallyModel [
 	^ newItem
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProfilerToolbarPresenter >> getItemWith: anObject [
 
 	^ (self items select: [ :item | item object == anObject ])
@@ -33,7 +35,7 @@ ProfilerToolbarPresenter >> getItemWith: anObject [
 		  ifNotEmpty: [ :result | result anyOne ]
 ]
 
-{ #category : #factory }
+{ #category : 'factory' }
 ProfilerToolbarPresenter >> newItemFrom: aTallyModel [
 
 	| button |
@@ -52,7 +54,7 @@ ProfilerToolbarPresenter >> newItemFrom: aTallyModel [
 	^ button
 ]
 
-{ #category : #'adding-removing items' }
+{ #category : 'adding-removing items' }
 ProfilerToolbarPresenter >> removeItemsAfter: anItem [
 	| toKeep item i |
 
@@ -67,25 +69,25 @@ ProfilerToolbarPresenter >> removeItemsAfter: anItem [
 	toKeep do: [ :itm | self addItem: itm ]
 ]
 
-{ #category : #reseting }
+{ #category : 'reseting' }
 ProfilerToolbarPresenter >> reset [
 	self selectedItem: nil.
 	self removeAllItems
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProfilerToolbarPresenter >> selectedItem [
 
 	^ selectedItem
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProfilerToolbarPresenter >> selectedItem: anObject [
 
 	selectedItem := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProfilerToolbarPresenter >> setSelectedItem: aToolbarButtonPresenter [
 
 	self items do: [:itm | itm icon: nil ].

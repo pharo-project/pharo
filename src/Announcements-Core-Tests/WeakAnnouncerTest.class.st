@@ -2,12 +2,14 @@
 SUnit tests for weak announcements
 "
 Class {
-	#name : #WeakAnnouncerTest,
-	#superclass : #AnnouncerTest,
-	#category : #'Announcements-Core-Tests-Tests'
+	#name : 'WeakAnnouncerTest',
+	#superclass : 'AnnouncerTest',
+	#category : 'Announcements-Core-Tests-Tests',
+	#package : 'Announcements-Core-Tests',
+	#tag : 'Tests'
 }
 
-{ #category : #benchmarks }
+{ #category : 'benchmarks' }
 WeakAnnouncerTest >> benchManyWeakGuys [
 
 	| object ann time |
@@ -29,41 +31,13 @@ WeakAnnouncerTest >> benchManyWeakGuys [
 	^ time
 ]
 
-{ #category : #benchmarks }
-WeakAnnouncerTest >> benchWeakSubscriptionDynamic [
-	"Run me to see how expensive #becomeForward: is (compared to #benchWeakSubscriptionStatic )"
-
-	| object ann |
-
-	object := Object new.
-	ann := Announcer new.
-
-	^[
-		1000 timesRepeat: [ (ann when: Announcement send: #value to: object) makeWeak ].
-	] timeToRun
-]
-
-{ #category : #benchmarks }
-WeakAnnouncerTest >> benchWeakSubscriptionStatic [
-	"Run me to see how cheap object creation is (compared to #benchWeakSubscriptionDynamic ) "
-
-	| object ann |
-
-	object := Object new.
-	ann := Announcer new.
-
-	^[
-		1000 timesRepeat: [ (ann weak when: Announcement send: #value to: object)  ].
-	] timeToRun
-]
-
-{ #category : #utilities }
+{ #category : 'utilities' }
 WeakAnnouncerTest >> longTestCase [
 
 	self timeLimit: 60 seconds
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WeakAnnouncerTest >> testNoDeadWeakSubscriptions [
 	self longTestCase.
 	"we skip this on the ci as it impact all other ci checks, open issue https://github.com/pharo-project/pharo/issues/2471"
@@ -76,7 +50,7 @@ WeakAnnouncerTest >> testNoDeadWeakSubscriptions [
 	self assertEmpty: (WeakAnnouncementSubscription allInstances select: [ :sub | sub subscriber isNil ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WeakAnnouncerTest >> testNoWeakBlock [
 	"There is no such thing as a weak block, these things never go away."
 
@@ -99,7 +73,7 @@ WeakAnnouncerTest >> testNoWeakBlock [
 	self assert: counter equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WeakAnnouncerTest >> testWeakDoubleAnnouncer [
 
 	| a1 a2 o |
@@ -137,7 +111,7 @@ WeakAnnouncerTest >> testWeakDoubleAnnouncer [
 	assert: a2 subscriptions numberOfSubscriptions isZero
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WeakAnnouncerTest >> testWeakObject [
 	| counter collector forwarder |
 
@@ -160,7 +134,7 @@ WeakAnnouncerTest >> testWeakObject [
 	self assert: counter equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WeakAnnouncerTest >> testWeakSubscription [
 	| obj subscription |
 	self longTestCase.
@@ -170,11 +144,4 @@ WeakAnnouncerTest >> testWeakSubscription [
 	subscription := (announcer when: AnnouncementMockA send: #value to: obj) makeWeak.
 
 	self assert: obj identicalTo: subscription subscriber
-]
-
-{ #category : #tests }
-WeakAnnouncerTest >> testWeakSubscriptionRelease [
-	"This test shows the a problem with weak registrations not garbage collected in Spur.
-	 See https://pharo.manuscript.com/f/cases/17537 for more details."
-	self benchManyWeakGuys
 ]

@@ -1,28 +1,30 @@
 Class {
-	#name : #PBClassLoader,
-	#superclass : #Object,
+	#name : 'PBClassLoader',
+	#superclass : 'Object',
 	#instVars : [
+		'nextClassIndex',
 		'builder',
+		'useClassBuilder',
 		'initializedClasses',
+		'compactClasses',
+		'mirrorDefinitionMap',
+		'definitionMirrorMap',
+		'shouldInitializeClassPool',
 		'environment',
 		'systemDefinition',
-		'compactClasses',
-		'shouldInitializeClassPool',
-		'useClassBuilder',
-		'fullyLoaded',
-		'definitionMirrorMap',
-		'mirrorDefinitionMap'
+		'fullyLoaded'
 	],
-	#category : #Pharo30Bootstrap
+	#category : 'Pharo30Bootstrap',
+	#package : 'Pharo30Bootstrap'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBClassLoader >> builder: aBuilder [
 
 	builder := aBuilder
 ]
 
-{ #category : #'class-loading' }
+{ #category : 'accessing' }
 PBClassLoader >> classDefinitionFor: aClass [
 	"Answer a String that defines the receiver."
 
@@ -43,35 +45,37 @@ PBClassLoader >> classDefinitionFor: aClass [
 	newClass := ShiftClassInstaller make: [ :builder |
 		builder
 			superclass: {superClass};
-			name: ''{name}'';
+			name: {name};
 			layoutClass: {type};
-			slots: ''{instanceVariablesString}'' asSlotCollection;
-			sharedVariablesFromString: ''{classVariablesString}'';
-			sharedPools: ''{sharedPoolsString}'';
-			category: ''{category}'';
+			slots: {instanceVariablesString} asSlotCollection;
+			sharedVariablesFromString: {classVariablesString};
+			sharedPools: {sharedPoolsString};
+			package: {package};
+			tag: {tag};
 			environment: {superClass} environment;
-			classSlots: ''{classInstanceVariablesString}'' asSlotCollection ].
-	newClass layout compactClassIndex: {compactIndex}.
+			classSlots: {classInstanceVariablesString} asSlotCollection ].
+	"newClass setTraitComposition: {aTraitComposition} asTraitComposition."
 	newClass'
 		format: { 
-			'superClass' -> aClass superclass name.
-			'name' -> aClass name.
+			'superClass' -> (aClass superclass ifNil: ['nil'] ifNotNil: [ :superclass | superclass name ]).
+			'name' -> aClass name printString.
 			'type' -> type.
-			'instanceVariablesString' -> (' ' join: aClass instVarNames).
-			'classVariablesString' -> aClass classVariablesString.
-			'sharedPoolsString' -> aClass sharedPoolsString.
-			'category' -> aClass category asString.
-			'classInstanceVariablesString' -> (' ' join: aClass classSide instVarNames).
-			'compactIndex' -> (self compactClassIndexForClass: aClass) } asDictionary.
+			'instanceVariablesString' -> (' ' join: aClass instVarNames) printString.
+			'classVariablesString' -> aClass classVariablesString printString.
+			'sharedPoolsString' -> aClass sharedPoolsString printString.
+			'package' -> aClass package name printString.
+			'tag' -> (aClass tags ifEmpty: [ 'nil' ] ifNotEmpty: [ :tags | tags anyOne printString ]).
+			'classInstanceVariablesString' -> (' ' join: aClass classSide instVarNames) printString.
+			'aTraitComposition' -> aClass traitCompositionString } asDictionary.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBClassLoader >> classForClassMirror: anEPClassMirror [ 
 	
 	^ mirrorDefinitionMap at: anEPClassMirror ifAbsent: [ systemDefinition classNamed: #Class ]
 ]
 
-{ #category : #'class-loading' }
+{ #category : 'class-loading' }
 PBClassLoader >> classNamed: aString [ 
 	
 	| class |
@@ -81,13 +85,13 @@ PBClassLoader >> classNamed: aString [
 	^ class
 ]
 
-{ #category : #stubs }
+{ #category : 'stubs' }
 PBClassLoader >> compactClassIndexForClass: aRFiClass [ 
 	
 	^ builder compactClassIndexForClassNamed: aRFiClass name.
 ]
 
-{ #category : #'class-loading' }
+{ #category : 'class-loading' }
 PBClassLoader >> createBehaviorFromDefinition: aRFiDefinition [
 
 	| newBehavior |
@@ -110,7 +114,7 @@ PBClassLoader >> createBehaviorFromDefinition: aRFiDefinition [
 		ifFalse: [ self registerTrait: newBehavior asTraitMirror named: aRFiDefinition name fullyLoaded: true ]
 ]
 
-{ #category : #stubs }
+{ #category : 'stubs' }
 PBClassLoader >> createClassStubForDefinition: aClassDefinition [
 	
 	| class metaclass |	
@@ -122,13 +126,13 @@ PBClassLoader >> createClassStubForDefinition: aClassDefinition [
 	^ class
 ]
 
-{ #category : #stages }
+{ #category : 'stages' }
 PBClassLoader >> createJustStubs [
 
 	shouldInitializeClassPool := false.
 ]
 
-{ #category : #stubs }
+{ #category : 'stubs' }
 PBClassLoader >> createStubForClassNamed: aSymbol [
 
 	| class stub |
@@ -141,7 +145,7 @@ PBClassLoader >> createStubForClassNamed: aSymbol [
 		ifFalse: [ Error signal ].
 ]
 
-{ #category : #'class-loading' }
+{ #category : 'class-loading' }
 PBClassLoader >> createTraitFromDefinition: aTrait [
 
 	| newTrait |	
@@ -150,7 +154,7 @@ PBClassLoader >> createTraitFromDefinition: aTrait [
 	^ newTrait
 ]
 
-{ #category : #'class-loading' }
+{ #category : 'class-loading' }
 PBClassLoader >> ensureAllSlotsAreInstanceVariableSlotsIn: aRFiDefinition [
 
 	aRFiDefinition slots
@@ -161,13 +165,13 @@ PBClassLoader >> ensureAllSlotsAreInstanceVariableSlotsIn: aRFiDefinition [
 				, slot expression ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBClassLoader >> environment: anEnvironment [
 
 	environment := anEnvironment
 ]
 
-{ #category : #'class-loading' }
+{ #category : 'class-loading' }
 PBClassLoader >> executeDefinitionFor: aRFiDefinition [
 
 	| definition |
@@ -180,12 +184,12 @@ PBClassLoader >> executeDefinitionFor: aRFiDefinition [
 	^ builder bootstrapInterpreter evaluateCode: definition.
 ]
 
-{ #category : #stubs }
+{ #category : 'stubs' }
 PBClassLoader >> formatOfClass: aRFiClass [ 
 	^ builder formatOfClass: aRFiClass
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PBClassLoader >> initialize [
 
 	super initialize.
@@ -194,13 +198,10 @@ PBClassLoader >> initialize [
 	definitionMirrorMap := EPDictionary new.
 	mirrorDefinitionMap := EPDictionary new.
 	
-	"maybe we could use a state pattern but for now this is so simple"
-	useClassBuilder := false.
-	
 	fullyLoaded := Dictionary new
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PBClassLoader >> initializeClassNamed: aClassName [
 
 	(self shouldInitializeClassNamed: aClassName) ifFalse: [ ^ self ].
@@ -210,7 +211,7 @@ PBClassLoader >> initializeClassNamed: aClassName [
 	self postInitializeClassNamed: aClassName
 ]
 
-{ #category : #stubs }
+{ #category : 'stubs' }
 PBClassLoader >> initializeClassPool: aClassName [
 
 	| definition class classPool classVariableBindings |
@@ -236,7 +237,7 @@ PBClassLoader >> initializeClassPool: aClassName [
 	^ class
 ]
 
-{ #category : #stages }
+{ #category : 'stages' }
 PBClassLoader >> initializeClassPools [
 
 	shouldInitializeClassPool := true.
@@ -245,7 +246,7 @@ PBClassLoader >> initializeClassPools [
 			ifTrue: [ self initializeClassPool: name ] ].
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PBClassLoader >> initializeTraitNamed: aClassName [
 
 	(self shouldInitializeClassNamed: aClassName) ifFalse: [ ^ self ].
@@ -253,7 +254,7 @@ PBClassLoader >> initializeTraitNamed: aClassName [
 	initializedClasses add: aClassName.
 ]
 
-{ #category : #'class-loading' }
+{ #category : 'class-loading' }
 PBClassLoader >> isClassDefinition: aString [
 
 	^ aString beginsWith: '| newClass |
@@ -262,13 +263,13 @@ PBClassLoader >> isClassDefinition: aString [
 			superclass: '.
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PBClassLoader >> isFullyLoadedClassNamed: aClassName [
 
 	^ fullyLoaded at: aClassName ifAbsent: [ false ]
 ]
 
-{ #category : #'class-loading' }
+{ #category : 'class-loading' }
 PBClassLoader >> loadClassNamed: aString [
 	| class |
 	class := self createStubForClassNamed: aString.
@@ -277,31 +278,43 @@ PBClassLoader >> loadClassNamed: aString [
 	^ class
 ]
 
-{ #category : #stubs }
+{ #category : 'stubs' }
 PBClassLoader >> loadedClassNamed: aString [
 
 	^ environment includesKey: aString
 ]
 
-{ #category : #stubs }
+{ #category : 'stubs' }
 PBClassLoader >> loadedClassNames [
 	
 	^ environment keys
 ]
 
-{ #category : #registration }
+{ #category : 'registration' }
 PBClassLoader >> map: aClassMirror with: aDefinition [
 
 	"We create a mapping between the real classes and their definitions for later"
 	
+	| classSideMirror |
+	self assert: (aClassMirror target isKindOf: EPSimulatorHandle).
+	(aClassMirror backend simulator objectMemory classTableRootObj) ifNotNil: [
+		self assert: aClassMirror target asClassIndexHandle address notNil.
+		aClassMirror target: (aClassMirror target asClassIndexHandle) ].
+
 	mirrorDefinitionMap at: aClassMirror put: aDefinition.
 	definitionMirrorMap at: aDefinition put: aClassMirror.
+
+	classSideMirror := aClassMirror basicClass.
+	"only valid for Spur simulator bootstrap by now"
+	(aClassMirror backend simulator objectMemory classTableRootObj) ifNotNil: [
+		self assert: classSideMirror target asClassIndexHandle address notNil.
+		classSideMirror target: (classSideMirror target asClassIndexHandle) ].
 	
-	mirrorDefinitionMap at: aClassMirror basicClass put: aDefinition classSide.
-	definitionMirrorMap at: aDefinition classSide put: aClassMirror basicClass
+	mirrorDefinitionMap at: classSideMirror put: aDefinition classSide.
+	definitionMirrorMap at: aDefinition classSide put: classSideMirror.
 ]
 
-{ #category : #stubs }
+{ #category : 'stubs' }
 PBClassLoader >> metaclassClass [
 	
 	"Base case for recursion on class creation.
@@ -329,7 +342,7 @@ PBClassLoader >> metaclassClass [
 	^ theNewMetaclass
 ]
 
-{ #category : #registration }
+{ #category : 'registration' }
 PBClassLoader >> migrateOldClass: oldClass to: newClass [
 
 	| oldClassMetaclass |
@@ -351,19 +364,20 @@ PBClassLoader >> migrateOldClass: oldClass to: newClass [
 		ifFalse:[ oldClassMetaclass becomeInto: newClass basicClass ] 
 ]
 
-{ #category : #accessing }
-PBClassLoader >> next [
-
-	self subclassResponsibility
+{ #category : 'registration' }
+PBClassLoader >> newClassIndex [
+	
+	nextClassIndex ifNil: [ nextClassIndex := 1024 ].
+	^ nextClassIndex := nextClassIndex + 1
 ]
 
-{ #category : #registration }
+{ #category : 'registration' }
 PBClassLoader >> registerClass: aClassMirror named: aName [
 
 	^ self registerClass: aClassMirror named: aName fullyLoaded: false
 ]
 
-{ #category : #registration }
+{ #category : 'registration' }
 PBClassLoader >> registerClass: aClassMirror named: aName fullyLoaded: aBoolean [
 
 	"If it existed before, we migrate its state"
@@ -379,11 +393,16 @@ PBClassLoader >> registerClass: aClassMirror named: aName fullyLoaded: aBoolean 
 	"We create a mapping between the real classes and their definitions for later"
 	self map: aClassMirror with: (systemDefinition classNamed: aName).
 	
+	"We say the simulator that this class is a root, possible becomes can come into it. THIS IS ONLY VALID FOR SPUR SIMULATOR BOOTSTRAP. REFACTOR ME".
+	self flag: #refactorMe.
+	builder objectSpace backend addExtraRoot: aClassMirror.
+	builder objectSpace backend addExtraRoot: aClassMirror classSide.
+	
 	"We reset the class map of the ast interpreter"
 	fullyLoaded at: aName put: aBoolean
 ]
 
-{ #category : #registration }
+{ #category : 'registration' }
 PBClassLoader >> registerTrait: aTraitMirror named: aName fullyLoaded: aBoolean [
 
 	(environment includesKey: aName)
@@ -402,13 +421,7 @@ PBClassLoader >> registerTrait: aTraitMirror named: aName fullyLoaded: aBoolean 
 "
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PBClassLoader >> systemDefinition: aRFiEnvironment [ 
 	systemDefinition := aRFiEnvironment
-]
-
-{ #category : #stages }
-PBClassLoader >> useClassBuilder [
-	
-	useClassBuilder := true
 ]

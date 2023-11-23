@@ -2,12 +2,14 @@
 A LogicalFontManagerTest is a test class for testing the behavior of LogicalFontManager
 "
 Class {
-	#name : #LogicalFontManagerTest,
-	#superclass : #TestCase,
-	#category : #'Fonts-Infrastructure-Tests-Logical'
+	#name : 'LogicalFontManagerTest',
+	#superclass : 'TestCase',
+	#category : 'Fonts-Infrastructure-Tests-Logical',
+	#package : 'Fonts-Infrastructure-Tests',
+	#tag : 'Logical'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LogicalFontManagerTest >> currentProviderOrError [
 	| provider |
 	provider := FreeTypeFontProvider readSlotNamed: #current.
@@ -15,7 +17,7 @@ LogicalFontManagerTest >> currentProviderOrError [
 	^ provider
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LogicalFontManagerTest >> testHasCurrentFreeTypeFontProvider [
 	"If it fails, LogicalFontManager unload should be called."
 	self assert: (LogicalFontManager current identityIncludesFontProvider: self currentProviderOrError)

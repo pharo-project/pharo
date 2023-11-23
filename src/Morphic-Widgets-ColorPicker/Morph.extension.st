@@ -1,6 +1,6 @@
-Extension { #name : #Morph }
+Extension { #name : 'Morph' }
 
-{ #category : #'*Morphic-Widgets-ColorPicker' }
+{ #category : '*Morphic-Widgets-ColorPicker' }
 Morph >> changeColor [
 
 	| dialog |
@@ -12,7 +12,7 @@ Morph >> changeColor [
 		ifFalse: [self fillStyle: dialog selectedColor]
 ]
 
-{ #category : #'*Morphic-Widgets-ColorPicker' }
+{ #category : '*Morphic-Widgets-ColorPicker' }
 Morph >> scaledIntoFormOfSize: aSmallInteger [
 	^ self imageForm scaledIntoFormOfSize: aSmallInteger
 ]

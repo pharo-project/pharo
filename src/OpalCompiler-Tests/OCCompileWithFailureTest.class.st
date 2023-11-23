@@ -6,17 +6,19 @@ Instead of raising syntax errors at runtime, they are raised at compile time.
 
 "
 Class {
-	#name : #OCCompileWithFailureTest,
-	#superclass : #TestCase,
-	#category : #'OpalCompiler-Tests-Source'
+	#name : 'OCCompileWithFailureTest',
+	#superclass : 'TestCase',
+	#category : 'OpalCompiler-Tests-Source',
+	#package : 'OpalCompiler-Tests',
+	#tag : 'Source'
 }
 
-{ #category : #'interactive error protocol' }
+{ #category : 'interactive error protocol' }
 OCCompileWithFailureTest >> notify: aMessage at: positon in: object [
 	"ingnore, for testEmptyBlockArg"
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCCompileWithFailureTest >> testEmptyBlockArg [
 	| result |
 	"parse [:] in parse error mode, this results in arg vars with an empty string as a name"
@@ -29,7 +31,7 @@ OCCompileWithFailureTest >> testEmptyBlockArg [
 	self assert: result statements first isReturn
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCCompileWithFailureTest >> testEvalSimpleMethodWithError [
 	| compiler cm |
 	cm := (compiler := OpalCompiler new)
@@ -43,7 +45,7 @@ OCCompileWithFailureTest >> testEvalSimpleMethodWithError [
 	self should: [cm valueWithReceiver: nil arguments: #()] raise: RuntimeSyntaxError
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCCompileWithFailureTest >> testParenthesis [
 	| compiler cm |
 	cm := (compiler := UndefinedObject compiler)

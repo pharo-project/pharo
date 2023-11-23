@@ -1,6 +1,6 @@
-Extension { #name : #WideString }
+Extension { #name : 'WideString' }
 
-{ #category : #'*Text-Scanning' }
+{ #category : '*Text-Scanning' }
 WideString >> scanCharactersFrom: startIndex to: stopIndex with: aCharacterScanner rightX: rightX  font: aFont [
 	"NB: strongly consider getting almost all these parameters from the scanner"
 	"Since I'm a wide char string, I know that we have to scan multi-byte characters and handle encodings etc"

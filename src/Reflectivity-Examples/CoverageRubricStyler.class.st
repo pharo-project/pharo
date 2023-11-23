@@ -2,12 +2,13 @@
 A styler that highlight with green all executed statement
 "
 Class {
-	#name : #CoverageRubricStyler,
-	#superclass : #IconStyler,
-	#category : #'Reflectivity-Examples'
+	#name : 'CoverageRubricStyler',
+	#superclass : 'IconStyler',
+	#category : 'Reflectivity-Examples',
+	#package : 'Reflectivity-Examples'
 }
 
-{ #category : #styling }
+{ #category : 'styling' }
 CoverageRubricStyler >> addIconStyle: aNode from: start to: stop [
 	|rejectClass|
 
@@ -16,22 +17,22 @@ CoverageRubricStyler >> addIconStyle: aNode from: start to: stop [
 	aNode hasBeenExecuted ifTrue: [  super addIconStyle: aNode from: start to: stop]
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 CoverageRubricStyler >> iconBlock: aNode [
 	^[ aNode inspect]
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 CoverageRubricStyler >> iconFor: aNode [
-	^ self iconNamed: #arrowUpIcon
+	^ self iconNamed: #arrowUp
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 CoverageRubricStyler >> iconLabel: aNode [
 	^ 'Metalink'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CoverageRubricStyler >> shouldStyleNode: aNode [
 	^aNode hasMetalink
 ]

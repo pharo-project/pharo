@@ -2,12 +2,13 @@
 ZdcSecureSocketStreamTests tests ZdcSecureSocketStream 
 "
 Class {
-	#name : #ZdcSecureSocketStreamTest,
-	#superclass : #TestCase,
-	#category : #'Zodiac-Tests'
+	#name : 'ZdcSecureSocketStreamTest',
+	#superclass : 'TestCase',
+	#category : 'Zodiac-Tests',
+	#package : 'Zodiac-Tests'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 ZdcSecureSocketStreamTest >> isNativeSSLPluginPresent [
 	"Return whether the SSL VM plugin can be instanciated and intialized."
 
@@ -16,7 +17,7 @@ ZdcSecureSocketStreamTest >> isNativeSSLPluginPresent [
 			do: [ false ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZdcSecureSocketStreamTest >> testIsNativeSSLPluginPresent [
 	"This test succeeds when the SSL VM plugin can be instantiated and intialized."
 
@@ -25,7 +26,7 @@ ZdcSecureSocketStreamTest >> testIsNativeSSLPluginPresent [
 		description: 'It seems that the native VM SSL plugin cannot be instantiated and initialized. (VM plugin missing ? OS libraries missing ?)'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ZdcSecureSocketStreamTest >> testPlain [
 	| query stream request response |
 	self isNativeSSLPluginPresent ifFalse: [ ^ self ].

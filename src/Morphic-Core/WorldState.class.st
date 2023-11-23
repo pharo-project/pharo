@@ -5,8 +5,8 @@ The state of a Morphic world.  (This needs some serious commenting!!)
 The MinCycleLapse variable holds the minimum amount of time that a morphic cycle is allowed to take.  If a cycle takes less than this, then interCyclePause: will wait until the full time has been used up.
 "
 Class {
-	#name : #WorldState,
-	#superclass : #Object,
+	#name : 'WorldState',
+	#superclass : 'Object',
 	#instVars : [
 		'hands',
 		'damageRecorder',
@@ -32,66 +32,68 @@ Class {
 		'ServerMode',
 		'ShowUpdateOptionInWorldMenu'
 	],
-	#category : #'Morphic-Core-Worlds'
+	#category : 'Morphic-Core-Worlds',
+	#package : 'Morphic-Core',
+	#tag : 'Worlds'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WorldState class >> MinCycleLapse: milliseconds [
 	"set the minimum amount of time that may transpire between two calls to doOneCycle"
 	MinCycleLapse := milliseconds ifNotNil: [ milliseconds rounded ]
 ]
 
-{ #category : #'testing os' }
+{ #category : 'testing os' }
 WorldState class >> canSurrenderToOS: aBoolean [
 
 	CanSurrenderToOS := aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WorldState class >> debugShowDamage [
 	^ DebugShowDamage ifNil: [DebugShowDamage := false]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WorldState class >> debugShowDamage: aBoolean [
 	DebugShowDamage := aBoolean
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 WorldState class >> desktopMenuPragmaKeyword [
 	"For compatibility with settings"
 
 	^ self discoveredMenuPragmaKeyword
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 WorldState class >> desktopMenuPragmaKeyword: aString [
 	DesktopMenuPragmaKeyword := aString
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 WorldState class >> desktopMenuTitle: aString [
 	DesktopMenuTitle := aString
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 WorldState class >> discoveredMenuPragmaKeyword [
 	^ DesktopMenuPragmaKeyword ifNil: [DesktopMenuPragmaKeyword := #worldMenu]
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 WorldState class >> discoveredMenuTitle [
 	^ DesktopMenuTitle ifNil: [DesktopMenuTitle := 'World']
 ]
 
-{ #category : #'drawing cycle' }
+{ #category : 'drawing cycle' }
 WorldState class >> doDrawCycleWith: aBlock [
 	aBlock ensure: [
 		self doInterCycleWait
 	]
 ]
 
-{ #category : #'drawing cycle' }
+{ #category : 'drawing cycle' }
 WorldState class >> doInterCycleWait [
 	| waitTime newCycleTime |
 	newCycleTime := Time millisecondClockValue.
@@ -109,17 +111,17 @@ WorldState class >> doInterCycleWait [
 	LastCycleTime := newCycleTime
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 WorldState class >> easySelectingWorld [
 	^ EasySelectingWorld ifNil: [EasySelectingWorld := false]
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 WorldState class >> easySelectingWorld: aBoolean [
 	EasySelectingWorld := aBoolean
 ]
 
-{ #category : #'world menu items' }
+{ #category : 'world menu items' }
 WorldState class >> helpOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #Help)
@@ -136,30 +138,30 @@ WorldState class >> helpOn: aBuilder [
 				action: [ Smalltalk aboutThisSystem ] ]
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 WorldState class >> initialize [
 	"WorldState initialize"
 
 	MinCycleLapse := 16.		"allows 60 frames per second..."
 ]
 
-{ #category : #'drawing cycle' }
+{ #category : 'drawing cycle' }
 WorldState class >> interCycleLapse [
 	^ MinCycleLapse ifNil: [ MinCycleLapse := 16 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WorldState class >> lastCycleTime [
 
 	^LastCycleTime
 ]
 
-{ #category : #'drawing cycle' }
+{ #category : 'drawing cycle' }
 WorldState class >> lastDrawCycleTime [
 	^ LastCycleTime ifNil: [ LastCycleTime := Time millisecondClockValue ]
 ]
 
-{ #category : #'world menu items' }
+{ #category : 'world menu items' }
 WorldState class >> mostUsedToolsOn: aBuilder [
 
 	(aBuilder item: #Tools)
@@ -167,12 +169,12 @@ WorldState class >> mostUsedToolsOn: aBuilder [
 		order: 1
 ]
 
-{ #category : #'world menu items' }
+{ #category : 'world menu items' }
 WorldState class >> pharoItemsOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #Pharo)
 		label: 'Pharo';
-		icon: ((self iconNamed: #pharo) scaledToSize: 16 @ 16);
+		icon: ((self iconNamed: #pharo) scaledToSize: (16 @ 16) scaledByDisplayScaleFactor);
 		order: 0;
 		with: [
 			(aBuilder group: #Saving)
@@ -206,7 +208,7 @@ WorldState class >> pharoItemsOn: aBuilder [
 					iconName: #smallQuit ]
 ]
 
-{ #category : #'world menu items' }
+{ #category : 'world menu items' }
 WorldState class >> quitSession [
 	| response |
 	response := UIManager default
@@ -221,14 +223,23 @@ WorldState class >> quitSession [
 		ifFalse: [Smalltalk snapshot: false andQuit: true]
 ]
 
-{ #category : #'world menu items' }
+{ #category : 'cleanup' }
+WorldState class >> restartMethods [
+
+	self allInstancesDo: [ :ws |
+		ws
+			convertAlarms;
+			cleanStepList ]
+]
+
+{ #category : 'world menu items' }
 WorldState class >> saveAndQuit [
 	Cursor write showWhile: [
 		Smalltalk snapshot: true andQuit: true
 	]
 ]
 
-{ #category : #'world menu items' }
+{ #category : 'world menu items' }
 WorldState class >> saveAs [
 	| reference |
 	reference := UIManager default
@@ -239,7 +250,7 @@ WorldState class >> saveAs [
 	reference ifNotNil: [ Smalltalk saveAs: reference parent / (reference basenameWithoutExtension: 'image') ]
 ]
 
-{ #category : #'world menu items' }
+{ #category : 'world menu items' }
 WorldState class >> saveSession [
 	Cursor write showWhile: [
 		Smalltalk
@@ -248,33 +259,33 @@ WorldState class >> saveSession [
 	]
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 WorldState class >> serverMode [
 	^ ServerMode ifNil: [ServerMode := false]
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 WorldState class >> serverMode: aBoolean [
 	(aBoolean = true or: [aBoolean = false or: [aBoolean isNil]])
 		ifTrue: [ServerMode := aBoolean]
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 WorldState class >> showUpdateOptionInWorldMenu [
 	^ ShowUpdateOptionInWorldMenu ifNil: [ShowUpdateOptionInWorldMenu := true]
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 WorldState class >> showUpdateOptionInWorldMenu: aBoolean [
 	ShowUpdateOptionInWorldMenu := aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WorldState class >> theme [
 	^ Smalltalk ui theme
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 WorldState class >> worldMenuSettingOn: aBuilder [
 	<systemsettings>
 	(aBuilder setting: #desktopMenuPragmaKeyword)
@@ -286,7 +297,7 @@ WorldState class >> worldMenuSettingOn: aBuilder [
 		description: 'Define whitch pragma should be used to build the world menu. To disable the world menu, leave this input empty.'
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 WorldState class >> worldStateDebuggingSettingsOn: aBuilder [
 
 	<systemsettings>
@@ -303,24 +314,24 @@ WorldState class >> worldStateDebuggingSettingsOn: aBuilder [
 					'If true, every changed region of the morphic display will be flashed black before updating.' ]
 ]
 
-{ #category : #hands }
+{ #category : 'hands' }
 WorldState >> activeHand [
 	^ activeHand
 ]
 
-{ #category : #hands }
+{ #category : 'hands' }
 WorldState >> activeHand: aHand [
 	activeHand := aHand
 ]
 
-{ #category : #hands }
+{ #category : 'hands' }
 WorldState >> addHand: aHandMorph [
 	"Add the given hand to the list of hands for this world."
 
 	hands := (hands copyWithout: aHandMorph) copyWith: aHandMorph
 ]
 
-{ #category : #alarms }
+{ #category : 'alarms' }
 WorldState >> adjustAlarmTimes: nowTime [
 	"Adjust the alarm times after some clock weirdness (such as roll-over, image-startup etc)"
 	| deltaTime |
@@ -328,7 +339,7 @@ WorldState >> adjustAlarmTimes: nowTime [
 	self alarms do:[:alarm| alarm scheduledTime: alarm scheduledTime + deltaTime]
 ]
 
-{ #category : #stepping }
+{ #category : 'stepping' }
 WorldState >> adjustWakeupTimes: now [
 	"Fix the wakeup times in my step list. This is necessary when this world has been restarted after a pause, say because some other view had control, after a snapshot, or because the millisecond clock has wrapped around. (The latter is a rare occurrence with a 32-bit clock!)"
 	| deltaTime |
@@ -337,7 +348,7 @@ WorldState >> adjustWakeupTimes: now [
 	lastStepTime := now
 ]
 
-{ #category : #stepping }
+{ #category : 'stepping' }
 WorldState >> adjustWakeupTimesIfNecessary [
 	"Fix the wakeup times in my step list if necessary. This is needed after a snapshot, after a long pause (say because some other view had control or because the user was selecting from an MVC-style menu) or when the millisecond clock wraps around (a very rare occurrence with a 32-bit clock!)."
 
@@ -347,20 +358,20 @@ WorldState >> adjustWakeupTimesIfNecessary [
 		 ifTrue: [self adjustWakeupTimes: now].  "clock slipped"
 ]
 
-{ #category : #alarms }
+{ #category : 'alarms' }
 WorldState >> alarmSortBlock [
 	^[ :alarm1 :alarm2 |
 		alarm1 scheduledTime < alarm2 scheduledTime.
 	]
 ]
 
-{ #category : #alarms }
+{ #category : 'alarms' }
 WorldState >> alarms [
 
 	^alarms ifNil: [alarms := Heap sortBlock: self alarmSortBlock]
 ]
 
-{ #category : #'update cycle' }
+{ #category : 'update cycle' }
 WorldState >> checkIfUpdateNeeded [
 
 	damageRecorder updateIsNeeded ifTrue: [ ^true ].
@@ -370,13 +381,13 @@ WorldState >> checkIfUpdateNeeded [
 	^false  "display is already up-to-date"
 ]
 
-{ #category : #cleaning }
+{ #category : 'cleaning' }
 WorldState >> cleanStepList [
 	"ensure that we have a cleaner block"
 	^stepList sortBlock: self stepListSortBlock
 ]
 
-{ #category : #stepping }
+{ #category : 'stepping' }
 WorldState >> cleanseStepListForWorld: aWorld [
 	"Remove morphs from the step list that are not in this World"
 
@@ -398,66 +409,66 @@ WorldState >> cleanseStepListForWorld: aWorld [
 			ifFalse:[self removeAlarm: entry selector for: entry receiver]]
 ]
 
-{ #category : #'object filein' }
+{ #category : 'object filein' }
 WorldState >> convertAlarms [
 
 	alarms ifNotNil: [alarms sortBlock: self alarmSortBlock].	"ensure cleaner block"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WorldState >> currentCursor [
 	^ currentCursor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WorldState >> currentCursor: anObject [
 	currentCursor := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WorldState >> damageRecorder [
 
 	^ damageRecorder
 ]
 
-{ #category : #'deferred message' }
+{ #category : 'deferred message' }
 WorldState >> defer: aValuable [
 
 	"aValuable will be executed in the next UI rendering cycle"
 	self deferredUIMessages nextPut: aValuable
 ]
 
-{ #category : #'private - accessing' }
+{ #category : 'private - accessing' }
 WorldState >> deferredUIMessages [
 
 	deferredUIMessages ifNil: [ deferredUIMessages := WaitfreeQueue new ].
 	^ deferredUIMessages
 ]
 
-{ #category : #'worldmenu building' }
+{ #category : 'worldmenu building' }
 WorldState >> discoveredMenuOn: aBuilder [
 
 	^ aBuilder menuEntitled: self discoveredMenuTitle
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 WorldState >> discoveredMenuPragmaKeyword [
 	^ self class discoveredMenuPragmaKeyword
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 WorldState >> discoveredMenuTitle [
 	^ self class discoveredMenuTitle
 ]
 
-{ #category : #'update cycle' }
+{ #category : 'update cycle' }
 WorldState >> displayWorld: aWorld [
 	"Update this world's display."
 
 	worldRenderer displayWorldState: self ofWorld: aWorld
 ]
 
-{ #category : #'update cycle' }
+{ #category : 'update cycle' }
 WorldState >> displayWorldSafely: aWorld [
 	"Update this world's display and keep track of errors during draw methods."
 
@@ -468,7 +479,7 @@ WorldState >> displayWorldSafely: aWorld [
 		[
 			errCtx := errCtx sender.
 			"Search the sender chain to find the morph causing the problem"
-			[errCtx notNil and:[(errCtx receiver isMorph) not]]
+			[errCtx isNotNil and:[(errCtx receiver isMorph) not]]
 				whileTrue:[errCtx := errCtx sender].
 			"If we're at the root of the context chain then we have a fatal drawing problem"
 			errCtx ifNil:[^self handleFatalDrawingError: err description].
@@ -483,13 +494,13 @@ WorldState >> displayWorldSafely: aWorld [
 	]
 ]
 
-{ #category : #canvas }
+{ #category : 'canvas' }
 WorldState >> doFullRepaint [
 
 	damageRecorder doFullRepaint
 ]
 
-{ #category : #'update cycle' }
+{ #category : 'update cycle' }
 WorldState >> doOneCycleFor: aWorld [
 	"Immediately do one cycle of the interaction loop.
 	This should not be called directly, but only via doOneCycleFor:"
@@ -510,7 +521,7 @@ WorldState >> doOneCycleFor: aWorld [
 	self displayWorldSafely: aWorld
 ]
 
-{ #category : #'update cycle' }
+{ #category : 'update cycle' }
 WorldState >> drawWorld: aWorld submorphs: submorphs invalidAreasOn: aCanvas [
 	"Redraw the damaged areas of the given canvas and clear the damage list. Return a collection of the areas that
 were redrawn."
@@ -561,7 +572,7 @@ were redrawn."
 	^validList
 ]
 
-{ #category : #'worldmenu building' }
+{ #category : 'worldmenu building' }
 WorldState >> fallbackMenuOn: menu [
 	"Build the menu that is put up if something is going wrong with the menubuilder"
 
@@ -586,7 +597,7 @@ WorldState >> fallbackMenuOn: menu [
 		selector: #quitSession
 ]
 
-{ #category : #'update cycle' }
+{ #category : 'update cycle' }
 WorldState >> handleFatalDrawingError: errMsg [
 	"Handle a fatal drawing error."
 	self worldRenderer deferUpdates: false. "Just in case"
@@ -595,31 +606,31 @@ WorldState >> handleFatalDrawingError: errMsg [
 	"Hm... we should jump into a 'safe' worldState here, but how do we find it?!"
 ]
 
-{ #category : #hands }
+{ #category : 'hands' }
 WorldState >> hands [
 
 	^ hands
 ]
 
-{ #category : #hands }
+{ #category : 'hands' }
 WorldState >> handsDo: aBlock [
 
 	^ hands do: aBlock
 ]
 
-{ #category : #hands }
+{ #category : 'hands' }
 WorldState >> handsReverseDo: aBlock [
 
 	^ hands reverseDo: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WorldState >> icon: aForm [
 
 	worldRenderer icon: aForm
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 WorldState >> initialize [
 
 	super initialize.
@@ -630,7 +641,7 @@ WorldState >> initialize [
 	lastAlarmTime := 0
 ]
 
-{ #category : #canvas }
+{ #category : 'canvas' }
 WorldState >> invalidate [
 	self worldRenderer invalidate.
 	damageRecorder
@@ -638,19 +649,19 @@ WorldState >> invalidate [
 		ifNotNil: [damageRecorder doFullRepaint]
 ]
 
-{ #category : #hands }
+{ #category : 'hands' }
 WorldState >> is: hand overlappingDamagedAreaIn: damageList [
 	| handBounds |
 	handBounds := hand fullBounds.
 	^ damageList anySatisfy: [ :r | r intersects: handBounds ]
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 WorldState >> isEasySelecting [
 	^ self class easySelectingWorld
 ]
 
-{ #category : #stepping }
+{ #category : 'stepping' }
 WorldState >> isStepping: aMorph [
 	"Return true if the given morph is in the step list."
 	lastStepMessage ifNotNil:[(lastStepMessage receiver == aMorph) ifTrue:[^true]].
@@ -658,7 +669,7 @@ WorldState >> isStepping: aMorph [
 	^ false
 ]
 
-{ #category : #stepping }
+{ #category : 'stepping' }
 WorldState >> isStepping: aMorph selector: aSelector [
 	"Return true if the given morph is in the step list."
 	lastStepMessage ifNotNil:[
@@ -668,30 +679,30 @@ WorldState >> isStepping: aMorph selector: aSelector [
 	^ false
 ]
 
-{ #category : #stepping }
+{ #category : 'stepping' }
 WorldState >> listOfSteppingMorphs [
 	^stepList collect:[:entry| entry receiver]
 ]
 
-{ #category : #hands }
+{ #category : 'hands' }
 WorldState >> realWindowExtent [
 
 	^ realWindowExtent
 ]
 
-{ #category : #hands }
+{ #category : 'hands' }
 WorldState >> realWindowExtent: aValue [
 
 	realWindowExtent := aValue
 ]
 
-{ #category : #canvas }
+{ #category : 'canvas' }
 WorldState >> recordDamagedRect: damageRect [
 
 	damageRecorder ifNotNil: [damageRecorder recordInvalidRect: damageRect truncated]
 ]
 
-{ #category : #alarms }
+{ #category : 'alarms' }
 WorldState >> removeAlarm: aSelector for: aTarget [
 	"Remove the alarm with the given selector"
 
@@ -700,7 +711,7 @@ WorldState >> removeAlarm: aSelector for: aTarget [
 		ifFound: [ :alarm | self alarms remove: alarm ]
 ]
 
-{ #category : #hands }
+{ #category : 'hands' }
 WorldState >> removeHand: aHandMorph [
 	"Remove the given hand from the list of hands for this world."
 
@@ -709,13 +720,13 @@ WorldState >> removeHand: aHandMorph [
 	activeHand == aHandMorph ifTrue: [activeHand := nil]
 ]
 
-{ #category : #canvas }
+{ #category : 'canvas' }
 WorldState >> resetDamageRecorder [
 
 	damageRecorder reset
 ]
 
-{ #category : #stepping }
+{ #category : 'stepping' }
 WorldState >> runLocalStepMethodsIn: aWorld [
 	"Run morph 'step' methods (LOCAL TO THIS WORLD) whose time has come. Purge any morphs that are no longer in this world.
 	ar 3/13/1999: Remove buggy morphs from the step list so that they don't raise repeated errors."
@@ -747,7 +758,7 @@ WorldState >> runLocalStepMethodsIn: aWorld [
 	ActiveWorld := priorWorld
 ]
 
-{ #category : #stepping }
+{ #category : 'stepping' }
 WorldState >> runStepMethodsIn: aWorld [
 	"Perform periodic activity inbetween event cycles"
 
@@ -758,10 +769,10 @@ WorldState >> runStepMethodsIn: aWorld [
 		whileFalse: [ nextInQueue value].
 	self runLocalStepMethodsIn: aWorld.
 	"The multi-threaded global Transcript needs to be updated periodically and synchronously with the UI."
-	Transcript stepGlobal
+	Smalltalk tools transcript stepGlobal
 ]
 
-{ #category : #hands }
+{ #category : 'hands' }
 WorldState >> selectHandsToDrawForDamage: damageList [
 	"Select the set of hands that must be redrawn because either (a) the hand itself has changed or (b) the hand intersects some damage rectangle."
 
@@ -769,24 +780,24 @@ WorldState >> selectHandsToDrawForDamage: damageList [
 		select: [ :hand | hand needsToBeDrawn and: [ hand hasChanged or: [ self is: hand overlappingDamagedAreaIn: damageList ] ] ]
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 WorldState >> serverMode [
 	^ self class serverMode
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 WorldState >> stepListSize [
 	^ stepList size
 ]
 
-{ #category : #stepping }
+{ #category : 'stepping' }
 WorldState >> stepListSortBlock [
 	^[ :stepMsg1 :stepMsg2 |
 		stepMsg1 scheduledTime <= stepMsg2 scheduledTime
 	]
 ]
 
-{ #category : #stepping }
+{ #category : 'stepping' }
 WorldState >> stopStepping: aMorph [
 	"Remove the given morph from the step list."
 	lastStepMessage ifNotNil:[
@@ -794,7 +805,7 @@ WorldState >> stopStepping: aMorph [
 	stepList removeAll: (stepList select:[:stepMsg| stepMsg receiver == aMorph])
 ]
 
-{ #category : #stepping }
+{ #category : 'stepping' }
 WorldState >> stopStepping: aMorph selector: aSelector [
 	"Remove the given morph from the step list."
 	lastStepMessage ifNotNil:[
@@ -803,7 +814,7 @@ WorldState >> stopStepping: aMorph selector: aSelector [
 	stepList removeAll: (stepList select:[:stepMsg| stepMsg receiver == aMorph and:[stepMsg selector == aSelector]])
 ]
 
-{ #category : #alarms }
+{ #category : 'alarms' }
 WorldState >> triggerAlarmsBefore: nowTime [
 	"Trigger all pending alarms that are to be executed before nowTime."
 	| pending |
@@ -816,7 +827,7 @@ WorldState >> triggerAlarmsBefore: nowTime [
 	lastAlarmTime := nowTime
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 WorldState >> updateToNewResolution: originalEvent [
 
 	"We need to reset the render if the resolution changes.
@@ -829,24 +840,24 @@ WorldState >> updateToNewResolution: originalEvent [
 	self worldRenderer checkForNewScreenSize
 ]
 
-{ #category : #canvas }
+{ #category : 'canvas' }
 WorldState >> viewBox [
 
 	^ self worldRenderer viewBox
 ]
 
-{ #category : #'worldmenu building' }
+{ #category : 'worldmenu building' }
 WorldState >> worldMenu [
 	^self menuBuilder menuEntitled: self discoveredMenuTitle
 ]
 
-{ #category : #hands }
+{ #category : 'hands' }
 WorldState >> worldRenderer [
 
     ^ worldRenderer ifNil: [ worldRenderer := NullWorldRenderer forWorld: self currentWorld ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WorldState >> worldRenderer: anObject [
 
 	worldRenderer := anObject.

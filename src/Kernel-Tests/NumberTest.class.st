@@ -2,43 +2,45 @@
 SUnit tests for numbers
 "
 Class {
-	#name : #NumberTest,
-	#superclass : #ClassTestCase,
-	#category : #'Kernel-Tests-Numbers'
+	#name : 'NumberTest',
+	#superclass : 'ClassTestCase',
+	#category : 'Kernel-Tests-Numbers',
+	#package : 'Kernel-Tests',
+	#tag : 'Numbers'
 }
 
-{ #category : #coverage }
+{ #category : 'coverage' }
 NumberTest >> classToBeTested [
 
 	^ Number
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 NumberTest >> testAsInteger [
 	"ensure we keep using truncated in asInteger"
 	self assert: 0.5 asInteger equals: 0.
 	self assert: (1/2) asInteger equals: 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 NumberTest >> testClampReturnsMaxIfNumberIsOverMax [
 
 	self assert: (80 clampBetween: 10 and: 20) equals: 20.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 NumberTest >> testClampReturnsMinIfNumberIsBelowMin [
 
 	self assert: (8 clampBetween: 10 and: 20) equals: 10.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 NumberTest >> testClampReturnsSameNumberIfBetweenMinAndMax [
 
 	self assert: (17 clampBetween: 10 and: 20) equals: 17.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 NumberTest >> testFractionPart [
 	self
 		assert: 2 fractionPart equals: 0;
@@ -49,7 +51,7 @@ NumberTest >> testFractionPart [
 		assert: 2.5 fractionPart equals: 0.5
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 NumberTest >> testIntegerPart [
 	self
 		assert: 2 integerPart equals: 2;
@@ -60,13 +62,13 @@ NumberTest >> testIntegerPart [
 		assert: 2.5 integerPart equals: 2.0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 NumberTest >> testNew [
 
 	self should: [Number new] raise: self defaultTestError
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 NumberTest >> testOne [
 	self
 		assert: Integer one equals: 1;
@@ -74,7 +76,7 @@ NumberTest >> testOne [
 		assert: Fraction one equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 NumberTest >> testPrintShowingDecimalPlaces [
 	self assert: (111.2 printShowingDecimalPlaces: 2) equals: '111.20'.
 	self assert: (111.2 printShowingDecimalPlaces: 0) equals: '111'.
@@ -89,7 +91,7 @@ NumberTest >> testPrintShowingDecimalPlaces [
 	self assert: (-0.001 printShowingDecimalPlaces: 2) equals: '0.00'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 NumberTest >> testPrintShowingDecimalPlaces2 [
 	"This tests problems related to Float>>rounded and Float>>roundTo::
 	- Float>>#rounded is inexact
@@ -107,7 +109,7 @@ NumberTest >> testPrintShowingDecimalPlaces2 [
 	1.0e306 printShowingDecimalPlaces: 3
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 NumberTest >> testPrintShowingDecimalPlaces3 [
 	"This problem were reported at http://bugs.squeak.org/view.php?id=7028
 	unfortunate inversion of left / right padding"
@@ -117,7 +119,7 @@ NumberTest >> testPrintShowingDecimalPlaces3 [
 	self assert: (-0.097 printShowingDecimalPlaces: 3) equals: '-0.097'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 NumberTest >> testRaisedTo [
 	"this is a test related to http://bugs.squeak.org/view.php?id=6781"
 
@@ -125,7 +127,7 @@ NumberTest >> testRaisedTo [
 	self should: [0 raisedTo: -1.0] raise: ZeroDivide
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 NumberTest >> testRaisedTo02 [
 
 	self assert: (2 raisedTo: 8) equals: 256.
@@ -137,7 +139,7 @@ NumberTest >> testRaisedTo02 [
 	self assert: (10 raisedTo: 2.5) equals: 316.22776601683825
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 NumberTest >> testRaisedToInteger [
 	self
 		assert: (2 raisedToInteger: 0) equals: 1;
@@ -159,7 +161,7 @@ NumberTest >> testRaisedToInteger [
 	self should: [ 0 raisedTo: -1 ] raise: ZeroDivide
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 NumberTest >> testRaisedToIntegerWithFloats [
 	self
 		assert: (2.0 raisedToInteger: 0) equals: 1.0;
@@ -181,7 +183,7 @@ NumberTest >> testRaisedToIntegerWithFloats [
 	self should: [ 0.0 raisedTo: -1 ] raise: ZeroDivide
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 NumberTest >> testReadFrom [
 	self assert: 1.0e-14 equals: (Number readFrom: '1.0e-14').
 	"Use a literal number format that compiles in GemStone.
@@ -190,7 +192,7 @@ NumberTest >> testReadFrom [
 	self should: [ Number readFrom: 'foo' ] raise: Error
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 NumberTest >> testReciprocal [
 	self
 		assert: 1 reciprocal equals: 1;
@@ -201,7 +203,7 @@ NumberTest >> testReciprocal [
 	self should: [ 0 reciprocal ] raise: ZeroDivide
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 NumberTest >> testRounded [
 
 	self assert: 0 rounded equals: 0.

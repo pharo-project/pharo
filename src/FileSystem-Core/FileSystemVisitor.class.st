@@ -2,21 +2,23 @@
 I am an abstract superclass for objects that can perform operations on directory trees. My subclasses implement the visitor protocol, and process filesystem nodes shown to them by guides.
 "
 Class {
-	#name : #FileSystemVisitor,
-	#superclass : #Object,
-	#category : #'FileSystem-Core-Base-Visitors'
+	#name : 'FileSystemVisitor',
+	#superclass : 'Object',
+	#category : 'FileSystem-Core-Base-Visitors',
+	#package : 'FileSystem-Core',
+	#tag : 'Base-Visitors'
 }
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 FileSystemVisitor >> visitDirectory: aReference [
 	^ self visitReference: aReference
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 FileSystemVisitor >> visitFile: aReference [
 	^ self visitReference: aReference
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 FileSystemVisitor >> visitReference: aReference [
 ]

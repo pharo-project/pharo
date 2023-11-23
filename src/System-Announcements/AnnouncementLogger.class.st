@@ -8,17 +8,19 @@ to unsubscribe
 AnnouncementLogger  allInstancesDo: [:each | SystemAnnouncer announcer unsubscribe: each ]
 "
 Class {
-	#name : #AnnouncementLogger,
-	#superclass : #Object,
-	#category : #'System-Announcements-Logging'
+	#name : 'AnnouncementLogger',
+	#superclass : 'Object',
+	#category : 'System-Announcements-Logging',
+	#package : 'System-Announcements',
+	#tag : 'Logging'
 }
 
-{ #category : #logging }
+{ #category : 'logging' }
 AnnouncementLogger >> logAnnouncement: ann [
 	ann traceCr
 ]
 
-{ #category : #subscription }
+{ #category : 'subscription' }
 AnnouncementLogger >> subscribeTo: anAnnouncer [
 
 	anAnnouncer "weak"

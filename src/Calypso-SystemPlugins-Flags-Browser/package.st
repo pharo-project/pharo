@@ -1,1 +1,1 @@
-Package { #name : #'Calypso-SystemPlugins-Flags-Browser' }
+Package { #name : 'Calypso-SystemPlugins-Flags-Browser' }

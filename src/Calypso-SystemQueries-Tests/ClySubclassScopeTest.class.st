@@ -1,16 +1,18 @@
 Class {
-	#name : #ClySubclassScopeTest,
-	#superclass : #ClyClassHierarchyScopeTest,
-	#category : #'Calypso-SystemQueries-Tests-Scopes'
+	#name : 'ClySubclassScopeTest',
+	#superclass : 'ClyClassHierarchyScopeTest',
+	#category : 'Calypso-SystemQueries-Tests-Scopes',
+	#package : 'Calypso-SystemQueries-Tests',
+	#tag : 'Scopes'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClySubclassScopeTest >> scopeClass [
 
 	^ClySubclassScope
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClySubclassScopeTest >> testClassEnumeration [
 	| expected |
 	scope := ClySubclassScope of: ClyClass1FromP1Mock.
@@ -21,7 +23,7 @@ ClySubclassScopeTest >> testClassEnumeration [
 	self assert: result asSet equals: expected asSet
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClySubclassScopeTest >> testClassEnumerationOverClassWhenBothMetaLevelsAreLocalScope [
 
 	| expected |
@@ -34,7 +36,7 @@ ClySubclassScopeTest >> testClassEnumerationOverClassWhenBothMetaLevelsAreLocalS
 	self assert: result asSet equals: expected asSet
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClySubclassScopeTest >> testClassEnumerationOverClassWhenClassSideIsLocalScope [
 
 	| expected |
@@ -46,7 +48,7 @@ ClySubclassScopeTest >> testClassEnumerationOverClassWhenClassSideIsLocalScope [
 	self assert: result asSet equals: expected asSet
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClySubclassScopeTest >> testClassEnumerationOverClassWhenConcreteClassScopeIsLocal [
 
 	| expected |
@@ -58,7 +60,7 @@ ClySubclassScopeTest >> testClassEnumerationOverClassWhenConcreteClassScopeIsLoc
 	self assert: result asSet equals: expected asSet
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClySubclassScopeTest >> testClassEnumerationOverClassWhenInstanceSideIsLocalScope [
 
 	| expected |
@@ -70,7 +72,7 @@ ClySubclassScopeTest >> testClassEnumerationOverClassWhenInstanceSideIsLocalScop
 	self assert: result asSet equals: expected asSet
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClySubclassScopeTest >> testClassEnumerationOverMetaClass [
 
 	| expected |
@@ -80,7 +82,7 @@ ClySubclassScopeTest >> testClassEnumerationOverMetaClass [
 	self assert: result asSet equals: expected asSet
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClySubclassScopeTest >> testMethodsEnumeration [
 	scope := ClySubclassScope of: ClyClass1FromP1Mock.
 
@@ -96,7 +98,7 @@ ClySubclassScopeTest >> testMethodsEnumeration [
 	self deny: (result includesAll: ClyClass1FromP1Mock superclass classSide localMethods)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClySubclassScopeTest >> testMethodsEnumerationWhenBothMetaLevels [
 
 	scope := ClySubclassScope of: ClyClass1FromP1Mock localScope: ClyBothMetaLevelClassScope.
@@ -113,7 +115,7 @@ ClySubclassScopeTest >> testMethodsEnumerationWhenBothMetaLevels [
 	self deny: (result includesAll: ClyClass1FromP1Mock superclass classSide localMethods)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClySubclassScopeTest >> testMethodsEnumerationWhenInstanceSideMetaLevel [
 	| subclassMethods |
 	scope := ClySubclassScope of: ClyClass1FromP1Mock.

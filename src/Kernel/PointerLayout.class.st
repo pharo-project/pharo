@@ -2,37 +2,39 @@
 I am the superclass for all layouts with Slots.
 "
 Class {
-	#name : #PointerLayout,
-	#superclass : #ObjectLayout,
+	#name : 'PointerLayout',
+	#superclass : 'ObjectLayout',
 	#instVars : [
 		'slotScope'
 	],
-	#category : #'Kernel-Layout'
+	#category : 'Kernel-Layout',
+	#package : 'Kernel',
+	#tag : 'Layout'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 PointerLayout class >> isAbstract [
 	^self == PointerLayout
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 PointerLayout >> = other [
 	^ super = other
 		ifFalse: [  false ]
 		ifTrue: [ self slotScope = other slotScope ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PointerLayout >> allSlots [
 	^ slotScope flatten
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PointerLayout >> allVisibleSlots [
 	^ slotScope allVisibleSlots
 ]
 
-{ #category : #validation }
+{ #category : 'validation' }
 PointerLayout >> checkInheritedSlots [
 
 	self host superclass
@@ -53,7 +55,7 @@ PointerLayout >> checkInheritedSlots [
 			description: [ 'Slot "', localSlot name, '" index at position ', index asString, ' conflicts with slot "', slot name, '" in ', self host superclass asString ]]
 ]
 
-{ #category : #validation }
+{ #category : 'validation' }
 PointerLayout >> checkIntegrity [
 	self
 		checkSanity;
@@ -61,7 +63,7 @@ PointerLayout >> checkIntegrity [
 		checkInheritedSlots
 ]
 
-{ #category : #validation }
+{ #category : 'validation' }
 PointerLayout >> checkParentScopes [
 	| parentScope superclassScope |
 	parentScope := self slotScope parentScope.
@@ -72,7 +74,7 @@ PointerLayout >> checkParentScopes [
 		description: 'Parent slot scope is out of sync'
 ]
 
-{ #category : #validation }
+{ #category : 'validation' }
 PointerLayout >> checkSanity [
 	super checkSanity.
 	self
@@ -80,7 +82,7 @@ PointerLayout >> checkSanity [
 		checkSlotIndices
 ]
 
-{ #category : #validation }
+{ #category : 'validation' }
 PointerLayout >> checkSlotIndices [
 	| slots current |
 	slots := slotScope flatten select: [:each | each size > 0]. "skip slots that have no index"
@@ -89,7 +91,7 @@ PointerLayout >> checkSlotIndices [
 			self assert: slots first index = (current index + current size) ]
 ]
 
-{ #category : #validation }
+{ #category : 'validation' }
 PointerLayout >> checkSlotNames [
 	| slots current |
 	slots := slotScope allVisibleSlots.
@@ -105,119 +107,119 @@ PointerLayout >> checkSlotNames [
 						signal ]]]
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 PointerLayout >> definesSlotNamed: aString [
 	^self resolveSlot: aString ifFound: [ true ] ifNone: [ false ]
 ]
 
-{ #category : #extending }
+{ #category : 'extending' }
 PointerLayout >> extend [
 	"Answer a default layout extending me."
 
 	^ self extend: self slotScope extend
 ]
 
-{ #category : #extending }
+{ #category : 'extending' }
 PointerLayout >> extend: aScope [
 	^ self species new slotScope: aScope
 ]
 
-{ #category : #extending }
+{ #category : 'extending' }
 PointerLayout >> extendEphemeron: newScope [
 
 	^ EphemeronLayout new slotScope: newScope
 ]
 
-{ #category : #extending }
+{ #category : 'extending' }
 PointerLayout >> extendVariable: newScope [
 	^ VariableLayout new slotScope: newScope
 ]
 
-{ #category : #extending }
+{ #category : 'extending' }
 PointerLayout >> extendWeak: newScope [
 	^ WeakLayout new slotScope: newScope
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PointerLayout >> fieldSize [
 	^ slotScope fieldSize
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 PointerLayout >> hasBindingThatBeginsWith: aString [
 	"Answer true if there is a Slot that begins with aString, false otherwise"
 
 	^ self slotScope hasBindingThatBeginsWith: aString
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 PointerLayout >> hasFields [
 	^ slotScope hasFields
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 PointerLayout >> hasSlots [
 	^ slotScope hasSlots
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 PointerLayout >> hash [
 	^ self class hash bitXor: self slotScope hash
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PointerLayout >> host: aClass [
 
 	super host: aClass.
 	self slots do: [ :aSlot | aSlot owningClass: aClass ]
 ]
 
-{ #category : #'instance initialization' }
+{ #category : 'instance initialization' }
 PointerLayout >> initializeInstance: anInstance [
 	self allSlotsDo: [ :slot | slot initialize: anInstance ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PointerLayout >> instVarNames [
 	^ slotScope visibleSlotNames
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 PointerLayout >> postCopy [
 	slotScope := slotScope copy
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PointerLayout >> resolveSlot: aName [
 	^ slotScope resolveSlot: aName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PointerLayout >> resolveSlot: aName ifFound: foundBlock ifNone: noneBlock [
 	^ slotScope resolveSlot: aName ifFound: foundBlock ifNone: noneBlock
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 PointerLayout >> size [
 	^ slotScope fieldSize
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 PointerLayout >> slotNamed: aName [
 	^self resolveSlot: aName asSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PointerLayout >> slotScope [
 	^ slotScope
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PointerLayout >> slotScope: anObject [
 	slotScope := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PointerLayout >> slots [
 	^ slotScope slots
 ]

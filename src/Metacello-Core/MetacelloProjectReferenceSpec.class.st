@@ -1,43 +1,45 @@
 Class {
-	#name : #MetacelloProjectReferenceSpec,
-	#superclass : #MetacelloAbstractPackageSpec,
+	#name : 'MetacelloProjectReferenceSpec',
+	#superclass : 'MetacelloAbstractPackageSpec',
 	#instVars : [
 		'projectReference'
 	],
-	#category : #'Metacello-Core-Specs'
+	#category : 'Metacello-Core-Specs',
+	#package : 'Metacello-Core',
+	#tag : 'Specs'
 }
 
-{ #category : #merging }
+{ #category : 'merging' }
 MetacelloProjectReferenceSpec >> aboutToCopy [
     self projectReference className
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProjectReferenceSpec >> answers: aListOfPairs [
 
 	self shouldNotImplement
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MetacelloProjectReferenceSpec >> configMethodCascadeOn: aStream member: aMember last: lastCascade indent: indent [
-    aMember methodUpdateSelector == #'remove:'
-        ifTrue: [ aStream nextPutAll: 'removeProject: ' , self name printString ]
-        ifFalse: [ 
-            self projectReference == nil
-                ifTrue: [ ^ self ].
-            aStream nextPutAll: self projectLabel , ': ' , self projectName printString , ' '.
-            (aMember methodUpdateSelector == #'copy:' and: [ self projectReference hasNonVersionStringField ])
-                ifTrue: [ aStream nextPutAll: 'copyFrom: ' , aMember sourceName printString , ' ' ].
-            self projectReference configShortCutMethodOn: aStream member: aMember indent: indent + 1 ].
-    lastCascade
-        ifTrue: [ aStream nextPut: $. ]
-        ifFalse: [ 
-            aStream
-                nextPut: $;;
-                cr ]
+
+	aMember methodUpdateSelector == #remove:
+		ifTrue: [ aStream nextPutAll: 'removeProject: ' , self name printString ]
+		ifFalse: [
+			self projectReference ifNil: [ ^ self ].
+			aStream nextPutAll: self projectLabel , ': ' , self projectName printString , ' '.
+			(aMember methodUpdateSelector == #copy: and: [ self projectReference hasNonVersionStringField ]) ifTrue: [
+				aStream nextPutAll: 'copyFrom: ' , aMember sourceName printString , ' ' ].
+			self projectReference configShortCutMethodOn: aStream member: aMember indent: indent + 1 ].
+	lastCascade
+		ifTrue: [ aStream nextPut: $. ]
+		ifFalse: [
+			aStream
+				nextPut: $;;
+				cr ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MetacelloProjectReferenceSpec >> configMethodOn: aStream indent: indent [
 
 	aStream 
@@ -50,23 +52,32 @@ MetacelloProjectReferenceSpec >> configMethodOn: aStream indent: indent [
 	aStream nextPutAll: ' ].'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MetacelloProjectReferenceSpec >> hasRepository [
     ^ self projectReference hasRepository
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProjectReferenceSpec >> includes: aCollection [
 
 	self shouldNotImplement
 ]
 
-{ #category : #importing }
+{ #category : 'loading' }
+MetacelloProjectReferenceSpec >> loadUsing: aLoader gofer: ignored [
+
+	| required |
+	required := self resolveToLoadableSpec.
+	required loader: aLoader.
+	^required load
+]
+
+{ #category : 'importing' }
 MetacelloProjectReferenceSpec >> mergeImportLoads: aLoadList [
     self projectReference mergeImportLoads: aLoadList
 ]
 
-{ #category : #merging }
+{ #category : 'merging' }
 MetacelloProjectReferenceSpec >> mergeMap [
 
 	| map |
@@ -75,102 +86,135 @@ MetacelloProjectReferenceSpec >> mergeMap [
 	^map
 ]
 
-{ #category : #merging }
+{ #category : 'merging' }
 MetacelloProjectReferenceSpec >> mergeSpec: anotherSpec [
 
-	| newSpec map anotherProjectReference |
+	| newSpec map |
 	newSpec := super mergeSpec: anotherSpec.
 	map := anotherSpec mergeMap.
-	(anotherProjectReference := map at: #projectReference) ~~ nil
-		ifTrue: [ 
-			newSpec projectReference: 
-				(newSpec projectReference == nil
-					ifTrue: [ anotherProjectReference ]
-					ifFalse: [ newSpec projectReference mergeSpec: anotherProjectReference ])].
-	^newSpec
+	(map at: #projectReference) ifNotNil: [ :anotherProjectReference |
+		newSpec projectReference: (newSpec projectReference
+				 ifNotNil: [ :reference | reference mergeSpec: anotherProjectReference ]
+				 ifNil: [ anotherProjectReference ]) ].
+	^ newSpec
 ]
 
-{ #category : #merging }
+{ #category : 'merging' }
 MetacelloProjectReferenceSpec >> nonOverridable [
 
 	^super nonOverridable, #( projectReference )
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 MetacelloProjectReferenceSpec >> postCopy [
 
 	super postCopy.
 	projectReference := projectReference copy.
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 MetacelloProjectReferenceSpec >> projectDo: projectBlock packageDo: packageBlock groupDo: groupBlock [
 
 	projectBlock value: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProjectReferenceSpec >> projectLabel [
     ^ self projectReference projectLabel
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProjectReferenceSpec >> projectName [
 	^self projectReference name
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloProjectReferenceSpec >> projectReference [
 	^ projectReference
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProjectReferenceSpec >> projectReference: anObject [
 	projectReference := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProjectReferenceSpec >> referencedSpec [
 
 	^self projectReference
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloProjectReferenceSpec >> relativeCurrentVersion [
 
 	^self projectReference relativeCurrentVersion
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloProjectReferenceSpec >> repositories [
     ^ self referencedSpec repositories
 ]
 
-{ #category : #loading }
+{ #category : 'accessing' }
+MetacelloProjectReferenceSpec >> repository: aStringOrMetacelloRepositorySpec [
+    ^ self projectReference repository: aStringOrMetacelloRepositorySpec
+]
+
+{ #category : 'loading' }
 MetacelloProjectReferenceSpec >> repositorySpecs [
 
 	^self repositories map values
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProjectReferenceSpec >> requires: aCollection [
 
 	self shouldNotImplement
 ]
 
-{ #category : #querying }
+{ #category : 'accessing' }
+MetacelloProjectReferenceSpec >> resolveProjectSpec [
+
+	^self projectReference
+]
+
+{ #category : 'private' }
+MetacelloProjectReferenceSpec >> resolveToLoadableSpec [
+
+	^self resolveProjectSpec resolveToLoadableSpec
+]
+
+{ #category : 'private' }
+MetacelloProjectReferenceSpec >> resolveToPackagesAndProjectsIn: aVersionSpec visited: visited [
+
+	^ { self }
+]
+
+{ #category : 'private' }
+MetacelloProjectReferenceSpec >> resolveToPackagesIn: aVersionSpec visited: visited [
+
+	^#()
+]
+
+{ #category : 'querying' }
 MetacelloProjectReferenceSpec >> version [
 
 	^self projectReference version
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloProjectReferenceSpec >> versionOrNil [
 
 	^self projectReference versionOrNil
 ]
 
-{ #category : #querying }
+{ #category : 'accessing' }
+MetacelloProjectReferenceSpec >> versionString [
+
+	^self projectReference versionString
+]
+
+{ #category : 'querying' }
 MetacelloProjectReferenceSpec >> versionString: aString [
 
 	^self projectReference versionString: aString

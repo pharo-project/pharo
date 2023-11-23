@@ -1,6 +1,6 @@
-Extension { #name : #BlockClosure }
+Extension { #name : 'BlockClosure' }
 
-{ #category : #'*Kernel-Chronology-Extras' }
+{ #category : '*Kernel-Chronology-Extras' }
 BlockClosure >> bench [
 	"Answer a BenchmarkResult with the number of times the receiver was executed in 5 seconds"
 
@@ -9,14 +9,14 @@ BlockClosure >> bench [
 	^ self benchFor: 5 seconds
 ]
 
-{ #category : #'*Kernel-Chronology-Extras' }
+{ #category : '*Kernel-Chronology-Extras' }
 BlockClosure >> benchCompareTo: aBlock [
 	"Answer a BenchmarkComparison of the receiver to the argument."
 
 	^ self bench compareTo: aBlock bench
 ]
 
-{ #category : #'*Kernel-Chronology-Extras' }
+{ #category : '*Kernel-Chronology-Extras' }
 BlockClosure >> benchFor: duration [
 
 	"Run me for duration and return a BenchmarkResult"
@@ -42,7 +42,7 @@ BlockClosure >> benchFor: duration [
 		  yourself
 ]
 
-{ #category : #'*Kernel-Chronology-Extras' }
+{ #category : '*Kernel-Chronology-Extras' }
 BlockClosure >> timeToRun [
 	"Answer the number of milliseconds taken to execute this block."
 

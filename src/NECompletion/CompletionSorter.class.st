@@ -4,35 +4,37 @@ Strategy pattern that describes the sorting functionality.
 Sorter allSubclasses collect: #kind an OrderedCollection('' 'alphabetical' '' '')
 "
 Class {
-	#name : #CompletionSorter,
-	#superclass : #Object,
+	#name : 'CompletionSorter',
+	#superclass : 'Object',
 	#instVars : [
 		'context'
 	],
-	#category : #'NECompletion-Sorting'
+	#category : 'NECompletion-Sorting',
+	#package : 'NECompletion',
+	#tag : 'Sorting'
 }
 
-{ #category : #description }
+{ #category : 'description' }
 CompletionSorter class >> kind [
 	^ ''
 ]
 
-{ #category : #'tools registry' }
+{ #category : 'tools registry' }
 CompletionSorter class >> register [
 	CompletionContext sorterClass: AlphabeticSorter
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompletionSorter >> context [
 	^ context
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompletionSorter >> context: anObject [
 	context := anObject
 ]
 
-{ #category : #sorting }
+{ #category : 'sorting' }
 CompletionSorter >> sortCompletionList: aList [
 
 	self shouldBeImplemented

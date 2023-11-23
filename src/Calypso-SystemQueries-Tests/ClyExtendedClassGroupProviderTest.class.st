@@ -1,15 +1,17 @@
 Class {
-	#name : #ClyExtendedClassGroupProviderTest,
-	#superclass : #ClyClassGroupProviderTest,
-	#category : #'Calypso-SystemQueries-Tests-Domain'
+	#name : 'ClyExtendedClassGroupProviderTest',
+	#superclass : 'ClyClassGroupProviderTest',
+	#category : 'Calypso-SystemQueries-Tests-Domain',
+	#package : 'Calypso-SystemQueries-Tests',
+	#tag : 'Domain'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClyExtendedClassGroupProviderTest >> groupProviderClass [
 	^ClyExtendedClassGroupProvider
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyExtendedClassGroupProviderTest >> packageSampleWhichHasGroup [
 	^ClyClass1FromP1Mock package
 ]

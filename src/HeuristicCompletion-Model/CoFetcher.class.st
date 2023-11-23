@@ -37,16 +37,18 @@ GenericComplishonFetcher >> entriesDo: aBlock
 
 "
 Class {
-	#name : #CoFetcher,
-	#superclass : #Object,
+	#name : 'CoFetcher',
+	#superclass : 'Object',
 	#instVars : [
 		'generator',
 		'filter'
 	],
-	#category : #'HeuristicCompletion-Model-Core'
+	#category : 'HeuristicCompletion-Model-Core',
+	#package : 'HeuristicCompletion-Model',
+	#tag : 'Core'
 }
 
-{ #category : #composing }
+{ #category : 'composing' }
 CoFetcher >> , anotherFetcher [
 
 	^ CoFetcherSequence new
@@ -55,19 +57,19 @@ CoFetcher >> , anotherFetcher [
 		yourself
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 CoFetcher >> acceptsEntry: entry [
 
 	^ filter accepts: entry
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CoFetcher >> atEnd [
 
 	^ self generator atEnd
 ]
 
-{ #category : #composing }
+{ #category : 'composing' }
 CoFetcher >> collect: aBlockClosure [
 
 	^ CoMappingFetcher new
@@ -76,14 +78,14 @@ CoFetcher >> collect: aBlockClosure [
 		yourself
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 CoFetcher >> entriesDo: aBlock [
 	"Key method for subclasses to define their semantics."
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #resetting }
+{ #category : 'resetting' }
 CoFetcher >> filter: newFilter [
 
 	(newFilter isMoreNarrowThan: filter)
@@ -92,7 +94,7 @@ CoFetcher >> filter: newFilter [
 	filter := newFilter
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 CoFetcher >> generator [
 	^ generator ifNil: [
 		generator := Generator on: [ :g |
@@ -101,32 +103,32 @@ CoFetcher >> generator [
 					ifTrue: [ g yield: entry ] ] ] ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CoFetcher >> initialize [
 	super initialize.
 
 	filter := CoFilter empty
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CoFetcher >> isEmptyCompletionFetcher [
 
 	^ false
 ]
 
-{ #category : #composing }
+{ #category : 'composing' }
 CoFetcher >> narrowFilter: aFilter narrowKey: aKey [
 
 	self filter: aFilter
 ]
 
-{ #category : #fetching }
+{ #category : 'fetching' }
 CoFetcher >> next [
 
 	^ self generator next
 ]
 
-{ #category : #fetching }
+{ #category : 'fetching' }
 CoFetcher >> next: anInteger [
 
 	^ Array new: anInteger streamContents: [ :stream | | total last |
@@ -134,28 +136,28 @@ CoFetcher >> next: anInteger [
 		[ (last := self next) ifNotNil: [ :each |
 			stream nextPut: each.
 			total := total + 1 ] ]
-			doWhileTrue: [ total < anInteger and: [ last notNil ] ] ]
+			doWhileTrue: [ total < anInteger and: [ last isNotNil ] ] ]
 ]
 
-{ #category : #resetting }
+{ #category : 'resetting' }
 CoFetcher >> reset [
 
 	generator := nil
 ]
 
-{ #category : #composing }
+{ #category : 'composing' }
 CoFetcher >> unnarrowFilter: aFilter narrowKey: aKey [
 
 	self filter: aFilter
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 CoFetcher >> upToEnd [
 
 	^ self generator upToEnd
 ]
 
-{ #category : #composing }
+{ #category : 'composing' }
 CoFetcher >> withNarrowHistory [
 
 	^ CoNarrowHistoryFetcher new
@@ -163,7 +165,7 @@ CoFetcher >> withNarrowHistory [
 		yourself
 ]
 
-{ #category : #composing }
+{ #category : 'composing' }
 CoFetcher >> withoutRepetition [
 
 	^ CoAvoidRepeatedFetcher new

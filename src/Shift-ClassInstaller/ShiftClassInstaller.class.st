@@ -19,17 +19,18 @@ The block passed is used to configure the builder. Check ShiftClassBuilder to se
 I have a subclass to anonymous generate classes, without registering in the environment. 
 "
 Class {
-	#name : #ShiftClassInstaller,
-	#superclass : #Object,
+	#name : 'ShiftClassInstaller',
+	#superclass : 'Object',
 	#instVars : [
 		'oldClass',
-		'builder',
-		'installingEnvironment'
+		'builder'
 	],
-	#category : #'Shift-ClassInstaller-Base'
+	#category : 'Shift-ClassInstaller-Base',
+	#package : 'Shift-ClassInstaller',
+	#tag : 'Base'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 ShiftClassInstaller class >> example [
 	<sampleInstance>
 	^ Smalltalk classInstaller make: [ :aSlotClassBuilder |
@@ -37,42 +38,52 @@ ShiftClassInstaller class >> example [
 			superclass: Object;
 			name: #MyClass;
 			slots: #(varA varB);
-			category: 'My-Category' ]
+			tag: 'ATag';
+			package: 'My-Package' ]
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ShiftClassInstaller class >> make: aBlock [
 	^ self new make:aBlock
 ]
 
-{ #category : #building }
-ShiftClassInstaller class >> update: oldClass to: aBlock [
-	^ self new
-		oldClass: oldClass;
-		make:aBlock
+{ #category : 'building' }
+ShiftClassInstaller class >> remake: aClass basedOn: aBuilder [
+
+	self new
+		oldClass: aClass;
+		installingEnvironment: aBuilder installingEnvironment;
+		make: [ :anotherBuilder |
+			anotherBuilder fillFor: aClass.
+			anotherBuilder buildEnvironment: aBuilder buildEnvironment.
+			anotherBuilder markIsInRemake.
+			aBuilder propagateChangesTo: anotherBuilder ]
 ]
 
-{ #category : #validating }
+{ #category : 'building' }
+ShiftClassInstaller class >> update: oldClass to: aBlock [
+	^ self new
+		fillFor: oldClass;
+		oldClass: oldClass;
+		make: aBlock
+]
+
+{ #category : 'validating' }
 ShiftClassInstaller class >> validateClassName: aString [
 	ShiftClassBuilder new name: aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ShiftClassInstaller >> builder [
 	^ builder
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ShiftClassInstaller >> comment: newClass [
 	builder comment ifNotNil: [ newClass comment: builder comment stamp: builder commentStamp ]
 ]
 
-{ #category : #building }
-ShiftClassInstaller >> copyClassSlotsFromExistingClass [
-	self builder layoutDefinition copyClassSlotsIfNeeded: oldClass class slots
-]
-
-{ #category : #copying }
+{ #category : 'copying' }
 ShiftClassInstaller >> copyObject: oldObject to: newClass [
 
 	| newObject |
@@ -104,7 +115,12 @@ ShiftClassInstaller >> copyObject: oldObject to: newClass [
 	^ newObject
 ]
 
-{ #category : #building }
+{ #category : 'initialization' }
+ShiftClassInstaller >> fillFor: aClassOrTrait [
+	builder fillFor: aClassOrTrait
+]
+
+{ #category : 'building' }
 ShiftClassInstaller >> fixSlotScope: newClass [
 	newClass superclass ifNil: [ ^ self ].
 	(newClass classLayout slotScope isKindOf: LayoutEmptyScope) ifTrue: [ ^ self ].
@@ -115,29 +131,26 @@ ShiftClassInstaller >> fixSlotScope: newClass [
 	self assert: newClass superclass classLayout slotScope == newClass classLayout slotScope parentScope
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ShiftClassInstaller >> initialize [
+
 	super initialize.
-	builder := ShiftClassBuilder new.
-	builder buildEnvironment: ShSmalltalkGlobalsEnvironment new
+	builder := ShiftClassBuilder new
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ShiftClassInstaller >> installInEnvironment: newClass [
-
 	"I only install if there is a name / non anonymous"
+
 	builder name ifNil: [ ^ self ].
 
 	"I only install in the environment if there is not oldClass installed."
-	(self installingEnvironment hasClassNamed: builder name) ifFalse:[
-		self installingEnvironment installClass: newClass withName: builder name ].
+	(self installingEnvironment hasClassNamed: builder name) ifFalse: [ self installingEnvironment at: builder name put: newClass ].
 
-	self
-		updateBindings: (self installingEnvironment bindingAt: builder name)
-		of: newClass
+	self updateBindings: (self installingEnvironment bindingOf: builder name) of: newClass
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ShiftClassInstaller >> installSubclassInSuperclass: newClass [
 
 	"I only install if there is a name / non anonymous"
@@ -146,25 +159,25 @@ ShiftClassInstaller >> installSubclassInSuperclass: newClass [
 	newClass superclass addSubclass: newClass
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ShiftClassInstaller >> installingEnvironment [
 
-	^ installingEnvironment ifNil: [ builder buildEnvironment ]
+	^ builder installingEnvironment
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ShiftClassInstaller >> installingEnvironment: anEnvironment [
 
-	installingEnvironment := anEnvironment
+	builder installingEnvironment: anEnvironment
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ShiftClassInstaller >> lookupOldClass [
-	oldClass
-		ifNil: [ oldClass := self installingEnvironment classNamed: builder name ifAbsent: [ nil ] ]
+
+	oldClass ifNil: [ oldClass := self installingEnvironment at: builder name ifAbsent: [ nil ] ]
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ShiftClassInstaller >> make [
 	| newClass |
 
@@ -172,7 +185,6 @@ ShiftClassInstaller >> make [
 
 	[
 		builder oldClass: oldClass.
-		self copyClassSlotsFromExistingClass.
 		newClass := builder build.
 
 		self installInEnvironment: newClass.
@@ -185,16 +197,14 @@ ShiftClassInstaller >> make [
 
 		builder builderEnhancer afterMigratingClass: builder installer: self.
 
-		builder builderEnhancer propagateChangesToRelatedClasses: newClass installer: self.
+		builder builderEnhancer propagateChangesToRelatedClasses: newClass builder: builder.
+		
 	] on: ShNoChangesInClass do:[
 		"If there are no changes in the building, I am not building or replacing nothing"
 		newClass := oldClass.
 	].
 
-	self fixSlotScope: newClass.
-	self fixSlotScope: newClass class.
-
-	self recategorize: newClass to: builder category.
+	self recategorize: newClass.
 	self comment: newClass.
 
 	self notifyChanges.
@@ -202,22 +212,21 @@ ShiftClassInstaller >> make [
 	^ newClass
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ShiftClassInstaller >> make: aBlock [
 
 	aBlock value: builder.
-
 	^self make
 ]
 
-{ #category : #'to sort' }
+{ #category : 'initialization' }
 ShiftClassInstaller >> makeWithBuilder: aBuilder [
 
 	builder := aBuilder.
 	^ self make
 ]
 
-{ #category : #migrating }
+{ #category : 'migrating' }
 ShiftClassInstaller >> migrateClassTo: newClass [
 	| slotsToMigrate oldClassVariables newClassVariables|
 
@@ -252,11 +261,14 @@ ShiftClassInstaller >> migrateClassTo: newClass [
 		{ oldClass. builder oldMetaclass } , oldClassVariables asArray
 			elementsForwardIdentityTo: { newClass. builder newMetaclass }, newClassVariables asArray.
 
+		self fixSlotScope: newClass.
+		self fixSlotScope: newClass class.
+
 		newClass classPool rehash.
 	] valueUninterruptably
 ]
 
-{ #category : #migrating }
+{ #category : 'migrating' }
 ShiftClassInstaller >> migrateInstancesTo: newClass [
 	| oldObjects newObjects readOnlyOldObjectsFlags |
 	oldObjects := oldClass allInstances.
@@ -273,50 +285,28 @@ ShiftClassInstaller >> migrateInstancesTo: newClass [
 	newObjects with: readOnlyOldObjectsFlags do: [ :anObject :aFlag | anObject setIsReadOnlyObject: aFlag ]
 ]
 
-{ #category : #notifications }
+{ #category : 'notifications' }
 ShiftClassInstaller >> notifyChanges [
 	builder notifyChanges
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ShiftClassInstaller >> oldClass [
 	^ oldClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ShiftClassInstaller >> oldClass: anObject [
 	oldClass := anObject
 ]
 
-{ #category : #notifications }
-ShiftClassInstaller >> recategorize: aClass to: newCategory [
-	| oldCategory |
-	oldCategory := oldClass ifNotNil:[oldClass basicCategory].
-	oldCategory == newCategory asSymbol
-		ifTrue: [ ^ self ].
-
-	self installingEnvironment organization
-		ifNotNil: [ :e | e classify: aClass name under: newCategory ].
-
-	(oldCategory isNil or:[ oldCategory = #Unclassified])
-		ifTrue: [ SystemAnnouncer uniqueInstance classAdded: aClass inCategory: newCategory ]
-		ifFalse: [ SystemAnnouncer uniqueInstance class: aClass recategorizedFrom: oldCategory to: newCategory ]
+{ #category : 'notifications' }
+ShiftClassInstaller >> recategorize: aClass [
+	"If the package is nil we leave the class unclassified"
+	builder package ifNotNil: [ :package | aClass package: package tag: builder tag ]
 ]
 
-{ #category : #building }
-ShiftClassInstaller >> remake: aClass [
-
-	self class new
-		oldClass: aClass;
-		installingEnvironment: self installingEnvironment;
-		make: [ :anotherBuilder |
-			anotherBuilder fillFor: aClass.
-			anotherBuilder buildEnvironment: builder buildEnvironment.
-			anotherBuilder markIsInRemake.
-			builder propagateChangesTo: anotherBuilder ]
-]
-
-{ #category : #building }
+{ #category : 'building' }
 ShiftClassInstaller >> updateBindings: aBinding of: newClass [
 	newClass methods do: [ :e | e classBinding: aBinding ]
 ]
