@@ -111,6 +111,18 @@ Class {
 	#tag : 'Base'
 }
 
+{ #category : 'class initialization' }
+SessionManager class >> classRemoved: classRemoved [
+
+	self default unregisterClassNamed: classRemoved name
+]
+
+{ #category : 'class initialization' }
+SessionManager class >> classRenamed: classRenamed [
+
+	self default renamedClass: classRenamed classRenamed from: classRenamed oldName to: classRenamed newName
+]
+
 { #category : 'accessing' }
 SessionManager class >> default [
 	^ Default ifNil: [ Default := self new ]
@@ -119,6 +131,16 @@ SessionManager class >> default [
 { #category : 'accessing' }
 SessionManager class >> default: aSessionManager [
 	Default := aSessionManager
+]
+
+{ #category : 'class initialization' }
+SessionManager class >> initialize [
+
+	self codeChangeAnnouncer unsubscribe: self.
+
+	self codeChangeAnnouncer weak
+		when: ClassRemoved send: #classRemoved: to: self;
+		when: ClassRenamed send: #classRenamed: to: self
 ]
 
 { #category : 'initialization' }
