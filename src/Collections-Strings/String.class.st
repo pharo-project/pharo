@@ -1429,6 +1429,21 @@ String >> findCloseParenthesisFor: startIndex [
 ]
 
 { #category : 'finding/searching' }
+String >> findClosing: close startingAt: startIndex [
+	"Assume the opening character is given at startIndex. Find the matching closing character, taking nesting into account."
+
+	| open nestLevel current |
+	self size < startIndex ifTrue: [ ^ self size + 1 ].
+	open := self at: startIndex.
+	nestLevel := 1.
+	startIndex + 1 to: self size do: [ :pos |
+		(current := self at: pos) == close
+			ifTrue: [ (nestLevel := nestLevel - 1) = 0 ifTrue: [ ^ pos ] ]
+			ifFalse: [ current == open ifTrue: [ nestLevel := nestLevel + 1 ] ] ].
+	^ self size + 1
+]
+
+{ #category : 'finding/searching' }
 String >> findDelimiters: delimiters startingAt: start [
 	"Answer the index of the character within the receiver, starting at start, that matches one of the delimiters. If the receiver does not contain any of the delimiters, answer size + 1."
 

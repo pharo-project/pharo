@@ -895,6 +895,19 @@ StringTest >> testFindCloseParenthesisFor [
 ]
 
 { #category : 'tests' }
+StringTest >> testFindClosingStartingAt [
+
+	self assert: ('(1 + 3(2 * 9) - 15)' findClosing: $) startingAt: 1) equals: 19.
+	self assert: ('(1+(2-3))-3.14159' findClosing: $) startingAt: 1) equals: 9.
+	self assert: ('(1+(2-3))-3.14159' findClosing: $) startingAt: 4) equals: 8.
+	self assert: ('()' findClosing: $) startingAt: 10) equals: 3.
+	
+	self assert: ('List<String>' findClosing: $> startingAt: 5) equals: 12.
+	self assert: ('Map<T,Map<T,List<T>>>' findClosing: $> startingAt: 4) equals: 21.
+	self assert: ('Map<T,Map<T,List<T>>>' findClosing: $> startingAt: 10) equals: 20
+]
+
+{ #category : 'tests' }
 StringTest >> testFindDelimitersStartingAt [
 
 	self assert: ('this is a string' findDelimiters: ' ' startingAt: 1) equals: 5.
