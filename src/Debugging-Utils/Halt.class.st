@@ -72,9 +72,8 @@ But it such design did not allow to debug the unhandled logic itself. For exampl
 Class {
 	#name : 'Halt',
 	#superclass : 'UnhandledException',
-	#category : 'Kernel-Exceptions',
-	#package : 'Kernel',
-	#tag : 'Exceptions'
+	#category : 'Debugging-Utils',
+	#package : 'Debugging-Utils'
 }
 
 { #category : 'testing' }
