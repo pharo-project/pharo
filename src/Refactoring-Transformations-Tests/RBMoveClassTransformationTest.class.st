@@ -32,7 +32,7 @@ RBMoveClassTransformationTest >> testRefactoring [
 RBMoveClassTransformationTest >> testTransform [
 
 	| transformation class |
-	self assert: self changeMockClass package name equals: #'Refactoring-Tests-Changes'.
+	self assert: self changeMockClass package name equals: #'Refactoring-Changes-Tests'.
 	self assert: self changeMockClass packageTag isRoot.
 
 	transformation := (RBMoveClassTransformation move: self changeMockClass name toPackage: #'Refactoring-Transformations-Tests' inTag: 'Test') generateChanges.

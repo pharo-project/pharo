@@ -48,7 +48,7 @@ PharoBootstrapInitialization class >> initializeCommandLineHandlerAndErrorHandli
 
 	"Weak array class initialization 2 lines"
 	Smalltalk specialObjectsArray at: 42 put: Semaphore new."to put in EPObjectSpace>>#createSpecialObjectsArray?"
-	WeakArray restartFinalizationProcess.
+	FinalizationProcess restartFinalizationProcess.
 
 	Smalltalk globals
 		at: #Transcript
@@ -60,9 +60,14 @@ PharoBootstrapInitialization class >> initializeCommandLineHandlerAndErrorHandli
 	Collection initialize.
 	CompiledMethod initialize.
 	Slot initialize.
-	RPackage initialize.
 	Behavior initialize.
 	Class initialize.
+	Package initialize.
+	
+	"Next three lines are for the deprecated aliases. This should be removed in Pharo 13"
+	PackageTag initialize.
+	PackageOrganizer initialize.
+	PackageConflictError initialize.
 
 	UIManager default: NonInteractiveUIManager new.
 

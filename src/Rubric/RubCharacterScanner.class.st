@@ -96,7 +96,7 @@ RubCharacterScanner >> basicScanCharactersFrom: startIndex to: stopIndex in: sou
 			char := (sourceString at: lastIndex).
 			ascii := char asciiValue.
 
-			(ascii < stops size and: [(stops at: ascii + 1) notNil]) ifTrue: [^ stops at: ascii + 1].
+			(ascii < stops size and: [(stops at: ascii + 1) isNotNil]) ifTrue: [^ stops at: ascii + 1].
 			"Note: The following is querying the font about the width
 			since the primitive may have failed due to a non-trivial
 			mapping of characters to glyphs or a non-existing xTable."
@@ -352,42 +352,38 @@ RubCharacterScanner >> setAlignment: style [
 { #category : 'private' }
 RubCharacterScanner >> setConditionArray: aSymbol [
 
-	aSymbol == #paddedSpace ifTrue: [^stopConditions := PaddedSpaceCondition "copy"].
+	aSymbol == #paddedSpace ifTrue: [ ^ stopConditions := PaddedSpaceCondition "copy" ].
 	"aSymbol == #space ifTrue: [^stopConditions := SpaceCondition copy]."
-	aSymbol == nil ifTrue: [^stopConditions := NilCondition "copy"].
+	aSymbol ifNil: [ ^ stopConditions := NilCondition "copy" ].
 	self error: 'undefined stopcondition for space character'
 ]
 
 { #category : 'private' }
 RubCharacterScanner >> setFont [
+
 	| priorFont |
 	"Set the font and other emphasis."
 	priorFont := font.
-	text == nil
-		ifFalse: [
-			emphasisCode := 0.
-			kern := 0.
-			indentationLevel := 0.
-			alignment := textStyle alignment.
-			font := nil.
-			(text attributesAt: lastIndex forStyle: textStyle) do: [ :att | att emphasizeScanner: self ] ].
-	font == nil
-		ifTrue: [ self setFont: textStyle defaultFontIndex ].
+	text ifNotNil: [
+		emphasisCode := 0.
+		kern := 0.
+		indentationLevel := 0.
+		alignment := textStyle alignment.
+		font := nil.
+		(text attributesAt: lastIndex forStyle: textStyle) do: [ :att | att emphasizeScanner: self ] ].
+	font ifNil: [ self setFont: textStyle defaultFontIndex ].
 	font := font emphasized: emphasisCode.
-	priorFont
-		ifNotNil: [
-			font = priorFont
-				ifTrue: [
-					"font is the same, perhaps the color has changed?
+	priorFont ifNotNil: [
+		font = priorFont ifTrue: [ "font is the same, perhaps the color has changed?
 					We still want kerning between chars of the same
 					font, but of different color. So add any pending kern to destX"
-					destX := destX + (pendingKernX ifNil: [ 0 ]) ].
-			destX := destX + (priorFont descentKern * self scale) ].
-	pendingKernX := 0.	"clear any pending kern so there is no danger of it being added twice"
+			destX := destX + (pendingKernX ifNil: [ 0 ]) ].
+		destX := destX + (priorFont descentKern * self scale) ].
+	pendingKernX := 0. "clear any pending kern so there is no danger of it being added twice"
 	destX := destX - (font descentKern * self scale). "NOTE: next statement should be removed when clipping works"
 	leftMargin ifNotNil: [ destX := destX max: leftMargin ].
-	kern := kern - font baseKern.	"Install various parameters from the font."
-	spaceWidth := font widthOf: Character space.	"	map := font characterToGlyphMap."
+	kern := kern - font baseKern. "Install various parameters from the font."
+	spaceWidth := font widthOf: Character space. "	map := font characterToGlyphMap."
 	stopConditions := DefaultStopConditions
 ]
 

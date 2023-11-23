@@ -29,7 +29,7 @@ ClassRenameFixTest >> setUp [
 ClassRenameFixTest >> tearDown [
 
 	SystemAnnouncer uniqueInstance unsubscribe: self.
-	(self packageName asPackageIfAbsent: [ nil ]) ifNotNil: [ :package | package removeFromSystem ].
+	self packageOrganizer removePackage: self packageName.
 	super tearDown
 ]
 

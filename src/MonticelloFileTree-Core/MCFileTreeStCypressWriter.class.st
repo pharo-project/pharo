@@ -293,10 +293,11 @@ MCFileTreeStCypressWriter >> writeExtensionClassDefinition: definition to: class
 
 { #category : 'writing' }
 MCFileTreeStCypressWriter >> writeMethodDefinition: definition [
-    fileStream
-        nextPutAll: definition category;
-        lf;
-        nextPutAll: definition source withUnixLineEndings
+
+	fileStream
+		nextPutAll: definition protocol;
+		lf;
+		nextPutAll: definition source withUnixLineEndings
 ]
 
 { #category : 'writing' }

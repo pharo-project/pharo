@@ -40,24 +40,32 @@ RingChunkImporter class >> fromStream: aStream [
 
 { #category : 'private' }
 RingChunkImporter >> classDefinition: aString with: chgRec [
-	| tokens theClass |
 
+	| tokens theClass converter |
 	tokens := self scannedSource: aString.
 	theClass := self classNamed: tokens third.
-	theClass superclassName: tokens first;
-			 definitionSource: aString;
-			 category: tokens last.
+	theClass
+		superclassName: tokens first;
+		definitionSource: aString.
 
-	tokens size = 11
-	ifTrue:[ theClass instanceVariables: (tokens fifth findTokens: ' ');
-			 	classVariables: (tokens seventh findTokens: ' ');
-				 sharedPools: (tokens ninth findTokens: ' ') ].
+	converter := CategoryConverter category: tokens last.
 
-	tokens size = 13
-	ifTrue:[ theClass traitCompositionSource: (tokens fifth);
-				instanceVariables: (tokens seventh findTokens: ' ');
-			 	classVariables: (tokens ninth findTokens: ' ');
-				 sharedPools: ((tokens at: 11) findTokens: ' ') ]
+	theClass
+		package: (RGPackageDefinition named: converter packageName);
+		packageTag: converter tagName.
+
+	tokens size = 11 ifTrue: [
+		theClass
+			instanceVariables: (tokens fifth findTokens: ' ');
+			classVariables: (tokens seventh findTokens: ' ');
+			sharedPools: (tokens ninth findTokens: ' ') ].
+
+	tokens size = 13 ifTrue: [
+		theClass
+			traitCompositionSource: tokens fifth;
+			instanceVariables: (tokens seventh findTokens: ' ');
+			classVariables: (tokens ninth findTokens: ' ');
+			sharedPools: ((tokens at: 11) findTokens: ' ') ]
 ]
 
 { #category : 'private' }
@@ -186,14 +194,19 @@ RingChunkImporter >> scannedSource: aString [
 { #category : 'private' }
 RingChunkImporter >> traitDefinition: aString with: chgRec [
 
-	| tokens trait |
+	| tokens trait converter |
 	tokens := self scannedSource: aString.
 	trait := self classNamed: tokens third.
-	trait isTrait
-		ifFalse: [ trait:= self createTraitNamed: tokens third ].
-	trait superclassName: tokens first;
-			 definitionSource: aString;
-			 category: tokens last
+	trait isTrait ifFalse: [ trait := self createTraitNamed: tokens third ].
+	trait
+		superclassName: tokens first;
+		definitionSource: aString.
+
+	converter := CategoryConverter category: tokens last.
+
+	trait
+		package: (RGPackageDefinition named: converter packageName);
+		packageTag: converter tagName
 ]
 
 { #category : 'visitor' }
@@ -236,18 +249,16 @@ RingChunkImporter >> visitDoItChunk: aChunk [
 RingChunkImporter >> visitMethodChunk: aChunk [
 
 	| theClass theMethod |
-	theClass:= self classNamed: aChunk behaviorName.
-	theMethod := (RGMethodDefinition
-						class: theClass
-						selector: aChunk methodSelector)
-							protocol: aChunk category;
-							sourceCode: aChunk contents;
-							stamp: aChunk stamp.
+	theClass := self classNamed: aChunk behaviorName.
+	theMethod := (RGMethodDefinition class: theClass selector: aChunk methodSelector)
+		             protocol: aChunk protocol;
+		             sourceCode: aChunk contents;
+		             stamp: aChunk stamp.
 	aChunk isMeta
 		ifTrue: [
 			theMethod isMeta: true.
-			theClass classSide addMethod: theMethod. ]
-		ifFalse:[ theClass addMethod: theMethod ]
+			theClass classSide addMethod: theMethod ]
+		ifFalse: [ theClass addMethod: theMethod ]
 ]
 
 { #category : 'visitor' }

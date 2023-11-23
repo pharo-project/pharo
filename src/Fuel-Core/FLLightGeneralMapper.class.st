@@ -48,13 +48,6 @@ FLLightGeneralMapper >> visitClass: aClass [
 ]
 
 { #category : 'visiting' }
-FLLightGeneralMapper >> visitClassTrait: aClassTrait [
-	self
-		mapAndTraceByClusterName: aClassTrait
-		to: FLGlobalMetaclassCluster
-]
-
-{ #category : 'visiting' }
 FLLightGeneralMapper >> visitClassVariable: aClassVariable [
 	self visitFixedObject: aClassVariable
 ]

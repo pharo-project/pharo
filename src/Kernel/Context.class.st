@@ -294,7 +294,7 @@ Context >> activeOuterContext [
 Context >> arguments [
 	"returns the arguments of a message invocation"
 	<reflection: 'Stack Manipulation - Context'>
-	^(1 to: self numArgs) collect: [:i | self tempAt: i]
+	^(1 to: self numArgs) collect: [:i | self basicAt: i]
 ]
 
 { #category : 'closure support' }
@@ -502,6 +502,21 @@ Context >> cut: aContext [
 	callee privSender: nil
 ]
 
+{ #category : 'accessing' }
+Context >> deadContextForClosure: closure [
+
+	| outerMethod |
+	outerMethod := closure literalAt: closure literals size + 1.
+
+	^ (self class
+		   sender: self
+		   receiver: nil
+		   method: outerMethod
+		   arguments: {  })
+		  pc: nil;
+		  yourself
+]
+
 { #category : 'printing' }
 Context >> debugStack: stackSize on: aStream [
 	"print a condensed version of the stack up to stackSize on aStream"
@@ -594,7 +609,7 @@ Context >> doPrimitive: primitiveIndex method: meth receiver: aReceiver args: ar
 			[^aReceiver simulateValueWithArguments: arguments first caller: self]].
 
 	((primitiveIndex between: 207 and: 209) "FullBlockClosure primitives"
-	  and: [(self objectClass: aReceiver) includesBehavior: FullBlockClosure]) ifTrue:
+	  and: [(self objectClass: aReceiver) includesBehavior: BlockClosure]) ifTrue:
 		[^primitiveIndex = 208
 			ifTrue: [aReceiver simulateValueWithArguments: arguments first caller: self]
 			ifFalse: [aReceiver simulateValueWithArguments: arguments caller: self]].
@@ -703,7 +718,7 @@ Context >> errorReportOn: stream [
 	"Note: The following is an open-coded version of  Context>>stackOfSize: since this method may be called during a  low space condition and we might run out of space for allocating the  full stack."
 	stackDepth := 0.
 	aContext := self.
-	[ aContext notNil and: [ (stackDepth := stackDepth + 1) < 40 ]]
+	[ aContext isNotNil and: [ (stackDepth := stackDepth + 1) < 40 ]]
 		whileTrue: [
 			"variable values"
 			aContext printDetails: stream.
@@ -872,7 +887,7 @@ Context >> handleSignal: exception [
 Context >> hasContext: aContext [
 	"Answer whether aContext is me or one of my senders"
 
-	^ (self findContextSuchThat: [ :context | context == aContext ]) notNil
+	^ (self findContextSuchThat: [ :context | context == aContext ]) isNotNil
 ]
 
 { #category : 'accessing' }
@@ -925,9 +940,9 @@ Context >> home [
 
 	closureOrNil ifNil: [ ^ self ].
 	"this happens for clean blocks, we try to find the home on the stack"
-	^ closureOrNil outerContext 
-		ifNil: [ self activeHome ]
-		ifNotNil: [:outer | outer home ]
+	^ closureOrNil outerContext
+		  ifNil: [ self activeHome ifNil: [ self deadContextForClosure: self method ] ]
+		  ifNotNil: [ :outer | outer home ]
 ]
 
 { #category : 'accessing' }
@@ -1087,9 +1102,7 @@ Context >> jump: distance withInterpreter: anInterpreter [
 Context >> longStack [
 	"Answer a String showing the top 100 contexts on my sender chain."
 
-	^ String streamContents: [ :stream |
-		(self stackOfSize: 100) do: [ :item |
-			stream print: item; cr ]]
+	^ self printStackOfSize: 100
 ]
 
 { #category : 'accessing' }
@@ -1483,6 +1496,18 @@ Context >> printOn: aStream [
 			outerContext printOn: aStream ]
 ]
 
+{ #category : 'debugger access' }
+Context >> printStackOfSize: aNumber [
+	"Answer a String showing the top ten contexts on my sender chain."
+
+	<reflection: 'Stack Manipulation - Context'>
+	^ String streamContents: [ :stream |
+		  (self stackOfSize: aNumber) do: [ :item |
+			  stream
+				  print: item;
+				  lf ] ]
+]
+
 { #category : 'initialization' }
 Context >> privRefresh [
 	"Reinitialize the receiver so that it is in the state it was at its creation."
@@ -1779,7 +1804,7 @@ Context >> return: value from: aSender [
 		^ self send: #cannotReturn: to: self with: {value} super: false ].
 	newTop := aSender sender.
 	context := self findNextUnwindContextUpTo: newTop.
-	(context notNil and: [ context unwindBlock = closureOrNil ]) ifTrue: [
+	(context isNotNil and: [ context unwindBlock = closureOrNil ]) ifTrue: [
 		"Here the return happens inside the unwind block like in following example:
 				[ #test ] ensure: [ ^ #returnFromUnwindBlock ]
 		In such cases #findNextUnwindContextUpTo: returns the corresponding #ensure context
@@ -2030,10 +2055,8 @@ Context >> shortDebugStackOn: aStream [
 { #category : 'debugger access' }
 Context >> shortStack [
 	"Answer a String showing the top ten contexts on my sender chain."
-	<reflection: 'Stack Manipulation - Context'>
-	^ String streamContents: [ :stream |
-		(self stackOfSize: 10) do: [ :item |
-			stream print: item; cr]]
+
+	^ self printStackOfSize: 10
 ]
 
 { #category : 'debugger access' }
@@ -2383,7 +2406,7 @@ Context >> unwindTo: aContext [
 
 { #category : 'private' }
 Context >> withoutPrimitiveTryNamedPrimitiveIn: aCompiledMethod for: aReceiver withArgs: arguments [
-"When using the debugger we want to run a method step by step. What what happens when we do a step into a CompiledMethod which has a primitive? If such a method is executed from outside the Debugger (normal scenario) the VM knows that such CompiledMethod has a primitive declaration and hence executes it. If it fails then it continues executing all the bytecodes of the method. Otherwise, it just returns.
+	"When using the debugger we want to run a method step by step. What what happens when we do a step into a CompiledMethod which has a primitive? If such a method is executed from outside the Debugger (normal scenario) the VM knows that such CompiledMethod has a primitive declaration and hence executes it. If it fails then it continues executing all the bytecodes of the method. Otherwise, it just returns.
 
 Now, what is the problem with the Debugger? The problem is that if the primitive fail, we don't want that the VM directly executes all the remaining bytecodes of the method. Instead, we would like to go step by step witht he Debugger, just as happens with normal methods.
 
@@ -2396,13 +2419,12 @@ tryNamedPrimitive
 Since this method does not change its bytecodes for every invocation, we can reuse it for all methods with primitives. There are only 2 things we have to change in the template: the number of arguments and the primitive declaration (to use the correct primitive name and module name).
 
 Then what we do is to run that compiled method with the receiver and arguments we have. The result is that we will be invoking almost the same original method but a slighly different version that does not have the smalltalk part after the primitive and that in contrast sends #primitiveFailToken. If this method invocation does not fail, then the Debugger continues debugging the sender of the primitive method. In this case, the step in is the same as step over. If the primitive fails, then the debugger continues executing the smalltalk part after the primitive method. In this case, step in is a real step in."
-	| theMethod  |
-	arguments size > 8
-		ifTrue: [ ^ self class primitiveFailToken ].
+
+	| theMethod |
+	arguments size > 8 ifTrue: [ ^ self class primitiveFailToken ].
 	theMethod := self class tryNamedPrimitiveTemplateMethod.
 	theMethod prepareForSimulationWith: arguments size.
-	theMethod == nil
-		ifTrue: [ ^ self class primitiveFailToken ].
+	theMethod ifNil: [ ^ self class primitiveFailToken ].
 	self setNamedPrimitiveInformationFrom: aCompiledMethod toMethod: theMethod.
 	theMethod flushCache.
 

@@ -299,7 +299,7 @@ MorphTreeNodeMorph >> drawLinesOn: aCanvas [
 	self nextSibling ifNotNil: [ self drawLinesToNextSiblingOn: aCanvas hasToggle: hasToggle ].
 
 	"If I have children and am expanded, draw a line to my first child"
-	(self firstChild notNil and: [ self isExpanded ])
+	(self firstChild isNotNil and: [ self isExpanded ])
 		ifTrue: [ self drawLinesToFirstChildOn: aCanvas]
 ]
 
@@ -474,7 +474,8 @@ MorphTreeNodeMorph >> hasContentToShow [
 { #category : 'testing' }
 MorphTreeNodeMorph >> hasIcon [
 	"Answer whether the receiver has an icon."
-	^ container hasIconBlock or: [self complexContents icon notNil]
+
+	^ container hasIconBlock or: [ self complexContents icon isNotNil ]
 ]
 
 { #category : 'testing' }
@@ -659,7 +660,7 @@ MorphTreeNodeMorph >> matchPath: anAssociation [
 		ifTrue: [ | matchingChildren |
 			anAssociation treeNodeTail ifNil: [ ^ { self } ].
 			matchingChildren := self children collect: [:child | child matchPath: anAssociation treeNodeTail ].
-			^ matchingChildren select: [ :e | e notNil ] ]
+			^ matchingChildren select: [ :e | e isNotNil ] ]
 ]
 
 { #category : 'accessing' }

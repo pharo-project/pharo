@@ -176,9 +176,6 @@ SourceFileBufferedReadWriteStreamTest >> testReadIntoLarger [
 SourceFileBufferedReadWriteStreamTest >> testReadThenWrite [
 	| stream stringStream |
 
-	((SystemVersion current major < 7) or: [ SystemVersion current build < 690 ])
-		ifTrue: [ ^ self skip ].
-
 	stringStream := ReadWriteStream with: '0123456789' copy.
 	stringStream reset.
 	stream := SourceFileBufferedReadWriteStream on: stringStream.
@@ -236,9 +233,6 @@ SourceFileBufferedReadWriteStreamTest >> testSetAtEnd [
 { #category : 'tests' }
 SourceFileBufferedReadWriteStreamTest >> testWriteThenRead [
 	| stream stringStream |
-
-	((SystemVersion current major < 7) or: [ SystemVersion current build < 690 ])
-		ifTrue: [ ^ self skip ].
 
 	stringStream := ReadWriteStream with: '0123456789' copy.
 	stringStream reset.

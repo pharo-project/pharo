@@ -25,7 +25,7 @@ ClyRemoveMethodGroupCommand class >> fullBrowserShortcutActivation [
 
 { #category : 'accessing' }
 ClyRemoveMethodGroupCommand >> defaultMenuIconName [
-	^#removeIcon
+	^#remove
 ]
 
 { #category : 'accessing' }

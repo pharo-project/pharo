@@ -40,13 +40,12 @@ BreakpointTest >> setUp [
 
 { #category : 'running' }
 BreakpointTest >> tearDown [
-	| pkg |
+
 	Breakpoint removeAll.
 	Breakpoint all addAll: previousBreakpoints.
 	SystemAnnouncer announcer: oldSystemAnnouncer.
 	cls ifNotNil: [ cls isObsolete ifFalse: [ cls removeFromSystem ] ].
-	pkg := 'DummyPackage' asPackageIfAbsent: [ ].
-	pkg ifNotNil: [ pkg removeFromSystem ].
+	self packageOrganizer removePackage: 'DummyPackage'.
 	super tearDown
 ]
 
@@ -101,7 +100,7 @@ BreakpointTest >> testBreakInContextNode [
 	Breakpoint registerObserver: observer.
 	breakpoint := Breakpoint new.
 	self should: [breakpoint breakInContext: self node: #node] raise: Break.
-	self assert: observer tag notNil.
+	self assert: observer tag isNotNil.
 	self assert: observer tag breakpoint identicalTo: breakpoint.
 	self assertCollection: observer tag nodes equals: #(#node)
 ]

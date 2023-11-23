@@ -330,10 +330,11 @@ Behavior >> allSuperclasses [
 { #category : 'enumerating' }
 Behavior >> allSuperclassesDo: aBlock [
 	"Evaluate the argument, aBlock, for each of the receiver's superclasses."
+
 	<reflection: 'Class structural inspection - Iterating and querying hierarchy'>
-	self superclass == nil
-		ifFalse: [aBlock value: self superclass.
-				self superclass allSuperclassesDo: aBlock]
+	self superclass ifNotNil: [ :class |
+		aBlock value: class.
+		class allSuperclassesDo: aBlock ]
 ]
 
 { #category : 'accessing - class hierarchy' }
@@ -542,6 +543,18 @@ Behavior >> cleanUp: aggressive [
 	^self cleanUp
 ]
 
+{ #category : 'accessing' }
+Behavior >> codeChangeAnnouncer [
+
+	^ self environment codeChangeAnnouncer
+]
+
+{ #category : 'accessing' }
+Behavior >> codeSupportAnnouncer [
+
+	^ self environment codeSupportAnnouncer
+]
+
 { #category : 'accessing - method dictionary' }
 Behavior >> compiledMethodAt: selector [
 	"Answer the compiled method associated with the argument, selector (a
@@ -584,6 +597,20 @@ Behavior >> deepCopy [
 	"Classes should only be shallowCopied or made anew."
 
 	^ self shallowCopy
+]
+
+{ #category : 'accessing - method dictionary' }
+Behavior >> definedMethods [
+	"Returns the methods of classes excluding the ones of the traits or extensions"
+
+	^ self localMethods reject: [ :method | method isExtension ]
+]
+
+{ #category : 'accessing - method dictionary' }
+Behavior >> definedSelectors [
+	"Returns the selectors of classes excluding the ones of the traits or extensions"
+
+	^ self definedMethods collect: [ :method | method selector ]
 ]
 
 { #category : 'accessing - instances and variables' }
@@ -772,7 +799,7 @@ Behavior >> hasAbstractMethods [
 
 { #category : 'binding' }
 Behavior >> hasBindingOf: aString [
-	^ (self bindingOf: aString) notNil
+	^ (self bindingOf: aString) isNotNil
 ]
 
 { #category : 'testing - method dictionary' }
@@ -1150,6 +1177,19 @@ Behavior >> kindOfSubclass [
 	^ self classLayout kindOfSubclass
 ]
 
+{ #category : 'accessing - method dictionary' }
+Behavior >> localMethods [
+	"returns the methods of classes excluding the ones of the traits that the class uses"
+
+	^ self methods
+]
+
+{ #category : 'accessing - method dictionary' }
+Behavior >> localSelectors [
+	<reflection: 'Class structural inspection - Selectors and methods inspection'>
+	^ self methodDict keys
+]
+
 { #category : 'printing' }
 Behavior >> longPrintOn: aStream [
 	"Append to the argument, aStream, the names and values of all of the receiver's instance variables.  But, not useful for a class with a method dictionary."
@@ -1408,7 +1448,7 @@ Behavior >> removeSelector: aSelector [
 Behavior >> removeSelectorSilently: selector [
 	"Remove selector without sending system change notifications"
 	<reflection: 'Class structural modification - Selector/Method modification'>
-	^ SystemAnnouncer uniqueInstance suspendAllWhile: [self removeSelector: selector]
+	^ self codeChangeAnnouncer suspendAllWhile: [self removeSelector: selector]
 ]
 
 { #category : 'cleanup' }
@@ -1705,12 +1745,12 @@ Behavior >> whichClassDefinesInstVar: aString [
 Behavior >> whichClassIncludesSelector: aSymbol [
 	"Answer the class on the receiver's superclass chain where the
 	argument, aSymbol (a message selector), will be found. Answer nil if none found."
+
 	"Rectangle whichClassIncludesSelector: #inspect."
+
 	<reflection: 'Class structural inspection - Selectors and methods inspection'>
-	(self includesSelector: aSymbol)
-		ifTrue: [^ self].
-	self superclass == nil
-		ifTrue: [^ nil].
+	(self includesSelector: aSymbol) ifTrue: [ ^ self ].
+	self superclass ifNil: [ ^ nil ].
 	^ self superclass whichClassIncludesSelector: aSymbol
 ]
 
@@ -1794,8 +1834,8 @@ Behavior >> withAllSuperclasses [
 { #category : 'enumerating' }
 Behavior >> withAllSuperclassesDo: aBlock [
 	"Evaluate the argument, aBlock, for each of the receiver's superclasses."
+
 	<reflection: 'Class structural inspection - Iterating and querying hierarchy'>
 	aBlock value: self.
-	self superclass == nil
-		ifFalse: [self superclass withAllSuperclassesDo: aBlock]
+	self superclass ifNotNil: [ :class | class withAllSuperclassesDo: aBlock ]
 ]

@@ -245,6 +245,14 @@ CompiledCode >> equivalentTo: aCompiledMethod [
 ]
 
 { #category : 'accessing' }
+CompiledCode >> extensionPackage [
+	"Private method - Do not use it if you don't know what to do. 
+	In case I am in an extension, I return the package containing me. Else return nil."
+
+	^ self originMethod propertyAt: #extensionPackage ifAbsent: [ nil ]
+]
+
+{ #category : 'accessing' }
 CompiledCode >> flag [
 	"Answer the user-level flag bit"
 
@@ -706,6 +714,14 @@ CompiledCode >> origin [
 { #category : 'accessing' }
 CompiledCode >> originMethod [
 	^ self methodClass findOriginMethodOf: self method
+]
+
+{ #category : 'accessing' }
+CompiledCode >> package [
+	"This method returns the package this method belongs to. It takes into account classes and traits.
+	If the method is in no package, returns nil"
+	self isDoIt ifTrue: [ ^ nil ].
+	^ self extensionPackage ifNil: [ self origin package ]
 ]
 
 { #category : 'accessing' }

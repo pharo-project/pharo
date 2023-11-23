@@ -53,13 +53,9 @@ RelationSlot >> addAssociationFrom: ownerObject to: otherObject [
 
 	self inverseSlot isToOneSlot
 		ifTrue: [
-			| oldObject |
-			oldObject := inverseSlot read: otherObject.
-			oldObject notNil
-				ifTrue: [ inverseSlot removeAssociationFrom: otherObject to: oldObject ].
+			(inverseSlot read: otherObject) ifNotNil: [ :oldObject | inverseSlot removeAssociationFrom: otherObject to: oldObject ].
 			inverseSlot writeInverse: ownerObject to: otherObject ]
-		ifFalse: [
-			(inverseSlot read: otherObject) inverseAdd: ownerObject ]
+		ifFalse: [ (inverseSlot read: otherObject) inverseAdd: ownerObject ]
 ]
 
 { #category : 'internal' }

@@ -120,7 +120,7 @@ MenuMorph class >> confirm: queryString trueChoice: trueChoice falseChoice: fals
 		ifNotNil: [ :answer | ^ trueChoice = answer ].
 	aBlock := [ :v | result := v ].
 	menu := self new.
-	menu addTitle: queryString icon: (self iconNamed: #confirmIcon).
+	menu addTitle: queryString icon: (self iconNamed: #confirm).
 	menu
 		add: trueChoice
 		target: aBlock
@@ -339,7 +339,7 @@ MenuMorph >> addCustomMenuItems: aCustomMenu hand: aHandMorph [
 { #category : 'actions' }
 MenuMorph >> addIfNeededTitle: aTitle andIcon: anIcon [
 
-	(aTitle notNil or: [ anIcon notNil ])
+	(aTitle isNotNil or: [ anIcon isNotNil ])
 		ifTrue: [ self addTitle: aTitle icon: anIcon ]
 ]
 
@@ -378,9 +378,9 @@ MenuMorph >> addList: aList [
 				ifTrue: [ self addLine ]
 				ifFalse: [
 					self add: tuple first capitalized translated selector: tuple second.
-					(tuple size > 2 and: [ tuple third notNil ])
+					(tuple size > 2 and: [ tuple third isNotNil ])
 						ifTrue: [ self balloonTextForLastItem: tuple third translated ].
-					(tuple size > 3 and: [ tuple fourth notNil ])
+					(tuple size > 3 and: [ tuple fourth isNotNil ])
 						ifTrue: [ self lastItem icon: (self iconNamed: tuple fourth) ] ] ]
 ]
 
@@ -640,7 +640,7 @@ MenuMorph >> deleteIfPopUp [
 	"Remove this menu from the screen if stayUp is not true. If it is a submenu, also remove its owning menu."
 
 	stayUp ifFalse: [self topRendererOrSelf delete].
-	(popUpOwner notNil and: [popUpOwner isMenuItemMorph]) ifTrue: [
+	(popUpOwner isNotNil and: [popUpOwner isMenuItemMorph]) ifTrue: [
 		popUpOwner isSelected: false.
 		(popUpOwner owner isMenuMorph)
 			ifTrue: [popUpOwner owner deleteIfPopUp]]
@@ -649,11 +649,12 @@ MenuMorph >> deleteIfPopUp [
 { #category : 'control' }
 MenuMorph >> deleteIfPopUp: evt [
 	"Remove this menu from the screen if stayUp is not true. If it is a submenu, also remove its owning menu."
-	stayUp ifFalse: [self topRendererOrSelf delete].
-	(popUpOwner notNil) ifTrue: [
+
+	stayUp ifFalse: [ self topRendererOrSelf delete ].
+	popUpOwner ifNotNil: [
 		popUpOwner isSelected: false.
-		popUpOwner deleteIfPopUp: evt].
-	evt ifNotNil:[evt hand releaseMouseFocus: self]
+		popUpOwner deleteIfPopUp: evt ].
+	evt ifNotNil: [ evt hand releaseMouseFocus: self ]
 ]
 
 { #category : 'control' }
@@ -727,7 +728,7 @@ MenuMorph >> displayFiltered: evt [
 		self removeProperty: #feedbackMorph
 	].
 	    " This method is invoked with evt = nil from MenuMorph >> removeMatchString. The current implementation can't select an item without an event. (Yet :D)"
-       (evt notNil and: [ matches size >= 1 ])
+       (evt isNotNil and: [ matches size >= 1 ])
 		ifTrue: [self selectItem: matches first event: evt]
 ]
 
@@ -744,7 +745,7 @@ MenuMorph >> drawOn: aCanvas [
 
 	super drawOn: aCanvas.
 
-	(self activeHand notNil
+	(self activeHand isNotNil
 			and: [ self activeHand keyboardFocus == self
 					and: [self rootMenu hasProperty: #hasUsedKeyboard]])
 		ifTrue: [
@@ -805,7 +806,7 @@ MenuMorph >> handleFocusEvent: evt [
 MenuMorph >> handlesKeyboard: evt [
 	"Answer whether the receiver handles the keystroke represented by the event"
 
-	^ evt anyModifierKeyPressed not or: [evt commandKeyPressed and: [self commandKeyHandler notNil]]
+	^ evt anyModifierKeyPressed not or: [evt commandKeyPressed and: [self commandKeyHandler isNotNil]]
 ]
 
 { #category : 'events' }
@@ -910,7 +911,7 @@ MenuMorph >> justDroppedInto: aMorph event: evt [
 	| halo |
 	super justDroppedInto: aMorph event: evt.
 	halo := evt hand halo.
-	(halo notNil and:[halo target hasOwner: self]) ifTrue:[
+	(halo isNotNil and:[halo target hasOwner: self]) ifTrue:[
 		"Grabbed single menu item"
 		self addHalo: evt.
 	].
@@ -979,7 +980,7 @@ MenuMorph >> keyStroke: evt [
 		ifFalse: [ self rootMenu setProperty: #hasUsedKeyboard toValue: true.
 			self changed ].
 
-	(evt commandKeyPressed and: [ self commandKeyHandler notNil ])
+	(evt commandKeyPressed and: [ self commandKeyHandler isNotNil ])
 		ifTrue: [ self commandKeyHandler commandKeyTypedIntoMenu: evt.
 			^ self deleteIfPopUp: evt ].
 
@@ -1030,7 +1031,7 @@ MenuMorph >> layoutItems [
 		item icon ifNotNil: [maxIconWidth := maxIconWidth max: item icon width].
 		item hasSubMenu ifTrue: [item subMenu layoutItems]].
 	maxIconWidth isZero
-		ifFalse: [self addBlankIconsIfNecessary: (Smalltalk ui icons blankIconOfWidth: maxIconWidth)]
+		ifFalse: [self addBlankIconsIfNecessary: (Form extent: maxIconWidth @ 1 depth: 8)]
 ]
 
 { #category : 'events' }
@@ -1325,7 +1326,7 @@ MenuMorph >> restoreFocus: originalFocusHolder in: aWorld [
 MenuMorph >> rightArrowStroked: evt [
 	"right arrow key"
 
-	(selectedItem notNil and: [ selectedItem hasSubMenu ])
+	(selectedItem isNotNil and: [ selectedItem hasSubMenu ])
 		ifTrue: [ evt hand newMouseFocus: selectedItem subMenu.
 			selectedItem subMenu moveSelectionDown: 1 event: evt.
 			evt hand newKeyboardFocus: selectedItem subMenu.

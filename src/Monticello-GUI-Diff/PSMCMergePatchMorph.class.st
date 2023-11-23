@@ -140,7 +140,7 @@ PSMCMergePatchMorph >> changesMenu: m [
 		enablementSelector: #notAllConflictsResolved.
 	menu lastItem
 		font: self theme menuFont;
-		icon: (self iconNamed: #smallRightFlushIcon);
+		icon: (self iconNamed: #smallRightFlush);
 		keyText: 'Cmd+f'.
 	^ menu
 ]

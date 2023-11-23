@@ -28,7 +28,7 @@ CompiledMethod >> methodNode [
 
 { #category : '*OpalCompiler-Core' }
 CompiledMethod >> recompile [
-	^ self methodClass recompile: self selector
+	^ self origin recompile: self selector
 ]
 
 { #category : '*OpalCompiler-Core' }

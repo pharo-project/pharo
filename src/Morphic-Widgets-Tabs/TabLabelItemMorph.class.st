@@ -40,7 +40,7 @@ TabLabelItemMorph >> computeSubmorphsToDraw [
 
 	owner width < tab showIconTreshold
 		ifTrue: [
-			(storedIcon isNil and: [ icon notNil ]) ifTrue: [
+			(storedIcon isNil and: [ icon isNotNil ]) ifTrue: [
 				storedIcon := icon.
 				self removeMorph: icon ].
 			^ { morph } ].

@@ -46,13 +46,6 @@ DADependencyTreePresenter class >> defaultLayout [
 		yourself
 ]
 
-{ #category : 'instance creation' }
-DADependencyTreePresenter class >> onPackages: aCollection [
-	^ self new
-		initializeWithRPackageSet: aCollection;
-		yourself
-]
-
 { #category : 'examples' }
 DADependencyTreePresenter class >> onPackagesMatch: match [
 
@@ -63,7 +56,10 @@ DADependencyTreePresenter class >> onPackagesMatch: match [
 
 { #category : 'instance creation' }
 DADependencyTreePresenter class >> onPackagesNamed: aCollection [
-	^ self onPackages: (aCollection collect: [ :each | RPackageSet named: each ])
+
+	^ self new
+		  initializeWith: aCollection;
+		  yourself
 ]
 
 { #category : 'specs' }
@@ -236,11 +232,11 @@ DADependencyTreePresenter >> initializeButtons [
 	buttonAddPackage := self newButton
 		help: 'Add package to the current analysis';
 		label: 'Add packages';
-		icon: (Smalltalk ui icons iconNamed: #addIcon).
+		icon: (self iconNamed: #add).
 	buttonRemovePackage := self newButton
 		help: 'Remove package to the current analysis';
 		label: 'Remove packages';
-		icon: (self iconNamed: #removeIcon).
+		icon: (self iconNamed: #remove).
 	buttonGenerateGraphViz := self newButton
 		help: 'Open the graph in world';
 		label: 'Open the graph'.
@@ -265,8 +261,9 @@ DADependencyTreePresenter >> initializePresenters [
 ]
 
 { #category : 'accessing' }
-DADependencyTreePresenter >> initializeWithRPackageSet: aCollection [
-	self relationGraph: (DAPackageRelationGraph onPackages: (aCollection collect: [ :each | DAPackage on: each ]))
+DADependencyTreePresenter >> initializeWith: packageNames [
+
+	self relationGraph: (DAPackageRelationGraph onPackages: (packageNames collect: [ :packageName | DAPackage onPackageNamed: packageName ]))
 ]
 
 { #category : 'private' }
@@ -294,7 +291,8 @@ DADependencyTreePresenter >> packagesEntryCompletion [
 
 { #category : 'accessing' }
 DADependencyTreePresenter >> pdPackagesFrom: selectedItems [
-	^ selectedItems collect: [ :item | DAPackage on: (RPackageSet named: item content packageName asString) ]
+
+	^ selectedItems collect: [ :item | DAPackage onPackageNamed: item content packageName asString ]
 ]
 
 { #category : 'actions' }

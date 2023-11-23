@@ -9,6 +9,9 @@ Class {
 		'infoCache',
 		'filename'
 	],
+	#classVars : [
+		'ReadingOldExport'
+	],
 	#category : 'Monticello-Storing',
 	#package : 'Monticello',
 	#tag : 'Storing'
@@ -26,6 +29,19 @@ MCMczReader class >> on: s fileName: f [
 		yourself
 ]
 
+{ #category : 'accessing' }
+MCMczReader class >> readingOldExport [
+	"Set true if you want to use the reader to import code that was exported before Pharo 12 and has the old MCClassDefinition format. This will be used by Pharo bootstrap for example until the bootstrap is done by a Pharo 12 image."
+
+	^ ReadingOldExport ifNil: [ ReadingOldExport := false ]
+]
+
+{ #category : 'accessing' }
+MCMczReader class >> readingOldExport: anObject [
+
+	ReadingOldExport := anObject
+]
+
 { #category : 'testing' }
 MCMczReader class >> supportsDependencies [
 	^ true
@@ -34,6 +50,22 @@ MCMczReader class >> supportsDependencies [
 { #category : 'testing' }
 MCMczReader class >> supportsVersions [
 	^ true
+]
+
+{ #category : 'loading' }
+MCMczReader >> adaptDefinitions [
+	"In the old export format the 4th variable of a MCClassDefinition was a category. Now we have the package name and in the last variables we have the tag.
+	This is allowing us to read the old format and try to find the package and the tag. This is not bulletproof."
+
+	self class readingOldExport ifFalse: [ ^ self ].
+	definitions
+		select: [ :def | def isClassDefinition ]
+		thenDo: [ :definition |
+			| converter |
+			converter := CategoryConverter category: definition packageName.
+			definition
+				packageName: converter packageName;
+				tagName: converter tagName ]
 ]
 
 { #category : 'converting' }
@@ -77,12 +109,11 @@ MCMczReader >> contentsForMember: member [
 
 { #category : 'parsing' }
 MCMczReader >> extractDefinitionsFrom: member [
-	| reader |
-	(MCSnapshotReader readerClassForFileNamed: member fileName)
-		ifNotNil: [:rc |
-			reader := rc on: (self contentsForMember: member) readStream.
-			definitions addAll: reader definitions]
 
+	| reader |
+	(MCStReader canReadFileNamed: member fileName) ifFalse: [ ^ self ].
+	reader := MCStReader on: (self contentsForMember: member) readStream.
+	definitions addAll: reader definitions
 ]
 
 { #category : 'parsing' }
@@ -114,14 +145,18 @@ MCMczReader >> infoCache [
 
 { #category : 'loading' }
 MCMczReader >> loadDefinitions [
-	definitions := OrderedCollection new.
-	(self zip memberNamed: 'snapshot.bin') ifNotNil:
-		[:m | [^ definitions := (MCDataStream on: m contents readStream) next definitions ]
-			on: Error do: [:fallThrough |]].
-	"otherwise"
-	(self zip membersMatching: 'snapshot/*')
-		do: [:m | self extractDefinitionsFrom: m].
 
+	definitions := OrderedCollection new.
+	(self zip memberNamed: 'snapshot.bin') ifNotNil: [ :m |
+		[
+		definitions := (MCDataStream on: m contents readStream) next definitions.
+		self adaptDefinitions.
+		^ definitions ]
+			on: Error
+			do: [ :fallThrough |
+				('An error happened while reading MCZ. We will fallback to another format. Short error stack: ' , fallThrough signalerContext shortStack) traceCr ] ].
+	"otherwise"
+	(self zip membersMatching: 'snapshot/*') do: [ :m | self extractDefinitionsFrom: m ]
 ]
 
 { #category : 'loading' }

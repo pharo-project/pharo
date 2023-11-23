@@ -315,7 +315,7 @@ DateAndTimeDosEpochTest >> testToByDo [
 	| schedule |
 	schedule := aDateAndTime to: aDateAndTime + 10 days by: 5 days do: [:i | ].
 	self
-		assert: schedule notNil;
+		assert: schedule isNotNil;
 		assert: schedule duration equals: 10 days
 ]
 

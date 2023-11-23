@@ -260,8 +260,9 @@ OCASTSemanticAnalyzer >> visitPragmaNode: aPragmaNode [
 
 	| varNode |
 	super visitPragmaNode: aPragmaNode.
+	aPragmaNode pragma: aPragmaNode asPragma.
 	aPragmaNode selector = #compilerOptions: ifTrue: [
-		aPragmaNode asPragma sendTo:
+		aPragmaNode pragma sendTo:
 			self compilationContext ].
 
 	"if the pragma is a primitive that defines an error variable, we need to declare a temp

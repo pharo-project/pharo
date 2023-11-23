@@ -8,19 +8,6 @@ CompiledMethod >> criticClass [
 ]
 
 { #category : '*Manifest-Core' }
-CompiledMethod >> criticNameOn: aStream [
-	"This behavior may be folded later by changing the name of this method or using another one."
-
-	aStream
-		<< self methodClass name
-		<< '>>#'
-		<< self selector
-		<< ' ('
-		<< self methodClass instanceSide category
-		<< ')'
-]
-
-{ #category : '*Manifest-Core' }
 CompiledMethod >> criticTheNonMetaclassClass [
 	"Return the class of the receiver for the critic browser. This behavior may be folded later by changing the name of this method or using another one."
 
@@ -37,5 +24,5 @@ CompiledMethod >> manifestBuilderForRuleChecker: aRuleChecker [
 { #category : '*Manifest-Core' }
 CompiledMethod >> mcWorkingCopy [
 
-	MCWorkingCopy workingCopiesForPackage: self package do: [ :package | ^ package ]
+	^ self package mcWorkingCopy
 ]

@@ -35,5 +35,5 @@ ShiftAnonymousClassInstaller >> notifyChanges [
 ]
 
 { #category : 'notifications' }
-ShiftAnonymousClassInstaller >> recategorize: newClass to: category [
+ShiftAnonymousClassInstaller >> recategorize: newClass [
 ]

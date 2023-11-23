@@ -5,8 +5,8 @@ ImageMorph >> drawOnAthensCanvas: aCanvas [
 
 	| cached style|
 
-	cached := aCanvas cacheAt: image ifAbsentPut: [
-		image asAthensPaintOn: aCanvas.
+	cached := aCanvas cacheAt: formSet ifAbsentPut: [
+		formSet asForm asAthensPaintOn: aCanvas.
 		].
 
 	aCanvas setPaint: cached.

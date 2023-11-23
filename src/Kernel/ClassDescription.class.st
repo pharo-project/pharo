@@ -25,14 +25,6 @@ ClassDescription class >> isAbstract [
 	^ self == ClassDescription
 ]
 
-{ #category : 'compiling' }
-ClassDescription >> acceptsLoggingOfCompilation [
-	"Answer whether the receiver's method submisions and class defintions should be logged to the changes file and to the current change set.  The metaclass follows the rule of the class itself
-	Weird name is so that it will come lexically before #compile, so that a clean build can make it through."
-
-	^ true
-]
-
 { #category : 'accessing - method dictionary' }
 ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod inProtocol: protocol [
 
@@ -43,7 +35,7 @@ ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod 
 		priorOrigin := method origin ].
 
 	oldProtocol := self protocolOfSelector: selector.
-	SystemAnnouncer uniqueInstance prevent: MethodRecategorized during: [ self classify: selector under: protocol ].
+	self codeChangeAnnouncer prevent: MethodRecategorized during: [ self classify: selector under: protocol ].
 	newProtocol := self protocolOfSelector: selector.
 
 	self addSelectorSilently: selector withMethod: compiledMethod.
@@ -51,10 +43,12 @@ ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod 
 	self isAnonymous ifTrue: [ ^ self ].
 
 	(priorMethod isNil or: [ priorOrigin ~= compiledMethod origin ])
-		ifTrue: [ SystemAnnouncer uniqueInstance methodAdded: compiledMethod ]
+		ifTrue: [
+			(self packageOrganizer packageForProtocol: newProtocol from: self) addMethod: compiledMethod.
+			self codeChangeAnnouncer announce: (MethodAdded method: compiledMethod) ]
 		ifFalse: [ "If protocol changed and someone is from different package, I need to throw a method recategorized"
-			newProtocol = oldProtocol ifFalse: [ SystemAnnouncer uniqueInstance methodRecategorized: compiledMethod oldProtocol: oldProtocol ].
-			SystemAnnouncer uniqueInstance methodChangedFrom: priorMethod to: compiledMethod oldProtocol: oldProtocol ]
+			newProtocol = oldProtocol ifFalse: [ self announceRecategorizationOf: compiledMethod oldProtocol: oldProtocol ].
+			self codeChangeAnnouncer announce: (MethodModified methodChangedFrom: priorMethod to: compiledMethod oldProtocol: oldProtocol) ]
 ]
 
 { #category : 'instance variables' }
@@ -78,7 +72,9 @@ ClassDescription >> addProtocol: aProtocol [
 
 	protocols := protocols copyWith: protocol.
 
-	SystemAnnouncer announce: (ProtocolAdded in: self protocol: protocol).
+	"For now extensions are managed via protocols. If the protocol represent an extension we need to make sure the corresponding package exists."
+	protocol isExtensionProtocol ifTrue: [ self packageOrganizer ensurePackageOfExtensionProtocol: protocol ].
+	self codeChangeAnnouncer  announce: (ProtocolAdded in: self protocol: protocol).
 	^ protocol
 ]
 
@@ -90,6 +86,7 @@ ClassDescription >> addSelector: selector withMethod: compiledMethod [
 
 { #category : 'accessing - method dictionary' }
 ClassDescription >> addSelectorSilently: selector withMethod: compiledMethod [
+
 	<reflection: 'Class structural modification - Selector/Method modification'>
 	super addSelectorSilently: selector withMethod: compiledMethod.
 	self instanceSide noteAddedSelector: selector meta: self isMeta
@@ -150,6 +147,16 @@ ClassDescription >> allUnreferencedInstanceVariables [
 	"Return a list of the instance variables known to the receiver which are not referenced"
 
 	^ self allSlots reject: [:slot | slot isReferenced]
+]
+
+{ #category : 'accessing - method dictionary' }
+ClassDescription >> announceRecategorizationOf: compiledMethod oldProtocol: oldProtocol [
+
+	"We do not want to do anything when it comes from Traits."
+	compiledMethod isFromTrait ifTrue: [ ^ self ].
+
+	self packageOrganizer repackageMethod: compiledMethod oldProtocol: oldProtocol newProtocol: compiledMethod protocol.
+	self codeChangeAnnouncer announce: (MethodRecategorized method: compiledMethod oldProtocol: oldProtocol)
 ]
 
 { #category : 'authors' }
@@ -227,14 +234,6 @@ ClassDescription >> classSide [
 ]
 
 { #category : 'instance variables' }
-ClassDescription >> classThatDefinesClassVariable: classVarName [
-	"Answer the class that defines the given class variable"
-	<reflection: 'Class structural inspection - Class variable inspection'>
-	(self classPool includesKey: classVarName asSymbol) ifTrue: [^ self].
-	^self superclass ifNotNil: [self superclass classThatDefinesClassVariable: classVarName]
-]
-
-{ #category : 'instance variables' }
 ClassDescription >> classThatDefinesInstVarNamed: instVarName [
 	<reflection: 'Class structural inspection - Instance variable inspection'>
 	^self
@@ -308,7 +307,7 @@ ClassDescription >> compile: sourceCode classified: protocol withStamp: changeSt
 		  classified: protocol
 		  withStamp: changeStamp
 		  notifying: requestor
-		  logSource: self acceptsLoggingOfCompilation
+		  logSource: true
 ]
 
 { #category : 'compiling' }
@@ -354,7 +353,7 @@ ClassDescription >> compileSilently: sourceCode classified: protocolName [
 ClassDescription >> compileSilently: sourceCode classified: protocolName notifying: requestor [
 	"Compile the code and classify the resulting method in the given protocol, leaving no trail in the system log, nor in any change set, nor in the 'recent submissions' list."
 
-	^ SystemAnnouncer uniqueInstance suspendAllWhile: [ self compile: sourceCode classified: protocolName notifying: requestor ]
+	^ self codeChangeAnnouncer suspendAllWhile: [ self compile: sourceCode classified: protocolName notifying: requestor ]
 ]
 
 { #category : 'copying' }
@@ -480,11 +479,6 @@ ClassDescription >> ensureProtocol: aProtocol [
 	^ self addProtocol: aProtocol
 ]
 
-{ #category : 'private' }
-ClassDescription >> errorCategoryName [
-	self error: 'Category name must be a String'
-]
-
 { #category : 'fileout' }
 ClassDescription >> expandedDefinitionString [
 	"Return the string of the class definition, each of my subclass may tell the printer how to printer it. A kind of double dispatch since we have multiple printers and multiple entities to be printed."
@@ -498,10 +492,24 @@ ClassDescription >> expandedDefinitionStringFor: aPrinter [
 	^ self subclassResponsibility
 ]
 
+{ #category : 'accessing - packages' }
+ClassDescription >> extendingPackages [
+	"the extending packages of a class are the packages that extend it."
+
+	^ (self localMethods , self classSide localMethods
+		   select: [ :each | each isExtension ]
+		   thenCollect: [ :each | each extensionPackage ]) asIdentitySet
+]
+
 { #category : 'protocols' }
 ClassDescription >> extensionProtocols [
 
 	^ self protocols select: [ :protocol | protocol isExtensionProtocol ]
+]
+
+{ #category : 'accessing - packages' }
+ClassDescription >> extensionSelectors [
+	^ self extendingPackages flatCollect: [ :each | each extensionSelectorsForClass: self ]
 ]
 
 { #category : 'instance variables' }
@@ -646,6 +654,25 @@ ClassDescription >> isDeprecated [
 	^ self package isDeprecated
 ]
 
+{ #category : 'testing' }
+ClassDescription >> isExtended [
+
+	^ self extendingPackages isEmpty
+]
+
+{ #category : 'testing' }
+ClassDescription >> isExtendedInPackage: aPackage [
+	"returns true if aPackage defines an extension to this class"
+	^ aPackage extendsClass: self
+]
+
+{ #category : 'testing' }
+ClassDescription >> isInstalled [
+	"Return true if I am installed in the system (which is equivalent to me been part of my package organizer). Else, return false."
+
+	^ self packageOrganizer isClassInstalled: self
+]
+
 { #category : 'accessing - parallel hierarchy' }
 ClassDescription >> isInstanceSide [
 	"Return true whether the receiver is a class (in a couple class/metaclass sense)."
@@ -785,7 +812,7 @@ ClassDescription >> notifyOfRecategorizedSelector: selector from: oldProtocol to
 	"If compiled method is not there, it meens it has been removed, not recategorized... so I skip
 	 the method recategorized announce"
 
-	self compiledMethodAt: selector ifPresent: [ :method | SystemAnnouncer uniqueInstance methodRecategorized: method oldProtocol: oldProtocol ]
+	self compiledMethodAt: selector ifPresent: [ :method | self announceRecategorizationOf: method oldProtocol: oldProtocol ]
 ]
 
 { #category : 'private' }
@@ -819,6 +846,58 @@ ClassDescription >> oldPharoDefinition [
 	^ ClassDefinitionPrinter oldPharo
 		for: self;
 		definitionString
+]
+
+{ #category : 'accessing' }
+ClassDescription >> package [
+
+	^ self subclassResponsibility
+]
+
+{ #category : 'accessing - packages' }
+ClassDescription >> package: aPackage [
+
+	^ (self packageOrganizer ensurePackage: aPackage) addClass: self
+]
+
+{ #category : 'accessing - packages' }
+ClassDescription >> package: aPackage tag: aTag [
+
+	^ (self packageOrganizer ensureTag: aTag inPackage: aPackage) addClass: self
+]
+
+{ #category : 'accessing - packages' }
+ClassDescription >> packageName [
+
+	^ self package ifNotNil: [ :package | package name ]
+]
+
+{ #category : 'accessing' }
+ClassDescription >> packageTag [
+	"Package tags are sub categories of packages to have a better organization of the packages."
+
+	^ self subclassResponsibility
+]
+
+{ #category : 'accessing - packages' }
+ClassDescription >> packageTag: aTag [
+	(aTag isString ifTrue: [ self package ensureTag: aTag ] ifFalse: [ aTag ]) addClass: self
+]
+
+{ #category : 'accessing - packages' }
+ClassDescription >> packageTagName [
+	"Package tags are sub categories of packages to have a better organization of the packages. I return the name of my package tag.."
+
+	^ self packageTag name
+]
+
+{ #category : 'accessing - packages' }
+ClassDescription >> packages [
+	"the extending packages of a class are the packages that extend it."
+
+	^ self extendingPackages
+		  add: self package;
+		  yourself
 ]
 
 { #category : 'printing' }
@@ -898,8 +977,7 @@ ClassDescription >> removeFromProtocols: aSelector [
 
 	(self protocolOfSelector: aSelector) ifNotNil: [ :protocol |
 		protocol removeMethodSelector: aSelector.
-		self removeProtocolIfEmpty: protocol.
-		self notifyOfRecategorizedSelector: aSelector from: protocol to: nil ]
+		self removeProtocolIfEmpty: protocol ]
 ]
 
 { #category : 'instance variables' }
@@ -917,6 +995,15 @@ ClassDescription >> removeNonexistentSelectorsFromProtocols [
 		protocol methodSelectors
 			reject: [ :selector | self includesSelector: selector ]
 			thenDo: [ :selector | self removeFromProtocols: selector ] ]
+]
+
+{ #category : 'accessing - packages' }
+ClassDescription >> removePackageTag [
+	"Removing a package tag is the same as moving it to the root tag that is the uncategorized tag."
+
+	| package |
+	package := self package.
+	package moveClass: self toTag: package rootTag
 ]
 
 { #category : 'protocols' }
@@ -944,7 +1031,7 @@ ClassDescription >> removeProtocolIfEmpty: aProtocol [
 
 	oldProtocolNames := self protocolNames.
 	protocols := protocols copyWithout: protocol.
-	SystemAnnouncer announce: (ProtocolRemoved in: self protocol: protocol)
+	self codeChangeAnnouncer  announce: (ProtocolRemoved in: self protocol: protocol)
 ]
 
 { #category : 'accessing - method dictionary' }
@@ -952,20 +1039,19 @@ ClassDescription >> removeSelector: selector [
 	"Remove the message whose selector is given from the method
 	dictionary of the receiver, if it is there. Answer nil otherwise."
 
-  <reflection: 'Class structural modification - Selector/Method modification'>
-	| method protocol package origin |
+	<reflection: 'Class structural modification - Selector/Method modification'>
+	| method origin |
 	method := self compiledMethodAt: selector ifAbsent: [ ^ nil ].
 	origin := method origin.
-	protocol := self protocolOfSelector: selector.
-	package := method package.
 
+	"Save the protocol in the properties so that method can still answer their protocol after been removed."
+	method propertyAt: #protocol put: (self protocolOfSelector: selector).
 	method removeFromPackage.
-	"When we remove a method we do not want to announce a recategorization."
-	SystemAnnouncer uniqueInstance prevent: MethodRecategorized during: [ self removeFromProtocols: selector ].
+	self removeFromProtocols: selector.
 
 	super removeSelector: selector.
 
-	SystemAnnouncer uniqueInstance methodRemoved: method protocol: protocol origin: origin package: package
+	self codeChangeAnnouncer methodRemoved: method origin: origin
 ]
 
 { #category : 'instance variables' }
@@ -996,7 +1082,7 @@ ClassDescription >> renameProtocol: anOldProtocol as: aNewProtocol [
 		oldProtocol resetMethodSelectors.
 		self removeProtocolIfEmpty: oldProtocol.
 
-	"I need to notify also the selector changes, otherwise RPackage will not notice"
+	"I need to notify also the selector changes, otherwise Package will not notice"
 	newProtocol methodSelectors do: [ :each | self notifyOfRecategorizedSelector: each from: oldProtocol to: newProtocol ]
 ]
 

@@ -496,7 +496,7 @@ Unicode class >> initialize [
 { #category : 'class initialization' }
 Unicode class >> initializeTagConstants [
 	" Unicode initializeTagConstants "
-	(self classPool keys
+	(self classVarNames
 		select: [:sym | sym size = 2
 						and: [sym first isUppercase and: [sym last isLowercase]]]) asSortedCollection
 		inject: 1

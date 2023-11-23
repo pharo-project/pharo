@@ -363,12 +363,12 @@ ZnUrl >> fragment: string [
 
 { #category : 'testing' }
 ZnUrl >> hasFragment [
-	^ fragment notNil
+	^ fragment isNotNil
 ]
 
 { #category : 'testing' }
 ZnUrl >> hasHost [
-	^ host notNil
+	^ host isNotNil
 ]
 
 { #category : 'testing' }
@@ -379,27 +379,29 @@ ZnUrl >> hasNonDefaultPort [
 
 { #category : 'testing' }
 ZnUrl >> hasPassword [
-	^ password notNil
+	^ password isNotNil
 ]
 
 { #category : 'testing' }
 ZnUrl >> hasPath [
-	^ segments notNil and: [ segments isEmpty not ]
+
+	^ segments isNotNil and: [ segments isNotEmpty ]
 ]
 
 { #category : 'testing' }
 ZnUrl >> hasPort [
-	^ port notNil
+	^ port isNotNil
 ]
 
 { #category : 'testing' }
 ZnUrl >> hasQuery [
-	^ query notNil and: [ query isEmpty not ]
+
+	^ query isNotNil and: [ query isNotEmpty ]
 ]
 
 { #category : 'testing' }
 ZnUrl >> hasScheme [
-	^ scheme notNil
+	^ scheme isNotNil
 ]
 
 { #category : 'testing' }
@@ -409,7 +411,7 @@ ZnUrl >> hasSecureScheme [
 
 { #category : 'testing' }
 ZnUrl >> hasUsername [
-	^ username notNil
+	^ username isNotNil
 ]
 
 { #category : 'comparing' }

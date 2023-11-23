@@ -412,7 +412,7 @@ RubSmalltalkEditor >> copySelection [
 	node := self bestNodeInTextArea.
 	escapingCharacter := self getEscapeCharacterFromAst: node.
 
-	selection := (escapingCharacter notNil and: [
+	selection := (escapingCharacter isNotNil and: [
 		"The node, if a comment or a string, should entirely contain the selection.
 		We convert the node source interval to an open interval to ignore the node delimiters."
 		node sourceInterval asOpenInterval includesAll: self selectionInterval ])

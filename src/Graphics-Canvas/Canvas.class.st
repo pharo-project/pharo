@@ -79,6 +79,12 @@ Canvas >> draw: anObject [
 ]
 
 { #category : 'drawing - images' }
+Canvas >> drawFormSet: formSet at: point [
+
+	^ self drawImage: formSet asForm at: point
+]
+
+{ #category : 'drawing - images' }
 Canvas >> drawImage: aForm at: aPoint [
 	"Draw the given Form, which is assumed to be a Form or ColorForm"
 
@@ -242,7 +248,7 @@ Canvas >> fillRectangle: aRectangle fillStyle: aFillStyle borderStyle: aBorderSt
        aFillStyle isTransparent ifFalse: [
                self fillRectangle: (aRectangle insetBy: aBorderStyle width) fillStyle: aFillStyle ].
 
-       (aBorderStyle notNil and: [aBorderStyle width]) >= 0 ifTrue: [ aBorderStyle frameRectangle: aRectangle on: self ]
+       (aBorderStyle isNotNil and: [aBorderStyle width]) >= 0 ifTrue: [ aBorderStyle frameRectangle: aRectangle on: self ]
 ]
 
 { #category : 'initialization' }
@@ -711,6 +717,12 @@ Canvas >> translateTo: newOrigin clippingTo: aRectangle during: aBlock [
 	self translateBy: newOrigin - self origin
 		clippingTo: (aRectangle translateBy: self origin negated)
 		during: aBlock
+]
+
+{ #category : 'drawing - images' }
+Canvas >> translucentFormSet: formSet at: point [
+
+	^ self translucentImage: formSet asForm at: point
 ]
 
 { #category : 'drawing - images' }

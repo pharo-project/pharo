@@ -124,11 +124,6 @@ MCRepository >> isValid [
 	^true
 ]
 
-{ #category : 'accessing' }
-MCRepository >> possiblyNewerVersionsOfAnyOf: someVersions [
-	^#()
-]
-
 { #category : 'printing' }
 MCRepository >> printOn: aStream [
 	super printOn: aStream.
@@ -150,9 +145,8 @@ MCRepository >> storeDependencies: aVersion [
 
 { #category : 'storing' }
 MCRepository >> storeVersion: aVersion [
-	self basicStoreVersion: aVersion.
-	SystemAnnouncer uniqueInstance
-		announce: (MCVersionSaved version: aVersion repository: self)
+
+	self basicStoreVersion: aVersion
 ]
 
 { #category : 'accessing' }

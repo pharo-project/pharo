@@ -90,13 +90,30 @@ MetacelloAbstractPackageSpec >> configMethodCascadeOn: aStream member: aMember l
 MetacelloAbstractPackageSpec >> configMethodOn: aStream for: aValue selector: selector cascading: cascading cascade: cascade indent: indent [
 
 	| valuePrintString |
-	aValue == nil ifTrue: [ ^self ].
-	cascading ifTrue: [ aStream cr; tab: indent ].
+	aValue ifNil: [ ^ self ].
+	cascading ifTrue: [
+		aStream
+			cr;
+			tab: indent ].
 	valuePrintString := aValue value isSymbol
-		ifTrue: [ '#' , aValue value asString printString ]
-		ifFalse: [ aValue value printString ].
-	aStream  nextPutAll: selector, valuePrintString.
+		                    ifTrue: [ '#' , aValue value asString printString ]
+		                    ifFalse: [ aValue value printString ].
+	aStream nextPutAll: selector , valuePrintString.
 	cascade ifTrue: [ aStream nextPut: $; ]
+]
+
+{ #category : 'querying' }
+MetacelloAbstractPackageSpec >> file [ 
+	"MetacelloPackageSpec compatibility"
+	
+	^nil
+]
+
+{ #category : 'accessing' }
+MetacelloAbstractPackageSpec >> getFile [
+	"MetacelloPackageSpec compatibility"
+
+	^ nil
 ]
 
 { #category : 'testing' }
@@ -112,8 +129,7 @@ MetacelloAbstractPackageSpec >> includeSpecNamesForPackageOrdering: aVersionSpec
 { #category : 'querying' }
 MetacelloAbstractPackageSpec >> includes [
 
-	includes == nil ifTrue: [ includes := #() ].
-	^includes
+	^ includes ifNil: [ includes := #(  ) ]
 ]
 
 { #category : 'accessing' }
@@ -127,10 +143,22 @@ MetacelloAbstractPackageSpec >> includesForPackageOrdering [
   ^ #()
 ]
 
+{ #category : 'querying' }
+MetacelloAbstractPackageSpec >> isPackageLoaded [
+
+	^ false
+]
+
 { #category : 'printing' }
 MetacelloAbstractPackageSpec >> label [
 
 	^self name
+]
+
+{ #category : 'loading' }
+MetacelloAbstractPackageSpec >> loadUsing: aLoader gofer: gofer [
+
+	^self subclassResponsibility
 ]
 
 { #category : 'merging' }
@@ -157,18 +185,14 @@ MetacelloAbstractPackageSpec >> mergeMap [
 { #category : 'merging' }
 MetacelloAbstractPackageSpec >> mergeSpec: anotherSpec [
 
-	| newSpec map anotherRequires anotherIncludes anotherAnswers |
+	| newSpec map |
 	newSpec := super mergeSpec: anotherSpec.
 	map := anotherSpec mergeMap.
-	anotherSpec name ~~ nil 
-		ifTrue: [ newSpec name: anotherSpec name ].
-	(anotherRequires := map at: #requires) ~~ nil
-		ifTrue: [ newSpec setRequires: self requires, anotherRequires ].
-	(anotherIncludes := map at: #includes) ~~ nil
-		ifTrue: [ newSpec setIncludes: self includes, anotherIncludes ].
-	(anotherAnswers := map at: #answers) ~~ nil
-		ifTrue: [ newSpec setAnswers: self answers, anotherAnswers ].
-	^newSpec
+	anotherSpec name ifNotNil: [ newSpec name: anotherSpec name ].
+	(map at: #requires) ifNotNil: [ :anotherRequires | newSpec setRequires: self requires , anotherRequires ].
+	(map at: #includes) ifNotNil: [ :anotherIncludes | newSpec setIncludes: self includes , anotherIncludes ].
+	(map at: #answers) ifNotNil: [ :anotherAnswers | newSpec setAnswers: self answers , anotherAnswers ].
+	^ newSpec
 ]
 
 { #category : 'querying' }
@@ -221,6 +245,12 @@ MetacelloAbstractPackageSpec >> removeFromMetacelloPackages: aMetacelloPackagesS
 			yourself)
 ]
 
+{ #category : 'loading' }
+MetacelloAbstractPackageSpec >> repositorySpecs [
+
+	^#()
+]
+
 { #category : 'private' }
 MetacelloAbstractPackageSpec >> requiredSpecNamesForPackageOrdering: aVersionSpec [
   ^ (self requiredSpecsForPackageOrdering: aVersionSpec)
@@ -235,8 +265,7 @@ MetacelloAbstractPackageSpec >> requiredSpecsForPackageOrdering: aVersionSpec [
 { #category : 'querying' }
 MetacelloAbstractPackageSpec >> requires [
 
-	requires == nil ifTrue: [ requires := #() ].
-	^requires
+	^ requires ifNil: [ requires := #(  ) ]
 ]
 
 { #category : 'accessing' }
@@ -253,6 +282,23 @@ MetacelloAbstractPackageSpec >> requiresSpecsForPackageOrdering: aVersionSpec [
 { #category : 'private' }
 MetacelloAbstractPackageSpec >> resolveSpecsForPackageOrdering: aVersionSpec [
   ^ {self}
+]
+
+{ #category : 'private' }
+MetacelloAbstractPackageSpec >> resolveToLoadableSpec [
+
+	^self
+]
+
+{ #category : 'private' }
+MetacelloAbstractPackageSpec >> resolveToPackagesAndProjectsIn: aVersionSpec  visited: visited [
+  ^ self resolveToPackagesIn: aVersionSpec visited: visited
+]
+
+{ #category : 'private' }
+MetacelloAbstractPackageSpec >> resolveToPackagesIn: aVersionSpec visited: visited [
+
+	^self subclassResponsibility
 ]
 
 { #category : 'private' }
@@ -298,4 +344,11 @@ MetacelloAbstractPackageSpec >> specs: specNames forPackageOrdering: aVersionSpe
           packageOrProjectSpecs
             addAll: (spec resolveSpecsForPackageOrdering: aVersionSpec) ] ].
   ^ packageOrProjectSpecs
+]
+
+{ #category : 'querying' }
+MetacelloAbstractPackageSpec >> version [ 
+	"MetacelloPackageSpec compatibility"
+	
+	^nil
 ]

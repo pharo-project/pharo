@@ -408,11 +408,9 @@ PositionableStream >> nextWord [
 	"Answer the next two bytes from the receiver as an Integer."
 
 	| high low |
-	high := self next.
-		high==nil ifTrue: [^false].
-	low := self next.
-		low==nil ifTrue: [^false].
-	^(high asInteger bitShift: 8) + low asInteger
+	high := self next ifNil: [ ^ false ].
+	low := self next ifNil: [ ^ false ].
+	^ (high asInteger bitShift: 8) + low asInteger
 ]
 
 { #category : 'accessing - nonhomogeneous' }
@@ -585,10 +583,10 @@ PositionableStream >> readInto: aCollection startingAt: startIndex count: n [
 	"Read n objects into the given collection.
 	Return number of elements that have been read."
 
-	| obj |
 	0 to: n - 1 do: [ :i |
-		(obj := self next) == nil ifTrue: [ ^ i ].
-		aCollection at: startIndex + i put: obj ].
+		self next
+			ifNil: [ ^ i ]
+			ifNotNil: [ :obj | aCollection at: startIndex + i put: obj ] ].
 	^ n
 ]
 

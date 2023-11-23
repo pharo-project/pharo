@@ -217,11 +217,9 @@ CompiledMethodTest >> nonAbstractMethod [
 	^ 4 + 5
 ]
 
-{ #category : 'private - accessing' }
+{ #category : 'running' }
 CompiledMethodTest >> packageNameForTests [
-	"Answer the category where to classify temporarily created classes"
-
-	^'Dummy-Tests-Class'
+	^ #'Generated-Compiled-Method-Test-Package'
 ]
 
 { #category : 'examples' }
@@ -295,6 +293,24 @@ CompiledMethodTest >> testAccessesSlot [
 	self assert: ((Point>>#setX:setY:) accessesSlot: (Point slotNamed: #y))
 ]
 
+{ #category : 'tests - compilation' }
+CompiledMethodTest >> testAddingSlotDoesNotRemoveExtension [
+	"Regression test for a case where recompiling a method removed the fact that it was an extension."
+
+	[
+	class := self class classInstaller make: [ :aBuilder |
+		         aBuilder
+			         name: #TUTU;
+			         slots: { #test };
+			         package: self packageNameForTests ].
+	class compile: 'isExtensionTestMethod ^ test' classified: '*GeneratedPackageForTest'.
+	self assert: (class >> #isExtensionTestMethod) isExtension.
+
+	class addInstVarNamed: 'test2'.
+
+	self assert: (class >> #isExtensionTestMethod) isExtension ] ensure: [ self packageOrganizer removePackage: 'GeneratedPackageForTest' ]
+]
+
 { #category : 'tests - converting' }
 CompiledMethodTest >> testAsString [
 
@@ -347,7 +363,24 @@ CompiledMethodTest >> testComparison [
 			self deny: each equals: method2 ]
 ]
 
-{ #category : 'tests' }
+{ #category : 'tests - compilation' }
+CompiledMethodTest >> testCompilingExistingMethodDoesNotRemoveExtensions [
+	"Regression test for a case where recompiling a method removed the fact that it was an extension."
+
+	[
+	| method |
+	self class compile: 'isExtensionTestMethod ^ 1' classified: '*GeneratedPackageForTest'.
+	method := self class >> #isExtensionTestMethod.
+	self assert: method isExtension.
+
+	self class compile: 'isExtensionTestMethod ^ 2'.
+
+	self assert: method isExtension ] ensure: [
+		self packageOrganizer removePackage: 'GeneratedPackageForTest'.
+		self class compiledMethodAt: #isExtensionTestMethod ifPresent: [ :method | method removeFromSystem ] ]
+]
+
+{ #category : 'tests - copying' }
 CompiledMethodTest >> testCopy [
 	<pragma: #pragma>
 	| method copy |
@@ -442,7 +475,7 @@ CompiledMethodTest >> testHasPragma [
 	self deny: methodWithOutPragma hasPragma
 ]
 
-{ #category : 'tests - abstract' }
+{ #category : 'tests - testing' }
 CompiledMethodTest >> testIsAbstract [
 
 	self assert: (self class >> #abstractMethod) isAbstract.
@@ -466,7 +499,7 @@ CompiledMethodTest >> testIsDeprecated [
 			ifFalse: [ self deny: (self class >> each) isDeprecated ] ]
 ]
 
-{ #category : 'tests - abstract' }
+{ #category : 'tests - testing' }
 CompiledMethodTest >> testIsExtension [
 
 	[
@@ -479,7 +512,8 @@ CompiledMethodTest >> testIsExtension [
 	self assert: method isExtension.
 
 	self class removeSelector: #isExtensionTestMethod.
-	self deny: method isExtension ] ensure: [
+	"Now we keep the infos about extension methods even after removing them"
+	self assert: method isExtension ] ensure: [
 		self packageOrganizer removePackage: 'Kernel-Tests-Generated-Package'.
 		self class compiledMethodAt: #isExtensionTestMethod ifPresent: [ :method | method removeFromSystem ] ]
 ]
@@ -805,6 +839,24 @@ CompiledMethodTest >> testPropertyAtIfPresentDoNotClashWithPragmas [
 	self assert: (method propertyAt: #bebou ifPresent: [ :value | value ]) ] ensure: [ method removeProperty: #bebou ]
 ]
 
+{ #category : 'tests - compiling' }
+CompiledMethodTest >> testProtocolOfRemovedMethod [
+
+	| method |
+	class := Object newAnonymousSubclass.
+	class compile: 'billy ^ 1' classified: 'cat'.
+
+	method := class >> #billy.
+
+	self assert: method protocol name equals: #cat.
+	self assert: method protocolName equals: #cat.
+
+	class removeSelector: #billy.
+
+	self assert: method protocol name equals: #cat.
+	self assert: method protocolName equals: #cat
+]
+
 { #category : 'tests - instance variable' }
 CompiledMethodTest >> testReadsField [
 	| method |
@@ -836,6 +888,23 @@ CompiledMethodTest >> testReadsSlot [
 	self assert: ((Point>>#x) readsSlot: (Point slotNamed: #x)).
 	self deny: ((Point>>#x) readsSlot: (Point slotNamed: #y)).
 	self deny: ((Point>>#setX:setY:) readsSlot: (Point slotNamed: #y))
+]
+
+{ #category : 'tests - compilation' }
+CompiledMethodTest >> testRecompilingDoesNotRemoveExtensions [
+	"Regression test for a case where recompiling a method removed the fact that it was an extension."
+
+	[
+	| method |
+	self class compile: 'isExtensionTestMethod ^ 1' classified: '*GeneratedPackageForTest'.
+	method := self class >> #isExtensionTestMethod.
+	self assert: method isExtension.
+
+	method recompile.
+
+	self assert: method isExtension ] ensure: [
+		self packageOrganizer removePackage: 'GeneratedPackageForTest'.
+		self class compiledMethodAt: #isExtensionTestMethod ifPresent: [ :method | method removeFromSystem ] ]
 ]
 
 { #category : 'tests - accessing' }
@@ -932,61 +1001,62 @@ CompiledMethodTest >> testUndeclaredReparationWithGlobal [
 CompiledMethodTest >> testUndeclaredReparationWithInstanceVariable [
 
 	| method method2 method3 method4 receiver |
-
 	Smalltalk globals at: #TestUndeclaredVariableClass ifPresent: [ :c | c removeFromSystem ].
-	class := (Object << #TestUndeclaredVariableClass package: '') install.
+	class := (Object << #TestUndeclaredVariableClass package: self packageNameForTests) install.
 	self assert: (class instVarIndexFor: #TestUndeclaredVariable) equals: 0.
 	receiver := class new.
 
 	"Note: unlike related tests, we need here a reveiver (see above) and to install the method in the class"
-	method := class compiler permitFaulty: true; install: 'x ^TestUndeclaredVariable ifNil: [ TestUndeclaredVariable ]'.
+	method := class compiler
+		          permitFaulty: true;
+		          install: 'x ^TestUndeclaredVariable ifNil: [ TestUndeclaredVariable ]'.
 	self assert: method usesUndeclareds.
 	self should: [ receiver executeMethod: method ] raise: UndeclaredVariableRead.
 
 	"Update the class (same identity, not a new class)"
-	self assert: (Object << #TestUndeclaredVariableClass slots: { #TestUndeclaredVariable}; package: '') install equals: class.
+	self
+		assert: ((Object << #TestUndeclaredVariableClass)
+				 slots: { #TestUndeclaredVariable };
+				 package: self packageNameForTests) install
+		equals: class.
 	self assert: (class instVarIndexFor: #TestUndeclaredVariable) equals: 1.
 	receiver instVarAt: 1 put: 42.
 
 	"Adding ivars DOES not repair the CompiledMethod"
 	self assert: method usesUndeclareds.
 	"But recompile and install a NEW method"
-	self deny: method equals: (method2 := class>>#x). "It is a new method"
+	self deny: method equals: (method2 := class >> #x). "It is a new method"
 	self deny: method2 usesUndeclareds.
 	self assert: (receiver executeMethod: method2) equals: 42.
 
 	"Removal of ivar DOES recompile a new new one"
-	class := (Object << #TestUndeclaredVariableClass package: '') install.
-	self deny: method2 equals: (method3 := class>>#x). "It is a new method"
+	class := (Object << #TestUndeclaredVariableClass package: self packageNameForTests) install.
+	self deny: method2 equals: (method3 := class >> #x). "It is a new method"
 	self assert: method3 usesUndeclareds.
 	self should: [ receiver executeMethod: method3 ] raise: UndeclaredVariableRead.
 
 	"Thus adding back DOES recompile again"
-	class := (Object << #TestUndeclaredVariableClass slots: {#TestUndeclaredVariable}; package: '') install.
+	class := ((Object << #TestUndeclaredVariableClass)
+		          slots: { #TestUndeclaredVariable };
+		          package: self packageNameForTests) install.
 	receiver instVarAt: 1 put: 421.
-	self deny: method3 equals: (method4 := class>>#x). "It is a new method"
+	self deny: method3 equals: (method4 := class >> #x). "It is a new method"
 	self deny: method4 usesUndeclareds.
-	self assert: (receiver executeMethod: method4) equals: 421.
-
-
+	self assert: (receiver executeMethod: method4) equals: 421
 ]
 
 { #category : 'tests - literals' }
 CompiledMethodTest >> testUndeclaredReparationWithShared [
 
 	| method |
-	class := (Object
-		         << #TestUndeclaredVariableClass
-		         package: '') install.
+	class := (Object << #TestUndeclaredVariableClass package: self packageNameForTests) install.
 	method := class compiler
 		          permitFaulty: true;
-		          compile:
-			          'x ^TestUndeclaredVariable ifNil: [ TestUndeclaredVariable ]'.
+		          compile: 'x ^TestUndeclaredVariable ifNil: [ TestUndeclaredVariable ]'.
 	"Add and initialize a shared"
-	class := (Object
-		         << #TestUndeclaredVariableClass
-		         sharedVariables:  {#TestUndeclaredVariable};
-		         package: '') install.
+	class := ((Object << #TestUndeclaredVariableClass)
+		          sharedVariables: { #TestUndeclaredVariable };
+		          package: self packageNameForTests) install.
 
 	nil executeMethod: method.
 	nil executeMethod: method
@@ -996,18 +1066,14 @@ CompiledMethodTest >> testUndeclaredReparationWithShared [
 CompiledMethodTest >> testUndeclaredReparationWithSharedWasCrashingOnOldVM1001 [
 
 	| method |
-	class := (Object
-		         << #TestUndeclaredVariableClass
-		         package: '') install.
+	class := (Object << #TestUndeclaredVariableClass package: self packageNameForTests) install.
 	method := class compiler
 		          permitFaulty: true;
-		          compile:
-			          'x ^TestUndeclaredVariable ifNil: [ TestUndeclaredVariable ]'.
+		          compile: 'x ^TestUndeclaredVariable ifNil: [ TestUndeclaredVariable ]'.
 	"Add and initialize a shared"
-	class := (Object
-		         << #TestUndeclaredVariableClass
-		         sharedVariables:  {#TestUndeclaredVariable};
-		         package: '') install.
+	class := ((Object << #TestUndeclaredVariableClass)
+		          sharedVariables: { #TestUndeclaredVariable };
+		          package: self packageNameForTests) install.
 
 	nil executeMethod: method.
 	nil executeMethod: method

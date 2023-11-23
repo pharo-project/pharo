@@ -11,7 +11,7 @@ Class {
 
 { #category : 'accessing' }
 DAMessageSendNode >> icon [
-	^ self iconNamed: #smallLanguageIcon
+	^ self iconNamed: #smallLanguage
 ]
 
 { #category : 'displaying' }

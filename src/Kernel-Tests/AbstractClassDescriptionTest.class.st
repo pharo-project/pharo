@@ -34,6 +34,6 @@ AbstractClassDescriptionTest >> setUp [
 { #category : 'running' }
 AbstractClassDescriptionTest >> tearDown [
 
-	class package removeFromSystem.
+	self packageOrganizer removePackage: self packageNameForTests.
 	super tearDown
 ]

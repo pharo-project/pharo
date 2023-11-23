@@ -170,6 +170,13 @@ RGEnvironmentQueryInterface >> includesClassNamed: aSymbol [
 	"
 ]
 
+{ #category : 'testing' }
+RGEnvironmentQueryInterface >> includesPackageNamed: aString [
+
+	self packagesDo: [ :each | each name = aString ifTrue: [ ^ true ] ].
+	^ false
+]
+
 { #category : 'caching' }
 RGEnvironmentQueryInterface >> invalidateName: aSymbol [
 

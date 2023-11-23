@@ -60,23 +60,25 @@ FLCreateClassSerializationTest >> testCreateByteArrayWithInstance [
 FLCreateClassSerializationTest >> testCreateClassAndMetaclass [
 	"Tests materialization of a class or trait not defined in the image and that the metaclass is also created."
 
-	| class materializedClassOrTrait environment category name metaclassName metaclass |
+	| class materializedClass environment name metaclassName metaclass package packageTag |
 	class := self classFactory silentlyNewClass.
 	environment := class environment.
-	category := class category.
+	package := class package.
+	packageTag := class packageTag.
 	name := class name.
 	metaclassName := class class name.
 	metaclass := class class.
 
-	materializedClassOrTrait := self resultOfSerializeRemoveAndMaterialize: class.
+	materializedClass := self resultOfSerializeRemoveAndMaterialize: class.
 
-	self assert: environment identicalTo: materializedClassOrTrait environment.
+	self assert: environment identicalTo: materializedClass environment.
 
-	self assert: category equals: materializedClassOrTrait category.
-	self assert: name equals: materializedClassOrTrait name.
+	self assert: package equals: materializedClass package.
+	self assert: packageTag name equals: materializedClass packageTag name.
+	self assert: name equals: materializedClass name.
 	"Notice that the metaclass is serialized by Fuel and a new one will be created."
-	self assert: metaclassName equals: materializedClassOrTrait class name.
-	self deny: metaclass identicalTo: materializedClassOrTrait class.
+	self assert: metaclassName equals: materializedClass class name.
+	self deny: metaclass identicalTo: materializedClass class.
 
 	"It is important to notice that (at this moment) Fuel does not add the materialized class or trait into Smalltalk globals"
 	self deny: (self environmentOfTest includesKey: name)
@@ -111,7 +113,7 @@ FLCreateClassSerializationTest >> testCreateClassWithClassVariable [
 	self assert: 1 equals: materializedClass classVarNames size.
 	self assert: (materializedClass classVarNames includes: #ClassVariable).
 	self assert: #test equals: (materializedClass classPool at: #ClassVariable).
-	self assert: materializedClass classPool associations first class identicalTo: ClassVariable
+	self assert: materializedClass classVariables first class identicalTo: ClassVariable
 ]
 
 { #category : 'tests' }
@@ -475,18 +477,20 @@ FLCreateClassSerializationTest >> testCreateWithNilEnvironment [
 FLCreateClassSerializationTest >> testCreateWithSmalltalkGlobalsEnvironment [
 	"Tests materialization of a class or trait not defined in the image, and with Smalltalk globals  in the instance variable 'environment'. In that case, the whole Smalltalk globals should NOT be fully serialized but only a reference to the globals should be stored. "
 
-	| aClassOrTrait materializedClassOrTrait category name |
-	aClassOrTrait := self classFactory silentlyNewClass.
-	aClassOrTrait environment: Smalltalk globals.
-	category := aClassOrTrait category.
-	name := aClassOrTrait name.
+	| class materializedClass name package packageTag |
+	class := self classFactory silentlyNewClass.
+	class environment: Smalltalk globals.
+	package := class package.
+	packageTag := class packageTag.
+	name := class name.
 
-	materializedClassOrTrait := self resultOfSerializeRemoveAndMaterialize: aClassOrTrait.
+	materializedClass := self resultOfSerializeRemoveAndMaterialize: class.
 
-	self assert: materializedClassOrTrait basicEnvironment identicalTo: Smalltalk globals.
+	self assert: materializedClass basicEnvironment identicalTo: Smalltalk globals.
 
-	self assert: category equals: materializedClassOrTrait category.
-	self assert: name equals: materializedClassOrTrait name
+	self assert: package equals: materializedClass package.
+	self assert: packageTag name equals: materializedClass packageTag name.
+	self assert: name equals: materializedClass name
 ]
 
 { #category : 'tests' }

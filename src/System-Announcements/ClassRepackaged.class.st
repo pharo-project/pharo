@@ -9,9 +9,9 @@ Class {
 		'oldTag',
 		'newTag'
 	],
-	#category : 'System-Announcements-System-Packages',
+	#category : 'System-Announcements-System-Classes',
 	#package : 'System-Announcements',
-	#tag : 'System-Packages'
+	#tag : 'System-Classes'
 }
 
 { #category : 'instance creation' }
@@ -22,6 +22,12 @@ ClassRepackaged class >> classRepackaged: aClass oldTag: oldTag newTag: newTag [
 		  oldTag: oldTag;
 		  newTag: newTag;
 		  yourself
+]
+
+{ #category : 'class initialization' }
+ClassRepackaged class >> initialize [
+
+	self deprecatedAliases: { #ClassRecategorized }
 ]
 
 { #category : 'testing' }
@@ -119,7 +125,5 @@ ClassRepackaged >> packagedChanged [
 { #category : 'accessing' }
 ClassRepackaged >> packagesAffected [
 
-	^ {
-		  self oldPackage.
-		  self newPackage }
+	^ { self oldPackage. self newPackage }
 ]

@@ -8,75 +8,71 @@ Class {
 
 { #category : 'tests' }
 ShCreateClassTest >> testClassWithClassSlots [
+
 	builder
 		name: #SHTestClassWithClassSlots;
-		slots: #(anSlot);
-		classSlots: #(aClassSlot).
+		slots: #( anSlot );
+		classSlots: #( aClassSlot ).
 
 	result := builder build.
 
 	self validateResult.
 	self validateSuperclass: Object.
-	self
-		validateSlots:
-			{#anSlot => InstanceVariableSlot}.
+	self validateSlots: { (#anSlot => InstanceVariableSlot) }.
 
-	self
-		validateClassSlots:
-			{#aClassSlot => InstanceVariableSlot.}
-		superclass: Object
+	self validateClassSlots: { (#aClassSlot => InstanceVariableSlot) } superclass: Object
 ]
 
 { #category : 'tests' }
 ShCreateClassTest >> testClassWithInheritedSlots [
+
 	builder
 		name: #SHTestClassWithInheritedSlots;
 		superclassName: #ShCBClassWithInstanceVariables;
-		slots: #(anSlot anotherSlot).
+		slots: #( anSlot anotherSlot ).
 
 	result := builder build.
 
 	self validateResult.
 	self validateSuperclass: ShCBClassWithInstanceVariables.
-	self
-		validateSlots:
-			{#inheritedSlot => InstanceVariableSlot.
-			#anSlot => InstanceVariableSlot.
-			#anotherSlot => InstanceVariableSlot}
+	self validateSlots: {
+			(#inheritedSlot => InstanceVariableSlot).
+			(#anSlot => InstanceVariableSlot).
+			(#anotherSlot => InstanceVariableSlot) }
 ]
 
 { #category : 'tests' }
 ShCreateClassTest >> testClassWithSlots [
+
 	builder
 		name: #SHTestClassWithSlots;
-		slots: #(anSlot anotherSlot).
+		slots: #( anSlot anotherSlot ).
 
 	result := builder build.
 
 	self validateResult.
 	self validateSuperclass: Object.
-	self
-		validateSlots:
-			{(#anSlot => InstanceVariableSlot).
-			(#anotherSlot => InstanceVariableSlot)}
+	self validateSlots: {
+			(#anSlot => InstanceVariableSlot).
+			(#anotherSlot => InstanceVariableSlot) }
 ]
 
 { #category : 'tests' }
 ShCreateClassTest >> testClassWithSuperclassNameAsString [
+
 	builder
 		name: #SHTestClassWithInheritedSlots;
 		superclassName: 'ShCBClassWithInstanceVariables';
-		slots: #(anSlot anotherSlot).
+		slots: #( anSlot anotherSlot ).
 
 	result := builder build.
 
 	self validateResult.
 	self validateSuperclass: ShCBClassWithInstanceVariables.
-	self
-		validateSlots:
-			{#inheritedSlot => InstanceVariableSlot.
-			#anSlot => InstanceVariableSlot.
-			#anotherSlot => InstanceVariableSlot}
+	self validateSlots: {
+			(#inheritedSlot => InstanceVariableSlot).
+			(#anSlot => InstanceVariableSlot).
+			(#anotherSlot => InstanceVariableSlot) }
 ]
 
 { #category : 'tests' }

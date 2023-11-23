@@ -1,6 +1,6 @@
 Class {
 	#name : 'UndefinedPackageTagTest',
-	#superclass : 'RPackageTestCase',
+	#superclass : 'PackageTestCase',
 	#category : 'RPackage-Tests',
 	#package : 'RPackage-Tests'
 }
@@ -35,8 +35,10 @@ UndefinedPackageTagTest >> testName [
 UndefinedPackageTagTest >> testPackageTagOfUnpackagedClass [
 
 	| class |
-	class := self newClassNamed: #MyTestClass in: #Package1.
-	self organizer removeClass: class.
+	class := self class classInstaller make: [ :aClassBuilder |
+		         aClassBuilder
+			         name: #MyTestClass;
+			         installingEnvironment: testEnvironment ].
 
 	self assert: class packageTag identicalTo: self undefinedTag
 ]

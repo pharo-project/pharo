@@ -516,7 +516,8 @@ FreeTypeFont >> isSimulatedRegular [
 
 { #category : 'testing' }
 FreeTypeFont >> isSimulatedStyle [
-	^simulatedEmphasis notNil
+
+	^ simulatedEmphasis isNotNil
 ]
 
 { #category : 'testing' }

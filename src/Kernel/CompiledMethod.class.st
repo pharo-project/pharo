@@ -442,6 +442,17 @@ CompiledMethod >> isExplicitlyRequired: marker [
 ]
 
 { #category : 'testing' }
+CompiledMethod >> isExtension [
+	"I return true if a method is an extension method. Which means that the methods is not packaged in the package of the class containing the method, but in another package."
+
+	"(self >> #selector) isExtension >>> false"
+
+	"(self >> #traitSource) isExtension >>> true"
+
+	^ self hasProperty: #extensionPackage
+]
+
+{ #category : 'testing' }
 CompiledMethod >> isFaulty [
  	"check if this method was compiled from syntactically wrong code"
 	| ast |
@@ -462,10 +473,9 @@ CompiledMethod >> isFaulty [
 { #category : 'testing' }
 CompiledMethod >> isFromTrait [
 	"Return true for methods that have been included from Traits"
+
 	<reflection: 'Class structural inspection - Selectors and methods inspection'>
-	| origin |
-	origin := self origin.
-	^ origin isTrait and: [ origin ~= self methodClass ]
+	^ self hasProperty: #traitSource
 ]
 
 { #category : 'testing' }
@@ -523,7 +533,7 @@ CompiledMethod >> isReturnField [
 { #category : 'printing' }
 CompiledMethod >> isSelfEvaluating [
 
-	^self methodClass notNil and: [self isDoIt not]
+	^self methodClass isNotNil and: [self isDoIt not]
 ]
 
 { #category : 'testing' }
@@ -576,6 +586,17 @@ CompiledMethod >> methodClass: aClass [
 	"set the class binding in the last literal to aClass"
 	^self numLiterals > 0
 		ifTrue: [ self literalAt: self numLiterals put: aClass binding ]
+]
+
+{ #category : 'private' }
+CompiledMethod >> migratePersistingPropertiesIn: aNewCompileMethod [
+	"While creating a new version of a method, we might want to persist some properties. I am here for this. I migrate the properties to persist from myself, the old version of the method, to the new version."
+
+	| properties |
+	(properties := self penultimateLiteral) isMethodProperties ifFalse: [ ^ self "There is no property so nothing to migrate." ].
+
+	properties class propertiesToPersist do: [ :propertyName |
+		properties at: propertyName ifPresent: [ :value | aNewCompileMethod propertyAt: propertyName put: value ] ]
 ]
 
 { #category : 'accessing' }
@@ -788,9 +809,11 @@ CompiledMethod >> propertyKeysAndValuesDo: aBlock [
 
 { #category : 'protocols' }
 CompiledMethod >> protocol [
-	"Return in which protocol (conceptual groups of methods) the receiver is grouped into."
+	"Return in which protocol (conceptual groups of methods) the receiver is grouped into.
+	
+	With the current implementation the method will have to lookup the protocol in its class, but the #protocol property will be added when we remove a method to still be able to answer the protocol the method was into."
 
-	^ self methodClass protocolOfSelector: self selector
+	^ self propertyAt: #protocol ifAbsent: [ self methodClass protocolOfSelector: self selector ]
 ]
 
 { #category : 'protocols' }
@@ -802,7 +825,7 @@ CompiledMethod >> protocol: aProtocol [
 CompiledMethod >> protocolName [
 	"Return the name of the protocol (conceptual groups of methods) in which the receiver is grouped into."
 
-	^ self methodClass protocolNameOfSelector: self selector
+	^ self protocol ifNotNil: [ :protocol | protocol name ]
 ]
 
 { #category : 'scanning' }
@@ -830,6 +853,12 @@ CompiledMethod >> refersToLiteral: aLiteral [
 	"Answer true if any literal in this method is literal, even if embedded in array structure."
 
 	^(self pragmaRefersToLiteral: aLiteral) or: [ super refersToLiteral: aLiteral]
+]
+
+{ #category : 'private' }
+CompiledMethod >> removeFromPackage [
+
+	self isFromTrait ifFalse: [ self package ifNotNil: [ :package | package removeMethod: self ] ]
 ]
 
 { #category : 'initialization' }

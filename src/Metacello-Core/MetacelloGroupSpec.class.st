@@ -46,6 +46,11 @@ MetacelloGroupSpec >> includeSpecNamesForPackageOrdering: aVersionSpec [
   ^ #()
 ]
 
+{ #category : 'loading' }
+MetacelloGroupSpec >> loadUsing: aLoader gofer: gofer [
+	"noop"
+]
+
 { #category : 'visiting' }
 MetacelloGroupSpec >> projectDo: projectBlock packageDo: packageBlock groupDo: groupBlock [
 
@@ -64,39 +69,63 @@ MetacelloGroupSpec >> requires: aCollection [
 ]
 
 { #category : 'private' }
-MetacelloGroupSpec >> requiresSpecsForPackageOrdering: aVersionSpec [
-  "expand the names in the group to a package or project"
+MetacelloGroupSpec >> resolveSpecsForPackageOrdering: aVersionSpec [
+	"expand the names in the group to a package or project"
 
-  | packageOrProjectSpecs |
-  packageOrProjectSpecs := Set new.
-  self includes
-    do: [ :specName | 
-      (aVersionSpec packageNamed: specName ifAbsent: [  ])
-        ifNotNil: [ :pkgSpec | 
-          packageOrProjectSpecs
-            addAll:
-              (pkgSpec
-                resolveToPackagesIn: aVersionSpec
-                andProjects: true
-                visited: MetacelloVisitedPackages new) ] ].
-  ^ packageOrProjectSpecs
+	| packageOrProjectSpecs |
+	packageOrProjectSpecs := Set new.
+	self includes do: [ :specName |
+		(aVersionSpec packageNamed: specName ifAbsent: [  ]) ifNotNil: [ :pkgSpec |
+			packageOrProjectSpecs addAll: (pkgSpec resolveToPackagesAndProjectsIn: aVersionSpec visited: MetacelloVisitedPackages new) ] ].
+	^ packageOrProjectSpecs
 ]
 
 { #category : 'private' }
-MetacelloGroupSpec >> resolveSpecsForPackageOrdering: aVersionSpec [
-  "expand the names in the group to a package or project"
+MetacelloGroupSpec >> resolveToLoadableSpec [
 
-  | packageOrProjectSpecs |
-  packageOrProjectSpecs := Set new.
-  self includes
-    do: [ :specName | 
-      (aVersionSpec packageNamed: specName ifAbsent: [  ])
-        ifNotNil: [ :pkgSpec | 
-          packageOrProjectSpecs
-            addAll:
-              (pkgSpec
-                resolveToPackagesIn: aVersionSpec
-                andProjects: true
-                visited: MetacelloVisitedPackages new) ] ].
-  ^ packageOrProjectSpecs
+	^nil
+]
+
+{ #category : 'private' }
+MetacelloGroupSpec >> resolveToPackagesAndProjectsIn: aVersionSpec visited: visited [
+
+	| packages |
+	packages := Dictionary new.
+	self
+		resolveToPackagesIn: aVersionSpec
+		andProjects: true
+		into: packages
+		visited: visited.
+	^ packages values asOrderedCollection
+]
+
+{ #category : 'private' }
+MetacelloGroupSpec >> resolveToPackagesIn: aVersionSpec andProjects: andProjectsBool into: packages visited: visited [
+
+	visited visit: self doing: [ :aSpec |
+		| map |
+		map := aVersionSpec packages map.
+		aSpec includes do: [ :pkgName |
+			(aVersionSpec packageNamed: pkgName forMap: map ifAbsent: [  ])
+				projectDo: [ :prj | andProjectsBool ifTrue: [ packages at: prj name put: prj ] ]
+				packageDo: [ :pkg | packages at: pkg name put: pkg ]
+				groupDo: [ :grp |
+					grp
+						resolveToPackagesIn: aVersionSpec
+						andProjects: andProjectsBool
+						into: packages
+						visited: visited ] ] ]
+]
+
+{ #category : 'private' }
+MetacelloGroupSpec >> resolveToPackagesIn: aVersionSpec visited: visited [
+
+	| packages |
+	packages := Dictionary new.
+	self
+		resolveToPackagesIn: aVersionSpec
+		andProjects: false
+		into: packages
+		visited: visited.
+	^ packages values asOrderedCollection
 ]

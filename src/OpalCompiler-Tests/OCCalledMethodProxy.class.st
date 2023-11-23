@@ -55,6 +55,13 @@ OCCalledMethodProxy >> originalMethod: anObject [
 	originalMethod := anObject
 ]
 
+{ #category : 'accessing' }
+OCCalledMethodProxy >> propertyAt: aSymbol ifPresent: aBlock [
+	"Do nothing there"
+
+	
+]
+
 { #category : 'evaluation' }
 OCCalledMethodProxy >> run: aSelector with: arguments in: aReceiver [
 

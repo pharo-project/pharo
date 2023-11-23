@@ -57,7 +57,7 @@ CharacterBlockScanner >> characterBlockAtPoint: aPoint index: index in: textLine
 	(characterPoint isNil or: [ characterPoint y > line bottom ]) ifTrue: [ characterPoint := line bottomRight ].
 	destX := leftMargin := line leftMarginForAlignment: alignment.
 	destY := line top.
-	(text isEmpty or: [ (characterPoint y < destY or: [ characterPoint x < destX ]) or: [ characterIndex notNil and: [ characterIndex < line first ] ] ])
+	(text isEmpty or: [ (characterPoint y < destY or: [ characterPoint x < destX ]) or: [ characterIndex isNotNil and: [ characterIndex < line first ] ] ])
 		ifTrue: [ ^ (CharacterBlock new
 				stringIndex: line first
 				text: text
@@ -99,7 +99,7 @@ CharacterBlockScanner >> cr [
 	CharacterBlocks, sometimes including the carriage return (cursor is at
 	the end) and sometimes not (cursor is in the middle of the text)."
 
-	((characterIndex notNil
+	((characterIndex isNotNil
 		and: [characterIndex > text size])
 			or: [(line last = text size)
 				and: [(destY + line lineHeight) < characterPoint y]])

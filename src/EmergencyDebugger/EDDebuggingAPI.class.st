@@ -40,7 +40,7 @@ EDDebuggingAPI class >> displayStackSize [
 EDDebuggingAPI class >> forbiddenProcesses [
 	^ {[  ].
 	[ Smalltalk lowSpaceWatcherProcess ].
-	[ WeakArray runningFinalizationProcess ].
+	[ FinalizationProcess runningFinalizationProcess ].
 	[ Processor backgroundProcess ].
 	[ UIManager default uiProcess ].
 	[ Delay schedulingProcess ]}

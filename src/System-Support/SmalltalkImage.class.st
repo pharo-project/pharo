@@ -1334,6 +1334,12 @@ SmalltalkImage >> organization [
 	^globals organization
 ]
 
+{ #category : 'accessing' }
+SmalltalkImage >> packages [
+
+	^ self organization packages
+]
+
 { #category : 'memory space' }
 SmalltalkImage >> primBytesLeft [
 	"Primitive. Answer the number of free bytes available in old space.

@@ -152,6 +152,14 @@ RBClassDataForRefactoringTest >> demoMethodWithDuplicates [
 ]
 
 { #category : 'tests' }
+RBClassDataForRefactoringTest >> demoMethodWithDuplicatesInBlocks [
+
+	(1 to: 10) do: [ :i | (i + 1) odd ifTrue: [ (i + 1) doSomething ] ].
+	(1 to: 10) do: [ :i |
+		(i + 1) even ifTrue: [ (i + 1) doSomethingElse ] ]
+]
+
+{ #category : 'tests' }
 RBClassDataForRefactoringTest >> demoRenameMethod: arg1 PermuteArgs: arg2 [
 	self do: arg1.
 	self do: arg2.

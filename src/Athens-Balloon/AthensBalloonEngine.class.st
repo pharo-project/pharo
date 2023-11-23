@@ -22,7 +22,7 @@ Class {
 { #category : 'copying' }
 AthensBalloonEngine >> copyBits [
 
-	(bitBlt notNil and: [ bitBlt destForm notNil ]) ifTrue: [
+	(bitBlt isNotNil and: [ bitBlt destForm isNotNil ]) ifTrue: [
 		bitBlt destForm unhibernate ].
 	self copyLoopFastest
 ]

@@ -37,12 +37,6 @@ RGMethod >> implementors [
 ]
 
 { #category : '*Calypso-Ring' }
-RGMethod >> isDefinedInPackage: aPackage [
-
-	^ self package = aPackage
-]
-
-{ #category : '*Calypso-Ring' }
 RGMethod >> isInstalled [
 	^ true
 ]

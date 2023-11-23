@@ -215,8 +215,7 @@ EpMonitor >> behaviorRemoved: aClassRemovedAnnouncement [
 EpMonitor >> behaviorRemovedImpliesMethodRemoved: aMethodInAnObsoleteBehavior defaultPackageName: aSymbol [
 
 	| packageName |
-	packageName := ((self packageOrganizer packageForProtocol: aMethodInAnObsoleteBehavior protocol) ifNil: [ aMethodInAnObsoleteBehavior methodClass package ])
-		               name.
+	packageName := (self packageOrganizer packageForProtocol: aMethodInAnObsoleteBehavior protocol from: aMethodInAnObsoleteBehavior methodClass) name.
 
 	"If the method is local, (belongs to the class being removed) then the package was wrong,  and we fix it"
 	packageName = UndefinedPackage undefinedPackageName ifTrue: [ packageName := aSymbol ].
@@ -415,7 +414,7 @@ EpMonitor >> methodRecategorized: aMethodRecategorized [
 		             protocol: aMethodRecategorized oldProtocol name;
 		             yourself.
 	newMethod := aMethodRecategorized methodRecategorized asEpiceaRingDefinition
-		             protocol: (aMethodRecategorized newProtocol ifNotNil: [ :protocol | protocol name ]);
+		             protocol: aMethodRecategorized newProtocol name;
 		             yourself.
 
 	self addEvent: (EpMethodModification oldMethod: oldMethod newMethod: newMethod)
@@ -423,12 +422,9 @@ EpMonitor >> methodRecategorized: aMethodRecategorized [
 
 { #category : 'announcement handling' }
 EpMonitor >> methodRemoved: aMethodRemovedAnnouncement [
-	"RPackage already unregistered the method so we have to workaround protocol and package."
+	"Package already unregistered the method so we have to workaround protocol."
 
-	self addEvent: (EpMethodRemoval method: (aMethodRemovedAnnouncement methodAffected asEpiceaRingDefinition
-				  protocol: aMethodRemovedAnnouncement protocol name;
-				  package: aMethodRemovedAnnouncement methodPackage name;
-				  yourself))
+	self addEvent: (EpMethodRemoval method: aMethodRemovedAnnouncement methodAffected asEpiceaRingDefinition)
 ]
 
 { #category : 'announcement handling' }

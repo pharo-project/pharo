@@ -444,13 +444,13 @@ FreeTypeFontProvider >> updateFromFile: aFile [
 	| i face numFaces cachedInfo info cachedNumFaces path |
 
 	i:= 0.
-	[(cachedInfo := self validCachedInfoFor: aFile index: i) notNil]
+	[(cachedInfo := self validCachedInfoFor: aFile index: i) isNotNil]
 		whileTrue:[
 			i = 0 ifTrue: [ cachedNumFaces := cachedInfo numFaces ].
 			self addFileInfo: cachedInfo index: i.
 			i := i + 1.].
 
-	(cachedNumFaces notNil and:[ i >= cachedNumFaces ]) ifTrue:[ ^ self ].
+	(cachedNumFaces isNotNil and:[ i >= cachedNumFaces ]) ifTrue:[ ^ self ].
 
 	path := aFile fullName utf8Encoded asString.
 	[face := FreeTypeFace basicNew filename: path; index:  i.
@@ -459,7 +459,7 @@ FreeTypeFontProvider >> updateFromFile: aFile [
 	face loadFields]
 		on: FT2Error, PrimitiveFailed
 		do: [:e | ^self failedToOpen: face from: path index: i ].
-	(face height notNil  and:[face hasFamilyName and:[face hasStyleName and:[face isValid]]])
+	(face height isNotNil and:[face hasFamilyName and:[face hasStyleName and:[face isValid]]])
 		ifFalse: [ ^self failedToOpen:face from: path index: i ]
 		ifTrue: [
 			numFaces ifNil: [numFaces := face numFaces].

@@ -35,18 +35,25 @@ HDTestReport class >> currentStageName: aStageName [
 ]
 
 { #category : 'running' }
-HDTestReport class >> runClasses: aCollectionOfClasses named: aString [
-	| suite classes |
-	suite := TestSuite named: aString.
-	classes := (aCollectionOfClasses
-		select: [ :each | (each includesBehavior: TestCase) and: [ each isAbstract not ] ])
-			asSortedCollection: [ :a :b | a name <= b name ].
-	classes isEmpty
-		ifTrue: [ ^ nil ].
-		
-	classes
-		do: [ :each | suite addTests: each buildSuite tests ].
-	^ self runSuite: suite
+HDTestReport class >> runClasses: aCollectionOfClasses named: packageName [
+
+	| suite classes time result |
+	suite := TestSuite named: packageName.
+	classes := (aCollectionOfClasses select: [ :class | class isTestCase and: [ class isAbstract not ] ]) asSortedCollection: [ :a :b | a name <= b name ].
+
+	classes ifEmpty: [ ^ nil ].
+
+	classes do: [ :class | suite addTests: class buildSuite tests ].
+
+	time := DateAndTime now.
+	Transcript << 'Beginning to run tests of ' << packageName << OSPlatform current lineEnding.
+	"We flush so that if a crash happens during the tests, we print in which package is the naughty test in the logs."
+	Transcript flush.
+	result := self runSuite: suite.
+	Transcript << 'Finished to run tests of ' << packageName << ' in ' << (DateAndTime now - time) humanReadablePrintString << OSPlatform current lineEnding.
+	Transcript flush.
+
+	^ result
 ]
 
 { #category : 'running' }
@@ -57,8 +64,8 @@ HDTestReport class >> runPackage: aString [
 
 { #category : 'running' }
 HDTestReport class >> runSuite: aTestSuite [
-	^ self new
-		runSuite: aTestSuite
+
+	^ self new runSuite: aTestSuite
 ]
 
 { #category : 'private' }
@@ -93,7 +100,8 @@ HDTestReport >> done [
 
 { #category : 'private' }
 HDTestReport >> generateTestName: aTestCase [
-	^ nodeName , (aTestCase class category copyReplaceAll: '-' with: '.')
+
+	^ nodeName , (aTestCase class package name copyReplaceAll: '-' with: '.')
 ]
 
 { #category : 'testing' }

@@ -469,7 +469,9 @@ EncoderForSistaV1 class >> isCreateBlockAt: pc in: method [
 
 	| byte |
 	byte := self nonExtensionBytecodeAt: pc in: method.
-	^ byte = 250
+	^ byte = 250 or: [
+		  (method sourceNodeForPC: pc) in: [ :node | "Clean blocks are created as PushConstant"
+			  node isBlock and: [ node isClean ] ] ]
 ]
 
 { #category : 'block closure support' }
@@ -701,60 +703,46 @@ EncoderForSistaV1 class >> method: method refersInBytecodeToLiteral: aLiteral sp
 	*	232		11101000	iiiiiiii		Push Integer #iiiiiiii (+ Extend B * 256, where bbbbbbbb = sddddddd, e.g. -32768 = i=0, a=0, s=1)
 	*	233		11101001	iiiiiiii		Push Character #iiiiiiii (+ Extend B * 256)
 		249		11111001 	xxxxxxxx	syyyyyyy	Reserved for Push Float"
-	| byte extended scanner |
-	specialOrNil ifNotNil:
-		[byte := specialOrNil + 95.
-		^(InstructionStream on: method) scanFor: [:b| b = byte]].
-	extended := false.
-	aLiteral isInteger ifTrue:
-		[(aLiteral >= -32768 and: [aLiteral <= 32767]) ifFalse: [^false].
-		 scanner := InstructionStream on: method.
-		 (aLiteral >= 0 and: [aLiteral <= 255]) ifTrue:
-			[aLiteral <= 1 ifTrue:
-				[byte := aLiteral + 80.
-				 ^scanner scanFor: [:b| b = byte]].
-			 ^scanner scanFor:
-				[:b|
-				(b = 232
-				 and: [extended not
-				 and: [scanner secondByte = aLiteral]])
-				or: [extended := b = 225.
-					false]]].
-		 byte := (aLiteral bitShift: -8) bitAnd: 255.
-		^scanner scanFor:
-			[:b|
-			(b = 232
-			 and: [extended
-			 and: [scanner secondByte = (aLiteral bitAnd: 255)]])
-			or: [extended := b = 225 and: [scanner secondByte = byte].
-				false]]].
-	aLiteral isCharacter ifTrue:
-		[aLiteral asciiValue <= 65535 ifFalse: [^false].
-		 scanner := InstructionStream on: method.
-		 aLiteral asciiValue <= 255 ifTrue:
-			[^scanner scanFor:
-				[:b|
-				(b = 233
-				 and: [extended not
-				 and: [scanner secondByte = aLiteral]])
-				or: [extended := b = 225.
-					false]]].
-		 byte := (aLiteral bitShift: -8) bitAnd: 255.
-		^scanner scanFor:
-			[:b|
-			(b = 233
-			 and: [extended
-			 and: [scanner secondByte = (aLiteral bitAnd: 255)]])
-			or: [extended := b = 225 and: [scanner secondByte = byte].
-				false]]].
-	aLiteral == nil ifTrue:
-		[^(InstructionStream on: method) scanFor: [:b| b = 79 or: [b = 91 or: b = 93]]].
-	aLiteral == true ifTrue:
-		[^(InstructionStream on: method) scanFor: [:b| b = 77 or: [b = 89]]].
-	aLiteral == false ifTrue:
-		[^(InstructionStream on: method) scanFor: [:b| b = 78 or: [b = 90]]].
 
-	^false
+	| byte extended scanner |
+	specialOrNil ifNotNil: [
+		byte := specialOrNil + 95.
+		^ (InstructionStream on: method) scanFor: [ :b | b = byte ] ].
+	extended := false.
+	aLiteral isInteger ifTrue: [
+		(aLiteral >= -32768 and: [ aLiteral <= 32767 ]) ifFalse: [ ^ false ].
+		scanner := InstructionStream on: method.
+		(aLiteral >= 0 and: [ aLiteral <= 255 ]) ifTrue: [
+			aLiteral <= 1 ifTrue: [
+				byte := aLiteral + 80.
+				^ scanner scanFor: [ :b | b = byte ] ].
+			^ scanner scanFor: [ :b |
+				  (b = 232 and: [ extended not and: [ scanner secondByte = aLiteral ] ]) or: [
+					  extended := b = 225.
+					  false ] ] ].
+		byte := (aLiteral bitShift: -8) bitAnd: 255.
+		^ scanner scanFor: [ :b |
+			  (b = 232 and: [ extended and: [ scanner secondByte = (aLiteral bitAnd: 255) ] ]) or: [
+				  extended := b = 225 and: [ scanner secondByte = byte ].
+				  false ] ] ].
+	aLiteral isCharacter ifTrue: [
+		aLiteral asciiValue <= 65535 ifFalse: [ ^ false ].
+		scanner := InstructionStream on: method.
+		aLiteral asciiValue <= 255 ifTrue: [
+			^ scanner scanFor: [ :b |
+				  (b = 233 and: [ extended not and: [ scanner secondByte = aLiteral ] ]) or: [
+					  extended := b = 225.
+					  false ] ] ].
+		byte := (aLiteral bitShift: -8) bitAnd: 255.
+		^ scanner scanFor: [ :b |
+			  (b = 233 and: [ extended and: [ scanner secondByte = (aLiteral bitAnd: 255) ] ]) or: [
+				  extended := b = 225 and: [ scanner secondByte = byte ].
+				  false ] ] ].
+	aLiteral ifNil: [ ^ (InstructionStream on: method) scanFor: [ :b | b = 79 or: [ b = 91 or: b = 93 ] ] ].
+	aLiteral == true ifTrue: [ ^ (InstructionStream on: method) scanFor: [ :b | b = 77 or: [ b = 89 ] ] ].
+	aLiteral == false ifTrue: [ ^ (InstructionStream on: method) scanFor: [ :b | b = 78 or: [ b = 90 ] ] ].
+
+	^ false
 ]
 
 { #category : 'block closure support' }

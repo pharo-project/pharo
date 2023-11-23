@@ -45,7 +45,7 @@ AthensBalloonPath >> convertFromBuilder: aBuilder [
 	| segment cContours |
 	segment := aBuilder pathStart.
 
-	[ segment notNil ] whileTrue: [
+	[ segment isNotNil ] whileTrue: [
 		segment visitWith: self.
 		segment := segment next ].
 

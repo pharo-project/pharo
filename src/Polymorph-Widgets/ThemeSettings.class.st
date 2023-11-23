@@ -283,20 +283,20 @@ ThemeSettings >> fromConfiguration: tree [
 { #category : 'accessing' }
 ThemeSettings >> haveFindReplaceSelectionTextColor [
 
-	^ findReplaceSelectionTextColor notNil
+	^ findReplaceSelectionTextColor isNotNil
 ]
 
 { #category : 'accessing' }
 ThemeSettings >> haveSecondarySelectionTextColor [
 	"Answer the value of selectionTextColor"
 
-	^ secondarySelectionTextColor notNil
+	^ secondarySelectionTextColor isNotNil
 ]
 
 { #category : 'accessing' }
 ThemeSettings >> haveSelectionTextColor [
 
-	^ selectionTextColor notNil
+	^ selectionTextColor isNotNil
 ]
 
 { #category : 'initialization' }

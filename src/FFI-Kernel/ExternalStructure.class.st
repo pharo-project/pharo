@@ -122,7 +122,7 @@ ExternalStructure class >> compileAlias: spec withAccessors: aSymbol [
 			].
 	isPointerField
 		ifTrue: [ externalType := externalType asPointerType ].
-	( fieldName notNil and: [ self shouldGenerate: fieldName policy: aSymbol ] )
+	( fieldName isNotNil and: [ self shouldGenerate: fieldName policy: aSymbol ] )
 		ifTrue: [ self defineAliasAccessorsFor: fieldName type: externalType ].
 	newCompiledSpec := isPointerField
 		ifTrue: [ WordArray with: ( ExternalType structureSpec bitOr: ExternalType pointerSpec ) ]
@@ -163,46 +163,37 @@ ExternalStructure class >> compileFields: specArray withAccessors: aSymbol [
 	- aSymbol = #never never generate the accessors
 	- aSymbol = #generated only generate the auto-generated accessors
 	- aSymbol = #absent only generate the absent accessors"
+
 	| byteOffset typeSpec newCompiledSpec |
-	(specArray size > 0 and: [specArray first class ~~ Array]) ifTrue:
-		[^ self compileAlias: specArray withAccessors: aSymbol].
+	(specArray size > 0 and: [ specArray first class ~~ Array ]) ifTrue: [ ^ self compileAlias: specArray withAccessors: aSymbol ].
 	byteOffset := 1.
 	typeSpec := WriteStream on: (WordArray new: 10).
 	typeSpec nextPut: FFIFlagStructure.
 	"dummy for size"
-	specArray do:
-		[:spec | | fieldName fieldType isPointerField externalType typeSize selfRefering |
+	specArray do: [ :spec |
+		| fieldName fieldType isPointerField externalType typeSize selfRefering |
 		fieldName := spec first.
 		fieldType := spec second.
 		isPointerField := fieldType last = $*.
 		fieldType := (fieldType findTokens: ' *') first.
 		externalType := ExternalType atomicTypeNamed: fieldType.
-		selfRefering := isPointerField and: [externalType isNil and: [fieldType = self asString]].
-		selfRefering ifTrue: [
-			externalType := ExternalType void asPointerType
-		] ifFalse:[
-			externalType == nil ifTrue: ["non-atomic"
-				Symbol
-					hasInterned: fieldType
-					ifTrue: [:sym | externalType := ExternalType structTypeNamed: sym].
-			].
-			externalType == nil ifTrue:[
-				self trace: '(' , fieldType , ' is void)'.
-				externalType := ExternalType void.
-			].
-			isPointerField ifTrue: [externalType := externalType asPointerType: self pointerSize]].
-			typeSize := externalType byteSize.
-			spec size > 2 ifTrue: ["extra size"
-				spec third < typeSize
-					ifTrue: [^ self error: 'Explicit type size is less than expected'].
-				typeSize := spec third.
-			].
-			(fieldName notNil and: [self shouldGenerate: fieldName policy: aSymbol]) ifTrue: [
-				self defineFieldAccessorsFor: fieldName startingAt: byteOffset type: externalType.
-			].
-			typeSpec nextPutAll: (externalType embeddedSpecWithSize: typeSize).
-			byteOffset := byteOffset + typeSize.
-		].
+		selfRefering := isPointerField and: [ externalType isNil and: [ fieldType = self asString ] ].
+		selfRefering
+			ifTrue: [ externalType := ExternalType void asPointerType ]
+			ifFalse: [
+				externalType ifNil: [ "non-atomic" Symbol hasInterned: fieldType ifTrue: [ :sym | externalType := ExternalType structTypeNamed: sym ] ].
+				externalType ifNil: [
+					self trace: '(' , fieldType , ' is void)'.
+					externalType := ExternalType void ].
+				isPointerField ifTrue: [ externalType := externalType asPointerType: self pointerSize ] ].
+		typeSize := externalType byteSize.
+		spec size > 2 ifTrue: [ "extra size"
+			spec third < typeSize ifTrue: [ ^ self error: 'Explicit type size is less than expected' ].
+			typeSize := spec third ].
+		(fieldName isNotNil and: [ self shouldGenerate: fieldName policy: aSymbol ]) ifTrue: [
+			self defineFieldAccessorsFor: fieldName startingAt: byteOffset type: externalType ].
+		typeSpec nextPutAll: (externalType embeddedSpecWithSize: typeSize).
+		byteOffset := byteOffset + typeSize ].
 	newCompiledSpec := typeSpec contents.
 	newCompiledSpec at: 1 put: (byteOffset - 1 bitOr: FFIFlagStructure).
 	^ newCompiledSpec
@@ -459,7 +450,7 @@ ExternalStructure >> compositeName [
 { #category : 'finalization' }
 ExternalStructure >> free [
 	"Free the handle pointed to by the receiver"
-	(handle notNil and:[handle isExternalAddress]) ifTrue:[handle free].
+	(handle isNotNil and:[handle isExternalAddress]) ifTrue:[handle free].
 	handle := nil
 ]
 

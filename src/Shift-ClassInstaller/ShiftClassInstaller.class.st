@@ -48,6 +48,19 @@ ShiftClassInstaller class >> make: aBlock [
 ]
 
 { #category : 'building' }
+ShiftClassInstaller class >> remake: aClass basedOn: aBuilder [
+
+	self new
+		oldClass: aClass;
+		installingEnvironment: aBuilder installingEnvironment;
+		make: [ :anotherBuilder |
+			anotherBuilder fillFor: aClass.
+			anotherBuilder buildEnvironment: aBuilder buildEnvironment.
+			anotherBuilder markIsInRemake.
+			aBuilder propagateChangesTo: anotherBuilder ]
+]
+
+{ #category : 'building' }
 ShiftClassInstaller class >> update: oldClass to: aBlock [
 	^ self new
 		fillFor: oldClass;
@@ -184,14 +197,14 @@ ShiftClassInstaller >> make [
 
 		builder builderEnhancer afterMigratingClass: builder installer: self.
 
-		builder builderEnhancer propagateChangesToRelatedClasses: newClass installer: self.
+		builder builderEnhancer propagateChangesToRelatedClasses: newClass builder: builder.
 		
 	] on: ShNoChangesInClass do:[
 		"If there are no changes in the building, I am not building or replacing nothing"
 		newClass := oldClass.
 	].
 
-	self recategorize: newClass to: builder category asSymbol.
+	self recategorize: newClass.
 	self comment: newClass.
 
 	self notifyChanges.
@@ -288,22 +301,9 @@ ShiftClassInstaller >> oldClass: anObject [
 ]
 
 { #category : 'notifications' }
-ShiftClassInstaller >> recategorize: aClass to: newCategory [
-
-	aClass category: newCategory
-]
-
-{ #category : 'building' }
-ShiftClassInstaller >> remake: aClass [
-
-	self class new
-		oldClass: aClass;
-		installingEnvironment: self installingEnvironment;
-		make: [ :anotherBuilder |
-			anotherBuilder fillFor: aClass.
-			anotherBuilder buildEnvironment: builder buildEnvironment.
-			anotherBuilder markIsInRemake.
-			builder propagateChangesTo: anotherBuilder ]
+ShiftClassInstaller >> recategorize: aClass [
+	"If the package is nil we leave the class unclassified"
+	builder package ifNotNil: [ :package | aClass package: package tag: builder tag ]
 ]
 
 { #category : 'building' }

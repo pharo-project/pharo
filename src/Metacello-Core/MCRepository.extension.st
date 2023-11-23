@@ -1,6 +1,12 @@
 Extension { #name : 'MCRepository' }
 
 { #category : '*Metacello-Core' }
+MCRepository >> asRepositorySpecFor: aMetacelloMCProject [
+
+	self subclassResponsibility
+]
+
+{ #category : '*Metacello-Core' }
 MCRepository class >> createRepositoryFromSpec: aRepositorySpec [
 	self subclassResponsibility
 ]
@@ -29,12 +35,22 @@ MCRepository class >> isFiletreeAlternateFormat: aRepositorySpec [
 ]
 
 { #category : '*Metacello-Core' }
+MCRepository >> metacelloProjectClassFor: aScriptEngine [
+    ^ MetacelloProject
+]
+
+{ #category : '*Metacello-Core' }
 MCRepository class >> newRepositoryFromSpec: aRepositorySpec [
 
 	^ self allSubclasses
 		  detect: [ :each | each isAvailableFor: aRepositorySpec type ]
 		  ifFound: [ :repositoryClass | repositoryClass createRepositoryFromSpec: aRepositorySpec ]
 		  ifNone: [ self error: 'Unknown repository type: ' , aRepositorySpec description ]
+]
+
+{ #category : '*Metacello-Core' }
+MCRepository >> projectVersion: aString [
+    "noop"
 ]
 
 { #category : '*Metacello-Core' }

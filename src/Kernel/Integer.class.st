@@ -1440,7 +1440,7 @@ Integer >> printStringRadix: baseInteger [
 		ifTrue: [
 			tempString := self storeStringBase: baseInteger.
 			^ self negative
-				ifTrue: [ '-10r' , (tempString copyFrom: 2 to: tempString size) ]
+				ifTrue: [ '-10r' , tempString allButFirst ]
 				ifFalse: [ '10r' , tempString ]].
 
 	^ self storeStringBase: baseInteger

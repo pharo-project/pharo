@@ -199,7 +199,7 @@ FFIEnumeration class >> enumClassForName: aName [
 			self class classInstaller make: [ :aBuilder |
 				aBuilder
 					name: className;
-					package: self category ]]
+					package: self package name ]]
 ]
 
 { #category : 'enum declaration' }
@@ -244,7 +244,7 @@ FFIEnumeration class >> generatedEnumProtocolName [
 
 { #category : 'testing' }
 FFIEnumeration class >> includes: aSymbol [
-	^ self classPool includesKey: aSymbol
+	^ self hasClassVarNamed: aSymbol
 ]
 
 { #category : 'class initialization' }

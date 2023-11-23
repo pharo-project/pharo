@@ -7,8 +7,8 @@ Class {
 	#name : 'MethodChunk',
 	#superclass : 'BehaviorOwnedChunk',
 	#instVars : [
-		'categoryName',
-		'stamp'
+		'stamp',
+		'protocol'
 	],
 	#category : 'CodeImport-Chunks',
 	#package : 'CodeImport',
@@ -16,12 +16,12 @@ Class {
 }
 
 { #category : 'instance creation' }
-MethodChunk class >> contents: someContents behaviorName: behaviorName isMeta: isMeta category: categoryName stamp: stamp [
+MethodChunk class >> contents: someContents behaviorName: behaviorName isMeta: isMeta protocol: protocol stamp: stamp [
 	^self new
 			contents: someContents;
 			behaviorName: behaviorName;
 			isMeta: isMeta;
-			category: categoryName;
+			protocol: protocol;
 			stamp: stamp;
 			yourself
 ]
@@ -30,16 +30,6 @@ MethodChunk class >> contents: someContents behaviorName: behaviorName isMeta: i
 MethodChunk >> accept: aVisitor [
 
 	^ aVisitor visitMethodChunk: self
-]
-
-{ #category : 'accessing' }
-MethodChunk >> category [
-	^ categoryName
-]
-
-{ #category : 'accessing' }
-MethodChunk >> category: aCategoryName [
-	categoryName := aCategoryName
 ]
 
 { #category : 'accessing' }
@@ -69,7 +59,7 @@ MethodChunk >> importFor: requestor logSource: logSource [
 
 	^ (self targetClass compiler
 		   permitUndeclared: true;
-		   protocol: categoryName;
+		   protocol: protocol;
 		   changeStamp: stamp;
 		   logged: logSource;
 		   install: contents) selector
@@ -85,6 +75,16 @@ MethodChunk >> isMethodDeclaration [
 MethodChunk >> methodSelector [
 
 	^ RBParser parseMethodPattern: self contents
+]
+
+{ #category : 'accessing' }
+MethodChunk >> protocol [
+	^ protocol
+]
+
+{ #category : 'accessing' }
+MethodChunk >> protocol: aString [
+	protocol := aString
 ]
 
 { #category : 'accessing' }

@@ -86,17 +86,6 @@ MCVersion >> allDependenciesNotIn: aDictionary do: aBlock ifUnresolved: failBloc
 						aBlock value: version]]]
 ]
 
-{ #category : 'converting' }
-MCVersion >> asDiffAgainst: aVersion [
-	aVersion info = self info ifTrue: [self error: 'Cannot diff against self!'].
-	^ MCDiffyVersion
-		package: self package
-		info: self info
-		snapshot: self snapshot
-		dependencies: self dependencies
-		baseVersion: aVersion
-]
-
 { #category : 'testing' }
 MCVersion >> canOptimizeLoading [
 	"Answer wether I can provide a patch for the working copy without the usual diff pass"

@@ -136,14 +136,16 @@ MetaLinkInstaller >> findSubNode: node in: methodNode [
 
 { #category : 'initialization' }
 MetaLinkInstaller >> initialize [
+
 	anonSubclassesBuilder := MetaLinkAnonymousClassBuilder new.
 	linksRegistry := MetaLinkRegistry new.
 	linkToNodesMapper := MetaLinkNodesMapper new.
 	superJumpLinks := OrderedCollection new.
 
-	SystemAnnouncer uniqueInstance weak when: MethodModified send: #methodChanged: to: self.
-	SystemAnnouncer uniqueInstance weak when: MethodRemoved send: #methodRemoved: to: self.
-	SystemAnnouncer uniqueInstance weak when: MethodAdded send: #methodAdded: to: self
+	self class codeSupportAnnouncer weak
+		when: MethodModified send: #methodChanged: to: self;
+		when: MethodRemoved send: #methodRemoved: to: self;
+		when: MethodAdded send: #methodAdded: to: self
 ]
 
 { #category : 'installation' }
@@ -432,5 +434,6 @@ MetaLinkInstaller >> uninstallSuperJumpLinks [
 
 { #category : 'initialization' }
 MetaLinkInstaller >> unsubscribeFromAnnouncers [
-	SystemAnnouncer uniqueInstance unsubscribe: self
+
+	self class codeSupportAnnouncer unsubscribe: self
 ]

@@ -7,7 +7,7 @@ ReSmallintChecker is responsible for running a set of rules on a given subsystem
 rules := ReRuleManager defaultRules.
 
 checker := ReSmalllintChecker new
-	runRules: rules onPackage: (RPackageOrganizer default packageNamed: #'Manifest-Core').
+	runRules: rules onPackage: (PackageOrganizer default packageNamed: #'Manifest-Core').
 
 ```
 "
@@ -145,21 +145,15 @@ ReSmalllintChecker >> isTruePositive: aCritic forRuleId: ruleId versionId: versi
 ]
 
 { #category : 'accessing' }
-ReSmalllintChecker >> manifestBuilderOf: aPackage [
+ReSmalllintChecker >> manifestBuilderOf: anEntity [
 
-	^ aPackage manifestBuilderForRuleChecker: self
+	^ anEntity manifestBuilderForRuleChecker: self
 ]
 
 { #category : 'accessing' }
 ReSmalllintChecker >> manifestBuilderOfClass: aClass [
-	| key |
-	key := aClass instanceSide category.
-	^ manifestClassCache
-		at: key
-		ifAbsentPut: [
-			(self builderManifestClass hasManifestFor: aClass)
-				ifTrue: [ self builderManifestClass of: aClass ]
-				ifFalse: [ nil ] ]
+
+	^ self manifestBuilderOfPackage: aClass package
 ]
 
 { #category : 'accessing' }
@@ -173,14 +167,11 @@ ReSmalllintChecker >> manifestBuilderOfMethod: aMethod [
 
 { #category : 'accessing' }
 ReSmalllintChecker >> manifestBuilderOfPackage: aPackage [
-	| key |
-	key := aPackage packageName.
-	^ manifestClassCache
-		at: key
-		ifAbsentPut: [
-			(self builderManifestClass hasPackageNamed: key)
-				ifTrue: [ self builderManifestClass ofPackageNamed: key ]
-				ifFalse: [ nil ] ]
+
+	^ manifestClassCache at: aPackage name ifAbsentPut: [
+		  self builderManifestClass allManifestClasses
+			  detect: [ :class | class package = aPackage ]
+			  ifNone: [ nil ] ]
 ]
 
 { #category : 'private' }

@@ -79,16 +79,16 @@ UndefinedObjectTest >> testIsNil [
 	self assert: (nil isNil)
 ]
 
+{ #category : 'tests - testing' }
+UndefinedObjectTest >> testIsNotNil [
+
+	self deny: (nil isNotNil)
+]
+
 { #category : 'tests - class methods' }
 UndefinedObjectTest >> testNew [
 
 	self should: [ UndefinedObject new] raise: Error
-]
-
-{ #category : 'tests - testing' }
-UndefinedObjectTest >> testNotNil [
-
-	self deny: (nil notNil)
 ]
 
 { #category : 'tests - printing' }

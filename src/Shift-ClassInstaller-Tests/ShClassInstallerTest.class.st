@@ -209,6 +209,54 @@ ShClassInstallerTest >> testClassWithSlotHasInitializeMethodWithInitializeSlots 
 ]
 
 { #category : 'tests' }
+ShClassInstallerTest >> testCreatedClassWithAllElements [
+
+	newClass := ShiftClassInstaller make: [ :builder |
+		            builder
+			            name: #SHClass;
+			            superclass: Object;
+			            slots: { #a. #b };
+			            layout: WeakLayout;
+			            traits: { TViewModelMock };
+			            sharedVariables: { #AAA };
+			            sharedPools: { #TextConstants };
+			            tag: 'boring';
+			            package: self generatedClassesPackageName ].
+
+	self assert: newClass name equals: #SHClass.
+	self assert: newClass slots size equals: 2.
+	self assert: newClass slotNames equals: #( a b ).
+	self assert: newClass classLayout class equals: WeakLayout.
+	self assert: newClass traitComposition equals: { TViewModelMock } asTraitComposition.
+	self assert: newClass class traitComposition equals: { TViewModelMock classSide } asTraitComposition.
+	self assert: newClass classVarNames equals: #( AAA ).
+	self assertCollection: newClass sharedPools hasSameElements: { TextConstants }.
+	self assert: newClass package name equals: self generatedClassesPackageName.
+	self assert: newClass packageTag name equals: 'boring'
+]
+
+{ #category : 'tests' }
+ShClassInstallerTest >> testCreatingFullTraitHasAllElements [
+
+	newClass := ShiftClassInstaller make: [ :builder |
+		            builder
+			            beTrait;
+			            name: #TSHClass;
+			            slots: { #a. #b };
+			            traits: { TViewModelMock };
+			            tag: 'boring';
+			            package: self generatedClassesPackageName ].
+
+	self assert: newClass name equals: #TSHClass.
+	self assert: newClass slots size equals: 2.
+	self assert: newClass slotNames equals: #( a b ).
+	self assert: newClass traitComposition equals: { TViewModelMock } asTraitComposition.
+	self assert: newClass class traitComposition equals: { TViewModelMock classSide } asTraitComposition.
+	self assert: newClass package name equals: self generatedClassesPackageName.
+	self assert: newClass packageTag name equals: 'boring'
+]
+
+{ #category : 'tests' }
 ShClassInstallerTest >> testDuplicateClassPreserveClassSlots [
 
 	newClass := ShiftClassInstaller make: [ :builder |
@@ -312,12 +360,23 @@ ShClassInstallerTest >> testInstallInSpecificEnvironment [
 
 	self assert: newClass environment identicalTo: newEnvironment.
 
-	self skip.
-	self flag: #package. "ShiftClassInstaller>>#recategorize:to: is using the old SystemOrganizer system to classify classes, but this does not add the classes to the instance of RPackageOrganizer but to the default package organizer of the image instead. Until we can fix this, we cannot have the next assertions working. They are clearly a bug but it'll be hard to fix this bug in short term........ :("
 	self deny: (self packageOrganizer hasPackage: self generatedClassesPackageName).
-	self assert: (newEnvironment organization hasPackage: self generatedClassesPackageName) ] ensure: [
-		"The tear down will not remove the class in the other environment"
+	self assert: (newEnvironment organization hasPackage: self generatedClassesPackageName) ] ensure: [ "The tear down will not remove the class in the other environment"
 		newEnvironment organization removePackage: self generatedClassesPackageName ]
+]
+
+{ #category : 'tests' }
+ShClassInstallerTest >> testInstallingWithAnEmptyTag [
+
+	newClass := ShiftClassInstaller make: [ :builder |
+		            builder
+			            name: #ShCITestEmptyTag;
+			            tag: '';
+			            package: self generatedClassesPackageName ].
+
+	self assert: newClass package name equals: self generatedClassesPackageName.
+	self assert: newClass packageTag isRoot.
+	self deny: newClass packageTag name equals: ''
 ]
 
 { #category : 'tests' }
@@ -385,6 +444,28 @@ ShClassInstallerTest >> testModifyingSuperclassInOtherOrder [
 
 	self assert: (obj instVarNamed: #anInstanceVariable) equals: 7.
 	self assert: (obj instVarNamed: #anSubInstanceVariable) equals: 17
+]
+
+{ #category : 'tests' }
+ShClassInstallerTest >> testRecompilingAClassKeepExtensionMethodsAsExtension [
+	"This is a regression test were recompiling a class was considering that all extension method became defined methods."
+
+	| extensionMethod |
+	newClass := self newClass: #ShCITestClass slots: {  }.
+
+	[
+	extensionMethod := newClass compiler
+		                   protocol: '*' , self generatedClassesPackageName , '2';
+		                   install: 'billy ^ #Billy'.
+
+	self assert: extensionMethod isExtension.
+	self assert: extensionMethod package name equals: self generatedClassesPackageName , '2'.
+
+	newClass := self newClass: #ShCITestClass slots: { #addedSlot }.
+
+	self assert: extensionMethod isExtension.
+	self assert: extensionMethod package name equals: self generatedClassesPackageName , '2' ] ensure: [
+		self packageOrganizer removePackage: self generatedClassesPackageName , '2' ]
 ]
 
 { #category : 'tests' }

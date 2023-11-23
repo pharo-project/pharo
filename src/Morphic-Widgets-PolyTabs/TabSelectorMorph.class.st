@@ -144,8 +144,8 @@ TabSelectorMorph >> drawSubmorphsOn: aCanvas [
 
 	|tab|
 	super drawSubmorphsOn: aCanvas.
-	(self hasKeyboardFocus and: [(tab := self selectedTab) notNil
-			and: [tab owner notNil]])
+	(self hasKeyboardFocus and: [(tab := self selectedTab) isNotNil
+			and: [tab owner isNotNil]])
 		ifTrue: [self clipSubmorphs
 				ifTrue: [aCanvas
 							clipBy: (aCanvas clipRect intersect: self clippingBounds ifNone:["done here" ^ self ])
@@ -261,7 +261,7 @@ TabSelectorMorph >> leftButtonEnabled [
 TabSelectorMorph >> leftButtonLabel [
 	"Answer the label for a button for scrolling left."
 
-	^AlphaImageMorph new image: (
+	^AlphaImageMorph new formSet: (
 		ScrollBarMorph
 			arrowOfDirection: #left
 			size: self controlButtonWidth - (3* self displayScaleFactor)
@@ -423,7 +423,7 @@ TabSelectorMorph >> rightButtonEnabled [
 TabSelectorMorph >> rightButtonLabel [
 	"Answer the label for a button for scrolling right."
 
-	^AlphaImageMorph new image: (
+	^AlphaImageMorph new formSet: (
 		ScrollBarMorph
 			arrowOfDirection: #right
 			size: self controlButtonWidth - (3 * self displayScaleFactor)
@@ -589,7 +589,7 @@ TabSelectorMorph >> visibleTabRange: anInterval [
 TabSelectorMorph >> visibleTabs [
 	"Answer the tabs that are currently visible."
 
-	^self tabs select: [:t | t owner notNil]
+	^self tabs select: [:t | t owner isNotNil]
 ]
 
 { #category : 'accessing' }

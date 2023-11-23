@@ -133,13 +133,6 @@ MetacelloProjectRegistration class >> fromMCConfigurationProjectSpec: aProjectSp
         yourself
 ]
 
-{ #category : 'accessing' }
-MetacelloProjectRegistration class >> primeRegistryFromImage [
-    "MetacelloProjectRegistration primeRegistryFromImage"
-
-    self registry primeRegistryFromImage
-]
-
 { #category : 'querying' }
 MetacelloProjectRegistration class >> projectSpecForClassNamed: aClassName ifAbsent: absentBlock [
     ^ self registry projectSpecForClassNamed: aClassName ifAbsent: absentBlock
@@ -162,9 +155,10 @@ MetacelloProjectRegistration class >> registerProjectSpec: aProjectSpec ifPresen
         ifAbsent: [ newRegistration registerProject ]
 ]
 
-{ #category : 'querying' }
+{ #category : 'registration' }
 MetacelloProjectRegistration class >> registrationForClassNamed: aClassName ifAbsent: absentBlock [
-    ^ self registry registrationForClassNamed: aClassName ifAbsent: absentBlock
+
+	^ self registry registrationForClassNamed: aClassName ifAbsent: absentBlock
 ]
 
 { #category : 'querying' }
@@ -227,11 +221,6 @@ MetacelloProjectRegistration >> baselineProjectSpec: anObject [
 ]
 
 { #category : 'accessing' }
-MetacelloProjectRegistration >> baselineProjectSpecIfAbsent: absentBlock [
-  ^ baselineProjectSpec ifNil: absentBlock
-]
-
-{ #category : 'accessing' }
 MetacelloProjectRegistration >> baselineProjectSpecIfPresent: presentBlock ifAbsent: absentBlock [
 
 	^ baselineProjectSpec
@@ -241,44 +230,34 @@ MetacelloProjectRegistration >> baselineProjectSpecIfPresent: presentBlock ifAbs
 
 { #category : 'testing' }
 MetacelloProjectRegistration >> canDowngradeTo: aProjectRegistration [
-    "true if there are no load conflicts
+	"true if there are no load conflicts
         OR
        if the load conflicts involved two cofigurations ONLY and a downgrade is allowed"
 
-    (self hasLoadConflicts: aProjectRegistration)
-        ifFalse: [ ^ true ].
-    configurationProjectSpec
-        ifNotNil: [ 
-            aProjectRegistration configurationProjectSpec
-                ifNotNil: [ 
-                    configurationProjectSpec ensureProjectLoaded.
-                    ^ configurationProjectSpec canDowngradeTo: aProjectRegistration configurationProjectSpec ] ].
-    ^ false
+	(self hasLoadConflicts: aProjectRegistration) ifFalse: [ ^ true ].
+	configurationProjectSpec ifNotNil: [
+		aProjectRegistration configurationProjectSpec ifNotNil: [
+			configurationProjectSpec ensureProjectLoaded.
+			^ configurationProjectSpec canDowngradeTo: aProjectRegistration configurationProjectSpec ] ].
+	^ false
 ]
 
 { #category : 'testing' }
 MetacelloProjectRegistration >> canUpgradeTo: aProjectRegistration [
-  "true if there are no load conflicts
+	"true if there are no load conflicts
         OR
        if the load conflicts involved two cofigurations ONLY and an upgrade is allowed"
 
-  (self hasLoadConflicts: aProjectRegistration)
-    ifFalse: [ ^ true ].
-  configurationProjectSpec
-    ifNotNil: [ 
-      aProjectRegistration configurationProjectSpec
-        ifNotNil: [ 
-          configurationProjectSpec copy ensureProjectLoaded.
-          ^ configurationProjectSpec
-            canUpgradeTo: aProjectRegistration configurationProjectSpec ] ].
-  baselineProjectSpec
-    ifNotNil: [ 
-      aProjectRegistration baselineProjectSpec
-        ifNotNil: [ 
-          baselineProjectSpec copy ensureProjectLoaded.
-          ^ baselineProjectSpec
-            canUpgradeTo: aProjectRegistration baselineProjectSpec ] ].
-  ^ false
+	(self hasLoadConflicts: aProjectRegistration) ifFalse: [ ^ true ].
+	configurationProjectSpec ifNotNil: [
+		aProjectRegistration configurationProjectSpec ifNotNil: [
+			configurationProjectSpec copy ensureProjectLoaded.
+			^ configurationProjectSpec canUpgradeTo: aProjectRegistration configurationProjectSpec ] ].
+	baselineProjectSpec ifNotNil: [
+		aProjectRegistration baselineProjectSpec ifNotNil: [
+			baselineProjectSpec copy ensureProjectLoaded.
+			^ baselineProjectSpec canUpgradeTo: aProjectRegistration baselineProjectSpec ] ].
+	^ false
 ]
 
 { #category : 'accessing' }
@@ -290,20 +269,21 @@ MetacelloProjectRegistration >> configurationProjectSpec [
 
 { #category : 'accessing' }
 MetacelloProjectRegistration >> configurationProjectSpec: anObject [
-  "force the registration to be consistent -- difficult for Metacello to 
+	"force the registration to be consistent -- difficult for Metacello to 
    repair registrations during load -- I've tried. "
 
-  "https://github.com/dalehenrich/metacello-work/issues/212"
+	"https://github.com/dalehenrich/metacello-work/issues/212"
 
-  self shouldBeMutable.
-  baselineProjectSpec := nil.
-  self assert: anObject isConfigurationOfProjectSpec.
-  configurationProjectSpec := anObject
+	self shouldBeMutable.
+	baselineProjectSpec := nil.
+	self assert: anObject isConfigurationOfProjectSpec.
+	configurationProjectSpec := anObject
 ]
 
 { #category : 'accessing' }
 MetacelloProjectRegistration >> configurationProjectSpecIfAbsent: absentBlock [
-    ^ configurationProjectSpec ifNil: absentBlock
+
+	^ configurationProjectSpec ifNil: [ absentBlock value ]
 ]
 
 { #category : 'accessing' }
@@ -316,40 +296,39 @@ MetacelloProjectRegistration >> configurationProjectSpecIfPresent: presentBlock 
 
 { #category : 'mutability' }
 MetacelloProjectRegistration >> copyOnWrite: aBlock [
-    "assume that only registered projects are immutable ... otherwise you'll get an error"
+	"assume that only registered projects are immutable ... otherwise you'll get an error"
 
-    | copy |
-    self class registry
-        registrationFor: self
-        ifPresent: [ :existing |  ]
-        ifAbsent: [ 
-            aBlock value: self.
-            ^ self ].
-    self unregisterProject.
-    copy := self copy.
-    aBlock value: copy.
-    copy registerProject.
-    ^ copy
+	| copy |
+	self class registry registrationFor: self ifPresent: [ :existing |  ] ifAbsent: [
+		aBlock value: self.
+		^ self ].
+	self unregisterProject.
+	copy := self copy.
+	aBlock value: copy.
+	copy registerProject.
+	^ copy
 ]
 
 { #category : 'accessing' }
 MetacelloProjectRegistration >> currentBranchName [
-  ^ self configurationProjectSpec
-    ifNotNil: [ 
-      configurationProjectSpec versionOrNil
-        ifNil: [ '' ]
-        ifNotNil: [ :vrsn | vrsn blessing asString ] ]
-    ifNil: [ baselineProjectSpec repositoryBranchName ]
+
+	^ self configurationProjectSpec
+		  ifNotNil: [
+			  configurationProjectSpec versionOrNil
+				  ifNil: [ '' ]
+				  ifNotNil: [ :vrsn | vrsn blessing asString ] ]
+		  ifNil: [ baselineProjectSpec repositoryBranchName ]
 ]
 
 { #category : 'accessing' }
 MetacelloProjectRegistration >> currentVersionString [
-  ^ self configurationProjectSpec
-    ifNotNil: [ :aSpec | aSpec versionString ]
-    ifNil: [ baselineProjectSpec repositoryVersionString ]
+
+	^ self configurationProjectSpec
+		  ifNotNil: [ :aSpec | aSpec versionString ]
+		  ifNil: [ baselineProjectSpec repositoryVersionString ]
 ]
 
-{ #category : 'querying' }
+{ #category : 'accessing' }
 MetacelloProjectRegistration >> currentlyLoadedClassesInProject [
 	^ self projectSpec currentlyLoadedClassesInVersion asSet
 ]
@@ -382,8 +361,8 @@ MetacelloProjectRegistration >> immutable [
 
 { #category : 'mutability' }
 MetacelloProjectRegistration >> isMutable [
-    mutable ifNil: [ ^ true ].
-    ^ mutable
+
+	^ mutable ifNil: [ true ]
 ]
 
 { #category : 'testing' }
@@ -398,8 +377,8 @@ MetacelloProjectRegistration >> isValid [
 
 { #category : 'accessing' }
 MetacelloProjectRegistration >> loadedInImage [
-    loadedInImage ifNil: [ loadedInImage := false ].
-    ^ loadedInImage
+
+	^ loadedInImage ifNil: [ loadedInImage := false ]
 ]
 
 { #category : 'accessing' }
@@ -418,18 +397,6 @@ MetacelloProjectRegistration >> locked [
 MetacelloProjectRegistration >> locked: anObject [
     self shouldBeMutable.
     locked := anObject
-]
-
-{ #category : 'lookup' }
-MetacelloProjectRegistration >> lookupBaselineSpec [
-  baselineProjectSpec ifNotNil: [ :spec | ^ spec ].
-  ^ configurationProjectSpec
-]
-
-{ #category : 'lookup' }
-MetacelloProjectRegistration >> lookupConfigurationSpec [
-  configurationProjectSpec ifNotNil: [ :spec | ^ spec ].
-  ^ baselineProjectSpec
 ]
 
 { #category : 'accessing' }
@@ -467,31 +434,30 @@ MetacelloProjectRegistration >> postCopy [
 
 { #category : 'printing' }
 MetacelloProjectRegistration >> printOn: aStream [
-  | label versionString descriptions |
-  self
-    configurationProjectSpecIfPresent: [ :spec | 
-      label := spec className.
-      versionString := spec versionString ]
-    ifAbsent: [ 
-      "baseline"
-      label := self baselineProjectSpec className.
-      versionString := '[baseline]' ].
-  aStream nextPutAll: label.
-  versionString
-    ifNil: [ aStream nextPutAll: ' --no version specified--' ]
-    ifNotNil: [ 
-      aStream
-        space;
-        nextPutAll: versionString ].
-  (descriptions := self repositoryDescriptions) isEmpty
-    ifTrue: [ ^ self ].
-  aStream nextPutAll: ' from '.
-  descriptions size = 1
-    ifTrue: [ aStream nextPutAll: descriptions first ]
-    ifFalse: [ 
-      aStream nextPut: ${.
-      descriptions do: [ :description | aStream nextPutAll: description ].
-      aStream nextPut: $} ]
+
+	| label versionString descriptions |
+	self
+		configurationProjectSpecIfPresent: [ :spec |
+			label := spec className.
+			versionString := spec versionString ]
+		ifAbsent: [ "baseline"
+			label := self baselineProjectSpec className.
+			versionString := '[baseline]' ].
+	aStream nextPutAll: label.
+	versionString
+		ifNil: [ aStream nextPutAll: ' --no version specified--' ]
+		ifNotNil: [
+			aStream
+				space;
+				nextPutAll: versionString ].
+	(descriptions := self repositoryDescriptions) isEmpty ifTrue: [ ^ self ].
+	aStream nextPutAll: ' from '.
+	descriptions size = 1
+		ifTrue: [ aStream nextPutAll: descriptions first ]
+		ifFalse: [
+			aStream nextPut: ${.
+			descriptions do: [ :description | aStream nextPutAll: description ].
+			aStream nextPut: $} ]
 ]
 
 { #category : 'accessing' }
@@ -538,9 +504,9 @@ MetacelloProjectRegistration >> repositoryDescriptions [
 
 { #category : 'mutability' }
 MetacelloProjectRegistration >> shouldBeMutable [
-    self isMutable
-        ifTrue: [ ^ self ].
-    self error: 'Not allowed to modify an immutable object'
+
+	self isMutable ifTrue: [ ^ self ].
+	self error: 'Not allowed to modify an immutable object'
 ]
 
 { #category : 'registration' }

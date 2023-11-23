@@ -89,26 +89,21 @@ UITheme class >> current: aUITheme [
 	SystemProgressMorph reset. "reset to use new fill styles"
 	ScrollBarMorph initializeImagesCache. "reset to use new arrows"
 
-	self class environment at: #SHPreferences ifPresent: [ :shPreferences |
-		shPreferences setStyleTable: aUITheme shStyleTable ].
+	self class environment at: #SHPreferences ifPresent: [ :shPreferences | shPreferences setStyleTable: aUITheme shStyleTable ].
 
-	self class environment at: #PolymorphSystemSettings ifPresent: [ :polymorphSystemSettings |
-		polymorphSystemSettings desktopColor: aUITheme desktopColor ].
+	self class environment at: #PolymorphSystemSettings ifPresent: [ :polymorphSystemSettings | polymorphSystemSettings desktopColor: aUITheme desktopColor ].
 
-	self class environment at: #NECPreferences ifPresent: [ :necPreferences |
-		necPreferences backgroundColor: aUITheme windowColor ].
+	self class environment at: #NECPreferences ifPresent: [ :necPreferences | necPreferences backgroundColor: aUITheme windowColor ].
 
-	self class environment at: #Paragraph ifPresent: [ :paragraph |
-		paragraph insertionPointColor: aUITheme caretColor ].
+	self class environment at: #Paragraph ifPresent: [ :paragraph | paragraph insertionPointColor: aUITheme caretColor ].
 
-	self class environment at: #BalloonMorph ifPresent: [ :balloonMorph |
-		balloonMorph setBalloonColorTo: aUITheme balloonBackgroundColor ].
+	self class environment at: #BalloonMorph ifPresent: [ :balloonMorph | balloonMorph setBalloonColorTo: aUITheme balloonBackgroundColor ].
 
 	aUITheme updateWorldDockingBars.
 	self currentWorld themeChanged.
-	(SystemWindow allSubInstances select:[:e | e owner isNil]) do: [ :each | each themeChanged ].
+	(SystemWindow allSubInstances select: [ :e | e owner isNil ]) do: [ :each | each themeChanged ].
 
-	SystemAnnouncer announce: UIThemeChanged
+	self codeSupportAnnouncer announce: UIThemeChanged
 ]
 
 { #category : 'accessing' }
@@ -688,7 +683,7 @@ UITheme >> checkboxLabelForText: aTextOrString [
 UITheme >> checkboxMarkerForm [
 	"Answer the form to use for a checkbox marker."
 
-	^ self iconNamed: #checkboxMarkerForm
+	^ self iconNamed: #checkboxMarker
 ]
 
 { #category : 'fill-styles - buttons' }
@@ -1105,10 +1100,16 @@ UITheme >> createArrowImagesCache [
 	^ LRUCache new
 		maximumWeight: 40;
 		factory: [ :key |
-			self
-				scrollbarArrowOfDirection: key first
+			| form1 form2 |
+			form1 := self scrollbarArrowOfDirection: key first
 				size: key second
-				color: key third ];
+				color: key third.
+			form2 := self scrollbarArrowOfDirection: key first
+				size: key second * 2
+				color: key third.
+			FormSet forms: {
+				form1.
+				form2 scaledToExactSize: form1 extent * 2 } ];
 		yourself
 ]
 
@@ -1666,7 +1667,7 @@ UITheme >> drawWindowPlainDropShadowFor: aSystemWindow on: aCanvas [
 	"Draw the plain drop shadow for the given window."
 
 	|blOffset brOffset trOffset|
-	(aSystemWindow owner notNil and: [aSystemWindow owner isHandMorph])
+	(aSystemWindow owner isNotNil and: [aSystemWindow owner isHandMorph])
 		ifTrue: [^self]. "skip if being dragged"
 	blOffset := (aSystemWindow wantsRoundedCorners and: [aSystemWindow roundedCorners includes: 2])
 		ifTrue: [7 scaledByDisplayScaleFactor] ifFalse: [1 scaledByDisplayScaleFactor].
@@ -1696,7 +1697,7 @@ UITheme >> dropListButtonLabelFor: aDropList [
 	"Answer the label for the button of the given drop list."
 
 	^AlphaImageMorph new
-		image: (ScrollBarMorph
+		formSet: (ScrollBarMorph
 			arrowOfDirection: #bottom
 			size: aDropList buttonWidth - 3 scaledByDisplayScaleFactor
 			color: aDropList paneColor darker);
@@ -3856,7 +3857,7 @@ UITheme >> radioButtonForm [
 UITheme >> radioButtonMarkerForm [
 	"Answer the form to use for a radio button marker."
 
-	^ self iconNamed: #radioButtonMarkerForm
+	^ self iconNamed: #radioButtonMarker
 ]
 
 { #category : 'border-styles - buttons' }
@@ -4944,14 +4945,14 @@ UITheme >> windowBottomOffset [
 UITheme >> windowCloseForm [
 	"Answer the form to use for the close button of a window."
 
-	^ self iconNamed: #windowCloseForm
+	^ self iconNamed: #windowClose
 ]
 
 { #category : 'label-styles - windows' }
 UITheme >> windowCloseOverForm [
 	"Answer the form to use for mouse over window close buttons"
 
-	^ self iconNamed: #windowCloseForm
+	^ self iconNamed: #windowClose
 ]
 
 { #category : 'label-styles - windows' }
@@ -5065,14 +5066,14 @@ UITheme >> windowLeftOffset [
 UITheme >> windowMaximizeForm [
 	"Answer the form to use for the maximize button of a window."
 
-	^ self iconNamed: #windowMaximizeForm
+	^ self iconNamed: #windowMaximize
 ]
 
 { #category : 'label-styles - windows' }
 UITheme >> windowMaximizeOverForm [
 	"Answer the form to use for mouse over window maximize buttons"
 
-	^ self iconNamed: #windowMaximizeForm
+	^ self iconNamed: #windowMaximize
 ]
 
 { #category : 'label-styles - windows' }
@@ -5093,7 +5094,7 @@ UITheme >> windowMaximizeSound [
 UITheme >> windowMenuForm [
 	"Answer the form to use for the menu button of a window."
 
-	^ self iconNamed: #windowMenuForm
+	^ self iconNamed: #windowMenu
 ]
 
 { #category : 'label-styles - windows' }
@@ -5114,14 +5115,14 @@ UITheme >> windowMenuPassiveForm [
 UITheme >> windowMinimizeForm [
 	"Answer the form to use for the minimize button of a window."
 
-	^ self iconNamed: #windowMinimizeForm
+	^ self iconNamed: #windowMinimize
 ]
 
 { #category : 'label-styles - windows' }
 UITheme >> windowMinimizeOverForm [
 	"Answer the form to use for mouse over window minimize buttons"
 
-	^ self iconNamed: #windowMinimizeForm
+	^ self iconNamed: #windowMinimize
 ]
 
 { #category : 'label-styles - windows' }

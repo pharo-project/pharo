@@ -162,7 +162,7 @@ PluggableListMorph >> allSubmorphNamesDo: nameBlock [
 PluggableListMorph >> autoDeselect [
 
 	^ autoDeselect
-		ifNil: [ self resetListSelector notNil ]
+		ifNil: [ self resetListSelector isNotNil ]
 		ifNotNil: [ autoDeselect ]
 ]
 
@@ -472,9 +472,10 @@ PluggableListMorph >> getIndexSelector: aSelector [
 { #category : 'model access' }
 PluggableListMorph >> getList [
 	"Answer the list to be displayed.  Caches the returned list in the 'list' ivar"
-	getListSelector == nil ifTrue: [^ #()].
+
+	getListSelector ifNil: [ ^ #(  ) ].
 	list := model perform: getListSelector.
-	list == nil ifTrue: [^ #()].
+	list ifNil: [ ^ #(  ) ].
 	list := list collectWithIndex: [ :item :index | self wrapItem: item index: index ].
 	^ list
 ]
@@ -989,7 +990,7 @@ PluggableListMorph >> mouseMoveOnMultiple: event [
 
 	row = 0 ifTrue: [ ^ super mouseDown: event ].
 
-	(self potentialDropItem notNil and: [ self dropEnabled ]) ifTrue: [ ^ self ].
+	(self potentialDropItem isNotNil and: [ self dropEnabled ]) ifTrue: [ ^ self ].
 
 	dragOnOrOff ifNil:
 			["Was not set at mouse down, which means the mouse must have gone down in an area where there was no list item"
@@ -1697,7 +1698,7 @@ PluggableListMorph >> verifyContents [
 					ifTrue: [self selectionIndex]
 					ifFalse: [nil]].
 	self updateList.
-	existingSelection notNil
+	existingSelection isNotNil
 		ifTrue: [	self selectionIndex: existingSelection]
 		ifFalse:	[self changeModelSelection: 0]
 ]

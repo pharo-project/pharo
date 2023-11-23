@@ -462,16 +462,16 @@ FreeTypeCacheTest >> testRemoveAllForFont [
 	1 to: 100 do:[:i |
 		fullCache atFont: font3 charCode: i type: 3 scale: 1 put: font1ZGlyph].
 	fifo := fullCache instVarNamed: #fifo.
-	self assert: (fifo detect:[:each | each font = font1] ifNone:[]) notNil.
-	self assert: (fifo detect:[:each | each font = font2] ifNone:[]) notNil.
-	self assert: (fifo detect:[:each | each font = font3] ifNone:[]) notNil.
+	self assert: (fifo detect:[:each | each font = font1] ifNone:[]) isNotNil.
+	self assert: (fifo detect:[:each | each font = font2] ifNone:[]) isNotNil.
+	self assert: (fifo detect:[:each | each font = font3] ifNone:[]) isNotNil.
 	fullCache removeAllForFont: font1.
 	self validateSizes: fullCache.
 	self validateCollections: fullCache.
 	fifo := (fullCache instVarNamed: #fifo).
 	self assert: (fifo detect:[:each | each font = font1] ifNone:[]) isNil.
-	self assert: (fifo detect:[:each | each font = font2] ifNone:[]) notNil.
-	self assert: (fifo detect:[:each | each font = font2] ifNone:[]) notNil
+	self assert: (fifo detect:[:each | each font = font2] ifNone:[]) isNotNil.
+	self assert: (fifo detect:[:each | each font = font2] ifNone:[]) isNotNil
 ]
 
 { #category : 'tests' }
@@ -486,16 +486,16 @@ FreeTypeCacheTest >> testRemoveAllForType [
 	1 to: 100 do:[:i |
 		fullCache atFont: font3 charCode: i type: 3 scale: 1 put: font1ZGlyph].
 	fifo := fullCache instVarNamed: #fifo.
-	self assert: (fifo detect:[:each | each type = 1] ifNone:[]) notNil.
-	self assert: (fifo detect:[:each | each type = 2] ifNone:[]) notNil.
-	self assert: (fifo detect:[:each | each type = 3] ifNone:[]) notNil.
+	self assert: (fifo detect:[:each | each type = 1] ifNone:[]) isNotNil.
+	self assert: (fifo detect:[:each | each type = 2] ifNone:[]) isNotNil.
+	self assert: (fifo detect:[:each | each type = 3] ifNone:[]) isNotNil.
 	fullCache removeAllForType: 1.
 	self validateSizes: fullCache.
 	self validateCollections: fullCache.
 	fifo := (fullCache instVarNamed: #fifo).
 	self assert: (fifo detect:[:each | each type = 1] ifNone:[]) isNil.
-	self assert: (fifo detect:[:each | each type = 2] ifNone:[]) notNil.
-	self assert: (fifo detect:[:each | each type = 3] ifNone:[]) notNil
+	self assert: (fifo detect:[:each | each type = 2] ifNone:[]) isNotNil.
+	self assert: (fifo detect:[:each | each type = 3] ifNone:[]) isNotNil
 ]
 
 { #category : 'tests' }

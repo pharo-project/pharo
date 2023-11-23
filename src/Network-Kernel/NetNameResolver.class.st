@@ -90,8 +90,11 @@ NetNameResolver class >> addressFromIPv6String: aString [
 { #category : 'address string utils' }
 NetNameResolver class >> addressFromString: addressString [
 	"Return the internet address represented by the given string. The string should contain four positive decimal integers delimited by periods, commas, or spaces, where each integer represents one address byte. Return nil if the string is not a host address in an acceptable format."
+
 	"NetNameResolver addressFromString: '1.2.3.4'"
+
 	"NetNameResolver addressFromString: '1,2,3,4'"
+
 	"NetNameResolver addressFromString: '1 2 3 4'"
 
 	| newAddr s byte delimiter |
@@ -103,14 +106,12 @@ NetNameResolver class >> addressFromString: addressString [
 	newAddr := ByteArray new: 4.
 	s := ReadStream on: addressString.
 	s skipSeparators.
-	1 to: 4 do: [:i |
-		byte := self readDecimalByteFrom: s.
-		byte = nil ifTrue: [^ nil].
+	1 to: 4 do: [ :i |
+		byte := (self readDecimalByteFrom: s) ifNil: [ ^ nil ].
 		newAddr at: i put: byte.
 		i < 4 ifTrue: [
 			delimiter := s next.
-			((delimiter = $.) or: [(delimiter = $,) or: [delimiter = $ ]])
-				ifFalse: [^ nil]]].
+			(delimiter = $. or: [ delimiter = $, or: [ delimiter = $  ] ]) ifFalse: [ ^ nil ] ] ].
 	^ newAddr
 ]
 

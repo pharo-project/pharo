@@ -128,42 +128,6 @@ MCWorkingCopyTest >> testAncestorMerge [
 ]
 
 { #category : 'tests' }
-MCWorkingCopyTest >> testBackport [
-	| inst base final backported ancestry |
-	inst := self mockInstanceA.
-	base := self snapshot.
-
-	self assert: inst one equals: 1.
-
-	self change: #one toReturn: 2.
-	self change: #two toReturn: 3.
-
-	final := self snapshot.
-	[ workingCopy backportChangesTo: base info ]
-		on: MCChangeSelectionRequest
-		do: [ :e | e resume: e patch ].
-
-	self assert: inst one equals: 2.
-	self assert: inst two equals: 3.
-	ancestry := workingCopy ancestry.
-	self assert: ancestry ancestors size equals: 1.
-	self assert: ancestry ancestors first equals: base info.
-	self assert: ancestry stepChildren size equals: 1.
-	self assert: ancestry stepChildren first equals: final info.
-
-	backported := self snapshot.
-	[ workingCopy backportChangesTo: base info ]
-		on: MCChangeSelectionRequest
-		do: [ :e | e resume: e patch ].
-
-	ancestry := workingCopy ancestry.
-	self assert: ancestry ancestors size equals: 1.
-	self assert: ancestry ancestors first equals: base info.
-	self assert: ancestry stepChildren size equals: 1.
-	self assert: ancestry stepChildren first equals: backported info
-]
-
-{ #category : 'tests' }
 MCWorkingCopyTest >> testDoubleRepeatedMerge [
 	| base motherA1 motherA2 motherB1 motherB2 inst |
 	base := self snapshot.
@@ -251,22 +215,6 @@ MCWorkingCopyTest >> testNaming [
 ]
 
 { #category : 'tests' }
-MCWorkingCopyTest >> testOptimizedLoad [
-	| inst base diffy |
-	inst := self mockInstanceA.
-	base := self snapshot.
-	self change: #one toReturn: 2.
-	self assert: inst one equals: 2.
-	diffy := self snapshot asDiffAgainst: base.
-	self deny: diffy canOptimizeLoading.
-	self load: base.
-	self assert: inst one equals: 1.
-	self assert: diffy canOptimizeLoading.
-	self load: diffy.
-	self assert: inst one equals: 2
-]
-
-{ #category : 'tests' }
 MCWorkingCopyTest >> testRedundantMerge [
 	| base |
 	base := self snapshot.
@@ -309,31 +257,6 @@ MCWorkingCopyTest >> testRepositoryFallback [
 	self assert: (repositoryGroup versionWithInfo: version info) identicalTo: version.
 	versions2 removeKey: version info.
 	self should: [ repositoryGroup versionWithInfo: version info ] raise: Error
-]
-
-{ #category : 'tests' }
-MCWorkingCopyTest >> testSelectiveBackport [
-	| inst base intermediate final |
-	inst := self mockInstanceA.
-	base := self snapshot.
-	self assert: inst one equals: 1.
-	self change: #one toReturn: 2.
-	intermediate := self snapshot.
-	self change: #two toReturn: 3.
-	final := self snapshot.
-	[ workingCopy backportChangesTo: base info ]
-		on: MCChangeSelectionRequest
-		do: [ :e | 
-			| patch selected |
-			patch := e patch.
-			selected := patch operations select: [ :ea | ea definition selector = #two ].
-			e resume: (MCPatch operations: selected) ].
-	self assert: inst one equals: 1.
-	self assert: inst two equals: 3.
-	self assert: workingCopy ancestry ancestors size equals: 1.
-	self assert: workingCopy ancestry ancestors first equals: base info.
-	self assert: workingCopy ancestry stepChildren size equals: 1.
-	self assert: workingCopy ancestry stepChildren first equals: final info
 ]
 
 { #category : 'tests' }

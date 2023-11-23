@@ -98,21 +98,9 @@ ClassFactoryForTestCase >> createdTraits [
 ]
 
 { #category : 'accessing' }
-ClassFactoryForTestCase >> defaultCategory [
-
-	^ (self packageName , '-' , self defaultTagPostfix) asSymbol
-]
-
-{ #category : 'accessing' }
 ClassFactoryForTestCase >> defaultSuperclass [
 
 	^ Object
-]
-
-{ #category : 'accessing' }
-ClassFactoryForTestCase >> defaultTagPostfix [
-
-	^ #Default
 ]
 
 { #category : 'cleaning' }
@@ -299,4 +287,10 @@ ClassFactoryForTestCase >> silentlyNewTrait [
 { #category : 'creating' }
 ClassFactoryForTestCase >> silentlyRename: aClass to: aName [
 	^ self silentlyDo: [ aClass rename: aName asSymbol ]
+]
+
+{ #category : 'accessing' }
+ClassFactoryForTestCase >> tagName [
+
+	^ #Default
 ]

@@ -61,24 +61,22 @@ DeflateStream >> compare: here with: matchPos min: minLength [
 { #category : 'deflating' }
 DeflateStream >> deflateBlock [
 	"Deflate the current contents of the stream"
-	| flushNeeded lastIndex |
-	(blockStart == nil) ifTrue:[
-		"One time initialization for the first block"
-		1 to: MinMatch-1 do:[:i| self updateHashAt: i].
-		blockStart := 0].
 
-	[blockPosition < position] whileTrue:[
-		(position + MaxMatch + 1 > writeLimit)
-			ifTrue:[lastIndex := writeLimit - MaxMatch - 1]
-			ifFalse:[lastIndex := position].
-		flushNeeded := self deflateBlock: lastIndex-1
-							chainLength: self hashChainLength
-							goodMatch: self goodMatchLength.
-		flushNeeded ifTrue:[
+	| flushNeeded lastIndex |
+	blockStart ifNil: [ "One time initialization for the first block"
+		1 to: MinMatch - 1 do: [ :i | self updateHashAt: i ].
+		blockStart := 0 ].
+
+	[ blockPosition < position ] whileTrue: [
+		position + MaxMatch + 1 > writeLimit
+			ifTrue: [ lastIndex := writeLimit - MaxMatch - 1 ]
+			ifFalse: [ lastIndex := position ].
+		flushNeeded := self deflateBlock: lastIndex - 1 chainLength: self hashChainLength goodMatch: self goodMatchLength.
+		flushNeeded ifTrue: [
 			self flushBlock.
-			blockStart := blockPosition].
+			blockStart := blockPosition ].
 		"Make room for more data"
-		self moveContentsToFront]
+		self moveContentsToFront ]
 ]
 
 { #category : 'deflating' }

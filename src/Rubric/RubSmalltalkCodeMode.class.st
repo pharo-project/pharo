@@ -185,8 +185,8 @@ RubSmalltalkCodeMode >> formatMethodCode [
 
 { #category : 'shout' }
 RubSmalltalkCodeMode >> hasBindingOf: aString [
-	" For the shout styler "
-	^ self model notNil and: [ self model hasBindingOf: aString ]
+	"For the shout styler"
+	^ self model isNotNil and: [ self model hasBindingOf: aString ]
 ]
 
 { #category : 'parsing' }

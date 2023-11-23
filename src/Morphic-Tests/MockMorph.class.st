@@ -15,12 +15,14 @@ Class {
 
 { #category : 'testing' }
 MockMorph >> hasMyMagicClickActivated [
-	^ magicClick notNil
+
+	^ magicClick isNotNil
 ]
 
 { #category : 'testing' }
 MockMorph >> hasMyMagicDoubleClickActivated [
-	^ magicDoubleClick notNil
+
+	^ magicDoubleClick isNotNil
 ]
 
 { #category : 'events' }

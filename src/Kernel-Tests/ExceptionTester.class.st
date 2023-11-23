@@ -681,9 +681,7 @@ ExceptionTester >> simpleTimeoutWithZeroDurationTestResults [
 { #category : 'accessing' }
 ExceptionTester >> suiteLog [
 
-	suiteLog == nil
-		ifTrue: [suiteLog := OrderedCollection new].
-	^suiteLog
+	^ suiteLog ifNil: [ suiteLog := OrderedCollection new ]
 ]
 
 { #category : 'accessing' }

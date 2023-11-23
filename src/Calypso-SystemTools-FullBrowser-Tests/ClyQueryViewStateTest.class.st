@@ -24,7 +24,7 @@ ClyQueryViewStateTest >> setUp [
 	viewDataSource := ClyCollapsedDataSource on: packages.
 	queryView := ClyQueryViewMorph for: browser.
 	queryView
-		treeStructure: {(RPackage -> #prepareClassGroupQueryFrom:in:)}.
+		treeStructure: {(Package -> #prepareClassGroupQueryFrom:in:)}.
 	queryView dataSource: viewDataSource.
 	queryView selection selectItems: {self selectedItem}
 ]
@@ -46,7 +46,7 @@ ClyQueryViewStateTest >> testApplyingToQueryViewShouldCreateOpenedDataSource [
 	self assert: newView dataSource ~~ navigationState dataSource.
 	self deny: newView dataSource isClosed.
 	self assert: newView dataSource queryView equals: newView.
-	self assert: newView dataSource table notNil
+	self assert: newView dataSource table isNotNil
 ]
 
 { #category : 'tests' }
@@ -67,7 +67,7 @@ ClyQueryViewStateTest >> testApplyingToQueryViewShouldRestoreExpandedItems [
 	self assert: (expandedItem isSameAs: self selectedItem).
 	self deny: expandedItem childrenDataSource isClosed.
 	self assert: expandedItem childrenDataSource queryView equals: newView.
-	self assert: expandedItem childrenDataSource table notNil
+	self assert: expandedItem childrenDataSource table isNotNil
 ]
 
 { #category : 'tests' }

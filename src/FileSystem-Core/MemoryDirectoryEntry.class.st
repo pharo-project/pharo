@@ -80,3 +80,11 @@ MemoryDirectoryEntry >> posixPermissions [
 MemoryDirectoryEntry >> size [
 	^reference size
 ]
+
+{ #category : 'accessing' }
+MemoryDirectoryEntry >> targetPath [
+	"Answer the Path pointing to the real file.
+	MemoryStore doesn't support symbolic links, answer the receivers file path"
+
+	^reference path
+]

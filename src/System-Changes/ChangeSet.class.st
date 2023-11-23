@@ -327,26 +327,29 @@ ChangeSet class >> newChanges: aChangeSet [
 ChangeSet class >> newChanges: aChangeSet withOld: old [
 	"Set the system ChangeSet to be the argument, aChangeSet."
 
-	SystemAnnouncer uniqueInstance unsubscribe: old.
+	self codeChangeAnnouncer unsubscribe: old.
+	self codeSupportAnnouncer unsubscribe: old.
 	current := aChangeSet.
 
-	SystemAnnouncer uniqueInstance private weak
+	self codeChangeAnnouncer weak
 		when: ClassRemoved send: #classRemoved: to: aChangeSet;
 		when: ClassAdded send: #classAdded: to: aChangeSet;
 		when: ClassCommented send: #classCommented: to: aChangeSet;
 		when: ClassRenamed send: #classRenamed: to: aChangeSet;
 		when: ProtocolAnnouncement send: #classReorganized: to: aChangeSet;
 		when: ClassRepackaged send: #classRepackaged: to: aChangeSet;
-		when: ClassModifiedClassDefinition send: #classModified: to: aChangeSet.
-
-	SystemAnnouncer uniqueInstance private weak
+		when: ClassModifiedClassDefinition send: #classModified: to: aChangeSet;
 		when: MethodAdded send: #methodAdded: to: aChangeSet;
 		when: MethodModified send: #methodModified: to: aChangeSet;
 		when: MethodRemoved send: #methodRemoved: to: aChangeSet;
-		when: MethodRecategorized send: #methodRecategorized: to: aChangeSet;
-		when: DoItChunkImported send: #doItChunkImported: to: aChangeSet.
+		when: MethodRecategorized send: #methodRecategorized: to: aChangeSet.
 
-	SystemAnnouncer announce: (CurrentChangeSetChanged new old: old; new: aChangeSet ; yourself)
+	self codeSupportAnnouncer weak when: DoItChunkImported send: #doItChunkImported: to: aChangeSet.
+
+	self codeSupportAnnouncer announce: (CurrentChangeSetChanged new
+			 old: old;
+			 new: aChangeSet;
+			 yourself)
 ]
 
 { #category : 'services' }
@@ -378,18 +381,6 @@ ChangeSet class >> promoteToTop: aChangeSet [
 
 	AllChangeSets remove: aChangeSet ifAbsent: [ ^ self ].
 	AllChangeSets add: aChangeSet
-]
-
-{ #category : 'defaults' }
-ChangeSet class >> promptForDefaultChangeSetDirectoryIfNecessary [
-	<script>
-
-	| path |
-	path := UIManager default
-		chooseDirectory: 'Please select where you want to save your cs'
-		from: FileSystem workingDirectory.
-	self defaultChangeSetDirectoryName: path asFileReference.
-	^ path asFileReference
 ]
 
 { #category : 'system-events' }
@@ -632,7 +623,7 @@ ChangeSet >> changedClasses [
 
 	^ self changedClassNames
 		collect: [ :className | Smalltalk globals classNamed: className ]
-		thenSelect: [ :aClass | aClass notNil ]
+		thenSelect: [ :aClass | aClass isNotNil ]
 ]
 
 { #category : 'method changes' }
@@ -657,19 +648,6 @@ ChangeSet >> changedMessageList [
 						parentName: className;
 						isMeta: classIsMeta) asActive ]]].
 	^ messageList asArray sort
-]
-
-{ #category : 'file in/out' }
-ChangeSet >> checkForSlips [
-	"Return a collection of method refs with possible debugging code in them."
-
-	| slips |
-	slips := OrderedCollection new.
-	self changedClasses do: [ :aClass |
-		(self methodChangesAtClass: aClass name) associationsDo: [ :mAssoc |
-			(#( remove addedThenRemoved ) includes: mAssoc value) ifFalse: [
-				aClass compiledMethodAt: mAssoc key ifPresent: [ :method | (self hasReportableSlip: method) ifTrue: [ slips add: aClass >> mAssoc key ] ] ] ] ].
-	^ slips
 ]
 
 { #category : 'change logging' }
@@ -820,175 +798,6 @@ ChangeSet >> expungeEmptyClassChangeEntries [
 		classRecord hasNoChanges ]
 ]
 
-{ #category : 'file in/out' }
-ChangeSet >> fileOut [
-	"File out the receiver, to a file whose name is a function of the
-	change-set name and a unique numeric tag."
-
-	| fileReference dir |
-	dir := self class promptForDefaultChangeSetDirectoryIfNecessary.
-	fileReference := ( dir / self name , 'cs') nextVersion.
-	self fileOutBody: fileReference
-]
-
-{ #category : 'file in/out' }
-ChangeSet >> fileOutBody: fileReference [
-
-	UIManager default
-		showWaitCursorWhile:
-			[
-			| internalStream |
-			internalStream := (String new: 10000) writeStream.
-			internalStream
-				header;
-				timeStamp.
-			self fileOutPreambleOn: internalStream.
-			self fileOutOn: internalStream.
-			self fileOutPostscriptOn: internalStream.
-
-			CodeExporter
-				writeSourceCodeFrom: internalStream
-				toFileReference: fileReference ]
-]
-
-{ #category : 'file in/out' }
-ChangeSet >> fileOutChangesFor: class on: stream [
-	"Write out all the method changes for this class."
-
-	| changes |
-	changes := Set new.
-	(self methodChangesAtClass: class name)
-		associationsDo: [ :mAssoc |
-			(mAssoc value = #remove or: [ mAssoc value = #addedThenRemoved ])
-				ifFalse: [ changes add: mAssoc key ] ].
-	changes isEmpty
-		ifTrue: [ ^ self ].
-	class fileOutChangedMessages: changes on: stream.
-	stream cr
-]
-
-{ #category : 'private' }
-ChangeSet >> fileOutClassDefinition: class on: stream [
-	"Write out class definition for the given class on the given stream, if the class definition was added or changed."
-
-	(self atClass: class includes: #rename)
-		ifTrue: [
-			stream
-				nextChunkPut: 'Smalltalk renameClassNamed: #' , (self oldNameFor: class) , ' as: #' , class name;
-				cr ].
-	(self atClass: class includes: #change)
-		ifTrue: [
-			"fat definition only needed for changes"
-			stream
-				nextChunkPut: class definitionString;
-				cr.
-			DeepCopier new checkClass: class	"If veryDeepCopy weakly copies some inst
-			vars in this class, warn author when new ones are added." ]
-		ifFalse: [
-			(self atClass: class includes: #add)
-				ifTrue: [
-					"use current definition for add"
-					stream
-						nextChunkPut: class definition;
-						cr.
-					DeepCopier new checkClass: class	"If veryDeepCopy weakly copies some inst
-				vars in this class, warn author when new ones are added." ] ].
-	(self atClass: class includes: #comment)
-		ifFalse: [ ^ self ].
-	class instanceSide putCommentOnFile: stream.
-	stream cr
-]
-
-{ #category : 'file in/out' }
-ChangeSet >> fileOutOn: stream [
-	"Write out all the changes the receiver knows about"
-
-	| classList traits classes traitList list |
-	self isEmpty ifTrue: [self inform: 'Warning: no changes to file out'].
-
-	traits := self changedClasses select: [:each | each isTrait].
-	classes := self changedClasses select: [:each | each isBehavior & each isTrait not].
-	traitList := self class traitsOrder: traits asOrderedCollection.
-	classList := self class classesOrder: classes asOrderedCollection.
-	list := OrderedCollection new
-		addAll: traitList;
-		addAll: classList;
-		yourself.
-
-	"First put out rename, max classDef and comment changes."
-	list do: [:aClass | self fileOutClassDefinition: aClass on: stream].
-
-	"Then put out all the method changes"
-	list do: [:aClass | self fileOutChangesFor: aClass on: stream].
-
-	"Finally put out removals, final class defs and reorganization if any"
-	list reverseDo: [:aClass | self fileOutPSFor: aClass on: stream].
-
-	self classRemoves asSortedCollection do:
-		[:aClassName | stream nextChunkPut: 'Smalltalk removeClassNamed: #', aClassName; cr]
-]
-
-{ #category : 'file in/out' }
-ChangeSet >> fileOutPSFor: class on: stream [
-	"Write out removals and initialization for this class."
-
-	| dict classRecord currentDef |
-	classRecord := changeRecords at: class name ifAbsent: [ ^ self ].
-	dict := classRecord methodChangeTypes.
-	dict keysSortedSafely
-		do: [ :key |
-			| changeType |
-			changeType := dict at: key.
-			(#(#remove #addedThenRemoved) includes: changeType)
-				ifTrue: [
-					stream
-						nextChunkPut: class name , ' removeSelector: ' , key storeString;
-						cr ]
-				ifFalse: [
-					(key = #initialize and: [ class isMeta ])
-						ifTrue: [
-							stream
-								nextChunkPut: class soleInstance name , ' initialize';
-								cr ] ] ].
-	((classRecord includesChangeType: #change) and: [ (currentDef := class definitionString) ~= class definitionString ])
-		ifTrue: [
-			stream
-				nextChunkPut: currentDef;
-				cr ].
-	(classRecord includesChangeType: #reorganize)
-		ifFalse: [ ^ self ].
-	class fileOutProtocolsOn: stream.
-	stream cr
-]
-
-{ #category : 'file in/out' }
-ChangeSet >> fileOutPostscriptOn: stream [
-	"If the receiver has a postscript, put it out onto the stream.  "
-
-	| aString |
-	aString := self postscriptString.
-	(aString notNil and: [ aString notEmpty ])
-		ifFalse: [ ^ self ].
-	stream nextChunkPut: aString.	"surroundedBySingleQuotes"
-	stream
-		cr;
-		cr
-]
-
-{ #category : 'file in/out' }
-ChangeSet >> fileOutPreambleOn: stream [
-	"If the receiver has a preamble, put it out onto the stream.  "
-
-	| aString |
-	aString := self preambleString.
-	(aString notNil and: [ aString notEmpty ])
-		ifFalse: [ ^ self ].
-	stream nextChunkPut: aString.	"surroundedBySingleQuotes"
-	stream
-		cr;
-		cr
-]
-
 { #category : 'moving changes' }
 ChangeSet >> forgetAllChangesFoundIn: otherChangeSet [
 	"Remove from the receiver all method changes found in aChangeSet. The intention is facilitate the process of factoring a large set of changes into disjoint change sets.  To use:  in a change sorter, copy over all the changes you want into some new change set, then use the subtract-other-side feature to subtract those changes from the larger change set, and continue in this manner."
@@ -1007,23 +816,16 @@ ChangeSet >> forgetChangesForClass: className in: otherChangeSet [
 		(otherChangeSet changeRecorderFor: className)
 ]
 
-{ #category : 'method changes' }
-ChangeSet >> hasAnyChangeForSelector: aSelector [
-	"Answer whether the receiver has any change under the given selector, whether it be add, change, or remove, for any class"
-
-	^ changeRecords anySatisfy: [ :aRecord | aRecord changedSelectors includes: aSelector ]
-]
-
 { #category : 'accessing' }
 ChangeSet >> hasPostscript [
 
-	^ postscript notNil
+	^ postscript isNotNil
 ]
 
 { #category : 'moving changes' }
 ChangeSet >> hasPreamble [
 
-	^ preamble notNil
+	^ preamble isNotNil
 ]
 
 { #category : 'file in/out' }

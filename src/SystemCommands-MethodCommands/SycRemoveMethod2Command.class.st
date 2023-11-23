@@ -24,7 +24,7 @@ SycRemoveMethod2Command class >> methodShortcutActivation [
 
 { #category : 'accessing' }
 SycRemoveMethod2Command >> defaultMenuIconName [
-	^#removeIcon
+	^#remove
 ]
 
 { #category : 'accessing' }

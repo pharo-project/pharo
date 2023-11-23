@@ -81,6 +81,13 @@ RBRemoveMethodRefactoring >> checkBrowseOccurrences: anCollectionOfOccurrences [
 ]
 
 { #category : 'preconditions' }
+RBRemoveMethodRefactoring >> checkPreconditions [ 
+
+	transformation checkPreconditions.
+	super checkPreconditions 
+]
+
+{ #category : 'preconditions' }
 RBRemoveMethodRefactoring >> checkReferencesToAnyOf: aSelector [
 
 	| occurrences |
@@ -154,8 +161,6 @@ RBRemoveMethodRefactoring >> justSendsSuper: aSelector [
 
 { #category : 'preconditions' }
 RBRemoveMethodRefactoring >> preconditions [
-
-	transformation checkPreconditions.
 
 	^ self breakingChangePreconditions 
 ]

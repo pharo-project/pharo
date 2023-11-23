@@ -10,7 +10,7 @@ Example
 ```
 (RBRenamePackageRefactoring 
 				rename: (self getPackageNamed: #'Refactoring-Tests-Core')
-				to: #'Refactoring-Tests-Core1') execute.
+				to: #'Refactoring-Core-Test') execute.
 ```
 "
 Class {

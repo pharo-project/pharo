@@ -31,7 +31,7 @@ FFIExternalStructureFieldParserTest >> testParseFieldsStructure [
 		parseFields: FFITestStructure fields
 		structure: FFITestStructure.
 
-	self assert: fieldSpec notNil.
+	self assert: fieldSpec isNotNil.
 	self assert: fieldSpec fieldNames equals: #(byte short long float double int64 ulong size_t).
 	self assert: (fieldSpec typeFor: #byte) class equals: FFIUInt8.
 	self assert: (fieldSpec typeFor: #short) class equals: FFIInt16.

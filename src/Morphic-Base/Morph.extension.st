@@ -186,7 +186,7 @@ Morph >> changeMinCellSize: evt [
 { #category : '*Morphic-Base' }
 Morph >> changeProportionalLayout [
 	| layout |
-	((layout := self layoutPolicy) notNil and:[layout isProportionalLayout])
+	((layout := self layoutPolicy) isNotNil and:[layout isProportionalLayout])
 		ifTrue:[^self]. "already proportional layout"
 	self layoutPolicy: ProportionalLayout new.
 	self layoutChanged
@@ -195,7 +195,7 @@ Morph >> changeProportionalLayout [
 { #category : '*Morphic-Base' }
 Morph >> changeTableLayout [
 	| layout |
-	((layout := self layoutPolicy) notNil and:[layout isTableLayout])
+	((layout := self layoutPolicy) isNotNil and:[layout isTableLayout])
 		ifTrue:[^self]. "already table layout"
 	self layoutPolicy: TableLayout new.
 	self layoutChanged
@@ -338,7 +338,7 @@ Morph >> justDroppedInto: aMorph event: anEvent [
 	"This message is sent to a dropped morph after it has been dropped on -- and been accepted by -- a drop-sensitive morph"
 
 	| aWindow |
-	(self formerOwner notNil and: [self formerOwner ~~ aMorph])
+	(self formerOwner isNotNil and: [self formerOwner ~~ aMorph])
 		ifTrue: [self removeHalo].
 	self formerOwner: nil.
 	self formerPosition: nil.

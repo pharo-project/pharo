@@ -279,9 +279,8 @@ CalendarMorph >> extent: aPoint [
 
 	| result |
 	result := super extent: aPoint.
-	date notNil
-		ifTrue: [self computeDays].
-	^result
+	date ifNotNil: [ self computeDays ].
+	^ result
 ]
 
 { #category : 'event handling' }

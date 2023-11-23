@@ -76,6 +76,7 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		spec package: 'Collections-Abstract'.
 		spec package: 'Collections-Arithmetic'.
 		spec package: 'Collections-Atomic'.
+		spec package: 'Collections-DoubleLinkedList'.
 		spec package: 'Collections-Native'.
 		spec package: 'Collections-Sequenceable'.
 		spec package: 'Collections-Stack'.
@@ -104,7 +105,6 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		
 		spec package: 'Transcript-NonInteractive'.
 		spec package: 'PharoBootstrap-Initialization'.
-		spec package: 'RPackage-Core'.
 		spec package: 'Random-Core'.
 		spec package: 'ReflectionMirrors-Primitives'.
 		spec package: 'Shift-Changes'.
@@ -128,7 +128,6 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		
 		spec package: 'FFI-Kernel'.
 				
-		spec package: 'CodeExport'.
 		spec package: 'CodeImport'.
 		
 		spec package: 'CodeImportCommandLineHandlers'.
@@ -150,6 +149,7 @@ BaselineOfPharoBootstrap >> baseline: spec [
 			'Announcements-Core'.
 			'Colors'.
 			'Collections-Abstract'.
+			'Collections-DoubleLinkedList'.
 			'Collections-Native'.
 			'Collections-Sequenceable'.
 			'Collections-Stack'.
@@ -166,7 +166,6 @@ BaselineOfPharoBootstrap >> baseline: spec [
 			'Network-UUID'.
 			'Transcript-NonInteractive'.
 			'PharoBootstrap-Initialization'.
-			'RPackage-Core'.
 			'Random-Core'.
 			'Shift-Changes'.
 			'Shift-ClassBuilder'.
@@ -204,7 +203,6 @@ BaselineOfPharoBootstrap >> baseline: spec [
 			'AST-Core'.
 			'Collections-Arithmetic'.
 			'Collections-Atomic'.
-			'CodeExport'.
 			'CodeImport'.
 			'CodeImportCommandLineHandlers'.
 			'Jobs'.

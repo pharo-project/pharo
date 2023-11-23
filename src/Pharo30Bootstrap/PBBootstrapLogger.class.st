@@ -14,7 +14,7 @@ PBBootstrapLogger >> basicLog: anItem [
 
 	Stdio stdout
 		nextPutAll: anItem value asString;
-		cr;
+		lf;
 		flush
 ]
 

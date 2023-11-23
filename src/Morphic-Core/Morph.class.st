@@ -147,7 +147,7 @@ Morph class >> morphsUnknownToTheirOwners [
 	self allSubInstances
 		do: [ :m |
 			| itsOwner |
-			(m isHandMorph not and: [ (itsOwner := m owner) notNil and: [ (itsOwner submorphs includes: m) not ] ])
+			(m isHandMorph not and: [ (itsOwner := m owner) isNotNil and: [ (itsOwner submorphs includes: m) not ] ])
 				ifTrue: [ problemMorphs add: m ] ].
 	^ problemMorphs
 ]
@@ -850,7 +850,7 @@ Morph >> addYellowButtonMenuItemsTo: aMenu event: evt [
 	self isWorldMorph ifFalse: [
 			self isFullOnScreen ifFalse: [aMenu add: 'move onscreen' selector: #goHome]].
 			self addLayoutMenuItems: aMenu hand: evt hand.
-			(owner notNil
+			(owner isNotNil
 					and: [owner isTextMorph])
 				ifTrue: [self addTextAnchorMenuItems: aMenu hand: evt hand].
 	self isWorldMorph ifFalse: [
@@ -1234,7 +1234,7 @@ Morph >> becomeModal [
 { #category : 'base - widgets' }
 Morph >> beginsWith: aString fromList: aMorph [
 	| string |
-	string := self userString ifNil: [(self submorphs collect: [:m | m userString]) detect: [:us | us notNil] ifNone: ['']].
+	string := self userString ifNil: [(self submorphs collect: [:m | m userString]) detect: [:us | us isNotNil ] ifNone: ['']].
 
 	^ string asString beginsWith: aString fromList: aMorph
 ]
@@ -1889,7 +1889,7 @@ Morph >> color: aColor [
 { #category : 'accessing' }
 Morph >> colorForInsets [
 	"Return the color to be used for shading inset borders.  The default is my own color, but it might want to be, eg, my owner's color.  Whoever's color ends up prevailing, the color itself gets the last chance to determine, so that when, for example, an InfiniteForm serves as the color, callers won't choke on some non-Color object being returned"
-	(color isColor and:[color isTransparent and:[owner notNil]]) ifTrue:[^owner colorForInsets].
+	(color isColor and:[color isTransparent and:[owner isNotNil]]) ifTrue:[^owner colorForInsets].
 	^ color colorForInsets
 ]
 
@@ -3299,7 +3299,7 @@ Morph >> hasDropShadowString [
 { #category : 'accessing - extension' }
 Morph >> hasExtension [
 	"answer whether the receiver has extention"
-	^ extension notNil
+	^ extension isNotNil
 ]
 
 { #category : 'event handling' }
@@ -3355,7 +3355,7 @@ Morph >> hasProperty: aSymbol [
 { #category : 'layout - menu' }
 Morph >> hasProportionalLayoutString [
 	| layout |
-	^ ((layout := self layoutPolicy) notNil
+	^ ((layout := self layoutPolicy) isNotNil
 			and: [layout isProportionalLayout]) -> 'proportional layout' translated
 ]
 
@@ -3377,7 +3377,7 @@ Morph >> hasSubmorphs [
 { #category : 'layout - menu' }
 Morph >> hasTableLayoutString [
 	| layout |
-	^ ((layout := self layoutPolicy) notNil
+	^ ((layout := self layoutPolicy) isNotNil
 			and: [layout isTableLayout]) ->   'table layout' translated
 ]
 
@@ -3657,7 +3657,7 @@ Morph >> isFlexMorph [
 { #category : 'testing' }
 Morph >> isFlexed [
 	"Return true if the receiver is currently flexed"
-	^ owner notNil and: [owner isFlexMorph]
+	^ owner isNotNil and: [owner isFlexMorph]
 ]
 
 { #category : 'testing' }
@@ -3684,14 +3684,14 @@ Morph >> isHandMorph [
 { #category : 'structure' }
 Morph >> isInDockingBar [
 	"answer if the receiver is in a menu bar"
-	^ (owner notNil) and: [owner isDockingBar]
+	^ (owner isNotNil) and: [owner isDockingBar]
 ]
 
 { #category : 'structure' }
 Morph >> isInWorld [
 	"Return true if this morph is in a world."
 
-	^self world notNil
+	^self world isNotNil
 ]
 
 { #category : 'testing' }
@@ -4406,21 +4406,15 @@ Morph >> moveOrResizeFromKeystroke: anEvent [
 	"move or resize the receiver based on a keystroke"
 
 	| dir |
-	anEvent keyValue = 28
-		ifTrue: [ dir := -1 @ 0 ].
-	anEvent keyValue = 29
-		ifTrue: [ dir := 1 @ 0 ].
-	anEvent keyValue = 30
-		ifTrue: [ dir := 0 @ -1 ].
-	anEvent keyValue = 31
-		ifTrue: [ dir := 0 @ 1 ].
-	dir notNil
-		ifTrue: [
-			anEvent controlKeyPressed
-				ifTrue: [ dir := dir * 10 ].
-			anEvent shiftPressed
-				ifTrue: [ self extent: self extent + dir ]
-				ifFalse: [ self position: self position + dir ] ]
+	anEvent keyValue = 28 ifTrue: [ dir := -1 @ 0 ].
+	anEvent keyValue = 29 ifTrue: [ dir := 1 @ 0 ].
+	anEvent keyValue = 30 ifTrue: [ dir := 0 @ -1 ].
+	anEvent keyValue = 31 ifTrue: [ dir := 0 @ 1 ].
+	dir ifNotNil: [
+		anEvent controlKeyPressed ifTrue: [ dir := dir * 10 ].
+		anEvent shiftPressed
+			ifTrue: [ self extent: self extent + dir ]
+			ifFalse: [ self position: self position + dir ] ]
 ]
 
 { #category : 'naming' }
@@ -4615,7 +4609,7 @@ Morph >> ownerChain [
 	| c next |
 	c := OrderedCollection with: self.
 	next := self.
-	[(next := next owner) notNil] whileTrue: [c add: next].
+	[(next := next owner) isNotNil] whileTrue: [c add: next].
 	^c asArray
 ]
 
@@ -4645,7 +4639,7 @@ Morph >> pasteUpMorphHandlingTabAmongFields [
 
 	| aPasteUp |
 	aPasteUp := self owner.
-	[aPasteUp notNil] whileTrue:
+	[aPasteUp isNotNil] whileTrue:
 		[aPasteUp tabAmongFields ifTrue:
 			[^ aPasteUp].
 		aPasteUp := aPasteUp owner].
@@ -5043,10 +5037,9 @@ Morph >> raisedColor [
 	itself gets the last chance to determine, so that when, for
 	example, an InfiniteForm serves as the color, callers won't choke
 	on some non-Color object being returned"
-	(color isColor
-			and: [color isTransparent
-					and: [owner notNil]])
-		ifTrue: [^ owner raisedColor].
+
+	(color isColor and: [ color isTransparent and: [ owner isNotNil ] ])
+		ifTrue: [ ^ owner raisedColor ].
 	^ color asColor raisedColor
 ]
 
@@ -5108,11 +5101,9 @@ Morph >> rejectDropMorphEvent: evt [
 	(1)  It remembers its former owner and position, and goes right back there
 	(2)  It remembers its former position only, in which case it was torn off from a parts bin, and the UI is that it floats back to its donor position and then vanishes."
 
-	self formerOwner notNil
-		ifTrue: [^ self slideBackToFormerSituation: evt].
+	self formerOwner ifNotNil: [ ^ self slideBackToFormerSituation: evt ].
 
-	self formerPosition  "Position but no owner -- can just make it vanish"
-		ifNotNil: [^ self vanishAfterSlidingTo: self formerPosition event: evt]
+	self formerPosition ifNotNil: [ :position | ^ self vanishAfterSlidingTo: position event: evt ] "Position but no owner -- can just make it vanish"
 ]
 
 { #category : 'recategorized' }
@@ -5161,7 +5152,7 @@ Morph >> removeAlarm: aSelector [
 Morph >> removeAllMorphs [
 	| oldMorphs myWorld |
 	myWorld := self world.
-	(fullBounds notNil or:[myWorld notNil]) ifTrue:[self invalidRect: self fullBounds].
+	(fullBounds isNotNil or:[myWorld isNotNil]) ifTrue:[self invalidRect: self fullBounds].
 	submorphs do: [:m | myWorld ifNotNil: [ m outOfWorld: myWorld ]. m privateOwner: nil].
 	oldMorphs := submorphs.
 	submorphs := EmptyArray.
@@ -5176,7 +5167,7 @@ Morph >> removeAllMorphsIn: aCollection [
 	set := IdentitySet new: aCollection size * 4 // 3.
 	aCollection do: [:each | each owner == self ifTrue: [ set add: each]].
 	myWorld := self world.
-	(fullBounds notNil or:[myWorld notNil]) ifTrue:[self invalidRect: self fullBounds].
+	(fullBounds isNotNil or:[myWorld isNotNil]) ifTrue:[self invalidRect: self fullBounds].
 	set do: [:m | myWorld ifNotNil: [ m outOfWorld: myWorld ]. m privateOwner: nil].
 	submorphs := submorphs reject: [ :each | set includes: each].
 	set do: [ :m | self removedMorph: m ].
@@ -5309,7 +5300,7 @@ Morph >> requestTextEditingAt: aRectangle [
 { #category : 'accessing - extension' }
 Morph >> resetExtension [
 	"reset the extension slot if it is not needed"
-	(extension notNil and: [extension isDefault]) ifTrue: [extension := nil]
+	(extension isNotNil and: [extension isDefault]) ifTrue: [extension := nil]
 ]
 
 { #category : 'dropping/grabbing' }
@@ -6411,7 +6402,7 @@ Morph >> topRendererOrSelf [
 	self isWorldMorph ifTrue: [^self].	"ignore scaling of this world"
 	top := self.
 	topsOwner := top owner.
-	[topsOwner notNil and: [topsOwner isRenderer]] whileTrue:
+	[topsOwner isNotNil and: [topsOwner isRenderer]] whileTrue:
 			[top := topsOwner.
 			topsOwner := top owner].
 	^top
@@ -6724,7 +6715,7 @@ Morph >> visibleClearArea [
 Morph >> wantsBalloon [
 	"Answer true if receiver wants to show a balloon help text is a few moments."
 
-	^ (self balloonText notNil) and: [self balloonHelpEnabled]
+	^ (self balloonText isNotNil) and: [self balloonHelpEnabled]
 ]
 
 { #category : 'halos and balloon help' }

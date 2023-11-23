@@ -23,7 +23,8 @@ Class {
 		'pageHeight',
 		'detailMorph',
 		'detailPosition',
-		'engine'
+		'engine',
+		'isDetailMorphVisible'
 	],
 	#category : 'NECompletion-Morphic',
 	#package : 'NECompletion-Morphic'
@@ -440,7 +441,7 @@ NECMenuMorph >> handlesMouseDown: anEvent [
 { #category : 'actions' }
 NECMenuMorph >> hasDetail [
 
-	^ detailMorph notNil
+	^ detailMorph isNotNil
 ]
 
 { #category : 'drawing' }
@@ -478,7 +479,8 @@ NECMenuMorph >> home [
 NECMenuMorph >> initialize [
 	super initialize.
 	self color: self class backgroundColor.
-	self borderStyle: (BorderStyle color: Color gray width: 1)
+	self borderStyle: (BorderStyle color: Color gray width: 1).
+	isDetailMorphVisible := false
 ]
 
 { #category : 'actions' }
@@ -655,8 +657,8 @@ NECMenuMorph >> showDetail [
 	detailMorph ifNotNil: [ ^ self browse ].
 	self itemsCount isZero ifTrue: [ ^ self ].
 	detailMorph := NECDetailMorph new.
-	self addMorph: detailMorph.
-	self updateDetail
+	self updateDetail.
+
 ]
 
 { #category : 'testing' }
@@ -666,13 +668,17 @@ NECMenuMorph >> takesKeyboardFocus [
 
 { #category : 'private' }
 NECMenuMorph >> updateDetail [
+
+	detailMorph ifNil: [ ^ self ].
+	detailPosition ifNil: [ ^ self ].	
+		
 	detailMorph
-		ifNil: [^ self].
-	detailPosition ifNil: [^ self].
-	detailMorph
-		entryDescription: (self selectedEntry description);
-		position: detailPosition menuWidth: self width;
-		show
+		entryDescription: self selectedEntry description;
+		position: detailPosition menuWidth: self width.
+
+	isDetailMorphVisible ifTrue: [ ^ self ].
+	self addMorph: detailMorph.
+	isDetailMorphVisible := true
 ]
 
 { #category : 'private' }

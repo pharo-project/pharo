@@ -163,7 +163,7 @@ ByteArray >> hexDumpOn: aStream max: maxBytes [
 	i := 0.
 	self readStreamDo: [ :stream |
 		ch := stream next.
-		[ch notNil and: [ i < maxBytes ]] whileTrue: [
+		[ch isNotNil and: [ i < maxBytes ]] whileTrue: [
 			remainder := i \\ 16.
 			remainder = 0 ifTrue: [
 				i = 0 ifFalse: [ aStream cr ].

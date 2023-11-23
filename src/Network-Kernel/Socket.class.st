@@ -664,7 +664,7 @@ Socket >> isBroadcastAddress: anAddress [
 Socket >> isConnected [
 	"Return true if this socket is connected."
 
-	socketHandle == nil ifTrue: [^ false].
+	socketHandle ifNil: [ ^ false ].
 	^ (self primSocketConnectionStatus: socketHandle) == Connected
 ]
 
@@ -672,7 +672,7 @@ Socket >> isConnected [
 Socket >> isOtherEndClosed [
 	"Return true if this socket had the other end closed."
 
-	socketHandle == nil ifTrue: [^ false].
+	socketHandle ifNil: [ ^ false ].
 	^ (self primSocketConnectionStatus: socketHandle) == OtherEndClosed
 ]
 
@@ -680,7 +680,7 @@ Socket >> isOtherEndClosed [
 Socket >> isThisEndClosed [
 	"Return true if this socket had the this end closed."
 
-	socketHandle == nil ifTrue: [^ false].
+	socketHandle ifNil: [ ^ false ].
 	^ (self primSocketConnectionStatus: socketHandle) == ThisEndClosed
 ]
 
@@ -688,7 +688,7 @@ Socket >> isThisEndClosed [
 Socket >> isUnconnected [
 	"Return true if this socket's state is Unconnected."
 
-	socketHandle == nil ifTrue: [^ false].
+	socketHandle ifNil: [ ^ false ].
 	^ (self primSocketConnectionStatus: socketHandle) == Unconnected
 ]
 
@@ -697,9 +697,9 @@ Socket >> isUnconnectedOrInvalid [
 	"Return true if this socket is completely disconnected or is invalid."
 
 	| status |
-	socketHandle == nil ifTrue: [^ true].
+	socketHandle ifNil: [ ^ true ].
 	status := self primSocketConnectionStatus: socketHandle.
-	^ (status = Unconnected) | (status = InvalidSocket)
+	^ status = Unconnected | (status = InvalidSocket)
 ]
 
 { #category : 'queries' }
@@ -707,7 +707,7 @@ Socket >> isValid [
 	"Return true if this socket contains a valid, non-nil socket handle."
 
 	| status |
-	socketHandle == nil ifTrue: [^ false].
+	socketHandle ifNil: [ ^ false ].
 	status := self primSocketConnectionStatus: socketHandle.
 	^ status ~= InvalidSocket
 ]
@@ -716,7 +716,7 @@ Socket >> isValid [
 Socket >> isWaitingForConnection [
 	"Return true if this socket is waiting for a connection."
 
-	socketHandle == nil ifTrue: [^ false].
+	socketHandle ifNil: [ ^ false ].
 	^ (self primSocketConnectionStatus: socketHandle) == WaitingForConnection
 ]
 
@@ -1434,7 +1434,7 @@ Socket >> sendData: aStringOrByteArray toHost: hostAddress port: portNumber [
 Socket >> sendDone [
 	"Return true if the most recent send operation on this socket has completed."
 
-	socketHandle == nil ifTrue: [^ false].
+	socketHandle ifNil: [ ^ false ].
 	^ self primSocketSendDone: socketHandle
 ]
 
@@ -1595,14 +1595,14 @@ Socket >> statusString [
 	"Return a string describing the status of this socket."
 
 	| status |
-	socketHandle == nil ifTrue: [^ 'destroyed'].
+	socketHandle ifNil: [ ^ 'destroyed' ].
 	status := self primSocketConnectionStatus: socketHandle.
-	status = InvalidSocket ifTrue: [^ 'invalidSocketHandle'].
-	status = Unconnected ifTrue: [^ 'unconnected'].
-	status = WaitingForConnection ifTrue: [^ 'waitingForConnection'].
-	status = Connected ifTrue: [^ 'connected'].
-	status = OtherEndClosed ifTrue: [^ 'otherEndClosedButNotThisEnd'].
-	status = ThisEndClosed ifTrue: [^ 'thisEndClosedButNotOtherEnd'].
+	status = InvalidSocket ifTrue: [ ^ 'invalidSocketHandle' ].
+	status = Unconnected ifTrue: [ ^ 'unconnected' ].
+	status = WaitingForConnection ifTrue: [ ^ 'waitingForConnection' ].
+	status = Connected ifTrue: [ ^ 'connected' ].
+	status = OtherEndClosed ifTrue: [ ^ 'otherEndClosedButNotThisEnd' ].
+	status = ThisEndClosed ifTrue: [ ^ 'thisEndClosedButNotOtherEnd' ].
 	^ 'unknown socket status'
 ]
 

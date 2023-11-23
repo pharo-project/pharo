@@ -134,7 +134,7 @@ PBBootstrap >> createImage [
 
 	| builder |
 
-	builder := PBImageBuilderSpur50 forArchitecture: architecture.
+	builder := PBAbstractImageBuilder forArchitecture: architecture.
 	builder versionInfo: versionInfo.
 	builder imageFileReference: imageReference.
 	builder systemDefinition: ringEnvironment.
@@ -145,7 +145,6 @@ PBBootstrap >> createImage [
 
 { #category : 'pre-requisites' }
 PBBootstrap >> ensureBaselineOfPharoBootstrap [
-	(self originRepository versionWithInfo: (self originRepository versionInfoFromVersionNamed: 'Metacello-PharoExtensions')) load.
 	(self originRepository versionWithInfo: (self originRepository versionInfoFromVersionNamed: 'BaselineOfPharoBootstrap')) load.
 	(self originRepository versionWithInfo: (self originRepository versionInfoFromVersionNamed: 'BaselineOfTraits')) load.
 	(self originRepository versionWithInfo: (self originRepository versionInfoFromVersionNamed: 'BaselineOfMetacello')) load.	
@@ -163,15 +162,6 @@ PBBootstrap >> exportAllPackagesIntoMcz [
 PBBootstrap >> exportIntoMcz: aPackageName [
 
 	self mczCache storeVersion: (self originRepository loadVersionFromFileNamed: aPackageName).
-]
-
-{ #category : 'preparation' }
-PBBootstrap >> exportKernelPackageNames [
-	"Export list of kernel package names for RPackage initialization to a file"
-		
-	self exportPackageNamesFor: self kernelPackageNames to: self bootstrapCacheDirectory / 'packagesKernel.txt'.
-	
-	
 ]
 
 { #category : 'preparation' }
@@ -210,7 +200,7 @@ PBBootstrap >> exportMonticelloInStFile [
 { #category : 'exporting' }
 PBBootstrap >> exportPackageNamesFor: packageNames to: aTextFile [
 
-	"export list of packages for the RPackage initialization. Eech package on standalone line"
+	"export list of packages for the Package initialization. Eech package on standalone line"
 		
 	aTextFile ensureDelete.
 	aTextFile writeStreamDo: [:stream | 
@@ -346,7 +336,7 @@ PBBootstrap >> monticelloNetworkPackageNames [
 { #category : 'package-names' }
 PBBootstrap >> monticelloPackageNames [
 
-	^ #('System-Model' 'Ring-OldChunkImporter' 'Zinc-Resource-Meta-Core' 'System-Changes' 'Ring-Definitions-Core' 'Ring-Definitions-Containers' 'Compression' 'Monticello' 'Ring-Definitions-Monticello' )
+	^ #('System-Model' 'Ring-OldChunkImporter' 'Zinc-Resource-Meta-Core' 'System-Changes' 'Ring-Definitions-Core' 'Compression' 'Monticello-Model' 'Monticello' 'Ring-Definitions-Monticello' )
 ]
 
 { #category : 'accessing' }
@@ -371,7 +361,6 @@ PBBootstrap >> prepareBootstrap [
 	
 	self
 		exportKernelProtocols;
-		exportKernelPackageNames;
 		exportAllPackagesIntoMcz;
 		exportMonticelloInStFile;
 		

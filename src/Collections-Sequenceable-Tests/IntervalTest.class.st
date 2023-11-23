@@ -4,8 +4,8 @@ SUnit tests for intervals
 Class {
 	#name : 'IntervalTest',
 	#superclass : 'CollectionRootTest',
-	#traits : 'TSortTest - {#testSort. #testSortUsingSortBlock} + TCloneTest + TIncludesWithIdentityCheckTest + TSequencedElementAccessTest + TIterateSequencedReadableTest + TSequencedConcatenationTest + TSubCollectionAccess + TAsStringCommaAndDelimiterSequenceableTest + TIndexAccess + TPrintOnSequencedTest + TConvertTest + (TCopySequenceableWithReplacement - {#testCopyReplaceAllWithManyOccurrence. #collectionWith2TimeSubcollection}) + TCopySequenceableWithOrWithoutSpecificElements + (TCopySequenceableSameContents - {#testShuffled}) + (TCopyPartOfSequenceable - {#testCopyEmptyMethod}) + TCopyTest + TBeginsEndsWith + TConvertAsSortedTest + TSequencedStructuralEqualityTest + TOccurrencesTest + TSequenceableTruncatedToSize',
-	#classTraits : 'TSortTest classTrait + TCloneTest classTrait + TIncludesWithIdentityCheckTest classTrait + TSequencedElementAccessTest classTrait + TIterateSequencedReadableTest classTrait + TSequencedConcatenationTest classTrait + TSubCollectionAccess classTrait + TAsStringCommaAndDelimiterSequenceableTest classTrait + TIndexAccess classTrait + TPrintOnSequencedTest classTrait + TConvertTest classTrait + TCopySequenceableWithReplacement classTrait + TCopySequenceableWithOrWithoutSpecificElements classTrait + TCopySequenceableSameContents classTrait + TCopyPartOfSequenceable classTrait + TCopyTest classTrait + TBeginsEndsWith classTrait + TConvertAsSortedTest classTrait + TSequencedStructuralEqualityTest classTrait + TOccurrencesTest classTrait + TSequenceableTruncatedToSize classTrait',
+	#traits : 'TSortTest - {#testSort. #testSortUsingSortBlock} + TCloneTest + TIncludesWithIdentityCheckTest + TSequencedElementAccessTest + TIterateSequencedReadableTest + TSequencedConcatenationTest + TSubCollectionAccess + TAsStringCommaAndDelimiterSequenceableTest + TIndexAccess + TPrintOnSequencedTest + TConvertTest + (TCopySequenceableWithReplacement - {#testCopyReplaceAllWithManyOccurrence. #collectionWith2TimeSubcollection}) + TCopySequenceableWithOrWithoutSpecificElements + (TCopySequenceableSameContents - {#testShuffled}) + (TCopyPartOfSequenceable - {#testCopyEmptyMethod}) + TCopyTest + TBeginsEndsWith + TConvertAsSortedTest + TSequencedStructuralEqualityTest + TOccurrencesTest + TSequenceableTruncatedToSize + (TCreationWithTest - {#testOfSize. #testWithAll. #testWith. #testWithWith. #testWithWithWith. #testWithWithWithWith. #testWithWithWithWithWith})',
+	#classTraits : 'TSortTest classTrait + TCloneTest classTrait + TIncludesWithIdentityCheckTest classTrait + TSequencedElementAccessTest classTrait + TIterateSequencedReadableTest classTrait + TSequencedConcatenationTest classTrait + TSubCollectionAccess classTrait + TAsStringCommaAndDelimiterSequenceableTest classTrait + TIndexAccess classTrait + TPrintOnSequencedTest classTrait + TConvertTest classTrait + TCopySequenceableWithReplacement classTrait + TCopySequenceableWithOrWithoutSpecificElements classTrait + TCopySequenceableSameContents classTrait + TCopyPartOfSequenceable classTrait + TCopyTest classTrait + TBeginsEndsWith classTrait + TConvertAsSortedTest classTrait + TSequencedStructuralEqualityTest classTrait + TOccurrencesTest classTrait + TSequenceableTruncatedToSize classTrait + TCreationWithTest classTrait',
 	#instVars : [
 		'empty',
 		'nonEmpty',
@@ -66,6 +66,13 @@ IntervalTest >> collectionInForIncluding [
 IntervalTest >> collectionMoreThan1NoDuplicates [
 	" return a collection of size 5 without equal elements"
 	^ nonEmpty
+]
+
+{ #category : 'requirements' }
+IntervalTest >> collectionMoreThan5Elements [
+" return a collection including at least 5 elements"
+
+	^ collectionWith5Elements
 ]
 
 { #category : 'requirements' }

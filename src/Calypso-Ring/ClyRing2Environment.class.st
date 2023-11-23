@@ -109,7 +109,7 @@ ClyRing2Environment >> initialize [
 	super initialize.
 
 	environment := RGEnvironment new.
-	projectManager := ClyProjectManagerRegistry new
+	projectManager := ProjectManager new
 ]
 
 { #category : 'accessing' }

@@ -85,7 +85,7 @@ Continuation >> initializeFromContext: aContext [
 	| valueStream context |
 	valueStream := WriteStream on: (Array new: 20).
 	context := aContext.
-	[context notNil] whileTrue:
+	[context isNotNil] whileTrue:
 		[valueStream nextPut: context.
 		1 to: context class instSize do: [:i | valueStream nextPut: (context instVarAt: i)].
 		1 to: context size do: [:i | valueStream nextPut: (context at: i)].
@@ -110,9 +110,10 @@ Continuation >> restoreValues [
 
 { #category : 'private' }
 Continuation >> terminate: aContext [
+
 	| context |
 	context := aContext.
-	[context notNil] whileTrue: [context := context swapSender: nil]
+	[ context isNotNil ] whileTrue: [ context := context swapSender: nil ]
 ]
 
 { #category : 'evaluating' }

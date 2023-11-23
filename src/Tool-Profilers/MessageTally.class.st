@@ -664,11 +664,10 @@ MessageTally >> printOn: aStream total: total totalTime: totalTime tallyExact: i
 		ifTrue: [
 			| myTally |
 			myTally := tally.
-			receivers == nil
-				ifFalse: [receivers do: [:r | myTally := myTally - r tally]].
+			receivers ifNotNil: [ receivers do: [ :r | myTally := myTally - r tally ] ].
 			aStream
 				print: myTally;
-				space]
+				space ]
 		ifFalse: [
 			| percentage |
 			percentage := tally asFloat / total * 100.0.
@@ -676,12 +675,12 @@ MessageTally >> printOn: aStream total: total totalTime: totalTime tallyExact: i
 				nextPutAll: (percentage printShowingDecimalPlaces: 1);
 				nextPutAll: '% {';
 				print: (percentage * totalTime / 100) rounded;
-				nextPutAll: 'ms} '].
+				nextPutAll: 'ms} ' ].
 	receivers
 		ifNil: [
 			aStream
 				nextPutAll: 'primitives';
-				cr]
+				cr ]
 		ifNotNil: [
 			| className aSelector aClass |
 			aSelector := method selector.
@@ -690,11 +689,10 @@ MessageTally >> printOn: aStream total: total totalTime: totalTime tallyExact: i
 			aStream
 				nextPutAll: class name;
 				nextPutAll: (aClass = class
-							ifTrue: ['>>']
-							ifFalse: ['(' , aClass name , ')>>']);
-				nextPutAll: (aSelector
-							contractTo: self maxClassPlusSelectorSize - className size);
-				cr]
+						 ifTrue: [ '>>' ]
+						 ifFalse: [ '(' , aClass name , ')>>' ]);
+				nextPutAll: (aSelector contractTo: self maxClassPlusSelectorSize - className size);
+				cr ]
 ]
 
 { #category : 'printing' }

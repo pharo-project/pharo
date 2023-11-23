@@ -13,11 +13,6 @@ Class {
 	#tag : 'Chronology'
 }
 
-{ #category : 'testing' }
-StopwatchTest class >> isUnitTest [
-	^false
-]
-
 { #category : 'coverage' }
 StopwatchTest >> classToBeTested [
 

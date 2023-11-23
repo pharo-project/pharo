@@ -32,7 +32,7 @@ SycInlineMethodCommand >> asRefactorings [
 
 { #category : 'accessing' }
 SycInlineMethodCommand >> defaultMenuIconName [
-	^ #smallRightFlushIcon
+	^ #smallRightFlush
 ]
 
 { #category : 'accessing' }

@@ -148,21 +148,19 @@ ExternalType class >> initializeAtomicTypes [
 { #category : 'class initialization' }
 ExternalType class >> initializeDefaultTypes [
 	"ExternalType initialize"
+
 	| type pointerType |
-	AtomicTypes = nil ifTrue:[
-		"Create new atomic types and setup the dictionaries"
+	AtomicTypes ifNil: [ "Create new atomic types and setup the dictionaries"
 		AtomicTypes := Dictionary new.
 		StructTypes := WeakValueDictionary new.
-		AtomicTypeNames valuesDo:[:k|
+		AtomicTypeNames valuesDo: [ :k |
 			type := self basicNew.
 			pointerType := self basicNew.
 			AtomicTypes at: k put: type.
 			type setReferencedType: pointerType.
-			pointerType setReferencedType: type.
-		].
-	].
+			pointerType setReferencedType: type ] ].
 	self initializeAtomicTypes.
-	self initializeStructureTypes.
+	self initializeStructureTypes
 	"AtomicTypes := nil"
 ]
 
@@ -240,60 +238,55 @@ ExternalType class >> new [
 
 { #category : 'private' }
 ExternalType class >> newTypeNamed: aString force: aBool [
+
 	| sym type referentClass pointerType |
+	StructTypes at: aString ifPresent: [ :aType | ^ aType ].
+	
 	sym := aString asSymbol.
-	type := StructTypes at: aString ifAbsent:[nil].
-	type == nil ifFalse:[^type].
-	referentClass := self environment at: sym ifAbsent:[nil].
-	(referentClass isBehavior and:[referentClass includesBehavior: ExternalStructure])
-		ifFalse:[referentClass := nil].
+	referentClass := self environment at: sym ifAbsent: [ nil ].
+	(referentClass isBehavior and: [ referentClass includesBehavior: ExternalStructure ]) ifFalse: [ referentClass := nil ].
 	"If we don't have a referent class and are not forced to create a type get out"
-	(referentClass == nil and:[aBool not]) ifTrue:[^nil].
-	type := self basicNew compiledSpec:
-		(WordArray with: self structureSpec).
-	pointerType := self basicNew compiledSpec:
-		(WordArray with: self pointerSpec).
+	(referentClass == nil and: [ aBool not ]) ifTrue: [ ^ nil ].
+	type := self basicNew compiledSpec: (WordArray with: self structureSpec).
+	pointerType := self basicNew compiledSpec: (WordArray with: self pointerSpec).
 	type setReferencedType: pointerType.
 	pointerType setReferencedType: type.
 	type newReferentClass: referentClass.
 	pointerType newReferentClass: referentClass.
 	StructTypes at: sym put: type.
-	^type
+	^ type
 ]
 
 { #category : 'housekeeping' }
 ExternalType class >> noticeModificationOf: aClass [
 	"A subclass of ExternalStructure has been redefined.
 	Clean out any obsolete references to its type."
-	| type |
-	aClass isBehavior ifFalse:[^nil]. "how could this happen?"
-	aClass withAllSubclassesDo:[:cls|
-		type := StructTypes at: cls name ifAbsent:[nil].
-		type == nil ifFalse:[
+
+	aClass isBehavior ifFalse: [ ^ nil ]. "how could this happen?"
+	aClass withAllSubclassesDo: [ :cls |
+		StructTypes at: cls name ifPresent: [ :type |
 			type newReferentClass: cls.
-			type asPointerType newReferentClass: cls].
-	]
+			type asPointerType newReferentClass: cls ] ]
 ]
 
 { #category : 'housekeeping' }
 ExternalType class >> noticeRemovalOf: aClass [
 	"A subclass of ExternalStructure is being removed.
 	Clean out any obsolete references to its type."
-	| type |
-	type := StructTypes at: aClass name ifAbsent:[nil].
-	type == nil ifFalse:[
+
+	StructTypes at: aClass name ifPresent: [ :type |
 		type newReferentClass: nil.
-		type asPointerType newReferentClass: nil]
+		type asPointerType newReferentClass: nil ]
 ]
 
 { #category : 'housekeeping' }
 ExternalType class >> noticeRenamingOf: aClass from: oldName to: newName [
 	"An ExternalStructure has been renamed from oldName to newName.
 	Keep our type names in sync."
-	| type |
-	type := StructTypes at: oldName ifAbsent:[nil].
-	type == nil ifFalse:[StructTypes at: newName put: type].
-	StructTypes removeKey: oldName ifAbsent:[]
+
+	StructTypes at: oldName ifPresent: [ :type |
+		StructTypes at: newName put: type.
+		StructTypes removeKey: oldName ]
 ]
 
 { #category : 'private' }
@@ -348,8 +341,9 @@ ExternalType class >> string [
 
 { #category : 'private' }
 ExternalType class >> structTypeNamed: aSymbol [
-	aSymbol == nil ifTrue:[^nil].
-	^self newTypeNamed: aSymbol force: false
+
+	aSymbol ifNil: [ ^ nil ].
+	^ self newTypeNamed: aSymbol force: false
 ]
 
 { #category : 'private' }
@@ -611,7 +605,7 @@ ExternalType >> printStructureFieldStartingAt: initialSpecIndex withName: name i
 { #category : 'printing' }
 ExternalType >> printTypedefOn: s [
 	s nextPutAll: 'typedef '.
-	(referentClass notNil
+	(referentClass isNotNil
 	 and: [(compiledSpec first bitClear: FFIStructSizeMask) = FFIFlagStructure])
 		ifTrue:
 			[| next |

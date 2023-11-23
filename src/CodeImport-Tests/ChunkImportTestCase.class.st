@@ -9,17 +9,30 @@ Class {
 	#tag : 'Chunks'
 }
 
-{ #category : 'auxiliar' }
+{ #category : 'helpers' }
 ChunkImportTestCase >> importAClass [
 
-	^CodeImporter evaluateString: 'Object subclass: #CodeImportTestCaseTestClass
+	^ CodeImporter evaluateString: 'Object subclass: #CodeImportTestCaseTestClass
 			instanceVariableNames: ''var1 var2 var3''
 			classVariableNames: ''''
 			poolDictionaries: ''''
-			category: ''CodeImport-Tests-Garbage''!'
+			category: ''' , self packageNameForTests , '''!'
 ]
 
-{ #category : 'importing-code' }
+{ #category : 'helpers' }
+ChunkImportTestCase >> packageNameForTests [
+
+	^ #'Generated-CodeImport-Tests-Garbage'
+]
+
+{ #category : 'running' }
+ChunkImportTestCase >> tearDown [
+
+	self packageOrganizer removePackage: self packageNameForTests.
+	super tearDown
+]
+
+{ #category : 'tests' }
 ChunkImportTestCase >> testExportAMethodWithLangTag [
 	|  stream chunkWriteStream |
 	stream := String new writeStream.
@@ -123,89 +136,83 @@ ChunkImportTestCase >> testExportAMethodWithLangTag [
 		yourself!'
 ]
 
-{ #category : 'importing-code' }
+{ #category : 'tests' }
 ChunkImportTestCase >> testImportAClass [
-	| class |
-	SystemAnnouncer uniqueInstance suspendAllWhile: [ [
-		class := self importAClass.
-		self assert: class superclass equals: Object.
-		self assert: #CodeImportTestCaseTestClass equals: class name.
-		self assert: (class instVarNames includes: 'var1').
-		self assert: (class instVarNames includes: 'var2').
-		self assert: (class instVarNames includes: 'var3').
-		self assert: class category equals: 'CodeImport-Tests-Garbage'.
 
-	] ensure: [ class ifNotNil: [ class removeFromSystem ] ] ]
+	| class |
+	class := self importAClass.
+	self assert: class superclass equals: Object.
+	self assert: #CodeImportTestCaseTestClass equals: class name.
+	self assert: (class instVarNames includes: 'var1').
+	self assert: (class instVarNames includes: 'var2').
+	self assert: (class instVarNames includes: 'var3').
+	self assert: class package name equals: 'Generated-CodeImport-Tests-Garbage'
 ]
 
-{ #category : 'importing-code' }
+{ #category : 'tests' }
 ChunkImportTestCase >> testImportAClassCategory [
 
 	| class classOrganizationString chunk |
 	classOrganizationString := '(#testing testImportAMethod testImportAClass)
 (#auxiliar importAClass)'.
 	chunk := '!{1} reorganize!'.
-	SystemAnnouncer uniqueInstance suspendAllWhile: [
-		[
-		class := self importAClass.
 
-		"we write the methods we will categorize"
-		class compileSilently: 'testImportAClass'.
-		class compileSilently: 'testImportAMethod'.
-		class compileSilently: 'importAClass'.
+	class := self importAClass.
 
-		CodeImporter evaluateString: (chunk format: { class name asString }) , classOrganizationString.
-		"we do not care about the order of the output just that all the elements are present"
-		self assert: (((String streamContents: [ :s | class fileOutProtocolsOn: s ]) findTokens: String cr , ' ()') includesAll:
-				 (classOrganizationString trimBoth findTokens: String cr , ' ()')) ] ensure: [ class ifNotNil: [ class removeFromSystem ] ] ]
+	"we write the methods we will categorize"
+	class compileSilently: 'testImportAClass'.
+	class compileSilently: 'testImportAMethod'.
+	class compileSilently: 'importAClass'.
+
+	CodeImporter evaluateString: (chunk format: { class name asString }) , classOrganizationString.
+	"we do not care about the order of the output just that all the elements are present"
+	self assert: (((String streamContents: [ :s | class fileOutProtocolsOn: s ]) findTokens: String cr , ' ()') includesAll:
+			 (classOrganizationString trimBoth findTokens: String cr , ' ()'))
 ]
 
-{ #category : 'importing-code' }
+{ #category : 'tests' }
 ChunkImportTestCase >> testImportAClassComment [
+
 	| class comment |
 	comment := 'I''m a nice comment, treat me well :).'.
-	SystemAnnouncer uniqueInstance suspendAllWhile: [[
-		class := self importAClass.
-		CodeImporter evaluateString: ('!{1} commentStamp: ''<historical>'' prior: 0!{2}!' format: { class name asString . comment }).
-		self assert: comment equals: class comment.
-	] ensure: [ class ifNotNil: [ class removeFromSystem ] ] ]
+
+	class := self importAClass.
+	CodeImporter evaluateString: ('!{1} commentStamp: ''<historical>'' prior: 0!{2}!' format: {
+				 class name asString.
+				 comment }).
+	self assert: comment equals: class comment
 ]
 
-{ #category : 'importing-code' }
+{ #category : 'tests' }
 ChunkImportTestCase >> testImportAClassCommentWithExclamationMarks [
+
 	| class comment commentToWrite |
 	comment := 'I''m a nice comment!, treat me well :).'.
 	commentToWrite := 'I''m a nice comment!!, treat me well :).' replaceAll: '!' with: '!!'.
-	SystemAnnouncer uniqueInstance suspendAllWhile: [[
-		class := self importAClass.
-		CodeImporter evaluateString: ('!{1} commentStamp: ''<historical>'' prior: 0!{2}!' format: { class name asString . commentToWrite }).
-		self assert: comment equals: class comment.
-	] ensure: [ class ifNotNil: [ class removeFromSystem ] ] ]
+
+	class := self importAClass.
+	CodeImporter evaluateString: ('!{1} commentStamp: ''<historical>'' prior: 0!{2}!' format: {
+				 class name asString.
+				 commentToWrite }).
+	self assert: comment equals: class comment
 ]
 
-{ #category : 'importing-code' }
+{ #category : 'tests' }
 ChunkImportTestCase >> testImportAMethod [
+
 	| class |
-	SystemAnnouncer uniqueInstance
-		suspendAllWhile: [
-			[
-			class := self importAClass.
-			CodeImporter
-				evaluateString:
-					('!{1} methodsFor: ''some protocol'' stamp: ''GuillermoPolito 5/2/2012 13:35''!someMethod
-	^true' format: {(class name asString)}).
-			self assert: class new someMethod ]
-				ensure: [ class ifNotNil: [ class removeFromSystem ] ] ]
+	class := self importAClass.
+	CodeImporter evaluateString: ('!{1} methodsFor: ''some protocol'' stamp: ''GuillermoPolito 5/2/2012 13:35''!someMethod
+	^true' format: { class name asString }).
+	self assert: class new someMethod
 ]
 
-{ #category : 'importing-code' }
+{ #category : 'tests' }
 ChunkImportTestCase >> testImportAMethodWithLangTag [
+
 	| class |
-	SystemAnnouncer uniqueInstance suspendAllWhile: [ [
-		class := self importAClass.
-		CodeImporter
-			evaluateString:
-				('!{1} methodsFor: ''some protocol'' stamp: ''GuillermoPolito 5/2/2012 13:35''!pangrams
+	class := self importAClass.
+	CodeImporter evaluateString: ('!{1} methodsFor: ''some protocol'' stamp: ''GuillermoPolito 5/2/2012 13:35''!pangrams
 	^ OrderedCollection new
 		add: ''English'' -> ''the quick brown fox jumps over the lazy dog'';
 		add: ''Bulgarian'' -> ''Под южно дърво, цъфтящо в синьо, бягаше малко пухкаво зайче.'';
@@ -252,49 +259,37 @@ ChunkImportTestCase >> testImportAMethodWithLangTag [
     ปฏิบัติประพฤติกฎกำหนดใจ
     พูดจาให้จ๊ะ ๆ จ๋า ๆ น่าฟังเอยฯ'';
 		add: ''Turkish'' -> ''Pijamalı hasta, yağız şoföre çabucak güvendi'';
-		yourself!]lang[(2798)0! !' format: {(class name asString)}).
-			self assert: class new pangrams first value equals: 'the quick brown fox jumps over the lazy dog']
-				ensure: [ class ifNotNil: [ class removeFromSystem ] ] ]
+		yourself!]lang[(2798)0! !' format: { class name asString }).
+	self assert: class new pangrams first value equals: 'the quick brown fox jumps over the lazy dog'
 ]
 
-{ #category : 'importing-code' }
+{ #category : 'tests' }
 ChunkImportTestCase >> testImportAMethodWithNoTimestamp [
+
 	| class |
-	SystemAnnouncer uniqueInstance
-		suspendAllWhile: [
-			[
-			class := self importAClass.
-			CodeImporter
-				evaluateString:
-					('!{1} methodsFor: ''some protocol''!someMethod
-	^true' format: {(class name asString)}).
-			self assert: class new someMethod ]
-				ensure: [ class ifNotNil: [ class removeFromSystem ] ] ]
+	class := self importAClass.
+	CodeImporter evaluateString: ('!{1} methodsFor: ''some protocol''!someMethod
+	^true' format: { class name asString }).
+	self assert: class new someMethod
 ]
 
-{ #category : 'importing-code' }
+{ #category : 'tests' }
 ChunkImportTestCase >> testImportAMethodWithSpacesInItsCategory [
 
 	| class |
-	SystemAnnouncer uniqueInstance suspendAllWhile: [
-		[
-		class := self importAClass.
-		CodeImporter evaluateString:
-			('!{1} methodsFor: ''some protocol'' stamp: ''GuillermoPolito 5/2/2012 13:35''!someMethod
+	class := self importAClass.
+	CodeImporter evaluateString: ('!{1} methodsFor: ''some protocol'' stamp: ''GuillermoPolito 5/2/2012 13:35''!someMethod
 	^true' format: { class name asString }).
-	
-		self
-			assert: (class >> #someMethod) protocolName
-			equals: 'some protocol' ] ensure: [
-			class ifNotNil: [ class removeFromSystem ] ] ]
+
+	self assert: (class >> #someMethod) protocolName equals: 'some protocol'
 ]
 
-{ #category : 'importing-methods' }
+{ #category : 'tests' }
 ChunkImportTestCase >> testImportFromReadStream [
 	self assert: 4 equals: (CodeImporter evaluateReadStream: '2+2!' readStream)
 ]
 
-{ #category : 'importing-methods' }
+{ #category : 'tests' }
 ChunkImportTestCase >> testImportString [
 	self assert: 4 equals: (CodeImporter evaluateString: '2+2!')
 ]

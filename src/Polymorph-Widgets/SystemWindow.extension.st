@@ -466,13 +466,13 @@ SystemWindow >> collapseBoxHit [
 SystemWindow >> configureForEmbedding [
 	"Set up the window so it can be embedded into another morph."
 
-	labelArea owner notNil ifTrue: [
+	labelArea owner ifNotNil: [
 		self
 			hasDropShadow: false;
 			beWithoutGrips;
 			removeLabelArea;
 			makeBorderless.
-		self submorphsDo: [:m | m unlock]]
+		self submorphsDo: [ :m | m unlock ] ]
 ]
 
 { #category : '*Polymorph-Widgets' }
@@ -653,28 +653,28 @@ SystemWindow >> handlesKeyboard: evt [
 SystemWindow >> hasCloseBox [
 	"Answer whether the receiver currently has a close box."
 
-	^closeBox notNil
+	^ closeBox isNotNil
 ]
 
 { #category : '*Polymorph-Widgets' }
 SystemWindow >> hasCollapseBox [
 	"Answer whether the receiver currently has a collapse box."
 
-	^collapseBox notNil
+	^ collapseBox isNotNil
 ]
 
 { #category : '*Polymorph-Widgets' }
 SystemWindow >> hasExpandBox [
 	"Answer whether the receiver currently has an expand box."
 
-	^expandBox notNil
+	^ expandBox isNotNil
 ]
 
 { #category : '*Polymorph-Widgets' }
 SystemWindow >> hasMenuBox [
 	"Answer whether the receiver currently has a menu box."
 
-	^menuBox notNil
+	^ menuBox isNotNil
 ]
 
 { #category : '*Polymorph-Widgets' }
@@ -748,7 +748,7 @@ SystemWindow >> isEmbedded [
 SystemWindow >> isMaximized [
 	"Answer whether we are maximised."
 
-	^self unexpandedFrame notNil
+	^ self unexpandedFrame isNotNil
 ]
 
 { #category : '*Polymorph-Widgets' }
@@ -991,7 +991,7 @@ SystemWindow >> nextMorphAcrossInWindow [
 	from the receiver to its next sibling or owner's next sibling etc.
 	Make sure we behave like a normal Morph, if we aren't a toplevel window ( or not visible) "
 
-	^ (self owner notNil and: [ self owner isWorldMorph ])
+	^ (self owner isNotNil and: [ self owner isWorldMorph ])
 		ifTrue: [ self ]
 		ifFalse: [ super nextMorphAcrossInWindow ]
 ]

@@ -112,7 +112,7 @@ RBInlineMethodFromComponentParametrizedTest >> testInlineEmptyComponentMethod [
 { #category : 'tests' }
 RBInlineMethodFromComponentParametrizedTest >> testModelInlineMethodWithSameVariableNames [
 	| class refactoring |
-	model := RBClassModelFactory rbNamespace new.
+	model := RBNamespace new.
 	class := model classNamed: self class name.
 	class compile: 'a9: a b9: b ^self + a + b' classified: #(#accessing).
 	(model classNamed: #Object)
@@ -131,7 +131,7 @@ RBInlineMethodFromComponentParametrizedTest >> testModelInlineMethodWithSameVari
 { #category : 'tests' }
 RBInlineMethodFromComponentParametrizedTest >> testModelInlineMethodWithSameVariableNames1 [
 	| class refactoring |
-	model := RBClassModelFactory rbNamespace new.
+	model := RBNamespace new.
 	class := model classNamed: #Rectangle.
 	class
 		compile: 'rectangleRelativeTo: aRectangle ^self origin extent: aRectangle extent'
@@ -153,7 +153,7 @@ RBInlineMethodFromComponentParametrizedTest >> testModelInlineMethodWithSameVari
 { #category : 'tests' }
 RBInlineMethodFromComponentParametrizedTest >> testModelInlineMethodWithSameVariableNames2 [
 	| class refactoring |
-	model := RBClassModelFactory rbNamespace new.
+	model := RBNamespace new.
 	class := model classNamed: self class name.
 	class compile: 'a9: a b9: b ^self + a + b' classified: #(#accessing).
 	(model classNamed: #Object)

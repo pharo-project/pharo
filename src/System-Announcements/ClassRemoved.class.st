@@ -6,8 +6,7 @@ Class {
 	#name : 'ClassRemoved',
 	#superclass : 'ClassAnnouncement',
 	#instVars : [
-		'classRemoved',
-		'packageTag'
+		'classRemoved'
 	],
 	#category : 'System-Announcements-System-Classes',
 	#package : 'System-Announcements',
@@ -15,12 +14,10 @@ Class {
 }
 
 { #category : 'instance creation' }
-ClassRemoved class >> class: aClass packageTag: aPackageTag [
+ClassRemoved class >> class: aClass [
 
-	self flag: #package. "For now the class cannot return its package tag after been removed. In the future the class should keep a reference to its package tag so we should not need to know the packageTag, we will be able to ask the class directly."
 	^ self new
 		  classRemoved: aClass;
-		  packageTag: aPackageTag;
 		  yourself
 ]
 
@@ -67,30 +64,12 @@ ClassRemoved >> classRemoved [
 { #category : 'accessing' }
 ClassRemoved >> classRemoved: aClass [
 
-	classRemoved := aClass.
-	packageTag := aClass packageTag
+	classRemoved := aClass
 ]
 
 { #category : 'accessing' }
-ClassRemoved >> packageAffected [
+ClassRemoved >> packagesAffected [
+	"In case we remove a class we need to specify that we are affecting the package of the class but also the packages extending it since we are removing extensions."
 
-	^ self packageTag package
-]
-
-{ #category : 'accessing' }
-ClassRemoved >> packageTag [
-
-	^ packageTag
-]
-
-{ #category : 'accessing' }
-ClassRemoved >> packageTag: anObject [
-
-	packageTag := anObject
-]
-
-{ #category : 'accessing' }
-ClassRemoved >> packageTagAffected [
-
-	^ self packageTag
+	^ self classRemoved packages
 ]

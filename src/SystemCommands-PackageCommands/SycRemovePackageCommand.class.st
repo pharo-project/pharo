@@ -31,7 +31,7 @@ SycRemovePackageCommand >> applyResultInContext: aToolContext [
 
 { #category : 'accessing' }
 SycRemovePackageCommand >> defaultMenuIconName [
-	^#removeIcon
+	^#remove
 ]
 
 { #category : 'accessing' }

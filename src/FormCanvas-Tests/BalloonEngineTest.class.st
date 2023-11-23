@@ -21,6 +21,6 @@ BalloonEngineTest >> testSpan [
 	engine := BalloonEngine new.
 
 	Display width > 0
-		ifTrue: [ self assert: engine span size equals: Display width ]
-		ifFalse: [ self assert: engine span size equals: BalloonEngine defaultBitmapWidth ]
+		ifTrue: [ self assert: engine span size equals: Display width + 1 ]
+		ifFalse: [ self assert: engine span size equals: BalloonEngine defaultBitmapWidth + 1 ]
 ]

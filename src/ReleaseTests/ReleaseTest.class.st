@@ -75,7 +75,7 @@ ReleaseTest >> knownProcesses [
 	^ {
 		Processor activeProcess.
 		Processor backgroundProcess.
-		WeakArray runningFinalizationProcess.
+		FinalizationProcess runningFinalizationProcess.
 		SmalltalkImage current lowSpaceWatcherProcess.
 		MorphicUIManager uiProcess.
 		CurrentExecutionEnvironment value watchDogProcess.
@@ -132,6 +132,17 @@ ReleaseTest >> testClassesShadow [
 	self assert: classes isEmpty description: classes asArray asString
 ]
 
+{ #category : 'tests - package' }
+ReleaseTest >> testExistingPackageNamesDoesNotContainIllegalCharacters [
+
+	| illegalCharacters |
+	illegalCharacters := #( $\ $/ $: $* $? $" $< $> $| ).
+
+	self packageOrganizer packages do: [ :package |
+		self deny: (package name includesAnyOf: illegalCharacters).
+		package classTags do: [ :tag | self deny: (tag name includesAnyOf: illegalCharacters) ] ]
+]
+
 { #category : 'tests' }
 ReleaseTest >> testExplicitRequirementMethodsShouldBeImplementedInTheirUsers [
 	"If a class is using a trait with an explicit requirement method, this class should implement the method"
@@ -156,7 +167,7 @@ ReleaseTest >> testInstanceSideMethodsWithNilKeyInLastLiteral [
 { #category : 'tests' }
 ReleaseTest >> testKeyClassesArePresentInStartupList [
 	| keyClasses registeredHandlers |
-	keyClasses := #(#Delay #ProcessorScheduler #Stdio #OSPlatform #UUIDGenerator #DiskStore #WeakArray #BasicCommandLineHandler).
+	keyClasses := #(#Delay #ProcessorScheduler #Stdio #OSPlatform #UUIDGenerator #DiskStore #FinalizationProcess #BasicCommandLineHandler).
 	registeredHandlers := SessionManager default startupList
 		collect: [:each | each handledId].
 
@@ -269,6 +280,23 @@ ReleaseTest >> testNoNullCharacter [
 	self assert: violations isEmpty description: 'Source corrupted: Methods with Null character found'
 ]
 
+{ #category : 'tests' }
+ReleaseTest >> testNoOrphanPackage [
+	"This test ensure that all packages loaded in Pharo are part of a baseline. This will be the most useful when we will be able to execute release tests last in the CI of Pharo. We will be able to detect generated packages that are not removed by the #tearDowns"
+
+	| declaredPackages |
+	declaredPackages := ((self class environment allClasses select: [ :class | class inheritsFrom: BaselineOf ]) flatCollect: [ :baseline |
+		                     baseline withAllPackageNames ]) asSet.
+	self assertEmpty: (self packageOrganizer packages reject: [ :package | package isUndefined or: [ declaredPackages includes: package name ] ])
+]
+
+{ #category : 'tests - package' }
+ReleaseTest >> testNoPackagesOverride [
+	"Class side packages should not be overridden"
+
+	Object allSubclasses do: [ :each | each class compiledMethodAt: #packages ifPresent: [ self fail: 'The #packages method should not be overriden' ] ]
+]
+
 { #category : 'tests - source' }
 ReleaseTest >> testNoPeriodInMethodSignature [
 	| methods |
@@ -287,7 +315,59 @@ ReleaseTest >> testNoSentButNotImplementedSelectors [
 	"There is a long term cleanup to fix 'selectors send but not implemented'.
 	 This test makes sure that we do not introduce new cases until we are down to zero"
 
-	self assert: SystemNavigation default allSentButNotImplementedSelectors size < 132
+	| knownFailures violations |
+	"String streamContents: [ :aStream | aStream << '#( '.  SystemNavigation default allSentButNotImplementedSelectors do: [ :m | .aStream << '''' << m printString  << ''' ' ]. aStream << ')' ]"
+	knownFailures := #( 'AthensCCWArcSegment>>#accept:' 'AthensCWArcSegment>>#accept:' 'AthensCairoCanvas>>#visitCubicSegment:'
+	                    'AthensCairoCanvas>>#visitQuadSegment:' 'AthensCloseSegment>>#accept:' 'AthensCubicSegment>>#accept:' 'AthensEllipticalArcSegment>>#accept:'
+	                    'AthensInteractiveScene>>#eventHandledByScene:' 'AthensLineSegment>>#accept:' 'AthensMoveSegment>>#accept:' 'AthensParagraph>>#compose:style:from:in:'
+	                    'AthensPolygon>>#paintFillsUsing:on:' 'BalloonEdgeData>>#stepToFirstScanLine' 'BalloonEdgeData>>#stepToNextScanLine'
+	                    'BalloonEngine>>#registerFills:' 'BalloonFillData>>#computeFill' 'ClyFullBrowserMorph>>#extendClassScopeForMethods:'
+	                    'ComplexBorderStyle>>#drawPolyPatchFrom:to:on:usingEnds:' 'ComplexBorderStyle>>#drawLineFrom:to:on:'
+	                    'Context>>#simulatePrimitive:in:receiver:arguments:' 'Context>>#doPrimitive:method:receiver:args:'
+	                    'Context>>#failPrimitiveWith:' 'DAPackageRelationGraphGenerator>>#buildEdges' 'DAPackageCycleGenerator>>#buildEdges' 'DAGraphVizGenerator>>#buildGraphViz' 'DAGraphVizGenerator>>#openWith:' 'DAGraphVizGenerator>>#saveDotFileAndGenerateForType:'
+	                    'DAPackageAnalyzerDiffTreePresenter>>#buildRoots' 'DTReRunConfiguration>>#items' 'DebugSession>>#shouldDisplayContext:basedOnFilters:'
+	                    'DiskDirectoryEntry class>>#store:path:node:' 'EDEmergencyDebugger>>#resetDisplay' 'EDTest>>#prepareMethodVersionTest'
+	                    'ExternalDropHandler class>>#defaultHandler' 'FFICallbackArgumentReader>>#stackPointer' 'FFIFloat32>>#callbackReturnOn:for:'
+	                    'FFIFloatType>>#callbackReturnOn:for:' 'FFIIndirectFunctionResolution>>#resolveFunction:'
+	                    'FFILibrary>>#macLibraryName' 'FFILibrary>>#win32LibraryName' 'FileDialogWindow>>#saveForcedSelectedFile'
+	                    'FileList class>>#morphicViewOnFile:contents:fileList:' 'GLMOSWindowWorldMorph>>#delete' 'IRReconstructor>>#fixPushNilsForTemps'
+	                    'IceLibgitCommitWalk>>#shouldInclude:' 'IcePackage>>#outgoingCommits' 'IceRemote>>#upstreamForBranch:backend:'
+	                    'IceTag>>#lastCommit' 'IceTipHiedraAltComponentHistoryBrowser>>#newCommitRow:commit:'
+	                    'IceTipHiedraAltHistoryBrowser>>#newCommitRow:commit:' 'IceTipHiedraAltHistoryBrowser>>#initializeCommitList'
+	                    'InstructionStream>>#interpretNext3ByteSistaV1Instruction:for:extA:extB:startPC:'
+	                    'KMDispatcher>>#spotterForKeysFor:' 'KMMetaModifier>>#printOsRepresentationOn:' 'LGitDiff>>#includesFileNamed:'
+	                    'LGitRepository>>#cloneRemote:signature:branch:checkoutOptions:' 'LazyListMorph>>#drawOnAthensCanvas:'
+	                    'MCAddition>>#myVersionOn:' 'MCFileTreeAbstractReader>>#packageProperties' 'MCModification>>#myVersionOn:' 'MCOrganizationDefinition>>#addAnalysisToPackageChangeSet:change:'
+	                    'MicrodownSpecComponentForTest class>>#open' 'MockLessonView>>#showTutorialNode:' 'MorphTreeMorph>>#nodeExpandRequest:'
+	                    'MorphTreeMorph>>#selectItemsRequest:' 'PSMCClassChangeWrapper>>#remoteChosen' 'PolygonMorph>>#intersects:' 'RBBasicDummyLintRuleTest class>>#createMatcherFor:method:'
+	                    'RBBasicDummyLintRuleTest class>>#usesAdd' 'RBBasicDummyLintRuleTest class>>#unreferencedVariables'
+	                    'RBBasicDummyLintRuleTest class>>#classNotReferenced' 'RBBasicDummyLintRuleTest class>>#canCall:in:from:'
+	                    'RBBasicDummyLintRuleTest class>>#tempsReadBeforeWritten' 'RBBasicDummyLintRuleTest class>>#usesTrue'
+	                    'RBBasicDummyLintRuleTest class>>#variableAssignedLiteral' 'RBBasicDummyLintRuleTest class>>#onlyReadOrWritten'
+	                    'RBBasicDummyLintRuleTest class>>#sentNotImplementedInApplication' 'RBBasicDummyLintRuleTest class>>#tempVarOverridesInstVar'
+	                    'RBBasicDummyLintRuleTest class>>#instVarInSubclasses' 'RBBasicDummyLintRuleTest class>>#utilityMethods'
+	                    'RBBasicLintRuleTestData class>>#canCall:in:from:' 'RBBasicLintRuleTestData class>>#createMatcherFor:method:'
+	                    'RBBasicLintRuleTestData class>>#sentNotImplementedInApplication' 'RBBasicLintRuleTestData class>>#utilityMethods'
+	                    'RBClassDataForRefactoringTest>>#inlineComponent' 'RBClassDataForRefactoringTest>>#textInput:name:symbol:'
+	                    'RBClassDataForRefactoringTest>>#inlineFailed' 'RBClassDataForRefactoringTest>>#renderContentOn:'
+	                    'RBEnvironmentVisitor>>#visitPackageEnv:' 'RBEnvironmentVisitor>>#visitClassEnv:' 'RBEnvironmentVisitor>>#visitProtocolEnv:'
+	                    'RBFindAndReplacePreviewPresenter>>#initializeDialogWindow:' 'RBLintRuleTestData>>#runOnEnvironment:'
+	                    'RBRemoveClassRefactoring>>#senders' 'RBTransformationDummyRuleTest class>>#initializeAfterLoad1'
+	                    'RBTransformationDummyRuleTest class>>#rewrite:methods:name:' 'RBTransformationRuleTestData class>>#initializeAfterLoad1'
+	                    'RBTransformationRuleTestData class>>#rewrite:methods:name:' 'RGChunkImporter>>#visitDoItChunk:' 'ReSentNotImplementedRuleTest>>#sampleMethod'
+	                    'Rectangle>>#newRectButtonPressedDo:inWorld:' 'RubSegmentMorph>>#intersects:' 'RubTextSegmentMorph>>#displayIconAt:onAthensCanvas:'
+	                    'SpApplication>>#ensureConfiguration' 'SpApplicationBackend>>#notify:' 'SpChangeSorterPresenter>>#createRingMethodForRemovedSelector:inClass:'
+	                    'SpRenameDefaultSpecToDefaultLayoutRefactoring>>#preconditions' 'SpRenameDefaultSpecToDefaultLayoutRefactoring>>#initialize'
+	                    'SpTransmission>>#from:port:to:transform:postTransmission:' 'SpTreeColumn>>#rowMorphFor:' 'SpUIThemeDecoratorTest>>#testDoesNotUnderstand'
+	                    'SpWindowPresenter>>#notify:' 'StSpotterPragmaBasedProcessor>>#installKeymappingsOn:'
+	                    'StringMorph>>#launchEditor:' 'SycRemoveKeepingSubclassesClassStrategy>>#execute:' 'TransferMorph>>#justDroppedInto:event:'
+	                    'TransferMorph>>#delete' 'ZnConstants class>>#frameworkMCVersion' ).
+
+	violations := (SystemNavigation default allSentButNotImplementedSelectors collect: [ :method | method printString ]) asOrderedCollection.
+	"This next line is to ignore this for SmalltalkCI and not make external Pharo projects fail :("
+	violations removeAllSuchThat: [ :violation | violation beginsWithAnyOf: #( SCI SmalltalkCI ) ].
+
+	self assertEmpty: (violations difference: knownFailures)
 ]
 
 { #category : 'tests - variables' }
@@ -295,7 +375,8 @@ ReleaseTest >> testNoShadowedVariablesInMethods [
 	"Fail if there are methods who define shadowed temps or args"
 	| found validExceptions remaining |
 	found := SystemNavigation default methods select: [ :m |
-		m ast variableDefinitionNodes anySatisfy: [ :node | node variable isShadowing ] ].
+		m isQuick not and: [ "quick methods do not define variables"
+			m ast variableDefinitionNodes anySatisfy: [ :node | node variable isShadowing ] ]].
 	"No other exceptions beside the ones mentioned here should be allowed"
 	validExceptions := {
 		RBSmalllintTestObject>>#tempVarOverridesInstVar.
@@ -328,6 +409,22 @@ ReleaseTest >> testObsoleteClasses [
 					print: obsoleteClasses ]]
 ]
 
+{ #category : 'tests - package' }
+ReleaseTest >> testPackageOrganizer [
+	"Ensure other tests temporary created organizers are collected"
+
+	3 timesRepeat: [ Smalltalk garbageCollect ].
+
+	"Now check :)"
+	self
+		assert: PackageOrganizer allInstances size = 1
+		description: 'There are multiple (' , PackageOrganizer allInstances size asString , ') instances of PackageOrganizer'.
+
+	self
+		assert: PackageOrganizer allInstances first == self packageOrganizer
+		description: 'The default package organizer is the not the only instance of PackageOrganizer'
+]
+
 { #category : 'tests' }
 ReleaseTest >> testPharoVersionFileExists [
 
@@ -342,29 +439,13 @@ ReleaseTest >> testPharoVersionFileExists [
 		equals: SystemVersion current major asString,  SystemVersion current minor asString
 ]
 
-{ #category : 'tests - packages - manifests' }
+{ #category : 'tests - package' }
 ReleaseTest >> testProperManifestClasses [
 
 	|manifests|
 	manifests := self class environment allClasses select: [:each | each isManifest ].
 	self assert: (manifests allSatisfy: [:each | each inheritsFrom: PackageManifest ]).
 	self assert: (manifests allSatisfy: [:each | each name beginsWith: 'Manifest' ])
-]
-
-{ #category : 'tests - rpackage' }
-ReleaseTest >> testRPackageOrganizer [
-	"Ensure other tests temporary created organizers are collected"
-
-	3 timesRepeat: [ Smalltalk garbageCollect ].
-
-	"Now check :)"
-	self
-		assert: RPackageOrganizer allInstances size = 1
-		description: 'There are multiple (' , RPackageOrganizer allInstances size asString , ') instances of RPackageOrganizer'.
-
-	self
-		assert: RPackageOrganizer allInstances first == self packageOrganizer
-		description: 'The default package organizer is the not the only instance of RPackageOrganizer'
 ]
 
 { #category : 'tests' }
@@ -410,7 +491,7 @@ ReleaseTest >> testTestCasesEndsWithTestOrTestCase [
 	self assertValidLintRule: ReTestClassNameShouldEndWithTestRule new
 ]
 
-{ #category : 'tests - rpackage' }
+{ #category : 'tests - package' }
 ReleaseTest >> testThatAllMethodsArePackaged [
 	| classes instanceMethods classMethods allMethods methodsWithoutPackageInfo |
 	classes := Smalltalk allClassesAndTraits.
@@ -440,7 +521,7 @@ ReleaseTest >> testUndeclared [
 			stream nextPutAll: 'Found undeclared Variables: '.
 			remaining do: [ :variable  |
 				| method |
-				method := variable usingMethods first.
+				method := variable usingMethods anyOne.
 				stream
 					cr
 					nextPutAll: variable name;
@@ -450,6 +531,13 @@ ReleaseTest >> testUndeclared [
 					print: method selector]].
 
 	self assert: remaining isEmpty description: description
+]
+
+{ #category : 'tests - package' }
+ReleaseTest >> testUndefinedPackageShouldBeEmpty [
+	"The unpackage package should not have any defined class or extended classes"
+
+	self assertEmpty: self packageOrganizer undefinedPackage classes
 ]
 
 { #category : 'tests' }
@@ -471,23 +559,14 @@ ReleaseTest >> testUnknownProcesses [
 				separatedBy: [ out << String crlf ] ])
 ]
 
-{ #category : 'tests - rpackage' }
+{ #category : 'tests - package' }
 ReleaseTest >> testUnpackagedClasses [
 
 	| unpackagedClasses |
-	unpackagedClasses := Smalltalk allClassesAndTraits select: [ :each | (self packageOrganizer packageOf: each) name = UndefinedPackage undefinedPackageName ].
+	unpackagedClasses := Smalltalk allClassesAndTraits select: [ :each | each package isUndefined ].
 	self assert: unpackagedClasses isEmpty description: (String streamContents: [ :s |
 			 s nextPutAll: 'Found the following unpackaged classes: '.
 			 unpackagedClasses do: [ :cls | s tab print: cls ] separatedBy: [ s cr ] ])
-]
-
-{ #category : 'tests - rpackage' }
-ReleaseTest >> testUnpackagedPackageShouldBeEmpty [
-
-	| unpackagePackage |
-	unpackagePackage := self packageOrganizer packageNamed: UndefinedPackage undefinedPackageName.
-	"The unpackage package should not have any defined class or extended classes"
-	self assertEmpty: unpackagePackage classes
 ]
 
 { #category : 'tests' }

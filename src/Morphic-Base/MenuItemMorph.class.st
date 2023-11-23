@@ -57,7 +57,7 @@ MenuItemMorph class >> initialize [
 MenuItemMorph >> aboutToBeGrabbedBy: aHand [
 	"Don't allow the receiver to act outside a Menu"
 	| menu box |
-	(owner notNil and:[owner hasSubmorphs ]) ifTrue:[
+	(owner isNotNil and:[owner hasSubmorphs ]) ifTrue:[
 		"I am a lonely menuitem already; just grab my owner"
 		owner stayUp: true.
 		^owner aboutToBeGrabbedBy: aHand].
@@ -334,7 +334,7 @@ MenuItemMorph >> handlesMouseOverDragging: evt [
 { #category : 'accessing' }
 MenuItemMorph >> hasIcon [
 	"Answer whether the receiver has an icon."
-	^ icon notNil
+	^ icon isNotNil
 ]
 
 { #category : 'accessing' }
@@ -352,7 +352,7 @@ MenuItemMorph >> hasMarker [
 { #category : 'accessing' }
 MenuItemMorph >> hasSubMenu [
 	"Return true if the receiver has a submenu"
-	^subMenu notNil
+	^subMenu isNotNil
 ]
 
 { #category : 'accessing' }
@@ -702,10 +702,8 @@ MenuItemMorph >> veryDeepFixupWith: deepCopier [
 	"If target and arguments fields were weakly copied, fix them here.  If they were in the tree being copied, fix them up, otherwise point to the originals!!"
 
 	super veryDeepFixupWith: deepCopier.
-	target := deepCopier references at: target ifAbsent: [target].
-	arguments notNil ifTrue:
-	[arguments := arguments collect: [:each |
-		deepCopier references at: each ifAbsent: [each]]]
+	target := deepCopier references at: target ifAbsent: [ target ].
+	arguments ifNotNil: [ arguments := arguments collect: [ :each | deepCopier references at: each ifAbsent: [ each ] ] ]
 ]
 
 { #category : 'copying' }
@@ -727,5 +725,5 @@ MenuItemMorph >> veryDeepInner: deepCopier [
 { #category : 'meta actions' }
 MenuItemMorph >> wantsHaloFromClick [
 	"Only if I'm not a lonely submenu"
-	^owner notNil and:[ owner hasSubmorphs ]
+	^owner isNotNil and:[ owner hasSubmorphs ]
 ]

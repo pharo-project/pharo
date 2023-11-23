@@ -2075,6 +2075,16 @@ f display
 ]
 
 { #category : 'scaling, rotation' }
+Form >> scaledToExactSize: newExtent [
+
+	| scale |
+
+	newExtent = self extent ifTrue: [^self].
+	scale := newExtent / self extent.
+	^self magnifyBy: scale smoothing: 2
+]
+
+{ #category : 'scaling, rotation' }
 Form >> scaledToSize: newExtent [
 
 	| scale |
@@ -2323,15 +2333,19 @@ Form >> trimBordersOfColor: aColor [
 Form >> unhibernate [
 	"If my bitmap has been compressed into a ByteArray,
 	then expand it now, and return true."
+
 	| resBits |
-	bits isForm ifTrue:[
+	bits isForm ifTrue: [
 		resBits := bits.
 		bits := Bitmap new: self bitsSize.
 		resBits displayResourceFormOn: self.
-		^true].
-	bits == nil ifTrue:[bits := Bitmap new: self bitsSize. ^true].
-	(bits isMemberOf: ByteArray)
-		ifTrue: [bits := Bitmap decompressFromByteArray: bits. ^ true].
+		^ true ].
+	bits ifNil: [
+		bits := Bitmap new: self bitsSize.
+		^ true ].
+	(bits isMemberOf: ByteArray) ifTrue: [
+		bits := Bitmap decompressFromByteArray: bits.
+		^ true ].
 	^ false
 ]
 

@@ -129,7 +129,7 @@ SimpleHierarchicalListMorph >> addMorphsTo: morphList from: aCollection allowSor
 
 	| priorMorph newCollection firstAddition |
 	priorMorph := nil.
-	newCollection := (sortBoolean and: [sortingSelector notNil]) ifTrue: [
+	newCollection := (sortBoolean and: [sortingSelector isNotNil]) ifTrue: [
 		(aCollection asSortedCollection: [ :a :b |
 			(a perform: sortingSelector) <= (b perform: sortingSelector)]) asOrderedCollection
 	] ifFalse: [
@@ -160,7 +160,7 @@ SimpleHierarchicalListMorph >> addSubmorphsAfter: parentMorph fromCollection: aC
 
 	| priorMorph morphList newCollection |
 	priorMorph := nil.
-	newCollection := (sortBoolean and: [sortingSelector notNil]) ifTrue: [
+	newCollection := (sortBoolean and: [sortingSelector isNotNil]) ifTrue: [
 		(aCollection asSortedCollection: [ :a :b |
 			(a perform: sortingSelector) <= (b perform: sortingSelector)]) asOrderedCollection
 	] ifFalse: [
@@ -369,14 +369,14 @@ SimpleHierarchicalListMorph >> drawLinesOn: aCanvas [
 		during: [:clippedCanvas |
 			scroller submorphs do: [ :submorph | | last |
 				((submorph isExpanded and: [
-					(submorph nextSibling notNil and: [
+					(submorph nextSibling isNotNil and: [
 						clippedCanvas isVisible: (submorph fullBounds topLeft
 							corner: submorph nextSibling fullBounds bottomRight)]) or: [
-					submorph nextSibling isNil and: [(last := submorph lastChild) notNil and: [
+					submorph nextSibling isNil and: [(last := submorph lastChild) isNotNil and: [
 						clippedCanvas isVisible: (submorph fullBounds topLeft
 							corner: last fullBounds bottomRight)]]]]) or: [
 				(clippedCanvas isVisible: submorph fullBounds) or: [
-				(submorph nextSibling notNil and: [
+				(submorph nextSibling isNotNil and: [
 						clippedCanvas isVisible: submorph nextSibling fullBounds])]]) ifTrue:[
 					submorph drawLinesOn: clippedCanvas lineColor: lColor]]]
 		smoothing: scroller smoothing
@@ -680,13 +680,13 @@ SimpleHierarchicalListMorph >> minimumSelection [
 
 { #category : 'event handling' }
 SimpleHierarchicalListMorph >> mouseDown: evt [
-	"Changed to take keybaord focus."
+	"Changed to take keyboard focus."
 
 	| aMorph selectors |
 	self wantsKeyboardFocus
 		ifTrue: [self takeKeyboardFocus].
 	aMorph := self itemFromPoint: evt position.
-	(aMorph notNil and:[aMorph inToggleArea: (aMorph point: evt position from: self)])
+	(aMorph isNotNil and:[aMorph inToggleArea: (aMorph point: evt position from: self)])
 		ifTrue:[^self toggleExpandedState: aMorph event: evt].
 
 	evt yellowButtonPressed  "First check for option (menu) click"
@@ -781,18 +781,20 @@ SimpleHierarchicalListMorph >> mouseMove: evt [
 SimpleHierarchicalListMorph >> mouseUp: event [
 	"Fixed up highlight problems."
 
-	| aMorph wasHigh|
+	| aMorph wasHigh |
 	aMorph := self itemFromPoint: event position.
-	wasHigh := aMorph notNil ifTrue: [aMorph highlightedForMouseDown] ifFalse: [false].
-	scroller submorphsDo: [:m |
-		m highlightedForMouseDown ifTrue: [m highlightForMouseDown: false]].
-	aMorph ifNil: [^self].
-	wasHigh ifFalse: [^self].
-	model okToChange ifFalse: [^self].
+	wasHigh := aMorph
+		           ifNotNil: [ aMorph highlightedForMouseDown ]
+		           ifNil: [ false ].
+	scroller submorphsDo: [ :m |
+		m highlightedForMouseDown ifTrue: [ m highlightForMouseDown: false ] ].
+	aMorph ifNil: [ ^ self ].
+	wasHigh ifFalse: [ ^ self ].
+	model okToChange ifFalse: [ ^ self ].
 	"No change if model is locked"
-	((autoDeselect == true) and: [aMorph == selectedMorph])
-		ifTrue: [self setSelectedMorph: nil]
-		ifFalse: [self setSelectedMorph: aMorph].
+	(autoDeselect == true and: [ aMorph == selectedMorph ])
+		ifTrue: [ self setSelectedMorph: nil ]
+		ifFalse: [ self setSelectedMorph: aMorph ].
 	Cursor normal show
 ]
 

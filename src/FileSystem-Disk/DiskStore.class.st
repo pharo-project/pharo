@@ -314,14 +314,17 @@ DiskStore >> defaultWorkingDirectory [
 
 { #category : 'public' }
 DiskStore >> delete: path [
-	| pathString |
+	"Delete the supplied path on the receiver"
+	| pathString isSymlink |
 
-	((self exists: path) or: [ self isSymlink: path ])
+	isSymlink := self isSymlink: path.
+	((self exists: path) or: [ isSymlink ])
 		ifFalse: [ ^ FileDoesNotExistException signalWith: path ].
 
 	pathString := self stringFromPath: path.
 
-	(self isDirectory: path) ifTrue:
+	"Symbolic links answer true to isDirectory:, but must be deleted as a regular file"
+	((self isDirectory: path) and: [ isSymlink not ]) ifTrue:
 		[ File deleteDirectory: (File encodePathString: pathString) ]
 	ifFalse:
 		[ File deleteFile: pathString ]
@@ -379,7 +382,7 @@ DiskStore >> directoryAt: aPath nodesDo: aBlock [
 		dirPointer := openDir.
 		entryData := File primReaddir: dirPointer ].
 	[
-		[ entryData notNil ] whileTrue:
+		[ entryData isNotNil ] whileTrue:
 			[
 				fileName := entryData first.
 				entryData at: 1 put: (File decodePathString: fileName).
