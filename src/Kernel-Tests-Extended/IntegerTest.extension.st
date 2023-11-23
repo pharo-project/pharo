@@ -454,8 +454,9 @@ IntegerTest >> testNthRootExactness [
 
 { #category : '*Kernel-Tests-Extended' }
 IntegerTest >> testNthRootTruncated [
-	<timeout:  5 "seconds">
+
 	| tooBigToBeAFloat large |
+	self timeLimit: 5 seconds.
 	tooBigToBeAFloat := 1 << 2000.
 	self assert: (tooBigToBeAFloat nthRootTruncated: 100) equals: 1 << 20.
 	self assert: (tooBigToBeAFloat + 1 nthRootTruncated: 100) equals: 1 << 20.
