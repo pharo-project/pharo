@@ -34,5 +34,5 @@ BaselineOfDependencyAnalyzer >> baseline: spec [
 BaselineOfDependencyAnalyzer >> graphAlgorithms: spec [
 
 	spec baseline: 'AIGraphAlgorithms' with: [
-		spec repository: 'github://pharo-ai/graph-algorithms:v1.2.5/src' ]
+		spec repository: 'github://pharo-ai/graph-algorithms:v1.2.6/src' ]
 ]
