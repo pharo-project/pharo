@@ -145,7 +145,7 @@ DAMessageSendAnalyzer >> sentMessages [
 DAMessageSendAnalyzer >> systemPackage [
 	"Answer a <Package> matching the receiver's package name. If we are browsing an unloaded package, then answer a virtual RPackage so the message send analyzer could preserve its behavior with loaded packages in #manuallyResolvedDependencies"
 
-	^ packageAnalysis systemPackage ifNil: [ RPackage named: 'Virtual' , self packageName ]
+	^ packageAnalysis systemPackage ifNil: [ Package named: 'Virtual' , self packageName ]
 ]
 
 { #category : 'computing' }

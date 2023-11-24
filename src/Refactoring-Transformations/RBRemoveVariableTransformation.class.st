@@ -48,21 +48,6 @@ RBRemoveVariableTransformation >> applicabilityPreconditionsForInstanceVariable 
 	^ (RBCondition directlyDefinesInstanceVariable: variableName asString in: class)
 ]
 
-{ #category : 'preconditions' }
-RBRemoveVariableTransformation >> breakingChangePreconditionsForClassVariable [
-
-	^ RBCondition
-		  accessesClassVariable: variableName
-		  in: class
-		  showIn: self
-]
-
-{ #category : 'preconditions' }
-RBRemoveVariableTransformation >> breakingChangePreconditionsForInstanceVariable [
-
-	^ (RBCondition doesNotAccessInstanceVariable: variableName inHierarchyOf: class showIn: self)
-]
-
 { #category : 'executing' }
 RBRemoveVariableTransformation >> privateTransform [
 

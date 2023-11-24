@@ -1,5 +1,5 @@
 "
-SUnit tests for RPackage trait synchronization
+SUnit tests for Package trait synchronization
 
 "
 Class {

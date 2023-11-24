@@ -123,17 +123,19 @@ RBMoveTemporaryVariableDefinitionTransformation >> checkBlocksIn: aParseTree [
 RBMoveTemporaryVariableDefinitionTransformation >> checkLocationsIn: candidateBlocks [
 
 	(candidateBlocks
-		detect: [:each | RBReadBeforeWrittenTester
-							isVariable: variableName readBeforeWrittenIn: each]
-		ifNone: [nil]) notNil
-		ifTrue: [^false].
+		 detect: [ :each |
+			 RBReadBeforeWrittenTester
+				 isVariable: variableName
+				 readBeforeWrittenIn: each ]
+		 ifNone: [ nil ]) ifNotNil: [ ^ false ].
 
 	blockNodes ifNil: [ blockNodes := OrderedCollection new ].
 	candidateBlocks do: [ :each |
 		(self checkBlocksIn: each body)
 			ifTrue: [ blockNodes add: each ]
-			ifFalse: 	[ (self checkLocationsIn: (self checkAllBlocksIn: each body))
-							ifFalse: [ blockNodes add: each ]]].
+			ifFalse: [
+				(self checkLocationsIn: (self checkAllBlocksIn: each body))
+					ifFalse: [ blockNodes add: each ] ] ].
 	^ true
 ]
 

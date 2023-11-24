@@ -36,11 +36,11 @@ DAMessageSendAnalyzerTest >> testShouldGetPotentialMatchForUnimplementedCalls [
 { #category : 'tests' }
 DAMessageSendAnalyzerTest >> testSystemPackage [
 
-	self assert: analyzer systemPackage class equals: RPackage.
+	self assert: analyzer systemPackage class equals: Package.
 	analyzer := DAMessageSendAnalyzer on: 'Unloaded-Dummy-Package'.
 	self
-		assert: analyzer systemPackage class = RPackage
-		description: 'It test that rPackage still answer a RPackage even when the analyzer was instantiated with an unexisting or unloaded package'.
+		assert: analyzer systemPackage class = Package
+		description: 'It test that rPackage still answer a Package even when the analyzer was instantiated with an unexisting or unloaded package'.
 	self assertEmpty: analyzer systemPackage definedClasses
 ]
 

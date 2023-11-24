@@ -1082,7 +1082,7 @@ ClassDescription >> renameProtocol: anOldProtocol as: aNewProtocol [
 		oldProtocol resetMethodSelectors.
 		self removeProtocolIfEmpty: oldProtocol.
 
-	"I need to notify also the selector changes, otherwise RPackage will not notice"
+	"I need to notify also the selector changes, otherwise Package will not notice"
 	newProtocol methodSelectors do: [ :each | self notifyOfRecategorizedSelector: each from: oldProtocol to: newProtocol ]
 ]
 

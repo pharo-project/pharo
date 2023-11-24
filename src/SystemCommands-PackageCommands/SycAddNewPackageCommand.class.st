@@ -11,7 +11,7 @@ Internal Representation and Key Implementation Points.
 
     Instance Variables
 	packageName:		<String>
-	resultPackage:		<RPackage>
+	resultPackage:		<Package>
 	systemEnvironment:		<Object>
 "
 Class {

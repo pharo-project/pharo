@@ -4,5 +4,5 @@ Extension { #name : 'SycDemoteToPackageWithTagCommand' }
 SycDemoteToPackageWithTagCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
 
-	^CmdContextMenuActivation byItemOf: CmdExtraMenuGroup for: RPackage asCalypsoItemContext
+	^CmdContextMenuActivation byItemOf: CmdExtraMenuGroup for: Package asCalypsoItemContext
 ]

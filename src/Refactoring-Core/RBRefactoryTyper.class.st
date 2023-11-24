@@ -370,7 +370,7 @@ RBRefactoryTyper >> processCollectionMessagesFor: variableName in: aParseTree [
 		ifFalse: [ ^ self ].
 	(#(anyOne at: at:ifAbsent: at:ifAbsentPut: atPin: atRandom atRandom: atWrap: eight fifth first fourth last middle ninth second seventh sixth third) includes: aParseTree selector) ifTrue: [
 		parent := aParseTree parent.
-		(parent notNil and: [ parent isMessage ])
+		(parent isNotNil and: [ parent isMessage ])
 			ifFalse: [ ^ self ].
 		aParseTree == parent receiver
 			ifFalse: [ ^ self ].
