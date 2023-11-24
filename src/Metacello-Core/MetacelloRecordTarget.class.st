@@ -12,6 +12,15 @@ MetacelloRecordTarget >> actionLabel [
 	^'Recording '
 ]
 
+{ #category : 'private' }
+MetacelloRecordTarget >> atomicLoadPackageOfSpec: aSpec withEngine: anEngine [
+
+	anEngine specBuilder
+		pushAtomicLoadDirectivesDuring: [
+			super linearLoadPackagesOfSpec: aSpec withEngine: anEngine ]
+		for: self
+]
+
 { #category : 'actions' }
 MetacelloRecordTarget >> linearLoadPackageSpec: packageSpec gofer: gofer withEngine: anEngine [
 
@@ -32,15 +41,17 @@ MetacelloRecordTarget >> linearLoadPackageSpec: packageSpec gofer: gofer withEng
 			             self postLoad: packageSpec withEngine: anEngine ].
 			(answers := packageSpec answers) notEmpty
 				ifTrue: [ loadBlock valueSupplyingMetacelloAnswers: answers ]
-				ifFalse: [ "fake := packageSpec copy.
-			fake name: fake file.
-			anEngine loadData 
-				addVersion: fake
-				versionInfo: fake
-				resolvedReference: externalReference 
-				packageSpec: packageSpec"
-					loadBlock value ] ]
+				ifFalse: [ loadBlock value ] ]
 		displaying: 'Recording ' , packageSpec file
+]
+
+{ #category : 'private' }
+MetacelloRecordTarget >> linearLoadPackagesOfSpec: aSpec withEngine: anEngine [
+
+	anEngine specBuilder
+		pushLinearLoadDirectivesDuring: [
+			super linearLoadPackagesOfSpec: aSpec withEngine: anEngine ]
+		for: self
 ]
 
 { #category : 'actions' }

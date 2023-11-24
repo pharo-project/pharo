@@ -61,6 +61,31 @@ MetacelloVersion >> blessing [
 ]
 
 { #category : 'private' }
+MetacelloVersion >> buildSpecFrom: required withEngine: anEngine forTarget: aTarget [
+
+	| packages |
+	packages := Dictionary new.
+	self spec resolveToLoadableSpecs: required map: packages.
+
+	packages values do: [ :pkg |
+		pkg ensureLoadedForDevelopmentUsing: aTarget withEngine: anEngine.
+		(MetacelloIgnorePackageLoaded signal: pkg) ifFalse: [
+			anEngine ignoreImage ifFalse: [
+				(pkg
+					 compareCurrentVersion: aTarget operator
+					 targetVersionStatus: #( #allLoadedToSpec )
+					 using: aTarget
+					 withEngine: anEngine) ifTrue: [ packages removeKey: pkg name ] ] ] ].
+
+	packages notEmpty ifTrue: [
+		aTarget preLoad: self spec withEngine: anEngine.
+		aTarget load: self spec withEngine: anEngine.
+		aTarget postLoad: self spec withEngine: anEngine ].
+	
+	^ aTarget
+]
+
+{ #category : 'private' }
 MetacelloVersion >> computeVersionStatus [
 	"
 		#allLoadedToSpec - all projects and packages are loaded and match specification
@@ -146,27 +171,6 @@ MetacelloVersion >> doWithProgress: aBlock label: aLabel withEngine: anEngine [
 		MetacelloPlatform current bypassProgressBars: oldBypassProgress ]
 ]
 
-{ #category : 'private' }
-MetacelloVersion >> executeLoadFromArray: required withEngine: anEngine forTarget: aTarget [
-
-	| packages |
-	packages := Dictionary new.
-	self spec resolveToLoadableSpecs: required map: packages.
-	packages values do: [ :pkg |
-		pkg ensureLoadedForDevelopmentUsing: aTarget withEngine: anEngine.
-		(MetacelloIgnorePackageLoaded signal: pkg) ifFalse: [
-			anEngine ignoreImage ifFalse: [
-				(pkg
-					 compareCurrentVersion: aTarget operator
-					 targetVersionStatus: #( #allLoadedToSpec )
-					 using: aTarget
-					 withEngine: anEngine) ifTrue: [ packages removeKey: pkg name ] ] ] ].
-	packages notEmpty ifTrue: [
-		aTarget preLoad: self spec withEngine: anEngine.
-		aTarget load: self spec withEngine: anEngine.
-		aTarget postLoad: self spec withEngine: anEngine ]
-]
-
 { #category : 'querying' }
 MetacelloVersion >> expandToLoadableSpecNames: nameList [
 	"Just like #resolveToLoadableSpecs:, but returns list of spec names instead of specs"
@@ -183,13 +187,10 @@ MetacelloVersion >> fetch: required [
 { #category : 'private' }
 MetacelloVersion >> fetchRequiredFromArray: anArray withEngine: anEngine [
 
-	| target |
-	target := MetacelloFetchTarget new.
-	self
-		executeLoadFromArray: anArray
-		withEngine: anEngine
-		forTarget: target.
-	^ target
+	^ self
+		  buildSpecFrom: anArray
+		  withEngine: anEngine
+		  forTarget: MetacelloFetchTarget new
 ]
 
 { #category : 'actions' }
@@ -395,7 +396,7 @@ MetacelloVersion >> recordRequiredFromArray: anArray withEngine: anEngine [
 	| target |
 	target := MetacelloRecordTarget new.
 	self
-		executeLoadFromArray: anArray
+		buildSpecFrom: anArray
 		withEngine: anEngine
 		forTarget: target.
 	^ anEngine specBuilder currentLoadDirective
@@ -405,19 +406,6 @@ MetacelloVersion >> recordRequiredFromArray: anArray withEngine: anEngine [
 MetacelloVersion >> recordWithEngine: anEngine [
 
 	^self doRecordRequiredFromArray: self spec defaultPackageNames withEngine: anEngine
-]
-
-{ #category : 'querying' }
-MetacelloVersion >> resolveToLoadableSpecs: nameList [
-	"Resolves names in namelist to the  list of packages and projects in the version that would be loaded. Projects are 
-	not traversed during the transitive closure. The scope is that of the version itself.
-	   If the spec is a package, answer a list including the package and the transitive closure on 
-			its #requires: and #includes: fields.
-	   If the spec is a project, answer the project.
-	   If the spec is a group, answers the list of packages in the #includes: field of the group. 
-			Groups in the #includes: field are expanded following the transitive closure on groups"
-
-	^self spec resolveToLoadableSpecs: nameList
 ]
 
 { #category : 'accessing' }

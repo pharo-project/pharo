@@ -24,15 +24,6 @@ MetacelloFetchTarget >> asEnsureTarget [
 		  yourself
 ]
 
-{ #category : 'private' }
-MetacelloFetchTarget >> atomicLoadPackageOfSpec: aSpec withEngine: anEngine [
-
-	anEngine specBuilder
-		pushAtomicLoadDirectivesDuring: [
-			super linearLoadPackagesOfSpec: aSpec withEngine: anEngine ]
-		for: self
-]
-
 { #category : 'initialization' }
 MetacelloFetchTarget >> forceFetch [
 
@@ -108,15 +99,6 @@ MetacelloFetchTarget >> linearLoadPackageSpec: packageSpec gofer: gofer withEngi
 				externalReference: externalReference
 				withEngine: anEngine ]
 		displaying: 'Fetching ' , packageSpec file
-]
-
-{ #category : 'private' }
-MetacelloFetchTarget >> linearLoadPackagesOfSpec: aSpec withEngine: anEngine [
-
-	anEngine specBuilder
-		pushLinearLoadDirectivesDuring: [
-			super linearLoadPackagesOfSpec: aSpec withEngine: anEngine ]
-		for: self
 ]
 
 { #category : 'private' }
