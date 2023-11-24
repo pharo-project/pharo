@@ -203,13 +203,6 @@ MetacelloVersion >> hash [
 ]
 
 { #category : 'accessing' }
-MetacelloVersion >> ignoreImage: aBool [ 
-	"by default ignoreImage is false"
-	
-	self loaderPolicy ignoreImage: aBool
-]
-
-{ #category : 'accessing' }
 MetacelloVersion >> importedVersions [
 
 	^ importedVersions ifNil: [ importedVersions := #(  ) ]
@@ -233,9 +226,10 @@ MetacelloVersion >> loadRequiredFromArray: anArray withEngine: anEngine [
 
 	| target |
 	target := MetacelloLoadTarget new.
-	^ (self
-		   fetchRequiredFromArray: (self defaultPackageNamesToLoad: anArray)
-		   withEngine: anEngine) doLoadWithEngine: anEngine
+	self
+		fetchRequiredFromArray: (self defaultPackageNamesToLoad: anArray)
+		withEngine: anEngine.
+	^ anEngine load
 ]
 
 { #category : 'actions' }
@@ -392,7 +386,7 @@ MetacelloVersion >> recordRequiredFromArray: anArray withEngine: anEngine [
 		executeLoadFromArray: anArray
 		withEngine: anEngine
 		forTarget: target.
-	^ target
+	^ anEngine specBuilder currentLoadDirective
 ]
 
 { #category : 'actions' }
@@ -412,13 +406,6 @@ MetacelloVersion >> resolveToLoadableSpecs: nameList [
 			Groups in the #includes: field are expanded following the transitive closure on groups"
 
 	^self spec resolveToLoadableSpecs: nameList
-]
-
-{ #category : 'accessing' }
-MetacelloVersion >> silently: aBool [ 
-	"by default silently is false"
-	
-	self loaderPolicy silently: aBool
 ]
 
 { #category : 'accessing' }

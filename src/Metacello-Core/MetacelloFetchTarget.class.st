@@ -20,15 +20,8 @@ MetacelloFetchTarget >> asEnsureTarget [
 	"explicitly share the loaderPolicy"
 
 	^ (MetacelloFetchTarget on: self spec)
-"		  loaderPolicy: self loaderPolicy;"
 		  forceFetch;
 		  yourself
-]
-
-{ #category : 'accessing' }
-MetacelloFetchTarget >> asLoadingTarget [
-
-	^ (MetacelloLoadTarget on: self spec) yourself
 ]
 
 { #category : 'private' }
@@ -38,18 +31,6 @@ MetacelloFetchTarget >> atomicLoadPackageOfSpec: aSpec withEngine: anEngine [
 		pushAtomicLoadDirectivesDuring: [
 			super linearLoadPackagesOfSpec: aSpec withEngine: anEngine ]
 		for: self
-]
-
-{ #category : 'actions' }
-MetacelloFetchTarget >> doLoadWithEngine: anEngine [
-
-	anEngine load
-]
-
-{ #category : 'accessing' }
-MetacelloFetchTarget >> ensuredMap [
-
-	^self loaderPolicy ensuredMap
 ]
 
 { #category : 'initialization' }
@@ -130,33 +111,12 @@ MetacelloFetchTarget >> linearLoadPackageSpec: packageSpec gofer: gofer withEngi
 ]
 
 { #category : 'private' }
-MetacelloFetchTarget >> linearLoadPackagesOfSpec: aSpec [
-
-	self loaderPolicy
-		pushLinearLoadDirectivesDuring: [
-			super linearLoadPackagesOfSpec: aSpec ]
-		for: self
-]
-
-{ #category : 'private' }
 MetacelloFetchTarget >> linearLoadPackagesOfSpec: aSpec withEngine: anEngine [
 
 	anEngine specBuilder
 		pushLinearLoadDirectivesDuring: [
 			super linearLoadPackagesOfSpec: aSpec withEngine: anEngine ]
 		for: self
-]
-
-{ #category : 'accessing' }
-MetacelloFetchTarget >> loadData [
-
-	^self loaderPolicy loadData
-]
-
-{ #category : 'accessing' }
-MetacelloFetchTarget >> loadDirective [
-
-	^self loaderPolicy loadDirective
 ]
 
 { #category : 'doits' }
@@ -171,14 +131,6 @@ MetacelloFetchTarget >> preLoad: packageOrVersionSpec withEngine: anEngine [
 
 	(MetacelloDirective preLoadSpec: packageOrVersionSpec) addTo:
 		anEngine specBuilder currentLoadDirective
-]
-
-{ #category : 'printing' }
-MetacelloFetchTarget >> printOn: aStream [
-	super printOn: aStream.
-	aStream nextPut: $(.
-	self loadDirective printOn: aStream.
-	aStream nextPut: $)
 ]
 
 { #category : 'private' }

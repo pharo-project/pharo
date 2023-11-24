@@ -5,7 +5,6 @@ Class {
 		'versionSpec',
 		'required',
 		'packages',
-		'loaderPolicy',
 		'target'
 	],
 	#category : 'Metacello-Core-Loaders',
@@ -47,16 +46,6 @@ MetacelloMCVersionSpecLoader >> executeWithEngine: anEngine forTarget: aTarget [
 MetacelloMCVersionSpecLoader >> label [
 
 	^self versionSpec label
-]
-
-{ #category : 'accessing' }
-MetacelloMCVersionSpecLoader >> loaderPolicy [
-	^ loaderPolicy
-]
-
-{ #category : 'accessing' }
-MetacelloMCVersionSpecLoader >> loaderPolicy: anObject [
-	loaderPolicy := anObject
 ]
 
 { #category : 'accessing' }

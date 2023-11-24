@@ -12,29 +12,12 @@ MetacelloRecordTarget >> actionLabel [
 	^'Recording '
 ]
 
-{ #category : 'accessing' }
-MetacelloRecordTarget >> asLoadingTarget [
-
-	^self
-]
-
-{ #category : 'accessing' }
-MetacelloRecordTarget >> asRecordingTarget [
-
-	^self
-]
-
-{ #category : 'actions' }
-MetacelloRecordTarget >> doingLoads: aBlock [
-	"escape mechanism for recording and null loaders to skip doing loaderlike things"
-]
-
 { #category : 'actions' }
 MetacelloRecordTarget >> linearLoadPackageSpec: packageSpec gofer: gofer withEngine: anEngine [
 
 	MetacelloPlatform current
 		do: [
-			| externalReference loadBlock answers fake |
+			| externalReference loadBlock answers |
 			externalReference := self
 				                     resolveRecordingPackageSpecReference:
 				                     packageSpec
@@ -61,11 +44,6 @@ MetacelloRecordTarget >> linearLoadPackageSpec: packageSpec gofer: gofer withEng
 ]
 
 { #category : 'actions' }
-MetacelloRecordTarget >> loadPackageDirective: aPackageLoadDirective gofer: aGofer [
-	"Noop"
-]
-
-{ #category : 'actions' }
 MetacelloRecordTarget >> loadPackageDirectives: pkgLoads gofer: aGofer [
 	"Noop"
 ]
@@ -89,25 +67,6 @@ MetacelloRecordTarget >> postLoad: packageOrVersionSpec withEngine: anEngine [
 MetacelloRecordTarget >> preLoad: packageOrVersionSpec withEngine: anEngine [
 
 	^ self
-]
-
-{ #category : 'private' }
-MetacelloRecordTarget >> resolveRecordingPackageSpecReference: packageSpec gofer: gofer [
-
-	| externalPackageReference |
-	externalPackageReference := packageSpec file
-		                            ifNil: [
-		                            GoferPackageReference name:
-			                            packageSpec name ]
-		                            ifNotNil: [ :file |
-		                            GoferResolvedReference
-			                            name: file
-			                            repository: nil ].
-	self repositoryMap
-		at: externalPackageReference packageName
-		put: (packageSpec repositorySpecs collect: [ :repoSpec |
-				 repoSpec createRepository ]).
-	^ externalPackageReference
 ]
 
 { #category : 'private' }

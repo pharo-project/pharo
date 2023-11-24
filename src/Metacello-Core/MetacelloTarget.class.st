@@ -81,14 +81,6 @@ MetacelloTarget >> asLoadingTarget [
 	^self
 ]
 
-{ #category : 'accessing' }
-MetacelloTarget >> asRecordingTarget [
-
-	^(MetacelloRecordTarget on: self spec)
-		"loaderPolicy: self loaderPolicy copy;"
-		yourself
-]
-
 { #category : 'actions' }
 MetacelloTarget >> doLoad [
 	"NOOP"
@@ -101,18 +93,6 @@ MetacelloTarget >> doingLoads: aBlock [
 	"escape mechanism for recording and null loaders to skip doing loaderlike things"
 	
 	aBlock value
-]
-
-{ #category : 'testing' }
-MetacelloTarget >> hasRepositoryOverrides [
-
-	^ self loaderPolicy hasRepositoryOverrides
-]
-
-{ #category : 'accessing' }
-MetacelloTarget >> ignoreImage [
-
-	^self loaderPolicy ignoreImage
 ]
 
 { #category : 'initialization' }
@@ -130,12 +110,14 @@ MetacelloTarget >> linearLoadPackageSpec: packageSpec gofer: gofer withEngine: a
 
 { #category : 'private' }
 MetacelloTarget >> linearLoadPackagesOfSpec: aSpec withEngine: anEngine [
-	
+
 	| gofer monticelloRepositories |
 	gofer := Gofer new.
-	monticelloRepositories := self repositoriesFrom: aSpec repositorySpecs.
-	monticelloRepositories do: [:repo | gofer repository: repo ].
-	aSpec packageSpecsInLoadOrder do: [:pkg | pkg loadUsing: self gofer: gofer withEngine: anEngine ].
+	monticelloRepositories := self repositoriesFrom:
+		                          aSpec repositorySpecs.
+	monticelloRepositories do: [ :repo | gofer repository: repo ].
+	aSpec packageSpecsInLoadOrder do: [ :pkg |
+		pkg loadUsing: self gofer: gofer withEngine: anEngine ]
 ]
 
 { #category : 'actions' }
@@ -260,12 +242,6 @@ MetacelloTarget >> repositoriesFrom: aMetacelloMVRepositorySpecs ignoreOverrides
 			 detect: [ :rep | rep description = description ]
 			 ifNone: [ aSpec createRepository ]) ifNotNil: [ :repo | repos add: repo ] ].
 	^ repos
-]
-
-{ #category : 'accessing' }
-MetacelloTarget >> repositoryMap [
-
-	^self loaderPolicy repositoryMap
 ]
 
 { #category : 'private' }

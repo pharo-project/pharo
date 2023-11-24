@@ -21,12 +21,6 @@ MetacelloLoadTarget >> asFetchingTarget [
 ]
 
 { #category : 'executing' }
-MetacelloLoadTarget >> executeOnSpec: aSpec [
-
-	self linearLoadPackagesOfSpec: aSpec
-]
-
-{ #category : 'executing' }
 MetacelloLoadTarget >> executeOnSpec: aSpec withEngine: anEngine [
 
 	self linearLoadPackagesOfSpec: aSpec withEngine: anEngine
