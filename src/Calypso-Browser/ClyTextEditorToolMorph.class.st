@@ -129,12 +129,14 @@ ClyTextEditorToolMorph >> changesAccepted [
 			textModel text: self editingText.
 			textMorph hasUnacceptedEdits: true.
 			err pass].
+
+		textModel setText: self editingText.
+		
 		applied
 			ifTrue: [ textMorph hasUnacceptedEdits: false.
 				self textUpdated.
 				browser focusActiveTab ]
 			ifFalse: [
-				textModel text: self editingText.
 				textMorph hasUnacceptedEdits: true].
 	]
 ]
