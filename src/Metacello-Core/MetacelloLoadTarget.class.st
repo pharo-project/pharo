@@ -29,38 +29,28 @@ MetacelloLoadTarget >> executeOnSpec: aSpec withEngine: anEngine [
 { #category : 'private' }
 MetacelloLoadTarget >> linearLoadPackageSpec: packageSpec gofer: gofer withEngine: anEngine [
 
-	MetacelloPlatform current
-		do: [
-			| loadBlock goferLoad answers resolvedReference repo |
-			resolvedReference := self
-				                     resolvePackageSpec: packageSpec
-				                     gofer: gofer.
-			resolvedReference ifNil: [ "Package version already loaded into image"
-				^ self ].
-			loadBlock := [
-			             self preLoad: packageSpec withEngine: anEngine.
-			             goferLoad := MetacelloGoferLoad on: Gofer new.
-			             goferLoad addResolved: resolvedReference.
-			             goferLoad execute.
-			             self postLoad: packageSpec withEngine: anEngine ].
-			(answers := packageSpec answers) notEmpty
-				ifTrue: [ loadBlock valueSupplyingMetacelloAnswers: answers ]
-				ifFalse: [ loadBlock value ].
-			repo := resolvedReference repository.
-			"self hasRepositoryOverrides
-				ifTrue: [
-					repo := self loaderPolicy repositoryMap
-						        at: resolvedReference name
-						        ifAbsent: [ resolvedReference repository ].
-					resolvedReference workingCopy repositoryGroup addRepository: repo ]
-				ifFalse: ["
-			resolvedReference workingCopy repositoryGroup addRepository:
-				resolvedReference repository. "]"
-			MetacelloNotification signal:
-				'Loaded -> ' , resolvedReference name , ' --- '
-				, repo repositoryDescription , ' --- '
-				, resolvedReference repository description ]
-		displaying: 'Loading ' , packageSpec file
+	| loadBlock goferLoad answers resolvedReference repo |
+	resolvedReference := self
+		                     resolvePackageSpec: packageSpec
+		                     gofer: gofer.
+	resolvedReference ifNil: [ "Package version already loaded into image"
+		^ self ].
+	loadBlock := [
+	             self preLoad: packageSpec withEngine: anEngine.
+	             goferLoad := MetacelloGoferLoad on: Gofer new.
+	             goferLoad addResolved: resolvedReference.
+	             goferLoad execute.
+	             self postLoad: packageSpec withEngine: anEngine ].
+	(answers := packageSpec answers) notEmpty
+		ifTrue: [ loadBlock valueSupplyingMetacelloAnswers: answers ]
+		ifFalse: [ loadBlock value ].
+	repo := resolvedReference repository.
+	resolvedReference workingCopy repositoryGroup addRepository:
+		resolvedReference repository.
+	MetacelloNotification signal:
+		'Loaded -> ' , resolvedReference name , ' --- '
+		, repo repositoryDescription , ' --- '
+		, resolvedReference repository description
 ]
 
 { #category : 'actions' }

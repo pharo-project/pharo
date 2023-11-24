@@ -147,12 +147,24 @@ MetacelloVersion >> doWithProgress: aBlock label: aLabel withEngine: anEngine [
 ]
 
 { #category : 'private' }
-MetacelloVersion >> executeLoadFromArray: anArray withEngine: anEngine forTarget: aTarget [
+MetacelloVersion >> executeLoadFromArray: required withEngine: anEngine forTarget: aTarget [
 
-	| loader |
-	loader := MetacelloMCVersionSpecLoader on: self spec.
-	loader required: anArray.
-	^ loader executeWithEngine: anEngine forTarget: aTarget
+	| packages |
+	packages := Dictionary new.
+	self spec resolveToLoadableSpecs: required map: packages.
+	packages values do: [ :pkg |
+		pkg ensureLoadedForDevelopmentUsing: aTarget withEngine: anEngine.
+		(MetacelloIgnorePackageLoaded signal: pkg) ifFalse: [
+			anEngine ignoreImage ifFalse: [
+				(pkg
+					 compareCurrentVersion: aTarget operator
+					 targetVersionStatus: #( #allLoadedToSpec )
+					 using: aTarget
+					 withEngine: anEngine) ifTrue: [ packages removeKey: pkg name ] ] ] ].
+	packages notEmpty ifTrue: [
+		aTarget preLoad: self spec withEngine: anEngine.
+		aTarget load: self spec withEngine: anEngine.
+		aTarget postLoad: self spec withEngine: anEngine ]
 ]
 
 { #category : 'querying' }
