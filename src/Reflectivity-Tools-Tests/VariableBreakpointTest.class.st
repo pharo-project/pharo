@@ -11,9 +11,8 @@ Class {
 		'testClass',
 		'testSubclass'
 	],
-	#category : 'Reflectivity-Tests-Breakpoints',
-	#package : 'Reflectivity-Tests',
-	#tag : 'Breakpoints'
+	#category : 'Reflectivity-Tools-Tests',
+	#package : 'Reflectivity-Tools-Tests'
 }
 
 { #category : 'helpers' }

@@ -70,6 +70,26 @@ Breakpoint class >> breakOnAST: aNode inObject: anObject [
 	^ breakpoint
 ]
 
+{ #category : 'API - object-centric' }
+Breakpoint class >> breakOnceOn: aSelector inObject: anObject [
+
+	| ast |
+	ast := (anObject class lookupSelector: aSelector) ast.
+	^ self breakOnceOnAST: ast inObject: anObject
+]
+
+{ #category : 'API - object-centric' }
+Breakpoint class >> breakOnceOnAST: aNode inObject: anObject [
+
+	| breakpoint |
+	breakpoint := self new.
+	breakpoint once: true.
+	breakpoint node: aNode.
+	breakpoint scopeTo: anObject.
+	breakpoint install.
+	^ breakpoint
+]
+
 { #category : 'accessing' }
 Breakpoint class >> browseAll [
 	<script>
