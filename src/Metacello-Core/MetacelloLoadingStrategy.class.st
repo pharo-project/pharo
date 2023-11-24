@@ -10,7 +10,7 @@ Class {
 }
 
 { #category : 'switch-strategy' }
-MetacelloLoadingStrategy >> changeToAtomicWithLoader: anObject [
+MetacelloLoadingStrategy >> changeToAtomic [
 
 	^ MetacelloAtomicLoadingStrategy new
 		  gofer: gofer;
@@ -18,7 +18,7 @@ MetacelloLoadingStrategy >> changeToAtomicWithLoader: anObject [
 ]
 
 { #category : 'switch-strategy' }
-MetacelloLoadingStrategy >> changeToLinearWithLoader: aLoader [
+MetacelloLoadingStrategy >> changeToLinear [
 
 	self subclassResponsibility
 ]

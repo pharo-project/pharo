@@ -210,12 +210,6 @@ MetacelloPackageSpec >> extractNameFromFile [
 ]
 
 { #category : 'loading' }
-MetacelloPackageSpec >> fetch [
-
-	self fetchUsing: self loader
-]
-
-{ #category : 'loading' }
 MetacelloPackageSpec >> fetchUsing: aTarget withEngine: anEngine [
 
 	| fetchingTarget |

@@ -28,9 +28,7 @@ MetacelloFetchTarget >> asEnsureTarget [
 { #category : 'accessing' }
 MetacelloFetchTarget >> asLoadingTarget [
 
-	^(MetacelloLoadTarget on: self spec)
-"		loaderPolicy: self loaderPolicy copy;"
-		yourself
+	^ (MetacelloLoadTarget on: self spec) yourself
 ]
 
 { #category : 'private' }

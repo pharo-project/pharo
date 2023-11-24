@@ -9,7 +9,7 @@ Class {
 { #category : 'private' }
 MetacelloLinearLoadDirective >> newLoadingStrategyFrom: oldLoadingStrategy [
 
-	^ oldLoadingStrategy changeToLinearWithLoader: nil
+	^ oldLoadingStrategy changeToLinear
 ]
 
 { #category : 'actions' }

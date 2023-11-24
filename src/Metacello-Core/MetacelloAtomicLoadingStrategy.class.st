@@ -12,17 +12,17 @@ Class {
 }
 
 { #category : 'switch-strategy' }
-MetacelloAtomicLoadingStrategy >> changeToAtomicWithLoader: anObject [
+MetacelloAtomicLoadingStrategy >> changeToAtomic [
 	"If I'm atomic, just do nothing and continue as is"
 
 	^ self
 ]
 
 { #category : 'switch-strategy' }
-MetacelloAtomicLoadingStrategy >> changeToLinearWithLoader: aLoader [
+MetacelloAtomicLoadingStrategy >> changeToLinear [
 	"If I'm atomic, close myself before starting a linear loading"
 
-	self finalizeLoadWith: aLoader.
+	self finalizeLoad.
 	^ MetacelloLinearLoadingStrategy new
 		  gofer: gofer;
 		  yourself
@@ -51,7 +51,7 @@ MetacelloAtomicLoadingStrategy >> executePreloadDirective: aPreloadDirective [
 ]
 
 { #category : 'actions' }
-MetacelloAtomicLoadingStrategy >> finalizeLoadWith: target [
+MetacelloAtomicLoadingStrategy >> finalizeLoad [
 	"load the accumulated packages (if any), reset the package list"
 
 	| pkgLoads |
@@ -59,7 +59,7 @@ MetacelloAtomicLoadingStrategy >> finalizeLoadWith: target [
 		self linear executePreloadDirective: directive ].
 	preloads := nil.
 	(pkgLoads := packageloads) notEmpty ifTrue: [
-		target asLoadingTarget
+		MetacelloLoadTarget new
 			loadPackageDirectives: pkgLoads
 			gofer: self gofer.
 		packageloads := nil ].

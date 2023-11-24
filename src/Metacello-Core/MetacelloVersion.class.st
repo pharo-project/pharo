@@ -163,12 +163,6 @@ MetacelloVersion >> expandToLoadableSpecNames: nameList [
 ]
 
 { #category : 'actions' }
-MetacelloVersion >> fetch [
-
-	^self doFetchRequiredFromArray: self spec defaultPackageNames
-]
-
-{ #category : 'actions' }
 MetacelloVersion >> fetch: required [
 
 	^required fetchRequiredForMetacelloMCVersion: self

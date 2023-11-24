@@ -7,7 +7,7 @@ Class {
 }
 
 { #category : 'switch-strategy' }
-MetacelloLinearLoadingStrategy >> changeToAtomicWithLoader: aLoader [
+MetacelloLinearLoadingStrategy >> changeToAtomic [
 	"If I'm linear, just open a new atomic one"
 
 	^ MetacelloAtomicLoadingStrategy new
@@ -16,7 +16,7 @@ MetacelloLinearLoadingStrategy >> changeToAtomicWithLoader: aLoader [
 ]
 
 { #category : 'switch-strategy' }
-MetacelloLinearLoadingStrategy >> changeToLinearWithLoader: aLoader [
+MetacelloLinearLoadingStrategy >> changeToLinear [
 	"If I'm linear, just do nothing and continue as is"
 
 	^ self
@@ -49,7 +49,7 @@ MetacelloLinearLoadingStrategy >> executePreloadDirective: aPreloadDirective [
 ]
 
 { #category : 'actions' }
-MetacelloLinearLoadingStrategy >> finalizeLoadWith: anObject [ 
+MetacelloLinearLoadingStrategy >> finalizeLoad [ 
 	
 	"Do nothing"
 ]

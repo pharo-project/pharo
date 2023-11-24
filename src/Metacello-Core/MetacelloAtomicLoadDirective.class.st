@@ -14,7 +14,7 @@ Class {
 { #category : 'instance creation' }
 MetacelloAtomicLoadDirective >> newLoadingStrategyFrom: oldLoadingStrategy [
 
-	^ oldLoadingStrategy changeToAtomicWithLoader: self loader
+	^ oldLoadingStrategy changeToAtomic
 ]
 
 { #category : 'actions' }

@@ -445,17 +445,6 @@ MetacelloProjectSpec >> ensureLoadedForDevelopmentUsing: aTarget withEngine: anE
 ]
 
 { #category : 'private - loading' }
-MetacelloProjectSpec >> ensureProjectFetch: mcLoader [
-	"projectClass == nil or version == nil"
-
-	mcLoader ensureForDevelopment
-		ifTrue: [ self ensureLoadUsing: mcLoader ]
-		ifFalse: [ self fetchUsing: mcLoader ].
-
-	mcLoader ensuredMap at: self name put: #present
-]
-
-{ #category : 'private - loading' }
 MetacelloProjectSpec >> ensureProjectFetch: aTarget withEngine: anEngine [
 	"projectClass == nil or version == nil"
 
@@ -717,41 +706,6 @@ MetacelloProjectSpec >> loadVersion: aVersionOrNil usingTarget: aTarget  withEng
 	(MetacelloProjectSpecLoadedNotification new projectSpec:
 		 (self copy versionString: vrsn versionString)) signal.
 	aTarget postLoad: self withEngine: anEngine
-]
-
-{ #category : 'loading' }
-MetacelloProjectSpec >> loadVersion: aVersionOrNil withEngine: anEngine [
-	"Load the correct version of the project"
-
-	| vrsn mcLoader list |
-	self ensureProjectLoadedWithEngine: anEngine.
-	vrsn := aVersionOrNil.
-	vrsn ifNil: [
-		[ vrsn := self version ]
-			on: MetacelloVersionDoesNotExistError
-			do: [ :ex |
-				^ (MetacelloProjectSpecLoadError projectSpec: self)
-					  versionDoesNotExistException: ex;
-					  signal:
-						  'No version found for ' , self versionString printString
-						  , ' of ' , self className asString , ' because: '
-						  , ex description ] ].
-	list := (anEngine ignoreImage
-		         ifTrue: [ self loadListForVersion: vrsn ]
-		         ifFalse: [
-			         vrsn
-				         packageAndProjectNamesToLoad:
-				         (self loadListForVersion: vrsn)
-				         loader: mcLoader ]) asSet.
-	vrsn versionString ~= self versionString ifTrue: [
-		MetacelloNotification signal: ' [' , vrsn versionString , ']' ].
-	mcLoader preLoad: self withEngine: anEngine.
-
-	vrsn doFetchRequiredFromArray: list withEngine: anEngine. "do the load"
-
-	(MetacelloProjectSpecLoadedNotification new projectSpec:
-		 (self copy versionString: vrsn versionString)) signal.
-	mcLoader postLoad: self withEngine: anEngine
 ]
 
 { #category : 'loading' }
