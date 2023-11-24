@@ -1,6 +1,6 @@
 Class {
 	#name : 'MetacelloFetchTarget',
-	#superclass : 'MetacelloTarget',
+	#superclass : 'MetacelloRecordTarget',
 	#instVars : [
 		'shouldForceFetch'
 	],

@@ -1,6 +1,6 @@
 Class {
 	#name : 'MetacelloRecordTarget',
-	#superclass : 'MetacelloFetchTarget',
+	#superclass : 'MetacelloTarget',
 	#category : 'Metacello-Core-Loaders',
 	#package : 'Metacello-Core',
 	#tag : 'Loaders'
@@ -46,15 +46,6 @@ MetacelloRecordTarget >> linearLoadPackageSpec: packageSpec gofer: gofer withEng
 { #category : 'actions' }
 MetacelloRecordTarget >> loadPackageDirectives: pkgLoads gofer: aGofer [
 	"Noop"
-]
-
-{ #category : 'accessing' }
-MetacelloRecordTarget >> packages [
-
-	| packages |
-	packages := OrderedCollection new.
-	self loadDirective packageDirectivesDo: [:directive | packages add: directive spec ].
-	^packages
 ]
 
 { #category : 'doits' }
