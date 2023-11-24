@@ -1433,14 +1433,14 @@ String >> findClosing: close startingAt: startIndex [
 	"Assume the opening character is given at startIndex. Find the matching closing character, taking nesting into account."
 
 	| open nestLevel current |
-	self size < startIndex ifTrue: [ ^ self size + 1 ].
+	self size < startIndex ifTrue: [ ^ 0 ].
 	open := self at: startIndex.
 	nestLevel := 1.
 	startIndex + 1 to: self size do: [ :pos |
 		(current := self at: pos) == close
-			ifTrue: [ (nestLevel := nestLevel - 1) = 0 ifTrue: [ ^ pos ] ]
+			ifTrue: [ (nestLevel := nestLevel - 1) == 0 ifTrue: [ ^ pos ] ]
 			ifFalse: [ current == open ifTrue: [ nestLevel := nestLevel + 1 ] ] ].
-	^ self size + 1
+	^ 0
 ]
 
 { #category : 'finding/searching' }
