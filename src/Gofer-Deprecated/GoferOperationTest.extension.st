@@ -103,11 +103,11 @@ GoferOperationTest >> testReinitialize [
 		addClassVarNamed: #ClassSide.
 	class compile: 'initialize InstanceSide := true'.
 	class class compile: 'initialize ClassSide := true'.
-	self assert: (class classVariableNamed: #InstanceSide) read isNil.
-	self assert: (class classVariableNamed: #ClassSide) read isNil.
+	self assert: (class readClassVariableNamed: #InstanceSide) isNil.
+	self assert: (class readClassVariableNamed: #ClassSide)  isNil.
 	gofer reinitialize.
-	self assert: (class classVariableNamed: #InstanceSide) read isNil.
-	self assert: (class classVariableNamed: #ClassSide) read
+	self assert: (class readClassVariableNamed: #InstanceSide) isNil.
+	self assert: (class readClassVariableNamed: #ClassSide)
 ]
 
 { #category : '*Gofer-Deprecated' }
