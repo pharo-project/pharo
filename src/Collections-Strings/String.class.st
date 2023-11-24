@@ -1412,23 +1412,6 @@ String >> findBetweenSubstrings: delimiters [
 ]
 
 { #category : 'finding/searching' }
-String >> findCloseParenthesisFor: startIndex [
-	"assume (self at: startIndex) is $(.  Find the matching $), allowing parentheses to nest."
-	" '(1+(2-3))-3.14159' findCloseParenthesisFor: 1 "
-	" '(1+(2-3))-3.14159' findCloseParenthesisFor: 4 "
-	| pos nestLevel |
-	pos := startIndex+1.
-	nestLevel := 1.
-	[ pos <= self size ] whileTrue: [
-		(self at: pos) = $( ifTrue: [ nestLevel := nestLevel + 1 ].
-		(self at: pos) = $) ifTrue: [ nestLevel := nestLevel - 1 ].
-		nestLevel = 0 ifTrue: [ ^pos ].
-		pos := pos + 1.
-	].
-	^self size + 1
-]
-
-{ #category : 'finding/searching' }
 String >> findClosing: close startingAt: startIndex [
 	"Assume the opening character is given at startIndex. Find the matching closing character, taking nesting into account."
 
