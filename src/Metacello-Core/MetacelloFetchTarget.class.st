@@ -119,20 +119,6 @@ MetacelloFetchTarget >> linearLoadPackagesOfSpec: aSpec withEngine: anEngine [
 		for: self
 ]
 
-{ #category : 'doits' }
-MetacelloFetchTarget >> postLoad: packageOrVersionSpec withEngine: anEngine [
-
-	(MetacelloDirective postLoadSpec: packageOrVersionSpec) addTo:
-		anEngine specBuilder currentLoadDirective
-]
-
-{ #category : 'doits' }
-MetacelloFetchTarget >> preLoad: packageOrVersionSpec withEngine: anEngine [
-
-	(MetacelloDirective preLoadSpec: packageOrVersionSpec) addTo:
-		anEngine specBuilder currentLoadDirective
-]
-
 { #category : 'private' }
 MetacelloFetchTarget >> resolveDependencies: aResolvedReference nearest: nearestReference into: aCollection [
 

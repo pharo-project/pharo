@@ -63,6 +63,56 @@ MetacelloLoadTarget >> linearLoadPackageSpec: packageSpec gofer: gofer withEngin
 		displaying: 'Loading ' , packageSpec file
 ]
 
+{ #category : 'actions' }
+MetacelloLoadTarget >> loadPackageDirectives: pkgLoads gofer: aGofer [
+
+	MetacelloPlatform current
+		do: [
+			| goferLoad loadBlock answers |
+			goferLoad := MetacelloGoferLoad on: aGofer.
+			answers := OrderedCollection new.
+
+			pkgLoads do: [ :packageLoadDirective |
+				| packageSpec |
+				packageSpec := packageLoadDirective spec.
+				aGofer disablePackageCache. "for good luck:)"
+				(self resolvePackageSpec: packageSpec gofer: aGofer) ifNotNil: [
+					:resolvedReference |
+					goferLoad addResolved: resolvedReference.
+					answers addAll: packageSpec answers.
+					packageLoadDirective resolvedReference: resolvedReference ] ].
+
+
+			loadBlock := [
+			             goferLoad execute.
+			             pkgLoads do: [ :packageLoadDirective |
+				             packageLoadDirective resolvedReference
+					             ifNotNil: [
+						             MetacelloNotification
+							             signal:
+								             'Loaded -> ' , packageLoadDirective file
+								             , ' --- '
+								             ,
+								             packageLoadDirective repository
+									             repositoryDescription , ' --- '
+								             ,
+								             packageLoadDirective resolvedReference repository
+									             description
+							             level: 2.
+						             packageLoadDirective resolvedReference workingCopy
+							             repositoryGroup addRepository:
+							             packageLoadDirective repository ]
+					             ifNil: [
+						             MetacelloNotification
+							             signal:
+							             'Already Loaded -> ' , packageLoadDirective file
+							             level: 2 ] ] ].
+			answers notEmpty
+				ifTrue: [ loadBlock valueSupplyingMetacelloAnswers: answers ]
+				ifFalse: [ loadBlock value ] ]
+		displaying: 'Loading...'
+]
+
 { #category : 'doits' }
 MetacelloLoadTarget >> postLoad: packageOrVersionSpec withEngine: anEngine [
 

@@ -2,9 +2,7 @@ Class {
 	#name : 'MetacelloTarget',
 	#superclass : 'Object',
 	#instVars : [
-		'operator',
-		'loaderPolicy',
-		'spec'
+		'operator'
 	],
 	#classVars : [
 		'RetryPackageResolution'
@@ -36,14 +34,6 @@ MetacelloTarget class >> nameComponentsFrom: aVersionName [
 				with: aVersionName
 				with: self ].
 	^ar
-]
-
-{ #category : 'instance creation' }
-MetacelloTarget class >> on: aMetacelloPackagesSpec [
-
-	^ self new
-		  spec: aMetacelloPackagesSpec;
-		  yourself
 ]
 
 { #category : 'accessing' }
@@ -130,61 +120,6 @@ MetacelloTarget >> load: aSpec withEngine: anEngine [
 
 	MetacelloError signal:
 		'Unknown loadType: ' , aSpec project loadType printString
-]
-
-{ #category : 'actions' }
-MetacelloTarget >> loadPackageDirectives: pkgLoads gofer: aGofer [
-
-	MetacelloPlatform current
-		do: [
-			| goferLoad loadBlock answers |
-			goferLoad := MetacelloGoferLoad on: aGofer.
-			answers := OrderedCollection new.
-
-			pkgLoads do: [ :packageLoadDirective |
-				| packageSpec |
-				packageSpec := packageLoadDirective spec.
-				aGofer disablePackageCache. "for good luck:)"
-				(self resolvePackageSpec: packageSpec gofer: aGofer) ifNotNil: [
-					:resolvedReference |
-					goferLoad addResolved: resolvedReference.
-					answers addAll: packageSpec answers.
-					packageLoadDirective resolvedReference: resolvedReference ] ].
-
-
-			loadBlock := [
-			             goferLoad execute.
-			             pkgLoads do: [ :packageLoadDirective |
-				             packageLoadDirective resolvedReference
-					             ifNotNil: [
-						             MetacelloNotification
-							             signal:
-								             'Loaded -> ' , packageLoadDirective file
-								             , ' --- '
-								             ,
-								             packageLoadDirective repository
-									             repositoryDescription , ' --- '
-								             ,
-								             packageLoadDirective resolvedReference repository
-									             description
-							             level: 2.
-						             packageLoadDirective resolvedReference workingCopy
-							             repositoryGroup addRepository:
-							             packageLoadDirective repository ]
-					             ifNil: [
-						             MetacelloNotification
-							             signal:
-							             'Already Loaded -> ' , packageLoadDirective file
-							             level: 2 ] ] ].
-			answers notEmpty
-				ifTrue: [ loadBlock valueSupplyingMetacelloAnswers: answers ]
-				ifFalse: [ loadBlock value ] ]
-		displaying: 'Loading...'
-]
-
-{ #category : 'accessing' }
-MetacelloTarget >> loaderPolicy: anObject [
-	loaderPolicy := anObject
 ]
 
 { #category : 'packages' }
@@ -320,16 +255,4 @@ MetacelloTarget >> retryingResolvePackageSpecReferences: packageSpec gofer: gofe
                 repositoryError: repositoryError;
                 yourself) signal ].
     ^ references
-]
-
-{ #category : 'accessing' }
-MetacelloTarget >> spec [
-
-	^spec
-]
-
-{ #category : 'accessing' }
-MetacelloTarget >> spec: aMetacelloPackagesSpec [
-
-	spec := aMetacelloPackagesSpec
 ]

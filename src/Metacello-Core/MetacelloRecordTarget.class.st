@@ -45,19 +45,23 @@ MetacelloRecordTarget >> linearLoadPackageSpec: packageSpec gofer: gofer withEng
 
 { #category : 'actions' }
 MetacelloRecordTarget >> loadPackageDirectives: pkgLoads gofer: aGofer [
+
+
 	"Noop"
 ]
 
 { #category : 'doits' }
 MetacelloRecordTarget >> postLoad: packageOrVersionSpec withEngine: anEngine [
 
-	^ self
+	(MetacelloDirective postLoadSpec: packageOrVersionSpec) addTo:
+		anEngine specBuilder currentLoadDirective
 ]
 
 { #category : 'doits' }
 MetacelloRecordTarget >> preLoad: packageOrVersionSpec withEngine: anEngine [
 
-	^ self
+	(MetacelloDirective preLoadSpec: packageOrVersionSpec) addTo:
+		anEngine specBuilder currentLoadDirective
 ]
 
 { #category : 'private' }

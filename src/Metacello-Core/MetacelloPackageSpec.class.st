@@ -236,7 +236,7 @@ MetacelloPackageSpec >> forceLoadUsing: aTarget withEngine: anEngine [
 
 	| loadTarget |
 	"force load it"
-	loadTarget := (MetacelloLoadTarget on: self) yourself.
+	loadTarget := MetacelloLoadTarget new.
 	loadTarget executeOnSpec: self withEngine: anEngine
 ]
 
