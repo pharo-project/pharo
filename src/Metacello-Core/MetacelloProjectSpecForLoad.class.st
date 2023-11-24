@@ -63,7 +63,7 @@ MetacelloProjectSpecForLoad >> performCurrentVersionTestAgainst: vrsn operator: 
 ]
 
 { #category : 'operations' }
-MetacelloProjectSpecForLoad >> performLoad [
+MetacelloProjectSpecForLoad >> performLoadWithEngine: anEngine [
 
 	| displayString spec |
 	spec := self projectSpec.
@@ -89,7 +89,7 @@ MetacelloProjectSpecForLoad >> performLoad [
 			vrsn := self useDetermineVersionForLoad
 				        ifTrue: [ spec determineCurrentVersionForLoad ]
 				        ifFalse: [ spec versionOrNil ].
-			(spec asProjectSpecForVersion: vrsn) loadVersion: vrsn ]
+			(spec asProjectSpecForVersion: vrsn) loadVersion: vrsn withEngine: anEngine ]
 ]
 
 { #category : 'accessing' }

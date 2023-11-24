@@ -15,20 +15,12 @@ MetacelloFetchTarget >> actionLabel [
 	^'Fetching '
 ]
 
-{ #category : 'versionInfo' }
-MetacelloFetchTarget >> ancestorsFor: packageSpec [
-
-	^self loadData
-		ancestorsFor: packageSpec 
-		ifAbsent: [ super ancestorsFor: packageSpec ]
-]
-
 { #category : 'accessing' }
 MetacelloFetchTarget >> asEnsureTarget [
 	"explicitly share the loaderPolicy"
 
 	^ (MetacelloFetchTarget on: self spec)
-		  loaderPolicy: self loaderPolicy;
+"		  loaderPolicy: self loaderPolicy;"
 		  forceFetch;
 		  yourself
 ]
@@ -37,31 +29,23 @@ MetacelloFetchTarget >> asEnsureTarget [
 MetacelloFetchTarget >> asLoadingTarget [
 
 	^(MetacelloLoadTarget on: self spec)
-		loaderPolicy: self loaderPolicy copy;
+"		loaderPolicy: self loaderPolicy copy;"
 		yourself
 ]
 
 { #category : 'private' }
-MetacelloFetchTarget >> atomicLoadPackageOfSpec: aSpec [
+MetacelloFetchTarget >> atomicLoadPackageOfSpec: aSpec withEngine: anEngine [
 
-	self loaderPolicy
+	anEngine
 		pushAtomicLoadDirectivesDuring: [
-			super linearLoadPackagesOfSpec: aSpec ]
+			super linearLoadPackagesOfSpec: aSpec withEngine: anEngine ]
 		for: self
 ]
 
-{ #category : 'versionInfo' }
-MetacelloFetchTarget >> currentVersionInfoFor: packageSpec [
-
-	^self loadData
-		currentVersionInfoFor: packageSpec 
-		ifAbsent: [ super currentVersionInfoFor: packageSpec ]
-]
-
 { #category : 'actions' }
-MetacelloFetchTarget >> doLoad [
+MetacelloFetchTarget >> doLoadWithEngine: anEngine [
 
-	self loaderPolicy copy load
+	anEngine load
 ]
 
 { #category : 'accessing' }
@@ -84,46 +68,66 @@ MetacelloFetchTarget >> initialize [
 ]
 
 { #category : 'actions' }
-MetacelloFetchTarget >> linearLoadPackageSpec: packageSpec gofer: gofer [
+MetacelloFetchTarget >> linearLoadPackageSpec: packageSpec gofer: gofer withEngine: anEngine [
 
 	MetacelloPlatform current
 		do: [
 			| references nearestReference cachedReference externalReference mcVersion loadedVersionInfos |
 			cachedReference := nil.
 			packageSpec searchCacheRepositoryForPackage: [ "check to see if mcz file is already in cacheRepository"
-				cachedReference := self resolvePackageSpec: packageSpec cachedGofer: self loaderPolicy cacheGofer.
-				(cachedReference isNotNil and: [ packageSpec getFile isNotNil ]) ifTrue: [
-					cachedReference name = packageSpec file ifTrue: [ "exact match between packageSpec file and cache"
-						^ self scheduleFetchFor: packageSpec cachedReference: cachedReference ] ] ].
-			references := self retryingResolvePackageSpecReferences: packageSpec gofer: gofer. "look up mcz file"
-			nearestReference := references last asMetacelloCachingResolvedReference.
-			(cachedReference isNotNil and: [ cachedReference name = nearestReference name ]) ifTrue: [ "latest reference in repository matches cachedReference ... "
-				^ self scheduleFetchFor: packageSpec nearestReference: nearestReference ].
-			(self ignoreImage not and: [ (loadedVersionInfos := self ancestorsFor: packageSpec) isNotNil ]) ifTrue: [ "If the mcz is already loaded into the image, no need to copy"
-				loadedVersionInfos do: [ :info |
-					info name = nearestReference name ifTrue: [
-						| spc |
-						spc := packageSpec copy.
-						spc file: info name.
-						(MetacelloIgnorePackageLoaded signal: spc) ifFalse: [ ^ self ] ] ] ].
-			externalReference := (references select: [ :ref | ref name = nearestReference name ]) first asMetacelloCachingResolvedReference.
-			self repositoryMap at: externalReference name put: externalReference repository.
-			(self resolveDependencies: externalReference nearest: nearestReference into: (OrderedCollection with: nearestReference)) do: [ :reference |
+				cachedReference := self
+					                   resolvePackageSpec: packageSpec
+					                   cachedGofer: anEngine cacheGofer.
+				(cachedReference isNotNil and: [ packageSpec getFile isNotNil ])
+					ifTrue: [
+						cachedReference name = packageSpec file ifTrue: [ "exact match between packageSpec file and cache"
+							^ self
+								  scheduleFetchFor: packageSpec
+								  cachedReference: cachedReference ] ] ].
+			references := self
+				              retryingResolvePackageSpecReferences: packageSpec
+				              gofer: gofer. "look up mcz file"
+			nearestReference := references last
+				                    asMetacelloCachingResolvedReference.
+			(cachedReference isNotNil and: [
+				 cachedReference name = nearestReference name ]) ifTrue: [ "latest reference in repository matches cachedReference ... "
+				^ self
+					  scheduleFetchFor: packageSpec
+					  nearestReference: nearestReference ].
+			(anEngine ignoreImage not and: [
+				 (loadedVersionInfos := packageSpec ancestors) isNotNil ])
+				ifTrue: [ "If the mcz is already loaded into the image, no need to copy"
+					loadedVersionInfos do: [ :info |
+						info name = nearestReference name ifTrue: [
+							| spc |
+							spc := packageSpec copy.
+							spc file: info name.
+							(MetacelloIgnorePackageLoaded signal: spc) ifFalse: [ ^ self ] ] ] ].
+			externalReference := (references select: [ :ref |
+				                      ref name = nearestReference name ]) first
+				                     asMetacelloCachingResolvedReference.
+			anEngine repositoryMap
+				at: externalReference name
+				put: externalReference repository.
+			(self
+				 resolveDependencies: externalReference
+				 nearest: nearestReference
+				 into: (OrderedCollection with: nearestReference)) do: [
+				:reference |
 				| pSpec l |
 				mcVersion := reference version.
-				(l := (GoferVersionReference name: reference name) resolveAllWith: self loaderPolicy cacheGofer) isEmpty ifTrue: [
-					self loaderPolicy cacheRepository storeVersion: mcVersion.
+				(l := (GoferVersionReference name: reference name)
+					      resolveAllWith: anEngine cacheGofer) isEmpty ifTrue: [
+					anEngine cacheRepository storeVersion: mcVersion.
 					reference == nearestReference
 						ifTrue: [ pSpec := packageSpec ]
 						ifFalse: [
 							pSpec := packageSpec project packageSpec.
-							pSpec name: mcVersion package name ].
-					self loadData
-						addVersion: mcVersion
-						versionInfo: mcVersion info
-						resolvedReference: reference
-						packageSpec: pSpec ] ].
-			self scheduleFetchFor: packageSpec externalReference: externalReference ]
+							pSpec name: mcVersion package name ] ] ].
+			self
+				scheduleFetchFor: packageSpec
+				externalReference: externalReference
+				withEngine: anEngine ]
 		displaying: 'Fetching ' , packageSpec file
 ]
 
@@ -133,6 +137,15 @@ MetacelloFetchTarget >> linearLoadPackagesOfSpec: aSpec [
 	self loaderPolicy
 		pushLinearLoadDirectivesDuring: [
 			super linearLoadPackagesOfSpec: aSpec ]
+		for: self
+]
+
+{ #category : 'private' }
+MetacelloFetchTarget >> linearLoadPackagesOfSpec: aSpec withEngine: anEngine [
+
+	anEngine
+		pushLinearLoadDirectivesDuring: [
+			super linearLoadPackagesOfSpec: aSpec withEngine: anEngine ]
 		for: self
 ]
 
@@ -149,15 +162,16 @@ MetacelloFetchTarget >> loadDirective [
 ]
 
 { #category : 'doits' }
-MetacelloFetchTarget >> postLoad: packageOrVersionSpec [
+MetacelloFetchTarget >> postLoad: packageOrVersionSpec withEngine: anEngine [
 
-	(MetacelloDirective postLoadSpec: packageOrVersionSpec loader: self)  addTo: self loadDirective
+	(MetacelloDirective postLoadSpec: packageOrVersionSpec loader: self)
+		addTo: anEngine loadDirective
 ]
 
 { #category : 'doits' }
-MetacelloFetchTarget >> preLoad: packageOrVersionSpec [
+MetacelloFetchTarget >> preLoad: packageOrVersionSpec withEngine: anEngine [
 
-	(MetacelloDirective preLoadSpec: packageOrVersionSpec loader: self) addTo: self loadDirective
+	(MetacelloDirective preLoadSpec: packageOrVersionSpec loader: self) addTo: anEngine loadDirective
 ]
 
 { #category : 'printing' }
@@ -220,12 +234,15 @@ MetacelloFetchTarget >> scheduleFetchFor: packageSpec cachedReference: reference
 ]
 
 { #category : 'private' }
-MetacelloFetchTarget >> scheduleFetchFor: packageSpec externalReference: reference [
+MetacelloFetchTarget >> scheduleFetchFor: packageSpec externalReference: reference withEngine: anEngine [
 
 	^ self
 		  scheduleFetchFor: packageSpec
 		  reference: reference
-		  message: 'Fetched -> ' , reference name , ' --- ' , reference repository repositoryDescription , ' --- ' , reference repository description
+		  message: 'Fetched -> ' , reference name , ' --- '
+			  , reference repository repositoryDescription , ' --- '
+			  , reference repository description
+		  withEngine: anEngine
 ]
 
 { #category : 'private' }
@@ -242,10 +259,14 @@ MetacelloFetchTarget >> scheduleFetchFor: packageSpec nearestReference: referenc
 ]
 
 { #category : 'private' }
-MetacelloFetchTarget >> scheduleFetchFor: packageSpec reference: reference message: message [
-	self loaderPolicy resetCacheGofer.
-	self preLoad: packageSpec.
-	(MetacelloDirective loadPackage: packageSpec externalReference: reference loader: self) addTo: self loadDirective.
-	self postLoad: packageSpec.
+MetacelloFetchTarget >> scheduleFetchFor: packageSpec reference: reference message: message withEngine: anEngine [
+
+	anEngine resetCacheGofer.
+	self preLoad: packageSpec withEngine: anEngine.
+	(MetacelloDirective
+		 loadPackage: packageSpec
+		 externalReference: reference
+		 loader: self) addTo: anEngine loadDirective.
+	self postLoad: packageSpec withEngine: anEngine.
 	MetacelloNotification signal: message
 ]

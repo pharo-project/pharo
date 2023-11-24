@@ -28,32 +28,22 @@ MetacelloMCVersionSpecLoader >> label [
 ]
 
 { #category : 'loading' }
-MetacelloMCVersionSpecLoader >> load [
+MetacelloMCVersionSpecLoader >> loadWithEngine: anEngine [
 
-	| mcLoader |
+	| target |
 	packages := Dictionary new.
 	self versionSpec resolveToLoadableSpecs: required map: packages.
-	mcLoader := self loader.
+	target := self target.
 	packages values do: [ :pkg |
-		pkg ensureLoadedForDevelopmentUsing: mcLoader.
+		pkg ensureLoadedForDevelopmentUsing: target withEngine: anEngine.
 		(MetacelloIgnorePackageLoaded signal: pkg) ifFalse: [
-			mcLoader ignoreImage ifFalse: [
-				(pkg compareCurrentVersion: self operator targetVersionStatus: #( #allLoadedToSpec ) using: mcLoader) ifTrue: [ packages removeKey: pkg name ] ] ] ].
+			anEngine ignoreImage ifFalse: [
+				(pkg compareCurrentVersion: self operator targetVersionStatus: #( #allLoadedToSpec ) using: target withEngine: anEngine) ifTrue: [ packages removeKey: pkg name ] ] ] ].
 	packages notEmpty ifTrue: [
-		mcLoader preLoad: self versionSpec.
-		mcLoader load.
-		mcLoader postLoad: self versionSpec ].
-	^ mcLoader
-]
-
-{ #category : 'accessing' }
-MetacelloMCVersionSpecLoader >> loader [
-
-	^ loader ifNil: [
-		  loader := self versionSpec loader copy.
-		  loader spec: self.
-		  loaderPolicy ifNotNil: [ loader loaderPolicy: loaderPolicy ].
-		  loader ]
+		target preLoad: self versionSpec withEngine: anEngine.
+		target load: anEngine.
+		target postLoad: self versionSpec withEngine: anEngine ].
+	^ target
 ]
 
 { #category : 'accessing' }
@@ -75,7 +65,7 @@ MetacelloMCVersionSpecLoader >> name [
 { #category : 'accessing' }
 MetacelloMCVersionSpecLoader >> operator [
 
-	^self loader operator
+	^self target operator
 ]
 
 { #category : 'spec compatibility' }
@@ -120,6 +110,16 @@ MetacelloMCVersionSpecLoader >> required [
 { #category : 'accessing' }
 MetacelloMCVersionSpecLoader >> required: anObject [
 	required := anObject
+]
+
+{ #category : 'accessing' }
+MetacelloMCVersionSpecLoader >> target [
+
+	^ loader ifNil: [
+		  loader := self versionSpec loader copy.
+		  loader spec: self.
+		  loaderPolicy ifNotNil: [ loader loaderPolicy: loaderPolicy ].
+		  loader ]
 ]
 
 { #category : 'accessing' }

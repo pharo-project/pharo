@@ -16,7 +16,7 @@ MetacelloLoadTarget >> actionLabel [
 MetacelloLoadTarget >> asFetchingTarget [
 
 	^(MetacelloFetchTarget on: self spec)
-		loaderPolicy: self loaderPolicy copy;
+		"loaderPolicy: self loaderPolicy copy;"
 		yourself
 ]
 
@@ -26,8 +26,14 @@ MetacelloLoadTarget >> executeOnSpec: aSpec [
 	self linearLoadPackagesOfSpec: aSpec
 ]
 
+{ #category : 'executing' }
+MetacelloLoadTarget >> executeOnSpec: aSpec withEngine: anEngine [
+
+	self linearLoadPackagesOfSpec: aSpec withEngine: anEngine
+]
+
 { #category : 'private' }
-MetacelloLoadTarget >> linearLoadPackageSpec: packageSpec gofer: gofer [
+MetacelloLoadTarget >> linearLoadPackageSpec: packageSpec gofer: gofer withEngine: anEngine [
 
 	MetacelloPlatform current
 		do: [
@@ -38,24 +44,24 @@ MetacelloLoadTarget >> linearLoadPackageSpec: packageSpec gofer: gofer [
 			resolvedReference ifNil: [ "Package version already loaded into image"
 				^ self ].
 			loadBlock := [
-			             self preLoad: packageSpec.
+			             self preLoad: packageSpec withEngine: anEngine.
 			             goferLoad := MetacelloGoferLoad on: Gofer new.
 			             goferLoad addResolved: resolvedReference.
 			             goferLoad execute.
-			             self postLoad: packageSpec ].
+			             self postLoad: packageSpec withEngine: anEngine ].
 			(answers := packageSpec answers) notEmpty
 				ifTrue: [ loadBlock valueSupplyingMetacelloAnswers: answers ]
 				ifFalse: [ loadBlock value ].
 			repo := resolvedReference repository.
-			self hasRepositoryOverrides
+			"self hasRepositoryOverrides
 				ifTrue: [
 					repo := self loaderPolicy repositoryMap
 						        at: resolvedReference name
 						        ifAbsent: [ resolvedReference repository ].
 					resolvedReference workingCopy repositoryGroup addRepository: repo ]
-				ifFalse: [
-					resolvedReference workingCopy repositoryGroup addRepository:
-						resolvedReference repository ].
+				ifFalse: ["
+			resolvedReference workingCopy repositoryGroup addRepository:
+				resolvedReference repository. "]"
 			MetacelloNotification signal:
 				'Loaded -> ' , resolvedReference name , ' --- '
 				, repo repositoryDescription , ' --- '
@@ -64,7 +70,7 @@ MetacelloLoadTarget >> linearLoadPackageSpec: packageSpec gofer: gofer [
 ]
 
 { #category : 'doits' }
-MetacelloLoadTarget >> postLoad: packageOrVersionSpec [
+MetacelloLoadTarget >> postLoad: packageOrVersionSpec withEngine: anEngine [
 
 	packageOrVersionSpec postLoadDoItBlock ifNotNil: [ :block |
 		block valueWithPossibleArgs: {
@@ -73,7 +79,7 @@ MetacelloLoadTarget >> postLoad: packageOrVersionSpec [
 ]
 
 { #category : 'doits' }
-MetacelloLoadTarget >> preLoad: packageOrVersionSpec [
+MetacelloLoadTarget >> preLoad: packageOrVersionSpec withEngine: anEngine [
 
 	packageOrVersionSpec preLoadDoItBlock ifNotNil: [ :block |
 		block valueWithPossibleArgs: {

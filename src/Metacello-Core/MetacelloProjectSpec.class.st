@@ -125,7 +125,7 @@ MetacelloProjectSpec >> className: aString [
 ]
 
 { #category : 'testing' }
-MetacelloProjectSpec >> compareCurrentVersion: anOperator targetVersionStatus: targetVersionStatus using: anMCLoader [
+MetacelloProjectSpec >> compareCurrentVersion: anOperator targetVersionStatus: targetVersionStatus using: anMCLoader withEngine: anEngine [
 
 	^ (MetacelloLookupProjectSpecForLoad new
 		   projectSpec: self;
@@ -412,7 +412,7 @@ MetacelloProjectSpec >> ensureConfigurationLoaded: vrsn ensured: ensured [
 ]
 
 { #category : 'loading' }
-MetacelloProjectSpec >> ensureLoadUsing: aLoader [
+MetacelloProjectSpec >> ensureLoadUsing: aTarget withEngine: anEngine [
   | pp |
   pp := (MetacelloLookupProjectSpec new
     projectSpec: self;
@@ -424,25 +424,25 @@ MetacelloProjectSpec >> ensureLoadUsing: aLoader [
           'Unable to resolve project package for ' , self name printString
             ,
               '. It is likely that that the configuration referencing this project will not validate properly (see MetacelloToolBox class>>validateConfiguration:).' ].
-  pp forceLoadUsing: aLoader
+
+  pp forceLoadUsing: aTarget withEngine: anEngine
 ]
 
 { #category : 'loading' }
-MetacelloProjectSpec >> ensureLoadedForDevelopmentUsing: mcLoader [
-  "for #development projects, always need latest version of package when contemplating a load"
-  | ensured |
+MetacelloProjectSpec >> ensureLoadedForDevelopmentUsing: aTarget withEngine: anEngine [
+	"for #development projects, always need latest version of package when contemplating a load"
 
-	self isLocked ifTrue: [ 
-		mcLoader ensuredMap at: self name put: #'present'.
+	| ensured |
+	self isLocked ifTrue: [
+		anEngine ensuredMap at: self name put: #present.
 		^ self ].
 
-	ensured := mcLoader ensuredMap at: self name ifAbsent: [ nil ].	
+	ensured := anEngine ensuredMap at: self name ifAbsent: [ nil ].
 	self projectClass ifNotNil: [
-		self ensureProjectLoaded: mcLoader ensured: ensured.
+		self ensureProjectLoaded: aTarget ensured: ensured withEngine: anEngine.
 		^ self ].
 
-  ensured ifNil: [ 
-	self ensureProjectFetch: mcLoader ]
+	ensured ifNil: [ self ensureProjectFetch: aTarget withEngine: anEngine ]
 ]
 
 { #category : 'private - loading' }
@@ -456,8 +456,34 @@ MetacelloProjectSpec >> ensureProjectFetch: mcLoader [
 	mcLoader ensuredMap at: self name put: #present
 ]
 
+{ #category : 'private - loading' }
+MetacelloProjectSpec >> ensureProjectFetch: aTarget withEngine: anEngine [
+	"projectClass == nil or version == nil"
+
+	aTarget ensureForDevelopment
+		ifTrue: [ self ensureLoadUsing: aTarget withEngine: anEngine ]
+		ifFalse: [ self fetchUsing: aTarget withEngine: anEngine ].
+
+	anEngine ensuredMap at: self name put: #present
+]
+
+{ #category : 'private - loading' }
+MetacelloProjectSpec >> ensureProjectLoaded: aTarget ensured: ensured withEngine: anEngine [
+
+	| version |
+	version := self versionOrNil.
+	version ifNil: [ ^ self ].
+	(self ensureConfigurationLoaded: version ensured: ensured) ifFalse: [
+		^ self ].
+
+	aTarget ensureForDevelopment
+		ifTrue: [ self ensureLoadUsing: aTarget withEngine: anEngine ]
+		ifFalse: [ self projectPackage fetchUsing: aTarget withEngine: anEngine ].
+	anEngine ensuredMap at: self name put: #latest
+]
+
 { #category : 'loading' }
-MetacelloProjectSpec >> ensureProjectLoaded [
+MetacelloProjectSpec >> ensureProjectLoadedWithEngine: anEngine [
 	"Ensure that the MetacelloProject is loaded in image. 
 	 projectClass == nil or requested version non-existent warrants a project package load."
 
@@ -466,32 +492,17 @@ MetacelloProjectSpec >> ensureProjectLoaded [
 	(self projectClass isNil or: [
 		 self versionOrNil isNil or: [
 			 (loader notNil or: [ self isMutable ]) and: [
-				 self loader ignoreImage ] ] ]) ifTrue: [
+				 anEngine ignoreImage ] ] ]) ifTrue: [
 		self projectPackage ifNil: [ ^ true ].
-		self ensureLoadUsing: self loader ].
+		self ensureLoadUsing: self loader withEngine: anEngine].
 	^ self projectClass isNotNil
 ]
 
-{ #category : 'private - loading' }
-MetacelloProjectSpec >> ensureProjectLoaded: mcLoader ensured: ensured [
-
-	| version |
-	version := self versionOrNil.
-	version ifNil: [ ^ self ].
-	(self ensureConfigurationLoaded: version ensured: ensured) ifFalse: [
-		^ self ].
-
-	mcLoader ensureForDevelopment
-		ifTrue: [ self ensureLoadUsing: mcLoader ]
-		ifFalse: [ self projectPackage fetchUsing: mcLoader ].
-	mcLoader ensuredMap at: self name put: #latest
-]
-
 { #category : 'loading' }
-MetacelloProjectSpec >> fetchUsing: aLoader [
+MetacelloProjectSpec >> fetchUsing: aLoader withEngine: anEngine [
     (MetacelloLookupProjectSpec new
         projectSpec: self;
-        yourself) signal projectPackage fetchUsing: aLoader
+        yourself) signal projectPackage fetchUsing: aLoader withEngine: anEngine
 ]
 
 { #category : 'querying' }
@@ -638,14 +649,6 @@ MetacelloProjectSpec >> label [
 	^self name
 ]
 
-{ #category : 'loading' }
-MetacelloProjectSpec >> load [
-
-    (MetacelloLookupProjectSpecForLoad new
-        projectSpec: self;
-        yourself) signal performLoad
-]
-
 { #category : 'private' }
 MetacelloProjectSpec >> loadListForVersion: vrsn [
 
@@ -674,11 +677,11 @@ MetacelloProjectSpec >> loadProjectIsLocked: version [
 ]
 
 { #category : 'loading' }
-MetacelloProjectSpec >> loadVersion: aVersionOrNil [
+MetacelloProjectSpec >> loadVersion: aVersionOrNil withEngine: anEngine [
 	"Load the correct version of the project"
 
 	| vrsn mcLoader list |
-	self ensureProjectLoaded.
+	self ensureProjectLoadedWithEngine: anEngine.
 	vrsn := aVersionOrNil.
 	vrsn ifNil: [
 		[ vrsn := self version ]
@@ -693,7 +696,7 @@ MetacelloProjectSpec >> loadVersion: aVersionOrNil [
 	mcLoader := self loader copy.
 	mcLoader operator: self operator.
 	vrsn loader: mcLoader.
-	list := (mcLoader ignoreImage
+	list := (anEngine ignoreImage
 		         ifTrue: [ self loadListForVersion: vrsn ]
 		         ifFalse: [
 			         vrsn
@@ -702,13 +705,21 @@ MetacelloProjectSpec >> loadVersion: aVersionOrNil [
 				         loader: mcLoader ]) asSet.
 	vrsn versionString ~= self versionString ifTrue: [
 		MetacelloNotification signal: ' [' , vrsn versionString , ']' ].
-	mcLoader preLoad: self.
+	mcLoader preLoad: self withEngine: anEngine.
 
-	vrsn doFetchRequiredFromArray: list. "do the load"
+	vrsn doFetchRequiredFromArray: list withEngine: anEngine. "do the load"
 
 	(MetacelloProjectSpecLoadedNotification new projectSpec:
 		 (self copy versionString: vrsn versionString)) signal.
-	mcLoader postLoad: self
+	mcLoader postLoad: self withEngine: anEngine
+]
+
+{ #category : 'loading' }
+MetacelloProjectSpec >> loadWithEngine: anEngine [
+
+    (MetacelloLookupProjectSpecForLoad new
+        projectSpec: self;
+        yourself) signal performLoadWithEngine: anEngine
 ]
 
 { #category : 'accessing' }
@@ -1121,8 +1132,8 @@ MetacelloProjectSpec >> versionForScriptEngine: aMetacelloScriptEngine [
     | prj |
     prj := self projectClass ifNil: [ self project ] ifNotNil: [ self projectClassProject ].
     ^ ((prj projectForScriptEngine: aMetacelloScriptEngine) version: self versionString)
-        silently: aMetacelloScriptEngine silently;
-        ignoreImage: aMetacelloScriptEngine ignoreImage
+"        silently: aMetacelloScriptEngine silently;
+        ignoreImage: aMetacelloScriptEngine ignoreImage"
 ]
 
 { #category : 'querying' }

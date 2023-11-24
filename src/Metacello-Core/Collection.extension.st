@@ -24,12 +24,6 @@ Collection >> fetchRequiredForMetacelloMCVersion: aMetacelloMCVersion [
 ]
 
 { #category : '*Metacello-Core' }
-Collection >> loadRequiredForMetacelloMCVersion: aMetacelloMCVersion [
-
-	^aMetacelloMCVersion doLoadRequiredFromArray: self.
-]
-
-{ #category : '*Metacello-Core' }
 Collection >> mergeIntoMetacelloPackages: aMetacelloPackagesSpec [
 
 	self do: [:each | each mergeIntoMetacelloPackages: aMetacelloPackagesSpec ]
@@ -39,12 +33,6 @@ Collection >> mergeIntoMetacelloPackages: aMetacelloPackagesSpec [
 Collection >> mergeIntoMetacelloRepositories: aMetacelloRepositoriesSpec [
 
 	self do: [:each | each mergeIntoMetacelloRepositories: aMetacelloRepositoriesSpec ]
-]
-
-{ #category : '*Metacello-Core' }
-Collection >> recordRequiredForMetacelloMCVersion: aMetacelloMCVersion [
-
-	^aMetacelloMCVersion doRecordRequiredFromArray: self.
 ]
 
 { #category : '*Metacello-Core' }

@@ -11,8 +11,14 @@ Class {
 	#tag : 'Directives'
 }
 
+{ #category : 'instance creation' }
+MetacelloAtomicLoadDirective >> newLoadingStrategyFrom: oldLoadingStrategy [
+
+	^ oldLoadingStrategy changeToAtomicWithLoader: self loader
+]
+
 { #category : 'actions' }
-MetacelloAtomicLoadDirective >> newLoaderForPolicy: aLoadPolicy [
+MetacelloAtomicLoadDirective >> newWithEngine: aLoadPolicy [
 
 	| gofer |
 	gofer := Gofer new.
@@ -22,12 +28,6 @@ MetacelloAtomicLoadDirective >> newLoaderForPolicy: aLoadPolicy [
 		gofer: gofer;
 		loader: self loader;
 		yourself
-]
-
-{ #category : 'instance creation' }
-MetacelloAtomicLoadDirective >> newLoadingStrategyFrom: oldLoadingStrategy [
-
-	^ oldLoadingStrategy changeToAtomicWithLoader: self loader
 ]
 
 { #category : 'accessing' }

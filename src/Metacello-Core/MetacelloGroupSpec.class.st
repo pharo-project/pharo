@@ -51,6 +51,11 @@ MetacelloGroupSpec >> loadUsing: aLoader gofer: gofer [
 	"noop"
 ]
 
+{ #category : 'loading' }
+MetacelloGroupSpec >> loadUsing: aLoader gofer: gofer withEngine: anEngine [
+	"noop"
+]
+
 { #category : 'visiting' }
 MetacelloGroupSpec >> projectDo: projectBlock packageDo: packageBlock groupDo: groupBlock [
 

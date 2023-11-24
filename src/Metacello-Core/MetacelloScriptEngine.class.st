@@ -7,7 +7,13 @@ Class {
 	#instVars : [
 		'root',
 		'projectSpec',
-		'options'
+		'options',
+		'ensuredMap',
+		'loadDirective',
+		'repositoryMap',
+		'cacheGofer',
+		'cacheRepository',
+		'overrideRepositories'
 	],
 	#classVars : [
 		'DefaultRepositoryDescription',
@@ -64,6 +70,22 @@ MetacelloScriptEngine class >> defaultVersionString [
     ^ DefaultVersionString
 ]
 
+{ #category : 'accessing' }
+MetacelloScriptEngine >> cacheGofer [
+
+	^ cacheGofer ifNil: [ "don't use a caching Gofer here, since we expect the contents to change during a fetch operation"
+		  cacheGofer := Gofer new
+			                disablePackageCache;
+			                repository: self cacheRepository;
+			                yourself ]
+]
+
+{ #category : 'accessing' }
+MetacelloScriptEngine >> cacheRepository [
+
+	^ cacheRepository ifNil: [ cacheRepository := MCDictionaryRepository new ]
+]
+
 { #category : 'defaults' }
 MetacelloScriptEngine >> defaultRepositoryDescription [
     ^ self class defaultRepositoryDescription
@@ -74,32 +96,38 @@ MetacelloScriptEngine >> defaultVersionString [
     ^ self class defaultVersionString
 ]
 
+{ #category : 'accessing' }
+MetacelloScriptEngine >> ensuredMap [
+
+	^ ensuredMap ifNil: [ ensuredMap := Dictionary new ]
+]
+
 { #category : 'actions api' }
 MetacelloScriptEngine >> fetch: required [
     self
         fetchRecord: [ :version | 
             required isEmpty
-                ifTrue: [ version fetch ]
+                ifTrue: [ version fetchWithEngine: self ]
                 ifFalse: [ version fetch: required ] ]
         required: required
 ]
 
 { #category : 'actions api' }
 MetacelloScriptEngine >> fetchRecord: fetchRecordBlock required: required [
-  MetacelloProjectRegistration
-    copyRegistryWhile: [ 
-      self
-        handleNotificationsForAction: [ 
-          | version loadedSpec |
-          self setDefaultsAndValidateProjectSpec.
-          [ loadedSpec := self lookupProjectSpecFor: self projectSpec ]
-            on: MetacelloAllowProjectDowngrade , MetacelloAllowProjectUpgrade
-            do: [ :notification | 
-              notification
-                handleOnDownGrade: [ :ex :existing :new | ex allowEvenIfLocked ]
-                onUpgrade: [ :ex :existing :new | ex allowEvenIfLocked ] ].
-          version := loadedSpec versionForScriptEngine: self.
-          self root: (fetchRecordBlock value: version) loadDirective ] ]
+
+	MetacelloProjectRegistration copyRegistryWhile: [
+		self handleNotificationsForAction: [
+			| version loadedSpec |
+			self setDefaultsAndValidateProjectSpec.
+			[ loadedSpec := self lookupProjectSpecFor: self projectSpec ]
+				on: MetacelloAllowProjectDowngrade , MetacelloAllowProjectUpgrade
+				do: [ :notification |
+					notification
+						handleOnDownGrade: [ :ex :existing :new | ex allowEvenIfLocked ]
+						onUpgrade: [ :ex :existing :new | ex allowEvenIfLocked ] ].
+			version := loadedSpec versionForScriptEngine: self.
+			fetchRecordBlock value: version.
+			self root: self loadDirective ] ]
 ]
 
 { #category : 'actions api' }
@@ -148,7 +176,7 @@ MetacelloScriptEngine >> getBaselineUnconditionalLoad: unconditionalLoad [
       unconditionalLoad
         ifFalse: [ ^ cl ] ].
   spec := self lookupProjectSpecFor: spec.
-  [ spec projectPackage load ]
+  [ spec projectPackage loadWithEngine: self ]
     on: MetacelloIgnorePackageLoaded
     do: [ :ex | 
       "see https://github.com/dalehenrich/metacello-work/issues/244 ... uncoditionally load
@@ -322,6 +350,12 @@ MetacelloScriptEngine >> list [
   self root: self projectSpec
 ]
 
+{ #category : 'loading' }
+MetacelloScriptEngine >> load [
+	overrideRepositories := Array with: self cacheRepository. "ensure that hasRepositoryOverrides is true"
+	self loadDirective loadWithPolicy: self
+]
+
 { #category : 'actions api' }
 MetacelloScriptEngine >> load: required [
     self
@@ -332,34 +366,38 @@ MetacelloScriptEngine >> load: required [
 
 { #category : 'actions api' }
 MetacelloScriptEngine >> load: required onProjectDownGrade: onDownGradeBlock onProjectUpgrade: onUpgradeBlock [
-  MetacelloProjectRegistration
-    copyRegistryRestoreOnErrorWhile: [ 
-      self
-        handleNotificationsForAction: [ 
-          | version loadedSpec |
-          self setDefaultsAndValidateProjectSpec.
-          [ loadedSpec := (self lookupProjectSpecFor: self projectSpec) copy ]
-            on: MetacelloAllowProjectDowngrade , MetacelloAllowProjectUpgrade
-            do: [ :ex | ex handleOnDownGrade: onDownGradeBlock onUpgrade: onUpgradeBlock ].
-          version := loadedSpec versionForScriptEngine: self.
-          self
-            root:
-              (required isEmpty
-                ifTrue: [ version load ]
-                ifFalse: [ version load: required ]) loadDirective.
-          loadedSpec loads: required.
-          MetacelloProjectRegistration
-            registrationForProjectSpec: loadedSpec
-            ifAbsent: [ :new | 
-              new
-                loadedInImage: true;
-                registerProject ]
-            ifPresent: [ :existing :new | 
-              existing
-                copyOnWrite: [ :existingCopy | 
-                  existingCopy
-                    loadedInImage: true;
-                    merge: new ] ] ] ]
+
+	MetacelloProjectRegistration copyRegistryRestoreOnErrorWhile: [
+		self handleNotificationsForAction: [
+			| version loadedSpec |
+			self setDefaultsAndValidateProjectSpec.
+			[ loadedSpec := (self lookupProjectSpecFor: self projectSpec) copy ]
+				on: MetacelloAllowProjectDowngrade , MetacelloAllowProjectUpgrade
+				do: [ :ex |
+					ex handleOnDownGrade: onDownGradeBlock onUpgrade: onUpgradeBlock ].
+			version := loadedSpec versionForScriptEngine: self.
+			required isEmpty
+				ifTrue: [ version loadWithEngine: self ]
+				ifFalse: [ version load: required ].
+			self root: self loadDirective.
+			loadedSpec loads: required.
+			MetacelloProjectRegistration
+				registrationForProjectSpec: loadedSpec
+				ifAbsent: [ :new |
+					new
+						loadedInImage: true;
+						registerProject ]
+				ifPresent: [ :existing :new |
+					existing copyOnWrite: [ :existingCopy |
+						existingCopy
+							loadedInImage: true;
+							merge: new ] ] ] ]
+]
+
+{ #category : 'accessing' }
+MetacelloScriptEngine >> loadDirective [
+
+	^ loadDirective ifNil: [ loadDirective := MetacelloLinearLoadDirective new ]
 ]
 
 { #category : 'actions api' }
@@ -429,12 +467,39 @@ MetacelloScriptEngine >> projectSpec: aProjectSpec [
     projectSpec := aProjectSpec
 ]
 
+{ #category : 'actions' }
+MetacelloScriptEngine >> pushAtomicLoadDirectivesDuring: aBlock for: aLoader [
+
+	self
+		pushLoadDirective: (MetacelloAtomicLoadDirective loader: aLoader)
+		during: aBlock
+]
+
+{ #category : 'actions' }
+MetacelloScriptEngine >> pushLinearLoadDirectivesDuring: aBlock for: aLoader [
+
+	| directive |
+	directive := MetacelloLinearLoadDirective loader: aLoader.
+	self pushLoadDirective: directive during: aBlock.
+	^ directive
+]
+
+{ #category : 'private' }
+MetacelloScriptEngine >> pushLoadDirective: aLoaderDirective during: aBlock [
+
+	|  oldRoot |
+	self loadDirective add: aLoaderDirective.
+	oldRoot := loadDirective.
+	loadDirective := aLoaderDirective.
+	aBlock ensure: [ loadDirective := oldRoot ].
+]
+
 { #category : 'actions api' }
 MetacelloScriptEngine >> record: required [
     self
         fetchRecord: [ :version | 
             required isEmpty
-                ifTrue: [ version record ]
+                ifTrue: [ version recordWithEngine: self ]
                 ifFalse: [ version record: required ] ]
         required: required
 ]
@@ -454,6 +519,18 @@ MetacelloScriptEngine >> register [
 { #category : 'accessing' }
 MetacelloScriptEngine >> repositories [
     ^ self projectSpec repositories
+]
+
+{ #category : 'accessing' }
+MetacelloScriptEngine >> repositoryMap [
+
+	^ repositoryMap ifNil: [ repositoryMap := Dictionary new ]
+]
+
+{ #category : 'initialization' }
+MetacelloScriptEngine >> resetCacheGofer [
+
+	cacheGofer := nil
 ]
 
 { #category : 'private' }

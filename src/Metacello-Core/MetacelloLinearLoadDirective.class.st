@@ -6,8 +6,14 @@ Class {
 	#tag : 'Directives'
 }
 
+{ #category : 'private' }
+MetacelloLinearLoadDirective >> newLoadingStrategyFrom: oldLoadingStrategy [
+
+	^ oldLoadingStrategy changeToLinearWithLoader: self loader
+]
+
 { #category : 'actions' }
-MetacelloLinearLoadDirective >> newLoaderForPolicy: aLoadPolicy [
+MetacelloLinearLoadDirective >> newWithEngine: aLoadPolicy [
 
 	| gofer |
 	gofer := Gofer new.
@@ -17,12 +23,6 @@ MetacelloLinearLoadDirective >> newLoaderForPolicy: aLoadPolicy [
 		  gofer: gofer;
 		  loader: self loader;
 		  yourself
-]
-
-{ #category : 'private' }
-MetacelloLinearLoadDirective >> newLoadingStrategyFrom: oldLoadingStrategy [
-
-	^ oldLoadingStrategy changeToLinearWithLoader: self loader
 ]
 
 { #category : 'accessing' }

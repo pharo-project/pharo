@@ -27,9 +27,7 @@ MetacelloRecordTarget >> asRecordingTarget [
 { #category : 'versionInfo' }
 MetacelloRecordTarget >> currentVersionInfoFor: packageSpec [
 
-	^self loadData
-		currentVersionInfoFor: packageSpec 
-		ifAbsent: [ nil ]
+	^ nil
 ]
 
 { #category : 'actions' }
@@ -44,29 +42,34 @@ MetacelloRecordTarget >> ensureForDevelopment [
 ]
 
 { #category : 'actions' }
-MetacelloRecordTarget >> linearLoadPackageSpec: packageSpec gofer: gofer [
+MetacelloRecordTarget >> linearLoadPackageSpec: packageSpec gofer: gofer withEngine: anEngine [
 
 	MetacelloPlatform current
-		do:  [ | externalReference loadBlock answers fake |
-			externalReference := self resolveRecordingPackageSpecReference: packageSpec gofer: gofer.
+		do: [
+			| externalReference loadBlock answers fake |
+			externalReference := self
+				                     resolveRecordingPackageSpecReference:
+				                     packageSpec
+				                     gofer: gofer
+				                     withEngine: anEngine.
 			loadBlock := [
-					self preLoad: packageSpec.
-					(MetacelloDirective 
-						loadPackage: packageSpec 
-						externalReference: externalReference 
-						loader: self) addTo: self loadDirective.
-					self postLoad: packageSpec ].
+			             self preLoad: packageSpec withEngine: anEngine.
+			             (MetacelloDirective
+				              loadPackage: packageSpec
+				              externalReference: externalReference
+				              loader: self) addTo: anEngine loadDirective.
+			             self postLoad: packageSpec withEngine: anEngine ].
 			(answers := packageSpec answers) notEmpty
 				ifTrue: [ loadBlock valueSupplyingMetacelloAnswers: answers ]
-				ifFalse: [ loadBlock value ].
-			fake := packageSpec copy.
+				ifFalse: [ loadBlock value ]
+			"fake := packageSpec copy.
 			fake name: fake file.
-			self loadData 
+			anEngine loadData 
 				addVersion: fake
 				versionInfo: fake
 				resolvedReference: externalReference 
-				packageSpec: packageSpec ]
-		displaying: 'Recording ', packageSpec file
+				packageSpec: packageSpec" ]
+		displaying: 'Recording ' , packageSpec file
 ]
 
 { #category : 'actions' }
@@ -89,31 +92,51 @@ MetacelloRecordTarget >> packages [
 ]
 
 { #category : 'doits' }
-MetacelloRecordTarget >> postLoad: packageOrVersionSpec [
+MetacelloRecordTarget >> postLoad: packageOrVersionSpec withEngine: anEngine [
 
 	^ self
 ]
 
 { #category : 'doits' }
-MetacelloRecordTarget >> preLoad: packageOrVersionSpec [
+MetacelloRecordTarget >> preLoad: packageOrVersionSpec withEngine: anEngine [
 
 	^ self
 ]
 
 { #category : 'private' }
 MetacelloRecordTarget >> resolveRecordingPackageSpecReference: packageSpec gofer: gofer [
-  | externalPackageReference |
-  externalPackageReference := packageSpec file
-	ifNil: [ GoferPackageReference name: packageSpec name ]
-    ifNotNil: [ :file | GoferResolvedReference name: file repository: nil ].
-  packageSpec repositorySpecs isEmpty
-    ifTrue: [ 
-      self repositoryMap
-        at: externalPackageReference packageName
-        put: (gofer repositories reject: [ :repo | repo = MCCacheRepository default ]) ]
-    ifFalse: [ 
-      self repositoryMap
-        at: externalPackageReference packageName
-        put: (packageSpec repositorySpecs collect: [ :repoSpec | repoSpec createRepository ]) ].
-  ^ externalPackageReference
+
+	| externalPackageReference |
+	externalPackageReference := packageSpec file
+		                            ifNil: [
+		                            GoferPackageReference name:
+			                            packageSpec name ]
+		                            ifNotNil: [ :file |
+		                            GoferResolvedReference
+			                            name: file
+			                            repository: nil ].
+	self repositoryMap
+		at: externalPackageReference packageName
+		put: (packageSpec repositorySpecs collect: [ :repoSpec |
+				 repoSpec createRepository ]).
+	^ externalPackageReference
+]
+
+{ #category : 'private' }
+MetacelloRecordTarget >> resolveRecordingPackageSpecReference: packageSpec gofer: gofer withEngine: anEngine [
+
+	| externalPackageReference |
+	externalPackageReference := packageSpec file
+		                            ifNil: [
+		                            GoferPackageReference name:
+			                            packageSpec name ]
+		                            ifNotNil: [ :file |
+		                            GoferResolvedReference
+			                            name: file
+			                            repository: nil ].
+	anEngine repositoryMap
+		at: externalPackageReference packageName
+		put: (packageSpec repositorySpecs collect: [ :repoSpec |
+				 repoSpec createRepository ]).
+	^ externalPackageReference
 ]

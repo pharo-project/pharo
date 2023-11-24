@@ -50,17 +50,17 @@ MetacelloVersionLoadDirective >> loadDirectives: anObject [
 { #category : 'actions' }
 MetacelloVersionLoadDirective >> loadWithPolicy: aLoadPolicy [
 
-	self executeUsing: (self newLoaderForPolicy: aLoadPolicy)
-]
-
-{ #category : 'actions' }
-MetacelloVersionLoadDirective >> newLoaderForPolicy: aLoadPolicy [
-
-	self subclassResponsibility
+	self executeUsing: (self newWithEngine: aLoadPolicy)
 ]
 
 { #category : 'private' }
 MetacelloVersionLoadDirective >> newLoadingStrategyFrom: oldLoadingStrategy [
+
+	self subclassResponsibility
+]
+
+{ #category : 'actions' }
+MetacelloVersionLoadDirective >> newWithEngine: aLoadPolicy [
 
 	self subclassResponsibility
 ]

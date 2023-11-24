@@ -72,6 +72,15 @@ MetacelloProjectReferenceSpec >> loadUsing: aLoader gofer: ignored [
 	^required load
 ]
 
+{ #category : 'loading' }
+MetacelloProjectReferenceSpec >> loadUsing: aLoader gofer: ignored withEngine: anEngine [
+
+	| required |
+	required := self resolveToLoadableSpec.
+	required loader: aLoader.
+	^required loadWithEngine: anEngine
+]
+
 { #category : 'importing' }
 MetacelloProjectReferenceSpec >> mergeImportLoads: aLoadList [
     self projectReference mergeImportLoads: aLoadList
