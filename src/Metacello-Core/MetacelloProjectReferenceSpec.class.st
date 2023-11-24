@@ -64,21 +64,11 @@ MetacelloProjectReferenceSpec >> includes: aCollection [
 ]
 
 { #category : 'loading' }
-MetacelloProjectReferenceSpec >> loadUsing: aLoader gofer: ignored [
+MetacelloProjectReferenceSpec >> loadUsing: aTarget gofer: ignored withEngine: anEngine [
 
 	| required |
 	required := self resolveToLoadableSpec.
-	required loader: aLoader.
-	^required load
-]
-
-{ #category : 'loading' }
-MetacelloProjectReferenceSpec >> loadUsing: aLoader gofer: ignored withEngine: anEngine [
-
-	| required |
-	required := self resolveToLoadableSpec.
-	required loader: aLoader.
-	^required loadWithEngine: anEngine
+	^ required loadUsingTarget: aTarget withEngine: anEngine
 ]
 
 { #category : 'importing' }

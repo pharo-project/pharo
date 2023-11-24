@@ -62,9 +62,9 @@ MetacelloPackageLoadDirective >> resolvedReference: anObject [
 ]
 
 { #category : 'initialization' }
-MetacelloPackageLoadDirective >> spec: aPackageSpec externalReference: anExternalReference loader: aLoader [
+MetacelloPackageLoadDirective >> spec: aPackageSpec externalReference: anExternalReference [
 
-	self spec: aPackageSpec loader: aLoader.
+	self spec: aPackageSpec.
 	externalReference := anExternalReference
 ]
 

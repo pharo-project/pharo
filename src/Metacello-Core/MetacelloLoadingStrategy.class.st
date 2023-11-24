@@ -2,8 +2,7 @@ Class {
 	#name : 'MetacelloLoadingStrategy',
 	#superclass : 'Object',
 	#instVars : [
-		'gofer',
-		'loader'
+		'gofer'
 	],
 	#category : 'Metacello-Core-Directives',
 	#package : 'Metacello-Core',
@@ -15,7 +14,6 @@ MetacelloLoadingStrategy >> changeToAtomicWithLoader: anObject [
 
 	^ MetacelloAtomicLoadingStrategy new
 		  gofer: gofer;
-		  loader: self loader;
 		  yourself
 ]
 
@@ -35,16 +33,4 @@ MetacelloLoadingStrategy >> gofer [
 MetacelloLoadingStrategy >> gofer: anObject [
 
 	gofer := anObject
-]
-
-{ #category : 'accessing' }
-MetacelloLoadingStrategy >> loader [
-	
-	^ loader
-]
-
-{ #category : 'accessing' }
-MetacelloLoadingStrategy >> loader: aLoader [
-
-	loader := aLoader
 ]

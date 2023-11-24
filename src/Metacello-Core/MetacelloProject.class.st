@@ -8,8 +8,6 @@ Class {
 		'symbolicVersionMap',
 		'loadType',
 		'versionMap',
-		'loader',
-		'loaderClass',
 		'configuration'
 	],
 	#category : 'Metacello-Core-Model',
@@ -180,24 +178,6 @@ MetacelloProject >> excludeFromLatestVersion [
 	^#(structural development broken baseline)
 ]
 
-{ #category : 'development support' }
-MetacelloProject >> fetchProject: aLoaderPolicy [
-	"fetch the latest version of the configuration package"
-
-	| mcLoader |
-	(mcLoader := self loader) ifNil: [ mcLoader := self project loaderClass on: nil ].
-	mcLoader loaderPolicy: aLoaderPolicy.
-	mcLoader doingLoads: [
-		self configuration class mcWorkingCopy ifNotNil: [ :workingCopy |
-			| pkg |
-			pkg := self packageSpec.
-			workingCopy repositoryGroup repositories do: [ :repo | pkg repositories repository: (repo asRepositorySpecFor: self) ].
-			pkg name: workingCopy packageName.
-			pkg fetchUsing: mcLoader.
-			^ true ] ].
-	^ true
-]
-
 { #category : 'spec classes' }
 MetacelloProject >> groupSpec [
 
@@ -261,30 +241,6 @@ MetacelloProject >> loadType: aSymbol [
 	"#atomic or #linear"
 
 	loadType := aSymbol
-]
-
-{ #category : 'spec classes' }
-MetacelloProject >> loader [
-
-	^loader
-]
-
-{ #category : 'spec classes' }
-MetacelloProject >> loader: aLoader [
-
-	loader := aLoader
-]
-
-{ #category : 'spec classes' }
-MetacelloProject >> loaderClass [
-
-	^ loaderClass ifNil: [ loaderClass := self defaultLoaderClass ]
-]
-
-{ #category : 'spec classes' }
-MetacelloProject >> loaderClass: aMetacelloSpecLoader [
-
-	loaderClass := aMetacelloSpecLoader
 ]
 
 { #category : 'private' }

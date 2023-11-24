@@ -89,12 +89,6 @@ MetacelloTarget >> asRecordingTarget [
 		yourself
 ]
 
-{ #category : 'versionInfo' }
-MetacelloTarget >> currentVersionInfoFor: packageSpec [
-
-	^ packageSpec currentVersionInfo
-]
-
 { #category : 'actions' }
 MetacelloTarget >> doLoad [
 	"NOOP"
@@ -150,15 +144,15 @@ MetacelloTarget >> linearLoadPackagesOfSpec: aSpec withEngine: anEngine [
 ]
 
 { #category : 'actions' }
-MetacelloTarget >> load: anEngine [
+MetacelloTarget >> load: aSpec withEngine: anEngine [
 
-	self loadType == #atomic ifTrue: [
-		^ self atomicLoadPackageOfSpec: self spec withEngine: anEngine ].
-	self loadType == #linear ifTrue: [
-		^ self linearLoadPackagesOfSpec: self spec withEngine: anEngine ].
+	aSpec project loadType == #atomic ifTrue: [
+		^ self atomicLoadPackageOfSpec: aSpec withEngine: anEngine ].
+	aSpec project loadType == #linear ifTrue: [
+		^ self linearLoadPackagesOfSpec: aSpec withEngine: anEngine ].
 
 	MetacelloError signal:
-		'Unknown loadType: ' , self loadType printString
+		'Unknown loadType: ' , aSpec project loadType printString
 ]
 
 { #category : 'actions' }
@@ -209,13 +203,6 @@ MetacelloTarget >> loadPackageDirectives: pkgLoads gofer: aGofer [
 				ifTrue: [ loadBlock valueSupplyingMetacelloAnswers: answers ]
 				ifFalse: [ loadBlock value ] ]
 		displaying: 'Loading...'
-]
-
-{ #category : 'accessing' }
-MetacelloTarget >> loadType [
-	"#atomic or #linear"
-	
-	^self project loadType
 ]
 
 { #category : 'accessing' }

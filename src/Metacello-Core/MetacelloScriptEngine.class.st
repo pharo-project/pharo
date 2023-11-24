@@ -127,7 +127,7 @@ MetacelloScriptEngine >> fetchRecord: fetchRecordBlock required: required [
 						onUpgrade: [ :ex :existing :new | ex allowEvenIfLocked ] ].
 			version := loadedSpec versionForScriptEngine: self.
 			fetchRecordBlock value: version.
-			self root: self loadDirective ] ]
+			self root: self specBuilder currentLoadDirective ] ]
 ]
 
 { #category : 'actions api' }
@@ -176,6 +176,7 @@ MetacelloScriptEngine >> getBaselineUnconditionalLoad: unconditionalLoad [
       unconditionalLoad
         ifFalse: [ ^ cl ] ].
   spec := self lookupProjectSpecFor: spec.
+
   [ spec projectPackage loadWithEngine: self ]
     on: MetacelloIgnorePackageLoaded
     do: [ :ex | 

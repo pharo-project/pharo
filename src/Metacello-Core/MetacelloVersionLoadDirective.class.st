@@ -25,7 +25,7 @@ MetacelloVersionLoadDirective >> executeUsing: oldLoadingStrategy [
 
 	self loadDirectives do: [ :directive |
 		directive executeUsing: newLoadingStrategy ].
-	newLoadingStrategy finalizeLoadWith: self loader
+	newLoadingStrategy finalizeLoadWith: nil
 ]
 
 { #category : 'printing' }

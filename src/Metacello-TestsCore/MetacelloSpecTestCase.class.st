@@ -38,13 +38,13 @@ MetacelloSpecTestCase >> projectSpec [
 
 { #category : 'accessing' }
 MetacelloSpecTestCase >> projectWith: projectAttributes [
-    | project |
-    "Construct Metacello project"
-    project := self projectClass new.
-    project projectAttributes: projectAttributes.
-    MetacelloVersionConstructor on: self project: project.
-    project loader: MetacelloRecordTarget new.
-    ^ project
+
+	| project |
+	"Construct Metacello project"
+	project := self projectClass new.
+	project projectAttributes: projectAttributes.
+	MetacelloVersionConstructor on: self project: project.
+	^ project
 ]
 
 { #category : 'specs' }

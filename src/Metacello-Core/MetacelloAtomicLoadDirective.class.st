@@ -26,7 +26,6 @@ MetacelloAtomicLoadDirective >> newWithEngine: aLoadPolicy [
 	gofer repository: aLoadPolicy cacheRepository.
 	^ MetacelloAtomicLoadingStrategy new
 		gofer: gofer;
-		loader: self loader;
 		yourself
 ]
 

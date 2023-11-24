@@ -5,8 +5,8 @@ Class {
 		'versionSpec',
 		'required',
 		'packages',
-		'loader',
-		'loaderPolicy'
+		'loaderPolicy',
+		'target'
 	],
 	#category : 'Metacello-Core-Loaders',
 	#package : 'Metacello-Core',
@@ -21,29 +21,32 @@ MetacelloMCVersionSpecLoader class >> on: aVersionSpec [
 		yourself
 ]
 
+{ #category : 'loading' }
+MetacelloMCVersionSpecLoader >> executeWithEngine: anEngine forTarget: aTarget [
+
+	"Double dispatch on the target to decide if it is a load, a fetch or a record"
+
+	packages := Dictionary new.
+	self versionSpec resolveToLoadableSpecs: required map: packages.
+	packages values do: [ :pkg |
+		pkg ensureLoadedForDevelopmentUsing: aTarget withEngine: anEngine.
+		(MetacelloIgnorePackageLoaded signal: pkg) ifFalse: [
+			anEngine ignoreImage ifFalse: [
+				(pkg
+					 compareCurrentVersion: aTarget operator
+					 targetVersionStatus: #( #allLoadedToSpec )
+					 using: aTarget
+					 withEngine: anEngine) ifTrue: [ packages removeKey: pkg name ] ] ] ].
+	packages notEmpty ifTrue: [
+		aTarget preLoad: self versionSpec withEngine: anEngine.
+		aTarget load: self versionSpec withEngine: anEngine.
+		aTarget postLoad: self versionSpec withEngine: anEngine ]
+]
+
 { #category : 'accessing' }
 MetacelloMCVersionSpecLoader >> label [
 
 	^self versionSpec label
-]
-
-{ #category : 'loading' }
-MetacelloMCVersionSpecLoader >> loadWithEngine: anEngine [
-
-	| target |
-	packages := Dictionary new.
-	self versionSpec resolveToLoadableSpecs: required map: packages.
-	target := self target.
-	packages values do: [ :pkg |
-		pkg ensureLoadedForDevelopmentUsing: target withEngine: anEngine.
-		(MetacelloIgnorePackageLoaded signal: pkg) ifFalse: [
-			anEngine ignoreImage ifFalse: [
-				(pkg compareCurrentVersion: self operator targetVersionStatus: #( #allLoadedToSpec ) using: target withEngine: anEngine) ifTrue: [ packages removeKey: pkg name ] ] ] ].
-	packages notEmpty ifTrue: [
-		target preLoad: self versionSpec withEngine: anEngine.
-		target load: anEngine.
-		target postLoad: self versionSpec withEngine: anEngine ].
-	^ target
 ]
 
 { #category : 'accessing' }
@@ -114,12 +117,11 @@ MetacelloMCVersionSpecLoader >> required: anObject [
 
 { #category : 'accessing' }
 MetacelloMCVersionSpecLoader >> target [
-
-	^ loader ifNil: [
-		  loader := self versionSpec loader copy.
-		  loader spec: self.
-		  loaderPolicy ifNotNil: [ loader loaderPolicy: loaderPolicy ].
-		  loader ]
+1halt.
+	^ target ifNil: [
+		  target := self versionSpec loader copy.
+		  target spec: self.
+		  target ]
 ]
 
 { #category : 'accessing' }

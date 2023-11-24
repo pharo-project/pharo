@@ -216,15 +216,6 @@ MetacelloPackageSpec >> fetch [
 ]
 
 { #category : 'loading' }
-MetacelloPackageSpec >> fetchPackage: aLoaderPolicy [
-
-	self fetchUsing: 
-		(self loader
-			loaderPolicy: aLoaderPolicy;
-			yourself)
-]
-
-{ #category : 'loading' }
 MetacelloPackageSpec >> fetchUsing: aTarget withEngine: anEngine [
 
 	| fetchingTarget |
@@ -251,9 +242,7 @@ MetacelloPackageSpec >> forceLoadUsing: aTarget withEngine: anEngine [
 
 	| loadTarget |
 	"force load it"
-	loadTarget := (MetacelloLoadTarget on: aTarget spec)
-		              "loaderPolicy: aTarget loaderPolicy copy;"
-		              yourself.
+	loadTarget := (MetacelloLoadTarget on: self) yourself.
 	loadTarget executeOnSpec: self withEngine: anEngine
 ]
 
@@ -347,9 +336,15 @@ MetacelloPackageSpec >> loadUsing: aLoader gofer: gofer withEngine: anEngine [
 ]
 
 { #category : 'loading' }
+MetacelloPackageSpec >> loadUsingTarget: aTarget withEngine: anEngine [
+
+	self forceLoadUsing: aTarget withEngine: anEngine
+]
+
+{ #category : 'loading' }
 MetacelloPackageSpec >> loadWithEngine: anEngine [ 
 	
-	self forceLoadUsing: self loader withEngine: anEngine
+	self forceLoadUsing: nil withEngine: anEngine
 ]
 
 { #category : 'merging' }
@@ -512,7 +507,7 @@ MetacelloPackageSpec >> workingCopyName [
 ]
 
 { #category : 'gofer' }
-MetacelloPackageSpec >> workingCopyNameFor: anMCLoader [
+MetacelloPackageSpec >> workingCopyNameFor: aTarget [
 
-	^ (anMCLoader currentVersionInfoFor: self) ifNotNil: [ :vi | vi name ]
+	^ self currentVersionInfo ifNotNil: [ :vi | vi name ]
 ]

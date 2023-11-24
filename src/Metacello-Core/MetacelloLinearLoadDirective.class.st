@@ -9,7 +9,7 @@ Class {
 { #category : 'private' }
 MetacelloLinearLoadDirective >> newLoadingStrategyFrom: oldLoadingStrategy [
 
-	^ oldLoadingStrategy changeToLinearWithLoader: self loader
+	^ oldLoadingStrategy changeToLinearWithLoader: nil
 ]
 
 { #category : 'actions' }
@@ -21,7 +21,6 @@ MetacelloLinearLoadDirective >> newWithEngine: aLoadPolicy [
 	gofer repository: aLoadPolicy cacheRepository.
 	^ MetacelloLinearLoadingStrategy new
 		  gofer: gofer;
-		  loader: self loader;
 		  yourself
 ]
 

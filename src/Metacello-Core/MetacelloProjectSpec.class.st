@@ -385,7 +385,6 @@ MetacelloProjectSpec >> determineCurrentVersionForLoad [
 	version blessing == #baseline ifTrue: [ ^ version ].
 	self loader ignoreImage ifTrue: [ ^ version ].
 	prjct := self projectClass new project.
-	prjct loader: self loader.
 	(currentVersion := prjct currentVersion) ifNil: [ ^ nil ].
 	(cvs := currentVersion versionStatus) == #somethingLoaded ifTrue: [ ^ nil ].
 	(#( #allLoadedToSpec #loadedToSpec #loadedMatchConstraints ) includes: (cvs := currentVersion versionStatus)) ifTrue: [
@@ -491,10 +490,9 @@ MetacelloProjectSpec >> ensureProjectLoadedWithEngine: anEngine [
 
 	(self projectClass isNil or: [
 		 self versionOrNil isNil or: [
-			 (loader notNil or: [ self isMutable ]) and: [
-				 anEngine ignoreImage ] ] ]) ifTrue: [
+			 self isMutable and: [ anEngine ignoreImage ] ] ]) ifTrue: [
 		self projectPackage ifNil: [ ^ true ].
-		self ensureLoadUsing: self loader withEngine: anEngine].
+		self ensureLoadUsing: nil withEngine: anEngine ].
 	^ self projectClass isNotNil
 ]
 
@@ -677,6 +675,51 @@ MetacelloProjectSpec >> loadProjectIsLocked: version [
 ]
 
 { #category : 'loading' }
+MetacelloProjectSpec >> loadUsingTarget: aTarget withEngine: anEngine [
+
+	(MetacelloLookupProjectSpecForLoad new
+		 projectSpec: self;
+		 yourself) signal
+		performLoadWithEngine: anEngine
+		usingTarget: aTarget
+]
+
+{ #category : 'loading' }
+MetacelloProjectSpec >> loadVersion: aVersionOrNil usingTarget: aTarget  withEngine: anEngine [
+	"Load the correct version of the project"
+
+	| vrsn list |
+	self ensureProjectLoadedWithEngine: anEngine.
+	vrsn := aVersionOrNil.
+	vrsn ifNil: [
+		[ vrsn := self version ]
+			on: MetacelloVersionDoesNotExistError
+			do: [ :ex |
+				^ (MetacelloProjectSpecLoadError projectSpec: self)
+					  versionDoesNotExistException: ex;
+					  signal:
+						  'No version found for ' , self versionString printString
+						  , ' of ' , self className asString , ' because: '
+						  , ex description ] ].
+	list := (anEngine ignoreImage
+		         ifTrue: [ self loadListForVersion: vrsn ]
+		         ifFalse: [
+			         vrsn
+				         packageAndProjectNamesToLoad:
+				         (self loadListForVersion: vrsn)
+				         loader: aTarget ]) asSet.
+	vrsn versionString ~= self versionString ifTrue: [
+		MetacelloNotification signal: ' [' , vrsn versionString , ']' ].
+	aTarget preLoad: self withEngine: anEngine.
+
+	vrsn doFetchRequiredFromArray: list withEngine: anEngine. "do the load"
+
+	(MetacelloProjectSpecLoadedNotification new projectSpec:
+		 (self copy versionString: vrsn versionString)) signal.
+	aTarget postLoad: self withEngine: anEngine
+]
+
+{ #category : 'loading' }
 MetacelloProjectSpec >> loadVersion: aVersionOrNil withEngine: anEngine [
 	"Load the correct version of the project"
 
@@ -693,9 +736,6 @@ MetacelloProjectSpec >> loadVersion: aVersionOrNil withEngine: anEngine [
 						  'No version found for ' , self versionString printString
 						  , ' of ' , self className asString , ' because: '
 						  , ex description ] ].
-	mcLoader := self loader copy.
-	mcLoader operator: self operator.
-	vrsn loader: mcLoader.
 	list := (anEngine ignoreImage
 		         ifTrue: [ self loadListForVersion: vrsn ]
 		         ifFalse: [
@@ -769,10 +809,12 @@ MetacelloProjectSpec >> mergeRepositoriesSpec: anotherRepositories [
 
 { #category : 'scripting' }
 MetacelloProjectSpec >> mergeScriptLoads: aSpec [
-    self shouldBeMutable.
-    aSpec loads
-        ifNotNil: [ :otherLoads | self loads ifNil: [ loads := otherLoads ] ifNotNil: [ loads := (loads , otherLoads) asSet asArray ] ].
-    self loader: aSpec loader
+
+	self shouldBeMutable.
+	aSpec loads ifNotNil: [ :otherLoads |
+		self loads
+			ifNil: [ loads := otherLoads ]
+			ifNotNil: [ loads := (loads , otherLoads) asSet asArray ] ]
 ]
 
 { #category : 'scripting' }

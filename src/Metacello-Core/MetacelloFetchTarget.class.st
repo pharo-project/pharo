@@ -36,7 +36,7 @@ MetacelloFetchTarget >> asLoadingTarget [
 { #category : 'private' }
 MetacelloFetchTarget >> atomicLoadPackageOfSpec: aSpec withEngine: anEngine [
 
-	anEngine
+	anEngine specBuilder
 		pushAtomicLoadDirectivesDuring: [
 			super linearLoadPackagesOfSpec: aSpec withEngine: anEngine ]
 		for: self
@@ -164,14 +164,15 @@ MetacelloFetchTarget >> loadDirective [
 { #category : 'doits' }
 MetacelloFetchTarget >> postLoad: packageOrVersionSpec withEngine: anEngine [
 
-	(MetacelloDirective postLoadSpec: packageOrVersionSpec loader: self)
-		addTo: anEngine specBuilder currentLoadDirective
+	(MetacelloDirective postLoadSpec: packageOrVersionSpec) addTo:
+		anEngine specBuilder currentLoadDirective
 ]
 
 { #category : 'doits' }
 MetacelloFetchTarget >> preLoad: packageOrVersionSpec withEngine: anEngine [
 
-	(MetacelloDirective preLoadSpec: packageOrVersionSpec loader: self) addTo: anEngine specBuilder currentLoadDirective
+	(MetacelloDirective preLoadSpec: packageOrVersionSpec) addTo:
+		anEngine specBuilder currentLoadDirective
 ]
 
 { #category : 'printing' }
@@ -265,8 +266,8 @@ MetacelloFetchTarget >> scheduleFetchFor: packageSpec reference: reference messa
 	self preLoad: packageSpec withEngine: anEngine.
 	(MetacelloDirective
 		 loadPackage: packageSpec
-		 externalReference: reference
-		 loader: self) addTo: anEngine specBuilder currentLoadDirective.
+		 externalReference: reference) addTo:
+		anEngine specBuilder currentLoadDirective.
 	self postLoad: packageSpec withEngine: anEngine.
 	MetacelloNotification signal: message
 ]

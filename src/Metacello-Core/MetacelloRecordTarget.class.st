@@ -24,12 +24,6 @@ MetacelloRecordTarget >> asRecordingTarget [
 	^self
 ]
 
-{ #category : 'versionInfo' }
-MetacelloRecordTarget >> currentVersionInfoFor: packageSpec [
-
-	^ nil
-]
-
 { #category : 'actions' }
 MetacelloRecordTarget >> doingLoads: aBlock [
 	"escape mechanism for recording and null loaders to skip doing loaderlike things"
@@ -56,19 +50,19 @@ MetacelloRecordTarget >> linearLoadPackageSpec: packageSpec gofer: gofer withEng
 			             self preLoad: packageSpec withEngine: anEngine.
 			             (MetacelloDirective
 				              loadPackage: packageSpec
-				              externalReference: externalReference
-				              loader: self) addTo: anEngine loadDirective.
+				              externalReference: externalReference) addTo:
+				             anEngine specBuilder currentLoadDirective.
 			             self postLoad: packageSpec withEngine: anEngine ].
 			(answers := packageSpec answers) notEmpty
 				ifTrue: [ loadBlock valueSupplyingMetacelloAnswers: answers ]
-				ifFalse: [ loadBlock value ]
-			"fake := packageSpec copy.
+				ifFalse: [ "fake := packageSpec copy.
 			fake name: fake file.
 			anEngine loadData 
 				addVersion: fake
 				versionInfo: fake
 				resolvedReference: externalReference 
-				packageSpec: packageSpec" ]
+				packageSpec: packageSpec"
+					loadBlock value ] ]
 		displaying: 'Recording ' , packageSpec file
 ]
 

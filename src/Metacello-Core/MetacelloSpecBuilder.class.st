@@ -28,18 +28,18 @@ MetacelloSpecBuilder >> loadDirective [
 ]
 
 { #category : 'actions' }
-MetacelloSpecBuilder >> pushAtomicLoadDirectivesDuring: aBlock for: aLoader [
+MetacelloSpecBuilder >> pushAtomicLoadDirectivesDuring: aBlock for: aTarget [
 
 	self
-		pushLoadDirective: (MetacelloAtomicLoadDirective loader: aLoader)
+		pushLoadDirective: MetacelloAtomicLoadDirective new
 		during: aBlock
 ]
 
 { #category : 'actions' }
-MetacelloSpecBuilder >> pushLinearLoadDirectivesDuring: aBlock for: aLoader [
+MetacelloSpecBuilder >> pushLinearLoadDirectivesDuring: aBlock for: aTarget [
 
 	| directive |
-	directive := MetacelloLinearLoadDirective loader: aLoader.
+	directive := MetacelloLinearLoadDirective new.
 	self pushLoadDirective: directive during: aBlock.
 	^ directive
 ]

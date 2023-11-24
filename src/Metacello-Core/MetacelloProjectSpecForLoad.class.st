@@ -37,7 +37,6 @@ MetacelloProjectSpecForLoad >> performCurrentVersionTestAgainst: vrsn operator: 
 		| prjct cv |
 		self hasOverride ifTrue: [ self error: 'unexpected logic combination: useDeterminVersionForLoad & hasOverride' ].
 		prjct := self projectSpec projectClassProject.
-		prjct loader: anMCLoader.
 		(cv := prjct currentVersion) ifNil: [ ^ false ].
 		(targetVersionStatus includes: cv versionStatus) ifTrue: [ ^ cv perform: anOperator with: vrsn ].
 		^ false ].
@@ -63,7 +62,7 @@ MetacelloProjectSpecForLoad >> performCurrentVersionTestAgainst: vrsn operator: 
 ]
 
 { #category : 'operations' }
-MetacelloProjectSpecForLoad >> performLoadWithEngine: anEngine [
+MetacelloProjectSpecForLoad >> performLoadWithEngine: anEngine usingTarget: aTarget [
 
 	| displayString spec |
 	spec := self projectSpec.
@@ -89,7 +88,7 @@ MetacelloProjectSpecForLoad >> performLoadWithEngine: anEngine [
 			vrsn := self useDetermineVersionForLoad
 				        ifTrue: [ spec determineCurrentVersionForLoad ]
 				        ifFalse: [ spec versionOrNil ].
-			(spec asProjectSpecForVersion: vrsn) loadVersion: vrsn withEngine: anEngine ]
+			(spec asProjectSpecForVersion: vrsn) loadVersion: vrsn usingTarget: aTarget withEngine: anEngine ]
 ]
 
 { #category : 'accessing' }

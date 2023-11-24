@@ -2,8 +2,7 @@ Class {
 	#name : 'MetacelloDirective',
 	#superclass : 'Object',
 	#instVars : [
-		'spec',
-		'loader'
+		'spec'
 	],
 	#category : 'Metacello-Core-Directives',
 	#package : 'Metacello-Core',
@@ -11,30 +10,21 @@ Class {
 }
 
 { #category : 'instance creation' }
-MetacelloDirective class >> loadPackage: aPackageSpec externalReference: externalReference loader: aLoader [
+MetacelloDirective class >> loadPackage: aPackageSpec externalReference: externalReference [
 
-	^ MetacelloPackageLoadDirective new spec: aPackageSpec externalReference: externalReference loader: aLoader
+	^ MetacelloPackageLoadDirective new spec: aPackageSpec externalReference: externalReference
 ]
 
 { #category : 'instance creation' }
-MetacelloDirective class >> loader: aLoader [
+MetacelloDirective class >> postLoadSpec: packageOrVersionSpec [
 
-	^self new
-		loader: aLoader
+	^ MetacelloPostLoadDirective new spec: packageOrVersionSpec
 ]
 
 { #category : 'instance creation' }
-MetacelloDirective class >> postLoadSpec: packageOrVersionSpec loader: aLoader [
+MetacelloDirective class >> preLoadSpec: packageOrVersionSpec [
 
-	^MetacelloPostLoadDirective new
-		spec: packageOrVersionSpec loader: aLoader
-]
-
-{ #category : 'instance creation' }
-MetacelloDirective class >> preLoadSpec: packageOrVersionSpec loader: aLoader [
-
-	^MetacelloPreLoadDirective new
-		spec: packageOrVersionSpec loader: aLoader
+	^ MetacelloPreLoadDirective new spec: packageOrVersionSpec
 ]
 
 { #category : 'actions' }
@@ -53,18 +43,6 @@ MetacelloDirective >> executeUsing: aLoader [
 MetacelloDirective >> label [
 
 	^self spec label
-]
-
-{ #category : 'accessing' }
-MetacelloDirective >> loader [
-
-	^loader
-]
-
-{ #category : 'accessing' }
-MetacelloDirective >> loader: aLoader [
-
-	loader := aLoader
 ]
 
 { #category : 'enumerating' }
@@ -101,10 +79,9 @@ MetacelloDirective >> spec [
 ]
 
 { #category : 'initialization' }
-MetacelloDirective >> spec: packageOrVersionSpec loader: aLoader [
+MetacelloDirective >> spec: packageOrVersionSpec [
 
 	spec := packageOrVersionSpec.
-	loader := aLoader
 ]
 
 { #category : 'accessing' }

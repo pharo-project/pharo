@@ -25,7 +25,6 @@ MetacelloAtomicLoadingStrategy >> changeToLinearWithLoader: aLoader [
 	self finalizeLoadWith: aLoader.
 	^ MetacelloLinearLoadingStrategy new
 		  gofer: gofer;
-		  loader: aLoader;
 		  yourself
 ]
 
@@ -84,6 +83,5 @@ MetacelloAtomicLoadingStrategy >> linear [
 	This is for internal use. Check users"
 	^ MetacelloLinearLoadingStrategy new
 		  gofer: gofer;
-		  loader: self loader;
 		  yourself
 ]
