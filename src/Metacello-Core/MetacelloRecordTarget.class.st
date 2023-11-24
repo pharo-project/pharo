@@ -22,6 +22,15 @@ MetacelloRecordTarget >> atomicLoadPackageOfSpec: aSpec withEngine: anEngine [
 ]
 
 { #category : 'actions' }
+MetacelloRecordTarget >> doLoad: packageSpec withExternalRefernece: externalReference inEngine: anEngine [
+
+	(MetacelloDirective
+		 loadPackage: packageSpec
+		 externalReference: externalReference) addTo:
+		anEngine specBuilder currentLoadDirective
+]
+
+{ #category : 'actions' }
 MetacelloRecordTarget >> linearLoadPackageSpec: packageSpec gofer: gofer withEngine: anEngine [
 
 	| externalReference |
@@ -30,12 +39,17 @@ MetacelloRecordTarget >> linearLoadPackageSpec: packageSpec gofer: gofer withEng
 		                     packageSpec
 		                     gofer: gofer
 		                     withEngine: anEngine.
+	
+	"Exit if already loaded"
+	externalReference ifNil: [ ^ nil ].
 	self preLoad: packageSpec withEngine: anEngine.
 	(MetacelloDirective
 		 loadPackage: packageSpec
 		 externalReference: externalReference) addTo:
 		anEngine specBuilder currentLoadDirective.
-	self postLoad: packageSpec withEngine: anEngine
+	self postLoad: packageSpec withEngine: anEngine.
+
+	^ externalReference
 ]
 
 { #category : 'private' }
@@ -83,18 +97,5 @@ MetacelloRecordTarget >> preLoad: packageOrVersionSpec withEngine: anEngine [
 { #category : 'private' }
 MetacelloRecordTarget >> resolveRecordingPackageSpecReference: packageSpec gofer: gofer withEngine: anEngine [
 
-	| externalPackageReference |
-	externalPackageReference := packageSpec file
-		                            ifNil: [
-		                            GoferPackageReference name:
-			                            packageSpec name ]
-		                            ifNotNil: [ :file |
-		                            GoferResolvedReference
-			                            name: file
-			                            repository: nil ].
-	anEngine repositoryMap
-		at: externalPackageReference packageName
-		put: (packageSpec repositorySpecs collect: [ :repoSpec |
-				 repoSpec createRepository ]).
-	^ externalPackageReference
+	^ (self resolvePackageSpecReferences: packageSpec gofer: gofer) first
 ]
