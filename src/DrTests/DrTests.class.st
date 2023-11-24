@@ -37,6 +37,12 @@ DrTests class >> beDefaultTestRunner [
 	self registerToolsOn: Smalltalk tools
 ]
 
+{ #category : 'class initialization' }
+DrTests class >> initialize [
+
+	Smalltalk tools register: self as: #testRunner
+]
+
 { #category : 'world menu' }
 DrTests class >> menuCommandOn: aBuilder [
 
