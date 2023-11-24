@@ -193,8 +193,8 @@ MetacelloPackageSpec >> ensureLoadUsing: mcLoader [
 { #category : 'loading' }
 MetacelloPackageSpec >> ensureLoadedForDevelopmentUsing: mcLoader [
 	"noop"
+
 	
-	^true
 ]
 
 { #category : 'private' }

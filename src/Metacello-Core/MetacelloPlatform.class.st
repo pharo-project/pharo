@@ -51,13 +51,6 @@ MetacelloPlatform >> bypassProgressBars: anObject [
 	bypassProgressBars := anObject
 ]
 
-{ #category : 'notification' }
-MetacelloPlatform >> collection: aCollection do: aBlock displaying: aString [
-
-	self bypassProgressBars ifTrue: [ ^ aCollection do: aBlock ].
-	aCollection do: aBlock displayingProgress: aString
-]
-
 { #category : 'repository creation' }
 MetacelloPlatform >> createRepository: aRepositorySpec [
 

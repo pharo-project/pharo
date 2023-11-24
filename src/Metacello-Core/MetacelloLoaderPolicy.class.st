@@ -80,7 +80,6 @@ MetacelloLoaderPolicy >> initialize [
 
 { #category : 'actions' }
 MetacelloLoaderPolicy >> load [
-1halt.
 	overrideRepositories := Array with: self cacheRepository. "ensure that hasRepositoryOverrides is true"
 	self loadDirective loadWithPolicy: self
 ]

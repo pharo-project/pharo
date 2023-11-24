@@ -703,7 +703,9 @@ MetacelloProjectSpec >> loadVersion: aVersionOrNil [
 	vrsn versionString ~= self versionString ifTrue: [
 		MetacelloNotification signal: ' [' , vrsn versionString , ']' ].
 	mcLoader preLoad: self.
-	vrsn fetchRequiredFromArray: list. "do the load"
+
+	vrsn doFetchRequiredFromArray: list. "do the load"
+
 	(MetacelloProjectSpecLoadedNotification new projectSpec:
 		 (self copy versionString: vrsn versionString)) signal.
 	mcLoader postLoad: self

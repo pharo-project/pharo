@@ -128,7 +128,7 @@ MetacelloVersion >> doWithProgress: aBlock label: aLabel [
 	oldPolicy := loaderPolicy.
 	oldBypassProgress := MetacelloPlatform current bypassProgressBars.
 
-	self loaderPolicy silently ifTrue: [
+	(oldPolicy notNil and: [oldPolicy silently]) ifTrue: [
 		MetacelloPlatform current bypassProgressBars: true ].
 
 	[
@@ -184,13 +184,10 @@ MetacelloVersion >> fetchRequiredFromArray: anArray [
 	displayString := newLoader actionLabel
 	                 , self versionNumber printString , ' of '
 	                 , self spec projectLabel.
-	MetacelloPlatform current
-		do: [
-			[
-			self versionSpec loader: newLoader.
-			^ self executeLoadFromArray: anArray ] ensure: [
-				self versionSpec loader: originalLoader ] ]
-		displaying: displayString
+	[
+	self versionSpec loader: newLoader.
+	^ self executeLoadFromArray: anArray ] ensure: [
+		self versionSpec loader: originalLoader ]
 ]
 
 { #category : 'querying' }
