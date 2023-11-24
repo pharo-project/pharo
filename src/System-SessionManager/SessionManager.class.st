@@ -114,7 +114,7 @@ Class {
 { #category : 'class initialization' }
 SessionManager class >> classRemoved: classRemoved [
 
-	self default unregisterClassNamed: classRemoved name
+	self default unregisterClassNamed: classRemoved classRemoved name
 ]
 
 { #category : 'class initialization' }
