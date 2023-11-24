@@ -104,11 +104,6 @@ MetacelloTarget >> doingLoads: aBlock [
 ]
 
 { #category : 'testing' }
-MetacelloTarget >> ensureForDevelopment [
-  ^ true
-]
-
-{ #category : 'testing' }
 MetacelloTarget >> hasRepositoryOverrides [
 
 	^ self loaderPolicy hasRepositoryOverrides

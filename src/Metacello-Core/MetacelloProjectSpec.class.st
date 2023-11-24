@@ -448,10 +448,7 @@ MetacelloProjectSpec >> ensureLoadedForDevelopmentUsing: aTarget withEngine: anE
 MetacelloProjectSpec >> ensureProjectFetch: aTarget withEngine: anEngine [
 	"projectClass == nil or version == nil"
 
-	aTarget ensureForDevelopment
-		ifTrue: [ self ensureLoadUsing: aTarget withEngine: anEngine ]
-		ifFalse: [ self fetchUsing: aTarget withEngine: anEngine ].
-
+	self ensureLoadUsing: aTarget withEngine: anEngine.
 	anEngine ensuredMap at: self name put: #present
 ]
 
@@ -464,9 +461,7 @@ MetacelloProjectSpec >> ensureProjectLoaded: aTarget ensured: ensured withEngine
 	(self ensureConfigurationLoaded: version ensured: ensured) ifFalse: [
 		^ self ].
 
-	aTarget ensureForDevelopment
-		ifTrue: [ self ensureLoadUsing: aTarget withEngine: anEngine ]
-		ifFalse: [ self projectPackage fetchUsing: aTarget withEngine: anEngine ].
+	self ensureLoadUsing: aTarget withEngine: anEngine.
 	anEngine ensuredMap at: self name put: #latest
 ]
 

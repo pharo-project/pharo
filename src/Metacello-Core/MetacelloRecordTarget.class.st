@@ -29,12 +29,6 @@ MetacelloRecordTarget >> doingLoads: aBlock [
 	"escape mechanism for recording and null loaders to skip doing loaderlike things"
 ]
 
-{ #category : 'testing' }
-MetacelloRecordTarget >> ensureForDevelopment [
-
-	^false
-]
-
 { #category : 'actions' }
 MetacelloRecordTarget >> linearLoadPackageSpec: packageSpec gofer: gofer withEngine: anEngine [
 

@@ -318,12 +318,6 @@ MetacelloPackageSpec >> isPackageLoaded: aLoader [
 ]
 
 { #category : 'loading' }
-MetacelloPackageSpec >> loadUsing: aLoader gofer: gofer [
-
-	^aLoader linearLoadPackageSpec: self gofer: gofer
-]
-
-{ #category : 'loading' }
 MetacelloPackageSpec >> loadUsing: aLoader gofer: gofer withEngine: anEngine [
 
 	^aLoader linearLoadPackageSpec: self gofer: gofer withEngine: anEngine

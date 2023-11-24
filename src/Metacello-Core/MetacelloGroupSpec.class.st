@@ -47,11 +47,6 @@ MetacelloGroupSpec >> includeSpecNamesForPackageOrdering: aVersionSpec [
 ]
 
 { #category : 'loading' }
-MetacelloGroupSpec >> loadUsing: aLoader gofer: gofer [
-	"noop"
-]
-
-{ #category : 'loading' }
 MetacelloGroupSpec >> loadUsing: aLoader gofer: gofer withEngine: anEngine [
 	"noop"
 ]
