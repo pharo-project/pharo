@@ -23,8 +23,8 @@ Class {
 		'patch',
 		'suffix'
 	],
-	#category : 'Pharo30Bootstrap',
-	#package : 'Pharo30Bootstrap'
+	#category : 'PharoBootstrap',
+	#package : 'PharoBootstrap'
 }
 
 { #category : 'instance-creation' }
