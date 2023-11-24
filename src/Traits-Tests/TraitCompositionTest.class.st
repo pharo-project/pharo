@@ -32,12 +32,16 @@ TraitCompositionTest >> testAliasCompositions [
 
 { #category : 'tests - enquiries' }
 TraitCompositionTest >> testClassMethodsTakePrecedenceOverTraitsMethods [
+
 	| keys |
 	keys := Set new.
-	self t4 methodDict bindingsDo: [ :each | keys add: each key ].
+	self t4 methodsDo: [ :method | keys add: method selector ].
 	self assert: keys size equals: 6.
-	self assert: (keys includesAll: #(#m12 #m13 #m13 #m21 #m22 #m11 #m42)).
-	self assert: (self t4 methodDict at: #m11) sourceCode equals: 'm11 ^41'
+	self assert:
+		(keys includesAll: #( #m12 #m13 #m13 #m21 #m22 #m11 #m42 )).
+	self
+		assert: (self t4 methodDict at: #m11) sourceCode
+		equals: 'm11 ^41'
 ]
 
 { #category : 'tests - basic' }
