@@ -181,13 +181,6 @@ MetacelloProject >> excludeFromLatestVersion [
 ]
 
 { #category : 'development support' }
-MetacelloProject >> fetchProject [
-	"fetch the latest version of the configuration package"
-	
-	^self fetchProject: MetacelloLoaderPolicy new
-]
-
-{ #category : 'development support' }
 MetacelloProject >> fetchProject: aLoaderPolicy [
 	"fetch the latest version of the configuration package"
 
