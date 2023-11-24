@@ -19,7 +19,7 @@ MetacelloFetchTarget >> actionLabel [
 MetacelloFetchTarget >> asEnsureTarget [
 	"explicitly share the loaderPolicy"
 
-	^ (MetacelloFetchTarget on: self spec)
+	^ MetacelloFetchTarget new
 		  forceFetch;
 		  yourself
 ]

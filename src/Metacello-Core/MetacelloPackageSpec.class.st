@@ -213,8 +213,7 @@ MetacelloPackageSpec >> extractNameFromFile [
 MetacelloPackageSpec >> fetchUsing: aTarget withEngine: anEngine [
 
 	| fetchingTarget |
-
-	fetchingTarget := aTarget asFetchingTarget.
+	fetchingTarget := MetacelloFetchTarget new.
 	fetchingTarget linearLoadPackagesOfSpec: self withEngine: anEngine
 ]
 

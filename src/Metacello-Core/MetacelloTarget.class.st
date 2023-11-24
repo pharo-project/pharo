@@ -65,33 +65,6 @@ MetacelloTarget >> asFetchingTarget [
 	^self
 ]
 
-{ #category : 'accessing' }
-MetacelloTarget >> asLoadingTarget [
-
-	^self
-]
-
-{ #category : 'actions' }
-MetacelloTarget >> doLoad [
-	"NOOP"
-
-	
-]
-
-{ #category : 'actions' }
-MetacelloTarget >> doingLoads: aBlock [
-	"escape mechanism for recording and null loaders to skip doing loaderlike things"
-	
-	aBlock value
-]
-
-{ #category : 'initialization' }
-MetacelloTarget >> initialize [
-
-	super initialize.
-	"self loaderPolicy"
-]
-
 { #category : 'actions' }
 MetacelloTarget >> linearLoadPackageSpec: packageSpec gofer: gofer withEngine: anEngine [
 
@@ -108,18 +81,6 @@ MetacelloTarget >> linearLoadPackagesOfSpec: aSpec withEngine: anEngine [
 	monticelloRepositories do: [ :repo | gofer repository: repo ].
 	aSpec packageSpecsInLoadOrder do: [ :pkg |
 		pkg loadUsing: self gofer: gofer withEngine: anEngine ]
-]
-
-{ #category : 'actions' }
-MetacelloTarget >> load: aSpec withEngine: anEngine [
-
-	aSpec project loadType == #atomic ifTrue: [
-		^ self atomicLoadPackageOfSpec: aSpec withEngine: anEngine ].
-	aSpec project loadType == #linear ifTrue: [
-		^ self linearLoadPackagesOfSpec: aSpec withEngine: anEngine ].
-
-	MetacelloError signal:
-		'Unknown loadType: ' , aSpec project loadType printString
 ]
 
 { #category : 'packages' }
@@ -140,23 +101,6 @@ MetacelloTarget >> operator: aSymbol [
 	operator := aSymbol
 ]
 
-{ #category : 'doits' }
-MetacelloTarget >> postLoad: packageOrVersionSpec withEngine: anEngine [
-	"subclassResponsibility, but it gets called during an upgrade, so leave it as NOOP"
-]
-
-{ #category : 'doits' }
-MetacelloTarget >> preLoad: packageOrVersionSpec withEngine: anEngine [
-
-	self subclassResponsibility
-]
-
-{ #category : 'accessing' }
-MetacelloTarget >> project [
-
-	^self spec project
-]
-
 { #category : 'repositories' }
 MetacelloTarget >> repositoriesFrom: aMetacelloMVRepositorySpecs [
 
@@ -167,7 +111,6 @@ MetacelloTarget >> repositoriesFrom: aMetacelloMVRepositorySpecs [
 MetacelloTarget >> repositoriesFrom: aMetacelloMVRepositorySpecs ignoreOverrides: ignoreOverrides [
 
 	| repositories repos |
-"	(ignoreOverrides not and: [ self hasRepositoryOverrides ]) ifTrue: [ ^ self loaderPolicy overrideRepositories ]."
 	repositories := MCRepositoryGroup default repositories.
 	repos := OrderedCollection new.
 	aMetacelloMVRepositorySpecs do: [ :aSpec |
@@ -175,29 +118,9 @@ MetacelloTarget >> repositoriesFrom: aMetacelloMVRepositorySpecs ignoreOverrides
 		description := aSpec description.
 		(repositories
 			 detect: [ :rep | rep description = description ]
-			 ifNone: [ aSpec createRepository ]) ifNotNil: [ :repo | repos add: repo ] ].
+			 ifNone: [ aSpec createRepository ]) ifNotNil: [ :repo |
+			repos add: repo ] ].
 	^ repos
-]
-
-{ #category : 'private' }
-MetacelloTarget >> resolvePackageSpec: packageSpec gofer: gofer [
-
-	| references resolvedReference mcVersion |
-	references := self
-		              retryingResolvePackageSpecReferences: packageSpec
-		              gofer: gofer.
-	resolvedReference := references last
-		                     asMetacelloCachingResolvedReference.
-	mcVersion := resolvedReference version.
-	packageSpec ancestors ifNotNil: [ :loadedVersionInfos |
-		loadedVersionInfos do: [ :info |
-			info name = mcVersion info name ifTrue: [
-				| spc |
-				"package already loaded, don't load again"
-				spc := packageSpec copy.
-				spc file: info name.
-				(MetacelloIgnorePackageLoaded signal: spc) ifFalse: [ ^ nil ] ] ] ].
-	^ resolvedReference
 ]
 
 { #category : 'private' }

@@ -44,6 +44,18 @@ MetacelloRecordTarget >> linearLoadPackageSpec: packageSpec gofer: gofer withEng
 ]
 
 { #category : 'actions' }
+MetacelloRecordTarget >> load: aSpec withEngine: anEngine [
+
+	aSpec project loadType == #atomic ifTrue: [
+		^ self atomicLoadPackageOfSpec: aSpec withEngine: anEngine ].
+	aSpec project loadType == #linear ifTrue: [
+		^ self linearLoadPackagesOfSpec: aSpec withEngine: anEngine ].
+
+	MetacelloError signal:
+		'Unknown loadType: ' , aSpec project loadType printString
+]
+
+{ #category : 'actions' }
 MetacelloRecordTarget >> loadPackageDirectives: pkgLoads gofer: aGofer [
 
 
