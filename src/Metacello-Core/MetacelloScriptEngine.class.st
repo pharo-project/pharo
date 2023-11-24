@@ -9,11 +9,11 @@ Class {
 		'projectSpec',
 		'options',
 		'ensuredMap',
-		'loadDirective',
 		'repositoryMap',
 		'cacheGofer',
 		'cacheRepository',
-		'overrideRepositories'
+		'overrideRepositories',
+		'specBuilder'
 	],
 	#classVars : [
 		'DefaultRepositoryDescription',
@@ -344,6 +344,13 @@ MetacelloScriptEngine >> ignoreImage [
     ^ self options at: #'ignoreImage' ifAbsent: [ false ]
 ]
 
+{ #category : 'options' }
+MetacelloScriptEngine >> initialize [
+
+	super initialize.
+	specBuilder := MetacelloSpecBuilder new
+]
+
 { #category : 'actions api' }
 MetacelloScriptEngine >> list [
   self setDefaultsAndValidateProjectSpec.
@@ -353,7 +360,7 @@ MetacelloScriptEngine >> list [
 { #category : 'loading' }
 MetacelloScriptEngine >> load [
 	overrideRepositories := Array with: self cacheRepository. "ensure that hasRepositoryOverrides is true"
-	self loadDirective loadWithPolicy: self
+	self specBuilder currentLoadDirective loadWithPolicy: self
 ]
 
 { #category : 'actions api' }
@@ -379,7 +386,7 @@ MetacelloScriptEngine >> load: required onProjectDownGrade: onDownGradeBlock onP
 			required isEmpty
 				ifTrue: [ version loadWithEngine: self ]
 				ifFalse: [ version load: required ].
-			self root: self loadDirective.
+			self root: self specBuilder currentLoadDirective.
 			loadedSpec loads: required.
 			MetacelloProjectRegistration
 				registrationForProjectSpec: loadedSpec
@@ -392,12 +399,6 @@ MetacelloScriptEngine >> load: required onProjectDownGrade: onDownGradeBlock onP
 						existingCopy
 							loadedInImage: true;
 							merge: new ] ] ] ]
-]
-
-{ #category : 'accessing' }
-MetacelloScriptEngine >> loadDirective [
-
-	^ loadDirective ifNil: [ loadDirective := MetacelloLinearLoadDirective new ]
 ]
 
 { #category : 'actions api' }
@@ -465,33 +466,6 @@ MetacelloScriptEngine >> projectSpec [
 { #category : 'accessing' }
 MetacelloScriptEngine >> projectSpec: aProjectSpec [
     projectSpec := aProjectSpec
-]
-
-{ #category : 'actions' }
-MetacelloScriptEngine >> pushAtomicLoadDirectivesDuring: aBlock for: aLoader [
-
-	self
-		pushLoadDirective: (MetacelloAtomicLoadDirective loader: aLoader)
-		during: aBlock
-]
-
-{ #category : 'actions' }
-MetacelloScriptEngine >> pushLinearLoadDirectivesDuring: aBlock for: aLoader [
-
-	| directive |
-	directive := MetacelloLinearLoadDirective loader: aLoader.
-	self pushLoadDirective: directive during: aBlock.
-	^ directive
-]
-
-{ #category : 'private' }
-MetacelloScriptEngine >> pushLoadDirective: aLoaderDirective during: aBlock [
-
-	|  oldRoot |
-	self loadDirective add: aLoaderDirective.
-	oldRoot := loadDirective.
-	loadDirective := aLoaderDirective.
-	aBlock ensure: [ loadDirective := oldRoot ].
 ]
 
 { #category : 'actions api' }
@@ -589,6 +563,11 @@ MetacelloScriptEngine >> setDefaultsAndValidateProjectSpec [
 { #category : 'options' }
 MetacelloScriptEngine >> silently [
     ^ self options at: #'silently' ifAbsent: [ false ]
+]
+
+{ #category : 'accessing' }
+MetacelloScriptEngine >> specBuilder [
+	^ specBuilder
 ]
 
 { #category : 'actions api' }
