@@ -24,25 +24,18 @@ MetacelloRecordTarget >> atomicLoadPackageOfSpec: aSpec withEngine: anEngine [
 { #category : 'actions' }
 MetacelloRecordTarget >> linearLoadPackageSpec: packageSpec gofer: gofer withEngine: anEngine [
 
-	MetacelloPlatform current
-		do: [
-			| externalReference loadBlock answers |
-			externalReference := self
-				                     resolveRecordingPackageSpecReference:
-				                     packageSpec
-				                     gofer: gofer
-				                     withEngine: anEngine.
-			loadBlock := [
-			             self preLoad: packageSpec withEngine: anEngine.
-			             (MetacelloDirective
-				              loadPackage: packageSpec
-				              externalReference: externalReference) addTo:
-				             anEngine specBuilder currentLoadDirective.
-			             self postLoad: packageSpec withEngine: anEngine ].
-			(answers := packageSpec answers) notEmpty
-				ifTrue: [ loadBlock valueSupplyingMetacelloAnswers: answers ]
-				ifFalse: [ loadBlock value ] ]
-		displaying: 'Recording ' , packageSpec file
+	| externalReference |
+	externalReference := self
+		                     resolveRecordingPackageSpecReference:
+		                     packageSpec
+		                     gofer: gofer
+		                     withEngine: anEngine.
+	self preLoad: packageSpec withEngine: anEngine.
+	(MetacelloDirective
+		 loadPackage: packageSpec
+		 externalReference: externalReference) addTo:
+		anEngine specBuilder currentLoadDirective.
+	self postLoad: packageSpec withEngine: anEngine
 ]
 
 { #category : 'private' }

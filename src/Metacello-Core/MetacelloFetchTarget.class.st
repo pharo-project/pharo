@@ -178,6 +178,15 @@ MetacelloFetchTarget >> scheduleFetchFor: packageSpec nearestReference: referenc
 ]
 
 { #category : 'private' }
+MetacelloFetchTarget >> scheduleFetchFor: packageSpec reference: reference message: message [
+	self loaderPolicy resetCacheGofer.
+	self preLoad: packageSpec.
+	(MetacelloDirective loadPackage: packageSpec externalReference: reference loader: self) addTo: self loadDirective.
+	self postLoad: packageSpec.
+	MetacelloNotification signal: message
+]
+
+{ #category : 'private' }
 MetacelloFetchTarget >> scheduleFetchFor: packageSpec reference: reference message: message withEngine: anEngine [
 
 	anEngine resetCacheGofer.

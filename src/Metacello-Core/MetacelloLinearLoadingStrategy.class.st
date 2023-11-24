@@ -34,18 +34,30 @@ MetacelloLinearLoadingStrategy >> executePackageDirective: aMetacelloPackageLoad
 MetacelloLinearLoadingStrategy >> executePostloadDirective: aPostloadDirective [
 
 	aPostloadDirective spec postLoadDoItBlock ifNotNil: [ :block |
-		MetacelloNotification signal: 'Evaluating -> ' , aPostloadDirective spec label , ' >> ' , aPostloadDirective spec postLoadDoIt value asString.
-		aPostloadDirective evaluateSupplyingAnswers: [ block valueWithPossibleArgs: (Array with: aPostloadDirective loader with: aPostloadDirective spec) ].
-		MetacelloNotification signal: 'Evaluated -> ' , aPostloadDirective spec label , ' >> ' , aPostloadDirective spec postLoadDoIt value asString ]
+		MetacelloNotification signal:
+			'Evaluating -> ' , aPostloadDirective spec label , ' >> '
+			, aPostloadDirective spec postLoadDoIt value asString.
+		block valueWithPossibleArgs:
+			(Array
+				 with: aPostloadDirective loader
+				 with: aPostloadDirective spec).
+		MetacelloNotification signal:
+			'Evaluated -> ' , aPostloadDirective spec label , ' >> '
+			, aPostloadDirective spec postLoadDoIt value asString ]
 ]
 
 { #category : 'loading' }
 MetacelloLinearLoadingStrategy >> executePreloadDirective: aPreloadDirective [
 
 	aPreloadDirective spec preLoadDoItBlock ifNotNil: [ :block |
-		MetacelloNotification signal: 'Evaluating -> ' , aPreloadDirective spec label , ' >> ' , aPreloadDirective spec preLoadDoIt value asString.
-		aPreloadDirective evaluateSupplyingAnswers: [ block valueWithPossibleArgs: (Array with: aPreloadDirective loader with: aPreloadDirective spec) ].
-		MetacelloNotification signal: 'Evaluated -> ' , aPreloadDirective spec label , ' >> ' , aPreloadDirective spec preLoadDoIt value asString ]
+		MetacelloNotification signal:
+			'Evaluating -> ' , aPreloadDirective spec label , ' >> '
+			, aPreloadDirective spec preLoadDoIt value asString.
+		block valueWithPossibleArgs:
+			(Array with: aPreloadDirective loader with: aPreloadDirective spec).
+		MetacelloNotification signal:
+			'Evaluated -> ' , aPreloadDirective spec label , ' >> '
+			, aPreloadDirective spec preLoadDoIt value asString ]
 ]
 
 { #category : 'actions' }
