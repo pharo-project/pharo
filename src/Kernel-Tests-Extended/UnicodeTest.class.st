@@ -130,7 +130,7 @@ UnicodeTest >> testIsInitialQuote [
 { #category : 'tests - categorization' }
 UnicodeTest >> testIsLetter [
 	| letterCategories methodAnswer catFromTable |
-	letterCategories := #(Ll Lm Lo Lt Lu) collect: [ :c | Unicode classPool at: c ].
+	letterCategories := #(Ll Lm Lo Lt Lu) collect: [ :c | Unicode classVariableNamed: c ].
 	self aRandomSelectionOfCodePointsDo: [ :cp |
 			methodAnswer := Unicode isLetter: (Character codePoint: cp).
 			catFromTable := self unicodeCategoryTableLookup: cp.
