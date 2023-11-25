@@ -47,6 +47,20 @@ ScalingCanvas class >> exampleDrawPolygon [
 ]
 
 { #category : 'examples' }
+ScalingCanvas class >> exampleDrawString [
+
+	^ self privateExampleWithExtent: 150@40 fillColor: Color white scale: 4 drawBlock: [ :canvas |
+		| bounds |
+		bounds := 5.5@3.5 corner: 144.5@37.5.
+		canvas
+			frameRectangle: bounds color: Color green;
+			drawString: 'Lorem ipsum' in: bounds
+				font: (LogicalFont familyName: 'Source Sans Pro' pointSize: 20) color: Color blue
+				underline: true underlineColor: Color red
+				strikethrough: true strikethroughColor: Color red ]
+]
+
+{ #category : 'examples' }
 ScalingCanvas class >> exampleFillOval [
 
 	^ self privateExampleWithExtent: 10@10 fillColor: Color white scale: 10 drawBlock: [ :canvas |
@@ -382,17 +396,17 @@ ScalingCanvas >> drawPolygon: vertices color: aColor borderWidth: bw borderColor
 			transformedCanvas drawPolygon: vertices color: aColor borderWidth: bw borderColor: bc ]
 ]
 
-{ #category : 'private' }
+{ #category : 'drawing - text' }
 ScalingCanvas >> drawString: s from: firstIndex to: lastIndex in: boundsRect font: fontOrNil color: c [
 
-	formCanvas drawString: s from: firstIndex to: lastIndex in: (boundsRect scaleBy: scale)
+	formCanvas drawString: s from: firstIndex to: lastIndex in: (boundsRect floor scaleBy: scale)
 		font: fontOrNil color: c scale: scale
 ]
 
 { #category : 'drawing - text' }
 ScalingCanvas >> drawString: s from: firstIndex to: lastIndex in: boundsRect font: fontOrNil color: c underline: underline underlineColor: uc strikethrough: strikethrough strikethroughColor: sc [
 
-	formCanvas drawString: s from: firstIndex to: lastIndex in: (boundsRect scaleBy: scale)
+	formCanvas drawString: s from: firstIndex to: lastIndex in: (boundsRect floor scaleBy: scale)
 		font: fontOrNil color: c
 		underline: underline underlineColor: uc
 		strikethrough: strikethrough strikethroughColor: sc
