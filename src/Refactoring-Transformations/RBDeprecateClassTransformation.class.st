@@ -9,10 +9,7 @@ transformation := (RBDeprecateClassTransformation
 "
 Class {
 	#name : 'RBDeprecateClassTransformation',
-	#superclass : 'RBCompositeTransformation',
-	#instVars : [
-		'className'
-	],
+	#superclass : 'RBClassTransformation',
 	#category : 'Refactoring-Transformations-Model-Unused',
 	#package : 'Refactoring-Transformations',
 	#tag : 'Model-Unused'
@@ -44,15 +41,15 @@ RBDeprecateClassTransformation >> class: aClassName [
 { #category : 'transforming' }
 RBDeprecateClassTransformation >> privateTransform [
 
-	RBAddMethodTransformation
-		sourceCode: (String streamContents: [ :code |
-				 code
-					 nextPutAll: 'deprecated';
-					 nextPutAll: String cr;
-					 nextPutAll: String tab;
-					 nextPutAll: '^ true' ])
-		in: (className , ' class') asSymbol
-		withProtocol: #deprecation
+	self generateChangesFor: (RBAddMethodTransformation
+			 sourceCode: (String streamContents: [ :code |
+					  code
+						  nextPutAll: 'isDeprecated';
+						  nextPutAll: String cr;
+						  nextPutAll: String tab;
+						  nextPutAll: '^ true' ])
+			 in: (className , ' class') asSymbol
+			 withProtocol: #deprecation)
 ]
 
 { #category : 'printing' }
