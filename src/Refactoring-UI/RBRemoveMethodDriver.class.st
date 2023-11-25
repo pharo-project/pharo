@@ -21,6 +21,12 @@ RBRemoveMethodDriver >> applyChanges [
 ]
 
 { #category : 'execution' }
+RBRemoveMethodDriver >> applyRemoveMethodChanges [ 
+ 
+	self openPreviewWithChanges: refactoring removeMethodChanges
+]
+
+{ #category : 'execution' }
 RBRemoveMethodDriver >> browseSenders [
 
 	StMessageBrowserPresenter  
@@ -61,13 +67,6 @@ RBRemoveMethodDriver >> handleBreakingChanges [
 		          openModal.
 
 	select ifNotNil: [ select action ]
-]
-
-{ #category : 'execution' }
-RBRemoveMethodDriver >> removeMethodChanges [ 
-
-	self openPreviewWithChanges: refactoring removeMethodChanges
-
 ]
 
 { #category : 'execution' }
