@@ -17,7 +17,7 @@ Class {
 { #category : 'execution' }
 RBRemoveMethodDriver >> applyChanges [
 
-	 self openPreviewWithChanges: refactoring generateChanges
+	 self openPreviewWithChanges: refactoring removeMethodChanges
 ]
 
 { #category : 'execution' }
@@ -66,8 +66,7 @@ RBRemoveMethodDriver >> handleBreakingChanges [
 { #category : 'execution' }
 RBRemoveMethodDriver >> removeMethodChanges [ 
 
-	refactoring refactorings do: [ :ref | ref removeMethodChanges ].
-	self openPreviewWithChanges: refactoring changes
+	self openPreviewWithChanges: refactoring removeMethodChanges
 
 ]
 
