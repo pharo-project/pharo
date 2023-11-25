@@ -85,7 +85,6 @@ PharoBootstrapInitialization class >> initializeCommandLineHandlerAndErrorHandli
 
 	'InitializingFFI' traceCr.
 	"FFI"
-	ExternalObject initialize.
 	ExternalType initialize.
 
 	'Initializing Session Manager' traceCr.

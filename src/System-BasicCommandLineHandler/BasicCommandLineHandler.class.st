@@ -58,8 +58,7 @@ BasicCommandLineHandler class >> description [
 
 { #category : 'class initialization' }
 BasicCommandLineHandler class >> initialize [
-	SessionManager default
-		registerSystemClassNamed: self name
+	SessionManager default registerSystemClassNamed: self name
 ]
 
 { #category : 'handler selection' }

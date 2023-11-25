@@ -128,15 +128,23 @@ SessionManager class >> initializeKernelRegistrations [
 
 	self default
 		registerSystemClassNamed: #SmallInteger atPriority: 10;
+		registerSystemClassNamed: #Delay atPriority: 20;
+		registerSystemClassNamed: #ProcessorScheduler atPriority: 30;
 		registerSystemClassNamed: #OSPlatform atPriority: 50;
 		registerSystemClassNamed: #ExternalObject atPriority: 60;
 		registerSystemClassNamed: #FFIBackend atPriority: 60;
-		registerSystemClassNamed: #File atPriority: 90;
-		registerSystemClassNamed: #FinalizationProcess;
+		registerSystemClassNamed: #Symbol;
+		registerSystemClassNamed: #SourceFileArray;
+		registerSystemClassNamed: #WeakArray;
 		registerSystemClassNamed: #Stdio;
+		registerSystemClassNamed: #FinalizationProcess;
+		registerSystemClassNamed: #File atPriority: 90;
 		registerSystemClassNamed: #SharedRandom;
 		registerSystemClassNamed: #EndianDetector;
-		registerSystemClassNamed: #Symbol
+		
+		registerGuiClassNamed: #Color;
+		
+		registerNetworkClassNamed: #UUIDGenerator
 ]
 
 { #category : 'deferred startup actions' }

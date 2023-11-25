@@ -69,12 +69,6 @@ UUIDGenerator class >> default [
 	^ Default ifNil: [ Default := self new ]
 ]
 
-{ #category : 'class initialization' }
-UUIDGenerator class >> initialize [
-	SessionManager default
-		registerNetworkClassNamed: self name
-]
-
 { #category : 'accessing' }
 UUIDGenerator class >> next [
 	"Return a UUID using the shared generator"

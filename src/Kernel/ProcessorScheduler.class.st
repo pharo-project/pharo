@@ -76,11 +76,7 @@ ProcessorScheduler class >> initialize [
 	LowIOPriority := 60.
 	HighIOPriority := 70.
 	TimingPriority := 80.
-	IdleTime := 50000.
-
-	SessionManager default
-		registerSystemClassNamed: self name
-		atPriority: 30
+	IdleTime := 50000
 ]
 
 { #category : 'instance creation' }
