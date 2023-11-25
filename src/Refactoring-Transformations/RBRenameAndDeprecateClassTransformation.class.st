@@ -76,17 +76,19 @@ RBRenameAndDeprecateClassTransformation >> applicabilityPreconditions [
 RBRenameAndDeprecateClassTransformation >> buildTransformations [
 
 	^ transformations ifNil: [
-		  | class |
-		  class := self model classNamed: className.
-		  transformations := OrderedCollection
-			                     with: ((RBInsertNewClassTransformation className: self tmpName)
-					                      superclass: className asSymbol;
-					                      packageName: class packageName;
-					                      tagName: class tagName;
-					                      yourself)
-			                     with: (RBRenameClassRefactoring rename: className to: newClassName)
-			                     with: (RBRenameClassRefactoring rename: self tmpName to: className)
-			                     with: (RBDeprecateClassTransformation className: className) ]
+		transformations := OrderedCollection
+			with: (RBRenameClassRefactoring
+						model: self model
+						rename: className to: newClassName)
+			with: ((RBInsertNewClassTransformation
+					   model: self model
+						className: className)
+						superclass: newClassName asSymbol;
+						subclasses: #();
+						packageName: (self model classNamed: className) packageName)
+		with: (RBDeprecateClassTransformation
+						model: self model
+						className: className)]
 ]
 
 { #category : 'api' }
