@@ -60,7 +60,7 @@ RBRenameAndDeprecateClassTransformation >> buildTransformations [
 					                      yourself)
 			                     with: (RBRenameClassRefactoring rename: className to: newClassName)
 			                     with: (RBRenameClassRefactoring rename: self tmpName to: className)
-			                     with: (RBDeprecateClassTransformation class: className) ]
+			                     with: (RBDeprecateClassTransformation className: className) ]
 ]
 
 { #category : 'api' }

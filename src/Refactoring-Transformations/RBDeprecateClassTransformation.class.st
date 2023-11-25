@@ -15,27 +15,21 @@ Class {
 	#tag : 'Model-Unused'
 }
 
-{ #category : 'api' }
-RBDeprecateClassTransformation class >> class: aClassName [
+{ #category : 'instance creation' }
+RBDeprecateClassTransformation class >> className: aClassName [
 
 	^ self new
-		class: aClassName;
+		className: aClassName;
 		yourself
 ]
 
-{ #category : 'api' }
-RBDeprecateClassTransformation class >> model: aRBModel class: aClassName [
+{ #category : 'instance creation' }
+RBDeprecateClassTransformation class >> model: aRBModel className: aClassName [
 
 	^ self new
 		model: aRBModel;
-		class: aClassName;
+		className: aClassName;
 		yourself
-]
-
-{ #category : 'api' }
-RBDeprecateClassTransformation >> class: aClassName [
-
-	className := aClassName
 ]
 
 { #category : 'transforming' }
@@ -57,7 +51,7 @@ RBDeprecateClassTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
 	self class storeOn: aStream.
-	aStream nextPutAll: ' class: '.
+	aStream nextPutAll: ' className: '.
 	className storeOn: aStream.
 	aStream nextPut: $)
 ]
