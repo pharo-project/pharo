@@ -1,21 +1,14 @@
 Class {
 	#name : 'RBDefinesSelectorsCondition',
-	#superclass : 'RBCondition',
+	#superclass : 'RBMethodsCondition',
 	#instVars : [
 		'class',
-		'selectors',
-		'violators'
+		'selectors'
 	],
 	#category : 'Refactoring-Core-Conditions',
 	#package : 'Refactoring-Core',
 	#tag : 'Conditions'
 }
-
-{ #category : 'checking' }
-RBDefinesSelectorsCondition >> check [ 
-
-	^ self violators isEmpty
-]
 
 { #category : 'initialization' }
 RBDefinesSelectorsCondition >> definesSelectors: aSelectorsList in: aClass [
