@@ -82,7 +82,7 @@ HaloMorph class >> customHaloSpecifications [
 	^ #(
 	(addDismissHandle:		left			top				(red		muchLighter)			#haloDismiss)
 	(addMenuHandle:		right		top				(red)							#haloMenu)
-	(addDragHandle:			center	top					(brown)							#haloDragddGrowHandle:		right		bottom			(yellow)						#haloScale)
+	(addDragHandle:			center	top					(brown)							#haloDrag)
 	(addScaleHandle:		right		bottom			(lightOrange)					#haloScale)
 
 	(addRecolorHandle:		left			center			(green muchLighter lighter)		#haloRecolor)
