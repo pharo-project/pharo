@@ -36,7 +36,14 @@ RBRemoveMethodsInHierarchyRefactoring >> applicabilityPreconditions [
 ]
 
 { #category : 'transforming' }
-RBRemoveMethodsInHierarchyRefactoring >> delete: aSelectorsCollection in: aClass [
+RBRemoveMethodsInHierarchyRefactoring >> initializeRefactorings [
+
+	class withAllSubclasses do: [ :aClass |
+		self remove: selectors in: aClass ]
+]
+
+{ #category : 'transforming' }
+RBRemoveMethodsInHierarchyRefactoring >> remove: aSelectorsCollection in: aClass [
 
 	| containingMethods |
 	containingMethods := aSelectorsCollection select: [ :sel |
@@ -46,13 +53,6 @@ RBRemoveMethodsInHierarchyRefactoring >> delete: aSelectorsCollection in: aClass
 				 model: self model
 				 selectors: containingMethods
 				 from: aClass) ]
-]
-
-{ #category : 'transforming' }
-RBRemoveMethodsInHierarchyRefactoring >> initializeRefactorings [
-
-	class withAllSubclasses do: [ :aClass |
-		self delete: selectors in: aClass ]
 ]
 
 { #category : 'removing' }
