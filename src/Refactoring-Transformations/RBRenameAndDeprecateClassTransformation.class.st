@@ -29,6 +29,15 @@ Class {
 }
 
 { #category : 'api' }
+RBRenameAndDeprecateClassTransformation class >> model: aRBModel rename: aClassName [
+
+	^ self new
+		model: aRBModel;
+		className: aClassName
+		yourself
+]
+
+{ #category : 'api' }
 RBRenameAndDeprecateClassTransformation class >> model: aRBModel rename: aClassName to: aNewClassName [
 
 	^ self new
@@ -39,11 +48,28 @@ RBRenameAndDeprecateClassTransformation class >> model: aRBModel rename: aClassN
 ]
 
 { #category : 'api' }
+RBRenameAndDeprecateClassTransformation class >> rename: aClassName [
+
+	^ self new
+		className: aClassName
+]
+
+{ #category : 'api' }
 RBRenameAndDeprecateClassTransformation class >> rename: aClassName to: aNewClassName [
 
 	^ self new
 		className: aClassName
 		newClassName: aNewClassName
+]
+
+{ #category : 'preconditions' }
+RBRenameAndDeprecateClassTransformation >> applicabilityPreconditions [
+
+	| class |
+	class := self model classNamed: className.
+	^ (RBCondition withBlock: [ class notNil and: [ class isMeta not ] ])
+	  & (RBCondition isValidClassName: newClassName)
+	  & (RBCondition isGlobal: newClassName in: self model) not
 ]
 
 { #category : 'executing' }
@@ -64,10 +90,22 @@ RBRenameAndDeprecateClassTransformation >> buildTransformations [
 ]
 
 { #category : 'api' }
+RBRenameAndDeprecateClassTransformation >> className: aClassName [
+
+	className := aClassName asSymbol 
+]
+
+{ #category : 'api' }
 RBRenameAndDeprecateClassTransformation >> className: aClassName newClassName: aNewClassName [
 
-	className := aClassName.
-	newClassName := aNewClassName
+	className := aClassName asSymbol.
+	newClassName := aNewClassName asSymbol 
+]
+
+{ #category : 'api' }
+RBRenameAndDeprecateClassTransformation >> newClassName: aNewClassName [
+
+	newClassName := aNewClassName asSymbol 
 ]
 
 { #category : 'printing' }
