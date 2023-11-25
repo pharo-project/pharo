@@ -1202,23 +1202,23 @@ UITheme >> createCloseBoxFor: aSystemWindow [
 UITheme >> createCollapseBoxFor: aSystemWindow [
 	"Answer a button for minimising the window."
 
-	|form msb|
-	form := self windowMinimizeForm.
-	msb := MultistateButtonMorph new extent: form extent.
-	msb activeEnabledNotOverUpFillStyle: (ImageFillStyle form: form).
-	form := self windowMinimizePassiveForm.
-	msb extent: form extent.
-	msb passiveEnabledNotOverUpFillStyle: (ImageFillStyle form: form).
-	form := self windowMinimizeOverForm.
-	msb extent: form extent.
+	|formSet msb|
+	formSet := self windowMinimizeFormSet.
+	msb := MultistateButtonMorph new extent: formSet extent.
+	msb activeEnabledNotOverUpFillStyle: (ImageFillStyle formSet: formSet).
+	formSet := self windowMinimizePassiveFormSet.
+	msb extent: formSet extent.
+	msb passiveEnabledNotOverUpFillStyle: (ImageFillStyle formSet: formSet).
+	formSet := self windowMinimizeOverFormSet.
+	msb extent: formSet extent.
 	msb
-		activeEnabledOverUpFillStyle: (ImageFillStyle form: form);
-		passiveEnabledOverUpFillStyle: (ImageFillStyle form: form).
-	form := self windowMinimizePassiveForm.
+		activeEnabledOverUpFillStyle: (ImageFillStyle formSet: formSet);
+		passiveEnabledOverUpFillStyle: (ImageFillStyle formSet: formSet).
+	formSet := self windowMinimizePassiveFormSet.
 	msb
-		extent: form extent;
-		activeEnabledOverDownFillStyle: (ImageFillStyle form: form);
-		passiveEnabledOverDownFillStyle: (ImageFillStyle form: form);
+		extent: formSet extent;
+		activeEnabledOverDownFillStyle: (ImageFillStyle formSet: formSet);
+		passiveEnabledOverDownFillStyle: (ImageFillStyle formSet: formSet);
 		addUpAction: [aSystemWindow collapseBoxHit];
 		setBalloonText: 'Collapse this window' translated;
 		extent: aSystemWindow boxExtent.
@@ -5131,23 +5131,41 @@ UITheme >> windowMenuPassiveForm [
 
 { #category : 'label-styles - windows' }
 UITheme >> windowMinimizeForm [
-	"Answer the form to use for the minimize button of a window."
 
-	^ self iconNamed: #windowMinimize
+	^ self windowMinimizeFormSet asForm
+]
+
+{ #category : 'label-styles - windows' }
+UITheme >> windowMinimizeFormSet [
+	"Answer the form set to use for the minimize button of a window."
+
+	^ self iconFormSetNamed: #windowMinimize
 ]
 
 { #category : 'label-styles - windows' }
 UITheme >> windowMinimizeOverForm [
-	"Answer the form to use for mouse over window minimize buttons"
 
-	^ self iconNamed: #windowMinimize
+	^ self windowMinimizeOverFormSet asForm
+]
+
+{ #category : 'label-styles - windows' }
+UITheme >> windowMinimizeOverFormSet [
+	"Answer the form set to use for mouse over window minimize buttons"
+
+	^ self iconFormSetNamed: #windowMinimize
 ]
 
 { #category : 'label-styles - windows' }
 UITheme >> windowMinimizePassiveForm [
-	"Answer the form to use for passive (background) window minimize buttons"
 
-	^ self iconNamed: #windowMinimizeInactive
+	^ self windowMinimizePassiveFormSet asForm
+]
+
+{ #category : 'label-styles - windows' }
+UITheme >> windowMinimizePassiveFormSet [
+	"Answer the form set to use for passive (background) window minimize buttons"
+
+	^ self iconFormSetNamed: #windowMinimizeInactive
 ]
 
 { #category : 'sounds' }
