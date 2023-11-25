@@ -6,12 +6,19 @@ Class {
 	#superclass : 'RBInteractionDriver',
 	#instVars : [
 		'methods',
-		'senders'
+		'senders',
+		'haveNoSenders'
 	],
 	#category : 'Refactoring-UI-Drivers',
 	#package : 'Refactoring-UI',
 	#tag : 'Drivers'
 }
+
+{ #category : 'execution' }
+RBRemoveMethodDriver >> applyChanges [
+
+	 self openPreviewWithChanges: refactoring generateChanges
+]
 
 { #category : 'execution' }
 RBRemoveMethodDriver >> browseSenders [
@@ -34,6 +41,29 @@ RBRemoveMethodDriver >> configureRefactoring [
 ]
 
 { #category : 'execution' }
+RBRemoveMethodDriver >> handleBreakingChanges [
+
+	| select items |
+	items := OrderedCollection new.
+
+	items add: (RBRemoveChoice new driver: self).
+	items add: (RBRemoveAndShowSendersChoice new driver: self).
+	items add: (RBDontRemoveButShowSendersChoice new driver: self).
+
+	select := SpSelectDialog new
+		          title: 'There are ' , haveNoSenders violators size asString
+			          , ' methods calling method(s) you want to delete';
+		          label: 'Select a strategy';
+		          items: items;
+		          display: [ :each | each description ];
+		          displayIcon: [ :each |
+			          self iconNamed: each systemIconName ];
+		          openModal.
+
+	select ifNotNil: [ select action ]
+]
+
+{ #category : 'execution' }
 RBRemoveMethodDriver >> removeMethodChanges [ 
 
 	refactoring refactorings do: [ :ref | ref removeMethodChanges ].
@@ -44,33 +74,14 @@ RBRemoveMethodDriver >> removeMethodChanges [
 { #category : 'execution' }
 RBRemoveMethodDriver >> runRefactoring [
 
-	| select |
 	self configureRefactoring.
-	[
-	[
-	senders := refactoring senders.
+	refactoring checkApplicabilityPreconditions.
+	
+	haveNoSenders := refactoring preconditionHaveNoSenders.
 
-	senders
-		ifEmpty: [ self openPreviewWithChanges: refactoring generateChanges ]
-		ifNotEmpty: [ 
-		
-		select := SpSelectDialog new 
-			title: 'There are ', senders size asString,  ' methods calling method(s) you want to delete';
-			label: 'Select a strategy';
-			items: (RBRemoveMethodChoice subclasses collect: [ :each | each  new driver: self]);
-			display: [ :each | each description ];
-			displayIcon: [ :each | self iconNamed: each systemIconName ];
-			openModal.
-			
-	select 
-		ifNotNil: [ 
-			select action ]]]
-	
-		on: RBApplicabilityChecksFailedError
-		do: [ :err | ^ RBRefactoringError signal: err messageText ] ]
-		on: RBBreakingChangeChecksFailedWarning
-		do: [ :err |	 err return ]
-	
+	haveNoSenders check
+			ifTrue: [ self applyChanges ]
+			ifFalse: [ self handleBreakingChanges ]
 
 ]
 
