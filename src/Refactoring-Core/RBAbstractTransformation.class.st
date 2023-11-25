@@ -212,6 +212,17 @@ RBAbstractTransformation >> generateChanges [
 	"RBRefactoringManager instance addRefactoring: self"
 ]
 
+{ #category : 'transforming' }
+RBAbstractTransformation >> generateChangesFor: aRefactoring [
+	"I will generate changes and save them in the model, BUT I will not apply them!
+	Use me when a refactorings is composed of multiple other refactorings"
+
+	"Execute the argument but passing the receiver options to that refactoring"
+	aRefactoring copyOptionsFrom: self options.
+	aRefactoring model: self model.
+	aRefactoring generateChanges
+]
+
 { #category : 'accessing' }
 RBAbstractTransformation >> model [
 
