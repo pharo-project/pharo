@@ -25,20 +25,12 @@ RBRemoveMethodDriver >> browseSenders [
 { #category : 'resources' }
 RBRemoveMethodDriver >> configureRefactoring [
 
-	| refactorings |
-	refactorings := OrderedCollection new.
-	(methods groupedBy: [ :m | m origin ])
-		keysAndValuesDo: [ :k :v |
-			refactorings add: (
-				RBRemoveMethodsRefactoring
-	            model: model
-	            selectors: (v collect: [ :each | each selector ])
-	         		from: k
-				)
-			].
-	refactoring := RBCompositeRefactoring new
-							model: model;
-							refactorings: refactorings 
+	| classSelectorMapping |
+	classSelectorMapping := methods collect: [ :m | m origin -> m selector ].
+
+	refactoring := RBRemoveMethodsRefactoring
+			            model: model
+			            classSelectorMapping: classSelectorMapping
 ]
 
 { #category : 'execution' }
@@ -56,7 +48,7 @@ RBRemoveMethodDriver >> runRefactoring [
 	self configureRefactoring.
 	[
 	[
-	senders := refactoring refactorings flatCollect: [ :ref | ref senders ].
+	senders := refactoring senders.
 
 	senders
 		ifEmpty: [ self openPreviewWithChanges: refactoring generateChanges ]
