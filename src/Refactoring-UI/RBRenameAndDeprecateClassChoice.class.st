@@ -15,5 +15,5 @@ RBRenameAndDeprecateClassChoice >> action [
 { #category : 'accessing' }
 RBRenameAndDeprecateClassChoice >> description [
 
-	^ 'Rename this class, subclass it with class that has old name and deprecate that class'
+	^ 'Rename this class, subclass it with a new class that has the old name of the class and deprecate that class'
 ]
