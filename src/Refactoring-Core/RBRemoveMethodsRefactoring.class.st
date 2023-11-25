@@ -74,7 +74,7 @@ RBRemoveMethodsRefactoring >> breakingChangePreconditions [
 
 	refactorings do: [ :ref | ref checkSuperMethods ].
 
-	^ RBMethodsHaveNoSendersCondition new model: self model; classSelectorsMapping: classSelectorMapping
+	^ self preconditionHaveNoSenders 
 ]
 
 { #category : 'preconditions' }
@@ -100,6 +100,12 @@ RBRemoveMethodsRefactoring >> classSelectorMapping: classSelectorMappingList [
 				 model: model
 				 selector: aClassSelectorPair value
 				 from: aClass) ]
+]
+
+{ #category : 'preconditions' }
+RBRemoveMethodsRefactoring >> preconditionHaveNoSenders [
+
+	^ RBMethodsHaveNoSendersCondition new model: self model; classSelectorsMapping: classSelectorMapping
 ]
 
 { #category : 'removing' }
