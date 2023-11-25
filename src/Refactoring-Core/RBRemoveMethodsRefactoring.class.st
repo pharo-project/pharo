@@ -77,6 +77,12 @@ RBRemoveMethodsRefactoring >> breakingChangePreconditions [
 	^ RBMethodsHaveNoSendersCondition new model: self model; classSelectorsMapping: classSelectorMapping
 ]
 
+{ #category : 'preconditions' }
+RBRemoveMethodsRefactoring >> checkSuperMethods [
+	
+	refactorings do: [ :ref | ref checkSuperMethods ]
+]
+
 { #category : 'initialization' }
 RBRemoveMethodsRefactoring >> classSelectorMapping: classSelectorMappingList [
 

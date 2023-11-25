@@ -13,11 +13,7 @@ Script
 "
 Class {
 	#name : 'RBRemoveMethodsInHierarchyRefactoring',
-	#superclass : 'RBCompositeRefactoring',
-	#instVars : [
-		'selectors',
-		'class'
-	],
+	#superclass : 'RBRemoveMethodsRefactoring',
 	#category : 'Refactoring-Core-Refactorings',
 	#package : 'Refactoring-Core',
 	#tag : 'Refactorings'
@@ -29,17 +25,12 @@ RBRemoveMethodsInHierarchyRefactoring class >> selectors: aSelectorsCollection f
 	^ self new selectors: aSelectorsCollection from: aClass
 ]
 
-{ #category : 'preconditions' }
-RBRemoveMethodsInHierarchyRefactoring >> applicabilityPreconditions [ 
-
-	^ { RBDefinesSelectorsCondition new definesSelectors: selectors in: class }
-]
-
 { #category : 'transforming' }
 RBRemoveMethodsInHierarchyRefactoring >> initializeRefactorings [
 
-	class withAllSubclasses do: [ :aClass |
-		self remove: selectors in: aClass ]
+	classSelectorMapping keysAndValuesDo: [ :class :selectors |
+		class allSubclasses do: [ :aClass |
+			self remove: selectors in: aClass ] ]
 ]
 
 { #category : 'transforming' }
@@ -55,22 +46,9 @@ RBRemoveMethodsInHierarchyRefactoring >> remove: aSelectorsCollection in: aClass
 				 from: aClass) ]
 ]
 
-{ #category : 'removing' }
+{ #category : 'accessing' }
 RBRemoveMethodsInHierarchyRefactoring >> selectors: aSelectorsCollection from: aClass [
 
-	class := self classObjectFor: aClass.
-	selectors := aSelectorsCollection.
-	refactorings := OrderedCollection new.
+	super selectors: aSelectorsCollection from: aClass.
 	self initializeRefactorings 
-]
-
-{ #category : 'printing' }
-RBRemoveMethodsInHierarchyRefactoring >> storeOn: aStream [
-	aStream nextPut: $(.
-	self class storeOn: aStream.
-	aStream nextPutAll: ' removeMethods: '.
-	selectors asArray storeOn: aStream.
-	aStream nextPutAll: ' from: '.
-	class storeOn: aStream.
-	aStream nextPut: $)
 ]
