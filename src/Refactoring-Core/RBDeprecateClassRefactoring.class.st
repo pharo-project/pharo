@@ -26,7 +26,7 @@ Class {
 
 { #category : 'instance creation' }
 RBDeprecateClassRefactoring class >> deprecate: aDeprecatedClass in: aNewName [
-	^ self new className: aDeprecatedClass name newName: aNewName
+	^ self new className: aDeprecatedClass newName: aNewName
 ]
 
 { #category : 'instance creation' }
