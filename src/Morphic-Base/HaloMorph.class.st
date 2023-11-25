@@ -178,7 +178,7 @@ HaloMorph class >> iconicHaloSpecifications [
 	(addFontSizeHandle:		leftCenter	bottom			(lightGreen)						#haloFontSize)
 	(addFontStyleHandle:		center		bottom			(lightRed)						#haloFontStyle)
 	(addFontEmphHandle:	rightCenter	bottom			(lightBrown darker)				#haloFontEmph)
-	(addRecolorHandle:		right		bottomCenter	(magenta darker)				#haloRecolon) )
+	(addRecolorHandle:		right		bottomCenter	(magenta darker)				#haloRecolor) )
 ]
 
 { #category : 'class initialization' }
