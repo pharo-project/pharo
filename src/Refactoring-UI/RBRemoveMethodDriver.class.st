@@ -30,8 +30,8 @@ RBRemoveMethodDriver >> applyRemoveMethodChanges [
 RBRemoveMethodDriver >> browseSenders [
 
 	StMessageBrowserPresenter  
-		browse: (senders collect: [ :each | each value methodClass realClass >> each value selector ]) 
-		asSendersOf: (refactoring refactorings flatCollect: [ :ref | ref selectors ])
+		browse: (haveNoSenders violators collect: [ :each | each value methodClass realClass >> each value selector ]) 
+		asSendersOf: (refactoring allSelectors )
 	"this does not work for multiple selectors remove."
 ]
 
