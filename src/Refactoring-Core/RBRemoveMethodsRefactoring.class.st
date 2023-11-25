@@ -9,13 +9,28 @@ Class {
 	#name : 'RBRemoveMethodsRefactoring',
 	#superclass : 'RBCompositeRefactoring',
 	#instVars : [
-		'selectors',
-		'class'
+		'classSelectorMapping',
+		'allSelectors'
 	],
 	#category : 'Refactoring-Core-Refactorings',
 	#package : 'Refactoring-Core',
 	#tag : 'Refactorings'
 }
+
+{ #category : 'instance creation' }
+RBRemoveMethodsRefactoring class >> classSelectorMapping: classMethodMappingDict [
+
+	^ self new
+		  classSelectorMapping: classMethodMappingDict
+]
+
+{ #category : 'instance creation' }
+RBRemoveMethodsRefactoring class >> model: model classSelectorMapping: classMethodMappingDict [
+
+	^ self new
+		  model: model;
+		  classSelectorMapping: classMethodMappingDict
+]
 
 { #category : 'instance creation' }
 RBRemoveMethodsRefactoring class >> model: aRBNamespace selectors: aSelectorsCollection from: aClass [
@@ -53,6 +68,25 @@ RBRemoveMethodsRefactoring >> breakingChangePreconditions [
 		  'Some of the methods have senders outside of the methods being removed'
 ]
 
+{ #category : 'initialization' }
+RBRemoveMethodsRefactoring >> classSelectorMapping: classSelectorMappingList [
+
+	classSelectorMapping := Dictionary new.
+	refactorings := OrderedCollection new.
+	classSelectorMappingList do: [ :aClassSelectorPair |
+		| aClass existingValue newValue |
+		aClass := self model classObjectFor: aClassSelectorPair key.
+		existingValue := classSelectorMapping at: aClass ifAbsent: nil.
+		newValue := existingValue
+			            ifNil: [ Array with: aClassSelectorPair value ]
+			            ifNotNil: [ existingValue copyWith: aClassSelectorPair value ].
+		classSelectorMapping at: aClass put: newValue.
+		refactorings add: (RBRemoveMethodRefactoring
+				 model: model
+				 selector: aClassSelectorPair value
+				 from: aClass) ]
+]
+
 { #category : 'removing' }
 RBRemoveMethodsRefactoring >> removeMethodChanges [
 
@@ -69,13 +103,7 @@ RBRemoveMethodsRefactoring >> selectors [
 { #category : 'accessing' }
 RBRemoveMethodsRefactoring >> selectors: aCollection from: aClass [
 
-	selectors := aCollection.
-	class := self model classFor: aClass.
-	refactorings := aCollection collect: [ :method |
-							RBRemoveMethodRefactoring
-								model: model
-								selector: method
-								from: aClass ]
+	self classSelectorMapping: (aCollection collect: [ :selector | aClass -> selector ] ) 
 ]
 
 { #category : 'private' }
