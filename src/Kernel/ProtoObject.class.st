@@ -70,12 +70,14 @@ ProtoObject >> becomeForward: otherObject copyHash: copyHash [
 ProtoObject >> cannotInterpret: aMessage [
 	 "Handle the fact that there was an attempt to send the given message to the receiver but a null methodDictionary was encountered while looking up the message selector.  Hopefully this is the result of encountering a stub for a swapped out class which induces this exception on purpose."
 
-"If this is the result of encountering a swap-out stub, then simulating the lookup in Smalltalk should suffice to install the class properly, and the message may be resent."
+	"If this is the result of encountering a swap-out stub, then simulating the lookup in Smalltalk should suffice to install the class properly, and the message may be resent."
+	
+	"Important: do not send anything to self (here or in a redefinition) as that will likely cause an infinite recursion of `cannotInterpret:`"
 
 	<reflection: 'Message sending and code execution - Control message passing'>
-	(self class lookupSelector: aMessage selector) ifNotNil:
-		["Simulated lookup succeeded -- resend the message."
-		^ aMessage sentTo: self].
+	((Behavior classOf: self) lookupSelector: aMessage selector) ifNotNil:
+		[ :method | "Simulated lookup succeeded. Evaluate the method!"
+			^ method valueWithReceiver: self arguments: aMessage arguments ].
 
 	"Could not recover by simulated lookup -- it's an error"
 	Error signal: 'MethodDictionary fault'.

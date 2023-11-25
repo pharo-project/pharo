@@ -19,6 +19,17 @@ Class {
 	#tag : 'Classes'
 }
 
+{ #category : #'simulation support' }
+Behavior class >> classOf: anObject [
+	"The class of anObject.
+	This is equivalent to `anObject class` but without a message to be send to `anObject`.
+	This can be very handy if the class of `anObject` is unreliable.
+	e.g. no inheritance from ProtoObject, or having a nil methodDict."
+
+	<primitive: 111>
+	self primitiveFailed
+]
+
 { #category : 'class initialization' }
 Behavior class >> initialize [
 	"Behavior initialize"
