@@ -61,31 +61,6 @@ MetacelloVersion >> blessing [
 ]
 
 { #category : 'private' }
-MetacelloVersion >> buildSpecFrom: required withEngine: anEngine forTarget: aTarget [
-
-	| packages |
-	packages := Dictionary new.
-	self spec resolveToLoadableSpecs: required map: packages.
-
-	packages values do: [ :pkg |
-		pkg ensureLoadedForDevelopmentUsing: aTarget withEngine: anEngine.
-		(MetacelloIgnorePackageLoaded signal: pkg) ifFalse: [
-			anEngine ignoreImage ifFalse: [
-				(pkg
-					 compareCurrentVersion: aTarget operator
-					 targetVersionStatus: #( #allLoadedToSpec )
-					 using: aTarget
-					 withEngine: anEngine) ifTrue: [ packages removeKey: pkg name ] ] ] ].
-
-	packages notEmpty ifTrue: [
-		aTarget preLoad: self spec.
-		aTarget load: self spec.
-		aTarget postLoad: self spec ].
-
-	^ aTarget
-]
-
-{ #category : 'private' }
 MetacelloVersion >> computeVersionStatus [
 	"
 		#allLoadedToSpec - all projects and packages are loaded and match specification
@@ -397,11 +372,11 @@ MetacelloVersion >> record: required [
 MetacelloVersion >> recordRequiredFromArray: anArray withEngine: anEngine [
 
 	| target |
-	target := MetacelloRecordTarget new.
-	self
-		buildSpecFrom: anArray
-		withEngine: anEngine
-		forTarget: target.
+	target := MetacelloRecordTarget on: anEngine.
+	target required: anArray.
+
+	self spec acceptVisitor: target.
+
 	^ anEngine specBuilder currentLoadDirective
 ]
 

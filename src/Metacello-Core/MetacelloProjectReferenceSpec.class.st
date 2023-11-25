@@ -14,6 +14,12 @@ MetacelloProjectReferenceSpec >> aboutToCopy [
     self projectReference className
 ]
 
+{ #category : 'visiting' }
+MetacelloProjectReferenceSpec >> acceptVisitor: aVisitor [
+	
+	^ aVisitor visitProjectReference: self
+]
+
 { #category : 'accessing' }
 MetacelloProjectReferenceSpec >> answers: aListOfPairs [
 

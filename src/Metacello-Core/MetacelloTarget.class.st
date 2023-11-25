@@ -64,26 +64,13 @@ MetacelloTarget class >> retryPackageResolution: aBool [
 ]
 
 { #category : 'accessing' }
+MetacelloTarget >> engine [
+	^ engine
+]
+
+{ #category : 'accessing' }
 MetacelloTarget >> engine: aMetacelloScriptEngine [ 
 	engine := aMetacelloScriptEngine
-]
-
-{ #category : 'actions' }
-MetacelloTarget >> linearLoadPackageSpec: packageSpec gofer: gofer [
-
-	self subclassResponsibility
-]
-
-{ #category : 'private' }
-MetacelloTarget >> linearLoadPackagesOfSpec: aSpec [
-
-	| gofer monticelloRepositories |
-	gofer := Gofer new.
-	monticelloRepositories := self repositoriesFrom:
-		                          aSpec repositorySpecs.
-	monticelloRepositories do: [ :repo | gofer repository: repo ].
-	aSpec packageSpecsInLoadOrder do: [ :pkg |
-		pkg loadUsing: self gofer: gofer withEngine: engine ]
 ]
 
 { #category : 'packages' }
@@ -131,13 +118,10 @@ MetacelloTarget >> resolvePackageSpecReferences: packageSpec gofer: gofer [
 
 	| versionReference references localGofer |
 	localGofer := gofer.
-"	1halt."
-	"self hasRepositoryOverrides not ifTrue: ["
-"		1halt."
-		packageSpec repositorySpecs notEmpty ifTrue: [
-			localGofer := Gofer new.
-			(self repositoriesFrom: packageSpec repositorySpecs) do: [ :repo |
-				localGofer repository: repo ] ] "]".
+	packageSpec repositorySpecs notEmpty ifTrue: [
+		localGofer := Gofer new.
+		(self repositoriesFrom: packageSpec repositorySpecs) do: [ :repo |
+			localGofer repository: repo ] ].
 	packageSpec getFile ifNil: [ "don't use package-cache when trying to get latest version"
 		localGofer disablePackageCache ].
 	versionReference := packageSpec goferLoaderReference.

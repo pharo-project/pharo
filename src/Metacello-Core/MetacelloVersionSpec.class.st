@@ -26,6 +26,12 @@ MetacelloVersionSpec class >> initialize [
 	self deprecatedAliases: { #MetacelloMCVersionSpec }
 ]
 
+{ #category : 'visiting' }
+MetacelloVersionSpec >> acceptVisitor: aVisitor [
+	
+	^ aVisitor visitVersionSpec: self
+]
+
 { #category : 'accessing' }
 MetacelloVersionSpec >> author [
 

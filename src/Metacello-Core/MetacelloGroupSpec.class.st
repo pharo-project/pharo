@@ -6,6 +6,12 @@ Class {
 	#tag : 'Specs'
 }
 
+{ #category : 'visiting' }
+MetacelloGroupSpec >> acceptVisitor: aVisitor [ 
+	
+	^ aVisitor visitGroupSpec: self
+]
+
 { #category : 'accessing' }
 MetacelloGroupSpec >> answers: aListOfPairs [
 

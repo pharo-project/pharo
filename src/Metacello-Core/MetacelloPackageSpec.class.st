@@ -13,6 +13,12 @@ Class {
 	#tag : 'Specs'
 }
 
+{ #category : 'visiting' }
+MetacelloPackageSpec >> acceptVisitor: aVisitor [
+
+	^ aVisitor visitPackageSpec: self
+]
+
 { #category : 'gofer' }
 MetacelloPackageSpec >> ancestors [
 

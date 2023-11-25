@@ -22,6 +22,12 @@ MetacelloSpec class >> for: aVersionMap [
 MetacelloSpec >> aboutToCopy [
 ]
 
+{ #category : 'visiting' }
+MetacelloSpec >> acceptVisitor: aVisitor [
+
+	self subclassResponsibility
+]
+
 { #category : 'spec creation' }
 MetacelloSpec >> addMember [
 

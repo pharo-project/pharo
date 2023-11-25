@@ -43,6 +43,18 @@ MetacelloLoadTarget >> linearLoadPackageSpec: packageSpec gofer: gofer [
 		, resolvedReference repository description
 ]
 
+{ #category : 'private' }
+MetacelloLoadTarget >> linearLoadPackagesOfSpec: aSpec [
+
+	| gofer monticelloRepositories |
+	gofer := Gofer new.
+	monticelloRepositories := self repositoriesFrom:
+		                          aSpec repositorySpecs.
+	monticelloRepositories do: [ :repo | gofer repository: repo ].
+	aSpec packageSpecsInLoadOrder do: [ :pkg |
+		pkg loadUsing: self gofer: gofer withEngine: engine ]
+]
+
 { #category : 'actions' }
 MetacelloLoadTarget >> loadPackageDirectives: pkgLoads gofer: aGofer [
 

@@ -1,6 +1,10 @@
 Class {
 	#name : 'MetacelloRecordTarget',
 	#superclass : 'MetacelloTarget',
+	#instVars : [
+		'required',
+		'currentRepositorySpecs'
+	],
 	#category : 'Metacello-Core-Loaders',
 	#package : 'Metacello-Core',
 	#tag : 'Loaders'
@@ -17,7 +21,8 @@ MetacelloRecordTarget >> atomicLoadPackageOfSpec: aSpec [
 
 	engine specBuilder
 		pushAtomicLoadDirectivesDuring: [
-		super linearLoadPackagesOfSpec: aSpec ]
+			currentRepositorySpecs := aSpec repositorySpecs.
+			aSpec packageSpecsInLoadOrder do: [ :pkg | pkg acceptVisitor: self ] ]
 		for: self
 ]
 
@@ -47,13 +52,15 @@ MetacelloRecordTarget >> linearLoadPackagesOfSpec: aSpec [
 
 	engine specBuilder
 		pushLinearLoadDirectivesDuring: [
-		super linearLoadPackagesOfSpec: aSpec ]
+			currentRepositorySpecs := aSpec repositorySpecs.
+			aSpec packageSpecsInLoadOrder do: [ :pkg | pkg acceptVisitor: self ] ]
 		for: self
 ]
 
 { #category : 'actions' }
 MetacelloRecordTarget >> load: aSpec [
 
+1halt.
 	aSpec project loadType == #atomic ifTrue: [
 		^ self atomicLoadPackageOfSpec: aSpec ].
 	aSpec project loadType == #linear ifTrue: [
@@ -84,8 +91,78 @@ MetacelloRecordTarget >> preLoad: packageOrVersionSpec [
 		engine specBuilder currentLoadDirective
 ]
 
+{ #category : 'accessing' }
+MetacelloRecordTarget >> required: aCollection [ 
+	
+	required := aCollection
+]
+
 { #category : 'private' }
 MetacelloRecordTarget >> resolveRecordingPackageSpecReference: packageSpec gofer: gofer [
 
 	^ (self resolvePackageSpecReferences: packageSpec gofer: gofer) first
+]
+
+{ #category : 'visiting' }
+MetacelloRecordTarget >> visitGroupSpec: aMetacelloGroupSpec [ 
+	
+	"Nothing"
+]
+
+{ #category : 'visiting' }
+MetacelloRecordTarget >> visitPackageSpec: aMetacelloPackageSpec [
+
+	| gofer monticelloRepositories externalReference |
+	gofer := Gofer new.
+	monticelloRepositories := self repositoriesFrom:
+		                          currentRepositorySpecs.
+	monticelloRepositories do: [ :repo | gofer repository: repo ].
+
+
+	externalReference := self
+		                     resolveRecordingPackageSpecReference:
+		                     aMetacelloPackageSpec
+		                     gofer: gofer.
+
+	"Exit if already loaded"
+	externalReference ifNil: [ ^ nil ].
+	self preLoad: aMetacelloPackageSpec.
+	(MetacelloDirective
+		 loadPackage: aMetacelloPackageSpec
+		 externalReference: externalReference) addTo:
+		engine specBuilder currentLoadDirective.
+	self postLoad: aMetacelloPackageSpec.
+
+	^ externalReference
+]
+
+{ #category : 'visiting' }
+MetacelloRecordTarget >> visitProjectReference: aMetacelloProjectReferenceSpec [
+
+	| required |
+	required := aMetacelloProjectReferenceSpec resolveToLoadableSpec.
+	^ required loadUsingTarget: self withEngine: engine
+]
+
+{ #category : 'visiting' }
+MetacelloRecordTarget >> visitVersionSpec: aMetacelloVersionSpec [
+
+	| packages |
+	packages := Dictionary new.
+	aMetacelloVersionSpec resolveToLoadableSpecs: required map: packages.
+
+	packages values do: [ :pkg |
+		pkg ensureLoadedForDevelopmentUsing: self withEngine: engine.
+		(MetacelloIgnorePackageLoaded signal: pkg) ifFalse: [
+			engine ignoreImage ifFalse: [
+				(pkg
+					 compareCurrentVersion: self operator
+					 targetVersionStatus: #( #allLoadedToSpec )
+					 using: self
+					 withEngine: engine) ifTrue: [ packages removeKey: pkg name ] ] ] ].
+
+	packages notEmpty ifTrue: [
+		self preLoad: aMetacelloVersionSpec.
+		self load: aMetacelloVersionSpec.
+		self postLoad: aMetacelloVersionSpec ]
 ]
