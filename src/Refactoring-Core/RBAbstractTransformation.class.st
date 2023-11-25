@@ -88,6 +88,12 @@ RBAbstractTransformation class >> refactoringOptions [
 	^ RefactoringOptions
 ]
 
+{ #category : 'preconditions' }
+RBAbstractTransformation >> applicabilityPreconditions [ 
+	
+	^ self trueCondition 
+]
+
 { #category : 'private' }
 RBAbstractTransformation >> buildSelectorString: aSelector [
 	aSelector numArgs = 0 ifTrue: [^aSelector].
@@ -136,6 +142,19 @@ RBAbstractTransformation >> buildSelectorString: aSelector withPermuteMap: aPerm
 RBAbstractTransformation >> changes [
 
 	^ self model changes
+]
+
+{ #category : 'preconditions' }
+RBAbstractTransformation >> checkApplicabilityPreconditions [
+
+	| conditions errorStrings |
+	conditions := self applicabilityPreconditions.
+	conditions := conditions reject: [ :cond | cond check ].
+	conditions ifEmpty: [ ^ self ].
+	errorStrings := String streamContents: [ :aStream |
+		                conditions do: [ :cond |
+			                cond violationMessageOn: aStream ] ].
+	self refactoringError: errorStrings
 ]
 
 { #category : 'condition definitions' }
