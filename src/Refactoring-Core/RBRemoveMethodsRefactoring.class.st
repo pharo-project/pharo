@@ -49,6 +49,12 @@ RBRemoveMethodsRefactoring class >> selectors: aSelectorsCollection from: aClass
 		from: aClass
 ]
 
+{ #category : 'accessing' }
+RBRemoveMethodsRefactoring >> allSelectors [
+	
+	^ allSelectors ifNil: [ allSelectors := classSelectorMapping values flattened ]
+]
+
 { #category : 'preconditions' }
 RBRemoveMethodsRefactoring >> applicabilityPreconditions [ 
 
@@ -95,12 +101,6 @@ RBRemoveMethodsRefactoring >> removeMethodChanges [
 ]
 
 { #category : 'accessing' }
-RBRemoveMethodsRefactoring >> selectors [
-	
-	^ selectors 
-]
-
-{ #category : 'accessing' }
 RBRemoveMethodsRefactoring >> selectors: aCollection from: aClass [
 
 	self classSelectorMapping: (aCollection collect: [ :selector | aClass -> selector ] ) 
@@ -109,5 +109,5 @@ RBRemoveMethodsRefactoring >> selectors: aCollection from: aClass [
 { #category : 'private' }
 RBRemoveMethodsRefactoring >> senders [
 	
-	^ (refactorings collect: [ :ref | ref sendersExcluding: selectors ]) flattened
+	^ (refactorings collect: [ :ref | ref sendersExcluding: self allSelectors ]) flattened
 ]
