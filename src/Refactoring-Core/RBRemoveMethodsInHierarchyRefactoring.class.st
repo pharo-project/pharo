@@ -32,9 +32,7 @@ RBRemoveMethodsInHierarchyRefactoring class >> selectors: aSelectorsCollection f
 { #category : 'preconditions' }
 RBRemoveMethodsInHierarchyRefactoring >> applicabilityPreconditions [ 
 
-	^ selectors
-			inject: self trueCondition
-			into: [ :cond :sel | cond & (RBCondition definesSelector: sel in: class) ]
+	^ { RBDefinesSelectorsCondition new definesSelectors: selectors in: class }
 ]
 
 { #category : 'transforming' }

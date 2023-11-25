@@ -56,11 +56,17 @@ RBRemoveMethodsRefactoring >> allSelectors [
 ]
 
 { #category : 'preconditions' }
-RBRemoveMethodsRefactoring >> applicabilityPreconditions [ 
+RBRemoveMethodsRefactoring >> applicabilityPreconditions [
 
-	^ selectors
-			inject: self trueCondition
-			into: [ :cond :sel | cond & (RBCondition definesSelector: sel in: class) ]
+	| preconditions |
+	preconditions := OrderedCollection new.
+	classSelectorMapping
+		keysAndValuesDo: [ :class :selectorsList |
+			preconditions add:
+					(RBDefinesSelectorsCondition new
+						 definesSelectors: selectorsList
+						 in: class) ].
+	^ preconditions
 ]
 
 { #category : 'preconditions' }
