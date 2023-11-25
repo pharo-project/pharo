@@ -606,7 +606,7 @@ UITheme >> checkboxButtonNormalBorderStyleFor: aChecboxButton [
 UITheme >> checkboxButtonNormalFillStyleFor: aCheckboxButton [
 	"Return the normal checkbox button fillStyle for the given checkbox button."
 
-	^(ImageFillStyle form: self checkboxForm) origin: aCheckboxButton topLeft
+	^(ImageFillStyle formSet: self checkboxFormSet) origin: aCheckboxButton topLeft
 ]
 
 { #category : 'border-styles - buttons' }
@@ -634,7 +634,7 @@ UITheme >> checkboxButtonSelectedDisabledFillStyleFor: aCheckboxButton [
 UITheme >> checkboxButtonSelectedFillStyleFor: aCheckboxButton [
 	"Return the selected checkbox button fillStyle for the given checkbox button."
 
-	^(ImageFillStyle form: self checkboxSelectedForm) origin: aCheckboxButton topLeft
+	^(ImageFillStyle formSet: self checkboxSelectedFormSet) origin: aCheckboxButton topLeft
 ]
 
 { #category : 'border-styles - buttons' }
@@ -646,9 +646,15 @@ UITheme >> checkboxCornerStyleFor: aCheckbox [
 
 { #category : 'forms' }
 UITheme >> checkboxForm [
-	"Answer the form to use for a normal checkbox."
 
-	^self  checkboxUnselectedForm
+	^self  checkboxFormSet asForm
+]
+
+{ #category : 'forms' }
+UITheme >> checkboxFormSet [
+	"Answer the form set to use for a normal checkbox."
+
+	^self  checkboxUnselectedFormSet
 ]
 
 { #category : 'label-styles - buttons' }
@@ -688,16 +694,28 @@ UITheme >> checkboxMarkerForm [
 
 { #category : 'fill-styles - buttons' }
 UITheme >> checkboxSelectedForm [
-	"Answer the form to use for a selected checkbox."
 
-	^ self iconNamed: #checkboxSelected
+	^ self checkboxSelectedFormSet asForm
+]
+
+{ #category : 'fill-styles - buttons' }
+UITheme >> checkboxSelectedFormSet [
+	"Answer the form set to use for a selected checkbox."
+
+	^ self iconFormSetNamed: #checkboxSelected
 ]
 
 { #category : 'forms' }
 UITheme >> checkboxUnselectedForm [
-	"Answer the form to use for a selected checkbox."
 
-	^ self iconNamed: #checkboxUnselected
+	^ self checkboxUnselectedFormSet asForm
+]
+
+{ #category : 'forms' }
+UITheme >> checkboxUnselectedFormSet [
+	"Answer the form set to use for a selected checkbox."
+
+	^ self iconFormSetNamed: #checkboxUnselected
 ]
 
 { #category : 'services' }
