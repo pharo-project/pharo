@@ -2649,25 +2649,25 @@ UITheme >> newCloseButtonIn: aThemedMorph for: aModel [
 UITheme >> newCloseControlIn: aThemedMorph for: aModel action: aValuable help: helpText [
 	"Answer a button for closing things."
 
-	|form msb|
-	form := self windowCloseForm.
-	msb := MultistateButtonMorph new extent: form extent.
-	msb activeEnabledNotOverUpFillStyle: (ImageFillStyle form: form).
-	form := self windowClosePassiveForm.
-	msb extent: form extent.
-	msb activeDisabledNotOverUpFillStyle: (ImageFillStyle form: form).
-	msb passiveEnabledNotOverUpFillStyle: (ImageFillStyle form: form).
-	msb passiveDisabledNotOverUpFillStyle: (ImageFillStyle form: form).
-	form := self windowCloseOverForm.
-	msb extent: form extent.
+	|formSet msb|
+	formSet := self windowCloseFormSet.
+	msb := MultistateButtonMorph new extent: formSet extent.
+	msb activeEnabledNotOverUpFillStyle: (ImageFillStyle formSet: formSet).
+	formSet := self windowClosePassiveFormSet.
+	msb extent: formSet extent.
+	msb activeDisabledNotOverUpFillStyle: (ImageFillStyle formSet: formSet).
+	msb passiveEnabledNotOverUpFillStyle: (ImageFillStyle formSet: formSet).
+	msb passiveDisabledNotOverUpFillStyle: (ImageFillStyle formSet: formSet).
+	formSet := self windowCloseOverFormSet.
+	msb extent: formSet extent.
 	msb
-		activeEnabledOverUpFillStyle: (ImageFillStyle form: form);
-		passiveEnabledOverUpFillStyle: (ImageFillStyle form: form).
-	form := self windowClosePassiveForm.
+		activeEnabledOverUpFillStyle: (ImageFillStyle formSet: formSet);
+		passiveEnabledOverUpFillStyle: (ImageFillStyle formSet: formSet).
+	formSet := self windowClosePassiveFormSet.
 	msb
-		extent: form extent;
-		activeEnabledOverDownFillStyle: (ImageFillStyle form: form);
-		passiveEnabledOverDownFillStyle: (ImageFillStyle form: form);
+		extent: formSet extent;
+		activeEnabledOverDownFillStyle: (ImageFillStyle formSet: formSet);
+		passiveEnabledOverDownFillStyle: (ImageFillStyle formSet: formSet);
 		addUpAction: aValuable;
 		setBalloonText: helpText.
 	^msb
@@ -4943,23 +4943,41 @@ UITheme >> windowBottomOffset [
 
 { #category : 'label-styles - windows' }
 UITheme >> windowCloseForm [
-	"Answer the form to use for the close button of a window."
 
-	^ self iconNamed: #windowClose
+	^ self windowCloseFormSet asForm
+]
+
+{ #category : 'label-styles - windows' }
+UITheme >> windowCloseFormSet [
+	"Answer the form set to use for the close button of a window."
+
+	^ self iconFormSetNamed: #windowClose
 ]
 
 { #category : 'label-styles - windows' }
 UITheme >> windowCloseOverForm [
-	"Answer the form to use for mouse over window close buttons"
 
-	^ self iconNamed: #windowClose
+	^ self windowCloseOverFormSet asForm
+]
+
+{ #category : 'label-styles - windows' }
+UITheme >> windowCloseOverFormSet [
+	"Answer the form set to use for mouse over window close buttons"
+
+	^ self iconFormSetNamed: #windowClose
 ]
 
 { #category : 'label-styles - windows' }
 UITheme >> windowClosePassiveForm [
-	"Answer the form to use for passive (background) window close buttons"
 
-	^ self iconNamed: #windowCloseInactive
+	^ self windowClosePassiveFormSet asForm
+]
+
+{ #category : 'label-styles - windows' }
+UITheme >> windowClosePassiveFormSet [
+	"Answer the form set to use for passive (background) window close buttons"
+
+	^ self iconFormSetNamed: #windowCloseInactive
 ]
 
 { #category : 'sounds' }
