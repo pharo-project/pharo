@@ -1229,23 +1229,23 @@ UITheme >> createCollapseBoxFor: aSystemWindow [
 UITheme >> createExpandBoxFor: aSystemWindow [
 	"Answer a button for maximising/restoring the window."
 
-	|form msb|
-	form := self windowMaximizeForm.
-	msb := MultistateButtonMorph new extent: form extent.
-	msb activeEnabledNotOverUpFillStyle: (ImageFillStyle form: form).
-	form := self windowMaximizePassiveForm.
-	msb extent: form extent.
-	msb passiveEnabledNotOverUpFillStyle: (ImageFillStyle form: form).
-	form := self windowMaximizeOverForm.
-	msb extent: form extent.
+	|formSet msb|
+	formSet := self windowMaximizeFormSet.
+	msb := MultistateButtonMorph new extent: formSet extent.
+	msb activeEnabledNotOverUpFillStyle: (ImageFillStyle formSet: formSet).
+	formSet := self windowMaximizePassiveFormSet.
+	msb extent: formSet extent.
+	msb passiveEnabledNotOverUpFillStyle: (ImageFillStyle formSet: formSet).
+	formSet := self windowMaximizeOverFormSet.
+	msb extent: formSet extent.
 	msb
-		activeEnabledOverUpFillStyle: (ImageFillStyle form: form);
-		passiveEnabledOverUpFillStyle: (ImageFillStyle form: form).
-	form := self windowMaximizePassiveForm.
+		activeEnabledOverUpFillStyle: (ImageFillStyle formSet: formSet);
+		passiveEnabledOverUpFillStyle: (ImageFillStyle formSet: formSet).
+	formSet := self windowMaximizePassiveFormSet.
 	msb
-		extent: form extent;
-		activeEnabledOverDownFillStyle: (ImageFillStyle form: form);
-		passiveEnabledOverDownFillStyle: (ImageFillStyle form: form);
+		extent: formSet extent;
+		activeEnabledOverDownFillStyle: (ImageFillStyle formSet: formSet);
+		passiveEnabledOverDownFillStyle: (ImageFillStyle formSet: formSet);
 		addUpAction: [aSystemWindow expandBoxHit];
 		setBalloonText: 'Expand to full screen' translated;
 		extent: aSystemWindow boxExtent.
@@ -5082,23 +5082,41 @@ UITheme >> windowLeftOffset [
 
 { #category : 'label-styles - windows' }
 UITheme >> windowMaximizeForm [
-	"Answer the form to use for the maximize button of a window."
 
-	^ self iconNamed: #windowMaximize
+	^ self windowMaximizeFormSet asForm
+]
+
+{ #category : 'label-styles - windows' }
+UITheme >> windowMaximizeFormSet [
+	"Answer the form set to use for the maximize button of a window."
+
+	^ self iconFormSetNamed: #windowMaximize
 ]
 
 { #category : 'label-styles - windows' }
 UITheme >> windowMaximizeOverForm [
-	"Answer the form to use for mouse over window maximize buttons"
 
-	^ self iconNamed: #windowMaximize
+	^ self windowMaximizeOverFormSet asForm
+]
+
+{ #category : 'label-styles - windows' }
+UITheme >> windowMaximizeOverFormSet [
+	"Answer the form set to use for mouse over window maximize buttons"
+
+	^ self iconFormSetNamed: #windowMaximize
 ]
 
 { #category : 'label-styles - windows' }
 UITheme >> windowMaximizePassiveForm [
-	"Answer the form to use for passive (background) window maximize/restore buttons"
 
-	^ self iconNamed: #windowMaximizeInactive
+	^ self windowMaximizePassiveFormSet asForm
+]
+
+{ #category : 'label-styles - windows' }
+UITheme >> windowMaximizePassiveFormSet [
+	"Answer the form set to use for passive (background) window maximize/restore buttons"
+
+	^ self iconFormSetNamed: #windowMaximizeInactive
 ]
 
 { #category : 'sounds' }
