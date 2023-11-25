@@ -3872,9 +3872,15 @@ UITheme >> radioButtonDisabledFillStyleFor: aRadioButton [
 
 { #category : 'fill-styles' }
 UITheme >> radioButtonForm [
-	"Answer the form to use for a normal radio button."
 
-	^ self iconNamed: #radioButtonUnselected
+	^ self radioButtonFormSet asForm
+]
+
+{ #category : 'fill-styles' }
+UITheme >> radioButtonFormSet [
+	"Answer the form set to use for a normal radio button."
+
+	^ self iconFormSetNamed: #radioButtonUnselected
 ]
 
 { #category : 'label-styles' }
@@ -3895,7 +3901,7 @@ UITheme >> radioButtonNormalBorderStyleFor: aRadioButton [
 UITheme >> radioButtonNormalFillStyleFor: aRadioButton [
 	"Return the normal radio button fillStyle for the given button."
 
-	^(ImageFillStyle form: self radioButtonForm) origin: aRadioButton topLeft
+	^(ImageFillStyle formSet: self radioButtonFormSet) origin: aRadioButton topLeft
 ]
 
 { #category : 'border-styles - buttons' }
@@ -3923,14 +3929,20 @@ UITheme >> radioButtonSelectedDisabledFillStyleFor: aRadioButton [
 UITheme >> radioButtonSelectedFillStyleFor: aRadioButton [
 	"Return the selected radio button fillStyle for the given button."
 
-	^(ImageFillStyle form: self radioButtonSelectedForm) origin: aRadioButton topLeft
+	^(ImageFillStyle formSet: self radioButtonSelectedFormSet) origin: aRadioButton topLeft
 ]
 
 { #category : 'fill-styles' }
 UITheme >> radioButtonSelectedForm [
-	"Answer the form to use for a selected radio button."
 
-	^ self iconNamed: #radioButtonSelected
+	^ self radioButtonSelectedFormSet asForm
+]
+
+{ #category : 'fill-styles' }
+UITheme >> radioButtonSelectedFormSet [
+	"Answer the form set to use for a selected radio button."
+
+	^ self iconFormSetNamed: #radioButtonSelected
 ]
 
 { #category : 'fill-styles' }
