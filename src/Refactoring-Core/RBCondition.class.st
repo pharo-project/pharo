@@ -25,7 +25,6 @@ Class {
 	#tag : 'Conditions'
 }
 
-
 { #category : 'instance creation' }
 RBCondition class >> canUnderstand: aSelector in: aClass [
 
