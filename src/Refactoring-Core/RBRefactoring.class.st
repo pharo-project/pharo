@@ -43,6 +43,12 @@ RBRefactoring class >> preconditionSignal [
 	^ RBRefactoringError , RBRefactoringWarning
 ]
 
+{ #category : 'preconditions' }
+RBRefactoring >> applicabilityPreconditions [
+
+	^ self trueCondition 
+]
+
 { #category : 'converting' }
 RBRefactoring >> asRefactoring [
 
@@ -55,6 +61,19 @@ RBRefactoring >> canReferenceVariable: aString in: aClass [
 	(aClass definesVariable: aString) ifTrue: [^true].
 	(self model includesGlobal: aString asSymbol) ifTrue: [^true].
 	^(self poolVariableNamesFor: aClass) includes: aString
+]
+
+{ #category : 'preconditions' }
+RBRefactoring >> checkApplicabilityPreconditions [
+
+	| conditions errorStrings |
+	conditions := self applicabilityPreconditions.
+	conditions := conditions reject: [ :cond | cond check ].
+	conditions ifEmpty: [ ^ self ].
+	errorStrings := String streamContents: [ :aStream |
+		                conditions do: [ :cond |
+			                cond violationMessageOn: aStream ] ].
+	self refactoringError: errorStrings
 ]
 
 { #category : 'support' }

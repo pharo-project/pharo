@@ -54,19 +54,6 @@ RBRemoveClassRefactoring >> breakingChangePreconditions [
 ]
 
 { #category : 'preconditions' }
-RBRemoveClassRefactoring >> checkApplicabilityPreconditions [
-
-	| conditions errorStrings |
-	conditions := self applicabilityPreconditions.
-	conditions := conditions reject: [ :cond | cond check ].
-	conditions ifEmpty: [ ^ self ].
-	errorStrings := String streamContents: [ :aStream |
-		                conditions do: [ :cond |
-			                cond violationMessageOn: aStream ] ].
-	self refactoringError: errorStrings
-]
-
-{ #category : 'preconditions' }
 RBRemoveClassRefactoring >> checkBreakingChangePreconditions [
 
 	| conditions errorStrings |
