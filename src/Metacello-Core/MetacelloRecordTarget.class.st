@@ -13,61 +13,51 @@ MetacelloRecordTarget >> actionLabel [
 ]
 
 { #category : 'private' }
-MetacelloRecordTarget >> atomicLoadPackageOfSpec: aSpec withEngine: anEngine [
+MetacelloRecordTarget >> atomicLoadPackageOfSpec: aSpec [
 
-	anEngine specBuilder
+	engine specBuilder
 		pushAtomicLoadDirectivesDuring: [
-			super linearLoadPackagesOfSpec: aSpec withEngine: anEngine ]
+		super linearLoadPackagesOfSpec: aSpec ]
 		for: self
 ]
 
 { #category : 'actions' }
-MetacelloRecordTarget >> doLoad: packageSpec withExternalRefernece: externalReference inEngine: anEngine [
-
-	(MetacelloDirective
-		 loadPackage: packageSpec
-		 externalReference: externalReference) addTo:
-		anEngine specBuilder currentLoadDirective
-]
-
-{ #category : 'actions' }
-MetacelloRecordTarget >> linearLoadPackageSpec: packageSpec gofer: gofer withEngine: anEngine [
+MetacelloRecordTarget >> linearLoadPackageSpec: packageSpec gofer: gofer [
 
 	| externalReference |
 	externalReference := self
 		                     resolveRecordingPackageSpecReference:
 		                     packageSpec
-		                     gofer: gofer
-		                     withEngine: anEngine.
-	
+		                     gofer: gofer.
+
 	"Exit if already loaded"
 	externalReference ifNil: [ ^ nil ].
-	self preLoad: packageSpec withEngine: anEngine.
+	self preLoad: packageSpec.
 	(MetacelloDirective
 		 loadPackage: packageSpec
 		 externalReference: externalReference) addTo:
-		anEngine specBuilder currentLoadDirective.
-	self postLoad: packageSpec withEngine: anEngine.
+		engine specBuilder currentLoadDirective.
+	self postLoad: packageSpec.
 
 	^ externalReference
 ]
 
 { #category : 'private' }
-MetacelloRecordTarget >> linearLoadPackagesOfSpec: aSpec withEngine: anEngine [
+MetacelloRecordTarget >> linearLoadPackagesOfSpec: aSpec [
 
-	anEngine specBuilder
+	engine specBuilder
 		pushLinearLoadDirectivesDuring: [
-			super linearLoadPackagesOfSpec: aSpec withEngine: anEngine ]
+		super linearLoadPackagesOfSpec: aSpec ]
 		for: self
 ]
 
 { #category : 'actions' }
-MetacelloRecordTarget >> load: aSpec withEngine: anEngine [
+MetacelloRecordTarget >> load: aSpec [
 
 	aSpec project loadType == #atomic ifTrue: [
-		^ self atomicLoadPackageOfSpec: aSpec withEngine: anEngine ].
+		^ self atomicLoadPackageOfSpec: aSpec ].
 	aSpec project loadType == #linear ifTrue: [
-		^ self linearLoadPackagesOfSpec: aSpec withEngine: anEngine ].
+		^ self linearLoadPackagesOfSpec: aSpec ].
 
 	MetacelloError signal:
 		'Unknown loadType: ' , aSpec project loadType printString
@@ -81,21 +71,21 @@ MetacelloRecordTarget >> loadPackageDirectives: pkgLoads gofer: aGofer [
 ]
 
 { #category : 'doits' }
-MetacelloRecordTarget >> postLoad: packageOrVersionSpec withEngine: anEngine [
+MetacelloRecordTarget >> postLoad: packageOrVersionSpec [
 
 	(MetacelloDirective postLoadSpec: packageOrVersionSpec) addTo:
-		anEngine specBuilder currentLoadDirective
+		engine specBuilder currentLoadDirective
 ]
 
 { #category : 'doits' }
-MetacelloRecordTarget >> preLoad: packageOrVersionSpec withEngine: anEngine [
+MetacelloRecordTarget >> preLoad: packageOrVersionSpec [
 
 	(MetacelloDirective preLoadSpec: packageOrVersionSpec) addTo:
-		anEngine specBuilder currentLoadDirective
+		engine specBuilder currentLoadDirective
 ]
 
 { #category : 'private' }
-MetacelloRecordTarget >> resolveRecordingPackageSpecReference: packageSpec gofer: gofer withEngine: anEngine [
+MetacelloRecordTarget >> resolveRecordingPackageSpecReference: packageSpec gofer: gofer [
 
 	^ (self resolvePackageSpecReferences: packageSpec gofer: gofer) first
 ]

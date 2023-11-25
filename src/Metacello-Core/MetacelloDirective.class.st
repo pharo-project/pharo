@@ -27,6 +27,12 @@ MetacelloDirective class >> preLoadSpec: packageOrVersionSpec [
 	^ MetacelloPreLoadDirective new spec: packageOrVersionSpec
 ]
 
+{ #category : 'visiting' }
+MetacelloDirective >> acceptVisitor: aVisitor [
+	
+	self subclassResponsibility
+]
+
 { #category : 'actions' }
 MetacelloDirective >> addTo: aLoaderDirective [
 
@@ -34,7 +40,7 @@ MetacelloDirective >> addTo: aLoaderDirective [
 ]
 
 { #category : 'actions' }
-MetacelloDirective >> executeUsing: aLoader [
+MetacelloDirective >> executeUsing: aTarget [
 
 	self subclassResponsibility
 ]

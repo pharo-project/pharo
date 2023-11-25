@@ -78,10 +78,10 @@ MetacelloVersion >> buildSpecFrom: required withEngine: anEngine forTarget: aTar
 					 withEngine: anEngine) ifTrue: [ packages removeKey: pkg name ] ] ] ].
 
 	packages notEmpty ifTrue: [
-		aTarget preLoad: self spec withEngine: anEngine.
-		aTarget load: self spec withEngine: anEngine.
-		aTarget postLoad: self spec withEngine: anEngine ].
-	
+		aTarget preLoad: self spec.
+		aTarget load: self spec.
+		aTarget postLoad: self spec ].
+
 	^ aTarget
 ]
 
@@ -187,10 +187,13 @@ MetacelloVersion >> fetch: required [
 { #category : 'private' }
 MetacelloVersion >> fetchRequiredFromArray: anArray withEngine: anEngine [
 
-	^ self
-		  buildSpecFrom: anArray
-		  withEngine: anEngine
-		  forTarget: MetacelloFetchTarget new
+	| directives |
+	directives := self
+		              recordRequiredFromArray:
+		              (self defaultPackageNamesToLoad: anArray)
+		              withEngine: anEngine.
+
+	^ directives acceptVisitor: (MetacelloFetchTarget on: anEngine)
 ]
 
 { #category : 'actions' }

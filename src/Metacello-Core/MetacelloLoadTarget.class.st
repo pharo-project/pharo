@@ -12,36 +12,27 @@ MetacelloLoadTarget >> actionLabel [
 	^'Loading '
 ]
 
-{ #category : 'accessing' }
-MetacelloLoadTarget >> asFetchingTarget [
-
-	^(MetacelloFetchTarget on: self spec)
-		"loaderPolicy: self loaderPolicy copy;"
-		yourself
-]
-
 { #category : 'executing' }
-MetacelloLoadTarget >> executeOnSpec: aSpec withEngine: anEngine [
+MetacelloLoadTarget >> executeOnSpec: aSpec [
 
-	self linearLoadPackagesOfSpec: aSpec withEngine: anEngine
+	self linearLoadPackagesOfSpec: aSpec
 ]
 
 { #category : 'private' }
-MetacelloLoadTarget >> linearLoadPackageSpec: packageSpec gofer: gofer withEngine: anEngine [
+MetacelloLoadTarget >> linearLoadPackageSpec: packageSpec gofer: gofer [
 
 	| goferLoad resolvedReference repo |
-
 	resolvedReference := self
 		                     resolvePackageSpec: packageSpec
 		                     gofer: gofer.
 	resolvedReference ifNil: [ "Package version already loaded into image"
 		^ self ].
 
-	self preLoad: packageSpec withEngine: anEngine.
+	self preLoad: packageSpec.
 	goferLoad := MetacelloGoferLoad on: Gofer new.
 	goferLoad addResolved: resolvedReference.
 	goferLoad execute.
-	self postLoad: packageSpec withEngine: anEngine.
+	self postLoad: packageSpec.
 
 	repo := resolvedReference repository.
 	resolvedReference workingCopy repositoryGroup addRepository:
@@ -87,7 +78,7 @@ MetacelloLoadTarget >> loadPackageDirectives: pkgLoads gofer: aGofer [
 ]
 
 { #category : 'doits' }
-MetacelloLoadTarget >> postLoad: packageOrVersionSpec withEngine: anEngine [
+MetacelloLoadTarget >> postLoad: packageOrVersionSpec [
 
 	packageOrVersionSpec postLoadDoItBlock ifNotNil: [ :block |
 		block valueWithPossibleArgs: {
@@ -96,7 +87,7 @@ MetacelloLoadTarget >> postLoad: packageOrVersionSpec withEngine: anEngine [
 ]
 
 { #category : 'doits' }
-MetacelloLoadTarget >> preLoad: packageOrVersionSpec withEngine: anEngine [
+MetacelloLoadTarget >> preLoad: packageOrVersionSpec [
 
 	packageOrVersionSpec preLoadDoItBlock ifNotNil: [ :block |
 		block valueWithPossibleArgs: {

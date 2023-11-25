@@ -6,6 +6,12 @@ Class {
 	#tag : 'Directives'
 }
 
+{ #category : 'visiting' }
+MetacelloLinearLoadDirective >> acceptVisitor: aVisitor [
+	
+	^ aVisitor visitLinearLoadDirective: self
+]
+
 { #category : 'private' }
 MetacelloLinearLoadDirective >> newLoadingStrategyFrom: oldLoadingStrategy [
 

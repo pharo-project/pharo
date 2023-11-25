@@ -10,6 +10,12 @@ Class {
 	#tag : 'Directives'
 }
 
+{ #category : 'visiting' }
+MetacelloPackageLoadDirective >> acceptVisitor: aVisitor [ 
+	
+	^ aVisitor visitPackageLoadDirective: self
+]
+
 { #category : 'actions' }
 MetacelloPackageLoadDirective >> executeUsing: aLoader [
 

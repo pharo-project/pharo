@@ -2,7 +2,8 @@ Class {
 	#name : 'MetacelloTarget',
 	#superclass : 'Object',
 	#instVars : [
-		'operator'
+		'operator',
+		'engine'
 	],
 	#classVars : [
 		'RetryPackageResolution'
@@ -37,6 +38,14 @@ MetacelloTarget class >> nameComponentsFrom: aVersionName [
 ]
 
 { #category : 'accessing' }
+MetacelloTarget class >> on: anEngine [
+
+	^ self new
+		  engine: anEngine;
+		  yourself
+]
+
+{ #category : 'accessing' }
 MetacelloTarget class >> retryPackageResolution [
 	"if true, 
 		errors during #retryingResolvePackageSpecReferences:gofer: are caught and 
@@ -55,24 +64,18 @@ MetacelloTarget class >> retryPackageResolution: aBool [
 ]
 
 { #category : 'accessing' }
-MetacelloTarget >> asEnsureTarget [
-	^ self
-]
-
-{ #category : 'accessing' }
-MetacelloTarget >> asFetchingTarget [
-
-	^self
+MetacelloTarget >> engine: aMetacelloScriptEngine [ 
+	engine := aMetacelloScriptEngine
 ]
 
 { #category : 'actions' }
-MetacelloTarget >> linearLoadPackageSpec: packageSpec gofer: gofer withEngine: anEngine [
+MetacelloTarget >> linearLoadPackageSpec: packageSpec gofer: gofer [
 
 	self subclassResponsibility
 ]
 
 { #category : 'private' }
-MetacelloTarget >> linearLoadPackagesOfSpec: aSpec withEngine: anEngine [
+MetacelloTarget >> linearLoadPackagesOfSpec: aSpec [
 
 	| gofer monticelloRepositories |
 	gofer := Gofer new.
@@ -80,7 +83,7 @@ MetacelloTarget >> linearLoadPackagesOfSpec: aSpec withEngine: anEngine [
 		                          aSpec repositorySpecs.
 	monticelloRepositories do: [ :repo | gofer repository: repo ].
 	aSpec packageSpecsInLoadOrder do: [ :pkg |
-		pkg loadUsing: self gofer: gofer withEngine: anEngine ]
+		pkg loadUsing: self gofer: gofer withEngine: engine ]
 ]
 
 { #category : 'packages' }

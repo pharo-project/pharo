@@ -159,7 +159,7 @@ MetacelloPackageSpec >> configShortCutMethodBodyOn: aStream member: aMember inde
 ]
 
 { #category : 'testing' }
-MetacelloPackageSpec >> currentPackageLoaded: loadedBlock notLoaded: notLoadedBlock using: anMCLoader [
+MetacelloPackageSpec >> currentPackageLoaded: loadedBlock notLoaded: notLoadedBlock [
 	"Use currentVersionInfoFor: because it involves the loader and returns versionInfo for a planned load 
 	 (atomic loaders) or currently loaded package"
 
@@ -178,7 +178,7 @@ MetacelloPackageSpec >> currentVersionInfo [
 { #category : 'loading' }
 MetacelloPackageSpec >> ensureLoadUsing: mcLoader withEngine: anEngine [
 
-	self forceLoadUsing: mcLoader asEnsureTarget withEngine: anEngine
+	self forceLoadingWithEngine: anEngine
 ]
 
 { #category : 'loading' }
@@ -213,8 +213,8 @@ MetacelloPackageSpec >> extractNameFromFile [
 MetacelloPackageSpec >> fetchUsing: aTarget withEngine: anEngine [
 
 	| fetchingTarget |
-	fetchingTarget := MetacelloFetchTarget new.
-	fetchingTarget linearLoadPackagesOfSpec: self withEngine: anEngine
+	fetchingTarget := MetacelloFetchTarget on: anEngine.
+	fetchingTarget linearLoadPackagesOfSpec: self
 ]
 
 { #category : 'querying' }
@@ -231,12 +231,12 @@ MetacelloPackageSpec >> file: aString [
 ]
 
 { #category : 'loading' }
-MetacelloPackageSpec >> forceLoadUsing: aTarget withEngine: anEngine [
+MetacelloPackageSpec >> forceLoadingWithEngine: anEngine [
 
 	| loadTarget |
 	"force load it"
 	loadTarget := MetacelloLoadTarget new.
-	loadTarget executeOnSpec: self withEngine: anEngine
+	loadTarget executeOnSpec: self
 ]
 
 { #category : 'accessing' }
@@ -319,19 +319,19 @@ MetacelloPackageSpec >> isPackageLoaded: aLoader [
 { #category : 'loading' }
 MetacelloPackageSpec >> loadUsing: aLoader gofer: gofer withEngine: anEngine [
 
-	^aLoader linearLoadPackageSpec: self gofer: gofer withEngine: anEngine
+	^ aLoader linearLoadPackageSpec: self gofer: gofer
 ]
 
 { #category : 'loading' }
 MetacelloPackageSpec >> loadUsingTarget: aTarget withEngine: anEngine [
 
-	self forceLoadUsing: aTarget withEngine: anEngine
+	self forceLoadingWithEngine: anEngine
 ]
 
 { #category : 'loading' }
-MetacelloPackageSpec >> loadWithEngine: anEngine [ 
-	
-	self forceLoadUsing: nil withEngine: anEngine
+MetacelloPackageSpec >> loadWithEngine: anEngine [
+
+	self forceLoadingWithEngine: anEngine
 ]
 
 { #category : 'merging' }

@@ -415,23 +415,26 @@ MetacelloVersionSpec >> isPartiallyCurrent [
 { #category : 'testing' }
 MetacelloVersionSpec >> isPartiallyCurrentAgainst: resolvedPackageAndProjectNames [
 
-	| mcLoader status |
+	| status |
 	status := MetacelloMCPartiallyLoadedStatus new.
-	mcLoader := self loader.
 	self
 		specsNamed: resolvedPackageAndProjectNames
 		projectDo: [ :prj |
 			| vrsn currentVersion |
 			status hasNoProject: false.
 			vrsn := prj versionOrNil.
-			vrsn ifNotNil: [ (currentVersion := prj relativeCurrentVersion) ifNotNil: [ status vrsnStatus add: currentVersion versionStatus ] ].
+			vrsn ifNotNil: [
+				(currentVersion := prj relativeCurrentVersion) ifNotNil: [
+					status vrsnStatus add: currentVersion versionStatus ] ].
 			currentVersion
 				ifNotNil: [
 					status aProjectIsLoaded: true.
 					(currentVersion perform: #= with: vrsn)
 						ifTrue: [ status aLoadedProjectIsExact: true ]
 						ifFalse: [
-							(currentVersion perform: prj projectReference operator with: vrsn)
+							(currentVersion
+								 perform: prj projectReference operator
+								 with: vrsn)
 								ifTrue: [ status aLoadedProjectIsCurrent: true ]
 								ifFalse: [ status aLoadedProjectIsNotCurrent: true ] ] ]
 				ifNil: [ status aProjectNotLoaded: true ] ]
@@ -457,12 +460,12 @@ MetacelloVersionSpec >> isPartiallyCurrentAgainst: resolvedPackageAndProjectName
 										wcName := vi name.
 										fileRef := GoferResolvedReference name: file.
 										wcRef := GoferResolvedReference name: wcName.
-										(wcRef compare: fileRef using: #'>=') ifTrue: [ current := true ] ].
+										(wcRef compare: fileRef using: #'>=') ifTrue: [
+											current := true ] ].
 									current
 										ifTrue: [ status aLoadedPackageIsCurrent: true ]
 										ifFalse: [ status aLoadedPackageIsNotCurrent: true ] ] ] ]
-				notLoaded: [ status aPackageNotLoaded: true ]
-				using: mcLoader ]
+				notLoaded: [ status aPackageNotLoaded: true ] ]
 		groupDo: [ :ignoredGroup | "if we encounter a group, trouble"
 			status abort: true.
 			^ status ].

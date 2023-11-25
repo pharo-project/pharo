@@ -412,19 +412,18 @@ MetacelloProjectSpec >> ensureConfigurationLoaded: vrsn ensured: ensured [
 
 { #category : 'loading' }
 MetacelloProjectSpec >> ensureLoadUsing: aTarget withEngine: anEngine [
-  | pp |
-  pp := (MetacelloLookupProjectSpec new
-    projectSpec: self;
-    yourself) signal projectPackage.
-  pp
-    ifNil: [ 
-      self
-        error:
-          'Unable to resolve project package for ' , self name printString
-            ,
-              '. It is likely that that the configuration referencing this project will not validate properly (see MetacelloToolBox class>>validateConfiguration:).' ].
 
-  pp forceLoadUsing: aTarget withEngine: anEngine
+	| pp |
+	pp := (MetacelloLookupProjectSpec new
+		       projectSpec: self;
+		       yourself) signal projectPackage.
+	pp ifNil: [
+		self error:
+			'Unable to resolve project package for ' , self name printString
+			,
+			'. It is likely that that the configuration referencing this project will not validate properly (see MetacelloToolBox class>>validateConfiguration:).' ].
+
+	pp forceLoadingWithEngine: anEngine
 ]
 
 { #category : 'loading' }
@@ -669,7 +668,7 @@ MetacelloProjectSpec >> loadUsingTarget: aTarget withEngine: anEngine [
 ]
 
 { #category : 'loading' }
-MetacelloProjectSpec >> loadVersion: aVersionOrNil usingTarget: aTarget  withEngine: anEngine [
+MetacelloProjectSpec >> loadVersion: aVersionOrNil usingTarget: aTarget withEngine: anEngine [
 	"Load the correct version of the project"
 
 	| vrsn list |
@@ -694,13 +693,13 @@ MetacelloProjectSpec >> loadVersion: aVersionOrNil usingTarget: aTarget  withEng
 				         loader: aTarget ]) asSet.
 	vrsn versionString ~= self versionString ifTrue: [
 		MetacelloNotification signal: ' [' , vrsn versionString , ']' ].
-	aTarget preLoad: self withEngine: anEngine.
+	aTarget preLoad: self.
 
 	vrsn doFetchRequiredFromArray: list withEngine: anEngine. "do the load"
 
 	(MetacelloProjectSpecLoadedNotification new projectSpec:
 		 (self copy versionString: vrsn versionString)) signal.
-	aTarget postLoad: self withEngine: anEngine
+	aTarget postLoad: self
 ]
 
 { #category : 'loading' }
