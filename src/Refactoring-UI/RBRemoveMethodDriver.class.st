@@ -6,7 +6,6 @@ Class {
 	#superclass : 'RBInteractionDriver',
 	#instVars : [
 		'methods',
-		'senders',
 		'haveNoSenders'
 	],
 	#category : 'Refactoring-UI-Drivers',
