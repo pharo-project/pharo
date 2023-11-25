@@ -54,7 +54,7 @@ ScalingCanvas class >> exampleFillOval [
 ]
 
 { #category : 'examples' }
-ScalingCanvas class >> exampleFillRectangle [
+ScalingCanvas class >> exampleFillRectangle1 [
 
 	^ self privateExampleWithExtent: 11@3 fillColor: Color white scale: 10 drawBlock: [ :canvas |
 		{
@@ -65,6 +65,29 @@ ScalingCanvas class >> exampleFillRectangle [
 			9.9@1.9 extent: 1.9@1.9
 		} do: [ :rectangle |
 			canvas fillRectangle: rectangle color: Color blue ] ]
+]
+
+{ #category : 'examples' }
+ScalingCanvas class >> exampleFillRectangle2 [
+
+	^ self privateExampleWithExtent: 50@50 fillColor: Color white scale: 10 drawBlock: [ :canvas |
+		0 to: 3 do: [ :i |
+			| colors gradientFillStyle rectangleOrigin |
+			colors := { Color red. Color green. Color blue } collect: [ :color | color alpha: 0.25 * (4 - i) ].
+			(gradientFillStyle := GradientFillStyle colors: colors)
+				origin: 2@0;
+				direction: 46@0.
+			canvas fillRectangle: (0@(i * 4) extent: 50@4) fillStyle: gradientFillStyle.
+			(gradientFillStyle := GradientFillStyle colors: colors)
+				origin: 0@48;
+				direction: (0@30) negated.
+			canvas fillRectangle: ((i * 4)@16 extent: 4@34) fillStyle: gradientFillStyle.
+			rectangleOrigin := 16@16 + ((i \\ 2 * 17)@(i // 2 * 17)).
+			(gradientFillStyle := GradientFillStyle colors: colors)
+				origin: rectangleOrigin + (8@8);
+				direction: 10@10;
+				radial: true.
+			canvas fillRectangle: (rectangleOrigin extent: 17@17) fillStyle: gradientFillStyle ] ]
 ]
 
 { #category : 'examples' }
@@ -394,6 +417,20 @@ ScalingCanvas >> fillOval: r color: c borderWidth: borderWidth borderColor: bord
 	self applyClippingTo: r floor
 		during: [ :clippedCanvas |
 			clippedCanvas fillOval: r color: c borderWidth: borderWidth borderColor: borderColor ]
+]
+
+{ #category : 'drawing - rectangles' }
+ScalingCanvas >> fillRectangle: aRectangle basicFillStyle: aFillStyle [
+
+	aFillStyle isGradientFill ifTrue: [
+		formCanvas fillRectangle: (aRectangle floor scaleBy: scale)
+			basicFillStyle: (aFillStyle copy
+				origin: aFillStyle origin * scale + (scale // 2);
+				direction: aFillStyle direction * scale;
+				normal: aFillStyle normal * scale;
+				yourself).
+		^ self ].
+	super fillRectangle: aRectangle basicFillStyle: aFillStyle
 ]
 
 { #category : 'initialization' }
