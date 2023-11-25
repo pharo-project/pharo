@@ -8,7 +8,8 @@ Class {
 		'originRepository',
 		'ringEnvironment',
 		'versionInfo',
-		'repositoryLocation'
+		'repositoryLocation',
+		'logger'
 	],
 	#category : 'PharoBootstrap',
 	#package : 'PharoBootstrap'
@@ -94,21 +95,19 @@ PBBootstrap >> architecture: aString [
 { #category : 'bootstrapping' }
 PBBootstrap >> bootstrap [
 
-	PBStepStartedSignal emit: 'Starting  Process.'.
+	logger
+		execute: [
+			logger log: '[+] Preparing bootstrap'.
+			self prepareBootstrap.
 
-    '    [+] Preparing bootstrap' traceCr.
-	self prepareBootstrap.
+			logger log: '[+] Creating image on which bootstrapping will take place'.
+			[ self createImage ]
+				on: AssertionFailure
+				do: [ :e | e resume ].
 
-    '    [+] Creating image on which bootstrapping will take place' traceCr.
-	[ self createImage ]
-		on: AssertionFailure
-		do: [ :e | e resume ].
-        
-    
-    '    [+] Initializing image for bootstrapping' traceCr.
-	self initializeImage.
-
-	PBStepFinishedSignal emit: 'Process ended.'
+			logger log: '[+] Initializing image for bootstrapping'.
+			self initializeImage ]
+		logged: 'Bootstrap process'
 ]
 
 { #category : 'accessing' }
@@ -133,13 +132,12 @@ PBBootstrap >> buildNumber: aBuildNumber [
 PBBootstrap >> createImage [
 
 	| builder |
-
 	builder := PBAbstractImageBuilder forArchitecture: architecture.
+	builder logger: logger.
 	builder versionInfo: versionInfo.
 	builder imageFileReference: imageReference.
 	builder systemDefinition: ringEnvironment.
-	builder espellBackend instanceVariableMapping: (PBInstanceVariableMapping onEnvironment: ringEnvironment ).
-		
+	builder espellBackend instanceVariableMapping: (PBInstanceVariableMapping onEnvironment: ringEnvironment).
 	builder bootstrap
 ]
 
@@ -300,6 +298,8 @@ PBBootstrap >> imageName: aString [
 
 { #category : 'initialization' }
 PBBootstrap >> initialize [
+	super initialize.
+	logger := PBLogger new
 ]
 
 { #category : 'initialization' }
