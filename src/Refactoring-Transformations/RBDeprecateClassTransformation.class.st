@@ -32,6 +32,26 @@ RBDeprecateClassTransformation class >> model: aRBModel className: aClassName [
 		yourself
 ]
 
+{ #category : 'preconditions' }
+RBDeprecateClassTransformation >> applicabilityPreconditions [
+
+	^ {
+		  (RBClassesExistCondition new classes: { class }).
+		  (RBClassesAreNotMetaClassCondition new classes: { class }) }
+]
+
+{ #category : 'preconditions' }
+RBDeprecateClassTransformation >> checkPreconditions [ 
+
+	self checkApplicabilityPreconditions 
+]
+
+{ #category : 'transforming' }
+RBDeprecateClassTransformation >> prepareForExecution [ 
+
+	class := self model classNamed: className
+]
+
 { #category : 'transforming' }
 RBDeprecateClassTransformation >> privateTransform [
 
