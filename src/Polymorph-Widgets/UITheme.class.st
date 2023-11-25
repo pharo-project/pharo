@@ -1263,25 +1263,25 @@ UITheme >> createMenuBoxFor: aSystemWindow [
 		actionSelector: #offerWindowMenu;
 		setBalloonText: 'window menu' translated"
 
-	|form msb|
-	form := self windowMenuForm.
-	msb := MultistateButtonMorph new extent: form extent.
-	msb activeEnabledNotOverUpFillStyle: (ImageFillStyle form: form).
-	form := self windowMenuPassiveForm.
-	msb extent: form extent.
-	msb activeDisabledNotOverUpFillStyle: (ImageFillStyle form: form).
-	msb passiveEnabledNotOverUpFillStyle: (ImageFillStyle form: form).
-	msb passiveDisabledNotOverUpFillStyle: (ImageFillStyle form: form).
-	form := self windowMenuForm.
-	msb extent: form extent.
+	|formSet msb|
+	formSet := self windowMenuFormSet.
+	msb := MultistateButtonMorph new extent: formSet extent.
+	msb activeEnabledNotOverUpFillStyle: (ImageFillStyle formSet: formSet).
+	formSet := self windowMenuPassiveFormSet.
+	msb extent: formSet extent.
+	msb activeDisabledNotOverUpFillStyle: (ImageFillStyle formSet: formSet).
+	msb passiveEnabledNotOverUpFillStyle: (ImageFillStyle formSet: formSet).
+	msb passiveDisabledNotOverUpFillStyle: (ImageFillStyle formSet: formSet).
+	formSet := self windowMenuFormSet.
+	msb extent: formSet extent.
 	msb
-		activeEnabledOverUpFillStyle: (ImageFillStyle form: form);
-		passiveEnabledOverUpFillStyle: (ImageFillStyle form: form).
-	form := self windowMenuPassiveForm.
+		activeEnabledOverUpFillStyle: (ImageFillStyle formSet: formSet);
+		passiveEnabledOverUpFillStyle: (ImageFillStyle formSet: formSet).
+	formSet := self windowMenuPassiveFormSet.
 	msb
-		extent: form extent;
-		activeEnabledOverDownFillStyle: (ImageFillStyle form: form);
-		passiveEnabledOverDownFillStyle: (ImageFillStyle form: form);
+		extent: formSet extent;
+		activeEnabledOverDownFillStyle: (ImageFillStyle formSet: formSet);
+		passiveEnabledOverDownFillStyle: (ImageFillStyle formSet: formSet);
 		addUpAction: [aSystemWindow offerWindowMenu];
 		setBalloonText: 'window menu' translated;
 		extent: aSystemWindow boxExtent.
@@ -3646,9 +3646,15 @@ UITheme >> newWindowIn: aThemedMorph for: aModel title: titleString [
 
 { #category : 'initialization' }
 UITheme >> newWindowMenuPassiveForm [
-	"Answer a new form for a window menu box."
 
-	^ self iconNamed: #windowMenuInactive
+	^ self newWindowMenuPassiveFormSet asForm
+]
+
+{ #category : 'initialization' }
+UITheme >> newWindowMenuPassiveFormSet [
+	"Answer a new form set for a window menu box."
+
+	^ self iconFormSetNamed: #windowMenuInactive
 ]
 
 { #category : 'morph creation' }
@@ -5128,9 +5134,15 @@ UITheme >> windowMaximizeSound [
 
 { #category : 'label-styles - windows' }
 UITheme >> windowMenuForm [
-	"Answer the form to use for the menu button of a window."
 
-	^ self iconNamed: #windowMenu
+	^ self windowMenuFormSet asForm
+]
+
+{ #category : 'label-styles - windows' }
+UITheme >> windowMenuFormSet [
+	"Answer the form set to use for the menu button of a window."
+
+	^ self iconFormSetNamed: #windowMenu
 ]
 
 { #category : 'label-styles - windows' }
@@ -5142,9 +5154,15 @@ UITheme >> windowMenuIconFor: aWindow [
 
 { #category : 'label-styles - windows' }
 UITheme >> windowMenuPassiveForm [
-	"Answer the form to use for passive (background) window menu buttons"
 
-	^self newWindowMenuPassiveForm
+	^self windowMenuPassiveFormSet asForm
+]
+
+{ #category : 'label-styles - windows' }
+UITheme >> windowMenuPassiveFormSet [
+	"Answer the form set to use for passive (background) window menu buttons"
+
+	^self newWindowMenuPassiveFormSet
 ]
 
 { #category : 'label-styles - windows' }
