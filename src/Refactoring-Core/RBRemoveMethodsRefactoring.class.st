@@ -74,10 +74,7 @@ RBRemoveMethodsRefactoring >> breakingChangePreconditions [
 
 	refactorings do: [ :ref | ref checkSuperMethods ].
 
-	^ RBCondition
-		  withBlock: [ self senders isEmpty ]
-		  errorString:
-		  'Some of the methods have senders outside of the methods being removed'
+	^ RBMethodsHaveNoSendersCondition new model: self model; classSelectorsMapping: classSelectorMapping
 ]
 
 { #category : 'initialization' }
@@ -110,10 +107,4 @@ RBRemoveMethodsRefactoring >> removeMethodChanges [
 RBRemoveMethodsRefactoring >> selectors: aCollection from: aClass [
 
 	self classSelectorMapping: (aCollection collect: [ :selector | aClass -> selector ] ) 
-]
-
-{ #category : 'private' }
-RBRemoveMethodsRefactoring >> senders [
-	
-	^ (refactorings collect: [ :ref | ref sendersExcluding: self allSelectors ]) flattened
 ]
