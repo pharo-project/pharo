@@ -26,7 +26,7 @@ Class {
 	#tag : 'Drivers'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'instance creation' }
 RBDeprecateClassDriver class >> className: aClassName scopes: refactoringScopes [
 
 	^ self new className: aClassName scopes: refactoringScopes
