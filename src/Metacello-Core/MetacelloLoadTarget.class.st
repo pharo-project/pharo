@@ -12,31 +12,6 @@ MetacelloLoadTarget >> actionLabel [
 	^'Loading '
 ]
 
-{ #category : 'private' }
-MetacelloLoadTarget >> linearLoadPackageSpec: packageSpec gofer: gofer [
-
-	| goferLoad resolvedReference repo |
-	resolvedReference := self
-		                     resolvePackageSpec: packageSpec
-		                     gofer: gofer.
-	resolvedReference ifNil: [ "Package version already loaded into image"
-		^ self ].
-
-	self preLoad: packageSpec.
-	goferLoad := MetacelloGoferLoad on: Gofer new.
-	goferLoad addResolved: resolvedReference.
-	goferLoad execute.
-	self postLoad: packageSpec.
-
-	repo := resolvedReference repository.
-	resolvedReference workingCopy repositoryGroup addRepository:
-		resolvedReference repository.
-	MetacelloNotification signal:
-		'Loaded -> ' , resolvedReference name , ' --- '
-		, repo repositoryDescription , ' --- '
-		, resolvedReference repository description
-]
-
 { #category : 'actions' }
 MetacelloLoadTarget >> loadPackageDirectives: pkgLoads gofer: aGofer [
 
@@ -118,24 +93,9 @@ MetacelloLoadTarget >> visitLinearLoadDirective: aMetacelloLinearLoadDirective [
 ]
 
 { #category : 'visiting' }
-MetacelloLoadTarget >> visitPackageLoadDirective: aMetacelloPackageLoadDirective [ 
-	
-	| goferLoad resolvedReference repo |
-	resolvedReference := aMetacelloPackageLoadDirective externalReference.
-	resolvedReference ifNil: [ "Package version already loaded into image"
-		^ self ].
+MetacelloLoadTarget >> visitPackageLoadDirective: aMetacelloPackageLoadDirective [
 
 	self preLoad: aMetacelloPackageLoadDirective spec.
-	goferLoad := MetacelloGoferLoad on: Gofer new.
-	goferLoad addResolved: resolvedReference.
-	goferLoad execute.
-	self postLoad: aMetacelloPackageLoadDirective spec.
-
-	repo := resolvedReference repository.
-	resolvedReference workingCopy repositoryGroup addRepository:
-		resolvedReference repository.
-	MetacelloNotification signal:
-		'Loaded -> ' , resolvedReference name , ' --- '
-		, repo repositoryDescription , ' --- '
-		, resolvedReference repository description
+	engine loader loadPackageDirective: aMetacelloPackageLoadDirective.
+	self postLoad: aMetacelloPackageLoadDirective spec
 ]

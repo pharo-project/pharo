@@ -13,7 +13,8 @@ Class {
 		'cacheGofer',
 		'cacheRepository',
 		'overrideRepositories',
-		'specBuilder'
+		'specBuilder',
+		'loader'
 	],
 	#classVars : [
 		'DefaultRepositoryDescription',
@@ -325,13 +326,6 @@ MetacelloScriptEngine >> list [
   self root: self projectSpec
 ]
 
-{ #category : 'loading' }
-MetacelloScriptEngine >> load [
-	1halt.
-	overrideRepositories := Array with: self cacheRepository. "ensure that hasRepositoryOverrides is true"
-	self specBuilder currentLoadDirective loadWithPolicy: self
-]
-
 { #category : 'actions api' }
 MetacelloScriptEngine >> load: required [
     self
@@ -369,6 +363,12 @@ MetacelloScriptEngine >> load: required onProjectDownGrade: onDownGradeBlock onP
 						existingCopy
 							loadedInImage: true;
 							merge: new ] ] ] ]
+]
+
+{ #category : 'accessing' }
+MetacelloScriptEngine >> loader [
+
+	^ loader ifNil: [ loader := MetacelloGoferLoader new ]
 ]
 
 { #category : 'actions api' }

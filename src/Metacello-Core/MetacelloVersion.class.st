@@ -217,12 +217,11 @@ MetacelloVersion >> isSomethingLoaded [
 MetacelloVersion >> loadRequiredFromArray: anArray withEngine: anEngine [
 
 	| directives |
-	1halt.
 	directives := self
 		              fetchRequiredFromArray:
 		              (self defaultPackageNamesToLoad: anArray)
 		              withEngine: anEngine.
-	directives acceptVisitor: MetacelloLoadTarget new.
+	directives acceptVisitor: (MetacelloLoadTarget on: anEngine).
 	^ directives
 ]
 

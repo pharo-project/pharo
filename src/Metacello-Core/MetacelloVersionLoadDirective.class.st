@@ -15,19 +15,6 @@ MetacelloVersionLoadDirective >> add: aDirective [
 	self loadDirectives add: aDirective
 ]
 
-{ #category : 'actions' }
-MetacelloVersionLoadDirective >> executeUsing: oldLoadingStrategy [
-
-	| newLoadingStrategy |
-	self loadDirectives isEmpty ifTrue: [ ^ self ].
-
-	newLoadingStrategy := self newLoadingStrategyFrom: oldLoadingStrategy.
-
-	self loadDirectives do: [ :directive |
-		directive executeUsing: newLoadingStrategy ].
-	newLoadingStrategy finalizeLoad
-]
-
 { #category : 'printing' }
 MetacelloVersionLoadDirective >> label [
 
@@ -45,12 +32,6 @@ MetacelloVersionLoadDirective >> loadDirectives [
 { #category : 'accessing' }
 MetacelloVersionLoadDirective >> loadDirectives: anObject [
 	loadDirectives := anObject
-]
-
-{ #category : 'actions' }
-MetacelloVersionLoadDirective >> loadWithPolicy: aLoadPolicy [
-
-	self executeUsing: (self newWithEngine: aLoadPolicy)
 ]
 
 { #category : 'private' }

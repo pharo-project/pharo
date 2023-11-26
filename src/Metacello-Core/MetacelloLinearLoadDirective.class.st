@@ -12,24 +12,6 @@ MetacelloLinearLoadDirective >> acceptVisitor: aVisitor [
 	^ aVisitor visitLinearLoadDirective: self
 ]
 
-{ #category : 'private' }
-MetacelloLinearLoadDirective >> newLoadingStrategyFrom: oldLoadingStrategy [
-
-	^ oldLoadingStrategy changeToLinear
-]
-
-{ #category : 'actions' }
-MetacelloLinearLoadDirective >> newWithEngine: aLoadPolicy [
-
-	| gofer |
-	gofer := Gofer new.
-	gofer disablePackageCache.
-	gofer repository: aLoadPolicy cacheRepository.
-	^ MetacelloLinearLoadingStrategy new
-		  gofer: gofer;
-		  yourself
-]
-
 { #category : 'accessing' }
 MetacelloLinearLoadDirective >> title [
 
