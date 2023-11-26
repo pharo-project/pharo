@@ -177,7 +177,7 @@ MetacelloScriptEngine >> getBaselineUnconditionalLoad: unconditionalLoad [
 	spec := self lookupProjectSpecFor: spec.
 
 	[
-	| recordTarget directives |
+	| recordTarget |
 	recordTarget := MetacelloRecordTarget on: self.
 	recordTarget required: #( 'default' ).
 	spec acceptVisitor: recordTarget.
@@ -369,6 +369,14 @@ MetacelloScriptEngine >> load [
 ]
 
 { #category : 'actions api' }
+MetacelloScriptEngine >> load: required [
+    self
+        load: required
+        onProjectDownGrade: [ :ex :existing :new | ex allowEvenIfLocked ]
+        onProjectUpgrade: [ :ex :existing :new | ex allowEvenIfLocked ]
+]
+
+{ #category : 'actions api' }
 MetacelloScriptEngine >> load: required onProjectDownGrade: onDownGradeBlock onProjectUpgrade: onUpgradeBlock [
 
 	MetacelloProjectRegistration copyRegistryRestoreOnErrorWhile: [
@@ -382,7 +390,7 @@ MetacelloScriptEngine >> load: required onProjectDownGrade: onDownGradeBlock onP
 			version := loadedSpec versionForScriptEngine: self.
 			required isEmpty
 				ifTrue: [ version loadWithEngine: self ]
-				ifFalse: [ version visitVersionSpecChildren: required ].
+				ifFalse: [ version load: required ].
 			self root: self specBuilder currentLoadDirective.
 			loadedSpec loads: required.
 			MetacelloProjectRegistration
@@ -598,12 +606,4 @@ MetacelloScriptEngine >> useCurrentVersion [
     "private option used to implement the classic mode"
 
     ^ self options at: #'useCurrentVersion' ifAbsent: [ false ]
-]
-
-{ #category : 'actions api' }
-MetacelloScriptEngine >> visitVersionSpecChildren: required [
-    self
-        load: required
-        onProjectDownGrade: [ :ex :existing :new | ex allowEvenIfLocked ]
-        onProjectUpgrade: [ :ex :existing :new | ex allowEvenIfLocked ]
 ]

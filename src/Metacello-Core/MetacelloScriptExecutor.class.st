@@ -127,6 +127,11 @@ MetacelloScriptExecutor >> list [
 ]
 
 { #category : 'actions api' }
+MetacelloScriptExecutor >> load: required [
+    actionArg := #load: -> {required}
+]
+
+{ #category : 'actions api' }
 MetacelloScriptExecutor >> lock [
     actionArg := #'lock' -> #()
 ]
@@ -270,9 +275,4 @@ MetacelloScriptExecutor >> versionArg [
 { #category : 'args' }
 MetacelloScriptExecutor >> versionArg: anObject [
     versionArg := anObject
-]
-
-{ #category : 'actions api' }
-MetacelloScriptExecutor >> visitVersionSpecChildren: required [
-    actionArg := #visitVersionSpecChildren: -> {required}
 ]
