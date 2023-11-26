@@ -127,9 +127,10 @@ MetacelloProjectSpec >> className: aString [
 { #category : 'testing' }
 MetacelloProjectSpec >> compareCurrentVersion: anOperator targetVersionStatus: targetVersionStatus using: anMCLoader withEngine: anEngine [
 
-	^ (MetacelloLookupProjectSpecForLoad new
-		   projectSpec: self;
-		   yourself) signal
+	| specForLoad |
+	specForLoad := anEngine handleLookupProjectSpecForLoad: self.
+
+	^ specForLoad
 		  performCurrentVersionTestAgainst: self versionOrNil
 		  operator: anOperator
 		  targetVersionStatus: targetVersionStatus
@@ -398,25 +399,22 @@ MetacelloProjectSpec >> determineCurrentVersionForLoad [
 ]
 
 { #category : 'loading' }
-MetacelloProjectSpec >> ensureConfigurationLoaded: vrsn ensured: ensured [
-  "answer true if the configuration should be reloaded:
+MetacelloProjectSpec >> ensureConfigurationLoaded: vrsn ensured: ensured withEngine: anEngine [
+	"answer true if the configuration should be reloaded:
     blessing is #development
     symbolic version (https://github.com/dalehenrich/metacello-work/issues/283)"
 
-  (vrsn blessing == #'development' or: [ self versionString isSymbol ])
-    ifTrue: [ 
-      ensured ~~ #'latest'
-        ifTrue: [ ^ MetacelloScriptEnsureProjectLoadedForDevelopment signal ] ].
-  ^ false
+	(vrsn blessing == #development or: [ self versionString isSymbol ])
+		ifTrue: [ ensured ~~ #latest ifTrue: [ anEngine useCurrentVersion ] ].
+	^ false
 ]
 
 { #category : 'loading' }
 MetacelloProjectSpec >> ensureLoadUsing: aTarget withEngine: anEngine [
 
 	| pp |
-	pp := (MetacelloLookupProjectSpec new
-		       projectSpec: self;
-		       yourself) signal projectPackage.
+	pp := (anEngine handleLookupProjectSpec: self) projectPackage.
+
 	pp ifNil: [
 		self error:
 			'Unable to resolve project package for ' , self name printString
@@ -457,8 +455,10 @@ MetacelloProjectSpec >> ensureProjectLoaded: aTarget ensured: ensured withEngine
 	| version |
 	version := self versionOrNil.
 	version ifNil: [ ^ self ].
-	(self ensureConfigurationLoaded: version ensured: ensured) ifFalse: [
-		^ self ].
+	(self
+		 ensureConfigurationLoaded: version
+		 ensured: ensured
+		 withEngine: anEngine) ifFalse: [ ^ self ].
 
 	self ensureLoadUsing: aTarget withEngine: anEngine.
 	anEngine ensuredMap at: self name put: #latest
@@ -481,9 +481,11 @@ MetacelloProjectSpec >> ensureProjectLoadedWithEngine: anEngine [
 
 { #category : 'loading' }
 MetacelloProjectSpec >> fetchUsing: aLoader withEngine: anEngine [
-    (MetacelloLookupProjectSpec new
-        projectSpec: self;
-        yourself) signal projectPackage fetchUsing: aLoader withEngine: anEngine
+
+	| pp |
+	pp := (anEngine handleLookupProjectSpec: self) projectPackage.
+
+	pp fetchUsing: aLoader withEngine: anEngine
 ]
 
 { #category : 'querying' }
@@ -648,23 +650,13 @@ MetacelloProjectSpec >> loadPackageList [
 	^ pkgs
 ]
 
-{ #category : 'private - loading' }
-MetacelloProjectSpec >> loadProjectIsLocked: version [
-	"Just inform is already loaded"
-
-	MetacelloProjectSpecLoadedNotification new
-		projectSpec: (self copy versionString: version versionString);
-		signal
-]
-
 { #category : 'loading' }
 MetacelloProjectSpec >> loadUsingTarget: aTarget withEngine: anEngine [
 
-	(MetacelloLookupProjectSpecForLoad new
-		 projectSpec: self;
-		 yourself) signal
-		performLoadWithEngine: anEngine
-		usingTarget: aTarget
+	| specForLoad |
+	specForLoad := anEngine handleLookupProjectSpecForLoad: self.
+
+	specForLoad performLoadWithEngine: anEngine usingTarget: aTarget
 ]
 
 { #category : 'loading' }
@@ -697,17 +689,18 @@ MetacelloProjectSpec >> loadVersion: aVersionOrNil usingTarget: aTarget withEngi
 
 	vrsn doFetchRequiredFromArray: list withEngine: anEngine. "do the load"
 
-	(MetacelloProjectSpecLoadedNotification new projectSpec:
-		 (self copy versionString: vrsn versionString)) signal.
+	anEngine handleProjectSpecLoaded:
+		(self copy versionString: vrsn versionString).
 	aTarget postLoad: self
 ]
 
 { #category : 'loading' }
 MetacelloProjectSpec >> loadWithEngine: anEngine [
 
-    (MetacelloLookupProjectSpecForLoad new
-        projectSpec: self;
-        yourself) signal performLoadWithEngine: anEngine
+	| specForLoad |
+	specForLoad := anEngine handleLookupProjectSpecForLoad: self.
+
+	specForLoad performLoadWithEngine: anEngine
 ]
 
 { #category : 'accessing' }

@@ -71,7 +71,7 @@ MetacelloMCBaselineOfProjectSpec >> determineCurrentVersionForLoad [
 ]
 
 { #category : 'loading' }
-MetacelloMCBaselineOfProjectSpec >> ensureConfigurationLoaded: vrsn ensured: ensured [
+MetacelloMCBaselineOfProjectSpec >> ensureConfigurationLoaded: vrsn ensured: ensured withEngine: anObject [
   "answer true if the configuration should be reloaded"
 
   "see Issue #181 for details ... basically we always want to consider loading the baseline from a project reference, especially if the two project specs are not the same..."

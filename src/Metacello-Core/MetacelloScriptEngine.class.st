@@ -250,84 +250,63 @@ MetacelloScriptEngine >> handleLookupBaselineSpecForEnsureLoad: exception [
 ]
 
 { #category : 'handlers' }
-MetacelloScriptEngine >> handleLookupProjectSpec: exception [
-    ^ exception
-        resume:
-            ((self lookupProjectSpecFor: exception projectSpec) ifNil: [ ^ exception resume: exception projectSpec ])
+MetacelloScriptEngine >> handleLookupProjectSpec: aProjectSpec [
+
+	^ (self lookupProjectSpecFor: aProjectSpec) ifNil: [ ^ aProjectSpec ]
 ]
 
 { #category : 'handlers' }
-MetacelloScriptEngine >> handleLookupProjectSpecForLoad: exception [
-  "if overrideProjectSpec is nil, use currentVersion in image, ignoreImage is false"
+MetacelloScriptEngine >> handleLookupProjectSpecForLoad: aProjectSpec [
+	"if overrideProjectSpec is nil, use currentVersion in image, ignoreImage is false"
 
-  | requested override |
-  requested := exception projectSpec.
-  override := self useCurrentVersion
-    ifTrue: [ 
-      "don't do lookup in registry if we expect to use the #currentVersion calculation"
-      nil ]
-    ifFalse: [ 
-      | registered |
-      registered := self lookupProjectSpecFor: exception projectSpec.
-      (registered compareEqual: requested)
-        ifFalse: [ 
-          "counts as override, only if they differ in some aspect"
-          override := registered ] ].
-  ^ exception
-    resume:
-      (MetacelloProjectSpecForLoad new
-        projectSpec: requested;
-        useDetermineVersionForLoad: self useCurrentVersion;
-        overrideProjectSpec: override;
-        yourself)
+	| override |
+	override := self useCurrentVersion
+		            ifTrue: [ "don't do lookup in registry if we expect to use the #currentVersion calculation"
+			            nil ]
+		            ifFalse: [
+			            | registered |
+			            registered := self lookupProjectSpecFor: aProjectSpec.
+			            (registered compareEqual: aProjectSpec) ifFalse: [ "counts as override, only if they differ in some aspect"
+				            override := registered ] ].
+	^ MetacelloProjectSpecForLoad new
+		  projectSpec: aProjectSpec;
+		  useDetermineVersionForLoad: self useCurrentVersion;
+		  overrideProjectSpec: override;
+		  yourself
 ]
 
 { #category : 'handlers' }
 MetacelloScriptEngine >> handleNotificationsForAction: actionBlock [
-  [ 
-  [ 
-  [ 
-  actionBlock
-    on:
-      MetacelloLookupProjectSpec , MetacelloLookupProjectSpecForLoad
-        , MetacelloProjectSpecLoadedNotification
-        , MetacelloScriptEnsureProjectLoadedForDevelopment
-        , MetacelloLookupBaselineSpecForEnsureLoad
-    do: [ :ex | 
-      "lookup and registration handlers need to be innermost set of handlers ...they may throw option notifications"
-      ex handleResolutionFor: self ] ]
-    on:
-      MetacelloAllowProjectDowngrade , MetacelloAllowProjectUpgrade
-        , MetacelloAllowConflictingProjectUpgrade
-    do: [ :ex | 
-      "option handlers need to be outermost set of handlers ... last line of defense before users are involved"
-      ex handleResolutionFor: self ] ]
-    on: MetacelloAllowLockedProjectChange
-    do: [ :ex | 
-      "MetacelloAllowLockedProjectChange need to be outermost handler ... since it is signaled from second line of handlers"
-      ex handleResolutionFor: self ] ]
-    on: Warning
-    do: [ :ex | 
-      "Warning is absolute outermost handler"
-      self handleWarning: ex ]
+
+	[
+	[
+	actionBlock
+		on: MetacelloAllowProjectDowngrade , MetacelloAllowProjectUpgrade
+			, MetacelloAllowConflictingProjectUpgrade
+		do: [ :ex | "option handlers need to be outermost set of handlers ... last line of defense before users are involved"
+			ex handleResolutionFor: self ] ]
+		on: MetacelloAllowLockedProjectChange
+		do: [ :ex | "MetacelloAllowLockedProjectChange need to be outermost handler ... since it is signaled from second line of handlers"
+			ex handleResolutionFor: self ] ]
+		on: Warning
+		do: [ :ex | "Warning is absolute outermost handler"
+			self handleWarning: ex ]
 ]
 
 { #category : 'handlers' }
-MetacelloScriptEngine >> handleProjectSpecLoaded: exception [
-    MetacelloProjectRegistration
-        registrationForProjectSpec: exception projectSpec
-        ifAbsent: [ :new | 
-            new
-                loadedInImage: true;
-                registerProject ]
-        ifPresent: [ :existing :new | 
-            "unconditionally merge new with existing (updates registration)"
-            existing
-                copyOnWrite: [ :existingCopy | 
-                    existingCopy
-                        loadedInImage: true;
-                        merge: new ] ].
-    exception resume
+MetacelloScriptEngine >> handleProjectSpecLoaded: aProjectSpec [
+
+	MetacelloProjectRegistration
+		registrationForProjectSpec: aProjectSpec
+		ifAbsent: [ :new |
+			new
+				loadedInImage: true;
+				registerProject ]
+		ifPresent: [ :existing :new | "unconditionally merge new with existing (updates registration)"
+			existing copyOnWrite: [ :existingCopy |
+				existingCopy
+					loadedInImage: true;
+					merge: new ] ]
 ]
 
 { #category : 'handlers' }
