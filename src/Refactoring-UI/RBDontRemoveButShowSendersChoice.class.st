@@ -6,7 +6,7 @@ Class {
 	#tag : 'Choices'
 }
 
-{ #category : 'accessing' }
+{ #category : 'execution' }
 RBDontRemoveButShowSendersChoice >> action [
 
 	driver browseSenders

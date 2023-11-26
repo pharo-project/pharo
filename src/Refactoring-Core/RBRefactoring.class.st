@@ -43,6 +43,12 @@ RBRefactoring class >> preconditionSignal [
 	^ RBRefactoringError , RBRefactoringWarning
 ]
 
+{ #category : 'preconditions' }
+RBRefactoring >> applicabilityPreconditions [
+
+	^ self trueCondition 
+]
+
 { #category : 'converting' }
 RBRefactoring >> asRefactoring [
 
@@ -55,6 +61,19 @@ RBRefactoring >> canReferenceVariable: aString in: aClass [
 	(aClass definesVariable: aString) ifTrue: [^true].
 	(self model includesGlobal: aString asSymbol) ifTrue: [^true].
 	^(self poolVariableNamesFor: aClass) includes: aString
+]
+
+{ #category : 'preconditions' }
+RBRefactoring >> checkApplicabilityPreconditions [
+
+	| conditions errorStrings |
+	conditions := self applicabilityPreconditions.
+	conditions := conditions reject: [ :cond | cond check ].
+	conditions ifEmpty: [ ^ self ].
+	errorStrings := String streamContents: [ :aStream |
+		                conditions do: [ :cond |
+			                cond violationMessageOn: aStream ] ].
+	self refactoringError: errorStrings
 ]
 
 { #category : 'support' }
@@ -111,17 +130,6 @@ RBRefactoring >> copyOptionsFrom: aDictionary [
 	(aDictionary keys difference: dict keys) do:
 		[ :e | dict at: e put: (aDictionary at: e) ].
 	self options: dict
-]
-
-{ #category : 'transforming' }
-RBRefactoring >> generateChangesFor: aRefactoring [
-	"I will generate changes and save them in the model, BUT I will not apply them!
-	Use me when a refactorings is composed of multiple other refactorings"
-
-	"Execute the argument but passing the receiver options to that refactoring"
-	aRefactoring copyOptionsFrom: self options.
-	aRefactoring model: self model.
-	aRefactoring generateChanges
 ]
 
 { #category : 'private' }

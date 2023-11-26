@@ -29,10 +29,7 @@ RBCompositeRefactoring >> breakingChangePreconditions [
 RBCompositeRefactoring >> generateChanges [
 	
 	self prepareForExecution.
-
-	self applicabilityPreconditions check ifFalse: [
-		^ RBApplicabilityChecksFailedError signal:
-			  self applicabilityPreconditions errorString ].
+	self checkApplicabilityPreconditions.
 	self breakingChangePreconditions check ifFalse: [
 		RBBreakingChangeChecksFailedWarning signal:
 			self breakingChangePreconditions errorString ].
