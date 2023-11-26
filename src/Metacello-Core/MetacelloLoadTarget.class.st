@@ -12,12 +12,6 @@ MetacelloLoadTarget >> actionLabel [
 	^'Loading '
 ]
 
-{ #category : 'executing' }
-MetacelloLoadTarget >> executeOnSpec: aSpec [
-
-	self linearLoadPackagesOfSpec: aSpec
-]
-
 { #category : 'private' }
 MetacelloLoadTarget >> linearLoadPackageSpec: packageSpec gofer: gofer [
 
@@ -41,18 +35,6 @@ MetacelloLoadTarget >> linearLoadPackageSpec: packageSpec gofer: gofer [
 		'Loaded -> ' , resolvedReference name , ' --- '
 		, repo repositoryDescription , ' --- '
 		, resolvedReference repository description
-]
-
-{ #category : 'private' }
-MetacelloLoadTarget >> linearLoadPackagesOfSpec: aSpec [
-
-	| gofer monticelloRepositories |
-	gofer := Gofer new.
-	monticelloRepositories := self repositoriesFrom:
-		                          aSpec repositorySpecs.
-	monticelloRepositories do: [ :repo | gofer repository: repo ].
-	aSpec packageSpecsInLoadOrder do: [ :pkg |
-		pkg loadUsing: self gofer: gofer withEngine: engine ]
 ]
 
 { #category : 'actions' }

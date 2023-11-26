@@ -177,16 +177,10 @@ MetacelloProjectReferenceSpec >> requires: aCollection [
 	self shouldNotImplement
 ]
 
-{ #category : 'accessing' }
-MetacelloProjectReferenceSpec >> resolveProjectSpec [
-
-	^self projectReference
-]
-
 { #category : 'private' }
 MetacelloProjectReferenceSpec >> resolveToLoadableSpec [
 
-	^self resolveProjectSpec resolveToLoadableSpec
+	^self projectReference resolveToLoadableSpec
 ]
 
 { #category : 'private' }

@@ -137,9 +137,9 @@ MetacelloRecordTarget >> visitPackageSpec: aMetacelloPackageSpec [
 { #category : 'visiting' }
 MetacelloRecordTarget >> visitProjectReference: aMetacelloProjectReferenceSpec [
 
-	^ aMetacelloProjectReferenceSpec resolveToLoadableSpec
-		  loadUsingTarget: self
-		  withEngine: engine
+	^ (MetacelloLookupProjectSpecForLoad new
+		   projectSpec: aMetacelloProjectReferenceSpec projectReference;
+		   yourself) signal performLoadWithEngine: engine usingTarget: self
 ]
 
 { #category : 'visiting' }
