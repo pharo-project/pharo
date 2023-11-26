@@ -54,12 +54,6 @@ RBTransformation class >> initializeRefactoringOptions [
 		put: [ :ref :env |  self error: #openBrowser ]
 ]
 
-{ #category : 'preconditions' }
-RBTransformation >> applicabilityPreconditions [ 
-	
-	^ self trueCondition 
-]
-
 { #category : 'converting' }
 RBTransformation >> asRefactoring [
 
