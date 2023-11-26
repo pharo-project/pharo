@@ -260,13 +260,6 @@ MetacelloScriptExecutor >> unregister [
   actionArg := #'unregister' -> #()
 ]
 
-{ #category : 'options api' }
-MetacelloScriptExecutor >> useCurrentVersion: aBool [
-    "private option used to implement the classic mode"
-
-    self options at: #'useCurrentVersion' put: aBool
-]
-
 { #category : 'args' }
 MetacelloScriptExecutor >> versionArg [
     ^ versionArg

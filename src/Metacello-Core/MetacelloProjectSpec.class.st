@@ -130,11 +130,7 @@ MetacelloProjectSpec >> compareCurrentVersion: anOperator targetVersionStatus: t
 	| specForLoad |
 	specForLoad := anEngine handleLookupProjectSpecForLoad: self.
 
-	^ specForLoad
-		  performCurrentVersionTestAgainst: self versionOrNil
-		  operator: anOperator
-		  targetVersionStatus: targetVersionStatus
-		  using: anMCLoader
+	^ false
 ]
 
 { #category : 'scripting' }
@@ -399,18 +395,7 @@ MetacelloProjectSpec >> determineCurrentVersionForLoad [
 ]
 
 { #category : 'loading' }
-MetacelloProjectSpec >> ensureConfigurationLoaded: vrsn ensured: ensured withEngine: anEngine [
-	"answer true if the configuration should be reloaded:
-    blessing is #development
-    symbolic version (https://github.com/dalehenrich/metacello-work/issues/283)"
-
-	(vrsn blessing == #development or: [ self versionString isSymbol ])
-		ifTrue: [ ensured ~~ #latest ifTrue: [ anEngine useCurrentVersion ] ].
-	^ false
-]
-
-{ #category : 'loading' }
-MetacelloProjectSpec >> ensureLoadUsing: aTarget withEngine: anEngine [
+MetacelloProjectSpec >> ensureLoadUsingEngine: anEngine [
 
 	| pp |
 	pp := (anEngine handleLookupProjectSpec: self) projectPackage.
@@ -426,42 +411,25 @@ MetacelloProjectSpec >> ensureLoadUsing: aTarget withEngine: anEngine [
 
 { #category : 'loading' }
 MetacelloProjectSpec >> ensureLoadedForDevelopmentUsing: aTarget withEngine: anEngine [
-	"for #development projects, always need latest version of package when contemplating a load"
 
 	| ensured |
 	self isLocked ifTrue: [
 		anEngine ensuredMap at: self name put: #present.
 		^ self ].
-
+1halt.
 	ensured := anEngine ensuredMap at: self name ifAbsent: [ nil ].
-	self projectClass ifNotNil: [
-		self ensureProjectLoaded: aTarget ensured: ensured withEngine: anEngine.
-		^ self ].
+	self projectClass ifNotNil: [ ^ self ].
 
-	ensured ifNil: [ self ensureProjectFetch: aTarget withEngine: anEngine ]
+	ensured ifNil: [
+		self ensureProjectFetch: aTarget withEngine: anEngine ]
 ]
 
 { #category : 'private - loading' }
 MetacelloProjectSpec >> ensureProjectFetch: aTarget withEngine: anEngine [
 	"projectClass == nil or version == nil"
 
-	self ensureLoadUsing: aTarget withEngine: anEngine.
+	self ensureLoadUsingEngine: anEngine.
 	anEngine ensuredMap at: self name put: #present
-]
-
-{ #category : 'private - loading' }
-MetacelloProjectSpec >> ensureProjectLoaded: aTarget ensured: ensured withEngine: anEngine [
-
-	| version |
-	version := self versionOrNil.
-	version ifNil: [ ^ self ].
-	(self
-		 ensureConfigurationLoaded: version
-		 ensured: ensured
-		 withEngine: anEngine) ifFalse: [ ^ self ].
-
-	self ensureLoadUsing: aTarget withEngine: anEngine.
-	anEngine ensuredMap at: self name put: #latest
 ]
 
 { #category : 'loading' }
@@ -475,7 +443,7 @@ MetacelloProjectSpec >> ensureProjectLoadedWithEngine: anEngine [
 		 self versionOrNil isNil or: [
 			 self isMutable and: [ anEngine ignoreImage ] ] ]) ifTrue: [
 		self projectPackage ifNil: [ ^ true ].
-		self ensureLoadUsing: nil withEngine: anEngine ].
+		self ensureLoadUsingEngine: anEngine ].
 	^ self projectClass isNotNil
 ]
 
@@ -651,15 +619,6 @@ MetacelloProjectSpec >> loadPackageList [
 ]
 
 { #category : 'loading' }
-MetacelloProjectSpec >> loadUsingTarget: aTarget withEngine: anEngine [
-
-	| specForLoad |
-	specForLoad := anEngine handleLookupProjectSpecForLoad: self.
-
-	specForLoad performLoadWithEngine: anEngine usingTarget: aTarget
-]
-
-{ #category : 'loading' }
 MetacelloProjectSpec >> loadVersion: aVersionOrNil usingTarget: aTarget withEngine: anEngine [
 	"Load the correct version of the project"
 
@@ -685,10 +644,9 @@ MetacelloProjectSpec >> loadVersion: aVersionOrNil usingTarget: aTarget withEngi
 				         loader: aTarget ]) asSet.
 	vrsn versionString ~= self versionString ifTrue: [
 		MetacelloNotification signal: ' [' , vrsn versionString , ']' ].
+
 	aTarget preLoad: self.
-
 	vrsn doFetchRequiredFromArray: list withEngine: anEngine. "do the load"
-
 	anEngine handleProjectSpecLoaded:
 		(self copy versionString: vrsn versionString).
 	aTarget postLoad: self
@@ -1112,11 +1070,13 @@ MetacelloProjectSpec >> version [
 
 { #category : 'scripting' }
 MetacelloProjectSpec >> versionForScriptEngine: aMetacelloScriptEngine [
-    | prj |
-    prj := self projectClass ifNil: [ self project ] ifNotNil: [ self projectClassProject ].
-    ^ ((prj projectForScriptEngine: aMetacelloScriptEngine) version: self versionString)
-"        silently: aMetacelloScriptEngine silently;
-        ignoreImage: aMetacelloScriptEngine ignoreImage"
+
+	| prj |
+	prj := self projectClass
+		       ifNil: [ self project ]
+		       ifNotNil: [ self projectClassProject ].
+	^ (prj projectForScriptEngine: aMetacelloScriptEngine) version:
+		  self versionString
 ]
 
 { #category : 'querying' }

@@ -94,12 +94,6 @@ MetacelloTarget >> operator: aSymbol [
 { #category : 'repositories' }
 MetacelloTarget >> repositoriesFrom: aMetacelloMVRepositorySpecs [
 
-	^self repositoriesFrom: aMetacelloMVRepositorySpecs ignoreOverrides: false
-]
-
-{ #category : 'repositories' }
-MetacelloTarget >> repositoriesFrom: aMetacelloMVRepositorySpecs ignoreOverrides: ignoreOverrides [
-
 	| repositories repos |
 	repositories := MCRepositoryGroup default repositories.
 	repos := OrderedCollection new.

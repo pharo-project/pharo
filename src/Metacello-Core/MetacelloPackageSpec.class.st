@@ -182,12 +182,6 @@ MetacelloPackageSpec >> currentVersionInfo [
 ]
 
 { #category : 'loading' }
-MetacelloPackageSpec >> ensureLoadUsing: mcLoader withEngine: anEngine [
-
-	self forceLoadingWithEngine: anEngine
-]
-
-{ #category : 'loading' }
 MetacelloPackageSpec >> ensureLoadedForDevelopmentUsing: aTarget [
 	"noop"
 
@@ -239,14 +233,7 @@ MetacelloPackageSpec >> file: aString [
 { #category : 'loading' }
 MetacelloPackageSpec >> forceLoadingWithEngine: anEngine [
 
-	| target directives |
-	"force load it"
-	target := MetacelloRecordTarget on: anEngine.
-	target required: #( 'default' ).
-	target currentRepositorySpecs: self repositorySpecs.
-	directives := self acceptVisitor: target.
-	anEngine specBuilder currentLoadDirective acceptVisitor:
-		(MetacelloLoadTarget on: self)
+	anEngine doLoadProjectSpecFrom: self
 ]
 
 { #category : 'accessing' }
@@ -324,18 +311,6 @@ MetacelloPackageSpec >> isPackageLoaded [
 MetacelloPackageSpec >> isPackageLoaded: aLoader [
 
 	^ (self workingCopyNameFor: aLoader) isNotNil
-]
-
-{ #category : 'loading' }
-MetacelloPackageSpec >> loadUsing: aLoader gofer: gofer withEngine: anEngine [
-
-	^ aLoader linearLoadPackageSpec: self gofer: gofer
-]
-
-{ #category : 'loading' }
-MetacelloPackageSpec >> loadUsingTarget: aTarget withEngine: anEngine [
-
-	self forceLoadingWithEngine: anEngine
 ]
 
 { #category : 'loading' }

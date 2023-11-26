@@ -492,6 +492,12 @@ MetacelloVersionSpec >> label [
 	^self versionString, ' [', self projectLabel, ']'
 ]
 
+{ #category : 'accessing' }
+MetacelloVersionSpec >> loader: aMetacelloLoadTarget [ 
+	
+	"nothing"
+]
+
 { #category : 'merging' }
 MetacelloVersionSpec >> mergeMap [
     | map |

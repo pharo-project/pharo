@@ -82,13 +82,13 @@ MetacelloMCBaselineOfProjectSpec >> ensureConfigurationLoaded: vrsn ensured: ens
 ]
 
 { #category : 'loading' }
-MetacelloMCBaselineOfProjectSpec >> ensureLoadUsing: aLoader withEngine: anEngine [
-  "see https://github.com/dalehenrich/metacello-work/issues/244 ... uncoditionally load
+MetacelloMCBaselineOfProjectSpec >> ensureLoadUsingEngine: anEngine [
+	"see https://github.com/dalehenrich/metacello-work/issues/244 ... uncoditionally load
    baseline"
 
-  [ super ensureLoadUsing: aLoader withEngine: anEngine ]
-    on: MetacelloIgnorePackageLoaded
-    do: [ :ex | ex resume: ex packageSpec name = self name ]
+	[ super ensureLoadUsingEngine: anEngine ]
+		on: MetacelloIgnorePackageLoaded
+		do: [ :ex | ex resume: ex packageSpec name = self name ]
 ]
 
 { #category : 'printing' }
