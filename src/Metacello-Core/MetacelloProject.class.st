@@ -143,12 +143,6 @@ MetacelloProject >> defaultBlessing [
 	^#release
 ]
 
-{ #category : 'spec classes' }
-MetacelloProject >> defaultLoaderClass [
-
-	^MetacelloLoadTarget
-]
-
 { #category : 'private' }
 MetacelloProject >> defaultPlatformAttributes [
 
@@ -221,12 +215,6 @@ MetacelloProject >> latestVersion [
 MetacelloProject >> latestVersion: blessing [
 
 	^(self map values select: [:version | blessing = version blessing ]) detectMax: [:version | version ]
-]
-
-{ #category : 'loading' }
-MetacelloProject >> load: aVersionString [
-
-	^(self version: aVersionString) load
 ]
 
 { #category : 'accessing' }
@@ -491,4 +479,10 @@ MetacelloProject >> versionSpec [
 MetacelloProject >> versions [
 
 	^self map values asArray sort: [:a :b | a <= b ]
+]
+
+{ #category : 'loading' }
+MetacelloProject >> visitVersionSpecChildren: aVersionString [
+
+	^(self version: aVersionString) load
 ]

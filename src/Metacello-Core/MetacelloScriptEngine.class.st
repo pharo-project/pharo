@@ -168,22 +168,26 @@ MetacelloScriptEngine >> getBaselineProjectUnconditionalLoad: unconditionalLoad 
 
 { #category : 'project lookup' }
 MetacelloScriptEngine >> getBaselineUnconditionalLoad: unconditionalLoad [
-  | spec |
-  spec := self projectSpec.
-  Smalltalk
-    at: spec className asSymbol
-    ifPresent: [ :cl | 
-      unconditionalLoad
-        ifFalse: [ ^ cl ] ].
-  spec := self lookupProjectSpecFor: spec.
 
-  [ spec projectPackage loadWithEngine: self ]
-    on: MetacelloIgnorePackageLoaded
-    do: [ :ex | 
-      "see https://github.com/dalehenrich/metacello-work/issues/244 ... uncoditionally load
+	| spec |
+	spec := self projectSpec.
+	Smalltalk
+		at: spec className asSymbol
+		ifPresent: [ :cl | unconditionalLoad ifFalse: [ ^ cl ] ].
+	spec := self lookupProjectSpecFor: spec.
+
+	[
+	| recordTarget directives |
+	recordTarget := MetacelloRecordTarget on: self.
+	recordTarget required: #( 'default' ).
+	spec acceptVisitor: recordTarget.
+	self specBuilder currentLoadDirective acceptVisitor:
+		(MetacelloLoadTarget on: self) ]
+		on: MetacelloIgnorePackageLoaded
+		do: [ :ex | "see https://github.com/dalehenrich/metacello-work/issues/244 ... uncoditionally load
         baseline"
-      ex resume: true ].
-  ^ Smalltalk at: spec className asSymbol
+			ex resume: true ].
+	^ Smalltalk at: spec className asSymbol
 ]
 
 { #category : 'project lookup' }
@@ -365,14 +369,6 @@ MetacelloScriptEngine >> load [
 ]
 
 { #category : 'actions api' }
-MetacelloScriptEngine >> load: required [
-    self
-        load: required
-        onProjectDownGrade: [ :ex :existing :new | ex allowEvenIfLocked ]
-        onProjectUpgrade: [ :ex :existing :new | ex allowEvenIfLocked ]
-]
-
-{ #category : 'actions api' }
 MetacelloScriptEngine >> load: required onProjectDownGrade: onDownGradeBlock onProjectUpgrade: onUpgradeBlock [
 
 	MetacelloProjectRegistration copyRegistryRestoreOnErrorWhile: [
@@ -386,7 +382,7 @@ MetacelloScriptEngine >> load: required onProjectDownGrade: onDownGradeBlock onP
 			version := loadedSpec versionForScriptEngine: self.
 			required isEmpty
 				ifTrue: [ version loadWithEngine: self ]
-				ifFalse: [ version load: required ].
+				ifFalse: [ version visitVersionSpecChildren: required ].
 			self root: self specBuilder currentLoadDirective.
 			loadedSpec loads: required.
 			MetacelloProjectRegistration
@@ -602,4 +598,12 @@ MetacelloScriptEngine >> useCurrentVersion [
     "private option used to implement the classic mode"
 
     ^ self options at: #'useCurrentVersion' ifAbsent: [ false ]
+]
+
+{ #category : 'actions api' }
+MetacelloScriptEngine >> visitVersionSpecChildren: required [
+    self
+        load: required
+        onProjectDownGrade: [ :ex :existing :new | ex allowEvenIfLocked ]
+        onProjectUpgrade: [ :ex :existing :new | ex allowEvenIfLocked ]
 ]

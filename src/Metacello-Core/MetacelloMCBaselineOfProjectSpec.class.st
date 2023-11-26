@@ -6,6 +6,12 @@ Class {
 	#tag : 'Specs'
 }
 
+{ #category : 'visiting' }
+MetacelloMCBaselineOfProjectSpec >> acceptVisitor: aVisitor [
+	
+	^ aVisitor visitProjectSpec: self
+]
+
 { #category : 'scripting' }
 MetacelloMCBaselineOfProjectSpec >> asBaselineProjectSpec [
     ^ self

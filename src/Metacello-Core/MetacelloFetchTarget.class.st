@@ -1,9 +1,9 @@
 Class {
 	#name : 'MetacelloFetchTarget',
 	#superclass : 'MetacelloTarget',
-	#category : 'Metacello-Core-Loaders',
+	#category : 'Metacello-Core-Targets',
 	#package : 'Metacello-Core',
-	#tag : 'Loaders'
+	#tag : 'Targets'
 }
 
 { #category : 'accessing' }

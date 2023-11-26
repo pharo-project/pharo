@@ -1,9 +1,9 @@
 Class {
 	#name : 'MetacelloLoadTarget',
 	#superclass : 'MetacelloTarget',
-	#category : 'Metacello-Core-Loaders',
+	#category : 'Metacello-Core-Targets',
 	#package : 'Metacello-Core',
-	#tag : 'Loaders'
+	#tag : 'Targets'
 }
 
 { #category : 'accessing' }
@@ -126,4 +126,34 @@ MetacelloLoadTarget >> resolvePackageSpec: packageSpec gofer: gofer [
 				spc file: info name.
 				(MetacelloIgnorePackageLoaded signal: spc) ifFalse: [ ^ nil ] ] ] ].
 	^ resolvedReference
+]
+
+{ #category : 'visiting' }
+MetacelloLoadTarget >> visitLinearLoadDirective: aMetacelloLinearLoadDirective [
+
+	aMetacelloLinearLoadDirective loadDirectives do: [ :dir |
+		dir acceptVisitor: self ]
+]
+
+{ #category : 'visiting' }
+MetacelloLoadTarget >> visitPackageLoadDirective: aMetacelloPackageLoadDirective [ 
+	
+	| goferLoad resolvedReference repo |
+	resolvedReference := aMetacelloPackageLoadDirective externalReference.
+	resolvedReference ifNil: [ "Package version already loaded into image"
+		^ self ].
+
+	self preLoad: aMetacelloPackageLoadDirective spec.
+	goferLoad := MetacelloGoferLoad on: Gofer new.
+	goferLoad addResolved: resolvedReference.
+	goferLoad execute.
+	self postLoad: aMetacelloPackageLoadDirective spec.
+
+	repo := resolvedReference repository.
+	resolvedReference workingCopy repositoryGroup addRepository:
+		resolvedReference repository.
+	MetacelloNotification signal:
+		'Loaded -> ' , resolvedReference name , ' --- '
+		, repo repositoryDescription , ' --- '
+		, resolvedReference repository description
 ]

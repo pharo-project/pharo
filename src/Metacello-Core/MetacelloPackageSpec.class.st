@@ -239,8 +239,12 @@ MetacelloPackageSpec >> file: aString [
 { #category : 'loading' }
 MetacelloPackageSpec >> forceLoadingWithEngine: anEngine [
 
-	| loadTarget |
+	| loadTarget target |
 	"force load it"
+	target := (MetacelloRecordTarget on: anEngine).
+	target required: #( 'default' ).
+	target currentRepositorySpecs: self repositorySpecs.
+	self acceptVisitor: target.
 	loadTarget := MetacelloLoadTarget new.
 	loadTarget executeOnSpec: self
 ]

@@ -168,7 +168,8 @@ MetacelloVersion >> fetchRequiredFromArray: anArray withEngine: anEngine [
 		              (self defaultPackageNamesToLoad: anArray)
 		              withEngine: anEngine.
 
-	^ directives acceptVisitor: (MetacelloFetchTarget on: anEngine)
+	directives acceptVisitor: (MetacelloFetchTarget on: anEngine).
+	^ directives
 ]
 
 { #category : 'actions' }
@@ -215,12 +216,12 @@ MetacelloVersion >> isSomethingLoaded [
 { #category : 'private' }
 MetacelloVersion >> loadRequiredFromArray: anArray withEngine: anEngine [
 
-	| target |
-	target := MetacelloLoadTarget new.
-	self
-		fetchRequiredFromArray: (self defaultPackageNamesToLoad: anArray)
-		withEngine: anEngine.
-	^ anEngine load
+	| directives |
+	directives := self
+		              fetchRequiredFromArray:
+		              (self defaultPackageNamesToLoad: anArray)
+		              withEngine: anEngine.
+	directives acceptVisitor: MetacelloLoadTarget new
 ]
 
 { #category : 'actions' }

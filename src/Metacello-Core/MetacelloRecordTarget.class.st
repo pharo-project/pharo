@@ -5,9 +5,9 @@ Class {
 		'required',
 		'currentRepositorySpecs'
 	],
-	#category : 'Metacello-Core-Loaders',
+	#category : 'Metacello-Core-Targets',
 	#package : 'Metacello-Core',
-	#tag : 'Loaders'
+	#tag : 'Targets'
 }
 
 { #category : 'accessing' }
@@ -19,11 +19,16 @@ MetacelloRecordTarget >> actionLabel [
 { #category : 'private' }
 MetacelloRecordTarget >> atomicLoadPackageOfSpec: aSpec [
 
-	engine specBuilder
+	self specBuilder
 		pushAtomicLoadDirectivesDuring: [
 			currentRepositorySpecs := aSpec repositorySpecs.
 			aSpec packageSpecsInLoadOrder do: [ :pkg | pkg acceptVisitor: self ] ]
 		for: self
+]
+
+{ #category : 'accessing' }
+MetacelloRecordTarget >> currentRepositorySpecs: aCollection [ 
+	currentRepositorySpecs := aCollection
 ]
 
 { #category : 'actions' }
@@ -41,7 +46,7 @@ MetacelloRecordTarget >> linearLoadPackageSpec: packageSpec gofer: gofer [
 	(MetacelloDirective
 		 loadPackage: packageSpec
 		 externalReference: externalReference) addTo:
-		engine specBuilder currentLoadDirective.
+		self specBuilder currentLoadDirective.
 	self postLoad: packageSpec.
 
 	^ externalReference
@@ -50,24 +55,11 @@ MetacelloRecordTarget >> linearLoadPackageSpec: packageSpec gofer: gofer [
 { #category : 'private' }
 MetacelloRecordTarget >> linearLoadPackagesOfSpec: aSpec [
 
-	engine specBuilder
+	self specBuilder
 		pushLinearLoadDirectivesDuring: [
 			currentRepositorySpecs := aSpec repositorySpecs.
 			aSpec packageSpecsInLoadOrder do: [ :pkg | pkg acceptVisitor: self ] ]
 		for: self
-]
-
-{ #category : 'actions' }
-MetacelloRecordTarget >> load: aSpec [
-
-1halt.
-	aSpec project loadType == #atomic ifTrue: [
-		^ self atomicLoadPackageOfSpec: aSpec ].
-	aSpec project loadType == #linear ifTrue: [
-		^ self linearLoadPackagesOfSpec: aSpec ].
-
-	MetacelloError signal:
-		'Unknown loadType: ' , aSpec project loadType printString
 ]
 
 { #category : 'actions' }
@@ -81,14 +73,14 @@ MetacelloRecordTarget >> loadPackageDirectives: pkgLoads gofer: aGofer [
 MetacelloRecordTarget >> postLoad: packageOrVersionSpec [
 
 	(MetacelloDirective postLoadSpec: packageOrVersionSpec) addTo:
-		engine specBuilder currentLoadDirective
+		self specBuilder currentLoadDirective
 ]
 
 { #category : 'doits' }
 MetacelloRecordTarget >> preLoad: packageOrVersionSpec [
 
 	(MetacelloDirective preLoadSpec: packageOrVersionSpec) addTo:
-		engine specBuilder currentLoadDirective
+		self specBuilder currentLoadDirective
 ]
 
 { #category : 'accessing' }
@@ -101,6 +93,12 @@ MetacelloRecordTarget >> required: aCollection [
 MetacelloRecordTarget >> resolveRecordingPackageSpecReference: packageSpec gofer: gofer [
 
 	^ (self resolvePackageSpecReferences: packageSpec gofer: gofer) first
+]
+
+{ #category : 'private' }
+MetacelloRecordTarget >> specBuilder [
+		
+	^ engine specBuilder
 ]
 
 { #category : 'visiting' }
@@ -130,7 +128,7 @@ MetacelloRecordTarget >> visitPackageSpec: aMetacelloPackageSpec [
 	(MetacelloDirective
 		 loadPackage: aMetacelloPackageSpec
 		 externalReference: externalReference) addTo:
-		engine specBuilder currentLoadDirective.
+		self specBuilder currentLoadDirective.
 	self postLoad: aMetacelloPackageSpec.
 
 	^ externalReference
@@ -139,9 +137,17 @@ MetacelloRecordTarget >> visitPackageSpec: aMetacelloPackageSpec [
 { #category : 'visiting' }
 MetacelloRecordTarget >> visitProjectReference: aMetacelloProjectReferenceSpec [
 
-	| required |
-	required := aMetacelloProjectReferenceSpec resolveToLoadableSpec.
-	^ required loadUsingTarget: self withEngine: engine
+	^ aMetacelloProjectReferenceSpec resolveToLoadableSpec
+		  loadUsingTarget: self
+		  withEngine: engine
+]
+
+{ #category : 'visiting' }
+MetacelloRecordTarget >> visitProjectSpec: aMetacelloMCBaselineOfProjectSpec [
+
+	currentRepositorySpecs := aMetacelloMCBaselineOfProjectSpec
+		                          repositorySpecs.
+	aMetacelloMCBaselineOfProjectSpec projectPackage acceptVisitor: self
 ]
 
 { #category : 'visiting' }
@@ -151,7 +157,7 @@ MetacelloRecordTarget >> visitVersionSpec: aMetacelloVersionSpec [
 	packages := Dictionary new.
 	aMetacelloVersionSpec resolveToLoadableSpecs: required map: packages.
 
-	packages values do: [ :pkg |
+	packages valuesDo: [ :pkg |
 		pkg ensureLoadedForDevelopmentUsing: self withEngine: engine.
 		(MetacelloIgnorePackageLoaded signal: pkg) ifFalse: [
 			engine ignoreImage ifFalse: [
@@ -161,8 +167,21 @@ MetacelloRecordTarget >> visitVersionSpec: aMetacelloVersionSpec [
 					 using: self
 					 withEngine: engine) ifTrue: [ packages removeKey: pkg name ] ] ] ].
 
-	packages notEmpty ifTrue: [
-		self preLoad: aMetacelloVersionSpec.
-		self load: aMetacelloVersionSpec.
-		self postLoad: aMetacelloVersionSpec ]
+	packages ifEmpty: [ ^ self ].
+	self preLoad: aMetacelloVersionSpec.
+	self visitVersionSpecChildren: aMetacelloVersionSpec.
+	self postLoad: aMetacelloVersionSpec
+]
+
+{ #category : 'actions' }
+MetacelloRecordTarget >> visitVersionSpecChildren: aSpec [
+
+	"Iterate the internals of the version spec"
+	aSpec project loadType == #atomic ifTrue: [
+		^ self atomicLoadPackageOfSpec: aSpec ].
+	aSpec project loadType == #linear ifTrue: [
+		^ self linearLoadPackagesOfSpec: aSpec ].
+
+	MetacelloError signal:
+		'Unknown loadType: ' , aSpec project loadType printString
 ]

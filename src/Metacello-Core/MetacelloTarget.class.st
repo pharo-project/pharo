@@ -8,9 +8,9 @@ Class {
 	#classVars : [
 		'RetryPackageResolution'
 	],
-	#category : 'Metacello-Core-Loaders',
+	#category : 'Metacello-Core-Targets',
 	#package : 'Metacello-Core',
-	#tag : 'Loaders'
+	#tag : 'Targets'
 }
 
 { #category : 'class initialization' }
