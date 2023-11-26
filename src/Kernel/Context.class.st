@@ -1305,10 +1305,9 @@ Context >> objectSize: anObject [
 
 { #category : 'accessing' }
 Context >> outerContext [
-	"Answer the context within which the receiver is nested."
+	"Answer the outerContext if this is a block context, nil else"
 	<reflection: 'Stack Manipulation - Context'>
-	^closureOrNil ifNotNil:
-		[closureOrNil outerContext ifNil: ["if the outer is nil, this is a CleanBlock" self sender]]
+	^closureOrNil ifNotNil: [ closureOrNil outerContext ]
 ]
 
 { #category : 'accessing' }
