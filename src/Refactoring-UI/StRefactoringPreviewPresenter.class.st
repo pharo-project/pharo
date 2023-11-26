@@ -3,6 +3,20 @@ I am a tool that previews refactoring changes to the user. User can change the s
 
 I am responsible for keeping track of `selectedChanges` (which changes to apply). When user selects a change from the list of all changes, I display a diff between old and new version of that change. When user accepts changes he wants to execute, I am responsible for invoking `RBRefactoryChangeManager` to perform them.
 
+
+Here is a possible use of such a tool.
+
+```
+| refact |
+refact := (RBRemoveVariableTransformation 
+	variable: 'isClassVariable'
+	class: #RBVariableTransformation
+	classVariable: false).
+(StRefactoringPreviewPresenter
+		 changes: refact generateChanges scopes: {RBBrowserEnvironment new} )
+		refactoring: refact;
+		openModal
+```
 "
 Class {
 	#name : 'StRefactoringPreviewPresenter',
@@ -26,6 +40,14 @@ Class {
 	#package : 'Refactoring-UI',
 	#tag : 'UI'
 }
+
+{ #category : 'instance creation' }
+StRefactoringPreviewPresenter class >> changes: aCompositeRefactoring [
+	
+	^ self new
+		  changesFrom: aCompositeRefactoring scopes: { RBBrowserEnvironment new };
+		  yourself
+]
 
 { #category : 'instance creation' }
 StRefactoringPreviewPresenter class >> changes: aCompositeRefactoring scopes: scopes [
@@ -112,7 +134,11 @@ StRefactoringPreviewPresenter >> connectPresenters [
 		selection selectedItem ifNotNil: [
 			self buildDiffFor: selection selectedItem ] ].
 
-	scopeDropList whenSelectedItemChangedDo: [ :scope | self updateActiveScope; updateChanges; updateTablePresenter ].
+	scopeDropList whenSelectedItemChangedDo: [ :scope | 
+			self 
+				updateActiveScope; 
+				updateChanges; 
+				updateTablePresenter ].
 
 	buttonCancel action: [ self closeWindow ].
 	buttonOk action: [ self accept ]

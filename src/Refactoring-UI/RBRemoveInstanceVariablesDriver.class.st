@@ -14,17 +14,17 @@ Class {
 }
 
 { #category : 'execution' }
-RBRemoveInstanceVariablesDriver >> applyChanges [
-
-	self openPreviewWithChanges: refactoring privateTransform
-]
-
-{ #category : 'execution' }
 RBRemoveInstanceVariablesDriver >> browseInstanceVariableReferences [
 
 	StMessageBrowserPresenter
 		browse: refactoring violators
 		
+]
+
+{ #category : 'execution' }
+RBRemoveInstanceVariablesDriver >> changes [
+
+	^ refactoring privateTransform
 ]
 
 { #category : 'resources' }
@@ -43,8 +43,7 @@ RBRemoveInstanceVariablesDriver >> handleBreakingChanges [
 
 	| select items |
 	items := OrderedCollection new.
-	items add: (RBBrowseReferencedInstanceVariableChoice new
-						driver: self ; yourself).
+	items add: (RBBrowseReferencedInstanceVariableChoice new driver: self ; yourself).
 	items add: (RBRemoveInstanceVariableChoice new driver: self; yourself).
 	items add: (RBRemoveInstanceVariableAndShowChoice new driver: self; yourself).
 	
