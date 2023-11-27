@@ -16,7 +16,7 @@ Class {
 { #category : 'activation' }
 DABrowserToolMorph class >> packageActivation [
 	<classAnnotation>
-	^ ClyTabActivationStrategyAnnotation for: RPackage asCalypsoItemContext
+	^ ClyTabActivationStrategyAnnotation for: Package asCalypsoItemContext
 ]
 
 { #category : 'accessing' }

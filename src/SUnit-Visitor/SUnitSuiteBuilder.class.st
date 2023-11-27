@@ -16,10 +16,10 @@ SUnitSuiteBuilder >> suiteNamed: aString withTests: tests [
 ]
 
 { #category : 'visiting' }
-SUnitSuiteBuilder >> visitRPackage: aRPackage [
+SUnitSuiteBuilder >> visitRPackage: aPackage [
 	^ self
-		suiteNamed: aRPackage name
-		withTests: (super visitRPackage: aRPackage)
+		suiteNamed: aPackage name
+		withTests: (super visitRPackage: aPackage)
 ]
 
 { #category : 'visiting' }

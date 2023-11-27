@@ -9,9 +9,9 @@ Class {
 		'oldTag',
 		'newTag'
 	],
-	#category : 'System-Announcements-System-Packages',
+	#category : 'System-Announcements-System-Classes',
 	#package : 'System-Announcements',
-	#tag : 'System-Packages'
+	#tag : 'System-Classes'
 }
 
 { #category : 'instance creation' }

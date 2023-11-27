@@ -39,6 +39,7 @@ BaselineOfMorphicCore >> baseline: spec [
 
 		spec package: 'System-Object Events'.
 		spec package: 'System-Caching'.
+		spec package: 'System-Clipboard'.		
 		spec package: 'Graphics-Canvas'.
 		spec package: 'FormCanvas-Core'.
 		spec package: 'Tool-Registry'.

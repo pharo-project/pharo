@@ -73,7 +73,7 @@ FLCreateClassSerializationTest >> testCreateClassAndMetaclass [
 
 	self assert: environment identicalTo: materializedClass environment.
 
-	self assert: package equals: materializedClass package.
+	self assert: package identicalTo: materializedClass package.
 	self assert: packageTag name equals: materializedClass packageTag name.
 	self assert: name equals: materializedClass name.
 	"Notice that the metaclass is serialized by Fuel and a new one will be created."
@@ -105,15 +105,15 @@ FLCreateClassSerializationTest >> testCreateClassWithClassVariable [
 	"Tests materialization a class not defined in the image, with a class variable."
 
 	| aClass materializedClass |
-	aClass := self classFactory make: [ :aBuilder | aBuilder sharedVariablesFromString: 'ClassVariable' ].
-	aClass classPool at: 'ClassVariable' put: #test.
+	aClass := self classFactory make: [ :aBuilder | aBuilder sharedVariablesFromString: #ClassVariable ].
+	(aClass classVariableNamed: #ClassVariable) write: #test.
 
 	materializedClass := self resultOfSerializeRemoveAndMaterialize: aClass.
 
 	self assert: 1 equals: materializedClass classVarNames size.
 	self assert: (materializedClass classVarNames includes: #ClassVariable).
-	self assert: #test equals: (materializedClass classPool at: #ClassVariable).
-	self assert: materializedClass classPool associations first class identicalTo: ClassVariable
+	self assert: #test equals: (materializedClass readClassVariableNamed: #ClassVariable).
+	self assert: materializedClass classVariables first class identicalTo: ClassVariable
 ]
 
 { #category : 'tests' }
@@ -242,8 +242,8 @@ FLCreateClassSerializationTest >> testCreateClassWithSharedPoolAndMethodReferenc
 
 	self assert: materializedClass sharedPools size equals: 1.
 	self assert: sharedPool identicalTo: materializedClass sharedPools first.
-	self assert: (materializedClass >> #xxx literalAt: 1) value identicalTo: (sharedPool classPool at: #ClassVar1).
-	self assert: (materializedClass class >> #yyy literalAt: 1) value identicalTo: (sharedPool classPool at: #ClassVar1).
+	self assert: (materializedClass >> #xxx literalAt: 1) value identicalTo: (sharedPool readClassVariableNamed: #ClassVar1).
+	self assert: (materializedClass class >> #yyy literalAt: 1) value identicalTo: (sharedPool readClassVariableNamed: #ClassVar1).
 	self assert: (materializedClass new perform: #xxx) identicalTo: anObject.
 	self assert: (materializedClass perform: #yyy) identicalTo: anObject
 ]
@@ -488,7 +488,7 @@ FLCreateClassSerializationTest >> testCreateWithSmalltalkGlobalsEnvironment [
 
 	self assert: materializedClass basicEnvironment identicalTo: Smalltalk globals.
 
-	self assert: package equals: materializedClass package.
+	self assert: package identicalTo: materializedClass package.
 	self assert: packageTag name equals: materializedClass packageTag name.
 	self assert: name equals: materializedClass name
 ]

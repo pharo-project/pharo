@@ -1,5 +1,5 @@
 "
-SUnit tests for RPackage tags
+SUnit tests for Package tags
 "
 Class {
 	#name : 'PackageTagTest',
@@ -52,6 +52,19 @@ PackageTagTest >> testAddClassSettingPackageTag [
 	self assert: class package equals: yPackage.
 	self assert: class packageTag equals: yTag.
 	self assert: class packageTag package equals: yPackage
+]
+
+{ #category : 'tests' }
+PackageTagTest >> testAddClassTagWithEmptyName [
+
+	| class |
+	class := self newClassNamed: #NewClass in: self xPackageName.
+
+	"When providing an empty tag name we expect to classify the class in the unclassify tag."
+	class packageTag: ''.
+
+	self assert: class packageTag isRoot.
+	self deny: class packageTag name equals: ''
 ]
 
 { #category : 'tests' }

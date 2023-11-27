@@ -1,6 +1,16 @@
 # Pharo
 
-This repository contains sources of the [Pharo language](http://pharo.org/). Pharo is a pure object-oriented programming language and a powerful environment, focused on simplicity and immediate feedback (think IDE and OS rolled into one).
+This repository contains sources of the [Pharo language](http://pharo.org/). Pharo is a pure object-oriented programming language and a powerful environment, focused on simplicity and immediate feedback (think IDE and OS rolled into one). Visit us on https://www.pharo.org or [Pharo Discord Server](https://discord.gg/QewZMZa)
+
+<p align="center">
+  <a href="https://www.pharo.org">
+    <img alt="Pharo" src="https://img.shields.io/static/v1?style=for-the-badge&message=Pharo&color=3297d4&logo=Harbor&logoColor=FFFFFF&label=" />
+  </a>
+  <a href="https://discord.gg/QewZMZa">  
+    <img alt="Discord online members" src="https://img.shields.io/discord/223421264751099906?color=5865F2&label=Discord&style=for-the-badge" />
+  </a>
+  <img alt="Commit activity per month" src="https://img.shields.io/github/commit-activity/m/pharo-project/pharo?style=for-the-badge" />
+</p>
 
 ![Pharo screenshot](https://pbs.twimg.com/media/DBpdIGrXkAA8SJ1.jpg)
 

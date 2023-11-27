@@ -1,5 +1,5 @@
 "
-SUnit tests for RPackage
+SUnit tests for Package
 "
 Class {
 	#name : 'PackageAndTraitOnModelTest',

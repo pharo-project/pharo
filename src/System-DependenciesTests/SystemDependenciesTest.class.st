@@ -124,8 +124,6 @@ SystemDependenciesTest >> knownSpec2Dependencies [
 SystemDependenciesTest >> knownUFFIDependencies [
 	"ideally this list should be empty"
 
-	"Note: #'Transcript-Core' is brought by RPackage-Core but we want to kill those dependencies in the future because the kernel group should not depend on that."
-
 	^ #( #'Refactoring-Critics' #'Refactoring-Environment' )
 ]
 

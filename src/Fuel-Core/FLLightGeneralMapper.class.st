@@ -75,6 +75,12 @@ FLLightGeneralMapper >> visitDictionary: aDictionary [
 ]
 
 { #category : 'visiting' }
+FLLightGeneralMapper >> visitEphemeron: anObject [
+
+	self mapAndTraceByObjectClass: anObject to: FLEphemeronCluster
+]
+
+{ #category : 'visiting' }
 FLLightGeneralMapper >> visitExternalAddress: anObject [
 	self
 		mapAndTraceByObjectClass: anObject

@@ -7,7 +7,7 @@ Internal Representation and Key Implementation Points.
 
     Instance Variables
 	classTag:		<Symbol>
-	package:		<RPackage>
+	package:		<Package>
 "
 Class {
 	#name : 'ClyClassCreationToolMorph',

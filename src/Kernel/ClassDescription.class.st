@@ -234,14 +234,6 @@ ClassDescription >> classSide [
 ]
 
 { #category : 'instance variables' }
-ClassDescription >> classThatDefinesClassVariable: classVarName [
-	"Answer the class that defines the given class variable"
-	<reflection: 'Class structural inspection - Class variable inspection'>
-	(self classPool includesKey: classVarName asSymbol) ifTrue: [^ self].
-	^self superclass ifNotNil: [self superclass classThatDefinesClassVariable: classVarName]
-]
-
-{ #category : 'instance variables' }
 ClassDescription >> classThatDefinesInstVarNamed: instVarName [
 	<reflection: 'Class structural inspection - Instance variable inspection'>
 	^self
@@ -1090,7 +1082,7 @@ ClassDescription >> renameProtocol: anOldProtocol as: aNewProtocol [
 		oldProtocol resetMethodSelectors.
 		self removeProtocolIfEmpty: oldProtocol.
 
-	"I need to notify also the selector changes, otherwise RPackage will not notice"
+	"I need to notify also the selector changes, otherwise Package will not notice"
 	newProtocol methodSelectors do: [ :each | self notifyOfRecategorizedSelector: each from: oldProtocol to: newProtocol ]
 ]
 

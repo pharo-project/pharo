@@ -25,6 +25,7 @@ UndeclaredVariable class >> possiblyRegisteredWithName: aString [
 		found class == Association ifTrue: [
 			"Found undeclared var can be an association during current bootstrap process.
 			So here we should convert it to real variable object otherwise the build will be broken"
+			('Found an Association in Undeclared: ', varName) traceCr.
 			found becomeForward: (self named: varName)].
 		^found	].
 

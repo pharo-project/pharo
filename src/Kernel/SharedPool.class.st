@@ -18,7 +18,11 @@ SharedPool class >> bindingOf: varName [
 
 { #category : 'name lookup' }
 SharedPool class >> bindingsDo: aBlock [
-	^self classPool bindingsDo: aBlock
+	self
+		deprecated:
+		'use classVariables do: instead'
+		transformWith: '`@receiver bindingsDo: `@arg1' -> '`@receiver classVariables do: `@arg1'.
+	^self classVariables do: aBlock
 ]
 
 { #category : 'name lookup' }
