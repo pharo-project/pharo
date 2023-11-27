@@ -80,28 +80,12 @@ MetacelloRecordTarget >> visitGroupSpec: aMetacelloGroupSpec [
 { #category : 'visiting' }
 MetacelloRecordTarget >> visitPackageSpec: aMetacelloPackageSpec [
 
-	| gofer monticelloRepositories externalReference |
-	gofer := Gofer new.
-	monticelloRepositories := self repositoriesFrom:
-		                          currentRepositorySpecs.
-	monticelloRepositories do: [ :repo | gofer repository: repo ].
-
-
-	externalReference := self
-		                     resolveRecordingPackageSpecReference:
-		                     aMetacelloPackageSpec
-		                     gofer: gofer.
-
-	"Exit if already loaded"
-	externalReference ifNil: [ ^ nil ].
 	self preLoad: aMetacelloPackageSpec.
 	(MetacelloDirective
 		 loadPackage: aMetacelloPackageSpec
-		 externalReference: externalReference) addTo:
+		 externalReference: currentRepositorySpecs) addTo:
 		self specBuilder currentLoadDirective.
-	self postLoad: aMetacelloPackageSpec.
-
-	^ externalReference
+	self postLoad: aMetacelloPackageSpec
 ]
 
 { #category : 'visiting' }

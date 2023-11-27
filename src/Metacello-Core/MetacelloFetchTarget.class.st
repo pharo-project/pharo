@@ -42,10 +42,12 @@ MetacelloFetchTarget >> visitLinearLoadDirective: aMetacelloLinearLoadDirective 
 MetacelloFetchTarget >> visitPackageLoadDirective: aMetacelloPackageLoadDirective [
 	"Fetch the package!"
 
-	| gofer references nearestReference externalReference |
+	| gofer references nearestReference externalReference monticelloRepositories |
 	gofer := Gofer new.
-	gofer repository:
-		aMetacelloPackageLoadDirective externalReference repository.
+	monticelloRepositories := self repositoriesFrom:
+		                          aMetacelloPackageLoadDirective
+			                          externalReference.
+	monticelloRepositories do: [ :repo | gofer repository: repo ].
 
 	references := self
 		              resolvePackageSpecReferences:

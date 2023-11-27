@@ -100,8 +100,8 @@ MetacelloScriptEngine >> defaultVersionString [
 { #category : 'project lookup' }
 MetacelloScriptEngine >> doLoadProjectSpecFrom: aMetacelloPackageSpec [
 
-	| gofer monticelloRepositories externalReference |
-	gofer := Gofer new.
+	"| gofer monticelloRepositories externalReference |"
+"	gofer := Gofer new.
 	monticelloRepositories := self loader repositoriesFrom:
 		                          aMetacelloPackageSpec repositorySpecs.
 	monticelloRepositories do: [ :repo | gofer repository: repo ].
@@ -110,11 +110,11 @@ MetacelloScriptEngine >> doLoadProjectSpecFrom: aMetacelloPackageSpec [
 	externalReference := self loader
 		                     resolveRecordingPackageSpecReference:
 		                     aMetacelloPackageSpec
-		                     gofer: gofer.
+		                     gofer: gofer."
 
 	self loader loadPackageDirective: (MetacelloDirective
 			 loadPackage: aMetacelloPackageSpec
-			 externalReference: externalReference)
+			 externalReference: aMetacelloPackageSpec repositorySpecs)
 ]
 
 { #category : 'accessing' }

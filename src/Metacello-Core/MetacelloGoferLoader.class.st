@@ -9,9 +9,18 @@ Class {
 { #category : 'as yet unclassified' }
 MetacelloGoferLoader >> loadPackageDirective: aMetacelloPackageLoadDirective [
 
-	| resolvedReference goferLoad repo |
-	resolvedReference := aMetacelloPackageLoadDirective externalReference.
-	goferLoad := MetacelloGoferLoad on: Gofer new.
+	| resolvedReference goferLoad repo gofer monticelloRepositories |
+	gofer := Gofer new.
+	monticelloRepositories := self repositoriesFrom:
+		                          aMetacelloPackageLoadDirective
+			                          externalReference.
+	monticelloRepositories do: [ :repo | gofer repository: repo ].
+	resolvedReference := self
+		                     resolveRecordingPackageSpecReference:
+		                     aMetacelloPackageLoadDirective spec
+		                     gofer: gofer.
+	
+	goferLoad := MetacelloGoferLoad on: gofer.
 	goferLoad addResolved: resolvedReference.
 	goferLoad execute.
 	repo := resolvedReference repository.
