@@ -30,13 +30,13 @@ MetacelloPackageLoadDirective >> externalReference [
 { #category : 'accessing' }
 MetacelloPackageLoadDirective >> file [
 
-	^self externalReference name
+	^ self externalReference asString
 ]
 
 { #category : 'printing' }
 MetacelloPackageLoadDirective >> label [
 
-	^self file
+	^ spec name , ' -- ', externalReference first description
 ]
 
 { #category : 'enumerating' }

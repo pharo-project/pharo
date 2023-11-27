@@ -125,20 +125,10 @@ MetacelloScriptEngine >> ensuredMap [
 
 { #category : 'actions api' }
 MetacelloScriptEngine >> fetch: required [
-    self
-        fetchRecord: [ :version | 
-            required isEmpty
-                ifTrue: [ version fetchWithEngine: self ]
-                ifFalse: [ version fetch: required ] ]
-        required: required
-]
-
-{ #category : 'actions api' }
-MetacelloScriptEngine >> fetchRecord: fetchRecordBlock required: required [
 
 	MetacelloProjectRegistration copyRegistryWhile: [
-		self handleNotificationsForAction: [ 
-			| version loadedSpec |
+		self handleNotificationsForAction: [
+			| version1 loadedSpec |
 			self setDefaultsAndValidateProjectSpec.
 			[ loadedSpec := self lookupProjectSpecFor: self projectSpec ]
 				on: MetacelloAllowProjectDowngrade , MetacelloAllowProjectUpgrade
@@ -146,8 +136,11 @@ MetacelloScriptEngine >> fetchRecord: fetchRecordBlock required: required [
 					notification
 						handleOnDownGrade: [ :ex :existing :new | ex allowEvenIfLocked ]
 						onUpgrade: [ :ex :existing :new | ex allowEvenIfLocked ] ].
-			version := loadedSpec versionForScriptEngine: self.
-			self root: (fetchRecordBlock value: version) ] ]
+			version1 := loadedSpec versionForScriptEngine: self.
+			self root: ([ :version |
+				 required isEmpty
+					 ifTrue: [ version fetchWithEngine: self ]
+					 ifFalse: [ version fetch: required ] ] value: version1) ] ]
 ]
 
 { #category : 'actions api' }
@@ -451,15 +444,25 @@ MetacelloScriptEngine >> projectSpec: aProjectSpec [
 { #category : 'actions api' }
 MetacelloScriptEngine >> record: required [
 
-	self
-		fetchRecord: [ :version |
-			| requiredArray |
+	MetacelloProjectRegistration copyRegistryWhile: [
+		self handleNotificationsForAction: [
+			| version loadedSpec requiredArray |
+			self setDefaultsAndValidateProjectSpec.
+			[ loadedSpec := self lookupProjectSpecFor: self projectSpec ]
+				on: MetacelloAllowProjectDowngrade , MetacelloAllowProjectUpgrade
+				do: [ :notification |
+					notification
+						handleOnDownGrade: [ :ex :existing :new | ex allowEvenIfLocked ]
+						onUpgrade: [ :ex :existing :new | ex allowEvenIfLocked ] ].
+			version := loadedSpec versionForScriptEngine: self.
+
 			requiredArray := required isString ifTrue: [ { required } ].
 			requiredArray ifEmpty: [
 				requiredArray := version spec defaultPackageNames ].
-
-			version doRecordRequiredFromArray: requiredArray withEngine: self ]
-		required: required
+			1halt.
+			self root:
+				(version doRecordRequiredFromArray: requiredArray withEngine: self) ] ].
+	^ self
 ]
 
 { #category : 'actions api' }
