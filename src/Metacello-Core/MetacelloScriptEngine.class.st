@@ -456,10 +456,11 @@ MetacelloScriptEngine >> record: required [
 						onUpgrade: [ :ex :existing :new | ex allowEvenIfLocked ] ].
 			version := loadedSpec versionForScriptEngine: self.
 
-			requiredArray := required isString ifTrue: [ { required } ].
+			requiredArray := required isString
+				ifTrue: [ { required } ]
+				ifFalse: [ required ].
 			requiredArray ifEmpty: [
 				requiredArray := version spec defaultPackageNames ].
-			1halt.
 			self root:
 				(version doRecordRequiredFromArray: requiredArray withEngine: self) ] ].
 	^ self
