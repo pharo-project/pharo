@@ -7,6 +7,7 @@ Usage: test [--junit-xml-output] [--fail-on-failure] [<package> ...]
 	--stage-name=aName	
 					it adds a prefix to the xml generated, this is useful 
 					when running in the CI infrastructure
+	--shuffle-seed        an integer specifying the seed used to shuffle the tests
 	 <package>            a String matching a package name
 	
 Examples:
