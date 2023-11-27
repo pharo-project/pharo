@@ -52,13 +52,7 @@ CommandLineArguments >> arguments [
 CommandLineArguments >> commandLineArguments [
 	"self commandLineArguments"
 
-	| documentPath args |
-
-	args := OrderedCollection withAll: Smalltalk arguments.
-	documentPath := Smalltalk vm documentPath.
-	documentPath isEmptyOrNil
-		ifFalse: [ args addFirst: documentPath ].
- 	^ args
+	^ Smalltalk arguments asOrderedCollection.
 ]
 
 { #category : 'copying' }
@@ -105,17 +99,12 @@ CommandLineArguments >> includesSubCommand: aName [
 { #category : 'initialization' }
 CommandLineArguments >> initialize [
 
-	| documentPath  |
-
-	arguments := OrderedCollection withAll: Smalltalk arguments.
-	documentPath := Smalltalk vm documentPath.
-	documentPath isEmptyOrNil
-		ifFalse: [ arguments addFirst: documentPath ]
+	arguments := self commandLineArguments
 ]
 
 { #category : 'initialization' }
 CommandLineArguments >> initializeWithArguments: aCollection [
-	super initialize.
+	self initialize.
 	arguments := aCollection
 ]
 
