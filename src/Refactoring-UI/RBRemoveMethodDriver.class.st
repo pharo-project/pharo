@@ -34,6 +34,12 @@ RBRemoveMethodDriver >> browseSenders [
 	"this does not work for multiple selectors remove."
 ]
 
+{ #category : 'execution' }
+RBRemoveMethodDriver >> changes [
+
+	^ refactoring generateChanges
+]
+
 { #category : 'resources' }
 RBRemoveMethodDriver >> configureRefactoring [
 
@@ -79,7 +85,6 @@ RBRemoveMethodDriver >> runRefactoring [
 	haveNoSenders check
 			ifTrue: [ self applyChanges ]
 			ifFalse: [ self handleBreakingChanges ]
-
 ]
 
 { #category : 'initialization' }
