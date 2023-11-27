@@ -28,6 +28,14 @@ Class {
 }
 
 { #category : 'instance creation' }
+StRefactoringPreviewPresenter class >> changes: aCompositeRefactoring [
+	
+	^ self new
+		  changesFrom: aCompositeRefactoring scopes: { RBBrowserEnvironment new };
+		  yourself
+]
+
+{ #category : 'instance creation' }
 StRefactoringPreviewPresenter class >> changes: aCompositeRefactoring scopes: scopes [
 
 	^ self new
@@ -71,6 +79,18 @@ StRefactoringPreviewPresenter >> buildDiffFor: aChange [
 	^ diffPresenter
 		  leftText: aChange oldVersionTextToDisplay;
 		  rightText: aChange textToDisplay
+]
+
+{ #category : 'initialization' }
+StRefactoringPreviewPresenter >> changesFrom: aCompositeChange [
+
+	compositeChange := aCompositeChange.
+	"we keep the composite because we want to use it for performing changes later on."
+	
+	changes := aCompositeChange whatToDisplayIn: self.
+	self updateScopeList.
+	self updateChanges.
+	self updateTablePresenter
 ]
 
 { #category : 'initialization' }
@@ -183,6 +203,22 @@ StRefactoringPreviewPresenter >> initializeWindow: aWindowPresenter [
 	aWindowPresenter
 		title: self title;
 		initialExtent: 700 @ 500
+]
+
+{ #category : 'action' }
+StRefactoringPreviewPresenter >> performChanges [ 
+	
+	"the following behavior should not be kept in the UI. 
+	It should be moved to the driver or the refactoring itself because the driver is a model of interaction.
+	May be this should be in the refactoring."
+	
+	[
+	selectedChanges do: [ :change |
+			RBRefactoryChangeManager instance
+				performChange: change;
+				addUndoPointer: RBRefactoryChangeManager nextCounter ] ] asJob
+		title: 'Refactoring';
+		run.
 ]
 
 { #category : 'accessing' }

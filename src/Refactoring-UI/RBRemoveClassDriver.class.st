@@ -35,6 +35,13 @@ RBRemoveClassDriver >> browseReferences [
 			asSendersOf: violator realClass ]
 ]
 
+{ #category : 'actions' }
+RBRemoveClassDriver >> changes [
+	
+	^  refactoring removeClassChanges
+
+]
+
 { #category : 'initialization' }
 RBRemoveClassDriver >> configureRefactoring [
 

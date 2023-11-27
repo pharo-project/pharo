@@ -27,6 +27,12 @@ RBRemoveSharedVariablesDriver >> browseSharedVariableReferences [
 		
 ]
 
+{ #category : 'execution' }
+RBRemoveSharedVariablesDriver >> changes [
+
+	^ refactoring privateTransform
+]
+
 { #category : 'resources' }
 RBRemoveSharedVariablesDriver >> configureRefactoring [
 

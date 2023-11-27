@@ -28,11 +28,24 @@ RBInteractionDriver class >> isAbstract [
 	^ self == RBInteractionDriver
 ]
 
+{ #category : 'testing' }
+RBInteractionDriver class >> previewPresenterClass: aClass [
+
+	 PreviewPresenterClass := aClass
+]
+
 { #category : 'execution' }
 RBInteractionDriver >> applyChanges [
 	"I'm a hook to actually execute the changes"
 	
 	self subclassResponsibility
+]
+
+{ #category : 'execution' }
+RBInteractionDriver >> changes [
+
+	^ self subclassResponsibility 
+
 ]
 
 { #category : 'execution' }
@@ -49,6 +62,22 @@ RBInteractionDriver >> openPreviewWithChanges: changes [
 		 scopes: scopes)
 		refactoring: self refactoring;
 		openModal
+]
+
+{ #category : 'configuration' }
+RBInteractionDriver >> previewPresenterClass [
+
+	^ PreviewPresenterClass ifNil: [ PreviewPresenterClass := StRefactoringPreviewPresenter ]
+	
+	
+]
+
+{ #category : 'configuration' }
+RBInteractionDriver >> previewPresenterClass: aClass [
+
+	 PreviewPresenterClass := aClass
+	
+	
 ]
 
 { #category : 'resources' }
