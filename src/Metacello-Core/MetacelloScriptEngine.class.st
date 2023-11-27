@@ -346,16 +346,19 @@ MetacelloScriptEngine >> load: required onProjectDownGrade: onDownGradeBlock onP
 	| result |
 	MetacelloProjectRegistration copyRegistryRestoreOnErrorWhile: [
 		self handleNotificationsForAction: [
-			| version loadedSpec |
+			| version loadedSpec requiredArray |
 			self setDefaultsAndValidateProjectSpec.
 			[ loadedSpec := (self lookupProjectSpecFor: self projectSpec) copy ]
 				on: MetacelloAllowProjectDowngrade , MetacelloAllowProjectUpgrade
 				do: [ :ex |
 					ex handleOnDownGrade: onDownGradeBlock onUpgrade: onUpgradeBlock ].
 			version := loadedSpec versionForScriptEngine: self.
-			result := required isEmpty
-				          ifTrue: [ version loadWithEngine: self ]
-				          ifFalse: [ version load: required ].
+			requiredArray := required isString ifTrue: [ { required } ].
+			requiredArray ifEmpty: [
+				requiredArray := version spec defaultPackageNames ].
+			result := version
+				          doLoadRequiredFromArray: requiredArray
+				          withEngine: self.
 			self root: result.
 			loadedSpec loads: required.
 			MetacelloProjectRegistration
@@ -447,12 +450,16 @@ MetacelloScriptEngine >> projectSpec: aProjectSpec [
 
 { #category : 'actions api' }
 MetacelloScriptEngine >> record: required [
-    self
-        fetchRecord: [ :version | 
-            required isEmpty
-                ifTrue: [ version recordWithEngine: self ]
-                ifFalse: [ version record: required ] ]
-        required: required
+
+	self
+		fetchRecord: [ :version |
+			| requiredArray |
+			requiredArray := required isString ifTrue: [ { required } ].
+			requiredArray ifEmpty: [
+				requiredArray := version spec defaultPackageNames ].
+
+			version doRecordRequiredFromArray: requiredArray withEngine: self ]
+		required: required
 ]
 
 { #category : 'actions api' }

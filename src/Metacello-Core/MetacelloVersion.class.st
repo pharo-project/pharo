@@ -231,12 +231,6 @@ MetacelloVersion >> loadUsingTarget: aTarget withEngine: anEngine [
 	^self doLoadRequiredFromArray: self spec defaultPackageNames withEngine: anEngine
 ]
 
-{ #category : 'actions' }
-MetacelloVersion >> loadWithEngine: anEngine [
-
-	^self doLoadRequiredFromArray: self spec defaultPackageNames withEngine: anEngine
-]
-
 { #category : 'querying' }
 MetacelloVersion >> loader [
 
@@ -362,12 +356,6 @@ MetacelloVersion >> projects [
 	projects := OrderedCollection new.
 	self spec projectDo: [:prj | projects add: prj projectReference ] packageDo: [:ignored | ] groupDo: [:ignored | ].
 	^projects
-]
-
-{ #category : 'actions' }
-MetacelloVersion >> record: required [
-
-	^required recordRequiredForMetacelloMCVersion: self
 ]
 
 { #category : 'private' }
