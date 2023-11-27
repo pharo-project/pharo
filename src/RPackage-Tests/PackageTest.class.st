@@ -166,7 +166,7 @@ PackageTest >> testDemoteToRPackageNamed [
 	package2 := self organizer packageNamed: 'Test1'.
 	self assert: package2 isNotNil.
 	self assert: (package2 classes includes: class).
-	self assert: ((package2 classTagNamed: 'TAG1') classes includes: class)
+	self assert: ((package2 tagNamed: 'TAG1') classes includes: class)
 ]
 
 { #category : 'tests - demotion' }
@@ -185,7 +185,7 @@ PackageTest >> testDemoteToRPackageNamedExistingPackage [
 	self assert: package2 isNotNil.
 	self assert: package2 equals: packageExisting.
 	self assert: (package2 classes includes: class).
-	self assert: ((package2 classTagNamed: 'TAG1') classes includes: class)
+	self assert: ((package2 tagNamed: 'TAG1') classes includes: class)
 ]
 
 { #category : 'tests - demotion' }
@@ -215,7 +215,7 @@ PackageTest >> testDemoteToRPackageNamedMultilevelPackage [
 	package2 := self organizer packageNamed: 'Test1-TAG1'.
 	self assert: package2 isNotNil.
 	self assert: (package2 classes includes: class).
-	self assert: ((package2 classTagNamed: 'X1') classes includes: class)
+	self assert: ((package2 tagNamed: 'X1') classes includes: class)
 ]
 
 { #category : 'tests - demotion' }
@@ -235,7 +235,7 @@ PackageTest >> testDemoteToRPackageNamedWithExtension [
 	packageDemoted := self organizer packageNamed: 'Test1'.
 	self assert: packageDemoted isNotNil.
 	self assert: (packageDemoted classes includes: class).
-	self assert: ((packageDemoted classTagNamed: 'TAG1') classes includes: class).
+	self assert: ((packageDemoted tagNamed: 'TAG1') classes includes: class).
 	self assert: (packageDemoted extensionMethods includes: classOther >> #bar).
 	self assert: (classOther >> #bar) protocolName equals: '*Test1-TAG1'.
 	self assert: (packageDemoted classes includesAll: {
@@ -397,7 +397,7 @@ PackageTest >> testMoveClassToTag [
 
 	self assert: (xPackage includesClass: class).
 	self assert: (xPackage hasTag: #TAG).
-	self assert: ((xPackage classTagNamed: #TAG) includesClass: class).
+	self assert: ((xPackage tagNamed: #TAG) includesClass: class).
 
 	yPackage := self ensureYPackage.
 	yTag := yPackage ensureTag: #YTag.
@@ -442,11 +442,11 @@ PackageTest >> testMoveClassToTagName [
 
 	self assert: (xPackage includesClass: class).
 	self assert: (xPackage hasTag: #TAG).
-	self assert: ((xPackage classTagNamed: #TAG) includesClass: class).
+	self assert: ((xPackage tagNamed: #TAG) includesClass: class).
 
 	yPackage := self ensureYPackage.
 	yPackage moveClass: class toTag: #YTag.
-	yTag := yPackage classTagNamed: #YTag.
+	yTag := yPackage tagNamed: #YTag.
 
 	self deny: (xPackage includesClass: class).
 	self assert: (yPackage includesClass: class).

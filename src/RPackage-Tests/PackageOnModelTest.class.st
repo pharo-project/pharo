@@ -93,16 +93,16 @@ PackageOnModelTest >> testAddTagNames [
 	xPackage moveClass: b1 toTag: #foo.
 	self assert: (xPackage tags anySatisfy: [ :tag | tag name = #foo ]).
 	self assert: xPackage tags size equals: 2. "foo and baz. The root tag got automatically removed since it was empty."
-	self assert: ((xPackage classTagNamed: #foo) classNames includes: #A1DefinedInX).
-	self assert: ((xPackage classTagNamed: #foo) classNames includes: #B1DefinedInX).
-	self assert: (xPackage classTagNamed: #foo) classNames size equals: 2.
+	self assert: ((xPackage tagNamed: #foo) classNames includes: #A1DefinedInX).
+	self assert: ((xPackage tagNamed: #foo) classNames includes: #B1DefinedInX).
+	self assert: (xPackage tagNamed: #foo) classNames size equals: 2.
 
 	xPackage ensureTag: #foo.
 	self assert: (xPackage tags anySatisfy: [ :tag | tag name = #baz ]).
 	self assert: (xPackage tags anySatisfy: [ :tag | tag name = #foo ]).
-	self assert: ((xPackage classTagNamed: #foo) classNames includes: #A1DefinedInX).
-	self assert: ((xPackage classTagNamed: #foo) classNames includes: #B1DefinedInX).
-	self assert: (xPackage classTagNamed: #foo) classNames size equals: 2
+	self assert: ((xPackage tagNamed: #foo) classNames includes: #A1DefinedInX).
+	self assert: ((xPackage tagNamed: #foo) classNames includes: #B1DefinedInX).
+	self assert: (xPackage tagNamed: #foo) classNames size equals: 2
 ]
 
 { #category : 'tests - tag class' }

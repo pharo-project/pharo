@@ -127,29 +127,6 @@ Package >> addMethod: aCompiledMethod [
 	^ aCompiledMethod
 ]
 
-{ #category : 'tags' }
-Package >> classTagNamed: aSymbol [
-
-	^ self tags detect: [ :each | each name = aSymbol ]
-]
-
-{ #category : 'tags' }
-Package >> classTagNamed: aSymbol ifAbsent: aBlock [
-
-	^ self tags
-		  detect: [ :each | each name = aSymbol ]
-		  ifNone: aBlock
-]
-
-{ #category : 'tags' }
-Package >> classTagNamed: aSymbol ifPresent: aBlock [
-
-	^ self tags
-		  detect: [ :each | each name = aSymbol ]
-		  ifFound: [ :tag | aBlock cull: tag ]
-		  ifNone: [ nil ]
-]
-
 { #category : 'accessing' }
 Package >> classes [
 	"Return all the classes"
@@ -160,7 +137,7 @@ Package >> classes [
 Package >> classesTaggedWith: aSymbol [
 	"Returns the classes tagged using aSymbol"
 
-	^ (self classTagNamed: aSymbol ifAbsent: [ ^ #(  ) ]) classes
+	^ (self tagNamed: aSymbol ifAbsent: [ ^ #(  ) ]) classes
 ]
 
 { #category : 'accessing' }
@@ -244,7 +221,7 @@ Package >> ensureTag: aTag [
 		           ifTrue: [ aTag ]
 		           ifFalse: [ aTag name ].
 
-	(self hasTag: aTag) ifTrue: [ ^ self classTagNamed: tagName ].
+	(self hasTag: aTag) ifTrue: [ ^ self tagNamed: tagName ].
 
 	newTag := PackageTag package: self name: tagName.
 	tags add: newTag.
@@ -684,7 +661,7 @@ Package >> removeTag: aTag [
 
 	| tag |
 	tag := aTag isString
-		       ifTrue: [ self classTagNamed: aTag ifAbsent: [ ^ self ] ]
+		       ifTrue: [ self tagNamed: aTag ifAbsent: [ ^ self ] ]
 		       ifFalse: [ aTag ].
 
 	"The #asArray is there to not remove elements from the #classes inst var while iterating it."
@@ -692,7 +669,7 @@ Package >> removeTag: aTag [
 
 	tags remove: tag ifAbsent: [ ^ self ].
 
-	self codeChangeAnnouncer  announce: (PackageTagRemoved to: tag)
+	self codeChangeAnnouncer announce: (PackageTagRemoved to: tag)
 ]
 
 { #category : 'tags' }
@@ -701,7 +678,7 @@ Package >> renameTag: aTag to: newName [
 	(self hasTag: aTag) ifFalse: [ ^ self ].
 
 	(aTag isString
-		 ifTrue: [ self classTagNamed: aTag ]
+		 ifTrue: [ self tagNamed: aTag ]
 		 ifFalse: [ aTag ]) renameTo: newName
 ]
 
@@ -766,6 +743,29 @@ Package >> selectorsForClass: aClass [
 	^ (self includesClass: aClass)
 		ifFalse: [self extensionSelectorsForClass: aClass]
 		ifTrue: [self definedSelectorsForClass: aClass]
+]
+
+{ #category : 'tags' }
+Package >> tagNamed: aSymbol [
+
+	^ self tags detect: [ :each | each name = aSymbol ]
+]
+
+{ #category : 'tags' }
+Package >> tagNamed: aSymbol ifAbsent: aBlock [
+
+	^ self tags
+		  detect: [ :each | each name = aSymbol ]
+		  ifNone: aBlock
+]
+
+{ #category : 'tags' }
+Package >> tagNamed: aSymbol ifPresent: aBlock [
+
+	^ self tags
+		  detect: [ :each | each name = aSymbol ]
+		  ifFound: [ :tag | aBlock cull: tag ]
+		  ifNone: [ nil ]
 ]
 
 { #category : 'tags' }

@@ -156,7 +156,7 @@ PackageOrganizer >> removeEmptyPackages [
 PackageOrganizer >> tagForCategory: category [
 
 	(self packageMatchingExtensionName: category) ifNotNil: [ :package |
-		package classTagNamed: (category withoutPrefix: package name , '-') ifPresent: [ :tag | ^ tag ] ].
+		package tagNamed: (category withoutPrefix: package name , '-') ifPresent: [ :tag | ^ tag ] ].
 
 	^ nil
 ]

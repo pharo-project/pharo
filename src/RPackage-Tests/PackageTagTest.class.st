@@ -17,7 +17,7 @@ PackageTagTest >> testAddClass [
 
 	self assert: (xPackage includesClass: class).
 	self assert: (xPackage hasTag: #TAG).
-	self assert: ((xPackage classTagNamed: #TAG) includesClass: class).
+	self assert: ((xPackage tagNamed: #TAG) includesClass: class).
 
 	yPackage := self ensureYPackage.
 	yTag := yPackage ensureTag: #YTag.
@@ -40,7 +40,7 @@ PackageTagTest >> testAddClassSettingPackageTag [
 
 	self assert: (xPackage includesClass: class).
 	self assert: (xPackage hasTag: #TAG).
-	self assert: ((xPackage classTagNamed: #TAG) includesClass: class).
+	self assert: ((xPackage tagNamed: #TAG) includesClass: class).
 
 	yPackage := self ensureYPackage.
 	yTag := yPackage ensureTag: #YTag.
@@ -76,7 +76,7 @@ PackageTagTest >> testAddTrait [
 
 	self assert: (xPackage includesClass: class).
 	self assert: (xPackage hasTag: #TAG).
-	self assert: ((xPackage classTagNamed: #TAG) includesClass: class).
+	self assert: ((xPackage tagNamed: #TAG) includesClass: class).
 
 	yPackage := self ensureYPackage.
 	yTag := yPackage ensureTag: #YTag.
@@ -99,7 +99,7 @@ PackageTagTest >> testAddTraitSettingPackageTag [
 
 	self assert: (xPackage includesClass: class).
 	self assert: (xPackage hasTag: #TAG).
-	self assert: ((xPackage classTagNamed: #TAG) includesClass: class).
+	self assert: ((xPackage tagNamed: #TAG) includesClass: class).
 
 	yPackage := self ensureYPackage.
 	yTag := yPackage ensureTag: #YTag.
@@ -149,7 +149,7 @@ PackageTagTest >> testPromoteAsPackage [
 	class := self newClassNamed: 'TestClass' in: package1 tag: 'TAG1'.
 	class compile: 'foo ^42' classified: 'accessing'.
 
-	tag1 := package1 classTagNamed: 'TAG1'.
+	tag1 := package1 tagNamed: 'TAG1'.
 
 	tag1 promoteAsPackage.
 
