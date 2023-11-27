@@ -98,17 +98,23 @@ MetacelloScriptEngine >> defaultVersionString [
 ]
 
 { #category : 'project lookup' }
-MetacelloScriptEngine >> doLoadProjectSpecFrom: loadedSpec [
+MetacelloScriptEngine >> doLoadProjectSpecFrom: aMetacelloPackageSpec [
 
-	| recordTarget |
-	recordTarget := MetacelloRecordTarget on: self.
-	recordTarget required: #( 'default' ).
-	recordTarget currentRepositorySpecs: loadedSpec repositorySpecs.
+	| gofer monticelloRepositories externalReference |
+	gofer := Gofer new.
+	monticelloRepositories := self loader repositoriesFrom:
+		                          aMetacelloPackageSpec repositorySpecs.
+	monticelloRepositories do: [ :repo | gofer repository: repo ].
 
-	loadedSpec acceptVisitor: recordTarget.
 
-	recordTarget specBuilder currentLoadDirective acceptVisitor:
-		(MetacelloLoadTarget on: self)
+	externalReference := self loader
+		                     resolveRecordingPackageSpecReference:
+		                     aMetacelloPackageSpec
+		                     gofer: gofer.
+
+	self loader loadPackageDirective: (MetacelloDirective
+			 loadPackage: aMetacelloPackageSpec
+			 externalReference: externalReference)
 ]
 
 { #category : 'accessing' }

@@ -34,12 +34,6 @@ MetacelloVersionLoadDirective >> loadDirectives: anObject [
 	loadDirectives := anObject
 ]
 
-{ #category : 'private' }
-MetacelloVersionLoadDirective >> newLoadingStrategyFrom: oldLoadingStrategy [
-
-	self subclassResponsibility
-]
-
 { #category : 'actions' }
 MetacelloVersionLoadDirective >> newWithEngine: aLoadPolicy [
 

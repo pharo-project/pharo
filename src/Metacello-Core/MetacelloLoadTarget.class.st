@@ -8,7 +8,7 @@ Class {
 
 { #category : 'accessing' }
 MetacelloLoadTarget >> actionLabel [
-
+1halt.
 	^'Loading '
 ]
 
