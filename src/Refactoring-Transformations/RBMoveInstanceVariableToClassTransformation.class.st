@@ -17,7 +17,7 @@ Class {
 	#name : 'RBMoveInstanceVariableToClassTransformation',
 	#superclass : 'RBCompositeVariableTransformation',
 	#instVars : [
-		'oldClass'
+		'oldClassName'
 	],
 	#category : 'Refactoring-Transformations-Model-Unused',
 	#package : 'Refactoring-Transformations',
@@ -48,15 +48,14 @@ RBMoveInstanceVariableToClassTransformation class >> variable: aVariableName fro
 { #category : 'executing' }
 RBMoveInstanceVariableToClassTransformation >> buildTransformations [
 
-	^ OrderedCollection
-		with: (RBAddVariableTransformation
+	^ { (RBAddVariableTransformation
 				model: self model
 				instanceVariable: variableName asString
-				class: className)
-		with: (RBRemoveVariableTransformation
+				class: className) .
+		 (RBRemoveVariableTransformation
 				model: self model
 				instanceVariable: variableName asString
-				class: oldClass)
+				class: oldClassName) }
 ]
 
 { #category : 'printing' }
@@ -67,7 +66,7 @@ RBMoveInstanceVariableToClassTransformation >> storeOn: aStream [
 	aStream nextPutAll: ' variable: '.
 	variableName storeOn: aStream.
 	aStream nextPutAll: ' fromClass: '.
-	oldClass storeOn: aStream.
+	oldClassName storeOn: aStream.
 	aStream nextPutAll: ' toClass: '.
 	className storeOn: aStream.
 	aStream nextPut: $)
@@ -75,8 +74,8 @@ RBMoveInstanceVariableToClassTransformation >> storeOn: aStream [
 
 { #category : 'api' }
 RBMoveInstanceVariableToClassTransformation >> variable: aVariableName fromClass: fromClassName toClass: toClassName [
-
+	
 	variableName := aVariableName.
 	className := toClassName.
-	oldClass := fromClassName
+	oldClassName := fromClassName
 ]

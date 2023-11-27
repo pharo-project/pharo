@@ -22,6 +22,12 @@ RBRemoveMethodDriver >> browseSenders [
 	"this does not work for multiple selectors remove."
 ]
 
+{ #category : 'execution' }
+RBRemoveMethodDriver >> changes [
+
+	^ refactoring generateChanges
+]
+
 { #category : 'resources' }
 RBRemoveMethodDriver >> configureRefactoring [
 
@@ -56,30 +62,27 @@ RBRemoveMethodDriver >> runRefactoring [
 	self configureRefactoring.
 	[
 	[
-	senders := refactoring refactorings flatCollect: [ :ref | ref senders ].
+	senders := refactoring refactorings flatCollect: [ :ref |
+		           ref senders ].
 
-	senders
-		ifEmpty: [ self openPreviewWithChanges: refactoring generateChanges ]
-		ifNotEmpty: [ 
-		
-		select := SpSelectDialog new 
-			title: 'There are ', senders size asString,  ' methods calling method(s) you want to delete';
-			label: 'Select a strategy';
-			items: (RBRemoveMethodChoice subclasses collect: [ :each | each  new driver: self]);
-			display: [ :each | each description ];
-			displayIcon: [ :each | self iconNamed: each systemIconName ];
-			openModal.
-			
-	select 
-		ifNotNil: [ 
-			select action ]]]
-	
+	senders ifEmpty: [ self applyChanges ] ifNotEmpty: [
+		select := SpSelectDialog new
+			          title: 'There are ' , senders size asString
+				          , ' methods calling method(s) you want to delete';
+			          label: 'Select a strategy';
+			          items:
+				          (RBRemoveMethodChoice subclasses collect: [ :each |
+						           each new driver: self ]);
+			          display: [ :each | each description ];
+			          displayIcon: [ :each |
+				          self iconNamed: each systemIconName ];
+			          openModal.
+
+		select ifNotNil: [ select action ] ] ]
 		on: RBApplicabilityChecksFailedError
 		do: [ :err | ^ RBRefactoringError signal: err messageText ] ]
 		on: RBBreakingChangeChecksFailedWarning
-		do: [ :err |	 err return ]
-	
-
+		do: [ :err | err return ]
 ]
 
 { #category : 'initialization' }

@@ -20,20 +20,28 @@ RBMoveInstanceVariableToClassParametrizedTest >> constructor [
 
 { #category : 'failure tests' }
 RBMoveInstanceVariableToClassParametrizedTest >> testFailureVariableAlreadyExists [
-
-	self shouldFail: (self
-			 createRefactoringWithModel: model
-			 andArguments:
-			 { 'result'. #RBFooLintRuleTestData. #RBBasicLintRuleTestData })
+	
+	| refact |
+	refact := (RBMoveInstanceVariableToClassTransformation model: model variable: #result fromClass: #RBFooLintRuleTestData toClass: #RBBasicLintRuleTestData).
+	self shouldFail: refact.
+	
+	"notice that result does not exist is #RBFooLintRuleTestData"
+			
 ]
 
 { #category : 'failure tests' }
 RBMoveInstanceVariableToClassParametrizedTest >> testFailureVariableDoesNotExistInOldClass [
-
-	self shouldFail: (self
-			 createRefactoringWithModel: model
-			 andArguments:
-			 { 'abc'. #RBFooLintRuleTestData. #RBBasicLintRuleTestData })
+	
+	| refact |
+	refact := RBMoveInstanceVariableToClassTransformation 
+					model: model 
+					variable: #doesNotExist 
+					fromClass: #RBFooLintRuleTestData 
+					toClass: #RBBasicLintRuleTestData.
+	self halt.
+	self deny: refact preconditions check
+	
+		
 ]
 
 { #category : 'tests' }

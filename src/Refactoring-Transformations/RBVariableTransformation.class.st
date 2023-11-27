@@ -92,5 +92,5 @@ RBVariableTransformation >> variable: aVariableName class: aClassName classVaria
 
 	self className: aClassName.
 	variableName := aVariableName.
-	isClassVariable := aBoolean
+	isClassVariable := aBoolean 
 ]

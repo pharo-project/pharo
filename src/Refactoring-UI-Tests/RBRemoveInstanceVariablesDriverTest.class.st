@@ -16,3 +16,18 @@ RBRemoveInstanceVariablesDriverTest >> testInstanceSmoke [
 		for: RBClassDataForRefactoringTest. 
 	refact configureRefactoring
 ]
+
+{ #category : 'tests' }
+RBRemoveInstanceVariablesDriverTest >> testInstanceSmokeAssertChanges [
+	
+	| rbclasses driver |
+	rbclasses := RBClassEnvironment classes: { RBLintRuleTestData  }.	
+	driver := RBRemoveInstanceVariablesDriver new 
+		scopes: { rbclasses }
+		variables: { #foo1 }
+		for: RBClassDataForRefactoringTest. 
+	driver configureRefactoring.
+	driver runRefactoring.
+	self assert: driver changes isNotEmpty
+	
+]
