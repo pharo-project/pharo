@@ -8,26 +8,8 @@ Class {
 
 { #category : 'accessing' }
 MetacelloLoadTarget >> actionLabel [
-1halt.
+
 	^'Loading '
-]
-
-{ #category : 'doits' }
-MetacelloLoadTarget >> postLoad: packageOrVersionSpec [
-
-	packageOrVersionSpec postLoadDoItBlock ifNotNil: [ :block |
-		block valueWithPossibleArgs: {
-				self.
-				packageOrVersionSpec } ]
-]
-
-{ #category : 'doits' }
-MetacelloLoadTarget >> preLoad: packageOrVersionSpec [
-
-	packageOrVersionSpec preLoadDoItBlock ifNotNil: [ :block |
-		block valueWithPossibleArgs: {
-				self.
-				packageOrVersionSpec } ]
 ]
 
 { #category : 'visiting' }
@@ -40,7 +22,23 @@ MetacelloLoadTarget >> visitLinearLoadDirective: aMetacelloLinearLoadDirective [
 { #category : 'visiting' }
 MetacelloLoadTarget >> visitPackageLoadDirective: aMetacelloPackageLoadDirective [
 
-	self preLoad: aMetacelloPackageLoadDirective spec.
-	engine loader loadPackageDirective: aMetacelloPackageLoadDirective.
-	self postLoad: aMetacelloPackageLoadDirective spec
+	engine loader loadPackageDirective: aMetacelloPackageLoadDirective
+]
+
+{ #category : 'visiting' }
+MetacelloLoadTarget >> visitPostLoadDirective: aMetacelloPostLoadDirective [
+	
+	aMetacelloPostLoadDirective spec postLoadDoItBlock ifNotNil: [ :block |
+		block valueWithPossibleArgs: {
+				self.
+				aMetacelloPostLoadDirective spec } ]
+]
+
+{ #category : 'visiting' }
+MetacelloLoadTarget >> visitPreLoadDirective: aMetacelloPreLoadDirective [
+	
+	aMetacelloPreLoadDirective spec preLoadDoItBlock ifNotNil: [ :block |
+		block valueWithPossibleArgs: {
+				self.
+				aMetacelloPreLoadDirective spec } ]
 ]

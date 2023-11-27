@@ -6,6 +6,12 @@ Class {
 	#tag : 'Directives'
 }
 
+{ #category : 'visiting' }
+MetacelloPreLoadDirective >> acceptVisitor: aTarget [
+	
+	aTarget visitPreLoadDirective: self
+]
+
 { #category : 'actions' }
 MetacelloPreLoadDirective >> addTo: aLoaderDirective [
 

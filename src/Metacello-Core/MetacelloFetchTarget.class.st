@@ -105,3 +105,15 @@ MetacelloFetchTarget >> visitPackageLoadDirective: aMetacelloPackageLoadDirectiv
 			engine cacheRepository storeVersion: mcVersion ] ].
 	engine resetCacheGofer
 ]
+
+{ #category : 'visiting' }
+MetacelloFetchTarget >> visitPostLoadDirective: aMetacelloPostLoadDirective [ 
+	
+	"Nothing"
+]
+
+{ #category : 'visiting' }
+MetacelloFetchTarget >> visitPreLoadDirective: aMetacelloPostLoadDirective [ 
+	
+	"Nothing"
+]

@@ -346,7 +346,9 @@ MetacelloScriptEngine >> load: required onProjectDownGrade: onDownGradeBlock onP
 				do: [ :ex |
 					ex handleOnDownGrade: onDownGradeBlock onUpgrade: onUpgradeBlock ].
 			version := loadedSpec versionForScriptEngine: self.
-			requiredArray := required isString ifTrue: [ { required } ].
+			requiredArray := required isString
+				                 ifTrue: [ { required } ]
+				                 ifFalse: [ required ].
 			requiredArray ifEmpty: [
 				requiredArray := version spec defaultPackageNames ].
 			result := version

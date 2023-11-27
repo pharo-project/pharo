@@ -255,7 +255,6 @@ MetacelloProjectRegistration >> canUpgradeTo: aProjectRegistration [
 			^ configurationProjectSpec canUpgradeTo: aProjectRegistration configurationProjectSpec ] ].
 	baselineProjectSpec ifNotNil: [
 		aProjectRegistration baselineProjectSpec ifNotNil: [
-			baselineProjectSpec copy ensureProjectLoaded.
 			^ baselineProjectSpec canUpgradeTo: aProjectRegistration baselineProjectSpec ] ].
 	^ false
 ]
