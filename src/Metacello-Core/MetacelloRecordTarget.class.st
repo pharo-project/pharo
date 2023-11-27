@@ -60,12 +60,6 @@ MetacelloRecordTarget >> required: aCollection [
 ]
 
 { #category : 'private' }
-MetacelloRecordTarget >> resolveRecordingPackageSpecReference: packageSpec gofer: gofer [
-
-	^ (self resolvePackageSpecReferences: packageSpec gofer: gofer) first
-]
-
-{ #category : 'private' }
 MetacelloRecordTarget >> specBuilder [
 		
 	^ engine specBuilder

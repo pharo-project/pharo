@@ -205,8 +205,7 @@ MetacelloPackageSpec >> ensureLoadedForDevelopmentUsing: aTarget withEngine: anE
 { #category : 'private' }
 MetacelloPackageSpec >> extractNameFromFile [
 
-	file ifNil: [ ^ nil ].
-	^ (self loader nameComponentsFrom: self file) first
+	^ file
 ]
 
 { #category : 'loading' }
