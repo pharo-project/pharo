@@ -18,5 +18,15 @@ FFIStrictResolutionMode >> isStrict [
 { #category : 'resolution' }
 FFIStrictResolutionMode >> resolveUndeclaredTypeForArgument: aFFIValueArgument withResolver: aResolver [
 
+	"Make strict all declarations except those using self.
+	This is safe because:
+	 - We can infer self from the current class
+	 - the only implementor of prepareAsSelfFromCalloutDeclaration are those classes representing pointers"
+	aFFIValueArgument value == #self ifTrue: [
+		| externalType |
+		externalType := aResolver requestor asExternalTypeOn: aResolver.
+		^ externalType prepareAsSelfFromCalloutDeclaration ].
+
+	"Otherwise, this is an untyped literal which is unsupported"
 	aResolver unsupportedUntypedLiteral: aFFIValueArgument value
 ]
