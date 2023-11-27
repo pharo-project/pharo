@@ -14,7 +14,8 @@ Class {
 		'tests',
 		'resources',
 		'name',
-		'announcer'
+		'announcer',
+		'randomGenerator'
 	],
 	#category : 'SUnit-Core-Kernel',
 	#package : 'SUnit-Core',
@@ -38,12 +39,6 @@ TestSuite >> , aTestSuite [
 			yourself
 ]
 
-{ #category : 'dependencies' }
-TestSuite >> addDependentToHierachy: anObject [
-	self addDependent: anObject.
-	self tests do: [ :each | each addDependentToHierachy: anObject]
-]
-
 { #category : 'accessing' }
 TestSuite >> addTest: aTest [
 	self tests add: aTest
@@ -61,16 +56,8 @@ TestSuite >> announceTest: aTest [
 
 { #category : 'running' }
 TestSuite >> debug [
-	self setUp.
-	[
-		self tests do: [:each |
-					each debug.
-					self announceTest: each.
-					self changed: each.
-		]
-	] ensure:[
-		self tearDown.
-	]
+
+	self runWith: [ :test | test debug ]
 ]
 
 { #category : 'accessing' }
@@ -95,12 +82,6 @@ TestSuite >> name [
 TestSuite >> name: aString [
 
 	name := aString
-]
-
-{ #category : 'dependencies' }
-TestSuite >> removeDependentFromHierachy: anObject [
-	self removeDependent: anObject.
-	self tests do: [ :each | each removeDependentFromHierachy: anObject]
 ]
 
 { #category : 'running' }
@@ -138,16 +119,17 @@ TestSuite >> run [
 
 { #category : 'running' }
 TestSuite >> run: aResult [
+
 	CurrentExecutionEnvironment runTestsBy: [
-		self runUnmanaged: aResult ]
+		self runWith: [ :test | test run: aResult ] ]
 ]
 
 { #category : 'running' }
-TestSuite >> runUnmanaged: aResult [
+TestSuite >> runWith: aBlock [
 	self setUp.
-	[ self tests
+	[ self shuffledTests
 		do: [ :each |
-			each run: aResult.
+			aBlock value: each.
 			self announceTest: each.
 			self changed: each ] ]
 		ensure: [ self tearDown ]
@@ -157,6 +139,24 @@ TestSuite >> runUnmanaged: aResult [
 TestSuite >> setUp [
 	self resources do: [:each |
 			each isAvailable ifFalse: [ each signalInitializationError ]]
+]
+
+{ #category : 'running' }
+TestSuite >> shuffleSeed [
+
+	^ randomGenerator seed
+]
+
+{ #category : 'running' }
+TestSuite >> shuffleSeed: aSeed [
+
+	randomGenerator := Random seed: aSeed
+]
+
+{ #category : 'running' }
+TestSuite >> shuffledTests [
+
+	^ self tests shuffledBy: randomGenerator
 ]
 
 { #category : 'running' }
