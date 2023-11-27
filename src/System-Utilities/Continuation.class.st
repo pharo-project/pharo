@@ -20,9 +20,8 @@ Class {
 	#instVars : [
 		'values'
 	],
-	#category : 'Kernel-Methods',
-	#package : 'Kernel',
-	#tag : 'Methods'
+	#category : 'System-Utilities',
+	#package : 'System-Utilities'
 }
 
 { #category : 'instance creation' }
