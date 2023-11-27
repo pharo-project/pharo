@@ -132,12 +132,6 @@ FT2FFILibrary class >> initialize [
 	(16rBA -> 'Font glyphs corrupted or missing fields')} asDictionary
 ]
 
-{ #category : 'options' }
-FT2FFILibrary class >> options [
-
-	^ #()
-]
-
 { #category : 'error handling' }
 FT2FFILibrary class >> translateErrorCode: aCode [
 	^ ErrorCodeTable at: aCode ifAbsent: [ 'Unknown Error code' ]

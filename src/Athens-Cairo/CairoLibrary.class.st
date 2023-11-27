@@ -10,12 +10,6 @@ Class {
 	#tag : 'Library'
 }
 
-{ #category : 'options' }
-CairoLibrary class >> options [
-
-	^ #()
-]
-
 { #category : 'accessing - platform' }
 CairoLibrary >> macLibraryName [
 
