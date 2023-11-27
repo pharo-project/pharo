@@ -73,7 +73,7 @@ FLCreateClassSerializationTest >> testCreateClassAndMetaclass [
 
 	self assert: environment identicalTo: materializedClass environment.
 
-	self assert: package equals: materializedClass package.
+	self assert: package identicalTo: materializedClass package.
 	self assert: packageTag name equals: materializedClass packageTag name.
 	self assert: name equals: materializedClass name.
 	"Notice that the metaclass is serialized by Fuel and a new one will be created."
@@ -488,7 +488,7 @@ FLCreateClassSerializationTest >> testCreateWithSmalltalkGlobalsEnvironment [
 
 	self assert: materializedClass basicEnvironment identicalTo: Smalltalk globals.
 
-	self assert: package equals: materializedClass package.
+	self assert: package identicalTo: materializedClass package.
 	self assert: packageTag name equals: materializedClass packageTag name.
 	self assert: name equals: materializedClass name
 ]

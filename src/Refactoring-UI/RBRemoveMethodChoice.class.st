@@ -6,7 +6,7 @@ Class {
 	#tag : 'Choices'
 }
 
-{ #category : 'accessing' }
+{ #category : 'execution' }
 RBRemoveMethodChoice >> action [
 
 	self subclassResponsibility 
