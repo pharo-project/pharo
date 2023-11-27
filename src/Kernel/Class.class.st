@@ -193,7 +193,7 @@ Class >> allSharedPools [
 Class >> anyUserOfClassVarNamed: aSymbol [
 	self withAllSubclasses do: [ :subclass |
  		{subclass . subclass class} do: [ :classOrMeta |
-			(classOrMeta whichMethodsReferTo: (self classPool associationAt: aSymbol))
+			(classOrMeta whichMethodsReferTo: (self classVariableNamed: aSymbol))
 				ifNotEmpty: [ ^classOrMeta ]]].
 	^nil
 ]

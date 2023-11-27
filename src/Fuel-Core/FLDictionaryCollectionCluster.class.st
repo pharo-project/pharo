@@ -16,14 +16,13 @@ FLDictionaryCollectionCluster >> encodeExtraInformationForReferencesFor: aDictio
 
 { #category : 'testing' }
 FLDictionaryCollectionCluster >> hasRealAssociations: aDictionary [
-	"Only check the first association, assume that all other entries
+	"Weak assocations and ephemerons should not be serialized as simple key / value tuples
+	but with their actual class.
+
+	Only check the first association, assume that all other entries
 	are of the same type"
 	aDictionary associationsDo: [ :assoc |
-		^ #(
-			Association
-			WeakKeyAssociation
-			WeakValueAssociation
-		) includes: assoc className ].
+		^ assoc class == Association ].
 	
 	^ true
 ]
@@ -55,8 +54,6 @@ FLDictionaryCollectionCluster >> materializeReferencesOf: aDictionary with: aDec
 
 { #category : 'analyzing' }
 FLDictionaryCollectionCluster >> referencesOf: aDictionary do: aBlock [	
-	"In Pharo 9 the class pool is a dictionary containing ClassVariables
-	pretending to be Associations. For that case we need to skip the optimization."
 	(self hasRealAssociations: aDictionary)
 		ifTrue: [
 			aDictionary keysAndValuesDo: [ :key :value |

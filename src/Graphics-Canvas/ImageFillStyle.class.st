@@ -5,7 +5,7 @@ Class {
 	#name : 'ImageFillStyle',
 	#superclass : 'OrientedFillStyle',
 	#instVars : [
-		'form',
+		'formSet',
 		'extent',
 		'offset'
 	],
@@ -16,9 +16,15 @@ Class {
 
 { #category : 'instance creation' }
 ImageFillStyle class >> form: aForm [
-	"Answer a new instance of the receiver with the given form."
 
-	^self new form: aForm
+	^ self formSet: (FormSet form: aForm)
+]
+
+{ #category : 'instance creation' }
+ImageFillStyle class >> formSet: aFormSet [
+	"Answer a new instance of the receiver with the given form set."
+
+	^self new formSet: aFormSet
 ]
 
 { #category : 'comparing' }
@@ -52,17 +58,29 @@ ImageFillStyle >> extent: anObject [
 
 { #category : 'accessing' }
 ImageFillStyle >> form [
-	"Answer the value of form"
 
-	^ form
+	^ formSet asForm
 ]
 
 { #category : 'accessing' }
 ImageFillStyle >> form: aForm [
-	"Set the value of form"
 
-	form := aForm.
-	self direction: aForm extent
+	self formSet: (FormSet form: aForm)
+]
+
+{ #category : 'accessing' }
+ImageFillStyle >> formSet [
+	"Answer the value of formSet"
+
+	^ formSet
+]
+
+{ #category : 'accessing' }
+ImageFillStyle >> formSet: aFormSet [
+	"Set the value of formSet"
+
+	formSet := aFormSet.
+	self direction: aFormSet extent
 ]
 
 { #category : 'comparing' }

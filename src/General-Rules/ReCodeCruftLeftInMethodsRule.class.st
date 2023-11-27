@@ -48,7 +48,7 @@ ReCodeCruftLeftInMethodsRule >> debuggingPatterns [
 { #category : 'private' }
 ReCodeCruftLeftInMethodsRule >> debuggingSelectors [
 
-	^ (Object allSelectorsInProtocol: 'flagging') , (Object allSelectorsInProtocol: 'debugging')
+	^ Object allSelectorsInProtocol: 'flagging'
 ]
 
 { #category : 'accessing' }
@@ -65,10 +65,11 @@ ReCodeCruftLeftInMethodsRule >> haltPatterns [
 
 { #category : 'private' }
 ReCodeCruftLeftInMethodsRule >> haltSelectors [
+
 	| objectConvenience miscellaneous |
-	objectConvenience := Object allSelectorsInProtocol: #halting.
-	miscellaneous := #(inspectOnce).
-	^ objectConvenience, miscellaneous
+	objectConvenience := Object allSelectorsInProtocol: '*' , Halt package name.
+	miscellaneous := #( inspectOnce ).
+	^ objectConvenience , miscellaneous
 ]
 
 { #category : 'initialization' }

@@ -36,33 +36,6 @@ RBPushDownVariableTransformation >> applicabilityPreconditionsForInstanceVariabl
 		  in: self definingClass
 ]
 
-{ #category : 'preconditions' }
-RBPushDownVariableTransformation >> breakingChangePreconditionsForClassVariable [
-
-	^ RBCondition withBlock: [
-		  | numSubclassesAccessing |
-		  numSubclassesAccessing := self definingClass subclasses count: [
-			                            :subclass |
-			                            subclass withAllSubclasses anySatisfy: [
-				                            :e |
-				                            (e
-					                             whichSelectorsReferToClassVariable:
-					                             variableName) isNotEmpty or: [
-					                            (e classSide
-						                             whichSelectorsReferToClassVariable:
-						                             variableName) isNotEmpty ] ] ].
-		  numSubclassesAccessing < 2 ]
-]
-
-{ #category : 'preconditions' }
-RBPushDownVariableTransformation >> breakingChangePreconditionsForInstanceVariable [
-
-	^ RBCondition
-		  accessesInstanceVariable: variableName
-		  in: self definingClass
-		  showIn: self
-]
-
 { #category : 'executing' }
 RBPushDownVariableTransformation >> buildTransformations [
 

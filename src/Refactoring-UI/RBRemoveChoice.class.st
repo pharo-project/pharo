@@ -6,10 +6,10 @@ Class {
 	#tag : 'Choices'
 }
 
-{ #category : 'accessing' }
+{ #category : 'execution' }
 RBRemoveChoice >> action [
 
-	driver removeMethodChanges
+	driver applyRemoveMethodChanges
 ]
 
 { #category : 'accessing' }
