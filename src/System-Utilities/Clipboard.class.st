@@ -15,8 +15,8 @@ Class {
 	#classVars : [
 		'Default'
 	],
-	#category : 'System-Clipboard-Base',
-	#package : 'System-Clipboard',
+	#category : 'System-Utilities-Base',
+	#package : 'System-Utilities',
 	#tag : 'Base'
 }
 

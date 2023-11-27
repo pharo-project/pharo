@@ -5,9 +5,8 @@ Class {
 		'leave',
 		'fill'
 	],
-	#category : 'Kernel-Tests-Methods',
-	#package : 'Kernel-Tests',
-	#tag : 'Methods'
+	#category : 'System-Utilities-Tests',
+	#package : 'System-Utilities-Tests'
 }
 
 { #category : 'API' }
