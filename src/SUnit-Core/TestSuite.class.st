@@ -72,6 +72,13 @@ TestSuite >> defaultResources [
 			coll]
 ]
 
+{ #category : 'initialization' }
+TestSuite >> initialize [
+
+	super initialize.
+	randomGenerator := Random new
+]
+
 { #category : 'accessing' }
 TestSuite >> name [
 
