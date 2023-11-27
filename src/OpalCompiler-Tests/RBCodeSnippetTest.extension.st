@@ -150,17 +150,6 @@ RBCodeSnippetTest >> testDecompile [
 ]
 
 { #category : '*OpalCompiler-Tests' }
-RBCodeSnippetTest >> testDecompileIR [
-
-	| method ir |
-	method := snippet compile.
-	method ifNil: [ ^ self skip ]. "Another test responsibility"
-	ir := method decompileIR.
-	self assert: ir class equals: IRMethod.
-	"Decompilation lose information. Not sure how to test more"
-]
-
-{ #category : '*OpalCompiler-Tests' }
 RBCodeSnippetTest >> testDoSemanticAnalysis [
 	"We should test more than that"
 

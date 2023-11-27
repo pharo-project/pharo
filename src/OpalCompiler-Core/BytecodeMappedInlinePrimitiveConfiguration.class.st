@@ -6,9 +6,8 @@ They send clients the `addMappedInlinePrimitiveHandler:at:` message to add bytec
 Class {
 	#name : 'BytecodeMappedInlinePrimitiveConfiguration',
 	#superclass : 'Object',
-	#category : 'Kernel-Methods',
-	#package : 'Kernel',
-	#tag : 'Methods'
+	#category : 'OpalCompiler-Core',
+	#package : 'OpalCompiler-Core'
 }
 
 { #category : 'configuring' }

@@ -10,12 +10,6 @@ CompiledMethod >> decompile [
 ]
 
 { #category : '*OpalCompiler-Core' }
-CompiledMethod >> decompileIR [
-
-	^ IRBytecodeDecompiler new decompile: self
-]
-
-{ #category : '*OpalCompiler-Core' }
 CompiledMethod >> lookupVar: aString [
 	^self ast scope lookupVar: aString
 ]

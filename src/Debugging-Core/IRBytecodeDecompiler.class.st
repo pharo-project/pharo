@@ -10,9 +10,8 @@ Class {
 		'newTempVector',
 		'scopeStack'
 	],
-	#category : 'OpalCompiler-Core-Bytecode',
-	#package : 'OpalCompiler-Core',
-	#tag : 'Bytecode'
+	#category : 'Debugging-Core',
+	#package : 'Debugging-Core'
 }
 
 { #category : 'instruction decoding' }

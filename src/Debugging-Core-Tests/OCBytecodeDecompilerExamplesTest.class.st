@@ -1,9 +1,8 @@
 Class {
 	#name : 'OCBytecodeDecompilerExamplesTest',
 	#superclass : 'TestCase',
-	#category : 'OpalCompiler-Tests-Bytecode',
-	#package : 'OpalCompiler-Tests',
-	#tag : 'Bytecode'
+	#category : 'Debugging-Core-Tests',
+	#package : 'Debugging-Core-Tests'
 }
 
 { #category : 'tests - blocks' }
