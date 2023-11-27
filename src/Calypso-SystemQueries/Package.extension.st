@@ -68,5 +68,7 @@ Package >> tagsForClasses [
 	"Any class could be tagged for user purpose.
 	Now we implement it on top of PackageTag"
 
-	^self classTags reject: [:each | each isRoot] thenCollect: [:each | each name]
+	^ self tags
+		  reject: [ :each | each isRoot ]
+		  thenCollect: [ :each | each name ]
 ]

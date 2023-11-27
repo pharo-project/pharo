@@ -556,7 +556,7 @@ PackageTest >> testRemoveTag [
 
 	a1 := self newClassNamed: #A1DefinedInX in: p1.
 	b1 := self newClassNamed: #B1DefinedInX in: p1.
-	self assert: p1 classTags size equals: 1. "We start with the root tag"
+	self assert: p1 tags size equals: 1. "We start with the root tag"
 
 	p1 moveClass: a1 toTag: #foo.
 	self assert: (((p1 classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #A1DefinedInX).
@@ -582,7 +582,7 @@ PackageTest >> testRemoveTagRemoveClasses [
 	p1 := self ensurePackage: #P1.
 
 	a1 := self newClassNamed: #A1DefinedInX in: p1.
-	self assert: p1 classTags size equals: 1. "We start with the root tag"
+	self assert: p1 tags size equals: 1. "We start with the root tag"
 
 	p1 moveClass: a1 toTag: #foo.
 	self assert: (((p1 classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #A1DefinedInX).

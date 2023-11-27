@@ -4,9 +4,9 @@ Extension { #name : 'Package' }
 Package >> actualClassTags [
 
 	self deprecated: 'This method is too specific and will be removed in future versions of Pharo.'.
-	(classTags size = 1 and: [ classTags anyOne isRoot ]) ifTrue: [ ^ #(  ) ].
+	(tags size = 1 and: [ tags anyOne isRoot ]) ifTrue: [ ^ #(  ) ].
 
-	^ classTags
+	^ tags
 ]
 
 { #category : '*Deprecated12' }
@@ -71,6 +71,13 @@ Package >> classTagForClass: aClass [
 
 	self deprecated: 'Use #tagOf: instead' transformWith: '`@rcv classTagForClass: `@arg' -> '`@rcv tagOf: `@arg'.
 	^ self tagOf: aClass
+]
+
+{ #category : '*Deprecated12' }
+Package >> classTags [
+
+	self deprecated: 'Use #tags instead.' transformWith: '`@rcv classTags' -> '`@rcv tags'.
+	^ self tags
 ]
 
 { #category : '*Deprecated12' }

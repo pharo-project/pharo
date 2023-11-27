@@ -15,7 +15,7 @@ PackageOrganizer >> categories [
 	categories := Set new.
 	self packages do: [ :p |
 		categories add: p name.
-		categories addAll: (p classTags collect: [ :tag | tag categoryName ]) ].
+		categories addAll: (p tags collect: [ :tag | tag categoryName ]) ].
 
 	^ categories asArray
 ]
