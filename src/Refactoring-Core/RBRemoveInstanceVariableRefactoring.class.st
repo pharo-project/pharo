@@ -67,6 +67,18 @@ RBRemoveInstanceVariableRefactoring >> preconditions [
 	^ self applicabilityPreconditions & self breakingChangePreconditions 
 ]
 
+{ #category : 'printing' }
+RBRemoveInstanceVariableRefactoring >> printOn: aStream [
+
+	super printOn: aStream.
+	aStream nextPutAll: '( Class: ', class asString. 
+	aStream 
+		nextPutAll: ' , ' ;
+		nextPutAll: variableName asString;
+		nextPutAll: ')' 
+	
+]
+
 { #category : 'transforming' }
 RBRemoveInstanceVariableRefactoring >> privateTransform [
 

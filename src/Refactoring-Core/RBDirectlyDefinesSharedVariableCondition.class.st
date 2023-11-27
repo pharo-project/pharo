@@ -1,5 +1,5 @@
 Class {
-	#name : 'RBDefinesSharedVariableCondition',
+	#name : 'RBDirectlyDefinesSharedVariableCondition',
 	#superclass : 'RBClassCondition',
 	#instVars : [
 		'sharedVariables'
@@ -10,12 +10,12 @@ Class {
 }
 
 { #category : 'instance creation' }
-RBDefinesSharedVariableCondition class >> class: aRBClass sharedVariables: aCollection [ 
+RBDirectlyDefinesSharedVariableCondition class >> class: aRBClass sharedVariables: aCollection [ 
 	^ self new class: aRBClass; sharedVariables: aCollection ; yourself
 ]
 
 { #category : 'instance creation' }
-RBDefinesSharedVariableCondition class >> classNamed: aString inModel: aRBNamespace sharedVariables: aCollection [ 
+RBDirectlyDefinesSharedVariableCondition class >> classNamed: aString inModel: aRBNamespace sharedVariables: aCollection [ 
 	
 	^ (self classNamed: aString inModel: aRBNamespace)
 		sharedVariables: aCollection;
@@ -23,13 +23,13 @@ RBDefinesSharedVariableCondition class >> classNamed: aString inModel: aRBNamesp
 ]
 
 { #category : 'accessing' }
-RBDefinesSharedVariableCondition >> check [
+RBDirectlyDefinesSharedVariableCondition >> check [
 	
-	violators := sharedVariables reject: [ :shared | aClass definesClassVariable: shared ].
+	violators := sharedVariables reject: [ :shared | aClass directlyDefinesClassVariable: shared ].
 	^ violators isEmpty
 ]
 
 { #category : 'accessing' }
-RBDefinesSharedVariableCondition >> sharedVariables: aCollection [ 
+RBDirectlyDefinesSharedVariableCondition >> sharedVariables: aCollection [ 
 	sharedVariables := aCollection
 ]
