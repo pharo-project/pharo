@@ -49,8 +49,8 @@ Class {
 	#instVars : [
 		'extensionSelectors',
 		'name',
-		'classTags',
-		'organizer'
+		'organizer',
+		'tags'
 	],
 	#classVars : [
 		'Properties'
@@ -127,47 +127,17 @@ Package >> addMethod: aCompiledMethod [
 	^ aCompiledMethod
 ]
 
-{ #category : 'class tags' }
-Package >> classTagNamed: aSymbol [
-
-	^ self classTags detect: [ :each | each name = aSymbol ]
-]
-
-{ #category : 'class tags' }
-Package >> classTagNamed: aSymbol ifAbsent: aBlock [
-
-	^ self classTags
-		  detect: [ :each | each name = aSymbol ]
-		  ifNone: aBlock
-]
-
-{ #category : 'class tags' }
-Package >> classTagNamed: aSymbol ifPresent: aBlock [
-
-	^ self classTags
-		  detect: [ :each | each name = aSymbol ]
-		  ifFound: [ :tag | aBlock cull: tag ]
-		  ifNone: [ nil ]
-]
-
-{ #category : 'class tags' }
-Package >> classTags [
-	"Returns the tags of the receiver"
-
-	^ classTags
-]
-
 { #category : 'accessing' }
 Package >> classes [
 	"Return all the classes"
 	^ self definedClasses, self extendedClasses
 ]
 
-{ #category : 'class tags' }
+{ #category : 'tags' }
 Package >> classesTaggedWith: aSymbol [
 	"Returns the classes tagged using aSymbol"
 
-	^ (self classTagNamed: aSymbol ifAbsent: [ ^ #(  ) ]) classes
+	^ (self tagNamed: aSymbol ifAbsent: [ ^ #(  ) ]) classes
 ]
 
 { #category : 'accessing' }
@@ -186,7 +156,7 @@ Package >> definedClassNames [
 { #category : 'accessing' }
 Package >> definedClasses [
 
-	^ self classTags flatCollect: [ :tag | tag classes ]
+	^ self tags flatCollect: [ :tag | tag classes ]
 ]
 
 { #category : 'accessing' }
@@ -242,7 +212,7 @@ Package >> ensureProperties [
 	^ Properties at: self ifAbsentPut: WeakKeyDictionary new
 ]
 
-{ #category : 'class tags' }
+{ #category : 'tags' }
 Package >> ensureTag: aTag [
 
 	| tagName newTag |
@@ -251,10 +221,10 @@ Package >> ensureTag: aTag [
 		           ifTrue: [ aTag ]
 		           ifFalse: [ aTag name ].
 
-	(self hasTag: aTag) ifTrue: [ ^ self classTagNamed: tagName ].
+	(self hasTag: aTag) ifTrue: [ ^ self tagNamed: tagName ].
 
 	newTag := PackageTag package: self name: tagName.
-	classTags add: newTag.
+	tags add: newTag.
 
 	self codeChangeAnnouncer announce: (PackageTagAdded to: newTag).
 	^ newTag
@@ -365,9 +335,10 @@ Package >> includesClass: aClass [
 	"Returns true if the receiver includes aClass in the classes that are defined within it: only class definition are considered - not class extensions"
 
 	"This check is here for speed reason. We first check that the package of the class is myself, and if it is, we also need to check that I contains the class because if the class is removed it will still know I am its package but I will not contain it anymore."
+
 	aClass package = self ifFalse: [ ^ false ].
-	
-	^ self classTags anySatisfy: [ :tag | tag includesClass: aClass ]
+
+	^ self tags anySatisfy: [ :tag | tag includesClass: aClass ]
 ]
 
 { #category : 'testing' }
@@ -379,7 +350,8 @@ Package >> includesClassNamed: aSymbol [
 
 { #category : 'testing' }
 Package >> includesClassTagNamed: aString [
-	^ self classTags anySatisfy: [ :each | each name = aString ]
+
+	^ self tags anySatisfy: [ :each | each name = aString ]
 ]
 
 { #category : 'testing' }
@@ -415,7 +387,7 @@ Package >> initialize [
 
 	super initialize.
 	extensionSelectors := IdentityDictionary new.
-	classTags := Set new
+	tags := Set new
 ]
 
 { #category : 'testing' }
@@ -562,7 +534,7 @@ Package >> packageName [
 { #category : 'system compatibility' }
 Package >> packages [
 	"Compatibility with monticello and old PackageInfo"
-	^ self classTags
+	^ self tags
 ]
 
 { #category : 'printing' }
@@ -619,15 +591,15 @@ Package >> removeAllExtensionMethodsFromClass: aClass [
 Package >> removeClass: aClass [
 	"I remove the class and potential empty tags from myself."
 
-	self classTags
+	self tags
 		detect: [ :tag | tag includesClass: aClass ]
 		ifFound: [ :tag | tag removeClass: aClass ]
 ]
 
-{ #category : 'class tags' }
+{ #category : 'tags' }
 Package >> removeEmptyTags [
 
-	(self classTags select: [ :tag | tag isEmpty ]) do: [ :emptyTag | self removeTag: emptyTag ]
+	(self tags select: [ :tag | tag isEmpty ]) do: [ :emptyTag | self removeTag: emptyTag ]
 ]
 
 { #category : 'removing' }
@@ -640,9 +612,8 @@ Package >> removeFromSystem [
 		postUnloadMethod := manifest class lookupSelector: #postUnload.
 		manifest preUnload ].
 
-	self classTags copy do: [ :tag | tag removeFromSystem ].
+	self tags copy do: [ :tag | tag removeFromSystem ].
 	self extensionMethods do: [ :method | method removeFromSystem ].
-
 	self organizer unregisterPackage: self.
 
 	"Now that the package is removed we can execute the potential postLoad. Since the class is already removed, we saved the method to execute earlier and we execute it now."
@@ -693,29 +664,29 @@ Package >> removeProperty: propName ifAbsent: aBlock [
 	^ property
 ]
 
-{ #category : 'class tags' }
+{ #category : 'tags' }
 Package >> removeTag: aTag [
 
 	| tag |
 	tag := aTag isString
-		       ifTrue: [ self classTagNamed: aTag ifAbsent: [ ^ self ] ]
+		       ifTrue: [ self tagNamed: aTag ifAbsent: [ ^ self ] ]
 		       ifFalse: [ aTag ].
 
 	"The #asArray is there to not remove elements from the #classes inst var while iterating it."
 	tag classes asArray do: [ :class | class removeFromSystem ].
 
-	classTags remove: tag ifAbsent: [ ^ self ].
+	tags remove: tag ifAbsent: [ ^ self ].
 
-	self codeChangeAnnouncer  announce: (PackageTagRemoved to: tag)
+	self codeChangeAnnouncer announce: (PackageTagRemoved to: tag)
 ]
 
-{ #category : 'class tags' }
+{ #category : 'tags' }
 Package >> renameTag: aTag to: newName [
 
 	(self hasTag: aTag) ifFalse: [ ^ self ].
 
 	(aTag isString
-		 ifTrue: [ self classTagNamed: aTag ]
+		 ifTrue: [ self tagNamed: aTag ]
 		 ifFalse: [ aTag ]) renameTo: newName
 ]
 
@@ -739,7 +710,7 @@ Package >> renameTo: aSymbol [
 	self codeChangeAnnouncer  announce: (PackageRenamed to: self oldName: oldName newName: newName)
 ]
 
-{ #category : 'class tags' }
+{ #category : 'tags' }
 Package >> rootTag [
 
 	^ self ensureTag: self rootTagName
@@ -782,19 +753,49 @@ Package >> selectorsForClass: aClass [
 		ifTrue: [self definedSelectorsForClass: aClass]
 ]
 
-{ #category : 'class tags' }
-Package >> tagNames [
+{ #category : 'tags' }
+Package >> tagNamed: aSymbol [
 
-	^ self classTags collect: [ :tag | tag name ]
+	^ self tags detect: [ :each | each name = aSymbol ]
 ]
 
-{ #category : 'class tags' }
+{ #category : 'tags' }
+Package >> tagNamed: aSymbol ifAbsent: aBlock [
+
+	^ self tags
+		  detect: [ :each | each name = aSymbol ]
+		  ifNone: aBlock
+]
+
+{ #category : 'tags' }
+Package >> tagNamed: aSymbol ifPresent: aBlock [
+
+	^ self tags
+		  detect: [ :each | each name = aSymbol ]
+		  ifFound: [ :tag | aBlock cull: tag ]
+		  ifNone: [ nil ]
+]
+
+{ #category : 'tags' }
+Package >> tagNames [
+
+	^ self tags collect: [ :tag | tag name ]
+]
+
+{ #category : 'tags' }
 Package >> tagOf: aClass [
 
-	^ self classTags
+	^ self tags
 		  detect: [ :tag | tag includesClass: aClass ]
 		  ifNone: [
 			  self error: ('No tag containing {1} found in package {2}' format: {
 						   aClass name.
 						   self name }) ]
+]
+
+{ #category : 'tags' }
+Package >> tags [
+	"Returns the tags of the receiver"
+
+	^ tags
 ]
