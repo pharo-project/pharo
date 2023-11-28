@@ -32,7 +32,7 @@ RBInteractionDriver class >> isAbstract [
 RBInteractionDriver >> applyChanges [
 	"I'm a hook to actually execute the changes"
 	
-	self subclassResponsibility
+	refactoring execute 
 ]
 
 { #category : 'execution' }

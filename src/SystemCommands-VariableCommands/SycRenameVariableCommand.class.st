@@ -52,7 +52,8 @@ SycRenameVariableCommand >> defaultMenuItemName [
 SycRenameVariableCommand >> execute [
 
 	| refactoring |
-	refactoring := variable createVariableRefactoring: self classRefactoring.
+	refactoring := variable createVariableRefactoring:
+		               self classRefactoring.
 	refactoring newName: self newVariableName.
 	refactoring execute
 ]
