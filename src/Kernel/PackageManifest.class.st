@@ -47,17 +47,27 @@ PackageManifest class >> manuallyResolvedDependencies [
 ]
 
 { #category : 'unloading' }
+PackageManifest class >> postUnload [
+	"Override this method to specify clean-up actions that should be done after package unloading."
+
+	self postUnloadAction ifNotNil: [ :block |
+		Warning signal:
+			'#postUnloadAction should be replaced by #postUnload doing the actual action instead of returning a block. This branch should be removed in Pharo 13 to keep only the empty post unload method.'.
+		block value ]
+]
+
+{ #category : 'unloading' }
 PackageManifest class >> postUnloadAction [
+	"This method should not be overriden and should be removed in Pharo 13"
 
-	"override to return block that will be executed after the package unloading. Keep in mind that all package classes are already removed from the system including the manifest class"
-
-	^ [ "do nothing" ]
+	^ nil
 ]
 
 { #category : 'unloading' }
 PackageManifest class >> preUnload [
+	"Override this method to specify clean-up actions that should be done before package unloading."
 
-	"override this method to specify clean-up actions that should be done before package unloading."
+	
 ]
 
 { #category : 'code-critics' }

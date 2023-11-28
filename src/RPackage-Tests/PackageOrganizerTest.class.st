@@ -359,7 +359,6 @@ PackageOrganizerTest >> testRemoveEmptyPackagesAndTags [
 PackageOrganizerTest >> testRemovePackage [
 
 	| xPackage yPackage zPackage a1 a2 b1 b2 a3 |
-	"taken from setup of RPackageReadOnlyCompleteSetup"
 	xPackage := self ensureXPackage.
 	yPackage := self ensureYPackage.
 	zPackage := self ensureZPackage.
@@ -387,6 +386,60 @@ PackageOrganizerTest >> testRemovePackage [
 	self deny: (self organizer packageOf: b1) isNil.
 	self deny: (self organizer packageOf: b2) isNil.
 	self deny: (self organizer packageOf: a3) isNil
+]
+
+{ #category : 'tests' }
+PackageOrganizerTest >> testRemovePackageLaunchClassUnloadHook [
+
+	| xPackage a1 |
+	xPackage := self ensureXPackage.
+
+	a1 := self newClassNamed: #A1DefinedInX in: xPackage.
+
+	a1 compile: 'methodDefinedInP1 ^ #methodDefinedInP1'.
+	a1 class compile: 'unload self packageOrganizer ensurePackage: #Generated'.
+
+	self organizer removePackage: xPackage.
+
+	self deny: (self organizer packageOf: a1) isNil.
+	self deny: (self organizer hasPackage: self xPackageName).
+	self assert: (self organizer hasPackage: #Generated)
+]
+
+{ #category : 'tests' }
+PackageOrganizerTest >> testRemovePackageLaunchPackagePostUnloadHook [
+
+	| xPackage |
+	xPackage := self ensureXPackage.
+
+	xPackage packageManifest class compile:
+		('postUnload (self packageOrganizer hasPackage: ''{1}'') ifFalse: [ self packageOrganizer ensurePackage: #Generated ]' format: { self xPackageName }).
+
+	self assert: (self organizer hasPackage: self xPackageName).
+	self deny: (self organizer hasPackage: #Generated).
+
+	self organizer removePackage: xPackage.
+
+	self deny: (self organizer hasPackage: self xPackageName).
+	self assert: (self organizer hasPackage: #Generated)
+]
+
+{ #category : 'tests' }
+PackageOrganizerTest >> testRemovePackageLaunchPackagePreUnloadHook [
+
+	| xPackage |
+	xPackage := self ensureXPackage.
+
+	xPackage packageManifest class compile:
+		('preUnload (self packageOrganizer hasPackage: ''{1}'') ifTrue: [ self packageOrganizer ensurePackage: #Generated ]' format: { self xPackageName }).
+
+	self assert: (self organizer hasPackage: self xPackageName).
+	self deny: (self organizer hasPackage: #Generated).
+
+	self organizer removePackage: xPackage.
+
+	self deny: (self organizer hasPackage: self xPackageName).
+	self assert: (self organizer hasPackage: #Generated)
 ]
 
 { #category : 'tests' }

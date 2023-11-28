@@ -76,13 +76,9 @@ TheManifestBuilder class >> manifestTag [
 ]
 
 { #category : 'instance creation' }
-TheManifestBuilder class >> of: aItem [
-	| mb  |
+TheManifestBuilder class >> of: anItem [
 
-	mb := self new.
-	(mb manifestOf: aItem)
-			ifNil: [mb createManifestOf: aItem].
-	^ mb
+	^ self ofPackage: anItem package
 ]
 
 { #category : 'instance creation' }
@@ -90,11 +86,10 @@ TheManifestBuilder class >> ofPackage: aPackage [
 
 	| builder |
 	builder := self new.
-	self allManifestClasses
-		detect: [ :each | each package = aPackage ]
-		ifFound: [ :manifestClass | builder manifestClass: manifestClass ]
-		ifNone: [ builder createManifestNamed: aPackage name ].
-	^ builder
+	^ self allManifestClasses
+		  detect: [ :each | each package = aPackage ]
+		  ifFound: [ :manifestClass | builder manifestClass: manifestClass ]
+		  ifNone: [ builder createManifestOf: aPackage ]
 ]
 
 { #category : 'accessing - tags' }
@@ -328,23 +323,16 @@ TheManifestBuilder >> containsTruePositive: aItem onRule: ruleId version: versio
 ]
 
 { #category : 'manifest' }
-TheManifestBuilder >> createManifestNamed: packageName [
+TheManifestBuilder >> createManifestOf: aPackage [
 
-	manifestClass := self class classInstaller make: [ :aBuilder |
-		aBuilder name: (self class manifestClassNameFor: packageName);
-			superclass: PackageManifest;
-			package: packageName ].
-
-	manifestClass
-		packageTag: self class manifestTag;
-		comment: self class manifestClassComment.
-	^ manifestClass
-]
-
-{ #category : 'manifest' }
-TheManifestBuilder >> createManifestOf: elem [
-
-	self createManifestNamed: (self packageNameOf: elem)
+	^ manifestClass := self class classInstaller make: [ :aBuilder |
+		                   aBuilder
+			                   name: (self class manifestClassNameFor: aPackage name);
+			                   superclass: PackageManifest;
+			                   installingEnvironment: aPackage environment;
+			                   package: aPackage name;
+			                   tag: self class manifestTag;
+			                   comment: self class manifestClassComment ]
 ]
 
 { #category : 'private' }

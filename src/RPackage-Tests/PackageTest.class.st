@@ -456,6 +456,17 @@ PackageTest >> testMoveClassToTagName [
 	self assert: class packageTag package equals: yPackage
 ]
 
+{ #category : 'tests' }
+PackageTest >> testPackageManifestIsInTheRightEnvironment [
+
+	| xPackage manifest |
+	xPackage := self ensureXPackage.
+
+	manifest := xPackage packageManifest.
+
+	self assert: xPackage environment identicalTo: manifest environment
+]
+
 { #category : 'tests - properties' }
 PackageTest >> testPropertyAtPut [
 

@@ -581,18 +581,11 @@ MCWorkingCopy >> uniqueVersionNameIn: aRepository [
 
 { #category : 'operations' }
 MCWorkingCopy >> unload [
-	"Unloads mcpackage, rpackage, classes and method extensions from this working copy"
+	"Unloads mcpackage, package, classes and method extensions from this working copy"
 
-	| postUnloadAction |
-	postUnloadAction := [  ].
-	self systemPackage ifNotNil: [ :aPackage |
-		aPackage packageManifestOrNil ifNotNil: [ :manifest |
-			postUnloadAction := manifest postUnloadAction.
-			manifest preUnload ] ].
 	MCPackageLoader unloadPackage: self package.
 	self systemPackage ifNotNil: [ :aPackage | aPackage removeFromSystem ].
-	self unregister.
-	postUnloadAction value
+	self unregister
 ]
 
 { #category : 'operations' }

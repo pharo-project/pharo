@@ -204,19 +204,6 @@ BuilderManifestTest >> testContainsToDo [
 ]
 
 { #category : 'tests' }
-BuilderManifestTest >> testCreationManifest [
-
-	manifestBuilder := TheManifestBuilder new.
-	testingEnvironment at: #ManifestManifestResourcesTests ifPresent: [ :class |
-		class
-			removeFromChanges;
-			removeFromSystem ].
-	self assert: (manifestBuilder manifestOf: MFClassA) isNil.
-	self assert: (manifestBuilder createManifestOf: MFClassA) isNotNil.
-	self assert: (manifestBuilder manifestOf: MFClassA) isNotNil
-]
-
-{ #category : 'tests' }
 BuilderManifestTest >> testCreationManifestOn [
 
 	manifestBuilder := TheManifestBuilder new.

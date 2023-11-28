@@ -634,10 +634,18 @@ Package >> removeEmptyTags [
 Package >> removeFromSystem [
 	"Copy to not remove collection over which we are iterating."
 
+	| postUnloadMethod |
+	"In case the package manifest is here, make sure we execute the preUnload and postUnload metods before and after the unloading."
+	self packageManifestOrNil ifNotNil: [ :manifest |
+		postUnloadMethod := manifest class lookupSelector: #postUnload.
+		manifest preUnload ].
+
 	self classTags copy do: [ :tag | tag removeFromSystem ].
 	self extensionMethods do: [ :method | method removeFromSystem ].
 
-	self organizer unregisterPackage: self
+	self organizer unregisterPackage: self.
+
+	postUnloadMethod ifNotNil: [ :method | method valueWithReceiver: method methodClass ]
 ]
 
 { #category : 'add method - compiled method' }
