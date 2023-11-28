@@ -6,20 +6,28 @@ Class {
 }
 
 { #category : 'tests' }
-RBRemoveInstanceVariablesDriverTest >> testBadPathVariableIsused [
-	
-	| rbclasses driver |
-	rbclasses := RBClassEnvironment classes: { RBLintRuleTestData . RBClassDataForRefactoringTest . MyClassARoot}.	
-	driver := RBRemoveInstanceVariablesDriver new 
-		scopes: { rbclasses }
-		variables: { #instVarName1 }
-		for: MyClassARoot. 
-	driver previewPresenterClass: StRefactoringPreviewPresenterMock.
-	driver selectDialog: StSelectDialogMock new.
-	driver runRefactoring.
-	"the variable is used so there is only one changes."
-	self assert: driver breakingChoices size equals: 3.
+RBRemoveInstanceVariablesDriverTest >> setUpDriver: driver [
 
+	driver previewPresenterClass: StRefactoringPreviewPresenterMock.
+	driver selectDialog: StSelectDialogMock new
+]
+
+{ #category : 'tests' }
+RBRemoveInstanceVariablesDriverTest >> testBadPathVariableIsused [
+
+	| rbclasses driver |
+	"the variable is used so there is only one changes."
+	rbclasses := RBClassEnvironment classes: {
+			             RBLintRuleTestData.
+			             RBClassDataForRefactoringTest.
+			             MyClassARoot }.
+	driver := RBRemoveInstanceVariablesDriver new
+		          scopes: { rbclasses }
+		          variables: { #instVarName1 }
+		          for: MyClassARoot.
+	self setUpDriver: driver.
+	driver runRefactoring.
+	self assert: driver breakingChoices size equals: 3
 ]
 
 { #category : 'tests' }
@@ -31,7 +39,7 @@ RBRemoveInstanceVariablesDriverTest >> testGoodPathTwoUnusedVariables [
 		scopes: { rbclasses }
 		variables: { #unusedVar1 . #unusedVar2 }
 		for: MyClassARoot. 
-	driver previewPresenterClass: StRefactoringPreviewPresenterMock.
+	self setUpDriver: driver.
 	driver runRefactoring.
 	self assert: driver refactoring changes changes size equals: 2
 	
@@ -46,7 +54,7 @@ RBRemoveInstanceVariablesDriverTest >> testGoodPathVariableIsUnused [
 		scopes: { rbclasses }
 		variables: { #unusedVar2 }
 		for: MyClassARoot. 
-	driver previewPresenterClass: StRefactoringPreviewPresenterMock.
+	self setUpDriver: driver.
 	driver runRefactoring.
 	self assert: driver refactoring changes changes size equals: 1
 	
