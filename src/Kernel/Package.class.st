@@ -645,6 +645,7 @@ Package >> removeFromSystem [
 
 	self organizer unregisterPackage: self.
 
+	"Now that the package is removed we can execute the potential postLoad. Since the class is already removed, we saved the method to execute earlier and we execute it now."
 	postUnloadMethod ifNotNil: [ :method | method valueWithReceiver: method methodClass ]
 ]
 
