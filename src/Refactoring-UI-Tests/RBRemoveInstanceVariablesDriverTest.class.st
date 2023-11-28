@@ -6,29 +6,48 @@ Class {
 }
 
 { #category : 'tests' }
-RBRemoveInstanceVariablesDriverTest >> testInstanceSmoke [
-	
-	| rbclasses refact |
-	rbclasses := RBClassEnvironment classes: { RBClassDataForRefactoringTest  }.	
-	refact := RBRemoveInstanceVariablesDriver new 
-		scopes: { rbclasses }
-		variables: { #instanceVariable }
-		for: RBClassDataForRefactoringTest. 
-	refact configureRefactoring
-]
-
-{ #category : 'tests' }
-RBRemoveInstanceVariablesDriverTest >> testInstanceSmokeAssertChanges [
+RBRemoveInstanceVariablesDriverTest >> testBadPathVariableIsused [
 	
 	| rbclasses driver |
 	rbclasses := RBClassEnvironment classes: { RBLintRuleTestData . RBClassDataForRefactoringTest . MyClassARoot}.	
-	RBRemoveInstanceVariablesDriver previewPresenterClass: StRefactoringPreviewPresenterMock.
 	driver := RBRemoveInstanceVariablesDriver new 
 		scopes: { rbclasses }
-		variables: { #instVarName2 }
+		variables: { #instVarName1 }
 		for: MyClassARoot. 
+	driver previewPresenterClass: StRefactoringPreviewPresenterMock.
+	driver selectDialog: StSelectDialogMock new.
 	driver runRefactoring.
-	RBRemoveInstanceVariablesDriver previewPresenterClass: StRefactoringPreviewPresenter.
-	self assert: driver refactoring generateChanges isNotEmpty
+	"the variable is used so there is only one changes."
+	self assert: driver breakingChoices size equals: 3.
+
+]
+
+{ #category : 'tests' }
+RBRemoveInstanceVariablesDriverTest >> testGoodPathTwoUnusedVariables [
+	
+	| rbclasses driver |
+	rbclasses := RBClassEnvironment classes: { RBLintRuleTestData . RBClassDataForRefactoringTest . MyClassARoot}.	
+	driver := RBRemoveInstanceVariablesDriver new 
+		scopes: { rbclasses }
+		variables: { #unusedVar1 . #unusedVar2 }
+		for: MyClassARoot. 
+	driver previewPresenterClass: StRefactoringPreviewPresenterMock.
+	driver runRefactoring.
+	self assert: driver refactoring changes changes size equals: 2
+	
+]
+
+{ #category : 'tests' }
+RBRemoveInstanceVariablesDriverTest >> testGoodPathVariableIsUnused [
+	
+	| rbclasses driver |
+	rbclasses := RBClassEnvironment classes: { RBLintRuleTestData . RBClassDataForRefactoringTest . MyClassARoot}.	
+	driver := RBRemoveInstanceVariablesDriver new 
+		scopes: { rbclasses }
+		variables: { #unusedVar2 }
+		for: MyClassARoot. 
+	driver previewPresenterClass: StRefactoringPreviewPresenterMock.
+	driver runRefactoring.
+	self assert: driver refactoring changes changes size equals: 1
 	
 ]

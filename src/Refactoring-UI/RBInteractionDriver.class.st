@@ -15,7 +15,8 @@ Class {
 	#instVars : [
 		'model',
 		'scopes',
-		'refactoring'
+		'refactoring',
+		'previewPresenterClass'
 	],
 	#category : 'Refactoring-UI-Drivers',
 	#package : 'Refactoring-UI',
@@ -32,6 +33,14 @@ RBInteractionDriver class >> isAbstract [
 RBInteractionDriver class >> previewPresenterClass: aClass [
 
 	 PreviewPresenterClass := aClass
+]
+
+{ #category : 'execution' }
+RBInteractionDriver >> application [
+	"For now use the singleton. Normally the application should be passed from Calypso and the command"
+	
+	^ StPharoApplication current
+
 ]
 
 { #category : 'execution' }
@@ -57,9 +66,10 @@ RBInteractionDriver >> furtherActionFor: aReport [
 { #category : 'execution' }
 RBInteractionDriver >> openPreviewWithChanges: changes [
 	
-	^ (StRefactoringPreviewPresenter
+	^ (self previewPresenterClass
 		 changes: changes
 		 scopes: scopes)
+		application: self application;
 		refactoring: self refactoring;
 		openModal
 ]
@@ -67,7 +77,7 @@ RBInteractionDriver >> openPreviewWithChanges: changes [
 { #category : 'configuration' }
 RBInteractionDriver >> previewPresenterClass [
 
-	^ PreviewPresenterClass ifNil: [ PreviewPresenterClass := StRefactoringPreviewPresenter ]
+	^ previewPresenterClass ifNil: [ previewPresenterClass := StRefactoringPreviewPresenter ] 
 	
 	
 ]
@@ -75,7 +85,7 @@ RBInteractionDriver >> previewPresenterClass [
 { #category : 'configuration' }
 RBInteractionDriver >> previewPresenterClass: aClass [
 
-	 PreviewPresenterClass := aClass
+	 previewPresenterClass := aClass
 	
 	
 ]

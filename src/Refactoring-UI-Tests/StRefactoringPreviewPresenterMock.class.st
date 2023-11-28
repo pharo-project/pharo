@@ -2,16 +2,21 @@ Class {
 	#name : 'StRefactoringPreviewPresenterMock',
 	#superclass : 'Object',
 	#instVars : [
-		'changes'
+		'changes',
+		'application'
 	],
-	#category : 'Refactoring-UI-UI',
-	#package : 'Refactoring-UI',
-	#tag : 'UI'
+	#category : 'Refactoring-UI-Tests',
+	#package : 'Refactoring-UI-Tests'
 }
 
 { #category : 'instance creation' }
 StRefactoringPreviewPresenterMock class >> changes: aRBUpFrontPreconditionCheckingCompositeRefactoring scopes: aCollection [ 
 	^ self new changes: aRBUpFrontPreconditionCheckingCompositeRefactoring scopes: aCollection 
+]
+
+{ #category : 'accessing' }
+StRefactoringPreviewPresenterMock >> application: aStPharoApplication [ 
+	application := aStPharoApplication
 ]
 
 { #category : 'instance creation' }
