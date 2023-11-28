@@ -80,17 +80,20 @@ RBRenameInstanceVariableRefactoring >> checkInformativePreconditions [
 	(RBIsValidInstanceVariableName name: newName) check ifFalse: [
 		self inform:
 			('The name {1} is not a valid instance variable name' format:
-				 { newName }) ].
+				 { newName }).
+		^ false ].
 
 	(RBIsVariableNotDefinedInHierarchy name: newName class: class) check
 		ifFalse: [
 			self inform:
 				('There is an existing variable named {1} in the class hierarchy'
-					 format: { newName }) ].
+					 format: { newName }).
+			^ false ].
 
 	(RBIsNotGlobal name: newName model: model) check ifFalse: [
 		self inform:
-			('There is a global variable named {1}' format: { newName }) ].
+			('There is a global variable named {1}' format: { newName }).
+		^ false ].
 	^ true
 ]
 

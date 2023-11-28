@@ -34,6 +34,50 @@ RBRenameClassVariableRefactoring class >> rename: aVarName to: aName in: aClass 
 		in: aClass
 ]
 
+{ #category : 'preconditions' }
+RBRenameClassVariableRefactoring >> checkInformativePreconditions [
+
+	(RBIsNotAMetaclass class: class) check ifFalse: [
+		self inform:
+			('The class {1} cannot be a metaclass' format: { class name }).
+		^ false ].
+
+	(RBIsValidSharedVariableName name: newName) check ifFalse: [
+		self inform:
+			('Invalid name! Shared variable names must start with uppercase and cannot be empty'
+				 format: { newName }).
+		^ false ].
+
+	(RBDefinesSharedVariableCondition
+		 classNamed: class name
+		 inModel: model
+		 sharedVariables: { newName }) not check ifFalse: [
+		self inform:
+			('The class {1} already defines a shared variable named {2}'
+				 format: {
+						 class name.
+						 newName }).
+		^ false ].
+
+	
+	(RBIsVariableNotDefinedInHierarchy name: newName class: class) check
+		ifFalse: [
+			self inform:
+				('The hierarchy of the class {1} already defines a shared variable named {2}'
+					 format: {
+							 class name.
+							 newName }).
+			^ false ].
+
+	(RBIsNotGlobal name: newName model: model) check ifFalse: [
+		self inform:
+			('There is an existing global named {1}' format: { newName }).
+		^ false ].
+
+	^ true
+
+]
+
 { #category : 'accessing' }
 RBRenameClassVariableRefactoring >> newName [
 	^ newName
