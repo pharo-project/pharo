@@ -29,7 +29,7 @@ PBClassLoader >> classDefinitionFor: aClass [
 	"Answer a String that defines the receiver."
 
 	| type |
-	type := aClass isWeak
+	type := type := aClass isWeak
 						ifTrue: [ 'WeakLayout' ]
 						ifFalse: [ aClass isPointers
 									ifTrue: [ aClass isVariable
@@ -40,7 +40,9 @@ PBClassLoader >> classDefinitionFor: aClass [
 										ifTrue: [ 'CompiledMethodLayout' ]
 										ifFalse: [ aClass isWords
 											ifTrue: [ 'WordLayout' ]
-											ifFalse: [ 'ByteLayout' ]]]].
+											ifFalse: [ aClass isDoubleWords
+													ifTrue: [ 'DoubleWordLayout' ]
+													ifFalse: [ 'ByteLayout' ]]]]].
 	^ '| newClass |
 	newClass := ShiftClassInstaller make: [ :builder |
 		builder

@@ -562,6 +562,12 @@ RGBehavior >> isCompiledMethod [
 ]
 
 { #category : 'testing - layouts' }
+RGBehavior >> isDoubleWords [
+
+	^ self layout isDoubleWordLayout
+]
+
+{ #category : 'testing - layouts' }
 RGBehavior >> isEphemeron [
 
 	^ self layout isEphemeronLayout
