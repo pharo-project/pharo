@@ -315,7 +315,10 @@ ThemeIcons >> iconFormSetNamed: aSymbol [
 				ifTrue: [
 					self crTrace: (aSymbol, ' icon not found!').
 					self notFoundIconFormSet ]
-				ifFalse: [ self blankIconFormSet ]])
+				ifFalse: [
+					aSymbol ~= #blank
+						ifTrue: [ self blankIconFormSet ]
+						ifFalse: [ FormSet form: (Form extent: 0@0) ]]])
 ]
 
 { #category : 'accessing' }

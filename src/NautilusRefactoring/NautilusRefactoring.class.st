@@ -81,8 +81,6 @@ NautilusRefactoring >> refactoringOptions: aRefactoring [
 		toUse: [ :ref :string | self shouldInlineExpression: string ];
 		setOption: #alreadyDefined
 		toUse: [ :ref :class :selector | self shouldOverride: selector in: class ];
-		setOption: #useExistingMethod
-		toUse: [ :ref :selector | self shouldUseExistingMethod: selector ];
 		setOption: #searchInWholeHierarchy
 		toUse: [ :ref :class | self shouldSearchInHierarchy: class ]
 ]
@@ -175,10 +173,4 @@ NautilusRefactoring >> shouldSearchInHierarchy: class [
 				confirm: 'Do you want to search occurrences in the whole hierarchy?'
 				label: 'Warning'
 		] ifEmpty: [ false ]
-]
-
-{ #category : 'option' }
-NautilusRefactoring >> shouldUseExistingMethod: aMethodName [
-	"for now we always want to use the existing method."
-	^ true
 ]

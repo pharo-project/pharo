@@ -26,7 +26,7 @@ SycDeprecateClassCommand class >> canBeExecutedInContext: aToolContext [
 { #category : 'converting' }
 SycDeprecateClassCommand >> asRefactorings [
 	| refactoring |
-	refactoring := RBDeprecateClassRefactoring deprecate: targetClass in: newName name.
+	refactoring := RBDeprecateClassRefactoring deprecate: targetClass name in: newName name.
 	^ { refactoring }
 ]
 

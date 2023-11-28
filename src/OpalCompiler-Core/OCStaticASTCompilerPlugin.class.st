@@ -18,12 +18,6 @@ OCStaticASTCompilerPlugin class >> isAbstract [
 	^ self == OCStaticASTCompilerPlugin
 ]
 
-{ #category : 'private' }
-OCStaticASTCompilerPlugin class >> priority [
-
-	^ 0
-]
-
 { #category : 'instance creation' }
 OCStaticASTCompilerPlugin class >> transform: anAST [
 	"Return a new instance of the receiver transforming the given AST"
@@ -42,11 +36,6 @@ OCStaticASTCompilerPlugin >> copyAST [
 	"Utility method to make a copy of the AST before manipulating it"
 
 	ast := ast copy
-]
-
-{ #category : 'accessing' }
-OCStaticASTCompilerPlugin >> priority [
-	^100 "default. Priority 0 is used by Reflectivity to be the last"
 ]
 
 { #category : 'private - transforming' }

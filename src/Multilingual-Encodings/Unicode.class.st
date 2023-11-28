@@ -501,8 +501,8 @@ Unicode class >> initializeTagConstants [
 						and: [sym first isUppercase and: [sym last isLowercase]]]) asSortedCollection
 		inject: 1
 		into: [:index :sym | sym = #Cn
-				ifTrue: [self classPool at: sym put: 0. index]
-				ifFalse: [self classPool at: sym put: index. index + 1]]
+				ifTrue:  [(self classVariableNamed: sym) write: 0. index]
+				ifFalse: [(self classVariableNamed: sym) write: index. index + 1]]
 ]
 
 { #category : 'private' }

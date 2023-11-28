@@ -186,13 +186,13 @@ SystemNavigation >> browseClassVarRefs: aClass [
 	index := (UIManager default chooseFrom: (labelStream contents substrings) lines: lines).
 	index = 0 ifTrue: [^ self].
 	^ self browseAllReferencesTo:
-		((owningClasses at: index) classPool associationAt: (allVars at: index))
+		((owningClasses at: index) classVariableNamed: (allVars at: index))
 ]
 
 { #category : '*Tool-Base' }
 SystemNavigation >> browseClassVariables: aClass [
 
-	^ aClass classPool inspectWithLabel: 'Class Variables in ' , aClass name
+	^ aClass classVariables inspectWithLabel: 'Class Variables in ' , aClass name
 ]
 
 { #category : '*Tool-Base' }

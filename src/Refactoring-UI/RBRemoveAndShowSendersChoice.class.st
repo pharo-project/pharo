@@ -6,10 +6,10 @@ Class {
 	#tag : 'Choices'
 }
 
-{ #category : 'accessing' }
+{ #category : 'execution' }
 RBRemoveAndShowSendersChoice >> action [ 
 	
-	driver removeMethodChanges.
+	driver applyRemoveMethodChanges.
 	driver browseSenders.
 ]
 

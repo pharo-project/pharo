@@ -30,9 +30,16 @@ RBInteractionDriver class >> isAbstract [
 
 { #category : 'execution' }
 RBInteractionDriver >> applyChanges [
-	"I'm a hook to actually execute the changes"
-	
-	refactoring execute 
+
+	self openPreviewWithChanges: self changes
+
+]
+
+{ #category : 'execution' }
+RBInteractionDriver >> changes [
+
+	^ self subclassResponsibility 
+
 ]
 
 { #category : 'execution' }

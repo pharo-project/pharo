@@ -214,8 +214,11 @@ BreakpointTest >> testObjectCentricAPI [
 	object2 := ReflectivityExamples new.
 
 	Breakpoint breakOn: #exampleAssignment inObject: object1.
-
 	self should: [object1 exampleAssignment] raise: Break.
+	self shouldnt: [object2 exampleAssignment] raise: Break.
+	
+	Breakpoint breakOnceOn: #exampleAssignment inObject: object2.
+	self should: [object2 exampleAssignment] raise: Break.
 	self shouldnt: [object2 exampleAssignment] raise: Break
 ]
 
@@ -227,8 +230,11 @@ BreakpointTest >> testObjectCentricASTAPI [
 	ast := (ReflectivityExamples >> #exampleAssignment) ast statements first.
 
 	Breakpoint breakOnAST: ast inObject: object1.
-
 	self should: [object1 exampleAssignment] raise: Break.
+	self shouldnt: [object2 exampleAssignment] raise: Break.	
+
+	Breakpoint breakOnceOnAST: ast inObject: object2.
+	self should: [object2 exampleAssignment] raise: Break.
 	self shouldnt: [object2 exampleAssignment] raise: Break
 ]
 
@@ -258,9 +264,25 @@ BreakpointTest >> testObjectCentricObjectAPI [
 	object2 := ReflectivityExamples new.
 
 	object1 haltOnCallTo: #exampleAssignment.
-
 	self should: [object1 exampleAssignment] raise: Break.
+	self shouldnt: [object2 exampleAssignment] raise: Break.
+	
+	object2 haltOnceOnCallTo: #exampleAssignment.
+	self should: [object2 exampleAssignment] raise: Break.
 	self shouldnt: [object2 exampleAssignment] raise: Break
+]
+
+{ #category : 'tests' }
+BreakpointTest >> testOnceBreakpointDisableAfterHit [
+	|object breakpoint|
+	object := ReflectivityExamples new.
+	
+	breakpoint := Breakpoint breakOnceOn: #exampleAssignment inObject: object.
+	breakpoint disable.
+	self shouldnt: [object exampleAssignment] raise: Break.
+	breakpoint enable.
+	self should: [object exampleAssignment] raise: Break.
+	self deny: breakpoint isEnabled
 ]
 
 { #category : 'tests' }

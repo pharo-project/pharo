@@ -82,7 +82,7 @@ HaloMorph class >> customHaloSpecifications [
 	^ #(
 	(addDismissHandle:		left			top				(red		muchLighter)			#haloDismiss)
 	(addMenuHandle:		right		top				(red)							#haloMenu)
-	(addDragHandle:			center	top					(brown)							#haloDragddGrowHandle:		right		bottom			(yellow)						#haloScale)
+	(addDragHandle:			center	top					(brown)							#haloDrag)
 	(addScaleHandle:		right		bottom			(lightOrange)					#haloScale)
 
 	(addRecolorHandle:		left			center			(green muchLighter lighter)		#haloRecolor)
@@ -178,7 +178,7 @@ HaloMorph class >> iconicHaloSpecifications [
 	(addFontSizeHandle:		leftCenter	bottom			(lightGreen)						#haloFontSize)
 	(addFontStyleHandle:		center		bottom			(lightRed)						#haloFontStyle)
 	(addFontEmphHandle:	rightCenter	bottom			(lightBrown darker)				#haloFontEmph)
-	(addRecolorHandle:		right		bottomCenter	(magenta darker)				#haloRecolon) )
+	(addRecolorHandle:		right		bottomCenter	(magenta darker)				#haloRecolor) )
 ]
 
 { #category : 'class initialization' }
