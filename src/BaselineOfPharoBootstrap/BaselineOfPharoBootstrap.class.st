@@ -188,7 +188,6 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		"These packages are added using hermes after bootstrap"
 
 		spec group: 'AdditionalPackages' with: {
-			'System-Hashing'.
 			'ReflectionMirrors-Primitives'.
 			'InitializePackagesCommandLineHandler'.
 			'Kernel-Chronology-Extras'.
@@ -211,6 +210,7 @@ BaselineOfPharoBootstrap >> baseline: spec [
 			'OpalCompiler-Core'}.
 		
 		spec group: 'FileSystemGroup' with: {
+			'System-Hashing'.
 			'Network-UUID'.
 			'FileSystem-Core'.
 			'FileSystem-Disk'}.
