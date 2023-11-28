@@ -1,16 +1,9 @@
 Class {
 	#name : 'RBRemoveInstanceVariablesDriverTest',
-	#superclass : 'TestCase',
+	#superclass : 'RBDriverTest',
 	#category : 'Refactoring-UI-Tests',
 	#package : 'Refactoring-UI-Tests'
 }
-
-{ #category : 'tests' }
-RBRemoveInstanceVariablesDriverTest >> setUpDriver: driver [
-
-	driver previewPresenterClass: StRefactoringPreviewPresenterMock.
-	driver selectDialog: StSelectDialogMock new
-]
 
 { #category : 'tests' }
 RBRemoveInstanceVariablesDriverTest >> testBadPathVariableIsused [
