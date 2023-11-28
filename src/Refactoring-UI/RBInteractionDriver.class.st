@@ -28,6 +28,12 @@ RBInteractionDriver class >> isAbstract [
 	^ self == RBInteractionDriver
 ]
 
+{ #category : 'testing' }
+RBInteractionDriver class >> previewPresenterClass: aClass [
+
+	 PreviewPresenterClass := aClass
+]
+
 { #category : 'execution' }
 RBInteractionDriver >> applyChanges [
 
@@ -56,6 +62,22 @@ RBInteractionDriver >> openPreviewWithChanges: changes [
 		 scopes: scopes)
 		refactoring: self refactoring;
 		openModal
+]
+
+{ #category : 'configuration' }
+RBInteractionDriver >> previewPresenterClass [
+
+	^ PreviewPresenterClass ifNil: [ PreviewPresenterClass := StRefactoringPreviewPresenter ]
+	
+	
+]
+
+{ #category : 'configuration' }
+RBInteractionDriver >> previewPresenterClass: aClass [
+
+	 PreviewPresenterClass := aClass
+	
+	
 ]
 
 { #category : 'resources' }
