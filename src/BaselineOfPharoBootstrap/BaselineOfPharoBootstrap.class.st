@@ -176,7 +176,6 @@ BaselineOfPharoBootstrap >> baseline: spec [
 			'System-CommandLine'.
 			'System-CommandLineHandler'.
 			'System-Finalization'.
-			'System-Hashing'.
 			'System-Platforms'.
 			'System-SessionManager'.
 			'System-Sources'.
@@ -189,6 +188,7 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		"These packages are added using hermes after bootstrap"
 
 		spec group: 'AdditionalPackages' with: {
+			'System-Hashing'.
 			'ReflectionMirrors-Primitives'.
 			'InitializePackagesCommandLineHandler'.
 			'Kernel-Chronology-Extras'.
