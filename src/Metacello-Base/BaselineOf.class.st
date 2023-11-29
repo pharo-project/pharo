@@ -150,10 +150,12 @@ BaselineOf >> baseline: spec [
 { #category : 'accessing' }
 BaselineOf >> newProjectWithRepositoryDescription: aListOrRepositoryDescriptions [
 
-	project := super newProjectWithRepositoryDescription:
+	| newProject |
+	newProject := super newProjectWithRepositoryDescription:
 		           aListOrRepositoryDescriptions.
 	aListOrRepositoryDescriptions do: [ :desc |
-		project version spec repository: desc ]
+		newProject version spec repository: desc ].
+	^ newProject
 ]
 
 { #category : 'accessing' }

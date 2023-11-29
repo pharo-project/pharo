@@ -144,7 +144,7 @@ ConfigurationOf >> project [
 
 	^ project ifNil: [
 		  "By default we don't know where the project came from..."
-		  self initalizeProjectWithRepositoryDescription: nil ]
+		  self initalizeProjectWithRepositoryDescription: #() ]
 ]
 
 { #category : 'accessing' }
