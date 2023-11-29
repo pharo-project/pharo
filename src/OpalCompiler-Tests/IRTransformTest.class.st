@@ -19,7 +19,7 @@ IRTransformTest >> testAdd [
 	iRMethod allSequences last add: IRInstruction returnTop.
 	aCompiledMethod := iRMethod compiledMethod.
 	self
-		assert: (aCompiledMethod valueWithReceiver: nil arguments: #())
+		assert: (aCompiledMethod valueWithReceiver: nil)
 		equals: 2
 ]
 
@@ -39,7 +39,7 @@ IRTransformTest >> testAddBefore [
 		before: ret.
 	aCompiledMethod := iRMethod compiledMethod.
 	self
-		assert: (aCompiledMethod valueWithReceiver: nil arguments: #())
+		assert: (aCompiledMethod valueWithReceiver: nil)
 		equals: 2
 ]
 
@@ -58,7 +58,7 @@ IRTransformTest >> testAddIntructions [
 			IRInstruction returnTop}.
 	aCompiledMethod := iRMethod compiledMethod.
 	self
-		assert: (aCompiledMethod valueWithReceiver: nil arguments: #())
+		assert: (aCompiledMethod valueWithReceiver: nil)
 		equals: 2
 ]
 
@@ -77,7 +77,7 @@ IRTransformTest >> testAddIntructionsBefore [
 		before: push.
 	aCompiledMethod := iRMethod compiledMethod.
 	self
-		assert: (aCompiledMethod valueWithReceiver: nil arguments: #())
+		assert: (aCompiledMethod valueWithReceiver: nil)
 		equals: 2
 ]
 
@@ -96,7 +96,7 @@ IRTransformTest >> testAddIntructionsBeforeFromLList [
 	iRMethod allSequences last addInstructions: col before: push.
 	aCompiledMethod := iRMethod compiledMethod.
 	self
-		assert: (aCompiledMethod valueWithReceiver: nil arguments: #())
+		assert: (aCompiledMethod valueWithReceiver: nil)
 		equals: 2
 ]
 
@@ -127,7 +127,7 @@ IRTransformTest >> testDelete [
 		detect: [ :each | each isPushLiteral: [ :c | c == 2 ] ]) delete.
 	aCompiledMethod := iRMethod compiledMethod.
 	self
-		assert: (aCompiledMethod valueWithReceiver: nil arguments: #())
+		assert: (aCompiledMethod valueWithReceiver: nil)
 		equals: 1
 ]
 
@@ -142,7 +142,7 @@ IRTransformTest >> testReplace [
 		replaceWith: (IRInstruction pushLiteral: 2).
 	aCompiledMethod := iRMethod compiledMethod.
 	self
-		assert: (aCompiledMethod valueWithReceiver: nil arguments: #())
+		assert: (aCompiledMethod valueWithReceiver: nil)
 		equals: 2
 ]
 
@@ -157,6 +157,6 @@ IRTransformTest >> testReplaceInstr [
 		replaceWithInstructions: {(IRInstruction pushLiteral: 2)}.
 	aCompiledMethod := iRMethod compiledMethod.
 	self
-		assert: (aCompiledMethod valueWithReceiver: nil arguments: #())
+		assert: (aCompiledMethod valueWithReceiver: nil)
 		equals: 2
 ]

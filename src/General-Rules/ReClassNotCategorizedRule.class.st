@@ -29,7 +29,7 @@ ReClassNotCategorizedRule >> basicCheck: aClass [
 
 	aClass isMeta ifTrue: [ ^ false ].
 
-	^ aClass packageTag isRoot and: [ aClass package classTags size > 1 ]
+	^ aClass packageTag isRoot and: [ aClass package tags size > 1 ]
 ]
 
 { #category : 'accessing' }

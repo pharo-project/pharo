@@ -58,7 +58,10 @@ ClassVariableTest >> testNotReadInMethod [
 { #category : 'tests - properties' }
 ClassVariableTest >> testNotWrittenInMethodWhenItIsOnlyRead [
 
+	| constantlockForTest |
 	DefaultTimeLimit printString. "reading class variable".
+	"add a clean block to check that is works"
+	constantlockForTest := [  ].
 
 	self deny: ((TestCase classVariableNamed: #DefaultTimeLimit) isWrittenIn: self class >> testSelector)
 ]

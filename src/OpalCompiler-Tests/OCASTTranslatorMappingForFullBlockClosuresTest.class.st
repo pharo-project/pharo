@@ -21,7 +21,7 @@ OCASTTranslatorMappingForFullBlockClosuresTest >> assertBlockNodeHasCorrectIR: b
 { #category : 'tests' }
 OCASTTranslatorMappingForFullBlockClosuresTest >> assertMethodReturnValue: method [
 	self
-		assert: (method valueWithReceiver: nil arguments: #())
+		assert: (method valueWithReceiver: nil)
 		equals: 42
 ]
 
