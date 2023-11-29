@@ -633,7 +633,7 @@ Object >> clone [
 					ifTrue:
 						[class isCompiledMethodClass
 							ifTrue:
-								[class newMethod: self basicSize - self initialPC + 1 + CompiledMethod trailerSize header: self header]
+								[class basicNew: self basicSize - self initialPC + 1 + CompiledMethod trailerSize header: self header]
 							ifFalse:
 								[class basicNew: self basicSize]]
 					ifFalse:
