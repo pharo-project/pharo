@@ -71,7 +71,7 @@ CompiledMethod class >> handleFailingFailingNewMethod: numberOfBytes header: hea
 	"space must be low."
 	OutOfMemory signal.
 	"retry if user proceeds"
-	^self newMethod: numberOfBytes header: headerWord
+	^self basicNew: numberOfBytes header: headerWord
 ]
 
 { #category : 'private' }
@@ -149,7 +149,7 @@ CompiledMethod class >> methodPropertiesClass [
 CompiledMethod class >> new [
 	"This will not make a meaningful method, but it could be used
 	to invoke some otherwise useful method in this class."
-	^self newMethod: 2 header: 1024
+	^self basicNew: 2 header: 1024
 ]
 
 { #category : 'instance creation' }
