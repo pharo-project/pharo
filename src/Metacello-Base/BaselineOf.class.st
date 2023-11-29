@@ -159,17 +159,6 @@ BaselineOf >> newProjectWithRepositoryDescription: aListOrRepositoryDescriptions
 ]
 
 { #category : 'accessing' }
-BaselineOf >> packageRepository [
-
-	^ self project repositoryDescriptions
-		  ifNotEmpty: [ :repositories |
-			  repositories
-				  detect: [ :each | each description beginsWith: 'tonel://' ]
-				  ifNone: [ repositories anyOne ] ]
-		  ifEmpty: [ nil ]
-]
-
-{ #category : 'accessing' }
 BaselineOf >> packageRepositoryURLForSpec: spec [
 	" Tries to determine a repository URL from which the baseline is being loaded. Useful for 
 	refering other baselines in the same repository. "

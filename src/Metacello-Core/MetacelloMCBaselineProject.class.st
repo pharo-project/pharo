@@ -97,6 +97,11 @@ MetacelloMCBaselineProject >> projectForScriptEngine: aMetacelloScriptEngine unc
   ^ aMetacelloScriptEngine getBaselineProjectUnconditionalLoad: true
 ]
 
+{ #category : 'accessing' }
+MetacelloMCBaselineProject >> repositoryDescription [
+	^ repositoryDescription
+]
+
 { #category : 'development support' }
 MetacelloMCBaselineProject >> setBaselineRepositoryDescription: aListOrRepositoryDescriptions [
 	"set #version repositories to < aListOrRepositoryDescriptions>. Should be the directory where the BaselineOf is located."
