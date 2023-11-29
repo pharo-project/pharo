@@ -9,20 +9,29 @@ Class {
 { #category : 'loading' }
 MetacelloGoferLoader >> loadAtomicPackageDirectives: packageDirectives [
 
-	| goferLoad gofer monticelloRepositories |
+	| goferLoad gofer monticelloRepositories references |
 	gofer := Gofer new.
 	goferLoad := MetacelloGoferLoad on: gofer.
 
-	packageDirectives do: [ :e |
-		| resolvedReference |
-		monticelloRepositories := self repositoriesFrom: e externalReference.
-		monticelloRepositories do: [ :repo | gofer repository: repo ].
-		resolvedReference := self
-			                     resolveRecordingPackageSpecReference: e spec
-			                     gofer: gofer.
-		goferLoad addResolved: resolvedReference ].
+	references := packageDirectives collect: [ :e |
+		              | resolvedReference |
+		              monticelloRepositories := self repositoriesFrom:
+			                                        e externalReference.
+		              monticelloRepositories do: [ :repo |
+			              gofer repository: repo ].
+		              resolvedReference := self
+			                                   resolveRecordingPackageSpecReference:
+			                                   e spec
+			                                   gofer: gofer.
+		              goferLoad addResolved: resolvedReference.
+		              resolvedReference ].
 
 	goferLoad execute.
+
+	"Add the repositories to monticello. Otherwise this will break during the loading of Pharo.
+	See: BaselineOf >> #packageRepository"
+	references do: [ :e |
+		e workingCopy repositoryGroup addRepository: e repository ].
 
 	packageDirectives do: [ :e |
 		MetacelloNotification signal:
