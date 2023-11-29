@@ -29,12 +29,6 @@ RBInteractionDriver class >> isAbstract [
 	^ self == RBInteractionDriver
 ]
 
-{ #category : 'testing' }
-RBInteractionDriver class >> previewPresenterClass: aClass [
-
-	 PreviewPresenterClass := aClass
-]
-
 { #category : 'execution' }
 RBInteractionDriver >> application [
 	"For now use the singleton. Normally the application should be passed from Calypso and the command"

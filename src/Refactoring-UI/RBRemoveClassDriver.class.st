@@ -145,7 +145,7 @@ RBRemoveClassDriver >> setBreakingChangesPreconditions [.
 	
 	haveNoReferences := refactoring preconditionHaveNoReferences.
 	emptyClasses := refactoring preconditionEmptyClasses.
-	noSubclasses := refactoring preconditionHaveNoSubclasses.
+	noSubclasses := refactoring preconditionHaveNoSubclasses
 
 	
 ]
