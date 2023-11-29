@@ -235,17 +235,18 @@ RGClassDefinitionTest >> testWithClassInstanceVariables [
 
 { #category : 'testing' }
 RGClassDefinitionTest >> testWithClassVariables [
+
 	| newClass classVar |
 	newClass := (RGClassDefinition named: #Object)
-		addClassVariables: #(DependentsFields);
-		addClassVarNamed: #FakeVariable;
-		yourself.
+		            addClassVariables: #( DependentsFields );
+		            addClassVarNamed: #FakeVariable;
+		            yourself.
 
 	self assert: newClass classVariables size equals: 2.
 	self assert: newClass classVarNames size equals: 2.
-	self assert: newClass allClassVarNames size equals: 2.	"no hierarchy"
+	self assert: newClass allClassVarNames size equals: 2. "no hierarchy"
 
-	classVar := newClass classVarNamed: #DependentsFields.
+	classVar := newClass classVariableNamed: #DependentsFields.
 	self assert: classVar notNil.
 	self assert: classVar isClassVariable.
 	self assert: classVar isVariable.

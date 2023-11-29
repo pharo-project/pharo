@@ -416,12 +416,19 @@ Context >> canHandleSignal: exception [
 
 { #category : 'private - exceptions' }
 Context >> cannotReturn: result [
+	"NB: Nil the receiver's pc to make sure it can't resume.
+	Backup the pc before nilling for the sake of debugging.
+	Example: 
+	Without nilling the pc the following example would crash the VM after resumption:
+	[[^ 1] on: BlockCannotReturn do: #resume ] fork
+	and the following example would run and happily execute an illegal return after resumption:
+	[[true ifTrue: [^ 1]] on: BlockCannotReturn do: #resume ] fork
+	"
 
-	closureOrNil ifNotNil: [
-		^ BlockCannotReturn result: result from: self home ].
-	UIManager default
-		requestDebuggerOpeningNamed: 'computation has been terminated'
-		inContext: thisContext
+	closureOrNil ifNotNil: [ 
+		BlockCannotReturn result: result from: self home.
+		^self push: pc; pc: nil ].
+	self error: 'computation has been terminated'
 ]
 
 { #category : 'private' }

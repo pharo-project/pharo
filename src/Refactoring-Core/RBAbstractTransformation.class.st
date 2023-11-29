@@ -59,9 +59,6 @@ RBAbstractTransformation class >> initializeRefactoringOptions [
 		at: #alreadyDefined
 		put: [ :ref :cls :selector |  self error: #alreadyDefined ];
 
-		at: #useExistingMethod
-		put: [ :ref :selector |  self error: #useExistingMethod ];
-
 		at: #openBrowser
 		put: [ :ref :env |  self error: #openBrowser ];
 
@@ -431,11 +428,6 @@ RBAbstractTransformation >> shouldOverride: aSelector in: aClass [
 		value: self
 		value: aClass
 		value: aSelector
-]
-
-{ #category : 'requests' }
-RBAbstractTransformation >> shouldUseExistingMethod: aSelector [
-	^(self options at: #useExistingMethod) value: self value: aSelector
 ]
 
 { #category : 'transforming' }

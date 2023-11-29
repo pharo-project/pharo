@@ -166,7 +166,6 @@ BaselineOfPharoBootstrap >> baseline: spec [
 			'Kernel'.
 			'Kernel-CodeModel'.
 			'Kernel-BytecodeEncoders'.
-			'Network-UUID'.
 			'Transcript-NonInteractive'.
 			'PharoBootstrap-Initialization'.
 			'Random-Core'.
@@ -214,6 +213,7 @@ BaselineOfPharoBootstrap >> baseline: spec [
 			'OpalCompiler-Core'}.
 		
 		spec group: 'FileSystemGroup' with: {
+			'Network-UUID'.
 			'FileSystem-Core'.
 			'FileSystem-Disk'}.
 
