@@ -1,4 +1,4 @@
-"
+2"
 I am a method in the IR (intermediate representation) language consisting of IRInstructions grouped by IRSequence (basic block).  The IRSequences form a control graph (therefore I only have to hold onto the starting sequence).  #compiledMethod will convert me to a CompiledMethod.  #methodNode will convert me back to a parse tree.
 
 "
@@ -238,7 +238,7 @@ IRMethod >> isSend [
 { #category : 'printing' }
 IRMethod >> longPrintString [
 
-	String streamContents: [ :stream |
+	^ String streamContents: [ :stream |
 		IRPrinter new
 			stream: stream;
 			visitNode: self ]
