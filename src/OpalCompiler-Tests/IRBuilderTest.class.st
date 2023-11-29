@@ -50,7 +50,7 @@ IRBuilderTest >> testDup [
 
 	aCompiledMethod := iRMethod compiledMethod.
 	self assert: (aCompiledMethod isKindOf: CompiledMethod).
-  	self assert: (aCompiledMethod valueWithReceiver: nil arguments: #() ).
+  	self assert: (aCompiledMethod valueWithReceiver: nil ).
 	^iRMethod
 ]
 
@@ -66,7 +66,7 @@ IRBuilderTest >> testInstVar [
 
 	aCompiledMethod := iRMethod compiledMethod.
 	self assert: (aCompiledMethod isKindOf: CompiledMethod).
-	self assert: (aCompiledMethod valueWithReceiver: 3 @ 4 arguments: #()) equals: 7.
+	self assert: (aCompiledMethod valueWithReceiver: 3 @ 4 ) equals: 7.
 	^ iRMethod
 ]
 
@@ -87,7 +87,7 @@ IRBuilderTest >> testJumpAheadTo [
 
 	aCompiledMethod := iRMethod compiledMethod.
 	self assert: (aCompiledMethod isKindOf: CompiledMethod).
-	self assert: (aCompiledMethod valueWithReceiver: nil arguments: #()) equals: 3.
+	self assert: (aCompiledMethod valueWithReceiver: nil) equals: 3.
 	^ iRMethod
 ]
 
@@ -107,7 +107,7 @@ IRBuilderTest >> testJumpAheadToIf [
 
 	aCompiledMethod := iRMethod compiledMethod.
 	self assert: (aCompiledMethod isKindOf: CompiledMethod).
- 	self assert: ((aCompiledMethod valueWithReceiver: nil arguments: #() ) isNil).
+ 	self assert: ((aCompiledMethod valueWithReceiver: nil) isNil).
 	^iRMethod
 ]
 
@@ -128,7 +128,7 @@ IRBuilderTest >> testJumpBackTo [
 
 	aCompiledMethod := iRMethod compiledMethod.
 	self assert: (aCompiledMethod isKindOf: CompiledMethod).
-	self assert: ((aCompiledMethod valueWithReceiver: nil arguments: #() ) isNil).
+	self assert: ((aCompiledMethod valueWithReceiver: nil) isNil).
 	^iRMethod
 ]
 
@@ -142,7 +142,7 @@ IRBuilderTest >> testLiteralArray [
 
 	aCompiledMethod := iRMethod compiledMethod.
 	self assert: (aCompiledMethod isKindOf: CompiledMethod).
-	self assert: (aCompiledMethod valueWithReceiver: nil arguments: #()) equals: #(test 4 you).
+	self assert: (aCompiledMethod valueWithReceiver: nil) equals: #(test 4 you).
 	^ iRMethod
 ]
 
@@ -157,7 +157,7 @@ IRBuilderTest >> testLiteralBoolean [
 
 	aCompiledMethod := iRMethod compiledMethod.
 	self assert: (aCompiledMethod isKindOf: CompiledMethod).
-	self assert: ((aCompiledMethod valueWithReceiver: nil arguments: #() )).
+	self assert: (aCompiledMethod valueWithReceiver: nil).
 	^iRMethod
 ]
 
@@ -171,7 +171,7 @@ IRBuilderTest >> testLiteralCharacter [
 
 	aCompiledMethod := iRMethod compiledMethod.
 	self assert: (aCompiledMethod isKindOf: CompiledMethod).
-	self assert: (aCompiledMethod valueWithReceiver: nil arguments: #()) equals: $e.
+	self assert: (aCompiledMethod valueWithReceiver: nil) equals: $e.
 	^ iRMethod
 ]
 
@@ -186,7 +186,7 @@ IRBuilderTest >> testLiteralFloat [
 
 	aCompiledMethod := iRMethod compiledMethod.
 	self assert: (aCompiledMethod isKindOf: CompiledMethod).
- 	self assert: ((aCompiledMethod valueWithReceiver: nil arguments: #() ) closeTo: 2.0).
+ 	self assert: ((aCompiledMethod valueWithReceiver: nil) closeTo: 2.0).
 	^iRMethod
 ]
 
@@ -200,7 +200,7 @@ IRBuilderTest >> testLiteralInteger [
 
 	aCompiledMethod := iRMethod compiledMethod.
 	self assert: (aCompiledMethod isKindOf: CompiledMethod).
-	self assert: (aCompiledMethod valueWithReceiver: nil arguments: #()) equals: 2.
+	self assert: (aCompiledMethod valueWithReceiver: nil) equals: 2.
 	^ iRMethod
 ]
 
@@ -216,7 +216,7 @@ IRBuilderTest >> testLiteralNil [
 	aCompiledMethod := iRMethod compiledMethod.
 
 	self assert: (aCompiledMethod isKindOf: CompiledMethod).
-     self assert: ((aCompiledMethod valueWithReceiver: 4 arguments: #() ) isNil).
+     self assert: ((aCompiledMethod valueWithReceiver: 4) isNil).
 	^iRMethod
 ]
 
@@ -231,7 +231,7 @@ IRBuilderTest >> testLiteralString [
 	aCompiledMethod := iRMethod compiledMethod.
 
 	self assert: (aCompiledMethod isKindOf: CompiledMethod).
-	self assert: (aCompiledMethod valueWithReceiver: nil arguments: #()) equals: 'hello'.
+	self assert: (aCompiledMethod valueWithReceiver: nil) equals: 'hello'.
 	^ iRMethod
 ]
 
@@ -246,7 +246,7 @@ IRBuilderTest >> testLiteralSymbol [
 	aCompiledMethod := iRMethod compiledMethod.
 
 	self assert: (aCompiledMethod isKindOf: CompiledMethod).
-	self assert: (aCompiledMethod valueWithReceiver: nil arguments: #()) equals: #you.
+	self assert: (aCompiledMethod valueWithReceiver: nil) equals: #you.
 	^ iRMethod
 ]
 
@@ -261,7 +261,7 @@ IRBuilderTest >> testLiteralVariableClass [
 	aCompiledMethod := iRMethod compiledMethod.
 
 	self assert: (aCompiledMethod isKindOf: CompiledMethod).
-	self assert: (aCompiledMethod valueWithReceiver: nil arguments: #()) equals: Object.
+	self assert: (aCompiledMethod valueWithReceiver: nil) equals: Object.
 	^ iRMethod
 ]
 
@@ -277,7 +277,7 @@ IRBuilderTest >> testLiteralVariableClassVariable [
 
 	self assert: (aCompiledMethod isKindOf: CompiledMethod).
 	OCOpalExamples new classVariable: #tag.
-	self assert: (aCompiledMethod valueWithReceiver: nil arguments: #()) equals: #tag.
+	self assert: (aCompiledMethod valueWithReceiver: nil) equals: #tag.
 	OCOpalExamples reset.
 	^ iRMethod
 ]
@@ -293,7 +293,7 @@ IRBuilderTest >> testLiteralVariableGlobale [
 	aCompiledMethod := iRMethod compiledMethod.
 
 	self assert: (aCompiledMethod isKindOf: CompiledMethod).
-	self assert: (aCompiledMethod valueWithReceiver: nil arguments: #()) equals: Smalltalk.
+	self assert: (aCompiledMethod valueWithReceiver: nil) equals: Smalltalk.
 	^ iRMethod
 ]
 
@@ -310,7 +310,7 @@ IRBuilderTest >> testPopTop [
 
 	aCompiledMethod := iRMethod compiledMethod.
 	self assert: (aCompiledMethod isKindOf: CompiledMethod).
-	self assert: ((aCompiledMethod valueWithReceiver: nil arguments: #() ) isNil).
+	self assert: ((aCompiledMethod valueWithReceiver: nil) isNil).
 	^iRMethod
 ]
 
@@ -328,7 +328,7 @@ IRBuilderTest >> testPushConsArray [
 	receiver := 5 @ 8.
 
 	self assert: (aCompiledMethod isKindOf: CompiledMethod).
-	self assert: (aCompiledMethod valueWithReceiver: receiver arguments: #()) first identicalTo: receiver.
+	self assert: (aCompiledMethod valueWithReceiver: receiver) first identicalTo: receiver.
 	^ iRMethod
 ]
 
@@ -346,7 +346,7 @@ IRBuilderTest >> testPushConsArray2 [
 	receiver := 5 @ 8.
 
 	self assert: (aCompiledMethod isKindOf: CompiledMethod).
-	self assert: (aCompiledMethod valueWithReceiver: receiver arguments: #()) equals: #('hi!').
+	self assert: (aCompiledMethod valueWithReceiver: receiver) equals: #('hi!').
 	^ iRMethod
 ]
 
@@ -365,7 +365,7 @@ IRBuilderTest >> testPushNewArray [
 	receiver :=  (5@8).
 
 	self assert: (aCompiledMethod isKindOf: CompiledMethod).
-	self assert: ((aCompiledMethod valueWithReceiver: receiver arguments: #()) first isNil).
+	self assert: ((aCompiledMethod valueWithReceiver: receiver) first isNil).
 	^iRMethod
 ]
 
@@ -382,7 +382,7 @@ IRBuilderTest >> testPushSelf [
 
 
 	self assert: (aCompiledMethod isKindOf: CompiledMethod).
-	self assert: (aCompiledMethod valueWithReceiver: nil arguments: #()) identicalTo: UndefinedObject.
+	self assert: (aCompiledMethod valueWithReceiver: nil) identicalTo: UndefinedObject.
 	^ iRMethod
 ]
 
@@ -420,7 +420,7 @@ IRBuilderTest >> testPushTempTemp [
 
 
 	self assert: (aCompiledMethod isKindOf: CompiledMethod).
-     self assert: ((aCompiledMethod valueWithReceiver: 5 arguments: #() ) isNil).
+     self assert: ((aCompiledMethod valueWithReceiver: 5) isNil).
 	^iRMethod
 ]
 
@@ -451,7 +451,7 @@ IRBuilderTest >> testPushThisProcess [
 
 	aCompiledMethod := iRMethod compiledMethod.
 	self assert: (aCompiledMethod isKindOf: CompiledMethod).
-	self assert: (aCompiledMethod valueWithReceiver: nil arguments: #()) equals: Process.
+	self assert: (aCompiledMethod valueWithReceiver: nil) equals: Process.
 	^ iRMethod
 ]
 
@@ -465,7 +465,7 @@ IRBuilderTest >> testReturnInstVar [
 
 	aCompiledMethod := iRMethod compiledMethod.
 	self assert: (aCompiledMethod isKindOf: CompiledMethod).
-	self assert: (aCompiledMethod valueWithReceiver: 3 @ 4 arguments: #()) equals: 3.
+	self assert: (aCompiledMethod valueWithReceiver: 3 @ 4) equals: 3.
 	^ iRMethod
 ]
 
@@ -480,7 +480,7 @@ IRBuilderTest >> testReturnTop [
 
 	aCompiledMethod := iRMethod compiledMethod.
 	self assert: (aCompiledMethod isKindOf: CompiledMethod).
-	self deny: (aCompiledMethod valueWithReceiver: nil arguments: #()).
+	self deny: (aCompiledMethod valueWithReceiver: nil).
 	^iRMethod
 ]
 
@@ -498,7 +498,7 @@ IRBuilderTest >> testSendSuper [
 
 
 	self assert: (aCompiledMethod isKindOf: CompiledMethod).
-     self should: [(aCompiledMethod valueWithReceiver: (self class new) arguments: #())] raise: Error.
+     self should: [(aCompiledMethod valueWithReceiver: (self class new))] raise: Error.
 	^iRMethod
 ]
 
@@ -515,7 +515,7 @@ IRBuilderTest >> testStoreIntoVariable [
 
 
 	self assert: (aCompiledMethod isKindOf: CompiledMethod).
-	aCompiledMethod valueWithReceiver: nil arguments: #().
+	aCompiledMethod valueWithReceiver: nil.
 	self assert: self class testToPush equals: 4.
 	self class testToPush: nil.
 	^ iRMethod
@@ -532,7 +532,7 @@ IRBuilderTest >> testStoreIvar [
 
 	aCompiledMethod := iRMethod compiledMethod.
 	self assert: (aCompiledMethod isKindOf: CompiledMethod).
-	self assert: (aCompiledMethod valueWithReceiver: self arguments: #()) equals: 34.
+	self assert: (aCompiledMethod valueWithReceiver: self) equals: 34.
 	^ iRMethod
 ]
 
@@ -551,7 +551,7 @@ IRBuilderTest >> testStorePopIntoVariable [
 
 
 	self assert: (aCompiledMethod isKindOf: CompiledMethod).
-	aCompiledMethod valueWithReceiver: nil arguments: #().
+	aCompiledMethod valueWithReceiver: nil.
 	self assert: self class testToPush equals: 4.
 	self class testToPush: nil.
 	^ iRMethod
@@ -570,7 +570,7 @@ IRBuilderTest >> testStorePopIvar [
 
 	aCompiledMethod := iRMethod compiledMethod.
 	self assert: (aCompiledMethod isKindOf: CompiledMethod).
-	self assert: (aCompiledMethod valueWithReceiver: self arguments: #()) equals: 34.
+	self assert: (aCompiledMethod valueWithReceiver: self) equals: 34.
 	^ iRMethod
 ]
 
@@ -588,6 +588,6 @@ IRBuilderTest >> testStoreTemp [
 
 	aCompiledMethod := iRMethod compiledMethod.
 	self assert: (aCompiledMethod isKindOf: CompiledMethod).
-	self assert: (aCompiledMethod valueWithReceiver: nil arguments: #()) equals: 34.
+	self assert: (aCompiledMethod valueWithReceiver: nil) equals: 34.
 	^ iRMethod
 ]

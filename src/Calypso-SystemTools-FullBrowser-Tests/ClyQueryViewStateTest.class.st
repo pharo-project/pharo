@@ -24,7 +24,7 @@ ClyQueryViewStateTest >> setUp [
 	viewDataSource := ClyCollapsedDataSource on: packages.
 	queryView := ClyQueryViewMorph for: browser.
 	queryView
-		treeStructure: {(RPackage -> #prepareClassGroupQueryFrom:in:)}.
+		treeStructure: {(Package -> #prepareClassGroupQueryFrom:in:)}.
 	queryView dataSource: viewDataSource.
 	queryView selection selectItems: {self selectedItem}
 ]

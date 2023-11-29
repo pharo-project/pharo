@@ -5,5 +5,5 @@ IceTipHiedraHistoryBrowser class >> calypsoCommandsWith: presenter forRootGroup:
 	<extensionCommands>
 
 	aCommandGroup / self selectionCommandGroupName register:
-		ClyBrowseIcebergCommitCommand forSpec
+		(ClyBrowseIcebergCommitCommand forSpecContext: presenter)
 ]

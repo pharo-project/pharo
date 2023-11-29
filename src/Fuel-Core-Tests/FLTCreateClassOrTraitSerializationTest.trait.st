@@ -8,26 +8,37 @@ Trait {
 	#tag : 'FullSerialization'
 }
 
+{ #category : 'helpers' }
+FLTCreateClassOrTraitSerializationTest >> fullySerialize: aClass [
+	self serializer fullySerializeBehavior: aClass.
+	self serialize: aClass
+]
+
+{ #category : 'helpers' }
+FLTCreateClassOrTraitSerializationTest >> materializeSilently: aBoolean [
+
+	| materialized |
+	materialized := self materialized.
+	self classFactory registerBehavior: materialized.
+	aBoolean ifTrue: [ self classFactory createdSilently add: materialized ].
+	^ materialized
+]
+
 { #category : 'class-factory' }
 FLTCreateClassOrTraitSerializationTest >> newAnonymousClassOrTrait [
 	^ self explicitRequirement
 ]
 
-{ #category : 'tests' }
+{ #category : 'helpers' }
 FLTCreateClassOrTraitSerializationTest >> resultOfSerializeRemoveAndMaterialize: aClass [
-
-	| materialized wasSilent |
-	self serializer fullySerializeBehavior: aClass.
-	self serialize: aClass.
+	| wasSilent |
+	self fullySerialize: aClass.
 	wasSilent := self classFactory createdSilently includes: aClass.
 	self classFactory delete: aClass.
-	materialized := self materialized.
-	self classFactory registerBehavior: materialized.
-	wasSilent ifTrue: [ self classFactory createdSilently add: materialized ].
-	^ materialized
+	^ self materializeSilently: wasSilent
 ]
 
-{ #category : 'tests' }
+{ #category : 'helpers' }
 FLTCreateClassOrTraitSerializationTest >> resultOfSerializeRemoveAndMaterializeAll: objects [
 
 	| classesOrTraits materialized silent |
@@ -95,7 +106,7 @@ FLTCreateClassOrTraitSerializationTest >> testCreateBasic [
 
 	self deny: aClassOrTrait identicalTo: materializedClassOrTrait.
 	self assert: environment identicalTo: materializedClassOrTrait environment.
-	self assert: package equals: materializedClassOrTrait package.
+	self assert: package identicalTo: materializedClassOrTrait package.
 	self assert: packageTag name equals: materializedClassOrTrait packageTag name.
 	self assert: name equals: materializedClassOrTrait name.
 
@@ -264,4 +275,31 @@ FLTCreateClassOrTraitSerializationTest >> testCreateWithTraitOnClassSide [
 	self assert: (aTrait users includes: materializedClassOrTrait classSide).
 	self assert: materializedClassOrTrait classSide localSelectors isEmpty.
 	self assert: 42 equals: ((self newInstanceFrom: materializedClassOrTrait) class perform: #fortyTwo)
+]
+
+{ #category : 'tests' }
+FLTCreateClassOrTraitSerializationTest >> testDoesNotCreatePackage [
+	"Tests materialization of a package not defined in the image."
+
+	| undefinedPackage aClassOrTrait materializedClassOrTrait package packageTag wasSilent |
+	undefinedPackage := self packageOrganizer undefinedPackage.
+	aClassOrTrait := self newClassOrTrait.
+	package := aClassOrTrait package.
+	packageTag := aClassOrTrait packageTag.
+	
+	self deny: package identicalTo: undefinedPackage.
+
+	self fullySerialize: aClassOrTrait.
+	wasSilent := self classFactory createdSilently includes: aClassOrTrait.
+	self classFactory delete: aClassOrTrait.
+	
+	package removeFromSystem.
+	self deny: (self packageOrganizer hasPackage: package).
+	
+	materializedClassOrTrait := self materializeSilently: wasSilent.
+
+	self deny: package identicalTo: materializedClassOrTrait package.
+	self assert: materializedClassOrTrait package identicalTo: undefinedPackage.
+	self deny: packageTag name equals: materializedClassOrTrait packageTag name.
+	self assert: materializedClassOrTrait packageTag identicalTo: undefinedPackage undefinedTag
 ]

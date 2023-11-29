@@ -17,7 +17,9 @@ RBExtractMethodTransformationTest >> sourceCodeAt: anInterval forMethod: aSelect
 RBExtractMethodTransformationTest >> testExtractUsingExistingMethodRefactoring [
 
 	| transformation class |
+	model := self modelOnClasses: { RBTransformationRuleTestData }.
 	transformation := RBExtractMethodTransformation
+		                  model: model
 		                  extract: 'rewriteRule tree printString'
 		                  from: #checkMethod:
 		                  to: #bar
@@ -103,7 +105,9 @@ RBExtractMethodTransformationTest >> testMethodDoesNotExist [
 RBExtractMethodTransformationTest >> testNeedsReturn [
 
 	| refactoring class |
+	model := self modelOnClasses: { RBDummyLintRuleTest }.
 	refactoring := (RBExtractMethodTransformation
+		                model: model
 		                extract: 'rules isEmpty ifTrue: [^self].
 						rules size == 1 ifTrue: [^rules first viewResults]'
 		                from: #openEditor
@@ -130,7 +134,10 @@ RBExtractMethodTransformationTest >> testNeedsReturn [
 RBExtractMethodTransformationTest >> testRefactoring [
 
 	| transformation class |
+	model := self modelOnClasses: { RBTransformationRuleTestData }.
+
 	transformation := (RBExtractMethodTransformation
+		                   model: model
 		                   extract:
 			                   '(RecursiveSelfRule executeTree: rewriteRule tree initialAnswer: false)
 			ifFalse: [builder
@@ -166,7 +173,10 @@ RBExtractMethodTransformationTest >> testRefactoring [
 RBExtractMethodTransformationTest >> testTransform [
 
 	| transformation class |
+	model := self modelOnClasses: { self changeMockClass }.
+
 	transformation := (RBAddMethodTransformation
+		                   model: model
 		                   sourceCode: 'foo
 									| temp bar |
 									bar := 5.
@@ -174,7 +184,7 @@ RBExtractMethodTransformationTest >> testTransform [
 									Transcript show: temp printString; cr.
 									^temp * temp'
 		                   in: self changeMockClass name
-		                   withProtocol: #accessing ) generateChanges.
+		                   withProtocol: #accessing) generateChanges.
 
 	transformation := (RBExtractMethodTransformation
 		                   model: transformation model
@@ -208,7 +218,10 @@ RBExtractMethodTransformationTest >> testTransform [
 RBExtractMethodTransformationTest >> testWithArgument [
 
 	| refactoring class |
+	model := self modelOnClasses: { RBTransformationRuleTestData }.
+
 	refactoring := (RBExtractMethodTransformation
+		                model: model
 		                extract: (self
 				                 sourceCodeAt: (143 to: 340)
 				                 forMethod: #checkMethod:
@@ -240,7 +253,7 @@ RBExtractMethodTransformationTest >> testWithArgument [
 RBExtractMethodTransformationTest >> testWithTemporariesSelected [
 
 	| class refactoring |
-	model := RBNamespace new.
+	model := self modelOnClasses: { self class }.
 	class := model classNamed: self class name.
 	class
 		compile: 'foo [| temp | temp := 5. temp * temp] value'
@@ -266,7 +279,7 @@ RBExtractMethodTransformationTest >> testWithTemporariesSelected [
 RBExtractMethodTransformationTest >> testWithTemporaryAssigned [
 
 	| class method refactoring |
-	model := RBNamespace new.
+	model := self modelOnClasses: { self class }.
 	class := model classNamed: self class name.
 	method := 'foo
 			| temp bar |
@@ -298,7 +311,9 @@ RBExtractMethodTransformationTest >> testWithTemporaryAssigned [
 RBExtractMethodTransformationTest >> testWithTemporaryVariable [
 
 	| refactoring class |
+	model := self modelOnClasses: { RBTransformationRuleTestData }.
 	refactoring := (RBExtractMethodTransformation
+		                model: model
 		                extract: (self
 				                 sourceCodeAt: (22 to: 280)
 				                 forMethod: #superSends
@@ -333,7 +348,9 @@ RBExtractMethodTransformationTest >> testWithTemporaryVariable [
 RBExtractMethodTransformationTest >> testWithTemporaryVariable2 [
 
 	| refactoring class |
+	model := self modelOnClasses: { RBDummyLintRuleTest }.
 	refactoring := (RBExtractMethodTransformation
+							 model: model
 		                extract: (self
 				                 sourceCodeAt: (78 to: 197)
 				                 forMethod: #displayName

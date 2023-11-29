@@ -354,19 +354,19 @@ RGEnvironment >> ensureClassNamed: aSymbol [
 RGEnvironment >> ensureClassTrait [
 
 	| aClassTrait |
-
+	
 	aClassTrait := self ask behaviorNamed: #ClassTrait.
 	aClassTrait ifNotNil: [ ^ aClassTrait ].
-
-	aClassTrait := self ask behaviors detect: [ :each |
+	
+	aClassTrait := self ask behaviors detect: [ :each | 
 		(each propertyNamed: #ClassTrait ifAbsent: [ false ]) ] ifNone: [ nil ].
 	aClassTrait ifNotNil: [ ^ aClassTrait ].
 
-	aClassTrait := self ensureClassNamed: #ClassTrait.
-
-	aClassTrait propertyNamed: #ClassTrait put: true.
-
-	^ aClassTrait
+	aClassTrait := self ensureClassNamed: #ClassTrait.	
+	
+	aClassTrait propertyNamed: #ClassTrait put: true.	
+	
+	^ aClassTrait.
 ]
 
 { #category : 'cleaning' }
@@ -825,16 +825,12 @@ RGEnvironment >> removeUnusedPackages [
 
 { #category : 'cleaning' }
 RGEnvironment >> unifyClassTrait [
-
 	"set all metaclasses of classTraits to the same object (ClassTrait) "
 
 	| aTrait |
-
 	aTrait := self ensureClassTrait.
 
-	self ask behaviorsDo: [ :each |
-		(each isMetaclassTrait)
-			ifTrue: [ each metaclass: aTrait]]
+	self ask behaviorsDo: [ :each | each isMetaclassTrait ifTrue: [ each metaclass: aTrait ] ]
 ]
 
 { #category : 'cleaning' }

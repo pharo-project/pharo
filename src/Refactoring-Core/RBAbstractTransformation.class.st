@@ -88,6 +88,12 @@ RBAbstractTransformation class >> refactoringOptions [
 	^ RefactoringOptions
 ]
 
+{ #category : 'preconditions' }
+RBAbstractTransformation >> applicabilityPreconditions [ 
+	
+	^ self trueCondition 
+]
+
 { #category : 'private' }
 RBAbstractTransformation >> buildSelectorString: aSelector [
 	aSelector numArgs = 0 ifTrue: [^aSelector].
@@ -136,6 +142,19 @@ RBAbstractTransformation >> buildSelectorString: aSelector withPermuteMap: aPerm
 RBAbstractTransformation >> changes [
 
 	^ self model changes
+]
+
+{ #category : 'preconditions' }
+RBAbstractTransformation >> checkApplicabilityPreconditions [
+
+	| conditions errorStrings |
+	conditions := self applicabilityPreconditions.
+	conditions := conditions reject: [ :cond | cond check ].
+	conditions ifEmpty: [ ^ self ].
+	errorStrings := String streamContents: [ :aStream |
+		                conditions do: [ :cond |
+			                cond violationMessageOn: aStream ] ].
+	self refactoringError: errorStrings
 ]
 
 { #category : 'condition definitions' }
@@ -212,11 +231,22 @@ RBAbstractTransformation >> generateChanges [
 	"RBRefactoringManager instance addRefactoring: self"
 ]
 
+{ #category : 'transforming' }
+RBAbstractTransformation >> generateChangesFor: aRefactoring [
+	"I will generate changes and save them in the model, BUT I will not apply them!
+	Use me when a refactorings is composed of multiple other refactorings"
+
+	"Execute the argument but passing the receiver options to that refactoring"
+	aRefactoring copyOptionsFrom: self options.
+	aRefactoring model: self model.
+	aRefactoring generateChanges
+]
+
 { #category : 'accessing' }
 RBAbstractTransformation >> model [
 
 	^ model
-		ifNil: [ model := ( RBClassModelFactory rbNamespace onEnvironment: self defaultEnvironment )
+		ifNil: [ model := (RBNamespace onEnvironment: self defaultEnvironment )
 				name: 'Changes for ', self class name asString;
 				yourself
 			]

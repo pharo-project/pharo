@@ -183,9 +183,9 @@ DisplayScreen >> fullscreen [
 { #category : 'screen managing' }
 DisplayScreen >> fullscreen: aBoolean [
 
-	SystemAnnouncer announce: (FullscreenAnnouncement new
-		displayScreen: self;
-		fullscreen: (LastScreenModeSelected := aBoolean))
+	self class codeSupportAnnouncer announce: (FullscreenAnnouncement new
+			 displayScreen: self;
+			 fullscreen: (LastScreenModeSelected := aBoolean))
 ]
 
 { #category : 'other' }

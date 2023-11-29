@@ -146,3 +146,8 @@ TaEmptyComposition >> traitDefining: aSelector [
 TaEmptyComposition >> traits [
 	^ #()
 ]
+
+{ #category : 'deprecated' }
+TaEmptyComposition >> transformations [
+	^ #()
+]

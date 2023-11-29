@@ -66,3 +66,10 @@ ClassRemoved >> classRemoved: aClass [
 
 	classRemoved := aClass
 ]
+
+{ #category : 'accessing' }
+ClassRemoved >> packagesAffected [
+	"In case we remove a class we need to specify that we are affecting the package of the class but also the packages extending it since we are removing extensions."
+
+	^ self classRemoved packages
+]

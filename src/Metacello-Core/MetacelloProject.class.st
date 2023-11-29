@@ -213,7 +213,7 @@ MetacelloProject >> fetchProject: aLoaderPolicy [
 	(mcLoader := self loader) ifNil: [ mcLoader := self project loaderClass on: nil ].
 	mcLoader loaderPolicy: aLoaderPolicy.
 	mcLoader doingLoads: [
-		MCWorkingCopy workingCopiesForClass: self configuration class do: [ :workingCopy |
+		self configuration class mcWorkingCopy ifNotNil: [ :workingCopy |
 			| pkg |
 			pkg := self packageSpec.
 			workingCopy repositoryGroup repositories do: [ :repo | pkg repositories repository: (repo asRepositorySpecFor: self) ].
@@ -411,23 +411,21 @@ MetacelloProject >> projectForScriptEngine: aMetacelloScriptEngine unconditional
 
 { #category : 'development support' }
 MetacelloProject >> projectPackage [
-  MCWorkingCopy
-    workingCopiesForClass: self configuration class
-    do: [ :workingCopy | 
-      | pkgSpec repo |
-      pkgSpec := self packageSpec
-        name: workingCopy packageName;
-        yourself.
-      workingCopy ancestors notEmpty
-        ifTrue: [ pkgSpec file: workingCopy ancestors first name ].
-      repo := workingCopy repositoryGroup repositories
-        detect: [ :each | each ~~ MCCacheRepository default ]
-        ifNone: [ 
-          MetacelloNotification signal: ('Using cache repository for ' , self label , ' project package').
-          MCCacheRepository default ].
-      pkgSpec repository: (repo asRepositorySpecFor: self).
-      ^ pkgSpec ].
-  ^ nil
+
+	self configuration class mcWorkingCopy ifNotNil: [ :workingCopy |
+		| pkgSpec repo |
+		pkgSpec := self packageSpec
+			           name: workingCopy packageName;
+			           yourself.
+		workingCopy ancestors notEmpty ifTrue: [ pkgSpec file: workingCopy ancestors first name ].
+		repo := workingCopy repositoryGroup repositories
+			        detect: [ :each | each ~~ MCCacheRepository default ]
+			        ifNone: [
+				        MetacelloNotification signal: 'Using cache repository for ' , self label , ' project package'.
+				        MCCacheRepository default ].
+		pkgSpec repository: (repo asRepositorySpecFor: self).
+		^ pkgSpec ].
+	^ nil
 ]
 
 { #category : 'private' }

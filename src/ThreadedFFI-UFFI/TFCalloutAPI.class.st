@@ -27,7 +27,7 @@ TFCalloutAPI class >> activateTraceWith: aBlock [
 { #category : 'tracing' }
 TFCalloutAPI class >> isTracing [
 
-	^ TraceBlock notNil
+	^ TraceBlock isNotNil
 ]
 
 { #category : 'instance creation' }

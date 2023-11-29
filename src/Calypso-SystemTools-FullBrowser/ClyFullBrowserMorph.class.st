@@ -171,7 +171,7 @@ ClyFullBrowserMorph >> adoptForExtendedClass [
 
 	| extendingPackages extraGroups |
 	self classSelection isEmpty ifTrue: [ ^ self ].
-	methodGroupQuery := methodGroupQuery withoutItemsOfType: RPackage. "To remove previous package injection"
+	methodGroupQuery := methodGroupQuery withoutItemsOfType: Package. "To remove previous package injection"
 	(self classSelection lastSelectedItem isMarkedWith: ClyExtendedClassTag) ifFalse: [ ^ self ].
 
 	"it will ensures method groups mode for extended class
@@ -531,7 +531,7 @@ ClyFullBrowserMorph >> newPackageView [
 	newPackageView := self newNavigationView
 		treeStructure: 	{
 			Project -> #prepareProjectItemsQueryFrom:in:.
-			RPackage -> #prepareClassGroupQueryFrom:in: };
+			Package -> #prepareClassGroupQueryFrom:in: };
 		enableFilterUsing: ClyRegexPattern new;
 		requestNavigationBy: #packageSelectionChanged.
 	newPackageView filterField announcer
@@ -557,7 +557,7 @@ ClyFullBrowserMorph >> newWindowTitle [
 
 { #category : 'accessing - selection' }
 ClyFullBrowserMorph >> packageSelection [
-	^packageView selection asSelectedParentsOf: RPackage
+	^packageView selection asSelectedParentsOf: Package
 ]
 
 { #category : 'accessing - selection' }

@@ -103,7 +103,7 @@ HEInstaller >> doInstallPackage: aHEPackage [
 	"Creating the package. It requires a number of steps.
 	1. Register the package in the organizer."
 	self flag: #pahro11. "Update this when Pharo 12 will be the minimal version"
-	SystemVersion current major < 12 ifTrue: [ RPackageOrganizer default registerPackageNamed: aHEPackage packageName ] ifFalse: [ self packageOrganizer ensurePackage: aHEPackage packageName ].
+	SystemVersion current major < 12 ifTrue: [ PackageOrganizer default registerPackageNamed: aHEPackage packageName ] ifFalse: [ self packageOrganizer ensurePackage: aHEPackage packageName ].
 
 	"2. Install the traits"
 	newTraits := aHEPackage traits collect: [ :exportedTrait | self buildTrait: exportedTrait ].
@@ -182,7 +182,7 @@ HEInstaller >> installMethods: exportedClass into: aClass [
 { #category : 'installing package' }
 HEInstaller >> installPackage: aHEPackage [
 
-	SystemAnnouncer uniqueInstance delayAnnouncementsAfter: [ self doInstallPackage: aHEPackage ]
+	self class codeChangeAnnouncer delayAnnouncementsAfter: [ self doInstallPackage: aHEPackage ]
 ]
 
 { #category : 'messages' }

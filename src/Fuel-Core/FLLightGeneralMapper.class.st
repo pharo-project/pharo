@@ -48,13 +48,6 @@ FLLightGeneralMapper >> visitClass: aClass [
 ]
 
 { #category : 'visiting' }
-FLLightGeneralMapper >> visitClassTrait: aClassTrait [
-	self
-		mapAndTraceByClusterName: aClassTrait
-		to: FLGlobalMetaclassCluster
-]
-
-{ #category : 'visiting' }
 FLLightGeneralMapper >> visitClassVariable: aClassVariable [
 	self visitFixedObject: aClassVariable
 ]
@@ -79,6 +72,12 @@ FLLightGeneralMapper >> visitCompiledMethod: aCompiledMethod [
 FLLightGeneralMapper >> visitDictionary: aDictionary [
 
 	self mapAndTraceByObjectClass: aDictionary to: FLDictionaryCollectionCluster
+]
+
+{ #category : 'visiting' }
+FLLightGeneralMapper >> visitEphemeron: anObject [
+
+	self mapAndTraceByObjectClass: anObject to: FLEphemeronCluster
 ]
 
 { #category : 'visiting' }

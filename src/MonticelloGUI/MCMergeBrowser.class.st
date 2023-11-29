@@ -3,10 +3,11 @@ Browser to merge changes
 "
 Class {
 	#name : 'MCMergeBrowser',
-	#superclass : 'MCPatchBrowser',
+	#superclass : 'MCCodeTool',
 	#instVars : [
 		'conflicts',
-		'merger'
+		'merger',
+		'selection'
 	],
 	#category : 'MonticelloGUI-Tools',
 	#package : 'MonticelloGUI',
@@ -39,6 +40,21 @@ MCMergeBrowser >> canMerge [
 { #category : 'actions' }
 MCMergeBrowser >> cancel [
 	self answer: false
+]
+
+{ #category : 'actions' }
+MCMergeBrowser >> changeSetNameForInstall [
+	"Answer the name of the change set into which my selection will be installed.
+	Derive this from my label.
+	If I have no label, use the current change set."
+
+	| tokens |
+	label ifNil: [ ^ChangeSet current name ].
+	tokens := label findTokens: ' '.
+	tokens removeAllFoundIn: { 'changes'. 'between'. 'and' }.
+	(tokens size = 3 and: [ tokens second = '<working' ]) ifTrue: [ ^tokens first, '-to-working' ].
+	tokens size = 2 ifFalse: [ ^'InstalledPatches' ].
+	^'{1}-to-{2}' format: tokens 
 ]
 
 { #category : 'actions' }
@@ -141,9 +157,29 @@ MCMergeBrowser >> innerButtonRow [
 		  (Reject chooseLocal 'reject the selected change' selectionIsConflicted))
 ]
 
+{ #category : 'actions' }
+MCMergeBrowser >> installSelection [
+	| loader |
+	selection ifNotNil:
+		[loader := MCPackageLoader new.
+		selection applyTo: loader.
+		loader loadWithName: self changeSetNameForInstall ]
+]
+
+{ #category : 'selecting' }
+MCMergeBrowser >> invert [
+	items := items collect: [:ea | ea inverse].
+	self changed: #list; changed: #text; changed: #selection
+]
+
 { #category : 'accessing' }
 MCMergeBrowser >> items [
 	^ conflicts, items
+]
+
+{ #category : 'accessing' }
+MCMergeBrowser >> list [
+	^ self items collect: [:ea | ea summary]
 ]
 
 { #category : 'actions' }
@@ -160,18 +196,89 @@ MCMergeBrowser >> merger: aMerger [
 	conflicts := aMerger conflicts sort: [:a :b | a operation <= b operation].
 ]
 
+{ #category : 'accessing' }
+MCMergeBrowser >> patch: aPatch [
+	items := aPatch operations asSortedCollection
+]
+
+{ #category : 'actions' }
+MCMergeBrowser >> revertSelection [
+	| loader |
+	selection ifNotNil:
+		[loader := MCPackageLoader new.
+		selection inverse applyTo: loader.
+		loader loadWithName: self changeSetNameForInstall ]
+]
+
+{ #category : 'subclassresponsibility' }
+MCMergeBrowser >> selectedClass [
+	| definition |
+	selection ifNil: [ ^ nil ].
+	(definition := selection definition) ifNil: [ ^ nil ].
+	definition isMethodDefinition
+		ifFalse: [ ^ nil ].
+	^ Smalltalk globals at: definition className ifAbsent: [  ]
+]
+
+{ #category : 'subclassresponsibility' }
+MCMergeBrowser >> selectedClassOrMetaClass [
+	| definition |
+	selection ifNil: [ ^nil ].
+	(definition := selection definition) ifNil: [ ^nil ].
+	definition isMethodDefinition ifFalse: [ ^nil ].
+	^definition actualClass
+]
+
+{ #category : 'subclassresponsibility' }
+MCMergeBrowser >> selectedMessageCategoryName [
+	| definition |
+	selection ifNil: [ ^nil ].
+	(definition := selection definition) ifNil: [ ^nil ].
+	definition isMethodDefinition ifFalse: [ ^nil ].
+	^definition category
+]
+
+{ #category : 'subclassresponsibility' }
+MCMergeBrowser >> selectedMessageName [
+	| definition |
+	selection ifNil: [ ^nil ].
+	(definition := selection definition) ifNil: [ ^nil ].
+	definition isMethodDefinition ifFalse: [ ^nil ].
+	^definition  selector
+]
+
+{ #category : 'selecting' }
+MCMergeBrowser >> selection [
+	^ selection 
+		ifNil: [0]
+		ifNotNil: [self items indexOf: selection]
+]
+
 { #category : 'morphic ui' }
 MCMergeBrowser >> selection: aNumber [
 	"Notify change of conflicts too."
-	
-	super selection: aNumber.
-	self changed: #selectionIsConflicted
+
+	selection := aNumber = 0 ifFalse: [ self items at: aNumber ].
+	self
+		changed: #selection;
+		changed: #text;
+		changed: #selectionIsConflicted
 ]
 
 { #category : 'actions' }
 MCMergeBrowser >> selectionIsConflicted [
 	selection ifNil: [ ^ false ].
 	^ selection isConflict
+]
+
+{ #category : 'text' }
+MCMergeBrowser >> text [
+	^ selection ifNil: [''] ifNotNil: [selection source]
+]
+
+{ #category : 'text' }
+MCMergeBrowser >> text: aTextOrString [
+	self changed: #text
 ]
 
 { #category : 'morphic ui' }

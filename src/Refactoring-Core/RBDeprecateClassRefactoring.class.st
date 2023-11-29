@@ -26,7 +26,7 @@ Class {
 
 { #category : 'instance creation' }
 RBDeprecateClassRefactoring class >> deprecate: aDeprecatedClass in: aNewName [
-	^ self new className: aDeprecatedClass name newName: aNewName
+	^ self new className: aDeprecatedClass newName: aNewName
 ]
 
 { #category : 'instance creation' }
@@ -45,6 +45,23 @@ RBDeprecateClassRefactoring >> addMethod: source to: aClass in: aProtocol [
 			sourceCode: source
 			in: aClass
 			withProtocol: aProtocol)
+]
+
+{ #category : 'preconditions' }
+RBDeprecateClassRefactoring >> applicabilityPreconditions [
+
+	| class |
+	class := self model classNamed: className.
+	^ { (RBClassesExistCondition new classes: { class }).
+		 (RBClassesAreNotMetaClassCondition new classes: { class }).
+		 (RBNameIsGlobalCondition new model: self model className: newName).
+	    (RBValidClassNameCondition new className: newName) }
+]
+
+{ #category : 'preconditions' }
+RBDeprecateClassRefactoring >> checkPreconditions [ 
+
+	self checkApplicabilityPreconditions 
 ]
 
 { #category : 'initialization' }
@@ -126,10 +143,8 @@ RBDeprecateClassRefactoring >> newClass [
 
 { #category : 'preconditions' }
 RBDeprecateClassRefactoring >> preconditions [
-	^((RBCondition withBlock: [deprecatedClass notNil and: [deprecatedClass isMeta not]])
-			& (RBCondition isValidClassName: newName)
-			& (RBCondition isGlobal: newName in: self model)) |
-			(RBCondition withBlock: [ self refactoringError: newName , ' is not a valid class name'])
+
+	self applicabilityPreconditions 
 ]
 
 { #category : 'transforming' }

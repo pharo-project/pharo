@@ -6,11 +6,6 @@ Class {
 	#tag : 'Dependencies'
 }
 
-{ #category : 'testing' }
-MCDependencySorterTest class >> isUnitTest [
-	^false
-]
-
 { #category : 'asserting' }
 MCDependencySorterTest >> assertItems: anArray orderAs: depOrder withRequired: missingDeps toLoad: unloadableItems [
 	self assertItems: anArray orderAs: depOrder withRequired: missingDeps  toLoad: unloadableItems  extraProvisions: #()

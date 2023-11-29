@@ -22,7 +22,7 @@ Class {
 { #category : 'actions' }
 RBRemoveClassDriver >> applyChanges [
 
-	self openPreviewWithChanges: refactoring removeClassChanges
+	self openPreviewWithChanges: self changes
 
 ]
 
@@ -33,6 +33,13 @@ RBRemoveClassDriver >> browseReferences [
 		StMessageBrowserPresenter
 			browse: (references collect: [ :ref | ref method ])
 			asSendersOf: violator realClass ]
+]
+
+{ #category : 'actions' }
+RBRemoveClassDriver >> changes [
+	
+	^  refactoring removeClassChanges
+
 ]
 
 { #category : 'initialization' }
@@ -58,9 +65,6 @@ RBRemoveClassDriver >> handleBreakingChanges [
 			(RBRemoveClassAndPushStateToSubclassChoice new driver: self) ].
 	haveNoReferences isFalse ifTrue: [
 		items add: (RBBrowseClassReferencesChoice new driver: self) ].
-	
-	items size = 1
-		ifTrue: [ ^ items first action ].
 		
 	select := SpSelectDialog new
 		          title: 'There are potential breaking changes!';

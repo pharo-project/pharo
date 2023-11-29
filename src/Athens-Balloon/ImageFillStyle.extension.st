@@ -5,6 +5,6 @@ ImageFillStyle >> asAthensPaintOn: anAthensCanvas [
 
 	^ (anAthensCanvas cacheAt: self ifAbsentPut: [
 		anAthensCanvas surface
-		createFormPaint: form ])
+		createFormPaint: self form ])
 		origin: origin
 ]

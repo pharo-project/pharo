@@ -111,6 +111,18 @@ Class {
 	#tag : 'Base'
 }
 
+{ #category : 'class initialization' }
+SessionManager class >> classRemoved: classRemoved [
+
+	self default unregisterClassNamed: classRemoved classRemoved name
+]
+
+{ #category : 'class initialization' }
+SessionManager class >> classRenamed: classRenamed [
+
+	self default renamedClass: classRenamed classRenamed from: classRenamed oldName to: classRenamed newName
+]
+
 { #category : 'accessing' }
 SessionManager class >> default [
 	^ Default ifNil: [ Default := self new ]
@@ -121,6 +133,16 @@ SessionManager class >> default: aSessionManager [
 	Default := aSessionManager
 ]
 
+{ #category : 'class initialization' }
+SessionManager class >> initialize [
+
+	self codeChangeAnnouncer unsubscribe: self.
+
+	self codeChangeAnnouncer weak
+		when: ClassRemoved send: #classRemoved: to: self;
+		when: ClassRenamed send: #classRenamed: to: self
+]
+
 { #category : 'initialization' }
 SessionManager class >> initializeKernelRegistrations [
 	"The session manager will be extracted from the KernelGroup of the bootstrap that is build by Espell. Because of that, the sessions needed by the KernelGroup needs to be initialized later in the bootstrap.
@@ -128,6 +150,8 @@ SessionManager class >> initializeKernelRegistrations [
 
 	self default
 		registerSystemClassNamed: #SmallInteger atPriority: 10;
+		registerSystemClassNamed: #Delay atPriority: 20;
+		registerSystemClassNamed: #ProcessorScheduler atPriority: 30;
 		registerSystemClassNamed: #OSPlatform atPriority: 50;
 		registerSystemClassNamed: #ExternalObject atPriority: 60;
 		registerSystemClassNamed: #FFIBackend atPriority: 60;
@@ -226,17 +250,17 @@ SessionManager >> installSession: aWorkingSession [
 
 { #category : 'snapshot and quit' }
 SessionManager >> launchSnapshot: save andQuit: quit [
+
 	| isImageStarting snapshotResult |
 	ChangesLog default logSnapshot: save andQuit: quit.
 
-	self currentSession stop: quit.	"Image not usable from here until the session is restarted!"
+	self currentSession stop: quit. "Image not usable from here until the session is restarted!"
 	save
 		ifTrue: [
-					snapshotResult := Smalltalk snapshotPrimitive.	"<-- PC frozen here on image file"
-					isImageStarting := snapshotResult == true. ]
+			snapshotResult := Smalltalk snapshotPrimitive. "<-- PC frozen here on image file"
+			isImageStarting := snapshotResult == true ]
 		ifFalse: [ isImageStarting := false ].
-	(quit and: [ isImageStarting not ])
-		ifTrue: [ Smalltalk quitPrimitive ].
+	(quit and: [ isImageStarting not ]) ifTrue: [ Smalltalk quitPrimitive ].
 
 	"create a new session object if we're booting"
 	isImageStarting ifTrue: [ self installNewSession ].
@@ -244,8 +268,8 @@ SessionManager >> launchSnapshot: save andQuit: quit [
 	self currentSession start: isImageStarting.
 	snapshotResult
 		ifNil: [ self error: 'Failed to write image file (disk full?)' ]
-		ifNotNil: [
-			SystemAnnouncer uniqueInstance snapshotDone: isImageStarting ].
+		ifNotNil: [ "This branch should be removed in Pharo 13 with the deprecated announcement."
+			self class environment at: #SnapshotDone ifPresent: [ :class | self class codeSupportAnnouncer announce: (class isNewImage: isImageStarting) ] ].
 
 	"We return the resuming state, which may be useful for users to know the state of the image"
 	^ isImageStarting

@@ -164,15 +164,6 @@ CDFluidClassDefinitionParser >> handleMetaclassName: aNode [
 				slots: {xxxx} so grab the class"
 
 	aNode handleMetaclassName: self
-
-	"| className classNode node |
-	node := aNode receiver arguments first.
-	className := node receiver binding value class name.
-	classNode := self classNameNodeClass new
-		originalNode: node;
-		className: className.
-	classDefinition className: node astNode: classNode
-	"
 ]
 
 { #category : 'parsing' }

@@ -6,7 +6,7 @@ I represent subgroups of ""extensions"" method group.
 Internal Representation and Key Implementation Points.
 
     Instance Variables
-	package:		<RPackage>
+	package:		<Package>
 "
 Class {
 	#name : 'ClyExternalPackageMethodGroup',

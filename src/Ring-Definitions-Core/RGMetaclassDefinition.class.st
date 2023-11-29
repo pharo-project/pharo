@@ -26,12 +26,6 @@ RGMetaclassDefinition >> allClassVarNames [
 	^self instanceSide allClassVarNames
 ]
 
-{ #category : 'variables' }
-RGMetaclassDefinition >> allSharedPoolNames [
-
-	^self instanceSide allSharedPoolNames
-]
-
 { #category : 'accessing' }
 RGMetaclassDefinition >> baseClass: aRGClassDefinition [
 

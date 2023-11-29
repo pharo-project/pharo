@@ -5,7 +5,7 @@ Operations are subclasses of MCPatchOperation:  addition (MCAddition), modificat
 "
 Class {
 	#name : 'MCThreeWayMerger',
-	#superclass : 'MCMerger',
+	#superclass : 'Object',
 	#instVars : [
 		'index',
 		'operations',
@@ -41,6 +41,11 @@ MCThreeWayMerger >> addBaseSnapshot: aSnapshot [
 ]
 
 { #category : 'operations' }
+MCThreeWayMerger >> addConflictWithOperation: anOperation [
+	self operations add: anOperation beConflict
+]
+
+{ #category : 'operations' }
 MCThreeWayMerger >> addDefinition: aDefinition [
 	index
 		definitionLike: aDefinition
@@ -68,8 +73,25 @@ MCThreeWayMerger >> applyPatch: aPatch [
 ]
 
 { #category : 'operations' }
+MCThreeWayMerger >> applyTo: anObject [
+	self isMerged ifFalse: [self error: 'You must resolve all the conflicts first'].
+	self operations do: [:ea | ea applyTo: anObject]
+]
+
+{ #category : 'operations' }
 MCThreeWayMerger >> baseSnapshot [
 	^ (MCSnapshot fromDefinitions: index definitions)
+]
+
+{ #category : 'accessing' }
+MCThreeWayMerger >> conflicts [	
+	^ self operations select: #isConflict
+
+]
+
+{ #category : 'testing' }
+MCThreeWayMerger >> hasConflicts [
+	^ self conflicts notEmpty
 ]
 
 { #category : 'initialization' }
@@ -77,6 +99,34 @@ MCThreeWayMerger >> initialize [
 	super initialize.
 	index := MCDefinitionIndex new.
 	provisions := Set new
+]
+
+{ #category : 'testing' }
+MCThreeWayMerger >> isMerged [
+	^ self conflicts allSatisfy: [:ea | ea isResolved]
+]
+
+{ #category : 'operations' }
+MCThreeWayMerger >> load [
+	| loader |
+	loader := MCPackageLoader new.
+	loader provisions addAll: self provisions.
+	self applyTo: loader.
+	loader load
+]
+
+{ #category : 'operations' }
+MCThreeWayMerger >> loadWithNameLike: baseName [
+	| loader |
+	loader := MCPackageLoader new.
+	loader provisions addAll: self provisions.
+	self applyTo: loader.
+	loader loadWithNameLike: baseName
+]
+
+{ #category : 'accessing' }
+MCThreeWayMerger >> mergedSnapshot [
+	^ MCPatcher apply: self to: self baseSnapshot
 ]
 
 { #category : 'operations' }

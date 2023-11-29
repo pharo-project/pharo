@@ -14,6 +14,12 @@ Class {
 }
 
 { #category : 'instance creation' }
+Collection class >> <- anArray [
+
+	^ self newFromArray: anArray
+]
+
+{ #category : 'instance creation' }
 Collection class >> empty [
 	^ self new
 ]

@@ -133,7 +133,7 @@ FLBlockClosureSerializationTest >> testBlockClosureMaterializesClassVariablesCor
 	method := class methodNamed: #methodWithClosure.
 	"Make sure we don't use global clusters here, which would simply perform a lookup"
 	self serializer fullySerializeBehavior: method methodClass.
-	closure := method valueWithReceiver: class new arguments: #(  ).
+	closure := method valueWithReceiver: class new.
 
 	self serialize: closure.
 

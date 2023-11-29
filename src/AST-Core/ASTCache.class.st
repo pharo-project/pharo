@@ -36,7 +36,7 @@ Class {
 { #category : 'private - announcements' }
 ASTCache class >> announceCacheReset [
 
-	SystemAnnouncer announce: ASTCacheReset new
+	self codeSupportAnnouncer announce: ASTCacheReset new
 ]
 
 { #category : 'accessing' }
@@ -185,9 +185,7 @@ ASTCache >> reset [
 ASTCache >> statistics [
 
 	^ statistics ifNil: [ "CacheStatistics comes from another package. It does not worth the dependency"
-		  Smalltalk globals
-			  at: #CacheStatistics
-			  ifPresent: [ :CS | statistics := CS new ] ]
+		  self class environment at: #CacheStatistics ifPresent: [ :class | statistics := class new ] ]
 ]
 
 { #category : 'accessing' }

@@ -24,7 +24,7 @@ RBMoveMethodToClassParametrizedTest >> testFailureMethodAlreadyDefined [
 
 	| method someClass |
 	someClass := model classNamed: #RBFooLintRuleTestData.
-	method := RBClassModelFactory rbMethod
+	method := model rbMethodClass
 		          for: someClass
 		          source: 'foo' , String cr , String tab , '^ 6'
 		          selector: #foo.

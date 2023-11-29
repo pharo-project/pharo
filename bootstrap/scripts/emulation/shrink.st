@@ -228,8 +228,8 @@
 	Job jobAnnouncer initialize.
 	EncodedCharSet initialize.
 	LanguageEnvironment resetKnownEnvironments.
-	RPackageOrganizer resetDefault.
-	bootstrappedPackages do: [ :packageName | RPackageOrganizer default registerPackageNamed: packageName ].
+	PackageOrganizer resetDefault.
+	bootstrappedPackages do: [ :packageName | PackageOrganizer default registerPackageNamed: packageName ].
 	(Smalltalk at: #Display) becomeForward: nil.
 	Smalltalk removeKey: #Display.
 	MCWorkingCopy allInstances do: [ :wc | wc repositoryGroup: nil ].
@@ -260,7 +260,7 @@
 	UIManager default progressBarEnabled: true.
 	MCWorkingCopy allSubInstancesDo: [ :p | p unregister ].
 	MCWorkingCopy unregisterForNotifications.
-	delete := #('Ring-Deprecated-ChunkImporter' 'Zinc-Resource-Meta-Core' 'System-Changes' 'Ring-Deprecated-Core-Kernel' 'Ring-Deprecated-Core-Containers' 'RingChunkImporter' 'Compression' 'Monticello' 'Ring-Deprecated-Monticello').
+	delete := #('Ring-Deprecated-ChunkImporter' 'Zinc-Resource-Meta-Core' 'System-Changes' 'Ring-Deprecated-Core-Kernel' 'Ring-Deprecated-Core-Containers' 'RingChunkImporter' 'Compression' 'Monticello' 'Monticello-Model' 'Ring-Deprecated-Monticello').
 	delete
 		do: [ :packageName | 
 			| mcPackage classes |

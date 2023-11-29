@@ -4,8 +4,9 @@ Checks for sends of deprecated messages that might be removed in upcoming releas
 Class {
 	#name : 'SendsDeprecatedMethodToGlobalRule',
 	#superclass : 'ReNodeBasedRule',
-	#category : 'General-Rules',
-	#package : 'General-Rules'
+	#category : 'General-Rules-Base',
+	#package : 'General-Rules',
+	#tag : 'Base'
 }
 
 { #category : 'accessing' }
