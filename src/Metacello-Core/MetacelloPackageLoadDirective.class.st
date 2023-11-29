@@ -48,7 +48,7 @@ MetacelloPackageLoadDirective >> packageDirectivesDo: aBlock [
 { #category : 'accessing' }
 MetacelloPackageLoadDirective >> packageName [
 
-	^self externalReference packageName
+	^ self spec name
 ]
 
 { #category : 'accessing' }

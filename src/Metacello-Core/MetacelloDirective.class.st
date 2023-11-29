@@ -30,7 +30,7 @@ MetacelloDirective class >> preLoadSpec: packageOrVersionSpec [
 { #category : 'visiting' }
 MetacelloDirective >> acceptVisitor: aVisitor [
 	
-	self subclassResponsibility
+	aVisitor visitAtomicLoadDirective: self
 ]
 
 { #category : 'actions' }

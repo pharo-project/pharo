@@ -6,30 +6,34 @@ Class {
 	#tag : 'Gofer'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'loading' }
+MetacelloGoferLoader >> loadAtomicPackageDirectives: packageDirectives [
+
+	| goferLoad gofer monticelloRepositories |
+	gofer := Gofer new.
+	goferLoad := MetacelloGoferLoad on: gofer.
+
+	packageDirectives do: [ :e |
+		| resolvedReference |
+		monticelloRepositories := self repositoriesFrom: e externalReference.
+		monticelloRepositories do: [ :repo | gofer repository: repo ].
+		resolvedReference := self
+			                     resolveRecordingPackageSpecReference: e spec
+			                     gofer: gofer.
+		goferLoad addResolved: resolvedReference ].
+
+	goferLoad execute.
+
+	packageDirectives do: [ :e |
+		MetacelloNotification signal:
+			'Loaded -> ' , e packageName , ' --- '
+			, e externalReference first description ]
+]
+
+{ #category : 'loading' }
 MetacelloGoferLoader >> loadPackageDirective: aMetacelloPackageLoadDirective [
 
-	| resolvedReference goferLoad repo gofer monticelloRepositories |
-	gofer := Gofer new.
-	monticelloRepositories := self repositoriesFrom:
-		                          aMetacelloPackageLoadDirective
-			                          externalReference.
-	monticelloRepositories do: [ :repo | gofer repository: repo ].
-	resolvedReference := self
-		                     resolveRecordingPackageSpecReference:
-		                     aMetacelloPackageLoadDirective spec
-		                     gofer: gofer.
-	
-	goferLoad := MetacelloGoferLoad on: gofer.
-	goferLoad addResolved: resolvedReference.
-	goferLoad execute.
-	repo := resolvedReference repository.
-	resolvedReference workingCopy repositoryGroup addRepository:
-		resolvedReference repository.
-	MetacelloNotification signal:
-		'Loaded -> ' , resolvedReference name , ' --- '
-		, repo repositoryDescription , ' --- '
-		, resolvedReference repository description
+	self loadAtomicPackageDirectives: { aMetacelloPackageLoadDirective }
 ]
 
 { #category : 'repositories' }

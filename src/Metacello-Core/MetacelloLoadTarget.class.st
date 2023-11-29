@@ -12,6 +12,23 @@ MetacelloLoadTarget >> actionLabel [
 	^'Loading '
 ]
 
+{ #category : 'accessing' }
+MetacelloLoadTarget >> loader [
+	
+	^ engine loader
+]
+
+{ #category : 'visiting' }
+MetacelloLoadTarget >> visitAtomicLoadDirective: aMetacelloAtomicLoadDirective [ 
+	
+	| atomicLoader |
+	atomicLoader := MetacelloAtomicLoader new.
+	atomicLoader target: self.
+	aMetacelloAtomicLoadDirective loadDirectives do: [ :dir |
+		dir acceptVisitor: atomicLoader ].
+	atomicLoader finishLoading.
+]
+
 { #category : 'visiting' }
 MetacelloLoadTarget >> visitLinearLoadDirective: aMetacelloLinearLoadDirective [
 
