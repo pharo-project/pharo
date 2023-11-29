@@ -13,7 +13,8 @@ Class {
 { #category : 'loading' }
 MetacelloAtomicLoad >> finishLoading [
 
-	target loader loadAtomicPackageDirectives: packageDirectives
+	target loader loadAtomicPackageDirectives: packageDirectives.
+	packageDirectives := #().
 ]
 
 { #category : 'visiting' }
@@ -27,6 +28,14 @@ MetacelloAtomicLoad >> initialize [
 MetacelloAtomicLoad >> target: aTarget [
 
 	target := aTarget
+]
+
+{ #category : 'visiting' }
+MetacelloAtomicLoad >> visitLinearLoadDirective: aMetacelloLinearLoadDirective [
+
+	"Finish current atomic loading and redispatch the linear loading"
+	self finishLoading.
+	target visitLinearLoadDirective: aMetacelloLinearLoadDirective
 ]
 
 { #category : 'visiting' }
