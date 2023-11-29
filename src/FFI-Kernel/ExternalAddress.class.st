@@ -194,15 +194,18 @@ ExternalAddress >> fromCString [
 ]
 
 { #category : 'converting' }
-ExternalAddress >> fromInteger: address [
-	"Make me point at address."
+ExternalAddress >> fromInteger: anInteger [
+	"Update me with the received address, which is an integer.
+	Warning: The implementation assumes the platform is little-endian."
 
 	| tmp |
-	tmp := address.
+	tmp := anInteger.
+	"Set each byte except last"
 	1 to: self size - 1 do: [ :i |
 		self basicAt: i put: (tmp bitAnd: 16rff).
 		tmp := tmp bitShift: -8 ].
-	self basicAt: self size put: (tmp bitAnd: 16rff)
+	"Last byte doesn't need any additional bit operation"
+	self basicAt: self size put: tmp
 ]
 
 { #category : 'accessing' }
