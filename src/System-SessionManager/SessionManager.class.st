@@ -111,6 +111,18 @@ Class {
 	#tag : 'Base'
 }
 
+{ #category : 'class initialization' }
+SessionManager class >> classRemoved: classRemoved [
+
+	self default unregisterClassNamed: classRemoved classRemoved name
+]
+
+{ #category : 'class initialization' }
+SessionManager class >> classRenamed: classRenamed [
+
+	self default renamedClass: classRenamed classRenamed from: classRenamed oldName to: classRenamed newName
+]
+
 { #category : 'accessing' }
 SessionManager class >> default [
 	^ Default ifNil: [ Default := self new ]
@@ -121,6 +133,16 @@ SessionManager class >> default: aSessionManager [
 	Default := aSessionManager
 ]
 
+{ #category : 'class initialization' }
+SessionManager class >> initialize [
+
+	self codeChangeAnnouncer unsubscribe: self.
+
+	self codeChangeAnnouncer weak
+		when: ClassRemoved send: #classRemoved: to: self;
+		when: ClassRenamed send: #classRenamed: to: self
+]
+
 { #category : 'initialization' }
 SessionManager class >> initializeKernelRegistrations [
 	"The session manager will be extracted from the KernelGroup of the bootstrap that is build by Espell. Because of that, the sessions needed by the KernelGroup needs to be initialized later in the bootstrap.
@@ -128,6 +150,8 @@ SessionManager class >> initializeKernelRegistrations [
 
 	self default
 		registerSystemClassNamed: #SmallInteger atPriority: 10;
+		registerSystemClassNamed: #Delay atPriority: 20;
+		registerSystemClassNamed: #ProcessorScheduler atPriority: 30;
 		registerSystemClassNamed: #OSPlatform atPriority: 50;
 		registerSystemClassNamed: #ExternalObject atPriority: 60;
 		registerSystemClassNamed: #FFIBackend atPriority: 60;

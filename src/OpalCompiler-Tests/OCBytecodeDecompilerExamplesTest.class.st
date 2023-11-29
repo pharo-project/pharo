@@ -14,11 +14,11 @@ OCBytecodeDecompilerExamplesTest >> testExampleBlockArgument [
 		          generateMethod.
 	instance := OCOpalExamples new.
 
-	ir := IRBytecodeDecompiler new decompile: method.
+	ir := FBIRBytecodeDecompiler new decompile: method.
 	newMethod := ir compiledMethod.
 
 	self
-		assert: (newMethod valueWithReceiver: instance arguments: #(  ))
+		assert: (newMethod valueWithReceiver: instance)
 		equals: instance exampleBlockArgument
 ]
 
@@ -30,11 +30,11 @@ OCBytecodeDecompilerExamplesTest >> testExampleBlockExternal [
 		          generateMethod.
 	instance := OCOpalExamples new.
 
-	ir := IRBytecodeDecompiler new decompile: method.
+	ir := FBIRBytecodeDecompiler new decompile: method.
 	newMethod := ir compiledMethod.
 
 	self
-		assert: (newMethod valueWithReceiver: instance arguments: #(  ))
+		assert: (newMethod valueWithReceiver: instance)
 		equals: instance exampleBlockExternal
 ]
 
@@ -46,11 +46,11 @@ OCBytecodeDecompilerExamplesTest >> testExampleBlockExternal2 [
 		          generateMethod.
 	instance := OCOpalExamples new.
 
-	ir := IRBytecodeDecompiler new decompile: method.
+	ir := FBIRBytecodeDecompiler new decompile: method.
 	newMethod := ir compiledMethod.
 
 	self
-		assert: (newMethod valueWithReceiver: instance arguments: #(  ))
+		assert: (newMethod valueWithReceiver: instance)
 		equals: instance exampleBlockExternal2
 ]
 
@@ -62,11 +62,11 @@ OCBytecodeDecompilerExamplesTest >> testExampleBlockExternalArg [
 		          generateMethod.
 	instance := OCOpalExamples new.
 
-	ir := IRBytecodeDecompiler new decompile: method.
+	ir := FBIRBytecodeDecompiler new decompile: method.
 	newMethod := ir compiledMethod.
 
 	self
-		assert: (newMethod valueWithReceiver: instance arguments: #(  ))
+		assert: (newMethod valueWithReceiver: instance)
 		equals: instance exampleBlockExternalArg
 ]
 
@@ -78,11 +78,11 @@ OCBytecodeDecompilerExamplesTest >> testExampleBlockExternalNested [
 		          generateMethod.
 	instance := OCOpalExamples new.
 
-	ir := IRBytecodeDecompiler new decompile: method.
+	ir := FBIRBytecodeDecompiler new decompile: method.
 	newMethod := ir compiledMethod.
 
 	self
-		assert: (newMethod valueWithReceiver: instance arguments: #(  ))
+		assert: (newMethod valueWithReceiver: instance)
 		equals: instance exampleBlockExternalNested
 ]
 
@@ -94,11 +94,11 @@ OCBytecodeDecompilerExamplesTest >> testExampleBlockInternal [
 		          generateMethod.
 	instance := OCOpalExamples new.
 
-	ir := IRBytecodeDecompiler new decompile: method.
+	ir := FBIRBytecodeDecompiler new decompile: method.
 	newMethod := ir compiledMethod.
 
 	self
-		assert: (newMethod valueWithReceiver: instance arguments: #(  ))
+		assert: (newMethod valueWithReceiver: instance)
 		equals: instance exampleBlockInternal
 ]
 
@@ -110,7 +110,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleBlockNested [
 		          generateMethod.
 	instance := OCOpalExamples new.
 
-	ir := IRBytecodeDecompiler new decompile: method.
+	ir := FBIRBytecodeDecompiler new decompile: method.
 	newMethod := ir compiledMethod.
 
 	self
@@ -126,7 +126,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleEmptyMethod [
 		          generateMethod.
 	instance := OCOpalExamples new.
 
-	ir := IRBytecodeDecompiler new decompile: method.
+	ir := FBIRBytecodeDecompiler new decompile: method.
 	newMethod := ir compiledMethod.
 
 	self
@@ -142,7 +142,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleIfFalse [
 		          generateMethod.
 	instance := OCOpalExamples new.
 
-	ir := IRBytecodeDecompiler new decompile: method.
+	ir := FBIRBytecodeDecompiler new decompile: method.
 	newMethod := ir compiledMethod.
 
 	self
@@ -158,7 +158,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleIfFalseIfTrue [
 		          generateMethod.
 	instance := OCOpalExamples new.
 
-	ir := IRBytecodeDecompiler new decompile: method.
+	ir := FBIRBytecodeDecompiler new decompile: method.
 	newMethod := ir compiledMethod.
 
 	self
@@ -174,7 +174,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleIfIfNotNilReturnNil [
 		          generateMethod.
 	instance := OCOpalExamples new.
 
-	ir := IRBytecodeDecompiler new decompile: method.
+	ir := FBIRBytecodeDecompiler new decompile: method.
 	newMethod := ir compiledMethod.
 
 	self
@@ -190,7 +190,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleIfNotNilArg [
 		          generateMethod.
 	instance := OCOpalExamples new.
 
-	ir := IRBytecodeDecompiler new decompile: method.
+	ir := FBIRBytecodeDecompiler new decompile: method.
 	newMethod := ir compiledMethod.
 
 	self
@@ -205,7 +205,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleIfTrue [
 	method := (OCOpalExamples >> #exampleIfTrue) parseTree generateMethod.
 	instance := OCOpalExamples new.
 
-	ir := IRBytecodeDecompiler new decompile: method.
+	ir := FBIRBytecodeDecompiler new decompile: method.
 	newMethod := ir compiledMethod.
 
 	self
@@ -221,7 +221,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleIfTrueIfFalse [
 		          generateMethod.
 	instance := OCOpalExamples new.
 
-	ir := IRBytecodeDecompiler new decompile: method.
+	ir := FBIRBytecodeDecompiler new decompile: method.
 	newMethod := ir compiledMethod.
 
 	self
@@ -237,7 +237,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleMethodTempInNestedBlock [
 		          parseTree generateMethod.
 	instance := OCOpalExamples new.
 
-	ir := IRBytecodeDecompiler new decompile: method.
+	ir := FBIRBytecodeDecompiler new decompile: method.
 	newMethod := ir compiledMethod.
 
 	self
@@ -253,7 +253,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleMethodWithOptimizedBlocksA [
 		          parseTree generateMethod.
 	instance := OCOpalExamples new.
 
-	ir := IRBytecodeDecompiler new decompile: method.
+	ir := FBIRBytecodeDecompiler new decompile: method.
 	newMethod := ir compiledMethod.
 
 	self
@@ -269,7 +269,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleNestedBlockScoping [
 		          generateMethod.
 	instance := OCOpalExamples new.
 
-	ir := IRBytecodeDecompiler new decompile: method.
+	ir := FBIRBytecodeDecompiler new decompile: method.
 	newMethod := ir compiledMethod.
 
 	self
@@ -285,7 +285,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleNewArray [
 		          generateMethod.
 	instance := OCOpalExamples new.
 
-	ir := IRBytecodeDecompiler new decompile: method.
+	ir := FBIRBytecodeDecompiler new decompile: method.
 	newMethod := ir compiledMethod.
 
 	self
@@ -301,7 +301,7 @@ OCBytecodeDecompilerExamplesTest >> testExamplePushArray [
 		          generateMethod.
 	instance := OCOpalExamples new.
 
-	ir := IRBytecodeDecompiler new decompile: method.
+	ir := FBIRBytecodeDecompiler new decompile: method.
 	newMethod := ir compiledMethod.
 
 	self
@@ -317,7 +317,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleReturn1 [
 		          generateMethod.
 	instance := OCOpalExamples new.
 
-	ir := IRBytecodeDecompiler new decompile: method.
+	ir := FBIRBytecodeDecompiler new decompile: method.
 	newMethod := ir compiledMethod.
 
 	self
@@ -333,7 +333,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleReturn1plus2 [
 		          generateMethod.
 	instance := OCOpalExamples new.
 
-	ir := IRBytecodeDecompiler new decompile: method.
+	ir := FBIRBytecodeDecompiler new decompile: method.
 	newMethod := ir compiledMethod.
 
 	self
@@ -348,7 +348,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleSelf [
 	method := (OCOpalExamples >> #exampleSelf) parseTree generateMethod.
 	instance := OCOpalExamples new.
 
-	ir := IRBytecodeDecompiler new decompile: method.
+	ir := FBIRBytecodeDecompiler new decompile: method.
 	newMethod := ir compiledMethod.
 
 	self
@@ -364,7 +364,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlock [
 		          generateMethod.
 	instance := OCOpalExamples new.
 
-	ir := IRBytecodeDecompiler new decompile: method.
+	ir := FBIRBytecodeDecompiler new decompile: method.
 	newMethod := ir compiledMethod.
 
 	self
@@ -381,7 +381,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockArgument1 [
 		          generateMethod.
 	instance := OCOpalExamples new.
 
-	ir := IRBytecodeDecompiler new decompile: method.
+	ir := FBIRBytecodeDecompiler new decompile: method.
 	newMethod := ir compiledMethod.
 
 	self
@@ -397,7 +397,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockArgument2 [
 		          generateMethod.
 	instance := OCOpalExamples new.
 
-	ir := IRBytecodeDecompiler new decompile: method.
+	ir := FBIRBytecodeDecompiler new decompile: method.
 	newMethod := ir compiledMethod.
 
 	self
@@ -413,7 +413,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockArgument3 [
 		          generateMethod.
 	instance := OCOpalExamples new.
 
-	ir := IRBytecodeDecompiler new decompile: method.
+	ir := FBIRBytecodeDecompiler new decompile: method.
 	newMethod := ir compiledMethod.
 
 	self
@@ -429,7 +429,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockArgument4 [
 		          generateMethod.
 	instance := OCOpalExamples new.
 
-	ir := IRBytecodeDecompiler new decompile: method.
+	ir := FBIRBytecodeDecompiler new decompile: method.
 	newMethod := ir compiledMethod.
 
 	self
@@ -445,7 +445,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockArgument5 [
 		          generateMethod.
 	instance := OCOpalExamples new.
 
-	ir := IRBytecodeDecompiler new decompile: method.
+	ir := FBIRBytecodeDecompiler new decompile: method.
 	newMethod := ir compiledMethod.
 
 	self
@@ -461,7 +461,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockEmpty [
 		          generateMethod.
 	instance := OCOpalExamples new.
 
-	ir := IRBytecodeDecompiler new decompile: method.
+	ir := FBIRBytecodeDecompiler new decompile: method.
 	newMethod := ir compiledMethod.
 
 	self
@@ -477,7 +477,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockLocal [
 		          generateMethod.
 	instance := OCOpalExamples new.
 
-	ir := IRBytecodeDecompiler new decompile: method.
+	ir := FBIRBytecodeDecompiler new decompile: method.
 	newMethod := ir compiledMethod.
 
 	self
@@ -493,7 +493,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockLocalIf [
 		          generateMethod.
 	instance := OCOpalExamples new.
 
-	ir := IRBytecodeDecompiler new decompile: method.
+	ir := FBIRBytecodeDecompiler new decompile: method.
 	newMethod := ir compiledMethod.
 
 	self
@@ -509,7 +509,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockLocalNested [
 		          generateMethod.
 	instance := OCOpalExamples new.
 
-	ir := IRBytecodeDecompiler new decompile: method.
+	ir := FBIRBytecodeDecompiler new decompile: method.
 	newMethod := ir compiledMethod.
 
 	self
@@ -525,7 +525,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockLocalWhile [
 		          generateMethod.
 	instance := OCOpalExamples new.
 
-	ir := IRBytecodeDecompiler new decompile: method.
+	ir := FBIRBytecodeDecompiler new decompile: method.
 	newMethod := ir compiledMethod.
 
 	self
@@ -541,7 +541,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockNested [
 		          generateMethod.
 	instance := OCOpalExamples new.
 
-	ir := IRBytecodeDecompiler new decompile: method.
+	ir := FBIRBytecodeDecompiler new decompile: method.
 	newMethod := ir compiledMethod.
 
 	self
@@ -557,7 +557,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockReturn [
 		          generateMethod.
 	instance := OCOpalExamples new.
 
-	ir := IRBytecodeDecompiler new decompile: method.
+	ir := FBIRBytecodeDecompiler new decompile: method.
 	newMethod := ir compiledMethod.
 
 	self
@@ -573,7 +573,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockiVar [
 		          generateMethod.
 	instance := OCOpalExamples new.
 
-	ir := IRBytecodeDecompiler new decompile: method.
+	ir := FBIRBytecodeDecompiler new decompile: method.
 	newMethod := ir compiledMethod.
 
 	self
@@ -588,7 +588,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleSuper [
 	method := (OCOpalExamples >> #exampleSuper) parseTree generateMethod.
 	instance := OCOpalExamples new.
 
-	ir := IRBytecodeDecompiler new decompile: method.
+	ir := FBIRBytecodeDecompiler new decompile: method.
 	newMethod := ir compiledMethod.
 
 	self
@@ -603,7 +603,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleThisContext [
 	method := (OCOpalExamples >> #exampleThisContext) parseTree
 		          generateMethod.
 
-	ir := IRBytecodeDecompiler new decompile: method.
+	ir := FBIRBytecodeDecompiler new decompile: method.
 	newMethod := ir compiledMethod.
 
 	instance := OCOpalExamples new.
@@ -620,7 +620,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleToDoArgument [
 		          generateMethod.
 	instance := OCOpalExamples new.
 
-	ir := IRBytecodeDecompiler new decompile: method.
+	ir := FBIRBytecodeDecompiler new decompile: method.
 	newMethod := ir compiledMethod.
 
 	self
@@ -636,7 +636,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleToDoArgumentNotInlined [
 		          parseTree generateMethod.
 	instance := OCOpalExamples new.
 
-	ir := IRBytecodeDecompiler new decompile: method.
+	ir := FBIRBytecodeDecompiler new decompile: method.
 	newMethod := ir compiledMethod.
 
 	self
@@ -652,7 +652,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleToDoInsideTemp [
 		          generateMethod.
 	instance := OCOpalExamples new.
 
-	ir := IRBytecodeDecompiler new decompile: method.
+	ir := FBIRBytecodeDecompiler new decompile: method.
 	newMethod := ir compiledMethod.
 
 	self
@@ -668,7 +668,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleToDoInsideTempNotInlined [
 		          parseTree generateMethod.
 	instance := OCOpalExamples new.
 
-	ir := IRBytecodeDecompiler new decompile: method.
+	ir := FBIRBytecodeDecompiler new decompile: method.
 	newMethod := ir compiledMethod.
 
 	self
@@ -684,7 +684,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleToDoOutsideTemp [
 		          generateMethod.
 	instance := OCOpalExamples new.
 
-	ir := IRBytecodeDecompiler new decompile: method.
+	ir := FBIRBytecodeDecompiler new decompile: method.
 	newMethod := ir compiledMethod.
 
 	self
@@ -700,7 +700,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleToDoOutsideTempNotInlined [
 		          parseTree generateMethod.
 	instance := OCOpalExamples new.
 
-	ir := IRBytecodeDecompiler new decompile: method.
+	ir := FBIRBytecodeDecompiler new decompile: method.
 	newMethod := ir compiledMethod.
 
 	self
@@ -716,7 +716,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleToDoValue [
 		          generateMethod.
 	instance := OCOpalExamples new.
 
-	ir := IRBytecodeDecompiler new decompile: method.
+	ir := FBIRBytecodeDecompiler new decompile: method.
 	newMethod := ir compiledMethod.
 
 	self
@@ -731,7 +731,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleWhileModificationAfterNotInlined 
 	method := (OCOpalExamples >> #exampleWhileModificationAfterNotInlined)
 		          parseTree generateMethod.
 
-	ir := IRBytecodeDecompiler new decompile: method.
+	ir := FBIRBytecodeDecompiler new decompile: method.
 	newMethod := ir compiledMethod.
 
 	self
@@ -748,7 +748,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleWhileModificationBefore [
 		          parseTree generateMethod.
 	instance := OCOpalExamples new.
 
-	ir := IRBytecodeDecompiler new decompile: method.
+	ir := FBIRBytecodeDecompiler new decompile: method.
 	newMethod := ir compiledMethod.
 
 	self
@@ -764,7 +764,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleWhileModificationBeforeNotInlined
 	           >> #exampleWhileModificationBeforeNotInlined) parseTree
 		          generateMethod.
 
-	ir := IRBytecodeDecompiler new decompile: method.
+	ir := FBIRBytecodeDecompiler new decompile: method.
 	newMethod := ir compiledMethod.
 
 	self
@@ -780,7 +780,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleWhileWithTemp [
 	method := (OCOpalExamples >> #exampleWhileWithTemp) parseTree
 		          generateMethod.
 
-	ir := IRBytecodeDecompiler new decompile: method.
+	ir := FBIRBytecodeDecompiler new decompile: method.
 	newMethod := ir compiledMethod.
 
 	self
@@ -796,7 +796,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleWhileWithTempNotInlined [
 	method := (OCOpalExamples >> #exampleWhileWithTempNotInlined)
 		          parseTree generateMethod.
 
-	ir := IRBytecodeDecompiler new decompile: method.
+	ir := FBIRBytecodeDecompiler new decompile: method.
 	newMethod := ir compiledMethod.
 
 	self
@@ -812,10 +812,10 @@ OCBytecodeDecompilerExamplesTest >> testExampleiVar [
 	method := (OCOpalExamples >> #exampleiVar) parseTree generateMethod.
 	instance := OCOpalExamples new.
 
-	ir := IRBytecodeDecompiler new decompile: method.
+	ir := FBIRBytecodeDecompiler new decompile: method.
 	newMethod := ir compiledMethod.
 
 	self
-		assert: (newMethod valueWithReceiver: instance arguments: #(  ))
+		assert: (newMethod valueWithReceiver: instance)
 		equals: instance exampleiVar
 ]

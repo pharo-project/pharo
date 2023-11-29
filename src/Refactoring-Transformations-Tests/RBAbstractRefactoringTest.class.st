@@ -158,15 +158,6 @@ RBAbstractRefactoringTest >> setupSelfArgumentNameFor: aRefactoring toReturn: aS
 ]
 
 { #category : 'set up' }
-RBAbstractRefactoringTest >> setupShouldUseExistingMethodFor: aRefactoring toReturn: aBoolean [
-
-	| options |
-	options := aRefactoring options copy.
-	options at: #useExistingMethod put: [ :ref :cls | aBoolean ].
-	aRefactoring options: options
-]
-
-{ #category : 'set up' }
 RBAbstractRefactoringTest >> setupVariableToMoveToFor: aRefactoring toReturn: aString [
 
 	| options |

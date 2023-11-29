@@ -46,8 +46,8 @@ BaselineOfIDE >> baseline: spec [
 		spec postLoadDoIt: #postload:package:.
 		spec baseline: 'BasicTools' with: [ spec repository: repository ].
 		spec baseline: 'Athens' with: [ spec repository: repository ].
-		spec baseline: 'Flashback' with: [ spec repository: repository ].
 		spec baseline: 'KernelTests' with: [ spec repository: repository ].
+    spec baseline: 'Flashback' with: [ spec repository: repository ].
 
 		self
 			load: 'Shift' group: 'shift-tests' spec: spec;

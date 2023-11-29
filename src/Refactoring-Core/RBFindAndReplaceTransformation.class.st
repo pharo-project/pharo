@@ -115,10 +115,7 @@ RBFindAndReplaceTransformation >> extract: occurrence of: rbMethod [
 { #category : 'accessing' }
 RBFindAndReplaceTransformation >> extractMethodRefactoring [
 	^ RBExtractMethodRefactoring new
-			setOption: #useExistingMethod
-			toUse:  [ :ref :aSelector |
-				true];
-			yourself
+
 ]
 
 { #category : 'initialization' }

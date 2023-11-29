@@ -512,9 +512,11 @@ StringTest >> testAsSmalltalkComment [
 	exampleStrings do: [ :s | self assert: (s copyWithout: $") equals: (s asComment copyWithout: $") ].
 
 	"finnaly, test for some common kinds of inputs"
+	self assert: '' asComment equals: '""'.
 	self assert: 'abc' asComment equals: '"abc"'.
 	self assert: 'abc"abc' asComment equals: '"abc""abc"'.
-	self assert: 'abc""abc' asComment equals: '"abc""abc"'
+	self assert: 'abc""abc' asComment equals: '"abc""abc"'.
+	self assert: '"abc abc"' asComment equals: '"abc abc"'
 ]
 
 { #category : 'tests' }

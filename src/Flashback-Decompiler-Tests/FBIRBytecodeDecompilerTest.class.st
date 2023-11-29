@@ -1,29 +1,29 @@
 Class {
-	#name : 'OCBytecodeDecompilerTest',
+	#name : 'FBIRBytecodeDecompilerTest',
 	#superclass : 'TestCase',
 	#instVars : [
 		'currentCompiler'
 	],
-	#category : 'OpalCompiler-Tests-Bytecode',
-	#package : 'OpalCompiler-Tests',
+	#category : 'Flashback-Decompiler-Tests-Bytecode',
+	#package : 'Flashback-Decompiler-Tests',
 	#tag : 'Bytecode'
 }
 
 { #category : 'running' }
-OCBytecodeDecompilerTest >> setUp [
+FBIRBytecodeDecompilerTest >> setUp [
 	super setUp.
 	currentCompiler := SmalltalkImage compilerClass.
 	SmalltalkImage compilerClass: OpalCompiler
 ]
 
 { #category : 'running' }
-OCBytecodeDecompilerTest >> tearDown [
+FBIRBytecodeDecompilerTest >> tearDown [
 	SmalltalkImage compilerClass: currentCompiler.
 	super tearDown
 ]
 
 { #category : 'tests' }
-OCBytecodeDecompilerTest >> testBugOffset [
+FBIRBytecodeDecompilerTest >> testBugOffset [
 	| iRMethod aCompiledMethod ir method |
 	iRMethod := IRBuilder new
 		addTemps: #(#a #b);
@@ -38,52 +38,52 @@ OCBytecodeDecompilerTest >> testBugOffset [
 ]
 
 { #category : 'tests - examples' }
-OCBytecodeDecompilerTest >> testDecompileBytecodeDecompilerTestClass [
+FBIRBytecodeDecompilerTest >> testDecompileBytecodeDecompilerTestClass [
 	| decompiledIR aCompiledMethod |
 	self class methods
 		do: [ :each |
-			decompiledIR := IRBytecodeDecompiler new decompile: each.
+			decompiledIR := FBIRBytecodeDecompiler new decompile: each.
 			aCompiledMethod := decompiledIR compiledMethod ]
 ]
 
 { #category : 'tests - examples' }
-OCBytecodeDecompilerTest >> testDecompileBytecodeGeneratorTest [
+FBIRBytecodeDecompilerTest >> testDecompileBytecodeGeneratorTest [
 	| decompiledIR aCompiledMethod |
 	OCBytecodeGeneratorTest methods
 		do: [ :each |
-			decompiledIR := IRBytecodeDecompiler new decompile: each.
+			decompiledIR := FBIRBytecodeDecompiler new decompile: each.
 			aCompiledMethod := decompiledIR compiledMethod ]
 ]
 
 { #category : 'tests - examples' }
-OCBytecodeDecompilerTest >> testDecompileIRBuilderTestClass [
+FBIRBytecodeDecompilerTest >> testDecompileIRBuilderTestClass [
 	| decompiledIR aCompiledMethod |
 	IRBuilderTest methods
 		do: [ :each |
-			decompiledIR := IRBytecodeDecompiler new decompile: each.
+			decompiledIR := FBIRBytecodeDecompiler new decompile: each.
 			aCompiledMethod := decompiledIR compiledMethod ]
 ]
 
 { #category : 'tests - examples' }
-OCBytecodeDecompilerTest >> testDecompilerOrderedCollectionDo [
+FBIRBytecodeDecompilerTest >> testDecompilerOrderedCollectionDo [
 	| cm decompiledIR |
 	cm := OrderedCollection >> #do:.
-	decompiledIR := IRBytecodeDecompiler new decompile: cm.
+	decompiledIR := FBIRBytecodeDecompiler new decompile: cm.
 	decompiledIR compiledMethod
 ]
 
 { #category : 'tests' }
-OCBytecodeDecompilerTest >> testDup [
+FBIRBytecodeDecompilerTest >> testDup [
 	| ir1 ir2 method |
 	ir1 := IRBuilderTest new testDup.
 	method := ir1 compiledMethod.
-	ir2 := IRBytecodeDecompiler new decompile: method.
+	ir2 := FBIRBytecodeDecompiler new decompile: method.
 	self deny: ir2 compiledMethod identicalTo: method.
 	self assert: ir2 compiledMethod symbolic equals: method symbolic
 ]
 
 { #category : 'tests' }
-OCBytecodeDecompilerTest >> testInstVar [
+FBIRBytecodeDecompilerTest >> testInstVar [
 	| ir1 ir2 method method2 |
 	ir1 := IRBuilderTest new testInstVar.
 	method := ir1 compiledMethod.
@@ -95,283 +95,283 @@ OCBytecodeDecompilerTest >> testInstVar [
 ]
 
 { #category : 'tests' }
-OCBytecodeDecompilerTest >> testJumpAheadTo [
+FBIRBytecodeDecompilerTest >> testJumpAheadTo [
 	| ir1 ir2 method |
 	ir1 := IRBuilderTest new testJumpAheadTo.
 	method := ir1 compiledMethod.
-	ir2 := IRBytecodeDecompiler new decompile: method.
+	ir2 := FBIRBytecodeDecompiler new decompile: method.
 	self deny: ir2 compiledMethod identicalTo: method.
 	self assert: ir2 compiledMethod equals: method
 ]
 
 { #category : 'tests' }
-OCBytecodeDecompilerTest >> testJumpAheadToIf [
+FBIRBytecodeDecompilerTest >> testJumpAheadToIf [
 	| ir1 ir2 method |
 	ir1 := IRBuilderTest new testJumpAheadToIf.
 	method := ir1 compiledMethod.
-	ir2 := IRBytecodeDecompiler new decompile: method.
+	ir2 := FBIRBytecodeDecompiler new decompile: method.
 	self deny: ir2 compiledMethod identicalTo: method.
 	self assert: ir2 compiledMethod symbolic equals: method symbolic.
 	self assert: ir2 compiledMethod equals: method
 ]
 
 { #category : 'tests' }
-OCBytecodeDecompilerTest >> testJumpBackTo [
+FBIRBytecodeDecompilerTest >> testJumpBackTo [
 	| ir1 ir2 method |
 	ir1 := IRBuilderTest new testJumpBackTo.
 	method := ir1 compiledMethod.
-	ir2 := IRBytecodeDecompiler new decompile: method.
+	ir2 := FBIRBytecodeDecompiler new decompile: method.
 	self deny: ir2 compiledMethod identicalTo: method.
 	self assert: ir2 compiledMethod symbolic equals: method symbolic.
 	self assert: ir2 compiledMethod equals: method
 ]
 
 { #category : 'tests' }
-OCBytecodeDecompilerTest >> testLiteralArray [
+FBIRBytecodeDecompilerTest >> testLiteralArray [
 	| ir1 ir2 method |
 	ir1 := IRBuilderTest new testLiteralArray.
 	method := ir1 compiledMethod.
-	ir2 := IRBytecodeDecompiler new decompile: method.
+	ir2 := FBIRBytecodeDecompiler new decompile: method.
 	self deny: ir2 compiledMethod identicalTo: method.
 	self assert: ir2 compiledMethod symbolic equals: method symbolic.
 	self assert: ir2 compiledMethod equals: method
 ]
 
 { #category : 'tests' }
-OCBytecodeDecompilerTest >> testLiteralBoolean [
+FBIRBytecodeDecompilerTest >> testLiteralBoolean [
 	| ir1 ir2 method |
 	ir1 := IRBuilderTest new testLiteralBoolean.
 	method := ir1 compiledMethod.
-	ir2 := IRBytecodeDecompiler new decompile: method.
+	ir2 := FBIRBytecodeDecompiler new decompile: method.
 	self deny: ir2 compiledMethod identicalTo: method.
 	self assert: ir2 compiledMethod symbolic equals: method symbolic.
 	self assert: ir2 compiledMethod equals: method
 ]
 
 { #category : 'tests' }
-OCBytecodeDecompilerTest >> testLiteralCharacter [
+FBIRBytecodeDecompilerTest >> testLiteralCharacter [
 	| ir1 ir2 method |
 	ir1 := IRBuilderTest new testLiteralCharacter.
 	method := ir1 compiledMethod.
-	ir2 := IRBytecodeDecompiler new decompile: method.
+	ir2 := FBIRBytecodeDecompiler new decompile: method.
 	self deny: ir2 compiledMethod identicalTo: method.
 	self assert: ir2 compiledMethod symbolic equals: method symbolic.
 	self assert: ir2 compiledMethod equals: method
 ]
 
 { #category : 'tests' }
-OCBytecodeDecompilerTest >> testLiteralFloat [
+FBIRBytecodeDecompilerTest >> testLiteralFloat [
 	| ir1 ir2 method |
 	ir1 := IRBuilderTest new testLiteralFloat.
 	method := ir1 compiledMethod.
-	ir2 := IRBytecodeDecompiler new decompile: method.
+	ir2 := FBIRBytecodeDecompiler new decompile: method.
 	self deny: ir2 compiledMethod identicalTo: method.
 	self assert: ir2 compiledMethod symbolic equals: method symbolic.
 	self assert: ir2 compiledMethod equals: method
 ]
 
 { #category : 'tests' }
-OCBytecodeDecompilerTest >> testLiteralInteger [
+FBIRBytecodeDecompilerTest >> testLiteralInteger [
 	| ir1 ir2 method |
 	ir1 := IRBuilderTest new testLiteralInteger.
 	method := ir1 compiledMethod.
-	ir2 := IRBytecodeDecompiler new decompile: method.
+	ir2 := FBIRBytecodeDecompiler new decompile: method.
 	self deny: ir2 compiledMethod identicalTo: method.
 	self assert: ir2 compiledMethod symbolic equals: method symbolic.
 	self assert: ir2 compiledMethod equals: method
 ]
 
 { #category : 'tests' }
-OCBytecodeDecompilerTest >> testLiteralNil [
+FBIRBytecodeDecompilerTest >> testLiteralNil [
 	| ir1 ir2 method |
 	ir1 := IRBuilderTest new testLiteralNil.
 	method := ir1 compiledMethod.
-	ir2 := IRBytecodeDecompiler new decompile: method.
+	ir2 := FBIRBytecodeDecompiler new decompile: method.
 	self deny: ir2 compiledMethod identicalTo: method.
 	self assert: ir2 compiledMethod symbolic equals: method symbolic.
 	self assert: ir2 compiledMethod equals: method
 ]
 
 { #category : 'tests' }
-OCBytecodeDecompilerTest >> testLiteralString [
+FBIRBytecodeDecompilerTest >> testLiteralString [
 	| ir1 ir2 method |
 	ir1 := IRBuilderTest new testLiteralString.
 	method := ir1 compiledMethod.
-	ir2 := IRBytecodeDecompiler new decompile: method.
+	ir2 := FBIRBytecodeDecompiler new decompile: method.
 	self deny: ir2 compiledMethod identicalTo: method.
 	self assert: ir2 compiledMethod symbolic equals: method symbolic.
 	self assert: ir2 compiledMethod equals: method
 ]
 
 { #category : 'tests' }
-OCBytecodeDecompilerTest >> testLiteralSymbol [
+FBIRBytecodeDecompilerTest >> testLiteralSymbol [
 	| ir1 ir2 method |
 	ir1 := IRBuilderTest new testLiteralSymbol.
 	method := ir1 compiledMethod.
-	ir2 := IRBytecodeDecompiler new decompile: method.
+	ir2 := FBIRBytecodeDecompiler new decompile: method.
 	self deny: ir2 compiledMethod identicalTo: method.
 	self assert: ir2 compiledMethod symbolic equals: method symbolic.
 	self assert: ir2 compiledMethod equals: method
 ]
 
 { #category : 'tests' }
-OCBytecodeDecompilerTest >> testLiteralVariableClass [
+FBIRBytecodeDecompilerTest >> testLiteralVariableClass [
 	| ir1 ir2 method |
 	ir1 := IRBuilderTest new testLiteralVariableClass.
 	method := ir1 compiledMethod.
-	ir2 := IRBytecodeDecompiler new decompile: method.
+	ir2 := FBIRBytecodeDecompiler new decompile: method.
 	self deny: ir2 compiledMethod identicalTo: method.
 	self assert: ir2 compiledMethod symbolic equals: method symbolic.
 	self assert: ir2 compiledMethod equals: method
 ]
 
 { #category : 'tests' }
-OCBytecodeDecompilerTest >> testLiteralVariableClassVariable [
+FBIRBytecodeDecompilerTest >> testLiteralVariableClassVariable [
 	| ir1 ir2 method |
 	ir1 := IRBuilderTest new testLiteralVariableClassVariable.
 	method := ir1 compiledMethod.
-	ir2 := IRBytecodeDecompiler new decompile: method.
+	ir2 := FBIRBytecodeDecompiler new decompile: method.
 	self deny: ir2 compiledMethod identicalTo: method.
 	self assert: ir2 compiledMethod symbolic equals: method symbolic.
 	self assert: ir2 compiledMethod equals: method
 ]
 
 { #category : 'tests' }
-OCBytecodeDecompilerTest >> testLiteralVariableGlobale [
+FBIRBytecodeDecompilerTest >> testLiteralVariableGlobale [
 	| ir1 ir2 method |
 	ir1 := IRBuilderTest new setUp; testLiteralVariableGlobale.
 	method := ir1 compiledMethod.
-	ir2 := IRBytecodeDecompiler new decompile: method.
+	ir2 := FBIRBytecodeDecompiler new decompile: method.
 	self deny: ir2 compiledMethod identicalTo: method.
 	self assert: ir2 compiledMethod symbolic equals: method symbolic.
 	self assert: ir2 compiledMethod equals: method
 ]
 
 { #category : 'tests' }
-OCBytecodeDecompilerTest >> testPopTop [
+FBIRBytecodeDecompilerTest >> testPopTop [
 	| ir1 ir2 method |
 	ir1 := IRBuilderTest new testPopTop.
 	method := ir1 compiledMethod.
-	ir2 := IRBytecodeDecompiler new decompile: method.
+	ir2 := FBIRBytecodeDecompiler new decompile: method.
 	self deny: ir2 compiledMethod identicalTo: method.
 	self assert: ir2 compiledMethod symbolic equals: method symbolic.
 	self assert: ir2 compiledMethod equals: method
 ]
 
 { #category : 'tests' }
-OCBytecodeDecompilerTest >> testPushConsArray [
+FBIRBytecodeDecompilerTest >> testPushConsArray [
 	| ir1 ir2 method |
 	ir1 := IRBuilderTest new testPushConsArray.
 	method := ir1 compiledMethod.
-	ir2 := IRBytecodeDecompiler new decompile: method.
+	ir2 := FBIRBytecodeDecompiler new decompile: method.
 	self deny: ir2 compiledMethod identicalTo: method.
 	self assert: ir2 compiledMethod symbolic equals: method symbolic.
 	self assert: ir2 compiledMethod equals: method
 ]
 
 { #category : 'tests' }
-OCBytecodeDecompilerTest >> testPushConsArray2 [
+FBIRBytecodeDecompilerTest >> testPushConsArray2 [
 	| ir1 ir2 method |
 	ir1 := IRBuilderTest new testPushConsArray2.
 	method := ir1 compiledMethod.
-	ir2 := IRBytecodeDecompiler new decompile: method.
+	ir2 := FBIRBytecodeDecompiler new decompile: method.
 	self deny: ir2 compiledMethod identicalTo: method.
 	self assert: ir2 compiledMethod symbolic equals: method symbolic.
 	self assert: ir2 compiledMethod equals: method
 ]
 
 { #category : 'tests' }
-OCBytecodeDecompilerTest >> testPushSelf [
+FBIRBytecodeDecompilerTest >> testPushSelf [
 	| ir1 ir2 method |
 	ir1 := IRBuilderTest new testPushSelf.
 	method := ir1 compiledMethod.
-	ir2 := IRBytecodeDecompiler new decompile: method.
+	ir2 := FBIRBytecodeDecompiler new decompile: method.
 	self deny: ir2 compiledMethod identicalTo: method.
 	self assert: ir2 compiledMethod symbolic equals: method symbolic.
 	self assert: ir2 compiledMethod equals: method
 ]
 
 { #category : 'tests' }
-OCBytecodeDecompilerTest >> testPushTempArgument [
+FBIRBytecodeDecompilerTest >> testPushTempArgument [
 	| ir1 ir2 method |
 	ir1 := IRBuilderTest new testPushTempArgument.
 	method := ir1 compiledMethod.
-	ir2 := IRBytecodeDecompiler new decompile: method.
+	ir2 := FBIRBytecodeDecompiler new decompile: method.
 	self deny: ir2 compiledMethod identicalTo: method.
 	self assert: ir2 compiledMethod symbolic equals: method symbolic.
 	self assert: ir2 compiledMethod equals: method
 ]
 
 { #category : 'tests' }
-OCBytecodeDecompilerTest >> testPushTempTemp [
+FBIRBytecodeDecompilerTest >> testPushTempTemp [
 	| ir1 ir2 method |
 	ir1 := IRBuilderTest new testPushTempTemp.
 	method := ir1 compiledMethod.
-	ir2 := IRBytecodeDecompiler new decompile: method.
+	ir2 := FBIRBytecodeDecompiler new decompile: method.
 	self deny: ir2 compiledMethod identicalTo: method.
 	self assert: ir2 compiledMethod symbolic equals: method symbolic.
 	self assert: ir2 compiledMethod equals: method
 ]
 
 { #category : 'tests' }
-OCBytecodeDecompilerTest >> testPushThisContext [
+FBIRBytecodeDecompilerTest >> testPushThisContext [
 	| ir1 ir2 method |
 	ir1 := IRBuilderTest new testPushThisContext.
 	method := ir1 compiledMethod.
-	ir2 := IRBytecodeDecompiler new decompile: method.
+	ir2 := FBIRBytecodeDecompiler new decompile: method.
 	self deny: ir2 compiledMethod identicalTo: method.
 	self assert: ir2 compiledMethod symbolic equals: method symbolic.
 	self assert: ir2 compiledMethod equals: method
 ]
 
 { #category : 'tests' }
-OCBytecodeDecompilerTest >> testReturnTop [
+FBIRBytecodeDecompilerTest >> testReturnTop [
 	| ir1 ir2 method |
 	ir1 := IRBuilderTest new testReturnTop.
 	method := ir1 compiledMethod.
-	ir2 := IRBytecodeDecompiler new decompile: method.
+	ir2 := FBIRBytecodeDecompiler new decompile: method.
 	self deny: ir2 compiledMethod identicalTo: method.
 	self assert: ir2 compiledMethod symbolic equals: method symbolic.
 	self assert: ir2 compiledMethod equals: method
 ]
 
 { #category : 'tests' }
-OCBytecodeDecompilerTest >> testSendSuper [
+FBIRBytecodeDecompilerTest >> testSendSuper [
 	| ir1 ir2 method |
 	ir1 := IRBuilderTest new testSendSuper.
 	method := ir1 compiledMethod.
-	ir2 := IRBytecodeDecompiler new decompile: method.
+	ir2 := FBIRBytecodeDecompiler new decompile: method.
 	self deny: ir2 compiledMethod identicalTo: method.
 	self assert: ir2 compiledMethod symbolic equals: method symbolic.
 	self assert: ir2 compiledMethod equals: method
 ]
 
 { #category : 'tests' }
-OCBytecodeDecompilerTest >> testStoreIntoVariable [
+FBIRBytecodeDecompilerTest >> testStoreIntoVariable [
 	| ir1 ir2 method |
 	ir1 := IRBuilderTest new testStoreIntoVariable.
 	method := ir1 compiledMethod.
-	ir2 := IRBytecodeDecompiler new decompile: method.
+	ir2 := FBIRBytecodeDecompiler new decompile: method.
 	self deny: ir2 compiledMethod identicalTo: method.
 	self assert: ir2 compiledMethod symbolic equals: method symbolic.
 	self assert: ir2 compiledMethod equals: method
 ]
 
 { #category : 'tests' }
-OCBytecodeDecompilerTest >> testStoreTemp [
+FBIRBytecodeDecompilerTest >> testStoreTemp [
 	| ir1 ir2 method |
 	ir1 := IRBuilderTest new testStoreTemp.
 	method := ir1 compiledMethod.
-	ir2 := IRBytecodeDecompiler new decompile: method.
+	ir2 := FBIRBytecodeDecompiler new decompile: method.
 	self deny: ir2 compiledMethod identicalTo: method.
 	self assert: ir2 compiledMethod symbolic equals: method symbolic.
 	self assert: ir2 compiledMethod equals: method
 ]
 
 { #category : 'tests - examples' }
-OCBytecodeDecompilerTest >> testWhileTrue [
+FBIRBytecodeDecompilerTest >> testWhileTrue [
 	| cm decompiledIR aCompiledMethod |
 	cm := self class >> #testWhileTrue.
-	decompiledIR := IRBytecodeDecompiler new decompile: cm.
+	decompiledIR := FBIRBytecodeDecompiler new decompile: cm.
 	aCompiledMethod := decompiledIR compiledMethod
 ]
