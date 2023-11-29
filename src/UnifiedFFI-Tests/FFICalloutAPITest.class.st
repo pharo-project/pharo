@@ -51,12 +51,12 @@ FFICalloutAPITest >> ffiLongLongAbs: number [
 
 { #category : 'primitives constant' }
 FFICalloutAPITest >> ffiTestConstantFormat: format to: buffer [
-	^ self ffiCall: #( int sprintf ( ByteArray buffer, String format, 65, 65, 1 ) ) fixedArgumentCount: 2
+	^ self ffiCall: #( int sprintf ( ByteArray buffer, String format, int 65, int 65, int 1 ) ) fixedArgumentCount: 2
 ]
 
 { #category : 'primitives constant' }
 FFICalloutAPITest >> ffiTestContantFormat: format value: aNumber to: buffer [
-	^ self ffiCall: #( int sprintf ( ByteArray buffer, String format, 65, 65, long aNumber ) ) fixedArgumentCount: 2
+	^ self ffiCall: #( int sprintf ( ByteArray buffer, String format, int 65, int 65, long aNumber ) ) fixedArgumentCount: 2
 ]
 
 { #category : 'primitives atomic' }
