@@ -116,7 +116,7 @@ ClassFactoryForTestCase >> delete: aBehavior [
 			aBehavior removeFromSystemUnlogged ]
 		ifFalse: [ aBehavior removeFromSystem ].
 	"We know that we can remove the key from Undeclared, as it was added by #removeFromSystem"
-	Undeclared removeKey: name
+	Undeclared removeKey: name ifAbsent: [ "might be an anonymous class" ]
 ]
 
 { #category : 'cleaning' }
