@@ -216,10 +216,10 @@ RBRemoveClassRefactoringTest >> testRemovingAnNonEmptyLeafClassIsAllowed [
 	model := RBNamespace onEnvironment: package.
 	refactoring := RBRemoveClassRefactoring 
 							model: model 
-							classNames: { #MyClassNonEmptyLeafUnused}.
+							classNames: { 'MyClassNonEmptyLeafUnused' asSymbol}.
 	refactoring prepareForExecution.
 	
-	sup := (refactoring model classNamed: #MyClassNonEmptyLeafUnused).
+	sup := (refactoring model classNamed: 'MyClassNonEmptyLeafUnused' asSymbol).
 	self assert: sup isNotNil.
 	self deny: sup isEmptyClass.
 	
@@ -231,7 +231,7 @@ RBRemoveClassRefactoringTest >> testRemovingAnNonEmptyLeafClassIsAllowed [
 		raise: RBRefactoringError.
 
 	self deny:
-		(refactoring model includesClassNamed: #MyClassNonEmptyLeafUnused) 
+		(refactoring model includesClassNamed: 'MyClassNonEmptyLeafUnused' asSymbol) 
 ]
 
 { #category : 'failure tests' }
