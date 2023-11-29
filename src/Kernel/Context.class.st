@@ -890,13 +890,6 @@ Context >> hasContext: aContext [
 	^ (self findContextSuchThat: [ :context | context == aContext ]) isNotNil
 ]
 
-{ #category : 'accessing' }
-Context >> hasInstVarRef [
-	"Answer whether the receiver references an instance variable."
-
-	^self compiledCode hasInstVarRef
-]
-
 { #category : 'testing' }
 Context >> hasMethodReturn [
 	self

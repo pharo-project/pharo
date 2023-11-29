@@ -35,20 +35,6 @@ CompiledCode >> bytecodeSizeForPc: pc [
 ]
 
 { #category : '*Debugging-Core' }
-CompiledCode >> hasInstVarRef [
-	self localHasInstVarRef ifTrue: [ ^ true ].
-	^ self innerCompiledBlocksAnySatisfy: [ :cb | cb hasInstVarRef ]
-]
-
-{ #category : '*Debugging-Core' }
-CompiledCode >> localHasInstVarRef [
-	"Answer whether the method references an instance variable."
-
-	
-	^ InstVarRefLocator check: self
-]
-
-{ #category : '*Debugging-Core' }
 CompiledCode >> pcPreviousTo: pc [
 	| scanner prevPc |
 	pc > self endPC ifTrue: [^self endPC].
