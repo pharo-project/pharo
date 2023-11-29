@@ -1,8 +1,7 @@
 "
-When loading a class where a ClassVariable subclass is used that is not present in the System, we need to model
-this variabke somehow so we can fix it as soon as the class is loaded.
+When loading a class where a ClassVariable subclass is used that is not present in the System, we need to model this variable somehow so we can fix it as soon as the class is loaded.
 
-The UndefinedClassVariable ingores reads and write (it returns nil). But on access, it checks if the class implementing the Variable has been loaded and if yes, it rebuilds the class definition.
+The UndefinedClassVariable ignores reads and writes (it returns nil). But on access, it checks if the class implementing the Variable has been loaded and if yes, it rebuilds the class definition.
 "
 Class {
 	#name : 'UndefinedClassVariable',

@@ -1,9 +1,7 @@
 "
-When loading a class where a Slot is used that is not present in the System, we need to model
-this slot somehow.
+When loading a class where a Slot is used that is not present in the System, we need to model this slot somehow.
 
-The UndefinedSlot ingores reads and write (it returns nil like undeclared variables). But on
-access, it checks if the Slot has been loaded and if yes, it rebuilds the class definition.
+The UndefinedSlot ingores reads and writes (it returns nil). But on access, it checks if the Slot has been loaded and if yes, it rebuilds the class definition.
 "
 Class {
 	#name : 'UndefinedSlot',
