@@ -153,7 +153,10 @@ BaselineOf >> packageRepository [
 	^ (MetacelloProjectRegistration
 		   registrationForClassNamed: self className
 		   ifAbsent: [  ]) repositoryDescriptions
-		  ifNotEmpty: [ :repositories | repositories anyOne ]
+		  ifNotEmpty: [ :repositories |
+			  repositories
+				  detect: [ :each | each description beginsWith: 'tonel://' ]
+				  ifNone: [ repositories anyOne ] ]
 		  ifEmpty: [ nil ]
 ]
 
