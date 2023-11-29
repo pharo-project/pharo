@@ -1108,7 +1108,7 @@ CompiledMethodTest >> testValueWithReceiverArguments [
 
 	method := self class compiledMethodAt: #returnTrue.
 
-	value := method valueWithReceiver: nil arguments: #().
+	value := method valueWithReceiver: nil.
 	self assert: value equals: true.
 
 	method := self class compiledMethodAt: #returnPlusOne:.

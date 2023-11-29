@@ -100,20 +100,10 @@ SycExtractMethodCommand >> setUpOptionToOverrideExistingMethodDuring: aRefactori
 ]
 
 { #category : 'execution' }
-SycExtractMethodCommand >> setUpOptionToUseExistingMethodDuring: aRefactoring [
-
-	aRefactoring setOption: #useExistingMethod toUse:  [ :ref :selector |
-		UIManager default
-			confirm: 'Do you want to use existing method ', selector printString, '?'
-			label: 'Warninig']
-]
-
-{ #category : 'execution' }
 SycExtractMethodCommand >> setUpOptionsOf: refactoring [
 
 	self initializeDefaultOptionsOf: refactoring.
 	self setUpOptionToChangeExtractionClass: refactoring.
-	self setUpOptionToUseExistingMethodDuring: refactoring.
 	self setUpOptionToOverrideExistingMethodDuring: refactoring.
 	self setUpOptionToChangeMethodNameDuring: refactoring
 ]

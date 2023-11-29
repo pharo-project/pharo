@@ -348,7 +348,7 @@ PackageAndClassesTest >> testRemoveClassInTag [
 
 	xPackage moveClass: a1 toTag: 'a1-tag'.
 	xPackage moveClass: b1 toTag: 'b1-tag'.
-	self assert: xPackage classTags size equals: 2.
+	self assert: xPackage tags size equals: 2.
 
 	self assert: (xPackage includesClass: a1).
 	self assert: (xPackage includesClass: b1).
@@ -360,7 +360,7 @@ PackageAndClassesTest >> testRemoveClassInTag [
 
 	xPackage removeClass: b1.
 	self deny: (xPackage includesClass: b1).
-	self assert: xPackage classTags size equals: 0
+	self assert: xPackage tags size equals: 0
 ]
 
 { #category : 'tests - removing classes' }

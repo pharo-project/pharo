@@ -92,24 +92,6 @@ SmalltalkImage class >> wordSize [
 	^ Smalltalk vm wordSize
 ]
 
-{ #category : 'startup - shutdown' }
-SmalltalkImage >> addToShutDownList: aClass [
-	"Startup and Shutdown are the responsibility of the SessionManager.
-	If you need to register in a specific category,
-	Please use registration methods provided in SessionManager / registration category."
-
-	SessionManager default registerUserClassNamed: aClass name
-]
-
-{ #category : 'startup - shutdown' }
-SmalltalkImage >> addToStartUpList: aClass [
-	"Startup and Shutdown are the responsibility of the SessionManager.
-	If you need to register in a specific category,
-	Please use registration methods provided in SessionManager / registration category."
-
-	SessionManager default registerUserClassNamed: aClass name
-]
-
 { #category : 'to clean later' }
 SmalltalkImage >> allClasses [
 	"Return all the class defines in the SmalltalkImage"
@@ -1682,11 +1664,6 @@ SmalltalkImage >> saveSession [
 	"Save the current image without quitting and return it resuming status (whether it was restarted or in the same flow)."
 
 	^ self snapshot: true andQuit: false
-]
-
-{ #category : 'accessing' }
-SmalltalkImage >> session [
-	^ SessionManager default currentSession
 ]
 
 { #category : 'image, changes name' }
