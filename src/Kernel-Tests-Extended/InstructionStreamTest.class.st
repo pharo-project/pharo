@@ -305,7 +305,7 @@ InstructionStreamTest >> testSteppingSendsDirectSend [
 
 	aContext := initialContext.
 
-	[aContext = nil]
+	[aContext willFailReturn]
 		whileFalse: [aContext := aContext step].
 
 	self assert: receiver expectedValue equals: 42
