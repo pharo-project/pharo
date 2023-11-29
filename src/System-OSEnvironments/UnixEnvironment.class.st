@@ -285,9 +285,9 @@ UnixEnvironment >> removeKey: key encoded: anEncoding [
 	^ self rawRemoveKey: (key encodeWith: anEncoding)
 ]
 
-{ #category : 'private' }
+{ #category : 'accessing' }
 UnixEnvironment >> setEnv: nameString value: valueString [
-	"This method calls the Standard C Library setenv() function"
+	"int setenv(const char *name, const char *value, int overwrite);"
 
-	^ self ffiCall: #(int setenv #(String nameString , String valueString , 1)) module: LibC
+	^ self ffiCall: #(int setenv #(String nameString , String valueString , int 1)) module: LibC
 ]
