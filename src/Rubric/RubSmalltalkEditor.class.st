@@ -515,11 +515,14 @@ RubSmalltalkEditor >> evaluate: aStream andDo: aBlock [
 		ifTrue: [ rcvr := self model doItReceiver.
 				ctxt := self model doItContext]
 		ifFalse: [ rcvr := ctxt := nil].
+		
+	"to improve: we need better reporting of errors, to revisit when unifying with Spec"
 	result := rcvr class compiler
 			source: aStream;
+			requestor: self;
 			context: ctxt;
 			receiver: rcvr;
-			permitFaulty: true;
+			permitFaulty: false;
 			evaluate.
 
 	^ aBlock value: result
