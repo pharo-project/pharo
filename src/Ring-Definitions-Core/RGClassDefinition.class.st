@@ -115,8 +115,11 @@ RGClassDefinition >> classSide [
 
 { #category : 'class variables' }
 RGClassDefinition >> classVarNamed: aString [
+	self 
+		deprecated: 'Use #classVariableNamed: instead.' 
+		transformWith: '`@rcv classVarNamed: `@arg' -> '`@rcv classVariableNamed: `@arg'.
 
-	^classVariables detect:[ :v| v name = aString asSymbol ] ifNone:[ nil ]
+	^self classVariableNamed: aString
 ]
 
 { #category : 'class variables' }
@@ -124,6 +127,12 @@ RGClassDefinition >> classVarNames [
 	"Answer a collection of the names of the class variables defined in the receiver."
 
 	^classVariables collect:[ :cvar| cvar name ]
+]
+
+{ #category : 'class variables' }
+RGClassDefinition >> classVariableNamed: aString [
+
+	^ classVariables detect:[ :v| v name = aString asSymbol ] ifNone: [ nil ]
 ]
 
 { #category : 'accessing' }
@@ -266,7 +275,9 @@ RGClassDefinition >> packageTag: anObject [
 { #category : 'class variables' }
 RGClassDefinition >> removeClassVarNamed: aString [
 
-	self removeVariable: (self classVarNamed: aString) from: classVariables
+	self
+		removeVariable: (self classVariableNamed: aString)
+		from: classVariables
 ]
 
 { #category : 'class variables' }
