@@ -22,7 +22,7 @@ MetacelloLoadTarget >> loader [
 MetacelloLoadTarget >> visitAtomicLoadDirective: aMetacelloAtomicLoadDirective [ 
 	
 	| atomicLoader |
-	atomicLoader := MetacelloAtomicLoader new.
+	atomicLoader := MetacelloAtomicLoad new.
 	atomicLoader target: self.
 	aMetacelloAtomicLoadDirective loadDirectives do: [ :dir |
 		dir acceptVisitor: atomicLoader ].
