@@ -141,7 +141,7 @@ RBRemoveClassDriver >> selectDialog: aDialog [
 ]
 
 { #category : 'private execution' }
-RBRemoveClassDriver >> setBreakingChangesPreconditions [.
+RBRemoveClassDriver >> setBreakingChangesPreconditions [
 	
 	haveNoReferences := refactoring preconditionHaveNoReferences.
 	emptyClasses := refactoring preconditionEmptyClasses.
