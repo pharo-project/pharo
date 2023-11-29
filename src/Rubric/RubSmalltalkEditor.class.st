@@ -1162,7 +1162,7 @@ RubSmalltalkEditor >> tally: aStream [
 			[receiver := context := nil].
 	compiledMethod := self compile: aStream for: receiver in: context.
 	compiledMethod ifNil: [^ self].
-	profiler := TimeProfiler spyOn: [ v:= compiledMethod valueWithReceiver: receiver arguments: #()].
+	profiler := TimeProfiler spyOn: [ v:= compiledMethod valueWithReceiver: receiver].
 	profiler showResult: v
 ]
 

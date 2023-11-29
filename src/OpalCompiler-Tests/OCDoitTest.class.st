@@ -53,7 +53,7 @@ OCDoitTest >> testDoItContextReadIvar [
 	ivarForTesting := #someValue.
 
 	method := thisContext compiler compile: 'ivarForTesting'.
-	value := method valueWithReceiver: self arguments: #().
+	value := method valueWithReceiver: self.
 	self assert: value equals: #someValue
 ]
 
