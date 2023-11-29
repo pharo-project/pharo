@@ -148,11 +148,18 @@ BaselineOf >> baseline: spec [
 ]
 
 { #category : 'accessing' }
+BaselineOf >> newProjectWithRepositoryDescription: aListOrRepositoryDescriptions [
+
+	project := super newProjectWithRepositoryDescription:
+		           aListOrRepositoryDescriptions.
+	aListOrRepositoryDescriptions do: [ :desc |
+		project version spec repository: desc ]
+]
+
+{ #category : 'accessing' }
 BaselineOf >> packageRepository [
 
-	^ (MetacelloProjectRegistration
-		   registrationForClassNamed: self className
-		   ifAbsent: [  ]) repositoryDescriptions
+	^ self project repositoryDescriptions
 		  ifNotEmpty: [ :repositories |
 			  repositories
 				  detect: [ :each | each description beginsWith: 'tonel://' ]
@@ -161,14 +168,16 @@ BaselineOf >> packageRepository [
 ]
 
 { #category : 'accessing' }
-BaselineOf >> packageRepositoryURL [
-
+BaselineOf >> packageRepositoryURLForSpec: spec [
 	" Tries to determine a repository URL from which the baseline is being loaded. Useful for 
 	refering other baselines in the same repository. "
 
-	^ self packageRepository
-		ifNotNil: [ :aRepository | aRepository description ]
-		ifNil: [ '' ]
+	^ spec repositoryDescriptions
+		  detect: [ :each | each beginsWith: 'tonel://' ]
+		  ifNone: [
+			  spec repositoryDescriptions
+				  ifEmpty: [ '' ]
+				  ifNotEmpty: [ :collection | collection anyOne ] ]
 ]
 
 { #category : 'baselines' }

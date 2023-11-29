@@ -892,11 +892,10 @@ MetacelloProjectSpec >> projectClass [
 
 { #category : 'querying' }
 MetacelloProjectSpec >> projectClassProject [
-    "indirection needed when projectClass is _not_ a subclass of MetacelloProject"
+	"indirection needed when projectClass is _not_ a subclass of MetacelloProject"
 
-    ^ self projectClass new project
-        setBaselineRepositoryDescription: self repositoryDescriptions;
-        yourself
+	^ self projectClass new initalizeProjectWithRepositoryDescription:
+		  self repositoryDescriptions
 ]
 
 { #category : 'visiting' }
