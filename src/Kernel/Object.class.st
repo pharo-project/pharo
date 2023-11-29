@@ -1362,21 +1362,6 @@ Object >> literalEqual: other [
 ]
 
 { #category : 'printing' }
-Object >> longPrintOn: aStream [
-	"Append to the argument, aStream, the names and values of all
-	of the receiver's instance variables."
-
-	self class allInstVarNames doWithIndex:
-		[:title :index |
-		aStream nextPutAll: title;
-		 nextPut: $:;
-		 space;
-		 tab;
-		 print: (self instVarAt: index);
-		 cr]
-]
-
-{ #category : 'printing' }
 Object >> longPrintOn: aStream limitedTo: sizeLimit indent: indent [
 	"Append to the argument, aStream, the names and values of all of the receiver's instance variables.  Limit is the length limit for each inst var."
 
@@ -1390,17 +1375,6 @@ Object >> longPrintOn: aStream limitedTo: sizeLimit indent: indent [
 		 nextPutAll:
 			((self instVarAt: index) printStringLimitedTo: (sizeLimit -3 -title size max: 1));
 		 cr]
-]
-
-{ #category : 'printing' }
-Object >> longPrintString [
-	"Answer a String whose characters are a description of the receiver."
-
-	| str |
-	str := String streamContents: [ :aStream | self longPrintOn: aStream ].
-
-	"Objects without inst vars should return something"
-	^ str ifEmpty: [ self printString , String cr ]
 ]
 
 { #category : 'printing' }
