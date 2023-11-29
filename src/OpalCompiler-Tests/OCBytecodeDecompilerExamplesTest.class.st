@@ -18,7 +18,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleBlockArgument [
 	newMethod := ir compiledMethod.
 
 	self
-		assert: (newMethod valueWithReceiver: instance arguments: #(  ))
+		assert: (newMethod valueWithReceiver: instance)
 		equals: instance exampleBlockArgument
 ]
 
@@ -34,7 +34,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleBlockExternal [
 	newMethod := ir compiledMethod.
 
 	self
-		assert: (newMethod valueWithReceiver: instance arguments: #(  ))
+		assert: (newMethod valueWithReceiver: instance)
 		equals: instance exampleBlockExternal
 ]
 
@@ -50,7 +50,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleBlockExternal2 [
 	newMethod := ir compiledMethod.
 
 	self
-		assert: (newMethod valueWithReceiver: instance arguments: #(  ))
+		assert: (newMethod valueWithReceiver: instance)
 		equals: instance exampleBlockExternal2
 ]
 
@@ -66,7 +66,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleBlockExternalArg [
 	newMethod := ir compiledMethod.
 
 	self
-		assert: (newMethod valueWithReceiver: instance arguments: #(  ))
+		assert: (newMethod valueWithReceiver: instance)
 		equals: instance exampleBlockExternalArg
 ]
 
@@ -82,7 +82,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleBlockExternalNested [
 	newMethod := ir compiledMethod.
 
 	self
-		assert: (newMethod valueWithReceiver: instance arguments: #(  ))
+		assert: (newMethod valueWithReceiver: instance)
 		equals: instance exampleBlockExternalNested
 ]
 
@@ -98,7 +98,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleBlockInternal [
 	newMethod := ir compiledMethod.
 
 	self
-		assert: (newMethod valueWithReceiver: instance arguments: #(  ))
+		assert: (newMethod valueWithReceiver: instance)
 		equals: instance exampleBlockInternal
 ]
 
@@ -816,6 +816,6 @@ OCBytecodeDecompilerExamplesTest >> testExampleiVar [
 	newMethod := ir compiledMethod.
 
 	self
-		assert: (newMethod valueWithReceiver: instance arguments: #(  ))
+		assert: (newMethod valueWithReceiver: instance)
 		equals: instance exampleiVar
 ]
