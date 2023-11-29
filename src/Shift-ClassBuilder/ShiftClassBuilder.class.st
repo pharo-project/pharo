@@ -331,7 +331,8 @@ ShiftClassBuilder >> fillFor: aClass [
 		layoutClass: aClass classLayout class;
 		slots: aClass localSlots;
 		classSlots: aClass class localSlots;
-		sharedVariables: aClass classVariables;
+		"we have to copy the class variables, as they contain the values"
+		sharedVariables: (aClass classVariables collect: [:var | var copy]);
 		sharedPools: aClass sharedPoolsString;
 		package: aClass package name;
 		installingEnvironment: aClass environment;
