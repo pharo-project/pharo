@@ -150,12 +150,11 @@ BaselineOf >> baseline: spec [
 { #category : 'accessing' }
 BaselineOf >> packageRepository [
 
-	" Tries to determine a repository from which the baseline is being loaded. Useful for 
-	refering other baselines in the same repository. "
-	
-	^ (self class package mcWorkingCopy repositoryGroup repositories reject: [:each | each = MCCacheRepository uniqueInstance]) 
-		ifNotEmpty: [ :repositories | repositories anyOne ]
-		ifEmpty: [ nil ]
+	^ (MetacelloProjectRegistration
+		   registrationForClassNamed: self className
+		   ifAbsent: [  ]) repositoryDescriptions
+		  ifNotEmpty: [ :repositories | repositories anyOne ]
+		  ifEmpty: [ nil ]
 ]
 
 { #category : 'accessing' }
