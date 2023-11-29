@@ -52,6 +52,22 @@ CompiledCode class >> basicNew: size [
 ]
 
 { #category : 'instance creation' }
+CompiledCode class >> basicNew: numberOfBytes header: headerWord [
+	"Primitive. Answer an instance of me. The number of literals (and other
+	 information) is specified by the headerWord (see my class comment).
+	 The first argument specifies the number of fields for bytecodes in the
+	 method. Fail if either argument is not a SmallInteger, or if numberOfBytes
+	 is negative, or if memory is low. Once the header of a method is set by
+	 this primitive, it cannot be changed to change the number of literals.
+	 Essential. See Object documentation whatIsAPrimitive."
+
+	<primitive: 79 error: ec>
+	ec == #'insufficient object memory' ifTrue:
+		[^self handleFailingNewMethod: numberOfBytes header: headerWord].
+	^self primitiveFailed
+]
+
+{ #category : 'instance creation' }
 CompiledCode class >> newMethod: numberOfBytes header: headerWord [
 	"Primitive. Answer an instance of me. The number of literals (and other
 	 information) is specified by the headerWord (see my class comment).
@@ -613,22 +629,6 @@ CompiledCode >> localWritesRef: literalAssociation [
 	^(scanner := InstructionStream on: self) scanFor: (self encoderClass bindingWriteScanBlockFor: litIndex using: scanner)
 ]
 
-{ #category : 'printing' }
-CompiledCode >> longPrintOn: aStream [
-	"List of all the byte codes in a method with a short description of each"
-
-	self isQuick ifTrue:
-		[self isReturnSpecial ifTrue:
-			[^ aStream nextPutAll: 'Quick return ' ,
-				(#('self' 'true' 'false' 'nil' '-1' '0' '1' '2') at: self primitive - 255)].
-		^ aStream nextPutAll: 'Quick return field ' , self returnField printString , ' (0-based)'].
-
-	self isPrimitive ifTrue: [
-		self printPrimitiveOn: aStream.
-	].
-	self symbolicBytecodes do: [ :each | each printOn: aStream ] separatedBy: [ aStream cr ]
-]
-
 { #category : 'scanning' }
 CompiledCode >> messages [
 	"Answer a Set of all the message selectors sent by this method."
@@ -959,13 +959,6 @@ CompiledCode >> stamp [
 { #category : 'debugger support' }
 CompiledCode >> stepIntoQuickMethods [
 	^self propertyAt: #stepIntoQuickMethod ifAbsent: [ false ]
-]
-
-{ #category : 'printing' }
-CompiledCode >> symbolic [
-	"Answer a String that contains a list of all the byte codes in a method with a short description of each."
-
-	^self longPrintString
 ]
 
 { #category : 'printing' }

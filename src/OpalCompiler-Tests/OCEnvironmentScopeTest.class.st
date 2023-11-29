@@ -22,7 +22,7 @@ OCEnvironmentScopeTest >> testCompileWithEnvironment [
 					environment: environment;
 					class: (environment at: #MyClass);
 					compile: 'tt ^MyClass'.
-	return := method valueWithReceiver: nil arguments: #().
+	return := method valueWithReceiver: nil.
 	self assert: return name equals: 'Point'.
 	"I d not know about anything else"
 	method := OpalCompiler new
@@ -42,6 +42,6 @@ OCEnvironmentScopeTest >> testCompileWithProductionEnvironment [
 					compile: 'tt ^1+2'.
 
 	self assert: method class equals: MyCompiledMethodForTesting.
-	return := method valueWithReceiver: nil arguments: #().
+	return := method valueWithReceiver: nil.
 	self assert: return equals: 3
 ]
