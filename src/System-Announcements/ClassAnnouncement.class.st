@@ -53,7 +53,7 @@ ClassAnnouncement >> packageTagAffected [
 { #category : 'accessing' }
 ClassAnnouncement >> packageTagsAffected [
 
-	^ { self classTagAffected }
+	^ { self packageTagAffected }
 ]
 
 { #category : 'accessing' }

@@ -5,7 +5,7 @@ Internal Representation and Key Implementation Points.
 
     Instance Variables
 	classTag:		<Symbol>
-	package:		<RPackage>
+	package:		<Package>
 
 "
 Class {
@@ -40,7 +40,7 @@ SycPromotePackageFromTagCommand >> defaultMenuItemName [
 { #category : 'execution' }
 SycPromotePackageFromTagCommand >> execute [
 
-	(package classTagNamed: classTag) promoteAsPackage
+	(package tagNamed: classTag) promoteAsPackage
 ]
 
 { #category : 'execution' }

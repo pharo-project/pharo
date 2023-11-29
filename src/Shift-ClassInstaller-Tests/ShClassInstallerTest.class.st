@@ -366,6 +366,20 @@ ShClassInstallerTest >> testInstallInSpecificEnvironment [
 ]
 
 { #category : 'tests' }
+ShClassInstallerTest >> testInstallingWithAnEmptyTag [
+
+	newClass := ShiftClassInstaller make: [ :builder |
+		            builder
+			            name: #ShCITestEmptyTag;
+			            tag: '';
+			            package: self generatedClassesPackageName ].
+
+	self assert: newClass package name equals: self generatedClassesPackageName.
+	self assert: newClass packageTag isRoot.
+	self deny: newClass packageTag name equals: ''
+]
+
+{ #category : 'tests' }
 ShClassInstallerTest >> testModifyingClassKeepsOrganizationOfMethods [
 
 	newClass := self newClass: #ShCITestClass superclass: subClass slots: #(  ).

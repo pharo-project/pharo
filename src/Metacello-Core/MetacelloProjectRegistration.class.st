@@ -155,6 +155,12 @@ MetacelloProjectRegistration class >> registerProjectSpec: aProjectSpec ifPresen
         ifAbsent: [ newRegistration registerProject ]
 ]
 
+{ #category : 'registration' }
+MetacelloProjectRegistration class >> registrationForClassNamed: aClassName ifAbsent: absentBlock [
+
+	^ self registry registrationForClassNamed: aClassName ifAbsent: absentBlock
+]
+
 { #category : 'querying' }
 MetacelloProjectRegistration class >> registrationForProjectSpec: aProjectSpec ifAbsent: absentBlock ifPresent: presentBlock [
     | newRegistration |
@@ -277,7 +283,7 @@ MetacelloProjectRegistration >> configurationProjectSpec: anObject [
 { #category : 'accessing' }
 MetacelloProjectRegistration >> configurationProjectSpecIfAbsent: absentBlock [
 
-	^ configurationProjectSpec ifNil: [ absentBlock ]
+	^ configurationProjectSpec ifNil: [ absentBlock value ]
 ]
 
 { #category : 'accessing' }
@@ -320,6 +326,11 @@ MetacelloProjectRegistration >> currentVersionString [
 	^ self configurationProjectSpec
 		  ifNotNil: [ :aSpec | aSpec versionString ]
 		  ifNil: [ baselineProjectSpec repositoryVersionString ]
+]
+
+{ #category : 'accessing' }
+MetacelloProjectRegistration >> currentlyLoadedClassesInProject [
+	^ self projectSpec currentlyLoadedClassesInVersion asSet
 ]
 
 { #category : 'testing' }

@@ -17,13 +17,13 @@ BaselineOfRefactoring >> baseline: spec [
 		package: 'Refactoring-UI' with: [ spec requires: #( 'Refactoring-Transformations' ) ];
 		package: 'Refactoring-DataForTesting';
 		package: 'Refactoring-UI-Tests' with: [ spec requires: #( 'Refactoring-DataForTesting' ) ];
-		package: 'Refactoring-Tests-Core' with: [ spec requires: #( 'Refactoring-Core' ) ];
-		package: 'Refactoring-Tests-Changes' with: [ spec requires: #( 'Refactoring-Changes' ) ];
-		package: 'Refactoring-Tests-Critics';
-		package: 'Refactoring-Tests-Environment' with: [ spec requires: #( 'Refactoring-Environment' ) ];
+		package: 'Refactoring-Core-Tests' with: [ spec requires: #( 'Refactoring-Core' ) ];
+		package: 'Refactoring-Changes-Tests' with: [ spec requires: #( 'Refactoring-Changes' ) ];
+		package: 'Refactoring-Critics-Tests';
+		package: 'Refactoring-Environment-Tests' with: [ spec requires: #( 'Refactoring-Environment' ) ];
 		package: 'Refactoring-Transformations-Tests' with: [ spec requires: #( 'Refactoring-Transformations' ) ];
 		group: 'Core' with: #( 'Refactoring-Changes' 'Refactoring-Core' 'Refactoring-UI' 'Refactoring-Environment' 'Refactoring-Transformations' );
 		group: 'Tests'
-		with: #( 'Refactoring-Tests-Core' 'Refactoring-Tests-Changes' 'Refactoring-Tests-Critics' 'Refactoring-Tests-Environment' 'Refactoring-UI-Tests'
+		with: #( 'Refactoring-Core-Tests' 'Refactoring-Changes-Tests' 'Refactoring-Critics-Tests' 'Refactoring-Environment-Tests' 'Refactoring-UI-Tests'
 			   'Refactoring-Transformations-Tests' )
 ]

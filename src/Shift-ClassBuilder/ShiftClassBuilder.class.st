@@ -561,12 +561,14 @@ ShiftClassBuilder >> sharedPools [
 ]
 
 { #category : 'accessing' }
-ShiftClassBuilder >> sharedPools: anObject [
-	"The paramter can be either a collection of symbols or a string that should be converted into a collection of symbols."
-
-	self layoutDefinition sharedPools: (anObject isString
-			 ifTrue: [ (anObject substrings: ' ') collect: [ :e | e asSymbol ] ]
-			 ifFalse: [ anObject ])
+ShiftClassBuilder >> sharedPools: aCollectionOrString [
+	"The paramter can be either a collection of symbols or a string that should be converted into a collection of symbols, or a Class where we get the name"
+	| pools |
+	pools := aCollectionOrString isString
+			 ifTrue: [ (aCollectionOrString substrings: ' ') collect: [ :e | e asSymbol ] ]
+			 ifFalse: [ aCollectionOrString collect: [ :each | each isSymbol ifFalse: [ each name ] ifTrue: [ each ] ].	 ].
+	
+	self layoutDefinition sharedPools: pools.
 ]
 
 { #category : 'accessing' }

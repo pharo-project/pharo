@@ -3,8 +3,9 @@ I am a trait used for object responding to #isEmpty to bring the rest of the beh
 "
 Trait {
 	#name : 'TIsEmpty',
-	#category : 'Kernel-Traits',
-	#package : 'Kernel-Traits'
+	#category : 'Kernel-Traits-Base',
+	#package : 'Kernel-Traits',
+	#tag : 'Base'
 }
 
 { #category : 'testing' }

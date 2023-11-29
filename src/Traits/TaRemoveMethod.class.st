@@ -32,6 +32,11 @@ TaRemoveMethod >> copyTraitExpression [
 	^ self class remove: removedSelectors to: inner
 ]
 
+{ #category : 'testing' }
+TaRemoveMethod >> isTraitExclusion [
+	^ true
+]
+
 { #category : 'accessing' }
 TaRemoveMethod >> methods [
 	^ inner methods reject: [ :e | removedSelectors includes: e selector ]

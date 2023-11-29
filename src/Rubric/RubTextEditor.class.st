@@ -446,6 +446,23 @@ RubTextEditor >> chooseColor [
 	^ attribute
 ]
 
+{ #category : 'menu messages' }
+RubTextEditor >> chooseRecentClipping [
+	"Let the user choose one of the remebered last clippings. Return nil if none had been
+	 remembered or if none is selected."
+
+	| recentClippings |
+	recentClippings := Clipboard recentClippings.
+
+	recentClippings ifEmpty: [ ^ nil ].
+	^ UIManager default
+		  chooseFrom: (recentClippings collect: [ :txt |
+				   ((txt asString contractTo: 50)
+					    copyReplaceAll: String cr
+					    with: '\') copyReplaceAll: String tab with: '|' ])
+		  values: recentClippings
+]
+
 { #category : 'undo - redo private' }
 RubTextEditor >> clearUndoManager: aKeyboardEvent [
 	^ self editingState clearUndoManager: aKeyboardEvent
@@ -1758,7 +1775,7 @@ RubTextEditor >> pasteRecent [
 	"Paste an item chose from RecentClippings."
 
 	| clipping |
-	(clipping := Clipboard chooseRecentClipping) ifNil: [^ self].
+	(clipping := self chooseRecentClipping) ifNil: [^ self].
 	Clipboard clipboardText: clipping.
 	^ self paste
 ]

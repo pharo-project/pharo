@@ -68,7 +68,7 @@ ZnChunkedReadStream >> contents [
 
 { #category : 'private' }
 ZnChunkedReadStream >> ensureChunkBufferOfSize: size [
-	(chunk notNil and: [ size <= chunk size ]) ifTrue: [ ^ self ].
+	(chunk isNotNil and: [ size <= chunk size ]) ifTrue: [ ^ self ].
 	chunk := self collectionSpecies new: size
 ]
 

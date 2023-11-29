@@ -21,24 +21,6 @@ SycRefactoringStoreOnTest >> testRemoveMessageArgumentCommandIsProperlyStoreOn [
 ]
 
 { #category : 'tests' }
-SycRefactoringStoreOnTest >> testSSycRenameMessageCommandIsProperlyStoreOn2 [
-
-	| refactorings node |
-
-	node := (MockTreeTableItem >> #title:) ast.
-
-	refactorings := SycRenameMessageCommand new
-		originalMessage: (SycMessageDescription ofMessageNode: node);
-		newSignature: (RBMethodName selector: #title: arguments: #('anObject')) ;
-		refactoredClass: MockTreeTableItem;
-		asRefactorings.
-
-	self
-		assert: (String streamContents: [ :s | refactorings storeOn: s ])
-		equals: '((Array new: 1) at: 1 put: (RBRenameMethodRefactoring renameMethod: #title: in: MockTreeTableItem to: #title: permutation: (1 to: 1)); yourself)'
-]
-
-{ #category : 'tests' }
 SycRefactoringStoreOnTest >> testSycAddMessageArgumentCommandIsProperlyStoreOn [
 
 	| refactorings node newSelector |

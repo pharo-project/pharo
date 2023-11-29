@@ -47,17 +47,8 @@ RBTransformation class >> initializeRefactoringOptions [
 		at: #alreadyDefined
 		put: [ :ref :cls :selector |  self error: #alreadyDefined ];
 
-		at: #useExistingMethod
-		put: [ :ref :selector |  self error: #useExistingMethod ];
-
 		at: #openBrowser
 		put: [ :ref :env |  self error: #openBrowser ]
-]
-
-{ #category : 'preconditions' }
-RBTransformation >> applicabilityPreconditions [ 
-	
-	^ self trueCondition 
 ]
 
 { #category : 'converting' }

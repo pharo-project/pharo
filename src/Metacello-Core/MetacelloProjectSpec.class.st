@@ -369,6 +369,12 @@ MetacelloProjectSpec >> copyForScriptingInto: aProjectSpec [
         file: file
 ]
 
+{ #category : 'querying' }
+MetacelloProjectSpec >> currentlyLoadedClassesInVersion [
+    self versionOrNil ifNotNil: [ :vrsn | ^ vrsn spec currentlyLoadedClassesInVersion ].
+    ^ #()
+]
+
 { #category : 'loading' }
 MetacelloProjectSpec >> determineCurrentVersionForLoad [
 	"don't use self currentVersion, because we are interested in the currentVersion of the project as loaded in image, not the current version relative to our load list"

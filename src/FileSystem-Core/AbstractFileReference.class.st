@@ -633,6 +633,11 @@ AbstractFileReference >> isFile [
 ]
 
 { #category : 'testing' }
+AbstractFileReference >> isHidden [
+	^ self resolve isHidden
+]
+
+{ #category : 'testing' }
 AbstractFileReference >> isReadable [
 	^ self resolve isReadable
 ]

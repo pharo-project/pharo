@@ -15,11 +15,6 @@ Class {
 	#tag : 'Image'
 }
 
-{ #category : 'testing' }
-SystemNavigationTest class >> isUnitTest [
-	^false
-]
-
 { #category : 'accessing' }
 SystemNavigationTest >> classFactory [
 
@@ -77,6 +72,23 @@ SystemNavigationTest >> testAllExistingProtocolsFor [
 	self assert: (classSideProtocols allSatisfy: #isSymbol).
 	self assert: (instSideProtocols includesAll: Object protocolNames).
 	self assert: (classSideProtocols includesAll: Object class protocolNames)
+]
+
+{ #category : 'tests' }
+SystemNavigationTest >> testAllGlobalNamesStartingWithDoCaseSensitive [
+
+	| result |
+	result := OrderedCollection new.
+	self systemNavigationToTest allGlobalNamesStartingWith: 'Sma' do: [ :name | result add: name ] caseSensitive: true.
+	self assert: (result includes: 'Smalltalk').
+
+	result := OrderedCollection new.
+	self systemNavigationToTest allGlobalNamesStartingWith: 'sma' do: [ :name | result add: name ] caseSensitive: true.
+	self deny: (result includes: 'Smalltalk').
+
+	result := OrderedCollection new.
+	self systemNavigationToTest allGlobalNamesStartingWith: 'sma' do: [ :name | result add: name ] caseSensitive: false.
+	self assert: (result includes: 'Smalltalk')
 ]
 
 { #category : 'tests' }

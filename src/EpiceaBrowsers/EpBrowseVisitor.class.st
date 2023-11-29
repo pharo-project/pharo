@@ -51,6 +51,6 @@ EpBrowseVisitor >> visitPackageTagChange: aPackageTagChange [
 	Smalltalk tools browser openOnPackage: ((self packageOrganizer
 			  packageNamed: aPackageTagChange packageName
 			  ifAbsent: [ ^ self inform: 'Package named ' , aPackageTagChange packageName , ' not found in the system' ])
-			 classTagNamed: aPackageTagChange tagName
+			 tagNamed: aPackageTagChange tagName
 			 ifAbsent: [ ^ self inform: 'Tag named ' , aPackageTagChange tagName , ' not found in package named ' , aPackageTagChange packageName ])
 ]

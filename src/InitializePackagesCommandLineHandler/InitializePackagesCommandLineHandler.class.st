@@ -57,7 +57,7 @@ InitializePackagesCommandLineHandler >> activate [
 { #category : 'activation' }
 InitializePackagesCommandLineHandler >> initializePackages [
 
-	RPackageOrganizer default basicBootstrapInitialize
+	PackageOrganizer default basicBootstrapInitialize
 ]
 
 { #category : 'activation' }

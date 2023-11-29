@@ -350,7 +350,7 @@ ShiftClassBuilderTest >> testFillShiftClassBuilder [
 	self assert: builder superclass equals: Object.
 	self assert: builder name equals: #Point2.
 	self assert: builder slots size equals: 2.
-	self assert: builder sharedPools equals: { ChronologyConstants }.
+	self assert: builder sharedPools equals: { #ChronologyConstants }.
 	self assert: builder package equals: self packageNameForTest.
 	self assert: builder tag equals: #Mafia
 ]

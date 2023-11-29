@@ -80,33 +80,32 @@ HaloMorph class >> customHaloSpecifications [
 			Note that the optional handles for specialized morphs, such as Sketch, Text, PasteUp, are also included"
 
 	^ #(
-	(addDismissHandle:		left			top				(red		muchLighter)			#haloDismissIcon)
-	(addMenuHandle:		right		top				(red)							#haloMenuIcon)
-	(addDragHandle:			center	top					(brown)							#haloDragIcon)
-	(addGrowHandle:		right		bottom			(yellow)						#haloScaleIcon)
-	(addScaleHandle:		right		bottom			(lightOrange)					#haloScaleIcon)
+	(addDismissHandle:		left			top				(red		muchLighter)			#haloDismiss)
+	(addMenuHandle:		right		top				(red)							#haloMenu)
+	(addDragHandle:			center	top					(brown)							#haloDrag)
+	(addScaleHandle:		right		bottom			(lightOrange)					#haloScale)
 
-	(addRecolorHandle:		left			center			(green muchLighter lighter)		#haloRecolorIcon)
-	(addFontSizeHandle:		leftCenter	bottom			(lightGreen)						#haloFontSizeIcon)
-	(addFontStyleHandle:		center		bottom			(lightRed)						#haloFontStyleIcon)
-	(addFontEmphHandle:	rightCenter	bottom			(lightBrown darker)				#haloFontEmphIcon)
-	(addRotateHandle:		left			bottom			(blue paler paler paler paler)							#haloRotIcon)
+	(addRecolorHandle:		left			center			(green muchLighter lighter)		#haloRecolor)
+	(addFontSizeHandle:		leftCenter	bottom			(lightGreen)						#haloFontSize)
+	(addFontStyleHandle:		center		bottom			(lightRed)						#haloFontStyle)
+	(addFontEmphHandle:	rightCenter	bottom			(lightBrown darker)				#haloFontEmph)
+	(addRotateHandle:		left			bottom			(blue paler paler paler paler)							#haloRot)
 
-	(addDebugHandle:		right		topCenter		(blue	veryMuchLighter)		#haloDebugIcon) )
+	(addDebugHandle:		right		topCenter		(blue	veryMuchLighter)		#haloDebug) )
 
 	"  Other useful handles...
 
   		selector				horiz		vert			color info						icon key
 		---------				------		-----------		-------------------------------		---------------
 
-	(addTileHandle:			left			bottomCenter	(lightBrown)					#haloTileIcon)
-	(addViewHandle:			left			center			(cyan)							#haloViewIcon)
-	(addGrabHandle:			center		top				(gray)							#haloGrabIcon)
-	(addDragHandle:			rightCenter	top				(brown)							#haloDragIcon)
-	(addDupHandle:			right		top				(green)							#haloDupIcon)
-	(addHelpHandle:			center		bottom			(lightBlue)						#haloHelpIcon)
-	(addFewerHandlesHandle:	left		topCenter		(paleBuff)						#haloFewerHandlesIcon)
-	(addPaintBgdHandle:		right		center			(lightGray)						#haloPaintIcon)
+	(addTileHandle:			left			bottomCenter	(lightBrown)					#haloTile)
+	(addViewHandle:			left			center			(cyan)							#haloView)
+	(addGrabHandle:			center		top				(gray)							#haloGrab)
+	(addDragHandle:			rightCenter	top				(brown)							#haloDrag)
+	(addDupHandle:			right		top				(green)							#haloDup)
+	(addHelpHandle:			center		bottom			(lightBlue)						#haloHelp)
+	(addFewerHandlesHandle:	left		topCenter		(paleBuff)						#haloFewerHandles)
+	(addPaintBgdHandle:		right		center			(lightGray)						#haloPaint)
 	"
 ]
 
@@ -165,21 +164,21 @@ HaloMorph class >> iconicHaloSpecifications [
 	^ #(
 	"  	selector				horiz		vert			color info						icon key
 		---------				------		-----------		-------------------------------		---------------"
-	(addCollapseHandle:		left			topCenter		(tan)							#haloCollapseIcon)
-	(addDebugHandle:		right		topCenter		(blue	veryMuchLighter)		#haloDebugIcon)
-	(addDismissHandle:		left			top				(red		muchLighter)			#haloDismissIcon)
-	(addRotateHandle:		left			bottom			(blue paler paler paler paler)							#haloRotIcon)
-	(addMenuHandle:		leftCenter	top				(red)							#haloMenuIcon)
+	(addCollapseHandle:		left			topCenter		(tan)							#haloCollapse)
+	(addDebugHandle:		right		topCenter		(blue	veryMuchLighter)		#haloDebug)
+	(addDismissHandle:		left			top				(red		muchLighter)			#haloDismiss)
+	(addRotateHandle:		left			bottom			(blue paler paler paler paler)							#haloRot)
+	(addMenuHandle:		leftCenter	top				(red)							#haloMenu)
 	(addGrabHandle:			center		top				(gray)							#haloGrab)
-	(addDragHandle:			rightCenter	top				(brown)							#haloDragIcon)
-	(addDupHandle:			right		top				(green)							#haloDupIcon)
-	(addHelpHandle:			center		bottom			(lightBlue)						#haloHelpIcon)
-	(addGrowHandle:		right		bottom			(yellow)						#haloScaleIcon)
-	(addScaleHandle:		right		bottom			(lightOrange)					#haloScaleIcon)
-	(addFontSizeHandle:		leftCenter	bottom			(lightGreen)						#haloFontSizeIcon)
-	(addFontStyleHandle:		center		bottom			(lightRed)						#haloFontStyleIcon)
-	(addFontEmphHandle:	rightCenter	bottom			(lightBrown darker)				#haloFontEmphIcon)
-	(addRecolorHandle:		right		bottomCenter	(magenta darker)				#haloRecolorIcon) )
+	(addDragHandle:			rightCenter	top				(brown)							#haloDrag)
+	(addDupHandle:			right		top				(green)							#haloDup)
+	(addHelpHandle:			center		bottom			(lightBlue)						#haloHelp)
+	(addGrowHandle:		right		bottom			(yellow)						#haloScale)
+	(addScaleHandle:		right		bottom			(lightOrange)					#haloScale)
+	(addFontSizeHandle:		leftCenter	bottom			(lightGreen)						#haloFontSize)
+	(addFontStyleHandle:		center		bottom			(lightRed)						#haloFontStyle)
+	(addFontEmphHandle:	rightCenter	bottom			(lightBrown darker)				#haloFontEmph)
+	(addRecolorHandle:		right		bottomCenter	(magenta darker)				#haloRecolor) )
 ]
 
 { #category : 'class initialization' }
@@ -215,21 +214,21 @@ HaloMorph class >> simpleFullHaloSpecifications [
 	^ #(
 	"  	selector				horiz		vert			color info						icon key
 		---------				------		-----------		-------------------------------		---------------"
-	(addDebugHandle:		right		topCenter		(blue	veryMuchLighter)		#haloDebugIcon)
-	(addDismissHandle:		left			top				(red		muchLighter)			#haloDismissIcon)
-	(addRotateHandle:		left			bottom			(blue paler paler paler paler)							#haloRotIcon)
-	(addMenuHandle:		leftCenter	top				(red)							#haloMenuIcon)
-	(addGrabHandle:			center		top				(gray)							#halograbIcon)
-	(addDragHandle:			rightCenter	top				(brown)							#haloDragIcon)
-	(addDupHandle:			right		top				(green)							#haloDupIcon)
-	(addHelpHandle:			center		bottom			(lightBlue)						#haloHelpIcon')
-	(addGrowHandle:		right		bottom			(yellow)						#haloScaleIcon)
-	(addScaleHandle:		right		bottom			(lightOrange)					#haloScaleIcon)
-	(addFewerHandlesHandle:	left		topCenter		(paleBuff)						#haloFewerHandlesIcon')
-	(addFontSizeHandle:		leftCenter	bottom			(lightGreen)						#haloFontSizeIcon)
-	(addFontStyleHandle:		center		bottom			(lightRed)						#haloFontStyleIcon)
-	(addFontEmphHandle:	rightCenter	bottom			(lightBrown darker)		  		#haloFontEmphIcon)
-	(addRecolorHandle:		right		bottomCenter	(magenta darker)				#haloRecolorIcon) )
+	(addDebugHandle:		right		topCenter		(blue	veryMuchLighter)		#haloDebug)
+	(addDismissHandle:		left			top				(red		muchLighter)			#haloDismiss)
+	(addRotateHandle:		left			bottom			(blue paler paler paler paler)							#haloRot)
+	(addMenuHandle:		leftCenter	top				(red)							#haloMenu)
+	(addGrabHandle:			center		top				(gray)							#halograb)
+	(addDragHandle:			rightCenter	top				(brown)							#haloDrag)
+	(addDupHandle:			right		top				(green)							#haloDup)
+	(addHelpHandle:			center		bottom			(lightBlue)						#haloHelp')
+	(addGrowHandle:		right		bottom			(yellow)						#haloScale)
+	(addScaleHandle:		right		bottom			(lightOrange)					#haloScale)
+	(addFewerHandlesHandle:	left		topCenter		(paleBuff)						#haloFewerHandles')
+	(addFontSizeHandle:		leftCenter	bottom			(lightGreen)						#haloFontSize)
+	(addFontStyleHandle:		center		bottom			(lightRed)						#haloFontStyle)
+	(addFontEmphHandle:	rightCenter	bottom			(lightBrown darker)		  		#haloFontEmph)
+	(addRecolorHandle:		right		bottomCenter	(magenta darker)				#haloRecolor) )
 ]
 
 { #category : 'private' }
@@ -719,12 +718,12 @@ HaloMorph >> createHandleAt: aPoint color: aColor iconName: iconName [
 			handle borderWidth: 0 ].
 	handle wantsYellowButtonMenu: false.
 	iconName
-		ifNotNil: [ ( self iconNamed: iconName )
-				ifNotNil: [ :form |
+		ifNotNil: [ ( self iconFormSetNamed: iconName )
+				ifNotNil: [ :formSet |
 					| image |
 
 					image := ImageMorph new.
-					image form: form.
+					image formSet: formSet.
 					image color: aColor contrastingBlackAndWhiteColor.
 					image lock.
 					handle addMorphCentered: image

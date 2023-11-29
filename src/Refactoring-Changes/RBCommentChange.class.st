@@ -60,7 +60,7 @@ RBCommentChange >> comment: aString [
 RBCommentChange >> generateChanges [
 
 	self changeClass comment: comment stamp: self changeStamp.
-	SystemAnnouncer uniqueInstance classCommented: self changeClass
+	
 ]
 
 { #category : 'printing' }

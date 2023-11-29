@@ -153,3 +153,9 @@ CleanBlockClosure >> writesField: varIndex [
 	"Clean blocks by definition do not read fields"
 	^false
 ]
+
+{ #category : 'scanning' }
+CleanBlockClosure >> writesRef: literalAssociation [
+	"Clean blocks can access Literal Variables"
+	^self compiledBlock writesRef: literalAssociation
+]

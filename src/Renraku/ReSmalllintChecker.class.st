@@ -7,7 +7,7 @@ ReSmallintChecker is responsible for running a set of rules on a given subsystem
 rules := ReRuleManager defaultRules.
 
 checker := ReSmalllintChecker new
-	runRules: rules onPackage: (RPackageOrganizer default packageNamed: #'Manifest-Core').
+	runRules: rules onPackage: (PackageOrganizer default packageNamed: #'Manifest-Core').
 
 ```
 "

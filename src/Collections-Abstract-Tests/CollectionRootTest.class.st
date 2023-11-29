@@ -174,7 +174,7 @@ CollectionRootTest >> testDetectIfFoundIfNoneWhenSomethingIsFound [
 	| wasFound foundObject |
 	foundObject := nil.
 	wasFound := self collectionWithoutNilElements
-		detect: [ :each | each notNil ]
+		detect: [ :each | each isNotNil ]
 		ifFound: [ :element |
 			foundObject := element.
 			true ]
@@ -189,7 +189,7 @@ CollectionRootTest >> testDetectIfFoundIfNoneWhenSomethingIsFoundIgnoringTheFoun
 	"The foundBlock can be a zero argument block ignoring the object found"
 
 	| wasFound |
-	wasFound := self collectionWithoutNilElements detect: [ :each | each notNil ] ifFound: [ true ] ifNone: [ false ].
+	wasFound := self collectionWithoutNilElements detect: [ :each | each isNotNil ] ifFound: [ true ] ifNone: [ false ].
 	self assert: wasFound
 ]
 
@@ -207,7 +207,7 @@ CollectionRootTest >> testDetectIfFoundWhenSomethingIsFound [
 	wasFound := false.
 	foundObject := nil.
 	self collectionWithoutNilElements
-		detect: [ :each | each notNil ]
+		detect: [ :each | each isNotNil ]
 		ifFound: [ :element |
 			foundObject := element.
 			wasFound := true ].
@@ -222,7 +222,7 @@ CollectionRootTest >> testDetectIfFoundWhenSomethingIsFoundIgnoringTheFoundObjec
 
 	| wasFound |
 	wasFound := false.
-	self collectionWithoutNilElements detect: [ :each | each notNil ] ifFound: [ wasFound := true ].
+	self collectionWithoutNilElements detect: [ :each | each isNotNil ] ifFound: [ wasFound := true ].
 	self assert: wasFound
 ]
 

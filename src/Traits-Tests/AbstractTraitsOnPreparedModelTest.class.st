@@ -29,11 +29,6 @@ Class {
 	#package : 'Traits-Tests'
 }
 
-{ #category : 'testing' }
-AbstractTraitsOnPreparedModelTest class >> isUnitTest [
-	^false
-]
-
 { #category : 'utilities' }
 AbstractTraitsOnPreparedModelTest >> assertPrints: aString like: anotherString [
 	self assert: (aString copyWithout: $ ) equals: (anotherString copyWithout: $ )
@@ -156,7 +151,6 @@ AbstractTraitsOnPreparedModelTest >> setUp [
 	"SetUpCount := SetUpCount + 1."
 
 	super setUp.
-	'Setup' traceCr.
 	SystemAnnouncer uniqueInstance suspendAllWhile:
 			[self t1: (self newTrait: #T1
 						traits: { }).

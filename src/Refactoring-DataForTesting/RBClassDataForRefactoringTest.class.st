@@ -159,7 +159,7 @@ RBClassDataForRefactoringTest >> demoMethodWithDuplicatesInBlocks [
 		(i + 1) even ifTrue: [ (i + 1) doSomethingElse ] ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBClassDataForRefactoringTest >> demoRenameMethod: arg1 PermuteArgs: arg2 [
 	self do: arg1.
 	self do: arg2.

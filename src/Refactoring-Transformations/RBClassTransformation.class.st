@@ -33,12 +33,8 @@ RBClassTransformation class >> model: aRBNamespace className: aString [
 
 { #category : 'accessing' }
 RBClassTransformation >> className [
-	self flag: #popUp.
-	^ className ifNil: [
-		self uiManager
-			chooseOrRequestFrom: (self environment allClasses collect: [:each | each name])
-			title: 'Class name was not defined to perform ', self class baseClass name,
-					 '. Please select a class to resume this transformation.' ]
+
+	^ className 
 ]
 
 { #category : 'accessing' }

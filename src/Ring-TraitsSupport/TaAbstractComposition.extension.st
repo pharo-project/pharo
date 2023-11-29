@@ -15,3 +15,9 @@ TaAbstractComposition >> asRingMinimalDefinitionIn: anRGEnvironment [
 			"we need to set real object because we cannot simply identify the real object from the model data"
 			def ]
 ]
+
+{ #category : '*Ring-TraitsSupport' }
+TaAbstractComposition >> includesElement: anElement [
+	"It checks if the composition includes the given element in the trait composition. It is used for compatibility, it should not be used as it is comparing by identity."
+	^ self subclassResponsibility
+]

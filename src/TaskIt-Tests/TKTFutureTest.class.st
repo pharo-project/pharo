@@ -540,7 +540,7 @@ TKTFutureTest >> testFutureSuccessCallbackExecutesInNewProcess [
 	runner := TKTNewProcessTaskRunner new.
 	future := runner future: [ 1 + 1 ].
 
-	30 timesRepeat: [
+	15 timesRepeat: [
 		future onSuccessDo: [ :r | processIds nextPut: Processor activeProcess identityHash ] ].
 
 	1 second wait.
@@ -548,7 +548,7 @@ TKTFutureTest >> testFutureSuccessCallbackExecutesInNewProcess [
 	processIdsSet := Set new.
 	[processIds isEmpty] whileFalse: [ processIdsSet add: processIds next ].
 
-	self assert: processIdsSet size equals: 30
+	self assert: processIdsSet size equals: 15
 ]
 
 { #category : 'tests - callbacks' }

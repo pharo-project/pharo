@@ -89,6 +89,12 @@ SystemNavigation >> allExistingProtocolsFor: instanceSide [
 			  ifFalse: [ class class protocolNames ] ]
 ]
 
+{ #category : 'query' }
+SystemNavigation >> allGlobalNamesStartingWith: aString do: aBlock caseSensitive: cs [
+
+	self environment keysDo: [ :globalName | (globalName beginsWith: aString caseSensitive: cs) ifTrue: [ aBlock value: globalName ] ]
+]
+
 { #category : 'private' }
 SystemNavigation >> allGlobalRefsOn: aSymbol [
 	"Answer all references to globals"

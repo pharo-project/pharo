@@ -108,7 +108,7 @@ RBExtractToTemporaryTransformation >> insertTemporary [
 RBExtractToTemporaryTransformation >> nodeContainedBy: anInterval [
 	| node |
 	node := self parseTree whichNodeIsContainedBy: anInterval.
-	(node notNil and: [ node isValue ])
+	(node isNotNil and: [ node isValue ])
 		ifFalse: [ self refactoringError: 'Cannot assign to non-value nodes' ].
 	^ node
 ]
