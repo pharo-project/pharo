@@ -134,7 +134,7 @@ RBRefactoringChangeTest >> testAddClassPattern [
 				ifNotNil: [ self assert: change definitionClass equals: class superclass ].
 
 			self assert: change instanceVariableNames equals: class instVarNames asArray.
-			self assert: change classVariableNames equals: class classVarNames asArray.
+			self assert: change classVariableNames asSet equals: class classVarNames asSet.
 			self assert: change classInstanceVariableNames equals: class class instVarNames.
 			self assert: change sharedPoolNames equals: class sharedPoolNames asArray.
 			self assert: change package equals: class package name.

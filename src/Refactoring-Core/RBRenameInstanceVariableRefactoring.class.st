@@ -72,9 +72,10 @@ RBRenameInstanceVariableRefactoring >> addNewAccessors [
 { #category : 'preconditions' }
 RBRenameInstanceVariableRefactoring >> applicabilityPreconditions [
 
-	^ (RBIsValidInstanceVariableName name: newName)
-	  & (RBIsVariableNotDefinedInHierarchy name: newName class: class)
-	  & (RBIsNotGlobal name: newName model: model)
+	^ {
+		  (RBIsValidInstanceVariableName name: newName).
+		  (RBIsVariableNotDefinedInHierarchy name: newName class: class).
+		  (RBIsNotGlobal name: newName model: model) }
 ]
 
 { #category : 'refactoring' }
@@ -100,7 +101,6 @@ RBRenameInstanceVariableRefactoring >> newName: anObject [
 
 { #category : 'preconditions' }
 RBRenameInstanceVariableRefactoring >> preconditions [
-
 	^(RBCondition isValidInstanceVariableName: newName for: class)
 		& (RBCondition definesInstanceVariable: variableName in: class)
 			& (RBCondition hierarchyOf: class definesVariable: newName) not

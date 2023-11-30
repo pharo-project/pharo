@@ -34,3 +34,9 @@ RBVariableNameCondition >> initialize [
 RBVariableNameCondition >> name: aString [
 	name := aString
 ]
+
+{ #category : 'displaying' }
+RBVariableNameCondition >> violationMessageOn: aWriteStream [
+
+	aWriteStream nextPutAll: self errorString
+]

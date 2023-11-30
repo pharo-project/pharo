@@ -425,23 +425,6 @@ CompiledMethodTest >> testHasComment [
 	self assert: (CompiledMethod>>#hasComment) hasComment
 ]
 
-{ #category : 'tests - instance variable' }
-CompiledMethodTest >> testHasInstVarRef [
-
-	| method  |
-	method := self class compiledMethodAt: #readX.
-	self assert: (method hasInstVarRef).
-
-	method := self class compiledMethodAt: #readXandY.
-	self assert: (method hasInstVarRef).
-
-	method := self class compiledMethodAt: #writeX.
-	self assert: (method hasInstVarRef).
-
-	method := self class compiledMethodAt: #writeXandY.
-	self assert: (method hasInstVarRef)
-]
-
 { #category : 'tests - literals' }
 CompiledMethodTest >> testHasLiteralSuchThat [
 	"#literals should not expose implementation hack that the last two literals are
@@ -1108,7 +1091,7 @@ CompiledMethodTest >> testValueWithReceiverArguments [
 
 	method := self class compiledMethodAt: #returnTrue.
 
-	value := method valueWithReceiver: nil arguments: #().
+	value := method valueWithReceiver: nil.
 	self assert: value equals: true.
 
 	method := self class compiledMethodAt: #returnPlusOne:.

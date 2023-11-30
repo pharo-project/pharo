@@ -11,9 +11,8 @@ Class {
 	#pools : [
 		'VTermOutputStyles'
 	],
-	#category : 'System-CommandLine-VTerm-Styling',
-	#package : 'System-CommandLine',
-	#tag : 'VTerm-Styling'
+	#category : 'System-CommandLine-TextSupport',
+	#package : 'System-CommandLine-TextSupport'
 }
 
 { #category : 'text coloring' }

@@ -16,12 +16,17 @@ Class {
 }
 
 { #category : 'execution' }
+RBRenameInstanceVariableDriver >> applyChanges [ 
+	refactoring privateTransform.
+	refactoring performChanges
+]
+
+{ #category : 'execution' }
 RBRenameInstanceVariableDriver >> configureRefactoring [
 
-	refactoring := RBUpFrontPreconditionCheckingCompositeRefactoring new
-		               model: model;
-		               refactorings: {RBRenameInstanceVariableRefactoring variable: oldName class: class};
-		               yourself
+	refactoring := RBRenameInstanceVariableRefactoring
+		               variable: oldName
+		               class: class
 ]
 
 { #category : 'accessing' }
@@ -45,7 +50,6 @@ RBRenameInstanceVariableDriver >> requestNewNameBasedOn: aName [
 		shouldEscape := true.
 		^ self ].
 
-	refactoring refactorings first newName: newName.
 	^ newName
 ]
 
@@ -61,7 +65,7 @@ RBRenameInstanceVariableDriver >> runRefactoring [
 	[ preconditionsPass ] whileFalse: [
 		newName := self requestNewNameBasedOn: oldName.
 		shouldEscape ifTrue: [ ^ self ].
-		refactoring refactorings first newName: newName.
+		refactoring newName: newName.
 		
 		preconditionsPass := true.
 		[ refactoring checkApplicabilityPreconditions ]

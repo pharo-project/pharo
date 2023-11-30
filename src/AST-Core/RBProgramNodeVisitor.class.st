@@ -141,7 +141,7 @@ RBProgramNodeVisitor >> visitMessageNode: aMessageNode [
 { #category : 'visiting' }
 RBProgramNodeVisitor >> visitMethodNode: aMethodNode [
 	self visitArgumentNodes: aMethodNode arguments.
-	aMethodNode pragmas do: [ :each | self visitNode: each ].
+	self visitPragmaNodes: aMethodNode pragmas.
 	self visitNode: aMethodNode body
 ]
 
@@ -170,6 +170,12 @@ RBProgramNodeVisitor >> visitPatternWrapperBlockNode: aRBPatternWrapperBlockNode
 { #category : 'visiting' }
 RBProgramNodeVisitor >> visitPragmaNode: aPragmaNode [
 	aPragmaNode arguments do: [ :each | self visitNode: each ]
+]
+
+{ #category : 'visiting' }
+RBProgramNodeVisitor >> visitPragmaNodes: aNodeCollection [
+	"Sent *once* when visiting a method node"
+	^ aNodeCollection do: [ :each | self visitPragmaNode: each ].
 ]
 
 { #category : 'visiting' }
