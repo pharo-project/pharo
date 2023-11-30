@@ -112,6 +112,7 @@ PharoBootstrapInitialization class >> initializeFileSystem [
 	(env at: #DiskStore) initialize.
 	(env at: #FileHandle) initialize.
 	(env at: #File) initialize.
+	(env at: #SharedRandom) initialize.
 
 	"Now that the file system is setup, we can register SourceFileArray to the session manager."
 	SessionManager default registerSystemClassNamed: #SourceFileArray
