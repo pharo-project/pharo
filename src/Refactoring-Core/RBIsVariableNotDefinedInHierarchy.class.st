@@ -21,11 +21,24 @@ RBIsVariableNotDefinedInHierarchy class >> name: aString class: aClass [
 
 { #category : 'checking' }
 RBIsVariableNotDefinedInHierarchy >> check [
-
-	^ (class hierarchyDefinesVariable: name) not
+	
+	(class definesVariable: name) ifTrue: [ violators := { class } . ^ false ].
+	
+	(class hierarchyDefinesVariable: name) ifTrue: [
+		violators := (class allSubclasses select: [ :each | each directlyDefinesVariable: name ]).
+		^ false ].
+	
+	^ true
 ]
 
 { #category : 'accessing' }
 RBIsVariableNotDefinedInHierarchy >> class: aClass [
 	class := aClass
+]
+
+{ #category : 'accessing' }
+RBIsVariableNotDefinedInHierarchy >> errorString [
+
+	^ 'The class {1}, in the hierarchy, already defines a variable named {2}'
+		  format: { violators first. name }
 ]

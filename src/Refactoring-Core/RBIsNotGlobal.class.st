@@ -23,7 +23,15 @@ RBIsNotGlobal class >> name: aString model: aNavigationModel [
 { #category : 'checking' }
 RBIsNotGlobal >> check [
 
-	^ (model includesGlobal: name asSymbol) not
+	(model includesGlobal: name asSymbol) ifTrue: [
+		violators := { name }.
+		^ false ].
+	^ true
+]
+
+{ #category : 'accessing' }
+RBIsNotGlobal >> errorString [
+	^ 'There is a global variable named {1}' format: { name }
 ]
 
 { #category : 'accessing' }

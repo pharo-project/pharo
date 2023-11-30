@@ -25,11 +25,17 @@ SycRenameVariableCommand2 >> defaultMenuItemName [
 
 { #category : 'execution' }
 SycRenameVariableCommand2 >> execute [
-
-	(RBRenameVariableDriver rename: toolContext lastSelectedVariable)
-		scopes: toolContext refactoringScopes;
-		model: (RBNamespace onEnvironment: RBBrowserEnvironment new);
-		runRefactoring
+	
+	| variable |
+	variable := toolContext lastSelectedVariable.
+	variable isClassVariable
+		ifFalse: [ 
+			(RBRenameInstanceVariableDriver new
+				scopes: toolContext refactoringScopes
+				variable: variable name
+				for: variable definingClass) runRefactoring ]
+		ifTrue: [ self halt ]
+	
 ]
 
 { #category : 'execution' }

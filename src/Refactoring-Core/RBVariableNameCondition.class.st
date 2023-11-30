@@ -5,7 +5,8 @@ Class {
 	#name : 'RBVariableNameCondition',
 	#superclass : 'RBNewAbstractCondition',
 	#instVars : [
-		'name'
+		'name',
+		'violators'
 	],
 	#category : 'Refactoring-Core-Conditions',
 	#package : 'Refactoring-Core',
@@ -21,6 +22,12 @@ RBVariableNameCondition class >> name: aString [
 { #category : 'utilities' }
 RBVariableNameCondition class >> reservedNames [
 	^#('self' 'true' 'false' 'nil' 'thisContext' 'super')
+]
+
+{ #category : 'initialization' }
+RBVariableNameCondition >> initialize [
+	super initialize.
+	violators := { }
 ]
 
 { #category : 'accessing' }

@@ -11,11 +11,23 @@ Class {
 
 { #category : 'checking' }
 RBIsValidSharedVariableName >> check [
+
 	| string |
-	name isString ifFalse: [^false].
+	name isString ifFalse: [
+		violators := { name }.
+		^ false ].
 	string := name asString.
-	(self class reservedNames includes: string) ifTrue: [^false].
-	string isEmpty ifTrue: [^false].
-	string first isUppercase ifFalse: [^false].
-	^RBScanner isVariable: string
+	(self class reservedNames includes: string) ifTrue: [
+		violators := { name }.
+		^ false ].
+	string isEmpty ifTrue: [
+		violators := { name }.
+		^ false ].
+	string first isUppercase ifFalse: [
+		violators := { name }.
+		^ false ].
+	(RBScanner isVariable: string) ifFalse: [
+		violators := { name }.
+		^ false ].
+	^ true
 ]
