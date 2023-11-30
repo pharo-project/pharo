@@ -166,7 +166,6 @@ BaselineOfPharoBootstrap >> baseline: spec [
 			'Kernel-BytecodeEncoders'.
 			'Transcript-NonInteractive'.
 			'PharoBootstrap-Initialization'.
-			'Random-Core'.
 			'Shift-Changes'.
 			'Shift-ClassBuilder'.
 			'Shift-ClassInstaller'.
@@ -176,7 +175,6 @@ BaselineOfPharoBootstrap >> baseline: spec [
 			'System-CommandLine'.
 			'System-CommandLineHandler'.
 			'System-Finalization'.
-			'System-Hashing'.
 			'System-Platforms'.
 			'System-SessionManager'.
 			'System-Sources'.
@@ -211,6 +209,8 @@ BaselineOfPharoBootstrap >> baseline: spec [
 			'OpalCompiler-Core'}.
 		
 		spec group: 'FileSystemGroup' with: {
+			'Random-Core'.
+			'System-Hashing'.
 			'Network-UUID'.
 			'FileSystem-Core'.
 			'FileSystem-Disk'}.

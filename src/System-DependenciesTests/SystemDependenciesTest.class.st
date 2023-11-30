@@ -106,13 +106,6 @@ SystemDependenciesTest >> knownSUnitDependencies [
 ]
 
 { #category : 'known dependencies' }
-SystemDependenciesTest >> knownSUnitKernelDependencies [
-	"ideally this list should be empty"
-
-	^ #( #'FileSystem-Core' )
-]
-
-{ #category : 'known dependencies' }
 SystemDependenciesTest >> knownSpec2Dependencies [
 
 	^ #(
@@ -439,9 +432,10 @@ SystemDependenciesTest >> testExternalSUnitKernelDependencies [
 		BaselineOfPharoBootstrap kernelPackageNames,
 		BaselineOfPharoBootstrap multilingualPackageNames,
 		BaselineOfPharoBootstrap kernelAdditionalPackagesNames,
+		BaselineOfPharoBootstrap fileSystemPackageNames,
 		BaselineOfPharoBootstrap sUnitPackageNames).
 
-	self assertCollection: dependencies hasSameElements: self knownSUnitKernelDependencies
+	self assertEmpty: dependencies
 ]
 
 { #category : 'tests' }
