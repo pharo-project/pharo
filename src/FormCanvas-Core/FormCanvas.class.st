@@ -217,7 +217,7 @@ FormCanvas >> drawString: aString from: firstIndex to: lastIndex in: bounds font
 	^ self drawString: aString from: firstIndex to: lastIndex in: bounds font: fontOrNil color: c scale: 1
 ]
 
-{ #category : 'drawing - text' }
+{ #category : 'scaled drawing' }
 FormCanvas >> drawString: aString from: firstIndex to: lastIndex in: bounds font: fontOrNil color: c scale: scale [
 	| font portRect point |
 	port colorMap: nil.
@@ -245,7 +245,7 @@ FormCanvas >> drawString: aString from: firstIndex to: lastIndex in: bounds font
 	^ self drawString: aString from: firstIndex to: lastIndex in: bounds font: fontOrNil color: c underline: underline underlineColor: uc strikethrough: strikethrough strikethroughColor: sc scale: 1
 ]
 
-{ #category : 'drawing - text' }
+{ #category : 'scaled drawing' }
 FormCanvas >> drawString: aString from: firstIndex to: lastIndex in: bounds font: fontOrNil color: c underline: underline underlineColor: uc strikethrough: strikethrough strikethroughColor: sc scale: scale [
 	| font portRect endPoint point |
 	port colorMap: nil.
@@ -496,7 +496,7 @@ FormCanvas >> paragraph: para bounds: bounds color: c [
 	^ self paragraph: para bounds: bounds color: c scale: 1
 ]
 
-{ #category : 'drawing' }
+{ #category : 'scaled drawing' }
 FormCanvas >> paragraph: para bounds: bounds color: c scale: scale [
 
 	| scanner |
