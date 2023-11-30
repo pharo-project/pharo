@@ -192,13 +192,13 @@ RubSmalltalkCodeMode >> hasBindingOf: aString [
 { #category : 'parsing' }
 RubSmalltalkCodeMode >> parseExpression: aString [
 
-	^RBParser parseFaultyExpression: aString
+	^ASTParser parseFaultyExpression: aString
 ]
 
 { #category : 'parsing' }
 RubSmalltalkCodeMode >> parseSource: aString [
 
-	^RBParser parseFaultyMethod: aString
+	^ASTParser parseFaultyMethod: aString
 ]
 
 { #category : 'shout' }

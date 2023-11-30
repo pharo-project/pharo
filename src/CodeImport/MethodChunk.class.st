@@ -74,7 +74,7 @@ MethodChunk >> isMethodDeclaration [
 { #category : 'accessing' }
 MethodChunk >> methodSelector [
 
-	^ RBParser parseMethodPattern: self contents
+	^ ASTParser parseMethodPattern: self contents
 ]
 
 { #category : 'accessing' }

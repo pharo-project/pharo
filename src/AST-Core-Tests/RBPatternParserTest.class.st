@@ -13,13 +13,13 @@ Class {
 
 { #category : 'accessing' }
 RBPatternParserTest class >> parserClass [
-	^ RBPatternParser
+	^ ASTPatternParser
 ]
 
 { #category : 'tests - matching' }
 RBPatternParserTest >> testMatchingPatternBlockNode1 [
 	| searchPattern tree |
-	searchPattern := RBPatternParser
+	searchPattern := ASTPatternParser
 		parseExpression: '(`a = `b) `{`a name size = `b name size}'.
 	tree := self parseExpression: 'a = c'.
 	self assert: (searchPattern match: tree inContext: Dictionary new)
@@ -28,7 +28,7 @@ RBPatternParserTest >> testMatchingPatternBlockNode1 [
 { #category : 'tests - matching' }
 RBPatternParserTest >> testMatchingPatternBlockNode2 [
 	| searchPattern tree |
-	searchPattern := RBPatternParser
+	searchPattern := ASTPatternParser
 		parseExpression: '(`a = `b) `{`a name anySatisfy: [ :e | `b name includes: e]}'.
 	tree := self parseExpression: 'a = a1'.
 	self assert: (searchPattern match: tree inContext: Dictionary new)
@@ -53,7 +53,7 @@ RBPatternParserTest >> testParseFaultyPatternBlock [
 { #category : 'tests - parsing' }
 RBPatternParserTest >> testPatternNotStringExpression [
 	| searchPattern tree |
-	searchPattern := RBPatternParser parseExpression: '`{ :node | node isString }'.
+	searchPattern := ASTPatternParser parseExpression: '`{ :node | node isString }'.
 
 	tree := self parseExpression: 'a = a1'.
 
@@ -64,7 +64,7 @@ RBPatternParserTest >> testPatternNotStringExpression [
 { #category : 'tests - parsing' }
 RBPatternParserTest >> testPatternStringExpression [
 	| searchPattern tree |
-	searchPattern := RBPatternParser parseExpression: '`{ :node | node isString }'.
+	searchPattern := ASTPatternParser parseExpression: '`{ :node | node isString }'.
 
 	tree := self parseExpression: '''justAString'''.
 
@@ -75,23 +75,23 @@ RBPatternParserTest >> testPatternStringExpression [
 { #category : 'tests - parsing' }
 RBPatternParserTest >> testPatternVariable [
 	| searchPattern |
-	searchPattern := RBPatternParser parseExpression: '`a'.
-	self assert: searchPattern class = RBPatternVariableNode.
+	searchPattern := ASTPatternParser parseExpression: '`a'.
+	self assert: searchPattern class = ASTPatternVariableNode.
 	self assert: searchPattern name equals: #'`a'
 ]
 
 { #category : 'tests - parsing' }
 RBPatternParserTest >> testPatternVariableSimpleVariable [
 	| searchPattern |
-	searchPattern := RBPatternParser parseExpression: '`a'.
-	self assert: searchPattern class = RBPatternVariableNode.
+	searchPattern := ASTPatternParser parseExpression: '`a'.
+	self assert: searchPattern class = ASTPatternVariableNode.
 	self assert: searchPattern name equals: #'`a'
 ]
 
 { #category : 'tests - parsing' }
 RBPatternParserTest >> testPatternVariableSymbol [
 	| searchPattern |
-	searchPattern := RBPatternParser parseExpression: '`#aSymbol'.
-	self assert: searchPattern class = RBPatternVariableNode.
+	searchPattern := ASTPatternParser parseExpression: '`#aSymbol'.
+	self assert: searchPattern class = ASTPatternVariableNode.
 	self assert: searchPattern name equals: #'`#aSymbol'
 ]

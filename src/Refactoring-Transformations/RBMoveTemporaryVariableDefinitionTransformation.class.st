@@ -124,7 +124,7 @@ RBMoveTemporaryVariableDefinitionTransformation >> checkLocationsIn: candidateBl
 
 	(candidateBlocks
 		 detect: [ :each |
-			 RBReadBeforeWrittenTester
+			 ASTReadBeforeWrittenTester
 				 isVariable: variableName
 				 readBeforeWrittenIn: each ]
 		 ifNone: [ nil ]) ifNotNil: [ ^ false ].

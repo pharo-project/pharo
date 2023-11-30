@@ -83,7 +83,7 @@ RBExtractMethodTransformation >> applicabilityPreconditions [
 		   true ]) & (RBCondition withBlock: [
 		   | tempVariables |
 		   tempVariables := self calculateTemporaries.
-		   (RBReadBeforeWrittenTester
+		   (ASTReadBeforeWrittenTester
 			    readBeforeWritten: tempVariables
 			    in: aSubtree) ifNotEmpty: [
 			   self refactoringError:
@@ -96,7 +96,7 @@ RBExtractMethodTransformation >> applicabilityPreconditions [
 		   | assignmentCollection |
 		   assignmentCollection := self calculateAssignments.
 		   assignmentCollection ifNotEmpty: [
-			   ((RBReadBeforeWrittenTester
+			   ((ASTReadBeforeWrittenTester
 				     isVariable: assignmentCollection first
 				     readBeforeWrittenIn: aSubtree) or: [ aSubtree containsReturn ])
 				   ifTrue: [
@@ -290,14 +290,14 @@ RBExtractMethodTransformation >> generateNewMethodWith: aMethodName [
 
 	| args newMethodNode |
 	args := aMethodName arguments
-		collect: [ :p | RBVariableNode named: p ].
+		collect: [ :p | ASTVariableNode named: p ].
 
-	newMethodNode := RBMethodNode
+	newMethodNode := ASTMethodNode
 							selector: aMethodName selector
 							arguments: args asArray
 							body: (subtree isSequence
 								ifTrue: [ subtree ]
-								ifFalse: [ RBSequenceNode
+								ifFalse: [ ASTSequenceNode
 									temporaries: #()
 									statements: (OrderedCollection with: subtree)]).
 	temporaries do: [:each | newMethodNode body addTemporaryNamed: each].
@@ -307,8 +307,8 @@ RBExtractMethodTransformation >> generateNewMethodWith: aMethodName [
 
 	assignments size = 1 ifTrue: [
 		newMethodNode addNode:
-			(RBReturnNode value:
-			(RBVariableNode named: assignments first asString)) ].
+			(ASTReturnNode value:
+			(ASTVariableNode named: assignments first asString)) ].
 
 	^ newMethodNode
 ]

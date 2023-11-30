@@ -64,7 +64,7 @@ RGBehavior >> compile: aString classified: aCategory notifying: aController [
 
 	| parseTree ast selector newMethod |
 
-	parseTree := (RBParser
+	parseTree := (ASTParser
 		parseMethod: aString
 		onError: [ :msg :pos | ^ nil ]) methodClass: self.
 
@@ -84,7 +84,7 @@ RGBehavior >> compile: code notifying: requestor [
 
 	| parseTree ast aMethod |
 
-	parseTree := (RBParser
+	parseTree := (ASTParser
 		parseMethod: code
 		onError: [ :msg :pos | "TODO:" ^ nil ]) methodClass: self.
 

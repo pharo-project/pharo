@@ -57,7 +57,7 @@ RGMethodDefinitionTest >> testASTNonExistingMethodWithSource [
 	newMethod := (RGMethodDefinition named: #foo) parent: newClass.
 	newMethod sourceCode: source.
 	self assert: newMethod isPassive.
-	self assert: newMethod ast equals: (RBParser parseMethod: source)
+	self assert: newMethod ast equals: (ASTParser parseMethod: source)
 ]
 
 { #category : 'test - accessing source' }

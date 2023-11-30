@@ -24,25 +24,25 @@ RBParseTreeSearcherTest >> assertCodeForSymbolAt: aSymbol in: myContextDictionar
 RBParseTreeSearcherTest >> assertCodeForVariableNodeNamed: name in: myContextDictionary equals: expectedCode [
 
 	^ self
-		  assert:(myContextDictionary at: (RBPatternVariableNode named: name)) formattedCode
+		  assert:(myContextDictionary at: (ASTPatternVariableNode named: name)) formattedCode
 		  equals: expectedCode
 ]
 
 { #category : 'helpers' }
 RBParseTreeSearcherTest >> parseExpression: aString [
 
-	^ RBParser parseExpression: aString
+	^ ASTParser parseExpression: aString
 ]
 
 { #category : 'helpers' }
 RBParseTreeSearcherTest >> parseMethod: aString [
 
-	^ RBParser parseMethod: aString
+	^ ASTParser parseMethod: aString
 ]
 
 { #category : 'helpers' }
 RBParseTreeSearcherTest >> parseTreeSearcher [
-	^ RBParseTreeSearcher new
+	^ ASTParseTreeSearcher new
 ]
 
 { #category : 'running' }
@@ -122,7 +122,7 @@ RBParseTreeSearcherTest >> testMacthesDoisMatchingStatementsInDynamicArray [
 	| contextDictionary |
 	searcher matches: '{`.@stmts.}' do: [ :aNode :answer |  contextDictionary:= searcher context ].
 	contextDictionary := searcher executeTree: (self parseExpression:'{ (1@2) . Color red . 3 }').
-	self assert: (contextDictionary at: (RBPatternVariableNode named: '`.@stmts')) size equals: 3
+	self assert: (contextDictionary at: (ASTPatternVariableNode named: '`.@stmts')) size equals: 3
 ]
 
 { #category : 'tests - arguments' }
@@ -136,7 +136,7 @@ RBParseTreeSearcherTest >> testMatchesArgumentToTestImplicitAddArgument [
 
 	matchContextList := OrderedCollection new.
 	matchContextArgList := OrderedCollection new.
-	aParser := RBParser new.
+	aParser := ASTParser new.
 
 	search := self parseTreeSearcher.
 	tree := self parseMethod: '+ a
@@ -357,12 +357,12 @@ RBParseTreeSearcherTest >> testSearchListComplex [
 
 	self
 		assert:
-		(dict at: (RBPatternVariableNode named: '`@receiver')) formattedCode
+		(dict at: (ASTPatternVariableNode named: '`@receiver')) formattedCode
 		equals: 'self'.
 
 	self
 		assert:
-		(dict at: (RBPatternVariableNode named: '`@arg')) formattedCode
+		(dict at: (ASTPatternVariableNode named: '`@arg')) formattedCode
 		equals: 'each isReadOnlyObject'
 ]
 
@@ -798,7 +798,7 @@ RBParseTreeSearcherTest >> testSimpleAddSearch [
 
 	| res |
 	searcher addSearch: '`@Super << `#ASymbol' -> [ :aNode :anAnswer | res := #class ].
-	searcher executeTree: (RBParser parseExpression: ' Object << #Point').
+	searcher executeTree: (ASTParser parseExpression: ' Object << #Point').
 	self assert: res equals: #class
 ]
 
@@ -807,7 +807,7 @@ RBParseTreeSearcherTest >> testSimpleAddSearches [
 
 	| res |
 	searcher addSearches: { '`@Super << `#ASymbol' -> [ :aNode :anAnswer | res := #class ]}.
-	searcher executeTree: (RBParser parseExpression: ' Object << #Point').
+	searcher executeTree: (ASTParser parseExpression: ' Object << #Point').
 	self assert: res equals: #class
 ]
 

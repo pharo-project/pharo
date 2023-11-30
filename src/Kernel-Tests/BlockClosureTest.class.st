@@ -365,7 +365,7 @@ BlockClosureTest >> testOneArgument [
 
 { #category : 'tests - printing' }
 BlockClosureTest >> testPrintOn [
-	self assert: (RBParser parseExpression: [ 1 + 2 ] printString) equals: (RBParser parseExpression: '[ 1 + 2 ]')
+	self assert: (ASTParser parseExpression: [ 1 + 2 ] printString) equals: (ASTParser parseExpression: '[ 1 + 2 ]')
 ]
 
 { #category : 'tests - printing' }
@@ -377,7 +377,7 @@ BlockClosureTest >> testPrintOnBlockDefinedInMethodWithoutSourceCode [
 	
 	block := method valueWithReceiver: nil.
 	"we compare the ast to not depend on pretty printer settings"
-	self assert: (RBParser parseExpression: block printString) equals: (RBParser parseExpression: '[ 1 + 2 ]').
+	self assert: (ASTParser parseExpression: block printString) equals: (ASTParser parseExpression: '[ 1 + 2 ]').
 ]
 
 { #category : 'tests' }

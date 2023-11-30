@@ -282,7 +282,7 @@ RBAbstractTransformation >> parseTreeRewriter [
 
 { #category : 'parsing' }
 RBAbstractTransformation >> parseTreeRewriterClass [
-	^ RBParseTreeRewriter
+	^ ASTParseTreeRewriter
 ]
 
 { #category : 'parsing' }
@@ -292,12 +292,12 @@ RBAbstractTransformation >> parseTreeSearcher [
 
 { #category : 'parsing' }
 RBAbstractTransformation >> parseTreeSearcherClass [
-	^ RBParseTreeSearcher
+	^ ASTParseTreeSearcher
 ]
 
 { #category : 'parsing' }
 RBAbstractTransformation >> parserClass [
-	^ RBParser
+	^ ASTParser
 ]
 
 { #category : 'transforming' }

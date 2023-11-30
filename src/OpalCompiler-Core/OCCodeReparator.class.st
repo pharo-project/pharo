@@ -47,7 +47,7 @@ OCCodeReparator >> declareTempAndPaste: name [
 	theTextString := self requestor text.
 
 	"We parse again the method displayed in the morph. The variable methodNode has the first version of the method, without temporary declarations. "
-	newMethodNode := RBParser parseMethod: theTextString.
+	newMethodNode := ASTParser parseMethod: theTextString.
 
 	"We check if there is a declaration of temporary variables"
 	tempsMark :=  newMethodNode body  rightBar ifNil: [ node methodNode body start ].
@@ -222,7 +222,7 @@ OCCodeReparator >> substituteVariable: varName atInterval: anInterval [
 		substituteWord: varName
 		wordInterval: anInterval.
 	node methodNode source: self requestor text.
-	node replaceWith:((RBVariableNode named: varName) binding: (node owningScope lookupVar: varName))
+	node replaceWith:((ASTVariableNode named: varName) binding: (node owningScope lookupVar: varName))
 ]
 
 { #category : 'correcting' }

@@ -24,7 +24,7 @@ ASTPluginMeaningOfLife >> transform [
 	self copyAST.
 	"we use the RBParseTreeRewriter to do the change, another option is to do it directly using
 	e.g #replaceWith:"
-	rule := RBParseTreeRewriter
+	rule := ASTParseTreeRewriter
 		        replaceLiteral: 42
 		        with: 'meaning of life'.
 	rule executeTree: ast.

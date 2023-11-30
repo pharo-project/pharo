@@ -112,7 +112,7 @@ RGMethod >> ast [
 { #category : 'private' }
 RGMethod >> astFromSource [
 
-	^ RBParser parseMethod: self sourceCode
+	^ ASTParser parseMethod: self sourceCode
 ]
 
 { #category : 'accessing - backend' }
@@ -313,7 +313,7 @@ RGMethod >> package: anRGPackage [
 { #category : 'accessing' }
 RGMethod >> parseTree [
 	| tree |
-	tree := RBParser
+	tree := ASTParser
 		  parseMethod: self sourceCode
 		  onError: [ :str :pos | ^ nil ].
 	tree ifNotNil: [ tree doSemanticAnalysis ].

@@ -14,7 +14,7 @@ MethodFinderTest >> testArgumentsNumber [
 	"The Method Finder should returns sends with the good number of arguments."
 
 	|bottom resultZero resultOne |
-	bottom := RBParser parseExpression: 'MethodFinderBottomClass new'.
+	bottom := ASTParser parseExpression: 'MethodFinderBottomClass new'.
 	resultZero := (MethodFinder new findMethodsByExampleInput: { bottom } andExpectedResult: bottom).
 	resultOne  := (MethodFinder new findMethodsByExampleInput: { bottom . bottom } andExpectedResult: bottom).
 	self assert: ((resultZero collect: [:each | each selector]) allSatisfy: [ :s | s keywords size = 1]).
@@ -28,7 +28,7 @@ MethodFinderTest >> testExceptionDoesNotStopTheFlow [
 	args := FinderExamplesSearchStrategy parseAsNodes: 'MethodFinderBottomClass new . 1'.
 	result := MethodFinder new
 		          findMethodsByExampleInput: args
-		          andExpectedResult: (RBParser parseExpression: '1').
+		          andExpectedResult: (ASTParser parseExpression: '1').
 	self assert: ((result collect: [ :each | each selector ]) includes:
 			 #oneArgumentMethod:)
 ]

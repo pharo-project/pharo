@@ -172,7 +172,7 @@ RubSmalltalkEditor >> bestNodeInString: source at: selectionInterval editingMode
 		node := ast bestNodeFor: (start to: stop).
 
 		node ifNil: [
-			node := RBParseErrorNodeVisitor
+			node := ASTParseErrorNodeVisitor
 				visit: ast
 				detect: [ :n | n intersectsInterval: (start to: start)]
 				ifNone: [ ^aBlock value ]].
@@ -186,7 +186,7 @@ RubSmalltalkEditor >> bestNodeInString: source at: selectionInterval editingMode
 						node := newNode ].
 				].
 
-			node := RBGenericNodeVisitor
+			node := ASTGenericNodeVisitor
 				visit: node
 				detect: [ :n | n intersectsInterval: (start to: start) ]
 				ifNone: [ node ] ] ].
@@ -201,8 +201,8 @@ RubSmalltalkEditor >> bestNodeInTextArea [
 
 	"We build the AST (which can be faulty when we are scripting) then ask the best node for the interval."
 	^ (self isScripting
-		   ifTrue: [ RBParser parseFaultyExpression: self textArea string ]
-		   ifFalse: [ RBParser parseFaultyMethod: self textArea string ]) bestNodeFor: (self textArea startIndex to: self textArea stopIndex)
+		   ifTrue: [ ASTParser parseFaultyExpression: self textArea string ]
+		   ifFalse: [ ASTParser parseFaultyMethod: self textArea string ]) bestNodeFor: (self textArea startIndex to: self textArea stopIndex)
 ]
 
 { #category : 'source navigation' }
@@ -240,8 +240,8 @@ RubSmalltalkEditor >> bestNodeInTextAreaWithoutSelection [
 					 ifTrue: [ self textArea string ].
 
 	node := self isScripting
-		ifTrue: [ RBParser parseFaultyExpression: intervalTrimmedText ]
-		ifFalse: [ RBParser parseFaultyMethod: intervalTrimmedText ].
+		ifTrue: [ ASTParser parseFaultyExpression: intervalTrimmedText ]
+		ifFalse: [ ASTParser parseFaultyMethod: intervalTrimmedText ].
 
 	^node bestNodeFor: (start to: start)
 ]
@@ -396,7 +396,7 @@ RubSmalltalkEditor >> computeSelectionIntervalForCurrentLine [
 { #category : 'private' }
 RubSmalltalkEditor >> computeSelectionIntervalFromCommentIn: aString at: anInterval [
 	| comment commentInterval |
-	comment := (RBScanner on: (aString copyFrom: anInterval first to: anInterval last) readStream) getComments.
+	comment := (ASTScanner on: (aString copyFrom: anInterval first to: anInterval last) readStream) getComments.
 	comment ifNil: [ ^ 0 to: -1 ].
 	commentInterval := comment first.
 	^ commentInterval first + 1 to: commentInterval last - 1
@@ -1217,7 +1217,7 @@ RubSmalltalkEditor >> widenSelectionIn: sourceCode selection: selectionInterval 
 	stop := node stop max: cursorIndex - 1.
 
 	comments := OrderedCollection new.
-	RBCommentNodeVisitor visit: node do: [ :cmnts | comments add: cmnts ].
+	ASTCommentNodeVisitor visit: node do: [ :cmnts | comments add: cmnts ].
 
 	comments
 		detect: [ :c | c start < cursorIndex and: [ c stop >= cursorIndex ] ]

@@ -37,7 +37,7 @@ DoItChunk >> importFor: requestor logSource: logSource [
 			 yourself).
 
 	"The package and class creation code got updated in Pharo but Monticello rely on this code. In order to not break the compatibility we are now checking if the code to import is this code and we handle it in another way."
-	ast := RBParser parseExpression: contents.
+	ast := ASTParser parseExpression: contents.
 	(self isPackageAddition: ast) ifTrue: [ ^ self packageOrganizer ensurePackageMatching: ast arguments first value ].
 	(OldClassDefinitionBuilder isOldClassCreation: ast) ifTrue: [ ^ OldClassDefinitionBuilder buildFromAST: ast ].
 

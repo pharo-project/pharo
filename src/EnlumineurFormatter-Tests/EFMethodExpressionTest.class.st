@@ -277,7 +277,7 @@ EFMethodExpressionTest >> spaceIndentConfiguration [
 { #category : 'tests' }
 EFMethodExpressionTest >> testBasic [
 	| expr source |
-	expr := RBParser parseMethod: 'aMethod <pragma> "aComment" body'.
+	expr := ASTParser parseMethod: 'aMethod <pragma> "aComment" body'.
 	configurationSelector := #basicConfiguration.
 	source := self formatter format: expr.
 	self assert: source equals:
@@ -290,7 +290,7 @@ EFMethodExpressionTest >> testBasic [
 { #category : 'tests' }
 EFMethodExpressionTest >> testBasic2 [
 	| expr source |
-	expr := RBParser parseMethod: 'aMethod <pragma1> <pragma2> "aComment1" "aComment2"  body'.
+	expr := ASTParser parseMethod: 'aMethod <pragma1> <pragma2> "aComment1" "aComment2"  body'.
 	configurationSelector := #newLineBetweenTopCommentsConfiguration.
 	source := self formatter format: expr.
 	self assert: source equals:
@@ -305,7 +305,7 @@ EFMethodExpressionTest >> testBasic2 [
 { #category : 'tests' }
 EFMethodExpressionTest >> testBasicSpaceIndent [
 	| expr source |
-	expr := RBParser parseMethod: 'aMethod <pragma> "aComment" body'.
+	expr := ASTParser parseMethod: 'aMethod <pragma> "aComment" body'.
 	configurationSelector := #spaceIndentConfiguration.
 	source := self formatter format: expr.
 	self assert: source equals:
@@ -318,7 +318,7 @@ EFMethodExpressionTest >> testBasicSpaceIndent [
 { #category : 'tests' }
 EFMethodExpressionTest >> testBigMethod [
 	| expr source |
-	expr := RBParser parseMethod: 
+	expr := ASTParser parseMethod: 
 	'aMethode
 	"aComment"
 	"anotherComment"
@@ -347,7 +347,7 @@ EFMethodExpressionTest >> testBigMethod [
 { #category : 'tests' }
 EFMethodExpressionTest >> testCommentBasicFormat [
 	| expr source |
-	expr := RBParser parseMethod: 'aMethode "   aComment   "'.
+	expr := ASTParser parseMethod: 'aMethode "   aComment   "'.
 	configurationSelector := #basicCommentFormatConfiguration.
 	source := self formatter format: expr.
 	self assert: source equals:
@@ -359,7 +359,7 @@ EFMethodExpressionTest >> testCommentBasicFormat [
 { #category : 'tests' }
 EFMethodExpressionTest >> testCommentNotBasicFormat [
 	| expr source |
-	expr := RBParser parseMethod: 'aMethode "   aComment   "'.
+	expr := ASTParser parseMethod: 'aMethode "   aComment   "'.
 	configurationSelector := #notBasicCommentFormatConfiguration.
 	source := self formatter format: expr.
 	self assert: source equals:
@@ -371,7 +371,7 @@ EFMethodExpressionTest >> testCommentNotBasicFormat [
 { #category : 'tests' }
 EFMethodExpressionTest >> testFormatBody [
 	| expr source |
-	expr := RBParser parseMethod: 'aMethode a:=1'.
+	expr := ASTParser parseMethod: 'aMethode a:=1'.
 	configurationSelector := #basicConfiguration.
 	source := self formatter format: expr.
 	self assert: source equals:
@@ -382,7 +382,7 @@ EFMethodExpressionTest >> testFormatBody [
 { #category : 'tests' }
 EFMethodExpressionTest >> testIndentCascade [
 	| expr source |
-	expr := RBParser parseMethod: 'aMethode	Transcript cr; show: ''foo'';	cr. Transcript cr;cr'.
+	expr := ASTParser parseMethod: 'aMethode	Transcript cr; show: ''foo'';	cr. Transcript cr;cr'.
 	configurationSelector := #cascadeConfiguration.
 	source := self formatter format: expr.
 	self assert: source equals:
@@ -399,7 +399,7 @@ EFMethodExpressionTest >> testIndentCascade [
 { #category : 'tests' }
 EFMethodExpressionTest >> testMethodWithMessageArgument [
 	| expr source |
-	expr := RBParser parseMethod: 
+	expr := ASTParser parseMethod: 
 'aMethod
 
 	1 to: 10 do: [:i | Transcript show:i ; cr ;cr]
@@ -419,7 +419,7 @@ EFMethodExpressionTest >> testMethodWithMessageArgument [
 { #category : 'tests' }
 EFMethodExpressionTest >> testNewLinesAfterComment [
 	| expr source |
-	expr := RBParser parseMethod: 'aMethode "aComment"'.
+	expr := ASTParser parseMethod: 'aMethode "aComment"'.
 	configurationSelector := #oneNewLineAfterCommentConfiguration.
 	source := self formatter format: expr.
 	self assert: source equals:
@@ -432,7 +432,7 @@ EFMethodExpressionTest >> testNewLinesAfterComment [
 { #category : 'tests' }
 EFMethodExpressionTest >> testNewLinesAfterComment2 [
 	| expr source |
-	expr := RBParser parseMethod: 'aMethode "aComment" "anotherComment"'.
+	expr := ASTParser parseMethod: 'aMethode "aComment" "anotherComment"'.
 	configurationSelector := #oneNewLineAfterCommentConfiguration.
 	source := self formatter format: expr.
 	self assert: source equals:
@@ -447,7 +447,7 @@ EFMethodExpressionTest >> testNewLinesAfterComment2 [
 { #category : 'tests' }
 EFMethodExpressionTest >> testNewLinesAfterGluedComment [
 	| expr source |
-	expr := RBParser parseMethod: 'aMethode"aComment""anotherComment"'.
+	expr := ASTParser parseMethod: 'aMethode"aComment""anotherComment"'.
 	configurationSelector := #oneNewLineAfterCommentConfiguration.
 	source := self formatter format: expr.
 	self assert: source equals:
@@ -460,7 +460,7 @@ EFMethodExpressionTest >> testNewLinesAfterGluedComment [
 { #category : 'tests' }
 EFMethodExpressionTest >> testNewLinesBetweenTopComments [
 	| expr source |
-	expr := RBParser parseMethod: 'aMethode "aComment" "anotherComment"'.
+	expr := ASTParser parseMethod: 'aMethode "aComment" "anotherComment"'.
 	configurationSelector := #newLineBetweenTopCommentsConfiguration.
 	source := self formatter format: expr.
 	self assert: source equals:
@@ -473,7 +473,7 @@ EFMethodExpressionTest >> testNewLinesBetweenTopComments [
 { #category : 'tests' }
 EFMethodExpressionTest >> testNoNewLinesAfterComment [
 	| expr source |
-	expr := RBParser parseMethod: 'aMethode "aComment"'.
+	expr := ASTParser parseMethod: 'aMethode "aComment"'.
 	configurationSelector := #basicCommentFormatConfiguration.
 	source := self formatter format: expr.
 	self assert: source equals:
@@ -485,7 +485,7 @@ EFMethodExpressionTest >> testNoNewLinesAfterComment [
 { #category : 'tests' }
 EFMethodExpressionTest >> testNoNewLinesAfterGluedComment [
 	| expr source |
-	expr := RBParser parseMethod: 'aMethode "aComment""anotherComment"'.
+	expr := ASTParser parseMethod: 'aMethode "aComment""anotherComment"'.
 	configurationSelector := #noNewLinesAfterCommentConfiguration.
 	source := self formatter format: expr.
 	self assert: source equals:
@@ -497,7 +497,7 @@ EFMethodExpressionTest >> testNoNewLinesAfterGluedComment [
 { #category : 'tests' }
 EFMethodExpressionTest >> testNoNewLinesAfterSignature [
 	| expr source |
-	expr := RBParser parseMethod: 'aMethode'.
+	expr := ASTParser parseMethod: 'aMethode'.
 	configurationSelector := #signatureConfiguration.
 	source := self formatter format: expr.
 	self assert: source equals:
@@ -508,7 +508,7 @@ EFMethodExpressionTest >> testNoNewLinesAfterSignature [
 { #category : 'tests' }
 EFMethodExpressionTest >> testNoNewLinesBetweenTopComments [
 	| expr source |
-	expr := RBParser parseMethod: 'aMethode "aComment" "anotherComment"'.
+	expr := ASTParser parseMethod: 'aMethode "aComment" "anotherComment"'.
 	configurationSelector := #noNewLineBetweenTopCommentsConfiguration.
 	source := self formatter format: expr.
 	self assert: source equals:
@@ -519,7 +519,7 @@ EFMethodExpressionTest >> testNoNewLinesBetweenTopComments [
 { #category : 'tests' }
 EFMethodExpressionTest >> testOneNewLinesAfterSignature [
 	| expr source |
-	expr := RBParser parseMethod: 'aMethode'.
+	expr := ASTParser parseMethod: 'aMethode'.
 	configurationSelector := #oneNewLineAfterCommentConfiguration.
 	source := self formatter format: expr.
 	self assert: source equals:
@@ -530,7 +530,7 @@ EFMethodExpressionTest >> testOneNewLinesAfterSignature [
 { #category : 'tests' }
 EFMethodExpressionTest >> testPragma [
 	| expr source |
-	expr := RBParser parseMethod: 'aMethode <pragma>'.
+	expr := ASTParser parseMethod: 'aMethode <pragma>'.
 	configurationSelector := #notBasicCommentFormatConfiguration.
 	source := self formatter format: expr.
 	self assert: source equals:
@@ -542,7 +542,7 @@ EFMethodExpressionTest >> testPragma [
 { #category : 'tests' }
 EFMethodExpressionTest >> testSignatureNotOnMultipleLines [
 	| expr source |
-	expr := RBParser parseMethod: 'aMethode:arg1 foo:arg2'.
+	expr := ASTParser parseMethod: 'aMethode:arg1 foo:arg2'.
 	configurationSelector := #signatureNotOnMultipleLinesConfiguration.
 	source := self formatter format: expr.
 	self assert: source equals:
@@ -553,7 +553,7 @@ EFMethodExpressionTest >> testSignatureNotOnMultipleLines [
 { #category : 'tests' }
 EFMethodExpressionTest >> testSignatureOnMultipleLines [
 	| expr source |
-	expr := RBParser parseMethod: 'aMethode: arg1 foo:arg2'.
+	expr := ASTParser parseMethod: 'aMethode: arg1 foo:arg2'.
 	configurationSelector := #signatureOnMultipleLinesConfiguration.
 	source := self formatter format: expr.
 	self assert: source equals:
@@ -565,7 +565,7 @@ EFMethodExpressionTest >> testSignatureOnMultipleLines [
 { #category : 'tests' }
 EFMethodExpressionTest >> testSignatureWithArgument [
 	| expr source |
-	expr := RBParser parseMethod: 'aMethode:arg'.
+	expr := ASTParser parseMethod: 'aMethode:arg'.
 	configurationSelector := #signatureNotOnMultipleLinesConfiguration.
 	source := self formatter format: expr.
 	self assert: source equals:
@@ -576,7 +576,7 @@ EFMethodExpressionTest >> testSignatureWithArgument [
 { #category : 'tests' }
 EFMethodExpressionTest >> testSignatureWithoutArgument [
 	| expr source |
-	expr := RBParser parseMethod: 'aMethode'.
+	expr := ASTParser parseMethod: 'aMethode'.
 	configurationSelector := #basicConfiguration.
 	source := self formatter format: expr.
 	self assert: source equals:
@@ -587,7 +587,7 @@ EFMethodExpressionTest >> testSignatureWithoutArgument [
 { #category : 'tests' }
 EFMethodExpressionTest >> testTwoNewLinesAfterSignature [
 	| expr source |
-	expr := RBParser parseMethod: 'aMethode'.
+	expr := ASTParser parseMethod: 'aMethode'.
 	configurationSelector := #twoNewLinesAfterSignatureConfiguration.
 	source := self formatter format: expr.
 	self assert: source equals:

@@ -43,9 +43,9 @@ ReNodeRewriteRule >> addMatchingExpression: aString rewriteTo: aRewriteString [
 	"add a 'from->to' pair of strings that represent a rewrite expression string to match and a rewrite expression to replace the matched node."
 
 	matches
-		at: (RBParser parseRewriteExpression: aString)
+		at: (ASTParser parseRewriteExpression: aString)
 		put: (ReRewriteTreeWrapper on: (
-			RBParser parseRewriteExpression: aRewriteString))
+			ASTParser parseRewriteExpression: aRewriteString))
 ]
 
 { #category : 'adding' }
@@ -53,7 +53,7 @@ ReNodeRewriteRule >> addMatchingExpression: aString rewriteWith: aBlock [
 	"add 	a 'from->to' pair, first element of which is a rewrite expression in a form of a string that is used to match nodes. The second parameter is a block that has to return a node which should replace the matched one. The block may accept 2 atguments: the matched node, and a dictionary of wildcard variables mapping"
 
 	matches
-		at: (RBParser parseRewriteExpression: aString)
+		at: (ASTParser parseRewriteExpression: aString)
 		put: (ReRewriteBlockWrapper on: aBlock)
 ]
 
@@ -62,9 +62,9 @@ ReNodeRewriteRule >> addMatchingMethod: aString rewriteTo: aRewriteString [
 	"add a 'from->to' pair of strings that represent a match method string to match and a rewrite method to replace the matched mathod"
 
 	matches
-		at: (RBParser parseRewriteMethod: aString)
+		at: (ASTParser parseRewriteMethod: aString)
 		put: (ReRewriteTreeWrapper on: (
-			RBParser parseRewriteMethod: aRewriteString))
+			ASTParser parseRewriteMethod: aRewriteString))
 ]
 
 { #category : 'adding' }
@@ -72,7 +72,7 @@ ReNodeRewriteRule >> addMatchingMethod: aString rewriteWith: aBlock [
 	"add 	a 'from->to' pair, first element of which is a rewrite method code in a form of a string that is used to match methods. The second parameter is a block that has to return a method ast which should replace the matched one. The block may accept 2 atguments: the matched ast, and a dictionary of wildcard variables mapping"
 
 	matches
-		at: (RBParser parseRewriteMethod: aString)
+		at: (ASTParser parseRewriteMethod: aString)
 		put: (ReRewriteBlockWrapper on: aBlock)
 ]
 

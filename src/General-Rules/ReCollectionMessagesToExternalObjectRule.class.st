@@ -23,7 +23,7 @@ ReCollectionMessagesToExternalObjectRule >> afterCheck: aNode mappings: mappingD
 	"Check selectors that assumes unowned result"
 	collectionGetter = 'copy' ifTrue: [ ^ false ].
 	(collectionGetter beginsWith: 'as') ifTrue: [ ^ false ].
-	collectionOwner := mappingDict at: (RBPatternVariableNode named: '`@collectionOwner').
+	collectionOwner := mappingDict at: (ASTPatternVariableNode named: '`@collectionOwner').
 	collectionOwner isVariable ifFalse: [ ^ true ].
 	"ignore for all global vars and self and super"
 	^ (aNode scope lookupVar: collectionOwner name) scope ~= Smalltalk globals

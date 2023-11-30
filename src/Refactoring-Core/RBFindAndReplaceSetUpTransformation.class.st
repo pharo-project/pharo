@@ -91,7 +91,7 @@ RBFindAndReplaceSetUpTransformation >> extractMethodRefactoring [
 RBFindAndReplaceSetUpTransformation >> methodNode [
 	| node |
 	node := super methodNode.
-	node body removeNode: (RBParser parseExpression: 'super setUp.').
+	node body removeNode: (ASTParser parseExpression: 'super setUp.').
 	^ node
 ]
 

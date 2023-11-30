@@ -24,7 +24,7 @@ BreakpointTest >> newDummyClass [
 
 { #category : 'tests' }
 BreakpointTest >> parserClass [
-	^ RBParser
+	^ ASTParser
 ]
 
 { #category : 'running' }
@@ -352,7 +352,7 @@ BreakpointTest >> testSelf_conditionBlockProducerMethodAST [
 { #category : 'tests' }
 BreakpointTest >> testSetAsBreakpointProperty [
 	| node breakpoint breakpoint2 |
-	node := RBProgramNode new.
+	node := ASTProgramNode new.
 	breakpoint := Breakpoint new.
 	breakpoint2 := Breakpoint new.
 	breakpoint node: node.

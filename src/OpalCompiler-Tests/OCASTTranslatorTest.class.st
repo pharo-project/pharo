@@ -53,7 +53,7 @@ OCASTTranslatorTest >> compileExample: aSelector [
 { #category : 'support' }
 OCASTTranslatorTest >> compileSource: source [
 	| ir ast |
-	ast := RBParser parseMethod: source.
+	ast := ASTParser parseMethod: source.
 	ast compilationContext: self compilationContext.
 	ast compiler
 		class: OCOpalExamples;

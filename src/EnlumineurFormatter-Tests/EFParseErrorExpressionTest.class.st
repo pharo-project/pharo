@@ -20,7 +20,7 @@ EFParseErrorExpressionTest >> basicConfiguration [
 EFParseErrorExpressionTest >> testParseError [
 
 	| expr source |
-	expr := RBParser parseFaultyExpression: '#(1 3 4'.
+	expr := ASTParser parseFaultyExpression: '#(1 3 4'.
 	configurationSelector := #basicConfiguration.
 	source := self formatter format: expr.
 	self assert: source equals: '#( 1 3 4'
@@ -30,7 +30,7 @@ EFParseErrorExpressionTest >> testParseError [
 EFParseErrorExpressionTest >> testParseError2 [
 
 	| expr source |
-	expr := RBParser parseFaultyExpression: '1 := '.
+	expr := ASTParser parseFaultyExpression: '1 := '.
 	configurationSelector := #basicConfiguration.
 	source := self formatter format: expr.
 	self assert: source equals: '1. := '

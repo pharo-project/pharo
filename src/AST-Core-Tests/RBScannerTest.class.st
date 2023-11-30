@@ -16,7 +16,7 @@ RBScannerTest >> buildScannerForText: source [
 
 { #category : 'initialize' }
 RBScannerTest >> scannerClass [
-	^ RBScanner
+	^ ASTScanner
 ]
 
 { #category : 'tests - Comment' }

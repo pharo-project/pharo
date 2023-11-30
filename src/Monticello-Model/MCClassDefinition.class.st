@@ -216,7 +216,7 @@ MCClassDefinition >> createVariableFromString: aString [
 			"if an error happens, we parse the slot definition to an ast.
 			and create a UndefinedSlot"
 			| ast slotName |
-			ast := RBParser parseExpression: aString. 
+			ast := ASTParser parseExpression: aString. 
 			slotName := ast receiver value. 
 			UndefinedSlot named: slotName ast: ast  ]
 ]

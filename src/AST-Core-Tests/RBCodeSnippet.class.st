@@ -2821,7 +2821,7 @@ RBCodeSnippet >> definitionRefactoring [
 	"Check if the new code is different from the old one"
 	old := node sourceCode.
 	new := self dumpDefinition.
-	newast := RBParser parseFaultyExpression: new.
+	newast := ASTParser parseFaultyExpression: new.
 	newast parent: node parent. "Force same context, so formattedCode is reliable"
 	node formattedCode = newast formattedCode ifTrue: [ ^ nil ].
 
@@ -3099,8 +3099,8 @@ RBCodeSnippet >> numberOfCritiques: anObject [
 { #category : 'parsing' }
 RBCodeSnippet >> parse [
 	^ isScripting
-		ifTrue: [ RBParser parseFaultyExpression: self source ]
-		ifFalse: [ RBParser parseFaultyMethod: self source ]
+		ifTrue: [ ASTParser parseFaultyExpression: self source ]
+		ifFalse: [ ASTParser parseFaultyMethod: self source ]
 
 ]
 
@@ -3108,8 +3108,8 @@ RBCodeSnippet >> parse [
 RBCodeSnippet >> parseOnError: aBlock [
 
 	^ [ isScripting
-			  ifTrue: [ RBParser parseExpression: self source ]
-			  ifFalse: [ RBParser parseMethod: self source ] ]
+			  ifTrue: [ ASTParser parseExpression: self source ]
+			  ifFalse: [ ASTParser parseMethod: self source ] ]
 		  on: CodeError
 		  do: [ :e | aBlock value: e ]
 ]

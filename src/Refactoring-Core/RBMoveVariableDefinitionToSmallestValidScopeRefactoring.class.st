@@ -40,7 +40,7 @@ RBMoveVariableDefinitionToSmallestValidScopeRefactoring class >> model: aRBSmall
 { #category : 'transforming' }
 RBMoveVariableDefinitionToSmallestValidScopeRefactoring >> checkNodes: sequenceNodes [
 	(sequenceNodes
-		anySatisfy: [:each | RBReadBeforeWrittenTester isVariable: name readBeforeWrittenIn: each])
+		anySatisfy: [:each | ASTReadBeforeWrittenTester isVariable: name readBeforeWrittenIn: each])
 		ifTrue: [^false].
 	sequenceNodes do:
 			[:each |

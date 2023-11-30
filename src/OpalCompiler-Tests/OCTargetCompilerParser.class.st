@@ -7,7 +7,7 @@ Note that  I only override a single private method, so changes in the superclass
 "
 Class {
 	#name : 'OCTargetCompilerParser',
-	#superclass : 'RBParser',
+	#superclass : 'ASTParser',
 	#category : 'OpalCompiler-Tests-Semantic',
 	#package : 'OpalCompiler-Tests',
 	#tag : 'Semantic'

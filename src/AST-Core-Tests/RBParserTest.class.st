@@ -11,7 +11,7 @@ Class {
 
 { #category : 'accessing' }
 RBParserTest class >> parserClass [
-	^ RBParser
+	^ ASTParser
 ]
 
 { #category : 'accessing' }
@@ -25,9 +25,9 @@ RBParserTest >> exampleClasses [
 	<sampleInstance>
 	^ Array
 		with: self parserClass
-		with: RBScanner
-		with: RBProgramNode
-		with: RBComment
+		with: ASTScanner
+		with: ASTProgramNode
+		with: ASTComment
 ]
 
 { #category : 'private' }
@@ -49,7 +49,7 @@ RBParserTest >> parseFaultyExpression: text [
 
 { #category : 'tests' }
 RBParserTest >> parseTreeSearcher [
-	^ RBParseTreeSearcher new
+	^ ASTParseTreeSearcher new
 ]
 
 { #category : 'private' }
@@ -280,11 +280,11 @@ RBParserTest >> testCascadeWithInvalidSelectorRaisesError [
 	The error node is stored inside the cascade."
 	self assert: tree messages first isMessage.
 	self assert: tree messages first receiver name equals: #faulty.
-	self assert: tree messages first selectorNode equals: (RBSelectorNode value: #cascade).
+	self assert: tree messages first selectorNode equals: (ASTSelectorNode value: #cascade).
 
 	self assert: tree messages second isMessage.
 	self assert: tree messages second receiver name equals: #faulty.
-	self assert: tree messages second selectorNode equals: (RBSelectorNode value: #repared).
+	self assert: tree messages second selectorNode equals: (ASTSelectorNode value: #repared).
 
 	self assert: tree messages third isParseError.
 	self assert: tree messages third errorMessage equals: 'Cascade message expected'.
@@ -301,7 +301,7 @@ RBParserTest >> testCascadeWithInvalidSelectorRaisesError [
 
 	self assert: tree messages last isMessage.
 	self assert: tree messages last receiver value equals: 1.
-	self assert: tree messages last selectorNode equals: (RBSelectorNode value: #node)
+	self assert: tree messages last selectorNode equals: (ASTSelectorNode value: #node)
 ]
 
 { #category : 'error testing' }
@@ -314,18 +314,18 @@ RBParserTest >> testCascadeWithMissingSelectorRaisesError [
 	"The presence of an error in a cascade (when parsingFaulty) parses the cascade until the end and stores the error node inside 	 the cascade."
 	self assert: tree messages first isMessage.
 	self assert: tree messages first receiver name equals: #faulty.
-	self assert: tree messages first selectorNode equals: (RBSelectorNode value: #cascade).
+	self assert: tree messages first selectorNode equals: (ASTSelectorNode value: #cascade).
 
 	self assert: tree messages second isMessage.
 	self assert: tree messages second receiver name equals: #faulty.
-	self assert: tree messages second selectorNode equals: (RBSelectorNode value: #repared).
+	self assert: tree messages second selectorNode equals: (ASTSelectorNode value: #repared).
 
 	self assert: tree messages third isFaulty.
 	self assert: tree messages third errorMessage equals: 'Cascade message expected'.
 
 	self assert: tree messages last isMessage.
 	self assert: tree messages last receiver name equals: #faulty.
-	self assert: tree messages last selectorNode equals: (RBSelectorNode value: #node)
+	self assert: tree messages last selectorNode equals: (ASTSelectorNode value: #node)
 ]
 
 { #category : 'error testing' }
@@ -379,31 +379,31 @@ RBParserTest >> testCopyInContext [
 { #category : 'tests - CreationProtocol' }
 RBParserTest >> testCreationBlockNodeWithExpression [
 	self compare: (self parserClass parseExpression: '[:a :b | a messaged. b messaged.]')
-		  to:(RBBlockNode
-			   arguments: (OrderedCollection with: (RBVariableNode named: 'a') with: (RBVariableNode named: 'b'))
-				body: (RBSequenceNode statements: (OrderedCollection with: (RBMessageNode receiver: (RBVariableNode named: #a) selector: (RBSelectorNode value: #messaged))
-																						with: (RBMessageNode receiver: (RBVariableNode named: #b) selector: (RBSelectorNode value: #messaged)))))
+		  to:(ASTBlockNode
+			   arguments: (OrderedCollection with: (ASTVariableNode named: 'a') with: (ASTVariableNode named: 'b'))
+				body: (ASTSequenceNode statements: (OrderedCollection with: (ASTMessageNode receiver: (ASTVariableNode named: #a) selector: (ASTSelectorNode value: #messaged))
+																						with: (ASTMessageNode receiver: (ASTVariableNode named: #b) selector: (ASTSelectorNode value: #messaged)))))
 ]
 
 { #category : 'tests - CreationProtocol' }
 RBParserTest >> testCreationCascadeNodeFromExpression [
 	self compare: (self parserClass parseExpression: 'cascade firstMessage; secondMessage; lastMessage')
-		  to: (RBCascadeNode
-				messages: (OrderedCollection with: (RBMessageNode receiver: (RBVariableNode named: 'cascade')
-																					selector: (RBSelectorNode value: #firstMessage))
-													  with: (RBMessageNode receiver: (RBVariableNode named: 'cascade')
-																					selector: (RBSelectorNode value: #secondMessage))
-													  with: (RBMessageNode receiver: (RBVariableNode named: 'cascade')
-																					selector: (RBSelectorNode value: #lastMessage)))
+		  to: (ASTCascadeNode
+				messages: (OrderedCollection with: (ASTMessageNode receiver: (ASTVariableNode named: 'cascade')
+																					selector: (ASTSelectorNode value: #firstMessage))
+													  with: (ASTMessageNode receiver: (ASTVariableNode named: 'cascade')
+																					selector: (ASTSelectorNode value: #secondMessage))
+													  with: (ASTMessageNode receiver: (ASTVariableNode named: 'cascade')
+																					selector: (ASTSelectorNode value: #lastMessage)))
 				semicolons: (OrderedCollection with: 21 with: 37))
 ]
 
 { #category : 'tests - CreationProtocol' }
 RBParserTest >> testCreationLiteralArrayNodeWithExpression [
 	self compare: (self parserClass parseExpression: '#(literal1 literal2)')
-		  to: (RBLiteralArrayNode
+		  to: (ASTLiteralArrayNode
 				startPosition: 1
-				contents: (Array with: (RBLiteralValueNode value: #literal1) with: (RBLiteralValueNode value: #literal2))
+				contents: (Array with: (ASTLiteralValueNode value: #literal1) with: (ASTLiteralValueNode value: #literal2))
 				stopPosition: 20
 				isByteArray: false)
 ]
@@ -411,7 +411,7 @@ RBParserTest >> testCreationLiteralArrayNodeWithExpression [
 { #category : 'tests - CreationProtocol' }
 RBParserTest >> testCreationLiteralValueNodeWithExpression [
 	self compare: (self parserClass parseExpression: '#literal')
-		  to: (RBLiteralValueNode
+		  to: (ASTLiteralValueNode
 				value: #literal
 				start: 1
 				stop: 8)
@@ -420,7 +420,7 @@ RBParserTest >> testCreationLiteralValueNodeWithExpression [
 { #category : 'tests - CreationProtocol' }
 RBParserTest >> testCreationLiteralValueNodeWithExpressionForNumber [
 	self compare: (self parserClass parseExpression: '2r10100')
-		  to: (RBLiteralValueNode
+		  to: (ASTLiteralValueNode
 				value: 20
 				start: 1
 				stop: 7)
@@ -430,55 +430,55 @@ RBParserTest >> testCreationLiteralValueNodeWithExpressionForNumber [
 RBParserTest >> testCreationMessageNodeFromExpression [
 	"Verify the good parsing of an expression."
 	self compare: (self parserClass parseExpression: 'self + 0')
-		  to: (RBMessageNode
-				receiver: (RBVariableNode named: 'self')
-				selector: (RBSelectorNode value: #+)
-				arguments: (Array with: (RBLiteralNode value: 0)))
+		  to: (ASTMessageNode
+				receiver: (ASTVariableNode named: 'self')
+				selector: (ASTSelectorNode value: #+)
+				arguments: (Array with: (ASTLiteralNode value: 0)))
 ]
 
 { #category : 'tests' }
 RBParserTest >> testCreationProtocol [
 	| messageNode |
-	self compare: (RBMessageNode
-				receiver: (RBVariableNode selfNode)
-				selector: (RBSelectorNode value: #+)
-				arguments: (Array with: (RBLiteralNode value: 0)))
+	self compare: (ASTMessageNode
+				receiver: (ASTVariableNode selfNode)
+				selector: (ASTSelectorNode value: #+)
+				arguments: (Array with: (ASTLiteralNode value: 0)))
 		to: (self parserClass parseExpression: 'self + 0').
-	messageNode := RBMessageNode receiver: (RBVariableNode selfNode) selector: (RBSelectorNode value: #foo).
-	self compare: (RBMethodNode selector: #bar
-				body: (RBSequenceNode statements: (OrderedCollection
-								with: (RBCascadeNode messages: (OrderedCollection with: messageNode with: messageNode)))))
+	messageNode := ASTMessageNode receiver: (ASTVariableNode selfNode) selector: (ASTSelectorNode value: #foo).
+	self compare: (ASTMethodNode selector: #bar
+				body: (ASTSequenceNode statements: (OrderedCollection
+								with: (ASTCascadeNode messages: (OrderedCollection with: messageNode with: messageNode)))))
 		to: (self parserClass parseMethod: 'bar self foo; foo')
 ]
 
 { #category : 'tests - CreationProtocol' }
 RBParserTest >> testCreationSelfNodeWithExpression [
 	self compare: (self parserClass parseExpression: 'self')
-		  to: RBVariableNode selfNode
+		  to: ASTVariableNode selfNode
 ]
 
 { #category : 'tests - CreationProtocol' }
 RBParserTest >> testCreationSuperNodeWithExpression [
 	self compare: (self parserClass parseExpression: 'super')
-		  to: RBVariableNode superNode
+		  to: ASTVariableNode superNode
 ]
 
 { #category : 'tests - CreationProtocol' }
 RBParserTest >> testCreationThisContexNodeWithExpression [
 	self compare: (self parserClass parseExpression: 'thisContext')
-		  to: RBVariableNode thisContextNode
+		  to: ASTVariableNode thisContextNode
 ]
 
 { #category : 'tests - CreationProtocol' }
 RBParserTest >> testCreationThisProcessNodeWithExpression [
 	self compare: (self parserClass parseExpression: 'thisProcess')
-		  to: RBVariableNode thisProcessNode 
+		  to: ASTVariableNode thisProcessNode 
 ]
 
 { #category : 'tests - CreationProtocol' }
 RBParserTest >> testCreationVariableNodeWithExpression [
 	self compare: (self parserClass parseExpression: 'variable')
-		  to: (RBVariableNode named: #variable start: 1)
+		  to: (ASTVariableNode named: #variable start: 1)
 ]
 
 { #category : 'tests - Array' }
@@ -598,7 +598,7 @@ RBParserTest >> testGarbageForgottenDotAfterAssignement [
 	error := child first value receiver arguments first.
 	self assert: error isMessage.
 	self assert: error receiver value equals: 2.
-	self assert: error selectorNode equals: (RBSelectorNode value: #temp)
+	self assert: error selectorNode equals: (ASTSelectorNode value: #temp)
 ]
 
 { #category : 'garbage tests' }
@@ -1307,38 +1307,38 @@ RBParserTest >> testParseGivesMethod [
 { #category : 'tests' }
 RBParserTest >> testParseLiterals [
 
-	self assert: (RBParser parseLiterals: '') equals: #(  ).
+	self assert: (ASTParser parseLiterals: '') equals: #(  ).
 	self
-		assert: (RBParser parseLiterals: '10 1.1 true nil false')
+		assert: (ASTParser parseLiterals: '10 1.1 true nil false')
 		equals: #( 10 1.1 true nil false ).
 	self
-		assert: (RBParser parseLiterals: '#foo #foo: #foo:bar:baz')
+		assert: (ASTParser parseLiterals: '#foo #foo: #foo:bar:baz')
 		equals: #( #foo #foo: #'foo:bar:baz' ).
 	self
-		assert: (RBParser parseLiterals: 'foo foo: foo:bar:baz')
+		assert: (ASTParser parseLiterals: 'foo foo: foo:bar:baz')
 		equals: #( #foo #foo: #'foo:bar:baz' ).
 	self
-		assert: (RBParser parseLiterals:
+		assert: (ASTParser parseLiterals:
 				 '''foo'' ''foo:'' ''foo:bar:baz'' ''1'' ''true''')
 		equals: #( 'foo' 'foo:' 'foo:bar:baz' '1' 'true' ).
 	self
-		assert: (RBParser parseLiterals: '(1 2) #(1 2) #[1 2]')
+		assert: (ASTParser parseLiterals: '(1 2) #(1 2) #[1 2]')
 		equals: #( #( 1 2 ) #( 1 2 ) #[ 1 2 ] ).
 	self
-		assert: (RBParser parseLiterals: '.[];::=^')
+		assert: (ASTParser parseLiterals: '.[];::=^')
 		equals: #( #'.' #'[' #']' #';' #':' #':=' #'^' ).
 
 	self
-		should: [ RBParser parseLiterals: '#( unclosed' ]
+		should: [ ASTParser parseLiterals: '#( unclosed' ]
 		raise: CodeError.
 	self
-		should: [ RBParser parseLiterals: ') unopened' ]
+		should: [ ASTParser parseLiterals: ') unopened' ]
 		raise: CodeError.
 	self
-		should: [ RBParser parseLiterals: '#[ 1 1000 2 ] bad subliteral' ]
+		should: [ ASTParser parseLiterals: '#[ 1 1000 2 ] bad subliteral' ]
 		raise: CodeError.
 	self
-		should: [ RBParser parseLiterals: 'syntax¿error' ]
+		should: [ ASTParser parseLiterals: 'syntax¿error' ]
 		raise: CodeError
 ]
 
@@ -1367,7 +1367,7 @@ RBParserTest >> testParseMethodWhichEndsWithUncompleteStringWithEscapedMarkAtThe
 	body := node body.
 	self assert: body isSequence.
 	self assert: body isFaulty.
-	self assert: (body temporaries includes: (RBVariableNode named: 'temp')).
+	self assert: (body temporaries includes: (ASTVariableNode named: 'temp')).
 
 	statement := body statements first.
 	self assert: statement isFaulty.
@@ -1402,7 +1402,7 @@ RBParserTest >> testParseMethodWithErrorTokenIsWellFormed [
 	body := node body.
 	self assert: body isSequence.
 	self assert: body isFaulty.
-	self assert: (body temporaries includes: (RBVariableNode named: 'temp')).
+	self assert: (body temporaries includes: (ASTVariableNode named: 'temp')).
 
 	statement := body statements first.
 	self assert: statement isFaulty.
@@ -1491,7 +1491,7 @@ RBParserTest >> testParserErrorsWithErrorBlock [
 					parseExpression.
 
 				errorCount := 0.
-				RBParseErrorNodeVisitor visit: ast do: [ :n | errorCount := errorCount + 1 ].
+				ASTParseErrorNodeVisitor visit: ast do: [ :n | errorCount := errorCount + 1 ].
 				self assert: errorCount equals: each last ]
 ]
 
@@ -1615,7 +1615,7 @@ RBParserTest >> testPositions [
 	self assert: blockNode sourceInterval equals: (1 to: 10).
 	self assert: blockNode size equals: 1.	"test dummy collection protocol"
 	blockNode printString.	"coverage"
-	self deny: (blockNode isLast: (RBVariableNode named: 'b'))
+	self deny: (blockNode isLast: (ASTVariableNode named: 'b'))
 ]
 
 { #category : 'error testing' }
@@ -1795,7 +1795,7 @@ RBParserTest >> testReplacingNodes [
 	| tree search block |
 	tree := self parserClass parseMethod: '+ a | a b | self ifTrue: [a] ifFalse: [b := c]. a := b. [:b :c :a | a foo: a; foo1: a; foo2: a foo: b]. {a. b}. ^a'.
 	search := self parseTreeSearcher.
-	block := [ :aNode :answer | aNode replaceWith: (RBVariableNode named: 'q') ].
+	block := [ :aNode :answer | aNode replaceWith: (ASTVariableNode named: 'q') ].
 	search
 		matches: 'a' do: block;
 		matchesArgument: 'a' do: block.

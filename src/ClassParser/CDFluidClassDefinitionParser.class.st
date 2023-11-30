@@ -445,7 +445,7 @@ CDFluidClassDefinitionParser >> parse: aString [
 CDFluidClassDefinitionParser >> parseRootNode: expressionTree [
 
 	| searcher |
-	searcher := RBParseTreeSearcher new.
+	searcher := ASTParseTreeSearcher new.
 	searcher
 		matches: 'Trait << `#name' do: [ :aNode :answer |
 			classNameNode := searcher variableNamed: '`#name'.
@@ -501,7 +501,7 @@ CDFluidClassDefinitionParser >> parseSelectorPart: aString withArgument: aNode [
 
 { #category : 'private - class factory' }
 CDFluidClassDefinitionParser >> parserClass [
-	^ RBParser
+	^ ASTParser
 ]
 
 { #category : 'private - class factory' }

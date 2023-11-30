@@ -595,7 +595,7 @@ RBAbstractClass >> parseTreeForSelector: aSelector [
 
 { #category : 'accessing' }
 RBAbstractClass >> parseTreeSearcherClass [
-	^ RBParseTreeSearcher
+	^ ASTParseTreeSearcher
 ]
 
 { #category : 'printing' }

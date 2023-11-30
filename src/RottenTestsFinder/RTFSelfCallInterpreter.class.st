@@ -8,7 +8,7 @@ See:
 "
 Class {
 	#name : 'RTFSelfCallInterpreter',
-	#superclass : 'RBProgramNodeVisitor',
+	#superclass : 'ASTProgramNodeVisitor',
 	#instVars : [
 		'selfClass',
 		'selfSentMethods',

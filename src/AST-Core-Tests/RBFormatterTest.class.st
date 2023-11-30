@@ -28,7 +28,7 @@ RBFormatterTest >> formatClass: aClass selector: aSymbol [
 
 { #category : 'private' }
 RBFormatterTest >> formatterClass [
-  ^RBSimpleFormatter
+  ^ASTSimpleFormatter
 ]
 
 { #category : 'tests' }

@@ -11,7 +11,7 @@ Class {
 
 { #category : 'plugin interface' }
 RFLinkReification class >> entities [
-	^{RBProgramNode . Variable}
+	^{ASTProgramNode . Variable}
 ]
 
 { #category : 'plugin interface' }
@@ -21,15 +21,15 @@ RFLinkReification class >> key [
 
 { #category : 'generate' }
 RFLinkReification >> genForInstanceVariableSlot [
-	^RBLiteralNode value: link
+	^ASTLiteralNode value: link
 ]
 
 { #category : 'generate' }
 RFLinkReification >> genForLiteralVariable [
-	^RBLiteralNode value: link
+	^ASTLiteralNode value: link
 ]
 
 { #category : 'generate' }
 RFLinkReification >> genForRBProgramNode [
-	^RBLiteralNode value: link
+	^ASTLiteralNode value: link
 ]

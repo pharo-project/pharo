@@ -31,7 +31,7 @@ RBProgramNodeTest >> getAllNodesFromAST [
 		"Sixth comment" cascade node; nodeux "Seventh comment"; notrois.
 		^ "return" nil
 		'.
-	^ RBParser parseMethod: methodText
+	^ ASTParser parseMethod: methodText
 ]
 
 { #category : 'accessing' }
@@ -50,7 +50,7 @@ RBProgramNodeTest >> getMethodString [
 
 { #category : 'accessing' }
 RBProgramNodeTest >> node [
-	^ node ifNil: [ node := RBProgramNode new ]
+	^ node ifNil: [ node := ASTProgramNode new ]
 ]
 
 { #category : 'tests - adding' }
@@ -350,7 +350,7 @@ RBProgramNodeTest >> testBestNodeFirstTempsAndFirstCommentGivesVariableNode [
 	| ast string start |
 	string := '"First comment"'.
 	start := self getMethodString findString: string.
-	ast := (RBParser parseMethod: self getMethodString) bestNodeFor: (start to: start + string size + 6).
+	ast := (ASTParser parseMethod: self getMethodString) bestNodeFor: (start to: start + string size + 6).
 	self assert: ast isVariable
 ]
 
@@ -359,7 +359,7 @@ RBProgramNodeTest >> testBestNodeForCommentInbetweenStatements [
 	| ast string start |
 	string := '"Fourth comment"'.
 	start := self getMethodString findString: string.
-	ast := (RBParser parseMethod: self getMethodString) bestNodeFor: (start to: start + string size - 1).
+	ast := (ASTParser parseMethod: self getMethodString) bestNodeFor: (start to: start + string size - 1).
 	self assert: ast isCommentNode.
 	self assert: ast contents equals: 'Fourth comment'
 ]
@@ -369,7 +369,7 @@ RBProgramNodeTest >> testBestNodeForCommentInsideACascadeNodeOnMessageNode [
 	| ast string start |
 	string := '"Seventh comment"'.
 	start := self getMethodString findString: string.
-	ast := (RBParser parseMethod: self getMethodString) bestNodeFor: (start to: start + string size - 1).
+	ast := (ASTParser parseMethod: self getMethodString) bestNodeFor: (start to: start + string size - 1).
 	self assert: ast isCommentNode.
 	self assert: ast contents equals: 'Seventh comment'
 ]
@@ -379,7 +379,7 @@ RBProgramNodeTest >> testBestNodeForCommentInsideACascadeNodeOnReceiver [
 	| ast string start |
 	string := '"Sixth comment"'.
 	start := self getMethodString findString: string.
-	ast := (RBParser parseMethod: self getMethodString) bestNodeFor: (start to: start + string size - 1).
+	ast := (ASTParser parseMethod: self getMethodString) bestNodeFor: (start to: start + string size - 1).
 	self assert: ast isCommentNode.
 	self assert: ast contents equals: 'Sixth comment'
 ]
@@ -389,7 +389,7 @@ RBProgramNodeTest >> testBestNodeForCommentInsideAssignementNode [
 	| ast string start |
 	string := '" Third comment "'.
 	start := self getMethodString findString: string.
-	ast := (RBParser parseMethod: self getMethodString) bestNodeFor: (start to: start + string size - 1).
+	ast := (ASTParser parseMethod: self getMethodString) bestNodeFor: (start to: start + string size - 1).
 	self assert: ast isCommentNode.
 	self assert: ast contents equals: ' Third comment '
 ]
@@ -399,7 +399,7 @@ RBProgramNodeTest >> testBestNodeForCommentInsideMessageNode [
 	| ast string start |
 	string := '"Fifth comment"'.
 	start := self getMethodString findString: string.
-	ast := (RBParser parseMethod: self getMethodString) bestNodeFor: (start to: start + string size - 1).
+	ast := (ASTParser parseMethod: self getMethodString) bestNodeFor: (start to: start + string size - 1).
 	self assert: ast isCommentNode.
 	self assert: ast contents equals: 'Fifth comment'
 ]
@@ -409,7 +409,7 @@ RBProgramNodeTest >> testBestNodeForCommentInsideMethodNode [
 	| ast string start |
 	string := '"First comment"'.
 	start := self getMethodString findString: string.
-	ast := (RBParser parseMethod: self getMethodString) bestNodeFor: (start to: start + string size - 1).
+	ast := (ASTParser parseMethod: self getMethodString) bestNodeFor: (start to: start + string size - 1).
 	self assert: ast isCommentNode.
 	self assert: ast contents equals: 'First comment'
 ]
@@ -419,7 +419,7 @@ RBProgramNodeTest >> testBestNodeForCommentInsideReturnNode [
 	| ast string start |
 	string := '"return"'.
 	start := self getMethodString findString: string.
-	ast := (RBParser parseMethod: self getMethodString) bestNodeFor: (start to: start + string size - 1).
+	ast := (ASTParser parseMethod: self getMethodString) bestNodeFor: (start to: start + string size - 1).
 	self assert: ast isCommentNode.
 	self assert: ast contents equals: 'return'
 ]
@@ -429,7 +429,7 @@ RBProgramNodeTest >> testBestNodeForCommentInsideSequenceNode [
 	| ast string start |
 	string := '"Second comment"'.
 	start := self getMethodString findString: string.
-	ast := (RBParser parseMethod: self getMethodString) bestNodeFor: (start to: start + string size - 1).
+	ast := (ASTParser parseMethod: self getMethodString) bestNodeFor: (start to: start + string size - 1).
 	self assert: ast isCommentNode.
 	self assert: ast contents equals: 'Second comment'
 ]
@@ -440,7 +440,7 @@ RBProgramNodeTest >> testBestNodeForStatementInsideMethodNodeReturnsStatement [
 	| bestNode string |
 
 	string := self getMethodString findString: '.'.
-	bestNode := (RBParser parseMethod: self getMethodString)
+	bestNode := (ASTParser parseMethod: self getMethodString)
 		        bestNodeForPosition: string + 1.
 	self
 		assert: bestNode isAssignment;
@@ -453,7 +453,7 @@ RBProgramNodeTest >> testBestNodeInsideAssignementGivesSelectedValue [
 	| ast string start |
 	string := '#node'.
 	start := self getMethodString findString: string.
-	ast := (RBParser parseMethod: self getMethodString) bestNodeFor: (start to: start + string size - 1).
+	ast := (ASTParser parseMethod: self getMethodString) bestNodeFor: (start to: start + string size - 1).
 	self assert: ast isLiteralNode.
 	self assert: ast value equals: #node
 ]
@@ -463,7 +463,7 @@ RBProgramNodeTest >> testBestNodeInsideAssignementGivesSelectedVariable [
 	| ast string start |
 	string := 'assignement'.
 	start := self getMethodString findString: string.
-	ast := (RBParser parseMethod: self getMethodString) bestNodeFor: (start to: start + string size - 1).
+	ast := (ASTParser parseMethod: self getMethodString) bestNodeFor: (start to: start + string size - 1).
 	self assert: ast isVariable.
 	self assert: ast name equals: 'assignement'
 ]
@@ -473,7 +473,7 @@ RBProgramNodeTest >> testBestNodeWithMethodSelectorGivesCommentNode [
 	| ast string start |
 	string := '"First comment"'.
 	start := self getMethodString findString: string.
-	ast := (RBParser parseMethod: self getMethodString) bestNodeFor: (1 to: start + string size - 1).
+	ast := (ASTParser parseMethod: self getMethodString) bestNodeFor: (1 to: start + string size - 1).
 	self assert: ast isCommentNode
 ]
 
@@ -484,7 +484,7 @@ RBProgramNodeTest >> testCursorAfterArgumentReturnsVariableNode [
 	sourceCode := 'toto: m1
 	               m1 aMessage'.
 
-	ast := RBParser parseMethod: sourceCode.
+	ast := ASTParser parseMethod: sourceCode.
 	bestNode := ast bestNodeForPosition: 9.
 
 	self assert: bestNode isVariable
@@ -500,7 +500,7 @@ RBProgramNodeTest >> testCursorAfterColonReturnsPreviousStatement [
 	var m1.
 	var m2'.
 
-	ast := RBParser parseMethod: sourceCode.
+	ast := ASTParser parseMethod: sourceCode.
 	bestNode := ast bestNodeForPosition: 13.
 
 	self assert: bestNode isMessage.
@@ -517,7 +517,7 @@ RBProgramNodeTest >> testCursorAfterMessageAndBeforeNewlineReturnsMessageNode [
 	               arg m1
 	 m2'.
 
-	ast := RBParser parseMethod: sourceCode.
+	ast := ASTParser parseMethod: sourceCode.
 	bestNode := ast bestNodeForPosition: 33.
 
 	self assert: bestNode isMessage.
@@ -532,7 +532,7 @@ RBProgramNodeTest >> testCursorAfterMessageAndSpaceReturnsMessageNode [
 	sourceCode := 'toto: arg
 	               arg m1  m2'.
 
-	ast := RBParser parseMethod: sourceCode.
+	ast := ASTParser parseMethod: sourceCode.
 	bestNode := ast bestNodeForPosition: 33.
 
 	self assert: bestNode isMessage.
@@ -547,7 +547,7 @@ RBProgramNodeTest >> testCursorAfterMessageReturnsMessageNode [
 	sourceCode := 'toto: arg
 	               arg m1 m2'.
 
-	ast := RBParser parseMethod: sourceCode.
+	ast := ASTParser parseMethod: sourceCode.
 	bestNode := ast bestNodeForPosition: 32.
 
 	self assert: bestNode isMessage.
@@ -562,7 +562,7 @@ RBProgramNodeTest >> testCursorAfterVariableReturnsVariableNode [
 	sourceCode := 'toto: m1
 	               m1 aMessage'.
 
-	ast := RBParser parseMethod: sourceCode.
+	ast := ASTParser parseMethod: sourceCode.
 	bestNode := ast bestNodeForPosition: 28.
 
 	self assert: bestNode isVariable
@@ -575,7 +575,7 @@ RBProgramNodeTest >> testCursorBeforeArgumentNextToSelectorReturnsMethodNode [
 	sourceCode := 'toto:m1
 	               m1 aMessage'.
 
-	ast := RBParser parseMethod: sourceCode.
+	ast := ASTParser parseMethod: sourceCode.
 	bestNode := ast bestNodeForPosition: 6.
 
 	self assert: bestNode isMethod
@@ -588,7 +588,7 @@ RBProgramNodeTest >> testCursorBeforeArgumentReturnsVariableNode [
 	sourceCode := 'toto: m1
 	               m1 aMessage'.
 
-	ast := RBParser parseMethod: sourceCode.
+	ast := ASTParser parseMethod: sourceCode.
 	bestNode := ast bestNodeForPosition: 7.
 
 	self assert: bestNode isVariable
@@ -604,7 +604,7 @@ RBProgramNodeTest >> testCursorBeforeMessageAndAfterNewlineReturnsMessageNode [
 	               arg m1
 	 m2'.
 
-	ast := RBParser parseMethod: sourceCode.
+	ast := ASTParser parseMethod: sourceCode.
 	bestNode := ast bestNodeForPosition: 34.
 
 	self assert: bestNode isMessage.
@@ -618,7 +618,7 @@ RBProgramNodeTest >> testCursorBeforeVariableReturnsVariableNode [
 	sourceCode := 'toto: m1
 	               m1 aMessage'.
 
-	ast := RBParser parseMethod: sourceCode.
+	ast := ASTParser parseMethod: sourceCode.
 	bestNode := ast bestNodeForPosition: 26.
 
 	self assert: bestNode isVariable
@@ -631,7 +631,7 @@ RBProgramNodeTest >> testCursorInMiddleOfVariableReturnsVariableNode [
 	sourceCode := 'toto: m1
 	               m1 aMessage'.
 
-	ast := RBParser parseMethod: sourceCode.
+	ast := ASTParser parseMethod: sourceCode.
 	bestNode := ast bestNodeForPosition: 27.
 
 	self assert: bestNode isVariable
@@ -811,11 +811,11 @@ RBProgramNodeTest >> testReplaceMethodBinary [
 	self assert: tree newSource equals: '~~ "1" first "2" ^ "3" 4 "5"'.
 
 	tree := self parseMethod: '= "1" anObject "2" ^ "3" 4 "5"'.
-	tree renameSelector: #assert: andArguments: (Array with: (RBVariableNode named: 'first')).
+	tree renameSelector: #assert: andArguments: (Array with: (ASTVariableNode named: 'first')).
 	self assert: tree newSource equals: 'assert: "1" first "2" ^ "3" 4 "5"'.
 
 	tree := self parseMethod: '= "1" anObject "2" ^ "3" 4 "5"'.
-	tree renameSelector: #assert:description: andArguments: (Array with: (RBVariableNode named: 'first') with: (RBVariableNode named: 'second')).
+	tree renameSelector: #assert:description: andArguments: (Array with: (ASTVariableNode named: 'first') with: (ASTVariableNode named: 'second')).
 	self assert: tree newSource equals: 'assert: first description: second "2" ^ "3" 4 "5"'
 ]
 
@@ -831,11 +831,11 @@ RBProgramNodeTest >> testReplaceMethodKeyword [
 	self assert: tree newSource equals: '~~ "1" first "2" ^ "3" 4 "5"'.
 
 	tree := self parseMethod: 'deny: "1" anObject "2" ^ "3" 4 "5"'.
-	tree renameSelector: #assert: andArguments: (Array with: (RBVariableNode named: 'first')).
+	tree renameSelector: #assert: andArguments: (Array with: (ASTVariableNode named: 'first')).
 	self assert: tree newSource equals: 'assert: "1" first "2" ^ "3" 4 "5"'.
 
 	tree := self parseMethod: 'deny: "1" anObject "2" ^ "3" 4 "5"'.
-	tree renameSelector: #assert:description: andArguments: (Array with: (RBVariableNode named: 'first') with: (RBVariableNode named: 'second')).
+	tree renameSelector: #assert:description: andArguments: (Array with: (ASTVariableNode named: 'first') with: (ASTVariableNode named: 'second')).
 	self assert: tree newSource equals: 'assert: first description: second "2" ^ "3" 4 "5"'
 ]
 

@@ -96,7 +96,7 @@ CNSelectorExtractor >> extractSelectorFromSelection: aString [
    "Extract a selector from the given string in isolation, regardless of the context around it"
 
 	| node |
-	node := RBParser parseFaultyExpression: aString.
+	node := ASTParser parseFaultyExpression: aString.
 	node
 		nodesDo: [ :n |
 			n isMessage
@@ -123,6 +123,6 @@ CNSelectorExtractor >> extractSelectorFromSource: aString atPosition: aPosition 
 				ifTrue: [ aPosition -1 ]
 				ifFalse: [ ^ nil ]].
 	^ self
-		  extractSelectorFromAST: (RBParser parseFaultyExpression: aString)
+		  extractSelectorFromAST: (ASTParser parseFaultyExpression: aString)
 		  atPosition: aPosition
 ]

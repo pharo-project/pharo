@@ -32,7 +32,7 @@ RBSmalllintContext >> buildParseTree [
 	| tree |
 
 	tree := self selectedClass parseTreeForSelector: self selector.
-	tree ifNil: [ ^ RBParser parseMethod: 'method' ].
+	tree ifNil: [ ^ ASTParser parseMethod: 'method' ].
 	tree doSemanticAnalysis.
 	^ tree
 ]

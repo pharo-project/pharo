@@ -19,11 +19,11 @@ RBParseTreeEnvironment >> selectionIntervalFor: aString [
 	| parseTree node |
 
 	matcher ifNil: [ ^ super selectionIntervalFor: aString ].
-	parseTree := RBParser
+	parseTree := ASTParser
 		parseMethod: aString
 		onError: [ :error :position | ^ super selectionIntervalFor: aString ].
 	node := matcher executeTree: parseTree initialAnswer: nil.
-	^ ( node isKindOf: RBProgramNode )
+	^ ( node isKindOf: ASTProgramNode )
 		ifTrue: [ node sourceInterval ]
 		ifFalse: [ super selectionIntervalFor: aString ]
 ]

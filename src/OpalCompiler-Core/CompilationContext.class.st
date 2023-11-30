@@ -594,7 +594,7 @@ CompilationContext >> parseOptions: optionsArray [
 
 { #category : 'accessing' }
 CompilationContext >> parserClass [
-	^ parserClass ifNil: [ parserClass := RBParser ]
+	^ parserClass ifNil: [ parserClass := ASTParser ]
 ]
 
 { #category : 'accessing' }

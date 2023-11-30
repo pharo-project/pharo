@@ -17,7 +17,7 @@ RBClassTest >> setUp [
 	super setUp.
 	rbNamespace := RBNamespace new.
 	objectClass := rbNamespace classNamed: #Object.
-	messageNodeClass := rbNamespace classNamed: #RBMessageNode.
+	messageNodeClass := rbNamespace classNamed: #ASTMessageNode.
 	rbNamespace defineClass: [ :aBuilder |
 		aBuilder
 			name: #SomeClassName;

@@ -209,7 +209,7 @@ RBFindAndReplaceTransformation >> nodesOf: methodNode [
 
 { #category : 'accessing' }
 RBFindAndReplaceTransformation >> patternParserClass [
-	^ RBPatternParser
+	^ ASTPatternParser
 ]
 
 { #category : 'preconditions' }

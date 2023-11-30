@@ -32,7 +32,7 @@ RBAbstractTransformationTest >> parseMethod: aString [
 
 { #category : 'parsing' }
 RBAbstractTransformationTest >> parserClass [
-	^ RBParser
+	^ ASTParser
 ]
 
 { #category : 'running' }

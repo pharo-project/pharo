@@ -10,9 +10,9 @@ Class {
 RBGenericNodeVisitorTest >> testVisitAnySatisfy [
 	| result tree |
 	tree := self parseExpression: 'Object new'.
-	result := RBGenericNodeVisitor visit: tree anySatisfy: [ :n | n isMessage ].
+	result := ASTGenericNodeVisitor visit: tree anySatisfy: [ :n | n isMessage ].
 	self assert: result.
-	result := RBGenericNodeVisitor visit: tree anySatisfy: [ :n | n isReturn ].
+	result := ASTGenericNodeVisitor visit: tree anySatisfy: [ :n | n isReturn ].
 	self deny: result
 ]
 
@@ -20,7 +20,7 @@ RBGenericNodeVisitorTest >> testVisitAnySatisfy [
 RBGenericNodeVisitorTest >> testVisitDetect [
 	| node tree |
 	tree := self parseExpression: 'Object new'.
-	node := RBGenericNodeVisitor  visit: tree detect: [ :n | n isMessage ].
+	node := ASTGenericNodeVisitor  visit: tree detect: [ :n | n isMessage ].
 	self  assert: node isMessage
 ]
 
@@ -28,7 +28,7 @@ RBGenericNodeVisitorTest >> testVisitDetect [
 RBGenericNodeVisitorTest >> testVisitDetectIfNone [
 	| result tree |
 	tree := self parseExpression: 'Object new'.
-	result := RBGenericNodeVisitor visit: tree detect: [ :n | n isReturn ] ifNone: [ #none ].
+	result := ASTGenericNodeVisitor visit: tree detect: [ :n | n isReturn ] ifNone: [ #none ].
 	self assert: result equals: #none
 ]
 
@@ -36,9 +36,9 @@ RBGenericNodeVisitorTest >> testVisitDetectIfNone [
 RBGenericNodeVisitorTest >> testVisitNoneSatisfy [
 	| result tree |
 	tree := self parseExpression: 'Object new'.
-	result := RBGenericNodeVisitor visit: tree noneSatisfy: [ :n | n isMessage ].
+	result := ASTGenericNodeVisitor visit: tree noneSatisfy: [ :n | n isMessage ].
 	self deny: result.
-	result := RBGenericNodeVisitor visit: tree noneSatisfy: [ :n | n isReturn ].
+	result := ASTGenericNodeVisitor visit: tree noneSatisfy: [ :n | n isReturn ].
 	self assert: result
 ]
 
@@ -46,7 +46,7 @@ RBGenericNodeVisitorTest >> testVisitNoneSatisfy [
 RBGenericNodeVisitorTest >> testVisitSelect [
 	| result tree |
 	tree := self parseExpression: 'Object new'.
-	result := RBGenericNodeVisitor visit: tree select: [ :n | n isMessage ].
+	result := ASTGenericNodeVisitor visit: tree select: [ :n | n isMessage ].
 	self assert: result size equals: 1.
 	self assert: result first selector equals: #new
 ]

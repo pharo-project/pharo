@@ -193,7 +193,7 @@ Deprecation >> raiseWarning [
 
 { #category : 'private' }
 Deprecation >> rewriterClass [
-	^ self class environment at: #RBParseTreeRewriter ifAbsent: [ nil ]
+	^ self class environment at: #ASTParseTreeRewriter ifAbsent: [ nil ]
 ]
 
 { #category : 'accessing' }

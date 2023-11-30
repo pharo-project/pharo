@@ -182,7 +182,7 @@ SlotErrorsTest >> testUndeclareSlot [
 	| slot instance |
 
 	aClass := self make: [ :builder |
-		builder slots: { UndefinedSlot named: #a ast: ((RBParser parseExpression: '#a => MySlot') doSemanticAnalysis;yourself) } ].
+		builder slots: { UndefinedSlot named: #a ast: ((ASTParser parseExpression: '#a => MySlot') doSemanticAnalysis;yourself) } ].
 
 	slot := aClass slotNamed: #a.
 
@@ -202,7 +202,7 @@ SlotErrorsTest >> testUndeclareSlotFixWhenSlotIsLoaded [
 	| slot instance mySlot |
 
 	aClass := self make: [ :builder |
-		builder slots: { UndefinedSlot named: #a ast: ((RBParser parseExpression: '#a => ', self anotherClassName) doSemanticAnalysis;yourself) } ].
+		builder slots: { UndefinedSlot named: #a ast: ((ASTParser parseExpression: '#a => ', self anotherClassName) doSemanticAnalysis;yourself) } ].
 
 	slot := aClass slotNamed: #a.
 

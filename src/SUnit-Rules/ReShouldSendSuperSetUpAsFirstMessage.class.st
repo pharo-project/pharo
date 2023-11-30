@@ -19,7 +19,7 @@ ReShouldSendSuperSetUpAsFirstMessage class >> checksMethod [
 
 { #category : 'utilities' }
 ReShouldSendSuperSetUpAsFirstMessage class >> parseTreeSearcher [
-	^ RBParseTreeSearcher new
+	^ ASTParseTreeSearcher new
 ]
 
 { #category : 'utilities' }

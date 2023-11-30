@@ -67,5 +67,5 @@ EFTest >> parseExpression: anExpression [
 
 { #category : 'hooks' }
 EFTest >> parserClass [
-	^ RBParser
+	^ ASTParser
 ]

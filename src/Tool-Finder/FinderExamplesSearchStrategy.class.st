@@ -12,7 +12,7 @@ Class {
 { #category : 'accessing' }
 FinderExamplesSearchStrategy class >> parseAsNodes: anExpression [
 
-	^ (RBParser parseExpression: '{', anExpression , '}') statements asArray
+	^ (ASTParser parseExpression: '{', anExpression , '}') statements asArray
 ]
 
 { #category : 'accessing' }

@@ -72,11 +72,11 @@ RBExtractToTemporaryTransformation >> checkVariableName [
 { #category : 'transforming' }
 RBExtractToTemporaryTransformation >> constructAssignmentFrom: aNode [
 	| valueNode |
-	valueNode := RBVariableNode named: newVariableName.
+	valueNode := ASTVariableNode named: newVariableName.
 	"Use a copy so aNode retains its original parent.
 	In this case the caller is done making use of the parent backlink,
 	but it seems sensible to keep it intact whenever possible."
-	^RBAssignmentNode variable: valueNode value: aNode copy.
+	^ASTAssignmentNode variable: valueNode value: aNode copy.
 ]
 
 { #category : 'api' }
@@ -100,7 +100,7 @@ RBExtractToTemporaryTransformation >> insertTemporary [
 			   before: statementNode;
 			   addTemporaryNamed: newVariableName.
 		   nodeReferences do: [ :each |
-			   each replaceWith: (RBVariableNode named: newVariableName) ].
+			   each replaceWith: (ASTVariableNode named: newVariableName) ].
 		   class compileTree: self parseTree ]) }
 ]
 
