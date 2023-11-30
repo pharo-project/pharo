@@ -72,7 +72,6 @@ BaselineOfPharoBootstrap >> baseline: spec [
 	spec for: #common do: [
 		spec package: 'AST-Core'.
 		spec package: 'Announcements-Core'.
-		spec package: 'Colors'.
 		spec package: 'Collections-Abstract'.
 		spec package: 'Collections-Arithmetic'.
 		spec package: 'Collections-Atomic'.
@@ -148,7 +147,6 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		spec group: 'KernelGroup' with: {
 			'FFI-Kernel'.
 			'Announcements-Core'.
-			'Colors'.
 			'Collections-Abstract'.
 			'Collections-DoubleLinkedList'.
 			'Collections-Native'.

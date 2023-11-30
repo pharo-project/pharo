@@ -58,8 +58,7 @@ PharoBootstrapInitialization class >> initializeCommandLineHandlerAndErrorHandli
 
 
 	UIManager default: NonInteractiveUIManager new.
-	
-	Color initialize.
+
 	InstructionStream initialize.
 
 	'Initializing Collections' traceCr.

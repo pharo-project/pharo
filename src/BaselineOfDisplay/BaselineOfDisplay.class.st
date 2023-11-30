@@ -32,6 +32,7 @@ BaselineOfDisplay >> baseline: spec [
 		spec postLoadDoIt: #'postload:package:'.
 		
 		spec 
+			package: 'Colors';
 			package: 'Graphics-Display Objects';
 			package: 'Graphics-Primitives' with: [ spec requires: 'Graphics-Display Objects' ];
 			package: 'Graphics-Transformations'
@@ -72,6 +73,7 @@ BaselineOfDisplay >> postload: loader package: packageSpec [
 	DisplayScreen initialize.
 	BitBlt initialize.
 	Form initialize.
+	Color initialize.
 	
 	MCMethodDefinition initializersEnabled: initializersEnabled.
 
