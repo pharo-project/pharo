@@ -82,13 +82,7 @@ PharoCommonTools class >> settingsOn: aBuilder [
 						targetSelector: #tools;
 						label: 'Filelist';
 						default: (self environment at: #FileList);
-						domainValues: Smalltalk tools recentFileListTools];
-		with: [
-					(aBuilder pickOne: #changeSorterTool)
-						target: Smalltalk;
-						targetSelector: #tools;
-						label: 'Changesorter';
-						domainValues: Smalltalk tools recentChangeSorterTools]
+						domainValues: Smalltalk tools recentFileListTools]
 ]
 
 { #category : 'system startup' }
