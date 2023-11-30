@@ -13,3 +13,12 @@ Class {
 EpProtocolAddition >> accept: aVisitor [
 	^ aVisitor visitProtocolAddition: self
 ]
+
+{ #category : 'accessing' }
+EpProtocolAddition >> fileOutEntryOn: aWriteStream [ 
+
+	self behaviorAffected realClass 
+		fileOutProtocol: self protocol 
+		on: aWriteStream.
+
+]

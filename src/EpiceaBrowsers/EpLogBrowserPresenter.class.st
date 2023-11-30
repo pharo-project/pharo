@@ -244,7 +244,12 @@ EpLogBrowserPresenter >> codeChangesMenuActions [
 		#browseSelection.
 		'Browse working copy of entity affected in the selected event(s)'.
 		#nautilusIcon.
-		$b command }.
+		$b command } .
+		{ 'File out'.
+		#fileOutSelection.
+		'File out the selected code changes'.
+		#smallSave.
+		$s command }.		
 	}
 ]
 
@@ -311,6 +316,17 @@ EpLogBrowserPresenter >> eventsMenuActions [
 		#announcementIcon.
 		$c command }.
 	}
+]
+
+{ #category : 'as yet unclassified' }
+EpLogBrowserPresenter >> fileOutSelection [
+	"Write the selected entries to a file"
+
+	| entries |
+	entries := self selectedCodeChanges collect: [ :each | each content ].
+
+	EpChunkExporter fileOut: entries.
+
 ]
 
 { #category : 'menu - filters' }
