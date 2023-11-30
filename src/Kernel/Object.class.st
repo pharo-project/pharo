@@ -939,67 +939,6 @@ Object >> fullPrintString [
 	^ String streamContents: [:s | self printOn: s]
 ]
 
-{ #category : 'halting' }
-Object >> halt [
-	"This is the typical message to use for inserting breakpoints during debugging."
-
-	<debuggerCompleteToSender>
-	Halt now
-]
-
-{ #category : 'halting' }
-Object >> halt: aString [
-	<debuggerCompleteToSender>
-	Halt now: aString
-]
-
-{ #category : 'halting' }
-Object >> haltFromCount: anInteger [
-	"Always halt after a count has been reached"
-
-	<debuggerCompleteToSender>
-	Halt fromCount: anInteger
-]
-
-{ #category : 'halting' }
-Object >> haltIf: condition [
-	<debuggerCompleteToSender>
-
-	Halt if: condition
-]
-
-{ #category : 'testing' }
-Object >> haltIfNil [
-]
-
-{ #category : 'halting' }
-Object >> haltIfNotTest [
-	"Halt if execution was not started by a test. This is useful as this means one can just run tests undisturbed, while a execution for example from the Playground would be halted"
-	<debuggerCompleteToSender>
-	Halt ifNotTest
-]
-
-{ #category : 'halting' }
-Object >> haltIfTest [
-	"Halt if execution was started by a test. These #halts are just active in the tests, useful when you want to add a halt in methods that are executed a lot (e.g. collections)"
-	<debuggerCompleteToSender>
-	Halt ifTest
-]
-
-{ #category : 'halting' }
-Object >> haltOnCount: anInteger [
-	"Halts once when a count is reached"
-
-	<debuggerCompleteToSender>
-	Halt onCount: anInteger
-]
-
-{ #category : 'halting' }
-Object >> haltOnce [
-	<debuggerCompleteToSender>
-	Halt once
-]
-
 { #category : 'process termination handling' }
 Object >> handleProcessTerminationOfWaitingContext: suspendedContext [
 

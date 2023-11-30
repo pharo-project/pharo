@@ -29,7 +29,7 @@ ProperPackagesTest >> testProperClassTagCasing [
 	| violations |
 	violations := OrderedCollection new.
 	self packageOrganizer packages do: [ :package |
-		package classTags do: [ :classTag | classTag name first isLowercase ifTrue: [ violations add: package -> classTag ] ] ].
+		package tags do: [ :classTag | classTag name first isLowercase ifTrue: [ violations add: package -> classTag ] ] ].
 	self assert: violations isEmpty description: 'Class Tags should be uppercase'
 ]
 

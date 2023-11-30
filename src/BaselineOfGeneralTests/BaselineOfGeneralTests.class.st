@@ -36,7 +36,7 @@ BaselineOfGeneralTests >> baseline: spec [
 					repository: repository;
 					loads: #Tests ];
 
-			package: 'FileSystem-Tests-Memory';
+			package: 'FileSystem-Memory-Tests';
 			package: 'Fonts-Infrastructure-Tests';
 
 			package: 'Graphics-Tests';
@@ -47,12 +47,12 @@ BaselineOfGeneralTests >> baseline: spec [
 			package: 'NECompletion-Tests';
 			package: 'ProfStef-Tests';
 			package: 'Regex-Core-Tests';
-			package: 'Ring-Definitions-Tests-Monticello';
+			package: 'Ring-Definitions-Monticello-Tests';
 			package: 'Rubric-Tests';
 			package: 'ScriptingExtensions-Tests';
 			package: 'STON-Tests';
 			package: 'System-Caching-Tests';
-			package: 'System-Clipboard-Tests';
+			package: 'System-Utilities-Tests';
 			package: 'System-Hashing-Tests';
 			package: 'System-History-Tests';
 			package: 'System-Localization-Tests';

@@ -343,12 +343,13 @@ DAPackageRelationGraph >> packageAt: aPackageName [
 DAPackageRelationGraph >> packageForBehavior: aClass [
 	"return a PDPackage and put in classToPackage"
 
-	^ classMapping
-		at: aClass
-		ifAbsentPut: [
-			self packages
-				detect: [ :each | each systemPackage includesClass: aClass ]
-				ifNone: [ self systemPackageContaining: aClass ] ]
+	^ classMapping at: aClass ifAbsentPut: [
+		  self packages
+			  detect: [ :each |
+				  each systemPackage
+					  ifNil: [ false ]
+					  ifNotNil: [ :package | package includesClass: aClass ] ]
+			  ifNone: [ self systemPackageContaining: aClass ] ]
 ]
 
 { #category : 'accessing' }

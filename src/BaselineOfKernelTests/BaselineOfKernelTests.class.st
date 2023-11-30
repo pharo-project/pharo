@@ -29,15 +29,15 @@ BaselineOfKernelTests >> baseline: spec [
 			package: 	'Kernel-Tests-WithCompiler';
 			package: 	'Announcements-Core-Tests';
 			package: 	'Compression-Tests'; 
-			package: 	'FileSystem-Tests-Core' with: [ spec requires: #('Collections-Tests') ];
-			package: 	'FileSystem-Tests-Disk';
+			package: 	'FileSystem-Core-Tests' with: [ spec requires: #('Collections-Tests') ];
+			package: 	'FileSystem-Disk-Tests';
 			package: 	'FileSystem-Tests-Attributes';
 			package: 	'Files-Tests' ;
 			package: 	'Jobs-Tests' ;
 			package: 	'AST-Core-Tests';
 			package: 	'OpalCompiler-Tests' with: [ spec requires: #('AST-Core-Tests') ];
 			package: 	'Random-Tests';
-			package: 	'Ring-Definitions-Tests-Core';
+			package: 	'Ring-Definitions-Core-Tests';
 			package: 	'Ring-Definitions-Tests-Containers'; 
 			package: 	'System-Object Events-Tests';
 			package: 	'System-OSEnvironments-Tests';

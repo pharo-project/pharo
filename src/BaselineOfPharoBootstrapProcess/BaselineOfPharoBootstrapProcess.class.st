@@ -22,5 +22,5 @@ BaselineOfPharoBootstrapProcess >> baseline: spec [
 			repository: 'github://pharo-project/hermes:v3.0.1';
   			loads: 'core' ].
 		spec
-			 package: 'Pharo30Bootstrap' ]
+			 package: 'PharoBootstrap' ]
 ]

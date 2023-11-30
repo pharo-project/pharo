@@ -282,7 +282,7 @@ RBExtractMethodRefactoring >> isParseTreeEquivalentTo: aSelector [
 					(class superclass whichClassIncludesSelector: aSelector)
 						~= (definingClass superclass whichClassIncludesSelector: each)]) not])
 		ifFalse: [^false].
-	^self shouldUseExistingMethod: aSelector
+	^ true
 ]
 
 { #category : 'accessing' }

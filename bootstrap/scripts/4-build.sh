@@ -149,7 +149,7 @@ ${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" initializePackages --proto
 
 # Installing compiler through Hermes 
 echo $(date -u) "[Compiler] Installing compiler through Hermes"
-${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" loadHermes OpalCompiler-Core.hermes CodeImport.hermes CodeImportCommandLineHandlers.hermes --save --no-fail-on-undeclared
+${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" loadHermes Debugging-Utils.hermes OpalCompiler-Core.hermes CodeImport.hermes CodeImportCommandLineHandlers.hermes --save --no-fail-on-undeclared
 ${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" eval --save "OpalCompiler register. CompilationContext initialize. OCASTTranslator initialize."
 ${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" st ${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/01-initialization/01-init.st --no-source --save --quit
 
@@ -158,7 +158,6 @@ ${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" st ${BOOTSTRAP_REPOSITORY}
 
 ${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" loadHermes FileSystem-Core.hermes FileSystem-Disk.hermes --save --no-fail-on-undeclared
 ${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" eval --save "PharoBootstrapInitialization initializeFileSystem"
-${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" eval --save "SourceFileArray initialize"
 zip "${COMPILER_IMAGE_NAME}.zip" "${COMPILER_IMAGE_NAME}.image"
 
 # Installing Traits through Hermes 
