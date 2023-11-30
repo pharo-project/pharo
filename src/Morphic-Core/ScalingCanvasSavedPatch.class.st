@@ -1,3 +1,6 @@
+"
+A ScalingCanvasSavedPatch is used to save a part of a `ScalingCanvas` under a `HandMorph`.
+"
 Class {
 	#name : 'ScalingCanvasSavedPatch',
 	#superclass : 'Object',

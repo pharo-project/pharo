@@ -1,3 +1,8 @@
+"
+A ScalingCanvas provides scaling on an underlying `FormCanvas`.
+
+The method `ScalingCanvas class>>#example` and other methods in the same protocol compare drawing using a FormCanvas and then scaling the Form to drawing using a ScalingCanvas directly on a scaled Form. Using the ScalingCanvas, text is drawn using more detailed character glyphs, and any `FormSet` is drawn using the scale-specific Form if available.
+"
 Class {
 	#name : 'ScalingCanvas',
 	#superclass : 'PluggableCanvas',
