@@ -12,8 +12,9 @@ Class {
 		'oldPC',
 		'symbolicBytecodes'
 	],
-	#category : 'Debugging-Core',
-	#package : 'Debugging-Core'
+	#category : 'OpalCompiler-Core-Bytecode',
+	#package : 'OpalCompiler-Core',
+	#tag : 'Bytecode'
 }
 
 { #category : 'decoding' }

@@ -16,10 +16,3 @@ CompiledCode >> rangeForPC: aPC [
  	"return which code to hightlight in the debugger"		
  	^(self sourceNodeForPC: aPC) debugHighlightRange
 ]
-
-{ #category : '*Debugging-Core' }
-CompiledCode >> symbolicBytecodes [
-	"Answer Collection that contains of all the byte codes in a method as an instance of SymbolicInstruction"
-
-	^SymbolicBytecodeBuilder decode: self
-]

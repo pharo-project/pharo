@@ -14,8 +14,9 @@ Class {
 		'offset',
 		'bytes'
 	],
-	#category : 'Debugging-Core',
-	#package : 'Debugging-Core'
+	#category : 'OpalCompiler-Core-Bytecode',
+	#package : 'OpalCompiler-Core',
+	#tag : 'Bytecode'
 }
 
 { #category : 'comparing' }
