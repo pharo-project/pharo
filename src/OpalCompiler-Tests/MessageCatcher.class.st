@@ -10,14 +10,15 @@ Class {
 	#instVars : [
 		'accumulator'
 	],
-	#category : 'Debugging-Core',
-	#package : 'Debugging-Core'
+	#category : 'OpalCompiler-Tests-Source',
+	#package : 'OpalCompiler-Tests',
+	#tag : 'Source'
 }
 
 { #category : 'reflective operations' }
 MessageCatcher >> doesNotUnderstand: aMessage [
 
-	accumulator ifNotNil: [accumulator add: aMessage].
+	accumulator ifNotNil: [ accumulator add: aMessage ].
 	^ aMessage
 ]
 
