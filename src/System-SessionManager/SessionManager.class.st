@@ -158,7 +158,6 @@ SessionManager class >> initializeKernelRegistrations [
 		registerSystemClassNamed: #File atPriority: 90;
 		registerSystemClassNamed: #FinalizationProcess;
 		registerSystemClassNamed: #Stdio;
-		registerSystemClassNamed: #SharedRandom;
 		registerSystemClassNamed: #EndianDetector;
 		registerSystemClassNamed: #Symbol
 ]

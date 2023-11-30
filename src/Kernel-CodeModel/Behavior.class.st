@@ -1190,13 +1190,6 @@ Behavior >> localSelectors [
 	^ self methodDict keys
 ]
 
-{ #category : 'printing' }
-Behavior >> longPrintOn: aStream [
-	"Append to the argument, aStream, the names and values of all of the receiver's instance variables.  But, not useful for a class with a method dictionary."
-
-	aStream nextPutAll: '<<too complex to show>>'; cr
-]
-
 { #category : 'accessing - method dictionary' }
 Behavior >> lookupSelector: selector [
 	"Look up the given selector in my methodDictionary.

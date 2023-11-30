@@ -72,7 +72,6 @@ BaselineOfPharoBootstrap >> baseline: spec [
 	spec for: #common do: [
 		spec package: 'AST-Core'.
 		spec package: 'Announcements-Core'.
-		spec package: 'Colors'.
 		spec package: 'Collections-Abstract'.
 		spec package: 'Collections-Arithmetic'.
 		spec package: 'Collections-Atomic'.
@@ -149,7 +148,6 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		spec group: 'KernelGroup' with: {
 			'FFI-Kernel'.
 			'Announcements-Core'.
-			'Colors'.
 			'Collections-Abstract'.
 			'Collections-DoubleLinkedList'.
 			'Collections-Native'.
@@ -168,7 +166,6 @@ BaselineOfPharoBootstrap >> baseline: spec [
 			'Kernel-BytecodeEncoders'.
 			'Transcript-NonInteractive'.
 			'PharoBootstrap-Initialization'.
-			'Random-Core'.
 			'Shift-Changes'.
 			'Shift-ClassBuilder'.
 			'Shift-ClassInstaller'.
@@ -178,7 +175,6 @@ BaselineOfPharoBootstrap >> baseline: spec [
 			'System-CommandLine'.
 			'System-CommandLineHandler'.
 			'System-Finalization'.
-			'System-Hashing'.
 			'System-Platforms'.
 			'System-SessionManager'.
 			'System-Sources'.
@@ -213,6 +209,8 @@ BaselineOfPharoBootstrap >> baseline: spec [
 			'OpalCompiler-Core'}.
 		
 		spec group: 'FileSystemGroup' with: {
+			'Random-Core'.
+			'System-Hashing'.
 			'Network-UUID'.
 			'FileSystem-Core'.
 			'FileSystem-Disk'}.
