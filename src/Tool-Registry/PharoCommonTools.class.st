@@ -139,22 +139,6 @@ PharoCommonTools >> changeList [
 	^ self toolNamed: #changeList
 ]
 
-{ #category : 'registry access' }
-PharoCommonTools >> changeSorter [
-
-	^ self toolNamed: #changeSorter
-]
-
-{ #category : 'tools' }
-PharoCommonTools >> changeSorterTool [
-	^ self changeSorter
-]
-
-{ #category : 'tools' }
-PharoCommonTools >> changeSorterTool: aTool [
-	^ self register: aTool as: #changeSorter
-]
-
 { #category : 'cleanup' }
 PharoCommonTools >> cleanUp [
 	recentTools keysAndValuesDo:[:name :toolSet|
@@ -242,11 +226,6 @@ PharoCommonTools >> processBrowser [
 { #category : 'registration' }
 PharoCommonTools >> recentBrowserTools [
 	^ self recentToolsFor: #browser
-]
-
-{ #category : 'registration' }
-PharoCommonTools >> recentChangeSorterTools [
-	^ self recentToolsFor: #changeSorter
 ]
 
 { #category : 'registration' }
