@@ -52,7 +52,7 @@ BaselineOfGeneralTests >> baseline: spec [
 			package: 'ScriptingExtensions-Tests';
 			package: 'STON-Tests';
 			package: 'System-Caching-Tests';
-			package: 'System-Clipboard-Tests';
+			package: 'System-Utilities-Tests';
 			package: 'System-Hashing-Tests';
 			package: 'System-History-Tests';
 			package: 'System-Localization-Tests';

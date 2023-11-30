@@ -1,8 +1,10 @@
 "
 I interpret bytecode instructions, sending the appropriate instruction messages to my IRBuilder, resulting in an IRMethod.
+
+My entry point is `CompiledMethod>>#decompileIR`
 "
 Class {
-	#name : 'IRBytecodeDecompiler',
+	#name : 'FBIRBytecodeDecompiler',
 	#superclass : 'InstructionClient',
 	#instVars : [
 		'instructionStream',
@@ -10,24 +12,24 @@ Class {
 		'newTempVector',
 		'scopeStack'
 	],
-	#category : 'OpalCompiler-Core-Bytecode',
-	#package : 'OpalCompiler-Core',
+	#category : 'Flashback-Decompiler-Bytecode',
+	#package : 'Flashback-Decompiler',
 	#tag : 'Bytecode'
 }
 
 { #category : 'instruction decoding' }
-IRBytecodeDecompiler >> blockReturnTop [
+FBIRBytecodeDecompiler >> blockReturnTop [
 	self popScope.
 	irBuilder blockReturnTop
 ]
 
 { #category : 'private' }
-IRBytecodeDecompiler >> checkIfJumpTarget [
+FBIRBytecodeDecompiler >> checkIfJumpTarget [
 	irBuilder testJumpAheadTarget: instructionStream pc
 ]
 
 { #category : 'public access' }
-IRBytecodeDecompiler >> decompile: aCompiledMethod [
+FBIRBytecodeDecompiler >> decompile: aCompiledMethod [
 	instructionStream := InstructionStream on: aCompiledMethod.
 	irBuilder := IRReconstructor new.
 	scopeStack := Stack new.
@@ -50,17 +52,17 @@ IRBytecodeDecompiler >> decompile: aCompiledMethod [
 ]
 
 { #category : 'instruction decoding' }
-IRBytecodeDecompiler >> doDup [
+FBIRBytecodeDecompiler >> doDup [
 	irBuilder pushDup
 ]
 
 { #category : 'instruction decoding' }
-IRBytecodeDecompiler >> doPop [
+FBIRBytecodeDecompiler >> doPop [
 	irBuilder popTop
 ]
 
 { #category : 'instruction decoding' }
-IRBytecodeDecompiler >> interpret [
+FBIRBytecodeDecompiler >> interpret [
 	| endPC |
 	endPC := instructionStream method endPC.
 	[instructionStream pc > endPC ]
@@ -71,7 +73,7 @@ IRBytecodeDecompiler >> interpret [
 ]
 
 { #category : 'instruction decoding' }
-IRBytecodeDecompiler >> jump: dist [
+FBIRBytecodeDecompiler >> jump: dist [
 	| index seq instr newSeq seqs |
 	index := instructionStream pc + dist.
 
@@ -100,7 +102,7 @@ IRBytecodeDecompiler >> jump: dist [
 ]
 
 { #category : 'instruction decoding' }
-IRBytecodeDecompiler >> jump: dist if: bool [
+FBIRBytecodeDecompiler >> jump: dist if: bool [
 	| index |
 	index := instructionStream pc + dist .
 
@@ -112,24 +114,24 @@ IRBytecodeDecompiler >> jump: dist if: bool [
 ]
 
 { #category : 'private' }
-IRBytecodeDecompiler >> methodClass [
+FBIRBytecodeDecompiler >> methodClass [
 	^ instructionStream  method methodClass
 ]
 
 { #category : 'quick methods' }
-IRBytecodeDecompiler >> methodReturnConstant: value [
+FBIRBytecodeDecompiler >> methodReturnConstant: value [
 	self pushConstant: value.
 	self methodReturnTop
 ]
 
 { #category : 'quick methods' }
-IRBytecodeDecompiler >> methodReturnReceiver [
+FBIRBytecodeDecompiler >> methodReturnReceiver [
 	self pushReceiver.
 	self methodReturnTop
 ]
 
 { #category : 'instruction decoding' }
-IRBytecodeDecompiler >> methodReturnTop [
+FBIRBytecodeDecompiler >> methodReturnTop [
 	irBuilder isLastClosureInstruction
 		ifTrue: [
 			self popScope.
@@ -140,25 +142,25 @@ IRBytecodeDecompiler >> methodReturnTop [
 ]
 
 { #category : 'instruction decoding' }
-IRBytecodeDecompiler >> popIntoLiteralVariable: offset [
+FBIRBytecodeDecompiler >> popIntoLiteralVariable: offset [
 	self storeIntoLiteralVariable: offset.
 	self doPop
 ]
 
 { #category : 'instruction decoding' }
-IRBytecodeDecompiler >> popIntoReceiverVariable: offset [
+FBIRBytecodeDecompiler >> popIntoReceiverVariable: offset [
 	self storeIntoReceiverVariable: offset.
 	self doPop
 ]
 
 { #category : 'instruction decoding' }
-IRBytecodeDecompiler >> popIntoRemoteTemp: remoteTempIndex inVectorAt: tempVectorIndex [
+FBIRBytecodeDecompiler >> popIntoRemoteTemp: remoteTempIndex inVectorAt: tempVectorIndex [
 	self storeIntoRemoteTemp: remoteTempIndex inVectorAt: tempVectorIndex.
 	self doPop
 ]
 
 { #category : 'instruction decoding' }
-IRBytecodeDecompiler >> popIntoTemporaryVariable: offset [
+FBIRBytecodeDecompiler >> popIntoTemporaryVariable: offset [
 	newTempVector
 		ifNil: [
 			self storeIntoTemporaryVariable: offset.
@@ -172,7 +174,7 @@ IRBytecodeDecompiler >> popIntoTemporaryVariable: offset [
 ]
 
 { #category : 'scope' }
-IRBytecodeDecompiler >> popScope [
+FBIRBytecodeDecompiler >> popScope [
 	| scope tempIndex |
 	scope := self scope.
 
@@ -196,22 +198,22 @@ IRBytecodeDecompiler >> popScope [
 ]
 
 { #category : 'instruction decoding' }
-IRBytecodeDecompiler >> pushActiveContext [
+FBIRBytecodeDecompiler >> pushActiveContext [
 	irBuilder pushThisContext
 ]
 
 { #category : 'instruction decoding' }
-IRBytecodeDecompiler >> pushConsArrayWithElements: numElements [
+FBIRBytecodeDecompiler >> pushConsArrayWithElements: numElements [
 	irBuilder pushConsArray: numElements
 ]
 
 { #category : 'instruction decoding' }
-IRBytecodeDecompiler >> pushConstant: value [
+FBIRBytecodeDecompiler >> pushConstant: value [
 	irBuilder pushLiteral: value
 ]
 
 { #category : 'instruction decoding' }
-IRBytecodeDecompiler >> pushFullClosure: compiledBlock numCopied: numCopied receiverOnStack: receiverOnStack ignoreOuterContext: ignoreOuterContext [
+FBIRBytecodeDecompiler >> pushFullClosure: compiledBlock numCopied: numCopied receiverOnStack: receiverOnStack ignoreOuterContext: ignoreOuterContext [
 
 	| copiedValues |
 
@@ -222,27 +224,27 @@ IRBytecodeDecompiler >> pushFullClosure: compiledBlock numCopied: numCopied rece
 ]
 
 { #category : 'instruction decoding' }
-IRBytecodeDecompiler >> pushLiteralVariable: assoc [
+FBIRBytecodeDecompiler >> pushLiteralVariable: assoc [
 	irBuilder pushLiteralVariable: assoc
 ]
 
 { #category : 'instruction decoding' }
-IRBytecodeDecompiler >> pushNewArrayOfSize: size [
+FBIRBytecodeDecompiler >> pushNewArrayOfSize: size [
 	newTempVector := IRRemoteArray new size: size
 ]
 
 { #category : 'instruction decoding' }
-IRBytecodeDecompiler >> pushReceiver [
+FBIRBytecodeDecompiler >> pushReceiver [
 	irBuilder pushReceiver
 ]
 
 { #category : 'instruction decoding' }
-IRBytecodeDecompiler >> pushReceiverVariable: offset [
+FBIRBytecodeDecompiler >> pushReceiverVariable: offset [
 	irBuilder pushInstVar: offset + 1
 ]
 
 { #category : 'instruction decoding' }
-IRBytecodeDecompiler >> pushRemoteTemp: remoteIndex inVectorAt: tempIndex [
+FBIRBytecodeDecompiler >> pushRemoteTemp: remoteIndex inVectorAt: tempIndex [
 	|  remoteArray remoteTempName |
 	remoteArray := self scope tempAt: tempIndex.
 	remoteTempName := self scope tempAt: remoteIndex inRemote: remoteArray.
@@ -250,7 +252,7 @@ IRBytecodeDecompiler >> pushRemoteTemp: remoteIndex inVectorAt: tempIndex [
 ]
 
 { #category : 'scope' }
-IRBytecodeDecompiler >> pushScope: copiedValues numArgs: numArgs [
+FBIRBytecodeDecompiler >> pushScope: copiedValues numArgs: numArgs [
 	|scope |
 	scope := IRBytecodeScope new numArgs: numArgs.
 	scopeStack push: scope.
@@ -258,12 +260,12 @@ IRBytecodeDecompiler >> pushScope: copiedValues numArgs: numArgs [
 ]
 
 { #category : 'instruction decoding' }
-IRBytecodeDecompiler >> pushTemporaryVariable: offset [
+FBIRBytecodeDecompiler >> pushTemporaryVariable: offset [
 	irBuilder pushTemp: (self scope tempAt: offset)
 ]
 
 { #category : 'quick methods' }
-IRBytecodeDecompiler >> quickMethod [
+FBIRBytecodeDecompiler >> quickMethod [
 
 	instructionStream method primitive = 256 ifTrue: [
 		^ self methodReturnReceiver
@@ -279,29 +281,29 @@ IRBytecodeDecompiler >> quickMethod [
 ]
 
 { #category : 'scope' }
-IRBytecodeDecompiler >> scope [
+FBIRBytecodeDecompiler >> scope [
 	^ scopeStack top
 ]
 
 { #category : 'instruction decoding' }
-IRBytecodeDecompiler >> send: selector super: superFlag numArgs: numArgs [
+FBIRBytecodeDecompiler >> send: selector super: superFlag numArgs: numArgs [
 	superFlag
 		ifTrue: [irBuilder send: selector toSuperOf: self methodClass]
 		ifFalse: [irBuilder send: selector]
 ]
 
 { #category : 'instruction decoding' }
-IRBytecodeDecompiler >> storeIntoLiteralVariable: value [
+FBIRBytecodeDecompiler >> storeIntoLiteralVariable: value [
 	irBuilder storeIntoLiteralVariable: value
 ]
 
 { #category : 'instruction decoding' }
-IRBytecodeDecompiler >> storeIntoReceiverVariable: offset [
+FBIRBytecodeDecompiler >> storeIntoReceiverVariable: offset [
 	irBuilder storeInstVar: offset + 1
 ]
 
 { #category : 'instruction decoding' }
-IRBytecodeDecompiler >> storeIntoRemoteTemp: remoteIndex inVectorAt: tempIndex [
+FBIRBytecodeDecompiler >> storeIntoRemoteTemp: remoteIndex inVectorAt: tempIndex [
 	|  remoteArray remoteTempName |
 	remoteArray := self scope tempAt: tempIndex.
 	remoteTempName := self scope tempAt: remoteIndex inRemote: remoteArray.
@@ -309,6 +311,6 @@ IRBytecodeDecompiler >> storeIntoRemoteTemp: remoteIndex inVectorAt: tempIndex [
 ]
 
 { #category : 'instruction decoding' }
-IRBytecodeDecompiler >> storeIntoTemporaryVariable: offset [
+FBIRBytecodeDecompiler >> storeIntoTemporaryVariable: offset [
 	irBuilder storeTemp: (self scope tempAt: offset)
 ]

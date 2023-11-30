@@ -140,7 +140,7 @@ ReleaseTest >> testExistingPackageNamesDoesNotContainIllegalCharacters [
 
 	self packageOrganizer packages do: [ :package |
 		self deny: (package name includesAnyOf: illegalCharacters).
-		package classTags do: [ :tag | self deny: (tag name includesAnyOf: illegalCharacters) ] ]
+		package tags do: [ :tag | self deny: (tag name includesAnyOf: illegalCharacters) ] ]
 ]
 
 { #category : 'tests' }

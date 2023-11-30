@@ -180,15 +180,6 @@ IRSequence >> last [
 	^sequence last
 ]
 
-{ #category : 'printing' }
-IRSequence >> longPrintOn: stream [
-
-	[IRPrinter new
-		stream: stream;
-		visitNode: self
-	] onDNU: #orderNumber do: [:ex | ex resume: ex receiver]
-]
-
 { #category : 'accessing' }
 IRSequence >> method [
 

@@ -14,17 +14,17 @@ Class {
 }
 
 { #category : 'execution' }
-RBRemoveSharedVariablesDriver >> applyChanges [
-
-	self openPreviewWithChanges: refactoring privateTransform
-]
-
-{ #category : 'execution' }
 RBRemoveSharedVariablesDriver >> browseSharedVariableReferences [
 
 	StMessageBrowserPresenter
 		browse: refactoring violators
 		
+]
+
+{ #category : 'execution' }
+RBRemoveSharedVariablesDriver >> changes [
+
+	^ refactoring privateTransform
 ]
 
 { #category : 'resources' }

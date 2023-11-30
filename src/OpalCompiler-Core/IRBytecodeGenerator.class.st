@@ -170,7 +170,7 @@ IRBytecodeGenerator >> compiledBlock [
 		encoder genCallPrimitive: quickPrimitive.
 	]."
 	header := self spurVMHeader: lits size.
-	cb := CompiledBlock newMethod: self bytecodes size header: header.
+	cb := CompiledBlock basicNew: self bytecodes size header: header.
 	(WriteStream with: cb)
 		position: cb initialPC - 1;
 		nextPutAll: self bytecodes.
@@ -200,7 +200,7 @@ IRBytecodeGenerator >> compiledMethodHeader: header literals: lits [
 	| cm cmClass|
 	"we look up the class in the productionEnvironment"
 	cmClass := self compilationContext compiledMethodClass.
-	cm := cmClass newMethod: self bytecodes size + CompiledMethod trailerSize header: header.
+	cm := cmClass basicNew: self bytecodes size + CompiledMethod trailerSize header: header.
 	(WriteStream with: cm)
 		position: cm initialPC - 1;
 		nextPutAll: self bytecodes.

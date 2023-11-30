@@ -7,8 +7,8 @@ Class {
 	#instVars : [
 		'clipboard'
 	],
-	#category : 'System-Clipboard-Tests-Base',
-	#package : 'System-Clipboard-Tests',
+	#category : 'System-Utilities-Tests-Base',
+	#package : 'System-Utilities-Tests',
 	#tag : 'Base'
 }
 

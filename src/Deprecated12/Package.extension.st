@@ -4,9 +4,9 @@ Extension { #name : 'Package' }
 Package >> actualClassTags [
 
 	self deprecated: 'This method is too specific and will be removed in future versions of Pharo.'.
-	(classTags size = 1 and: [ classTags anyOne isRoot ]) ifTrue: [ ^ #(  ) ].
+	(tags size = 1 and: [ tags anyOne isRoot ]) ifTrue: [ ^ #(  ) ].
 
-	^ classTags
+	^ tags
 ]
 
 { #category : '*Deprecated12' }
@@ -63,7 +63,7 @@ Package >> classNamesForClassTag: aSymbol [
 
 	self deprecated: 'This method is too specific and will be remove in future versions of Pharo. If you are using it you can inline the method'.
 
-	^ (self classTagNamed: aSymbol ifAbsent: [ ^ #(  ) ]) classNames
+	^ (self tagNamed: aSymbol ifAbsent: [ ^ #(  ) ]) classNames
 ]
 
 { #category : '*Deprecated12' }
@@ -71,6 +71,39 @@ Package >> classTagForClass: aClass [
 
 	self deprecated: 'Use #tagOf: instead' transformWith: '`@rcv classTagForClass: `@arg' -> '`@rcv tagOf: `@arg'.
 	^ self tagOf: aClass
+]
+
+{ #category : '*Deprecated12' }
+Package >> classTagNamed: aSymbol [
+
+	self deprecated: 'Use #tagNamed: instead.' transformWith: '`@rcv classTagNamed: `@arg' -> '`@rcv tagNamed: `@arg'.
+	^ self tagNamed: aSymbol
+]
+
+{ #category : '*Deprecated12' }
+Package >> classTagNamed: aSymbol ifAbsent: aBlock [
+
+	self deprecated: 'Use #tagNamed:ifAbsent: instead.' transformWith: '`@rcv classTagNamed: `@arg ifAbsent: `@arg2' -> '`@rcv tagNamed: `@arg ifAbsent: `@arg2'.
+	^ self tags
+		  detect: [ :each | each name = aSymbol ]
+		  ifNone: aBlock
+]
+
+{ #category : '*Deprecated12' }
+Package >> classTagNamed: aSymbol ifPresent: aBlock [
+
+	self deprecated: 'Use #tagNamed:ifPresent: instead.' transformWith: '`@rcv classTagNamed: `@arg ifPresent: `@arg2' -> '`@rcv tagNamed: `@arg ifPresent: `@arg2'.
+	^ self tags
+		  detect: [ :each | each name = aSymbol ]
+		  ifFound: [ :tag | aBlock cull: tag ]
+		  ifNone: [ nil ]
+]
+
+{ #category : '*Deprecated12' }
+Package >> classTags [
+
+	self deprecated: 'Use #tags instead.' transformWith: '`@rcv classTags' -> '`@rcv tags'.
+	^ self tags
 ]
 
 { #category : '*Deprecated12' }

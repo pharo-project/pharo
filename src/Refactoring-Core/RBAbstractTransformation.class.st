@@ -59,9 +59,6 @@ RBAbstractTransformation class >> initializeRefactoringOptions [
 		at: #alreadyDefined
 		put: [ :ref :cls :selector |  self error: #alreadyDefined ];
 
-		at: #useExistingMethod
-		put: [ :ref :selector |  self error: #useExistingMethod ];
-
 		at: #openBrowser
 		put: [ :ref :env |  self error: #openBrowser ];
 
@@ -86,6 +83,12 @@ RBAbstractTransformation class >> menuItemString [
 { #category : 'accessing' }
 RBAbstractTransformation class >> refactoringOptions [
 	^ RefactoringOptions
+]
+
+{ #category : 'preconditions' }
+RBAbstractTransformation >> applicabilityPreconditions [ 
+	
+	^ self trueCondition 
 ]
 
 { #category : 'private' }
@@ -136,6 +139,19 @@ RBAbstractTransformation >> buildSelectorString: aSelector withPermuteMap: aPerm
 RBAbstractTransformation >> changes [
 
 	^ self model changes
+]
+
+{ #category : 'preconditions' }
+RBAbstractTransformation >> checkApplicabilityPreconditions [
+
+	| conditions errorStrings |
+	conditions := self applicabilityPreconditions.
+	conditions := conditions reject: [ :cond | cond check ].
+	conditions ifEmpty: [ ^ self ].
+	errorStrings := String streamContents: [ :aStream |
+		                conditions do: [ :cond |
+			                cond violationMessageOn: aStream ] ].
+	self refactoringError: errorStrings
 ]
 
 { #category : 'condition definitions' }
@@ -210,6 +226,17 @@ RBAbstractTransformation >> generateChanges [
 	
 	"below executes the refactoring without prompt"
 	"RBRefactoringManager instance addRefactoring: self"
+]
+
+{ #category : 'transforming' }
+RBAbstractTransformation >> generateChangesFor: aRefactoring [
+	"I will generate changes and save them in the model, BUT I will not apply them!
+	Use me when a refactorings is composed of multiple other refactorings"
+
+	"Execute the argument but passing the receiver options to that refactoring"
+	aRefactoring copyOptionsFrom: self options.
+	aRefactoring model: self model.
+	aRefactoring generateChanges
 ]
 
 { #category : 'accessing' }
@@ -401,11 +428,6 @@ RBAbstractTransformation >> shouldOverride: aSelector in: aClass [
 		value: self
 		value: aClass
 		value: aSelector
-]
-
-{ #category : 'requests' }
-RBAbstractTransformation >> shouldUseExistingMethod: aSelector [
-	^(self options at: #useExistingMethod) value: self value: aSelector
 ]
 
 { #category : 'transforming' }
