@@ -147,8 +147,7 @@ SlotAnnouncementsTest >> testChangeInSuperclassShouldNotAnnounceSubclassModified
 	"Create a class and a subclass"
 	aClass := self make: [ :builder |
 		builder
-			name: self aClassName;
-			slots: #() ].
+			name: self aClassName ].
 
 	anotherClass := self make: [ :builder |
 		builder
