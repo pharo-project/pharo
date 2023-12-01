@@ -1,8 +1,9 @@
 Class {
 	#name : 'ShSlotChangeDetectorTest',
 	#superclass : 'ShAbstractChangeDetectorTest',
-	#category : 'Shift-Changes-Tests',
-	#package : 'Shift-Changes-Tests'
+	#category : 'Shift-ClassBuilder-Tests-Changes',
+	#package : 'Shift-ClassBuilder-Tests',
+	#tag : 'Changes'
 }
 
 { #category : 'tests' }

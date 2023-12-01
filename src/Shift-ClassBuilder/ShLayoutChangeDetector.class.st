@@ -4,8 +4,9 @@ I know how to detect a change in the layout of a class.
 Class {
 	#name : 'ShLayoutChangeDetector',
 	#superclass : 'ShAbstractInstanceSideClassChangeDetector',
-	#category : 'Shift-Changes',
-	#package : 'Shift-Changes'
+	#category : 'Shift-ClassBuilder-Changes',
+	#package : 'Shift-ClassBuilder',
+	#tag : 'Changes'
 }
 
 { #category : 'initialization' }

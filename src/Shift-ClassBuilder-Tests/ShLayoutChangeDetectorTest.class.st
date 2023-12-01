@@ -4,8 +4,9 @@ A ShLayoutChangeDetectorTest is a test class for testing the behavior of ShLayou
 Class {
 	#name : 'ShLayoutChangeDetectorTest',
 	#superclass : 'ShAbstractChangeDetectorTest',
-	#category : 'Shift-Changes-Tests',
-	#package : 'Shift-Changes-Tests'
+	#category : 'Shift-ClassBuilder-Tests-Changes',
+	#package : 'Shift-ClassBuilder-Tests',
+	#tag : 'Changes'
 }
 
 { #category : 'tests' }

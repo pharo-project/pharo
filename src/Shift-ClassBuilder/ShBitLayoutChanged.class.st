@@ -5,8 +5,9 @@ Specially if there is a change from PointerLayout to BitLayout and if there is n
 Class {
 	#name : 'ShBitLayoutChanged',
 	#superclass : 'ShAbstractChange',
-	#category : 'Shift-Changes',
-	#package : 'Shift-Changes'
+	#category : 'Shift-ClassBuilder-Changes',
+	#package : 'Shift-ClassBuilder',
+	#tag : 'Changes'
 }
 
 { #category : 'propagating' }

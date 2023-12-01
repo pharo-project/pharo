@@ -4,8 +4,9 @@ I detect if there is a change in the superclass
 Class {
 	#name : 'ShSuperclassChangeDetector',
 	#superclass : 'ShAbstractInstanceSideClassChangeDetector',
-	#category : 'Shift-Changes',
-	#package : 'Shift-Changes'
+	#category : 'Shift-ClassBuilder-Changes',
+	#package : 'Shift-ClassBuilder',
+	#tag : 'Changes'
 }
 
 { #category : 'class initialization' }

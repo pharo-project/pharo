@@ -4,8 +4,9 @@ I am an special Class change detector, used when we have to include the change i
 Class {
 	#name : 'ShAbstractInstanceSideClassChangeDetector',
 	#superclass : 'ShAbstractClassChangeDetector',
-	#category : 'Shift-Changes',
-	#package : 'Shift-Changes'
+	#category : 'Shift-ClassBuilder-Changes',
+	#package : 'Shift-ClassBuilder',
+	#tag : 'Changes'
 }
 
 { #category : 'testing' }
