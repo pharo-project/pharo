@@ -145,13 +145,13 @@ FLCreateClassSerializationTest >> testCreateClassWithCreatedTraitWithInstanceVar
 	The trait has instance variables."
 
 	| aClass aTrait result materializedClass materializedTrait materializedObject |
-	aClass := self classFactory silentlyMake: [ :aBuilder | aBuilder slotsFromString: 'ivar' ].
+	aClass := self classFactory silentlyMake: [ :aBuilder | aBuilder slots: #(ivar) ].
 	self classFactory silentlyCompile: 'ivar: x ivar := x' in: aClass.
 	self classFactory silentlyCompile: 'ivar ^ ivar' in: aClass.
 	aTrait := self classFactory silentlyMake: [ :aBuilder |
 		          aBuilder
 			          beTrait;
-			          slotsFromString: 'traitIvar' ].
+			          slots: #(traitIvar) ].
 	self classFactory silentlyCompile: 'traitIvar: x traitIvar := x' in: aTrait.
 	self classFactory silentlyCompile: 'traitIvar ^ traitIvar' in: aTrait.
 	aClass addToComposition: aTrait.
@@ -188,7 +188,7 @@ FLCreateClassSerializationTest >> testCreateClassWithInstance [
 	"Tests materialization of a class who references an instance of itself."
 
 	| aClass anInstance materializedClass materializedInstance |
-	aClass := self classFactory make: [ :aBuilder | aBuilder slotsFromString: 'name' ].
+	aClass := self classFactory make: [ :aBuilder | aBuilder slots: #(name) ].
 	aClass class instanceVariableNames: 'instance'.
 
 	anInstance := aClass new
@@ -272,7 +272,7 @@ FLCreateClassSerializationTest >> testCreateClassWithVariables [
 	"Tests materialization of a class not defined in the image, with instance variables."
 
 	| aClass materializedClass |
-	aClass := self classFactory make: [ :aBuilder | aBuilder slotsFromString: 'var1 var2' ].
+	aClass := self classFactory make: [ :aBuilder | aBuilder slots: #(var1 var2) ].
 
 	materializedClass := self resultOfSerializeRemoveAndMaterialize: aClass.
 
@@ -511,7 +511,7 @@ FLCreateClassSerializationTest >> testMaterializationDoesNotModifySerializedClas
 	"Tests that materialization does not change the source class."
 
 	| aClass materializedClass |
-	aClass := self classFactory make: [ :aBuilder | aBuilder slotsFromString: 'var' ].
+	aClass := self classFactory make: [ :aBuilder | aBuilder slots: #(var) ].
 
 	self serializer fullySerializeBehavior: aClass.
 	self serialize: aClass.

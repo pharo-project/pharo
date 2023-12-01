@@ -27,7 +27,7 @@ TEqualityTest >> testSetContainsOnlyOneInstanceOfAClassWithIVs [
 	class := classFactory make: [ :aBuilder |
 		         aBuilder
 			         superclass: ComparableObjectForEqualityTest;
-			         slotsFromString: 'x y' ].
+			         slots: #(x y) ].
 	class compile: 'x: newX y: newY
 		x := newX.
 		y := newY'.
@@ -63,11 +63,11 @@ TEqualityTest >> testSetContainsTwoInstancesOfTwoDiffrentClassesWithIVs [
 	otherClass := classFactory make: [ :aBuilder |
 		              aBuilder
 			              superclass: ComparableObjectForEqualityTest;
-			              slotsFromString: 'x y' ].
+			              slots: #(x y) ].
 	yetAnotherClass := classFactory make: [ :aBuilder |
 		                   aBuilder
 			                   superclass: ComparableObjectForEqualityTest;
-			                   slotsFromString: 'x y' ].
+			                   slots: #(x y) ].
 	{
 		otherClass.
 		yetAnotherClass } do: [ :class |
@@ -106,7 +106,7 @@ TEqualityTest >> testTwoInstancesOfTheSameClassWithDifferentIvValuessAreNotEqual
 	class := classFactory make: [ :aBuilder |
 		         aBuilder
 			         superclass: ComparableObjectForEqualityTest;
-			         slotsFromString: 'x y' ].
+			         slots: #(x y) ].
 	class compile: 'x: newX y: newY
 		x := newX.
 		y := newY'.
@@ -133,7 +133,7 @@ TEqualityTest >> testTwoInstancesOfTheSameClassWithSameIvValuessAreEqual [
 	class := classFactory make: [ :aBuilder |
 		         aBuilder
 			         superclass: ComparableObjectForEqualityTest;
-			         slotsFromString: 'x y' ].
+			         slot: #(x y) ].
 	class compile: 'x: newX y: newY
 		x := newX.
 		y := newY'.

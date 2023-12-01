@@ -34,7 +34,7 @@ FLMigrationTest >> setUpEnvironment [
 FLMigrationTest >> testBadDestinationVariableRename [
 
 	| pointClass aPoint pointClassName |
-	pointClass := self classFactory make: [ :aBuilder | aBuilder slotsFromString: 'x y' ].
+	pointClass := self classFactory make: [ :aBuilder | aBuilder slots: #(x y) ].
 	pointClassName := pointClass name.
 	aPoint := pointClass new.
 
@@ -53,11 +53,11 @@ FLMigrationTest >> testChangeInSuperclass [
 	"Tests that serializer tolarates when there is a change in the superclass between serialization and materialization"
 
 	| aClass aClassSubclass instance materializedInstance |
-	aClass := self classFactory make: [ :aBuilder | aBuilder slotsFromString: 'a b c' ].
+	aClass := self classFactory make: [ :aBuilder | aBuilder slots: #(a b c) ].
 	aClassSubclass := self classFactory make: [ :aBuilder |
 		                  aBuilder
 			                  superclass: aClass;
-			                  slotsFromString: 'd e' ].
+			                  slots: #(d e) ].
 
 	instance := aClassSubclass new.
 	instance instVarNamed: 'a' put: $A.
@@ -86,7 +86,7 @@ FLMigrationTest >> testChangeInSuperclass [
 FLMigrationTest >> testClassAndVariableRename [
 
 	| pointClass aPoint resultPoint pointClassName |
-	pointClass := self classFactory make: [ :aBuilder | aBuilder slotsFromString: 'x y' ].
+	pointClass := self classFactory make: [ :aBuilder | aBuilder slots: #(x y) ].
 	pointClassName := pointClass name.
 	aPoint := pointClass new.
 	aPoint instVarNamed: 'x' put: 7.
@@ -111,7 +111,7 @@ FLMigrationTest >> testClassAndVariableRename [
 FLMigrationTest >> testClassRename [
 
 	| pointClass aPoint resultPoint pointClassName |
-	pointClass := self classFactory make: [ :aBuilder | aBuilder slotsFromString: 'x y' ].
+	pointClass := self classFactory make: [ :aBuilder | aBuilder slots: #(x y) ].
 	pointClassName := pointClass name.
 	aPoint := pointClass new.
 	aPoint instVarNamed: 'x' put: 7.
@@ -151,12 +151,12 @@ FLMigrationTest >> testSuperclassChange [
 	"Tests that serializer tolarates when the superclass changed between serialization and materialization"
 
 	| aClass aClassSubclass instance materializedInstance anotherSuperclass |
-	aClass := self classFactory make: [ :aBuilder | aBuilder slotsFromString: 'a b c' ].
+	aClass := self classFactory make: [ :aBuilder | aBuilder slots: #(a b c) ].
 	aClassSubclass := self classFactory make: [ :aBuilder |
 		                  aBuilder
 			                  superclass: aClass;
-			                  slotsFromString: 'd e' ].
-	anotherSuperclass := self classFactory make: [ :aBuilder | aBuilder slotsFromString: 'x' ].
+			                  slots: #(d e) ].
+	anotherSuperclass := self classFactory make: [ :aBuilder | aBuilder slots: #(x) ].
 
 	instance := aClassSubclass new.
 	instance instVarNamed: 'a' put: $A.
@@ -182,7 +182,7 @@ FLMigrationTest >> testVariableInsertion [
 	"Tests that serializer tolarates when there is a new instance variable on materialization"
 
 	| pairClass aPair resultPair |
-	pairClass := self classFactory make: [ :aBuilder | aBuilder slotsFromString: 'left right' ].
+	pairClass := self classFactory make: [ :aBuilder | aBuilder slots: #(left right) ].
 	aPair := pairClass new.
 	aPair instVarAt: 1 put: $A.
 	aPair instVarAt: 2 put: $B.
@@ -201,7 +201,7 @@ FLMigrationTest >> testVariableOrderChange [
 	"Tests that serializer tolarates when the order in the instance variables changed between serialization and materialization"
 
 	| pairClass aPair resultPair |
-	pairClass := self classFactory make: [ :aBuilder | aBuilder slotsFromString: 'left right' ].
+	pairClass := self classFactory make: [ :aBuilder | aBuilder slots: #(left right) ].
 	aPair := pairClass new.
 	aPair instVarAt: 1 put: $A.
 	aPair instVarAt: 2 put: $B.
@@ -219,7 +219,7 @@ FLMigrationTest >> testVariableRemoved [
 	"Tests that serializer tolarates when an instance variable is missing on materialization"
 
 	| pairClass aPair resultPair |
-	pairClass := self classFactory make: [ :aBuilder | aBuilder slotsFromString: 'left right' ].
+	pairClass := self classFactory make: [ :aBuilder | aBuilder slots: #(left right) ].
 	aPair := pairClass new.
 	aPair instVarAt: 1 put: $A.
 	aPair instVarAt: 2 put: $B.
@@ -235,7 +235,7 @@ FLMigrationTest >> testVariableRemoved [
 FLMigrationTest >> testVariableRename [
 
 	| pointClass aPoint resultPoint pointClassName |
-	pointClass := self classFactory make: [ :aBuilder | aBuilder slotsFromString: 'x y' ].
+	pointClass := self classFactory make: [ :aBuilder | aBuilder slots: #(x y) ].
 	pointClassName := pointClass name.
 	aPoint := pointClass new.
 	aPoint instVarNamed: 'x' put: 7.

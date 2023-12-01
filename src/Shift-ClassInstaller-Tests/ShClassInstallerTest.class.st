@@ -174,9 +174,6 @@ ShClassInstallerTest >> testClassWithComment [
 		            builder
 			            name: #SHClassWithComment;
 			            superclass: Object;
-			            slots: #(  );
-			            sharedVariables: '';
-			            sharedPools: '';
 			            package: self generatedClassesPackageName;
 			            comment: 'I have a comment';
 			            commentStamp: 'anStamp' ].

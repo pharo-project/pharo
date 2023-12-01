@@ -119,11 +119,6 @@ ShLayoutDefinition >> sharedVariables: anObject [
 ]
 
 { #category : 'accessing' }
-ShLayoutDefinition >> sharedVariablesString [
-	^ (sharedVariables collect:[:e | e key]) joinUsing: ' '
-]
-
-{ #category : 'accessing' }
 ShLayoutDefinition >> slots [
 	^ slots
 ]

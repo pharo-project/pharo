@@ -86,7 +86,7 @@ ClassFactoryForTestCaseTest >> testSingleClassCreation [
 	class := factory make: [ :aBuilder |
 		         aBuilder
 			         superclass: Object;
-			         slotsFromString: 'a b c';
+			         slots: {#a.#b .#c};
 			         sharedVariablesFromString: 'X Y';
 			         tag: factory tagName ].
 	self assert: (self environment allClasses includes: class).

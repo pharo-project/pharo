@@ -26,7 +26,7 @@ FLHookedSubstitutionTest >> testAvoidRecursion [
 FLHookedSubstitutionTest >> testClassWithCachedValueByNil [
 
 	| aClassWithCachedValue result original |
-	aClassWithCachedValue := self classFactory silentlyMake: [ :aBuilder | aBuilder slotsFromString: 'cache' ].
+	aClassWithCachedValue := self classFactory silentlyMake: [ :aBuilder | aBuilder slots: #(cache) ].
 	self classFactory
 		silentlyCompile: 'cache ^cache' in: aClassWithCachedValue;
 		silentlyCompile: 'cache: x cache := x' in: aClassWithCachedValue;
@@ -54,7 +54,7 @@ FLHookedSubstitutionTest >> testObjectByProxyThatBecomesItsContent [
 	"Tests a substitution of an object by a proxy that becomes another object on materialization."
 
 	| aProxyClass result |
-	aProxyClass := self classFactory silentlyMake: [ :aBuilder | aBuilder slotsFromString: 'someState' ].
+	aProxyClass := self classFactory silentlyMake: [ :aBuilder | aBuilder slots: #(someState) ].
 	self classFactory
 		silentlyCompile: 'initialize  someState := 5@1' in: aProxyClass;
 		silentlyCompile: 'fuelAccept: aVisitor
