@@ -7,9 +7,8 @@ This prints the class definition as it was till Pharo9: ST80 style, but with ext
 Class {
 	#name : 'OldPharoClassDefinitionPrinter',
 	#superclass : 'ClassDefinitionPrinter',
-	#category : 'Kernel-ClassDefinitionPrinter',
-	#package : 'Kernel',
-	#tag : 'ClassDefinitionPrinter'
+	#category : 'ClassDefinitionPrinters',
+	#package : 'ClassDefinitionPrinters'
 }
 
 { #category : 'internal' }

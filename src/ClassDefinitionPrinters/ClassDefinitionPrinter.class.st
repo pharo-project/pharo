@@ -61,9 +61,8 @@ Class {
 	#classVars : [
 		'DisplayEmptySlots'
 	],
-	#category : 'Kernel-ClassDefinitionPrinter',
-	#package : 'Kernel',
-	#tag : 'ClassDefinitionPrinter'
+	#category : 'ClassDefinitionPrinters',
+	#package : 'ClassDefinitionPrinters'
 }
 
 { #category : 'configure' }
