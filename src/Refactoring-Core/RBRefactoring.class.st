@@ -66,14 +66,11 @@ RBRefactoring >> canReferenceVariable: aString in: aClass [
 { #category : 'preconditions' }
 RBRefactoring >> checkApplicabilityPreconditions [
 
-	| conditions errorStrings |
+	| conditions failingConditions |
 	conditions := self applicabilityPreconditions.
-	conditions := conditions reject: [ :cond | cond check ].
-	conditions ifEmpty: [ ^ self ].
-	errorStrings := String streamContents: [ :aStream |
-		                conditions do: [ :cond |
-			                cond violationMessageOn: aStream ] ].
-	self refactoringError: errorStrings
+	failingConditions := conditions reject: [ :cond | cond check ].
+	failingConditions ifEmpty: [ ^ self ].
+	RBRefactoringError signalFor: failingConditions
 ]
 
 { #category : 'support' }
@@ -130,6 +127,18 @@ RBRefactoring >> copyOptionsFrom: aDictionary [
 	(aDictionary keys difference: dict keys) do:
 		[ :e | dict at: e put: (aDictionary at: e) ].
 	self options: dict
+]
+
+{ #category : 'preconditions' }
+RBRefactoring >> failedApplicabilityPreconditions [
+
+	[self checkApplicabilityPreconditions] 
+		on: RBRefactoringError
+		do: [ :err | 
+			^ err failedConditions
+			].
+		^ #()
+		
 ]
 
 { #category : 'private' }

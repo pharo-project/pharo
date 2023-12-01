@@ -6,7 +6,7 @@ Class {
 	#superclass : 'RBNewAbstractCondition',
 	#instVars : [
 		'name',
-		'violators'
+		'violator'
 	],
 	#category : 'Refactoring-Core-Conditions',
 	#package : 'Refactoring-Core',
@@ -24,10 +24,12 @@ RBVariableNameCondition class >> reservedNames [
 	^#('self' 'true' 'false' 'nil' 'thisContext' 'super')
 ]
 
-{ #category : 'initialization' }
-RBVariableNameCondition >> initialize [
-	super initialize.
-	violators := { }
+{ #category : 'accessing' }
+RBVariableNameCondition >> errorString [
+
+	^ String streamContents: [ :stream |
+		self violationMessageOn: stream
+		]
 ]
 
 { #category : 'accessing' }
@@ -35,8 +37,12 @@ RBVariableNameCondition >> name: aString [
 	name := aString
 ]
 
-{ #category : 'displaying' }
-RBVariableNameCondition >> violationMessageOn: aWriteStream [
+{ #category : 'accessing' }
+RBVariableNameCondition >> violationMessageOn: stream [
+	self subclassResponsibility 
+]
 
-	aWriteStream nextPutAll: self errorString
+{ #category : 'accessing' }
+RBVariableNameCondition >> violator [
+	^ violator
 ]

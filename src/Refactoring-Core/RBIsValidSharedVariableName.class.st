@@ -14,20 +14,29 @@ RBIsValidSharedVariableName >> check [
 
 	| string |
 	name isString ifFalse: [
-		violators := { name }.
+		violator := name.
 		^ false ].
 	string := name asString.
 	(self class reservedNames includes: string) ifTrue: [
-		violators := { name }.
+		violator := name.
 		^ false ].
 	string isEmpty ifTrue: [
-		violators := { name }.
+		violator := name.
 		^ false ].
 	string first isUppercase ifFalse: [
-		violators := { name }.
+		violator := name.
 		^ false ].
 	(RBScanner isVariable: string) ifFalse: [
-		violators := { name }.
+		violator := name.
 		^ false ].
 	^ true
+]
+
+{ #category : 'accessing' }
+RBIsValidSharedVariableName >> violationMessageOn: aStream [
+
+	^ aStream
+		  nextPutAll: violator;
+		  nextPutAll:
+			  ' is not a valid shared variable name (the name must start in uppercase).'
 ]

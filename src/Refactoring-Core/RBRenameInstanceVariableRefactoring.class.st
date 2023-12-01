@@ -74,8 +74,8 @@ RBRenameInstanceVariableRefactoring >> applicabilityPreconditions [
 
 	^ {
 		  (RBIsValidInstanceVariableName name: newName).
-		  (RBIsVariableNotDefinedInHierarchy name: newName class: class).
-		  (RBIsNotGlobal name: newName model: model) }
+		  (RBNameIsGlobalCondition new model: model className: newName) not.
+		  (RBIsVariableNotDefinedInHierarchy name: newName class: class) }
 ]
 
 { #category : 'refactoring' }

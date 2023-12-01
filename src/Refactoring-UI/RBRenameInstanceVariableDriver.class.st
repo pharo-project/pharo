@@ -8,7 +8,8 @@ Class {
 		'oldName',
 		'class',
 		'newName',
-		'shouldEscape'
+		'shouldEscape',
+		'lastName'
 	],
 	#category : 'Refactoring-UI-Drivers',
 	#package : 'Refactoring-UI',
@@ -39,7 +40,6 @@ RBRenameInstanceVariableDriver >> requestNewNameBasedOn: aName [
 
 	newName := SpRequestDialog new
 		           title: 'Please provide a new variable name';
-		           label: 'The new name should be unique among the variables in the class hierarchy';
 		           text: aName;
 		           openModal.
 
@@ -49,28 +49,26 @@ RBRenameInstanceVariableDriver >> requestNewNameBasedOn: aName [
 	newName = oldName ifTrue: [
 		shouldEscape := true.
 		^ self ].
-
+	lastName := newName.
 	^ newName
 ]
 
 { #category : 'execution' }
 RBRenameInstanceVariableDriver >> runRefactoring [
 
-	| preconditionsPass |
-
+	| failedConditions |
 	self configureRefactoring.
+	
 	shouldEscape := false.
-	preconditionsPass := false.
 
-	[ preconditionsPass ] whileFalse: [
-		newName := self requestNewNameBasedOn: oldName.
-		shouldEscape ifTrue: [ ^ self ].
-		refactoring newName: newName.
-		
-		preconditionsPass := true.
-		[ refactoring checkApplicabilityPreconditions ]
-			on: RBRefactoringError
-			do: [ :ex | preconditionsPass := false ] ].
+	[ newName := self requestNewNameBasedOn: lastName.
+	shouldEscape ifTrue: [ ^ self ].
+	refactoring newName: newName.
+	failedConditions := refactoring failedApplicabilityPreconditions.
+	failedConditions isEmpty ]
+		whileFalse: [
+			failedConditions do: [ :cond | 
+				self inform: cond errorString ] ].
 
 	self applyChanges
 ]
@@ -80,5 +78,6 @@ RBRenameInstanceVariableDriver >> scopes: aCollection variable: aString for: aCl
 	scopes := aCollection.
 	model :=  self defaultModel.
 	oldName := aString.
+	lastName := aString.
 	class := aClass
 ]

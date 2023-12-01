@@ -14,31 +14,29 @@ RBIsValidInstanceVariableName >> check [
 
 	| string |
 	name isString ifFalse: [
-		violators := { name }.
+		violator := name.
 		^ false ].
 	string := name asString.
 	string isEmpty ifTrue: [
-		violators := { name }.
+		violator := name.
 		^ false ].
 	(self class reservedNames includes: string) ifTrue: [
-		violators := { name }.
+		violator := name.
 		^ false ].
 	string first isUppercase ifTrue: [
-		violators := { name }.
+		violator := name.
 		^ false ].
 	(RBScanner isVariable: string) ifFalse: [
-		violators := { name }.
+		violator := name.
 		^ false ].
 	^ true
 ]
 
 { #category : 'accessing' }
-RBIsValidInstanceVariableName >> errorString [ 
+RBIsValidInstanceVariableName >> violationMessageOn: aStream [
 
-	^ 'Invalid name {1}. The name mustn''t start in uppercase or be reserved word' format: { name }
-]
-
-{ #category : 'accessing' }
-RBIsValidInstanceVariableName >> violators [
-	^ violators
+	^ aStream
+		  nextPutAll: violator;
+		  nextPutAll:
+			  ' is not a valid instance variable name (the name musn''t start in uppercase or be a reserved word).'
 ]
