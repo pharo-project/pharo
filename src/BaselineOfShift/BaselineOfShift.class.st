@@ -31,7 +31,7 @@ BaselineOfShift >> baseline: spec [
 			spec package: 'Shift-Changes-Ficus-Tests' with:[spec requires: #('core' 'Shift-Changes-Ficus')].
 
 			spec
-				group: 'core' with: #('Shift-Changes' 'Shift-ClassBuilder' 'Shift-ClassInstaller');
+				group: 'core' with: #('Shift-ClassBuilder' 'Shift-ClassInstaller');
 				group: 'dev' with: #('core' 'tests');
 				group: 'shift-tests' with: #('Shift-ClassBuilder-Tests' 'Shift-ClassInstaller-Tests');
 				group: 'shift-ficus-tests' with: #('Shift-Changes-Ficus-Tests'); 
