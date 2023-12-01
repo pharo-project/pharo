@@ -148,7 +148,6 @@ ToolRegistry >> menuItems [
 		('Process Browser' 			#openProcessBrowser)
 		-
 		('Monticello Browser'		#openMonticelloBrowser)
-		('Change Sorter'			#openChangeSorter)
 	)
 ]
 
