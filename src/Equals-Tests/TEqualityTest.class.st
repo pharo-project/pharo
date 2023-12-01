@@ -133,7 +133,7 @@ TEqualityTest >> testTwoInstancesOfTheSameClassWithSameIvValuessAreEqual [
 	class := classFactory make: [ :aBuilder |
 		         aBuilder
 			         superclass: ComparableObjectForEqualityTest;
-			         slot: #(x y) ].
+			         slots: #(x y) ].
 	class compile: 'x: newX y: newY
 		x := newX.
 		y := newY'.

@@ -20,7 +20,7 @@ FLMigrationTest >> redefined: aClass with: instanceVariableNames [
 	^ self classFactory make: [ :aBuilder |
 		  aBuilder
 			  fillFor: aClass;
-			  slotsFromString: instanceVariableNames ]
+			  slots: instanceVariableNames ]
 ]
 
 { #category : 'running' }
@@ -94,7 +94,7 @@ FLMigrationTest >> testClassAndVariableRename [
 
 	self serialize: aPoint.
 	self classFactory silentlyRename: pointClass to: (pointClassName , 'Renamed') asSymbol.
-	pointClass := self redefined: pointClass with: 'posY posX'.
+	pointClass := self redefined: pointClass with: #(posY posX).
 
 	self materializer migrateClassNamed: pointClassName toClass: pointClass variables: (Dictionary new
 			 at: 'x' put: 'posX';
@@ -188,7 +188,7 @@ FLMigrationTest >> testVariableInsertion [
 	aPair instVarAt: 2 put: $B.
 
 	self serialize: aPair.
-	self redefined: pairClass with: 'left middle right'.
+	self redefined: pairClass with: #(left middle right).
 	resultPair := self materialized.
 
 	self assert: $A equals: (resultPair instVarAt: 1).
@@ -207,7 +207,7 @@ FLMigrationTest >> testVariableOrderChange [
 	aPair instVarAt: 2 put: $B.
 
 	self serialize: aPair.
-	self redefined: pairClass with: 'right left'.
+	self redefined: pairClass with: #(right left).
 	resultPair := self materialized.
 
 	self assert: $B equals: (resultPair instVarAt: 1).
@@ -225,7 +225,7 @@ FLMigrationTest >> testVariableRemoved [
 	aPair instVarAt: 2 put: $B.
 
 	self serialize: aPair.
-	self redefined: pairClass with: 'right'.
+	self redefined: pairClass with: #(right).
 	resultPair := self materialized.
 
 	self assert: $B equals: (resultPair instVarAt: 1)
@@ -242,7 +242,7 @@ FLMigrationTest >> testVariableRename [
 	aPoint instVarNamed: 'y' put: 11.
 
 	self serialize: aPoint.
-	self redefined: pointClass with: 'posY posX'.
+	self redefined: pointClass with: #(posY posX).
 
 	self materializer migrateClassNamed: pointClassName variables: (Dictionary new
 			 at: 'x' put: 'posX';
