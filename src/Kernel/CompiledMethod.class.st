@@ -109,15 +109,6 @@ CompiledMethod class >> new [
 	^self basicNew: 2 header: 1024
 ]
 
-{ #category : 'instance creation' }
-CompiledMethod class >> newFrom: aCompiledMethod [
-	| inst |
-	inst := self basicNew: aCompiledMethod size.
-	1 to: aCompiledMethod size do: [:index |
-		inst at: index put: (aCompiledMethod at: index)].
-	^ inst
-]
-
 { #category : 'private' }
 CompiledMethod class >> newInstanceFrom: oldInstance variable: variable size: instSize map: map [
 	"Create a new instance of the receiver based on the given old instance.

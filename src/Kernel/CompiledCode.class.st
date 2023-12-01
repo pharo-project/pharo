@@ -111,6 +111,15 @@ CompiledCode class >> handleFailingNew: numberOfBytes header: headerWord [
 ]
 
 { #category : 'instance creation' }
+CompiledCode class >> newFrom: aCompiledMethod [
+	| inst |
+	inst := super basicNew: aCompiledMethod size.
+	1 to: aCompiledMethod size do: [:index |
+		inst at: index put: (aCompiledMethod at: index)].
+	^ inst
+]
+
+{ #category : 'instance creation' }
 CompiledCode class >> newMethod: numberOfBytes header: headerWord [
 	"Primitive. Answer an instance of me. The number of literals (and other
 	 information) is specified by the headerWord (see my class comment).
