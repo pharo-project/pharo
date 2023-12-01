@@ -105,7 +105,7 @@ FLCreateClassSerializationTest >> testCreateClassWithClassVariable [
 	"Tests materialization a class not defined in the image, with a class variable."
 
 	| aClass materializedClass |
-	aClass := self classFactory make: [ :aBuilder | aBuilder sharedVariablesFromString: #ClassVariable ].
+	aClass := self classFactory make: [ :aBuilder | aBuilder sharedVariables: #(ClassVariable) ].
 	(aClass classVariableNamed: #ClassVariable) write: #test.
 
 	materializedClass := self resultOfSerializeRemoveAndMaterialize: aClass.
@@ -445,7 +445,7 @@ FLCreateClassSerializationTest >> testCreateWithClassVariableAccessors [
 	"Tests materialization of a compiled method in a class not defined in the image. The class defines accessors for a class variable."
 
 	| aClass materializedClass instance |
-	aClass := self classFactory silentlyMake: [ :aBuilder | aBuilder sharedVariablesFromString: 'AnFLClassVariable' ].
+	aClass := self classFactory silentlyMake: [ :aBuilder | aBuilder sharedVariables: #(AnFLClassVariable) ].
 	self classFactory
 		silentlyCompile: 'classVariable ^AnFLClassVariable' in: aClass;
 		silentlyCompile: 'classVariable: value AnFLClassVariable := value' in: aClass.

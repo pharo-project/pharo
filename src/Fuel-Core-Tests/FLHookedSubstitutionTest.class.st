@@ -72,7 +72,7 @@ FLHookedSubstitutionTest >> testObjectByProxyThatBecomesItsContent [
 FLHookedSubstitutionTest >> testProxyByTarget [
 
 	| aProxyClass result original |
-	aProxyClass := self classFactory silentlyMake: [ :aBuilder | aBuilder sharedVariablesFromString: 'Target' ].
+	aProxyClass := self classFactory silentlyMake: [ :aBuilder | aBuilder sharedVariables: #(Target) ].
 	self classFactory
 		silentlyCompile: 'target: x  Target := x' in: aProxyClass;
 		silentlyCompile: 'fuelAccept: aVisitor
@@ -94,7 +94,7 @@ FLHookedSubstitutionTest >> testProxyByTarget [
 FLHookedSubstitutionTest >> testProxyByTargetAnalisysIsPropagated [
 
 	| aProxyClass result pair original |
-	aProxyClass := self classFactory silentlyMake: [ :aBuilder | aBuilder sharedVariablesFromString: 'Target' ].
+	aProxyClass := self classFactory silentlyMake: [ :aBuilder | aBuilder sharedVariables: #(Target) ].
 	self classFactory
 		silentlyCompile: 'target: x  Target := x' in: aProxyClass;
 		silentlyCompile: 'fuelAccept: aVisitor
@@ -122,7 +122,7 @@ FLHookedSubstitutionTest >> testProxyByTargetAnalisysIsPropagated [
 FLHookedSubstitutionTest >> testProxyByTargetInsideObjectAndAnalisysIsPropagated [
 
 	| aProxyClass result original pair pairRoot |
-	aProxyClass := self classFactory silentlyMake: [ :aBuilder | aBuilder sharedVariablesFromString: 'Target' ].
+	aProxyClass := self classFactory silentlyMake: [ :aBuilder | aBuilder sharedVariables: #(Target) ].
 	self classFactory
 		silentlyCompile: 'target: x  Target := x' in: aProxyClass;
 		silentlyCompile: 'fuelAccept: aVisitor
@@ -154,7 +154,7 @@ FLHookedSubstitutionTest >> testProxyByTargetInsideObjectAndAnalisysIsPropagated
 FLHookedSubstitutionTest >> testProxyInsideObjectByTarget [
 
 	| aProxyClass result original pair |
-	aProxyClass := self classFactory silentlyMake: [ :aBuilder | aBuilder sharedVariablesFromString: 'Target' ].
+	aProxyClass := self classFactory silentlyMake: [ :aBuilder | aBuilder sharedVariables: #(Target) ].
 	self classFactory
 		silentlyCompile: 'target: x  Target := x' in: aProxyClass;
 		silentlyCompile: 'fuelAccept: aVisitor
