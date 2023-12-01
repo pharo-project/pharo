@@ -39,9 +39,9 @@ EpMethodModification >> fileOutEntryOn: aWriteStream [
 	"File out the receiver into aWriteStream if its affected method was not already deleted"
 
 	self methodAffected realParent
-		ifNotNil: [ : methodDefinition | 
-			methodDefinition origin 
-				printMethodChunk: methodDefinition selector 
+		ifNotNil: [  
+			self methodAffected origin 
+				printMethodChunk: self methodAffected selector 
 				on: aWriteStream ]
 
 ]

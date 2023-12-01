@@ -318,7 +318,7 @@ EpLogBrowserPresenter >> eventsMenuActions [
 	}
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'menu - operations' }
 EpLogBrowserPresenter >> fileOutSelection [
 	"Write the selected entries to a file"
 
