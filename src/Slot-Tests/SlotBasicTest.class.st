@@ -137,6 +137,8 @@ SlotBasicTest >> testNewWeakClass [
 	aClass := self makeWithLayout: WeakLayout.
 	self assert: aClass isPointers.
 	self deny: aClass isFixed.
+	self assert: aClass isVariable.
+	self assert: aClass classLayout isVariable.
 	self assert: aClass isWords.
 	self assert: aClass isWeak
 ]
