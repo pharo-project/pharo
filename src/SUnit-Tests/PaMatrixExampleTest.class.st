@@ -4,9 +4,9 @@ Testing class
 Class {
 	#name : 'PaMatrixExampleTest',
 	#superclass : 'PaAbstractExampleTest',
-	#category : 'ParametrizedTests-Tests',
-	#package : 'ParametrizedTests',
-	#tag : 'Tests'
+	#category : 'SUnit-Tests-Parametrized',
+	#package : 'SUnit-Tests',
+	#tag : 'Parametrized'
 }
 
 { #category : 'private' }

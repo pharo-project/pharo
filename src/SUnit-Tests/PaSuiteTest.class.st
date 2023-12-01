@@ -4,9 +4,9 @@ Test case to check that the cases are correctly generated
 Class {
 	#name : 'PaSuiteTest',
 	#superclass : 'ParametrizedTestCase',
-	#category : 'ParametrizedTests-Tests',
-	#package : 'ParametrizedTests',
-	#tag : 'Tests'
+	#category : 'SUnit-Tests-Parametrized',
+	#package : 'SUnit-Tests',
+	#tag : 'Parametrized'
 }
 
 { #category : 'tests' }

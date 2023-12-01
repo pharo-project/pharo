@@ -48,7 +48,7 @@ SystemDependenciesTest >> knownBasicToolsDependencies [
 
 	^ #( 'AST-Core-Tests' 'Athens-Cairo' 'Athens-Core' #'Athens-Morphic'
 	     #'Refactoring-Critics' #'Commander-Core'
-	     #Reflectivity #'Reflectivity-Tools' #Shout 'ParametrizedTests'
+	     #Reflectivity #'Reflectivity-Tools' #Shout
 	     'HeuristicCompletion-Model' #VariablesLibrary #'Spec2-CommonWidgets')
 ]
 
@@ -251,7 +251,6 @@ SystemDependenciesTest >> testExternalIDEDependencies [
 	BaselineOfMorphic.
 	BaselineOfMorphicCore.
 	BaselineOfSlot.
-	BaselineOfParametrizedTests.
 	BaselineOfSUnit.
 	BaselineOfTraits.
 	BaselineOfUI.
@@ -467,8 +466,7 @@ SystemDependenciesTest >> testExternalSpec2Dependencies [
 		BaselineOfThreadedFFI corePackageNames,
 
 		"Tests"
-		BaselineOfSUnit defaultPackageNames,
-		BaselineOfParametrizedTests allPackageNames))
+		BaselineOfSUnit defaultPackageNames))
 			copyWithoutAll: self knownMorphicDependencies, self knownBasicToolsDependencies, self knownUIDependencies.
 
 	self assertCollection: dependencies hasSameElements: self knownSpec2Dependencies
@@ -499,7 +497,6 @@ SystemDependenciesTest >> testExternalUIDependencies [
 		self metacelloPackageNames,
 		self tonelCorePackageNames,
 		BaselineOfTraits corePackages,
-		BaselineOfParametrizedTests allPackageNames,
 		BaselineOfSUnit defaultPackageNames,
 		BaselineOfDisplay allPackageNames,
 		BaselineOfUnifiedFFI allPackageNames,

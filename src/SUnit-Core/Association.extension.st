@@ -1,6 +1,6 @@
 Extension { #name : 'Association' }
 
-{ #category : '*ParametrizedTests' }
+{ #category : '*SUnit-Core' }
 Association >> asTestParameter [
 
 	^ ParametrizedTestExpandedParameter new
