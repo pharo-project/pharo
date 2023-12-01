@@ -25,7 +25,3 @@ ClyClassIconTableDecorator class >> decorateMainTableCell: anItemCellMorph of: a
 
     anItemCellMorph definitionMorph: icon asMorph
 ]
-
-{ #category : 'decoration' }
-ClyClassIconTableDecorator class >> decorateTableCell: anItemCellMorph of: aDataSourceItem [
-]
