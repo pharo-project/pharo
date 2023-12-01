@@ -55,49 +55,6 @@ CompiledMethod class >> fullFrameSize [  "CompiledMethod fullFrameSize"
 	^ LargeFrame
 ]
 
-{ #category : 'private' }
-CompiledMethod class >> handleFailingFailingNewMethod: numberOfBytes header: headerWord [
-	"This newMethod:header: gets sent after handleFailingBasicNew: has done a full
-	 garbage collection and possibly grown memory.  If this basicNew: fails then the
-	 system really is low on space, so raise the OutOfMemory signal.
-
-	 Primitive. Answer an instance of this class with the number of indexable variables
-	 specified by the argument, headerWord, and the number of bytecodes specified
-	 by numberOfBytes.  Fail if this if the arguments are not Integers, or if numberOfBytes
-	 is negative, or if the receiver is not a CompiledMethod class, or if there is not enough
-	 memory available. Essential. See Object documentation whatIsAPrimitive."
-
-	<primitive: 79>
-	"space must be low."
-	OutOfMemory signal.
-	"retry if user proceeds"
-	^self basicNew: numberOfBytes header: headerWord
-]
-
-{ #category : 'private' }
-CompiledMethod class >> handleFailingNewMethod: numberOfBytes header: headerWord [
-	"This newMethod:header: gets sent after newMethod:header: has failed
-	 and allowed a scavenging garbage collection to occur.  The scavenging
-	 collection will have happened as the VM is activating the (failing) basicNew:.
-	 If handleFailingBasicNew: fails then the scavenge failed to reclaim sufficient
-	 space and a global garbage collection is required.  Retry after garbage
-	 collecting and growing memory if necessary.
-
-	 Primitive. Answer an instance of this class with the number of indexable variables
-	 specified by the argument, headerWord, and the number of bytecodes specified
-	 by numberOfBytes.  Fail if this if the arguments are not Integers, or if numberOfBytes
-	 is negative, or if the receiver is not a CompiledMethod class, or if there is not enough
-	 memory available. Essential. See Object documentation whatIsAPrimitive."
-
-	<primitive: 79>
-	| bytesRequested |
-	bytesRequested := (headerWord bitAnd: 16rFFFF) + 1 * Smalltalk wordSize + numberOfBytes + 16.
-	Smalltalk garbageCollect < bytesRequested ifTrue:
-		[Smalltalk growMemoryByAtLeast: bytesRequested].
-	"retry after global garbage collect and possible grow"
-	^self handleFailingFailingNewMethod: numberOfBytes header: headerWord
-]
-
 { #category : 'instance creation' }
 CompiledMethod class >> headerFlagForEncoder: anEncoderClass [
 	anEncoderClass == PrimaryBytecodeSetEncoderClass ifTrue: [ ^ 0 ].
@@ -155,13 +112,13 @@ CompiledMethod class >> new [
 { #category : 'instance creation' }
 CompiledMethod class >> newFrom: aCompiledMethod [
 	| inst |
-	inst := super basicNew: aCompiledMethod size.
+	inst := self basicNew: aCompiledMethod size.
 	1 to: aCompiledMethod size do: [:index |
 		inst at: index put: (aCompiledMethod at: index)].
 	^ inst
 ]
 
-{ #category : 'instance creation' }
+{ #category : 'private' }
 CompiledMethod class >> newInstanceFrom: oldInstance variable: variable size: instSize map: map [
 	"Create a new instance of the receiver based on the given old instance.
 	The supplied map contains a mapping of the old instVar names into
