@@ -435,7 +435,7 @@ IRBuilderTest >> testPushThisContext [
 
 	aCompiledMethod := iRMethod compiledMethod.
 	self assert: (aCompiledMethod isKindOf: CompiledMethod).
-	self assert: (aCompiledMethod valueWithReceiver: 5 arguments: #()) equals: 5.
+	self assert: (aCompiledMethod valueWithReceiver: 5) equals: 5.
 	^ iRMethod
 ]
 

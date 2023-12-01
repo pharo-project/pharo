@@ -30,7 +30,7 @@ OCEnvironmentScopeTest >> testCompileWithEnvironment [
 					class: (environment at: #MyClass);
 					permitFaulty: true;
 					compile: 'tt ^Object'.
-	self should: [ method valueWithReceiver: nil arguments: #() ] raise: UndeclaredVariableRead
+	self should: [ method valueWithReceiver: nil ] raise: UndeclaredVariableRead
 ]
 
 { #category : 'test - production - environment' }

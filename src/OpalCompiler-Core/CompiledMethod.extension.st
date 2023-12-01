@@ -10,6 +10,12 @@ CompiledMethod >> decompile [
 ]
 
 { #category : '*OpalCompiler-Core' }
+
+CompiledMethod >> hasTemporaryVariableNamed: aName [
+	^ self tempNames includes: aName
+]
+
+{ #category : '*OpalCompiler-Core' }
 CompiledMethod >> lookupVar: aString [
 	^self ast scope lookupVar: aString
 ]
@@ -52,4 +58,18 @@ CompiledMethod >> symbolic [
 
 		self isPrimitive ifTrue: [ self printPrimitiveOn: aStream ].
 		self symbolicBytecodes do: [ :each | each printOn: aStream ] separatedBy: [ aStream cr ] ]
+]
+
+{ #category : '*OpalCompiler-Core' }
+CompiledMethod >> temporaryVariableNamed: aName [
+	(self hasTemporaryVariableNamed: aName) ifFalse: [ ^nil ].
+	^self sourceNode scope lookupVar: aName
+]
+
+{ #category : '*OpalCompiler-Core' }
+CompiledMethod >> temporaryVariables [
+	"on the level of compiledMethod, temps include the arguments"
+	self flag: #TODO. "we need to revist temps vs args"
+	^(self sourceNode arguments collect: [ :each | each binding ]),
+		(self sourceNode temporaries collect: [ :each | each binding ])
 ]

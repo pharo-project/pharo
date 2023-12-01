@@ -226,6 +226,10 @@ CDFluidClassDefinitionParser >> handleSharedVarableNodeSimple: slotDefNode [
 { #category : 'parsing - variables' }
 CDFluidClassDefinitionParser >> handleSharedVariabeNode: variableDefNode [
 	 | variable |
+	"Setting, default off, to allow experiments"
+	self class unrestrictedVariableDefinitions ifTrue: [ 
+		^ classDefinition addSharedVariable: (self handleUnrestrictedSharedVariableDefinition: variableDefNode) ].
+	
 	"when a class variable is just #ClassVars"
 	variableDefNode isLiteralNode ifTrue: [ variable := self handleSharedVarableNodeSimple: variableDefNode].
 	"#ClassVar => SomeVar default: 5; default2: 4"
@@ -411,6 +415,26 @@ CDFluidClassDefinitionParser >> handleTraitUsesFromNode: aNode [
 	aNode isDynamicArray and: [aNode allStatements ifEmpty: [ ^ self ]].
  	traitComposition := CDTraitCompositionBuilder new buildFrom: aNode.
 	classDefinition traitDefinition: traitComposition
+]
+
+{ #category : 'parsing - variables' }
+CDFluidClassDefinitionParser >> handleUnrestrictedSharedVariableDefinition: variableDefNode [
+
+	"If the preference is enabled, allow unrestricted shared variable definitions. 
+	TAKE CARE: There is no way to know the name nor the class witout executing the code of the defintion.
+	This means that a) code will be evaluated which could have side effects and b) you need to load the Slot Class
+	before any users, as an UndefinedSlot can not be created, as we do not know the name"
+
+	| variableInstance |
+	"create the instance of the Variable by evaluating the defintion, we use this to fill out the name and variableClassName"
+	variableInstance := variableDefNode evaluate.
+
+	^ CDSharedVariableNode new
+		  node: variableDefNode;
+		  name: variableDefNode name;
+		  variableClassName: variableInstance class name;
+		  start: variableDefNode start;
+		  stop: variableDefNode stop
 ]
 
 { #category : 'parsing - variables' }
