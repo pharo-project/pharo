@@ -223,6 +223,20 @@ CompiledCode >> clearSignFlag [
 		[self objectAt: 1 put: self header - SmallInteger minVal]
 ]
 
+{ #category : 'copying' }
+CompiledCode >> clone [
+	"Answer a shallow copy of the receiver."
+	<primitive: 148 error: ec>
+	| newObject |
+	ec == #'insufficient object memory' ifFalse:
+		[^self primitiveFailed].
+	"If the primitive fails due to insufficient memory, instantiate via basicNew: to invoke the garbage collector before retrying, and use copyFrom: to copy state."
+	newObject := self class
+		basicNew: self basicSize - self initialPC + 1 + self class trailerSize 
+		header: self header.
+	^newObject copyFrom: self
+]
+
 { #category : 'accessing' }
 CompiledCode >> comment [
 	"Return the first comment of the receiver"
