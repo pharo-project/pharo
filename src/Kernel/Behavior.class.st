@@ -1037,12 +1037,6 @@ Behavior >> isCompact [
 	^false
 ]
 
-{ #category : 'testing' }
-Behavior >> isCompiledMethodClass [
-	"Answer whether the receiver has compiled method instances that mix pointers and bytes."
-	^self instSpec >= 24
-]
-
 { #category : 'testing - method dictionary' }
 Behavior >> isDisabledSelector: selector [
 	<reflection: 'Class structural inspection - Selectors and methods inspection'>
