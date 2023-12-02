@@ -107,6 +107,9 @@ RBExtractMethodTransformationTest >> testFailureWhenMethodDoesNotExist [
 
 { #category : 'tests' }
 RBExtractMethodTransformationTest >> testNeedsReturn [
+	"When code to be extracted contains explicit returns,
+	then when replacing it with the extracted method name,
+	we should return the result of the method"
 
 	| refactoring class |
 	model := self modelOnClasses: { RBDummyLintRuleTest }.
