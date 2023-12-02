@@ -95,7 +95,7 @@ RBExtractMethodTransformationTest >> testFailureCannotExtractTwoAssignmentsToTem
 ]
 
 { #category : 'tests - failures' }
-RBExtractMethodTransformationTest >> testMethodDoesNotExist [
+RBExtractMethodTransformationTest >> testFailureWhenMethodDoesNotExist [
 
 	self shouldFail: (RBExtractMethodTransformation
 			extract: 'bla'
