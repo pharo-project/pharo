@@ -28,8 +28,7 @@ Class {
 		'subtree',
 		'arguments',
 		'temporaries',
-		'assignments',
-		'selectorOfExistingMethod'
+		'assignments'
 	],
 	#category : 'Refactoring-Transformations-Model-Unused',
 	#package : 'Refactoring-Transformations',
@@ -114,9 +113,11 @@ RBExtractMethodTransformation >> buildTransformationFor: newMethodName withRemov
 { #category : 'executing' }
 RBExtractMethodTransformation >> buildTransformations [
 
+	| selectorOfExistingMethod |
 	subtree := self calculateSubtree.
-	self findMethodWithSimilarBody.
-	selectorOfExistingMethod
+	
+	selectorOfExistingMethod := self findMethodWithSimilarBody.
+	selectorOfExistingMethod 
 		ifNotNil: [
 			^ OrderedCollection with: (self parseTreeRewriterClass
 					   replaceCode: subtree
@@ -256,7 +257,9 @@ RBExtractMethodTransformation >> findMethodWithSimilarBody [
 		   whichMethodIn: searchSpace
 		   matches: subtree)
 		  ifNotEmpty: [ :opportunities | "we found one method with similar body so we will use it instead of creating a new one"
-			  selectorOfExistingMethod := opportunities anyOne ]
+			  ^ opportunities anyOne ]
+		  ifEmpty: [ ^ nil ]
+		
 ]
 
 { #category : 'executing' }
