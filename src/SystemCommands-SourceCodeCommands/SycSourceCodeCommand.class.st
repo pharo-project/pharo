@@ -32,7 +32,7 @@ SycSourceCodeCommand class >> method: aMethod node: aRBProgramNode [
 		sourceNode: aRBProgramNode
 ]
 
-{ #category : 'execution' }
+{ #category : 'converting' }
 SycSourceCodeCommand >> asRefactorings [
 	self subclassResponsibility
 ]
