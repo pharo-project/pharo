@@ -82,13 +82,7 @@ PharoCommonTools class >> settingsOn: aBuilder [
 						targetSelector: #tools;
 						label: 'Filelist';
 						default: (self environment at: #FileList);
-						domainValues: Smalltalk tools recentFileListTools];
-		with: [
-					(aBuilder pickOne: #changeSorterTool)
-						target: Smalltalk;
-						targetSelector: #tools;
-						label: 'Changesorter';
-						domainValues: Smalltalk tools recentChangeSorterTools]
+						domainValues: Smalltalk tools recentFileListTools]
 ]
 
 { #category : 'system startup' }
@@ -143,22 +137,6 @@ PharoCommonTools >> browserTool: aTool [
 PharoCommonTools >> changeList [
 
 	^ self toolNamed: #changeList
-]
-
-{ #category : 'registry access' }
-PharoCommonTools >> changeSorter [
-
-	^ self toolNamed: #changeSorter
-]
-
-{ #category : 'tools' }
-PharoCommonTools >> changeSorterTool [
-	^ self changeSorter
-]
-
-{ #category : 'tools' }
-PharoCommonTools >> changeSorterTool: aTool [
-	^ self register: aTool as: #changeSorter
 ]
 
 { #category : 'cleanup' }
@@ -248,11 +226,6 @@ PharoCommonTools >> processBrowser [
 { #category : 'registration' }
 PharoCommonTools >> recentBrowserTools [
 	^ self recentToolsFor: #browser
-]
-
-{ #category : 'registration' }
-PharoCommonTools >> recentChangeSorterTools [
-	^ self recentToolsFor: #changeSorter
 ]
 
 { #category : 'registration' }

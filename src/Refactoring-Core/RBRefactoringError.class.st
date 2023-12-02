@@ -24,3 +24,14 @@ RBRefactoringError class >> signalFor: failingConditions [
 		messageText: errorStrings;
 		signal	
 ]
+
+{ #category : 'accessing' }
+RBRefactoringError >> failedConditions [
+	^ failedConditions
+]
+
+{ #category : 'accessing' }
+RBRefactoringError >> faledConditions: aCollection [
+	"aCollection should contain objects of kind RBNewAbstractCondition"
+	failedConditions := aCollection
+]

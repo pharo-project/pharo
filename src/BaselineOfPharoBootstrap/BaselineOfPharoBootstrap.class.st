@@ -90,7 +90,6 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		spec package: 'Hermes'.
 		spec package: 'Hermes-Extensions'.
 
-		spec package: 'Jobs'.
 		spec package: 'Kernel'.
 		spec package: 'Kernel-BytecodeEncoders'.
 		spec package: 'Kernel-Chronology-Extras'.
@@ -201,7 +200,6 @@ BaselineOfPharoBootstrap >> baseline: spec [
 			'Collections-Atomic'.
 			'CodeImport'.
 			'CodeImportCommandLineHandlers'.
-			'Jobs'.
 			'System-SourcesCondenser'.
 			'Debugging-Utils'.
 			'OpalCompiler-Core'}.
