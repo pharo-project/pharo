@@ -394,7 +394,7 @@ CDFluidClassParserTest >> testUnrestrictedClassVariable [
 	self assert: def sharedVariables first class equals: CDSharedVariableNode.
 	self assert: def sharedVariables first name equals: #A.
 	self assert: def sharedVariables first variableClassName equals: #ClassVariable.
-	CDFluidClassDefinitionParser unrestrictedVariableDefinitions: orginalSetting..
+	CDFluidClassDefinitionParser unrestrictedVariableDefinitions: orginalSetting
 ]
 
 { #category : 'tests - (r) class variables' }
@@ -412,7 +412,7 @@ CDFluidClassParserTest >> testUnrestrictedClassVariableSimple [
 	self assert: def sharedVariables first class equals: CDSharedVariableNode.
 	self assert: def sharedVariables first name equals: #A.
 	self assert: def sharedVariables first variableClassName equals: #ClassVariable.
-	CDFluidClassDefinitionParser unrestrictedVariableDefinitions: orginalSetting..
+	CDFluidClassDefinitionParser unrestrictedVariableDefinitions: orginalSetting
 ]
 
 { #category : 'tests - (r) slots' }
