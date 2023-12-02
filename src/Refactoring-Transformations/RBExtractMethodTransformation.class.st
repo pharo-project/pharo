@@ -71,13 +71,12 @@ RBExtractMethodTransformation class >> model: aRBModel extract: aString from: aS
 { #category : 'preconditions' }
 RBExtractMethodTransformation >> applicabilityPreconditions [ 
 
-	| aSubtree |
-	aSubtree := self calculateSubtree.
+	subtree := self calculateSubtree.
 
 	^ (RBCondition withBlock: [
-		   aSubtree ifNil: [ self refactoringError: 'Cannot extract code.' ].
+		   subtree ifNil: [ self refactoringError: 'Cannot extract code.' ].
 		   true ]) & (RBCondition withBlock: [
-		   aSubtree parent isCascade ifTrue: [
+		   subtree parent isCascade ifTrue: [
 			   self refactoringError:
 				   'Cannot extract code in a cascaded message' ].
 		   true ]) & (RBCondition withBlock: [
@@ -85,7 +84,7 @@ RBExtractMethodTransformation >> applicabilityPreconditions [
 		   tempVariables := self calculateTemporaries.
 		   (RBReadBeforeWrittenTester
 			    readBeforeWritten: tempVariables
-			    in: aSubtree) ifNotEmpty: [
+			    in: subtree) ifNotEmpty: [
 			   self refactoringError:
 				   'Cannot extract temporaries if they are read before written.' ].
 		   true ]) & (RBCondition withBlock: [
@@ -98,7 +97,7 @@ RBExtractMethodTransformation >> applicabilityPreconditions [
 		   assignmentCollection ifNotEmpty: [
 			   ((RBReadBeforeWrittenTester
 				     isVariable: assignmentCollection first
-				     readBeforeWrittenIn: aSubtree) or: [ aSubtree containsReturn ])
+				     readBeforeWrittenIn: subtree) or: [ subtree containsReturn ])
 				   ifTrue: [
 					   self refactoringError:
 						   ('Cannot extract assignment to <1s> without also extracting all the references.'
@@ -111,7 +110,7 @@ RBExtractMethodTransformation >> applicabilityPreconditions [
 
 		   (self parseTreeSearcherClass
 			    whichMethodIn: searchSpace
-			    matches: aSubtree)
+			    matches: subtree)
 			   ifNotEmpty: [ :opportunities | "we found one method with similar body so we will use it instead of creating a new one"
 				   selectorOfExistingMethod := opportunities anyOne.
 				   true ]
