@@ -247,6 +247,8 @@ RBExtractMethodTransformationTest >> testWithTemporariesSelected [
 
 { #category : 'tests' }
 RBExtractMethodTransformationTest >> testWithTemporaryAssigned [
+	"test when selected code contains temporary that has assignment
+	extracted method will also have that temporary"
 
 	| class method refactoring |
 	model := self modelOnClasses: { self class }.
@@ -261,7 +263,9 @@ RBExtractMethodTransformationTest >> testWithTemporaryAssigned [
 
 	refactoring := (RBExtractMethodTransformation
 		                model: model
-		                extract: (method copyFrom: 24 to: 98)
+		                extract: 'bar := 5.
+			temp := bar * bar.
+			Transcript show: temp printString; cr.'
 		                from: #foo
 		                to: #foobar
 		                in: class) generateChanges.
