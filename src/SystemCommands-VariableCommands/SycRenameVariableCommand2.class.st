@@ -34,7 +34,7 @@ SycRenameVariableCommand2 >> execute [
 				scopes: toolContext refactoringScopes
 				variable: variable name
 				for: variable definingClass) runRefactoring ]
-		ifTrue: [ self halt ]
+		ifTrue: [ self inform: 'pending implementation' ]
 	
 ]
 

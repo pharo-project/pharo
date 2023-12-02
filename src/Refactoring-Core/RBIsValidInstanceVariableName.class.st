@@ -38,5 +38,5 @@ RBIsValidInstanceVariableName >> violationMessageOn: aStream [
 	^ aStream
 		  nextPutAll: violator;
 		  nextPutAll:
-			  ' is not a valid instance variable name (the name musn''t start in uppercase or be a reserved word).'
+			  ' the name musn''t start in uppercase or be a reserved word.'
 ]

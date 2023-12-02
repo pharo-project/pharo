@@ -66,11 +66,10 @@ RBRefactoring >> canReferenceVariable: aString in: aClass [
 { #category : 'preconditions' }
 RBRefactoring >> checkApplicabilityPreconditions [
 
-	| conditions failingConditions |
-	conditions := self applicabilityPreconditions.
-	failingConditions := conditions reject: [ :cond | cond check ].
-	failingConditions ifEmpty: [ ^ self ].
-	RBRefactoringError signalFor: failingConditions
+	| failedPreconditions |
+	failedPreconditions := self failedApplicabilityPreconditions.
+	failedPreconditions ifEmpty: [ ^ self ].
+	RBRefactoringError signalFor: failedPreconditions
 ]
 
 { #category : 'support' }
@@ -132,13 +131,7 @@ RBRefactoring >> copyOptionsFrom: aDictionary [
 { #category : 'preconditions' }
 RBRefactoring >> failedApplicabilityPreconditions [
 
-	[self checkApplicabilityPreconditions] 
-		on: RBRefactoringError
-		do: [ :err | 
-			^ err failedConditions
-			].
-		^ #()
-		
+	^ self applicabilityPreconditions reject: [ :cond | cond check ]
 ]
 
 { #category : 'private' }

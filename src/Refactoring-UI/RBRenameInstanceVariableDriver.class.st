@@ -30,11 +30,6 @@ RBRenameInstanceVariableDriver >> configureRefactoring [
 		               class: class
 ]
 
-{ #category : 'accessing' }
-RBRenameInstanceVariableDriver >> defaultModel [
-	^ RBNamespace onEnvironment: RBBrowserEnvironment new
-]
-
 { #category : 'execution' }
 RBRenameInstanceVariableDriver >> requestNewNameBasedOn: aName [
 
@@ -76,7 +71,7 @@ RBRenameInstanceVariableDriver >> runRefactoring [
 { #category : 'initialization' }
 RBRenameInstanceVariableDriver >> scopes: aCollection variable: aString for: aClass [ 
 	scopes := aCollection.
-	model :=  self defaultModel.
+	model :=  self refactoringScopeOn: scopes first.
 	oldName := aString.
 	lastName := aString.
 	class := aClass
