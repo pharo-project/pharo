@@ -1,27 +1,15 @@
 Class {
-	#name : 'RBExtractMethodParametrizedTest',
+	#name : 'RBExtractMethodRefactoringTest',
 	#superclass : 'RBAbstractRefactoringTest',
-	#category : 'Refactoring-Transformations-Tests-SingleParametrized',
+	#category : 'Refactoring-Transformations-Tests-Test',
 	#package : 'Refactoring-Transformations-Tests',
-	#tag : 'SingleParametrized'
+	#tag : 'Test'
 }
 
 { #category : 'tests' }
-RBExtractMethodParametrizedTest class >> testParameters [
-	^ ParametrizedTestMatrix new
-		addCase: { #rbClass -> RBExtractMethodRefactoring };
-		yourself
-]
-
-{ #category : 'accessing' }
-RBExtractMethodParametrizedTest >> constructor [
-	^ #extract:from:in:
-]
-
-{ #category : 'tests' }
-RBExtractMethodParametrizedTest >> testExtractMethodAtEndOfMethodThatNeedsReturn [
+RBExtractMethodRefactoringTest >> testExtractMethodAtEndOfMethodThatNeedsReturn [
 	| refactoring class |
-	refactoring := self createRefactoringWithArguments: {(52 to: 133) . #openEditor . RBLintRuleTestData }.
+	refactoring := RBExtractMethodRefactoring extract: (52 to: 133) from: #openEditor in: RBLintRuleTestData.
 	self setupMethodNameFor: refactoring toReturn: #foo:.
 	self executeRefactoring: refactoring.
 	class := refactoring model classNamed: #RBLintRuleTestData.
@@ -36,9 +24,9 @@ RBExtractMethodParametrizedTest >> testExtractMethodAtEndOfMethodThatNeedsReturn
 ]
 
 { #category : 'tests' }
-RBExtractMethodParametrizedTest >> testExtractMethodThatMovesTemporaryVariable [
+RBExtractMethodRefactoringTest >> testExtractMethodThatMovesTemporaryVariable [
 	| refactoring class |
-	refactoring := self createRefactoringWithArguments: { (22 to: 280) . #superSends . RBTransformationRuleTestData }.
+	refactoring := RBExtractMethodRefactoring extract: (22 to: 280) from: #superSends in: RBTransformationRuleTestData.
 	self setupMethodNameFor: refactoring toReturn: #foo1.
 	self executeRefactoring: refactoring.
 	class := refactoring model classNamed: #RBTransformationRuleTestData.
@@ -59,9 +47,9 @@ RBExtractMethodParametrizedTest >> testExtractMethodThatMovesTemporaryVariable [
 ]
 
 { #category : 'tests' }
-RBExtractMethodParametrizedTest >> testExtractMethodThatNeedsArgument [
+RBExtractMethodRefactoringTest >> testExtractMethodThatNeedsArgument [
 	| refactoring class |
-	refactoring := self createRefactoringWithArguments: { (143 to: 340) . #checkMethod: . RBTransformationRuleTestData }.
+	refactoring := RBExtractMethodRefactoring extract: (143 to: 340) from: #checkMethod: in: RBTransformationRuleTestData.
 	self setupMethodNameFor: refactoring toReturn: #foo:.
 	self executeRefactoring: refactoring.
 	class := refactoring model classNamed: #RBTransformationRuleTestData.
@@ -78,9 +66,9 @@ RBExtractMethodParametrizedTest >> testExtractMethodThatNeedsArgument [
 ]
 
 { #category : 'tests' }
-RBExtractMethodParametrizedTest >> testExtractMethodThatNeedsTemporaryVariable [
+RBExtractMethodRefactoringTest >> testExtractMethodThatNeedsTemporaryVariable [
 	| refactoring class |
-	refactoring := self createRefactoringWithArguments: { (78 to: 197) . #displayName . RBLintRuleTestData }.
+	refactoring := RBExtractMethodRefactoring extract: (78 to: 197) from: #displayName in: RBLintRuleTestData.
 	self setupMethodNameFor: refactoring toReturn: #foo:.
 	self executeRefactoring: refactoring.
 	class := refactoring model classNamed: #RBLintRuleTestData.
@@ -98,9 +86,9 @@ RBExtractMethodParametrizedTest >> testExtractMethodThatNeedsTemporaryVariable [
 ]
 
 { #category : 'tests' }
-RBExtractMethodParametrizedTest >> testExtractMethodToSuperclass [
+RBExtractMethodRefactoringTest >> testExtractMethodToSuperclass [
 	| refactoring class |
-	refactoring := self createRefactoringWithArguments: { (143 to: 340) . #checkMethod: . RBTransformationRuleTestData }.
+	refactoring := RBExtractMethodRefactoring extract: (143 to: 340) from: #checkMethod: in: RBTransformationRuleTestData.
 	self setupMethodNameFor: refactoring toReturn: #foo:.
 	self setupExtractionClassFor: refactoring toReturn: RBFooLintRuleTestData.
 	self executeRefactoring: refactoring.
@@ -120,9 +108,9 @@ RBExtractMethodParametrizedTest >> testExtractMethodToSuperclass [
 ]
 
 { #category : 'tests' }
-RBExtractMethodParametrizedTest >> testExtractWithRenamingOfParameters [
+RBExtractMethodRefactoringTest >> testExtractWithRenamingOfParameters [
 	| refactoring class |
-	refactoring := self createRefactoringWithArguments: { (78 to: 197) . #displayName . RBLintRuleTestData }.
+	refactoring := RBExtractMethodRefactoring extract: (78 to: 197) from: #displayName in: RBLintRuleTestData.
 	self setupMethodNameFor: refactoring toReturn: #foo:.
 	refactoring
 		parameterMap:
@@ -153,38 +141,35 @@ RBExtractMethodParametrizedTest >> testExtractWithRenamingOfParameters [
 ]
 
 { #category : 'failure tests' }
-RBExtractMethodParametrizedTest >> testFailureBadInterval [
-	self shouldFail: (self createRefactoringWithArguments:
-		{ (24 to: 30) . #testMethod . RBClassDataForRefactoringTest }).
-	self shouldFail: (self createRefactoringWithArguments:
-		{ (80 to: 147) . #subclassOf:overrides: . RBBasicLintRuleTestData class })
+RBExtractMethodRefactoringTest >> testFailureBadInterval [
+	self shouldFail: (RBExtractMethodRefactoring extract: (24 to: 30) from: #testMethod in: RBClassDataForRefactoringTest ).
+	self shouldFail: (RBExtractMethodRefactoring extract: (80 to: 147) from: #subclassOf:overrides: in: RBBasicLintRuleTestData class )
 ]
 
 { #category : 'failure tests' }
-RBExtractMethodParametrizedTest >> testFailureExtract [
-	self shouldFail: (self createRefactoringWithArguments:
-		{ (80 to: 269) . #subclassOf:overrides: . RBBasicLintRuleTestData class }).
-	self shouldFail: (self createRefactoringWithArguments:
-		{ (53 to: 56) . #subclassOf:overrides: . RBBasicLintRuleTestData class }).
-	self shouldFail: (self createRefactoringWithArguments:
-		{ (77 to: 222) . #subclassResponsibilityNotDefined . RBBasicLintRuleTestData class })
+RBExtractMethodRefactoringTest >> testFailureExtract [
+	self shouldFail: (RBExtractMethodRefactoring extract: (80 to: 269) from: #subclassOf:overrides: in: RBBasicLintRuleTestData class ).
+	self shouldFail: (RBExtractMethodRefactoring extract: (53 to: 56) from: #subclassOf:overrides: in: RBBasicLintRuleTestData class).
+	self shouldFail: (RBExtractMethodRefactoring extract: (77 to: 222) from: #subclassResponsibilityNotDefined in: RBBasicLintRuleTestData class )
 ]
 
 { #category : 'failure tests' }
-RBExtractMethodParametrizedTest >> testFailureNonExistantSelector [
-	self shouldFail: (self createRefactoringWithArguments:
-		{ (10 to: 20) . #checkClass1: . RBBasicLintRuleTestData })
+RBExtractMethodRefactoringTest >> testFailureNonExistantSelector [
+	self shouldFail: (RBExtractMethodRefactoring extract: (10 to: 20) from: #checkClass1: in: RBBasicLintRuleTestData)
 ]
 
 { #category : 'tests' }
-RBExtractMethodParametrizedTest >> testModelExtractMethodWithTemporariesSelected [
+RBExtractMethodRefactoringTest >> testModelExtractMethodWithTemporariesSelected [
 	| class refactoring |
 	model := RBNamespace new.
 	class := model classNamed: self class name.
 	class compile: 'foo [| temp | temp := 5. temp * temp] value'
 		classified: #(#accessing).
-	refactoring := self createRefactoringWithModel: model
-		andArguments: { (6 to: 36) . #foo . class }.
+	refactoring := RBExtractMethodRefactoring
+						model: model
+						extract: (6 to: 36)
+						from: #foo 
+						in: class.
 	self setupMethodNameFor: refactoring toReturn: #foobar.
 	self executeRefactoring: refactoring.
 	
@@ -198,15 +183,18 @@ RBExtractMethodParametrizedTest >> testModelExtractMethodWithTemporariesSelected
 ]
 
 { #category : 'tests' }
-RBExtractMethodParametrizedTest >> testModelExtractMethodWithTemporaryAssigned [
+RBExtractMethodRefactoringTest >> testModelExtractMethodWithTemporaryAssigned [
 	| class refactoring |
 	model := RBNamespace new.
 	class := model classNamed: self class name.
 	class
 		compile: 'foo 				| temp bar | 				bar := 5. 				temp := bar * bar. 				Transcript show: temp printString; cr. 				^temp * temp'
 		classified: #(#accessing).
-	refactoring := self createRefactoringWithModel: model
-		andArguments: { (26 to: 102) . #foo . class }.
+	refactoring := RBExtractMethodRefactoring
+						model: model
+						extract: (26 to: 102)
+						from: #foo
+						in:class.
 	self setupMethodNameFor: refactoring toReturn: #foobar.
 	self executeRefactoring: refactoring.
 	self assert: (class parseTreeForSelector: #foo)
@@ -219,10 +207,13 @@ RBExtractMethodParametrizedTest >> testModelExtractMethodWithTemporaryAssigned [
 ]
 
 { #category : 'tests' }
-RBExtractMethodParametrizedTest >> testValidateRenameParameters [
+RBExtractMethodRefactoringTest >> testValidateRenameParameters [
 	| refactoring |
-	refactoring := self createRefactoringWithModel: model
-		andArguments: { (78 to: 197) . #displayName . RBLintRuleTestData }.
+	refactoring := RBExtractMethodRefactoring
+						model: model
+						extract: (78 to: 197)
+						from: #displayName
+						in: RBLintRuleTestData.
 	self setupMethodNameFor: refactoring toReturn: #foo:.
 	refactoring parameterMap: (Dictionary new at: #nameStream put: #nameStream; yourself ).
 	"Fail when use instance variables as new parameters"
