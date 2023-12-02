@@ -183,6 +183,40 @@ RBExtractMethodTransformationTest >> testTransform [
 ]
 
 { #category : 'tests' }
+RBExtractMethodTransformationTest >> testWhenTemporaryVariableBecomesArgumentOfExtractedMethod [
+
+	| refactoring class |
+	model := self modelOnClasses: { RBDummyLintRuleTest }.
+	refactoring := (RBExtractMethodTransformation
+							 model: model
+		                extract: (self
+				                 sourceCodeAt: (78 to: 197)
+				                 forMethod: #displayName
+				                 in: RBDummyLintRuleTest)
+		                from: #displayName
+		                to: #foo:
+		                in: #RBDummyLintRuleTest) generateChanges.
+
+	self assert: refactoring model changes changes size equals: 2.
+
+	class := refactoring model classNamed: #RBDummyLintRuleTest.
+	self
+		assert: (class parseTreeForSelector: #displayName)
+		equals: (self parseMethod: 'displayName
+					| nameStream |
+					nameStream := WriteStream on: (String new: 64).
+					self foo: nameStream.
+					^nameStream contents').
+	self
+		assert: (class parseTreeForSelector: #foo:)
+		equals: (self parseMethod: 'foo: nameStream
+					nameStream nextPutAll: self name;
+								nextPutAll: '' (''.
+					self problemCount printOn: nameStream.
+					nameStream nextPut: $).')
+]
+
+{ #category : 'tests' }
 RBExtractMethodTransformationTest >> testWithArgument [
 
 	| refactoring class |
@@ -316,38 +350,4 @@ RBExtractMethodTransformationTest >> testWithTemporaryVariable [
 						ifNone: [nil]) isNil]
 							-> ''self `@message: ``@args'').
 				^rule')
-]
-
-{ #category : 'tests' }
-RBExtractMethodTransformationTest >> testWithTemporaryVariable2 [
-
-	| refactoring class |
-	model := self modelOnClasses: { RBDummyLintRuleTest }.
-	refactoring := (RBExtractMethodTransformation
-							 model: model
-		                extract: (self
-				                 sourceCodeAt: (78 to: 197)
-				                 forMethod: #displayName
-				                 in: RBDummyLintRuleTest)
-		                from: #displayName
-		                to: #foo:
-		                in: #RBDummyLintRuleTest) generateChanges.
-
-	self assert: refactoring model changes changes size equals: 2.
-
-	class := refactoring model classNamed: #RBDummyLintRuleTest.
-	self
-		assert: (class parseTreeForSelector: #displayName)
-		equals: (self parseMethod: 'displayName
-					| nameStream |
-					nameStream := WriteStream on: (String new: 64).
-					self foo: nameStream.
-					^nameStream contents').
-	self
-		assert: (class parseTreeForSelector: #foo:)
-		equals: (self parseMethod: 'foo: nameStream
-					nameStream nextPutAll: self name;
-								nextPutAll: '' (''.
-					self problemCount printOn: nameStream.
-					nameStream nextPut: $).')
 ]
