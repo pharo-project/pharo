@@ -74,21 +74,8 @@ RBExtractMethodTransformation >> applicabilityPreconditions [
 	^ self preconditionParsableSubtree
 	  & self preconditionNotInCascadedMessage
 	  & self preconditionTemporariesAreNotReadBeforeWritten
-	  & self preconditionOneAssignmentMaximum & self
-		  preconditionAssignmentsNotReadBeforeWrittenORSubtreeDoesNotContainsReturn
-	  & (RBCondition withBlock: [
-			   | searchSpace |
-			   searchSpace := (self class allMethodsInHierarchyOf:
-				                   self definingClass) reject: [ :m |
-				                  m selector = selector ].
-
-			   (self parseTreeSearcherClass
-				    whichMethodIn: searchSpace
-				    matches: subtree)
-				   ifNotEmpty: [ :opportunities | "we found one method with similar body so we will use it instead of creating a new one"
-					   selectorOfExistingMethod := opportunities anyOne.
-					   true ]
-				   ifEmpty: [ true ] ])
+	  & self preconditionOneAssignmentMaximum
+	  & self preconditionAssignmentsNotReadBeforeWrittenORSubtreeDoesNotContainsReturn
 ]
 
 { #category : 'executing' }
@@ -128,7 +115,7 @@ RBExtractMethodTransformation >> buildTransformationFor: newMethodName withRemov
 RBExtractMethodTransformation >> buildTransformations [
 
 	subtree := self calculateSubtree.
-
+	self findMethodWithSimilarBody.
 	selectorOfExistingMethod
 		ifNotNil: [
 			^ OrderedCollection with: (self parseTreeRewriterClass
@@ -255,6 +242,21 @@ RBExtractMethodTransformation >> extract: aString from: aSelector to: aNewSelect
 	selector := aSelector.
 	newSelector := aNewSelector.
 	sourceCode := aString
+]
+
+{ #category : 'preconditions' }
+RBExtractMethodTransformation >> findMethodWithSimilarBody [
+
+	| searchSpace |
+	searchSpace := (self class allMethodsInHierarchyOf:
+		                self definingClass) reject: [ :m |
+		               m selector = selector ].
+
+	^ (self parseTreeSearcherClass
+		   whichMethodIn: searchSpace
+		   matches: subtree)
+		  ifNotEmpty: [ :opportunities | "we found one method with similar body so we will use it instead of creating a new one"
+			  selectorOfExistingMethod := opportunities anyOne ]
 ]
 
 { #category : 'executing' }
