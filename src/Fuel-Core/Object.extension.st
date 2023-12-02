@@ -13,6 +13,21 @@ Object >> fuelAfterMaterialization [
 ]
 
 { #category : '*Fuel-Core' }
+Object >> fuelCheckEphemeronSupport [
+	FLNotSerializable signal: 'Unsupported ephemeron implementation'
+]
+
+{ #category : '*Fuel-Core' }
+Object >> fuelIsEphemeron [
+	^ self class classLayout class == EphemeronLayout
+]
+
+{ #category : '*Fuel-Core' }
+Object >> fuelWasMourned [
+	^ false
+]
+
+{ #category : '*Fuel-Core' }
 Object >> serializeOn: aStream [
 	FLSerializer
 		serialize: self
