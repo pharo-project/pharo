@@ -99,7 +99,7 @@ OSWorldRenderer >> checkForNewScreenSize [
 	windowRenderer := self osWindowRenderer.
 	windowRenderer ifNil: [ ^ self ].
 
-	(display isNil or: [ display extent = self actualDisplaySize ])
+	(display isNil or: [ display extent = self actualDisplaySize and: [ world worldState realWindowExtent = self actualScreenSize ] ])
 		ifTrue: [ ^ self ].
 
 	display := Form extent: self actualDisplaySize depth: 32.
