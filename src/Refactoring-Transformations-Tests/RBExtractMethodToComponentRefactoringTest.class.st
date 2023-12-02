@@ -1,5 +1,5 @@
 Class {
-	#name : 'RBExtractMethodToComponentParametrizedTest',
+	#name : 'RBExtractMethodToComponentRefactoringTest',
 	#superclass : 'RBAbstractRefactoringTest',
 	#category : 'Refactoring-Transformations-Tests-SingleParametrized',
 	#package : 'Refactoring-Transformations-Tests',
@@ -7,21 +7,9 @@ Class {
 }
 
 { #category : 'tests' }
-RBExtractMethodToComponentParametrizedTest class >> testParameters [
-	^ ParametrizedTestMatrix new
-		addCase: { #rbClass -> RBExtractMethodToComponentRefactoring };
-		yourself
-]
-
-{ #category : 'accessing' }
-RBExtractMethodToComponentParametrizedTest >> constructor [
-	^ #extract:from:in:
-]
-
-{ #category : 'tests' }
-RBExtractMethodToComponentParametrizedTest >> testExtractMethodAtEndOfMethodThatNeedsReturn [
+RBExtractMethodToComponentRefactoringTest >> testExtractMethodAtEndOfMethodThatNeedsReturn [
 	| refactoring class selectorsSize |
-	refactoring := self createRefactoringWithArguments: { (52 to: 133) . #openEditor . RBLintRuleTestData }.
+	refactoring := RBExtractMethodToComponentRefactoring extract: (52 to: 133) from: #openEditor in: RBLintRuleTestData.
 	self setupMethodNameFor: refactoring toReturn: #foo:.
 	self setupSelfArgumentNameFor: refactoring toReturn: 'asdf'.
 	self setupVariableToMoveToFor: refactoring toReturn: 'rules'.
@@ -52,33 +40,33 @@ RBExtractMethodToComponentParametrizedTest >> testExtractMethodAtEndOfMethodThat
 ]
 
 { #category : 'failure tests' }
-RBExtractMethodToComponentParametrizedTest >> testFailureBadInterval [
-	self shouldFail: (self createRefactoringWithArguments:
-		{ (24 to: 30) . #testMethod . RBClassDataForRefactoringTest }).
-	self shouldFail: (self createRefactoringWithArguments:
-		{ (80 to: 147) . #subclassOf:overrides: . RBBasicLintRuleTestData class })
+RBExtractMethodToComponentRefactoringTest >> testFailureBadInterval [
+	self shouldFail: (RBExtractMethodToComponentRefactoring
+		extract: (24 to: 30) from: #testMethod in: RBClassDataForRefactoringTest).
+	self shouldFail: (RBExtractMethodToComponentRefactoring
+		extract: (80 to: 147) from: #subclassOf:overrides: in: RBBasicLintRuleTestData class)
 ]
 
 { #category : 'failure tests' }
-RBExtractMethodToComponentParametrizedTest >> testFailureExtract [
-	self shouldFail: (self createRefactoringWithArguments:
-		{(80 to: 269) . #subclassOf:overrides: . RBBasicLintRuleTestData class }).
-	self shouldFail: (self createRefactoringWithArguments:
-		{ (53 to: 56) . #subclassOf:overrides: . RBBasicLintRuleTestData class }).
-	self shouldFail: (self createRefactoringWithArguments:
-		{ (77 to: 222) . #subclassResponsibilityNotDefined . RBBasicLintRuleTestData class })
+RBExtractMethodToComponentRefactoringTest >> testFailureExtract [
+	self shouldFail: (RBExtractMethodToComponentRefactoring
+		extract: (80 to: 269) from: #subclassOf:overrides: in: RBBasicLintRuleTestData class).
+	self shouldFail: (RBExtractMethodToComponentRefactoring
+		extract: (53 to: 56) from: #subclassOf:overrides: in: RBBasicLintRuleTestData class).
+	self shouldFail: (RBExtractMethodToComponentRefactoring
+		extract: (77 to: 222) from: #subclassResponsibilityNotDefined in: RBBasicLintRuleTestData class)
 ]
 
 { #category : 'failure tests' }
-RBExtractMethodToComponentParametrizedTest >> testFailureNonExistantSelector [
-	self shouldFail: (self createRefactoringWithArguments:
-		{ (10 to: 20) . #checkClass1: . RBBasicLintRuleTestData })
+RBExtractMethodToComponentRefactoringTest >> testFailureNonExistantSelector [
+	self shouldFail: (RBExtractMethodToComponentRefactoring
+		extract: (10 to: 20) from: #checkClass1: in: RBBasicLintRuleTestData)
 ]
 
 { #category : 'tests' }
-RBExtractMethodToComponentParametrizedTest >> testMoveWithoutSelfReference [
+RBExtractMethodToComponentRefactoringTest >> testMoveWithoutSelfReference [
 	| refactoring class selectorsSize |
-	refactoring := self createRefactoringWithArguments: { (118 to: 285) . #copyDictionary: . RBReadBeforeWrittenTester }.
+	refactoring := RBExtractMethodToComponentRefactoring extract: (118 to: 285) from: #copyDictionary: in: RBReadBeforeWrittenTester.
 	self setupMethodNameFor: refactoring toReturn: #copyWithAssociations.
 	self setupVariableToMoveToFor: refactoring toReturn: 'aDictionary'.
 	self setupVariableTypesFor: refactoring toReturn: (Array with: (refactoring model classNamed: #Dictionary)).

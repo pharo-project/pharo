@@ -1,5 +1,8 @@
+"
+I am a command to extract selected ast node into separate method 
+"
 Class {
-	#name : 'SycExtractMethod2Command',
+	#name : 'SycExtractMethodAndOccurrencesCommand',
 	#superclass : 'SycSourceCodeRefactoringCommand',
 	#traits : 'TRefactoringCommandSupport',
 	#classTraits : 'TRefactoringCommandSupport classTrait',
@@ -11,90 +14,52 @@ Class {
 }
 
 { #category : 'testing' }
-SycExtractMethod2Command class >> canBeExecutedInContext: aSourceCodeContext [
+SycExtractMethodAndOccurrencesCommand class >> canBeExecutedInContext: aSourceCodeContext [
 
 	^ (super canBeExecutedInContext: aSourceCodeContext) and: [
 		  aSourceCodeContext isMethodSelected not ]
 ]
 
 { #category : 'testing' }
-SycExtractMethod2Command class >> methodEditorShortcutActivation [
+SycExtractMethodAndOccurrencesCommand class >> methodEditorShortcutActivation [
 	<classAnnotation>
 
 	^CmdShortcutActivation by: $e meta, $m meta for: ClySourceCodeContext
 ]
 
 { #category : 'converting' }
-SycExtractMethod2Command >> asRefactorings [
+SycExtractMethodAndOccurrencesCommand >> asRefactorings [
 
 	| selectedInterval refactoring |
 	selectedInterval := selectedTextInterval ifEmpty: [
 		                    sourceNode sourceInterval ].
-
-	refactoring := RBExtractMethodTransformation
-		               extract: (method sourceCode
-				                copyFrom: selectedInterval first
-				                to: selectedInterval last)
+	refactoring := RBExtractMethodAndOccurrences
+		               extract: selectedInterval
 		               from: method selector
-		               to: self getNewSelector selector
 		               in: method origin.
 	self setUpOptionsOf: refactoring.
 	^ { refactoring }
 ]
 
 { #category : 'accessing' }
-SycExtractMethod2Command >> defaultMenuIconName [
+SycExtractMethodAndOccurrencesCommand >> defaultMenuIconName [
 	^ #glamorousRestart
 ]
 
 { #category : 'accessing' }
-SycExtractMethod2Command >> defaultMenuItemName [
-
-	^ 'Extract method 2'
+SycExtractMethodAndOccurrencesCommand >> defaultMenuItemName [
+	^ 'Extract method and occurances'
 ]
 
 { #category : 'execution' }
-SycExtractMethod2Command >> execute [
-
-	self executeRefactoring: self asRefactorings
-]
-
-{ #category : 'private' }
-SycExtractMethod2Command >> executeRefactoring: refactoring [
-
-	self initializeDefaultOptionsOf: refactoring.
-	[ refactoring execute ]
-		on: RBRefactoringError
-		do: [ :e | UIManager default alert: e messageText ]
-]
-
-{ #category : 'converting' }
-SycExtractMethod2Command >> getNewSelector [
-
-	| invalidArgs methodName dialog |
-	methodName := RBMethodName 
-							selector: #fooForNow
-		  					arguments: #().
-	invalidArgs := self computeInvalidArgNamesForSelector: method selector.
-	dialog := SycMethodNameEditorPresenter
-		          openOn: methodName
-		          withInvalidArgs: invalidArgs
-		          canRenameArgs: true
-		          canRemoveArgs: false
-		          canAddArgs: false.
-	dialog cancelled ifTrue: [ CmdCommandAborted signal ].
-	^ methodName
-]
-
-{ #category : 'execution' }
-SycExtractMethod2Command >> readParametersFromContext: aSourceCodeContext [
+SycExtractMethodAndOccurrencesCommand >> readParametersFromContext: aSourceCodeContext [
 	super readParametersFromContext: aSourceCodeContext.
 	self setUpModelFromContext: aSourceCodeContext.
 	selectedTextInterval := aSourceCodeContext selectedTextInterval
 ]
 
 { #category : 'execution' }
-SycExtractMethod2Command >> setUpOptionToChangeExtractionClass: refactoring [
+SycExtractMethodAndOccurrencesCommand >> setUpOptionToChangeExtractionClass: refactoring [
 
 	refactoring setOption: #extractionClass toUse: [ :ref | | cls superclasses |
 		cls := ref methodClass realClass.
@@ -112,7 +77,7 @@ SycExtractMethod2Command >> setUpOptionToChangeExtractionClass: refactoring [
 ]
 
 { #category : 'execution' }
-SycExtractMethod2Command >> setUpOptionToChangeMethodNameDuring: refactoring [
+SycExtractMethodAndOccurrencesCommand >> setUpOptionToChangeMethodNameDuring: refactoring [
 
 	| dialog |
 	refactoring setOption: #methodName toUse: [ :methodName :ref | | invalidArgs |
@@ -128,18 +93,17 @@ SycExtractMethod2Command >> setUpOptionToChangeMethodNameDuring: refactoring [
 ]
 
 { #category : 'execution' }
-SycExtractMethod2Command >> setUpOptionToOverrideExistingMethodDuring: aRefactoring [
+SycExtractMethodAndOccurrencesCommand >> setUpOptionToOverrideExistingMethodDuring: aRefactoring [
 
 	aRefactoring setOption: #alreadyDefined toUse:  [ :ref :class :selector |
 		ref refactoringWarning: 'Method ', selector printString, ' will override method in ', class name]
 ]
 
 { #category : 'execution' }
-SycExtractMethod2Command >> setUpOptionsOf: refactoring [
+SycExtractMethodAndOccurrencesCommand >> setUpOptionsOf: refactoring [
 
 	self initializeDefaultOptionsOf: refactoring.
 	self setUpOptionToChangeExtractionClass: refactoring.
-
 	self setUpOptionToOverrideExistingMethodDuring: refactoring.
 	self setUpOptionToChangeMethodNameDuring: refactoring
 ]

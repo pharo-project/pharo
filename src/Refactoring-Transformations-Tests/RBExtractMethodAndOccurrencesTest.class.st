@@ -1,35 +1,26 @@
 Class {
-	#name : 'RBExtractMethodAndOccurrencesParametrizedTest',
+	#name : 'RBExtractMethodAndOccurrencesTest',
 	#superclass : 'RBAbstractRefactoringTest',
 	#category : 'Refactoring-Transformations-Tests-SingleParametrized',
 	#package : 'Refactoring-Transformations-Tests',
 	#tag : 'SingleParametrized'
 }
 
-{ #category : 'tests' }
-RBExtractMethodAndOccurrencesParametrizedTest class >> testParameters [
-	^ ParametrizedTestMatrix new
-		addCase: { #rbClass -> RBExtractMethodAndOccurrences };
-		yourself
-]
-
-{ #category : 'accessing' }
-RBExtractMethodAndOccurrencesParametrizedTest >> constructor [
-	^ #extract:from:in:
-]
-
 { #category : 'running' }
-RBExtractMethodAndOccurrencesParametrizedTest >> setUp [
+RBExtractMethodAndOccurrencesTest >> setUp [
 	super setUp.
 	model := self rbModelForExtractMethodTest
 ]
 
 { #category : 'tests' }
-RBExtractMethodAndOccurrencesParametrizedTest >> testExtractMethodWithTwoArgsAndOcurrences [
+RBExtractMethodAndOccurrencesTest >> testExtractMethodWithTwoArgsAndOcurrences [
 	|class refactoring|
 	class := model classNamed: #MyClassA.
-	refactoring := self createRefactoringWithModel: model
-		andArguments: { (116 to: 245) . #displayName . class }.
+	refactoring := RBExtractMethodAndOccurrences
+						model: model
+						extract: (116 to: 245)
+						from: #displayName
+						in: class.
 	self setupSearchInAllHierarchyFor: refactoring toReturn: true.
 	self setupMethodNameFor: refactoring toReturn: #stringArg:streamArg:.
 	self executeRefactoring: refactoring.
@@ -59,11 +50,14 @@ RBExtractMethodAndOccurrencesParametrizedTest >> testExtractMethodWithTwoArgsAnd
 ]
 
 { #category : 'tests' }
-RBExtractMethodAndOccurrencesParametrizedTest >> testExtractSimpleMethodAndOcurrences [
+RBExtractMethodAndOccurrencesTest >> testExtractSimpleMethodAndOcurrences [
 	|class refactoring|
 	class := model classNamed: #MyClassA.
-	refactoring := self createRefactoringWithModel: model
-		andArguments: { (291 to: 311) . #myMethod . class }.
+	refactoring := RBExtractMethodAndOccurrences
+						model: model
+						extract: (291 to: 311)
+						from: #myMethod
+						in: class.
 	self setupSearchInAllHierarchyFor: refactoring toReturn: true.
 	self setupMethodNameFor: refactoring toReturn: #extractedMethod.
 	self executeRefactoring: refactoring.
@@ -108,9 +102,9 @@ RBExtractMethodAndOccurrencesParametrizedTest >> testExtractSimpleMethodAndOcurr
 ]
 
 { #category : 'failure tests' }
-RBExtractMethodAndOccurrencesParametrizedTest >> testFailureBadInterval [
+RBExtractMethodAndOccurrencesTest >> testFailureBadInterval [
 	|class|
 	class := model classNamed: #MyClassA.
-	self shouldFail: (self createRefactoringWithModel: model
-		andArguments: { (127 to: 136) . #myMethod . class })
+	self shouldFail: (RBExtractMethodAndOccurrences model: model
+		extract: (127 to: 136) from: #myMethod in: class)
 ]
