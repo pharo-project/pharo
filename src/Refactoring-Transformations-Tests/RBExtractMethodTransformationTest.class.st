@@ -60,7 +60,7 @@ RBExtractMethodTransformationTest >> testFailureBadInterval [
 ]
 
 { #category : 'tests - failures' }
-RBExtractMethodTransformationTest >> testFailureExtract [
+RBExtractMethodTransformationTest >> testFailureCannotExtractProperSubtreeFromInterval [
 
 	self shouldFail: (RBExtractMethodTransformation
 			 extract: (self
@@ -79,6 +79,10 @@ RBExtractMethodTransformationTest >> testFailureExtract [
 			 from: #subclassOf:overrides:
 			 to: #foo
 			 in: #'RBBasicLintRuleTestData class').
+]
+
+{ #category : 'tests' }
+RBExtractMethodTransformationTest >> testFailureCannotExtractTwoAssignmentsToTemporaries [
 
 	self shouldFail: (RBExtractMethodTransformation
 			 extract: (self
