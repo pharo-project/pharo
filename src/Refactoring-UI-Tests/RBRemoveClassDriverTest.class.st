@@ -6,6 +6,20 @@ Class {
 }
 
 { #category : 'tests' }
+RBRemoveClassDriverTest >> testBadPathRemovingNonEmptySubWithSubclasses [
+	
+	| pack driver |
+	pack := RBPackageEnvironment packageNames: { 'Refactoring-UI-Tests' . 'Refactoring-UI' }.
+	driver := RBRemoveClassDriver new 
+		scopes: { pack }
+		classes: { RBRemoveClassDriver }.
+	self setUpDriver: driver.
+	driver runRefactoring.
+		
+	self assert: driver breakingChoices size equals: 2
+]
+
+{ #category : 'tests' }
 RBRemoveClassDriverTest >> testGoodPathClassIsUnusedEmptyNoSubclasses [
 	
 	| pack driver |

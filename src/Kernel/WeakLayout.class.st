@@ -8,7 +8,7 @@ References held in the variable part are held weakly and might be nilled out by 
 "
 Class {
 	#name : 'WeakLayout',
-	#superclass : 'PointerLayout',
+	#superclass : 'VariableLayout',
 	#category : 'Kernel-Layout',
 	#package : 'Kernel',
 	#tag : 'Layout'
@@ -32,11 +32,6 @@ WeakLayout class >> subclassDefiningSymbol [
 { #category : 'format' }
 WeakLayout >> instanceSpecification [
 	^ 4
-]
-
-{ #category : 'testing' }
-WeakLayout >> isVariable [
-	^ true
 ]
 
 { #category : 'testing' }

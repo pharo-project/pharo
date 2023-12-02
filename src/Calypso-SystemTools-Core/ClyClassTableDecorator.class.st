@@ -13,6 +13,14 @@ Class {
 }
 
 { #category : 'decoration' }
+ClyClassTableDecorator class >> decorateTableCell: anItemCellMorph of: aDataSourceItem [
+
+	| labelMorphExtension |
+	labelMorphExtension := anItemCellMorph label assureExtension.
+	labelMorphExtension balloonText: aDataSourceItem actualObject comment. 
+]
+
+{ #category : 'decoration' }
 ClyClassTableDecorator class >> decorationStrategy [
 	<classAnnotation>
 
