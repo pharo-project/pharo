@@ -57,6 +57,11 @@ RBInteractionDriver >> furtherActionFor: aReport [
 	aReport browse
 ]
 
+{ #category : 'accessing' }
+RBInteractionDriver >> model: aRBBrowserEnvironment [ 
+	model := aRBBrowserEnvironment
+]
+
 { #category : 'execution' }
 RBInteractionDriver >> openPreviewWithChanges: changes [
 	
