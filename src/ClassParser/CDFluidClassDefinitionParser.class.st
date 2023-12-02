@@ -226,12 +226,14 @@ CDFluidClassDefinitionParser >> handleSharedVarableNodeSimple: slotDefNode [
 { #category : 'parsing - variables' }
 CDFluidClassDefinitionParser >> handleSharedVariabeNode: variableDefNode [
 	 | variable |
+	
+	"when a class variable is just #ClassVars"
+	variableDefNode isLiteralNode ifTrue: [ ^ classDefinition addSharedVariable: (self handleSharedVarableNodeSimple: variableDefNode)].
+	
 	"Setting, default off, to allow experiments"
 	self class unrestrictedVariableDefinitions ifTrue: [ 
 		^ classDefinition addSharedVariable: (self handleUnrestrictedSharedVariableDefinition: variableDefNode) ].
 	
-	"when a class variable is just #ClassVars"
-	variableDefNode isLiteralNode ifTrue: [ variable := self handleSharedVarableNodeSimple: variableDefNode].
 	"#ClassVar => SomeVar default: 5; default2: 4"
 	variableDefNode isCascade ifTrue: [ variable := self handleSharedVariableNodeCascade: variableDefNode].
 	"when a class var is just #var => SomeVar"
@@ -311,12 +313,14 @@ CDFluidClassDefinitionParser >> handleSharedVariableNodesFromArrayNode: aRBArray
 CDFluidClassDefinitionParser >> handleSlotNode: slotDefNode [
 	 | slot |
 	
+	"when a slot is just #inst"
+	slotDefNode isLiteralNode ifTrue: [
+		^ classDefinition addSlot: ( self handleSlotNodeSimple: slotDefNode)].
+	
 	"Setting, default off, to allow experiments"
 	self class unrestrictedVariableDefinitions ifTrue: [ 
 		^ classDefinition addSlot: (self handleUnrestrictedSlotDefinition: slotDefNode) ].
 	
-	"when a slot is just #inst"
-	slotDefNode isLiteralNode ifTrue: [ slot := self handleSlotNodeSimple: slotDefNode].
 	"#inst => InstanceVariableSlot default: 5; default2: 4"
 	slotDefNode isCascade ifTrue: [ slot := self handleSlotNodeCascade: slotDefNode].
 	"when a slot is just #inst => InstanceVariableSlot."
@@ -421,9 +425,9 @@ CDFluidClassDefinitionParser >> handleTraitUsesFromNode: aNode [
 CDFluidClassDefinitionParser >> handleUnrestrictedSharedVariableDefinition: variableDefNode [
 
 	"If the preference is enabled, allow unrestricted shared variable definitions. 
-	TAKE CARE: There is no way to know the name nor the class witout executing the code of the defintion.
-	This means that a) code will be evaluated which could have side effects and b) you need to load the Slot Class
-	before any users, as an UndefinedSlot can not be created, as we do not know the name"
+	TAKE CARE: There is no way to know the name nor the class without executing the code of the defintion.
+	This means that a) code will be evaluated which could have side effects and b) you need to load the Variable class
+	before any users, as an UndefinedClassVariable can not be created, as we do not know the name"
 
 	| variableInstance |
 	"create the instance of the Variable by evaluating the defintion, we use this to fill out the name and variableClassName"
@@ -431,7 +435,7 @@ CDFluidClassDefinitionParser >> handleUnrestrictedSharedVariableDefinition: vari
 
 	^ CDSharedVariableNode new
 		  node: variableDefNode;
-		  name: variableDefNode name;
+		  name: variableInstance name;
 		  variableClassName: variableInstance class name;
 		  start: variableDefNode start;
 		  stop: variableDefNode stop
