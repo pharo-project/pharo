@@ -105,7 +105,6 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		spec package: 'PharoBootstrap-Initialization'.
 		spec package: 'Random-Core'.
 		spec package: 'ReflectionMirrors-Primitives'.
-		spec package: 'Shift-Changes'.
 		spec package: 'Shift-ClassBuilder'.
 		spec package: 'Shift-ClassInstaller'.
 		spec package: 'Slot-Core'.
@@ -163,7 +162,6 @@ BaselineOfPharoBootstrap >> baseline: spec [
 			'Kernel-BytecodeEncoders'.
 			'Transcript-NonInteractive'.
 			'PharoBootstrap-Initialization'.
-			'Shift-Changes'.
 			'Shift-ClassBuilder'.
 			'Shift-ClassInstaller'.
 			'Slot-Core'.

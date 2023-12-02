@@ -4,6 +4,7 @@ This notification is raised if there is no changes in a class when invoked the c
 Class {
 	#name : 'ShNoChangesInClass',
 	#superclass : 'Notification',
-	#category : 'Shift-Changes',
-	#package : 'Shift-Changes'
+	#category : 'Shift-ClassBuilder-Changes',
+	#package : 'Shift-ClassBuilder',
+	#tag : 'Changes'
 }

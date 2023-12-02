@@ -17,8 +17,9 @@ Class {
 		'builder',
 		'oldClass'
 	],
-	#category : 'Shift-Changes',
-	#package : 'Shift-Changes'
+	#category : 'Shift-ClassBuilder-Changes',
+	#package : 'Shift-ClassBuilder',
+	#tag : 'Changes'
 }
 
 { #category : 'testing' }

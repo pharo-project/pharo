@@ -6,8 +6,9 @@ Trait {
 	#classInstVars : [
 		'a'
 	],
-	#category : 'Shift-ClassBuilder-Tests',
-	#package : 'Shift-ClassBuilder-Tests'
+	#category : 'Shift-ClassBuilder-Tests-Mock',
+	#package : 'Shift-ClassBuilder-Tests',
+	#tag : 'Mock'
 }
 
 { #category : 'accessing' }

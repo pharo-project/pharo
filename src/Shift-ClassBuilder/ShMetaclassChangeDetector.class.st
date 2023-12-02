@@ -4,8 +4,9 @@ I am responsible of detecting when a class changes its metaclass.
 Class {
 	#name : 'ShMetaclassChangeDetector',
 	#superclass : 'ShAbstractClassChangeDetector',
-	#category : 'Shift-Changes',
-	#package : 'Shift-Changes'
+	#category : 'Shift-ClassBuilder-Changes',
+	#package : 'Shift-ClassBuilder',
+	#tag : 'Changes'
 }
 
 { #category : 'initialization' }

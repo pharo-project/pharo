@@ -12,8 +12,9 @@ Class {
 		'sharedVariables',
 		'builder'
 	],
-	#category : 'Shift-ClassBuilder',
-	#package : 'Shift-ClassBuilder'
+	#category : 'Shift-ClassBuilder-Builder',
+	#package : 'Shift-ClassBuilder',
+	#tag : 'Builder'
 }
 
 { #category : 'accessing' }

@@ -5,8 +5,9 @@ I announce with a copy of the old class and the new class.
 Class {
 	#name : 'ShMetaclassChanged',
 	#superclass : 'ShAbstractChange',
-	#category : 'Shift-Changes',
-	#package : 'Shift-Changes'
+	#category : 'Shift-ClassBuilder-Changes',
+	#package : 'Shift-ClassBuilder',
+	#tag : 'Changes'
 }
 
 { #category : 'announcing' }

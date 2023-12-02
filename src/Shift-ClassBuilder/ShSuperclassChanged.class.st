@@ -4,8 +4,9 @@ I model the change in a superclass that should be propagated to the subclasses.
 Class {
 	#name : 'ShSuperclassChanged',
 	#superclass : 'ShAbstractChange',
-	#category : 'Shift-Changes',
-	#package : 'Shift-Changes'
+	#category : 'Shift-ClassBuilder-Changes',
+	#package : 'Shift-ClassBuilder',
+	#tag : 'Changes'
 }
 
 { #category : 'testing' }
