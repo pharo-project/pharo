@@ -1003,11 +1003,8 @@ Context >> isContext [
 
 { #category : 'testing' }
 Context >> isDead [
-	"Context is dead when
-	- it is self finished (returned to sender)
-	- it is at the last instruction of process termination (it is unwinded and process is suspended)"
 
-	^ pc isNil or: [  self isEndOfProcessTermination ]
+	^ pc isNil
 ]
 
 { #category : 'testing' }
