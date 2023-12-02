@@ -71,8 +71,6 @@ RBExtractMethodTransformation class >> model: aRBModel extract: aString from: aS
 { #category : 'preconditions' }
 RBExtractMethodTransformation >> applicabilityPreconditions [ 
 
-	subtree := self calculateSubtree.
-
 	^ (RBCondition withBlock: [
 		   subtree ifNil: [ self refactoringError: 'Cannot extract code.' ].
 		   true ]) & (RBCondition withBlock: [
@@ -367,6 +365,12 @@ RBExtractMethodTransformation >> newMethodName [
 								 newSelector := nil ] ] ].
 
 	^ methodName
+]
+
+{ #category : 'transforming' }
+RBExtractMethodTransformation >> prepareForExecution [
+
+	subtree := self calculateSubtree
 ]
 
 { #category : 'printing' }
