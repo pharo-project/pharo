@@ -114,7 +114,6 @@ RBExtractMethodTransformation >> buildTransformationFor: newMethodName withRemov
 RBExtractMethodTransformation >> buildTransformations [
 
 	| selectorOfExistingMethod |
-	subtree := self calculateSubtree.
 	
 	selectorOfExistingMethod := self findMethodWithSimilarBody.
 	selectorOfExistingMethod 
