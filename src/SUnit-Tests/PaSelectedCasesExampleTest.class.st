@@ -19,9 +19,9 @@ Class {
 		'number2',
 		'result'
 	],
-	#category : 'ParametrizedTests-Examples',
-	#package : 'ParametrizedTests',
-	#tag : 'Examples'
+	#category : 'SUnit-Tests-Parametrized-Examples',
+	#package : 'SUnit-Tests',
+	#tag : 'Parametrized-Examples'
 }
 
 { #category : 'building suites' }

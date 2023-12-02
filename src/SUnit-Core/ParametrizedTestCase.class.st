@@ -54,9 +54,9 @@ Class {
 	#instVars : [
 		'parametersToUse'
 	],
-	#category : 'ParametrizedTests-Core',
-	#package : 'ParametrizedTests',
-	#tag : 'Core'
+	#category : 'SUnit-Core-Parametrized',
+	#package : 'SUnit-Core',
+	#tag : 'Parametrized'
 }
 
 { #category : 'building suites' }

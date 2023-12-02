@@ -8,9 +8,9 @@ Class {
 		'selector',
 		'values'
 	],
-	#category : 'ParametrizedTests-Core',
-	#package : 'ParametrizedTests',
-	#tag : 'Core'
+	#category : 'SUnit-Core-Parametrized',
+	#package : 'SUnit-Core',
+	#tag : 'Parametrized'
 }
 
 { #category : 'accessing' }

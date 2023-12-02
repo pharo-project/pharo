@@ -1,6 +1,6 @@
 Extension { #name : 'Array' }
 
-{ #category : '*ParametrizedTests' }
+{ #category : '*SUnit-Core' }
 Array >> asTestMatrix [
 
 	| matrix |

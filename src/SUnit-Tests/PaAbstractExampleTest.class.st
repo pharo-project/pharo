@@ -8,9 +8,9 @@ Class {
 		'option2',
 		'option1'
 	],
-	#category : 'ParametrizedTests-Tests',
-	#package : 'ParametrizedTests',
-	#tag : 'Tests'
+	#category : 'SUnit-Tests-Parametrized',
+	#package : 'SUnit-Tests',
+	#tag : 'Parametrized'
 }
 
 { #category : 'private' }
