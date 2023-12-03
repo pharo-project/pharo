@@ -396,13 +396,7 @@ RBExtractMethodTransformation >> preconditionParsableSubtree [
 { #category : 'preconditions' }
 RBExtractMethodTransformation >> preconditionTemporariesAreNotReadBeforeWritten [
 
-	^ RBCondition withBlock: [
-		  (RBReadBeforeWrittenTester
-			   readBeforeWritten: temporaries
-			   in: subtree) ifNotEmpty: [
-			  self refactoringError:
-				  'Cannot extract temporaries if they are read before written.' ].
-		  true ]
+	^ RBTemporariesNotReadBeforeWrittenCondition new subtree: subtree temporaries: temporaries 
 ]
 
 { #category : 'transforming' }
