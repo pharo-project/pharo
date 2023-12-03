@@ -24,7 +24,7 @@ SycExtractMethodAndOccurrencesCommand class >> canBeExecutedInContext: aSourceCo
 SycExtractMethodAndOccurrencesCommand class >> methodEditorShortcutActivation [
 	<classAnnotation>
 
-	^CmdShortcutActivation by: $e meta, $m meta for: ClySourceCodeContext
+	^CmdShortcutActivation by: $e meta, $m meta, $o meta for: ClySourceCodeContext
 ]
 
 { #category : 'converting' }

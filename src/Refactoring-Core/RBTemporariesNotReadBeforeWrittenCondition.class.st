@@ -1,8 +1,7 @@
 Class {
 	#name : 'RBTemporariesNotReadBeforeWrittenCondition',
-	#superclass : 'RBCondition',
+	#superclass : 'RBSubtreeCondition',
 	#instVars : [
-		'subtree',
 		'temporaries'
 	],
 	#category : 'Refactoring-Core-Conditions',
@@ -21,9 +20,8 @@ RBTemporariesNotReadBeforeWrittenCondition >> check [
 ]
 
 { #category : 'initiali' }
-RBTemporariesNotReadBeforeWrittenCondition >> subtree: aRBMessageNode temporaries: aCollection [ 
+RBTemporariesNotReadBeforeWrittenCondition >> temporaries: aCollection [ 
 	
-	subtree := aRBMessageNode.
 	temporaries := aCollection 
 ]
 

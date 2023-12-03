@@ -3,17 +3,10 @@ A RBTemporariesNotReadBeforeWrittenConditionTest is a test class for testing the
 "
 Class {
 	#name : 'RBTemporariesNotReadBeforeWrittenConditionTest',
-	#superclass : 'TestCase',
+	#superclass : 'RBAbstractConditionTest',
 	#category : 'Refactoring-Core-Tests',
 	#package : 'Refactoring-Core-Tests'
 }
-
-{ #category : 'utilities' }
-RBTemporariesNotReadBeforeWrittenConditionTest >> modelOnClasses: aCollection [
-
-	^ RBNamespace onEnvironment:
-		  (RBClassEnvironment classes: aCollection)
-]
 
 { #category : 'tests' }
 RBTemporariesNotReadBeforeWrittenConditionTest >> testNoTemporariesInSubtree [
@@ -24,7 +17,7 @@ RBTemporariesNotReadBeforeWrittenConditionTest >> testNoTemporariesInSubtree [
 	parseTree := class parseTreeForSelector: self selector.
 	subtree := parseTree extractSubtreeWith: 'precondition check'.
 	
-	precondition := RBTemporariesNotReadBeforeWrittenCondition new subtree: subtree temporaries: #().
+	precondition := RBTemporariesNotReadBeforeWrittenCondition new subtree: subtree; temporaries: #().
 	
 	self assert: precondition check
 ]
@@ -35,7 +28,7 @@ RBTemporariesNotReadBeforeWrittenConditionTest >> testSubtreeIsNilExpectFalse [
 	| precondition |.
 	
 	"model is read before written in the code snippet"
-	precondition := RBTemporariesNotReadBeforeWrittenCondition new subtree: nil temporaries: #(#model).
+	precondition := RBTemporariesNotReadBeforeWrittenCondition new subtree: nil; temporaries: #(#model).
 	
 	self deny: precondition check
 ]
@@ -52,7 +45,7 @@ RBTemporariesNotReadBeforeWrittenConditionTest >> testTemporaryIsNotReadBeforeWr
 	class := model classObjectFor: self class.
 	parseTree := class parseTreeForSelector: self selector.'.
 	
-	precondition := RBTemporariesNotReadBeforeWrittenCondition new subtree: subtree temporaries: #(#subtree  #model  #class #parseTree).
+	precondition := RBTemporariesNotReadBeforeWrittenCondition new subtree: subtree; temporaries: #(#subtree  #model  #class #parseTree).
 	
 	self assert: precondition check
 ]
@@ -68,7 +61,7 @@ RBTemporariesNotReadBeforeWrittenConditionTest >> testTemporaryIsReadBeforeWritt
 	class := model classObjectFor: self class.'.
 	
 	"model is read before written in the code snippet"
-	precondition := RBTemporariesNotReadBeforeWrittenCondition new subtree: subtree temporaries: #(#model #class).
+	precondition := RBTemporariesNotReadBeforeWrittenCondition new subtree: subtree; temporaries: #(#model #class).
 	
 	self deny: precondition check
 ]
