@@ -23,9 +23,9 @@ FLEphemeronCluster >> clusterReferencesDo: aBlock [
 
 { #category : 'analyzing' }
 FLEphemeronCluster >> referencesOf: anObject do: aBlock [
-	"Do not store strong reference to the key, which is essentially a weak reference.
-	Do not trace the key either. We only want to serialize the key if there's an
-	explicit reference to it in the graph."
+	"Do not trace the key. We only want to serialize the key if there's an
+	explicit reference to it in the graph.
+	See #serializeReferencesOf:with:"
 	| key |
 	key := anObject key.
 	variablesMapping
@@ -38,7 +38,8 @@ FLEphemeronCluster >> referencesOf: anObject do: aBlock [
 { #category : 'serialize/materialize' }
 FLEphemeronCluster >> serializeReferencesOf: anObject with: anEncoder [
 	"As we did not trace the key we can simply encode it here,
-	provided it was strongly referenced from within the graph."
+	provided it was strongly referenced from within the graph.
+	If there's no reference within the graph we encode nil."
 	anEncoder encodeWeakReferenceTo: anObject key.
 	
 	"The references do not contain the key"
