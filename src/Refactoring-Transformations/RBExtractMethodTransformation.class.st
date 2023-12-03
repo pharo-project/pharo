@@ -128,7 +128,6 @@ RBExtractMethodTransformation >> buildTransformations [
 				  ifTrue: [ OrderedCollection new ]
 				  ifFalse: [
 					  | tempsToRemove |
-					  arguments := self calculateArguments.
 					  tempsToRemove := self calculateTemporariesToRemove.
 
 					  assignments size > 1
@@ -147,6 +146,9 @@ RBExtractMethodTransformation >> calculateArguments [
 	"returns a collection of variables that should be passed as arguments"
 
 	| allVariables accesses assigned |
+	
+	subtree ifNil: [ ^ nil ].
+	
 	allVariables := parseTree allDefinedVariables difference: subtree allDefinedVariables.
 
 	accesses := allVariables select: [ :each | subtree references: each ].
@@ -403,7 +405,8 @@ RBExtractMethodTransformation >> prepareForExecution [
 
 	subtree := self calculateSubtree.
 	temporaries := self calculateTemporaries.
-	assignments := self calculateAssignments 
+	assignments := self calculateAssignments.
+	arguments := self calculateArguments 
 ]
 
 { #category : 'printing' }
