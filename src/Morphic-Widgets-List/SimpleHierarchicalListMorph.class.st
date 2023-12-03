@@ -465,12 +465,12 @@ SimpleHierarchicalListMorph >> expandedForm [
 ]
 
 { #category : 'actions' }
-SimpleHierarchicalListMorph >> expandedFormForMorph: aMorph [
-	"Answer the form to use for expanded items."
+SimpleHierarchicalListMorph >> expandedFormSetForMorph: aMorph [
+	"Answer the form set to use for expanded items."
 
 	^ (self selectedMorph = aMorph and: [self theme selectionColor luminance < 0.6])
-		ifTrue: [self theme whiteTreeExpandedForm]
-		ifFalse: [self theme treeExpandedForm]
+		ifTrue: [self theme whiteTreeExpandedFormSet]
+		ifFalse: [self theme treeExpandedFormSet]
 ]
 
 { #category : 'geometry' }
@@ -806,10 +806,10 @@ SimpleHierarchicalListMorph >> notExpandedForm [
 ]
 
 { #category : 'accessing' }
-SimpleHierarchicalListMorph >> notExpandedFormForMorph: aMorph [
+SimpleHierarchicalListMorph >> notExpandedFormSetForMorph: aMorph [
 	^ (self selectedMorph = aMorph and: [self theme selectionColor luminance < 0.6])
-		ifTrue: [self theme whiteTreeUnexpandedForm]
-		ifFalse: [self theme treeUnexpandedForm]
+		ifTrue: [self theme whiteTreeUnexpandedFormSet]
+		ifFalse: [self theme treeUnexpandedFormSet]
 ]
 
 { #category : 'private' }
