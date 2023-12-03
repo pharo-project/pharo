@@ -129,7 +129,6 @@ RBExtractMethodTransformation >> buildTransformations [
 				  ifFalse: [
 					  | tempsToRemove |
 					  arguments := self calculateArguments.
-					  assignments := self calculateAssignments.
 					  tempsToRemove := self calculateTemporariesToRemove.
 
 					  assignments size > 1
@@ -160,6 +159,9 @@ RBExtractMethodTransformation >> calculateArguments [
 RBExtractMethodTransformation >> calculateAssignments [
 	"checks how many variables in the subtree are assigned to values."
 
+	"asssignments depend on subtree, if the subtree is nil, assignment will be nil as well"
+	subtree ifNil: [ ^ nil ].
+	
 	^ assignments ifNil: [
 		| sequenceNode whoDefinesTemp |
 		sequenceNode := (parseTree allChildren select: [ :each | each isSequence ]) last.
@@ -352,11 +354,10 @@ RBExtractMethodTransformation >> newMethodName [
 RBExtractMethodTransformation >> preconditionAssignmentsNotReadBeforeWrittenORSubtreeDoesNotContainsReturn [
 
 	^ RBCondition withBlock: [
-		  | assignmentCollection |
-		  assignmentCollection := self calculateAssignments.
-		  assignmentCollection ifNotEmpty: [
+.
+		  assignments ifNotEmpty: [
 			  ((RBReadBeforeWrittenTester
-				    isVariable: assignmentCollection first
+				    isVariable: assignments first
 				    readBeforeWrittenIn: subtree) or: [ subtree containsReturn ])
 				  ifTrue: [
 					  self refactoringError:
@@ -379,7 +380,7 @@ RBExtractMethodTransformation >> preconditionNotInCascadedMessage [
 RBExtractMethodTransformation >> preconditionOneAssignmentMaximum [
 
 	^ RBCondition withBlock: [
-		  self calculateAssignments size > 1 ifTrue: [
+		  assignments size > 1 ifTrue: [
 			  self refactoringError:
 				  'Cannot extract two or more assignments to temporaries without also extracting all the references.' ].
 		  true ]
@@ -401,7 +402,8 @@ RBExtractMethodTransformation >> preconditionTemporariesAreNotReadBeforeWritten 
 RBExtractMethodTransformation >> prepareForExecution [
 
 	subtree := self calculateSubtree.
-	temporaries := self calculateTemporaries 
+	temporaries := self calculateTemporaries.
+	assignments := self calculateAssignments 
 ]
 
 { #category : 'printing' }
