@@ -227,8 +227,8 @@ AthensCairoCanvas >> primResetDashes: anOffset [
                                                          double offset);"
 	^ self ffiCall: #(void cairo_set_dash (
 				self,
-				void* 0,
-				int 0,
+				0,
+				0,
 				double anOffset) )
 ]
 
