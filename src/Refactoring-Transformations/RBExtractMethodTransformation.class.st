@@ -209,7 +209,10 @@ RBExtractMethodTransformation >> calculateSubtree [
 { #category : 'querying' }
 RBExtractMethodTransformation >> calculateTemporaries [
 	"returns a collection of variables that should be defined inside the method"
-
+	
+	"temporaries depend on subtree, if the subtree is nil, temporaries will be nil as well"
+	subtree ifNil: [ ^ nil ].
+	
 	^ temporaries ifNil: [
 		| allVariables accesses |
 		allVariables := parseTree allDefinedVariables difference: subtree allDefinedVariables.
@@ -394,7 +397,6 @@ RBExtractMethodTransformation >> preconditionParsableSubtree [
 RBExtractMethodTransformation >> preconditionTemporariesAreNotReadBeforeWritten [
 
 	^ RBCondition withBlock: [
-		  temporaries := self calculateTemporaries.
 		  (RBReadBeforeWrittenTester
 			   readBeforeWritten: temporaries
 			   in: subtree) ifNotEmpty: [
@@ -406,7 +408,8 @@ RBExtractMethodTransformation >> preconditionTemporariesAreNotReadBeforeWritten 
 { #category : 'transforming' }
 RBExtractMethodTransformation >> prepareForExecution [
 
-	subtree := self calculateSubtree
+	subtree := self calculateSubtree.
+	temporaries := self calculateTemporaries 
 ]
 
 { #category : 'printing' }
