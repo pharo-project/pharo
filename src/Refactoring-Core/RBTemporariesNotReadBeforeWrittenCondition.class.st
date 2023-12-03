@@ -28,5 +28,5 @@ RBTemporariesNotReadBeforeWrittenCondition >> temporaries: aCollection [
 { #category : 'displaying' }
 RBTemporariesNotReadBeforeWrittenCondition >> violationMessageOn: aStream [
 
-	^ 'Cannot extract temporaries because they are read before written.'
+	aStream nextPutAll: 'Cannot extract temporaries because they are read before written.'
 ]

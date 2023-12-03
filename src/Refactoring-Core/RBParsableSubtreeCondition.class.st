@@ -16,5 +16,5 @@ RBParsableSubtreeCondition >> check [
 { #category : 'displaying' }
 RBParsableSubtreeCondition >> violationMessageOn: aStream [
 
-	^ 'Cannot extract selected code, it is not a valid subtree.'
+	aStream nextPutAll: 'Cannot extract selected code, it is not a valid subtree.'
 ]

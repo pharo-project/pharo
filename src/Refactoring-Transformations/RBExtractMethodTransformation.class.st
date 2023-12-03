@@ -371,11 +371,7 @@ RBExtractMethodTransformation >> preconditionAssignmentsNotReadBeforeWrittenORSu
 { #category : 'preconditions' }
 RBExtractMethodTransformation >> preconditionNotInCascadedMessage [
 
-	^ RBCondition withBlock: [
-		  subtree parent isCascade ifTrue: [
-			  self refactoringError:
-				  'Cannot extract code in a cascaded message' ].
-		  true ]
+	^ RBNotInCascadedMessageCondition new subtree: subtree
 ]
 
 { #category : 'preconditions' }
