@@ -388,9 +388,7 @@ RBExtractMethodTransformation >> preconditionOneAssignmentMaximum [
 { #category : 'preconditions' }
 RBExtractMethodTransformation >> preconditionParsableSubtree [
 
-	^ RBCondition withBlock: [
-		  subtree ifNil: [ self refactoringError: 'Cannot extract code.' ].
-		  true ]
+	^ RBParsableSubtreeCondition new subtree: subtree
 ]
 
 { #category : 'preconditions' }
