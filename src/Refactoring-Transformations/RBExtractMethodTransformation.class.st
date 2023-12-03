@@ -160,6 +160,9 @@ RBExtractMethodTransformation >> calculateArguments [
 { #category : 'querying' }
 RBExtractMethodTransformation >> calculateAssignments [
 	"checks how many variables in the subtree are assigned to values."
+	"Those are temporaries (without temps defined in the subtree; see `calculateTemporaries` for details)
+	that have reference in a statement outside of the subtree.
+	For those variables we would need to return newly assigned value to preserve behavior."
 
 	"asssignments depend on subtree, if the subtree is nil, assignment will be nil as well"
 	subtree ifNil: [ ^ nil ].
@@ -212,7 +215,12 @@ RBExtractMethodTransformation >> calculateSubtree [
 
 { #category : 'querying' }
 RBExtractMethodTransformation >> calculateTemporaries [
-	"returns a collection of variables that should be defined inside the method"
+	"returns a collection of variables that should be defined inside the method.
+	Those are all variables (temps and args) that are defined outside of subtree,
+	but are part of an assignment in the subtree.
+	If we want to assign something to them, we need to have a temp for it.
+	See calculateAssignments which then checks if we can preserve behavior
+	by returning that assignment value as extracted method's return value"
 	
 	"temporaries depend on subtree, if the subtree is nil, temporaries will be nil as well"
 	subtree ifNil: [ ^ nil ].
@@ -376,6 +384,11 @@ RBExtractMethodTransformation >> preconditionNotInCascadedMessage [
 
 { #category : 'preconditions' }
 RBExtractMethodTransformation >> preconditionOneAssignmentMaximum [
+	"When we have one assignment to temp or arg we don't need to worry about other references,
+	since we can return newly assigned value from the extracted method and preserve behavior.
+	When we have two or more assignments AND when they have references outside of extracted block,
+	we don't support return of multiple values, instead we notify the user that all references
+	to those temps should be extracted as well."
 
 	^ RBCondition withBlock: [
 		  assignments size > 1 ifTrue: [
