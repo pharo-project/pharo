@@ -129,7 +129,6 @@ RBExtractMethodTransformation >> buildTransformations [
 				  ifFalse: [
 					  | tempsToRemove |
 					  arguments := self calculateArguments.
-					  temporaries := self calculateTemporaries.
 					  assignments := self calculateAssignments.
 					  tempsToRemove := self calculateTemporariesToRemove.
 
@@ -395,10 +394,9 @@ RBExtractMethodTransformation >> preconditionParsableSubtree [
 RBExtractMethodTransformation >> preconditionTemporariesAreNotReadBeforeWritten [
 
 	^ RBCondition withBlock: [
-		  | tempVariables |
-		  tempVariables := self calculateTemporaries.
+		  temporaries := self calculateTemporaries.
 		  (RBReadBeforeWrittenTester
-			   readBeforeWritten: tempVariables
+			   readBeforeWritten: temporaries
 			   in: subtree) ifNotEmpty: [
 			  self refactoringError:
 				  'Cannot extract temporaries if they are read before written.' ].
