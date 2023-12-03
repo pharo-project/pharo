@@ -20,9 +20,9 @@ RBRenameClassDriver class >> rename: oldName [
 ]
 
 { #category : 'execution' }
-RBRenameClassDriver >> applyChanges [
+RBRenameClassDriver >> changes [
 
-	self openPreviewWithChanges: refactoring privateTransform
+	^ refactoring privateTransform
 ]
 
 { #category : 'resources' }
