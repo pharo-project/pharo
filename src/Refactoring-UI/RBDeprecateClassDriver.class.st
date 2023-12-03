@@ -21,9 +21,9 @@ Class {
 		'className',
 		'newClassName'
 	],
-	#category : 'Refactoring-UI-Drivers',
+	#category : 'Refactoring-UI-Drivers to migrate to new architecture',
 	#package : 'Refactoring-UI',
-	#tag : 'Drivers'
+	#tag : 'Drivers to migrate to new architecture'
 }
 
 { #category : 'instance creation' }
@@ -108,16 +108,24 @@ RBDeprecateClassDriver >> requestNewClassName [
 RBDeprecateClassDriver >> runRefactoring [
 
 	| select |
-	select := SpSelectDialog new 
+	select := self selectDialog.
+	
+	[
+		[ select ifNotNil: [ select action ] ]
+		on: RBApplicabilityChecksFailedError do: [ :err | RBRefactoringError signal: err errorString ]
+	]
+	on: RBBreakingChangeChecksFailedWarning do: [ :err | RBRefactoringWarning signal: err errorString. err resume ]
+]
+
+{ #category : 'execution' }
+RBDeprecateClassDriver >> selectDialog [ 
+
+	^ SpSelectDialog new 
 		title: 'Deprecate class with strategy';
 		label: 'Select a strategy';
 		items: (RBDeprecateClassChoice subclasses collect: [ :each | each  new driver: self]);
 		display: [ :each | each description ];
 		displayIcon: [ :each | self iconNamed: each systemIconName ];
 		openModal.
-	[
-		[ select ifNotNil: [ select action ] ]
-		on: RBApplicabilityChecksFailedError do: [ :err | RBRefactoringError signal: err errorString ]
-	]
-	on: RBBreakingChangeChecksFailedWarning do: [ :err | RBRefactoringWarning signal: err errorString. err resume ]
+
 ]

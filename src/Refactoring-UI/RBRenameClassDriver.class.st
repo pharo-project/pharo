@@ -22,7 +22,7 @@ RBRenameClassDriver class >> rename: oldName [
 { #category : 'execution' }
 RBRenameClassDriver >> changes [
 
-	^ refactoring privateTransform
+	^ refactoring privateTransform; changes
 ]
 
 { #category : 'resources' }
