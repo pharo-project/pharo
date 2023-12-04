@@ -627,17 +627,10 @@ Object >> clone [
 	| class newObject |
 	ec == #'insufficient object memory' ifFalse:
 		[^self primitiveFailed].
-	"If the primitive fails due to insufficient memory, instantiate via basicNew: to invoke
-	 the garbage collector before retrying, and use copyFrom: to copy state."
+	"If the primitive fails due to insufficient memory, instantiate via basicNew: to invoke the garbage collector before retrying, and use copyFrom: to copy state."
 	newObject := (class := self class) isVariable
-					ifTrue:
-						[class isCompiledMethodClass
-							ifTrue:
-								[class basicNew: self basicSize - self initialPC + 1 + CompiledMethod trailerSize header: self header]
-							ifFalse:
-								[class basicNew: self basicSize]]
-					ifFalse:
-						[class basicNew].
+					ifTrue: [class basicNew: self basicSize]
+					ifFalse: [class basicNew].
 	^newObject copyFrom: self
 ]
 

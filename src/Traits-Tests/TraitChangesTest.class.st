@@ -59,7 +59,7 @@ TraitChangesTest >> testconfigureBuilderWithNameTraitCompositionInstanceVariable
 	builder := ShiftClassBuilder new
 		           name: #T1;
 		           beTrait;
-		           slotsFromString: 'a b';
+		           slots: #(a b);
 		           package: self packageNameForTests.
 
 	self assert: builder slots size equals: 2.

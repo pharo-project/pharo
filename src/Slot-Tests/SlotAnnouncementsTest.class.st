@@ -111,7 +111,7 @@ SlotAnnouncementsTest >> testChangeInSharedVariablesAndSharedPoolsShouldAnnounce
 		builder
 			name: self aClassName;
 			sharedPools: 'TestSharedPool';
-			sharedVariablesFromString: 'A B' ].
+			sharedVariables: #(A B) ].
 
 	self assert: self collectedAnnouncements size equals: 1.
 	self assert: self collectedAnnouncements first newClassDefinition equals: aClass
@@ -133,7 +133,7 @@ SlotAnnouncementsTest >> testChangeInSharedVariablesShouldAnnounceClassModified 
 	aClass := self make: [ :builder |
 		builder
 			name: self aClassName;
-			sharedVariablesFromString: 'A B C' ].
+			sharedVariables: #(A B C) ].
 
 	self assert: self collectedAnnouncements size equals: 1.
 	self assert: self collectedAnnouncements first newClassDefinition equals: aClass
@@ -147,8 +147,7 @@ SlotAnnouncementsTest >> testChangeInSuperclassShouldNotAnnounceSubclassModified
 	"Create a class and a subclass"
 	aClass := self make: [ :builder |
 		builder
-			name: self aClassName;
-			slots: #() ].
+			name: self aClassName ].
 
 	anotherClass := self make: [ :builder |
 		builder
