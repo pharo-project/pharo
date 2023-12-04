@@ -13,7 +13,7 @@ Class {
 FLIgnoredVariablesTest >> testAllVariablesIgnored [
 
 	| anObject result aClass |
-	aClass := self classFactory make: [ :aBuilder | aBuilder slotsFromString: 'a b' ].
+	aClass := self classFactory make: [ :aBuilder | aBuilder slots: #(a b) ].
 	self classFactory silentlyCompile: 'fuelIgnoredInstanceVariableNames ^#(a b)' in: aClass class.
 	anObject := aClass new
 		            instVarAt: 1 put: $A;
@@ -30,7 +30,7 @@ FLIgnoredVariablesTest >> testAllVariablesIgnored [
 FLIgnoredVariablesTest >> testIgnoredValueIsNotMaterialized [
 
 	| anObject materialized aClass |
-	aClass := self classFactory make: [ :aBuilder | aBuilder slotsFromString: 'a' ].
+	aClass := self classFactory make: [ :aBuilder | aBuilder slots: #(a) ].
 	self classFactory silentlyCompile: 'fuelIgnoredInstanceVariableNames ^#(a)' in: aClass class.
 	anObject := aClass new
 		            instVarAt: 1 put: #A;
@@ -46,7 +46,7 @@ FLIgnoredVariablesTest >> testIgnoredValueIsNotMaterialized [
 FLIgnoredVariablesTest >> testOneIgnoredVariable [
 
 	| anObject result aClass |
-	aClass := self classFactory make: [ :aBuilder | aBuilder slotsFromString: 'a b c' ].
+	aClass := self classFactory make: [ :aBuilder | aBuilder slots: #(a b c) ].
 	self classFactory silentlyCompile: 'fuelIgnoredInstanceVariableNames ^#(b)' in: aClass class.
 	anObject := aClass new
 		            instVarAt: 1 put: $A;
@@ -65,7 +65,7 @@ FLIgnoredVariablesTest >> testOneIgnoredVariable [
 FLIgnoredVariablesTest >> testTwoIgnoredVariables [
 
 	| anObject result aClass |
-	aClass := self classFactory make: [ :aBuilder | aBuilder slotsFromString: 'a b c' ].
+	aClass := self classFactory make: [ :aBuilder | aBuilder slots: #(a b c) ].
 	self classFactory silentlyCompile: 'fuelIgnoredInstanceVariableNames ^#(a c)' in: aClass class.
 	anObject := aClass new
 		            instVarAt: 1 put: $A;
