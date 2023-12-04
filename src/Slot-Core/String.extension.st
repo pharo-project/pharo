@@ -9,7 +9,7 @@ String >> asClassVariable [
 String >> asClassVariableCollection [
 	"Parse as class variables. Use space, tab and cr as separators
 	Example:
-	  'a b' asClassVariableCollection --> {a => Slot. b => Slot}
+	  'A B' asClassVariableCollection --> {{#a => ClassVariable. #b => ClassVariable}
 	"
 
 	^(self substrings: Character separators) collect: [ :substring | substring asSymbol asClassVariable ]
