@@ -74,7 +74,8 @@ RBExtractMethodTransformation >> applicabilityPreconditions [
 	  & self preconditionNotInCascadedMessage
 	  & self preconditionTemporariesAreNotReadBeforeWritten
 	  & self preconditionOneAssignmentMaximum
-	  & self preconditionAssignmentsNotReadBeforeWrittenANDSubtreeDoesNotContainsReturn
+	  & self preconditionAssignmentsNotReadBeforeWritten
+	  & self preconditionSubtreeDoesNotContainsReturn
 ]
 
 { #category : 'executing' }
@@ -361,19 +362,11 @@ RBExtractMethodTransformation >> newMethodName [
 ]
 
 { #category : 'preconditions' }
-RBExtractMethodTransformation >> preconditionAssignmentsNotReadBeforeWrittenANDSubtreeDoesNotContainsReturn [
+RBExtractMethodTransformation >> preconditionAssignmentsNotReadBeforeWritten [
 
-	^ RBCondition withBlock: [
-.
-		  assignments ifNotEmpty: [
-			  ((RBReadBeforeWrittenTester
-				    isVariable: assignments first
-				    readBeforeWrittenIn: subtree) or: [ subtree containsReturn ])
-				  ifTrue: [
-					  self refactoringError:
-						  ('Cannot extract assignment to <1s> without also extracting all the references.'
-							   expandMacrosWith: assignments asString) ] ].
-		  true ]
+	assignments isEmptyOrNil ifTrue: [ ^ self trueCondition ].
+
+	^ RBVariablesNotReadBeforeWrittenCondition new subtree: subtree; variables: assignments
 ]
 
 { #category : 'preconditions' }
@@ -398,6 +391,14 @@ RBExtractMethodTransformation >> preconditionOneAssignmentMaximum [
 RBExtractMethodTransformation >> preconditionParsableSubtree [
 
 	^ RBParsableSubtreeCondition new subtree: subtree
+]
+
+{ #category : 'preconditions' }
+RBExtractMethodTransformation >> preconditionSubtreeDoesNotContainsReturn [
+
+	assignments isEmptyOrNil ifTrue: [ ^ self trueCondition ].
+
+	^ RBSubtreeDoesNotContainReturnCondition new subtree: subtree
 ]
 
 { #category : 'preconditions' }
