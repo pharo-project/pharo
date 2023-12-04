@@ -32,9 +32,8 @@ ClassDefinitionPrinter displayEmptySlots: true
 Class {
 	#name : 'FluidClassDefinitionPrinter',
 	#superclass : 'ClassDefinitionPrinter',
-	#category : 'Kernel-ClassDefinitionPrinter',
-	#package : 'Kernel',
-	#tag : 'ClassDefinitionPrinter'
+	#category : 'ClassDefinitionPrinters',
+	#package : 'ClassDefinitionPrinters'
 }
 
 { #category : 'definition double dispatch API' }

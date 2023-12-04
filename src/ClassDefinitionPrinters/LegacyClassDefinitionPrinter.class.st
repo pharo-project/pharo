@@ -8,9 +8,8 @@ When the last users have been fixed, we can remove this class
 Class {
 	#name : 'LegacyClassDefinitionPrinter',
 	#superclass : 'ClassDefinitionPrinter',
-	#category : 'Kernel-ClassDefinitionPrinter',
-	#package : 'Kernel',
-	#tag : 'ClassDefinitionPrinter'
+	#category : 'ClassDefinitionPrinters',
+	#package : 'ClassDefinitionPrinters'
 }
 
 { #category : 'public API' }
