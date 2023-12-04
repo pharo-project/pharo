@@ -403,7 +403,7 @@ RBExtractMethodTransformation >> preconditionParsableSubtree [
 { #category : 'preconditions' }
 RBExtractMethodTransformation >> preconditionTemporariesAreNotReadBeforeWritten [
 
-	^ RBTemporariesNotReadBeforeWrittenCondition new subtree: subtree; temporaries: temporaries 
+	^ RBVariablesNotReadBeforeWrittenCondition new subtree: subtree; variables: temporaries 
 ]
 
 { #category : 'transforming' }
