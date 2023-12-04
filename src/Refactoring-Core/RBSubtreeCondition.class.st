@@ -29,5 +29,6 @@ RBSubtreeCondition >> subtree: aRBMethodNode [
 
 { #category : 'displaying' }
 RBSubtreeCondition >> violationMessageOn: aStream [ 
-	^ self subclassResponsibility
+
+	self subclassResponsibility
 ]

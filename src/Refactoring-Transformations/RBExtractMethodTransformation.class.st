@@ -390,11 +390,8 @@ RBExtractMethodTransformation >> preconditionOneAssignmentMaximum [
 	we don't support return of multiple values, instead we notify the user that all references
 	to those temps should be extracted as well."
 
-	^ RBCondition withBlock: [
-		  assignments size > 1 ifTrue: [
-			  self refactoringError:
-				  'Cannot extract two or more assignments to temporaries without also extracting all the references.' ].
-		  true ]
+	^ RBMaxOneAssignmentWithReferencesCondition new
+		  assignments: assignments
 ]
 
 { #category : 'preconditions' }
