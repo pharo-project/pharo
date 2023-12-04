@@ -10,7 +10,7 @@ ContextTest >> testScopeOptimizedBlock [
 	method := Smalltalk compiler
 							  class: Object;
 							  compile:  'test true ifTrue: [ ^ thisContext astScope ]'.
-	astScope := method valueWithReceiver: nil arguments: #().
+	astScope := method valueWithReceiver: nil.
 
 	self assert: astScope class equals: OCOptimizedBlockScope
 ]
@@ -25,7 +25,7 @@ ContextTest >> testSourceNodeOptimizedBlock [
 	method := Smalltalk compiler
 							  class: Object;
 							  compile:  'test 1 to: 1 do: [ :i | ^ thisContext sourceNode ]'.
-	sourceNode := method valueWithReceiver: nil arguments: #().
+	sourceNode := method valueWithReceiver: nil.
 
 	self assert: sourceNode isMethod
 ]

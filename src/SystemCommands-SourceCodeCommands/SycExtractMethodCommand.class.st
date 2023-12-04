@@ -24,7 +24,7 @@ SycExtractMethodCommand class >> canBeExecutedInContext: aSourceCodeContext [
 SycExtractMethodCommand class >> methodEditorShortcutActivation [
 	<classAnnotation>
 
-	^CmdShortcutActivation by: $e meta, $m meta for: ClySourceCodeContext
+	^CmdShortcutActivation by: $e meta, $m meta, $t meta for: ClySourceCodeContext
 ]
 
 { #category : 'converting' }
@@ -33,9 +33,13 @@ SycExtractMethodCommand >> asRefactorings [
 	| selectedInterval refactoring |
 	selectedInterval := selectedTextInterval ifEmpty: [
 		                    sourceNode sourceInterval ].
-	refactoring := RBExtractMethodAndOccurrences
-		               extract: selectedInterval
+
+	refactoring := RBExtractMethodTransformation
+		               extract: (method sourceCode
+				                copyFrom: selectedInterval first
+				                to: selectedInterval last)
 		               from: method selector
+		               to: self getNewSelector selector
 		               in: method origin.
 	self setUpOptionsOf: refactoring.
 	^ { refactoring }
@@ -48,7 +52,26 @@ SycExtractMethodCommand >> defaultMenuIconName [
 
 { #category : 'accessing' }
 SycExtractMethodCommand >> defaultMenuItemName [
+
 	^ 'Extract method'
+]
+
+{ #category : 'converting' }
+SycExtractMethodCommand >> getNewSelector [
+
+	| invalidArgs methodName dialog |
+	methodName := RBMethodName 
+							selector: #fooForNow
+		  					arguments: #().
+	invalidArgs := self computeInvalidArgNamesForSelector: method selector.
+	dialog := SycMethodNameEditorPresenter
+		          openOn: methodName
+		          withInvalidArgs: invalidArgs
+		          canRenameArgs: true
+		          canRemoveArgs: false
+		          canAddArgs: false.
+	dialog cancelled ifTrue: [ CmdCommandAborted signal ].
+	^ methodName
 ]
 
 { #category : 'execution' }
@@ -100,20 +123,11 @@ SycExtractMethodCommand >> setUpOptionToOverrideExistingMethodDuring: aRefactori
 ]
 
 { #category : 'execution' }
-SycExtractMethodCommand >> setUpOptionToUseExistingMethodDuring: aRefactoring [
-
-	aRefactoring setOption: #useExistingMethod toUse:  [ :ref :selector |
-		UIManager default
-			confirm: 'Do you want to use existing method ', selector printString, '?'
-			label: 'Warninig']
-]
-
-{ #category : 'execution' }
 SycExtractMethodCommand >> setUpOptionsOf: refactoring [
 
 	self initializeDefaultOptionsOf: refactoring.
 	self setUpOptionToChangeExtractionClass: refactoring.
-	self setUpOptionToUseExistingMethodDuring: refactoring.
+
 	self setUpOptionToOverrideExistingMethodDuring: refactoring.
 	self setUpOptionToChangeMethodNameDuring: refactoring
 ]

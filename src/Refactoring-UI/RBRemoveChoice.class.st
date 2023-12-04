@@ -9,7 +9,7 @@ Class {
 { #category : 'execution' }
 RBRemoveChoice >> action [
 
-	driver applyRemoveMethodChanges
+	driver applyChanges
 ]
 
 { #category : 'accessing' }

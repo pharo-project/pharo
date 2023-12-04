@@ -86,10 +86,7 @@ Delay class >> initialize [
 
 	self scheduler ifNotNil: [ self scheduler stopTimerEventLoop ].
 	self scheduler: DelaySemaphoreScheduler new.
-	self scheduler startTimerEventLoop.
-	SessionManager default
-		registerSystemClassNamed: self name
-		atPriority: 20
+	self scheduler startTimerEventLoop
 ]
 
 { #category : 'testing' }

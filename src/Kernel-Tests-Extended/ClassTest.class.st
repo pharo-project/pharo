@@ -168,7 +168,7 @@ ClassTest >> testClassVariableEntanglement [
 	firstClass := self class classInstaller make: [ :aBuilder |
 		aBuilder
 			name: firstClassName;
-			sharedVariablesFromString: 'MyVar';
+			sharedVariables: {#MyVar};
 			package: self packageNameForTest ].
 
 	[
@@ -183,7 +183,7 @@ ClassTest >> testClassVariableEntanglement [
 		secondClass := self class classInstaller make: [ :aBuilder |
 			aBuilder
 				name: secondClassName;
-				sharedVariablesFromString: 'MyVar';
+				sharedVariables: {#MyVar};
 				package: self packageNameForTest ].
 
 		[
@@ -537,7 +537,7 @@ ClassTest >> testSubclassInstanceVariableNames [
 	class := self class classInstaller make: [ :aBuilder |
 		       aBuilder
 			       name: #SubclassExample;
-			       slotsFromString: 'x y' ].
+			       slots: #(x y) ].
 
 	self assert: (testEnvironment includesKey: #SubclassExample).
 

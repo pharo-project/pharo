@@ -7,10 +7,10 @@ Class {
 }
 
 { #category : 'execution' }
-RBRemoveAndShowSendersChoice >> action [ 
-	
-	driver applyRemoveMethodChanges.
-	driver browseSenders.
+RBRemoveAndShowSendersChoice >> action [
+
+	driver applyChanges.
+	driver browseSenders
 ]
 
 { #category : 'accessing' }

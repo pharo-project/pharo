@@ -1037,12 +1037,6 @@ Behavior >> isCompact [
 	^false
 ]
 
-{ #category : 'testing' }
-Behavior >> isCompiledMethodClass [
-	"Answer whether the receiver has compiled method instances that mix pointers and bytes."
-	^self instSpec >= 24
-]
-
 { #category : 'testing - method dictionary' }
 Behavior >> isDisabledSelector: selector [
 	<reflection: 'Class structural inspection - Selectors and methods inspection'>
@@ -1195,13 +1189,6 @@ Behavior >> localMethods [
 Behavior >> localSelectors [
 	<reflection: 'Class structural inspection - Selectors and methods inspection'>
 	^ self methodDict keys
-]
-
-{ #category : 'printing' }
-Behavior >> longPrintOn: aStream [
-	"Append to the argument, aStream, the names and values of all of the receiver's instance variables.  But, not useful for a class with a method dictionary."
-
-	aStream nextPutAll: '<<too complex to show>>'; cr
 ]
 
 { #category : 'accessing - method dictionary' }

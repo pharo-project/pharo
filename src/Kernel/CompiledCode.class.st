@@ -52,6 +52,74 @@ CompiledCode class >> basicNew: size [
 ]
 
 { #category : 'instance creation' }
+CompiledCode class >> basicNew: numberOfBytes header: headerWord [
+	"Primitive. Answer an instance of me. The number of literals (and other
+	 information) is specified by the headerWord (see my class comment).
+	 The first argument specifies the number of fields for bytecodes in the
+	 method. Fail if either argument is not a SmallInteger, or if numberOfBytes
+	 is negative, or if memory is low. Once the header of a method is set by
+	 this primitive, it cannot be changed to change the number of literals.
+	 Essential. See Object documentation whatIsAPrimitive."
+
+	<primitive: 79 error: ec>
+	ec == #'insufficient object memory' ifTrue:
+		[^self handleFailingNew: numberOfBytes header: headerWord].
+	^self primitiveFailed
+]
+
+{ #category : 'private' }
+CompiledCode class >> handleFailingFailingNew: numberOfBytes header: headerWord [
+	"This basicNew:header: gets sent after handleFailingBasicNew: has done a full
+	 garbage collection and possibly grown memory.  If this basicNew: fails then the
+	 system really is low on space, so raise the OutOfMemory signal.
+
+	 Primitive. Answer an instance of this class with the number of indexable variables
+	 specified by the argument, headerWord, and the number of bytecodes specified
+	 by numberOfBytes.  Fail if this if the arguments are not Integers, or if numberOfBytes
+	 is negative, or if the receiver is not a CompiledMethod class, or if there is not enough
+	 memory available. Essential. See Object documentation whatIsAPrimitive."
+
+	<primitive: 79>
+	"space must be low."
+	OutOfMemory signal.
+	"retry if user proceeds"
+	^self basicNew: numberOfBytes header: headerWord
+]
+
+{ #category : 'private' }
+CompiledCode class >> handleFailingNew: numberOfBytes header: headerWord [
+	"This basicNew:header: gets sent after basicNew:header: has failed
+	 and allowed a scavenging garbage collection to occur.  The scavenging
+	 collection will have happened as the VM is activating the (failing) basicNew:.
+	 If handleFailingBasicNew: fails then the scavenge failed to reclaim sufficient
+	 space and a global garbage collection is required.  Retry after garbage
+	 collecting and growing memory if necessary.
+
+	 Primitive. Answer an instance of this class with the number of indexable variables
+	 specified by the argument, headerWord, and the number of bytecodes specified
+	 by numberOfBytes.  Fail if this if the arguments are not Integers, or if numberOfBytes
+	 is negative, or if the receiver is not a CompiledMethod class, or if there is not enough
+	 memory available. Essential. See Object documentation whatIsAPrimitive."
+
+	<primitive: 79>
+	| bytesRequested |
+	bytesRequested := ((headerWord bitAnd: 16rFFFF) + 1) * Smalltalk wordSize + numberOfBytes + 16.
+	Smalltalk garbageCollect < bytesRequested ifTrue:
+		[Smalltalk growMemoryByAtLeast: bytesRequested].
+	"retry after global garbage collect and possible grow"
+	^self handleFailingFailingNew: numberOfBytes header: headerWord
+]
+
+{ #category : 'instance creation' }
+CompiledCode class >> newFrom: aCompiledMethod [
+	| inst |
+	inst := super basicNew: aCompiledMethod size.
+	1 to: aCompiledMethod size do: [:index |
+		inst at: index put: (aCompiledMethod at: index)].
+	^ inst
+]
+
+{ #category : 'instance creation' }
 CompiledCode class >> newMethod: numberOfBytes header: headerWord [
 	"Primitive. Answer an instance of me. The number of literals (and other
 	 information) is specified by the headerWord (see my class comment).
@@ -63,7 +131,7 @@ CompiledCode class >> newMethod: numberOfBytes header: headerWord [
 
 	<primitive: 79 error: ec>
 	ec == #'insufficient object memory' ifTrue:
-		[^self handleFailingNewMethod: numberOfBytes header: headerWord].
+		[^self handleFailingNew: numberOfBytes header: headerWord].
 	^self primitiveFailed
 ]
 
@@ -205,6 +273,20 @@ CompiledCode >> clearSignFlag [
 
 	self signFlag ifTrue:
 		[self objectAt: 1 put: self header - SmallInteger minVal]
+]
+
+{ #category : 'copying' }
+CompiledCode >> clone [
+	"Answer a shallow copy of the receiver."
+	<primitive: 148 error: ec>
+	| newObject |
+	ec == #'insufficient object memory' ifFalse:
+		[^self primitiveFailed].
+	"If the primitive fails due to insufficient memory, instantiate via basicNew: to invoke the garbage collector before retrying, and use copyFrom: to copy state."
+	newObject := self class
+		basicNew: self basicSize - self initialPC + 1 + self class trailerSize 
+		header: self header.
+	^newObject copyFrom: self
 ]
 
 { #category : 'accessing' }
@@ -613,22 +695,6 @@ CompiledCode >> localWritesRef: literalAssociation [
 	^(scanner := InstructionStream on: self) scanFor: (self encoderClass bindingWriteScanBlockFor: litIndex using: scanner)
 ]
 
-{ #category : 'printing' }
-CompiledCode >> longPrintOn: aStream [
-	"List of all the byte codes in a method with a short description of each"
-
-	self isQuick ifTrue:
-		[self isReturnSpecial ifTrue:
-			[^ aStream nextPutAll: 'Quick return ' ,
-				(#('self' 'true' 'false' 'nil' '-1' '0' '1' '2') at: self primitive - 255)].
-		^ aStream nextPutAll: 'Quick return field ' , self returnField printString , ' (0-based)'].
-
-	self isPrimitive ifTrue: [
-		self printPrimitiveOn: aStream.
-	].
-	self symbolicBytecodes do: [ :each | each printOn: aStream ] separatedBy: [ aStream cr ]
-]
-
 { #category : 'scanning' }
 CompiledCode >> messages [
 	"Answer a Set of all the message selectors sent by this method."
@@ -959,13 +1025,6 @@ CompiledCode >> stamp [
 { #category : 'debugger support' }
 CompiledCode >> stepIntoQuickMethods [
 	^self propertyAt: #stepIntoQuickMethod ifAbsent: [ false ]
-]
-
-{ #category : 'printing' }
-CompiledCode >> symbolic [
-	"Answer a String that contains a list of all the byte codes in a method with a short description of each."
-
-	^self longPrintString
 ]
 
 { #category : 'printing' }

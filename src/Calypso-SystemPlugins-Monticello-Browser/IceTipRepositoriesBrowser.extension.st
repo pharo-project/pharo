@@ -5,5 +5,5 @@ IceTipRepositoriesBrowser class >> calypsoCommandsWith: presenter forRootGroup: 
 	<extensionCommands>
 
 	aCommandGroup / self selectionCommandGroupName register:
-		ClyBrowseIcebergRepositoryCommand forSpec
+		(ClyBrowseIcebergRepositoryCommand forSpecContext: presenter)
 ]

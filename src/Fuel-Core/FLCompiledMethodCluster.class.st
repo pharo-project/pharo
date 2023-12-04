@@ -52,7 +52,7 @@ FLCompiledMethodCluster >> materializeInstanceWith: aDecoder [
 	bytecodesPlusTrailerSize := aDecoder nextEncodedUint16.
 
 	compiledMethod := CompiledMethod
-		newMethod: bytecodesPlusTrailerSize
+		basicNew: bytecodesPlusTrailerSize
 		header: header.
 
 	compiledMethod initialPC

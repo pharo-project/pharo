@@ -384,11 +384,11 @@ MorphTreeNodeMorph >> drawOn: aCanvas [
 { #category : 'drawing' }
 MorphTreeNodeMorph >> drawToggleOn: aCanvas in: aRectangle [
 
-	| aForm centeringOffset |
-	aForm := self toggleImageForm.
-	centeringOffset := ((aRectangle height - aForm extent y) / 2.0) truncated.
+	| aFormSet centeringOffset |
+	aFormSet := self toggleImageFormSet.
+	centeringOffset := ((aRectangle height - aFormSet extent y) / 2.0) truncated.
 	^aCanvas
-		translucentImage: aForm
+		translucentFormSet: aFormSet
 		at: (aRectangle topLeft translateBy: 0 @ centeringOffset)
 ]
 
@@ -955,10 +955,10 @@ MorphTreeNodeMorph >> toggleExpandedState [
 ]
 
 { #category : 'accessing' }
-MorphTreeNodeMorph >> toggleImageForm [
+MorphTreeNodeMorph >> toggleImageFormSet [
 	^ isExpanded
-			ifTrue: [container expandedFormForMorph: self]
-			ifFalse: [container notExpandedFormForMorph: self]
+			ifTrue: [container expandedFormSetForMorph: self]
+			ifFalse: [container notExpandedFormSetForMorph: self]
 ]
 
 { #category : 'accessing' }

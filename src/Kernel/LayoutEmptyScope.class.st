@@ -54,8 +54,8 @@ LayoutEmptyScope >> hasSlots [
 ]
 
 { #category : 'testing' }
-LayoutEmptyScope >> ifNotEmpty: aBlock [
-	"This scope is empty so we do nothing"
+LayoutEmptyScope >> isEmpty [
+	^ true
 ]
 
 { #category : 'accessing' }

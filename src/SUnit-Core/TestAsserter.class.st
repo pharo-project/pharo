@@ -433,11 +433,11 @@ TestAsserter >> denyCollection: actualCollection includesAny: subcollection [
 
 { #category : 'asserting' }
 TestAsserter >> denyEmpty: aCollection [
-	"I raise an AssertionFailure if the giving collection is empty. I also provide a specialized message in case I failed"
+	"I raise an AssertionFailure if the giving collection is empty. I also provide a specialized message in case I failed.
+	
+	Not using #isNotEmpty like this objects as parameter can only implement #isEmpty and not both messages."
 
-	^ self
-		  assert: aCollection isNotEmpty
-		  description: aCollection asString , ' should not have been empty'
+	^ self assert: aCollection isEmpty not description: aCollection asString , ' should not have been empty'
 ]
 
 { #category : 'asserting' }

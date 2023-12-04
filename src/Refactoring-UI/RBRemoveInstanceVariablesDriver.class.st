@@ -14,9 +14,14 @@ Class {
 }
 
 { #category : 'execution' }
-RBRemoveInstanceVariablesDriver >> applyChanges [
+RBRemoveInstanceVariablesDriver >> breakingChoices [
 
-	self openPreviewWithChanges: refactoring privateTransform
+	| items |
+	items := OrderedCollection new.
+	items add: (RBBrowseReferencedInstanceVariableChoice new driver: self; yourself).
+	items add: (RBRemoveInstanceVariableChoice new driver: self; yourself).
+	items add: (RBRemoveInstanceVariableAndShowChoice new driver: self;  yourself).
+	^ items
 ]
 
 { #category : 'execution' }
@@ -25,6 +30,12 @@ RBRemoveInstanceVariablesDriver >> browseInstanceVariableReferences [
 	StMessageBrowserPresenter
 		browse: refactoring violators
 		
+]
+
+{ #category : 'execution' }
+RBRemoveInstanceVariablesDriver >> changes [
+
+	^ refactoring privateTransform; changes
 ]
 
 { #category : 'resources' }
@@ -39,22 +50,21 @@ RBRemoveInstanceVariablesDriver >> configureRefactoring [
 ]
 
 { #category : 'execution' }
+RBRemoveInstanceVariablesDriver >> defaultSelectDialog [
+
+	^ SpSelectDialog new
+		  title: 'There are references to variables!';
+		  items: self breakingChoices;
+		  display: [ :each | each description ];
+		  displayIcon: [ :each | self iconNamed: each systemIconName ];
+		  openModal
+]
+
+{ #category : 'execution' }
 RBRemoveInstanceVariablesDriver >> handleBreakingChanges [
 
-	| select items |
-	items := OrderedCollection new.
-	items add: (RBBrowseReferencedInstanceVariableChoice new
-						driver: self ; yourself).
-	items add: (RBRemoveInstanceVariableChoice new driver: self; yourself).
-	items add: (RBRemoveInstanceVariableAndShowChoice new driver: self; yourself).
-	
-	select := SpSelectDialog new
-		          title: 'There are references to variables!';
-		          items: items;
-		          display: [ :each | each description ];
-		          displayIcon: [ :each |  self iconNamed: each systemIconName ];
-		          openModal.
-
+	| select |
+	select := self selectDialog.
 	select ifNotNil: [ select action ]
 ]
 
@@ -78,4 +88,11 @@ RBRemoveInstanceVariablesDriver >> scopes: refactoringScopes variables: aCollect
 	model := self refactoringScopeOn: scopes first.
 	variables := aCollection.
 	class := aClass
+]
+
+{ #category : 'execution' }
+RBRemoveInstanceVariablesDriver >> selectDialog [
+	
+	^ selectDialog ifNil: [ selectDialog := self defaultSelectDialog ].
+	
 ]
