@@ -159,7 +159,7 @@ ClyMainItemCellMorph >> collapsedButton [
 		target: item;
 		actionSelector: #expand;
 		arguments: {};
-		labelGraphic: self theme treeUnexpandedForm;
+		labelFormSet: self theme treeUnexpandedFormSet;
 		color: Color transparent;
 		helpText: 'Expand Item';
 		borderWidth: 0
@@ -212,7 +212,7 @@ ClyMainItemCellMorph >> expandedButton [
 		target: item;
 		actionSelector: #collapse;
 		arguments: {};
-		labelGraphic: self theme treeExpandedForm;
+		labelFormSet: self theme treeExpandedFormSet;
 		color: Color transparent;
 		helpText: 'Unexpand Item';
 		borderWidth: 0
