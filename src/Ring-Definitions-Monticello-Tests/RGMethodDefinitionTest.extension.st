@@ -12,7 +12,7 @@ RGMethodDefinitionTest >> testAsFullMethodDefinition [
 	self assert: rgMethod parent notNil.
 	self assert: rgMethod parentName equals: #Class.
 	self assert: rgMethod parent methods size equals: Class methods size.
-	self assert: rgMethod parent package name equals: #Kernel.
+	self assert: rgMethod parent package name equals: #'Kernel-CodeModel'.
 	self assert: rgMethod package notNil.
 	self assert: rgMethod package name equals: #'Ring-Definitions-Core'.
 
@@ -21,7 +21,7 @@ RGMethodDefinitionTest >> testAsFullMethodDefinition [
 	self assert: rgMethod parent notNil.
 	self assert: rgMethod parentName equals: #Class.
 	self assert: rgMethod parent methods size equals: Class methods size.
-	self assert: rgMethod parent package name equals: #Kernel.
+	self assert: rgMethod parent package name equals: #'Kernel-CodeModel'.
 	self assert: rgMethod package notNil.
-	self assert: rgMethod package name equals: #Kernel
+	self assert: rgMethod package name equals: #'Kernel-CodeModel'
 ]

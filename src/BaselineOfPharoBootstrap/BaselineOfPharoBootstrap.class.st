@@ -92,6 +92,7 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		spec package: 'Hermes-Extensions'.
 
 		spec package: 'Kernel'.
+		spec package: 'Kernel-CodeModel'.
 		spec package: 'Kernel-BytecodeEncoders'.
 		spec package: 'Kernel-Chronology-Extras'.
 		spec package: 'NumberParser'.
@@ -160,6 +161,7 @@ BaselineOfPharoBootstrap >> baseline: spec [
 			'FileSystem-Path'.
 			'Hermes'.
 			'Kernel'.
+			'Kernel-CodeModel'.
 			'Kernel-BytecodeEncoders'.
 			'Transcript-NonInteractive'.
 			'PharoBootstrap-Initialization'.
