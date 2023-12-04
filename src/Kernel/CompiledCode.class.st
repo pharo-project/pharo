@@ -48,7 +48,7 @@ CompiledCode class >> basicNew [
 { #category : 'instance creation' }
 CompiledCode class >> basicNew: size [
 
-	self error: 'CompiledMethods and CompiledBlocks and CompiledBlocks may only be created with basicNew:header:'
+	self error: 'CompiledMethods and CompiledBlocks may only be created with basicNew:header:'
 ]
 
 { #category : 'instance creation' }
