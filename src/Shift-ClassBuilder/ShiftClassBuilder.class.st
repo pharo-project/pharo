@@ -583,13 +583,9 @@ ShiftClassBuilder >> sharedVariables: aCollection [
 ]
 
 { #category : 'accessing' }
-ShiftClassBuilder >> sharedVariablesFromString: aStringOrArray [
-	layoutDefinition sharedVariables: (aStringOrArray isString
-        ifTrue: [ (aStringOrArray substrings: ' ') collect: [ :x | x asSymbol => ClassVariable ] ]
-        ifFalse: [ aStringOrArray collect: [ :x |
-                x isSymbol
-                    ifTrue: [ x => ClassVariable ]
-                    ifFalse: [ self error: 'Shared variables can only be String or an array of Symbols' ] ] ])
+ShiftClassBuilder >> sharedVariablesFromString: aString [
+	"Note: this method should not be used outside of old style class definitions"
+	layoutDefinition sharedVariables: aString asClassVariableCollection
 ]
 
 { #category : 'accessing' }
@@ -605,6 +601,7 @@ ShiftClassBuilder >> slots: aCollection [
 
 { #category : 'accessing' }
 ShiftClassBuilder >> slotsFromString: aString [
+	"Note: this method should not be used outside of old style class definitions"
 	self slots: aString asSlotCollection
 ]
 

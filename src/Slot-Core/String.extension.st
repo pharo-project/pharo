@@ -6,6 +6,16 @@ String >> asClassVariable [
 ]
 
 { #category : '*Slot-Core' }
+String >> asClassVariableCollection [
+	"Parse as class variables. Use space, tab and cr as separators
+	Example:
+	  'a b' asClassVariableCollection --> {a => Slot. b => Slot}
+	"
+
+	^(self substrings: Character separators) collect: [ :substring | substring asSymbol asClassVariable ]
+]
+
+{ #category : '*Slot-Core' }
 String >> asSlot [
 	^ InstanceVariableSlot named: self
 ]
