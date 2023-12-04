@@ -123,7 +123,7 @@ ShiftClassInstaller >> fillFor: aClassOrTrait [
 { #category : 'building' }
 ShiftClassInstaller >> fixSlotScope: newClass [
 	newClass superclass ifNil: [ ^ self ].
-	(newClass classLayout slotScope isKindOf: LayoutEmptyScope) ifTrue: [ ^ self ].
+	newClass classLayout slotScope ifEmpty: [ ^ self ].
 
 	newClass superclass classLayout slotScope == newClass classLayout slotScope parentScope
 		ifFalse: [ newClass classLayout slotScope parentScope: newClass superclass classLayout slotScope ].

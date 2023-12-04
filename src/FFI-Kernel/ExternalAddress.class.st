@@ -194,23 +194,18 @@ ExternalAddress >> fromCString [
 ]
 
 { #category : 'converting' }
-ExternalAddress >> fromInteger: address [
-	"set my handle to point at address."
-	"Do we really need this? bf 2/21/2001 23:48"
+ExternalAddress >> fromInteger: anInteger [
+	"Update me with the received address, which is an integer.
+	Warning: The implementation assumes the platform is little-endian."
 
-	| sz pointer |
-	sz := self size.
-	pointer := ByteArray new: sz.
-	pointer integerAt: 1 put: address size: sz signed: false.
-	self basicAt: 1 put: (pointer byteAt: 1);
-		basicAt: 2 put: (pointer byteAt: 2);
-		basicAt: 3 put: (pointer byteAt: 3);
-		basicAt: 4 put: (pointer byteAt: 4).
-	sz = 8 ifTrue:
-		[self basicAt: 5 put: (pointer byteAt: 5);
-			basicAt: 6 put: (pointer byteAt: 6);
-			basicAt: 7 put: (pointer byteAt: 7);
-			basicAt: 8 put: (pointer byteAt: 8)]
+	| tmp |
+	tmp := anInteger.
+	"Set each byte except last"
+	1 to: self size - 1 do: [ :i |
+		self basicAt: i put: (tmp bitAnd: 16rff).
+		tmp := tmp bitShift: -8 ].
+	"Last byte doesn't need any additional bit operation"
+	self basicAt: self size put: tmp
 ]
 
 { #category : 'accessing' }

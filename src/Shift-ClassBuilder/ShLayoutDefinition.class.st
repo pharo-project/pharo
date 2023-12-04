@@ -12,8 +12,9 @@ Class {
 		'sharedVariables',
 		'builder'
 	],
-	#category : 'Shift-ClassBuilder',
-	#package : 'Shift-ClassBuilder'
+	#category : 'Shift-ClassBuilder-Builder',
+	#package : 'Shift-ClassBuilder',
+	#tag : 'Builder'
 }
 
 { #category : 'accessing' }
@@ -116,11 +117,6 @@ ShLayoutDefinition >> sharedVariables [
 { #category : 'accessing' }
 ShLayoutDefinition >> sharedVariables: anObject [
 	sharedVariables := anObject
-]
-
-{ #category : 'accessing' }
-ShLayoutDefinition >> sharedVariablesString [
-	^ (sharedVariables collect:[:e | e key]) joinUsing: ' '
 ]
 
 { #category : 'accessing' }

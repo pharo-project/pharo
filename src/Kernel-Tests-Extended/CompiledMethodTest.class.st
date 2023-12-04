@@ -330,6 +330,22 @@ CompiledMethodTest >> testBytecode [
 	self assertCollection: (Object>>#halt) bytecodes equals: expectedResult
 ]
 
+{ #category : 'tests - copying' }
+CompiledMethodTest >> testClone [
+	<pragma: #pragma> "for testing"
+	| method copy |
+	method := thisContext method.
+	self assert: method pragmas notEmpty.
+	copy := method clone.
+	self assert: (method equivalentTo: copy).
+	self assert: method header equals: copy header.
+	self assert: method equals: copy.
+	self assert: method ~~ copy.
+	"this is a shallow copy"
+	self deny: copy penultimateLiteral method identicalTo: copy.
+	copy pragmas do: [ :p | self deny: p method identicalTo: copy ]
+]
+
 { #category : 'tests - accessing' }
 CompiledMethodTest >> testComments [
 	"I am the first comment to be found in this test"

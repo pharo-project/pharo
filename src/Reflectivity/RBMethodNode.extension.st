@@ -23,7 +23,7 @@ RBMethodNode >> metaLinkOptionsFromClassAndMethod [
 		ifPresent: [ :method |
 			options
 				parseOptions:
-					((method valueWithReceiver: nil arguments: #()) asDictionary
+					((method valueWithReceiver: nil) asDictionary
 						at: self selector
 						ifAbsent: [ #() ]) ].
 	"set meta link options defined per method"

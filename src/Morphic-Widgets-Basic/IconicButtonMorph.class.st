@@ -121,6 +121,24 @@ IconicButtonMorph >> interactSelector [
 ]
 
 { #category : 'accessing' }
+IconicButtonMorph >> labelFormSet [
+
+	^ graphicalMorph formSet
+]
+
+{ #category : 'accessing' }
+IconicButtonMorph >> labelFormSet: aFormSet [
+	"Changed to look for any image morph rather than just a sketch."
+
+	graphicalMorph ifNotNil: [graphicalMorph delete].
+	graphicalMorph := ImageMorph new formSet: aFormSet.
+	self extent: graphicalMorph extent + (self borderWidth + self extraBorder).
+	graphicalMorph position: self center - (graphicalMorph extent // 2).
+	self addMorph: graphicalMorph.
+	graphicalMorph lock
+]
+
+{ #category : 'accessing' }
 IconicButtonMorph >> labelFromString: aString [
 	"Make an iconic label from aString"
 
@@ -130,19 +148,13 @@ IconicButtonMorph >> labelFromString: aString [
 { #category : 'accessing' }
 IconicButtonMorph >> labelGraphic [
 
-	^ graphicalMorph form
+	^ self labelFormSet asForm
 ]
 
 { #category : 'accessing' }
 IconicButtonMorph >> labelGraphic: aForm [
-	"Changed to look for any image morph rather than just a sketch."
 
-	graphicalMorph ifNotNil: [graphicalMorph delete].
-	graphicalMorph := ImageMorph new form: aForm.
-	self extent: graphicalMorph extent + (self borderWidth + self extraBorder).
-	graphicalMorph position: self center - (graphicalMorph extent // 2).
-	self addMorph: graphicalMorph.
-	graphicalMorph lock
+	^ self labelFormSet: (FormSet form: aForm)
 ]
 
 { #category : 'mouse events' }

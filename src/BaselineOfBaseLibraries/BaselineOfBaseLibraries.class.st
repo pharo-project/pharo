@@ -26,9 +26,6 @@ BaselineOfBaseLibraries >> baseline: spec [
 				loads: 'Core';
 				className: 'BaselineOfSUnit';
 				repository: repository ].
-		spec
-			baseline: 'ParametrizedTests'
-			with: [ spec repository: repository ].
 
 		spec baseline: 'Slot' with: [
 			spec

@@ -159,12 +159,6 @@ Metaclass >> commentStamp: changeStamp [
 	self instanceSide commentStamp: changeStamp
 ]
 
-{ #category : 'fileout' }
-Metaclass >> definitionStringFor: aConfiguredPrinter [
-
-	^ aConfiguredPrinter metaclassDefinitionString
-]
-
 { #category : 'accessing' }
 Metaclass >> environment [
 

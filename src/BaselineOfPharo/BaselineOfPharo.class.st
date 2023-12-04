@@ -33,11 +33,8 @@ BaselineOfPharo class >> beautifulCommentsRepository [
 BaselineOfPharo class >> declareExternalProjects [
 
 	^ (Pragma allNamed: #externalProject in: self class)
-		collect: [ :each | 
-			each method 
-				valueWithReceiver: self 
-				arguments: #() ]
-		as: Array
+			collect: [ :each | each method valueWithReceiver: self ]
+			as: Array
 ]
 
 { #category : 'accessing - external projects' }

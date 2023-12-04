@@ -7,29 +7,64 @@ Class {
 }
 
 { #category : 'tests' }
-FLEphemeronTest >> testWeakKeyAssociationMourningAfterMaterialization [
-	"This tests serialization / materialization of WeakKeyAssociation, which is an ephemeron class.
-	When the key is not strongly referenced, which is the case here, the garbage collector
-	will send #mourn to the object to finalize it. This will cause the ephemeron to remove itself
-	from its container."
+FLEphemeronTest >> testEphemeronSupport [
+	| unsupported |
+	unsupported := { FinalizationRegistryEntry }.
+	Object allSubclasses
+		select: [ :class |
+			class classLayout class == EphemeronLayout and: [
+				(unsupported includes: class) not ] ]
+		thenDo: [ :class |
+			self assert: (class includesSelector: #fuelCheckEphemeronSupport) ]
+]
 
-	| dictionary ephemeron materializedDictionary materializedAssociation |
-	dictionary := Dictionary new.
-	ephemeron := WeakKeyAssociation new
-		key: Object new;
-		value: 'value';
-		container: dictionary.
-	dictionary add: ephemeron.
+{ #category : 'tests' }
+FLEphemeronTest >> testSupportForFinalizationRegistryEntry [
+	| ephemeron |
+	ephemeron := FinalizationRegistryEntry new.
+	self
+		should: [ ephemeron fuelCheckEphemeronSupport ]
+		raise: FLNotSerializable
+		whoseDescriptionIncludes: 'Unsupported ephemeron implementation'
+		description: 'FinalizationRegistryEntry serialization is not supported'
+]
 
-	materializedDictionary := self resultOfSerializeAndMaterialize: dictionary.
-	self deny: materializedDictionary isEmpty.
-	self assert: materializedDictionary size equals: 1.
-	materializedAssociation := materializedDictionary associations first.
-	self assert: materializedAssociation key isNil.
-	self assert: materializedAssociation value equals: 'value'.
+{ #category : 'tests' }
+FLEphemeronTest >> testSupportForWeakKeyAssociation [
+	| ephemeron errorString |
+	ephemeron := WeakKeyAssociation new.
+	errorString := 'Unsupported use of ephemeron'.
+	self
+		should: [ ephemeron fuelCheckEphemeronSupport ]
+		raise: FLNotSerializable
+		whoseDescriptionIncludes: errorString
+		description: 'WeakKeyAssociation with nil container is not supported'.
+	
+	ephemeron
+		key: 'key'
+		value: 'value'.
+	self
+		should: [ ephemeron fuelCheckEphemeronSupport ]
+		raise: FLNotSerializable
+		whoseDescriptionIncludes: errorString
+		description: 'WeakKeyAssociation with nil container is not supported'.
 		
-	Smalltalk garbageCollect.
-	self deny: materializedDictionary isEmpty
+	ephemeron container: Set new.
+	self
+		should: [ ephemeron fuelCheckEphemeronSupport ]
+		raise: FLNotSerializable
+		whoseDescriptionIncludes: errorString
+		description: 'WeakKeyAssociation is only supported with dictionary containers'.
+		
+	ephemeron container: Dictionary new.
+	self
+		shouldnt: [ ephemeron fuelCheckEphemeronSupport ]
+		raise: FLNotSerializable.
+		
+	ephemeron container: WeakKeyDictionary new.
+	self
+		shouldnt: [ ephemeron fuelCheckEphemeronSupport ]
+		raise: FLNotSerializable
 ]
 
 { #category : 'tests' }

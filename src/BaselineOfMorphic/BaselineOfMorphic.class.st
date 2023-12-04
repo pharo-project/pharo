@@ -307,6 +307,7 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 	UIManager default: MorphicUIManager new.
 	UIManager default uiProcess resume.
 	PharoLightTheme beCurrent.
+	ScalingCanvas initialize.
 	self cleanUpAfterMorphicInitialization.
 
 	GraphicFontSettings setFontsToStyleNamed: #small.

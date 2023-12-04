@@ -16,7 +16,8 @@ Class {
 		'model',
 		'scopes',
 		'refactoring',
-		'previewPresenterClass'
+		'previewPresenterClass',
+		'selectDialog'
 	],
 	#category : 'Refactoring-UI-Drivers',
 	#package : 'Refactoring-UI',
@@ -51,10 +52,23 @@ RBInteractionDriver >> changes [
 
 ]
 
+{ #category : 'configuration' }
+RBInteractionDriver >> defaultSelectDialog [
+	"We do not use a subclassResponsibility because all the drivers do not have to."
+	
+	^ self
+	
+]
+
 { #category : 'execution' }
 RBInteractionDriver >> furtherActionFor: aReport [
 	
 	aReport browse
+]
+
+{ #category : 'accessing' }
+RBInteractionDriver >> model: aRBBrowserEnvironment [ 
+	model := aRBBrowserEnvironment
 ]
 
 { #category : 'execution' }
@@ -99,4 +113,18 @@ RBInteractionDriver >> refactoringScopeOn: aScope [
 RBInteractionDriver >> runRefactoring [
 
 	self subclassResponsibility
+]
+
+{ #category : 'configuration' }
+RBInteractionDriver >> selectDialog [
+	
+	^ selectDialog ifNil: [ selectDialog := self defaultSelectDialog ].
+	
+]
+
+{ #category : 'configuration' }
+RBInteractionDriver >> selectDialog: aDialog [
+	
+	selectDialog := aDialog 
+	
 ]
