@@ -4,8 +4,9 @@ This class contains tests for `FluidClassSideClassBuilder`
 Class {
 	#name : 'ShiftClassSideClassBuilderTest',
 	#superclass : 'ShiftClassBuilderAbstractTest',
-	#category : 'Shift-ClassBuilder-Tests',
-	#package : 'Shift-ClassBuilder-Tests'
+	#category : 'Shift-ClassBuilder-Tests-Base',
+	#package : 'Shift-ClassBuilder-Tests',
+	#tag : 'Base'
 }
 
 { #category : 'running' }

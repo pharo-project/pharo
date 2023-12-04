@@ -69,6 +69,15 @@ RBRenameInstanceVariableRefactoring >> addNewAccessors [
 		createSetterAccessor
 ]
 
+{ #category : 'preconditions' }
+RBRenameInstanceVariableRefactoring >> applicabilityPreconditions [
+
+	^ {
+		  (RBIsValidInstanceVariableName name: newName).
+		  (RBNameIsGlobalCondition new model: model className: newName) not.
+		  (RBIsVariableNotDefinedInHierarchy name: newName class: class) }
+]
+
 { #category : 'refactoring' }
 RBRenameInstanceVariableRefactoring >> browsedEnvironment [
 	^ browsedEnvironment ifNil: [ browsedEnvironment := RBBrowserEnvironment new ]

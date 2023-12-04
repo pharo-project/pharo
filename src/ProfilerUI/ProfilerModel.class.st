@@ -162,7 +162,7 @@ ProfilerModel >> profileCode: someCode notifying: requestor [
 		                  isScripting: true;
 		                  failBlock: [ ^ self ];
 		                  compile.
-	compiledMethod valueWithReceiver: self arguments: #(  )
+	compiledMethod valueWithReceiver: self
 ]
 
 { #category : 'accessing' }

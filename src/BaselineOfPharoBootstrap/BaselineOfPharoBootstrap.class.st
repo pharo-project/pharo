@@ -90,7 +90,6 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		spec package: 'Hermes'.
 		spec package: 'Hermes-Extensions'.
 
-		spec package: 'Jobs'.
 		spec package: 'Kernel'.
 		spec package: 'Kernel-BytecodeEncoders'.
 		spec package: 'Kernel-Chronology-Extras'.
@@ -106,7 +105,6 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		spec package: 'PharoBootstrap-Initialization'.
 		spec package: 'Random-Core'.
 		spec package: 'ReflectionMirrors-Primitives'.
-		spec package: 'Shift-Changes'.
 		spec package: 'Shift-ClassBuilder'.
 		spec package: 'Shift-ClassInstaller'.
 		spec package: 'Slot-Core'.
@@ -164,7 +162,6 @@ BaselineOfPharoBootstrap >> baseline: spec [
 			'Kernel-BytecodeEncoders'.
 			'Transcript-NonInteractive'.
 			'PharoBootstrap-Initialization'.
-			'Shift-Changes'.
 			'Shift-ClassBuilder'.
 			'Shift-ClassInstaller'.
 			'Slot-Core'.
@@ -201,7 +198,6 @@ BaselineOfPharoBootstrap >> baseline: spec [
 			'Collections-Atomic'.
 			'CodeImport'.
 			'CodeImportCommandLineHandlers'.
-			'Jobs'.
 			'System-SourcesCondenser'.
 			'Debugging-Utils'.
 			'OpalCompiler-Core'}.
