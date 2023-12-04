@@ -224,7 +224,7 @@ FluidClassDefinitionPrinterTest >> testMetaclass [
 	self assert: (self forClass: Metaclass) equals: 'ClassDescription << #Metaclass
 	slots: { #thisClass };
 	tag: ''Classes'';
-	package: ''Kernel'''
+	package: ''Kernel-CodeModel'''
 ]
 
 { #category : 'tests - metaclasses' }

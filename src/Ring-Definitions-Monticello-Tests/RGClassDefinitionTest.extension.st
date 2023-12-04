@@ -8,7 +8,7 @@ RGClassDefinitionTest >> testAsFullClassDefinition [
 	self assertEmpty: rgClass methods.
 	self assert: rgClass superclass isNil.
 	self assertEmpty: rgClass subclasses.
-	self assert: rgClass package name equals: #Kernel.
+	self assert: rgClass package name equals: #'Kernel-CodeModel'.
 
 	rgClass := Class asFullRingDefinition.
 	self denyEmpty: rgClass methods.
@@ -18,12 +18,12 @@ RGClassDefinitionTest >> testAsFullClassDefinition [
 	self denyEmpty: rgClass subclasses.
 	self assert: rgClass package notNil.
 	self assert: rgClass package equals: rgClass instanceSide package.
-	self assert: rgClass package name equals: #Kernel.
+	self assert: rgClass package name equals: #'Kernel-CodeModel'.
 	self assert: rgClass packageTag equals: #Classes.
 	self denyEmpty: rgClass extensionMethods.
 
 	self assert: rgClass superclass superclass isNil.
-	self assert: rgClass superclass package name equals: #Kernel.
+	self assert: rgClass superclass package name equals: #'Kernel-CodeModel'.
 	self assert: rgClass subclasses first package name equals: #Kernel.
 
 	rgClass := RGClassDefinition classSide asFullRingDefinition.
