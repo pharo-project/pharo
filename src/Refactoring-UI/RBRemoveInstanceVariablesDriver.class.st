@@ -6,8 +6,7 @@ Class {
 	#superclass : 'RBInteractionDriver',
 	#instVars : [
 		'class',
-		'variables',
-		'selectDialog'
+		'variables'
 	],
 	#category : 'Refactoring-UI-Drivers',
 	#package : 'Refactoring-UI',
@@ -36,7 +35,7 @@ RBRemoveInstanceVariablesDriver >> browseInstanceVariableReferences [
 { #category : 'execution' }
 RBRemoveInstanceVariablesDriver >> changes [
 
-	^ refactoring privateTransform
+	^ refactoring privateTransform; changes
 ]
 
 { #category : 'resources' }
@@ -95,12 +94,5 @@ RBRemoveInstanceVariablesDriver >> scopes: refactoringScopes variables: aCollect
 RBRemoveInstanceVariablesDriver >> selectDialog [
 	
 	^ selectDialog ifNil: [ selectDialog := self defaultSelectDialog ].
-	
-]
-
-{ #category : 'execution' }
-RBRemoveInstanceVariablesDriver >> selectDialog: aDialog [
-	
-	selectDialog := aDialog 
 	
 ]

@@ -17,9 +17,10 @@ Class {
 }
 
 { #category : 'execution' }
-RBRenameInstanceVariableDriver >> applyChanges [ 
-	refactoring privateTransform.
-	refactoring performChanges
+RBRenameInstanceVariableDriver >> changes [
+
+	^ refactoring privateTransform; changes
+	
 ]
 
 { #category : 'execution' }
