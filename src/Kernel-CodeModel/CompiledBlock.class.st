@@ -234,3 +234,8 @@ CompiledBlock >> stepIntoQuickMethods [
 CompiledBlock >> stepIntoQuickMethods: aBoolean [
 	^self method stepIntoQuickMethods: aBoolean
 ]
+
+{ #category : 'constants' }
+CompiledBlock >> trailerSize [
+	^ 0
+]

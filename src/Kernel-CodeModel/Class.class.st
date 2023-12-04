@@ -561,12 +561,6 @@ Class >> definesClassVariableNamed: aString [
 	^ self classVarNames includes: aString
 ]
 
-{ #category : 'fileout' }
-Class >> definitionStringFor: aConfiguredPrinter [
-
-	^ aConfiguredPrinter classDefinitionString
-]
-
 { #category : 'deprecation' }
 Class >> deprecationRefactorings [
 

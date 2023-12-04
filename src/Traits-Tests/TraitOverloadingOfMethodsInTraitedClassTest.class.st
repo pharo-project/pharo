@@ -8,7 +8,7 @@ Class {
 { #category : 'tests' }
 TraitOverloadingOfMethodsInTraitedClassTest >> createT1 [
 	| t1 |
-	t1 := self newTrait: #T1 with: '' asSlotCollection.
+	t1 := self newTrait: #T1 with: #().
 	t1 classTrait
 		compile:
 			'isTrueForUsersOfTheTraitForT2OverloadingOfMethodsInTraitedClassTest
@@ -32,7 +32,7 @@ TraitOverloadingOfMethodsInTraitedClassTest >> createT1 [
 
 { #category : 'tests' }
 TraitOverloadingOfMethodsInTraitedClassTest >> createT2 [
-	^ self newTrait: #T2 with: '' asSlotCollection
+	^ self newTrait: #T2 with: #()
 ]
 
 { #category : 'running' }

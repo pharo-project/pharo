@@ -19,5 +19,4 @@ PackageOrganizer >> basicBootstrapInitialize [
 				behavior classSide } do: [ :aBehavior |
 				aBehavior extensionProtocols do: [ :protocol |
 					(self ensurePackageMatching: protocol name allButFirst trimBoth) importProtocol: protocol forClass: aBehavior ] ] ]
-		displayingProgress: 'Importing extensions'
 ]

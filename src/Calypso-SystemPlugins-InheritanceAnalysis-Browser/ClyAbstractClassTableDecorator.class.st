@@ -20,7 +20,8 @@ ClyAbstractClassTableDecorator class >> decorateTableCell: anItemCellMorph of: a
 
 	nameMorph := anItemCellMorph label.
 	nameMorph emphasis: TextEmphasis italic emphasisCode.
-	nameMorph color: (nameMorph color contrastingColorAdjustment) contrastingColorAdjustment
+	nameMorph color: (nameMorph color contrastingColorAdjustment) contrastingColorAdjustment.
+	super decorateTableCell: anItemCellMorph of: aDataSourceItem.
 ]
 
 { #category : 'testing' }

@@ -98,8 +98,17 @@ AbstractLayoutScope >> hash [
 ]
 
 { #category : 'testing' }
+AbstractLayoutScope >> ifEmpty: aBlock [
+	^ self isEmpty
+		  ifTrue: [ aBlock value ]
+		  ifFalse: [ self ]
+]
+
+{ #category : 'testing' }
 AbstractLayoutScope >> ifNotEmpty: aBlock [
-	self subclassResponsibility
+	^ self isEmpty
+		ifTrue: [ self ]
+		ifFalse: [ aBlock cull: self ]
 ]
 
 { #category : 'enumerating' }
@@ -120,6 +129,11 @@ AbstractLayoutScope >> indexOf: anElement ifAbsent: exceptionBlock [
 		[:index |
 		(self at: index) = anElement ifTrue: [^ index]].
 	^ exceptionBlock value
+]
+
+{ #category : 'testing' }
+AbstractLayoutScope >> isEmpty [
+	self subclassResponsibility
 ]
 
 { #category : 'accessing' }

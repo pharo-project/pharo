@@ -385,35 +385,6 @@ ClassDescription >> definesSlotNamed: aString [
 	^ self slotNames includes: aString
 ]
 
-{ #category : 'file in/out' }
-ClassDescription >> definition [
-	"Answer a String that defines the receiver."
-	self
-		deprecated: #definition
-		transformWith: '`@receiver definition' -> '`@receiver definitionString'.
-	^ self definitionString
-]
-
-{ #category : 'fileout' }
-ClassDescription >> definitionPrinter [
-	"Return a configurated printer associated with the current class definition format."
-
-	^ ClassDefinitionPrinter for: self
-]
-
-{ #category : 'fileout' }
-ClassDescription >> definitionString [
-	"Return the string of the class definition, each of my subclass may tell the printer how to printer it. A kind of double dispatch since we have multiple printers and multiple entities to be printed."
-
-	^ self definitionPrinter definitionString
-]
-
-{ #category : 'fileout' }
-ClassDescription >> definitionStringFor: aConfiguredPrinter [
-
-	^ self subclassResponsibility
-]
-
 { #category : 'dependencies' }
 ClassDescription >> dependentClasses [
 	"Return the list of classes used myself"
@@ -477,19 +448,6 @@ ClassDescription >> ensureProtocol: aProtocol [
 	aProtocol ifNil: [ ^ self ensureProtocol: Protocol unclassified ].
 
 	^ self addProtocol: aProtocol
-]
-
-{ #category : 'fileout' }
-ClassDescription >> expandedDefinitionString [
-	"Return the string of the class definition, each of my subclass may tell the printer how to printer it. A kind of double dispatch since we have multiple printers and multiple entities to be printed."
-
-	^ self expandedDefinitionStringFor: (self definitionPrinter for: self)
-]
-
-{ #category : 'fileout' }
-ClassDescription >> expandedDefinitionStringFor: aPrinter [
-
-	^ self subclassResponsibility
 ]
 
 { #category : 'accessing - packages' }
@@ -830,22 +788,6 @@ ClassDescription >> obsolete [
 	"Make the receiver obsolete."
 	self superclass removeSubclass: self.
 	super obsolete
-]
-
-{ #category : 'file in/out' }
-ClassDescription >> oldDefinition [
-
-	^ ClassDefinitionPrinter legacy
-		for: self;
-		definitionString
-]
-
-{ #category : 'file in/out' }
-ClassDescription >> oldPharoDefinition [
-
-	^ ClassDefinitionPrinter oldPharo
-		for: self;
-		definitionString
 ]
 
 { #category : 'accessing' }

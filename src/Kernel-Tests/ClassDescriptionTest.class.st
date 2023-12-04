@@ -27,7 +27,6 @@ ClassDescriptionTest >> compilationTestPackageName [
 ClassDescriptionTest >> createTestClass [
 
 	^ ((Object << #TemporaryMockClass)
-		   slots: {  };
 		   package: self compilationTestPackageName) build
 ]
 
@@ -192,7 +191,6 @@ ClassDescriptionTest >> testDeprecatedAliasesAreRemovedByClassRemovalSpecialCase
 
 	| class systemDictionary |
 	class := ((Object << #TemporaryMockClass)
-		          slots: {  };
 		          package: self compilationTestPackageName) install.
 	systemDictionary := class environment.
 

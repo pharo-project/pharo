@@ -8,7 +8,7 @@ References held in the variable part are held weakly and might be nilled out by 
 "
 Class {
 	#name : 'WeakLayout',
-	#superclass : 'PointerLayout',
+	#superclass : 'VariableLayout',
 	#category : 'Kernel-CodeModel-Layout',
 	#package : 'Kernel-CodeModel',
 	#tag : 'Layout'

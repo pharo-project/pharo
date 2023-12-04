@@ -14,15 +14,14 @@ Class {
 }
 
 { #category : 'execution' }
-RBRemoveMethodDriver >> applyChanges [
+RBRemoveMethodDriver >> breakingChoices [
 
-	 self openPreviewWithChanges: refactoring removeMethodChanges
-]
-
-{ #category : 'execution' }
-RBRemoveMethodDriver >> applyRemoveMethodChanges [ 
- 
-	self openPreviewWithChanges: refactoring removeMethodChanges
+	| items |
+	items := OrderedCollection new.
+	items add: (RBRemoveChoice new driver: self).
+	items add: (RBRemoveAndShowSendersChoice new driver: self).
+	items add: (RBDontRemoveButShowSendersChoice new driver: self).
+	^ items
 ]
 
 { #category : 'execution' }
@@ -37,7 +36,7 @@ RBRemoveMethodDriver >> browseSenders [
 { #category : 'execution' }
 RBRemoveMethodDriver >> changes [
 
-	^ refactoring generateChanges
+	^ refactoring removeMethodChanges
 ]
 
 { #category : 'resources' }
@@ -54,23 +53,8 @@ RBRemoveMethodDriver >> configureRefactoring [
 { #category : 'execution' }
 RBRemoveMethodDriver >> handleBreakingChanges [
 
-	| select items |
-	items := OrderedCollection new.
-
-	items add: (RBRemoveChoice new driver: self).
-	items add: (RBRemoveAndShowSendersChoice new driver: self).
-	items add: (RBDontRemoveButShowSendersChoice new driver: self).
-
-	select := SpSelectDialog new
-		          title: 'There are ' , haveNoSenders violators size asString
-			          , ' methods calling method(s) you want to delete';
-		          label: 'Select a strategy';
-		          items: items;
-		          display: [ :each | each description ];
-		          displayIcon: [ :each |
-			          self iconNamed: each systemIconName ];
-		          openModal.
-
+	| select |
+	select := self selectDialog.
 	select ifNotNil: [ select action ]
 ]
 
@@ -101,4 +85,17 @@ RBRemoveMethodDriver >> scopes: refactoringScopes methods: aMethods [
 	scopes := refactoringScopes.
 	model := self refactoringScopeOn: scopes first.
 	methods := aMethods
+]
+
+{ #category : 'execution' }
+RBRemoveMethodDriver >> selectDialog [
+
+	^ SpSelectDialog new
+		  title: 'There are ' , haveNoSenders violators size asString
+			  , ' methods calling method(s) you want to delete';
+		  label: 'Select a strategy';
+		  items: self breakingChoices;
+		  display: [ :each | each description ];
+		  displayIcon: [ :each | self iconNamed: each systemIconName ];
+		  openModal
 ]

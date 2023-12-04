@@ -98,9 +98,8 @@ LayoutClassScope >> hash [
 ]
 
 { #category : 'testing' }
-LayoutClassScope >> ifNotEmpty: aBlock [
-	"This scope is not empty so we evaluate the block"
-	aBlock value: self
+LayoutClassScope >> isEmpty [
+	^ false
 ]
 
 { #category : 'accessing' }

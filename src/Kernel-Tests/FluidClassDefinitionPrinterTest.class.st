@@ -94,7 +94,6 @@ FluidClassDefinitionPrinterTest >> testDisplayEmptySlots [
 	| class |
 	ClassDefinitionPrinter displayEmptySlots: true.
 	class := (Object << #CDFluidMock
-	slots: {};
 	tag: 'BasicObjects';
 	package: 'Kernel') build.
 	self assert: (self forClass: class) equals: 'Object << #CDFluidMock
@@ -108,7 +107,6 @@ FluidClassDefinitionPrinterTest >> testDoesNotDisplayEmptySlots [
 	| class |
 	ClassDefinitionPrinter displayEmptySlots: false.
 	class := (Object << #CDFluidMock
-	slots: {};
 	tag: 'BasicObjects';
 	package: 'Kernel') build.
 	self assert: (self forClass: class) equals: 'Object << #CDFluidMock
