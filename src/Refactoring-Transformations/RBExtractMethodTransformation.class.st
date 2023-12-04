@@ -74,7 +74,7 @@ RBExtractMethodTransformation >> applicabilityPreconditions [
 	  & self preconditionNotInCascadedMessage
 	  & self preconditionTemporariesAreNotReadBeforeWritten
 	  & self preconditionOneAssignmentMaximum
-	  & self preconditionAssignmentsNotReadBeforeWrittenORSubtreeDoesNotContainsReturn
+	  & self preconditionAssignmentsNotReadBeforeWrittenANDSubtreeDoesNotContainsReturn
 ]
 
 { #category : 'executing' }
@@ -361,7 +361,7 @@ RBExtractMethodTransformation >> newMethodName [
 ]
 
 { #category : 'preconditions' }
-RBExtractMethodTransformation >> preconditionAssignmentsNotReadBeforeWrittenORSubtreeDoesNotContainsReturn [
+RBExtractMethodTransformation >> preconditionAssignmentsNotReadBeforeWrittenANDSubtreeDoesNotContainsReturn [
 
 	^ RBCondition withBlock: [
 .
