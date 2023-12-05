@@ -163,7 +163,7 @@ AthensCairoSurface class >> destroyContextHandle: aHandle [
 
 { #category : 'private' }
 AthensCairoSurface class >> destroySurfaceHandle: handle [
-	^ self ffiCall: #( void cairo_surface_destroy ( ulong handle ) )
+	^ self ffiCall: #( void cairo_surface_destroy ( size_t handle ) )
 ]
 
 { #category : 'surface plugin callbacks' }
