@@ -9,7 +9,7 @@ Class {
 { #category : 'tests' }
 ShSharedPoolChangeDetectorTest >> testChangeInSharedPoolsIsDetected [
 
-	newBuilder sharedPools: 'TestSharedPool2'.
+	newBuilder sharedPools: {#TestSharedPool2}.
 
 	self denyEmpty: self newComparer compareClass.
 	self assertChangeAreDetected
@@ -18,7 +18,7 @@ ShSharedPoolChangeDetectorTest >> testChangeInSharedPoolsIsDetected [
 { #category : 'tests' }
 ShSharedPoolChangeDetectorTest >> testNoChangeInSharedPoolsDetected [
 
-	newBuilder sharedPools: 'TestSharedPool'.
+	newBuilder sharedPools: #(TestSharedPool).
 
 	self assertEmpty: self newComparer compareClass.
 	self assertChangeArentDetected

@@ -74,7 +74,7 @@ ShAbstractChangeDetectorTest >> setUp [
 			               slots: { #ivar1 };
 			               classSlots: { #classVar1 };
 			               sharedVariables: { #Var1 };
-			               sharedPools: 'TestSharedPool';
+			               sharedPools: { #TestSharedPool };
 			               layoutClass: FixedLayout;
 			               package: self packageName ].
 

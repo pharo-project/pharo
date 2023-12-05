@@ -24,7 +24,7 @@ RBClassTest >> setUp [
 			superclass: Object;
 			slots: { #instanceVariable1. #instanceVariable2 };
 			sharedVariables: { #ClassVariable1 };
-			sharedPools: 'TextConstants';
+			sharedPools: { #TextConstants };
 			package: #'Refactory-Testing' ].
 	newClass := rbNamespace classNamed: #SomeClassName
 ]

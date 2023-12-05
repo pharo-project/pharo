@@ -44,8 +44,6 @@ ShClassInstallerTest >> newClass: className superclass: aSuperclass slots: slots
 			  superclass: aSuperclass;
 			  slots: slots;
 			  classSlots: metaclassSlots;
-			  sharedVariables: '';
-			  sharedPools: '';
 			  package: self generatedClassesPackageName ]
 ]
 
@@ -85,7 +83,7 @@ ShClassInstallerTest >> testChangingASharedPoolUpdatesCorrectlyUsers [
 	newClass2 := ShiftClassInstaller make: [ :builder |
 		             builder
 			             name: #ShCITestClass;
-			             sharedPools: 'ShCITestSharedPool';
+			             sharedPools: #(ShCITestSharedPool);
 			             package: self generatedClassesPackageName ].
 
 	newClass2 compile: 'a ^A'.

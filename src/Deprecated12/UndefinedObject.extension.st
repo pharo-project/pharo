@@ -15,7 +15,7 @@ UndefinedObject >> subclass: nameOfClass instanceVariableNames: instVarNameList 
 					name: `@name;
 					slotsFromString: `@instVar;
 					sharedVariablesFromString: `@classVar;
-					sharedPools: `@pools;
+					sharedPoolsFromString: `@pools;
 					category: `@package;
 					environment: `@rcv environment ]'.
 	Warning signal: 'Attempt to create ' , nameOfClass , ' as a subclass of nil.  Possibly a class is being loaded before its superclass.'.
@@ -25,7 +25,7 @@ UndefinedObject >> subclass: nameOfClass instanceVariableNames: instVarNameList 
 			  name: nameOfClass;
 			  slotsFromString: instVarNameList;
 			  sharedVariablesFromString: classVarNames;
-			  sharedPools: poolDictnames;
+			  sharedPoolsFromString: poolDictnames;
 			  category: category;
 			  environment: self environment ]
 ]
