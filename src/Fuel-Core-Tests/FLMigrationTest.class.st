@@ -20,7 +20,7 @@ FLMigrationTest >> redefined: aClass with: instanceVariableNames [
 	^ self classFactory make: [ :aBuilder |
 		  aBuilder
 			  fillFor: aClass;
-			  slotsFromString: instanceVariableNames ]
+			  slots: instanceVariableNames ]
 ]
 
 { #category : 'running' }
@@ -34,7 +34,7 @@ FLMigrationTest >> setUpEnvironment [
 FLMigrationTest >> testBadDestinationVariableRename [
 
 	| pointClass aPoint pointClassName |
-	pointClass := self classFactory make: [ :aBuilder | aBuilder slotsFromString: 'x y' ].
+	pointClass := self classFactory make: [ :aBuilder | aBuilder slots: #(x y) ].
 	pointClassName := pointClass name.
 	aPoint := pointClass new.
 
@@ -53,11 +53,11 @@ FLMigrationTest >> testChangeInSuperclass [
 	"Tests that serializer tolarates when there is a change in the superclass between serialization and materialization"
 
 	| aClass aClassSubclass instance materializedInstance |
-	aClass := self classFactory make: [ :aBuilder | aBuilder slotsFromString: 'a b c' ].
+	aClass := self classFactory make: [ :aBuilder | aBuilder slots: #(a b c) ].
 	aClassSubclass := self classFactory make: [ :aBuilder |
 		                  aBuilder
 			                  superclass: aClass;
-			                  slotsFromString: 'd e' ].
+			                  slots: #(d e) ].
 
 	instance := aClassSubclass new.
 	instance instVarNamed: 'a' put: $A.
@@ -86,7 +86,7 @@ FLMigrationTest >> testChangeInSuperclass [
 FLMigrationTest >> testClassAndVariableRename [
 
 	| pointClass aPoint resultPoint pointClassName |
-	pointClass := self classFactory make: [ :aBuilder | aBuilder slotsFromString: 'x y' ].
+	pointClass := self classFactory make: [ :aBuilder | aBuilder slots: #(x y) ].
 	pointClassName := pointClass name.
 	aPoint := pointClass new.
 	aPoint instVarNamed: 'x' put: 7.
@@ -94,7 +94,7 @@ FLMigrationTest >> testClassAndVariableRename [
 
 	self serialize: aPoint.
 	self classFactory silentlyRename: pointClass to: (pointClassName , 'Renamed') asSymbol.
-	pointClass := self redefined: pointClass with: 'posY posX'.
+	pointClass := self redefined: pointClass with: #(posY posX).
 
 	self materializer migrateClassNamed: pointClassName toClass: pointClass variables: (Dictionary new
 			 at: 'x' put: 'posX';
@@ -111,7 +111,7 @@ FLMigrationTest >> testClassAndVariableRename [
 FLMigrationTest >> testClassRename [
 
 	| pointClass aPoint resultPoint pointClassName |
-	pointClass := self classFactory make: [ :aBuilder | aBuilder slotsFromString: 'x y' ].
+	pointClass := self classFactory make: [ :aBuilder | aBuilder slots: #(x y) ].
 	pointClassName := pointClass name.
 	aPoint := pointClass new.
 	aPoint instVarNamed: 'x' put: 7.
@@ -151,12 +151,12 @@ FLMigrationTest >> testSuperclassChange [
 	"Tests that serializer tolarates when the superclass changed between serialization and materialization"
 
 	| aClass aClassSubclass instance materializedInstance anotherSuperclass |
-	aClass := self classFactory make: [ :aBuilder | aBuilder slotsFromString: 'a b c' ].
+	aClass := self classFactory make: [ :aBuilder | aBuilder slots: #(a b c) ].
 	aClassSubclass := self classFactory make: [ :aBuilder |
 		                  aBuilder
 			                  superclass: aClass;
-			                  slotsFromString: 'd e' ].
-	anotherSuperclass := self classFactory make: [ :aBuilder | aBuilder slotsFromString: 'x' ].
+			                  slots: #(d e) ].
+	anotherSuperclass := self classFactory make: [ :aBuilder | aBuilder slots: #(x) ].
 
 	instance := aClassSubclass new.
 	instance instVarNamed: 'a' put: $A.
@@ -182,13 +182,13 @@ FLMigrationTest >> testVariableInsertion [
 	"Tests that serializer tolarates when there is a new instance variable on materialization"
 
 	| pairClass aPair resultPair |
-	pairClass := self classFactory make: [ :aBuilder | aBuilder slotsFromString: 'left right' ].
+	pairClass := self classFactory make: [ :aBuilder | aBuilder slots: #(left right) ].
 	aPair := pairClass new.
 	aPair instVarAt: 1 put: $A.
 	aPair instVarAt: 2 put: $B.
 
 	self serialize: aPair.
-	self redefined: pairClass with: 'left middle right'.
+	self redefined: pairClass with: #(left middle right).
 	resultPair := self materialized.
 
 	self assert: $A equals: (resultPair instVarAt: 1).
@@ -201,13 +201,13 @@ FLMigrationTest >> testVariableOrderChange [
 	"Tests that serializer tolarates when the order in the instance variables changed between serialization and materialization"
 
 	| pairClass aPair resultPair |
-	pairClass := self classFactory make: [ :aBuilder | aBuilder slotsFromString: 'left right' ].
+	pairClass := self classFactory make: [ :aBuilder | aBuilder slots: #(left right) ].
 	aPair := pairClass new.
 	aPair instVarAt: 1 put: $A.
 	aPair instVarAt: 2 put: $B.
 
 	self serialize: aPair.
-	self redefined: pairClass with: 'right left'.
+	self redefined: pairClass with: #(right left).
 	resultPair := self materialized.
 
 	self assert: $B equals: (resultPair instVarAt: 1).
@@ -219,13 +219,13 @@ FLMigrationTest >> testVariableRemoved [
 	"Tests that serializer tolarates when an instance variable is missing on materialization"
 
 	| pairClass aPair resultPair |
-	pairClass := self classFactory make: [ :aBuilder | aBuilder slotsFromString: 'left right' ].
+	pairClass := self classFactory make: [ :aBuilder | aBuilder slots: #(left right) ].
 	aPair := pairClass new.
 	aPair instVarAt: 1 put: $A.
 	aPair instVarAt: 2 put: $B.
 
 	self serialize: aPair.
-	self redefined: pairClass with: 'right'.
+	self redefined: pairClass with: #(right).
 	resultPair := self materialized.
 
 	self assert: $B equals: (resultPair instVarAt: 1)
@@ -235,14 +235,14 @@ FLMigrationTest >> testVariableRemoved [
 FLMigrationTest >> testVariableRename [
 
 	| pointClass aPoint resultPoint pointClassName |
-	pointClass := self classFactory make: [ :aBuilder | aBuilder slotsFromString: 'x y' ].
+	pointClass := self classFactory make: [ :aBuilder | aBuilder slots: #(x y) ].
 	pointClassName := pointClass name.
 	aPoint := pointClass new.
 	aPoint instVarNamed: 'x' put: 7.
 	aPoint instVarNamed: 'y' put: 11.
 
 	self serialize: aPoint.
-	self redefined: pointClass with: 'posY posX'.
+	self redefined: pointClass with: #(posY posX).
 
 	self materializer migrateClassNamed: pointClassName variables: (Dictionary new
 			 at: 'x' put: 'posX';

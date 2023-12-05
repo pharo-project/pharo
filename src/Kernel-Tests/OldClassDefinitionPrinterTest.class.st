@@ -74,7 +74,7 @@ OldClassDefinitionPrinterTest >> testMetaclass [
 	self assert: (self forClass: Metaclass) equals:  'ClassDescription subclass: #Metaclass
 	instanceVariableNames: ''thisClass''
 	classVariableNames: ''''
-	package: ''Kernel-Classes'''
+	package: ''Kernel-CodeModel-Classes'''
 ]
 
 { #category : 'tests - metaclasses' }

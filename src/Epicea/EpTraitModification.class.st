@@ -38,6 +38,20 @@ EpTraitModification >> behaviorAffectedName [
 	^ newTrait name
 ]
 
+{ #category : 'accessing' }
+EpTraitModification >> fileOutEntryOn: aWriteStream [ 
+	"Write a code chunk to modify the receiver's trait on aWriteStream"
+
+	| realClass |
+	
+	realClass := self newTrait realClass.
+	aWriteStream
+		nextChunkPut: realClass definitionString;
+		cr.
+	realClass instanceSide putCommentOnFile: aWriteStream.
+	aWriteStream cr
+]
+
 { #category : 'testing' }
 EpTraitModification >> hasChanges [
 	^ oldTrait definitionSource ~= newTrait definitionSource or: [

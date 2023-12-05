@@ -140,7 +140,7 @@ EpCodeChangeIntegrationTest >> testInstanceVariableAddition [
 { #category : 'tests' }
 EpCodeChangeIntegrationTest >> testInstanceVariableRemoval [
 
-	aClass := classFactory make: [ :aBuilder | aBuilder slotsFromString: 'x' ].
+	aClass := classFactory make: [ :aBuilder | aBuilder slots: #(x) ].
 
 	self assert: (self countLogEventsWith: EpClassModification) equals: 0.
 	aClass removeInstVarNamed: #x.

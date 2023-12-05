@@ -84,6 +84,7 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		spec package: 'Collections-Support'.
 		spec package: 'Collections-Unordered'.
 		spec package: 'Collections-Weak'.
+		spec package: 'ClassDefinitionPrinters'.
 		spec package: 'Debugging-Core'.
 		spec package: 'Files'.
 		spec package: 'FileSystem-Path'.
@@ -91,6 +92,7 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		spec package: 'Hermes-Extensions'.
 
 		spec package: 'Kernel'.
+		spec package: 'Kernel-CodeModel'.
 		spec package: 'Kernel-BytecodeEncoders'.
 		spec package: 'Kernel-Chronology-Extras'.
 		spec package: 'NumberParser'.
@@ -159,6 +161,7 @@ BaselineOfPharoBootstrap >> baseline: spec [
 			'FileSystem-Path'.
 			'Hermes'.
 			'Kernel'.
+			'Kernel-CodeModel'.
 			'Kernel-BytecodeEncoders'.
 			'Transcript-NonInteractive'.
 			'PharoBootstrap-Initialization'.
@@ -198,6 +201,7 @@ BaselineOfPharoBootstrap >> baseline: spec [
 			'Collections-Atomic'.
 			'CodeImport'.
 			'CodeImportCommandLineHandlers'.
+			'ClassDefinitionPrinters'.
 			'System-SourcesCondenser'.
 			'Debugging-Utils'.
 			'OpalCompiler-Core'}.

@@ -22,7 +22,7 @@ ManifestKernel class >> ignoredDependencies [
 { #category : 'meta-data - dependency analyser' }
 ManifestKernel class >> manuallyResolvedDependencies [
 
-	^ #( #'System-Settings-Core' #'System-Sources' #'System-Platforms' #'Shift-ClassBuilder' #'Regex-Core' #Reflectivity #'Shift-ClassInstaller' )
+	^ #( #'System-Settings-Core' #Reflectivity #'Shift-ClassInstaller' )
 ]
 
 { #category : 'meta-data' }
