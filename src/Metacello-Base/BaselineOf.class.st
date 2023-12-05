@@ -159,6 +159,17 @@ BaselineOf >> newProjectWithRepositoryDescription: aListOrRepositoryDescriptions
 ]
 
 { #category : 'accessing' }
+BaselineOf >> packageRepositoryURL [
+
+	" Tries to determine a repository URL from which the baseline is being loaded. Useful for 
+	refering other baselines in the same repository. "
+
+	^ self packageRepository
+		ifNotNil: [ :aRepository | aRepository description ]
+		ifNil: [ '' ]
+]
+
+{ #category : 'accessing' }
 BaselineOf >> packageRepositoryURLForSpec: spec [
 	" Tries to determine a repository URL from which the baseline is being loaded. Useful for 
 	refering other baselines in the same repository. "
