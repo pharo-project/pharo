@@ -912,8 +912,8 @@ ReflectivityControlTest >> testFailingDoubleRWInstead [
 		variableWriteNodes select: [ :node | node name = 'singleton' ].
 
 	"default MO for rw -- bug manifests on install"
-	readMO := [ :object | object class classVarNamed: 'singleton' ].
-	writeMO := [ :object :newValue | object class classVarNamed: 'singleton' put: newValue ].
+	readMO := [ :object | object class readClassVariableNamed: 'singleton' ].
+	writeMO := [ :object :newValue | object class writeClassVariableNamed: 'singleton' value: newValue ].
 
 	readLink := MetaLink new
 		metaObject: readMO;
@@ -944,7 +944,7 @@ ReflectivityControlTest >> testFailingDoubleRWInsteadSimplified [
 		variableReadNodes select: [ :node | node name = 'singleton' ]) first.
 
 	"default MO for rw -- bug manifests on install"
-	readMO := [ :object | object class classVarNamed: 'singleton' ].
+	readMO := [ :object | object class readClassVariableNamed: 'singleton' ].
 
 	readLink := MetaLink new
 		metaObject: readMO;
