@@ -86,7 +86,7 @@ ShiftClassBuilderTest >> testBuilderSharedPools [
 	builder
 		slots: { #string. #runs };
 		tag: 'Base';
-		sharedPools: 'TextConstants';
+		sharedPools: #(TextConstants);
 		package: 'Text-Core'.
 
 	self assert: builder sharedPools equals: #( TextConstants )

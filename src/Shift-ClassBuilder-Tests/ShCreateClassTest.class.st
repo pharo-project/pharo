@@ -88,7 +88,7 @@ ShCreateClassTest >> testEmptyClass [
 ShCreateClassTest >> testSharedPool [
 	builder name: #SHClassWithSharedPool.
 	result := builder
-		sharedPools: 'ShTestSharedPool';
+		sharedPools: #(ShTestSharedPool);
 		build.
 
 	self validateResult.

@@ -52,7 +52,7 @@ ObsoleteTest >> testFixObsoleteSharedPools [
 	| poolClass obsoletePoolName testClass preFixObsoleteClassNames postFixObsoleteClassNames |
 	poolClass := classFactory newClass. "provides unique name over time via class variable counter"
 
-	testClass := classFactory make: [ :aBuilder | aBuilder sharedPools: poolClass name asString ].
+	testClass := classFactory make: [ :aBuilder | aBuilder sharedPools: { poolClass } ].
 
 	classFactory delete: poolClass.
 	obsoletePoolName := poolClass name.

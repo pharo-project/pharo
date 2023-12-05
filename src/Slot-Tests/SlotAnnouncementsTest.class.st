@@ -88,7 +88,7 @@ SlotAnnouncementsTest >> testChangeInSharedPoolShouldAnnounceClassModified [
 	aClass := self make: [ :builder |
 		builder
 			name: self aClassName;
-			sharedPools: 'TestSharedPool' ].
+			sharedPools: #(TestSharedPool) ].
 
 	self assert: self collectedAnnouncements size equals: 1.
 	self assert: self collectedAnnouncements first newClassDefinition equals: aClass
@@ -110,7 +110,7 @@ SlotAnnouncementsTest >> testChangeInSharedVariablesAndSharedPoolsShouldAnnounce
 	aClass := self make: [ :builder |
 		builder
 			name: self aClassName;
-			sharedPools: 'TestSharedPool';
+			sharedPools: #(TestSharedPool);
 			sharedVariables: #(A B) ].
 
 	self assert: self collectedAnnouncements size equals: 1.
@@ -236,7 +236,7 @@ SlotAnnouncementsTest >> testCreateAndChangeWithoutCommentDoesNotAnnounce [
 		make: [ :builder |
 			builder
 				name: self aClassName;
-				sharedPools: 'TestSharedPool' ].
+				sharedPools: #(TestSharedPool) ].
 
 	self assertEmpty: self collectedAnnouncements
 ]
@@ -278,7 +278,7 @@ SlotAnnouncementsTest >> testEmptyCommentDoesNotAnnounce [
 			builder
 				name: self aClassName;
 				comment: '';
-				sharedPools: 'TestSharedPool' ].
+				sharedPools: #(TestSharedPool) ].
 
 	self assertEmpty: self collectedAnnouncements
 ]

@@ -19,7 +19,7 @@ ShiftClassBuilder >> buildFromAST: aCDClassDefinitionNode [
 
 	aCDClassDefinitionNode tag ifNotNil: [ :aTag | self tag: aTag ].
 
-	self layoutDefinition sharedPools: (aCDClassDefinitionNode sharedPools collect: [ :e | e name ]).
+	self layoutDefinition sharedPoolsFromString: (aCDClassDefinitionNode sharedPools collect: [ :e | e name ]).
 
 	aCDClassDefinitionNode traitDefinition ifNotNil: [ :traitDef |
 		traitDef originalNode formattedCode.

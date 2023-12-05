@@ -71,8 +71,7 @@ CDClassDefinitionNode >> packageNameNode: aRBNode astNode: astNode [
 
 { #category : 'accessing' }
 CDClassDefinitionNode >> sharedPools [
-	sharedPools ifNil: [ self sharedPools: OrderedCollection new. ].
-	^sharedPools
+	^ sharedPools ifNil: [ self sharedPools: OrderedCollection new ]
 ]
 
 { #category : 'accessing' }
