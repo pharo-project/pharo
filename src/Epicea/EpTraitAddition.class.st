@@ -37,6 +37,20 @@ EpTraitAddition >> behaviorAffectedName [
 	^ self traitAdded name
 ]
 
+{ #category : 'accessing' }
+EpTraitAddition >> fileOutEntryOn: aWriteStream [
+	"Write a code chunk to create the receiver's trait on aWriteStream"
+
+	| realClass |
+	
+	realClass := self traitAdded realClass.
+	aWriteStream
+		nextChunkPut: realClass definitionString;
+		cr.
+	realClass instanceSide putCommentOnFile: aWriteStream.
+	aWriteStream cr
+]
+
 { #category : 'initialization' }
 EpTraitAddition >> initializeWithTrait: aTrait [
 

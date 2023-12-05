@@ -14,3 +14,14 @@ EpPackageRemoval >> accept: aVisitor [
 
 	^ aVisitor visitPackageRemoval: self
 ]
+
+{ #category : 'accessing' }
+EpPackageRemoval >> fileOutEntryOn: aWriteStream [ 
+	"Write a code chunk to remove a package"
+
+	aWriteStream
+		nextPutAll: 'self packageOrganizer removePackage: ';
+		nextChunkPut: self packageName;
+		cr.
+
+]
