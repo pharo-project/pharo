@@ -544,7 +544,7 @@ GeneralScrollPaneMorph >> vScrollbar: anObject [
 GeneralScrollPaneMorph >> vScrollbarInterval [
 	"Answer the computed size of the thumb of the vertical scrollbar."
 
-	^self scrollBounds height asFloat / self scrollTarget height min: 1.0
+	^ (self scrollBounds height asFloat / (self scrollTarget height max: 1.0)) min: 1.0
 ]
 
 { #category : 'scrollbars' }
