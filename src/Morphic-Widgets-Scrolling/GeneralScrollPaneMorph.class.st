@@ -143,7 +143,7 @@ GeneralScrollPaneMorph >> hScrollbar: anObject [
 GeneralScrollPaneMorph >> hScrollbarInterval [
 	"Answer the computed size of the thumb of the horizontal scrollbar."
 
-	^self scrollBounds width asFloat / self scrollTarget width min: 1.0
+	^ self scrollBounds width asFloat / (self scrollTarget width max: 1.0) min: 1.0
 ]
 
 { #category : 'scrollbars' }
