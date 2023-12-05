@@ -63,6 +63,13 @@ ClassVariable >> emitValue: methodBuilder [
 ]
 
 { #category : 'testing' }
+ClassVariable >> hasSameDefinitionAs: otherVariable [
+
+	"Equal definition. ClassVariable values are not to be taken into account"
+	^self key = otherVariable key
+]
+
+{ #category : 'testing' }
 ClassVariable >> isAccessedBy: aBehavior [
 
 	^ (aBehavior hasMethodAccessingVariable: self) or: [ aBehavior class hasMethodAccessingVariable: self ]

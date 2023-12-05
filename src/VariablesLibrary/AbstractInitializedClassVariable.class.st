@@ -23,8 +23,18 @@ AbstractInitializedClassVariable class >> isAbstract [
 ]
 
 { #category : 'accessing' }
+AbstractInitializedClassVariable >> default [
+	^ default
+]
+
+{ #category : 'accessing' }
 AbstractInitializedClassVariable >> default: anObject [
 	default := anObject
+]
+
+{ #category : 'testing' }
+AbstractInitializedClassVariable >> hasSameDefinitionAs: otherVariable [
+	^(super hasSameDefinitionAs: otherVariable) and: [ default = otherVariable default ]
 ]
 
 { #category : 'printing' }

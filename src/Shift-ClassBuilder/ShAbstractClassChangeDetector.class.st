@@ -41,12 +41,11 @@ ShAbstractClassChangeDetector >> compareClass [
 ]
 
 { #category : 'changes' }
-ShAbstractClassChangeDetector >> compareSlotCollection: a with: b [
-
+ShAbstractClassChangeDetector >> compareVariableCollection: a with: b [
 	(a size = b size) ifFalse: [ ^ false].
 
-	a with: b do: [ :aSlot :bSlot |
-			(aSlot hasSameDefinitionAs: bSlot) ifFalse: [ ^ false ] ].
+	a with: b do: [ :aVar :bVar |
+			(aVar hasSameDefinitionAs: bVar) ifFalse: [ ^ false ] ].
 
 	^ true
 ]
