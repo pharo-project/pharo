@@ -74,7 +74,8 @@ RBExtractMethodTransformation >> applicabilityPreconditions [
 	  & self preconditionNotInCascadedMessage
 	  & self preconditionTemporariesAreNotReadBeforeWritten
 	  & self preconditionOneAssignmentMaximum
-	  & self preconditionAssignmentsNotReadBeforeWrittenORSubtreeDoesNotContainsReturn
+	  & self preconditionAssignmentsNotReadBeforeWritten
+	  & self preconditionSubtreeDoesNotContainsReturn
 ]
 
 { #category : 'executing' }
@@ -128,9 +129,6 @@ RBExtractMethodTransformation >> buildTransformations [
 				  ifTrue: [ OrderedCollection new ]
 				  ifFalse: [
 					  | tempsToRemove |
-					  arguments := self calculateArguments.
-					  temporaries := self calculateTemporaries.
-					  assignments := self calculateAssignments.
 					  tempsToRemove := self calculateTemporariesToRemove.
 
 					  assignments size > 1
@@ -149,6 +147,9 @@ RBExtractMethodTransformation >> calculateArguments [
 	"returns a collection of variables that should be passed as arguments"
 
 	| allVariables accesses assigned |
+	
+	subtree ifNil: [ ^ nil ].
+	
 	allVariables := parseTree allDefinedVariables difference: subtree allDefinedVariables.
 
 	accesses := allVariables select: [ :each | subtree references: each ].
@@ -160,7 +161,13 @@ RBExtractMethodTransformation >> calculateArguments [
 { #category : 'querying' }
 RBExtractMethodTransformation >> calculateAssignments [
 	"checks how many variables in the subtree are assigned to values."
+	"Those are temporaries (without temps defined in the subtree; see `calculateTemporaries` for details)
+	that have reference in a statement outside of the subtree.
+	For those variables we would need to return newly assigned value to preserve behavior."
 
+	"asssignments depend on subtree, if the subtree is nil, assignment will be nil as well"
+	subtree ifNil: [ ^ nil ].
+	
 	^ assignments ifNil: [
 		| sequenceNode whoDefinesTemp |
 		sequenceNode := (parseTree allChildren select: [ :each | each isSequence ]) last.
@@ -209,8 +216,16 @@ RBExtractMethodTransformation >> calculateSubtree [
 
 { #category : 'querying' }
 RBExtractMethodTransformation >> calculateTemporaries [
-	"returns a collection of variables that should be defined inside the method"
-
+	"returns a collection of variables that should be defined inside the method.
+	Those are all variables (temps and args) that are defined outside of subtree,
+	but are part of an assignment in the subtree.
+	If we want to assign something to them, we need to have a temp for it.
+	See calculateAssignments which then checks if we can preserve behavior
+	by returning that assignment value as extracted method's return value"
+	
+	"temporaries depend on subtree, if the subtree is nil, temporaries will be nil as well"
+	subtree ifNil: [ ^ nil ].
+	
 	^ temporaries ifNil: [
 		| allVariables accesses |
 		allVariables := parseTree allDefinedVariables difference: subtree allDefinedVariables.
@@ -347,68 +362,58 @@ RBExtractMethodTransformation >> newMethodName [
 ]
 
 { #category : 'preconditions' }
-RBExtractMethodTransformation >> preconditionAssignmentsNotReadBeforeWrittenORSubtreeDoesNotContainsReturn [
+RBExtractMethodTransformation >> preconditionAssignmentsNotReadBeforeWritten [
 
-	^ RBCondition withBlock: [
-		  | assignmentCollection |
-		  assignmentCollection := self calculateAssignments.
-		  assignmentCollection ifNotEmpty: [
-			  ((RBReadBeforeWrittenTester
-				    isVariable: assignmentCollection first
-				    readBeforeWrittenIn: subtree) or: [ subtree containsReturn ])
-				  ifTrue: [
-					  self refactoringError:
-						  ('Cannot extract assignment to <1s> without also extracting all the references.'
-							   expandMacrosWith: assignments asString) ] ].
-		  true ]
+	assignments isEmptyOrNil ifTrue: [ ^ self trueCondition ].
+
+	^ RBVariablesNotReadBeforeWrittenCondition new subtree: subtree; variables: assignments
 ]
 
 { #category : 'preconditions' }
 RBExtractMethodTransformation >> preconditionNotInCascadedMessage [
 
-	^ RBCondition withBlock: [
-		  subtree parent isCascade ifTrue: [
-			  self refactoringError:
-				  'Cannot extract code in a cascaded message' ].
-		  true ]
+	^ RBNotInCascadedMessageCondition new subtree: subtree
 ]
 
 { #category : 'preconditions' }
 RBExtractMethodTransformation >> preconditionOneAssignmentMaximum [
+	"When we have one assignment to temp or arg we don't need to worry about other references,
+	since we can return newly assigned value from the extracted method and preserve behavior.
+	When we have two or more assignments AND when they have references outside of extracted block,
+	we don't support return of multiple values, instead we notify the user that all references
+	to those temps should be extracted as well."
 
-	^ RBCondition withBlock: [
-		  self calculateAssignments size > 1 ifTrue: [
-			  self refactoringError:
-				  'Cannot extract two or more assignments to temporaries without also extracting all the references.' ].
-		  true ]
+	^ RBMaxOneAssignmentWithReferencesCondition new
+		  assignments: assignments
 ]
 
 { #category : 'preconditions' }
 RBExtractMethodTransformation >> preconditionParsableSubtree [
 
-	^ RBCondition withBlock: [
-		  subtree ifNil: [ self refactoringError: 'Cannot extract code.' ].
-		  true ]
+	^ RBParsableSubtreeCondition new subtree: subtree
+]
+
+{ #category : 'preconditions' }
+RBExtractMethodTransformation >> preconditionSubtreeDoesNotContainsReturn [
+
+	assignments isEmptyOrNil ifTrue: [ ^ self trueCondition ].
+
+	^ RBSubtreeDoesNotContainReturnCondition new subtree: subtree
 ]
 
 { #category : 'preconditions' }
 RBExtractMethodTransformation >> preconditionTemporariesAreNotReadBeforeWritten [
 
-	^ RBCondition withBlock: [
-		  | tempVariables |
-		  tempVariables := self calculateTemporaries.
-		  (RBReadBeforeWrittenTester
-			   readBeforeWritten: tempVariables
-			   in: subtree) ifNotEmpty: [
-			  self refactoringError:
-				  'Cannot extract temporaries if they are read before written.' ].
-		  true ]
+	^ RBVariablesNotReadBeforeWrittenCondition new subtree: subtree; variables: temporaries 
 ]
 
 { #category : 'transforming' }
 RBExtractMethodTransformation >> prepareForExecution [
 
-	subtree := self calculateSubtree
+	subtree := self calculateSubtree.
+	temporaries := self calculateTemporaries.
+	assignments := self calculateAssignments.
+	arguments := self calculateArguments 
 ]
 
 { #category : 'printing' }
