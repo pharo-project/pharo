@@ -139,6 +139,12 @@ ClassVariable >> printOn: aStream [
 ]
 
 { #category : 'queries' }
+ClassVariable >> usingClasses [
+
+	^ self possiblyUsingClasses select: [ :class | class hasMethodAccessingVariable: self ]
+]
+
+{ #category : 'queries' }
 ClassVariable >> usingMethods [
 	^self possiblyUsingClasses flatCollect: [ :class | class whichMethodsReferTo: self ]
 ]

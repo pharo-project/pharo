@@ -160,6 +160,11 @@ ClassVariableTest >> testScope [
 ]
 
 { #category : 'tests' }
+ClassVariableTest >> testUsingClasses [
+	self assert: (Object classVariableNamed: #DependentsFields) usingClasses anyOne identicalTo: DeepCopier
+]
+
+{ #category : 'tests' }
 ClassVariableTest >> testUsingMethods [
 	| variable |
 	"The semantics of where to search is tested as part of #testPossiblyUsingClasses"
