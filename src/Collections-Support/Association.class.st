@@ -42,6 +42,13 @@ Association >> hasLiteral: aLiteral [
 	^false
 ]
 
+{ #category : 'testing' }
+Association >> hasSameDefinitionAs: otherVariable [
+
+	"As the bootstrap creates class Variables as Associations, we need to be able to compare"
+	^self class == otherVariable class and: [self key = otherVariable key]
+]
+
 { #category : 'variables-toclean' }
 Association >> isAssociation [
 	^ true
