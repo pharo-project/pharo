@@ -175,6 +175,11 @@ IRSequence >> isEmpty [
 	^sequence isEmpty
 ]
 
+{ #category : 'testing' }
+IRSequence >> isNotEmpty [
+	^sequence isNotEmpty
+]
+
 { #category : 'accessing' }
 IRSequence >> last [
 	^sequence last
@@ -211,7 +216,8 @@ IRSequence >> nonBodySuccessorSequences [
 
 { #category : 'testing' }
 IRSequence >> notEmpty [
-	^sequence notEmpty
+	self deprecated: 'Use #isNotEmpty instead.' transformWith: '`@rcv notEmpty' -> '`@rcv isNotEmpty'.
+	^self isNotEmpty
 ]
 
 { #category : 'accessing' }
