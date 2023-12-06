@@ -44,8 +44,6 @@ ShClassInstallerTest >> newClass: className superclass: aSuperclass slots: slots
 			  superclass: aSuperclass;
 			  slots: slots;
 			  classSlots: metaclassSlots;
-			  sharedVariables: '';
-			  sharedPools: '';
 			  package: self generatedClassesPackageName ]
 ]
 
@@ -85,7 +83,7 @@ ShClassInstallerTest >> testChangingASharedPoolUpdatesCorrectlyUsers [
 	newClass2 := ShiftClassInstaller make: [ :builder |
 		             builder
 			             name: #ShCITestClass;
-			             sharedPools: 'ShCITestSharedPool';
+			             sharedPools: #(ShCITestSharedPool);
 			             package: self generatedClassesPackageName ].
 
 	newClass2 compile: 'a ^A'.
@@ -174,9 +172,6 @@ ShClassInstallerTest >> testClassWithComment [
 		            builder
 			            name: #SHClassWithComment;
 			            superclass: Object;
-			            slots: #(  );
-			            sharedVariables: '';
-			            sharedPools: '';
 			            package: self generatedClassesPackageName;
 			            comment: 'I have a comment';
 			            commentStamp: 'anStamp' ].
@@ -363,6 +358,20 @@ ShClassInstallerTest >> testInstallInSpecificEnvironment [
 	self deny: (self packageOrganizer hasPackage: self generatedClassesPackageName).
 	self assert: (newEnvironment organization hasPackage: self generatedClassesPackageName) ] ensure: [ "The tear down will not remove the class in the other environment"
 		newEnvironment organization removePackage: self generatedClassesPackageName ]
+]
+
+{ #category : 'tests' }
+ShClassInstallerTest >> testInstallingWithAnEmptyTag [
+
+	newClass := ShiftClassInstaller make: [ :builder |
+		            builder
+			            name: #ShCITestEmptyTag;
+			            tag: '';
+			            package: self generatedClassesPackageName ].
+
+	self assert: newClass package name equals: self generatedClassesPackageName.
+	self assert: newClass packageTag isRoot.
+	self deny: newClass packageTag name equals: ''
 ]
 
 { #category : 'tests' }

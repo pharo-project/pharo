@@ -28,8 +28,7 @@ Class {
 		'subtree',
 		'arguments',
 		'temporaries',
-		'assignments',
-		'selectorOfExistingMethod'
+		'assignments'
 	],
 	#category : 'Refactoring-Transformations-Model-Unused',
 	#package : 'Refactoring-Transformations',
@@ -69,54 +68,13 @@ RBExtractMethodTransformation class >> model: aRBModel extract: aString from: aS
 ]
 
 { #category : 'preconditions' }
-RBExtractMethodTransformation >> applicabilityPreconditions [ 
+RBExtractMethodTransformation >> applicabilityPreconditions [
 
-	| aSubtree |
-	aSubtree := self calculateSubtree.
-
-	^ (RBCondition withBlock: [
-		   aSubtree ifNil: [ self refactoringError: 'Cannot extract code.' ].
-		   true ]) & (RBCondition withBlock: [
-		   aSubtree parent isCascade ifTrue: [
-			   self refactoringError:
-				   'Cannot extract code in a cascaded message' ].
-		   true ]) & (RBCondition withBlock: [
-		   | tempVariables |
-		   tempVariables := self calculateTemporaries.
-		   (RBReadBeforeWrittenTester
-			    readBeforeWritten: tempVariables
-			    in: aSubtree) ifNotEmpty: [
-			   self refactoringError:
-				   'Cannot extract temporaries if they are read before written.' ].
-		   true ]) & (RBCondition withBlock: [
-		   self calculateAssignments size > 1 ifTrue: [
-			   self refactoringError:
-				   'Cannot extract two or more assignments to temporaries without also extracting all the references.' ].
-		   true ]) & (RBCondition withBlock: [
-		   | assignmentCollection |
-		   assignmentCollection := self calculateAssignments.
-		   assignmentCollection ifNotEmpty: [
-			   ((RBReadBeforeWrittenTester
-				     isVariable: assignmentCollection first
-				     readBeforeWrittenIn: aSubtree) or: [ aSubtree containsReturn ])
-				   ifTrue: [
-					   self refactoringError:
-						   ('Cannot extract assignment to <1s> without also extracting all the references.'
-							    expandMacrosWith: assignments asString) ] ].
-		   true ]) & (RBCondition withBlock: [
-		   | searchSpace |
-		   searchSpace := (self class allMethodsInHierarchyOf:
-			                   self definingClass) reject: [ :m |
-			                  m selector = selector ].
-
-		   (self parseTreeSearcherClass
-			    whichMethodIn: searchSpace
-			    matches: aSubtree)
-			   ifNotEmpty: [ :opportunities | "we found one method with similar body so we will use it instead of creating a new one"
-				   selectorOfExistingMethod := opportunities anyOne.
-				   true ]
-			   ifEmpty: [ true ] ])
-	
+	^ self preconditionParsableSubtree
+	  & self preconditionNotInCascadedMessage
+	  & self preconditionTemporariesAreNotReadBeforeWritten
+	  & self preconditionOneAssignmentMaximum
+	  & self preconditionAssignmentsNotReadBeforeWrittenORSubtreeDoesNotContainsReturn
 ]
 
 { #category : 'executing' }
@@ -155,9 +113,10 @@ RBExtractMethodTransformation >> buildTransformationFor: newMethodName withRemov
 { #category : 'executing' }
 RBExtractMethodTransformation >> buildTransformations [
 
-	subtree := self calculateSubtree.
-
-	selectorOfExistingMethod
+	| selectorOfExistingMethod |
+	
+	selectorOfExistingMethod := self findMethodWithSimilarBody.
+	selectorOfExistingMethod 
 		ifNotNil: [
 			^ OrderedCollection with: (self parseTreeRewriterClass
 					   replaceCode: subtree
@@ -285,6 +244,23 @@ RBExtractMethodTransformation >> extract: aString from: aSelector to: aNewSelect
 	sourceCode := aString
 ]
 
+{ #category : 'preconditions' }
+RBExtractMethodTransformation >> findMethodWithSimilarBody [
+
+	| searchSpace |
+	searchSpace := (self class allMethodsInHierarchyOf:
+		                self definingClass) reject: [ :m |
+		               m selector = selector ].
+
+	^ (self parseTreeSearcherClass
+		   whichMethodIn: searchSpace
+		   matches: subtree)
+		  ifNotEmpty: [ :opportunities | "we found one method with similar body so we will use it instead of creating a new one"
+			  ^ opportunities anyOne ]
+		  ifEmpty: [ ^ nil ]
+		
+]
+
 { #category : 'executing' }
 RBExtractMethodTransformation >> generateNewMethodWith: aMethodName [
 
@@ -368,6 +344,71 @@ RBExtractMethodTransformation >> newMethodName [
 								 newSelector := nil ] ] ].
 
 	^ methodName
+]
+
+{ #category : 'preconditions' }
+RBExtractMethodTransformation >> preconditionAssignmentsNotReadBeforeWrittenORSubtreeDoesNotContainsReturn [
+
+	^ RBCondition withBlock: [
+		  | assignmentCollection |
+		  assignmentCollection := self calculateAssignments.
+		  assignmentCollection ifNotEmpty: [
+			  ((RBReadBeforeWrittenTester
+				    isVariable: assignmentCollection first
+				    readBeforeWrittenIn: subtree) or: [ subtree containsReturn ])
+				  ifTrue: [
+					  self refactoringError:
+						  ('Cannot extract assignment to <1s> without also extracting all the references.'
+							   expandMacrosWith: assignments asString) ] ].
+		  true ]
+]
+
+{ #category : 'preconditions' }
+RBExtractMethodTransformation >> preconditionNotInCascadedMessage [
+
+	^ RBCondition withBlock: [
+		  subtree parent isCascade ifTrue: [
+			  self refactoringError:
+				  'Cannot extract code in a cascaded message' ].
+		  true ]
+]
+
+{ #category : 'preconditions' }
+RBExtractMethodTransformation >> preconditionOneAssignmentMaximum [
+
+	^ RBCondition withBlock: [
+		  self calculateAssignments size > 1 ifTrue: [
+			  self refactoringError:
+				  'Cannot extract two or more assignments to temporaries without also extracting all the references.' ].
+		  true ]
+]
+
+{ #category : 'preconditions' }
+RBExtractMethodTransformation >> preconditionParsableSubtree [
+
+	^ RBCondition withBlock: [
+		  subtree ifNil: [ self refactoringError: 'Cannot extract code.' ].
+		  true ]
+]
+
+{ #category : 'preconditions' }
+RBExtractMethodTransformation >> preconditionTemporariesAreNotReadBeforeWritten [
+
+	^ RBCondition withBlock: [
+		  | tempVariables |
+		  tempVariables := self calculateTemporaries.
+		  (RBReadBeforeWrittenTester
+			   readBeforeWritten: tempVariables
+			   in: subtree) ifNotEmpty: [
+			  self refactoringError:
+				  'Cannot extract temporaries if they are read before written.' ].
+		  true ]
+]
+
+{ #category : 'transforming' }
+RBExtractMethodTransformation >> prepareForExecution [
+
+	subtree := self calculateSubtree
 ]
 
 { #category : 'printing' }

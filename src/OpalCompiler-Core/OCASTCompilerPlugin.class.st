@@ -45,10 +45,14 @@ OCASTCompilerPlugin class >> isAbstract [
 	^ self == OCASTCompilerPlugin
 ]
 
+{ #category : 'accessing - defaults' }
+OCASTCompilerPlugin class >> priority [
+	^ self defaultPriority
+]
+
 { #category : 'accessing' }
 OCASTCompilerPlugin >> priority [
-
-	^ self class defaultPriority
+	^ self class priority
 ]
 
 { #category : 'transforming' }

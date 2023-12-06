@@ -86,14 +86,14 @@ ClassFactoryForTestCaseTest >> testSingleClassCreation [
 	class := factory make: [ :aBuilder |
 		         aBuilder
 			         superclass: Object;
-			         slotsFromString: 'a b c';
-			         sharedVariablesFromString: 'X Y';
+			         slots: #(a b c);
+			         sharedVariables: #(X Y);
 			         tag: factory tagName ].
 	self assert: (self environment allClasses includes: class).
 	self assert: class package name equals: factory packageName.
 	self assert: class packageTag name equals: factory tagName.
 	self assert: class instVarNames equals: #( a b c ).
-	self assert: class classPool keys asSet equals: #( X Y ) asSet
+	self assert: class classVarNames asSet equals: #( X Y ) asSet
 ]
 
 { #category : 'testing' }

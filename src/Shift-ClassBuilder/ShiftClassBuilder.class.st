@@ -62,8 +62,9 @@ Class {
 	#classVars : [
 		'BuilderEnhancer'
 	],
-	#category : 'Shift-ClassBuilder',
-	#package : 'Shift-ClassBuilder'
+	#category : 'Shift-ClassBuilder-Builder',
+	#package : 'Shift-ClassBuilder',
+	#tag : 'Builder'
 }
 
 { #category : 'defaults' }
@@ -331,8 +332,9 @@ ShiftClassBuilder >> fillFor: aClass [
 		layoutClass: aClass classLayout class;
 		slots: aClass localSlots;
 		classSlots: aClass class localSlots;
-		sharedVariablesFromString: aClass classVariablesString;
-		sharedPools: aClass sharedPoolsString;
+		"we have to copy the class variables, as they contain the values"
+		sharedVariables: (aClass classVariables collect: [:var | var copy]);
+		sharedPools: (aClass sharedPools collect: [ :each | each name ]) asArray;
 		package: aClass package name;
 		installingEnvironment: aClass environment;
 		oldClass: aClass.
@@ -560,12 +562,23 @@ ShiftClassBuilder >> sharedPools [
 ]
 
 { #category : 'accessing' }
-ShiftClassBuilder >> sharedPools: anObject [
-	"The paramter can be either a collection of symbols or a string that should be converted into a collection of symbols."
+ShiftClassBuilder >> sharedPools: aCollectionOrString [
+	"The paramter can be either a collection of symbols or a string that should be converted into a collection of symbols, or a Class where we get the name"
+	| pools |
+	pools := aCollectionOrString isString
+			 ifTrue: [ (aCollectionOrString substrings: ' ') collect: [ :e | e asSymbol ] ]
+			 ifFalse: [ aCollectionOrString collect: [ :each | each isSymbol ifFalse: [ each name ] ifTrue: [ each ] ].	 ].
+	
+	self layoutDefinition sharedPools: pools.
+]
 
-	self layoutDefinition sharedPools: (anObject isString
-			 ifTrue: [ (anObject substrings: ' ') collect: [ :e | e asSymbol ] ]
-			 ifFalse: [ anObject ])
+{ #category : 'accessing' }
+ShiftClassBuilder >> sharedPoolsFromString: aCollectionOrString [
+	"This should be only used for old style class defs"
+	| pools |
+	pools := (aCollectionOrString substrings: ' ') collect: [ :e | e asSymbol ].
+	
+	self layoutDefinition sharedPools: pools.
 ]
 
 { #category : 'accessing' }

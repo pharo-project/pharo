@@ -1,5 +1,5 @@
 "
-SUnit tests for RPackage 
+SUnit tests for Package 
 "
 Class {
 	#name : 'PackageTest',
@@ -166,7 +166,7 @@ PackageTest >> testDemoteToRPackageNamed [
 	package2 := self organizer packageNamed: 'Test1'.
 	self assert: package2 isNotNil.
 	self assert: (package2 classes includes: class).
-	self assert: ((package2 classTagNamed: 'TAG1') classes includes: class)
+	self assert: ((package2 tagNamed: 'TAG1') classes includes: class)
 ]
 
 { #category : 'tests - demotion' }
@@ -185,7 +185,7 @@ PackageTest >> testDemoteToRPackageNamedExistingPackage [
 	self assert: package2 isNotNil.
 	self assert: package2 equals: packageExisting.
 	self assert: (package2 classes includes: class).
-	self assert: ((package2 classTagNamed: 'TAG1') classes includes: class)
+	self assert: ((package2 tagNamed: 'TAG1') classes includes: class)
 ]
 
 { #category : 'tests - demotion' }
@@ -215,7 +215,7 @@ PackageTest >> testDemoteToRPackageNamedMultilevelPackage [
 	package2 := self organizer packageNamed: 'Test1-TAG1'.
 	self assert: package2 isNotNil.
 	self assert: (package2 classes includes: class).
-	self assert: ((package2 classTagNamed: 'X1') classes includes: class)
+	self assert: ((package2 tagNamed: 'X1') classes includes: class)
 ]
 
 { #category : 'tests - demotion' }
@@ -235,7 +235,7 @@ PackageTest >> testDemoteToRPackageNamedWithExtension [
 	packageDemoted := self organizer packageNamed: 'Test1'.
 	self assert: packageDemoted isNotNil.
 	self assert: (packageDemoted classes includes: class).
-	self assert: ((packageDemoted classTagNamed: 'TAG1') classes includes: class).
+	self assert: ((packageDemoted tagNamed: 'TAG1') classes includes: class).
 	self assert: (packageDemoted extensionMethods includes: classOther >> #bar).
 	self assert: (classOther >> #bar) protocolName equals: '*Test1-TAG1'.
 	self assert: (packageDemoted classes includesAll: {
@@ -380,14 +380,6 @@ PackageTest >> testMcPackage [
 	self assert: rPackage mcPackage equals: (MCPackage new name: #Test1)
 ]
 
-{ #category : 'tests - MC' }
-PackageTest >> testMcWorkingCopy [
-
-	| rPackage |
-	rPackage := self organizer ensurePackage: #Test1.
-	self assert: rPackage mcWorkingCopy identicalTo: (MCWorkingCopy forPackageNamed: #Test1)
-]
-
 { #category : 'tests - classes' }
 PackageTest >> testMoveClassToTag [
 
@@ -397,7 +389,7 @@ PackageTest >> testMoveClassToTag [
 
 	self assert: (xPackage includesClass: class).
 	self assert: (xPackage hasTag: #TAG).
-	self assert: ((xPackage classTagNamed: #TAG) includesClass: class).
+	self assert: ((xPackage tagNamed: #TAG) includesClass: class).
 
 	yPackage := self ensureYPackage.
 	yTag := yPackage ensureTag: #YTag.
@@ -442,11 +434,11 @@ PackageTest >> testMoveClassToTagName [
 
 	self assert: (xPackage includesClass: class).
 	self assert: (xPackage hasTag: #TAG).
-	self assert: ((xPackage classTagNamed: #TAG) includesClass: class).
+	self assert: ((xPackage tagNamed: #TAG) includesClass: class).
 
 	yPackage := self ensureYPackage.
 	yPackage moveClass: class toTag: #YTag.
-	yTag := yPackage classTagNamed: #YTag.
+	yTag := yPackage tagNamed: #YTag.
 
 	self deny: (xPackage includesClass: class).
 	self assert: (yPackage includesClass: class).
@@ -556,7 +548,7 @@ PackageTest >> testRemoveTag [
 
 	a1 := self newClassNamed: #A1DefinedInX in: p1.
 	b1 := self newClassNamed: #B1DefinedInX in: p1.
-	self assert: p1 classTags size equals: 1. "We start with the root tag"
+	self assert: p1 tags size equals: 1. "We start with the root tag"
 
 	p1 moveClass: a1 toTag: #foo.
 	self assert: (((p1 classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #A1DefinedInX).
@@ -582,7 +574,7 @@ PackageTest >> testRemoveTagRemoveClasses [
 	p1 := self ensurePackage: #P1.
 
 	a1 := self newClassNamed: #A1DefinedInX in: p1.
-	self assert: p1 classTags size equals: 1. "We start with the root tag"
+	self assert: p1 tags size equals: 1. "We start with the root tag"
 
 	p1 moveClass: a1 toTag: #foo.
 	self assert: (((p1 classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #A1DefinedInX).

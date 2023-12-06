@@ -18,7 +18,9 @@ Class {
 
 { #category : 'accessing' }
 BasicDatePrinter class >> default [
-	^ ExtendedDatePrinter new
+
+	"We should have a registration mecanism in the future."
+	^ (self environment at: #ExtendedDatePrinter ifAbsent: [ self ]) new
 ]
 
 { #category : 'printing' }

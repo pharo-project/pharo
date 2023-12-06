@@ -29,51 +29,51 @@ Class {
 }
 
 { #category : 'baseline' }
-BaselineOfMorphic >> baseline: spec [ 
-    
+BaselineOfMorphic >> baseline: spec [
+
 	<baseline>
-        
-	| repository | 
-	
-	repository := self packageRepositoryURL.
+	| repository |
+	repository := self packageRepositoryURLForSpec: spec.
 
 	spec for: #common do: [
-		spec preLoadDoIt: #'preload:package:'.
-		spec postLoadDoIt: #'postload:package:'.
+		spec preLoadDoIt: #preload:package:.
+		spec postLoadDoIt: #postload:package:.
 
-		spec 
-			baseline: 'MorphicCore' with: [spec repository: repository];
-			baseline: 'MenuRegistration' with: [spec repository: repository].
+		spec
+			baseline: 'MorphicCore' with: [ spec repository: repository ];
+			baseline: 'MenuRegistration' with: [ spec repository: repository ].
 
-		spec baseline: 'Fuel' with: [ 
-			spec repository: repository; loads: #('Core') ].
+		spec baseline: 'Fuel' with: [
+			spec
+				repository: repository;
+				loads: #( 'Core' ) ].
 
 		spec package: 'System-Localization'.
-		
-		spec package: 'EmbeddedFreeType'.
+
+		spec baseline: 'FreeType' with: [
+			spec
+				repository: repository;
+				loads: 'ui' ].
+		spec package: 'EmbeddedFreeType' with: [ spec requires: 'FreeType' ].
 		spec package: 'FileSystem-Zip'.
 		spec package: 'Fonts-Infrastructure'.
-		spec baseline: 'FreeType' with: [ 
-			spec 
-				repository: repository; 
-				loads: 'ui' ].
 
 		spec package: 'Graphics-Files'.
 		spec package: 'Graphics-Fonts'.
 		spec package: 'Graphics-Shapes'.
 		spec package: 'Growl'.
 
-		spec baseline: 'Keymapping' with: [ 
-			spec 
+		spec baseline: 'Keymapping' with: [
+			spec
 				repository: repository;
 				loads: 'core' ].
 
 		spec package: 'Transcript-Core'.
 
 		spec package: 'Native-Browser'.
-		
+
 		spec package: 'Regex-Core'.
-		
+
 		spec package: 'Morphic-Base'.
 		spec package: 'Morphic-Examples'.
 		spec package: 'Morphic-Widgets-Basic'.
@@ -89,16 +89,19 @@ BaselineOfMorphic >> baseline: spec [
 		spec package: 'Morphic-Widgets-Tree'.
 		spec package: 'Morphic-Widgets-Windows'.
 		spec package: 'Morphic-Widgets-FastTable'.
-		
+
 		spec package: 'Morphic-Widgets-Taskbar-Tests'.
-		
+
 		"Several packages depend on Rubric as a basic Morphic component"
 		spec package: 'Rubric'.
-		
-		spec baseline: 'NewValueHolder' with: [ spec repository: repository; loads: 'core' ].
+
+		spec baseline: 'NewValueHolder' with: [
+			spec
+				repository: repository;
+				loads: 'core' ].
 
 		spec package: 'Polymorph-Widgets'.
-		
+
 		spec package: 'Images-Animated'.
 
 		spec package: 'Settings-Graphics'.
@@ -113,22 +116,20 @@ BaselineOfMorphic >> baseline: spec [
 		however conceptually it could be placed somewhere else."
 		spec package: 'Formatter-Settings'.
 		spec package: 'System-Sound'.
-		
+
 		spec package: 'Text-Diff'.
 		spec package: 'Text-Edition'.
 		spec package: 'Text-Scanning'.
 
 		spec package: 'Morphic-Widgets-TickList'.
-		
+
 		spec package: 'System-Changes-FileServices'.
 
 		spec package: 'StartupPreferences'.
 		spec package: 'System-Identification'.
-		
-		"Tool-Base extends and uses morphic, so it depends on it"
-		spec package: 'Tool-Base'.
 
-	].
+		"Tool-Base extends and uses morphic, so it depends on it"
+		spec package: 'Tool-Base' ]
 ]
 
 { #category : 'actions' }
@@ -306,6 +307,7 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 	UIManager default: MorphicUIManager new.
 	UIManager default uiProcess resume.
 	PharoLightTheme beCurrent.
+	ScalingCanvas initialize.
 	self cleanUpAfterMorphicInitialization.
 
 	GraphicFontSettings setFontsToStyleNamed: #small.

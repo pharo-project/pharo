@@ -211,7 +211,7 @@ FFIStructure class >> defineFieldOffset: fieldName value: offset [
 		ifNil: [
 			(self hasClassVarNamed: offsetVarName)
 				ifFalse: [ self addClassVarNamed: offsetVarName ].
-			self classVarNamed: offsetVarName put: offset ]
+			self writeClassVariableNamed: offsetVarName value: offset ]
 ]
 
 { #category : 'register marshalling' }

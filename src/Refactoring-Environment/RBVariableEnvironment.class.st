@@ -181,7 +181,7 @@ RBVariableEnvironment >> classForName: aString [
 		ifTrue: [ aString copyFrom: 1 to: (aString size - 6 max: 1) ]
 		ifFalse: [ aString ]) asSymbol.
 	class := self systemDictionary at: name ifAbsent: [ nil ].
-	^ (class notNil and: [ isMeta ])
+	^ (class isNotNil and: [ isMeta ])
 		ifTrue: [ class class ]
 		ifFalse: [ class ]
 ]
@@ -207,7 +207,7 @@ RBVariableEnvironment >> classVariableSelectorsFor: aClass [
 			[:each |
 			| cls |
 			cls := self classForName: each.
-			(cls notNil and: [aClass instanceSide includesBehavior: cls])
+			(cls isNotNil and: [aClass instanceSide includesBehavior: cls])
 				ifTrue: [classVars addAll: (classVariables at: each)]].
 	classVars do:
 			[:each |
@@ -359,7 +359,7 @@ RBVariableEnvironment >> instanceVariableSelectorsFor: aClass [
 					[:each |
 					| cls |
 					cls := self classForName: each.
-					(cls notNil and: [aClass includesBehavior: cls])
+					(cls isNotNil and: [aClass includesBehavior: cls])
 						ifTrue: [instVars addAll: ((self perform: var) at: each)]].
 			instVars do: [:each | selectors addAll: (aClass perform: sel with: each)]].
 	^selectors

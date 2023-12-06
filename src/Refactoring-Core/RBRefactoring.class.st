@@ -43,6 +43,12 @@ RBRefactoring class >> preconditionSignal [
 	^ RBRefactoringError , RBRefactoringWarning
 ]
 
+{ #category : 'preconditions' }
+RBRefactoring >> applicabilityPreconditions [
+
+	^ self trueCondition 
+]
+
 { #category : 'converting' }
 RBRefactoring >> asRefactoring [
 
@@ -55,6 +61,15 @@ RBRefactoring >> canReferenceVariable: aString in: aClass [
 	(aClass definesVariable: aString) ifTrue: [^true].
 	(self model includesGlobal: aString asSymbol) ifTrue: [^true].
 	^(self poolVariableNamesFor: aClass) includes: aString
+]
+
+{ #category : 'preconditions' }
+RBRefactoring >> checkApplicabilityPreconditions [
+
+	| failedPreconditions |
+	failedPreconditions := self failedApplicabilityPreconditions.
+	failedPreconditions ifEmpty: [ ^ self ].
+	RBRefactoringError signalFor: failedPreconditions
 ]
 
 { #category : 'support' }
@@ -113,15 +128,10 @@ RBRefactoring >> copyOptionsFrom: aDictionary [
 	self options: dict
 ]
 
-{ #category : 'transforming' }
-RBRefactoring >> generateChangesFor: aRefactoring [
-	"I will generate changes and save them in the model, BUT I will not apply them!
-	Use me when a refactorings is composed of multiple other refactorings"
+{ #category : 'preconditions' }
+RBRefactoring >> failedApplicabilityPreconditions [
 
-	"Execute the argument but passing the receiver options to that refactoring"
-	aRefactoring copyOptionsFrom: self options.
-	aRefactoring model: self model.
-	aRefactoring generateChanges
+	^ self applicabilityPreconditions reject: [ :cond | cond check ]
 ]
 
 { #category : 'private' }
@@ -199,7 +209,7 @@ RBRefactoring >> uniqueMethodNameFor: anInteger [
 	index := 0.
 
 	[name := before , index printString , after.
-	(Symbol findInterned: name) notNil]
+	(Symbol findInterned: name) isNotNil]
 			whileTrue: [index := index + 1].
 	^name asSymbol
 ]

@@ -604,33 +604,29 @@ String >> asCamelCase [
 String >> asComment [
 	"return this string, munged so that it can be treated as a comment in Smalltalk code.  Quote marks are added to the beginning and end of the string, and whenever a solitary quote mark appears within the string, it is doubled"
 
-	^String streamContents:  [ :str |
-		| quoteCount first |
+	^ String streamContents: [ :str |
+		  | quoteCount first |
+		  str nextPut: $".
 
-		str nextPut: $".
+		  quoteCount := 0.
+		  first := true.
+		  self withIndexDo: [ :char :index |
+			  char = $"
+				  ifTrue: [
+					  (first or: (index = self size) ) ifFalse: [
+						  str nextPut: char.
+						  quoteCount := quoteCount + 1 ] ]
+				  ifFalse: [
+					  quoteCount odd ifTrue: [ "add a quote to even the number of quotes in a row"
+						  str nextPut: $" ].
+					  quoteCount := 0.
+					  str nextPut: char ].
+			  first := false ].
+		
+		   quoteCount odd
+			  ifTrue: [ "check at the end" str nextPut: $" ].
 
-		quoteCount := 0.
-		first := true.
-		self do: [ :char |
-			char = $"
-				ifTrue: [
-					first ifFalse: [
-						str nextPut: char.
-						quoteCount := quoteCount + 1 ] ]
-				ifFalse: [
-					quoteCount odd ifTrue: [
-						"add a quote to even the number of quotes in a row"
-						str nextPut: $" ].
-					quoteCount := 0.
-					str nextPut: char ].
-			first := false ].
-
-		quoteCount odd ifTrue: [
-			"check at the end"
-			str nextPut: $". ].
-
-		str nextPut: $".
-	]
+		  str nextPut: $" ]
 ]
 
 { #category : 'converting' }
@@ -1412,20 +1408,18 @@ String >> findBetweenSubstrings: delimiters [
 ]
 
 { #category : 'finding/searching' }
-String >> findCloseParenthesisFor: startIndex [
-	"assume (self at: startIndex) is $(.  Find the matching $), allowing parentheses to nest."
-	" '(1+(2-3))-3.14159' findCloseParenthesisFor: 1 "
-	" '(1+(2-3))-3.14159' findCloseParenthesisFor: 4 "
-	| pos nestLevel |
-	pos := startIndex+1.
+String >> findClosing: close startingAt: startIndex [
+	"Assume the opening character is given at startIndex. Find the matching closing character, taking nesting into account."
+
+	| open nestLevel current |
+	self size < startIndex ifTrue: [ ^ 0 ].
+	open := self at: startIndex.
 	nestLevel := 1.
-	[ pos <= self size ] whileTrue: [
-		(self at: pos) = $( ifTrue: [ nestLevel := nestLevel + 1 ].
-		(self at: pos) = $) ifTrue: [ nestLevel := nestLevel - 1 ].
-		nestLevel = 0 ifTrue: [ ^pos ].
-		pos := pos + 1.
-	].
-	^self size + 1
+	startIndex + 1 to: self size do: [ :pos |
+		(current := self at: pos) == close
+			ifTrue: [ (nestLevel := nestLevel - 1) == 0 ifTrue: [ ^ pos ] ]
+			ifFalse: [ current == open ifTrue: [ nestLevel := nestLevel + 1 ] ] ].
+	^ 0
 ]
 
 { #category : 'finding/searching' }

@@ -127,13 +127,13 @@ FLBlockClosureSerializationTest >> testBlockClosureChangeSameBytecodesConstant [
 FLBlockClosureSerializationTest >> testBlockClosureMaterializesClassVariablesCorrectly [
 
 	| class closure method |
-	class := self classFactory silentlyMake: [ :aBuilder | aBuilder sharedVariablesFromString: 'ClassVariableForTesting' ].
+	class := self classFactory silentlyMake: [ :aBuilder | aBuilder sharedVariables: #(ClassVariableForTesting)].
 	self classFactory silentlyCompile: 'methodWithClosure  ^ [ ClassVariableForTesting ]' in: class.
 
 	method := class methodNamed: #methodWithClosure.
 	"Make sure we don't use global clusters here, which would simply perform a lookup"
 	self serializer fullySerializeBehavior: method methodClass.
-	closure := method valueWithReceiver: class new arguments: #(  ).
+	closure := method valueWithReceiver: class new.
 
 	self serialize: closure.
 

@@ -48,7 +48,7 @@ SystemDependenciesTest >> knownBasicToolsDependencies [
 
 	^ #( 'AST-Core-Tests' 'Athens-Cairo' 'Athens-Core' #'Athens-Morphic'
 	     #'Refactoring-Critics' #'Commander-Core'
-	     #Reflectivity #'Reflectivity-Tools' #Shout 'ParametrizedTests'
+	     #Reflectivity #'Reflectivity-Tools' #Shout
 	     'HeuristicCompletion-Model' #VariablesLibrary #'Spec2-CommonWidgets')
 ]
 
@@ -87,7 +87,7 @@ SystemDependenciesTest >> knownLocalMonticelloDependencies [
 SystemDependenciesTest >> knownMorphicCoreDependencies [
 	"ideally this list should be empty"
 
-	^ #( #'Keymapping-KeyCombinations' #'Refactoring-Critics' #'Refactoring-Environment')
+	^ #(#'Fonts-Infrastructure' #'FreeType' #'Keymapping-KeyCombinations' #'Morphic-Base' #'Refactoring-Critics' #'Refactoring-Environment')
 ]
 
 { #category : 'known dependencies' }
@@ -106,13 +106,6 @@ SystemDependenciesTest >> knownSUnitDependencies [
 ]
 
 { #category : 'known dependencies' }
-SystemDependenciesTest >> knownSUnitKernelDependencies [
-	"ideally this list should be empty"
-
-	^ #( #'FileSystem-Core' )
-]
-
-{ #category : 'known dependencies' }
 SystemDependenciesTest >> knownSpec2Dependencies [
 
 	^ #(
@@ -123,8 +116,6 @@ SystemDependenciesTest >> knownSpec2Dependencies [
 { #category : 'known dependencies' }
 SystemDependenciesTest >> knownUFFIDependencies [
 	"ideally this list should be empty"
-
-	"Note: #'Transcript-Core' is brought by RPackage-Core but we want to kill those dependencies in the future because the kernel group should not depend on that."
 
 	^ #( #'Refactoring-Critics' #'Refactoring-Environment' )
 ]
@@ -260,7 +251,6 @@ SystemDependenciesTest >> testExternalIDEDependencies [
 	BaselineOfMorphic.
 	BaselineOfMorphicCore.
 	BaselineOfSlot.
-	BaselineOfParametrizedTests.
 	BaselineOfSUnit.
 	BaselineOfTraits.
 	BaselineOfUI.
@@ -441,9 +431,10 @@ SystemDependenciesTest >> testExternalSUnitKernelDependencies [
 		BaselineOfPharoBootstrap kernelPackageNames,
 		BaselineOfPharoBootstrap multilingualPackageNames,
 		BaselineOfPharoBootstrap kernelAdditionalPackagesNames,
+		BaselineOfPharoBootstrap fileSystemPackageNames,
 		BaselineOfPharoBootstrap sUnitPackageNames).
 
-	self assertCollection: dependencies hasSameElements: self knownSUnitKernelDependencies
+	self assertEmpty: dependencies
 ]
 
 { #category : 'tests' }
@@ -475,8 +466,7 @@ SystemDependenciesTest >> testExternalSpec2Dependencies [
 		BaselineOfThreadedFFI corePackageNames,
 
 		"Tests"
-		BaselineOfSUnit defaultPackageNames,
-		BaselineOfParametrizedTests allPackageNames))
+		BaselineOfSUnit defaultPackageNames))
 			copyWithoutAll: self knownMorphicDependencies, self knownBasicToolsDependencies, self knownUIDependencies.
 
 	self assertCollection: dependencies hasSameElements: self knownSpec2Dependencies
@@ -507,7 +497,6 @@ SystemDependenciesTest >> testExternalUIDependencies [
 		self metacelloPackageNames,
 		self tonelCorePackageNames,
 		BaselineOfTraits corePackages,
-		BaselineOfParametrizedTests allPackageNames,
 		BaselineOfSUnit defaultPackageNames,
 		BaselineOfDisplay allPackageNames,
 		BaselineOfUnifiedFFI allPackageNames,

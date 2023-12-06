@@ -330,6 +330,22 @@ CompiledMethodTest >> testBytecode [
 	self assertCollection: (Object>>#halt) bytecodes equals: expectedResult
 ]
 
+{ #category : 'tests - copying' }
+CompiledMethodTest >> testClone [
+	<pragma: #pragma> "for testing"
+	| method copy |
+	method := thisContext method.
+	self assert: method pragmas notEmpty.
+	copy := method clone.
+	self assert: (method equivalentTo: copy).
+	self assert: method header equals: copy header.
+	self assert: method equals: copy.
+	self assert: method ~~ copy.
+	"this is a shallow copy"
+	self deny: copy penultimateLiteral method identicalTo: copy.
+	copy pragmas do: [ :p | self deny: p method identicalTo: copy ]
+]
+
 { #category : 'tests - accessing' }
 CompiledMethodTest >> testComments [
 	"I am the first comment to be found in this test"
@@ -423,23 +439,6 @@ CompiledMethodTest >> testEqualityInstanceSideMethod [
 { #category : 'tests - testing' }
 CompiledMethodTest >> testHasComment [
 	self assert: (CompiledMethod>>#hasComment) hasComment
-]
-
-{ #category : 'tests - instance variable' }
-CompiledMethodTest >> testHasInstVarRef [
-
-	| method  |
-	method := self class compiledMethodAt: #readX.
-	self assert: (method hasInstVarRef).
-
-	method := self class compiledMethodAt: #readXandY.
-	self assert: (method hasInstVarRef).
-
-	method := self class compiledMethodAt: #writeX.
-	self assert: (method hasInstVarRef).
-
-	method := self class compiledMethodAt: #writeXandY.
-	self assert: (method hasInstVarRef)
 ]
 
 { #category : 'tests - literals' }
@@ -1108,7 +1107,7 @@ CompiledMethodTest >> testValueWithReceiverArguments [
 
 	method := self class compiledMethodAt: #returnTrue.
 
-	value := method valueWithReceiver: nil arguments: #().
+	value := method valueWithReceiver: nil.
 	self assert: value equals: true.
 
 	method := self class compiledMethodAt: #returnPlusOne:.

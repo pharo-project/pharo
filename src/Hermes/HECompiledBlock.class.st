@@ -28,7 +28,7 @@ HECompiledBlock >> asLiteralIn: anEnvironment [
 	previousBlock := anEnvironment newBlock.
 	containingBlockOrMethod := previousBlock ifNil: [ anEnvironment newMethod ].
 
-	newBlock := CompiledBlock newMethod: bytecode size header: (self headerFor: anEnvironment).
+	newBlock := CompiledBlock basicNew: bytecode size header: (self headerFor: anEnvironment).
 
 	anEnvironment newBlock: newBlock.
 

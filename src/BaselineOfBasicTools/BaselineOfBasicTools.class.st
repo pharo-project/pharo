@@ -34,7 +34,7 @@ BaselineOfBasicTools >> baseline: spec [
 
 	<baseline>
 	| repository |
-	repository := self packageRepositoryURL.
+	repository := self packageRepositoryURLForSpec: spec.
 	spec for: #common do: [
 		spec postLoadDoIt: #postload:package:.
 
@@ -68,9 +68,11 @@ BaselineOfBasicTools >> baseline: spec [
 		spec package: 'NECompletion-Preferences'.
 		spec package: 'Metacello-FileTree'.
 		spec package: 'Metacello-Cypress'.
-		spec package: 'CodeExport'..
+		spec package: 'CodeExport'.
 		spec package: 'MonticelloGUI'.
-		spec package: 'Monticello-GUI-Diff' with: [ spec requires: #( 'Tool-Diff' 'MonticelloGUI' ) ].
+		spec
+			package: 'Monticello-GUI-Diff'
+			with: [ spec requires: #( 'Tool-Diff' 'MonticelloGUI' ) ].
 		spec package: 'System-Changes-Tests'. "<= Not sure this one should be here but it is where the classes were loaded before been extracted from Tests package."
 		spec package: 'System-Sources-Tests'. "<= Not sure this one should be here but it is where the classes were loaded before been extracted from Tests package."
 		spec package: 'System-Announcements-Tests'. "<= Not sure this one should be here but it is where the classes were loaded before been extracted from Tests package."

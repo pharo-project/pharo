@@ -627,17 +627,10 @@ Object >> clone [
 	| class newObject |
 	ec == #'insufficient object memory' ifFalse:
 		[^self primitiveFailed].
-	"If the primitive fails due to insufficient memory, instantiate via basicNew: to invoke
-	 the garbage collector before retrying, and use copyFrom: to copy state."
+	"If the primitive fails due to insufficient memory, instantiate via basicNew: to invoke the garbage collector before retrying, and use copyFrom: to copy state."
 	newObject := (class := self class) isVariable
-					ifTrue:
-						[class isCompiledMethodClass
-							ifTrue:
-								[class newMethod: self basicSize - self initialPC + 1 + CompiledMethod trailerSize header: self header]
-							ifFalse:
-								[class basicNew: self basicSize]]
-					ifFalse:
-						[class basicNew].
+					ifTrue: [class basicNew: self basicSize]
+					ifFalse: [class basicNew].
 	^newObject copyFrom: self
 ]
 
@@ -937,67 +930,6 @@ Object >> fullPrintString [
 	"Answer a String whose characters are a description of the receiver."
 
 	^ String streamContents: [:s | self printOn: s]
-]
-
-{ #category : 'halting' }
-Object >> halt [
-	"This is the typical message to use for inserting breakpoints during debugging."
-
-	<debuggerCompleteToSender>
-	Halt now
-]
-
-{ #category : 'halting' }
-Object >> halt: aString [
-	<debuggerCompleteToSender>
-	Halt now: aString
-]
-
-{ #category : 'halting' }
-Object >> haltFromCount: anInteger [
-	"Always halt after a count has been reached"
-
-	<debuggerCompleteToSender>
-	Halt fromCount: anInteger
-]
-
-{ #category : 'halting' }
-Object >> haltIf: condition [
-	<debuggerCompleteToSender>
-
-	Halt if: condition
-]
-
-{ #category : 'testing' }
-Object >> haltIfNil [
-]
-
-{ #category : 'halting' }
-Object >> haltIfNotTest [
-	"Halt if execution was not started by a test. This is useful as this means one can just run tests undisturbed, while a execution for example from the Playground would be halted"
-	<debuggerCompleteToSender>
-	Halt ifNotTest
-]
-
-{ #category : 'halting' }
-Object >> haltIfTest [
-	"Halt if execution was started by a test. These #halts are just active in the tests, useful when you want to add a halt in methods that are executed a lot (e.g. collections)"
-	<debuggerCompleteToSender>
-	Halt ifTest
-]
-
-{ #category : 'halting' }
-Object >> haltOnCount: anInteger [
-	"Halts once when a count is reached"
-
-	<debuggerCompleteToSender>
-	Halt onCount: anInteger
-]
-
-{ #category : 'halting' }
-Object >> haltOnce [
-	<debuggerCompleteToSender>
-	Halt once
 ]
 
 { #category : 'process termination handling' }
@@ -1423,21 +1355,6 @@ Object >> literalEqual: other [
 ]
 
 { #category : 'printing' }
-Object >> longPrintOn: aStream [
-	"Append to the argument, aStream, the names and values of all
-	of the receiver's instance variables."
-
-	self class allInstVarNames doWithIndex:
-		[:title :index |
-		aStream nextPutAll: title;
-		 nextPut: $:;
-		 space;
-		 tab;
-		 print: (self instVarAt: index);
-		 cr]
-]
-
-{ #category : 'printing' }
 Object >> longPrintOn: aStream limitedTo: sizeLimit indent: indent [
 	"Append to the argument, aStream, the names and values of all of the receiver's instance variables.  Limit is the length limit for each inst var."
 
@@ -1451,17 +1368,6 @@ Object >> longPrintOn: aStream limitedTo: sizeLimit indent: indent [
 		 nextPutAll:
 			((self instVarAt: index) printStringLimitedTo: (sizeLimit -3 -title size max: 1));
 		 cr]
-]
-
-{ #category : 'printing' }
-Object >> longPrintString [
-	"Answer a String whose characters are a description of the receiver."
-
-	| str |
-	str := String streamContents: [ :aStream | self longPrintOn: aStream ].
-
-	"Objects without inst vars should return something"
-	^ str ifEmpty: [ self printString , String cr ]
 ]
 
 { #category : 'printing' }

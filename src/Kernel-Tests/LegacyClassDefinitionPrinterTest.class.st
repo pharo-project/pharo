@@ -74,7 +74,7 @@ LegacyClassDefinitionPrinterTest >> testMetaclass [
 	instanceVariableNames: ''thisClass''
 	classVariableNames: ''''
 	poolDictionaries: ''''
-	category: ''Kernel-Classes'''
+	category: ''Kernel-CodeModel-Classes'''
 ]
 
 { #category : 'tests - metaclasses' }

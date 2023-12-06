@@ -77,7 +77,9 @@ RBDummyCompositeLintRuleTest >> failedRules [
 
 { #category : 'testing' }
 RBDummyCompositeLintRuleTest >> hasConflicts [
-	^(rules detect: [:each | each hasConflicts] ifNone: [nil]) notNil
+
+	^ (rules detect: [ :each | each hasConflicts ] ifNone: [ nil ])
+		  isNotNil
 ]
 
 { #category : 'testing' }

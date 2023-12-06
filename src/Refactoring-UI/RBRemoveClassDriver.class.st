@@ -19,20 +19,38 @@ Class {
 	#tag : 'Drivers'
 }
 
-{ #category : 'actions' }
-RBRemoveClassDriver >> applyChanges [
+{ #category : 'execution' }
+RBRemoveClassDriver >> breakingChoices [
 
-	self openPreviewWithChanges: refactoring removeClassChanges
-
+	| items |
+	items := OrderedCollection new.
+	items add: (RBRemoveClassReparentChoice new
+						driver: self;
+						classesHaveSubclasses: noSubclasses isFalse;
+						emptyClasses: emptyClasses isTrue).
+	(noSubclasses isFalse and: [ emptyClasses isFalse ]) ifTrue: [
+		items add: (RBRemoveClassAndPushStateToSubclassChoice new driver: self) ].
+	haveNoReferences isFalse ifTrue: [
+		items add: (RBBrowseClassReferencesChoice new driver: self) ].
+	^ items 
+	
 ]
 
 { #category : 'actions' }
 RBRemoveClassDriver >> browseReferences [
 
 	haveNoReferences violators keysAndValuesDo: [ :violator :references |
+		"we should pass the application! "
 		StMessageBrowserPresenter
 			browse: (references collect: [ :ref | ref method ])
 			asSendersOf: violator realClass ]
+]
+
+{ #category : 'actions' }
+RBRemoveClassDriver >> changes [
+	
+	^  refactoring removeClassChanges
+
 ]
 
 { #category : 'initialization' }
@@ -44,33 +62,24 @@ RBRemoveClassDriver >> configureRefactoring [
 	refactoring prepareForInteractiveMode
 ]
 
+{ #category : 'private execution' }
+RBRemoveClassDriver >> defaultSelectDialog [
+
+	^ SpSelectDialog new
+		    title: 'There are potential breaking changes!';
+		          label: self labelBasedOnBreakingChanges;
+		          items: self breakingChoices;
+		          display: [ :each | each description ];
+		          displayIcon: [ :each | self iconNamed: each systemIconName ];
+		          openModal
+	
+]
+
 { #category : 'execution' }
 RBRemoveClassDriver >> handleBreakingChanges [
 
-	| select items |
-	items := OrderedCollection new.
-	items add: (RBRemoveClassReparentChoice new
-						driver: self;
-						classesHaveSubclasses: noSubclasses isFalse;
-						emptyClasses: emptyClasses isTrue).
-	(noSubclasses isFalse and: [ emptyClasses isFalse ]) ifTrue: [
-		items add:
-			(RBRemoveClassAndPushStateToSubclassChoice new driver: self) ].
-	haveNoReferences isFalse ifTrue: [
-		items add: (RBBrowseClassReferencesChoice new driver: self) ].
-	
-	items size = 1
-		ifTrue: [ ^ items first action ].
-		
-	select := SpSelectDialog new
-		          title: 'There are potential breaking changes!';
-		          label: self labelBasedOnBreakingChanges;
-		          items: items;
-		          display: [ :each | each description ];
-		          displayIcon: [ :each |
-			          self iconNamed: each systemIconName ];
-		          openModal.
-
+	| select |
+	select := self selectDialog.
 	select ifNotNil: [ select action ]
 ]
 
@@ -101,11 +110,7 @@ RBRemoveClassDriver >> runRefactoring [
 	
 	self configureRefactoring.
 	refactoring checkApplicabilityPreconditions.
-	
-	haveNoReferences := refactoring preconditionHaveNoReferences.
-	emptyClasses := refactoring preconditionEmptyClasses.
-	noSubclasses := refactoring preconditionHaveNoSubclasses.
-
+	self setBreakingChangesPreconditions.
 	haveNoReferences check & emptyClasses check & noSubclasses check
 			ifTrue: [ self applyChanges ]
 			ifFalse: [ self handleBreakingChanges ]
@@ -118,4 +123,21 @@ RBRemoveClassDriver >> scopes: refactoringScopes classes: aColclasses [
 	scopes := refactoringScopes.
 	model := self refactoringScopeOn: scopes first.
 	classes := aColclasses
+]
+
+{ #category : 'private execution' }
+RBRemoveClassDriver >> selectDialog [
+	
+	^ selectDialog ifNil: [ selectDialog := self defaultSelectDialog ].
+	
+]
+
+{ #category : 'private execution' }
+RBRemoveClassDriver >> setBreakingChangesPreconditions [
+	
+	haveNoReferences := refactoring preconditionHaveNoReferences.
+	emptyClasses := refactoring preconditionEmptyClasses.
+	noSubclasses := refactoring preconditionHaveNoSubclasses
+
+	
 ]

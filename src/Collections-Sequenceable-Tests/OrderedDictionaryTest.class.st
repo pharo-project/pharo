@@ -622,21 +622,6 @@ OrderedDictionaryTest >> testAtUpdateInitial [
 ]
 
 { #category : 'tests' }
-OrderedDictionaryTest >> testBindingsDo [
-	| dictionary |
-
-	dictionary := self emptyDictionary.
-	self
-		should: [:block | dictionary bindingsDo: block]
-		enumerate: #().
-	self orderedAssociations withIndexDo: [:each :i |
-		dictionary add: each.
-		self
-			should: [:block | dictionary bindingsDo: block]
-			enumerate: (self orderedAssociationsFirst: i)]
-]
-
-{ #category : 'tests' }
 OrderedDictionaryTest >> testCapacity [
 	"The current Dictionary implementation allocates more than specified.
 	The amount allocated may change in the future but it likely won't ever

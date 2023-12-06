@@ -6,11 +6,11 @@ Class {
 	#tag : 'Choices'
 }
 
-{ #category : 'accessing' }
-RBRemoveAndShowSendersChoice >> action [ 
-	
-	driver removeMethodChanges.
-	driver browseSenders.
+{ #category : 'execution' }
+RBRemoveAndShowSendersChoice >> action [
+
+	driver applyChanges.
+	driver browseSenders
 ]
 
 { #category : 'accessing' }

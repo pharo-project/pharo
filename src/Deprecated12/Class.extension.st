@@ -62,7 +62,7 @@ Class >> ephemeronSubclass: t instanceVariableNames: f classVariableNames: d poo
 					layoutClass: EphemeronLayout;
 					slotsFromString: `@instVar;
 					sharedVariablesFromString: `@classVar;
-					sharedPools: `@pools;
+					sharedPoolsFromString: `@pools;
 					category: `@package;
 					environment: `@rcv environment ]'.
 
@@ -73,7 +73,7 @@ Class >> ephemeronSubclass: t instanceVariableNames: f classVariableNames: d poo
 			  layoutClass: EphemeronLayout;
 			  slotsFromString: f;
 			  sharedVariablesFromString: d;
-			  sharedPools: s;
+			  sharedPoolsFromString: s;
 			  category: cat;
 			  environment: self environment ]
 ]
@@ -93,7 +93,7 @@ Class >> ephemeronSubclass: t instanceVariableNames: f classVariableNames: d poo
 					layoutClass: EphemeronLayout;
 					slotsFromString: `@instVar;
 					sharedVariablesFromString: `@classVar;
-					sharedPools: `@pools;
+					sharedPoolsFromString: `@pools;
 					package: `@package;
 					environment: `@rcv environment ]'.
 	^ self classInstaller make: [ :builder |
@@ -103,7 +103,7 @@ Class >> ephemeronSubclass: t instanceVariableNames: f classVariableNames: d poo
 			  layoutClass: EphemeronLayout;
 			  slotsFromString: f;
 			  sharedVariablesFromString: d;
-			  sharedPools: s;
+			  sharedPoolsFromString: s;
 			  package: package;
 			  environment: self environment ]
 ]
@@ -149,7 +149,7 @@ Class >> immediateSubclass: t instanceVariableNames: f classVariableNames: d poo
 					layoutClass: ImmediateLayout;
 					slotsFromString: `@instVar;
 					sharedVariablesFromString: `@classVar;
-					sharedPools: `@pools;
+					sharedPoolsFromString: `@pools;
 					category: `@package;
 					environment: `@rcv environment ]'.
 	^ self classInstaller make: [ :builder |
@@ -159,7 +159,7 @@ Class >> immediateSubclass: t instanceVariableNames: f classVariableNames: d poo
 			  layoutClass: ImmediateLayout;
 			  slotsFromString: f;
 			  sharedVariablesFromString: d;
-			  sharedPools: s;
+			  sharedPoolsFromString: s;
 			  category: cat;
 			  environment: self environment ]
 ]
@@ -178,7 +178,7 @@ Class >> immediateSubclass: t instanceVariableNames: f classVariableNames: d poo
 					layoutClass: ImmediateLayout;
 					slotsFromString: `@instVar;
 					sharedVariablesFromString: `@classVar;
-					sharedPools: `@pools;
+					sharedPoolsFromString: `@pools;
 					package: `@package;
 					environment: `@rcv environment ]'.
 
@@ -189,7 +189,7 @@ Class >> immediateSubclass: t instanceVariableNames: f classVariableNames: d poo
 			  layoutClass: ImmediateLayout;
 			  slotsFromString: f;
 			  sharedVariablesFromString: d;
-			  sharedPools: s;
+			  sharedPoolsFromString: s;
 			  package: package;
 			  environment: self environment ]
 ]
@@ -237,7 +237,7 @@ Class >> immediateSubclass: aName uses: aTraitComposition instanceVariableNames:
 					layoutClass: ImmediateLayout;
 					slotsFromString: `@instVar;
 					sharedVariablesFromString: `@classVar;
-					sharedPools: `@pools;
+					sharedPoolsFromString: `@pools;
 					traitComposition: `@trait;
 					package: `@package;
 					environment: `@rcv environment ]'.
@@ -248,7 +248,7 @@ Class >> immediateSubclass: aName uses: aTraitComposition instanceVariableNames:
 			  slotsFromString: someInstanceVariableNames;
 			  layoutClass: ImmediateLayout;
 			  sharedVariablesFromString: someClassVariableNames;
-			  sharedPools: someSharedPoolNames;
+			  sharedPoolsFromString: someSharedPoolNames;
 			  traitComposition: aTraitComposition;
 			  package: package ]
 ]
@@ -347,7 +347,7 @@ Class >> subclass: t instanceVariableNames: f classVariableNames: d poolDictiona
 			  name: t;
 			  slotsFromString: f;
 			  sharedVariablesFromString: d;
-			  sharedPools: s;
+			  sharedPoolsFromString: s;
 			  category: cat;
 			  environment: self environment ]
 ]
@@ -376,7 +376,7 @@ Class >> subclass: t instanceVariableNames: f classVariableNames: d poolDictiona
 			  layoutClass: self classLayout class;
 			  slotsFromString: f;
 			  sharedVariablesFromString: d;
-			  sharedPools: s;
+			  sharedPoolsFromString: s;
 			  package: package;
 			  environment: self environment ]
 ]
@@ -431,7 +431,7 @@ Class >> subclass: aSubclassSymbol layout: layoutClass slots: slotDefinition cla
 			  layoutClass: layoutClass;
 			  slots: slotDefinition;
 			  sharedVariables: classVarDefinition;
-			  sharedPools: someSharedPoolNames;
+			  sharedPoolsFromString: someSharedPoolNames;
 			  package: package ]
 ]
 
@@ -482,7 +482,7 @@ Class >> subclass: aSubclassSymbol slots: slotDefinition classVariables: classVa
 			  superclass: self;
 			  slots: slotDefinition;
 			  sharedVariables: classVarDefinition;
-			  sharedPools: someSharedPoolNames;
+			  sharedPoolsFromString: someSharedPoolNames;
 			  package: package ]
 ]
 
@@ -571,7 +571,7 @@ Class >> subclass: aName uses: aTraitCompositionOrArray instanceVariableNames: s
 					name: `@name;
 					slotsFromString: `@instVar;
 					sharedVariablesFromString: `@classVar;
-					sharedPools: `@pools;
+					sharedPoolsFromString: `@pools;
 					traitComposition: `@trait;
 					category: `@package;
 					environment: `@rcv environment ]'.
@@ -581,7 +581,7 @@ Class >> subclass: aName uses: aTraitCompositionOrArray instanceVariableNames: s
 			  superclass: self;
 			  slotsFromString: someInstanceVariableNames;
 			  sharedVariablesFromString: someClassVariableNames;
-			  sharedPools: someSharedPoolNames;
+			  sharedPoolsFromString: someSharedPoolNames;
 			  traitComposition: aTraitCompositionOrArray;
 			  category: aCategory ]
 ]
@@ -600,7 +600,7 @@ Class >> subclass: aName uses: aTraitCompositionOrArray instanceVariableNames: s
 					name: `@name;
 					slotsFromString: `@instVar;
 					sharedVariablesFromString: `@classVar;
-					sharedPools: `@pools;
+					sharedPoolsFromString: `@pools;
 					traitComposition: `@trait;
 					package: `@package;
 					environment: `@rcv environment ]'.
@@ -610,7 +610,7 @@ Class >> subclass: aName uses: aTraitCompositionOrArray instanceVariableNames: s
 			  superclass: self;
 			  slotsFromString: someInstanceVariableNames;
 			  sharedVariablesFromString: someClassVariableNames;
-			  sharedPools: someSharedPoolNames;
+			  sharedPoolsFromString: someSharedPoolNames;
 			  traitComposition: aTraitCompositionOrArray;
 			  package: package ]
 ]
@@ -686,7 +686,7 @@ Class >> subclass: subclassName uses: aTraitComposition layout: aLayout slots: s
 					layoutClass: `@layout;
 					slots: `@instVar;
 					sharedVariables: `@classVar;
-					sharedPools: `@pools;
+					sharedPoolsFromString: `@pools;
 					traitComposition: `@trait;
 					category: `@package;
 					environment: `@rcv environment ]'.
@@ -697,7 +697,7 @@ Class >> subclass: subclassName uses: aTraitComposition layout: aLayout slots: s
 			  slots: someSlots;
 			  layoutClass: aLayout;
 			  sharedVariables: someClassVariables;
-			  sharedPools: somePoolDictionaries;
+			  sharedPoolsFromString: somePoolDictionaries;
 			  traitComposition: aTraitComposition;
 			  category: aCategory ]
 ]
@@ -717,7 +717,7 @@ Class >> subclass: subclassName uses: aTraitComposition layout: aLayout slots: s
 					layoutClass: `@layout;
 					slots: `@instVar;
 					sharedVariables: `@classVar;
-					sharedPools: `@pools;
+					sharedPoolsFromString: `@pools;
 					traitComposition: `@trait;
 					package: `@package;
 					environment: `@rcv environment ]'.
@@ -728,7 +728,7 @@ Class >> subclass: subclassName uses: aTraitComposition layout: aLayout slots: s
 			  slots: someSlots;
 			  layoutClass: aLayout;
 			  sharedVariables: someClassVariables;
-			  sharedPools: somePoolDictionaries;
+			  sharedPoolsFromString: somePoolDictionaries;
 			  traitComposition: aTraitComposition;
 			  package: package ]
 ]
@@ -748,7 +748,7 @@ Class >> subclass: subclassName uses: aTraitComposition layout: aLayout slots: s
 					layoutClass: `@layout;
 					slots: `@instVar;
 					sharedVariables: `@classVar;
-					sharedPools: `@pools;
+					sharedPoolsFromString: `@pools;
 					traitComposition: `@trait;
 					category: `@package;
 					environment: `@rcv environment ]'.
@@ -759,7 +759,7 @@ Class >> subclass: subclassName uses: aTraitComposition layout: aLayout slots: s
 			  slots: someSlots;
 			  layoutClass: aLayout;
 			  sharedVariablesFromString: someClassVariablesNames;
-			  sharedPools: somePoolDictionaries;
+			  sharedPoolsFromString: somePoolDictionaries;
 			  traitComposition: aTraitComposition;
 			  category: aCategory ]
 ]
@@ -779,7 +779,7 @@ Class >> subclass: subclassName uses: aTraitComposition layout: aLayout slots: s
 					layoutClass: `@layout;
 					slots: `@instVar;
 					sharedVariables: `@classVar;
-					sharedPools: `@pools;
+					sharedPoolsFromString: `@pools;
 					traitComposition: `@trait;
 					package: `@package;
 					environment: `@rcv environment ]'.
@@ -790,7 +790,7 @@ Class >> subclass: subclassName uses: aTraitComposition layout: aLayout slots: s
 			  slots: someSlots;
 			  layoutClass: aLayout;
 			  sharedVariablesFromString: someClassVariablesNames;
-			  sharedPools: somePoolDictionaries;
+			  sharedPoolsFromString: somePoolDictionaries;
 			  traitComposition: aTraitComposition;
 			  package: package ]
 ]
@@ -858,7 +858,7 @@ Class >> subclass: aSubclassSymbol uses: aTraitCompositionOrArray slots: slotDef
 					name: `@name;
 					slots: `@instVar;
 					sharedVariables: `@classVar;
-					sharedPools: `@pools;
+					sharedPoolsFromString: `@pools;
 					traitComposition: `@trait;
 					category: `@package;
 					environment: `@rcv environment ]'.
@@ -868,7 +868,7 @@ Class >> subclass: aSubclassSymbol uses: aTraitCompositionOrArray slots: slotDef
 			  superclass: self;
 			  slots: slotDefinition;
 			  sharedVariables: classVarDefinition;
-			  sharedPools: someSharedPoolNames;
+			  sharedPoolsFromString: someSharedPoolNames;
 			  traitComposition: aTraitCompositionOrArray;
 			  category: aCategorySymbol ]
 ]
@@ -886,7 +886,7 @@ Class >> subclass: aSubclassSymbol uses: aTraitCompositionOrArray slots: slotDef
 					name: `@name;
 					slots: `@instVar;
 					sharedVariables: `@classVar;
-					sharedPools: `@pools;
+					sharedPoolsFromString: `@pools;
 					traitComposition: `@trait;
 					package: `@package;
 					environment: `@rcv environment ]'.
@@ -896,7 +896,7 @@ Class >> subclass: aSubclassSymbol uses: aTraitCompositionOrArray slots: slotDef
 			  superclass: self;
 			  slots: slotDefinition;
 			  sharedVariables: classVarDefinition;
-			  sharedPools: someSharedPoolNames;
+			  sharedPoolsFromString: someSharedPoolNames;
 			  traitComposition: aTraitCompositionOrArray;
 			  package: package ]
 ]
@@ -968,7 +968,7 @@ Class >> variableByteSubclass: className instanceVariableNames: f classVariableN
 					layoutClass: (`@rcv checkForCompiledMethodLayout: `@name);
 					slotsFromString: `@instVar;
 					sharedVariablesFromString: `@classVar;
-					sharedPools: `@pools;
+					sharedPoolsFromString: `@pools;
 					category: `@package;
 					environment: `@rcv environment ]'.
 	^ self classInstaller make: [ :builder |
@@ -978,7 +978,7 @@ Class >> variableByteSubclass: className instanceVariableNames: f classVariableN
 			  layoutClass: (self checkForCompiledMethodLayout: className);
 			  slotsFromString: f;
 			  sharedVariablesFromString: d;
-			  sharedPools: s;
+			  sharedPoolsFromString: s;
 			  category: cat;
 			  environment: self environment ]
 ]
@@ -998,7 +998,7 @@ Class >> variableByteSubclass: className instanceVariableNames: f classVariableN
 					layoutClass: (`@rcv checkForCompiledMethodLayout: `@name);
 					slotsFromString: `@instVar;
 					sharedVariablesFromString: `@classVar;
-					sharedPools: `@pools;
+					sharedPoolsFromString: `@pools;
 					package: `@package;
 					environment: `@rcv environment ]'.
 	^ self classInstaller make: [ :builder |
@@ -1008,7 +1008,7 @@ Class >> variableByteSubclass: className instanceVariableNames: f classVariableN
 			  layoutClass: (self checkForCompiledMethodLayout: className);
 			  slotsFromString: f;
 			  sharedVariablesFromString: d;
-			  sharedPools: s;
+			  sharedPoolsFromString: s;
 			  package: package;
 			  environment: self environment ]
 ]
@@ -1057,7 +1057,7 @@ Class >> variableByteSubclass: aName uses: aTraitComposition instanceVariableNam
 					layoutClass: (`@rcv checkForCompiledMethodLayout: `@name);
 					slotsFromString: `@instVar;
 					sharedVariablesFromString: `@classVar;
-					sharedPools: `@pools;
+					sharedPoolsFromString: `@pools;
 					traitComposition: `@trait;
 					category: `@package;
 					environment: `@rcv environment ]'.
@@ -1068,7 +1068,7 @@ Class >> variableByteSubclass: aName uses: aTraitComposition instanceVariableNam
 			  slotsFromString: someInstanceVariableNames;
 			  layoutClass: (self checkForCompiledMethodLayout: aName);
 			  sharedVariablesFromString: someClassVariableNames;
-			  sharedPools: someSharedPoolNames;
+			  sharedPoolsFromString: someSharedPoolNames;
 			  traitComposition: aTraitComposition;
 			  category: aCategory ]
 ]
@@ -1194,7 +1194,7 @@ Class >> variableSubclass: className instanceVariableNames: instVarNameList clas
 					layoutClass: VariableLayout;
 					slotsFromString: `@instVar;
 					sharedVariablesFromString: `@classVar;
-			 		sharedPools: `@pools;
+			 		sharedPoolsFromString: `@pools;
 					category: `@package;
 					environment: `@rcv environment ]'.
 
@@ -1205,7 +1205,7 @@ Class >> variableSubclass: className instanceVariableNames: instVarNameList clas
 			  layoutClass: VariableLayout;
 			  slotsFromString: instVarNameList;
 			  sharedVariablesFromString: classVarNames;
-			  sharedPools: s;
+			  sharedPoolsFromString: s;
 			  category: cat;
 			  environment: self environment ]
 ]
@@ -1224,7 +1224,7 @@ Class >> variableSubclass: t instanceVariableNames: f classVariableNames: d pool
 					layoutClass: VariableLayout;
 					slotsFromString: `@instVar;
 					sharedVariablesFromString: `@classVar;
-			 		sharedPools: `@pools;
+			 		sharedPoolsFromString: `@pools;
 					package: `@package;
 					environment: `@rcv environment ]'.
 	^ self classInstaller make: [ :builder |
@@ -1234,7 +1234,7 @@ Class >> variableSubclass: t instanceVariableNames: f classVariableNames: d pool
 			  layoutClass: VariableLayout;
 			  slotsFromString: f;
 			  sharedVariablesFromString: d;
-			  sharedPools: s;
+			  sharedPoolsFromString: s;
 			  package: package;
 			  environment: self environment ]
 ]
@@ -1308,7 +1308,7 @@ Class >> variableSubclass: aName uses: aTraitComposition instanceVariableNames: 
 					layoutClass: VariableLayout;
 					slotsFromString: `@instVar;
 					sharedVariablesFromString: `@classVar;
-			 		sharedPools: `@pools;
+			 		sharedPoolsFromString: `@pools;
 					traitComposition: `@trait;
 					category: `@package;
 					environment: `@rcv environment ]'.
@@ -1319,7 +1319,7 @@ Class >> variableSubclass: aName uses: aTraitComposition instanceVariableNames: 
 			  layoutClass: VariableLayout;
 			  slotsFromString: someInstanceVariableNames;
 			  sharedVariablesFromString: someClassVariableNames;
-			  sharedPools: someSharedPoolNames;
+			  sharedPoolsFromString: someSharedPoolNames;
 			  traitComposition: aTraitComposition;
 			  category: aCategory ]
 ]
@@ -1339,7 +1339,7 @@ Class >> variableSubclass: aName uses: aTraitComposition instanceVariableNames: 
 					layoutClass: VariableLayout;
 					slotsFromString: `@instVar;
 					sharedVariablesFromString: `@classVar;
-			 		sharedPools: `@pools;
+			 		sharedPoolsFromString: `@pools;
 					traitComposition: `@trait;
 					package: `@package;
 					environment: `@rcv environment ]'.
@@ -1350,7 +1350,7 @@ Class >> variableSubclass: aName uses: aTraitComposition instanceVariableNames: 
 			  layoutClass: VariableLayout;
 			  slotsFromString: someInstanceVariableNames;
 			  sharedVariablesFromString: someClassVariableNames;
-			  sharedPools: someSharedPoolNames;
+			  sharedPoolsFromString: someSharedPoolNames;
 			  traitComposition: aTraitComposition;
 			  category: aCategory ]
 ]
@@ -1422,7 +1422,7 @@ Class >> variableWordSubclass: t instanceVariableNames: f classVariableNames: d 
 					layoutClass: WordLayout;
 					slotsFromString: `@instVar;
 					sharedVariablesFromString: `@classVar;
-					sharedPools: `@pools;
+					sharedPoolsFromString: `@pools;
 					category: `@package;
 					environment: `@rcv environment ]'.
 	^ self classInstaller make: [ :builder |
@@ -1432,7 +1432,7 @@ Class >> variableWordSubclass: t instanceVariableNames: f classVariableNames: d 
 			  layoutClass: WordLayout;
 			  slotsFromString: f;
 			  sharedVariablesFromString: d;
-			  sharedPools: s;
+			  sharedPoolsFromString: s;
 			  category: cat;
 			  environment: self environment ]
 ]
@@ -1451,7 +1451,7 @@ Class >> variableWordSubclass: t instanceVariableNames: f classVariableNames: d 
 					layoutClass: WordLayout;
 					slotsFromString: `@instVar;
 					sharedVariablesFromString: `@classVar;
-					sharedPools: `@pools;
+					sharedPoolsFromString: `@pools;
 					package: `@package;
 					environment: `@rcv environment ]'.
 	^ self classInstaller make: [ :builder |
@@ -1461,7 +1461,7 @@ Class >> variableWordSubclass: t instanceVariableNames: f classVariableNames: d 
 			  layoutClass: WordLayout;
 			  slotsFromString: f;
 			  sharedVariablesFromString: d;
-			  sharedPools: s;
+			  sharedPoolsFromString: s;
 			  package: package;
 			  environment: self environment ]
 ]
@@ -1539,7 +1539,7 @@ Class >> variableWordSubclass: aName uses: aTraitComposition instanceVariableNam
 					layoutClass: WordLayout;
 					slotsFromString: `@instVar;
 					sharedVariablesFromString: `@classVar;
-					sharedPools: `@pools;
+					sharedPoolsFromString: `@pools;
 					traitComposition: `@trait;
 					category: `@package;
 					environment: `@rcv environment ]'.
@@ -1550,7 +1550,7 @@ Class >> variableWordSubclass: aName uses: aTraitComposition instanceVariableNam
 			  slotsFromString: someInstanceVariableNames;
 			  layoutClass: WordLayout;
 			  sharedVariablesFromString: someClassVariableNames;
-			  sharedPools: someSharedPoolNames;
+			  sharedPoolsFromString: someSharedPoolNames;
 			  traitComposition: aTraitComposition;
 			  category: aCategory ]
 ]
@@ -1570,7 +1570,7 @@ Class >> variableWordSubclass: aName uses: aTraitComposition instanceVariableNam
 					layoutClass: WordLayout;
 					slotsFromString: `@instVar;
 					sharedVariablesFromString: `@classVar;
-					sharedPools: `@pools;
+					sharedPoolsFromString: `@pools;
 					traitComposition: `@trait;
 					package: `@package;
 					environment: `@rcv environment ]'.
@@ -1581,7 +1581,7 @@ Class >> variableWordSubclass: aName uses: aTraitComposition instanceVariableNam
 			  slotsFromString: someInstanceVariableNames;
 			  layoutClass: WordLayout;
 			  sharedVariablesFromString: someClassVariableNames;
-			  sharedPools: someSharedPoolNames;
+			  sharedPoolsFromString: someSharedPoolNames;
 			  traitComposition: aTraitComposition;
 			  category: aCategory ]
 ]
@@ -1654,7 +1654,7 @@ Class >> weakSubclass: t instanceVariableNames: f classVariableNames: d poolDict
 					layoutClass: WeakLayout;
 					slotsFromString: `@instVar;
 					sharedVariablesFromString: `@classVar;
-			 		sharedPools: `@pools;
+			 		sharedPoolsFromString: `@pools;
 					category: `@package;
 					environment: `@rcv environment ]'.
 	^ self classInstaller make: [ :builder |
@@ -1664,7 +1664,7 @@ Class >> weakSubclass: t instanceVariableNames: f classVariableNames: d poolDict
 			  layoutClass: WeakLayout;
 			  slotsFromString: f;
 			  sharedVariablesFromString: d;
-			  sharedPools: s;
+			  sharedPoolsFromString: s;
 			  category: cat;
 			  environment: self environment ]
 ]
@@ -1684,7 +1684,7 @@ Class >> weakSubclass: t instanceVariableNames: f classVariableNames: d poolDict
 					layoutClass: WeakLayout;
 					slotsFromString: `@instVar;
 					sharedVariablesFromString: `@classVar;
-					sharedPools: `@pools;
+					sharedPoolsFromString: `@pools;
 					package: `@package;
 					environment: `@rcv environment ]'.
 	^ self classInstaller make: [ :builder |
@@ -1694,7 +1694,7 @@ Class >> weakSubclass: t instanceVariableNames: f classVariableNames: d poolDict
 			  layoutClass: WeakLayout;
 			  slotsFromString: f;
 			  sharedVariablesFromString: d;
-			  sharedPools: s;
+			  sharedPoolsFromString: s;
 			  category: package;
 			  environment: self environment ]
 ]
@@ -1770,7 +1770,7 @@ Class >> weakSubclass: aName uses: aTraitComposition instanceVariableNames: some
 					layoutClass: WeakLayout;
 					slotsFromString: `@instVar;
 					sharedVariablesFromString: `@classVar;
-			 		sharedPools: `@pools;
+			 		sharedPoolsFromString: `@pools;
 					traitComposition: `@trait;
 					category: `@package;
 					environment: `@rcv environment ]'.
@@ -1781,7 +1781,7 @@ Class >> weakSubclass: aName uses: aTraitComposition instanceVariableNames: some
 			  slotsFromString: someInstanceVariableNames;
 			  layoutClass: WeakLayout;
 			  sharedVariablesFromString: someClassVariableNames;
-			  sharedPools: someSharedPoolNames;
+			  sharedPoolsFromString: someSharedPoolNames;
 			  traitComposition: aTraitComposition;
 			  category: aCategory ]
 ]
@@ -1801,7 +1801,7 @@ Class >> weakSubclass: aName uses: aTraitComposition instanceVariableNames: some
 					layoutClass: WeakLayout;
 					slotsFromString: `@instVar;
 					sharedVariablesFromString: `@classVar;
-					sharedPools: `@pools;
+					sharedPoolsFromString: `@pools;
 					traitComposition: `@trait;
 					package: `@package;
 					environment: `@rcv environment ]'.
@@ -1812,7 +1812,7 @@ Class >> weakSubclass: aName uses: aTraitComposition instanceVariableNames: some
 			  slotsFromString: someInstanceVariableNames;
 			  layoutClass: WeakLayout;
 			  sharedVariablesFromString: someClassVariableNames;
-			  sharedPools: someSharedPoolNames;
+			  sharedPoolsFromString: someSharedPoolNames;
 			  traitComposition: aTraitComposition;
 			  category: aCategory ]
 ]

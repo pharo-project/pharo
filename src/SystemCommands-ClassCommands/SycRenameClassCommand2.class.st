@@ -1,7 +1,9 @@
 Class {
 	#name : 'SycRenameClassCommand2',
 	#superclass : 'SycSingleClassCommand',
-	#instVars : [ 'toolContext' ],
+	#instVars : [
+		'toolContext'
+	],
 	#category : 'SystemCommands-ClassCommands',
 	#package : 'SystemCommands-ClassCommands'
 }

@@ -60,22 +60,22 @@ PackageOnModelTest >> setUp [
 { #category : 'tests - tag class' }
 PackageOnModelTest >> testAddTag [
 
-	self assert: xPackage classTags size equals: 1. "We start with the root tag"
+	self assert: xPackage tags size equals: 1. "We start with the root tag"
 	xPackage ensureTag: #baz.
-	self assert: (xPackage classTags anySatisfy: [ :tag | tag name = #baz ]).
-	self assert: xPackage classTags size equals: 2.
+	self assert: (xPackage tags anySatisfy: [ :tag | tag name = #baz ]).
+	self assert: xPackage tags size equals: 2.
 
 	xPackage moveClass: a1 toTag: #foo.
 	xPackage moveClass: b1 toTag: #foo.
-	self assert: (xPackage classTags anySatisfy: [ :tag | tag name = #foo ]).
-	self assert: xPackage classTags size equals: 2. "foo and baz. The root tag got automatically removed since it was empty."
+	self assert: (xPackage tags anySatisfy: [ :tag | tag name = #foo ]).
+	self assert: xPackage tags size equals: 2. "foo and baz. The root tag got automatically removed since it was empty."
 	self assert: (((xPackage classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #A1DefinedInX).
 	self assert: (((xPackage classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #B1DefinedInX).
 	self assert: (xPackage classesTaggedWith: #foo) size equals: 2.
 
 	xPackage ensureTag: #foo.
-	self assert: (xPackage classTags anySatisfy: [ :tag | tag name = #baz ]).
-	self assert: (xPackage classTags anySatisfy: [ :tag | tag name = #foo ]).
+	self assert: (xPackage tags anySatisfy: [ :tag | tag name = #baz ]).
+	self assert: (xPackage tags anySatisfy: [ :tag | tag name = #foo ]).
 	self assert: (((xPackage classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #A1DefinedInX).
 	self assert: (((xPackage classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #B1DefinedInX).
 	self assert: (xPackage classesTaggedWith: #foo) size equals: 2
@@ -84,31 +84,31 @@ PackageOnModelTest >> testAddTag [
 { #category : 'tests - tag class' }
 PackageOnModelTest >> testAddTagNames [
 
-	self assert: xPackage classTags size equals: 1. "We start with the root tag"
+	self assert: xPackage tags size equals: 1. "We start with the root tag"
 	xPackage ensureTag: #baz.
-	self assert: (xPackage classTags anySatisfy: [ :tag | tag name = #baz ]).
-	self assert: xPackage classTags size equals: 2.
+	self assert: (xPackage tags anySatisfy: [ :tag | tag name = #baz ]).
+	self assert: xPackage tags size equals: 2.
 
 	xPackage moveClass: a1 toTag: #foo.
 	xPackage moveClass: b1 toTag: #foo.
-	self assert: (xPackage classTags anySatisfy: [ :tag | tag name = #foo ]).
-	self assert: xPackage classTags size equals: 2. "foo and baz. The root tag got automatically removed since it was empty."
-	self assert: ((xPackage classTagNamed: #foo) classNames includes: #A1DefinedInX).
-	self assert: ((xPackage classTagNamed: #foo) classNames includes: #B1DefinedInX).
-	self assert: (xPackage classTagNamed: #foo) classNames size equals: 2.
+	self assert: (xPackage tags anySatisfy: [ :tag | tag name = #foo ]).
+	self assert: xPackage tags size equals: 2. "foo and baz. The root tag got automatically removed since it was empty."
+	self assert: ((xPackage tagNamed: #foo) classNames includes: #A1DefinedInX).
+	self assert: ((xPackage tagNamed: #foo) classNames includes: #B1DefinedInX).
+	self assert: (xPackage tagNamed: #foo) classNames size equals: 2.
 
 	xPackage ensureTag: #foo.
-	self assert: (xPackage classTags anySatisfy: [ :tag | tag name = #baz ]).
-	self assert: (xPackage classTags anySatisfy: [ :tag | tag name = #foo ]).
-	self assert: ((xPackage classTagNamed: #foo) classNames includes: #A1DefinedInX).
-	self assert: ((xPackage classTagNamed: #foo) classNames includes: #B1DefinedInX).
-	self assert: (xPackage classTagNamed: #foo) classNames size equals: 2
+	self assert: (xPackage tags anySatisfy: [ :tag | tag name = #baz ]).
+	self assert: (xPackage tags anySatisfy: [ :tag | tag name = #foo ]).
+	self assert: ((xPackage tagNamed: #foo) classNames includes: #A1DefinedInX).
+	self assert: ((xPackage tagNamed: #foo) classNames includes: #B1DefinedInX).
+	self assert: (xPackage tagNamed: #foo) classNames size equals: 2
 ]
 
 { #category : 'tests - tag class' }
 PackageOnModelTest >> testAddTagsToAClass [
 
-	self assert: xPackage classTags size equals: 1. "We start with the root tag"
+	self assert: xPackage tags size equals: 1. "We start with the root tag"
 
 	xPackage moveClass: a1 toTag: #foo.
 	self assert: (((xPackage classesTaggedWith: #foo) collect: [ :each | each name ]) includes: #A1DefinedInX).
@@ -157,7 +157,7 @@ PackageOnModelTest >> testDefinedSelectorsForClass [
 { #category : 'tests - tag class' }
 PackageOnModelTest >> testEmpty [
 
-	self assertEmpty: (RPackage named: 'new package') classTags
+	self assertEmpty: (Package named: 'new package') tags
 ]
 
 { #category : 'tests - accessing' }

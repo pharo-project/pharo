@@ -307,13 +307,13 @@ RubSmalltalkEditor >> classNamesContainingIt [
 ]
 
 { #category : 'do-its' }
-RubSmalltalkEditor >> compile: aStream for: anObject in: evalContext [
+RubSmalltalkEditor >> compile: source for: anObject in: evalContext [
 	| methodClass |
 	methodClass := evalContext
 		ifNil: [ anObject class ]
 		ifNotNil: [ evalContext methodClass ].
 	^self class compiler
-		source: aStream;
+		source: source;
 		class: methodClass;
 		context: evalContext;
 		isScripting: true;
@@ -508,18 +508,21 @@ RubSmalltalkEditor >> editingMode [
 ]
 
 { #category : 'do-its' }
-RubSmalltalkEditor >> evaluate: aStream andDo: aBlock [
+RubSmalltalkEditor >> evaluate: source andDo: aBlock [
 	"Treat the current selection as an expression; evaluate it and invoke aBlock with the result."
 	| result rcvr ctxt |
 	(self model respondsTo: #doItReceiver)
 		ifTrue: [ rcvr := self model doItReceiver.
 				ctxt := self model doItContext]
 		ifFalse: [ rcvr := ctxt := nil].
+		
+	"to improve: we need better reporting of errors, to revisit when unifying with Spec"
 	result := rcvr class compiler
-			source: aStream;
+			source: source;
+			requestor: self;
 			context: ctxt;
 			receiver: rcvr;
-			permitFaulty: true;
+			permitFaulty: false;
 			evaluate.
 
 	^ aBlock value: result
@@ -1159,7 +1162,7 @@ RubSmalltalkEditor >> tally: aStream [
 			[receiver := context := nil].
 	compiledMethod := self compile: aStream for: receiver in: context.
 	compiledMethod ifNil: [^ self].
-	profiler := TimeProfiler spyOn: [ v:= compiledMethod valueWithReceiver: receiver arguments: #()].
+	profiler := TimeProfiler spyOn: [ v:= compiledMethod valueWithReceiver: receiver].
 	profiler showResult: v
 ]
 

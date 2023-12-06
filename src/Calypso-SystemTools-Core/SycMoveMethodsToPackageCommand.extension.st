@@ -6,7 +6,7 @@ SycMoveMethodsToPackageCommand class >> methodBrowserDragAndDropActivation [
 
 	^CmdDragAndDropActivation
 		for: ClyMethod asCalypsoItemContext
-		toDropIn: RPackage asCalypsoItemContext
+		toDropIn: Package asCalypsoItemContext
 ]
 
 { #category : '*Calypso-SystemTools-Core' }

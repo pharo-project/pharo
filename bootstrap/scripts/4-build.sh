@@ -126,13 +126,13 @@ zip "${BOOTSTRAP_ARCHIVE_IMAGE_NAME}.zip" "${BOOTSTRAP_ARCHIVE_IMAGE_NAME}.image
 # Archive binary Hermes packages
 zip "${HERMES_ARCHIVE_NAME}.zip" *.hermes
 
-# Archive RPackage definitions
+# Archive Package definitions
 zip "${RPACKAGE_ARCHIVE_NAME}.zip" protocolsKernel.txt
 
 # Find st-cache path
 [[ -z "${BOOTSTRAP_CACHE}" ]] && ST_CACHE='st-cache' || ST_CACHE="${BOOTSTRAP_CACHE}/st-cache"
 
-# Installing RPackage
+# Installing Package
 echo $(date -u) "[Compiler] Initializing Bootstraped Image"
 ${VM} "${COMPILER_IMAGE_NAME}.image" # I have to run once the image so the next time it starts the CommandLineHandler.
 
@@ -142,23 +142,22 @@ ${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" loadHermes Math-Operations
 
 ${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" loadHermes InitializePackagesCommandLineHandler.hermes --save
 
-${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" loadHermes Collections-Atomic.hermes AST-Core.hermes Collections-Arithmetic.hermes Jobs.hermes System-SourcesCondenser.hermes --save --no-fail-on-undeclared
+${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" loadHermes Collections-Atomic.hermes AST-Core.hermes Collections-Arithmetic.hermes ClassDefinitionPrinters.hermes System-SourcesCondenser.hermes --save --no-fail-on-undeclared
 
 echo $(date -u) "[Compiler] Initializing the packages in the Kernel"
 ${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" initializePackages --protocols=protocolsKernel.txt --packages --save
 
 # Installing compiler through Hermes 
 echo $(date -u) "[Compiler] Installing compiler through Hermes"
-${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" loadHermes OpalCompiler-Core.hermes CodeImport.hermes CodeImportCommandLineHandlers.hermes --save --no-fail-on-undeclared
+${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" loadHermes Debugging-Utils.hermes OpalCompiler-Core.hermes CodeImport.hermes CodeImportCommandLineHandlers.hermes --save --no-fail-on-undeclared
 ${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" eval --save "OpalCompiler register. CompilationContext initialize. OCASTTranslator initialize."
 ${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" st ${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/01-initialization/01-init.st --no-source --save --quit
 
 echo $(date -u) "[Compiler] Initializing Unicode"
 ${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" st ${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/01-initialization/02-initUnicode.st --no-source --save --quit "${BOOTSTRAP_REPOSITORY}/resources/unicode/"
 
-${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" loadHermes FileSystem-Core.hermes FileSystem-Disk.hermes --save --no-fail-on-undeclared
+${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" loadHermes Random-Core.hermes System-Hashing.hermes Network-UUID.hermes FileSystem-Core.hermes FileSystem-Disk.hermes --save --no-fail-on-undeclared
 ${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" eval --save "PharoBootstrapInitialization initializeFileSystem"
-${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" eval --save "SourceFileArray initialize"
 zip "${COMPILER_IMAGE_NAME}.zip" "${COMPILER_IMAGE_NAME}.image"
 
 # Installing Traits through Hermes 
@@ -169,8 +168,8 @@ ${VM} "${TRAITS_IMAGE_NAME}.image" "${IMAGE_FLAGS}" loadHermes Traits.hermes --s
 ${VM} "${TRAITS_IMAGE_NAME}.image" "${IMAGE_FLAGS}" loadHermes Kernel-Traits.hermes Collections-Abstract-Traits.hermes CodeImport-Traits.hermes --save
 zip "${TRAITS_IMAGE_NAME}.zip" "${TRAITS_IMAGE_NAME}.image"
 
-#Bootstrap Initialization: Class and RPackage initialization
-echo $(date -u) "[Core] Class and RPackage initialization"
+#Bootstrap Initialization: Class and Package initialization
+echo $(date -u) "[Core] Class and Package initialization"
 ${VM} "${TRAITS_IMAGE_NAME}.image" "${IMAGE_FLAGS}" save ${CORE_IMAGE_NAME}
 zip "${CORE_IMAGE_NAME}.zip" "${CORE_IMAGE_NAME}.image"
 

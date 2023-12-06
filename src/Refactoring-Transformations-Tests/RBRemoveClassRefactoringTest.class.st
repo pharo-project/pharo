@@ -104,40 +104,6 @@ RBRemoveClassRefactoringTest >> testPreconditionHasNoReferencesWithClassesWithRe
 	self assert: refact preconditionHaveNoReferences check
 ]
 
-{ #category : 'tests preconditions' }
-RBRemoveClassRefactoringTest >> testPreconditionHasNoSymbolUseHandlesCorrectlyRemovedClasses [
-
-	| refact classes |
-	classes := RBClassEnvironment classes: { OnlyReferencing . OnlyReferencedByASymbol}.
-	"since the model is only these classes, such references are not introducing extra references for the test"
-	model := RBNamespace onEnvironment: classes.
-	
-	refact := RBRemoveClassRefactoring 
-					model: model 
-					classNames: { #OnlyReferencing . #OnlyReferencedByASymbol }.
-		
-	self assert: (refact preconditionHasNoUsers: (refact model classNamed: #OnlyReferencedByASymbol)) check.
-	"It should be true because uses created by classes to be removed should not be counted."
-	
-]
-
-{ #category : 'tests preconditions' }
-RBRemoveClassRefactoringTest >> testPreconditionHasNoSymbolUseShouldFail [
-
-	| refact classes |
-	classes := RBClassEnvironment classes: { OnlyReferencing . OnlyReferencedByASymbol}.
-	"since the model is only these classes, such references are not introducing extra references for the test"
-	model := RBNamespace onEnvironment: classes.
-	
-	refact := RBRemoveClassRefactoring 
-					model: model 
-					classNames: { #OnlyReferencedByASymbol }.
-		
-	self deny: (refact preconditionHasNoUsers: (refact model classNamed: #OnlyReferencedByASymbol)) check.
-	"It should be false because the referencing class is not removed and is part of the model"
-	
-]
-
 { #category : 'tests' }
 RBRemoveClassRefactoringTest >> testPreconditionNotEmptyClass [
 
@@ -250,10 +216,10 @@ RBRemoveClassRefactoringTest >> testRemovingAnNonEmptyLeafClassIsAllowed [
 	model := RBNamespace onEnvironment: package.
 	refactoring := RBRemoveClassRefactoring 
 							model: model 
-							classNames: { #MyClassNonEmptyLeafUnused}.
+							classNames: { 'MyClassNonEmptyLeafUnused' asSymbol}.
 	refactoring prepareForExecution.
 	
-	sup := (refactoring model classNamed: #MyClassNonEmptyLeafUnused).
+	sup := (refactoring model classNamed: 'MyClassNonEmptyLeafUnused' asSymbol).
 	self assert: sup isNotNil.
 	self deny: sup isEmptyClass.
 	
@@ -265,7 +231,7 @@ RBRemoveClassRefactoringTest >> testRemovingAnNonEmptyLeafClassIsAllowed [
 		raise: RBRefactoringError.
 
 	self deny:
-		(refactoring model includesClassNamed: #MyClassNonEmptyLeafUnused) 
+		(refactoring model includesClassNamed: 'MyClassNonEmptyLeafUnused' asSymbol) 
 ]
 
 { #category : 'failure tests' }

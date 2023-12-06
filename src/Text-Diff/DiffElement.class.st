@@ -48,7 +48,7 @@ DiffElement >> = anObject [
 { #category : 'testing' }
 DiffElement >> hasMatch [
 
-	^match notNil
+	^match isNotNil
 ]
 
 { #category : 'comparing' }

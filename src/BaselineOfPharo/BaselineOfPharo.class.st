@@ -1,14 +1,18 @@
+"
+This is a primary baseline to load Pharo base libraries, the IDE as well as projects that are managed in own repository (so called ""external projects"") and other
+"
 Class {
 	#name : 'BaselineOfPharo',
 	#superclass : 'BaselineOf',
 	#classVars : [
 		'ExternalProjects'
 	],
-	#category : 'BaselineOfPharo',
-	#package : 'BaselineOfPharo'
+	#category : 'BaselineOfPharo-Base',
+	#package : 'BaselineOfPharo',
+	#tag : 'Base'
 }
 
-{ #category : 'external projects' }
+{ #category : 'accessing - external projects' }
 BaselineOfPharo class >> beautifulComments [
 	<externalProject>
 
@@ -29,14 +33,11 @@ BaselineOfPharo class >> beautifulCommentsRepository [
 BaselineOfPharo class >> declareExternalProjects [
 
 	^ (Pragma allNamed: #externalProject in: self class)
-		collect: [ :each | 
-			each method 
-				valueWithReceiver: self 
-				arguments: #() ]
-		as: Array
+			collect: [ :each | each method valueWithReceiver: self ]
+			as: Array
 ]
 
-{ #category : 'external projects' }
+{ #category : 'accessing - external projects' }
 BaselineOfPharo class >> documentBrowser [
 	<externalProject>
 	
@@ -53,21 +54,22 @@ BaselineOfPharo class >> documentBrowserRepository [
 	^ (self externalProjectNamed: 'DocumentBrowser') repository
 ]
 
-{ #category : 'external projects' }
+{ #category : 'accessing - external projects' }
 BaselineOfPharo class >> externalProjectNamed: aName [
 
 	^ self externalProjects 
 		detect: [ :each | each name = aName ]
 ]
 
-{ #category : 'external projects' }
+{ #category : 'accessing' }
 BaselineOfPharo class >> externalProjects [
+	<script: 'self externalProjects inspect'>
 
 	^ ExternalProjects ifNil: [ 
 		ExternalProjects := self declareExternalProjects ]
 ]
 
-{ #category : 'external projects' }
+{ #category : 'accessing - external projects' }
 BaselineOfPharo class >> iceberg [
 	<externalProject>
 
@@ -85,7 +87,7 @@ BaselineOfPharo class >> icebergRepository [
 	^ (self externalProjectNamed: 'Iceberg') repository
 ]
 
-{ #category : 'external projects' }
+{ #category : 'accessing - external projects' }
 BaselineOfPharo class >> microdown [
 	<externalProject>
 	
@@ -102,7 +104,7 @@ BaselineOfPharo class >> microdownRepository [
 	^ (self externalProjectNamed: 'Microdown') repository
 ]
 
-{ #category : 'external projects' }
+{ #category : 'accessing - external projects' }
 BaselineOfPharo class >> newTools [
 	<externalProject>
 
@@ -119,14 +121,15 @@ BaselineOfPharo class >> newToolsRepository [
 	^ (self externalProjectNamed: 'NewTools') repository
 ]
 
-{ #category : 'external projects' }
+{ #category : 'accessing - external projects' }
 BaselineOfPharo class >> roassal [
 	<externalProject>
-	^ PharoExternalProject 
-		newName: 'Roassal' 
-		owner: 'pharo-graphics' 
-		project: 'Roassal' 
-		version: 'v1.05b'
+
+	^ PharoExternalProject
+		  newName: 'Roassal'
+		  owner: 'pharo-graphics'
+		  project: 'Roassal'
+		  version: 'v1.05b'
 ]
 
 { #category : 'repository urls' }
@@ -135,7 +138,7 @@ BaselineOfPharo class >> roassalRepository [
 	^ (self externalProjectNamed: 'Roassal') repository
 ]
 
-{ #category : 'external projects' }
+{ #category : 'accessing - external projects' }
 BaselineOfPharo class >> spec [
 	<externalProject>
 
@@ -152,7 +155,7 @@ BaselineOfPharo class >> specRepository [
 	^ (self externalProjectNamed: 'Spec2') repository
 ]
 
-{ #category : 'external projects' }
+{ #category : 'accessing - external projects' }
 BaselineOfPharo class >> welcomeBrowser [
 	<externalProject>
 	
@@ -174,7 +177,7 @@ BaselineOfPharo >> baseline: spec [
 
 	<baseline>
 	| repository |
-	repository := self packageRepositoryURL.
+	repository := self packageRepositoryURLForSpec: spec.
 
 	spec for: #common do: [
 		spec postLoadDoIt: #postload:package:.
@@ -191,7 +194,7 @@ BaselineOfPharo >> baseline: spec [
 			package: 'Deprecated12' ]
 ]
 
-{ #category : 'baseline' }
+{ #category : 'actions' }
 BaselineOfPharo >> postload: loader package: packageSpec [
 	"If we added a github token for the build, we remove it."
 
@@ -201,7 +204,7 @@ BaselineOfPharo >> postload: loader package: packageSpec [
 		credential password = token ifTrue: [ (Smalltalk classNamed: #IceCredentialStore) current removePlainTextCredential: credential ].
 		'Removing credential.' traceCr ].
 
-	"Load the WelcomeBrowser as last step"
-		(self class environment classNamed: #StWelcomeBrowser)
-			ifNotNil: [ :aClass | aClass openForRelease ]
+	"Open the WelcomeBrowser as last step"
+	(self class environment classNamed: #StWelcomeBrowser)
+		ifNotNil: [ :aClass | aClass openForRelease ]
 ]

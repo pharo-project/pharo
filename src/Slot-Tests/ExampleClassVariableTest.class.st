@@ -59,7 +59,7 @@ ExampleClassVariableTest >> testMigrateClassVar [
 	self assert: (aClass hasClassVarNamed: 'ClassVar').
 	self assert: (aClass classVariableNamed: #ClassVar) class equals: ClassVariable.
 
-	aClass classVarNamed: 'ClassVar' put: 5.
+	aClass writeClassVariableNamed: 'ClassVar' value: 5.
 
 	aClass := self make: [ :builder |
 		builder
