@@ -113,7 +113,10 @@ MetacelloRecordTarget >> visitProjectReference: aMetacelloProjectReferenceSpec [
 		                         asProjectSpecForVersion: vrsn.
 	projectSpecForVersion ensureProjectLoadedWithEngine: engine.
 	vrsn ifNil: [ vrsn := projectSpecForVersion version ].
-	vrsn spec acceptVisitor: self
+	vrsn
+		recordRequiredFromArray:
+		(projectSpecForVersion loadListForVersion: vrsn)
+		withEngine: engine
 ]
 
 { #category : 'visiting' }
