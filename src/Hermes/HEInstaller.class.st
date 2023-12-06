@@ -49,7 +49,7 @@ HEInstaller >> build: aHEClass [
 			            layoutClass: layoutType;
 			            slots: aHEClass instanceVariables asSlotCollection;
 			            sharedVariablesFromString: aHEClass classVariables;
-			            sharedPools: aHEClass sharedPools;
+			            sharedPoolsFromString: aHEClass sharedPools;
 			            package: aHEClass packageName;
 			            classSlots: aHEClass classInstancevariables asSlotCollection.
 		            aHEClass tagName ifNotEmpty: [ :tag | builder tag: tag ].

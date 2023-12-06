@@ -96,7 +96,7 @@ ClassFactoryForTestCase >> newSubclassOf: aClass uses: aTraitComposition instanc
 			  traitComposition: aTraitComposition;
 			  slotsFromString: ivNamesString;
 			  sharedVariablesFromString: classVarsString;
-			  sharedPools: poolNamesString;
+			  sharedPoolsFromString: poolNamesString;
 			  package: self packageName;
 			  tag: category ]
 ]
@@ -175,7 +175,7 @@ ClassFactoryForTestCase >> redefineClass: aClass subclassOf: aSuperclass uses: a
 			  traitComposition: aTraitComposition;
 			  slotsFromString: ivNamesString;
 			  sharedVariablesFromString: classVarsString;
-			  sharedPools: poolNamesString;
+			  sharedPoolsFromString: poolNamesString;
 			  package: aPackageName asSymbol ]
 ]
 
