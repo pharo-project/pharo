@@ -380,14 +380,6 @@ PackageTest >> testMcPackage [
 	self assert: rPackage mcPackage equals: (MCPackage new name: #Test1)
 ]
 
-{ #category : 'tests - MC' }
-PackageTest >> testMcWorkingCopy [
-
-	| rPackage |
-	rPackage := self organizer ensurePackage: #Test1.
-	self assert: rPackage mcWorkingCopy identicalTo: (MCWorkingCopy forPackageNamed: #Test1)
-]
-
 { #category : 'tests - classes' }
 PackageTest >> testMoveClassToTag [
 

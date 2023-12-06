@@ -24,6 +24,9 @@ The `<baseline>` pragma marks the method containing the baseline specification.
 Class {
 	#name : 'MetacelloMCBaselineProject',
 	#superclass : 'MetacelloProject',
+	#instVars : [
+		'repositoryDescription'
+	],
 	#category : 'Metacello-Core-Model',
 	#package : 'Metacello-Core',
 	#tag : 'Model'
@@ -94,11 +97,16 @@ MetacelloMCBaselineProject >> projectForScriptEngine: aMetacelloScriptEngine unc
   ^ aMetacelloScriptEngine getBaselineProjectUnconditionalLoad: true
 ]
 
-{ #category : 'initialization' }
-MetacelloMCBaselineProject >> setBaselineRepositoryDescription: aListOrRepositoryDescriptions [
-    "set #version repositories to < aListOrRepositoryDescriptions>. Should be the directory where the BaselineOf is located."
+{ #category : 'accessing' }
+MetacelloMCBaselineProject >> repositoryDescription [
+	^ repositoryDescription
+]
 
-    aListOrRepositoryDescriptions do: [:desc | self version spec repository: desc]
+{ #category : 'development support' }
+MetacelloMCBaselineProject >> setBaselineRepositoryDescription: aListOrRepositoryDescriptions [
+	"set #version repositories to < aListOrRepositoryDescriptions>. Should be the directory where the BaselineOf is located."
+
+	repositoryDescription := aListOrRepositoryDescriptions
 ]
 
 { #category : 'versions' }
