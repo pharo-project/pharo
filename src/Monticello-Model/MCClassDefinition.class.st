@@ -196,7 +196,7 @@ MCClassDefinition >> createClass [
 			  layoutClass: (ObjectLayout layoutForType: type);
 			  slots: self instanceVariables;
 			  sharedVariables: self classVariables;
-			  sharedPools: self sharedPoolsString;
+			  sharedPoolsFromString: self sharedPoolsString;
 			  classSlots: self classInstanceVariables;
 			  traitComposition: self traitCompositionCompiled;
 			  classTraitComposition: self classTraitCompositionCompiled;
