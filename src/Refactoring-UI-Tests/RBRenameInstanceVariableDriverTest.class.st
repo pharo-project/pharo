@@ -6,7 +6,7 @@ Class {
 }
 
 { #category : 'tests' }
-RBRenameInstanceVariableDriverTest >> testGoodPathAndInvalidName [
+RBRenameInstanceVariableDriverTest >> testInvalidName [
 	
 	| rbclasses driver |
 	rbclasses := RBClassEnvironment classes: { MyClassARoot}.	
@@ -23,7 +23,7 @@ RBRenameInstanceVariableDriverTest >> testGoodPathAndInvalidName [
 ]
 
 { #category : 'tests' }
-RBRenameInstanceVariableDriverTest >> testGoodPathAndValidName [
+RBRenameInstanceVariableDriverTest >> testValidNameAndUnusedVariable [
 	
 	| rbclasses driver |
 	rbclasses := RBClassEnvironment classes: { MyClassARoot}.	
@@ -35,6 +35,23 @@ RBRenameInstanceVariableDriverTest >> testGoodPathAndValidName [
 	self setUpDriver: driver.
 	driver runRefactoring.
 	
+	self assert: driver refactoring changes changes size equals: 1
+	
+]
+
+{ #category : 'tests' }
+RBRenameInstanceVariableDriverTest >> testValidNameAndUsedVariable [
+	
+	| rbclasses driver |
+	rbclasses := RBClassEnvironment classes: { MyClassARoot}.	
+	driver := RBRenameInstanceVariableDriver new
+				scopes: { rbclasses }
+				variable: #instVarName1
+				for: MyClassARoot
+				newName: #instVarName1a.
+	self setUpDriver: driver.
+	driver runRefactoring.
+	"Renaming the references to the variable is not encapsulated in change objects, therefore the only change is the renaming of the variable itself."
 	self assert: driver refactoring changes changes size equals: 1
 	
 ]

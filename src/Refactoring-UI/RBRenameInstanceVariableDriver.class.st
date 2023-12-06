@@ -56,7 +56,7 @@ RBRenameInstanceVariableDriver >> prepareRefactoring [
 ]
 
 { #category : 'private' }
-RBRenameInstanceVariableDriver >> prepareRefactoringInteracting [
+RBRenameInstanceVariableDriver >> prepareRefactoringInteractively [
 	| failedConditions |
 	
 	"We ask the user for the variable new name"
@@ -100,7 +100,7 @@ RBRenameInstanceVariableDriver >> runRefactoring [
 		ifNil: [ 
 			"run in interactive mode" 
 			shouldEscape := false.
-			self prepareRefactoringInteracting
+			self prepareRefactoringInteractively
 		 ]
 		ifNotNil: [ 
 			"run in script mode"
