@@ -1,6 +1,23 @@
 Extension { #name : 'ContextTest' }
 
 { #category : '*Kernel-Tests-Extended' }
+ContextTest >> testBlockCannotReturn [
+
+	| p |
+	p := [ thisContext pc: nil ] newProcess.
+	[
+	p suspendedContext method selector = #pc: and: [
+		p suspendedContext sender isDead ] ] whileFalse: [ p step ].
+	self assert: p suspendedContext method selector equals: #pc:.
+	self assert: p suspendedContext sender isDead.
+	self assert: p suspendedContext pc equals: p suspendedContext method endPC.
+
+	p step. "step into a return to a dead sender"
+
+	self assert: p suspendedContext method selector equals: #cannotReturn:
+]
+
+{ #category : '*Kernel-Tests-Extended' }
 ContextTest >> testCannotReturn [
 	| context p |
 	p := [context := thisContext] fork.
