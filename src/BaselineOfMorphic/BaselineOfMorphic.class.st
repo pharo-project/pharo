@@ -50,13 +50,13 @@ BaselineOfMorphic >> baseline: spec [
 
 		spec package: 'System-Localization'.
 
-		spec package: 'EmbeddedFreeType'.
-		spec package: 'FileSystem-Zip'.
-		spec package: 'Fonts-Infrastructure'.
 		spec baseline: 'FreeType' with: [
 			spec
 				repository: repository;
 				loads: 'ui' ].
+		spec package: 'EmbeddedFreeType' with: [ spec requires: 'FreeType' ].
+		spec package: 'FileSystem-Zip'.
+		spec package: 'Fonts-Infrastructure'.
 
 		spec package: 'Graphics-Files'.
 		spec package: 'Graphics-Fonts'.
