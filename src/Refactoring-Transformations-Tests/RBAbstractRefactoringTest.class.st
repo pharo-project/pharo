@@ -55,7 +55,7 @@ RBAbstractRefactoringTest >> methodSignatureStringForUnarySymbol: aSymbol [
 
 { #category : 'helpers' }
 RBAbstractRefactoringTest >> objectClassVariable [
-	^Object classPool keys detect: [:each | true]
+	^Object classVariables first name
 ]
 
 { #category : 'parsing' }
