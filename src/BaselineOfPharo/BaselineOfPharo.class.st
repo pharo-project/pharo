@@ -174,10 +174,10 @@ BaselineOfPharo class >> welcomeBrowserRepository [
 
 { #category : 'baselines' }
 BaselineOfPharo >> baseline: spec [
-	<baseline>
 
+	<baseline>
 	| repository |
-	repository := self packageRepositoryURL.
+	repository := self packageRepositoryURLForSpec: spec.
 
 	spec for: #common do: [
 		spec postLoadDoIt: #postload:package:.

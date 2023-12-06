@@ -22,8 +22,3 @@ BaselineOfRing >> baseline: spec [
 				package: 'Ring-RuntimeSupport';
 				package: 'Calypso-Ring' ]
 ]
-
-{ #category : 'accessing' }
-BaselineOfRing >> repository [
-	^ self packageRepositoryURL
-]
