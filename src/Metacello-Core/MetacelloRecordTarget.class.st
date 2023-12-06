@@ -113,10 +113,7 @@ MetacelloRecordTarget >> visitProjectReference: aMetacelloProjectReferenceSpec [
 		                         asProjectSpecForVersion: vrsn.
 	projectSpecForVersion ensureProjectLoadedWithEngine: engine.
 	vrsn ifNil: [ vrsn := projectSpecForVersion version ].
-	self preLoad: projectSpecForVersion.
-	engine handleProjectSpecLoaded:
-		(projectSpecForVersion copy versionString: vrsn versionString).
-	self postLoad: projectSpecForVersion
+	vrsn spec acceptVisitor: self
 ]
 
 { #category : 'visiting' }
@@ -143,19 +140,22 @@ MetacelloRecordTarget >> visitVersionSpec: aMetacelloVersionSpec [
 { #category : 'actions' }
 MetacelloRecordTarget >> visitVersionSpecChildren: aSpec [
 
-	| packages |
+	| packages oldCurrentRepositorySpecs |
 	
 	packages := Dictionary new.
 	aSpec resolveToLoadableSpecs: required map: packages.
+	
+	oldCurrentRepositorySpecs := currentRepositorySpecs.
 	currentRepositorySpecs := aSpec repositorySpecs.
 	packages := aSpec packageSpecsInLoadOrderForMap: packages.
 	
-	"Iterate the internals of the version spec"
+	["Iterate the internals of the version spec"
 	aSpec project loadType == #atomic ifTrue: [
 		^ self atomicLoadPackageOfSpec: packages ].
 	aSpec project loadType == #linear ifTrue: [
 		^ self linearLoadPackagesOfSpec: packages ].
 
 	MetacelloError signal:
-		'Unknown loadType: ' , aSpec project loadType printString
+		'Unknown loadType: ' , aSpec project loadType printString]
+		ensure: [ currentRepositorySpecs := oldCurrentRepositorySpecs ]
 ]
