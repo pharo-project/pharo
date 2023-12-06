@@ -81,12 +81,14 @@ ProfilerInputPresenter >> setModelBeforeInitialization: aDomainObject [
 
 { #category : 'initialization' }
 ProfilerInputPresenter >> subscribeOnProfilingAnnouncements [
+
 	viewModel announcer
 		when: ProfilingStartedAnnouncement
-		do: [ self enabled: false ];
-
+		do: [ self enabled: false ]
+		for: self;
 		when: ProfilingResultsDisplayedAnnouncement
 		do: [ self enabled: true ]
+		for: self
 ]
 
 { #category : 'initialization' }

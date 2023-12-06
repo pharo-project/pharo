@@ -85,7 +85,7 @@ MetacelloRecordTarget >> visitPackageSpec: aMetacelloPackageSpec [
 { #category : 'visiting' }
 MetacelloRecordTarget >> visitProjectReference: aMetacelloProjectReferenceSpec [
 
-	| specForLoad displayString vrsn |
+	| specForLoad displayString vrsn projectSpecForVersion |
 	specForLoad := engine handleLookupProjectSpecForLoad:
 		               aMetacelloProjectReferenceSpec projectReference.
 
@@ -109,10 +109,14 @@ MetacelloRecordTarget >> visitProjectReference: aMetacelloProjectReferenceSpec [
 		^ self ].
 
 	vrsn := specForLoad projectSpec versionOrNil.
-	(specForLoad projectSpec asProjectSpecForVersion: vrsn)
-		loadVersion: vrsn
-		usingTarget: self
-		withEngine: engine
+	projectSpecForVersion := specForLoad projectSpec
+		                         asProjectSpecForVersion: vrsn.
+	projectSpecForVersion ensureProjectLoadedWithEngine: engine.
+	vrsn ifNil: [ vrsn := projectSpecForVersion version ].
+	self preLoad: projectSpecForVersion.
+	engine handleProjectSpecLoaded:
+		(projectSpecForVersion copy versionString: vrsn versionString).
+	self postLoad: projectSpecForVersion
 ]
 
 { #category : 'visiting' }

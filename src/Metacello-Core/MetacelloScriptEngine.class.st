@@ -184,7 +184,7 @@ MetacelloScriptEngine >> getBaselineProjectUnconditionalLoad [
 		do: [ :ex |
       "see https://github.com/dalehenrich/metacello-work/issues/244 ... uncoditionally load baseline"
 			ex resume: true ].
-	project := (Smalltalk at: self projectSpec className asSymbol)
+	project := (Smalltalk at: self projectSpec className asSymbol) new
       initalizeProjectWithRepositoryDescription: self projectSpec repositories map keys.
   project version spec repositories: self repositories copy.
   ^ project
