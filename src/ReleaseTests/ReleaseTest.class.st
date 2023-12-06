@@ -313,9 +313,10 @@ ReleaseTest >> testNoPeriodInMethodSignature [
 { #category : 'tests - methods' }
 ReleaseTest >> testNoSentButNotImplementedSelectors [
 	"There is a long term cleanup to fix 'selectors send but not implemented'.
-	 This test makes sure that we do not introduce new cases until we are down to zero"
+	 This test makes sure that we do not introduce new cases until we are down to one"
 
-	| knownFailures violations |
+	| knownFailures violations wantedAndValidViolations |
+	
 	"String streamContents: [ :aStream | aStream << '#( '.  SystemNavigation default allSentButNotImplementedSelectors do: [ :m | .aStream << '''' << m printString  << ''' ' ]. aStream << ')' ]"
 	knownFailures := #( 'AthensCCWArcSegment>>#accept:' 'AthensCWArcSegment>>#accept:' 'AthensCairoCanvas>>#visitCubicSegment:'
 	                    'AthensCairoCanvas>>#visitQuadSegment:' 'AthensCloseSegment>>#accept:' 'AthensCubicSegment>>#accept:' 'AthensEllipticalArcSegment>>#accept:'
@@ -367,6 +368,10 @@ ReleaseTest >> testNoSentButNotImplementedSelectors [
 	"This next line is to ignore this for SmalltalkCI and not make external Pharo projects fail :("
 	violations removeAllSuchThat: [ :violation | violation beginsWithAnyOf: #( SCI SmalltalkCI ) ].
 
+	"There is a violation that we explicitly want for rule tesing"
+	wantedAndValidViolations := #('ReSentButNotUnderstoodBySuperRuleTest>>#sampleMethod').
+	
+	violations removeAll: wantedAndValidViolations.
 	self assertEmpty: (violations difference: knownFailures)
 ]
 
