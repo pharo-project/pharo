@@ -425,10 +425,8 @@ RubSmalltalkEditor >> copySelection [
 { #category : 'do-its' }
 RubSmalltalkEditor >> debug: aStream [
 	| method receiver context |
-	(self model respondsTo: #doItReceiver)
-		ifTrue: [ receiver := self model doItReceiver.
-			context := self model doItContext ]
-		ifFalse: [ receiver := context := nil ].
+	receiver := self model doItReceiver.
+	context := self model doItContext.
 	method := self compile: aStream for: receiver in: context.
 	method ifNil: [ ^self ].
 	method isReturnSpecial
@@ -511,11 +509,8 @@ RubSmalltalkEditor >> editingMode [
 RubSmalltalkEditor >> evaluate: source andDo: aBlock [
 	"Treat the current selection as an expression; evaluate it and invoke aBlock with the result."
 	| result rcvr ctxt |
-	(self model respondsTo: #doItReceiver)
-		ifTrue: [ rcvr := self model doItReceiver.
-				ctxt := self model doItContext]
-		ifFalse: [ rcvr := ctxt := nil].
-		
+	rcvr := self model doItReceiver.
+	ctxt := self model doItContext.
 	"to improve: we need better reporting of errors, to revisit when unifying with Spec"
 	result := rcvr class compiler
 			source: source;
@@ -1154,12 +1149,9 @@ RubSmalltalkEditor >> sendersOfIt: aKeyboardEvent [
 RubSmalltalkEditor >> tally: aStream [
 	"Treat the current selection as an expression; evaluate and tally it."
 	| receiver context v compiledMethod profiler |
-	(self model respondsTo: #doItReceiver)
-		ifTrue:
-			[receiver := self model doItReceiver.
-			context := self model doItContext]
-		ifFalse:
-			[receiver := context := nil].
+	receiver := self model doItReceiver.
+	context := self model doItContext.
+	
 	compiledMethod := self compile: aStream for: receiver in: context.
 	compiledMethod ifNil: [^ self].
 	profiler := TimeProfiler spyOn: [ v:= compiledMethod valueWithReceiver: receiver].
