@@ -543,7 +543,7 @@ OpalCompiler >> generateMethod [
 	ast compiledMethod: method.
 	ast propertyAt: #Undeclareds ifPresent: [ :undeclareds | undeclareds do: [ :var | var registerMethod: method ] ].
 	method propertyAt: #source put: source.
-	self compilationContext noPattern ifTrue: [ method propertyAt: #ast put: ast ]. "Keep AST for scripts (for the moment)"
+	self isScripting ifTrue: [ method propertyAt: #ast put: ast ]. "Keep AST for scripts (for the moment)"
 
 	"If the prior method was not set explicitly, we set it because we will need it if we are not in the first compilation"
 	self priorMethod ifNil: [
@@ -604,14 +604,13 @@ OpalCompiler >> isInteractive [
 
 { #category : 'accessing' }
 OpalCompiler >> isScripting [
-	^ self semanticScope isDoItScope
+	^ self compilationContext isScripting
 ]
 
 { #category : 'accessing' }
 OpalCompiler >> isScripting: aBoolean [
 
-	(aBoolean and: [ self isScripting not ]) ifTrue: [
-		self semanticScope: OCReceiverDoItSemanticScope targetingNilReceiver ]
+	self compilationContext isScripting: aBoolean
 ]
 
 { #category : 'accessing' }
