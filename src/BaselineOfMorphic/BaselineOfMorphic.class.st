@@ -138,7 +138,7 @@ BaselineOfMorphic >> cleanUpAfterMorphicInitialization [
 	MCDataStream initialize.
 	GradientFillStyle initPixelRampCache.
 	FreeTypeCache clearCurrent.
-	ImageMorph classPool at: #DefaultForm put: (Form extent: 1 @ 1 depth: 1).
+	ImageMorph writeClassVariableNamed: #DefaultForm value: (Form extent: 1 @ 1 depth: 1).
 	World cleanseOtherworldlySteppers.
 	MCFileBasedRepository flushAllCaches.
 	MCMethodDefinition shutDown.
