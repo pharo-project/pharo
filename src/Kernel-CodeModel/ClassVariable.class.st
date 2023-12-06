@@ -140,15 +140,8 @@ ClassVariable >> printOn: aStream [
 
 { #category : 'queries' }
 ClassVariable >> usingClasses [
-	| classes |
-	classes := self definingClass withAllSubclasses.
 
-	"For pool variables we need to add the poolUsers and it's subclasses"
-	self isPoolVariable ifTrue: [
-		classes addAll:
-			(self definingClass poolUsers flatCollect: [ :each | each withAllSubclasses ]) ].
-
-	^ classes select: [ :class | class hasMethodAccessingVariable: self ]
+	^ self possiblyUsingClasses select: [ :class | class hasMethodAccessingVariable: self ]
 ]
 
 { #category : 'queries' }
