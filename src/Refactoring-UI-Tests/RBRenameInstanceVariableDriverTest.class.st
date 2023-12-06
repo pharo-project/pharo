@@ -6,7 +6,24 @@ Class {
 }
 
 { #category : 'tests' }
-RBRenameInstanceVariableDriverTest >> testGoodPathVariableIsUnused [
+RBRenameInstanceVariableDriverTest >> testGoodPathAndInvalidName [
+	
+	| rbclasses driver |
+	rbclasses := RBClassEnvironment classes: { MyClassARoot}.	
+	driver := RBRenameInstanceVariableDriver new
+				scopes: { rbclasses }
+				variable: #unusedVar1
+				for: MyClassARoot
+				newName: #unusedVar2.
+	"There is already a variable named `unusedVar2` in the class `MyClassRoot`"
+	self setUpDriver: driver.
+	
+	self should: [driver runRefactoring] raise: RBRefactoringError
+	
+]
+
+{ #category : 'tests' }
+RBRenameInstanceVariableDriverTest >> testGoodPathAndValidName [
 	
 	| rbclasses driver |
 	rbclasses := RBClassEnvironment classes: { MyClassARoot}.	

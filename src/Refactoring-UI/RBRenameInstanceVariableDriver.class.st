@@ -20,7 +20,10 @@ Class {
 RBRenameInstanceVariableDriver >> applyChanges [
 	
 	refactoring privateTransform.
-	refactoring performChanges
+	self flag: 'The next line is horrible, 
+					I must think of a better way to prevent changes from executing during tests'.
+	(previewPresenterClass isKindOf: StRefactoringPreviewPresenterMock class)
+		ifFalse: [ refactoring performChanges ]
 ]
 
 { #category : 'execution' }
@@ -44,7 +47,33 @@ RBRenameInstanceVariableDriver >> newName: aString [
 	self shouldNotImplement 
 ]
 
-{ #category : 'execution' }
+{ #category : 'private' }
+RBRenameInstanceVariableDriver >> prepareRefactoring [
+	"The Driver is run in scripting mode, therefore the variable `newName` was defined in the method scopes:variable:for:newName:.
+	We don't need to ask for the name to the user"
+	refactoring newName: newName.
+	refactoring checkApplicabilityPreconditions
+]
+
+{ #category : 'private' }
+RBRenameInstanceVariableDriver >> prepareRefactoringInteracting [
+	| failedConditions |
+	
+	"We ask the user for the variable new name"
+	[ newName := self requestNewNameBasedOn: lastName.
+	shouldEscape ifTrue: [ ^ self ].
+	refactoring newName: newName.
+	failedConditions := refactoring failedApplicabilityPreconditions.
+	failedConditions isEmpty ]
+		whileFalse: [
+			failedConditions do: [ :cond |
+				self application newInform
+					label: cond errorString;
+					title: 'Invalid name';
+					openModal ] ].
+]
+
+{ #category : 'private' }
 RBRenameInstanceVariableDriver >> requestNewNameBasedOn: aName [
 
 	newName := SpRequestDialog new
@@ -67,42 +96,18 @@ RBRenameInstanceVariableDriver >> runRefactoring [
 
 	self configureRefactoring.
 	
-	shouldEscape := false.
 	newName 
 		ifNil: [ 
 			"run in interactive mode" 
-			self runRefactoringInteracting
+			shouldEscape := false.
+			self prepareRefactoringInteracting
 		 ]
 		ifNotNil: [ 
 			"run in script mode"
-			self runRefactoringSilently
+			self prepareRefactoring
 		 ].
 		
 	self applyChanges
-]
-
-{ #category : 'private' }
-RBRenameInstanceVariableDriver >> runRefactoringInteracting [
-	| failedConditions |
-	
-	[ newName := self requestNewNameBasedOn: lastName.
-	shouldEscape ifTrue: [ ^ self ].
-	refactoring newName: newName.
-	failedConditions := refactoring failedApplicabilityPreconditions.
-	failedConditions isEmpty ]
-		whileFalse: [
-			failedConditions do: [ :cond |
-				self application newInform
-					label: cond errorString;
-					title: 'Invalid name';
-					openModal ] ].
-]
-
-{ #category : 'private' }
-RBRenameInstanceVariableDriver >> runRefactoringSilently [
-	
-	refactoring newName: newName.
-	refactoring checkApplicabilityPreconditions
 ]
 
 { #category : 'initialization' }
