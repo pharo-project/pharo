@@ -191,11 +191,10 @@ Class >> allSharedPools [
 
 { #category : 'class variables' }
 Class >> anyUserOfClassVarNamed: aSymbol [
-	self withAllSubclasses do: [ :subclass |
- 		{subclass . subclass class} do: [ :classOrMeta |
-			(classOrMeta whichMethodsReferTo: (self classVariableNamed: aSymbol))
-				ifNotEmpty: [ ^classOrMeta ]]].
-	^nil
+	"maybe this should be deprecated"
+	^ (self classVariableNamed: aSymbol) usingClasses
+		ifEmpty: [ nil ]
+		ifNotEmpty: [:notEmpty | notEmpty anyOne]
 ]
 
 { #category : 'deprecation' }
