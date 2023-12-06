@@ -18,13 +18,13 @@ MetacelloAtomicLoad >> finishLoading [
 	"Execute all preloads, then atomically all packages, finally all preloads"
 	
 	preLoads do: [ :e | target visitPreLoadDirective: e ].
-	preLoads := #().
+	preLoads := OrderedCollection new.
 
 	target loader loadAtomicPackageDirectives: packageDirectives.
-	packageDirectives := #().
+	packageDirectives := OrderedCollection new.
 	
 	postLoads do: [ :e | target visitPostLoadDirective: e ].
-	postLoads := #().
+	postLoads := OrderedCollection new.
 ]
 
 { #category : 'visiting' }
