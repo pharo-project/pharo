@@ -892,10 +892,16 @@ MetacelloProjectSpec >> projectClass [
 
 { #category : 'querying' }
 MetacelloProjectSpec >> projectClassProject [
-	"indirection needed when projectClass is _not_ a subclass of MetacelloProject"
 
-	^ self projectClass new initalizeProjectWithRepositoryDescription:
-		  self repositoryDescriptions
+	"Initialize the project object in the baseline/configuration"
+	| projectClassInstance |
+	projectClassInstance := self projectClass new.
+	projectClassInstance initalizeProjectWithRepositoryDescription:
+		self repositoryDescriptions.
+
+	"Then return it through the project method to call the hook redefined in subclasses for compatibility.
+	Subclasses typically change the load type of the project to #atomic"
+	^ projectClassInstance project
 ]
 
 { #category : 'visiting' }
