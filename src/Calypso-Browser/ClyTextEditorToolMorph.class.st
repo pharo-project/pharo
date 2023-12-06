@@ -122,23 +122,25 @@ ClyTextEditorToolMorph >> cancelChanges [
 ClyTextEditorToolMorph >> changesAccepted [
 
 	| applied |
-	^self applyChangesBy: [
-		textMorph hasUnacceptedEdits: true.
-		[self changesAreAboutApply.
-		applied := self applyChanges] on: Error do: [ :err |
-			textModel text: self editingText.
-			textMorph hasUnacceptedEdits: true.
-			err pass].
+	^ self applyChangesBy: [
+		  textMorph hasUnacceptedEdits: true.
+		  [
+		  self changesAreAboutApply.
+		  applied := self applyChanges ]
+			  on: Error
+			  do: [ :err |
+				  textModel setText: self editingText.
+				  textMorph hasUnacceptedEdits: true.
+				  err pass ].
 
-		textModel setText: self editingText.
-		
-		applied
-			ifTrue: [ textMorph hasUnacceptedEdits: false.
-				self textUpdated.
-				browser focusActiveTab ]
-			ifFalse: [
-				textMorph hasUnacceptedEdits: true].
-	]
+		  textModel setText: self editingText.
+
+		  applied
+			  ifTrue: [
+				  textMorph hasUnacceptedEdits: false.
+				  self textUpdated.
+				  browser focusActiveTab ]
+			  ifFalse: [ textMorph hasUnacceptedEdits: true ] ]
 ]
 
 { #category : 'events handling' }

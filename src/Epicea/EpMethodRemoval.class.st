@@ -32,6 +32,17 @@ EpMethodRemoval >> affectedPackageName [
 	^ method package
 ]
 
+{ #category : 'accessing' }
+EpMethodRemoval >> fileOutEntryOn: aWriteStream [
+	"Write a code chunk to remove the receiver's method on aWriteStream"
+
+	aWriteStream 
+		nextPutAll: self behaviorAffectedName;
+		nextPutAll: ' removeSelector: ';
+		nextChunkPut: self selector asSymbol;
+		cr
+]
+
 { #category : 'initialization' }
 EpMethodRemoval >> initializeWithMethod: aCompiledMethod [
 

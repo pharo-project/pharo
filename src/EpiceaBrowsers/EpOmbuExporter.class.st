@@ -42,13 +42,9 @@ EpOmbuExporter >> fileOut: epiceaEntries [
 
 	epiceaEntries do: [ :anEntry |
 		originalReference := (anEntry tagAt: OmStore selfReferenceKey).
-
 		anEvent := anEntry content accept: visitor.
-
 		exportedReference := outputLog addEntryWith: anEvent tags: [ :tags |  ].
-
-		map at: originalReference put: exportedReference.
-		].
+		map at: originalReference put: exportedReference 	].
 
 	outputLog store flush
 ]

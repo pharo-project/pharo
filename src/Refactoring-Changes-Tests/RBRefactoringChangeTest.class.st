@@ -100,7 +100,7 @@ RBRefactoringChangeTest >> testAddClassInteractively [
 			          name: self class name;
 			          slots: { #instVar };
 			          sharedVariables: { #ClassVar };
-			          sharedPools: 'PoolDict';
+			          sharedPools: #(PoolDict);
 			          tag: self class packageTag name;
 			          package: self class package name ].
 	self assert: change superclassName equals: self class superclass name.

@@ -334,7 +334,7 @@ ShiftClassBuilder >> fillFor: aClass [
 		classSlots: aClass class localSlots;
 		"we have to copy the class variables, as they contain the values"
 		sharedVariables: (aClass classVariables collect: [:var | var copy]);
-		sharedPools: aClass sharedPoolsString;
+		sharedPools: (aClass sharedPools collect: [ :each | each name ]) asArray;
 		package: aClass package name;
 		installingEnvironment: aClass environment;
 		oldClass: aClass.
@@ -568,6 +568,15 @@ ShiftClassBuilder >> sharedPools: aCollectionOrString [
 	pools := aCollectionOrString isString
 			 ifTrue: [ (aCollectionOrString substrings: ' ') collect: [ :e | e asSymbol ] ]
 			 ifFalse: [ aCollectionOrString collect: [ :each | each isSymbol ifFalse: [ each name ] ifTrue: [ each ] ].	 ].
+	
+	self layoutDefinition sharedPools: pools.
+]
+
+{ #category : 'accessing' }
+ShiftClassBuilder >> sharedPoolsFromString: aCollectionOrString [
+	"This should be only used for old style class defs"
+	| pools |
+	pools := (aCollectionOrString substrings: ' ') collect: [ :e | e asSymbol ].
 	
 	self layoutDefinition sharedPools: pools.
 ]

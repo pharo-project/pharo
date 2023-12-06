@@ -37,7 +37,7 @@ RBSharedPoolTest >> setUp [
 			name: #DateAndTime;
 			slots: { #seconds. #offset. #julianDayNumber. #nanos };
 			sharedVariables: { #ClockProvider. #LocalTimeZoneCache };
-			sharedPools: 'ChronologyConstants';
+			sharedPools: #(ChronologyConstants);
 			package: 'Kernel-Chronology' ].
 
 	userOf := rbNamespace classNamed: #DateAndTime
