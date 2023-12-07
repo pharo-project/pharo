@@ -806,14 +806,16 @@ SHRBTextStyler >> privateStyle: aText [
 	| compiler |
 
 	aText ifEmpty: [ ^ self ].
+
 	compiler := classOrMetaClass compiler
 		source: aText asString;
 		receiver: (workspace ifNotNil: [:w | w doItReceiver]);
+		context: (workspace ifNotNil: [:w | w doItContext]);
 		isScripting: self isScripting;
 		requestor: workspace.
 
 	self plugins do: [ :each | compiler addParsePlugin: each ].
-
+	
 	^ self
 		style: aText
 		ast: compiler parse

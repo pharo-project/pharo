@@ -34,6 +34,11 @@ OCReceiverDoItSemanticScope class >> targetingReceiver: anObject [
 		targetReceiver: anObject
 ]
 
+{ #category : 'testing' }
+OCReceiverDoItSemanticScope >> isScripting [
+	^true
+]
+
 { #category : 'accessing' }
 OCReceiverDoItSemanticScope >> receiver [
 
