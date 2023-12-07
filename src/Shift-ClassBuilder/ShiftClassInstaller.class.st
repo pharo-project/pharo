@@ -25,8 +25,8 @@ Class {
 		'oldClass',
 		'builder'
 	],
-	#category : 'Shift-ClassBuilder-Tests-Installer',
-	#package : 'Shift-ClassBuilder-Tests',
+	#category : 'Shift-ClassBuilder-Installer',
+	#package : 'Shift-ClassBuilder',
 	#tag : 'Installer'
 }
 
