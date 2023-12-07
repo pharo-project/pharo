@@ -43,6 +43,12 @@ MetacelloAtomicLoad >> target: aTarget [
 ]
 
 { #category : 'visiting' }
+MetacelloAtomicLoad >> visitAtomicLoadDirective: aMetagelloAtomicLoadDirective [
+
+	target visitAtomicLoadDirective: aMetagelloAtomicLoadDirective
+]
+
+{ #category : 'visiting' }
 MetacelloAtomicLoad >> visitLinearLoadDirective: aMetacelloLinearLoadDirective [
 
 	"Finish current atomic loading and redispatch the linear loading"
