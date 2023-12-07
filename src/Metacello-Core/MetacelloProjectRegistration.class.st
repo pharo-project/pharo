@@ -146,16 +146,6 @@ MetacelloProjectRegistration class >> projectSpecs [
 ]
 
 { #category : 'registration' }
-MetacelloProjectRegistration class >> registerProjectSpec: aProjectSpec ifPresent: presentBlock [
-    | newRegistration |
-    newRegistration := aProjectSpec asProjectRegistration.
-    ^ self registry
-        registrationFor: newRegistration
-        ifPresent: [ :existing | presentBlock value: existing value: newRegistration ]
-        ifAbsent: [ newRegistration registerProject ]
-]
-
-{ #category : 'registration' }
 MetacelloProjectRegistration class >> registrationForClassNamed: aClassName ifAbsent: absentBlock [
 
 	^ self registry registrationForClassNamed: aClassName ifAbsent: absentBlock

@@ -85,50 +85,53 @@ MetacelloRecordTarget >> visitPackageSpec: aMetacelloPackageSpec [
 { #category : 'visiting' }
 MetacelloRecordTarget >> visitProjectReference: aMetacelloProjectReferenceSpec [
 
-	| specForLoad displayString vrsn projectSpecForVersion registered override registration |
+	| displayString vrsn projectSpecForVersion registered override registration |
 	registration := MetacelloProjectRegistration
 		                registrationForProjectSpec:
 		                aMetacelloProjectReferenceSpec projectReference
 		                ifAbsent: [ :new | new ]
-		                ifPresent: [ :existing :new | ^ existing ].
+		                ifPresent: [ :existing :new |
+		                engine resolvePresentProject: existing new: new ].
 	registered := registration projectSpec.
-	registration registerProject.
 	(registered compareEqual:
 		 aMetacelloProjectReferenceSpec projectReference) ifFalse: [ "counts as override, only if they differ in some aspect"
 		override := registered ].
-	specForLoad := MetacelloProjectSpecForLoad new
-		               projectSpec:
-			               aMetacelloProjectReferenceSpec projectReference;
-		               overrideProjectSpec: override;
-		               yourself.
 
-	displayString := 'Project: ' , specForLoad projectSpec name.
-	specForLoad projectSpec versionString ifNotNil: [
-		displayString := displayString , ' '
-		                 , specForLoad projectSpec versionString ].
+	displayString := 'Project: '
+	                 ,
+	                 aMetacelloProjectReferenceSpec projectReference name.
+	aMetacelloProjectReferenceSpec projectReference versionString
+		ifNotNil: [
+			displayString := displayString , ' '
+			                 ,
+			                 aMetacelloProjectReferenceSpec projectReference
+				                 versionString ].
 
 	MetacelloNotification signal: displayString.
 
-	specForLoad projectSpec isLocked ifTrue: [
+	aMetacelloProjectReferenceSpec projectReference isLocked ifTrue: [
 		MetacelloNotification signal: 'Project is locked, skipping.'.
-		^ specForLoad ].
+		^ aMetacelloProjectReferenceSpec projectReference ].
 
 
 	override ifNotNil: [
-		override := specForLoad overrideProjectSpec copy.
-		override mergeScriptLoads: specForLoad projectSpec.
+		override := override copy.
+		override mergeScriptLoads:
+			aMetacelloProjectReferenceSpec projectReference.
 		override loadVersion: nil.
 		^ self ].
 
-	vrsn := specForLoad projectSpec versionOrNil.
-	projectSpecForVersion := specForLoad projectSpec
-		                         asProjectSpecForVersion: vrsn.
+	vrsn := aMetacelloProjectReferenceSpec projectReference versionOrNil.
+	projectSpecForVersion := aMetacelloProjectReferenceSpec
+		                         projectReference asProjectSpecForVersion:
+		                         vrsn.
 	projectSpecForVersion ensureProjectLoadedWithEngine: engine.
 	vrsn ifNil: [ vrsn := projectSpecForVersion version ].
 	vrsn
 		recordRequiredFromArray:
 		(projectSpecForVersion loadListForVersion: vrsn)
-		withEngine: engine
+		withEngine: engine.
+	registration registerProject.
 ]
 
 { #category : 'visiting' }
