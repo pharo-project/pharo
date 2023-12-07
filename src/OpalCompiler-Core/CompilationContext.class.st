@@ -471,7 +471,7 @@ CompilationContext >> initialize [
 
 { #category : 'accessing' }
 CompilationContext >> isScripting [
-	^semanticScope isScripting
+	^semanticScope isDoItScope
 ]
 
 { #category : 'accessing' }

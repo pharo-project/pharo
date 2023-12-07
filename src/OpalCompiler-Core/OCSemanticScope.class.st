@@ -62,11 +62,6 @@ OCSemanticScope >> isDoItScope [
 	^false
 ]
 
-{ #category : 'testing' }
-OCSemanticScope >> isScripting [
-	^false
-]
-
 { #category : 'lookup' }
 OCSemanticScope >> lookupVar: name [
 

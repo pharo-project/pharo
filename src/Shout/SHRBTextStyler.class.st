@@ -809,8 +809,7 @@ SHRBTextStyler >> privateStyle: aText [
 
 	compiler := classOrMetaClass compiler
 		source: aText asString;
-		receiver: (workspace ifNotNil: [:w | w doItReceiver]);
-		context: (workspace ifNotNil: [:w | w doItContext]);
+		receiver: (self isScripting ifTrue: [workspace ifNotNil: [:w | w doItReceiver]]);
 		isScripting: self isScripting;
 		requestor: workspace.
 
