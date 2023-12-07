@@ -246,20 +246,6 @@ MetacelloScriptEngine >> handleLookupProjectSpec: aProjectSpec [
 ]
 
 { #category : 'handlers' }
-MetacelloScriptEngine >> handleLookupProjectSpecForLoad: aProjectSpec [
-	"if overrideProjectSpec is nil, use currentVersion in image, ignoreImage is false"
-
-	| override registered |
-	registered := self lookupProjectSpecFor: aProjectSpec.
-	(registered compareEqual: aProjectSpec) ifFalse: [ "counts as override, only if they differ in some aspect"
-		override := registered ].
-	^ MetacelloProjectSpecForLoad new
-		  projectSpec: aProjectSpec;
-		  overrideProjectSpec: override;
-		  yourself
-]
-
-{ #category : 'handlers' }
 MetacelloScriptEngine >> handleNotificationsForAction: actionBlock [
 
 	[

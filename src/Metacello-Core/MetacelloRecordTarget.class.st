@@ -85,9 +85,22 @@ MetacelloRecordTarget >> visitPackageSpec: aMetacelloPackageSpec [
 { #category : 'visiting' }
 MetacelloRecordTarget >> visitProjectReference: aMetacelloProjectReferenceSpec [
 
-	| specForLoad displayString vrsn projectSpecForVersion |
-	specForLoad := engine handleLookupProjectSpecForLoad:
-		               aMetacelloProjectReferenceSpec projectReference.
+	| specForLoad displayString vrsn projectSpecForVersion registered override registration |
+	registration := MetacelloProjectRegistration
+		                registrationForProjectSpec:
+		                aMetacelloProjectReferenceSpec projectReference
+		                ifAbsent: [ :new | new ]
+		                ifPresent: [ :existing :new | ^ existing ].
+	registered := registration projectSpec.
+	registration registerProject.
+	(registered compareEqual:
+		 aMetacelloProjectReferenceSpec projectReference) ifFalse: [ "counts as override, only if they differ in some aspect"
+		override := registered ].
+	specForLoad := MetacelloProjectSpecForLoad new
+		               projectSpec:
+			               aMetacelloProjectReferenceSpec projectReference;
+		               overrideProjectSpec: override;
+		               yourself.
 
 	displayString := 'Project: ' , specForLoad projectSpec name.
 	specForLoad projectSpec versionString ifNotNil: [
@@ -101,8 +114,7 @@ MetacelloRecordTarget >> visitProjectReference: aMetacelloProjectReferenceSpec [
 		^ specForLoad ].
 
 
-	specForLoad hasOverride ifTrue: [
-		| override |
+	override ifNotNil: [
 		override := specForLoad overrideProjectSpec copy.
 		override mergeScriptLoads: specForLoad projectSpec.
 		override loadVersion: nil.

@@ -124,15 +124,6 @@ MetacelloProjectSpec >> className: aString [
 	self projectPackage: nil
 ]
 
-{ #category : 'testing' }
-MetacelloProjectSpec >> compareCurrentVersion: anOperator targetVersionStatus: targetVersionStatus using: anMCLoader withEngine: anEngine [
-
-	| specForLoad |
-	specForLoad := anEngine handleLookupProjectSpecForLoad: self.
-
-	^ false
-]
-
 { #category : 'scripting' }
 MetacelloProjectSpec >> compareEqual: aMetacelloProjectSpec [
 	"'projectPackage repositories'"
@@ -650,15 +641,6 @@ MetacelloProjectSpec >> loadVersion: aVersionOrNil usingTarget: aTarget withEngi
 	anEngine handleProjectSpecLoaded:
 		(self copy versionString: vrsn versionString).
 	aTarget postLoad: self
-]
-
-{ #category : 'loading' }
-MetacelloProjectSpec >> loadWithEngine: anEngine [
-
-	| specForLoad |
-	specForLoad := anEngine handleLookupProjectSpecForLoad: self.
-
-	specForLoad performLoadWithEngine: anEngine
 ]
 
 { #category : 'accessing' }
