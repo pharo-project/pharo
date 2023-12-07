@@ -7,9 +7,9 @@ I have exactly the same interface than the main class installer.
 Class {
 	#name : 'ShiftAnonymousClassInstaller',
 	#superclass : 'ShiftClassInstaller',
-	#category : 'Shift-ClassInstaller-Base',
-	#package : 'Shift-ClassInstaller',
-	#tag : 'Base'
+	#category : 'Shift-ClassBuilder-Installer',
+	#package : 'Shift-ClassBuilder',
+	#tag : 'Installer'
 }
 
 { #category : 'accessing' }

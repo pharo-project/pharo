@@ -5,8 +5,9 @@ Class {
 		'numberOfAnnouncements',
 		'newTrait'
 	],
-	#category : 'Shift-ClassInstaller-Tests',
-	#package : 'Shift-ClassInstaller-Tests'
+	#category : 'Shift-ClassBuilder-Tests-Installer',
+	#package : 'Shift-ClassBuilder-Tests',
+	#tag : 'Installer'
 }
 
 { #category : 'running' }

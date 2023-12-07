@@ -108,7 +108,6 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		spec package: 'Random-Core'.
 		spec package: 'ReflectionMirrors-Primitives'.
 		spec package: 'Shift-ClassBuilder'.
-		spec package: 'Shift-ClassInstaller'.
 		spec package: 'Slot-Core'.
 		spec package: 'System-Announcements'.
 		spec package: 'System-BasicCommandLineHandler'.
@@ -166,7 +165,6 @@ BaselineOfPharoBootstrap >> baseline: spec [
 			'Transcript-NonInteractive'.
 			'PharoBootstrap-Initialization'.
 			'Shift-ClassBuilder'.
-			'Shift-ClassInstaller'.
 			'Slot-Core'.
 			'System-Announcements'.
 			'System-BasicCommandLineHandler'.
