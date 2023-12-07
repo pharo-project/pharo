@@ -612,6 +612,12 @@ Canvas >> origin [
 ]
 
 { #category : 'drawing - images' }
+Canvas >> paintFormSet: aFormSet at: aPoint [
+
+	self paintImage: aFormSet asForm at: aPoint
+]
+
+{ #category : 'drawing - images' }
 Canvas >> paintImage: aForm at: aPoint [
 	"Draw the given Form, which is assumed to be a Form or ColorForm following the convention that zero is the transparent pixel value."
 
@@ -686,6 +692,12 @@ Canvas >> stencil: stencilForm at: aPoint color: aColor [
 Canvas >> stencil: stencilForm at: aPoint sourceRect: sourceRect color: aColor [
 	"Flood this canvas with aColor wherever stencilForm has non-zero pixels"
 	^self subclassResponsibility
+]
+
+{ #category : 'drawing - images' }
+Canvas >> stencilFormSet: stencilFormSet at: aPoint color: aColor [
+
+	^ self stencil: stencilFormSet asForm at: aPoint color: aColor
 ]
 
 { #category : 'drawing - support' }
