@@ -66,7 +66,7 @@ ClassVariable >> emitValue: methodBuilder [
 ClassVariable >> hasSameDefinitionAs: otherVariable [
 
 	"Equal definition. ClassVariable values are not to be taken into account"
-	^self class == otherVariable class and: [self key = otherVariable key]
+	^self class = otherVariable class and: [self key = otherVariable key]
 ]
 
 { #category : 'testing' }

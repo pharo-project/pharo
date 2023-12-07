@@ -18,7 +18,7 @@ ShSharedVariablesChangeDetector >> compareFrom: a to: b [
 ShSharedVariablesChangeDetector >> initialize [
 	super initialize.
 	
-	builderAccessor := [ :e | e sharedVariables asArray ].
-	classAccessor := [ :e | e classVariables asArray ].
+	builderAccessor := [ :e | e layoutDefinition sharedVariables ].
+	classAccessor := [ :e | e classVariables ].
 	comparer := [ :a :b | self compareVariableCollection: a with: b ]
 ]
