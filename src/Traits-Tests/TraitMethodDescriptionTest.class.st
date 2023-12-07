@@ -7,14 +7,13 @@ Class {
 
 { #category : 'tests' }
 TraitMethodDescriptionTest >> testArgumentNames [
+
 	self t1 compile: 'zork1: myArgument zork2: mySecondArgument ^true'.
 	self t2 compile: 'zork1: myArgument zork2: somethingElse ^false'.
-	self assert: ((self t5 sourceCodeAt: #zork1:zork2:) asString
-				beginsWith: 'zork1: arg1 zork2: arg2').
+	self assert: ((self t5 sourceCodeAt: #zork1:zork2:) asString beginsWith: 'zork1: myArgument zork2: somethingElse').
 	self t1 compile: 'zork1: myArgument zork2: mySecondArgument ^true'.
 	self t2 compile: 'zork1: somethingElse zork2: myArgument ^false'.
-	self assert: ((self t5 sourceCodeAt: #zork1:zork2:) asString
-				beginsWith: 'zork1: arg1 zork2: arg2')
+	self assert: ((self t5 sourceCodeAt: #zork1:zork2:) asString beginsWith: 'zork1: somethingElse zork2: myArgument')
 ]
 
 { #category : 'tests' }
@@ -33,7 +32,7 @@ TraitMethodDescriptionTest >> testConflictMethodCreation [
 	self t1 compile: '@ myArgument ^true'.
 	self t2 compile: '@myArgument ^false'.
 	self
-		assert: ((self t5 sourceCodeAt: #@) asString beginsWith: '@ anObject').
+		assert: ((self t5 sourceCodeAt: #@) asString beginsWith: '@myArgument').
 	self should: [self c2 new @ 17] raise: Error.
 
 	"keyword"
@@ -41,17 +40,17 @@ TraitMethodDescriptionTest >> testConflictMethodCreation [
 		^true'.
 	self t2 compile: 'zork: myArgument ^false'.
 	self assert: ((self t5 sourceCodeAt: #zork:) asString
-				beginsWith: 'zork: arg1').
+				beginsWith: 'zork: myArgument').
 	self should: [self c2 new zork: 17] raise: Error.
 	self t1 compile: 'zork:myArgument ^true'.
 	self t2 compile: 'zork:myArgument ^false'.
 	self assert: ((self t5 sourceCodeAt: #zork:) asString
-				beginsWith: 'zork: arg1').
+				beginsWith: 'zork:myArgument').
 	self should: [self c2 new zork: 17] raise: Error.
 	self t1 compile: 'zork1: t1 zork2: t2 ^true'.
 	self t2 compile: 'zork1: anObject zork2: anotherObject ^false'.
 	self assert: ((self t5 sourceCodeAt: #zork1:zork2:) asString
-				beginsWith: 'zork1: arg1 zork2: arg2').
+				beginsWith: 'zork1: anObject zork2: anotherObject').
 	self should: [self c2 new zork1: 1 zork2: 2] raise: Error
 ]
 

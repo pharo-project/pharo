@@ -180,8 +180,8 @@ CompiledMethod >> classBinding: aBinding [
 
 { #category : 'source code management' }
 CompiledMethod >> clearSourcePointer [
-	"we use #setSourcePointer: to not clear the property #source"
-	self setSourcePointer: 0
+
+	self sourcePointer: 0
 ]
 
 { #category : 'accessing' }
@@ -880,18 +880,6 @@ CompiledMethod >> selector: aSelector [
 				self literalAt: nl - 1 put: aSelector]
 ]
 
-{ #category : 'source code management' }
-CompiledMethod >> setSourcePointer: srcPointer [
-
-	| trailerBytes trailerSize start |
-	"Drop the #source property if any"
-	self removeProperty: #source.
-	trailerSize := self class trailerSize.
-	trailerBytes := srcPointer asByteArrayOfSize: trailerSize.
-	start := self size - trailerSize.
-	start + 1 to: self size do: [:n | self at: n put: (trailerBytes at: n - start) ]
-]
-
 { #category : 'accessing' }
 CompiledMethod >> sourceCode [
 	"Retrieve or reconstruct the source code for this method."
@@ -925,9 +913,16 @@ CompiledMethod >> sourcePointer [
 { #category : 'source code management' }
 CompiledMethod >> sourcePointer: srcPointer [
 
+	| trailerBytes trailerSize start |
 	"Drop the #source property if any"
 	self removeProperty: #source.
-	self setSourcePointer: srcPointer
+	trailerSize := self class trailerSize.
+	trailerBytes := srcPointer asByteArrayOfSize: trailerSize.
+	start := self size - trailerSize.
+	start + 1 to: self size do: [ :n | self at: n put: (trailerBytes at: n - start) ].
+
+	"In case the mtehod is definied in a trait, we need to update the source pointers of the copies."
+	self origin = self methodClass ifTrue: [ self origin notifySourcePointerOf: self selector updateTo: self sourcePointer ]
 ]
 
 { #category : 'debugger support' }

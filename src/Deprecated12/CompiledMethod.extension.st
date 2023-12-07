@@ -27,6 +27,13 @@ CompiledMethod >> isTaggedWith: aSymbol [
 ]
 
 { #category : '*Deprecated12' }
+CompiledMethod >> setSourcePointer: srcPointer [
+
+	self deprecated: 'Use #sourcePointer: instead' transformWith: '`@rcv setSourcePointer: `@arg' -> '`@rcv sourcePointer: `@arg'.
+	self sourcePointer: srcPointer
+]
+
+{ #category : '*Deprecated12' }
 CompiledMethod >> tagWith: aSymbol [
 
 	self deprecated: 'Use #protocol: instead.' transformWith: '`@rcv tagWith: `@arg' -> '`@rcv protocol: `@arg'.

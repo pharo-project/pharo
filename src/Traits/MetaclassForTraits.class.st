@@ -106,6 +106,15 @@ MetaclassForTraits >> notifyOfRecategorizedSelector: selector from: oldProtocol 
 	self traitUsers do: [ :e | e recategorizeSelector: selector from: oldProtocol to: newProtocol ]
 ]
 
+{ #category : 'private' }
+MetaclassForTraits >> notifySourcePointerOf: aSelector updateTo: srcPointer [
+	"By default we do nothing and traits can hook here to update the users."
+
+	self users do: [ :user |
+		user compiledMethodAt: aSelector ifPresent: [ :method | method sourcePointer: srcPointer ].
+		user notifySourcePointerOf: aSelector updateTo: srcPointer ]
+]
+
 { #category : 'printing' }
 MetaclassForTraits >> printOn: aStream [
 	aStream

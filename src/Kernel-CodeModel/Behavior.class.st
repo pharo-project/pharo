@@ -1305,6 +1305,11 @@ Behavior >> nonObsoleteClass [
 	^ self environment at: self originalName
 ]
 
+{ #category : 'private' }
+Behavior >> notifySourcePointerOf: aSelector updateTo: srcPointer [
+	"By default we do nothing and traits can hook here to update the users."
+]
+
 { #category : 'initialization' }
 Behavior >> obsolete [
 	"nothing to be done"

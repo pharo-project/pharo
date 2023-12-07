@@ -160,8 +160,7 @@ PharoChangesCondenser >> swapSourcePointerOfClassOrTrait: classOrTrait [
 { #category : 'private - 2 swapping' }
 PharoChangesCondenser >> swapSourcePointerOfMethod: method [
 
-	remoteStringMap at: method ifPresent: [ :remoteString |
-		method setSourcePointer: remoteString sourcePointer ]
+	remoteStringMap at: method ifPresent: [ :remoteString | method sourcePointer: remoteString sourcePointer ]
 ]
 
 { #category : 'private - 2 swapping' }

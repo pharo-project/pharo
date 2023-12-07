@@ -185,6 +185,15 @@ Trait >> notifyOfRecategorizedSelector: selector from: oldProtocol to: newProtoc
 	self traitUsers do: [ :e | e recategorizeSelector: selector from: oldProtocol to: newProtocol ]
 ]
 
+{ #category : 'private' }
+Trait >> notifySourcePointerOf: aSelector updateTo: srcPointer [
+	"By default we do nothing and traits can hook here to update the users."
+
+	self users do: [ :user |
+		user compiledMethodAt: aSelector ifPresent: [ :method | method sourcePointer: srcPointer ].
+		user notifySourcePointerOf: aSelector updateTo: srcPointer ]
+]
+
 { #category : 'accessing - method dictionary' }
 Trait >> rebuildMethodDictionary [
 	"I extend the behavior in TraitedMetaclass propagating the changes to my users"
