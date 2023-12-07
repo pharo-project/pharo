@@ -45,7 +45,9 @@ MetacelloAtomicLoad >> target: aTarget [
 { #category : 'visiting' }
 MetacelloAtomicLoad >> visitAtomicLoadDirective: aMetagelloAtomicLoadDirective [
 
-	target visitAtomicLoadDirective: aMetagelloAtomicLoadDirective
+	"An atomic inside an atomic just merges the two atomic into one"
+	aMetagelloAtomicLoadDirective loadDirectives do: [ :dir |
+		dir acceptVisitor: self ].
 ]
 
 { #category : 'visiting' }
