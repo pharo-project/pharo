@@ -82,6 +82,7 @@ BaselineOfBasicTools >> baseline: spec [
 		spec package: 'Network-Mail'.
 		spec package: 'Network-Mail-Tests'.
 		spec package: 'ProfStef-Core'.
+		spec package: 'StartupPreferences'.
 
 		spec baseline: 'Refactoring' with: [
 			spec

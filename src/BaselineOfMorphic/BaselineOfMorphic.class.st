@@ -124,8 +124,6 @@ BaselineOfMorphic >> baseline: spec [
 		spec package: 'Morphic-Widgets-TickList'.
 
 		spec package: 'System-Changes-FileServices'.
-
-		spec package: 'StartupPreferences'.
 		spec package: 'System-Identification'.
 
 		"Tool-Base extends and uses morphic, so it depends on it"
