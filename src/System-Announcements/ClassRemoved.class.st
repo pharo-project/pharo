@@ -21,35 +21,6 @@ ClassRemoved class >> class: aClass [
 		  yourself
 ]
 
-{ #category : 'testing' }
-ClassRemoved >> affectsMethod: aMethod [
-	^classRemoved == aMethod origin
-]
-
-{ #category : 'testing' }
-ClassRemoved >> affectsMethods [
-	"methods are removed together with removed class"
-	^true
-]
-
-{ #category : 'testing' }
-ClassRemoved >> affectsMethodsDefinedInClass: aClass [
-
-	^classRemoved == aClass
-]
-
-{ #category : 'testing' }
-ClassRemoved >> affectsMethodsDefinedInPackage: aPackage [
-
-	^ self packageAffected == aPackage
-]
-
-{ #category : 'testing' }
-ClassRemoved >> affectsMethodsInProtocol: protocol [
-
-	^ classRemoved protocolNames includes: protocol
-]
-
 { #category : 'accessing' }
 ClassRemoved >> classAffected [
 	^self classRemoved

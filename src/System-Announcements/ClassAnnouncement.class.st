@@ -9,31 +9,6 @@ Class {
 	#tag : 'System-Classes'
 }
 
-{ #category : 'testing' }
-ClassAnnouncement >> affectsClass: aClass [
-	^self classAffected == aClass
-]
-
-{ #category : 'testing' }
-ClassAnnouncement >> affectsClasses [
-	^true
-]
-
-{ #category : 'testing' }
-ClassAnnouncement >> affectsClassesDefinedInPackage: aPackage [
-	^self packagesAffected includes: aPackage
-]
-
-{ #category : 'testing' }
-ClassAnnouncement >> affectsClassesExtendedInPackage: aPackage [
-	^aPackage extendsClass: self classAffected
-]
-
-{ #category : 'testing' }
-ClassAnnouncement >> affectsPackages [
-	^true
-]
-
 { #category : 'accessing' }
 ClassAnnouncement >> classAffected [
 	self subclassResponsibility
