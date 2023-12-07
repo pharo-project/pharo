@@ -13,5 +13,5 @@ Class {
 ManifestKernelCodeModel class >> manuallyResolvedDependencies [
 
 	<ignoreForCoverage>
-	^ #(#'Shift-ClassInstaller')
+	^ #(#'Shift-ClassBuilder')
 ]

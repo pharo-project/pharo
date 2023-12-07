@@ -4,8 +4,9 @@ A test slot used in ShClassInstallerTest
 Class {
 	#name : 'ShTestSlot',
 	#superclass : 'IndexedSlot',
-	#category : 'Shift-ClassInstaller-Tests',
-	#package : 'Shift-ClassInstaller-Tests'
+	#category : 'Shift-ClassBuilder-Tests-Installer',
+	#package : 'Shift-ClassBuilder-Tests',
+	#tag : 'Installer'
 }
 
 { #category : 'initialization' }

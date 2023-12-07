@@ -8,14 +8,15 @@ Class {
 		'newClass2',
 		'superClass2'
 	],
-	#category : 'Shift-ClassInstaller-Tests',
-	#package : 'Shift-ClassInstaller-Tests'
+	#category : 'Shift-ClassBuilder-Tests-Installer',
+	#package : 'Shift-ClassBuilder-Tests',
+	#tag : 'Installer'
 }
 
 { #category : 'instance creation' }
 ShClassInstallerTest >> generatedClassesPackageName [
 
-	^ #'GeneratedPackage-Shift-ClassInstallerTests'
+	^ #'GeneratedPackage-Shift-ClassBuilderTests'
 ]
 
 { #category : 'instance creation' }

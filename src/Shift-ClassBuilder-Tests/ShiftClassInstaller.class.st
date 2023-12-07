@@ -25,9 +25,9 @@ Class {
 		'oldClass',
 		'builder'
 	],
-	#category : 'Shift-ClassInstaller-Base',
-	#package : 'Shift-ClassInstaller',
-	#tag : 'Base'
+	#category : 'Shift-ClassBuilder-Tests-Installer',
+	#package : 'Shift-ClassBuilder-Tests',
+	#tag : 'Installer'
 }
 
 { #category : 'examples' }

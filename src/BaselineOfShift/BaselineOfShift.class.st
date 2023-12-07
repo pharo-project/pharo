@@ -13,14 +13,12 @@ BaselineOfShift >> baseline: spec [
 		do:
 			[
 			spec package: 'Shift-ClassBuilder'.
-			spec package: 'Shift-ClassInstaller' with:[spec requires: #('Shift-ClassBuilder')].
 			spec package: 'Shift-ClassBuilder-Tests' with:[spec requires: #core].
-			spec package: 'Shift-ClassInstaller-Tests' with:[spec requires: #core].
 
 			spec
-				group: 'core' with: #('Shift-ClassBuilder' 'Shift-ClassInstaller');
+				group: 'core' with: #('Shift-ClassBuilder');
 				group: 'dev' with: #('core' 'tests');
-				group: 'shift-tests' with: #('Shift-ClassBuilder-Tests' 'Shift-ClassInstaller-Tests');
+				group: 'shift-tests' with: #('Shift-ClassBuilder-Tests');
 				group: 'tests' with: #('shift-tests');
 				group: 'default' with: #('core')
 			]
