@@ -51,7 +51,6 @@ ShiftClassInstaller class >> make: aBlock [
 ShiftClassInstaller class >> remake: aClass basedOn: aBuilder [
 
 	self new
-		oldClass: aClass;
 		installingEnvironment: aBuilder installingEnvironment;
 		make: [ :anotherBuilder |
 			anotherBuilder fillFor: aClass.
@@ -64,7 +63,6 @@ ShiftClassInstaller class >> remake: aClass basedOn: aBuilder [
 ShiftClassInstaller class >> update: oldClass to: aBlock [
 	^ self new
 		fillFor: oldClass;
-		oldClass: oldClass;
 		make: aBlock
 ]
 
@@ -87,7 +85,7 @@ ShiftClassInstaller >> comment: newClass [
 ShiftClassInstaller >> copyObject: oldObject to: newClass [
 
 	| newObject |
-	newObject := (newClass isVariable and: [ oldClass isVariable ])
+	newObject := (newClass isVariable and: [ self oldClass isVariable ])
 		             ifTrue: [
 			             | createdObject |
 			             createdObject := newClass basicNew: oldObject basicSize.
@@ -172,19 +170,10 @@ ShiftClassInstaller >> installingEnvironment: anEnvironment [
 ]
 
 { #category : 'building' }
-ShiftClassInstaller >> lookupOldClass [
-
-	oldClass ifNil: [ oldClass := self installingEnvironment at: builder name ifAbsent: [ nil ] ]
-]
-
-{ #category : 'building' }
 ShiftClassInstaller >> make [
 	| newClass |
 
-	self lookupOldClass.
-
 	[
-		builder oldClass: oldClass.
 		newClass := builder build.
 
 		self installInEnvironment: newClass.
@@ -201,7 +190,7 @@ ShiftClassInstaller >> make [
 		
 	] on: ShNoChangesInClass do:[
 		"If there are no changes in the building, I am not building or replacing nothing"
-		newClass := oldClass.
+		newClass := self oldClass.
 	].
 
 	self recategorize: newClass.
@@ -230,23 +219,23 @@ ShiftClassInstaller >> makeWithBuilder: aBuilder [
 ShiftClassInstaller >> migrateClassTo: newClass [
 	| slotsToMigrate oldClassVariables newClassVariables|
 
-	oldClass ifNil:[^ self].
+	self oldClass ifNil:[^ self].
 	self assert: newClass isNotNil.
 
-	oldClass 	superclass removeSubclass: oldClass.
+	self oldClass superclass removeSubclass: self oldClass.
 
-	newClass subclasses: oldClass subclasses.
+	newClass subclasses: self oldClass subclasses.
 
 	slotsToMigrate := newClass class allSlots reject:[:e | builder builderEnhancer hasToSkipSlot: e ].
 	slotsToMigrate do: [ :newSlot | 
 		"the slot might need to initialize the new class"
 		newSlot wantsInitialization ifTrue: [ newSlot initialize: newClass ].
-		oldClass class slotNamed: newSlot name ifFound: [ :oldSlot | newSlot write: (oldSlot read: oldClass) to: newClass ] ].
+		self oldClass class slotNamed: newSlot name ifFound: [ :oldSlot | newSlot write: (oldSlot read: self oldClass) to: newClass ] ].
 
 	oldClassVariables := OrderedCollection new.
 	newClassVariables := OrderedCollection new.
 
-	oldClass classVariables do: [ :oldVar | | newVar |
+	self oldClass classVariables do: [ :oldVar | | newVar |
 		(newClass hasClassVarNamed: oldVar key)
 			ifTrue: [
 				newVar := newClass classVariableNamed: oldVar key.
@@ -258,7 +247,7 @@ ShiftClassInstaller >> migrateClassTo: newClass [
 		(self builder hasToMigrateInstances)
 			ifTrue: [ builder builderEnhancer migrateInstancesTo: newClass installer: self ].
 
-		{ oldClass. builder oldMetaclass } , oldClassVariables asArray
+		{ self oldClass. builder oldMetaclass } , oldClassVariables asArray
 			elementsForwardIdentityTo: { newClass. builder newMetaclass }, newClassVariables asArray.
 
 		self fixSlotScope: newClass.
@@ -271,7 +260,7 @@ ShiftClassInstaller >> migrateClassTo: newClass [
 { #category : 'migrating' }
 ShiftClassInstaller >> migrateInstancesTo: newClass [
 	| oldObjects newObjects readOnlyOldObjectsFlags |
-	oldObjects := oldClass allInstances.
+	oldObjects := self oldClass allInstances.
 	oldObjects ifEmpty: [ ^ self ].
 
 	readOnlyOldObjectsFlags := OrderedCollection new: oldObjects size.
@@ -292,7 +281,7 @@ ShiftClassInstaller >> notifyChanges [
 
 { #category : 'accessing' }
 ShiftClassInstaller >> oldClass [
-	^ oldClass
+	^ builder oldClass
 ]
 
 { #category : 'accessing' }
