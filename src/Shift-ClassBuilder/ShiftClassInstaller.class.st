@@ -49,11 +49,10 @@ ShiftClassInstaller class >> make: aBlock [
 
 { #category : 'building' }
 ShiftClassInstaller class >> remake: aClass basedOn: aBuilder [
-
 	self new
-		installingEnvironment: aBuilder installingEnvironment;
 		make: [ :anotherBuilder |
 			anotherBuilder fillFor: aClass.
+			anotherBuilder installingEnvironment: aBuilder installingEnvironment.
 			anotherBuilder buildEnvironment: aBuilder buildEnvironment.
 			anotherBuilder markIsInRemake.
 			aBuilder propagateChangesTo: anotherBuilder ]

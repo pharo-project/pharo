@@ -283,13 +283,33 @@ ShClassInstallerTest >> testDuplicateClassPreserveMethods [
 ]
 
 { #category : 'tests' }
+ShClassInstallerTest >> testDuplicateClassPreserveSharedVariables [
+
+	newClass := ShiftClassInstaller make: [ :builder |
+		  builder
+			  name: #ShCITestClass;
+			  sharedVariables: {#ShVariable};
+			  package: self generatedClassesPackageName ].
+
+	newClass2 := newClass duplicateClassWithNewName: #ShCITestClass2.
+
+	self assert: (newClass2 hasClassVarNamed: #ShVariable).
+	"Did we copy the Class Variables?"
+	self assert: (newClass2 classVariableNamed: #ShVariable) definingClass equals: newClass2.
+	self assert: (newClass classVariableNamed: #ShVariable) definingClass equals: newClass
+]
+
+{ #category : 'tests' }
 ShClassInstallerTest >> testDuplicateClassPreserveSlots [
 
 	newClass := self newClass: #ShCITestClass slots: {#anInstanceVariable => BooleanSlot}.
 	newClass2 := newClass duplicateClassWithNewName: #ShCITestClass2.
 
 	self assert: (newClass2 hasSlotNamed: #anInstanceVariable).
-	self assert: (newClass2 slotNamed: #anInstanceVariable) class equals: BooleanSlot
+	self assert: (newClass2 slotNamed: #anInstanceVariable) class equals: BooleanSlot.
+	"Make sure the slots are copied"
+	self assert: (newClass slotNamed: #anInstanceVariable) definingClass equals: newClass.
+	self assert: (newClass2 slotNamed: #anInstanceVariable) definingClass equals: newClass2
 ]
 
 { #category : 'tests' }

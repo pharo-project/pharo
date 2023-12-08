@@ -109,8 +109,6 @@ ShiftClassBuilder >> build [
 	self validateSuperclass.
 	self compareWithOldClass.
 
-	self layoutDefinition copySlotsIfUsedIn: oldClass.
-
 	"If this is the first build, when building a class.
 	We need to check if there is no conflicts with existing subclasses.
 	If we are in a remake, it have been done when building the superclass modified before."
@@ -331,8 +329,8 @@ ShiftClassBuilder >> fillFor: aClass [
 		superclass: aClass superclass;
 		name: aClass getName;
 		layoutClass: aClass classLayout class;
-		slots: aClass localSlots;
-		classSlots: aClass class localSlots;
+		slots: (aClass localSlots collect: [:var | var copy]);
+		classSlots: (aClass class localSlots collect: [:var | var copy]);
 		"we have to copy the class variables, as they contain the values"
 		sharedVariables: (aClass classVariables collect: [:var | var copy]);
 		sharedPools: (aClass sharedPools collect: [ :each | each name ]) asArray;
@@ -436,6 +434,7 @@ ShiftClassBuilder >> isInRemake [
 ShiftClassBuilder >> isRebuild [
 	"Are we rebuilding an existing class?"
 	oldClass ifNil: [ ^false ].
+	oldClass isAnonymous ifTrue: [ ^true ].
 	^name = oldClass name
 ]
 
@@ -464,7 +463,6 @@ ShiftClassBuilder >> layoutDefinition [
 
 { #category : 'accessing' }
 ShiftClassBuilder >> markIsInRemake [
-
 	inRemake := true
 ]
 
