@@ -572,13 +572,18 @@ OrderedCollection >> insert: anObject before: spot [
 
 { #category : 'splitjoin' }
 OrderedCollection >> join: aCollection [
-	"Append the elements of the argument, aSequenceableCollection, separating them by the receiver."
+	"Append the elements of the argument, aSequenceableCollection, separating them by the receiver.
+	Note that we always return an OrderedCollection, not a SortedCollection--the interleaved order
+	of the result is the whole point, here."
 
 	| result |
-	result := self class new.
+	"Lower-bound guess at the size of the result, assuming aCollection is 'flat'--
+	no nested collections."
+	result := self speciesForTransform new:
+		          aCollection size + (self size * (aCollection size - 1)).
 	aCollection
-		do: [:each | each appendTo: result]
-		separatedBy: [self appendTo: result].
+		do: [ :each | each appendTo: result ]
+		separatedBy: [ self appendTo: result ].
 	^ result
 ]
 
