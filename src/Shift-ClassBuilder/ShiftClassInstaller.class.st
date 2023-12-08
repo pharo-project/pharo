@@ -219,7 +219,7 @@ ShiftClassInstaller >> makeWithBuilder: aBuilder [
 ShiftClassInstaller >> migrateClassTo: newClass [
 	| slotsToMigrate oldClassVariables newClassVariables|
 
-	self oldClass ifNil:[^ self].
+	builder isRebuild ifFalse: [^ self].
 	self assert: newClass isNotNil.
 
 	self oldClass superclass removeSubclass: self oldClass.
@@ -260,6 +260,8 @@ ShiftClassInstaller >> migrateClassTo: newClass [
 { #category : 'migrating' }
 ShiftClassInstaller >> migrateInstancesTo: newClass [
 	| oldObjects newObjects readOnlyOldObjectsFlags |
+	
+	builder isRebuild ifFalse: [^ self].
 	oldObjects := self oldClass allInstances.
 	oldObjects ifEmpty: [ ^ self ].
 

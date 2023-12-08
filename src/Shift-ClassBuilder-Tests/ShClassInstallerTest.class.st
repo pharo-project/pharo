@@ -50,7 +50,8 @@ ShClassInstallerTest >> newClass: className superclass: aSuperclass slots: slots
 
 { #category : 'running' }
 ShClassInstallerTest >> tearDown [
-
+	newClass  ifNotNil: [:c | c removeFromSystem].
+	newClass2 ifNotNil: [:c | c removeFromSystem].
 	self packageOrganizer removePackage: self generatedClassesPackageName.
 	super tearDown
 ]

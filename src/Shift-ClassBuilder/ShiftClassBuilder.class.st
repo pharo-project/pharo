@@ -211,10 +211,10 @@ ShiftClassBuilder >> commentStamp: anObject [
 
 { #category : 'changes' }
 ShiftClassBuilder >> compareWithOldClass [
-	oldClass ifNil: [ ^ self ].
+	self isRebuild ifFalse: [ ^ self ].
 	changeComparers do: [ :e | e compareClass: oldClass with: self ].
 
-	changes ifEmpty: [ ShNoChangesInClass signal. ]
+	(changes isEmpty and: [ oldClass name == name ]) ifTrue:  [ ShNoChangesInClass signal. ]
 ]
 
 { #category : 'compiling' }
@@ -429,6 +429,13 @@ ShiftClassBuilder >> isInRemake [
 	"If the builder is in remake (when propagating changes to subclasses)"
 
 	^ inRemake
+]
+
+{ #category : 'testing' }
+ShiftClassBuilder >> isRebuild [
+	"Are we rebuilding an existing class?"
+	oldClass ifNil: [ ^false ].
+	^name = oldClass name
 ]
 
 { #category : 'accessing' }
