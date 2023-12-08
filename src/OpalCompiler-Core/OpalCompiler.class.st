@@ -569,15 +569,16 @@ OpalCompiler >> install [
 	logSource := self logged ifNil: [ true ].
 	protocol := protocol ifNil: [ self priorMethod ifNotNil: [ self priorMethod protocol ] ].
 
-	class addAndClassifySelector: method selector withMethod: method inProtocol: protocol.
+	logSource ifTrue: [
+		method putSource: source withPreamble: [ :file | "It is possible the protocol might be wrong, fro example if the protocol is nil or and extension to the package of the class containing the method. But to fix this problem it would require to find the right protocol before classification and this is some work to do... And this logged protocol is not really used."
+			class
+				printProtocolChunk: protocol 
+				on: file
+				withStamp: changeStamp
+				priorMethod: self priorMethod.
+			file cr ] ].
 
-	logSource ifTrue: [ "For the log we do not use `protocol` because in case it is nil, we keep the current classification or we classify under uncategorize in the method is not present in a protocol yet. So we ask to the method its protocol after classifying it."
-		method
-			putSource: source
-			class: class
-			protocol: method protocol
-			withStamp: changeStamp
-			priorMethod: self priorMethod ].
+	class addAndClassifySelector: method selector withMethod: method inProtocol: protocol.
 
 	class instanceSide noteCompilationOf: method meta: class isClassSide.
 
