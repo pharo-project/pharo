@@ -1,11 +1,11 @@
 Extension { #name : 'String' }
 
-{ #category : '*Slot-Core' }
+{ #category : '*Kernel-CodeModel' }
 String >> asClassVariable [
 	^ ClassVariable named: self
 ]
 
-{ #category : '*Slot-Core' }
+{ #category : '*Kernel-CodeModel' }
 String >> asClassVariableCollection [
 	"Parse as class variables. Use space, tab and cr as separators
 	Example:
@@ -15,12 +15,12 @@ String >> asClassVariableCollection [
 	^(self substrings: Character separators) collect: [ :substring | substring asSymbol asClassVariable ]
 ]
 
-{ #category : '*Slot-Core' }
+{ #category : '*Kernel-CodeModel' }
 String >> asSlot [
 	^ InstanceVariableSlot named: self
 ]
 
-{ #category : '*Slot-Core' }
+{ #category : '*Kernel-CodeModel' }
 String >> asSlotCollection [
 	"Parse as slots. Use space, tab and cr as separators
 	Example:
