@@ -211,10 +211,11 @@ ShiftClassBuilder >> commentStamp: anObject [
 
 { #category : 'changes' }
 ShiftClassBuilder >> compareWithOldClass [
+	"Comparing changes only needs to be done when updating (rebuilding) and existing class"
 	self isRebuild ifFalse: [ ^ self ].
+	
 	changeComparers do: [ :e | e compareClass: oldClass with: self ].
-
-	(changes isEmpty and: [ oldClass name == name ]) ifTrue:  [ ShNoChangesInClass signal. ]
+	changes isEmpty ifTrue: [ ShNoChangesInClass signal ]
 ]
 
 { #category : 'compiling' }
