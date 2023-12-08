@@ -15,7 +15,10 @@ ClassDescription >> printProtocolChunk: protocol on: aFileStream withStamp: chan
 			 strm
 				 nextPutAll: self name;
 				 nextPutAll: ' methodsFor: ';
-				 print: protocol name asString.
+				 print: (protocol ifNotNil: [
+							  protocol isString
+								  ifTrue: [ protocol ]
+								  ifFalse: [ protocol name ] ]) asString.
 			 (changeStamp isNotNil and: [ changeStamp size > 0 or: [ priorMethod isNotNil ] ]) ifTrue: [
 				 strm
 					 nextPutAll: ' stamp: ';
