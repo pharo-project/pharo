@@ -833,7 +833,13 @@ TraitTest >> testUsingTraitInAnonymousSubClassAndRedefiningIt [
 
 	self deny: (Object subclasses includes: aClass).
 
-	t1 := self newTrait: #T1 with: #(aSlot).
+	t1 := t1 classInstaller make: [ :aBuilder |
+		  aBuilder
+			  fillFor: t1;
+			  slots: #(aSlot);
+			  package: self packageNameForTests;
+			  beTrait ].
+		
 	self assert: (aClass hasSlotNamed: #aSlot).
 
 	self deny: (Object subclasses includes: aClass)

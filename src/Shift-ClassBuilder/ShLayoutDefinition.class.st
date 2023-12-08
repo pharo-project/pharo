@@ -58,16 +58,6 @@ ShLayoutDefinition >> copy: slotCollection ifUsedIn: aClass [
 				ifNone: [ aSlot ] ]
 ]
 
-{ #category : 'accessing' }
-ShLayoutDefinition >> copySlotsIfUsedIn: oldClass [
-	"I copy the slots if they are used in oldClass. As the slots has state (usually the index) they cannot be shared between the old and the new class."
-
-	oldClass ifNil: [ ^ self ].
-
-	slots := self copy: slots ifUsedIn: oldClass.
-	classSlots := self copy: classSlots ifUsedIn: oldClass class
-]
-
 { #category : 'initialization' }
 ShLayoutDefinition >> initialize [
 
