@@ -3,13 +3,13 @@ I am an exception to indicate that a slot is found in a layout or in the image.
 "
 Class {
 	#name : 'SlotNotFound',
-	#superclass : 'ClassBuilderError',
+	#superclass : 'Error',
 	#instVars : [
 		'name'
 	],
-	#category : 'Slot-Core-Exception',
-	#package : 'Slot-Core',
-	#tag : 'Exception'
+	#category : 'Kernel-CodeModel-Exceptions',
+	#package : 'Kernel-CodeModel',
+	#tag : 'Exceptions'
 }
 
 { #category : 'signalling' }

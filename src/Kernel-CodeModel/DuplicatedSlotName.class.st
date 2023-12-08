@@ -3,15 +3,15 @@ I am signaled when trying to build a class with a duplicated slot.
 "
 Class {
 	#name : 'DuplicatedSlotName',
-	#superclass : 'ClassBuilderError',
+	#superclass : 'Error',
 	#instVars : [
 		'newSlot',
 		'oldSlot',
 		'host'
 	],
-	#category : 'Slot-Core-Exception',
-	#package : 'Slot-Core',
-	#tag : 'Exception'
+	#category : 'Kernel-CodeModel-Exceptions',
+	#package : 'Kernel-CodeModel',
+	#tag : 'Exceptions'
 }
 
 { #category : 'accessing' }
