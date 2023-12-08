@@ -1,6 +1,6 @@
 Extension { #name : 'Symbol' }
 
-{ #category : '*Slot-Core' }
+{ #category : '*Kernel-CodeModel' }
 Symbol >> => aVariable [
 	"If the slot we give as argument is not present in the image, we create an UndefinedSlot with the AST of the slot definition"
 
