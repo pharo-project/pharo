@@ -47,10 +47,16 @@ FreeTypeFont class >> forLogicalFont: aLogicalFont fileInfo: aFreeTypeFileInfoAb
 	face := aFreeTypeFileInfoAbstract isEmbedded
 		ifTrue: [ FreeTypeFace fromBytes: aFreeTypeFileInfoAbstract fileContents index: index ]
 		ifFalse: [ FreeTypeFace fromFile: aFreeTypeFileInfoAbstract absolutePath index: index ].
-	^ (self all add: self new)
-		setFace: face pointSize: pointSize;
-		simulatedEmphasis: simulatedEmphasis;
-		yourself
+	^ self all
+		detect: [ :font |
+			font face = face and: [
+				font pointSize = pointSize and: [
+					font basicSimulatedEmphasis = simulatedEmphasis ] ] ]
+		ifNone: [
+			(self all add: self new)
+				setFace: face pointSize: pointSize;
+				simulatedEmphasis: simulatedEmphasis;
+				yourself ]
 ]
 
 { #category : 'measuring' }
@@ -69,6 +75,12 @@ FreeTypeFont >> ascent [
 FreeTypeFont >> basicAscent [
 
 	^(self face ascender * self pixelSize // self face unitsPerEm)
+]
+
+{ #category : 'private' }
+FreeTypeFont >> basicSimulatedEmphasis [
+
+	^ simulatedEmphasis
 ]
 
 { #category : 'glyph lookup' }
