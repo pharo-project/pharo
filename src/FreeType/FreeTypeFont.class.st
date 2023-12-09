@@ -34,29 +34,13 @@ FreeTypeFont class >> forLogicalFont: aLogicalFont fileInfo: aFreeTypeFileInfoAb
 	index := aFreeTypeFileInfoAbstract index.
 	^aFreeTypeFileInfoAbstract isEmbedded
 		ifTrue:[
-			self
-				fromBytes: aFreeTypeFileInfoAbstract fileContents
-				pointSize: pointSize
-				index: index]
+			self new
+				setFace: (FreeTypeFace fromBytes: aFreeTypeFileInfoAbstract fileContents index: index) pointSize: pointSize;
+				yourself]
 		ifFalse:[
-			self
-				fromFile: aFreeTypeFileInfoAbstract absolutePath
-				pointSize: pointSize
-				index: index]
-]
-
-{ #category : 'instance creation' }
-FreeTypeFont class >> fromBytes: aByteArray pointSize: anInteger  index: i [
-	^self new
-		setFace: (FreeTypeFace fromBytes: aByteArray index: i) pointSize: anInteger;
-		yourself
-]
-
-{ #category : 'instance creation' }
-FreeTypeFont class >> fromFile: aFileName pointSize: anInteger index: i [
-	^self new
-		setFace: (FreeTypeFace fromFile: aFileName index: i) pointSize: anInteger;
-		yourself
+			self new
+				setFace: (FreeTypeFace fromFile: aFreeTypeFileInfoAbstract absolutePath index: index) pointSize: pointSize;
+				yourself]
 ]
 
 { #category : 'measuring' }
