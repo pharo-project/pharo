@@ -28,11 +28,11 @@ Class {
 }
 
 { #category : 'instance creation' }
-FreeTypeFont class >> forLogicalFont: aLogicalFont fileInfo: aFreeTypeFileInfoAbstract [
-	| pointSize index |
+FreeTypeFont class >> forLogicalFont: aLogicalFont fileInfo: aFreeTypeFileInfoAbstract simulatedEmphasis: simulatedEmphasis [
+	| pointSize index font |
 	pointSize := aLogicalFont pointSize.
 	index := aFreeTypeFileInfoAbstract index.
-	^aFreeTypeFileInfoAbstract isEmbedded
+	font := aFreeTypeFileInfoAbstract isEmbedded
 		ifTrue:[
 			self new
 				setFace: (FreeTypeFace fromBytes: aFreeTypeFileInfoAbstract fileContents index: index) pointSize: pointSize;
@@ -40,7 +40,9 @@ FreeTypeFont class >> forLogicalFont: aLogicalFont fileInfo: aFreeTypeFileInfoAb
 		ifFalse:[
 			self new
 				setFace: (FreeTypeFace fromFile: aFreeTypeFileInfoAbstract absolutePath index: index) pointSize: pointSize;
-				yourself]
+				yourself].
+	font simulatedEmphasis: simulatedEmphasis.
+	^ font
 ]
 
 { #category : 'measuring' }
