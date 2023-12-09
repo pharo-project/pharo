@@ -22,7 +22,6 @@ Class {
 	#name : 'ShiftClassInstaller',
 	#superclass : 'Object',
 	#instVars : [
-		'oldClass',
 		'builder'
 	],
 	#category : 'Shift-ClassBuilder-Installer',
@@ -287,7 +286,7 @@ ShiftClassInstaller >> oldClass [
 
 { #category : 'accessing' }
 ShiftClassInstaller >> oldClass: anObject [
-	oldClass := anObject
+	builder oldClass: anObject
 ]
 
 { #category : 'notifications' }
