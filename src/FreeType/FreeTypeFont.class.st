@@ -46,20 +46,10 @@ FreeTypeFont class >> forLogicalFont: aLogicalFont fileInfo: aFreeTypeFileInfoAb
 ]
 
 { #category : 'instance creation' }
-FreeTypeFont class >> fromBytes: aByteArray pointSize: anInteger [
-	^self fromBytes: aByteArray pointSize: anInteger index: 0
-]
-
-{ #category : 'instance creation' }
 FreeTypeFont class >> fromBytes: aByteArray pointSize: anInteger  index: i [
 	^self new
 		setFace: (FreeTypeFace fromBytes: aByteArray index: i) pointSize: anInteger;
 		yourself
-]
-
-{ #category : 'instance creation' }
-FreeTypeFont class >> fromFile: aFileName pointSize: anInteger [
-	^ self fromFile: aFileName pointSize: anInteger index: 0
 ]
 
 { #category : 'instance creation' }
