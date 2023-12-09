@@ -13,7 +13,7 @@ Class {
 ShSlotChangeDetector >> initialize [
 
 	super initialize.
-	builderAccessor := [ :e | e allSlots asArray ].
-	classAccessor := [ :e | e allSlots asArray ].
-	comparer := [ :a :b | self compareSlotCollection: a with: b ]
+	builderAccessor := [ :e | e allSlots ].
+	classAccessor := [ :e | e allSlots ].
+	comparer := [ :a :b | self compareVariables: a with: b ]
 ]

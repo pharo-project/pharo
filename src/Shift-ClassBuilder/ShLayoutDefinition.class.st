@@ -40,24 +40,6 @@ ShLayoutDefinition >> classSlots: anObject [
 	classSlots := anObject collect: [ :e | e asSlot ]
 ]
 
-{ #category : 'accessing' }
-ShLayoutDefinition >> copy: slotCollection ifUsedIn: aClass [
-	"I only copy the slot if it is not virtual and it is the same in the oldClass.
-	 They are copied as they have the index as instance variable, the index can change in the new class."
-
-	aClass slots isEmpty ifTrue: [ ^ slotCollection ].
-
-	^ slotCollection
-		collect: [ :aSlot |
-			aClass
-				slotNamed: aSlot name
-				ifFound: [ :oldSlot |
-					(oldSlot == aSlot and: [ aSlot isVirtual not ])
-						ifTrue: [ aSlot copy ]
-						ifFalse: [ aSlot ] ]
-				ifNone: [ aSlot ] ]
-]
-
 { #category : 'initialization' }
 ShLayoutDefinition >> initialize [
 

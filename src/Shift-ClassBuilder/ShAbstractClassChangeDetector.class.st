@@ -41,7 +41,7 @@ ShAbstractClassChangeDetector >> compareClass [
 ]
 
 { #category : 'changes' }
-ShAbstractClassChangeDetector >> compareSlotCollection: a with: b [
+ShAbstractClassChangeDetector >> compareVariables: a with: b [
 
 	(a size = b size) ifFalse: [ ^ false].
 
