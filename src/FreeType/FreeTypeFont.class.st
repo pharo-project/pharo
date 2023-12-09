@@ -22,27 +22,35 @@ Class {
 		'FT2Constants',
 		'FreeTypeCacheConstants'
 	],
+	#classInstVars : [
+		'all'
+	],
 	#category : 'FreeType-Fonts',
 	#package : 'FreeType',
 	#tag : 'Fonts'
 }
 
+{ #category : 'accessing' }
+FreeTypeFont class >> all [
+
+	^ all ifNil: [
+		all := WeakSet new
+			addAll: self allInstances;
+			yourself ]
+]
+
 { #category : 'instance creation' }
 FreeTypeFont class >> forLogicalFont: aLogicalFont fileInfo: aFreeTypeFileInfoAbstract simulatedEmphasis: simulatedEmphasis [
-	| pointSize index font |
+	| pointSize index face |
 	pointSize := aLogicalFont pointSize.
 	index := aFreeTypeFileInfoAbstract index.
-	font := aFreeTypeFileInfoAbstract isEmbedded
-		ifTrue:[
-			self new
-				setFace: (FreeTypeFace fromBytes: aFreeTypeFileInfoAbstract fileContents index: index) pointSize: pointSize;
-				yourself]
-		ifFalse:[
-			self new
-				setFace: (FreeTypeFace fromFile: aFreeTypeFileInfoAbstract absolutePath index: index) pointSize: pointSize;
-				yourself].
-	font simulatedEmphasis: simulatedEmphasis.
-	^ font
+	face := aFreeTypeFileInfoAbstract isEmbedded
+		ifTrue: [ FreeTypeFace fromBytes: aFreeTypeFileInfoAbstract fileContents index: index ]
+		ifFalse: [ FreeTypeFace fromFile: aFreeTypeFileInfoAbstract absolutePath index: index ].
+	^ (self all add: self new)
+		setFace: face pointSize: pointSize;
+		simulatedEmphasis: simulatedEmphasis;
+		yourself
 ]
 
 { #category : 'measuring' }
