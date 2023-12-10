@@ -22,10 +22,22 @@ Class {
 		'FT2Constants',
 		'FreeTypeCacheConstants'
 	],
+	#classInstVars : [
+		'all'
+	],
 	#category : 'FreeType-Fonts',
 	#package : 'FreeType',
 	#tag : 'Fonts'
 }
+
+{ #category : 'accessing' }
+FreeTypeFont class >> all [
+
+	^ all ifNil: [
+		all := WeakSet new
+			addAll: self allInstances;
+			yourself ]
+]
 
 { #category : 'instance creation' }
 FreeTypeFont class >> face: freeTypeFace pointSize: pointSize [
@@ -36,7 +48,7 @@ FreeTypeFont class >> face: freeTypeFace pointSize: pointSize [
 { #category : 'instance creation' }
 FreeTypeFont class >> face: freeTypeFace pointSize: pointSize simulatedEmphasis: simulatedEmphasis [
 
-	^ self new
+	^ (self all add: self new)
 		setFace: freeTypeFace pointSize: pointSize;
 		simulatedEmphasis: simulatedEmphasis;
 		yourself
