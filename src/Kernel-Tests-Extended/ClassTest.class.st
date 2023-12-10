@@ -108,7 +108,9 @@ ClassTest >> testAddSlot [
 	self assert: tutu instVarNames equals: #('x').
 	self assert: tutu name equals: #TUTU.
 	tutu addSlot: #y => InstanceVariableSlot.
-	self assert: tutu instVarNames equals: #('x' 'y')
+	self assert: tutu instVarNames equals: #('x' 'y').
+	self assert: (tutu slotNamed: #x) definingClass identicalTo: tutu.
+	self assert: (tutu slotNamed: #y) definingClass identicalTo: tutu.
 ]
 
 { #category : 'tests' }
@@ -122,7 +124,9 @@ ClassTest >> testAddSlotAnonymous [
 	self assert: tutu getName isNil.
 	tutu := tutu addSlot: #y => InstanceVariableSlot.
 	self assert: tutu getName isNil.
-	self assert: tutu instVarNames equals: #('x' 'y')
+	self assert: tutu instVarNames equals: #('x' 'y').
+	self assert: (tutu slotNamed: #x) definingClass identicalTo: tutu.
+	self assert: (tutu slotNamed: #y) definingClass identicalTo: tutu.
 ]
 
 { #category : 'tests - access' }
@@ -479,6 +483,19 @@ ClassTest >> testRemoveClassSlot [
 	self assert: tutu class instVarNames equals: #(#X).
 	tutu removeClassSlot: slot1.
 	self assert: tutu class instVarNames equals: #()
+]
+
+{ #category : 'tests' }
+ClassTest >> testRemoveSlot [
+
+	| slotx tutu |
+	tutu := testEnvironment at: #TUTU.
+	tutu addSlot: (slotx := #x => InstanceVariableSlot).
+	tutu addSlot: #y => InstanceVariableSlot.
+	self assert: tutu instVarNames equals: #('x' 'y').
+	tutu removeSlot: slotx.
+	self assert: tutu instVarNames equals: #('y').
+	self assert: (tutu slotNamed: #y) definingClass identicalTo: tutu.
 ]
 
 { #category : 'tests - access' }

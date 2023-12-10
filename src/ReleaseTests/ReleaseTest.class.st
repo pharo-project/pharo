@@ -109,6 +109,34 @@ ReleaseTest >> testAllGlobalBindingAreGlobalVariables [
 ]
 
 { #category : 'tests - variables' }
+ReleaseTest >> testAllInstanceVariablesDefiningClass [
+	"Make sure that all slots (ivars) have a correct defining class
+	This should never happen but the test is a good way to avoid future bugs"
+	| violating |
+
+	violating := Smalltalk globals allBehaviors select: [ :class |
+		class localSlots anySatisfy: [:var | var definingClass ~= class ]].
+
+	self
+		assert: violating isEmpty
+		description: 'Slot with wrong defining Class in: ', violating asArray asString
+]
+
+{ #category : 'tests - variables' }
+ReleaseTest >> testAllInstanceVariablesOwningClass [
+	"Make sure that all slots (ivars) have a correct owning class
+	This should never happen but the test is a good way to avoid future bugs"
+	| violating |
+
+	violating := Smalltalk globals allBehaviors select: [ :class |
+		class slots anySatisfy: [:var | var owningClass ~= class ]].
+
+	self
+		assert: violating isEmpty
+		description: 'Slot with wrong owning Class in: ', violating asArray asString
+]
+
+{ #category : 'tests - variables' }
 ReleaseTest >> testAllInstanceVariablesStartLowercase [
 	"Make sure that all class instance variable names start with a lowercase letter"
 	| violating |
@@ -119,6 +147,20 @@ ReleaseTest >> testAllInstanceVariablesStartLowercase [
 	self
 		assert: violating isEmpty
 		description: 'Instance variable names must start with a lowercase letter: ', violating asArray asString
+]
+
+{ #category : 'tests - variables' }
+ReleaseTest >> testAllSharedVariablesOwningClass [
+	"Make sure that all SharedVariables (ClassVariables) have a correct owning class
+	This should never happen but the test is a good way to avoid future bugs"
+	| violating |
+
+	violating := Smalltalk globals allBehaviors select: [ :class |
+		class classVariables anySatisfy: [:var | var owningClass ~= class instanceSide]].
+
+	self
+		assert: violating isEmpty
+		description: 'ClassVar with wrong owning Class in: ', violating asArray asString
 ]
 
 { #category : 'tests - variables' }
