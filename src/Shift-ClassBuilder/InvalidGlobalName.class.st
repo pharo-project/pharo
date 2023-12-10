@@ -3,10 +3,10 @@ I am a warning signaled when trying to build a class with invalid name.
 "
 Class {
 	#name : 'InvalidGlobalName',
-	#superclass : 'ClassBuilderError',
-	#category : 'Slot-Core-Exception',
-	#package : 'Slot-Core',
-	#tag : 'Exception'
+	#superclass : 'Error',
+	#category : 'Shift-ClassBuilder-Exceptions',
+	#package : 'Shift-ClassBuilder',
+	#tag : 'Exceptions'
 }
 
 { #category : 'signalling' }

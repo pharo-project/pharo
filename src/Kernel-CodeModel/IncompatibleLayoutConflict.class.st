@@ -3,14 +3,14 @@ I am an error raised when extending a class with an incompatible layout.
 "
 Class {
 	#name : 'IncompatibleLayoutConflict',
-	#superclass : 'ClassBuilderError',
+	#superclass : 'Error',
 	#instVars : [
 		'layout',
 		'subType'
 	],
-	#category : 'Slot-Core-Exception',
-	#package : 'Slot-Core',
-	#tag : 'Exception'
+	#category : 'Kernel-CodeModel-Exceptions',
+	#package : 'Kernel-CodeModel',
+	#tag : 'Exceptions'
 }
 
 { #category : 'accessing' }
