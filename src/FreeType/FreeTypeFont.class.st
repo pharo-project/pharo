@@ -48,10 +48,16 @@ FreeTypeFont class >> face: freeTypeFace pointSize: pointSize [
 { #category : 'instance creation' }
 FreeTypeFont class >> face: freeTypeFace pointSize: pointSize simulatedEmphasis: simulatedEmphasis [
 
-	^ (self all add: self new)
-		setFace: freeTypeFace pointSize: pointSize;
-		simulatedEmphasis: simulatedEmphasis;
-		yourself
+	^ self all
+		detect: [ :font |
+			font face = freeTypeFace and: [
+				font pointSize = pointSize and: [
+					font basicSimulatedEmphasis = simulatedEmphasis ] ] ]
+		ifNone: [
+			(self all add: self new)
+				setFace: freeTypeFace pointSize: pointSize;
+				simulatedEmphasis: simulatedEmphasis;
+				yourself ]
 ]
 
 { #category : 'instance creation' }
@@ -103,6 +109,12 @@ FreeTypeFont >> ascent [
 FreeTypeFont >> basicAscent [
 
 	^(self face ascender * self pixelSize // self face unitsPerEm)
+]
+
+{ #category : 'private' }
+FreeTypeFont >> basicSimulatedEmphasis [
+
+	^ simulatedEmphasis
 ]
 
 { #category : 'glyph lookup' }
