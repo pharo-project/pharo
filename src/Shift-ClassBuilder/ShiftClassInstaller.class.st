@@ -48,6 +48,7 @@ ShiftClassInstaller class >> make: aBlock [
 
 { #category : 'building' }
 ShiftClassInstaller class >> remake: aClass basedOn: aBuilder [
+	"This sets #markIsInRemake, used by the classBuilder when updating subclasses and Traits users"
 	self new
 		make: [ :anotherBuilder |
 			anotherBuilder fillFor: aClass.

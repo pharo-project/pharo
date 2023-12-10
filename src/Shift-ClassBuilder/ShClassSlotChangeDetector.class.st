@@ -14,7 +14,7 @@ ShClassSlotChangeDetector >> initialize [
 	super initialize.
 	builderAccessor := [ :e | e classSlots ].
 	classAccessor := [ :e | e class slots ].
-	comparer := [ :a :b |  self compareSlotCollection: a with: b ]
+	comparer := [ :a :b |  self compareVariables: a with: b ]
 ]
 
 { #category : 'changes' }
