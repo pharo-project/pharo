@@ -28,6 +28,14 @@ Class {
 }
 
 { #category : 'instance creation' }
+FreeTypeFont class >> face: freeTypeFace pointSize: pointSize [
+
+	^ self new
+		setFace: freeTypeFace pointSize: pointSize;
+		yourself
+]
+
+{ #category : 'instance creation' }
 FreeTypeFont class >> forLogicalFont: aLogicalFont fileInfo: aFreeTypeFileInfoAbstract [
 	| pointSize index |
 	pointSize := aLogicalFont pointSize.
@@ -51,10 +59,9 @@ FreeTypeFont class >> fromBytes: aByteArray pointSize: anInteger [
 ]
 
 { #category : 'instance creation' }
-FreeTypeFont class >> fromBytes: aByteArray pointSize: anInteger  index: i [
-	^self new
-		setFace: (FreeTypeFace fromBytes: aByteArray index: i) pointSize: anInteger;
-		yourself
+FreeTypeFont class >> fromBytes: aByteArray pointSize: anInteger index: i [
+
+	^ self face: (FreeTypeFace fromBytes: aByteArray index: i) pointSize: anInteger
 ]
 
 { #category : 'instance creation' }
@@ -64,9 +71,8 @@ FreeTypeFont class >> fromFile: aFileName pointSize: anInteger [
 
 { #category : 'instance creation' }
 FreeTypeFont class >> fromFile: aFileName pointSize: anInteger index: i [
-	^self new
-		setFace: (FreeTypeFace fromFile: aFileName index: i) pointSize: anInteger;
-		yourself
+
+	^ self face: (FreeTypeFace fromFile: aFileName index: i) pointSize: anInteger
 ]
 
 { #category : 'measuring' }
