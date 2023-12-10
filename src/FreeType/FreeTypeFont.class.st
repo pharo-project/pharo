@@ -30,20 +30,27 @@ Class {
 { #category : 'instance creation' }
 FreeTypeFont class >> face: freeTypeFace pointSize: pointSize [
 
+	^ self face: freeTypeFace pointSize: pointSize simulatedEmphasis: nil
+]
+
+{ #category : 'instance creation' }
+FreeTypeFont class >> face: freeTypeFace pointSize: pointSize simulatedEmphasis: simulatedEmphasis [
+
 	^ self new
 		setFace: freeTypeFace pointSize: pointSize;
+		simulatedEmphasis: simulatedEmphasis;
 		yourself
 ]
 
 { #category : 'instance creation' }
-FreeTypeFont class >> forLogicalFont: aLogicalFont fileInfo: aFreeTypeFileInfoAbstract [
+FreeTypeFont class >> forLogicalFont: aLogicalFont fileInfo: aFreeTypeFileInfoAbstract simulatedEmphasis: simulatedEmphasis [
 	| pointSize index face |
 	pointSize := aLogicalFont pointSize.
 	index := aFreeTypeFileInfoAbstract index.
 	face := aFreeTypeFileInfoAbstract isEmbedded
 		ifTrue: [ FreeTypeFace fromBytes: aFreeTypeFileInfoAbstract fileContents index: index ]
 		ifFalse: [ FreeTypeFace fromFile: aFreeTypeFileInfoAbstract absolutePath index: index ].
-	^ self face: face pointSize: pointSize
+	^ self face: face pointSize: pointSize simulatedEmphasis: simulatedEmphasis
 ]
 
 { #category : 'instance creation' }
