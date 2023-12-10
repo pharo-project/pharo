@@ -37,20 +37,13 @@ FreeTypeFont class >> face: freeTypeFace pointSize: pointSize [
 
 { #category : 'instance creation' }
 FreeTypeFont class >> forLogicalFont: aLogicalFont fileInfo: aFreeTypeFileInfoAbstract [
-	| pointSize index |
+	| pointSize index face |
 	pointSize := aLogicalFont pointSize.
 	index := aFreeTypeFileInfoAbstract index.
-	^aFreeTypeFileInfoAbstract isEmbedded
-		ifTrue:[
-			self
-				fromBytes: aFreeTypeFileInfoAbstract fileContents
-				pointSize: pointSize
-				index: index]
-		ifFalse:[
-			self
-				fromFile: aFreeTypeFileInfoAbstract absolutePath
-				pointSize: pointSize
-				index: index]
+	face := aFreeTypeFileInfoAbstract isEmbedded
+		ifTrue: [ FreeTypeFace fromBytes: aFreeTypeFileInfoAbstract fileContents index: index ]
+		ifFalse: [ FreeTypeFace fromFile: aFreeTypeFileInfoAbstract absolutePath index: index ].
+	^ self face: face pointSize: pointSize
 ]
 
 { #category : 'instance creation' }
