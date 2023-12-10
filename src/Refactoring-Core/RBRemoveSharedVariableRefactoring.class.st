@@ -34,7 +34,7 @@ RBRemoveSharedVariableRefactoring class >> remove: variable from: class [
 RBRemoveSharedVariableRefactoring >> applicabilityPreconditions [
 
 	^ ( RBIsNotAMetaclass class: class )
-		& ( RBDefinesSharedVariableCondition class: class sharedVariables: {variableName} )
+		& ( RBDirectlyDefinesSharedVariableCondition class: class sharedVariables: {variableName} )
 
 ]
 
