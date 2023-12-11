@@ -374,11 +374,10 @@ DebugSession >> resume: aValue [
 DebugSession >> resumeProcess [
 	"Make sure the interrupted process is restored properly and restart the low space handler"
 
-	interruptedProcess isTerminated
-		ifFalse: [
-			errorWasInUIProcess
-				ifTrue: [ UIManager default resumeUIProcess: interruptedProcess ]
-				ifFalse: [ interruptedProcess resume ]].
+	interruptedProcess isTerminated ifFalse: [
+		errorWasInUIProcess
+			ifTrue: [ Process resumeUIProcess: interruptedProcess ]
+			ifFalse: [ interruptedProcess resume ] ].
 
 	"restart low space handler"
 	Smalltalk installLowSpaceWatcher
