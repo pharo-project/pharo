@@ -884,8 +884,6 @@ CompiledMethod >> selector: aSelector [
 CompiledMethod >> setSourcePointer: srcPointer [
 
 	| trailerBytes trailerSize start |
-	"Drop the #source property if any"
-	self removeProperty: #source.
 	trailerSize := self class trailerSize.
 	trailerBytes := srcPointer asByteArrayOfSize: trailerSize.
 	start := self size - trailerSize.
