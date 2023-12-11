@@ -192,7 +192,7 @@ ShiftClassInstaller >> make [
 		newClass := self oldClass.
 	].
 
-	self recategorize: newClass.
+	self updatePackage: newClass.
 	self comment: newClass.
 
 	self notifyChanges.
@@ -290,13 +290,13 @@ ShiftClassInstaller >> oldClass: anObject [
 	builder oldClass: anObject
 ]
 
-{ #category : 'notifications' }
-ShiftClassInstaller >> recategorize: aClass [
-	"If the package is nil we leave the class unclassified"
-	builder package ifNotNil: [ :package | aClass package: package tag: builder tag ]
-]
-
 { #category : 'building' }
 ShiftClassInstaller >> updateBindings: aBinding of: newClass [
 	newClass methods do: [ :e | e classBinding: aBinding ]
+]
+
+{ #category : 'notifications' }
+ShiftClassInstaller >> updatePackage: aClass [
+	"If the package is nil we leave the class unclassified"
+	builder package ifNotNil: [ :package | aClass package: package tag: builder tag ]
 ]
