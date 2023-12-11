@@ -111,6 +111,7 @@ RGClassTest >> testCopyForBehaviorDefinitionForClass [
 
 { #category : 'tests' }
 RGClassTest >> testDefinition [
+
 	| env aClass |
 	env := RGEnvironment new.
 
@@ -119,13 +120,10 @@ RGClassTest >> testDefinition [
 	aClass package: (env ensurePackageNamed: 'Kernel-Objects').
 	aClass addClassVariable: (RGClassVariable named: #DependentsFields parent: aClass).
 
-	self
-		assert: aClass definition
-		equals:
-			'ProtoObject subclass: #Object
-	instanceVariableNames: ''''
-	classVariableNames: ''DependentsFields''
-	package: ''Kernel-Objects'''
+	self assert: aClass definition equals: 'ProtoObject << #Object
+	slots: {  };
+	sharedVariables: { #DependentsFields };
+	package: #''Kernel-Objects'''
 ]
 
 { #category : 'tests' }

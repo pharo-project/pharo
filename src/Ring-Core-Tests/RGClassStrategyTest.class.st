@@ -61,7 +61,7 @@ RGClassStrategyTest >> testDefinition [
 	aClass := RGClass named: #SomeClass.
 	aClass superclass name: #Object.
 
-	self assert: (aClass definition beginsWith: 'Object subclass: #SomeClass')
+	self assert: (aClass definition beginsWith: 'Object << #SomeClass')
 ]
 
 { #category : 'tests' }
@@ -76,7 +76,7 @@ RGClassStrategyTest >> testDefinitionWithSlots [
 	expression := 'ToManyRelationSlot inverse: #director inClass: #SlotExampleMovie'.
 	slot expression: expression.
 
-	self assert: (aClass definition beginsWith: 'Object subclass: #SomeClass').
+	self assert: (aClass definition beginsWith: 'Object << #SomeClass').
 	self assert: (aClass definition includesSubstring: ('#iVar => ', expression))
 ]
 
