@@ -39,10 +39,9 @@ ShClassInstallerAnnouncementsTest >> testClassRepackagingShouldAnnounceClassModi
 		self assert: ann classRepackaged name equals: #SHClass ].
 
 	[
-	ShiftClassInstaller make: [ :builder |
-		builder
-			fillFor: aClass;
-			package: self generatedClassesPackageName , '2' ].
+	ShiftClassInstaller 
+		update: aClass 
+		to: [ :builder | builder package: self generatedClassesPackageName , '2' ].
 
 	self assert: numberOfAnnouncements equals: 1 ] ensure: [ self packageOrganizer removePackage: self generatedClassesPackageName , '2' ]
 ]
