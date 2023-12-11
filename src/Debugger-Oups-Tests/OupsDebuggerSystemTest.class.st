@@ -32,7 +32,7 @@ OupsDebuggerSystemTest >> createDummyDebugRequestForUIProcess [
 		on: Exception
 		do: [ :e | exception := e ].
 	^ (OupsDummyDebugRequest newForException: exception)
-		  process: UIManager default uiProcess;
+		  process: Process uiProcess;
 		  yourself
 ]
 
