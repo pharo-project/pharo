@@ -1163,14 +1163,6 @@ Behavior >> isWords [
 	^self isBytes not
 ]
 
-{ #category : 'testing - class hierarchy' }
-Behavior >> kindOfSubclass [
-	"Answer a String that is the keyword that describes the receiver's kind of subclass
-	Note: this is for printing the ST80 style class definiton, see #subclassDefiningSymbol"
-	<reflection: 'Class structural inspection - Iterating and querying hierarchy'>
-	^ self classLayout kindOfSubclass
-]
-
 { #category : 'accessing - method dictionary' }
 Behavior >> localMethods [
 	"returns the methods of classes excluding the ones of the traits that the class uses"
