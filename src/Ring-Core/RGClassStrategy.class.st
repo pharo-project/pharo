@@ -252,7 +252,7 @@ RGClassStrategy >> definition [
 			  aStream
 				  crtab;
 				  nextPutAll: 'tag: ';
-				  nextPutAll: tag;
+				  print: tag;
 				  nextPut: $; ].
 		  aStream
 			  crtab;

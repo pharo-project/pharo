@@ -249,7 +249,7 @@ RGTraitV2Strategy >> definition [
 			  stream
 				  crtab;
 				  nextPutAll: 'tag: ';
-				  nextPutAll: tag;
+				  print: tag;
 				  nextPut: $; ].
 		  stream
 			  crtab;
