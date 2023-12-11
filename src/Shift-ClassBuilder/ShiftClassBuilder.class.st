@@ -119,7 +119,6 @@ ShiftClassBuilder >> build [
 	self createClass.
 
 	self oldClass ifNotNil: [
-		self newClass basicTag: self oldClass packageTag.
 		self copyProtocols.
 		self newClass commentSourcePointer: self oldClass commentSourcePointer ].
 

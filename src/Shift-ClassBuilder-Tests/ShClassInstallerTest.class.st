@@ -283,6 +283,23 @@ ShClassInstallerTest >> testDuplicateClassPreserveMethods [
 ]
 
 { #category : 'tests' }
+ShClassInstallerTest >> testDuplicateClassPreservePackage [
+
+	newClass := self newClass: #ShCITestClass slots: {#anInstanceVariable}.
+	newClass2 := newClass duplicateClassWithNewName: #ShCITestClass2.
+
+	self assert: newClass2 packageTag name equals: newClass packageTag name.
+	"pacakge knows the new class"
+	self assert: (newClass2 packageTag includesClass: newClass2).
+	self assert: (newClass2 packageTag classes identityIncludes: newClass2).
+	"and still the original"
+	self assert: (newClass packageTag includesClass: newClass).
+	self assert: (newClass packageTag classes identityIncludes: newClass).
+	"packageTag is identity"
+	self assert: newClass packageTag identicalTo: newClass2 packageTag
+]
+
+{ #category : 'tests' }
 ShClassInstallerTest >> testDuplicateClassPreserveSharedVariables [
 
 	newClass := ShiftClassInstaller make: [ :builder |
