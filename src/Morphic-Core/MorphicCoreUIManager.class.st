@@ -56,14 +56,6 @@ MorphicCoreUIManager >> restoreDisplayAfter: aBlock [
 ]
 
 { #category : 'ui process' }
-MorphicCoreUIManager >> resumeUIProcess: aProcess [
-  "Adopt aProcess as the project process -- probably because of proceeding from a debugger"
-
-  UIProcess := aProcess.
-  UIProcess resume
-]
-
-{ #category : 'ui process' }
 MorphicCoreUIManager >> spawnNewProcess [
 
   UIProcess := [

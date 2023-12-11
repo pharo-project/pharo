@@ -36,17 +36,18 @@ MorphicUIManager class >> isValidForCurrentSystemConfiguration [
 
 { #category : 'cleanup' }
 MorphicUIManager class >> restartMethods [
-   UIProcess ifNotNil: [
-	| process |
-	process := UIProcess.
-	self new spawnNewProcess.
-	process terminate. ]
+
+	Process uiProcess ifNotNil: [
+		| process |
+		process := Process uiProcess.
+		self new spawnNewProcess.
+		process terminate ]
 ]
 
 { #category : 'ui process' }
 MorphicUIManager class >> uiProcess [
 
-	^ UIProcess
+	^ Process uiProcess
 ]
 
 { #category : 'private' }
@@ -618,14 +619,6 @@ MorphicUIManager >> restoreDisplayAfter: aBlock [
 	self currentWorld fullRepaintNeeded
 ]
 
-{ #category : 'ui process' }
-MorphicUIManager >> resumeUIProcess: aProcess [
-	"Adopt aProcess as the project process -- probably because of proceeding from a debugger"
-
-	UIProcess := aProcess.
-	UIProcess resume
-]
-
 { #category : 'display' }
 MorphicUIManager >> showWaitCursorWhile: aBlock [
 	Cursor wait showWhile: aBlock
@@ -634,9 +627,10 @@ MorphicUIManager >> showWaitCursorWhile: aBlock [
 { #category : 'ui process' }
 MorphicUIManager >> spawnNewProcess [
 
-	UIProcess := [ MorphicRenderLoop new doOneCycleWhile: [ true ] ] newProcess priority:
-		             Processor userSchedulingPriority.
-	UIProcess
+	Process uiProcess:
+		([ MorphicRenderLoop new doOneCycleWhile: [ true ] ] newProcess
+			 priority: Processor userSchedulingPriority).
+	Process uiProcess
 		name: 'Morphic UI Process';
 		resume
 ]
@@ -650,8 +644,8 @@ MorphicUIManager >> systemNotificationDefaultAction: aNotification [
 
 { #category : 'ui process' }
 MorphicUIManager >> terminateUIProcess [
-	UIProcess suspend; terminate.
-	UIProcess := nil "?"
+
+	Process terminateUIProcess
 ]
 
 { #category : 'accessing' }
@@ -664,7 +658,7 @@ MorphicUIManager >> uiProcess [
 	" Answer the currently active UI process for morphic world.
 	Client should check explicitly if #uiProcess answers nil or not (see other implementations)"
 
-	^ UIProcess
+	^ Process uiProcess
 ]
 
 { #category : 'ui requests' }
