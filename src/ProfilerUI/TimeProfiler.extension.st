@@ -1,13 +1,25 @@
 Extension { #name : 'TimeProfiler' }
 
 { #category : '*ProfilerUI' }
-TimeProfiler >> blockCodeFrom: aString [
-	^ 'self runBlock: [', aString, ']'
+TimeProfiler >> doItCodeSelectorsPath [
+
+	^ #( 'UndefinedObject>>DoIt' )
 ]
 
 { #category : '*ProfilerUI' }
-TimeProfiler >> doItSelectorsPath [
-	^ #('UndefinedObject>>DoIt')
+TimeProfiler >> doItCommandSelectorsPath [
+
+	^ #( 'SpCodeProfileItCommand>>execute'
+	     'CompiledMethod>>valueWithReceiver:arguments:'
+	     'UndefinedObject>>DoIt' )
+]
+
+{ #category : '*ProfilerUI' }
+TimeProfiler >> doItSelectorsPaths [
+
+	^ Array
+		  with: self doItCodeSelectorsPath
+		  with: self doItCommandSelectorsPath
 ]
 
 { #category : '*ProfilerUI' }

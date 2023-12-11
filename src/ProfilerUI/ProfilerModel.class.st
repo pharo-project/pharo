@@ -20,7 +20,10 @@ Class {
 { #category : 'constants' }
 ProfilerModel >> allProfilerClasses [
 
-	^ { AndreasSystemProfiler . TimeProfiler ". PreciseProfiler" }
+	^ {
+		  AndreasSystemProfiler.
+		  TimeProfiler".
+		  PreciseProfiler" }
 ]
 
 { #category : 'announce' }
@@ -55,14 +58,27 @@ ProfilerModel >> browseItem [
 ]
 
 { #category : 'constants' }
-ProfilerModel >> doItSelectorsPath [
+ProfilerModel >> doItSelectorsPaths [
 
-	^ profiler doItSelectorsPath
+	^ profiler doItSelectorsPaths
 ]
 
 { #category : 'constants' }
 ProfilerModel >> doItSourceCodeFrom: someCode [
-	^ 'self profileBlock: [',(profiler blockCodeFrom: someCode),' ]'
+
+	^ 'self forkProfileBlock: [' , someCode , ' ]'
+]
+
+{ #category : 'api' }
+ProfilerModel >> forkProfileBlock: aBlock [
+	"Fork is used to get a more clean execution results tree"
+
+	[
+	self announceProfilingStarted.
+	self startProfiling.
+	[ profiler runBlock: aBlock ] ensure: [
+		self stopProfiling.
+		self announceProfilingFinished ] ] fork
 ]
 
 { #category : 'api' }
@@ -138,23 +154,19 @@ ProfilerModel >> newProfiler [
 	^ self profilerClass new
 ]
 
-{ #category : 'private' }
+{ #category : 'api' }
 ProfilerModel >> profileBlock: aBlock [
 
-	"Fork is used to get a more clean execution results tree"
-	[self announceProfilingStarted.
-	self startProfiling.
-	aBlock ensure: [
-		self stopProfiling.
-		self announceProfilingFinished ]] fork
+	self resetProfiler.
+
+	self forkProfileBlock: aBlock
 ]
 
 { #category : 'api' }
 ProfilerModel >> profileCode: someCode notifying: requestor [
 
 	| compiledMethod |
-	self isProfiling ifTrue: [ profiler stopProfiling ].
-	profiler := self newProfiler.
+	self resetProfiler.
 
 	compiledMethod := Smalltalk compiler
 		                  source: (self doItSourceCodeFrom: someCode);
@@ -179,6 +191,13 @@ ProfilerModel >> profilerClass: aClass [
 ProfilerModel >> report [
 
 	^ profiler report
+]
+
+{ #category : 'private' }
+ProfilerModel >> resetProfiler [
+
+	self isProfiling ifTrue: [ profiler stopProfiling ].
+	profiler := self newProfiler
 ]
 
 { #category : 'accessing' }
@@ -227,7 +246,7 @@ ProfilerModel >> rootTallyItemsOver: perCent [
 		ifNotEmpty: [:sons | sons asOrderedCollection sort reverse ]
 ]
 
-{ #category : 'private - running' }
+{ #category : 'private' }
 ProfilerModel >> runBlock: aBlock [
 
 	^ profiler runBlock: aBlock

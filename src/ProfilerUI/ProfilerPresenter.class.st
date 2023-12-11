@@ -41,6 +41,24 @@ ProfilerPresenter class >> open [
 	^ self new open
 ]
 
+{ #category : 'spying' }
+ProfilerPresenter class >> profileCode: aString [
+
+	^ self new
+		  open;
+		  profileCode: aString asString;
+		  yourself
+]
+
+{ #category : 'spying' }
+ProfilerPresenter class >> spyOn: aBlock [
+
+	^ self new
+		  open;
+		  spyOn: aBlock;
+		  yourself
+]
+
 { #category : 'constants' }
 ProfilerPresenter >> initExtent [
 	^ 800 @ 800
@@ -79,6 +97,31 @@ ProfilerPresenter >> newResultsPresenter [
 { #category : 'constants' }
 ProfilerPresenter >> presenterTitle [
 	^ 'Profiler'
+]
+
+{ #category : 'actions' }
+ProfilerPresenter >> profileCode: aString [
+
+	inputPresenter
+		code: aString;
+		profileIt
+]
+
+{ #category : 'actions' }
+ProfilerPresenter >> spyOn: aBlock [
+
+	inputPresenter
+		block: aBlock;
+		profileIt
+]
+
+{ #category : 'actions' }
+ProfilerPresenter >> spyOn: aBlock asCode: aString [
+
+	inputPresenter
+		block: aBlock;
+		code: aString;
+		profileIt
 ]
 
 { #category : 'subscription' }

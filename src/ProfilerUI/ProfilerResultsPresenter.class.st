@@ -26,8 +26,19 @@ Class {
 { #category : 'private' }
 ProfilerResultsPresenter >> doItNode [
 
-	| selectorsPath doItNode |
-	selectorsPath := viewModel doItSelectorsPath.
+	| doItNode |
+	doItNode := nil.
+	viewModel doItSelectorsPaths do: [ :eachPath |
+		doItNode := self doItNodeFor: eachPath.
+		doItNode ifNotNil: [ ^ doItNode ] ].
+	^ doItNode
+]
+
+{ #category : 'private' }
+ProfilerResultsPresenter >> doItNodeFor: originalSelectorsPath [
+
+	| doItNode selectorsPath |
+	selectorsPath := Array withAll: originalSelectorsPath.
 	doItNode := nil.
 	treeTable expandAllSuchThat: [ :item |
 		| bool |
@@ -37,10 +48,10 @@ ProfilerResultsPresenter >> doItNode [
 			doItNode := item.
 			selectorsPath := selectorsPath allButFirst ].
 		bool ].
-	(doItNode isNil or: [
-		 doItNode methodName ~= viewModel doItSelectorsPath last ]) ifTrue: [
-		^ nil ].
 
+	(doItNode isNil or: [
+		 doItNode methodName ~= originalSelectorsPath last ]) ifTrue: [
+		^ nil ].
 	^ doItNode
 ]
 
