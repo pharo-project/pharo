@@ -11,10 +11,9 @@ ProtocolAnnouncementsTest >> testAddProtocolAnnouncedOnlyInTrait [
 			         name: 'TraitForTest';
 			         package: self packageNameForTests , '2' ].
 
-	class := self class classInstaller make: [ :aBuilder |
-		         aBuilder
-			         fillFor: class;
-			         traits: trait ].
+	class := class classInstaller 
+		update: class
+		to: [ :aBuilder | aBuilder traits: trait ].
 
 	self when: ProtocolAdded do: [ :ann |
 		self assert: ann protocol name equals: #king.
