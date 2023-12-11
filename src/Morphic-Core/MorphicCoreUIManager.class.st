@@ -4,9 +4,6 @@ This is a very simplified version of MorphicUIManager for Moprhic subset that co
 Class {
 	#name : 'MorphicCoreUIManager',
 	#superclass : 'DummyUIManager',
-	#classVars : [
-		'UIProcess'
-	],
 	#category : 'Morphic-Core-Support',
 	#package : 'Morphic-Core',
 	#tag : 'Support'
@@ -58,17 +55,17 @@ MorphicCoreUIManager >> restoreDisplayAfter: aBlock [
 { #category : 'ui process' }
 MorphicCoreUIManager >> spawnNewProcess [
 
-  UIProcess := [
-	MorphicRenderLoop new doOneCycleWhile: [ true ]
-  ] newProcess priority: Processor userSchedulingPriority.
-  UIProcess name: 'Morphic UI Process'.
-  UIProcess resume
+	Process
+		spawnNewUIProcess:
+			([ MorphicRenderLoop new doOneCycleWhile: [ true ] ] newProcess
+				 priority: Processor userSchedulingPriority)
+		named: 'Morphic UI Process'
 ]
 
 { #category : 'ui process' }
 MorphicCoreUIManager >> terminateUIProcess [
-  UIProcess suspend; terminate.
-  UIProcess := nil "?"
+
+	Process terminateUIProcess
 ]
 
 { #category : 'ui process' }
@@ -76,5 +73,5 @@ MorphicCoreUIManager >> uiProcess [
   " Answer the currently active UI process for morphic world.
   Client should check explicitly if #uiProcess answers nil or not (see other implementations)"
 
-  ^ UIProcess
+  ^ Process uiProcess
 ]

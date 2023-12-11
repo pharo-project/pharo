@@ -112,6 +112,14 @@ Process class >> resumeUIProcess: aProcess [
 ]
 
 { #category : 'ui process' }
+Process class >> spawnNewUIProcess: aProcess named: aString [
+
+	UIProcess := aProcess.
+	UIProcess name: aString.
+	UIProcess resume
+]
+
+{ #category : 'ui process' }
 Process class >> terminateUIProcess [
 
 	UIProcess

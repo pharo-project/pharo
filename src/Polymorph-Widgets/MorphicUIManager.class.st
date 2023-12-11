@@ -11,9 +11,6 @@ Class {
 	#instVars : [
 		'activeTranscript'
 	],
-	#classVars : [
-		'UIProcess'
-	],
 	#category : 'Polymorph-Widgets-Themes',
 	#package : 'Polymorph-Widgets',
 	#tag : 'Themes'
@@ -627,12 +624,11 @@ MorphicUIManager >> showWaitCursorWhile: aBlock [
 { #category : 'ui process' }
 MorphicUIManager >> spawnNewProcess [
 
-	Process uiProcess:
-		([ MorphicRenderLoop new doOneCycleWhile: [ true ] ] newProcess
-			 priority: Processor userSchedulingPriority).
-	Process uiProcess
-		name: 'Morphic UI Process';
-		resume
+	Process
+		spawnNewUIProcess:
+			([ MorphicRenderLoop new doOneCycleWhile: [ true ] ] newProcess
+				 priority: Processor userSchedulingPriority)
+		named: 'Morphic UI Process'
 ]
 
 { #category : 'ui requests' }
@@ -658,7 +654,7 @@ MorphicUIManager >> uiProcess [
 	" Answer the currently active UI process for morphic world.
 	Client should check explicitly if #uiProcess answers nil or not (see other implementations)"
 
-	^ Process uiProcess
+	^ self class uiProcess
 ]
 
 { #category : 'ui requests' }
