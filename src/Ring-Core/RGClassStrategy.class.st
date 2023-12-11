@@ -251,8 +251,8 @@ RGClassStrategy >> definition [
 		  self owner packageTag ifNotNil: [ :tag |
 			  aStream
 				  crtab;
-				  nextPutAll: 'tags: ';
-				  nextPutAll: tag;
+				  nextPutAll: 'tag: ';
+				  print: tag;
 				  nextPut: $; ].
 		  aStream
 			  crtab;
