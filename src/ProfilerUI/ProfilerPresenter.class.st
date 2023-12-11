@@ -41,6 +41,15 @@ ProfilerPresenter class >> open [
 	^ self new open
 ]
 
+{ #category : 'spying' }
+ProfilerPresenter class >> profileCode: aString [
+
+	^ self new
+		  open;
+		  profileCode: aString asString;
+		  yourself
+]
+
 { #category : 'constants' }
 ProfilerPresenter >> initExtent [
 	^ 800 @ 800
@@ -79,6 +88,13 @@ ProfilerPresenter >> newResultsPresenter [
 { #category : 'constants' }
 ProfilerPresenter >> presenterTitle [
 	^ 'Profiler'
+]
+
+{ #category : 'actions' }
+ProfilerPresenter >> profileCode: aString [
+
+	inputPresenter code: aString.
+	inputPresenter profileIt
 ]
 
 { #category : 'subscription' }

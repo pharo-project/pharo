@@ -30,17 +30,19 @@ ProfilerInputPresenter class >> defaultLayout [
 		  yourself
 ]
 
+{ #category : 'accessing' }
+ProfilerInputPresenter >> code: aString [
+
+	codeInput text: aString
+]
+
 { #category : 'initialization' }
 ProfilerInputPresenter >> initializeActions [
 
 	profilerDropList whenSelectedItemChangedDo: [ :item |
 		viewModel profilerClass: item ].
 
-
-	profileItButton action: [
-		codeInput text
-			ifEmpty: [ self notify: 'Must enter code' at: 0 in: codeInput text ]
-			ifNotEmpty: [ viewModel profileCode: codeInput text notifying: self] ]
+	profileItButton action: [ self profileIt ]
 ]
 
 { #category : 'initialization' }
@@ -73,6 +75,14 @@ ProfilerInputPresenter >> notify: errorMessage at: positionIndex in: sourceCode 
 	codeInput takeKeyboardFocus
 ]
 
+{ #category : 'initialization' }
+ProfilerInputPresenter >> profileIt [
+
+	codeInput text
+		ifEmpty: [ self notify: 'Must enter code' at: 0 in: codeInput text ]
+		ifNotEmpty: [ viewModel profileCode: codeInput text notifying: self ]
+]
+
 { #category : 'accessing - model' }
 ProfilerInputPresenter >> setModelBeforeInitialization: aDomainObject [
 
@@ -81,12 +91,14 @@ ProfilerInputPresenter >> setModelBeforeInitialization: aDomainObject [
 
 { #category : 'initialization' }
 ProfilerInputPresenter >> subscribeOnProfilingAnnouncements [
+
 	viewModel announcer
 		when: ProfilingStartedAnnouncement
-		do: [ self enabled: false ];
-
+		do: [ self enabled: false ]
+		for: self;
 		when: ProfilingResultsDisplayedAnnouncement
 		do: [ self enabled: true ]
+		for: self
 ]
 
 { #category : 'initialization' }
