@@ -19,13 +19,12 @@ BaselineOfSlot >> baseline: spec [
 	spec
 		for: #common
 		do: [ spec
-				package: 'Slot-Core';
-				package: 'Slot-Examples' with: [ spec requires: #('Slot-Core') ];
-				package: 'Slot-Tests' with: [ spec requires: #('Slot-Core' 'Slot-Examples') ];
-				package: 'VariablesLibrary' with: [ spec requires: #('Slot-Core') ];
+				package: 'Slot-Examples';
+				package: 'Slot-Tests' with: [ spec requires: #('Slot-Examples') ];
+				package: 'VariablesLibrary';
 				package: 'VariablesLibrary-Tests' with: [ spec requires: #('VariablesLibrary' 'Slot-Tests') ].
 
 			spec
-				group: 'core' with: #('Slot-Core' 'VariablesLibrary');
+				group: 'core' with: #('VariablesLibrary');
 				group: 'slot-tests' with: #('Slot-Tests' 'VariablesLibrary-Tests') ]
 ]
