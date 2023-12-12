@@ -18,19 +18,16 @@ Class {
 
 { #category : 'execution' }
 RBRenameVariableDriver >> applyChanges [
-	
-	refactoring privateTransform.
-	self flag: 'The next line is horrible, 
-					I must think of a better way to prevent changes from executing during tests'.
-	(previewPresenterClass isKindOf: StRefactoringPreviewPresenterMock class)
-		ifFalse: [ refactoring performChanges ]
+	"I use the preview presenter to perform changes, but I do not open it"
+	(self previewWithChanges: self changes) performChanges
 ]
 
 { #category : 'execution' }
 RBRenameVariableDriver >> changes [
 
-	^ refactoring privateTransform; changes
-	
+	refactoring changes changes isEmpty ifTrue: [
+		refactoring privateTransform ].
+	^ refactoring changes
 ]
 
 { #category : 'execution' }
