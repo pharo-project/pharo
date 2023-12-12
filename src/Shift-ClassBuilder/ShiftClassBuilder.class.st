@@ -332,7 +332,7 @@ ShiftClassBuilder >> fillFor: aClass [
 		classSlots: (aClass class localSlots collect: [:var | var copy]);
 		"we have to copy the class variables, as they contain the values"
 		sharedVariables: (aClass classVariables collect: [:var | var copy]);
-		sharedPools: (aClass sharedPools collect: [ :each | each name ]) asArray;
+		sharedPools: aClass sharedPools asArray;
 		package: aClass package name;
 		installingEnvironment: aClass environment;
 		oldClass: aClass.
@@ -357,7 +357,7 @@ ShiftClassBuilder >> fillInstanceSideFromClass: aClass [
 	self layout: aClass classLayout class.
 
 	self sharedVariables: aClass classVariables.
-	self sharedPools: (aClass sharedPools collect: [ :each | each name ]) asArray
+	self sharedPools: aClass sharedPools asArray
 ]
 
 { #category : 'building' }
@@ -599,7 +599,7 @@ ShiftClassBuilder >> sharedVariables: aCollection [
 { #category : 'accessing' }
 ShiftClassBuilder >> sharedVariablesFromString: aString [
 	"Note: this method should not be used outside of old style class definitions"
-	layoutDefinition sharedVariables: aString asClassVariableCollection
+	self sharedVariables: aString asClassVariableCollection
 ]
 
 { #category : 'accessing' }

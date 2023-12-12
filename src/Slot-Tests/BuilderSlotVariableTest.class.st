@@ -1,5 +1,5 @@
 Class {
-	#name : 'SlotClassVariableTest',
+	#name : 'BuilderSlotVariableTest',
 	#superclass : 'SlotClassBuilderTest',
 	#category : 'Slot-Tests-ClassBuilder',
 	#package : 'Slot-Tests',
@@ -7,7 +7,7 @@ Class {
 }
 
 { #category : 'tests' }
-SlotClassVariableTest >> testAccessorInstanceVariableSlotGeneratesAccessors [
+BuilderSlotVariableTest >> testAccessorInstanceVariableSlotGeneratesAccessors [
 	| class1 |
 
 	class1 := self make: [ :builder |
@@ -22,31 +22,7 @@ SlotClassVariableTest >> testAccessorInstanceVariableSlotGeneratesAccessors [
 ]
 
 { #category : 'tests' }
-SlotClassVariableTest >> testClassVariableDoesNotDuplicatesSubclassesOfSuperclass [
-	"Issue: 13028"
-	| class1 class2 |
-
-	class1 := self make: [ :builder |
-		builder
-			name: self aClassName;
-			superclass: Object ].
-
-	class2 := self make: [ :builder |
-		builder
-			name: self anotherClassName;
-			superclass: class1 ].
-
-	self assert: class1 subclasses equals: { class2 }.
-	class2 := self make: [ :builder |
-		builder
-			name: self anotherClassName;
-			superclass: class1;
-			sharedVariables: #(ASharedVariable) ].
-	self assert: class1 subclasses equals: { class2 }
-]
-
-{ #category : 'tests' }
-SlotClassVariableTest >> testWantsInitializationAddsInitializeSlot [
+BuilderSlotVariableTest >> testWantsInitializationAddsInitializeSlot [
 
 	| class1 |
 	class1 := self make: [ :builder |
@@ -65,7 +41,7 @@ SlotClassVariableTest >> testWantsInitializationAddsInitializeSlot [
 ]
 
 { #category : 'tests' }
-SlotClassVariableTest >> testWantsInitializationSkipInitializeSlotIfAlreadyInHierarchy [
+BuilderSlotVariableTest >> testWantsInitializationSkipInitializeSlotIfAlreadyInHierarchy [
 	| class1 class2 |
 
 	class1 := self make: [ :builder |

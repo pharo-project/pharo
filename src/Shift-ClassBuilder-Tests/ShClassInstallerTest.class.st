@@ -254,6 +254,13 @@ ShClassInstallerTest >> testCreatingFullTraitHasAllElements [
 ]
 
 { #category : 'tests' }
+ShClassInstallerTest >> testDuplicateClassError [
+
+	newClass := self newClass: #ShCITestClass slots: {#anInstanceVariable => BooleanSlot}.
+	self should: [ newClass duplicateClassWithNewName: #OrderedDictionary ] raise: TestResult error
+]
+
+{ #category : 'tests' }
 ShClassInstallerTest >> testDuplicateClassPreserveClassSlots [
 
 	newClass := ShiftClassInstaller make: [ :builder |
