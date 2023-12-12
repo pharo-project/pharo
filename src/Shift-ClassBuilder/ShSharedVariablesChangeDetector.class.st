@@ -10,21 +10,10 @@ Class {
 }
 
 { #category : 'initialization' }
-ShSharedVariablesChangeDetector >> compareFrom: a to: b [
-	^ a asDictionary = b asDictionary
-]
-
-{ #category : 'initialization' }
 ShSharedVariablesChangeDetector >> initialize [
 	super initialize.
-	builderAccessor := [ :e | e sharedVariables collect: [ :x | x key -> x class ] ].
-	classAccessor := [ :e | e classVariables collect: [ :x | x key -> x class ] ].
-	comparer := [ :a :b | self compareFrom: a to: b ]
-	
-	"We should use #compareVariableCollection:with: to compare. To check why the bootstrap fails"
-	
-	"builderAccessor := [ :e | e layoutDefinition sharedVariables ].
- 	classAccessor := [ :e | e classVariables ].
- 	comparer := [ :a :b | self compareVariableCollection: a with: b ]"
+	builderAccessor := [ :e | e sharedVariables sorted: [ :a :b | a name < b name ] ].
+ 	classAccessor := [ :e | e classVariables sorted: [ :a :b | a name < b name ] ].
+ 	comparer := [ :a :b | self compareVariables: a with: b ]
 	
 ]

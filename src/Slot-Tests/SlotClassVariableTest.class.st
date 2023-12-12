@@ -46,6 +46,16 @@ SlotClassVariableTest >> testClassVariableDoesNotDuplicatesSubclassesOfSuperclas
 ]
 
 { #category : 'tests' }
+SlotClassVariableTest >> testInitializedClassVariableUpdateClass [
+	
+	aClass := self make: [ :builder | builder sharedVariables: {#ClassVar => InitializedClassVariable default: 5}].
+
+	self assert: (aClass classVariableNamed: #ClassVar) default equals: 5.
+	aClass := self make: [ :builder | builder sharedVariables: {#ClassVar => InitializedClassVariable default: 4}].
+	self assert: (aClass classVariableNamed: #ClassVar) default equals: 4.
+]
+
+{ #category : 'tests' }
 SlotClassVariableTest >> testWantsInitializationAddsInitializeSlot [
 
 	| class1 |
