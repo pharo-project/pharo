@@ -26,33 +26,26 @@ Class {
 { #category : 'private' }
 ProfilerResultsPresenter >> doItNode [
 
-	| doItNode |
-	doItNode := nil.
-	viewModel doItSelectorsPaths do: [ :eachPath |
-		doItNode := self doItNodeFor: eachPath.
-		doItNode ifNotNil: [ ^ doItNode ] ].
-	^ doItNode
-]
+	| talliesPathToExpand actualNodeInTree |
+	talliesPathToExpand := Stack withAll:
+		                       (viewModel tallyRoot
+			                        detectPathOfMethodSelector: 'DoIt'
+			                        maxDepth: 10).
 
-{ #category : 'private' }
-ProfilerResultsPresenter >> doItNodeFor: originalSelectorsPath [
+	talliesPathToExpand ifEmpty: [ ^ nil ].
 
-	| doItNode selectorsPath |
-	selectorsPath := Array withAll: originalSelectorsPath.
-	doItNode := nil.
+	actualNodeInTree := nil.
+
 	treeTable expandAllSuchThat: [ :item |
-		| bool |
-		bool := (selectorsPath indexOf: item methodName) == 1 and: [
-			        item hasContents ].
-		bool ifTrue: [
-			doItNode := item.
-			selectorsPath := selectorsPath allButFirst ].
-		bool ].
+		(talliesPathToExpand isNotEmpty and: [
+			 item = talliesPathToExpand top and: [ item hasContents ] ])
+			ifTrue: [
+				talliesPathToExpand pop.
+				talliesPathToExpand ifEmpty: [ actualNodeInTree := item ].
+				true ]
+			ifFalse: [ false ] ].
 
-	(doItNode isNil or: [
-		 doItNode methodName ~= originalSelectorsPath last ]) ifTrue: [
-		^ nil ].
-	^ doItNode
+	^ actualNodeInTree
 ]
 
 { #category : 'event handling' }

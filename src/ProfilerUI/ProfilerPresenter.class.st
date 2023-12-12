@@ -42,20 +42,20 @@ ProfilerPresenter class >> open [
 ]
 
 { #category : 'spying' }
+ProfilerPresenter class >> profileBlock: aBlock [
+
+	^ self new
+		  open;
+		  profileBlock: aBlock;
+		  yourself
+]
+
+{ #category : 'spying' }
 ProfilerPresenter class >> profileCode: aString [
 
 	^ self new
 		  open;
 		  profileCode: aString asString;
-		  yourself
-]
-
-{ #category : 'spying' }
-ProfilerPresenter class >> spyOn: aBlock [
-
-	^ self new
-		  open;
-		  spyOn: aBlock;
 		  yourself
 ]
 
@@ -100,26 +100,26 @@ ProfilerPresenter >> presenterTitle [
 ]
 
 { #category : 'actions' }
-ProfilerPresenter >> profileCode: aString [
+ProfilerPresenter >> profileBlock: aBlock [
 
 	inputPresenter
+		block: aBlock;
+		profileIt
+]
+
+{ #category : 'actions' }
+ProfilerPresenter >> profileBlock: aBlock displayCode: aString [
+
+	inputPresenter
+		block: aBlock;
 		code: aString;
 		profileIt
 ]
 
 { #category : 'actions' }
-ProfilerPresenter >> spyOn: aBlock [
+ProfilerPresenter >> profileCode: aString [
 
 	inputPresenter
-		block: aBlock;
-		profileIt
-]
-
-{ #category : 'actions' }
-ProfilerPresenter >> spyOn: aBlock asCode: aString [
-
-	inputPresenter
-		block: aBlock;
 		code: aString;
 		profileIt
 ]

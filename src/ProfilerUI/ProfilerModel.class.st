@@ -58,12 +58,6 @@ ProfilerModel >> browseItem [
 ]
 
 { #category : 'constants' }
-ProfilerModel >> doItSelectorsPaths [
-
-	^ profiler doItSelectorsPaths
-]
-
-{ #category : 'constants' }
 ProfilerModel >> doItSourceCodeFrom: someCode [
 
 	^ 'self forkProfileBlock: [' , someCode , ' ]'

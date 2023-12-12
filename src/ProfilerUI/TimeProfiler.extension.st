@@ -1,28 +1,6 @@
 Extension { #name : 'TimeProfiler' }
 
 { #category : '*ProfilerUI' }
-TimeProfiler >> doItCodeSelectorsPath [
-
-	^ #( 'UndefinedObject>>DoIt' )
-]
-
-{ #category : '*ProfilerUI' }
-TimeProfiler >> doItCommandSelectorsPath [
-
-	^ #( 'SpCodeProfileItCommand>>execute'
-	     'CompiledMethod>>valueWithReceiver:arguments:'
-	     'UndefinedObject>>DoIt' )
-]
-
-{ #category : '*ProfilerUI' }
-TimeProfiler >> doItSelectorsPaths [
-
-	^ Array
-		  with: self doItCodeSelectorsPath
-		  with: self doItCommandSelectorsPath
-]
-
-{ #category : '*ProfilerUI' }
 TimeProfiler >> report [
 
 	^ self fullReport
