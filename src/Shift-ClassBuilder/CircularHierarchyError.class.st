@@ -3,10 +3,10 @@ I am signaled if a new class introduces a circular class hierarchy.
 "
 Class {
 	#name : 'CircularHierarchyError',
-	#superclass : 'ClassBuilderError',
-	#category : 'Slot-Core-Exception',
-	#package : 'Slot-Core',
-	#tag : 'Exception'
+	#superclass : 'Error',
+	#category : 'Shift-ClassBuilder-Exceptions',
+	#package : 'Shift-ClassBuilder',
+	#tag : 'Exceptions'
 }
 
 { #category : 'signalling' }

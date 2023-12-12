@@ -11,10 +11,9 @@ MethodAnnouncementsTest >> testCompileMethodAnnounceAdditionOnlyInTrait [
 			         name: 'TraitForTest';
 			         package: self packageNameForTests , '2' ].
 
-	class := self class classInstaller make: [ :aBuilder |
-		         aBuilder
-			         fillFor: class;
-			         traits: trait ].
+	class := class classInstaller 
+		update: class
+		to: [ :aBuilder | aBuilder traits: trait ].
 
 	self when: MethodAdded do: [ :ann |
 		self assert: ann method selector equals: #king.
@@ -41,10 +40,9 @@ MethodAnnouncementsTest >> testRemoveMethodAnnounceRemovalOnlyInTrait [
 			         name: 'TraitForTest';
 			         package: self packageNameForTests , '2' ].
 
-	class := self class classInstaller make: [ :aBuilder |
-		         aBuilder
-			         fillFor: class;
-			         traits: trait ].
+	class := class classInstaller 
+		update: class
+		to: [ :aBuilder | aBuilder traits: trait ].
 
 	trait compiler
 		protocol: #titan;
@@ -73,10 +71,9 @@ MethodAnnouncementsTest >> testUpdateMethodAnnounceModificationOnlyInTrait [
 			         name: 'TraitForTest';
 			         package: self packageNameForTests , '2' ].
 
-	class := self class classInstaller make: [ :aBuilder |
-		         aBuilder
-			         fillFor: class;
-			         traits: trait ].
+	class := class classInstaller 
+		update: class
+		to: [ :aBuilder | aBuilder traits: trait ].
 
 	trait compiler
 		protocol: #titan;
@@ -107,10 +104,9 @@ MethodAnnouncementsTest >> testUpdateMethodAnnounceRecategorizationOnlyInTrait [
 			         name: 'TraitForTest';
 			         package: self packageNameForTests , '2' ].
 
-	class := self class classInstaller make: [ :aBuilder |
-		         aBuilder
-			         fillFor: class;
-			         traits: trait ].
+	class := class classInstaller 
+		update: class
+		to: [ :aBuilder | aBuilder traits: trait ].
 
 	trait compiler
 		protocol: #demon;

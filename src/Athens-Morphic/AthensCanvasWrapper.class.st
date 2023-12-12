@@ -481,6 +481,12 @@ AthensCanvasWrapper >> origin: aPoint [
 ]
 
 { #category : 'canvas drawing - images' }
+AthensCanvasWrapper >> paintFormSet: aFormSet at: aPoint [
+
+	self paintImage: aFormSet asForm at: aPoint
+]
+
+{ #category : 'canvas drawing - images' }
 AthensCanvasWrapper >> paintImage: aForm at: aPoint [
 	self paintImage: aForm at: aPoint sourceRect: aForm boundingBox
 ]
@@ -517,6 +523,22 @@ AthensCanvasWrapper >> setOrigin: aPoint clipRect: aRectangle [
 	currentClipRect := aRectangle
 ]
 
+{ #category : 'canvas converting' }
+AthensCanvasWrapper >> shadowDrawingCanvasWithExtent: extent shadowColor: shadowColor [
+
+	^ (Display defaultCanvasClass extent: extent depth: 1)
+		asShadowDrawingCanvas: shadowColor
+]
+
+{ #category : 'canvas drawing - images' }
+AthensCanvasWrapper >> stencil: stencilForm at: aPoint color: aColor [
+
+	^ self stencil: stencilForm
+		at: aPoint
+		sourceRect: stencilForm boundingBox
+		color: aColor
+]
+
 { #category : 'canvas drawing' }
 AthensCanvasWrapper >> stencil: stencilForm at: aPoint sourceRect: sourceRect color: aColor [
 	|mask|
@@ -529,6 +551,12 @@ AthensCanvasWrapper >> stencil: stencilForm at: aPoint sourceRect: sourceRect co
 		self canvas draw.
 		mask maskOn: self canvas.
 		]
+]
+
+{ #category : 'canvas drawing - images' }
+AthensCanvasWrapper >> stencilFormSet: stencilFormSet at: aPoint color: aColor [
+
+	^ self stencil: stencilFormSet asForm at: aPoint color: aColor
 ]
 
 { #category : 'canvas drawing - support' }

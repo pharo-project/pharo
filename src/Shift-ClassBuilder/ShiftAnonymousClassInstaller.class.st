@@ -25,15 +25,10 @@ ShiftAnonymousClassInstaller >> installInEnvironment: newClass [
 ShiftAnonymousClassInstaller >> installSubclassInSuperclass: newClass [
 ]
 
-{ #category : 'building' }
-ShiftAnonymousClassInstaller >> lookupOldClass [
-	^ self
-]
-
 { #category : 'notifications' }
 ShiftAnonymousClassInstaller >> notifyChanges [
 ]
 
 { #category : 'notifications' }
-ShiftAnonymousClassInstaller >> recategorize: newClass [
+ShiftAnonymousClassInstaller >> updatePackage: newClass [
 ]

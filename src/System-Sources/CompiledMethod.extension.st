@@ -1,18 +1,6 @@
 Extension { #name : 'CompiledMethod' }
 
 { #category : '*System-Sources' }
-CompiledMethod >> putSource: sourceStr class: class protocol: protocol withStamp: changeStamp priorMethod: priorMethod [
-
-	^ self putSource: sourceStr withPreamble: [ :file |
-		  class
-			  printProtocolChunk: protocol
-			  on: file
-			  withStamp: changeStamp
-			  priorMethod: priorMethod.
-		  file cr ]
-]
-
-{ #category : '*System-Sources' }
 CompiledMethod >> putSource: source withPreamble: preambleBlock [
 	"Store the source code for the receiver on an external file."
 

@@ -574,17 +574,14 @@ Class >> deprecationRefactorings [
 { #category : 'copying' }
 Class >> duplicateClassWithNewName: aSymbol [
 
-	| copysName class |
+	| copysName |
 	copysName := aSymbol asSymbol.
 	copysName = self name ifTrue: [ ^ self ].
 	(self environment includesKey: copysName) ifTrue: [ ^ self error: copysName , ' already exists' ].
-	class := self classInstaller make: [ :builder |
-		         builder
-			         fillFor: self;
-			         name: copysName ].
-	class copyAllMethodsFrom: self.
-	class class copyAllMethodsFrom: self class.
-	^ class
+	
+	^ self classInstaller 
+		update: self 
+		to: [ :builder | builder name: copysName ]
 ]
 
 { #category : 'organization' }

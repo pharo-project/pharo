@@ -50,7 +50,8 @@ ShClassInstallerTest >> newClass: className superclass: aSuperclass slots: slots
 
 { #category : 'running' }
 ShClassInstallerTest >> tearDown [
-
+	newClass  ifNotNil: [:c | c removeFromSystem].
+	newClass2 ifNotNil: [:c | c removeFromSystem].
 	self packageOrganizer removePackage: self generatedClassesPackageName.
 	super tearDown
 ]
@@ -282,13 +283,50 @@ ShClassInstallerTest >> testDuplicateClassPreserveMethods [
 ]
 
 { #category : 'tests' }
+ShClassInstallerTest >> testDuplicateClassPreservePackage [
+
+	newClass := self newClass: #ShCITestClass slots: {#anInstanceVariable}.
+	newClass2 := newClass duplicateClassWithNewName: #ShCITestClass2.
+
+	self assert: newClass2 packageTag name equals: newClass packageTag name.
+	"pacakge knows the new class"
+	self assert: (newClass2 packageTag includesClass: newClass2).
+	self assert: (newClass2 packageTag classes identityIncludes: newClass2).
+	"and still the original"
+	self assert: (newClass packageTag includesClass: newClass).
+	self assert: (newClass packageTag classes identityIncludes: newClass).
+	"packageTag is identity"
+	self assert: newClass packageTag identicalTo: newClass2 packageTag
+]
+
+{ #category : 'tests' }
+ShClassInstallerTest >> testDuplicateClassPreserveSharedVariables [
+
+	newClass := ShiftClassInstaller make: [ :builder |
+		  builder
+			  name: #ShCITestClass;
+			  sharedVariables: {#ShVariable};
+			  package: self generatedClassesPackageName ].
+
+	newClass2 := newClass duplicateClassWithNewName: #ShCITestClass2.
+
+	self assert: (newClass2 hasClassVarNamed: #ShVariable).
+	"Did we copy the Class Variables?"
+	self assert: (newClass2 classVariableNamed: #ShVariable) definingClass equals: newClass2.
+	self assert: (newClass classVariableNamed: #ShVariable) definingClass equals: newClass
+]
+
+{ #category : 'tests' }
 ShClassInstallerTest >> testDuplicateClassPreserveSlots [
 
 	newClass := self newClass: #ShCITestClass slots: {#anInstanceVariable => BooleanSlot}.
 	newClass2 := newClass duplicateClassWithNewName: #ShCITestClass2.
 
 	self assert: (newClass2 hasSlotNamed: #anInstanceVariable).
-	self assert: (newClass2 slotNamed: #anInstanceVariable) class equals: BooleanSlot
+	self assert: (newClass2 slotNamed: #anInstanceVariable) class equals: BooleanSlot.
+	"Make sure the slots are copied"
+	self assert: (newClass slotNamed: #anInstanceVariable) definingClass equals: newClass.
+	self assert: (newClass2 slotNamed: #anInstanceVariable) definingClass equals: newClass2
 ]
 
 { #category : 'tests' }

@@ -109,8 +109,6 @@ ShiftClassBuilder >> build [
 	self validateSuperclass.
 	self compareWithOldClass.
 
-	self layoutDefinition copySlotsIfUsedIn: oldClass.
-
 	"If this is the first build, when building a class.
 	We need to check if there is no conflicts with existing subclasses.
 	If we are in a remake, it have been done when building the superclass modified before."
@@ -121,7 +119,6 @@ ShiftClassBuilder >> build [
 	self createClass.
 
 	self oldClass ifNotNil: [
-		self newClass basicTag: self oldClass packageTag.
 		self copyProtocols.
 		self newClass commentSourcePointer: self oldClass commentSourcePointer ].
 
@@ -211,10 +208,11 @@ ShiftClassBuilder >> commentStamp: anObject [
 
 { #category : 'changes' }
 ShiftClassBuilder >> compareWithOldClass [
-	oldClass ifNil: [ ^ self ].
+	"Comparing changes only needs to be done when updating (rebuilding) and existing class"
+	self isRebuild ifFalse: [ ^ self ].
+	
 	changeComparers do: [ :e | e compareClass: oldClass with: self ].
-
-	changes ifEmpty: [ ShNoChangesInClass signal. ]
+	changes isEmpty ifTrue: [ ShNoChangesInClass signal ]
 ]
 
 { #category : 'compiling' }
@@ -330,8 +328,8 @@ ShiftClassBuilder >> fillFor: aClass [
 		superclass: aClass superclass;
 		name: aClass getName;
 		layoutClass: aClass classLayout class;
-		slots: aClass localSlots;
-		classSlots: aClass class localSlots;
+		slots: (aClass localSlots collect: [:var | var copy]);
+		classSlots: (aClass class localSlots collect: [:var | var copy]);
 		"we have to copy the class variables, as they contain the values"
 		sharedVariables: (aClass classVariables collect: [:var | var copy]);
 		sharedPools: (aClass sharedPools collect: [ :each | each name ]) asArray;
@@ -431,6 +429,14 @@ ShiftClassBuilder >> isInRemake [
 	^ inRemake
 ]
 
+{ #category : 'testing' }
+ShiftClassBuilder >> isRebuild [
+	"Are we rebuilding an existing class?"
+	oldClass ifNil: [ ^false ].
+	oldClass isAnonymous ifTrue: [ ^true ].
+	^name = oldClass name
+]
+
 { #category : 'accessing' }
 ShiftClassBuilder >> layout: aLayoutClass [
 	"Added while merging FluidClassBuilder API and ShiftClassBuilder. Maybe we should deprecate #layoutClass:"
@@ -456,7 +462,6 @@ ShiftClassBuilder >> layoutDefinition [
 
 { #category : 'accessing' }
 ShiftClassBuilder >> markIsInRemake [
-
 	inRemake := true
 ]
 

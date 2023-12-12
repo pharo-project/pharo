@@ -51,3 +51,10 @@ ScalingCanvas >> restoreSavedPatch: savedPatch at: aPoint [
 
 	formCanvas restoreSavedPatch: savedPatch form at: aPoint * scale
 ]
+
+{ #category : '*Morphic-Core' }
+ScalingCanvas >> shadowDrawingCanvasWithExtent: extent shadowColor: shadowColor [
+
+	^ (self class formCanvas: (FormCanvas on: (Form extent: extent * scale depth: 1)) scale: scale)
+		asShadowDrawingCanvas: shadowColor
+]

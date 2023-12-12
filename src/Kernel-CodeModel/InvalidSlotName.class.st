@@ -3,10 +3,10 @@ I am signaled when the name of a Slot is an invalid variable name.
 "
 Class {
 	#name : 'InvalidSlotName',
-	#superclass : 'ClassBuilderError',
-	#category : 'Slot-Core-Exception',
-	#package : 'Slot-Core',
-	#tag : 'Exception'
+	#superclass : 'Error',
+	#category : 'Kernel-CodeModel-Exceptions',
+	#package : 'Kernel-CodeModel',
+	#tag : 'Exceptions'
 }
 
 { #category : 'signalling' }
