@@ -17,14 +17,15 @@ ShSharedVariablesChangeDetector >> compareFrom: a to: b [
 { #category : 'initialization' }
 ShSharedVariablesChangeDetector >> initialize [
 	super initialize.
-	builderAccessor := [ :e | e sharedVariables collect: [ :x | x key -> x class ] ].
+	"old code, to be cleaned when the new way works"
+	"builderAccessor := [ :e | e sharedVariables collect: [ :x | x key -> x class ] ].
 	classAccessor := [ :e | e classVariables collect: [ :x | x key -> x class ] ].
-	comparer := [ :a :b | self compareFrom: a to: b ]
+	comparer := [ :a :b | self compareFrom: a to: b ]"
 	
 	"We should use #compareVariableCollection:with: to compare. To check why the bootstrap fails"
 	
-	"builderAccessor := [ :e | e layoutDefinition sharedVariables ].
+	builderAccessor := [ :e | e sharedVariables ].
  	classAccessor := [ :e | e classVariables ].
- 	comparer := [ :a :b | self compareVariableCollection: a with: b ]"
+ 	comparer := [ :a :b | self compareVariables: a with: b ]
 	
 ]
