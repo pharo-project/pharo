@@ -100,11 +100,11 @@ RBRenameVariableDriver >> requestNewNameBasedOn: aName [
 RBRenameVariableDriver >> runRefactoring [
 
 	self configureRefactoring.
+	shouldEscape := false.
 	
 	newName 
 		ifNil: [ 
-			"run in interactive mode" 
-			shouldEscape := false.
+			"run in interactive mode"
 			self prepareRefactoringInteractively
 		 ]
 		ifNotNil: [ 

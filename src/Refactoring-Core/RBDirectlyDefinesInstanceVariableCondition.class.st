@@ -35,3 +35,14 @@ RBDirectlyDefinesInstanceVariableCondition >> instanceVariables: aColOfStrings [
 
 	instanceVariables := aColOfStrings
 ]
+
+{ #category : 'displaying' }
+RBDirectlyDefinesInstanceVariableCondition >> violationMessageOn: aStream [
+
+	^ violators do: [ :violator |
+		  aStream
+			nextPutAll: 
+				('The variable {1} is not directly defined in the class {2}' 
+					format: { violator. className });
+			nextPut: Character cr ]
+]
