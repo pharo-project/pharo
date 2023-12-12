@@ -24,8 +24,8 @@ ShSharedVariablesChangeDetector >> initialize [
 	
 	"We should use #compareVariableCollection:with: to compare. To check why the bootstrap fails"
 	
-	builderAccessor := [ :e | e sharedVariables ].
- 	classAccessor := [ :e | e classVariables ].
+	builderAccessor := [ :e | e sharedVariables sorted: [ :a :b | a name < b name ] ].
+ 	classAccessor := [ :e | e classVariables sorted: [ :a :b | a name < b name ] ].
  	comparer := [ :a :b | self compareVariables: a with: b ]
 	
 ]
