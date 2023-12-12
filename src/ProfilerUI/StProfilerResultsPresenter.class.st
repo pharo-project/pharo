@@ -2,7 +2,7 @@
 I am a panel in the ProfilerPresenter containing the profiling process results together with parameters to filter these results
 "
 Class {
-	#name : 'ProfilerResultsPresenter',
+	#name : 'StProfilerResultsPresenter',
 	#superclass : 'SpPresenter',
 	#instVars : [
 		'treeTable',
@@ -24,7 +24,7 @@ Class {
 }
 
 { #category : 'private' }
-ProfilerResultsPresenter >> doItNode [
+StProfilerResultsPresenter >> doItNode [
 
 	| talliesPathToExpand actualNodeInTree |
 	talliesPathToExpand := Stack withAll:
@@ -49,7 +49,7 @@ ProfilerResultsPresenter >> doItNode [
 ]
 
 { #category : 'event handling' }
-ProfilerResultsPresenter >> handleProfilingFinished [
+StProfilerResultsPresenter >> handleProfilingFinished [
 
 	| doItNode |
 	self defer: [
@@ -69,13 +69,13 @@ ProfilerResultsPresenter >> handleProfilingFinished [
 ]
 
 { #category : 'event handling' }
-ProfilerResultsPresenter >> handleProfilingStarted [
+StProfilerResultsPresenter >> handleProfilingStarted [
 	self enabled: false.
 	navigationToolbar reset
 ]
 
 { #category : 'event handling' }
-ProfilerResultsPresenter >> handleSelectionChanged [
+StProfilerResultsPresenter >> handleSelectionChanged [
 	| navButton node |
 	node := treeTable selectedItem.
 
@@ -96,7 +96,7 @@ ProfilerResultsPresenter >> handleSelectionChanged [
 ]
 
 { #category : 'event handling' }
-ProfilerResultsPresenter >> handleTreeRootChanged: event [
+StProfilerResultsPresenter >> handleTreeRootChanged: event [
 
 	| nodeToSelect pathToSelect |
 	self assert: event item == viewModel tallyRoot.
@@ -125,7 +125,7 @@ ProfilerResultsPresenter >> handleTreeRootChanged: event [
 ]
 
 { #category : 'initialization' }
-ProfilerResultsPresenter >> initializeActions [
+StProfilerResultsPresenter >> initializeActions [
 
 	treeTable
 		whenSelectedItemChangedSend: #handleSelectionChanged
@@ -154,7 +154,7 @@ ProfilerResultsPresenter >> initializeActions [
 ]
 
 { #category : 'initialization' }
-ProfilerResultsPresenter >> initializePresenters [
+StProfilerResultsPresenter >> initializePresenters [
 
 	| h |
 	h := self class toolbarHeight.
@@ -185,7 +185,7 @@ ProfilerResultsPresenter >> initializePresenters [
 ]
 
 { #category : 'private - factory' }
-ProfilerResultsPresenter >> newBrowseButton [
+StProfilerResultsPresenter >> newBrowseButton [
 
 	^ self newButton
 		  icon: (self iconNamed: #glamorousBrowse);
@@ -196,7 +196,7 @@ ProfilerResultsPresenter >> newBrowseButton [
 ]
 
 { #category : 'private - factory' }
-ProfilerResultsPresenter >> newConfigurationSectionLayout [
+StProfilerResultsPresenter >> newConfigurationSectionLayout [
 
 	^ SpBoxLayout newTopToBottom
 		  add: (SpBoxLayout newLeftToRight
@@ -226,30 +226,30 @@ ProfilerResultsPresenter >> newConfigurationSectionLayout [
 ]
 
 { #category : 'private - factory' }
-ProfilerResultsPresenter >> newProfilerCode [
+StProfilerResultsPresenter >> newProfilerCode [
 
-	^ self instantiate: ProfilerCodePresenter
+	^ self instantiate: StProfilerCodePresenter
 ]
 
 { #category : 'private - factory' }
-ProfilerResultsPresenter >> newProfilerNumberInput [
-	^ self instantiate: ProfilerNumberInput
+StProfilerResultsPresenter >> newProfilerNumberInput [
+	^ self instantiate: StProfilerNumberInput
 ]
 
 { #category : 'private - factory' }
-ProfilerResultsPresenter >> newProfilerToolbar [
+StProfilerResultsPresenter >> newProfilerToolbar [
 
-	^ self instantiate: ProfilerToolbarPresenter
+	^ self instantiate: StProfilerToolbarPresenter
 ]
 
 { #category : 'private - factory' }
-ProfilerResultsPresenter >> newProfilerTreeTable [
+StProfilerResultsPresenter >> newProfilerTreeTable [
 
-	^ ProfilerTreeTablePresenter on: viewModel
+	^ StProfilerTreeTablePresenter on: viewModel
 ]
 
 { #category : 'private - factory' }
-ProfilerResultsPresenter >> newReportButton [
+StProfilerResultsPresenter >> newReportButton [
 
 	^ self newButton
 		icon: (self iconNamed: #recentMessages);
@@ -259,7 +259,7 @@ ProfilerResultsPresenter >> newReportButton [
 ]
 
 { #category : 'private - factory' }
-ProfilerResultsPresenter >> newShowAsRootButton [
+StProfilerResultsPresenter >> newShowAsRootButton [
 
 	^ self newButton
 		  icon: (self iconNamed: #glamorousRedo);
@@ -270,7 +270,7 @@ ProfilerResultsPresenter >> newShowAsRootButton [
 ]
 
 { #category : 'private - factory' }
-ProfilerResultsPresenter >> newThresholdExpandInput [
+StProfilerResultsPresenter >> newThresholdExpandInput [
 
 	^ self newProfilerNumberInput
 		  help: 'Only nodes with a percentage of time greater than this threshold will be expanded';
@@ -279,7 +279,7 @@ ProfilerResultsPresenter >> newThresholdExpandInput [
 ]
 
 { #category : 'private - factory' }
-ProfilerResultsPresenter >> newThresholdFilterInput [
+StProfilerResultsPresenter >> newThresholdFilterInput [
 
 	^ self newProfilerNumberInput
 		  help: 'Only nodes with a percentage of time greater than this threshold will be shown';
@@ -288,7 +288,7 @@ ProfilerResultsPresenter >> newThresholdFilterInput [
 ]
 
 { #category : 'private - factory' }
-ProfilerResultsPresenter >> newTreeVisualizationDropList [
+StProfilerResultsPresenter >> newTreeVisualizationDropList [
 	| items |
 	items := {
 		         ('Full tree' -> false).
@@ -305,13 +305,13 @@ ProfilerResultsPresenter >> newTreeVisualizationDropList [
 ]
 
 { #category : 'accessing - model' }
-ProfilerResultsPresenter >> setModelBeforeInitialization: aDomainObject [
+StProfilerResultsPresenter >> setModelBeforeInitialization: aDomainObject [
 
 	viewModel := aDomainObject
 ]
 
 { #category : 'subscription' }
-ProfilerResultsPresenter >> subscribeOnProfilingAnnouncements [
+StProfilerResultsPresenter >> subscribeOnProfilingAnnouncements [
 
 	viewModel announcer
 		when: ProfilingStartedAnnouncement send: #handleProfilingStarted to: self;
@@ -320,13 +320,13 @@ ProfilerResultsPresenter >> subscribeOnProfilingAnnouncements [
 ]
 
 { #category : 'subscription' }
-ProfilerResultsPresenter >> unsubscribeFromProfilingAnnouncements [
+StProfilerResultsPresenter >> unsubscribeFromProfilingAnnouncements [
 
 	viewModel announcer unsubscribe: self
 ]
 
 { #category : 'accessing' }
-ProfilerResultsPresenter >> viewModel [
+StProfilerResultsPresenter >> viewModel [
 
 	^ viewModel
 ]

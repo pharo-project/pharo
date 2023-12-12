@@ -2,7 +2,7 @@
 A presenter for tree with a table used by the ProfilerUI to optimize rendering performance, but using more memory.
 "
 Class {
-	#name : 'ProfilerTreeTablePresenter',
+	#name : 'StProfilerTreeTablePresenter',
 	#superclass : 'SpTreeTablePresenter',
 	#instVars : [
 		'viewModel'
@@ -13,33 +13,33 @@ Class {
 }
 
 { #category : 'specs' }
-ProfilerTreeTablePresenter class >> adapterName [
+StProfilerTreeTablePresenter class >> adapterName [
 
 	^ #ProfilerTreeTableAdapter
 ]
 
 { #category : 'api - selection' }
-ProfilerTreeTablePresenter >> emptySelection [
+StProfilerTreeTablePresenter >> emptySelection [
 	self withAdapterPerformOrDefer: [ :anAdapter |
 		 anAdapter widget emptySelection ]
 ]
 
 { #category : 'expanding-collapsing' }
-ProfilerTreeTablePresenter >> expandAllSuchThat: aBlock [
+StProfilerTreeTablePresenter >> expandAllSuchThat: aBlock [
 
 	self withAdapterPerformOrDefer: [ :anAdapter |
 		anAdapter widget expandAllSuchThat: aBlock ]
 ]
 
 { #category : 'expanding-collapsing' }
-ProfilerTreeTablePresenter >> expandNodesOver: aNumber [
+StProfilerTreeTablePresenter >> expandNodesOver: aNumber [
 	self rememberingSelectedNodeDo: [
 		self collapseAll.
 		self expandAllSuchThat: [ :item | item weight asFloat >= aNumber asFloat ] ]
 ]
 
 { #category : 'expanding-collapsing' }
-ProfilerTreeTablePresenter >> hideNodesUnder: aNumber [
+StProfilerTreeTablePresenter >> hideNodesUnder: aNumber [
 
 	self rememberingExpandedAndSelectedNodesDo: [
 		viewModel hideNodesUnder: aNumber asFloat.
@@ -47,7 +47,7 @@ ProfilerTreeTablePresenter >> hideNodesUnder: aNumber [
 ]
 
 { #category : 'initialization' }
-ProfilerTreeTablePresenter >> initialize [
+StProfilerTreeTablePresenter >> initialize [
 	super initialize.
 	"the column below is created only to prevent the TreeTableMorph from creating an additional column"
 	self addColumn: (SpCompositeTableColumn new
@@ -58,14 +58,14 @@ ProfilerTreeTablePresenter >> initialize [
 ]
 
 { #category : 'expanding-collapsing' }
-ProfilerTreeTablePresenter >> rememberingExpandedAndSelectedNodesDo: aBlock [
+StProfilerTreeTablePresenter >> rememberingExpandedAndSelectedNodesDo: aBlock [
 
 	self rememberingSelectedNodeDo: [
 		self rememberingExpandedNodesDo: aBlock ]
 ]
 
 { #category : 'expanding-collapsing' }
-ProfilerTreeTablePresenter >> rememberingExpandedNodesDo: aBlock [
+StProfilerTreeTablePresenter >> rememberingExpandedNodesDo: aBlock [
 
 	| expanded |
 	self withAdapterPerformOrDefer: [ :anAdapter |
@@ -75,7 +75,7 @@ ProfilerTreeTablePresenter >> rememberingExpandedNodesDo: aBlock [
 ]
 
 { #category : 'api - selection' }
-ProfilerTreeTablePresenter >> rememberingSelectedNodeDo: aBlock [
+StProfilerTreeTablePresenter >> rememberingSelectedNodeDo: aBlock [
 
 	| selected widget |
 	self withAdapterPerformOrDefer: [ :anAdapter |
@@ -89,32 +89,32 @@ ProfilerTreeTablePresenter >> rememberingSelectedNodeDo: aBlock [
 ]
 
 { #category : 'updating' }
-ProfilerTreeTablePresenter >> reset [
+StProfilerTreeTablePresenter >> reset [
 	self withAdapterPerformOrDefer: [ :anAdapter |
 		anAdapter widget buildContents ]
 ]
 
 { #category : 'api' }
-ProfilerTreeTablePresenter >> roots: aCollection [
+StProfilerTreeTablePresenter >> roots: aCollection [
 	super roots: aCollection.
 	self emptySelection
 ]
 
 { #category : 'scrolling' }
-ProfilerTreeTablePresenter >> scrollSelectionIntoView [
+StProfilerTreeTablePresenter >> scrollSelectionIntoView [
 	self withAdapterPerformOrDefer: [ :anAdapter |
 		anAdapter widget scrollSelectionIntoView ]
 ]
 
 { #category : 'api - selection' }
-ProfilerTreeTablePresenter >> selectNodePath: aCollection [
+StProfilerTreeTablePresenter >> selectNodePath: aCollection [
 
 	self withAdapterPerformOrDefer: [ :anAdapter |
 		anAdapter widget selectNodePath: aCollection ]
 ]
 
 { #category : 'api - selection' }
-ProfilerTreeTablePresenter >> selectPath: aPath scrollToSelection: shouldScrollToSelection [
+StProfilerTreeTablePresenter >> selectPath: aPath scrollToSelection: shouldScrollToSelection [
 
 	self selectNodePath: aPath.
 	self withAdapterPerformOrDefer: [ :anAdapter |
@@ -122,25 +122,25 @@ ProfilerTreeTablePresenter >> selectPath: aPath scrollToSelection: shouldScrollT
 ]
 
 { #category : 'api - selection' }
-ProfilerTreeTablePresenter >> selectedItem [
+StProfilerTreeTablePresenter >> selectedItem [
 
 	self withAdapterPerformOrDefer: [ :anAdapter |
 		^ anAdapter selectedItem ]
 ]
 
 { #category : 'accessing - model' }
-ProfilerTreeTablePresenter >> setModelBeforeInitialization: aDomainObject [
+StProfilerTreeTablePresenter >> setModelBeforeInitialization: aDomainObject [
 
 	viewModel := aDomainObject
 ]
 
 { #category : 'accessing' }
-ProfilerTreeTablePresenter >> viewModel [
+StProfilerTreeTablePresenter >> viewModel [
 	^ viewModel
 ]
 
 { #category : 'adapter' }
-ProfilerTreeTablePresenter >> whenSelectedItemChangedSend: aSymbol to: anObject [
+StProfilerTreeTablePresenter >> whenSelectedItemChangedSend: aSymbol to: anObject [
 
 	self withAdapterPerformOrDefer: [ :anAdapter |
 		anAdapter widget model onSelectionChangeSend: aSymbol to: anObject ]

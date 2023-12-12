@@ -2,7 +2,7 @@
 I am a panel in the ProfilerPresenter containing user defined inputs to start profiling
 "
 Class {
-	#name : 'ProfilerInputPresenter',
+	#name : 'StProfilerInputPresenter',
 	#superclass : 'SpPresenter',
 	#instVars : [
 		'profilerDropList',
@@ -17,7 +17,7 @@ Class {
 }
 
 { #category : 'layout' }
-ProfilerInputPresenter class >> defaultLayout [
+StProfilerInputPresenter class >> defaultLayout [
 
 	^ SpBoxLayout newTopToBottom
 		  add: #codeInput;
@@ -32,7 +32,7 @@ ProfilerInputPresenter class >> defaultLayout [
 ]
 
 { #category : 'accessing' }
-ProfilerInputPresenter >> block: aBlock [
+StProfilerInputPresenter >> block: aBlock [
 
 	| sourceNode |
 	codeInput
@@ -53,13 +53,13 @@ ProfilerInputPresenter >> block: aBlock [
 ]
 
 { #category : 'accessing' }
-ProfilerInputPresenter >> code: aString [
+StProfilerInputPresenter >> code: aString [
 
 	codeInput text: aString
 ]
 
 { #category : 'initialization' }
-ProfilerInputPresenter >> initializeActions [
+StProfilerInputPresenter >> initializeActions [
 
 	profilerDropList whenSelectedItemChangedDo: [ :item |
 		viewModel profilerClass: item ].
@@ -68,7 +68,7 @@ ProfilerInputPresenter >> initializeActions [
 ]
 
 { #category : 'initialization' }
-ProfilerInputPresenter >> initializePresenters [
+StProfilerInputPresenter >> initializePresenters [
 
 	codeInput := self newCode beForScripting; yourself.
 
@@ -91,14 +91,14 @@ ProfilerInputPresenter >> initializePresenters [
 ]
 
 { #category : 'error handling' }
-ProfilerInputPresenter >> notify: errorMessage at: positionIndex in: sourceCode [
+StProfilerInputPresenter >> notify: errorMessage at: positionIndex in: sourceCode [
 
 	codeInput notify: errorMessage at: positionIndex in: sourceCode .
 	codeInput takeKeyboardFocus
 ]
 
 { #category : 'initialization' }
-ProfilerInputPresenter >> profileIt [
+StProfilerInputPresenter >> profileIt [
 
 	block ifNotNil: [ ^ viewModel profileBlock: block ].
 
@@ -109,13 +109,13 @@ ProfilerInputPresenter >> profileIt [
 ]
 
 { #category : 'accessing - model' }
-ProfilerInputPresenter >> setModelBeforeInitialization: aDomainObject [
+StProfilerInputPresenter >> setModelBeforeInitialization: aDomainObject [
 
 	viewModel := aDomainObject
 ]
 
 { #category : 'initialization' }
-ProfilerInputPresenter >> subscribeOnProfilingAnnouncements [
+StProfilerInputPresenter >> subscribeOnProfilingAnnouncements [
 
 	viewModel announcer
 		when: ProfilingStartedAnnouncement
@@ -127,11 +127,11 @@ ProfilerInputPresenter >> subscribeOnProfilingAnnouncements [
 ]
 
 { #category : 'initialization' }
-ProfilerInputPresenter >> unsubscribeFromProfilingAnnouncements [
+StProfilerInputPresenter >> unsubscribeFromProfilingAnnouncements [
 	viewModel announcer unsubscribe: self
 ]
 
 { #category : 'accessing' }
-ProfilerInputPresenter >> viewModel [
+StProfilerInputPresenter >> viewModel [
 	^ viewModel
 ]
