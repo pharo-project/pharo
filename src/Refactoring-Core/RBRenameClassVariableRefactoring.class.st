@@ -34,6 +34,16 @@ RBRenameClassVariableRefactoring class >> rename: aVarName to: aName in: aClass 
 		in: aClass
 ]
 
+{ #category : 'preconditions' }
+RBRenameClassVariableRefactoring >> applicabilityPreconditions [
+
+	^ {
+		  (RBIsNotAMetaclass class: class).
+		  (RBIsValidSharedVariableName name: newName).
+		  (RBIsVariableNotDefinedInHierarchy name: newName class: class).
+		  (RBNameIsGlobalCondition new model: model className: newName) not }
+]
+
 { #category : 'accessing' }
 RBRenameClassVariableRefactoring >> newName [
 	^ newName
