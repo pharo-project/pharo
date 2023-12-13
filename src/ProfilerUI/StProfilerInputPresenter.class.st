@@ -2,12 +2,13 @@
 I am a panel in the ProfilerPresenter containing user defined inputs to start profiling
 "
 Class {
-	#name : 'ProfilerInputPresenter',
+	#name : 'StProfilerInputPresenter',
 	#superclass : 'SpPresenter',
 	#instVars : [
 		'profilerDropList',
 		'profileItButton',
 		'codeInput',
+		'block',
 		'viewModel'
 	],
 	#category : 'ProfilerUI-View',
@@ -16,7 +17,7 @@ Class {
 }
 
 { #category : 'layout' }
-ProfilerInputPresenter class >> defaultLayout [
+StProfilerInputPresenter class >> defaultLayout [
 
 	^ SpBoxLayout newTopToBottom
 		  add: #codeInput;
@@ -30,21 +31,44 @@ ProfilerInputPresenter class >> defaultLayout [
 		  yourself
 ]
 
+{ #category : 'accessing' }
+StProfilerInputPresenter >> block: aBlock [
+
+	| sourceNode |
+	codeInput
+		beNotEditable;
+		withoutSyntaxHighlight.
+
+	sourceNode := aBlock sourceNode.
+	sourceNode source
+		ifNil: [ self code: sourceNode formattedCode ]
+		ifNotNil: [ :sourceCode |
+			| sourceCodeOfBlock |
+			sourceCodeOfBlock := sourceCode
+				                     copyFrom: sourceNode sourceInterval first + 1
+				                     to: sourceNode sourceInterval last - 1.
+			self code: sourceCodeOfBlock ].
+
+	block := aBlock
+]
+
+{ #category : 'accessing' }
+StProfilerInputPresenter >> code: aString [
+
+	codeInput text: aString
+]
+
 { #category : 'initialization' }
-ProfilerInputPresenter >> initializeActions [
+StProfilerInputPresenter >> initializeActions [
 
 	profilerDropList whenSelectedItemChangedDo: [ :item |
 		viewModel profilerClass: item ].
 
-
-	profileItButton action: [
-		codeInput text
-			ifEmpty: [ self notify: 'Must enter code' at: 0 in: codeInput text ]
-			ifNotEmpty: [ viewModel profileCode: codeInput text notifying: self] ]
+	profileItButton action: [ self profileIt ]
 ]
 
 { #category : 'initialization' }
-ProfilerInputPresenter >> initializePresenters [
+StProfilerInputPresenter >> initializePresenters [
 
 	codeInput := self newCode beForScripting; yourself.
 
@@ -67,34 +91,47 @@ ProfilerInputPresenter >> initializePresenters [
 ]
 
 { #category : 'error handling' }
-ProfilerInputPresenter >> notify: errorMessage at: positionIndex in: sourceCode [
+StProfilerInputPresenter >> notify: errorMessage at: positionIndex in: sourceCode [
 
 	codeInput notify: errorMessage at: positionIndex in: sourceCode .
 	codeInput takeKeyboardFocus
 ]
 
+{ #category : 'initialization' }
+StProfilerInputPresenter >> profileIt [
+
+	block ifNotNil: [ ^ viewModel profileBlock: block ].
+
+	codeInput text ifNotEmpty: [
+		^ viewModel profileCode: codeInput text notifying: self ].
+
+	self notify: 'Must enter code' at: 0 in: codeInput text
+]
+
 { #category : 'accessing - model' }
-ProfilerInputPresenter >> setModelBeforeInitialization: aDomainObject [
+StProfilerInputPresenter >> setModelBeforeInitialization: aDomainObject [
 
 	viewModel := aDomainObject
 ]
 
 { #category : 'initialization' }
-ProfilerInputPresenter >> subscribeOnProfilingAnnouncements [
+StProfilerInputPresenter >> subscribeOnProfilingAnnouncements [
+
 	viewModel announcer
 		when: ProfilingStartedAnnouncement
-		do: [ self enabled: false ];
-
+		do: [ self enabled: false ]
+		for: self;
 		when: ProfilingResultsDisplayedAnnouncement
 		do: [ self enabled: true ]
+		for: self
 ]
 
 { #category : 'initialization' }
-ProfilerInputPresenter >> unsubscribeFromProfilingAnnouncements [
+StProfilerInputPresenter >> unsubscribeFromProfilingAnnouncements [
 	viewModel announcer unsubscribe: self
 ]
 
 { #category : 'accessing' }
-ProfilerInputPresenter >> viewModel [
+StProfilerInputPresenter >> viewModel [
 	^ viewModel
 ]

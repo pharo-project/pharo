@@ -2,7 +2,7 @@
 I am a number input text to introduce percentage threshold to filter / expand / collapse in the profiler results tree
 "
 Class {
-	#name : 'ProfilerNumberInput',
+	#name : 'StProfilerNumberInput',
 	#superclass : 'SpNumberInputFieldPresenter',
 	#category : 'ProfilerUI-View',
 	#package : 'ProfilerUI',
@@ -10,7 +10,7 @@ Class {
 }
 
 { #category : 'initialization' }
-ProfilerNumberInput >> initialize [
+StProfilerNumberInput >> initialize [
 
 	super initialize.
 	self
@@ -22,7 +22,7 @@ ProfilerNumberInput >> initialize [
 ]
 
 { #category : 'initialization' }
-ProfilerNumberInput >> initializePresenters [
+StProfilerNumberInput >> initializePresenters [
 
 	self eventHandler
 		whenFocusLostDo: [

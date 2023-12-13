@@ -1,16 +1,6 @@
 Extension { #name : 'TimeProfiler' }
 
 { #category : '*ProfilerUI' }
-TimeProfiler >> blockCodeFrom: aString [
-	^ 'self runBlock: [', aString, ']'
-]
-
-{ #category : '*ProfilerUI' }
-TimeProfiler >> doItSelectorsPath [
-	^ #('UndefinedObject>>DoIt')
-]
-
-{ #category : '*ProfilerUI' }
 TimeProfiler >> report [
 
 	^ self fullReport

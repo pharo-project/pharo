@@ -2,7 +2,7 @@
 I show the source code of the selected node in the profiler results tree
 "
 Class {
-	#name : 'ProfilerCodePresenter',
+	#name : 'StProfilerCodePresenter',
 	#superclass : 'SpCodePresenter',
 	#category : 'ProfilerUI-View',
 	#package : 'ProfilerUI',
@@ -10,13 +10,13 @@ Class {
 }
 
 { #category : 'initialization' }
-ProfilerCodePresenter >> initialize [
+StProfilerCodePresenter >> initialize [
 	super initialize.
 	self beNotEditable
 ]
 
 { #category : 'initialization' }
-ProfilerCodePresenter >> methodOrBlock: methodOrBlock [
+StProfilerCodePresenter >> methodOrBlock: methodOrBlock [
 
 	methodOrBlock ifNil: [
 		self text: ''.

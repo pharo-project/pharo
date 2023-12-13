@@ -2,7 +2,7 @@
 I am a graphical user interface for profiling code using both AndreasProfiler and TimeProfiler
 "
 Class {
-	#name : 'ProfilerPresenter',
+	#name : 'StProfilerPresenter',
 	#superclass : 'SpPresenter',
 	#instVars : [
 		'inputPresenter',
@@ -15,7 +15,7 @@ Class {
 }
 
 { #category : 'layout' }
-ProfilerPresenter class >> defaultLayout [
+StProfilerPresenter class >> defaultLayout [
 	^ SpPanedLayout newTopToBottom
 		  positionOfSlider: 20 percent;
 		  add: #inputPresenter;
@@ -24,7 +24,7 @@ ProfilerPresenter class >> defaultLayout [
 ]
 
 { #category : 'examples' }
-ProfilerPresenter class >> menuCommandOn: aBuilder [
+StProfilerPresenter class >> menuCommandOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #'Profiler')
 		parent: #Profiling;
@@ -35,19 +35,37 @@ ProfilerPresenter class >> menuCommandOn: aBuilder [
 ]
 
 { #category : 'examples' }
-ProfilerPresenter class >> open [
+StProfilerPresenter class >> open [
 
 	<example>
 	^ self new open
 ]
 
+{ #category : 'spying' }
+StProfilerPresenter class >> profileBlock: aBlock [
+
+	^ self new
+		  open;
+		  profileBlock: aBlock;
+		  yourself
+]
+
+{ #category : 'spying' }
+StProfilerPresenter class >> profileCode: aString [
+
+	^ self new
+		  open;
+		  profileCode: aString asString;
+		  yourself
+]
+
 { #category : 'constants' }
-ProfilerPresenter >> initExtent [
+StProfilerPresenter >> initExtent [
 	^ 800 @ 800
 ]
 
 { #category : 'initialization' }
-ProfilerPresenter >> initializePresenters [
+StProfilerPresenter >> initializePresenters [
 
 	inputPresenter := self newInputPresenter.
 	resultsPresenter := self newResultsPresenter
@@ -56,7 +74,7 @@ ProfilerPresenter >> initializePresenters [
 ]
 
 { #category : 'initialization' }
-ProfilerPresenter >> initializeWindow: aWindowPresenter [
+StProfilerPresenter >> initializeWindow: aWindowPresenter [
 	aWindowPresenter
 		title: self presenterTitle;
 		initialExtent: self initExtent;
@@ -65,38 +83,63 @@ ProfilerPresenter >> initializeWindow: aWindowPresenter [
 ]
 
 { #category : 'private - factory' }
-ProfilerPresenter >> newInputPresenter [
+StProfilerPresenter >> newInputPresenter [
 
-	^ ProfilerInputPresenter on: self viewModel
+	^ StProfilerInputPresenter on: self viewModel
 ]
 
 { #category : 'private - factory' }
-ProfilerPresenter >> newResultsPresenter [
+StProfilerPresenter >> newResultsPresenter [
 
-	^ ProfilerResultsPresenter on: self viewModel
+	^ StProfilerResultsPresenter on: self viewModel
 ]
 
 { #category : 'constants' }
-ProfilerPresenter >> presenterTitle [
+StProfilerPresenter >> presenterTitle [
 	^ 'Profiler'
 ]
 
+{ #category : 'actions' }
+StProfilerPresenter >> profileBlock: aBlock [
+
+	inputPresenter
+		block: aBlock;
+		profileIt
+]
+
+{ #category : 'actions' }
+StProfilerPresenter >> profileBlock: aBlock displayCode: aString [
+
+	inputPresenter
+		block: aBlock;
+		code: aString;
+		profileIt
+]
+
+{ #category : 'actions' }
+StProfilerPresenter >> profileCode: aString [
+
+	inputPresenter
+		code: aString;
+		profileIt
+]
+
 { #category : 'subscription' }
-ProfilerPresenter >> subscribe [
+StProfilerPresenter >> subscribe [
 
 	resultsPresenter subscribeOnProfilingAnnouncements.
 	inputPresenter subscribeOnProfilingAnnouncements
 ]
 
 { #category : 'subscription' }
-ProfilerPresenter >> unsubscribe [
+StProfilerPresenter >> unsubscribe [
 
 	resultsPresenter unsubscribeFromProfilingAnnouncements.
 	inputPresenter unsubscribeFromProfilingAnnouncements
 ]
 
 { #category : 'accessing' }
-ProfilerPresenter >> viewModel [
+StProfilerPresenter >> viewModel [
 
 	^ viewModel ifNil: [ viewModel := ProfilerModel new ]
 ]

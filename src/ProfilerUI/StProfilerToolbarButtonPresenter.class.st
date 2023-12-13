@@ -2,7 +2,7 @@
 I represent an item in the navigation toolbar used to display the profiling results
 "
 Class {
-	#name : 'ProfilerToolbarButtonPresenter',
+	#name : 'StProfilerToolbarButtonPresenter',
 	#superclass : 'SpToolbarButtonPresenter',
 	#instVars : [
 		'object',
@@ -14,31 +14,31 @@ Class {
 }
 
 { #category : 'accessing' }
-ProfilerToolbarButtonPresenter >> object [
+StProfilerToolbarButtonPresenter >> object [
 
 	^ object
 ]
 
 { #category : 'accessing' }
-ProfilerToolbarButtonPresenter >> object: anObject [
+StProfilerToolbarButtonPresenter >> object: anObject [
 
 	object := anObject
 ]
 
 { #category : 'printing' }
-ProfilerToolbarButtonPresenter >> printOn: aStream [
+StProfilerToolbarButtonPresenter >> printOn: aStream [
 
 	aStream nextPutAll: self object methodName
 ]
 
 { #category : 'accessing' }
-ProfilerToolbarButtonPresenter >> selectedObject [
+StProfilerToolbarButtonPresenter >> selectedObject [
 
 	^ selectedObject
 ]
 
 { #category : 'accessing' }
-ProfilerToolbarButtonPresenter >> selectedObject: aTallyModel [
+StProfilerToolbarButtonPresenter >> selectedObject: aTallyModel [
 
 	selectedObject := aTallyModel
 ]

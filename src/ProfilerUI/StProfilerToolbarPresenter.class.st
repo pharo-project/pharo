@@ -3,7 +3,7 @@ I am a toolbar used to navigate the results tree of the profiling.
 My items are the buttons I contain which can be clicked by users
 "
 Class {
-	#name : 'ProfilerToolbarPresenter',
+	#name : 'StProfilerToolbarPresenter',
 	#superclass : 'SpToolbarPresenter',
 	#instVars : [
 		'selectedItem'
@@ -14,7 +14,7 @@ Class {
 }
 
 { #category : 'adding-removing items' }
-ProfilerToolbarPresenter >> ensureItemWith: aTallyModel [
+StProfilerToolbarPresenter >> ensureItemWith: aTallyModel [
 
 	| newItem |
 	(self getItemWith: aTallyModel) ifNotNil: [ :found | ^ found ].
@@ -28,7 +28,7 @@ ProfilerToolbarPresenter >> ensureItemWith: aTallyModel [
 ]
 
 { #category : 'accessing' }
-ProfilerToolbarPresenter >> getItemWith: anObject [
+StProfilerToolbarPresenter >> getItemWith: anObject [
 
 	^ (self items select: [ :item | item object == anObject ])
 		  ifEmpty: [ nil ]
@@ -36,10 +36,10 @@ ProfilerToolbarPresenter >> getItemWith: anObject [
 ]
 
 { #category : 'factory' }
-ProfilerToolbarPresenter >> newItemFrom: aTallyModel [
+StProfilerToolbarPresenter >> newItemFrom: aTallyModel [
 
 	| button |
-	button := ProfilerToolbarButtonPresenter new.
+	button := StProfilerToolbarButtonPresenter new.
 
 	button
 		object: aTallyModel;
@@ -55,7 +55,7 @@ ProfilerToolbarPresenter >> newItemFrom: aTallyModel [
 ]
 
 { #category : 'adding-removing items' }
-ProfilerToolbarPresenter >> removeItemsAfter: anItem [
+StProfilerToolbarPresenter >> removeItemsAfter: anItem [
 	| toKeep item i |
 
 	toKeep := #() asOrderedCollection.
@@ -70,25 +70,25 @@ ProfilerToolbarPresenter >> removeItemsAfter: anItem [
 ]
 
 { #category : 'reseting' }
-ProfilerToolbarPresenter >> reset [
+StProfilerToolbarPresenter >> reset [
 	self selectedItem: nil.
 	self removeAllItems
 ]
 
 { #category : 'accessing' }
-ProfilerToolbarPresenter >> selectedItem [
+StProfilerToolbarPresenter >> selectedItem [
 
 	^ selectedItem
 ]
 
 { #category : 'accessing' }
-ProfilerToolbarPresenter >> selectedItem: anObject [
+StProfilerToolbarPresenter >> selectedItem: anObject [
 
 	selectedItem := anObject
 ]
 
 { #category : 'accessing' }
-ProfilerToolbarPresenter >> setSelectedItem: aToolbarButtonPresenter [
+StProfilerToolbarPresenter >> setSelectedItem: aToolbarButtonPresenter [
 
 	self items do: [:itm | itm icon: nil ].
 	aToolbarButtonPresenter icon: (self iconNamed: 'windowMenu').
