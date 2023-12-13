@@ -1274,7 +1274,9 @@ RBProgramNode >> statementNodeIn: aSequenceBlockOrMethod [
 
 	| sequence answer |
 	"Retrieve body from method or block node--we need a sequence"
-	sequence := aSequenceBlockOrMethod asSequenceNode.
+	sequence := aSequenceBlockOrMethod isSequence
+		            ifTrue: [ aSequenceBlockOrMethod ]
+		            ifFalse: [ aSequenceBlockOrMethod body ].
 	answer := self.
 	[ answer parent == sequence ] whileFalse: [
 		answer := answer parent ifNil: [

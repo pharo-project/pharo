@@ -125,12 +125,6 @@ RBBlockNode >> arguments: argCollection [
 	arguments do: [:each | each parent: self ]
 ]
 
-{ #category : 'converting' }
-RBBlockNode >> asSequenceNode [
-
-	^ body
-]
-
 { #category : 'accessing - token' }
 RBBlockNode >> bar [
 	^ bar
