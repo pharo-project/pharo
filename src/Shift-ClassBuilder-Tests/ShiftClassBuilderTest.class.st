@@ -368,7 +368,7 @@ ShiftClassBuilderTest >> testInstallMinimalMockClass [
 	tag: '''' ;
 	sharedPools: {};
 	package: ''' , self packageNameForTest , ''''.
-	ShiftClassInstaller new makeWithBuilder: builder.
+	builder install.
 
 	installedClass := self class environment at: #MyClass ifAbsent: [ self fail ].
 
