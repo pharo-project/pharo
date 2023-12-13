@@ -130,7 +130,7 @@ AdditionalMethodState >> copyWith: aPropertyOrPragma [ "<Association|Pragma>"
 	copy := self class basicNew: (bs := self basicSize) + 1.
 	1 to: bs do:
 		[:i|
-		copy basicAt: i put: (self basicAt: i) shallowCopy].
+		copy basicAt: i put: (self basicAt: i)].
 	copy basicAt: bs + 1 put: aPropertyOrPragma.
 	1 to: self class instSize do:
 		[:i| copy instVarAt: i put: (self instVarAt: i)].
@@ -150,7 +150,7 @@ AdditionalMethodState >> copyWithout: aPropertyOrPragma [ "<Association|Pragma>"
 		[:i|
 		(self basicAt: i) = aPropertyOrPragma
 			ifTrue: [offset := 1]
-			ifFalse: [copy basicAt: i - offset put: (self basicAt: i) shallowCopy]].
+			ifFalse: [copy basicAt: i - offset put: (self basicAt: i)]].
 	1 to: self class instSize do:
 		[:i| copy instVarAt: i put: (self instVarAt: i)].
 	^copy
