@@ -330,9 +330,8 @@ ShiftClassBuilder >> fillFor: aClass [
 		layoutClass: aClass classLayout class;
 		slots: (aClass localSlots collect: [:var | var copy]);
 		classSlots: (aClass class localSlots collect: [:var | var copy]);
-		"we have to copy the class variables, as they contain the values"
 		sharedVariables: (aClass classVariables collect: [:var | var copy]);
-		sharedPools: (aClass sharedPools collect: [ :each | each name ]) asArray;
+		sharedPools: aClass sharedPools asArray;
 		package: aClass package name;
 		installingEnvironment: aClass environment;
 		oldClass: aClass.
@@ -357,7 +356,7 @@ ShiftClassBuilder >> fillInstanceSideFromClass: aClass [
 	self layout: aClass classLayout class.
 
 	self sharedVariables: aClass classVariables.
-	self sharedPools: (aClass sharedPools collect: [ :each | each name ]) asArray
+	self sharedPools: aClass sharedPools asArray
 ]
 
 { #category : 'building' }

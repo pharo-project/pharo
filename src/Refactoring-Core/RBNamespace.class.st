@@ -700,7 +700,7 @@ RBNamespace >> reparentClasses: aRBClassCollection to: newClass [
 				name: aClass name;
 				slots: aClass instanceVariableNames;
 				sharedVariables: aClass classVariableNames;
-				sharedPoolsFromString: (' ' join: aClass sharedPoolNames);
+				sharedPools: aClass sharedPoolNames;
 				package: aClass packageName;
 				tag: aClass tagName ] ]
 ]
