@@ -163,11 +163,11 @@ RBClassDataForRefactoringTest >> demoMethodWithDuplicatesInBlocks [
 RBClassDataForRefactoringTest >> demoMethodWithDuplicatesInEarlierBlocks [
 
 	(3 to: 10) do: [ :i |
-		self someValue \\ i = 0 ifTrue: [ self doSomethingFor: i ] ].
-	self someValue odd ifTrue: [ self doSomethingElse ]
+		self someMethod \\ i = 0 ifTrue: [ self performAction: i ] ].
+	self someMethod odd ifTrue: [ self performAction ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RBClassDataForRefactoringTest >> demoRenameMethod: arg1 PermuteArgs: arg2 [
 	self do: arg1.
 	self do: arg2.
