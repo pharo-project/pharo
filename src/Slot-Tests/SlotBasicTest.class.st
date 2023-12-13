@@ -80,6 +80,16 @@ SlotBasicTest >> testClassWithCommentAndStamp [
 	self assert: aClass organization commentStamp equals: (Object>>#halt) stamp
 ]
 
+{ #category : #'tests - shared variables' }
+SlotBasicTest >> testInitializedSlotUpdateClass [
+ 	"When we update a Slot that has a default value, the slot us updated, tests #hasSameDefinitionAs:"
+ 	aClass := self make: [ :builder | builder slots: {#slot => InitializedSlot default: 5}].
+
+ 	self assert: (aClass slotNamed: #slot) default equals: 5.
+ 	aClass := self make: [ :builder | builder slots: {#slot => InitializedSlot default: 4}].
+ 	self assert: (aClass slotNamed: #slot) default equals: 4
+]
+
 { #category : #'tests - basic' }
 SlotBasicTest >> testNewCompiledMethodClass [
 
