@@ -1,5 +1,5 @@
 "
-Packacke with support for system changes recorded in changesets
+Package with support for system changes recorded. I mainly contains ChangeRecord that represents a change recorded on a file in fileOut format.
 "
 Class {
 	#name : 'ManifestSystemChanges',
