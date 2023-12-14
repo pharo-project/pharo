@@ -14,8 +14,3 @@ ManifestSystemChanges class >> manuallyResolvedDependencies [
 
 	^ #( #'OpalCompiler-Core' #'FileSystem-Disk' #'Collections-Abstract' )
 ]
-
-{ #category : 'code-critics' }
-ManifestSystemChanges class >> ruleClassNameInSelectorRuleV1FalsePositive [
-	^ #(#(#(#RGMetaclassDefinition #(#'ChangeSet class' #ChangeSet)) #'2021-10-04T20:06:46.530781+02:00') )
-]

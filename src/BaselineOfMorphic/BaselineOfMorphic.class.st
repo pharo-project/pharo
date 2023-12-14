@@ -144,8 +144,6 @@ BaselineOfMorphic >> cleanUpAfterMorphicInitialization [
 	ExternalDropHandler resetRegisteredHandlers.
 	ScrollBarMorph initializeImagesCache.
 
-	ChangeSet removeChangeSetsNamedSuchThat: [ :each | true ].
-	ChangeSet resetCurrentToNewUnnamedChangeSet.
 	Author reset
 ]
 
