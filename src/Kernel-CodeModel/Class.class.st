@@ -189,14 +189,6 @@ Class >> allSharedPools [
 			aSet addAll: self sharedPools; yourself]
 ]
 
-{ #category : 'class variables' }
-Class >> anyUserOfClassVarNamed: aSymbol [
-	"maybe this should be deprecated"
-	^ (self classVariableNamed: aSymbol) usingClasses
-		ifEmpty: [ nil ]
-		ifNotEmpty: [:notEmpty | notEmpty anyOne]
-]
-
 { #category : 'deprecation' }
 Class >> applyDeprecation [
 

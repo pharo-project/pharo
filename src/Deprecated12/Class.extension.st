@@ -1,6 +1,14 @@
 Extension { #name : 'Class' }
 
 { #category : '*Deprecated12' }
+Class >> anyUserOfClassVarNamed: aSymbol [
+	self deprecated: 'use #usingClasses on the Variable instead'.
+	^ (self classVariableNamed: aSymbol) usingClasses
+		ifEmpty: [ nil ]
+		ifNotEmpty: [:notEmpty | notEmpty anyOne]
+]
+
+{ #category : '*Deprecated12' }
 Class >> basicCategory [
 
 	self deprecated: 'Use #category now' transformWith: '`@rcv basicCategory' -> '`@rcv category'.

@@ -140,11 +140,6 @@ ClassTest >> testAllSharedPools [
 	self assertEmpty: SubclassPoolUser sharedPools
 ]
 
-{ #category : 'tests - class variables' }
-ClassTest >> testAnyUserOfClassVarNamed [
-	self assert: ((Object anyUserOfClassVarNamed: #DependentsFields) isKindOf: Object)
-]
-
 { #category : 'tests' }
 ClassTest >> testChangingShapeDoesNotPutNilInMethodsLastLiteralKey [
 	"Test that when the shape of a class changes, the key of the last literal of the methods is not nil"
