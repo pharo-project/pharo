@@ -131,7 +131,6 @@ BaselineOfIDE >> baseline: spec [
 		self roassal: spec.
 
 		spec baseline: 'ThreadedFFI' with: [ spec repository: repository ].
-		spec baseline: 'ProfilerUI' with: [ spec repository: repository ].
 
 		spec package: 'Kernel-ExtraUtils' ]
 ]
