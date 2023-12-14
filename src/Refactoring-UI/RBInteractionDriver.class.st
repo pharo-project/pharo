@@ -74,7 +74,11 @@ RBInteractionDriver >> model: aRBBrowserEnvironment [
 { #category : 'execution' }
 RBInteractionDriver >> openPreviewWithChanges: changes [
 	
-	^ (self previewWithChanges: changes)
+	^ (self previewPresenterClass
+		 changes: changes
+		 scopes: scopes)
+		application: self application;
+		refactoring: self refactoring;
 		openModal
 ]
 
@@ -92,16 +96,6 @@ RBInteractionDriver >> previewPresenterClass: aClass [
 	 previewPresenterClass := aClass
 	
 	
-]
-
-{ #category : 'utilities' }
-RBInteractionDriver >> previewWithChanges: changes [
-	
-	^ (self previewPresenterClass
-		 changes: changes
-		 scopes: scopes)
-		application: self application;
-		refactoring: self refactoring
 ]
 
 { #category : 'resources' }

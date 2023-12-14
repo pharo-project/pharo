@@ -29,12 +29,6 @@ StRefactoringPreviewPresenterMock >> openModal [
 	^ changes
 ]
 
-{ #category : 'transforming' }
-StRefactoringPreviewPresenterMock >> performChanges [
-	"I am a mock, I do nothing"
-	^ self
-]
-
 { #category : 'accessing' }
 StRefactoringPreviewPresenterMock >> refactoring: aRBUpFrontPreconditionCheckingCompositeRefactoring [ 
 	"don't touch me this is for the mock"

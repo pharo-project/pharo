@@ -17,12 +17,6 @@ Class {
 }
 
 { #category : 'execution' }
-RBRenameVariableDriver >> applyChanges [
-	"I use the preview presenter to perform changes, but I do not open it"
-	(self previewWithChanges: self changes) performChanges
-]
-
-{ #category : 'execution' }
 RBRenameVariableDriver >> changes [
 
 	refactoring changes changes isEmpty ifTrue: [
@@ -68,6 +62,13 @@ RBRenameVariableDriver >> prepareRefactoringInteractively [
 					label: cond errorString;
 					title: 'Invalid name';
 					openModal ] ].
+]
+
+{ #category : 'configuration' }
+RBRenameVariableDriver >> previewPresenterClass [
+
+	^ previewPresenterClass ifNil: [
+		  previewPresenterClass := StRefactoringPreviewPresenterWithAutoAccept ]
 ]
 
 { #category : 'factory method' }
