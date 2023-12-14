@@ -262,6 +262,12 @@ Class >> immediateSubclass: aName uses: aTraitComposition instanceVariableNames:
 ]
 
 { #category : '*Deprecated12' }
+Class >> removeFromChanges [
+
+	self deprecated: 'The ChangeSet system is been removed in Pharo 12 since Epicea replaces all its features already.'
+]
+
+{ #category : '*Deprecated12' }
 Class >> subclass: t instanceVariableNames: ins [
 
 	self

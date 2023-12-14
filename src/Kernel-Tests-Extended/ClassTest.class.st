@@ -22,9 +22,7 @@ ClassTest >> classToBeTested [
 { #category : 'setup' }
 ClassTest >> deleteClass [
 
-	testEnvironment at: className ifPresent: [ :class |
-		testingEnvironment at: #ChangeSet ifPresent: [ class removeFromChanges ].
-		class removeFromSystemUnlogged ]
+	testEnvironment at: className ifPresent: [ :class | class removeFromSystemUnlogged ]
 ]
 
 { #category : 'setup' }
@@ -215,18 +213,9 @@ ClassTest >> testClassVariableEntanglement [
 				self assert: secondClass myVar equals: 456.
 				self assert: thirdClass myVar equals: 789.
 
-			 ] ensure: [
-				thirdClass
-					removeFromChanges;
-					removeFromSystemUnlogged ].
-		 ] ensure: [
-			secondClass
-				removeFromChanges;
-				removeFromSystemUnlogged ].
-	 ] ensure: [
-		firstClass
-			removeFromChanges;
-			removeFromSystemUnlogged ]
+			 ] ensure: [ thirdClass removeFromSystemUnlogged ].
+		 ] ensure: [ secondClass removeFromSystemUnlogged ].
+	 ] ensure: [ firstClass removeFromSystemUnlogged ]
 ]
 
 { #category : 'tests - accessing - comments' }
