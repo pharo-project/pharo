@@ -173,9 +173,7 @@ MczInstaller >> install [
 { #category : 'installation' }
 MczInstaller >> installMember: member [
 
-	self useNewChangeSetDuring:
-		[ CodeImporter evaluateReadStream: (self contentsForMember: member) readStream.
-		]
+	CodeImporter evaluateReadStream: (self contentsForMember: member) readStream
 ]
 
 { #category : 'utilities' }
@@ -196,16 +194,6 @@ MczInstaller >> recordVersionInfo [
 { #category : 'accessing' }
 MczInstaller >> stream: aStream [
 	stream := aStream
-]
-
-{ #category : 'utilities' }
-MczInstaller >> useNewChangeSetDuring: aBlock [
-	| changeHolder oldChanges newChanges |
-	changeHolder := ChangeSet.
-	oldChanges := ChangeSet current.
-	newChanges := ChangeSet new name: (ChangeSet uniqueNameLike: self extractPackageName).
-	changeHolder newChanges: newChanges.
-	[ aBlock value ] ensure: [changeHolder newChanges: oldChanges]
 ]
 
 { #category : 'utilities' }

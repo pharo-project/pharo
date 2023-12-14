@@ -136,7 +136,7 @@ MCPackageLoader >> installSnapshot: aSnapshot [
 MCPackageLoader >> load [
 
 	self validate.
-	self useNewChangeSetDuring: [ self basicLoad ]
+	self basicLoad
 ]
 
 { #category : 'private' }
@@ -172,18 +172,6 @@ MCPackageLoader >> loadClassDefinitions [
 
 	"Finally we warn about the errors we could not fix."
 	errorDefinitions ifNotEmpty: [ self warnAboutErrors: errorDefinitions ]
-]
-
-{ #category : 'public' }
-MCPackageLoader >> loadWithName: baseName [
-	self validate.
-	self useChangeSetNamed: baseName during: [self basicLoad]
-]
-
-{ #category : 'public' }
-MCPackageLoader >> loadWithNameLike: baseName [
-	self validate.
-	self useNewChangeSetNamedLike: baseName during: [self basicLoad]
 ]
 
 { #category : 'patch ops' }
@@ -240,27 +228,6 @@ MCPackageLoader >> updatePackage: aPackage withSnapshot: aSnapshot [
 	patch applyTo: self.
 	packageSnap definitions do: [:ea | self provisions addAll: ea provisions]
 
-]
-
-{ #category : 'private' }
-MCPackageLoader >> useChangeSetNamed: baseName during: aBlock [
-	"Use the named change set, or create one with the given name."
-	| oldChanges newChanges |
-	oldChanges := ChangeSet current.
-	newChanges := (ChangeSet named: baseName) ifNil: [ ChangeSet new name: baseName ].
-	ChangeSet newChanges: newChanges.
-	aBlock ensure: [ ChangeSet newChanges: oldChanges ].
-
-]
-
-{ #category : 'private' }
-MCPackageLoader >> useNewChangeSetDuring: aBlock [
-	^self useNewChangeSetNamedLike: 'MC' during: aBlock
-]
-
-{ #category : 'private' }
-MCPackageLoader >> useNewChangeSetNamedLike: baseName during: aBlock [
-	^self useChangeSetNamed: (ChangeSet uniqueNameLike: baseName) during: aBlock
 ]
 
 { #category : 'private' }

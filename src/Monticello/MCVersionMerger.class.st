@@ -15,9 +15,10 @@ Class {
 
 { #category : 'action' }
 MCVersionMerger class >> mergeVersion: aVersion [
+
 	self new
 		addVersion: aVersion;
-		mergeWithNameLike: aVersion info name
+		merge
 ]
 
 { #category : 'adding' }
@@ -62,16 +63,6 @@ MCVersionMerger >> merge [
 		^ true].
 	
 	^ false
-]
-
-{ #category : 'actions' }
-MCVersionMerger >> mergeWithNameLike: baseName [
-
-	self gatherChanges.
-	
-	self resolveConflicts ifTrue:
-		[merger loadWithNameLike: baseName.
-		records do: [:ea | ea updateWorkingCopy]].
 ]
 
 { #category : 'actions' }
