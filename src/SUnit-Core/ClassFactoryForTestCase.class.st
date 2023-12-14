@@ -297,3 +297,22 @@ ClassFactoryForTestCase >> tagName [
 
 	^ #Default
 ]
+
+{ #category : 'creating' }
+ClassFactoryForTestCase >> update: aClass to: aBlock [
+	"I return an updated class or trait in the environment of the factory configured as the user specified in the make block.
+	Once the test is finished, I'll remove the created class or trait."
+
+	| newClass |
+	newClass := self class classInstaller make: [ :aBuilder | "Let's but some default values."
+		    			aBuilder fillFor: aClass.        
+						aBuilder
+			            installingEnvironment: self environment;
+			            package: self packageName.
+						
+		            "Now we let the users specify what they want."
+		            aBlock value: aBuilder ].
+
+	self registerBehavior: newClass.
+	^ newClass
+]

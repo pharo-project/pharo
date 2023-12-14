@@ -35,8 +35,7 @@ ChangeSetClassChangesTest >> tearDown [
 
 { #category : 'tests' }
 ChangeSetClassChangesTest >> testAddInstanceVariable [
-	"Adding an instance variable to the class should result in a change
-	record being added to the current change set."
+	"Adding an instance variable to the class should result in a change record being added to the current change set."
 
 	| class className saveClassDefinition |
 	"Define a class and save its definition"
@@ -47,10 +46,8 @@ ChangeSetClassChangesTest >> testAddInstanceVariable [
 	self assert: saveClassDefinition equals: class definitionString.
 
 	"Redefine the class, adding one instance variable"
-	factory make: [ :aBuilder |
-		aBuilder
-			fillFor: class;
-			slots: #(zzz aaa) ].
+	factory update: class to: [ :aBuilder | 
+			aBuilder slots: #(zzz aaa) ].
 
 	self deny: class definitionString equals: saveClassDefinition.
 
@@ -60,26 +57,22 @@ ChangeSetClassChangesTest >> testAddInstanceVariable [
 
 { #category : 'tests' }
 ChangeSetClassChangesTest >> testAddInstanceVariableAddsNewChangeRecord [
-	"Changing the class category for a class should result in a change
-	record being updated in the current change set."
+	"Changing the class category for a class should result in a change record being updated in the current change set."
 
 	| class saveClassDefinition |
 	class := factory make: [ :aBuilder | aBuilder slots: #(zzz) ].
 	saveClassDefinition := class definitionString.
 	ChangeSet current removeClassChanges: class name.
 	"Redefine the class, adding one instance variable"
-	factory make: [ :aBuilder |
-		aBuilder
-			fillFor: class;
-			slots: #(zzz aaa) ].
+	factory update: class to: [ :aBuilder | 
+			aBuilder slots: #(zzz aaa) ].
 
 	self assert: (ChangeSet current changeRecorderFor: class name) priorDefinition equals: saveClassDefinition
 ]
 
 { #category : 'tests' }
 ChangeSetClassChangesTest >> testChangeClassCategory [
-	"Changing the class category for a class should result in a change
-	record being added to the current change set."
+	"Changing the class category for a class should result in a change record being added to the current change set."
 
 	[
 	| class saveClassDefinition |
@@ -89,10 +82,8 @@ ChangeSetClassChangesTest >> testChangeClassCategory [
 	self assert: saveClassDefinition equals: class definitionString.
 
 	"Redefine the class, changing only the class category"
-	factory make: [ :aBuilder |
-		aBuilder
-			fillFor: class;
-			package: 'TestPackage2' ].
+	factory update: class to: [ :aBuilder |
+		aBuilder package: 'TestPackage2' ].
 	self deny: class definitionString equals: saveClassDefinition.
 
 	"Assert that the change has been recorded in the current change set"
@@ -104,11 +95,9 @@ ChangeSetClassChangesTest >> testChangeClassCategory [
 
 { #category : 'tests' }
 ChangeSetClassChangesTest >> testChangeClassCategoryAddsNewChangeRecord [
-	"Changing the class category for a class should result in a change
-	record being updated in the current change set."
+	"Changing the class category for a class should result in a change record being updated in the current change set."
 
-	"At the start of this test, JunkClass should not exist, and there should be
-	no change records pertaining to it in the change set."
+	"At the start of this test, JunkClass should not exist, and there should be no change records pertaining to it in the change set."
 
 	[
 	| class |
@@ -118,10 +107,8 @@ ChangeSetClassChangesTest >> testChangeClassCategoryAddsNewChangeRecord [
 	ChangeSet current removeClassChanges: class name.
 
 	"Redefine the class, changing only the class category"
-	factory make: [ :aBuilder |
-		aBuilder
-			fillFor: class;
-			package: 'TestPackage2' ].
+	factory update: class to: [ :aBuilder |
+		aBuilder package: 'TestPackage2' ].
 
 	self assert: (ChangeSet current changeRecorderFor: class) priorDefinition equals: class definitionString ] ensure: [
 		self packageOrganizer
