@@ -146,22 +146,17 @@ ClassFactoryForTestCase >> newTraitUsing: aTraitComposition [
 { #category : '*Deprecated12' }
 ClassFactoryForTestCase >> redefineClass: aClass category: aString [
 
-	self deprecated: 'Use the method #make: with the right parameters instead. See ClassFactoryForTestCase>>#newSubclassOf:uses:instanceVariableNames:classVariableNames:poolDictionaries:category: for the API and #make: to find the default value I am setting.'.
-	^ self make: [ :aBuilder |
-		  aBuilder
-			  fillFor: aClass;
-			  package: aString ]
+	self deprecated: 'Use the method #update:to: instead'.
+	^ self update: aClass to: [ :aBuilder |
+		  aBuilder package: aString ]
 ]
 
 { #category : '*Deprecated12' }
 ClassFactoryForTestCase >> redefineClass: aClass instanceVariableNames: aString [
 
-	self deprecated:
-		'Use the method #make: with the right parameters instead. See ClassFactoryForTestCase>>#newSubclassOf:uses:instanceVariableNames:classVariableNames:poolDictionaries:category: for the API and #make: to find the default value I am setting.'.
-	^ self make: [ :aBuilder |
-		  aBuilder
-			  fillFor: aClass;
-			  slotsFromString: aString ]
+	self deprecated: 'Use the method #update:to: instead'.
+	^ self update: aClass to:[ :aBuilder |
+		  aBuilder slotsFromString: aString ]
 ]
 
 { #category : '*Deprecated12' }
