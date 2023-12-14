@@ -105,11 +105,11 @@ ClassFactoryForTestCase >> defaultSuperclass [
 
 { #category : 'cleaning' }
 ClassFactoryForTestCase >> delete: aBehavior [
+
 	| name |
 	createdBehaviors remove: aBehavior ifAbsent: [  ].
 	aBehavior isObsolete ifTrue: [ ^ self ].
 	name := aBehavior name. "save it as it will be obsolete later"
-	self class environment at: #ChangeSet ifPresent: [ :changeSet | changeSet current removeClassAndMetaClassChanges: aBehavior ].
 	(createdSilently includes: aBehavior)
 		ifTrue: [
 			createdSilently remove: aBehavior.

@@ -36,10 +36,7 @@ SmalllintManifestCheckerTest >> setUp [
 { #category : 'running' }
 SmalllintManifestCheckerTest >> tearDown [
 
-	testingEnvironment at: #ManifestManifestResourcesTests ifPresent: [ :class |
-		class
-			removeFromChanges;
-			removeFromSystem ].
+	testingEnvironment at: #ManifestManifestResourcesTests ifPresent: [ :class | class removeFromSystem ].
 	super tearDown
 ]
 

@@ -43,21 +43,6 @@ MCMergeBrowser >> cancel [
 ]
 
 { #category : 'actions' }
-MCMergeBrowser >> changeSetNameForInstall [
-	"Answer the name of the change set into which my selection will be installed.
-	Derive this from my label.
-	If I have no label, use the current change set."
-
-	| tokens |
-	label ifNil: [ ^ChangeSet current name ].
-	tokens := label findTokens: ' '.
-	tokens removeAllFoundIn: { 'changes'. 'between'. 'and' }.
-	(tokens size = 3 and: [ tokens second = '<working' ]) ifTrue: [ ^tokens first, '-to-working' ].
-	tokens size = 2 ifFalse: [ ^'InstalledPatches' ].
-	^'{1}-to-{2}' format: tokens 
-]
-
-{ #category : 'actions' }
 MCMergeBrowser >> chooseAllNewerConflicts [
 	"Notify the potential new state of canMerge."
 	
@@ -159,11 +144,12 @@ MCMergeBrowser >> innerButtonRow [
 
 { #category : 'actions' }
 MCMergeBrowser >> installSelection [
+
 	| loader |
-	selection ifNotNil:
-		[loader := MCPackageLoader new.
+	selection ifNotNil: [
+		loader := MCPackageLoader new.
 		selection applyTo: loader.
-		loader loadWithName: self changeSetNameForInstall ]
+		loader load ]
 ]
 
 { #category : 'selecting' }
@@ -203,11 +189,12 @@ MCMergeBrowser >> patch: aPatch [
 
 { #category : 'actions' }
 MCMergeBrowser >> revertSelection [
+
 	| loader |
-	selection ifNotNil:
-		[loader := MCPackageLoader new.
+	selection ifNotNil: [
+		loader := MCPackageLoader new.
 		selection inverse applyTo: loader.
-		loader loadWithName: self changeSetNameForInstall ]
+		loader load ]
 ]
 
 { #category : 'subclassresponsibility' }
