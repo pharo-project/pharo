@@ -1206,13 +1206,6 @@ ClassDescription >> usesPoolVarNamed: aString [
 	^ false
 ]
 
-{ #category : 'compiling' }
-ClassDescription >> wantsChangeSetLogging [
-	"Answer whether code submitted for the receiver should be remembered by the changeSet mechanism."
-
-	^ true
-]
-
 { #category : 'queries' }
 ClassDescription >> whichMethodsAccess: instVarName [
 	"Answer the methods that access the argument, instVarName, as a named instance variable. Pay attention the instVarName variable should be used e.g., be part of a return, message send or assignment else the compiler optimize it away and the method will not return it."
