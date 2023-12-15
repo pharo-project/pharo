@@ -126,7 +126,7 @@ RBRefactoryChangeManager class >> unload [
 RBRefactoryChangeManager >> addUndo: aRefactoringChange [
 	undo push: aRefactoringChange.
 	undo size > UndoSize
-		ifTrue: [ undo removeFirst ].
+		ifTrue: [ undo removeLast ].
 	redo := OrderedCollection new
 ]
 
@@ -244,8 +244,8 @@ RBRefactoryChangeManager >> undoOperation [
 	undo ifEmpty: [ ^ self ].
 	self ignoreChangesWhile: [
 		| change |
-		change := undo removeLast.
-		redo add: change execute ]
+		change := undo pop.
+		redo add: change execute ] 
 ]
 
 { #category : 'public access' }
