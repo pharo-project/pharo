@@ -33,18 +33,6 @@ PackageTagAnnouncement class >> to: aPackageTag [
 		  yourself
 ]
 
-{ #category : 'testing' }
-PackageTagAnnouncement >> affectsPackage: aPackage [
-
-	^ self package == aPackage
-]
-
-{ #category : 'testing' }
-PackageTagAnnouncement >> affectsPackages [
-
-	^ true
-]
-
 { #category : 'accessing' }
 PackageTagAnnouncement >> package [
 

@@ -35,12 +35,6 @@ ProtocolAnnouncement class >> initialize [
 	self deprecatedAliases: { #ClassReorganized }
 ]
 
-{ #category : 'testing' }
-ProtocolAnnouncement >> affectsProtocolsIn: aClass [
-
-	^ self classAffected == aClass
-]
-
 { #category : 'accessing' }
 ProtocolAnnouncement >> classAffected [
 
