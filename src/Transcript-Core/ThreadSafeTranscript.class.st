@@ -99,6 +99,11 @@ ThreadSafeTranscript >> doItContext [
 	^nil
 ]
 
+{ #category : 'accessing' }
+ThreadSafeTranscript >> doItReceiver [
+	^ nil
+]
+
 { #category : 'streaming' }
 ThreadSafeTranscript >> flush [
 	"The next #stepGlobal message (usually invoked by Morhic stepping) will raise an #appendEntry update and reset the stream."
