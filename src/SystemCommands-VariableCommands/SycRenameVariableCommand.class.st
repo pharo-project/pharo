@@ -45,7 +45,8 @@ SycRenameVariableCommand >> classRefactoring [
 
 { #category : 'accessing' }
 SycRenameVariableCommand >> defaultMenuItemName [
-	^'Rename'
+
+	^ 'Rename (old calypso)'
 ]
 
 { #category : 'execution' }

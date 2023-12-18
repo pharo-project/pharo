@@ -7,9 +7,9 @@ Class {
 	#instVars : [
 		'oldName',
 		'newName',
-		'lastName',
 		'class',
-		'shouldEscape'
+		'shouldEscape',
+		'previouslyProposedName'
 	],
 	#category : 'Refactoring-UI-Drivers',
 	#package : 'Refactoring-UI',
@@ -32,43 +32,28 @@ RBRenameVariableDriver >> configureRefactoring [
 		               class: class
 ]
 
-{ #category : 'accessing' }
-RBRenameVariableDriver >> newName: aString [
-	"The only way to define newName is either using the UI (interactive mode) or using the initialization method >>scopes:variable:for:newName:"
-	self shouldNotImplement 
-]
-
 { #category : 'private' }
-RBRenameVariableDriver >> prepareRefactoring [
-	"The Driver is run in scripting mode, therefore the variable `newName` was defined in the method scopes:variable:for:newName:.
-	We don't need to ask for the name to the user"
-	refactoring newName: newName.
-	refactoring checkApplicabilityPreconditions
+RBRenameVariableDriver >> informError: cond [
+
+	self informDialog
+		label: cond errorString;
+		title: 'Invalid name';
+		openModal
 ]
 
 { #category : 'private' }
 RBRenameVariableDriver >> prepareRefactoringInteractively [
+
 	| failedConditions |
-	
-	"We ask the user for the variable new name"
-	[ newName := self requestNewNameBasedOn: lastName.
+	[
+	newName := self requestNewNameBasedOn: previouslyProposedName.
 	shouldEscape ifTrue: [ ^ self ].
 	refactoring newName: newName.
 	failedConditions := refactoring failedApplicabilityPreconditions.
-	failedConditions isEmpty ]
-		whileFalse: [
-			failedConditions do: [ :cond |
-				self application newInform
-					label: cond errorString;
-					title: 'Invalid name';
-					openModal ] ].
-]
-
-{ #category : 'configuration' }
-RBRenameVariableDriver >> previewPresenterClass [
-
-	^ previewPresenterClass ifNil: [
-		  previewPresenterClass := StRefactoringPreviewPresenterWithAutoAccept ]
+	failedConditions isEmpty ] whileFalse: [
+		failedConditions do: [ :cond |
+			self informError: cond 
+			 ] ]
 ]
 
 { #category : 'factory method' }
@@ -79,7 +64,7 @@ RBRenameVariableDriver >> refactoringClass [
 { #category : 'private' }
 RBRenameVariableDriver >> requestNewNameBasedOn: aName [
 
-	newName := SpRequestDialog new
+	newName := self requestDialog
 		           title: 'Please provide a new variable name';
 		           text: aName;
 		           openModal.
@@ -90,7 +75,7 @@ RBRenameVariableDriver >> requestNewNameBasedOn: aName [
 	newName = oldName ifTrue: [
 		shouldEscape := true.
 		^ self ].
-	lastName := newName.
+	previouslyProposedName := newName.
 	^ newName
 ]
 
@@ -99,18 +84,10 @@ RBRenameVariableDriver >> runRefactoring [
 
 	self configureRefactoring.
 	shouldEscape := false.
-	
-	newName 
-		ifNil: [ 
-			"run in interactive mode"
-			self prepareRefactoringInteractively
-		 ]
-		ifNotNil: [ 
-			"run in script mode"
-			self prepareRefactoring
-		 ].
+
+	self prepareRefactoringInteractively.
 	shouldEscape ifTrue: [ ^ self ].
-	
+
 	self applyChanges
 ]
 
@@ -120,7 +97,7 @@ RBRenameVariableDriver >> scopes: aCollection variable: aString for: aClass [
 	scopes := aCollection.
 	model :=  self refactoringScopeOn: scopes first.
 	oldName := aString.
-	lastName := aString.
+	previouslyProposedName := aString.
 	class := aClass
 ]
 

@@ -71,6 +71,5 @@ RBCommentChange >> printOn: aStream [
 		nextPutAll: ' classComment: ';
 		print: (self comment copyReplaceAll: '!' with: '!!');
 		nextPutAll: ' stamp: ';
-		print: self changeStamp;
-		nextPutAll: '!'
+		print: self changeStamp
 ]

@@ -10,3 +10,7 @@ StSelectDialogMock >> action [
 	"I'm a mock"
 	^ self
 ]
+
+{ #category : 'accessing' }
+StSelectDialogMock >> title: doesNotCare [
+]
