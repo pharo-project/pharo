@@ -13,9 +13,3 @@ ClassDescription >> manifestBuilderForRuleChecker: aRuleChecker [
 
 	^ aRuleChecker manifestBuilderOfClass: self
 ]
-
-{ #category : '*Manifest-Core' }
-ClassDescription >> mcWorkingCopy [
-
-	MCWorkingCopy workingCopiesForClass: self do: [ :package | ^ package ]
-]

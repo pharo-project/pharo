@@ -65,6 +65,12 @@ Object >> haltOnWriteTo: aVariableName [
 ]
 
 { #category : '*Reflectivity' }
+Object >> haltOnceOnCallTo: aSelector [
+
+	^ Breakpoint breakOnceOn: aSelector inObject: self
+]
+
+{ #category : '*Reflectivity' }
 Object >> intanceSpecificMetaLinksAvailable [
 	^true
 ]

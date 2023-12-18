@@ -13,3 +13,15 @@ Class {
 EpProtocolRemoval >> accept: aVisitor [
 	^ aVisitor visitProtocolRemoval: self
 ]
+
+{ #category : 'accessing' }
+EpProtocolRemoval >> fileOutEntryOn: aWriteStream [ 
+
+	aWriteStream 
+		nextPutAll: self behaviorAffectedName;
+		nextPutAll: ' removeProtocolNamed: ';
+		print: self protocol;
+		nextPutAll: ' stamp: ';
+		print: Author changeStamp;
+		nextPutAll: '!'
+]

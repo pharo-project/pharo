@@ -96,7 +96,7 @@ RubCharacterScanner >> basicScanCharactersFrom: startIndex to: stopIndex in: sou
 			char := (sourceString at: lastIndex).
 			ascii := char asciiValue.
 
-			(ascii < stops size and: [(stops at: ascii + 1) notNil]) ifTrue: [^ stops at: ascii + 1].
+			(ascii < stops size and: [(stops at: ascii + 1) isNotNil]) ifTrue: [^ stops at: ascii + 1].
 			"Note: The following is querying the font about the width
 			since the primitive may have failed due to a non-trivial
 			mapping of characters to glyphs or a non-existing xTable."

@@ -36,6 +36,13 @@ OmEntry >> content: anObject [
 	content := anObject
 ]
 
+{ #category : 'accessing' }
+OmEntry >> fileOutEntryOn: aWriteStream [ 
+	"Write the receiver's contents to aWriteStream"
+
+	self content fileOutEntryOn: aWriteStream.
+]
+
 { #category : 'comparing' }
 OmEntry >> hash [
 	^ self species hash bitXor: self content hash

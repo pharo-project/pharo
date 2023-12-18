@@ -55,7 +55,7 @@ RBAbstractRefactoringTest >> methodSignatureStringForUnarySymbol: aSymbol [
 
 { #category : 'helpers' }
 RBAbstractRefactoringTest >> objectClassVariable [
-	^Object classPool keys detect: [:each | true]
+	^Object classVariables first name
 ]
 
 { #category : 'parsing' }
@@ -154,15 +154,6 @@ RBAbstractRefactoringTest >> setupSelfArgumentNameFor: aRefactoring toReturn: aS
 	| options |
 	options := aRefactoring options copy.
 	options at: #selfArgumentName put: [:ref | aString].
-	aRefactoring options: options
-]
-
-{ #category : 'set up' }
-RBAbstractRefactoringTest >> setupShouldUseExistingMethodFor: aRefactoring toReturn: aBoolean [
-
-	| options |
-	options := aRefactoring options copy.
-	options at: #useExistingMethod put: [ :ref :cls | aBoolean ].
 	aRefactoring options: options
 ]
 

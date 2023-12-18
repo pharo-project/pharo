@@ -22,12 +22,24 @@ Class {
 	#tag : 'Refactorings'
 }
 
+{ #category : 'displaying' }
+RBRenameClassRefactoring class >> basicMenuItemString [
+
+	^ 'Rename'
+]
+
 { #category : 'instance creation' }
-RBRenameClassRefactoring class >> model: aRBSmalltalk rename: aClass to: aNewName [
+RBRenameClassRefactoring class >> model: aRBNamespace rename: aClass to: aNewName [
 	^ self new
-		model: aRBSmalltalk;
+		model: aRBNamespace;
 		className: aClass newName: aNewName;
 		yourself
+]
+
+{ #category : 'partial instantiation' }
+RBRenameClassRefactoring class >> rename: aClassName [ 
+	^ self new
+		className: aClassName ; yourself
 ]
 
 { #category : 'instance creation' }
@@ -41,16 +53,34 @@ RBRenameClassRefactoring class >> rename: aClassName to: aNewName [
 RBRenameClassRefactoring >> applicabilityPreconditions [
 
 	^ (RBCondition withBlock: [
-		   class notNil and: [ class isMeta not ] ])
+		   self doesClassToBeRenamedExist and: [ self isNotMetaclass ] ])
 	  & self isValidClassName & self isNotGlobal
+]
+
+{ #category : 'initialization' }
+RBRenameClassRefactoring >> className: aName [
+
+	className := aName asSymbol.
+	class := self model classNamed: className.
+	
 ]
 
 { #category : 'initialization' }
 RBRenameClassRefactoring >> className: aName newName: aNewName [
 
-	className := aName asSymbol.
-	class := self model classNamed: className.
-	newName := aNewName asSymbol
+	self className: aName.
+	self newName: aNewName
+]
+
+{ #category : 'preconditions' }
+RBRenameClassRefactoring >> doesClassToBeRenamedExist [
+	^ class isNotNil 
+]
+
+{ #category : 'preconditions' }
+RBRenameClassRefactoring >> isMetaclass [
+
+	^ class isMeta
 ]
 
 { #category : 'preconditions' }
@@ -60,15 +90,28 @@ RBRenameClassRefactoring >> isNotGlobal [
 ]
 
 { #category : 'preconditions' }
+RBRenameClassRefactoring >> isNotMetaclass [
+
+	^ self isMetaclass not
+]
+
+{ #category : 'preconditions' }
 RBRenameClassRefactoring >> isValidClassName [
 
 	^ RBCondition isValidClassName: newName
 ]
 
+{ #category : 'initialization' }
+RBRenameClassRefactoring >> newName: aNewName [
+
+	newName := aNewName asSymbol
+]
+
 { #category : 'preconditions' }
 RBRenameClassRefactoring >> preconditions [
 
-	self prepareForExecution.
+	self prepareForExecution. 
+	"We have to check because the setter is actually already doing the className to class transformation."
 	^ self applicabilityPreconditions 
 ]
 

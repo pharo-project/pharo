@@ -367,11 +367,9 @@ TestCase class >> historyAnnouncer [
 
 { #category : 'class initialization' }
 TestCase class >> initialize [
-	SystemAnnouncer uniqueInstance unsubscribe: self.
-	SystemAnnouncer uniqueInstance weak
-		when: MethodAdded, MethodModified, MethodRemoved
-		send: #methodChanged:
-		to: self
+
+	self codeChangeAnnouncer unsubscribe: self.
+	self codeChangeAnnouncer weak when: MethodAdded , MethodModified , MethodRemoved send: #methodChanged: to: self
 ]
 
 { #category : 'testing' }
@@ -385,11 +383,6 @@ TestCase class >> isAbstract [
 { #category : 'testing' }
 TestCase class >> isTestCase [
 	^ true
-]
-
-{ #category : 'testing' }
-TestCase class >> isUnitTest [
-	^true
 ]
 
 { #category : 'testing' }

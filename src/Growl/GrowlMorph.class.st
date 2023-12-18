@@ -268,7 +268,7 @@ GrowlMorph >> enabled [
 
 { #category : 'event handling' }
 GrowlMorph >> handlesMouseDown: evt [
-	^ actionBlock notNil or: [super handlesMouseDown: evt]
+	^ actionBlock isNotNil or: [super handlesMouseDown: evt]
 ]
 
 { #category : 'initialization' }

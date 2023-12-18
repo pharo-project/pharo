@@ -11,7 +11,6 @@ Class {
 	#instVars : [
 		'manager',
 		'deferredStartupActions',
-		'id',
 		'creationTime',
 		'properties'
 	],
@@ -59,11 +58,6 @@ WorkingSession >> executeDeferredStartupActions: resuming [
 			action cull: resuming
 			"We do not handle errors on deferred startup actions as there is already the environment ready to use.
 			The current UI manager will handle the error." ]
-]
-
-{ #category : 'accessing' }
-WorkingSession >> id [
-	^ id ifNil: [ id := UUID new ]
 ]
 
 { #category : 'initialization' }

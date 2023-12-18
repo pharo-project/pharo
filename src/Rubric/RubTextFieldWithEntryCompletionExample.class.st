@@ -48,7 +48,7 @@ RubTextFieldWithEntryCompletionExample >> newScrolledText [
 { #category : 'accessing' }
 RubTextFieldWithEntryCompletionExample >> packagesEntryCompletion [
 	| applicants |
-	applicants := RPackageOrganizer default packages
+	applicants := PackageOrganizer default packages
 		collect: [ :package | package packageName asString ].
 	^ EntryCompletion new
 		dataSourceBlock: [ :currText | applicants ];

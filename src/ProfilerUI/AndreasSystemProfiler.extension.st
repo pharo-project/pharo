@@ -1,18 +1,10 @@
 Extension { #name : 'AndreasSystemProfiler' }
 
 { #category : '*ProfilerUI' }
-AndreasSystemProfiler >> blockCodeFrom: someCode [
-	^ '[' , someCode , '] value'
-]
+AndreasSystemProfiler >> runBlock: aBlock [
+	"Compatibility with TimeProfiler"
 
-{ #category : '*ProfilerUI' }
-AndreasSystemProfiler >> doItSelectorsPath [
-	^ #( 'nil>>nil'
-		  'FullBlockClosure>>newProcess'
-	     'ProfilerModel>>profileBlock:'
-		  'FullBlockClosure>>ensure:'
-	     'ProfilerModel>>DoIt'
-		  'ProfilerModel>>DoIt' )
+	^ aBlock value
 ]
 
 { #category : '*ProfilerUI' }

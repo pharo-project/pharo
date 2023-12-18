@@ -29,7 +29,7 @@ IVsAndClassVarNamesConflictTest >> tearDown [
 IVsAndClassVarNamesConflictTest >> testOneCanProceedWhenIntroducingCapitalizedInstanceVariables [
 
 	| class |
-	[ class := classFactory make: [ :aBuilder | aBuilder slotsFromString: 'X Y' ] ]
+	[ class := classFactory make: [ :aBuilder | aBuilder slots: #(X Y) ] ]
 		on: Exception
 		do: [ :ex | ex resume ].
 	self assert: (testingEnvironment keys includes: class name)
@@ -39,7 +39,7 @@ IVsAndClassVarNamesConflictTest >> testOneCanProceedWhenIntroducingCapitalizedIn
 IVsAndClassVarNamesConflictTest >> testOneCanProceedWhenIntroducingClasseVariablesBeginingWithLowerCaseCharacters [
 
 	| class |
-	[ class := classFactory make: [ :aBuilder | aBuilder slotsFromString: 'a BVarName' ] ]
+	[ class := classFactory make: [ :aBuilder | aBuilder slots: #(a BVarName) ] ]
 		on: Exception
 		do: [ :ex | ex resume ].
 	self assert: (testingEnvironment keys includes: class name)

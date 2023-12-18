@@ -16,7 +16,7 @@ Class {
 { #category : 'activation' }
 DABrowserToolMorph class >> packageActivation [
 	<classAnnotation>
-	^ ClyTabActivationStrategyAnnotation for: RPackage asCalypsoItemContext
+	^ ClyTabActivationStrategyAnnotation for: Package asCalypsoItemContext
 ]
 
 { #category : 'accessing' }
@@ -67,10 +67,10 @@ DABrowserToolMorph >> isSimilarTo: anotherBrowserTool [
 
 { #category : 'testing' }
 DABrowserToolMorph >> isValidInContext: aClyFullBrowserContext [
-	self context class = aClyFullBrowserContext class
-		ifFalse: [ ^ false ].
 
-	^ self analyzedPackage rPackageSet packageName = aClyFullBrowserContext lastSelectedClassGroup name
+	self context class = aClyFullBrowserContext class ifFalse: [ ^ false ].
+
+	^ self analyzedPackage packageName = aClyFullBrowserContext lastSelectedClassGroup name
 ]
 
 { #category : 'initialization' }

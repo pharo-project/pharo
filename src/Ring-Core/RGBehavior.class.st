@@ -1014,6 +1014,25 @@ RGBehavior >> selectors [
 ]
 
 { #category : 'accessing - definition' }
+RGBehavior >> sharedPoolsDefinitionString [
+	"Answer a string of my class variable names separated by spaces."
+
+	^ String streamContents: [ :str |
+		  str nextPutAll: '{ '.
+		  self sharedPools
+			  do: [ :pool |
+				  str
+					  nextPut: $#;
+					  nextPutAll: pool name ]
+			  separatedBy: [
+				  str
+					  space;
+					  nextPut: $.;
+					  space ].
+		  str nextPutAll: '}' ]
+]
+
+{ #category : 'accessing - definition' }
 RGBehavior >> sharedPoolsString [
 	"Answer a string of my class variable names separated by spaces."
 

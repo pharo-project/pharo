@@ -42,10 +42,10 @@ ZnRequestTest >> testCookiesParsing [
 	testCookie1 := cookies detect: [ :each | each name = 'testCookie1' ].
 	testCookie2 := cookies detect: [ :each | each name = 'testCookie2' ].
 
-	self assert: testCookie1 notNil.
+	self assert: testCookie1 isNotNil.
 	self assert: testCookie1 value equals: '123'.
 
-	self assert: testCookie2 notNil.
+	self assert: testCookie2 isNotNil.
 	self assert: testCookie2 value equals: '321'.
 ]
 

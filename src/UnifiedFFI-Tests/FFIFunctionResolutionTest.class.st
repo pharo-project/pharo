@@ -143,7 +143,7 @@ FFIFunctionResolutionTest >> testResolveClassVariableShouldSetClassVariableLoade
 	argument resolveUsing: resolver.
 	argument loader emitArgument: self context: context.
 
-	self assert: stack pop equals: { #classVariable . (String classPool bindingOf: #AsciiOrder )}.
+	self assert: stack pop equals: { #classVariable . (String classVariableNamed: #AsciiOrder )}.
 	self assert: argument resolvedType class equals: int32Type
 ]
 

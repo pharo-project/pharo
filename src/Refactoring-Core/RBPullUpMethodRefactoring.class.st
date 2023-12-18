@@ -65,7 +65,7 @@ RBPullUpMethodRefactoring >> checkBackReferencesTo: aSelector [
 					[:sel |
 					| parseTree |
 					parseTree := each parseTreeForSelector: sel.
-					(parseTree notNil and:
+					(parseTree isNotNil and:
 							[(parseTree superMessages includes: aSelector)
 								and: [definingClass == (each whoDefinesMethod: aSelector)]])
 						ifTrue:
@@ -138,7 +138,7 @@ RBPullUpMethodRefactoring >> checkSiblingSuperSendsFrom: aRBClass [
 								ifTrue:
 									[| definer |
 									definer := aRBClass superclass whoDefinesMethod: aSelector.
-									(definer notNil and: [class includesClass: definer])
+									(definer isNotNil and: [class includesClass: definer])
 										ifTrue:
 											[self
 												refactoringError: ('Cannot pull up <1s> since <2p>>><3s> sends a super message to it.'

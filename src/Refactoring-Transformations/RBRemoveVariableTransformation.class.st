@@ -45,22 +45,7 @@ RBRemoveVariableTransformation >> applicabilityPreconditionsForClassVariable [
 RBRemoveVariableTransformation >> applicabilityPreconditionsForInstanceVariable [
 	"For now only remove an instance variable that is locally defined in a class."
 	
-	^ (RBCondition directlyDefinesInstanceVariable: variableName asString in: class)
-]
-
-{ #category : 'preconditions' }
-RBRemoveVariableTransformation >> breakingChangePreconditionsForClassVariable [
-
-	^ RBCondition
-		  accessesClassVariable: variableName
-		  in: class
-		  showIn: self
-]
-
-{ #category : 'preconditions' }
-RBRemoveVariableTransformation >> breakingChangePreconditionsForInstanceVariable [
-
-	^ (RBCondition doesNotAccessInstanceVariable: variableName inHierarchyOf: class showIn: self)
+	^ (RBDirectlyDefinesInstanceVariableCondition classNamed: class name inModel: self model instanceVariables: { variableName })
 ]
 
 { #category : 'executing' }

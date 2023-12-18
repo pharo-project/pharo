@@ -478,6 +478,43 @@ OrderedDictionaryTest >> testAt [
 ]
 
 { #category : 'tests' }
+OrderedDictionaryTest >> testAtAt [
+
+	| dict |
+	dict := { #key1 -> { #key2 -> #value2 } asOrderedDictionary } asOrderedDictionary.
+	self assert: (dict at: #key1 at: #key2) equals: #value2.
+	self should: [ dict at: #key1 at: #unknownKey ] raise: KeyNotFound
+]
+
+{ #category : 'tests' }
+OrderedDictionaryTest >> testAtAtIfAbsent [
+
+	self assert: (OrderedDictionary new at: #key1 at: #key2 ifAbsent: [ 33 ]) equals: 33.
+	self assert: (OrderedDictionary new 
+						at: #key1 at: #key2 put: 22; 
+						at: #key1 at: #key2 ifAbsent: [ 33 ]) equals: 22.
+]
+
+{ #category : 'tests' }
+OrderedDictionaryTest >> testAtAtIfAbsentPut [
+
+	self assert: (OrderedDictionary new 
+						at: #key1 at: #key2 ifAbsentPut: [ 33 ]; at: #key1 at: #key2) equals: 33.
+	self assert: (OrderedDictionary new 
+						at: #key1 at: #key2 put: 22; 
+						at: #key1 at: #key2 ifAbsentPut: [ 33 ]; at: #key1 at: #key2) equals: 22.
+]
+
+{ #category : 'tests' }
+OrderedDictionaryTest >> testAtAtPut [
+
+	self assert: (OrderedDictionary new 
+						at: #key1 at: #key2 put: 22;
+						at: #key1 at: #key2 put: 23;
+						at: #key1 at: #key2 ) equals: 23.
+]
+
+{ #category : 'tests' }
 OrderedDictionaryTest >> testAtIfAbsent [
 	| dictionary |
 
@@ -622,21 +659,6 @@ OrderedDictionaryTest >> testAtUpdateInitial [
 ]
 
 { #category : 'tests' }
-OrderedDictionaryTest >> testBindingsDo [
-	| dictionary |
-
-	dictionary := self emptyDictionary.
-	self
-		should: [:block | dictionary bindingsDo: block]
-		enumerate: #().
-	self orderedAssociations withIndexDo: [:each :i |
-		dictionary add: each.
-		self
-			should: [:block | dictionary bindingsDo: block]
-			enumerate: (self orderedAssociationsFirst: i)]
-]
-
-{ #category : 'tests' }
 OrderedDictionaryTest >> testCapacity [
 	"The current Dictionary implementation allocates more than specified.
 	The amount allocated may change in the future but it likely won't ever
@@ -703,22 +725,6 @@ OrderedDictionaryTest >> testCopyEmpty [
 		assertIsDictionary: copy
 		copiedFrom: dictionary
 		withOrderedAssociations: #()
-]
-
-{ #category : 'tests' }
-OrderedDictionaryTest >> testDeclareFrom [
-	| dictionary otherDictionary |
-	dictionary := self emptyDictionary.
-	otherDictionary := self dictionaryWithOrderedAssociations.
-	self orderedKeys do: [ :each | self assert: (dictionary declare: each from: otherDictionary) identicalTo: dictionary ].
-	self assertIsDictionary: dictionary withOrderedAssociations: self orderedAssociations.
-	self assertEmpty: otherDictionary.
-
-	self orderedKeys
-		do: [ :each |
-			otherDictionary add: each -> self newValue.
-			self assert: (dictionary declare: each from: otherDictionary) identicalTo: dictionary ].
-	self assertIsDictionary: dictionary withOrderedAssociations: self orderedAssociations
 ]
 
 { #category : 'tests' }

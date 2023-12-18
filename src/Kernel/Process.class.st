@@ -352,20 +352,6 @@ Process >> isTerminating [
 	^ terminating ifNil: [ false ]
 ]
 
-{ #category : 'printing' }
-Process >> longPrintOn: stream [
-	| ctxt |
-	super printOn: stream.
-	stream cr.
-	ctxt := self suspendedContext.
-	[ ctxt isNil ]
-		whileFalse: [
-			stream space.
-			ctxt printOn: stream.
-			stream cr.
-			ctxt := ctxt sender ]
-]
-
 { #category : 'accessing' }
 Process >> name [
 

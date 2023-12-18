@@ -176,41 +176,43 @@ OrderedDictionary >> at: firstKey at: secondKey [
 	"Return the object stored in the second dictionary at secondKey. The second dictionary is accessed via the key firstKey."
 
 	"
-	(Dictionary new
+	(OrderedDictionary new
 		at: #top at: #below1 put: 1;
 		at: #top at: #below1 put: 2;
 		at: #top at: #below1)
 	>>>
 	2"
 
-	^ self at: firstKey at: secondKey ifAbsent: [ self errorKeyNotFound: secondKey ]
+	^ dictionary at: firstKey at: secondKey
 ]
 
 { #category : 'nested dictionaries' }
 OrderedDictionary >> at: firstKey at: secondKey ifAbsent: aZeroArgBlock [
 		"Return the object stored in the second dictionary at secondKey. The second dictionary is accessed via the key firstKey. Execute aZeroArgBlock in case one of the key is wrong."
+	"
+	(OrderedDictionary new
+		at: #top at: #below1 ifAbsent: [ 1 ])
+	>>>
+	1
+	"
+	
+	^ dictionary at: firstKey at: secondKey ifAbsent: aZeroArgBlock
 
-	| subDictionary |
-	subDictionary := self at: firstKey ifAbsent: [ ^ aZeroArgBlock value ].
-	^ subDictionary at: secondKey ifAbsent: aZeroArgBlock
 ]
 
 { #category : 'nested dictionaries' }
 OrderedDictionary >> at: firstKey at: secondKey ifAbsentPut: aZeroArgBlock [
 	"Return the object stored in the second dictionary at secondKey. The second dictionary is accessed via the key firstKey. If firstKey is not defined, set a new dictionary for the second key and set the value of aZeroArgBlock execution. If firstKey is defined and not second key set the value of aZeroArgBlock execution. See NestedDictionaryTest for examples."
 
-	| subDictionary |
-	subDictionary := self at: firstKey ifAbsentPut: [ self copyEmpty ].
-	^ subDictionary at: secondKey ifAbsentPut: aZeroArgBlock
+	^ dictionary at: firstKey at: secondKey ifAbsentPut: aZeroArgBlock
+
 ]
 
 { #category : 'nested dictionaries' }
 OrderedDictionary >> at: firstKey at: secondKey put: aValue [
 	"Set a value at secondKey in the dictionary returned by firstKey."
 
-	| subDictionary |
-	subDictionary := self at: firstKey ifAbsentPut: [ self copyEmpty ].
-	^ subDictionary at: secondKey put: aValue
+	^ dictionary at: firstKey at: secondKey put: aValue
 ]
 
 { #category : 'accessing' }
@@ -284,6 +286,12 @@ OrderedDictionary >> bindingOf: varName [
 
 { #category : 'enumerating' }
 OrderedDictionary >> bindingsDo: aBlock [
+
+	self
+		deprecated:
+		'use classVariables do: instead'
+		transformWith: '`@receiver bindingsDo: `@arg1' -> '`@receiver associationsDo: `@arg1'.
+
 	self associationsDo: aBlock
 ]
 

@@ -35,6 +35,8 @@ Internal Representation and Key Implementation Points.
 Class {
 	#name : 'ClyDataSourceSelection',
 	#superclass : 'Object',
+	#traits : 'TIsEmpty',
+	#classTraits : 'TIsEmpty classTrait',
 	#instVars : [
 		'items',
 		'rootDataSource'

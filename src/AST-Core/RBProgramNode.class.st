@@ -1217,7 +1217,8 @@ RBProgramNode >> size [
 
 { #category : 'accessing' }
 RBProgramNode >> source [
-	^ parent notNil ifTrue: [ parent source ] ifFalse: [ nil ]
+
+	^ parent ifNotNil: [ parent source ]
 ]
 
 { #category : 'accessing' }
@@ -1261,6 +1262,26 @@ RBProgramNode >> statementNode [
 
 	(parent isNil or: [parent isSequence]) ifTrue: [^self].
 	^parent statementNode
+]
+
+{ #category : 'querying' }
+RBProgramNode >> statementNodeIn: aSequenceBlockOrMethod [
+	"Return the statement within aSequenceBlockOrMethod that ultimately contains us,
+	skipping any intervening nested blocks.
+	
+	Note that to avoid repeatedly comparing large chunks of the tree, we use identity for comparison,
+	so the provided node must have come from the same parse as the receiver."
+
+	| sequence answer |
+	"Retrieve body from method or block node--we need a sequence"
+	sequence := aSequenceBlockOrMethod isSequence
+		            ifTrue: [ aSequenceBlockOrMethod ]
+		            ifFalse: [ aSequenceBlockOrMethod body ].
+	answer := self.
+	[ answer parent == sequence ] whileFalse: [
+		answer := answer parent ifNil: [
+			          ^ NotFound signalFor: self in: aSequenceBlockOrMethod ] ].
+	^ answer
 ]
 
 { #category : 'accessing' }

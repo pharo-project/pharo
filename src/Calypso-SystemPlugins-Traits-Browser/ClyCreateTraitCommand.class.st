@@ -6,7 +6,7 @@ I just ask user to type trait definition in dialog window. Then I compile trait 
 Internal Representation and Key Implementation Points.
 
     Instance Variables
-	package:		<RPackage>
+	package:		<Package>
 	classTag:		<Symcol>
 
 "

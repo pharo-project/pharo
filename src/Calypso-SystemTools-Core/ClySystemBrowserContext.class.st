@@ -192,16 +192,6 @@ ClySystemBrowserContext >> requestMultipleVariables: queryTitle from: classes [
 ]
 
 { #category : 'user requests' }
-ClySystemBrowserContext >> requestRemoveClassStrategyFor: classes [
-	^tool requestRemoveClassStrategyFor: classes
-]
-
-{ #category : 'user requests' }
-ClySystemBrowserContext >> requestRemoveMethodStrategyFor: methods [
-	^tool requestRemoveMethodStrategyFor: methods
-]
-
-{ #category : 'user requests' }
 ClySystemBrowserContext >> requestSimpleVariable: queryTitle from: classes [
 
 	^tool searchDialog

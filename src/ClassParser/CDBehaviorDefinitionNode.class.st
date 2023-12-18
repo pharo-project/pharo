@@ -112,11 +112,6 @@ CDBehaviorDefinitionNode >> layoutClass: aClass [
 ]
 
 { #category : 'accessing' }
-CDBehaviorDefinitionNode >> selector [
-	^ self subclassResponsibility
-]
-
-{ #category : 'accessing' }
 CDBehaviorDefinitionNode >> slotNodes [
 
 	^ slotNodes

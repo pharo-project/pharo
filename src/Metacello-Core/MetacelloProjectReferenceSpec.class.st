@@ -63,6 +63,15 @@ MetacelloProjectReferenceSpec >> includes: aCollection [
 	self shouldNotImplement
 ]
 
+{ #category : 'loading' }
+MetacelloProjectReferenceSpec >> loadUsing: aLoader gofer: ignored [
+
+	| required |
+	required := self resolveToLoadableSpec.
+	required loader: aLoader.
+	^required load
+]
+
 { #category : 'importing' }
 MetacelloProjectReferenceSpec >> mergeImportLoads: aLoadList [
     self projectReference mergeImportLoads: aLoadList
@@ -80,16 +89,14 @@ MetacelloProjectReferenceSpec >> mergeMap [
 { #category : 'merging' }
 MetacelloProjectReferenceSpec >> mergeSpec: anotherSpec [
 
-	| newSpec map anotherProjectReference |
+	| newSpec map |
 	newSpec := super mergeSpec: anotherSpec.
 	map := anotherSpec mergeMap.
-	(anotherProjectReference := map at: #projectReference) ~~ nil
-		ifTrue: [ 
-			newSpec projectReference: 
-				(newSpec projectReference == nil
-					ifTrue: [ anotherProjectReference ]
-					ifFalse: [ newSpec projectReference mergeSpec: anotherProjectReference ])].
-	^newSpec
+	(map at: #projectReference) ifNotNil: [ :anotherProjectReference |
+		newSpec projectReference: (newSpec projectReference
+				 ifNotNil: [ :reference | reference mergeSpec: anotherProjectReference ]
+				 ifNil: [ anotherProjectReference ]) ].
+	^ newSpec
 ]
 
 { #category : 'merging' }
@@ -148,6 +155,11 @@ MetacelloProjectReferenceSpec >> repositories [
     ^ self referencedSpec repositories
 ]
 
+{ #category : 'accessing' }
+MetacelloProjectReferenceSpec >> repository: aStringOrMetacelloRepositorySpec [
+    ^ self projectReference repository: aStringOrMetacelloRepositorySpec
+]
+
 { #category : 'loading' }
 MetacelloProjectReferenceSpec >> repositorySpecs [
 
@@ -160,6 +172,30 @@ MetacelloProjectReferenceSpec >> requires: aCollection [
 	self shouldNotImplement
 ]
 
+{ #category : 'accessing' }
+MetacelloProjectReferenceSpec >> resolveProjectSpec [
+
+	^self projectReference
+]
+
+{ #category : 'private' }
+MetacelloProjectReferenceSpec >> resolveToLoadableSpec [
+
+	^self resolveProjectSpec resolveToLoadableSpec
+]
+
+{ #category : 'private' }
+MetacelloProjectReferenceSpec >> resolveToPackagesAndProjectsIn: aVersionSpec visited: visited [
+
+	^ { self }
+]
+
+{ #category : 'private' }
+MetacelloProjectReferenceSpec >> resolveToPackagesIn: aVersionSpec visited: visited [
+
+	^#()
+]
+
 { #category : 'querying' }
 MetacelloProjectReferenceSpec >> version [
 
@@ -170,6 +206,12 @@ MetacelloProjectReferenceSpec >> version [
 MetacelloProjectReferenceSpec >> versionOrNil [
 
 	^self projectReference versionOrNil
+]
+
+{ #category : 'accessing' }
+MetacelloProjectReferenceSpec >> versionString [
+
+	^self projectReference versionString
 ]
 
 { #category : 'querying' }

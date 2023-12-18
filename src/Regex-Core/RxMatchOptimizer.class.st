@@ -235,7 +235,7 @@ RxMatchOptimizer >> syntaxBranch: branchNode [
 	we must recurse down the branch. Otherwise, just the head atom
 	is important."
 
-	(branchNode piece isNullable and: [branchNode branch notNil])
+	(branchNode piece isNullable and: [branchNode branch isNotNil])
 		ifTrue: [branchNode branch dispatchTo: self].
 	branchNode piece dispatchTo: self
 ]

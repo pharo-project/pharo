@@ -4,8 +4,9 @@ This class contains tests for `FluidClassBuilder`
 Class {
 	#name : 'ShiftClassBuilderTest',
 	#superclass : 'ShiftClassBuilderAbstractTest',
-	#category : 'Shift-ClassBuilder-Tests',
-	#package : 'Shift-ClassBuilder-Tests'
+	#category : 'Shift-ClassBuilder-Tests-Base',
+	#package : 'Shift-ClassBuilder-Tests',
+	#tag : 'Base'
 }
 
 { #category : 'running' }
@@ -85,7 +86,7 @@ ShiftClassBuilderTest >> testBuilderSharedPools [
 	builder
 		slots: { #string. #runs };
 		tag: 'Base';
-		sharedPools: 'TextConstants';
+		sharedPools: #(TextConstants);
 		package: 'Text-Core'.
 
 	self assert: builder sharedPools equals: #( TextConstants )
@@ -350,7 +351,7 @@ ShiftClassBuilderTest >> testFillShiftClassBuilder [
 	self assert: builder superclass equals: Object.
 	self assert: builder name equals: #Point2.
 	self assert: builder slots size equals: 2.
-	self assert: builder sharedPools equals: { ChronologyConstants }.
+	self assert: builder sharedPools equals: { #ChronologyConstants }.
 	self assert: builder package equals: self packageNameForTest.
 	self assert: builder tag equals: #Mafia
 ]
@@ -367,7 +368,7 @@ ShiftClassBuilderTest >> testInstallMinimalMockClass [
 	tag: '''' ;
 	sharedPools: {};
 	package: ''' , self packageNameForTest , ''''.
-	ShiftClassInstaller new makeWithBuilder: builder.
+	builder install.
 
 	installedClass := self class environment at: #MyClass ifAbsent: [ self fail ].
 

@@ -293,6 +293,24 @@ CompiledMethodTest >> testAccessesSlot [
 	self assert: ((Point>>#setX:setY:) accessesSlot: (Point slotNamed: #y))
 ]
 
+{ #category : 'tests - compilation' }
+CompiledMethodTest >> testAddingSlotDoesNotRemoveExtension [
+	"Regression test for a case where recompiling a method removed the fact that it was an extension."
+
+	[
+	class := self class classInstaller make: [ :aBuilder |
+		         aBuilder
+			         name: #TUTU;
+			         slots: { #test };
+			         package: self packageNameForTests ].
+	class compile: 'isExtensionTestMethod ^ test' classified: '*GeneratedPackageForTest'.
+	self assert: (class >> #isExtensionTestMethod) isExtension.
+
+	class addInstVarNamed: 'test2'.
+
+	self assert: (class >> #isExtensionTestMethod) isExtension ] ensure: [ self packageOrganizer removePackage: 'GeneratedPackageForTest' ]
+]
+
 { #category : 'tests - converting' }
 CompiledMethodTest >> testAsString [
 
@@ -310,6 +328,22 @@ CompiledMethodTest >> testBytecode [
 		ifTrue: [#[16 129 216 88]]
 		ifFalse: [#[64 209 135 120]].
 	self assertCollection: (Object>>#halt) bytecodes equals: expectedResult
+]
+
+{ #category : 'tests - copying' }
+CompiledMethodTest >> testClone [
+	<pragma: #pragma> "for testing"
+	| method copy |
+	method := thisContext method.
+	self assert: method pragmas notEmpty.
+	copy := method clone.
+	self assert: (method equivalentTo: copy).
+	self assert: method header equals: copy header.
+	self assert: method equals: copy.
+	self assert: method ~~ copy.
+	"this is a shallow copy"
+	self deny: copy penultimateLiteral method identicalTo: copy.
+	copy pragmas do: [ :p | self deny: p method identicalTo: copy ]
 ]
 
 { #category : 'tests - accessing' }
@@ -345,7 +379,24 @@ CompiledMethodTest >> testComparison [
 			self deny: each equals: method2 ]
 ]
 
-{ #category : 'tests' }
+{ #category : 'tests - compilation' }
+CompiledMethodTest >> testCompilingExistingMethodDoesNotRemoveExtensions [
+	"Regression test for a case where recompiling a method removed the fact that it was an extension."
+
+	[
+	| method |
+	self class compile: 'isExtensionTestMethod ^ 1' classified: '*GeneratedPackageForTest'.
+	method := self class >> #isExtensionTestMethod.
+	self assert: method isExtension.
+
+	self class compile: 'isExtensionTestMethod ^ 2'.
+
+	self assert: method isExtension ] ensure: [
+		self packageOrganizer removePackage: 'GeneratedPackageForTest'.
+		self class compiledMethodAt: #isExtensionTestMethod ifPresent: [ :method | method removeFromSystem ] ]
+]
+
+{ #category : 'tests - copying' }
 CompiledMethodTest >> testCopy [
 	<pragma: #pragma>
 	| method copy |
@@ -390,23 +441,6 @@ CompiledMethodTest >> testHasComment [
 	self assert: (CompiledMethod>>#hasComment) hasComment
 ]
 
-{ #category : 'tests - instance variable' }
-CompiledMethodTest >> testHasInstVarRef [
-
-	| method  |
-	method := self class compiledMethodAt: #readX.
-	self assert: (method hasInstVarRef).
-
-	method := self class compiledMethodAt: #readXandY.
-	self assert: (method hasInstVarRef).
-
-	method := self class compiledMethodAt: #writeX.
-	self assert: (method hasInstVarRef).
-
-	method := self class compiledMethodAt: #writeXandY.
-	self assert: (method hasInstVarRef)
-]
-
 { #category : 'tests - literals' }
 CompiledMethodTest >> testHasLiteralSuchThat [
 	"#literals should not expose implementation hack that the last two literals are
@@ -440,7 +474,7 @@ CompiledMethodTest >> testHasPragma [
 	self deny: methodWithOutPragma hasPragma
 ]
 
-{ #category : 'tests - abstract' }
+{ #category : 'tests - testing' }
 CompiledMethodTest >> testIsAbstract [
 
 	self assert: (self class >> #abstractMethod) isAbstract.
@@ -464,7 +498,7 @@ CompiledMethodTest >> testIsDeprecated [
 			ifFalse: [ self deny: (self class >> each) isDeprecated ] ]
 ]
 
-{ #category : 'tests - abstract' }
+{ #category : 'tests - testing' }
 CompiledMethodTest >> testIsExtension [
 
 	[
@@ -804,6 +838,24 @@ CompiledMethodTest >> testPropertyAtIfPresentDoNotClashWithPragmas [
 	self assert: (method propertyAt: #bebou ifPresent: [ :value | value ]) ] ensure: [ method removeProperty: #bebou ]
 ]
 
+{ #category : 'tests - compiling' }
+CompiledMethodTest >> testProtocolOfRemovedMethod [
+
+	| method |
+	class := Object newAnonymousSubclass.
+	class compile: 'billy ^ 1' classified: 'cat'.
+
+	method := class >> #billy.
+
+	self assert: method protocol name equals: #cat.
+	self assert: method protocolName equals: #cat.
+
+	class removeSelector: #billy.
+
+	self assert: method protocol name equals: #cat.
+	self assert: method protocolName equals: #cat
+]
+
 { #category : 'tests - instance variable' }
 CompiledMethodTest >> testReadsField [
 	| method |
@@ -837,20 +889,20 @@ CompiledMethodTest >> testReadsSlot [
 	self deny: ((Point>>#setX:setY:) readsSlot: (Point slotNamed: #y))
 ]
 
-{ #category : 'tests - abstract' }
+{ #category : 'tests - compilation' }
 CompiledMethodTest >> testRecompilingDoesNotRemoveExtensions [
 	"Regression test for a case where recompiling a method removed the fact that it was an extension."
 
 	[
 	| method |
-	self class compile: 'isExtensionTestMethod ^ 1' classified: '*Kernel-Tests-Generated-Package'.
+	self class compile: 'isExtensionTestMethod ^ 1' classified: '*GeneratedPackageForTest'.
 	method := self class >> #isExtensionTestMethod.
 	self assert: method isExtension.
 
 	method recompile.
 
 	self assert: method isExtension ] ensure: [
-		self packageOrganizer removePackage: 'Kernel-Tests-Generated-Package'.
+		self packageOrganizer removePackage: 'GeneratedPackageForTest'.
 		self class compiledMethodAt: #isExtensionTestMethod ifPresent: [ :method | method removeFromSystem ] ]
 ]
 
@@ -1055,7 +1107,7 @@ CompiledMethodTest >> testValueWithReceiverArguments [
 
 	method := self class compiledMethodAt: #returnTrue.
 
-	value := method valueWithReceiver: nil arguments: #().
+	value := method valueWithReceiver: nil.
 	self assert: value equals: true.
 
 	method := self class compiledMethodAt: #returnPlusOne:.

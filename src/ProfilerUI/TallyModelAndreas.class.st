@@ -10,6 +10,12 @@ Class {
 }
 
 { #category : 'accessing' }
+TallyModelAndreas >> childrenItems [
+
+	^ super childrenItems reversed
+]
+
+{ #category : 'accessing' }
 TallyModelAndreas >> methodOrBlock [
 	^ item methodOrBlock
 ]

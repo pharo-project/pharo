@@ -60,7 +60,7 @@ RBPullUpMethodParametrizedTest >> addClassHierarchyForPools [
 			aBuilder
 				superclassName: #TotoSuperclass;
 				name: #Toto;
-				sharedPools: 'TotoSharedPool';
+				sharedPools: #(TotoSharedPool);
 				package: #'Refactory-Test data' ].
 
 	(model classNamed: #Toto) compile: 'poolReference ^ SP' classified: #( #accessing )

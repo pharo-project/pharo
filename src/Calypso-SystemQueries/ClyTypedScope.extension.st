@@ -30,6 +30,12 @@ ClyTypedScope >> includesPackageTagsAffectedBy: aSystemAnnouncement [
 ]
 
 { #category : '*Calypso-SystemQueries' }
+ClyTypedScope >> includesPackagesAffectedBy: aClyAsyncQueryIsDone [
+
+	^ false
+]
+
+{ #category : '*Calypso-SystemQueries' }
 ClyTypedScope >> includesVariablesAffectedBy: aSystemAnnouncement [
 	^false
 ]

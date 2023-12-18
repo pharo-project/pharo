@@ -43,5 +43,5 @@ ClySemiAsyncQueryResult >> runBuildProcess [
 		forkAt: Processor userBackgroundPriority
 		named: 'Build result of ', buildingQuery printString.
 	semaphore wait: 500 milliSeconds.
-	asyncModeIsActive := buildProcess notNil
+	asyncModeIsActive := buildProcess isNotNil
 ]

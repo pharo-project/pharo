@@ -39,18 +39,14 @@ RBRemoveMethodsRefactoringTest >> testRemovingMethodsFromDifferentClasses [
 	self assert: (class definesMethod: methodReferencing).
 	self assert: (anotherClass definesMethod: anotherMethodWithoutRefs).
 
-	(RBCompositeRefactoring new
+	(RBRemoveMethodsRefactoring new
 		model: model;
-		refactorings: { 
-			RBRemoveMethodsRefactoring
-				model: model
-				selectors: { methodWithoutRefs . methodReferencing }
-				from: class
+		classSelectorMapping: { 
+			RBBasicLintRuleTestData -> methodWithoutRefs
 			.
-			RBRemoveMethodsRefactoring
-				model: model
-				selectors: { anotherMethodWithoutRefs }
-				from: anotherClass 
+			RBBasicLintRuleTestData -> methodReferencing
+			.
+			RBTransformationDummyRuleTest -> anotherMethodWithoutRefs
 		} 
 	) generateChanges.
 

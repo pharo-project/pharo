@@ -478,7 +478,10 @@ Dictionary >> bindingOf: varName [
 { #category : 'enumerating' }
 Dictionary >> bindingsDo: aBlock [
 
-	"An alias for associationsDo:"
+	self
+		deprecated:
+		'use classVariables do: instead'
+		transformWith: '`@receiver bindingsDo: `@arg1' -> '`@receiver associationsDo: `@arg1'.
 
 	self associationsDo: aBlock
 ]
@@ -964,21 +967,6 @@ Dictionary >> storeOn: aStream [
 			aStream store: each].
 	noneYet ifFalse: [aStream nextPutAll: '; yourself'].
 	aStream nextPut: $)
-]
-
-{ #category : 'private' }
-Dictionary >> valueAtNewKey: aKey put: anObject atIndex: index declareFrom: aDictionary [
-	"Support for coordinating class variable and global declarations
-	with variables that have been put in Undeclared so as to
-	redirect all references to the undeclared variable."
-
-	(aDictionary includesKey: aKey)
-		ifTrue:
-			[self atNewIndex: index
-				put: ((aDictionary associationAt: aKey) value: anObject).
-			aDictionary removeKey: aKey]
-		ifFalse:
-			[self atNewIndex: index put: (Association key: aKey value: anObject)]
 ]
 
 { #category : 'accessing' }

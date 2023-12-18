@@ -47,9 +47,9 @@ HEInstaller >> build: aHEClass [
 			            name: aHEClass className;
 			            superclass: superclass;
 			            layoutClass: layoutType;
-			            slots: aHEClass instanceVariables asSlotCollection;
+			            slotsFromString: aHEClass instanceVariables;
 			            sharedVariablesFromString: aHEClass classVariables;
-			            sharedPools: aHEClass sharedPools;
+			            sharedPoolsFromString: aHEClass sharedPools;
 			            package: aHEClass packageName;
 			            classSlots: aHEClass classInstancevariables asSlotCollection.
 		            aHEClass tagName ifNotEmpty: [ :tag | builder tag: tag ].
@@ -103,7 +103,7 @@ HEInstaller >> doInstallPackage: aHEPackage [
 	"Creating the package. It requires a number of steps.
 	1. Register the package in the organizer."
 	self flag: #pahro11. "Update this when Pharo 12 will be the minimal version"
-	SystemVersion current major < 12 ifTrue: [ RPackageOrganizer default registerPackageNamed: aHEPackage packageName ] ifFalse: [ self packageOrganizer ensurePackage: aHEPackage packageName ].
+	SystemVersion current major < 12 ifTrue: [ PackageOrganizer default registerPackageNamed: aHEPackage packageName ] ifFalse: [ self packageOrganizer ensurePackage: aHEPackage packageName ].
 
 	"2. Install the traits"
 	newTraits := aHEPackage traits collect: [ :exportedTrait | self buildTrait: exportedTrait ].
@@ -182,7 +182,7 @@ HEInstaller >> installMethods: exportedClass into: aClass [
 { #category : 'installing package' }
 HEInstaller >> installPackage: aHEPackage [
 
-	SystemAnnouncer uniqueInstance delayAnnouncementsAfter: [ self doInstallPackage: aHEPackage ]
+	self class codeChangeAnnouncer delayAnnouncementsAfter: [ self doInstallPackage: aHEPackage ]
 ]
 
 { #category : 'messages' }
@@ -214,18 +214,20 @@ HEInstaller >> rebuildMethod: aMethod into: aClass [
 	extendedEnvironment newSelector: aMethod name.
 
 	self flag: #pharo11. "If Pharo12 the management of the method trailer changed and the way to create a new method changed too."
-	newMethod := CompiledMethod
-		             newMethod: (SystemVersion current major >= 12
-				              ifTrue: [ aMethod bytecode size + CompiledMethod trailerSize ]
-				              ifFalse: [ aMethod bytecode size ])
-		             header: (aMethod headerFor: extendedEnvironment).
+	newMethod := SystemVersion current major >= 12
+		 ifTrue: [CompiledMethod
+		             basicNew: aMethod bytecode size + CompiledMethod trailerSize 
+		             header: (aMethod headerFor: extendedEnvironment) ]
+		ifFalse: [ CompiledMethod
+		             newMethod: aMethod bytecode size
+		             header: (aMethod headerFor: extendedEnvironment) ].
 
 	extendedEnvironment newMethod: newMethod.
 
 	aMethod literals doWithIndex: [ :literal :idx | newMethod literalAt: idx put: (literal asLiteralIn: extendedEnvironment) ].
 
 	newMethod classBinding: aClass binding.
-	literalSpace := aMethod literals size + 1 * Smalltalk wordSize.
+	literalSpace := (aMethod literals size + 1) * Smalltalk wordSize.
 
 	aMethod bytecode doWithIndex: [ :e :idx | newMethod at: idx + literalSpace put: e ].
 

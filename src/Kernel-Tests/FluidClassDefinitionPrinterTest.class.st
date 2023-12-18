@@ -70,11 +70,10 @@ FluidClassDefinitionPrinterTest >> testChronologyConstants [
 { #category : 'tests - template' }
 FluidClassDefinitionPrinterTest >> testCompactClassTemplate [
 
-	self
-		assert: (FluidClassDefinitionPrinter new compactClassDefinitionTemplateInPackage: 'Kernel')
-		equals:  'Object << #MyClass
+	self assert: (FluidClassDefinitionPrinter new compactClassDefinitionTemplateInPackage: 'Kernel' tag: #Basic) equals: 'Object << #MyClass
 	slots: {};
 	sharedVariables: {};
+	tag: #Basic;
 	package: ''Kernel'''
 ]
 
@@ -95,7 +94,6 @@ FluidClassDefinitionPrinterTest >> testDisplayEmptySlots [
 	| class |
 	ClassDefinitionPrinter displayEmptySlots: true.
 	class := (Object << #CDFluidMock
-	slots: {};
 	tag: 'BasicObjects';
 	package: 'Kernel') build.
 	self assert: (self forClass: class) equals: 'Object << #CDFluidMock
@@ -109,7 +107,6 @@ FluidClassDefinitionPrinterTest >> testDoesNotDisplayEmptySlots [
 	| class |
 	ClassDefinitionPrinter displayEmptySlots: false.
 	class := (Object << #CDFluidMock
-	slots: {};
 	tag: 'BasicObjects';
 	package: 'Kernel') build.
 	self assert: (self forClass: class) equals: 'Object << #CDFluidMock
@@ -227,7 +224,7 @@ FluidClassDefinitionPrinterTest >> testMetaclass [
 	self assert: (self forClass: Metaclass) equals: 'ClassDescription << #Metaclass
 	slots: { #thisClass };
 	tag: ''Classes'';
-	package: ''Kernel'''
+	package: ''Kernel-CodeModel'''
 ]
 
 { #category : 'tests - metaclasses' }

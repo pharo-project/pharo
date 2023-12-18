@@ -117,9 +117,9 @@ RBInsertNewClassTransformation >> subclasses: aCollection [
 ]
 
 { #category : 'api' }
-RBInsertNewClassTransformation >> superclass: superclassName [
+RBInsertNewClassTransformation >> superclass: aSuperclass [
 
-	superclass := superclassName asSymbol
+	superclass := aSuperclass
 ]
 
 { #category : 'accessing' }

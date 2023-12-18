@@ -42,7 +42,7 @@ ClyQueryBrowserStateTest >> testRestoredBrowserInstanceWithExpectedFlatQueryResu
 
 	self restoreBrowserInstance.
 
-	self assert: navigationState expectedFlatQueryResult notNil.
+	self assert: navigationState expectedFlatQueryResult isNotNil.
 	self assert: browser expectedFlatQueryResult equals: navigationState expectedFlatQueryResult
 ]
 

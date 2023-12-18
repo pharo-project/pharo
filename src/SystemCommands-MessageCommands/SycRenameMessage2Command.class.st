@@ -1,3 +1,6 @@
+"
+Call the rename method refactoring (yes the class name is not good)
+"
 Class {
 	#name : 'SycRenameMessage2Command',
 	#superclass : 'SycChangeMessageSignatureCommand',
@@ -32,6 +35,12 @@ SycRenameMessage2Command >> canRemoveArgs [
 	^ false
 ]
 
+{ #category : 'execution' }
+SycRenameMessage2Command >> createRefactoring [
+	"not used"
+	^ self 
+]
+
 { #category : 'accessing' }
 SycRenameMessage2Command >> defaultMenuIconName [
 	^#edit
@@ -39,7 +48,7 @@ SycRenameMessage2Command >> defaultMenuIconName [
 
 { #category : 'accessing' }
 SycRenameMessage2Command >> defaultMenuItemName [
-	^'Rename2'
+	^'Rename'
 ]
 
 { #category : 'execution' }

@@ -41,6 +41,6 @@ ClyProjectContentQuery >> collectMetadataOf: aQueryResult by: anEnvironmentPlugi
 
 { #category : 'system changes' }
 ClyProjectContentQuery >> isResult: aQueryResult affectedBy: aSystemAnnouncement [
-	self flag: #todo.
-	^false
+
+	^scope includesPackagesAffectedBy: aSystemAnnouncement
 ]

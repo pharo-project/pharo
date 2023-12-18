@@ -11,7 +11,7 @@ Class {
 
 { #category : 'accessing' }
 MetacelloProjectSpecGenerator >> projectSpecCreationBlock [
-    ^ [ :projectName | {(MetacelloMCProject new projectSpec name: projectName)} ]
+    ^ [ :projectName | {(MetacelloProject new projectSpec name: projectName)} ]
 ]
 
 { #category : 'accessing' }

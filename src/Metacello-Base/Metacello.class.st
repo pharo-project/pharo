@@ -297,11 +297,6 @@ Metacello >> blueplane: projectName [
     self repository: 'http://squeaksource.blueplane.jp/' , projectName
 ]
 
-{ #category : 'api options' }
-Metacello >> cacheRepository: aRepositoryDescription [
-    self addStatement: #'cacheRepository:' args: {aRepositoryDescription}
-]
-
 { #category : 'api projectSpec' }
 Metacello >> className: className [
     self addStatement: #'classNameArg:' args: {className}
@@ -530,11 +525,6 @@ Metacello >> renggli: projectName [
 { #category : 'api projectSpec' }
 Metacello >> repository: repositoryDescription [
     self addStatement: #'repositoryArg:' args: {repositoryDescription}
-]
-
-{ #category : 'api options' }
-Metacello >> repositoryOverrides: aRepositoryDescriptionCollection [
-    self addStatement: #'repositoryOverrides:' args: {aRepositoryDescriptionCollection}
 ]
 
 { #category : 'accessing' }

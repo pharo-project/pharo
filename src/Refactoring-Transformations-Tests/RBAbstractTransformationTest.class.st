@@ -12,10 +12,17 @@ RBAbstractTransformationTest >> changeMockClass [
 	^ RBRefactoringChangeMock
 ]
 
+{ #category : 'utilities' }
+RBAbstractTransformationTest >> modelOnClasses: aCollection [
+
+	^ RBNamespace onEnvironment:
+		  (RBClassEnvironment classes: aCollection)
+]
+
 { #category : 'mocking' }
 RBAbstractTransformationTest >> objectClassVariable [
 
-	^ Object classPool keys detect: [:each | true]
+	^ Object classVariables first name
 ]
 
 { #category : 'parsing' }

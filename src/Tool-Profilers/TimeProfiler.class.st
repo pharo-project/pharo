@@ -168,7 +168,7 @@ TimeProfiler >> blockCode: aString notifying: aRequestor [
 		requestor: self;
 		failBlock: [^self];
 		compile.
-	self showResult: ( compiledMethod valueWithReceiver: self arguments: #()).
+	self showResult: ( compiledMethod valueWithReceiver: self).
 	self changed: #blockCode.
 	self changed: #summaryText.
 	self changed: #fullReport.

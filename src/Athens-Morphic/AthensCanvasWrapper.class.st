@@ -164,6 +164,12 @@ AthensCanvasWrapper >> draw: anObject [
 ]
 
 { #category : 'canvas drawing - images' }
+AthensCanvasWrapper >> drawFormSet: formSet at: point [
+
+	^ self drawImage: formSet asForm at: point
+]
+
+{ #category : 'canvas drawing - images' }
 AthensCanvasWrapper >> drawImage: aForm at: aPoint [
 	"Draw the given Form, which is assumed to be a Form or ColorForm"
 
@@ -475,6 +481,12 @@ AthensCanvasWrapper >> origin: aPoint [
 ]
 
 { #category : 'canvas drawing - images' }
+AthensCanvasWrapper >> paintFormSet: aFormSet at: aPoint [
+
+	self paintImage: aFormSet asForm at: aPoint
+]
+
+{ #category : 'canvas drawing - images' }
 AthensCanvasWrapper >> paintImage: aForm at: aPoint [
 	self paintImage: aForm at: aPoint sourceRect: aForm boundingBox
 ]
@@ -511,6 +523,22 @@ AthensCanvasWrapper >> setOrigin: aPoint clipRect: aRectangle [
 	currentClipRect := aRectangle
 ]
 
+{ #category : 'canvas converting' }
+AthensCanvasWrapper >> shadowDrawingCanvasWithExtent: extent shadowColor: shadowColor [
+
+	^ (Display defaultCanvasClass extent: extent depth: 1)
+		asShadowDrawingCanvas: shadowColor
+]
+
+{ #category : 'canvas drawing - images' }
+AthensCanvasWrapper >> stencil: stencilForm at: aPoint color: aColor [
+
+	^ self stencil: stencilForm
+		at: aPoint
+		sourceRect: stencilForm boundingBox
+		color: aColor
+]
+
 { #category : 'canvas drawing' }
 AthensCanvasWrapper >> stencil: stencilForm at: aPoint sourceRect: sourceRect color: aColor [
 	|mask|
@@ -523,6 +551,12 @@ AthensCanvasWrapper >> stencil: stencilForm at: aPoint sourceRect: sourceRect co
 		self canvas draw.
 		mask maskOn: self canvas.
 		]
+]
+
+{ #category : 'canvas drawing - images' }
+AthensCanvasWrapper >> stencilFormSet: stencilFormSet at: aPoint color: aColor [
+
+	^ self stencil: stencilFormSet asForm at: aPoint color: aColor
 ]
 
 { #category : 'canvas drawing - support' }
@@ -548,6 +582,12 @@ AthensCanvasWrapper >> translateBy: offset clippingTo: aRect during: aBlock [
 { #category : 'canvas drawing - support' }
 AthensCanvasWrapper >> translateBy: offset during: aBlock [
 	^ self copyOrigin: origin + offset clipRect: self clipRect
+]
+
+{ #category : 'canvas drawing - images' }
+AthensCanvasWrapper >> translucentFormSet: formSet at: point [
+
+	^ self translucentImage: formSet asForm at: point
 ]
 
 { #category : 'canvas drawing - images' }

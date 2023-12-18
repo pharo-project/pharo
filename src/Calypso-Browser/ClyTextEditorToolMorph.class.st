@@ -95,12 +95,13 @@ ClyTextEditorToolMorph >> buildLeftSideBar [
 
 { #category : 'building' }
 ClyTextEditorToolMorph >> buildTextMorph [
+
 	textModel := RubScrolledTextModel new.
 	textModel interactionModel: self.
 	textMorph := textModel newScrolledText.
 	textMorph
-		width: self width; "build is performed in background when owner is not exist yet. But we need proper width to perform kind of styling/formatting if needed"
-		beWrapped;
+		width: self width;
+		"build is performed in background when owner is not exist yet. But we need proper width to perform kind of styling/formatting if needed"beWrapped;
 		font: StandardFonts codeFont;
 		editingMode: self editingMode.
 	CmdKMDispatcher attachedTo: textMorph textArea withCommandsFrom: self. "It overrides default text morph shortcuts with Commander"
@@ -121,21 +122,25 @@ ClyTextEditorToolMorph >> cancelChanges [
 ClyTextEditorToolMorph >> changesAccepted [
 
 	| applied |
-	^self applyChangesBy: [
-		textMorph hasUnacceptedEdits: true.
-		[self changesAreAboutApply.
-		applied := self applyChanges] on: Error do: [ :err |
-			textModel text: self editingText.
-			textMorph hasUnacceptedEdits: true.
-			err pass].
-		applied
-			ifTrue: [ textMorph hasUnacceptedEdits: false.
-				self textUpdated.
-				browser focusActiveTab ]
-			ifFalse: [
-				textModel text: self editingText.
-				textMorph hasUnacceptedEdits: true].
-	]
+	^ self applyChangesBy: [
+		  textMorph hasUnacceptedEdits: true.
+		  [
+		  self changesAreAboutApply.
+		  applied := self applyChanges ]
+			  on: Error
+			  do: [ :err |
+				  textModel setText: self editingText.
+				  textMorph hasUnacceptedEdits: true.
+				  err pass ].
+
+		  textModel setText: self editingText.
+
+		  applied
+			  ifTrue: [
+				  textMorph hasUnacceptedEdits: false.
+				  self textUpdated.
+				  browser focusActiveTab ]
+			  ifFalse: [ textMorph hasUnacceptedEdits: true ] ]
 ]
 
 { #category : 'events handling' }

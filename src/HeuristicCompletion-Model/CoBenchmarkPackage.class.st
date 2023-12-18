@@ -15,10 +15,10 @@ Class {
 }
 
 { #category : 'instance creation' }
-CoBenchmarkPackage class >> on: aRPackage [
+CoBenchmarkPackage class >> on: aPackage [
 
 	^ self new
-		package: aRPackage;
+		package: aPackage;
 		yourself
 ]
 
@@ -29,9 +29,9 @@ CoBenchmarkPackage >> methodsDo: aBlockClosure [
 ]
 
 { #category : 'accessing' }
-CoBenchmarkPackage >> package: aRPackage [
+CoBenchmarkPackage >> package: aPackage [
 
-	package := aRPackage
+	package := aPackage
 ]
 
 { #category : 'printing' }

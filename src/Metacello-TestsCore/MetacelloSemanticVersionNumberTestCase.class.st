@@ -16,9 +16,10 @@ MetacelloSemanticVersionNumberTestCase >> sampleVersionStrings [
 
 { #category : 'tests' }
 MetacelloSemanticVersionNumberTestCase >> testEqualityComparison [
-	self deny: '1.0.0+-' asMetacelloSemanticVersionNumber equals: '1.0.0--' asMetacelloSemanticVersionNumber.
-	self sampleVersionStrings
-		do: [ :versionString | self assert: versionString asMetacelloSemanticVersionNumber equals: versionString asMetacelloSemanticVersionNumber ]
+
+	self deny: (MetacelloSemanticVersionNumber fromString: '1.0.0+-') equals: (MetacelloSemanticVersionNumber fromString: '1.0.0--').
+	self sampleVersionStrings do: [ :versionString |
+		self assert: (MetacelloSemanticVersionNumber fromString: versionString) equals: (MetacelloSemanticVersionNumber fromString: versionString) ]
 ]
 
 { #category : 'tests - matching' }
@@ -27,31 +28,22 @@ MetacelloSemanticVersionNumberTestCase >> testInvalidSpecialMatch [
 ]
 
 { #category : 'tests' }
-MetacelloSemanticVersionNumberTestCase >> testIssue392 [
-  "semantic version strings that are actually invalid, but were allowed by MetacelloOldSemanticVersionNumber"
-
-  #('v0.0.1' '00.0.1' '16r00.0.1' '101r.0.1' 'rr101r.0.1')
-    do: [ :versionString | 
-      MetacelloOldSemanticVersionNumber fromString: versionString.
-      self should: [ self versionClass fromString: versionString ] raise: Error ]
-]
-
-{ #category : 'tests' }
 MetacelloSemanticVersionNumberTestCase >> testLessThanComparison [
-    self assert: '1.0.0-rc.1+build.1' asMetacelloSemanticVersionNumber < '1.0.0' asMetacelloSemanticVersionNumber.
-    self
-        assert: '1.0.0-rc.1+build.1' asMetacelloSemanticVersionNumber < '1.0.0+build.0' asMetacelloSemanticVersionNumber.
-    self assert: '1.0.0-alpha.1' asMetacelloSemanticVersionNumber < '1.0.0-0.3.7' asMetacelloSemanticVersionNumber.
-    self assert: '1.0.0-alpha' asMetacelloSemanticVersionNumber < '1.0.0-alpha.1' asMetacelloSemanticVersionNumber.
-    self assert: '1.0.0+-' asMetacelloSemanticVersionNumber < '1.0.0+a' asMetacelloSemanticVersionNumber.
-    self assert: '1.0.0-0.3.7' asMetacelloSemanticVersionNumber < '1.0.0-x.7.z.92' asMetacelloSemanticVersionNumber
+
+	self assert: (MetacelloSemanticVersionNumber fromString: '1.0.0-rc.1+build.1') < (MetacelloSemanticVersionNumber fromString: '1.0.0').
+	self assert: (MetacelloSemanticVersionNumber fromString: '1.0.0-rc.1+build.1') < (MetacelloSemanticVersionNumber fromString: '1.0.0+build.0').
+	self assert: (MetacelloSemanticVersionNumber fromString: '1.0.0-alpha.1') < (MetacelloSemanticVersionNumber fromString: '1.0.0-0.3.7').
+	self assert: (MetacelloSemanticVersionNumber fromString: '1.0.0-alpha') < (MetacelloSemanticVersionNumber fromString: '1.0.0-alpha.1').
+	self assert: (MetacelloSemanticVersionNumber fromString: '1.0.0+-') < (MetacelloSemanticVersionNumber fromString: '1.0.0+a').
+	self assert: (MetacelloSemanticVersionNumber fromString: '1.0.0-0.3.7') < (MetacelloSemanticVersionNumber fromString: '1.0.0-x.7.z.92')
 ]
 
 { #category : 'tests' }
 MetacelloSemanticVersionNumberTestCase >> testPrinting [
+
 	| x vrsn |
-	self sampleVersionStrings
-		do: [ :versionString | self assert: versionString equals: (x := (vrsn := versionString asMetacelloSemanticVersionNumber) printString) ]
+	self sampleVersionStrings do: [ :versionString |
+		self assert: versionString equals: (x := (vrsn := MetacelloSemanticVersionNumber fromString: versionString) printString) ]
 ]
 
 { #category : 'tests' }
@@ -199,14 +191,15 @@ MetacelloSemanticVersionNumberTestCase >> testVersion19 [
 
 { #category : 'tests' }
 MetacelloSemanticVersionNumberTestCase >> validateSemanticVersionStrings: versionStrings [
-    | versions version |
-    versions := versionStrings collect: [ :each | each asMetacelloSemanticVersionNumber ].
-    version := versions at: 1.
-    2 to: versions size do: [ :index | 
-        | nextVersion |
-        nextVersion := versions at: index.
-        self assert: version < nextVersion.
-        version := nextVersion ]
+
+	| versions version |
+	versions := versionStrings collect: [ :string | MetacelloSemanticVersionNumber fromString: string ].
+	version := versions at: 1.
+	2 to: versions size do: [ :index |
+		| nextVersion |
+		nextVersion := versions at: index.
+		self assert: version < nextVersion.
+		version := nextVersion ]
 ]
 
 { #category : 'private' }

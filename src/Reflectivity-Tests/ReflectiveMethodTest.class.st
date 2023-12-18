@@ -100,6 +100,25 @@ ReflectiveMethodTest >> testLinkCountTwoLinks [
 	self assert: (ReflectivityExamples >> #exampleMethod) reflectiveMethod isNil
 ]
 
+{ #category : 'tests' }
+ReflectiveMethodTest >> testLinkKeepsExtension [
+
+	[
+	| metalink |
+	ReflectivityExamples compile: 'exampleWithExtension' classified: '*GeneratedPackageForTest'.
+
+	self assert: (ReflectivityExamples >> #exampleWithExtension) isExtension.
+
+	metalink := MetaLink new.
+	(ReflectivityExamples >> #exampleWithExtension) ast link: metalink.
+
+	self assert: (ReflectivityExamples >> #exampleWithExtension) isExtension.
+
+	metalink uninstall.
+
+	self assert: (ReflectivityExamples >> #exampleWithExtension) isExtension ] ensure: [ self packageOrganizer removePackage: 'GeneratedPackageForTest' ]
+]
+
 { #category : 'tests - links' }
 ReflectiveMethodTest >> testSetLink [
 	| sendNode link |

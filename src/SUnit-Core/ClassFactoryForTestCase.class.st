@@ -106,14 +106,17 @@ ClassFactoryForTestCase >> defaultSuperclass [
 { #category : 'cleaning' }
 ClassFactoryForTestCase >> delete: aBehavior [
 
+	| name |
 	createdBehaviors remove: aBehavior ifAbsent: [  ].
 	aBehavior isObsolete ifTrue: [ ^ self ].
-	self class environment at: #ChangeSet ifPresent: [ :changeSet | changeSet current removeClassAndMetaClassChanges: aBehavior ].
+	name := aBehavior name. "save it as it will be obsolete later"
 	(createdSilently includes: aBehavior)
 		ifTrue: [
 			createdSilently remove: aBehavior.
 			aBehavior removeFromSystemUnlogged ]
-		ifFalse: [ aBehavior removeFromSystem ]
+		ifFalse: [ aBehavior removeFromSystem ].
+	"We know that we can remove the key from Undeclared, as it was added by #removeFromSystem"
+	Undeclared removeKey: name ifAbsent: [ "might be an anonymous class" ]
 ]
 
 { #category : 'cleaning' }
@@ -293,4 +296,23 @@ ClassFactoryForTestCase >> silentlyRename: aClass to: aName [
 ClassFactoryForTestCase >> tagName [
 
 	^ #Default
+]
+
+{ #category : 'creating' }
+ClassFactoryForTestCase >> update: aClass to: aBlock [
+	"I return an updated class or trait in the environment of the factory configured as the user specified in the make block.
+	Once the test is finished, I'll remove the created class or trait."
+
+	| newClass |
+	newClass := self class classInstaller make: [ :aBuilder | "Let's but some default values."
+		    			aBuilder fillFor: aClass.        
+						aBuilder
+			            installingEnvironment: self environment;
+			            package: self packageName.
+						
+		            "Now we let the users specify what they want."
+		            aBlock value: aBuilder ].
+
+	self registerBehavior: newClass.
+	^ newClass
 ]

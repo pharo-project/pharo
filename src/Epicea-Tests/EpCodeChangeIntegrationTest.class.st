@@ -24,7 +24,7 @@ EpCodeChangeIntegrationTest >> packageTagNameForTesting [
 { #category : 'running' }
 EpCodeChangeIntegrationTest >> tearDown [
 
-	(self packageNameForTesting asPackageIfAbsent: [ nil ]) ifNotNil: [ :package | package removeFromSystem ].
+	self packageOrganizer removePackage: self packageNameForTesting.
 	super tearDown
 ]
 
@@ -140,7 +140,7 @@ EpCodeChangeIntegrationTest >> testInstanceVariableAddition [
 { #category : 'tests' }
 EpCodeChangeIntegrationTest >> testInstanceVariableRemoval [
 
-	aClass := classFactory make: [ :aBuilder | aBuilder slotsFromString: 'x' ].
+	aClass := classFactory make: [ :aBuilder | aBuilder slots: #(x) ].
 
 	self assert: (self countLogEventsWith: EpClassModification) equals: 0.
 	aClass removeInstVarNamed: #x.
@@ -167,7 +167,7 @@ EpCodeChangeIntegrationTest >> testMetaclassInstanceVariableAdditionWithTrait [
 	aTrait := classFactory newTrait.
 
 	self assert: (self countLogEventsWith: EpClassModification) equals: 0.
-	aClass classSide uses: aTrait asTraitComposition instanceVariableNames: 'x'.
+	aClass classSide trait: aTrait asTraitComposition slots: #( x ).
 	self assert: (self countLogEventsWith: EpClassModification) equals: 1
 ]
 

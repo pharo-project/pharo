@@ -80,14 +80,17 @@ RBExtractToTemporaryRefactoring >> extract: anInterval to: aString from: aSelect
 { #category : 'transforming' }
 RBExtractToTemporaryRefactoring >> insertTemporary [
 
-	| node statementNode nodeReferences |
+	| node statementNode nodeReferences scope |
 	node := self parseTree whichNodeIsContainedBy: sourceInterval.
-	(node notNil and: [ node isValue ]) ifFalse: [
+	(node isNotNil and: [ node isValue ]) ifFalse: [
 		self refactoringError: 'Cannot assign to non-value nodes' ].
-	nodeReferences := node methodOrBlockNode allChildren select: [ :each |
-		                  each = node ].
-	statementNode := node statementNode.
-	statementNode parent
+	scope := node methodOrBlockNode.
+	nodeReferences := scope allChildren select: [ :each | each = node ].
+	"Insert the assignment before the first occurrence to be replaced,
+	but in the same scope as the selected expression,
+	even if that first occurrence is in a nested block."
+	statementNode := nodeReferences first statementNodeIn: scope.
+	scope body
 		addNode: (self constructAssignmentFrom: node) before: statementNode;
 		addTemporaryNamed: newVariableName.
 	nodeReferences do: [ :each |

@@ -64,12 +64,6 @@ MetacelloScriptEngine class >> defaultVersionString [
     ^ DefaultVersionString
 ]
 
-{ #category : 'options' }
-MetacelloScriptEngine >> cacheRepository [
-    ^ (MetacelloMCProject new repositorySpec description: (self options at: #'cacheRepository' ifAbsent: [ ^ nil ]))
-        createRepository
-]
-
 { #category : 'defaults' }
 MetacelloScriptEngine >> defaultRepositoryDescription [
     ^ self class defaultRepositoryDescription
@@ -120,8 +114,6 @@ MetacelloScriptEngine >> get [
       projectPackage := spec projectPackage.
       projectPackage repositorySpecs
         do: [ :repoSpec | repoSpec createRepository flushForScriptGet ].
-      self cacheRepository
-        ifNotNil: [ :cacheRepository | projectPackage loader loaderPolicy cacheRepository: cacheRepository ].
       projectPackage load.
       self root: (Smalltalk at: spec className asSymbol) project.
       MetacelloProjectRegistration
@@ -141,7 +133,8 @@ MetacelloScriptEngine >> get [
 { #category : 'project lookup' }
 MetacelloScriptEngine >> getBaselineProjectUnconditionalLoad: unconditionalLoad [
     | project |
-    project := (self getBaselineUnconditionalLoad: unconditionalLoad) project.
+    project := (self getBaselineUnconditionalLoad: unconditionalLoad) new
+      initalizeProjectWithRepositoryDescription: self projectSpec repositories map keys.
     project version spec repositories: self repositories copy.
     ^ project
 ]
@@ -462,12 +455,6 @@ MetacelloScriptEngine >> register [
 { #category : 'accessing' }
 MetacelloScriptEngine >> repositories [
     ^ self projectSpec repositories
-]
-
-{ #category : 'options' }
-MetacelloScriptEngine >> repositoryOverrides [
-    ^ (self options at: #'repositoryOverrides' ifAbsent: [ ^ nil ])
-        collect: [ :description | (MetacelloMCProject new repositorySpec description: description) createRepository ]
 ]
 
 { #category : 'private' }

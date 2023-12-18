@@ -4,8 +4,9 @@ This class contains tests for `FluidTraitBuilder`
 Class {
 	#name : 'ShiftTraitBuilderTest',
 	#superclass : 'ShiftClassBuilderAbstractTest',
-	#category : 'Shift-ClassBuilder-Tests',
-	#package : 'Shift-ClassBuilder-Tests'
+	#category : 'Shift-ClassBuilder-Tests-Base',
+	#package : 'Shift-ClassBuilder-Tests',
+	#tag : 'Base'
 }
 
 { #category : 'running' }
@@ -134,8 +135,9 @@ ShiftTraitBuilderTest >> testInstallMinimalMockClass [
 	slots: {};
 	tag: '''' ;
 	package: ''' , self packageNameForTest , ''''.
-	ShiftClassInstaller new makeWithBuilder: builder.
-
+	
+	builder install.
+	
 	installedClass := self class environment at: #TMyClass ifAbsent: [ self fail ].
 
 	self assert: installedClass name equals: #TMyClass.

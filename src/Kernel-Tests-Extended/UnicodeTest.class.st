@@ -44,7 +44,7 @@ UnicodeTest >> aRandomSelectionOfCodePointsDo: aBlock [
 { #category : 'utilities' }
 UnicodeTest >> checkCorrespondanceOf: aSelector and: aCategoryTag [
 	| cat methodAnswer catFromTable |
-	cat := Unicode classPool at: aCategoryTag.
+	cat := Unicode readClassVariableNamed: aCategoryTag.
 	self
 		aRandomSelectionOfCodePointsDo: [ :cp |
 			methodAnswer := Unicode
@@ -130,7 +130,7 @@ UnicodeTest >> testIsInitialQuote [
 { #category : 'tests - categorization' }
 UnicodeTest >> testIsLetter [
 	| letterCategories methodAnswer catFromTable |
-	letterCategories := #(Ll Lm Lo Lt Lu) collect: [ :c | Unicode classPool at: c ].
+	letterCategories := #(Ll Lm Lo Lt Lu) collect: [ :c | Unicode readClassVariableNamed: c ].
 	self aRandomSelectionOfCodePointsDo: [ :cp |
 			methodAnswer := Unicode isLetter: (Character codePoint: cp).
 			catFromTable := self unicodeCategoryTableLookup: cp.

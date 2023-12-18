@@ -1,3 +1,7 @@
+"
+A simple refactoring that removes an instance variable. 
+The variable should not be used obviously.
+"
 Class {
 	#name : 'RBRemoveInstanceVariableRefactoring',
 	#superclass : 'RBVariableRefactoring',
@@ -9,6 +13,12 @@ Class {
 	#package : 'Refactoring-Core',
 	#tag : 'Refactorings'
 }
+
+{ #category : 'displaying' }
+RBRemoveInstanceVariableRefactoring class >> basicMenuItemString [
+
+	^ 'Remove Instance Variable'
+]
 
 { #category : 'instance creation' }
 RBRemoveInstanceVariableRefactoring class >> model: aNamespace remove: variable from: class [
@@ -55,6 +65,18 @@ RBRemoveInstanceVariableRefactoring >> generateChanges [
 RBRemoveInstanceVariableRefactoring >> preconditions [
 
 	^ self applicabilityPreconditions & self breakingChangePreconditions 
+]
+
+{ #category : 'printing' }
+RBRemoveInstanceVariableRefactoring >> printOn: aStream [
+
+	super printOn: aStream.
+	aStream nextPutAll: '( Class: ', class asString. 
+	aStream 
+		nextPutAll: ' , ' ;
+		nextPutAll: variableName asString;
+		nextPutAll: ')' 
+	
 ]
 
 { #category : 'transforming' }

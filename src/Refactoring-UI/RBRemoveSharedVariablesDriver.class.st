@@ -14,9 +14,14 @@ Class {
 }
 
 { #category : 'execution' }
-RBRemoveSharedVariablesDriver >> applyChanges [
+RBRemoveSharedVariablesDriver >> breakingChoices [
 
-	self openPreviewWithChanges: refactoring privateTransform
+	| items |
+	items := OrderedCollection new.
+	items add: (RBBrowseReferencedSharedVariableChoice new driver: self ; yourself).
+	items add: (RBRemoveSharedVariableChoice new driver: self; yourself).
+	items add: (RBRemoveSharedVariableAndShowChoice new driver: self; yourself).
+	^ items
 ]
 
 { #category : 'execution' }
@@ -25,6 +30,12 @@ RBRemoveSharedVariablesDriver >> browseSharedVariableReferences [
 	StMessageBrowserPresenter
 		browse: refactoring violators
 		
+]
+
+{ #category : 'execution' }
+RBRemoveSharedVariablesDriver >> changes [
+
+	^ refactoring privateTransform; changes
 ]
 
 { #category : 'resources' }
@@ -39,21 +50,22 @@ RBRemoveSharedVariablesDriver >> configureRefactoring [
 ]
 
 { #category : 'execution' }
-RBRemoveSharedVariablesDriver >> handleBreakingChanges [
+RBRemoveSharedVariablesDriver >> defaultSelectDialog [
 
-	| select items |
-	items := OrderedCollection new.
-	items add: (RBBrowseReferencedSharedVariableChoice new driver: self ; yourself).
-	items add: (RBRemoveSharedVariableChoice new driver: self; yourself).
-	items add: (RBRemoveSharedVariableAndShowChoice new driver: self; yourself).
-	
-	select := SpSelectDialog new
+	^ SpSelectDialog new
 		          title: 'There are references to variables!';
-		          items: items;
+		          items: self breakingChoices;
 		          display: [ :each | each description ];
 		          displayIcon: [ :each |  self iconNamed: each systemIconName ];
 		          openModal.
 
+]
+
+{ #category : 'execution' }
+RBRemoveSharedVariablesDriver >> handleBreakingChanges [
+
+	| select  |
+	select := self defaultSelectDialog.
 	select ifNotNil: [ select action ]
 ]
 

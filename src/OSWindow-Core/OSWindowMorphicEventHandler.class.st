@@ -253,17 +253,28 @@ OSWindowMorphicEventHandler >> visitMouseMoveEvent: anEvent [
 
 { #category : 'visiting' }
 OSWindowMorphicEventHandler >> visitMouseWheelEvent: anEvent [
-	| vertical |
+
+	| vertical horizontal direction |
 	vertical := anEvent scrollVertical.
-	vertical = 0 ifTrue: [ ^ nil ].
+	horizontal := anEvent scrollHorizontal.
+
+	direction := vertical isZero
+		             ifTrue: [
+			             horizontal > 0
+				             ifTrue: [ Character arrowLeft ]
+				             ifFalse: [ Character arrowRight ] ]
+		             ifFalse: [
+			             vertical > 0
+				             ifTrue: [ Character arrowUp ]
+				             ifFalse: [ Character arrowDown ] ].
 
 	^ MouseWheelEvent new
-		setType: #mouseWheel
-		position: (self convertPosition: anEvent position)
-		direction: (vertical > 0 ifTrue: [Character arrowUp] ifFalse: [Character arrowDown])
-		buttons: (self convertModifiers: anEvent modifiers)
-		hand: self activeHand
-		stamp: Time millisecondClockValue
+		  setType: #mouseWheel
+		  position: (self convertPosition: anEvent position)
+		  direction: direction
+		  buttons: (self convertModifiers: anEvent modifiers)
+		  hand: self activeHand
+		  stamp: Time millisecondClockValue
 ]
 
 { #category : 'visiting' }

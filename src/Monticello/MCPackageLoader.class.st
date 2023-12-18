@@ -9,8 +9,6 @@ Instance Variables
 	removals:		<Object>
 	requirements:		<Object>
 	unloadableDefinitions:		<Object>
-	methodAdditions  <MethodAdditions> MethodDefinitions corresponding to the Definitions in ""additions"" that have been added so far.
-
 "
 Class {
 	#name : 'MCPackageLoader',
@@ -75,15 +73,10 @@ MCPackageLoader >> basicLoad [
 { #category : 'private' }
 MCPackageLoader >> basicLoadDefinitions [
 
-	| methodAdditions |
 	self loadClassDefinitions.
 
-	methodAdditions := additions
-		                   select: [ :aDefinition | aDefinition isMethodDefinition ]
-		                   thenCollect: [ :aDefinition | aDefinition asMethodAddition ].
-
 	"We want to announce the addition of the methods only once all methods are loaded because the system might react to the annoucements and execute code requirement other methods from the classes we are loading."
-	SystemAnnouncer uniqueInstance delayAnnouncementsAfter: [ methodAdditions do: [ :each | each installMethod ] ].
+	SystemAnnouncer uniqueInstance delayAnnouncementsAfter: [ additions select: [ :aDefinition | aDefinition isMethodDefinition ] thenDo: [ :definition | definition load ] ].
 
 	removals do: [ :each | each unload ] displayingProgress: 'Cleaning up...'.
 
@@ -143,7 +136,7 @@ MCPackageLoader >> installSnapshot: aSnapshot [
 MCPackageLoader >> load [
 
 	self validate.
-	self useNewChangeSetDuring: [ self basicLoad ]
+	self basicLoad
 ]
 
 { #category : 'private' }
@@ -179,18 +172,6 @@ MCPackageLoader >> loadClassDefinitions [
 
 	"Finally we warn about the errors we could not fix."
 	errorDefinitions ifNotEmpty: [ self warnAboutErrors: errorDefinitions ]
-]
-
-{ #category : 'public' }
-MCPackageLoader >> loadWithName: baseName [
-	self validate.
-	self useChangeSetNamed: baseName during: [self basicLoad]
-]
-
-{ #category : 'public' }
-MCPackageLoader >> loadWithNameLike: baseName [
-	self validate.
-	self useNewChangeSetNamedLike: baseName during: [self basicLoad]
 ]
 
 { #category : 'patch ops' }
@@ -247,27 +228,6 @@ MCPackageLoader >> updatePackage: aPackage withSnapshot: aSnapshot [
 	patch applyTo: self.
 	packageSnap definitions do: [:ea | self provisions addAll: ea provisions]
 
-]
-
-{ #category : 'private' }
-MCPackageLoader >> useChangeSetNamed: baseName during: aBlock [
-	"Use the named change set, or create one with the given name."
-	| oldChanges newChanges |
-	oldChanges := ChangeSet current.
-	newChanges := (ChangeSet named: baseName) ifNil: [ ChangeSet new name: baseName ].
-	ChangeSet newChanges: newChanges.
-	aBlock ensure: [ ChangeSet newChanges: oldChanges ].
-
-]
-
-{ #category : 'private' }
-MCPackageLoader >> useNewChangeSetDuring: aBlock [
-	^self useNewChangeSetNamedLike: 'MC' during: aBlock
-]
-
-{ #category : 'private' }
-MCPackageLoader >> useNewChangeSetNamedLike: baseName during: aBlock [
-	^self useChangeSetNamed: (ChangeSet uniqueNameLike: baseName) during: aBlock
 ]
 
 { #category : 'private' }

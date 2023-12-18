@@ -26,7 +26,7 @@ RBPackageEnvironment class >> onEnvironment: anEnvironment packageNames: aCollec
 	^ self
 		onEnvironment: anEnvironment
 		packages: (aCollection collect: [ :each |
-			RPackageOrganizer default packageNamed: each ])
+			PackageOrganizer default packageNamed: each ])
 ]
 
 { #category : 'instance creation' }
@@ -58,11 +58,6 @@ RBPackageEnvironment class >> packages: aCollection [
 	^ self
 		onEnvironment: self default
 		packages: aCollection
-]
-
-{ #category : 'visiting' }
-RBPackageEnvironment >> acceptVisitor: aEnvVisitor [
-	^ aEnvVisitor visitPackageEnv: self
 ]
 
 { #category : 'adding' }
@@ -173,8 +168,9 @@ RBPackageEnvironment >> printBasisObject: aClass on: aStream [
 
 { #category : 'printing' }
 RBPackageEnvironment >> printOn: aStream [
+
 	aStream nextPutAll: 'Pck: '.
-	packages do: [ :pkg | aStream nextPutAll: pkg packageName, ', ']
+	packages do: [ :pkg | aStream nextPutAll: pkg name , ', ' ]
 ]
 
 { #category : 'removing' }

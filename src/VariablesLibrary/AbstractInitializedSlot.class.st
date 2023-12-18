@@ -41,6 +41,13 @@ AbstractInitializedSlot >> default: anObject [
 ]
 
 { #category : 'comparing' }
+AbstractInitializedSlot >> hasSameDefinitionAs: otherVariable [
+	
+ 	^(super hasSameDefinitionAs: otherVariable) 
+		and: [ default = otherVariable default ]
+]
+
+{ #category : 'comparing' }
 AbstractInitializedSlot >> hash [
 	^super hash bitXor: default hash
 ]

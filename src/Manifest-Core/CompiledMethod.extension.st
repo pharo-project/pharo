@@ -20,9 +20,3 @@ CompiledMethod >> manifestBuilderForRuleChecker: aRuleChecker [
 
 	^ aRuleChecker manifestBuilderOfMethod: self
 ]
-
-{ #category : '*Manifest-Core' }
-CompiledMethod >> mcWorkingCopy [
-
-	MCWorkingCopy workingCopiesForPackage: self package do: [ :package | ^ package ]
-]

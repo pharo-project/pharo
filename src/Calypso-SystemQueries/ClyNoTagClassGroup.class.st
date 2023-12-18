@@ -37,5 +37,5 @@ ClyNoTagClassGroup >> renameTagTo: newTag [
 ClyNoTagClassGroup >> tag [
 	"Uncategorized classes are going to the root tag."
 
-	^ RPackage rootTagName
+	^ Package rootTagName
 ]

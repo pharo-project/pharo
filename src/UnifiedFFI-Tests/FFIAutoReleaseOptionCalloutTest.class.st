@@ -67,7 +67,7 @@ FFIAutoReleaseOptionCalloutTest >> testOnFFIMethodWithSignature: anArray doing: 
 		newFFIMethodWithSignature: anArray
 		doing: mockedFunctionReturn
 		options: #().
-	return := method valueWithReceiver: nil arguments: #().
+	return := method valueWithReceiver: nil.
 	self
 		deny: (aBlockToTestIfAutoReleaseWasDone value: return)
 		description: 'By default, autoRelease was not performed on the returned object'.
@@ -76,7 +76,7 @@ FFIAutoReleaseOptionCalloutTest >> testOnFFIMethodWithSignature: anArray doing: 
 		newFFIMethodWithSignature: anArray
 		doing: mockedFunctionReturn
 		options: #( + optAutoReleaseReturnedValue ).
-	return := method valueWithReceiver: nil arguments: #().
+	return := method valueWithReceiver: nil.
 	self
 		assert: (aBlockToTestIfAutoReleaseWasDone value: return)
 		description: 'With the option, autoRelease was performed'

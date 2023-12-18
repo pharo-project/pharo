@@ -45,14 +45,15 @@ MCVersionLoader >> announceLoad: aString do: aBlock [
 
 { #category : 'private' }
 MCVersionLoader >> announceLoadStop: aString [
-	SystemAnnouncer announce: (MCVersionLoaderStopped new
-		versionLoader: self;
-		label: aString; 
-		yourself)
+
+	self class codeSupportAnnouncer announce: (MCVersionLoaderStopped new
+			 versionLoader: self;
+			 label: aString;
+			 yourself)
 ]
 
 { #category : 'private' }
-MCVersionLoader >> basicLoadWithNameLike: aString [
+MCVersionLoader >> basicLoad [
 	| loader |
 	
 	self checkForModificationsIfCancel: [ ^ self] ifMerge: [ ^ self mergeVersions ].
@@ -66,7 +67,7 @@ MCVersionLoader >> basicLoadWithNameLike: aString [
 			ifTrue: [ea patch applyTo: loader]
 			ifFalse: [loader updatePackage: ea package withSnapshot: ea snapshot]].
 		
-	loader loadWithNameLike: aString.
+	loader load.
 	versions do: [:ea | ea workingCopy loaded: ea]
 ]
 
@@ -110,8 +111,8 @@ MCVersionLoader >> ensurePackage: mcPackage [
 
 { #category : 'testing' }
 MCVersionLoader >> hasLocalModifications [
-	^ self localModifications isEmpty not
-	
+
+	^ self localModifications isNotEmpty
 ]
 
 { #category : 'testing' }
@@ -140,7 +141,8 @@ MCVersionLoader >> load [
 { #category : 'loading' }
 MCVersionLoader >> loadWithNameLike: aString [
 	" this is THE central entrypoint for all loading (gopher, metacello, monticello, ...) "
-	^ self announceLoad: aString do: [ self basicLoadWithNameLike: aString ]
+
+	^ self announceLoad: aString do: [ self basicLoad ]
 ]
 
 { #category : 'checking' }

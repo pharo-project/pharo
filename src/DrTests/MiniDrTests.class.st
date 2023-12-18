@@ -5,7 +5,8 @@ Class {
 	#name : 'MiniDrTests',
 	#superclass : 'AbstractDrTestsPresenter',
 	#instVars : [
-		'startButton'
+		'startButton',
+		'pluginPresenter'
 	],
 	#category : 'DrTests-Spec',
 	#package : 'DrTests',
@@ -58,6 +59,18 @@ MiniDrTests >> initializeWindow: aWindowPresenter [
 ]
 
 { #category : 'accessing' }
+MiniDrTests >> pluginPresenter [
+
+	^ pluginPresenter
+]
+
+{ #category : 'accessing' }
+MiniDrTests >> receivePluginPresenter: aPluginPresenter [
+
+	pluginPresenter := aPluginPresenter
+]
+
+{ #category : 'accessing' }
 MiniDrTests >> startButton [
 	^ startButton
 ]
@@ -67,8 +80,9 @@ MiniDrTests >> switchToDrTest [
 
 	(DrTests newApplication: self application)
 		reloadConfiguration: testsConfiguration
-			withResults: pluginResult
-			andPlugin: currentPlugin;
+		withResults: pluginResult
+		andPlugin: currentPlugin
+		andPresenter: self pluginPresenter;
 		open
 ]
 

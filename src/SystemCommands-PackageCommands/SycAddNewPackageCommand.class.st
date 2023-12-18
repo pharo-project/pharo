@@ -11,7 +11,7 @@ Internal Representation and Key Implementation Points.
 
     Instance Variables
 	packageName:		<String>
-	resultPackage:		<RPackage>
+	resultPackage:		<Package>
 	systemEnvironment:		<Object>
 "
 Class {
@@ -46,7 +46,7 @@ SycAddNewPackageCommand >> defaultMenuItemName [
 SycAddNewPackageCommand >> execute [
 
 	resultPackage := [ systemEnvironment createPackageNamed: packageName ]
-		                 on: RPackageConflictError
+		                 on: PackageConflictError
 		                 do: [ systemEnvironment packageNamed: packageName ]
 ]
 

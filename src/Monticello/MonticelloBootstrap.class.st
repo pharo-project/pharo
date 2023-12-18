@@ -65,7 +65,7 @@ MonticelloBootstrap >> bootstrapVersionsExcept: aBlock [
 { #category : 'versions' }
 MonticelloBootstrap >> bootstrapVersionsSatisfying: aBlock [
 
-	^ RPackageOrganizer default packages
+	^ PackageOrganizer default packages
 		  select: [ :package | package name ~= UndefinedPackage undefinedPackageName and: [ aBlock value: package ] ]
 		  thenCollect: [ :rpackage | self fileNameForPackageNamed: rpackage name ]
 ]
@@ -75,7 +75,7 @@ MonticelloBootstrap >> createWorkingCopies [
 	"For each of the packages inside the image, excepted by the Unpackaged package, create a monticello working copy.
 	This is achieved by creating an instance of a working copy and snapshotting it. This generates and registers the working copy automatically."
 
-	(RPackageOrganizer default packageNames copyWithout: UndefinedPackage undefinedPackageName) asSortedCollection do: [ :packageName |
+	(PackageOrganizer default packageNames copyWithout: UndefinedPackage undefinedPackageName) asSortedCollection do: [ :packageName |
 		SystemNotification signal: 'Creating Snapshot of: ' , packageName.
 		(MCWorkingCopy ensureForPackageNamed: packageName) snapshot ]
 ]

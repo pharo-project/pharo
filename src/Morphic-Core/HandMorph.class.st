@@ -770,15 +770,19 @@ HandMorph >> nonCachingFullDrawOn: aCanvas [
 
 	submorphs isEmpty ifTrue: [^ self drawOn: aCanvas].  "just draw the hand itself"
 	aCanvas asShadowDrawingCanvas
-		translateBy: self shadowOffset during:[:shadowCanvas| | shadowForm |
+		translateBy: self shadowOffset during:[:shadowCanvas| | shadowFormSet bnds canvas |
 		"Note: We use a shadow form here to prevent drawing
 		overlapping morphs multiple times using the transparent
 		shadow color."
-		shadowForm := self shadowForm.
+		bnds := Rectangle merging: (submorphs collect: [:m | m fullBounds]).
+		canvas := aCanvas shadowDrawingCanvasWithExtent: bnds extent shadowColor: Color black.
+		canvas translateBy: bnds topLeft negated
+			during:[:tempCanvas| self drawSubmorphsOn: tempCanvas].
+		shadowFormSet := FormSet extent: bnds extent depth: 1 forms: { canvas form }.
 "
 shadowForm displayAt: shadowForm offset negated. Display forceToScreen: (0@0 extent: shadowForm extent).
 "
-		shadowCanvas paintImage: shadowForm at: shadowForm offset.  "draw shadows"
+		shadowCanvas paintFormSet: shadowFormSet at: bnds topLeft.  "draw shadows"
 	].
 	"draw morphs in front of shadows"
 	self drawSubmorphsOn: aCanvas.
@@ -1112,18 +1116,6 @@ HandMorph >> sendListenEvent: anEvent to: listenerGroup [
 HandMorph >> sendMouseEvent: anEvent [
 	"Send the event to the morph currently holding the focus, or if none to the owner of the hand."
 	^self sendEvent: anEvent focus: self mouseFocus clear:[self mouseFocus: nil]
-]
-
-{ #category : 'drawing' }
-HandMorph >> shadowForm [
-	"Return a 1-bit shadow of my submorphs.  Assumes submorphs is not empty"
-	| bnds canvas |
-	bnds := Rectangle merging: (submorphs collect: [:m | m fullBounds]).
-	canvas := (Display defaultCanvasClass extent: bnds extent depth: 1)
-		asShadowDrawingCanvas: Color black.
-	canvas translateBy: bnds topLeft negated
-		during:[:tempCanvas| self drawSubmorphsOn: tempCanvas].
-	^ canvas form offset: bnds topLeft
 ]
 
 { #category : 'drop shadows' }

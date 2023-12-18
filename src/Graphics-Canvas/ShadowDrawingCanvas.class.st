@@ -44,6 +44,15 @@ ShadowDrawingCanvas >> on: aCanvas [
 	shadowColor := Color black
 ]
 
+{ #category : 'drawing - images' }
+ShadowDrawingCanvas >> paintFormSet: aFormSet at: aPoint [
+
+	myCanvas
+		stencilFormSet: aFormSet
+		at: aPoint
+		color: shadowColor
+]
+
 { #category : 'accessing' }
 ShadowDrawingCanvas >> shadowColor [
 	^shadowColor

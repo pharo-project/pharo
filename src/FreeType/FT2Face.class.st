@@ -689,20 +689,19 @@ FT2Face >> renderGlyphIntoForm: aForm pixelMode: pixelMode [
 	"render the current glyph (selected by loadChar/loadGlyph into the given form (1 or 8 bpp)
 	with pixel mode anInteger "
 
-	| ftBitmap buffer outline |
+	| ftBitmap outline |
 	ftBitmap := FTBitmap new.
 	outline := self outline.
 
-	buffer := ExternalAddress allocate: aForm bits byteSize.
-	1 to: aForm bits byteSize do: [ :i | buffer byteAt: i put: 0 ].
-	buffer autoRelease.
+	ExternalAddress allocate: aForm bits byteSize bytesDuring:[:buffer |
+		1 to: aForm bits byteSize do: [ :i | buffer byteAt: i put: 0 ].
 
-	ftBitmap setBuffer: buffer.
-	ftBitmap initializeFromForm: aForm pixelMode: pixelMode.
+		ftBitmap setBuffer: buffer.
+		ftBitmap initializeFromForm: aForm pixelMode: pixelMode.
 
-	FT2Library current getBitmap: ftBitmap getHandle fromOutline: outline getHandle.
+		FT2Library current getBitmap: ftBitmap getHandle fromOutline: outline getHandle.
 
-	aForm bits copyFromByteArray: (buffer copyFrom: 1 to: aForm bits byteSize)
+		aForm bits copyFromByteArray: (buffer copyFrom: 1 to: aForm bits byteSize) ]
 ]
 
 { #category : 'charmaps' }
