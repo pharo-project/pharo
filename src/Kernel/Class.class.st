@@ -828,7 +828,7 @@ Class >> isAnonymous [
 
 { #category : 'testing' }
 Class >> isClass [
-	<reflection: 'Class structural inspection - Class/Metaclass shift'>
+	<reflection: 'Class structural inspection - Class kind testing'>
 	^ true
 ]
 
@@ -1313,7 +1313,7 @@ Class >> subclasses [
 
 { #category : 'accessing - class hierarchy' }
 Class >> subclasses: aCollection [
-	<reflection: 'Class structural inspection - Iterating and querying hierarchy'>
+	<reflection: 'Class structural modification - Hierarchy modification'>
 	subclasses := aCollection
 ]
 

@@ -374,7 +374,7 @@ ClassDescription >> copyAllMethodsFrom: originClass [
 { #category : 'slots' }
 ClassDescription >> definesSlot: aSlot [
 	"Return true whether the receiver defines an instance variable named aString"
-	<reflection: 'Object Inspection - Slot inspection'>
+	<reflection: 'Class structural inspection - Slot inspection'>
 	^ self slots identityIncludes: aSlot
 ]
 

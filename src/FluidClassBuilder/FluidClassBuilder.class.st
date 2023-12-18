@@ -49,7 +49,7 @@ Class {
 { #category : 'copying' }
 FluidClassBuilder >> fillInstanceSideFromClass: aClass [
 
-	<reflection: 'Class structural inspection - Pragma'>
+	<reflection: 'Class structural modification - Fluid Builder class creation'>
 	super fillInstanceSideFromClass: aClass.
 	self superclass: aClass superclass.
 

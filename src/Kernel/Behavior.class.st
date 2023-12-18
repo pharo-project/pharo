@@ -1608,7 +1608,7 @@ Behavior >> superclass: aClass [
 
 	"Note: Do not use 'aClass isKindOf: Behavior' here
 		in case we recompile from Behavior itself."
-		<reflection: 'Class structural inspection - Iterating and querying hierarchy'>
+	<reflection: 'Class structural modification - Hierarchy modification'>
 	aClass
 		ifNil: [ self basicSuperclass: aClass.
 			Object flushCache.

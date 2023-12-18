@@ -51,7 +51,7 @@ TraitedClass class >> classTrait [
 
 { #category : 'testing' }
 TraitedClass class >> isTrait [
-	<reflection: 'Class structural inspection - Traits'>
+	<reflection: 'Class structural inspection - Class kind testing'>
 	^ true
 ]
 
