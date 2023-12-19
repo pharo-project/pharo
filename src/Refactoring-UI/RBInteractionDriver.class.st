@@ -98,7 +98,7 @@ RBInteractionDriver >> informDialog: aDialog [
 	 informDialog := aDialog
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 RBInteractionDriver >> initialize [
 
 	super initialize.
