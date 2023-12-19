@@ -38,6 +38,14 @@ EpTraitRemoval >> behaviorAffectedName [
 	^ self traitRemoved name
 ]
 
+{ #category : 'accessing' }
+EpTraitRemoval >> fileOutEntryOn: aWriteStream [
+
+	aWriteStream 
+		nextPutAll: self behaviorAffectedName;
+		nextChunkPut: ' removeFromSystem'
+]
+
 { #category : 'initialization' }
 EpTraitRemoval >> initializeWithTrait: aTrait [
 

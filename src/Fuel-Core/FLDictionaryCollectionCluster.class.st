@@ -4,6 +4,9 @@ A FLDictionaryCollectionCluster is a cluster that rather than using the default 
 Class {
 	#name : 'FLDictionaryCollectionCluster',
 	#superclass : 'FLAbstractCollectionCluster',
+	#instVars : [
+		'ephemeronKeys'
+	],
 	#category : 'Fuel-Core-Clusters-Optimized',
 	#package : 'Fuel-Core',
 	#tag : 'Clusters-Optimized'
@@ -12,6 +15,17 @@ Class {
 { #category : 'serialize/materialize' }
 FLDictionaryCollectionCluster >> encodeExtraInformationForReferencesFor: aDictionary with: anEncoder [
 	anEncoder encodeByte: (self hasRealAssociations: aDictionary) asBit
+]
+
+{ #category : 'analyzing' }
+FLDictionaryCollectionCluster >> ephemeron: anEphemeron do: aBlock [
+	anEphemeron fuelCheckEphemeronSupport.
+	"Add strong reference to key so we know that from
+	now on the ephemeron won't be finalized."
+	ephemeronKeys add: anEphemeron key.
+	"Check that the ephemeron wasn't mourned yet. We might
+	have added the strong reference after finalization."
+	anEphemeron fuelWasMourned ifFalse: [ aBlock value: anEphemeron ]
 ]
 
 { #category : 'testing' }
@@ -25,6 +39,13 @@ FLDictionaryCollectionCluster >> hasRealAssociations: aDictionary [
 		^ assoc class == Association ].
 	
 	^ true
+]
+
+{ #category : 'initialization' }
+FLDictionaryCollectionCluster >> initialize [
+	super initialize.
+	
+	ephemeronKeys := OrderedCollection new
 ]
 
 { #category : 'serialize/materialize' }
@@ -60,5 +81,19 @@ FLDictionaryCollectionCluster >> referencesOf: aDictionary do: aBlock [
 				aBlock
 					value: key;
 					value: value ] ]
-		ifFalse: [ aDictionary associationsDo: aBlock ]
+		ifFalse: [
+			self
+				specialAssociationsOf: aDictionary
+				do: aBlock ]
+]
+
+{ #category : 'analyzing' }
+FLDictionaryCollectionCluster >> specialAssociationsOf: aDictionary do: aBlock [
+	aDictionary associationsDo: [ :association |
+		association fuelIsEphemeron
+			ifFalse: [ aBlock value: association ]
+			ifTrue: [
+				self
+					ephemeron: association
+					do: aBlock ] ]
 ]

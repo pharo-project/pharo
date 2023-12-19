@@ -15,6 +15,12 @@ Class {
 	#tag : 'Renderer'
 }
 
+{ #category : 'private' }
+OSWindowFormRenderer >> canvasScaleFactor [
+
+	^ OSWorldRenderer canvasScaleFactor
+]
+
 { #category : 'morphic integration' }
 OSWindowFormRenderer >> deferUpdatesWhile: aBlock [
 
@@ -41,7 +47,14 @@ OSWindowFormRenderer >> form: anObject [
 
 { #category : 'accessing' }
 OSWindowFormRenderer >> getCanvas [
-	^ form getCanvas
+
+	| scale formCanvas |
+	
+	scale := self canvasScaleFactor.
+	formCanvas := form getCanvas.
+	^ scale = 1
+		ifTrue: [ formCanvas ]
+		ifFalse: [ ScalingCanvas formCanvas: formCanvas scale: scale ]
 ]
 
 { #category : 'size' }

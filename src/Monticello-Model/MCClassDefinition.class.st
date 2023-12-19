@@ -146,10 +146,9 @@ MCClassDefinition >> classVarNames: cvarArray [
 
 { #category : 'printing' }
 MCClassDefinition >> classVariables [
-	^self needsSlotClassDefinition 
-		ifTrue: [self sortedVariablesOfType: #isClassVariable ]
-		ifFalse: [(self classVariablesString substrings: ' ') collect: [:x | x asSymbol => ClassVariable]].
-
+	^ self needsSlotClassDefinition 
+ 		ifTrue: [ self sortedVariablesOfType: #isClassVariable ]
+ 		ifFalse: [ self classVariablesString asClassVariableCollection ]
 ]
 
 { #category : 'printing' }
@@ -196,7 +195,7 @@ MCClassDefinition >> createClass [
 			  layoutClass: (ObjectLayout layoutForType: type);
 			  slots: self instanceVariables;
 			  sharedVariables: self classVariables;
-			  sharedPools: self sharedPoolsString;
+			  sharedPoolsFromString: self sharedPoolsString;
 			  classSlots: self classInstanceVariables;
 			  traitComposition: self traitCompositionCompiled;
 			  classTraitComposition: self classTraitCompositionCompiled;

@@ -10,6 +10,11 @@ CompiledMethod >> decompile [
 ]
 
 { #category : '*OpalCompiler-Core' }
+CompiledMethod >> hasTemporaryVariableNamed: aName [
+	^ self tempNames includes: aName
+]
+
+{ #category : '*OpalCompiler-Core' }
 CompiledMethod >> lookupVar: aString [
 	^self ast scope lookupVar: aString
 ]
@@ -39,4 +44,31 @@ CompiledMethod >> sourceNode [
 { #category : '*OpalCompiler-Core' }
 CompiledMethod >> sourceNodeForPC: aPC [
 	^self sourceNode sourceNodeForPC: aPC
+]
+
+{ #category : '*OpalCompiler-Core' }
+CompiledMethod >> symbolic [
+	"List of all the byte codes in a method with a short description of each"
+
+	^ String streamContents: [ :aStream |
+		self isQuick ifTrue: [
+			self isReturnSpecial ifTrue: [ ^ aStream nextPutAll: 'Quick return ' , (#( 'self' 'true' 'false' 'nil' '-1' '0' '1' '2' ) at: self primitive - 255) ].
+			^ aStream nextPutAll: 'Quick return field ' , self returnField printString , ' (0-based)' ].
+
+		self isPrimitive ifTrue: [ self printPrimitiveOn: aStream ].
+		self symbolicBytecodes do: [ :each | each printOn: aStream ] separatedBy: [ aStream cr ] ]
+]
+
+{ #category : '*OpalCompiler-Core' }
+CompiledMethod >> temporaryVariableNamed: aName [
+	(self hasTemporaryVariableNamed: aName) ifFalse: [ ^nil ].
+	^self sourceNode scope lookupVar: aName
+]
+
+{ #category : '*OpalCompiler-Core' }
+CompiledMethod >> temporaryVariables [
+	"on the level of compiledMethod, temps include the arguments"
+	self flag: #TODO. "we need to revist temps vs args"
+	^(self sourceNode arguments collect: [ :each | each binding ]),
+		(self sourceNode temporaries collect: [ :each | each binding ])
 ]

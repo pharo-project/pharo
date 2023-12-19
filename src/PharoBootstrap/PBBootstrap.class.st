@@ -176,9 +176,7 @@ PBBootstrap >> exportMonticelloInStFile [
 
 	self
 		exportPackages: self monticelloPackageNames
-		usingInitializeScript: '
-		ChangeSet initialize.
-		
+		usingInitializeScript: '		
 		ZipConstants initialize.
 		ZipFileConstants initialize.
 		ZipWriteStream initialize.
@@ -336,7 +334,7 @@ PBBootstrap >> monticelloNetworkPackageNames [
 { #category : 'package-names' }
 PBBootstrap >> monticelloPackageNames [
 
-	^ #('System-Model' 'Ring-OldChunkImporter' 'Zinc-Resource-Meta-Core' 'System-Changes' 'Ring-Definitions-Core' 'Compression' 'Monticello-Model' 'Monticello' 'Ring-Definitions-Monticello' )
+	^ #('System-Model' 'Ring-OldChunkImporter' 'Zinc-Resource-Meta-Core' 'System-Changes' 'Ring-Definitions-Core' 'Jobs' 'Compression' 'Monticello-Model' 'Monticello' 'Ring-Definitions-Monticello' )
 ]
 
 { #category : 'accessing' }
@@ -397,7 +395,7 @@ PBBootstrap >> prepareEnvironmentForExport [
 PBBootstrap >> prepareEnvironmentForHermes [
 	ringEnvironment := self originRepository asRing2EnvironmentWith: self allPackagesForHermes.
 	ringEnvironment fixProtoObjectClassSuperclass.
-	ringEnvironment addGlobalsNamed: #(Smalltalk Transcript FileStream MacRomanTextConverter ChangeSet SourceFiles Processor Display Sensor UTF8TextConverter Undeclared TextConstants).
+	ringEnvironment addGlobalsNamed: #(Smalltalk Transcript FileStream MacRomanTextConverter SourceFiles Processor Display Sensor UTF8TextConverter Undeclared TextConstants).
 	ringEnvironment clean
 ]
 

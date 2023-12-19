@@ -16,7 +16,11 @@ Class {
 		'model',
 		'scopes',
 		'refactoring',
-		'previewPresenterClass'
+		'previewPresenterClass',
+		'selectDialog',
+		'requestDialog',
+		'informDialog',
+		'stoppedBeforeApplyingRefactoring'
 	],
 	#category : 'Refactoring-UI-Drivers',
 	#package : 'Refactoring-UI',
@@ -40,8 +44,11 @@ RBInteractionDriver >> application [
 { #category : 'execution' }
 RBInteractionDriver >> applyChanges [
 
-	self openPreviewWithChanges: self changes
-
+	| applied |
+	applied := self openPreviewWithChanges: self changes.
+	"it looks like there is a bug in Spec"
+	"stoppedBeforeApplyingRefactoring := applied isCancelled not
+	isCancelled returns always true so I will use it when this will be fixed in spec."
 ]
 
 { #category : 'execution' }
@@ -51,10 +58,57 @@ RBInteractionDriver >> changes [
 
 ]
 
+{ #category : 'private' }
+RBInteractionDriver >> defaultInformDialog [
+
+  ^ self application newInform
+]
+
+{ #category : 'configuration' }
+RBInteractionDriver >> defaultRequestDialog [
+	"We do not use a subclassResponsibility because all the drivers do not have to."
+
+	^ SpRequestDialog new
+]
+
+{ #category : 'configuration' }
+RBInteractionDriver >> defaultSelectDialog [
+	"We do not use a subclassResponsibility because all the drivers do not have to."
+	
+	^ self
+	
+]
+
 { #category : 'execution' }
 RBInteractionDriver >> furtherActionFor: aReport [
 	
 	aReport browse
+]
+
+{ #category : 'private' }
+RBInteractionDriver >> informDialog [
+	"I'm hook to inject mock in tests. The driver should specialize defaultInformDialog"
+	
+	^ informDialog ifNil: [ informDialog := self defaultInformDialog ]
+]
+
+{ #category : 'private' }
+RBInteractionDriver >> informDialog: aDialog [
+
+	 informDialog := aDialog
+]
+
+{ #category : 'initialization' }
+RBInteractionDriver >> initialize [
+
+	super initialize.
+	stoppedBeforeApplyingRefactoring := false.
+	"for now unused but we should soon use it. Check applyChanges"
+]
+
+{ #category : 'accessing' }
+RBInteractionDriver >> model: aRBBrowserEnvironment [ 
+	model := aRBBrowserEnvironment
 ]
 
 { #category : 'execution' }
@@ -95,8 +149,35 @@ RBInteractionDriver >> refactoringScopeOn: aScope [
 	^ RBNamespace onEnvironment: aScope asRBEnvironment
 ]
 
+{ #category : 'private' }
+RBInteractionDriver >> requestDialog [
+	"I'm hook for the injection of mock in tests. Subclasses should only redefine defaultRequestDialog if needed."
+	
+	^ requestDialog ifNil: [ requestDialog := self defaultRequestDialog ]
+]
+
+{ #category : 'accessing' }
+RBInteractionDriver >> requestDialog: aStRequestDialog [
+
+	requestDialog := aStRequestDialog
+]
+
 { #category : 'execution' }
 RBInteractionDriver >> runRefactoring [
 
 	self subclassResponsibility
+]
+
+{ #category : 'configuration' }
+RBInteractionDriver >> selectDialog [
+	
+	^ selectDialog ifNil: [ selectDialog := self defaultSelectDialog ].
+	
+]
+
+{ #category : 'configuration' }
+RBInteractionDriver >> selectDialog: aDialog [
+	
+	selectDialog := aDialog 
+	
 ]

@@ -18,7 +18,7 @@ RBRefactoringBrowserTest >> executeRefactoring: aRefactoring [
 
 { #category : 'private' }
 RBRefactoringBrowserTest >> objectClassVariable [
-	^Object classPool keys detect: [:each | true]
+	^Object classVariables first name
 ]
 
 { #category : 'helpers' }

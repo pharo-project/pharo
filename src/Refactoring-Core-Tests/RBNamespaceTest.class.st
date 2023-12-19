@@ -256,7 +256,7 @@ RBNamespaceTest >> testRedefineClassChange [
 			name: #RBNamespaceTest;
 			slots: { #a };
 			sharedVariables: { #A };
-			sharedPools: 'TextConstants';
+			sharedPools: #(TextConstants);
 			package: #'Refactory-Testing' ].
 	self assert: (namespace includesClassNamed: #Object).
 	self assert: (namespace classNamed: #Object) isNotNil

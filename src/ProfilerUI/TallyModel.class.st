@@ -42,19 +42,35 @@ TallyModel >> browseItem [
 
 { #category : 'accessing' }
 TallyModel >> childrenItems [
-	| perCent threshold |
 
-	model tallyRoot ifNil: [ ^#() ].
+	| perCent threshold |
+	model tallyRoot ifNil: [ ^ #(  ) ].
 
 	perCent := model showNodeThreshold.
 	threshold := (perCent asFloat / 100 * model tallyRoot tally) rounded.
 
-	^ (self item sonsOver: threshold) asSortedCollection reverse
+	^ (self item sonsOver: threshold) asSortedCollection
 ]
 
 { #category : 'accessing' }
 TallyModel >> data [
 	^ self
+]
+
+{ #category : 'accessing' }
+TallyModel >> detectPathOfMethodSelector: aMethodSelector maxDepth: aMaxDepth [
+
+	aMaxDepth < 0 ifTrue: [ ^ #(  ) ].
+	self methodSelector = aMethodSelector ifTrue: [ ^ Array with: self ].
+
+	self sons do: [ :each |
+		| path |
+		path := each
+			        detectPathOfMethodSelector: aMethodSelector
+			        maxDepth: aMaxDepth - 1.
+		path ifNotEmpty: [ ^ (Array with: self) , path ] ].
+
+	^ #(  )
 ]
 
 { #category : 'actions' }
@@ -96,17 +112,27 @@ TallyModel >> menu: menu shifted: b [
 ]
 
 { #category : 'accessing' }
+TallyModel >> methodClassName [
+
+	^ item methodClassName
+]
+
+{ #category : 'accessing' }
 TallyModel >> methodName [
 
-	^ item methodClassName , '>>' , (item method
-		   ifNotNil: [ item method selector ]
-		   ifNil: [ 'nil' ])
+	^ self methodClassName , '>>' , self methodSelector
 ]
 
 { #category : 'accessing' }
 TallyModel >> methodOrBlock [
-	item ifNil: [ ^ nil ].
-	^ item method
+
+	^ item ifNotNil: [ :theItem | theItem method ]
+]
+
+{ #category : 'accessing' }
+TallyModel >> methodSelector [
+
+	^ item method ifNotNil: [ item method selector ] ifNil: [ 'nil' ]
 ]
 
 { #category : 'path' }

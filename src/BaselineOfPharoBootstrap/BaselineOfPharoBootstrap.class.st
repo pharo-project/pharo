@@ -65,14 +65,13 @@ BaselineOfPharoBootstrap class >> sUnitPackageNames [
 	^ self packagesOfGroupNamed: #SUnitGroup
 ]
 
-{ #category : 'baseline' }
+{ #category : 'baselines' }
 BaselineOfPharoBootstrap >> baseline: spec [
 	<baseline>
 
 	spec for: #common do: [
 		spec package: 'AST-Core'.
 		spec package: 'Announcements-Core'.
-		spec package: 'Colors'.
 		spec package: 'Collections-Abstract'.
 		spec package: 'Collections-Arithmetic'.
 		spec package: 'Collections-Atomic'.
@@ -85,14 +84,15 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		spec package: 'Collections-Support'.
 		spec package: 'Collections-Unordered'.
 		spec package: 'Collections-Weak'.
+		spec package: 'ClassDefinitionPrinters'.
 		spec package: 'Debugging-Core'.
 		spec package: 'Files'.
 		spec package: 'FileSystem-Path'.
 		spec package: 'Hermes'.
 		spec package: 'Hermes-Extensions'.
 
-		spec package: 'Jobs'.
 		spec package: 'Kernel'.
+		spec package: 'Kernel-CodeModel'.
 		spec package: 'Kernel-BytecodeEncoders'.
 		spec package: 'Kernel-Chronology-Extras'.
 		spec package: 'NumberParser'.
@@ -107,10 +107,7 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		spec package: 'PharoBootstrap-Initialization'.
 		spec package: 'Random-Core'.
 		spec package: 'ReflectionMirrors-Primitives'.
-		spec package: 'Shift-Changes'.
 		spec package: 'Shift-ClassBuilder'.
-		spec package: 'Shift-ClassInstaller'.
-		spec package: 'Slot-Core'.
 		spec package: 'System-Announcements'.
 		spec package: 'System-BasicCommandLineHandler'.
 		spec package: 'System-CommandLine'.
@@ -148,7 +145,6 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		spec group: 'KernelGroup' with: {
 			'FFI-Kernel'.
 			'Announcements-Core'.
-			'Colors'.
 			'Collections-Abstract'.
 			'Collections-DoubleLinkedList'.
 			'Collections-Native'.
@@ -163,20 +159,16 @@ BaselineOfPharoBootstrap >> baseline: spec [
 			'FileSystem-Path'.
 			'Hermes'.
 			'Kernel'.
+			'Kernel-CodeModel'.
 			'Kernel-BytecodeEncoders'.
 			'Transcript-NonInteractive'.
 			'PharoBootstrap-Initialization'.
-			'Random-Core'.
-			'Shift-Changes'.
 			'Shift-ClassBuilder'.
-			'Shift-ClassInstaller'.
-			'Slot-Core'.
 			'System-Announcements'.
 			'System-BasicCommandLineHandler'.
 			'System-CommandLine'.
 			'System-CommandLineHandler'.
 			'System-Finalization'.
-			'System-Hashing'.
 			'System-Platforms'.
 			'System-SessionManager'.
 			'System-Sources'.
@@ -205,12 +197,14 @@ BaselineOfPharoBootstrap >> baseline: spec [
 			'Collections-Atomic'.
 			'CodeImport'.
 			'CodeImportCommandLineHandlers'.
-			'Jobs'.
+			'ClassDefinitionPrinters'.
 			'System-SourcesCondenser'.
 			'Debugging-Utils'.
 			'OpalCompiler-Core'}.
 		
 		spec group: 'FileSystemGroup' with: {
+			'Random-Core'.
+			'System-Hashing'.
 			'Network-UUID'.
 			'FileSystem-Core'.
 			'FileSystem-Disk'}.

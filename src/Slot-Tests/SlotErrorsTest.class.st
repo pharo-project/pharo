@@ -12,12 +12,6 @@ SlotErrorsTest >> assertInvalidClassName: aName [
 	self should: [
 		self make: [ :builder |
 			builder name: aName ] ]
-		raise: InvalidGlobalName.
-	self flag: 'should remove class if not raised'.
-
-	self should: [
-		Smalltalk classInstaller
-			validateClassName: aName ]
 		raise: InvalidGlobalName
 ]
 
@@ -231,11 +225,4 @@ SlotErrorsTest >> testUndeclareSlotFixWhenSlotIsLoaded [
 	self assert: (mySlot read: instance) equals: nil.
 	mySlot write: 1 to: instance.
 	self assert: (mySlot read: instance) equals: 1
-]
-
-{ #category : 'tests' }
-SlotErrorsTest >> testValidateClassName [
-
-	Smalltalk classInstaller
-		validateClassName: #GoodClassNameThatShouldNotExist
 ]

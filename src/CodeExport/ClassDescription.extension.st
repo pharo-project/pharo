@@ -53,6 +53,24 @@ ClassDescription >> fileOutOn: aFileStream [
 ]
 
 { #category : '*CodeExport' }
+ClassDescription >> fileOutProtocol: protocolName on: aFileStream [
+	"File a description of the receiver's protocolName on aFileStream."
+
+	aFileStream
+		cr;
+		nextPut: $!;
+		nextChunkPut: self name , ' reorganize';
+		cr;
+		nextChunkPut: (String streamContents: [ :aStream |
+							 aStream
+								 nextPut: $(;
+								 nextPutAll: protocolName printString;
+								 nextPut: $);
+								 cr ]);
+		cr
+]
+
+{ #category : '*CodeExport' }
 ClassDescription >> fileOutProtocolsOn: aFileStream [
 	"File a description of the receiver's organization on aFileStream."
 

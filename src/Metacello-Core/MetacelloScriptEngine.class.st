@@ -133,7 +133,8 @@ MetacelloScriptEngine >> get [
 { #category : 'project lookup' }
 MetacelloScriptEngine >> getBaselineProjectUnconditionalLoad: unconditionalLoad [
     | project |
-    project := (self getBaselineUnconditionalLoad: unconditionalLoad) project.
+    project := (self getBaselineUnconditionalLoad: unconditionalLoad) new
+      initalizeProjectWithRepositoryDescription: self projectSpec repositories map keys.
     project version spec repositories: self repositories copy.
     ^ project
 ]

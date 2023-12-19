@@ -2,15 +2,12 @@ Extension { #name : 'GZipReadStream' }
 
 { #category : '*System-FileRegistry' }
 GZipReadStream class >> fileReaderServicesForFile: fullName suffix: suffix [
+
 	<fileService>
 	| services |
 	services := OrderedCollection new.
-	(#('gz' '*') includes: suffix)
-		ifFalse: [ ^ services ].
-	suffix = '*' | (fullName asLowercase endsWith: '.cs.gz') | (fullName asLowercase endsWith: '.mcs.gz')
-		ifTrue: [ services add: self serviceFileIn.
-			(Smalltalk globals includesKey: #ChangeSorter)
-				ifTrue: [ services add: self serviceFileIntoNewChangeSet ] ].
+	(#( 'gz' '*' ) includes: suffix) ifFalse: [ ^ services ].
+	suffix = '*' | (fullName asLowercase endsWith: '.cs.gz') | (fullName asLowercase endsWith: '.mcs.gz') ifTrue: [ services add: self serviceFileIn ].
 	services addAll: self services.
 	^ services
 ]

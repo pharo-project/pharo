@@ -36,7 +36,7 @@ ClyRemoveMethodGroupCommand >> defaultMenuItemName [
 { #category : 'execution' }
 ClyRemoveMethodGroupCommand >> execute [
 
-	methodGroups do: #removeWithMethods
+	methodGroups do: [ :each | each removeWithMethods ]
 ]
 
 { #category : 'execution' }

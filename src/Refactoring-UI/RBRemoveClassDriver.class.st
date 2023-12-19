@@ -12,8 +12,7 @@ Class {
 		'classes',
 		'haveNoReferences',
 		'noSubclasses',
-		'emptyClasses',
-		'selectDialog'
+		'emptyClasses'
 	],
 	#category : 'Refactoring-UI-Drivers',
 	#package : 'Refactoring-UI',
@@ -120,7 +119,7 @@ RBRemoveClassDriver >> runRefactoring [
 
 { #category : 'initialization' }
 RBRemoveClassDriver >> scopes: refactoringScopes classes: aColclasses [
-	
+
 	scopes := refactoringScopes.
 	model := self refactoringScopeOn: scopes first.
 	classes := aColclasses
@@ -130,13 +129,6 @@ RBRemoveClassDriver >> scopes: refactoringScopes classes: aColclasses [
 RBRemoveClassDriver >> selectDialog [
 	
 	^ selectDialog ifNil: [ selectDialog := self defaultSelectDialog ].
-	
-]
-
-{ #category : 'configuration' }
-RBRemoveClassDriver >> selectDialog: aDialog [
-	
-	selectDialog := aDialog 
 	
 ]
 

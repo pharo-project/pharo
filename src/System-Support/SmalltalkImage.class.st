@@ -342,7 +342,7 @@ SmalltalkImage >> cleanUp [
 
 { #category : 'cleanup' }
 SmalltalkImage >> cleanUp: aggressive [
-	"Clean up. When aggressive is true, this will destroy change sets, etc."
+	"Clean up. When aggressive is true, this will destroy resources, etc."
 	"Smalltalk cleanUp: false"
 	"Smalltalk cleanUp: true"
 
@@ -351,20 +351,20 @@ SmalltalkImage >> cleanUp: aggressive [
 
 { #category : 'cleanup' }
 SmalltalkImage >> cleanUp: aggressive except: exclusions [
-	"Clean up. When aggressive is true, this will destroy resources, change sets, etc.
+	"Clean up. When aggressive is true, this will destroy resources, etc.
 	Leave out any classes specifically listed in exclusions."
 
-	"Smalltalk cleanUp: true except: {Point . ChangeSet}"
+	"Smalltalk cleanUp: true except: {Point}"
 
 	^self cleanUp: aggressive except: exclusions confirming: aggressive
 ]
 
 { #category : 'cleanup' }
 SmalltalkImage >> cleanUp: aggressive except: exclusions confirming: aBool [
-	"Clean up. When aggressive is true, this will destroy resources, change sets, etc.
+	"Clean up. When aggressive is true, this will destroy resources, etc.
 	Leave out any classes specifically listed in exclusions."
 
-	"Smalltalk cleanUp: true except: {Point . ChangeSet}
+	"Smalltalk cleanUp: true except: {Point}
 		- will ask for confirmation"
 	"SmalltalkImage current cleanUp: true except: {} confirming: false
 		- will not ask for confirmation"

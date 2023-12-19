@@ -295,7 +295,7 @@ PSMCPatchMorph >> revertChange: aChange [
 	| loader |
 	loader := MCPackageLoader new.
 	aChange inverse applyTo: loader.
-	loader loadWithName: ChangeSet current name
+	loader load
 ]
 
 { #category : 'private' }

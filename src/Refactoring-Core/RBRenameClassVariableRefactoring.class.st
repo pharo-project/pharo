@@ -34,6 +34,21 @@ RBRenameClassVariableRefactoring class >> rename: aVarName to: aName in: aClass 
 		in: aClass
 ]
 
+{ #category : 'preconditions' }
+RBRenameClassVariableRefactoring >> applicabilityPreconditions [
+
+	^ {
+		  (RBIsNotAMetaclass class: class).
+		  (RBIsValidSharedVariableName name: newName).
+		  (RBIsVariableNotDefinedInHierarchy name: newName class: class).
+		  (RBNameIsGlobalCondition new model: model className: newName) not.
+		  "For now only rename a shared variable that is locally defined in a class."
+		  (RBDirectlyDefinesSharedVariableCondition
+			   classNamed: class name
+			   inModel: self model
+			   sharedVariables: { variableName }) }
+]
+
 { #category : 'accessing' }
 RBRenameClassVariableRefactoring >> newName [
 	^ newName

@@ -15,6 +15,13 @@ Class {
 	#tag : 'VariablesAndSlots'
 }
 
+{ #category : 'tests' }
+ClassVariableTest >> testAsClassVariableCollection [
+
+ 	self assert: 'a b' asClassVariableCollection equals: {#a => ClassVariable. #b => ClassVariable}.
+	self assert: ('a _a a_a b b_' asClassVariableCollection collect: [ :i | i name ]) equals: #(#a #_a #a_a #b #b_)
+]
+
 { #category : 'tests - properties' }
 ClassVariableTest >> testIsReadInMethod [
 
@@ -157,6 +164,11 @@ ClassVariableTest >> testScope [
 	variable := SmalltalkImage classVariableNamed: #CompilerClass.
 	self assert: variable scope equals: SmalltalkImage.
 	self assert: (variable scope lookupVar: variable name) equals: variable
+]
+
+{ #category : 'tests' }
+ClassVariableTest >> testUsingClasses [
+	self assert: (Object classVariableNamed: #DependentsFields) usingClasses anyOne identicalTo: DeepCopier
 ]
 
 { #category : 'tests' }

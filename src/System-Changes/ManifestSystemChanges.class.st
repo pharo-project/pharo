@@ -1,5 +1,5 @@
 "
-Packacke with support for system changes recorded in changesets
+Package with support for system changes recorded. I mainly contains ChangeRecord that represents a change recorded on a file in fileOut format.
 "
 Class {
 	#name : 'ManifestSystemChanges',
@@ -13,9 +13,4 @@ Class {
 ManifestSystemChanges class >> manuallyResolvedDependencies [
 
 	^ #( #'OpalCompiler-Core' #'FileSystem-Disk' #'Collections-Abstract' )
-]
-
-{ #category : 'code-critics' }
-ManifestSystemChanges class >> ruleClassNameInSelectorRuleV1FalsePositive [
-	^ #(#(#(#RGMetaclassDefinition #(#'ChangeSet class' #ChangeSet)) #'2021-10-04T20:06:46.530781+02:00') )
 ]

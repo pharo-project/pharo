@@ -44,7 +44,7 @@ UnicodeTest >> aRandomSelectionOfCodePointsDo: aBlock [
 { #category : 'utilities' }
 UnicodeTest >> checkCorrespondanceOf: aSelector and: aCategoryTag [
 	| cat methodAnswer catFromTable |
-	cat := Unicode classPool at: aCategoryTag.
+	cat := Unicode readClassVariableNamed: aCategoryTag.
 	self
 		aRandomSelectionOfCodePointsDo: [ :cp |
 			methodAnswer := Unicode

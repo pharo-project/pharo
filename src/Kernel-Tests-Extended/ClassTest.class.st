@@ -22,9 +22,7 @@ ClassTest >> classToBeTested [
 { #category : 'setup' }
 ClassTest >> deleteClass [
 
-	testEnvironment at: className ifPresent: [ :class |
-		testingEnvironment at: #ChangeSet ifPresent: [ class removeFromChanges ].
-		class removeFromSystemUnlogged ]
+	testEnvironment at: className ifPresent: [ :class | class removeFromSystemUnlogged ]
 ]
 
 { #category : 'setup' }
@@ -108,7 +106,9 @@ ClassTest >> testAddSlot [
 	self assert: tutu instVarNames equals: #('x').
 	self assert: tutu name equals: #TUTU.
 	tutu addSlot: #y => InstanceVariableSlot.
-	self assert: tutu instVarNames equals: #('x' 'y')
+	self assert: tutu instVarNames equals: #('x' 'y').
+	self assert: (tutu slotNamed: #x) definingClass identicalTo: tutu.
+	self assert: (tutu slotNamed: #y) definingClass identicalTo: tutu.
 ]
 
 { #category : 'tests' }
@@ -122,7 +122,9 @@ ClassTest >> testAddSlotAnonymous [
 	self assert: tutu getName isNil.
 	tutu := tutu addSlot: #y => InstanceVariableSlot.
 	self assert: tutu getName isNil.
-	self assert: tutu instVarNames equals: #('x' 'y')
+	self assert: tutu instVarNames equals: #('x' 'y').
+	self assert: (tutu slotNamed: #x) definingClass identicalTo: tutu.
+	self assert: (tutu slotNamed: #y) definingClass identicalTo: tutu.
 ]
 
 { #category : 'tests - access' }
@@ -134,11 +136,6 @@ ClassTest >> testAllSharedPools [
 	self assert: RootClassPoolUser sharedPools size equals: 1.
 	self assert: ClassMultiplePoolUser sharedPools size equals: 2.	"has shared pools does not take into account the fact that a superclass may use some shared pools"
 	self assertEmpty: SubclassPoolUser sharedPools
-]
-
-{ #category : 'tests - class variables' }
-ClassTest >> testAnyUserOfClassVarNamed [
-	self assert: ((Object anyUserOfClassVarNamed: #DependentsFields) isKindOf: Object)
 ]
 
 { #category : 'tests' }
@@ -216,18 +213,9 @@ ClassTest >> testClassVariableEntanglement [
 				self assert: secondClass myVar equals: 456.
 				self assert: thirdClass myVar equals: 789.
 
-			 ] ensure: [
-				thirdClass
-					removeFromChanges;
-					removeFromSystemUnlogged ].
-		 ] ensure: [
-			secondClass
-				removeFromChanges;
-				removeFromSystemUnlogged ].
-	 ] ensure: [
-		firstClass
-			removeFromChanges;
-			removeFromSystemUnlogged ]
+			 ] ensure: [ thirdClass removeFromSystemUnlogged ].
+		 ] ensure: [ secondClass removeFromSystemUnlogged ].
+	 ] ensure: [ firstClass removeFromSystemUnlogged ]
 ]
 
 { #category : 'tests - accessing - comments' }
@@ -481,6 +469,19 @@ ClassTest >> testRemoveClassSlot [
 	self assert: tutu class instVarNames equals: #()
 ]
 
+{ #category : 'tests' }
+ClassTest >> testRemoveSlot [
+
+	| slotx tutu |
+	tutu := testEnvironment at: #TUTU.
+	tutu addSlot: (slotx := #x => InstanceVariableSlot).
+	tutu addSlot: #y => InstanceVariableSlot.
+	self assert: tutu instVarNames equals: #('x' 'y').
+	tutu removeSlot: slotx.
+	self assert: tutu instVarNames equals: #('y').
+	self assert: (tutu slotNamed: #y) definingClass identicalTo: tutu.
+]
+
 { #category : 'tests - access' }
 ClassTest >> testSharedPoolOfVarNamed [
 
@@ -537,7 +538,7 @@ ClassTest >> testSubclassInstanceVariableNames [
 	class := self class classInstaller make: [ :aBuilder |
 		       aBuilder
 			       name: #SubclassExample;
-			       slotsFromString: 'x y' ].
+			       slots: #(x y) ].
 
 	self assert: (testEnvironment includesKey: #SubclassExample).
 

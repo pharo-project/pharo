@@ -175,18 +175,14 @@ IRSequence >> isEmpty [
 	^sequence isEmpty
 ]
 
+{ #category : 'testing' }
+IRSequence >> isNotEmpty [
+	^sequence isNotEmpty
+]
+
 { #category : 'accessing' }
 IRSequence >> last [
 	^sequence last
-]
-
-{ #category : 'printing' }
-IRSequence >> longPrintOn: stream [
-
-	[IRPrinter new
-		stream: stream;
-		visitNode: self
-	] onDNU: #orderNumber do: [:ex | ex resume: ex receiver]
 ]
 
 { #category : 'accessing' }
@@ -220,7 +216,8 @@ IRSequence >> nonBodySuccessorSequences [
 
 { #category : 'testing' }
 IRSequence >> notEmpty [
-	^sequence notEmpty
+	self deprecated: 'Use #isNotEmpty instead.' transformWith: '`@rcv notEmpty' -> '`@rcv isNotEmpty'.
+	^self isNotEmpty
 ]
 
 { #category : 'accessing' }

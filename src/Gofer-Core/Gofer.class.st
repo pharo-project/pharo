@@ -288,18 +288,8 @@ Gofer >> smalltalkhubUser: aUserName project: aProjectName [
 ]
 
 { #category : 'repositories - places' }
-Gofer >> squeakfoundation: aString [
-	self url: 'http://source.squeakfoundation.org/' , aString
-]
-
-{ #category : 'repositories - places' }
 Gofer >> squeaksource3: aProjectName [
 	self repository: (MCGemstoneRepository location: 'http://ss3.gemtalksystems.com/ss/' , aProjectName)
-]
-
-{ #category : 'repositories - places' }
-Gofer >> squeaksource: aProjectName [
-	self repository: (MCSqueaksourceRepository location: 'http://www.squeaksource.com/' , aProjectName)
 ]
 
 { #category : 'repositories' }

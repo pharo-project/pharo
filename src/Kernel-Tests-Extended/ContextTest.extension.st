@@ -72,17 +72,3 @@ ContextTest >> testSourceNodeExecutedWhenContextIsJustAtStartpc [
 	sourceNode := context sourceNodeExecuted.
 	self assert: sourceNode equals: (self class >> testSelector) ast sendNodes first receiver
 ]
-
-{ #category : '*Kernel-Tests-Extended' }
-ContextTest >> testWriteVariableNamedValue [
-	|localVar|
-	localVar := 2.
-	instVarForTestLookupSymbol := 3.
-	classVarForTestLookupSymbol := 4.
-	thisContext writeVariableNamed: #localVar value: #changed1.
-	self assert: (thisContext readVariableNamed: #localVar) equals: #changed1.
-	thisContext writeVariableNamed: #instVarForTestLookupSymbol value: #changed2.
-	self assert: (thisContext readVariableNamed: #instVarForTestLookupSymbol) equals: #changed2.
-	thisContext writeVariableNamed: #classVarForTestLookupSymbol value: #changed3.
-	self assert: (thisContext readVariableNamed: #classVarForTestLookupSymbol) equals: #changed3
-]

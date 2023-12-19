@@ -10,7 +10,13 @@ Class {
 }
 
 { #category : 'accessing' }
-TallyModelTime >> methodName [
+TallyModelTime >> methodClassName [
 
-	^ item method methodClass name, '>>' , item method selector asString
+	^ item method methodClass name
+]
+
+{ #category : 'accessing' }
+TallyModelTime >> methodSelector [
+
+	^ item method selector asString
 ]

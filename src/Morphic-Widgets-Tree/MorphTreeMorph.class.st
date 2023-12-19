@@ -848,12 +848,12 @@ MorphTreeMorph >> expandedForm [
 ]
 
 { #category : 'expanding-collapsing' }
-MorphTreeMorph >> expandedFormForMorph: aMorph [
-	"Answer the form to use for expanded items."
+MorphTreeMorph >> expandedFormSetForMorph: aMorph [
+	"Answer the form set to use for expanded items."
 
 	^ (aMorph selected and: [self selectionColor luminance < 0.7])
-		ifTrue: [self theme whiteTreeExpandedForm]
-		ifFalse: [self theme treeExpandedForm]
+		ifTrue: [self theme whiteTreeExpandedFormSet]
+		ifFalse: [self theme treeExpandedFormSet]
 ]
 
 { #category : 'expanding-collapsing' }
@@ -1413,10 +1413,10 @@ MorphTreeMorph >> notExpandedForm [
 ]
 
 { #category : 'expanding-collapsing' }
-MorphTreeMorph >> notExpandedFormForMorph: aMorph [
+MorphTreeMorph >> notExpandedFormSetForMorph: aMorph [
 	^ (aMorph selected and: [self selectionColor luminance < 0.7])
-		ifTrue: [self theme whiteTreeUnexpandedForm]
-		ifFalse: [self theme treeUnexpandedForm]
+		ifTrue: [self theme whiteTreeUnexpandedFormSet]
+		ifFalse: [self theme treeUnexpandedFormSet]
 ]
 
 { #category : 'expanding-collapsing' }
