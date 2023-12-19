@@ -110,6 +110,15 @@ SlotTest >> testSlotUsers [
 	self deny: (ToOneRelationSlot slotUsers includes: SlotExamplePerson)
 ]
 
+{ #category : 'tests - misc' }
+SlotTest >> testUsingClasses [
+	| slot |
+	slot := Message slotNamed: #selector.
+	self assert: (slot usingClasses includes: Message).
+	self assert: (slot usingClasses includes: MessageSend).
+	self deny: (slot usingClasses includes: Point)
+]
+
 { #category : 'tests - read/write' }
 SlotTest >> testWriteToContext [
 

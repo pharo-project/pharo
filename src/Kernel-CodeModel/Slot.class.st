@@ -249,6 +249,12 @@ Slot >> owningClass: aClass [
 	owningClass := aClass
 ]
 
+{ #category : 'queries' }
+Slot >> possiblyUsingClasses [
+	"all classes where we could access the slot"
+	^ self definingClass withAllSubclasses
+]
+
 { #category : 'printing' }
 Slot >> printOn: aStream [
 	"Every subclass that adds state must redefine either this method or #definitionString"
@@ -307,6 +313,12 @@ Slot >> size [
 { #category : 'printing' }
 Slot >> storeOn: aStream [
 	^self printOn: aStream
+]
+
+{ #category : 'queries' }
+Slot >> usingClasses [
+	"all classes where the slot read or written"
+	^ self possiblyUsingClasses select: [ :class | class hasMethodAccessingVariable: self ]
 ]
 
 { #category : 'queries' }
