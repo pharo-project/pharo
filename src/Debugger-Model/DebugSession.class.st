@@ -60,7 +60,8 @@ DebugSession class >> defaultContextModelClass [
 
 { #category : 'settings' }
 DebugSession class >> logDebuggerStackToFile [
-	^ LogDebuggerStackToFile ifNil: [LogDebuggerStackToFile := true]
+	^ LogDebuggerStackToFile 
+		ifNil: [ LogDebuggerStackToFile := false ]
 ]
 
 { #category : 'settings' }

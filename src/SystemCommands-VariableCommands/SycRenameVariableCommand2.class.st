@@ -20,7 +20,8 @@ SycRenameVariableCommand2 class >> defaultMenuIconName [
 
 { #category : 'accessing' }
 SycRenameVariableCommand2 >> defaultMenuItemName [
-	^'Rename2'
+
+	^ 'Rename'
 ]
 
 { #category : 'execution' }
