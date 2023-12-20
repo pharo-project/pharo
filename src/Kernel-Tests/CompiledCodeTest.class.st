@@ -325,11 +325,11 @@ CompiledCodeTest >> testLiteralsEvenTheOnesInTheInnerBlocks [
 		equals: {
 				2.
 				(UndeclaredVariable key: #test value: nil).
-				.
+				#runtimeUndeclaredWrite:inContext:.
 				(GlobalVariable key: #Class value: Class).
 				2.
 				(UndeclaredVariable key: #test value: nil).
-				#runtimeUndeclaredWrite:inContext:..
+				#runtimeUndeclaredWrite:inContext:.
 				#( #arrayInBlock ).
 				(GlobalVariable key: #Object value: Object).
 				#name.
