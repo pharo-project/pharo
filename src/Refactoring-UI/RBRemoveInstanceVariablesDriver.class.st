@@ -34,7 +34,8 @@ RBRemoveInstanceVariablesDriver >> browseInstanceVariableReferences [
 
 { #category : 'execution' }
 RBRemoveInstanceVariablesDriver >> changes [
-
+	"We only perform the changes."
+	
 	^ refactoring privateTransform; changes
 ]
 

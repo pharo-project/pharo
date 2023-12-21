@@ -87,6 +87,7 @@ RBMoveMethodToClassSideRefactoring >> checkVariableNamed: aString [
 
 { #category : 'executing' }
 RBMoveMethodToClassSideRefactoring >> generateChanges [
+	"Prepare, check the preconditions, and perform the actual transformation (i.e., creating a list of changes that can be accessible using the changes message). This method should not be invoked from drivers since drivers usually check in finer grained mode the preconditions - and that this stage they already checked the preconditions."
 	
 	self prepareForExecution.
 
@@ -98,6 +99,10 @@ RBMoveMethodToClassSideRefactoring >> generateChanges [
 			self breakingChangePreconditions errorString ].
 
 	self privateTransform.
+	self flag: #todo. 
+	"unclear if we should return self changes. According to the result not. 
+	We should be consistent."
+	
 	^ self changes
 ]
 

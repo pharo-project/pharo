@@ -109,7 +109,8 @@ RBRemoveClassDriver >> removeClassAndPushStateToSubclasses [
 RBRemoveClassDriver >> runRefactoring [
 	
 	self configureRefactoring.
-	refactoring checkApplicabilityPreconditions.
+	refactoring failedApplicabilityPreconditions 
+		ifNotEmpty: [ ^ self inform: 'The class should exist and not be a metaclass' ].
 	self setBreakingChangesPreconditions.
 	haveNoReferences check & emptyClasses check & noSubclasses check
 			ifTrue: [ self applyChanges ]

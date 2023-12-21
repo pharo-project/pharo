@@ -27,7 +27,12 @@ RBCompositeRefactoring >> breakingChangePreconditions [
 
 { #category : 'executing' }
 RBCompositeRefactoring >> generateChanges [
+	""
 	
+	self flag: #todo. 
+	"This method does not have the same flow than other and in particular
+	checkApplicabilityPreconditions is raising an error but it is not caught
+	like the other ones. "
 	self prepareForExecution.
 	self checkApplicabilityPreconditions.
 	self breakingChangePreconditions check ifFalse: [

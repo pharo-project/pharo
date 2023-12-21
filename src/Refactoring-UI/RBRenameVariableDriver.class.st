@@ -18,9 +18,7 @@ Class {
 { #category : 'execution' }
 RBRenameVariableDriver >> changes [
 
-	refactoring changes changes isEmpty ifTrue: [
-		refactoring privateTransform ].
-	^ refactoring changes
+	^ refactoring privateTransform; changes
 ]
 
 { #category : 'execution' }

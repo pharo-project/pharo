@@ -155,9 +155,10 @@ RBRemoveClassRefactoring >> privateTransform [
 
 { #category : 'removing' }
 RBRemoveClassRefactoring >> removeClassChanges [
-
+	"We know that the preconditions are ok! This should only be called by drivers when the preconditions have been met."
+	
+	
 	self privateTransform.
-
 	^ self changes
 ]
 

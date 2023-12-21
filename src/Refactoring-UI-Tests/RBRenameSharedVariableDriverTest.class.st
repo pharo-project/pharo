@@ -22,7 +22,6 @@ RBRenameSharedVariableDriverTest >> testInvalidNameFollowedByAValideOne [
 	requestDialog on: #title: respond: 'nothing'.
 	requestDialog on: #text: respond: 'nothing'.
 	driver requestDialog: requestDialog.
-	driver informDialog: StInformDialogMock new.
 	driver runRefactoring
 ]
 
@@ -44,7 +43,6 @@ RBRenameSharedVariableDriverTest >> testValidNameAndUndefinedVariable [
 	requestDialog on: #title: respond: 'nothing'.
 	requestDialog on: #text: respond: 'nothing'.
 	driver requestDialog: requestDialog.
-	driver informDialog: StInformDialogMock new.
 
 	driver runRefactoring
 ]
@@ -89,7 +87,6 @@ RBRenameSharedVariableDriverTest >> testValidNameAndUsedVariable [
 	requestDialog on: #title: respond: 'nothing'.
 	requestDialog on: #text: respond: 'nothing'.
 	driver requestDialog: requestDialog.
-	driver informDialog: StInformDialogMock new.
 	
 	driver runRefactoring.
 	self assert: driver refactoring changes changes size equals: 1

@@ -24,7 +24,7 @@ RBRenameInstanceVariableDriverTest >> testInvalidNameFollowedByAValidName [
 	requestDialog on: #title: respond: 'nothing'.
 	requestDialog on: #text: respond: 'nothing'.
 	driver requestDialog: requestDialog.
-	driver informDialog: StInformDialogMock new.
+	
 	"it like a smoke test and for the moment we cannot control better what happen."
 	driver runRefactoring
 ]
@@ -50,8 +50,8 @@ RBRenameInstanceVariableDriverTest >> testValidNameAndUndefinedVariable [
 	requestDialog on: #title: respond: 'nothing'.
 	requestDialog on: #text: respond: 'nothing'.
 	driver requestDialog: requestDialog.
-	driver informDialog: StInformDialogMock new.
-	
+
+	self halt.
  	driver runRefactoring 
 ]
 
@@ -72,7 +72,6 @@ RBRenameInstanceVariableDriverTest >> testValidNameAndUnusedVariable [
 	requestDialog on: #title: respond: 'nothing'.
 	requestDialog on: #text: respond: 'nothing'.
 	driver requestDialog: requestDialog.
-	driver informDialog: StInformDialogMock new.
 
 	driver runRefactoring.
 	self assert: driver refactoring changes changes size equals: 1
@@ -94,12 +93,7 @@ RBRenameInstanceVariableDriverTest >> testValidNameAndUsedVariable [
 	requestDialog on: #title: respond: 'nothing'.
 	requestDialog on: #text: respond: 'nothing'.
 	driver requestDialog: requestDialog.
-	driver informDialog: StInformDialogMock new.
-
-
-
-
-
+	
 	driver runRefactoring.
 	"Renaming the references to the variable is not encapsulated in change objects, therefore the only change is the renaming of the variable itself."
 
