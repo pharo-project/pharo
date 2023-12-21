@@ -157,11 +157,10 @@ StRefactoringPreviewPresenter >> initializeDialogWindow: aDialogWindowPresenter 
 	 Override this to set buttons other than the default (Ok, Cancel)."
 	
 	aDialogWindowPresenter
-		addButton: 'Ok' do: [ :presenter | 
+		addButton: 'Cancel' do: [ :presenter | presenter close ];
+		addDefaultButton: 'Ok' do: [ :presenter | 
 			self accept.
-			presenter close ];
-		addButton: 'Cancel' do: [ :presenter | 
-			presenter close ]	
+			presenter close ]
 ]
 
 { #category : 'initialization' }
