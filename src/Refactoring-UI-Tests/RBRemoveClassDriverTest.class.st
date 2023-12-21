@@ -20,6 +20,20 @@ RBRemoveClassDriverTest >> testBadPathRemovingNonEmptySubWithSubclasses [
 ]
 
 { #category : 'tests' }
+RBRemoveClassDriverTest >> testClassDoesNotExist [
+	
+	| pack driver |
+	pack := RBPackageEnvironment packageName: 'Refactoring-DataForTesting'.
+	driver := RBRemoveClassDriver new 
+		scopes: { pack }
+		classes: { MyClassC class}.
+	self setUpDriver: driver.
+
+	self shouldnt: [driver runRefactoring ] raise: RBRefactoringError.  
+	
+]
+
+{ #category : 'tests' }
 RBRemoveClassDriverTest >> testGoodPathClassIsUnusedEmptyNoSubclasses [
 	
 	| pack driver |
