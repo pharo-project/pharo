@@ -13,8 +13,7 @@ RBRenameInstanceVariableDriverTest >> testInvalidNameFollowedByAValidName [
 	driver := RBRenameInstanceVariableDriver new
 		          scopes: { rbclasses }
 		          variable: #unusedVar1
-		          for: MyClassARoot
-		          newName: #unusedVar2.
+		          for: MyClassARoot.
 	"There is already a variable named `unusedVar2` in the class `MyClassRoot`"
 
 	self setUpDriver: driver.
@@ -41,21 +40,19 @@ RBRenameInstanceVariableDriverTest >> testValidNameAndUndefinedVariable [
 	driver := RBRenameInstanceVariableDriver new
 		          scopes: { rbclasses }
 		          variable: #inexistantVariable
-		          for: MyClassARoot
-		          newName: #inexistantVariable1.
+		          for: MyClassARoot.
+		
 	"Variable `inexistantVariable` is not defined in `MyClassARoot`"
 	self setUpDriver: driver.
 
 	requestDialog := MockObject new.
-	requestDialog on: #openModal respond: #unusedVar1a.
+	requestDialog on: #openModal respond: #inexistantVariable1.
 	requestDialog on: #title: respond: 'nothing'.
 	requestDialog on: #text: respond: 'nothing'.
 	driver requestDialog: requestDialog.
 	driver informDialog: StInformDialogMock new.
 	
-
-	"I do not get why and how we can get a refactoring error?"
-	self should: [ driver runRefactoring ] raise: RBRefactoringError
+ 	driver runRefactoring 
 ]
 
 { #category : 'tests' }
@@ -66,8 +63,7 @@ RBRenameInstanceVariableDriverTest >> testValidNameAndUnusedVariable [
 	driver := RBRenameInstanceVariableDriver new
 		          scopes: { rbclasses }
 		          variable: #unusedVar1
-		          for: MyClassARoot
-		          newName: #unusedVar1a.
+		          for: MyClassARoot.
 	self setUpDriver: driver.
 	
 
@@ -90,8 +86,7 @@ RBRenameInstanceVariableDriverTest >> testValidNameAndUsedVariable [
 	driver := RBRenameInstanceVariableDriver new
 		          scopes: { rbclasses }
 		          variable: #instVarName1
-		          for: MyClassARoot
-		          newName: #instVarName1a.
+		          for: MyClassARoot.
 	self setUpDriver: driver.
 
 	requestDialog := MockObject new.

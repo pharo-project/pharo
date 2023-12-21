@@ -13,8 +13,7 @@ RBRenameSharedVariableDriverTest >> testInvalidNameFollowedByAValideOne [
 	driver := RBRenameSharedVariableDriver new
 		          scopes: { rbclasses }
 		          variable: #Shared1
-		          for: MyClassARoot
-		          newName: #Shared2.
+		          for: MyClassARoot.
 	"There is already a variable named `#Shared2` in the class `MyClassRoot`"
 	self setUpDriver: driver.
 	requestDialog := MockObject new.
@@ -36,8 +35,7 @@ RBRenameSharedVariableDriverTest >> testValidNameAndUndefinedVariable [
 	driver := RBRenameSharedVariableDriver new
 		          scopes: { rbclasses }
 		          variable: #Shared3
-		          for: MyClassARoot
-		          newName: #Shared3a.
+		          for: MyClassARoot.
 	"Variable `Shared3` is not defined in `MyClassARoot`"
 	self setUpDriver: driver.
 	requestDialog := MockObject new.
@@ -59,8 +57,7 @@ RBRenameSharedVariableDriverTest >> testValidNameAndUnusedVariable [
 	driver := RBRenameSharedVariableDriver new
 		          scopes: { rbclasses }
 		          variable: #Shared2
-		          for: MyClassARoot
-		          newName: #Shared2a.
+		          for: MyClassARoot.
 	self setUpDriver: driver.
 	requestDialog := MockObject new.
 	requestDialog on: #openModal respond: #Shared277676.
@@ -81,8 +78,7 @@ RBRenameSharedVariableDriverTest >> testValidNameAndUsedVariable [
 	driver := RBRenameSharedVariableDriver new
 		          scopes: { rbclasses }
 		          variable: #Shared2
-		          for: MyClassARoot
-		          newName: #Shared2a.
+		          for: MyClassARoot.
 	self setUpDriver: driver.
 
 	"Renaming the references to the variable is not encapsulated in change objects, 
