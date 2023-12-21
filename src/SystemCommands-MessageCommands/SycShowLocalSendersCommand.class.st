@@ -2,42 +2,42 @@
 This command find the senders of a given method in the classes upper in the inheritance chain above a given method.
 "
 Class {
-	#name : 'SycHierarchicalSendersCommand',
+	#name : 'SycShowLocalSendersCommand',
 	#superclass : 'SycChangeMessageSignatureCommand',
 	#category : 'SystemCommands-MessageCommands',
 	#package : 'SystemCommands-MessageCommands'
 }
 
 { #category : 'execution' }
-SycHierarchicalSendersCommand >> applyResultInContext: a [
+SycShowLocalSendersCommand >> applyResultInContext: a [
 ]
 
 { #category : 'accessing' }
-SycHierarchicalSendersCommand >> defaultMenuIconName [
+SycShowLocalSendersCommand >> defaultMenuIconName [
 
 	^ #edit
 ]
 
 { #category : 'accessing' }
-SycHierarchicalSendersCommand >> defaultMenuItemName [
+SycShowLocalSendersCommand >> defaultMenuItemName [
 
 	^ 'Hierarchical senders'
 ]
 
 { #category : 'execution' }
-SycHierarchicalSendersCommand >> execute [
+SycShowLocalSendersCommand >> execute [
 
 	Smalltalk tools messageList browse: self searchInTheWholeHierarchy.
 ]
 
 { #category : 'testing' }
-SycHierarchicalSendersCommand >> isComplexRefactoring [
+SycShowLocalSendersCommand >> isComplexRefactoring [
 
 	^ false
 ]
 
 { #category : 'execution' }
-SycHierarchicalSendersCommand >> searchInTheWholeHierarchy [
+SycShowLocalSendersCommand >> searchInTheWholeHierarchy [
 
 	^ refactoredClass withAllSuperAndSubclasses 
 		flatCollect: [ :class |

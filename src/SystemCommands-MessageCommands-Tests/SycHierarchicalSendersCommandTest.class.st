@@ -2,15 +2,14 @@ Class {
 	#name : 'SycHierarchicalSendersCommandTest',
 	#superclass : 'TestCase',
 	#category : 'SystemCommands-MessageCommands-Tests',
-	#package : 'SystemCommands-MessageCommands',
-	#tag : 'Tests'
+	#package : 'SystemCommands-MessageCommands-Tests'
 }
 
 { #category : 'tests' }
 SycHierarchicalSendersCommandTest >> testSearchInTheWholeHierarchy [
 
 	| senders |
-	senders := SycHierarchicalSendersCommand new
+	senders := SycShowLocalSendersCommand new
 			refactoredClass: SycMockClassForHierarhicalSenderB;
 			originalMessage: (SycMockClassForHierarhicalSenderB >> #referredSelector);
 			searchInTheWholeHierarchy.

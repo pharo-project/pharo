@@ -2,8 +2,7 @@ Class {
 	#name : 'SycMockClassForHierarhicalSenderB',
 	#superclass : 'SycMockClassForHierarhicalSenderA',
 	#category : 'SystemCommands-MessageCommands-Tests',
-	#package : 'SystemCommands-MessageCommands',
-	#tag : 'Tests'
+	#package : 'SystemCommands-MessageCommands-Tests'
 }
 
 { #category : 'as yet unclassified' }
