@@ -898,7 +898,8 @@ Class >> removeFromSystem: logged [
 	"we add the class to Undeclared so that if references still exist, they will  be automatically fixed if this class is loaded again. We do not check if references exist as it is too slow"
 	
 	(Undeclared includesKey: self name) ifFalse: [
-			Undeclared add: (((self environment associationAt: self name) primitiveChangeClassTo: UndeclaredVariable new) value: nil)].
+		self environment associationAt: self name ifPresent: [  
+			Undeclared add: (((self environment associationAt: self name) primitiveChangeClassTo: UndeclaredVariable new) value: nil)]].
 	
 	self environment forgetClass: self.
 
