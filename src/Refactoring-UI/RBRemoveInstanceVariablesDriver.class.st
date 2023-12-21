@@ -74,7 +74,10 @@ RBRemoveInstanceVariablesDriver >> runRefactoring [
 
 	self configureRefactoring.
 	
-	refactoring checkApplicabilityPreconditions.
+	"Normally from the IDE we should not get bogus variables."
+	"we could call the violatorMessages here to let the applicability preconditions do the job."
+	refactoring failedApplicabilityPreconditions 
+		ifNotEmpty: [ ^ self inform: 'The variable ', refactoring variable,  ' does not exist' ].
 	
 	refactoring breakingChangePreconditions check
 		ifTrue: [ self applyChanges ]
