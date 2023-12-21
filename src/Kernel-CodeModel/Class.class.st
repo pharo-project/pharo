@@ -899,7 +899,7 @@ Class >> removeFromSystem: logged [
 	
 	(Undeclared includesKey: self name) ifFalse: [
 		self environment associationAt: self name ifPresent: [  
-			Undeclared add: (((self environment associationAt: self name) primitiveChangeClassTo: UndeclaredVariable new) value: nil)]].
+			Undeclared add: ((self environment associationAt: self name) primitiveChangeClassTo: UndeclaredVariable new)]].
 	
 	self environment forgetClass: self.
 
