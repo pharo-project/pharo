@@ -954,7 +954,7 @@ CompiledMethodTest >> testUndeclaredReparationWithClass [
 	"Removal of class DOES undeclare users"
 	c removeFromSystem.
 	self assert: method usesUndeclareds.
-	self assert: (nil executeMethod: method) equals: c.
+	self should: [nil executeMethod: method] raise: UndeclaredVariableRead.
 
 	"Thus, adding back repair DOES repair again"
 	c2 := Object subclass: #TestUndeclaredVariable.
