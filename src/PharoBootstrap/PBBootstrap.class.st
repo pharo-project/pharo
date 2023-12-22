@@ -176,9 +176,7 @@ PBBootstrap >> exportMonticelloInStFile [
 
 	self
 		exportPackages: self monticelloPackageNames
-		usingInitializeScript: '
-		ChangeSet initialize.
-		
+		usingInitializeScript: '		
 		ZipConstants initialize.
 		ZipFileConstants initialize.
 		ZipWriteStream initialize.
@@ -397,7 +395,7 @@ PBBootstrap >> prepareEnvironmentForExport [
 PBBootstrap >> prepareEnvironmentForHermes [
 	ringEnvironment := self originRepository asRing2EnvironmentWith: self allPackagesForHermes.
 	ringEnvironment fixProtoObjectClassSuperclass.
-	ringEnvironment addGlobalsNamed: #(Smalltalk Transcript FileStream MacRomanTextConverter ChangeSet SourceFiles Processor Display Sensor UTF8TextConverter Undeclared TextConstants).
+	ringEnvironment addGlobalsNamed: #(Smalltalk Transcript FileStream MacRomanTextConverter SourceFiles Processor Display Sensor UTF8TextConverter Undeclared TextConstants).
 	ringEnvironment clean
 ]
 

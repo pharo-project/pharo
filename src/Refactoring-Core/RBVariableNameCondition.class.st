@@ -37,7 +37,7 @@ RBVariableNameCondition >> name: aString [
 	name := aString
 ]
 
-{ #category : 'accessing' }
+{ #category : 'displaying' }
 RBVariableNameCondition >> violationMessageOn: stream [
 	self subclassResponsibility 
 ]

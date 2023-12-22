@@ -211,58 +211,53 @@ RGClassStrategy >> defaultSharedPools [
 { #category : 'testing' }
 RGClassStrategy >> definition [
 
-	| aStream poolString |
+	^ String streamContents: [ :aStream |
+		  owner superclass
+			  ifNil: [ aStream nextPutAll: 'nil' ]
+			  ifNotNil: [ aStream nextPutAll: self owner superclass name ].
+		  aStream
+			  nextPutAll: ' << #';
+			  nextPutAll: self owner name.
 
-	self owner slotsNeedFullDefinition
-		ifTrue: [ ^ self definitionWithSlots ].
+		  self layout isFixedLayout ifFalse: [
+			  aStream
+				  crtab;
+				  nextPutAll: 'layout: ';
+				  nextPutAll: self layout layoutName;
+				  nextPutAll: ';' ].
 
-	poolString := self owner sharedPoolsString.
-	aStream := (String new: 800) writeStream.
-	owner superclass
-		ifNil: [ aStream nextPutAll: 'ProtoObject' ]
-		ifNotNil: [ aStream nextPutAll: self owner superclass name ].
-	aStream
-		nextPutAll: self kindOfSubclass;
-		store: self owner name.
-	self owner hasTraitComposition
-		ifTrue:
-			[ aStream
-				cr;
-				tab;
-				nextPutAll: 'uses: ';
-				nextPutAll: self owner traitCompositionString ].
-	aStream
-		cr;
-		tab;
-		nextPutAll: 'instanceVariableNames: ';
-		store: self owner instanceVariablesString.
-	aStream
-		cr;
-		tab;
-		nextPutAll: 'classVariableNames: ';
-		store: self owner classVariablesString.
-	poolString = ''
-		ifFalse:
-			[ aStream
-				cr;
-				tab;
-				nextPutAll: 'poolDictionaries: ';
-				store: poolString ].
-	aStream
-		cr;
-		tab;
-		nextPutAll: 'package: ';
-		store: self owner category asString.
-	owner superclass
-		ifNil:
-			[ aStream
-				nextPutAll: '.';
-				cr.
-			aStream nextPutAll: self owner name.
-			aStream
-				space;
-				nextPutAll: 'superclass: nil' ].
-	^ aStream contents
+		  self owner hasTraitComposition ifTrue: [
+			  aStream
+				  crtab;
+				  nextPutAll: 'traits: ';
+				  nextPutAll: self owner traitCompositionString;
+				  nextPut: $; ].
+		  aStream
+			  crtab;
+			  nextPutAll: 'slots: ';
+			  nextPutAll: self owner slotDefinitionString;
+			  nextPut: $;.
+		  aStream
+			  crtab;
+			  nextPutAll: 'sharedVariables: ';
+			  nextPutAll: self owner classVariableDefinitionString;
+			  nextPut: $;.
+		  self owner sharedPools ifNotEmpty: [
+			  aStream
+				  crtab;
+				  nextPutAll: 'sharedPools: ';
+				  nextPutAll: self owner sharedPoolsDefinitionString;
+			  nextPut: $;. ].
+		  self owner packageTag ifNotNil: [ :tag |
+			  aStream
+				  crtab;
+				  nextPutAll: 'tag: ';
+				  print: tag;
+				  nextPut: $; ].
+		  aStream
+			  crtab;
+			  nextPutAll: 'package: ';
+			  print: self owner package name ]
 ]
 
 { #category : 'fileout' }
@@ -280,44 +275,6 @@ RGClassStrategy >> definitionStringFor: aRGPackage [
 		classDefinitionNamed: self owner name
 		ifAbsent: [ self error: 'No class definition found for the recever' ])
 			definitionString
-]
-
-{ #category : 'testing' }
-RGClassStrategy >> definitionWithSlots [
-
-	| aStream poolString|
-
-	poolString := self owner sharedPoolsString.
-
-	aStream := (String new: 800) writeStream.
-	self owner superclass
-		ifNil: [aStream nextPutAll: 'ProtoObject']
-		ifNotNil: [aStream nextPutAll: self owner superclass name].
-	aStream nextPutAll: ' subclass: ';
-			store: self owner name.
-	(self owner hasTraitComposition) ifTrue: [
-		aStream cr; tab; nextPutAll: 'uses: ';
-			nextPutAll: self owner traitCompositionString].
-
-	(self layout layoutName = #FixedLayout) ifFalse: [
-		aStream cr; tab; nextPutAll: 'layout: ';
-			nextPutAll: self layout layoutName].
-	aStream cr; tab; nextPutAll: 'slots: ';
-			nextPutAll: self owner slotDefinitionString.
-	aStream cr; tab; nextPutAll: 'classVariables: ';
-			nextPutAll: self owner classVariableDefinitionString.
-	poolString = '' ifFalse: [
-		aStream cr; tab; nextPutAll: 'poolDictionaries: ';
-			store: poolString].
-	aStream cr; tab; nextPutAll: 'package: ';
-			store: self category asString.
-
-	self owner superclass ifNil: [
-		aStream nextPutAll: '.'; cr.
-		aStream nextPutAll: self owner name.
-		aStream space; nextPutAll: 'superclass: nil'. ].
-
-	^ aStream contents
 ]
 
 { #category : 'initialization' }

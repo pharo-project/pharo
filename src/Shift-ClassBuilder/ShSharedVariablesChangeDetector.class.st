@@ -10,14 +10,10 @@ Class {
 }
 
 { #category : 'initialization' }
-ShSharedVariablesChangeDetector >> compareFrom: a to: b [
-	^ a asDictionary = b asDictionary
-]
-
-{ #category : 'initialization' }
 ShSharedVariablesChangeDetector >> initialize [
 	super initialize.
-	builderAccessor := [ :e | e layoutDefinition sharedVariables collect:[ :x | x key -> x class ] as: Array ].
-	classAccessor := [ :e | e classVariables collect: [ :x | x key -> x class ] as: Array ].
-	comparer := [ :a :b | self compareFrom: a to: b ]
+	builderAccessor := [ :e | e sharedVariables sorted: [ :a :b | a name < b name ] ].
+ 	classAccessor := [ :e | e classVariables sorted: [ :a :b | a name < b name ] ].
+ 	comparer := [ :a :b | self compareVariables: a with: b ]
+	
 ]

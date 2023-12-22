@@ -25,6 +25,10 @@ Metaclass >> trait: aTraitCompositionOrArray [
 
 { #category : '*Traits' }
 Metaclass >> trait: aTraitCompositionOrArray instanceVariableNames: instVarString [
+	self
+		deprecated: 'Use #trait:slots: instead.'
+		transformWith: '`@rcv trait: `@arg1 instanceVariableNames: `@arg2' -> '`@rcv trait: `@arg1 slots: `@arg2 asSlotCollection'.
+
 
 	^ self trait: aTraitCompositionOrArray slots: instVarString asSlotCollection
 ]
@@ -45,27 +49,25 @@ Metaclass >> trait: aTraitCompositionOrArray slots: slotArray [
 
 { #category : '*Traits' }
 Metaclass >> uses: aTraitCompositionOrArray [
-	"This method will be deprecated better use trait."
 
-	self trait: aTraitCompositionOrArray slots: #()
+	self deprecated: 'Please use #trait: instead' transformWith: '`@receiver trait: `@arg' -> '`@receiver trait: `@arg'.
+
+	^ self trait: aTraitCompositionOrArray
 ]
 
 { #category : '*Traits' }
 Metaclass >> uses: aTraitCompositionOrArray instanceVariableNames: instVarString [
-	"This method will be deprecated better use trait:slots: or trait:instanceVariableNames:"
-	^ self uses: aTraitCompositionOrArray slots: instVarString asSlotCollection
+	
+	self
+		deprecated: 'Use #trait:slots: instead.'
+		transformWith: '`@rcv uses: `@arg1 instanceVariableNames: `@arg2' -> '`@rcv trait: `@arg1 slots: `@arg2 asSlotCollection'.
+	^ self trait: aTraitCompositionOrArray slots: instVarString asSlotCollection
 ]
 
 { #category : '*Traits' }
 Metaclass >> uses: aTraitCompositionOrArray slots: slotArray [
-	| theClass |
-	theClass := self instanceSide.
-
-	theClass := theClass classInstaller
-		update: theClass
-		to: [ :builder |
-			builder
-				classTraitComposition: aTraitCompositionOrArray asTraitComposition;
-				classSlots: slotArray ].
-	^ theClass classSide
+	
+	self
+		deprecated: 'Use #trait:slots: instead.'
+		transformWith: '`@rcv uses: `@arg1 slots: `@arg2' -> '`@rcv trait: `@arg1 slots: `@arg2'.
 ]

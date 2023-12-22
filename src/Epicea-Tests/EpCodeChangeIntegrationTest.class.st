@@ -167,7 +167,7 @@ EpCodeChangeIntegrationTest >> testMetaclassInstanceVariableAdditionWithTrait [
 	aTrait := classFactory newTrait.
 
 	self assert: (self countLogEventsWith: EpClassModification) equals: 0.
-	aClass classSide uses: aTrait asTraitComposition instanceVariableNames: 'x'.
+	aClass classSide trait: aTrait asTraitComposition slots: #( x ).
 	self assert: (self countLogEventsWith: EpClassModification) equals: 1
 ]
 

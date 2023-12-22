@@ -106,6 +106,33 @@ RBExtractMethodTransformationTest >> testFailureWhenMethodDoesNotExist [
 ]
 
 { #category : 'tests' }
+RBExtractMethodTransformationTest >> testFailureWhenTemporaryReadBeforeWritten [
+
+	| class method |
+	model := self modelOnClasses: { self class }.
+	class := model classNamed: self class name.
+	method := 'foo
+			| temp bar |
+			bar := temp.
+			temp := bar * bar.
+			Transcript show: temp printString; cr.
+			^temp * temp'.
+	class compile: method classified: #( #accessing ).
+
+	self
+		should: [
+			(RBExtractMethodTransformation
+				 model: model
+				 extract: '
+			bar := temp.
+			temp := bar * bar.'
+				 from: #foo
+				 to: #foobar
+				 in: class) generateChanges ]
+		raise: RBRefactoringError
+]
+
+{ #category : 'tests' }
 RBExtractMethodTransformationTest >> testNeedsReturn [
 	"When code to be extracted contains explicit returns,
 	then when replacing it with the extracted method name,

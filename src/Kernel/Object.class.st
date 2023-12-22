@@ -1056,7 +1056,7 @@ Object >> isCharacter [
 
 { #category : 'testing' }
 Object >> isClass [
-	<reflection: 'Class structural inspection - Class/Metaclass shift'>
+	<reflection: 'Class structural inspection - Class kind testing'>
 	^ false
 ]
 
@@ -1716,7 +1716,7 @@ Object >> respondsTo: aSymbol [
 	"Answer whether the receiver can understand the specified message selector
 	aSymbol (ie. will respond meaningfully when such a message is sent to the
 	receiver)."
-	<reflection: 'Class structural inspection - Selectors and methods inspection'>
+	<reflection: 'Message sending and code execution - Method lookup'>
 	^self class canUnderstand: aSymbol
 ]
 

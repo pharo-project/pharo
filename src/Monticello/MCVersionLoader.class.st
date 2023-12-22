@@ -53,7 +53,7 @@ MCVersionLoader >> announceLoadStop: aString [
 ]
 
 { #category : 'private' }
-MCVersionLoader >> basicLoadWithNameLike: aString [
+MCVersionLoader >> basicLoad [
 	| loader |
 	
 	self checkForModificationsIfCancel: [ ^ self] ifMerge: [ ^ self mergeVersions ].
@@ -67,7 +67,7 @@ MCVersionLoader >> basicLoadWithNameLike: aString [
 			ifTrue: [ea patch applyTo: loader]
 			ifFalse: [loader updatePackage: ea package withSnapshot: ea snapshot]].
 		
-	loader loadWithNameLike: aString.
+	loader load.
 	versions do: [:ea | ea workingCopy loaded: ea]
 ]
 
@@ -141,7 +141,8 @@ MCVersionLoader >> load [
 { #category : 'loading' }
 MCVersionLoader >> loadWithNameLike: aString [
 	" this is THE central entrypoint for all loading (gopher, metacello, monticello, ...) "
-	^ self announceLoad: aString do: [ self basicLoadWithNameLike: aString ]
+
+	^ self announceLoad: aString do: [ self basicLoad ]
 ]
 
 { #category : 'checking' }

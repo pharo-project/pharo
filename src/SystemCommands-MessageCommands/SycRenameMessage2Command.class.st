@@ -58,7 +58,8 @@ SycRenameMessage2Command >> execute [
 		          scopes: refactoringScopes
 		          model: model
 		          renameMethodSignature: originalMessage
-		          in: refactoredClass.
+		          in: originalMessage methodClass.
+	
 	driver command: self andPostAction: [ toolContext showMessage: originalMessage renamedTo: driver newMessage ].
 	driver runRefactoring.
 	

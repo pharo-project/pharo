@@ -107,6 +107,18 @@ LogicalFont class >> new [
 	^ self all add: super new
 ]
 
+{ #category : 'emphasis values' }
+LogicalFont class >> pharoSlantItalic [
+
+	^ 2
+]
+
+{ #category : 'emphasis values' }
+LogicalFont class >> pharoWeightBold [
+
+	^ 1
+]
+
 { #category : 'system startup' }
 LogicalFont class >> shutDown: quitting [
 
@@ -183,24 +195,6 @@ LogicalFont class >> slantSlanted [
 LogicalFont class >> slantUpright [
 
 	^ 0
-]
-
-{ #category : 'emphasis values' }
-LogicalFont class >> squeakSlantItalic [
-
-	^ 2
-]
-
-{ #category : 'emphasis values' }
-LogicalFont class >> squeakStretchCondensed [
-
-	^ 8
-]
-
-{ #category : 'emphasis values' }
-LogicalFont class >> squeakWeightBold [
-
-	^ 1
 ]
 
 { #category : 'emphasis values' }
@@ -538,8 +532,8 @@ LogicalFont >> emphasis [
 	1=bold, 2=italic, 3=bold-italic etc"
 	| answer |
 	answer := 0.
-	self isBoldOrBolder ifTrue:[answer := answer + self class squeakWeightBold].
-	self isItalicOrOblique ifTrue:[answer := answer + self class squeakSlantItalic].
+	self isBoldOrBolder ifTrue:[answer := answer + self class pharoWeightBold].
+	self isItalicOrOblique ifTrue:[answer := answer + self class pharoSlantItalic].
 	^answer
 ]
 
@@ -558,14 +552,14 @@ LogicalFont >> emphasisString [
 LogicalFont >> emphasized: code [
 	| validCode newWeight newSlant answer validCodeMask |
 	"we only handle bold and italic here since underline/strikeout are drawn separately"
-	validCodeMask := self class squeakWeightBold bitOr: self class squeakSlantItalic.
+	validCodeMask := self class pharoWeightBold bitOr: self class pharoSlantItalic.
 	validCode := code bitAnd: validCodeMask.
 	validCode = 0
 		ifTrue: [ ^ self ].
-	newWeight := (validCode anyMask: self class squeakWeightBold)
+	newWeight := (validCode anyMask: self class pharoWeightBold)
 		ifTrue: [ self class weightBold max: weightValue ]
 		ifFalse: [ weightValue ].
-	newSlant := ((validCode anyMask: self class squeakSlantItalic) and: [ self isItalicOrOblique not ])
+	newSlant := ((validCode anyMask: self class pharoSlantItalic) and: [ self isItalicOrOblique not ])
 		ifTrue: [ self class slantItalic ]
 		ifFalse: [ slantValue ].
 	(weightValue = newWeight and: [ slantValue = newSlant ])

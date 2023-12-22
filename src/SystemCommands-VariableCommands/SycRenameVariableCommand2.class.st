@@ -20,22 +20,24 @@ SycRenameVariableCommand2 class >> defaultMenuIconName [
 
 { #category : 'accessing' }
 SycRenameVariableCommand2 >> defaultMenuItemName [
-	^'Rename2'
+
+	^ 'Rename'
 ]
 
 { #category : 'execution' }
 SycRenameVariableCommand2 >> execute [
-	
-	| variable |
+
+	| variable driver |
 	variable := toolContext lastSelectedVariable.
-	variable isClassVariable
-		ifFalse: [ 
-			(RBRenameInstanceVariableDriver new
-				scopes: toolContext refactoringScopes
-				variable: variable name
-				for: variable definingClass) runRefactoring ]
-		ifTrue: [ self inform: 'pending implementation' ]
 	
+	driver := variable isClassVariable
+		          ifFalse: [ RBRenameInstanceVariableDriver new ]
+		          ifTrue: [ RBRenameSharedVariableDriver new ].
+
+	(driver
+		 scopes: toolContext refactoringScopes
+		 variable: variable name
+		 for: variable definingClass) runRefactoring
 ]
 
 { #category : 'execution' }

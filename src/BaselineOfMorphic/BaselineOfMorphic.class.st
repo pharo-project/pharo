@@ -123,9 +123,6 @@ BaselineOfMorphic >> baseline: spec [
 
 		spec package: 'Morphic-Widgets-TickList'.
 
-		spec package: 'System-Changes-FileServices'.
-
-		spec package: 'StartupPreferences'.
 		spec package: 'System-Identification'.
 
 		"Tool-Base extends and uses morphic, so it depends on it"
@@ -139,15 +136,13 @@ BaselineOfMorphic >> cleanUpAfterMorphicInitialization [
 	MCDataStream initialize.
 	GradientFillStyle initPixelRampCache.
 	FreeTypeCache clearCurrent.
-	ImageMorph classPool at: #DefaultForm put: (Form extent: 1 @ 1 depth: 1).
+	ImageMorph writeClassVariableNamed: #DefaultForm value: (Form extent: 1 @ 1 depth: 1).
 	World cleanseOtherworldlySteppers.
 	MCFileBasedRepository flushAllCaches.
 	MCMethodDefinition shutDown.
 	ExternalDropHandler resetRegisteredHandlers.
 	ScrollBarMorph initializeImagesCache.
 
-	ChangeSet removeChangeSetsNamedSuchThat: [ :each | true ].
-	ChangeSet resetCurrentToNewUnnamedChangeSet.
 	Author reset
 ]
 

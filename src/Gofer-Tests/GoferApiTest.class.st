@@ -26,13 +26,6 @@ GoferApiTest >> assert: aGofer repositories: anArray [
 			self assert: first description equals: second ]
 ]
 
-{ #category : 'tests - repositories - places' }
-GoferApiTest >> testBlueplane [
-
-	gofer blueplane: 'SIXX'.
-	self assert: gofer repositories: #('http://squeaksource.blueplane.jp/SIXX')
-]
-
 { #category : 'tests - repositories' }
 GoferApiTest >> testCustomRepository [
 
@@ -120,13 +113,13 @@ GoferApiTest >> testInitialRepositories [
 { #category : 'tests - repositories - options' }
 GoferApiTest >> testPackageCache [
 
-	gofer squeaksource: 'r1'; squeaksource: 'r2'.
+	gofer squeaksource3: 'r1'; squeaksource3: 'r2'.
 
 	gofer enablePackageCache.
-	self assert: gofer repositories: (Array with: MCCacheRepository uniqueInstance description) , #('http://www.squeaksource.com/r1' 'http://www.squeaksource.com/r2').
+	self assert: gofer repositories: (Array with: MCCacheRepository uniqueInstance description) , #('http://ss3.gemtalksystems.com/ss/r1' 'http://ss3.gemtalksystems.com/ss/r2').
 
 	gofer disablePackageCache.
-	self assert: gofer repositories: #('http://www.squeaksource.com/r1' 'http://www.squeaksource.com/r2')
+	self assert: gofer repositories: #('http://ss3.gemtalksystems.com/ss/r1' 'http://ss3.gemtalksystems.com/ss/r2')
 ]
 
 { #category : 'tests - references' }

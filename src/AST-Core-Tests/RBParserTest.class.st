@@ -1759,6 +1759,11 @@ RBParserTest >> testQuerying [
 	arg1Node := tree whichNodeIsContainedBy: (102 to: 105).
 	self assert: arg1Node name equals: 'arg1'.
 	self assert: (arg1Node statementNode isMessage and: [ arg1Node statementNode selector value = #+ ]).
+	self assert: (arg1Node statementNodeIn: arg1Node methodOrBlockNode) equals: arg1Node statementNode.
+	self assert: (arg1Node statementNodeIn: arg1Node methodOrBlockNode body) equals: arg1Node statementNode.
+	self assert: (arg1Node statementNodeIn: tree) equals: tree body statements last.
+	self assert: (arg1Node statementNodeIn: tree body) equals: tree body statements last.
+	self should: [ arg1Node statementNodeIn: RBSequenceNode new ] raise: NotFound.
 	self assert: (arg1Node whoDefines: 'arg1') isBlock.
 	self assert: (aNode whoDefines: 'a') isMethod.
 	self assert: (aNode whoDefines: 'b') isSequence.

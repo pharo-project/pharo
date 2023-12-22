@@ -361,12 +361,6 @@ Package >> includesExtensionSelector: aSelector ofClass: aClass [
 	^ (self extensionSelectorsForClass: aClass) includes: aSelector asSymbol
 ]
 
-{ #category : 'testing' }
-Package >> includesMethodsAffectedBy: aSystemAnnouncement [
-
-	^aSystemAnnouncement affectsMethodsDefinedInPackage: self
-]
-
 { #category : 'system compatibility' }
 Package >> includesProtocol: protocol ofClass: aClass [
 

@@ -65,7 +65,7 @@ BaselineOfPharoBootstrap class >> sUnitPackageNames [
 	^ self packagesOfGroupNamed: #SUnitGroup
 ]
 
-{ #category : 'baseline' }
+{ #category : 'baselines' }
 BaselineOfPharoBootstrap >> baseline: spec [
 	<baseline>
 
@@ -108,8 +108,6 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		spec package: 'Random-Core'.
 		spec package: 'ReflectionMirrors-Primitives'.
 		spec package: 'Shift-ClassBuilder'.
-		spec package: 'Shift-ClassInstaller'.
-		spec package: 'Slot-Core'.
 		spec package: 'System-Announcements'.
 		spec package: 'System-BasicCommandLineHandler'.
 		spec package: 'System-CommandLine'.
@@ -166,8 +164,6 @@ BaselineOfPharoBootstrap >> baseline: spec [
 			'Transcript-NonInteractive'.
 			'PharoBootstrap-Initialization'.
 			'Shift-ClassBuilder'.
-			'Shift-ClassInstaller'.
-			'Slot-Core'.
 			'System-Announcements'.
 			'System-BasicCommandLineHandler'.
 			'System-CommandLine'.

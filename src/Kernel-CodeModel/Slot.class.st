@@ -162,10 +162,8 @@ Slot >> ensureSlotInitializationFor: aClass [
 { #category : 'comparing' }
 Slot >> hasSameDefinitionAs: otherSlot [
 
-	"equal definition. Slots an have additional state that is not part of the definitoon
-	(e.g. the index in IndexSlot).
-	This method then is overriden to not take that state into account"
-	^self = otherSlot
+	"Equal definition. Slots an have additional state that is not part of the definition (e.g. the index in IndexSlot), and data that is part of it (see subclass override)"
+	^self class = otherSlot class and: [self name = otherSlot name]
 ]
 
 { #category : 'initialization' }
@@ -251,6 +249,12 @@ Slot >> owningClass: aClass [
 	owningClass := aClass
 ]
 
+{ #category : 'queries' }
+Slot >> possiblyUsingClasses [
+	"all classes where we could access the slot"
+	^ self definingClass withAllSubclasses
+]
+
 { #category : 'printing' }
 Slot >> printOn: aStream [
 	"Every subclass that adds state must redefine either this method or #definitionString"
@@ -309,6 +313,12 @@ Slot >> size [
 { #category : 'printing' }
 Slot >> storeOn: aStream [
 	^self printOn: aStream
+]
+
+{ #category : 'queries' }
+Slot >> usingClasses [
+	"all classes where the slot read or written"
+	^ self possiblyUsingClasses select: [ :class | class hasMethodAccessingVariable: self ]
 ]
 
 { #category : 'queries' }

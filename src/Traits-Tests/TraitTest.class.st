@@ -776,6 +776,36 @@ TraitTest >> testTraitThatHasAPragmaHasCorrectTraitSourceAfterRecompile [
 ]
 
 { #category : 'tests' }
+TraitTest >> testTraitUsingTraitsPreserveSourceCode [
+
+	| t1 t2 source |
+	t1 := self createT1.
+	t2 := self newTrait: #T2 traits: t1.
+
+	source := 'aMethod: aString
+	^ aMethod'.
+	t1 compile: source.
+
+	self assert: (t1 >> #aMethod:) sourceCode equals: source.
+	self assert: (t2 >> #aMethod:) sourceCode equals: source
+]
+
+{ #category : 'tests' }
+TraitTest >> testTraitUsingTraitsPreserveSourceCodeOnClassSide [
+
+	| t1 t2 source |
+	t1 := self createT1.
+	t2 := self newTrait: #T2 traits: t1.
+
+	source := 'aMethod: aString
+	^ aMethod'.
+	t1 class compile: source.
+
+	self assert: (t1 class >> #aMethod:) sourceCode equals: source.
+	self assert: (t2 class >> #aMethod:) sourceCode equals: source
+]
+
+{ #category : 'tests' }
 TraitTest >> testTraitsMethodClassSanity [
 
 	(Smalltalk globals allTraits flatCollect: #traitUsers) asSet do: [ :trait |
@@ -803,7 +833,14 @@ TraitTest >> testUsingTraitInAnonymousSubClassAndRedefiningIt [
 
 	self deny: (Object subclasses includes: aClass).
 
-	t1 := self newTrait: #T1 with: #(aSlot).
+	t1 := t1 classInstaller 
+				update: t1
+				to: [ :aBuilder |
+		  						aBuilder
+			  					slots: #(aSlot);
+								 package: self packageNameForTests;
+			  					beTrait ].
+		
 	self assert: (aClass hasSlotNamed: #aSlot).
 
 	self deny: (Object subclasses includes: aClass)

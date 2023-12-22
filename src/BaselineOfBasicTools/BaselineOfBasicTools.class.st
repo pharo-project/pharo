@@ -73,7 +73,6 @@ BaselineOfBasicTools >> baseline: spec [
 		spec
 			package: 'Monticello-GUI-Diff'
 			with: [ spec requires: #( 'Tool-Diff' 'MonticelloGUI' ) ].
-		spec package: 'System-Changes-Tests'. "<= Not sure this one should be here but it is where the classes were loaded before been extracted from Tests package."
 		spec package: 'System-Sources-Tests'. "<= Not sure this one should be here but it is where the classes were loaded before been extracted from Tests package."
 		spec package: 'System-Announcements-Tests'. "<= Not sure this one should be here but it is where the classes were loaded before been extracted from Tests package."
 		spec package: 'RPackage-Tests'.
@@ -82,6 +81,7 @@ BaselineOfBasicTools >> baseline: spec [
 		spec package: 'Network-Mail'.
 		spec package: 'Network-Mail-Tests'.
 		spec package: 'ProfStef-Core'.
+		spec package: 'StartupPreferences'.
 
 		spec baseline: 'Refactoring' with: [
 			spec

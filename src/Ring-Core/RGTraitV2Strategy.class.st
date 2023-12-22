@@ -230,57 +230,31 @@ RGTraitV2Strategy >> defaultSharedPools [
 RGTraitV2Strategy >> definition [
 	"Answer a String that defines the receiver"
 
-	^String streamContents: [:stream |
-		stream nextPutAll: 'Trait'.
-		stream nextPutAll: ' named: ';
-				store: self owner name.
-		stream cr; tab; nextPutAll: 'uses: ';
-				nextPutAll: self owner traitCompositionString.
-		(self owner slots size > 0) ifTrue: [
-			stream
-				crtab;
-				nextPutAll: 'slots: ';
-				nextPutAll: self owner slotDefinitionString].
-		stream cr; tab; nextPutAll: 'package: ';
-				store: self category asString]
-]
-
-{ #category : 'testing' }
-RGTraitV2Strategy >> definitionWithSlots [
-
-	| aStream poolString|
-
-	poolString := self owner sharedPoolsString.
-
-	aStream := (String new: 800) writeStream.
-	self owner superclass
-		ifNil: [aStream nextPutAll: 'ProtoObject']
-		ifNotNil: [aStream nextPutAll: self owner superclass name].
-	aStream nextPutAll: ' subclass: ';
-			store: self owner name.
-	(self owner hasTraitComposition) ifTrue: [
-		aStream cr; tab; nextPutAll: 'uses: ';
-			nextPutAll: self owner traitCompositionString].
-
-	(self layout layoutName = #FixedLayout) ifFalse: [
-		aStream cr; tab; nextPutAll: 'layout: ';
-			nextPutAll: self layout layoutName].
-	aStream cr; tab; nextPutAll: 'slots: ';
-			nextPutAll: self owner slotDefinitionString.
-	aStream cr; tab; nextPutAll: 'classVariables: ';
-			nextPutAll: self owner classVariableDefinitionString.
-	poolString = '' ifFalse: [
-		aStream cr; tab; nextPutAll: 'poolDictionaries: ';
-			store: poolString].
-	aStream cr; tab; nextPutAll: 'package: ';
-			store: self category asString.
-
-	self owner superclass ifNil: [
-		aStream nextPutAll: '.'; cr.
-		aStream nextPutAll: self owner name.
-		aStream space; nextPutAll: 'superclass: nil'. ].
-
-	^ aStream contents
+	^ String streamContents: [ :stream |
+		  stream nextPutAll: 'Trait'.
+		  stream
+			  nextPutAll: ' << #';
+			  nextPutAll: self owner name;
+			  crtab;
+			  nextPutAll: 'traits: ';
+			  nextPutAll: self owner traitCompositionString;
+			  nextPut: $;.
+		  self owner slots size > 0 ifTrue: [
+			  stream
+				  crtab;
+				  nextPutAll: 'slots: ';
+				  nextPutAll: self owner slotDefinitionString;
+				  nextPut: $; ].
+		  self owner packageTag ifNotNil: [ :tag |
+			  stream
+				  crtab;
+				  nextPutAll: 'tag: ';
+				  print: tag;
+				  nextPut: $; ].
+		  stream
+			  crtab;
+			  nextPutAll: 'package: ';
+			  print: self owner package name ]
 ]
 
 { #category : 'initialization' }

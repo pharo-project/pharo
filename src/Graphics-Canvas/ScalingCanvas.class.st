@@ -609,6 +609,13 @@ ScalingCanvas >> stencil: stencilForm at: aPoint sourceRect: sourceRect color: a
 		at: aPoint truncated * scale sourceRect: (sourceRect scaleBy: scale) color: aColor
 ]
 
+{ #category : 'drawing - images' }
+ScalingCanvas >> stencilFormSet: stencilFormSet at: aPoint color: aColor [
+
+	formCanvas stencil: (stencilFormSet asFormAtScale: scale)
+		at: aPoint truncated * scale color: aColor
+]
+
 { #category : 'drawing - support' }
 ScalingCanvas >> transformBy: aDisplayTransform clippingTo: aClipRect during: aBlock smoothing: cellSize [
 

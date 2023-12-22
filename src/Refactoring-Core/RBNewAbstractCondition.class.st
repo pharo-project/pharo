@@ -27,6 +27,11 @@ RBNewAbstractCondition >> not [
 	^RBNewNegationCondition on: self
 ]
 
+{ #category : 'displaying' }
+RBNewAbstractCondition >> violationMessageOn: aStream [
+	self subclassResponsibility 
+]
+
 { #category : 'logical operations' }
 RBNewAbstractCondition >> | aCondition [
 	"(A | B) = (A not & B not) not"

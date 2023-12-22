@@ -3,7 +3,7 @@ I add a number of facilities to basic Behaviors:
 	Named instance variables
 	Category organization for methods
 	The notion of a name of this class (implemented as subclass responsibility)
-	The maintenance of a ChangeSet, and logging changes on a file
+	Logging changes on a file
 	Most of the mechanism for fileOut.
 	
 I am an abstract class, in particular, my facilities are intended for inheritance by two subclasses, Class and Metaclass.
@@ -373,7 +373,7 @@ ClassDescription >> copyAllMethodsFrom: originClass [
 { #category : 'slots' }
 ClassDescription >> definesSlot: aSlot [
 	"Return true whether the receiver defines an instance variable named aString"
-	<reflection: 'Object Inspection - Slot inspection'>
+	<reflection: 'Class structural inspection - Slot inspection'>
 	^ self slots identityIncludes: aSlot
 ]
 
@@ -733,26 +733,6 @@ ClassDescription >> newInstanceFrom: oldInstance variable: variable size: instSi
 	variable
 		ifTrue: [ 1 to: oldInstance basicSize do: [ :offset | new basicAt: offset put: (oldInstance basicAt: offset) ] ].
 	^ new
-]
-
-{ #category : 'private' }
-ClassDescription >> newInstanceFrom: oldInstance variable: variable size: instSize map: map [
-	"Create a new instance of the receiver based on the given old instance.
-	The supplied map contains a mapping of the old instVar names into
-	the receiver's instVars"
-	| new |
-	variable
-		ifTrue: [new := self basicNew: oldInstance basicSize]
-		ifFalse: [new := self basicNew].
-	1 to: instSize do:
-		[:offset |  (map at: offset) > 0 ifTrue:
-			[new instVarAt: offset
-					put: (oldInstance instVarAt: (map at: offset))]].
-	variable
-		ifTrue: [1 to: oldInstance basicSize do:
-					[:offset |
-					new basicAt: offset put: (oldInstance basicAt: offset)]].
-	^new
 ]
 
 { #category : 'accessing - method dictionary' }
@@ -1224,13 +1204,6 @@ ClassDescription >> usesPoolVarNamed: aString [
 	"Only classes may use a pool variable named: aString"
 	<reflection: 'Class structural inspection - Shared pool inspection'>
 	^ false
-]
-
-{ #category : 'compiling' }
-ClassDescription >> wantsChangeSetLogging [
-	"Answer whether code submitted for the receiver should be remembered by the changeSet mechanism."
-
-	^ true
 ]
 
 { #category : 'queries' }

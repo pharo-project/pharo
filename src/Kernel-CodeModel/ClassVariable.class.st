@@ -63,6 +63,13 @@ ClassVariable >> emitValue: methodBuilder [
 ]
 
 { #category : 'testing' }
+ClassVariable >> hasSameDefinitionAs: otherVariable [
+
+ 	"Equal definition. ClassVariable values are not to be taken into account"
+ 	^self class = otherVariable class and: [self key = otherVariable key]
+]
+
+{ #category : 'testing' }
 ClassVariable >> isAccessedBy: aBehavior [
 
 	^ (aBehavior hasMethodAccessingVariable: self) or: [ aBehavior class hasMethodAccessingVariable: self ]
@@ -136,6 +143,12 @@ ClassVariable >> printOn: aStream [
 		store: self name;
 		nextPutAll: ' => ';
 		nextPutAll: self class name
+]
+
+{ #category : 'queries' }
+ClassVariable >> usingClasses [
+
+	^ self possiblyUsingClasses select: [ :class | class hasMethodAccessingVariable: self ]
 ]
 
 { #category : 'queries' }

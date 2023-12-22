@@ -11,7 +11,7 @@ Class {
 
 { #category : 'meta-data' }
 ManifestKernel class >> dependencies [
-	^ #(#'System-Announcements' #'System-CommandLine' #'Collections-Strings' #'Slot-Core' #'Collections-Unordered' #'Collections-Streams' #Files #'System-Object Events' #'Collections-Abstract' #'Collections-Native' #'Collections-Support' #'System-Support' #'Multilingual-Encodings' #'Collections-Sequenceable' #'NewValueHolder-Core' #'System-Sources' #Compiler #'OpalCompiler-Core' #'System-Finalization' #Traits #'Collections-Weak' #UIManager)
+	^ #(#'System-Announcements' #'System-CommandLine' #'Collections-Strings' #'Collections-Unordered' #'Collections-Streams' #Files #'System-Object Events' #'Collections-Abstract' #'Collections-Native' #'Collections-Support' #'System-Support' #'Multilingual-Encodings' #'Collections-Sequenceable' #'NewValueHolder-Core' #'System-Sources' #Compiler #'OpalCompiler-Core' #'System-Finalization' #Traits #'Collections-Weak' #UIManager)
 ]
 
 { #category : 'meta-data - dependency analyser' }
@@ -22,7 +22,7 @@ ManifestKernel class >> ignoredDependencies [
 { #category : 'meta-data - dependency analyser' }
 ManifestKernel class >> manuallyResolvedDependencies [
 
-	^ #( #'System-Settings-Core' #Reflectivity #'Shift-ClassInstaller' )
+	^ #( #'System-Settings-Core' #Reflectivity #'Shift-ClassBuilder' )
 ]
 
 { #category : 'meta-data' }

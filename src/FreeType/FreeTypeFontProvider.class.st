@@ -180,7 +180,7 @@ FreeTypeFontProvider >> fontFor: aLogicalFont familyName: familyName [
 	FT2Library current isAvailable ifFalse:[^nil].
 	info:= self fontInfoFor: aLogicalFont familyName: familyName.
 	info ifNil:[^nil].
-	answer := FreeTypeFont forLogicalFont: aLogicalFont fileInfo: info.
+	simulatedSqueakEmphasis := nil.
 	needsSimulatedBold := aLogicalFont isBoldOrBolder and:[(info isBolderThan: 500) not].
 	needsSimulatedSlant := aLogicalFont isItalicOrOblique and: [info isItalicOrOblique not].
 	(needsSimulatedBold or:[needsSimulatedSlant])
@@ -193,8 +193,8 @@ FreeTypeFontProvider >> fontFor: aLogicalFont familyName: familyName [
 					simulatedSqueakEmphasis := simulatedSqueakEmphasis + squeakBoldEmphasis].
 			needsSimulatedSlant
 				ifTrue:[
-					simulatedSqueakEmphasis := simulatedSqueakEmphasis + squeakItalicEmphasis].
-			answer simulatedEmphasis: simulatedSqueakEmphasis].
+					simulatedSqueakEmphasis := simulatedSqueakEmphasis + squeakItalicEmphasis]].
+	answer := FreeTypeFont forLogicalFont: aLogicalFont fileInfo: info simulatedEmphasis: simulatedSqueakEmphasis.
 	answer face validate.
 	answer face isValid ifFalse:[^nil].  "we may get this if startup causes text display BEFORE receiver has been updated from the system"
 	^answer
