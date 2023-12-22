@@ -251,7 +251,7 @@ Morph >> dispatchKeystrokeForEvent: evt [
 Morph >> exportAs: anExtension using: aWriter [
 
 	| reference |
-	reference := UIManager default
+	reference := self morphicUIManager
 		chooseForSaveFileReference: 'Save Morph as ', anExtension asUppercase
 		extensions: { anExtension }
 		path: (self externalName, '.' , anExtension).

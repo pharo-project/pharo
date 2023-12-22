@@ -20,7 +20,7 @@ PSMCMergePatchMorph >> allConflictsMenu [
 	"Answer the all conflicts menu."
 
 	| menu |
-	menu := UIManager default newMenuIn: self for: self.
+	menu := self morphicUIManager newMenuIn: self for: self.
 	menu
 		addToggle: 'Keep current version of all' translated
 		target: self
