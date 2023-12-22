@@ -346,13 +346,13 @@ TraitTest >> testMethodsAddedInMetaclass [
 
 { #category : 'tests' }
 TraitTest >> testMethodsAddedInMetaclassNotPresentInSubclasses [
+
 	| t1 c1 c2 |
-
 	t1 := self createT1.
-	c1 := self newClass: #C1 with: #(g h) traits: t1.
-	c2 := self newClass: #C2 superclass: c1 traits: {}.
+	c1 := self newClass: #C1 with: #( g h ) traits: t1.
+	c2 := self newClass: #C2 superclass: c1 traits: {  }.
 
-	self assertCollection: c2 class selectors sorted equals: #()
+	self assertCollection: c2 class localSelectors sorted equals: #(  )
 ]
 
 { #category : 'tests' }
@@ -365,9 +365,7 @@ TraitTest >> testMethodsAddedInMetaclassPresentInSubclassesAfterChangingSupercla
 	c1 := self newClass: #C1 with: #(g h) traits: t1.
 	c2 := self newClass: #C2 superclass: c1 traits: {t2}.
 
-	self assertCollection: c2 class selectors sorted equals: #().
-	c1 := self newClass: #C1 with: #(g h) traits: {}.
-
+	self assertCollection: c2 class localSelectors sorted equals: #().
 	self assertCollection: c2 class selectors sorted equals: TraitedClass selectors sorted
 ]
 
@@ -381,9 +379,7 @@ TraitTest >> testMethodsAddedInMetaclassPresentInSubclassesAfterRemovingSupercla
 	c1 := self newClass: #C1 with: #(g h) traits: t1.
 	c2 := self newClass: #C2 superclass: c1 traits: {t2}.
 
-	self assertCollection: c2 class selectors sorted equals: #().
-	c1 removeFromSystem.
-
+	self assertCollection: c2 class localSelectors sorted equals: #().
 	self assertCollection: c2 class selectors sorted equals: TraitedClass selectors sorted
 ]
 
@@ -583,12 +579,16 @@ TraitTest >> testRemovingTraitsRemoveTraitedClassMethodsWithSubclasses [
 	c2 := self newClass: #C2 superclass: c1 traits: t2.
 
 	self assert: (c1 class includesSelector: #traits).
-	self deny: (c2 class includesSelector: #traits).
+	self deny: (c1 class includesLocalSelector: #traits).
+	self assert: (c2 class includesSelector: #traits).
+	self deny: (c2 class includesLocalSelector: #traits).
 
 	c1 := self newClass: #C1 with: #(g h) traits: {}.
 
+	"Now c1 has no more traits, c2 remains unchanged"
 	self deny: (c1 class includesSelector: #traits).
-	self assert: (c2 class includesSelector: #traits)
+	self assert: (c2 class includesSelector: #traits).
+	self deny: (c2 class includesLocalSelector: #traits).
 ]
 
 { #category : 'tests' }

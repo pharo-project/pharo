@@ -125,7 +125,7 @@ TraitedMetaclass >> findOriginMethodOf: aMethod [
 { #category : 'testing' }
 TraitedMetaclass >> hasTraitComposition [
 
-	^ self traitComposition isEmpty not
+	^ composition isEmpty not
 ]
 
 { #category : 'testing - method dictionary' }
@@ -308,7 +308,14 @@ TraitedMetaclass >> slots [
 
 { #category : 'accessing' }
 TraitedMetaclass >> traitComposition [
-	^ composition
+
+	"Return the trait composition used publicly to compute usages and (re) compilation.
+	It must contain TraitedClass to consider the methods defined there.
+	
+	Internally use directly the instance variable `composition`"
+
+	(composition includesTrait: TraitedClass) ifTrue: [ ^ composition ].
+	^ composition + TraitedClass asTraitComposition
 ]
 
 { #category : 'accessing' }
@@ -323,7 +330,8 @@ TraitedMetaclass >> traitComposition: aComposition [
 
 { #category : 'accessing' }
 TraitedMetaclass >> traitCompositionString [
-	^ self traitComposition asString
+
+	^ composition asString
 ]
 
 { #category : 'accessing' }
