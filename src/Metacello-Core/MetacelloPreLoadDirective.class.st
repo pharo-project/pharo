@@ -18,12 +18,6 @@ MetacelloPreLoadDirective >> addTo: aLoaderDirective [
 	spec preLoadDoIt value ifNotNil: [ aLoaderDirective add: self ]
 ]
 
-{ #category : 'actions' }
-MetacelloPreLoadDirective >> executeUsing: aLoader [
-
-	aLoader executePreloadDirective: self
-]
-
 { #category : 'printing' }
 MetacelloPreLoadDirective >> label [
 

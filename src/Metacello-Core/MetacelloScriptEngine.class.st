@@ -12,7 +12,6 @@ Class {
 		'repositoryMap',
 		'cacheGofer',
 		'cacheRepository',
-		'overrideRepositories',
 		'specBuilder',
 		'loader'
 	],
@@ -100,18 +99,6 @@ MetacelloScriptEngine >> defaultVersionString [
 { #category : 'project lookup' }
 MetacelloScriptEngine >> doLoadProjectSpecFrom: aMetacelloPackageSpec [
 
-	"| gofer monticelloRepositories externalReference |"
-"	gofer := Gofer new.
-	monticelloRepositories := self loader repositoriesFrom:
-		                          aMetacelloPackageSpec repositorySpecs.
-	monticelloRepositories do: [ :repo | gofer repository: repo ].
-
-
-	externalReference := self loader
-		                     resolveRecordingPackageSpecReference:
-		                     aMetacelloPackageSpec
-		                     gofer: gofer."
-
 	self loader loadPackageDirective: (MetacelloDirective
 			 loadPackage: aMetacelloPackageSpec
 			 externalReference: aMetacelloPackageSpec repositorySpecs)
@@ -128,7 +115,7 @@ MetacelloScriptEngine >> fetch: required [
 
 	MetacelloProjectRegistration copyRegistryWhile: [
 		self handleNotificationsForAction: [
-			| version1 loadedSpec |
+			| version loadedSpec requiredArray |
 			self setDefaultsAndValidateProjectSpec.
 			[ loadedSpec := self lookupProjectSpecFor: self projectSpec ]
 				on: MetacelloAllowProjectDowngrade , MetacelloAllowProjectUpgrade
@@ -136,11 +123,16 @@ MetacelloScriptEngine >> fetch: required [
 					notification
 						handleOnDownGrade: [ :ex :existing :new | ex allowEvenIfLocked ]
 						onUpgrade: [ :ex :existing :new | ex allowEvenIfLocked ] ].
-			version1 := loadedSpec versionForScriptEngine: self.
-			self root: ([ :version |
-				 required isEmpty
-					 ifTrue: [ version fetchWithEngine: self ]
-					 ifFalse: [ version fetch: required ] ] value: version1) ] ]
+			version := loadedSpec versionForScriptEngine: self.
+
+			requiredArray := required isString
+				                 ifTrue: [ { required } ]
+				                 ifFalse: [ required ].
+			requiredArray ifEmpty: [
+				requiredArray := version spec defaultPackageNames.
+
+				self root:
+					(version doFetchRequiredFromArray: requiredArray withEngine: self) ] ] ]
 ]
 
 { #category : 'actions api' }
@@ -298,7 +290,7 @@ MetacelloScriptEngine >> ignoreImage [
     ^ self options at: #'ignoreImage' ifAbsent: [ false ]
 ]
 
-{ #category : 'options' }
+{ #category : 'initialization' }
 MetacelloScriptEngine >> initialize [
 
 	super initialize.

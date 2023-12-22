@@ -27,7 +27,7 @@ MetacelloAtomicLoad >> finishLoading [
 	postLoads := OrderedCollection new.
 ]
 
-{ #category : 'visiting' }
+{ #category : 'initialization' }
 MetacelloAtomicLoad >> initialize [
 
 	super initialize.

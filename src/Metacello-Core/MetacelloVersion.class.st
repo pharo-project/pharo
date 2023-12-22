@@ -153,12 +153,6 @@ MetacelloVersion >> expandToLoadableSpecNames: nameList [
 	^self spec expandToLoadableSpecNames: nameList
 ]
 
-{ #category : 'actions' }
-MetacelloVersion >> fetch: required [
-
-	^required fetchRequiredForMetacelloMCVersion: self
-]
-
 { #category : 'private' }
 MetacelloVersion >> fetchRequiredFromArray: anArray withEngine: anEngine [
 
@@ -170,12 +164,6 @@ MetacelloVersion >> fetchRequiredFromArray: anArray withEngine: anEngine [
 
 	directives acceptVisitor: (MetacelloFetchTarget on: anEngine).
 	^ directives
-]
-
-{ #category : 'actions' }
-MetacelloVersion >> fetchWithEngine: anEngine [
-
-	^self doFetchRequiredFromArray: self spec defaultPackageNames withEngine: anEngine
 ]
 
 { #category : 'querying' }

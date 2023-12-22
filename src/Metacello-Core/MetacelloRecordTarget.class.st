@@ -17,10 +17,11 @@ MetacelloRecordTarget >> actionLabel [
 ]
 
 { #category : 'private' }
-MetacelloRecordTarget >> atomicLoadPackageOfSpec: packages [
+MetacelloRecordTarget >> atomicLoadPackages: packages ofSpec: spec [
 
 	self specBuilder
 		pushAtomicLoadDirectivesDuring: [
+			self specBuilder currentLoadDirective spec: spec.
 			packages do: [ :pkg | pkg acceptVisitor: self ] ]
 		for: self
 ]
@@ -31,10 +32,11 @@ MetacelloRecordTarget >> currentRepositorySpecs: aCollection [
 ]
 
 { #category : 'private' }
-MetacelloRecordTarget >> linearLoadPackagesOfSpec: packages [
+MetacelloRecordTarget >> linearLoadPackages: packages ofSpec: spec [
 
 	self specBuilder
 		pushLinearLoadDirectivesDuring: [
+			self specBuilder currentLoadDirective spec: spec.
 			packages do: [ :pkg | pkg acceptVisitor: self ] ]
 		for: self
 ]
@@ -169,9 +171,9 @@ MetacelloRecordTarget >> visitVersionSpecChildren: aSpec [
 	
 	["Iterate the internals of the version spec"
 	aSpec project loadType == #atomic ifTrue: [
-		^ self atomicLoadPackageOfSpec: packages ].
+		^ self atomicLoadPackages: packages ofSpec: aSpec ].
 	aSpec project loadType == #linear ifTrue: [
-		^ self linearLoadPackagesOfSpec: packages ].
+		^ self linearLoadPackages: packages ofSpec: aSpec ].
 
 	MetacelloError signal:
 		'Unknown loadType: ' , aSpec project loadType printString]

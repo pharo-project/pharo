@@ -16,12 +16,6 @@ MetacelloPackageLoadDirective >> acceptVisitor: aVisitor [
 	^ aVisitor visitPackageLoadDirective: self
 ]
 
-{ #category : 'actions' }
-MetacelloPackageLoadDirective >> executeUsing: aLoader [
-
-	aLoader executePackageDirective: self
-]
-
 { #category : 'accessing' }
 MetacelloPackageLoadDirective >> externalReference [
 	^ externalReference
@@ -49,6 +43,12 @@ MetacelloPackageLoadDirective >> packageDirectivesDo: aBlock [
 MetacelloPackageLoadDirective >> packageName [
 
 	^ self spec name
+]
+
+{ #category : 'accessing' }
+MetacelloPackageLoadDirective >> packages [
+	
+	^ { spec }
 ]
 
 { #category : 'accessing' }

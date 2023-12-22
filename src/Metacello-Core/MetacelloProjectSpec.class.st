@@ -400,21 +400,6 @@ MetacelloProjectSpec >> ensureLoadUsingEngine: anEngine [
 	pp forceLoadingWithEngine: anEngine
 ]
 
-{ #category : 'loading' }
-MetacelloProjectSpec >> ensureLoadedForDevelopmentUsing: aTarget withEngine: anEngine [
-
-	| ensured |
-	self isLocked ifTrue: [
-		anEngine ensuredMap at: self name put: #present.
-		^ self ].
-1halt.
-	ensured := anEngine ensuredMap at: self name ifAbsent: [ nil ].
-	self projectClass ifNotNil: [ ^ self ].
-
-	ensured ifNil: [
-		self ensureProjectFetch: aTarget withEngine: anEngine ]
-]
-
 { #category : 'private - loading' }
 MetacelloProjectSpec >> ensureProjectFetch: aTarget withEngine: anEngine [
 	"projectClass == nil or version == nil"
@@ -436,15 +421,6 @@ MetacelloProjectSpec >> ensureProjectLoadedWithEngine: anEngine [
 		self projectPackage ifNil: [ ^ true ].
 		self ensureLoadUsingEngine: anEngine ].
 	^ self projectClass isNotNil
-]
-
-{ #category : 'loading' }
-MetacelloProjectSpec >> fetchUsing: aLoader withEngine: anEngine [
-
-	| pp |
-	pp := (anEngine handleLookupProjectSpec: self) projectPackage.
-
-	pp fetchUsing: aLoader withEngine: anEngine
 ]
 
 { #category : 'querying' }
@@ -879,7 +855,6 @@ MetacelloProjectSpec >> relativeCurrentVersion [
 		            on: Error
 		            do: [ :ex |
 			            vrsn blessing == #development ifTrue: [
-				            self ensureLoadUsing: self loader.
 				            vrsn := self versionOrNil.
 				            ex return: (vrsn expandToLoadableSpecNames: loadList) ].
 			            ex pass ].

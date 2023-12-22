@@ -39,12 +39,6 @@ MetacelloDirective >> addTo: aLoaderDirective [
 	aLoaderDirective add: self
 ]
 
-{ #category : 'actions' }
-MetacelloDirective >> executeUsing: aTarget [
-
-	self subclassResponsibility
-]
-
 { #category : 'printing' }
 MetacelloDirective >> label [
 
@@ -53,6 +47,12 @@ MetacelloDirective >> label [
 
 { #category : 'enumerating' }
 MetacelloDirective >> packageDirectivesDo: aBlock [
+]
+
+{ #category : 'accessing' }
+MetacelloDirective >> packages [
+	
+	self subclassResponsibility
 ]
 
 { #category : 'printing' }

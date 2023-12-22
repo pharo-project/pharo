@@ -18,12 +18,6 @@ Collection >> execute: projectSpecBlock against: aScriptExecutor [
 ]
 
 { #category : '*Metacello-Core' }
-Collection >> fetchRequiredForMetacelloMCVersion: aMetacelloMCVersion [
-
-	^aMetacelloMCVersion doFetchRequiredFromArray: self.
-]
-
-{ #category : '*Metacello-Core' }
 Collection >> mergeIntoMetacelloPackages: aMetacelloPackagesSpec [
 
 	self do: [:each | each mergeIntoMetacelloPackages: aMetacelloPackagesSpec ]

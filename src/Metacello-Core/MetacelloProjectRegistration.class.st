@@ -227,7 +227,6 @@ MetacelloProjectRegistration >> canDowngradeTo: aProjectRegistration [
 	(self hasLoadConflicts: aProjectRegistration) ifFalse: [ ^ true ].
 	configurationProjectSpec ifNotNil: [
 		aProjectRegistration configurationProjectSpec ifNotNil: [
-			configurationProjectSpec ensureProjectLoaded.
 			^ configurationProjectSpec canDowngradeTo: aProjectRegistration configurationProjectSpec ] ].
 	^ false
 ]
@@ -241,11 +240,12 @@ MetacelloProjectRegistration >> canUpgradeTo: aProjectRegistration [
 	(self hasLoadConflicts: aProjectRegistration) ifFalse: [ ^ true ].
 	configurationProjectSpec ifNotNil: [
 		aProjectRegistration configurationProjectSpec ifNotNil: [
-			configurationProjectSpec copy ensureProjectLoaded.
-			^ configurationProjectSpec canUpgradeTo: aProjectRegistration configurationProjectSpec ] ].
+			^ configurationProjectSpec canUpgradeTo:
+				  aProjectRegistration configurationProjectSpec ] ].
 	baselineProjectSpec ifNotNil: [
 		aProjectRegistration baselineProjectSpec ifNotNil: [
-			^ baselineProjectSpec canUpgradeTo: aProjectRegistration baselineProjectSpec ] ].
+			^ baselineProjectSpec canUpgradeTo:
+				  aProjectRegistration baselineProjectSpec ] ].
 	^ false
 ]
 

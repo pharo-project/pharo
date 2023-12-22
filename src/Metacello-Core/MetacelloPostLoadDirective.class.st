@@ -18,12 +18,6 @@ MetacelloPostLoadDirective >> addTo: aLoaderDirective [
 	spec postLoadDoIt value ifNotNil: [ aLoaderDirective add: self ]
 ]
 
-{ #category : 'actions' }
-MetacelloPostLoadDirective >> executeUsing: aLoader [
-
-	aLoader executePostloadDirective: self
-]
-
 { #category : 'printing' }
 MetacelloPostLoadDirective >> label [
 

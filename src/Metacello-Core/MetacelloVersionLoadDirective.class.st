@@ -46,6 +46,12 @@ MetacelloVersionLoadDirective >> packageDirectivesDo: aBlock [
 	self loadDirectives do: [:directive | directive packageDirectivesDo: aBlock ].
 ]
 
+{ #category : 'accessing' }
+MetacelloVersionLoadDirective >> packages [
+	
+	^ loadDirectives flatCollect: [ :e | e packages ]
+]
+
 { #category : 'printing' }
 MetacelloVersionLoadDirective >> printLoadDirectivesOn: aStream indent: indent [
 

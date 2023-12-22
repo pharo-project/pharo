@@ -14,7 +14,7 @@ MetacelloSpecBuilder >> currentLoadDirective [
 	^ currentLoadDirective
 ]
 
-{ #category : 'accessing' }
+{ #category : 'initialization' }
 MetacelloSpecBuilder >> initialize [
 
 	super initialize.
