@@ -119,7 +119,7 @@ RubPluggableTextMorphExample >> dropEnabled: aBoolean [
 
 { #category : 'view creation' }
 RubPluggableTextMorphExample >> editButtonMorph [
-	^ UIManager default
+	^ self morphicUIManager
 		newButtonFor: self
 		action: #editSourceCode
 		getEnabled: nil
@@ -156,7 +156,7 @@ RubPluggableTextMorphExample >> help [
 
 { #category : 'view creation' }
 RubPluggableTextMorphExample >> metaSwitchMorph [
-	^ UIManager default
+	^ self morphicUIManager
 		newCheckboxFor: self
 		getSelected: #classIsMeta
 		setSelected: #classIsMeta:
@@ -176,6 +176,12 @@ RubPluggableTextMorphExample >> methodSelectorMorph [
 		autoAccept: true;
 		hResizing: #spaceFill;
 		yourself
+]
+
+{ #category : 'view creation' }
+RubPluggableTextMorphExample >> morphicUIManager [
+	
+	^ MorphicUIManager new
 ]
 
 { #category : 'view creation' }
@@ -246,19 +252,17 @@ RubPluggableTextMorphExample >> promptForCancel [
 	would be overwritten."
 
 	| choice |
-	choice := UIManager default
-		confirm: 'Contents has been modified.\What do you want to do?' translated withCRs
-		trueChoice: 'Accept' translated
-		falseChoice: 'Discard' translated
-		cancelChoice: 'Cancel' translated
-		default: nil.
-	choice
-		ifNotNil: [
-			choice
-				ifTrue: [
-					self changed: #getText.
-					self changed: #clearUserEdits ]
-				ifFalse: [ self changed: #clearUserEdits ] ].
+	choice := self morphicUIManager
+		          confirm:
+			          'Contents has been modified.\What do you want to do?'
+				          translated withCRs
+		          trueChoice: 'Accept' translated
+		          falseChoice: 'Discard' translated
+		          cancelChoice: 'Cancel' translated
+		          default: nil.
+	choice ifNotNil: [
+		choice ifTrue: [ self changed: #getText ].
+		self changed: #clearUserEdits ].
 	^ self canDiscardEdits
 ]
 

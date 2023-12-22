@@ -429,7 +429,7 @@ ProcessBrowser >> changePriority [
 	nameAndRules third
 		ifFalse: [self inform: 'Nope, won''t change priority of ' , nameAndRules first.
 			^ self].
-	str := UIManager default
+	str := self morphicUIManager
 				request: 'New priority'
 		  initialAnswer: selectedProcess priority asString.
 	str ifNil: [str := String new].
@@ -519,7 +519,7 @@ ProcessBrowser >> findContext [
 	| initialProcessIndex initialStackIndex found |
 	initialProcessIndex := self processListIndex.
 	initialStackIndex := self stackListIndex.
-	searchString := UIManager default
+	searchString := self morphicUIManager
 			request: 'Enter a string to search for in the process stack lists'
 	  initialAnswer: searchString.
 	searchString isEmptyOrNil
@@ -804,7 +804,7 @@ ProcessBrowser >> menuStackList: aMenuMorph [
 ProcessBrowser >> messageTally [
 
 	| secString secs |
-	secString := UIManager default
+	secString := self morphicUIManager
 		             request: 'Profile for how many seconds?'
 		             initialAnswer: '4'.
 	secString ifNil: [ secString := String new ].
@@ -836,6 +836,12 @@ ProcessBrowser >> methodText [
 { #category : 'stack list' }
 ProcessBrowser >> moreStack [
 	self updateStackList: 2000
+]
+
+{ #category : 'process actions' }
+ProcessBrowser >> morphicUIManager [
+
+	^ MorphicUIManager new
 ]
 
 { #category : 'process actions' }
