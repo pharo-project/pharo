@@ -4,16 +4,14 @@ This command find the senders of a given method in the classes upper in the inhe
 Class {
 	#name : 'SycShowLocalSendersCommand',
 	#superclass : 'SycMessageCommand',
-	#instVars : [
-		'selectedClass',
-		'selectedMessage'
-	],
 	#category : 'SystemCommands-MessageCommands',
 	#package : 'SystemCommands-MessageCommands'
 }
 
-{ #category : 'execution' }
-SycShowLocalSendersCommand >> applyResultInContext: a [
+{ #category : 'testing' }
+SycShowLocalSendersCommand class >> canBeExecutedInContext: aToolContext [
+
+	^ (super canBeExecutedInContext: aToolContext) and: [ aToolContext selectedMessages size = 1 ]
 ]
 
 { #category : 'accessing' }
@@ -41,41 +39,29 @@ SycShowLocalSendersCommand >> isComplexRefactoring [
 ]
 
 { #category : 'execution' }
-SycShowLocalSendersCommand >> prepareFullExecutionInContext: aToolContext [
-
-	super prepareFullExecutionInContext: aToolContext.
-	selectedMessage := aToolContext lastSelectedMessage.
-	selectedClass := aToolContext lastSelectedClass.
-]
-
-{ #category : 'execution' }
 SycShowLocalSendersCommand >> searchInTheWholeHierarchy [
 
-	^ selectedClass withAllSuperAndSubclasses 
+	^ self selectedClass withAllSuperAndSubclasses 
 		flatCollect: [ :class |
-			(class thoroughWhichMethodsReferTo: selectedMessage selector) , (class class thoroughWhichMethodsReferTo: selectedMessage selector) ].
+			(class thoroughWhichMethodsReferTo: self selectedSelector) , (class class thoroughWhichMethodsReferTo: self selectedSelector) ].
 ]
 
 { #category : 'accessing' }
 SycShowLocalSendersCommand >> selectedClass [
+	"Answer the receiver's selected <Class>"
 
-	^ selectedClass
-]
-
-{ #category : 'accessing' }
-SycShowLocalSendersCommand >> selectedClass: anObject [
-
-	selectedClass := anObject
+	^ self selectedMessage methodClass
 ]
 
 { #category : 'accessing' }
 SycShowLocalSendersCommand >> selectedMessage [
+	"Answer a <SycMessageDescription> describing the selected message"
 
-	^ selectedMessage
+	^ self messages anyOne
 ]
 
-{ #category : 'accessing' }
-SycShowLocalSendersCommand >> selectedMessage: anObject [
+{ #category : 'execution' }
+SycShowLocalSendersCommand >> selectedSelector [
 
-	selectedMessage := anObject
+	^ self selectedMessage selector
 ]

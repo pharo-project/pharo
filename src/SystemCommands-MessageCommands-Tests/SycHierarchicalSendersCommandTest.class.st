@@ -10,9 +10,8 @@ SycHierarchicalSendersCommandTest >> testSearchInTheWholeHierarchy [
 
 	| senders |
 	senders := SycShowLocalSendersCommand new
-			selectedClass: SycMockClassForHierarhicalSenderB;
-			selectedMessage: (SycMockClassForHierarhicalSenderB >> #referredSelector);
-			searchInTheWholeHierarchy.
+		messages: { SycMessageDescription ofMethod: (SycMockClassForHierarhicalSenderB >> #referredSelector) };
+		searchInTheWholeHierarchy.
 	self 
 		assertCollection: senders 
 		hasSameElements: {
