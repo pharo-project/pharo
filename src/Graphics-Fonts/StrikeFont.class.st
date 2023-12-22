@@ -188,22 +188,6 @@ StrikeFont class >> fromStrike: fileName [
 	^self new newFromStrike: fileName
 ]
 
-{ #category : 'font creation' }
-StrikeFont class >> hostFontFromUser [
-	"StrikeFont hostFontFromUser"
-	| fontNames index labels |
-	fontNames := self listFontNames asSortedCollection.
-	labels := (String new: 100) writeStream.
-	fontNames
-		do: [ :fn | labels nextPutAll: fn ]
-		separatedBy: [ labels cr ].
-	index := UIManager default
-		chooseFrom: labels contents substrings
-		title: 'Choose your font'.
-	index = 0 ifTrue: [ ^ nil ].
-	^ fontNames at: index
-]
-
 { #category : 'class initialization' }
 StrikeFont class >> initialize [
 	SessionManager default registerGuiClassNamed: self name
