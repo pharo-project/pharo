@@ -726,6 +726,11 @@ Number >> storeStringBase: base [
 	^ String streamContents: [:strm | self storeOn: strm base: base]
 ]
 
+{ #category : 'testing' }
+Number >> strictlyPositive [
+	^ self > 0
+]
+
 { #category : 'printing' }
 Number >> stringForReadout [
 	^ self rounded printString
