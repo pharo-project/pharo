@@ -211,7 +211,7 @@ WorldState class >> pharoItemsOn: aBuilder [
 { #category : 'world menu items' }
 WorldState class >> quitSession [
 	| response |
-	response := UIManager default
+	response := MorphicUIManager new
 						confirm: 'Save changes before quitting?'
 						trueChoice: 'Save'
 						falseChoice: 'Discard'

@@ -125,16 +125,6 @@ NonInteractiveUIManager >> multiLineRequest: queryString initialAnswer: defaultA
 	^  self nonInteractiveRequest: queryString
 ]
 
-{ #category : 'errors' }
-NonInteractiveUIManager >> nonInteractive [
-	^ ErrorNonInteractive signal
-]
-
-{ #category : 'errors' }
-NonInteractiveUIManager >> nonInteractive: anException [
-	^ ErrorNonInteractive signalForException: anException
-]
-
 { #category : 'non-interactive' }
 NonInteractiveUIManager >> nonInteractiveManager [
 	" Answer an instance of non-interactive manager, which will be used when image runs headless.
