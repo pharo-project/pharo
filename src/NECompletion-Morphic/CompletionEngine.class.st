@@ -377,7 +377,7 @@ CompletionEngine >> resetCompletionDelay [
 
 	completionDelay := [
 			(Delay forMilliseconds: NECPreferences popupAutomaticDelay) wait.
-			self morphicUIManager defer:  [
+			UIManager default defer:  [
 				editor atCompletionPosition ifTrue: [ self openMenuForced: false ]]
 		] fork
 ]
