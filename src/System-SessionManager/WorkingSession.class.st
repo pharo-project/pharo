@@ -142,7 +142,6 @@ WorkingSession >> start: isImageStarting [
 { #category : 'startup - shutdown' }
 WorkingSession >> stop: isImageQuitting [
 
-	Object flushDependents.
 	self runShutdown: isImageQuitting
 ]
 
