@@ -86,7 +86,7 @@ OCCodeReparator >> defineClassOrTrait: aSymbol definitionString: aString [
 	"Prompts the user to define a new class oe trait."
 
 	| classBinding result definitionString |
-	definitionString := UIManager default
+	definitionString := MorphicUIManager new
 		multiLineRequest: 'Edit definition:'
 		initialAnswer: aString
 		answerHeight: 200.
@@ -186,7 +186,7 @@ OCCodeReparator >> openMenu [
 	lines add: labels size.
 	labels add: 'Cancel'.
 	caption := 'Unknown variable: ' , name , ' please correct, or cancel:'.
-	choice := UIManager default chooseFrom: labels lines: lines title: caption.
+	choice := MorphicUIManager new chooseFrom: labels lines: lines title: caption.
 	(actions at: choice ifAbsent: [ ^ false ]) value.
 	^ true
 ]

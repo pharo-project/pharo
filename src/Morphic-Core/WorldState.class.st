@@ -241,13 +241,16 @@ WorldState class >> saveAndQuit [
 
 { #category : 'world menu items' }
 WorldState class >> saveAs [
-	| reference |
-	reference := UIManager default
-		chooseForSaveFileReference: 'Save Image as?'
-		extensions: #('image')
-		path: Smalltalk imageFile nextVersion.
 
-	reference ifNotNil: [ Smalltalk saveAs: reference parent / (reference basenameWithoutExtension: 'image') ]
+	| reference |
+	reference := MorphicUIManager new
+		             chooseForSaveFileReference: 'Save Image as?'
+		             extensions: #( 'image' )
+		             path: Smalltalk imageFile nextVersion.
+
+	reference ifNotNil: [
+		Smalltalk saveAs:
+			reference parent / (reference basenameWithoutExtension: 'image') ]
 ]
 
 { #category : 'world menu items' }

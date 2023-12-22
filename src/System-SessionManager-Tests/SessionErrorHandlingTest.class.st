@@ -46,6 +46,7 @@ SessionErrorHandlingTest >> testErrorCaughtAndDefferedIfExceptionSignaledAtStart
 { #category : 'tests' }
 SessionErrorHandlingTest >> testErrorCaughtIfExceptionSignaledAtShutdownWhenDefaultUiManagerActive [
 	"session errorHandler will be TestWorkingSession that will register caught errors"
+
 	<haltOrBreakpointForTesting>
 	manager register: (TestSessionHandler onShutdown: [ Halt now ]).
 
@@ -59,16 +60,15 @@ SessionErrorHandlingTest >> testErrorCaughtIfExceptionSignaledAtShutdownWhenDefa
 
 { #category : 'tests' }
 SessionErrorHandlingTest >> testErrorHandledIfExceptionSignaledAtShutdownWhenStartupUiManagerActive [
-	<haltOrBreakpointForTesting>
-	manager register: (TestSessionHandler onShutdown: [ ZeroDivide signal ]).
-	session errorHandler:
-		(TestStartupUIManager new
-			sessionManager: manager;
-			yourself).
 
-	self
-		shouldnt: [ session stop: false ]
-		raise: ZeroDivide.
+	<haltOrBreakpointForTesting>
+	manager register:
+		(TestSessionHandler onShutdown: [ ZeroDivide signal ]).
+	session errorHandler: (TestStartupUIManager new
+			 sessionManager: manager;
+			 yourself).
+
+	self shouldnt: [ session stop: false ] raise: ZeroDivide.
 	self
 		assert: (session instVarNamed: 'deferredStartupActions') size
 		equals: 1
@@ -76,9 +76,9 @@ SessionErrorHandlingTest >> testErrorHandledIfExceptionSignaledAtShutdownWhenSta
 
 { #category : 'tests' }
 SessionErrorHandlingTest >> testErrorHandledIfExceptionSignaledAtStartupWhenDefaultUiManagerActive [
-	<haltOrBreakpointForTesting>
 	"session errorHandler will be TestWorkingSession that will register caught errors"
 
+	<haltOrBreakpointForTesting>
 	manager register: (TestSessionHandler onStartup: [ Halt now ]).
 
 	"ensure error handled"

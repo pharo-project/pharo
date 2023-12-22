@@ -196,11 +196,6 @@ Process >> copyStack [
 	^ self copy install: suspendedContext copyStack
 ]
 
-{ #category : 'debugging' }
-Process >> debug [
-	^ self debugWithTitle: 'Debug'
-]
-
 { #category : 'private' }
 Process >> doTerminationFromAnotherProcess [ 
 	"Stop this process forever from another process.

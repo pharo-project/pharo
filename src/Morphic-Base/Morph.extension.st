@@ -433,19 +433,6 @@ Morph >> rowMorphForNode: aNode inColumn: aColumn [
 ]
 
 { #category : '*Morphic-Base' }
-Morph >> setArrowheads [
-	"Let the user edit the size of arrowheads for this object"
-
-	| aParameter result  |
-	aParameter := self renderedMorph valueOfProperty:  #arrowSpec ifAbsent: [PolygonMorph defaultArrowSpec].
-	result := Morph obtainArrowheadFor: 'Head size for arrowheads: ' translated defaultValue: aParameter asString.
-	result ifNotNil:
-			[self renderedMorph  setProperty: #arrowSpec toValue: result]
-		ifNil:
-			[ self inform: 'Invalid input']
-]
-
-{ #category : '*Morphic-Base' }
 Morph >> setShadowOffset: evt [
 	| handle |
 	handle := HandleMorph new forEachPointDo:

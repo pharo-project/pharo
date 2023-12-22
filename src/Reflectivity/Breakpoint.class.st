@@ -524,7 +524,7 @@ Breakpoint >> removeFromNodeProperty [
 Breakpoint >> requestConditionBlock [
 	| script |
 	script := 'true'.
-	script := UIManager default
+	script := MorphicUIManager new
 		request: 'This expression will be evaluated in the context of the position of this breakpoint.
 		You can use variables, globals, `thisContext`, `self` and `super`.
 		`:=` and Pool variables are not supported`'

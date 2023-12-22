@@ -646,23 +646,6 @@ UIManager >> request: aStringOrText initialAnswer: defaultAnswer title: aTitle e
 	^self subclassResponsibility
 ]
 
-{ #category : 'debug requests' }
-UIManager >> requestDebuggerOpeningForProcess: aProcess named: title inContext: aContext [
-
-	<debuggerCompleteToSender>
-
-	Smalltalk logError: aContext printString inContext: aContext.
-
-	self class environment
-		at: #OupsDebugRequest
-		ifPresent: [ :requestClass |
-			(requestClass newForContext: aContext)
-				process: aProcess;
-				label: title;
-				submit.
-			^ self ]
-]
-
 { #category : 'ui requests' }
 UIManager >> requestPassword: queryString [
 	"Create an instance of me whose question is queryString. Invoke it centered
