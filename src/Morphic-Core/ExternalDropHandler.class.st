@@ -23,7 +23,7 @@ ExternalDropHandler class >> chooseServiceFrom: aCollection [
 	"private - choose a service from aCollection asking the user if
 	needed"
 	aCollection size = 1 ifTrue: [^ aCollection anyOne].
-	^ UIManager default chooseFrom: (aCollection collect: [:each |
+	^ self morphicUIManager chooseFrom: (aCollection collect: [:each |
 			each label]) values: aCollection
 ]
 
@@ -83,6 +83,12 @@ ExternalDropHandler class >> lookupServiceBasedHandler: aFileReference [
 	theOne := self chooseServiceFrom: services.
 	^theOne
 		ifNotNil: [ExternalDropHandler type: nil extension: nil action: [:stream | theOne performServiceFor: aFileReference]]
+]
+
+{ #category : 'private' }
+ExternalDropHandler class >> morphicUIManager [
+
+	^ MorphicUIManager new
 ]
 
 { #category : 'accessing' }
