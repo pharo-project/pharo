@@ -40,12 +40,14 @@ UIManagerSessionHandler >> shutdown: isImageQuitting [
 
 	"Prepare the shutdown and the next startup"
 
-	UIManager default: StartupUIManager new
+	UIManager default: StartupUIManager new.
+	ErrorHandler defaultErrorHandler: UIManager default.
 ]
 
 { #category : 'handlers' }
 UIManagerSessionHandler >> startup: isImageStarting [
 	"Install the right UIManager"
 
-	UIManager default: UIManager forCurrentSystemConfiguration
+	UIManager default: UIManager forCurrentSystemConfiguration.
+	ErrorHandler defaultErrorHandler: UIManager default.
 ]
