@@ -315,11 +315,6 @@ CommandLineUIManager >> logYellowDuring: aBlock [
 	^ self logColored: '33' during: aBlock
 ]
 
-{ #category : 'display' }
-CommandLineUIManager >> newDisplayDepthNoRestore: pixelSize [
-	"do nothing"
-]
-
 { #category : 'non-interactive' }
 CommandLineUIManager >> nonInteractiveManager [
 	" Answer an instance of non-interactive manager, which will be used when image runs headless.
@@ -441,13 +436,6 @@ CommandLineUIManager >> textEntry: aStringOrText title: aString [
 { #category : 'ui TEasilyThemed' }
 CommandLineUIManager >> textEntry: aStringOrText title: aString entryText: defaultEntryText [
 	"Open a text entry dialog."
-]
-
-{ #category : 'ui requests' }
-CommandLineUIManager >> uiProcess [
-	" receiver don't have a ui process, associated with it,
-	client should check explicitly if #uiProcess answers nil or not"
-	^ nil
 ]
 
 { #category : 'default actions' }

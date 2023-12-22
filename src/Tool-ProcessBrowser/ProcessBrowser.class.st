@@ -147,7 +147,7 @@ ProcessBrowser class >> initialize [
 
 { #category : 'process control' }
 ProcessBrowser class >> isUIProcess: aProcess [
-	^ aProcess == UIManager default uiProcess
+	^ aProcess == MorphicUIManager uiProcess
 ]
 
 { #category : 'world menu' }
@@ -248,7 +248,7 @@ ProcessBrowser class >> registerWellKnownProcesses [
 		allowStop: false
 		allowDebug: false.
 	self
-		registerWellKnownProcess: [ UIManager default uiProcess ]
+		registerWellKnownProcess: [ MorphicUIManager uiProcess ]
 		label: nil
 		allowStop: false
 		allowDebug: false.

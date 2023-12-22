@@ -520,12 +520,6 @@ UIManager >> multiLineRequest: queryString initialAnswer: defaultAnswer answerHe
 	^self subclassResponsibility
 ]
 
-{ #category : 'display' }
-UIManager >> newDisplayDepthNoRestore: pixelSize [
-
-	self subclassResponsibility
-]
-
 { #category : 'ui requests' }
 UIManager >> newMenuIn: aThemedMorph for: aModel [
 	"Answer a new menu."
@@ -709,16 +703,6 @@ UIManager >> showWaitCursorWhile: aBlock [
 { #category : 'ui process' }
 UIManager >> spawnNewProcess [
 	"Do nothing by default."
-]
-
-{ #category : 'ui process' }
-UIManager >> spawnNewProcessIfThisIsUI: suspendedProcess [
-
-	self uiProcess == suspendedProcess ifTrue: [
-		self spawnNewProcess.
-		^true
-	].
-	^false		"no new process was created"
 ]
 
 { #category : 'ui process' }

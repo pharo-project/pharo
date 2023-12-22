@@ -119,7 +119,7 @@ ImageCleaner >> cleanUpProcesses [
 			FinalizationProcess runningFinalizationProcess.
 			Processor backgroundProcess.
 			SmalltalkImage current lowSpaceWatcherProcess.
-			UIManager default uiProcess.
+			MorphicUIManager uiProcess.
 			Delay schedulingProcess} includes: p ])
 		do: [ :p |
 			p

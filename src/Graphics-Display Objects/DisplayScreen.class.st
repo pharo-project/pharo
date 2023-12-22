@@ -245,7 +245,7 @@ DisplayScreen >> newDepth: pixelSize [
 { #category : 'private' }
 DisplayScreen >> newDepthNoRestore: pixelSize [
 
-	UIManager default newDisplayDepthNoRestore: pixelSize
+	MorphicUIManager new newDisplayDepthNoRestore: pixelSize
 ]
 
 { #category : 'other' }
@@ -262,14 +262,14 @@ DisplayScreen >> replacedBy: aForm do: aBlock [
 { #category : 'other' }
 DisplayScreen >> restore [
 
-	UIManager default restoreDisplay
+	MorphicUIManager new restoreDisplay
 ]
 
 { #category : 'other' }
 DisplayScreen >> restoreAfter: aBlock [
 	"Evaluate the block, wait for a mouse click, and then restore the screen."
 
-	UIManager default restoreDisplayAfter: aBlock
+	MorphicUIManager new restoreDisplayAfter: aBlock
 ]
 
 { #category : 'private' }
