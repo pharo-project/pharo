@@ -228,13 +228,6 @@ SystemNavigation >> browseHierarchy: aClass selector: aSelector [
 ]
 
 { #category : '*Tool-Base' }
-SystemNavigation >> browseInstVarDefs: aClass [
-
-	^ self chooseInstVarFrom: aClass thenDo:
-		[:aVar | self browseAllStoresInto: aVar from: aClass]
-]
-
-{ #category : '*Tool-Base' }
 SystemNavigation >> browseInstVarRefs: aClass [
 
 	^ self chooseInstVarFrom: aClass thenDo:
