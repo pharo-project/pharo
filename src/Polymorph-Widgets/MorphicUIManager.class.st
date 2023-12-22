@@ -367,9 +367,23 @@ MorphicUIManager >> handleDebugRequest: aDebugRequest fromDebuggerSystem: anOups
 
 { #category : 'error handling' }
 MorphicUIManager >> handleError: anError log: shouldLog [
-	shouldLog
-		ifTrue: [ self logError: anError ].
+
+	shouldLog ifTrue: [ self logError: anError ].
 	(OupsDebugRequest newForException: anError) submit
+]
+
+{ #category : 'error handling' }
+MorphicUIManager >> handleNotification: aNotification [
+
+	aNotification messageText traceCr.
+	aNotification resume
+]
+
+{ #category : 'error handling' }
+MorphicUIManager >> handleWarning: aWarning [
+	"The user should be notified of the occurrence of an exceptional occurrence and given an option of continuing or aborting the computation. The description of the occurrence should include any text specified as the argument of the #signal: message."
+
+	(OupsWarningRequest newForException: aWarning) submit
 ]
 
 { #category : 'handle debug requests' }
@@ -641,13 +655,6 @@ MorphicUIManager >> spawnNewProcess [
 		resume
 ]
 
-{ #category : 'ui requests' }
-MorphicUIManager >> systemNotificationDefaultAction: aNotification [
-
-	aNotification messageText traceCr.
-	aNotification resume
-]
-
 { #category : 'ui process' }
 MorphicUIManager >> terminateUIProcess [
 	UIProcess suspend; terminate.
@@ -672,13 +679,6 @@ MorphicUIManager >> unhandledErrorDefaultAction: anException [
 
 	"The current computation is terminated. The cause of the error should be logged or reported to the user. If the program is operating in an interactive debugging environment the computation should be suspended and the debugger activated."
 	anException debug
-]
-
-{ #category : 'handle debug requests' }
-MorphicUIManager >> warningDefaultAction: anException [
-	"The user should be notified of the occurrence of an exceptional occurrence and given an option of continuing or aborting the computation. The description of the occurrence should include any text specified as the argument of the #signal: message."
-	self flag: 'This looks like a code smell'.
-	(OupsWarningRequest newForException: anException) submit
 ]
 
 { #category : 'global state' }

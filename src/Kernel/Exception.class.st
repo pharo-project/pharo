@@ -114,15 +114,6 @@ Exception >> completeProcess: aProcess with: aContext [
 ]
 
 { #category : 'handling' }
-Exception >> debug [
-
-	"requests a debugger on myself"
-
-	<debuggerCompleteToSender>
-	UIManager default requestDebuggerOpeningFor: self
-]
-
-{ #category : 'handling' }
 Exception >> defaultAction [
 	"No one has handled this error, but now give them a chance to decide how to debug it.
 	If none handles this either then open debugger (see UnhandedError-defaultAction).
@@ -408,5 +399,5 @@ Exception >> unhandledErrorAction [
 	"No one has handled this error, then I gave them a chance to decide how to debug it and I raise an UnhandledError. But it was not handled by anybody so that we are here (see nhandedError-defaultAction).
 	It is the final action an exception can do which is normally a debugger in interactive image"
 
- 	^ UIManager default unhandledErrorDefaultAction: self
+	thisProcess handleError: self
 ]

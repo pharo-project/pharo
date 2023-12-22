@@ -411,6 +411,26 @@ UIManager >> handleError: anError [
 
 { #category : 'error handling' }
 UIManager >> handleError: anError log: shouldLog [
+	"Provide a default handling for unhandled error.
+	 We should never reach this code, because it should be overridden by subclasses.
+	 (but we can't put 'self subclassResponsibility' , because it will cause infinite loop,
+	 in case if current ui manager having no override of this method).
+	 This method is only for documentation purposes."
+
+	Smalltalk snapshot: false andQuit: true
+]
+
+{ #category : 'error handling' }
+UIManager >> handleNotification: aNotification [
+
+	"by default, do nothing"
+
+	aNotification resume
+]
+
+{ #category : 'error handling' }
+UIManager >> handleWarning: aWarning [
+	"Handle warning notification. Should be overidden by subclass."
 
 	self subclassResponsibility
 ]
@@ -633,19 +653,6 @@ UIManager >> request: aStringOrText initialAnswer: defaultAnswer title: aTitle e
 ]
 
 { #category : 'debug requests' }
-UIManager >> requestDebuggerOpeningFor: anException [
-
-	<debuggerCompleteToSender>
-	Smalltalk logError: anException printString inContext: anException signalerContext.
-
-	self class environment
-		at: #OupsDebugRequest
-		ifPresent: [ :requestClass |
-			(requestClass newForException: anException) submit.
-			^ self ]
-]
-
-{ #category : 'debug requests' }
 UIManager >> requestDebuggerOpeningForProcess: aProcess named: title inContext: aContext [
 
 	<debuggerCompleteToSender>
@@ -657,36 +664,6 @@ UIManager >> requestDebuggerOpeningForProcess: aProcess named: title inContext: 
 		ifPresent: [ :requestClass |
 			(requestClass newForContext: aContext)
 				process: aProcess;
-				label: title;
-				submit.
-			^ self ]
-]
-
-{ #category : 'debug requests' }
-UIManager >> requestDebuggerOpeningForWarning: aWarning [
-
-	<debuggerCompleteToSender>
-
-	Smalltalk logError: aWarning printString inContext: aWarning signalerContext.
-
-	self class environment
-		at: #OupsWarningRequest
-		ifPresent: [ :requestClass |
-			(requestClass newForException:  aWarning)
-				submit.
-			^ self ]
-]
-
-{ #category : 'debug requests' }
-UIManager >> requestDebuggerOpeningNamed: title inContext: aContext [
-
-	<debuggerCompleteToSender>
-	Smalltalk logError: aContext printString inContext: aContext.
-
-	self class environment
-		at: #OupsDebugRequest
-		ifPresent: [ :requestClass |
-			(requestClass newForContext: aContext)
 				label: title;
 				submit.
 			^ self ]
@@ -744,14 +721,6 @@ UIManager >> spawnNewProcessIfThisIsUI: suspendedProcess [
 	^false		"no new process was created"
 ]
 
-{ #category : 'default actions' }
-UIManager >> systemNotificationDefaultAction: aNotification [
-
-	"by default, do nothing"
-
-	aNotification resume
-]
-
 { #category : 'ui process' }
 UIManager >> terminateUIProcess [
 	"Do nothing by default."
@@ -776,22 +745,4 @@ UIManager >> textEntry: aStringOrText title: aString entryText: defaultEntryText
 	"Open a text entry dialog."
 
 	^self subclassResponsibility
-]
-
-{ #category : 'default actions' }
-UIManager >> unhandledErrorDefaultAction: anException [
-	"Provide a default handling for unhandled error.
-	 We should never reach this code, because it should be overridden by subclasses.
-	 (but we can't put 'self subclassResponsibility' , because it will cause infinite loop,
-	 in case if current ui manager having no override of this method).
-	 This method is only for documentation purposes."
-
-	Smalltalk snapshot: false andQuit: true
-]
-
-{ #category : 'default actions' }
-UIManager >> warningDefaultAction: aWarning [
-	"Handle warning notification. Should be overidden by subclass."
-
-	self subclassResponsibility
 ]

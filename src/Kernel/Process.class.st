@@ -29,7 +29,8 @@ Class {
 		'env',
 		'effectiveProcess',
 		'terminating',
-		'level'
+		'level',
+		'errorHandler'
 	],
 	#classVars : [
 		'InheritablePSKeys',
@@ -200,19 +201,6 @@ Process >> debug [
 	^ self debugWithTitle: 'Debug'
 ]
 
-{ #category : 'debugging' }
-Process >> debugWithTitle: title [
-
-	| context |
-	context := self isActiveProcess
-		           ifTrue: [ thisContext ]
-		           ifFalse: [ self suspendedContext ].
-	UIManager default
-		requestDebuggerOpeningForProcess: self
-		named: title
-		inContext: context
-]
-
 { #category : 'private' }
 Process >> doTerminationFromAnotherProcess [ 
 	"Stop this process forever from another process.
@@ -275,6 +263,18 @@ Process >> endProcess [
 	"^thisContext restart"
 ]
 
+{ #category : 'error handling' }
+Process >> errorHandler [
+
+	^ errorHandler ifNil: [ ErrorHandler defaultErrorHandler ]
+]
+
+{ #category : 'accessing' }
+Process >> errorHandler: anObject [
+
+	errorHandler := anObject
+]
+
 { #category : 'private' }
 Process >> evaluate: aBlock onBehalfOf: aProcess [
 	"Evaluate aBlock setting effectiveProcess to aProcess.  Used
@@ -284,6 +284,24 @@ Process >> evaluate: aBlock onBehalfOf: aProcess [
 	oldEffectiveProcess := effectiveProcess.
 	effectiveProcess := aProcess.
 	^aBlock ensure: [effectiveProcess := oldEffectiveProcess]
+]
+
+{ #category : 'error handling' }
+Process >> handleError: anError [
+
+	^ self errorHandler handleError: anError
+]
+
+{ #category : 'error handling' }
+Process >> handleNotification: aNotification [
+
+	^ self errorHandler handleNotification: aNotification
+]
+
+{ #category : 'error handling' }
+Process >> handleWarning: aWarning [
+
+	^ self errorHandler handleWarning: aWarning
 ]
 
 { #category : 'initialization' }
