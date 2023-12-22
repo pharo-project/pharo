@@ -6,6 +6,12 @@ Class {
 	#tag : 'Specs'
 }
 
+{ #category : 'visiting' }
+MetacelloMCBaselineOfProjectSpec >> acceptVisitor: aVisitor [
+	
+	^ aVisitor visitProjectSpec: self
+]
+
 { #category : 'scripting' }
 MetacelloMCBaselineOfProjectSpec >> asBaselineProjectSpec [
     ^ self
@@ -65,7 +71,7 @@ MetacelloMCBaselineOfProjectSpec >> determineCurrentVersionForLoad [
 ]
 
 { #category : 'loading' }
-MetacelloMCBaselineOfProjectSpec >> ensureConfigurationLoaded: vrsn ensured: ensured [
+MetacelloMCBaselineOfProjectSpec >> ensureConfigurationLoaded: vrsn ensured: ensured withEngine: anObject [
   "answer true if the configuration should be reloaded"
 
   "see Issue #181 for details ... basically we always want to consider loading the baseline from a project reference, especially if the two project specs are not the same..."
@@ -76,13 +82,13 @@ MetacelloMCBaselineOfProjectSpec >> ensureConfigurationLoaded: vrsn ensured: ens
 ]
 
 { #category : 'loading' }
-MetacelloMCBaselineOfProjectSpec >> ensureLoadUsing: aLoader [
-  "see https://github.com/dalehenrich/metacello-work/issues/244 ... uncoditionally load
+MetacelloMCBaselineOfProjectSpec >> ensureLoadUsingEngine: anEngine [
+	"see https://github.com/dalehenrich/metacello-work/issues/244 ... uncoditionally load
    baseline"
 
-  [ super ensureLoadUsing: aLoader ]
-    on: MetacelloIgnorePackageLoaded
-    do: [ :ex | ex resume: ex packageSpec name = self name ]
+	[ super ensureLoadUsingEngine: anEngine ]
+		on: MetacelloIgnorePackageLoaded
+		do: [ :ex | ex resume: ex packageSpec name = self name ]
 ]
 
 { #category : 'printing' }

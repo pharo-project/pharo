@@ -146,16 +146,6 @@ MetacelloProjectRegistration class >> projectSpecs [
 ]
 
 { #category : 'registration' }
-MetacelloProjectRegistration class >> registerProjectSpec: aProjectSpec ifPresent: presentBlock [
-    | newRegistration |
-    newRegistration := aProjectSpec asProjectRegistration.
-    ^ self registry
-        registrationFor: newRegistration
-        ifPresent: [ :existing | presentBlock value: existing value: newRegistration ]
-        ifAbsent: [ newRegistration registerProject ]
-]
-
-{ #category : 'registration' }
 MetacelloProjectRegistration class >> registrationForClassNamed: aClassName ifAbsent: absentBlock [
 
 	^ self registry registrationForClassNamed: aClassName ifAbsent: absentBlock
@@ -237,7 +227,6 @@ MetacelloProjectRegistration >> canDowngradeTo: aProjectRegistration [
 	(self hasLoadConflicts: aProjectRegistration) ifFalse: [ ^ true ].
 	configurationProjectSpec ifNotNil: [
 		aProjectRegistration configurationProjectSpec ifNotNil: [
-			configurationProjectSpec ensureProjectLoaded.
 			^ configurationProjectSpec canDowngradeTo: aProjectRegistration configurationProjectSpec ] ].
 	^ false
 ]
@@ -251,12 +240,12 @@ MetacelloProjectRegistration >> canUpgradeTo: aProjectRegistration [
 	(self hasLoadConflicts: aProjectRegistration) ifFalse: [ ^ true ].
 	configurationProjectSpec ifNotNil: [
 		aProjectRegistration configurationProjectSpec ifNotNil: [
-			configurationProjectSpec copy ensureProjectLoaded.
-			^ configurationProjectSpec canUpgradeTo: aProjectRegistration configurationProjectSpec ] ].
+			^ configurationProjectSpec canUpgradeTo:
+				  aProjectRegistration configurationProjectSpec ] ].
 	baselineProjectSpec ifNotNil: [
 		aProjectRegistration baselineProjectSpec ifNotNil: [
-			baselineProjectSpec copy ensureProjectLoaded.
-			^ baselineProjectSpec canUpgradeTo: aProjectRegistration baselineProjectSpec ] ].
+			^ baselineProjectSpec canUpgradeTo:
+				  aProjectRegistration baselineProjectSpec ] ].
 	^ false
 ]
 

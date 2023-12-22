@@ -261,12 +261,6 @@ OrderedDictionary >> at: aKey put: aValue [
 ]
 
 { #category : 'accessing' }
-OrderedDictionary >> at: key update: updateBlock [
-	"I am used to update the value at a given key, or if the key does not exist, to throw an error"
-	self at: key update: updateBlock initial: [ KeyNotFound signalFor: key ]
-]
-
-{ #category : 'accessing' }
 OrderedDictionary >> at: key update: updateBlock initial: initBlocktOrValue [
 	"I am used to update the value at a given key. The updateBlock is passed
 	the existing value, and the result of the block is stored back.
@@ -310,11 +304,6 @@ OrderedDictionary >> collect: aBlock [
 { #category : 'private' }
 OrderedDictionary >> dictionary [
 	^ dictionary
-]
-
-{ #category : 'accessing' }
-OrderedDictionary >> dictionaryClass [
-	^ Dictionary
 ]
 
 { #category : 'enumerating' }
