@@ -61,7 +61,7 @@ ShiftTraitBuilderTest >> testCreatingEmptyTraitHasDefaultElements [
 	self assert: newTrait name equals: #TTestTrait.
 	self assert: newTrait slotNames equals: #(  ).
 	self assert: newTrait traitComposition equals: {  } asTraitComposition.
-	self assert: newTrait class traitComposition equals: {  } asTraitComposition.
+	self assert: newTrait class traitComposition equals: {  } asTraitComposition + TraitedClass.
 	self assert: newTrait classVarNames equals: #(  ).
 	self assert: newTrait package name equals: self packageNameForTest
 ]

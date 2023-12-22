@@ -63,6 +63,13 @@ TraitedMetaclass >> baseLocalMethods: anObject [
 	baseLocalMethods := anObject
 ]
 
+{ #category : 'accessing' }
+TraitedMetaclass >> basicTraitComposition [
+	"Return the declared trait composition, mainly for serialization purposes"
+
+	^ composition
+]
+
 { #category : 'fileout' }
 TraitedMetaclass >> definitionStringFor: aConfiguredPrinter [
 
