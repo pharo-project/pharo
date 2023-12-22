@@ -124,7 +124,11 @@ DummyUIManager >> progressBarEnabled: aBoolean [
 { #category : 'ui requests' }
 DummyUIManager >> request: queryString initialAnswer: defaultAnswer [
 
-	^ self request: queryString initialAnswer: defaultAnswer title: 'Provide the following information' entryCompletion: nil
+	^ self
+		  request: queryString
+		  initialAnswer: defaultAnswer
+		  title: 'Provide the following information'
+		  entryCompletion: nil
 ]
 
 { #category : 'ui requests' }
