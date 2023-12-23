@@ -19,7 +19,8 @@ Class {
 		'showEntryItemMenu',
 		'entryContentPresenter',
 		'itemsPresenter',
-		'toolbarPresenter'
+		'toolbarPresenter',
+		'searchPresenter'
 	],
 	#category : 'EpiceaBrowsers-UI-Log',
 	#package : 'EpiceaBrowsers',
@@ -29,20 +30,23 @@ Class {
 { #category : 'layout' }
 EpLogBrowserPresenter class >> defaultLayout [
 
-	^ SpPanedLayout newTopToBottom
-		  positionOfSlider: 0.6;
-		  add: #itemsPresenter;
-		  add: (SpBoxLayout newTopToBottom
-				   add: #toolbarPresenter
-				   expand: false
-				   fill: false
-				   padding: 2;
-				   add: #entryContentPresenter
-				   expand: true
-				   fill: true
-				   padding: 2;
-				   yourself);
-		  yourself
+	^ SpBoxLayout newTopToBottom 
+			add: #searchPresenter expand: false fill: false padding: 3;
+			add: (SpPanedLayout newTopToBottom
+					positionOfSlider: 0.6;
+					add: #itemsPresenter;
+					add: (SpBoxLayout newTopToBottom
+					   add: #toolbarPresenter
+						   expand: false
+						   fill: false
+						   padding: 2;
+					   add: #entryContentPresenter
+						   expand: true
+						   fill: true
+						   padding: 2;
+						   yourself);
+			yourself);
+			yourself
 ]
 
 { #category : 'accessing' }
@@ -394,6 +398,18 @@ EpLogBrowserPresenter >> filterLatestCodeChanges [
 	self addFilter: (EpLatestCodeChangeFilter new logBrowserModel: self; yourself)
 ]
 
+{ #category : 'initialization' }
+EpLogBrowserPresenter >> filterList: text [
+
+	| filteredItems |
+
+	filteredItems := self cachedLogEntries 
+		select: [ : omEntry | omEntry content affectedName asLowercase beginsWith: text asLowercase ]
+		thenCollect: [:each | log referenceTo: each ].
+	itemsPresenter items: filteredItems.
+
+]
+
 { #category : 'menu - filters' }
 EpLogBrowserPresenter >> filterSelection [
 
@@ -558,6 +574,11 @@ EpLogBrowserPresenter >> initializePresenters [
 		display: [ :entryReference | self morphForItemAt: entryReference ];
 		whenSelectionChangedDo: [ self refreshEntryContentDeferrer schedule ];
 		contextMenu: [ self menuMorphForSelectedItems ].
+		
+	searchPresenter := self newTextInput
+		placeholder: 'Filter...';
+		whenTextChangedDo: [ : text | self filterList: text ];
+		yourself.
 
 	toolbarPresenter := self instantiate: EpLogBrowserToolbarPresenter.
 	toolbarPresenter logBrowserPresenter: self.

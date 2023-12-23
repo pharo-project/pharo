@@ -16,6 +16,11 @@ EpCodeChange class >> isAbstract [
 ]
 
 { #category : 'accessing' }
+EpCodeChange >> affectedName [
+	^ self behaviorAffectedName.
+]
+
+{ #category : 'accessing' }
 EpCodeChange >> affectedPackageName [
 
 	^ self subclassResponsibility
