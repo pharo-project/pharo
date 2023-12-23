@@ -271,8 +271,8 @@ BaselineOfIDE >> postload: loader package: packageSpec [
 	Smalltalk tools register: ProcessBrowser as: #processBrowser.
 	Smalltalk tools register: TimeProfiler as: #timeProfiler.
 
-	(MorphicCoreUIManager readClassVariableNamed: #UIProcess) ifNotNil: [ :proc | proc terminate ].
-	MorphicCoreUIManager writeClassVariableNamed: #UIProcess   value: nil.
+	(Process readClassVariableNamed: #UIProcess) ifNotNil: [ :proc | proc terminate ].
+	Process writeClassVariableNamed: #UIProcess   value: nil.
 
 	PolymorphSystemSettings desktopColor: Color veryVeryLightGray lighter.
 	SourceCodeFonts setSourceCodeFonts: 10.

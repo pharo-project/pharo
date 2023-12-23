@@ -34,7 +34,8 @@ Class {
 	#classVars : [
 		'InheritablePSKeys',
 		'PSKeys',
-		'PSKeysSema'
+		'PSKeysSema',
+		'UIProcess'
 	],
 	#category : 'Kernel-Processes',
 	#package : 'Kernel',
@@ -99,6 +100,42 @@ Process class >> psKeysSema [
 	"Isolate handling of class variable"
 
 	^PSKeysSema ifNil: [ PSKeysSema := Semaphore forMutualExclusion ]
+]
+
+{ #category : 'ui process' }
+Process class >> resumeUIProcess: aProcess [
+	"Adopt aProcess as the project process.
+	The only case in the tools is when a debug session resumes a process"
+
+	UIProcess := aProcess.
+	UIProcess resume
+]
+
+{ #category : 'ui process' }
+Process class >> spawnNewUIProcess: aProcess named: aString [
+
+	UIProcess := aProcess.
+	UIProcess name: aString.
+	UIProcess resume
+]
+
+{ #category : 'ui process' }
+Process class >> terminateUIProcess [
+
+	UIProcess
+		suspend;
+		terminate.
+	UIProcess := nil
+]
+
+{ #category : 'ui process' }
+Process class >> uiProcess [
+	^UIProcess
+]
+
+{ #category : 'ui process' }
+Process class >> uiProcess: aProcess [
+	UIProcess := aProcess
 ]
 
 { #category : 'process specific' }
