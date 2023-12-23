@@ -51,6 +51,13 @@ MetacelloPlatform >> bypassProgressBars: anObject [
 	bypassProgressBars := anObject
 ]
 
+{ #category : 'notification' }
+MetacelloPlatform >> collection: aCollection do: aBlock displaying: aString [
+
+	self bypassProgressBars ifTrue: [ ^ aCollection do: aBlock ].
+	aCollection do: aBlock displayingProgress: aString
+]
+
 { #category : 'repository creation' }
 MetacelloPlatform >> createRepository: aRepositorySpec [
 
@@ -80,4 +87,61 @@ MetacelloPlatform >> extractTypeFromDescription: description [
 	(description beginsWith: 'gitorious://') ifTrue: [ ^ 'gitorious' ].
 	(description beginsWith: 'bitbucket://') ifTrue: [ ^ 'bitbucket' ].
 	^ 'http'
+]
+
+{ #category : 'caching' }
+MetacelloPlatform >> primeStackCacheWith: aDictionary doing: noArgBlock [
+
+	self 
+		useStackCacheDuring: [:dict | ^noArgBlock value ] 
+		defaultDictionary: aDictionary
+]
+
+{ #category : 'caching' }
+MetacelloPlatform >> stackCacheFor: cacheName at: key doing: aBlock [
+
+	^self stackCacheFor: cacheName cacheClass: Dictionary at: key doing: aBlock
+]
+
+{ #category : 'caching' }
+MetacelloPlatform >> stackCacheFor: cacheName cacheClass: cacheClass at: key doing: aBlock [
+
+	self
+		useStackCacheDuring: [ :dict |
+			| cache |
+			cache := dict at: cacheName ifAbsent: [  ].
+			cache
+				ifNotNil: [
+					| value hasEntry |
+					hasEntry := true.
+					value := cache at: key ifAbsent: [ hasEntry := false ].
+					hasEntry ifTrue: [ ^ value ] ]
+				ifNil: [
+					cache := cacheClass new.
+					dict at: cacheName put: cache ].
+			^ aBlock value: cache ]
+		defaultDictionary: nil
+]
+
+{ #category : 'caching' }
+MetacelloPlatform >> useStackCacheDuring: aBlock defaultDictionary: defaultDictionary [
+
+	| dict |
+	dict := MetacelloStackCacheNotification signal ifNil: [ defaultDictionary ifNil: [ Dictionary new ] ].
+
+	[
+	[ ^ aBlock value: dict ]
+		on: MetacelloStackCacheNotification
+		do: [ :ex | ex resume: dict ] ]
+		on: MetacelloClearStackCacheNotification
+		do: [ :ex |
+			| keys |
+			keys := ex cacheNames ifNil: [ dict keys ].
+			keys do: [ :k |
+				(dict includesKey: k) ifTrue: [
+					| c |
+					c := dict at: k.
+					c keys do: [ :ck | c removeKey: ck ].
+					dict removeKey: k ] ].
+			ex resume ]
 ]

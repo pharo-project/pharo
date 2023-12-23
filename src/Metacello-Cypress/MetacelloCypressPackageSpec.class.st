@@ -15,7 +15,7 @@ MetacelloCypressPackageSpec >> ancestors [
 ]
 
 { #category : 'testing' }
-MetacelloCypressPackageSpec >> compareCurrentVersion: anOperator targetVersionStatus: statusIgnored using: anMCLoader withEngine: anEngine [
+MetacelloCypressPackageSpec >> compareCurrentVersion: anOperator targetVersionStatus: statusIgnored using: anMCLoader [
   ^ false
 ]
 

@@ -110,6 +110,11 @@ OrderedCollection class >> new: anInteger [
 	^ self basicNew setCollection: (self arrayType new: anInteger)
 ]
 
+{ #category : 'stream creation' }
+OrderedCollection class >> new: size streamContents: aBlock [
+	^ self withAll: (super new: size streamContents: aBlock)
+]
+
 { #category : 'instance creation' }
 OrderedCollection class >> new: anInteger withAll: anObject [
 	^ self basicNew setContents: (self arrayType new: anInteger withAll: anObject)
@@ -714,6 +719,26 @@ OrderedCollection >> removeAt: index [
 	removed := self at: index.
 	self removeIndex: index + firstIndex - 1.
 	^removed
+]
+
+{ #category : 'removing' }
+OrderedCollection >> removeDuplicates [
+	"Remove the copies of elements, but keep the same order"
+
+	"#(7 42 7 42 9) asOrderedCollection removeDuplicates asArray >>> #(7 42 9)"
+	"#(1 2 3) asOrderedCollection removeDuplicates asArray >>> #(1 2 3)"
+
+	| iterator seen |
+	self ifEmpty: [ ^ self ].
+	iterator := 1.
+	seen := Set new.
+	[ iterator <= self size ]
+		whileTrue: [ | each |
+			each := self at: iterator.
+			(seen includes: each)
+				ifTrue: [ self removeAt: iterator ]
+				ifFalse: [ seen add: each. iterator := iterator + 1. ].
+	 ]
 ]
 
 { #category : 'removing' }

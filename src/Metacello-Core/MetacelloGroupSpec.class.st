@@ -6,12 +6,6 @@ Class {
 	#tag : 'Specs'
 }
 
-{ #category : 'visiting' }
-MetacelloGroupSpec >> acceptVisitor: aVisitor [ 
-	
-	^ aVisitor visitGroupSpec: self
-]
-
 { #category : 'accessing' }
 MetacelloGroupSpec >> answers: aListOfPairs [
 
@@ -53,7 +47,7 @@ MetacelloGroupSpec >> includeSpecNamesForPackageOrdering: aVersionSpec [
 ]
 
 { #category : 'loading' }
-MetacelloGroupSpec >> loadUsing: aLoader gofer: gofer withEngine: anEngine [
+MetacelloGroupSpec >> loadUsing: aLoader gofer: gofer [
 	"noop"
 ]
 

@@ -2,7 +2,8 @@ Class {
 	#name : 'MetacelloDirective',
 	#superclass : 'Object',
 	#instVars : [
-		'spec'
+		'spec',
+		'loader'
 	],
 	#category : 'Metacello-Core-Directives',
 	#package : 'Metacello-Core',
@@ -10,27 +11,30 @@ Class {
 }
 
 { #category : 'instance creation' }
-MetacelloDirective class >> loadPackage: aPackageSpec externalReference: externalReference [
+MetacelloDirective class >> loadPackage: aPackageSpec externalReference: externalReference loader: aLoader [
 
-	^ MetacelloPackageLoadDirective new spec: aPackageSpec externalReference: externalReference
+	^ MetacelloPackageLoadDirective new spec: aPackageSpec externalReference: externalReference loader: aLoader
 ]
 
 { #category : 'instance creation' }
-MetacelloDirective class >> postLoadSpec: packageOrVersionSpec [
+MetacelloDirective class >> loader: aLoader [
 
-	^ MetacelloPostLoadDirective new spec: packageOrVersionSpec
+	^self new
+		loader: aLoader
 ]
 
 { #category : 'instance creation' }
-MetacelloDirective class >> preLoadSpec: packageOrVersionSpec [
+MetacelloDirective class >> postLoadSpec: packageOrVersionSpec loader: aLoader [
 
-	^ MetacelloPreLoadDirective new spec: packageOrVersionSpec
+	^MetacelloPostLoadDirective new
+		spec: packageOrVersionSpec loader: aLoader
 ]
 
-{ #category : 'visiting' }
-MetacelloDirective >> acceptVisitor: aVisitor [
-	
-	aVisitor visitAtomicLoadDirective: self
+{ #category : 'instance creation' }
+MetacelloDirective class >> preLoadSpec: packageOrVersionSpec loader: aLoader [
+
+	^MetacelloPreLoadDirective new
+		spec: packageOrVersionSpec loader: aLoader
 ]
 
 { #category : 'actions' }
@@ -45,14 +49,26 @@ MetacelloDirective >> label [
 	^self spec label
 ]
 
-{ #category : 'enumerating' }
-MetacelloDirective >> packageDirectivesDo: aBlock [
+{ #category : 'actions' }
+MetacelloDirective >> loadUsing: aLoaderDirective gofer: aGofer [
+
+	self subclassResponsibility
 ]
 
 { #category : 'accessing' }
-MetacelloDirective >> packages [
-	
-	self subclassResponsibility
+MetacelloDirective >> loader [
+
+	^loader
+]
+
+{ #category : 'accessing' }
+MetacelloDirective >> loader: aLoader [
+
+	loader := aLoader
+]
+
+{ #category : 'enumerating' }
+MetacelloDirective >> packageDirectivesDo: aBlock [
 ]
 
 { #category : 'printing' }
@@ -85,9 +101,10 @@ MetacelloDirective >> spec [
 ]
 
 { #category : 'initialization' }
-MetacelloDirective >> spec: packageOrVersionSpec [
+MetacelloDirective >> spec: packageOrVersionSpec loader: aLoader [
 
 	spec := packageOrVersionSpec.
+	loader := aLoader
 ]
 
 { #category : 'accessing' }

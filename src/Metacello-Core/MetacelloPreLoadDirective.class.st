@@ -6,12 +6,6 @@ Class {
 	#tag : 'Directives'
 }
 
-{ #category : 'visiting' }
-MetacelloPreLoadDirective >> acceptVisitor: aTarget [
-	
-	aTarget visitPreLoadDirective: self
-]
-
 { #category : 'actions' }
 MetacelloPreLoadDirective >> addTo: aLoaderDirective [
 
@@ -22,6 +16,12 @@ MetacelloPreLoadDirective >> addTo: aLoaderDirective [
 MetacelloPreLoadDirective >> label [
 
 	^super label, ' >> ', self spec preLoadDoIt value asString
+]
+
+{ #category : 'actions' }
+MetacelloPreLoadDirective >> loadUsing: aLoaderDirective gofer: aGofer [
+
+	aLoaderDirective loadPreloadDirective: self.
 ]
 
 { #category : 'accessing' }

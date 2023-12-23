@@ -348,12 +348,10 @@ MCGitBasedNetworkRepository >> calculateRepositoryDirectory [
 
 { #category : 'initialization' }
 MCGitBasedNetworkRepository >> canUpgradeTo: anMCGitBasedRepository [
-
-	(anMCGitBasedRepository isKindOf: self class) ifFalse: [ ^ false ].
-
-	^ self projectPath = anMCGitBasedRepository projectPath and: [
-		  self repoPath = anMCGitBasedRepository repoPath and: [
-			  self projectVersion = anMCGitBasedRepository projectVersion ] ]
+  (anMCGitBasedRepository isKindOf: self class)
+    ifFalse: [ ^ false ].
+  ^ self projectPath = anMCGitBasedRepository projectPath
+    and: [ self repoPath = anMCGitBasedRepository repoPath ]
 ]
 
 { #category : 'accessing' }

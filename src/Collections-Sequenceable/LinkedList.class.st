@@ -83,6 +83,11 @@ LinkedList class >> new: anInt [
 	^self new
 ]
 
+{ #category : 'stream creation' }
+LinkedList class >> new: size streamContents: aBlock [
+	^ self withAll: (super new: size streamContents: aBlock)
+]
+
 { #category : 'instance creation' }
 LinkedList class >> newFrom: aCollection [
 	"Answer an instance with same elements as aCollection."
