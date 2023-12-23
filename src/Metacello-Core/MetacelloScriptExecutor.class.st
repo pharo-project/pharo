@@ -128,7 +128,7 @@ MetacelloScriptExecutor >> list [
 
 { #category : 'actions api' }
 MetacelloScriptExecutor >> load: required [
-    actionArg := #load: -> {required}
+    actionArg := #'load:' -> {required}
 ]
 
 { #category : 'actions api' }
@@ -258,6 +258,13 @@ MetacelloScriptExecutor >> unlock [
 { #category : 'actions api' }
 MetacelloScriptExecutor >> unregister [
   actionArg := #'unregister' -> #()
+]
+
+{ #category : 'options api' }
+MetacelloScriptExecutor >> useCurrentVersion: aBool [
+    "private option used to implement the classic mode"
+
+    self options at: #'useCurrentVersion' put: aBool
 ]
 
 { #category : 'args' }

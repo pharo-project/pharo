@@ -26,12 +26,6 @@ MetacelloVersionSpec class >> initialize [
 	self deprecatedAliases: { #MetacelloMCVersionSpec }
 ]
 
-{ #category : 'visiting' }
-MetacelloVersionSpec >> acceptVisitor: aVisitor [
-	
-	^ aVisitor visitVersionSpec: self
-]
-
 { #category : 'accessing' }
 MetacelloVersionSpec >> author [
 
@@ -355,8 +349,14 @@ MetacelloVersionSpec >> difference: otherVersionSpec [
 { #category : 'loading' }
 MetacelloVersionSpec >> expandToLoadableSpecNames: nameList [
 
-	^ (self resolveToLoadableSpecs: nameList) collect: [ :spec |
-		  spec name ]
+	| cacheKey names |
+	cacheKey := Array with: self label with: nameList.
+	^MetacelloPlatform current
+		stackCacheFor: #loadableSpecNames
+		at: cacheKey
+		doing: [ :cache | 
+			names := (self resolveToLoadableSpecs: nameList) collect: [:spec | spec name ].
+			cache at: cacheKey put: names ].
 ]
 
 { #category : 'accessing' }
@@ -421,26 +421,23 @@ MetacelloVersionSpec >> isPartiallyCurrent [
 { #category : 'testing' }
 MetacelloVersionSpec >> isPartiallyCurrentAgainst: resolvedPackageAndProjectNames [
 
-	| status |
+	| mcLoader status |
 	status := MetacelloMCPartiallyLoadedStatus new.
+	mcLoader := self loader.
 	self
 		specsNamed: resolvedPackageAndProjectNames
 		projectDo: [ :prj |
 			| vrsn currentVersion |
 			status hasNoProject: false.
 			vrsn := prj versionOrNil.
-			vrsn ifNotNil: [
-				(currentVersion := prj relativeCurrentVersion) ifNotNil: [
-					status vrsnStatus add: currentVersion versionStatus ] ].
+			vrsn ifNotNil: [ (currentVersion := prj relativeCurrentVersion) ifNotNil: [ status vrsnStatus add: currentVersion versionStatus ] ].
 			currentVersion
 				ifNotNil: [
 					status aProjectIsLoaded: true.
 					(currentVersion perform: #= with: vrsn)
 						ifTrue: [ status aLoadedProjectIsExact: true ]
 						ifFalse: [
-							(currentVersion
-								 perform: prj projectReference operator
-								 with: vrsn)
+							(currentVersion perform: prj projectReference operator with: vrsn)
 								ifTrue: [ status aLoadedProjectIsCurrent: true ]
 								ifFalse: [ status aLoadedProjectIsNotCurrent: true ] ] ]
 				ifNil: [ status aProjectNotLoaded: true ] ]
@@ -466,12 +463,12 @@ MetacelloVersionSpec >> isPartiallyCurrentAgainst: resolvedPackageAndProjectName
 										wcName := vi name.
 										fileRef := GoferResolvedReference name: file.
 										wcRef := GoferResolvedReference name: wcName.
-										(wcRef compare: fileRef using: #'>=') ifTrue: [
-											current := true ] ].
+										(wcRef compare: fileRef using: #'>=') ifTrue: [ current := true ] ].
 									current
 										ifTrue: [ status aLoadedPackageIsCurrent: true ]
 										ifFalse: [ status aLoadedPackageIsNotCurrent: true ] ] ] ]
-				notLoaded: [ status aPackageNotLoaded: true ] ]
+				notLoaded: [ status aPackageNotLoaded: true ]
+				using: mcLoader ]
 		groupDo: [ :ignoredGroup | "if we encounter a group, trouble"
 			status abort: true.
 			^ status ].
@@ -490,12 +487,6 @@ MetacelloVersionSpec >> isSomethingLoaded [
 MetacelloVersionSpec >> label [
 
 	^self versionString, ' [', self projectLabel, ']'
-]
-
-{ #category : 'accessing' }
-MetacelloVersionSpec >> loader: aMetacelloLoadTarget [ 
-	
-	"nothing"
 ]
 
 { #category : 'merging' }

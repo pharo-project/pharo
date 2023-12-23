@@ -10,12 +10,6 @@ Class {
 	#tag : 'Directives'
 }
 
-{ #category : 'visiting' }
-MetacelloPackageLoadDirective >> acceptVisitor: aVisitor [ 
-	
-	^ aVisitor visitPackageLoadDirective: self
-]
-
 { #category : 'accessing' }
 MetacelloPackageLoadDirective >> externalReference [
 	^ externalReference
@@ -24,13 +18,19 @@ MetacelloPackageLoadDirective >> externalReference [
 { #category : 'accessing' }
 MetacelloPackageLoadDirective >> file [
 
-	^ self externalReference asString
+	^self externalReference name
 ]
 
 { #category : 'printing' }
 MetacelloPackageLoadDirective >> label [
 
-	^ spec name , ' -- ', externalReference first description
+	^self file
+]
+
+{ #category : 'actions' }
+MetacelloPackageLoadDirective >> loadUsing: aLoaderDirective gofer: aGofer [
+
+	aLoaderDirective loadPackageDirective: self gofer: aGofer
 ]
 
 { #category : 'enumerating' }
@@ -42,13 +42,7 @@ MetacelloPackageLoadDirective >> packageDirectivesDo: aBlock [
 { #category : 'accessing' }
 MetacelloPackageLoadDirective >> packageName [
 
-	^ self spec name
-]
-
-{ #category : 'accessing' }
-MetacelloPackageLoadDirective >> packages [
-	
-	^ { spec }
+	^self externalReference packageName
 ]
 
 { #category : 'accessing' }
@@ -68,9 +62,9 @@ MetacelloPackageLoadDirective >> resolvedReference: anObject [
 ]
 
 { #category : 'initialization' }
-MetacelloPackageLoadDirective >> spec: aPackageSpec externalReference: anExternalReference [
+MetacelloPackageLoadDirective >> spec: aPackageSpec externalReference: anExternalReference loader: aLoader [
 
-	self spec: aPackageSpec.
+	self spec: aPackageSpec loader: aLoader.
 	externalReference := anExternalReference
 ]
 

@@ -1,6 +1,6 @@
 Class {
 	#name : 'MetacelloValidationFailure',
-	#superclass : 'MetacelloError',
+	#superclass : 'Error',
 	#instVars : [
 		'issues'
 	],

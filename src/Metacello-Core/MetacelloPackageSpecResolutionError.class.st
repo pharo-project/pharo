@@ -1,6 +1,6 @@
 Class {
 	#name : 'MetacelloPackageSpecResolutionError',
-	#superclass : 'MetacelloError',
+	#superclass : 'Error',
 	#instVars : [
 		'packageSpec',
 		'repositories',

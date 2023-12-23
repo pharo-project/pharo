@@ -3,6 +3,7 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'project',
+		'loader',
 		'mutable'
 	],
 	#category : 'Metacello-Core-Specs',
@@ -20,12 +21,6 @@ MetacelloSpec class >> for: aVersionMap [
 
 { #category : 'merging' }
 MetacelloSpec >> aboutToCopy [
-]
-
-{ #category : 'visiting' }
-MetacelloSpec >> acceptVisitor: aVisitor [
-
-	self subclassResponsibility
 ]
 
 { #category : 'spec creation' }
@@ -95,6 +90,25 @@ MetacelloSpec >> label [
 	^self printString
 ]
 
+{ #category : 'accessing' }
+MetacelloSpec >> loader [
+
+	^ loader ifNil: [
+		  self project loader
+			  ifNotNil: [ :prjctLoader | self loader: prjctLoader ]
+			  ifNil: [ self loader: (self project loaderClass on: self) ].
+		  loader ]
+]
+
+{ #category : 'accessing' }
+MetacelloSpec >> loader: aLoader [
+    "We're interested in propogating the loader state, _except_ for the spec"
+
+    self shouldBeMutable.
+    loader := aLoader copy.
+    loader spec: self
+]
+
 { #category : 'importing' }
 MetacelloSpec >> mergeImportLoads: aLoadList [
     self error: 'import: can only be used with baseline project specs'
@@ -138,7 +152,8 @@ MetacelloSpec >> nonOverridable [
 MetacelloSpec >> postCopy [
 
 	super postCopy.
-	mutable := nil
+	mutable := nil.
+	loader ifNotNil: [ self loader: loader ]
 ]
 
 { #category : 'doits' }
