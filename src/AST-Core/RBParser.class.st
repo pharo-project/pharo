@@ -801,7 +801,7 @@ RBParser >> parseMethodBodyInto: aMethodNode [
 
 	pragmas ifNotNil: [ aMethodNode pragmas: pragmas ].
 	self atEnd ifFalse: [ self parseIncompleteExpression: aMethodNode body ].
-	(aMethodNode body statements isEmpty and: [currentToken comments notNil]) ifTrue: [
+	(aMethodNode body statements isEmpty and: [currentToken comments isNotNil]) ifTrue: [
 		self extractCommentsFrom: currentToken.
 		self addCommentsTo: aMethodNode body ]
 ]
@@ -1222,7 +1222,7 @@ RBParser >> patchNegativeLiteral [
 	currentToken value <= 0 ifFalse: [^self].
 	currentToken value = 0
 		ifTrue:
-			[(source notNil and:
+			[(source isNotNil and:
 					[source notEmpty
 						and: [(source at: (currentToken start min: source size)) = $-]])
 				ifFalse: [^self]].
@@ -1291,7 +1291,7 @@ RBParser >> source: aString [
 
 { #category : 'private' }
 RBParser >> step [
-	(currentToken notNil and: [currentToken comments notNil])
+	(currentToken isNotNil and: [currentToken comments notNil])
 		ifTrue: [self extractCommentsFrom: currentToken].
 	nextToken ifNotNil:
 			[currentToken := nextToken.
