@@ -26,16 +26,6 @@ RBCompositeRefactoring >> breakingChangePreconditions [
 	^ #()
 ]
 
-{ #category : 'scripting api - conditions' }
-RBCompositeRefactoring >> checkApplicabilityPreconditions [
-	"Check all the preconditions and raise an error if any of them is false."
-	
-	| pre |
-	pre := self applicabilityPreconditions allSatisfy: [ :each | each check ].
-	pre ifFalse: [
-		RBRefactoringError signal: pre errorString ].
-]
-
 { #category : 'scripting api - executing' }
 RBCompositeRefactoring >> generateChanges [
 	
