@@ -55,7 +55,7 @@ HDTestReport class >> runClasses: aCollectionOfClasses named: packageName [
 	time := DateAndTime now.
 	Transcript
 		<< 'Beginning to run tests of ' << packageName
-		<< ' with random seed ' << ShuffleSeed asString
+		<< ' with random seed ' << suite shuffleSeed asString
 		<< OSPlatform current lineEnding.
 	"We flush so that if a crash happens during the tests, we print in which package is the naughty test in the logs."
 	Transcript flush.
