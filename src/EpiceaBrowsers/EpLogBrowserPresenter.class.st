@@ -874,11 +874,17 @@ EpLogBrowserPresenter >> searchedEntryMatches: aString [
 	"If there are filters applied, then search aString in the subset of the filtered entries, otherwise search in the cached log entries"
 
 	| searchedEntries |
-	searchedEntries := andFilter subFilters
-		ifEmpty: [ self searchEntries: self cachedLogEntries for: aString ]
-		ifNotEmpty: [ self searchEntries: self filteredEntries for: aString ].
-	toolbarPresenter searchedEntriesCount: searchedEntries size.
-	^ searchedEntries
+	
+	aString 
+		ifNotEmpty: [ 
+			searchedEntries := andFilter subFilters
+				ifEmpty: [ self searchEntries: self cachedLogEntries for: aString ]
+				ifNotEmpty: [ self searchEntries: self filteredEntries for: aString ].
+			toolbarPresenter searchedEntriesCount: searchedEntries size.
+			^ searchedEntries ]
+		ifEmpty: [ toolbarPresenter searchedEntriesCount: 0 ].
+	^ self filteredEntryReferences.
+
 
 ]
 
