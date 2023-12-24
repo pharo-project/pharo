@@ -20,7 +20,8 @@ Class {
 		'entryContentPresenter',
 		'itemsPresenter',
 		'toolbarPresenter',
-		'searchPresenter'
+		'searchPresenter',
+		'searchButtonPresenter'
 	],
 	#category : 'EpiceaBrowsers-UI-Log',
 	#package : 'EpiceaBrowsers',
@@ -31,7 +32,10 @@ Class {
 EpLogBrowserPresenter class >> defaultLayout [
 
 	^ SpBoxLayout newTopToBottom 
-			add: #searchPresenter expand: false fill: false padding: 3;
+			add: (SpBoxLayout newLeftToRight 
+				add: #searchPresenter expand: true fill: true padding: 3;
+				add: #searchButtonPresenter expand: false;
+				yourself) expand: false fill: false padding: 3;
 			add: (SpPanedLayout newTopToBottom
 					positionOfSlider: 0.6;
 					add: #itemsPresenter;
@@ -398,18 +402,6 @@ EpLogBrowserPresenter >> filterLatestCodeChanges [
 	self addFilter: (EpLatestCodeChangeFilter new logBrowserModel: self; yourself)
 ]
 
-{ #category : 'initialization' }
-EpLogBrowserPresenter >> filterList: text [
-
-	| filteredItems |
-
-	filteredItems := self cachedLogEntries 
-		select: [ : omEntry | omEntry content affectedName asLowercase beginsWith: text asLowercase ]
-		thenCollect: [:each | log referenceTo: each ].
-	itemsPresenter items: filteredItems.
-
-]
-
 { #category : 'menu - filters' }
 EpLogBrowserPresenter >> filterSelection [
 
@@ -445,12 +437,15 @@ EpLogBrowserPresenter >> filteredEntriesCount [
 { #category : 'accessing' }
 EpLogBrowserPresenter >> filteredEntryReferences [
 
-	^ andFilter subFilters
+	| filteredEntries |
+	filteredEntries := andFilter subFilters
 		ifEmpty: [ log entryReferences ]
 		ifNotEmpty: [
 			self cachedLogEntries
 				select: [:each | andFilter accepts: each ]
-				thenCollect: [:each | log referenceTo: each ] ]
+				thenCollect: [:each | log referenceTo: each ] ].
+	toolbarPresenter filteredEntriesCount: filteredEntries size.
+	^ filteredEntries
 ]
 
 { #category : 'accessing' }
@@ -575,10 +570,7 @@ EpLogBrowserPresenter >> initializePresenters [
 		whenSelectionChangedDo: [ self refreshEntryContentDeferrer schedule ];
 		contextMenu: [ self menuMorphForSelectedItems ].
 		
-	searchPresenter := self newTextInput
-		placeholder: 'Filter...';
-		whenTextChangedDo: [ : text | self filterList: text ];
-		yourself.
+	self initializeSearchPresenters.
 
 	toolbarPresenter := self instantiate: EpLogBrowserToolbarPresenter.
 	toolbarPresenter logBrowserPresenter: self.
@@ -587,6 +579,25 @@ EpLogBrowserPresenter >> initializePresenters [
 	entryContentPresenter showOptions: false.
 
 	self beHistoryMode
+]
+
+{ #category : 'initialization' }
+EpLogBrowserPresenter >> initializeSearchPresenters [
+
+	searchPresenter := self newTextInput
+		placeholder: 'Filter...';
+		whenTextChangedDo: [ : text | 
+			text 
+				ifNotEmpty: [ searchButtonPresenter enable ]
+				ifEmpty: [ searchButtonPresenter disable ].
+			self searchList: text ];
+		yourself.
+	searchButtonPresenter := self newButton
+		iconName: #smallFind;
+		label: 'Find';
+		disable;
+		action: [ self searchList: searchPresenter text ];
+		yourself.
 ]
 
 { #category : 'initialization' }
@@ -839,6 +850,36 @@ EpLogBrowserPresenter >> revertChangesIn: entries [
 EpLogBrowserPresenter >> revertSelectedChanges [
 
 	self revertChangesIn: self selectedCodeChanges
+]
+
+{ #category : 'accessing - searching' }
+EpLogBrowserPresenter >> searchEntries: entriesCollection for: aString [
+	"Answer a <Collection> where each entry from entriesCollection matches aString"
+
+	^ entriesCollection
+		select: [ : omEntry | omEntry matches: aString ]
+		thenCollect: [:each | log referenceTo: each ]
+]
+
+{ #category : 'accessing - searching' }
+EpLogBrowserPresenter >> searchList: aString [
+	"Update the receiver's log entries with entries matching aString"
+
+	itemsPresenter items: (self searchedEntryMatches: aString) reversed.
+	toolbarPresenter refresh.
+]
+
+{ #category : 'accessing - searching' }
+EpLogBrowserPresenter >> searchedEntryMatches: aString [
+	"If there are filters applied, then search aString in the subset of the filtered entries, otherwise search in the cached log entries"
+
+	| searchedEntries |
+	searchedEntries := andFilter subFilters
+		ifEmpty: [ self searchEntries: self cachedLogEntries for: aString ]
+		ifNotEmpty: [ self searchEntries: self filteredEntries for: aString ].
+	toolbarPresenter searchedEntriesCount: searchedEntries size.
+	^ searchedEntries
+
 ]
 
 { #category : 'menu - accessing' }
