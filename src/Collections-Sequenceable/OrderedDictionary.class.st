@@ -307,18 +307,6 @@ OrderedDictionary >> collect: aBlock [
 			each key -> (aBlock value: each value)])
 ]
 
-{ #category : 'adding' }
-OrderedDictionary >> declare: aKey from: aDictionary [
-	(self includesKey: aKey)
-		ifTrue: [^ self].
-
-	(aDictionary includesKey: aKey)
-		ifTrue: [
-			self add: (aDictionary associationAt: aKey).
-			aDictionary removeKey: aKey]
-		ifFalse: [self add: aKey -> nil]
-]
-
 { #category : 'private' }
 OrderedDictionary >> dictionary [
 	^ dictionary

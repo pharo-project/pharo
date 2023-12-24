@@ -1044,6 +1044,13 @@ Behavior >> isDisabledSelector: selector [
 ]
 
 { #category : 'testing' }
+Behavior >> isDoubleWords [
+	"Answer true if the receiver is made of 64-bit instance variables."
+
+	^self classLayout isDoubleWords
+]
+
+{ #category : 'testing' }
 Behavior >> isEphemeronClass [
 	"Answer whether the receiver has ephemeral instance variables.  The garbage collector will
 	 fire (queue for finalization) any ephemeron whose first instance variable is not referenced
@@ -1160,7 +1167,7 @@ Behavior >> isWeak [
 Behavior >> isWords [
 	"Answer true if the receiver is made of 32-bit instance variables."
 
-	^self isBytes not
+	^self classLayout isWords
 ]
 
 { #category : 'accessing - method dictionary' }
