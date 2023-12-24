@@ -51,7 +51,8 @@ RBRenameInstanceVariableDriverTest >> testValidNameAndUndefinedVariable [
 	requestDialog on: #text: respond: 'nothing'.
 	driver requestDialog: requestDialog.
 
-	self halt.
+	"self halt."
+	"It loops from here."
  	driver runRefactoring 
 ]
 

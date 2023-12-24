@@ -33,7 +33,8 @@ RBRemoveInstanceVariableRefactoring class >> remove: variable from: class [
 { #category : 'preconditions' }
 RBRemoveInstanceVariableRefactoring >> applicabilityPreconditions [
 	"we store it because the violators are computed during check so we should not recreate it each time."
- 	^ applicabilityPreconditions ifNil: [ RBCondition directlyDefinesInstanceVariable: variableName asString in: class ]
+	
+ 	^ applicabilityPreconditions ifNil: [ applicabilityPreconditions := (RBDirectlyDefinesInstanceVariableCondition classNamed: class name inModel: self model instanceVariables: { variableName }) ]
 ]
 
 { #category : 'preconditions' }

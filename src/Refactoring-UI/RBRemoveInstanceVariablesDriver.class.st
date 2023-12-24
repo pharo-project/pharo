@@ -79,7 +79,7 @@ RBRemoveInstanceVariablesDriver >> runRefactoring [
 	refactoring failedApplicabilityPreconditions 
 		ifNotEmpty: [ ^ self inform: 'The variable ', refactoring variable,  ' does not exist' ].
 	
-	refactoring breakingChangePreconditions check
+	(refactoring breakingChangePreconditions allSatisfy: [:each | each check])
 		ifTrue: [ self applyChanges ]
 		ifFalse: [ self handleBreakingChanges ]
 

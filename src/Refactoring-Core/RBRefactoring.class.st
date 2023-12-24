@@ -63,16 +63,17 @@ RBRefactoring >> canReferenceVariable: aString in: aClass [
 	^(self poolVariableNamesFor: aClass) includes: aString
 ]
 
-{ #category : 'preconditions' }
+{ #category : 'scripting api - conditions' }
 RBRefactoring >> checkApplicabilityPreconditions [
-
+	"Check a preconditions and raise an error on violations. This method is part of the scripting API since it raises an error."
+	
 	| failedPreconditions |
 	failedPreconditions := self failedApplicabilityPreconditions.
 	failedPreconditions ifEmpty: [ ^ self ].
 	RBRefactoringError signalFor: failedPreconditions
 ]
 
-{ #category : 'support' }
+{ #category : 'private' }
 RBRefactoring >> checkClass: aRBClass selector: aSelector using: aMatcher [
 	| parseTree |
 	parseTree := aRBClass parseTreeForSelector: aSelector.
@@ -90,7 +91,7 @@ RBRefactoring >> classObjectFor: anObject [
 	^ anObject
 ]
 
-{ #category : 'support' }
+{ #category : 'private' }
 RBRefactoring >> convertAllReferencesToClass: aRBClass using: searchReplacer [
 	self model allReferencesToClass: aRBClass
 		do:
@@ -101,7 +102,7 @@ RBRefactoring >> convertAllReferencesToClass: aRBClass using: searchReplacer [
 				using: searchReplacer]
 ]
 
-{ #category : 'support' }
+{ #category : 'private' }
 RBRefactoring >> convertClasses: classSet select: aBlock using: searchReplacer [
 	classSet do:
 			[:aClass |
@@ -130,7 +131,8 @@ RBRefactoring >> copyOptionsFrom: aDictionary [
 
 { #category : 'preconditions' }
 RBRefactoring >> failedApplicabilityPreconditions [
-
+	"Returne the failed preconditions without raising error. It should only be called by drivers."
+	
 	^ self applicabilityPreconditions reject: [ :cond | cond check ]
 ]
 

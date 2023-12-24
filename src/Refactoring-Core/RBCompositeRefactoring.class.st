@@ -15,24 +15,30 @@ Class {
 
 { #category : 'preconditions' }
 RBCompositeRefactoring >> applicabilityPreconditions [
-
-	^ RBCondition true 
+	"Return the list of the all the applicabilityPreconditions of the composite"
+	^ #()
 ]
 
 { #category : 'preconditions' }
 RBCompositeRefactoring >> breakingChangePreconditions [ 
-
-	^ RBCondition true 
+		"Return the list of the all the breakingChangePreconditions of the composite"
+		
+	^ #()
 ]
 
-{ #category : 'executing' }
-RBCompositeRefactoring >> generateChanges [
-	""
+{ #category : 'scripting api - conditions' }
+RBCompositeRefactoring >> checkApplicabilityPreconditions [
+	"Check all the preconditions and raise an error if any of them is false."
 	
-	self flag: #todo. 
-	"This method does not have the same flow than other and in particular
-	checkApplicabilityPreconditions is raising an error but it is not caught
-	like the other ones. "
+	| pre |
+	pre := self applicabilityPreconditions allSatisfy: [ :each | each check ].
+	pre ifFalse: [
+		RBRefactoringError signal: pre errorString ].
+]
+
+{ #category : 'scripting api - executing' }
+RBCompositeRefactoring >> generateChanges [
+	
 	self prepareForExecution.
 	self checkApplicabilityPreconditions.
 	self breakingChangePreconditions check ifFalse: [
@@ -45,8 +51,9 @@ RBCompositeRefactoring >> generateChanges [
 
 { #category : 'preconditions' }
 RBCompositeRefactoring >> preconditions [
-
-	^ self applicabilityPreconditions & self breakingChangePreconditions 
+	"Return the list of all the preconditions."
+	
+	^ self applicabilityPreconditions addAll: self breakingChangePreconditions ; yourself
 ]
 
 { #category : 'preparation' }
