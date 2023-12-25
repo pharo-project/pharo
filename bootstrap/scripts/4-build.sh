@@ -141,7 +141,9 @@ ${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" loadHermes Hermes-Extensio
 ${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" loadHermes Math-Operations-Extensions.hermes Debugging-Core.hermes Kernel-Chronology-Extras.hermes Multilingual-Encodings.hermes ReflectionMirrors-Primitives.hermes --save --no-fail-on-undeclared
 
 # Now that Chronology is loaded, we can initialize the version
-${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" perform SystemVersion setMajor:minor:patch:suffix:build:commitHash: ${PHARO_MAJOR} ${PHARO_MINOR} ${PHARO_PATCH} ${PHARO_SUFFIX} ${BUILD_NUMBER} ${PHARO_COMMIT_HASH}
+${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" perform  --save ChronologyConstants initialize
+${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" perform  --save DateAndTime initialize
+${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" perform  --save SystemVersion setMajor:minor:patch:suffix:build:commitHash: ${PHARO_MAJOR} ${PHARO_MINOR} ${PHARO_PATCH} ${PHARO_SUFFIX} ${BUILD_NUMBER} ${PHARO_COMMIT_HASH}
 
 ${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" loadHermes InitializePackagesCommandLineHandler.hermes --save
 
