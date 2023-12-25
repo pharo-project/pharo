@@ -717,20 +717,7 @@ PBAbstractImageBuilder >> initializeImage [
 	Enchancement possible: This should be automatically managed by the createVMStubs method"
 			objectSpace backend processorAssociation: (self bootstrapInterpreter evaluateCode: 'Smalltalk globals associationAt: #Processor.').
 
-			process := objectSpace createProcessWithPriority: 40 doing: ('PharoBootstrapInitialization 
-			initializeImageOfType: ''Pharo'' 
-			major: {major} 
-			minor: {minor} 
-			patch: {patch}
-			suffix: ''{suffix}'' 
-			build: {build} 
-			commitHash: ''{hash}''.' format: {
-						            ('major' -> versionInfo major).
-						            ('minor' -> versionInfo minor).
-						            ('patch' -> versionInfo patch).
-						            ('suffix' -> (versionInfo suffix ifNil: [ '' ])).
-						            ('build' -> versionInfo buildNumber).
-						            ('hash' -> versionInfo commitHash) } asDictionary).
+			process := objectSpace createProcessWithPriority: 40 doing: 'PharoBootstrapInitialization initializeCommandLineHandlerAndErrorHandling'.
 			objectSpace installAsActiveProcess: process.
 
 			self followForwardingPointers.
