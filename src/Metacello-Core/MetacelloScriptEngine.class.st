@@ -147,7 +147,7 @@ MetacelloScriptEngine >> get [
       projectPackage := spec projectPackage.
       projectPackage repositorySpecs
         do: [ :repoSpec | repoSpec createRepository flushForScriptGet ].
-      projectPackage load.
+      projectPackage forceLoadingWithEngine: self.
       self root: (Smalltalk at: spec className asSymbol) project.
       MetacelloProjectRegistration
         registrationForProjectSpec: spec
