@@ -11,7 +11,6 @@ Class {
 	#instVars : [
 		'manager',
 		'deferredStartupActions',
-		'creationTime',
 		'properties'
 	],
 	#category : 'System-SessionManager-Utilities',
@@ -38,11 +37,6 @@ WorkingSession >> addDeferredStartupAction: aBlock [
 ]
 
 { #category : 'accessing' }
-WorkingSession >> creationTime [
-	^ creationTime
-]
-
-{ #category : 'accessing' }
 WorkingSession >> errorHandler [
 	^ UIManager default
 ]
@@ -64,7 +58,6 @@ WorkingSession >> executeDeferredStartupActions: resuming [
 WorkingSession >> initialize [
 	super initialize.
 	deferredStartupActions := OrderedCollection new.
-	creationTime := DateAndTime now.
 	properties := Dictionary new
 ]
 

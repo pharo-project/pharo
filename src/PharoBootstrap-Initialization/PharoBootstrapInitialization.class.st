@@ -82,9 +82,10 @@ PharoBootstrapInitialization class >> initializeCommandLineHandlerAndErrorHandli
 	ExternalType initialize.
 
 	'Initializing Session Manager' traceCr.
-	SessionManager default installNewSession.
 	SessionManager initialize.
 	SessionManager initializeKernelRegistrations.
+	SessionManager default installNewSession.
+
 
 	'Initializing basic command line behaviors' traceCr.
 	"Initialize basic command line behaviour"
