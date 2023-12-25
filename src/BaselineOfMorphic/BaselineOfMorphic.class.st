@@ -276,7 +276,7 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 	self loadBitmapDejaVuSans.
 	self loadBitmapSourcePro.
 
-	#( TextStyle ) do: [ :each | (Smalltalk globals at: each) initialize ].
+	(Smalltalk globals at: #TextStyle) initialize.
 
 	Stdio stdout
 		nextPutAll: 'bitmap fonts loaded' asString;
@@ -329,7 +329,7 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 	   #FreeTypeFontProvider #GradientFillStyle #IconicButtonMorph
 	   #KMLog #LogicalFont #LucidaGrandeRegular #OSEnvironment
 	   #ScrollBarMorph #StrikeFont #SystemSettingsPersistence
-	   #TabMorph #TaskbarMorph #Text #TextAction #TextConstants
+	   #TabMorph #TaskbarMorph #TextAction #TextConstants
 	   #TextStyle ) do: [ :each |
 		(Smalltalk globals at: each) initialize ].
 
