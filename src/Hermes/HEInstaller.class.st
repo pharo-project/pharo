@@ -91,11 +91,6 @@ HEInstaller >> classNamed: aSymbol [
 	^ self environment at: aSymbol
 ]
 
-{ #category : 'reporting undeclared' }
-HEInstaller >> createdUndeclared [
-	^ (Undeclared associations reject: [ :asoc | originalUndeclareds associations includes: asoc]) asDictionary 
-]
-
 { #category : 'installing package' }
 HEInstaller >> doInstallPackage: aHEPackage [
 
@@ -202,6 +197,13 @@ HEInstaller >> messageMethod: aHEMethod alreadyExistsIn: aClass [
 	^ 'The method ' , aHEMethod name asString , ' already exists in class ' , aClass name asString
 ]
 
+{ #category : 'reporting undeclared' }
+HEInstaller >> newUndeclaredVariables [
+	"Return the collection of undeclared variables created during this installation"
+	^ Undeclared associations reject: [ :asoc |
+		  originalUndeclareds associations includes: asoc ]
+]
+
 { #category : 'installing methods' }
 HEInstaller >> rebuildMethod: aMethod into: aClass [
 
@@ -236,7 +238,10 @@ HEInstaller >> rebuildMethod: aMethod into: aClass [
 
 { #category : 'reporting undeclared' }
 HEInstaller >> reportNewUndeclareds: newUndeclareds [
-	newUndeclareds ifNotEmpty: [ self error: 'New Undeclared created... check dependencies: ' , newUndeclareds keys printString ]
+
+	newUndeclareds ifNotEmpty: [
+		self error: 'New Undeclared created... check dependencies: '
+			, (newUndeclareds collect: [ :e | e key ]) printString ]
 ]
 
 { #category : 'validating existence' }
@@ -257,7 +262,7 @@ HEInstaller >> supportsTraits [
 
 { #category : 'reporting undeclared' }
 HEInstaller >> validateNoNewUndeclared [
-	self reportNewUndeclareds: self createdUndeclared.
+	self reportNewUndeclareds: self newUndeclaredVariables.
 	
 	SystemNotification signal: ('[Hermes] Remaining Undeclared variables in the system: '
 		, Undeclared keys printString)

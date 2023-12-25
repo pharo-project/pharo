@@ -22,5 +22,6 @@ Class {
 { #category : 'meta-data - dependency analyser' }
 ManifestHermes class >> manuallyResolvedDependencies [
 
-	^ #( #Files #'Collections-Abstract' )
+	<ignoreForCoverage>
+	^ #(#Equals #'Announcements-Core' #'Zinc-Character-Encoding-Core' #Traits #'Shift-ClassBuilder' #'Collections-Unordered' #'Collections-Abstract')
 ]
