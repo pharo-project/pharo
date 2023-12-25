@@ -242,7 +242,7 @@ SystemVersion >> initialize [
 SystemVersion >> major [
 	"Answer the major number of a version. 1 in '1.2'"
 
-	^ major
+	^ major asInteger
 ]
 
 { #category : 'accessing - properties' }
@@ -290,7 +290,7 @@ SystemVersion >> majorMinorVersion [
 SystemVersion >> minor [
 	"Answer the minor number of a version. 2 in '1.2'"
 
-	^ minor
+	^ minor asInteger
 ]
 
 { #category : 'accessing - properties' }
@@ -302,7 +302,8 @@ SystemVersion >> minor: anInteger [
 
 { #category : 'accessing' }
 SystemVersion >> patch [
-	^ patch
+
+	^ patch asInteger
 ]
 
 { #category : 'accessing' }
