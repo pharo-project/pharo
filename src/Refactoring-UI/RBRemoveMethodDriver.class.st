@@ -62,7 +62,8 @@ RBRemoveMethodDriver >> handleBreakingChanges [
 RBRemoveMethodDriver >> runRefactoring [
 
 	self configureRefactoring.
-	refactoring checkApplicabilityPreconditions.
+	refactoring failedApplicabilityPreconditions 
+		ifNotEmpty: [ ^ self inform: 'The method does not exist' ].
 	
 	haveNoSenders := refactoring preconditionHaveNoSenders.
 

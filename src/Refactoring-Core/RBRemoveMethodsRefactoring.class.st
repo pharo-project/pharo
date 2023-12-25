@@ -57,7 +57,8 @@ RBRemoveMethodsRefactoring >> allSelectors [
 
 { #category : 'preconditions' }
 RBRemoveMethodsRefactoring >> applicabilityPreconditions [
-
+	"Return a list of preconditions"
+	
 	| preconditions |
 	preconditions := OrderedCollection new.
 	classSelectorMapping

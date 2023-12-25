@@ -121,7 +121,8 @@ RBRemoveMethodRefactoring >> checkSuperMethods [
 
 { #category : 'executing' }
 RBRemoveMethodRefactoring >> generateChanges [
-
+	"Prepare, check the preconditions, and perform the actual transformation (i.e., creating a list of changes that can be accessible using the changes message). This method should not be invoked from drivers since drivers usually check in finer grained mode the preconditions - and that this stage they already checked the preconditions."
+	
 	self prepareForExecution.
 
 	transformation applicabilityPreconditions check ifFalse: [
@@ -130,6 +131,8 @@ RBRemoveMethodRefactoring >> generateChanges [
 	self breakingChangePreconditions check ifFalse: [
 		RBBreakingChangeChecksFailedWarning signal:
 			self breakingChangePreconditions errorString ].
+	self flag: #todo. 
+	"see other generateChanges"
 	^ self removeMethodChanges 
 ]
 
@@ -173,7 +176,7 @@ RBRemoveMethodRefactoring >> privateTransform [
 
 { #category : 'actions' }
 RBRemoveMethodRefactoring >> removeMethodChanges [
-	"Pay attention, don't call directly since this method skips preconditions."
+	"Pay attention, don't call directly since this method skips preconditions. This should only be called by drivers when the preconditions have been met."
 
 	self privateTransform.
 	^ self changes
