@@ -51,14 +51,14 @@ function set_version_common() {
 	# HACK: Since this may beforehand a PR branch, I do not have all information I need. I assume I will have a tag indicating Pharo version.
 	# Note: do not use `--first-parent` here, since Jenkins is crazy and use the PR as the first parent wheras useful version information in the targeted branch.
     # Set the common env vars extracting version information. Requires that prefix and suffix are set beforehand
-    PHARO_MAJOR="git describe --long --tags | cut -d'-' -f 1 | cut -c 2- | cut -d'.' -f 1-1"
-    PHARO_MINOR="git describe --long --tags | cut -d'-' -f 1 | cut -c 2- | cut -d'.' -f 2-2"
-    PHARO_PATCH="git describe --long --tags | cut -d'-' -f 1 | cut -c 2- | cut -d'.' -f 3-3"
+    PHARO_MAJOR="$(git describe --long --tags | cut -d'-' -f 1 | cut -c 2- | cut -d'.' -f 1-1)"
+    PHARO_MINOR="$(git describe --long --tags | cut -d'-' -f 1 | cut -c 2- | cut -d'.' -f 2-2)"
+    PHARO_PATCH="$(git describe --long --tags | cut -d'-' -f 1 | cut -c 2- | cut -d'.' -f 3-3)"
 
 	# This will answer "Pharo7.0-PR"
-	PHARO_NAME_PREFIX="$(PHARO_PREFIX)-$(PHARO_MAJOR).$(PHARO_MINOR)-$(PHARO_SUFFIX)"
+	PHARO_NAME_PREFIX="${PHARO_PREFIX}${PHARO_MAJOR}.${PHARO_MINOR}-${PHARO_SUFFIX}"
     # This will answer "70"
-	PHARO_SHORT_VERSION="$(PHARO_MAJOR)$(PHARO_MINOR)"
+	PHARO_SHORT_VERSION="${PHARO_MAJOR}${PHARO_MINOR}"
 }
 
 # sets variables when we are in a release build
