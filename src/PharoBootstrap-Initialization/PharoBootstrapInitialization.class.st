@@ -105,7 +105,6 @@ PharoBootstrapInitialization class >> initializeFileSystem [
 	env := self environment.
 	(env at: #FileLocator) initialize.
 	(env at: #DiskStore) initialize.
-	(env at: #FileHandle) initialize.
 	(env at: #File) initialize.
 	(env at: #SharedRandom) initialize.
 
