@@ -30,11 +30,6 @@ PharoBootstrapInitialization class >> initializeCommandLineHandlerAndErrorHandli
 	
 	ProcessorScheduler initialize.
 
-	Object initialize.
-
-	ChronologyConstants initialize.
-	DateAndTime initialize.
-
 	Delay initialize.
 
 	ProcessorScheduler startUp.
