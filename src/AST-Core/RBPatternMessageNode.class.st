@@ -51,7 +51,7 @@ RBPatternMessageNode >> copyInContext: aDictionary [
 
 { #category : 'testing - matching' }
 RBPatternMessageNode >> isList [
-	^isCascadeList and: [parent notNil and: [parent isCascade]]
+	^isCascadeList and: [parent isNotNil and: [parent isCascade]]
 ]
 
 { #category : 'testing - matching' }
