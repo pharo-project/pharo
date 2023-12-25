@@ -22,13 +22,6 @@ MorphicCoreUIManager class >> restartMethods [
 ]
 
 { #category : 'ui requests' }
-MorphicCoreUIManager >> currentWorld [
-
-	ActiveWorld ifNotNil: [ ^ ActiveWorld ].
-	^ World
-]
-
-{ #category : 'ui requests' }
 MorphicCoreUIManager >> restoreDisplayAfter: aBlock [
 
   aBlock value.

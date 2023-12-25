@@ -273,13 +273,6 @@ MorphicUIManager >> confirm: queryString trueChoice: trueChoice falseChoice: fal
 		default: defaultOption
 ]
 
-{ #category : 'ui requests' }
-MorphicUIManager >> currentWorld [
-
-	ActiveWorld ifNotNil: [ ^ ActiveWorld ].
-	^ World
-]
-
 { #category : 'private' }
 MorphicUIManager >> deactivate [
 
