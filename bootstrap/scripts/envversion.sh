@@ -47,13 +47,28 @@ function is_development_build() {
 	fi
 }
 
+function set_version_common() {
+	# HACK: Since this may beforehand a PR branch, I do not have all information I need. I assume I will have a tag indicating Pharo version.
+	# Note: do not use `--first-parent` here, since Jenkins is crazy and use the PR as the first parent wheras useful version information in the targeted branch.
+    # Set the common env vars extracting version information. Requires that prefix and suffix are set beforehand
+    PHARO_MAJOR="git describe --long --tags | cut -d'-' -f 1 | cut -c 2- | cut -d'.' -f 1-1"
+    PHARO_MINOR="git describe --long --tags | cut -d'-' -f 1 | cut -c 2- | cut -d'.' -f 2-2"
+    PHARO_PATCH="git describe --long --tags | cut -d'-' -f 1 | cut -c 2- | cut -d'.' -f 3-3"
+
+	# This will answer "Pharo7.0-PR"
+	PHARO_NAME_PREFIX="$(PHARO_PREFIX)-$(PHARO_MAJOR).$(PHARO_MINOR)-$(PHARO_SUFFIX)"
+    # This will answer "70"
+	PHARO_SHORT_VERSION="$(PHARO_MAJOR)$(PHARO_MINOR)"
+}
+
 # sets variables when we are in a release build
 function set_version_release_variables() {
 	# I'm a release, I have all values needed in a TAG
 	# This will answer "Pharo7.0"
-	PHARO_NAME_PREFIX="Pharo$(git describe --long --tags --first-parent | cut -d'-' -f 1-2 | cut -c 2-)"
-	# This will be "70"
-	PHARO_SHORT_VERSION="$(git describe --long --tags --first-parent | cut -d'-' -f 1 | cut -c 2- | cut -d'.' -f 1-2 | sed 's/\.//')"
+    
+    PHARO_PREFIX="Pharo"
+    PHARO_SUFFIX=""
+    set_version_common
 }
 
 # sets variables when we are in a snapshot build
@@ -61,20 +76,17 @@ function set_version_snapshot_variables() {
 	# ensure we have BRANCH_NAME variable
 	ensure_branch_name
 	# This will answer "Pharo7.0-SNAPSHOT"
-	PHARO_NAME_PREFIX="${BRANCH_NAME}-SNAPSHOT"
-	# This will answer "70"
-	PHARO_SHORT_VERSION="$(git describe --long --tags --first-parent | cut -d'-' -f 1 | cut -c 2- | cut -d'.' -f 1-2 | sed 's/\.//')"
+    PHARO_PREFIX="${BRANCH_NAME}"
+    PHARO_SUFFIX="SNAPSHOT"
+    set_version_common
 }
 
 # sets variables when we are in a pull request build
 function set_version_pull_request_variables() {
 	# I'm not development build, I should be a PR
-	# HACK: Since this is a PR branch, I do not have all information I need. I assume I will have a tag indicating Pharo version.
-	# Note: do not use `--first-parent` here, since Jenkins is crazy and use the PR as the first parent wheras useful version information in the targeted branch.
-	# This will answer "Pharo7.0-PR"
-	PHARO_NAME_PREFIX="Pharo$(git describe --long --tags | cut -d'-' -f 1 | cut -c 2- | cut -d'.' -f 1-2)-PR"
-	# This will answer "70"
-	PHARO_SHORT_VERSION="$(git describe --long --tags | cut -d'-' -f 1 | cut -c 2- | cut -d'.' -f 1-2 | sed 's/\.//')"
+    PHARO_PREFIX="Pharo"
+    PHARO_SUFFIX="PR"
+    set_version_common
 }
 
 # sets all variables:
