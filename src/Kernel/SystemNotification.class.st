@@ -12,5 +12,5 @@ Class {
 { #category : 'handling' }
 SystemNotification >> defaultAction [
 
-	^ thisProcess handleNotification: self
+	^ Processor activeProcess handleNotification: self
 ]

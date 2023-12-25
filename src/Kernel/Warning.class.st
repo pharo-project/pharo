@@ -27,5 +27,5 @@ Warning >> unhandledErrorAction [
 	It is the final action an exception can do which is normally a debugger in interactive image"
 
 	<debuggerCompleteToSender>
-	^ thisProcess handleWarning: self
+	^ Processor activeProcess handleWarning: self
 ]
