@@ -97,23 +97,27 @@ HEInstaller >> doInstallPackage: aHEPackage [
 	| newTraits newClasses |
 	"Creating the package. It requires a number of steps.
 	1. Register the package in the organizer."
-	self flag: #pahro11. "Update this when Pharo 12 will be the minimal version"
-	SystemVersion current major < 12 ifTrue: [ PackageOrganizer default registerPackageNamed: aHEPackage packageName ] ifFalse: [ self packageOrganizer ensurePackage: aHEPackage packageName ].
+	PackageOrganizer default registerPackageNamed: aHEPackage packageName.
 
 	"2. Install the traits"
-	newTraits := aHEPackage traits collect: [ :exportedTrait | self buildTrait: exportedTrait ].
+	newTraits := aHEPackage traits collect: [ :exportedTrait |
+		             self buildTrait: exportedTrait ].
 
 	"3. Install traits methods"
-	aHEPackage traits with: newTraits do: [ :exportedTrait :newTrait | self installMethods: exportedTrait into: newTrait ].
+	aHEPackage traits with: newTraits do: [ :exportedTrait :newTrait |
+		self installMethods: exportedTrait into: newTrait ].
 
 	"4. Install classes"
-	newClasses := aHEPackage classes collect: [ :exportedClass | self build: exportedClass ].
+	newClasses := aHEPackage classes collect: [ :exportedClass |
+		              self build: exportedClass ].
 
 	"5. Install class methods"
-	aHEPackage classes with: newClasses do: [ :exportedClass :newClass | self installMethods: exportedClass into: newClass ].
+	aHEPackage classes with: newClasses do: [ :exportedClass :newClass |
+		self installMethods: exportedClass into: newClass ].
 
 	"6. Install extension methods"
-	aHEPackage extensionMethods do: [ :e | self installExtensionMethod: e ].
+	aHEPackage extensionMethods do: [ :e |
+		self installExtensionMethod: e ].
 
 	"7. After all I validate if there are no new undeclared variables created in the environment.
 	A new undeclared is a sign of an improper modularization."
