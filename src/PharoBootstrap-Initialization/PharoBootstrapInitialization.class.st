@@ -59,7 +59,6 @@ PharoBootstrapInitialization class >> initializeCommandLineHandlerAndErrorHandli
 	'Initializing Collections' traceCr.
 	CollectionElement initialize.
 	ExternalSemaphoreTable initialize.
-	Collection initialize.
 	
 	'Initializing code model' traceCr.
 	CompiledMethod initialize.
