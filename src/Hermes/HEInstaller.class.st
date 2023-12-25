@@ -97,7 +97,7 @@ HEInstaller >> doInstallPackage: aHEPackage [
 	| newTraits newClasses |
 	"Creating the package. It requires a number of steps.
 	1. Register the package in the organizer."
-	PackageOrganizer default registerPackageNamed: aHEPackage packageName.
+	self packageOrganizer ensurePackage: aHEPackage packageName.
 
 	"2. Install the traits"
 	newTraits := aHEPackage traits collect: [ :exportedTrait |
