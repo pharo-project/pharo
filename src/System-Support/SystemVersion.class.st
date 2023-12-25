@@ -96,6 +96,19 @@ SystemVersion class >> major: major minor: minor patch: patch suffix: aString bu
 		yourself
 ]
 
+{ #category : 'instance creation' }
+SystemVersion class >> setMajor: major minor: minor patch: patch suffix: aString build: build commitHash: hashString [
+	"Create a SystemVersion instance  and set it as current"
+
+	^ Current := self
+		             major: major
+		             minor: minor
+		             patch: patch
+		             suffix: aString
+		             build: build
+		             commitHash: hashString
+]
+
 { #category : 'accessing - properties' }
 SystemVersion >> build [
 

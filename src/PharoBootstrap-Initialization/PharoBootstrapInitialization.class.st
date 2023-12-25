@@ -117,22 +117,3 @@ PharoBootstrapInitialization class >> initializeFileSystem [
 	"Now that the file system is setup, we can register SourceFileArray to the session manager."
 	SessionManager default registerSystemClassNamed: #SourceFileArray
 ]
-
-{ #category : 'public api' }
-PharoBootstrapInitialization class >> initializeImageOfType: typeName major: major minor: minor patch: patch suffix: suffix build: buildNumber commitHash: hash [
-	"The image main entry point called by an image builder. The arguments specify the image
-	version description.
-	This method is run before the new bootstrapped image is saved!"
-
-	SystemVersion writeClassVariableNamed: #Current value: (SystemVersion new
-			 type: typeName;
-			 major: major;
-			 minor: minor;
-			 patch: patch;
-			 suffix: suffix;
-			 build: buildNumber;
-			 commitHash: hash;
-			 yourself).
-
-	self initializeCommandLineHandlerAndErrorHandling
-]
