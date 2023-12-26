@@ -34,9 +34,8 @@ Class {
 	#instVars : [
 		'references'
 	],
-	#category : 'Kernel-Copying',
-	#package : 'Kernel',
-	#tag : 'Copying'
+	#category : 'System-Model',
+	#package : 'System-Model'
 }
 
 { #category : 'checking' }

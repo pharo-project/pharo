@@ -1905,19 +1905,6 @@ Object >> valueWithArguments: aSequenceOfArguments [
 ]
 
 { #category : 'copying' }
-Object >> veryDeepCopy [
-	"Do a complete tree copy using a dictionary.  An object in the tree twice is only copied once.  All references to the object in the copy of the tree will point to the new copy."
-
-	| copier new |
-	copier := DeepCopier new initialize: 4096 "self initialDeepCopierSize".
-	new := self veryDeepCopyWith: copier.
-	copier references associationsDo: [:assoc |
-		assoc value veryDeepFixupWith: copier].
-	copier fixDependents.
-	^ new
-]
-
-{ #category : 'copying' }
 Object >> veryDeepCopyWith: deepCopier [
 	"Copy me and the entire tree of objects I point to.  An object in the tree twice is copied once, and both references point to him.  deepCopier holds a dictionary of objects we have seen.  Some classes refuse to be copied.  Some classes are picky about which fields get deep copied."
 
