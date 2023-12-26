@@ -82,7 +82,7 @@ DependentsManager >> dependentsOf: anObject [
 	^ dependents at: anObject ifAbsent: [ #(  ) ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 DependentsManager >> fixDependents: copiedReferences [
 
 	dependents associationsDo: [ :pair |

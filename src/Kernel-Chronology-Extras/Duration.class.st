@@ -76,7 +76,7 @@ Duration class >> minutes: aNumber [
 	^ self seconds: aNumber * SecondsInMinute nanoSeconds: 0
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'instance creation' }
 Duration class >> month: aMonth [
 	"aMonth is an Integer or a String"
 

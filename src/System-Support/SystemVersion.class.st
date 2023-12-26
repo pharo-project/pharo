@@ -124,8 +124,8 @@ SystemVersion >> build: aBuildNumber [
 { #category : 'private' }
 SystemVersion >> calculateHighestUpdate [
 	|result|
-	result := (major * 10000) + (minor * 1000).
-	self hasValidBuildNumber ifTrue: [ result := result + build ].
+	result := (self major * 10000) + (self minor * 1000).
+	self hasValidBuildNumber ifTrue: [ result := result + self build ].
 	^result
 ]
 

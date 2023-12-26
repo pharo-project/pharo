@@ -90,7 +90,7 @@ Timespan >> asDateAndTime [
 	^ start
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'enumerating' }
 Timespan >> asDosTimestamp [
 
 	^ start asDosTimestamp
@@ -102,7 +102,7 @@ Timespan >> asDuration [
 	^ self duration
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'enumerating' }
 Timespan >> asMonth [
 
 	^ start asMonth
@@ -121,19 +121,19 @@ Timespan >> asTime [
 	^ start asTime
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'enumerating' }
 Timespan >> asWeek [
 
 	^ start asWeek
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'enumerating' }
 Timespan >> asYear [
 
 	^ start asYear
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'enumerating' }
 Timespan >> dates [
 
 
@@ -144,13 +144,13 @@ Timespan >> dates [
 	^ dates asArray
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'enumerating' }
 Timespan >> datesDo: aBlock [
 
 	self do: aBlock with: start asDate
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'enumerating' }
 Timespan >> day [
 	"Answer the day of the year represented by the receiver."
 	^ self dayOfYear
@@ -163,52 +163,52 @@ Timespan >> dayOfMonth [
 	^ start dayOfMonth
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'enumerating' }
 Timespan >> dayOfWeek [
 	"Answer the day of the week represented by the receiver."
 
 	^ start dayOfWeek
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'enumerating' }
 Timespan >> dayOfWeekName [
 	"Answer the day of the week represented by the receiver."
 
 	^ start dayOfWeekName
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'enumerating' }
 Timespan >> dayOfYear [
 	"Answer the day of the year represented by the receiver."
 
 	^ start dayOfYear
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'enumerating' }
 Timespan >> daysInMonth [
 
 	^ start daysInMonth
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'enumerating' }
 Timespan >> daysInYear [
  	"Answer the number of days in the month represented by the receiver."
 
 	^ start daysInYear
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'enumerating' }
 Timespan >> daysLeftInYear [
 	^ start daysLeftInYear
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'enumerating' }
 Timespan >> do: aBlock with: aFirstElement [
 
  	self do: aBlock with: aFirstElement when: [ :t | true ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'enumerating' }
 Timespan >> do: aBlock with: aFirstElement when: aConditionBlock [
 
 	| element end |
@@ -235,7 +235,7 @@ Timespan >> duration: aDuration [
 	duration := aDuration
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'enumerating' }
 Timespan >> end [
 
 	^ self duration asNanoSeconds = 0
@@ -243,7 +243,7 @@ Timespan >> end [
 		ifFalse: [ self next start - DateAndTime clockPrecision ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'enumerating' }
 Timespan >> every: aDuration do: aBlock [
 
 	| element end |
@@ -255,7 +255,7 @@ Timespan >> every: aDuration do: aBlock [
 		element := element + aDuration. ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'enumerating' }
 Timespan >> firstDayOfMonth [
 
 	^ start firstDayOfMonth
@@ -267,7 +267,7 @@ Timespan >> hash [
 	^ start hash + duration hash
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'enumerating' }
 Timespan >> includes: aDateAndTime [
 
 	^ (aDateAndTime isKindOf: Timespan)
@@ -277,26 +277,26 @@ Timespan >> includes: aDateAndTime [
 			ifFalse: [ aDateAndTime asDateAndTime between: start and: self end ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'enumerating' }
 Timespan >> includesAll: aCollection [
 	"Answer whether all the elements of aCollection are in the receiver."
 
 	^ aCollection allSatisfy: [ :elem | self includes: elem ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'enumerating' }
 Timespan >> includesAny: aCollection [
 	"Answer whether any element of aCollection is included in the receiver"
 
 	^ aCollection anySatisfy: [ :elem | self includes: elem ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'enumerating' }
 Timespan >> includesAnyOf: aCollection [
 	^ self includesAny: aCollection
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'enumerating' }
 Timespan >> intersection: aTimespan [
 
 	 "Return the Timespan both have in common, or nil"
@@ -310,7 +310,7 @@ Timespan >> intersection: aTimespan [
 	 ^ self species starting: aBegin ending: anEnd
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'enumerating' }
 Timespan >> isLeapYear [
 
 	^ start isLeapYear
@@ -333,7 +333,7 @@ Timespan >> month [
 	^ start month
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'enumerating' }
 Timespan >> monthAbbreviation [
 
 	^ start monthAbbreviation
@@ -345,13 +345,13 @@ Timespan >> monthIndex [
 	^ self month
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'enumerating' }
 Timespan >> monthName [
 
 	^ start monthName
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'enumerating' }
 Timespan >> months [
 
 	| months |
@@ -360,7 +360,7 @@ Timespan >> months [
 	^ months asArray
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'enumerating' }
 Timespan >> monthsDo: aBlock [
 
  	self do: aBlock with: start asMonth
@@ -420,7 +420,7 @@ Timespan >> start: aDateAndTime [
 	start := aDateAndTime asDateAndTime
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'enumerating' }
 Timespan >> to: anEnd [
 	"Answer an Timespan. anEnd must be aDateAndTime or a Timespan"
 	| end |
@@ -430,7 +430,7 @@ Timespan >> to: anEnd [
 	^ Timespan starting: (self start) ending: end
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'enumerating' }
 Timespan >> translateTo: aTimeZone [
 	"Keep myself's representation and move it to another timezone offset.
 	Note that unlike #offset: this WILL change the absolute time in UTC"
@@ -439,13 +439,13 @@ Timespan >> translateTo: aTimeZone [
 		starting: (start translateTo: aTimeZone)
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'enumerating' }
 Timespan >> translateToUTC [
 	" Move this represenation to UTC"
 	^ self translateTo: 0
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'enumerating' }
 Timespan >> union: aTimespan [
 	 "Return the Timespan spanned by both"
 
@@ -456,7 +456,7 @@ Timespan >> union: aTimespan [
 	^ Timespan starting: aBegin ending: (anEnd + DateAndTime clockPrecision)
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'enumerating' }
 Timespan >> weeks [
 
 
@@ -466,13 +466,13 @@ Timespan >> weeks [
 	^ weeks asArray
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'enumerating' }
 Timespan >> weeksDo: aBlock [
 
 	self do: aBlock with: self asWeek
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'enumerating' }
 Timespan >> workDates [
  	"Exclude Saturday and Sunday"
 
@@ -482,7 +482,7 @@ Timespan >> workDates [
 	^ workDays
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'enumerating' }
 Timespan >> workDatesDo: aBlock [
  	"Exclude Saturday and Sunday"
 
@@ -495,7 +495,7 @@ Timespan >> year [
 	^ start year
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'enumerating' }
 Timespan >> years [
 
 
@@ -505,7 +505,7 @@ Timespan >> years [
 	^ years asArray
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'enumerating' }
 Timespan >> yearsDo: aBlock [
 
 	self do: aBlock with: start asYear

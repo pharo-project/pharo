@@ -89,7 +89,7 @@ DateAndTime class >> current [
 	^ self now
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'instance creation' }
 DateAndTime class >> date: aDate time: aTime [
 
 	^ self
@@ -103,7 +103,7 @@ DateAndTime class >> date: aDate time: aTime [
 		offset: self localOffset
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'instance creation' }
 DateAndTime class >> dosEpoch [
 	"Answer a DateAndTime representing the DOS epoch (1 January 1980, midnight UTC)"
 
@@ -119,7 +119,7 @@ DateAndTime class >> epoch [
   ^ (self julianDayNumber: SqueakEpoch) offset: 0
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'instance creation' }
 DateAndTime class >> fromDosTimestamp: anInteger [
 
 	^ (DosTimestamp on: anInteger) asDateAndTime
@@ -132,7 +132,7 @@ DateAndTime class >> fromInternalTime: anInteger [
 	^(self fromSeconds: anInteger offset: 0) translateTo: self localOffset
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'instance creation' }
 DateAndTime class >> fromMethodTimeStamp: aString [
 	| stream |
 	stream := aString readStream.
@@ -142,13 +142,13 @@ DateAndTime class >> fromMethodTimeStamp: aString [
 	^ self readSeparateDateAndTimeFrom: stream
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'instance creation' }
 DateAndTime class >> fromSeconds: secondsSinceEpochUTC [
 	"Answer a DateAndTime since the epoch: 1 January 1901 for the seconds in UTC time"
 	^ self fromSeconds: secondsSinceEpochUTC offset: self localOffset
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'instance creation' }
 DateAndTime class >> fromSeconds: utcSecondsSinceEpoch offset: aUTCOffset [
 	"Answer a DateAndTime since the epoch: 1 January 1901 for the given timeZone"
 
@@ -170,7 +170,7 @@ DateAndTime class >> fromUnixTime: anInteger [
 	^ self fromSeconds: anInteger + 2177452800 "unix epoch constant"
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'instance creation' }
 DateAndTime class >> fuzzyReadFrom: aStream [
 	| bc year month day hour minute second nanos offset buffer ch |
 
@@ -290,7 +290,7 @@ DateAndTime class >> new [
 	^ self epoch offset: self localOffset
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'instance creation' }
 DateAndTime class >> noon [
 
 	^ self now noon
@@ -310,7 +310,7 @@ DateAndTime class >> now [
 		offset: self localOffset
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'instance creation' }
 DateAndTime class >> readFrom: aStream [
 	"Parse and return a new DateAndTime instance from stream,
 	as a Date, an optional Time and an optional TimeZone offset.
@@ -320,7 +320,7 @@ DateAndTime class >> readFrom: aStream [
 	^self readFrom: aStream defaultOffset: self localOffset
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'instance creation' }
 DateAndTime class >> readFrom: aStream defaultOffset: defaultOffset [
 	"Parse and return a new DateAndTime instance from stream,
 	as a Date, an optional Time and an optional TimeZone offset.
@@ -347,7 +347,7 @@ DateAndTime class >> readFrom: aStream defaultOffset: defaultOffset [
 		offset: offset
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'private' }
 DateAndTime class >> readOptionalSeparatorFrom: stream [
 	"Read an optional separator (non decimal digit) from stream and return it.
 	Return nil if nothing was read"
@@ -362,7 +362,7 @@ DateAndTime class >> readOptionalSeparatorFrom: stream [
 		ifFalse: [ stream next ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'instance creation' }
 DateAndTime class >> readSeparateDateAndTimeFrom: stream [
 	"Read a separate Date and Time from stream to instanciate the receiver.
 	See also #printSeparateDateAndTimeOn:"
@@ -377,7 +377,7 @@ DateAndTime class >> readSeparateDateAndTimeFrom: stream [
 		time: time
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'instance creation' }
 DateAndTime class >> readTimezoneOffsetFrom: stream [
 	"Read and return an optional timezone offset in the form of
 	[+|-]hh[[separator]mm[[separator]ss]] or Z from stream as a duration.
@@ -386,7 +386,7 @@ DateAndTime class >> readTimezoneOffsetFrom: stream [
 	^self readTimezoneOffsetFrom: stream default: self localOffset
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'instance creation' }
 DateAndTime class >> readTimezoneOffsetFrom: stream default: defaultOffset [
 	"Read and return an optional timezone offset in the form of
 	[+|-]hh[[separator]mm[[separator]ss]] or Z from stream as a duration.
@@ -409,7 +409,7 @@ DateAndTime class >> readTimezoneOffsetFrom: stream default: defaultOffset [
 		ifFalse: [ defaultOffset ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'instance creation' }
 DateAndTime class >> readTwoDigitIntegerFrom: stream [
 	"Parse and return a decimal number of 2 digits from stream.
 	Fail if that is not possible"
@@ -423,19 +423,19 @@ DateAndTime class >> readTwoDigitIntegerFrom: stream [
 	^ integer
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'instance creation' }
 DateAndTime class >> today [
 
 	^ self midnight
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'instance creation' }
 DateAndTime class >> tomorrow [
 
 	^ self today asDate next asDateAndTime
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'instance creation' }
 DateAndTime class >> totalSeconds [
 	"Answer the total seconds ellapsed since the epoch: 1 January 1901"
 
@@ -450,7 +450,7 @@ DateAndTime class >> unixEpoch [
 		yourself
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'instance creation' }
 DateAndTime class >> year: year day: dayOfYear [
 	"Return a DateAndTime"
 
@@ -462,7 +462,7 @@ DateAndTime class >> year: year day: dayOfYear [
 		second: 0
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'instance creation' }
 DateAndTime class >> year: year day: dayOfYear hour: hour minute: minute second: second [
 
 	^ self
@@ -474,7 +474,7 @@ DateAndTime class >> year: year day: dayOfYear hour: hour minute: minute second:
 		offset: self localOffset
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'instance creation' }
 DateAndTime class >> year: year day: dayOfYear hour: hour minute: minute second: second offset: offset [
 	"Return a DataAndTime"
 
@@ -504,7 +504,7 @@ DateAndTime class >> year: aYearInteger month: aMonthNumber [
         minute: 0
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'instance creation' }
 DateAndTime class >> year: year month: month day: day [
 	"Return a DateAndTime, midnight local time"
 	^ self
@@ -515,7 +515,7 @@ DateAndTime class >> year: year month: month day: day [
 		minute: 0
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'instance creation' }
 DateAndTime class >> year: year month: month day: day hour: hour minute: minute [
 	"Return a DateAndTime"
 
@@ -528,7 +528,7 @@ DateAndTime class >> year: year month: month day: day hour: hour minute: minute 
 		second: 0
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'instance creation' }
 DateAndTime class >> year: year month: month day: day hour: hour minute: minute offset: anOffset [
 	"Return a DateAndTime"
 
@@ -542,7 +542,7 @@ DateAndTime class >> year: year month: month day: day hour: hour minute: minute 
 		offset: anOffset
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'instance creation' }
 DateAndTime class >> year: year month: month day: day hour: hour minute: minute second: second [
 	"Return a DateAndTime"
 
@@ -556,7 +556,7 @@ DateAndTime class >> year: year month: month day: day hour: hour minute: minute 
 		offset: self localOffset
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'instance creation' }
 DateAndTime class >> year: year month: month day: day hour: hour minute: minute second: second nanoSecond: nanoCount offset: utcOffset [
 	"Return a DateAndTime with the values in the given TimeZone (UTCOffset)"
 
@@ -592,7 +592,7 @@ DateAndTime class >> year: year month: month day: day hour: hour minute: minute 
 		yourself
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'instance creation' }
 DateAndTime class >> year: year month: month day: day hour: hour minute: minute second: second offset: offset [
 
 	^ self
@@ -606,7 +606,7 @@ DateAndTime class >> year: year month: month day: day hour: hour minute: minute 
 		offset: offset
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'instance creation' }
 DateAndTime class >> year: year month: month day: day offset: anOffset [
 	"Return a DateAndTime, midnight in the timezone with the given offset"
 	^ self
@@ -618,7 +618,7 @@ DateAndTime class >> year: year month: month day: day offset: anOffset [
 		offset: anOffset
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'instance creation' }
 DateAndTime class >> yesterday [
 
 	^ self today asDate previous asDateAndTime
@@ -688,7 +688,7 @@ DateAndTime >> asDateAndTime [
 	^ self
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 DateAndTime >> asDosTimestamp [
 
 	^ (DosTimestamp fromDateAndTime: self) value
@@ -701,7 +701,7 @@ DateAndTime >> asDuration [
 	^ Duration seconds: self secondsSinceMidnightLocalTime nanoSeconds: nanos
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 DateAndTime >> asFileNameCompatibleString [
 	| stream |
 	stream := String new writeStream.
@@ -711,7 +711,7 @@ DateAndTime >> asFileNameCompatibleString [
 	^ stream contents
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 DateAndTime >> asLocal [
 
 	^ (self offset = self class localOffset)
@@ -719,20 +719,20 @@ DateAndTime >> asLocal [
 		ifFalse: [self offset: self class localOffset]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 DateAndTime >> asMonth [
 
 	^ Month starting: self
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 DateAndTime >> asNanoSeconds [
 	"Answer the number of nanoseconds since midnight"
 
 	^ self asDuration asNanoSeconds
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 DateAndTime >> asSeconds [
  	"Return the number of seconds since the epoch"
 
@@ -765,19 +765,19 @@ DateAndTime >> asUnixTime [
 	^((self offset: Duration zero) - self class unixEpoch) asSeconds
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 DateAndTime >> asWeek [
 
 	^ Week starting: self
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 DateAndTime >> asYear [
 
 	^ Year starting: self
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 DateAndTime >> day [
 
  	^ self dayOfYear
@@ -814,33 +814,33 @@ DateAndTime >> dayMonthYearDo: aBlock [
 		value: fullYear
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 DateAndTime >> dayOfMonth [
 	"Answer which day of the month is represented by the receiver."
 
 	^ self dayMonthYearDo: [ :d :m :y | d ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 DateAndTime >> dayOfWeek [
 	"Sunday=1, ... , Saturday=7"
 
 	^ (self julianDayNumber + 1 rem: 7) + 1
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 DateAndTime >> dayOfWeekAbbreviation [
 
 	^ self dayOfWeekName copyFrom: 1 to: 3
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 DateAndTime >> dayOfWeekName [
 
 	^ Week nameOfDay: self dayOfWeek
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 DateAndTime >> dayOfYear [
 	"This code was contributed by Dan Ingalls. It is equivalent to the terser
 		^ jdn - (Year year: self year) start julianDayNumber + 1 but much quicker."
@@ -854,7 +854,7 @@ DateAndTime >> dayOfYear [
 				ifFalse: [ monthStart + d - 1 ]]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 DateAndTime >> daysInMonth [
 	"Answer the number of days in the month represented by the receiver."
 
@@ -862,7 +862,7 @@ DateAndTime >> daysInMonth [
 	^ self asMonth daysInMonth
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 DateAndTime >> daysInYear [
 
  	"Answer the number of days in the year represented by the receiver."
@@ -870,20 +870,20 @@ DateAndTime >> daysInYear [
  	^ self asYear daysInYear
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 DateAndTime >> daysLeftInYear [
  	"Answer the number of days in the year after the date of the receiver."
 
  	^ self daysInYear - self dayOfYear
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 DateAndTime >> duration [
 
 	^ Duration zero
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 DateAndTime >> firstDayOfMonth [
 
  	^ self asMonth start day
@@ -902,13 +902,13 @@ DateAndTime >> hash [
 	^ (julianDayNumber hashMultiply bitXor: seconds) bitXor: nanos
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 DateAndTime >> hour [
 
 	^ self hour24
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 DateAndTime >> hour12 [
 	"Answer an <integer> between 1 and 12, inclusive, representing the hour
 	of the day in the 12-hour clock of the local time of the receiver."
@@ -916,7 +916,7 @@ DateAndTime >> hour12 [
 	^ self hour24 - 1 \\ 12 + 1
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 DateAndTime >> hour24 [
 	"Answer a number that represents the number of complete hours in the receiver's time part,
 	 after the number of complete days has been removed."
@@ -924,13 +924,13 @@ DateAndTime >> hour24 [
  	^ self localSeconds // SecondsInHour \\ 24
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 DateAndTime >> hours [
 
  	^ self hour
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 DateAndTime >> isLeapYear [
 
 	^ Year isLeapYear: self year
@@ -961,13 +961,13 @@ DateAndTime >> localSeconds [
 	^ seconds + self offset asSeconds
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 DateAndTime >> meridianAbbreviation [
 
 	^ self asTime meridianAbbreviation
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 DateAndTime >> middleOf: aDuration [
 	"Return a Timespan where the receiver is the middle of the Duration"
 
@@ -1001,32 +1001,32 @@ DateAndTime >> minute [
  	^ self localSeconds // SecondsInMinute \\ 60
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 DateAndTime >> minutes [
 
  	^ self minute
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 DateAndTime >> month [
 
 	^ self dayMonthYearDo: [ :d :m :y | m ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 DateAndTime >> monthAbbreviation [
 
 	^ self monthName copyFrom: 1 to: 3
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 DateAndTime >> monthIndex [
 
 
  	^ self month
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 DateAndTime >> monthName [
 
 	^ Month nameOfMonth: self month
@@ -1038,7 +1038,7 @@ DateAndTime >> nanoSecond [
 	^ nanos
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 DateAndTime >> noon [
 	"Answer a DateAndTime starting at noon"
 
@@ -1075,27 +1075,27 @@ DateAndTime >> offset: anOffset [
 		yourself
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 DateAndTime >> printHMSOn: aStream [
 	"Print just hh:mm:ss"
 
 	self printHMSOn: aStream separatedBy: $:
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 DateAndTime >> printHMSOn: aStream separatedBy: aSeparator [
 
 	BasicDatePrinter default printHMS: self separatedBy: aSeparator on: aStream
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 DateAndTime >> printHMSWithDashesOn: aStream [
 	"Print just hh-mm-ss"
 
 	self printHMSOn: aStream separatedBy: $-
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 DateAndTime >> printMSOn: aStream [
 	"Print just mm:ss"
 
@@ -1119,7 +1119,7 @@ DateAndTime >> printOn: aStream withLeadingSpace: printLeadingSpaceToo [
 	BasicDatePrinter default printDateAndTime: self withLeadingSpace: printLeadingSpaceToo on: aStream
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 DateAndTime >> printSeparateDateAndTimeOn: stream [
 	"Print the receiver as separate Date and Time to stream.
 	See also #readSeparateDateAndTimeFrom:"
@@ -1130,7 +1130,7 @@ DateAndTime >> printSeparateDateAndTimeOn: stream [
 		print: self asTime
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 DateAndTime >> printYMDOn: aStream [
 	"Print just YYYY-MM-DD part.
 	If the year is negative, prints out '-YYYY-MM-DD'."
@@ -1138,7 +1138,7 @@ DateAndTime >> printYMDOn: aStream [
 	^ self printYMDOn: aStream withLeadingSpace: false
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 DateAndTime >> printYMDOn: aStream withLeadingSpace: printLeadingSpaceToo [
 	"Print just the year, month, and day on aStream.
 
@@ -1159,7 +1159,7 @@ DateAndTime >> printYMDOn: aStream withLeadingSpace: printLeadingSpaceToo [
 	day printOn: aStream base: 10 length: 2 padded: true
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 DateAndTime >> rounded [
 	"Answer a date and time to the nearest whole second"
 
@@ -1182,18 +1182,18 @@ DateAndTime >> second [
  	^ self localSeconds \\ 60
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 DateAndTime >> seconds [
 
  	^ self second
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 DateAndTime >> secondsSinceMidnightLocalTime [
 	^ self localSeconds \\ SecondsInDay
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 DateAndTime >> secondsSinceMidnightUTC [
 
 	^ seconds
@@ -1222,31 +1222,31 @@ DateAndTime >> ticks: ticks offset: utcOffset [
 	self setJdn: (ticks at: 1) seconds: (ticks at: 2) nano: (ticks at: 3) offset: utcOffset
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 DateAndTime >> timeZone [
 	^ TimeZone offset: self offset
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 DateAndTime >> timeZoneAbbreviation [
 
 	^ self timeZone abbreviation
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 DateAndTime >> timeZoneName [
 
 	^ self timeZone name
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 DateAndTime >> to: anEnd [
 	"Answer a Timespan. anEnd conforms to protocol DateAndTime or protocol Timespan"
 
 	^ Timespan starting: self ending: (anEnd asDateAndTime)
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 DateAndTime >> to: anEnd by: aDuration [
 	"Answer a Timespan. anEnd conforms to protocol DateAndTime or protocol Timespan"
 
@@ -1255,14 +1255,14 @@ DateAndTime >> to: anEnd by: aDuration [
 		yourself
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 DateAndTime >> to: anEnd by: aDuration do: aBlock [
 	"Answer a Timespan. anEnd conforms to protocol DateAndTime or protocol Timespan"
 
 	^ (self to: anEnd by: aDuration) scheduleDo: aBlock
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 DateAndTime >> translateTo: anOffset [
 	"Keep myself's representation and move it to another timezone offset.
 	Note that unlike #offset: this WILL change the absolute time in UTC
@@ -1284,26 +1284,26 @@ DateAndTime >> translateTo: anOffset [
 			offset: anOffset asDuration ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 DateAndTime >> translateToUTC [
 	" Move this represenation to UTC"
 	^ self translateTo: 0 asDuration
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 DateAndTime >> truncated [
 	"Answer a date and time to the nearest preceding whole second"
 
 	^ self species basicNew ticks: { julianDayNumber. seconds. 0 } offset: offset
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 DateAndTime >> withoutOffset [
 
 	^ self offset: 0
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 DateAndTime >> year [
 	^ self dayMonthYearDo: [:d :m :y | y ]
 ]

@@ -50,44 +50,44 @@ Class {
 	#package : 'Kernel-Chronology-Extras'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'instance creation' }
 Date class >> asMonth: aMonthNumber inYear: aYearNumber [
       "Returns the month corresponding the month number"
 
         ^ Month year: aYearNumber month: aMonthNumber
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'instance creation' }
 Date class >> dayNames [
 	"Return a collection of english day names"
 	^ DayNames copy
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'instance creation' }
 Date class >> dayOfWeek: dayName [
 
 	^ Week indexOfDay: dayName
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'instance creation' }
 Date class >> daysInMonth [
 	"Return a collection representing the days in each month"
 	^ DaysInMonth copy
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'instance creation' }
 Date class >> daysInMonth: monthName forYear: yearInteger [
 
 	^ Month daysInMonth: monthName forYear: yearInteger
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'instance creation' }
 Date class >> daysInYear: yearInteger [
 
 	^ Year daysInYear: yearInteger
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'instance creation' }
 Date class >> firstWeekdayOfMonth: month year: year [
 	"Answer the weekday index of the first day in <month> in the <year>."
 
@@ -108,62 +108,62 @@ Date class >> fromSeconds: seconds [
 	^ self starting: (DateAndTime fromSeconds: seconds)
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'instance creation' }
 Date class >> fromString: aString [
 	"Answer an instance of created from a string with format mm.dd.yyyy or mm-dd-yyyy or mm/dd/yyyy"
 
 	^ self readFrom: aString readStream
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'instance creation' }
 Date class >> indexOfMonth: aMonthName [
 
 	^ Month indexOfMonth: aMonthName
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'instance creation' }
 Date class >> julianDayNumber: aJulianDayNumber [
 
 	^ self starting: (DateAndTime julianDayNumber: aJulianDayNumber)
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'instance creation' }
 Date class >> julianDayNumber: aJulianDayNumber offset: aTimeZoneOffset [
 
 	^ self starting: (DateAndTime julianDayNumber: aJulianDayNumber offset: aTimeZoneOffset)
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'instance creation' }
 Date class >> monthNames [
 	"Return a collection of english month names"
 	^ MonthNames copy
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'instance creation' }
 Date class >> nameOfDay: dayIndex [
 
 	^ Week nameOfDay: dayIndex
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'instance creation' }
 Date class >> nameOfMonth: anIndex [
 
 	^ Month nameOfMonth: anIndex
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'instance creation' }
 Date class >> newDay: day month: month year: year [
 
 	^ self year: year month: month day: day
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'instance creation' }
 Date class >> newDay: dayCount year: yearInteger [
 
 	^ self year: yearInteger day: dayCount
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'instance creation' }
 Date class >> readFrom: aStream [
 	"Read a Date from the stream in any of the forms:
 		<day> <month> <year>		(15 April 1982; 15-APR-82; 15.4.82; 15APR82)
@@ -227,7 +227,7 @@ Date class >> readFrom: aStream [
 		day: day
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'instance creation' }
 Date class >> readFrom: aStringOrStream pattern: pattern [
 	"See
 	DateParser comment"
@@ -247,50 +247,50 @@ Date class >> today [
 	^ self current
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'instance creation' }
 Date class >> tomorrow [
 
 	^ self today next
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'instance creation' }
 Date class >> week: week day: dayOfWeek [
 
 	^ self starting: (Week week: week) start + (dayOfWeek - 1) days
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'instance creation' }
 Date class >> year: year day: dayOfYear [
 
 	^ self starting: (DateAndTime year: year day: dayOfYear)
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'instance creation' }
 Date class >> year: year month: month day: day [
 
 	^ self starting: (DateAndTime year: year month: month day: day)
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'instance creation' }
 Date class >> year: year week: week day: dayOfWeek [
 
 	^ self starting: (Week year: year week: week) start + (dayOfWeek - 1) days
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'instance creation' }
 Date class >> yesterday [
 
 	^ self today previous
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'adding' }
 Date >> addDays: dayCount [
 	"((Date year: 2018 month: 9 day: 28) addDays: 3) printString >>> '1 October 2018'"
 
 	^ (self asDateAndTime + (dayCount days)) asDate
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'adding' }
 Date >> addMonths: monthCount [
 	"((Date year: 2018 month: 9 day: 28) addMonths: 3) printString>>> '28 December 2018'"
 
@@ -316,7 +316,7 @@ Date >> dayMonthYearDo: aBlock [
 	^ start dayMonthYearDo: aBlock
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'adding' }
 Date >> ddmmyyyy [
 	"Print the receiver  in standard French format dd/mm/yyyy."
 	"(Date year: 2018 month: 9 day: 28) ddmmyyyy >>> '28/9/2018'"
@@ -335,7 +335,7 @@ Date >> equals: aDate [
         [ self dayOfMonth = aDate dayOfMonth ] ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'adding' }
 Date >> isAfter: aDate [
 	"Answer a boolean indicating whether the receiver is later than aDate (ignoring time zones).
 	To compare with time zones, use #>"
@@ -350,7 +350,7 @@ Date >> isAfter: aDate [
 					self dayOfMonth > otherDate dayOfMonth ] ] ] ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'adding' }
 Date >> isBefore: aDate [
 	"Answer a boolean indicating whether the receiver is earlier than aDate (ignoring time zones).
 	To compare with time zones, use #<"
@@ -365,7 +365,7 @@ Date >> isBefore: aDate [
 					self dayOfMonth < otherDate dayOfMonth ] ] ] ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'adding' }
 Date >> isOnOrAfter: aDate [
 	"Answer a boolean indicating whether the receiver is on or later than aDate (ignoring time zones).
 	To compare with time zones, use #>="
@@ -373,7 +373,7 @@ Date >> isOnOrAfter: aDate [
 	^(self equals: aDate) or: [ self isAfter: aDate ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'adding' }
 Date >> isOnOrBefore: aDate [
 	"Answer a boolean indicating whether the receiver is on or earlier than aDate (ignoring time zones).
 	To compare with time zones, use #<="
@@ -381,7 +381,7 @@ Date >> isOnOrBefore: aDate [
 	^(self equals: aDate) or: [ self isBefore: aDate ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'adding' }
 Date >> mmddyyyy [
 	"Print the receiver in standard U.S.A format mm/dd/yyyy.
 	Note that the name here is slightly misleading -- the month and day numbers don't show leading zeros,
@@ -391,35 +391,35 @@ Date >> mmddyyyy [
 	^ self printFormat: #(2 1 3 $/ 1 1)
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'adding' }
 Date >> month [
 	"(Date year: 2018 month: 9 day: 28) month printString >>> 'September 2018'"
 
 	^ self asMonth
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'adding' }
 Date >> monthIndex [
 	"(Date year: 2018 month: 9 day: 28) monthIndex >>> 9"
 
 	^ super month
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'adding' }
 Date >> onNextMonth [
 	"(Date year: 2018 month: 9 day: 28) onNextMonth printString >>> '28 October 2018'"
 
 	^ self addMonths: 1
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'adding' }
 Date >> onPreviousMonth [
 	"(Date year: 2018 month: 9 day: 28) onPreviousMonth printString >>> '28 August 2018'"
 
 	^ self addMonths: -1
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'adding' }
 Date >> previous: dayName [
 	"Answer the previous date whose weekday name is dayName."
 	"((Date year: 2018 month: 9 day: 28) previous: 'Sunday') printString >>> '23 September 2018'"
@@ -456,13 +456,13 @@ Date >> species [
 	^Timespan
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'adding' }
 Date >> storeOn: aStream [
 
  	aStream print: self printString; nextPutAll: ' asDate'
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'adding' }
 Date >> subtractDate: aDate [
 	"Answer the number of days between self and aDate"
 	"((Date year: 2018 month: 9 day: 28) subtractDate: '27 September 2018') >>> 1"
@@ -470,14 +470,14 @@ Date >> subtractDate: aDate [
 	^ (self start - aDate asDateAndTime) days
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'adding' }
 Date >> subtractDays: dayCount [
 	"((Date year: 2018 month: 9 day: 28) subtractDays: 1) printString >>> '27 September 2018'"
 
 	^ (self asDateAndTime - (dayCount days)) asDate
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'adding' }
 Date >> weekday [
 	"Answer the name of the day of the week on which the receiver falls."
 	"(Date year: 2018 month: 9 day: 28) weekday >>> #Friday"
@@ -485,7 +485,7 @@ Date >> weekday [
 	^ self dayOfWeekName
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'adding' }
 Date >> weekdayIndex [
 	"Sunday=1, ... , Saturday=7"
 	"(Date year: 2018 month: 9 day: 28) weekdayIndex >>> 6"
@@ -493,7 +493,7 @@ Date >> weekdayIndex [
 	^ self dayOfWeek
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'adding' }
 Date >> yyyymmdd [
  	"Format the date in ISO 8601 standard like '2002-10-22'
 	The result is of fixed size 10 characters long.."

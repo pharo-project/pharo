@@ -18,7 +18,7 @@ Class {
 	#package : 'Kernel-Chronology-Extras'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'benchmarking' }
 Time class >> benchmarkMillisecondClock [
 	"Benchmark the time spent in a call to Time>>millisecondClockValue.
 	On the VM level this tests the efficiency of calls to ioMSecs()."
@@ -62,7 +62,7 @@ Running this benchmark will not give any useful result.' ].
 	  , ' microseconds per call to Time>>millisecondClockValue'
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'benchmarking' }
 Time class >> benchmarkPrimitiveResponseDelay [
 	"Benchmark the overhead for primitive dispatches with an active Delay.
 	On the VM level, this tests the efficiency of ioLowResMSecs."
@@ -139,7 +139,7 @@ Time class >> current [
 	^ self now
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'instance creation' }
 Time class >> dateAndTimeFromSeconds: secondCountSinceEpoch [
 
 	| dateAndTime |
@@ -159,19 +159,19 @@ Time class >> fromSeconds: secondCount [
 	^ self seconds: integerSeconds nanoSeconds: nanos
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'benchmarking' }
 Time class >> fromString: aString [
 	^ self readFrom: aString readStream
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'benchmarking' }
 Time class >> hour: hour minute: minute second: second [
 	"Answer a Time"
 
  	^ self hour: hour minute: minute second: second nanoSecond: 0
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'benchmarking' }
 Time class >> hour: hour minute: minute second: second  nano: nano [
 
 	| nanoMultiplicative |
@@ -181,7 +181,7 @@ Time class >> hour: hour minute: minute second: second  nano: nano [
  	^ self hour: hour minute: minute second: second nanoSecond: nano * nanoMultiplicative
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'benchmarking' }
 Time class >> hour: hour minute: minute second: second  nanoSecond: nanoCount [
 	"Answer a Time - only second precision for now"
 
@@ -218,7 +218,7 @@ Time class >> microsecondsToRun: timedBlock [
 	^self microsecondClockValue - initialMicroseconds
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'benchmarking' }
 Time class >> midnight [
 
 	^ self seconds: 0
@@ -233,7 +233,7 @@ Time class >> millisecondClockValue [
 	^ 0
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'benchmarking' }
 Time class >> milliseconds: currentTime since: lastTime [
 	"Answer the elapsed time since last recorded in milliseconds.
 	Compensate for rollover."
@@ -245,7 +245,7 @@ Time class >> milliseconds: currentTime since: lastTime [
 		ifFalse: [delta]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'benchmarking' }
 Time class >> millisecondsSince: lastTime [
  	"Answer the elapsed time since last recorded in milliseconds.
  	Compensate for rollover."
@@ -253,7 +253,7 @@ Time class >> millisecondsSince: lastTime [
  	^self milliseconds: self millisecondClockValue since: lastTime
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'benchmarking' }
 Time class >> millisecondsToRun: timedBlock [
 	"Answer the number of milliseconds timedBlock takes to return its value."
 
@@ -267,7 +267,7 @@ Time class >> new [
 	^ self midnight
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'benchmarking' }
 Time class >> noon [
 
 	^ self seconds: (SecondsInDay / 2)
@@ -339,7 +339,7 @@ Time class >> primUTCSecondsClock [
 	^self primUTCMicrosecondsClock // 1e6
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'benchmarking' }
 Time class >> readFrom: aStream [
 
 	"Read a Time from the stream in the form:
@@ -736,7 +736,7 @@ Time >> ticks: anArray [
 	nanos := anArray at: 3
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 Time >> to: anEnd [
 	"Answer a Timespan. anEnd must respond to #asDateAndTime"
 
