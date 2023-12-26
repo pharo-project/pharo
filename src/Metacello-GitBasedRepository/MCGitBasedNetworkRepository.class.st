@@ -252,13 +252,11 @@ MCGitBasedNetworkRepository class >> projectDirectoryFrom: projectPath version: 
 
 { #category : 'version patterns' }
 MCGitBasedNetworkRepository class >> projectVersionFromString: aString [
-  "strip leading $v if present and return an instance of MetacelloVersionNumber"
+	"strip leading $v if present and return an instance of MetacelloVersionNumber"
 
-  | versionString |
-  versionString := aString.
-  (versionString beginsWith: 'v')
-    ifTrue: [ versionString := versionString copyFrom: 2 to: versionString size ].
-  ^ MetacelloVersionNumber fromString: versionString
+	| versionString |
+	versionString := (aString beginsWith: 'v') ifTrue: [ aString allButFirst ] ifFalse: [ aString ].
+	^ MetacelloVersionNumber fromString: versionString
 ]
 
 { #category : 'private' }
