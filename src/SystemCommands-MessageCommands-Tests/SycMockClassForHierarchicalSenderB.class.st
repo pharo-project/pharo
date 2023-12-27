@@ -1,18 +1,18 @@
 Class {
-	#name : 'SycMockClassForHierarhicalSenderB',
-	#superclass : 'SycMockClassForHierarhicalSenderA',
+	#name : 'SycMockClassForHierarchicalSenderB',
+	#superclass : 'SycMockClassForHierarchicalSenderA',
 	#category : 'SystemCommands-MessageCommands-Tests',
 	#package : 'SystemCommands-MessageCommands-Tests'
 }
 
 { #category : 'as yet unclassified' }
-SycMockClassForHierarhicalSenderB >> referredSelector [
+SycMockClassForHierarchicalSenderB >> referredSelector [
 
 	3 + 4
 ]
 
 { #category : 'as yet unclassified' }
-SycMockClassForHierarhicalSenderB >> targetMethod [
+SycMockClassForHierarchicalSenderB >> targetMethod [
 
 	self referredSelector.
 ]

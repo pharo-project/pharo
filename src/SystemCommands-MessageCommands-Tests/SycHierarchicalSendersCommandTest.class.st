@@ -10,12 +10,12 @@ SycHierarchicalSendersCommandTest >> testSearchInTheWholeHierarchy [
 
 	| senders |
 	senders := SycShowLocalSendersCommand new
-		messages: { SycMessageDescription ofMethod: (SycMockClassForHierarhicalSenderB >> #referredSelector) };
+		messages: { SycMessageDescription ofMethod: (SycMockClassForHierarchicalSenderB >> #referredSelector) };
 		searchInTheWholeHierarchy.
 	self 
 		assertCollection: senders 
 		hasSameElements: {
-			SycMockClassForHierarhicalSenderA >> #methodReferToSelector . 
-			SycMockClassForHierarhicalSenderC >> #methodReferToSelector. 
-			SycMockClassForHierarhicalSenderB >> #targetMethod }.
+			SycMockClassForHierarchicalSenderA >> #methodReferToSelector . 
+			SycMockClassForHierarchicalSenderC >> #methodReferToSelector. 
+			SycMockClassForHierarchicalSenderB >> #targetMethod }.
 ]
