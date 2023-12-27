@@ -241,7 +241,7 @@ HDTestReport >> reportTestCase: aTestCase runBlock: aBlock [
 	Otherwise any new xml element would be written out of the test node.
 	To allow reporting during test we set a temp log stream 
 	which we append to the main stream at the end of test as part of test element"
-	testLog := self newLogDuring: [ time := aBlock timeToRun ].
+	testLog := self newLogDuring: [ time := aBlock millisecondsToRun ].
 	stream
 		tab; nextPutAll: '<testcase classname="';
 		nextPutAll: (self encode: (self generateTestName: aTestCase));
@@ -250,7 +250,7 @@ HDTestReport >> reportTestCase: aTestCase runBlock: aBlock [
 		nextPutAll: '" name="';
 		nextPutAll: (self encode: aTestCase nameForReport);
 		nextPutAll: '" time="';
-		print: time asMilliSeconds / 1000.0;
+		print: time / 1000.0;
 		nextPutAll: '">';
 		lf.
 	stream nextPutAll: testLog.
@@ -265,7 +265,7 @@ HDTestReport >> run [
 		during: [ [ 
 			self setUp.
 			suiteTime := [ self runAll ]
-				timeToRun ]
+				millisecondsToRun ]
 					ensure: [ self tearDown ] ]
 ]
 
