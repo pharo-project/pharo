@@ -2,7 +2,7 @@
 my subclasses model pssible completions for variables
 "
 Class {
-	#name : 'NECCVariableEntry',
+	#name : 'NECVariableEntry',
 	#superclass : 'NECEntry',
 	#category : 'NECompletion-Model',
 	#package : 'NECompletion',
@@ -10,7 +10,7 @@ Class {
 }
 
 { #category : 'ui related' }
-NECCVariableEntry >> browse [
+NECVariableEntry >> browse [
 	| class |
 	class := Smalltalk globals at: contents ifAbsent: [ nil ].
 	class
@@ -19,14 +19,19 @@ NECCVariableEntry >> browse [
 ]
 
 { #category : 'detail information' }
-NECCVariableEntry >> createDescription [
+NECVariableEntry >> createDescription [
 	| clazz |
-	clazz := Smalltalk globals at: contents ifAbsent: [ nil ].
+	clazz := self class environment at: contents ifAbsent: [ nil ].
 	^ clazz
 		ifNil: [ NECEntryDescription label: self label ]
 		ifNotNil:
-			[ NECEntryDescription
-				label: self label
-				title: clazz printString
-				description: clazz comment ]
+			[ 
+			clazz isClass 
+				ifFalse: [ 
+					"we have few globals but we should handle them correctly"
+					NECEntryDescription label: self label ]
+				ifTrue: [ NECEntryDescription
+					label: self label
+					title: clazz printString
+					description: clazz comment ]]
 ]
