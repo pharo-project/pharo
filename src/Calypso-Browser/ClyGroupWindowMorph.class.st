@@ -5,6 +5,7 @@ For example I update group window title to be same as selected tab title.
 Class {
 	#name : 'ClyGroupWindowMorph',
 	#superclass : 'GroupWindowMorph',
+	#classTraits : '{} + TraitedClass',
 	#category : 'Calypso-Browser-UI',
 	#package : 'Calypso-Browser',
 	#tag : 'UI'

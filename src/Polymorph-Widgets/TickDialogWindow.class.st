@@ -6,6 +6,7 @@ See self example
 Class {
 	#name : 'TickDialogWindow',
 	#superclass : 'DialogWindowMorph',
+	#classTraits : '{} + TraitedClass',
 	#instVars : [
 		'defaultValue',
 		'itemsHeaderName',

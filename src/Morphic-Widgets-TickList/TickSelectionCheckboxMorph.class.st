@@ -4,6 +4,7 @@ A TickSelectionCheckboxMorph is a checkbox which propagate a bit more the events
 Class {
 	#name : 'TickSelectionCheckboxMorph',
 	#superclass : 'CheckboxMorph',
+	#classTraits : '{} + TraitedClass',
 	#instVars : [
 		'index'
 	],

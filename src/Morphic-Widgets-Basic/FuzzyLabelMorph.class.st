@@ -4,6 +4,7 @@ A label that underdraws to the top-left, top-right, bottom-right and bottom left
 Class {
 	#name : 'FuzzyLabelMorph',
 	#superclass : 'LabelMorph',
+	#classTraits : '{} + TraitedClass',
 	#instVars : [
 		'offset',
 		'alpha'

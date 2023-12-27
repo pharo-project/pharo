@@ -7,6 +7,7 @@ I am a specialization of the MenuItemMorph for the Menubar. I adapt the look of 
 Class {
 	#name : 'MenubarItemMorph',
 	#superclass : 'DockingBarMenuItemMorph',
+	#classTraits : '{} + TraitedClass',
 	#category : 'Morphic-Widgets-Menubar-View',
 	#package : 'Morphic-Widgets-Menubar',
 	#tag : 'View'

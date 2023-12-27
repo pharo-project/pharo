@@ -6,6 +6,7 @@ Since it is not a good idea to change the shortcut, this ability is not availabl
 Class {
 	#name : 'UpdatingMenuItemMorph',
 	#superclass : 'ToggleMenuItemMorph',
+	#classTraits : '{} + TraitedClass',
 	#instVars : [
 		'nameSelector',
 		'iconSelector',

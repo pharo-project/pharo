@@ -4,6 +4,7 @@ I'm an example that shows a tiger that moves via rotation, translation and zoom 
 Class {
 	#name : 'AthensTigerWindow',
 	#superclass : 'StandardWindow',
+	#classTraits : '{} + TraitedClass',
 	#instVars : [
 		'surface',
 		'scale',

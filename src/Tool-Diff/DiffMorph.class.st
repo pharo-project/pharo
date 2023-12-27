@@ -6,6 +6,7 @@ When a classContext: is setted, the strings are highlighted using such contextua
 Class {
 	#name : 'DiffMorph',
 	#superclass : 'ComposableMorph',
+	#classTraits : '{} + TraitedClass',
 	#instVars : [
 		'prettyPrint',
 		'contextClass',

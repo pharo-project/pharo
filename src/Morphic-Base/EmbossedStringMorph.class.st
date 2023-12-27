@@ -4,6 +4,7 @@ A label that underdraws to the top-left and/or bottom-right with a lighter and/o
 Class {
 	#name : 'EmbossedStringMorph',
 	#superclass : 'StringMorph',
+	#classTraits : '{} + TraitedClass',
 	#instVars : [
 		'style',
 		'trackPaneColor'

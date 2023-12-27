@@ -12,6 +12,7 @@ Try:
 Class {
 	#name : 'EditableDropListMorph',
 	#superclass : 'DropListMorph',
+	#classTraits : '{} + TraitedClass',
 	#instVars : [
 		'addToListSel',
 		'content'

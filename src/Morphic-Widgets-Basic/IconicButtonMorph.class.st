@@ -4,6 +4,7 @@ A ""Simple Button"" in which the appearance is provided by a Form.
 Class {
 	#name : 'IconicButtonMorph',
 	#superclass : 'SimpleButtonMorph',
+	#classTraits : '{} + TraitedClass',
 	#instVars : [
 		'graphicalMorph',
 		'oldBorderStyle',

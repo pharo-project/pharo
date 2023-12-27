@@ -9,6 +9,7 @@ Instance variables:
 Class {
 	#name : 'MenuMorph',
 	#superclass : 'AlignmentMorph',
+	#classTraits : '{} + TraitedClass',
 	#instVars : [
 		'defaultTarget',
 		'selectedItem',

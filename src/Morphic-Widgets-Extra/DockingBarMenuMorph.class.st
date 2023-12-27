@@ -1,6 +1,7 @@
 Class {
 	#name : 'DockingBarMenuMorph',
 	#superclass : 'MenuMorph',
+	#classTraits : '{} + TraitedClass',
 	#instVars : [
 		'activatorDockingBar'
 	],

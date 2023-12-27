@@ -1519,7 +1519,7 @@ SystemWindow >> paneColor: aColor [
 
 { #category : 'panes' }
 SystemWindow >> paneColorToUse [
-	^ Display depth <= 2
+	^ self display depth <= 2
 		ifTrue:
 			[Color white]
 		ifFalse:

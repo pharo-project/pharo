@@ -1,6 +1,7 @@
 Class {
 	#name : 'CircleMorphCounter',
 	#superclass : 'CircleMorph',
+	#classTraits : '{} + TraitedClass',
 	#instVars : [
 		'counter'
 	],

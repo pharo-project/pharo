@@ -4,6 +4,7 @@ A yes/no/cancel message dialog. Cancel (escape & return) is the default.
 Class {
 	#name : 'QuestionDialogWindow',
 	#superclass : 'ProceedDialogWindow',
+	#classTraits : '{} + TraitedClass',
 	#instVars : [
 		'answer'
 	],

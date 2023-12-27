@@ -7,6 +7,7 @@ I am a simple morph used by the MenubarMorph to add some separators. Use me via 
 Class {
 	#name : 'MenubarSeparatorMorph',
 	#superclass : 'SimpleButtonMorph',
+	#classTraits : '{} + TraitedClass',
 	#category : 'Morphic-Widgets-Menubar-View',
 	#package : 'Morphic-Widgets-Menubar',
 	#tag : 'View'

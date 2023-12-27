@@ -4,6 +4,7 @@ QuestionDialog supporting custom text/buttons for yes/no choices.
 Class {
 	#name : 'CustomQuestionDialogWindow',
 	#superclass : 'QuestionDialogWindow',
+	#classTraits : '{} + TraitedClass',
 	#instVars : [
 		'yesButton',
 		'noButton',

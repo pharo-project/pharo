@@ -37,6 +37,7 @@ Class {
 		'CmdGesturesEnabled',
 		'CycleHalosBothDirections',
 		'DefaultYellowButtonMenuEnabled',
+		'DisplayInstance',
 		'EmptyArray',
 		'EventDispatcher',
 		'HalosEnabled',
@@ -93,6 +94,13 @@ Morph class >> defaultYellowButtonMenuEnabled: aBoolean [
 	DefaultYellowButtonMenuEnabled := aBoolean
 ]
 
+{ #category : 'accessing' }
+Morph class >> display [
+
+	"expression copied and pasted from DisplayScreen class initialize method"
+	^ DisplayInstance ifNil: [ DisplayInstance := DisplayScreen new setExtent: 0@0 depth: 32; yourself ]
+]
+
 { #category : 'settings' }
 Morph class >> halosEnabled [
 
@@ -110,7 +118,8 @@ Morph class >> initialize [
 	"Morph initialize"
 
 	"this empty array object is shared by all morphs with no submorphs:"
-	EmptyArray := Array new
+	EmptyArray := Array new.
+	DisplayInstance := Display
 ]
 
 { #category : 'settings' }
@@ -1104,7 +1113,7 @@ Morph >> asFormOfSize: extent [
 	| form transform rect |
 
 	rect := self bounds scaledAndCenteredIn: (0@0 extent: extent).
-	form := Form extent: rect extent depth: Display depth.
+	form := Form extent: rect extent depth: self display depth.
 	transform := MatrixTransform2x3 withScale: form extent / self extent.
 	form getCanvas
 		transformBy: transform
@@ -2142,6 +2151,12 @@ Morph >> dismissViaHalo [
 	self dismissMorph
 ]
 
+{ #category : 'drawing' }
+Morph >> display [
+	"expression copied and pasted from DisplayScreen class initialize method"
+	^ DisplayInstance ifNil: [ DisplayInstance := DisplayScreen new setExtent: 0@0 depth: 32; yourself ]
+]
+
 { #category : 'change reporting' }
 Morph >> displayExtentChanged [
 
@@ -2182,7 +2197,7 @@ Morph >> doFastReframe: ptName [
 				setToPoint: cursorPoint
 				minExtent: self minimumExtent
 		] inWorld: self world.
-	Display deferUpdatesIn: Display boundingBox while: [
+	self display deferUpdatesIn: self display boundingBox while: [
 		self bounds: newBounds].
 
 	^newBounds
@@ -2575,7 +2590,7 @@ Morph >> flashBounds [
 	"Flash the receiver's bounds  -- does not use the receiver's color, thus works with StringMorphs and SketchMorphs, etc., for which #flash is useless.  No senders initially, but useful to send this from a debugger or inspector"
 
 	5 timesRepeat:
-		[Display flash: self boundsInWorld  andWait: 120]
+		[self display flash: self boundsInWorld andWait: 60]
 ]
 
 { #category : 'macpal' }
@@ -3502,7 +3517,7 @@ Morph >> imageForm [
 { #category : 'drawing' }
 Morph >> imageForm: depth backgroundColor: aColor forRectangle: rect [
 	| canvas |
-	canvas := Display defaultCanvasClass extent: rect extent depth: depth.
+	canvas := self display defaultCanvasClass extent: rect extent depth: depth.
 	canvas translateBy: rect topLeft negated
 		during:[:tempCanvas|
 			tempCanvas fillRectangle: rect color: aColor.
@@ -3513,7 +3528,7 @@ Morph >> imageForm: depth backgroundColor: aColor forRectangle: rect [
 { #category : 'drawing' }
 Morph >> imageForm: depth forRectangle: rect [
 	| canvas |
-	canvas := Display defaultCanvasClass extent: rect extent depth: depth.
+	canvas := self display defaultCanvasClass extent: rect extent depth: depth.
 	canvas translateBy: rect topLeft negated
 		during:[:tempCanvas| tempCanvas fullDrawMorph: self].
 	^ canvas form offset: rect topLeft
@@ -3528,7 +3543,7 @@ Morph >> imageFormDepth: depth [
 { #category : 'drawing' }
 Morph >> imageFormForRectangle: rect [
 
-	^ self imageForm: Display depth forRectangle: rect
+	^ self imageForm: self display depth forRectangle: rect
 ]
 
 { #category : 'user interface' }

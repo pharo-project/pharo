@@ -591,7 +591,7 @@ SystemWindow >> fastAnimateRectangles: rects [
 	col := Color gray alpha: 0.5.
 	merged := rects first.
 	rects withIndexDo: [:r :i |
-		Display
+		self display
 			border: r rounded
 			width: 1
 			rule: Form blend

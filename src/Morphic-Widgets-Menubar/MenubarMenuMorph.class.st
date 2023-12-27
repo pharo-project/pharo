@@ -7,6 +7,7 @@ I am a specialization of the MenuMorph for the Menubar. I adapt the keyboard nav
 Class {
 	#name : 'MenubarMenuMorph',
 	#superclass : 'MenuMorph',
+	#classTraits : '{} + TraitedClass',
 	#category : 'Morphic-Widgets-Menubar-View',
 	#package : 'Morphic-Widgets-Menubar',
 	#tag : 'View'

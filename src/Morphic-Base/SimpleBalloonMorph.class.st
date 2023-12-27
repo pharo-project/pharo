@@ -4,6 +4,7 @@ A simple ballon morph with straight segments
 Class {
 	#name : 'SimpleBalloonMorph',
 	#superclass : 'BalloonMorph',
+	#classTraits : '{} + TraitedClass',
 	#category : 'Morphic-Base-Widgets',
 	#package : 'Morphic-Base',
 	#tag : 'Widgets'

@@ -4,6 +4,7 @@ Message dialog containing a drop list for selection of an item.
 Class {
 	#name : 'ChooseDropListDialogWindow',
 	#superclass : 'MessageDialogWindow',
+	#classTraits : '{} + TraitedClass',
 	#instVars : [
 		'listMorph',
 		'list'

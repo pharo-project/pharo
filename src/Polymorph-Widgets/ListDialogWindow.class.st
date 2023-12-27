@@ -5,6 +5,7 @@ A text field is provided to on the fly reduce the field or search
 Class {
 	#name : 'ListDialogWindow',
 	#superclass : 'MessageDialogWindow',
+	#classTraits : '{} + TraitedClass',
 	#instVars : [
 		'pattern',
 		'list',

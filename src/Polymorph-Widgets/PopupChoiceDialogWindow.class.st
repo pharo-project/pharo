@@ -4,6 +4,7 @@ Presents a list of options in a popup format. If the list is long it will split 
 Class {
 	#name : 'PopupChoiceDialogWindow',
 	#superclass : 'ModelDependentDialogWindow',
+	#classTraits : '{} + TraitedClass',
 	#instVars : [
 		'choice',
 		'labels',
@@ -267,7 +268,7 @@ PopupChoiceDialogWindow >> newChoicesMorph [
 		hResizing: #shrinkWrap;
 		vResizing: #shrinkWrap.
 	self labels ifEmpty: [^answer].
-	maxLines := Display height - 100 // 2 // (self newChoiceButtonFor: 1) height.
+	maxLines := self display height - 100 // 2 // (self newChoiceButtonFor: 1) height.
 	morphs := OrderedCollection new.
 	1 to: self labels size do: [:i |
 		morphs add: (self newChoiceButtonFor: i).
@@ -296,8 +297,8 @@ PopupChoiceDialogWindow >> newContentMorph [
 		hResizing: #spaceFill;
 		vResizing: #spaceFill.
 	sp
-		minWidth: ((choices width min: Display width // 2) + sp scrollBarThickness max: TextEntryDialogWindow minimumWidth);
-		minHeight: (choices height min: Display height // 2).
+		minWidth: ((choices width min: self display width // 2) + sp scrollBarThickness max: TextEntryDialogWindow minimumWidth);
+		minHeight: (choices height min: self display height // 2).
 	choices width > sp minWidth
 		ifTrue: [sp minHeight: sp minHeight + sp scrollBarThickness].
 	sp

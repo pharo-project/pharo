@@ -11,6 +11,7 @@ Example:
 Class {
 	#name : 'PasswordDialogWindow',
 	#superclass : 'TextEntryDialogWindow',
+	#classTraits : '{} + TraitedClass',
 	#instVars : [
 		'textEditor',
 		'showPassword'

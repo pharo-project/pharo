@@ -21,6 +21,7 @@ PluggableToggleButtonMorph new
 Class {
 	#name : 'PluggableToggleButtonMorph',
 	#superclass : 'PluggableButtonMorph',
+	#classTraits : '{} + TraitedClass',
 	#instVars : [
 		'pressed'
 	],

@@ -15,6 +15,7 @@ GrowlMorph new openInWorld.
 Class {
 	#name : 'GrowlMorph',
 	#superclass : 'TextMorph',
+	#classTraits : '{} + TraitedClass',
 	#instVars : [
 		'dismissHandle',
 		'vanishTime',

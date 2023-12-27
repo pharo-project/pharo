@@ -18,6 +18,7 @@ and DockingBarToggleMenuItemMorph is created by
 Class {
 	#name : 'DockingBarToggleMenuItemMorph',
 	#superclass : 'ToggleMenuItemMorph',
+	#classTraits : '{} + TraitedClass',
 	#category : 'Morphic-Widgets-Extra',
 	#package : 'Morphic-Widgets-Extra'
 }

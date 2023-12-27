@@ -1,6 +1,7 @@
 Class {
 	#name : 'RubSegmentIconMenuMorph',
 	#superclass : 'EmbeddedMenuMorph',
+	#classTraits : '{} + TraitedClass',
 	#category : 'Rubric-Editing-Widgets',
 	#package : 'Rubric',
 	#tag : 'Editing-Widgets'

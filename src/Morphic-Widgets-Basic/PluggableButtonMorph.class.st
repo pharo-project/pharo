@@ -24,6 +24,7 @@ Options:
 Class {
 	#name : 'PluggableButtonMorph',
 	#superclass : 'AlignmentMorph',
+	#classTraits : '{} + TraitedClass',
 	#instVars : [
 		'model',
 		'label',

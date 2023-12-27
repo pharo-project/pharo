@@ -4,6 +4,7 @@ A PSMCMergeMorph is a graphical tool to navigate changes and select changes in c
 Class {
 	#name : 'PSMCMergeMorph',
 	#superclass : 'ComposableMorph',
+	#classTraits : '{} + TraitedClass',
 	#instVars : [
 		'patchMorph',
 		'codeMorph',

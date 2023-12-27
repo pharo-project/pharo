@@ -4,6 +4,7 @@ String morph with enablement support. When disabled the text will appear inset.
 Class {
 	#name : 'LabelMorph',
 	#superclass : 'StringMorph',
+	#classTraits : '{} + TraitedClass',
 	#instVars : [
 		'getEnabledSelector',
 		'getTextSelector',

@@ -4,6 +4,7 @@ Dialog window displaying a message with a single OK button. Escape/return will c
 Class {
 	#name : 'MessageDialogWindow',
 	#superclass : 'DialogWindowMorph',
+	#classTraits : '{} + TraitedClass',
 	#instVars : [
 		'textMorph',
 		'textFont',
@@ -53,11 +54,11 @@ MessageDialogWindow >> initialExtent [
 
 	|ext|
 	ext := super initialExtent.
-	self textMorph width > (Display width - 50) ifTrue: [
+	self textMorph width > (self display width - 50) ifTrue: [
 		self textMorph
 			wrapFlag: true;
 			hResizing: #rigid;
-			extent: (Display width - 50) @ 0.
+			extent: (self display  width - 50) @ 0.
 		ext := super initialExtent].
 	^ext
 ]
@@ -77,7 +78,7 @@ MessageDialogWindow >> lineLengths [
 { #category : 'accessing' }
 MessageDialogWindow >> minimumWidth [
 
-	^ (self lineLengths max + 100) min: Display width
+	^ (self lineLengths max + 100) min: self display width
 ]
 
 { #category : 'actions' }

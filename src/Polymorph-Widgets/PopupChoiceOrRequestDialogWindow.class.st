@@ -1,6 +1,7 @@
 Class {
 	#name : 'PopupChoiceOrRequestDialogWindow',
 	#superclass : 'PopupChoiceDialogWindow',
+	#classTraits : '{} + TraitedClass',
 	#instVars : [
 		'okButton'
 	],

@@ -4,6 +4,7 @@ Multi-line text entry dialog.
 Class {
 	#name : 'TextEditorDialogWindow',
 	#superclass : 'MessageDialogWindow',
+	#classTraits : '{} + TraitedClass',
 	#instVars : [
 		'entryText',
 		'textEditorMorph'

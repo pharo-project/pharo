@@ -4,6 +4,7 @@ Single-line text entry dialog.
 Class {
 	#name : 'TextEntryDialogWindow',
 	#superclass : 'TextEditorDialogWindow',
+	#classTraits : '{} + TraitedClass',
 	#classVars : [
 		'MinimumWidth'
 	],
@@ -35,7 +36,7 @@ TextEntryDialogWindow >> initialExtent [
 
 { #category : 'accessing' }
 TextEntryDialogWindow >> minimumWidth [
-	^ (super minimumWidth max: self class minimumWidth) min: (Display width)
+	^ (super minimumWidth max: self class minimumWidth) min: self display width
 ]
 
 { #category : 'accessing' }

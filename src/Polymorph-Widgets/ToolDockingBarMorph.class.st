@@ -4,6 +4,7 @@ A non user-moveable docking bar that uses theme-based fill styles.
 Class {
 	#name : 'ToolDockingBarMorph',
 	#superclass : 'DockingBarMorph',
+	#classTraits : '{} + TraitedClass',
 	#category : 'Polymorph-Widgets-Base',
 	#package : 'Polymorph-Widgets',
 	#tag : 'Base'

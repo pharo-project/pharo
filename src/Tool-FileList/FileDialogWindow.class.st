@@ -4,6 +4,7 @@ Dialog based file chooser for selecting or saving files. Supports various types 
 Class {
 	#name : 'FileDialogWindow',
 	#superclass : 'DialogWindowMorph',
+	#classTraits : '{} + TraitedClass',
 	#instVars : [
 		'directoryTreeMorph',
 		'fileListMorph',

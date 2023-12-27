@@ -5,6 +5,7 @@ A DockingBarMenuItemMorph is a specialized version of its superclass for Docking
 Class {
 	#name : 'DockingBarMenuItemMorph',
 	#superclass : 'MenuItemMorph',
+	#classTraits : '{} + TraitedClass',
 	#category : 'Morphic-Widgets-Extra',
 	#package : 'Morphic-Widgets-Extra'
 }

@@ -16,6 +16,7 @@ Display a rectangle where the button is.
 Class {
 	#name : 'ThreePhaseButtonMorph',
 	#superclass : 'ImageMorph',
+	#classTraits : '{} + TraitedClass',
 	#instVars : [
 		'offFormSet',
 		'pressedFormSet',

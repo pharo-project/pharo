@@ -4,6 +4,7 @@ This is really only a shell for creating single-segment straight-line Shapes.
 Class {
 	#name : 'LineMorph',
 	#superclass : 'PolygonMorph',
+	#classTraits : '{} + TraitedClass',
 	#category : 'Morphic-Base-Basic',
 	#package : 'Morphic-Base',
 	#tag : 'Basic'

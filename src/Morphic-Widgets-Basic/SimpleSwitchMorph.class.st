@@ -6,6 +6,7 @@ I represent a switch that can be either on or off.  I chnage my state in respons
 Class {
 	#name : 'SimpleSwitchMorph',
 	#superclass : 'SimpleButtonMorph',
+	#classTraits : '{} + TraitedClass',
 	#instVars : [
 		'onColor',
 		'offColor'

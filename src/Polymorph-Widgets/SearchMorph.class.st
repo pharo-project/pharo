@@ -14,6 +14,7 @@ Typical use-case:
 Class {
 	#name : 'SearchMorph',
 	#superclass : 'EditableDropListMorph',
+	#classTraits : '{} + TraitedClass',
 	#instVars : [
 		'maxSize',
 		'currentCompletionIndex',

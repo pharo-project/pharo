@@ -129,11 +129,11 @@ NECDetailMorph >> position: aPoint menuWidth: anInteger [
 	| y x |
 	arrowPosition := aPoint.
 	y := aPoint y + self class height.
-	y := y > Display height
-				ifTrue: [Display height - self class height]
+	y := y > self display height
+				ifTrue: [self display height - self class height]
 				ifFalse: [aPoint y - self itemHeight].
 	x := aPoint x.
-	x := x + self class width > Display width
+	x := x + self class width > self display width
 				ifTrue: [
 					arrowPosition := (self positionOnLeft: anInteger) @ aPoint y.
 					arrowPosition x]

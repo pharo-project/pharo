@@ -20,6 +20,7 @@ DockingBarMorph new
 Class {
 	#name : 'DockingBarMorph',
 	#superclass : 'AlignmentMorph',
+	#classTraits : '{} + TraitedClass',
 	#instVars : [
 		'originalColor',
 		'gradientRamp',

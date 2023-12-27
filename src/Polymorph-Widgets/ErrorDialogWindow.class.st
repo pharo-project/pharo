@@ -4,6 +4,7 @@ A message dialog with an error icon.
 Class {
 	#name : 'ErrorDialogWindow',
 	#superclass : 'MessageDialogWindow',
+	#classTraits : '{} + TraitedClass',
 	#category : 'Polymorph-Widgets-Windows',
 	#package : 'Polymorph-Widgets',
 	#tag : 'Windows'

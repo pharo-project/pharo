@@ -4,6 +4,7 @@ A menu item that supports on/off state (using standard icons), enablement and di
 Class {
 	#name : 'ToggleMenuItemMorph',
 	#superclass : 'MenuItemMorph',
+	#classTraits : '{} + TraitedClass',
 	#instVars : [
 		'getStateSelector',
 		'enablementSelector'

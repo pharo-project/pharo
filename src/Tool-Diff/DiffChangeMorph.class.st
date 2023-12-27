@@ -4,6 +4,7 @@ A morph to display text differences
 Class {
 	#name : 'DiffChangeMorph',
 	#superclass : 'ComposableMorph',
+	#classTraits : '{} + TraitedClass',
 	#instVars : [
 		'diffMorph',
 		'descriptionMorph'

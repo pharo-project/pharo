@@ -5,6 +5,7 @@ Activate me with the setting named 'Use Polymorph difference tools'.
 Class {
 	#name : 'PSMCPatchMorph',
 	#superclass : 'DiffChangeMorph',
+	#classTraits : '{} + TraitedClass',
 	#instVars : [
 		'changeTree',
 		'selectedChangeWrapper'

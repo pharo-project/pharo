@@ -1,6 +1,7 @@
 Class {
 	#name : 'RubSegmentIconMenuItemMorph',
 	#superclass : 'ToggleMenuItemMorph',
+	#classTraits : '{} + TraitedClass',
 	#instVars : [
 		'segment'
 	],

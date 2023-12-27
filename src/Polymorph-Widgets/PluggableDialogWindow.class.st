@@ -4,6 +4,7 @@ Pluggable form of dialog window supporting custom selector on model for applying
 Class {
 	#name : 'PluggableDialogWindow',
 	#superclass : 'ModelDependentDialogWindow',
+	#classTraits : '{} + TraitedClass',
 	#instVars : [
 		'statusValue',
 		'buttons',

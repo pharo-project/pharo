@@ -4,6 +4,7 @@ Standard dialog for selecting a colour by HSVA colour selector, picking from the
 Class {
 	#name : 'ColorSelectorDialogWindow',
 	#superclass : 'DialogWindowMorph',
+	#classTraits : '{} + TraitedClass',
 	#instVars : [
 		'selectedColor',
 		'hsvaMorph'
@@ -240,11 +241,11 @@ ColorSelectorDialogWindow >> pickColor [
 					(self hsvaMorph containsPoint: p)
 						ifFalse:
 							[ "deal with the fact that 32 bit displays may have garbage in the alpha bits"
-							c := Display depth = 32
+							c := self display depth = 32
 								ifTrue: [ Color
-										colorFromPixelValue: ((Display pixelValueAt: p) bitOr: 16rFF000000)
+										colorFromPixelValue: ((self display  pixelValueAt: p) bitOr: 16rFF000000)
 										depth: 32 ]
-								ifFalse: [ Display colorAt: p ] ].
+								ifFalse: [ self display  colorAt: p ] ].
 					h position: p.
 					self selectedColor ~= c
 						ifTrue: [ self selectedColor: c ] ].

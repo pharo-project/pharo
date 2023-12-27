@@ -203,7 +203,7 @@ Morph >> changeTableLayout [
 
 { #category : '*Morphic-Base' }
 Morph >> defaultBalloonColor [
-	^ Display depth <= 2
+	^ self display depth <= 2
 		ifTrue: [Color white]
 		ifFalse: [BalloonMorph balloonColor]
 ]

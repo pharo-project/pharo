@@ -152,7 +152,7 @@ PolygonMorph class >> fromHand: hand [
 		evt isMouse ifTrue: [ p1 := evt cursorPoint].
 		(evt isMouse and: [ evt anyButtonPressed ]) not ].
 
-	opposite := (Display colorAt: p1) negated.
+	opposite := (self display colorAt: p1) negated.
 	opposite = Color transparent ifTrue: [opposite := Color red].
 	(poly := LineMorph from: p1 to: p1 color: opposite width: 2) openInWorld.
 	oldVerts := {p1}.
@@ -193,7 +193,7 @@ PolygonMorph class >> fromHandFreehand: hand [
 		evt isMouse ifTrue: [ p1 := evt cursorPoint].
 		(evt isMouse and: [ evt anyButtonPressed ])  ].
 
-	opposite := (Display colorAt: p1) negated.
+	opposite := (self display colorAt: p1) negated.
 	opposite = Color transparent ifTrue: [opposite := Color red].
 	(poly := LineMorph from: p1 to: p1 color: opposite width: 2) openInWorld.
 
@@ -465,7 +465,7 @@ PolygonMorph >> borderForm [
 
 	| borderCanvas |
 	borderForm ifNotNil: [^ borderForm].
-	borderCanvas := (Display defaultCanvasClass extent: bounds extent depth: 1)
+	borderCanvas := (self display defaultCanvasClass extent: bounds extent depth: 1)
 		asShadowDrawingCanvas: Color black.
 	borderCanvas translateBy: bounds topLeft negated
 		during:[:tempCanvas| self drawBorderOn: tempCanvas].

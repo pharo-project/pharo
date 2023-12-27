@@ -93,7 +93,7 @@ ThumbnailMorph >> drawForForm: aForm on: aCanvas [
 	| scale shrunkForm viewedObjectBox interimCanvas |
 	viewedObjectBox := aForm boundingBox.
 	scale :=  self scaleFor: viewedObjectBox in: self innerBounds.
-	interimCanvas := Display defaultCanvasClass extent: viewedObjectBox extent depth: aCanvas depth.
+	interimCanvas := self display defaultCanvasClass extent: viewedObjectBox extent depth: aCanvas depth.
 	interimCanvas translateBy: viewedObjectBox topLeft negated
 				during: [:tempCanvas | tempCanvas drawImage: aForm at: 0@0].
 	shrunkForm := interimCanvas form magnifyBy: scale smoothing: 1.
@@ -119,7 +119,7 @@ ThumbnailMorph >> drawMeOn: aCanvas [
 				[RecursionDepth := RecursionDepth + 1.
 				viewedMorphBox := aFormOrMorph fullBounds.
 			scale :=  self scaleFor: viewedMorphBox in: self innerBounds.
-				c := Display defaultCanvasClass extent: viewedMorphBox extent
+				c := self display defaultCanvasClass extent: viewedMorphBox extent
 							depth: aCanvas depth.
 				c translateBy: viewedMorphBox topLeft negated
 					during:

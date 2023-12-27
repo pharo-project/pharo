@@ -23,6 +23,7 @@ Don't blame him if it's not perfect.  We wanted to get it out for people to play
 Class {
 	#name : 'IndentingListItemMorph',
 	#superclass : 'StringMorph',
+	#classTraits : '{} + TraitedClass',
 	#instVars : [
 		'indentLevel',
 		'isExpanded',

@@ -27,6 +27,7 @@ Internal Representation and Key Implementation Points.
 Class {
 	#name : 'ClyBrowserSearchDialogWindow',
 	#superclass : 'DialogWindowMorph',
+	#classTraits : '{} + TraitedClass',
 	#instVars : [
 		'browser',
 		'itemsView'

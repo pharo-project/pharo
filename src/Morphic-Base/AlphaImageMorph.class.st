@@ -7,6 +7,7 @@ Displays an image with the specified alpha value (translucency) and optional sca
 Class {
 	#name : 'AlphaImageMorph',
 	#superclass : 'ImageMorph',
+	#classTraits : '{} + TraitedClass',
 	#instVars : [
 		'alpha',
 		'cachedFormSet',

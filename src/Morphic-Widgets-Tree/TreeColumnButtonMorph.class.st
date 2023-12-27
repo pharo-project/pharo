@@ -4,6 +4,7 @@ A button in a morphic based tree
 Class {
 	#name : 'TreeColumnButtonMorph',
 	#superclass : 'SimpleButtonMorph',
+	#classTraits : '{} + TraitedClass',
 	#instVars : [
 		'model',
 		'icon'

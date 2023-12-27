@@ -16,6 +16,7 @@ Examples
 Class {
 	#name : 'TaskbarItemMorph',
 	#superclass : 'PluggableButtonMorph',
+	#classTraits : '{} + TraitedClass',
 	#category : 'Morphic-Widgets-Taskbar',
 	#package : 'Morphic-Widgets-Taskbar'
 }

@@ -6,6 +6,7 @@ Then a model can be defined, and queried for state, on image, off image and pres
 Class {
 	#name : 'PluggableThreePhaseButtonMorph',
 	#superclass : 'ThreePhaseButtonMorph',
+	#classTraits : '{} + TraitedClass',
 	#instVars : [
 		'offImageSelector',
 		'onImageSelector',

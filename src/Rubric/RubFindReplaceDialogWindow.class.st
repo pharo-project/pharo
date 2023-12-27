@@ -4,6 +4,7 @@ I am the window to find and replace text in a text area
 Class {
 	#name : 'RubFindReplaceDialogWindow',
 	#superclass : 'DialogWindowMorph',
+	#classTraits : '{} + TraitedClass',
 	#instVars : [
 		'findTextField'
 	],

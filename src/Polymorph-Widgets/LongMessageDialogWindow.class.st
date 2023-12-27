@@ -5,6 +5,7 @@ Handles long messages through use of a text editor with potential for scrolling.
 Class {
 	#name : 'LongMessageDialogWindow',
 	#superclass : 'MessageDialogWindow',
+	#classTraits : '{} + TraitedClass',
 	#instVars : [
 		'entryText'
 	],
@@ -58,8 +59,8 @@ LongMessageDialogWindow >> newTextMorph [
 		setText: #entryText:
 		getEnabled: nil)
 			beForPlainText;
-			minWidth: Display width // 4;
-			minHeight: Display height // 4;
+			minWidth: self display width // 4;
+			minHeight: self display height // 4;
 			wrapped: true;
 			beReadOnly.
 	^tm

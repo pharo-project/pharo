@@ -5,6 +5,7 @@ I am a specialization of EllipseMorph that knows enough to remain circular.
 Class {
 	#name : 'CircleMorph',
 	#superclass : 'EllipseMorph',
+	#classTraits : '{} + TraitedClass',
 	#instVars : [
 		'referencePosition',
 		'originalCenter',

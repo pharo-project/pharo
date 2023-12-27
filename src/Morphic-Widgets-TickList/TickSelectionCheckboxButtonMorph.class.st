@@ -4,6 +4,7 @@ A TickSelectionCheckboxButtonMorph is the button hidden into the TickSelectionCh
 Class {
 	#name : 'TickSelectionCheckboxButtonMorph',
 	#superclass : 'CheckboxButtonMorph',
+	#classTraits : '{} + TraitedClass',
 	#instVars : [
 		'index'
 	],

@@ -100,8 +100,8 @@ FastDraggingFrameMorph >> mouseMove: evt [
 { #category : 'event handling' }
 FastDraggingFrameMorph >> mouseUp: evt [
 	target
-		ifNotNil: [Display
-				deferUpdatesIn: Display boundingBox
+		ifNotNil: [self display
+				deferUpdatesIn: self display boundingBox
 				while: [target bounds: self bounds]].
 	self delete
 ]

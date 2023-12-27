@@ -5,6 +5,7 @@ with clickable icons on the spitter
 Class {
 	#name : 'MergeDiffMorph',
 	#superclass : 'DiffMorph',
+	#classTraits : '{} + TraitedClass',
 	#instVars : [
 		'allowJoinClicks'
 	],

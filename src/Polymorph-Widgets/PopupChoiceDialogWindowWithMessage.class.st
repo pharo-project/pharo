@@ -11,6 +11,7 @@ UIManager default inform:
 Class {
 	#name : 'PopupChoiceDialogWindowWithMessage',
 	#superclass : 'PopupChoiceDialogWindow',
+	#classTraits : '{} + TraitedClass',
 	#instVars : [
 		'textMorph',
 		'iconMorph',
@@ -50,7 +51,7 @@ PopupChoiceDialogWindowWithMessage >> initialExtent [
 
 	|ext|
 	ext := super initialExtent.
-	self textMorph width > (Display width // 2) ifTrue: [
+	self textMorph width > (self display width // 2) ifTrue: [
 		self textMorph
 			wrapFlag: true;
 			hResizing: #rigid;

@@ -18,6 +18,7 @@ Internal Representation and Key Implementation Points.
 Class {
 	#name : 'MenubarMorph',
 	#superclass : 'DockingBarMorph',
+	#classTraits : '{} + TraitedClass',
 	#instVars : [
 		'menuBarItems'
 	],

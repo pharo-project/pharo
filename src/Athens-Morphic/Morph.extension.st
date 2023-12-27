@@ -71,12 +71,12 @@ Morph >> fullDrawOnAthensCanvas: anAthensCanvas [
 { #category : '*Athens-Morphic' }
 Morph >> testAthensRender [
 
-| surf |
-	surf := AthensCairoSurface extent: Display extent.
+	| surf |
+	surf := AthensCairoSurface extent: self display extent.
 
 	surf drawDuring: [:can |
 "		can pathTransform scaleBy: 0.5; rotateByDegrees: 30."
 		self fullDrawOnAthensCanvas: can ].
 
-	Display getCanvas drawImage: 	surf asForm  at: 0@0
+	self display  getCanvas drawImage: 	surf asForm  at: 0@0
 ]
