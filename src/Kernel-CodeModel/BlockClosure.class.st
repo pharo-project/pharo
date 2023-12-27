@@ -1028,6 +1028,40 @@ BlockClosure >> valueWithin: aDuration onTimeout: timeoutBlock [
 				ifFalse:[ e pass]]
 ]
 
+{ #category : 'evaluating' }
+BlockClosure >> valueWithinMilliseconds: milliseconds onTimeout: timeoutBlock [
+	"Evaluate the receiver.
+	If the evaluation does not complete in less than milliseconds evaluate the timeoutBlock instead"
+	<debuggerCompleteToSender>
+
+	| theProcess delay watchdog tag |
+	milliseconds <= 0 ifTrue: [^ timeoutBlock value ].
+
+	"the block will be executed in the current process"
+	theProcess := Processor activeProcess.
+	delay := Delay forMilliseconds: milliseconds.
+	tag := self.
+
+	"make a watchdog process"
+	watchdog := [
+		delay wait. 	"wait for timeout or completion"
+		theProcess ifNotNil:[ theProcess signalException: (TimedOut new tag: tag)]
+	] newProcess.
+
+	"Watchdog needs to run at high priority to do its job (but not at timing priority)"
+	watchdog priority: Processor timingPriority-1.
+
+	"catch the timeout signal"
+	^ [	watchdog resume.				"start up the watchdog"
+		self ensure:[						"evaluate the receiver"
+			theProcess := nil.				"it has completed, so ..."
+			delay delaySemaphore signal.	"arrange for the watchdog to exit"
+		]] on: TimedOut do: [ :e |
+			e tag == tag
+				ifTrue:[ timeoutBlock value ]
+				ifFalse:[ e pass]]
+]
+
 { #category : 'controlling' }
 BlockClosure >> whileFalse [
 	"Ordinarily compiled in-line, and therefore not overridable.
