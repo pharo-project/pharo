@@ -384,6 +384,30 @@ BlockClosure >> method [
 	^ self compiledBlock
 ]
 
+{ #category : 'private timing' }
+BlockClosure >> microsecondClockValue [
+	"Answer the number of microseconds since Epoch"
+
+	^self primUTCMicrosecondsClock
+]
+
+{ #category : 'private timing' }
+BlockClosure >> microsecondsToRun [
+	"Answer the number of milliseconds the receiver takes to return its value."
+
+	| initialMicroseconds |
+	initialMicroseconds := self microsecondClockValue.
+	self value.
+	^self microsecondClockValue - initialMicroseconds
+]
+
+{ #category : 'private timing' }
+BlockClosure >> millisecondsToRun [
+	"Answer the number of milliseconds the receiver takes to return its value."
+
+	^ self microsecondsToRun // 1e3
+]
+
 { #category : 'scheduling' }
 BlockClosure >> newProcess [
 	"Answer a Process running the code in the receiver. The process is not
@@ -566,6 +590,17 @@ BlockClosure >> outerContext [
 { #category : 'accessing' }
 BlockClosure >> outerContext: ctxt [
 	outerContext := ctxt
+]
+
+{ #category : 'private timing' }
+BlockClosure >> primUTCMicrosecondsClock [
+	"Answer the number of micro-seconds ellapsed since epoch.
+	That is since 00:00 on the morning of January 1, 1901 UTC.
+	At least a 60-bit unsigned integer is used internally which is enough for dates up to year 38435.
+	Essential. See Object documentation whatIsAPrimitive. "
+
+	<primitive: 240>
+	self primitiveFailed
 ]
 
 { #category : 'printing' }
