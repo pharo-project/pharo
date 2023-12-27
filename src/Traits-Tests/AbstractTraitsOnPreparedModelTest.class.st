@@ -389,11 +389,3 @@ AbstractTraitsOnPreparedModelTest >> t9 [
 AbstractTraitsOnPreparedModelTest >> t9: anObject [
 	^t9 := anObject
 ]
-
-{ #category : 'running' }
-AbstractTraitsOnPreparedModelTest >> tearDown [
-
-	self packageOrganizer removePackage: self packageNameForTests.
-
-	super tearDown
-]
