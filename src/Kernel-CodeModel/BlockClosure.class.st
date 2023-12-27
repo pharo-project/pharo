@@ -213,7 +213,7 @@ BlockClosure >> doWhileTrue: conditionBlock [
 	^ result
 ]
 
-{ #category : 'evaluating' }
+{ #category : 'duration to be packaged out' }
 BlockClosure >> durationToRun [
 	"Answer the duration taken to execute this block."
 
