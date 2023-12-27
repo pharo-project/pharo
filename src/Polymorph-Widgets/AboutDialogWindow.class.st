@@ -36,7 +36,7 @@ AboutDialogWindow class >> openForPharo [
 	dialog textMorph
 		minWidth: 20;
 		minHeight: 20.
-	dialog width: (width + 120 min: self display width - 50).
+	dialog width: (width + 120 min: self displayInstance width - 50).
 	dialog position: 25 @ 25
 ]
 

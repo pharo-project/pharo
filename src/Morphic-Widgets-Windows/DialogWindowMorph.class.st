@@ -350,7 +350,7 @@ DialogWindowMorph >> title: aString [
 
 	super title: aString.
 	label fitContents.
-	self minimumExtent: (((label width + 20 min: (self display width // 2)) max: self minimumExtent x)@ self minimumExtent y)
+	self minimumExtent: (((label width + 20 min: (self displayInstance width // 2)) max: self minimumExtent x)@ self minimumExtent y)
 ]
 
 { #category : 'theme' }

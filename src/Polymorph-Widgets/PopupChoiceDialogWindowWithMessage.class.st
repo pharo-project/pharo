@@ -51,11 +51,11 @@ PopupChoiceDialogWindowWithMessage >> initialExtent [
 
 	|ext|
 	ext := super initialExtent.
-	self textMorph width > (self display width // 2) ifTrue: [
+	self textMorph width > (self displayInstance width // 2) ifTrue: [
 		self textMorph
 			wrapFlag: true;
 			hResizing: #rigid;
-			extent: Display width // 2 @ 0.
+			extent: self displayInstance width // 2 @ 0.
 		ext := super initialExtent].
 	^ext
 ]

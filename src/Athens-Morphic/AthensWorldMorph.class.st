@@ -31,8 +31,8 @@ AthensWorldMorph >> restoreMorphicDisplay [
 	DisplayScreen startUp.
 
 	self
-		extent: self display extent;
-		viewBox: self display boundingBox;
+		extent: self displayInstance extent;
+		viewBox: self displayInstance boundingBox;
 		handsDo: [:h | h visible: true; showTemporaryCursor: nil];
 		resizeBackgroundMorph;
 		submorphsDo: [ :each | each displayExtentChanged ];

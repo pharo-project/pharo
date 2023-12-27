@@ -370,7 +370,7 @@ StringMorph >> heightToDisplayInList: aList [
 { #category : 'drawing' }
 StringMorph >> imageForm: depth forRectangle: rect [
 	| canvas |
-	canvas := self display defaultCanvasClass extent: rect extent depth: depth.
+	canvas := self displayInstance defaultCanvasClass extent: rect extent depth: depth.
 
 	backgroundColor isTransparent ifTrue: [
 		canvas form fillColor: self theme backgroundColor.

@@ -268,7 +268,7 @@ PopupChoiceDialogWindow >> newChoicesMorph [
 		hResizing: #shrinkWrap;
 		vResizing: #shrinkWrap.
 	self labels ifEmpty: [^answer].
-	maxLines := self display height - 100 // 2 // (self newChoiceButtonFor: 1) height.
+	maxLines := self displayInstance height - 100 // 2 // (self newChoiceButtonFor: 1) height.
 	morphs := OrderedCollection new.
 	1 to: self labels size do: [:i |
 		morphs add: (self newChoiceButtonFor: i).
@@ -297,8 +297,8 @@ PopupChoiceDialogWindow >> newContentMorph [
 		hResizing: #spaceFill;
 		vResizing: #spaceFill.
 	sp
-		minWidth: ((choices width min: self display width // 2) + sp scrollBarThickness max: TextEntryDialogWindow minimumWidth);
-		minHeight: (choices height min: self display height // 2).
+		minWidth: ((choices width min: self displayInstance width // 2) + sp scrollBarThickness max: TextEntryDialogWindow minimumWidth);
+		minHeight: (choices height min: self displayInstance height // 2).
 	choices width > sp minWidth
 		ifTrue: [sp minHeight: sp minHeight + sp scrollBarThickness].
 	sp

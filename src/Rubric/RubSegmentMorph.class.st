@@ -65,7 +65,7 @@ RubSegmentMorph >> borderForm [
 
 	| borderCanvas |
 	borderForm ifNotNil: [^ borderForm].
-	borderCanvas := (self display defaultCanvasClass extent: bounds extent depth: 1)
+	borderCanvas := (self displayInstance defaultCanvasClass extent: bounds extent depth: 1)
 		asShadowDrawingCanvas: Color black.
 	borderCanvas translateBy: bounds topLeft negated
 		during:[:tempCanvas| self drawBorderOn: tempCanvas].

@@ -63,7 +63,7 @@ SVColorSelectorMorph >> colorAt: aPoint [
 	"Answer the color in the world at the given point."
 
 	^self isInWorld
-		ifTrue: [(self display colorAt: aPoint) beOpaque ]
+		ifTrue: [(self displayInstance colorAt: aPoint) beOpaque ]
 		ifFalse: [Color black]
 ]
 

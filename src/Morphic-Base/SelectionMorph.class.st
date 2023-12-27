@@ -344,7 +344,7 @@ SelectionMorph >> drawOn: aCanvas [
 	box := self bounds.
 	selectedItems do: [:m | box := box merge: m fullBounds].
 	box := box expandBy: 1.
-	canvas := self display defaultCanvasClass extent: box extent depth: 8.
+	canvas := self displayInstance defaultCanvasClass extent: box extent depth: 8.
 	canvas translateBy: box topLeft negated
 		during: [:tempCanvas | selectedItems do: [:m | tempCanvas fullDrawMorph: m]].
 	form1 := (Form extent: box extent) copyBits: (0@0 extent: box extent) from: canvas form at: 0@0 colorMap: (Color maskingMap: 8).

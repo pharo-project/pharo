@@ -54,11 +54,11 @@ MessageDialogWindow >> initialExtent [
 
 	|ext|
 	ext := super initialExtent.
-	self textMorph width > (self display width - 50) ifTrue: [
+	self textMorph width > (self displayInstance width - 50) ifTrue: [
 		self textMorph
 			wrapFlag: true;
 			hResizing: #rigid;
-			extent: (self display  width - 50) @ 0.
+			extent: (self displayInstance width - 50) @ 0.
 		ext := super initialExtent].
 	^ext
 ]
@@ -78,7 +78,7 @@ MessageDialogWindow >> lineLengths [
 { #category : 'accessing' }
 MessageDialogWindow >> minimumWidth [
 
-	^ (self lineLengths max + 100) min: self display width
+	^ (self lineLengths max + 100) min: self displayInstance width
 ]
 
 { #category : 'actions' }

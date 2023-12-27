@@ -621,7 +621,7 @@ MenuItemMorph >> selectionFillStyle [
 	"answer the fill style to use with the receiver is the selected
 	element"
 
-	self display depth <= 2 ifTrue: [ ^ Color gray ].
+	self displayInstance depth <= 2 ifTrue: [ ^ Color gray ].
 	^ self theme menuSelectionColor
 ]
 

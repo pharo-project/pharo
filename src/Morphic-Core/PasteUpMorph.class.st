@@ -481,7 +481,7 @@ PasteUpMorph >> flashRects: rectangleList color: aColor [
 	"Details: Uses two reverses so that the display is restored to its original state. This is necessary when in deferred update mode."
 
 	| blt |
-	blt := (BitBlt toForm: self display)
+	blt := (BitBlt toForm: self displayInstance)
 		sourceForm: nil;
 		sourceOrigin: 0@0;
 		clipRect: self viewBox;
@@ -499,7 +499,7 @@ PasteUpMorph >> gridFormOrigin: origin grid: smallGrid background: backColor lin
 	| bigGrid gridForm gridOrigin |
 	gridOrigin := origin \\ smallGrid.
 	bigGrid := (smallGrid asPoint x) @ (smallGrid asPoint y).
-	gridForm := Form extent: bigGrid depth: self display depth.
+	gridForm := Form extent: bigGrid depth: self displayInstance depth.
 	backColor ifNotNil: [gridForm fillWithColor: backColor].
 	gridOrigin x to: gridForm width by: smallGrid x do:
 		[:x | gridForm fill: (x@0 extent: 1@gridForm height) fillColor: lineColor].
@@ -932,7 +932,7 @@ PasteUpMorph >> toggleResizeToFit [
 PasteUpMorph >> useRoundedCorners [
 	"Somewhat special cased because we do have to fill Display for this"
 	super useRoundedCorners.
-	self == self world ifTrue:[ self display bits primFill: 0]. 
+	self == self world ifTrue:[ self displayInstance bits primFill: 0]. 
 	"done so that we *don't* get a flash"
 ]
 

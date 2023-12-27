@@ -241,11 +241,11 @@ ColorSelectorDialogWindow >> pickColor [
 					(self hsvaMorph containsPoint: p)
 						ifFalse:
 							[ "deal with the fact that 32 bit displays may have garbage in the alpha bits"
-							c := self display depth = 32
+							c := self displayInstance depth = 32
 								ifTrue: [ Color
-										colorFromPixelValue: ((self display  pixelValueAt: p) bitOr: 16rFF000000)
+										colorFromPixelValue: ((self displayInstance  pixelValueAt: p) bitOr: 16rFF000000)
 										depth: 32 ]
-								ifFalse: [ self display  colorAt: p ] ].
+								ifFalse: [ self displayInstance  colorAt: p ] ].
 					h position: p.
 					self selectedColor ~= c
 						ifTrue: [ self selectedColor: c ] ].

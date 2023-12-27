@@ -95,7 +95,7 @@ Morph class >> defaultYellowButtonMenuEnabled: aBoolean [
 ]
 
 { #category : 'accessing' }
-Morph class >> display [
+Morph class >> displayInstance [
 
 	"expression copied and pasted from DisplayScreen class initialize method"
 	^ DisplayInstance ifNil: [ DisplayInstance := DisplayScreen new setExtent: 0@0 depth: 32; yourself ]
@@ -1113,7 +1113,7 @@ Morph >> asFormOfSize: extent [
 	| form transform rect |
 
 	rect := self bounds scaledAndCenteredIn: (0@0 extent: extent).
-	form := Form extent: rect extent depth: self display depth.
+	form := Form extent: rect extent depth: self displayInstance depth.
 	transform := MatrixTransform2x3 withScale: form extent / self extent.
 	form getCanvas
 		transformBy: transform
@@ -2151,18 +2151,18 @@ Morph >> dismissViaHalo [
 	self dismissMorph
 ]
 
-{ #category : 'drawing' }
-Morph >> display [
-	"expression copied and pasted from DisplayScreen class initialize method"
-	^ DisplayInstance ifNil: [ DisplayInstance := DisplayScreen new setExtent: 0@0 depth: 32; yourself ]
-]
-
 { #category : 'change reporting' }
 Morph >> displayExtentChanged [
 
 	"
 	This method is sent to all submorphs of the worldMorph when the external display extent changes (resizing the vm window).
 	"
+]
+
+{ #category : 'drawing' }
+Morph >> displayInstance [
+	"expression copied and pasted from DisplayScreen class initialize method"
+	^ DisplayInstance ifNil: [ DisplayInstance := DisplayScreen new setExtent: 0@0 depth: 32; yourself ]
 ]
 
 { #category : 'settings' }
@@ -2197,7 +2197,7 @@ Morph >> doFastReframe: ptName [
 				setToPoint: cursorPoint
 				minExtent: self minimumExtent
 		] inWorld: self world.
-	self display deferUpdatesIn: self display boundingBox while: [
+	self displayInstance deferUpdatesIn: self displayInstance boundingBox while: [
 		self bounds: newBounds].
 
 	^newBounds
@@ -2590,7 +2590,7 @@ Morph >> flashBounds [
 	"Flash the receiver's bounds  -- does not use the receiver's color, thus works with StringMorphs and SketchMorphs, etc., for which #flash is useless.  No senders initially, but useful to send this from a debugger or inspector"
 
 	5 timesRepeat:
-		[self display flash: self boundsInWorld andWait: 60]
+		[self displayInstance flash: self boundsInWorld andWait: 60]
 ]
 
 { #category : 'macpal' }
@@ -3517,7 +3517,7 @@ Morph >> imageForm [
 { #category : 'drawing' }
 Morph >> imageForm: depth backgroundColor: aColor forRectangle: rect [
 	| canvas |
-	canvas := self display defaultCanvasClass extent: rect extent depth: depth.
+	canvas := self displayInstance defaultCanvasClass extent: rect extent depth: depth.
 	canvas translateBy: rect topLeft negated
 		during:[:tempCanvas|
 			tempCanvas fillRectangle: rect color: aColor.
@@ -3528,7 +3528,7 @@ Morph >> imageForm: depth backgroundColor: aColor forRectangle: rect [
 { #category : 'drawing' }
 Morph >> imageForm: depth forRectangle: rect [
 	| canvas |
-	canvas := self display defaultCanvasClass extent: rect extent depth: depth.
+	canvas := self displayInstance defaultCanvasClass extent: rect extent depth: depth.
 	canvas translateBy: rect topLeft negated
 		during:[:tempCanvas| tempCanvas fullDrawMorph: self].
 	^ canvas form offset: rect topLeft
@@ -3543,7 +3543,7 @@ Morph >> imageFormDepth: depth [
 { #category : 'drawing' }
 Morph >> imageFormForRectangle: rect [
 
-	^ self imageForm: self display depth forRectangle: rect
+	^ self imageForm: self displayInstance depth forRectangle: rect
 ]
 
 { #category : 'user interface' }

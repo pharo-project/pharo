@@ -85,7 +85,7 @@ Class {
 IdentifierChooserMorph class >> allowedArea [
 	"The area allowed for the building and positioning of the morph"
 	| allowedArea |
-	allowedArea := self display usableArea.
+	allowedArea := self displayInstance usableArea.
 	allowedArea := allowedArea intersect: self currentWorld visibleClearArea ifNone: [ 0@0 corner: 0@0 "not sure about this"].
 	^allowedArea
 ]
@@ -342,8 +342,8 @@ IdentifierChooserMorph >> newContentMorph [
 		hResizing: #spaceFill;
 		vResizing: #spaceFill.
 	sp
-		minWidth: (scrollPaneWidth ifNil: [(choicesMorph width min: (self display width // 2) - 50) + sp scrollBarThickness]);
-		minHeight: (choicesMorph height min: (self display height // 3)).
+		minWidth: (scrollPaneWidth ifNil: [(choicesMorph width min: (self displayInstance width // 2) - 50) + sp scrollBarThickness]);
+		minHeight: (choicesMorph height min: (self displayInstance height // 3)).
 	choicesMorph width > sp minWidth
 		ifTrue: [sp minHeight: sp minHeight + sp scrollBarThickness].
 	^ sp
