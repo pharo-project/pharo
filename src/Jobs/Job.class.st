@@ -88,7 +88,7 @@ Job class >> exampleDebug [
 	
 	"run a different thread to interrupt the job"
 	[ aJob run ] forkAt: Processor userBackgroundPriority.
-	1 second asDelay wait. "wait for the job to start properly"
+	(Delay forSeconds: 1) wait. "wait for the job to start properly"
 	aJob debug
 ]
 

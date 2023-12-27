@@ -25,7 +25,7 @@ TTLCacheTest >> testExpiring [
 	self assert: didComputeValue.
 	self assert: (cache includesKey: #foo).
 	self assert: (cache at: #foo ifAbsentPut: [ self fail ]) equals: 100.
-	1 second asDelay wait.
+	(Delay forSeconds: 1) wait.
 	didComputeValue := false.
 	cache at: #foo ifAbsentPut: [ didComputeValue := true. 101 ].
 	self assert: didComputeValue.
@@ -42,7 +42,7 @@ TTLCacheTest >> testRemoveStaleValues [
 	cache at: #foo ifAbsentPut: [ 100 ].
 	cache at: #bar ifAbsentPut: [ 200 ].
 	self deny: cache isEmpty.
-	1 second asDelay wait.
+	(Delay forSeconds: 1) wait.
 	keys := cache removeStaleValues.
 	self assertEmpty: cache.
 	self assert: keys asArray sorted equals: #(bar foo).

@@ -47,7 +47,7 @@ DelaySchedulerBackgroundWorkerMorph >> initialize [
 
     workerProcess :=
     [     work := 0.
-        [    10 milliSeconds asDelay wait.
+        [   (Delay forMilliseconds: 10) wait.
             work := work + 1.
             morphDeleted.
         ] whileFalse.
@@ -55,9 +55,9 @@ DelaySchedulerBackgroundWorkerMorph >> initialize [
 
     controllerProcess :=
     [     [    workerProcess resume. self color: Color green.
-            10 milliSeconds asDelay wait.
+            (Delay forMilliseconds: 10) wait.
             workerProcess suspend. self color: Color red.
-            10 milliSeconds asDelay wait.
+				(Delay forMilliseconds: 10) wait.
             morphDeleted.
         ] whileFalse.
     ] newProcess name: 'Controller'.
