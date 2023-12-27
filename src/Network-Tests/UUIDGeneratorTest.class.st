@@ -44,7 +44,7 @@ UUIDGeneratorTest >> testSpeed [
 
 	self
 		should: [ 100000 timesRepeat: [ UUID nonStandardUUID ] ]
-		notTakeMoreThan: 1 second
+		notTakeMoreThanMilliseconds: 60
 ]
 
 { #category : 'testing' }

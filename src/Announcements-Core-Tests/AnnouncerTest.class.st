@@ -93,7 +93,7 @@ AnnouncerTest >> testAnnouncingReentrant [
 		ifTrue: [ ok := true ]
 	] for: self.
 
-	self should: [ announcer announce: Announcement new. ] notTakeMoreThan: 1 second.
+	self should: [ announcer announce: Announcement new. ] notTakeMoreThanMilliseconds: 60.
 	self assert: ok
 ]
 

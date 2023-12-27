@@ -267,7 +267,7 @@ ProcessMonitorTestServiceTest >> testFailTestWhenBackgroundProcessWasFailedDurin
 			[testService handleCompletedTest] on: TestLeftRunningProcess do: [ :err | err retry ].
 			self assert: false description: 'should fail with error'.
 		] on: TestFailedByForkedProcess do: [:err | ]
-	] notTakeMoreThan: 2 seconds.
+	] notTakeMoreThanMilliseconds: 120.
 	self assert: processIsDone
 ]
 
