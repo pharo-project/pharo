@@ -18,7 +18,7 @@ RBRenameClassRefactoringTest >> testFailureBadName [
 
 { #category : 'failure tests' }
 RBRenameClassRefactoringTest >> testFailureExistingName [
-1halt.
+
 	self shouldFail:
 		(RBRenameClassRefactoring rename: self class name to: #Object)
 ]
