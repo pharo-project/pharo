@@ -248,7 +248,8 @@ DebugSession >> logStackToFileIfNeeded [
 	self class logDebuggerStackToFile ifFalse: [ ^self ].
 
 	[[Smalltalk logError: name inContext: interruptedContext  ] onErrorDo: [ ]]
-		valueWithin: 100 milliSeconds onTimeout: [  ]
+		valueWithinMilliseconds: 100 
+		onTimeout: [  ]
 ]
 
 { #category : 'accessing' }
