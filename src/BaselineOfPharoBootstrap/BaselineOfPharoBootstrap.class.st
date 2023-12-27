@@ -143,6 +143,7 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		spec package: 'SUnit-Tests'.
 		spec package: 'Kernel-Tests'.
 		spec package: 'JenkinsTools-Core'.
+		spec package: 'System-Model'.
 		spec package: 'InitializePackagesCommandLineHandler'.
 		
 
@@ -225,6 +226,7 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		}.
 
 		spec group: 'SUnitGroup' with: {
+			'System-Model'.
 			'SUnit-Core'.
 			'SUnit-Tests'.
 			'Kernel-Tests'.

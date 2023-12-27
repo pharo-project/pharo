@@ -57,7 +57,7 @@ export PHARO_CI_TESTING_ENVIRONMENT=1
 ./pharo bootstrap.image
 #Adding packages removed from the bootstrap
 ./pharo bootstrap.image loadHermes Hermes-Extensions.hermes --save
-./pharo bootstrap.image loadHermes Kernel-Chronology-Extras.hermes AST-Core.hermes InitializePackagesCommandLineHandler.hermes Random-Core.hermes System-Model.kernel --save --no-fail-on-undeclared --on-duplication=ignore
+./pharo bootstrap.image loadHermes Kernel-Chronology-Extras.hermes AST-Core.hermes InitializePackagesCommandLineHandler.hermes Random-Core.hermes System-Model.hermes --save --no-fail-on-undeclared --on-duplication=ignore
 ./pharo bootstrap.image perform --save ChronologyConstants initialize
 ./pharo bootstrap.image perform --save DateAndTime initialize
 
