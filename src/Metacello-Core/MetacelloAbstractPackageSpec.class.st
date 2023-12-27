@@ -156,7 +156,7 @@ MetacelloAbstractPackageSpec >> label [
 ]
 
 { #category : 'loading' }
-MetacelloAbstractPackageSpec >> loadUsing: aLoader gofer: gofer [
+MetacelloAbstractPackageSpec >> loadUsing: aLoader gofer: gofer  withEngine: anEngine [
 
 	^self subclassResponsibility
 ]
