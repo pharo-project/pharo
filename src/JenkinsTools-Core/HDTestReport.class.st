@@ -144,7 +144,7 @@ HDTestReport >> initialize [
 
 	super initialize.
 	shouldSerializeError := true.
-	suiteTime := 0 asDuration.
+	suiteTime := 0.
 	suitePosition := suiteFailures := suiteErrors := 0.
 	progressFileName := 'progress.log'.
 	stageName := self class currentStageName.
@@ -262,11 +262,12 @@ HDTestReport >> reportTestCase: aTestCase runBlock: aBlock [
 HDTestReport >> run [
 	Author uniqueInstance
 		ifUnknownAuthorUse: 'hudson'
-		during: [ [ 
+		during: [ 
+			[ 
 			self setUp.
-			suiteTime := [ self runAll ]
-				millisecondsToRun ]
-					ensure: [ self tearDown ] ]
+			suiteTime := [ self runAll ] millisecondsToRun ]
+				ensure: [ self tearDown ] 
+		]
 ]
 
 { #category : 'running' }
@@ -431,7 +432,7 @@ HDTestReport >> tearDown [
 	stream 
 		nextPutAll: ' failures="'; print: suiteFailures; 
 		nextPutAll: '" errors="'; print: suiteErrors; 
-		nextPutAll: '" time="'; print: suiteTime asMilliSeconds / 1000.0; 
+		nextPutAll: '" time="'; print: suiteTime / 1000.0; 
 		nextPutAll: '">'.
 	stream close.
 	
