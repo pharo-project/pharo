@@ -591,20 +591,6 @@ MorphicUIManager >> requestPassword: aStringOrText [
 		entryText: ''
 ]
 
-{ #category : 'ui requests' }
-MorphicUIManager >> restoreDisplay [
-
-	self currentWorld fullRepaintNeeded
-]
-
-{ #category : 'ui requests' }
-MorphicUIManager >> restoreDisplayAfter: aBlock [
-
-	aBlock value.
-	self currentWorld activeHand waitButton.
-	self currentWorld fullRepaintNeeded
-]
-
 { #category : 'ui process' }
 MorphicUIManager >> resumeUIProcess: aProcess [
 	"Adopt aProcess as the project process -- probably because of proceeding from a debugger"

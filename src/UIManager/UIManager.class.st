@@ -656,18 +656,6 @@ UIManager >> requestPassword: queryString [
 ]
 
 { #category : 'display' }
-UIManager >> restoreDisplay [
-
-	self subclassResponsibility
-]
-
-{ #category : 'display' }
-UIManager >> restoreDisplayAfter: aBlock [
-
-	self subclassResponsibility
-]
-
-{ #category : 'display' }
 UIManager >> showWaitCursorWhile: aBlock [
 	| process |
 	process := [ [ true ] "loop until the end of aBlock processing"

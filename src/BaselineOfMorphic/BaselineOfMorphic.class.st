@@ -333,8 +333,6 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 
 	Author reset.
 	MCMethodDefinition initializersEnabled: initializersEnabled.
-
-	UIManager default restoreDisplay.
 	
 	Initialized := true.
 ]

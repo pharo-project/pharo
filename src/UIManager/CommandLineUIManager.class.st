@@ -395,16 +395,6 @@ CommandLineUIManager >> replacing: aUIManager [
 	self beDefault
 ]
 
-{ #category : 'display' }
-CommandLineUIManager >> restoreDisplay [
-	"do nothing"
-]
-
-{ #category : 'display' }
-CommandLineUIManager >> restoreDisplayAfter: aBlock [
-	"do nothing"
-]
-
 { #category : 'accessing' }
 CommandLineUIManager >> stderr [
 

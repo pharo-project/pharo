@@ -152,17 +152,6 @@ DummyUIManager >> requestPassword: queryString [
 	^ self request: queryString initialAnswer: ''
 ]
 
-{ #category : 'display' }
-DummyUIManager >> restoreDisplay [
-]
-
-{ #category : 'display' }
-DummyUIManager >> restoreDisplayAfter: aBlock [
-
-	aBlock value.
-	self restoreDisplay
-]
-
 { #category : 'default actions' }
 DummyUIManager >> traceCr: aString [
 

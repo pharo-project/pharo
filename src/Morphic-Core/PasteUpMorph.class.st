@@ -878,12 +878,6 @@ PasteUpMorph >> resizeToFitString [
 ]
 
 { #category : 'world state' }
-PasteUpMorph >> restoreDisplay [
-
-	self world restoreMorphicDisplay.	"I don't actually expect this to be called"
-]
-
-{ #category : 'world state' }
 PasteUpMorph >> restoreMainDockingBarDisplay [
 	"Restore the display of docking bars"
 	self dockingBars

@@ -236,10 +236,11 @@ DisplayScreen >> newDepth: pixelSize [
 	Display newDepth: 8.
 	Display newDepth: 1
 	"
-	(self supportsDisplayDepth: pixelSize)
-		ifFalse: [^ self inform: 'Display depth ' , pixelSize printString , ' is not supported on this system'].
-	self newDepthNoRestore: pixelSize.
-	self restore
+
+	(self supportsDisplayDepth: pixelSize) ifFalse: [
+		^ self inform: 'Display depth ' , pixelSize printString
+			  , ' is not supported on this system' ].
+	self newDepthNoRestore: pixelSize
 ]
 
 { #category : 'private' }
@@ -269,19 +270,6 @@ DisplayScreen >> replacedBy: aForm do: aBlock [
 	aBlock value.
 	Display := self.
 	ScreenSave := nil
-]
-
-{ #category : 'other' }
-DisplayScreen >> restore [
-
-	MorphicUIManager new restoreDisplay
-]
-
-{ #category : 'other' }
-DisplayScreen >> restoreAfter: aBlock [
-	"Evaluate the block, wait for a mouse click, and then restore the screen."
-
-	MorphicUIManager new restoreDisplayAfter: aBlock
 ]
 
 { #category : 'private' }
