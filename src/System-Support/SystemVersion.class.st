@@ -112,7 +112,7 @@ SystemVersion class >> setMajor: major minor: minor patch: patch suffix: aString
 { #category : 'accessing - properties' }
 SystemVersion >> build [
 
-	 ^build
+	^ build asInteger
 ]
 
 { #category : 'accessing - properties' }
