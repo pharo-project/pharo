@@ -5,13 +5,13 @@ Class {
 	#package : 'SystemCommands-MessageCommands-Tests'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'mocking' }
 SycMockClassForHierarchicalSenderB >> referredSelector [
 
 	3 + 4
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'mocking' }
 SycMockClassForHierarchicalSenderB >> targetMethod [
 
 	self referredSelector.
