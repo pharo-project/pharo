@@ -14,9 +14,10 @@ Class {
 
 { #category : 'utilities' }
 SessionErrorHandlingTest >> newTestSessionfor: aManager [
+
 	^ TestWorkingSession new
-		manager: aManager;
-		yourself
+		  manager: aManager;
+		  yourself
 ]
 
 { #category : 'running' }
@@ -31,16 +32,26 @@ SessionErrorHandlingTest >> setUp [
 SessionErrorHandlingTest >> testErrorCaughtAndDefferedIfExceptionSignaledAtStartupWhenStartupUiManagerActive [
 
 	<haltOrBreakpointForTesting>
-	UIManager nonInteractiveDuring: [
-		manager register: (TestSessionHandler onStartup: [ Halt now ]).
-		session errorHandler: (TestStartupUIManager new
-				 sessionManager: manager;
-				 yourself).
+	| finished startupProcess error |
+	finished := Semaphore new.
+	startupProcess := [
+	                  [
+	                  manager register:
+		                  (TestSessionHandler onStartup: [ Halt now ]).
+	                  session start: false ]
+		                  on: Error
+		                  do: [ :e | error := e ].
+	                  finished signal ] newProcess.
+	session errorHandler:
+		(TestStartupUIManager new sessionManager: manager).
 
-		self shouldnt: [ session start: false ] raise: Halt.
-		self
-			assert: (session instVarNamed: 'deferredStartupActions') size
-			equals: 1 ]
+	startupProcess resume.
+	finished wait.
+
+	self assert: error isNil.
+	self
+		assert: (session instVarNamed: 'deferredStartupActions') size
+		equals: 1
 ]
 
 { #category : 'tests' }
