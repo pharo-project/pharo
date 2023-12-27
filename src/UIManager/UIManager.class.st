@@ -701,3 +701,10 @@ UIManager >> textEntry: aStringOrText title: aString entryText: defaultEntryText
 
 	^self subclassResponsibility
 ]
+
+{ #category : 'accessing' }
+UIManager >> uiProcess [
+	"Keep it for compatibility. Some tests require it for now"
+
+	^ nil
+]
