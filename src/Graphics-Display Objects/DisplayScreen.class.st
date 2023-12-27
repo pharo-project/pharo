@@ -244,8 +244,20 @@ DisplayScreen >> newDepth: pixelSize [
 
 { #category : 'private' }
 DisplayScreen >> newDepthNoRestore: pixelSize [
+	"Change depths.  Check if there is enough space!  , di"
 
-	MorphicUIManager new newDisplayDepthNoRestore: pixelSize
+	| area need |
+	pixelSize = self depth ifTrue: [ ^ self "no change" ].
+	pixelSize abs < self depth ifFalse: [ "Make sure there is enough space"
+		area := self boundingBox area. "pixels"
+		need := area * (pixelSize abs - self depth) // 8
+		        + Smalltalk lowSpaceThreshold. "new bytes needed"
+		(Smalltalk garbageCollectMost <= need and: [
+			 Smalltalk garbageCollect <= need ]) ifTrue: [
+			self error: 'Insufficient free space' ] ].
+	self setExtent: self extent depth: pixelSize.
+
+	DisplayScreen startUp
 ]
 
 { #category : 'other' }
