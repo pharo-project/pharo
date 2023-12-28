@@ -131,6 +131,12 @@ MetacelloScriptExecutor >> load: required [
     actionArg := #load: -> {required}
 ]
 
+{ #category : 'options api' }
+MetacelloScriptExecutor >> loader: aLoader [
+	
+	self options at: #loader put: aLoader
+]
+
 { #category : 'actions api' }
 MetacelloScriptExecutor >> lock [
     actionArg := #'lock' -> #()

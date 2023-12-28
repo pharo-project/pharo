@@ -350,7 +350,7 @@ MetacelloScriptEngine >> load: required onProjectDownGrade: onDownGradeBlock onP
 { #category : 'accessing' }
 MetacelloScriptEngine >> loader [
 
-	^ loader ifNil: [ loader := MetacelloGoferLoader new ]
+	^ loader ifNil: [ loader := MetacelloMonticelloLoader new ]
 ]
 
 { #category : 'actions api' }
