@@ -64,6 +64,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Network-Mail-Tests'.
 		spec package: 'Gofer-Tests'.
 		spec package: 'Rubric-SpecFindReplaceDialog'.
+		spec package: 'System-NumberPrinting'.
 
 
 		self load: 'Metacello' group: 'Tests' spec: spec.
