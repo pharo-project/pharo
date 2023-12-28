@@ -4214,12 +4214,6 @@ Morph >> morphicLayerNumber [
 	"leave lots of room for special things"
 ]
 
-{ #category : 'private' }
-Morph >> morphicUIManager [
-
-	^ MorphicUIManager new
-]
-
 { #category : 'submorphs - accessing' }
 Morph >> morphsAt: aPoint [
 	"Return a collection of all morphs in this morph structure that contain the given point, possibly including the receiver itself.  The order is deepest embedding first."

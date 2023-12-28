@@ -14,9 +14,8 @@ Class {
 	#classVars : [
 		'UIProcess'
 	],
-	#category : 'Polymorph-Widgets-Themes',
-	#package : 'Polymorph-Widgets',
-	#tag : 'Themes'
+	#category : 'Polymorph-Widgets',
+	#package : 'Polymorph-Widgets'
 }
 
 { #category : 'accessing' }
@@ -344,12 +343,6 @@ MorphicUIManager >> enterOrRequestFrom: labelList values: valueList lines: lines
 		labels: labelList
 		values: valueList
 		lines: linesArray
-]
-
-{ #category : 'ui requests' }
-MorphicUIManager >> fontFromUser: priorFont [
-
-	^ StrikeFont fromUser: priorFont allowKeyboard: true
 ]
 
 { #category : 'handle debug requests' }

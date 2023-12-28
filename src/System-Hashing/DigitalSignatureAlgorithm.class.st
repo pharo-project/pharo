@@ -87,18 +87,13 @@ DigitalSignatureAlgorithm class >> initialize [
 { #category : 'public' }
 DigitalSignatureAlgorithm class >> sign: aStringOrStream privateKey: privateKey [
 	"Sign the given message (a stream or string) and answer a signature string."
+
 	"Note: Unguessable random numbers are needed for message signing. The user will be prompted to type a really long random string (two or three lines) to initialize the random number generator before signing a message. A different random string should be typed for every session; it is not a password and we wish to produce different random number streams."
-	| dsa hasher h sig |
+
+	| dsa |
 	dsa := self new.
-	dsa initRandomFromUser.
-	hasher := SHA1 new.
-	h := aStringOrStream class isBytes
-		ifTrue: [ hasher hashMessage: aStringOrStream ]
-		ifFalse: [ hasher hashStream: aStringOrStream ].
-	sig := dsa
-		computeSignatureForMessageHash: h
-		privateKey: privateKey.
-	^ dsa signatureToString: sig
+	dsa initRandomNonInteractively.
+	^ self sign: aStringOrStream privateKey: privateKey dsa: dsa
 ]
 
 { #category : 'public' }
@@ -130,33 +125,6 @@ DigitalSignatureAlgorithm class >> testKeySet [
 DigitalSignatureAlgorithm class >> time: aBlock as: aString count: anInteger [
 
 	^{anInteger. aString. (Time millisecondsToRun: aBlock)}
-]
-
-{ #category : 'examples' }
-DigitalSignatureAlgorithm class >> timeDecode: count [
-	"Example of signing a message and verifying its signature."
-	"Note: Secure random numbers are needed for key generation and message signing, but not for signature verification. There is no need to call initRandomFromUser if you are merely checking a signature."
-	"DigitalSignatureAlgorithm timeDecode: 20"
-
-	| dsa |
-
-	dsa := self new.
-	dsa initRandomFromUser.
-
-	#(1 10 100 1000 10000 100000) do: [ :extraLen | | s msg keys sig |
-		s := String new: extraLen.
-		1 to: s size do: [ :i | s at: i put: (Character value: 200 atRandom)].
-		msg := 'This is a test...',s.
-		keys := self testKeySet.
-		sig := self sign: msg privateKey: keys first dsa: dsa.
-		"self inform: 'Signature created'."
-		self timeDirect: [
-			count timesRepeat: [
-				(self verify: sig isSignatureOf: msg publicKey: keys last)
-					ifFalse: [self error: 'ERROR! Signature verification failed'].
-			].
-		] as: 'verify msgLen = ',msg size printString count: count
-	]
 ]
 
 { #category : 'testing' }

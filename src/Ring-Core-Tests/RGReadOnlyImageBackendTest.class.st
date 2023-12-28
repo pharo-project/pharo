@@ -16,6 +16,13 @@ RGReadOnlyImageBackendTest >> backendClass [
 	^ RGReadOnlyImageBackend
 ]
 
+{ #category : 'initialization' }
+RGReadOnlyImageBackendTest >> initialize [
+
+	<ignoreUnusedClassVariables: #( #SharedVariableToTest )>
+	super initialize
+]
+
 { #category : 'accessing' }
 RGReadOnlyImageBackendTest >> newEnvironment [
 

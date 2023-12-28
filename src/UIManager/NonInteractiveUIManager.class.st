@@ -116,11 +116,6 @@ NonInteractiveUIManager >> edit: aText label: labelString accept: aBlockOrNil [
 ]
 
 { #category : 'ui requests' }
-NonInteractiveUIManager >> fontFromUser: priorFont [
-	^self nonInteractiveWarning: 'Font Choose Request'
-]
-
-{ #category : 'ui requests' }
 NonInteractiveUIManager >> multiLineRequest: queryString initialAnswer: defaultAnswer answerHeight: answerHeight [
 	^  self nonInteractiveRequest: queryString
 ]

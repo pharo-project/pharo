@@ -386,12 +386,6 @@ UIManager >> edit: aText label: labelString accept: aBlockOrNil [
 	^self subclassResponsibility
 ]
 
-{ #category : 'ui requests' }
-UIManager >> fontFromUser: priorFont [
-
-	self subclassResponsibility
-]
-
 { #category : 'debug requests' }
 UIManager >> handleDebugRequest: aDebugRequest fromDebuggerSystem: anOupsDebuggerSystem [
 	"Provide a default handling for unhandled error.

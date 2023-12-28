@@ -66,12 +66,6 @@ DummyUIManager >> edit: aText label: labelString accept: aBlockOrNil [
 	^ nil
 ]
 
-{ #category : 'ui requests' }
-DummyUIManager >> fontFromUser: priorFont [
-
-	self error: 'No user response possible'
-]
-
 { #category : 'error handling' }
 DummyUIManager >> handleError: anError log: shouldLog [
 

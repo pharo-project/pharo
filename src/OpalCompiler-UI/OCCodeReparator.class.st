@@ -16,9 +16,8 @@ Class {
 		'node',
 		'requestor'
 	],
-	#category : 'OpalCompiler-Core-FrontEnd',
-	#package : 'OpalCompiler-Core',
-	#tag : 'FrontEnd'
+	#category : 'OpalCompiler-UI',
+	#package : 'OpalCompiler-UI'
 }
 
 { #category : 'correcting' }

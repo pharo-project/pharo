@@ -85,12 +85,6 @@ ExternalDropHandler class >> lookupServiceBasedHandler: aFileReference [
 		ifNotNil: [ExternalDropHandler type: nil extension: nil action: [:stream | theOne performServiceFor: aFileReference]]
 ]
 
-{ #category : 'private' }
-ExternalDropHandler class >> morphicUIManager [
-
-	^ MorphicUIManager new
-]
-
 { #category : 'accessing' }
 ExternalDropHandler class >> registerHandler: aHandler [
 	self registeredHandlers add: aHandler
