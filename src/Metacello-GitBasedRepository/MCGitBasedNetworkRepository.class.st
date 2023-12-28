@@ -495,6 +495,13 @@ MCGitBasedNetworkRepository >> normalizeTagsData: jsonObject [
 ]
 
 { #category : 'accessing' }
+MCGitBasedNetworkRepository >> packageNamed: aName ifAbsent: aBlock [
+	"delegate collection to local repository, but change them to be from *this* repository."
+
+	^ self localRepository packageNamed: aName ifAbsent: aBlock
+]
+
+{ #category : 'accessing' }
 MCGitBasedNetworkRepository >> projectPath [
     ^ projectPath
 ]

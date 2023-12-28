@@ -124,6 +124,12 @@ MCRepository >> isValid [
 	^true
 ]
 
+{ #category : 'accessing' }
+MCRepository >> packageNamed: aName ifAbsent: aBlock [
+
+	^ aBlock value
+]
+
 { #category : 'printing' }
 MCRepository >> printOn: aStream [
 	super printOn: aStream.
