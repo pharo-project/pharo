@@ -7,6 +7,24 @@ Class {
 }
 
 { #category : 'loading' }
+MetacelloMonticelloLoader >> fetchPackageDirective: aMetacelloPackageLoadDirective [
+
+	| monticelloRepositories allResolvedReferences references nearestReference mcVersion |
+	monticelloRepositories := self repositoriesFrom:
+		                          aMetacelloPackageLoadDirective
+			                          externalReference.
+	allResolvedReferences := monticelloRepositories flatCollect: [ :r |
+		                         r goferReferences ].
+	references := allResolvedReferences select: [ :each |
+		              aMetacelloPackageLoadDirective spec name
+		              = each packageName ].
+
+	nearestReference := references last.
+	mcVersion := nearestReference version.
+	MCCacheRepository default storeVersion: mcVersion
+]
+
+{ #category : 'loading' }
 MetacelloMonticelloLoader >> loadAtomicPackageDirectives: packageDirectives [
 	"Each package directive can specify many repositorySpecs.
 	Find the first one that defines the package (assumming they all are equivalent) and use that."
@@ -28,11 +46,6 @@ MetacelloMonticelloLoader >> loadAtomicPackageDirectives: packageDirectives [
 		resolvedReference ].
 
 	model load.
-
-	"Add the repositories to monticello. Otherwise this will break during the loading of Pharo.
-	See: BaselineOf >> #packageRepository"
-	references do: [ :e |
-		e first workingCopy repositoryGroup addRepository: e second ].
 
 	packageDirectives do: [ :e |
 		MetacelloNotification signal:
@@ -60,21 +73,4 @@ MetacelloMonticelloLoader >> repositoriesFrom: aMetacelloMVRepositorySpecs [
 			 ifNone: [ aSpec createRepository ]) ifNotNil: [ :repo |
 			repos add: repo ] ].
 	^ repos
-]
-
-{ #category : 'private' }
-MetacelloMonticelloLoader >> resolvePackageSpecReferences: packageSpec gofer: gofer [
-
-	| versionReference references localGofer |
-	localGofer := gofer.
-	packageSpec repositorySpecs notEmpty ifTrue: [
-		localGofer := Gofer new.
-		(self repositoriesFrom: packageSpec repositorySpecs) do: [ :repo |
-			localGofer repository: repo ] ].
-	packageSpec getFile ifNil: [ "don't use package-cache when trying to get latest version"
-		localGofer disablePackageCache ].
-	versionReference := packageSpec goferLoaderReference.
-	references := versionReference resolveAllWith: localGofer.
-	localGofer enablePackageCache.
-	^ references
 ]

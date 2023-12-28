@@ -67,20 +67,6 @@ MetacelloVersionSpec >> computeVersionStatus: matchBlock [
 	self computeVersionStatus: (self expandToLoadableSpecNames: #('ALL')) matchBlock: matchBlock
 ]
 
-{ #category : 'accessing' }
-MetacelloVersionSpec >> computeVersionStatus: resolvedPackageAndProjectNames matchBlock: matchBlock [
-
-	| status |
-
-	status := resolvedPackageAndProjectNames
-		ifNil: [ self isPartiallyCurrent ]
-		ifNotNil: [ self isPartiallyCurrentAgainst: resolvedPackageAndProjectNames ].
-	status isAllLoadedToSpec: matchBlock.
-	status isLoadedToSpec: matchBlock.
-	status isLoadedMatchConstraints: matchBlock.
-	status isSomethingLoaded: matchBlock
-]
-
 { #category : 'printing' }
 MetacelloVersionSpec >> configMethodBasicOn: aStream last: last indent: indent [
 
@@ -251,21 +237,6 @@ MetacelloVersionSpec >> createVersion [
 	^ self versionClass fromSpec: self
 ]
 
-{ #category : 'querying' }
-MetacelloVersionSpec >> currentlyLoadedClassesInVersion [
-
-	| classes |
-	classes := Set new.
-	self
-		projectDo: [ :ignored |  ]
-		packageDo: [ :packageSpec |
-			([ packageSpec workingCopy ]
-				 on: Error
-				 do: [ :ex | ex return: nil ]) ifNotNil: [ :workingCopy | workingCopy systemPackage ifNotNil: [ :package | classes addAll: package classes ] ] ]
-		groupDo: [ :ignored |  ].
-	^ classes
-]
-
 { #category : 'loading' }
 MetacelloVersionSpec >> defaultPackageNames [
 	"if there is a package named 'default' (a group) then it defines the default package names,
@@ -410,80 +381,6 @@ MetacelloVersionSpec >> import: aString provides: anArray [
 { #category : 'accessing' }
 MetacelloVersionSpec >> importArray [
   ^ importArray
-]
-
-{ #category : 'testing' }
-MetacelloVersionSpec >> isPartiallyCurrent [
-
-	^self isPartiallyCurrentAgainst: (self expandToLoadableSpecNames: #('ALL'))
-]
-
-{ #category : 'testing' }
-MetacelloVersionSpec >> isPartiallyCurrentAgainst: resolvedPackageAndProjectNames [
-
-	| status |
-	status := MetacelloMCPartiallyLoadedStatus new.
-	self
-		specsNamed: resolvedPackageAndProjectNames
-		projectDo: [ :prj |
-			| vrsn currentVersion |
-			status hasNoProject: false.
-			vrsn := prj versionOrNil.
-			vrsn ifNotNil: [
-				(currentVersion := prj relativeCurrentVersion) ifNotNil: [
-					status vrsnStatus add: currentVersion versionStatus ] ].
-			currentVersion
-				ifNotNil: [
-					status aProjectIsLoaded: true.
-					(currentVersion perform: #= with: vrsn)
-						ifTrue: [ status aLoadedProjectIsExact: true ]
-						ifFalse: [
-							(currentVersion
-								 perform: prj projectReference operator
-								 with: vrsn)
-								ifTrue: [ status aLoadedProjectIsCurrent: true ]
-								ifFalse: [ status aLoadedProjectIsNotCurrent: true ] ] ]
-				ifNil: [ status aProjectNotLoaded: true ] ]
-		packageDo: [ :pkg |
-			status hasNoPackage: false.
-			pkg
-				currentPackageLoaded: [ :versionInfos :file |
-					| wcName wcRef fileRef exact current |
-					status aPackageIsLoaded: true.
-					versionInfos isEmpty
-						ifTrue: [ status aLoadedPackageIsNotCurrent: true ]
-						ifFalse: [
-							exact := current := false.
-							versionInfos do: [ :vi |
-								wcName := vi name.
-								fileRef := GoferResolvedReference name: file.
-								wcRef := GoferResolvedReference name: wcName.
-								(wcRef compare: fileRef using: #=) ifTrue: [ exact := true ] ].
-							exact
-								ifTrue: [ status aLoadedPackageIsExact: true ]
-								ifFalse: [
-									versionInfos do: [ :vi |
-										wcName := vi name.
-										fileRef := GoferResolvedReference name: file.
-										wcRef := GoferResolvedReference name: wcName.
-										(wcRef compare: fileRef using: #'>=') ifTrue: [
-											current := true ] ].
-									current
-										ifTrue: [ status aLoadedPackageIsCurrent: true ]
-										ifFalse: [ status aLoadedPackageIsNotCurrent: true ] ] ] ]
-				notLoaded: [ status aPackageNotLoaded: true ] ]
-		groupDo: [ :ignoredGroup | "if we encounter a group, trouble"
-			status abort: true.
-			^ status ].
-	^ status
-]
-
-{ #category : 'testing' }
-MetacelloVersionSpec >> isSomethingLoaded [
-	"at least one package loaded"
-	
-	self isPartiallyCurrent isSomethingLoaded: [ :ignored | ^ true ].
-	^ false
 ]
 
 { #category : 'printing' }

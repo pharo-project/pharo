@@ -10,7 +10,6 @@ Class {
 		'options',
 		'ensuredMap',
 		'repositoryMap',
-		'cacheGofer',
 		'cacheRepository',
 		'specBuilder',
 		'loader'
@@ -68,16 +67,6 @@ MetacelloScriptEngine class >> defaultRepositoryDescription: descriptionOrNil [
 MetacelloScriptEngine class >> defaultVersionString [
     DefaultVersionString ifNil: [ DefaultVersionString := #'stable' ].
     ^ DefaultVersionString
-]
-
-{ #category : 'accessing' }
-MetacelloScriptEngine >> cacheGofer [
-
-	^ cacheGofer ifNil: [ "don't use a caching Gofer here, since we expect the contents to change during a fetch operation"
-		  cacheGofer := Gofer new
-			                disablePackageCache;
-			                repository: self cacheRepository;
-			                yourself ]
 ]
 
 { #category : 'accessing' }
@@ -467,12 +456,6 @@ MetacelloScriptEngine >> repositories [
 MetacelloScriptEngine >> repositoryMap [
 
 	^ repositoryMap ifNil: [ repositoryMap := Dictionary new ]
-]
-
-{ #category : 'initialization' }
-MetacelloScriptEngine >> resetCacheGofer [
-
-	cacheGofer := nil
 ]
 
 { #category : 'private' }

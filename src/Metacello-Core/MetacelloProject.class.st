@@ -95,48 +95,6 @@ MetacelloProject >> createRepository: aRepositorySpec [
 	^ MetacelloPlatform current createRepository: aRepositorySpec
 ]
 
-{ #category : 'versions' }
-MetacelloProject >> currentVersion [
-
-	^ self currentVersionAgainst: nil
-]
-
-{ #category : 'versions' }
-MetacelloProject >> currentVersionAgainst: resolvedPackageAndProjectNames [
-
-	| versions latestSomethingLoaded |
-	versions := self sortedAndFilteredVersions.
-	versions do: [ :version |
-		| status matchBlock |
-		status := resolvedPackageAndProjectNames
-			          ifNil: [ version spec isPartiallyCurrent ]
-			          ifNotNil: [
-				          version spec isPartiallyCurrentAgainst:
-					          resolvedPackageAndProjectNames ].
-		matchBlock := [ :matchStatus |
-		              | versionCopy |
-		              versionCopy := version copy.
-		              versionCopy versionStatus: matchStatus.
-		              ^ versionCopy ].
-	
-		status isAllLoadedToSpec: matchBlock.
-		status isLoadedToSpec: matchBlock.
-		status isLoadedMatchConstraints: matchBlock.
-	
-		status isSomethingLoaded: [ :matchStatus |
-			latestSomethingLoaded ifNil: [ | versionCopy |
-				versionCopy := version copy.
-				versionCopy versionStatus: matchStatus.
-				latestSomethingLoaded := versionCopy ] ] ].
-	
-	"If we finished the loop without finding a version in
-	 - isAllLoadedToSpec:
-	 - isLoadedToSpec:
-	 - isLoadedMatchConstraints:
-	then return what we found in the first call to isSomethingLoaded: (or nil if we did not find anything)"
-	^ latestSomethingLoaded
-]
-
 { #category : 'accessing' }
 MetacelloProject >> defaultBlessing [
 
@@ -342,7 +300,6 @@ MetacelloProject >> projectPackage [
 		pkgSpec := self packageSpec
 			           name: workingCopy packageName;
 			           yourself.
-		workingCopy ancestors notEmpty ifTrue: [ pkgSpec file: workingCopy ancestors first name ].
 		repo := workingCopy repositoryGroup repositories
 			        detect: [ :each | each ~~ MCCacheRepository default ]
 			        ifNone: [

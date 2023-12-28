@@ -142,12 +142,6 @@ MetacelloProjectReferenceSpec >> referencedSpec [
 ]
 
 { #category : 'querying' }
-MetacelloProjectReferenceSpec >> relativeCurrentVersion [
-
-	^self projectReference relativeCurrentVersion
-]
-
-{ #category : 'querying' }
 MetacelloProjectReferenceSpec >> repositories [
     ^ self referencedSpec repositories
 ]

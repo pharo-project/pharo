@@ -53,13 +53,6 @@ MetacelloMCBaselineProject >> bleedingEdge [
 ]
 
 { #category : 'versions' }
-MetacelloMCBaselineProject >> currentVersion [
-    ^ self version isSomethingLoaded
-        ifTrue: [ self version ]
-        ifFalse: [ nil ]
-]
-
-{ #category : 'versions' }
 MetacelloMCBaselineProject >> currentVersionAgainst: resolvedPackageAndProjectNames [
     ^ nil
 ]
