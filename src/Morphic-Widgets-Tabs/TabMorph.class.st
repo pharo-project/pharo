@@ -768,7 +768,7 @@ TabMorph >> retrieveMorph: aBlock [
 
 	^ [ retrievingSemaphore wait.
 		morph ifNotNil: [
-			UIManager default defer: [aBlock value: morph ]]]
+			self morphicUIManager defer: [aBlock value: morph ]]]
 				fork
 ]
 
@@ -858,7 +858,7 @@ TabMorph >> softRetrieveMorph [
 	retrievingProcess := [ [
 		morph := retrievingBlock value]
 	ensure: [
-		UIManager default defer: [
+		self morphicUIManager defer: [
 			self icon: oldIcon.
 			self triggerEvent: #tabRefreshed with: self].
 		"I should signal all waiters here"

@@ -251,7 +251,7 @@ Morph >> dispatchKeystrokeForEvent: evt [
 Morph >> exportAs: anExtension using: aWriter [
 
 	| reference |
-	reference := UIManager default
+	reference := self morphicUIManager
 		chooseForSaveFileReference: 'Save Morph as ', anExtension asUppercase
 		extensions: { anExtension }
 		path: (self externalName, '.' , anExtension).
@@ -430,19 +430,6 @@ Morph >> rowMorphForNode: aNode inColumn: aColumn [
 		].
 
 	^ rm
-]
-
-{ #category : '*Morphic-Base' }
-Morph >> setArrowheads [
-	"Let the user edit the size of arrowheads for this object"
-
-	| aParameter result  |
-	aParameter := self renderedMorph valueOfProperty:  #arrowSpec ifAbsent: [PolygonMorph defaultArrowSpec].
-	result := Morph obtainArrowheadFor: 'Head size for arrowheads: ' translated defaultValue: aParameter asString.
-	result ifNotNil:
-			[self renderedMorph  setProperty: #arrowSpec toValue: result]
-		ifNil:
-			[ self inform: 'Invalid input']
 ]
 
 { #category : '*Morphic-Base' }

@@ -1687,7 +1687,7 @@ SystemWindow >> reframePanesAdjoining: growingPane along: side to: aDisplayBox [
 { #category : 'label' }
 SystemWindow >> relabel [
 	| newLabel |
-	newLabel := UIManager default
+	newLabel := self morphicUIManager
 		request: 'New title for this window' translated
 		initialAnswer: labelString.
 	newLabel isEmptyOrNil ifTrue: [^self].
@@ -1835,7 +1835,7 @@ SystemWindow >> setUpdatablePanesFrom: getSelectors [
 SystemWindow >> setWindowColor [
 	"Allow the user to select a new basic color for the window"
 
-	(UIManager default chooseColor: self paneColor)
+	(self morphicUIManager chooseColor: self paneColor)
 		ifNotNil: [:nc | self setWindowColor: nc]
 ]
 

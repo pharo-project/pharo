@@ -148,7 +148,35 @@ ZipArchive >> extractAllTo: aDirectory [
 ZipArchive >> extractAllTo: aDirectory informing: bar [
 	"Extract all elements to the given directory; notifying user via UI on progress and if existing files exist"
 
-	^ self extractAllTo: aDirectory informing: bar overwrite: false
+	| bar1 barValue |
+	bar1 := bar ifNil: [ DummySystemProgressItem new ].
+	barValue := 0.
+	self members select: #isDirectory thenDo: [ :entry |
+		| dir shouldUpdateInfos lastUpdate |
+		lastUpdate := 0.
+		(shouldUpdateInfos := (Time millisecondsSince: lastUpdate) >= 100)
+			ifTrue: [
+				lastUpdate := Time millisecondClockValue.
+				bar1 label: 'Creating ' , entry fileName ].
+		dir := (entry fileName findTokens: '/')
+			       inject: aDirectory
+			       into: [ :base :part | base / part ].
+		dir ensureCreateDirectory.
+		barValue := barValue + 1.
+		shouldUpdateInfos ifTrue: [ bar1 value: barValue ] ].
+	self members reject: #isDirectory thenDo: [ :entry |
+		| shouldUpdateInfos lastUpdate |
+		lastUpdate := 0.
+		(shouldUpdateInfos := (Time millisecondsSince: lastUpdate) >= 100)
+			ifTrue: [
+				lastUpdate := Time millisecondClockValue.
+				bar1 label: 'Extracting ' , entry fileName ].
+		entry extractInDirectory: aDirectory.
+		barValue := barValue + 1.
+		shouldUpdateInfos ifTrue: [
+			bar1 value: barValue.
+			lastUpdate := Time millisecondClockValue ] ].
+	^ self
 ]
 
 { #category : 'archive operations' }
@@ -159,41 +187,31 @@ ZipArchive >> extractAllTo: aDirectory informing: aBar overwrite: allOverwrite [
 	bar := aBar ifNil: [ DummySystemProgressItem new ].
 	overwriteAll := allOverwrite.
 	barValue := 0.
-	self members
-		select: #isDirectory
-		thenDo: [ :entry |
-			| dir shouldUpdateInfos lastUpdate |
-			lastUpdate := 0.
-			(shouldUpdateInfos := (Time millisecondsSince: lastUpdate) >= 100)
-				ifTrue: [ lastUpdate := Time millisecondClockValue.
-					bar label: 'Creating ' , entry fileName ].
-			dir := (entry fileName findTokens: '/')
-				inject: aDirectory
-				into: [ :base :part | base / part ].
-			dir ensureCreateDirectory.
-			barValue := barValue + 1.
-			shouldUpdateInfos
-				ifTrue: [ bar value: barValue ] ].
-	self members
-		reject: #isDirectory
-		thenDo: [ :entry |
-			| shouldUpdateInfos lastUpdate |
-			lastUpdate := 0.
-			(shouldUpdateInfos := (Time millisecondsSince: lastUpdate) >= 100)
-				ifTrue: [ lastUpdate := Time millisecondClockValue.
-					bar label: 'Extracting ' , entry fileName ].
-			entry
-				extractInDirectory: aDirectory
-				informingOverwrite: overwriteAll
-				onSuccess: [  ]
-				onRetryWithOverwrite: [ overwriteAll := true ]
-				onFailedOverwrite: [ (self confirm: 'Failed to extract ' , entry fileName , '. Proceed?')
-						ifFalse: [ ^ self ] ]
-				onAbortOverwrite: [ ^ self ].
-			barValue := barValue + 1.
-			shouldUpdateInfos
-				ifTrue: [ bar value: barValue.
-					lastUpdate := Time millisecondClockValue ] ]
+	self members select: #isDirectory thenDo: [ :entry |
+		| dir shouldUpdateInfos lastUpdate |
+		lastUpdate := 0.
+		(shouldUpdateInfos := (Time millisecondsSince: lastUpdate) >= 100)
+			ifTrue: [
+				lastUpdate := Time millisecondClockValue.
+				bar label: 'Creating ' , entry fileName ].
+		dir := (entry fileName findTokens: '/')
+			       inject: aDirectory
+			       into: [ :base :part | base / part ].
+		dir ensureCreateDirectory.
+		barValue := barValue + 1.
+		shouldUpdateInfos ifTrue: [ bar value: barValue ] ].
+	self members reject: #isDirectory thenDo: [ :entry |
+		| shouldUpdateInfos lastUpdate |
+		lastUpdate := 0.
+		(shouldUpdateInfos := (Time millisecondsSince: lastUpdate) >= 100)
+			ifTrue: [
+				lastUpdate := Time millisecondClockValue.
+				bar label: 'Extracting ' , entry fileName ].
+		entry extractInDirectory: aDirectory.
+		barValue := barValue + 1.
+		shouldUpdateInfos ifTrue: [
+			bar value: barValue.
+			lastUpdate := Time millisecondClockValue ] ]
 ]
 
 { #category : 'archive operations' }

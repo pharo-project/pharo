@@ -53,7 +53,7 @@ SycExtractTempCommand >> defaultMenuItemName [
 SycExtractTempCommand >> prepareFullExecutionInContext: aSourceCodeContext [
 	super prepareFullExecutionInContext: aSourceCodeContext.
 
-	tempName := UIManager default
+	tempName := self morphicUIManager
 		request: 'New temp name'
 		initialAnswer: ''
 		title: 'Extract code to temp variable'.

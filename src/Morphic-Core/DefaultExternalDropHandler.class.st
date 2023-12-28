@@ -28,7 +28,7 @@ DefaultExternalDropHandler >> chooseServiceFrom: aCollection [
 	needed"
 	aCollection size = 1
 		ifTrue: [^ aCollection anyOne].
-	^ UIManager default chooseFrom: (aCollection collect: [:each | each label]) values: aCollection
+	^ self morphicUIManager chooseFrom: (aCollection collect: [:each | each label]) values: aCollection
 ]
 
 { #category : 'private' }

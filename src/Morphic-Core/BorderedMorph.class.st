@@ -40,7 +40,7 @@ BorderedMorph >> addBorderStyleMenuItems: aMenu hand: aHandMorph [
 	"Add border-style menu items"
 
 	| subMenu |
-	subMenu := UIManager default newMenuIn: self for: self.
+	subMenu := self morphicUIManager newMenuIn: self for: self.
 	subMenu
 		add: 'border width...' selector: #changeBorderWidth:;
 		add: 'border color...' selector: #changeBorderColor:;
