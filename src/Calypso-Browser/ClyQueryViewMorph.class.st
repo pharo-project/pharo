@@ -685,6 +685,16 @@ ClyQueryViewMorph >> restoreSelectedItems [
 	highlighting restoreTableSelection
 ]
 
+{ #category : 'event handling' }
+ClyQueryViewMorph >> selectFirstItem [
+
+	| rowsCount |
+	
+	rowsCount := self dataSource numberOfRows.
+	rowsCount = 0 ifTrue: [ ^ self ].
+	UIManager default defer: [ self selection ensureVisibleFirstItem ]
+]
+
 { #category : 'controlling' }
 ClyQueryViewMorph >> selectLastItem [
 
