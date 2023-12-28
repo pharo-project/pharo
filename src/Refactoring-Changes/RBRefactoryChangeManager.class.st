@@ -228,8 +228,7 @@ RBRefactoryChangeManager >> redoOperation [
 { #category : 'initialization' }
 RBRefactoryChangeManager >> release [
 
-	self disconnectFromChanges.
-	super release
+	self disconnectFromChanges
 ]
 
 { #category : 'public access' }

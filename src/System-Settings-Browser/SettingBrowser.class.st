@@ -600,13 +600,13 @@ SettingBrowser >> regexpSearch: aBoolean [
 
 { #category : 'initialization' }
 SettingBrowser >> release [
+
 	treeHolder release.
 	treeHolder := nil.
 	roots := nil.
 	status := nil.
 	searchedText := nil.
-	viewedPackages := nil.
-	super release
+	viewedPackages := nil
 ]
 
 { #category : 'accessing' }
