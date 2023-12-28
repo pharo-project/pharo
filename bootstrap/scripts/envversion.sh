@@ -56,7 +56,7 @@ function set_version_common() {
     PHARO_PATCH="$(git describe --long --tags | cut -d'-' -f 1 | cut -c 2- | cut -d'.' -f 3-3)"
 
 	# This will answer "Pharo7.0-PR"
-	PHARO_NAME_PREFIX="${PHARO_PREFIX}${PHARO_MAJOR}.${PHARO_MINOR}-${PHARO_SUFFIX}"
+	PHARO_NAME_PREFIX="Pharo${PHARO_MAJOR}.${PHARO_MINOR}-${PHARO_SUFFIX}"
     # This will answer "70"
 	PHARO_SHORT_VERSION="${PHARO_MAJOR}${PHARO_MINOR}"
 }
@@ -66,7 +66,6 @@ function set_version_release_variables() {
 	# I'm a release, I have all values needed in a TAG
 	# This will answer "Pharo7.0"
     
-    PHARO_PREFIX="Pharo"
     PHARO_SUFFIX=""
     set_version_common
 }
@@ -76,7 +75,6 @@ function set_version_snapshot_variables() {
 	# ensure we have BRANCH_NAME variable
 	ensure_branch_name
 	# This will answer "Pharo7.0-SNAPSHOT"
-    PHARO_PREFIX="${BRANCH_NAME}"
     PHARO_SUFFIX="SNAPSHOT"
     set_version_common
 }
@@ -84,7 +82,6 @@ function set_version_snapshot_variables() {
 # sets variables when we are in a pull request build
 function set_version_pull_request_variables() {
 	# I'm not development build, I should be a PR
-    PHARO_PREFIX="Pharo"
     PHARO_SUFFIX="PR"
     set_version_common
 }
