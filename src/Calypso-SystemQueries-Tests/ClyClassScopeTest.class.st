@@ -22,30 +22,26 @@ ClyClassScopeTest >> testClassEnumeration [
 
 { #category : 'tests' }
 ClyClassScopeTest >> testClassVarsEnumeration [
-
-	scope := ClyClassScope ofAll: {
-			         ClySubclassLOfClass2FromP1Mock.
-			         ClyClass1FromP1Mock }. "last one has no class vars"
+	scope := ClyClassScope ofAll: {Object. ClyClass1FromP1Mock}.	"last one has no class vars"
 
 	scope classVariablesDo: [ :each | result add: each ].
 
 	self assert: result size equals: 1.
-	self assert: result anyOne equals: (ClyClassVariable
-			 on: ClySubclassLOfClass2FromP1Mock classVariables first
-			 definedIn: ClySubclassLOfClass2FromP1Mock)
+	self
+		assert: result anyOne
+		equals: (ClyClassVariable on: Object classVariables first definedIn: Object)
 ]
 
 { #category : 'tests' }
 ClyClassScopeTest >> testClassVarsEnumerationFromClassSideOfDefiningClass [
-
-	scope := ClyClassScope of: ClySubclassLOfClass2FromP1Mock class.
+	scope := ClyClassScope of: Object class.
 
 	scope classVariablesDo: [ :each | result add: each ].
 
 	self assert: result size equals: 1.
-	self assert: result anyOne equals: (ClyClassVariable
-			 on: ClySubclassLOfClass2FromP1Mock classVariables first
-			 definedIn: ClySubclassLOfClass2FromP1Mock)
+	self
+		assert: result anyOne
+		equals: (ClyClassVariable on: Object classVariables first definedIn: Object)
 ]
 
 { #category : 'tests' }
@@ -120,25 +116,24 @@ ClyClassScopeTest >> testVariablesEnumerationForClassWithInstanceVariables [
 
 { #category : 'tests' }
 ClyClassScopeTest >> testVariablesEnumerationForObject [
-
-	scope := ClyClassScope of: ClySubclassLOfClass2FromP1Mock.
+	scope := ClyClassScope of: Object.
 
 	scope variablesDo: [ :each | result add: each ].
 
 	self assert: result size equals: 1.
-	self assert: result anyOne equals: (ClyClassVariable
-			 on: ClySubclassLOfClass2FromP1Mock classVariables first
-			 definedIn: ClySubclassLOfClass2FromP1Mock)
+	self
+		assert: result anyOne
+		equals: (ClyClassVariable on: Object classVariables first definedIn: Object)
 ]
 
 { #category : 'tests' }
 ClyClassScopeTest >> testVariablesEnumerationForTwoClassesWithClassAndInstanceVars [
-	scope := ClyClassScope ofAll: {ClySubclassLOfClass2FromP1Mock. ClyClass1FromP1Mock}.
+	scope := ClyClassScope ofAll: {Object. ClyClass1FromP1Mock}.
 
 	scope variablesDo: [ :each | result add: each ].
 
 	self assert: (result as: Set) equals: {
-		ClyClassVariable named: #SubclassClassVar definedIn: ClySubclassLOfClass2FromP1Mock.
+		ClyClassVariable named: #DependentsFields definedIn: Object.
 		ClyInstanceVariable named: #instanceSideVar2 definedIn: ClyClass1FromP1Mock.
 		ClyInstanceVariable named: #instanceSideVar1 definedIn: ClyClass1FromP1Mock
 	} asSet

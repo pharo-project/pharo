@@ -18,15 +18,15 @@ MetaClassTest >> testHasBindingThatBeginsWith [
 { #category : 'tests' }
 MetaClassTest >> testHasClassVarNamed [
 
-	self assert: (Character class hasClassVarNamed: #CharSet).
-	self deny: (Character class hasClassVarNamed: #NotCharSet)
+	self assert: (Object class hasClassVarNamed: #DependentsFields).
+	self deny: (Object class hasClassVarNamed: #CompilerClass)
 ]
 
 { #category : 'tests' }
 MetaClassTest >> testclassVarNames [
 
-	self assert: (Character class classVarNames includes: #CharSet).
+	self assert: (Object class classVarNames includes: #DependentsFields).
 
 	"A class and it's meta-class share the class variables"
-	self assert: Character class classVarNames equals: Character class classVarNames
+	self assert: Object class classVarNames equals: Object classVarNames
 ]

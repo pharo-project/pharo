@@ -23,7 +23,7 @@ RBRenameClassVariableParametrizedTest >> testFailureAlreadyExistingName [
 
 	self shouldFail: (self createRefactoringWithArguments: {
 				 #RecursiveSelfRule.
-				 #TextConstants.
+				 self objectClassVariable.
 				 #RBTransformationRuleTestData })
 ]
 

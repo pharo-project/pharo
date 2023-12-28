@@ -158,11 +158,11 @@ MorphTreeResizerMorph >> pressedFillStyle [
 
 { #category : 'submorphs - add/remove' }
 MorphTreeResizerMorph >> release [
-
 	traceMorph := nil.
 	oldColor := nil.
 	container := nil.
-	self releaseActionMap "we are not sure if we need it"
+	self releaseActionMap. "we are not sure if we need it"
+	super release
 ]
 
 { #category : 'instance creation' }

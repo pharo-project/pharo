@@ -13,5 +13,6 @@ BaselineOfMisc >> baseline: spec [
 			package: 'PharoDocComment';
 			package: 'STON-Text support';
 			package: 'System-CommandLine-TextSupport';
+			package: 'PerformMessageCommandLineHandler';
 			package: 'Files-Prompt'. ]
 ]

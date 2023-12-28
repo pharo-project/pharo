@@ -34,8 +34,9 @@ Class {
 	#instVars : [
 		'references'
 	],
-	#category : 'System-Model',
-	#package : 'System-Model'
+	#category : 'Kernel-Copying',
+	#package : 'Kernel',
+	#tag : 'Copying'
 }
 
 { #category : 'checking' }
@@ -130,7 +131,14 @@ DeepCopier >> doesMethod: aSelector writeAllInstanceVariablesOfClass: aClass [
 DeepCopier >> fixDependents [
 	"They are not used much, but need to be right"
 
-	^ DependentsManager fixDependents: references
+	DependentsFields associationsDo:
+		[:pair |
+		pair value do:
+			[:dep |
+			(references at: dep ifAbsent: [nil]) ifNotNil:
+				[:newDep| | newModel |
+				newModel := references at: pair key ifAbsent: [pair key].
+				newModel addDependent: newDep]]]
 ]
 
 { #category : 'initialization' }

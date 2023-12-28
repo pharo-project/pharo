@@ -47,7 +47,7 @@ OSTouchOneFingerDoubleTapDetector class >> doubleTouchSpeedSettingsOn: aBuilder 
 
 { #category : 'class initialization' }
 OSTouchOneFingerDoubleTapDetector class >> initialize [
-
+	super initialize.
 	DoubleTouchSpeed := 700.
 	MaxDistance := 0.05
 ]

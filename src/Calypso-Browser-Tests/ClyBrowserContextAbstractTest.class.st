@@ -57,7 +57,7 @@ ClyBrowserContextAbstractTest >> differentClassGroupContext [
 	| items |
 	self deleteBrowser.
 	browser := ClyFullBrowserMorph open.
-	browser selectPackage: (PackageOrganizer default packageNamed: #Kernel) andTag: 'Numbers'.
+	browser selectPackage: (PackageOrganizer default packageNamed: #Kernel) andTag: 'Chronology'.
 	items := browser classGroupSelection items.
 
 	^ ClyFullBrowserClassGroupContext new

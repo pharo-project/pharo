@@ -169,6 +169,12 @@ Number >> addAssignToFloatArray: aFloatArray [
 ]
 
 { #category : 'converting' }
+Number >> asDuration [
+
+ 	^ Duration seconds: self asInteger
+]
+
+{ #category : 'converting' }
 Number >> asFloat [
 	"Answer a floating-point number approximating the receiver."
 
@@ -214,6 +220,11 @@ Number >> asScaledDecimal: scale [
 	"Answer the receiver converted to a ScaledDecimal."
 
 	^ ScaledDecimal newFromNumber: self scale: scale
+]
+
+{ #category : 'converting' }
+Number >> asSeconds [
+	^ Duration milliSeconds: self * 1000
 ]
 
 { #category : 'converting' }
@@ -270,6 +281,12 @@ Number >> day [
  	^ self days
 ]
 
+{ #category : 'accessing' }
+Number >> days [
+
+ 	^ Duration days: self
+]
+
 { #category : 'truncation and round off' }
 Number >> detentBy: detent atMultiplesOf: grid snap: snap [
 	"Map all values that are within detent/2 of any multiple of grid to that multiple.  Otherwise, if snap is true, return self, meaning that the values in the dead zone will never be returned.  If snap is false, then expand the range between dead zones so that it covers the range between multiples of the grid, and scale the value by that factor."
@@ -320,6 +337,12 @@ Number >> hour [
  	^ self hours
 ]
 
+{ #category : 'accessing' }
+Number >> hours [
+
+ 	^ Duration hours: self
+]
+
 { #category : 'truncation and round off' }
 Number >> integerPart [
 	"Added for ANSI compatibility"
@@ -361,6 +384,15 @@ Number >> milliSecond [
 ]
 
 { #category : 'accessing' }
+Number >> milliSeconds [
+
+	"2 milliSeconds printString >>> '0:00:00:00.002'"
+	"(1 second + 2 milliSeconds) printString >>> '0:00:00:01.002'"
+
+ 	^ Duration milliSeconds: self
+]
+
+{ #category : 'accessing' }
 Number >> minute [
 	"1 minute printString >>> '0:00:01:00'"
 	"(1 hour + 1 minute) printString >>> '0:01:01:00'"
@@ -369,11 +401,27 @@ Number >> minute [
 ]
 
 { #category : 'accessing' }
+Number >> minutes [
+	"2 minutes printString >>> '0:00:02:00'"
+	"(1 hour + 2 minutes) printString >>> '0:01:02:00'"
+
+ 	^ Duration minutes: self
+]
+
+{ #category : 'accessing' }
 Number >> nanoSecond [
 	"1 nanoSecond printString >>> '0:00:00:00.000000001'"
 	"(1 milliSecond + 1 nanoSecond) printString >>> '0:00:00:00.001000001'"
 
  	^ self nanoSeconds
+]
+
+{ #category : 'accessing' }
+Number >> nanoSeconds [
+	"2 nanoSeconds printString >>> '0:00:00:00.000000002'"
+	"(1 milliSecond + 2 nanoSeconds) printString >>> '0:00:00:00.001000002'"
+
+ 	^ Duration nanoSeconds: self
 ]
 
 { #category : 'arithmetic' }
@@ -623,6 +671,15 @@ Number >> second [
  	^ self seconds
 ]
 
+{ #category : 'accessing' }
+Number >> seconds [
+
+	"2 seconds printString >>> '0:00:00:02'"
+	"(1 minute + 2 seconds) printString >>> '0:00:01:02'"
+
+ 	^ Duration seconds: self
+]
+
 { #category : 'converting' }
 Number >> sign [
 	"Answer 1 if the receiver is greater than 0, -1 if less than 0, else 0."
@@ -707,7 +764,19 @@ Number >> week [
 ]
 
 { #category : 'accessing' }
+Number >> weeks [
+
+ 	^ Duration weeks: self
+]
+
+{ #category : 'accessing' }
 Number >> year [
 
  	^self years
+]
+
+{ #category : 'accessing' }
+Number >> years [
+
+ 	^ Duration years: self
 ]

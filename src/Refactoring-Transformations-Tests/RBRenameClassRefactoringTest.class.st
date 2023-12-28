@@ -11,7 +11,7 @@ RBRenameClassRefactoringTest >> testFailureBadName [
 
 	self shouldFail: (RBRenameClassRefactoring
 			 rename: #RBLintRuleTestData
-			 to: #TextConstants).
+			 to: self objectClassVariable).
 	self shouldFail:
 		(RBRenameClassRefactoring rename: #RBLintRuleTestData to: #'Ob ject')
 ]

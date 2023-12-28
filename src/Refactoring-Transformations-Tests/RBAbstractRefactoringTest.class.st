@@ -55,8 +55,7 @@ RBAbstractRefactoringTest >> methodSignatureStringForUnarySymbol: aSymbol [
 
 { #category : 'helpers' }
 RBAbstractRefactoringTest >> objectClassVariable [
-
-	^ Character classVariables first name
+	^Object classVariables first name
 ]
 
 { #category : 'parsing' }

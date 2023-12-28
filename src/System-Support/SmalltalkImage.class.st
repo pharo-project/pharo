@@ -681,8 +681,8 @@ SmalltalkImage >> fullNameForImageNamed: aString [
 { #category : 'memory space' }
 SmalltalkImage >> garbageCollect [
 	"Primitive. Reclaims all garbage and answers the size of the largest free chunk in old space."
-
-	^ self primitiveGarbageCollect
+	Object flushDependents.
+	^self primitiveGarbageCollect
 ]
 
 { #category : 'memory space' }

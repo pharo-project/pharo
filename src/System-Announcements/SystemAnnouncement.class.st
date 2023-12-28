@@ -7,12 +7,19 @@ Class {
 	#name : 'SystemAnnouncement',
 	#superclass : 'Announcement',
 	#instVars : [
+		'timeStamp',
 		'properties'
 	],
 	#category : 'System-Announcements-System-Base',
 	#package : 'System-Announcements',
 	#tag : 'System-Base'
 }
+
+{ #category : 'initialization' }
+SystemAnnouncement >> initialize [
+	super initialize.
+	self setTimeStamp
+]
 
 { #category : 'properties' }
 SystemAnnouncement >> properties [
@@ -31,4 +38,22 @@ SystemAnnouncement >> propertyAt: aString ifPresent: aBlockClosure [
 SystemAnnouncement >> propertyAt: aKey put: aValue [
 
 	self properties at: aKey put: aValue
+]
+
+{ #category : 'private' }
+SystemAnnouncement >> setTimeStamp [
+
+	timeStamp := DateAndTime current
+]
+
+{ #category : 'accessing' }
+SystemAnnouncement >> timeStamp [
+
+	^ timeStamp
+]
+
+{ #category : 'accessing' }
+SystemAnnouncement >> timeStamp: aTimeStamp [
+
+	timeStamp := aTimeStamp
 ]

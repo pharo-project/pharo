@@ -10,8 +10,9 @@ Class {
 	#pools : [
 		'ChronologyConstants'
 	],
-	#category : 'Kernel-Chronology-Extras',
-	#package : 'Kernel-Chronology-Extras'
+	#category : 'Kernel-Chronology',
+	#package : 'Kernel',
+	#tag : 'Chronology'
 }
 
 { #category : 'accessing' }

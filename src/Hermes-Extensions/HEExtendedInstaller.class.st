@@ -57,14 +57,12 @@ HEExtendedInstaller >> initialize [
 
 { #category : 'reporting undeclared' }
 HEExtendedInstaller >> reportNewUndeclareds: newUndeclareds [
-
 	| message |
-	newUndeclareds ifNotEmpty: [
-		message := 'New Undeclared created... check dependencies: '
-		           , (newUndeclareds collect: [ :e | e key ]) printString.
-		failOnUndeclared
-			ifTrue: [ self error: message ]
-			ifFalse: [ SystemNotification signal: message ] ]
+	newUndeclareds
+		ifNotEmpty: [ message := 'New Undeclared created... check dependencies: ', newUndeclareds keys printString.
+			failOnUndeclared
+				ifTrue: [ self error: message ]
+				ifFalse: [ SystemNotification signal: message ] ]
 ]
 
 { #category : 'validating existence' }

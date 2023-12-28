@@ -485,7 +485,7 @@ CompiledMethodTest >> testIsAbstract [
 { #category : 'tests - testing' }
 CompiledMethodTest >> testIsClassSide [
 	self deny: (Object>>#yourself) isClassSide.
-	self assert: (UndefinedObject class>>#new) isClassSide
+	self assert: (Object class>>#initialize) isClassSide
 ]
 
 { #category : 'tests - testing' }

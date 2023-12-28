@@ -11,8 +11,9 @@ https://en.wikipedia.org/wiki/ISO_8601
 Class {
 	#name : 'BasicDatePrinter',
 	#superclass : 'Object',
-	#category : 'Kernel-Chronology-Extras',
-	#package : 'Kernel-Chronology-Extras'
+	#category : 'Kernel-Chronology',
+	#package : 'Kernel',
+	#tag : 'Chronology'
 }
 
 { #category : 'accessing' }

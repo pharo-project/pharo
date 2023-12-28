@@ -11,15 +11,14 @@ RBRefactoringBrowserTest class >> isAbstract [
 ]
 
 { #category : 'private' }
-RBRefactoringBrowserTest >> abstractTransformationClassVariable [
-
-	^ RBAbstractTransformation classVariables first name
-]
-
-{ #category : 'private' }
 RBRefactoringBrowserTest >> executeRefactoring: aRefactoring [
 	aRefactoring generateChanges.
 	self parserClass parseExpression: aRefactoring storeString
+]
+
+{ #category : 'private' }
+RBRefactoringBrowserTest >> objectClassVariable [
+	^Object classVariables first name
 ]
 
 { #category : 'helpers' }
