@@ -11,9 +11,8 @@ Class {
 	#pools : [
 		'ChronologyConstants'
 	],
-	#category : 'Kernel-Chronology',
-	#package : 'Kernel',
-	#tag : 'Chronology'
+	#category : 'Kernel-Chronology-Extras',
+	#package : 'Kernel-Chronology-Extras'
 }
 
 { #category : 'instance creation simple' }
@@ -75,6 +74,13 @@ Duration class >> milliSeconds: milliCount [
 Duration class >> minutes: aNumber [
 
 	^ self seconds: aNumber * SecondsInMinute nanoSeconds: 0
+]
+
+{ #category : 'instance creation' }
+Duration class >> month: aMonth [
+	"aMonth is an Integer or a String"
+
+	^ (Month month: aMonth) duration
 ]
 
 { #category : 'instance creation simple' }
