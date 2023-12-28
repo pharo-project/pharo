@@ -58,7 +58,7 @@ OldClassDefinitionPrinterTest >> testChronologyConstants [
 		equals: 'SharedPool subclass: #ChronologyConstants
 	instanceVariableNames: ''''
 	classVariableNames: ''DayNames DaysInMonth HoursInDay MicrosecondsInDay MinutesInHour MonthNames NanosInMicroSecond NanosInMillisecond NanosInSecond SecondsInDay SecondsInHour SecondsInMinute SqueakEpoch''
-	package: ''Kernel-Chronology-Extras'''
+	package: ''Kernel-Chronology'''
 ]
 
 { #category : 'tests - metaclasses' }

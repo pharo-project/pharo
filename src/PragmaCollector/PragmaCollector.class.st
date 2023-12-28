@@ -276,10 +276,10 @@ PragmaCollector >> reject: aBlock [
 
 { #category : 'dependents access' }
 PragmaCollector >> release [
-
 	self noMoreNotifications.
 	self destroyAnnouncer.
-	collected := nil
+	collected := nil.
+	super release
 ]
 
 { #category : 'updating' }

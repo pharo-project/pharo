@@ -4,8 +4,9 @@ I am an error thrown if Time expands outside a 24 hour range.
 Class {
 	#name : 'TimeError',
 	#superclass : 'Error',
-	#category : 'Kernel-Chronology-Extras',
-	#package : 'Kernel-Chronology-Extras'
+	#category : 'Kernel-Chronology',
+	#package : 'Kernel',
+	#tag : 'Chronology'
 }
 
 { #category : 'validation' }

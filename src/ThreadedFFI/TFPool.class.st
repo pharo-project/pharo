@@ -96,6 +96,8 @@ TFPool >> printOn: stream [
 { #category : 'initialization' }
 TFPool >> release [
 
+	super release.
+
 	releaseBlock ifNotNil: [ elements do: releaseBlock ].
 	elements := nil
 ]

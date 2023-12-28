@@ -28,7 +28,7 @@ PerformMessageCommandLineHandler class >> description [
 
 { #category : 'activation' }
 PerformMessageCommandLineHandler >> activate [
-	| aClass aMessage arguments messageArguments result |
+	| aClass aMessage arguments messageArguments |
 	self activateHelp
 		ifTrue: [ ^ self ].
 
@@ -42,10 +42,7 @@ PerformMessageCommandLineHandler >> activate [
 	aMessage := arguments second asSymbol.
 	messageArguments := (arguments allButFirst: 2) asArray.
 
-	result := aClass perform: aMessage withArguments: messageArguments.
-	self stdout
-		print: result;
-		lf.
+	aClass perform: aMessage withArguments: messageArguments.
 
 	(self hasOption: 'save')
 		ifTrue: [ Smalltalk snapshot: true andQuit: false ].

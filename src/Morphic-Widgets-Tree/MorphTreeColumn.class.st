@@ -223,10 +223,10 @@ MorphTreeColumn >> nodeStringGetter: aSelectorOrAValuable [
 
 { #category : 'initialization' }
 MorphTreeColumn >> release [
-
 	container := nil.
 	header := nil.
-	self releaseActionMap "we are not sure if we need it"
+	self releaseActionMap. "we are not sure if we need it"
+	super release
 ]
 
 { #category : 'column drawing' }

@@ -286,8 +286,8 @@ ClassTest >> testHasBindingThatBeginsWith [
 { #category : 'tests - class variables' }
 ClassTest >> testHasClassVarNamed [
 
-	self assert: (Character hasClassVarNamed: #CharSet).
-	self deny: (Character hasClassVarNamed: #NotCharSet)
+	self assert: (Object hasClassVarNamed: #DependentsFields).
+	self deny: (Object hasClassVarNamed: #CompilerClass)
 ]
 
 { #category : 'tests - accessing - comments' }
@@ -586,19 +586,25 @@ ClassTest >> testUsesPoolVarNamed [
 ]
 
 { #category : 'tests - class variables' }
+ClassTest >> testallClassVariables [
+
+	self assert: SmalltalkImage allClassVariables last name equals: #DependentsFields
+]
+
+{ #category : 'tests - class variables' }
 ClassTest >> testclassVarNames [
 
-	self assert: (Character classVarNames includes: #CharSet).
+	self assert: (Object classVarNames includes: #DependentsFields).
 
 	"A class and it's meta-class share the class variables"
-	self assert: Character classVarNames equals: Character class classVarNames
+	self assert: Object classVarNames equals: Object class classVarNames
 ]
 
 { #category : 'tests - class variables' }
 ClassTest >> testclassVariables [
 
-	self assert: (Character classVariables anySatisfy: [ :cv | cv name = #CharSet ]).
+	self assert: Object classVariables first name equals: #DependentsFields.
 
 	"A class and it's meta-class share the class variables"
-	self assert: Character classVariables equals: Character class classVariables
+	self assert: Object classVariables equals: Object class classVariables
 ]

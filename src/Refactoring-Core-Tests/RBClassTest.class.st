@@ -3,10 +3,9 @@ Class {
 	#superclass : 'RBRefactoringBrowserTest',
 	#instVars : [
 		'rbNamespace',
+		'objectClass',
 		'newClass',
-		'abstractTransformationClass',
-		'refactoringClass',
-		'objectClass'
+		'messageNodeClass'
 	],
 	#category : 'Refactoring-Core-Tests',
 	#package : 'Refactoring-Core-Tests'
@@ -17,9 +16,8 @@ RBClassTest >> setUp [
 
 	super setUp.
 	rbNamespace := RBNamespace new.
-	abstractTransformationClass := rbNamespace classNamed: #RBAbstractTransformation.
 	objectClass := rbNamespace classNamed: #Object.
-	refactoringClass := rbNamespace classNamed: #RBClassRefactoring.
+	messageNodeClass := rbNamespace classNamed: #RBMessageNode.
 	rbNamespace defineClass: [ :aBuilder |
 		aBuilder
 			name: #SomeClassName;
@@ -50,45 +48,43 @@ RBClassTest >> testBindingOf [
 RBClassTest >> testClassSide [
 
 	| meta |
-	meta := abstractTransformationClass classSide.
+	meta := objectClass classSide.
 	self assert: meta isMeta.
-	self assert: meta instanceSide equals: abstractTransformationClass.
-	self deny: abstractTransformationClass isMeta.
+	self assert: meta instanceSide equals: objectClass.
+	self deny: objectClass isMeta.
 ]
 
 { #category : 'tests - definition' }
 RBClassTest >> testDefinesClassVariable [
-
-	self deny:
-		(abstractTransformationClass definesClassVariable: #ClassVariable1).
-	self assert: (abstractTransformationClass definesClassVariable:
-			 self abstractTransformationClassVariable).
+	self deny: (objectClass definesClassVariable: #ClassVariable1).
+	self assert: (objectClass definesClassVariable: self objectClassVariable).
 	self assert: (newClass definesClassVariable: #ClassVariable1).
-	self deny: (refactoringClass definesClassVariable: #ClassVariable1).
-	self assert: (refactoringClass definesClassVariable:
-			 self abstractTransformationClassVariable)
+	self deny: (messageNodeClass definesClassVariable: #ClassVariable1).
+	self
+		assert: (messageNodeClass definesClassVariable: self objectClassVariable)
 ]
 
 { #category : 'tests - definition' }
 RBClassTest >> testDefinesInstanceVariable [
-	self deny: (abstractTransformationClass definesInstanceVariable: 'instanceVariable1').
+	self deny: (objectClass definesInstanceVariable: 'instanceVariable1').
 	self assert: (newClass definesInstanceVariable: 'instanceVariable1').
-	self deny: (refactoringClass definesInstanceVariable: 'instanceVariable1').
-	self assert: (refactoringClass definesInstanceVariable: 'className').
+	self deny: (messageNodeClass definesInstanceVariable: 'instanceVariable1').
+	self assert: (messageNodeClass definesInstanceVariable: 'parent').
+	self assert: (messageNodeClass definesInstanceVariable: 'selector')
 ]
 
 { #category : 'tests - definition' }
 RBClassTest >> testDefinesMethod [
-	self assert: (abstractTransformationClass definesMethod: #printString).
+	self assert: (objectClass definesMethod: #printString).
 	self assert: (newClass definesMethod: #printString).
-	self assert: (refactoringClass definesMethod: #printString)
+	self assert: (messageNodeClass definesMethod: #printString)
 ]
 
 { #category : 'tests - definition' }
 RBClassTest >> testDefinesPoolDictionary [
-	self deny: (abstractTransformationClass definesPoolDictionary: #OpcodePool).
+	self deny: (objectClass definesPoolDictionary: #OpcodePool).
 	self assert: (newClass definesPoolDictionary: #TextConstants).
-	self deny: (refactoringClass definesPoolDictionary: #OpcodePool).
+	self deny: (messageNodeClass definesPoolDictionary: #OpcodePool).
 	self assert: ((RBNamespace new classNamed: #Text)
 				definesPoolDictionary: #TextConstants)
 ]
@@ -164,24 +160,24 @@ RBClassTest >> testHierarchy [
 { #category : 'tests - navigation' }
 RBClassTest >> testIsEmptyClass [
 	
-	self deny: abstractTransformationClass isEmptyClass.
+	self deny: objectClass isEmptyClass.
 	self assert: (rbNamespace classNamed: #MyClassB) isEmptyClass
 ]
 
 { #category : 'tests - navigation' }
 RBClassTest >> testIsInstanceSide [
 
-	self deny: abstractTransformationClass instanceSide isMeta.
-	self assert: abstractTransformationClass classSide isMeta.
-	self deny: abstractTransformationClass classSide instanceSide isMeta.
+	self deny: objectClass instanceSide isMeta.
+	self assert: objectClass classSide isMeta.
+	self deny: objectClass classSide instanceSide isMeta.
 	
 ]
 
 { #category : 'tests - navigation' }
 RBClassTest >> testIsMeta [
 
-	self assert: abstractTransformationClass classSide isMeta.
-	self deny: abstractTransformationClass isMeta
+	self assert: objectClass classSide isMeta.
+	self deny: objectClass isMeta
 ]
 
 { #category : 'tests' }
@@ -202,7 +198,7 @@ RBClassTest >> testWhichClassIncludesSelectorDefinedInTheClass [
 RBClassTest >> testWhichClassIncludesSelectorDoNotFind [
 
 	self
-		assert: (abstractTransformationClass whichClassIncludesSelector: #doesNotExistAtAll)
+		assert: (objectClass whichClassIncludesSelector: #doesNotExistAtAll)
 		equals: nil
 ]
 
@@ -210,7 +206,7 @@ RBClassTest >> testWhichClassIncludesSelectorDoNotFind [
 RBClassTest >> testWhichClassIncludesSelectorDoesNotExist [
 
 	self
-		assert: (abstractTransformationClass whichClassIncludesSelector: #doesNotExistAtAll)
+		assert: (objectClass whichClassIncludesSelector: #doesNotExistAtAll)
 		equals: nil
 ]
 
@@ -282,7 +278,7 @@ RBClassTest >> testWhoDefinesMethodDefinedInTheClass [
 RBClassTest >> testWhoDefinesMethodDoesNotExist [
 
 	self
-		assert: (abstractTransformationClass whoDefinesMethod: #doesNotExistAtAll)
+		assert: (objectClass whoDefinesMethod: #doesNotExistAtAll)
 		equals: nil
 ]
 
@@ -309,6 +305,6 @@ RBClassTest >> testWhoDefinesMethodGoingUpAndDoNotFind [
 RBClassTest >> testWhoDefinesMethodSelectorDoNotFind [
 
 	self
-		assert: (abstractTransformationClass whoDefinesMethod: #doesNotExistAtAll)
+		assert: (objectClass whoDefinesMethod: #doesNotExistAtAll)
 		equals: nil
 ]

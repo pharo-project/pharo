@@ -55,7 +55,7 @@ LegacyClassDefinitionPrinterTest >> testChronologyConstants [
 	instanceVariableNames: ''''
 	classVariableNames: ''DayNames DaysInMonth HoursInDay MicrosecondsInDay MinutesInHour MonthNames NanosInMicroSecond NanosInMillisecond NanosInSecond SecondsInDay SecondsInHour SecondsInMinute SqueakEpoch''
 	poolDictionaries: ''''
-	category: ''Kernel-Chronology-Extras'''
+	category: ''Kernel-Chronology'''
 ]
 
 { #category : 'tests - metaclasses' }

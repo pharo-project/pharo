@@ -22,7 +22,7 @@ RBAbstractTransformationTest >> modelOnClasses: aCollection [
 { #category : 'mocking' }
 RBAbstractTransformationTest >> objectClassVariable [
 
-	^ Character classVariables first name
+	^ Object classVariables first name
 ]
 
 { #category : 'parsing' }

@@ -86,8 +86,8 @@ RBSmalllintChecker >> methodBlock: aBlock [
 
 { #category : 'initialization' }
 RBSmalllintChecker >> release [
-
-	context release
+	context release.
+	super release
 ]
 
 { #category : 'accessing' }

@@ -63,7 +63,8 @@ FluidClassDefinitionPrinterTest >> testChronologyConstants [
 		assert: (self forClass: ChronologyConstants)
 		equals: 'SharedPool << #ChronologyConstants
 	sharedVariables: { #SqueakEpoch . #SecondsInDay . #DayNames . #MonthNames . #SecondsInHour . #MicrosecondsInDay . #NanosInSecond . #SecondsInMinute . #NanosInMillisecond . #DaysInMonth . #NanosInMicroSecond . #HoursInDay . #MinutesInHour };
-	package: ''Kernel-Chronology-Extras'''
+	tag: ''Chronology'';
+	package: ''Kernel'''
 ]
 
 { #category : 'tests - template' }
@@ -198,8 +199,8 @@ FluidClassDefinitionPrinterTest >> testExpandedTime [
 	slots: { #seconds . #nanos };
 	sharedVariables: {};
 	sharedPools: { ChronologyConstants };
-	tag: '''';
-	package: ''Kernel-Chronology-Extras'''
+	tag: ''Chronology'';
+	package: ''Kernel'''
 ]
 
 { #category : 'tests - template' }

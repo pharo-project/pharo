@@ -175,8 +175,8 @@ RBSmalllintContext >> protocols [
 
 { #category : 'initialization' }
 RBSmalllintContext >> release [
-
-	literalProcess ifNotNil: [ literalProcess terminate ]
+	literalProcess ifNotNil: [literalProcess terminate].
+	super release
 ]
 
 { #category : 'accessing' }

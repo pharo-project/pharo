@@ -19,8 +19,9 @@ Class {
 		'SecondsInMinute',
 		'SqueakEpoch'
 	],
-	#category : 'Kernel-Chronology-Extras',
-	#package : 'Kernel-Chronology-Extras'
+	#category : 'Kernel-Chronology',
+	#package : 'Kernel',
+	#tag : 'Chronology'
 }
 
 { #category : 'class initialization' }

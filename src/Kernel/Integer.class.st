@@ -370,6 +370,11 @@ Integer >> asScaledDecimal [
 	^ ScaledDecimal newFromNumber: self scale: 0
 ]
 
+{ #category : 'converting' }
+Integer >> asSeconds [
+	^ Duration seconds: self
+]
+
 { #category : 'truncation and round off' }
 Integer >> asSmallerPowerOfTwo [
 	"Convert the receiver into a power of two which is not larger than the receiver"
