@@ -81,14 +81,13 @@ ReCriticEngine >> critiquesOf: anEntity [
 ReCriticEngine >> guidedBy: anEntity ban: aCritique [
 
 	| candidates |
-
 	candidates := anEntity banLevelCandidates.
 
-	(UIManager default
-		chooseFrom: (candidates collect: [:each | each reBanName])
-		values: candidates
-		title: 'On which level do you want to ban the rule?')
-			ifNotNil: [ :entity | entity ban: aCritique ]
+	(MorphicUIManager new
+		 chooseFrom: (candidates collect: [ :each | each reBanName ])
+		 values: candidates
+		 title: 'On which level do you want to ban the rule?') ifNotNil: [
+		:entity | entity ban: aCritique ]
 ]
 
 { #category : 'running' }

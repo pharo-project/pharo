@@ -588,7 +588,7 @@ RBProgramNode >> hasNonLocalReturn [
 RBProgramNode >> hasProperty: aKey [
 	"Test if the property aKey is present."
 
-	^ properties notNil and: [ properties includesKey: aKey ]
+	^ properties isNotNil and: [ properties includesKey: aKey ]
 ]
 
 { #category : 'comparing' }

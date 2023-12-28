@@ -13,6 +13,12 @@ Class {
 	#tag : 'Specs'
 }
 
+{ #category : 'visiting' }
+MetacelloPackageSpec >> acceptVisitor: aVisitor [
+
+	^ aVisitor visitPackageSpec: self
+]
+
 { #category : 'gofer' }
 MetacelloPackageSpec >> ancestors [
 
@@ -20,13 +26,23 @@ MetacelloPackageSpec >> ancestors [
 ]
 
 { #category : 'testing' }
-MetacelloPackageSpec >> compareCurrentVersion: anOperator targetVersionStatus: statusIgnored using: anMCLoader [
+MetacelloPackageSpec >> compareCurrentVersion: anOperator targetVersionStatus: statusIgnored using: aTarget withEngine: anEngine [
+	"Use currentVersionInfoFor: because it involves the loader and returns versionInfo for a planned load 
+	 (atomic loaders) or currently loaded package"
 
-	self 
-		currentPackageLoaded: [:bool | ^bool ] 
-		comparing: anOperator 
-		notLoaded: [:ignored | ^false ]
-		using: anMCLoader
+	| wcName |
+	self ancestors ifNotNil: [ :vis |
+		| fileRef wcRef |
+		self getFile ifNil: [ ^ false ].
+		vis do: [ :vi |
+			wcName := vi name.
+			fileRef := GoferVersionReference name: self file.
+			fileRef versionNumber = 0 ifTrue: [ "a shame that GoferVersionReference doesn't have better method for recognizing a missing verion number" "fix for: https://github.com/dalehenrich/metacello-work/issues/185"
+				^ false ].
+			wcRef := GoferVersionReference name: wcName.
+			(wcRef compare: fileRef using: anOperator) ifTrue: [ ^ true ] ].
+		^ false ].
+	^ false
 ]
 
 { #category : 'printing' }
@@ -149,31 +165,11 @@ MetacelloPackageSpec >> configShortCutMethodBodyOn: aStream member: aMember inde
 ]
 
 { #category : 'testing' }
-MetacelloPackageSpec >> currentPackageLoaded: loadedBlock comparing: comarisonOperator notLoaded: notLoadedBlock using: anMCLoader [
+MetacelloPackageSpec >> currentPackageLoaded: loadedBlock notLoaded: notLoadedBlock [
 	"Use currentVersionInfoFor: because it involves the loader and returns versionInfo for a planned load 
 	 (atomic loaders) or currently loaded package"
 
-	| wcName |
-	(anMCLoader ancestorsFor: self) ifNotNil: [ :vis |
-		| fileRef wcRef |
-		self getFile ifNil: [ ^ loadedBlock value: false ].
-		vis do: [ :vi |
-			wcName := vi name.
-			fileRef := GoferVersionReference name: self file.
-			fileRef versionNumber = 0 ifTrue: [ "a shame that GoferVersionReference doesn't have better method for recognizing a missing verion number" "fix for: https://github.com/dalehenrich/metacello-work/issues/185"
-				^ loadedBlock value: false ].
-			wcRef := GoferVersionReference name: wcName.
-			(wcRef compare: fileRef using: comarisonOperator) ifTrue: [ ^ loadedBlock value: true ] ].
-		^ loadedBlock value: false ].
-	^ notLoadedBlock value: true
-]
-
-{ #category : 'testing' }
-MetacelloPackageSpec >> currentPackageLoaded: loadedBlock notLoaded: notLoadedBlock using: anMCLoader [
-	"Use currentVersionInfoFor: because it involves the loader and returns versionInfo for a planned load 
-	 (atomic loaders) or currently loaded package"
-
-	(anMCLoader ancestorsFor: self) ifNotNil: [ :vis |
+	self ancestors ifNotNil: [ :vis |
 		self getFile ifNil: [ ^ loadedBlock value: #(  ) value: self file ].
 		^ loadedBlock value: vis value: self file ].
 	^ notLoadedBlock value
@@ -186,47 +182,30 @@ MetacelloPackageSpec >> currentVersionInfo [
 ]
 
 { #category : 'loading' }
-MetacelloPackageSpec >> ensureLoadUsing: mcLoader [
-	self forceLoadUsing: mcLoader ensureSpecLoader
+MetacelloPackageSpec >> ensureLoadedForDevelopmentUsing: aTarget [
+	"noop"
+
+	
 ]
 
 { #category : 'loading' }
-MetacelloPackageSpec >> ensureLoadedForDevelopmentUsing: mcLoader [
+MetacelloPackageSpec >> ensureLoadedForDevelopmentUsing: aTarget ithEngine: anEngine [
 	"noop"
+
 	
-	^true
+]
+
+{ #category : 'loading' }
+MetacelloPackageSpec >> ensureLoadedForDevelopmentUsing: aTarget withEngine: anEngine [
+	"noop"
+
+	
 ]
 
 { #category : 'private' }
 MetacelloPackageSpec >> extractNameFromFile [
 
-	file ifNil: [ ^ nil ].
-	^ (self loader nameComponentsFrom: self file) first
-]
-
-{ #category : 'loading' }
-MetacelloPackageSpec >> fetch [
-
-	self fetchUsing: self loader
-]
-
-{ #category : 'loading' }
-MetacelloPackageSpec >> fetchPackage: aLoaderPolicy [
-
-	self fetchUsing: 
-		(self loader
-			loaderPolicy: aLoaderPolicy;
-			yourself)
-]
-
-{ #category : 'loading' }
-MetacelloPackageSpec >> fetchUsing: mcLoader [
-
-	| fetchingSpecLoader |
-	fetchingSpecLoader := mcLoader fetchingSpecLoader.
-	fetchingSpecLoader
-		linearLoadPackageSpecs: (Array with: self) 
-		repositories: (fetchingSpecLoader repositoriesFrom: self repositorySpecs).
+	^ file
 ]
 
 { #category : 'querying' }
@@ -243,17 +222,9 @@ MetacelloPackageSpec >> file: aString [
 ]
 
 { #category : 'loading' }
-MetacelloPackageSpec >> forceLoadUsing: mcLoader [
+MetacelloPackageSpec >> forceLoadingWithEngine: anEngine [
 
-	| fetchingSpecLoader |
-	"force load it"
-	fetchingSpecLoader := (MetacelloLoadingMCSpecLoader on: mcLoader spec)
-		                      loaderPolicy: mcLoader loaderPolicy copy;
-		                      yourself.
-	fetchingSpecLoader
-		linearLoadPackageSpecs: (Array with: self)
-		repositories:
-		(fetchingSpecLoader repositoriesFrom: self repositorySpecs)
+	anEngine doLoadProjectSpecFrom: self
 ]
 
 { #category : 'accessing' }
@@ -334,21 +305,9 @@ MetacelloPackageSpec >> isPackageLoaded: aLoader [
 ]
 
 { #category : 'loading' }
-MetacelloPackageSpec >> load [
+MetacelloPackageSpec >> loadWithEngine: anEngine [
 
-	self forceLoadUsing: self loader
-]
-
-{ #category : 'loading' }
-MetacelloPackageSpec >> loadUsing: mcLoader [
-
-	self loader doingLoads: [ self forceLoadUsing: mcLoader ]
-]
-
-{ #category : 'loading' }
-MetacelloPackageSpec >> loadUsing: aLoader gofer: gofer [
-
-	^aLoader linearLoadPackageSpec: self gofer: gofer
+	self forceLoadingWithEngine: anEngine
 ]
 
 { #category : 'merging' }
@@ -393,7 +352,7 @@ MetacelloPackageSpec >> nonOverridable [
 { #category : 'loading' }
 MetacelloPackageSpec >> packageSpecsInLoadOrder [
 
-	^{ self. }
+	^ { self }
 ]
 
 { #category : 'copying' }
@@ -511,7 +470,7 @@ MetacelloPackageSpec >> workingCopyName [
 ]
 
 { #category : 'gofer' }
-MetacelloPackageSpec >> workingCopyNameFor: anMCLoader [
+MetacelloPackageSpec >> workingCopyNameFor: aTarget [
 
-	^ (anMCLoader currentVersionInfoFor: self) ifNotNil: [ :vi | vi name ]
+	^ self currentVersionInfo ifNotNil: [ :vi | vi name ]
 ]

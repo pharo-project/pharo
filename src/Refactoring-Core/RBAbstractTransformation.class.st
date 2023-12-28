@@ -141,7 +141,7 @@ RBAbstractTransformation >> changes [
 	^ self model changes
 ]
 
-{ #category : 'preconditions' }
+{ #category : 'scripting api - conditions' }
 RBAbstractTransformation >> checkApplicabilityPreconditions [
 
 	| conditions errorStrings |
@@ -164,7 +164,7 @@ RBAbstractTransformation >> checkMethodName: aName in: aClass [
 	^RBCondition checkMethodName: aName in: aClass
 ]
 
-{ #category : 'preconditions' }
+{ #category : 'scripting api - conditions' }
 RBAbstractTransformation >> checkPreconditions [
 
 	| conditions block |
@@ -212,13 +212,15 @@ RBAbstractTransformation >> emptyCondition [
 
 { #category : 'transforming' }
 RBAbstractTransformation >> execute [
-	"Check precondition, execute the transformation that produces changes and finally execute the changes"
+	"Check precondition, execute the transformation that produces changes and finally execute the changes. This method is part of the scripting API. It should not be called from the driver."
+	
 	self generateChanges.
 	self performChanges
 ]
 
-{ #category : 'executing' }
+{ #category : 'scripting api - executing' }
 RBAbstractTransformation >> generateChanges [
+	"Prepare, check the preconditions, and perform the actual transformation (i.e., creating a list of changes that can be accessible using the changes message). This method should not be invoked from drivers since drivers usually check in finer grained mode the preconditions - and that this stage they already checked the preconditions."
 	
 	self prepareForExecution.
 	self checkPreconditions.

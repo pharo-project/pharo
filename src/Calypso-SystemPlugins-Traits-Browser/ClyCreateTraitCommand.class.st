@@ -51,7 +51,7 @@ ClyCreateTraitCommand >> execute [
 	category := package name.
 	packageTag ifNotNil: [ category := category , '-' , packageTag ].
 	traitDefinition := ClassDefinitionPrinter fluid traitDefinitionTemplateInPackage: category.
-	traitDefinition := UIManager default
+	traitDefinition := self morphicUIManager
 		                   multiLineRequest: 'Define trait:'
 		                   initialAnswer: traitDefinition
 		                   answerHeight: 250.

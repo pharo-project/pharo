@@ -13,39 +13,16 @@ Class {
 
 { #category : 'preconditions' }
 RBUpFrontPreconditionCheckingCompositeRefactoring >> applicabilityPreconditions [
-	"basically this is checking up front all preconditions and I need a way to not rexecute them 
-	when executing the refactoring.
-	"
-
-	""
-
-	refactorings ifEmpty: [ ^ self ].
-	refactorings size = 1 ifTrue: [ ^ refactorings first applicabilityPreconditions ].
-	^ refactorings inject: RBTrueCondition new into: [ :sum :each | sum & each applicabilityPreconditions ]
+	"Return the list of the all the applicabilityPreconditions of the composite"
+	
+	^ refactorings collect: [ :each |  each applicabilityPreconditions ] 
 ]
 
 { #category : 'preconditions' }
 RBUpFrontPreconditionCheckingCompositeRefactoring >> breakingChangePreconditions [
-	"basically this is checking up front all preconditions and I need a way to not rexecute them 
-	when executing the refactoring.
-	"
-
-	"^ refactorings allSatisfy: [ :each | each applicabilityPreconditions check ] this is bad since it does not return a condition"
-
-	refactorings ifEmpty: [ ^ self ].
-	refactorings size = 1 ifTrue: [ ^ refactorings first breakingChangePreconditions ].
-	^ refactorings allButFirst 
-		inject: refactorings first breakingChangePreconditions 
-		into: [ :sum :each | sum & each applicabilityPreconditions ]
-]
-
-{ #category : 'preconditions' }
-RBUpFrontPreconditionCheckingCompositeRefactoring >> checkApplicabilityPreconditions [
-
-	| pre |
-	pre := self applicabilityPreconditions.
-	pre check ifFalse: [
-		RBRefactoringError signal: pre errorString ].
+	"Return the list of the all the breakingChangePreconditions of the composite"
+	
+	^ refactorings collect: [ :each | each breakingChangePreconditions ]
 ]
 
 { #category : 'accessing' }

@@ -13,8 +13,7 @@ RBRenameInstanceVariableDriverTest >> testInvalidNameFollowedByAValidName [
 	driver := RBRenameInstanceVariableDriver new
 		          scopes: { rbclasses }
 		          variable: #unusedVar1
-		          for: MyClassARoot
-		          newName: #unusedVar2.
+		          for: MyClassARoot.
 	"There is already a variable named `unusedVar2` in the class `MyClassRoot`"
 
 	self setUpDriver: driver.
@@ -25,7 +24,7 @@ RBRenameInstanceVariableDriverTest >> testInvalidNameFollowedByAValidName [
 	requestDialog on: #title: respond: 'nothing'.
 	requestDialog on: #text: respond: 'nothing'.
 	driver requestDialog: requestDialog.
-	driver informDialog: StInformDialogMock new.
+	
 	"it like a smoke test and for the moment we cannot control better what happen."
 	driver runRefactoring
 ]
@@ -41,21 +40,20 @@ RBRenameInstanceVariableDriverTest >> testValidNameAndUndefinedVariable [
 	driver := RBRenameInstanceVariableDriver new
 		          scopes: { rbclasses }
 		          variable: #inexistantVariable
-		          for: MyClassARoot
-		          newName: #inexistantVariable1.
+		          for: MyClassARoot.
+		
 	"Variable `inexistantVariable` is not defined in `MyClassARoot`"
 	self setUpDriver: driver.
 
 	requestDialog := MockObject new.
-	requestDialog on: #openModal respond: #unusedVar1a.
+	requestDialog on: #openModal respond: #inexistantVariable1.
 	requestDialog on: #title: respond: 'nothing'.
 	requestDialog on: #text: respond: 'nothing'.
 	driver requestDialog: requestDialog.
-	driver informDialog: StInformDialogMock new.
-	
 
-	"I do not get why and how we can get a refactoring error?"
-	self should: [ driver runRefactoring ] raise: RBRefactoringError
+	"self halt."
+	"It loops from here."
+ 	driver runRefactoring 
 ]
 
 { #category : 'tests' }
@@ -66,8 +64,7 @@ RBRenameInstanceVariableDriverTest >> testValidNameAndUnusedVariable [
 	driver := RBRenameInstanceVariableDriver new
 		          scopes: { rbclasses }
 		          variable: #unusedVar1
-		          for: MyClassARoot
-		          newName: #unusedVar1a.
+		          for: MyClassARoot.
 	self setUpDriver: driver.
 	
 
@@ -76,7 +73,6 @@ RBRenameInstanceVariableDriverTest >> testValidNameAndUnusedVariable [
 	requestDialog on: #title: respond: 'nothing'.
 	requestDialog on: #text: respond: 'nothing'.
 	driver requestDialog: requestDialog.
-	driver informDialog: StInformDialogMock new.
 
 	driver runRefactoring.
 	self assert: driver refactoring changes changes size equals: 1
@@ -90,8 +86,7 @@ RBRenameInstanceVariableDriverTest >> testValidNameAndUsedVariable [
 	driver := RBRenameInstanceVariableDriver new
 		          scopes: { rbclasses }
 		          variable: #instVarName1
-		          for: MyClassARoot
-		          newName: #instVarName1a.
+		          for: MyClassARoot.
 	self setUpDriver: driver.
 
 	requestDialog := MockObject new.
@@ -99,12 +94,7 @@ RBRenameInstanceVariableDriverTest >> testValidNameAndUsedVariable [
 	requestDialog on: #title: respond: 'nothing'.
 	requestDialog on: #text: respond: 'nothing'.
 	driver requestDialog: requestDialog.
-	driver informDialog: StInformDialogMock new.
-
-
-
-
-
+	
 	driver runRefactoring.
 	"Renaming the references to the variable is not encapsulated in change objects, therefore the only change is the renaming of the variable itself."
 

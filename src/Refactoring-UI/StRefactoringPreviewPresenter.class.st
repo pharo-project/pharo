@@ -52,7 +52,6 @@ StRefactoringPreviewPresenter class >> title [
 StRefactoringPreviewPresenter >> accept [
 	
 	(self okToChange not or: [ selectedChanges isEmptyOrNil ]) ifTrue: [
-		"UIManager default inform: 'No changes to apply.'."
 		self application newInform 
 				title: 'No changes to apply.';
 				acceptLabel: 'Close this!';
@@ -200,7 +199,6 @@ StRefactoringPreviewPresenter >> initializeWindow: aWindowPresenter [
 
 { #category : 'action' }
 StRefactoringPreviewPresenter >> performChanges [ 
-	
 	"the following behavior should not be kept in the UI. 
 	It should be moved to the driver or the refactoring itself because the driver is a model of interaction.
 	May be this should be in the refactoring."

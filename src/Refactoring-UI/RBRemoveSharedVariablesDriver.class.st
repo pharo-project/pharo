@@ -74,7 +74,8 @@ RBRemoveSharedVariablesDriver >> runRefactoring [
 
 	self configureRefactoring.
 	
-	refactoring checkApplicabilityPreconditions.
+	refactoring failedApplicabilityPreconditions 
+		ifNotEmpty: [ ^ self inform: 'The shared variable does not exist' ].
 	
 	refactoring breakingChangePreconditions check
 		ifTrue: [ self applyChanges ]

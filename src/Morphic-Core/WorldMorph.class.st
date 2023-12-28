@@ -225,7 +225,7 @@ WorldMorph >> becomeActiveDuring: aBlock [
 { #category : 'meta-actions' }
 WorldMorph >> buildMetaMenu: evt [
 	| menu |
-	menu := UIManager default newMenuIn: self for: self.
+	menu := self morphicUIManager newMenuIn: self for: self.
 	self addStandardHaloMenuItemsTo: menu hand: evt hand.
 	^ menu
 ]

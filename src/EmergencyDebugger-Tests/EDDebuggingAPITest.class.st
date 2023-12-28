@@ -12,7 +12,7 @@ EDDebuggingAPITest >> forbiddenProcesses [
 	[ Smalltalk lowSpaceWatcherProcess ].
 	[ FinalizationProcess runningFinalizationProcess ].
 	[ Processor backgroundProcess ].
-	[ UIManager default uiProcess ].
+	[ MorphicUIManager uiProcess ].
 	[ Delay schedulingProcess ]}
 ]
 

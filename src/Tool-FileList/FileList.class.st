@@ -306,7 +306,7 @@ FileList >> addNew: aString byEvaluating: aBlock [
 
 	| response newName index |
 	self okToChange ifFalse: [^ self].
-	(response := UIManager default
+	(response := self morphicUIManager
 						request: ('New {1} Name?' translated format: {aString translated})
 						initialAnswer: ('{1}Name' translated format: {aString translated}))
 		isEmptyOrNil ifTrue: [^ self].
@@ -409,7 +409,7 @@ FileList >> confirmOverwriteOrCreateNewFileOrAbort [
 	chooseList := {'overwrite that file' translated.
 	               'choose another name' translated .
 	               'cancel' translated. }.
-	choice := UIManager default
+	choice := self morphicUIManager
 		chooseFrom: chooseList
 		title: 'Save contents' translated.
 	^ choice
@@ -935,6 +935,12 @@ FileList >> morphicPatternPane [
 		yourself
 ]
 
+{ #category : 'file menu action' }
+FileList >> morphicUIManager [
+
+	^ MorphicUIManager new
+]
+
 { #category : 'morphic ui' }
 FileList >> morphicView [
 
@@ -1227,7 +1233,7 @@ FileList >> renameFile [
 	| newName response |
 	listIndex = 0 ifTrue: [^ self].
 	self okToChange ifFalse: [^ self].
-	(response := UIManager default request: 'NewFileName?' translated
+	(response := self morphicUIManager request: 'NewFileName?' translated
  					initialAnswer: reference basename)
 		isEmptyOrNil ifTrue: [^ self].
 	newName := response asFileName.
@@ -1244,7 +1250,7 @@ FileList >> renameFile [
 { #category : 'private' }
 FileList >> requestNewFileNameAndSave [
 	| newName |
-	newName := UIManager default request: 'Enter a new file name' initialAnswer: reference fullName.
+	newName := self morphicUIManager request: 'Enter a new file name' initialAnswer: reference fullName.
 	newName ifNil: [ ^ self].
 	reference := newName asFileReference.
 	(reference asFileReference exists) ifTrue:[ ^ self updateFileContents ].
@@ -1642,7 +1648,7 @@ FileList >> viewContents [
 
 	| aString |
 	aString := self reference readStreamDo: [ :stream | stream upToEnd ].
-	UIManager default
+	self morphicUIManager
 		edit: aString
 		label: 'Contents from ' , self reference basename
 ]

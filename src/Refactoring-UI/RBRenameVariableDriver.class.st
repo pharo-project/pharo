@@ -6,7 +6,6 @@ Class {
 	#superclass : 'RBInteractionDriver',
 	#instVars : [
 		'oldName',
-		'newName',
 		'class',
 		'shouldEscape',
 		'previouslyProposedName'
@@ -19,9 +18,7 @@ Class {
 { #category : 'execution' }
 RBRenameVariableDriver >> changes [
 
-	refactoring changes changes isEmpty ifTrue: [
-		refactoring privateTransform ].
-	^ refactoring changes
+	^ refactoring privateTransform; changes
 ]
 
 { #category : 'execution' }
@@ -44,7 +41,7 @@ RBRenameVariableDriver >> informError: cond [
 { #category : 'private' }
 RBRenameVariableDriver >> prepareRefactoringInteractively [
 
-	| failedConditions |
+	| failedConditions newName |
 	[
 	newName := self requestNewNameBasedOn: previouslyProposedName.
 	shouldEscape ifTrue: [ ^ self ].
@@ -64,6 +61,7 @@ RBRenameVariableDriver >> refactoringClass [
 { #category : 'private' }
 RBRenameVariableDriver >> requestNewNameBasedOn: aName [
 
+	| newName |
 	newName := self requestDialog
 		           title: 'Please provide a new variable name';
 		           text: aName;
@@ -99,11 +97,4 @@ RBRenameVariableDriver >> scopes: aCollection variable: aString for: aClass [
 	oldName := aString.
 	previouslyProposedName := aString.
 	class := aClass
-]
-
-{ #category : 'initialization' }
-RBRenameVariableDriver >> scopes: aCollection variable: aString for: aClass newName: aString2 [ 
-	"The driver is initialized in script mode (i.e. we won't ask for the newName to the user while running the refactoring"
-	self scopes: aCollection variable: aString for: aClass.
-	newName := aString2
 ]

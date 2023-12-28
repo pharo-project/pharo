@@ -33,7 +33,8 @@ RBRemoveInstanceVariableRefactoring class >> remove: variable from: class [
 { #category : 'preconditions' }
 RBRemoveInstanceVariableRefactoring >> applicabilityPreconditions [
 	"we store it because the violators are computed during check so we should not recreate it each time."
- 	^ applicabilityPreconditions ifNil: [ RBCondition directlyDefinesInstanceVariable: variableName asString in: class ]
+	
+ 	^ applicabilityPreconditions ifNil: [ applicabilityPreconditions := (RBDirectlyDefinesInstanceVariableCondition classNamed: class name inModel: self model instanceVariables: { variableName }) ]
 ]
 
 { #category : 'preconditions' }
@@ -47,6 +48,7 @@ RBRemoveInstanceVariableRefactoring >> breakingChangePreconditions [
 
 { #category : 'executing' }
 RBRemoveInstanceVariableRefactoring >> generateChanges [
+	"Prepare, check the preconditions, and perform the actual transformation (i.e., creating a list of changes that can be accessible using the changes message). This method should not be invoked from drivers since drivers usually check in finer grained mode the preconditions - and that this stage they already checked the preconditions."
 	
 	self prepareForExecution.
 
@@ -58,6 +60,8 @@ RBRemoveInstanceVariableRefactoring >> generateChanges [
 			self breakingChangePreconditions errorString ].
 
 	self privateTransform.
+	self flag: #todo.
+	"the method comment does not indicte this. May be we can add self changes but to all the generateChanges methods. Be consistent. "
 	^ self changes
 ]
 

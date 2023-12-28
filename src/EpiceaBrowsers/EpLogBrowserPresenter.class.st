@@ -108,15 +108,7 @@ EpLogBrowserPresenter >> addMenuItemsForSelectedItemsIn: aMenu [
 			anItem
 				name: 'Filters';
 				icon: (self iconNamed: #smallFind);
-				subMenu: self filtersSubMenu ] ].
-
-	aMenu addGroup: [ :aGroup |
-		aGroup addItem: [ :anItem |
-			anItem
-				name: 'Write Ombu file';
-				description: 'Write selected entries to an Ombu file';
-				icon: (self iconNamed: #smallSaveAs);
-				action: [ self ombuFileSaveSelection ] ] ]
+				subMenu: self filtersSubMenu ] ]
 ]
 
 { #category : 'menu - operations' }
@@ -261,28 +253,6 @@ EpLogBrowserPresenter >> codeChangesMenuActions [
 	}
 ]
 
-{ #category : 'menu - operations' }
-EpLogBrowserPresenter >> commentSelection [
-
-	| items newCommentOrNil oldComment entryReferences |
-	items := self selectedEntryItems.
-	entryReferences := items collect: [:each | each reference].
-	oldComment := items anyOne oldComment.
-
-	newCommentOrNil := UIManager default
-		multiLineRequest: 'Enter a comment for the selection'
-		initialAnswer: oldComment
-		answerHeight: 250.
-
-	newCommentOrNil ifNil: [ ^ self ].
-
-	self logOffEvent:
-		(EpLogEntriesComment
-			entryReferences: entryReferences
-			oldComment: oldComment
-			newComment: newCommentOrNil)
-]
-
 { #category : 'accessing' }
 EpLogBrowserPresenter >> commentsLog [
 
@@ -312,18 +282,6 @@ EpLogBrowserPresenter >> entryItems [
 
 	^ log entryReferences collect: [:each |
 		self itemForEntryReference: each ]
-]
-
-{ #category : 'menu' }
-EpLogBrowserPresenter >> eventsMenuActions [
-
-	^ {
-		{ 'Comment'.
-		#commentSelection.
-		'Edit comment of selected entries'.
-		#announcementIcon.
-		$c command }.
-	}
 ]
 
 { #category : 'menu - operations' }
@@ -656,9 +614,9 @@ EpLogBrowserPresenter >> menuActionsForSelectedItems [
 		| event |
 		event := (self itemForEntryReference: selectedReferences anyOne) event.
 		(event isEpRefactoring and: [ event canBuildRBRefactoring ])
-			ifTrue: [ ^ self refactoringMenuActions, self eventsMenuActions ]].
+			ifTrue: [ ^ self refactoringMenuActions ]].
 
-	^ self codeChangesMenuActions, self eventsMenuActions
+	^ self codeChangesMenuActions
 ]
 
 { #category : 'menu' }
@@ -699,15 +657,6 @@ EpLogBrowserPresenter >> newItemForEntryReference: entryReference [
 		entry: entry;
 		triggerItems: triggers;
 		yourself
-]
-
-{ #category : 'menu - operations' }
-EpLogBrowserPresenter >> ombuFileSaveSelection [
-
-	| entries |
-	entries := self selectedEntryItems collect: [ :each | each entry ].
-
-	EpOmbuExporter askFileNameAndFileOut: entries in: FileLocator workingDirectory
 ]
 
 { #category : 'menu - operations' }

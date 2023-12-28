@@ -89,19 +89,21 @@ RBPushDownMethodRefactoring >> classes: aCollection [
 
 { #category : 'executing' }
 RBPushDownMethodRefactoring >> generateChanges [
-
+	"Prepare, check the preconditions, and perform the actual transformation (i.e., creating a list of changes that can be accessible using the changes message). This method should not be invoked from drivers since drivers usually check in finer grained mode the preconditions - and that this stage they already checked the preconditions."
+	
 	self prepareForExecution.
 
 	self applicabilityPreconditions check ifFalse: [
 		RBApplicabilityChecksFailedError signal:
 			self applicabilityPreconditions errorString ].
-
 	self breakingChangePreconditions check ifFalse: [
 		RBBreakingChangeChecksFailedWarning signal:
 			self breakingChangePreconditions errorString ].
 
 	self privateTransform.
-
+	self flag: #todo.
+	"check because the superclass does not involve self changes."
+	
 	^ self changes
 ]
 

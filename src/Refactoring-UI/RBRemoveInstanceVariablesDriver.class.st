@@ -34,7 +34,8 @@ RBRemoveInstanceVariablesDriver >> browseInstanceVariableReferences [
 
 { #category : 'execution' }
 RBRemoveInstanceVariablesDriver >> changes [
-
+	"We only perform the changes."
+	
 	^ refactoring privateTransform; changes
 ]
 
@@ -73,9 +74,12 @@ RBRemoveInstanceVariablesDriver >> runRefactoring [
 
 	self configureRefactoring.
 	
-	refactoring checkApplicabilityPreconditions.
+	"Normally from the IDE we should not get bogus variables."
+	"we could call the violatorMessages here to let the applicability preconditions do the job."
+	refactoring failedApplicabilityPreconditions 
+		ifNotEmpty: [ ^ self inform: 'The variable ', refactoring variable,  ' does not exist' ].
 	
-	refactoring breakingChangePreconditions check
+	(refactoring breakingChangePreconditions allSatisfy: [:each | each check])
 		ifTrue: [ self applyChanges ]
 		ifFalse: [ self handleBreakingChanges ]
 

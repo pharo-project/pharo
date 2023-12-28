@@ -166,7 +166,8 @@ ReAbstractCritique >> isCritique [
 
 { #category : 'actions' }
 ReAbstractCritique >> popDescriptionUp [
-	UIManager default longMessage: self description title: self title
+
+	MorphicUIManager new longMessage: self description title: self title
 ]
 
 { #category : 'printing' }

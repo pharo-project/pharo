@@ -170,26 +170,18 @@ MetacelloVersionConstructor >> on: aConfig [
 
 	| cacheKey |
 	cacheKey := aConfig class.
-	project := MetacelloPlatform current stackCacheFor: #versionConstructor at: cacheKey doing: [ :cache |
-		           super on: aConfig.
-		           cache at: cacheKey put: self project ].
+	super on: aConfig.
+	project := self project.
 	self setProject: project
 ]
 
 { #category : 'initialization' }
 MetacelloVersionConstructor >> on: aConfig project: aProject [
 
-	| cacheKey cachedProject |
-	cacheKey := aConfig class.
-	cachedProject := MetacelloPlatform current stackCacheFor: #versionConstructor at: cacheKey doing: [ :cache |
-		                 super on: aConfig project: aProject.
-		                 cache at: cacheKey put: self project.
-		                 ^ self ].
-	aProject map: cachedProject map.
-	aProject errorMap: cachedProject errorMap.
-	aProject symbolicVersionMap: cachedProject symbolicVersionMap.
-	aProject configuration: aConfig.
-	self setProject: aProject
+	super on: aConfig project: aProject.
+	
+	"The project is created on access..."
+	self project
 ]
 
 { #category : 'private' }

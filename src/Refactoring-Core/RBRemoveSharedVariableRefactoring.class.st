@@ -49,7 +49,8 @@ RBRemoveSharedVariableRefactoring >> breakingChangePreconditions [
 
 { #category : 'executing' }
 RBRemoveSharedVariableRefactoring >> generateChanges [
-
+	"Prepare, check the preconditions, and perform the actual transformation (i.e., creating a list of changes that can be accessible using the changes message). This method should not be invoked from drivers since drivers usually check in finer grained mode the preconditions - and that this stage they already checked the preconditions."
+	
 	self prepareForExecution.
 
 	self applicabilityPreconditions check ifFalse: [
@@ -60,6 +61,8 @@ RBRemoveSharedVariableRefactoring >> generateChanges [
 			self breakingChangePreconditions errorString ].
 
 	self privateTransform.
+	self flag: #todo. 
+	"Check other methods generateChanges"
 	^ self changes
 ]
 
