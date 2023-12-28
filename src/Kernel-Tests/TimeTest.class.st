@@ -214,21 +214,33 @@ TimeTest >> testMeridianAbbreviation [
 	self assert: aTime meridianAbbreviation equals: 'PM'
 ]
 
-{ #category : 'tests' }
+{ #category : 'tests - deprecated' }
 TimeTest >> testMinute [
 	self assert: aTime minute equals: 34.
 	self assert: aTime minutes equals: 34
 ]
 
 { #category : 'tests' }
+TimeTest >> testMinutes [
+	self assert: aTime minutes equals: 34.
+
+]
+
+{ #category : 'tests - deprecated' }
 TimeTest >> testNanoSecond [
 	self assert: aTime nanoSecond equals: 0
 	"Right now all times all seconds"
 ]
 
 { #category : 'tests' }
-TimeTest >> testNew [
-	self assert: self timeClass new asSeconds equals: 0
+TimeTest >> testNanoSeconds [
+	self assert: aTime nanoSeconds equals: 0
+	"Right now all times all seconds"
+]
+
+{ #category : 'tests' }
+TimeTest >> testNewSeconds [
+	self assert: self timeClass new seconds equals: 0
 ]
 
 { #category : 'tests - printing' }
@@ -314,14 +326,14 @@ TimeTest >> testReadFromWithNanos [
 ]
 
 { #category : 'tests' }
-TimeTest >> testSecond [
+TimeTest >> testSeconds [
 	self assert: aTime second equals: 56.
 	self assert: aTime seconds equals: 56
 ]
 
 { #category : 'tests' }
-TimeTest >> testSeconds [
-	self assert: (Time readFrom: '20:33:14.321-05:00' readStream) asDuration seconds equals: 14
+TimeTest >> testSecondsFromReadFrom [
+	self assert: (Time readFrom: '20:33:14.321-05:00' readStream) seconds equals: 14
 ]
 
 { #category : 'tests' }
@@ -350,13 +362,23 @@ TimeTest >> testTicks [
 { #category : 'tests' }
 TimeTest >> testValidationSeconds [
 	| day |
-	day := 24*60*60.
-	self should: [ Time seconds: day] raise: TimeError.
-	self should: [ Time seconds: -1] raise: TimeError.
-	self should: [ Time seconds: day nanoSeconds: 0] raise: TimeError.
-	self should: [ Time seconds: -1 nanoSeconds: 0] raise: TimeError.
-	self should: [ Time new seconds: day nanoSeconds: 0] raise: TimeError.
-	self should: [ Time new seconds: -1 nanoSeconds: 0] raise: TimeError
+	day := 24 * 60 * 60.
+	self should: [ Time seconds: day ] raise: TimeError.
+	self shouldnt: [ Time seconds: day - 1 ] raise: TimeError.
+	
+	self should: [ Time seconds: day nanoSeconds: 0 ] raise: TimeError.
+	self shouldnt: [ Time seconds: day - 1 nanoSeconds: 0 ] raise: TimeError.
+	
+	self should: [ Time new seconds: day nanoSeconds: 0 ] raise: TimeError.
+	self shouldnt: [ Time seconds: day - 1 nanoSeconds: 0 ] raise: TimeError.
+]
+
+{ #category : 'tests' }
+TimeTest >> testValidationSecondsNegativeTime [
+	
+	self should: [ Time seconds: -1 ] raise: TimeError.
+	self should: [ Time seconds: -1 nanoSeconds: 0 ] raise: TimeError.
+	self should: [ Time new seconds: -1 nanoSeconds: 0 ] raise: TimeError
 ]
 
 { #category : 'tests' }

@@ -1,7 +1,30 @@
 "
-This represents a particular point in time during any given day.  For example, '5:19:45 pm'.
+I represent a particular point in time during any given day, e.g. '5:19:45 pm'.
+My instances can be compared together < and other operators.
 
-If you need a point in time on a particular day, use DateAndTime.  If you need a duration of time, use Duration.
+Some interesting class methods are:
+
+- `Time now` which returns the local time. 
+- `Time nowUTC` which returns the time without taking into account timezones.
+
+Time instance can handle nanoseconds precision (See the implementation section below).
+
+Here are some unsurprising messages to access time parts.
+
+- `Time now seconds` returns the seconds of the current time.
+- `Time now minutes` returns the minutes of the current time.
+- `Time now hours` returns the hours of the current time.
+
+If you need a point in time on a particular day, use `DateAndTime`.
+
+### Implementation
+
+As shown in `Time class >> #nowUTC` instances of my classes are represented using seconds and nano seconds.
+It means in particular that they can represent information with nano second precision. Imagine that you have a device that generate nano precise information, my instance can adequately manage it.  
+
+Now as of December 2023, the primitive used to provide the time from the OS, has a microsecond precision and not a nanoseconds precision.
+It means that you can ask a time instance for nano seconds but it will have a precision of microseconds (e.g. you will get microseconds * by 1000).
+
 
 "
 Class {
@@ -293,7 +316,9 @@ Time >> hhmm24 [
 
 { #category : 'accessing' }
 Time >> hour [
-
+	"Answer a number that represents the number of complete hours in the receiver,
+	after the number of complete days has been removed."
+	
 	^ self hour24
 ]
 
@@ -346,12 +371,24 @@ Time >> minute [
 
 { #category : 'accessing' }
 Time >> minutes [
+	"Answer a number that represents the number of complete minutes in the receiver,
+	after the number of complete hours has been removed."
+	
+	^ (seconds rem: SecondsInHour) quo: SecondsInMinute
+]
 
-	^ self asDuration minutes
+{ #category : 'deprecated' }
+Time >> nanoSecond [
+	"Answer a number that represents the number of complete nano seconds in the receiver,
+	after the number of complete micro seconds has been removed."
+	
+	^ nanos
 ]
 
 { #category : 'accessing' }
-Time >> nanoSecond [
+Time >> nanoSeconds [
+	"Answer a number that represents the number of complete nano seconds in the receiver,
+	after the number of complete micro seconds has been removed."
 
 	^ nanos
 ]
@@ -437,7 +474,7 @@ Time >> printOn: aStream [
 		on: aStream
 ]
 
-{ #category : 'accessing' }
+{ #category : 'deprecated' }
 Time >> second [
 	"Answer a number that represents the number of complete seconds in the receiver,
 	after the number of complete minutes has been removed."
@@ -447,6 +484,8 @@ Time >> second [
 
 { #category : 'accessing' }
 Time >> seconds [
+	"Answer a number that represents the number of complete seconds in the receiver,
+	after the number of complete minutes has been removed."
 
 	^ self second
 ]
