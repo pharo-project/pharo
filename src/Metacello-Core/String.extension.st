@@ -50,18 +50,6 @@ String >> execute: projectSpecBlock against: aScriptExecutor [
 ]
 
 { #category : '*Metacello-Core' }
-String >> fetchRequiredForMetacelloMCVersion: aMetacelloMCVersion [
-
-	^aMetacelloMCVersion doFetchRequiredFromArray: (Array with: self).
-]
-
-{ #category : '*Metacello-Core' }
-String >> loadRequiredForMetacelloMCVersion: aMetacelloMCVersion [
-
-	^aMetacelloMCVersion doLoadRequiredFromArray: (Array with: self).
-]
-
-{ #category : '*Metacello-Core' }
 String >> mergeIntoMetacelloPackages: aMetacelloPackagesSpec [
 
 	| spec |
@@ -133,12 +121,6 @@ String >> packageFileSpecFor: aMetacelloPackagesSpec [
 	^(aMetacelloPackagesSpec project packageSpec)
 			file: self;
 			yourself
-]
-
-{ #category : '*Metacello-Core' }
-String >> recordRequiredForMetacelloMCVersion: aMetacelloMCVersion [
-
-	^aMetacelloMCVersion doRecordRequiredFromArray: (Array with: self).
 ]
 
 { #category : '*Metacello-Core' }

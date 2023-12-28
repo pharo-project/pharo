@@ -197,34 +197,42 @@ CPUWatcher >> monitorProcessPeriod: secs sampleRate: msecs [
 
 { #category : 'porcine capture' }
 CPUWatcher >> openMorphicWindowForSuspendedProcess: aProcess [
+
 	| menu rules |
-	menu := UIManager default newMenuIn: self for: self.
+	menu := MorphicUIManager new newMenuIn: self for: self.
 	"nickname  allow-stop  allow-debug"
-	rules := self  processBrowser nameAndRulesFor: aProcess.
-	menu add: 'Dismiss this menu'
-		target: menu
-		selector: #delete;
+	rules := self processBrowser nameAndRulesFor: aProcess.
+	menu
+		add: 'Dismiss this menu' target: menu selector: #delete;
 		addLine.
-	menu add: 'Open Process Browser'
+	menu
+		add: 'Open Process Browser'
 		target: self processBrowser
 		selector: #open.
-	menu add: 'Resume'
+	menu
+		add: 'Resume'
 		target: self
 		selector: #resumeProcess:fromMenu:
-		argumentList: { aProcess . menu }.
-	menu add: 'Terminate'
+		argumentList: {
+				aProcess.
+				menu }.
+	menu
+		add: 'Terminate'
 		target: self
 		selector: #terminateProcess:fromMenu:
-		argumentList: { aProcess . menu }.
+		argumentList: {
+				aProcess.
+				menu }.
 	rules third ifTrue: [
-		menu add: 'Debug at a lower priority'
+		menu
+			add: 'Debug at a lower priority'
 			target: self
 			selector: #debugProcess:fromMenu:
-			argumentList: { aProcess . menu }.
-	].
-	menu addTitle: aProcess identityHash asString,
-		' ', rules first,
-		' is taking too much time and has been suspended.
+			argumentList: {
+					aProcess.
+					menu } ].
+	menu addTitle: aProcess identityHash asString , ' ' , rules first
+		, ' is taking too much time and has been suspended.
 What do you want to do with it?'.
 	menu stayUp: true.
 	menu popUpInWorld
@@ -233,7 +241,8 @@ What do you want to do with it?'.
 { #category : 'porcine capture' }
 CPUWatcher >> openWindowForSuspendedProcess: aProcess [
 
-	 UIManager default defer: [ self openMorphicWindowForSuspendedProcess: aProcess ]
+	MorphicUIManager new defer: [
+		self openMorphicWindowForSuspendedProcess: aProcess ]
 ]
 
 { #category : 'accessing' }

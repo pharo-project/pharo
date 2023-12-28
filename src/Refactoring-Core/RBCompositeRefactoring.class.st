@@ -15,17 +15,18 @@ Class {
 
 { #category : 'preconditions' }
 RBCompositeRefactoring >> applicabilityPreconditions [
-
-	^ RBCondition true 
+	"Return the list of the all the applicabilityPreconditions of the composite"
+	^ #()
 ]
 
 { #category : 'preconditions' }
 RBCompositeRefactoring >> breakingChangePreconditions [ 
-
-	^ RBCondition true 
+		"Return the list of the all the breakingChangePreconditions of the composite"
+		
+	^ #()
 ]
 
-{ #category : 'executing' }
+{ #category : 'scripting api - executing' }
 RBCompositeRefactoring >> generateChanges [
 	
 	self prepareForExecution.
@@ -40,8 +41,9 @@ RBCompositeRefactoring >> generateChanges [
 
 { #category : 'preconditions' }
 RBCompositeRefactoring >> preconditions [
-
-	^ self applicabilityPreconditions & self breakingChangePreconditions 
+	"Return the list of all the preconditions."
+	
+	^ self applicabilityPreconditions addAll: self breakingChangePreconditions ; yourself
 ]
 
 { #category : 'preparation' }

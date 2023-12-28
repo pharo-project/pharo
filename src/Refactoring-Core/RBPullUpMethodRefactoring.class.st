@@ -250,7 +250,10 @@ RBPullUpMethodRefactoring >> copyDownMethods [
 
 { #category : 'actions' }
 RBPullUpMethodRefactoring >> generateChanges [
-
+	
+	self flag: #todo.
+	"Revisit this in the context of the comments of RBAbstractTransformation>>generateChanges. 
+	It looks like the self changes should not be invoked here! "
 	super generateChanges.
 
 	^ self changes

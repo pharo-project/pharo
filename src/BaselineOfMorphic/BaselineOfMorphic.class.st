@@ -303,7 +303,10 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 	Display newDepth: 32.
 
 	UIManager default: MorphicUIManager new.
-	UIManager default uiProcess resume.
+	MorphicUIManager uiProcess resume.
+	
+	ErrorHandler defaultErrorHandler: UIManager default.
+	
 	PharoLightTheme beCurrent.
 	ScalingCanvas initialize.
 	self cleanUpAfterMorphicInitialization.
@@ -312,11 +315,11 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 
 	"Install the right UIManager"
 	UIManager default: UIManager forCurrentSystemConfiguration.
+	ErrorHandler defaultErrorHandler: UIManager default.
 	Stdio stdout
 		nextPutAll: 'UIManager changed:';
 		nextPutAll: UIManager default class name;
 		lf.
-
 
 	MenubarMorph initialize.
 
@@ -342,10 +345,8 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 
 	Author reset.
 	MCMethodDefinition initializersEnabled: initializersEnabled.
-
-	UIManager default restoreDisplay.
-
-	Initialized := true
+	
+	Initialized := true.
 ]
 
 { #category : 'actions' }

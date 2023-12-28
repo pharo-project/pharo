@@ -39,7 +39,7 @@ ClyCreateTestCaseCommand >> execute [
 	p := package name.
 	packageTag ifNotNil: [ p := p , '-' , packageTag ].
 	classDefinition := ClassDefinitionPrinter fluid testClassDefinitionTemplateInPackage: p.
-	classDefinition := UIManager default
+	classDefinition := self morphicUIManager
 		                   multiLineRequest: 'Define test class:'
 		                   initialAnswer: classDefinition
 		                   answerHeight: 250.

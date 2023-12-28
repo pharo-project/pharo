@@ -920,7 +920,7 @@ MailMessage >> viewBody [
 	"open a viewer on the body of this message"
 	self containsViewableImage
 		ifTrue: [^ self viewImageInBody].
-	UIManager default
+	MorphicUIManager new
 		longMessage: self bodyTextFormatted
 		title: (self name ifNil: ['(a message part)'])
 ]

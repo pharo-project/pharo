@@ -9,5 +9,6 @@ Class {
 RBDriverTest >> setUpDriver: driver [
 
 	driver previewPresenterClass: StRefactoringPreviewPresenterMock.
-	driver selectDialog: StSelectDialogMock new
+	driver selectDialog: StSelectDialogMock new.
+	driver informDialog: StInformDialogMock new.
 ]

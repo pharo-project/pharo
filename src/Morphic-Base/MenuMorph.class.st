@@ -347,9 +347,9 @@ MenuMorph >> addIfNeededTitle: aTitle andIcon: anIcon [
 MenuMorph >> addItem [
 
 	| string sel |
-	string := UIManager default request: 'Label for new item?'.
+	string := self morphicUIManager request: 'Label for new item?'.
 	string isEmpty ifTrue: [^ self].
-	sel := UIManager default request: 'Selector?'.
+	sel := self morphicUIManager request: 'Selector?'.
 	sel isEmpty ifFalse: [sel := sel asSymbol].
 	self add: string selector: sel
 ]
@@ -403,7 +403,7 @@ MenuMorph >> addSeparator [
 MenuMorph >> addTitle [
 
 	| string |
-	string := UIManager default request: 'Title for this menu?'.
+	string := self morphicUIManager request: 'Title for this menu?'.
 	string isEmptyOrNil ifTrue: [^ self].
 	self addTitle: string
 ]
@@ -672,7 +672,7 @@ MenuMorph >> detachSubMenu: evt [
 	possibleTargets := self items select:[ :any | any hasSubMenu].
 	possibleTargets isEmpty ifTrue: [ ^self ].
 
-	index := UIManager default
+	index := self morphicUIManager
 			chooseFrom: (possibleTargets collect:[:t| t contents asString])
 			title: 'Which menu?' translated.
 	index = 0 ifTrue:[^self].

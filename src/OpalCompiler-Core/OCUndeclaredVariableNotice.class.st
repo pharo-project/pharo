@@ -11,9 +11,3 @@ OCUndeclaredVariableNotice >> isUndeclaredNotice [
 
 	^ true
 ]
-
-{ #category : 'correcting' }
-OCUndeclaredVariableNotice >> reparator [
-
-	^ OCCodeReparator new node: self node
-]

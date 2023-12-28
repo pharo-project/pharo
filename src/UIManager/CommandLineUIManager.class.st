@@ -193,7 +193,39 @@ CommandLineUIManager >> handleDebugRequest: aDebugRequest fromDebuggerSystem: an
 { #category : 'error handling' }
 CommandLineUIManager >> handleError: anError log: shouldLog [
 
-	shouldLog ifTrue: [ self logError: anError ]
+	self
+		quitFrom: anError signalerContext
+		withMessage: anError description
+]
+
+{ #category : 'error handling' }
+CommandLineUIManager >> handleNotification: aNotification [
+
+	Smalltalk logStdOutDuring: [:logger |
+		logger nextPutAll: aNotification class name;
+				 nextPutAll: ': ';
+				 nextPutAll: aNotification messageText;
+				 cr ].
+
+	aNotification resume
+]
+
+{ #category : 'error handling' }
+CommandLineUIManager >> handleWarning: aWarning [
+	| logBlock |
+	"Pass all warnings, but log them"
+
+	logBlock := [:logger |
+		logger
+			cr;
+			nextPutAll: '*** Warning: ';
+			nextPutAll: aWarning description;
+			cr ].
+
+	Smalltalk logDuring: logBlock.
+	self logYellowDuring: logBlock.
+
+	aWarning resume
 ]
 
 { #category : 'handle debug requests' }
@@ -283,11 +315,6 @@ CommandLineUIManager >> logYellowDuring: aBlock [
 	^ self logColored: '33' during: aBlock
 ]
 
-{ #category : 'display' }
-CommandLineUIManager >> newDisplayDepthNoRestore: pixelSize [
-	"do nothing"
-]
-
 { #category : 'non-interactive' }
 CommandLineUIManager >> nonInteractiveManager [
 	" Answer an instance of non-interactive manager, which will be used when image runs headless.
@@ -368,16 +395,6 @@ CommandLineUIManager >> replacing: aUIManager [
 	self beDefault
 ]
 
-{ #category : 'display' }
-CommandLineUIManager >> restoreDisplay [
-	"do nothing"
-]
-
-{ #category : 'display' }
-CommandLineUIManager >> restoreDisplayAfter: aBlock [
-	"do nothing"
-]
-
 { #category : 'accessing' }
 CommandLineUIManager >> stderr [
 
@@ -396,18 +413,6 @@ CommandLineUIManager >> stdout [
 	^ Stdio stdout
 ]
 
-{ #category : 'ui requests' }
-CommandLineUIManager >> systemNotificationDefaultAction: aNotification [
-
-	Smalltalk logStdOutDuring: [:logger |
-		logger nextPutAll: aNotification class name;
-				 nextPutAll: ': ';
-				 nextPutAll: aNotification messageText;
-				 cr ].
-
-	aNotification resume
-]
-
 { #category : 'ui TEasilyThemed' }
 CommandLineUIManager >> textEntry: aStringOrText [
 	"Open a text entry dialog."
@@ -423,37 +428,10 @@ CommandLineUIManager >> textEntry: aStringOrText title: aString entryText: defau
 	"Open a text entry dialog."
 ]
 
-{ #category : 'ui requests' }
-CommandLineUIManager >> uiProcess [
-	" receiver don't have a ui process, associated with it,
-	client should check explicitly if #uiProcess answers nil or not"
-	^ nil
-]
-
 { #category : 'default actions' }
 CommandLineUIManager >> unhandledErrorDefaultAction: anException [
 
 	self quitFrom: anException signalerContext  withMessage: anException description.
 
-	UIManager default == self ifFalse: [
-		^ UIManager default unhandledErrorDefaultAction: anException
-		]
-]
 
-{ #category : 'ui requests' }
-CommandLineUIManager >> warningDefaultAction: aWarning [
-	| logBlock |
-	"Pass all warnings, but log them"
-
-	logBlock := [:logger |
-		logger
-			cr;
-			nextPutAll: '*** Warning: ';
-			nextPutAll: aWarning description;
-			cr ].
-
-	Smalltalk logDuring: logBlock.
-	self logYellowDuring: logBlock.
-
-	aWarning resume
 ]

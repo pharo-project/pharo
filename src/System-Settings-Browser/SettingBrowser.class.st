@@ -460,29 +460,6 @@ SettingBrowser >> getViewedPackageNames [
 ]
 
 { #category : 'user interface' }
-SettingBrowser >> helpDeclaringAndManagingSettings [
-	"Open up a workspace with explanatory info in it about the Setting Browser"
-	UIManager default edit: 'To be documented here later' label: 'Declaring and managing settings' translated
-]
-
-{ #category : 'user interface' }
-SettingBrowser >> helpMenuIn: aWindow [
-	| helpMenu |
-	helpMenu := aWindow newMenu.
-	helpMenu
-		addToggle: 'About' translated
-		target: self
-		selector: #about.
-	helpMenu lastItem font: aWindow theme menuFont.
-	helpMenu
-		addToggle: 'Declaring and managing settings' translated
-		target: self
-		selector: #helpDeclaringAndManagingSettings.
-	helpMenu lastItem font: aWindow theme menuFont.
-	^ helpMenu
-]
-
-{ #category : 'user interface' }
 SettingBrowser >> initialExtent [
 	^ self class initialExtent
 ]

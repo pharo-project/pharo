@@ -53,7 +53,9 @@ RBInteractionDriver >> applyChanges [
 
 { #category : 'execution' }
 RBInteractionDriver >> changes [
-
+	"Drivers should not call generateChanges of Refactoring because generateChanges is performing the preconditions and raising errors 
+	The API method generateChanges is for refactoring scripting."
+	
 	^ self subclassResponsibility 
 
 ]

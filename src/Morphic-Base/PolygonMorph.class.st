@@ -2045,7 +2045,7 @@ PolygonMorph >> smoothOrSegmentedPhrase [
 PolygonMorph >> specifyDashedLine [
 
 	| executableSpec newSpec |
-	executableSpec := UIManager default
+	executableSpec := self morphicUIManager
 		request:
 'Enter a dash specification as
 { major dash length. minor dash length. minor dash color }

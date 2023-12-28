@@ -210,7 +210,7 @@ ScrollPane >> getMenu: shiftKeyState [
 
 	| menu aMenu aTitle |
 	self getMenuSelector ifNil: [ ^ nil ].
-	menu := UIManager default newMenuIn: self for: self model.
+	menu := self morphicUIManager newMenuIn: self for: self model.
 	aTitle := getMenuTitleSelector ifNotNil: [ self model perform: getMenuTitleSelector ].
 	self getMenuSelector numArgs = 1 ifTrue: [
 		aMenu := self model perform: self getMenuSelector with: menu.
