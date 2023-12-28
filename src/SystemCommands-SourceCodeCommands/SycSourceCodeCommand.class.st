@@ -49,7 +49,7 @@ SycSourceCodeCommand >> executeRefactoring: refactoring [
 	self initializeDefaultOptionsOf: refactoring.
 	[ refactoring execute ]
 		on: RBRefactoringError
-		do: [ :e | UIManager default alert: e messageText ]
+		do: [ :e | self morphicUIManager alert: e messageText ]
 ]
 
 { #category : 'accessing' }

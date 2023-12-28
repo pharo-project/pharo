@@ -14,6 +14,12 @@ MetacelloProjectReferenceSpec >> aboutToCopy [
     self projectReference className
 ]
 
+{ #category : 'visiting' }
+MetacelloProjectReferenceSpec >> acceptVisitor: aVisitor [
+	
+	^ aVisitor visitProjectReference: self
+]
+
 { #category : 'accessing' }
 MetacelloProjectReferenceSpec >> answers: aListOfPairs [
 
@@ -61,15 +67,6 @@ MetacelloProjectReferenceSpec >> hasRepository [
 MetacelloProjectReferenceSpec >> includes: aCollection [
 
 	self shouldNotImplement
-]
-
-{ #category : 'loading' }
-MetacelloProjectReferenceSpec >> loadUsing: aLoader gofer: ignored [
-
-	| required |
-	required := self resolveToLoadableSpec.
-	required loader: aLoader.
-	^required load
 ]
 
 { #category : 'importing' }
@@ -172,16 +169,10 @@ MetacelloProjectReferenceSpec >> requires: aCollection [
 	self shouldNotImplement
 ]
 
-{ #category : 'accessing' }
-MetacelloProjectReferenceSpec >> resolveProjectSpec [
-
-	^self projectReference
-]
-
 { #category : 'private' }
 MetacelloProjectReferenceSpec >> resolveToLoadableSpec [
 
-	^self resolveProjectSpec resolveToLoadableSpec
+	^self projectReference resolveToLoadableSpec
 ]
 
 { #category : 'private' }

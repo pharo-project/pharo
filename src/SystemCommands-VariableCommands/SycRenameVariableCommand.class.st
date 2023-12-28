@@ -85,7 +85,7 @@ SycRenameVariableCommand >> prepareFullExecutionInContext: aToolContext [
 { #category : 'execution' }
 SycRenameVariableCommand >> requestNewNameIn: aToolContext [
 
-	newName := UIManager default
+	newName := self morphicUIManager
 		           request: 'New name of the variable'
 		           initialAnswer: variable name
 		           title: 'Rename a variable'.

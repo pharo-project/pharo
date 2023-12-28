@@ -39,7 +39,7 @@ ClyCreateClassCommand >> execute [
 	p := package name.
 	packageTag ifNotNil: [ p := p , '-' , packageTag ].
 	classDefinition := ClassDefinitionPrinter fluid classDefinitionTemplateInPackage: p.
-	classDefinition := UIManager default
+	classDefinition := self morphicUIManager
 		                   multiLineRequest: 'Define class definition:'
 		                   initialAnswer: classDefinition
 		                   answerHeight: 250.

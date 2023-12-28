@@ -109,7 +109,7 @@ DebugSession >> createModelForContext: aContext [
 { #category : 'initialization' }
 DebugSession >> detectUIProcess [
 
-	errorWasInUIProcess := UIManager default uiProcess == interruptedProcess
+	errorWasInUIProcess := MorphicUIManager uiProcess == interruptedProcess
 ]
 
 { #category : 'accessing' }

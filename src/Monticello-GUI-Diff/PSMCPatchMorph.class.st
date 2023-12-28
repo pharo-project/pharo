@@ -16,18 +16,6 @@ Class {
 	#package : 'Monticello-GUI-Diff'
 }
 
-{ #category : 'settings' }
-PSMCPatchMorph class >> defaultDiffToolsSettingOn: aBuilder [
-	<systemsettings>
-	(aBuilder setting: #polymorphDiffToolsUsedByDefault)
-		label: 'Use Polymorph difference tools';
-		default: true;
-		description: 'When enabled the Polymorph diff tools will be used with Monticello. When disabled, the original tools are used.';
-		parent: #differator;
-		target: PSMCPatchMorph;
-		selector: #usedByDefault
-]
-
 { #category : 'instance creation' }
 PSMCPatchMorph class >> forPatch: aPatch [
 	"Answer a new instance of the receiver
@@ -41,13 +29,6 @@ PSMCPatchMorph class >> taskbarIconName [
 	"Answer the icon for the receiver in a task bar."
 
 	^#smallForward
-]
-
-{ #category : 'settings' }
-PSMCPatchMorph class >> usedByDefault [
-	"Answer whether the Polymorph diff tools should be used with Monticello."
-
-	^UsedByDefault ifNil: [UsedByDefault := true]
 ]
 
 { #category : 'settings' }
