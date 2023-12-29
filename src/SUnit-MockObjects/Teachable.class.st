@@ -1,9 +1,8 @@
 "
 An object you can teach how to behave. Have a look at the class side for an example.
+The implementation was done by Torsten Bergman.
 
 For more infos have a look at:
-
-[http://lists.squeakfoundation.org/pipermail/squeak-dev/2002-April/038170.html](http://lists.squeakfoundation.org/pipermail/squeak-dev/2002-April/038170.html)
 [https://github.com/astares/Pharo-Teachable](https://github.com/astares/Pharo-Teachable)
 
 "
