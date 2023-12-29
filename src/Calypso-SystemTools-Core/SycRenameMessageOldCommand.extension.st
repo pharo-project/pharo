@@ -1,12 +1,12 @@
-Extension { #name : 'SycRenameMessage2Command' }
+Extension { #name : 'SycRenameMessageOldCommand' }
 
 { #category : '*Calypso-SystemTools-Core' }
-SycRenameMessage2Command class >> browserMenuOrder [
+SycRenameMessageOldCommand class >> browserMenuOrder [
 	^2
 ]
 
 { #category : '*Calypso-SystemTools-Core' }
-SycRenameMessage2Command class >> methodMenuActivation [
+SycRenameMessageOldCommand class >> methodMenuActivation [
 	<classAnnotation>
 
 	^CmdContextMenuActivation
@@ -14,21 +14,21 @@ SycRenameMessage2Command class >> methodMenuActivation [
 ]
 
 { #category : '*Calypso-SystemTools-Core' }
-SycRenameMessage2Command class >> methodShortcutActivation [
+SycRenameMessageOldCommand class >> methodShortcutActivation [
 	<classAnnotation>
 
 	^CmdShortcutActivation renamingFor: ClyMethod asCalypsoItemContext
 ]
 
 { #category : '*Calypso-SystemTools-Core' }
-SycRenameMessage2Command class >> sourceCodeMenuActivation [
+SycRenameMessageOldCommand class >> sourceCodeMenuActivation [
 	<classAnnotation>
 
 	^SycSourceCodeMenuActivation byRootGroupItemOrder: 1.2 for: ClyMethodSourceCodeContext
 ]
 
 { #category : '*Calypso-SystemTools-Core' }
-SycRenameMessage2Command class >> sourceCodeShortcutActivation [
+SycRenameMessageOldCommand class >> sourceCodeShortcutActivation [
 	<classAnnotation>
 
 	^CmdShortcutActivation renamingFor: ClyMethodSourceCodeContext

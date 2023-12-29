@@ -2,7 +2,7 @@
 Call the rename method refactoring (yes the class name is not good)
 "
 Class {
-	#name : 'SycRenameMessage2Command',
+	#name : 'SycRenameMessageOldCommand',
 	#superclass : 'SycChangeMessageSignatureCommand',
 	#instVars : [
 		'newSignature',
@@ -14,7 +14,7 @@ Class {
 }
 
 { #category : 'execution' }
-SycRenameMessage2Command >> applyResultInContext: aToolContext [
+SycRenameMessageOldCommand >> applyResultInContext: aToolContext [
 	"I have problem to understand how to plug the call to the driver in the cmd architecture
 	in a way that I can come back here only once the refactoring is applied."
 
@@ -26,35 +26,35 @@ SycRenameMessage2Command >> applyResultInContext: aToolContext [
 ]
 
 { #category : 'requesting' }
-SycRenameMessage2Command >> canAddArgs [
+SycRenameMessageOldCommand >> canAddArgs [
 	^false
 ]
 
 { #category : 'requesting' }
-SycRenameMessage2Command >> canRemoveArgs [
+SycRenameMessageOldCommand >> canRemoveArgs [
 	^ false
 ]
 
 { #category : 'execution' }
-SycRenameMessage2Command >> createRefactoring [
+SycRenameMessageOldCommand >> createRefactoring [
 	"not used"
 	^ self 
 ]
 
 { #category : 'accessing' }
-SycRenameMessage2Command >> defaultMenuIconName [
+SycRenameMessageOldCommand >> defaultMenuIconName [
 	^#edit
 ]
 
 { #category : 'accessing' }
-SycRenameMessage2Command >> defaultMenuItemName [
-	^'Rename'
+SycRenameMessageOldCommand >> defaultMenuItemName [
+	^'Rename (old driver)'
 ]
 
 { #category : 'execution' }
-SycRenameMessage2Command >> execute [
+SycRenameMessageOldCommand >> execute [
 
-	driver := RBRenameMethodDriver new
+	driver := RERenameMethodOldDriver new
 		          scopes: refactoringScopes
 		          model: model
 		          renameMethodSignature: originalMessage
@@ -66,29 +66,29 @@ SycRenameMessage2Command >> execute [
 ]
 
 { #category : 'execution' }
-SycRenameMessage2Command >> isComplexRefactoring [ 
+SycRenameMessageOldCommand >> isComplexRefactoring [ 
 
 	^ false
 ]
 
 { #category : 'accessing' }
-SycRenameMessage2Command >> newSignature [
+SycRenameMessageOldCommand >> newSignature [
 	^ newSignature
 ]
 
 { #category : 'accessing' }
-SycRenameMessage2Command >> newSignature: anObject [
+SycRenameMessageOldCommand >> newSignature: anObject [
 	newSignature := anObject
 ]
 
 { #category : 'execution' }
-SycRenameMessage2Command >> prepareFullExecutionInContext: aToolContext [
+SycRenameMessageOldCommand >> prepareFullExecutionInContext: aToolContext [
 
 	super prepareFullExecutionInContext: aToolContext.
 	toolContext := aToolContext
 ]
 
 { #category : 'execution' }
-SycRenameMessage2Command >> resultMessageSelector [
+SycRenameMessageOldCommand >> resultMessageSelector [
 	^newSignature selector
 ]

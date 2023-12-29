@@ -2,7 +2,7 @@
 I'm a model for user interaction for the rename method refactoring.
 "
 Class {
-	#name : 'RBRenameMethodDriver',
+	#name : 'RERenameMethodOldDriver',
 	#superclass : 'RBInteractionDriver',
 	#instVars : [
 		'class',
@@ -17,33 +17,33 @@ Class {
 }
 
 { #category : 'testing' }
-RBRenameMethodDriver >> canAddArgs [
+RERenameMethodOldDriver >> canAddArgs [
 	^ false
 ]
 
 { #category : 'testing' }
-RBRenameMethodDriver >> canEditName [
+RERenameMethodOldDriver >> canEditName [
 	^ true
 ]
 
 { #category : 'testing' }
-RBRenameMethodDriver >> canRemoveArgs [
+RERenameMethodOldDriver >> canRemoveArgs [
 	^ false
 ]
 
 { #category : 'testing' }
-RBRenameMethodDriver >> canRenameArgs [
+RERenameMethodOldDriver >> canRenameArgs [
 	^ true
 ]
 
 { #category : 'To be removed' }
-RBRenameMethodDriver >> command: aCommand andPostAction: aClosure [ 
+RERenameMethodOldDriver >> command: aCommand andPostAction: aClosure [ 
 	command := aCommand. "may be not needed"
 	postAction := aClosure
 ]
 
 { #category : 'initialize' }
-RBRenameMethodDriver >> model: aModel renameMethodSignature: aMessage in: aClass [ 
+RERenameMethodOldDriver >> model: aModel renameMethodSignature: aMessage in: aClass [ 
 	model := aModel.
 	originalMessage := aMessage.
 	"while we could think that the class is not needed, it is because a rename should not override existing methods."
@@ -51,13 +51,13 @@ RBRenameMethodDriver >> model: aModel renameMethodSignature: aMessage in: aClass
 ]
 
 { #category : 'To be removed' }
-RBRenameMethodDriver >> newMessage [
+RERenameMethodOldDriver >> newMessage [
 
 	^ newMessage
 ]
 
 { #category : 'execution' }
-RBRenameMethodDriver >> refactoring [
+RERenameMethodOldDriver >> refactoring [
 	"here we do not fully configure the refactoring because we are missing information such as the signature.
 	Since we want to let the refactoring validate input we need to create it upfront then configure later."
 	
@@ -65,7 +65,7 @@ RBRenameMethodDriver >> refactoring [
 ]
 
 { #category : 'To be removed' }
-RBRenameMethodDriver >> requestNewMessage [
+RERenameMethodOldDriver >> requestNewMessage [
 
 	| methodName dialog  |
 	methodName := RBMethodName
@@ -83,7 +83,7 @@ RBRenameMethodDriver >> requestNewMessage [
 ]
 
 { #category : 'execution' }
-RBRenameMethodDriver >> runRefactoring [
+RERenameMethodOldDriver >> runRefactoring [
 
 	refactoring := self refactoring.
 	[
@@ -104,7 +104,7 @@ RBRenameMethodDriver >> runRefactoring [
 ]
 
 { #category : 'initialize' }
-RBRenameMethodDriver >> scopes: refactoringScope model: aModel renameMethodSignature: aMessage in: aClass [
+RERenameMethodOldDriver >> scopes: refactoringScope model: aModel renameMethodSignature: aMessage in: aClass [
 
 	scopes := refactoringScope.
 	model := aModel.
