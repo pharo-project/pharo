@@ -10,9 +10,10 @@ BaselineOfOpalCompiler >> baseline: spec [
 
 	<baseline>
 	spec for: #common do: [
-		spec
-			baseline: 'SUnit'
-			with: [ spec repository: (self packageRepositoryURLForSpec: spec) ].
+		spec baseline: 'SUnit' with: [
+			spec
+				repository: (self packageRepositoryURLForSpec: spec);
+				loads: 'Core' ].
 		spec
 			baseline: 'AST'
 			with: [ spec repository: (self packageRepositoryURLForSpec: spec) ].

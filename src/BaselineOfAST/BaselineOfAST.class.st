@@ -10,10 +10,10 @@ BaselineOfAST >> baseline: spec [
 
 	<baseline>
 	spec for: #common do: [
-		spec
-			baseline: 'SUnit'
-			with: [ spec repository: (self packageRepositoryURLForSpec: spec) ].
-
+		spec baseline: 'SUnit' with: [
+			spec
+				repository: (self packageRepositoryURLForSpec: spec);
+				loads: 'Core' ].
 		spec
 			package: 'AST-Core';
 			package: 'AST-Core-Tests'
