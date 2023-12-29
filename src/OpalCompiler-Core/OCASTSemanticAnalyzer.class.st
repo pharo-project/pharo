@@ -116,11 +116,14 @@ OCASTSemanticAnalyzer >> outerScope: anObject [
 
 { #category : 'variables' }
 OCASTSemanticAnalyzer >> resolveVariableNode: aVariableNode [
+
 	| var |
-	var := (scope lookupVar: aVariableNode name)
-		ifNil: [ self undeclaredVariable: aVariableNode ].
+	var := (scope lookupVar: aVariableNode name) ifNil: [
+		       (self compilationContext environment bindingOf:
+			        aVariableNode name) ifNil: [
+			       self undeclaredVariable: aVariableNode ] ].
 	aVariableNode variable: var.
-	^var
+	^ var
 ]
 
 { #category : 'initialization' }
