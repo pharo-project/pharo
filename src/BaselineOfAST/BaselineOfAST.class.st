@@ -13,7 +13,7 @@ BaselineOfAST >> baseline: spec [
 		spec baseline: 'SUnit' with: [
 			spec
 				repository: (self packageRepositoryURLForSpec: spec);
-				loads: 'Core' ].
+				loads: 'SUnit-Core' ].
 		spec
 			package: 'AST-Core';
 			package: 'AST-Core-Tests'

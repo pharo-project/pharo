@@ -13,7 +13,7 @@ BaselineOfOpalCompiler >> baseline: spec [
 		spec baseline: 'SUnit' with: [
 			spec
 				repository: (self packageRepositoryURLForSpec: spec);
-				loads: 'Core' ].
+				loads: 'SUnit-Core' ].
 		spec
 			baseline: 'AST'
 			with: [ spec repository: (self packageRepositoryURLForSpec: spec) ].
