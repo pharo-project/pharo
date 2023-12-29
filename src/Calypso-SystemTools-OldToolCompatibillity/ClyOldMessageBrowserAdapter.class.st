@@ -132,7 +132,8 @@ ClyOldMessageBrowserAdapter >> open [
 	query
 		criteriaString: autoSelect;
 		criteriaBlock: refreshingBlock.
-	openedBrowser := ClyQueryBrowserMorph openOn: query
+	openedBrowser := ClyQueryBrowserMorph openOn: query.
+	openedBrowser selectFirstItem.
 ]
 
 { #category : 'accessing' }

@@ -370,6 +370,14 @@ ClyQueryBrowserMorph >> selectClass: aClass [
 ]
 
 { #category : 'navigation' }
+ClyQueryBrowserMorph >> selectFirstItem [
+
+	self changeStateBy: [
+		resultView selectFirstItem
+	]
+]
+
+{ #category : 'navigation' }
 ClyQueryBrowserMorph >> selectLastItem [
 
 	self changeStateBy: [
