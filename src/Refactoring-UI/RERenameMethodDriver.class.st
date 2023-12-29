@@ -40,8 +40,8 @@ RERenameMethodDriver >> canRenameArgs [
 
 { #category : 'execution' }
 RERenameMethodDriver >> changes [
-
-	^ refactoring generateChanges
+	"Remember should not call generateChanges"
+	^ refactoring renameChanges
 
 
 ]
@@ -60,7 +60,7 @@ RERenameMethodDriver >> configureRefactoring [
 	"here we do not fully configure the refactoring because we are missing information such as the signature.
 	Since we want to let the refactoring validate input we need to create it upfront then configure later."
 	
-	refactoring := RBRenameMethodRefactoring new renameMethod: originalMessage selector in: class 
+	refactoring := RERenameMethodRefactoring new renameMethod: originalMessage selector in: class 
 ]
 
 { #category : 'execution' }
@@ -93,6 +93,7 @@ RERenameMethodDriver >> postAction: aClosure [
 RERenameMethodDriver >> requestNewMessage [
 
 	| methodName dialog  |
+	
 	methodName := RBMethodName
 		              selector: originalMessage selector
 		              arguments: originalMessage argumentNames.
@@ -104,13 +105,14 @@ RERenameMethodDriver >> requestNewMessage [
 		          canAddArgs: self canAddArgs
 		          canEditName: self canEditName.
 	dialog ifNil: [ shouldEscape := true. ^ self ].
-	
 	"If the name is the same then there is no need to perform the refactoring 
 	and in such case we can just escape."
 	"note that it would be better to pass a method name to the refactoring instead of splitting tlla the arguments this way"
-	(refactoring newSelector: methodName selector; permutation: methodName permutation; skippingPreconditions ) check
+	refactoring newSelector: methodName selector; permutation: methodName permutation.
+	refactoring areNamesTheSame 
 		ifTrue: [ shouldEscape := true. ^ self ].
-	
+	"refactoring areArgumentsTheSame & refactoring areArgumentsPermuted not
+		ifTrue: [ shouldEscape := true. ^ self ]."
 	^ methodName
 ]
 
@@ -121,7 +123,6 @@ RERenameMethodDriver >> runRefactoring [
 	self configureRefactoring.
 	[ newMessage := self requestNewMessage.
 	shouldEscape ifTrue: [ ^ self ].
-	refactoring newSelector: newName.
 	failedConditions := refactoring failedApplicabilityPreconditions.
 	failedConditions isEmpty ]
 		whileFalse: [
@@ -130,6 +131,9 @@ RERenameMethodDriver >> runRefactoring [
 					label: cond errorString;
 					title: 'Invalid name';
 					openModal ] ].
+	self halt.
+	refactoring doesNotOverrideExistingMethodPrecondition check.
+		"to revise"
 	self configureMessage.
 	self applyChanges.
 ]

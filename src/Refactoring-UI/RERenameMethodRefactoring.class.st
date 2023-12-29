@@ -63,10 +63,32 @@ RERenameMethodRefactoring class >> renameMethod: aSelector in: aClass to: newSel
 { #category : 'preconditions' }
 RERenameMethodRefactoring >> applicabilityPreconditions [
 
-	^ self newNameDoesNotRequireRefactoringPreconditions not & (RBCondition
-		   withBlock: [ oldSelector numArgs = newSelector numArgs ]
+	^ { "self newNameDoesNotRequireRefactoringPreconditions not . 
+		(RBCondition
+		   withBlock: [ self areArgumentsTheSame ]
 		   errorString: newSelector printString
-			   , ' doesn''t have the correct number of arguments.')
+			   , ' doesn''t have the correct number of arguments.')" } 
+]
+
+{ #category : 'torevisit' }
+RERenameMethodRefactoring >> areArgumentsPermuted [
+	"I fedup and not happy but let us move on. We may turn them into first class condition later."
+	
+	^ permutation asArray = (1 to: oldSelector numArgs) asArray
+]
+
+{ #category : 'torevisit' }
+RERenameMethodRefactoring >> areArgumentsTheSame [
+	"I fedup and not happy but let us move on. We may turn them into first class condition later."
+	
+	^ oldSelector numArgs = newSelector numArgs
+]
+
+{ #category : 'torevisit' }
+RERenameMethodRefactoring >> areNamesTheSame [
+	"I fedup and not happy but let us move on. We may turn them into first class condition later."
+
+	^ (newSelector = oldSelector) 
 ]
 
 { #category : 'preconditions' }
@@ -75,22 +97,29 @@ RERenameMethodRefactoring >> breakingChangePreconditions [
 	^ self doesNotOverrideExistingMethodPrecondition 
 ]
 
-{ #category : 'executing' }
+{ #category : 'preconditions' }
+RERenameMethodRefactoring >> doesNotOverrideExistingMethodPrecondition [
+	"Check that the new selector is not already defined in superclasses"
+	self halt.
+	^ self implementors
+		inject: RBCondition true 
+		into: [ :condition :each |
+			condition & (RBCondition hierarchyOf: each canUnderstand: newSelector) not ]
+]
+
+{ #category : 'preconditions' }
 RERenameMethodRefactoring >> generateChanges [
 	"Prepare, check the preconditions, and perform the actual transformation (i.e., creating a list of changes that can be accessible using the changes message). This method should not be invoked from drivers since drivers usually check in finer grained mode the preconditions - and that this stage they already checked the preconditions."
 	
 	self prepareForExecution.
 
-	self applicabilityPreconditions check ifFalse: [
+	(self applicabilityPreconditions reject: [ :each | each check ]) ifNotEmpty: [
 		^ RBApplicabilityChecksFailedError signal:
 			  self applicabilityPreconditions errorString ].
 	self breakingChangePreconditions check ifFalse: [
 		RBBreakingChangeChecksFailedWarning signal:
 			self breakingChangePreconditions errorString ].
-
 	self privateTransform.
-	self flag: #todo. 
-	"check other methods"
 	^ self changes
 ]
 
@@ -115,7 +144,8 @@ RERenameMethodRefactoring >> modifyImplementorParseTree: parseTree in: aClass [
 
 { #category : 'preconditions' }
 RERenameMethodRefactoring >> myConditions [
-	^RBCondition withBlock: [oldSelector numArgs = newSelector numArgs]
+
+	^ RBCondition withBlock: [ self areArgumentsTheSame ]
 		errorString: newSelector printString
 				, ' doesn''t have the correct number of arguments.'
 ]
@@ -126,12 +156,12 @@ RERenameMethodRefactoring >> newNameDoesNotRequireRefactoringPreconditions [
 
 
 	^ (RBCondition
-		   withBlock: [ newSelector = oldSelector ]
+		   withBlock: [ self areNamesTheSame not ]
 		   errorString:
 		   'The selector name has <1?not:> changed <1?:to #' , newSelector
-		   , '>') & (RBCondition
-		   withBlock: [
-		   permutation asArray = (1 to: oldSelector numArgs) asArray ]
+		   , '>') & 
+		(RBCondition
+		   withBlock: [ self areArgumentsPermuted ]
 		   errorString: 'The arguments are <1?:not >permuted')
 ]
 
@@ -148,13 +178,21 @@ RERenameMethodRefactoring >> parseTreeRewriterInstance [
 
 { #category : 'preconditions' }
 RERenameMethodRefactoring >> preconditions [
-
-	^ self newNameDoesNotRequireRefactoringPreconditions | super preconditions
+	self halt.
+	
+	^ self newNameDoesNotRequireRefactoringPreconditions | self superPreconditions
 ]
 
 { #category : 'accessing' }
 RERenameMethodRefactoring >> refactoredClass [
 	^ class
+]
+
+{ #category : 'as yet unclassified' }
+RERenameMethodRefactoring >> renameChanges [
+
+	self privateTransform.
+	^ self changes
 ]
 
 { #category : 'printing' }
@@ -172,4 +210,19 @@ RERenameMethodRefactoring >> storeOn: aStream [
 		nextPutAll: ' permutation: '.
 	permutation storeOn: aStream.
 	aStream nextPut: $)
+]
+
+{ #category : 'preconditions' }
+RERenameMethodRefactoring >> superPreconditions [
+	"This refactoring only preserves behavior if all implementors are renamed."
+
+	| conditions |
+	
+	conditions := self myConditions
+	              & (RBCondition definesSelector: oldSelector in: class)
+	              & self isValidMethodNamePrecondition.
+
+	^ conditions & self doesNotOverrideExistingMethodPrecondition
+
+
 ]
