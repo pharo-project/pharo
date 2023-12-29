@@ -363,10 +363,6 @@ PBAbstractImageBuilder >> createInitialObjects [
 			self bootstrapInterpreter evaluateCode: 'SmallInteger instVarAt: ' , (self classInstanceVariableIndexAt: 1) asString , ' put: -16r40000000.'. "minVal"
 			self bootstrapInterpreter evaluateCode: 'SmallInteger instVarAt: ' , (self classInstanceVariableIndexAt: 2) asString , ' put: 16r3FFFFFFF.'. "maxVal"
 
-			self log: 'Initializing Date and Time constants'.
-			self bootstrapInterpreter evaluateCode: 'DateAndTime initialize.'.
-			self bootstrapInterpreter evaluateCode: 'ChronologyConstants initialize.'.
-
 			self log: 'Initializing CompiledMethod constants'.
 			self bootstrapInterpreter evaluateCode: 'CompiledMethod initialize.'.
 
@@ -721,20 +717,7 @@ PBAbstractImageBuilder >> initializeImage [
 	Enchancement possible: This should be automatically managed by the createVMStubs method"
 			objectSpace backend processorAssociation: (self bootstrapInterpreter evaluateCode: 'Smalltalk globals associationAt: #Processor.').
 
-			process := objectSpace createProcessWithPriority: 40 doing: ('PharoBootstrapInitialization 
-			initializeImageOfType: ''Pharo'' 
-			major: {major} 
-			minor: {minor} 
-			patch: {patch}
-			suffix: ''{suffix}'' 
-			build: {build} 
-			commitHash: ''{hash}''.' format: {
-						            ('major' -> versionInfo major).
-						            ('minor' -> versionInfo minor).
-						            ('patch' -> versionInfo patch).
-						            ('suffix' -> (versionInfo suffix ifNil: [ '' ])).
-						            ('build' -> versionInfo buildNumber).
-						            ('hash' -> versionInfo commitHash) } asDictionary).
+			process := objectSpace createProcessWithPriority: 40 doing: 'PharoBootstrapInitialization initializeCommandLineHandlerAndErrorHandling'.
 			objectSpace installAsActiveProcess: process.
 
 			self followForwardingPointers.

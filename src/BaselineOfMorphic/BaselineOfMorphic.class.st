@@ -252,7 +252,6 @@ BaselineOfMorphic >> loadBitmapSourcePro [
 BaselineOfMorphic >> postload: loader package: packageSpec [
 
 	| array |
-	
 	"Ignore pre and post loads if already executed"
 	Initialized = true ifTrue: [ ^ self ].
 
@@ -261,44 +260,48 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 	Author fullName: self class name.
 
 	TextConstants initialize.
-		
+
 	"Initialize Fuel"
 	FLLargeIdentityHashedCollection initialize.
 
-	Stdio stdout nextPutAll: 'starting...'; lf.
+	Stdio stdout
+		nextPutAll: 'starting...';
+		lf.
 
-	Stdio stdout nextPutAll: Smalltalk ui asString; lf.
+	Stdio stdout
+		nextPutAll: Smalltalk ui asString;
+		lf.
 
 	PNGReadWriter initialize.
 	self loadBitmapDejaVuSans.
 	self loadBitmapSourcePro.
-	
-	#(TextStyle) do: [:each | (Smalltalk globals at: each) initialize. ].
-	
-	Stdio stdout nextPutAll: 'bitmap fonts loaded' asString; lf.
 
-	#(ProgressBarMorph BalloonEngineConstants BalloonEngine 
-	CornerRounder  DigitalSignatureAlgorithm DummySoundSystem
-	FT2Types FT2FFILibrary
-	FreeTypeCacheConstants FreeTypeCache FreeTypeSettings 
-	FreeTypeSubPixelAntiAliasedGlyphRenderer FT2Constants FT2Handle 
-	GIFReadWriter GlobalIdentifier
-	HaloMorph CharacterScanner ImageMorph JPEGHuffmanTable
-	JPEGReadStream JPEGReadWriter Locale
-	MczInstaller MD5NonPrimitive MenuItemMorph MenuMorph  
-	RxMatcher RxParser RxsPredicate
-	SHA1 ShortIntegerArray
-	SystemProgressMorph SystemWindow TestCase TextContainer TextDiffBuilder
-	ThemeIcons ThumbnailMorph TransferMorph UITheme ZnByteEncoder
-	ZnConstants ZnMimeType ZnNetworkingUtils ZnServer ZnSingleThreadedServer
-	) do: [:each | (Smalltalk globals at: each) initialize. ].
+	(Smalltalk globals at: #TextStyle) initialize.
+
+	Stdio stdout
+		nextPutAll: 'bitmap fonts loaded' asString;
+		lf.
+
+	#( #ProgressBarMorph #BalloonEngineConstants #BalloonEngine
+	   #CornerRounder #DigitalSignatureAlgorithm
+	   #FT2Types #FT2FFILibrary #FreeTypeCacheConstants
+	   #FreeTypeCache #FreeTypeSettings #FreeTypeSubPixelAntiAliasedGlyphRenderer
+	   #FT2Constants #GIFReadWriter #GlobalIdentifier #HaloMorph
+	   #CharacterScanner #ImageMorph #JPEGHuffmanTable #JPEGReadStream
+	   #JPEGReadWriter #Locale #MczInstaller #MD5NonPrimitive
+	   #MenuItemMorph #MenuMorph #RxMatcher #RxParser #RxsPredicate
+	   #SHA1 #ShortIntegerArray #SystemProgressMorph #SystemWindow
+	   #TestCase #TextContainer #TextDiffBuilder #ThumbnailMorph
+	   #TransferMorph #UITheme #ZnByteEncoder #ZnConstants #ZnMimeType
+	   #ZnNetworkingUtils #ZnServer #ZnSingleThreadedServer ) do: [ :each |
+		(Smalltalk globals at: each) initialize ].
 
 	BalloonMorph setBalloonColorTo: Color yellow.
 
 	UIManager default terminateUIProcess.
 	MorphicUIManager new spawnNewProcess.
 	Display newDepth: 32.
-	
+
 	UIManager default: MorphicUIManager new.
 	MorphicUIManager uiProcess resume.
 	
@@ -313,19 +316,28 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 	"Install the right UIManager"
 	UIManager default: UIManager forCurrentSystemConfiguration.
 	ErrorHandler defaultErrorHandler: UIManager default.
-	Stdio stdout nextPutAll: 'UIManager changed:' ; nextPutAll: UIManager default class name ; lf.
+	Stdio stdout
+		nextPutAll: 'UIManager changed:';
+		nextPutAll: UIManager default class name;
+		lf.
 
-
-	MenubarMorph initialize.	
+	MenubarMorph initialize.
 
 	PolymorphSystemSettings showDesktopLogo: false.
 	PolymorphSystemSettings showDesktopLogo: true.
 	PolymorphSystemSettings desktopColor: Color white.
 
-	#(#AbstractFont #BalloonMorph #Clipboard #EmbeddedFreeTypeFontInstaller #FLCompiledMethodCluster #FLLargeIdentityHashedCollection #FreeTypeFontProvider #GradientFillStyle #IconicButtonMorph #KMLog #LogicalFont #LucidaGrandeRegular #OSEnvironment #ScrollBarMorph #StrikeFont #SystemSettingsPersistence #TabMorph #TaskbarMorph #Text #TextAction #TextConstants #TextStyle) do: [:each |
-		 (Smalltalk globals at: each) initialize. ].
+	#( #AbstractFont #BalloonMorph #Clipboard #EmbeddedFreeTypeFontInstaller
+	   #FLCompiledMethodCluster #FLLargeIdentityHashedCollection
+	   #FreeTypeFontProvider #GradientFillStyle #IconicButtonMorph
+	   #KMLog #LogicalFont #LucidaGrandeRegular #OSEnvironment
+	   #ScrollBarMorph #StrikeFont #SystemSettingsPersistence
+	   #TabMorph #TaskbarMorph #TextAction #TextConstants
+	   #TextStyle ) do: [ :each |
+		(Smalltalk globals at: each) initialize ].
 
-	LogicalFontManager current addFontProvider: FreeTypeFontProvider current.
+	LogicalFontManager current addFontProvider:
+		FreeTypeFontProvider current.
 
 	array := Smalltalk specialObjectsArray copy.
 	array at: 5 put: Bitmap.

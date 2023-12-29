@@ -30,11 +30,6 @@ PharoBootstrapInitialization class >> initializeCommandLineHandlerAndErrorHandli
 	
 	ProcessorScheduler initialize.
 
-	Object initialize.
-
-	ChronologyConstants initialize.
-	DateAndTime initialize.
-
 	Delay initialize.
 
 	ProcessorScheduler startUp.
@@ -65,7 +60,6 @@ PharoBootstrapInitialization class >> initializeCommandLineHandlerAndErrorHandli
 	'Initializing Collections' traceCr.
 	CollectionElement initialize.
 	ExternalSemaphoreTable initialize.
-	Collection initialize.
 	
 	'Initializing code model' traceCr.
 	CompiledMethod initialize.
@@ -89,9 +83,10 @@ PharoBootstrapInitialization class >> initializeCommandLineHandlerAndErrorHandli
 	ExternalType initialize.
 
 	'Initializing Session Manager' traceCr.
-	SessionManager default installNewSession.
 	SessionManager initialize.
 	SessionManager initializeKernelRegistrations.
+	SessionManager default installNewSession.
+
 
 	'Initializing basic command line behaviors' traceCr.
 	"Initialize basic command line behaviour"
@@ -111,29 +106,9 @@ PharoBootstrapInitialization class >> initializeFileSystem [
 	env := self environment.
 	(env at: #FileLocator) initialize.
 	(env at: #DiskStore) initialize.
-	(env at: #FileHandle) initialize.
 	(env at: #File) initialize.
 	(env at: #SharedRandom) initialize.
 
 	"Now that the file system is setup, we can register SourceFileArray to the session manager."
 	SessionManager default registerSystemClassNamed: #SourceFileArray
-]
-
-{ #category : 'public api' }
-PharoBootstrapInitialization class >> initializeImageOfType: typeName major: major minor: minor patch: patch suffix: suffix build: buildNumber commitHash: hash [
-	"The image main entry point called by an image builder. The arguments specify the image
-	version description.
-	This method is run before the new bootstrapped image is saved!"
-
-	SystemVersion writeClassVariableNamed: #Current value: (SystemVersion new
-			 type: typeName;
-			 major: major;
-			 minor: minor;
-			 patch: patch;
-			 suffix: suffix;
-			 build: buildNumber;
-			 commitHash: hash;
-			 yourself).
-
-	self initializeCommandLineHandlerAndErrorHandling
 ]

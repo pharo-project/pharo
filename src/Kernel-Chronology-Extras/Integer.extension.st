@@ -1,6 +1,11 @@
 Extension { #name : 'Integer' }
 
 { #category : '*Kernel-Chronology-Extras' }
+Integer >> asSeconds [
+	^ Duration seconds: self
+]
+
+{ #category : '*Kernel-Chronology-Extras' }
 Integer >> asYear [
 
  	^ Year year: self
