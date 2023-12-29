@@ -13,9 +13,12 @@ BaselineOfOpalCompiler >> baseline: spec [
 		spec
 			baseline: 'SUnit'
 			with: [ spec repository: (self packageRepositoryURLForSpec: spec) ].
+		spec
+			baseline: 'AST'
+			with: [ spec repository: (self packageRepositoryURLForSpec: spec) ].
 
 		spec
-			package: 'OpalCompiler-Core';
+			package: 'OpalCompiler-Core' with: [ spec requires: #( 'AST' ) ];
 			package: 'OpalCompiler-Tests'
 			with: [ spec requires: #( 'SUnit' 'OpalCompiler-Core' ) ].
 
