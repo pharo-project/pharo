@@ -1,6 +1,6 @@
 "
 An object you can teach how to behave. Have a look at the class side for an example.
-The implementation was done by Torsten Bergman.
+The implementation was done by Torsten Bergmann.
 
 For more infos have a look at:
 [https://github.com/astares/Pharo-Teachable](https://github.com/astares/Pharo-Teachable)
