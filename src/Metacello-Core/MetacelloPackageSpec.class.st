@@ -363,7 +363,7 @@ MetacelloPackageSpec >> requiredPackageSpecsWithEngine: anEngine [
 	| specs requiredSpec |
 	self project ifNil: [ ^ #(  ) ].
 	specs := self project version spec
-		         packageSpecsInLoadOrderWithEngine: nil.
+		         packageSpecsInLoadOrderWithEngine: anEngine.
 	^ self requires flatCollect: [ :required |
 		  requiredSpec := specs detect: [ :e | e name = required ].
 		  requiredSpec packageSpecsInLoadOrderWithEngine: anEngine ]

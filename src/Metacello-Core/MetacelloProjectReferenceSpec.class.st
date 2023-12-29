@@ -105,13 +105,12 @@ MetacelloProjectReferenceSpec >> nonOverridable [
 { #category : 'loading' }
 MetacelloProjectReferenceSpec >> packageSpecsInLoadOrderWithEngine: anEngine [
 
-	| specs loadedSpecs |
+	| specs loadedSpecs loads |
 	specs := (self projectReference versionForEngine: anEngine) spec
 		         packageSpecsInLoadOrderWithEngine: anEngine.
-	loadedSpecs := (self projectReference loads ifNil: [ #(  ) ])
-		               ifNotEmpty: [ :loads |
-		               specs select: [ :each | loads includes: each name ] ]
-		               ifEmpty: [ specs ].
+	loads := self projectReference loadListForVersion:
+		         (self projectReference versionForEngine: anEngine).
+	loadedSpecs := specs select: [ :each | loads includes: each name ].
 	^ loadedSpecs flatCollect: [ :e |
 		  e packageSpecsInLoadOrderWithEngine: anEngine ]
 ]
