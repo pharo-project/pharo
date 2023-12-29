@@ -33,7 +33,8 @@ Class {
 	#name : 'ReRenameMethodRefactoring',
 	#superclass : 'RBChangeMethodNameRefactoring',
 	#instVars : [
-		'hasPermutedArguments'
+		'hasPermutedArguments',
+		'violations'
 	],
 	#category : 'Refactoring-UI-Refactorings',
 	#package : 'Refactoring-UI',
@@ -94,17 +95,16 @@ ReRenameMethodRefactoring >> areNamesTheSame [
 { #category : 'preconditions' }
 ReRenameMethodRefactoring >> breakingChangePreconditions [
 
-	^ self doesNotOverrideExistingMethodPrecondition 
+	^ self doesNotOverrideExistingMethodPreconditions isEmpty
 ]
 
 { #category : 'preconditions' }
-ReRenameMethodRefactoring >> doesNotOverrideExistingMethodPrecondition [
+ReRenameMethodRefactoring >> doesNotOverrideExistingMethodPreconditions [
 	"Check that the new selector is not already defined in superclasses"
 	self halt.
-	^ self implementors
-		inject: RBCondition true 
-		into: [ :condition :each |
-			condition & (RBCondition hierarchyOf: each canUnderstand: newSelector) not ]
+	^	violations := self implementors asOrderedCollection select: [ :each | (ReUpToRootDefinesMethod new class: each ; selector: newSelector) check ].
+	"Here we get all the conditions whose classes defines a selector.
+	we could flatten this.".
 ]
 
 { #category : 'preconditions' }
@@ -225,4 +225,9 @@ ReRenameMethodRefactoring >> superPreconditions [
 	^ conditions & self doesNotOverrideExistingMethodPrecondition
 
 
+]
+
+{ #category : 'accessing' }
+ReRenameMethodRefactoring >> violations [
+	^ violations
 ]

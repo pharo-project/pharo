@@ -127,13 +127,23 @@ ReRenameMethodDriver >> runRefactoring [
 	failedConditions isEmpty ]
 		whileFalse: [
 			failedConditions do: [ :cond |
+				"We need to mockify it"
 				self application newInform
 					label: cond errorString;
 					title: 'Invalid name';
 					openModal ] ].
 	self halt.
-	refactoring doesNotOverrideExistingMethodPrecondition check.
-		"to revise"
+	refactoring doesNotOverrideExistingMethodPreconditions 
+		ifNotEmpty: [ 
+			"We need to mockify it"
+			| ok |
+			ok := self application newConfirm
+				title: refactoring violations first name, ' defines the method ', refactoring newSelector ;
+		      label: 'Do you want to override it?';
+		      acceptLabel: 'Sure!';
+		      cancelLabel: 'No, forget it';
+		      openModal.
+		ok ifFalse: [ ^ self ] ].
 	self configureMessage.
 	self applyChanges.
 ]
