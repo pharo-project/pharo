@@ -12,7 +12,7 @@ MetacelloMonticelloLoader >> fetchPackageDirective: aMetacelloPackageLoadDirecti
 	| monticelloRepositories allResolvedReferences references nearestReference mcVersion |
 	monticelloRepositories := self repositoriesFrom:
 		                          aMetacelloPackageLoadDirective
-			                          externalReference.
+			                          repositorySpecs.
 	allResolvedReferences := monticelloRepositories flatCollect: [ :r |
 		                         r goferReferences ].
 	references := allResolvedReferences select: [ :each |
@@ -34,7 +34,7 @@ MetacelloMonticelloLoader >> loadAtomicPackageDirectives: packageDirectives [
 
 	references := packageDirectives collect: [ :e |
 		| resolvedReference |
-		resolvedReference := ((self repositoriesFrom: e externalReference)
+		resolvedReference := ((self repositoriesFrom: e repositorySpecs)
 			flatCollect: [ :repo | | found |
 				found := repo
 					packageNamed: e spec name
@@ -50,7 +50,7 @@ MetacelloMonticelloLoader >> loadAtomicPackageDirectives: packageDirectives [
 	packageDirectives do: [ :e |
 		MetacelloNotification signal:
 			'Loaded -> ' , e packageName , ' --- '
-			, e externalReference first description ]
+			, e repositorySpecs first description ]
 ]
 
 { #category : 'loading' }
@@ -62,15 +62,6 @@ MetacelloMonticelloLoader >> loadPackageDirective: aMetacelloPackageLoadDirectiv
 { #category : 'repositories' }
 MetacelloMonticelloLoader >> repositoriesFrom: aMetacelloMVRepositorySpecs [
 
-	| repositories repos |
-	repositories := MCRepositoryGroup default repositories.
-	repos := OrderedCollection new.
-	aMetacelloMVRepositorySpecs do: [ :aSpec |
-		| description |
-		description := aSpec description.
-		(repositories
-			 detect: [ :rep | rep description = description ]
-			 ifNone: [ aSpec createRepository ]) ifNotNil: [ :repo |
-			repos add: repo ] ].
-	^ repos
+	^ aMetacelloMVRepositorySpecs collect: [ :aSpec |
+		  aSpec createRepository ]
 ]

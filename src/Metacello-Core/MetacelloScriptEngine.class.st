@@ -90,7 +90,7 @@ MetacelloScriptEngine >> doLoadProjectSpecFrom: aMetacelloPackageSpec [
 
 	self loader loadPackageDirective: (MetacelloDirective
 			 loadPackage: aMetacelloPackageSpec
-			 externalReference: aMetacelloPackageSpec repositorySpecs)
+			 repositorySpecs: aMetacelloPackageSpec repositorySpecs)
 ]
 
 { #category : 'accessing' }

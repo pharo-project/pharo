@@ -79,7 +79,7 @@ MetacelloRecordTarget >> visitPackageSpec: aMetacelloPackageSpec [
 	self preLoad: aMetacelloPackageSpec.
 	(MetacelloDirective
 		 loadPackage: aMetacelloPackageSpec
-		 externalReference: currentRepositorySpecs) addTo:
+		 repositorySpecs: currentRepositorySpecs) addTo:
 		self specBuilder currentLoadDirective.
 	self postLoad: aMetacelloPackageSpec
 ]

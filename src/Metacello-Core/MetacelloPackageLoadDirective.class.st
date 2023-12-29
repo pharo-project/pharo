@@ -2,8 +2,7 @@ Class {
 	#name : 'MetacelloPackageLoadDirective',
 	#superclass : 'MetacelloDirective',
 	#instVars : [
-		'resolvedReference',
-		'externalReference'
+		'repositorySpecs'
 	],
 	#category : 'Metacello-Core-Directives',
 	#package : 'Metacello-Core',
@@ -17,20 +16,15 @@ MetacelloPackageLoadDirective >> acceptVisitor: aVisitor [
 ]
 
 { #category : 'accessing' }
-MetacelloPackageLoadDirective >> externalReference [
-	^ externalReference
-]
-
-{ #category : 'accessing' }
 MetacelloPackageLoadDirective >> file [
 
-	^ self externalReference asString
+	^ self repositorySpecs asString
 ]
 
 { #category : 'printing' }
 MetacelloPackageLoadDirective >> label [
 
-	^ spec name , ' -- ', externalReference first description
+	^ spec name , ' -- ', repositorySpecs first description
 ]
 
 { #category : 'enumerating' }
@@ -54,24 +48,19 @@ MetacelloPackageLoadDirective >> packages [
 { #category : 'accessing' }
 MetacelloPackageLoadDirective >> repository [
 
-	^self externalReference repository
+	^self repositorySpecs repository
 ]
 
 { #category : 'accessing' }
-MetacelloPackageLoadDirective >> resolvedReference [
-	^ resolvedReference
-]
-
-{ #category : 'accessing' }
-MetacelloPackageLoadDirective >> resolvedReference: anObject [
-	resolvedReference := anObject
+MetacelloPackageLoadDirective >> repositorySpecs [
+	^ repositorySpecs
 ]
 
 { #category : 'initialization' }
-MetacelloPackageLoadDirective >> spec: aPackageSpec externalReference: anExternalReference [
+MetacelloPackageLoadDirective >> spec: aPackageSpec repositorySpecs: anExternalReference [
 
 	self spec: aPackageSpec.
-	externalReference := anExternalReference
+	repositorySpecs := anExternalReference
 ]
 
 { #category : 'accessing' }

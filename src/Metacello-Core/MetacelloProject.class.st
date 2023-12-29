@@ -89,12 +89,6 @@ MetacelloProject >> configurationOfProjectSpec [
     ^ MetacelloMCConfigurationOfProjectSpec for: self
 ]
 
-{ #category : 'repository creation' }
-MetacelloProject >> createRepository: aRepositorySpec [
-
-	^ MetacelloPlatform current createRepository: aRepositorySpec
-]
-
 { #category : 'accessing' }
 MetacelloProject >> defaultBlessing [
 
