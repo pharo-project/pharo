@@ -166,8 +166,8 @@ MetacelloMCBaselineOfProjectSpec >> repositoryVersionString [
 ]
 
 { #category : 'scripting' }
-MetacelloMCBaselineOfProjectSpec >> validateVersionString: issues withDefaultVersionString: ignored [
-    self versionString
+MetacelloMCBaselineOfProjectSpec >> validateVersionString: issues withDefaultVersionString: ignored withEngine: aScriptEngine [
+ (self versionStringForEngine: aScriptEngine)
         ifNotNil: [ :vs | 
             | prj |
             prj := self project asBaselineProject.
@@ -176,7 +176,7 @@ MetacelloMCBaselineOfProjectSpec >> validateVersionString: issues withDefaultVer
                     issues
                         add:
                             (MetacelloValidationError
-                                configurationClass: self projectClass
+                                configurationClass: (self projectClassForEngine: aScriptEngine)
                                 reasonCode: #'invalidVersionString'
                                 callSite:
                                     #'validateForScriptLoad:withDefaultVersionString:withDefaultRepositoryDecription:'
@@ -185,13 +185,15 @@ MetacelloMCBaselineOfProjectSpec >> validateVersionString: issues withDefaultVer
 ]
 
 { #category : 'querying' }
-MetacelloMCBaselineOfProjectSpec >> version [
+MetacelloMCBaselineOfProjectSpec >> versionForEngine: aMetacelloScriptEngine [
 
-	self projectClass ifNil: [ ^ nil ].
-	^ self projectClassProject version
+	(self projectClassForEngine: aMetacelloScriptEngine) ifNil: [ ^ nil ].
+	^ (self projectClassProjectForEngine: aMetacelloScriptEngine) version
 ]
 
-{ #category : 'querying' }
-MetacelloMCBaselineOfProjectSpec >> versionString [
-    ^ versionString ifNil: [ self version ifNotNil: [:v | v versionString] ]
+{ #category : 'versions' }
+MetacelloMCBaselineOfProjectSpec >> versionStringForEngine: aMetacelloScriptEngine [
+
+	^ versionString ifNil: [
+		  (self versionForEngine: aMetacelloScriptEngine) ifNotNil: [ :v | v versionString ] ]
 ]

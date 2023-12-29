@@ -57,6 +57,14 @@ MetacelloGroupSpec >> loadUsing: aLoader gofer: gofer withEngine: anEngine [
 	"noop"
 ]
 
+{ #category : 'loading' }
+MetacelloGroupSpec >> packageSpecsInLoadOrderWithEngine: anEngine [
+
+	^ ((self project version spec packageSpecsInLoadOrderWithEngine: anEngine)
+		   select: [ :each | self includes includes: each name ])
+		  flatCollect: [ :e | e packageSpecsInLoadOrderWithEngine: anEngine ]
+]
+
 { #category : 'visiting' }
 MetacelloGroupSpec >> projectDo: projectBlock packageDo: packageBlock groupDo: groupBlock [
 

@@ -102,6 +102,20 @@ MetacelloProjectReferenceSpec >> nonOverridable [
 	^super nonOverridable, #( projectReference )
 ]
 
+{ #category : 'loading' }
+MetacelloProjectReferenceSpec >> packageSpecsInLoadOrderWithEngine: anEngine [
+
+	| specs loadedSpecs |
+	specs := (self projectReference versionForEngine: anEngine) spec
+		         packageSpecsInLoadOrderWithEngine: anEngine.
+	loadedSpecs := (self projectReference loads ifNil: [ #(  ) ])
+		               ifNotEmpty: [ :loads |
+		               specs select: [ :each | loads includes: each name ] ]
+		               ifEmpty: [ specs ].
+	^ loadedSpecs flatCollect: [ :e |
+		  e packageSpecsInLoadOrderWithEngine: anEngine ]
+]
+
 { #category : 'copying' }
 MetacelloProjectReferenceSpec >> postCopy [
 
@@ -188,9 +202,9 @@ MetacelloProjectReferenceSpec >> version [
 ]
 
 { #category : 'querying' }
-MetacelloProjectReferenceSpec >> versionOrNil [
+MetacelloProjectReferenceSpec >> versionOrNilForEngine: anEngine [
 
-	^self projectReference versionOrNil
+	^ self projectReference versionOrNilForEngine: anEngine
 ]
 
 { #category : 'accessing' }

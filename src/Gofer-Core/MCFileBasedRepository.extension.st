@@ -10,16 +10,18 @@ MCFileBasedRepository >> goferReferences [
 ]
 
 { #category : '*Gofer-Core' }
-MCFileBasedRepository >> packageNamed: aName ifAbsent: aBlock [
+MCFileBasedRepository >> packageNamed: aName ifPresent: presentBlock ifAbsent: absentBlock [
 
-	| versionNames |
-	versionNames := [ self allVersionNames ]
+	| versionNames versionName |
+	versionNames := [ self packageDescriptionsFromReadableFileNames ]
 		                on: MCRepositoryError
 		                do: [ :error |
 			                ^ GoferRepositoryError
 				                  signal: error messageText
 				                  repository: self ].
-	^ self versionFrom: (versionNames
-			   detect: [ :e | e packageName = aName ]
-			   ifNone: [ ^ aBlock value ])
+	versionName := versionNames
+		               detect: [ :e | e first = aName ]
+		               ifNone: [ nil ].
+	versionName ifNil: [ ^ absentBlock value ].
+	^ presentBlock value: (self versionFrom: versionName first)
 ]

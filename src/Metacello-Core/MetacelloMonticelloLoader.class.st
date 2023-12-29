@@ -6,22 +6,19 @@ Class {
 	#tag : 'Gofer'
 }
 
+{ #category : 'accessing' }
+MetacelloMonticelloLoader >> engine: aMetacelloScriptEngine [ 
+	"Nothing"
+]
+
 { #category : 'loading' }
 MetacelloMonticelloLoader >> fetchPackageDirective: aMetacelloPackageLoadDirective [
 
-	| monticelloRepositories allResolvedReferences references nearestReference mcVersion |
-	monticelloRepositories := self repositoriesFrom:
-		                          aMetacelloPackageLoadDirective
-			                          repositorySpecs.
-	allResolvedReferences := monticelloRepositories flatCollect: [ :r |
-		                         r goferReferences ].
-	references := allResolvedReferences select: [ :each |
-		              aMetacelloPackageLoadDirective spec name
-		              = each packageName ].
-
-	nearestReference := references last.
-	mcVersion := nearestReference version.
-	MCCacheRepository default storeVersion: mcVersion
+	| repository allResolvedReferences |
+	repository := self repositoriesFrom:
+		              aMetacelloPackageLoadDirective repositorySpecs.
+	allResolvedReferences := repository fetchPackageNamed:
+		                         aMetacelloPackageLoadDirective spec name
 ]
 
 { #category : 'loading' }
@@ -29,21 +26,13 @@ MetacelloMonticelloLoader >> loadAtomicPackageDirectives: packageDirectives [
 	"Each package directive can specify many repositorySpecs.
 	Find the first one that defines the package (assumming they all are equivalent) and use that."
 
-	| model references |
+	| model |
 	model := MCVersionLoader new.
 
-	references := packageDirectives collect: [ :e |
-		| resolvedReference |
-		resolvedReference := ((self repositoriesFrom: e repositorySpecs)
-			flatCollect: [ :repo | | found |
-				found := repo
-					packageNamed: e spec name
-					ifAbsent: [ nil ].
-				found
-					ifNil: [ #(  ) ]
-					ifNotNil: [ { {found . repo} } ] ]) first.
-		model addVersion: resolvedReference first.
-		resolvedReference ].
+	packageDirectives do: [ :e |
+		| repository |
+		repository := self repositoriesFrom: e repositorySpecs.
+		repository loadPackageNamed: e spec name intoLoader: model ].
 
 	model load.
 
@@ -59,9 +48,19 @@ MetacelloMonticelloLoader >> loadPackageDirective: aMetacelloPackageLoadDirectiv
 	self loadAtomicPackageDirectives: { aMetacelloPackageLoadDirective }
 ]
 
+{ #category : 'accessing' }
+MetacelloMonticelloLoader >> lookupProjectClassNamed: aString [
+
+	^ Smalltalk at: aString asSymbol ifAbsent: [ nil ]
+]
+
 { #category : 'repositories' }
 MetacelloMonticelloLoader >> repositoriesFrom: aMetacelloMVRepositorySpecs [
 
-	^ aMetacelloMVRepositorySpecs collect: [ :aSpec |
-		  aSpec createRepository ]
+	aMetacelloMVRepositorySpecs size = 1 ifTrue: [
+		^ aMetacelloMVRepositorySpecs first createRepository ].
+
+	^ MetacelloRepositoryGroup onRepositories:
+		  (aMetacelloMVRepositorySpecs collect: [ :aSpec |
+			   aSpec createRepository ])
 ]

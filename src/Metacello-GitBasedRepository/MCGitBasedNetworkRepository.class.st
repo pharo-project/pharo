@@ -407,6 +407,14 @@ MCGitBasedNetworkRepository >> ensureLocalRepository [
 	self resolveLocalRespository
 ]
 
+{ #category : 'fetching' }
+MCGitBasedNetworkRepository >> fetchPackageNamed: aName [
+
+	| references |
+	references := self packageNamed: aName.
+	MCCacheRepository default storeVersion: references
+]
+
 { #category : 'initialization' }
 MCGitBasedNetworkRepository >> flushCache [
   "the directory acts like a cache since we download the directory from a git-based repository (github, bitbucket, etc.)"
@@ -477,6 +485,14 @@ MCGitBasedNetworkRepository >> isValid [
     ^ true
 ]
 
+{ #category : 'accessing' }
+MCGitBasedNetworkRepository >> loadPackageNamed: aString intoLoader: aMCVersionLoader [
+
+	| found |
+	found := self packageNamed: aString.
+	aMCVersionLoader addVersion: found
+]
+
 { #category : 'private' }
 MCGitBasedNetworkRepository >> localRepository [
 	self ensureLocalRepository.
@@ -495,10 +511,13 @@ MCGitBasedNetworkRepository >> normalizeTagsData: jsonObject [
 ]
 
 { #category : 'accessing' }
-MCGitBasedNetworkRepository >> packageNamed: aName ifAbsent: aBlock [
+MCGitBasedNetworkRepository >> packageNamed: aName ifPresent: presentBlock ifAbsent: absentBlock [
 	"delegate collection to local repository, but change them to be from *this* repository."
 
-	^ self localRepository packageNamed: aName ifAbsent: aBlock
+	^ self localRepository
+		  packageNamed: aName
+		  ifPresent: presentBlock
+		  ifAbsent: absentBlock
 ]
 
 { #category : 'accessing' }

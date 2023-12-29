@@ -54,21 +54,20 @@ MCVersionLoader >> announceLoadStop: aString [
 
 { #category : 'private' }
 MCVersionLoader >> basicLoad [
+
 	| loader |
-	
-	self checkForModificationsIfCancel: [ ^ self] ifMerge: [ ^ self mergeVersions ].
-	
+	self
+		checkForModificationsIfCancel: [ ^ self ]
+		ifMerge: [ ^ self mergeVersions ].
+
 	loader := versions size > 1
-		ifTrue: [MCMultiPackageLoader new]
-		ifFalse: [MCPackageLoader new].
-		
-	versions do: [:ea |
-		ea canOptimizeLoading
-			ifTrue: [ea patch applyTo: loader]
-			ifFalse: [loader updatePackage: ea package withSnapshot: ea snapshot]].
-		
+		          ifTrue: [ MCMultiPackageLoader new ]
+		          ifFalse: [ MCPackageLoader new ].
+	versions do: [ :ea |
+		loader updatePackage: ea package withSnapshot: ea snapshot ].
+
 	loader load.
-	versions do: [:ea | ea workingCopy loaded: ea]
+	versions do: [ :ea | ea workingCopy loaded: ea ]
 ]
 
 { #category : 'checking' }

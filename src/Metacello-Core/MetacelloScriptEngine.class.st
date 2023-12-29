@@ -165,7 +165,7 @@ MetacelloScriptEngine >> getBaselineProjectUnconditionalLoad [
 		do: [ :ex |
       "see https://github.com/dalehenrich/metacello-work/issues/244 ... uncoditionally load baseline"
 			ex resume: true ].
-	project := (Smalltalk at: self projectSpec className asSymbol) new
+	project := (self lookupProjectClassNamed: self projectSpec className asSymbol) new
       initalizeProjectWithRepositoryDescription: self projectSpec repositories map keys.
   project version spec repositories: self repositories copy.
   ^ project
@@ -339,7 +339,11 @@ MetacelloScriptEngine >> load: required onProjectDownGrade: onDownGradeBlock onP
 { #category : 'accessing' }
 MetacelloScriptEngine >> loader [
 
-	^ loader ifNil: [ loader := MetacelloMonticelloLoader new ]
+	^ (self options
+		   at: #loader
+		   ifAbsentPut: [ MetacelloMonticelloLoader new ])
+		  engine: self;
+		  yourself
 ]
 
 { #category : 'actions api' }
@@ -368,6 +372,12 @@ MetacelloScriptEngine >> lock [
                       specCopy mergeScriptRepository: spec.
                       spec := specCopy ] ] ] ].
       self root: spec ]
+]
+
+{ #category : 'accessing' }
+MetacelloScriptEngine >> lookupProjectClassNamed: aString [ 
+	
+	^ self loader lookupProjectClassNamed: aString 
 ]
 
 { #category : 'project lookup' }

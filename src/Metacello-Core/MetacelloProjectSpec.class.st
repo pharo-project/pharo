@@ -138,8 +138,8 @@ MetacelloProjectSpec >> compareVersions: aMetacelloProjectSpec usingOperator: an
 { #category : 'scripting' }
 MetacelloProjectSpec >> compareVersionsEqual: aMetacelloProjectSpec [
   | vrsn otherVrsn |
-  vrsn := self versionOrNil.
-  otherVrsn := aMetacelloProjectSpec versionOrNil.
+  vrsn := self versionOrNilForEngine: nil.
+  otherVrsn := aMetacelloProjectSpec versionOrNilForEngine: nil.
   vrsn ifNil: [ ^ vrsn = otherVrsn ].
   otherVrsn ifNil: [ ^ false ].
   ^ vrsn versionNumber = otherVrsn versionNumber
@@ -368,12 +368,12 @@ MetacelloProjectSpec >> ensureProjectLoadedWithEngine: anEngine [
 
 	"answer true if the projectClass exists"
 
-	(self projectClass isNil or: [
-		 self versionOrNil isNil or: [
+	((self projectClassForEngine: anEngine) isNil or: [
+		 (self versionOrNilForEngine: anEngine) isNil or: [
 			 self isMutable and: [ anEngine ignoreImage ] ] ]) ifTrue: [
 		self projectPackage ifNil: [ ^ true ].
 		self ensureLoadUsingEngine: anEngine ].
-	^ self projectClass isNotNil
+	^ (self projectClassForEngine: anEngine) isNotNil
 ]
 
 { #category : 'querying' }
@@ -681,18 +681,21 @@ MetacelloProjectSpec >> preLoadDoIt: anObject [
 ]
 
 { #category : 'querying' }
-MetacelloProjectSpec >> projectClass [
+MetacelloProjectSpec >> projectClassForEngine: aMetacelloScriptEngine [
 
+	aMetacelloScriptEngine ifNil: [ ^ nil ].
 	self className ifNil: [ ^ nil ].
-	^ Smalltalk at: self className asSymbol ifAbsent: [  ]
+	^ aMetacelloScriptEngine lookupProjectClassNamed:
+		  self className asSymbol
 ]
 
 { #category : 'querying' }
-MetacelloProjectSpec >> projectClassProject [
-
+MetacelloProjectSpec >> projectClassProjectForEngine: aMetacelloScriptEngine [
 	"Initialize the project object in the baseline/configuration"
+
 	| projectClassInstance |
-	projectClassInstance := self projectClass new.
+	projectClassInstance := (self projectClassForEngine:
+		                         aMetacelloScriptEngine) new.
 	projectClassInstance initalizeProjectWithRepositoryDescription:
 		self repositoryDescriptions.
 
@@ -742,7 +745,7 @@ MetacelloProjectSpec >> registrationsCompareEqual: aMetacelloProjectSpec [
     "name className versionString operator loads preLoadDoIt postLoadDoIt"
 
     ^ self className = aMetacelloProjectSpec className
-        and: [ self versionString = aMetacelloProjectSpec versionString and: [ self operator == aMetacelloProjectSpec operator ] ]
+        and: [ (self versionStringForEngine: nil) = (aMetacelloProjectSpec versionStringForEngine: nil) and: [ self operator == aMetacelloProjectSpec operator ] ]
 ]
 
 { #category : 'accessing' }
@@ -829,46 +832,41 @@ MetacelloProjectSpec >> updateForSpawnMethod: sourceSpec [
 
 { #category : 'scripting' }
 MetacelloProjectSpec >> validateForScriptLoad: aScriptEngine withDefaultVersionString: defaultVersionString withDefaultRepositoryDecription: defaultRepositoryDecription [
-    | issues callSite |
-    issues := OrderedCollection new.
-    callSite := #'validateForScriptLoad:withDefaultVersionString:withDefaultRepositoryDecription:'.
-    self name
-        ifNil: [ 
-            issues
-                add:
-                    (MetacelloValidationError
-                        configurationClass: self projectClass
-                        reasonCode: #'incompleteProjectSpec'
-                        callSite: callSite
-                        explanation: 'name field required') ].
-    self className
-        ifNil: [ 
-            issues
-                add:
-                    (MetacelloValidationError
-                        configurationClass: self projectClass
-                        reasonCode: #'incompleteProjectSpec'
-                        callSite: callSite
-                        explanation: 'className field required') ].
-    self repositories isEmpty
-        ifTrue: [ 
-            defaultRepositoryDecription
-                ifNotNil: [ self repository: defaultRepositoryDecription ]
-                ifNil: [ 
-                    issues
-                        add:
-                            (MetacelloValidationError
-                                configurationClass: self projectClass
-                                reasonCode: #'incompleteProjectSpec'
-                                callSite: callSite
-                                explanation: 'repository field required') ] ].
-    self validateVersionString: issues withDefaultVersionString: defaultVersionString.
-    ^ issues
+
+	| issues callSite |
+	issues := OrderedCollection new.
+	callSite := #validateForScriptLoad:withDefaultVersionString:withDefaultRepositoryDecription:.
+	self name ifNil: [
+		issues add: (MetacelloValidationError
+				 configurationClass: (self projectClassForEngine: aScriptEngine)
+				 reasonCode: #incompleteProjectSpec
+				 callSite: callSite
+				 explanation: 'name field required') ].
+	self className ifNil: [
+		issues add: (MetacelloValidationError
+				 configurationClass: (self projectClassForEngine: aScriptEngine)
+				 reasonCode: #incompleteProjectSpec
+				 callSite: callSite
+				 explanation: 'className field required') ].
+	self repositories isEmpty ifTrue: [
+		defaultRepositoryDecription
+			ifNotNil: [ self repository: defaultRepositoryDecription ]
+			ifNil: [
+				issues add: (MetacelloValidationError
+						 configurationClass: (self projectClassForEngine: aScriptEngine)
+						 reasonCode: #incompleteProjectSpec
+						 callSite: callSite
+						 explanation: 'repository field required') ] ].
+	self
+		validateVersionString: issues
+		withDefaultVersionString: defaultVersionString
+		withEngine: aScriptEngine.
+	^ issues
 ]
 
 { #category : 'scripting' }
-MetacelloProjectSpec >> validateVersionString: issues withDefaultVersionString: defaultVersionString [
-    self versionString
+MetacelloProjectSpec >> validateVersionString: issues withDefaultVersionString: defaultVersionString withEngine: aScriptEngine [
+  (self versionStringForEngine: aScriptEngine)
         ifNil: [ 
             defaultVersionString
                 ifNotNil: [ self versionString: defaultVersionString ]
@@ -876,7 +874,7 @@ MetacelloProjectSpec >> validateVersionString: issues withDefaultVersionString: 
                     issues
                         add:
                             (MetacelloValidationError
-                                configurationClass: self projectClass
+                                configurationClass: (self projectClassForEngine: aScriptEngine)
                                 reasonCode: #'incompleteProjectSpec'
                                 callSite:
                                     #'validateForScriptLoad:withDefaultVersionString:withDefaultRepositoryDecription:'
@@ -884,18 +882,20 @@ MetacelloProjectSpec >> validateVersionString: issues withDefaultVersionString: 
 ]
 
 { #category : 'querying' }
-MetacelloProjectSpec >> version [
+MetacelloProjectSpec >> versionForEngine: aMetacelloScriptEngine [
 	"Empty version string means use latestVersion or #bleedingEdge"
 
-	self projectClass ifNil: [ ^ nil ].
-	^ self versionString
-		  ifNotNil: [ self projectClassProject version: self versionString ]
+	(self projectClassForEngine: aMetacelloScriptEngine) ifNil: [ ^ nil ].
+	^ (self versionStringForEngine: aMetacelloScriptEngine)
+		  ifNotNil: [
+			  (self projectClassProjectForEngine: aMetacelloScriptEngine) versionStringForEngine:
+				  aMetacelloScriptEngine ]
 		  ifNil: [
 			  | vrsn |
 			  "Eventually it will become an error to not specify a project reference version as default: #stable is the preferred default""self deprecated: 'Must specify a project reference version.'."
 			  self flag: 'deprecate after version 1.0'.
-			  (vrsn := self projectClassProject latestVersion) isNil
-				  ifTrue: [ self projectClassProject version: #bleedingEdge ]
+			  (vrsn := (self projectClassProjectForEngine: aMetacelloScriptEngine) latestVersion) isNil
+				  ifTrue: [ (self projectClassProjectForEngine: aMetacelloScriptEngine) version: #bleedingEdge ]
 				  ifFalse: [ vrsn ] ]
 ]
 
@@ -903,11 +903,11 @@ MetacelloProjectSpec >> version [
 MetacelloProjectSpec >> versionForScriptEngine: aMetacelloScriptEngine [
 
 	| prj |
-	prj := self projectClass
+	prj := (self projectClassForEngine: aMetacelloScriptEngine)
 		       ifNil: [ self project ]
-		       ifNotNil: [ self projectClassProject ].
+		       ifNotNil: [ self projectClassProjectForEngine: aMetacelloScriptEngine ].
 	^ (prj projectForScriptEngine: aMetacelloScriptEngine) version:
-		  self versionString
+		(self versionStringForEngine: aMetacelloScriptEngine)
 ]
 
 { #category : 'querying' }
@@ -918,18 +918,19 @@ MetacelloProjectSpec >> versionKey [
 ]
 
 { #category : 'querying' }
-MetacelloProjectSpec >> versionOrNil [
+MetacelloProjectSpec >> versionOrNilForEngine: anEngine [
 
-	^[ self version ] on: MetacelloVersionDoesNotExistError do: [:ex | ^nil ].
-]
-
-{ #category : 'querying' }
-MetacelloProjectSpec >> versionString [
-	^ versionString
+	^[ self versionForEngine: anEngine ] on: MetacelloVersionDoesNotExistError do: [:ex | ^nil ].
 ]
 
 { #category : 'accessing' }
 MetacelloProjectSpec >> versionString: anObject [
     self shouldBeMutable.
     versionString := anObject
+]
+
+{ #category : 'querying' }
+MetacelloProjectSpec >> versionStringForEngine: aMetacelloScriptEngine [
+
+	^ versionString
 ]

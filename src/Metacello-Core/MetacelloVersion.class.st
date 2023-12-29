@@ -156,14 +156,14 @@ MetacelloVersion >> expandToLoadableSpecNames: nameList [
 { #category : 'private' }
 MetacelloVersion >> fetchRequiredFromArray: anArray withEngine: anEngine [
 
-	| directives |
-	directives := self
+	| directive |
+	directive := self
 		              recordRequiredFromArray:
 		              (self defaultPackageNamesToLoad: anArray)
 		              withEngine: anEngine.
 
-	directives acceptVisitor: (MetacelloFetchTarget on: anEngine).
-	^ directives
+	directive acceptVisitor: (MetacelloFetchTarget on: anEngine).
+	^ directive
 ]
 
 { #category : 'querying' }
@@ -197,13 +197,13 @@ MetacelloVersion >> importedVersions: aCollection [
 { #category : 'private' }
 MetacelloVersion >> loadRequiredFromArray: anArray withEngine: anEngine [
 
-	| directives |
-	directives := self
-		              fetchRequiredFromArray:
-		              (self defaultPackageNamesToLoad: anArray)
-		              withEngine: anEngine.
-	directives acceptVisitor: (MetacelloLoadTarget on: anEngine).
-	^ directives
+	| directive |
+	directive := self
+		             fetchRequiredFromArray:
+		             (self defaultPackageNamesToLoad: anArray)
+		             withEngine: anEngine.
+	directive acceptVisitor: (MetacelloLoadTarget on: anEngine).
+	^ directive
 ]
 
 { #category : 'actions' }
@@ -322,7 +322,7 @@ MetacelloVersion >> recordRequiredFromArray: anArray withEngine: anEngine [
 
 	self spec acceptVisitor: target.
 
-	^ target specBuilder currentLoadDirective
+	^ target specBuilder root
 ]
 
 { #category : 'actions' }

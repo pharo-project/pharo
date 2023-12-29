@@ -76,11 +76,15 @@ MetacelloRecordTarget >> visitGroupSpec: aMetacelloGroupSpec [
 { #category : 'visiting' }
 MetacelloRecordTarget >> visitPackageSpec: aMetacelloPackageSpec [
 
+	| directive |
+	directive := MetacelloDirective
+		             loadPackage: aMetacelloPackageSpec
+		             repositorySpecs: currentRepositorySpecs.
+	(self specBuilder currentLoadDirective includes: directive) ifTrue: [
+		^ self ].
+
 	self preLoad: aMetacelloPackageSpec.
-	(MetacelloDirective
-		 loadPackage: aMetacelloPackageSpec
-		 repositorySpecs: currentRepositorySpecs) addTo:
-		self specBuilder currentLoadDirective.
+	directive addTo: self specBuilder currentLoadDirective.
 	self postLoad: aMetacelloPackageSpec
 ]
 
@@ -102,12 +106,12 @@ MetacelloRecordTarget >> visitProjectReference: aMetacelloProjectReferenceSpec [
 	displayString := 'Project: '
 	                 ,
 	                 aMetacelloProjectReferenceSpec projectReference name.
-	aMetacelloProjectReferenceSpec projectReference versionString
+	(aMetacelloProjectReferenceSpec projectReference versionStringForEngine: engine)
 		ifNotNil: [
 			displayString := displayString , ' '
 			                 ,
-			                 aMetacelloProjectReferenceSpec projectReference
-				                 versionString ].
+			                 (aMetacelloProjectReferenceSpec projectReference
+				                 versionStringForEngine: engine) ].
 
 	MetacelloNotification signal: displayString.
 
@@ -123,12 +127,12 @@ MetacelloRecordTarget >> visitProjectReference: aMetacelloProjectReferenceSpec [
 		override loadVersion: nil.
 		^ self ].
 
-	vrsn := aMetacelloProjectReferenceSpec projectReference versionOrNil.
+	vrsn := aMetacelloProjectReferenceSpec projectReference versionOrNilForEngine: engine.
 	projectSpecForVersion := aMetacelloProjectReferenceSpec
 		                         projectReference asProjectSpecForVersion:
 		                         vrsn.
 	projectSpecForVersion ensureProjectLoadedWithEngine: engine.
-	vrsn ifNil: [ vrsn := projectSpecForVersion version ].
+	vrsn ifNil: [ vrsn := projectSpecForVersion versionForEngine: engine ].
 	vrsn
 		recordRequiredFromArray:
 		(projectSpecForVersion loadListForVersion: vrsn)

@@ -9,6 +9,13 @@ Class {
 	#tag : 'Directives'
 }
 
+{ #category : 'comparing' }
+MetacelloPackageLoadDirective >> = anotherPackageDirective [
+
+	anotherPackageDirective species = self species ifFalse: [ ^ false ].
+	^ anotherPackageDirective packageName = self packageName
+]
+
 { #category : 'visiting' }
 MetacelloPackageLoadDirective >> acceptVisitor: aVisitor [ 
 	
@@ -19,6 +26,12 @@ MetacelloPackageLoadDirective >> acceptVisitor: aVisitor [
 MetacelloPackageLoadDirective >> file [
 
 	^ self repositorySpecs asString
+]
+
+{ #category : 'comparing' }
+MetacelloPackageLoadDirective >> hash [
+
+	^ self packageName hash
 ]
 
 { #category : 'printing' }

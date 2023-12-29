@@ -280,7 +280,7 @@ MetacelloPackageSpec >> nonOverridable [
 ]
 
 { #category : 'loading' }
-MetacelloPackageSpec >> packageSpecsInLoadOrder [
+MetacelloPackageSpec >> packageSpecsInLoadOrderWithEngine: anObject [
 
 	^ { self }
 ]
@@ -355,6 +355,18 @@ MetacelloPackageSpec >> repositoryDescriptions [
 MetacelloPackageSpec >> repositorySpecs [
 
 	^self repositories map values
+]
+
+{ #category : 'as yet unclassified' }
+MetacelloPackageSpec >> requiredPackageSpecsWithEngine: anEngine [
+
+	| specs requiredSpec |
+	self project ifNil: [ ^ #(  ) ].
+	specs := self project version spec
+		         packageSpecsInLoadOrderWithEngine: nil.
+	^ self requires flatCollect: [ :required |
+		  requiredSpec := specs detect: [ :e | e name = required ].
+		  requiredSpec packageSpecsInLoadOrderWithEngine: anEngine ]
 ]
 
 { #category : 'private' }
