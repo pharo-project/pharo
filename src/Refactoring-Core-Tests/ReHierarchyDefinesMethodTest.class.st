@@ -1,25 +1,24 @@
 Class {
-	#name : 'REHierarchyDefinesMethodTest',
+	#name : 'ReHierarchyDefinesMethodTest',
 	#superclass : 'TestCase',
-	#category : 'Refactoring-Core-Conditions',
-	#package : 'Refactoring-Core',
-	#tag : 'Conditions'
+	#category : 'Refactoring-Core-Tests',
+	#package : 'Refactoring-Core-Tests'
 }
 
 { #category : 'tests' }
-REHierarchyDefinesMethodTest >> model [
+ReHierarchyDefinesMethodTest >> model [
 
 	^ RBNamespace onEnvironment:
 		  (RBClassEnvironment classes: {MyClassARoot . MySubAccessingSuperclassState} )
 ]
 
 { #category : 'as yet unclassified' }
-REHierarchyDefinesMethodTest >> testHierarchyDefinesByCheckingInRootDefiningTheMethod [
+ReHierarchyDefinesMethodTest >> testHierarchyDefinesByCheckingInRootDefiningTheMethod [
 
 	| myClassARoot hier |
 	myClassARoot := self model classNamed: #MyClassARoot.
 	
-	hier := REHierarchyDefinesMethod new 
+	hier := ReHierarchyDefinesMethod new 
 		class: myClassARoot; selector: #accessing.
 		
 	" the class MyClassARoot defines the method #accessing "
@@ -30,12 +29,12 @@ REHierarchyDefinesMethodTest >> testHierarchyDefinesByCheckingInRootDefiningTheM
 ]
 
 { #category : 'as yet unclassified' }
-REHierarchyDefinesMethodTest >> testHierarchyDefinesByCheckingInRootNotDefiningTheMethod [
+ReHierarchyDefinesMethodTest >> testHierarchyDefinesByCheckingInRootNotDefiningTheMethod [
 
 	| myClassARoot hier |
 	myClassARoot := self model classNamed: #MyClassARoot.
 	
-	hier := REHierarchyDefinesMethod new 
+	hier := ReHierarchyDefinesMethod new 
 		class: myClassARoot; selector: #accessingSharedVariable2.
 		
 	" the subclass of MyClassARoot defines the method #accessingSharedVariable2 "
@@ -46,12 +45,12 @@ REHierarchyDefinesMethodTest >> testHierarchyDefinesByCheckingInRootNotDefiningT
 ]
 
 { #category : 'as yet unclassified' }
-REHierarchyDefinesMethodTest >> testHierarchyDefinesByCheckingInSubclassDefiningTheMethod [
+ReHierarchyDefinesMethodTest >> testHierarchyDefinesByCheckingInSubclassDefiningTheMethod [
 
 	| myClassARoot hier |
 	myClassARoot := self model classNamed: #MySubAccessingSuperclassState.
 	
-	hier := REHierarchyDefinesMethod new 
+	hier := ReHierarchyDefinesMethod new 
 		class: myClassARoot; selector: #accessing.
 		
 	" the class MySubAccessingSuperclassState defines too the method #accessing "
@@ -62,12 +61,12 @@ REHierarchyDefinesMethodTest >> testHierarchyDefinesByCheckingInSubclassDefining
 ]
 
 { #category : 'as yet unclassified' }
-REHierarchyDefinesMethodTest >> testHierarchyDefinesByCheckingInSubclassNotDefiningTheMethod [
+ReHierarchyDefinesMethodTest >> testHierarchyDefinesByCheckingInSubclassNotDefiningTheMethod [
 
 	| myClassARoot hier |
 	myClassARoot := self model classNamed: #MySubAccessingSuperclassState.
 	
-	hier := REHierarchyDefinesMethod new 
+	hier := ReHierarchyDefinesMethod new 
 		class: myClassARoot; selector: #initialize.
 		
 	" the superclass of MySubAccessingSuperclassState defines the method #initialize "

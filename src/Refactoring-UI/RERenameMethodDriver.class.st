@@ -2,7 +2,7 @@
 I'm a model for user interaction for the rename method refactoring.
 "
 Class {
-	#name : 'RERenameMethodDriver',
+	#name : 'ReRenameMethodDriver',
 	#superclass : 'RBInteractionDriver',
 	#instVars : [
 		'class',
@@ -19,27 +19,27 @@ Class {
 }
 
 { #category : 'private testing' }
-RERenameMethodDriver >> canAddArgs [
+ReRenameMethodDriver >> canAddArgs [
 	^ false
 ]
 
 { #category : 'private testing' }
-RERenameMethodDriver >> canEditName [
+ReRenameMethodDriver >> canEditName [
 	^ true
 ]
 
 { #category : 'private testing' }
-RERenameMethodDriver >> canRemoveArgs [
+ReRenameMethodDriver >> canRemoveArgs [
 	^ false
 ]
 
 { #category : 'private testing' }
-RERenameMethodDriver >> canRenameArgs [
+ReRenameMethodDriver >> canRenameArgs [
 	^ true
 ]
 
 { #category : 'execution' }
-RERenameMethodDriver >> changes [
+ReRenameMethodDriver >> changes [
 	"Remember should not call generateChanges"
 	^ refactoring renameChanges
 
@@ -47,7 +47,7 @@ RERenameMethodDriver >> changes [
 ]
 
 { #category : 'execution' }
-RERenameMethodDriver >> configureMessage [
+ReRenameMethodDriver >> configureMessage [
 
 	refactoring newSelector: newMessage selector.
 	refactoring permutation: newMessage permutation.
@@ -55,23 +55,23 @@ RERenameMethodDriver >> configureMessage [
 ]
 
 { #category : 'execution' }
-RERenameMethodDriver >> configureRefactoring [
+ReRenameMethodDriver >> configureRefactoring [
 
 	"here we do not fully configure the refactoring because we are missing information such as the signature.
 	Since we want to let the refactoring validate input we need to create it upfront then configure later."
 	
-	refactoring := RERenameMethodRefactoring new renameMethod: originalMessage selector in: class 
+	refactoring := ReRenameMethodRefactoring new renameMethod: originalMessage selector in: class 
 ]
 
 { #category : 'execution' }
-RERenameMethodDriver >> initialize [ 
+ReRenameMethodDriver >> initialize [ 
 	
 	super initialize.
 	shouldEscape := false.
 ]
 
 { #category : 'initialize' }
-RERenameMethodDriver >> model: aModel renameMethodSignature: aMessage in: aClass [ 
+ReRenameMethodDriver >> model: aModel renameMethodSignature: aMessage in: aClass [ 
 	model := aModel.
 	originalMessage := aMessage.
 	"while we could think that the class is not needed, it is because a rename should not override existing methods."
@@ -79,18 +79,18 @@ RERenameMethodDriver >> model: aModel renameMethodSignature: aMessage in: aClass
 ]
 
 { #category : 'To be removed' }
-RERenameMethodDriver >> newMessage [
+ReRenameMethodDriver >> newMessage [
 
 	^ newMessage
 ]
 
 { #category : 'To be removed' }
-RERenameMethodDriver >> postAction: aClosure [ 
+ReRenameMethodDriver >> postAction: aClosure [ 
 	postAction := aClosure
 ]
 
 { #category : 'To be removed' }
-RERenameMethodDriver >> requestNewMessage [
+ReRenameMethodDriver >> requestNewMessage [
 
 	| methodName dialog  |
 	
@@ -117,7 +117,7 @@ RERenameMethodDriver >> requestNewMessage [
 ]
 
 { #category : 'execution' }
-RERenameMethodDriver >> runRefactoring [
+ReRenameMethodDriver >> runRefactoring [
 
 	| failedConditions |
 	self configureRefactoring.
@@ -139,7 +139,7 @@ RERenameMethodDriver >> runRefactoring [
 ]
 
 { #category : 'initialize' }
-RERenameMethodDriver >> scopes: refactoringScope model: aModel renameMethodSignature: aMessage in: aClass [
+ReRenameMethodDriver >> scopes: refactoringScope model: aModel renameMethodSignature: aMessage in: aClass [
 
 	scopes := refactoringScope.
 	self model: aModel renameMethodSignature: aMessage in: aClass 

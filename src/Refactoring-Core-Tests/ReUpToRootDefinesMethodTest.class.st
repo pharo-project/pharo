@@ -1,25 +1,24 @@
 Class {
-	#name : 'REUpToRootDefinesMethodTest',
+	#name : 'ReUpToRootDefinesMethodTest',
 	#superclass : 'TestCase',
-	#category : 'Refactoring-Core-Conditions',
-	#package : 'Refactoring-Core',
-	#tag : 'Conditions'
+	#category : 'Refactoring-Core-Tests',
+	#package : 'Refactoring-Core-Tests'
 }
 
 { #category : 'tests' }
-REUpToRootDefinesMethodTest >> model [
+ReUpToRootDefinesMethodTest >> model [
 
 	^ RBNamespace onEnvironment:
 		  (RBClassEnvironment classes: {MyClassARoot . MySubAccessingSuperclassState} )
 ]
 
 { #category : 'tests' }
-REUpToRootDefinesMethodTest >> testUpToRootDefinesByCheckingInRootDefiningTheMethod [
+ReUpToRootDefinesMethodTest >> testUpToRootDefinesByCheckingInRootDefiningTheMethod [
 
 	| myClassARoot hier |
 	myClassARoot := self model classNamed: #MyClassARoot.
 	
-	hier := REUpToRootDefinesMethod new 
+	hier := ReUpToRootDefinesMethod new 
 		class: myClassARoot; selector: #accessing.
 		
 	" the class MyClassARoot defines the method #accessing "
@@ -30,12 +29,12 @@ REUpToRootDefinesMethodTest >> testUpToRootDefinesByCheckingInRootDefiningTheMet
 ]
 
 { #category : 'tests' }
-REUpToRootDefinesMethodTest >> testUpToRootDefinesByCheckingInSubclassDefiningTheMethod [
+ReUpToRootDefinesMethodTest >> testUpToRootDefinesByCheckingInSubclassDefiningTheMethod [
 
 	| myClassARoot hier |
 	myClassARoot := self model classNamed: #MySubAccessingSuperclassState.
 	
-	hier := REUpToRootDefinesMethod new 
+	hier := ReUpToRootDefinesMethod new 
 		class: myClassARoot; selector: #accessing.
 		
 	" the class MySubAccessingSuperclassState defines the method #accessing "
@@ -46,12 +45,12 @@ REUpToRootDefinesMethodTest >> testUpToRootDefinesByCheckingInSubclassDefiningTh
 ]
 
 { #category : 'tests' }
-REUpToRootDefinesMethodTest >> testUpToRootDefinesByCheckingInSubclassNotDefiningTheMethod [
+ReUpToRootDefinesMethodTest >> testUpToRootDefinesByCheckingInSubclassNotDefiningTheMethod [
 
 	| myClassARoot hier |
 	myClassARoot := self model classNamed: #MySubAccessingSuperclassState.
 	
-	hier := REHierarchyDefinesMethod new 
+	hier := ReHierarchyDefinesMethod new 
 		class: myClassARoot; selector: #initialize.
 		
 	" the superclass of MySubAccessingSuperclassState defines the method #initialize "
@@ -62,12 +61,12 @@ REUpToRootDefinesMethodTest >> testUpToRootDefinesByCheckingInSubclassNotDefinin
 ]
 
 { #category : 'tests' }
-REUpToRootDefinesMethodTest >> testUpToRootNotDefineTheMethod [
+ReUpToRootDefinesMethodTest >> testUpToRootNotDefineTheMethod [
 
 	| myClassARoot hier |
 	myClassARoot := self model classNamed: #MyClassARoot.
 	
-	hier := REUpToRootDefinesMethod new 
+	hier := ReUpToRootDefinesMethod new 
 		class: myClassARoot; selector: #accessingSharedVariable2.
 		
 	" the subclass of MyClassARoot defines the method #accessingSharedVariable2 but we do not look in it.
@@ -79,12 +78,12 @@ REUpToRootDefinesMethodTest >> testUpToRootNotDefineTheMethod [
 ]
 
 { #category : 'tests' }
-REUpToRootDefinesMethodTest >> testUpToRootNotDefineTheMethodStartingFromSubclass [
+ReUpToRootDefinesMethodTest >> testUpToRootNotDefineTheMethodStartingFromSubclass [
 
 	| myClassARoot hier |
 	myClassARoot := self model classNamed: #MySubAccessingSuperclassState.
 	
-	hier := REUpToRootDefinesMethod new 
+	hier := ReUpToRootDefinesMethod new 
 		class: myClassARoot; selector: #doesNotExist.
 		
 	" the subclass of MyClassARoot defines the method #accessingSharedVariable2 but we do not look in it.

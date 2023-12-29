@@ -30,7 +30,7 @@ refactoring execute
 ```
 "
 Class {
-	#name : 'RERenameMethodRefactoring',
+	#name : 'ReRenameMethodRefactoring',
 	#superclass : 'RBChangeMethodNameRefactoring',
 	#instVars : [
 		'hasPermutedArguments'
@@ -41,7 +41,7 @@ Class {
 }
 
 { #category : 'instance creation' }
-RERenameMethodRefactoring class >> model: aRBSmalltalk renameMethod: aSelector in: aClass to: newSelector permutation: aMap [
+ReRenameMethodRefactoring class >> model: aRBSmalltalk renameMethod: aSelector in: aClass to: newSelector permutation: aMap [
 	^ self new
 		model: aRBSmalltalk;
 		renameMethod: aSelector
@@ -52,7 +52,7 @@ RERenameMethodRefactoring class >> model: aRBSmalltalk renameMethod: aSelector i
 ]
 
 { #category : 'instance creation' }
-RERenameMethodRefactoring class >> renameMethod: aSelector in: aClass to: newSelector permutation: aMap [
+ReRenameMethodRefactoring class >> renameMethod: aSelector in: aClass to: newSelector permutation: aMap [
 	^ self new
 		renameMethod: aSelector
 		in: aClass
@@ -61,7 +61,7 @@ RERenameMethodRefactoring class >> renameMethod: aSelector in: aClass to: newSel
 ]
 
 { #category : 'preconditions' }
-RERenameMethodRefactoring >> applicabilityPreconditions [
+ReRenameMethodRefactoring >> applicabilityPreconditions [
 
 	^ { "self newNameDoesNotRequireRefactoringPreconditions not . 
 		(RBCondition
@@ -71,34 +71,34 @@ RERenameMethodRefactoring >> applicabilityPreconditions [
 ]
 
 { #category : 'torevisit' }
-RERenameMethodRefactoring >> areArgumentsPermuted [
+ReRenameMethodRefactoring >> areArgumentsPermuted [
 	"I fedup and not happy but let us move on. We may turn them into first class condition later."
 	
 	^ permutation asArray = (1 to: oldSelector numArgs) asArray
 ]
 
 { #category : 'torevisit' }
-RERenameMethodRefactoring >> areArgumentsTheSame [
+ReRenameMethodRefactoring >> areArgumentsTheSame [
 	"I fedup and not happy but let us move on. We may turn them into first class condition later."
 	
 	^ oldSelector numArgs = newSelector numArgs
 ]
 
 { #category : 'torevisit' }
-RERenameMethodRefactoring >> areNamesTheSame [
+ReRenameMethodRefactoring >> areNamesTheSame [
 	"I fedup and not happy but let us move on. We may turn them into first class condition later."
 
 	^ (newSelector = oldSelector) 
 ]
 
 { #category : 'preconditions' }
-RERenameMethodRefactoring >> breakingChangePreconditions [
+ReRenameMethodRefactoring >> breakingChangePreconditions [
 
 	^ self doesNotOverrideExistingMethodPrecondition 
 ]
 
 { #category : 'preconditions' }
-RERenameMethodRefactoring >> doesNotOverrideExistingMethodPrecondition [
+ReRenameMethodRefactoring >> doesNotOverrideExistingMethodPrecondition [
 	"Check that the new selector is not already defined in superclasses"
 	self halt.
 	^ self implementors
@@ -108,7 +108,7 @@ RERenameMethodRefactoring >> doesNotOverrideExistingMethodPrecondition [
 ]
 
 { #category : 'preconditions' }
-RERenameMethodRefactoring >> generateChanges [
+ReRenameMethodRefactoring >> generateChanges [
 	"Prepare, check the preconditions, and perform the actual transformation (i.e., creating a list of changes that can be accessible using the changes message). This method should not be invoked from drivers since drivers usually check in finer grained mode the preconditions - and that this stage they already checked the preconditions."
 	
 	self prepareForExecution.
@@ -124,7 +124,7 @@ RERenameMethodRefactoring >> generateChanges [
 ]
 
 { #category : 'testing' }
-RERenameMethodRefactoring >> hasPermutedArguments [
+ReRenameMethodRefactoring >> hasPermutedArguments [
 
 	^ hasPermutedArguments
 		ifNil: [ hasPermutedArguments := super hasPermutedArguments ]
@@ -132,18 +132,18 @@ RERenameMethodRefactoring >> hasPermutedArguments [
 ]
 
 { #category : 'testing' }
-RERenameMethodRefactoring >> implementorsCanBePrimitives [
+ReRenameMethodRefactoring >> implementorsCanBePrimitives [
 	^self hasPermutedArguments not
 ]
 
 { #category : 'private' }
-RERenameMethodRefactoring >> modifyImplementorParseTree: parseTree in: aClass [
+ReRenameMethodRefactoring >> modifyImplementorParseTree: parseTree in: aClass [
 	super modifyImplementorParseTree: parseTree in: aClass.
 	self renameArgumentsIn: parseTree
 ]
 
 { #category : 'preconditions' }
-RERenameMethodRefactoring >> myConditions [
+ReRenameMethodRefactoring >> myConditions [
 
 	^ RBCondition withBlock: [ self areArgumentsTheSame ]
 		errorString: newSelector printString
@@ -151,7 +151,7 @@ RERenameMethodRefactoring >> myConditions [
 ]
 
 { #category : 'preconditions' }
-RERenameMethodRefactoring >> newNameDoesNotRequireRefactoringPreconditions [
+ReRenameMethodRefactoring >> newNameDoesNotRequireRefactoringPreconditions [
 	"this could be part of skippingRefactoringPrecondition meaning that there is no need to execute it."
 
 
@@ -166,7 +166,7 @@ RERenameMethodRefactoring >> newNameDoesNotRequireRefactoringPreconditions [
 ]
 
 { #category : 'parsing' }
-RERenameMethodRefactoring >> parseTreeRewriterInstance [
+ReRenameMethodRefactoring >> parseTreeRewriterInstance [
 
 	^ self hasPermutedArguments
 		  ifTrue: [ self parseTreeRewriterClass new ]
@@ -177,26 +177,26 @@ RERenameMethodRefactoring >> parseTreeRewriterInstance [
 ]
 
 { #category : 'preconditions' }
-RERenameMethodRefactoring >> preconditions [
+ReRenameMethodRefactoring >> preconditions [
 	self halt.
 	
 	^ self newNameDoesNotRequireRefactoringPreconditions | self superPreconditions
 ]
 
 { #category : 'accessing' }
-RERenameMethodRefactoring >> refactoredClass [
+ReRenameMethodRefactoring >> refactoredClass [
 	^ class
 ]
 
 { #category : 'as yet unclassified' }
-RERenameMethodRefactoring >> renameChanges [
+ReRenameMethodRefactoring >> renameChanges [
 
 	self privateTransform.
 	^ self changes
 ]
 
 { #category : 'printing' }
-RERenameMethodRefactoring >> storeOn: aStream [
+ReRenameMethodRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	aStream nextPutAll: self class name.
 	aStream
@@ -213,7 +213,7 @@ RERenameMethodRefactoring >> storeOn: aStream [
 ]
 
 { #category : 'preconditions' }
-RERenameMethodRefactoring >> superPreconditions [
+ReRenameMethodRefactoring >> superPreconditions [
 	"This refactoring only preserves behavior if all implementors are renamed."
 
 	| conditions |

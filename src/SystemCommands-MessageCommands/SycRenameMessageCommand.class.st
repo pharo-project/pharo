@@ -55,7 +55,7 @@ SycRenameMessageCommand >> defaultMenuItemName [
 { #category : 'execution' }
 SycRenameMessageCommand >> execute [
 
-	driver := RERenameMethodDriver new
+	driver := ReRenameMethodDriver new
 		          scopes: refactoringScopes
 		          model: model
 		          renameMethodSignature: originalMessage

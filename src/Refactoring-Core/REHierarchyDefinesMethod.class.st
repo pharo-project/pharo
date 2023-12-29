@@ -3,7 +3,7 @@ This condition checks in the class and its superclasses and subclasses if a clas
 It could be a subclass of `REUpToRootDefinesMethod` since it extends the search.
 "
 Class {
-	#name : 'REHierarchyDefinesMethod',
+	#name : 'ReHierarchyDefinesMethod',
 	#superclass : 'RBClassCondition',
 	#instVars : [
 		'selector'
@@ -14,13 +14,13 @@ Class {
 }
 
 { #category : 'checking' }
-REHierarchyDefinesMethod >> check [
+ReHierarchyDefinesMethod >> check [
 
 	^ self hierarchyDefinesMethod
 ]
 
 { #category : 'checking' }
-REHierarchyDefinesMethod >> doesClass: argClass definesMethod: aSelector [
+ReHierarchyDefinesMethod >> doesClass: argClass definesMethod: aSelector [
 	"We could avoid the aSelector argument. I do not have a good name."
 	
 	(argClass directlyDefinesMethod: aSelector) ifTrue: [ violators add: argClass. ^ true].
@@ -28,26 +28,26 @@ REHierarchyDefinesMethod >> doesClass: argClass definesMethod: aSelector [
 ]
 
 { #category : 'as yet unclassified' }
-REHierarchyDefinesMethod >> hierarchyDefinesMethod [
+ReHierarchyDefinesMethod >> hierarchyDefinesMethod [
 
 	(self doesClass: aClass definesMethod: selector) ifTrue: [ ^ true ].
 	^ self subclassOf: aClass redefines: selector
 ]
 
 { #category : 'accessing' }
-REHierarchyDefinesMethod >> selector [
+ReHierarchyDefinesMethod >> selector [
 
 	^ selector
 ]
 
 { #category : 'accessing' }
-REHierarchyDefinesMethod >> selector: aSymbol [
+ReHierarchyDefinesMethod >> selector: aSymbol [
 
 	selector := aSymbol
 ]
 
 { #category : 'as yet unclassified' }
-REHierarchyDefinesMethod >> subclassOf: argClass redefines: aSelector [
+ReHierarchyDefinesMethod >> subclassOf: argClass redefines: aSelector [
 
 	| defs |
 	defs := argClass allSubclasses select: [ :each | (each directlyDefinesMethod: aSelector) ].

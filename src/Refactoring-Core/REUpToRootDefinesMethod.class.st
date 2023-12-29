@@ -2,7 +2,7 @@
 This condition checks in the class and its superclasses if a class defines a given selector
 "
 Class {
-	#name : 'REUpToRootDefinesMethod',
+	#name : 'ReUpToRootDefinesMethod',
 	#superclass : 'RBClassCondition',
 	#instVars : [
 		'selector'
@@ -13,13 +13,13 @@ Class {
 }
 
 { #category : 'checking' }
-REUpToRootDefinesMethod >> check [
+ReUpToRootDefinesMethod >> check [
 
 	^ self upToRootDefinesMethod 
 ]
 
 { #category : 'checking' }
-REUpToRootDefinesMethod >> doesClass: argClass definesMethod: aSelector [
+ReUpToRootDefinesMethod >> doesClass: argClass definesMethod: aSelector [
 	"We could avoid the aSelector argument. I do not have a good name."
 	
 	(argClass directlyDefinesMethod: aSelector) ifTrue: [ violators add: argClass. ^ true].
@@ -27,19 +27,19 @@ REUpToRootDefinesMethod >> doesClass: argClass definesMethod: aSelector [
 ]
 
 { #category : 'accessing' }
-REUpToRootDefinesMethod >> selector [
+ReUpToRootDefinesMethod >> selector [
 
 	^ selector
 ]
 
 { #category : 'accessing' }
-REUpToRootDefinesMethod >> selector: aSymbol [
+ReUpToRootDefinesMethod >> selector: aSymbol [
 
 	selector := aSymbol
 ]
 
 { #category : 'checking' }
-REUpToRootDefinesMethod >> upToRootDefinesMethod [
+ReUpToRootDefinesMethod >> upToRootDefinesMethod [
 
 	(self doesClass: aClass definesMethod: selector) ifTrue: [ ^ true ].
 	^ false
