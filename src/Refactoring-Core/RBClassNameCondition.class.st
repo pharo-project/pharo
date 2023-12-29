@@ -25,7 +25,20 @@ RBClassNameCondition >> classNamed: aString [
 	className := aString
 ]
 
+{ #category : 'initialization' }
+RBClassNameCondition >> initialize [
+
+	super initialize.
+	violators := OrderedCollection new.
+]
+
 { #category : 'accessing' }
 RBClassNameCondition >> model: aModel [ 
 	model := aModel
+]
+
+{ #category : 'initialization' }
+RBClassNameCondition >> violators [ 
+
+	^ violators
 ]
