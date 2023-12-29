@@ -552,7 +552,7 @@ EpLogBrowserPresenter >> initializeSearchPresenters [
 		yourself.
 	searchButtonPresenter := self newButton
 		iconName: #smallFind;
-		label: 'Search';
+		label: 'Find';
 		disable;
 		action: [ self searchList: searchPresenter text ];
 		yourself.
@@ -814,7 +814,6 @@ EpLogBrowserPresenter >> searchEntries: entriesCollection for: aString [
 EpLogBrowserPresenter >> searchList: aString [
 	"Update the receiver's log entries with entries matching aString"
 
-	log ifNil: [ ^ self ].
 	itemsPresenter items: (self searchedEntryMatches: aString) reversed.
 	toolbarPresenter refresh.
 ]
