@@ -132,14 +132,17 @@ ReRenameMethodDriver >> runRefactoring [
 					label: cond errorString;
 					title: 'Invalid name';
 					openModal ] ].
-	self halt.
+			
 	refactoring doesNotOverrideExistingMethodPreconditions 
 		ifNotEmpty: [ 
 			"We need to mockify it"
 			| ok |
 			ok := self application newConfirm
-				title: refactoring violations first name, ' defines the method ', refactoring newSelector ;
-		      label: 'Do you want to override it?';
+				"should be move into the refactoring"
+				title: 'Watchout override detected!';
+		      label: (String streamContents: 
+							[:s | refactoring violationMessageOn: s.
+								s nextPutAll: '. Do you want the override(s)?']);
 		      acceptLabel: 'Sure!';
 		      cancelLabel: 'No, forget it';
 		      openModal.

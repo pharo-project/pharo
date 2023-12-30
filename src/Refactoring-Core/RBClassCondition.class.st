@@ -17,6 +17,11 @@ RBClassCondition class >> class: anRBClass [
 ]
 
 { #category : 'accessing' }
+RBClassCondition >> analysedClass [
+	^ aClass
+]
+
+{ #category : 'accessing' }
 RBClassCondition >> class: aRBClass [
 	aClass := aRBClass
 ]

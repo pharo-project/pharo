@@ -101,10 +101,9 @@ ReRenameMethodRefactoring >> breakingChangePreconditions [
 { #category : 'preconditions' }
 ReRenameMethodRefactoring >> doesNotOverrideExistingMethodPreconditions [
 	"Check that the new selector is not already defined in superclasses"
-	self halt.
-	^	violations := self implementors asOrderedCollection select: [ :each | (ReUpToRootDefinesMethod new class: each ; selector: newSelector) check ].
-	"Here we get all the conditions whose classes defines a selector.
-	we could flatten this.".
+
+	^ violations := self implementors asOrderedCollection select: [ :each | (ReUpToRootDefinesMethod new class: each ; selector: newSelector) check ].
+	
 ]
 
 { #category : 'preconditions' }
@@ -225,6 +224,19 @@ ReRenameMethodRefactoring >> superPreconditions [
 	^ conditions & self doesNotOverrideExistingMethodPrecondition
 
 
+]
+
+{ #category : 'printing' }
+ReRenameMethodRefactoring >> violationMessageOn: aStream [
+	
+	violations size = 1
+		ifTrue: [ aStream nextPutAll: violations first name; nextPutAll: ' defines the method ' ]
+		ifFalse: [ 
+	violations 
+			do: [ :each | aStream nextPutAll: each name ] 
+			separatedBy: [ aStream nextPutAll: ', '].
+	aStream nextPutAll: ' define the method '. ].
+	aStream nextPutAll: newSelector.
 ]
 
 { #category : 'accessing' }
