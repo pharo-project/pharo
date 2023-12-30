@@ -298,10 +298,26 @@ ClyQueryBrowserMorph >> newWindowTitle [
 ]
 
 { #category : 'opening/closing' }
+ClyQueryBrowserMorph >> open [ 
+	super open.
+
+	resultView takeKeyboardFocus
+	
+]
+
+{ #category : 'opening/closing' }
 ClyQueryBrowserMorph >> openAnotherBrowser: aBrowser [
 	(aBrowser isKindOf: ClyQueryBrowserMorph)
 		ifTrue: [ aBrowser openInWindow: self window]
 		ifFalse: [ aBrowser open ]
+]
+
+{ #category : 'opening/closing' }
+ClyQueryBrowserMorph >> openInWindow: aWindow [
+	super openInWindow: aWindow.
+
+	resultView takeKeyboardFocus
+	
 ]
 
 { #category : 'initialization' }
