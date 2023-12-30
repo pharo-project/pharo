@@ -106,10 +106,10 @@ MetacelloProjectReferenceSpec >> nonOverridable [
 MetacelloProjectReferenceSpec >> packageSpecsInLoadOrderWithEngine: anEngine [
 
 	| specs loadedSpecs loads |
-	specs := (self projectReference versionForEngine: anEngine) spec
+	specs := self projectReference version spec
 		         packageSpecsInLoadOrderWithEngine: anEngine.
 	loads := self projectReference loadListForVersion:
-		         (self projectReference versionForEngine: anEngine).
+		         self projectReference version.
 	loadedSpecs := specs select: [ :each | loads includes: each name ].
 	^ loadedSpecs flatCollect: [ :e |
 		  e packageSpecsInLoadOrderWithEngine: anEngine ]
@@ -201,9 +201,9 @@ MetacelloProjectReferenceSpec >> version [
 ]
 
 { #category : 'querying' }
-MetacelloProjectReferenceSpec >> versionOrNilForEngine: anEngine [
+MetacelloProjectReferenceSpec >> versionOrNil [
 
-	^ self projectReference versionOrNilForEngine: anEngine
+	^ self projectReference versionOrNil
 ]
 
 { #category : 'accessing' }

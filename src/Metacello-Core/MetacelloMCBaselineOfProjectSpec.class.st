@@ -159,9 +159,9 @@ MetacelloMCBaselineOfProjectSpec >> repositoryVersionString [
 ]
 
 { #category : 'scripting' }
-MetacelloMCBaselineOfProjectSpec >> validateVersionString: issues withDefaultVersionString: ignored withEngine: aScriptEngine [
+MetacelloMCBaselineOfProjectSpec >> validateVersionString: issues withDefaultVersionString: ignored [
 
-	(self versionStringForEngine: aScriptEngine) ifNotNil: [ :vs |
+	self versionString ifNotNil: [ :vs |
 		| prj |
 		prj := self project asBaselineProject.
 		vs ~= prj singletonVersionName ifTrue: [
@@ -174,15 +174,15 @@ MetacelloMCBaselineOfProjectSpec >> validateVersionString: issues withDefaultVer
 ]
 
 { #category : 'querying' }
-MetacelloMCBaselineOfProjectSpec >> versionForEngine: aMetacelloScriptEngine [
+MetacelloMCBaselineOfProjectSpec >> version [
 
 	projectInitialized ifFalse: [ ^ nil ].
 	^ self project version
 ]
 
-{ #category : 'versions' }
-MetacelloMCBaselineOfProjectSpec >> versionStringForEngine: aMetacelloScriptEngine [
+{ #category : 'querying' }
+MetacelloMCBaselineOfProjectSpec >> versionString [
 
 	^ versionString ifNil: [
-		  (self versionForEngine: aMetacelloScriptEngine) ifNotNil: [ :v | v versionString ] ]
+		  self version ifNotNil: [ :v | v versionString ] ]
 ]

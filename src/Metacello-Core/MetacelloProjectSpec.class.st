@@ -138,12 +138,13 @@ MetacelloProjectSpec >> compareVersions: aMetacelloProjectSpec usingOperator: an
 
 { #category : 'scripting' }
 MetacelloProjectSpec >> compareVersionsEqual: aMetacelloProjectSpec [
-  | vrsn otherVrsn |
-  vrsn := self versionOrNilForEngine: nil.
-  otherVrsn := aMetacelloProjectSpec versionOrNilForEngine: nil.
-  vrsn ifNil: [ ^ vrsn = otherVrsn ].
-  otherVrsn ifNil: [ ^ false ].
-  ^ vrsn versionNumber = otherVrsn versionNumber
+
+	| vrsn otherVrsn |
+	vrsn := self versionOrNil.
+	otherVrsn := aMetacelloProjectSpec versionOrNil.
+	vrsn ifNil: [ ^ vrsn = otherVrsn ].
+	otherVrsn ifNil: [ ^ false ].
+	^ vrsn versionNumber = otherVrsn versionNumber
 ]
 
 { #category : 'printing' }
@@ -749,10 +750,11 @@ MetacelloProjectSpec >> registration [
 
 { #category : 'scripting' }
 MetacelloProjectSpec >> registrationsCompareEqual: aMetacelloProjectSpec [
-    "name className versionString operator loads preLoadDoIt postLoadDoIt"
+	"name className versionString operator loads preLoadDoIt postLoadDoIt"
 
-    ^ self className = aMetacelloProjectSpec className
-        and: [ (self versionStringForEngine: nil) = (aMetacelloProjectSpec versionStringForEngine: nil) and: [ self operator == aMetacelloProjectSpec operator ] ]
+	^ self className = aMetacelloProjectSpec className and: [
+		  self versionString = aMetacelloProjectSpec versionString and: [
+			  self operator == aMetacelloProjectSpec operator ] ]
 ]
 
 { #category : 'accessing' }
@@ -863,15 +865,14 @@ MetacelloProjectSpec >> validateForScriptLoad: aScriptEngine withDefaultVersionS
 						 explanation: 'repository field required') ] ].
 	self
 		validateVersionString: issues
-		withDefaultVersionString: defaultVersionString
-		withEngine: aScriptEngine.
+		withDefaultVersionString: defaultVersionString.
 	^ issues
 ]
 
 { #category : 'scripting' }
-MetacelloProjectSpec >> validateVersionString: issues withDefaultVersionString: defaultVersionString withEngine: aScriptEngine [
+MetacelloProjectSpec >> validateVersionString: issues withDefaultVersionString: defaultVersionString [
 
-	(self versionStringForEngine: aScriptEngine) ifNil: [
+	self versionString ifNil: [
 		defaultVersionString
 			ifNotNil: [ self versionString: defaultVersionString ]
 			ifNil: [
@@ -883,12 +884,11 @@ MetacelloProjectSpec >> validateVersionString: issues withDefaultVersionString: 
 ]
 
 { #category : 'querying' }
-MetacelloProjectSpec >> versionForEngine: aMetacelloScriptEngine [
+MetacelloProjectSpec >> version [
 	"Empty version string means use latestVersion or #bleedingEdge"
 
-	^ (self versionStringForEngine: aMetacelloScriptEngine)
-		  ifNotNil: [
-		  self project versionStringForEngine: aMetacelloScriptEngine ]
+	^ self versionString
+		  ifNotNil: [ self project versionString ]
 		  ifNil: [
 			  | vrsn |
 			  "Eventually it will become an error to not specify a project reference version as default: #stable is the preferred default""self deprecated: 'Must specify a project reference version.'."
@@ -901,8 +901,7 @@ MetacelloProjectSpec >> versionForEngine: aMetacelloScriptEngine [
 { #category : 'scripting' }
 MetacelloProjectSpec >> versionForScriptEngine: aMetacelloScriptEngine [
 
-	^ self project version:
-		  (self versionStringForEngine: aMetacelloScriptEngine)
+	^ self project version: self versionString
 ]
 
 { #category : 'querying' }
@@ -913,19 +912,21 @@ MetacelloProjectSpec >> versionKey [
 ]
 
 { #category : 'querying' }
-MetacelloProjectSpec >> versionOrNilForEngine: anEngine [
+MetacelloProjectSpec >> versionOrNil [
 
-	^[ self versionForEngine: anEngine ] on: MetacelloVersionDoesNotExistError do: [:ex | ^nil ].
+	^ [ self version ]
+		  on: MetacelloVersionDoesNotExistError
+		  do: [ :ex | ^ nil ]
+]
+
+{ #category : 'querying' }
+MetacelloProjectSpec >> versionString [
+
+	^ versionString
 ]
 
 { #category : 'accessing' }
 MetacelloProjectSpec >> versionString: anObject [
     self shouldBeMutable.
     versionString := anObject
-]
-
-{ #category : 'querying' }
-MetacelloProjectSpec >> versionStringForEngine: aMetacelloScriptEngine [
-
-	^ versionString
 ]
