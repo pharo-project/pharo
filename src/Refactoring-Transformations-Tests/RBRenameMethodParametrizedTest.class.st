@@ -9,8 +9,9 @@ Class {
 { #category : 'tests' }
 RBRenameMethodParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
+				addCase: { #rbClass -> ReRenameMethodRefactoring };
 		addCase: { #rbClass -> RBRenameMethodRefactoring };
-		addCase: { #rbClass -> ReRenameMethodRefactoring };
+
 		addCase: { #rbClass -> RBRenameMethodTransformation };
 		yourself
 ]
@@ -154,7 +155,7 @@ RBRenameMethodParametrizedTest >> testRenameTestMethod [
 RBRenameMethodParametrizedTest >> testRenameTestMethod1 [
 	| refactoring class |
 	refactoring := self createRefactoringWithArguments:
-		{ ('testMethod1') asSymbol . RBClassDataForRefactoringTest . #testMethod2 . (1 to: 0) }.
+		{ 'testMethod1' asSymbol . RBClassDataForRefactoringTest . #testMethod2 . (1 to: 0) }.
 	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
 	class := refactoring model classNamed: #RBClassDataForRefactoringTest.
 	

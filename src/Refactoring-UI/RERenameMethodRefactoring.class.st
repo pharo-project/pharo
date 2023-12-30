@@ -120,9 +120,9 @@ ReRenameMethodRefactoring >> generateChanges [
 	(self applicabilityPreconditions reject: [ :each | each check ]) ifNotEmpty: [
 		^ RBApplicabilityChecksFailedError signal:
 			  self applicabilityPreconditions errorString ].
-	self breakingChangePreconditions check ifFalse: [
+	self breakingChangePreconditions ifFalse: [
 		RBBreakingChangeChecksFailedWarning signal:
-			self breakingChangePreconditions errorString ].
+			(String streamContents: [ :s | self violationMessageOn: s  ])].
 	self privateTransform.
 	^ self changes
 ]
