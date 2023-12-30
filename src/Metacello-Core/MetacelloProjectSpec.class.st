@@ -350,16 +350,15 @@ MetacelloProjectSpec >> copyForScriptingInto: aProjectSpec [
 
 { #category : 'loading' }
 MetacelloProjectSpec >> ensureLoadUsingEngine: anEngine [
-	"Load only if not there yet"
 
 	| projectClassInstance projectClass |
-	(anEngine lookupProjectClassNamed: self className) ifNotNil: [
-		^ self ].
+	"Load only if not there yet"
+	(anEngine lookupProjectClassNamed: self className) ifNil: [
+		anEngine doLoadProjectSpecFrom: (MetacelloPackageSpec new
+				 name: self className;
+				 repositories: self repositories;
+				 yourself) ].
 
-	anEngine doLoadProjectSpecFrom: (MetacelloPackageSpec new
-			 name: self className;
-			 repositories: self repositories;
-			 yourself).
 	projectInitialized := true.
 	projectClass := anEngine lookupProjectClassNamed:
 		                self className asSymbol.
