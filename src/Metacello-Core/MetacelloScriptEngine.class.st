@@ -127,30 +127,26 @@ MetacelloScriptEngine >> fetch: required [
 
 { #category : 'actions api' }
 MetacelloScriptEngine >> get [
-  " load a fresh copy from repo"
+	" load a fresh copy from repo"
 
-  | spec projectPackage |
-  MetacelloProjectRegistration
-    copyRegistryRestoreOnErrorWhile: [ 
-      self setDefaultsAndValidateProjectSpec.
-      spec := self projectSpec.
-      projectPackage := spec projectPackage.
-      projectPackage repositorySpecs
-        do: [ :repoSpec | repoSpec createRepository flushForScriptGet ].
-      projectPackage forceLoadingWithEngine: self.
-      self root: (Smalltalk at: spec className asSymbol) project.
-      MetacelloProjectRegistration
-        registrationForProjectSpec: spec
-        ifAbsent: [ :new | new registerProject ]
-        ifPresent: [ :existing :new | 
-          existing
-            copyOnWrite: [ :existingCopy | 
-              spec
-                copyForRegistration: existingCopy
-                onWrite: [ :specCopy | 
-                  specCopy
-                    ifNil: [ existingCopy merge: new ]
-                    ifNotNil: [ specCopy mergeScriptRepository: spec ] ] ] ] ]
+	| spec projectPackage |
+	MetacelloProjectRegistration copyRegistryRestoreOnErrorWhile: [
+		self setDefaultsAndValidateProjectSpec.
+		spec := self projectSpec.
+		projectPackage := spec projectPackage.
+		projectPackage repositorySpecs do: [ :repoSpec |
+			repoSpec createRepository flushForScriptGet ].
+		self doLoadProjectSpecFrom: projectPackage.
+		self root: (Smalltalk at: spec className asSymbol) project.
+		MetacelloProjectRegistration
+			registrationForProjectSpec: spec
+			ifAbsent: [ :new | new registerProject ]
+			ifPresent: [ :existing :new |
+				existing copyOnWrite: [ :existingCopy |
+					spec copyForRegistration: existingCopy onWrite: [ :specCopy |
+						specCopy
+							ifNil: [ existingCopy merge: new ]
+							ifNotNil: [ specCopy mergeScriptRepository: spec ] ] ] ] ]
 ]
 
 { #category : 'project lookup' }

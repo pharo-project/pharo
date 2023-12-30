@@ -178,12 +178,6 @@ MetacelloPackageSpec >> file: aString [
 	file := aString
 ]
 
-{ #category : 'loading' }
-MetacelloPackageSpec >> forceLoadingWithEngine: anEngine [
-
-	anEngine doLoadProjectSpecFrom: self
-]
-
 { #category : 'accessing' }
 MetacelloPackageSpec >> getFile [
 	"raw access to iv"

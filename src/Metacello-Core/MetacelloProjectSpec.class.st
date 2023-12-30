@@ -350,17 +350,25 @@ MetacelloProjectSpec >> copyForScriptingInto: aProjectSpec [
 
 { #category : 'loading' }
 MetacelloProjectSpec >> ensureLoadUsingEngine: anEngine [
+	"Load only if not there yet"
 
-	| pp |
-	pp := (anEngine handleLookupProjectSpec: self) projectPackage.
+	| projectClassInstance projectClass |
+	(anEngine lookupProjectClassNamed: self className) ifNotNil: [
+		^ self ].
 
-	pp ifNil: [
-		self error:
-			'Unable to resolve project package for ' , self name printString
-			,
-			'. It is likely that that the configuration referencing this project will not validate properly (see MetacelloToolBox class>>validateConfiguration:).' ].
-
-	pp forceLoadingWithEngine: anEngine
+	anEngine doLoadProjectSpecFrom: (MetacelloPackageSpec new
+			 name: self className;
+			 repositories: self repositories;
+			 yourself).
+	projectInitialized := true.
+	projectClass := anEngine lookupProjectClassNamed:
+		                self className asSymbol.
+	"Then return it through the project method to call the hook redefined in subclasses for compatibility.
+	Subclasses typically change the load type of the project to #atomic"
+	projectClassInstance := projectClass new.
+	projectClassInstance initalizeProjectWithRepositoryDescription:
+		self repositoryDescriptions.
+	project := projectClassInstance project
 ]
 
 { #category : 'loading' }
@@ -372,8 +380,7 @@ MetacelloProjectSpec >> ensureProjectLoadedWithEngine: anEngine [
 
 	(projectInitialized not or: [
 		 self isMutable and: [ anEngine ignoreImage ] ]) ifTrue: [
-		self ensureLoadUsingEngine: anEngine.
-		self initializeProjectForEngine: anEngine ]
+		self ensureLoadUsingEngine: anEngine ]
 ]
 
 { #category : 'querying' }

@@ -216,7 +216,7 @@ MetacelloProject >> map: aDictionary [
 { #category : 'spec classes' }
 MetacelloProject >> packageSpec [
 
-	^self packageSpecClass for: self
+	^ self packageSpecClass for: self
 ]
 
 { #category : 'spec classes' }
