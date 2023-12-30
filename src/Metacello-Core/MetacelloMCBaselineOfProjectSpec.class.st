@@ -81,16 +81,6 @@ MetacelloMCBaselineOfProjectSpec >> ensureConfigurationLoaded: vrsn ensured: ens
   ^ true
 ]
 
-{ #category : 'loading' }
-MetacelloMCBaselineOfProjectSpec >> ensureLoadUsingEngine: anEngine [
-	"see https://github.com/dalehenrich/metacello-work/issues/244 ... uncoditionally load
-   baseline"
-
-	[ super ensureLoadUsingEngine: anEngine ]
-		on: MetacelloIgnorePackageLoaded
-		do: [ :ex | ex resume: ex packageSpec name = self name ]
-]
-
 { #category : 'printing' }
 MetacelloMCBaselineOfProjectSpec >> hasClassName [
 

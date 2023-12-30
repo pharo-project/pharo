@@ -278,12 +278,8 @@ MetacelloProject >> projectAttributes: aList [
 
 { #category : 'scripting' }
 MetacelloProject >> projectForScriptEngine: aMetacelloScriptEngine [
-    ^ self projectForScriptEngine: aMetacelloScriptEngine unconditionalLoad: false
-]
 
-{ #category : 'scripting' }
-MetacelloProject >> projectForScriptEngine: aMetacelloScriptEngine unconditionalLoad: aBool [
-    ^ aMetacelloScriptEngine getConfigurationProjectUnconditionalLoad: aBool
+	^ aMetacelloScriptEngine getConfigurationProjectUnconditionalLoad
 ]
 
 { #category : 'development support' }

@@ -83,7 +83,7 @@ MetacelloMCBaselineProject >> latestVersion: blessing [
 ]
 
 { #category : 'scripting' }
-MetacelloMCBaselineProject >> projectForScriptEngine: aMetacelloScriptEngine unconditionalLoad: aBool [
+MetacelloMCBaselineProject >> projectForScriptEngine: aMetacelloScriptEngine [
 	"see https://github.com/dalehenrich/metacello-work/issues/244 ... uncoditionally load
    baseline"
 

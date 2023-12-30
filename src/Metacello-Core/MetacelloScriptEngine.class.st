@@ -156,28 +156,26 @@ MetacelloScriptEngine >> get [
 MetacelloScriptEngine >> getBaselineProjectUnconditionalLoad [
 
 	| project |
-	[
 	self doLoadProjectSpecFrom: (MetacelloPackageSpec new
 			 name: self projectSpec className;
 			 repositories: self projectSpec repositories;
-			 yourself) ]
-		on: MetacelloIgnorePackageLoaded
-		do: [ :ex |
-      "see https://github.com/dalehenrich/metacello-work/issues/244 ... uncoditionally load baseline"
-			ex resume: true ].
-	project := (self lookupProjectClassNamed: self projectSpec className asSymbol) new
-      initalizeProjectWithRepositoryDescription: self projectSpec repositories map keys.
-  project version spec repositories: self repositories copy.
-  ^ project
+			 yourself).
+	project := (self lookupProjectClassNamed:
+		            self projectSpec className asSymbol) new
+		           initalizeProjectWithRepositoryDescription:
+		           self projectSpec repositories map keys.
+	project version spec repositories: self repositories copy.
+	^ project
 ]
 
 { #category : 'project lookup' }
-MetacelloScriptEngine >> getConfigurationProjectUnconditionalLoad: unconditionalLoad [
-    ^ (self getConfigurationUnconditionalLoad: unconditionalLoad) project
+MetacelloScriptEngine >> getConfigurationProjectUnconditionalLoad [
+
+	^ self getConfigurationUnconditionalLoad project
 ]
 
 { #category : 'project lookup' }
-MetacelloScriptEngine >> getConfigurationUnconditionalLoad: unconditionalLoad [
+MetacelloScriptEngine >> getConfigurationUnconditionalLoad [
 
 	| spec |
 	spec := self projectSpec.
