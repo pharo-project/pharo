@@ -85,11 +85,6 @@ ReRenameMethodDriver >> newMessage [
 ]
 
 { #category : 'To be removed' }
-ReRenameMethodDriver >> postAction: aClosure [ 
-	postAction := aClosure
-]
-
-{ #category : 'To be removed' }
 ReRenameMethodDriver >> requestNewMessage [
 
 	| methodName dialog  |
@@ -109,7 +104,7 @@ ReRenameMethodDriver >> requestNewMessage [
 	and in such case we can just escape."
 	"note that it would be better to pass a method name to the refactoring instead of splitting tlla the arguments this way"
 	refactoring newSelector: methodName selector; permutation: methodName permutation.
-	refactoring areNamesTheSame 
+	refactoring areNamesTheSame & refactoring areArgumentsPermuted
 		ifTrue: [ shouldEscape := true. ^ self ].
 	"refactoring areArgumentsTheSame & refactoring areArgumentsPermuted not
 		ifTrue: [ shouldEscape := true. ^ self ]."
