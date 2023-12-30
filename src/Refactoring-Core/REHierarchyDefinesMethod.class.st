@@ -27,7 +27,7 @@ ReHierarchyDefinesMethod >> doesClass: argClass definesMethod: aSelector [
 	^ argClass superclass isNotNil and: [ self doesClass: argClass superclass definesMethod: aSelector ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'checking' }
 ReHierarchyDefinesMethod >> hierarchyDefinesMethod [
 
 	(self doesClass: aClass definesMethod: selector) ifTrue: [ ^ true ].
@@ -46,7 +46,7 @@ ReHierarchyDefinesMethod >> selector: aSymbol [
 	selector := aSymbol
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'checking' }
 ReHierarchyDefinesMethod >> subclassOf: argClass redefines: aSelector [
 
 	| defs |
