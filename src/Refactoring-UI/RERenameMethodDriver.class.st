@@ -138,7 +138,6 @@ ReRenameMethodDriver >> runRefactoring [
 			"We need to mockify it"
 			| ok |
 			ok := self application newConfirm
-				"should be move into the refactoring"
 				title: 'Watchout override detected!';
 		      label: (String streamContents: 
 							[:s | refactoring violationMessageOn: s.
