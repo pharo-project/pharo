@@ -276,12 +276,6 @@ MetacelloProject >> projectAttributes: aList [
 	projectAttributes := aList
 ]
 
-{ #category : 'scripting' }
-MetacelloProject >> projectForScriptEngine: aMetacelloScriptEngine [
-
-	^ aMetacelloScriptEngine getConfigurationProjectUnconditionalLoad
-]
-
 { #category : 'development support' }
 MetacelloProject >> projectPackage [
 

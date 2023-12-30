@@ -106,12 +106,10 @@ MetacelloRecordTarget >> visitProjectReference: aMetacelloProjectReferenceSpec [
 	displayString := 'Project: '
 	                 ,
 	                 aMetacelloProjectReferenceSpec projectReference name.
-	(aMetacelloProjectReferenceSpec projectReference versionStringForEngine: engine)
-		ifNotNil: [
-			displayString := displayString , ' '
-			                 ,
-			                 (aMetacelloProjectReferenceSpec projectReference
-				                 versionStringForEngine: engine) ].
+	(aMetacelloProjectReferenceSpec projectReference versionStringForEngine: engine) ifNotNil: [
+		displayString := displayString , ' '
+		                 , (aMetacelloProjectReferenceSpec projectReference
+				                  versionStringForEngine: engine) ].
 
 	MetacelloNotification signal: displayString.
 
@@ -127,17 +125,19 @@ MetacelloRecordTarget >> visitProjectReference: aMetacelloProjectReferenceSpec [
 		override loadVersion: nil.
 		^ self ].
 
-	vrsn := aMetacelloProjectReferenceSpec projectReference versionOrNilForEngine: engine.
+	vrsn := aMetacelloProjectReferenceSpec projectReference
+		        versionOrNilForEngine: engine.
 	projectSpecForVersion := aMetacelloProjectReferenceSpec
 		                         projectReference asProjectSpecForVersion:
 		                         vrsn.
+
 	projectSpecForVersion ensureProjectLoadedWithEngine: engine.
 	vrsn ifNil: [ vrsn := projectSpecForVersion versionForEngine: engine ].
 	vrsn
 		recordRequiredFromArray:
 		(projectSpecForVersion loadListForVersion: vrsn)
 		withEngine: engine.
-	registration registerProject.
+	registration registerProject
 ]
 
 { #category : 'visiting' }

@@ -1,6 +1,9 @@
 Class {
 	#name : 'MetacelloMCBaselineOfProjectSpec',
 	#superclass : 'MetacelloProjectSpec',
+	#instVars : [
+		'version'
+	],
 	#category : 'Metacello-Core-Specs',
 	#package : 'Metacello-Core',
 	#tag : 'Specs'
@@ -157,28 +160,24 @@ MetacelloMCBaselineOfProjectSpec >> repositoryVersionString [
 
 { #category : 'scripting' }
 MetacelloMCBaselineOfProjectSpec >> validateVersionString: issues withDefaultVersionString: ignored withEngine: aScriptEngine [
- (self versionStringForEngine: aScriptEngine)
-        ifNotNil: [ :vs | 
-            | prj |
-            prj := self project asBaselineProject.
-            vs ~= prj singletonVersionName
-                ifTrue: [ 
-                    issues
-                        add:
-                            (MetacelloValidationError
-                                configurationClass: (self projectClassForEngine: aScriptEngine)
-                                reasonCode: #'invalidVersionString'
-                                callSite:
-                                    #'validateForScriptLoad:withDefaultVersionString:withDefaultRepositoryDecription:'
-                                explanation:
-                                    'version field is incorrect, should be: ' , prj singletonVersionName printString) ] ]
+
+	(self versionStringForEngine: aScriptEngine) ifNotNil: [ :vs |
+		| prj |
+		prj := self project asBaselineProject.
+		vs ~= prj singletonVersionName ifTrue: [
+			issues add: (MetacelloValidationError
+					 reasonCode: #invalidVersionString
+					 callSite:
+					 #validateForScriptLoad:withDefaultVersionString:withDefaultRepositoryDecription:
+					 explanation: 'version field is incorrect, should be: '
+						 , prj singletonVersionName printString) ] ]
 ]
 
 { #category : 'querying' }
 MetacelloMCBaselineOfProjectSpec >> versionForEngine: aMetacelloScriptEngine [
 
-	(self projectClassForEngine: aMetacelloScriptEngine) ifNil: [ ^ nil ].
-	^ (self projectClassProjectForEngine: aMetacelloScriptEngine) version
+	projectInitialized ifFalse: [ ^ nil ].
+	^ self project version
 ]
 
 { #category : 'versions' }

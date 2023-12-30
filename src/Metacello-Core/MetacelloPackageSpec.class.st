@@ -234,12 +234,6 @@ MetacelloPackageSpec >> info [
 	^self
 ]
 
-{ #category : 'loading' }
-MetacelloPackageSpec >> loadWithEngine: anEngine [
-
-	self forceLoadingWithEngine: anEngine
-]
-
 { #category : 'merging' }
 MetacelloPackageSpec >> mergeMap [
 

@@ -119,6 +119,7 @@ MetacelloProjectRegistration class >> copyRegistryWhile: aBlock [
 
 { #category : 'instance creation' }
 MetacelloProjectRegistration class >> fromMCBaselineProjectSpec: aProjectSpec [
+
     ^ self new
         projectName: aProjectSpec name;
         baselineProjectSpec: aProjectSpec;
@@ -207,6 +208,7 @@ MetacelloProjectRegistration >> baselineProjectSpec: anObject [
   self shouldBeMutable.
   configurationProjectSpec := nil.
   self assert: anObject isBaselineOfProjectSpec.
+
   baselineProjectSpec := anObject
 ]
 
@@ -399,6 +401,7 @@ MetacelloProjectRegistration >> merge: aProjectRegistration [
       baselineProjectSpec := nil.
       self versionInfo versionString: configurationProjectSpec versionString ]
     ifNil: [ 
+	1halt.
       baselineProjectSpec := aProjectRegistration baselineProjectSpec.
       configurationProjectSpec := nil.
       self versionInfo

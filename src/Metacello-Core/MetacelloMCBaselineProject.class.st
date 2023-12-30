@@ -82,14 +82,6 @@ MetacelloMCBaselineProject >> latestVersion: blessing [
     ^ nil
 ]
 
-{ #category : 'scripting' }
-MetacelloMCBaselineProject >> projectForScriptEngine: aMetacelloScriptEngine [
-	"see https://github.com/dalehenrich/metacello-work/issues/244 ... uncoditionally load
-   baseline"
-
-	^ aMetacelloScriptEngine getBaselineProjectUnconditionalLoad
-]
-
 { #category : 'accessing' }
 MetacelloMCBaselineProject >> repositoryDescription [
 	^ repositoryDescription

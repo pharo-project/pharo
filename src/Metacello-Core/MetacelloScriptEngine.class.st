@@ -112,6 +112,7 @@ MetacelloScriptEngine >> fetch: required [
 					notification
 						handleOnDownGrade: [ :ex :existing :new | ex allowEvenIfLocked ]
 						onUpgrade: [ :ex :existing :new | ex allowEvenIfLocked ] ].
+			loadedSpec ensureProjectLoadedWithEngine: self.
 			version := loadedSpec versionForScriptEngine: self.
 
 			requiredArray := required isString
@@ -166,22 +167,6 @@ MetacelloScriptEngine >> getBaselineProjectUnconditionalLoad [
 		           self projectSpec repositories map keys.
 	project version spec repositories: self repositories copy.
 	^ project
-]
-
-{ #category : 'project lookup' }
-MetacelloScriptEngine >> getConfigurationProjectUnconditionalLoad [
-
-	^ self getConfigurationUnconditionalLoad project
-]
-
-{ #category : 'project lookup' }
-MetacelloScriptEngine >> getConfigurationUnconditionalLoad [
-
-	| spec |
-	spec := self projectSpec.
-	Smalltalk at: spec className asSymbol ifPresent: [ :cl | ^ cl ].
-	(spec := self lookupProjectSpecFor: spec) projectPackage load.
-	^ Smalltalk at: spec className asSymbol
 ]
 
 { #category : 'handlers' }
@@ -310,6 +295,7 @@ MetacelloScriptEngine >> load: required onProjectDownGrade: onDownGradeBlock onP
 				on: MetacelloAllowProjectDowngrade , MetacelloAllowProjectUpgrade
 				do: [ :ex |
 					ex handleOnDownGrade: onDownGradeBlock onUpgrade: onUpgradeBlock ].
+			loadedSpec ensureProjectLoadedWithEngine: self.
 			version := loadedSpec versionForScriptEngine: self.
 			requiredArray := required isString
 				                 ifTrue: [ { required } ]
@@ -431,6 +417,7 @@ MetacelloScriptEngine >> record: required [
 					notification
 						handleOnDownGrade: [ :ex :existing :new | ex allowEvenIfLocked ]
 						onUpgrade: [ :ex :existing :new | ex allowEvenIfLocked ] ].
+			loadedSpec ensureProjectLoadedWithEngine: self.
 			version := loadedSpec versionForScriptEngine: self.
 
 			requiredArray := required isString

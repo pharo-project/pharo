@@ -11,7 +11,8 @@ Class {
 		'repositories',
 		'operator',
 		'postLoadDoIt',
-		'className'
+		'className',
+		'projectInitialized'
 	],
 	#category : 'Metacello-Core-Specs',
 	#package : 'Metacello-Core',
@@ -368,12 +369,10 @@ MetacelloProjectSpec >> ensureProjectLoadedWithEngine: anEngine [
 
 	"answer true if the projectClass exists"
 
-	((self projectClassForEngine: anEngine) isNil or: [
-		 (self versionOrNilForEngine: anEngine) isNil or: [
-			 self isMutable and: [ anEngine ignoreImage ] ] ]) ifTrue: [
-		self projectPackage ifNil: [ ^ true ].
-		self ensureLoadUsingEngine: anEngine ].
-	^ (self projectClassForEngine: anEngine) isNotNil
+	(projectInitialized not or: [
+		 self isMutable and: [ anEngine ignoreImage ] ]) ifTrue: [
+		self ensureLoadUsingEngine: anEngine.
+		self initializeProjectForEngine: anEngine ]
 ]
 
 { #category : 'querying' }
@@ -485,6 +484,33 @@ MetacelloProjectSpec >> hasNonVersionStringField [
 { #category : 'testing' }
 MetacelloProjectSpec >> hasRepository [
     ^ self repositorySpecs notEmpty
+]
+
+{ #category : 'testing' }
+MetacelloProjectSpec >> initialize [
+
+	super initialize.
+	projectInitialized := false
+]
+
+{ #category : 'initialization' }
+MetacelloProjectSpec >> initializeProjectForEngine: aMetacelloScriptEngine [
+
+	| projectClassInstance projectClass |
+	projectInitialized := true.
+	projectClass := aMetacelloScriptEngine lookupProjectClassNamed:
+		                self className asSymbol.
+
+	projectClassInstance := projectClass new.
+
+	"Then return it through the project method to call the hook redefined in subclasses for compatibility.
+	Subclasses typically change the load type of the project to #atomic"
+	projectClassInstance initalizeProjectWithRepositoryDescription:
+		self repositoryDescriptions.
+
+	project := projectClassInstance project.
+	"project version spec repositories:
+		aMetacelloScriptEngine repositories copy"
 ]
 
 { #category : 'testing' }
@@ -680,33 +706,14 @@ MetacelloProjectSpec >> preLoadDoIt: anObject [
 	anObject setPreLoadDoItInMetacelloSpec: self
 ]
 
-{ #category : 'querying' }
-MetacelloProjectSpec >> projectClassForEngine: aMetacelloScriptEngine [
-
-	aMetacelloScriptEngine ifNil: [ ^ nil ].
-	self className ifNil: [ ^ nil ].
-	^ aMetacelloScriptEngine lookupProjectClassNamed:
-		  self className asSymbol
-]
-
-{ #category : 'querying' }
-MetacelloProjectSpec >> projectClassProjectForEngine: aMetacelloScriptEngine [
-	"Initialize the project object in the baseline/configuration"
-
-	| projectClassInstance |
-	projectClassInstance := (self projectClassForEngine:
-		                         aMetacelloScriptEngine) new.
-	projectClassInstance initalizeProjectWithRepositoryDescription:
-		self repositoryDescriptions.
-
-	"Then return it through the project method to call the hook redefined in subclasses for compatibility.
-	Subclasses typically change the load type of the project to #atomic"
-	^ projectClassInstance project
-]
-
 { #category : 'visiting' }
 MetacelloProjectSpec >> projectDo: projectBlock packageDo: packageBlock groupDo: groupBlock [
     projectBlock value: self
+]
+
+{ #category : 'accessing' }
+MetacelloProjectSpec >> projectInitialized [
+	^ projectInitialized
 ]
 
 { #category : 'printing' }
@@ -838,13 +845,11 @@ MetacelloProjectSpec >> validateForScriptLoad: aScriptEngine withDefaultVersionS
 	callSite := #validateForScriptLoad:withDefaultVersionString:withDefaultRepositoryDecription:.
 	self name ifNil: [
 		issues add: (MetacelloValidationError
-				 configurationClass: (self projectClassForEngine: aScriptEngine)
 				 reasonCode: #incompleteProjectSpec
 				 callSite: callSite
 				 explanation: 'name field required') ].
 	self className ifNil: [
 		issues add: (MetacelloValidationError
-				 configurationClass: (self projectClassForEngine: aScriptEngine)
 				 reasonCode: #incompleteProjectSpec
 				 callSite: callSite
 				 explanation: 'className field required') ].
@@ -853,7 +858,6 @@ MetacelloProjectSpec >> validateForScriptLoad: aScriptEngine withDefaultVersionS
 			ifNotNil: [ self repository: defaultRepositoryDecription ]
 			ifNil: [
 				issues add: (MetacelloValidationError
-						 configurationClass: (self projectClassForEngine: aScriptEngine)
 						 reasonCode: #incompleteProjectSpec
 						 callSite: callSite
 						 explanation: 'repository field required') ] ].
@@ -866,48 +870,39 @@ MetacelloProjectSpec >> validateForScriptLoad: aScriptEngine withDefaultVersionS
 
 { #category : 'scripting' }
 MetacelloProjectSpec >> validateVersionString: issues withDefaultVersionString: defaultVersionString withEngine: aScriptEngine [
-  (self versionStringForEngine: aScriptEngine)
-        ifNil: [ 
-            defaultVersionString
-                ifNotNil: [ self versionString: defaultVersionString ]
-                ifNil: [ 
-                    issues
-                        add:
-                            (MetacelloValidationError
-                                configurationClass: (self projectClassForEngine: aScriptEngine)
-                                reasonCode: #'incompleteProjectSpec'
-                                callSite:
-                                    #'validateForScriptLoad:withDefaultVersionString:withDefaultRepositoryDecription:'
-                                explanation: 'version field required') ] ]
+
+	(self versionStringForEngine: aScriptEngine) ifNil: [
+		defaultVersionString
+			ifNotNil: [ self versionString: defaultVersionString ]
+			ifNil: [
+				issues add: (MetacelloValidationError
+						 reasonCode: #incompleteProjectSpec
+						 callSite:
+						 #validateForScriptLoad:withDefaultVersionString:withDefaultRepositoryDecription:
+						 explanation: 'version field required') ] ]
 ]
 
 { #category : 'querying' }
 MetacelloProjectSpec >> versionForEngine: aMetacelloScriptEngine [
 	"Empty version string means use latestVersion or #bleedingEdge"
 
-	(self projectClassForEngine: aMetacelloScriptEngine) ifNil: [ ^ nil ].
 	^ (self versionStringForEngine: aMetacelloScriptEngine)
 		  ifNotNil: [
-			  (self projectClassProjectForEngine: aMetacelloScriptEngine) versionStringForEngine:
-				  aMetacelloScriptEngine ]
+		  self project versionStringForEngine: aMetacelloScriptEngine ]
 		  ifNil: [
 			  | vrsn |
 			  "Eventually it will become an error to not specify a project reference version as default: #stable is the preferred default""self deprecated: 'Must specify a project reference version.'."
 			  self flag: 'deprecate after version 1.0'.
-			  (vrsn := (self projectClassProjectForEngine: aMetacelloScriptEngine) latestVersion) isNil
-				  ifTrue: [ (self projectClassProjectForEngine: aMetacelloScriptEngine) version: #bleedingEdge ]
+			  (vrsn := self project latestVersion) isNil
+				  ifTrue: [ self project version: #bleedingEdge ]
 				  ifFalse: [ vrsn ] ]
 ]
 
 { #category : 'scripting' }
 MetacelloProjectSpec >> versionForScriptEngine: aMetacelloScriptEngine [
 
-	| prj |
-	prj := (self projectClassForEngine: aMetacelloScriptEngine)
-		       ifNil: [ self project ]
-		       ifNotNil: [ self projectClassProjectForEngine: aMetacelloScriptEngine ].
-	^ (prj projectForScriptEngine: aMetacelloScriptEngine) version:
-		(self versionStringForEngine: aMetacelloScriptEngine)
+	^ self project version:
+		  (self versionStringForEngine: aMetacelloScriptEngine)
 ]
 
 { #category : 'querying' }
