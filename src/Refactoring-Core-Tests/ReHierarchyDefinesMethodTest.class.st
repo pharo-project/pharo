@@ -12,7 +12,7 @@ ReHierarchyDefinesMethodTest >> model [
 		  (RBClassEnvironment classes: {MyClassARoot . MySubAccessingSuperclassState} )
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'tests' }
 ReHierarchyDefinesMethodTest >> testHierarchyDefinesByCheckingInRootDefiningTheMethod [
 
 	| myClassARoot hier |
@@ -28,7 +28,7 @@ ReHierarchyDefinesMethodTest >> testHierarchyDefinesByCheckingInRootDefiningTheM
 	self assert: hier violators size equals: 1
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'tests' }
 ReHierarchyDefinesMethodTest >> testHierarchyDefinesByCheckingInRootNotDefiningTheMethod [
 
 	| myClassARoot hier |
@@ -44,7 +44,7 @@ ReHierarchyDefinesMethodTest >> testHierarchyDefinesByCheckingInRootNotDefiningT
 	self assert: hier violators size equals: 1
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'tests' }
 ReHierarchyDefinesMethodTest >> testHierarchyDefinesByCheckingInSubclassDefiningTheMethod [
 
 	| myClassARoot hier |
@@ -60,7 +60,7 @@ ReHierarchyDefinesMethodTest >> testHierarchyDefinesByCheckingInSubclassDefining
 	self assert: hier violators size equals: 1
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'tests' }
 ReHierarchyDefinesMethodTest >> testHierarchyDefinesByCheckingInSubclassNotDefiningTheMethod [
 
 	| myClassARoot hier |
