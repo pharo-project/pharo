@@ -1,6 +1,6 @@
 Extension { #name : 'String' }
 
-{ #category : '*UIManager' }
+{ #category : '*Jobs' }
 String >> displayProgressFrom: minVal to: maxVal during: workBlock [
 	"Display this string as a caption over a progress bar while workBlock is evaluated.
 
@@ -11,9 +11,9 @@ EXAMPLE (Select next 6 lines and Do It)
 	1 to: 10 do: [:x | bar value: x.
 			(Delay forMilliseconds: 500) wait]].
 "
-	^ UIManager default
-		displayProgress: self
-		from: minVal
-		to: maxVal
-		during: workBlock
+	^ workBlock asJob
+			title: self;
+			min: minVal;
+			max: maxVal;
+			run
 ]
