@@ -36,9 +36,8 @@ Class {
 		'hasPermutedArguments',
 		'violations'
 	],
-	#category : 'Refactoring-UI-Refactorings',
-	#package : 'Refactoring-UI',
-	#tag : 'Refactorings'
+	#category : 'Refactoring-Core',
+	#package : 'Refactoring-Core'
 }
 
 { #category : 'instance creation' }
@@ -192,7 +191,7 @@ ReRenameMethodRefactoring >> refactoredClass [
 	^ class
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'changes' }
 ReRenameMethodRefactoring >> renameChanges [
 
 	self privateTransform.

@@ -81,7 +81,8 @@ RBRenameMethodParametrizedTest >> testRenameMethodPermuteArgs [
 		equals:
 			(self
 				parseMethod:
-					'demoRenameMethod: arg2 PermuteArgs: arg1 self do: arg1.
+'demoRenameMethod: arg2 PermuteArgs: arg1 
+	self do: arg1.
 	self do: arg2.
 	^ arg1 > arg2').
 	
