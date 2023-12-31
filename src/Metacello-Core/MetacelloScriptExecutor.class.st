@@ -68,11 +68,11 @@ MetacelloScriptExecutor >> execute: statements [
 			ifNil: [ self perform: assoc key ]
 			ifNotNil: [ self perform: assoc key withArguments: assoc value ] ].
 	projectSpecGenerator := self projectSpecGenerator.
-	self executeString: projectSpecGenerator target do: [ :projectSpec |
+	self executeString: projectSpecGenerator target do: [ :projectReferenceSpec |
 		| engine |
 		engine := MetacelloScriptEngine new
 			          options: self options copy;
-			          projectSpec: projectSpec;
+			          projectReferenceSpec: projectReferenceSpec;
 			          yourself.
 		engine perform: actionArg key withArguments: actionArg value.
 		engine root ifNotNil: [ :root | self roots add: root ] ].
