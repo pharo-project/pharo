@@ -331,8 +331,7 @@ MetacelloScriptEngine >> lock [
 	| spec |
 	MetacelloProjectRegistration
 		copyRegistryDuring: [
-			self setDefaultsAndValidate:
-				self projectReferenceSpec projectReference copy. "don't add defaults"
+			self setDefaultsAndValidate: self projectReferenceSpec copy. "don't add defaults"
 			spec := self projectReferenceSpec projectReference.
 			MetacelloProjectRegistration
 				registrationForProjectSpec: spec
@@ -412,8 +411,8 @@ MetacelloScriptEngine >> record: required [
 { #category : 'actions api' }
 MetacelloScriptEngine >> register [
   | spec |
-  self setDefaultsAndValidate: self projectSpec copy.	"don't add defaults"
-  spec := self projectSpec.
+  self setDefaultsAndValidate: self projectReferenceSpec copy.	"don't add defaults"
+  spec := self projectReferenceSpec projectReference.
   MetacelloProjectRegistration
     registrationForProjectSpec: spec
     ifAbsent: [ :new | new registerProject ]
@@ -501,8 +500,7 @@ MetacelloScriptEngine >> unlock [
 	| spec |
 	MetacelloProjectRegistration
 		copyRegistryDuring: [
-			self setDefaultsAndValidate:
-				self projectReferenceSpec projectReference copy. "don't add defaults"
+			self setDefaultsAndValidate: self projectReferenceSpec copy. "don't add defaults"
 			spec := self projectReferenceSpec projectReference.
 			MetacelloProjectRegistration
 				registrationForProjectSpec: spec
@@ -516,12 +514,13 @@ MetacelloScriptEngine >> unlock [
 
 { #category : 'actions api' }
 MetacelloScriptEngine >> unregister [
-  | spec |
-  self setDefaultsAndValidate: self projectSpec copy.	"don't add defaults"
-  spec := self projectSpec.
-  MetacelloProjectRegistration
-    registrationForProjectSpec: spec
-    ifAbsent: [ :ignored |  ]
-    ifPresent: [ :existing :new | existing unregisterProject ].
-  self root: spec
+
+	| spec |
+	self setDefaultsAndValidate: self projectReferenceSpec copy. "don't add defaults"
+	spec := self projectReferenceSpec projectReference.
+	MetacelloProjectRegistration
+		registrationForProjectSpec: spec
+		ifAbsent: [ :ignored |  ]
+		ifPresent: [ :existing :new | existing unregisterProject ].
+	self root: spec
 ]
