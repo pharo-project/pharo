@@ -180,6 +180,12 @@ CmdCommand >> execute [
 	self subclassResponsibility
 ]
 
+{ #category : 'accessing' }
+CmdCommand >> morphicUIManager [
+
+	^ MorphicUIManager new
+]
+
 { #category : 'execution' }
 CmdCommand >> prepareFullExecutionInContext: aToolContext [
 ]

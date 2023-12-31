@@ -64,6 +64,10 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Network-Mail-Tests'.
 		spec package: 'Gofer-Tests'.
 		spec package: 'Rubric-SpecFindReplaceDialog'.
+    spec package: 'System-NumberPrinting'.
+
+    spec package: 'OpalCompiler-UI'.
+
 
 		self load: 'Metacello' group: 'Tests' spec: spec.
 
@@ -108,6 +112,7 @@ BaselineOfIDE >> baseline: spec [
 			with: [ spec repository: repository ].
 		spec baseline: 'ClassParser' with: [ spec repository: repository ].
 
+		
 		self
 			load: 'Calypso'
 			group: #( 'FullEnvironment' 'SystemBrowser' 'Tests' )

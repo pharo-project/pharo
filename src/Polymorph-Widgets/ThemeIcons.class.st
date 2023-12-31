@@ -177,7 +177,7 @@ ThemeIcons class >> settingsOn: aBuilder [
 ThemeIcons class >> uiFetchPacks [
 	| choosenPacks remotePacks |
 
-	UIManager default
+	MorphicUIManager new
 		informUser: 'Retrieving available packs from remote repository'
 		during: [ remotePacks := self fetchPacks ].
 
@@ -188,7 +188,7 @@ ThemeIcons class >> uiFetchPacks [
 		title: 'Remote available icon packs')
 		chooseFromOwner: self currentWorld.
 	choosenPacks ifNil: [ ^ self ].
-	UIManager default informUserDuring: [ :bar |
+	MorphicUIManager new informUserDuring: [ :bar |
 		choosenPacks do: [ :each |
 			bar label: 'Retrieving "', each name, '" icon set from remote repository'.
 			each downloadFromUrl ]]

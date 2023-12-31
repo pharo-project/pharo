@@ -50,8 +50,8 @@ KMPragmaKeymapBuilder class >> registerInterestToSystemAnnouncement [
 
 { #category : 'instance creation' }
 KMPragmaKeymapBuilder class >> release [
-	SystemAnnouncer uniqueInstance unsubscribe: self.
-	self uniqueInstance release
+
+	SystemAnnouncer uniqueInstance unsubscribe: self
 ]
 
 { #category : 'instance creation' }
@@ -132,8 +132,8 @@ KMPragmaKeymapBuilder >> pragmas [
 
 { #category : 'dependencies' }
 KMPragmaKeymapBuilder >> release [
-	model := nil.
-	super release
+
+	model := nil
 ]
 
 { #category : 'initialization' }

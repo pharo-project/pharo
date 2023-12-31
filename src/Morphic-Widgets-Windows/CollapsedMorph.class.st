@@ -35,7 +35,7 @@ CollapsedMorph >> buildWindowMenu [
 	"Answer the menu to be put up in response to the user's clicking on the window-menu control in the window title.  Specialized for CollapsedMorphs."
 
 	| aMenu |
-	aMenu := UIManager default
+	aMenu := self morphicUIManager
 					newMenuIn: self for: self.
 	aMenu add: 'Change name...' selector: #relabel.
 	aMenu addLine.
