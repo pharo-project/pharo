@@ -32,9 +32,10 @@ MetacelloSpecBuilder >> loadDirective [
 { #category : 'actions' }
 MetacelloSpecBuilder >> pushAtomicLoadDirectivesDuring: aBlock for: aTarget [
 
-	self
-		pushLoadDirective: MetacelloAtomicLoadDirective new
-		during: aBlock
+	| atomic |
+	atomic := MetacelloAtomicLoadDirective new.
+	self pushLoadDirective: atomic during: aBlock.
+	atomic addTo: self currentLoadDirective
 ]
 
 { #category : 'actions' }

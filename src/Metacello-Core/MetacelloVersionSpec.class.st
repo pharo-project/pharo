@@ -482,7 +482,7 @@ MetacelloVersionSpec >> packageNames [
 { #category : 'querying' }
 MetacelloVersionSpec >> packageSpecsInLoadOrder [
 
-	^ self packages packageSpecsInLoadOrder
+	^ self packages packageSpecsInLoadOrderFor: self
 ]
 
 { #category : 'querying' }
