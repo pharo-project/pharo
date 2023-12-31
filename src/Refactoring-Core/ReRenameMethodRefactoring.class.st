@@ -64,11 +64,18 @@ ReRenameMethodRefactoring class >> renameMethod: aSelector in: aClass to: newSel
 { #category : 'preconditions' }
 ReRenameMethodRefactoring >> applicabilityPreconditions [
 
-	^ { self newNameDoesNotRequireRefactoringPrecondition not . 
-		 (ReBlockCondition new
-		   block: [ self haveSelectorsSameArity ];
-		   violatorErrorString: newSelector printString
-			   , ' doesn''t have the same number of arguments than ', oldSelector)}
+	^ { 
+		self validSelectorCondition .
+		self methodDefinedInClassCondition . 
+		self newNameDoesNotRequireRefactoringPrecondition not . 
+		self localConditions }
+]
+
+{ #category : 'redefined locally waiting for superclass migration' }
+ReRenameMethodRefactoring >> applicabilityViolationMessageOn: stream [
+
+
+	
 ]
 
 { #category : 'torevisit' }
@@ -120,10 +127,12 @@ ReRenameMethodRefactoring >> generateChanges [
 	"Prepare, check the preconditions, and perform the actual transformation (i.e., creating a list of changes that can be accessible using the changes message). This method should not be invoked from drivers since drivers usually check in finer grained mode the preconditions - and that this stage they already checked the preconditions."
 	
 	self prepareForExecution.
-
-	(self applicabilityPreconditions reject: [ :each | each check ]) ifNotEmpty: [
-		^ RBApplicabilityChecksFailedError signal:
-			  self applicabilityPreconditions errorString ].
+	"this is a bit bad since on error we execute twice the preconditions
+	once to check and one to report. to be fixed later"
+	
+	self failedApplicabilityPreconditions ifNotEmpty: [
+		^ RBApplicabilityChecksFailedError signal: 'Prpblems with selector'
+			  "should fix this later self applicabilityPreconditions errorString" ].
 	self breakingChangePreconditions ifFalse: [
 		RBBreakingChangeChecksFailedWarning signal:
 			(String streamContents: [ :s | self breakingChangeViolationMessageOn: s  ])].
@@ -159,6 +168,12 @@ ReRenameMethodRefactoring >> localConditions [
 		block: [ self haveSelectorsSameArity ];
 		violatorErrorString: newSelector printString
 				, ' doesn''t have the same number of arguments as ', oldSelector printString
+]
+
+{ #category : 'preconditions' }
+ReRenameMethodRefactoring >> methodDefinedInClassCondition [
+
+	^ (RBDefinesSelectorsCondition new definesSelectors: {oldSelector} in: class)
 ]
 
 { #category : 'private' }
@@ -228,16 +243,21 @@ ReRenameMethodRefactoring >> storeOn: aStream [
 ReRenameMethodRefactoring >> superPreconditions [
 
 	| conditions |
-	
-	conditions := self myConditions
-	              & (RBDefinesSelectorsCondition new definesSelector: {oldSelector} in: class)
-	              & (ReBlockCondition new 
-							block: [ newSelector asString isValidSelector ];
-							violatorErrorString: newSelector ,' is not a valid selector').
+	conditions := self localConditions
+	              & self methodDefinedInClassCondition
+	              & self validSelectorCondition.
 
 	^ conditions & self doesNotOverrideExistingMethodPreconditions
 
 
+]
+
+{ #category : 'preconditions' }
+ReRenameMethodRefactoring >> validSelectorCondition [
+
+	^ (ReBlockCondition new 
+			block: [ newSelector asString isValidSelector ];
+			violatorErrorString: newSelector ,' is not a valid selector').
 ]
 
 { #category : 'accessing' }
