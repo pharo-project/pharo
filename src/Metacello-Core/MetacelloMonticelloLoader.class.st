@@ -1,6 +1,9 @@
 Class {
 	#name : 'MetacelloMonticelloLoader',
 	#superclass : 'Object',
+	#instVars : [
+		'projectCache'
+	],
 	#category : 'Metacello-Core-Gofer',
 	#package : 'Metacello-Core',
 	#tag : 'Gofer'
@@ -19,6 +22,13 @@ MetacelloMonticelloLoader >> fetchPackageDirective: aMetacelloPackageLoadDirecti
 		              aMetacelloPackageLoadDirective repositorySpecs.
 	allResolvedReferences := repository fetchPackageNamed:
 		                         aMetacelloPackageLoadDirective spec name
+]
+
+{ #category : 'initialization' }
+MetacelloMonticelloLoader >> initialize [
+
+	super initialize.
+	projectCache := Dictionary new
 ]
 
 { #category : 'loading' }
@@ -52,7 +62,13 @@ MetacelloMonticelloLoader >> loadPackageDirective: aMetacelloPackageLoadDirectiv
 MetacelloMonticelloLoader >> loadProject: aMetacelloMCBaselineOfProjectSpec [
 	"Loads the project class (BaselineOf, ConfigurationOf) and creates a project from it"
 
-	| projectClass projectClassInstance |
+	"There is no need at loading a project twice as long as it has the same version."
+
+	| projectClass projectClassInstance project |
+	projectCache
+		at: aMetacelloMCBaselineOfProjectSpec className
+		ifPresent: [ :found | ^ found ].
+
 	(self lookupProjectClassNamed:
 		 aMetacelloMCBaselineOfProjectSpec className) ifNil: [
 		self loadPackageDirective: (MetacelloDirective
@@ -69,7 +85,11 @@ MetacelloMonticelloLoader >> loadProject: aMetacelloMCBaselineOfProjectSpec [
 	"Subclasses typically change the load type of the project to #atomic"
 	projectClassInstance initalizeProjectWithRepositoryDescription:
 		aMetacelloMCBaselineOfProjectSpec repositoryDescriptions.
-	^ projectClassInstance project
+	project := projectClassInstance project.
+	projectCache
+		at: aMetacelloMCBaselineOfProjectSpec className
+		put: project.
+	^ project
 ]
 
 { #category : 'accessing' }
