@@ -480,10 +480,16 @@ MetacelloVersionSpec >> packageNames [
 ]
 
 { #category : 'querying' }
+MetacelloVersionSpec >> packageSpecsInLoadOrder [
+
+	^ self packages packageSpecsInLoadOrder
+]
+
+{ #category : 'querying' }
 MetacelloVersionSpec >> packageSpecsInLoadOrderForMap: packageMap [
 
 	| loadOrder pkgs packageNames importNames importSpec importProjectSpecs importProjectNameMap |
-	loadOrder := self packageSpecsInLoadOrderWithEngine: nil.
+	loadOrder := self packageSpecsInLoadOrder.
 	importNames := (packageNames := (packageMap values collect: [ :pkg |
 		                                 pkg name ]) asSet) copy.
 	(self import isNil and: [ self importArray isNil ]) ifTrue: [
@@ -585,7 +591,7 @@ MetacelloVersionSpec >> preLoadDoIt: anObject [
 { #category : 'enumerating' }
 MetacelloVersionSpec >> projectDo: projectBlock packageDo: packageBlock groupDo: groupBlock [
 
-	(self packageSpecsInLoadOrderWithEngine: nil) do: [ :pkgSpec |
+	self packageSpecsInLoadOrder do: [ :pkgSpec |
 		pkgSpec
 			projectDo: projectBlock
 			packageDo: packageBlock

@@ -13,7 +13,6 @@ MetacelloMCNamelessProjectSpec >> asProjectSpecForVersion: vrsn [
   "https://github.com/dalehenrich/metacello-work/issues/331"
 
   | proj spec |
-1halt.
   proj := vrsn ifNil: [ ^ self ] ifNotNil: [ vrsn versionSpec project ].
   spec := MetacelloMCConfigurationOfProjectSpec for: proj.
   self copyForScriptingInto: spec.

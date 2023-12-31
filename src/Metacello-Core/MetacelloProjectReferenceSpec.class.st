@@ -103,16 +103,25 @@ MetacelloProjectReferenceSpec >> nonOverridable [
 ]
 
 { #category : 'loading' }
-MetacelloProjectReferenceSpec >> packageSpecsInLoadOrderWithEngine: anEngine [
+MetacelloProjectReferenceSpec >> packageSpecsInLoadOrder [
 
 	| specs loadedSpecs loads |
-	specs := self projectReference version spec
-		         packageSpecsInLoadOrderWithEngine: anEngine.
+	specs := self projectReference version spec packageSpecsInLoadOrder.
 	loads := self projectReference loadListForVersion:
 		         self projectReference version.
 	loadedSpecs := specs select: [ :each | loads includes: each name ].
-	^ loadedSpecs flatCollect: [ :e |
-		  e packageSpecsInLoadOrderWithEngine: anEngine ]
+	^ loadedSpecs flatCollect: [ :e | e packageSpecsInLoadOrder ]
+]
+
+{ #category : 'loading' }
+MetacelloProjectReferenceSpec >> packageSpecsInLoadOrderWithEngine: anEngine [
+
+	| specs loadedSpecs loads |
+	specs := self projectReference version spec packageSpecsInLoadOrder.
+	loads := self projectReference loadListForVersion:
+		         self projectReference version.
+	loadedSpecs := specs select: [ :each | loads includes: each name ].
+	^ loadedSpecs flatCollect: [ :e | e packageSpecsInLoadOrder ]
 ]
 
 { #category : 'copying' }

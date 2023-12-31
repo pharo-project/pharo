@@ -261,6 +261,12 @@ MetacelloPackageSpec >> nonOverridable [
 ]
 
 { #category : 'loading' }
+MetacelloPackageSpec >> packageSpecsInLoadOrder [
+
+	^ { self }
+]
+
+{ #category : 'loading' }
 MetacelloPackageSpec >> packageSpecsInLoadOrderWithEngine: anObject [
 
 	^ { self }
@@ -343,11 +349,10 @@ MetacelloPackageSpec >> requiredPackageSpecsWithEngine: anEngine [
 
 	| specs requiredSpec |
 	self project ifNil: [ ^ #(  ) ].
-	specs := self project version spec
-		         packageSpecsInLoadOrderWithEngine: anEngine.
+	specs := self project version spec packageSpecsInLoadOrder.
 	^ self requires flatCollect: [ :required |
 		  requiredSpec := specs detect: [ :e | e name = required ].
-		  requiredSpec packageSpecsInLoadOrderWithEngine: anEngine ]
+		  requiredSpec packageSpecsInLoadOrder ]
 ]
 
 { #category : 'private' }
