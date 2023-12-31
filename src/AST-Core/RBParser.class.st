@@ -135,12 +135,12 @@ RBParser >> addPragma: aPragma [
 
 { #category : 'private - classes' }
 RBParser >> arrayNodeClass [
-	^ RBArrayNode
+	^ ASTArrayNode
 ]
 
 { #category : 'private - classes' }
 RBParser >> assignmentNodeClass [
-	^ RBAssignmentNode
+	^ ASTAssignmentNode
 ]
 
 { #category : 'testing' }
@@ -164,12 +164,12 @@ RBParser >> basicParsePragma [
 
 { #category : 'private - classes' }
 RBParser >> blockNodeClass [
-	^ RBBlockNode
+	^ ASTBlockNode
 ]
 
 { #category : 'private - classes' }
 RBParser >> cascadeNodeClass [
-	^ RBCascadeNode
+	^ ASTCascadeNode
 ]
 
 { #category : 'accessing' }
@@ -179,7 +179,7 @@ RBParser >> currentToken [
 
 { #category : 'private - classes' }
 RBParser >> doItMethodNodeClass [
-	^ RBDoItMethodNode
+	^ ASTDoItMethodNode
 ]
 
 { #category : 'private - classes' }
@@ -208,7 +208,7 @@ RBParser >> errorPosition [
 RBParser >> extractCommentsFrom: aToken [
 
 	aToken comments
-		collect: [:commentToken | RBComment with: commentToken ]
+		collect: [:commentToken | ASTComment with: commentToken ]
 		into: comments
 ]
 
@@ -239,27 +239,27 @@ RBParser >> initializeParserWith: aString [
 
 { #category : 'private - classes' }
 RBParser >> literalArrayNodeClass [
-	^ RBLiteralArrayNode
+	^ ASTLiteralArrayNode
 ]
 
 { #category : 'private - classes' }
 RBParser >> literalNodeClass [
-	^ RBLiteralNode
+	^ ASTLiteralNode
 ]
 
 { #category : 'private - classes' }
 RBParser >> literalValueNodeClass [
-	^ RBLiteralValueNode
+	^ ASTLiteralValueNode
 ]
 
 { #category : 'private - classes' }
 RBParser >> messageNodeClass [
-	^ RBMessageNode
+	^ ASTMessageNode
 ]
 
 { #category : 'private - classes' }
 RBParser >> methodNodeClass [
-	^ RBMethodNode
+	^ ASTMethodNode
 ]
 
 { #category : 'private' }
@@ -939,7 +939,7 @@ RBParser >> parsePrimitiveObject [
 		| position |
 		position := currentToken start.
 		self step. "@"
-		^ RBAnnotationMarkNode new start: position ].
+		^ ASTAnnotationMarkNode new start: position ].
 
 	":id is only acceptable at the begin of a block. So just consume them as unexpected"
 	((currentToken isSpecial: $:) and: [ self nextToken isIdentifier ])
@@ -1237,12 +1237,12 @@ RBParser >> patchNegativeLiteral [
 
 { #category : 'private - classes' }
 RBParser >> pragmaNodeClass [
-	^ RBPragmaNode
+	^ ASTPragmaNode
 ]
 
 { #category : 'private - classes' }
 RBParser >> returnNodeClass [
-	^ RBReturnNode
+	^ ASTReturnNode
 ]
 
 { #category : 'private - parsing' }
@@ -1275,12 +1275,12 @@ RBParser >> scannerNext [
 
 { #category : 'private - classes' }
 RBParser >> selectorNodeClass [
-	^ RBSelectorNode
+	^ ASTSelectorNode
 ]
 
 { #category : 'private - classes' }
 RBParser >> sequenceNodeClass [
-	^ RBSequenceNode
+	^ ASTSequenceNode
 ]
 
 { #category : 'accessing' }
@@ -1318,5 +1318,5 @@ RBParser >> stepBar [
 
 { #category : 'private - classes' }
 RBParser >> variableNodeClass [
-	^ RBVariableNode
+	^ ASTVariableNode
 ]

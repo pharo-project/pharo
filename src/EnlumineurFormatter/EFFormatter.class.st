@@ -1086,7 +1086,7 @@ EFFormatter >> formatArray: anArrayNode [
 	| current |
 	codeStream nextPutAll: self spacesInsideArray.
 	(anArrayNode statements
-		reject: [ :each | each class = RBLiteralValueNode ])
+		reject: [ :each | each class = ASTLiteralValueNode ])
 		ifEmpty: [ anArrayNode statements
 				do: [ :each | 
 					current := each.

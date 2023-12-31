@@ -281,14 +281,14 @@ RBExtractMethodTransformation >> generateNewMethodWith: aMethodName [
 
 	| args newMethodNode |
 	args := aMethodName arguments
-		collect: [ :p | RBVariableNode named: p ].
+		collect: [ :p | ASTVariableNode named: p ].
 
-	newMethodNode := RBMethodNode
+	newMethodNode := ASTMethodNode
 							selector: aMethodName selector
 							arguments: args asArray
 							body: (subtree isSequence
 								ifTrue: [ subtree ]
-								ifFalse: [ RBSequenceNode
+								ifFalse: [ ASTSequenceNode
 									temporaries: #()
 									statements: (OrderedCollection with: subtree)]).
 	temporaries do: [:each | newMethodNode body addTemporaryNamed: each].
@@ -298,8 +298,8 @@ RBExtractMethodTransformation >> generateNewMethodWith: aMethodName [
 
 	assignments size = 1 ifTrue: [
 		newMethodNode addNode:
-			(RBReturnNode value:
-			(RBVariableNode named: assignments first asString)) ].
+			(ASTReturnNode value:
+			(ASTVariableNode named: assignments first asString)) ].
 
 	^ newMethodNode
 ]

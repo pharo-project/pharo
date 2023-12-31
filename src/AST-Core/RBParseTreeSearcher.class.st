@@ -157,7 +157,7 @@ RBParseTreeSearcher class >> treeMatchingStatements: aString in: aParseTree [
 	notifier := self new.
 	tree := RBParser parseExpression: aString.
 	tree isSequence
-		ifFalse: [tree := RBSequenceNode statements: (Array with: tree)].
+		ifFalse: [tree := ASTSequenceNode statements: (Array with: tree)].
 	tree temporaries: (Array with: (RBPatternVariableNode named: '`@temps')).
 	tree addNodeFirst: (RBPatternVariableNode named: '`@.S1').
 	tree lastIsReturn
@@ -337,7 +337,7 @@ RBParseTreeSearcher >> messages [
 			[:each |
 			| searchMessages |
 			searchMessages := each sentMessages.
-			RBProgramNode optimizedSelectors
+			ASTProgramNode optimizedSelectors
 				do: [:sel | searchMessages remove: sel ifAbsent: []].
 			searchMessages isEmpty ifTrue: [^messages := #()].
 			messages addAll: searchMessages].

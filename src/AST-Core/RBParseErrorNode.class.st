@@ -12,7 +12,7 @@ The return value is either valid nodes representing the AST, or nodes representi
 "
 Class {
 	#name : 'RBParseErrorNode',
-	#superclass : 'RBValueNode',
+	#superclass : 'ASTValueNode',
 	#instVars : [
 		'errorMessage',
 		'value',

@@ -290,7 +290,7 @@ BaselineOfIDE >> postload: loader package: packageSpec [
 
 	MCSaveVersionDialog previousMessages add: String new.
 
-	RBProgramNode formatterClass: (self class environment at: #EFFormatter ifAbsent: [ RBSimpleFormatter ]).
+	ASTProgramNode formatterClass: (self class environment at: #EFFormatter ifAbsent: [ RBSimpleFormatter ]).
 
 	Color flushCache.
 

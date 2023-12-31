@@ -296,16 +296,16 @@ Breakpoint >> condition: aCondition [
 Breakpoint >> conditionBlockProducerMethodAST: conditionString [
 	| conditionBlockProducerMethodAST conditionAST |
 	conditionAST := self parserClass parseExpression: conditionString.
-	conditionBlockProducerMethodAST := RBMethodNode
+	conditionBlockProducerMethodAST := ASTMethodNode
 		selector: #conditionBlockGenerator
 		body:
-			(RBReturnNode
+			(ASTReturnNode
 				value:
-					(RBBlockNode
-						arguments: {(RBVariableNode named: 'ThisContext')}
+					(ASTBlockNode
+						arguments: {(ASTVariableNode named: 'ThisContext')}
 						body:
-							(RBMessageNode
-								receiver: (RBVariableNode named: 'Breakpoint')
+							(ASTMessageNode
+								receiver: (ASTVariableNode named: 'Breakpoint')
 								selector: #checkBreakConditionValue:
 								arguments: {conditionAST}) asSequenceNode)) asSequenceNode.
 	conditionBlockProducerMethodAST := self
@@ -551,10 +551,10 @@ Breakpoint >> rewriteASTToSimulateExecutionInADifferentContext: anAST [
 	rewriter := RBParseTreeRewriter new.
 	semanticallyAnalysedMethodAST := anAST doSemanticAnalysis.	"To find which variables are undefined"
 	rewriter
-		replace: (RBVariableNode named: #ThisContext) name
+		replace: (ASTVariableNode named: #ThisContext) name
 		with:
 			'(ThisContext readVariableNamed: #'
-				, (RBVariableNode named: #ThisContext) name , ')'.
+				, (ASTVariableNode named: #ThisContext) name , ')'.
 	allMessageNodes := semanticallyAnalysedMethodAST allChildren
 		select: [ :astElem | astElem isMessage ].
 	receiverSuperclassValueNode := self parserClass
@@ -565,12 +565,12 @@ Breakpoint >> rewriteASTToSimulateExecutionInADifferentContext: anAST [
 				ifTrue: [ rewriter
 						replaceTree: msgNode
 						withTree:
-							(RBMessageNode
+							(ASTMessageNode
 								receiver: (self parserClass parseExpression: 'ThisContext receiver')
 								selector: #perform:withArguments:inSuperclass:
 								arguments:
-									{(RBLiteralValueNode value: msgNode selector).
-									(RBArrayNode statements: msgNode arguments).
+									{(ASTLiteralValueNode value: msgNode selector).
+									(ASTArrayNode statements: msgNode arguments).
 									receiverSuperclassValueNode}) ] ].
 	intermediateAST := rewriter
 		executeTree: semanticallyAnalysedMethodAST;

@@ -142,16 +142,16 @@ RBMoveMethodRefactoring >> checkTemporaryVariableNames [
 { #category : 'transforming' }
 RBMoveMethodRefactoring >> compileDelegatorMethod [
 	| statementNode delegatorNode tree |
-	delegatorNode := RBMessageNode
-		                 receiver: (RBVariableNode named: variable)
+	delegatorNode := ASTMessageNode
+		                 receiver: (ASTVariableNode named: variable)
 		                 selector: parseTree selector
 		                 keywordsPositions: parseTree keywordsPositions
 		                 arguments: (parseTree argumentNames collect: [ :each |
 				                  each = selfVariableName
-					                  ifTrue: [ RBVariableNode selfNode ]
-					                  ifFalse: [ RBVariableNode named: each ] ]).
-	self hasOnlySelfReturns ifFalse: [ delegatorNode := RBReturnNode value: delegatorNode ].
-	statementNode := RBSequenceNode temporaries: #(  ) statements: (Array with: delegatorNode).
+					                  ifTrue: [ ASTVariableNode selfNode ]
+					                  ifFalse: [ ASTVariableNode named: each ] ]).
+	self hasOnlySelfReturns ifFalse: [ delegatorNode := ASTReturnNode value: delegatorNode ].
+	statementNode := ASTSequenceNode temporaries: #(  ) statements: (Array with: delegatorNode).
 	(tree := class parseTreeForSelector: selector) body: statementNode.
 	class compileTree: tree
 ]
@@ -270,7 +270,7 @@ RBMoveMethodRefactoring >> getNewMethodName [
 	] whileTrue: [  ].
 	parseTree
 		renameSelector: newSelector
-		andArguments: ( parameters collect: [ :each | RBVariableNode named: each ] ) asArray
+		andArguments: ( parameters collect: [ :each | ASTVariableNode named: each ] ) asArray
 ]
 
 { #category : 'transforming' }

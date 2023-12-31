@@ -7,7 +7,7 @@ Instance Variables:
 "
 Class {
 	#name : 'RBPatternMessageNode',
-	#superclass : 'RBMessageNode',
+	#superclass : 'ASTMessageNode',
 	#instVars : [
 		'isList',
 		'isCascadeList'
@@ -28,7 +28,7 @@ RBPatternMessageNode class >> receiver: aValueNode selector: aSelector keywordsP
 				keywordsPositions: positionList asIntegerArray
 				arguments: valueNodes]
 		ifFalse:
-			[RBMessageNode
+			[ASTMessageNode
 				receiver: aValueNode
 				selector: aSelector
 				keywordsPositions: positionList asIntegerArray
@@ -43,7 +43,7 @@ RBPatternMessageNode >> copyInContext: aDictionary [
 	keywordSelector := self isSelectorList
 		ifTrue: [ aDictionary at: self selectorParts first ]
 		ifFalse: [ '' join: (self selectorParts collect: [ :each | aDictionary at: each ])].
-	^ RBMessageNode
+	^ ASTMessageNode
 		receiver: (self receiver copyInContext: aDictionary)
 		selector: keywordSelector
 		arguments: (self copyList: self arguments inContext: aDictionary)
@@ -106,7 +106,7 @@ RBPatternMessageNode >> matchSelectorAgainst: aNode inContext: aDictionary [
 
 { #category : 'private' }
 RBPatternMessageNode >> matchingClass [
-	^RBMessageNode
+	^ASTMessageNode
 ]
 
 { #category : 'initialization' }

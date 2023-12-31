@@ -10,7 +10,7 @@ Class {
 CoSuperMessageHeuristicTest >> testDoesApplyForMethodNodeInContextWithNilclass [
 
 	self deny: (CoSuperMessageHeuristic new
-		appliesForNode: RBMethodNode new
+		appliesForNode: ASTMethodNode new
 		inContext: (CoCompletionContext new
 			completionClass: nil;
 			yourself))
@@ -20,7 +20,7 @@ CoSuperMessageHeuristicTest >> testDoesApplyForMethodNodeInContextWithNilclass [
 CoSuperMessageHeuristicTest >> testDoesApplyForMethodNodeInContextWithSuperclass [
 
 	self assert: (CoSuperMessageHeuristic new
-		appliesForNode: RBMethodNode new
+		appliesForNode: ASTMethodNode new
 		inContext: (CoCompletionContext new
 			completionClass: (CoMockClass new superclass: CoMockClass new);
 			yourself))
@@ -30,7 +30,7 @@ CoSuperMessageHeuristicTest >> testDoesApplyForMethodNodeInContextWithSuperclass
 CoSuperMessageHeuristicTest >> testDoesApplyForSuperMessageSendNodes [
 
 	self assert: (CoSuperMessageHeuristic new
-		appliesForNode: (RBMessageNode receiver: (RBVariableNode superNode variable: SuperVariable new) selector: #foo)
+		appliesForNode: (ASTMessageNode receiver: (ASTVariableNode superNode variable: SuperVariable new) selector: #foo)
 		inContext: nil)
 ]
 
@@ -38,7 +38,7 @@ CoSuperMessageHeuristicTest >> testDoesApplyForSuperMessageSendNodes [
 CoSuperMessageHeuristicTest >> testDoesNotApplyForMethodNodeInContextWithNoSuperclass [
 
 	self deny: (CoSuperMessageHeuristic new
-		appliesForNode: RBMethodNode new
+		appliesForNode: ASTMethodNode new
 		inContext: (CoCompletionContext new
 			completionClass: (CoMockClass new superclass: nil);
 			yourself))
@@ -48,6 +48,6 @@ CoSuperMessageHeuristicTest >> testDoesNotApplyForMethodNodeInContextWithNoSuper
 CoSuperMessageHeuristicTest >> testDoesNotApplyForNonSuperMessageSendNodes [
 
 	self deny: (CoSuperMessageHeuristic new
-		appliesForNode: (RBMessageNode receiver: (RBVariableNode new variable: (GlobalVariable new)) selector: #foo)
+		appliesForNode: (ASTMessageNode receiver: (ASTVariableNode new variable: (GlobalVariable new)) selector: #foo)
 		inContext: nil)
 ]
