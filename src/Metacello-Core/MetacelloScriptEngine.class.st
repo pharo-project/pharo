@@ -402,7 +402,7 @@ MetacelloScriptEngine >> projectReferenceSpec: aProjectSpec [
 MetacelloScriptEngine >> record: required [
 
 	^ self
-		  do: [ :versionSpec :requiredArray |
+		  do: [ :versionSpec :requiredArray :projectSpec |
 			  versionSpec
 				  doRecordRequiredFromArray: requiredArray
 				  withEngine: self ]
