@@ -33,8 +33,9 @@ Class {
 	#classInstVars : [
 		'any'
 	],
-	#category : 'SUnit-MockObjects',
-	#package : 'SUnit-MockObjects'
+	#category : 'SUnit-MockObjects-Core',
+	#package : 'SUnit-MockObjects',
+	#tag : 'Core'
 }
 
 { #category : 'accessing' }
