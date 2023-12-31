@@ -23,12 +23,12 @@ SycRenameMessageCommand >> applyResultInContext: aToolContext [
 
 	"aToolContext
 		showMessage: originalMessage
-		renamedTo: driver newMessage"
+		renamedTo: driver newMessage" 
 ]
 
 { #category : 'requesting' }
 SycRenameMessageCommand >> canAddArgs [
-	^false
+	^ false
 ]
 
 { #category : 'requesting' }
@@ -39,22 +39,22 @@ SycRenameMessageCommand >> canRemoveArgs [
 { #category : 'execution' }
 SycRenameMessageCommand >> createRefactoring [
 	"not used"
-	^ self 
+	^ self
 ]
 
 { #category : 'accessing' }
 SycRenameMessageCommand >> defaultMenuIconName [
-	^#edit
+	^ #edit
 ]
 
 { #category : 'accessing' }
 SycRenameMessageCommand >> defaultMenuItemName [
-	^'Rename'
+	^ 'Rename'
 ]
 
 { #category : 'execution' }
 SycRenameMessageCommand >> execute [
- 
+
 	driver := ReRenameMethodDriver new
 		          scopes: refactoringScopes
 		          model: model
@@ -73,11 +73,13 @@ SycRenameMessageCommand >> isComplexRefactoring [
 
 { #category : 'accessing' }
 SycRenameMessageCommand >> newSignature [
+
 	^ newSignature
 ]
 
 { #category : 'accessing' }
 SycRenameMessageCommand >> newSignature: anObject [
+
 	newSignature := anObject
 ]
 
@@ -90,5 +92,6 @@ SycRenameMessageCommand >> prepareFullExecutionInContext: aToolContext [
 
 { #category : 'execution' }
 SycRenameMessageCommand >> resultMessageSelector [
-	^newSignature selector
+
+	^ newSignature selector
 ]
