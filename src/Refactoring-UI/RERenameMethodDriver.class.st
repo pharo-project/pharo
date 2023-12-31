@@ -104,10 +104,9 @@ ReRenameMethodDriver >> requestNewMessage [
 	and in such case we can just escape."
 	"note that it would be better to pass a method name to the refactoring instead of splitting tlla the arguments this way"
 	refactoring newSelector: methodName selector; permutation: methodName permutation.
-	refactoring areNamesTheSame & refactoring areArgumentsPermuted
+	refactoring newNameDoesNotRequireRefactoringPrecondition check
 		ifTrue: [ shouldEscape := true. ^ self ].
-	"refactoring areArgumentsTheSame & refactoring areArgumentsPermuted not
-		ifTrue: [ shouldEscape := true. ^ self ]."
+
 	^ methodName
 ]
 
@@ -135,7 +134,7 @@ ReRenameMethodDriver >> runRefactoring [
 			ok := self application newConfirm
 				title: 'Watchout override detected!';
 		      label: (String streamContents: 
-							[:s | refactoring violationMessageOn: s.
+							[:s | refactoring breakingChangeViolationMessageOn: s.
 								s nextPutAll: '. Do you want the override(s)?']);
 		      acceptLabel: 'Sure!';
 		      cancelLabel: 'No, forget it';
