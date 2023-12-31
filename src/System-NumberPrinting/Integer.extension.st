@@ -171,14 +171,6 @@ Integer >> printOn: aStream base: base length: minimum padded: zeroFlag [
 ]
 
 { #category : '*System-NumberPrinting' }
-Integer >> printOn: aStream base: b nDigits: n [
-	"Append a representation of this number in base b on aStream using nDigits.
-	self must be positive."
-
-	self subclassResponsibility
-]
-
-{ #category : '*System-NumberPrinting' }
 Integer >> printOn: outputStream base: baseInteger showRadix: flagBoolean [
 	"Write a sequence of characters that describes the receiver in radix
 	baseInteger with optional radix specifier.

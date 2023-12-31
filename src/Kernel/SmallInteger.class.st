@@ -596,6 +596,14 @@ SmallInteger >> printOn: stream base: base length: minimumLength padded: padWith
 		divisor := divisor // base ]
 ]
 
+{ #category : 'printing' }
+SmallInteger >> printOn: aStream base: b nDigits: n [
+	"Append a representation of this number in base b on aStream using nDigits.
+	self must be positive."
+
+	self printOn: aStream base: b length: n padded: true
+]
+
 { #category : 'arithmetic' }
 SmallInteger >> quo: aNumber [
 	"Primitive. Divide the receiver by the argument and answer with the

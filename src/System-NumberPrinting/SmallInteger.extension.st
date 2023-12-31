@@ -11,14 +11,6 @@ SmallInteger >> numberOfDigitsInBase: b [
 ]
 
 { #category : '*System-NumberPrinting' }
-SmallInteger >> printOn: aStream base: b nDigits: n [
-	"Append a representation of this number in base b on aStream using nDigits.
-	self must be positive."
-
-	self printOn: aStream base: b length: n padded: true
-]
-
-{ #category : '*System-NumberPrinting' }
 SmallInteger >> printStringBase: b [
 	"Return a String representation of this number in base b.
 	For SmallIntegers, it is more efficient to print directly in a String,
