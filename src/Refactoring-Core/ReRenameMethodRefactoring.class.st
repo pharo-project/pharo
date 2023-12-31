@@ -71,13 +71,6 @@ ReRenameMethodRefactoring >> applicabilityPreconditions [
 		self localConditions }
 ]
 
-{ #category : 'redefined locally waiting for superclass migration' }
-ReRenameMethodRefactoring >> applicabilityViolationMessageOn: stream [
-
-
-	
-]
-
 { #category : 'torevisit' }
 ReRenameMethodRefactoring >> areArgumentsPermuted [
 	
@@ -125,8 +118,14 @@ ReRenameMethodRefactoring >> doesNotOverrideExistingMethodPreconditions [
 { #category : 'redefined locally waiting for superclass migration' }
 ReRenameMethodRefactoring >> generateChanges [
 	"Prepare, check the preconditions, and perform the actual transformation (i.e., creating a list of changes that can be accessible using the changes message). This method should not be invoked from drivers since drivers usually check in finer grained mode the preconditions - and that this stage they already checked the preconditions."
-	
+		
+	"since we locally redefine generate changes we do not need anymore preconditions.
+	We should probably reintroduce it in the future as preconditions 
+	^ self applicabilityPreconditions addAll: self breakingChangesPreconditions but it will be once the complete hierarchy is
+	migrated to the new way."	
+
 	self prepareForExecution.
+	
 	"this is a bit bad since on error we execute twice the preconditions
 	once to check and one to report. to be fixed later"
 	
@@ -203,19 +202,12 @@ ReRenameMethodRefactoring >> parseTreeRewriterInstance [
 				  with: newSelector ]
 ]
 
-{ #category : 'preconditions' }
-ReRenameMethodRefactoring >> preconditions [
-	self halt.
-	
-	^ self newNameDoesNotRequireRefactoringPrecondition | self superPreconditions
-]
-
 { #category : 'accessing' }
 ReRenameMethodRefactoring >> refactoredClass [
 	^ class
 ]
 
-{ #category : 'changes' }
+{ #category : 'interactive' }
 ReRenameMethodRefactoring >> renameChanges [
 
 	self privateTransform.
@@ -237,19 +229,6 @@ ReRenameMethodRefactoring >> storeOn: aStream [
 		nextPutAll: ' permutation: '.
 	permutation storeOn: aStream.
 	aStream nextPut: $)
-]
-
-{ #category : 'preconditions' }
-ReRenameMethodRefactoring >> superPreconditions [
-
-	| conditions |
-	conditions := self localConditions
-	              & self methodDefinedInClassCondition
-	              & self validSelectorCondition.
-
-	^ conditions & self doesNotOverrideExistingMethodPreconditions
-
-
 ]
 
 { #category : 'preconditions' }
