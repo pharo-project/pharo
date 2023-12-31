@@ -23,5 +23,5 @@ MCFileBasedRepository >> packageNamed: aName ifPresent: presentBlock ifAbsent: a
 		               detect: [ :e | e first = aName ]
 		               ifNone: [ nil ].
 	versionName ifNil: [ ^ absentBlock value ].
-	^ presentBlock value: (self versionFrom: versionName first)
+	^ presentBlock value: (self versionFromFileNamed: versionName last)
 ]
