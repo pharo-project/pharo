@@ -73,7 +73,6 @@ ReRenameMethodRefactoring >> applicabilityPreconditions [
 
 { #category : 'torevisit' }
 ReRenameMethodRefactoring >> areArgumentsPermuted [
-	"I fedup and not happy but let us move on. We may turn them into first class condition later."
 	
 	^ (permutation asArray = (1 to: oldSelector numArgs) asArray ) not
 ]
