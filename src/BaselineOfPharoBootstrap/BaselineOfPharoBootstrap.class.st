@@ -139,6 +139,7 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		spec package: 'FileSystem-Core'.
 		spec package: 'FileSystem-Disk'.
 
+		spec package: 'System-NumberPrinting'.
 		spec package: 'SUnit-Core'.
 		spec package: 'SUnit-Tests'.
 		spec package: 'Kernel-Tests'.
@@ -181,6 +182,7 @@ BaselineOfPharoBootstrap >> baseline: spec [
 			'PerformMessageCommandLineHandler'.
 			'System-Support'.
 			'NumberParser'.
+			'System-NumberPrinting'.
 
 			'UIManager'.
 			'Zinc-Character-Encoding-Core' }.
