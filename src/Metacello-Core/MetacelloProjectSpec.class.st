@@ -349,37 +349,16 @@ MetacelloProjectSpec >> copyForScriptingInto: aProjectSpec [
 ]
 
 { #category : 'loading' }
-MetacelloProjectSpec >> ensureLoadUsingEngine: anEngine [
-
-	| projectClassInstance projectClass |
-	"Load only if not there yet"
-	(anEngine lookupProjectClassNamed: self className) ifNil: [
-		anEngine doLoadProjectSpecFrom: (MetacelloPackageSpec new
-				 name: self className;
-				 repositories: self repositories;
-				 yourself) ].
-
-	projectInitialized := true.
-	projectClass := anEngine lookupProjectClassNamed:
-		                self className asSymbol.
-	"Then return it through the project method to call the hook redefined in subclasses for compatibility.
-	Subclasses typically change the load type of the project to #atomic"
-	projectClassInstance := projectClass new.
-	projectClassInstance initalizeProjectWithRepositoryDescription:
-		self repositoryDescriptions.
-	project := projectClassInstance project
-]
-
-{ #category : 'loading' }
 MetacelloProjectSpec >> ensureProjectLoadedWithEngine: anEngine [
 	"Ensure that the MetacelloProject is loaded in image. 
 	 projectClass == nil or requested version non-existent warrants a project package load."
 
-	"answer true if the projectClass exists"
+	(projectInitialized and: [
+		 (self isMutable and: [ anEngine ignoreImage ]) not ]) ifTrue: [
+		^ self ].
 
-	(projectInitialized not or: [
-		 self isMutable and: [ anEngine ignoreImage ] ]) ifTrue: [
-		self ensureLoadUsingEngine: anEngine ]
+	projectInitialized := true.
+	project := anEngine loader loadProject: self
 ]
 
 { #category : 'querying' }
@@ -498,26 +477,6 @@ MetacelloProjectSpec >> initialize [
 
 	super initialize.
 	projectInitialized := false
-]
-
-{ #category : 'initialization' }
-MetacelloProjectSpec >> initializeProjectForEngine: aMetacelloScriptEngine [
-
-	| projectClassInstance projectClass |
-	projectInitialized := true.
-	projectClass := aMetacelloScriptEngine lookupProjectClassNamed:
-		                self className asSymbol.
-
-	projectClassInstance := projectClass new.
-
-	"Then return it through the project method to call the hook redefined in subclasses for compatibility.
-	Subclasses typically change the load type of the project to #atomic"
-	projectClassInstance initalizeProjectWithRepositoryDescription:
-		self repositoryDescriptions.
-
-	project := projectClassInstance project.
-	"project version spec repositories:
-		aMetacelloScriptEngine repositories copy"
 ]
 
 { #category : 'testing' }
@@ -902,12 +861,6 @@ MetacelloProjectSpec >> version [
 			  (vrsn := self project latestVersion) isNil
 				  ifTrue: [ self project version: #bleedingEdge ]
 				  ifFalse: [ vrsn ] ]
-]
-
-{ #category : 'scripting' }
-MetacelloProjectSpec >> versionForScriptEngine: aMetacelloScriptEngine [
-
-	^ self project version: self versionString
 ]
 
 { #category : 'querying' }

@@ -112,15 +112,13 @@ MetacelloScriptEngine >> do: aBlock required: required onProjectDownGrade: onDow
 						notification
 							handleOnDownGrade: onDownGradeBlock
 							onUpgrade: onUpgradeBlock ].
-				projectSpec ensureProjectLoadedWithEngine: self.
-				versionSpec := projectSpec versionForScriptEngine: self.
 
-				requiredArray := required isString
-					                 ifTrue: [ { required } ]
-					                 ifFalse: [ required ].
-				requiredArray ifEmpty: [
-					requiredArray := versionSpec spec defaultPackageNames ].
+				projectSpec loads: required.
+				projectSpec ensureProjectLoadedWithEngine: self.
+				versionSpec := projectSpec project version: projectSpec versionString.
+				requiredArray := projectSpec loadListForVersion: versionSpec.	
 				self root: (aBlock value: versionSpec value: requiredArray value: projectSpec) ] ]
+
 		commitIfSuccess: aBoolean
 ]
 
@@ -174,22 +172,6 @@ MetacelloScriptEngine >> get [
 									ifNil: [ existingCopy merge: new ]
 									ifNotNil: [ specCopy mergeScriptRepository: spec ] ] ] ] ] ]
 		commitIfSuccess: true
-]
-
-{ #category : 'project lookup' }
-MetacelloScriptEngine >> getBaselineProjectUnconditionalLoad [
-
-	| project |
-	self doLoadProjectSpecFrom: (MetacelloPackageSpec new
-			 name: self projectSpec className;
-			 repositories: self projectSpec repositories;
-			 yourself).
-	project := (self lookupProjectClassNamed:
-		            self projectSpec className asSymbol) new
-		           initalizeProjectWithRepositoryDescription:
-		           self projectSpec repositories map keys.
-	project version spec repositories: self repositories copy.
-	^ project
 ]
 
 { #category : 'handlers' }
@@ -316,7 +298,6 @@ MetacelloScriptEngine >> load: required onProjectDownGrade: onDownGradeBlock onP
 				          doLoadRequiredFromArray: requiredArray
 				          withEngine: self.
 			self root: result.
-			projectSpec loads: required.
 			MetacelloProjectRegistration
 				registrationForProjectSpec: projectSpec
 				ifAbsent: [ :new |
@@ -350,7 +331,8 @@ MetacelloScriptEngine >> lock [
 	| spec |
 	MetacelloProjectRegistration
 		copyRegistryDuring: [
-			self setDefaultsAndValidate: self projectReferenceSpec copy. "don't add defaults"
+			self setDefaultsAndValidate:
+				self projectReferenceSpec projectReference copy. "don't add defaults"
 			spec := self projectReferenceSpec projectReference.
 			MetacelloProjectRegistration
 				registrationForProjectSpec: spec
@@ -519,7 +501,8 @@ MetacelloScriptEngine >> unlock [
 	| spec |
 	MetacelloProjectRegistration
 		copyRegistryDuring: [
-			self setDefaultsAndValidate: self projectReferenceSpec copy. "don't add defaults"
+			self setDefaultsAndValidate:
+				self projectReferenceSpec projectReference copy. "don't add defaults"
 			spec := self projectReferenceSpec projectReference.
 			MetacelloProjectRegistration
 				registrationForProjectSpec: spec

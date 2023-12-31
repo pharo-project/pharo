@@ -91,7 +91,7 @@ MetacelloRecordTarget >> visitPackageSpec: aMetacelloPackageSpec [
 { #category : 'visiting' }
 MetacelloRecordTarget >> visitProjectReference: aMetacelloProjectReferenceSpec [
 
-	| displayString projectSpecForVersion registered override registration |
+	| displayString projectSpec registered override registration requiredArray |
 	registration := MetacelloProjectRegistration
 		                registrationForProjectSpec:
 		                aMetacelloProjectReferenceSpec projectReference
@@ -127,15 +127,15 @@ MetacelloRecordTarget >> visitProjectReference: aMetacelloProjectReferenceSpec [
 		override loadVersion: nil.
 		^ self ].
 
-	projectSpecForVersion := aMetacelloProjectReferenceSpec
+	projectSpec := aMetacelloProjectReferenceSpec
 		                         projectReference asProjectSpecForVersion:
 		                         aMetacelloProjectReferenceSpec
 			                         projectReference versionOrNil.
-
-	projectSpecForVersion ensureProjectLoadedWithEngine: engine.
-	projectSpecForVersion version
-		recordRequiredFromArray: (projectSpecForVersion loadListForVersion:
-				 projectSpecForVersion version)
+	projectSpec ensureProjectLoadedWithEngine: engine.
+	requiredArray := projectSpec loadListForVersion:
+		                 projectSpec version.
+	projectSpec version
+		recordRequiredFromArray: requiredArray
 		withEngine: engine.
 	registration registerProject
 ]

@@ -48,6 +48,30 @@ MetacelloMonticelloLoader >> loadPackageDirective: aMetacelloPackageLoadDirectiv
 	self loadAtomicPackageDirectives: { aMetacelloPackageLoadDirective }
 ]
 
+{ #category : 'loading' }
+MetacelloMonticelloLoader >> loadProject: aMetacelloMCBaselineOfProjectSpec [
+	"Loads the project class (BaselineOf, ConfigurationOf) and creates a project from it"
+
+	| projectClass projectClassInstance |
+	(self lookupProjectClassNamed:
+		 aMetacelloMCBaselineOfProjectSpec className) ifNil: [
+		self loadPackageDirective: (MetacelloDirective
+				 loadPackage: (MetacelloPackageSpec new
+						  name: aMetacelloMCBaselineOfProjectSpec className;
+						  repositories: aMetacelloMCBaselineOfProjectSpec repositories;
+						  yourself)
+				 repositorySpecs:
+				 aMetacelloMCBaselineOfProjectSpec repositorySpecs) ].
+
+	projectClass := self lookupProjectClassNamed:
+		                aMetacelloMCBaselineOfProjectSpec className asSymbol.
+	projectClassInstance := projectClass new.
+	"Subclasses typically change the load type of the project to #atomic"
+	projectClassInstance initalizeProjectWithRepositoryDescription:
+		aMetacelloMCBaselineOfProjectSpec repositoryDescriptions.
+	^ projectClassInstance project
+]
+
 { #category : 'accessing' }
 MetacelloMonticelloLoader >> lookupProjectClassNamed: aString [
 

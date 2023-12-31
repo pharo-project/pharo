@@ -99,7 +99,7 @@ MetacelloVersion >> doFetchRequiredFromArray: anArray withEngine: anEngine [
 		  doWithProgress: [
 		  self fetchRequiredFromArray: anArray withEngine: anEngine ]
 		  label: 'Fetching'
-		  withEngine: anEngine
+		  silently: anEngine silently
 ]
 
 { #category : 'private' }
@@ -109,20 +109,21 @@ MetacelloVersion >> doLoadRequiredFromArray: anArray withEngine: anEngine [
 		  doWithProgress: [
 		  self loadRequiredFromArray: anArray withEngine: anEngine ]
 		  label: 'Loading'
-		  withEngine: anEngine
+		  silently: anEngine silently
 ]
 
 { #category : 'private' }
 MetacelloVersion >> doRecordRequiredFromArray: anArray withEngine: anEngine [
 
 	^ self
-		  doWithProgress: [ self recordRequiredFromArray: anArray withEngine: anEngine ]
+		  doWithProgress: [
+		  self recordRequiredFromArray: anArray withEngine: anEngine ]
 		  label: 'Recording'
-		  withEngine: anEngine
+		  silently: anEngine silently
 ]
 
 { #category : 'private' }
-MetacelloVersion >> doWithProgress: aBlock label: aLabel withEngine: anEngine [
+MetacelloVersion >> doWithProgress: aBlock label: aLabel silently: silently [
 
 	| displayString oldBypassProgress |
 	displayString := ' ' , self versionNumber printString , ' of '
@@ -130,7 +131,7 @@ MetacelloVersion >> doWithProgress: aBlock label: aLabel withEngine: anEngine [
 	MetacelloNotification signal: aLabel , displayString , '...'.
 	oldBypassProgress := MetacelloPlatform current bypassProgressBars.
 
-	anEngine silently ifTrue: [
+	silently ifTrue: [
 		MetacelloPlatform current bypassProgressBars: true ].
 
 	[

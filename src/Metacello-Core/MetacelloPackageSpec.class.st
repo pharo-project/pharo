@@ -152,13 +152,6 @@ MetacelloPackageSpec >> ensureLoadedForDevelopmentUsing: aTarget ithEngine: anEn
 	
 ]
 
-{ #category : 'loading' }
-MetacelloPackageSpec >> ensureLoadedForDevelopmentUsing: aTarget withEngine: anEngine [
-	"noop"
-
-	
-]
-
 { #category : 'private' }
 MetacelloPackageSpec >> extractNameFromFile [
 
