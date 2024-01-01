@@ -60,7 +60,6 @@ SycRenameMessageCommand >> execute [
 		          model: model
 		          renameMethodSignature: originalMessage
 		          in: originalMessage methodClass.
-
 	driver runRefactoring.
 	
 ]
