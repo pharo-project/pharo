@@ -2,7 +2,7 @@
 Call the rename method refactoring (yes the class name is not good)
 "
 Class {
-	#name : 'SycRenameMessage2Command',
+	#name : 'SycRenameMessageCommand',
 	#superclass : 'SycChangeMessageSignatureCommand',
 	#instVars : [
 		'newSignature',
@@ -14,7 +14,7 @@ Class {
 }
 
 { #category : 'execution' }
-SycRenameMessage2Command >> applyResultInContext: aToolContext [
+SycRenameMessageCommand >> applyResultInContext: aToolContext [
 	"I have problem to understand how to plug the call to the driver in the cmd architecture
 	in a way that I can come back here only once the refactoring is applied."
 
@@ -22,73 +22,74 @@ SycRenameMessage2Command >> applyResultInContext: aToolContext [
 
 	"aToolContext
 		showMessage: originalMessage
-		renamedTo: driver newMessage"
+		renamedTo: driver newMessage" 
 ]
 
 { #category : 'requesting' }
-SycRenameMessage2Command >> canAddArgs [
-	^false
+SycRenameMessageCommand >> canAddArgs [
+	^ false
 ]
 
 { #category : 'requesting' }
-SycRenameMessage2Command >> canRemoveArgs [
+SycRenameMessageCommand >> canRemoveArgs [
 	^ false
 ]
 
 { #category : 'execution' }
-SycRenameMessage2Command >> createRefactoring [
+SycRenameMessageCommand >> createRefactoring [
 	"not used"
-	^ self 
+	^ self
 ]
 
 { #category : 'accessing' }
-SycRenameMessage2Command >> defaultMenuIconName [
-	^#edit
+SycRenameMessageCommand >> defaultMenuIconName [
+	^ #edit
 ]
 
 { #category : 'accessing' }
-SycRenameMessage2Command >> defaultMenuItemName [
-	^'Rename'
+SycRenameMessageCommand >> defaultMenuItemName [
+	^ 'Rename'
 ]
 
 { #category : 'execution' }
-SycRenameMessage2Command >> execute [
+SycRenameMessageCommand >> execute [
 
-	driver := RBRenameMethodDriver new
+	driver := ReRenameMethodDriver new
 		          scopes: refactoringScopes
 		          model: model
 		          renameMethodSignature: originalMessage
 		          in: originalMessage methodClass.
-	
-	driver command: self andPostAction: [ toolContext showMessage: originalMessage renamedTo: driver newMessage ].
 	driver runRefactoring.
 	
 ]
 
 { #category : 'execution' }
-SycRenameMessage2Command >> isComplexRefactoring [ 
+SycRenameMessageCommand >> isComplexRefactoring [ 
 
 	^ false
 ]
 
 { #category : 'accessing' }
-SycRenameMessage2Command >> newSignature [
+SycRenameMessageCommand >> newSignature [
+
 	^ newSignature
 ]
 
 { #category : 'accessing' }
-SycRenameMessage2Command >> newSignature: anObject [
+SycRenameMessageCommand >> newSignature: anObject [
+
 	newSignature := anObject
 ]
 
 { #category : 'execution' }
-SycRenameMessage2Command >> prepareFullExecutionInContext: aToolContext [
+SycRenameMessageCommand >> prepareFullExecutionInContext: aToolContext [
 
 	super prepareFullExecutionInContext: aToolContext.
 	toolContext := aToolContext
 ]
 
 { #category : 'execution' }
-SycRenameMessage2Command >> resultMessageSelector [
-	^newSignature selector
+SycRenameMessageCommand >> resultMessageSelector [
+
+	^ newSignature selector
 ]

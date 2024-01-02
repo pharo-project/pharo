@@ -60,8 +60,6 @@ RBRemoveInstanceVariableRefactoring >> generateChanges [
 			self breakingChangePreconditions errorString ].
 
 	self privateTransform.
-	self flag: #todo.
-	"the method comment does not indicte this. May be we can add self changes but to all the generateChanges methods. Be consistent. "
 	^ self changes
 ]
 

@@ -101,9 +101,6 @@ RBPushDownMethodRefactoring >> generateChanges [
 			self breakingChangePreconditions errorString ].
 
 	self privateTransform.
-	self flag: #todo.
-	"check because the superclass does not involve self changes."
-	
 	^ self changes
 ]
 

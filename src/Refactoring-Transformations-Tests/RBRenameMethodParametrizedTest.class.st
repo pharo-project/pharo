@@ -9,7 +9,9 @@ Class {
 { #category : 'tests' }
 RBRenameMethodParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
+				addCase: { #rbClass -> ReRenameMethodRefactoring };
 		addCase: { #rbClass -> RBRenameMethodRefactoring };
+
 		addCase: { #rbClass -> RBRenameMethodTransformation };
 		yourself
 ]
@@ -68,6 +70,33 @@ RBRenameMethodParametrizedTest >> testRenameMethodOnlyInSomePackages [
 { #category : 'tests' }
 RBRenameMethodParametrizedTest >> testRenameMethodPermuteArgs [
 	| refactoring class |
+	"We will permute the arguments of the message while the selector will stay the same 
+	 so 
+		the new method will see its argument changed
+		and its users using 1, 2 should be changed to 2 and 1.
+	
+	demoRenameMethod: arg1 PermuteArgs: arg2
+		self do: arg1.
+		self do: arg2.
+		^ arg1 > arg2
+	
+	is transformed into 
+	
+	demoRenameMethod: arg2 PermuteArgs: arg1
+		self do: arg1.
+		self do: arg2.
+		^ arg1 > arg2
+	
+	and 
+	demoExampleCall
+		^ self demoRenameMethod: 1 PermuteArgs: 2
+	
+	is transformed into 
+	
+	demoExampleCall
+		^ self demoRenameMethod: 2 PermuteArgs: 1
+	
+	"
 	refactoring := self createRefactoringWithArguments:
 		{ ('demoRenameMethod:' , 'PermuteArgs:') asSymbol . RBClassDataForRefactoringTest .
 		('demoRenameMethod:' , 'PermuteArgs:') asSymbol . #(2 1) }.
@@ -79,7 +108,8 @@ RBRenameMethodParametrizedTest >> testRenameMethodPermuteArgs [
 		equals:
 			(self
 				parseMethod:
-					'demoRenameMethod: arg2 PermuteArgs: arg1 self do: arg1.
+'demoRenameMethod: arg2 PermuteArgs: arg1 
+	self do: arg1.
 	self do: arg2.
 	^ arg1 > arg2').
 	
@@ -153,7 +183,7 @@ RBRenameMethodParametrizedTest >> testRenameTestMethod [
 RBRenameMethodParametrizedTest >> testRenameTestMethod1 [
 	| refactoring class |
 	refactoring := self createRefactoringWithArguments:
-		{ ('testMethod1') asSymbol . RBClassDataForRefactoringTest . #testMethod2 . (1 to: 0) }.
+		{ 'testMethod1' asSymbol . RBClassDataForRefactoringTest . #testMethod2 . (1 to: 0) }.
 	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
 	class := refactoring model classNamed: #RBClassDataForRefactoringTest.
 	
