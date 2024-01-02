@@ -195,6 +195,8 @@ RGEnvironment >> cleanUnusedUnreferencedPackages [
 		referenced addAll: each referencedPackages ].
 
 	unreferenced := (self ask packages copyWithoutAll: referenced).
+	"Do not skip packages that only have extension methods..."
+	unreferenced := unreferenced reject: [ :e | e definedBehaviors isEmpty and: [ e extensionMethods notEmpty ] ].
 
 	unreferenced do: [:each | self removePackage: each  ].
 
