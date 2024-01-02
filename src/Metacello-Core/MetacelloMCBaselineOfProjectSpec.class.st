@@ -1,9 +1,6 @@
 Class {
 	#name : 'MetacelloMCBaselineOfProjectSpec',
 	#superclass : 'MetacelloProjectSpec',
-	#instVars : [
-		'version'
-	],
 	#category : 'Metacello-Core-Specs',
 	#package : 'Metacello-Core',
 	#tag : 'Specs'

@@ -7,11 +7,7 @@ Class {
 	#instVars : [
 		'root',
 		'options',
-		'ensuredMap',
-		'repositoryMap',
-		'cacheRepository',
 		'specBuilder',
-		'loader',
 		'projectReferenceSpec'
 	],
 	#classVars : [
@@ -69,12 +65,6 @@ MetacelloScriptEngine class >> defaultVersionString [
     ^ DefaultVersionString
 ]
 
-{ #category : 'accessing' }
-MetacelloScriptEngine >> cacheRepository [
-
-	^ cacheRepository ifNil: [ cacheRepository := MCDictionaryRepository new ]
-]
-
 { #category : 'defaults' }
 MetacelloScriptEngine >> defaultRepositoryDescription [
     ^ self class defaultRepositoryDescription
@@ -128,12 +118,6 @@ MetacelloScriptEngine >> doLoadProjectSpecFrom: aMetacelloPackageSpec [
 	self loader loadPackageDirective: (MetacelloDirective
 			 loadPackage: aMetacelloPackageSpec
 			 repositorySpecs: aMetacelloPackageSpec repositorySpecs)
-]
-
-{ #category : 'accessing' }
-MetacelloScriptEngine >> ensuredMap [
-
-	^ ensuredMap ifNil: [ ensuredMap := Dictionary new ]
 ]
 
 { #category : 'actions api' }
@@ -423,12 +407,6 @@ MetacelloScriptEngine >> register [
 { #category : 'accessing' }
 MetacelloScriptEngine >> repositories [
     ^ self projectSpec repositories
-]
-
-{ #category : 'accessing' }
-MetacelloScriptEngine >> repositoryMap [
-
-	^ repositoryMap ifNil: [ repositoryMap := Dictionary new ]
 ]
 
 { #category : 'private' }

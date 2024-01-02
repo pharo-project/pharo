@@ -3,7 +3,6 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'currentLoadDirective',
-		'directives',
 		'root'
 	],
 	#category : 'Metacello-Core-Scripts',
