@@ -182,7 +182,6 @@ BaselineOfPharoBootstrap >> baseline: spec [
 			'PerformMessageCommandLineHandler'.
 			'System-Support'.
 			'NumberParser'.
-			'System-NumberPrinting'.
 
 			'UIManager'.
 			'Zinc-Character-Encoding-Core' }.
@@ -195,6 +194,7 @@ BaselineOfPharoBootstrap >> baseline: spec [
 			'Kernel-Chronology-Extras'.
 			'Math-Operations-Extensions'.
 			'Debugging-Core'.
+			'System-NumberPrinting'.
 		}.
 
 		spec group: 'MultilingualGroup' with: {
