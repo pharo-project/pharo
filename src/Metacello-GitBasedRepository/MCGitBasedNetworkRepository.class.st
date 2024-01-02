@@ -490,7 +490,8 @@ MCGitBasedNetworkRepository >> loadPackageNamed: aString intoLoader: aMCVersionL
 
 	| found |
 	found := self packageNamed: aString.
-	aMCVersionLoader addVersion: found
+	aMCVersionLoader addVersion: found.
+	^ { found . self }
 ]
 
 { #category : 'private' }

@@ -191,7 +191,8 @@ MCFileBasedRepository >> loadPackageNamed: aString intoLoader: aMCVersionLoader 
 
 	| found |
 	found := self packageNamed: aString.
-	aMCVersionLoader addVersion: found
+	aMCVersionLoader addVersion: found.
+	^ { found . self }
 ]
 
 { #category : 'private' }

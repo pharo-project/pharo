@@ -36,15 +36,24 @@ MetacelloMonticelloLoader >> loadAtomicPackageDirectives: packageDirectives [
 	"Each package directive can specify many repositorySpecs.
 	Find the first one that defines the package (assumming they all are equivalent) and use that."
 
-	| model |
+	| model references |
 	model := MCVersionLoader new.
 
-	packageDirectives do: [ :e |
+	references := packageDirectives collect: [ :e |
 		| repository |
 		repository := self repositoriesFrom: e repositorySpecs.
-		repository loadPackageNamed: e spec name intoLoader: model ].
+		repository loadPackageNamed: e spec name intoLoader: model.
+	].
 
 	model load.
+	
+	"Add the repositories to monticello. Otherwise this will break during the loading of Pharo.
+	See: BaselineOf >> #packageRepository.
+	Still used by WelcomeBrowser.
+	When this is removed, we should also remove the reference return in loadPackageNamed:intoLoader:"
+	references do: [ :e |
+		e first workingCopy repositoryGroup addRepository: e second ].
+	
 
 	packageDirectives do: [ :e |
 		MetacelloNotification signal:
