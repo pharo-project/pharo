@@ -76,10 +76,12 @@ MetacelloRecordTarget >> visitGroupSpec: aMetacelloGroupSpec [
 { #category : 'visiting' }
 MetacelloRecordTarget >> visitPackageSpec: aMetacelloPackageSpec [
 
-	| directive |
+	| directive packageRepositorySpecs |
+	packageRepositorySpecs := aMetacelloPackageSpec repositorySpecs
+		                          ifEmpty: [ currentRepositorySpecs ].
 	directive := MetacelloDirective
 		             loadPackage: aMetacelloPackageSpec
-		             repositorySpecs: currentRepositorySpecs.
+		             repositorySpecs: packageRepositorySpecs.
 	(self specBuilder currentLoadDirective includes: directive) ifTrue: [
 		^ self ].
 
