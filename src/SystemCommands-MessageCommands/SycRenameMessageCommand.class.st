@@ -4,7 +4,6 @@ Call the rename method refactoring (yes the class name is not good)
 Class {
 	#name : 'SycRenameMessageCommand',
 	#superclass : 'SycChangeMessageSignatureCommand',
-	#classTraits : '{} + TraitedClass',
 	#instVars : [
 		'newSignature',
 		'driver',
