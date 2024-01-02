@@ -344,7 +344,7 @@ MetacelloPackageSpec >> repositorySpecs [
 	^self repositories map values
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 MetacelloPackageSpec >> requiredPackageSpecsWithEngine: anEngine [
 
 	| specs requiredSpec |

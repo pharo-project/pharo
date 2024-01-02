@@ -62,11 +62,6 @@ MetacelloVersionSpec >> blessing: anObject [
 	blessing := anObject asMetacelloValueHolderFor: self
 ]
 
-{ #category : 'accessing' }
-MetacelloVersionSpec >> computeVersionStatus: matchBlock [
-	self computeVersionStatus: (self expandToLoadableSpecNames: #('ALL')) matchBlock: matchBlock
-]
-
 { #category : 'printing' }
 MetacelloVersionSpec >> configMethodBasicOn: aStream last: last indent: indent [
 
@@ -321,13 +316,6 @@ MetacelloVersionSpec >> difference: otherVersionSpec [
 					''.
 					otherPackageSpec file } ] ].
 	^ report
-]
-
-{ #category : 'loading' }
-MetacelloVersionSpec >> expandToLoadableSpecNames: nameList [
-
-	^ (self resolveToLoadableSpecs: nameList) collect: [ :spec |
-		  spec name ]
 ]
 
 { #category : 'accessing' }

@@ -60,19 +60,6 @@ MetacelloVersion >> blessing [
     ^ self basicSpec blessing value
 ]
 
-{ #category : 'private' }
-MetacelloVersion >> computeVersionStatus [
-	"
-		#allLoadedToSpec - all projects and packages are loaded and match specification
-		#loadedToSpec - all loaded projects and packages match specifications (at least one package loaded)
-		#loadedMatchConstraints - all loaded projects and packages match constraints (at least one package loaded)
-		#somethingLoaded - at least one package loaded
-	"
-
-	self spec computeVersionStatus: [ :status | ^ status ].
-	^ #noStatus
-]
-
 { #category : 'querying' }
 MetacelloVersion >> defaultPackageNamesToLoad: defaultList [
 	"Answer the list of packages and projects to be loaded: packages already loaded plust defaultList"
@@ -145,13 +132,6 @@ MetacelloVersion >> doWithProgress: aBlock label: aLabel silently: silently [
 			^ result ]
 		displaying: aLabel , displayString ] ensure: [
 		MetacelloPlatform current bypassProgressBars: oldBypassProgress ]
-]
-
-{ #category : 'querying' }
-MetacelloVersion >> expandToLoadableSpecNames: nameList [
-	"Just like #resolveToLoadableSpecs:, but returns list of spec names instead of specs"
-	
-	^self spec expandToLoadableSpecNames: nameList
 ]
 
 { #category : 'private' }
@@ -387,12 +367,6 @@ MetacelloVersion >> versionNumberFrom: aString [
 MetacelloVersion >> versionSpec [
 
 	^self spec
-]
-
-{ #category : 'accessing' }
-MetacelloVersion >> versionStatus [
-
-	^ versionStatus ifNil: [ versionStatus := self computeVersionStatus ]
 ]
 
 { #category : 'accessing' }

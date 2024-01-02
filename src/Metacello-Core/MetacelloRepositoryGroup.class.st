@@ -9,7 +9,7 @@ Class {
 	#tag : 'Gofer'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'instance creation' }
 MetacelloRepositoryGroup class >> onRepositories: aRepositoryCollection [
 
 	^ self new
@@ -17,7 +17,7 @@ MetacelloRepositoryGroup class >> onRepositories: aRepositoryCollection [
 		yourself
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 MetacelloRepositoryGroup >> loadPackageNamed: aName intoLoader: aLoader [
 	"Find the first repository that defines the package"
 

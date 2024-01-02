@@ -472,7 +472,7 @@ MetacelloProjectSpec >> hasRepository [
     ^ self repositorySpecs notEmpty
 ]
 
-{ #category : 'testing' }
+{ #category : 'initialization' }
 MetacelloProjectSpec >> initialize [
 
 	super initialize.
