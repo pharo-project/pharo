@@ -417,11 +417,6 @@ MetacelloPackageSpec >> repository: aString username: username password: passwor
 ]
 
 { #category : 'loading' }
-MetacelloPackageSpec >> repositoryDescriptions [
-    ^ self repositorySpecs collect: [ :repoSpec | repoSpec description ]
-]
-
-{ #category : 'loading' }
 MetacelloPackageSpec >> repositorySpecs [
 
 	^self repositories map values

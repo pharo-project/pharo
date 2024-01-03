@@ -887,11 +887,6 @@ MetacelloProjectSpec >> repository: aString username: username password: passwor
 ]
 
 { #category : 'querying' }
-MetacelloProjectSpec >> repositoryDescriptions [
-    ^ self repositorySpecs collect: [ :repoSpec | repoSpec description ]
-]
-
-{ #category : 'querying' }
 MetacelloProjectSpec >> repositorySpecs [
     repositories ifNil: [ ^ #() ].
     ^ self repositories map values

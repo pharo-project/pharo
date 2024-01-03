@@ -185,6 +185,17 @@ MetacelloSpec >> removeMember [
 	^MetacelloRemoveMemberSpec for: self project
 ]
 
+{ #category : 'querying' }
+MetacelloSpec >> repositoryDescriptions [
+    ^ self repositorySpecs collect: [ :repoSpec | repoSpec description ]
+]
+
+{ #category : 'querying' }
+MetacelloSpec >> repositorySpecs [
+
+	^ self subclassResponsibility
+]
+
 { #category : 'mutability' }
 MetacelloSpec >> shouldBeMutable [
 
