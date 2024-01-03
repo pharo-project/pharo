@@ -1,6 +1,6 @@
 Extension { #name : 'MCFileBasedRepository' }
 
-{ #category : '*Gofer-Core' }
+{ #category : '*Gofer-Deprecated' }
 MCFileBasedRepository >> goferReferences [
 	| versionNames |
 	versionNames := [ self allVersionNames ]
@@ -9,7 +9,7 @@ MCFileBasedRepository >> goferReferences [
 	^ versionNames collect: [ :each | GoferResolvedReference name: each repository: self ]
 ]
 
-{ #category : '*Gofer-Core' }
+{ #category : '*Gofer-Deprecated' }
 MCFileBasedRepository >> packageNamed: aName ifPresent: presentBlock ifAbsent: absentBlock [
 
 	| versionNames versionName |

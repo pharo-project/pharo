@@ -4,8 +4,8 @@ A GoferPackageReference refers to the latest version of a Monticello package.
 Class {
 	#name : 'GoferPackageReference',
 	#superclass : 'GoferReference',
-	#category : 'Gofer-Core-References',
-	#package : 'Gofer-Core',
+	#category : 'Gofer-Deprecated-References',
+	#package : 'Gofer-Deprecated',
 	#tag : 'References'
 }
 

@@ -7,8 +7,8 @@ Class {
 	#instVars : [
 		'repository'
 	],
-	#category : 'Gofer-Core-References',
-	#package : 'Gofer-Core',
+	#category : 'Gofer-Deprecated-References',
+	#package : 'Gofer-Deprecated',
 	#tag : 'References'
 }
 
@@ -49,6 +49,17 @@ GoferResolvedReference >> <= aResolvedReference [
 GoferResolvedReference >> initializeName: aString repository: aRepository [
 	self initializeName: aString.
 	repository := aRepository
+]
+
+{ #category : 'operations' }
+GoferResolvedReference >> merge [
+	"Merge-in the changes of this refence"
+
+	Gofer new
+		repository: self repository;
+		package: package;
+		version: self name;
+		merge
 ]
 
 { #category : 'accessing' }

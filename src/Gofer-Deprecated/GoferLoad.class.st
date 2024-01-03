@@ -4,8 +4,8 @@ Loading for specific packages using Gofer
 Class {
 	#name : 'GoferLoad',
 	#superclass : 'GoferOperation',
-	#category : 'Gofer-Core-Operations',
-	#package : 'Gofer-Core',
+	#category : 'Gofer-Deprecated-Operations',
+	#package : 'Gofer-Deprecated',
 	#tag : 'Operations'
 }
 
