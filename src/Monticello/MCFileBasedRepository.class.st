@@ -146,6 +146,14 @@ MCFileBasedRepository >> closestAncestorVersionFor: anAncestry ifNone: errorBloc
 			^ errorBlock value ]
 ]
 
+{ #category : 'fetching' }
+MCFileBasedRepository >> fetchPackageNamed: aName [
+
+	| references |
+	references := self packageNamed: aName.
+	MCCacheRepository default storeVersion: references
+]
+
 { #category : 'accessing' }
 MCFileBasedRepository >> filterFileNames: aCollection forVersionNamed: aString [
 	^ aCollection select: [:ea | (self versionNameFromFileName: ea) = aString] 
@@ -176,6 +184,15 @@ MCFileBasedRepository >> loadAllFileNames [
 MCFileBasedRepository >> loadNotCachedVersionFromFileNamed: aString [
 	
 	^ self versionReaderForFileNamed: aString do: [:r | r version]
+]
+
+{ #category : 'accessing' }
+MCFileBasedRepository >> loadPackageNamed: aString intoLoader: aMCVersionLoader [ 
+
+	| found |
+	found := self packageNamed: aString.
+	aMCVersionLoader addVersion: found.
+	^ { found . self }
 ]
 
 { #category : 'private' }

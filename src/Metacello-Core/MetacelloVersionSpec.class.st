@@ -62,25 +62,6 @@ MetacelloVersionSpec >> blessing: anObject [
 	blessing := anObject asMetacelloValueHolderFor: self
 ]
 
-{ #category : 'accessing' }
-MetacelloVersionSpec >> computeVersionStatus: matchBlock [
-	self computeVersionStatus: (self expandToLoadableSpecNames: #('ALL')) matchBlock: matchBlock
-]
-
-{ #category : 'accessing' }
-MetacelloVersionSpec >> computeVersionStatus: resolvedPackageAndProjectNames matchBlock: matchBlock [
-
-	| status |
-
-	status := resolvedPackageAndProjectNames
-		ifNil: [ self isPartiallyCurrent ]
-		ifNotNil: [ self isPartiallyCurrentAgainst: resolvedPackageAndProjectNames ].
-	status isAllLoadedToSpec: matchBlock.
-	status isLoadedToSpec: matchBlock.
-	status isLoadedMatchConstraints: matchBlock.
-	status isSomethingLoaded: matchBlock
-]
-
 { #category : 'printing' }
 MetacelloVersionSpec >> configMethodBasicOn: aStream last: last indent: indent [
 
@@ -251,21 +232,6 @@ MetacelloVersionSpec >> createVersion [
 	^ self versionClass fromSpec: self
 ]
 
-{ #category : 'querying' }
-MetacelloVersionSpec >> currentlyLoadedClassesInVersion [
-
-	| classes |
-	classes := Set new.
-	self
-		projectDo: [ :ignored |  ]
-		packageDo: [ :packageSpec |
-			([ packageSpec workingCopy ]
-				 on: Error
-				 do: [ :ex | ex return: nil ]) ifNotNil: [ :workingCopy | workingCopy systemPackage ifNotNil: [ :package | classes addAll: package classes ] ] ]
-		groupDo: [ :ignored |  ].
-	^ classes
-]
-
 { #category : 'loading' }
 MetacelloVersionSpec >> defaultPackageNames [
 	"if there is a package named 'default' (a group) then it defines the default package names,
@@ -352,13 +318,6 @@ MetacelloVersionSpec >> difference: otherVersionSpec [
 	^ report
 ]
 
-{ #category : 'loading' }
-MetacelloVersionSpec >> expandToLoadableSpecNames: nameList [
-
-	^ (self resolveToLoadableSpecs: nameList) collect: [ :spec |
-		  spec name ]
-]
-
 { #category : 'accessing' }
 MetacelloVersionSpec >> getAuthor [
 	^author
@@ -410,80 +369,6 @@ MetacelloVersionSpec >> import: aString provides: anArray [
 { #category : 'accessing' }
 MetacelloVersionSpec >> importArray [
   ^ importArray
-]
-
-{ #category : 'testing' }
-MetacelloVersionSpec >> isPartiallyCurrent [
-
-	^self isPartiallyCurrentAgainst: (self expandToLoadableSpecNames: #('ALL'))
-]
-
-{ #category : 'testing' }
-MetacelloVersionSpec >> isPartiallyCurrentAgainst: resolvedPackageAndProjectNames [
-
-	| status |
-	status := MetacelloMCPartiallyLoadedStatus new.
-	self
-		specsNamed: resolvedPackageAndProjectNames
-		projectDo: [ :prj |
-			| vrsn currentVersion |
-			status hasNoProject: false.
-			vrsn := prj versionOrNil.
-			vrsn ifNotNil: [
-				(currentVersion := prj relativeCurrentVersion) ifNotNil: [
-					status vrsnStatus add: currentVersion versionStatus ] ].
-			currentVersion
-				ifNotNil: [
-					status aProjectIsLoaded: true.
-					(currentVersion perform: #= with: vrsn)
-						ifTrue: [ status aLoadedProjectIsExact: true ]
-						ifFalse: [
-							(currentVersion
-								 perform: prj projectReference operator
-								 with: vrsn)
-								ifTrue: [ status aLoadedProjectIsCurrent: true ]
-								ifFalse: [ status aLoadedProjectIsNotCurrent: true ] ] ]
-				ifNil: [ status aProjectNotLoaded: true ] ]
-		packageDo: [ :pkg |
-			status hasNoPackage: false.
-			pkg
-				currentPackageLoaded: [ :versionInfos :file |
-					| wcName wcRef fileRef exact current |
-					status aPackageIsLoaded: true.
-					versionInfos isEmpty
-						ifTrue: [ status aLoadedPackageIsNotCurrent: true ]
-						ifFalse: [
-							exact := current := false.
-							versionInfos do: [ :vi |
-								wcName := vi name.
-								fileRef := GoferResolvedReference name: file.
-								wcRef := GoferResolvedReference name: wcName.
-								(wcRef compare: fileRef using: #=) ifTrue: [ exact := true ] ].
-							exact
-								ifTrue: [ status aLoadedPackageIsExact: true ]
-								ifFalse: [
-									versionInfos do: [ :vi |
-										wcName := vi name.
-										fileRef := GoferResolvedReference name: file.
-										wcRef := GoferResolvedReference name: wcName.
-										(wcRef compare: fileRef using: #'>=') ifTrue: [
-											current := true ] ].
-									current
-										ifTrue: [ status aLoadedPackageIsCurrent: true ]
-										ifFalse: [ status aLoadedPackageIsNotCurrent: true ] ] ] ]
-				notLoaded: [ status aPackageNotLoaded: true ] ]
-		groupDo: [ :ignoredGroup | "if we encounter a group, trouble"
-			status abort: true.
-			^ status ].
-	^ status
-]
-
-{ #category : 'testing' }
-MetacelloVersionSpec >> isSomethingLoaded [
-	"at least one package loaded"
-	
-	self isPartiallyCurrent isSomethingLoaded: [ :ignored | ^ true ].
-	^ false
 ]
 
 { #category : 'printing' }
@@ -584,7 +469,8 @@ MetacelloVersionSpec >> packageNames [
 
 { #category : 'querying' }
 MetacelloVersionSpec >> packageSpecsInLoadOrder [
-  ^ self packages packageSpecsInLoadOrderFor: self
+
+	^ self packages packageSpecsInLoadOrderFor: self
 ]
 
 { #category : 'querying' }
@@ -592,8 +478,10 @@ MetacelloVersionSpec >> packageSpecsInLoadOrderForMap: packageMap [
 
 	| loadOrder pkgs packageNames importNames importSpec importProjectSpecs importProjectNameMap |
 	loadOrder := self packageSpecsInLoadOrder.
-	importNames := (packageNames := (packageMap values collect: [ :pkg | pkg name ]) asSet) copy.
-	(self import isNil and: [ self importArray isNil ]) ifTrue: [ ^ loadOrder select: [ :pkg | packageNames includes: pkg name ] ].
+	importNames := (packageNames := (packageMap values collect: [ :pkg |
+		                                 pkg name ]) asSet) copy.
+	(self import isNil and: [ self importArray isNil ]) ifTrue: [
+		^ loadOrder select: [ :pkg | packageNames includes: pkg name ] ].
 	loadOrder do: [ :pkg | importNames remove: pkg name ifAbsent: [  ] ].
 	pkgs := OrderedCollection new.
 	importProjectSpecs := Dictionary new.
@@ -603,8 +491,12 @@ MetacelloVersionSpec >> packageSpecsInLoadOrderForMap: packageMap [
 			importArray do: [ :assoc |
 				assoc key = pkg name ifTrue: [
 					importProjectSpecs at: pkg name put: pkg.
-					(assoc value select: [ :each | importNames includes: each ]) do: [ :each |
-						(importProjectNameMap at: pkg name ifAbsent: [ importProjectNameMap at: pkg name put: Set new ]) add: each ] ] ] ] ].
+					(assoc value select: [ :each | importNames includes: each ]) do: [
+						:each |
+						(importProjectNameMap
+							 at: pkg name
+							 ifAbsent: [ importProjectNameMap at: pkg name put: Set new ])
+							add: each ] ] ] ] ].
 	self import ifNotNil: [
 		loadOrder do: [ :pkg |
 			pkg name = self import ifTrue: [
@@ -612,14 +504,22 @@ MetacelloVersionSpec >> packageSpecsInLoadOrderForMap: packageMap [
 				importProjectNameMap at: pkg name put: importNames ] ] ].
 	loadOrder do: [ :pkg |
 		(packageNames includes: pkg name) ifTrue: [ pkgs add: pkg ].
-		importProjectSpecs at: pkg name ifPresent: [ :importProjectSpec | "insert the imports at this point"
-			(importProjectNameMap at: pkg name ifAbsent: [ #(  ) ]) do: [ :importedName |
-				pkgs add: (importSpec := importProjectSpec copy
-						               name: importedName;
-						               mergeImportLoads: { importedName };
-						               yourself).
-				importSpec projectReference name: importedName ] ] ].
+		importProjectSpecs
+			at: pkg name
+			ifPresent: [ :importProjectSpec | "insert the imports at this point"
+				(importProjectNameMap at: pkg name ifAbsent: [ #(  ) ]) do: [
+					:importedName |
+					pkgs add: (importSpec := importProjectSpec copy
+							               name: importedName;
+							               mergeImportLoads: { importedName };
+							               yourself).
+					importSpec projectReference name: importedName ] ] ].
 	^ pkgs
+]
+
+{ #category : 'querying' }
+MetacelloVersionSpec >> packageSpecsInLoadOrderWithEngine: anObject [
+  ^ self packages packageSpecsInLoadOrderFor: self
 ]
 
 { #category : 'accessing' }
@@ -679,8 +579,11 @@ MetacelloVersionSpec >> preLoadDoIt: anObject [
 { #category : 'enumerating' }
 MetacelloVersionSpec >> projectDo: projectBlock packageDo: packageBlock groupDo: groupBlock [
 
-	self packageSpecsInLoadOrder do: [:pkgSpec |
-		pkgSpec projectDo: projectBlock packageDo: packageBlock groupDo: groupBlock ]
+	self packageSpecsInLoadOrder do: [ :pkgSpec |
+		pkgSpec
+			projectDo: projectBlock
+			packageDo: packageBlock
+			groupDo: groupBlock ]
 ]
 
 { #category : 'accessing' }

@@ -76,18 +76,24 @@ MetacelloRecordTarget >> visitGroupSpec: aMetacelloGroupSpec [
 { #category : 'visiting' }
 MetacelloRecordTarget >> visitPackageSpec: aMetacelloPackageSpec [
 
+	| directive packageRepositorySpecs |
+	packageRepositorySpecs := aMetacelloPackageSpec repositorySpecs
+		                          ifEmpty: [ currentRepositorySpecs ].
+	directive := MetacelloDirective
+		             loadPackage: aMetacelloPackageSpec
+		             repositorySpecs: packageRepositorySpecs.
+	(self specBuilder currentLoadDirective includes: directive) ifTrue: [
+		^ self ].
+
 	self preLoad: aMetacelloPackageSpec.
-	(MetacelloDirective
-		 loadPackage: aMetacelloPackageSpec
-		 externalReference: currentRepositorySpecs) addTo:
-		self specBuilder currentLoadDirective.
+	directive addTo: self specBuilder currentLoadDirective.
 	self postLoad: aMetacelloPackageSpec
 ]
 
 { #category : 'visiting' }
 MetacelloRecordTarget >> visitProjectReference: aMetacelloProjectReferenceSpec [
 
-	| displayString vrsn projectSpecForVersion registered override registration |
+	| displayString projectSpec registered override registration requiredArray |
 	registration := MetacelloProjectRegistration
 		                registrationForProjectSpec:
 		                aMetacelloProjectReferenceSpec projectReference
@@ -123,17 +129,17 @@ MetacelloRecordTarget >> visitProjectReference: aMetacelloProjectReferenceSpec [
 		override loadVersion: nil.
 		^ self ].
 
-	vrsn := aMetacelloProjectReferenceSpec projectReference versionOrNil.
-	projectSpecForVersion := aMetacelloProjectReferenceSpec
+	projectSpec := aMetacelloProjectReferenceSpec
 		                         projectReference asProjectSpecForVersion:
-		                         vrsn.
-	projectSpecForVersion ensureProjectLoadedWithEngine: engine.
-	vrsn ifNil: [ vrsn := projectSpecForVersion version ].
-	vrsn
-		recordRequiredFromArray:
-		(projectSpecForVersion loadListForVersion: vrsn)
+		                         aMetacelloProjectReferenceSpec
+			                         projectReference versionOrNil.
+	projectSpec ensureProjectLoadedWithEngine: engine.
+	requiredArray := projectSpec loadListForVersion:
+		                 projectSpec version.
+	projectSpec version
+		recordRequiredFromArray: requiredArray
 		withEngine: engine.
-	registration registerProject.
+	registration registerProject
 ]
 
 { #category : 'visiting' }

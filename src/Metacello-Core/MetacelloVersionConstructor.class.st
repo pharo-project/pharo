@@ -215,7 +215,6 @@ MetacelloVersionConstructor >> validateVersionString: versionString againstSpec:
 			MetacelloValidationNotification
 				signal:
 					(MetacelloValidationError
-						configurationClass: self configurationClass
 						reasonCode: #incorrectVersionString
 						callSite: #validateVersionString:againstSpec
 						explanation:

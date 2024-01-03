@@ -6,14 +6,9 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'root',
-		'projectSpec',
 		'options',
-		'ensuredMap',
-		'repositoryMap',
-		'cacheGofer',
-		'cacheRepository',
 		'specBuilder',
-		'loader'
+		'projectReferenceSpec'
 	],
 	#classVars : [
 		'DefaultRepositoryDescription',
@@ -70,22 +65,6 @@ MetacelloScriptEngine class >> defaultVersionString [
     ^ DefaultVersionString
 ]
 
-{ #category : 'accessing' }
-MetacelloScriptEngine >> cacheGofer [
-
-	^ cacheGofer ifNil: [ "don't use a caching Gofer here, since we expect the contents to change during a fetch operation"
-		  cacheGofer := Gofer new
-			                disablePackageCache;
-			                repository: self cacheRepository;
-			                yourself ]
-]
-
-{ #category : 'accessing' }
-MetacelloScriptEngine >> cacheRepository [
-
-	^ cacheRepository ifNil: [ cacheRepository := MCDictionaryRepository new ]
-]
-
 { #category : 'defaults' }
 MetacelloScriptEngine >> defaultRepositoryDescription [
     ^ self class defaultRepositoryDescription
@@ -96,105 +75,87 @@ MetacelloScriptEngine >> defaultVersionString [
     ^ self class defaultVersionString
 ]
 
+{ #category : 'actions api' }
+MetacelloScriptEngine >> do: aBlock required: required [
+
+	^ self
+		  do: aBlock
+		  required: required
+		  onProjectDownGrade: [ :ex :existing :new | ex allowEvenIfLocked ]
+		  onProjectUpgrade: [ :ex :existing :new | ex allowEvenIfLocked ]
+		  commitIfSuccess: false
+]
+
+{ #category : 'actions api' }
+MetacelloScriptEngine >> do: aBlock required: required onProjectDownGrade: onDownGradeBlock onProjectUpgrade: onUpgradeBlock commitIfSuccess: aBoolean [
+
+	MetacelloProjectRegistration
+		copyRegistryDuring: [
+			self handleNotificationsForAction: [
+				| versionSpec projectSpec requiredArray |
+				self setDefaultsAndValidateProjectSpec.
+				[
+				projectSpec := (self lookupProjectSpecFor:
+					                self projectReferenceSpec projectReference) copy ]
+					on: MetacelloAllowProjectDowngrade , MetacelloAllowProjectUpgrade
+					do: [ :notification |
+						notification
+							handleOnDownGrade: onDownGradeBlock
+							onUpgrade: onUpgradeBlock ].
+
+				projectSpec loads: required.
+				projectSpec ensureProjectLoadedWithEngine: self.
+				versionSpec := projectSpec project version: projectSpec versionString.
+				requiredArray := projectSpec loadListForVersion: versionSpec.	
+				self root: (aBlock value: versionSpec value: requiredArray value: projectSpec) ] ]
+
+		commitIfSuccess: aBoolean
+]
+
 { #category : 'project lookup' }
 MetacelloScriptEngine >> doLoadProjectSpecFrom: aMetacelloPackageSpec [
 
 	self loader loadPackageDirective: (MetacelloDirective
 			 loadPackage: aMetacelloPackageSpec
-			 externalReference: aMetacelloPackageSpec repositorySpecs)
-]
-
-{ #category : 'accessing' }
-MetacelloScriptEngine >> ensuredMap [
-
-	^ ensuredMap ifNil: [ ensuredMap := Dictionary new ]
+			 repositorySpecs: aMetacelloPackageSpec repositorySpecs)
 ]
 
 { #category : 'actions api' }
 MetacelloScriptEngine >> fetch: required [
 
-	MetacelloProjectRegistration copyRegistryWhile: [
-		self handleNotificationsForAction: [
-			| version loadedSpec requiredArray |
-			self setDefaultsAndValidateProjectSpec.
-			[ loadedSpec := self lookupProjectSpecFor: self projectSpec ]
-				on: MetacelloAllowProjectDowngrade , MetacelloAllowProjectUpgrade
-				do: [ :notification |
-					notification
-						handleOnDownGrade: [ :ex :existing :new | ex allowEvenIfLocked ]
-						onUpgrade: [ :ex :existing :new | ex allowEvenIfLocked ] ].
-			version := loadedSpec versionForScriptEngine: self.
-
-			requiredArray := required isString
-				                 ifTrue: [ { required } ]
-				                 ifFalse: [ required ].
-			requiredArray ifEmpty: [
-				requiredArray := version spec defaultPackageNames.
-
-				self root:
-					(version doFetchRequiredFromArray: requiredArray withEngine: self) ] ] ]
+	^ self
+		  do: [ :versionSpec :requiredArray :projectSpec |
+			  versionSpec
+				  doFetchRequiredFromArray: requiredArray
+				  withEngine: self ]
+		  required: required
 ]
 
 { #category : 'actions api' }
 MetacelloScriptEngine >> get [
-  " load a fresh copy from repo"
+	" load a fresh copy from repo"
 
-  | spec projectPackage |
-  MetacelloProjectRegistration
-    copyRegistryRestoreOnErrorWhile: [ 
-      self setDefaultsAndValidateProjectSpec.
-      spec := self projectSpec.
-      projectPackage := spec projectPackage.
-      projectPackage repositorySpecs
-        do: [ :repoSpec | repoSpec createRepository flushForScriptGet ].
-      projectPackage forceLoadingWithEngine: self.
-      self root: (Smalltalk at: spec className asSymbol) project.
-      MetacelloProjectRegistration
-        registrationForProjectSpec: spec
-        ifAbsent: [ :new | new registerProject ]
-        ifPresent: [ :existing :new | 
-          existing
-            copyOnWrite: [ :existingCopy | 
-              spec
-                copyForRegistration: existingCopy
-                onWrite: [ :specCopy | 
-                  specCopy
-                    ifNil: [ existingCopy merge: new ]
-                    ifNotNil: [ specCopy mergeScriptRepository: spec ] ] ] ] ]
-]
-
-{ #category : 'project lookup' }
-MetacelloScriptEngine >> getBaselineProjectUnconditionalLoad [
-
-	| project |
-	[
-	self doLoadProjectSpecFrom: (MetacelloPackageSpec new
-			 name: self projectSpec className;
-			 repositories: self projectSpec repositories;
-			 yourself) ]
-		on: MetacelloIgnorePackageLoaded
-		do: [ :ex |
-      "see https://github.com/dalehenrich/metacello-work/issues/244 ... uncoditionally load baseline"
-			ex resume: true ].
-	project := (Smalltalk at: self projectSpec className asSymbol) new
-      initalizeProjectWithRepositoryDescription: self projectSpec repositories map keys.
-  project version spec repositories: self repositories copy.
-  ^ project
-]
-
-{ #category : 'project lookup' }
-MetacelloScriptEngine >> getConfigurationProjectUnconditionalLoad: unconditionalLoad [
-    ^ (self getConfigurationUnconditionalLoad: unconditionalLoad) project
-]
-
-{ #category : 'project lookup' }
-MetacelloScriptEngine >> getConfigurationUnconditionalLoad: unconditionalLoad [
-
-	| spec |
-	spec := self projectSpec.
-	Smalltalk at: spec className asSymbol ifPresent: [ :cl | ^ cl ].
-	(spec := self lookupProjectSpecFor: spec) projectPackage load.
-	^ Smalltalk at: spec className asSymbol
+	MetacelloProjectRegistration
+		copyRegistryDuring: [
+			self handleNotificationsForAction: [
+				| spec projectPackage |
+				self setDefaultsAndValidateProjectSpec.
+				spec := self projectReferenceSpec.
+				projectPackage := spec projectPackage.
+				projectPackage repositorySpecs do: [ :repoSpec |
+					repoSpec createRepository flushForScriptGet ].
+				self doLoadProjectSpecFrom: projectPackage.
+				self root: (Smalltalk at: spec className asSymbol) project.
+				MetacelloProjectRegistration
+					registrationForProjectSpec: spec
+					ifAbsent: [ :new | new registerProject ]
+					ifPresent: [ :existing :new |
+						existing copyOnWrite: [ :existingCopy |
+							spec copyForRegistration: existingCopy onWrite: [ :specCopy |
+								specCopy
+									ifNil: [ existingCopy merge: new ]
+									ifNotNil: [ specCopy mergeScriptRepository: spec ] ] ] ] ] ]
+		commitIfSuccess: true
 ]
 
 { #category : 'handlers' }
@@ -300,7 +261,7 @@ MetacelloScriptEngine >> initialize [
 { #category : 'actions api' }
 MetacelloScriptEngine >> list [
   self setDefaultsAndValidateProjectSpec.
-  self root: self projectSpec
+  self root: self projectReferenceSpec
 ]
 
 { #category : 'actions api' }
@@ -314,28 +275,15 @@ MetacelloScriptEngine >> load: required [
 { #category : 'actions api' }
 MetacelloScriptEngine >> load: required onProjectDownGrade: onDownGradeBlock onProjectUpgrade: onUpgradeBlock [
 
-	| result |
-	MetacelloProjectRegistration copyRegistryRestoreOnErrorWhile: [
-		self handleNotificationsForAction: [
-			| version loadedSpec requiredArray |
-			self setDefaultsAndValidateProjectSpec.
-			[ loadedSpec := (self lookupProjectSpecFor: self projectSpec) copy ]
-				on: MetacelloAllowProjectDowngrade , MetacelloAllowProjectUpgrade
-				do: [ :ex |
-					ex handleOnDownGrade: onDownGradeBlock onUpgrade: onUpgradeBlock ].
-			version := loadedSpec versionForScriptEngine: self.
-			requiredArray := required isString
-				                 ifTrue: [ { required } ]
-				                 ifFalse: [ required ].
-			requiredArray ifEmpty: [
-				requiredArray := version spec defaultPackageNames ].
-			result := version
+	self
+		do: [ :versionSpec :requiredArray :projectSpec |
+			| result |
+			result := versionSpec
 				          doLoadRequiredFromArray: requiredArray
 				          withEngine: self.
 			self root: result.
-			loadedSpec loads: required.
 			MetacelloProjectRegistration
-				registrationForProjectSpec: loadedSpec
+				registrationForProjectSpec: projectSpec
 				ifAbsent: [ :new |
 					new
 						loadedInImage: true;
@@ -344,53 +292,65 @@ MetacelloScriptEngine >> load: required onProjectDownGrade: onDownGradeBlock onP
 					existing copyOnWrite: [ :existingCopy |
 						existingCopy
 							loadedInImage: true;
-							merge: new ] ] ] ]
+							merge: new ] ] ]
+		required: required
+		onProjectDownGrade: onDownGradeBlock
+		onProjectUpgrade: onUpgradeBlock
+		commitIfSuccess: true
 ]
 
 { #category : 'accessing' }
 MetacelloScriptEngine >> loader [
 
-	^ loader ifNil: [ loader := MetacelloGoferLoader new ]
+	^ (self options
+		   at: #loader
+		   ifAbsentPut: [ MetacelloMonticelloLoader new ])
+		  engine: self;
+		  yourself
 ]
 
 { #category : 'actions api' }
 MetacelloScriptEngine >> lock [
-  | spec |
-  MetacelloProjectRegistration
-    copyRegistryRestoreOnErrorWhile: [ 
-      self setDefaultsAndValidate: self projectSpec copy.	"don't add defaults"
-      spec := self projectSpec.
-      MetacelloProjectRegistration
-        registrationForProjectSpec: spec
-        ifAbsent: [ :new | 
-          new
-            locked: true;
-            registerProject ]
-        ifPresent: [ :existing :new | 
-          existing
-            copyOnWrite: [ :existingCopy | 
-              existingCopy locked: true.
-              spec
-                copyForRegistration: existingCopy
-                onWrite: [ :specCopy | 
-                  specCopy
-                    ifNil: [ existingCopy merge: new ]
-                    ifNotNil: [ 
-                      specCopy mergeScriptRepository: spec.
-                      spec := specCopy ] ] ] ].
-      self root: spec ]
+
+	| spec |
+	MetacelloProjectRegistration
+		copyRegistryDuring: [
+			self setDefaultsAndValidate: self projectReferenceSpec copy. "don't add defaults"
+			spec := self projectReferenceSpec projectReference.
+			MetacelloProjectRegistration
+				registrationForProjectSpec: spec
+				ifAbsent: [ :new |
+					new
+						locked: true;
+						registerProject ]
+				ifPresent: [ :existing :new |
+					existing copyOnWrite: [ :existingCopy |
+						existingCopy locked: true.
+						spec copyForRegistration: existingCopy onWrite: [ :specCopy |
+							specCopy ifNil: [ existingCopy merge: new ] ifNotNil: [
+								specCopy mergeScriptRepository: spec.
+								spec := specCopy ] ] ] ].
+			self root: spec ]
+		commitIfSuccess: true
+]
+
+{ #category : 'accessing' }
+MetacelloScriptEngine >> lookupProjectClassNamed: aString [ 
+	
+	^ self loader lookupProjectClassNamed: aString 
 ]
 
 { #category : 'project lookup' }
 MetacelloScriptEngine >> lookupProjectSpecFor: aProjectSpec [
 	"if there is no conflict, choose new spec"
+
 	| registration |
-	
 	registration := MetacelloProjectRegistration
-		registrationForProjectSpec: aProjectSpec
-		ifAbsent: [ :new | new ]
-		ifPresent: [ :existing :new | self resolvePresentProject: existing new: new ].
-  
+		                registrationForProjectSpec: aProjectSpec
+		                ifAbsent: [ :new | new ]
+		                ifPresent: [ :existing :new |
+		                self resolvePresentProject: existing new: new ].
+
 	^ registration projectSpec
 ]
 
@@ -411,46 +371,32 @@ MetacelloScriptEngine >> projectName [
 ]
 
 { #category : 'accessing' }
-MetacelloScriptEngine >> projectSpec [
-    ^ projectSpec
+MetacelloScriptEngine >> projectReferenceSpec [
+    ^ projectReferenceSpec
 ]
 
 { #category : 'accessing' }
-MetacelloScriptEngine >> projectSpec: aProjectSpec [
+MetacelloScriptEngine >> projectReferenceSpec: aProjectSpec [
 
-    projectSpec := aProjectSpec
+    projectReferenceSpec := aProjectSpec
 ]
 
 { #category : 'actions api' }
 MetacelloScriptEngine >> record: required [
 
-	MetacelloProjectRegistration copyRegistryWhile: [
-		self handleNotificationsForAction: [
-			| version loadedSpec requiredArray |
-			self setDefaultsAndValidateProjectSpec.
-			[ loadedSpec := self lookupProjectSpecFor: self projectSpec ]
-				on: MetacelloAllowProjectDowngrade , MetacelloAllowProjectUpgrade
-				do: [ :notification |
-					notification
-						handleOnDownGrade: [ :ex :existing :new | ex allowEvenIfLocked ]
-						onUpgrade: [ :ex :existing :new | ex allowEvenIfLocked ] ].
-			version := loadedSpec versionForScriptEngine: self.
-
-			requiredArray := required isString
-				ifTrue: [ { required } ]
-				ifFalse: [ required ].
-			requiredArray ifEmpty: [
-				requiredArray := version spec defaultPackageNames ].
-			self root:
-				(version doRecordRequiredFromArray: requiredArray withEngine: self) ] ].
 	^ self
+		  do: [ :versionSpec :requiredArray :projectSpec |
+			  versionSpec
+				  doRecordRequiredFromArray: requiredArray
+				  withEngine: self ]
+		  required: required
 ]
 
 { #category : 'actions api' }
 MetacelloScriptEngine >> register [
   | spec |
-  self setDefaultsAndValidate: self projectSpec copy.	"don't add defaults"
-  spec := self projectSpec.
+  self setDefaultsAndValidate: self projectReferenceSpec copy.	"don't add defaults"
+  spec := self projectReferenceSpec projectReference.
   MetacelloProjectRegistration
     registrationForProjectSpec: spec
     ifAbsent: [ :new | new registerProject ]
@@ -461,18 +407,6 @@ MetacelloScriptEngine >> register [
 { #category : 'accessing' }
 MetacelloScriptEngine >> repositories [
     ^ self projectSpec repositories
-]
-
-{ #category : 'accessing' }
-MetacelloScriptEngine >> repositoryMap [
-
-	^ repositoryMap ifNil: [ repositoryMap := Dictionary new ]
-]
-
-{ #category : 'initialization' }
-MetacelloScriptEngine >> resetCacheGofer [
-
-	cacheGofer := nil
 ]
 
 { #category : 'private' }
@@ -510,7 +444,7 @@ MetacelloScriptEngine >> setDefaultsAndValidate: aProjectSpec [
   "NOTE: aProjectSpec has defaults assigned if versionString or repository missing"
 
   | issues |
-  issues := aProjectSpec
+  issues := aProjectSpec projectReference
     validateForScriptLoad: self
     withDefaultVersionString: self defaultVersionString
     withDefaultRepositoryDecription: self defaultRepositoryDescription.
@@ -525,7 +459,7 @@ MetacelloScriptEngine >> setDefaultsAndValidate: aProjectSpec [
 MetacelloScriptEngine >> setDefaultsAndValidateProjectSpec [
   "NOTE: projectSpec has defaults assigned if versionString or repository missing"
 
-  self setDefaultsAndValidate: self projectSpec
+  self setDefaultsAndValidate: self projectReferenceSpec
 ]
 
 { #category : 'options' }
@@ -540,26 +474,31 @@ MetacelloScriptEngine >> specBuilder [
 
 { #category : 'actions api' }
 MetacelloScriptEngine >> unlock [
-  | spec |
-  MetacelloProjectRegistration
-    copyRegistryRestoreOnErrorWhile: [ 
-      self setDefaultsAndValidate: self projectSpec copy.	"don't add defaults"
-      spec := self projectSpec.
-      MetacelloProjectRegistration
-        registrationForProjectSpec: spec
-        ifAbsent: [ :ignored |  ]
-        ifPresent: [ :existing :new | existing copyOnWrite: [ :existingCopy | existingCopy locked: false ] ].
-      self root: spec ]
+
+	| spec |
+	MetacelloProjectRegistration
+		copyRegistryDuring: [
+			self setDefaultsAndValidate: self projectReferenceSpec copy. "don't add defaults"
+			spec := self projectReferenceSpec projectReference.
+			MetacelloProjectRegistration
+				registrationForProjectSpec: spec
+				ifAbsent: [ :ignored |  ]
+				ifPresent: [ :existing :new |
+					existing copyOnWrite: [ :existingCopy |
+						existingCopy locked: false ] ].
+			self root: spec ]
+		commitIfSuccess: true
 ]
 
 { #category : 'actions api' }
 MetacelloScriptEngine >> unregister [
-  | spec |
-  self setDefaultsAndValidate: self projectSpec copy.	"don't add defaults"
-  spec := self projectSpec.
-  MetacelloProjectRegistration
-    registrationForProjectSpec: spec
-    ifAbsent: [ :ignored |  ]
-    ifPresent: [ :existing :new | existing unregisterProject ].
-  self root: spec
+
+	| spec |
+	self setDefaultsAndValidate: self projectReferenceSpec copy. "don't add defaults"
+	spec := self projectReferenceSpec projectReference.
+	MetacelloProjectRegistration
+		registrationForProjectSpec: spec
+		ifAbsent: [ :ignored |  ]
+		ifPresent: [ :existing :new | existing unregisterProject ].
+	self root: spec
 ]
