@@ -60,13 +60,6 @@ InstructionClient >> doPop [
 	"Remove Top Of Stack bytecode."
 ]
 
-{ #category : 'initialization' }
-InstructionClient >> initialize [
-	mappedInlinePrimitiveHandlers := Dictionary new.
-	"Configuration classes are expected to send the `addMappedInlinePrimitiveHandler:at:` message to add bytecode handlers to this instance"
-	BytecodeMappedInlinePrimitiveConfiguration subclasses do: [ :each | each configure: self ]
-]
-
 { #category : 'instruction decoding' }
 InstructionClient >> jump: offset [
 	"Unconditional Jump bytecode."

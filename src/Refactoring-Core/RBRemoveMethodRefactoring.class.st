@@ -131,8 +131,6 @@ RBRemoveMethodRefactoring >> generateChanges [
 	self breakingChangePreconditions check ifFalse: [
 		RBBreakingChangeChecksFailedWarning signal:
 			self breakingChangePreconditions errorString ].
-	self flag: #todo. 
-	"see other generateChanges"
 	^ self removeMethodChanges 
 ]
 

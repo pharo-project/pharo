@@ -4,6 +4,7 @@ Class {
 	#instVars : [
 		'messages'
 	],
-	#category : 'SUnit-MockObjects',
-	#package : 'SUnit-MockObjects'
+	#category : 'SUnit-MockObjects-Core',
+	#package : 'SUnit-MockObjects',
+	#tag : 'Core'
 }

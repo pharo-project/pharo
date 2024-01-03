@@ -61,8 +61,6 @@ RBRemoveSharedVariableRefactoring >> generateChanges [
 			self breakingChangePreconditions errorString ].
 
 	self privateTransform.
-	self flag: #todo. 
-	"Check other methods generateChanges"
 	^ self changes
 ]
 

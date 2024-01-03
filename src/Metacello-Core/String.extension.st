@@ -45,11 +45,6 @@ String >> asMetacelloVersionNumber [
 ]
 
 { #category : '*Metacello-Core' }
-String >> execute: projectSpecBlock against: aScriptExecutor [
-    aScriptExecutor executeString: self do: projectSpecBlock
-]
-
-{ #category : '*Metacello-Core' }
 String >> mergeIntoMetacelloPackages: aMetacelloPackagesSpec [
 
 	| spec |

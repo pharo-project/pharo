@@ -207,10 +207,11 @@ EpLogBrowserPresenter >> cachedLogEntries [
 	^ (cachedLogEntries isNotNil and: [ cachedLogEntries size = log entriesCount ])
 		ifTrue: [ cachedLogEntries ]
 		ifFalse: [
-			'Reading log'
-				displayProgressFrom: 0 to: 1
-				during: [ cachedLogEntries := log entries ]
-			]
+			[ : job | 
+				job title: 'Reading log'.
+				cachedLogEntries := log entries
+			] asJob run ].
+
 ]
 
 { #category : 'refreshing' }

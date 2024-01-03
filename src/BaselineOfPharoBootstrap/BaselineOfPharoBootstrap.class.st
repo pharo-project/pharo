@@ -124,7 +124,11 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		spec package: 'Zinc-Character-Encoding-Core'.
 		
 		spec package: 'FFI-Kernel'.
-				
+		
+		"Minimal command line handler for bootstrap.
+		Only using perform and environment #at:"
+		spec package: 'PerformMessageCommandLineHandler'.
+		
 		spec package: 'CodeImport'.
 		
 		spec package: 'CodeImportCommandLineHandlers'.
@@ -139,6 +143,7 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		spec package: 'SUnit-Tests'.
 		spec package: 'Kernel-Tests'.
 		spec package: 'JenkinsTools-Core'.
+		spec package: 'System-Model'.
 		spec package: 'InitializePackagesCommandLineHandler'.
 		
 
@@ -172,6 +177,8 @@ BaselineOfPharoBootstrap >> baseline: spec [
 			'System-Platforms'.
 			'System-SessionManager'.
 			'System-Sources'.
+			
+			'PerformMessageCommandLineHandler'.
 			'System-Support'.
 			'NumberParser'.
 
@@ -219,6 +226,7 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		}.
 
 		spec group: 'SUnitGroup' with: {
+			'System-Model'.
 			'SUnit-Core'.
 			'SUnit-Tests'.
 			'Kernel-Tests'.

@@ -365,6 +365,12 @@ Metacello >> load: required [
   ^ self execute: #'load:' args: {required}
 ]
 
+{ #category : 'api options' }
+Metacello >> loader: aLoader [
+
+	self addStatement: #loader: args: { aLoader }
+]
+
 { #category : 'api actions' }
 Metacello >> lock [
   "lock projects in registry"

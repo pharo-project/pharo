@@ -138,18 +138,18 @@ ZipArchive >> close [
 ZipArchive >> extractAllTo: aDirectory [
 	"Extract all elements to the given directory; notifying user via UI on progress and if existing files exist"
 
-	UIManager default
-		informUserDuring: [:bar |
-			bar max: self numberOfMembers.
-			self extractAllTo: aDirectory informing: bar ]
+	[ : job |
+		job max: self numberOfMembers.
+		self extractAllTo: aDirectory informing: job ] 
+			asJob run
 ]
 
 { #category : 'archive operations' }
-ZipArchive >> extractAllTo: aDirectory informing: bar [
+ZipArchive >> extractAllTo: aDirectory informing: job [
 	"Extract all elements to the given directory; notifying user via UI on progress and if existing files exist"
 
-	| bar1 barValue |
-	bar1 := bar ifNil: [ DummySystemProgressItem new ].
+	| job1 barValue |
+	job1 := job ifNil: [ DummySystemProgressItem new ].
 	barValue := 0.
 	self members select: #isDirectory thenDo: [ :entry |
 		| dir shouldUpdateInfos lastUpdate |
@@ -157,24 +157,24 @@ ZipArchive >> extractAllTo: aDirectory informing: bar [
 		(shouldUpdateInfos := (Time millisecondsSince: lastUpdate) >= 100)
 			ifTrue: [
 				lastUpdate := Time millisecondClockValue.
-				bar1 label: 'Creating ' , entry fileName ].
+				job1 title: 'Creating ' , entry fileName ].
 		dir := (entry fileName findTokens: '/')
 			       inject: aDirectory
 			       into: [ :base :part | base / part ].
 		dir ensureCreateDirectory.
 		barValue := barValue + 1.
-		shouldUpdateInfos ifTrue: [ bar1 value: barValue ] ].
+		shouldUpdateInfos ifTrue: [ job1 currentValue: barValue ] ].
 	self members reject: #isDirectory thenDo: [ :entry |
 		| shouldUpdateInfos lastUpdate |
 		lastUpdate := 0.
 		(shouldUpdateInfos := (Time millisecondsSince: lastUpdate) >= 100)
 			ifTrue: [
 				lastUpdate := Time millisecondClockValue.
-				bar1 label: 'Extracting ' , entry fileName ].
+				job1 title: 'Extracting ' , entry fileName ].
 		entry extractInDirectory: aDirectory.
 		barValue := barValue + 1.
 		shouldUpdateInfos ifTrue: [
-			bar1 value: barValue.
+			job1 currentValue: barValue.
 			lastUpdate := Time millisecondClockValue ] ].
 	^ self
 ]

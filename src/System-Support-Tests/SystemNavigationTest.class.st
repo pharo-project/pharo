@@ -181,6 +181,20 @@ SystemNavigationTest >> testReferencesToAClassInBlock [
 ]
 
 { #category : 'tests' }
+SystemNavigationTest >> testRemoveMethodInClass [
+
+	| methodToRemove selector class |
+
+	selector := #aMethod.
+	class := self classFactory silentlyNewClass.
+	class compileSilently: selector asString , ' ^ self'.
+
+	methodToRemove := class >> selector.
+	self assert: (self systemNavigationToTest removeMethod: methodToRemove inClass: class).
+	self should: [ class >> selector ] raise: NotFound
+]
+
+{ #category : 'tests' }
 SystemNavigationTest >> testSenderOfASelectorInBlock [
 
 	| senders selector class otherClass |
