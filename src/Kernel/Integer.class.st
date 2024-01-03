@@ -659,7 +659,7 @@ Integer >> digitAt: anExponent base: base [
 
 	"Return number that represents digit at given position.
 		42 digitAt: 2 base: 10 -> 4
-		42 digitAt: 1 base: 10 -> 1
+		42 digitAt: 1 base: 10 -> 2
 	It is always a number or zero:
 		16rFF digitAt: 1 base: 16 -> 15
 		1 digitAt: 2 base: 10 -> 0
