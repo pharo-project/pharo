@@ -152,30 +152,28 @@ MetacelloRecordTarget >> visitProjectSpec: aMetacelloMCBaselineOfProjectSpec [
 { #category : 'visiting' }
 MetacelloRecordTarget >> visitVersionSpec: aMetacelloVersionSpec [
 
-	self preLoad: aMetacelloVersionSpec.
-	self visitVersionSpecChildren: aMetacelloVersionSpec.
-	self postLoad: aMetacelloVersionSpec
-]
-
-{ #category : 'actions' }
-MetacelloRecordTarget >> visitVersionSpecChildren: aSpec [
-
-	| packages oldCurrentRepositorySpecs |
-	
+	| packages oldCurrentRepositorySpecs projectRepositorySpecs |
 	packages := Dictionary new.
-	aSpec resolveToLoadableSpecs: required map: packages.
-	
+	aMetacelloVersionSpec resolveToLoadableSpecs: required map: packages.
 	oldCurrentRepositorySpecs := currentRepositorySpecs.
-	currentRepositorySpecs := aSpec repositorySpecs.
-	packages := aSpec packageSpecsInLoadOrderForMap: packages.
-	
-	["Iterate the internals of the version spec"
-	aSpec project loadType == #atomic ifTrue: [
-		^ self atomicLoadPackages: packages ofSpec: aSpec ].
-	aSpec project loadType == #linear ifTrue: [
-		^ self linearLoadPackages: packages ofSpec: aSpec ].
+	currentRepositorySpecs := aMetacelloVersionSpec repositorySpecs.
+	packages := aMetacelloVersionSpec packageSpecsInLoadOrderForMap:
+		            packages.
 
-	MetacelloError signal:
-		'Unknown loadType: ' , aSpec project loadType printString]
-		ensure: [ currentRepositorySpecs := oldCurrentRepositorySpecs ]
+	projectRepositorySpecs := aMetacelloVersionSpec repositorySpecs
+		                          ifEmpty: [ currentRepositorySpecs ].
+	aMetacelloVersionSpec repositories: projectRepositorySpecs.
+	self preLoad: aMetacelloVersionSpec.
+
+	[ "Iterate the internals of the version spec"
+	aMetacelloVersionSpec project loadType == #atomic ifTrue: [
+		self atomicLoadPackages: packages ofSpec: aMetacelloVersionSpec ].
+	aMetacelloVersionSpec project loadType == #linear ifTrue: [
+		self linearLoadPackages: packages ofSpec: aMetacelloVersionSpec ].
+
+	self postLoad: aMetacelloVersionSpec.
+
+	MetacelloError signal: 'Unknown loadType: '
+		, aMetacelloVersionSpec project loadType printString ] ensure: [
+		currentRepositorySpecs := oldCurrentRepositorySpecs ]
 ]
