@@ -61,20 +61,20 @@ ReRenameMethodDriver >> configureRefactoring [
 	refactoring := ReRenameMethodRefactoring new renameMethod: originalMessage selector in: class 
 ]
 
-{ #category : 'execution' }
+{ #category : 'initialization' }
 ReRenameMethodDriver >> initialize [ 
 	
 	super initialize.
 	shouldEscape := false.
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'for mocks' }
 ReRenameMethodDriver >> methodNameEditorPresenterClass [
 
 	^ methodNameEditorPresenterClass ifNil: [ methodNameEditorPresenterClass := StMethodNameEditorPresenter]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'for mocks' }
 ReRenameMethodDriver >> methodNameEditorPresenterClass: aClass [
 
 	methodNameEditorPresenterClass := aClass
@@ -88,13 +88,7 @@ ReRenameMethodDriver >> model: aModel renameMethodSignature: aMessage in: aClass
 	class := aClass
 ]
 
-{ #category : 'To be removed' }
-ReRenameMethodDriver >> newMessage [
-
-	^ newMessage
-]
-
-{ #category : 'To be removed' }
+{ #category : 'interaction' }
 ReRenameMethodDriver >> requestNewMessage [
 
 	| methodName dialog  |
