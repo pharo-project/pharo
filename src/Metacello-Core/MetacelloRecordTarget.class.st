@@ -173,7 +173,10 @@ MetacelloRecordTarget >> visitVersionSpec: aMetacelloVersionSpec [
 
 	self postLoad: aMetacelloVersionSpec.
 
-	MetacelloError signal: 'Unknown loadType: '
-		, aMetacelloVersionSpec project loadType printString ] ensure: [
-		currentRepositorySpecs := oldCurrentRepositorySpecs ]
+	(#( atomic linear ) includes: aMetacelloVersionSpec project loadType)
+		ifFalse: [
+			MetacelloError signal: 'Unknown loadType: '
+				, aMetacelloVersionSpec project loadType printString ]
+			
+	] ensure: [ currentRepositorySpecs := oldCurrentRepositorySpecs ]
 ]
