@@ -8,10 +8,7 @@ Class {
 		'class',
 		'originalMessage',
 		'newMessage',
-		'command',
-		'postAction',
-		'shouldEscape',
-		'newName'
+		'shouldEscape'
 	],
 	#category : 'Refactoring-UI-Drivers',
 	#package : 'Refactoring-UI',
