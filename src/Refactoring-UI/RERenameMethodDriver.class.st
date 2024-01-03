@@ -80,7 +80,7 @@ ReRenameMethodDriver >> methodNameEditorPresenterClass: aClass [
 	methodNameEditorPresenterClass := aClass
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 ReRenameMethodDriver >> model: aModel renameMethodSignature: aMessage in: aClass [ 
 	model := aModel.
 	originalMessage := aMessage.
@@ -157,7 +157,7 @@ ReRenameMethodDriver >> runRefactoring [
 	self applyChanges.
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 ReRenameMethodDriver >> scopes: refactoringScope model: aModel renameMethodSignature: aMessage in: aClass [
 
 	scopes := refactoringScope.
