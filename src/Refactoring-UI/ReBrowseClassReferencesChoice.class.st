@@ -1,19 +1,19 @@
 Class {
-	#name : 'RBBrowseClassReferencesChoice',
-	#superclass : 'RBRemoveClassChoice',
+	#name : 'ReBrowseClassReferencesChoice',
+	#superclass : 'ReRemoveClassChoice',
 	#category : 'Refactoring-UI-Choices',
 	#package : 'Refactoring-UI',
 	#tag : 'Choices'
 }
 
 { #category : 'accessing' }
-RBBrowseClassReferencesChoice >> action [
+ReBrowseClassReferencesChoice >> action [
 
 	driver browseReferences
 ]
 
 { #category : 'accessing' }
-RBBrowseClassReferencesChoice >> description [
+ReBrowseClassReferencesChoice >> description [
 
 	^ 'Browse class references'
 ]

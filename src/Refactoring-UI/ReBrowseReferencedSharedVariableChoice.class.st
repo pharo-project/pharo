@@ -1,19 +1,19 @@
 Class {
-	#name : 'RBBrowseReferencedSharedVariableChoice',
-	#superclass : 'RBVariableChoice',
+	#name : 'ReBrowseReferencedSharedVariableChoice',
+	#superclass : 'ReVariableChoice',
 	#category : 'Refactoring-UI-Choices',
 	#package : 'Refactoring-UI',
 	#tag : 'Choices'
 }
 
 { #category : 'accessing' }
-RBBrowseReferencedSharedVariableChoice >> action [ 
+ReBrowseReferencedSharedVariableChoice >> action [ 
 
 	driver browseSharedVariableReferences
 ]
 
 { #category : 'accessing' }
-RBBrowseReferencedSharedVariableChoice >> description [ 
+ReBrowseReferencedSharedVariableChoice >> description [ 
 
 	^ 'Browse referenced shared variable (s)'
 ]

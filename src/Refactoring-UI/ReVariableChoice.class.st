@@ -1,6 +1,6 @@
 Class {
-	#name : 'RBVariableChoice',
-	#superclass : 'RBChoice',
+	#name : 'ReVariableChoice',
+	#superclass : 'ReChoice',
 	#category : 'Refactoring-UI-Choices',
 	#package : 'Refactoring-UI',
 	#tag : 'Choices'

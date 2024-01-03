@@ -14,7 +14,7 @@ ReRemoveInstanceVariablesDriverTest >> testBadPathVariableIsused [
 			             RBLintRuleTestData.
 			             RBClassDataForRefactoringTest.
 			             MyClassARoot }.
-	driver := RBRemoveInstanceVariablesDriver new
+	driver := ReRemoveInstanceVariablesDriver new
 		          scopes: { rbclasses }
 		          variables: { #instVarName1 }
 		          for: MyClassARoot.
@@ -28,7 +28,7 @@ ReRemoveInstanceVariablesDriverTest >> testGoodPathTwoUnusedVariables [
 	
 	| rbclasses driver |
 	rbclasses := RBClassEnvironment classes: { RBLintRuleTestData . RBClassDataForRefactoringTest . MyClassARoot}.	
-	driver := RBRemoveInstanceVariablesDriver new 
+	driver := ReRemoveInstanceVariablesDriver new 
 		scopes: { rbclasses }
 		variables: { #unusedVar1 . #unusedVar2 }
 		for: MyClassARoot. 
@@ -43,7 +43,7 @@ ReRemoveInstanceVariablesDriverTest >> testGoodPathVariableIsUnused [
 	
 	| rbclasses driver |
 	rbclasses := RBClassEnvironment classes: { RBLintRuleTestData . RBClassDataForRefactoringTest . MyClassARoot}.	
-	driver := RBRemoveInstanceVariablesDriver new 
+	driver := ReRemoveInstanceVariablesDriver new 
 		scopes: { rbclasses }
 		variables: { #unusedVar2 }
 		for: MyClassARoot. 

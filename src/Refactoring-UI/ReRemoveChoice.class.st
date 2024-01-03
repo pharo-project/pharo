@@ -1,19 +1,19 @@
 Class {
-	#name : 'RBRemoveChoice',
-	#superclass : 'RBRemoveMethodChoice',
+	#name : 'ReRemoveChoice',
+	#superclass : 'ReRemoveMethodChoice',
 	#category : 'Refactoring-UI-Choices',
 	#package : 'Refactoring-UI',
 	#tag : 'Choices'
 }
 
 { #category : 'execution' }
-RBRemoveChoice >> action [
+ReRemoveChoice >> action [
 
 	driver applyChanges
 ]
 
 { #category : 'accessing' }
-RBRemoveChoice >> description [
+ReRemoveChoice >> description [
 
 	^ 'Remove it'
 ]

@@ -2,7 +2,7 @@
 I'm an interaction class in charge of stirring the application or not of removing shared variables.
 "
 Class {
-	#name : 'RBRemoveSharedVariablesDriver',
+	#name : 'ReRemoveSharedVariablesDriver',
 	#superclass : 'RBInteractionDriver',
 	#instVars : [
 		'class',
@@ -14,18 +14,18 @@ Class {
 }
 
 { #category : 'execution' }
-RBRemoveSharedVariablesDriver >> breakingChoices [
+ReRemoveSharedVariablesDriver >> breakingChoices [
 
 	| items |
 	items := OrderedCollection new.
-	items add: (RBBrowseReferencedSharedVariableChoice new driver: self ; yourself).
-	items add: (RBRemoveSharedVariableChoice new driver: self; yourself).
-	items add: (RBRemoveSharedVariableAndShowChoice new driver: self; yourself).
+	items add: (ReBrowseReferencedSharedVariableChoice new driver: self ; yourself).
+	items add: (ReRemoveSharedVariableChoice new driver: self; yourself).
+	items add: (ReRemoveSharedVariableAndShowChoice new driver: self; yourself).
 	^ items
 ]
 
 { #category : 'execution' }
-RBRemoveSharedVariablesDriver >> browseSharedVariableReferences [
+ReRemoveSharedVariablesDriver >> browseSharedVariableReferences [
 
 	StMessageBrowserPresenter
 		browse: refactoring violators
@@ -33,13 +33,13 @@ RBRemoveSharedVariablesDriver >> browseSharedVariableReferences [
 ]
 
 { #category : 'execution' }
-RBRemoveSharedVariablesDriver >> changes [
+ReRemoveSharedVariablesDriver >> changes [
 
 	^ refactoring privateTransform; changes
 ]
 
 { #category : 'resources' }
-RBRemoveSharedVariablesDriver >> configureRefactoring [
+ReRemoveSharedVariablesDriver >> configureRefactoring [
 
 	refactoring := RBUpFrontPreconditionCheckingCompositeRefactoring new
 							model: model; 
@@ -50,7 +50,7 @@ RBRemoveSharedVariablesDriver >> configureRefactoring [
 ]
 
 { #category : 'execution' }
-RBRemoveSharedVariablesDriver >> defaultSelectDialog [
+ReRemoveSharedVariablesDriver >> defaultSelectDialog [
 
 	^ SpSelectDialog new
 		          title: 'There are references to variables!';
@@ -62,7 +62,7 @@ RBRemoveSharedVariablesDriver >> defaultSelectDialog [
 ]
 
 { #category : 'execution' }
-RBRemoveSharedVariablesDriver >> handleBreakingChanges [
+ReRemoveSharedVariablesDriver >> handleBreakingChanges [
 
 	| select  |
 	select := self defaultSelectDialog.
@@ -70,7 +70,7 @@ RBRemoveSharedVariablesDriver >> handleBreakingChanges [
 ]
 
 { #category : 'execution' }
-RBRemoveSharedVariablesDriver >> runRefactoring [
+ReRemoveSharedVariablesDriver >> runRefactoring [
 
 	self configureRefactoring.
 	
@@ -84,7 +84,7 @@ RBRemoveSharedVariablesDriver >> runRefactoring [
 ]
 
 { #category : 'initialization' }
-RBRemoveSharedVariablesDriver >> scopes: refactoringScopes variables: aCollection for: aClass [
+ReRemoveSharedVariablesDriver >> scopes: refactoringScopes variables: aCollection for: aClass [
 	
 	scopes := refactoringScopes.
 	model := self refactoringScopeOn: scopes first.

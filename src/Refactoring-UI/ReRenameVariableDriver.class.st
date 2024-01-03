@@ -2,7 +2,7 @@
 I'm an abstract model for user interaction for the rename variables refactoring.
 "
 Class {
-	#name : 'RBRenameVariableDriver',
+	#name : 'ReRenameVariableDriver',
 	#superclass : 'RBInteractionDriver',
 	#instVars : [
 		'oldName',
@@ -16,13 +16,13 @@ Class {
 }
 
 { #category : 'execution' }
-RBRenameVariableDriver >> changes [
+ReRenameVariableDriver >> changes [
 
 	^ refactoring privateTransform; changes
 ]
 
 { #category : 'execution' }
-RBRenameVariableDriver >> configureRefactoring [
+ReRenameVariableDriver >> configureRefactoring [
 
 	refactoring := self refactoringClass
 		               variable: oldName
@@ -30,7 +30,7 @@ RBRenameVariableDriver >> configureRefactoring [
 ]
 
 { #category : 'private' }
-RBRenameVariableDriver >> informError: cond [
+ReRenameVariableDriver >> informError: cond [
 
 	self informDialog
 		label: cond errorString;
@@ -39,7 +39,7 @@ RBRenameVariableDriver >> informError: cond [
 ]
 
 { #category : 'private' }
-RBRenameVariableDriver >> prepareRefactoringInteractively [
+ReRenameVariableDriver >> prepareRefactoringInteractively [
 
 	| failedConditions newName |
 	[
@@ -54,12 +54,12 @@ RBRenameVariableDriver >> prepareRefactoringInteractively [
 ]
 
 { #category : 'factory method' }
-RBRenameVariableDriver >> refactoringClass [
+ReRenameVariableDriver >> refactoringClass [
 	self subclassResponsibility 
 ]
 
 { #category : 'private' }
-RBRenameVariableDriver >> requestNewNameBasedOn: aName [
+ReRenameVariableDriver >> requestNewNameBasedOn: aName [
 
 	| newName |
 	newName := self requestDialog
@@ -78,7 +78,7 @@ RBRenameVariableDriver >> requestNewNameBasedOn: aName [
 ]
 
 { #category : 'execution' }
-RBRenameVariableDriver >> runRefactoring [
+ReRenameVariableDriver >> runRefactoring [
 
 	self configureRefactoring.
 	shouldEscape := false.
@@ -90,7 +90,7 @@ RBRenameVariableDriver >> runRefactoring [
 ]
 
 { #category : 'initialization' }
-RBRenameVariableDriver >> scopes: aCollection variable: aString for: aClass [ 
+ReRenameVariableDriver >> scopes: aCollection variable: aString for: aClass [ 
 	"The driver is initialized in interactive mode (i.e. we will ask for the newName to the user while running the refactoring"
 	scopes := aCollection.
 	model :=  self refactoringScopeOn: scopes first.

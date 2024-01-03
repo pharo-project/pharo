@@ -1,19 +1,19 @@
 Class {
-	#name : 'RBDeprecateAndMigrateReferencesClassChoice',
-	#superclass : 'RBDeprecateClassChoice',
+	#name : 'ReDeprecateAndMigrateReferencesClassChoice',
+	#superclass : 'ReDeprecateClassChoice',
 	#category : 'Refactoring-UI-Choices',
 	#package : 'Refactoring-UI',
 	#tag : 'Choices'
 }
 
 { #category : 'execution' }
-RBDeprecateAndMigrateReferencesClassChoice >> action [
+ReDeprecateAndMigrateReferencesClassChoice >> action [
 
 	driver deprecateAndMigrateReferences
 ]
 
 { #category : 'accessing' }
-RBDeprecateAndMigrateReferencesClassChoice >> description [
+ReDeprecateAndMigrateReferencesClassChoice >> description [
 
 	^ 'Deprecate class and migrate all references to another class'
 ]

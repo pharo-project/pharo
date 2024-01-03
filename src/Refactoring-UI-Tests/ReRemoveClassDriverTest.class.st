@@ -10,9 +10,9 @@ ReRemoveClassDriverTest >> testBadPathRemovingNonEmptySubWithSubclasses [
 	
 	| pack driver |
 	pack := RBPackageEnvironment packageNames: { 'Refactoring-UI-Tests' . 'Refactoring-UI' }.
-	driver := RBRemoveClassDriver new 
+	driver := ReRemoveClassDriver new 
 		scopes: { pack }
-		classes: { RBRemoveClassDriver }.
+		classes: { ReRemoveClassDriver }.
 	self setUpDriver: driver.
 	driver runRefactoring.
 		
@@ -24,7 +24,7 @@ ReRemoveClassDriverTest >> testClassDoesNotExist [
 	
 	| pack driver |
 	pack := RBPackageEnvironment packageName: 'Refactoring-DataForTesting'.
-	driver := RBRemoveClassDriver new 
+	driver := ReRemoveClassDriver new 
 		scopes: { pack }
 		classes: { MyClassC class}.
 	self setUpDriver: driver.
@@ -38,7 +38,7 @@ ReRemoveClassDriverTest >> testGoodPathClassIsUnusedEmptyNoSubclasses [
 	
 	| pack driver |
 	pack := RBPackageEnvironment packageName: 'Refactoring-DataForTesting'.
-	driver := RBRemoveClassDriver new 
+	driver := ReRemoveClassDriver new 
 		scopes: { pack }
 		classes: { RBUnusedRootClass}.
 	self setUpDriver: driver.
@@ -52,7 +52,7 @@ ReRemoveClassDriverTest >> testGoodPathRemovingNonEmptyLeaf [
 	
 	| pack driver |
 	pack := RBPackageEnvironment packageName: 'Refactoring-DataForTesting'.
-	driver := RBRemoveClassDriver new 
+	driver := ReRemoveClassDriver new 
 		scopes: { pack }
 		classes: { self class environment at: 'MyClassNonEmptyLeafUnused' asSymbol}.
 	self setUpDriver: driver.

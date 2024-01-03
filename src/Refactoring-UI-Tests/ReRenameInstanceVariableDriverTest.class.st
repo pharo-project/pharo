@@ -10,7 +10,7 @@ ReRenameInstanceVariableDriverTest >> testInvalidNameFollowedByAValidName [
 
 	| rbclasses driver requestDialog |
 	rbclasses := RBClassEnvironment classes: { MyClassARoot }.
-	driver := RBRenameInstanceVariableDriver new
+	driver := ReRenameInstanceVariableDriver new
 		          scopes: { rbclasses }
 		          variable: #unusedVar1
 		          for: MyClassARoot.
@@ -37,7 +37,7 @@ ReRenameInstanceVariableDriverTest >> testValidNameAndUndefinedVariable [
 	"I do not understand this test and it loops with my changes."
 	
 	rbclasses := RBClassEnvironment classes: { MyClassARoot }.
-	driver := RBRenameInstanceVariableDriver new
+	driver := ReRenameInstanceVariableDriver new
 		          scopes: { rbclasses }
 		          variable: #inexistantVariable
 		          for: MyClassARoot.
@@ -61,7 +61,7 @@ ReRenameInstanceVariableDriverTest >> testValidNameAndUnusedVariable [
 
 	| rbclasses driver requestDialog |
 	rbclasses := RBClassEnvironment classes: { MyClassARoot }.
-	driver := RBRenameInstanceVariableDriver new
+	driver := ReRenameInstanceVariableDriver new
 		          scopes: { rbclasses }
 		          variable: #unusedVar1
 		          for: MyClassARoot.
@@ -83,7 +83,7 @@ ReRenameInstanceVariableDriverTest >> testValidNameAndUsedVariable [
 
 	| rbclasses driver requestDialog |
 	rbclasses := RBClassEnvironment classes: { MyClassARoot }.
-	driver := RBRenameInstanceVariableDriver new
+	driver := ReRenameInstanceVariableDriver new
 		          scopes: { rbclasses }
 		          variable: #instVarName1
 		          for: MyClassARoot.

@@ -2,7 +2,7 @@
 I'm a model for user interaction for the remove instance variable refactoring.
 "
 Class {
-	#name : 'RBRemoveInstanceVariablesDriver',
+	#name : 'ReRemoveInstanceVariablesDriver',
 	#superclass : 'RBInteractionDriver',
 	#instVars : [
 		'class',
@@ -14,18 +14,18 @@ Class {
 }
 
 { #category : 'execution' }
-RBRemoveInstanceVariablesDriver >> breakingChoices [
+ReRemoveInstanceVariablesDriver >> breakingChoices [
 
 	| items |
 	items := OrderedCollection new.
-	items add: (RBBrowseReferencedInstanceVariableChoice new driver: self; yourself).
-	items add: (RBRemoveInstanceVariableChoice new driver: self; yourself).
-	items add: (RBRemoveInstanceVariableAndShowChoice new driver: self;  yourself).
+	items add: (ReBrowseReferencedInstanceVariableChoice new driver: self; yourself).
+	items add: (ReRemoveInstanceVariableChoice new driver: self; yourself).
+	items add: (ReRemoveInstanceVariableAndShowChoice new driver: self;  yourself).
 	^ items
 ]
 
 { #category : 'execution' }
-RBRemoveInstanceVariablesDriver >> browseInstanceVariableReferences [
+ReRemoveInstanceVariablesDriver >> browseInstanceVariableReferences [
 
 	StMessageBrowserPresenter
 		browse: refactoring violators
@@ -33,14 +33,14 @@ RBRemoveInstanceVariablesDriver >> browseInstanceVariableReferences [
 ]
 
 { #category : 'execution' }
-RBRemoveInstanceVariablesDriver >> changes [
+ReRemoveInstanceVariablesDriver >> changes [
 	"We only perform the changes."
 	
 	^ refactoring privateTransform; changes
 ]
 
 { #category : 'resources' }
-RBRemoveInstanceVariablesDriver >> configureRefactoring [
+ReRemoveInstanceVariablesDriver >> configureRefactoring [
 
 	refactoring := RBUpFrontPreconditionCheckingCompositeRefactoring new
 							model: model; 
@@ -51,7 +51,7 @@ RBRemoveInstanceVariablesDriver >> configureRefactoring [
 ]
 
 { #category : 'execution' }
-RBRemoveInstanceVariablesDriver >> defaultSelectDialog [
+ReRemoveInstanceVariablesDriver >> defaultSelectDialog [
 
 	^ SpSelectDialog new
 		  title: 'There are references to variables!';
@@ -62,7 +62,7 @@ RBRemoveInstanceVariablesDriver >> defaultSelectDialog [
 ]
 
 { #category : 'execution' }
-RBRemoveInstanceVariablesDriver >> handleBreakingChanges [
+ReRemoveInstanceVariablesDriver >> handleBreakingChanges [
 
 	| select |
 	select := self selectDialog.
@@ -70,7 +70,7 @@ RBRemoveInstanceVariablesDriver >> handleBreakingChanges [
 ]
 
 { #category : 'execution' }
-RBRemoveInstanceVariablesDriver >> runRefactoring [
+ReRemoveInstanceVariablesDriver >> runRefactoring [
 
 	self configureRefactoring.
 	
@@ -86,7 +86,7 @@ RBRemoveInstanceVariablesDriver >> runRefactoring [
 ]
 
 { #category : 'initialization' }
-RBRemoveInstanceVariablesDriver >> scopes: refactoringScopes variables: aCollection for: aClass [
+ReRemoveInstanceVariablesDriver >> scopes: refactoringScopes variables: aCollection for: aClass [
 	
 	scopes := refactoringScopes.
 	model := self refactoringScopeOn: scopes first.
@@ -95,7 +95,7 @@ RBRemoveInstanceVariablesDriver >> scopes: refactoringScopes variables: aCollect
 ]
 
 { #category : 'execution' }
-RBRemoveInstanceVariablesDriver >> selectDialog [
+ReRemoveInstanceVariablesDriver >> selectDialog [
 	
 	^ selectDialog ifNil: [ selectDialog := self defaultSelectDialog ].
 	

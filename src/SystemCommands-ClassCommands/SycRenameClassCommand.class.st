@@ -1,5 +1,5 @@
 Class {
-	#name : 'SycRenameClassCommand2',
+	#name : 'SycRenameClassCommand',
 	#superclass : 'SycSingleClassCommand',
 	#instVars : [
 		'toolContext'
@@ -9,17 +9,17 @@ Class {
 }
 
 { #category : 'accessing' }
-SycRenameClassCommand2 >> defaultMenuIconName [
+SycRenameClassCommand >> defaultMenuIconName [
 	^ #edit
 ]
 
 { #category : 'accessing' }
-SycRenameClassCommand2 >> defaultMenuItemName [
+SycRenameClassCommand >> defaultMenuItemName [
 	^'Rename'
 ]
 
 { #category : 'execution' }
-SycRenameClassCommand2 >> execute [
+SycRenameClassCommand >> execute [
 	"Pay attention when you specify a model that is a selection of the full environment. 
 	Indeed imagine that you have a model of just one package, 
 	the precondition may say that the new name is not the one of an already existing global 
@@ -38,7 +38,7 @@ SycRenameClassCommand2 >> execute [
 ]
 
 { #category : 'execution' }
-SycRenameClassCommand2 >> prepareFullExecutionInContext: aToolContext [
+SycRenameClassCommand >> prepareFullExecutionInContext: aToolContext [
 	
 	super prepareFullExecutionInContext: aToolContext.
 	toolContext := aToolContext

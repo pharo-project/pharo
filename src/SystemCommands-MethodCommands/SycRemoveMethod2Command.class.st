@@ -35,7 +35,7 @@ SycRemoveMethod2Command >> defaultMenuItemName [
 { #category : 'execution' }
 SycRemoveMethod2Command >> execute [
 	
-	(RBRemoveMethodDriver new
+	(ReRemoveMethodDriver new
 				 scopes: toolContext refactoringScopes
 				 methods: methods) runRefactoring
 ]

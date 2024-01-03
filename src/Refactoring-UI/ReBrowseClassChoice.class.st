@@ -1,13 +1,13 @@
 Class {
-	#name : 'RBBrowseClassChoice',
-	#superclass : 'RBRemoveClassChoice',
+	#name : 'ReBrowseClassChoice',
+	#superclass : 'ReRemoveClassChoice',
 	#category : 'Refactoring-UI-Choices',
 	#package : 'Refactoring-UI',
 	#tag : 'Choices'
 }
 
 { #category : 'accessing' }
-RBBrowseClassChoice >> action [
+ReBrowseClassChoice >> action [
 
 	driver browseClass
 ]

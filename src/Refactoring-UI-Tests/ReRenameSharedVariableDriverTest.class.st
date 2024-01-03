@@ -10,7 +10,7 @@ ReRenameSharedVariableDriverTest >> testInvalidNameFollowedByAValideOne [
 
 	| rbclasses driver requestDialog |
 	rbclasses := RBClassEnvironment classes: { MyClassARoot }.
-	driver := RBRenameSharedVariableDriver new
+	driver := ReRenameSharedVariableDriver new
 		          scopes: { rbclasses }
 		          variable: #Shared1
 		          for: MyClassARoot.
@@ -31,7 +31,7 @@ ReRenameSharedVariableDriverTest >> testValidNameAndUndefinedVariable [
 	| rbclasses driver requestDialog |
 	self skip.
 	rbclasses := RBClassEnvironment classes: { MyClassARoot }.
-	driver := RBRenameSharedVariableDriver new
+	driver := ReRenameSharedVariableDriver new
 		          scopes: { rbclasses }
 		          variable: #Shared3
 		          for: MyClassARoot.
@@ -54,7 +54,7 @@ ReRenameSharedVariableDriverTest >> testValidNameAndUnusedVariable [
 
 	| rbclasses driver requestDialog |
 	rbclasses := RBClassEnvironment classes: { MyClassARoot }.
-	driver := RBRenameSharedVariableDriver new
+	driver := ReRenameSharedVariableDriver new
 		          scopes: { rbclasses }
 		          variable: #Shared2
 		          for: MyClassARoot.
@@ -75,7 +75,7 @@ ReRenameSharedVariableDriverTest >> testValidNameAndUsedVariable [
 
 	| rbclasses driver requestDialog |
 	rbclasses := RBClassEnvironment classes: { MyClassARoot }.
-	driver := RBRenameSharedVariableDriver new
+	driver := ReRenameSharedVariableDriver new
 		          scopes: { rbclasses }
 		          variable: #Shared2
 		          for: MyClassARoot.

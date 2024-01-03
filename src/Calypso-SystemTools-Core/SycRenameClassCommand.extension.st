@@ -1,28 +1,28 @@
-Extension { #name : 'SycRenameClassCommand2' }
+Extension { #name : 'SycRenameClassCommand' }
 
 { #category : '*Calypso-SystemTools-Core' }
-SycRenameClassCommand2 class >> browserContextMenuActivation [
+SycRenameClassCommand class >> browserContextMenuActivation [
 	<classAnnotation>
 
 	^CmdContextMenuActivation byRootGroupItemOrder: 1 for: ClyClass asCalypsoItemContext
 ]
 
 { #category : '*Calypso-SystemTools-Core' }
-SycRenameClassCommand2 class >> browserShortcutActivation [
+SycRenameClassCommand class >> browserShortcutActivation [
 	<classAnnotation>
 	
 	^CmdShortcutActivation renamingFor: ClyClass asCalypsoItemContext
 ]
 
 { #category : '*Calypso-SystemTools-Core' }
-SycRenameClassCommand2 class >> sourceCodeMenuActivation [
+SycRenameClassCommand class >> sourceCodeMenuActivation [
 	<classAnnotation>
 
 	^SycSourceCodeMenuActivation byRootGroupItemOrder: 1.2 for: ClySourceCodeContext
 ]
 
 { #category : '*Calypso-SystemTools-Core' }
-SycRenameClassCommand2 class >> sourceCodeShortcutActivation [
+SycRenameClassCommand class >> sourceCodeShortcutActivation [
 	<classAnnotation>
 
 	^CmdShortcutActivation renamingFor: ClySourceCodeContext

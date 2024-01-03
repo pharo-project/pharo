@@ -2,7 +2,7 @@
 I'm a model for user interaction for the remove method refactoring.
 "
 Class {
-	#name : 'RBRemoveMethodDriver',
+	#name : 'ReRemoveMethodDriver',
 	#superclass : 'RBInteractionDriver',
 	#instVars : [
 		'methods',
@@ -14,18 +14,18 @@ Class {
 }
 
 { #category : 'execution' }
-RBRemoveMethodDriver >> breakingChoices [
+ReRemoveMethodDriver >> breakingChoices [
 
 	| items |
 	items := OrderedCollection new.
-	items add: (RBRemoveChoice new driver: self).
-	items add: (RBRemoveAndShowSendersChoice new driver: self).
-	items add: (RBDontRemoveButShowSendersChoice new driver: self).
+	items add: (ReRemoveChoice new driver: self).
+	items add: (ReRemoveAndShowSendersChoice new driver: self).
+	items add: (ReDontRemoveButShowSendersChoice new driver: self).
 	^ items
 ]
 
 { #category : 'execution' }
-RBRemoveMethodDriver >> browseSenders [
+ReRemoveMethodDriver >> browseSenders [
 
 	StMessageBrowserPresenter  
 		browse: (haveNoSenders violators collect: [ :each | each value methodClass realClass >> each value selector ]) 
@@ -34,13 +34,13 @@ RBRemoveMethodDriver >> browseSenders [
 ]
 
 { #category : 'execution' }
-RBRemoveMethodDriver >> changes [
+ReRemoveMethodDriver >> changes [
 
 	^ refactoring removeMethodChanges
 ]
 
 { #category : 'resources' }
-RBRemoveMethodDriver >> configureRefactoring [
+ReRemoveMethodDriver >> configureRefactoring [
 
 	| classSelectorMapping |
 	classSelectorMapping := methods collect: [ :m | m origin -> m selector ].
@@ -51,7 +51,7 @@ RBRemoveMethodDriver >> configureRefactoring [
 ]
 
 { #category : 'execution' }
-RBRemoveMethodDriver >> handleBreakingChanges [
+ReRemoveMethodDriver >> handleBreakingChanges [
 
 	| select |
 	select := self selectDialog.
@@ -59,7 +59,7 @@ RBRemoveMethodDriver >> handleBreakingChanges [
 ]
 
 { #category : 'execution' }
-RBRemoveMethodDriver >> runRefactoring [
+ReRemoveMethodDriver >> runRefactoring [
 
 	self configureRefactoring.
 	refactoring failedApplicabilityPreconditions 
@@ -73,7 +73,7 @@ RBRemoveMethodDriver >> runRefactoring [
 ]
 
 { #category : 'initialization' }
-RBRemoveMethodDriver >> scopes: refactoringScopes method: aMethod [
+ReRemoveMethodDriver >> scopes: refactoringScopes method: aMethod [
 	
 	scopes := refactoringScopes.
 	model := self refactoringScopeOn: scopes first.
@@ -81,7 +81,7 @@ RBRemoveMethodDriver >> scopes: refactoringScopes method: aMethod [
 ]
 
 { #category : 'initialization' }
-RBRemoveMethodDriver >> scopes: refactoringScopes methods: aMethods [
+ReRemoveMethodDriver >> scopes: refactoringScopes methods: aMethods [
 	
 	scopes := refactoringScopes.
 	model := self refactoringScopeOn: scopes first.
@@ -89,7 +89,7 @@ RBRemoveMethodDriver >> scopes: refactoringScopes methods: aMethods [
 ]
 
 { #category : 'execution' }
-RBRemoveMethodDriver >> selectDialog [
+ReRemoveMethodDriver >> selectDialog [
 
 	^ SpSelectDialog new
 		  title: 'There are ' , haveNoSenders violators size asString

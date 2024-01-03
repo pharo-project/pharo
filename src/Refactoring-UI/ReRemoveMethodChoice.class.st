@@ -1,13 +1,13 @@
 Class {
-	#name : 'RBDeprecateClassChoice',
-	#superclass : 'RBChoice',
+	#name : 'ReRemoveMethodChoice',
+	#superclass : 'ReChoice',
 	#category : 'Refactoring-UI-Choices',
 	#package : 'Refactoring-UI',
 	#tag : 'Choices'
 }
 
 { #category : 'execution' }
-RBDeprecateClassChoice >> action [
+ReRemoveMethodChoice >> action [
 
 	self subclassResponsibility 
 ]

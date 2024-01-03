@@ -6,7 +6,7 @@ In particular I propose different refactorings based on the situation:
 
 "
 Class {
-	#name : 'RBRemoveClassDriver',
+	#name : 'ReRemoveClassDriver',
 	#superclass : 'RBInteractionDriver',
 	#instVars : [
 		'classes',
@@ -20,24 +20,24 @@ Class {
 }
 
 { #category : 'execution' }
-RBRemoveClassDriver >> breakingChoices [
+ReRemoveClassDriver >> breakingChoices [
 
 	| items |
 	items := OrderedCollection new.
-	items add: (RBRemoveClassReparentChoice new
+	items add: (ReRemoveClassReparentChoice new
 						driver: self;
 						classesHaveSubclasses: noSubclasses isFalse;
 						emptyClasses: emptyClasses isTrue).
 	(noSubclasses isFalse and: [ emptyClasses isFalse ]) ifTrue: [
-		items add: (RBRemoveClassAndPushStateToSubclassChoice new driver: self) ].
+		items add: (ReRemoveClassAndPushStateToSubclassChoice new driver: self) ].
 	haveNoReferences isFalse ifTrue: [
-		items add: (RBBrowseClassReferencesChoice new driver: self) ].
+		items add: (ReBrowseClassReferencesChoice new driver: self) ].
 	^ items 
 	
 ]
 
 { #category : 'actions' }
-RBRemoveClassDriver >> browseReferences [
+ReRemoveClassDriver >> browseReferences [
 
 	haveNoReferences violators keysAndValuesDo: [ :violator :references |
 		"we should pass the application! "
@@ -47,14 +47,14 @@ RBRemoveClassDriver >> browseReferences [
 ]
 
 { #category : 'actions' }
-RBRemoveClassDriver >> changes [
+ReRemoveClassDriver >> changes [
 	
 	^  refactoring removeClassChanges
 
 ]
 
 { #category : 'initialization' }
-RBRemoveClassDriver >> configureRefactoring [
+ReRemoveClassDriver >> configureRefactoring [
 
 	refactoring := RBRemoveClassRefactoring
 		               model: model
@@ -63,7 +63,7 @@ RBRemoveClassDriver >> configureRefactoring [
 ]
 
 { #category : 'private execution' }
-RBRemoveClassDriver >> defaultSelectDialog [
+ReRemoveClassDriver >> defaultSelectDialog [
 
 	^ SpSelectDialog new
 		    title: 'There are potential breaking changes!';
@@ -76,7 +76,7 @@ RBRemoveClassDriver >> defaultSelectDialog [
 ]
 
 { #category : 'execution' }
-RBRemoveClassDriver >> handleBreakingChanges [
+ReRemoveClassDriver >> handleBreakingChanges [
 
 	| select |
 	select := self selectDialog.
@@ -84,7 +84,7 @@ RBRemoveClassDriver >> handleBreakingChanges [
 ]
 
 { #category : 'ui - dialogs' }
-RBRemoveClassDriver >> labelBasedOnBreakingChanges [
+ReRemoveClassDriver >> labelBasedOnBreakingChanges [
 
 	^ String streamContents: [ :stream | 
 		emptyClasses violationMessageOn: stream.
@@ -97,7 +97,7 @@ RBRemoveClassDriver >> labelBasedOnBreakingChanges [
 ]
 
 { #category : 'actions' }
-RBRemoveClassDriver >> removeClassAndPushStateToSubclasses [
+ReRemoveClassDriver >> removeClassAndPushStateToSubclasses [
 
 	refactoring := RBRemoveClassPushingStateToSubclassesRefactoring
 						   model: model
@@ -106,7 +106,7 @@ RBRemoveClassDriver >> removeClassAndPushStateToSubclasses [
 ]
 
 { #category : 'execution' }
-RBRemoveClassDriver >> runRefactoring [
+ReRemoveClassDriver >> runRefactoring [
 	
 	self configureRefactoring.
 	refactoring failedApplicabilityPreconditions 
@@ -119,7 +119,7 @@ RBRemoveClassDriver >> runRefactoring [
 ]
 
 { #category : 'initialization' }
-RBRemoveClassDriver >> scopes: refactoringScopes classes: aColclasses [
+ReRemoveClassDriver >> scopes: refactoringScopes classes: aColclasses [
 
 	scopes := refactoringScopes.
 	model := self refactoringScopeOn: scopes first.
@@ -127,14 +127,14 @@ RBRemoveClassDriver >> scopes: refactoringScopes classes: aColclasses [
 ]
 
 { #category : 'private execution' }
-RBRemoveClassDriver >> selectDialog [
+ReRemoveClassDriver >> selectDialog [
 	
 	^ selectDialog ifNil: [ selectDialog := self defaultSelectDialog ].
 	
 ]
 
 { #category : 'private execution' }
-RBRemoveClassDriver >> setBreakingChangesPreconditions [
+ReRemoveClassDriver >> setBreakingChangesPreconditions [
 	
 	haveNoReferences := refactoring preconditionHaveNoReferences.
 	emptyClasses := refactoring preconditionEmptyClasses.

@@ -1,19 +1,19 @@
 Class {
-	#name : 'RBDontRemoveButShowSendersChoice',
-	#superclass : 'RBRemoveMethodChoice',
+	#name : 'ReDontRemoveButShowSendersChoice',
+	#superclass : 'ReRemoveMethodChoice',
 	#category : 'Refactoring-UI-Choices',
 	#package : 'Refactoring-UI',
 	#tag : 'Choices'
 }
 
 { #category : 'execution' }
-RBDontRemoveButShowSendersChoice >> action [
+ReDontRemoveButShowSendersChoice >> action [
 
 	driver browseSenders
 ]
 
 { #category : 'accessing' }
-RBDontRemoveButShowSendersChoice >> description [
+ReDontRemoveButShowSendersChoice >> description [
 
 	^ 'Don''t remove, but show me those senders'
 ]

@@ -1,25 +1,25 @@
 Class {
-	#name : 'RBRemoveClassAndPushStateToSubclassChoice',
-	#superclass : 'RBRemoveClassChoice',
+	#name : 'ReRemoveClassAndPushStateToSubclassChoice',
+	#superclass : 'ReRemoveClassChoice',
 	#category : 'Refactoring-UI-Choices',
 	#package : 'Refactoring-UI',
 	#tag : 'Choices'
 }
 
 { #category : 'accessing' }
-RBRemoveClassAndPushStateToSubclassChoice >> action [ 
+ReRemoveClassAndPushStateToSubclassChoice >> action [ 
 
 	driver removeClassAndPushStateToSubclasses
 ]
 
 { #category : 'accessing' }
-RBRemoveClassAndPushStateToSubclassChoice >> description [
+ReRemoveClassAndPushStateToSubclassChoice >> description [
 
 	^ 'Remove it and push class state to subclasses'
 ]
 
 { #category : 'accessing' }
-RBRemoveClassAndPushStateToSubclassChoice >> order [
+ReRemoveClassAndPushStateToSubclassChoice >> order [
 
 	^ 2
 ]

@@ -31,8 +31,8 @@ SycRenameVariableCommand2 >> execute [
 	variable := toolContext lastSelectedVariable.
 	
 	driver := variable isClassVariable
-		          ifFalse: [ RBRenameInstanceVariableDriver new ]
-		          ifTrue: [ RBRenameSharedVariableDriver new ].
+		          ifFalse: [ ReRenameInstanceVariableDriver new ]
+		          ifTrue: [ ReRenameSharedVariableDriver new ].
 
 	(driver
 		 scopes: toolContext refactoringScopes

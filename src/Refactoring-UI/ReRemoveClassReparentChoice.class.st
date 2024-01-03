@@ -1,6 +1,6 @@
 Class {
-	#name : 'RBRemoveClassReparentChoice',
-	#superclass : 'RBRemoveClassChoice',
+	#name : 'ReRemoveClassReparentChoice',
+	#superclass : 'ReRemoveClassChoice',
 	#instVars : [
 		'classesHaveSubclasses',
 		'emptyClasses'
@@ -11,20 +11,20 @@ Class {
 }
 
 { #category : 'accessing' }
-RBRemoveClassReparentChoice >> action [
+ReRemoveClassReparentChoice >> action [
 
 	driver applyChanges
 
 ]
 
 { #category : 'accessing' }
-RBRemoveClassReparentChoice >> classesHaveSubclasses: aBoolean [
+ReRemoveClassReparentChoice >> classesHaveSubclasses: aBoolean [
 
 	classesHaveSubclasses := aBoolean
 ]
 
 { #category : 'accessing' }
-RBRemoveClassReparentChoice >> description [
+ReRemoveClassReparentChoice >> description [
 
 	^ String streamContents: [ :aStream |
 		aStream nextPutAll: 'Remove it'.
@@ -36,12 +36,12 @@ RBRemoveClassReparentChoice >> description [
 ]
 
 { #category : 'accessing' }
-RBRemoveClassReparentChoice >> emptyClasses: aBoolean [
+ReRemoveClassReparentChoice >> emptyClasses: aBoolean [
 
 	emptyClasses := aBoolean 
 ]
 
 { #category : 'accessing' }
-RBRemoveClassReparentChoice >> order [
+ReRemoveClassReparentChoice >> order [
 	^1
 ]

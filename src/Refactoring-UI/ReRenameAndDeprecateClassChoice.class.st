@@ -1,19 +1,19 @@
 Class {
-	#name : 'RBRenameAndDeprecateClassChoice',
-	#superclass : 'RBDeprecateClassChoice',
+	#name : 'ReRenameAndDeprecateClassChoice',
+	#superclass : 'ReDeprecateClassChoice',
 	#category : 'Refactoring-UI-Choices',
 	#package : 'Refactoring-UI',
 	#tag : 'Choices'
 }
 
 { #category : 'execution' }
-RBRenameAndDeprecateClassChoice >> action [
+ReRenameAndDeprecateClassChoice >> action [
 
 	driver renameAndDeprecate 
 ]
 
 { #category : 'accessing' }
-RBRenameAndDeprecateClassChoice >> description [
+ReRenameAndDeprecateClassChoice >> description [
 
 	^ 'Rename this class, subclass it with a new class that has the old name of the class and deprecate that class'
 ]

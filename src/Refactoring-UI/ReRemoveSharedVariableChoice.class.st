@@ -1,19 +1,19 @@
 Class {
-	#name : 'RBRemoveSharedVariableChoice',
-	#superclass : 'RBVariableChoice',
+	#name : 'ReRemoveSharedVariableChoice',
+	#superclass : 'ReVariableChoice',
 	#category : 'Refactoring-UI-Choices',
 	#package : 'Refactoring-UI',
 	#tag : 'Choices'
 }
 
 { #category : 'accessing' }
-RBRemoveSharedVariableChoice >> action [
+ReRemoveSharedVariableChoice >> action [
 
 	driver applyChanges
 ]
 
 { #category : 'accessing' }
-RBRemoveSharedVariableChoice >> description [ 
+ReRemoveSharedVariableChoice >> description [ 
 
 	^ 'Remove shared variables anyway'
 ]

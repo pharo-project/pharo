@@ -1,19 +1,19 @@
 Class {
-	#name : 'RBBrowseReferencedInstanceVariableChoice',
-	#superclass : 'RBVariableChoice',
+	#name : 'ReBrowseReferencedInstanceVariableChoice',
+	#superclass : 'ReVariableChoice',
 	#category : 'Refactoring-UI-Choices',
 	#package : 'Refactoring-UI',
 	#tag : 'Choices'
 }
 
 { #category : 'accessing' }
-RBBrowseReferencedInstanceVariableChoice >> action [ 
+ReBrowseReferencedInstanceVariableChoice >> action [ 
 
 	driver browseInstanceVariableReferences
 ]
 
 { #category : 'accessing' }
-RBBrowseReferencedInstanceVariableChoice >> description [ 
+ReBrowseReferencedInstanceVariableChoice >> description [ 
 
 	^ 'Browse referenced instance variable (s)'
 ]
