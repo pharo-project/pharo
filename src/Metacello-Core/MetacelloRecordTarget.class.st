@@ -160,7 +160,7 @@ MetacelloRecordTarget >> visitVersionSpec: aMetacelloVersionSpec [
 	packages := aMetacelloVersionSpec packageSpecsInLoadOrderForMap:
 		            packages.
 
-	projectRepositorySpecs := aMetacelloVersionSpec repositorySpecs
+	projectRepositorySpecs := aMetacelloVersionSpec repositories
 		                          ifEmpty: [ currentRepositorySpecs ].
 	aMetacelloVersionSpec repositories: projectRepositorySpecs.
 	self preLoad: aMetacelloVersionSpec.
