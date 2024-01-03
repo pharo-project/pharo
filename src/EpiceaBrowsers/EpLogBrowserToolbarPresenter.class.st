@@ -7,7 +7,9 @@ Class {
 	#instVars : [
 		'logBrowserPresenter',
 		'filtersButton',
-		'statusLabel'
+		'statusLabel',
+		'filteredEntriesCount',
+		'searchedEntriesCount'
 	],
 	#category : 'EpiceaBrowsers-UI-Log',
 	#package : 'EpiceaBrowsers',
@@ -52,8 +54,27 @@ EpLogBrowserToolbarPresenter >> beRevertMode [
 		action: [ logBrowserPresenter revertAllChangesAndCloseWindow ]
 ]
 
+{ #category : 'accessing' }
+EpLogBrowserToolbarPresenter >> filteredEntriesCount [
+	^ filteredEntriesCount
+]
+
+{ #category : 'accessing' }
+EpLogBrowserToolbarPresenter >> filteredEntriesCount: anInteger [ 
+
+	filteredEntriesCount := anInteger
+]
+
+{ #category : 'initialization' }
+EpLogBrowserToolbarPresenter >> initialize [ 
+
+	super initialize.
+	searchedEntriesCount := 0.
+]
+
 { #category : 'initialization' }
 EpLogBrowserToolbarPresenter >> initializePresenters [
+
 	filtersButton := self newButton.
 	statusLabel := self newLabel
 ]
@@ -69,21 +90,23 @@ EpLogBrowserToolbarPresenter >> refresh [
 	statusLabel label: self statusString
 ]
 
+{ #category : 'accessing' }
+EpLogBrowserToolbarPresenter >> searchedEntriesCount: anInteger [ 
+
+	searchedEntriesCount := anInteger
+]
+
 { #category : 'refreshing' }
 EpLogBrowserToolbarPresenter >> statusString [
 	^ String
 		streamContents: [ :stream |
-			| filtered total |
-			filtered := logBrowserPresenter filteredEntriesCount.
+			| total |
 			total := logBrowserPresenter totalEntriesCount.
-
 			stream
-				print: filtered;
-				nextPutAll: ' events'.
-
-			filtered = total
-				ifFalse: [ stream
-						nextPutAll: ' (';
-						print: total;
-						nextPutAll: ' total)' ] ]
+				print: total;
+				nextPutAll: ' events | ';
+				print: searchedEntriesCount;
+				nextPutAll: ' found | ';
+				print: filteredEntriesCount;
+				nextPutAll: ' filtered' ]
 ]
