@@ -381,16 +381,18 @@ Integer >> asSmallerPowerOfTwo [
 
 { #category : 'printing' }
 Integer >> asStringWithCommas [
-	"123456789 asStringWithCommas"
-	"-123456789 asStringWithCommas"
+	"123456789 asStringWithCommas >>> '123,456,789'"
+	"-123456789 asStringWithCommas >>> '-123,456,789'"
+	
 	^ String streamContents: [:stream |
 		self printWithCommasOn: stream ]
 ]
 
 { #category : 'printing' }
 Integer >> asStringWithCommasSigned [
-	"123456789 asStringWithCommasSigned"
-	"-123456789 asStringWithCommasSigned"
+	"123456789 asStringWithCommasSigned >>> '+123,456,789'"
+	"-123456789 asStringWithCommasSigned >>> '-123,456,789'"
+	
 	^ String streamContents: [:stream |
 		self printWithCommasSignedOn: stream ]
 ]
@@ -398,13 +400,13 @@ Integer >> asStringWithCommasSigned [
 { #category : 'printing' }
 Integer >> asTwoCharacterString [
 	"Answer a two-character string representing the receiver, with leading zero if required.  Intended for use with integers in the range 0 to 99, but plausible replies given for other values too
-	Examples:
-		2 asTwoCharacterString
-		11 asTwoCharacterString
-		1943 asTwoCharacterString
-		0 asTwoCharacterString
-		-2 asTwoCharacterString
-		-234 asTwoCharacterString "
+	Examples:"
+		"2 asTwoCharacterString >>> '02'"
+		"11 asTwoCharacterString >>> '11'"
+		"1943 asTwoCharacterString >>> '19'"
+		"0 asTwoCharacterString >>> '00'"
+		"-2 asTwoCharacterString >>> '-2'"
+		"-234 asTwoCharacterString >>> '-2'"
 
 	^ (self >= 0 and: [self < 10])
 		ifTrue:	['0', self printString]
@@ -657,13 +659,13 @@ Integer >> digitAdd: arg [
 { #category : 'accessing' }
 Integer >> digitAt: anExponent base: base [
 
-	"Return number that represents digit at given position.
-		42 digitAt: 2 base: 10 -> 4
-		42 digitAt: 1 base: 10 -> 2
-	It is always a number or zero:
-		16rFF digitAt: 1 base: 16 -> 15
-		1 digitAt: 2 base: 10 -> 0
-	Results are not defined for base smaller than 2 and non-integer arguments."
+	"Return number that represents digit at given position."
+		"(42 digitAt: 2 base: 10) >>> 4"
+		"(42 digitAt: 1 base: 10) >>> 2"
+	"It is always a number or zero:"
+		"(16rFF digitAt: 1 base: 16) >>> 15"
+		"(1 digitAt: 2 base: 10) >>> 0"
+	"Results are not defined for base smaller than 2 and non-integer arguments."
 
 	^ self // (base raisedToInteger: anExponent - 1) \\ base
 ]
@@ -1443,21 +1445,23 @@ Integer >> printStringRadix: baseInteger [
 
 { #category : 'printing' }
 Integer >> printWithCommasOn: aStream [
-	"123456789 asStringWithCommas"
-	"-123456789 asStringWithCommas"
+	"(String streamContents: [ :s | 123456789 printWithCommasOn: s ]) >>> '123,456,789'"
+	"(String streamContents: [ :s | -123456789 printWithCommasOn: s ]) >>> '-123,456,789'"
+
 	^ self printSeparatedBy: $, every: 3 signed: false on: aStream
 ]
 
 { #category : 'printing' }
 Integer >> printWithCommasSignedOn: aStream [
-	"123456789 asStringWithCommasSigned"
-	"-123456789 asStringWithCommasSigned"
+	"(String streamContents: [ :s | 123456789 printWithCommasSignedOn: s ]) >>> '+123,456,789'"
+	"(String streamContents: [ :s | -123456789 printWithCommasSignedOn: s ]) >>> '-123,456,789'"
+
 	^ self printSeparatedBy: $, every: 3 signed: true on: aStream
 ]
 
 { #category : 'arithmetic' }
 Integer >> quo: aNumber [
-	"Refer to the comment in Number quo: "
+	"Refer to the comment in Number#quo: "
 	| ng quo |
 	aNumber isInteger ifTrue:
 		[ng := self negative == aNumber negative == false.
@@ -1518,7 +1522,7 @@ Integer >> round: numberOfWishedDecimal [
 
 { #category : 'truncation and round off' }
 Integer >> rounded [
-	"Refer to the comment in Number|rounded."
+	"Refer to the comment in Number#rounded."
 ]
 
 { #category : 'printing' }
@@ -1584,7 +1588,7 @@ Integer >> timesRepeat: aBlock [
 
 { #category : 'truncation and round off' }
 Integer >> truncated [
-	"Refer to the comment in Number|truncated."
+	"Refer to the comment in Number#truncated."
 ]
 
 { #category : 'bit manipulation' }
