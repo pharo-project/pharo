@@ -8,7 +8,8 @@ Class {
 		'class',
 		'originalMessage',
 		'newMessage',
-		'shouldEscape'
+		'shouldEscape',
+		'methodNameEditorPresenterClass'
 	],
 	#category : 'Refactoring-UI-Drivers',
 	#package : 'Refactoring-UI',
@@ -67,6 +68,18 @@ ReRenameMethodDriver >> initialize [
 	shouldEscape := false.
 ]
 
+{ #category : 'as yet unclassified' }
+ReRenameMethodDriver >> methodNameEditorPresenterClass [
+
+	^ methodNameEditorPresenterClass ifNil: [ methodNameEditorPresenterClass := StMethodNameEditorPresenter]
+]
+
+{ #category : 'as yet unclassified' }
+ReRenameMethodDriver >> methodNameEditorPresenterClass: aClass [
+
+	methodNameEditorPresenterClass := aClass
+]
+
 { #category : 'initialize' }
 ReRenameMethodDriver >> model: aModel renameMethodSignature: aMessage in: aClass [ 
 	model := aModel.
@@ -89,7 +102,7 @@ ReRenameMethodDriver >> requestNewMessage [
 	methodName := RBMethodName
 		              selector: originalMessage selector
 		              arguments: originalMessage argumentNames.
-	dialog := StMethodNameEditorPresenter
+	dialog := self methodNameEditorPresenterClass
 		          openOn: methodName
 		          withInvalidArgs: (RBCondition invalidArgumentNamesForSelector: originalMessage selector in: model)
 		          canRenameArgs: self canRenameArgs
