@@ -12,7 +12,7 @@ MetacelloScriptRegistryExecutor >> prime [
 
 { #category : 'execution callback' }
 MetacelloScriptRegistryExecutor >> projectSpecSelectBlock [
-  ^ [ :projectSpec | projectSpec notNil ]
+  ^ [ :projectSpec | projectSpec isNotNil ]
 ]
 
 { #category : 'actions api' }

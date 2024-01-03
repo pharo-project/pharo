@@ -115,7 +115,7 @@ TestCommandLineHandler >> runPackages [
 	
 	packages := self packages.
 	self inform: 'Running tests in ', packages size asString, ' Packages'.
-	results := (self testRunner runPackages: self packages) select: #notNil.
+	results := (self testRunner runPackages: self packages) select: #isNotNil.
 				
 	self informResults: results.
 	(self hasOption: 'save') ifTrue: [ Smalltalk saveSession ].

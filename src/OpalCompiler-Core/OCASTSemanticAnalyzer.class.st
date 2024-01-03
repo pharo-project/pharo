@@ -93,7 +93,7 @@ OCASTSemanticAnalyzer >> declareVariableNode: aVariableNode as: anOCTempVariable
 	shadowing := scope lookupVar: name.
 	var := scope addTemp: anOCTempVariable.
 	aVariableNode binding: var.
-	(shadowing notNil and: [ shadowing allowsShadowing not]) ifTrue: [self shadowing: shadowing withVariable: aVariableNode].
+	(shadowing isNotNil and: [ shadowing allowsShadowing not]) ifTrue: [self shadowing: shadowing withVariable: aVariableNode].
 	^ var
 ]
 

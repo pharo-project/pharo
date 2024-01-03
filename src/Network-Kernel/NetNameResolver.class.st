@@ -221,7 +221,7 @@ NetNameResolver class >> initializeNetwork [
 		ResolverSemaphore ifNotNil: [Smalltalk unregisterExternalObject: ResolverSemaphore].
 		ResolverSemaphore := Semaphore new.
 		semaIndex := Smalltalk registerExternalObject: ResolverSemaphore.
-		successful := (self primInitializeNetwork: semaIndex) notNil.
+		successful := (self primInitializeNetwork: semaIndex) isNotNil.
 		HaveNetwork := nil.].
 	^successful or: [NoNetworkError signal: 'failed network initialization']
 ]

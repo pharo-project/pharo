@@ -356,7 +356,7 @@ ProcessMonitorTestServiceTest >> testHasDefaultFailingStrategyForRunningProcesse
 
 	testService := ProcessMonitorTestService new.
 
-	self assert: testService shouldFailTestLeavingProcesses notNil.
+	self assert: testService shouldFailTestLeavingProcesses isNotNil.
 	self assert: testService shouldFailTestLeavingProcesses equals: ProcessMonitorTestService shouldFailTestLeavingProcesses
 ]
 
@@ -365,7 +365,7 @@ ProcessMonitorTestServiceTest >> testHasDefaultTerminationStrategyForRunningProc
 
 	testService := ProcessMonitorTestService new.
 
-	self assert: testService shouldTerminateProcesses notNil.
+	self assert: testService shouldTerminateProcesses isNotNil.
 	self assert: testService shouldTerminateProcesses equals: ProcessMonitorTestService shouldTerminateProcesses
 ]
 

@@ -135,7 +135,7 @@ MCFileBasedRepository >> cachedFileNames [
 MCFileBasedRepository >> canReadFileNamed: aString [
 	| reader |
 	reader := MCVersionReader readerClassForFileNamed: aString.
-	^ reader notNil
+	^ reader isNotNil
 ]
 
 { #category : 'accessing' }
@@ -267,7 +267,7 @@ MCFileBasedRepository >> storeVersion: aVersion [
 { #category : 'private' }
 MCFileBasedRepository >> updateCachedVersionFromFileName: aString with: aVersion [
 	self resizeCache: cache.
-	(aVersion notNil and: [aVersion isCacheable]) ifTrue: [cache at: aString put: aVersion].
+	(aVersion isNotNil and: [aVersion isCacheable]) ifTrue: [cache at: aString put: aVersion].
 
 ]
 

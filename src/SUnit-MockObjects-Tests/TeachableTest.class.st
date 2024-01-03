@@ -79,7 +79,7 @@ TeachableTest >> testInstanceCreation [
 
 	| instance |
 	instance := self defaultTestClass new.
-	self assert: instance notNil.
+	self assert: instance isNotNil.
 	self assert: instance class equals: self defaultTestClass
 ]
 

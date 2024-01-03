@@ -98,7 +98,7 @@ ConnectionQueue >> initPortNumber: anInteger queueLength: queueLength [
 
 { #category : 'public' }
 ConnectionQueue >> isValid [
-	^process notNil
+	^process isNotNil
 ]
 
 { #category : 'private' }
@@ -127,11 +127,11 @@ ConnectionQueue >> listenLoop [
 		[newConnection := socket waitForAcceptFor: 10]
 			on: ConnectionTimedOut
 			do: [:ex | newConnection := nil].
-		(newConnection notNil and: [newConnection isConnected])
+		(newConnection isNotNil and: [newConnection isConnected])
 			ifTrue: [(accessSema critical: [connections size < maxQueueLength])
 						ifFalse: [newConnection close. newConnection := nil]]
 			ifFalse: [newConnection := nil].
-		(newConnection notNil and: [newConnection isConnected]) ifTrue: [
+		(newConnection isNotNil and: [newConnection isConnected]) ifTrue: [
 			accessSema critical: [connections addLast: newConnection].
 			newConnection := nil.
 			self changed].

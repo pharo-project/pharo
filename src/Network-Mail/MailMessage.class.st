@@ -611,12 +611,12 @@ MailMessage >> name [
 
 	"try in the content-type: header"
 	type := self fieldNamed: 'content-type' ifAbsent: [nil].
-	(type notNil and: [(nameField := type parameters at: 'name' ifAbsent: [nil]) notNil])
+	(type isNotNil and: [(nameField := type parameters at: 'name' ifAbsent: [nil]) isNotNil])
 		ifTrue: [^ nameField].
 
 	"try in content-disposition:"
 	disposition := self fieldNamed: 'content-disposition' ifAbsent: [nil].
-	(disposition notNil and: [(nameField := disposition parameters at: 'filename' ifAbsent: [nil]) notNil])
+	(disposition isNotNil and: [(nameField := disposition parameters at: 'filename' ifAbsent: [nil]) isNotNil])
 		ifTrue: [^ nameField].
 
 	"give up"

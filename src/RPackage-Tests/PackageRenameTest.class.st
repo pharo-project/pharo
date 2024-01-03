@@ -18,14 +18,14 @@ PackageRenameTest >> testRenamePackage [
 	class := self newClassNamed: #TestClass in: package tag: 'TAG'.
 
 	self assert: (package includesClass: class).
-	self assert: (package tagNamed: #TAG ifAbsent: [ nil ]) notNil.
+	self assert: (package tagNamed: #TAG ifAbsent: [ nil ]) isNotNil.
 	self assert: ((package tagNamed: #TAG ifAbsent: [ nil ]) includesClass: class).
 	self assert: workingCopy modified.
 
 	package renameTo: 'TestRename'.
 
 	self assert: (package includesClass: class).
-	self assert: (package tagNamed: #TAG ifAbsent: [ nil ]) notNil.
+	self assert: (package tagNamed: #TAG ifAbsent: [ nil ]) isNotNil.
 	self assert: ((package tagNamed: #TAG ifAbsent: [ nil ]) includesClass: class).
 	self assert: class category equals: #'TestRename-TAG'.
 	self deny: (self packageOrganizer hasPackage: #Test1).
@@ -45,13 +45,13 @@ PackageRenameTest >> testRenamePackageToOwnTagName [
 	class1 := self newClassNamed: #TestClass1 in: package tag: 'Core'.
 	class2 := self newClassNamed: #TestClass2 in: package tag: 'Util'.
 
-	self assert: (package tagNamed: #Core ifAbsent: [ nil ]) notNil.
-	self assert: (package tagNamed: #Util ifAbsent: [ nil ]) notNil.
+	self assert: (package tagNamed: #Core ifAbsent: [ nil ]) isNotNil.
+	self assert: (package tagNamed: #Util ifAbsent: [ nil ]) isNotNil.
 	package renameTo: 'Test1-Core'.
 	self assert: (package includesClass: class1).
 	self assert: (package includesClass: class2).
-	self assert: (package tagNamed: #Core ifAbsent: [ nil ]) notNil.
-	self assert: (package tagNamed: #Util ifAbsent: [ nil ]) notNil.
+	self assert: (package tagNamed: #Core ifAbsent: [ nil ]) isNotNil.
+	self assert: (package tagNamed: #Util ifAbsent: [ nil ]) isNotNil.
 	self assert: ((package tagNamed: #Core ifAbsent: [ nil ]) includesClass: class1).
 	self assert: ((package tagNamed: #Util ifAbsent: [ nil ]) includesClass: class2).
 
@@ -152,7 +152,7 @@ PackageRenameTest >> testUnregisterPackage [
 	workingCopy := MCWorkingCopy forPackageNamed: 'Test1'.
 	class := self newClassNamed: #TestClass in: package tag: 'TAG'.
 	self assert: (package includesClass: class).
-	self assert: (package tagNamed: #TAG ifAbsent: [ nil ]) notNil.
+	self assert: (package tagNamed: #TAG ifAbsent: [ nil ]) isNotNil.
 	self assert: ((package tagNamed: #TAG ifAbsent: [ nil ]) includesClass: class).
 	self assert: workingCopy modified.
 
