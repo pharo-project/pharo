@@ -152,17 +152,13 @@ MetacelloRecordTarget >> visitProjectSpec: aMetacelloMCBaselineOfProjectSpec [
 { #category : 'visiting' }
 MetacelloRecordTarget >> visitVersionSpec: aMetacelloVersionSpec [
 
-	| packages oldCurrentRepositorySpecs projectRepositorySpecs |
+	| packages oldCurrentRepositorySpecs |
 	packages := Dictionary new.
 	aMetacelloVersionSpec resolveToLoadableSpecs: required map: packages.
 	oldCurrentRepositorySpecs := currentRepositorySpecs.
 	currentRepositorySpecs := aMetacelloVersionSpec repositorySpecs.
 	packages := aMetacelloVersionSpec packageSpecsInLoadOrderForMap:
 		            packages.
-
-	projectRepositorySpecs := aMetacelloVersionSpec repositories
-		                          ifEmpty: [ currentRepositorySpecs ].
-	aMetacelloVersionSpec repositories: projectRepositorySpecs.
 	self preLoad: aMetacelloVersionSpec.
 
 	[ "Iterate the internals of the version spec"
