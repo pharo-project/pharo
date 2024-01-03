@@ -1,12 +1,12 @@
 Class {
-	#name : 'RBRemoveClassDriverTest',
-	#superclass : 'RBDriverTest',
+	#name : 'ReRemoveClassDriverTest',
+	#superclass : 'ReDriverTest',
 	#category : 'Refactoring-UI-Tests',
 	#package : 'Refactoring-UI-Tests'
 }
 
 { #category : 'tests' }
-RBRemoveClassDriverTest >> testBadPathRemovingNonEmptySubWithSubclasses [
+ReRemoveClassDriverTest >> testBadPathRemovingNonEmptySubWithSubclasses [
 	
 	| pack driver |
 	pack := RBPackageEnvironment packageNames: { 'Refactoring-UI-Tests' . 'Refactoring-UI' }.
@@ -20,7 +20,7 @@ RBRemoveClassDriverTest >> testBadPathRemovingNonEmptySubWithSubclasses [
 ]
 
 { #category : 'tests' }
-RBRemoveClassDriverTest >> testClassDoesNotExist [
+ReRemoveClassDriverTest >> testClassDoesNotExist [
 	
 	| pack driver |
 	pack := RBPackageEnvironment packageName: 'Refactoring-DataForTesting'.
@@ -34,7 +34,7 @@ RBRemoveClassDriverTest >> testClassDoesNotExist [
 ]
 
 { #category : 'tests' }
-RBRemoveClassDriverTest >> testGoodPathClassIsUnusedEmptyNoSubclasses [
+ReRemoveClassDriverTest >> testGoodPathClassIsUnusedEmptyNoSubclasses [
 	
 	| pack driver |
 	pack := RBPackageEnvironment packageName: 'Refactoring-DataForTesting'.
@@ -48,7 +48,7 @@ RBRemoveClassDriverTest >> testGoodPathClassIsUnusedEmptyNoSubclasses [
 ]
 
 { #category : 'tests' }
-RBRemoveClassDriverTest >> testGoodPathRemovingNonEmptyLeaf [
+ReRemoveClassDriverTest >> testGoodPathRemovingNonEmptyLeaf [
 	
 	| pack driver |
 	pack := RBPackageEnvironment packageName: 'Refactoring-DataForTesting'.

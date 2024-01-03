@@ -1,103 +1,95 @@
 Class {
-	#name : 'RBRenameInstanceVariableDriverTest',
-	#superclass : 'RBDriverTest',
+	#name : 'ReRenameSharedVariableDriverTest',
+	#superclass : 'ReDriverTest',
 	#category : 'Refactoring-UI-Tests',
 	#package : 'Refactoring-UI-Tests'
 }
 
 { #category : 'tests' }
-RBRenameInstanceVariableDriverTest >> testInvalidNameFollowedByAValidName [
+ReRenameSharedVariableDriverTest >> testInvalidNameFollowedByAValideOne [
 
 	| rbclasses driver requestDialog |
 	rbclasses := RBClassEnvironment classes: { MyClassARoot }.
-	driver := RBRenameInstanceVariableDriver new
+	driver := RBRenameSharedVariableDriver new
 		          scopes: { rbclasses }
-		          variable: #unusedVar1
+		          variable: #Shared1
 		          for: MyClassARoot.
-	"There is already a variable named `unusedVar2` in the class `MyClassRoot`"
-
+	"There is already a variable named `#Shared2` in the class `MyClassRoot`"
 	self setUpDriver: driver.
-
 	requestDialog := MockObject new.
-	requestDialog on: #openModal respond: #unusedVar2.
-	requestDialog on: #openModal respond: #okName.
+	requestDialog on: #openModal respond: #Shared2.
+	requestDialog on: #openModal respond: #Shared277676.
 	requestDialog on: #title: respond: 'nothing'.
 	requestDialog on: #text: respond: 'nothing'.
 	driver requestDialog: requestDialog.
-	
-	"it like a smoke test and for the moment we cannot control better what happen."
 	driver runRefactoring
 ]
 
 { #category : 'tests' }
-RBRenameInstanceVariableDriverTest >> testValidNameAndUndefinedVariable [
+ReRenameSharedVariableDriverTest >> testValidNameAndUndefinedVariable [
 
 	| rbclasses driver requestDialog |
 	self skip.
-	"I do not understand this test and it loops with my changes."
-	
 	rbclasses := RBClassEnvironment classes: { MyClassARoot }.
-	driver := RBRenameInstanceVariableDriver new
+	driver := RBRenameSharedVariableDriver new
 		          scopes: { rbclasses }
-		          variable: #inexistantVariable
+		          variable: #Shared3
 		          for: MyClassARoot.
-		
-	"Variable `inexistantVariable` is not defined in `MyClassARoot`"
+	"Variable `Shared3` is not defined in `MyClassARoot`"
 	self setUpDriver: driver.
-
 	requestDialog := MockObject new.
-	requestDialog on: #openModal respond: #inexistantVariable1.
+	requestDialog on: #openModal respond: #Shared2.
+	requestDialog on: #openModal respond: #Shared277676.
 	requestDialog on: #title: respond: 'nothing'.
 	requestDialog on: #text: respond: 'nothing'.
 	driver requestDialog: requestDialog.
 
 	"self halt."
-	"It loops from here."
- 	driver runRefactoring 
+	"It loops from here"
+	driver runRefactoring
 ]
 
 { #category : 'tests' }
-RBRenameInstanceVariableDriverTest >> testValidNameAndUnusedVariable [
+ReRenameSharedVariableDriverTest >> testValidNameAndUnusedVariable [
 
 	| rbclasses driver requestDialog |
 	rbclasses := RBClassEnvironment classes: { MyClassARoot }.
-	driver := RBRenameInstanceVariableDriver new
+	driver := RBRenameSharedVariableDriver new
 		          scopes: { rbclasses }
-		          variable: #unusedVar1
+		          variable: #Shared2
 		          for: MyClassARoot.
 	self setUpDriver: driver.
-	
-
 	requestDialog := MockObject new.
-	requestDialog on: #openModal respond: #unusedVar1a.
+	requestDialog on: #openModal respond: #Shared277676.
 	requestDialog on: #title: respond: 'nothing'.
 	requestDialog on: #text: respond: 'nothing'.
 	driver requestDialog: requestDialog.
-
+	
 	driver runRefactoring.
+	
 	self assert: driver refactoring changes changes size equals: 1
 ]
 
 { #category : 'tests' }
-RBRenameInstanceVariableDriverTest >> testValidNameAndUsedVariable [
+ReRenameSharedVariableDriverTest >> testValidNameAndUsedVariable [
 
 	| rbclasses driver requestDialog |
 	rbclasses := RBClassEnvironment classes: { MyClassARoot }.
-	driver := RBRenameInstanceVariableDriver new
+	driver := RBRenameSharedVariableDriver new
 		          scopes: { rbclasses }
-		          variable: #instVarName1
+		          variable: #Shared2
 		          for: MyClassARoot.
 	self setUpDriver: driver.
 
+	"Renaming the references to the variable is not encapsulated in change objects, 
+	therefore the only change is the renaming of the variable itself."
+	
 	requestDialog := MockObject new.
-	requestDialog on: #openModal respond: #instVarName1a.
+	requestDialog on: #openModal respond: #Shared2a.
 	requestDialog on: #title: respond: 'nothing'.
 	requestDialog on: #text: respond: 'nothing'.
 	driver requestDialog: requestDialog.
 	
 	driver runRefactoring.
-	"Renaming the references to the variable is not encapsulated in change objects, therefore the only change is the renaming of the variable itself."
-
-
 	self assert: driver refactoring changes changes size equals: 1
 ]

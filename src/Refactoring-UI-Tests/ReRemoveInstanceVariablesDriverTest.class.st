@@ -1,12 +1,12 @@
 Class {
-	#name : 'RBRemoveInstanceVariablesDriverTest',
-	#superclass : 'RBDriverTest',
+	#name : 'ReRemoveInstanceVariablesDriverTest',
+	#superclass : 'ReDriverTest',
 	#category : 'Refactoring-UI-Tests',
 	#package : 'Refactoring-UI-Tests'
 }
 
 { #category : 'tests' }
-RBRemoveInstanceVariablesDriverTest >> testBadPathVariableIsused [
+ReRemoveInstanceVariablesDriverTest >> testBadPathVariableIsused [
 
 	| rbclasses driver |
 	"the variable is used so there is only one changes."
@@ -24,7 +24,7 @@ RBRemoveInstanceVariablesDriverTest >> testBadPathVariableIsused [
 ]
 
 { #category : 'tests' }
-RBRemoveInstanceVariablesDriverTest >> testGoodPathTwoUnusedVariables [
+ReRemoveInstanceVariablesDriverTest >> testGoodPathTwoUnusedVariables [
 	
 	| rbclasses driver |
 	rbclasses := RBClassEnvironment classes: { RBLintRuleTestData . RBClassDataForRefactoringTest . MyClassARoot}.	
@@ -39,7 +39,7 @@ RBRemoveInstanceVariablesDriverTest >> testGoodPathTwoUnusedVariables [
 ]
 
 { #category : 'tests' }
-RBRemoveInstanceVariablesDriverTest >> testGoodPathVariableIsUnused [
+ReRemoveInstanceVariablesDriverTest >> testGoodPathVariableIsUnused [
 	
 	| rbclasses driver |
 	rbclasses := RBClassEnvironment classes: { RBLintRuleTestData . RBClassDataForRefactoringTest . MyClassARoot}.	
