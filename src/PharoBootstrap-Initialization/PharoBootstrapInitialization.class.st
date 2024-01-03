@@ -24,6 +24,33 @@ Class {
 	#tag : 'Base'
 }
 
+{ #category : 'public api' }
+PharoBootstrapInitialization class >> initializeASTDeprecations [
+	"This should be removed in P13 with all the deprecated aliases setted."
+	{
+		ASTLiteralValueNode.
+		ASTMethodNode.
+		ASTCascadeNode.
+		ASTStringReplacement.
+		ASTArrayNode.
+		ASTNode.
+		ASTVariableNode.
+		ASTAnnotationMarkNode.
+		ASTLiteralArrayNode.
+		ASTReturnNode.
+		ASTLiteralNode.
+		ASTSelectorNode.
+		ASTBlockNode.
+		ASTComment.
+		ASTAssignmentNode.
+		ASTPragmaNode.
+		ASTValueNode.
+		ASTMessageNode.
+		ASTProgramNode.
+		ASTDoItMethodNode.
+		ASTSequenceNode } do: [ :class | class initialize ]
+]
+
 { #category : 'initialization' }
 PharoBootstrapInitialization class >> initializeCommandLineHandlerAndErrorHandling [
 	"This method is run before the new bootstrapped image is saved!"
