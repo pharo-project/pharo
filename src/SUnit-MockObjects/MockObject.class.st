@@ -25,6 +25,24 @@ To use the MockObject as a real mock, the user needs to verify its use. This is 
 The `verify:` message will assert 
 - 1) that the mock has received all the messages it has been trained on, 
 - 2) that it has not received only those messages.
+
+# About MockObject any
+
+The Any object is a ""don't care"" object. It's useful for those cases where we want the mock to verify only some of the arguments of a message.
+
+For example, when executing this code
+
+```
+sqlConnection := MockObject new.
+sqlConnection
+  on: #executeCleanly:with:
+  with: 'INSERT INTO table VALUES(?1, ?2);'
+  with: MockObject any.
+sqlConnection executeCleanly: 'INSERT INTO table VALUES(?1, ?2);' with: {'key'. 'value'}.
+```
+when sqlConnection receives the `#executeCleanly:with:` with those arguments, it will check that the message has two arguments, but it will then only check that the first one matches exactly what it was taught, and ignore the second argument.
+
+
 "
 Class {
 	#name : 'MockObject',
@@ -42,7 +60,8 @@ Class {
 
 { #category : 'accessing' }
 MockObject class >> any [
-
+	"This is joker object to say that we do not care of the message argument. See the class comment for an example."
+	
 	^ any ifNil: [ any := Object new ]
 ]
 
@@ -64,7 +83,8 @@ MockObject class >> on: aSymbol respond: anObject [
 
 { #category : 'reflective operations' }
 MockObject >> doesNotUnderstand: aMessage [
-	"When a message is not understood, check if this is one that have benn taught and if this is the case remove it from the list of messages. This supports the possibility to have sequence of similar messages resulting in different messages."
+	"When a message is not understood, check if this is one that have benn taught and if this is the case remove it from the list of messages. This supports the possibility to have sequence of similar messages resulting in different messages. In particular I handle also Joker objects as part of the message argument. See MockObject any"
+	
 	messages isEmpty
 		ifTrue: [ failed := true ]
 		ifFalse: [ | expected |
