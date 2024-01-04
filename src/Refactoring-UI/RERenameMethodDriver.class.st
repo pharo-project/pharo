@@ -8,10 +8,8 @@ Class {
 		'class',
 		'originalMessage',
 		'newMessage',
-		'command',
-		'postAction',
 		'shouldEscape',
-		'newName'
+		'methodNameEditorPresenterClass'
 	],
 	#category : 'Refactoring-UI-Drivers',
 	#package : 'Refactoring-UI',
@@ -63,14 +61,26 @@ ReRenameMethodDriver >> configureRefactoring [
 	refactoring := ReRenameMethodRefactoring new renameMethod: originalMessage selector in: class 
 ]
 
-{ #category : 'execution' }
+{ #category : 'initialization' }
 ReRenameMethodDriver >> initialize [ 
 	
 	super initialize.
 	shouldEscape := false.
 ]
 
-{ #category : 'initialize' }
+{ #category : 'for mocks' }
+ReRenameMethodDriver >> methodNameEditorPresenterClass [
+
+	^ methodNameEditorPresenterClass ifNil: [ methodNameEditorPresenterClass := StMethodNameEditorPresenter]
+]
+
+{ #category : 'for mocks' }
+ReRenameMethodDriver >> methodNameEditorPresenterClass: aClass [
+
+	methodNameEditorPresenterClass := aClass
+]
+
+{ #category : 'initialization' }
 ReRenameMethodDriver >> model: aModel renameMethodSignature: aMessage in: aClass [ 
 	model := aModel.
 	originalMessage := aMessage.
@@ -78,13 +88,7 @@ ReRenameMethodDriver >> model: aModel renameMethodSignature: aMessage in: aClass
 	class := aClass
 ]
 
-{ #category : 'To be removed' }
-ReRenameMethodDriver >> newMessage [
-
-	^ newMessage
-]
-
-{ #category : 'To be removed' }
+{ #category : 'interaction' }
 ReRenameMethodDriver >> requestNewMessage [
 
 	| methodName dialog  |
@@ -92,7 +96,7 @@ ReRenameMethodDriver >> requestNewMessage [
 	methodName := RBMethodName
 		              selector: originalMessage selector
 		              arguments: originalMessage argumentNames.
-	dialog := StMethodNameEditorPresenter
+	dialog := self methodNameEditorPresenterClass
 		          openOn: methodName
 		          withInvalidArgs: (RBCondition invalidArgumentNamesForSelector: originalMessage selector in: model)
 		          canRenameArgs: self canRenameArgs
@@ -147,7 +151,7 @@ ReRenameMethodDriver >> runRefactoring [
 	self applyChanges.
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 ReRenameMethodDriver >> scopes: refactoringScope model: aModel renameMethodSignature: aMessage in: aClass [
 
 	scopes := refactoringScope.

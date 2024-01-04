@@ -1,14 +1,6 @@
 Class {
 	#name : 'RBDriverTest',
-	#superclass : 'TestCase',
+	#superclass : 'ReDriverTest',
 	#category : 'Refactoring-UI-Tests',
 	#package : 'Refactoring-UI-Tests'
 }
-
-{ #category : 'initialization' }
-RBDriverTest >> setUpDriver: driver [
-
-	driver previewPresenterClass: StRefactoringPreviewPresenterMock.
-	driver selectDialog: StSelectDialogMock new.
-	driver informDialog: StInformDialogMock new.
-]
