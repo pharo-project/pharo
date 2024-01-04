@@ -64,7 +64,7 @@ BaselineOfSUnit >> teachable: spec [
 
 	spec baseline: 'Teachable' with: [
 		spec
-			repository: 'github://astares/Pharo-Teachable:v2.2/src';
+			repository: 'github://astares/Pharo-Teachable:v2.3/src';
 			loads: #( 'Core' ) ].
 
 	spec
