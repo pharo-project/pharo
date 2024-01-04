@@ -29,7 +29,7 @@ SycRemoveMethod2Command >> defaultMenuIconName [
 
 { #category : 'accessing' }
 SycRemoveMethod2Command >> defaultMenuItemName [
-	^'Remove refactoring'
+	^'(R) Remove'
 ]
 
 { #category : 'execution' }

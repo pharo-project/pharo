@@ -48,7 +48,7 @@ SycRenameMessageCommand >> defaultMenuIconName [
 
 { #category : 'accessing' }
 SycRenameMessageCommand >> defaultMenuItemName [
-	^ 'Rename'
+	^ '(R) Rename'
 ]
 
 { #category : 'execution' }
