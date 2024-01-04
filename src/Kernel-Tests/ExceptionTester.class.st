@@ -454,6 +454,14 @@ ExceptionTester >> simpleIsNestedTestResults [
 ]
 
 { #category : 'tests' }
+ExceptionTester >> simpleNoTimeoutMilliTest [
+
+	[ self doSomething ]
+		valueWithinMilliseconds: 24 * 3600  
+		onTimeout: [ self doSomethingElse ]
+]
+
+{ #category : 'tests' }
 ExceptionTester >> simpleNoTimeoutTest [
 
 	[ self doSomething ]
@@ -641,6 +649,15 @@ ExceptionTester >> simpleReturnTestResults [
 ]
 
 { #category : 'tests' }
+ExceptionTester >> simpleTimeoutMilliWithZeroDurationTest [
+
+	[ self doSomething ]
+		valueWithinMilliseconds: 0 
+		onTimeout:
+			[ self doSomethingElse ]
+]
+
+{ #category : 'tests' }
 ExceptionTester >> simpleTimeoutTest [
 
 	| n |
@@ -676,6 +693,17 @@ ExceptionTester >> simpleTimeoutWithZeroDurationTestResults [
 	^OrderedCollection new
 		add: self doSomethingElseString;
 		yourself
+]
+
+{ #category : 'tests' }
+ExceptionTester >> simpleTimeoutmilliTest [
+
+	| n |
+	[1 to: 1000000 do: [ :i | n := i. self doSomething ] ]
+		valueWithinMilliseconds: 50 
+		onTimeout:
+			[ self iterationsBeforeTimeout: n.
+			self doSomethingElse ]
 ]
 
 { #category : 'accessing' }

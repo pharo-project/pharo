@@ -44,7 +44,7 @@ BlockClosure >> benchFor: duration [
 
 { #category : '*Kernel-Chronology-Extras' }
 BlockClosure >> timeToRun [
-	"Answer the number of milliseconds taken to execute this block."
+	"Answer the duration taken to execute this block."
 
 	^ Duration milliSeconds: (Time millisecondsToRun: self)
 ]
