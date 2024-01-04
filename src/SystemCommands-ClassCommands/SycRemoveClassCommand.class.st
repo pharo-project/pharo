@@ -15,7 +15,7 @@ SycRemoveClassCommand >> defaultMenuIconName [
 
 { #category : 'accessing' }
 SycRemoveClassCommand >> defaultMenuItemName [
-	^'Remove Class'
+	^'(R) Remove'
 ]
 
 { #category : 'execution' }
