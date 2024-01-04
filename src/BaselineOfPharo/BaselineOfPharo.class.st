@@ -121,6 +121,13 @@ BaselineOfPharo class >> newToolsRepository [
 	^ (self externalProjectNamed: 'NewTools') repository
 ]
 
+{ #category : 'class initialization' }
+BaselineOfPharo class >> reset [
+	<script>
+
+	ExternalProjects := nil
+]
+
 { #category : 'accessing - external projects' }
 BaselineOfPharo class >> roassal [
 	<externalProject>
@@ -153,6 +160,23 @@ BaselineOfPharo class >> spec [
 BaselineOfPharo class >> specRepository [
 
 	^ (self externalProjectNamed: 'Spec2') repository
+]
+
+{ #category : 'accessing - external projects' }
+BaselineOfPharo class >> teachable [
+	<externalProject>
+
+	^ PharoExternalProject 
+		newName: 'Teachable' 
+		owner: 'astares' 
+		project:'Pharo-Teachable' 
+		version: 'main'
+]
+
+{ #category : 'repository urls' }
+BaselineOfPharo class >> teachableRepository [
+
+	^ (self externalProjectNamed: 'Teachable') repository
 ]
 
 { #category : 'accessing - external projects' }
