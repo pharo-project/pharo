@@ -1,5 +1,5 @@
 Class {
-	#name : 'MyClassUsingMockTest',
+	#name : 'MockBasicAPITest',
 	#superclass : 'TestCase',
 	#instVars : [
 		'mock'
@@ -9,7 +9,7 @@ Class {
 }
 
 { #category : 'running' }
-MyClassUsingMockTest >> setUp [
+MockBasicAPITest >> setUp [
 
 	super setUp.
 	mock := MockObject new.
@@ -23,24 +23,31 @@ MyClassUsingMockTest >> setUp [
 ]
 
 { #category : 'running' }
-MyClassUsingMockTest >> testMeaningOfLife [
+MockBasicAPITest >> testMeaningOfLife [
 
 	<ignoreNotImplementedSelectors: #(meaningOfLife secondMeaning)>
+	
 	self assert: mock meaningOfLife equals: 42.
+	"We verify that all the messages have been consumed. 
+	Since this is not the case we raise an error."
 	self should: [ self verify: mock ] raise: TestFailure.
 	self assert: mock secondMeaning equals: 84
 ]
 
 { #category : 'running' }
-MyClassUsingMockTest >> testMeaningOfLifeIsFirst [
+MockBasicAPITest >> testMeaningOfLifeIsFirst [
 
 	<ignoreNotImplementedSelectors: #( meaningOfLife secondMeaning )>
 	self assert: mock meaningOfLife equals: 42.
-	self assert: mock secondMeaning equals: 84
+	self assert: mock secondMeaning equals: 84.
+	
+	"We verify that all the messages have been consumed. 
+	Since this is the case we did not get an error."
+	self shouldnt: [ self verify: mock ] raise: TestFailure.
 ]
 
 { #category : 'running' }
-MyClassUsingMockTest >> testMeaningOfLifeIsSentOnce [
+MockBasicAPITest >> testMeaningOfLifeIsSentOnce [
 	"A simple mock object can answer a message only once and in the same order."
 
 	<ignoreNotImplementedSelectors: #( meaningOfLife )>
@@ -48,7 +55,7 @@ MyClassUsingMockTest >> testMeaningOfLifeIsSentOnce [
 ]
 
 { #category : 'running' }
-MyClassUsingMockTest >> testMeaningOfLifeIsSentTwice [
+MockBasicAPITest >> testMeaningOfLifeIsSentTwice [
 
 	<ignoreNotImplementedSelectors: #( meaningOfLife )>
 	mock meaningOfLife.
@@ -56,7 +63,7 @@ MyClassUsingMockTest >> testMeaningOfLifeIsSentTwice [
 ]
 
 { #category : 'running' }
-MyClassUsingMockTest >> testVerifyChecksThatAllTheMessageGotSent [
+MockBasicAPITest >> testVerifyChecksThatAllTheMessageGotSent [
 
 	<ignoreNotImplementedSelectors: #( meaningOfLife secondMeaning )>
 	self assert: mock meaningOfLife equals: 42.
@@ -65,7 +72,7 @@ MyClassUsingMockTest >> testVerifyChecksThatAllTheMessageGotSent [
 ]
 
 { #category : 'running' }
-MyClassUsingMockTest >> testVerifyFailsWhenMessageShouldBeSent [
+MockBasicAPITest >> testVerifyFailsWhenMessageShouldBeSent [
 
 	<ignoreNotImplementedSelectors: #( meaningOfLife )>
 	self assert: mock meaningOfLife equals: 42.
