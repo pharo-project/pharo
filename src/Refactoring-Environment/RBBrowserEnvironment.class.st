@@ -294,7 +294,7 @@ RBBrowserEnvironment >> definesClass: aClass [
 { #category : 'description' }
 RBBrowserEnvironment >> description [
 
-	^ self defaultName
+	^ self label
 ]
 
 { #category : 'description' }

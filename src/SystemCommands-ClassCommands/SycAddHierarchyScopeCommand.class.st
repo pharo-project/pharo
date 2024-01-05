@@ -22,6 +22,8 @@ SycAddHierarchyScopeCommand >> defaultMenuItemName [
 { #category : 'execution' }
 SycAddHierarchyScopeCommand >> execute [
 	| scope |
+	self halt.
 	scope :=  RBBrowserEnvironment new forClassHierarchy: targetClass.
-	RefactoringSettings addScope: scope
+	ScopesManager addScope: scope.
+	ScopesPresenter open
 ]

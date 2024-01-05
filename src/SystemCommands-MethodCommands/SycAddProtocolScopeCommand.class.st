@@ -15,12 +15,13 @@ Class {
 SycAddProtocolScopeCommand >> execute [
 
 	| scope protocols |
+	self halt.
 	self prepareFullExecution.
 	protocols := methodGroups
 		             select: [ :methodGroup | methodGroup isKindOf: ClyMethodsInProtocolGroup ]
 		             thenCollect: [ :methodsInProtocolGroup | methodsInProtocolGroup protocol ].
 	scope := RBBrowserEnvironment new forClass: class protocols: protocols.
-	RefactoringSettings addScope: scope
+	ScopesManager addScope: scope
 ]
 
 { #category : 'accessing' }

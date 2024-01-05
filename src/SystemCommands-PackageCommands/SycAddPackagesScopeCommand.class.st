@@ -19,14 +19,15 @@ SycAddPackagesScopeCommand >> defaultMenuIconName [
 
 { #category : 'accessing' }
 SycAddPackagesScopeCommand >> defaultMenuItemName [
-	^ 'Add to scope list'
+	^ 'Add package(s) to scope list'
 ]
 
 { #category : 'execution' }
 SycAddPackagesScopeCommand >> execute [
 	| scope |
-	scope := RBBrowserEnvironment new forPackages: packages.
-	RefactoringSettings addScope: scope
+	scope := ScopesManager newScopeFrom: packages.
+	ScopesManager addScope: scope.
+	ScopesPresenter open
 ]
 
 { #category : 'accessing' }

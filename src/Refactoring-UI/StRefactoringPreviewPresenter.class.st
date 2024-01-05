@@ -175,7 +175,7 @@ StRefactoringPreviewPresenter >> initializePresenters [
 
 	scopeLabel := self newLabel label: 'Scope '.
 	scopeDropList := self newDropList.
-	scopeDropList display: [ :scope | scope description capitalized ].
+	scopeDropList display: [ :scope | scope description ].
 
 	buttonOk := self newButton
 		            label: 'Ok';
