@@ -268,7 +268,7 @@ MCGitBasedNetworkRepository class >> projectZipUrlFor: projectPath versionString
 MCGitBasedNetworkRepository class >> resetCacheDirectoryIfInvalid [
   "Reset if invalid"
 
-  repoCacheDirectory notNil
+  repoCacheDirectory isNotNil
     and: [ 
       (MCFileTreeFileUtils current directoryExists: repoCacheDirectory)
         ifFalse: [ repoCacheDirectory := nil ] ]

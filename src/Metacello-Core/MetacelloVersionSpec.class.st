@@ -432,7 +432,7 @@ MetacelloVersionSpec >> packageNamed: aString forMap: map ifAbsent: absentBlock 
 
 	| importSpec |
 	^ map at: aString ifAbsent: [
-		  (self importArray notNil or: [ self import notNil ]) ifTrue: [ "expect the 'missing' name to be satisfied within context of imported project"
+		  (self importArray isNotNil or: [ self import isNotNil ]) ifTrue: [ "expect the 'missing' name to be satisfied within context of imported project"
 			  importArray ifNotNil: [
 				  importArray do: [ :assoc |
 					  ((assoc value includes: aString) and: [ map includesKey: assoc key ]) ifTrue: [
@@ -440,7 +440,7 @@ MetacelloVersionSpec >> packageNamed: aString forMap: map ifAbsent: absentBlock 
 							                mergeImportLoads: { aString };
 							                yourself ] ].
 				  importSpec ifNotNil: [ ^ importSpec ] ].
-			  (importSpec isNil and: [ self import notNil ]) ifTrue: [
+			  (importSpec isNil and: [ self import isNotNil ]) ifTrue: [
 				  ^ (map at: self import ifAbsent: absentBlock)
 					    mergeImportLoads: { aString };
 					    yourself ] ].

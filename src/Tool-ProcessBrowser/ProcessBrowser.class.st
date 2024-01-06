@@ -581,12 +581,14 @@ ProcessBrowser >> inspectReceiver [
 
 { #category : 'updating' }
 ProcessBrowser >> isAutoUpdating [
-	^autoUpdateProcess notNil and: [ autoUpdateProcess isSuspended  not ]
+
+	^ autoUpdateProcess isNotNil and: [ autoUpdateProcess isSuspended  not ]
 ]
 
 { #category : 'updating' }
 ProcessBrowser >> isAutoUpdatingPaused [
-	^autoUpdateProcess notNil and: [ autoUpdateProcess isSuspended ]
+
+	^ autoUpdateProcess isNotNil and: [ autoUpdateProcess isSuspended ]
 ]
 
 { #category : 'testing' }
@@ -1039,7 +1041,7 @@ ProcessBrowser >> stackListIndex [
 { #category : 'accessing' }
 ProcessBrowser >> stackListIndex: index [
 	stackListIndex := index.
-	selectedContext := (stackList notNil
+	selectedContext := (stackList isNotNil
 						and: [index > 0]) ifTrue:
 							[stackList at: index ifAbsent: []].
 	selectedClass := nil.
@@ -1188,7 +1190,7 @@ ProcessBrowser >> updateStackList: depth [
 	| suspendedContext oldHighlight |
 	selectedProcess
 		ifNil: [^ self changeStackListTo: nil].
-	(stackList notNil and: [ stackListIndex > 0 ])
+	(stackList isNotNil and: [ stackListIndex > 0 ])
 		ifTrue: [oldHighlight := stackList at: stackListIndex].
 	selectedProcess == Processor activeProcess
 		ifTrue: [self

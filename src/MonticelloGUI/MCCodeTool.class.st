@@ -99,7 +99,7 @@ MCCodeTool >> fileOutMessage [
 			timeStamp.
 		items do: [ :patchOp |
 			patchOp definition isMethodDefinition ifTrue: [
-				(patchOp definition actualClass notNil and: [
+				(patchOp definition actualClass isNotNil and: [
 					 patchOp definition actualClass includesSelector:
 						 patchOp definition selector ])
 					ifTrue: [

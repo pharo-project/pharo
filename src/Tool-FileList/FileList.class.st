@@ -798,7 +798,7 @@ FileList >> isDirectoryList: aMorph [
 FileList >> isFileSelected [
 	"return if a file is currently selected"
 
-	^ reference notNil and: [ reference isFile ]
+	^ reference isNotNil and: [ reference isFile ]
 ]
 
 { #category : 'file list menu' }

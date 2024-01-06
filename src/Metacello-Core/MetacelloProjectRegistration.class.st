@@ -337,7 +337,7 @@ MetacelloProjectRegistration >> isValid [
 	" has a name and one or the other of the projectSpecs is non-nil, but not both ... this is CRITICAL"
 
 	projectName ifNil: [ ^ false ].
-	configurationProjectSpec ifNil: [ ^ baselineProjectSpec notNil ].
+	configurationProjectSpec ifNil: [ ^ baselineProjectSpec isNotNil ].
 	^ baselineProjectSpec isNil
 ]
 
@@ -440,7 +440,7 @@ MetacelloProjectRegistration >> projectName: anObject [
 MetacelloProjectRegistration >> projectSpec [
 	^ baselineProjectSpec
 		ifNil: [ 
-			self assert: configurationProjectSpec notNil.
+			self assert: configurationProjectSpec isNotNil.
 			configurationProjectSpec ]
 ]
 
