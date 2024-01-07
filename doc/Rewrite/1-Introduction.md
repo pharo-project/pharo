@@ -1,5 +1,5 @@
 This documentation is based on [https://thepharo.dev/2021/12/09/what-is-rbparsetreesearcher/](https://thepharo.dev/2021/12/09/what-is-rbparsetreesearcher/)
-written by Aless Hosry. Pharo thanks her for this nice material
+written by Aless Hosry. Pharo thanks her for this nice material.
 
 
 Imagine that you want to find a specific expression and that you want to find it in the complete system. How many classes would you have to look for? 
