@@ -13,7 +13,17 @@ You can of course compare it with the same piece of code for equality, but would
 `car isNil ifTrue: [ ^ self ].
 ```
 
-Now this expression can match any other expression where isNil ifTrue: [^self] is sent to any variable (or literal). With such a power you can find all the usages of isNil ifTrue: and replace them with ifNil. So what are the “wildcards” that we are using?
+Now this expression can match any other expression where `isNil ifTrue: [^self]` is sent to any variable (or literal). With such a power you can find all the usages of `isNil ifTrue:`. Using the rewrite engine you can even automatically replace them with `ifNil:`. 
+
+The question is then to know the “wildcards” and how they work.
+The Pharo rewrite engine originally developed by John Brant and Don Robert proposes the following patterns:
+- Basic pattern: `a
+- literal patterns: `#
+- List patterns: `@
+- Statement patterns: `.
+- Block patterns: `{}
+
+We detail them.
 
 
 ## (`)Basic pattern nodes
