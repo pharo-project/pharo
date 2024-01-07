@@ -75,6 +75,13 @@ x foo
 OrderedCollection foo
 ```
 
+Note that the pattern will not match the following expression. 
+If you want to match such expression you have to use a list pattern (`@) as shown below.
+```
+self bar foo
+```
+
+
 ## (`#) Literal pattern nodes
 
 A back-tick can be followed by the hash sign to ensure that matched receiver will be a literal:
