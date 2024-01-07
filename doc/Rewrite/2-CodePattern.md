@@ -44,7 +44,8 @@ This pattern will match any unary message sent to Pharo globals.
 Pharo globals `someMessage
 ```
 
-This pattern will match any selector with multiple arguments followed by aVal.
+This pattern will match any selector followed by aVal.
+Note that if you want to match a selector with multiple keywords such as `between:and:` you will have to use a list pattern (`@) as shown below.
 ```
 `sel: aVal
 ```
