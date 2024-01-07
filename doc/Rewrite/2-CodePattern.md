@@ -84,10 +84,14 @@ self bar foo
 
 ## (`#) Literal pattern nodes
 
-A back-tick can be followed by the hash sign to ensure that matched receiver will be a literal:
+A back-tick can be followed by the hash sign to ensure that matched receiver will be a literal.
 
-Pattern type	Pattern node	Description
-Literal	`#literal asArray	This pattern will match any literal (Number, String, Array of literal ) followed by asArray message
+#### Example:
+
+This pattern will match any literal (Number, String, Array of literal ) followed by `asArray` message
+```
+`#literal asArray	x
+```
 
 #### Example:
 
@@ -95,6 +99,7 @@ Literal	`#literal asArray	This pattern will match any literal (Number, String, A
  `#lit size
 ```
 matches:
+
 ```
 3 size
 'foo' size
@@ -103,18 +108,50 @@ matches:
 
 ## (`@) List pattern nodes
 
-To have complete flexibility, there is the possibility to use an at sign @ before the name of a pattern node which turns the node into a list pattern node, which can be empty, returns one or multiple values.
+To have complete flexibility, there is the possibility to use an at sign @ before the name of a pattern node.
+This turns the node into a list pattern nodes, which can be empty, returns one or multiple values.
+It can be apply to different nodes: expression, selectors, temporaries, arguments, or statements. 
 
-Pattern type	Pattern node	Description
-Entity	`@expr isPatternVariable	This pattern will match a single or multiple entities followed by isPatternVariable
-Message	myVar `@message	This pattern will match any message (including unary) sent to myVar
-Temporary variable	|`temp `@temps|	This pattern will match at least one temporary variable which is defined as `temp; For`@temps, the matching can find nil, one or many temporary variables defined.
-Argument	myDict at: 1 put:`@args	This pattern will match myDict at: 1 put: followed by a list of arguments `@args that can be nil, one or many args.
-List of statements	[ `.@statements.
- `var := `myAttribute. ]	We will explain statements later on, but this is to mention that @ can be used also to define a list of statements which can be empty, contain one or many elements.
+### Expression	
+This pattern will match a single or multiple entities followed by the message `isPatternVariable`
+
+```
+`@expr isPatternVariable
+```
+
+### Selector
+This pattern will match any selector (including unary)  of message sent to `myVar`
+```
+myVar `@message
+```
+
+### Temporary variable	
+
+This pattern will match at least one temporary variable which is defined as `temp.
+For`@temps, the matching can find nil, one or many temporary variables defined.
+
+```
+|`temp `@temps|
+```
+
+### Arguments
+This pattern will match myDict at: 1 put: followed by a list of arguments `@args that can be nil, one or many args.
+
+```
+ myDict at: 1 put:`@args
+```
+
+### List of statements	
+We will explain statements later on, but this is to mention that @ can be used also to define a list of statements which can be empty, contain one or many elements.
+
+```
+[ `.@statements.
+ `var := `myAttribute. ]
+```
 
 This expression will match a block which has at first a list of statements, that must be followed by 1 last assignment statement `var := `myAttribute.
-Disclaimer:
+
+Remarks:
 
 You may write an expression with just args instead of `@args.
 The list patterns does not make any sense for literal nodes i.e. `#@literal.
