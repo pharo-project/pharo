@@ -28,13 +28,38 @@ We detail them.
 
 ## (`)Basic pattern nodes
 
-Code prefixed with a back-tick character (`) defines a pattern node. The table below is listing three simple patterns that can be declared with the back-tick:
+Code prefixed with a back-tick character (`) defines a pattern node. The list below shows some simple patterns that can be declared with the back-tick:
 
-| __Pattern type__	| __Example__	| __Description__ |
-| Variable	| `someName asString	| This pattern will match message asString sent to any receiver, disregarding the name of it |
-| Message	| Pharo globals `someMessage |	This pattern will match any unary message sent to Pharo globals.|
-| Method	| `someMethod ^ nil	|This pattern will match any method which returns nil|
-| Selector	| `sel: aVal	| This pattern will match any selector followed by aVal.|
+
+#### Variable	
+This pattern will match message asString sent to any receiver, disregarding the name of it.
+```
+`someName asString
+```
+
+
+#### Message	
+This pattern will match any unary message sent to Pharo globals.
+```
+Pharo globals `someMessage
+```
+
+This pattern will match any selector with multiple arguments followed by aVal.
+```
+`sel: aVal
+```
+
+#### Method
+This pattern will match any method which returns nil.
+
+```
+`someMethod ^ nil
+```
+ 
+Note that the matcher should be configured to work on method and not just expressions.
+The MatchTool offers a checkbox to indicate this.
+
+
 
 #### Example with matches:
 
