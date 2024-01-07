@@ -18,7 +18,7 @@ You can find tools to help you in the Library menu of Pharo.
 - Rewrite rule editor: It lets you write rules that will transform the code using two matching expressions one for the target and one for the resulting code.
 These tools have been maintained and redesigned by Sebastian Jordan-Montano.
 
-For the moment, we will explain some fundamental definitions and for that the post is structured following below sections:
+We explain some fundamental definitions in the following sections:
 
 - Pattern code description
 - RBParseTreeSearcher description
