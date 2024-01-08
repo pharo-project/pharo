@@ -70,14 +70,10 @@ OCCodeReparator >> declareTempAndPaste: name [
 OCCodeReparator >> defineClass: classSymbol [
 	"Prompts the user to define a new class."
 
-	| systemCategory classDefinition |
-	systemCategory := node methodNode methodClass category ifNil: [ 'Unknown' ].
-	classDefinition := ClassDefinitionPrinter fluid
-		                   classDefinitionTemplateInPackage: systemCategory
-		                   named: classSymbol.
-	^ self
-		  defineClassOrTrait: classSymbol
-		  definitionString: classDefinition
+	| class classDefinition |
+	class := node methodNode methodClass.
+	classDefinition := ClassDefinitionPrinter fluid classDefinitionTemplateInPackage: class package name tag: class packageTag name named: classSymbol.
+	^ self defineClassOrTrait: classSymbol definitionString: classDefinition
 ]
 
 { #category : 'correcting' }
@@ -109,16 +105,12 @@ OCCodeReparator >> defineClassOrTrait: aSymbol definitionString: aString [
 OCCodeReparator >> defineTrait: traitName [
 	"Prompts the user to define a new trait."
 
-	| traitSymbol systemCategory traitDefinition |
+	| traitSymbol class traitDefinition |
 	traitSymbol := traitName asSymbol.
-	
-	systemCategory := node methodNode methodClass category ifNil: [ 'Unknown' ].
-	traitDefinition := ClassDefinitionPrinter fluid
-		                   traitDefinitionTemplateInPackage: systemCategory
-		                   named: traitSymbol.
-	^ self
-		  defineClassOrTrait: traitSymbol
-		  definitionString: traitDefinition
+
+	class := node methodNode methodClass.
+	traitDefinition := ClassDefinitionPrinter fluid traitDefinitionTemplateInPackage: class package name tag: class packageTag name named: traitSymbol.
+	^ self defineClassOrTrait: traitSymbol definitionString: traitDefinition
 ]
 
 { #category : 'accessing' }
