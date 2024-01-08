@@ -35,19 +35,12 @@ ClyCreateTestCaseCommand >> defaultMenuItemName [
 
 { #category : 'command execution' }
 ClyCreateTestCaseCommand >> execute [
-	| classDefinition p resultClass |
-	p := package name.
-	packageTag ifNotNil: [ p := p , '-' , packageTag ].
-	classDefinition := ClassDefinitionPrinter fluid testClassDefinitionTemplateInPackage: p.
-	classDefinition := self morphicUIManager
-		                   multiLineRequest: 'Define test class:'
-		                   initialAnswer: classDefinition
-		                   answerHeight: 250.
+
+	| classDefinition resultClass |
+	classDefinition := ClassDefinitionPrinter fluid testClassDefinitionTemplateInPackage: package name tag: packageTag.
+	classDefinition := self morphicUIManager multiLineRequest: 'Define test class:' initialAnswer: classDefinition answerHeight: 250.
 	classDefinition isEmptyOrNil ifTrue: [ ^ self ].
-	resultClass := browser
-		               compileANewClassFrom: classDefinition
-		               notifying: nil
-		               startingFrom: nil.
+	resultClass := browser compileANewClassFrom: classDefinition notifying: nil startingFrom: nil.
 	resultClass ifNotNil: [ browser selectClass: resultClass ]
 ]
 

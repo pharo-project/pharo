@@ -205,9 +205,7 @@ FluidClassDefinitionPrinterTest >> testExpandedTime [
 { #category : 'tests - template' }
 FluidClassDefinitionPrinterTest >> testFullClassTemplate [
 
-	self
-		assert: (FluidClassDefinitionPrinter new classDefinitionTemplateInPackage: 'Kernel')
-		equals:  'Object << #MyClass
+	self assert: (FluidClassDefinitionPrinter new classDefinitionTemplateInPackage: 'Kernel' tag: nil named: #MyClass) equals: 'Object << #MyClass
 	layout: FixedLayout;
 	traits: {};
 	slots: {};
