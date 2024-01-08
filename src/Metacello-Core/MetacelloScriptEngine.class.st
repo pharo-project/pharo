@@ -96,7 +96,7 @@ MetacelloScriptEngine >> do: aBlock required: required onProjectDownGrade: onDow
 				self setDefaultsAndValidateProjectSpec.
 				[
 				projectSpec := (self lookupProjectSpecFor:
-					                self projectReferenceSpec projectReference) copy ]
+					                self projectReferenceSpec) copy ]
 					on: MetacelloAllowProjectDowngrade , MetacelloAllowProjectUpgrade
 					do: [ :notification |
 						notification
@@ -105,10 +105,14 @@ MetacelloScriptEngine >> do: aBlock required: required onProjectDownGrade: onDow
 
 				projectSpec loads: required.
 				projectSpec ensureProjectLoadedWithEngine: self.
-				versionSpec := projectSpec project version: projectSpec versionString.
-				requiredArray := projectSpec loadListForVersion: versionSpec.	
-				self root: (aBlock value: versionSpec value: requiredArray value: projectSpec) ] ]
-
+				versionSpec := projectSpec project version:
+					               projectSpec versionString.
+				requiredArray := projectSpec loadListForVersion: versionSpec.
+				self root:
+					(aBlock
+						 value: versionSpec
+						 value: requiredArray
+						 value: projectSpec) ] ]
 		commitIfSuccess: aBoolean
 ]
 
@@ -316,7 +320,7 @@ MetacelloScriptEngine >> lock [
 	MetacelloProjectRegistration
 		copyRegistryDuring: [
 			self setDefaultsAndValidate: self projectReferenceSpec copy. "don't add defaults"
-			spec := self projectReferenceSpec projectReference.
+			spec := self projectReferenceSpec.
 			MetacelloProjectRegistration
 				registrationForProjectSpec: spec
 				ifAbsent: [ :new |
@@ -372,7 +376,7 @@ MetacelloScriptEngine >> projectName [
 
 { #category : 'accessing' }
 MetacelloScriptEngine >> projectReferenceSpec [
-    ^ projectReferenceSpec
+    ^ projectReferenceSpec projectReference
 ]
 
 { #category : 'accessing' }
@@ -394,14 +398,16 @@ MetacelloScriptEngine >> record: required [
 
 { #category : 'actions api' }
 MetacelloScriptEngine >> register [
-  | spec |
-  self setDefaultsAndValidate: self projectReferenceSpec copy.	"don't add defaults"
-  spec := self projectReferenceSpec projectReference.
-  MetacelloProjectRegistration
-    registrationForProjectSpec: spec
-    ifAbsent: [ :new | new registerProject ]
-    ifPresent: [ :existing :new | existing copyOnWrite: [ :existingCopy | existingCopy merge: new ] ].
-  self root: spec
+
+	| spec |
+	self setDefaultsAndValidate: self projectReferenceSpec copy. "don't add defaults"
+	spec := self projectReferenceSpec.
+	MetacelloProjectRegistration
+		registrationForProjectSpec: spec
+		ifAbsent: [ :new | new registerProject ]
+		ifPresent: [ :existing :new |
+			existing copyOnWrite: [ :existingCopy | existingCopy merge: new ] ].
+	self root: spec
 ]
 
 { #category : 'accessing' }
@@ -441,18 +447,18 @@ MetacelloScriptEngine >> root: anObject [
 
 { #category : 'project lookup' }
 MetacelloScriptEngine >> setDefaultsAndValidate: aProjectSpec [
-  "NOTE: aProjectSpec has defaults assigned if versionString or repository missing"
+	"NOTE: aProjectSpec has defaults assigned if versionString or repository missing"
 
-  | issues |
-  issues := aProjectSpec projectReference
-    validateForScriptLoad: self
-    withDefaultVersionString: self defaultVersionString
-    withDefaultRepositoryDecription: self defaultRepositoryDescription.
-  issues isEmpty
-    ifTrue: [ ^ self ].
-  (MetacelloValidationFailure
-    issues: issues
-    message: 'Project spec validation failure') signal
+	| issues |
+	issues := aProjectSpec
+		          validateForScriptLoad: self
+		          withDefaultVersionString: self defaultVersionString
+		          withDefaultRepositoryDecription:
+		          self defaultRepositoryDescription.
+	issues isEmpty ifTrue: [ ^ self ].
+	(MetacelloValidationFailure
+		 issues: issues
+		 message: 'Project spec validation failure') signal
 ]
 
 { #category : 'project lookup' }
@@ -479,7 +485,7 @@ MetacelloScriptEngine >> unlock [
 	MetacelloProjectRegistration
 		copyRegistryDuring: [
 			self setDefaultsAndValidate: self projectReferenceSpec copy. "don't add defaults"
-			spec := self projectReferenceSpec projectReference.
+			spec := self projectReferenceSpec.
 			MetacelloProjectRegistration
 				registrationForProjectSpec: spec
 				ifAbsent: [ :ignored |  ]
@@ -495,7 +501,7 @@ MetacelloScriptEngine >> unregister [
 
 	| spec |
 	self setDefaultsAndValidate: self projectReferenceSpec copy. "don't add defaults"
-	spec := self projectReferenceSpec projectReference.
+	spec := self projectReferenceSpec.
 	MetacelloProjectRegistration
 		registrationForProjectSpec: spec
 		ifAbsent: [ :ignored |  ]
