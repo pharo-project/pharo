@@ -460,7 +460,7 @@ ProcessTest >> testIsTerminatingForcedTermination [
 	self deny: unwound.
 
 	process resume.
-	[ terminationSemaphore isSignaled ] whileTrue: [ 50 milliSeconds asDelay wait ].
+	[ terminationSemaphore isSignaled ] whileTrue: [ (Delay forMilliseconds: 50) wait ].
 	self deny: process isSuspended.
 	self deny: process isTerminating.
 	self deny: process isTerminated.
@@ -482,7 +482,7 @@ ProcessTest >> testIsTerminatingForcedTermination [
 	self deny: unwound.
 	self assert: terminator identicalTo: process ].
 
-	[ process isTerminated ] whileFalse: [ 50 milliSeconds asDelay wait ].
+	[ process isTerminated ] whileFalse: [  (Delay forMilliseconds: 50) wait  ].
 	self deny: process isSuspended.
 	self assert: process isTerminating.
 	self assert: process isTerminated.

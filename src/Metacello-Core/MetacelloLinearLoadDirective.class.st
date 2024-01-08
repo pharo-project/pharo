@@ -12,6 +12,12 @@ MetacelloLinearLoadDirective >> acceptVisitor: aVisitor [
 	^ aVisitor visitLinearLoadDirective: self
 ]
 
+{ #category : 'testing' }
+MetacelloLinearLoadDirective >> includes: aDirective [ 
+	
+	^ self loadDirectives includes: aDirective
+]
+
 { #category : 'accessing' }
 MetacelloLinearLoadDirective >> title [
 

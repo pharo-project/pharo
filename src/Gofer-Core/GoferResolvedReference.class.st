@@ -59,6 +59,13 @@ GoferResolvedReference >> repository [
 ]
 
 { #category : 'accessing' }
+GoferResolvedReference >> repository: aRepository [
+	"Answer the repository of the receiver."
+
+	repository := aRepository
+]
+
+{ #category : 'accessing' }
 GoferResolvedReference >> version [
 	"Answer a Monticello version of the receiver."
 

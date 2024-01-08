@@ -648,7 +648,7 @@ PluggableButtonMorph >> indicateModalChild [
 	d := 0.
 	self assureExtension.
 	2 timesRepeat: [
-		(Delay forDuration: d milliSeconds) wait.
+		(Delay forMilliseconds: d) wait.
 		d := 200.
 		extension fillStyle: c.
 		self privateColor: c.

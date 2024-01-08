@@ -2,7 +2,8 @@ Class {
 	#name : 'MetacelloSpecBuilder',
 	#superclass : 'Object',
 	#instVars : [
-		'currentLoadDirective'
+		'currentLoadDirective',
+		'root'
 	],
 	#category : 'Metacello-Core-Scripts',
 	#package : 'Metacello-Core',
@@ -18,7 +19,7 @@ MetacelloSpecBuilder >> currentLoadDirective [
 MetacelloSpecBuilder >> initialize [
 
 	super initialize.
-	currentLoadDirective := MetacelloLinearLoadDirective new
+	root := currentLoadDirective := MetacelloLinearLoadDirective new
 ]
 
 { #category : 'accessing' }
@@ -30,26 +31,30 @@ MetacelloSpecBuilder >> loadDirective [
 { #category : 'actions' }
 MetacelloSpecBuilder >> pushAtomicLoadDirectivesDuring: aBlock for: aTarget [
 
-	self
-		pushLoadDirective: MetacelloAtomicLoadDirective new
-		during: aBlock
+	| atomic |
+	atomic := MetacelloAtomicLoadDirective new.
+	self pushLoadDirective: atomic during: aBlock.
+	atomic addTo: self currentLoadDirective
 ]
 
 { #category : 'actions' }
 MetacelloSpecBuilder >> pushLinearLoadDirectivesDuring: aBlock for: aTarget [
 
-	| directive |
-	directive := MetacelloLinearLoadDirective new.
-	self pushLoadDirective: directive during: aBlock.
-	^ directive
+	self
+		pushLoadDirective: root
+		during: aBlock
 ]
 
 { #category : 'private' }
 MetacelloSpecBuilder >> pushLoadDirective: aLoaderDirective during: aBlock [
 
-	|  oldRoot |
-	self loadDirective add: aLoaderDirective.
+	| oldRoot |
 	oldRoot := currentLoadDirective.
 	currentLoadDirective := aLoaderDirective.
-	aBlock ensure: [ currentLoadDirective := oldRoot ].
+	aBlock ensure: [ currentLoadDirective := oldRoot ]
+]
+
+{ #category : 'accessing' }
+MetacelloSpecBuilder >> root [
+	^ root
 ]

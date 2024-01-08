@@ -61,9 +61,23 @@ Delay class >> delaySchedulerClass: aSchedulerClass [
 ]
 
 { #category : 'instance creation' }
+Delay class >> forDays: aNumber [
+	"Return a new Delay for the given number of Days"
+	
+	^ self forMilliseconds: aNumber * 1000 * 60 * 60 * 24
+]
+
+{ #category : 'instance creation' }
 Delay class >> forDuration: aDuration [
  	"Return a new Delay for the given duration."
  	^ self forMilliseconds: aDuration asMilliSeconds
+]
+
+{ #category : 'instance creation' }
+Delay class >> forHours: aNumber [
+	"Return a new Delay for the given number of Hours"
+	
+	^ self forMilliseconds: aNumber * 1000 * 60 * 60
 ]
 
 { #category : 'instance creation' }
@@ -73,6 +87,13 @@ Delay class >> forMilliseconds: aNumber [
 	WARNING: There may be a minimal delay time that depends on the system activity and setting of the idle process. See ProcessorScheduler class >> idleTime "
 
 	^ self new setDelay: aNumber forSemaphore: Semaphore new
+]
+
+{ #category : 'instance creation' }
+Delay class >> forMinutes: aNumber [
+	"Return a new Delay for the given number of Minutes"
+	
+	^ self forMilliseconds: aNumber * 1000 * 60
 ]
 
 { #category : 'instance creation' }

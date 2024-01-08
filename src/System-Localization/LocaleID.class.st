@@ -79,7 +79,7 @@ LocaleID >> displayLanguage [
 
 { #category : 'testing' }
 LocaleID >> hasParent [
-	^self isoCountry notNil
+	^self isoCountry isNotNil
 ]
 
 { #category : 'comparing' }

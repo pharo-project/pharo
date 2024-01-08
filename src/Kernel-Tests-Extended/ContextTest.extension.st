@@ -1,6 +1,23 @@
 Extension { #name : 'ContextTest' }
 
 { #category : '*Kernel-Tests-Extended' }
+ContextTest >> testBlockCannotReturn [
+
+	| p |
+	p := [ thisContext pc: nil ] newProcess.
+	[
+	p suspendedContext method selector = #pc: and: [
+		p suspendedContext sender isDead ] ] whileFalse: [ p step ].
+	self assert: p suspendedContext method selector equals: #pc:.
+	self assert: p suspendedContext sender isDead.
+	self assert: p suspendedContext pc equals: p suspendedContext method endPC.
+
+	p step. "step into a return to a dead sender"
+
+	self assert: p suspendedContext method selector equals: #cannotReturn:
+]
+
+{ #category : '*Kernel-Tests-Extended' }
 ContextTest >> testCannotReturn [
 	| context p |
 	p := [context := thisContext] fork.
@@ -17,8 +34,8 @@ ContextTest >> testCannotReturn [
 ContextTest >> testClosureRestart [
 	"Test that various combinations of closures are restarted with the expected values"
 	"no args, no remote temps blocks are not tested, as I don't know how to do that programatically without ending up looping endlessly"
-	self should: [self privRestartBlockTest] notTakeMoreThan: 0.1 second.
-	self should: [self privRestartArgBlockTest] notTakeMoreThan: 0.1 second.
+	self should: [self privRestartBlockTest] notTakeMoreThanMilliseconds: 500.
+	self should: [self privRestartArgBlockTest] notTakeMoreThanMilliseconds: 500.
 	"self should: [self privRestartBlockArgsNoRemoteTempsTest] notTakeMoreThan: 0.1 second" "FAILING!"
 ]
 

@@ -1259,7 +1259,9 @@ FBDExamples >> exampleToDo5 [
 	tmp1 := {true.
 				true.
 				true}.
-	[ 1 to: 3 do: [ :index | tmp1 at: index put: false ] ] valueWithin: 50 milliSeconds onTimeout: [ ].
+	[ 1 to: 3 do: [ :index | tmp1 at: index put: false ] ] 
+	valueWithinMilliseconds: 50 
+	onTimeout: [ ].
 	^ tmp1
 ]
 

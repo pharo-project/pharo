@@ -51,14 +51,11 @@ MetacelloRepositorySpec >> configMethodOn: aStream indent: indent [
 
 { #category : 'mc support' }
 MetacelloRepositorySpec >> createRepository [
-  | repo |
 
-  repo := self project createRepository: self.
-  ^ MCRepositoryGroup default repositories
-    detect: [ :each | each = repo ]
-    ifNone: [ 
-      MCRepositoryGroup default addRepository: repo.
-      repo ]
+	| repo |
+	repo := MetacelloPlatform current createRepository: self.
+	MCRepositoryGroup default addRepository: repo.
+	^ repo
 ]
 
 { #category : 'querying' }

@@ -117,6 +117,6 @@ TCPSocketTest >> testServerAccept [
 
 	self testClientConnect.
 	serverSocket := listenerSocket waitForAcceptFor: 2.
-	self assert: serverSocket notNil.
+	self assert: serverSocket isNotNil.
 	self assert: serverSocket isConnected
 ]

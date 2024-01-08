@@ -99,10 +99,6 @@ RBMoveMethodToClassSideRefactoring >> generateChanges [
 			self breakingChangePreconditions errorString ].
 
 	self privateTransform.
-	self flag: #todo. 
-	"unclear if we should return self changes. According to the result not. 
-	We should be consistent."
-	
 	^ self changes
 ]
 

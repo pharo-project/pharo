@@ -108,10 +108,7 @@ function set_version_variables() {
 	fi
 	
 	PHARO_VM_VERSION=${PHARO_SHORT_VERSION}
-	
-	# Prefix the commit hash with a g, to be compatible with git-describe commit hashes
-	# https://git-scm.com/docs/git-describe
-	PHARO_COMMIT_HASH="g$(git rev-parse --verify HEAD)"
+	PHARO_COMMIT_HASH="$(git rev-parse --verify HEAD)"
 	popd > /dev/null
 } 
 

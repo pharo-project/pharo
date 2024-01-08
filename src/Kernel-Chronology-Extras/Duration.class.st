@@ -229,7 +229,7 @@ Duration >> asDays [
 { #category : 'converting' }
 Duration >> asDelay [
 
- 	^ Delay forDuration: self
+ 	^ Delay forMilliseconds: self asMilliSeconds
 ]
 
 { #category : 'converting' }

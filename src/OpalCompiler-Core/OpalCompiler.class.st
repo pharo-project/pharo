@@ -111,7 +111,7 @@ OpalCompiler class >> overlayEnvironment [
 
 { #category : 'overlay' }
 OpalCompiler class >> overlayIsActive [
-	^overlayEnvironment notNil
+	^overlayEnvironment isNotNil
 ]
 
 { #category : 'overlay' }

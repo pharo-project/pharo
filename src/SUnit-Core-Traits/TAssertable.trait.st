@@ -275,18 +275,25 @@ TAssertable >> should: aBlock notTakeMoreThan: aDuration [
     "Evaluate aBlock and if it takes more than given duration
     to run we report a test failure. "
 
-	^ aBlock valueWithin: aDuration onTimeout: [
-		self
-			assert: false
-			description: ['Block evaluation took more than the expected <1p>' expandMacrosWith: aDuration]
+	^ aBlock 
+		valueWithinMilliseconds: aDuration asMilliSeconds 
+		onTimeout: [
+			self
+				assert: false
+				description: ['Block evaluation took more than the expected <1p>' expandMacrosWith: aDuration ]
 	]
 ]
 
 { #category : 'asserting' }
-TAssertable >> should: aBlock notTakeMoreThanMilliseconds: anInteger [
-    "For compatibility with other Smalltalks"
+TAssertable >> should: aBlock notTakeMoreThanMilliseconds: milli [
+    "Evaluate aBlock and if it takes more than given milli of milliseconds
+    to run we report a test failure. "
 
-   self should: aBlock notTakeMoreThan: (Duration milliSeconds: anInteger)
+	^ aBlock valueWithinMilliseconds: milli onTimeout: [
+		self
+			assert: false
+			description: ['Block evaluation took more than the expected <1p>' expandMacrosWith: milli]
+	]
 ]
 
 { #category : 'asserting' }

@@ -716,7 +716,7 @@ TabMorph >> mouseLeaveIcon [
 	fadeOut ifNotNil: [ fadeOut terminate ].
 	fadeOut := [
 		closeIcon image: self class closeHalfOverIcon.
-		50 milliSeconds asDelay wait.
+		(Delay forMilliseconds: 50) wait.
 		closeIcon image: self class closeIcon ] fork
 ]
 

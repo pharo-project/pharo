@@ -29,13 +29,13 @@ SycRemoveMethod2Command >> defaultMenuIconName [
 
 { #category : 'accessing' }
 SycRemoveMethod2Command >> defaultMenuItemName [
-	^'Remove refactoring'
+	^'(R) Remove'
 ]
 
 { #category : 'execution' }
 SycRemoveMethod2Command >> execute [
 	
-	(RBRemoveMethodDriver new
+	(ReRemoveMethodDriver new
 				 scopes: toolContext refactoringScopes
 				 methods: methods) runRefactoring
 ]

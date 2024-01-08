@@ -59,7 +59,7 @@ UUIDTest >> testSpeed [
 
 	self
 		should: [ 100000 timesRepeat: [ UUID new ] ]
-		notTakeMoreThan: 1 second
+		notTakeMoreThanMilliseconds: 1000
 ]
 
 { #category : 'testing' }

@@ -1689,7 +1689,7 @@ EFFormatter >> needsParenthesisFor: aNode [
 		and: [ parent isMessage
 				and: [ parent receiver == aNode and: [ aNode selector isUnary not ] ] ])
 		ifTrue: [ grandparent := parent parent.
-			(grandparent notNil and: [ grandparent isCascade ])
+			(grandparent isNotNil and: [ grandparent isCascade ])
 				ifTrue: [ ^ true ] ].
 	aNode precedence < parent precedence
 		ifTrue: [ ^ false ].

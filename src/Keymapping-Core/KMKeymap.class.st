@@ -102,7 +102,7 @@ KMKeymap >> executeActionTargetting: target [
 
 { #category : 'accessing' }
 KMKeymap >> hasName [
-	^name notNil
+	^name isNotNil
 ]
 
 { #category : 'comparing' }

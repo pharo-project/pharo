@@ -1291,7 +1291,7 @@ RBParser >> source: aString [
 
 { #category : 'private' }
 RBParser >> step [
-	(currentToken isNotNil and: [currentToken comments notNil])
+	(currentToken isNotNil and: [currentToken comments isNotNil])
 		ifTrue: [self extractCommentsFrom: currentToken].
 	nextToken ifNotNil:
 			[currentToken := nextToken.

@@ -135,7 +135,7 @@ MCFileBasedRepository >> cachedFileNames [
 MCFileBasedRepository >> canReadFileNamed: aString [
 	| reader |
 	reader := MCVersionReader readerClassForFileNamed: aString.
-	^ reader notNil
+	^ reader isNotNil
 ]
 
 { #category : 'accessing' }
@@ -144,6 +144,14 @@ MCFileBasedRepository >> closestAncestorVersionFor: anAncestry ifNone: errorBloc
 		cacheAllFileNamesDuring: [ 
 			anAncestry breadthFirstAncestorsDo: [ :ancestorInfo | (self notCachedVersionWithInfo: ancestorInfo) ifNotNil: [ :v | ^ v ] ].
 			^ errorBlock value ]
+]
+
+{ #category : 'fetching' }
+MCFileBasedRepository >> fetchPackageNamed: aName [
+
+	| references |
+	references := self packageNamed: aName.
+	MCCacheRepository default storeVersion: references
 ]
 
 { #category : 'accessing' }
@@ -176,6 +184,15 @@ MCFileBasedRepository >> loadAllFileNames [
 MCFileBasedRepository >> loadNotCachedVersionFromFileNamed: aString [
 	
 	^ self versionReaderForFileNamed: aString do: [:r | r version]
+]
+
+{ #category : 'accessing' }
+MCFileBasedRepository >> loadPackageNamed: aString intoLoader: aMCVersionLoader [ 
+
+	| found |
+	found := self packageNamed: aString.
+	aMCVersionLoader addVersion: found.
+	^ { found . self }
 ]
 
 { #category : 'private' }
@@ -250,7 +267,7 @@ MCFileBasedRepository >> storeVersion: aVersion [
 { #category : 'private' }
 MCFileBasedRepository >> updateCachedVersionFromFileName: aString with: aVersion [
 	self resizeCache: cache.
-	(aVersion notNil and: [aVersion isCacheable]) ifTrue: [cache at: aString put: aVersion].
+	(aVersion isNotNil and: [aVersion isCacheable]) ifTrue: [cache at: aString put: aVersion].
 
 ]
 
