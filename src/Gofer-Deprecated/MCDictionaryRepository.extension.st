@@ -1,11 +1,11 @@
 Extension { #name : 'MCDictionaryRepository' }
 
-{ #category : '*Gofer-Core' }
+{ #category : '*Gofer-Deprecated' }
 MCDictionaryRepository >> goferPriority [
 	^ 10
 ]
 
-{ #category : '*Gofer-Core' }
+{ #category : '*Gofer-Deprecated' }
 MCDictionaryRepository >> goferReferences [
 	^ self allVersionInfos collect: [ :each | GoferResolvedReference name: each name repository: self ]
 ]

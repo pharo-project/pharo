@@ -440,17 +440,6 @@ MCGitBasedNetworkRepository >> flushForScriptGet [
 ]
 
 { #category : 'accessing' }
-MCGitBasedNetworkRepository >> goferReferences [
-	"delegate collection to local repository, but change them to be from *this* repository."
-
-	^ self localRepository goferReferences 
-		collect: [ :each | 
-			GoferResolvedReference 
-				name: each name 
-				repository: self ]
-]
-
-{ #category : 'accessing' }
 MCGitBasedNetworkRepository >> goferVersionFrom: aVersionReference [
 	self flag: #review. "This will fail in non filtree(cypress) formats, but I need to 
 	 implement it to make the tests pass. A better approach maybe to look at those tests 

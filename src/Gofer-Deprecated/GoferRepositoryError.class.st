@@ -7,9 +7,8 @@ Class {
 	#instVars : [
 		'repository'
 	],
-	#category : 'Gofer-Core-Exceptions',
-	#package : 'Gofer-Core',
-	#tag : 'Exceptions'
+	#category : 'Gofer-Deprecated',
+	#package : 'Gofer-Deprecated'
 }
 
 { #category : 'instance creation' }

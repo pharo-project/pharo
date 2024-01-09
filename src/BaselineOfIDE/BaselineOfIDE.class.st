@@ -62,7 +62,6 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Math-Operations-Extensions-Tests'.
 		spec package: 'Network-Tests'.
 		spec package: 'Network-Mail-Tests'.
-		spec package: 'Gofer-Tests'.
 		spec package: 'Rubric-SpecFindReplaceDialog'.
 		spec package: 'OpalCompiler-UI'.
 

@@ -76,9 +76,8 @@ Class {
 		'packageCacheRepository',
 		'resolvedReferencesCache'
 	],
-	#category : 'Gofer-Core-Base',
-	#package : 'Gofer-Core',
-	#tag : 'Base'
+	#category : 'Gofer-Deprecated',
+	#package : 'Gofer-Deprecated'
 }
 
 { #category : 'private' }
@@ -87,8 +86,7 @@ Gofer class >> gofer [
 
 	^ self new
 		renggli: 'gofer';
-		package: 'Gofer-Core';
-		package: 'Gofer-Tests';
+		package: 'Gofer-Deprecated';
 		yourself
 ]
 
@@ -137,6 +135,27 @@ Gofer >> basicReferencesIn: aRepository [
 { #category : 'repositories - places' }
 Gofer >> blueplane: aString [
 	self url: 'http://squeaksource.blueplane.jp/' , aString
+]
+
+{ #category : 'operations' }
+Gofer >> cleanup [
+	"Cleans the specified packages."
+
+	^ self execute: GoferCleanup
+]
+
+{ #category : 'operations' }
+Gofer >> commit [
+	"Commit the modified packages."
+
+	^ self execute: GoferCommit
+]
+
+{ #category : 'operations' }
+Gofer >> commit: aString [
+	"Commit the modified packages with the given commit message."
+
+	^ self execute: GoferCommit do: [ :operation | operation message: aString ]
 ]
 
 { #category : 'references' }
@@ -204,6 +223,13 @@ Gofer >> execute: anOperationClass do: aBlock [
 	^ operation execute
 ]
 
+{ #category : 'operations' }
+Gofer >> fetch [
+	"Download versions from remote repositories into the local cache."
+
+	^ self execute: GoferFetch
+]
+
 { #category : 'repositories - places' }
 Gofer >> gemsource: aString [
 	self url: 'http://seaside.gemstone.com/ss/' , aString
@@ -228,11 +254,65 @@ Gofer >> load [
 	^ self execute: GoferLoad
 ]
 
+{ #category : 'operations' }
+Gofer >> loadBleedingEdge [
+	"Load the baseline of the previously specifed configuration."
+
+	^ self loadVersion: #bleedingEdge
+]
+
+{ #category : 'operations' }
+Gofer >> loadDevelopment [
+	"Load the development version of the previously specifed configuration."
+
+	^ self loadVersion: #development
+]
+
+{ #category : 'operations' }
+Gofer >> loadStable [
+	"Load the stable version of the previously specifed configuration."
+
+	^ self loadVersion: #stable
+]
+
+{ #category : 'operations' }
+Gofer >> loadVersion: anMetacelloVersionIdentifierSymbol [
+	"Load the given version name"
+	^ self execute: GoferMetacelloLoad do: [ :operation|
+		operation version: anMetacelloVersionIdentifierSymbol ]
+]
+
+{ #category : 'operations' }
+Gofer >> localChanges [
+	"Answer the changes between the base version and the working copy."
+
+	^ self execute: GoferLocalChanges
+]
+
+{ #category : 'operations' }
+Gofer >> merge [
+	"Merge the specified packages into their working copies."
+
+	^ self execute: GoferMerge
+]
+
 { #category : 'references' }
 Gofer >> package: aString [
 	"Add the package aString to the receiver. aString is a package name as it appears in the Monticello Browser, something like 'Magritte-Seaside'. Gofer will try to resolve this name to an actual version in one of the configured repositories before doing something with the package. Gofer sorts all the versions in all the repositories according to branch name (versions without a branch are preferred), version number, author name and repository priority. The top hit of this sorted list is eventually going to be loaded and used."
 
 	references addLast: (GoferPackageReference name: aString)
+]
+
+{ #category : 'operations' }
+Gofer >> package: aString constraint: aOneArgumentBlock [
+	"Add the package aString to the receiver, but constraint the resulting versions further with aOneArgumentBlock. For details on the package, see #package:. The following example defines various constraints:
+
+		aGofer package: 'Magritte-Seaside' constraint: [ :version |
+			version author = 'lr'
+				and: [ version branch = 'trial'
+				and: [ version versionNumber > 120 ] ] ]"
+
+	references addLast: (GoferConstraintReference name: aString constraint: aOneArgumentBlock)
 ]
 
 { #category : 'copying' }
@@ -242,11 +322,39 @@ Gofer >> postCopy [
 	resolvedReferencesCache := nil
 ]
 
+{ #category : 'operations' }
+Gofer >> push [
+	"Upload local versions from local cache into remote repositories."
+
+	^ self execute: GoferPush
+]
+
+{ #category : 'operations' }
+Gofer >> recompile [
+	"Recompile the specified packages."
+
+	^ self execute: GoferRecompile
+]
+
 { #category : 'accessing' }
 Gofer >> references [
 	"Answer the configured references."
 
 	^ Array withAll: references
+]
+
+{ #category : 'operations' }
+Gofer >> reinitialize [
+	"Calls the class side initializers on all package code."
+
+	^ self execute: GoferReinitialize
+]
+
+{ #category : 'operations' }
+Gofer >> remoteChanges [
+	"Display the changes between the working copy and the remote changes."
+
+	^ self execute: GoferRemoteChanges
 ]
 
 { #category : 'repositories - places' }
@@ -282,6 +390,13 @@ Gofer >> resolved [
 	^ self references collect: [ :each | each resolveWith: self ]
 ]
 
+{ #category : 'operations' }
+Gofer >> revert [
+	"Revert the specified packages to the currently loaded version."
+
+	^ self execute: GoferRevert
+]
+
 { #category : 'repositories - places' }
 Gofer >> smalltalkhubUser: aUserName project: aProjectName [
 	self repository: (MCSmalltalkhubRepository owner: aUserName project: aProjectName)
@@ -290,6 +405,20 @@ Gofer >> smalltalkhubUser: aUserName project: aProjectName [
 { #category : 'repositories - places' }
 Gofer >> squeaksource3: aProjectName [
 	self repository: (MCGemstoneRepository location: 'http://ss3.gemtalksystems.com/ss/' , aProjectName)
+]
+
+{ #category : 'operations' }
+Gofer >> unload [
+	"Unload the specified packages."
+
+	^ self execute: GoferUnload
+]
+
+{ #category : 'operations' }
+Gofer >> update [
+	"Update the specified packages."
+
+	^ self execute: GoferUpdate
 ]
 
 { #category : 'repositories' }
