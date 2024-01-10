@@ -531,29 +531,27 @@ TestAsserter >> should: aBlock description: aString [
 	self assert: aBlock value description: aString
 ]
 
-{ #category : 'to be packaged in duration package' }
+{ #category : 'asserting' }
 TestAsserter >> should: aBlock notTakeMoreThan: aDuration [
-    "Evaluate aBlock and if it takes more than given duration
+	"Evaluate aBlock and if it takes more than given duration
     to run we report a test failure. "
+
 	<debuggerCompleteToSender>
-	^ aBlock valueWithinMilliseconds: aDuration asMilliSeconds onTimeout: [
-		self
-			assert: false
-			description: ['Block evaluation took more than the expected <1p>' expandMacrosWith: aDuration]
-	]
+	^ self
+		  should: aBlock
+		  notTakeMoreThanMilliseconds: aDuration asMilliSeconds
 ]
 
 { #category : 'asserting' }
 TestAsserter >> should: aBlock notTakeMoreThanMilliseconds: anInteger [
-    "Evaluate aBlock and if it takes more than given duration
+	"Evaluate aBlock and if it takes more than given duration
     to run we report a test failure. "
+
 	<debuggerCompleteToSender>
-	
 	^ aBlock valueWithinMilliseconds: anInteger onTimeout: [
-		self
-			assert: false
-			description: ['Block evaluation took more than the expected <1p>' expandMacrosWith: anInteger]
-	]
+		  self assert: false description: [
+			  'Block evaluation took more than the expected <1p>'
+				  expandMacrosWith: anInteger ] ]
 ]
 
 { #category : 'asserting' }

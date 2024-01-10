@@ -641,7 +641,7 @@ PluggableButtonMorph >> iconPosition [
 PluggableButtonMorph >> indicateModalChild [
 	"Flash the button border."
 
-	|fs c w d|
+	| fs c w d |
 	fs := self fillStyle.
 	c := self color alphaMixed: 0.5 with: Color black.
 	w := self world.
@@ -653,11 +653,11 @@ PluggableButtonMorph >> indicateModalChild [
 		extension fillStyle: c.
 		self privateColor: c.
 		self invalidRect: self bounds.
-		w ifNotNil: [w displayWorldSafely].
-		(Delay forDuration: d milliSeconds) wait.
+		w ifNotNil: [ w displayWorldSafely ].
+		(Delay forMilliseconds: d milliSeconds) wait.
 		self fillStyle: fs.
-		w ifNotNil: [w displayWorldSafely].
-		self invalidRect: self bounds]
+		w ifNotNil: [ w displayWorldSafely ].
+		self invalidRect: self bounds ]
 ]
 
 { #category : 'initialization' }

@@ -383,7 +383,7 @@ MessageTally class >> terminateTimerProcess [
 { #category : 'spying' }
 MessageTally class >> time: aBlock [
 
-	^ Time millisecondsToRun: aBlock
+	^ aBlock millisecondsToRun
 ]
 
 { #category : 'comparing' }

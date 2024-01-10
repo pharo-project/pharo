@@ -213,13 +213,6 @@ BlockClosure >> doWhileTrue: conditionBlock [
 	^ result
 ]
 
-{ #category : 'duration to be packaged out' }
-BlockClosure >> durationToRun [
-	"Answer the duration taken to execute this block."
-
-	^ self timeToRun
-]
-
 { #category : 'accessing' }
 BlockClosure >> endPC [
 	^ self compiledBlock endPC
@@ -382,30 +375,6 @@ BlockClosure >> isValid [
 { #category : 'accessing' }
 BlockClosure >> method [
 	^ self compiledBlock
-]
-
-{ #category : 'private timing' }
-BlockClosure >> microsecondClockValue [
-	"Answer the number of microseconds since Epoch"
-
-	^self primUTCMicrosecondsClock
-]
-
-{ #category : 'private timing' }
-BlockClosure >> microsecondsToRun [
-	"Answer the number of milliseconds the receiver takes to return its value."
-
-	| initialMicroseconds |
-	initialMicroseconds := self microsecondClockValue.
-	self value.
-	^self microsecondClockValue - initialMicroseconds
-]
-
-{ #category : 'private timing' }
-BlockClosure >> millisecondsToRun [
-	"Answer the number of milliseconds the receiver takes to return its value."
-
-	^ self microsecondsToRun // 1e3
 ]
 
 { #category : 'scheduling' }
@@ -590,17 +559,6 @@ BlockClosure >> outerContext [
 { #category : 'accessing' }
 BlockClosure >> outerContext: ctxt [
 	outerContext := ctxt
-]
-
-{ #category : 'private timing' }
-BlockClosure >> primUTCMicrosecondsClock [
-	"Answer the number of micro-seconds ellapsed since epoch.
-	That is since 00:00 on the morning of January 1, 1901 UTC.
-	At least a 60-bit unsigned integer is used internally which is enough for dates up to year 38435.
-	Essential. See Object documentation whatIsAPrimitive. "
-
-	<primitive: 240>
-	self primitiveFailed
 ]
 
 { #category : 'printing' }
@@ -992,74 +950,6 @@ BlockClosure >> valueWithPossibleArgument: anArg [
 	a := Array new: numArgs.
 	a at: 1 put: anArg.
 	^self valueWithArguments: a
-]
-
-{ #category : 'evaluating' }
-BlockClosure >> valueWithin: aDuration onTimeout: timeoutBlock [
-	"Evaluate the receiver.
-	If the evaluation does not complete in less than aDuration evaluate the timeoutBlock instead"
-	<debuggerCompleteToSender>
-	| theProcess delay watchdog tag |
-
-	aDuration <= Duration zero ifTrue: [^ timeoutBlock value ].
-
-	"the block will be executed in the current process"
-	theProcess := Processor activeProcess.
-	delay := aDuration asDelay.
-	tag := self.
-
-	"make a watchdog process"
-	watchdog := [
-		delay wait. 	"wait for timeout or completion"
-		theProcess ifNotNil:[ theProcess signalException: (TimedOut new tag: tag)]
-	] newProcess.
-
-	"Watchdog needs to run at high priority to do its job (but not at timing priority)"
-	watchdog priority: Processor timingPriority-1.
-
-	"catch the timeout signal"
-	^ [	watchdog resume.				"start up the watchdog"
-		self ensure:[						"evaluate the receiver"
-			theProcess := nil.				"it has completed, so ..."
-			delay delaySemaphore signal.	"arrange for the watchdog to exit"
-		]] on: TimedOut do: [ :e |
-			e tag == tag
-				ifTrue:[ timeoutBlock value ]
-				ifFalse:[ e pass]]
-]
-
-{ #category : 'evaluating' }
-BlockClosure >> valueWithinMilliseconds: milliseconds onTimeout: timeoutBlock [
-	"Evaluate the receiver.
-	If the evaluation does not complete in less than milliseconds evaluate the timeoutBlock instead"
-	<debuggerCompleteToSender>
-
-	| theProcess delay watchdog tag |
-	milliseconds <= 0 ifTrue: [^ timeoutBlock value ].
-
-	"the block will be executed in the current process"
-	theProcess := Processor activeProcess.
-	delay := Delay forMilliseconds: milliseconds.
-	tag := self.
-
-	"make a watchdog process"
-	watchdog := [
-		delay wait. 	"wait for timeout or completion"
-		theProcess ifNotNil:[ theProcess signalException: (TimedOut new tag: tag)]
-	] newProcess.
-
-	"Watchdog needs to run at high priority to do its job (but not at timing priority)"
-	watchdog priority: Processor timingPriority-1.
-
-	"catch the timeout signal"
-	^ [	watchdog resume.				"start up the watchdog"
-		self ensure:[						"evaluate the receiver"
-			theProcess := nil.				"it has completed, so ..."
-			delay delaySemaphore signal.	"arrange for the watchdog to exit"
-		]] on: TimedOut do: [ :e |
-			e tag == tag
-				ifTrue:[ timeoutBlock value ]
-				ifFalse:[ e pass]]
 ]
 
 { #category : 'controlling' }

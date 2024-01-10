@@ -36,6 +36,11 @@ BaselineOfBaseLibraries >> baseline: spec [
 			spec
 				loads: #( 'CoreTests' );
 				repository: repository ].
+			
+		spec baseline: 'SystemBenchmark' with: [
+			spec
+				loads: #( 'tests' );
+				repository: repository ].
 
 		spec baseline: 'Clap' with: [
 			spec

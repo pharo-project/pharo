@@ -68,12 +68,6 @@ Delay class >> forDays: aNumber [
 ]
 
 { #category : 'instance creation' }
-Delay class >> forDuration: aDuration [
- 	"Return a new Delay for the given duration."
- 	^ self forMilliseconds: aDuration asMilliSeconds
-]
-
-{ #category : 'instance creation' }
 Delay class >> forHours: aNumber [
 	"Return a new Delay for the given number of Hours"
 	
