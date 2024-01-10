@@ -27,6 +27,8 @@ BaselineOfBaseLibraries >> baseline: spec [
 				className: 'BaselineOfSUnit';
 				repository: repository ].
 
+		spec baseline: 'KernelTests' with: [ spec repository: repository ].
+
 		spec baseline: 'Slot' with: [
 			spec
 				loads: 'core';
@@ -36,7 +38,7 @@ BaselineOfBaseLibraries >> baseline: spec [
 			spec
 				loads: #( 'CoreTests' );
 				repository: repository ].
-			
+
 		spec baseline: 'SystemBenchmark' with: [
 			spec
 				loads: #( 'tests' );
