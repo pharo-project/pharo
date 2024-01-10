@@ -52,6 +52,25 @@ BlockClosure class >> isAbstract [
 	^ self == BlockClosure
 ]
 
+{ #category : 'testing' }
+BlockClosure >> = aBlockClosure [
+
+	self == aBlockClosure ifTrue: [ ^ true ].
+	self class = aBlockClosure class ifFalse: [ ^ false ].
+	self compiledBlock = aBlockClosure compiledBlock ifFalse: [ ^ false ].
+	self receiver = aBlockClosure receiver ifFalse: [ ^ false ].
+	"If we have the same compiledBlock, we must have the same number of copied values as well"
+	1 to: self numCopiedValues do: [ :i |
+		(self copiedValueAt: i) = (aBlockClosure copiedValueAt: i) ifFalse: [
+			^ false ] ].
+	"Directly compare outerContext only if we have a non-local return, as Context uses identity
+	so will generally *not* be equal. Again, aBlockClosure must have the same answer to
+	#hasNonLocalReturn as this is a property of the compiledBlock, which we know is equal."
+	self hasNonLocalReturn ifTrue: [
+		self outerContext = aBlockClosure outerContext ifFalse: [ ^ false ] ].
+	^ true
+]
+
 { #category : 'accessing' }
 BlockClosure >> argumentCount [
 	"Answer the number of arguments that must be used to evaluate this block"
@@ -377,6 +396,15 @@ BlockClosure >> isValid [
 	"Answer the receiver."
 
 	^true
+]
+
+{ #category : 'testing' }
+BlockClosure >> literalEqual: aLiteral [
+	"Answer true if the receiver and otherLiteral represent the same literal.
+	Two equivalent clean blocks in different places in a method are not the same literal,
+	so use identity for comparison."
+
+	^ self == aLiteral
 ]
 
 { #category : 'accessing' }
