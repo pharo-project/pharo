@@ -300,7 +300,6 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 
 	UIManager default terminateUIProcess.
 	MorphicUIManager new spawnNewProcess.
-	Display newDepth: 32.
 
 	UIManager default: MorphicUIManager new.
 	MorphicUIManager uiProcess resume.

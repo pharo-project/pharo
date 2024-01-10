@@ -56,21 +56,14 @@ BaselineOfDisplay >> installBitmap [
 { #category : 'actions' }
 BaselineOfDisplay >> postload: loader package: packageSpec [
 
-	| display |
-	
 	"Ignore pre and post loads if already executed"
 	Initialized = true ifTrue: [ ^ self ].
 	
 	self installBitmap.
 
-	display := (Smalltalk classNamed: #DisplayScreen) new.
-	display setExtent: 0@0 depth: 2.
-	Smalltalk globals at: #Display put: display.
-
 	Cursor webLink. "set the webLink cursor shape"
 					
 	Cursor initialize.
-	DisplayScreen initialize.
 	BitBlt initialize.
 	Form initialize.
 	Color initialize.
