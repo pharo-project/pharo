@@ -300,6 +300,12 @@ MetacelloProjectRegistration >> currentVersionString [
 ]
 
 { #category : 'testing' }
+MetacelloProjectRegistration >> currentlyLoadedClassesInProject [
+
+	^ self projectSpec currentlyLoadedClassesInVersion asSet
+]
+
+{ #category : 'testing' }
 MetacelloProjectRegistration >> hasLoadConflicts: aProjectRegistration [
 	"5 combinations of loads with no load conflicts:
         No configs and baselines =

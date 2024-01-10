@@ -348,6 +348,14 @@ MetacelloProjectSpec >> copyForScriptingInto: aProjectSpec [
         file: file
 ]
 
+{ #category : 'as yet unclassified' }
+MetacelloProjectSpec >> currentlyLoadedClassesInVersion [
+
+	self versionOrNil ifNotNil: [ :vrsn |
+		^ vrsn spec currentlyLoadedClassesInVersion ].
+	^ #(  )
+]
+
 { #category : 'loading' }
 MetacelloProjectSpec >> ensureProjectLoadedWithEngine: anEngine [
 	"Ensure that the MetacelloProject is loaded in image. 
@@ -875,7 +883,7 @@ MetacelloProjectSpec >> versionOrNil [
 
 	^ [ self version ]
 		  on: MetacelloVersionDoesNotExistError
-		  do: [ :ex | ^ nil ]
+		  do: [ :ex | nil ]
 ]
 
 { #category : 'querying' }
