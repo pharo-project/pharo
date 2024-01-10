@@ -296,9 +296,21 @@ WorldMorph >> deleteBalloonTarget: aMorph [
 	self handsDo: [ :h | h deleteBalloonTarget: aMorph ]
 ]
 
+{ #category : 'accessing' }
+WorldMorph >> depth [
+	
+	^ self worldState worldRenderer depth
+]
+
 { #category : 'world menu' }
 WorldMorph >> discoveredWorldMenu [
 	^ worldState discoveredWorldMenu
+]
+
+{ #category : 'api' }
+WorldMorph >> display [
+
+	^ self worldState worldRenderer display
 ]
 
 { #category : 'accessing' }

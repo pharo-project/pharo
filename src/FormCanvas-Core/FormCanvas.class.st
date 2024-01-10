@@ -62,7 +62,7 @@ FormCanvas class >> defaultTranslucentPatterns [
 { #category : 'instance creation' }
 FormCanvas class >> extent: aPoint [
 
-	^ self extent: aPoint depth: Display depth
+	^ self extent: aPoint depth: 32
 ]
 
 { #category : 'instance creation' }
@@ -657,25 +657,6 @@ FormCanvas >> setPaintColor: aColor [
 	patternWord := form pixelWordFor: paintColor.
 	port fillPattern: (screen collect: [:maskWord | maskWord bitAnd: patternWord]).
 	port combinationRule: Form paint
-]
-
-{ #category : 'other' }
-FormCanvas >> showAt: pt [
-
-	^ form displayAt: pt
-]
-
-{ #category : 'other' }
-FormCanvas >> showAt: pt invalidRects: updateRects [
-	| blt |
-	blt := (BitBlt toForm: Display)
-			sourceForm: form;
-			combinationRule: Form over.
-	updateRects do:
-		[:rect |
-		blt sourceRect: rect;
-			destOrigin: rect topLeft + pt;
-			copyBits]
 ]
 
 { #category : 'drawing - images' }

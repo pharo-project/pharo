@@ -170,18 +170,8 @@ Form class >> fromDisplay: aRectangle [
 	"Answer an instance of me with bitmap initialized from the area of the
 	display screen defined by aRectangle."
 
-	^ (self extent: aRectangle extent depth: Display depth)
+	^ (self extent: aRectangle extent depth: 32)
 		fromDisplay: aRectangle
-]
-
-{ #category : 'instance creation' }
-Form class >> fromDisplay: aRectangle using: oldForm [
-	"Like fromDisplay: only if oldForm is the right size, copy into it and answer it instead."
-
-	^ (oldForm ~~ nil and: [ oldForm extent = aRectangle extent ])
-		ifTrue: [ oldForm fromDisplay: aRectangle.
-			oldForm ]
-		ifFalse: [ self fromDisplay: aRectangle ]
 ]
 
 { #category : 'class initialization' }

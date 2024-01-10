@@ -96,8 +96,7 @@ EDDisplayInterface >> ensureWindowOpen [
 { #category : 'private - display' }
 EDDisplayInterface >> extent [
 
-	^ extent ifNil: [
-		extent := DisplayScreen actualScreenSize min: (650@700) ]
+	^ extent ifNil: [ extent := 650 @ 700 ]
 ]
 
 { #category : 'private - display' }

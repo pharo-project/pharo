@@ -19,8 +19,7 @@ Class {
 	#classVars : [
 		'DeferringUpdates',
 		'DisplayChangeSignature',
-		'LastScreenModeSelected',
-		'ScreenSave'
+		'LastScreenModeSelected'
 	],
 	#category : 'Graphics-Display Objects-Screen',
 	#package : 'Graphics-Display Objects',
@@ -28,25 +27,11 @@ Class {
 }
 
 { #category : 'accessing' }
-DisplayScreen class >> actualScreenDepth [
-
-	^ Display depth
-]
-
-{ #category : 'accessing' }
 DisplayScreen class >> actualScreenSize [
 	"Delegates to active world because it can be something else than the one provided by the VM"
 
 	self flag: #pharoTodo. "The method should be modified to use currentWorld, but the dependency is not possible. We have to remodularize it."
 	^ self currentWorld ifNil: [ 0 @ 0 ] ifNotNil: #actualScreenSize
-]
-
-{ #category : 'display box access' }
-DisplayScreen class >> boundingBox [
-	"Answer the bounding box for the form representing the current display
-	screen."
-
-	^Display boundingBox
 ]
 
 { #category : 'deferring' }
@@ -172,20 +157,12 @@ DisplayScreen >> fullBoundingBox [
 	^ super boundingBox
 ]
 
-{ #category : 'other' }
-DisplayScreen >> fullscreen [
-	"Display fullscreen"
-
-	ScreenSave ifNil: [ ^ self ].
-	Display := ScreenSave
-]
-
 { #category : 'screen managing' }
 DisplayScreen >> fullscreen: aBoolean [
 
-	self class codeSupportAnnouncer announce: (FullscreenAnnouncement new
-			 displayScreen: self;
-			 fullscreen: (LastScreenModeSelected := aBoolean))
+	self class codeSupportAnnouncer announce:
+		(FullscreenAnnouncement new fullscreen:
+			 (LastScreenModeSelected := aBoolean))
 ]
 
 { #category : 'other' }
@@ -221,24 +198,8 @@ DisplayScreen >> isDisplayScreen [
 
 { #category : 'screen managing' }
 DisplayScreen >> isFullscreen [
-	^ self lastScreenModeSelected
-]
 
-{ #category : 'screen managing' }
-DisplayScreen >> lastScreenModeSelected [
-	^ LastScreenModeSelected
-		ifNil: [LastScreenModeSelected := false]
-]
-
-{ #category : 'other' }
-DisplayScreen >> replacedBy: aForm do: aBlock [
-	"Permits normal display to draw on aForm instead of the display."
-
-	ScreenSave := self.
-	Display := aForm.
-	aBlock value.
-	Display := self.
-	ScreenSave := nil
+	^ LastScreenModeSelected ifNil: [ LastScreenModeSelected := false ]
 ]
 
 { #category : 'private' }

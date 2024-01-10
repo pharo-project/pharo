@@ -118,14 +118,6 @@ HandMorph class >> settingsOn: aBuilder [
 "HandMorph eventStats inspect"'
 ]
 
-{ #category : 'utilities' }
-HandMorph class >> showEvents: aBool [
-	"HandMorph showEvents: true"
-	"HandMorph showEvents: false"
-	ShowEvents := aBool.
-	aBool ifFalse: [ self currentWorld invalidRect: (0@0 extent: 500@120) ]
-]
-
 { #category : 'accessing' }
 HandMorph class >> upperHandLimit [
 
@@ -521,8 +513,6 @@ HandMorph >> handleEvent: anEvent [
 	captureBlock ifNotNil: [ ^ captureBlock value: anEvent ].
 	evt isMouseOver ifTrue:[^self sendMouseEvent: evt].
 
-	self showDebugEvent: evt.
-
 	"Notify listeners"
 	self sendListenEvent: evt to: self eventListeners.
 
@@ -578,7 +568,6 @@ HandMorph >> handleEvent: anEvent [
 			ifTrue:[self dropMorphs: evt]
 			ifFalse:[self sendMouseEvent: evt].
 	].
-	self showMouseFocusEvent: evt.
 	self mouseOverHandler processMouseOver: lastMouseEvent
 ]
 
@@ -1127,27 +1116,6 @@ HandMorph >> shadowOffset [
 { #category : 'accessing' }
 HandMorph >> shiftPressed [
 	^lastMouseEvent shiftPressed
-]
-
-{ #category : 'events - processing' }
-HandMorph >> showDebugEvent: evt [
-
-	ShowEvents == true ifTrue: [
-		| ofs|
-		Display fill: (0@0 extent: 500@120) rule: Form over fillColor: Color white.
-		ofs := (owner hands indexOf: self) - 1 * 60.
-		evt printString displayAt: (0@ofs) + (evt isKeyboard ifTrue: [0@30] ifFalse: [0@0]).
-		self keyboardFocus printString displayAt: (0@ofs)+(0@45).
-		]
-]
-
-{ #category : 'events - processing' }
-HandMorph >> showMouseFocusEvent: evt [
-
-	ShowEvents == true ifTrue: [
-		| ofs|
-		ofs := (owner hands indexOf: self) - 1 * 60.
-		self mouseFocus printString displayAt: (0@ofs) + (0@15)]
 ]
 
 { #category : 'cursor' }

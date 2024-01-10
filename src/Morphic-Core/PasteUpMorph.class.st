@@ -475,31 +475,13 @@ PasteUpMorph >> findWindow: evt [
 	menu popUpEvent: evt in: self
 ]
 
-{ #category : 'world state' }
-PasteUpMorph >> flashRects: rectangleList color: aColor [
-	"For testing. Flashes the given list of rectangles on the Display so you can watch incremental redisplay at work."
-	"Details: Uses two reverses so that the display is restored to its original state. This is necessary when in deferred update mode."
-
-	| blt |
-	blt := (BitBlt toForm: Display)
-		sourceForm: nil;
-		sourceOrigin: 0@0;
-		clipRect: self viewBox;
-		combinationRule: Form reverse.
-	rectangleList do: [:r | | screenRect |
-		screenRect := r translateBy: self viewBox origin.
-		blt destRect: screenRect; copyBits.
-		(Delay forMilliseconds: 15) wait.
-		blt destRect: screenRect; copyBits ]
-]
-
 { #category : 'drawing' }
 PasteUpMorph >> gridFormOrigin: origin grid: smallGrid background: backColor line: lineColor [
 
 	| bigGrid gridForm gridOrigin |
 	gridOrigin := origin \\ smallGrid.
 	bigGrid := (smallGrid asPoint x) @ (smallGrid asPoint y).
-	gridForm := Form extent: bigGrid depth: Display depth.
+	gridForm := Form extent: bigGrid depth: self currentWorld worldState worldRenderer depth.
 	backColor ifNotNil: [gridForm fillWithColor: backColor].
 	gridOrigin x to: gridForm width by: smallGrid x do:
 		[:x | gridForm fill: (x@0 extent: 1@gridForm height) fillColor: lineColor].
@@ -920,13 +902,6 @@ PasteUpMorph >> toggleResizeToFit [
 	"Toggle whether the receiver is set to resize-to-fit"
 
 	self vResizeToFit: self resizeToFit not
-]
-
-{ #category : 'accessing' }
-PasteUpMorph >> useRoundedCorners [
-	"Somewhat special cased because we do have to fill Display for this"
-	super useRoundedCorners.
-	self == self world ifTrue:[Display bits primFill: 0]. "done so that we *don't* get a flash"
 ]
 
 { #category : 'project state' }

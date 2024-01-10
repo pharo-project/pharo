@@ -48,15 +48,15 @@ PopupChoiceDialogWindowWithMessage >> initialExtent [
 	"Answer the initial extent for the receiver.
 	Adjust the text if the text	would be wider than 1/2 the display width."
 
-	|ext|
+	| ext |
 	ext := super initialExtent.
-	self textMorph width > (Display width // 2) ifTrue: [
+	self textMorph width > (self currentWorld width // 2) ifTrue: [
 		self textMorph
 			wrapFlag: true;
 			hResizing: #rigid;
-			extent: Display width // 2 @ 0.
-		ext := super initialExtent].
-	^ext
+			extent: self currentWorld width // 2 @ 0.
+		ext := super initialExtent ].
+	^ ext
 ]
 
 { #category : 'accessing' }

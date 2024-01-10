@@ -1093,7 +1093,7 @@ Morph >> asFormOfSize: extent [
 	| form transform rect |
 
 	rect := self bounds scaledAndCenteredIn: (0@0 extent: extent).
-	form := Form extent: rect extent depth: Display depth.
+	form := Form extent: rect extent depth: 32.
 	transform := MatrixTransform2x3 withScale: form extent / self extent.
 	form getCanvas
 		transformBy: transform
@@ -2165,16 +2165,15 @@ Morph >> doFastReframe: ptName [
 	| newBounds |
 	"For fast display, only higlight the rectangle during loop"
 	newBounds := self boundsInWorld
-		newRectButtonPressedDo: [:rectangle :cursorPoint |
-			rectangle
-				withSideOrCorner: ptName
-				setToPoint: cursorPoint
-				minExtent: self minimumExtent
-		] inWorld: self world.
-	Display deferUpdatesIn: Display boundingBox while: [
-		self bounds: newBounds].
+		             newRectButtonPressedDo: [ :rectangle :cursorPoint |
+			             rectangle
+				             withSideOrCorner: ptName
+				             setToPoint: cursorPoint
+				             minExtent: self minimumExtent ]
+		             inWorld: self world.
+	self bounds: newBounds.
 
-	^newBounds
+	^ newBounds
 ]
 
 { #category : 'layout' }
@@ -2557,14 +2556,6 @@ Morph >> fitInWorld [
 Morph >> flash [
 
 	self flashColor: self flashFillStyle
-]
-
-{ #category : 'drawing' }
-Morph >> flashBounds [
-	"Flash the receiver's bounds  -- does not use the receiver's color, thus works with StringMorphs and SketchMorphs, etc., for which #flash is useless.  No senders initially, but useful to send this from a debugger or inspector"
-
-	5 timesRepeat:
-		[Display flash: self boundsInWorld  andWait: 120]
 ]
 
 { #category : 'macpal' }
@@ -3043,8 +3034,8 @@ Morph >> handleTextInputEvent: anEvent [
 { #category : 'events - processing' }
 Morph >> handleUnknownEvent: anEvent [
 	"An event of an unknown type was sent to the receiver. What shall we do?!"
-	self inform: 'Unknown event: ', anEvent printString.
-	anEvent printString displayAt: 0@0.
+
+	self inform: 'Unknown event: ' , anEvent printString.
 	anEvent wasHandled: true
 ]
 
@@ -3490,19 +3481,19 @@ Morph >> imageForm [
 
 { #category : 'drawing' }
 Morph >> imageForm: depth backgroundColor: aColor forRectangle: rect [
+
 	| canvas |
-	canvas := Display defaultCanvasClass extent: rect extent depth: depth.
-	canvas translateBy: rect topLeft negated
-		during:[:tempCanvas|
-			tempCanvas fillRectangle: rect color: aColor.
-			tempCanvas fullDrawMorph: self].
+	canvas := FormCanvas extent: rect extent depth: depth.
+	canvas translateBy: rect topLeft negated during: [ :tempCanvas |
+		tempCanvas fillRectangle: rect color: aColor.
+		tempCanvas fullDrawMorph: self ].
 	^ canvas form offset: rect topLeft
 ]
 
 { #category : 'drawing' }
 Morph >> imageForm: depth forRectangle: rect [
 	| canvas |
-	canvas := Display defaultCanvasClass extent: rect extent depth: depth.
+	canvas := FormCanvas extent: rect extent depth: depth.
 	canvas translateBy: rect topLeft negated
 		during:[:tempCanvas| tempCanvas fullDrawMorph: self].
 	^ canvas form offset: rect topLeft
@@ -3517,7 +3508,7 @@ Morph >> imageFormDepth: depth [
 { #category : 'drawing' }
 Morph >> imageFormForRectangle: rect [
 
-	^ self imageForm: Display depth forRectangle: rect
+	^ self imageForm: 32 forRectangle: rect
 ]
 
 { #category : 'user interface' }
@@ -5064,13 +5055,8 @@ Morph >> rejectDropEvent: anEvent [
 
 { #category : 'dropping/grabbing' }
 Morph >> rejectDropMorphEvent: evt [
-	"The receiver has been rejected, and must be put back somewhere.  There are three cases:
-	(1)  It remembers its former owner and position, and goes right back there
-	(2)  It remembers its former position only, in which case it was torn off from a parts bin, and the UI is that it floats back to its donor position and then vanishes."
-
-	self formerOwner ifNotNil: [ ^ self slideBackToFormerSituation: evt ].
-
-	self formerPosition ifNotNil: [ :position | ^ self vanishAfterSlidingTo: position event: evt ] "Position but no owner -- can just make it vanish"
+	
+	"Hook for subclasses"
 ]
 
 { #category : 'recategorized' }
@@ -5824,32 +5810,6 @@ Morph >> simulateRightMouseUp [
 	self simulateMouseUpWith: MouseEvent yellowButton
 ]
 
-{ #category : 'dropping/grabbing' }
-Morph >> slideBackToFormerSituation: evt [
-	| slideForm formerOwner formerPosition aWorld startPoint endPoint trans |
-	formerOwner := self formerOwner.
-	formerPosition := self formerPosition.
-	aWorld := evt hand world.
-	trans := formerOwner transformFromWorld.
-	slideForm := trans isPureTranslation
-				ifTrue: [self imageForm offset: 0 @ 0]
-				ifFalse:
-					[((TransformationMorph new asFlexOf: self) transform: trans) imageForm
-						offset: 0 @ 0].
-	startPoint := evt hand fullBounds origin.
-	endPoint := trans localPointToGlobal: formerPosition.
-	owner removeMorph: self.
-	aWorld displayWorld.
-	slideForm
-		slideFrom: startPoint
-		to: endPoint
-		nSteps: 12
-		delay: 15.
-	formerOwner addMorph: self.
-	self position: formerPosition.
-	self justDroppedInto: formerOwner event: evt
-]
-
 { #category : 'menus' }
 Morph >> snapToEdgeIfAppropriate [
 	| edgeSymbol oldBounds aWorld |
@@ -6599,19 +6559,6 @@ Morph >> valueOfProperty: aSymbol ifPresentDo: aBlock [
 	aBlock on behalf of the value of that property"
 	extension ifNil:  [^ self].
 	^ aBlock value: (extension valueOfProperty: aSymbol ifAbsent: [^ self])
-]
-
-{ #category : 'dropping/grabbing' }
-Morph >> vanishAfterSlidingTo: aPosition event: evt [
-
-	| aForm aWorld startPoint endPoint |
-	aForm := self imageForm offset: 0@0.
-	aWorld := self world.
-	startPoint := evt hand fullBounds origin.
-	self delete.
-	aWorld displayWorld.
-	endPoint := aPosition.
-	aForm slideFrom: startPoint  to: endPoint nSteps: 12 delay: 15
 ]
 
 { #category : 'copying' }
