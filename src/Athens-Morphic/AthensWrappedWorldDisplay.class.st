@@ -11,7 +11,6 @@ Class {
 	#name : 'AthensWrappedWorldDisplay',
 	#superclass : 'Object',
 	#instVars : [
-		'realDisplay',
 		'wrapMorph'
 	],
 	#category : 'Athens-Morphic',

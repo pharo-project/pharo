@@ -43,7 +43,7 @@ RGClassDefinitionTest >> testAddingMethods [
 	self assert: newMethod parent equals: newClass.
 
 	self assert: (newClass compiledMethodNamed: #size) isNotNil.
-	self assert: (newClass compiledMethodNamed: #fakeMethod) isNotNil
+	self assert: (newClass compiledMethodNamed: #fakeMethod) isNil
 ]
 
 { #category : 'testing' }

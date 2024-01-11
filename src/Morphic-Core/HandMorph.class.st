@@ -34,7 +34,6 @@ Class {
 		'EventStats',
 		'NormalCursor',
 		'PasteBuffer',
-		'ShowEvents',
 		'UpperHandLimit'
 	],
 	#category : 'Morphic-Core-Kernel',
