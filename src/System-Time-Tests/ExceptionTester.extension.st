@@ -4,7 +4,7 @@ Extension { #name : 'ExceptionTester' }
 ExceptionTester >> simpleNoTimeoutTest [
 
 	[ self doSomething ]
-		valueWithinMilliseconds: Float infinity onTimeout:
+		valueWithinMilliseconds: 86400000 "1 day milliseconds" onTimeout:
 			[ self doSomethingElse ]
 ]
 

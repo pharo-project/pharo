@@ -45,6 +45,7 @@ SharedPoolTest >> testPoolUsers [
 	result := PoolDefiner poolUsers.
 	self assertCollection: result hasSameElements: {
 			ClassMultiplePoolUser.
+			ExampleForTestWithSharedPool.
 			RootClassPoolUser }
 ]
 

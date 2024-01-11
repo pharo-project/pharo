@@ -78,7 +78,7 @@ BehaviorTest >> testAllSelectorsAboveUntil [
 	| selectors |
 	selectors := self class allSelectorsAboveUntil: TestCase.
 	self deny: (selectors includes: #testAllSelectorsAboveUntil).
-	self assert: (selectors includes: #assert:).
+	self assert: (selectors includes: #run:).
 	self deny: (selectors includes: #yourself)
 ]
 

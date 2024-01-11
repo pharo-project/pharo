@@ -14,7 +14,7 @@ BlockClosureValueWithinTest >> testValueWithinNonLocalReturnDoesNotTimeout [
 	self deny: self valueWithinMillisecondsWithNonLocalReturn
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'tests' }
 BlockClosureValueWithinTest >> testValueWithinTimingBasicMilliseconds [
 	
 	| milli |
@@ -25,7 +25,7 @@ BlockClosureValueWithinTest >> testValueWithinTimingBasicMilliseconds [
 	self assert: milli < 1000
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'tests' }
 BlockClosureValueWithinTest >> testValueWithinTimingNestedInnerMilliseconds [
 	
 	| milli |
@@ -38,7 +38,7 @@ BlockClosureValueWithinTest >> testValueWithinTimingNestedInnerMilliseconds [
 	self assert: milli < 500
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'tests' }
 BlockClosureValueWithinTest >> testValueWithinTimingNestedOutertestValueWithinTimingBasicMilliseconds [
 	
 	| milli |
@@ -53,7 +53,7 @@ BlockClosureValueWithinTest >> testValueWithinTimingNestedOutertestValueWithinTi
 	self assert: milli < 5000
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'tests' }
 BlockClosureValueWithinTest >> testValueWithinTimingRepeatMilliseconds [
 	
 	| milli |
