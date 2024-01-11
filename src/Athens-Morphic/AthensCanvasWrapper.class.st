@@ -526,7 +526,7 @@ AthensCanvasWrapper >> setOrigin: aPoint clipRect: aRectangle [
 { #category : 'canvas converting' }
 AthensCanvasWrapper >> shadowDrawingCanvasWithExtent: extent shadowColor: shadowColor [
 
-	^ (Display defaultCanvasClass extent: extent depth: 1)
+	^ (FormCanvas extent: extent depth: 1)
 		asShadowDrawingCanvas: shadowColor
 ]
 

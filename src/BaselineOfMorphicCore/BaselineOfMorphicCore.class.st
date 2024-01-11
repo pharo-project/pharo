@@ -81,14 +81,11 @@ BaselineOfMorphicCore >> postload: loader package: packageSpec [
 	world handsDo: [:h | h initForEvents].
 	world borderWidth: 0.
 	
-	Display newDepth: 32.
 	world displayWorldSafely.
 	MorphicCoreUIManager new spawnNewProcess.
 	
 	world cleanseOtherworldlySteppers.
 	ExternalDropHandler resetRegisteredHandlers.
-
-	Display newDepth: 32.
 
 	(world instVarNamed: #worldState) invalidate.
 

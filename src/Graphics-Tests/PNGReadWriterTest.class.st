@@ -234,7 +234,6 @@ PNGReadWriterTest >> encodeAndDecode: original [
 	"decode"
 	stream := self readEncoded: bytes.
 	[ decoded := (PNGReadWriter new on: stream) nextImage.
-	decoded display.
 
 	"compare"
 	self assert: original width equals: decoded width.
@@ -277,7 +276,7 @@ PNGReadWriterTest >> encodeAndDecodeColor: aColor depth: aDepth [
 PNGReadWriterTest >> encodeAndDecodeDisplay: depth [
 	| form |
 	fileName := 'testDisplay', depth printString,'.png'.
-	form := Form extent: (Display extent min: 560@560) depth: depth.
+	form := Form extent: (self currentWorld extent min: 560@560) depth: depth.
 	self currentWorld fullDrawOn: form getCanvas.
 	self encodeAndDecode: form.
 	self deleteFile
@@ -317,7 +316,6 @@ PNGReadWriterTest >> encodeAndDecodeReverse: original [
 	"decode"
 	stream := bytes readStream.
 	decoded := (PNGReadWriter new on: stream) nextImage.
-	decoded display.
 
 	"compare"
 	self assert: original width equals: decoded width.
@@ -347,7 +345,6 @@ PNGReadWriterTest >> encodeAndDecodeStream: file [
 	file reset.
 	aForm := (PNGReadWriter new on: file) nextImage.
 	aForm ifNil:[^self error: 'nil form' ].
-	aForm display.
 	self encodeAndDecode: aForm
 ]
 
