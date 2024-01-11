@@ -259,7 +259,7 @@ Semaphore >> waitTimeoutSeconds: anInteger onCompletion: completionBlock onTimeo
 	Return the value returned by the executed block."
 
 	^ self
-		  waitTimeoutSeconds: anInteger * 1000
+		  waitTimeoutMilliseconds: anInteger * 1000
 		  onCompletion: completionBlock
 		  onTimeout: timeoutBlock
 ]
