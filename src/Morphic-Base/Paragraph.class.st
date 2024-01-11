@@ -171,8 +171,6 @@ Paragraph >> adjustedFirstCharacterIndex [
 Paragraph >> buildSelectionBlocksFrom: topLeft to: bottomRight [
 
 	| viewedString primary topLeftBlk bottomRightBlk findReplaceIntervals secondarySelectionIntervals startIdx stopIdx |
-	Display depth = 1 ifTrue: [ ^ self ].
-	Display depth = 2 ifTrue: [ ^ self ].
 	primary := selectionStart
 		           ifNotNil: [
 		           selectionStart stringIndex to:
@@ -624,10 +622,9 @@ Paragraph >> initialize [
 
 { #category : 'settings' }
 Paragraph >> insertionPointColor [
-	self focused ifFalse: [^ Color transparent].
-	^ Display depth <= 2
-		ifTrue: [Color black]
-		ifFalse: [self class insertionPointColor]
+
+	self focused ifFalse: [ ^ Color transparent ].
+	^ self class insertionPointColor
 ]
 
 { #category : 'alignment' }
