@@ -43,19 +43,6 @@ DisplayScreen class >> deferUpdates: aBoolean [
 	^ wasDeferred
 ]
 
-{ #category : 'settings' }
-DisplayScreen class >> displaySettingsOn: aBuilder [
-	<systemsettings>
-	(aBuilder setting: #displayFullscreen)
-		label: 'Fullscreen mode';
-		parent: #desktopSettings;
-		target: #Display;
-		getSelector: #isFullscreen;
-		setSelector: #fullscreen:;
-		description: 'On platforms that support it, set fullscreen mode';
-		default: false
-]
-
 { #category : 'class initialization' }
 DisplayScreen class >> initialize [
 
@@ -157,35 +144,6 @@ DisplayScreen >> fullBoundingBox [
 	^ super boundingBox
 ]
 
-{ #category : 'screen managing' }
-DisplayScreen >> fullscreen: aBoolean [
-
-	self class codeSupportAnnouncer announce:
-		(FullscreenAnnouncement new fullscreen:
-			 (LastScreenModeSelected := aBoolean))
-]
-
-{ #category : 'other' }
-DisplayScreen >> fullscreenMode: aBoolean [
-	"On platforms that support it, set fullscreen mode to the value of the argument. (Note: you'll need to restore the Display after calling this primitive."
-	"Display fullscreenMode: true. Display newDepth: Display depth"
-
-	<primitive: 233>
-	self primitiveFailed
-]
-
-{ #category : 'screen managing' }
-DisplayScreen >> fullscreenOff [
-
-	self fullscreen: false
-]
-
-{ #category : 'screen managing' }
-DisplayScreen >> fullscreenOn [
-
-	self fullscreen: true
-]
-
 { #category : 'other' }
 DisplayScreen >> height [
 	^ self boundingBox height
@@ -194,12 +152,6 @@ DisplayScreen >> height [
 { #category : 'testing' }
 DisplayScreen >> isDisplayScreen [
 	^true
-]
-
-{ #category : 'screen managing' }
-DisplayScreen >> isFullscreen [
-
-	^ LastScreenModeSelected ifNil: [ LastScreenModeSelected := false ]
 ]
 
 { #category : 'private' }
@@ -247,11 +199,6 @@ DisplayScreen >> supportsDisplayDepth: pixelDepth [
 	"Return true if this pixel depth is supported on the current host platform.
 	Primitive. Optional."
 	^#(1 2 4 8 16 32) includes: pixelDepth
-]
-
-{ #category : 'screen managing' }
-DisplayScreen >> toggleFullscreen [
-	self fullscreen: self isFullscreen not
 ]
 
 { #category : 'other' }
