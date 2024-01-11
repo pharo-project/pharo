@@ -124,18 +124,22 @@ DigitalSignatureAlgorithm class >> testKeySet [
 { #category : 'testing' }
 DigitalSignatureAlgorithm class >> time: aBlock as: aString count: anInteger [
 
-	^{anInteger. aString. (Time millisecondsToRun: aBlock)}
+	^ {
+		  anInteger.
+		  aString.
+		  aBlock millisecondsToRun }
 ]
 
 { #category : 'testing' }
 DigitalSignatureAlgorithm class >> timeDirect: aBlock as: aString count: anInteger [
+
 	self trace: (String streamContents: [ :stream |
 			 stream
 				 nextPutAll: anInteger asStringWithCommas;
 				 nextPutAll: '  ';
 				 nextPutAll: aString;
 				 nextPutAll: ' took ';
-				 nextPutAll: (Time millisecondsToRun: aBlock) asStringWithCommas;
+				 nextPutAll: aBlock millisecondsToRun asStringWithCommas;
 				 nextPutAll: ' ms';
 				 cr ])
 ]

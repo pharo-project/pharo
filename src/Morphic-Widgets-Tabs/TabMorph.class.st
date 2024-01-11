@@ -894,6 +894,7 @@ TabMorph >> waitReadyMorphFor: timeoutDuration [
 	Clients could use it to not show loading progress if it is really fast process.
 	Instead some blinking could happen"
 
-	morph ifNotNil: [ ^self].
-	retrievingSemaphore wait: timeoutDuration
+	morph ifNotNil: [ ^ self ].
+	retrievingSemaphore waitTimeoutMilliseconds:
+		timeoutDuration asMilliSeconds
 ]

@@ -287,12 +287,15 @@ SUnitExtensionsTest >> testValidShouldNotTakeMoreThanMilliseconds [
 { #category : 'real tests' }
 SUnitExtensionsTest >> validShouldNotTakeMoreThan [
 
-	self should: [(Delay forMilliseconds: 100) wait] 
-	notTakeMoreThanMilliseconds:  200
+	self
+		should: [ (Delay forMilliseconds: 100) wait ]
+		notTakeMoreThanMilliseconds: 200
 ]
 
 { #category : 'real tests' }
 SUnitExtensionsTest >> validShouldNotTakeMoreThanMilliseconds [
 
-	self should: [(Delay forMilliseconds: 100) wait] notTakeMoreThanMilliseconds: 200
+	self
+		should: [ (Delay forMilliseconds: 100) wait ]
+		notTakeMoreThanMilliseconds: 200
 ]

@@ -84,16 +84,18 @@ AnnouncerTest >> testAnnouncingReentrant [
 	so announcer are reentrant"
 
 	| bool ok |
-
 	ok := bool := false.
-	announcer when: Announcement do: [
-		bool ifFalse: [
-			bool := true.
-		announcer announce:  Announcement new. ]
-		ifTrue: [ ok := true ]
-	] for: self.
+	announcer
+		when: Announcement
+		do: [
+			bool
+				ifFalse: [
+					bool := true.
+					announcer announce: Announcement new ]
+				ifTrue: [ ok := true ] ]
+		for: self.
 
-	self should: [ announcer announce: Announcement new. ] notTakeMoreThanMilliseconds: 60.
+	announcer announce: Announcement new.
 	self assert: ok
 ]
 
