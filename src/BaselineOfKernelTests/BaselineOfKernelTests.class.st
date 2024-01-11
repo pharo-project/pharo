@@ -26,8 +26,10 @@ BaselineOfKernelTests >> baseline: spec [
 					   'Collections-Streams-Tests' 'Collections-Strings-Tests' 'Collections-Support-Tests' 'Collections-Stack-Tests' 'Collections-Weak-Tests') ];
 			package: 	'Kernel-Tests'; 
 			package: 	'Kernel-Extended-Tests' ;
-			package: 	'Kernel-Tests-WithCompiler';
 			package: 	'System-Time-Tests' ;
+			package: 	'Kernel-Tests-WithCompiler' with: [
+				spec requires: #( 'System-Time-Tests' 'Kernel-Tests' )
+			];
 			package: 	'Announcements-Core-Tests';
 			package: 	'Compression-Tests'; 
 			package: 	'FileSystem-Core-Tests' with: [ spec requires: #('Collections-Tests') ];
