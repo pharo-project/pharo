@@ -285,12 +285,12 @@ ScalingCanvas class >> privateExampleWithExtent: extent fillColor: fillColor sca
 
 	| baseForm form1 form2 |
 	
-	(baseForm := Form extent: extent depth: Display depth)
+	(baseForm := Form extent: extent depth: 32)
 		fillColor: fillColor.
 	drawBlock value: baseForm getCanvas.
 	form1 := baseForm scaledToSize: extent * scale.
 	
-	(form2 := Form extent: extent * scale depth: Display depth)
+	(form2 := Form extent: extent * scale depth: 32)
 		fillColor: fillColor.
 	drawBlock value: (self formCanvas: form2 getCanvas scale: scale).
 	

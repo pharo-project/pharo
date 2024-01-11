@@ -83,14 +83,6 @@ BorderStyle >> colorsAtCorners [
 	^Array new: 4 withAll: self color
 ]
 
-{ #category : 'accessing' }
-BorderStyle >> dotOfSize: diameter forDirection: aDirection [
-	| form |
-	form := Form extent: diameter@diameter depth: Display depth.
-	form getCanvas fillOval: form boundingBox color: self color.
-	^form
-]
-
 { #category : 'drawing' }
 BorderStyle >> drawLineFrom: startPoint to: stopPoint on: aCanvas [
 	^aCanvas line: startPoint to: stopPoint width: self width color: self color

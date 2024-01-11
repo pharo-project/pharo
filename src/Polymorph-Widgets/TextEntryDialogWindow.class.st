@@ -35,7 +35,9 @@ TextEntryDialogWindow >> initialExtent [
 
 { #category : 'accessing' }
 TextEntryDialogWindow >> minimumWidth [
-	^ (super minimumWidth max: self class minimumWidth) min: (Display width)
+
+	^ (super minimumWidth max: self class minimumWidth) min:
+		  self currentWorld width
 ]
 
 { #category : 'accessing' }

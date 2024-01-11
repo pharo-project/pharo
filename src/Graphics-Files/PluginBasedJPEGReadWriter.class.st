@@ -106,7 +106,7 @@ PluginBasedJPEGReadWriter >> isPluginPresent [
 PluginBasedJPEGReadWriter >> nextImage [
 	"Decode and answer a Form from my stream."
 
-	^ self nextImageSuggestedDepth: Display depth
+	^ self nextImageSuggestedDepth: 32
 ]
 
 { #category : 'public access' }

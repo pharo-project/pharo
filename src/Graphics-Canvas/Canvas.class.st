@@ -64,7 +64,7 @@ Canvas >> contentsOfArea: aRectangle into: aForm [
 { #category : 'accessing' }
 Canvas >> depth [
 
-	^ Display depth
+	^ self subclassResponsibility
 ]
 
 { #category : 'testing' }
@@ -264,7 +264,7 @@ Canvas >> flush [
 { #category : 'accessing' }
 Canvas >> form [
 
-	^ Display
+	^ self subclassResponsibility
 ]
 
 { #category : 'drawing - rectangles' }

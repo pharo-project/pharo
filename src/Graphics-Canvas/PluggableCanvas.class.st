@@ -182,12 +182,6 @@ PluggableCanvas >> shadowColor: color [
 		c shadowColor: color ]
 ]
 
-{ #category : 'canvas methods' }
-PluggableCanvas >> showAt: pt invalidRects: updateRects [
-	self apply: [ :c |
-		c showAt: pt invalidRects: updateRects ]
-]
-
 { #category : 'drawing - images' }
 PluggableCanvas >> stencil: stencilForm at: aPoint sourceRect: sourceRect color: aColor [
 	self apply: [ :c |

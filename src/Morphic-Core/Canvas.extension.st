@@ -21,6 +21,6 @@ Canvas >> restoreSavedPatch: aForm at: aPoint [
 { #category : '*Morphic-Core' }
 Canvas >> shadowDrawingCanvasWithExtent: extent shadowColor: shadowColor [
 
-	^ (Display defaultCanvasClass extent: extent depth: 1)
-		asShadowDrawingCanvas: shadowColor
+	^ (FormCanvas extent: extent depth: 1) asShadowDrawingCanvas:
+		  shadowColor
 ]
