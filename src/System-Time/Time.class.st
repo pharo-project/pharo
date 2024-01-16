@@ -151,6 +151,15 @@ Time class >> millisecondsSince: lastTime [
  	^self milliseconds: self millisecondClockValue since: lastTime
 ]
 
+{ #category : 'deprecated' }
+Time class >> millisecondsToRun: timedBlock [
+	"Answer the number of milliseconds timedBlock takes to return its value."
+	"This method is deprecated. We do not raise a deprecation warning to avoid annoy people. 
+	but we will in the future."
+	
+	^ timedBlock millisecondsToRun
+]
+
 { #category : 'instance creation' }
 Time class >> new [
 	"Answer a Time representing midnight"
