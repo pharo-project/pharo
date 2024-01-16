@@ -600,7 +600,7 @@ RBAbstractClass >> parseTreeSearcherClass [
 
 { #category : 'printing' }
 RBAbstractClass >> printOn: aStream [
-	aStream nextPutAll: self name
+	aStream nextPutAll: 'rb-', self name
 ]
 
 { #category : 'private' }
