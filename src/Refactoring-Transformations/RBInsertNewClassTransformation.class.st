@@ -84,7 +84,7 @@ RBInsertNewClassTransformation >> privateTransform [
 	self model
 		defineClass: [ :aBuilder |
 			aBuilder
-				superclassName: (self model classObjectFor: superclass) name;
+				superclassName: superclass name;
 				name: className;
 				package: packageName;
 				tag: tagName ];
