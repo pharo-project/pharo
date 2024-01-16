@@ -71,7 +71,7 @@ RBInsertNewClassRefactoring >> privateTransform [
 	self model
 		defineClass: [ :aBuilder |
 			aBuilder
-				superclass: (self model classObjectFor: superclass);
+				superclassName: superclass name;
 				name: className;
 				package: packageName;
 				tag: tagName;
