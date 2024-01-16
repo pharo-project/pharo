@@ -275,11 +275,6 @@ Metacello >> bitbucketUser: userName project: projectName commitish: commitish p
 	self repository: 'bitbucket://' , userName , '/' , projectName , ':' , (commitish ifEmpty: [ 'master' ]) , '/' , path
 ]
 
-{ #category : 'api repository shortcuts' }
-Metacello >> blueplane: projectName [
-    self repository: 'http://squeaksource.blueplane.jp/' , projectName
-]
-
 { #category : 'api projectSpec' }
 Metacello >> className: className [
     self addStatement: #'classNameArg:' args: {className}
@@ -288,11 +283,6 @@ Metacello >> className: className [
 { #category : 'api projectSpec' }
 Metacello >> configuration: projectName [
     self addStatement: #'configurationArg:' args: {projectName}
-]
-
-{ #category : 'api repository shortcuts' }
-Metacello >> croquet: projectName [
-    self repository: 'http://hedgehog.software.umn.edu:8888/' , projectName
 ]
 
 { #category : 'private' }
@@ -341,11 +331,6 @@ Metacello >> ignoreImage [
     "ignore image state"
 
     self addStatement: #'ignoreImage:' args: {true}
-]
-
-{ #category : 'api repository shortcuts' }
-Metacello >> impara: projectName [
-    self repository: 'http://source.impara.de/' , projectName
 ]
 
 { #category : 'api actions' }
@@ -506,11 +491,6 @@ Metacello >> register [
   ^ self execute: #'register' args: #()
 ]
 
-{ #category : 'api repository shortcuts' }
-Metacello >> renggli: projectName [
-    self repository: 'http://source.lukas-renggli.ch/' , projectName
-]
-
 { #category : 'api projectSpec' }
 Metacello >> repository: repositoryDescription [
     self addStatement: #'repositoryArg:' args: {repositoryDescription}
@@ -548,11 +528,6 @@ Metacello >> smalltalkhubUser: userName project: projectName [
 ]
 
 { #category : 'api repository shortcuts' }
-Metacello >> squeakfoundation: projectName [
-    self repository: 'http://source.squeakfoundation.org/' , projectName
-]
-
-{ #category : 'api repository shortcuts' }
 Metacello >> squeaksource3: projectName [
   self repository: 'http://ss3.gemtalksystems.com/ss/' , projectName
 ]
@@ -578,16 +553,6 @@ Metacello >> statements: anObject [
 	statements := anObject
 ]
 
-{ #category : 'api repository shortcuts' }
-Metacello >> swa: projectName [
-    self swasource: projectName
-]
-
-{ #category : 'api repository shortcuts' }
-Metacello >> swasource: projectName [
-    self repository: 'http://www.hpi.uni-potsdam.de/hirschfeld/squeaksource/' , projectName
-]
-
 { #category : 'api actions' }
 Metacello >> unlock [
   "unlock projects in registry"
@@ -605,9 +570,4 @@ Metacello >> unregister [
 { #category : 'api projectSpec' }
 Metacello >> version: versionString [
     self addStatement: #'versionArg:' args: {versionString}
-]
-
-{ #category : 'api repository shortcuts' }
-Metacello >> wiresong: projectName [
-    self repository: 'http://source.wiresong.ca/' , projectName
 ]

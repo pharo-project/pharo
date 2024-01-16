@@ -80,16 +80,6 @@ Class {
 	#package : 'Gofer-Deprecated'
 }
 
-{ #category : 'private' }
-Gofer class >> gofer [
-	"Create a Gofer instance"
-
-	^ self new
-		renggli: 'gofer';
-		package: 'Gofer-Deprecated';
-		yourself
-]
-
 { #category : 'instance creation' }
 Gofer class >> it [
 	^ self new
@@ -130,11 +120,6 @@ Gofer >> basicReferencesIn: aRepository [
 	^ [ aRepository goferReferences asSortedCollection asArray ]
 		on: GoferRepositoryError
 		do: errorBlock
-]
-
-{ #category : 'repositories - places' }
-Gofer >> blueplane: aString [
-	self url: 'http://squeaksource.blueplane.jp/' , aString
 ]
 
 { #category : 'operations' }
@@ -233,11 +218,6 @@ Gofer >> fetch [
 { #category : 'repositories - places' }
 Gofer >> gemsource: aString [
 	self url: 'http://seaside.gemstone.com/ss/' , aString
-]
-
-{ #category : 'repositories - places' }
-Gofer >> impara: aString [
-	self url: 'http://source.impara.de/' , aString
 ]
 
 { #category : 'initialization' }
@@ -357,11 +337,6 @@ Gofer >> remoteChanges [
 	^ self execute: GoferRemoteChanges
 ]
 
-{ #category : 'repositories - places' }
-Gofer >> renggli: aString [
-	self url: 'http://source.lukas-renggli.ch/' , aString
-]
-
 { #category : 'accessing' }
 Gofer >> repositories [
 	"Answer the configured monticello repositories."
@@ -446,9 +421,4 @@ Gofer >> version: aString [
 	"Add the version aString to the receiver. aString is a version name as it appears in the Monticello Repository Browser, something like 'Magritte-Seaside-lr.334'. Gofer will try to resolve this name to one of the configured repositories before loading the code."
 
 	references addLast: (GoferVersionReference name: aString)
-]
-
-{ #category : 'repositories - places' }
-Gofer >> wiresong: aString [
-	self url: 'http://source.wiresong.ca/' , aString
 ]
