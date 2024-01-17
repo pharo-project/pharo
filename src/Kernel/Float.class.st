@@ -592,10 +592,10 @@ Float >> adaptToInteger: rcvr andCompare: selector [
 	"Try to avoid asTrueFraction because it can cost"
 	selector == #= ifTrue: [ self fractionPart = 0.0 ifFalse: [ ^ false ] ].
 	selector == #'~=' ifTrue: [ self fractionPart = 0.0 ifFalse: [ ^ true ] ].
-	selector == #< ifTrue: [ ^ self >= rcvr ].
-	selector == #> ifTrue: [ ^ self <= rcvr ].
-	selector == #'<=' ifTrue: [ ^ self > rcvr ].
-	selector == #'>=' ifTrue: [ ^ self < rcvr ].
+	selector == #< ifTrue: [ ^ self > rcvr ].
+	selector == #> ifTrue: [ ^ self < rcvr ].
+	selector == #'<=' ifTrue: [ ^ self >= rcvr ].
+	selector == #'>=' ifTrue: [ ^ self <= rcvr ].
 
 	^ rcvr perform: selector with: self asTrueFraction
 ]
