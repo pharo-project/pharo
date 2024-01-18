@@ -35,7 +35,7 @@ RBMethodsHaveNoSendersCondition >> violationMessageOn: aStream [
 	aStream nextPutAll: 'Method(s) have senders:'.
 	self violators do: [ :violator |
 		aStream
-			nextPutAll: violator;
+			nextPutAll: violator asString;
 			nextPutAll: ';';
 			space ]
 ]
