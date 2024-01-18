@@ -1366,14 +1366,14 @@ Socket >> sendData: aStringOrByteArray [
 	| bytesSent bytesToSend count |
 	bytesToSend := aStringOrByteArray size.
 	bytesSent := 0.
-	[bytesSent < bytesToSend] whileTrue: [
-		(self waitForSendDoneFor: 60)
-			ifFalse: [ConnectionTimedOut signal: 'send data timeout; data not sent'].
-		count := self primSocket: socketHandle
-			sendData: aStringOrByteArray
-			startIndex: bytesSent + 1
-			count: (bytesToSend - bytesSent min: 5000).
-		bytesSent := bytesSent + count].
+	[ bytesSent < bytesToSend ] whileTrue: [
+		self waitForSendDoneFor: 60.
+		count := self
+			         primSocket: socketHandle
+			         sendData: aStringOrByteArray
+			         startIndex: bytesSent + 1
+			         count: (bytesToSend - bytesSent min: 5000).
+		bytesSent := bytesSent + count ].
 
 	^ bytesSent
 ]
@@ -1439,17 +1439,15 @@ Socket >> sendSomeData: aStringOrByteArray startIndex: startIndex count: count [
 { #category : 'sending' }
 Socket >> sendSomeData: aStringOrByteArray startIndex: startIndex count: count for: aTimeoutInSeconds [
 	"Send up to count bytes of the given data starting at the given index. Answer the number of bytes actually sent."
+
 	"Note: This operation may have to be repeated multiple times to send a large amount of data."
 
-	| bytesSent |
-	(self waitForSendDoneFor: aTimeoutInSeconds)
-		ifTrue: [
-			bytesSent := self primSocket: socketHandle
-				sendData: aStringOrByteArray
-				startIndex: startIndex
-				count: count ]
-		ifFalse: [ ConnectionTimedOut signal: 'send data timeout; data not sent' ].
-	^ bytesSent
+	self waitForSendDoneFor: aTimeoutInSeconds.
+	^ self
+		  primSocket: socketHandle
+		  sendData: aStringOrByteArray
+		  startIndex: startIndex
+		  count: count
 ]
 
 { #category : 'sending' }
@@ -1479,28 +1477,27 @@ Socket >> sendStreamContents: stream checkBlock: checkBlock [
 { #category : 'datagrams' }
 Socket >> sendUDPData: aStringOrByteArray toHost: hostAddress port: portNumber [
 	"Send a UDP packet containing the given data to the specified host/port."
-	| bytesToSend bytesSent count |
 
+	| bytesToSend bytesSent count |
 	bytesToSend := aStringOrByteArray size.
 	bytesSent := 0.
 	[
-		(self waitForSendDoneFor: 20)
-			ifFalse: [ConnectionTimedOut signal: 'send data timeout; data not sent'].
-		count := self primSocket: socketHandle
-			sendUDPData: aStringOrByteArray
-			toHost: hostAddress
-			port: portNumber
-			startIndex: bytesSent + 1
-			count: bytesToSend - bytesSent.
-		count = 0 ifTrue:
-			["Usually broadcast fails in primitive without the proper option set,
+	self waitForSendDoneFor: 20.
+	count := self
+		         primSocket: socketHandle
+		         sendUDPData: aStringOrByteArray
+		         toHost: hostAddress
+		         port: portNumber
+		         startIndex: bytesSent + 1
+		         count: bytesToSend - bytesSent.
+	count = 0 ifTrue: [ "Usually broadcast fails in primitive without the proper option set,
 			but some platforms simply return count=0"
-			(self broadcastMisconfiguredForSendingTo: hostAddress)
-				ifTrue: [ ^ self broadcastError: hostAddress ].
-			bytesToSend ~= count
-				ifTrue: [ ^NetworkError signal: 'failed to send data']].
-		bytesSent := bytesSent + count.
-		bytesSent < bytesToSend] whileTrue.
+		(self broadcastMisconfiguredForSendingTo: hostAddress) ifTrue: [
+			^ self broadcastError: hostAddress ].
+		bytesToSend ~= count ifTrue: [
+			^ NetworkError signal: 'failed to send data' ] ].
+	bytesSent := bytesSent + count.
+	bytesSent < bytesToSend ] whileTrue.
 
 	^ bytesSent
 ]
@@ -1692,15 +1689,31 @@ Socket >> waitForDisconnectionFor: timeout [
 Socket >> waitForSendDoneFor: timeout [
 	"Wait up until the given deadline for the current send operation to complete. Return true if it completes by the deadline, false if not."
 
-	| startTime msecsDelta msecsEllapsed sendDone |
+	^ self
+		  waitForSendDoneFor: timeout
+		  ifClosed: [ ConnectionClosed signal: 'connection closed while sending data' ]
+		  ifTimedOut: [ ConnectionTimedOut signal: 'send data timeout; data not sent' ]
+]
+
+{ #category : 'waiting' }
+Socket >> waitForSendDoneFor: timeout ifClosed: closedBlock ifTimedOut: timedOutBlock [
+	"Wait up until the given deadline for the current send operation to complete.
+	If it does not, execute <timedOutBlock>. If the connection is closed before
+	the send completes, execute <closedBlock>."
+
+	| startTime msecsDelta |
 	startTime := Time millisecondClockValue.
 	msecsDelta := (timeout * 1000) truncated.
-	[(sendDone := self primSocketSendDone: socketHandle) not and: [ self isConnected
-			"Connection end and final data can happen fast, so test in this order"
-		and: [(msecsEllapsed := Time millisecondsSince: startTime) < msecsDelta]]] whileTrue: [
-			self writeSemaphore waitTimeoutMilliseconds: msecsDelta - msecsEllapsed].
-
-	^ sendDone
+	[ (Time millisecondsSince: startTime) < msecsDelta ] whileTrue: [
+		self sendDone ifTrue: [ ^ self ].
+		self isConnected ifFalse: [ ^ closedBlock value ].
+		self writeSemaphore waitTimeoutMilliseconds:
+			(msecsDelta - (Time millisecondsSince: startTime) max: 0) ].
+	self sendDone ifFalse: [
+		^ (self isConnected
+			   ifTrue: [ timedOutBlock ]
+			   ifFalse: [ closedBlock ]) value ].
+	^ self
 ]
 
 { #category : 'accessing' }
