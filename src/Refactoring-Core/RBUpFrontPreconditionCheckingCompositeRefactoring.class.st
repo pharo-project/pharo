@@ -34,5 +34,5 @@ RBUpFrontPreconditionCheckingCompositeRefactoring >> privateTransform [
 
 { #category : 'accessing' }
 RBUpFrontPreconditionCheckingCompositeRefactoring >> violators [ 
-	^ self breakingChangePreconditions violators
+	^ self breakingChangePreconditions flatCollect: [ :cond | cond violators ]
 ]
