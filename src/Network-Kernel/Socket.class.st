@@ -1630,18 +1630,14 @@ Socket >> waitForDataFor: timeout [
 Socket >> waitForDataFor: timeout ifClosed: closedBlock ifTimedOut: timedOutBlock [
 	"Wait for the given nr of seconds for data to arrive."
 
-	| startTime msecsDelta |
+	| startTime msecsDelta msecsElapsed |
 	startTime := Time millisecondClockValue.
 	msecsDelta := (timeout * 1000) truncated.
-	[ (Time millisecondsSince: startTime) < msecsDelta ]
-		whileTrue: [ self dataAvailable ifTrue: [ ^ self ].
-			self isConnected ifFalse: [ ^ closedBlock value ].
-			self readSemaphore waitTimeoutMilliseconds: (msecsDelta - (Time millisecondsSince: startTime) max: 0) ].
-
-	self dataAvailable
-		ifFalse: [ ^ (self isConnected
-				ifTrue: [ timedOutBlock ]
-				ifFalse: [ closedBlock ]) value ]
+	[ self dataAvailable ] whileFalse: [
+		self isConnected ifFalse: [ ^ closedBlock value ].
+		(msecsElapsed := Time millisecondsSince: startTime) < msecsDelta
+			ifFalse: [ ^ timedOutBlock value ].
+		self readSemaphore waitTimeoutMilliseconds: msecsDelta - msecsElapsed ]
 ]
 
 { #category : 'waiting' }
@@ -1695,19 +1691,15 @@ Socket >> waitForSendDoneFor: timeout ifClosed: closedBlock ifTimedOut: timedOut
 	If it does not, execute <timedOutBlock>. If the connection is closed before
 	the send completes, execute <closedBlock>."
 
-	| startTime msecsDelta |
+	| startTime msecsDelta msecsElapsed |
 	startTime := Time millisecondClockValue.
 	msecsDelta := (timeout * 1000) truncated.
-	[ (Time millisecondsSince: startTime) < msecsDelta ] whileTrue: [
-		self sendDone ifTrue: [ ^ self ].
+	"Connection end and final data can happen fast, so test in this order"
+	[ self sendDone ] whileFalse: [
 		self isConnected ifFalse: [ ^ closedBlock value ].
-		self writeSemaphore waitTimeoutMilliseconds:
-			(msecsDelta - (Time millisecondsSince: startTime) max: 0) ].
-	self sendDone ifFalse: [
-		^ (self isConnected
-			   ifTrue: [ timedOutBlock ]
-			   ifFalse: [ closedBlock ]) value ].
-	^ self
+		(msecsElapsed := Time millisecondsSince: startTime) < msecsDelta
+			ifFalse: [ ^ timedOutBlock value ].
+		self writeSemaphore waitTimeoutMilliseconds: msecsDelta - msecsElapsed ]
 ]
 
 { #category : 'accessing' }
