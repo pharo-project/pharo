@@ -109,6 +109,14 @@ Object class >> howToModifyPrimitives [
 	self error: 'comment only'
 ]
 
+{ #category : 'initialization' }
+Object class >> initialize [
+
+	Warning signal:
+		'Proceeding will call `Behavior>>initialize` and this method will update my superclass and my method dictionary. Are you sure you want to proceed?'.
+	^ super initialize
+]
+
 { #category : 'instance creation' }
 Object class >> newFrom: aSimilarObject [
 	"Create an object that has similar contents to aSimilarObject. If the classes have any instance variables with the same names, copy them across. If this is bad for a class, override this method."
