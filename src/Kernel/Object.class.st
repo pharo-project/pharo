@@ -112,9 +112,7 @@ Object class >> howToModifyPrimitives [
 { #category : 'initialization' }
 Object class >> initialize [
 
-	Warning signal:
-		'Proceeding will call `Behavior>>initialize` and this method will update my superclass and my method dictionary. Are you sure you want to proceed?'.
-	^ super initialize
+	self error: 'This method should not be invoked. This method is probably be invoked by a call to `super initialize` on a class side initialization which should not be done. Only instance side initalization should systematically call their super equivalent.'
 ]
 
 { #category : 'instance creation' }
