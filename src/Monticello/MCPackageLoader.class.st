@@ -150,6 +150,7 @@ MCPackageLoader >> loadClassDefinitions [
 	errorDefinitions := OrderedCollection new.
 
 	"We first load the class definitions and store the potential errors"
+	[
 	(additions select: [ :aDefinition | aDefinition isClassDefinition ])
 		do: [ :aDefinition |
 			[ aDefinition load ]
@@ -166,14 +167,11 @@ MCPackageLoader >> loadClassDefinitions [
 			errorDefinitions remove: aClassDefinition.
 			[ aClassDefinition load ]
 				on: Error
-				do: [ : ex | 
-						ex messageText traceCr.
-						errorDefinitions add: aClassDefinition ] ]
+				do: [ :ex | errorDefinitions add: aClassDefinition ] ]
 		displayingProgress: 'Reloading erroneous definitions...'.
-	previousErrors size = errorDefinitions size ] whileFalse.
-
-	"Finally we warn about the errors we could not fix."
-	errorDefinitions ifNotEmpty: [ self warnAboutErrors: errorDefinitions ]
+	previousErrors size = errorDefinitions size ] whileFalse ] ensure: [ "Finally we warn about the errors we could not fix."
+		errorDefinitions ifNotEmpty: [
+			self warnAboutErrors: errorDefinitions ] ]
 ]
 
 { #category : 'patch ops' }
