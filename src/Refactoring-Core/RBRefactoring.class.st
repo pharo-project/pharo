@@ -56,6 +56,12 @@ RBRefactoring >> asRefactoring [
 	^ self
 ]
 
+{ #category : 'preconditions' }
+RBRefactoring >> breakingChangePreconditions [
+
+	^ self trueCondition 
+]
+
 { #category : 'testing' }
 RBRefactoring >> canReferenceVariable: aString in: aClass [
 	(aClass definesVariable: aString) ifTrue: [^true].
@@ -71,6 +77,16 @@ RBRefactoring >> checkApplicabilityPreconditions [
 	failedPreconditions := self failedApplicabilityPreconditions.
 	failedPreconditions ifEmpty: [ ^ self ].
 	RBRefactoringError signalFor: failedPreconditions
+]
+
+{ #category : 'scripting api - conditions' }
+RBRefactoring >> checkBreakingChangePreconditions [
+	"Check a preconditions and raise an error on violations. This method is part of the scripting API since it raises an error."
+	
+	| failedPreconditions |
+	failedPreconditions := self failedBreakingChangePreconditions.
+	failedPreconditions ifEmpty: [ ^ self ].
+	RBRefactoringWarning signalFor: failedPreconditions
 ]
 
 { #category : 'private' }
@@ -134,6 +150,13 @@ RBRefactoring >> failedApplicabilityPreconditions [
 	"Returne the failed preconditions without raising error. It should only be called by drivers."
 	
 	^ self applicabilityPreconditions reject: [ :cond | cond check ]
+]
+
+{ #category : 'preconditions' }
+RBRefactoring >> failedBreakingChangePreconditions [
+	"Returne the failed preconditions without raising error. It should only be called by drivers."
+	
+	^ self breakingChangePreconditions reject: [ :cond | cond check ]
 ]
 
 { #category : 'private' }

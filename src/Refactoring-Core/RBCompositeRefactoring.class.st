@@ -31,9 +31,7 @@ RBCompositeRefactoring >> generateChanges [
 	
 	self prepareForExecution.
 	self checkApplicabilityPreconditions.
-	self breakingChangePreconditions check ifFalse: [
-		RBBreakingChangeChecksFailedWarning signal:
-			self breakingChangePreconditions errorString ].
+	self checkBreakingChangePreconditions.
 
 	self privateTransform.
 	^ self changes
