@@ -75,7 +75,7 @@ RBRemoveMethodsRefactoring >> breakingChangePreconditions [
 
 	refactorings do: [ :ref | ref checkSuperMethods ].
 
-	^ self preconditionHaveNoSenders 
+	^ { self preconditionHaveNoSenders }
 ]
 
 { #category : 'preconditions' }
