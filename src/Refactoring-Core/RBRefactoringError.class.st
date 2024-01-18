@@ -20,7 +20,7 @@ RBRefactoringError class >> signalFor: failingConditions [
 			                cond violationMessageOn: aStream ] ].
 	
 	^ self new
-		faledConditions: failingConditions;
+		failedConditions: failingConditions;
 		messageText: errorStrings;
 		signal	
 ]
@@ -31,7 +31,7 @@ RBRefactoringError >> failedConditions [
 ]
 
 { #category : 'accessing' }
-RBRefactoringError >> faledConditions: aCollection [
+RBRefactoringError >> failedConditions: aCollection [
 	"aCollection should contain objects of kind RBNewAbstractCondition"
 	failedConditions := aCollection
 ]

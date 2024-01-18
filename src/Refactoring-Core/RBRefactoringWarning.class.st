@@ -29,7 +29,7 @@ RBRefactoringWarning class >> signalFor: failingConditions [
 			                cond violationMessageOn: aStream ] ].
 	
 	^ self new
-		faledConditions: failingConditions;
+		failedConditions: failingConditions;
 		messageText: errorStrings;
 		signal	
 ]
