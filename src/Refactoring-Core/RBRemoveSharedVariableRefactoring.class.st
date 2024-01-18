@@ -40,7 +40,7 @@ RBRemoveSharedVariableRefactoring >> applicabilityPreconditions [
 
 { #category : 'preconditions' }
 RBRemoveSharedVariableRefactoring >> breakingChangePreconditions [
-	
+
 	^ breakingChangePreconditions ifNil: [  breakingChangePreconditions := 
 		(RBSharedVariableHasReferences new 
 			hierarchyOf: class referencesSharedVariable: variableName) not ]

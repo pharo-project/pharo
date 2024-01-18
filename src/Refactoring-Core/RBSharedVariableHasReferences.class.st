@@ -13,7 +13,7 @@ Class {
 
 { #category : 'accessing' }
 RBSharedVariableHasReferences >> check [
-	
+
 	aClass withAllSubclasses do: [ :each |
 			| res |
 			res := (each whichMethodsReferToSharedVariable: sharedVariable).
