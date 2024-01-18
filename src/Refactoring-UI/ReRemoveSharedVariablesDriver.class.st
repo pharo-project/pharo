@@ -76,8 +76,11 @@ ReRemoveSharedVariablesDriver >> runRefactoring [
 	
 	refactoring failedApplicabilityPreconditions 
 		ifNotEmpty: [ ^ self inform: 'The shared variable does not exist' ].
-	
-	self applyChanges
+
+	refactoring failedBreakingChangePreconditions
+		ifEmpty: [ self applyChanges ]
+		ifNotEmpty: [ self handleBreakingChanges ]
+
 ]
 
 { #category : 'initialization' }
