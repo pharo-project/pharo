@@ -2,7 +2,7 @@
 A simple refactoring to remove a shared variable.
 "
 Class {
-	#name : 'RBRemoveSharedVariableRefactoring',
+	#name : 'ReRemoveSharedVariableRefactoring',
 	#superclass : 'RBVariableRefactoring',
 	#instVars : [
 		'breakingChangePreconditions'
@@ -13,25 +13,25 @@ Class {
 }
 
 { #category : 'displaying' }
-RBRemoveSharedVariableRefactoring class >> basicMenuItemString [
+ReRemoveSharedVariableRefactoring class >> basicMenuItemString [
 
 	^ 'Remove Shared Variable'
 ]
 
 { #category : 'instance creation' }
-RBRemoveSharedVariableRefactoring class >> model: aNamespace remove: variable from: class [
+ReRemoveSharedVariableRefactoring class >> model: aNamespace remove: variable from: class [
 
 	^ self model: aNamespace variable: variable class: class
 ]
 
 { #category : 'removing' }
-RBRemoveSharedVariableRefactoring class >> remove: variable from: class [
+ReRemoveSharedVariableRefactoring class >> remove: variable from: class [
 
 	^ self variable: variable class: class
 ]
 
 { #category : 'preconditions' }
-RBRemoveSharedVariableRefactoring >> applicabilityPreconditions [
+ReRemoveSharedVariableRefactoring >> applicabilityPreconditions [
 
 	^ ( ReIsNotAMetaclass class: class )
 		& ( ReDirectlyDefinesSharedVariableCondition class: class sharedVariables: {variableName} )
@@ -39,7 +39,7 @@ RBRemoveSharedVariableRefactoring >> applicabilityPreconditions [
 ]
 
 { #category : 'preconditions' }
-RBRemoveSharedVariableRefactoring >> breakingChangePreconditions [
+ReRemoveSharedVariableRefactoring >> breakingChangePreconditions [
 
 	^ breakingChangePreconditions ifNil: [  breakingChangePreconditions := 
 		(ReSharedVariableHasReferences new 
@@ -48,7 +48,7 @@ RBRemoveSharedVariableRefactoring >> breakingChangePreconditions [
 ]
 
 { #category : 'executing' }
-RBRemoveSharedVariableRefactoring >> generateChanges [
+ReRemoveSharedVariableRefactoring >> generateChanges [
 	"Prepare, check the preconditions, and perform the actual transformation (i.e., creating a list of changes that can be accessible using the changes message). This method should not be invoked from drivers since drivers usually check in finer grained mode the preconditions - and that this stage they already checked the preconditions."
 	
 	self prepareForExecution.
@@ -65,18 +65,18 @@ RBRemoveSharedVariableRefactoring >> generateChanges [
 ]
 
 { #category : 'preconditions' }
-RBRemoveSharedVariableRefactoring >> preconditions [
+ReRemoveSharedVariableRefactoring >> preconditions [
 
 	^ self applicabilityPreconditions & self breakingChangePreconditions 
 ]
 
 { #category : 'transforming' }
-RBRemoveSharedVariableRefactoring >> privateTransform [
+ReRemoveSharedVariableRefactoring >> privateTransform [
 	class removeClassVariable: variableName
 ]
 
 { #category : 'accessing' }
-RBRemoveSharedVariableRefactoring >> refactoredClass [
+ReRemoveSharedVariableRefactoring >> refactoredClass [
 
 	^ class
 ]

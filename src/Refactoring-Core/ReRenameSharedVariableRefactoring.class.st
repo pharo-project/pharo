@@ -6,7 +6,7 @@ I rename the class variable in the class definition and in all methods refering 
 My precondition verifies that the new variable is valid and not yet used in the whole class hierarchy.
 "
 Class {
-	#name : 'RBRenameClassVariableRefactoring',
+	#name : 'ReRenameSharedVariableRefactoring',
 	#superclass : 'RBVariableRefactoring',
 	#instVars : [
 		'newName'
@@ -17,7 +17,7 @@ Class {
 }
 
 { #category : 'instance creation' }
-RBRenameClassVariableRefactoring class >> model: aRBSmalltalk rename: aVarName to: aName in: aClass [
+ReRenameSharedVariableRefactoring class >> model: aRBSmalltalk rename: aVarName to: aName in: aClass [
 	^ self new
 		model: aRBSmalltalk;
 		rename: aVarName
@@ -27,7 +27,7 @@ RBRenameClassVariableRefactoring class >> model: aRBSmalltalk rename: aVarName t
 ]
 
 { #category : 'instance creation' }
-RBRenameClassVariableRefactoring class >> rename: aVarName to: aName in: aClass [
+ReRenameSharedVariableRefactoring class >> rename: aVarName to: aName in: aClass [
 	^ self new
 		rename: aVarName
 		to: aName
@@ -35,7 +35,7 @@ RBRenameClassVariableRefactoring class >> rename: aVarName to: aName in: aClass 
 ]
 
 { #category : 'preconditions' }
-RBRenameClassVariableRefactoring >> applicabilityPreconditions [
+ReRenameSharedVariableRefactoring >> applicabilityPreconditions [
 
 	^ {
 		  (ReIsNotAMetaclass class: class).
@@ -50,17 +50,17 @@ RBRenameClassVariableRefactoring >> applicabilityPreconditions [
 ]
 
 { #category : 'accessing' }
-RBRenameClassVariableRefactoring >> newName [
+ReRenameSharedVariableRefactoring >> newName [
 	^ newName
 ]
 
 { #category : 'accessing' }
-RBRenameClassVariableRefactoring >> newName: anObject [
+ReRenameSharedVariableRefactoring >> newName: anObject [
 	newName := anObject
 ]
 
 { #category : 'preconditions' }
-RBRenameClassVariableRefactoring >> preconditions [
+ReRenameSharedVariableRefactoring >> preconditions [
 	^(RBCondition isMetaclass: class) not
 		& (RBCondition isValidClassVarName: newName asString for: class)
 			& (RBCondition definesClassVariable: variableName asString in: class)
@@ -69,7 +69,7 @@ RBRenameClassVariableRefactoring >> preconditions [
 ]
 
 { #category : 'transforming' }
-RBRenameClassVariableRefactoring >> privateTransform [
+ReRenameSharedVariableRefactoring >> privateTransform [
 	class
 		renameClassVariable: variableName
 		to: newName
@@ -77,13 +77,13 @@ RBRenameClassVariableRefactoring >> privateTransform [
 ]
 
 { #category : 'initialization' }
-RBRenameClassVariableRefactoring >> rename: aVarName to: aName in: aClass [
+ReRenameSharedVariableRefactoring >> rename: aVarName to: aName in: aClass [
 	self variable: aVarName class: aClass.
 	newName := aName
 ]
 
 { #category : 'transforming' }
-RBRenameClassVariableRefactoring >> renameReferences [
+ReRenameSharedVariableRefactoring >> renameReferences [
 	| replacer methods |
 	replacer := self parseTreeRewriterClass
 		rename: variableName
@@ -96,7 +96,7 @@ RBRenameClassVariableRefactoring >> renameReferences [
 ]
 
 { #category : 'printing' }
-RBRenameClassVariableRefactoring >> storeOn: aStream [
+ReRenameSharedVariableRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.
 	aStream

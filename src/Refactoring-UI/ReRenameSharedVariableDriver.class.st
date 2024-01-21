@@ -12,5 +12,5 @@ Class {
 { #category : 'factory method' }
 ReRenameSharedVariableDriver >> refactoringClass [
 
-	^ RBRenameClassVariableRefactoring
+	^ ReRenameSharedVariableRefactoring
 ]
