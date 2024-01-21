@@ -232,7 +232,7 @@ MetacelloVersionSpec >> createVersion [
 	^ self versionClass fromSpec: self
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'enumerating' }
 MetacelloVersionSpec >> currentlyLoadedClassesInVersion [
 
 	| classes |
