@@ -1,5 +1,5 @@
 Class {
-	#name : 'RBRenameClassDriver',
+	#name : 'ReRenameClassDriver',
 	#superclass : 'RBInteractionDriver',
 	#instVars : [
 		'oldName',
@@ -12,7 +12,7 @@ Class {
 }
 
 { #category : 'instance creation' }
-RBRenameClassDriver class >> rename: oldName [
+ReRenameClassDriver class >> rename: oldName [
 	
 	^ self new 
 		oldName: oldName;
@@ -20,26 +20,26 @@ RBRenameClassDriver class >> rename: oldName [
 ]
 
 { #category : 'execution' }
-RBRenameClassDriver >> changes [
+ReRenameClassDriver >> changes [
 
 	^ refactoring privateTransform; changes
 ]
 
 { #category : 'resources' }
-RBRenameClassDriver >> configureRefactoring [
+ReRenameClassDriver >> configureRefactoring [
 	
 		refactoring := RBRenameClassRefactoring rename: oldName.
 ]
 
 { #category : 'initialization' }
-RBRenameClassDriver >> initialize [ 
+ReRenameClassDriver >> initialize [ 
 	
 	super initialize.
 	shouldEscape := false.
 ]
 
 { #category : 'accessing' }
-RBRenameClassDriver >> model: aRBNamespace [
+ReRenameClassDriver >> model: aRBNamespace [
 	"Pay attention when you specify a model that is a selection of the full environment. 
 	Indeed imagine that you have a model of just one package, 
 	the precondition may say that the new name is not the one of an already existing global 
@@ -51,12 +51,12 @@ RBRenameClassDriver >> model: aRBNamespace [
 ]
 
 { #category : 'accessing' }
-RBRenameClassDriver >> oldName: aString [ 
+ReRenameClassDriver >> oldName: aString [ 
 	oldName := aString
 ]
 
 { #category : 'execution' }
-RBRenameClassDriver >> requestNewNameBasedOn: aName [
+ReRenameClassDriver >> requestNewNameBasedOn: aName [
 	
 	newName := SpRequestDialog new 
 							title: 'Please provide a new class name' ;
@@ -73,7 +73,7 @@ RBRenameClassDriver >> requestNewNameBasedOn: aName [
 ]
 
 { #category : 'execution' }
-RBRenameClassDriver >> runRefactoring [
+ReRenameClassDriver >> runRefactoring [
 	
 	self configureRefactoring.
 	refactoring doesClassToBeRenamedExist
@@ -96,7 +96,7 @@ RBRenameClassDriver >> runRefactoring [
 ]
 
 { #category : 'accessing' }
-RBRenameClassDriver >> scopes: aScope [
+ReRenameClassDriver >> scopes: aScope [
 
 	scopes := aScope
 ]

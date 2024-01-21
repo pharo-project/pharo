@@ -31,7 +31,7 @@ SycRenameClassCommand >> execute [
 	
 	
 	
-	(RBRenameClassDriver
+	(ReRenameClassDriver
 		rename: targetClass name) 
 		model: RBBrowserEnvironment new;
 		scopes: toolContext refactoringScopes; runRefactoring
