@@ -231,6 +231,13 @@ PragmaMenuAndShortcutRegistrationItem >> precondition: aBlock [
 	precondition := aBlock
 ]
 
+{ #category : 'printing' }
+PragmaMenuAndShortcutRegistrationItem >> printOn: aStream [
+
+	super printOn: aStream. 
+	item ifNotNil: [ aStream nextPutAll: '(', item ,')' ]
+]
+
 { #category : 'accessing' }
 PragmaMenuAndShortcutRegistrationItem >> selector [
 
