@@ -1,5 +1,5 @@
 Class {
-	#name : 'RBSharedVariableHasReferences',
+	#name : 'ReSharedVariableHasReferences',
 	#superclass : 'RBNewAbstractCondition',
 	#instVars : [
 		'aClass',
@@ -12,7 +12,7 @@ Class {
 }
 
 { #category : 'accessing' }
-RBSharedVariableHasReferences >> check [
+ReSharedVariableHasReferences >> check [
 
 	aClass withAllSubclasses do: [ :each |
 			| res |
@@ -30,25 +30,25 @@ RBSharedVariableHasReferences >> check [
 ]
 
 { #category : 'accessing' }
-RBSharedVariableHasReferences >> errorString [ 
+ReSharedVariableHasReferences >> errorString [ 
 
 	^ ' Variable ', sharedVariable , ' is still referenced'
 ]
 
 { #category : 'instance creation' }
-RBSharedVariableHasReferences >> hierarchyOf: aRBClass referencesSharedVariable: variableName [
+ReSharedVariableHasReferences >> hierarchyOf: aRBClass referencesSharedVariable: variableName [
 
 	aClass := aRBClass instanceSide.
 	sharedVariable := variableName 
 ]
 
 { #category : 'initialization' }
-RBSharedVariableHasReferences >> initialize [ 
+ReSharedVariableHasReferences >> initialize [ 
 	super initialize.
 	violators := OrderedCollection new
 ]
 
 { #category : 'accessing' }
-RBSharedVariableHasReferences >> violators [ 
+ReSharedVariableHasReferences >> violators [ 
 	^ violators
 ]

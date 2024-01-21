@@ -33,8 +33,8 @@ RBRemoveSharedVariableRefactoring class >> remove: variable from: class [
 { #category : 'preconditions' }
 RBRemoveSharedVariableRefactoring >> applicabilityPreconditions [
 
-	^ ( RBIsNotAMetaclass class: class )
-		& ( RBDirectlyDefinesSharedVariableCondition class: class sharedVariables: {variableName} )
+	^ ( ReIsNotAMetaclass class: class )
+		& ( ReDirectlyDefinesSharedVariableCondition class: class sharedVariables: {variableName} )
 
 ]
 
@@ -42,7 +42,7 @@ RBRemoveSharedVariableRefactoring >> applicabilityPreconditions [
 RBRemoveSharedVariableRefactoring >> breakingChangePreconditions [
 
 	^ breakingChangePreconditions ifNil: [  breakingChangePreconditions := 
-		(RBSharedVariableHasReferences new 
+		(ReSharedVariableHasReferences new 
 			hierarchyOf: class referencesSharedVariable: variableName) not ]
 	
 ]

@@ -1,13 +1,13 @@
 Class {
-	#name : 'RBClassesEmptyCondition',
-	#superclass : 'RBClassesCondition',
+	#name : 'ReClassesEmptyCondition',
+	#superclass : 'ReClassesCondition',
 	#category : 'Refactoring-Core-Conditions',
 	#package : 'Refactoring-Core',
 	#tag : 'Conditions'
 }
 
 { #category : 'testing' }
-RBClassesEmptyCondition >> isEmpty: aClass [
+ReClassesEmptyCondition >> isEmpty: aClass [
 
 	^ aClass classVariableNames isEmpty and: [
 		  aClass instanceVariableNames isEmpty and: [
@@ -15,7 +15,7 @@ RBClassesEmptyCondition >> isEmpty: aClass [
 ]
 
 { #category : 'displaying' }
-RBClassesEmptyCondition >> violationMessageOn: aStream [
+ReClassesEmptyCondition >> violationMessageOn: aStream [
 
 	self violators do: [ :violator |
 		aStream
@@ -25,7 +25,7 @@ RBClassesEmptyCondition >> violationMessageOn: aStream [
 ]
 
 { #category : 'accessing' }
-RBClassesEmptyCondition >> violators [
+ReClassesEmptyCondition >> violators [
 
 	^ violators ifNil: [
 		  violators := classes reject: [ :aClass | self isEmpty: aClass ] ]

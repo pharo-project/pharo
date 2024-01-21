@@ -1,6 +1,6 @@
 Class {
-	#name : 'RBDefinesSelectorsCondition',
-	#superclass : 'RBMethodsCondition',
+	#name : 'ReDefinesSelectorsCondition',
+	#superclass : 'ReMethodsCondition',
 	#instVars : [
 		'class',
 		'selectors'
@@ -11,14 +11,14 @@ Class {
 }
 
 { #category : 'initialization' }
-RBDefinesSelectorsCondition >> definesSelectors: aSelectorsList in: aClass [
+ReDefinesSelectorsCondition >> definesSelectors: aSelectorsList in: aClass [
 
 	class := aClass.
 	selectors := aSelectorsList
 ]
 
 { #category : 'displaying' }
-RBDefinesSelectorsCondition >> violationMessageOn: aStream [
+ReDefinesSelectorsCondition >> violationMessageOn: aStream [
 
 	self violators do: [ :violator |
 		aStream
@@ -31,7 +31,7 @@ RBDefinesSelectorsCondition >> violationMessageOn: aStream [
 ]
 
 { #category : 'accessing' }
-RBDefinesSelectorsCondition >> violators [
+ReDefinesSelectorsCondition >> violators [
 
 	^ violators ifNil: [
 		  violators := selectors reject: [ :aSelector | class directlyDefinesMethod: aSelector ] ]

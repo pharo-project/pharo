@@ -1,19 +1,19 @@
 Class {
-	#name : 'RBNotInCascadedMessageCondition',
-	#superclass : 'RBSubtreeCondition',
+	#name : 'ReNotInCascadedMessageCondition',
+	#superclass : 'ReSubtreeCondition',
 	#category : 'Refactoring-Core-Conditions',
 	#package : 'Refactoring-Core',
 	#tag : 'Conditions'
 }
 
 { #category : 'checking' }
-RBNotInCascadedMessageCondition >> check [
+ReNotInCascadedMessageCondition >> check [
 
 	^ subtree parent isCascade not
 ]
 
 { #category : 'displaying' }
-RBNotInCascadedMessageCondition >> violationMessageOn: aStream [ 
+ReNotInCascadedMessageCondition >> violationMessageOn: aStream [ 
 
 	^ aStream nextPutAll: 'Cannot extract code in a cascaded message.'
 ]

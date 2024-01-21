@@ -41,7 +41,7 @@ ReRemoveClassRefactoring class >> model: aRBSmalltalk classNames: aClassNameColl
 { #category : 'preconditions' }
 ReRemoveClassRefactoring >> applicabilityPreconditions [
 
-	^ { RBClassesExistCondition new classes: classesDictionary . self preconditionAreNotMeta }
+	^ { ReClassesExistCondition new classes: classesDictionary . self preconditionAreNotMeta }
 ]
 
 { #category : 'preconditions' }
@@ -102,19 +102,19 @@ ReRemoveClassRefactoring >> environmentWithUsersOf: aClassable [
 { #category : 'preconditions' }
 ReRemoveClassRefactoring >> preconditionAreNotMeta [
 
-	^ RBClassesAreNotMetaClassCondition new classes: classesDictionary
+	^ ReClassesAreNotMetaClassCondition new classes: classesDictionary
 ]
 
 { #category : 'preconditions' }
 ReRemoveClassRefactoring >> preconditionEmptyClasses [
 
-	^ RBClassesEmptyCondition new classes: classesDictionary
+	^ ReClassesEmptyCondition new classes: classesDictionary
 ]
 
 { #category : 'preconditions' }
 ReRemoveClassRefactoring >> preconditionHaveNoReferences [
 
-	^ RBClassesHaveNoReferencesCondition new
+	^ ReClassesHaveNoReferencesCondition new
 		  model: model;
 		  classes: classesDictionary values
 ]
@@ -122,7 +122,7 @@ ReRemoveClassRefactoring >> preconditionHaveNoReferences [
 { #category : 'preconditions' }
 ReRemoveClassRefactoring >> preconditionHaveNoSubclasses [
 
-	^ RBClassesHaveNoSubclassesCondition new classes: classesDictionary					
+	^ ReClassesHaveNoSubclassesCondition new classes: classesDictionary					
 ]
 
 { #category : 'preconditions' }

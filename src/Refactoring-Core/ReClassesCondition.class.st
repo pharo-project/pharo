@@ -1,5 +1,5 @@
 Class {
-	#name : 'RBClassesCondition',
+	#name : 'ReClassesCondition',
 	#superclass : 'RBCondition',
 	#instVars : [
 		'classes',
@@ -11,31 +11,31 @@ Class {
 }
 
 { #category : 'checking' }
-RBClassesCondition >> check [ 
+ReClassesCondition >> check [ 
 
 	^ self violators isEmpty
 ]
 
 { #category : 'accessing' }
-RBClassesCondition >> classes: aRBClassCollection [
+ReClassesCondition >> classes: aRBClassCollection [
 
 	classes := aRBClassCollection 
 ]
 
 { #category : 'checking' }
-RBClassesCondition >> isFalse [
+ReClassesCondition >> isFalse [
 
 	^ self isTrue not
 ]
 
 { #category : 'checking' }
-RBClassesCondition >> isTrue [ 
+ReClassesCondition >> isTrue [ 
 
 	^ self check
 ]
 
 { #category : 'accessing' }
-RBClassesCondition >> violators [
+ReClassesCondition >> violators [
 
 	^ self subclassResponsibility
 ]

@@ -2,7 +2,7 @@
 I am an abstract class whose subclasses define checks for valid variables (instance and class vars)
 "
 Class {
-	#name : 'RBVariableNameCondition',
+	#name : 'ReVariableNameCondition',
 	#superclass : 'RBNewAbstractCondition',
 	#instVars : [
 		'name',
@@ -14,18 +14,18 @@ Class {
 }
 
 { #category : 'utilities' }
-RBVariableNameCondition class >> name: aString [
+ReVariableNameCondition class >> name: aString [
 
 	^ self new name: aString
 ]
 
 { #category : 'utilities' }
-RBVariableNameCondition class >> reservedNames [
+ReVariableNameCondition class >> reservedNames [
 	^#('self' 'true' 'false' 'nil' 'thisContext' 'super')
 ]
 
 { #category : 'accessing' }
-RBVariableNameCondition >> errorString [
+ReVariableNameCondition >> errorString [
 
 	^ String streamContents: [ :stream |
 		self violationMessageOn: stream
@@ -33,16 +33,16 @@ RBVariableNameCondition >> errorString [
 ]
 
 { #category : 'accessing' }
-RBVariableNameCondition >> name: aString [
+ReVariableNameCondition >> name: aString [
 	name := aString
 ]
 
 { #category : 'displaying' }
-RBVariableNameCondition >> violationMessageOn: stream [
+ReVariableNameCondition >> violationMessageOn: stream [
 	self subclassResponsibility 
 ]
 
 { #category : 'accessing' }
-RBVariableNameCondition >> violator [
+ReVariableNameCondition >> violator [
 	^ violator
 ]

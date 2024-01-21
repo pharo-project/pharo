@@ -1,5 +1,5 @@
 Class {
-	#name : 'RBValidClassNameCondition',
+	#name : 'ReValidClassNameCondition',
 	#superclass : 'RBCondition',
 	#instVars : [
 		'className'
@@ -10,19 +10,19 @@ Class {
 }
 
 { #category : 'checking' }
-RBValidClassNameCondition >> check [ 
+ReValidClassNameCondition >> check [ 
 
 	^ self class checkClassVarName: className in: self
 ]
 
 { #category : 'accessing' }
-RBValidClassNameCondition >> className: aSymbol [
+ReValidClassNameCondition >> className: aSymbol [
 
 	className := aSymbol asSymbol 
 ]
 
 { #category : 'accessing' }
-RBValidClassNameCondition >> violationMessageOn: aStream [
+ReValidClassNameCondition >> violationMessageOn: aStream [
 
 	self violators do: [ :violator |
 		aStream
@@ -31,7 +31,7 @@ RBValidClassNameCondition >> violationMessageOn: aStream [
 ]
 
 { #category : 'accessing' }
-RBValidClassNameCondition >> violators [
+ReValidClassNameCondition >> violators [
 
 	^ self check ifFalse: [ { className } ] ifTrue: [ #() ]
 ]

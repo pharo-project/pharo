@@ -1,13 +1,13 @@
 Class {
-	#name : 'RBClassesExistCondition',
-	#superclass : 'RBClassesCondition',
+	#name : 'ReClassesExistCondition',
+	#superclass : 'ReClassesCondition',
 	#category : 'Refactoring-Core-Conditions',
 	#package : 'Refactoring-Core',
 	#tag : 'Conditions'
 }
 
 { #category : 'displaying' }
-RBClassesExistCondition >> violationMessageOn: aStream [
+ReClassesExistCondition >> violationMessageOn: aStream [
 
 	self violators do: [ :violator |
 		aStream
@@ -17,7 +17,7 @@ RBClassesExistCondition >> violationMessageOn: aStream [
 ]
 
 { #category : 'accessing' }
-RBClassesExistCondition >> violators [
+ReClassesExistCondition >> violators [
 
 	^ violators ifNil: [
 		  violators := OrderedCollection new.

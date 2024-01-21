@@ -4,7 +4,7 @@ It could be a subclass of `REUpToRootDefinesMethod` since it extends the search.
 "
 Class {
 	#name : 'ReHierarchyDefinesMethod',
-	#superclass : 'RBClassCondition',
+	#superclass : 'ReClassCondition',
 	#instVars : [
 		'selector'
 	],

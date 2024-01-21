@@ -2,15 +2,15 @@
 I check if a name is valid for an instance variable
 "
 Class {
-	#name : 'RBIsValidInstanceVariableName',
-	#superclass : 'RBVariableNameCondition',
+	#name : 'ReIsValidInstanceVariableName',
+	#superclass : 'ReVariableNameCondition',
 	#category : 'Refactoring-Core-Conditions',
 	#package : 'Refactoring-Core',
 	#tag : 'Conditions'
 }
 
 { #category : 'checking' }
-RBIsValidInstanceVariableName >> check [
+ReIsValidInstanceVariableName >> check [
 
 	| string |
 	name isString ifFalse: [
@@ -33,7 +33,7 @@ RBIsValidInstanceVariableName >> check [
 ]
 
 { #category : 'accessing' }
-RBIsValidInstanceVariableName >> violationMessageOn: aStream [
+ReIsValidInstanceVariableName >> violationMessageOn: aStream [
 
 	^ aStream
 		  nextPutAll: violator;

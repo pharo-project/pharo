@@ -1,5 +1,5 @@
 Class {
-	#name : 'RBMethodsCondition',
+	#name : 'ReMethodsCondition',
 	#superclass : 'RBCondition',
 	#instVars : [
 		'violators'
@@ -10,13 +10,13 @@ Class {
 }
 
 { #category : 'checking' }
-RBMethodsCondition >> check [ 
+ReMethodsCondition >> check [ 
 
 	^ self violators isEmpty
 ]
 
 { #category : 'accessing' }
-RBMethodsCondition >> violators [
+ReMethodsCondition >> violators [
 
 	^ self subclassResponsibility 
 ]

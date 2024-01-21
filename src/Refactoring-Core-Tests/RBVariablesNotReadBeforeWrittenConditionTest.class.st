@@ -17,7 +17,7 @@ RBVariablesNotReadBeforeWrittenConditionTest >> testNoVariablesInSubtree [
 	parseTree := class parseTreeForSelector: self selector.
 	subtree := parseTree extractSubtreeWith: 'precondition check'.
 	
-	precondition := RBVariablesNotReadBeforeWrittenCondition new subtree: subtree; variables: #().
+	precondition := ReVariablesNotReadBeforeWrittenCondition new subtree: subtree; variables: #().
 	
 	self assert: precondition check
 ]
@@ -28,7 +28,7 @@ RBVariablesNotReadBeforeWrittenConditionTest >> testSubtreeIsNilExpectFalse [
 	| precondition |.
 	
 	"model is read before written in the code snippet"
-	precondition := RBVariablesNotReadBeforeWrittenCondition new subtree: nil; variables: #(#model).
+	precondition := ReVariablesNotReadBeforeWrittenCondition new subtree: nil; variables: #(#model).
 	
 	self deny: precondition check
 ]
@@ -45,7 +45,7 @@ RBVariablesNotReadBeforeWrittenConditionTest >> testVariableIsNotReadBeforeWritt
 	class := model classObjectFor: self class.
 	parseTree := class parseTreeForSelector: self selector.'.
 	
-	precondition := RBVariablesNotReadBeforeWrittenCondition new subtree: subtree; variables: #(#subtree  #model  #class #parseTree).
+	precondition := ReVariablesNotReadBeforeWrittenCondition new subtree: subtree; variables: #(#subtree  #model  #class #parseTree).
 	
 	self assert: precondition check
 ]
@@ -61,7 +61,7 @@ RBVariablesNotReadBeforeWrittenConditionTest >> testVariableIsReadBeforeWritten 
 	class := model classObjectFor: self class.'.
 	
 	"model is read before written in the code snippet"
-	precondition := RBVariablesNotReadBeforeWrittenCondition new subtree: subtree; variables: #(#model #class).
+	precondition := ReVariablesNotReadBeforeWrittenCondition new subtree: subtree; variables: #(#model #class).
 	
 	self deny: precondition check
 ]

@@ -1,5 +1,5 @@
 Class {
-	#name : 'RBNewNegationCondition',
+	#name : 'ReNewNegationCondition',
 	#superclass : 'RBNewAbstractCondition',
 	#instVars : [
 		'condition'
@@ -10,28 +10,28 @@ Class {
 }
 
 { #category : 'instance creation' }
-RBNewNegationCondition class >> on: aRBInstanceVariableHasReferences [ 
+ReNewNegationCondition class >> on: aRBInstanceVariableHasReferences [ 
 	^ self new condition: aRBInstanceVariableHasReferences ; yourself.
 ]
 
 { #category : 'checking' }
-RBNewNegationCondition >> check [
+ReNewNegationCondition >> check [
 	^condition check not
 ]
 
 { #category : 'accessing' }
-RBNewNegationCondition >> condition: aCondition [
+ReNewNegationCondition >> condition: aCondition [
 	condition := aCondition.
 ]
 
 { #category : 'accessing' }
-RBNewNegationCondition >> errorString [ 
+ReNewNegationCondition >> errorString [ 
 
 	^ condition errorString
 ]
 
 { #category : 'accessing' }
-RBNewNegationCondition >> violators [
+ReNewNegationCondition >> violators [
 	"This is probably wrong because of the negation"
 	^ condition violators
 ]

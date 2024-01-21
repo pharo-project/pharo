@@ -1,20 +1,20 @@
 Class {
-	#name : 'RBClassesHaveNoSubclassesCondition',
-	#superclass : 'RBClassesCondition',
+	#name : 'ReClassesHaveNoSubclassesCondition',
+	#superclass : 'ReClassesCondition',
 	#category : 'Refactoring-Core-Conditions',
 	#package : 'Refactoring-Core',
 	#tag : 'Conditions'
 }
 
 { #category : 'testing' }
-RBClassesHaveNoSubclassesCondition >> hasSubclasses: aClass excluding: classesList [
+ReClassesHaveNoSubclassesCondition >> hasSubclasses: aClass excluding: classesList [
 
 	^ ((aClass subclasses collect: [ :each | each name ])
 		   copyWithoutAll: classesList) isNotEmpty
 ]
 
 { #category : 'displaying' }
-RBClassesHaveNoSubclassesCondition >> violationMessageOn: aStream [
+ReClassesHaveNoSubclassesCondition >> violationMessageOn: aStream [
 
 	self violators do: [ :violator |
 		aStream
@@ -24,7 +24,7 @@ RBClassesHaveNoSubclassesCondition >> violationMessageOn: aStream [
 ]
 
 { #category : 'accessing' }
-RBClassesHaveNoSubclassesCondition >> violators [
+ReClassesHaveNoSubclassesCondition >> violators [
 
 	^ violators ifNil: [
 		  violators := classes select: [ :aClass |

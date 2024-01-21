@@ -1,5 +1,5 @@
 Class {
-	#name : 'RBSubtreeCondition',
+	#name : 'ReSubtreeCondition',
 	#superclass : 'RBCondition',
 	#instVars : [
 		'subtree'
@@ -10,25 +10,25 @@ Class {
 }
 
 { #category : 'testing' }
-RBSubtreeCondition class >> isAbstract [
+ReSubtreeCondition class >> isAbstract [
 
-	^ self == RBSubtreeCondition
+	^ self == ReSubtreeCondition
 ]
 
 { #category : 'checking' }
-RBSubtreeCondition >> check [
+ReSubtreeCondition >> check [
 
 	^ self subclassResponsibility
 ]
 
 { #category : 'accessing' }
-RBSubtreeCondition >> subtree: aRBMethodNode [
+ReSubtreeCondition >> subtree: aRBMethodNode [
 
 	subtree := aRBMethodNode
 ]
 
 { #category : 'displaying' }
-RBSubtreeCondition >> violationMessageOn: aStream [ 
+ReSubtreeCondition >> violationMessageOn: aStream [ 
 
 	self subclassResponsibility
 ]

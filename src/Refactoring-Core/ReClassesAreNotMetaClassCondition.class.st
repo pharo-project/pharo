@@ -1,13 +1,13 @@
 Class {
-	#name : 'RBClassesAreNotMetaClassCondition',
-	#superclass : 'RBClassesCondition',
+	#name : 'ReClassesAreNotMetaClassCondition',
+	#superclass : 'ReClassesCondition',
 	#category : 'Refactoring-Core-Conditions',
 	#package : 'Refactoring-Core',
 	#tag : 'Conditions'
 }
 
 { #category : 'displaying' }
-RBClassesAreNotMetaClassCondition >> violationMessageOn: aStream [
+ReClassesAreNotMetaClassCondition >> violationMessageOn: aStream [
 
 	self violators do: [ :violator |
 		aStream
@@ -18,7 +18,7 @@ RBClassesAreNotMetaClassCondition >> violationMessageOn: aStream [
 ]
 
 { #category : 'accessing' }
-RBClassesAreNotMetaClassCondition >> violators [
+ReClassesAreNotMetaClassCondition >> violators [
 
 	^ violators ifNil: [
 		  violators := classes select: [ :class | class isMeta ] ]

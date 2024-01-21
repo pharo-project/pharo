@@ -3,7 +3,7 @@ This condition checks in the class and its superclasses if a class defines a giv
 "
 Class {
 	#name : 'ReUpToRootDefinesMethod',
-	#superclass : 'RBClassCondition',
+	#superclass : 'ReClassCondition',
 	#instVars : [
 		'selector'
 	],

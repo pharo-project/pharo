@@ -1,19 +1,19 @@
 Class {
-	#name : 'RBSubtreeDoesNotContainReturnCondition',
-	#superclass : 'RBSubtreeCondition',
+	#name : 'ReSubtreeDoesNotContainReturnCondition',
+	#superclass : 'ReSubtreeCondition',
 	#category : 'Refactoring-Core-Conditions',
 	#package : 'Refactoring-Core',
 	#tag : 'Conditions'
 }
 
 { #category : 'checking' }
-RBSubtreeDoesNotContainReturnCondition >> check [
+ReSubtreeDoesNotContainReturnCondition >> check [
 
 	^ subtree containsReturn not
 ]
 
 { #category : 'displaying' }
-RBSubtreeDoesNotContainReturnCondition >> violationMessageOn: aStream [ 
+ReSubtreeDoesNotContainReturnCondition >> violationMessageOn: aStream [ 
 
 	aStream nextPutAll: 'Cannot extract selected code since it containt return.'
 ]

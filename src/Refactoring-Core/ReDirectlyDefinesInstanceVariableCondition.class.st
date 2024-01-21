@@ -1,6 +1,6 @@
 Class {
-	#name : 'RBDirectlyDefinesInstanceVariableCondition',
-	#superclass : 'RBClassCondition',
+	#name : 'ReDirectlyDefinesInstanceVariableCondition',
+	#superclass : 'ReClassCondition',
 	#instVars : [
 		'instanceVariables'
 	],
@@ -10,7 +10,7 @@ Class {
 }
 
 { #category : 'instance creation' }
-RBDirectlyDefinesInstanceVariableCondition class >> classNamed: aString inModel: aRBNamespace instanceVariables: aCollection [ 
+ReDirectlyDefinesInstanceVariableCondition class >> classNamed: aString inModel: aRBNamespace instanceVariables: aCollection [ 
 	
 	^ (self classNamed: aString inModel: aRBNamespace)
 		instanceVariables: aCollection;
@@ -18,26 +18,26 @@ RBDirectlyDefinesInstanceVariableCondition class >> classNamed: aString inModel:
 ]
 
 { #category : 'checking' }
-RBDirectlyDefinesInstanceVariableCondition >> check [
+ReDirectlyDefinesInstanceVariableCondition >> check [
 	
 	violators := instanceVariables reject: [ :shared | aClass directlyDefinesInstanceVariable: shared ].
 	^ violators isEmpty
 ]
 
 { #category : 'private' }
-RBDirectlyDefinesInstanceVariableCondition >> errorBlock [
+ReDirectlyDefinesInstanceVariableCondition >> errorBlock [
 	^ [ aClass printString
 				, ' <1?: > directly define <1?s:> instance variable ' , instanceVariables ]
 ]
 
 { #category : 'accessing' }
-RBDirectlyDefinesInstanceVariableCondition >> instanceVariables: aColOfStrings [
+ReDirectlyDefinesInstanceVariableCondition >> instanceVariables: aColOfStrings [
 
 	instanceVariables := aColOfStrings
 ]
 
 { #category : 'displaying' }
-RBDirectlyDefinesInstanceVariableCondition >> violationMessageOn: aStream [
+ReDirectlyDefinesInstanceVariableCondition >> violationMessageOn: aStream [
 
 	^ violators do: [ :violator |
 		  aStream

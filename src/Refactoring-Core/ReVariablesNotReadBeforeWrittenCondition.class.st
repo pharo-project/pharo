@@ -1,6 +1,6 @@
 Class {
-	#name : 'RBVariablesNotReadBeforeWrittenCondition',
-	#superclass : 'RBSubtreeCondition',
+	#name : 'ReVariablesNotReadBeforeWrittenCondition',
+	#superclass : 'ReSubtreeCondition',
 	#instVars : [
 		'variables'
 	],
@@ -10,7 +10,7 @@ Class {
 }
 
 { #category : 'checking' }
-RBVariablesNotReadBeforeWrittenCondition >> check [
+ReVariablesNotReadBeforeWrittenCondition >> check [
 
 	(subtree isNil or: [ variables isNil ]) ifTrue: [ ^ false ].
 	
@@ -20,13 +20,13 @@ RBVariablesNotReadBeforeWrittenCondition >> check [
 ]
 
 { #category : 'initiali' }
-RBVariablesNotReadBeforeWrittenCondition >> variables: aCollection [ 
+ReVariablesNotReadBeforeWrittenCondition >> variables: aCollection [ 
 	
 	variables := aCollection 
 ]
 
 { #category : 'displaying' }
-RBVariablesNotReadBeforeWrittenCondition >> violationMessageOn: aStream [
+ReVariablesNotReadBeforeWrittenCondition >> violationMessageOn: aStream [
 
 	aStream
 		nextPutAll: 'Cannot extract selected code because variables: ';

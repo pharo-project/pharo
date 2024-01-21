@@ -73,11 +73,11 @@ RBRenameInstanceVariableRefactoring >> addNewAccessors [
 RBRenameInstanceVariableRefactoring >> applicabilityPreconditions [
 
 	^ {
-		  (RBIsValidInstanceVariableName name: newName).
-		  (RBNameIsGlobalCondition new model: model className: newName) not.
-		  (RBIsVariableNotDefinedInHierarchy name: newName class: class).
+		  (ReIsValidInstanceVariableName name: newName).
+		  (ReNameIsGlobalCondition new model: model className: newName) not.
+		  (ReIsVariableNotDefinedInHierarchy name: newName class: class).
 		  "For now only rename a instance variable that is locally defined in a class."
-		  (RBDirectlyDefinesInstanceVariableCondition
+		  (ReDirectlyDefinesInstanceVariableCondition
 			   classNamed: class name
 			   inModel: self model
 			   instanceVariables: { variableName }) }

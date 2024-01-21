@@ -1,5 +1,5 @@
 Class {
-	#name : 'RBNameIsGlobalCondition',
+	#name : 'ReNameIsGlobalCondition',
 	#superclass : 'RBCondition',
 	#instVars : [
 		'className',
@@ -11,20 +11,20 @@ Class {
 }
 
 { #category : 'checking' }
-RBNameIsGlobalCondition >> check [  
+ReNameIsGlobalCondition >> check [  
 
 	^ model includesGlobal: className 
 ]
 
 { #category : 'instance creation' }
-RBNameIsGlobalCondition >> model: aRBNamespace className: aSymbol [
+ReNameIsGlobalCondition >> model: aRBNamespace className: aSymbol [
 
 	className := aSymbol asSymbol.
 	model := aRBNamespace 
 ]
 
 { #category : 'displaying' }
-RBNameIsGlobalCondition >> violationMessageOn: aStream [
+ReNameIsGlobalCondition >> violationMessageOn: aStream [
 
 	self violators do: [ :violator |
 		aStream
@@ -33,7 +33,7 @@ RBNameIsGlobalCondition >> violationMessageOn: aStream [
 ]
 
 { #category : 'accessing' }
-RBNameIsGlobalCondition >> violators [
+ReNameIsGlobalCondition >> violators [
 
 	^ self check ifFalse: [ { className } ] ifTrue: [ #() ]
 ]

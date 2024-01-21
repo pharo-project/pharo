@@ -34,14 +34,14 @@ ReRemoveInstanceVariableRefactoring class >> remove: variable from: class [
 ReRemoveInstanceVariableRefactoring >> applicabilityPreconditions [
 	"we store it because the violators are computed during check so we should not recreate it each time."
 	
- 	^ applicabilityPreconditions ifNil: [ applicabilityPreconditions := (RBDirectlyDefinesInstanceVariableCondition classNamed: class name inModel: self model instanceVariables: { variableName }) ]
+ 	^ applicabilityPreconditions ifNil: [ applicabilityPreconditions := (ReDirectlyDefinesInstanceVariableCondition classNamed: class name inModel: self model instanceVariables: { variableName }) ]
 ]
 
 { #category : 'preconditions' }
 ReRemoveInstanceVariableRefactoring >> breakingChangePreconditions [ 
 
 	^ breakingChangePreconditions ifNil: [  breakingChangePreconditions := 
-		(RBInstanceVariableHasReferences new 
+		(ReInstanceVariableHasReferences new 
 			hierarchyOf: class referencesInstanceVariable: variableName) not ]
 	
 ]

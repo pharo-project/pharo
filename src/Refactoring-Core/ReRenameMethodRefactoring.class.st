@@ -172,7 +172,7 @@ ReRenameMethodRefactoring >> localConditions [
 { #category : 'preconditions' }
 ReRenameMethodRefactoring >> methodDefinedInClassCondition [
 
-	^ (RBDefinesSelectorsCondition new definesSelectors: {oldSelector} in: class)
+	^ (ReDefinesSelectorsCondition new definesSelectors: {oldSelector} in: class)
 ]
 
 { #category : 'private' }

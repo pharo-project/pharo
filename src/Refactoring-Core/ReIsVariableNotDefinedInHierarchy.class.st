@@ -2,8 +2,8 @@
 I check if `name` is not already used by a variable in the `class` hierarchy
 "
 Class {
-	#name : 'RBIsVariableNotDefinedInHierarchy',
-	#superclass : 'RBVariableNameCondition',
+	#name : 'ReIsVariableNotDefinedInHierarchy',
+	#superclass : 'ReVariableNameCondition',
 	#instVars : [
 		'class'
 	],
@@ -13,14 +13,14 @@ Class {
 }
 
 { #category : 'instance creation' }
-RBIsVariableNotDefinedInHierarchy class >> name: aString class: aClass [
+ReIsVariableNotDefinedInHierarchy class >> name: aString class: aClass [
 	^ (self name: aString)
 		class: aClass;
 		yourself
 ]
 
 { #category : 'checking' }
-RBIsVariableNotDefinedInHierarchy >> check [
+ReIsVariableNotDefinedInHierarchy >> check [
 
 	(class hierarchyDefinesVariable: name) ifTrue: [
 		violator := name.
@@ -29,12 +29,12 @@ RBIsVariableNotDefinedInHierarchy >> check [
 ]
 
 { #category : 'accessing' }
-RBIsVariableNotDefinedInHierarchy >> class: aClass [
+ReIsVariableNotDefinedInHierarchy >> class: aClass [
 	class := aClass
 ]
 
 { #category : 'accessing' }
-RBIsVariableNotDefinedInHierarchy >> violationMessageOn: aStream [
+ReIsVariableNotDefinedInHierarchy >> violationMessageOn: aStream [
 	
 	^ aStream
 		  nextPutAll: violator;

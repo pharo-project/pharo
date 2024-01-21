@@ -64,7 +64,7 @@ ReRemoveMethodsRefactoring >> applicabilityPreconditions [
 	classSelectorMapping
 		keysAndValuesDo: [ :class :selectorsList |
 			preconditions add:
-					(RBDefinesSelectorsCondition new
+					(ReDefinesSelectorsCondition new
 						 definesSelectors: selectorsList
 						 in: class) ].
 	^ preconditions
@@ -106,7 +106,7 @@ ReRemoveMethodsRefactoring >> classSelectorMapping: classSelectorMappingList [
 { #category : 'preconditions' }
 ReRemoveMethodsRefactoring >> preconditionHaveNoSenders [
 
-	^ RBMethodsHaveNoSendersCondition new model: self model; classSelectorsMapping: classSelectorMapping
+	^ ReMethodsHaveNoSendersCondition new model: self model; classSelectorsMapping: classSelectorMapping
 ]
 
 { #category : 'removing' }

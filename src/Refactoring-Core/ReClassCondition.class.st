@@ -1,6 +1,6 @@
 Class {
-	#name : 'RBClassCondition',
-	#superclass : 'RBClassNameCondition',
+	#name : 'ReClassCondition',
+	#superclass : 'ReClassNameCondition',
 	#instVars : [
 		'aClass'
 	],
@@ -10,23 +10,23 @@ Class {
 }
 
 { #category : 'instance creation' }
-RBClassCondition class >> class: anRBClass [ 
+ReClassCondition class >> class: anRBClass [ 
 	^ self new
 		class: anRBClass;
 		yourself
 ]
 
 { #category : 'accessing' }
-RBClassCondition >> analysedClass [
+ReClassCondition >> analysedClass [
 	^ aClass
 ]
 
 { #category : 'accessing' }
-RBClassCondition >> class: aRBClass [
+ReClassCondition >> class: aRBClass [
 	aClass := aRBClass
 ]
 
 { #category : 'accessing' }
-RBClassCondition >> classNamed: aString [ 
+ReClassCondition >> classNamed: aString [ 
 	aClass := model classNamed: aString
 ]

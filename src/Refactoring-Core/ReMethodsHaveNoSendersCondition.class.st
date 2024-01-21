@@ -1,6 +1,6 @@
 Class {
-	#name : 'RBMethodsHaveNoSendersCondition',
-	#superclass : 'RBMethodsCondition',
+	#name : 'ReMethodsHaveNoSendersCondition',
+	#superclass : 'ReMethodsCondition',
 	#instVars : [
 		'classSelectorsMapping',
 		'model',
@@ -12,25 +12,25 @@ Class {
 }
 
 { #category : 'accessing' }
-RBMethodsHaveNoSendersCondition >> allSelectors [
+ReMethodsHaveNoSendersCondition >> allSelectors [
 
 	^ allSelectors ifNil: [ allSelectors := classSelectorsMapping flatCollect: #value ]
 ]
 
 { #category : 'initialization' }
-RBMethodsHaveNoSendersCondition >> classSelectorsMapping: aDictionary [
+ReMethodsHaveNoSendersCondition >> classSelectorsMapping: aDictionary [
 
 	classSelectorsMapping := aDictionary 
 ]
 
 { #category : 'initialization' }
-RBMethodsHaveNoSendersCondition >> model: aRBNamespace [
+ReMethodsHaveNoSendersCondition >> model: aRBNamespace [
 
 	model := aRBNamespace 
 ]
 
 { #category : 'displaying' }
-RBMethodsHaveNoSendersCondition >> violationMessageOn: aStream [
+ReMethodsHaveNoSendersCondition >> violationMessageOn: aStream [
 
 	aStream nextPutAll: 'Method(s) have senders:'.
 	self violators do: [ :violator |
@@ -41,7 +41,7 @@ RBMethodsHaveNoSendersCondition >> violationMessageOn: aStream [
 ]
 
 { #category : 'accessing' }
-RBMethodsHaveNoSendersCondition >> violators [
+ReMethodsHaveNoSendersCondition >> violators [
 
 	violators ifNotNil: [ ^ violators ].
 

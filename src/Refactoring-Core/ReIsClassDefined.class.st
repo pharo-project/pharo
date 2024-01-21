@@ -1,19 +1,19 @@
 Class {
-	#name : 'RBIsClassDefined',
-	#superclass : 'RBClassNameCondition',
+	#name : 'ReIsClassDefined',
+	#superclass : 'ReClassNameCondition',
 	#category : 'Refactoring-Core-Conditions',
 	#package : 'Refactoring-Core',
 	#tag : 'Conditions'
 }
 
 { #category : 'checking' }
-RBIsClassDefined >> check [ 
+ReIsClassDefined >> check [ 
 
 	^ (model classNamed: className) isNotNil
 ]
 
 { #category : 'accessing' }
-RBIsClassDefined >> violators [ 
+ReIsClassDefined >> violators [ 
 
 	^ { className }
 ]

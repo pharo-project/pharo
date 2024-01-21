@@ -1,17 +1,17 @@
 Class {
-	#name : 'RBIsNotAMetaclass',
-	#superclass : 'RBClassCondition',
+	#name : 'ReIsNotAMetaclass',
+	#superclass : 'ReClassCondition',
 	#category : 'Refactoring-Core-Conditions',
 	#package : 'Refactoring-Core',
 	#tag : 'Conditions'
 }
 
 { #category : 'checking' }
-RBIsNotAMetaclass >> check [
+ReIsNotAMetaclass >> check [
 	^ aClass isMeta not
 ]
 
 { #category : 'checking' }
-RBIsNotAMetaclass >> violators [
+ReIsNotAMetaclass >> violators [
 	^ { aClass }
 ]

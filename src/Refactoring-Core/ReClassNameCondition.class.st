@@ -1,5 +1,5 @@
 Class {
-	#name : 'RBClassNameCondition',
+	#name : 'ReClassNameCondition',
 	#superclass : 'RBNewAbstractCondition',
 	#instVars : [
 		'violators',
@@ -12,7 +12,7 @@ Class {
 }
 
 { #category : 'instance creation' }
-RBClassNameCondition class >> classNamed: aString inModel: aModel [ 
+ReClassNameCondition class >> classNamed: aString inModel: aModel [ 
 	
 	^ self new
 		model: aModel;
@@ -21,24 +21,24 @@ RBClassNameCondition class >> classNamed: aString inModel: aModel [
 ]
 
 { #category : 'accessing' }
-RBClassNameCondition >> classNamed: aString [ 
+ReClassNameCondition >> classNamed: aString [ 
 	className := aString
 ]
 
 { #category : 'initialization' }
-RBClassNameCondition >> initialize [
+ReClassNameCondition >> initialize [
 
 	super initialize.
 	violators := OrderedCollection new.
 ]
 
 { #category : 'accessing' }
-RBClassNameCondition >> model: aModel [ 
+ReClassNameCondition >> model: aModel [ 
 	model := aModel
 ]
 
 { #category : 'initialization' }
-RBClassNameCondition >> violators [ 
+ReClassNameCondition >> violators [ 
 
 	^ violators
 ]

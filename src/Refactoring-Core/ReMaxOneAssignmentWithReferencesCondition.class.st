@@ -8,8 +8,8 @@ we don't support return of multiple values, instead we notify the user that all 
 to those temps should be extracted as well.
 "
 Class {
-	#name : 'RBMaxOneAssignmentWithReferencesCondition',
-	#superclass : 'RBSubtreeCondition',
+	#name : 'ReMaxOneAssignmentWithReferencesCondition',
+	#superclass : 'ReSubtreeCondition',
 	#instVars : [
 		'assignments'
 	],
@@ -19,13 +19,13 @@ Class {
 }
 
 { #category : 'accessing' }
-RBMaxOneAssignmentWithReferencesCondition >> assignments: aCollection [ 
+ReMaxOneAssignmentWithReferencesCondition >> assignments: aCollection [ 
 
 	assignments := aCollection
 ]
 
 { #category : 'checking' }
-RBMaxOneAssignmentWithReferencesCondition >> check [ 
+ReMaxOneAssignmentWithReferencesCondition >> check [ 
 
 	assignments ifNil: [ ^ false ].
 	
@@ -33,7 +33,7 @@ RBMaxOneAssignmentWithReferencesCondition >> check [
 ]
 
 { #category : 'displaying' }
-RBMaxOneAssignmentWithReferencesCondition >> violationMessageOn: aStream [
+ReMaxOneAssignmentWithReferencesCondition >> violationMessageOn: aStream [
 
 	aStream
 		nextPutAll:
