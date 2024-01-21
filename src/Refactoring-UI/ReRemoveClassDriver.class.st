@@ -56,7 +56,7 @@ ReRemoveClassDriver >> changes [
 { #category : 'initialization' }
 ReRemoveClassDriver >> configureRefactoring [
 
-	refactoring := RBRemoveClassRefactoring
+	refactoring := ReRemoveClassRefactoring
 		               model: model
 		               classNames: (classes collect: [ :cl | cl name ]).
 	refactoring prepareForInteractiveMode
@@ -99,7 +99,7 @@ ReRemoveClassDriver >> labelBasedOnBreakingChanges [
 { #category : 'actions' }
 ReRemoveClassDriver >> removeClassAndPushStateToSubclasses [
 
-	refactoring := RBRemoveClassPushingStateToSubclassesRefactoring
+	refactoring := ReRemoveClassPushingStateToSubclassesRefactoring
 						   model: model
 		               classNames: (classes collect: [ :cl | cl name ]).
 	self openPreviewWithChanges: refactoring removeClassesChanges

@@ -12,7 +12,7 @@ You can create my instance and execute the refactoring by running:
 ```
 "
 Class {
-	#name : 'RePushDownMethodDriver2',
+	#name : 'RePushDownMethodDriver',
 	#superclass : 'RBInteractionDriver',
 	#instVars : [
 		'methods',
@@ -24,13 +24,20 @@ Class {
 }
 
 { #category : 'initialization' }
-RePushDownMethodDriver2 class >> model: aRBNamespace scopes: refactoringScopes pushDownMethods: methods [
+RePushDownMethodDriver class >> model: aRBNamespace scopes: refactoringScopes pushDownMethods: methods [
 
 	^ self new model: aRBNamespace scopes: refactoringScopes pushDownMethods: methods
 ]
 
+{ #category : 'execution' }
+RePushDownMethodDriver >> changes [
+	"it should NOT be generate changes."
+	^  refactoring privateTransform
+
+]
+
 { #category : 'resources' }
-RePushDownMethodDriver2 >> configureRefactoring [
+RePushDownMethodDriver >> configureRefactoring [
 
 	refactoring :=  RBPushDownMethodRefactoring
 		  model: model
@@ -38,8 +45,28 @@ RePushDownMethodDriver2 >> configureRefactoring [
 		  from: class
 ]
 
+{ #category : 'configuration' }
+RePushDownMethodDriver >> defaultSelectDialog [
+
+	^ SpSelectDialog new
+		    title: 'There are potential breaking changes!';
+		          label: #('to be done' 'yes');
+		          items: #('to be done' 'yes');
+		          display: [ :each | each " description" ];
+		          displayIcon: [ :each | self iconNamed: each systemIconName ];
+		          openModal
+]
+
+{ #category : 'execution' }
+RePushDownMethodDriver >> handleBreakingChanges [
+
+	| select |
+	select := self selectDialog.
+	select ifNotNil: [ select action ]
+]
+
 { #category : 'initialization' }
-RePushDownMethodDriver2 >> model: aRBNamespace scopes: refactoringScopes pushDownMethods: methodsList [
+RePushDownMethodDriver >> model: aRBNamespace scopes: refactoringScopes pushDownMethods: methodsList [
 	"Push down a list of methods of the same class"
 	
 	model := aRBNamespace.
@@ -49,29 +76,23 @@ RePushDownMethodDriver2 >> model: aRBNamespace scopes: refactoringScopes pushDow
 ]
 
 { #category : 'execution' }
-RePushDownMethodDriver2 >> runRefactoring [
+RePushDownMethodDriver >> runRefactoring [
 
-	| changes |
 	methods := self selectMethods.
 	"the user can still select if needed. Nil = cancel refactoring"
 	methods ifNil: [ ^ self ].
-
 	self configureRefactoring.
-	changes := [
-	           [ refactoring generateChanges ]
-		           on: RBApplicabilityChecksFailedError
-		           do: [ :err |
-		           ^ RBRefactoringError signal: err messageText ] ]
-		           on: RBBreakingChangeChecksFailedWarning
-		           do: [ :err |
-			           RBRefactoringWarning signal: err messageText.
-			           "If user answers no, error is being propagated."
-			           err resume ].
-	self openPreviewWithChanges: changes
+
+	refactoring failedApplicabilityPreconditions 
+		ifNotEmpty: [ ^ self inform: 'The shared variable does not exist' ].
+
+	refactoring failedBreakingChangePreconditions
+		ifEmpty: [ self applyChanges ]
+		ifNotEmpty: [ self handleBreakingChanges ]
 ]
 
 { #category : 'execution' }
-RePushDownMethodDriver2 >> selectMethods [
+RePushDownMethodDriver >> selectMethods [
 
 	| dialog |
 	dialog := StMethodsSelectionPresenter

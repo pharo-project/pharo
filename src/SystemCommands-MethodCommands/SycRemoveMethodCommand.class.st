@@ -1,5 +1,5 @@
 Class {
-	#name : 'SycRemoveMethod2Command',
+	#name : 'SycRemoveMethodCommand',
 	#superclass : 'SycMethodCommand',
 	#instVars : [
 		'toolContext'
@@ -9,31 +9,31 @@ Class {
 }
 
 { #category : 'activation' }
-SycRemoveMethod2Command class >> methodMenuActivation [
+SycRemoveMethodCommand class >> methodMenuActivation [
 	<classAnnotation>
 
 	^ CmdContextMenuActivation byRootGroupItemOrder: 10000 for: ClyMethod asCalypsoItemContext
 ]
 
 { #category : 'activation' }
-SycRemoveMethod2Command class >> methodShortcutActivation [
+SycRemoveMethodCommand class >> methodShortcutActivation [
 	<classAnnotation>
 
 	^CmdShortcutActivation removalFor: ClyMethod asCalypsoItemContext
 ]
 
 { #category : 'accessing' }
-SycRemoveMethod2Command >> defaultMenuIconName [
+SycRemoveMethodCommand >> defaultMenuIconName [
 	^#remove
 ]
 
 { #category : 'accessing' }
-SycRemoveMethod2Command >> defaultMenuItemName [
+SycRemoveMethodCommand >> defaultMenuItemName [
 	^'(R) Remove'
 ]
 
 { #category : 'execution' }
-SycRemoveMethod2Command >> execute [
+SycRemoveMethodCommand >> execute [
 	
 	(ReRemoveMethodDriver new
 				 scopes: toolContext refactoringScopes
@@ -41,13 +41,13 @@ SycRemoveMethod2Command >> execute [
 ]
 
 { #category : 'execution' }
-SycRemoveMethod2Command >> isComplexRefactoring [ 
+SycRemoveMethodCommand >> isComplexRefactoring [ 
 
 	^ false
 ]
 
 { #category : 'execution' }
-SycRemoveMethod2Command >> prepareFullExecutionInContext: aToolContext [
+SycRemoveMethodCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 	toolContext := aToolContext.
 	"(RBRemoveMethodDriver new scopes: aToolContext refactoringScopes methods: methods for: aToolContext lastSelectedClass) runRefactoring"

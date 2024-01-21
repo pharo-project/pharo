@@ -3,7 +3,7 @@ I represent a sequence of refactorings but I will skip refactorings failing and 
 "
 Class {
 	#name : 'RBCompositeContinuingRefactoring',
-	#superclass : 'RBCompositeRefactoring',
+	#superclass : 'ReCompositeRefactoring',
 	#category : 'Refactoring-Core-Refactorings',
 	#package : 'Refactoring-Core',
 	#tag : 'Refactorings'

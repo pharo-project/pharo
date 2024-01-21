@@ -15,8 +15,8 @@ transf := (RBRemoveClassPushingStateToSubclassesRefactoring
 ```
 "
 Class {
-	#name : 'RBRemoveClassPushingStateToSubclassesRefactoring',
-	#superclass : 'RBRemoveClassRefactoring',
+	#name : 'ReRemoveClassPushingStateToSubclassesRefactoring',
+	#superclass : 'ReRemoveClassRefactoring',
 	#instVars : [
 		'refactorings'
 	],
@@ -26,13 +26,13 @@ Class {
 }
 
 { #category : 'preconditions' }
-RBRemoveClassPushingStateToSubclassesRefactoring >> breakingChangePreconditions [
+ReRemoveClassPushingStateToSubclassesRefactoring >> breakingChangePreconditions [
 
 	^ { self preconditionHaveNoReferences }
 ]
 
 { #category : 'transforming' }
-RBRemoveClassPushingStateToSubclassesRefactoring >> createRefactoringPushDownClassVarsOf: class [
+ReRemoveClassPushingStateToSubclassesRefactoring >> createRefactoringPushDownClassVarsOf: class [
 	class classVariableNames do: [ :e |
 		refactorings add: 
 			(RBPushDownClassVariableRefactoring model: self model variable: e class: class).
@@ -40,7 +40,7 @@ RBRemoveClassPushingStateToSubclassesRefactoring >> createRefactoringPushDownCla
 ]
 
 { #category : 'transforming' }
-RBRemoveClassPushingStateToSubclassesRefactoring >> createRefactoringPushDownInstVarsOf: class [
+ReRemoveClassPushingStateToSubclassesRefactoring >> createRefactoringPushDownInstVarsOf: class [
 	class instanceVariableNames
 		do: [ :e |
 			refactorings
@@ -51,12 +51,12 @@ RBRemoveClassPushingStateToSubclassesRefactoring >> createRefactoringPushDownIns
 ]
 
 { #category : 'transforming' }
-RBRemoveClassPushingStateToSubclassesRefactoring >> createRefactoringPushDownMethodsOf: class [
+ReRemoveClassPushingStateToSubclassesRefactoring >> createRefactoringPushDownMethodsOf: class [
 	refactorings add: (RBPushDownMethodRefactoring model: self model pushDown: class selectors from: class)
 ]
 
 { #category : 'transforming' }
-RBRemoveClassPushingStateToSubclassesRefactoring >> createRefactorings [
+ReRemoveClassPushingStateToSubclassesRefactoring >> createRefactorings [
 	"I mimick a composite refactoring. In the future I will take advantage of the new cool RBCompositeRefactoring."
 	
 	classNames do:
@@ -69,13 +69,13 @@ RBRemoveClassPushingStateToSubclassesRefactoring >> createRefactorings [
 ]
 
 { #category : 'initialization' }
-RBRemoveClassPushingStateToSubclassesRefactoring >> initialize [
+ReRemoveClassPushingStateToSubclassesRefactoring >> initialize [
 	super initialize.
 	refactorings := OrderedCollection new
 ]
 
 { #category : 'transforming' }
-RBRemoveClassPushingStateToSubclassesRefactoring >> privateTransform [
+ReRemoveClassPushingStateToSubclassesRefactoring >> privateTransform [
 	self createRefactorings.
 	refactorings do: [ :ref | ref generateChanges ].
 	self reparentSubclasses.
@@ -83,12 +83,12 @@ RBRemoveClassPushingStateToSubclassesRefactoring >> privateTransform [
 ]
 
 { #category : 'transforming' }
-RBRemoveClassPushingStateToSubclassesRefactoring >> removeClasses [
+ReRemoveClassPushingStateToSubclassesRefactoring >> removeClasses [
 	classNames do: [:each | self model removeClassKeepingSubclassesNamed: each]
 ]
 
 { #category : 'removing' }
-RBRemoveClassPushingStateToSubclassesRefactoring >> removeClassesChanges [
+ReRemoveClassPushingStateToSubclassesRefactoring >> removeClassesChanges [
 
 	self privateTransform.
 	

@@ -6,8 +6,8 @@ My preconditions verify that methods to be removed are not referenced anywhere. 
 
 "
 Class {
-	#name : 'RBRemoveMethodsRefactoring',
-	#superclass : 'RBCompositeRefactoring',
+	#name : 'ReRemoveMethodsRefactoring',
+	#superclass : 'ReCompositeRefactoring',
 	#instVars : [
 		'classSelectorMapping',
 		'allSelectors'
@@ -18,14 +18,14 @@ Class {
 }
 
 { #category : 'instance creation' }
-RBRemoveMethodsRefactoring class >> classSelectorMapping: classMethodMappingDict [
+ReRemoveMethodsRefactoring class >> classSelectorMapping: classMethodMappingDict [
 
 	^ self new
 		  classSelectorMapping: classMethodMappingDict
 ]
 
 { #category : 'instance creation' }
-RBRemoveMethodsRefactoring class >> model: model classSelectorMapping: classMethodMappingDict [
+ReRemoveMethodsRefactoring class >> model: model classSelectorMapping: classMethodMappingDict [
 
 	^ self new
 		  model: model;
@@ -33,7 +33,7 @@ RBRemoveMethodsRefactoring class >> model: model classSelectorMapping: classMeth
 ]
 
 { #category : 'instance creation' }
-RBRemoveMethodsRefactoring class >> model: aRBNamespace selectors: aSelectorsCollection from: aClass [
+ReRemoveMethodsRefactoring class >> model: aRBNamespace selectors: aSelectorsCollection from: aClass [
 
 	^ self new
 		model: aRBNamespace;
@@ -42,7 +42,7 @@ RBRemoveMethodsRefactoring class >> model: aRBNamespace selectors: aSelectorsCol
 ]
 
 { #category : 'instance creation' }
-RBRemoveMethodsRefactoring class >> selectors: aSelectorsCollection from: aClass [
+ReRemoveMethodsRefactoring class >> selectors: aSelectorsCollection from: aClass [
 
 	^ self new
 		selectors: aSelectorsCollection 
@@ -50,13 +50,13 @@ RBRemoveMethodsRefactoring class >> selectors: aSelectorsCollection from: aClass
 ]
 
 { #category : 'accessing' }
-RBRemoveMethodsRefactoring >> allSelectors [
+ReRemoveMethodsRefactoring >> allSelectors [
 	
 	^ allSelectors ifNil: [ allSelectors := classSelectorMapping values flattened ]
 ]
 
 { #category : 'preconditions' }
-RBRemoveMethodsRefactoring >> applicabilityPreconditions [
+ReRemoveMethodsRefactoring >> applicabilityPreconditions [
 	"Return a list of preconditions"
 	
 	| preconditions |
@@ -71,7 +71,7 @@ RBRemoveMethodsRefactoring >> applicabilityPreconditions [
 ]
 
 { #category : 'preconditions' }
-RBRemoveMethodsRefactoring >> breakingChangePreconditions [
+ReRemoveMethodsRefactoring >> breakingChangePreconditions [
 
 	refactorings do: [ :ref | ref checkSuperMethods ].
 
@@ -79,13 +79,13 @@ RBRemoveMethodsRefactoring >> breakingChangePreconditions [
 ]
 
 { #category : 'preconditions' }
-RBRemoveMethodsRefactoring >> checkSuperMethods [
+ReRemoveMethodsRefactoring >> checkSuperMethods [
 	
 	refactorings do: [ :ref | ref checkSuperMethods ]
 ]
 
 { #category : 'initialization' }
-RBRemoveMethodsRefactoring >> classSelectorMapping: classSelectorMappingList [
+ReRemoveMethodsRefactoring >> classSelectorMapping: classSelectorMappingList [
 
 	classSelectorMapping := Dictionary new.
 	refactorings := OrderedCollection new.
@@ -104,20 +104,20 @@ RBRemoveMethodsRefactoring >> classSelectorMapping: classSelectorMappingList [
 ]
 
 { #category : 'preconditions' }
-RBRemoveMethodsRefactoring >> preconditionHaveNoSenders [
+ReRemoveMethodsRefactoring >> preconditionHaveNoSenders [
 
 	^ RBMethodsHaveNoSendersCondition new model: self model; classSelectorsMapping: classSelectorMapping
 ]
 
 { #category : 'removing' }
-RBRemoveMethodsRefactoring >> removeMethodChanges [
+ReRemoveMethodsRefactoring >> removeMethodChanges [
 
 	refactorings do: [ :ref | ref privateTransform ].
 	^ self changes
 ]
 
 { #category : 'accessing' }
-RBRemoveMethodsRefactoring >> selectors: aCollection from: aClass [
+ReRemoveMethodsRefactoring >> selectors: aCollection from: aClass [
 
 	self classSelectorMapping: (aCollection collect: [ :selector | aClass -> selector ] ) 
 ]
