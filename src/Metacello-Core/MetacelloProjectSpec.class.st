@@ -348,7 +348,7 @@ MetacelloProjectSpec >> copyForScriptingInto: aProjectSpec [
         file: file
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'enumerating' }
 MetacelloProjectSpec >> currentlyLoadedClassesInVersion [
 
 	self versionOrNil ifNotNil: [ :vrsn |
