@@ -11,7 +11,7 @@ Example
 	(RBRenameClassRefactoring rename: 'RBRenameClassRefactoring' to: 'RBRenameClassRefactoring2') execute
 "
 Class {
-	#name : 'RBRenameClassRefactoring',
+	#name : 'ReRenameClassRefactoring',
 	#superclass : 'RBClassRefactoring',
 	#instVars : [
 		'newName',
@@ -23,13 +23,13 @@ Class {
 }
 
 { #category : 'displaying' }
-RBRenameClassRefactoring class >> basicMenuItemString [
+ReRenameClassRefactoring class >> basicMenuItemString [
 
 	^ 'Rename'
 ]
 
 { #category : 'instance creation' }
-RBRenameClassRefactoring class >> model: aRBNamespace rename: aClass to: aNewName [
+ReRenameClassRefactoring class >> model: aRBNamespace rename: aClass to: aNewName [
 	^ self new
 		model: aRBNamespace;
 		className: aClass newName: aNewName;
@@ -37,20 +37,20 @@ RBRenameClassRefactoring class >> model: aRBNamespace rename: aClass to: aNewNam
 ]
 
 { #category : 'partial instantiation' }
-RBRenameClassRefactoring class >> rename: aClassName [ 
+ReRenameClassRefactoring class >> rename: aClassName [ 
 	^ self new
 		className: aClassName ; yourself
 ]
 
 { #category : 'instance creation' }
-RBRenameClassRefactoring class >> rename: aClassName to: aNewName [
+ReRenameClassRefactoring class >> rename: aClassName to: aNewName [
 	^ self new
 		className: aClassName
 		newName: aNewName
 ]
 
 { #category : 'preconditions' }
-RBRenameClassRefactoring >> applicabilityPreconditions [
+ReRenameClassRefactoring >> applicabilityPreconditions [
 
 	^ (RBCondition withBlock: [
 		   self doesClassToBeRenamedExist and: [ self isNotMetaclass ] ])
@@ -58,7 +58,7 @@ RBRenameClassRefactoring >> applicabilityPreconditions [
 ]
 
 { #category : 'initialization' }
-RBRenameClassRefactoring >> className: aName [
+ReRenameClassRefactoring >> className: aName [
 
 	className := aName asSymbol.
 	class := self model classNamed: className.
@@ -66,49 +66,49 @@ RBRenameClassRefactoring >> className: aName [
 ]
 
 { #category : 'initialization' }
-RBRenameClassRefactoring >> className: aName newName: aNewName [
+ReRenameClassRefactoring >> className: aName newName: aNewName [
 
 	self className: aName.
 	self newName: aNewName
 ]
 
 { #category : 'preconditions' }
-RBRenameClassRefactoring >> doesClassToBeRenamedExist [
+ReRenameClassRefactoring >> doesClassToBeRenamedExist [
 	^ class isNotNil 
 ]
 
 { #category : 'preconditions' }
-RBRenameClassRefactoring >> isMetaclass [
+ReRenameClassRefactoring >> isMetaclass [
 
 	^ class isMeta
 ]
 
 { #category : 'preconditions' }
-RBRenameClassRefactoring >> isNotGlobal [
+ReRenameClassRefactoring >> isNotGlobal [
 
 	^ (RBCondition isGlobal: newName in: self model) not
 ]
 
 { #category : 'preconditions' }
-RBRenameClassRefactoring >> isNotMetaclass [
+ReRenameClassRefactoring >> isNotMetaclass [
 
 	^ self isMetaclass not
 ]
 
 { #category : 'preconditions' }
-RBRenameClassRefactoring >> isValidClassName [
+ReRenameClassRefactoring >> isValidClassName [
 
 	^ RBCondition isValidClassName: newName
 ]
 
 { #category : 'initialization' }
-RBRenameClassRefactoring >> newName: aNewName [
+ReRenameClassRefactoring >> newName: aNewName [
 
 	newName := aNewName asSymbol
 ]
 
 { #category : 'preconditions' }
-RBRenameClassRefactoring >> preconditions [
+ReRenameClassRefactoring >> preconditions [
 
 	self prepareForExecution. 
 	"We have to check because the setter is actually already doing the className to class transformation."
@@ -116,13 +116,13 @@ RBRenameClassRefactoring >> preconditions [
 ]
 
 { #category : 'preconditions' }
-RBRenameClassRefactoring >> prepareForExecution [
+ReRenameClassRefactoring >> prepareForExecution [
 
 	class := self model classNamed: className
 ]
 
 { #category : 'transforming' }
-RBRenameClassRefactoring >> privateTransform [
+ReRenameClassRefactoring >> privateTransform [
 
 	self model
 		renameClass: class
@@ -131,7 +131,7 @@ RBRenameClassRefactoring >> privateTransform [
 ]
 
 { #category : 'transforming' }
-RBRenameClassRefactoring >> renameReferences [
+ReRenameClassRefactoring >> renameReferences [
 
 	| replacer |
 	replacer := (self parseTreeRewriterClass
@@ -151,7 +151,7 @@ RBRenameClassRefactoring >> renameReferences [
 ]
 
 { #category : 'printing' }
-RBRenameClassRefactoring >> storeOn: aStream [
+ReRenameClassRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.
 	aStream nextPutAll: ' rename: '.

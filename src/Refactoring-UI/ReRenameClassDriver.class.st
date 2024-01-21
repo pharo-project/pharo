@@ -28,7 +28,7 @@ ReRenameClassDriver >> changes [
 { #category : 'resources' }
 ReRenameClassDriver >> configureRefactoring [
 	
-		refactoring := RBRenameClassRefactoring rename: oldName.
+		refactoring := ReRenameClassRefactoring rename: oldName.
 ]
 
 { #category : 'initialization' }

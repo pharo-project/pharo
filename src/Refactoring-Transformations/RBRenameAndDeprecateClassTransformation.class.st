@@ -79,7 +79,7 @@ RBRenameAndDeprecateClassTransformation >> buildTransformations [
 
 	^ transformations ifNil: [
 		transformations := OrderedCollection
-			with: (RBRenameClassRefactoring
+			with: (ReRenameClassRefactoring
 						model: self model
 						rename: className to: newClassName)
 			with: ((RBInsertNewClassTransformation
