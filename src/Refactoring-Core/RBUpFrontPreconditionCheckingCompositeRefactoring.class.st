@@ -5,7 +5,7 @@ So do not use me if your sequence has side effects you rely on later on the foll
 "
 Class {
 	#name : 'RBUpFrontPreconditionCheckingCompositeRefactoring',
-	#superclass : 'RBCompositeRefactoring',
+	#superclass : 'ReCompositeRefactoring',
 	#category : 'Refactoring-Core-Refactorings',
 	#package : 'Refactoring-Core',
 	#tag : 'Refactorings'

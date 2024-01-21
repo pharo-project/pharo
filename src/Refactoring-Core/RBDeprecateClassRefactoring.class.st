@@ -52,10 +52,10 @@ RBDeprecateClassRefactoring >> applicabilityPreconditions [
 
 	| class |
 	class := self model classNamed: className.
-	^ { (RBClassesExistCondition new classes: { class }).
-		 (RBClassesAreNotMetaClassCondition new classes: { class }).
-		 (RBNameIsGlobalCondition new model: self model className: newName).
-	    (RBValidClassNameCondition new className: newName) }
+	^ { (ReClassesExistCondition new classes: { class }).
+		 (ReClassesAreNotMetaClassCondition new classes: { class }).
+		 (ReNameIsGlobalCondition new model: self model className: newName).
+	    (ReValidClassNameCondition new className: newName) }
 ]
 
 { #category : 'preconditions' }

@@ -239,7 +239,6 @@ RBFindAndReplaceTransformation >> privateTransform [
 	classes do: [ :cls | (self selectorsFor: cls) do: [ :sel | |rbMethod|
 		rbMethod := cls methodFor: sel.
 		self findOccurrencesIn: rbMethod] ].
-	self inform: occurrences asString, ' occurrences were found and changed.'
 ]
 
 { #category : 'accessing' }

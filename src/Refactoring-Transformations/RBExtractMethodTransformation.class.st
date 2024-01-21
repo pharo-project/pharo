@@ -366,13 +366,13 @@ RBExtractMethodTransformation >> preconditionAssignmentsNotReadBeforeWritten [
 
 	assignments isEmptyOrNil ifTrue: [ ^ self trueCondition ].
 
-	^ RBVariablesNotReadBeforeWrittenCondition new subtree: subtree; variables: assignments
+	^ ReVariablesNotReadBeforeWrittenCondition new subtree: subtree; variables: assignments
 ]
 
 { #category : 'preconditions' }
 RBExtractMethodTransformation >> preconditionNotInCascadedMessage [
 
-	^ RBNotInCascadedMessageCondition new subtree: subtree
+	^ ReNotInCascadedMessageCondition new subtree: subtree
 ]
 
 { #category : 'preconditions' }
@@ -383,14 +383,14 @@ RBExtractMethodTransformation >> preconditionOneAssignmentMaximum [
 	we don't support return of multiple values, instead we notify the user that all references
 	to those temps should be extracted as well."
 
-	^ RBMaxOneAssignmentWithReferencesCondition new
+	^ ReMaxOneAssignmentWithReferencesCondition new
 		  assignments: assignments
 ]
 
 { #category : 'preconditions' }
 RBExtractMethodTransformation >> preconditionParsableSubtree [
 
-	^ RBParsableSubtreeCondition new subtree: subtree
+	^ ReParsableSubtreeCondition new subtree: subtree
 ]
 
 { #category : 'preconditions' }
@@ -398,13 +398,13 @@ RBExtractMethodTransformation >> preconditionSubtreeDoesNotContainsReturn [
 
 	assignments isEmptyOrNil ifTrue: [ ^ self trueCondition ].
 
-	^ RBSubtreeDoesNotContainReturnCondition new subtree: subtree
+	^ ReSubtreeDoesNotContainReturnCondition new subtree: subtree
 ]
 
 { #category : 'preconditions' }
 RBExtractMethodTransformation >> preconditionTemporariesAreNotReadBeforeWritten [
 
-	^ RBVariablesNotReadBeforeWrittenCondition new subtree: subtree; variables: temporaries 
+	^ ReVariablesNotReadBeforeWrittenCondition new subtree: subtree; variables: temporaries 
 ]
 
 { #category : 'transforming' }

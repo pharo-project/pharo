@@ -45,7 +45,7 @@ ReRemoveMethodDriver >> configureRefactoring [
 	| classSelectorMapping |
 	classSelectorMapping := methods collect: [ :m | m origin -> m selector ].
 
-	refactoring := RBRemoveMethodsRefactoring
+	refactoring := ReRemoveMethodsRefactoring
 			            model: model
 			            classSelectorMapping: classSelectorMapping
 ]

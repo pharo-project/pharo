@@ -18,17 +18,17 @@ Class {
 }
 
 { #category : 'instance creation' }
-RBPushDownMethodRefactoring class >> model: aRBSmalltalk pushDown: selectorCollection from: aClass [
+RBPushDownMethodRefactoring class >> model: anEnvironment pushDown: selectorCollection from: aClass [
 	^ self new
-		model: aRBSmalltalk;
+		model: anEnvironment;
 		pushDown: selectorCollection from: aClass;
 		yourself
 ]
 
 { #category : 'instance creation' }
-RBPushDownMethodRefactoring class >> model: aRBSmalltalk pushDown: selectorCollection from: aClass in: classes [
+RBPushDownMethodRefactoring class >> model: anEnvironment pushDown: selectorCollection from: aClass in: classes [
 	^ self new
-		model: aRBSmalltalk;
+		model: anEnvironment;
 		pushDown: selectorCollection from: aClass in: classes;
 		yourself
 ]

@@ -45,7 +45,7 @@ ReRemoveInstanceVariablesDriver >> configureRefactoring [
 	refactoring := RBUpFrontPreconditionCheckingCompositeRefactoring new
 							model: model; 
 							refactorings: (variables collect: [:each | 
-									RBRemoveInstanceVariableRefactoring model: model remove: each from: class]);
+									ReRemoveInstanceVariableRefactoring model: model remove: each from: class]);
 								yourself.
 	refactoring prepareForInteractiveMode
 ]

@@ -44,7 +44,7 @@ ReRemoveSharedVariablesDriver >> configureRefactoring [
 	refactoring := RBUpFrontPreconditionCheckingCompositeRefactoring new
 							model: model; 
 							refactorings: (variables collect: [:each | 
-									RBRemoveSharedVariableRefactoring model: model remove: each from: class]);
+									ReRemoveSharedVariableRefactoring model: model remove: each from: class]);
 								yourself.
 	refactoring prepareForInteractiveMode
 ]

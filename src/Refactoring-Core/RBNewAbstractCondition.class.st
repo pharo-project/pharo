@@ -24,7 +24,7 @@ RBNewAbstractCondition >> errorString [
 
 { #category : 'logical operations' }
 RBNewAbstractCondition >> not [
-	^RBNewNegationCondition on: self
+	^ReNewNegationCondition on: self
 ]
 
 { #category : 'displaying' }
