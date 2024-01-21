@@ -12,7 +12,7 @@ You can create my instance and execute the refactoring by running:
 ```
 "
 Class {
-	#name : 'RBPushDownMethodDriver',
+	#name : 'RePushDownMethodDriver2',
 	#superclass : 'RBInteractionDriver',
 	#instVars : [
 		'methods',
@@ -24,13 +24,13 @@ Class {
 }
 
 { #category : 'initialization' }
-RBPushDownMethodDriver class >> model: aRBNamespace scopes: refactoringScopes pushDownMethods: methods [
+RePushDownMethodDriver2 class >> model: aRBNamespace scopes: refactoringScopes pushDownMethods: methods [
 
 	^ self new model: aRBNamespace scopes: refactoringScopes pushDownMethods: methods
 ]
 
 { #category : 'resources' }
-RBPushDownMethodDriver >> configureRefactoring [
+RePushDownMethodDriver2 >> configureRefactoring [
 
 	refactoring :=  RBPushDownMethodRefactoring
 		  model: model
@@ -39,8 +39,9 @@ RBPushDownMethodDriver >> configureRefactoring [
 ]
 
 { #category : 'initialization' }
-RBPushDownMethodDriver >> model: aRBNamespace scopes: refactoringScopes pushDownMethods: methodsList [
-
+RePushDownMethodDriver2 >> model: aRBNamespace scopes: refactoringScopes pushDownMethods: methodsList [
+	"Push down a list of methods of the same class"
+	
 	model := aRBNamespace.
 	scopes := refactoringScopes.
 	methods := methodsList.
@@ -48,10 +49,11 @@ RBPushDownMethodDriver >> model: aRBNamespace scopes: refactoringScopes pushDown
 ]
 
 { #category : 'execution' }
-RBPushDownMethodDriver >> runRefactoring [
+RePushDownMethodDriver2 >> runRefactoring [
 
 	| changes |
 	methods := self selectMethods.
+	"the user can still select if needed. Nil = cancel refactoring"
 	methods ifNil: [ ^ self ].
 
 	self configureRefactoring.
@@ -69,7 +71,7 @@ RBPushDownMethodDriver >> runRefactoring [
 ]
 
 { #category : 'execution' }
-RBPushDownMethodDriver >> selectMethods [
+RePushDownMethodDriver2 >> selectMethods [
 
 	| dialog |
 	dialog := StMethodsSelectionPresenter

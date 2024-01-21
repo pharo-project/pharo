@@ -34,9 +34,8 @@ RBRemoveClassPushingStateToSubclassesRefactoring >> breakingChangePreconditions 
 { #category : 'transforming' }
 RBRemoveClassPushingStateToSubclassesRefactoring >> createRefactoringPushDownClassVarsOf: class [
 	class classVariableNames do: [ :e |
-		refactorings add: (RBPushDownClassVariableRefactoring
-		variable: e
-		class: class).
+		refactorings add: 
+			(RBPushDownClassVariableRefactoring model: self model variable: e class: class).
 	]
 ]
 
@@ -47,13 +46,13 @@ RBRemoveClassPushingStateToSubclassesRefactoring >> createRefactoringPushDownIns
 			refactorings
 				add:
 					(RBPushDownInstanceVariableRefactoring
-						variable: e
+						model: self model variable: e
 						class: class) ]
 ]
 
 { #category : 'transforming' }
 RBRemoveClassPushingStateToSubclassesRefactoring >> createRefactoringPushDownMethodsOf: class [
-	refactorings add: (RBPushDownMethodRefactoring pushDown: class selectors from: class)
+	refactorings add: (RBPushDownMethodRefactoring model: self model pushDown: class selectors from: class)
 ]
 
 { #category : 'transforming' }

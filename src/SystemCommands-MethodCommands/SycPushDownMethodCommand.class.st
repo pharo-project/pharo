@@ -33,7 +33,7 @@ SycPushDownMethodCommand >> executeRefactorings [
 	(RBPushDownMethodDriver
 		model: model
 		scopes: refactoringScopes
-		pushDown: methods) runRefactoring
+		pushDownMethods: methods) runRefactoring
 ]
 
 { #category : 'testing' }
