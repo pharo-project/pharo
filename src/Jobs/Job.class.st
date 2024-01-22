@@ -108,8 +108,7 @@ Job class >> exampleProgress [
 Job class >> jobAnnouncer [
 	"Answers the announcer for job announcements"
 	
-	^ jobAnnouncer 
-			ifNil: [ jobAnnouncer := Announcer new ]
+	^ jobAnnouncer ifNil: [ jobAnnouncer := Announcer new ]
 ]
 
 { #category : 'private' }
