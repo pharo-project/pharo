@@ -51,10 +51,9 @@ OupsDebuggerSystem >> ensureExceptionIn: aDebugSession [
 
 { #category : 'handle debug requests' }
 OupsDebuggerSystem >> handleDebugRequest: aDebugRequest [
-
 	"A DebugRequest has been submitted. Ask what to do to the default UIManager. Typically, the UIManager will call back my #openDebuggerOnRequest: method to open a debugger"
 
-	[ self defaultUIManager handleDebugRequest: aDebugRequest fromDebuggerSystem: self]
+	[ self openDebuggerOnRequest: aDebugRequest ]
 		on: Error
 		do: [ self signalDebuggerError: aDebugRequest ]
 ]
