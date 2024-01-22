@@ -88,6 +88,16 @@ RGMethod >> readsSlot: aSlot [
 ]
 
 { #category : '*Calypso-Ring' }
+RGMethod >> realMethod [
+	"Included to support for browsing unloaded methods, i.e. from the Calypso. 
+	Since Calypso still uses Ring objects, it needs to get the real method so it can understand messages such as #isClassified. The real fix here is to reify Package support (like tags) in Ring (which is planned to be removed). See issue #15931 for details"
+
+	^ (Smalltalk at: self parent resolvedNameOrNil)
+		ifNotNil: [ : realClass | ^ realClass >> self name ]
+		ifNil: [ self error: 'Unexpected error while resolving Ring method class' ]
+]
+
+{ #category : '*Calypso-Ring' }
 RGMethod >> sendNodes [
 	^self ast sendNodes
 ]
