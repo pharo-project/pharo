@@ -190,7 +190,7 @@ RBRefactoryTyper >> guessTypeFromAssignment: aNode [
 	type := nil.
 	aNode value isAssignment
 		ifTrue: [ ^ self
-				guessTypeFromAssignment: ( RBAssignmentNode variable: aNode variable value: aNode value value )
+				guessTypeFromAssignment: ( ASTAssignmentNode variable: aNode variable value: aNode value value )
 			].
 	aNode value isBlock
 		ifTrue: [ type := model classFor: [  ] class ].

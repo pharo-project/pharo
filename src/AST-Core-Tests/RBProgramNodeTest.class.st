@@ -50,7 +50,7 @@ RBProgramNodeTest >> getMethodString [
 
 { #category : 'accessing' }
 RBProgramNodeTest >> node [
-	^ node ifNil: [ node := RBProgramNode new ]
+	^ node ifNil: [ node := ASTProgramNode new ]
 ]
 
 { #category : 'tests - adding' }
@@ -811,11 +811,11 @@ RBProgramNodeTest >> testReplaceMethodBinary [
 	self assert: tree newSource equals: '~~ "1" first "2" ^ "3" 4 "5"'.
 
 	tree := self parseMethod: '= "1" anObject "2" ^ "3" 4 "5"'.
-	tree renameSelector: #assert: andArguments: (Array with: (RBVariableNode named: 'first')).
+	tree renameSelector: #assert: andArguments: (Array with: (ASTVariableNode named: 'first')).
 	self assert: tree newSource equals: 'assert: "1" first "2" ^ "3" 4 "5"'.
 
 	tree := self parseMethod: '= "1" anObject "2" ^ "3" 4 "5"'.
-	tree renameSelector: #assert:description: andArguments: (Array with: (RBVariableNode named: 'first') with: (RBVariableNode named: 'second')).
+	tree renameSelector: #assert:description: andArguments: (Array with: (ASTVariableNode named: 'first') with: (ASTVariableNode named: 'second')).
 	self assert: tree newSource equals: 'assert: first description: second "2" ^ "3" 4 "5"'
 ]
 
@@ -831,11 +831,11 @@ RBProgramNodeTest >> testReplaceMethodKeyword [
 	self assert: tree newSource equals: '~~ "1" first "2" ^ "3" 4 "5"'.
 
 	tree := self parseMethod: 'deny: "1" anObject "2" ^ "3" 4 "5"'.
-	tree renameSelector: #assert: andArguments: (Array with: (RBVariableNode named: 'first')).
+	tree renameSelector: #assert: andArguments: (Array with: (ASTVariableNode named: 'first')).
 	self assert: tree newSource equals: 'assert: "1" first "2" ^ "3" 4 "5"'.
 
 	tree := self parseMethod: 'deny: "1" anObject "2" ^ "3" 4 "5"'.
-	tree renameSelector: #assert:description: andArguments: (Array with: (RBVariableNode named: 'first') with: (RBVariableNode named: 'second')).
+	tree renameSelector: #assert:description: andArguments: (Array with: (ASTVariableNode named: 'first') with: (ASTVariableNode named: 'second')).
 	self assert: tree newSource equals: 'assert: first description: second "2" ^ "3" 4 "5"'
 ]
 

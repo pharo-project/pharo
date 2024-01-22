@@ -160,17 +160,17 @@ RBCodeSnippetTest >> testParse [
 	"Smoke test on each AST node (in alphabetic order of selectors)"
 	ast nodesDo: [ :node |
 		self assert: ((node allParents includes: ast) or: [node = ast]).
-		node start to: node stop do: [ :i | self assert: ((node bestNodeFor: (i to: i)) isKindOf: RBProgramNode) ].
-		node start+1 to: node stop do: [ :i | self assert: ((node bestNodeForPosition: i) isKindOf: RBProgramNode) ].
+		node start to: node stop do: [ :i | self assert: ((node bestNodeFor: (i to: i)) isKindOf: ASTProgramNode) ].
+		node start+1 to: node stop do: [ :i | self assert: ((node bestNodeForPosition: i) isKindOf: ASTProgramNode) ].
 		self assert: node dump equals: node dump.
 		node hasMultipleReturns.
 		node hasNonLocalReturn.
 		self assert: node sourceCode isString.
-		node start to: node stop do: [ :i | self assert: ((node nodeForOffset: i) isKindOf: RBProgramNode) ].
+		node start to: node stop do: [ :i | self assert: ((node nodeForOffset: i) isKindOf: ASTProgramNode) ].
 		self assert: node printString isString.
 		self assert: node selfMessages isCollection.
 		self assert: node methodNode = ast equals: snippet isScripting not.
-		self assert: (node methodOrBlockNode isKindOf: RBProgramNode).
+		self assert: (node methodOrBlockNode isKindOf: ASTProgramNode).
 	]
 ]
 

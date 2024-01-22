@@ -127,8 +127,8 @@ RBParseTreeRewriter class >> replace: code with: newCode method: aBoolean [
 RBParseTreeRewriter class >> replaceLiteral: literal with: newLiteral [
 	| rewriteRule |
 	rewriteRule := self new.
-	rewriteRule replaceTree: (RBLiteralNode value: literal)
-		withTree: (RBLiteralNode value: newLiteral).
+	rewriteRule replaceTree: (ASTLiteralNode value: literal)
+		withTree: (ASTLiteralNode value: newLiteral).
 	^rewriteRule
 ]
 
@@ -136,7 +136,7 @@ RBParseTreeRewriter class >> replaceLiteral: literal with: newLiteral [
 RBParseTreeRewriter class >> replaceStatements: code with: newCode in: aParseTree onInterval: anInterval [
 	| tree replaceStmt |
 	tree := self buildTree: code method: false.
-	tree isSequence ifFalse: [ tree := RBSequenceNode statements: (Array with: tree) ].
+	tree isSequence ifFalse: [ tree := ASTSequenceNode statements: (Array with: tree) ].
 	tree temporaries: (Array with: (RBPatternVariableNode named: '`@temps')).
 	tree addNodeFirst: (RBPatternVariableNode named: '`@.S1').
 	replaceStmt := tree lastIsReturn

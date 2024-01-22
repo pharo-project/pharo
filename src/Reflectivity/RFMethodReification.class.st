@@ -15,7 +15,7 @@ Class {
 
 { #category : 'plugin interface' }
 RFMethodReification class >> entities [
-	^{RBProgramNode}
+	^{ASTProgramNode}
 ]
 
 { #category : 'plugin interface' }
@@ -25,7 +25,7 @@ RFMethodReification class >> key [
 
 { #category : 'generate' }
 RFMethodReification >> genForRBProgramNode [
-	^RBMessageNode
-		receiver: (RBMessageNode receiver: (RBLiteralNode value: entity) selector: #methodNode)
+	^ASTMessageNode
+		receiver: (ASTMessageNode receiver: (ASTLiteralNode value: entity) selector: #methodNode)
 		selector: #compiledMethod
 ]

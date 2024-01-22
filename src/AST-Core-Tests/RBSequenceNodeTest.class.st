@@ -10,7 +10,7 @@ Class {
 RBSequenceNodeTest >> testModifyParametersShouldNotModifyPeriods [
 
 	| sequenceNode |
-	sequenceNode := RBSequenceNode new.
+	sequenceNode := ASTSequenceNode new.
 	sequenceNode statements add: #example.
 	self
 		assertCollection: sequenceNode statements

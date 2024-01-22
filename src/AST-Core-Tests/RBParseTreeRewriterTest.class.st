@@ -58,9 +58,9 @@ RBParseTreeRewriterTest >> testBlockRewrites [
 	"Here the rule says that we only replace in the rightmost children of the return node."
 	rewriter replace: 'asdf' with: 'fdsa' when: [ :aNode | aNode parent parent isReturn ].
 	"here we want the replace self foo by the value the selector of the self foo expression, i.e. foo"
-	rewriter replace: 'self foo' withValueFrom: [ :aNode | RBVariableNode named: aNode selector asString ].
+	rewriter replace: 'self foo' withValueFrom: [ :aNode | ASTVariableNode named: aNode selector asString ].
 	"here the condition is false so the rule is not executed."
-	rewriter replaceArgument: 'asdf' withValueFrom: [ :aNode | RBVariableNode named: 'xxx' ] when: [ :aNode | true ].
+	rewriter replaceArgument: 'asdf' withValueFrom: [ :aNode | ASTVariableNode named: 'xxx' ] when: [ :aNode | true ].
 	rewriter executeTree: tree.
 	self
 		compare: tree
@@ -106,12 +106,12 @@ RBParseTreeRewriterTest >> testBlockRewritesArguments [
 
 	rewriter
 		replaceArgument: 'asdf'
-		withValueFrom: [ :aNode | RBVariableNode named: 'xxx' ]
+		withValueFrom: [ :aNode | ASTVariableNode named: 'xxx' ]
 		when: [ :aNode | true ].
 
 	rewriter
 		replaceArgument: 'bar'
-		withValueFrom: [ :aNode | RBVariableNode named: 'yyy' ]
+		withValueFrom: [ :aNode | ASTVariableNode named: 'yyy' ]
 		when: [ :aNode | true ].
 
 	rewriter executeTree: tree.
@@ -134,11 +134,11 @@ RBParseTreeRewriterTest >> testBlockRewritesArgumentsTakeIntoAccountConditions [
 	^asdf + self foo + asdf'.
 	rewriter
 		replaceArgument: 'asdf'
-		withValueFrom: [ :aNode | RBVariableNode named: 'xxx' ]
+		withValueFrom: [ :aNode | ASTVariableNode named: 'xxx' ]
 		when: [ :aNode | true ].
 	rewriter
 		replaceArgument: 'bar'
-		withValueFrom: [ :aNode | RBVariableNode named: 'yyy' ]
+		withValueFrom: [ :aNode | ASTVariableNode named: 'yyy' ]
 		when: [ :aNode | false ].
 
 	rewriter executeTree: tree.
@@ -176,7 +176,7 @@ RBParseTreeRewriterTest >> testBlockRewritesWithTrueConditionIsNotExecutedWhenNo
 
 	| tree |
 	tree := self treeToBeRewritten.
-	rewriter replaceArgument: 'asdf' withValueFrom: [ :aNode | RBVariableNode named: 'xxx' ] when: [ :aNode | true ].
+	rewriter replaceArgument: 'asdf' withValueFrom: [ :aNode | ASTVariableNode named: 'xxx' ] when: [ :aNode | true ].
 	rewriter executeTree: tree.
 	self
 		compare: tree

@@ -103,7 +103,7 @@ RBAddParameterTransformation >> modifyImplementorParseTree: parseTree in: aClass
 		andArguments: ((permutation
 			collect: [ :e | parseTree argumentNames at: e ifAbsent: [ index := index +1.
 				argNames at: index	] ])
-				collect: [:e | RBVariableNode named: e ]).
+				collect: [:e | ASTVariableNode named: e ]).
 	self renameArgumentsIn: parseTree
 ]
 

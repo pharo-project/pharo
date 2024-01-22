@@ -77,8 +77,8 @@ RBStringReplaceRule >> replaceString: replaceString [
 	replaceTree := self parserClass parseRewriteExpression: replaceString.
 	searchTree isSequence = replaceTree isSequence
 		ifFalse: [ searchTree isSequence
-				ifTrue: [ replaceTree := RBSequenceNode statements: (Array with: replaceTree) ]
-				ifFalse: [ searchTree := RBSequenceNode statements: (Array with: searchTree) ] ]
+				ifTrue: [ replaceTree := ASTSequenceNode statements: (Array with: replaceTree) ]
+				ifFalse: [ searchTree := ASTSequenceNode statements: (Array with: searchTree) ] ]
 ]
 
 { #category : 'private - searching' }
