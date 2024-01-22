@@ -227,19 +227,35 @@ MCFileBasedRepository >> notCachedVersionWithInfo: aVersionInfo [
 ]
 
 { #category : 'accessing' }
+MCFileBasedRepository >> packageDescriptionsFromReadableFileNames [
+	^ self readableFileNames
+		collect: [ :each | 
+			| name |
+			name := (each copyUpToLast: $.) copyUpTo: $(.
+			name last isDigit
+				ifFalse: [ 
+					{name.
+					''.
+					''.
+					each} ]
+				ifTrue: [ 
+					| packageName author versionNumber |
+					packageName := name copyUpToLast: $-.
+					author := (name copyAfterLast: $-) copyUpTo: $..
+					versionNumber := ((name copyAfterLast: $-) copyAfter: $.) asInteger ifNil: [ 0 ].
+					{packageName.
+					author.
+					versionNumber.
+					each} ] ]
+]
+
+{ #category : 'accessing' }
 MCFileBasedRepository >> packageNamed: aName ifPresent: presentBlock ifAbsent: absentBlock [
 
-	| versionNames versionName |
-	versionNames := [ self packageDescriptionsFromReadableFileNames ]
-		                on: MCRepositoryError
-		                do: [ :error |
-			                ^ GoferRepositoryError
-				                  signal: error messageText
-				                  repository: self ].
-	versionName := versionNames
+	| versionName |
+	versionName := self packageDescriptionsFromReadableFileNames
 		               detect: [ :e | e first = aName ]
-		               ifNone: [ nil ].
-	versionName ifNil: [ ^ absentBlock value ].
+		               ifNone: [ ^ absentBlock value ].
 	^ presentBlock value: (self versionFromFileNamed: versionName last)
 ]
 
