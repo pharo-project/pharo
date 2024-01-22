@@ -149,6 +149,13 @@ TraitedMetaclass >> includesLocalSelector: aSymbol [
 	^ self isLocalSelector: aSymbol
 ]
 
+{ #category : #testing }
+TraitedMetaclass >> includesTrait: aTrait [
+
+	<reflection: 'Class structural inspection - Traits'>
+	^ self traitComposition includesTrait: aTrait
+]
+
 { #category : #initialization }
 TraitedMetaclass >> initialize [
 	super initialize.

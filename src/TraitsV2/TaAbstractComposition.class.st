@@ -273,10 +273,11 @@ TaAbstractComposition >> hash [
 	^ self subclassResponsibility
 ]
 
-{ #category : #querying }
+{ #category : #testing }
 TaAbstractComposition >> includesTrait: aTrait [
 	"Checks if the trait is used in the trait composition"
-	^ self allTraits includes: aTrait
+
+	^ self subclassResponsibility
 ]
 
 { #category : #operations }
