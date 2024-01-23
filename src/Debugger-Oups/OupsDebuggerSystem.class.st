@@ -82,21 +82,13 @@ OupsDebuggerSystem >> logDebugRequest: aDebugRequest withUIManager: aCommandLine
 
 { #category : 'open debugger' }
 OupsDebuggerSystem >> openDebuggerOnRequest: aDebugRequest [
-
 	"Prepare the opening of a debugger, and delegate the debugger selection and opening to a strategy"
 
 	<debuggerCompleteToSender>
-	| debuggerOpeningStrategy |
 	aDebugRequest debugSession logStackToFileIfNeeded.
 	self performPreDebugActionsIn: aDebugRequest.
-	self spawnNewUIProcessIfNecessary: aDebugRequest.
 	self ensureExceptionIn: aDebugRequest debugSession.
-
-	"Schedule the debugger opening in a deferred UI message to address redraw problems after opening a debugger e.g. from the testrunner."
-	debuggerOpeningStrategy := self debuggerSelectionStrategy.
-	self defaultUIManager defer: [
-		debuggerOpeningStrategy openDebuggerForSession:
-			aDebugRequest debugSession ].
+	self debuggerSelectionStrategy openDebuggerForSession: aDebugRequest debugSession.
 	self suspendDebuggedProcess: aDebugRequest
 ]
 
@@ -122,23 +114,6 @@ OupsDebuggerSystem >> signalDebuggerError: aDebugRequest [
 { #category : 'error management' }
 OupsDebuggerSystem >> signalDebuggerErrorMessage [
 	^ 'DebuggerSystem failure'
-]
-
-{ #category : 'helpers' }
-OupsDebuggerSystem >> spawnNewUIProcess [
-
-	"See comment of spawnNewUIProcessIfNecessary:"
-
-	DefaultExecutionEnvironment beActiveDuring: [
-		self defaultUIManager spawnNewProcess ]
-]
-
-{ #category : 'helpers' }
-OupsDebuggerSystem >> spawnNewUIProcessIfNecessary: aDebugRequest [
-	"If aDebugRequest is about debugging the UI process, we must create a new UI process to take its place. Because the debugged process will be suspended at some point, and suspending the UI process means freezing the UI of the image"
-
-	aDebugRequest debugSession errorWasInUIProcess ifTrue: [
-		self spawnNewUIProcess ]
 ]
 
 { #category : 'helpers' }
