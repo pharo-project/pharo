@@ -199,12 +199,6 @@ DebugSession >> interruptedProcess [
 ]
 
 { #category : 'testing' }
-DebugSession >> isAboutUIProcess [
-
-	^errorWasInUIProcess
-]
-
-{ #category : 'testing' }
 DebugSession >> isContextPostMortem: selectedContext [
 	"return whether we're inspecting a frozen exception without a process attached"
 	| suspendedContext |
@@ -618,16 +612,12 @@ DebugSession >> terminate [
 	in order to terminate the right process."
 
 	self interruptedProcess
-		ifNotNil: [
-			"Assume the user closed the debugger. Simply kill the interrupted process."
+		ifNotNil: [ "Assume the user closed the debugger. Simply kill the interrupted process."
 			self interruptedProcess terminate.
 			self clear.
-			Smalltalk installLowSpaceWatcher.  "restart low space handler" ]
-		ifNil: [
-			"Assume the interrupted process was resumed."
-			"Kill the active process if the error was in the UI as there should be only one UI process."
-			self isAboutUIProcess
-				ifTrue: [Processor terminateActive] ]
+			Smalltalk installLowSpaceWatcher "restart low space handler" ]
+		ifNil: [ "Assume the interrupted process was resumed." "Kill the active process if the error was in the UI as there should be only one UI process."
+			self errorWasInUIProcess ifTrue: [ Processor terminateActive ] ]
 ]
 
 { #category : 'evaluating' }

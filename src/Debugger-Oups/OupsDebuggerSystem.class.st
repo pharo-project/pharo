@@ -135,10 +135,9 @@ OupsDebuggerSystem >> spawnNewUIProcess [
 
 { #category : 'helpers' }
 OupsDebuggerSystem >> spawnNewUIProcessIfNecessary: aDebugRequest [
-
 	"If aDebugRequest is about debugging the UI process, we must create a new UI process to take its place. Because the debugged process will be suspended at some point, and suspending the UI process means freezing the UI of the image"
 
-	aDebugRequest debugSession isAboutUIProcess ifTrue: [
+	aDebugRequest debugSession errorWasInUIProcess ifTrue: [
 		self spawnNewUIProcess ]
 ]
 
