@@ -93,6 +93,14 @@ RBCreateAccessorsForVariableTransformation class >> variable: aVarName class: aC
 		classVariable: aBoolean; yourself
 ]
 
+{ #category : 'preconditions' }
+RBCreateAccessorsForVariableTransformation >> applicabilityPreconditions [ 
+
+	^ classVariable
+		ifTrue: [RBCondition definesClassVariable: variableName asSymbol in: class]
+		ifFalse: [RBCondition definesInstanceVariable: variableName in: class]
+]
+
 { #category : 'initialization' }
 RBCreateAccessorsForVariableTransformation >> classVariable: aBoolean [
 	classVariable := aBoolean
@@ -249,9 +257,7 @@ RBCreateAccessorsForVariableTransformation >> possibleSetterSelectors [
 RBCreateAccessorsForVariableTransformation >> preconditions [
 	"Checks that the class actually defines the variable from which we will build setter and getter."
 
-	^ classVariable
-		ifTrue: [RBCondition definesClassVariable: variableName asSymbol in: class]
-		ifFalse: [RBCondition definesInstanceVariable: variableName in: class]
+	^ self applicabilityPreconditions 
 ]
 
 { #category : 'transforming' }
