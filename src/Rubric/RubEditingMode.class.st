@@ -44,6 +44,9 @@ RubEditingMode class >> extendedSearchMenuOn: aBuilder [
 					(aBuilder item: #'Case sensitive method literal strings with it' translated)
 						keyText: 'U';
 						selector: #methodCaseSensitiveStringsContainingIt.
+					(aBuilder item: #'Method source with it' translated)
+						selector: #methodSourceContainingIt;
+						withSeparatorAfter.
 					(aBuilder item: #'Class names containing it' translated) selector: #classNamesContainingIt.
 					(aBuilder item: #'Class comments with it' translated) selector: #classCommentsContainingIt ]
 ]
