@@ -15,6 +15,21 @@ Class {
 }
 
 { #category : 'preconditions' }
+RBPushDownClassVariableRefactoring >> applicabilityPreconditions [ 
+
+	^ RBCondition definesClassVariable: variableName in: class
+]
+
+{ #category : 'preconditions' }
+RBPushDownClassVariableRefactoring >> breakingChangePreconditions [
+	"Preconditions are that only one subclass refers to the class variable."
+
+	^ RBCondition withBlock: [
+		  self findDestinationClass.
+		  true ]
+]
+
+{ #category : 'preconditions' }
 RBPushDownClassVariableRefactoring >> findDestinationClass [
 	| classes |
 	classes := class withAllSubclasses reject: [ :each |
@@ -35,12 +50,8 @@ RBPushDownClassVariableRefactoring >> findDestinationClass [
 
 { #category : 'preconditions' }
 RBPushDownClassVariableRefactoring >> preconditions [
-	"Preconditions are that only one subclass refers to the class variable."
 
-	^(RBCondition definesClassVariable: variableName in: class)
-		& (RBCondition withBlock:
-					[self findDestinationClass.
-					true])
+	^ self applicabilityPreconditions & self breakingChangePreconditions
 ]
 
 { #category : 'transforming' }
