@@ -110,12 +110,6 @@ RBRenameInstanceVariableRefactoring >> newName: anObject [
 	newName := anObject
 ]
 
-{ #category : 'preconditions' }
-RBRenameInstanceVariableRefactoring >> preconditions [
-
-	^ self applicabilityPreconditions
-]
-
 { #category : 'transforming' }
 RBRenameInstanceVariableRefactoring >> privateTransform [
 	renameAccessors ifTrue: [

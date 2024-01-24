@@ -49,12 +49,6 @@ RBProtectInstanceVariableRefactoring >> inline: aSelector [
 		do: []
 ]
 
-{ #category : 'preconditions' }
-RBProtectInstanceVariableRefactoring >> preconditions [
-
-	^ self applicabilityPreconditions
-]
-
 { #category : 'transforming' }
 RBProtectInstanceVariableRefactoring >> privateTransform [
 	self setOption: #inlineExpression toUse: [:ref :string | true].

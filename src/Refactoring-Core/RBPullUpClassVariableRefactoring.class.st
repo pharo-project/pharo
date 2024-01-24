@@ -15,12 +15,6 @@ RBPullUpClassVariableRefactoring >> applicabilityPreconditions [
 	^(RBCondition isMetaclass: class) not
 ]
 
-{ #category : 'preconditions' }
-RBPullUpClassVariableRefactoring >> preconditions [
-
-	^ self applicabilityPreconditions
-]
-
 { #category : 'transforming' }
 RBPullUpClassVariableRefactoring >> privateTransform [
 	| subclass |

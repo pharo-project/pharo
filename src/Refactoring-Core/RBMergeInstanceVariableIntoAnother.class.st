@@ -59,12 +59,6 @@ RBMergeInstanceVariableIntoAnother >> applicabilityPreconditions [
 			   instanceVariables: { newName }) }
 ]
 
-{ #category : 'preconditions' }
-RBMergeInstanceVariableIntoAnother >> preconditions [
-
-	^ self applicabilityPreconditions
-]
-
 { #category : 'transforming' }
 RBMergeInstanceVariableIntoAnother >> privateTransform [
 	renameAccessors ifTrue: [

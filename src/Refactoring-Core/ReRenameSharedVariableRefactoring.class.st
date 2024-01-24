@@ -65,12 +65,6 @@ ReRenameSharedVariableRefactoring >> newName: anObject [
 	newName := anObject
 ]
 
-{ #category : 'preconditions' }
-ReRenameSharedVariableRefactoring >> preconditions [
-
-	^ self applicabilityPreconditions
-]
-
 { #category : 'transforming' }
 ReRenameSharedVariableRefactoring >> privateTransform [
 	class
