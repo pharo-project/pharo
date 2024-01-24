@@ -57,6 +57,12 @@ RBInlineAllSendersRefactoring class >> sendersOf: aSelector in: aClass [
 		in: aClass
 ]
 
+{ #category : 'preconditions' }
+RBInlineAllSendersRefactoring >> applicabilityPreconditions [
+
+	^ RBCondition canUnderstand: selector in: class
+]
+
 { #category : 'transforming' }
 RBInlineAllSendersRefactoring >> checkInlinedMethods [
 	numberReplaced = 0
@@ -126,7 +132,8 @@ RBInlineAllSendersRefactoring >> numberOfSelfSendsIn: aParseTree [
 
 { #category : 'preconditions' }
 RBInlineAllSendersRefactoring >> preconditions [
-	^RBCondition canUnderstand: selector in: class
+
+	^ self applicabilityPreconditions
 ]
 
 { #category : 'transforming' }
