@@ -225,9 +225,8 @@ RBInlineMethodRefactoring >> insertInlinedMethod [
 
 { #category : 'testing' }
 RBInlineMethodRefactoring >> isOverridden [
-	| selector|
-	selector := self inlineSelector.
-	^ class subclassRedefines: selector
+
+	^ class subclassRedefines: self inlineSelector
 ]
 
 { #category : 'testing' }
