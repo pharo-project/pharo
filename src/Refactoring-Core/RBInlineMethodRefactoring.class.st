@@ -104,15 +104,22 @@ RBInlineMethodRefactoring >> checkOverridden: aBoolean [
 { #category : 'transforming' }
 RBInlineMethodRefactoring >> checkSelectedMessage [
 
-	sourceParseTree ifNil: [ self refactoringError: 'Could not parse sources' ].
-	sourceMessage
-		ifNil: [ self refactoringError: 'The selection doesn''t appear to be a message send' ].
-	sourceMessage isCascade
-		ifTrue: [ sourceMessage := sourceMessage messages last ].
-	sourceMessage isMessage
-		ifFalse: [ self refactoringError: 'The selection doesn''t appear to be a message send' ].
-	(sourceMessage receiver isSelfVariable or: [ sourceMessage receiver isSuperVariable ])
-		ifFalse: [ self refactoringError: 'Cannot inline non-self messages' ]
+	sourceParseTree := class parseTreeForSelector: sourceSelector.
+	sourceParseTree ifNil: [
+		self refactoringError: 'Could not parse sources' ].
+	sourceMessage := sourceParseTree whichNodeIsContainedBy:
+		                 sourceInterval.
+	sourceMessage ifNil: [
+		self refactoringError:
+			'The selection doesn''t appear to be a message send' ].
+	sourceMessage isCascade ifTrue: [
+		sourceMessage := sourceMessage messages last ].
+	sourceMessage isMessage ifFalse: [
+		self refactoringError:
+			'The selection doesn''t appear to be a message send' ].
+	(sourceMessage receiver isSelfVariable or: [
+		 sourceMessage receiver isSuperVariable ]) ifFalse: [
+		self refactoringError: 'Cannot inline non-self messages' ]
 ]
 
 { #category : 'transforming' }
@@ -308,15 +315,6 @@ RBInlineMethodRefactoring >> parseInlineMethod [
 RBInlineMethodRefactoring >> preconditions [ 
 
 	^ self applicabilityPreconditions & self breakingChangePreconditions 
-]
-
-{ #category : 'transforming' }
-RBInlineMethodRefactoring >> prepareForExecution [
-
-	sourceParseTree := class parseTreeForSelector: sourceSelector.
-	sourceParseTree ifNotNil: [
-		sourceMessage := sourceParseTree whichNodeIsContainedBy:
-			                 sourceInterval ]
 ]
 
 { #category : 'transforming' }
