@@ -59,52 +59,36 @@ RBInlineMethodRefactoring >> addTemporary: sourceNode assignedTo: replacementNod
 ]
 
 { #category : 'preconditions' }
-RBInlineMethodRefactoring >> applicabilityPreconditions [ 
+RBInlineMethodRefactoring >> applicabilityPreconditions [
 	"Even though it looks complex it only does preconditions and set up. `transform` does actual refactoring"
+
 	^ (RBCondition definesSelector: sourceSelector in: class)
-		& (RBCondition withBlock:
-					[self checkSelectedMessage.
-					self checkOverridden ifTrue: [
-						self isOverridden
-						ifTrue:
-							[self
-								refactoringWarning: ('<1p>>><2s> is overriden. Do you want to inline it anyway?', String cr, 'You can break you hooks with this inline.'
-										expandMacrosWith: self classOfTheMethodToInline
-										with: self inlineSelector)] ].
-					self parseInlineMethod.
-					self isPrimitive
-						ifTrue: [self refactoringError: 'Cannot inline primitives'].
-					self checkSuperMessages.
-					self rewriteInlinedTree.
-					(sourceMessage parent isReturn or: [self hasMultipleReturns not])
-						ifFalse:
-							[self
-								refactoringError: 'Cannot inline method since it contains multiple returns that cannot be rewritten'].
-					true])
+	  & (RBCondition withBlock: [
+			   self checkSelectedMessage.
+			   self parseInlineMethod.
+			   self isPrimitive ifTrue: [
+				   self refactoringError: 'Cannot inline primitives' ].
+			   self checkSuperMessages.
+			   self rewriteInlinedTree.
+			   (sourceMessage parent isReturn or: [
+				    self hasMultipleReturns not ]) ifFalse: [
+				   self refactoringError:
+					   'Cannot inline method since it contains multiple returns that cannot be rewritten' ].
+			   true ])
 ]
 
 { #category : 'preconditions' }
-RBInlineMethodRefactoring >> breakingChangePreconditions [ 
-	"Even though it looks complex it only does preconditions and set up. `transform` does actual refactoring"
-	^ (RBCondition withBlock:
-					[self checkSelectedMessage.
-					self checkOverridden ifTrue: [
-						self isOverridden
-						ifTrue:
-							[self
-								refactoringWarning: ('<1p>>><2s> is overriden. Do you want to inline it anyway?', String cr, 'You can break you hooks with this inline.'
-										expandMacrosWith: self classOfTheMethodToInline
-										with: self inlineSelector)] ].
-					self parseInlineMethod.
-					self isPrimitive
-						ifTrue: [self refactoringError: 'Cannot inline primitives'].
-					self checkSuperMessages.
-					self rewriteInlinedTree.
-					(sourceMessage parent isReturn or: [self hasMultipleReturns not])
-						ifFalse:
-							[self
-								refactoringError: 'Cannot inline method since it contains multiple returns that cannot be rewritten'].
-					true])
+RBInlineMethodRefactoring >> breakingChangePreconditions [
+
+	^ RBCondition withBlock: [
+		  self checkOverridden ifTrue: [
+			  self isOverridden ifTrue: [
+				  self refactoringWarning:
+					  ('<1p>>><2s> is overriden. Do you want to inline it anyway?'
+					   , String cr , 'You can break you hooks with this inline.'
+						   expandMacrosWith: self classOfTheMethodToInline
+						   with: self inlineSelector) ] ].
+		  true ]
 ]
 
 { #category : 'accessing' }
@@ -322,28 +306,9 @@ RBInlineMethodRefactoring >> parseInlineMethod [
 ]
 
 { #category : 'preconditions' }
-RBInlineMethodRefactoring >> preconditions [
-	"Even though it looks complex it only does preconditions and set up. `transform` does actual refactoring"
-	^ (RBCondition definesSelector: sourceSelector in: class)
-		& (RBCondition withBlock:
-					[self checkSelectedMessage.
-					self checkOverridden ifTrue: [
-						self isOverridden
-						ifTrue:
-							[self
-								refactoringWarning: ('<1p>>><2s> is overriden. Do you want to inline it anyway?', String cr, 'You can break you hooks with this inline.'
-										expandMacrosWith: self classOfTheMethodToInline
-										with: self inlineSelector)] ].
-					self parseInlineMethod.
-					self isPrimitive
-						ifTrue: [self refactoringError: 'Cannot inline primitives'].
-					self checkSuperMessages.
-					self rewriteInlinedTree.
-					(sourceMessage parent isReturn or: [self hasMultipleReturns not])
-						ifFalse:
-							[self
-								refactoringError: 'Cannot inline method since it contains multiple returns that cannot be rewritten'].
-					true])
+RBInlineMethodRefactoring >> preconditions [ 
+
+	^ self applicabilityPreconditions & self breakingChangePreconditions 
 ]
 
 { #category : 'transforming' }
