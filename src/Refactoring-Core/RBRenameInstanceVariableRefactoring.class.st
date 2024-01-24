@@ -88,6 +88,12 @@ RBRenameInstanceVariableRefactoring >> browsedEnvironment [
 	^ browsedEnvironment ifNil: [ browsedEnvironment := RBBrowserEnvironment new ]
 ]
 
+{ #category : 'scripting api - conditions' }
+RBRenameInstanceVariableRefactoring >> checkPreconditions [ 
+
+	self checkApplicabilityPreconditions 
+]
+
 { #category : 'initialization' }
 RBRenameInstanceVariableRefactoring >> initialize [
 	super initialize.
@@ -106,10 +112,8 @@ RBRenameInstanceVariableRefactoring >> newName: anObject [
 
 { #category : 'preconditions' }
 RBRenameInstanceVariableRefactoring >> preconditions [
-	^(RBCondition isValidInstanceVariableName: newName for: class)
-		& (RBCondition definesInstanceVariable: variableName in: class)
-			& (RBCondition hierarchyOf: class definesVariable: newName) not
-			& (RBCondition isGlobal: newName in: self model) not
+
+	^ self applicabilityPreconditions
 ]
 
 { #category : 'transforming' }
