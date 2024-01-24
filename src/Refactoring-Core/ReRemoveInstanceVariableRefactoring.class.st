@@ -63,12 +63,6 @@ ReRemoveInstanceVariableRefactoring >> generateChanges [
 	^ self changes
 ]
 
-{ #category : 'preconditions' }
-ReRemoveInstanceVariableRefactoring >> preconditions [
-
-	^ self applicabilityPreconditions & self breakingChangePreconditions 
-]
-
 { #category : 'printing' }
 ReRemoveInstanceVariableRefactoring >> printOn: aStream [
 

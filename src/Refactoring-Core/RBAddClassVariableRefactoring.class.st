@@ -27,12 +27,6 @@ RBAddClassVariableRefactoring >> breakingChangePreconditions [
 		   definesVariable: variableName asString) not
 ]
 
-{ #category : 'preconditions' }
-RBAddClassVariableRefactoring >> preconditions [
-
-	^ self applicabilityPreconditions & self breakingChangePreconditions
-]
-
 { #category : 'transforming' }
 RBAddClassVariableRefactoring >> privateTransform [
 	class addClassVariable: variableName
