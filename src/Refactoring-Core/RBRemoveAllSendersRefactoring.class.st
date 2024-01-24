@@ -65,11 +65,6 @@ RBRemoveAllSendersRefactoring >> messagePattern [
 	^ 'self ' , (self buildSelectorString: selector)
 ]
 
-{ #category : 'preconditions' }
-RBRemoveAllSendersRefactoring >> preconditions [
-	^ self trueCondition
-]
-
 { #category : 'transforming' }
 RBRemoveAllSendersRefactoring >> privateTransform [
 	self removeSelfSenders
