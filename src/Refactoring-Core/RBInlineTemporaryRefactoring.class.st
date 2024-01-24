@@ -37,6 +37,31 @@ RBInlineTemporaryRefactoring class >> model: aRBSmalltalk inline: anInterval fro
 		yourself
 ]
 
+{ #category : 'preconditions' }
+RBInlineTemporaryRefactoring >> applicabilityPreconditions [ 
+
+	^ (RBCondition definesSelector: selector in: class)
+	  & (RBCondition withBlock: [
+			   self checkSelectedInterval.
+			   true ])
+]
+
+{ #category : 'preconditions' }
+RBInlineTemporaryRefactoring >> checkSelectedInterval [
+
+	sourceTree ifNil: [ self refactoringError: 'Could not parse source' ].
+
+	assignmentNode isAssignment
+		ifFalse: [ self refactoringError: 'The selected node is not an assignment statement' ].
+
+	self hasOnlyOneAssignment
+		ifFalse: [ self refactoringError: 'There are multiple assignments to the variable' ].
+	( RBReadBeforeWrittenTester
+		isVariable: assignmentNode variable name
+		writtenBeforeReadIn: definingNode )
+		ifFalse: [ self refactoringError: 'The variable is possible read before it is assigned' ]
+]
+
 { #category : 'transforming' }
 RBInlineTemporaryRefactoring >> compileMethod [
 	class compileTree: sourceTree
@@ -61,10 +86,19 @@ RBInlineTemporaryRefactoring >> inline: anInterval from: aSelector in: aClass [
 
 { #category : 'preconditions' }
 RBInlineTemporaryRefactoring >> preconditions [
-	^(RBCondition definesSelector: selector in: class)
-		& (RBCondition withBlock:
-					[self verifySelectedInterval.
-					true])
+
+	^ self applicabilityPreconditions
+]
+
+{ #category : 'transforming' }
+RBInlineTemporaryRefactoring >> prepareForExecution [
+
+	sourceTree := class parseTreeForSelector: selector.
+	sourceTree ifNil: [ ^ self ].
+	assignmentNode := sourceTree whichNodeIsContainedBy: sourceInterval.
+	assignmentNode ifNil: [ ^ self ].
+	definingNode := assignmentNode whoDefines:
+		                assignmentNode variable name
 ]
 
 { #category : 'transforming' }
@@ -104,21 +138,4 @@ RBInlineTemporaryRefactoring >> storeOn: aStream [
 		nextPutAll: ' in: '.
 	class storeOn: aStream.
 	aStream nextPut: $)
-]
-
-{ #category : 'preconditions' }
-RBInlineTemporaryRefactoring >> verifySelectedInterval [
-
-	sourceTree := class parseTreeForSelector: selector.
-	sourceTree ifNil: [ self refactoringError: 'Could not parse source' ].
-	assignmentNode := sourceTree whichNodeIsContainedBy: sourceInterval.
-	assignmentNode isAssignment
-		ifFalse: [ self refactoringError: 'The selected node is not an assignment statement' ].
-	definingNode := assignmentNode whoDefines: assignmentNode variable name.
-	self hasOnlyOneAssignment
-		ifFalse: [ self refactoringError: 'There are multiple assignments to the variable' ].
-	( RBReadBeforeWrittenTester
-		isVariable: assignmentNode variable name
-		writtenBeforeReadIn: definingNode )
-		ifFalse: [ self refactoringError: 'The variable is possible read before it is assigned' ]
 ]
