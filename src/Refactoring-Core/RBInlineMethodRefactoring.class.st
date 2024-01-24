@@ -121,7 +121,6 @@ RBInlineMethodRefactoring >> checkOverridden: aBoolean [
 RBInlineMethodRefactoring >> checkSelectedMessage [
 
 	sourceParseTree ifNil: [ self refactoringError: 'Could not parse sources' ].
-	sourceMessage := sourceParseTree whichNodeIsContainedBy: sourceInterval.
 	sourceMessage
 		ifNil: [ self refactoringError: 'The selection doesn''t appear to be a message send' ].
 	sourceMessage isCascade
@@ -199,7 +198,6 @@ RBInlineMethodRefactoring >> inlineParseTree [
 { #category : 'transforming' }
 RBInlineMethodRefactoring >> inlineSelector [
 
-	sourceMessage ifNil: [ self checkSelectedMessage ].
 	^ sourceMessage selector
 ]
 
@@ -351,7 +349,10 @@ RBInlineMethodRefactoring >> preconditions [
 { #category : 'transforming' }
 RBInlineMethodRefactoring >> prepareForExecution [
 
-	sourceParseTree := class parseTreeForSelector: sourceSelector
+	sourceParseTree := class parseTreeForSelector: sourceSelector.
+	sourceParseTree ifNotNil: [
+		sourceMessage := sourceParseTree whichNodeIsContainedBy:
+			                 sourceInterval ]
 ]
 
 { #category : 'transforming' }
