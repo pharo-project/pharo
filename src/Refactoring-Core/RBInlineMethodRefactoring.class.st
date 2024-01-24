@@ -301,6 +301,12 @@ RBInlineMethodRefactoring >> preconditions [
 ]
 
 { #category : 'transforming' }
+RBInlineMethodRefactoring >> prepareForExecution [
+
+	sourceParseTree := class parseTreeForSelector: sourceSelector
+]
+
+{ #category : 'transforming' }
 RBInlineMethodRefactoring >> privateTransform [
 	self
 		renameConflictingTemporaries;
