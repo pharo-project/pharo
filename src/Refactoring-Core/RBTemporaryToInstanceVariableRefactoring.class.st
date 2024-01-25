@@ -174,12 +174,12 @@ RBTemporaryToInstanceVariableRefactoring >> removeTemporaryOfClass: aClass [
 { #category : 'removing' }
 RBTemporaryToInstanceVariableRefactoring >> removeTemporaryOfMethod: aSelector in: aClass [
 
-	| parseTree matcher method |
+	| methodParseTree matcher method |
 	method := aClass methodFor: aSelector.
-	parseTree := method parseTree.
-	parseTree ifNil: [ self refactoringError: 'Could not parse method' ].
+	methodParseTree := method parseTree.
+	methodParseTree ifNil: [ self refactoringError: 'Could not parse method' ].
 	( matcher := self parseTreeRewriterClass removeTemporaryNamed: temporaryVariableName )
-		executeTree: parseTree.
+		executeTree: methodParseTree.
 	method compileTree: matcher tree
 ]
 
