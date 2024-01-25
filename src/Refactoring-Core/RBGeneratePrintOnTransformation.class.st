@@ -63,13 +63,6 @@ RBGeneratePrintOnTransformation class >> model: aNamespace className: aClass var
 RBGeneratePrintOnTransformation >> applicabilityPreconditions [ 
 	"Checks that the class actually defines all the variables that will be part of the printOn:."
 
-	^ self applicabilityPreconditions 
-]
-
-{ #category : 'preconditions' }
-RBGeneratePrintOnTransformation >> preconditions [
-	"Checks that the class actually defines all the variables that will be part of the printOn:."
-
 	^ variables
 		  inject: self trueCondition
 		  into: [ :condition :variable |
