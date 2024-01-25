@@ -46,7 +46,7 @@ if [ ! -e "${BOOTSTRAP_DOWNLOADS}/vmBootstrap/pharo" ]; then
 	mkdir ${BOOTSTRAP_DOWNLOADS}/vmBootstrap
 	cd ${BOOTSTRAP_DOWNLOADS}/vmBootstrap
 
-	${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/getPharoVM.sh 100 vm $BOOTSTRAP_ARCH
+	${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/getPharoVM.sh 120 vm $BOOTSTRAP_ARCH
 	cd -
 	echo "Bootstrap VM: $(${VM_BOOTSTRAP} --version)"
 fi 
