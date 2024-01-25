@@ -42,9 +42,3 @@ RBClassRefactoring class >> model: aRBModel className: aName [
 RBClassRefactoring >> className: aName [
 	className := aName
 ]
-
-{ #category : 'preconditions' }
-RBClassRefactoring >> preconditions [
-
-	^ self applicabilityPreconditions
-]

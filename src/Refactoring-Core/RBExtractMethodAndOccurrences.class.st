@@ -92,12 +92,6 @@ RBExtractMethodAndOccurrences >> findOccurrencesOf: aSelector [
 				aSelector , ' is not a valid selector name.' ]
 ]
 
-{ #category : 'preconditions' }
-RBExtractMethodAndOccurrences >> preconditions [
-
-	^ self trueCondition
-]
-
 { #category : 'transforming' }
 RBExtractMethodAndOccurrences >> privateTransform [
 	| newExtractedSelector |
