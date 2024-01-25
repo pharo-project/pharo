@@ -49,6 +49,12 @@ ReRenameSharedVariableRefactoring >> applicabilityPreconditions [
 			   sharedVariables: { variableName }) }
 ]
 
+{ #category : 'scripting api - conditions' }
+ReRenameSharedVariableRefactoring >> checkPreconditions [ 
+
+	self checkApplicabilityPreconditions 
+]
+
 { #category : 'accessing' }
 ReRenameSharedVariableRefactoring >> newName [
 	^ newName
@@ -57,15 +63,6 @@ ReRenameSharedVariableRefactoring >> newName [
 { #category : 'accessing' }
 ReRenameSharedVariableRefactoring >> newName: anObject [
 	newName := anObject
-]
-
-{ #category : 'preconditions' }
-ReRenameSharedVariableRefactoring >> preconditions [
-	^(RBCondition isMetaclass: class) not
-		& (RBCondition isValidClassVarName: newName asString for: class)
-			& (RBCondition definesClassVariable: variableName asString in: class)
-			& (RBCondition hierarchyOf: class definesVariable: newName asString) not
-			& (RBCondition isGlobal: newName asString in: self model) not
 ]
 
 { #category : 'transforming' }

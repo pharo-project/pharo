@@ -146,6 +146,15 @@ RBRefactoring >> copyOptionsFrom: aDictionary [
 ]
 
 { #category : 'preconditions' }
+RBRefactoring >> eagerlyCheckApplicabilityPreconditions [
+
+	self applicabilityPreconditions
+		do: [ :cond | cond check ifFalse:
+				[ self refactoringError:
+					(String streamContents: [ :aStream | cond violationMessageOn: aStream ] ) ] ]
+]
+
+{ #category : 'preconditions' }
 RBRefactoring >> failedApplicabilityPreconditions [
 	"Returne the failed preconditions without raising error. It should only be called by drivers."
 	
