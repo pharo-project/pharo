@@ -108,12 +108,6 @@ ReRenameClassRefactoring >> newName: aNewName [
 ]
 
 { #category : 'preconditions' }
-ReRenameClassRefactoring >> preconditions [
-	"We have to check because the setter is actually already doing the className to class transformation."
-	^ self applicabilityPreconditions 
-]
-
-{ #category : 'preconditions' }
 ReRenameClassRefactoring >> prepareForExecution [
 
 	class := self model classNamed: className

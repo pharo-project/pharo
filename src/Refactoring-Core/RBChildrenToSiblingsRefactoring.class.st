@@ -125,12 +125,6 @@ RBChildrenToSiblingsRefactoring >> name: aClassName class: aClass subclasses: su
 				collect: [:each | self model classFor: each]
 ]
 
-{ #category : 'preconditions' }
-RBChildrenToSiblingsRefactoring >> preconditions [
-
-	^ self applicabilityPreconditions
-]
-
 { #category : 'transforming' }
 RBChildrenToSiblingsRefactoring >> privateTransform [
 	self

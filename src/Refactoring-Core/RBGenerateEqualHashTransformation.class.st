@@ -169,12 +169,6 @@ RBGenerateEqualHashTransformation >> compileHash [
 			withProtocol: #comparing)
 ]
 
-{ #category : 'preconditions' }
-RBGenerateEqualHashTransformation >> preconditions [
-
-	^ self applicabilityPreconditions
-]
-
 { #category : 'transforming' }
 RBGenerateEqualHashTransformation >> privateTransform [
 	self compileHash.

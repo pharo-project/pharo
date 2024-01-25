@@ -70,12 +70,6 @@ RBInsertNewClassRefactoring >> packageName: anObject [
 	packageName := anObject
 ]
 
-{ #category : 'preconditions' }
-RBInsertNewClassRefactoring >> preconditions [
-
-	^ self applicabilityPreconditions 
-]
-
 { #category : 'transforming' }
 RBInsertNewClassRefactoring >> privateTransform [
 

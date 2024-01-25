@@ -126,12 +126,6 @@ RBCopyClassRefactoring >> packageName: anObject [
 	packageName := anObject
 ]
 
-{ #category : 'preconditions' }
-RBCopyClassRefactoring >> preconditions [
-
-	^ self applicabilityPreconditions
-]
-
 { #category : 'transforming' }
 RBCopyClassRefactoring >> privateTransform [
 	self copyClass.
