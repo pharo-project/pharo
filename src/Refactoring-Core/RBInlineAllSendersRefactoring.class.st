@@ -130,12 +130,6 @@ RBInlineAllSendersRefactoring >> numberOfSelfSendsIn: aParseTree [
 	^ search executeTree: aParseTree initialAnswer: 0
 ]
 
-{ #category : 'preconditions' }
-RBInlineAllSendersRefactoring >> preconditions [
-
-	^ self applicabilityPreconditions
-]
-
 { #category : 'transforming' }
 RBInlineAllSendersRefactoring >> privateTransform [
 	self
