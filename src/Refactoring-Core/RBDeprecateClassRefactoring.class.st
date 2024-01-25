@@ -144,7 +144,7 @@ RBDeprecateClassRefactoring >> newClass [
 { #category : 'preconditions' }
 RBDeprecateClassRefactoring >> preconditions [
 
-	self applicabilityPreconditions 
+	^ self applicabilityPreconditions 
 ]
 
 { #category : 'transforming' }
