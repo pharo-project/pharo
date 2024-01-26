@@ -250,7 +250,7 @@ RBPullUpMethodRefactoring >> copyDownMethods [
 
 { #category : 'preconditions' }
 RBPullUpMethodRefactoring >> preconditions [
-	self requestSuperClass.
+
 	^(selectors inject: (RBCondition hasSuperclass: class)
 		into: [:cond :each | cond & (RBCondition definesSelector: each in: class)])
 			& (RBCondition withBlock:
@@ -295,7 +295,7 @@ RBPullUpMethodRefactoring >> pullUp: selectorCollection from: aClass [
 
 { #category : 'initialization' }
 RBPullUpMethodRefactoring >> pullUp: selectorCollection from: aClass to: aSuperClass [
-	self setOption: #superClass toUse: [ :ref | ].
+
 	class := self classObjectFor: aClass.
 	targetSuperclass := self classObjectFor: aSuperClass .
 	selectors := selectorCollection.
@@ -349,11 +349,6 @@ RBPullUpMethodRefactoring >> removePulledUpMethods [
 	selectors do: [ :each |
 		self generateChangesFor:
 			(RBRemoveMethodTransformation selector: each from: class) ]
-]
-
-{ #category : 'preconditions' }
-RBPullUpMethodRefactoring >> requestSuperClass [
-	^(self options at: #superClass) value: self
 ]
 
 { #category : 'initialization' }
