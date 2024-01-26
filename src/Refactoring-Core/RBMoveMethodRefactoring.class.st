@@ -82,14 +82,6 @@ RBMoveMethodRefactoring >> addSelfReturn [
 	parseTree addSelfReturn
 ]
 
-{ #category : 'private' }
-RBMoveMethodRefactoring >> buildParseTree [
-
-	parseTree := ( class parseTreeForSelector: selector ) copy.
-	parseTree ifNil: [ self refactoringError: 'Could not parse method' ].
-	parseTree doSemanticAnalysis
-]
-
 { #category : 'preconditions' }
 RBMoveMethodRefactoring >> checkAssignmentsToVariable [
 	| searcher |
@@ -319,7 +311,7 @@ RBMoveMethodRefactoring >> needsToReplaceSelfReferences [
 RBMoveMethodRefactoring >> preconditions [
 	^(RBCondition definesSelector: selector in: class)
 		& (RBCondition withBlock:
-					[self buildParseTree.
+					[
 					self checkForPrimitiveMethod.
 					self checkForSuperReferences.
 					self checkAssignmentsToVariable.
@@ -328,6 +320,14 @@ RBMoveMethodRefactoring >> preconditions [
 					self checkTemporaryVariableNames.
 					self getNewMethodName.
 					true])
+]
+
+{ #category : 'transforming' }
+RBMoveMethodRefactoring >> prepareForExecution [ 
+
+	parseTree := ( class parseTreeForSelector: selector ) copy.
+	parseTree ifNil: [ self refactoringError: 'Could not parse method' ].
+	parseTree doSemanticAnalysis
 ]
 
 { #category : 'transforming' }
