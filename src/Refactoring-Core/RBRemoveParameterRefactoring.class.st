@@ -8,11 +8,7 @@ If the method contains more than one argument, I request the user to choose one 
 "
 Class {
 	#name : 'RBRemoveParameterRefactoring',
-	#superclass : 'RBChangeMethodNameRefactoring',
-	#instVars : [
-		'parameterIndex',
-		'argument'
-	],
+	#superclass : 'RBParameterRemoval',
 	#category : 'Refactoring-Core-Refactorings',
 	#package : 'Refactoring-Core',
 	#tag : 'Refactorings'
@@ -34,45 +30,6 @@ RBRemoveParameterRefactoring class >> removeParameter: aString in: aClass select
 		removeParameter: aString
 		in: aClass
 		selector: aSelector
-]
-
-{ #category : 'validating' }
-RBRemoveParameterRefactoring >> applyValidations [
-
-	| tree |
-	(class directlyDefinesMethod: oldSelector) ifFalse: [
-		self refactoringError: 'Method doesn''t exist' ].
-	tree := class parseTreeForSelector: oldSelector.
-	tree ifNil: [ self refactoringError: 'Cannot parse sources' ].
-	argument ifNil: [
-		self refactoringError: 'This method does not have an argument' ].
-	parameterIndex := tree argumentNames
-		                  indexOf: argument
-		                  ifAbsent: [
-		                  self refactoringError: 'Select a parameter!!' ].
-	oldSelector numArgs == 0 ifTrue: [
-		self refactoringError: 'This method contains no arguments' ].
-	oldSelector isInfix ifTrue: [
-		self refactoringError:
-			'Cannot remove parameters of infix selectors' ]
-]
-
-{ #category : 'private' }
-RBRemoveParameterRefactoring >> computeNewSelector [
-	| keywords |
-
-	keywords := oldSelector keywords asOrderedCollection.
-	keywords size = 1
-		ifTrue: [ ^ (keywords first copyWithout: $:) asSymbol ].
-	keywords removeAt: parameterIndex.
-	^ (String streamContents: [ :str | keywords do: [ :each | str nextPutAll: each ] ]) asSymbol
-]
-
-{ #category : 'transforming' }
-RBRemoveParameterRefactoring >> getNewSelector [
-	self applyValidations.
-	permutation := (1 to: oldSelector numArgs) copyWithout: parameterIndex.
-	^ newSelector ifNil: [ newSelector := self computeNewSelector ]
 ]
 
 { #category : 'transforming' }

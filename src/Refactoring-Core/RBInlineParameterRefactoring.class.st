@@ -39,7 +39,7 @@ method1
 "
 Class {
 	#name : 'RBInlineParameterRefactoring',
-	#superclass : 'RBRemoveParameterRefactoring',
+	#superclass : 'RBParameterRemoval',
 	#instVars : [
 		'expressions'
 	],
