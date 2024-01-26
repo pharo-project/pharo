@@ -64,6 +64,12 @@ ReRemoveSharedVariableRefactoring >> generateChanges [
 	^ self changes
 ]
 
+{ #category : 'preconditions' }
+ReRemoveSharedVariableRefactoring >> preconditions [
+
+	^ self applicabilityPreconditions & self breakingChangePreconditions
+]
+
 { #category : 'transforming' }
 ReRemoveSharedVariableRefactoring >> privateTransform [
 	class removeClassVariable: variableName

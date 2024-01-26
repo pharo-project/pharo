@@ -31,6 +31,12 @@ RBPullUpInstanceVariableRefactoring >> breakingChangePreconditions [
 		  true ]
 ]
 
+{ #category : 'preconditions' }
+RBPullUpInstanceVariableRefactoring >> preconditions [
+
+	^ self applicabilityPreconditions & self breakingChangePreconditions
+]
+
 { #category : 'transforming' }
 RBPullUpInstanceVariableRefactoring >> privateTransform [
 	class allSubclasses do:
