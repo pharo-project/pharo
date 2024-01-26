@@ -10,19 +10,15 @@ Class {
 }
 
 { #category : 'accessing' }
-SycAddClassesScopeCommand >> defaultMenuIconName [
-	^ #add
-]
-
-{ #category : 'accessing' }
 SycAddClassesScopeCommand >> defaultMenuItemName [
-	^ 'Add class(es) to scope list'
+	^ 'Create new scope from selected class(es)'
 ]
 
 { #category : 'execution' }
 SycAddClassesScopeCommand >> execute [
 	| scope |
+	
 	scope := ScopesManager newScopeFrom: classes.
 	ScopesManager addScope: scope.
-	ScopesPresenter open
+	ScopesPresenter openSelecting: scope
 ]

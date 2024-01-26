@@ -14,20 +14,22 @@ Class {
 
 { #category : 'accessing' }
 SycAddPackagesScopeCommand >> defaultMenuIconName [
-	^ #add
+	^ #smallPushpin
 ]
 
 { #category : 'accessing' }
 SycAddPackagesScopeCommand >> defaultMenuItemName [
-	^ 'Add package(s) to scope list'
+	^ 'Create scope from selected package(s)'
 ]
 
 { #category : 'execution' }
 SycAddPackagesScopeCommand >> execute [
+
 	| scope |
+	
 	scope := ScopesManager newScopeFrom: packages.
 	ScopesManager addScope: scope.
-	ScopesPresenter open
+	ScopesPresenter openSelecting: scope
 ]
 
 { #category : 'accessing' }

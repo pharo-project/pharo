@@ -265,6 +265,16 @@ RBBrowserEnvironmentTest >> testEnvironmentWrapper [
 	self assert: wrapper environment identicalTo: printString
 ]
 
+{ #category : 'tests - environments' }
+RBBrowserEnvironmentTest >> testHierarchyEnvironment [
+
+	| aHierarchyEnvironment |
+	aHierarchyEnvironment := universalEnvironment forClassHierarchy: RBBrowserEnvironmentTest.
+	self universalTestFor: aHierarchyEnvironment.
+	self assert: (aHierarchyEnvironment implementorsOf: #testPackageEnvironment) numberSelectors equals: 1.
+	self assert: (aHierarchyEnvironment implementorsOf: #setUp) numberSelectors equals:4 
+]
+
 { #category : 'tests' }
 RBBrowserEnvironmentTest >> testImplementorsMatching [
 	| print |
