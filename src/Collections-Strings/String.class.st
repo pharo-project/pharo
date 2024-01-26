@@ -767,7 +767,9 @@ String >> asTime [
 { #category : 'converting' }
 String >> asUncommentedCode [
 	"this string represents a commented code, let's uncomment it"
-
+	
+	"'""abc""' asUncommentedCode >>> 'abc'"
+	
 	^ String streamContents:  [ :str |
 
 		|doubleQuoteAlreadyFound|
