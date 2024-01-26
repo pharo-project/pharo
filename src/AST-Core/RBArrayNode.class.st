@@ -98,9 +98,10 @@ RBArrayNode >> addNodesFirst: aCollection [
 
 { #category : 'accessing' }
 RBArrayNode >> allStatements [
-	^ statements asOrderedCollection copy
-			addAll: super allStatements;
-			yourself
+
+	^ (OrderedCollection withAll: statements)
+		  addAll: super allStatements;
+		  yourself
 ]
 
 { #category : 'accessing' }
