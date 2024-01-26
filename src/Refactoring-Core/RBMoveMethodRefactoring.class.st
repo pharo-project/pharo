@@ -82,12 +82,26 @@ RBMoveMethodRefactoring >> addSelfReturn [
 	parseTree addSelfReturn
 ]
 
-{ #category : 'private' }
-RBMoveMethodRefactoring >> buildParseTree [
+{ #category : 'preconditions' }
+RBMoveMethodRefactoring >> applicabilityPreconditions [
 
-	parseTree := ( class parseTreeForSelector: selector ) copy.
-	parseTree ifNil: [ self refactoringError: 'Could not parse method' ].
-	parseTree doSemanticAnalysis
+	^ (RBCondition definesSelector: selector in: class)
+	  & (RBCondition withBlock: [
+			   self checkForPrimitiveMethod.
+			   self checkForSuperReferences.
+			   self checkAssignmentsToVariable.
+			   self getClassesToMoveTo.
+			   self checkTemporaryVariableNames.
+			   true ])
+]
+
+{ #category : 'preconditions' }
+RBMoveMethodRefactoring >> breakingChangePreconditions [
+
+	^ RBCondition withBlock: [
+		  self getArgumentNameForSelf.
+		  self getNewMethodName.
+		  true ]
 ]
 
 { #category : 'preconditions' }
@@ -317,17 +331,16 @@ RBMoveMethodRefactoring >> needsToReplaceSelfReferences [
 
 { #category : 'preconditions' }
 RBMoveMethodRefactoring >> preconditions [
-	^(RBCondition definesSelector: selector in: class)
-		& (RBCondition withBlock:
-					[self buildParseTree.
-					self checkForPrimitiveMethod.
-					self checkForSuperReferences.
-					self checkAssignmentsToVariable.
-					self getClassesToMoveTo.
-					self getArgumentNameForSelf.
-					self checkTemporaryVariableNames.
-					self getNewMethodName.
-					true])
+
+	^ self applicabilityPreconditions & self breakingChangePreconditions
+]
+
+{ #category : 'transforming' }
+RBMoveMethodRefactoring >> prepareForExecution [ 
+
+	parseTree := ( class parseTreeForSelector: selector ) copy.
+	parseTree ifNil: [ self refactoringError: 'Could not parse method' ].
+	parseTree doSemanticAnalysis
 ]
 
 { #category : 'transforming' }
