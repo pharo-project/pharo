@@ -32,6 +32,21 @@ RBChangeMethodNameRefactoring class >> isAbstract [
 ]
 
 { #category : 'preconditions' }
+RBChangeMethodNameRefactoring >> applicabilityPreconditions [
+
+	^ self myConditions
+	  & (RBCondition definesSelector: oldSelector in: class)
+	  & self isValidMethodNamePrecondition
+]
+
+{ #category : 'preconditions' }
+RBChangeMethodNameRefactoring >> breakingChangePreconditions [ 
+	"This refactoring only preserves behavior if all implementors are renamed."
+
+	^ self doesNotOverrideExistingMethodPrecondition 
+]
+
+{ #category : 'preconditions' }
 RBChangeMethodNameRefactoring >> doesNotOverrideExistingMethodPrecondition [
 	"Check that the new selector is not already defined in superclasses"
 	
@@ -106,12 +121,7 @@ RBChangeMethodNameRefactoring >> permutation: anObject [
 RBChangeMethodNameRefactoring >> preconditions [
 	"This refactoring only preserves behavior if all implementors are renamed."
 
-	| conditions |
-	conditions := self myConditions
-	              & (RBCondition definesSelector: oldSelector in: class)
-	              & self isValidMethodNamePrecondition.
-
-	^ conditions & self doesNotOverrideExistingMethodPrecondition
+	^ self applicabilityPreconditions & self breakingChangePreconditions 
 ]
 
 { #category : 'transforming' }
