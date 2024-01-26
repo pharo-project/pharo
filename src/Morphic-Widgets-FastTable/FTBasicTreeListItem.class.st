@@ -87,7 +87,7 @@ FTBasicTreeListItem >> collapsedButton [
 
 	^self defaultButton
 		actionSelector: #expandItem;
-		labelGraphic: Smalltalk ui theme treeUnexpandedForm;
+		labelFormSet: Smalltalk ui theme treeUnexpandedFormSet;
 		helpText: 'Expand Item';
 		yourself
 ]
@@ -139,7 +139,7 @@ FTBasicTreeListItem >> expandedButton [
 
 	^self defaultButton
 		actionSelector: #collapseItem;
-		labelGraphic: Smalltalk ui theme treeExpandedForm;
+		labelFormSet: Smalltalk ui theme treeExpandedFormSet;
 		helpText: 'Collapse Item';
 		yourself
 ]
