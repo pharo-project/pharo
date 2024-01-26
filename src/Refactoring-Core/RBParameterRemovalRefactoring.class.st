@@ -3,7 +3,7 @@ I am a common superclass for `InlineParameter` and `RemoveParameter` refactoring
 I have the common state and methods that are shared between the two refactorings.
 "
 Class {
-	#name : 'RBParameterRemoval',
+	#name : 'RBParameterRemovalRefactoring',
 	#superclass : 'RBChangeMethodNameRefactoring',
 	#instVars : [
 		'parameterIndex',
@@ -15,13 +15,13 @@ Class {
 }
 
 { #category : 'testing' }
-RBParameterRemoval class >> isAbstract [
+RBParameterRemovalRefactoring class >> isAbstract [
 
-	^ self == RBParameterRemoval
+	^ self == RBParameterRemovalRefactoring
 ]
 
 { #category : 'validating' }
-RBParameterRemoval >> applyValidations [
+RBParameterRemovalRefactoring >> applyValidations [
 
 	| tree |
 	(class directlyDefinesMethod: oldSelector) ifFalse: [
@@ -42,7 +42,7 @@ RBParameterRemoval >> applyValidations [
 ]
 
 { #category : 'private' }
-RBParameterRemoval >> computeNewSelector [
+RBParameterRemovalRefactoring >> computeNewSelector [
 	| keywords |
 
 	keywords := oldSelector keywords asOrderedCollection.
@@ -53,7 +53,7 @@ RBParameterRemoval >> computeNewSelector [
 ]
 
 { #category : 'private' }
-RBParameterRemoval >> getNewSelector [
+RBParameterRemovalRefactoring >> getNewSelector [
 	self applyValidations.
 	permutation := (1 to: oldSelector numArgs) copyWithout: parameterIndex.
 	^ newSelector ifNil: [ newSelector := self computeNewSelector ]

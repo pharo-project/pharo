@@ -8,7 +8,7 @@ If the method contains more than one argument, I request the user to choose one 
 "
 Class {
 	#name : 'RBRemoveParameterRefactoring',
-	#superclass : 'RBParameterRemoval',
+	#superclass : 'RBParameterRemovalRefactoring',
 	#category : 'Refactoring-Core-Refactorings',
 	#package : 'Refactoring-Core',
 	#tag : 'Refactorings'
