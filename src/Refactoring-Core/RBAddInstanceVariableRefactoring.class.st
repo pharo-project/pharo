@@ -24,6 +24,12 @@ RBAddInstanceVariableRefactoring >> breakingChangePreconditions [
 	^ (RBCondition hierarchyOf: class definesVariable: variableName) not
 ]
 
+{ #category : 'preconditions' }
+RBAddInstanceVariableRefactoring >> preconditions [
+
+	^ self applicabilityPreconditions & self breakingChangePreconditions
+]
+
 { #category : 'transforming' }
 RBAddInstanceVariableRefactoring >> privateTransform [
 	class addInstanceVariable: variableName

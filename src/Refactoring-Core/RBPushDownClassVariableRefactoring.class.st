@@ -48,6 +48,12 @@ RBPushDownClassVariableRefactoring >> findDestinationClass [
 	^ destinationClass
 ]
 
+{ #category : 'preconditions' }
+RBPushDownClassVariableRefactoring >> preconditions [
+
+	^ self applicabilityPreconditions & self breakingChangePreconditions
+]
+
 { #category : 'transforming' }
 RBPushDownClassVariableRefactoring >> privateTransform [
 

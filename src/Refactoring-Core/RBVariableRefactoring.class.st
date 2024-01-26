@@ -33,12 +33,6 @@ RBVariableRefactoring class >> variable: aVarName class: aClass [
 		variable: aVarName class: aClass
 ]
 
-{ #category : 'preconditions' }
-RBVariableRefactoring >> preconditions [
-
-	^ self applicabilityPreconditions & self breakingChangePreconditions
-]
-
 { #category : 'initialization' }
 RBVariableRefactoring >> refactoredClassName [
 	^ class name
