@@ -49,6 +49,31 @@ RBPullUpMethodRefactoring class >> pullUp: selectorCollection from: aClass to: a
 ]
 
 { #category : 'preconditions' }
+RBPullUpMethodRefactoring >> applicabilityPreconditions [ 
+
+	^(selectors 
+		inject: (RBCondition hasSuperclass: class)
+		into: [:cond :each | 
+			cond 
+			& (RBCondition definesSelector: each in: class)])
+			& (RBCondition withBlock:
+						[
+						self checkClassVars.
+						self checkSuperclass.
+						self checkSuperMessages.
+						true])
+]
+
+{ #category : 'preconditions' }
+RBPullUpMethodRefactoring >> breakingChangePreconditions [
+
+	^ selectors 
+		inject: self trueCondition 
+		into: [ :cond :each |
+		  	cond & (RBCondition withBlock: [ self checkInstVars. true ]) ]
+]
+
+{ #category : 'preconditions' }
 RBPullUpMethodRefactoring >> checkBackReferencesTo: aSelector [
 	"If `aSelector` is defined in `targetSuperclass` or one of its superclasses check for
 	super sends to `aSelector` in `targetSuperclass` hierarchy.
@@ -251,14 +276,7 @@ RBPullUpMethodRefactoring >> copyDownMethods [
 { #category : 'preconditions' }
 RBPullUpMethodRefactoring >> preconditions [
 
-	^(selectors inject: (RBCondition hasSuperclass: class)
-		into: [:cond :each | cond & (RBCondition definesSelector: each in: class)])
-			& (RBCondition withBlock:
-						[self checkInstVars.
-						self checkClassVars.
-						self checkSuperclass.
-						self checkSuperMessages.
-						true])
+	^ self applicabilityPreconditions & self breakingChangePreconditions 
 ]
 
 { #category : 'transforming' }
