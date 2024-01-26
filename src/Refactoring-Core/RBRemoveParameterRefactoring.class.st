@@ -32,6 +32,19 @@ RBRemoveParameterRefactoring class >> removeParameter: aString in: aClass select
 		selector: aSelector
 ]
 
+{ #category : 'preconditions' }
+RBRemoveParameterRefactoring >> applicabilityPreconditions [
+	| imps |
+	imps := self model allImplementorsOf: oldSelector.
+	self getNewSelector.
+	^imps inject: (super applicabilityPreconditions)
+		into:
+			[:cond :each |
+			cond
+				& (RBCondition withBlock: [(self hasReferencesToTemporaryIn: each) not]
+						errorString: 'This argument is still referenced in at least one implementor!!')]
+]
+
 { #category : 'transforming' }
 RBRemoveParameterRefactoring >> hasReferencesToTemporaryIn: each [
 
@@ -40,19 +53,6 @@ RBRemoveParameterRefactoring >> hasReferencesToTemporaryIn: each [
 	tree := each parseTreeForSelector: oldSelector.
 	tree ifNil: [ self refactoringError: 'Cannot parse sources.' ].
 	^ tree references: ( tree argumentNames at: parameterIndex )
-]
-
-{ #category : 'preconditions' }
-RBRemoveParameterRefactoring >> myConditions [
-	| imps |
-	imps := self model allImplementorsOf: oldSelector.
-	self getNewSelector.
-	^imps inject: (RBCondition definesSelector: oldSelector in: class)
-		into:
-			[:cond :each |
-			cond
-				& (RBCondition withBlock: [(self hasReferencesToTemporaryIn: each) not]
-						errorString: 'This argument is still referenced in at least one implementor!!')]
 ]
 
 { #category : 'accessing' }

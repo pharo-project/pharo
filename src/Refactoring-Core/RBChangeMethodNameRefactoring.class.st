@@ -34,8 +34,7 @@ RBChangeMethodNameRefactoring class >> isAbstract [
 { #category : 'preconditions' }
 RBChangeMethodNameRefactoring >> applicabilityPreconditions [
 
-	^ self myConditions
-	  & (RBCondition definesSelector: oldSelector in: class)
+	^ (RBCondition definesSelector: oldSelector in: class)
 	  & self isValidMethodNamePrecondition
 ]
 
@@ -88,11 +87,6 @@ RBChangeMethodNameRefactoring >> modifyImplementorParseTree: parseTree in: aClas
 	| oldArgs |
 	oldArgs := parseTree arguments.
 	parseTree renameSelector: newSelector andArguments: (permutation collect: [:each | oldArgs at: each])
-]
-
-{ #category : 'preconditions' }
-RBChangeMethodNameRefactoring >> myConditions [
-	"^self subclassResponsibility"
 ]
 
 { #category : 'instance creation' }
