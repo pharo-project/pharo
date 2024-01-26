@@ -86,12 +86,6 @@ RBInlineTemporaryRefactoring >> inline: anInterval from: aSelector in: aClass [
 	sourceInterval := anInterval
 ]
 
-{ #category : 'preconditions' }
-RBInlineTemporaryRefactoring >> preconditions [
-
-	^ self applicabilityPreconditions
-]
-
 { #category : 'transforming' }
 RBInlineTemporaryRefactoring >> privateTransform [
 	self

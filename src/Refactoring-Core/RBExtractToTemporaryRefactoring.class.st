@@ -39,6 +39,17 @@ RBExtractToTemporaryRefactoring class >> model: aRBSmalltalk extract: anInterval
 ]
 
 { #category : 'preconditions' }
+RBExtractToTemporaryRefactoring >> applicabilityPreconditions [
+
+	^ (RBCondition definesSelector: selector in: class)
+	  & (RBCondition isValidInstanceVariableName: newVariableName for: class)
+	  & (RBCondition withBlock: [
+		   self verifySelectedInterval.
+		   self checkVariableName.
+		   true ])
+]
+
+{ #category : 'preconditions' }
 RBExtractToTemporaryRefactoring >> checkVariableName [
 	(class whoDefinesInstanceVariable: newVariableName) ifNotNil:
 			[self refactoringError: ('<1p> defines an instance variable named <2s>'
@@ -105,16 +116,6 @@ RBExtractToTemporaryRefactoring >> parseTree [
 			parseTree ifNil: [ self refactoringError: 'Could not parse method' ]
 			].
 	^ parseTree doSemanticAnalysis
-]
-
-{ #category : 'preconditions' }
-RBExtractToTemporaryRefactoring >> preconditions [
-	^(RBCondition definesSelector: selector in: class)
-		& (RBCondition isValidInstanceVariableName: newVariableName for: class)
-			& (RBCondition withBlock:
-						[self verifySelectedInterval.
-						self checkVariableName.
-						true])
 ]
 
 { #category : 'transforming' }

@@ -89,12 +89,6 @@ RBExtractMethodToComponentRefactoring >> moveMethod [
 	self generateChangesFor: refactoring
 ]
 
-{ #category : 'preconditions' }
-RBExtractMethodToComponentRefactoring >> preconditions [
-
-	^ self trueCondition
-]
-
 { #category : 'transforming' }
 RBExtractMethodToComponentRefactoring >> privateTransform [
 	self

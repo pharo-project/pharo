@@ -72,12 +72,6 @@ RBAddMethodRefactoring >> checkPreconditions [
 	super checkPreconditions 
 ]
 
-{ #category : 'preconditions' }
-RBAddMethodRefactoring >> preconditions [
-
-	^ self applicabilityPreconditions 
-]
-
 { #category : 'transforming' }
 RBAddMethodRefactoring >> privateTransform [
 

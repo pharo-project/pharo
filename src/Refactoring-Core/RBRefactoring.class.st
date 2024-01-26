@@ -43,12 +43,6 @@ RBRefactoring class >> preconditionSignal [
 	^ RBRefactoringError , RBRefactoringWarning
 ]
 
-{ #category : 'preconditions' }
-RBRefactoring >> applicabilityPreconditions [
-
-	^ self trueCondition 
-]
-
 { #category : 'converting' }
 RBRefactoring >> asRefactoring [
 

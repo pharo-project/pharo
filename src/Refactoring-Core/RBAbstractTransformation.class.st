@@ -336,7 +336,7 @@ RBAbstractTransformation >> poolVariableNamesIn: poolName [
 { #category : 'preconditions' }
 RBAbstractTransformation >> preconditions [
 
-	self subclassResponsibility
+	^ self applicabilityPreconditions
 ]
 
 { #category : 'transforming' }

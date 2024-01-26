@@ -141,12 +141,6 @@ RBDeprecateClassRefactoring >> newClass [
 	^ self model classNamed: newName
 ]
 
-{ #category : 'preconditions' }
-RBDeprecateClassRefactoring >> preconditions [
-
-	self applicabilityPreconditions 
-]
-
 { #category : 'transforming' }
 RBDeprecateClassRefactoring >> privateTransform [
 
