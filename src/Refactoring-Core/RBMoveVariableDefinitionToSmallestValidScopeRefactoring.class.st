@@ -37,6 +37,26 @@ RBMoveVariableDefinitionToSmallestValidScopeRefactoring class >> model: aRBSmall
 		yourself
 ]
 
+{ #category : 'preconditions' }
+RBMoveVariableDefinitionToSmallestValidScopeRefactoring >> applicabilityPreconditions [
+
+	^ (RBCondition definesSelector: selector in: class)
+	  & (RBCondition withBlock: [
+			   | methodSource |
+			   interval first <= interval last ifFalse: [
+				   self refactoringError: 'You must select a variable name' ].
+			   methodSource := class sourceCodeFor: selector.
+			   methodSource size >= interval last ifFalse: [
+				   self refactoringError: 'Invalid range for variable' ].
+			   name := methodSource copyFrom: interval first to: interval last.
+			   (self checkInstanceVariableName: name in: class) ifFalse: [
+				   self refactoringError:
+					   name , ' does not seem to be a valid variable name.' ].
+			   parseTree := class parseTreeForSelector: selector.
+			   self checkParseTree.
+			   true ])
+]
+
 { #category : 'transforming' }
 RBMoveVariableDefinitionToSmallestValidScopeRefactoring >> checkNodes: sequenceNodes [
 	(sequenceNodes
@@ -75,26 +95,6 @@ RBMoveVariableDefinitionToSmallestValidScopeRefactoring >> class: aClass selecto
 	interval := anInterval.
 	class := self classObjectFor: aClass.
 	selector := aSelector
-]
-
-{ #category : 'preconditions' }
-RBMoveVariableDefinitionToSmallestValidScopeRefactoring >> preconditions [
-	^(RBCondition definesSelector: selector in: class)
-		& (RBCondition withBlock:
-					[| methodSource |
-					interval first <= interval last
-						ifFalse: [self refactoringError: 'You must select a variable name'].
-					methodSource := class sourceCodeFor: selector.
-					methodSource size >= interval last
-						ifFalse: [self refactoringError: 'Invalid range for variable'].
-					name := methodSource copyFrom: interval first to: interval last.
-					(self checkInstanceVariableName: name in: class)
-						ifFalse:
-							[self
-								refactoringError: name , ' does not seem to be a valid variable name.'].
-					parseTree := class parseTreeForSelector: selector.
-					self checkParseTree.
-					true])
 ]
 
 { #category : 'transforming' }
