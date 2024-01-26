@@ -28,15 +28,15 @@ Class {
 
 { #category : 'instance creation' }
 MCLazyVersionInfo class >> from: aVersionInfo [
+
 	^ self new
-		initializeWithName: aVersionInfo name
-		id: aVersionInfo id
-		message: aVersionInfo message
-		date: aVersionInfo date
-		time: aVersionInfo time
-		author: aVersionInfo author
-		ancestors: aVersionInfo ancestors
-		stepChildren: aVersionInfo stepChildren
+		  initializeWithName: aVersionInfo name
+		  id: aVersionInfo id
+		  message: aVersionInfo message
+		  date: aVersionInfo date
+		  time: aVersionInfo time
+		  ancestors: aVersionInfo ancestors
+		  stepChildren: aVersionInfo stepChildren
 ]
 
 { #category : 'class initialization' }
@@ -72,6 +72,18 @@ MCLazyVersionInfo >> initialize [
 	super initialize.
 	ancestors := WeakArray new.
 	stepChildren := WeakArray new
+]
+
+{ #category : 'initialization' }
+MCLazyVersionInfo >> initializeWithName: vName id: aUUID message: aString date: aDate time: aTime ancestors: aCollection stepChildren: stepCollection [
+
+	name := vName.
+	id := aUUID.
+	message := aString.
+	date := aDate ifNil: [ Date today ].
+	time := aTime.
+	ancestors := WeakArray withAll: aCollection.
+	stepChildren := WeakArray withAll: stepCollection
 ]
 
 { #category : 'initialization' }

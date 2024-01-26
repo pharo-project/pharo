@@ -264,7 +264,6 @@ MCFileTreeStCypressReader >> loadVersionInfo [
     message: 'fabricated from a Cypress format repository'
     date: Date today
     time: Time now
-    author: ''
     ancestors: #()
     stepChildren: #()
 

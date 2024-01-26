@@ -296,7 +296,15 @@ ClassDescription >> compile: sourceCode classified: protocol [
 { #category : 'compiling' }
 ClassDescription >> compile: sourceCode classified: protcol notifying: requestor [
 
-	^ self compile: sourceCode classified: protcol withStamp: Author changeStamp notifying: requestor
+	^ self
+		  compile: sourceCode
+		  classified: protcol
+		  withStamp: Date today mmddyyyy , ' '
+			  ,
+				  ((String streamContents: [ :s | Time now print24: true on: s ])
+					   copyFrom: 1
+					   to: 5)
+		  notifying: requestor
 ]
 
 { #category : 'compiling' }

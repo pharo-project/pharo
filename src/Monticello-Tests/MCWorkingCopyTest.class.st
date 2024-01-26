@@ -24,18 +24,6 @@ MCWorkingCopyTest >> assertNameWhenSavingTo: aRepository is: aString [
 	self assert: name equals: aString
 ]
 
-{ #category : 'asserting' }
-MCWorkingCopyTest >> assertNumberWhenSavingTo: aRepository is: aNumber [
-	| name |
-	name := nil.
-	[ aRepository storeVersion: (workingCopy newVersionIn: aRepository) ]
-		on: MCVersionNameAndMessageRequest
-		do: [ :n | 
-			name := n suggestedName.
-			n resume: (Array with: name with: '') ].
-	self assert: name equals: self packageName , '-' , Author fullName , '.' , aNumber asString
-]
-
 { #category : 'actions' }
 MCWorkingCopyTest >> basicMerge: aVersion [
 	aVersion merge

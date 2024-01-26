@@ -300,9 +300,9 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 
 	UIManager default: MorphicUIManager new.
 	MorphicUIManager uiProcess resume.
-	
+
 	ErrorHandler defaultErrorHandler: UIManager default.
-	
+
 	PharoLightTheme beCurrent.
 	ScalingCanvas initialize.
 	self cleanUpAfterMorphicInitialization.
@@ -328,9 +328,8 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 	   #FreeTypeFontProvider #GradientFillStyle #IconicButtonMorph
 	   #KMLog #LogicalFont #LucidaGrandeRegular #OSEnvironment
 	   #ScrollBarMorph #StrikeFont #SystemSettingsPersistence
-	   #TabMorph #TaskbarMorph #TextAction #TextConstants
-	   #TextStyle ) do: [ :each |
-		(Smalltalk globals at: each) initialize ].
+	   #TabMorph #TaskbarMorph #TextAction #TextConstants #TextStyle )
+		do: [ :each | (Smalltalk globals at: each) initialize ].
 
 	LogicalFontManager current addFontProvider:
 		FreeTypeFontProvider current.
@@ -339,10 +338,9 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 	array at: 5 put: Bitmap.
 	Smalltalk specialObjectsArray becomeForward: array.
 
-	Author reset.
 	MCMethodDefinition initializersEnabled: initializersEnabled.
-	
-	Initialized := true.
+
+	Initialized := true
 ]
 
 { #category : 'actions' }

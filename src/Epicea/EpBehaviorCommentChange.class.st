@@ -7,9 +7,7 @@ Class {
 	#instVars : [
 		'behavior',
 		'oldComment',
-		'newComment',
-		'oldStamp',
-		'newStamp'
+		'newComment'
 	],
 	#category : 'Epicea-Model',
 	#package : 'Epicea',
