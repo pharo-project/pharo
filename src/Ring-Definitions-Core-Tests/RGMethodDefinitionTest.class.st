@@ -12,9 +12,7 @@ Class {
 { #category : 'running' }
 RGMethodDefinitionTest >> runCase [
 
-	SystemAnnouncer uniqueInstance suspendAllWhile: [
-		Author useAuthor: self class name asString during: [ super runCase ]
-	]
+	SystemAnnouncer uniqueInstance suspendAllWhile: [ super runCase ]
 ]
 
 { #category : 'running' }

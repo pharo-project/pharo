@@ -260,14 +260,11 @@ HDTestReport >> reportTestCase: aTestCase runBlock: aBlock [
 
 { #category : 'running' }
 HDTestReport >> run [
-	Author uniqueInstance
-		ifUnknownAuthorUse: 'hudson'
-		during: [ 
-			[ 
-			self setUp.
-			suiteTime := [ self runAll ] millisecondsToRun ]
-				ensure: [ self tearDown ] 
-		]
+
+	[
+	self setUp.
+	suiteTime := [ self runAll ] millisecondsToRun ] ensure: [
+		self tearDown ]
 ]
 
 { #category : 'running' }

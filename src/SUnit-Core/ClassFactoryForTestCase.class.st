@@ -249,13 +249,12 @@ ClassFactoryForTestCase >> silentlyCompile: aString in: aBehavior protocol: anot
 ClassFactoryForTestCase >> silentlyCompile: aString in: aBehavior protocol: anotherString storingSource: aBoolean [
 
 	^ self silentlyDo: [
-		  Author useAuthor: 'TestsAuthor' during: [
-			  aBehavior
-				  compile: aString
-				  classified: anotherString
-				  withStamp: nil
-				  notifying: nil
-				  logSource: aBoolean ] ]
+		  aBehavior
+			  compile: aString
+			  classified: anotherString
+			  withStamp: nil
+			  notifying: nil
+			  logSource: aBoolean ]
 ]
 
 { #category : 'compiling - silently' }

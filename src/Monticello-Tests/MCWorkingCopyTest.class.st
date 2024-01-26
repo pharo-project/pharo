@@ -5,8 +5,7 @@ Class {
 		'workingCopy',
 		'repositoryGroup',
 		'versions',
-		'versions2',
-		'savedName'
+		'versions2'
 	],
 	#category : 'Monticello-Tests-Base',
 	#package : 'Monticello-Tests',
@@ -87,9 +86,7 @@ MCWorkingCopyTest >> setUp [
 	MCRepositoryGroup default
 		removeRepository: repos1;
 		removeRepository: repos2.
-	workingCopy repositoryGroup: repositoryGroup.
-	savedName := Author fullName.
-	Author fullName: 'abc'
+	workingCopy repositoryGroup: repositoryGroup
 ]
 
 { #category : 'actions' }
@@ -107,7 +104,6 @@ MCWorkingCopyTest >> tearDown [
 
 	workingCopy unregister.
 	self restoreMocks.
-	Author fullName: savedName.
 	super tearDown
 ]
 

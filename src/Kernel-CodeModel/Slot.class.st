@@ -133,19 +133,18 @@ Slot >> emitValue: aMethodBuilder [
 
 { #category : 'private' }
 Slot >> ensureInitalizeMethodExists: aClass [
+
 	(aClass includesSelector: #initialize) ifTrue: [ ^ self ].
 
-	Author
-		useAuthor: 'Generated'
-		during: [ aClass
-				compile:
-					'initialize
+	aClass
+		compile: 'initialize
 	super initialize.'
-				classified: 'initialization' ]
+		classified: 'initialization'
 ]
 
 { #category : 'private' }
 Slot >> ensureSlotInitializationFor: aClass [
+
 	| source |
 	(self sendsInitializeSlots: aClass) ifTrue: [ ^ self ].
 
@@ -156,7 +155,7 @@ Slot >> ensureSlotInitializationFor: aClass [
 
 	self class initializeSlots: self.' , source.
 
-	Author useAuthor: 'Generated' during: [ aClass compile: source classified: 'initialization' ]
+	aClass compile: source classified: 'initialization'
 ]
 
 { #category : 'comparing' }

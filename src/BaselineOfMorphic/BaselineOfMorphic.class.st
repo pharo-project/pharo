@@ -132,18 +132,17 @@ BaselineOfMorphic >> baseline: spec [
 { #category : 'actions' }
 BaselineOfMorphic >> cleanUpAfterMorphicInitialization [
 
-	Author fullName: self class name.
 	MCDataStream initialize.
 	GradientFillStyle initPixelRampCache.
 	FreeTypeCache clearCurrent.
-	ImageMorph writeClassVariableNamed: #DefaultForm value: (Form extent: 1 @ 1 depth: 1).
+	ImageMorph
+		writeClassVariableNamed: #DefaultForm
+		value: (Form extent: 1 @ 1 depth: 1).
 	World cleanseOtherworldlySteppers.
 	MCFileBasedRepository flushAllCaches.
 	MCMethodDefinition shutDown.
 	ExternalDropHandler resetRegisteredHandlers.
-	ScrollBarMorph initializeImagesCache.
-
-	Author reset
+	ScrollBarMorph initializeImagesCache
 ]
 
 { #category : 'fonts' }
@@ -257,8 +256,6 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 
 	SystemNotification signal: 'Starting postload action'.
 
-	Author fullName: self class name.
-
 	TextConstants initialize.
 
 	"Initialize Fuel"
@@ -362,8 +359,6 @@ BaselineOfMorphic >> preload: loader package: packageSpec [
 	
 	initializersEnabled := MCMethodDefinition initializersEnabled.
 	MCMethodDefinition initializersEnabled: false.
-	
-	Author fullName: self class name
 ]
 
 { #category : 'baseline' }

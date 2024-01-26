@@ -40,7 +40,5 @@ SlotSilentTest >> compileAccessorsFor: aSlot [
 { #category : 'running' }
 SlotSilentTest >> runCase [
 
-	SystemAnnouncer uniqueInstance suspendAllWhile: [
-		Author useAuthor: self class name asString during: [ super runCase ]
-	]
+	SystemAnnouncer uniqueInstance suspendAllWhile: [ super runCase ]
 ]

@@ -74,9 +74,7 @@ BreakpointTest >> testAddRemoveBreakpointKeepTimeStamp [
 
 	| bp timeStamp |
 	"adding an removing a breakpoint does not change the timestamp of the method"
-	Author
-		useAuthor: thisContext method selector
-		during: [ cls compile: 'dummy ^42' ].
+	cls compile: 'dummy ^42'.
 
 	timeStamp := (cls >> #dummy) timeStamp.
 
