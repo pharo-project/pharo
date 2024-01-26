@@ -83,6 +83,28 @@ RBMoveMethodRefactoring >> addSelfReturn [
 ]
 
 { #category : 'preconditions' }
+RBMoveMethodRefactoring >> applicabilityPreconditions [
+
+	^ (RBCondition definesSelector: selector in: class)
+	  & (RBCondition withBlock: [
+			   self checkForPrimitiveMethod.
+			   self checkForSuperReferences.
+			   self checkAssignmentsToVariable.
+			   self getClassesToMoveTo.
+			   self checkTemporaryVariableNames.
+			   true ])
+]
+
+{ #category : 'preconditions' }
+RBMoveMethodRefactoring >> breakingChangePreconditions [
+
+	^ RBCondition withBlock: [
+		  self getArgumentNameForSelf.
+		  self getNewMethodName.
+		  true ]
+]
+
+{ #category : 'preconditions' }
 RBMoveMethodRefactoring >> checkAssignmentsToVariable [
 	| searcher |
 	variable
@@ -309,17 +331,8 @@ RBMoveMethodRefactoring >> needsToReplaceSelfReferences [
 
 { #category : 'preconditions' }
 RBMoveMethodRefactoring >> preconditions [
-	^(RBCondition definesSelector: selector in: class)
-		& (RBCondition withBlock:
-					[
-					self checkForPrimitiveMethod.
-					self checkForSuperReferences.
-					self checkAssignmentsToVariable.
-					self getClassesToMoveTo.
-					self getArgumentNameForSelf.
-					self checkTemporaryVariableNames.
-					self getNewMethodName.
-					true])
+
+	^ self applicabilityPreconditions & self breakingChangePreconditions
 ]
 
 { #category : 'transforming' }
