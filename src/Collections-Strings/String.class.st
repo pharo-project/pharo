@@ -855,6 +855,7 @@ String >> beginsWith: prefix [
 	"('pharo' beginsWith: 'pharo-project') >>> false"
 	"('pharo' beginsWith: 'phuro') >>> false"
 	"('pharo' beginsWith: 'pha') >>> true"
+	
 	prefix ifEmpty: [ ^true ].
 	(self class isBytes and: [ prefix class isBytes ]) ifFalse: [^super beginsWith: prefix].
 
@@ -906,6 +907,9 @@ String >> byteSize [
 { #category : 'converting' }
 String >> capitalized [
 	"Return a copy with the first letter capitalized"
+	
+	"'abc' capitalized >>> 'Abc'"
+	
 	| cap |
 	self isEmpty ifTrue: [ ^self copy ].
 	cap := self copy.
