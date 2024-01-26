@@ -109,7 +109,7 @@ Object class >> howToModifyPrimitives [
 	self error: 'comment only'
 ]
 
-{ #category : 'instance creation' }
+{ #category : 'class initialization' }
 Object class >> initialize [ 
 
 	"This method is empty but this is on purpose. This is to protect subclasses that are wrongly calling super initialize or classes that are receiving initialize.
