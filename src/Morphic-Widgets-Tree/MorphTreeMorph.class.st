@@ -218,8 +218,6 @@ Class {
 		'withHLines',
 		'preferedPaneColor',
 		'indentGap',
-		'expandedToggleImage',
-		'notExpandedToggleImage',
 		'resizerWidth',
 		'gapAfterToggle',
 		'hasToggleAtRoot',
@@ -1467,8 +1465,6 @@ MorphTreeMorph >> release [
 	lineColorBlock := nil.
 	columnResizers := nil.
 	preferedPaneColor := nil.
-	expandedToggleImage := nil.
-	notExpandedToggleImage := nil.
 	columns ifNotNil: [
 		columns do: [ :col | col release ].
 		columns := nil ].
