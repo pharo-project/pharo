@@ -1825,11 +1825,6 @@ MorphTreeMorph >> toggleExpandedState: aMorph event: event [
 ]
 
 { #category : 'expanding-collapsing' }
-MorphTreeMorph >> toggleImageHeight [
-	^ self expandedToggleImage height max: self notExpandedToggleImage height
-]
-
-{ #category : 'expanding-collapsing' }
 MorphTreeMorph >> toggleImageWidth [
 	^ self expandedToggleImage width max: self notExpandedToggleImage width
 ]
