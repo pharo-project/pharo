@@ -19,6 +19,32 @@ Class {
 	#tag : 'Model-Unused'
 }
 
+{ #category : 'preconditions' }
+RBPullUpVariableTransformation >> applicabilityPreconditions [ 
+
+	^ isClassVariable
+		ifTrue: [ (RBCondition isMetaclass: self definingClass) not ]
+		ifFalse: [ RBCondition withBlock:
+			[(self definingClass hierarchyDefinesInstanceVariable: variableName)
+				ifFalse: [self refactoringError: 'No subclass defines ' , variableName].
+			true] ]
+]
+
+{ #category : 'preconditions' }
+RBPullUpVariableTransformation >> breakingChangePreconditions [ 
+
+	^ isClassVariable
+		ifTrue: [ self trueCondition ]
+		ifFalse: [ RBCondition withBlock:
+			[(self definingClass subclasses
+				anySatisfy: [:each | (each directlyDefinesInstanceVariable: variableName) not])
+				ifTrue:
+					[self
+						refactoringWarning: 'Not all subclasses have an instance variable named.<n> Do you want pull up this variable anyway?'
+								, variableName , '.'].
+			true] ]
+]
+
 { #category : 'executing' }
 RBPullUpVariableTransformation >> buildTransformations [
 
@@ -40,18 +66,8 @@ RBPullUpVariableTransformation >> buildTransformations [
 
 { #category : 'preconditions' }
 RBPullUpVariableTransformation >> preconditions [
-	^ isClassVariable
-		ifTrue: [ (RBCondition isMetaclass: self definingClass) not ]
-		ifFalse: [ RBCondition withBlock:
-			[(self definingClass hierarchyDefinesInstanceVariable: variableName)
-				ifFalse: [self refactoringError: 'No subclass defines ' , variableName].
-			(self definingClass subclasses
-				anySatisfy: [:each | (each directlyDefinesInstanceVariable: variableName) not])
-				ifTrue:
-					[self
-						refactoringWarning: 'Not all subclasses have an instance variable named.<n> Do you want pull up this variable anyway?'
-								, variableName , '.'].
-			true] ]
+
+	^ self applicabilityPreconditions & self breakingChangePreconditions
 ]
 
 { #category : 'printing' }
