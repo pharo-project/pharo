@@ -839,13 +839,6 @@ MorphTreeMorph >> expandSilently: aMorph suchThat: aBlock [
 ]
 
 { #category : 'expanding-collapsing' }
-MorphTreeMorph >> expandedForm [
-	"Answer the form to use for expanded items."
-
-	^self theme treeExpandedForm
-]
-
-{ #category : 'expanding-collapsing' }
 MorphTreeMorph >> expandedFormSetForMorph: aMorph [
 	"Answer the form set to use for expanded items."
 
@@ -1396,13 +1389,6 @@ MorphTreeMorph >> nodeStringGetter: aValuable [
 	"Set how to get a string for the first column node with a valuable which
 	takes a row  MorphTreeMorphNode as argument"
 	self columns first nodeStringGetter: aValuable
-]
-
-{ #category : 'expanding-collapsing' }
-MorphTreeMorph >> notExpandedForm [
-	"Answer the form to use for unexpanded items."
-
-	^self theme treeUnexpandedForm
 ]
 
 { #category : 'expanding-collapsing' }
