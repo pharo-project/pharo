@@ -31,7 +31,7 @@ RBAbstractRefactoringTest >> createRefactoringWithModel: aRBNamespace andArgumen
 
 { #category : 'parsing' }
 RBAbstractRefactoringTest >> executeRefactoring: aRefactoring [
-	aRefactoring prepareForExecution.
+
 	aRefactoring generateChanges
 ]
 
