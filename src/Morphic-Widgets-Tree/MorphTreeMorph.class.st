@@ -862,11 +862,6 @@ MorphTreeMorph >> expandedNodesFrom: aMorpList [
 	^ (aMorpList select: [ :each | each isExpanded]) collect: [ :each | each complexContents]
 ]
 
-{ #category : 'expanding-collapsing' }
-MorphTreeMorph >> expandedToggleImage [
-	^ expandedToggleImage ifNil: [expandedToggleImage := ImageMorph new form: self expandedForm]
-]
-
 { #category : 'geometry' }
 MorphTreeMorph >> extent: newExtent [
 	super extent: newExtent.
@@ -1417,11 +1412,6 @@ MorphTreeMorph >> notExpandedFormSetForMorph: aMorph [
 	^ (aMorph selected and: [self selectionColor luminance < 0.7])
 		ifTrue: [self theme whiteTreeUnexpandedFormSet]
 		ifFalse: [self theme treeUnexpandedFormSet]
-]
-
-{ #category : 'expanding-collapsing' }
-MorphTreeMorph >> notExpandedToggleImage [
-	^ notExpandedToggleImage ifNil: [notExpandedToggleImage := ImageMorph new form: self notExpandedForm]
 ]
 
 { #category : 'updating' }
