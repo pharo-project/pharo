@@ -704,7 +704,7 @@ MorphTreeNodeMorph >> nextSibling: anotherMorph [
 { #category : 'accessing' }
 MorphTreeNodeMorph >> notExpandedToggleImageHeight [
 
-	^ container notExpandedForm extent y
+	^ (container notExpandedFormSetForMorph: self) height
 ]
 
 { #category : 'updating' }
