@@ -256,13 +256,9 @@ ScalingCanvas class >> formCanvas: formCanvas scale: scale [
 { #category : 'class initialization' }
 ScalingCanvas class >> initialize [
 
-	| theme icons iconFormsScale2 |
+	| icons iconFormsScale2 |
 
 	FormMapping := IdentityDictionary new.
-
-	theme := Smalltalk ui theme.
-	(theme formSetsForScale: 1) keysAndValuesDo: [ :formSetName :formSet |
-		FormMapping at: formSet asForm put: (formSet asFormAtScale: 2) ].
 
 	icons := Smalltalk ui icons.
 	icons scale = 1 ifFalse: [ ^ self ].
