@@ -964,7 +964,7 @@ MorphTreeNodeMorph >> toggleImageFormSet [
 { #category : 'accessing' }
 MorphTreeNodeMorph >> toggleImageWidth [
 
-	^ container toggleImageWidth
+	^ (container expandedFormSetForMorph: self) width max: (container notExpandedFormSetForMorph: self) width
 ]
 
 { #category : 'accessing' }

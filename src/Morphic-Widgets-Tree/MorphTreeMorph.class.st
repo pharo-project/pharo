@@ -1824,11 +1824,6 @@ MorphTreeMorph >> toggleExpandedState: aMorph event: event [
 	self adjustSubmorphPositions
 ]
 
-{ #category : 'expanding-collapsing' }
-MorphTreeMorph >> toggleImageWidth [
-	^ self expandedToggleImage width max: self notExpandedToggleImage width
-]
-
 { #category : 'accessing' }
 MorphTreeMorph >> topHeader [
 	^ topHeader
