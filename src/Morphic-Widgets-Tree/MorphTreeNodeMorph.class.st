@@ -904,7 +904,7 @@ MorphTreeNodeMorph >> selectionFrame [
 
 { #category : 'accessing' }
 MorphTreeNodeMorph >> sensitiveToggleRectangle [
-	^(bounds left + self indentGap) @ bounds top extent: (container toggleImageWidth + container gapAfterToggle) @ bounds height
+	^(bounds left + self indentGap) @ bounds top extent: (self toggleImageWidth + container gapAfterToggle) @ bounds height
 ]
 
 { #category : 'accessing' }
@@ -962,8 +962,14 @@ MorphTreeNodeMorph >> toggleImageFormSet [
 ]
 
 { #category : 'accessing' }
+MorphTreeNodeMorph >> toggleImageWidth [
+
+	^ container toggleImageWidth
+]
+
+{ #category : 'accessing' }
 MorphTreeNodeMorph >> toggleRectangle [
-	^(bounds left + self indentGap) @ bounds top extent: (container toggleImageWidth) @ bounds height
+	^(bounds left + self indentGap) @ bounds top extent: (self toggleImageWidth) @ bounds height
 ]
 
 { #category : 'accessing' }
