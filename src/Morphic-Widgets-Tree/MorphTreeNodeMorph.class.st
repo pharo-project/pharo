@@ -335,7 +335,7 @@ MorphTreeNodeMorph >> drawLinesToNextSiblingOn: aCanvas hasToggle: hasToggle [
 	nextSibBounds := self nextSibling toggleRectangle.
 	myCenter := myBounds center.
 	vLineX := myCenter x.
-	gap := (container notExpandedForm extent y // 2) + 1.
+	gap := (self notExpandedToggleImageHeight // 2) + 1.
 	vLineTop := myCenter y + (self hasToggle ifTrue: [gap] ifFalse: [0]).
 	vLineBottom := nextSibBounds center y - (self nextSibling hasToggle ifTrue: [gap] ifFalse: [0]).
 	"Draw line from me to next sibling"
@@ -699,6 +699,12 @@ MorphTreeNodeMorph >> nextSibling [
 MorphTreeNodeMorph >> nextSibling: anotherMorph [
 
 	nextSibling := anotherMorph
+]
+
+{ #category : 'accessing' }
+MorphTreeNodeMorph >> notExpandedToggleImageHeight [
+
+	^ container notExpandedForm extent y
 ]
 
 { #category : 'updating' }
