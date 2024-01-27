@@ -660,7 +660,7 @@ Object >> deprecated: anExplanationString on: date in: version transformWith: aR
 		date: date;
 		version: version;
 		rule: aRule;
-		transform
+		signal
 ]
 
 { #category : 'deprecation' }
@@ -674,7 +674,7 @@ Object >> deprecated: anExplanationString on: date in: version transformWith: aR
 		version: version;
 		rule: aRule;
 		condition: conditionBlock;
-		transform
+		signal
 ]
 
 { #category : 'deprecation' }
@@ -685,7 +685,7 @@ Object >> deprecated: anExplanationString transformWith: aRule [
 		context: thisContext sender;
 		explanation: anExplanationString;
 		rule: aRule;
-		transform
+		signal
 ]
 
 { #category : 'deprecation' }
@@ -697,7 +697,7 @@ Object >> deprecated: anExplanationString transformWith: aRule when: conditionBl
 		explanation: anExplanationString;
 		rule: aRule;
 		condition: conditionBlock;
-		transform
+		signal
 ]
 
 { #category : 'displaying' }
