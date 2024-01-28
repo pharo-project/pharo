@@ -660,15 +660,10 @@ BlockClosure >> value: firstArg [
 	 message. Supply the argument and copied values to the activation
 	 as its argument and copied temps. Primitive. Essential."
 	<primitive: 207>
-	| newContext |
+	
 	numArgs ~= 1 ifTrue:
 		[self numArgsError: 1].
-	false
-		ifTrue: "Old code to simulate the closure value primitive on VMs that lack it."
-			[newContext := self asContextWithSender: thisContext sender.
-			newContext at: 1 put: firstArg.
-			thisContext privSender: newContext]
-		ifFalse: [self primitiveFailed]
+	self primitiveFailed
 ]
 
 { #category : 'evaluating' }
@@ -678,16 +673,10 @@ BlockClosure >> value: firstArg value: secondArg [
 	 message. Supply the arguments and copied values to the activation
 	 as its arguments and copied temps. Primitive. Essential."
 	<primitive: 207>
-	| newContext |
+
 	numArgs ~= 2 ifTrue:
 		[self numArgsError: 2].
-	false
-		ifTrue: "Old code to simulate the closure value primitive on VMs that lack it."
-			[newContext := self asContextWithSender: thisContext sender.
-			newContext at: 1 put: firstArg.
-			newContext at: 2 put: secondArg.
-			thisContext privSender: newContext]
-		ifFalse: [self primitiveFailed]
+	self primitiveFailed
 ]
 
 { #category : 'evaluating' }
@@ -697,17 +686,10 @@ BlockClosure >> value: firstArg value: secondArg value: thirdArg [
 	 message. Supply the arguments and copied values to the activation
 	 as its arguments and copied temps. Primitive. Essential."
 	<primitive: 207>
-	| newContext |
+
 	numArgs ~= 3 ifTrue:
 		[self numArgsError: 3].
-	false
-		ifTrue: "Old code to simulate the closure value primitive on VMs that lack it."
-			[newContext := self asContextWithSender: thisContext sender.
-			newContext at: 1 put: firstArg.
-			newContext at: 2 put: secondArg.
-			newContext at: 3 put: thirdArg.
-			thisContext privSender: newContext]
-		ifFalse: [self primitiveFailed]
+	self primitiveFailed
 ]
 
 { #category : 'evaluating' }
@@ -717,18 +699,9 @@ BlockClosure >> value: firstArg value: secondArg value: thirdArg value: fourthAr
 	 message. Supply the arguments and copied values to the activation
 	 as its arguments and copied temps. Primitive. Essential."
 	<primitive: 207>
-	| newContext |
 	numArgs ~= 4 ifTrue:
 		[self numArgsError: 4].
-	false
-		ifTrue: "Old code to simulate the closure value primitive on VMs that lack it."
-			[newContext := self asContextWithSender: thisContext sender.
-			newContext at: 1 put: firstArg.
-			newContext at: 2 put: secondArg.
-			newContext at: 3 put: thirdArg.
-			newContext at: 4 put: fourthArg.
-			thisContext privSender: newContext]
-		ifFalse: [self primitiveFailed]
+	self primitiveFailed
 ]
 
 { #category : 'evaluating' }

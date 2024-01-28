@@ -49,6 +49,31 @@ RBPullUpMethodRefactoring class >> pullUp: selectorCollection from: aClass to: a
 ]
 
 { #category : 'preconditions' }
+RBPullUpMethodRefactoring >> applicabilityPreconditions [ 
+
+	^(selectors 
+		inject: (RBCondition hasSuperclass: class)
+		into: [:cond :each | 
+			cond 
+			& (RBCondition definesSelector: each in: class)])
+			& (RBCondition withBlock:
+						[
+						self checkClassVars.
+						self checkSuperclass.
+						self checkSuperMessages.
+						true])
+]
+
+{ #category : 'preconditions' }
+RBPullUpMethodRefactoring >> breakingChangePreconditions [
+
+	^ selectors 
+		inject: self trueCondition 
+		into: [ :cond :each |
+		  	cond & (RBCondition withBlock: [ self checkInstVars. true ]) ]
+]
+
+{ #category : 'preconditions' }
 RBPullUpMethodRefactoring >> checkBackReferencesTo: aSelector [
 	"If `aSelector` is defined in `targetSuperclass` or one of its superclasses check for
 	super sends to `aSelector` in `targetSuperclass` hierarchy.
@@ -250,15 +275,8 @@ RBPullUpMethodRefactoring >> copyDownMethods [
 
 { #category : 'preconditions' }
 RBPullUpMethodRefactoring >> preconditions [
-	self requestSuperClass.
-	^(selectors inject: (RBCondition hasSuperclass: class)
-		into: [:cond :each | cond & (RBCondition definesSelector: each in: class)])
-			& (RBCondition withBlock:
-						[self checkInstVars.
-						self checkClassVars.
-						self checkSuperclass.
-						self checkSuperMessages.
-						true])
+
+	^ self applicabilityPreconditions & self breakingChangePreconditions 
 ]
 
 { #category : 'transforming' }
@@ -295,7 +313,7 @@ RBPullUpMethodRefactoring >> pullUp: selectorCollection from: aClass [
 
 { #category : 'initialization' }
 RBPullUpMethodRefactoring >> pullUp: selectorCollection from: aClass to: aSuperClass [
-	self setOption: #superClass toUse: [ :ref | ].
+
 	class := self classObjectFor: aClass.
 	targetSuperclass := self classObjectFor: aSuperClass .
 	selectors := selectorCollection.
@@ -349,11 +367,6 @@ RBPullUpMethodRefactoring >> removePulledUpMethods [
 	selectors do: [ :each |
 		self generateChangesFor:
 			(RBRemoveMethodTransformation selector: each from: class) ]
-]
-
-{ #category : 'preconditions' }
-RBPullUpMethodRefactoring >> requestSuperClass [
-	^(self options at: #superClass) value: self
 ]
 
 { #category : 'initialization' }

@@ -74,12 +74,6 @@ RBAbstractClassVariableReferencesRefactoring >> createAccessors [
 	self generateChangesFor: self accessorsRefactoring
 ]
 
-{ #category : 'preconditions' }
-RBAbstractClassVariableReferencesRefactoring >> preconditions [
-
-	^ self applicabilityPreconditions
-]
-
 { #category : 'transforming' }
 RBAbstractClassVariableReferencesRefactoring >> privateTransform [
 	self createAccessors.

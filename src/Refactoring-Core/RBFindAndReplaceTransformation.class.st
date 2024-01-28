@@ -85,6 +85,25 @@ RBFindAndReplaceTransformation class >> model: aModel find: aMethod of: aClass i
 		yourself
 ]
 
+{ #category : 'preconditions' }
+RBFindAndReplaceTransformation >> applicabilityPreconditions [
+
+	| condition rbMethod |
+	rbMethod := class methodFor: selector.
+	condition := (RBCondition definesSelector: selector in: class)
+	             & (replacesAllHierarchy
+			              ifFalse: [ self trueCondition ]
+			              ifTrue: [
+				              class allSubclasses
+					              inject: self trueCondition
+					              into: [ :cond :aClass |
+						              cond & (RBCondition
+							               definesSelector: selector
+							               in: aClass
+							               orIsSimilarTo: rbMethod) not ] ]).
+	^ condition
+]
+
 { #category : 'accessing' }
 RBFindAndReplaceTransformation >> argumentsOf: aDictionary [
 	"Return the arguments values of a method ocurrence"
@@ -210,26 +229,6 @@ RBFindAndReplaceTransformation >> nodesOf: methodNode [
 { #category : 'accessing' }
 RBFindAndReplaceTransformation >> patternParserClass [
 	^ RBPatternParser
-]
-
-{ #category : 'preconditions' }
-RBFindAndReplaceTransformation >> preconditions [
-
-	| condition rbMethod |
-
-	rbMethod := class methodFor: selector.
-	condition := (RBCondition definesSelector: selector in: class)
-	             & (replacesAllHierarchy
-			              ifFalse: [ self trueCondition ]
-			              ifTrue: [
-				              class allSubclasses
-					              inject: self trueCondition
-					              into: [ :cond :aClass |
-						              cond
-						              &
-						              (RBCondition definesSelector: selector in: aClass orIsSimilarTo: rbMethod)
-							              not ] ]).
-	^ condition
 ]
 
 { #category : 'transforming' }

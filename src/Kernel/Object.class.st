@@ -109,6 +109,14 @@ Object class >> howToModifyPrimitives [
 	self error: 'comment only'
 ]
 
+{ #category : 'class initialization' }
+Object class >> initialize [ 
+
+	"This method is empty but this is on purpose. This is to protect subclasses that are wrongly calling super initialize or classes that are receiving initialize.
+	
+	If you remove this method, the method Behavior >> initialize will be executed and the class will be nuked because reinitialized."
+]
+
 { #category : 'instance creation' }
 Object class >> newFrom: aSimilarObject [
 	"Create an object that has similar contents to aSimilarObject. If the classes have any instance variables with the same names, copy them across. If this is bad for a class, override this method."
@@ -660,7 +668,7 @@ Object >> deprecated: anExplanationString on: date in: version transformWith: aR
 		date: date;
 		version: version;
 		rule: aRule;
-		transform
+		signal
 ]
 
 { #category : 'deprecation' }
@@ -674,7 +682,7 @@ Object >> deprecated: anExplanationString on: date in: version transformWith: aR
 		version: version;
 		rule: aRule;
 		condition: conditionBlock;
-		transform
+		signal
 ]
 
 { #category : 'deprecation' }
@@ -685,7 +693,7 @@ Object >> deprecated: anExplanationString transformWith: aRule [
 		context: thisContext sender;
 		explanation: anExplanationString;
 		rule: aRule;
-		transform
+		signal
 ]
 
 { #category : 'deprecation' }
@@ -697,7 +705,7 @@ Object >> deprecated: anExplanationString transformWith: aRule when: conditionBl
 		explanation: anExplanationString;
 		rule: aRule;
 		condition: conditionBlock;
-		transform
+		signal
 ]
 
 { #category : 'displaying' }

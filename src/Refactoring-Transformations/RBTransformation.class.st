@@ -71,12 +71,6 @@ RBTransformation >> copyOptionsFrom: aDictionary [
 	self options: dict
 ]
 
-{ #category : 'preconditions' }
-RBTransformation >> preconditions [
-
-	^ self applicabilityPreconditions 
-]
-
 { #category : 'accessing' }
 RBTransformation >> setOption: aSymbol toUse: aBlock [
 
