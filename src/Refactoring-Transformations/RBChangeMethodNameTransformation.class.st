@@ -63,20 +63,6 @@ RBChangeMethodNameTransformation >> implementorsCanBePrimitives [
 	^false
 ]
 
-{ #category : 'preconditions' }
-RBChangeMethodNameTransformation >> interactionConditions [
-	"This refactoring only preserves behavior if all implementors are renamed."
-	
-	self flag: #popUp.
-	
-	^ (RBCondition withBlock:
-		[self implementors size > 1
-			ifTrue:
-				[self refactoringWarning: ('This will modify all <1p> implementors. Proceed anyway?'
-							expandMacrosWith: self implementors size)].
-		true])
-]
-
 { #category : 'support' }
 RBChangeMethodNameTransformation >> modifyImplementorParseTree: parseTree in: aClass [
 	| oldArgs |
