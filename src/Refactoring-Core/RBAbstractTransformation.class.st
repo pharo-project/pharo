@@ -198,6 +198,21 @@ RBAbstractTransformation >> convertMethod: selector for: aClass using: searchRep
 		ifTrue: [ aClass compileTree: searchReplacer tree ]
 ]
 
+{ #category : 'accessing' }
+RBAbstractTransformation >> copyOptionsFrom: aDictionary [
+	| dict |
+	dict := self options.
+	dict == self class refactoringOptions
+		ifTrue: [^self options: aDictionary copy].
+	dict keysAndValuesDo:
+			[:key :value |
+			value == (self class refactoringOptions at: key ifAbsent: [nil])
+				ifTrue: [ dict at: key put: (aDictionary at: key) ]].
+	(aDictionary keys difference: dict keys) do:
+		[ :e | dict at: e put: (aDictionary at: e) ].
+	self options: dict
+]
+
 { #category : 'initialize' }
 RBAbstractTransformation >> defaultEnvironment [
 
@@ -411,6 +426,17 @@ RBAbstractTransformation >> selectVariableTypesFrom: initialTypeCollection selec
 		value: self
 		value: initialTypeCollection
 		value: selectedTypeCollection
+]
+
+{ #category : 'accessing' }
+RBAbstractTransformation >> setOption: aSymbol toUse: aBlock [
+	"Unshare on usage"
+	
+	| dict |
+	dict := self options.
+	dict == self class refactoringOptions ifTrue: [dict := dict copy].
+	dict at: aSymbol put: aBlock.
+	self options: dict
 ]
 
 { #category : 'requests' }
