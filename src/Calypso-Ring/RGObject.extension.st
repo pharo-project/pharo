@@ -4,5 +4,8 @@ Extension { #name : 'RGObject' }
 RGObject >> realClass [
 	"Answer the <Class> representing the receiver"
 
-	^ self class environment at: self resolvedNameOrNil
+	^ self isMeta
+		ifTrue: [ (self class environment at: self instanceSide resolvedNameOrNil) class ]
+		ifFalse: [ self class environment at: self resolvedNameOrNil ].
+
 ]
