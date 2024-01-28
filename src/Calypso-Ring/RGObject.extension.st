@@ -4,5 +4,5 @@ Extension { #name : 'RGObject' }
 RGObject >> realClass [
 	"Answer the <Class> representing the receiver"
 
-	^ Smalltalk at: self resolvedNameOrNil
+	^ self class environment at: self resolvedNameOrNil
 ]
