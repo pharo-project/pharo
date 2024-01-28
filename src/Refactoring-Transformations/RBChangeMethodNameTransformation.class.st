@@ -21,15 +21,6 @@ RBChangeMethodNameTransformation >> applicabilityPreconditions [
 
 ]
 
-{ #category : 'preconditions' }
-RBChangeMethodNameTransformation >> breakingChangePreconditions [ 
-
-	^ self implementors
-		inject: self interactionConditions 
-		into: [ :condition :each |
-			condition & (RBCondition hierarchyOf: each canUnderstand: newSelector) not; errorBlock: [] ]
-]
-
 { #category : 'support' }
 RBChangeMethodNameTransformation >> convertAllReferencesTo: aSymbol of: classes using: searchReplacer [
 	(self model allReferencesTo: aSymbol in: classes)
@@ -108,12 +99,6 @@ RBChangeMethodNameTransformation >> parseTreeRewriter [
 	rewriteRule replace: '``@object ' , oldString
 		with: '``@object ' , newString.
 	^rewriteRule
-]
-
-{ #category : 'preconditions' }
-RBChangeMethodNameTransformation >> preconditions [
-
-	^ self applicabilityPreconditions & self breakingChangePreconditions 
 ]
 
 { #category : 'support' }
