@@ -58,6 +58,39 @@ RBInlineMethodRefactoring >> addTemporary: sourceNode assignedTo: replacementNod
 					value: replacementNode)
 ]
 
+{ #category : 'preconditions' }
+RBInlineMethodRefactoring >> applicabilityPreconditions [
+	"Even though it looks complex it only does preconditions and set up. `transform` does actual refactoring"
+
+	^ (RBCondition definesSelector: sourceSelector in: class)
+	  & (RBCondition withBlock: [
+			   self checkSelectedMessage.
+			   self parseInlineMethod.
+			   self isPrimitive ifTrue: [
+				   self refactoringError: 'Cannot inline primitives' ].
+			   self checkSuperMessages.
+			   self rewriteInlinedTree.
+			   (sourceMessage parent isReturn or: [
+				    self hasMultipleReturns not ]) ifFalse: [
+				   self refactoringError:
+					   'Cannot inline method since it contains multiple returns that cannot be rewritten' ].
+			   true ])
+]
+
+{ #category : 'preconditions' }
+RBInlineMethodRefactoring >> breakingChangePreconditions [
+
+	^ RBCondition withBlock: [
+		  self checkOverridden ifTrue: [
+			  self isOverridden ifTrue: [
+				  self refactoringWarning:
+					  ('<1p>>><2s> is overriden. Do you want to inline it anyway?'
+					   , String cr , 'You can break you hooks with this inline.'
+						   expandMacrosWith: self classOfTheMethodToInline
+						   with: self inlineSelector) ] ].
+		  true ]
+]
+
 { #category : 'accessing' }
 RBInlineMethodRefactoring >> checkOverridden [
 	^ checkOverridden ifNil: [ checkOverridden := true ]
@@ -66,6 +99,27 @@ RBInlineMethodRefactoring >> checkOverridden [
 { #category : 'accessing' }
 RBInlineMethodRefactoring >> checkOverridden: aBoolean [
 	checkOverridden := aBoolean
+]
+
+{ #category : 'transforming' }
+RBInlineMethodRefactoring >> checkSelectedMessage [
+
+	sourceParseTree := class parseTreeForSelector: sourceSelector.
+	sourceParseTree ifNil: [
+		self refactoringError: 'Could not parse sources' ].
+	sourceMessage := sourceParseTree whichNodeIsContainedBy:
+		                 sourceInterval.
+	sourceMessage ifNil: [
+		self refactoringError:
+			'The selection doesn''t appear to be a message send' ].
+	sourceMessage isCascade ifTrue: [
+		sourceMessage := sourceMessage messages last ].
+	sourceMessage isMessage ifFalse: [
+		self refactoringError:
+			'The selection doesn''t appear to be a message send' ].
+	(sourceMessage receiver isSelfVariable or: [
+		 sourceMessage receiver isSuperVariable ]) ifFalse: [
+		self refactoringError: 'Cannot inline non-self messages' ]
 ]
 
 { #category : 'transforming' }
@@ -102,22 +156,6 @@ RBInlineMethodRefactoring >> compileMethod [
 	class compileTree: sourceParseTree
 ]
 
-{ #category : 'transforming' }
-RBInlineMethodRefactoring >> findSelectedMessage [
-
-	sourceParseTree := class parseTreeForSelector: sourceSelector.
-	sourceParseTree ifNil: [ self refactoringError: 'Could not parse sources' ].
-	sourceMessage := sourceParseTree whichNodeIsContainedBy: sourceInterval.
-	sourceMessage
-		ifNil: [ self refactoringError: 'The selection doesn''t appear to be a message send' ].
-	sourceMessage isCascade
-		ifTrue: [ sourceMessage := sourceMessage messages last ].
-	sourceMessage isMessage
-		ifFalse: [ self refactoringError: 'The selection doesn''t appear to be a message send' ].
-	(sourceMessage receiver isSelfVariable or: [ sourceMessage receiver isSuperVariable ])
-		ifFalse: [ self refactoringError: 'Cannot inline non-self messages' ]
-]
-
 { #category : 'testing' }
 RBInlineMethodRefactoring >> hasMultipleReturns [
 	"Do we have multiple returns? If the last statement isn't a return, then we have an implicit return of self."
@@ -151,7 +189,6 @@ RBInlineMethodRefactoring >> inlineParseTree [
 { #category : 'transforming' }
 RBInlineMethodRefactoring >> inlineSelector [
 
-	sourceMessage ifNil: [ self findSelectedMessage ].
 	^ sourceMessage selector
 ]
 
@@ -195,9 +232,8 @@ RBInlineMethodRefactoring >> insertInlinedMethod [
 
 { #category : 'testing' }
 RBInlineMethodRefactoring >> isOverridden [
-	| selector|
-	selector := self inlineSelector.
-	^ class subclassRedefines: selector
+
+	^ class subclassRedefines: self inlineSelector
 ]
 
 { #category : 'testing' }
@@ -276,28 +312,9 @@ RBInlineMethodRefactoring >> parseInlineMethod [
 ]
 
 { #category : 'preconditions' }
-RBInlineMethodRefactoring >> preconditions [
-	"Even though it looks complex it only does preconditions and set up. `transform` does actual refactoring"
-	^ (RBCondition definesSelector: sourceSelector in: class)
-		& (RBCondition withBlock:
-					[self findSelectedMessage.
-					self checkOverridden ifTrue: [
-						self isOverridden
-						ifTrue:
-							[self
-								refactoringWarning: ('<1p>>><2s> is overriden. Do you want to inline it anyway?', String cr, 'You can break you hooks with this inline.'
-										expandMacrosWith: self classOfTheMethodToInline
-										with: self inlineSelector)] ].
-					self parseInlineMethod.
-					self isPrimitive
-						ifTrue: [self refactoringError: 'Cannot inline primitives'].
-					self checkSuperMessages.
-					self rewriteInlinedTree.
-					(sourceMessage parent isReturn or: [self hasMultipleReturns not])
-						ifFalse:
-							[self
-								refactoringError: 'Cannot inline method since it contains multiple returns that cannot be rewritten'].
-					true])
+RBInlineMethodRefactoring >> preconditions [ 
+
+	^ self applicabilityPreconditions & self breakingChangePreconditions 
 ]
 
 { #category : 'transforming' }

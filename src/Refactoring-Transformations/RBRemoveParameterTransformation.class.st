@@ -28,6 +28,20 @@ RBRemoveParameterTransformation class >> removeParameter: aString in: aClass sel
 		selector: aSelector
 ]
 
+{ #category : 'preconditions' }
+RBRemoveParameterTransformation >> applicabilityPreconditions [ 
+
+	| imps |
+	self getNewSelector.
+	imps := self model allImplementorsOf: oldSelector.
+	^ imps inject: super applicabilityPreconditions 
+		into:
+			[:cond :each |
+			cond & (RBCondition 
+						withBlock: [ (self hasReferencesToTemporaryIn: each) not ]
+						errorString: 'This argument is still referenced in at least one implementor!!')]
+]
+
 { #category : 'private' }
 RBRemoveParameterTransformation >> computeNewSelector [
 
@@ -63,26 +77,6 @@ RBRemoveParameterTransformation >> hasReferencesToTemporaryIn: each [
 	tree := each parseTreeForSelector: oldSelector.
 	tree ifNil: [ self refactoringError: 'Cannot parse sources.' ].
 	^ tree references: ( tree argumentNames at: parameterIndex )
-]
-
-{ #category : 'private' }
-RBRemoveParameterTransformation >> localPreconditions [
-
-	| imps |
-	self getNewSelector.
-	imps := self model allImplementorsOf: oldSelector.
-	^ imps inject: (RBCondition definesSelector: oldSelector in: class)
-		into:
-			[:cond :each |
-			cond & (RBCondition 
-						withBlock: [ (self hasReferencesToTemporaryIn: each) not ]
-						errorString: 'This argument is still referenced in at least one implementor!!')]
-]
-
-{ #category : 'private' }
-RBRemoveParameterTransformation >> preconditions [ 
-	"It looks like the localPreconditions is doing a side effect!!! argh! "
-	^  self localPreconditions & super preconditions
 ]
 
 { #category : 'private' }

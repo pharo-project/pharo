@@ -66,7 +66,7 @@ ReRemoveInstanceVariableRefactoring >> generateChanges [
 { #category : 'preconditions' }
 ReRemoveInstanceVariableRefactoring >> preconditions [
 
-	^ self applicabilityPreconditions & self breakingChangePreconditions 
+	^ self applicabilityPreconditions & self breakingChangePreconditions
 ]
 
 { #category : 'printing' }

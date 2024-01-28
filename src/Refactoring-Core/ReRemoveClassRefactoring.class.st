@@ -84,15 +84,6 @@ ReRemoveClassRefactoring >> classNames: aClassNameCollection [
 ]
 
 { #category : 'preconditions' }
-ReRemoveClassRefactoring >> eagerlyCheckApplicabilityPreconditions [
-
-	self applicabilityPreconditions
-		do: [ :cond | cond check ifFalse:
-				[ self refactoringError:
-					(String streamContents: [ :aStream | cond violationMessageOn: aStream ] ) ] ]
-]
-
-{ #category : 'preconditions' }
 ReRemoveClassRefactoring >> environmentWithUsersOf: aClassable [
 	^ RBClassEnvironment
 		onEnvironment: RBBrowserEnvironment new

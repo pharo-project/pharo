@@ -174,12 +174,6 @@ RBAbstractVariablesRefactoring >> parseTree [
 	^tree
 ]
 
-{ #category : 'preconditions' }
-RBAbstractVariablesRefactoring >> preconditions [
-
-	^ self trueCondition
-]
-
 { #category : 'transforming' }
 RBAbstractVariablesRefactoring >> privateTransform [
 	self hasVariablesToAbstract

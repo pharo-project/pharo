@@ -36,6 +36,12 @@ RBMoveMethodToClassRefactoring class >> model: aRBSmalltalk method: aMethod clas
 		yourself
 ]
 
+{ #category : 'preconditions' }
+RBMoveMethodToClassRefactoring >> applicabilityPreconditions [
+
+	^ (RBCondition definesSelector: method selector in: class) not
+]
+
 { #category : 'transforming' }
 RBMoveMethodToClassRefactoring >> classModelOf: aClass [
 	^ self model classObjectFor: aClass
@@ -45,11 +51,6 @@ RBMoveMethodToClassRefactoring >> classModelOf: aClass [
 RBMoveMethodToClassRefactoring >> method: aMethod class: aClass [
 	method := aMethod.
 	class := self classObjectFor: aClass
-]
-
-{ #category : 'preconditions' }
-RBMoveMethodToClassRefactoring >> preconditions [
-	^(RBCondition definesSelector: method selector in: class) not
 ]
 
 { #category : 'transforming' }

@@ -42,6 +42,18 @@ RBExtractMethodRefactoring class >> model: aRBSmalltalk extract: anInterval from
 		yourself
 ]
 
+{ #category : 'preconditions' }
+RBExtractMethodRefactoring >> applicabilityPreconditions [ 
+	^(RBCondition definesSelector: selector in: class)
+		& (RBCondition withBlock:
+					[self extractMethod.
+					self checkSpecialExtractions.
+					self checkReturn.
+					needsReturn ifTrue: [extractedParseTree addReturn].
+					self checkTemporaries.
+					true])
+]
+
 { #category : 'transforming' }
 RBExtractMethodRefactoring >> checkAssignments: variableNames [
 	| node outsideVars removeAssigned |
@@ -348,18 +360,6 @@ RBExtractMethodRefactoring >> placeholderNode [
 		in: modifiedParseTree.
 	node ifNil: [ self refactoringError: 'Cannot extract code' ].
 	^ node
-]
-
-{ #category : 'preconditions' }
-RBExtractMethodRefactoring >> preconditions [
-	^(RBCondition definesSelector: selector in: class)
-		& (RBCondition withBlock:
-					[self extractMethod.
-					self checkSpecialExtractions.
-					self checkReturn.
-					needsReturn ifTrue: [extractedParseTree addReturn].
-					self checkTemporaries.
-					true])
 ]
 
 { #category : 'transforming' }

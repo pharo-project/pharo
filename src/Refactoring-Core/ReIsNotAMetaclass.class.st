@@ -11,6 +11,12 @@ ReIsNotAMetaclass >> check [
 	^ aClass isMeta not
 ]
 
+{ #category : 'displaying' }
+ReIsNotAMetaclass >> violationMessageOn: aWriteStream [ 
+	
+	aWriteStream nextPutAll: 'Class ', aClass name , ' is a metaclass'
+]
+
 { #category : 'checking' }
 ReIsNotAMetaclass >> violators [
 	^ { aClass }

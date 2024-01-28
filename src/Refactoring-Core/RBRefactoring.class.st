@@ -43,12 +43,6 @@ RBRefactoring class >> preconditionSignal [
 	^ RBRefactoringError , RBRefactoringWarning
 ]
 
-{ #category : 'preconditions' }
-RBRefactoring >> applicabilityPreconditions [
-
-	^ self trueCondition 
-]
-
 { #category : 'converting' }
 RBRefactoring >> asRefactoring [
 
@@ -143,6 +137,15 @@ RBRefactoring >> copyOptionsFrom: aDictionary [
 	(aDictionary keys difference: dict keys) do:
 		[ :e | dict at: e put: (aDictionary at: e) ].
 	self options: dict
+]
+
+{ #category : 'preconditions' }
+RBRefactoring >> eagerlyCheckApplicabilityPreconditions [
+
+	self applicabilityPreconditions
+		do: [ :cond | cond check ifFalse:
+				[ self refactoringError:
+					(String streamContents: [ :aStream | cond violationMessageOn: aStream ] ) ] ]
 ]
 
 { #category : 'preconditions' }

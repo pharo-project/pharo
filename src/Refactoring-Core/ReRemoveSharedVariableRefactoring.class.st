@@ -67,7 +67,7 @@ ReRemoveSharedVariableRefactoring >> generateChanges [
 { #category : 'preconditions' }
 ReRemoveSharedVariableRefactoring >> preconditions [
 
-	^ self applicabilityPreconditions & self breakingChangePreconditions 
+	^ self applicabilityPreconditions & self breakingChangePreconditions
 ]
 
 { #category : 'transforming' }

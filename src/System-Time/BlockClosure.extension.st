@@ -30,7 +30,7 @@ BlockClosure >> valueWithin: aDuration onTimeout: timeoutBlock [
 	If the evaluation does not complete in less than aDuration evaluate the timeoutBlock instead"
 
 	<debuggerCompleteToSender>
-	self
+	^ self
 		valueWithinMilliseconds: aDuration asMilliSeconds
 		onTimeout: timeoutBlock
 ]

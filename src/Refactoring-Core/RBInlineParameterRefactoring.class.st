@@ -39,7 +39,7 @@ method1
 "
 Class {
 	#name : 'RBInlineParameterRefactoring',
-	#superclass : 'RBRemoveParameterRefactoring',
+	#superclass : 'RBParameterRemovalRefactoring',
 	#instVars : [
 		'expressions'
 	],
@@ -79,6 +79,19 @@ RBInlineParameterRefactoring >> allExpressionsToInline [
 	^coll asOrderedCollection
 ]
 
+{ #category : 'preconditions' }
+RBInlineParameterRefactoring >> applicabilityPreconditions [
+	self getNewSelector.
+	expressions := self allExpressionsToInline.
+	^ super applicabilityPreconditions
+		& ((RBCondition withBlock: [expressions isNotEmpty ])
+				errorMacro: 'No callers. Use Remove Method instead.')
+			& ((RBCondition withBlock: [expressions size = 1])
+					errorMacro: 'All values passed as this argument must be identical.')
+			& ((RBCondition withBlock: [expressions first isLiteralNode])
+					errorMacro: 'All values passed must be literal.')
+]
+
 { #category : 'private' }
 RBInlineParameterRefactoring >> expressionsToInlineFrom: aTree [
 	| searcher |
@@ -107,19 +120,6 @@ RBInlineParameterRefactoring >> modifyImplementorParseTree: parseTree in: aClass
 	assignment := RBAssignmentNode variable: node copy value: expressions first.
 	parseTree body addNodeFirst: assignment.
 	super modifyImplementorParseTree: parseTree in: aClass
-]
-
-{ #category : 'preconditions' }
-RBInlineParameterRefactoring >> myConditions [
-	self getNewSelector.
-	expressions := self allExpressionsToInline.
-	^(RBCondition definesSelector: oldSelector in: class)
-		& ((RBCondition withBlock: [expressions isNotEmpty ])
-				errorMacro: 'No callers. Use Remove Method instead.')
-			& ((RBCondition withBlock: [expressions size = 1])
-					errorMacro: 'All values passed as this argument must be identical.')
-			& ((RBCondition withBlock: [expressions first isLiteralNode])
-					errorMacro: 'All values passed must be literal.')
 ]
 
 { #category : 'printing' }

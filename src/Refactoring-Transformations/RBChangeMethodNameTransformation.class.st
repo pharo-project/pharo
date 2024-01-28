@@ -21,6 +21,15 @@ RBChangeMethodNameTransformation >> applicabilityPreconditions [
 
 ]
 
+{ #category : 'preconditions' }
+RBChangeMethodNameTransformation >> breakingChangePreconditions [ 
+
+	^ self implementors
+		inject: self interactionConditions 
+		into: [ :condition :each |
+			condition & (RBCondition hierarchyOf: each canUnderstand: newSelector) not; errorBlock: [] ]
+]
+
 { #category : 'support' }
 RBChangeMethodNameTransformation >> convertAllReferencesTo: aSymbol of: classes using: searchReplacer [
 	(self model allReferencesTo: aSymbol in: classes)
@@ -65,6 +74,7 @@ RBChangeMethodNameTransformation >> implementorsCanBePrimitives [
 
 { #category : 'preconditions' }
 RBChangeMethodNameTransformation >> interactionConditions [
+	"This refactoring only preserves behavior if all implementors are renamed."
 	
 	self flag: #popUp.
 	
@@ -102,16 +112,8 @@ RBChangeMethodNameTransformation >> parseTreeRewriter [
 
 { #category : 'preconditions' }
 RBChangeMethodNameTransformation >> preconditions [
-	"This refactoring only preserves behavior if all implementors are renamed."
 
-	| conditions |
-	conditions := self applicabilityPreconditions. 
-
-	conditions := self implementors
-		inject: conditions into: [ :condition :each |
-			condition & (RBCondition hierarchyOf: each canUnderstand: newSelector) not ].
-
-	^ conditions & self interactionConditions 
+	^ self applicabilityPreconditions & self breakingChangePreconditions 
 ]
 
 { #category : 'support' }

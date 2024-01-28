@@ -88,12 +88,6 @@ RBExpandReferencedPoolsRefactoring >> movePoolVariables [
 		do: [:poolDict | toClasses do: [:each | self movePool: poolDict toClass: each]]
 ]
 
-{ #category : 'preconditions' }
-RBExpandReferencedPoolsRefactoring >> preconditions [
-
-	^ self trueCondition
-]
-
 { #category : 'transforming' }
 RBExpandReferencedPoolsRefactoring >> privateTransform [
 	self computePoolsToMove.

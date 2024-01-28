@@ -39,6 +39,18 @@ RBSplitCascadeRefactoring class >> split: anInterval from: aSelector in: aClass 
 		yourself
 ]
 
+{ #category : 'preconditions' }
+RBSplitCascadeRefactoring >> applicabilityPreconditions [
+
+	^ (RBCondition definesSelector: selector in: class)
+	  & (RBCondition withBlock: [
+			   self
+				   findCascadeNode;
+				   findAncestorNode;
+				   findMessageNodes.
+			   true ])
+]
+
 { #category : 'transforming' }
 RBSplitCascadeRefactoring >> extractReceiver [
 	| name |
@@ -105,13 +117,6 @@ RBSplitCascadeRefactoring >> parseTree [
 			parseTree ifNil: [ self refactoringError: 'Could not parse sources' ]
 			].
 	^ parseTree doSemanticAnalysis
-]
-
-{ #category : 'preconditions' }
-RBSplitCascadeRefactoring >> preconditions [
-	^ (RBCondition definesSelector: selector in: class) & (RBCondition withBlock: [
-		self findCascadeNode; findAncestorNode; findMessageNodes.
-		true ])
 ]
 
 { #category : 'transforming' }
