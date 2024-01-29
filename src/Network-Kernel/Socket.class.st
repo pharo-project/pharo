@@ -1546,15 +1546,19 @@ Socket >> setPort: port [
 
 { #category : 'queries' }
 Socket >> socketError [
-	^self primSocketError: socketHandle
+
+	^ socketHandle ifNotNil: [ self primSocketError: socketHandle ]
 ]
 
 { #category : 'queries' }
 Socket >> socketErrorMessage [
 
-	^ [ OSPlatform current getErrorMessage: self socketError ]
-		  on: Error
-		  do: [ 'Error code: ' , self socketError printString ]
+	^ self socketError
+		  ifNil: [ 'Socket destroyed, cannot retrieve error message' ]
+		  ifNotNil: [ :err |
+			  [ OSPlatform current getErrorMessage: err ]
+				  on: Error
+				  do: [ 'Error code: ' , err printString ] ]
 ]
 
 { #category : 'accessing' }
