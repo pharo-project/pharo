@@ -332,31 +332,31 @@ Process >> installEnvIntoForked: newProcess [
 { #category : 'testing' }
 Process >> isActiveProcess [
 
-	^ self == Processor activeProcess
+	^ self state == #active
+]
+
+{ #category : 'testing' }
+Process >> isBlocked [
+
+	^ self state == #blocked
+]
+
+{ #category : 'testing' }
+Process >> isReady [
+
+	^ self state == #ready
 ]
 
 { #category : 'testing' }
 Process >> isSuspended [
-	"Answer true if I was never scheduled yet (new process, never been sent #resume) or paused (was sent #suspend)"
-	self isActiveProcess ifTrue: [ ^false ].
-	self isTerminated ifTrue: [ ^false ].
-	^myList isNil or: [ myList isEmpty ]
+
+	^ self state == #suspended
 ]
 
 { #category : 'testing' }
 Process >> isTerminated [
 
-	"Answer if the receiver is terminated, i.e. if the receiver is not active and
-	one of the following conditions is met:
-	(1) the receiver is a defunct process (suspendedContext = nil or pc = nil)
-	(2) the receiver is suspended in the endProcess method (We cannot use pragmas... pragmas require the compiler, it generates an evil dependency.
-	It also is not available in minimal images)"
-
-	self isActiveProcess ifTrue: [ ^ false ].
-
-	^suspendedContext isNil or: [
-		suspendedContext isDead or: [
-			(suspendedContext method == (self class >> #endProcess))]]
+	^ self state == #terminated
 ]
 
 { #category : 'testing' }
@@ -602,6 +602,32 @@ Process >> signalException: anException [
 	process is resumed, it will signal the exception"
 
 	oldList ifNotNil: [self resume]
+]
+
+{ #category : 'testing' }
+Process >> state [
+
+	self == Processor activeProcess ifTrue: [ ^ #active ].
+	"A process is #terminated if one of the following conditions is met:
+	(1) the receiver is a defunct process (suspendedContext = nil or pc = nil)
+	(2) the receiver is suspended in the endProcess method (we cannot use pragmas...
+	pragmas require the compiler, it generates an evil dependency.
+	It also is not available in minimal images)"
+	(suspendedContext isNil or: [
+		 suspendedContext isDead or: [
+			 suspendedContext method == (self class >> #endProcess) ] ])
+		ifTrue: [ ^ #terminated ].
+	"Any other process without a suspendingList, or which cannot
+	possibly be present in that list because it is empty,
+	is considered #suspended. This is either a new process that has
+	never been sent #resume, or one that has been sent #suspend."
+	(myList isNil or: [ myList isEmpty ]) ifTrue: [ ^ #suspended ].
+	"We term a process that is waiting in a list on the Processor #ready,
+	because it will run as soon as the Processor is free. Any other type of list,
+	usually a Semaphore, is considered #blocked"
+	^ myList class == ProcessList
+		  ifTrue: [ #ready ]
+		  ifFalse: [ #blocked ]
 ]
 
 { #category : 'changing suspended state' }

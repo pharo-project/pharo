@@ -192,7 +192,7 @@ ProcessorScheduler >> interpriorityYield: modifiedProcess [
 			[ modifiedProcess resume ] fork.
 			modifiedProcess suspend ]
 		ifFalse: [
-			(modifiedProcess suspendingList isKindOf: ProcessList) ifTrue: [
+			modifiedProcess isReady ifTrue: [
 				modifiedProcess
 					suspend;
 					resume ] ]
