@@ -67,7 +67,7 @@ RBRemoveParameterRefactoring >> removeParameter: aString in: aClass selector: aS
 	argument := aString
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBRemoveParameterRefactoring >> storeOn: aStream [
 
 	aStream nextPut: $(.

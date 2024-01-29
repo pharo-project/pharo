@@ -104,7 +104,7 @@ RBExtractMethodAndOccurrences >> shouldSearchInHierarchy [
 	^(self options at: #searchInWholeHierarchy) value: self value: class
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBExtractMethodAndOccurrences >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

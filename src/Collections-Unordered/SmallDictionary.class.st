@@ -768,7 +768,7 @@ SmallDictionary >> size [
 	^size
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 SmallDictionary >> storeOn: aStream [
 	| noneYet |
 	aStream nextPutAll: '(('.

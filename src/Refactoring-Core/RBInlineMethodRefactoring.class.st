@@ -450,7 +450,7 @@ RBInlineMethodRefactoring >> sourceSelector [
 	^ sourceSelector
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBInlineMethodRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

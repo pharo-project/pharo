@@ -1144,14 +1144,14 @@ Float >> significandAsInteger [
 	^(((self basicAt: 1) bitAnd: 16r000FFFFF) bitShift: 32) bitOr: (self basicAt: 2)
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 Float >> storeOn: aStream [
 	"Print the Number exactly so it can be interpreted back unchanged"
 
 	self storeOn: aStream base: 10
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 Float >> storeOn: aStream base: base [
 	"Print the Number exactly so it can be interpreted back unchanged"
 	self isFinite

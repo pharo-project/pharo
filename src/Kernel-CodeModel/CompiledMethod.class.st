@@ -193,7 +193,7 @@ CompiledMethod >> defaultSelector [
 	^ #DoIt numArgs: self numArgs
 ]
 
-{ #category : 'printing' }
+{ #category : 'displaying' }
 CompiledMethod >> displayStringOn: aStream [
 	aStream print: self methodClass; nextPutAll: '>>'; store: self selector
 ]
@@ -919,7 +919,7 @@ CompiledMethod >> stepIntoQuickMethods: aBoolean [
 	^self propertyAt: #stepIntoQuickMethod put: aBoolean
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 CompiledMethod >> storeOn: aStream [
 	| noneYet |
 	aStream nextPutAll: '(('.

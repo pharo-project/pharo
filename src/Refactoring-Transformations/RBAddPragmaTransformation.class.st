@@ -95,7 +95,7 @@ RBAddPragmaTransformation >> privateTransform [
 	self definingClass compileTree: methodTree
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBAddPragmaTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.

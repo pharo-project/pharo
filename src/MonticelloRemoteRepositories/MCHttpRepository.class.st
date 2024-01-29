@@ -181,7 +181,7 @@ MCHttpRepository >> displayProgress: label during: workBlock [
 		  run
 ]
 
-{ #category : 'printing' }
+{ #category : 'displaying' }
 MCHttpRepository >> displayStringOn: aStream [
 	aStream nextPutAll: self location
 ]

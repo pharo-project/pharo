@@ -247,7 +247,7 @@ RBChildrenToSiblingsRefactoring >> shouldPushUp: aSelector from: aClass [
 		anySatisfy: [ :each | (each directlyDefinesMethod: aSelector) not ]
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBChildrenToSiblingsRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

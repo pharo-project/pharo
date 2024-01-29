@@ -349,7 +349,7 @@ Array >> shouldBePrintedAsLiteral: alreadyVisited [
 	^ self allSatisfy: [ :each | each shouldBePrintedAsLiteral: alreadyVisited , { self } ]
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 Array >> storeOn: aStream [
 
 	"Use the literal form if possible."

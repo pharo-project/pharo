@@ -97,7 +97,7 @@ RBExtractMethodToComponentRefactoring >> privateTransform [
 		inlineForwarder
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBExtractMethodToComponentRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

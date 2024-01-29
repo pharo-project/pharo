@@ -80,7 +80,7 @@ RBRenameMethodTransformation >> parseTreeRewriter [
 	^rewriteRule
 ]
 
-{ #category : 'accessing' }
+{ #category : 'storing' }
 RBRenameMethodTransformation >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

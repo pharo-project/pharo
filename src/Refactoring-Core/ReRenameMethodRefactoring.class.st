@@ -214,7 +214,7 @@ ReRenameMethodRefactoring >> renameChanges [
 	^ self changes
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 ReRenameMethodRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	aStream nextPutAll: self class name.

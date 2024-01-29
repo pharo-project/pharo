@@ -40,7 +40,7 @@ FinderPragmaNode >> childrenItems [
 	^ (self model resultDictionary at: self item ifAbsent:[^super childrenItems]) keys
 ]
 
-{ #category : 'private' }
+{ #category : 'displaying' }
 FinderPragmaNode >> displayString [
 	^ '<' , self item  , '>'
 ]

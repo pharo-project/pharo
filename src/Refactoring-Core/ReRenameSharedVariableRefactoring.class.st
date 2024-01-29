@@ -92,7 +92,7 @@ ReRenameSharedVariableRefactoring >> renameReferences [
 	methods do: [ :method | self convertMethod: method selector for: method modelClass using: replacer ]
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 ReRenameSharedVariableRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

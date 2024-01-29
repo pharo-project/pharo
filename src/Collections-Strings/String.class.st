@@ -1167,7 +1167,7 @@ String >> deepCopy [
 	^self shallowCopy
 ]
 
-{ #category : 'printing' }
+{ #category : 'displaying' }
 String >> displayStringOn: aStream [
 	"Make sure that this is not printOn: because we do not want to have multiple quotes."
 	aStream nextPutAll: self
@@ -2522,7 +2522,7 @@ String >> stemAndNumericSuffix [
 	^ { stem . suffix }
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 String >> storeOn: aStream [
 	"Print inside string quotes, doubling inbedded quotes."
 

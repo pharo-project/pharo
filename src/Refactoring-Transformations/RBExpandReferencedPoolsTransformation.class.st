@@ -92,7 +92,7 @@ RBExpandReferencedPoolsTransformation >> privateTransform [
 	self movePoolVariables
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBExpandReferencedPoolsTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.

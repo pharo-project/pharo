@@ -193,7 +193,7 @@ RBRenameInstanceVariableRefactoring >> renameReferences [
 		using: replacer
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBRenameInstanceVariableRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

@@ -38,7 +38,7 @@ RBVariableRefactoring >> refactoredClassName [
 	^ class name
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBVariableRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

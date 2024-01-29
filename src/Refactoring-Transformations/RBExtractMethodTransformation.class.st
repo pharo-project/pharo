@@ -416,7 +416,7 @@ RBExtractMethodTransformation >> prepareForExecution [
 	arguments := self calculateArguments 
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBExtractMethodTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.

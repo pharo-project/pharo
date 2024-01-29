@@ -167,7 +167,7 @@ ReRemoveClassRefactoring >> reparentSubclasses [
 			self model reparentClasses: class subclasses copy to: class superclass]
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 ReRemoveClassRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.
