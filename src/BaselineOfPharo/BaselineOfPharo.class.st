@@ -70,6 +70,23 @@ BaselineOfPharo class >> externalProjects [
 ]
 
 { #category : 'accessing - external projects' }
+BaselineOfPharo class >> fuel [
+	<externalProject>
+	
+	^ PharoExternalProject 
+		newName: 'Fuel' 
+		owner: 'theseion' 
+		project: 'Fuel' 
+		version: 'Pharo12'
+]
+
+{ #category : 'repository urls' }
+BaselineOfPharo class >> fuelRepository [
+
+	^ (self externalProjectNamed: 'Fuel') repository
+]
+
+{ #category : 'accessing - external projects' }
 BaselineOfPharo class >> iceberg [
 	<externalProject>
 
