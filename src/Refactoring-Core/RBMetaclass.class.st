@@ -73,7 +73,7 @@ RBMetaclass >> printOn: aStream [
 	aStream nextPutAll: ' class'
 ]
 
-{ #category : 'initialization' }
+{ #category : 'accessing' }
 RBMetaclass >> realName: aSymbol [
 	self realClass: (self model environment at: aSymbol) classSide
 ]
