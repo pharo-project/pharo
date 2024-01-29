@@ -119,7 +119,7 @@ RubShoutStylerDecorator >> styler [
 
 	^ styler ifNil: [
 		| selectedClassOrMeta |
-		(self model isNotNil and: [ (selectedClassOrMeta := self model selectedClassOrMetaClass) isNotNil ])
+		styler := (self model isNotNil and: [ (selectedClassOrMeta := self model selectedClassOrMetaClass) isNotNil ])
 			ifTrue: [
 				selectedClassOrMeta realClass syntaxHighlighter
 					view: self;
