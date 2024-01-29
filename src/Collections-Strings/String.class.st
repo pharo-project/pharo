@@ -765,33 +765,6 @@ String >> asTime [
 ]
 
 { #category : 'converting' }
-String >> asUncommentedCode [
-	"this string represents a commented code, let's uncomment it"
-
-	self deprecated: 'This method will be removed in the future version of Pharo because the implementation does not seem to have use cases or there are too few.'.
-
-	"'""abc""' asUncommentedCode >>> 'abc'"
-	
-	^ String streamContents:  [ :str |
-
-		|doubleQuoteAlreadyFound|
-		doubleQuoteAlreadyFound := false.
-
-		self withoutQuoting do: [ :char |
-			char = $"
-				ifTrue: [
-					doubleQuoteAlreadyFound 	ifTrue: [
-							str nextPut: $" ].
-					doubleQuoteAlreadyFound := doubleQuoteAlreadyFound not.
-				]
-				ifFalse: [
-					str nextPut: char
-				]
-		 ]
-	]
-]
-
-{ #category : 'converting' }
 String >> asUnsignedInteger [
 	"Returns the first integer it can find or nil."
 	| start stream |

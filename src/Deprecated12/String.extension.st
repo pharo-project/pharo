@@ -1,6 +1,33 @@
 Extension { #name : 'String' }
 
 { #category : '*Deprecated12' }
+String >> asUncommentedCode [
+	"this string represents a commented code, let's uncomment it"
+
+	self deprecated: 'This method will be removed in the future version of Pharo because the implementation does not seem to have use cases or there are too few.'.
+
+	"'""abc""' asUncommentedCode >>> 'abc'"
+	
+	^ String streamContents:  [ :str |
+
+		|doubleQuoteAlreadyFound|
+		doubleQuoteAlreadyFound := false.
+
+		self withoutQuoting do: [ :char |
+			char = $"
+				ifTrue: [
+					doubleQuoteAlreadyFound 	ifTrue: [
+							str nextPut: $" ].
+					doubleQuoteAlreadyFound := doubleQuoteAlreadyFound not.
+				]
+				ifFalse: [
+					str nextPut: char
+				]
+		 ]
+	]
+]
+
+{ #category : '*Deprecated12' }
 String class >> crlfcrlf [
 
 	self
