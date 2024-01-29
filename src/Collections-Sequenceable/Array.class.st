@@ -153,6 +153,12 @@ Array >> copyWithDependent: newElement [
 	^ self copyWith: newElement
 ]
 
+{ #category : 'displaying' }
+Array >> displayString [
+
+	^ super displayString contractTo: 200
+]
+
 { #category : 'converting' }
 Array >> elementsExchangeIdentityWith: otherArray [
 	"This primitive performs a bulk mutation, causing all pointers to the elements of the
