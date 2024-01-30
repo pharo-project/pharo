@@ -617,11 +617,10 @@ Process >> state [
 		 suspendedContext isDead or: [
 			 suspendedContext method == (self class >> #endProcess) ] ])
 		ifTrue: [ ^ #terminated ].
-	"Any other process without a suspendingList, or which cannot
-	possibly be present in that list because it is empty,
-	is considered #suspended. This is either a new process that has
-	never been sent #resume, or one that has been sent #suspend."
-	(myList isNil or: [ myList isEmpty ]) ifTrue: [ ^ #suspended ].
+	"Any other process without a list is considered #suspended.
+	This is either a new process that has never been sent #resume,
+	or one that has been sent #suspend."
+	myList ifNil: [ ^ #suspended ].
 	"We term a process that is waiting in a list on the Processor #ready,
 	because it will run as soon as the Processor is free. Any other type of list,
 	usually a Semaphore, is considered #blocked"
