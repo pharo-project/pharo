@@ -92,12 +92,6 @@ ClyConstantMethodQuery >> hash [
 	^ super hash bitXor: methods hash
 ]
 
-{ #category : 'accessing' }
-ClyConstantMethodQuery >> highlightElement [
-	
-	^ self description
-]
-
 { #category : 'initialization' }
 ClyConstantMethodQuery >> initialize [
 	super initialize.

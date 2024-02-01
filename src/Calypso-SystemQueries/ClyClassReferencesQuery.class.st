@@ -53,12 +53,6 @@ ClyClassReferencesQuery >> doesMethod: aMethod useVar: aVariable [
 ]
 
 { #category : 'accessing' }
-ClyClassReferencesQuery >> highlightElement [
-	
-	^ self printVariables
-]
-
-{ #category : 'accessing' }
 ClyClassReferencesQuery >> variableQuery: aClassQuery [
 	super variableQuery: (aClassQuery withResult: ClyClassBindingsResult new)
 ]
