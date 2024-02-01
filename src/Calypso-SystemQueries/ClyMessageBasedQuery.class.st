@@ -63,6 +63,12 @@ ClyMessageBasedQuery >> hash [
 	^ super hash bitXor: selectors hash
 ]
 
+{ #category : 'accessing' }
+ClyMessageBasedQuery >> highlightElement [
+	
+	^ self selectors anyOne
+]
+
 { #category : 'printing' }
 ClyMessageBasedQuery >> printExtraInfoOn: aStream [
 	super printExtraInfoOn: aStream.

@@ -265,6 +265,12 @@ ClyQuery >> hash [
 	^requiredResult hash bitXor: scope hash
 ]
 
+{ #category : 'accessing' }
+ClyQuery >> highlightElement [
+
+	^ nil
+]
+
 { #category : 'initialization' }
 ClyQuery >> initialize [
 	super initialize.
