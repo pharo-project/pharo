@@ -80,9 +80,9 @@ PharoCommonTools class >> settingsOn: aBuilder [
 					(aBuilder pickOne: #fileListTool)
 						target: Smalltalk;
 						targetSelector: #tools;
-						label: 'Filelist';
-						default: (self environment at: #FileList);
-						domainValues: Smalltalk tools recentFileListTools]
+						label: 'FileBrowser';
+						default: (self environment at: #StFileSystemPresenter);
+						domainValues: Smalltalk tools recentFileListTools ]
 ]
 
 { #category : 'system startup' }

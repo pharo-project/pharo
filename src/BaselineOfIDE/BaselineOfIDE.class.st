@@ -265,7 +265,7 @@ BaselineOfIDE >> postload: loader package: packageSpec [
 	EpMonitor current enable.
 
 	Smalltalk tools register: ExternalChangesBrowser as: #changeList.
-	Smalltalk tools register: FileList as: #fileList.
+	Smalltalk tools register: StFileSystemPresenter as: #fileList.
 	Smalltalk tools register: Finder as: #finder.
 	Smalltalk tools register: ProcessBrowser as: #processBrowser.
 	Smalltalk tools register: TimeProfiler as: #timeProfiler.
