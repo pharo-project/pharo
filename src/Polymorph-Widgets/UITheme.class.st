@@ -754,12 +754,12 @@ UITheme >> chooseColorIn: aThemedMorph title: aString color: aColor for: aBlock 
 UITheme >> chooseDirectoryIn: aThemedMorph title: title path: path [
 	"Answer the result of a file dialog with the given title, choosing directories only."
 
-	| dialog |
-	dialog := (FileDialogWindow newWithTheme: aThemedMorph theme)
-		title: title;
-		answerDirectory.
-	path ifNotNil: [ dialog selectPath: path ].
-	^ dialog openModal answer
+	^ StOpenDirectoryDialog new
+		defaultFolder: path;
+		title: (title ifNil: [ 'Choose Directory' translated ]);
+		openModal;
+		selectedEntry
+
 ]
 
 { #category : 'services' }
@@ -816,37 +816,34 @@ UITheme >> chooseForSaveFileReferenceIn: aThemedMorph title: title extensions: e
 	path and preview type.
 	Answer nil or a filename."
 
-	| dialog pathFileReference |
+	| pathFileReference |
+	
 	pathFileReference := path asFileReference.
-	dialog := (FileDialogWindow newWithTheme: aThemedMorph theme)
-		title: title;
-		fileNameText: pathFileReference basename;
-		answerSaveFile.
-	exts ifNotNil: [ dialog validExtensions: exts ].
-	path ifNotNil: [ dialog selectPath: path ].
-	^ dialog openModal answer
+	^ StSaveFileDialog new
+		setTitle: title;
+		showDirectory: path parent;
+		extensions: exts;				
+		selectFile: pathFileReference basename;
+		openModal;
+		selectedEntry
 ]
 
 { #category : 'services' }
 UITheme >> chooseFullFileNameIn: aThemedMorph title: title patterns: patterns path: path preview: preview [
 	"Answer the result of a file name chooser dialog with the given title, patterns
-	path and preview type.
-	Answer nil or a filename."
+	path and preview type. Answer nil or a filename."
 
 	| dialog |
-	dialog := FileDialogWindow basicNew
-		basicTheme: aThemedMorph theme;
-		previewType: preview;
-		initialize;
-		title: title;
-		answerPathName.
-	patterns
-		ifNotNil: [ dialog
-				fileSelectionBlock: [ :de |
-					(dialog defaultFileSelectionBlock value: de)
-						and: [ de isDirectory or: [ patterns anySatisfy: [ :pat | pat match: de name ] ] ] ] ].
-	path ifNotNil: [ dialog selectPath: path ].
-	^ dialog openModal answer
+	
+	dialog := StOpenFileDialog new
+		previewer: StFileBrowserContentPreviewer new;
+		setTitle: title;				
+		yourself.
+	path ifNotNil: [ dialog showDirectory: path ].
+	patterns ifNotNil: [ dialog extensions: patterns ].
+	^ dialog
+		openModal;
+		selectedEntry.
 ]
 
 { #category : 'services' }
