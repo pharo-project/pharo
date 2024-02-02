@@ -118,7 +118,7 @@ SortedCollection >> add: newObject [
 SortedCollection >> addAll: aCollection [
 	aCollection size > (self size // 3)
 		ifTrue:
-			[aCollection do: [:each | self addLast: each].
+			[aCollection do: [:each | self addNoSort: each].
 			self reSort]
 		ifFalse: [aCollection do: [:each | self add: each]].
 	^ aCollection
@@ -127,6 +127,18 @@ SortedCollection >> addAll: aCollection [
 { #category : 'adding' }
 SortedCollection >> addFirst: newObject [
 	self shouldNotImplement
+]
+
+{ #category : 'adding' }
+SortedCollection >> addLast: newObject [
+	self shouldNotImplement
+]
+
+{ #category : 'private' }
+SortedCollection >> addNoSort: anObject [
+	"Add newObject to the end of the receiver. Assume that this is the correct position--do not check sort order. Answer newObject."
+
+	^ super addLast: anObject
 ]
 
 { #category : 'accessing' }
@@ -258,13 +270,6 @@ SortedCollection >> intersection: aCollection [
 		yourself
 ]
 
-{ #category : 'splitjoin' }
-SortedCollection >> join: aCollection [
-	"Append the elements of the argument, aSequenceableCollection, separating them by the receiver."
-	"Curiously addAllLast: does not trigger a reSort, so we must do it here."
-	^ (super join: aCollection) reSort; yourself
-]
-
 { #category : 'math functions' }
 SortedCollection >> median [
 	"Return the middle element, or as close as we can get."
@@ -358,4 +363,10 @@ SortedCollection >> sortBlock: aBlock [
 	sortBlock := aBlock.
 	"sortBlocks with side effects may not work right"
 	self size > 0 ifTrue: [self reSort]
+]
+
+{ #category : 'private' }
+SortedCollection >> speciesForTransform [
+
+	^ OrderedCollection
 ]
