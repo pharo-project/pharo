@@ -187,7 +187,7 @@ ProcessorScheduler >> interpriorityYield: modifiedProcess [
 	The only application so far is when changing the priority of a process.
 	"
 
-	modifiedProcess isActiveProcess
+	modifiedProcess isActive
 		ifTrue: [
 			[ modifiedProcess resume ] fork.
 			modifiedProcess suspend ]
