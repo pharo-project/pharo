@@ -47,6 +47,40 @@ SocketStreamTest >> tearDown [
 ]
 
 { #category : 'stream protocol' }
+SocketStreamTest >> testFlushLargeMessageOtherEndClosed [
+	"A large send will be broken into chunks and fail on the second one."
+
+	serverStream close.
+	self
+		should: [ "256kiB"
+			clientStream
+				nextPutAll: (String new: 2 ** 18 withAll: $a);
+				flush ]
+		raise: ConnectionClosed
+]
+
+{ #category : 'stream protocol' }
+SocketStreamTest >> testFlushOtherEndClosed [
+	"Ensure that #flush properly raises an error when called when the other end is closed."
+
+	serverStream close.
+	"The first send after the other end is closed will not have problems as long as it fits within the send buffer."
+	self
+		shouldnt: [
+			clientStream
+				nextPutAll: 'A line of text';
+				flush ]
+		raise: NetworkError.
+	"The next send will wait for the first to finish and discover the error condition."
+	self
+		should: [
+			clientStream
+				nextPutAll: 'Another line of text';
+				flush ]
+		raise: ConnectionClosed
+]
+
+{ #category : 'stream protocol' }
 SocketStreamTest >> testNextIntoClose [
 	"Ensure that #next:into: will function properly when the connection is closed"
 
@@ -67,6 +101,20 @@ SocketStreamTest >> testNextIntoCloseNonSignaling [
 	clientStream close] fork.
 	self assert: (serverStream next: 100 into: (String new: 100) startingAt: 1)
 		equals: 'A line of text'
+]
+
+{ #category : 'stream protocol' }
+SocketStreamTest >> testNextPutAllFlushOtherEndClosed [
+	"#nextPutAllFlush: does its own error handling, so needs to be tested separately.
+	Having some content in the buffer first means that the direct send of the second buffer will encounter an error."
+
+	serverStream close.
+	self
+		should: [
+			clientStream
+				nextPutAll: 'A line of text';
+				nextPutAllFlush: 'Another line of text' ]
+		raise: ConnectionClosed
 ]
 
 { #category : 'stream protocol' }
