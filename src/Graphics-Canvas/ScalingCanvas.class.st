@@ -474,6 +474,13 @@ ScalingCanvas >> formCanvas: initialFormCanvas scale: initialScale [
 
 ]
 
+{ #category : 'private' }
+ScalingCanvas >> formSet: aFormSet at: aPoint sourceRect: sourceRect rule: rule [
+
+	formCanvas image: (self scaledFormForFormSet: aFormSet) at: aPoint truncated * scale
+		sourceRect: (sourceRect scaleBy: scale) rule: rule
+]
+
 { #category : 'drawing - rectangles' }
 ScalingCanvas >> frameAndFillRectangle: r fillColor: fillColor borderWidth: borderWidth borderColor: borderColor [
 

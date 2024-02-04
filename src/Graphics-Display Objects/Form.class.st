@@ -50,6 +50,13 @@ Form class >> blendAlpha [
 	^ 30
 ]
 
+{ #category : 'mode constants' }
+Form class >> blendAlphaScaled [
+	"Answer the integer denoting BitBlt's blend-with-scaled-alpha rule."
+
+	^ 34
+]
+
 { #category : 'instance creation' }
 Form class >> dotOfSize: diameter [
 	"Create a form which contains a round black dot."
