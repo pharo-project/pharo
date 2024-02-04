@@ -376,13 +376,7 @@ ScalingCanvas >> depth [
 { #category : 'drawing - images' }
 ScalingCanvas >> drawFormSet: formSet at: point [
 
-	| form scaledForm |
-
-	form := formSet asForm.
-	scaledForm := (scale = 2 and: [ FormMapping includesKey: form ])
-		ifTrue: [ FormMapping at: form ]
-		ifFalse: [ formSet asFormAtScale: scale ].
-	formCanvas drawImage: scaledForm at: point * scale
+	formCanvas drawImage: (self scaledFormForFormSet: formSet) at: point * scale
 ]
 
 { #category : 'drawing - polygons' }
@@ -586,6 +580,15 @@ ScalingCanvas >> scalePolygon: vertices [
 		point truncated * scale ]
 ]
 
+{ #category : 'private' }
+ScalingCanvas >> scaledFormForFormSet: formSet [
+
+	scale = 2 ifTrue: [
+		formSet mappableFormForScalingCanvas ifNotNil: [ :mappableForm |
+			FormMapping at: mappableForm ifPresent: [ :mappedForm | ^ mappedForm ] ] ].
+	^ formSet asFormAtScale: scale
+]
+
 { #category : 'accessing' }
 ScalingCanvas >> shadowColor [
 
@@ -644,11 +647,5 @@ ScalingCanvas >> translateBy: delta during: aBlock [
 { #category : 'drawing - images' }
 ScalingCanvas >> translucentFormSet: formSet at: point [
 
-	| form scaledForm |
-
-	form := formSet asForm.
-	scaledForm := (scale = 2 and: [ FormMapping includesKey: form ])
-		ifTrue: [ FormMapping at: form ]
-		ifFalse: [ formSet asFormAtScale: scale ].
-	formCanvas translucentImage: scaledForm at: point * scale
+	formCanvas translucentImage: (self scaledFormForFormSet: formSet) at: point * scale
 ]
