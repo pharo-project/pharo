@@ -583,12 +583,10 @@ ScalingCanvas >> scalePolygon: vertices [
 { #category : 'private' }
 ScalingCanvas >> scaledFormForFormSet: formSet [
 
-	| form |
-
-	form := formSet asForm.
-	^ (scale = 2 and: [ FormMapping includesKey: form ])
-		ifTrue: [ FormMapping at: form ]
-		ifFalse: [ formSet asFormAtScale: scale ]
+	scale = 2 ifTrue: [
+		formSet mappableFormForScalingCanvas ifNotNil: [ :mappableForm |
+			FormMapping at: mappableForm ifPresent: [ :mappedForm | ^ mappedForm ] ] ].
+	^ formSet asFormAtScale: scale
 ]
 
 { #category : 'accessing' }
