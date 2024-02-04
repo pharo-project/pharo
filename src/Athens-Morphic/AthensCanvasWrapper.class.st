@@ -517,6 +517,12 @@ AthensCanvasWrapper >> rubParagraph: para bounds: bounds color: c [
 	self paragraph: para bounds: bounds color: c
 ]
 
+{ #category : 'canvas accessing' }
+AthensCanvasWrapper >> scale [
+
+	^ 1
+]
+
 { #category : 'formcanvas copying' }
 AthensCanvasWrapper >> setOrigin: aPoint clipRect: aRectangle [
 	origin := aPoint.
