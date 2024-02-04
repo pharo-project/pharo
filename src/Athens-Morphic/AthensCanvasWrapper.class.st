@@ -365,6 +365,12 @@ AthensCanvasWrapper >> form [
 	^ self canvas surface asForm
 ]
 
+{ #category : 'private' }
+AthensCanvasWrapper >> formSet: aFormSet at: aPoint sourceRect: sourceRect rule: rule [
+
+	^ self image: aFormSet asForm at: aPoint sourceRect: sourceRect rule: rule
+]
+
 { #category : 'canvas drawing - rectangles' }
 AthensCanvasWrapper >> frameAndFillRectangle: aRectangle fillColor: aFillColor borderWidth: aBorderWidth borderColor: aBorderColor [
 	self
