@@ -182,7 +182,7 @@ ClyQueryBrowserMorph >> extraScopesOfSelectedItems [
 { #category : 'initialization' }
 ClyQueryBrowserMorph >> initialExtent [
 
-	^ 1450 @ 620 * self currentWorld displayScaleFactor
+	^ 1350 @ 620 * self currentWorld displayScaleFactor
 ]
 
 { #category : 'initialization' }
@@ -199,17 +199,11 @@ ClyQueryBrowserMorph >> initializeNavigationViews [
 	resultView enableFilter: ClyQueryBrowserFilter.
 	resultView allowsDeselection: false.
 	resultView mainColumn
-		width: 250;
 		displayItemPropertyBy: [:item | self classNameOf: item].
 	(resultView addColumn: #name)
-		width: 200;
 		displayItemPropertyBy: [:item | self mainNameOf: item].
 	(resultView addColumn: #package)
-		width: 150;
-		displayItemPropertyBy: [:item | self packageNameOf: item].
-	(resultView addColumn: #protocol)
-		width: 150;
-		displayItemPropertyBy: [:item | self protocolNameOf: item].
+		displayItemPropertyBy: [:item | self packageNameOf: item]
 ]
 
 { #category : 'testing' }
