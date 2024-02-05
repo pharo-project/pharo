@@ -49,7 +49,7 @@ RBPullUpVariableTransformation >> buildTransformations [
 		yourself
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBPullUpVariableTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.

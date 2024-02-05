@@ -122,7 +122,7 @@ RBInlineParameterRefactoring >> modifyImplementorParseTree: parseTree in: aClass
 	super modifyImplementorParseTree: parseTree in: aClass
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBInlineParameterRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

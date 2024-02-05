@@ -89,7 +89,7 @@ RBMethodProtocolTransformation >> protocol: aString inMethod: aSelector inClass:
 	protocol := aString
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBMethodProtocolTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.

@@ -167,7 +167,7 @@ RBCopyPackageRefactoring >> reparent: classes  with: copyClasses [
 		] asJob run
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBCopyPackageRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

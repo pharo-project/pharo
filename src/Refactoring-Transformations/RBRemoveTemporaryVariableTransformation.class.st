@@ -89,7 +89,7 @@ RBRemoveTemporaryVariableTransformation >> privateTransform [
 	class compileTree: methodTree
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBRemoveTemporaryVariableTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.

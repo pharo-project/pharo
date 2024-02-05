@@ -46,7 +46,7 @@ RBNotEnvironment >> not [
 	^environment
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBNotEnvironment >> storeOn: aStream [
 	environment storeOn: aStream.
 	aStream nextPutAll: ' not'

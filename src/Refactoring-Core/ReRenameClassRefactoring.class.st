@@ -142,7 +142,7 @@ ReRenameClassRefactoring >> renameReferences [
 			 ifNotNil: [ :m | m isFromTrait]) ifFalse: [ self convertMethod: method selector for: method modelClass using: replacer ] ]
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 ReRenameClassRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

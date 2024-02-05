@@ -90,7 +90,7 @@ RBAddMethodRefactoring >> sourceCode: aString in: aClass withProtocol: aProtocol
 								withProtocol: aProtocol 
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBAddMethodRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

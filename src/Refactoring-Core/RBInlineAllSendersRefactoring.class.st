@@ -170,7 +170,7 @@ RBInlineAllSendersRefactoring >> sendersOf: aSelector in: aClass [
 	numberReplaced := numberNotReplaced := 0
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBInlineAllSendersRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

@@ -80,7 +80,7 @@ RBAddProtocolTransformation >> protocolExist [
 		  errorString: 'Protocol named ' , protocol , ' already exists'
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBAddProtocolTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.

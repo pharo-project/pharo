@@ -145,7 +145,7 @@ RBSplitCascadeRefactoring >> splitCascade [
 	class compileTree: ancestorNode methodNode
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBSplitCascadeRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

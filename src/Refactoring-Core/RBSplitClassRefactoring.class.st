@@ -158,7 +158,7 @@ RBSplitClassRefactoring >> privateTransform [
 		abstractVariableReferences
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBSplitClassRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

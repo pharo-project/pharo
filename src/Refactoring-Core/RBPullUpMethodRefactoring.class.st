@@ -379,7 +379,7 @@ RBPullUpMethodRefactoring >> selectors: aList [
 	selectors := aList
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBPullUpMethodRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

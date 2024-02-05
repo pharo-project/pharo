@@ -431,7 +431,7 @@ Duration >> seconds: secondCount nanoSeconds: nanoCount [
 			nanos := nanos - NanosInSecond ]
 ]
 
-{ #category : 'private' }
+{ #category : 'storing' }
 Duration >> storeOn: aStream [
 
  	aStream

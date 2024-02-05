@@ -165,7 +165,7 @@ RBAddParameterRefactoring >> senders [
 	^ senders
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBAddParameterRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	aStream nextPutAll: self class name.

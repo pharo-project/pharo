@@ -99,7 +99,7 @@ MCRepository >> description [
 	^ self class name
 ]
 
-{ #category : 'printing' }
+{ #category : 'displaying' }
 MCRepository >> displayStringOn: aStream [
 	aStream nextPutAll: self description
 ]

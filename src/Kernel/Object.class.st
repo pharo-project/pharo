@@ -1798,7 +1798,7 @@ Object >> storeAt: offset inTempFrame: aContext [
 	^ aContext tempAt: offset put: self
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 Object >> storeOn: aStream [
 	"Append to the argument aStream a sequence of characters that is an
 	expression whose evaluation creates an object similar to the receiver."
@@ -1826,7 +1826,7 @@ Object >> storeOn: aStream [
 	aStream nextPutAll: ' yourself)'
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 Object >> storeString [
 	"Answer a String representation of the receiver from which the receiver
 	can be reconstructed."

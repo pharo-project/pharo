@@ -226,7 +226,7 @@ ArrayedCollection >> storeElementsFrom: firstIndex to: lastIndex on: aStream [
 	^noneYet
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 ArrayedCollection >> storeOn: aStream [
 
 	aStream nextPutAll: '(('.

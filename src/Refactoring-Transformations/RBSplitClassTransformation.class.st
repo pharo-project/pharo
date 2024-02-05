@@ -175,7 +175,7 @@ RBSplitClassTransformation >> isNotGlobal [
 	^ (RBCondition isGlobal: newClassName in: self model) not
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBSplitClassTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.

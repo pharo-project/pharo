@@ -89,7 +89,7 @@ RBRenamePackageTransformation >> renamePackage [
 	self model renamePackage: package to: newName
 ]
 
-{ #category : 'executing' }
+{ #category : 'storing' }
 RBRenamePackageTransformation >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

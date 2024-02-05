@@ -167,7 +167,7 @@ BorderStyle >> releaseCachedState [
 	"Release any associated cached state"
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 BorderStyle >> storeOn: aStream [
 	"Store a reconstructable representation of the
 	receiver on the given stream."

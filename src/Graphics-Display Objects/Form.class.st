@@ -2233,13 +2233,13 @@ Form >> storeHexBitsOn:aStream [
 	^self storeBits:28 to:0 on:aStream
 ]
 
-{ #category : 'file in/out' }
+{ #category : 'storing' }
 Form >> storeOn: aStream [
 
 	self storeOn: aStream base: 10
 ]
 
-{ #category : 'file in/out' }
+{ #category : 'storing' }
 Form >> storeOn: aStream base: anInteger [
 	"Store the receiver out as an expression that can be evaluated to recreate a Form with the same contents as the original."
 

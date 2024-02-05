@@ -66,7 +66,7 @@ RBDeprecateClassTransformation >> privateTransform [
 			 withProtocol: #deprecation)
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBDeprecateClassTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.

@@ -610,7 +610,7 @@ Time >> seconds: secondCount nanoSeconds: nanoCount [
 	nanos := nanoCount
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 Time >> storeOn: aStream [
 
  	aStream print: self printString; nextPutAll: ' asTime'

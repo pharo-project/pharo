@@ -400,7 +400,7 @@ RBMoveMethodRefactoring >> selector: aSymbol class: aClass variable: aVariableNa
 	variable := aVariableName
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBMoveMethodRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

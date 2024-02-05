@@ -741,7 +741,7 @@ RBAbstractClass >> sourceCodeFor: aSelector [
 	^ ( class methodFor: aSelector ) source
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBAbstractClass >> storeOn: aStream [
 	aStream nextPutAll: self name
 ]
