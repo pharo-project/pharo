@@ -41,6 +41,19 @@ MCVersionInfo class >> name: vName id: id message: message date: date time: time
 		stepChildren: stepChildren
 ]
 
+{ #category : 'instance creation' }
+MCVersionInfo class >> name: vName id: id message: message date: date time: time author: author ancestors: ancestors stepChildren: stepChildren [
+
+	^ self
+		  name: vName
+		  id: id
+		  message: message
+		  date: date
+		  time: time
+		  ancestors: ancestors
+		  stepChildren: stepChildren
+]
+
 { #category : 'comparing' }
 MCVersionInfo >> = other [
 	^ other species = self species
