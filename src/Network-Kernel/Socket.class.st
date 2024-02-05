@@ -465,11 +465,18 @@ Socket >> connectTo: hostAddress port: port [
 Socket >> connectTo: hostAddress port: port waitForConnectionFor: timeout [
 	"Initiate a connection to the given port at the given host
 	address. Waits until the connection is established or time outs."
+
 	self connectNonBlockingTo: hostAddress port: port.
 	self
 		waitForConnectionFor: timeout
-		ifTimedOut: [ConnectionTimedOut signal: 'Cannot connect to '
-					, (NetNameResolver stringFromAddress: hostAddress) , ':' , port asString]
+		ifClosed: [
+			ConnectionClosed signal: 'Connection aborted to '
+				, (NetNameResolver stringFromAddress: hostAddress) , ':'
+				, port asString ]
+		ifTimedOut: [
+			ConnectionTimedOut signal: 'Cannot connect to '
+				, (NetNameResolver stringFromAddress: hostAddress) , ':'
+				, port asString ]
 ]
 
 { #category : 'connection open/close' }
@@ -489,18 +496,27 @@ Socket >> dataAvailable [
 
 { #category : 'initialize - destroy' }
 Socket >> destroy [
-	"Destroy this socket. Its connection, if any, is aborted and its resources are freed. Do nothing if the socket has already been destroyed (i.e., if its socketHandle is nil)."
+	"Destroy this socket. Its connection, if any, is aborted and its resources are freed.
+	Any processes waiting on the socket are freed immediately, but it is up to them to
+	recognize that the socket has been destroyed.
+	Do nothing if the socket has already been destroyed (i.e., if its socketHandle is nil)."
 
-	socketHandle
-		ifNotNil: [
-			self isValid
-				ifTrue: [ self primSocketDestroy: socketHandle ].
-			Smalltalk unregisterExternalObject: semaphore.
-			Smalltalk unregisterExternalObject: readSemaphore.
-			Smalltalk unregisterExternalObject: writeSemaphore.
-			socketHandle := nil.
-			readSemaphore := writeSemaphore := semaphore := nil.
-			self unregister ]
+	socketHandle ifNotNil: [
+		| saveSemaphores |
+		self isValid ifTrue: [ self primSocketDestroy: socketHandle ].
+		socketHandle := nil.
+		Smalltalk unregisterExternalObject: semaphore.
+		Smalltalk unregisterExternalObject: readSemaphore.
+		Smalltalk unregisterExternalObject: writeSemaphore.
+		"Stash the semaphores and nil them before signaling to make sure
+		no caller gets a chance to wait on them again and block forever."
+		saveSemaphores := {
+			                  semaphore.
+			                  readSemaphore.
+			                  writeSemaphore }.
+		semaphore := readSemaphore := writeSemaphore := nil.
+		saveSemaphores do: [ :each | each signalAll ].
+		self unregister ]
 ]
 
 { #category : 'receiving' }
@@ -737,26 +753,16 @@ Socket >> listenWithBacklog: anIntegerBacklog [
 Socket >> localAddress [
 	"If in the process of connecting, wait for connection to be established and binding to address completed before resolving."
 
-	^ [ self primSocketLocalAddress: socketHandle ]
-		on: Error
-		do: [ :e |
-			self isWaitingForConnection
-				ifTrue: [ self waitForConnectionFor: Socket standardTimeout ifTimedOut: nil.
-					self primSocketLocalAddress: socketHandle ]
-				ifFalse: [ e pass ] ]
+	^ self retryIfWaitingForConnection: [
+		  self primSocketLocalAddress: socketHandle ]
 ]
 
 { #category : 'accessing' }
 Socket >> localPort [
 	"If in the process of connecting, wait for connection to be established and binding to address completed before resolving."
 
-	^ [ self primSocketLocalPort: socketHandle ]
-		on: Error
-		do: [ :e |
-			self isWaitingForConnection
-				ifTrue: [ self waitForConnectionFor: Socket standardTimeout ifTimedOut: nil.
-					self primSocketLocalPort: socketHandle ]
-				ifFalse: [ e pass ] ]
+	^ self retryIfWaitingForConnection: [
+		  self primSocketLocalPort: socketHandle ]
 ]
 
 { #category : 'accessing' }
@@ -1323,26 +1329,31 @@ Socket >> register [
 Socket >> remoteAddress [
 	"If in the process of connecting, wait for connection to be established and binding to address completed before resolving."
 
-	^ [ self primSocketRemoteAddress: socketHandle ]
-		on: Error
-		do: [ :e |
-			self isWaitingForConnection
-				ifTrue: [ self waitForConnectionFor: Socket standardTimeout ifTimedOut: nil.
-					self primSocketRemoteAddress: socketHandle ]
-				ifFalse: [ e pass ] ]
+	^ self retryIfWaitingForConnection: [
+		  self primSocketRemoteAddress: socketHandle ]
 ]
 
 { #category : 'accessing' }
 Socket >> remotePort [
 	"If in the process of connecting, wait for connection to be established and binding to address completed before resolving."
 
-	^ [ self primSocketRemotePort: socketHandle ]
-		on: Error
-		do: [ :e |
-			self isWaitingForConnection
-				ifTrue: [ self waitForConnectionFor: Socket standardTimeout ifTimedOut: nil.
-					self primSocketRemotePort: socketHandle ]
-				ifFalse: [ e pass ] ]
+	^ self retryIfWaitingForConnection: [ self primSocketRemotePort: socketHandle ]
+]
+
+{ #category : 'waiting' }
+Socket >> retryIfWaitingForConnection: aBlock [
+
+	^ aBlock
+		  on: SocketError
+		  do: [ :e |
+			  self isWaitingForConnection
+				  ifTrue: [
+					  self
+						  waitForConnectionFor: Socket standardTimeout
+						  ifClosed: nil
+						  ifTimedOut: nil.
+					  aBlock value ]
+				  ifFalse: [ e pass ] ]
 ]
 
 { #category : 'accessing' }
@@ -1366,14 +1377,14 @@ Socket >> sendData: aStringOrByteArray [
 	| bytesSent bytesToSend count |
 	bytesToSend := aStringOrByteArray size.
 	bytesSent := 0.
-	[bytesSent < bytesToSend] whileTrue: [
-		(self waitForSendDoneFor: 60)
-			ifFalse: [ConnectionTimedOut signal: 'send data timeout; data not sent'].
-		count := self primSocket: socketHandle
-			sendData: aStringOrByteArray
-			startIndex: bytesSent + 1
-			count: (bytesToSend - bytesSent min: 5000).
-		bytesSent := bytesSent + count].
+	[ bytesSent < bytesToSend ] whileTrue: [
+		self waitForSendDoneFor: 60.
+		count := self
+			         primSocket: socketHandle
+			         sendData: aStringOrByteArray
+			         startIndex: bytesSent + 1
+			         count: (bytesToSend - bytesSent min: 5000).
+		bytesSent := bytesSent + count ].
 
 	^ bytesSent
 ]
@@ -1439,17 +1450,15 @@ Socket >> sendSomeData: aStringOrByteArray startIndex: startIndex count: count [
 { #category : 'sending' }
 Socket >> sendSomeData: aStringOrByteArray startIndex: startIndex count: count for: aTimeoutInSeconds [
 	"Send up to count bytes of the given data starting at the given index. Answer the number of bytes actually sent."
+
 	"Note: This operation may have to be repeated multiple times to send a large amount of data."
 
-	| bytesSent |
-	(self waitForSendDoneFor: aTimeoutInSeconds)
-		ifTrue: [
-			bytesSent := self primSocket: socketHandle
-				sendData: aStringOrByteArray
-				startIndex: startIndex
-				count: count ]
-		ifFalse: [ ConnectionTimedOut signal: 'send data timeout; data not sent' ].
-	^ bytesSent
+	self waitForSendDoneFor: aTimeoutInSeconds.
+	^ self
+		  primSocket: socketHandle
+		  sendData: aStringOrByteArray
+		  startIndex: startIndex
+		  count: count
 ]
 
 { #category : 'sending' }
@@ -1479,28 +1488,27 @@ Socket >> sendStreamContents: stream checkBlock: checkBlock [
 { #category : 'datagrams' }
 Socket >> sendUDPData: aStringOrByteArray toHost: hostAddress port: portNumber [
 	"Send a UDP packet containing the given data to the specified host/port."
-	| bytesToSend bytesSent count |
 
+	| bytesToSend bytesSent count |
 	bytesToSend := aStringOrByteArray size.
 	bytesSent := 0.
 	[
-		(self waitForSendDoneFor: 20)
-			ifFalse: [ConnectionTimedOut signal: 'send data timeout; data not sent'].
-		count := self primSocket: socketHandle
-			sendUDPData: aStringOrByteArray
-			toHost: hostAddress
-			port: portNumber
-			startIndex: bytesSent + 1
-			count: bytesToSend - bytesSent.
-		count = 0 ifTrue:
-			["Usually broadcast fails in primitive without the proper option set,
+	self waitForSendDoneFor: 20.
+	count := self
+		         primSocket: socketHandle
+		         sendUDPData: aStringOrByteArray
+		         toHost: hostAddress
+		         port: portNumber
+		         startIndex: bytesSent + 1
+		         count: bytesToSend - bytesSent.
+	count = 0 ifTrue: [ "Usually broadcast fails in primitive without the proper option set,
 			but some platforms simply return count=0"
-			(self broadcastMisconfiguredForSendingTo: hostAddress)
-				ifTrue: [ ^ self broadcastError: hostAddress ].
-			bytesToSend ~= count
-				ifTrue: [ ^NetworkError signal: 'failed to send data']].
-		bytesSent := bytesSent + count.
-		bytesSent < bytesToSend] whileTrue.
+		(self broadcastMisconfiguredForSendingTo: hostAddress) ifTrue: [
+			^ self broadcastError: hostAddress ].
+		bytesToSend ~= count ifTrue: [
+			^ NetworkError signal: 'failed to send data' ] ].
+	bytesSent := bytesSent + count.
+	bytesSent < bytesToSend ] whileTrue.
 
 	^ bytesSent
 ]
@@ -1538,15 +1546,19 @@ Socket >> setPort: port [
 
 { #category : 'queries' }
 Socket >> socketError [
-	^self primSocketError: socketHandle
+
+	^ socketHandle ifNotNil: [ self primSocketError: socketHandle ]
 ]
 
 { #category : 'queries' }
 Socket >> socketErrorMessage [
 
-	^ [ OSPlatform current getErrorMessage: self socketError ]
-		  on: Error
-		  do: [ 'Error code: ' , self socketError printString ]
+	^ self socketError
+		  ifNil: [ 'Socket destroyed, cannot retrieve error message' ]
+		  ifNotNil: [ :err |
+			  [ OSPlatform current getErrorMessage: err ]
+				  on: Error
+				  do: [ 'Error code: ' , err printString ] ]
 ]
 
 { #category : 'accessing' }
@@ -1578,40 +1590,57 @@ Socket >> unregister [
 { #category : 'waiting' }
 Socket >> waitForAcceptFor: timeout [
 	"Wait and accept an incoming connection. Return nil if it fails"
-	^ self waitForAcceptFor: timeout ifTimedOut: [nil]
+
+	^ self waitForAcceptFor: timeout ifClosed: nil ifTimedOut: nil
 ]
 
 { #category : 'waiting' }
-Socket >> waitForAcceptFor: timeout ifTimedOut: timeoutBlock [
+Socket >> waitForAcceptFor: timeout ifClosed: closedBlock ifTimedOut: timeoutBlock [
 	"Wait and accept an incoming connection"
-	self waitForConnectionFor: timeout ifTimedOut: [^timeoutBlock value].
-	^self accept
+
+	self
+		waitForConnectionFor: timeout
+		ifClosed: [ ^ closedBlock value ]
+		ifTimedOut: [ ^ timeoutBlock value ].
+	^ self accept
 ]
 
 { #category : 'waiting' }
 Socket >> waitForConnectionFor: timeout [
 	"Wait up until the given deadline for a connection to be established. Return true if it is established by the deadline, false if not."
 
-	^self
-		waitForConnectionFor: timeout
-		ifTimedOut: [ConnectionTimedOut signal: 'Failed to connect in ', timeout asString, ' seconds']
+	^ self
+		  waitForConnectionFor: timeout
+		  ifClosed: [
+			  ConnectionClosed signal: (socketHandle
+					   ifNil: [ 'Socket destroyed while connecting' ]
+					   ifNotNil: [
+					   'Connection aborted or failed: ' , self socketErrorMessage ]) ]
+		  ifTimedOut: [
+			  ConnectionTimedOut signal:
+				  'Failed to connect in ' , timeout asString , ' seconds' ]
 ]
 
 { #category : 'waiting' }
-Socket >> waitForConnectionFor: timeout ifTimedOut: timeoutBlock [
-	"Wait up until the given deadline for a connection to be established. Return true if it is established by the deadline, false if not."
+Socket >> waitForConnectionFor: timeout ifClosed: closedBlock ifTimedOut: timeoutBlock [
+	"Wait up until the given deadline for a connection to be established.
+	Evaluate closedBlock if the connection is closed locally,
+	or timeoutBlock if the deadline expires.
+	
+	We should separately detect the case of a connection being refused here as well."
 
-	| startTime msecsDelta msecsEllapsed status |
+	| startTime msecsDelta msecsElapsed status |
 	startTime := Time millisecondClockValue.
 	msecsDelta := (timeout * 1000) truncated.
-	status := self primSocketConnectionStatus: socketHandle.
-	[(status = WaitingForConnection) and: [(msecsEllapsed := Time millisecondsSince: startTime) < msecsDelta]]
-		whileTrue: [
-			semaphore waitTimeoutMilliseconds: msecsDelta - msecsEllapsed.
-			status := self primSocketConnectionStatus: socketHandle].
 
-	status = Connected ifFalse: [^timeoutBlock value].
-	^ true
+	[
+	status := self primSocketConnectionStatus: socketHandle.
+	status == WaitingForConnection and: [
+		(msecsElapsed := Time millisecondsSince: startTime) < msecsDelta ] ]
+		whileTrue: [ semaphore waitTimeoutMilliseconds: msecsDelta - msecsElapsed ].
+
+	status == WaitingForConnection ifTrue: [ ^ timeoutBlock value ].
+	status == Connected ifFalse: [ ^ closedBlock value ]
 ]
 
 { #category : 'waiting' }
@@ -1637,20 +1666,18 @@ Socket >> waitForDataFor: timeout [
 
 { #category : 'waiting' }
 Socket >> waitForDataFor: timeout ifClosed: closedBlock ifTimedOut: timedOutBlock [
-	"Wait for the given nr of seconds for data to arrive."
+	"Wait for the given nr of seconds for data to arrive.
+	If it does not, execute <timedOutBlock>. If the connection
+	is closed before any data arrives, execute <closedBlock>."
 
-	| startTime msecsDelta |
+	| startTime msecsDelta msecsElapsed |
 	startTime := Time millisecondClockValue.
 	msecsDelta := (timeout * 1000) truncated.
-	[ (Time millisecondsSince: startTime) < msecsDelta ]
-		whileTrue: [ self dataAvailable ifTrue: [ ^ self ].
-			self isConnected ifFalse: [ ^ closedBlock value ].
-			self readSemaphore waitTimeoutMilliseconds: (msecsDelta - (Time millisecondsSince: startTime) max: 0) ].
-
-	self dataAvailable
-		ifFalse: [ ^ (self isConnected
-				ifTrue: [ timedOutBlock ]
-				ifFalse: [ closedBlock ]) value ]
+	[ self dataAvailable ] whileFalse: [
+		self isConnected ifFalse: [ ^ closedBlock value ].
+		(msecsElapsed := Time millisecondsSince: startTime) < msecsDelta
+			ifFalse: [ ^ timedOutBlock value ].
+		self readSemaphore waitTimeoutMilliseconds: msecsDelta - msecsElapsed ]
 ]
 
 { #category : 'waiting' }
@@ -1675,32 +1702,46 @@ Socket >> waitForDisconnectionFor: timeout [
 	(e.g., because he has called 'close' to send a close request to the other end)
 	before calling this method."
 
-	| startTime msecsDelta status |
+	| startTime msecsDelta msecsElapsed status |
 	startTime := Time millisecondClockValue.
 	msecsDelta := (timeout * 1000) truncated.
+
+	[
 	status := self primSocketConnectionStatus: socketHandle.
-	[((status == Connected) or: [(status == ThisEndClosed)]) and:
-	 [(Time millisecondsSince: startTime) < msecsDelta]] whileTrue: [
-		self discardReceivedData.
-		self readSemaphore waitTimeoutMilliseconds:
-			(msecsDelta - (Time millisecondsSince: startTime) max: 0).
-		status := self primSocketConnectionStatus: socketHandle].
+	(status == Connected or: [ status == ThisEndClosed ]) and: [
+		(msecsElapsed := Time millisecondsSince: startTime) < msecsDelta ] ]
+		whileTrue: [
+			self discardReceivedData.
+			self readSemaphore waitTimeoutMilliseconds: msecsDelta - msecsElapsed ].
 	^ status ~= Connected
 ]
 
 { #category : 'waiting' }
 Socket >> waitForSendDoneFor: timeout [
-	"Wait up until the given deadline for the current send operation to complete. Return true if it completes by the deadline, false if not."
+	"Wait up until the given deadline for the current send operation to complete.
+	Raise an exception if the timeout expires or the connection is closed before sending finishes."
 
-	| startTime msecsDelta msecsEllapsed sendDone |
+	^ self
+		  waitForSendDoneFor: timeout
+		  ifClosed: [ ConnectionClosed signal: 'connection closed while sending data' ]
+		  ifTimedOut: [ ConnectionTimedOut signal: 'send data timeout; data not sent' ]
+]
+
+{ #category : 'waiting' }
+Socket >> waitForSendDoneFor: timeout ifClosed: closedBlock ifTimedOut: timedOutBlock [
+	"Wait up until the given deadline for the current send operation to complete.
+	If it does not, execute <timedOutBlock>. If the connection is closed before
+	the send completes, execute <closedBlock>."
+
+	| startTime msecsDelta msecsElapsed |
 	startTime := Time millisecondClockValue.
 	msecsDelta := (timeout * 1000) truncated.
-	[(sendDone := self primSocketSendDone: socketHandle) not and: [ self isConnected
-			"Connection end and final data can happen fast, so test in this order"
-		and: [(msecsEllapsed := Time millisecondsSince: startTime) < msecsDelta]]] whileTrue: [
-			self writeSemaphore waitTimeoutMilliseconds: msecsDelta - msecsEllapsed].
-
-	^ sendDone
+	"Connection end and final data can happen fast, so test in this order"
+	[ self sendDone ] whileFalse: [
+		self isConnected ifFalse: [ ^ closedBlock value ].
+		(msecsElapsed := Time millisecondsSince: startTime) < msecsDelta
+			ifFalse: [ ^ timedOutBlock value ].
+		self writeSemaphore waitTimeoutMilliseconds: msecsDelta - msecsElapsed ]
 ]
 
 { #category : 'accessing' }
