@@ -22,7 +22,8 @@ Class {
 		'isRunning',
 		'parent',
 		'process',
-		'owner'
+		'owner',
+		'announcer'
 	],
 	#classInstVars : [
 		'jobAnnouncer'
@@ -108,8 +109,7 @@ Job class >> exampleProgress [
 Job class >> jobAnnouncer [
 	"Answers the announcer for job announcements"
 	
-	^ jobAnnouncer 
-			ifNil: [ jobAnnouncer := Announcer new ]
+	^ jobAnnouncer ifNil: [ jobAnnouncer := Announcer new ]
 ]
 
 { #category : 'private' }
@@ -119,7 +119,7 @@ Job >> addChild: aJob [
 	aJob parent: self
 ]
 
-{ #category : 'accessing' }
+{ #category : 'private - announcing' }
 Job >> announce: anAnnouncementClass [
 
 	| announcement |
@@ -127,17 +127,29 @@ Job >> announce: anAnnouncementClass [
 	self announcer announce: announcement
 ]
 
-{ #category : 'accessing' }
+{ #category : 'private - announcing' }
 Job >> announceChange [
 
 	isRunning ifFalse: [ ^ self ].
 	self announce: JobChange
 ]
 
-{ #category : 'accessing' }
+{ #category : 'private - announcing' }
+Job >> announceEnd [
+
+	self announce: JobEnd
+]
+
+{ #category : 'private - announcing' }
+Job >> announceStart [
+
+	self announce: JobStart
+]
+
+{ #category : 'private - announcing' }
 Job >> announcer [
 
-	^ self class jobAnnouncer
+	^ announcer ifNil: [ self class jobAnnouncer ]
 ]
 
 { #category : 'accessing' }
@@ -163,8 +175,9 @@ Job >> cleanupAfterRunning [
 
 	isRunning := false.
 	process := nil.
-	self announce: JobEnd.
-	parent ifNotNil: [ :job | job removeChild: self ]
+	self announceEnd.
+	parent ifNotNil: [ :job | 
+		job removeChild: self ]
 ]
 
 { #category : 'compatibility' }
@@ -219,6 +232,13 @@ Job >> initialize [
 	title := ''.
 	isRunning := false.
 	children := OrderedCollection new.
+]
+
+{ #category : 'accessing' }
+Job >> installOn: aPresenter [
+	"this method is provider for compatibility"
+	
+	announcer := aPresenter announcer
 ]
 
 { #category : 'testing' }
@@ -310,7 +330,7 @@ Job >> prepareForRunning [
 	isRunning := true.
 	process := Processor activeProcess.
 	CurrentJob value ifNotNil: [ :job | job addChild: self].
-	self announce: JobStart.
+	self announceStart
 ]
 
 { #category : 'progress' }
@@ -337,8 +357,11 @@ Job >> removeChild: aJob [
 Job >> run [
 
 	[ self prepareForRunning.
-	  CurrentJob value: self during: [ ^ block cull: self ] ]
-			ensure: [ self cleanupAfterRunning ]
+	  CurrentJob 
+		value: self 
+		during: [ ^ block cull: self ] ]
+	ensure: [ 
+		self cleanupAfterRunning ]
 ]
 
 { #category : 'accessing' }

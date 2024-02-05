@@ -20,7 +20,7 @@ Class {
 SycDeprecateClassCommand class >> canBeExecutedInContext: aToolContext [
 
 	^ (super canBeExecutedInContext: aToolContext) and: [
-		  aToolContext lastSelectedClass isDeprecated not ]
+		  aToolContext lastSelectedClass realClass isDeprecated not ]
 ]
 
 { #category : 'converting' }

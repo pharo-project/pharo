@@ -53,7 +53,7 @@ DAWelcomePresenter >> initializePresenters [
 
 	choosePresenter := SpChooserPresenter new
 		sourceItems: self packageOrganizer packages;
-		displayBlock: #packageName;
+		displayBlock: [ :aPackage | aPackage name ];
 		yourself.
 
 	browseDependenciesButton := self newButton

@@ -204,7 +204,7 @@ RBMoveMethodToClassSideRefactoring >> removeMethod: selector from: aRBClass [
 			from: aRBClass)
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBMoveMethodToClassSideRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

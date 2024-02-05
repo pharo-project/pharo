@@ -50,6 +50,13 @@ Form class >> blendAlpha [
 	^ 30
 ]
 
+{ #category : 'mode constants' }
+Form class >> blendAlphaScaled [
+	"Answer the integer denoting BitBlt's blend-with-scaled-alpha rule."
+
+	^ 34
+]
+
 { #category : 'instance creation' }
 Form class >> dotOfSize: diameter [
 	"Create a form which contains a round black dot."
@@ -2226,13 +2233,13 @@ Form >> storeHexBitsOn:aStream [
 	^self storeBits:28 to:0 on:aStream
 ]
 
-{ #category : 'file in/out' }
+{ #category : 'storing' }
 Form >> storeOn: aStream [
 
 	self storeOn: aStream base: 10
 ]
 
-{ #category : 'file in/out' }
+{ #category : 'storing' }
 Form >> storeOn: aStream base: anInteger [
 	"Store the receiver out as an expression that can be evaluated to recreate a Form with the same contents as the original."
 

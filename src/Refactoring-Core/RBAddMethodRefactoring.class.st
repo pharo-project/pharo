@@ -72,12 +72,6 @@ RBAddMethodRefactoring >> checkPreconditions [
 	super checkPreconditions 
 ]
 
-{ #category : 'preconditions' }
-RBAddMethodRefactoring >> preconditions [
-
-	^ self applicabilityPreconditions 
-]
-
 { #category : 'transforming' }
 RBAddMethodRefactoring >> privateTransform [
 
@@ -96,7 +90,7 @@ RBAddMethodRefactoring >> sourceCode: aString in: aClass withProtocol: aProtocol
 								withProtocol: aProtocol 
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBAddMethodRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

@@ -62,6 +62,12 @@ RBAbstractInstanceVariableRefactoring >> createAccessors [
 	self generateChangesFor: self accessorsRefactoring
 ]
 
+{ #category : 'preconditions' }
+RBAbstractInstanceVariableRefactoring >> preconditions [
+
+	^ self applicabilityPreconditions & self breakingChangePreconditions
+]
+
 { #category : 'transforming' }
 RBAbstractInstanceVariableRefactoring >> privateTransform [
 	self createAccessors.

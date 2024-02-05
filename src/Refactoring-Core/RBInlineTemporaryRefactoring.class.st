@@ -86,12 +86,6 @@ RBInlineTemporaryRefactoring >> inline: anInterval from: aSelector in: aClass [
 	sourceInterval := anInterval
 ]
 
-{ #category : 'preconditions' }
-RBInlineTemporaryRefactoring >> preconditions [
-
-	^ self applicabilityPreconditions
-]
-
 { #category : 'transforming' }
 RBInlineTemporaryRefactoring >> privateTransform [
 	self
@@ -117,7 +111,7 @@ RBInlineTemporaryRefactoring >> replaceReferences [
 	rewriter executeTree: definingNode
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBInlineTemporaryRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

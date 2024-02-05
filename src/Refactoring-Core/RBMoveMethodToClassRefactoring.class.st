@@ -53,12 +53,6 @@ RBMoveMethodToClassRefactoring >> method: aMethod class: aClass [
 	class := self classObjectFor: aClass
 ]
 
-{ #category : 'preconditions' }
-RBMoveMethodToClassRefactoring >> preconditions [
-
-	^ self applicabilityPreconditions
-]
-
 { #category : 'transforming' }
 RBMoveMethodToClassRefactoring >> privateTransform [
 	| oldClass newClass rbMethod originalProtocol |
@@ -77,7 +71,7 @@ RBMoveMethodToClassRefactoring >> privateTransform [
 			withProtocol: originalProtocol)
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBMoveMethodToClassRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

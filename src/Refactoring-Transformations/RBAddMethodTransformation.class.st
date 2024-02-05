@@ -89,7 +89,7 @@ RBAddMethodTransformation >> sourceCode: aString in: aClassName withProtocol: aS
 	protocol := aSymbol
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBAddMethodTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.

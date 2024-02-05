@@ -112,7 +112,7 @@ RBPushDownMethodTransformation >> removeSelectors [
 		from: class
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBPushDownMethodTransformation >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

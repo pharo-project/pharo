@@ -1525,7 +1525,7 @@ Integer >> rounded [
 	"Refer to the comment in Number#rounded."
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 Integer >> storeOn: aStream [
 	self < 0
 		ifTrue: [ aStream space ].
@@ -1533,7 +1533,7 @@ Integer >> storeOn: aStream [
 	super storeOn: aStream
 ]
 
-{ #category : 'printing - numerative' }
+{ #category : 'storing' }
 Integer >> storeOn: aStream base: base [
 	"Print a representation of the receiver on the stream
 	<aStream> in base <base> where
@@ -1549,7 +1549,7 @@ Integer >> storeOn: aStream base: base [
 	aStream nextPutAll: (integer printStringBase: base)
 ]
 
-{ #category : 'printing - numerative' }
+{ #category : 'storing' }
 Integer >> storeOn: aStream base: base length: minimum padded: zeroFlag [
 	| prefix |
 	prefix := self negative ifTrue: ['-'] ifFalse: [String new].
@@ -1557,7 +1557,7 @@ Integer >> storeOn: aStream base: base length: minimum padded: zeroFlag [
 	self print: (self abs printStringBase: base) on: aStream prefix: prefix length: minimum padded: zeroFlag
 ]
 
-{ #category : 'printing - numerative' }
+{ #category : 'storing' }
 Integer >> storeStringBase: base length: minimum padded: zeroFlag [
 	"(10 storeStringBase: 16 length: 6 padded: true) >>> '16r00A'"
 
@@ -1565,7 +1565,7 @@ Integer >> storeStringBase: base length: minimum padded: zeroFlag [
 			self storeOn: s base: base length: minimum padded: zeroFlag ]
 ]
 
-{ #category : 'printing - numerative' }
+{ #category : 'storing' }
 Integer >> storeStringHex [
 	"Returns a string representation of the receiver in base 16 in a way that executing it will return the receiver."
 	"10 storeStringHex >>> '16rA'"

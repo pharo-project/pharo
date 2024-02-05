@@ -556,6 +556,12 @@ FormCanvas >> resetGrafPort [
 	port clipRect: clipRect
 ]
 
+{ #category : 'accessing' }
+FormCanvas >> scale [
+
+	^ 1
+]
+
 { #category : 'private' }
 FormCanvas >> setClearColor: aColor [
 	"Install a new clear color - e.g., a color is used for clearing the background"

@@ -30,19 +30,22 @@ RBSwapMethodRefactoring class >> swapMethod: aSelector in: aClass [
 ]
 
 { #category : 'preconditions' }
+RBSwapMethodRefactoring >> applicabilityPreconditions [
+
+	^ (RBCondition definesSelector: selector in: class)
+	  & (RBCondition definesSelector: selector in: target) not
+	  & (RBCondition withBlock: [
+			   self checkInstVars.
+			   true ])
+]
+
+{ #category : 'preconditions' }
 RBSwapMethodRefactoring >> checkInstVars [
 	class instanceVariableNames do: [ :each |
 		(target instanceVariableNames includes: each) ifFalse: [
 			((class whichSelectorsReferToInstanceVariable: each) includes: selector) ifTrue: [
 				self
 					refactoringError: ('<1p> refers to <2s>, which is not defined in <3p>' expandMacrosWith: selector with: each with: target) ] ] ]
-]
-
-{ #category : 'preconditions' }
-RBSwapMethodRefactoring >> preconditions [
-	^ (RBCondition definesSelector: selector in: class)
-		& (RBCondition definesSelector: selector in: target) not
-		& (RBCondition withBlock: [ self checkInstVars. true ])
 ]
 
 { #category : 'transforming' }

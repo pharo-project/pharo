@@ -302,7 +302,7 @@ MCWorkingCopy >> description [
 	^ self packageNameWithStar, ' (', (ancestry ancestorStringWithout: self packageName), ')'
 ]
 
-{ #category : 'printing' }
+{ #category : 'displaying' }
 MCWorkingCopy >> displayStringOn: stream [
 
 	ancestry ancestors

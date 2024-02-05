@@ -150,9 +150,10 @@ RBMethodNode >> allSequenceNodes [
 { #category : 'accessing' }
 RBMethodNode >> allStatements [
 	"return the statements including variable definition."
-	^ self temporaries asOrderedCollection copy
-			addAll: super allStatements;
-			yourself
+
+	^ (OrderedCollection withAll: self temporaries)
+		  addAll: super allStatements;
+		  yourself
 ]
 
 { #category : 'accessing' }

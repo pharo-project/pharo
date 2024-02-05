@@ -267,6 +267,12 @@ Canvas >> form [
 	^ self subclassResponsibility
 ]
 
+{ #category : 'private' }
+Canvas >> formSet: aFormSet at: aPoint sourceRect: sourceRect rule: rule [
+
+	^ self image: aFormSet asForm at: aPoint sourceRect: sourceRect rule: rule
+]
+
 { #category : 'drawing - rectangles' }
 Canvas >> frameAndFillRectangle: r fillColor: fillColor borderWidth: borderWidth borderColor: borderColor [
 	"Draw the rectangle using the given attributes"

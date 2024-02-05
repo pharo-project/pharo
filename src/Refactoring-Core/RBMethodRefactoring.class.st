@@ -24,9 +24,3 @@ RBMethodRefactoring class >> isAbstract [
 RBMethodRefactoring >> methodClass [
 	^ class
 ]
-
-{ #category : 'preconditions' }
-RBMethodRefactoring >> preconditions [
-
-	^ self applicabilityPreconditions
-]

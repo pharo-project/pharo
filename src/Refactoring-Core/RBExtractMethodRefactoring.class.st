@@ -42,6 +42,18 @@ RBExtractMethodRefactoring class >> model: aRBSmalltalk extract: anInterval from
 		yourself
 ]
 
+{ #category : 'preconditions' }
+RBExtractMethodRefactoring >> applicabilityPreconditions [ 
+	^(RBCondition definesSelector: selector in: class)
+		& (RBCondition withBlock:
+					[self extractMethod.
+					self checkSpecialExtractions.
+					self checkReturn.
+					needsReturn ifTrue: [extractedParseTree addReturn].
+					self checkTemporaries.
+					true])
+]
+
 { #category : 'transforming' }
 RBExtractMethodRefactoring >> checkAssignments: variableNames [
 	| node outsideVars removeAssigned |
@@ -350,18 +362,6 @@ RBExtractMethodRefactoring >> placeholderNode [
 	^ node
 ]
 
-{ #category : 'preconditions' }
-RBExtractMethodRefactoring >> preconditions [
-	^(RBCondition definesSelector: selector in: class)
-		& (RBCondition withBlock:
-					[self extractMethod.
-					self checkSpecialExtractions.
-					self checkReturn.
-					needsReturn ifTrue: [extractedParseTree addReturn].
-					self checkTemporaries.
-					true])
-]
-
 { #category : 'transforming' }
 RBExtractMethodRefactoring >> privateTransform [
 
@@ -436,7 +436,7 @@ RBExtractMethodRefactoring >> startLimit: aNumber [
 	^ aNumber
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBExtractMethodRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

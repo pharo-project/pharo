@@ -141,12 +141,6 @@ RBDeprecateClassRefactoring >> newClass [
 	^ self model classNamed: newName
 ]
 
-{ #category : 'preconditions' }
-RBDeprecateClassRefactoring >> preconditions [
-
-	self applicabilityPreconditions 
-]
-
 { #category : 'transforming' }
 RBDeprecateClassRefactoring >> privateTransform [
 
@@ -239,7 +233,7 @@ RBDeprecateClassRefactoring >> shouldRemoveExtensions: anObject [
 	shouldRemoveExtensions := anObject
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBDeprecateClassRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

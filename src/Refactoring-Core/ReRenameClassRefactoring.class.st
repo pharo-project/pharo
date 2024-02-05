@@ -108,14 +108,6 @@ ReRenameClassRefactoring >> newName: aNewName [
 ]
 
 { #category : 'preconditions' }
-ReRenameClassRefactoring >> preconditions [
-
-	self prepareForExecution. 
-	"We have to check because the setter is actually already doing the className to class transformation."
-	^ self applicabilityPreconditions 
-]
-
-{ #category : 'preconditions' }
 ReRenameClassRefactoring >> prepareForExecution [
 
 	class := self model classNamed: className
@@ -150,7 +142,7 @@ ReRenameClassRefactoring >> renameReferences [
 			 ifNotNil: [ :m | m isFromTrait]) ifFalse: [ self convertMethod: method selector for: method modelClass using: replacer ] ]
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 ReRenameClassRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

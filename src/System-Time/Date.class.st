@@ -456,7 +456,7 @@ Date >> species [
 	^Timespan
 ]
 
-{ #category : 'adding' }
+{ #category : 'storing' }
 Date >> storeOn: aStream [
 
  	aStream print: self printString; nextPutAll: ' asDate'

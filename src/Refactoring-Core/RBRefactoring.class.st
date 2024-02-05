@@ -43,12 +43,6 @@ RBRefactoring class >> preconditionSignal [
 	^ RBRefactoringError , RBRefactoringWarning
 ]
 
-{ #category : 'preconditions' }
-RBRefactoring >> applicabilityPreconditions [
-
-	^ self trueCondition 
-]
-
 { #category : 'converting' }
 RBRefactoring >> asRefactoring [
 
@@ -130,21 +124,6 @@ RBRefactoring >> convertClasses: classSet select: aBlock using: searchReplacer [
 						using: searchReplacer]]
 ]
 
-{ #category : 'accessing' }
-RBRefactoring >> copyOptionsFrom: aDictionary [
-	| dict |
-	dict := self options.
-	dict == self class refactoringOptions
-		ifTrue: [^self options: aDictionary copy].
-	dict keysAndValuesDo:
-			[:key :value |
-			value == (self class refactoringOptions at: key ifAbsent: [nil])
-				ifTrue: [ dict at: key put: (aDictionary at: key) ]].
-	(aDictionary keys difference: dict keys) do:
-		[ :e | dict at: e put: (aDictionary at: e) ].
-	self options: dict
-]
-
 { #category : 'preconditions' }
 RBRefactoring >> eagerlyCheckApplicabilityPreconditions [
 
@@ -217,15 +196,6 @@ RBRefactoring >> safeVariableNameFor: aClass temporaries: allTempVars basedOn: a
 			i := i + 1.
 			newString := baseString , i printString ].
 	^ newString
-]
-
-{ #category : 'accessing' }
-RBRefactoring >> setOption: aSymbol toUse: aBlock [
-	| dict |
-	dict := self options.
-	dict == self class refactoringOptions ifTrue: [dict := dict copy].
-	dict at: aSymbol put: aBlock.
-	self options: dict
 ]
 
 { #category : 'transforming' }

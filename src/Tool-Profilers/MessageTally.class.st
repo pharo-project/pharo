@@ -468,7 +468,7 @@ MessageTally >> displayIdentifierOn: aStream [
 		store: self method selector
 ]
 
-{ #category : 'printing' }
+{ #category : 'displaying' }
 MessageTally >> displayStringOn: aStream [
 	self displayIdentifierOn: aStream.
 	aStream

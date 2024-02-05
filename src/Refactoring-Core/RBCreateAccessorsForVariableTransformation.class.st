@@ -253,13 +253,6 @@ RBCreateAccessorsForVariableTransformation >> possibleSetterSelectors [
 	^self methodsReferencingVariable select: [:each | each numArgs == 1]
 ]
 
-{ #category : 'preconditions' }
-RBCreateAccessorsForVariableTransformation >> preconditions [
-	"Checks that the class actually defines the variable from which we will build setter and getter."
-
-	^ self applicabilityPreconditions 
-]
-
 { #category : 'transforming' }
 RBCreateAccessorsForVariableTransformation >> privateTransform [
 	self
@@ -287,7 +280,7 @@ RBCreateAccessorsForVariableTransformation >> setterMethodName [
 	^ setterMethodName
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBCreateAccessorsForVariableTransformation >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.
