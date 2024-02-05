@@ -299,11 +299,7 @@ ClassDescription >> compile: sourceCode classified: protcol notifying: requestor
 	^ self
 		  compile: sourceCode
 		  classified: protcol
-		  withStamp: Date today mmddyyyy , ' '
-			  ,
-				  ((String streamContents: [ :s | Time now print24: true on: s ])
-					   copyFrom: 1
-					   to: 5)
+		  withStamp: nil
 		  notifying: requestor
 ]
 
