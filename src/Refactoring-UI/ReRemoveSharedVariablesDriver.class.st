@@ -41,7 +41,7 @@ ReRemoveSharedVariablesDriver >> changes [
 { #category : 'resources' }
 ReRemoveSharedVariablesDriver >> configureRefactoring [
 
-	refactoring := RBUpFrontPreconditionCheckingCompositeRefactoring new
+	refactoring := ReUpFrontPreconditionCheckingCompositeRefactoring new
 							model: model; 
 							refactorings: (variables collect: [:each | 
 									ReRemoveSharedVariableRefactoring model: model remove: each from: class]);
