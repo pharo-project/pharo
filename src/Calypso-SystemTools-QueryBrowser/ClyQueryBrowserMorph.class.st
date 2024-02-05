@@ -180,6 +180,12 @@ ClyQueryBrowserMorph >> extraScopesOfSelectedItems [
 ]
 
 { #category : 'initialization' }
+ClyQueryBrowserMorph >> initialExtent [
+
+	^ 1450 @ 620 * self currentWorld displayScaleFactor
+]
+
+{ #category : 'initialization' }
 ClyQueryBrowserMorph >> initialize [
 	super initialize.
 
@@ -198,12 +204,12 @@ ClyQueryBrowserMorph >> initializeNavigationViews [
 	(resultView addColumn: #name)
 		width: 200;
 		displayItemPropertyBy: [:item | self mainNameOf: item].
-	(resultView addColumn: #protocol)
-		width: 200;
-		displayItemPropertyBy: [:item | self protocolNameOf: item].
 	(resultView addColumn: #package)
-		width: 50;
-		displayItemPropertyBy: [:item | self packageNameOf: item]
+		width: 150;
+		displayItemPropertyBy: [:item | self packageNameOf: item].
+	(resultView addColumn: #protocol)
+		width: 150;
+		displayItemPropertyBy: [:item | self protocolNameOf: item].
 ]
 
 { #category : 'testing' }
