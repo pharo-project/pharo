@@ -779,18 +779,21 @@ UITheme >> chooseExistingFileReferenceIn: aThemedMorph title: title extensions: 
 	path and preview type.
 	Answer nil or a filename."
 
-	| dialog pathFileReference |
+	| pathFileReference |
+	
+	self flag: #ToDo.
 	pathFileReference := path asFileReference.
-	dialog := FileDialogWindow basicNew
-		basicTheme: aThemedMorph theme;
-		previewType: preview;
-		fileNameText: pathFileReference basename;
-		initialize;
-		title: title;
-		answerPathName.
-	exts ifNotNil: [ dialog validExtensions: exts ].
+	^ StOpenFileDialog new
+		showDirectory: path;
+		selectFile: pathFileReference;
+		previewer: StFileBrowserContentPreviewer new;
+		title: (title ifNil: [ 'Choose File' ]);
+		openModal;
+		selectedEntry.
+	
+ "	exts ifNotNil: [ dialog validExtensions: exts ].
 	path ifNotNil: [ dialog selectPath: pathFileReference pathString ].
-	^ dialog openModal answer ifNotNil: #asFileReference
+	^ dialog openModal answer ifNotNil: #asFileReference"
 ]
 
 { #category : 'services' }
@@ -798,16 +801,21 @@ UITheme >> chooseFileIn: aThemedMorph title: title extensions: exts path: path p
 	"Answer the result of a file open dialog with the given title, extensions path and preview type.
 	Answer nil or a filename."
 
-	| dialog |
-	dialog := FileDialogWindow basicNew
-		basicTheme: aThemedMorph theme;
-		previewType: preview;
-		initialize;
-		title: title;
-		answerFileEntry.
-	exts ifNotNil: [ dialog validExtensions: exts ].
+	| pathFileReference |
+	
+	self flag: #ToDo.
+	pathFileReference := path asFileReference.
+	^ StOpenFileDialog new
+		showDirectory: path;
+		selectFile: pathFileReference;
+		previewer: StFileBrowserContentPreviewer new;
+		title: (title ifNil: [ 'Choose File' ]);
+		openModal;
+		selectedEntry.
+
+	"exts ifNotNil: [ dialog validExtensions: exts ].
 	path ifNotNil: [ dialog selectPath: path ].
-	^ dialog openModal answer
+	^ dialog openModal answer" 
 ]
 
 { #category : 'services' }
