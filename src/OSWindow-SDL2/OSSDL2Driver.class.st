@@ -293,7 +293,7 @@ OSSDL2Driver >> processEvent: sdlEvent [
 		mappedEvent := sdlEvent mapped.
 		self evaluateUserInterrupt: mappedEvent.
 		self eventFilter dispatchEvent: mappedEvent
-	] on: Error do: [ :err |
+	] on: UnhandledException do: [ :err |
 		"It is critical, that event handling keep running despite errors.
 		Normally, any errors in event handling requires immediate attention and fixing"
 		err freeze.
