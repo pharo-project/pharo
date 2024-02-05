@@ -9,7 +9,7 @@ RBClassEnvironment new forClasses: Number withAllSubclasses.
 ```
 "
 Class {
-	#name : 'RBClassEnvironment',
+	#name : 'RBClassHierarchiesEnvironment',
 	#superclass : 'RBBrowserEnvironmentWrapper',
 	#instVars : [
 		'classes',
@@ -20,45 +20,45 @@ Class {
 }
 
 { #category : 'api' }
-RBClassEnvironment class >> class: aClass [
+RBClassHierarchiesEnvironment class >> class: aClass [
 	^ self classes: { aClass }
 ]
 
 { #category : 'api' }
-RBClassEnvironment class >> classes: aCollection [
+RBClassHierarchiesEnvironment class >> classes: aCollection [
 	^ self
 		onEnvironment: self default
 		classes: aCollection
 ]
 
 { #category : 'accessing - defaults' }
-RBClassEnvironment class >> defaultName [
+RBClassHierarchiesEnvironment class >> defaultName [
 
 	^ 'Classes'
 ]
 
 { #category : 'api' }
-RBClassEnvironment class >> onEnvironment: anEnvironment classes: aCollection [
+RBClassHierarchiesEnvironment class >> onEnvironment: anEnvironment classes: aCollection [
 	^(self onEnvironment: anEnvironment)
 		classes: aCollection; yourself
 ]
 
 { #category : 'adding' }
-RBClassEnvironment >> addClass: aClass [
+RBClassHierarchiesEnvironment >> addClass: aClass [
 	aClass isMeta
 		ifTrue: [ metaClasses add: aClass soleInstance name ]
 		ifFalse: [ classes add: aClass name ]
 ]
 
 { #category : 'adding' }
-RBClassEnvironment >> addClassAndMetaClassFor: aClassOrMetaClass [
+RBClassHierarchiesEnvironment >> addClassAndMetaClassFor: aClassOrMetaClass [
 	self
 		addClass: aClassOrMetaClass classSide;
 		addClass: aClassOrMetaClass instanceSide
 ]
 
 { #category : 'accessing' }
-RBClassEnvironment >> asSelectorEnvironment [
+RBClassHierarchiesEnvironment >> asSelectorEnvironment [
 
 	^RBSelectorEnvironment new
 		searchStrings:#();
@@ -69,12 +69,12 @@ RBClassEnvironment >> asSelectorEnvironment [
 ]
 
 { #category : 'accessing' }
-RBClassEnvironment >> basisObjects [
+RBClassHierarchiesEnvironment >> basisObjects [
 	^ classes
 ]
 
 { #category : 'accessing - classes' }
-RBClassEnvironment >> classNames [
+RBClassHierarchiesEnvironment >> classNames [
 	^ IdentitySet new
 		addAll: classes;
 		addAll: metaClasses;
@@ -82,7 +82,7 @@ RBClassEnvironment >> classNames [
 ]
 
 { #category : 'printing' }
-RBClassEnvironment >> classSelectorDictionary [
+RBClassHierarchiesEnvironment >> classSelectorDictionary [
 	^ classes
 		inject: (IdentityDictionary new: classes size)
 		into: [ :answer :class |
@@ -92,12 +92,14 @@ RBClassEnvironment >> classSelectorDictionary [
 ]
 
 { #category : 'initialization' }
-RBClassEnvironment >> classes: aCollection [
+RBClassHierarchiesEnvironment >> classes: aCollection [
 	aCollection do: [ :each | self addClass: each ]
 ]
 
 { #category : 'accessing - classes' }
-RBClassEnvironment >> classesDo: aBlock [
+RBClassHierarchiesEnvironment >> classesDo: aBlock [
+	"calcular las classes incluidas en las jerarquias de cada class hierarchy"
+	"se itera y se agrega a un set, por ende las repeticiones no importan"
 	classes do: [ :each |
 		| class |
 		class := self systemDictionary at: each ifAbsent: [ nil ].
@@ -111,7 +113,7 @@ RBClassEnvironment >> classesDo: aBlock [
 ]
 
 { #category : 'private' }
-RBClassEnvironment >> defaultLabel [
+RBClassHierarchiesEnvironment >> defaultLabel [
 	| stream |
 	stream := String new writeStream.
 	classes do:
@@ -122,13 +124,13 @@ RBClassEnvironment >> defaultLabel [
 ]
 
 { #category : 'testing' }
-RBClassEnvironment >> definesClass: aClass [
+RBClassHierarchiesEnvironment >> definesClass: aClass [
 
 	^ self includesClass: aClass
 ]
 
 { #category : 'testing' }
-RBClassEnvironment >> includesClass: aClass [
+RBClassHierarchiesEnvironment >> includesClass: aClass [
 	^(aClass isMeta
 		ifTrue: [metaClasses includes: aClass soleInstance name]
 		ifFalse: [classes includes: aClass name])
@@ -136,24 +138,24 @@ RBClassEnvironment >> includesClass: aClass [
 ]
 
 { #category : 'initialization' }
-RBClassEnvironment >> initialize [
+RBClassHierarchiesEnvironment >> initialize [
 	super initialize.
 	classes := IdentitySet new.
 	metaClasses := IdentitySet new
 ]
 
 { #category : 'testing' }
-RBClassEnvironment >> isClassEnvironment [
+RBClassHierarchiesEnvironment >> isClassEnvironment [
 	^true
 ]
 
 { #category : 'testing' }
-RBClassEnvironment >> isEmpty [
+RBClassHierarchiesEnvironment >> isEmpty [
 	^classes isEmpty and: [metaClasses isEmpty]
 ]
 
 { #category : 'printing' }
-RBClassEnvironment >> metaClassSelectorDictionary [
+RBClassHierarchiesEnvironment >> metaClassSelectorDictionary [
 	^ metaClasses
 		inject: (IdentityDictionary new: metaClasses size)
 		into: [ :answer :class |
@@ -163,39 +165,39 @@ RBClassEnvironment >> metaClassSelectorDictionary [
 ]
 
 { #category : 'copying' }
-RBClassEnvironment >> postCopy [
+RBClassHierarchiesEnvironment >> postCopy [
 	super postCopy.
 	classes := classes copy.
 	metaClasses := metaClasses copy
 ]
 
 { #category : 'printing' }
-RBClassEnvironment >> printBasisObject: aClass on: aStream [
+RBClassHierarchiesEnvironment >> printBasisObject: aClass on: aStream [
 
 	^ aStream nextPutAll: aClass
 ]
 
 { #category : 'printing' }
-RBClassEnvironment >> printOn: aStream [
+RBClassHierarchiesEnvironment >> printOn: aStream [
 
 	aStream nextPutAll: 'Cls: '.
 	classes do: [ :cls | aStream nextPutAll: cls, ', ']
 ]
 
 { #category : 'accessing' }
-RBClassEnvironment >> problemCount [
+RBClassHierarchiesEnvironment >> problemCount [
 	^self numberClasses
 ]
 
 { #category : 'removing' }
-RBClassEnvironment >> removeClass: aClass [
+RBClassHierarchiesEnvironment >> removeClass: aClass [
 	aClass isMeta
 		ifTrue: [metaClasses remove: aClass soleInstance name ifAbsent: []]
 		ifFalse: [classes remove: aClass name ifAbsent: []]
 ]
 
 { #category : 'accessing' }
-RBClassEnvironment >> selectors [
+RBClassHierarchiesEnvironment >> selectors [
 
 	^ Array streamContents: [ :stream |
 		self classesDo: [ :class |
@@ -203,7 +205,7 @@ RBClassEnvironment >> selectors [
 ]
 
 { #category : 'printing' }
-RBClassEnvironment >> storeOn: aStream [
+RBClassHierarchiesEnvironment >> storeOn: aStream [
 	aStream nextPut: $(.
 	super storeOn: aStream.
 	aStream nextPutAll: ' classes: (('.
