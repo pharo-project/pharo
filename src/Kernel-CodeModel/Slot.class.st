@@ -310,7 +310,7 @@ Slot >> size [
 	^self isVirtual ifTrue: [0] ifFalse: [1]
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 Slot >> storeOn: aStream [
 	^self printOn: aStream
 ]

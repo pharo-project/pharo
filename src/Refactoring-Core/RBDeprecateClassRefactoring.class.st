@@ -233,7 +233,7 @@ RBDeprecateClassRefactoring >> shouldRemoveExtensions: anObject [
 	shouldRemoveExtensions := anObject
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBDeprecateClassRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

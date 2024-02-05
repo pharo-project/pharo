@@ -694,7 +694,7 @@ RunArray >> size [
 	^size
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RunArray >> storeOn: aStream [
 
 	aStream nextPut: $(.

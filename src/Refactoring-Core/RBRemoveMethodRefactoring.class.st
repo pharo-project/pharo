@@ -221,7 +221,7 @@ RBRemoveMethodRefactoring >> sendersOf: aSelector [
 	^ self model allReferencesTo: aSelector
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBRemoveMethodRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

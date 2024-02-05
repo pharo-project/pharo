@@ -436,7 +436,7 @@ RBExtractMethodRefactoring >> startLimit: aNumber [
 	^ aNumber
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBExtractMethodRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

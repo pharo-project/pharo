@@ -403,7 +403,7 @@ RBMoveMethodTransformation >> selector: aSymbol class: aClass variable: aVariabl
 	variable := aVariableName
 ]
 
-{ #category : 'transforming' }
+{ #category : 'storing' }
 RBMoveMethodTransformation >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

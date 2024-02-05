@@ -595,7 +595,7 @@ OrderedDictionary >> size [
 	^ dictionary size
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 OrderedDictionary >> storeOn: aStream [
 	aStream << '((' << self class name << ' new)'.
 	self associations

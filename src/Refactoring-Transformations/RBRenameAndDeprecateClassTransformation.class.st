@@ -118,7 +118,7 @@ RBRenameAndDeprecateClassTransformation >> newClassName: aNewClassName [
 	newClassName := aNewClassName asSymbol 
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBRenameAndDeprecateClassTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.

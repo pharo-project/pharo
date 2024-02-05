@@ -86,7 +86,7 @@ RBRemoveParameterTransformation >> removeParameter: aString in: aClass selector:
 	argument := aString
 ]
 
-{ #category : 'private' }
+{ #category : 'storing' }
 RBRemoveParameterTransformation >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

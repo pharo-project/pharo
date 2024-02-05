@@ -104,7 +104,7 @@ RBMoveVariableDefinitionToSmallestValidScopeRefactoring >> privateTransform [
 	class compileTree: parseTree
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBMoveVariableDefinitionToSmallestValidScopeRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

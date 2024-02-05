@@ -65,7 +65,7 @@ RBPushDownVariableTransformation >> preconditions [
 		ifFalse: [ self applicabilityPreconditionsForInstanceVariable ]
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBPushDownVariableTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.

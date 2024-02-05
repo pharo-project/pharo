@@ -93,7 +93,7 @@ RBRenameArgumentOrTemporaryRefactoring >> renameNode: aParseTree [
 	(self parseTreeRewriterClass rename: oldName to: newName) executeTree: aParseTree
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBRenameArgumentOrTemporaryRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

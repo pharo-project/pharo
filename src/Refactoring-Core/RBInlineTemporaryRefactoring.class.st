@@ -111,7 +111,7 @@ RBInlineTemporaryRefactoring >> replaceReferences [
 	rewriter executeTree: definingNode
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBInlineTemporaryRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

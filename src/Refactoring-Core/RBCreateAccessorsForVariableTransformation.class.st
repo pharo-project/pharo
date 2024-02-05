@@ -280,7 +280,7 @@ RBCreateAccessorsForVariableTransformation >> setterMethodName [
 	^ setterMethodName
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBCreateAccessorsForVariableTransformation >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

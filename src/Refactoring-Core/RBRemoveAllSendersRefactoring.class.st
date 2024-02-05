@@ -112,7 +112,7 @@ RBRemoveAllSendersRefactoring >> selfSendIn: aTree [
 	^ nodes
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBRemoveAllSendersRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

@@ -84,7 +84,7 @@ RBInsertNewClassRefactoring >> privateTransform [
 		reparentClasses: subclasses to: (self model classNamed: className)
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBInsertNewClassRefactoring >> storeOn: aStream [
 
 	aStream nextPutAll: '(('.

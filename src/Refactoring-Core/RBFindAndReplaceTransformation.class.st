@@ -258,7 +258,7 @@ RBFindAndReplaceTransformation >> startLimitOf: sourceCode [
 	^ self method ast body statements first start
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBFindAndReplaceTransformation >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

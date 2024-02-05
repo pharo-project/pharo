@@ -52,7 +52,7 @@ RBAddClassCommentTransformation >> privateTransform [
 	self definingClass comment: comment
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBAddClassCommentTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.

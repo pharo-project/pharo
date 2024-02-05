@@ -603,12 +603,12 @@ Number >> signBit [
 	^0
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 Number >> storeOn: aStream [
 	self printOn: aStream
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 Number >> storeOn: aStream base: base [
 	"This method should print a representation of the number for the given base,
 	including the base prefix (with letter r for radix)"
@@ -616,7 +616,7 @@ Number >> storeOn: aStream base: base [
 	^self subclassResponsibility
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 Number >> storeStringBase: base [
 	"Returns a string representation of the receiver in base 16 in a way that executing it will return the receiver."
 	"(10 storeStringBase: 16) >>> '16rA'"

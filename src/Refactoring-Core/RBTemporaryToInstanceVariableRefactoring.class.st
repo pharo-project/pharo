@@ -183,7 +183,7 @@ RBTemporaryToInstanceVariableRefactoring >> removeTemporaryOfMethod: aSelector i
 	method compileTree: matcher tree
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBTemporaryToInstanceVariableRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.
