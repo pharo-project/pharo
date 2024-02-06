@@ -203,7 +203,9 @@ ClyQueryBrowserMorph >> initializeNavigationViews [
 	(resultView addColumn: #name)
 		displayItemPropertyBy: [:item | self mainNameOf: item].
 	(resultView addColumn: #package)
-		displayItemPropertyBy: [:item | self packageNameOf: item]
+		displayItemPropertyBy: [:item | self packageNameOf: item].
+	(resultView addColumn: #protocol)
+		displayItemPropertyBy: [:item | self protocolNameOf: item]
 ]
 
 { #category : 'testing' }
