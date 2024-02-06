@@ -213,13 +213,6 @@ BlockClosure >> doWhileTrue: conditionBlock [
 	^ result
 ]
 
-{ #category : 'evaluating' }
-BlockClosure >> durationToRun [
-	"Answer the duration taken to execute this block."
-
-	^ self timeToRun
-]
-
 { #category : 'accessing' }
 BlockClosure >> endPC [
 	^ self compiledBlock endPC
@@ -667,15 +660,10 @@ BlockClosure >> value: firstArg [
 	 message. Supply the argument and copied values to the activation
 	 as its argument and copied temps. Primitive. Essential."
 	<primitive: 207>
-	| newContext |
+	
 	numArgs ~= 1 ifTrue:
 		[self numArgsError: 1].
-	false
-		ifTrue: "Old code to simulate the closure value primitive on VMs that lack it."
-			[newContext := self asContextWithSender: thisContext sender.
-			newContext at: 1 put: firstArg.
-			thisContext privSender: newContext]
-		ifFalse: [self primitiveFailed]
+	self primitiveFailed
 ]
 
 { #category : 'evaluating' }
@@ -685,16 +673,10 @@ BlockClosure >> value: firstArg value: secondArg [
 	 message. Supply the arguments and copied values to the activation
 	 as its arguments and copied temps. Primitive. Essential."
 	<primitive: 207>
-	| newContext |
+
 	numArgs ~= 2 ifTrue:
 		[self numArgsError: 2].
-	false
-		ifTrue: "Old code to simulate the closure value primitive on VMs that lack it."
-			[newContext := self asContextWithSender: thisContext sender.
-			newContext at: 1 put: firstArg.
-			newContext at: 2 put: secondArg.
-			thisContext privSender: newContext]
-		ifFalse: [self primitiveFailed]
+	self primitiveFailed
 ]
 
 { #category : 'evaluating' }
@@ -704,17 +686,10 @@ BlockClosure >> value: firstArg value: secondArg value: thirdArg [
 	 message. Supply the arguments and copied values to the activation
 	 as its arguments and copied temps. Primitive. Essential."
 	<primitive: 207>
-	| newContext |
+
 	numArgs ~= 3 ifTrue:
 		[self numArgsError: 3].
-	false
-		ifTrue: "Old code to simulate the closure value primitive on VMs that lack it."
-			[newContext := self asContextWithSender: thisContext sender.
-			newContext at: 1 put: firstArg.
-			newContext at: 2 put: secondArg.
-			newContext at: 3 put: thirdArg.
-			thisContext privSender: newContext]
-		ifFalse: [self primitiveFailed]
+	self primitiveFailed
 ]
 
 { #category : 'evaluating' }
@@ -724,18 +699,9 @@ BlockClosure >> value: firstArg value: secondArg value: thirdArg value: fourthAr
 	 message. Supply the arguments and copied values to the activation
 	 as its arguments and copied temps. Primitive. Essential."
 	<primitive: 207>
-	| newContext |
 	numArgs ~= 4 ifTrue:
 		[self numArgsError: 4].
-	false
-		ifTrue: "Old code to simulate the closure value primitive on VMs that lack it."
-			[newContext := self asContextWithSender: thisContext sender.
-			newContext at: 1 put: firstArg.
-			newContext at: 2 put: secondArg.
-			newContext at: 3 put: thirdArg.
-			newContext at: 4 put: fourthArg.
-			thisContext privSender: newContext]
-		ifFalse: [self primitiveFailed]
+	self primitiveFailed
 ]
 
 { #category : 'evaluating' }
@@ -957,40 +923,6 @@ BlockClosure >> valueWithPossibleArgument: anArg [
 	a := Array new: numArgs.
 	a at: 1 put: anArg.
 	^self valueWithArguments: a
-]
-
-{ #category : 'evaluating' }
-BlockClosure >> valueWithin: aDuration onTimeout: timeoutBlock [
-	"Evaluate the receiver.
-	If the evaluation does not complete in less than aDuration evaluate the timeoutBlock instead"
-	<debuggerCompleteToSender>
-	| theProcess delay watchdog tag |
-
-	aDuration <= Duration zero ifTrue: [^ timeoutBlock value ].
-
-	"the block will be executed in the current process"
-	theProcess := Processor activeProcess.
-	delay := aDuration asDelay.
-	tag := self.
-
-	"make a watchdog process"
-	watchdog := [
-		delay wait. 	"wait for timeout or completion"
-		theProcess ifNotNil:[ theProcess signalException: (TimedOut new tag: tag)]
-	] newProcess.
-
-	"Watchdog needs to run at high priority to do its job (but not at timing priority)"
-	watchdog priority: Processor timingPriority-1.
-
-	"catch the timeout signal"
-	^ [	watchdog resume.				"start up the watchdog"
-		self ensure:[						"evaluate the receiver"
-			theProcess := nil.				"it has completed, so ..."
-			delay delaySemaphore signal.	"arrange for the watchdog to exit"
-		]] on: TimedOut do: [ :e |
-			e tag == tag
-				ifTrue:[ timeoutBlock value ]
-				ifFalse:[ e pass]]
 ]
 
 { #category : 'controlling' }

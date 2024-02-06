@@ -349,18 +349,18 @@ TestExecutionEnvironment >> testCase: anObject [
 TestExecutionEnvironment >> watchDogLoop [
 
 	| timeIsGone |
-	[	"waiting new test case"
-		watchDogSemaphore wait.
-		"waiting while test completes"
-		[timeIsGone := watchDogSemaphore wait: maxTimeForTest.
-		testCompleted] whileFalse: [
-			"this subloop allows to dynamically change time limit and restart watch dog"
-			timeIsGone ifTrue: [
-				"The main purpose of following condition is to ignore timeout when test is under debug.
+	[ "waiting new test case"
+	watchDogSemaphore wait.
+	"waiting while test completes"
+	[
+	timeIsGone := watchDogSemaphore waitTimeoutMilliseconds:
+		              maxTimeForTest asMilliSeconds.
+	testCompleted ] whileFalse: [ "this subloop allows to dynamically change time limit and restart watch dog"
+		timeIsGone ifTrue: [ "The main purpose of following condition is to ignore timeout when test is under debug.
 				Test process is suspended only when it is debugged"
-				mainTestProcess isSuspended ifFalse: [
-					mainTestProcess signalException: TestTookTooMuchTime new]]	].
-	] repeat
+			mainTestProcess isSuspended ifFalse: [
+				mainTestProcess signalException: TestTookTooMuchTime new ] ] ] ]
+		repeat
 ]
 
 { #category : 'accessing' }

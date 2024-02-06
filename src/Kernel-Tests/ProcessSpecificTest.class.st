@@ -172,8 +172,8 @@ ProcessSpecificTest >> testLocalVariable [
 
 	"Set a maximum wait timeout so that the test case will complete
 	 even if the processes fail to signal us."
-	s1 waitTimeoutMSecs: 5000.
-	s2 waitTimeoutMSecs: 5000.
+	s1 waitTimeoutMilliseconds: 5000.
+	s2 waitTimeoutMilliseconds: 5000.
 	self assert: p1stopped.
 	self assert: p2stopped
 ]

@@ -170,7 +170,7 @@ RBRenameVariableTransformation >> renameReferences [
 		using: replacer
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBRenameVariableTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.

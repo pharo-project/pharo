@@ -42,7 +42,7 @@ RGClassDefinitionTest >> testAddingMethods [
 	newMethod := newClass methodNamed: #size.
 	self assert: newMethod parent equals: newClass.
 
-	self assert: (newClass compiledMethodNamed: #size) notNil.
+	self assert: (newClass compiledMethodNamed: #size) isNotNil.
 	self assert: (newClass compiledMethodNamed: #fakeMethod) isNil
 ]
 
@@ -247,7 +247,7 @@ RGClassDefinitionTest >> testWithClassVariables [
 	self assert: newClass allClassVarNames size equals: 2. "no hierarchy"
 
 	classVar := newClass classVariableNamed: #DependentsFields.
-	self assert: classVar notNil.
+	self assert: classVar isNotNil.
 	self assert: classVar isClassVariable.
 	self assert: classVar isVariable.
 	self assert: classVar parent equals: newClass.

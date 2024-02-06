@@ -12,7 +12,7 @@ MetaClassTest >> testHasBindingThatBeginsWith [
 	self assert: (SmalltalkImage class hasBindingThatBeginsWith: 'Object').
 
 	"Pools are looked up, too"
-	self assert: (TimeZone class hasBindingThatBeginsWith: 'DaysInMo')
+	self assert: (PoolDefiner class hasBindingThatBeginsWith: 'AnAu')
 ]
 
 { #category : 'tests' }

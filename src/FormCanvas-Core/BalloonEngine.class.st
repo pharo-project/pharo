@@ -438,12 +438,14 @@ BalloonEngine >> flush [
 { #category : 'initialization' }
 BalloonEngine >> initialize [
 
+	| destination |
 	super initialize.
 
 	externals := OrderedCollection new: 100.
-
-	self bitBlt: ((BitBlt toForm: Display)
-			destRect: Display boundingBox;
+	
+	destination := Form extent: 0@0 depth: 32.
+	self bitBlt: ((BitBlt toForm: destination)
+			destRect: destination boundingBox;
 			yourself).
 
 	forms := #().

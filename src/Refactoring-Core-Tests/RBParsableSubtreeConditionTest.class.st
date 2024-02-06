@@ -14,7 +14,7 @@ RBParsableSubtreeConditionTest >> testParsableSubtreeExpectTrue [
 	parseTree := class parseTreeForSelector: self selector.
 	subtree := parseTree extractSubtreeWith: 'precondition check'.
 	
-	precondition := RBParsableSubtreeCondition new subtree: subtree.
+	precondition := ReParsableSubtreeCondition new subtree: subtree.
 	
 	self assert: precondition check
 ]
@@ -25,7 +25,7 @@ RBParsableSubtreeConditionTest >> testSubtreeIsNilExpectFalse [
 	| precondition |.
 	
 	"model is read before written in the code snippet"
-	precondition := RBParsableSubtreeCondition new subtree: nil.
+	precondition := ReParsableSubtreeCondition new subtree: nil.
 	
 	self deny: precondition check
 ]

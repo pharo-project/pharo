@@ -369,7 +369,7 @@ SystemNavigation >> obsoleteClasses [
 		allInstancesDo: [ :m |
 			| c |
 			c := m soleInstance.
-			(c notNil and: [ c isObsolete ])
+			(c isNotNil and: [ c isObsolete ])
 				ifTrue: [ obs add: c ] ].
 	^ obs asArray
 

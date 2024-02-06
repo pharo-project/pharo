@@ -12,11 +12,6 @@ Collection >> addToMetacelloRepositories: aMetacelloRepositoriesSpec [
 	self do: [:each | each addToMetacelloRepositories: aMetacelloRepositoriesSpec ]
 ]
 
-{ #category : '*Metacello-Core-scripting' }
-Collection >> execute: projectSpecBlock against: aScriptExecutor [
-    aScriptExecutor executeCollection: self do: projectSpecBlock
-]
-
 { #category : '*Metacello-Core' }
 Collection >> mergeIntoMetacelloPackages: aMetacelloPackagesSpec [
 

@@ -32,10 +32,10 @@ OldClassDefinitionPrinterTest >> testArray [
 { #category : 'tests - classes' }
 OldClassDefinitionPrinterTest >> testArrayedCollectionWithPoolDictionary [
 
-	self assert: (self forClass: ExampleForTestWithSharedPool) equals: 'ArrayedCollection subclass: #ExampleForTestWithSharedPool
+	self assert: (self forClass: ExampleForTestWithSharedPool) equals: 'Object subclass: #ExampleForTestWithSharedPool
 	instanceVariableNames: ''''
 	classVariableNames: ''''
-	poolDictionaries: ''ChronologyConstants''
+	poolDictionaries: ''PoolDefiner''
 	package: ''Kernel-Tests-Classes'''
 ]
 
@@ -51,14 +51,14 @@ OldClassDefinitionPrinterTest >> testByteString [
 ]
 
 { #category : 'tests - classes' }
-OldClassDefinitionPrinterTest >> testChronologyConstants [
+OldClassDefinitionPrinterTest >> testClassPool [
 
 	self
-		assert: (self forClass: ChronologyConstants)
-		equals: 'SharedPool subclass: #ChronologyConstants
+		assert: (self forClass: PoolDefiner)
+		equals: 'SharedPool subclass: #PoolDefiner
 	instanceVariableNames: ''''
-	classVariableNames: ''DayNames DaysInMonth HoursInDay MicrosecondsInDay MinutesInHour MonthNames NanosInMicroSecond NanosInMillisecond NanosInSecond SecondsInDay SecondsInHour SecondsInMinute SqueakEpoch''
-	package: ''Kernel-Chronology-Extras'''
+	classVariableNames: ''AnAuthor Gloups''
+	package: ''Kernel-Tests-Classes'''
 ]
 
 { #category : 'tests - metaclasses' }

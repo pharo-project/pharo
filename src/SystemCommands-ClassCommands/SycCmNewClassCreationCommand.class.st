@@ -35,6 +35,6 @@ SycCmNewClassCreationCommand >> isApplicable [
 { #category : 'preparation' }
 SycCmNewClassCreationCommand >> prepareFullExecution [
 	super prepareFullExecution.
-	newClassName := self morphicUIManager request: 'Name of new class'.
+	newClassName := UIManager default request: 'Name of new class'.
 	newClassName isEmptyOrNil | (newClassName = targetClass name) ifTrue: [ CmdCommandAborted signal]
 ]

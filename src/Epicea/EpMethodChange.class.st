@@ -16,6 +16,12 @@ EpMethodChange class >> isAbstract [
 ]
 
 { #category : 'accessing' }
+EpMethodChange >> affectedName [ 
+
+	^ self methodAffectedSelector
+]
+
+{ #category : 'accessing' }
 EpMethodChange >> behaviorAffectedName [
 
 	^ self methodAffected className

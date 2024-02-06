@@ -53,6 +53,12 @@ RBAddMethodRefactoring class >> sourceCode: aString in: aClass withProtocol: aPr
 ]
 
 { #category : 'preconditions' }
+RBAddMethodRefactoring >> applicabilityPreconditions [ 
+
+	^ (RBCondition canUnderstand: transformation selector in: class) not
+]
+
+{ #category : 'preconditions' }
 RBAddMethodRefactoring >> checkPreconditions [
 	"We should have same preconditions checking API for all refactorings.
 	Some of them do it like: 
@@ -64,12 +70,6 @@ RBAddMethodRefactoring >> checkPreconditions [
 
 	transformation checkPreconditions.
 	super checkPreconditions 
-]
-
-{ #category : 'preconditions' }
-RBAddMethodRefactoring >> preconditions [
-
-	^ (RBCondition canUnderstand: transformation selector in: class) not
 ]
 
 { #category : 'transforming' }
@@ -90,7 +90,7 @@ RBAddMethodRefactoring >> sourceCode: aString in: aClass withProtocol: aProtocol
 								withProtocol: aProtocol 
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBAddMethodRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

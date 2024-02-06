@@ -72,7 +72,7 @@ MCVersionInfo >> date [
 	^ date
 ]
 
-{ #category : 'printing' }
+{ #category : 'displaying' }
 MCVersionInfo >> displayStringOn: stream [
 	stream nextPutAll: self name
 ]

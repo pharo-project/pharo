@@ -73,26 +73,6 @@ BitsLayout >> isBits [
 ]
 
 { #category : 'testing' }
-BitsLayout >> isBytes [
-	^ false
-]
-
-{ #category : 'testing' }
-BitsLayout >> isDoubleBytes [
-	^ false
-]
-
-{ #category : 'testing' }
-BitsLayout >> isDoubleWords [
-	^ false
-]
-
-{ #category : 'testing' }
 BitsLayout >> isVariable [
 	^ true
-]
-
-{ #category : 'testing' }
-BitsLayout >> isWords [
-	^ false
 ]

@@ -248,7 +248,7 @@ VirtualMachine >> gcStatisticsDuring: aBlockClosure [
 	incrementalGCTime := self totalIncrementalGCTime.
 	fullGCTime := self totalFullGCTime.
 	
-	timeToRun := aBlockClosure timeToRun.
+	timeToRun := aBlockClosure millisecondsToRun.
 
 	incrementalGCCount := self incrementalGCCount - incrementalGCCount.
 	fullGCCount := self fullGCCount - fullGCCount.

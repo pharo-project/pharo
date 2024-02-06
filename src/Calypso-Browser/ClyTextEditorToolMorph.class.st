@@ -203,8 +203,8 @@ ClyTextEditorToolMorph >> findAnyString: strings in: text [
 
 	| index |
 	strings do: [ :each |
-		index := text findString: each startingAt: 1.
-		index > 0 ifTrue: [^index to: index + each size]].
+		index := text indexOfSubCollection: each startingAt: 1.
+		index > 0 ifTrue: [ ^ index to: index + each size - 1 ] ].
 
 	^0 to: -1
 ]

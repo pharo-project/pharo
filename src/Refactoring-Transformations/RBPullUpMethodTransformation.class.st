@@ -322,7 +322,7 @@ RBPullUpMethodTransformation >> removePulledUpMethods [
 			from: class ]
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBPullUpMethodTransformation >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

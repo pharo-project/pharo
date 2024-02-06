@@ -202,7 +202,7 @@ RBClassEnvironment >> selectors [
 			self selectorsForClass: class do: [ :selector | stream nextPut: selector ] ] ]
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBClassEnvironment >> storeOn: aStream [
 	aStream nextPut: $(.
 	super storeOn: aStream.

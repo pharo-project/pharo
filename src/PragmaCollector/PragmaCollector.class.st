@@ -188,7 +188,7 @@ PragmaCollector >> isNotEmpty [
 
 { #category : 'updating' }
 PragmaCollector >> keepPragma: aPragma [
-	(selectors notNil and: [(selectors includes: aPragma selector) not ]) ifTrue: [ ^ false ].
+	(selectors isNotNil and: [(selectors includes: aPragma selector) not ]) ifTrue: [ ^ false ].
 	^ self filter value: aPragma
 ]
 

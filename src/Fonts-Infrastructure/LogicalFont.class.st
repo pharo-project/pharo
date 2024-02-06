@@ -831,7 +831,7 @@ LogicalFont >> slantValue: anObject [
 	slantValue := anObject
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 LogicalFont >> storeOn: aStream [
 
 	aStream

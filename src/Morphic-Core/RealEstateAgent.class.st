@@ -106,9 +106,11 @@ RealEstateAgent class >> initialize [
 RealEstateAgent class >> maximumUsableArea [
 
 	| allowedArea |
-	allowedArea := Display usableArea.
-	allowedArea := allowedArea intersect: self currentWorld visibleClearArea ifNone: [ allowedArea ].
-	^allowedArea
+	allowedArea := self currentWorld bounds.
+	allowedArea := allowedArea
+		               intersect: self currentWorld visibleClearArea
+		               ifNone: [ allowedArea ].
+	^ allowedArea
 ]
 
 { #category : 'accessing' }

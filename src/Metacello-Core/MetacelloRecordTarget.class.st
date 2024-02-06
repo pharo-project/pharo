@@ -76,64 +76,57 @@ MetacelloRecordTarget >> visitGroupSpec: aMetacelloGroupSpec [
 { #category : 'visiting' }
 MetacelloRecordTarget >> visitPackageSpec: aMetacelloPackageSpec [
 
+	| directive packageRepositorySpecs |
+	packageRepositorySpecs := aMetacelloPackageSpec repositorySpecs
+		                          ifEmpty: [ currentRepositorySpecs ].
+	directive := MetacelloDirective
+		             loadPackage: aMetacelloPackageSpec
+		             repositorySpecs: packageRepositorySpecs.
+	(self specBuilder currentLoadDirective includes: directive) ifTrue: [
+		^ self ].
+
 	self preLoad: aMetacelloPackageSpec.
-	(MetacelloDirective
-		 loadPackage: aMetacelloPackageSpec
-		 externalReference: currentRepositorySpecs) addTo:
-		self specBuilder currentLoadDirective.
+	directive addTo: self specBuilder currentLoadDirective.
 	self postLoad: aMetacelloPackageSpec
 ]
 
 { #category : 'visiting' }
 MetacelloRecordTarget >> visitProjectReference: aMetacelloProjectReferenceSpec [
 
-	| displayString vrsn projectSpecForVersion registered override registration |
+	| displayString projectSpec registered override registration requiredArray projectReferenceToLoad |
+	projectReferenceToLoad := aMetacelloProjectReferenceSpec
+		                          projectReference.
+
+	displayString := 'Project: ' , projectReferenceToLoad name.
+	projectReferenceToLoad versionString ifNotNil: [
+		displayString := displayString , ' '
+		                 , projectReferenceToLoad versionString ].
+
+	MetacelloNotification signal: displayString.
+
+	projectReferenceToLoad isLocked ifTrue: [
+		MetacelloNotification signal: 'Project is locked, skipping.'.
+		^ projectReferenceToLoad ].
+
 	registration := MetacelloProjectRegistration
-		                registrationForProjectSpec:
-		                aMetacelloProjectReferenceSpec projectReference
+		                registrationForProjectSpec: projectReferenceToLoad
 		                ifAbsent: [ :new | new ]
 		                ifPresent: [ :existing :new |
 		                engine resolvePresentProject: existing new: new ].
 	registered := registration projectSpec.
-	(registered compareEqual:
-		 aMetacelloProjectReferenceSpec projectReference) ifFalse: [ "counts as override, only if they differ in some aspect"
-		override := registered ].
+	(registered compareEqual: projectReferenceToLoad) ifFalse: [ "counts as override, only if they differ in some aspect"
+		override := registered copy.
+		override mergeScriptLoads: projectReferenceToLoad.
+		projectReferenceToLoad := override ].
 
-	displayString := 'Project: '
-	                 ,
-	                 aMetacelloProjectReferenceSpec projectReference name.
-	aMetacelloProjectReferenceSpec projectReference versionString
-		ifNotNil: [
-			displayString := displayString , ' '
-			                 ,
-			                 aMetacelloProjectReferenceSpec projectReference
-				                 versionString ].
-
-	MetacelloNotification signal: displayString.
-
-	aMetacelloProjectReferenceSpec projectReference isLocked ifTrue: [
-		MetacelloNotification signal: 'Project is locked, skipping.'.
-		^ aMetacelloProjectReferenceSpec projectReference ].
-
-
-	override ifNotNil: [
-		override := override copy.
-		override mergeScriptLoads:
-			aMetacelloProjectReferenceSpec projectReference.
-		override loadVersion: nil.
-		^ self ].
-
-	vrsn := aMetacelloProjectReferenceSpec projectReference versionOrNil.
-	projectSpecForVersion := aMetacelloProjectReferenceSpec
-		                         projectReference asProjectSpecForVersion:
-		                         vrsn.
-	projectSpecForVersion ensureProjectLoadedWithEngine: engine.
-	vrsn ifNil: [ vrsn := projectSpecForVersion version ].
-	vrsn
-		recordRequiredFromArray:
-		(projectSpecForVersion loadListForVersion: vrsn)
+	projectSpec := projectReferenceToLoad asProjectSpecForVersion:
+		               projectReferenceToLoad versionOrNil.
+	projectSpec ensureProjectLoadedWithEngine: engine.
+	requiredArray := projectSpec loadListForVersion: projectSpec version.
+	projectSpec version
+		recordRequiredFromArray: requiredArray
 		withEngine: engine.
-	registration registerProject.
+	registration registerProject
 ]
 
 { #category : 'visiting' }

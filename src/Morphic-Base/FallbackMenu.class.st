@@ -78,3 +78,9 @@ FallbackMenu >> menu [
 	client fallbackMenuOn: menu.
 	^ menu
 ]
+
+{ #category : 'private' }
+FallbackMenu >> morphicUIManager [
+
+	^ MorphicUIManager new
+]

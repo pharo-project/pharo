@@ -38,7 +38,7 @@ String >> asAlphaNumeric: totalSize extraChars: additionallyAllowed mergeUID: mi
 	[ stream atEnd or: [ index >= sizeOfFirstPart ] ] whileFalse:
 		[ (((ascii := (ch := stream next) asciiValue) between: 65 and: 90) or:
 			[ (ascii between: 97 and: 122) or:
-				[ ch isDigit or: [ additionallyAllowed notNil and: [ additionallyAllowed includes: ch ] ] ] ])
+				[ ch isDigit or: [ additionallyAllowed isNotNil and: [ additionallyAllowed includes: ch ] ] ] ])
 			ifTrue:
 				[ skip
 					ifTrue: [ out nextPut: ch asUppercase ]

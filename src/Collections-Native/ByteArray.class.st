@@ -369,7 +369,7 @@ ByteArray >> shortAt: index put: value bigEndian: aBool [
 	^value
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 ByteArray >> storeOn: aStream [
 	aStream nextPutAll: '#['.
 	self

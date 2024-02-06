@@ -10,9 +10,9 @@ Class {
 }
 
 { #category : 'instance creation' }
-MetacelloDirective class >> loadPackage: aPackageSpec externalReference: externalReference [
+MetacelloDirective class >> loadPackage: aPackageSpec repositorySpecs: externalReference [
 
-	^ MetacelloPackageLoadDirective new spec: aPackageSpec externalReference: externalReference
+	^ MetacelloPackageLoadDirective new spec: aPackageSpec repositorySpecs: externalReference
 ]
 
 { #category : 'instance creation' }

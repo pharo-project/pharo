@@ -331,14 +331,14 @@ PSMCPatchMorph >> selectionHasActualClass [
 
 	^self selectedChangeWrapper
 		ifNil: [false]
-		ifNotNil: [:w | w actualClass notNil]
+		ifNotNil: [:w | w actualClass isNotNil]
 ]
 
 { #category : 'private' }
 PSMCPatchMorph >> selectionIsMethodChange [
 	"Answer whether the currently selected change is for a method."
 
-	^self selectedChange notNil and: [
+	^self selectedChange isNotNil and: [
 		self selectedChange definition isMethodDefinition and: [
 			self selectedChange definition isLoadable ] ]
 ]

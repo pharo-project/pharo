@@ -122,6 +122,12 @@ TaSequence >> hash [
 	^ self class hash
 ]
 
+{ #category : 'testing' }
+TaSequence >> includesTrait: aTrait [
+
+	^ members anySatisfy: [ :member | member includesTrait: aTrait ]
+]
+
 { #category : 'initialization' }
 TaSequence >> initialize [
 	super initialize.

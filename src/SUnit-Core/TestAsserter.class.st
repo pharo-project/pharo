@@ -533,21 +533,25 @@ TestAsserter >> should: aBlock description: aString [
 
 { #category : 'asserting' }
 TestAsserter >> should: aBlock notTakeMoreThan: aDuration [
-    "Evaluate aBlock and if it takes more than given duration
+	"Evaluate aBlock and if it takes more than given duration
     to run we report a test failure. "
+
 	<debuggerCompleteToSender>
-	^ aBlock valueWithin: aDuration onTimeout: [
-		self
-			assert: false
-			description: ['Block evaluation took more than the expected <1p>' expandMacrosWith: aDuration]
-	]
+	^ self
+		  should: aBlock
+		  notTakeMoreThanMilliseconds: aDuration asMilliSeconds
 ]
 
 { #category : 'asserting' }
 TestAsserter >> should: aBlock notTakeMoreThanMilliseconds: anInteger [
-    "For compatibility with other Smalltalks"
+	"Evaluate aBlock and if it takes more than given duration
+    to run we report a test failure. "
 
-   self should: aBlock notTakeMoreThan: (Duration milliSeconds: anInteger)
+	<debuggerCompleteToSender>
+	^ aBlock valueWithinMilliseconds: anInteger onTimeout: [
+		  self assert: false description: [
+			  'Block evaluation took more than the expected <1p>'
+				  expandMacrosWith: anInteger ] ]
 ]
 
 { #category : 'asserting' }

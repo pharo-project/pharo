@@ -295,7 +295,7 @@ MorphTreeColumn >> thumbnailOfSize: thumbExtent [
 
 	|f t r|
 	r := self header fullBounds scaledAndCenteredIn: (0@0 extent: thumbExtent).
-	f := Form extent: r extent depth: Display depth.
+	f := Form extent: r extent depth: 32.
 	t := MatrixTransform2x3 withScale: 1.0.
 	f getCanvas
 		transformBy: t

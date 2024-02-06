@@ -12,6 +12,12 @@ Class {
 	#tag : 'Refactorings'
 }
 
+{ #category : 'preconditions' }
+RBProtectInstanceVariableRefactoring >> applicabilityPreconditions [ 
+
+	^RBCondition definesInstanceVariable: variableName in: class
+]
+
 { #category : 'private - accessing' }
 RBProtectInstanceVariableRefactoring >> getterSetterMethods [
 	| matcher |
@@ -41,11 +47,6 @@ RBProtectInstanceVariableRefactoring >> inline: aSelector [
 						sendersOf: aSelector
 						in: class)]
 		do: []
-]
-
-{ #category : 'preconditions' }
-RBProtectInstanceVariableRefactoring >> preconditions [
-	^RBCondition definesInstanceVariable: variableName in: class
 ]
 
 { #category : 'transforming' }
