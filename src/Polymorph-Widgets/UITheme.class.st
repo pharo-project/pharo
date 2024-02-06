@@ -774,48 +774,58 @@ UITheme >> chooseDropListIn: aThemedMorph text: aStringOrText title: aString lis
 ]
 
 { #category : 'services' }
-UITheme >> chooseExistingFileReferenceIn: aThemedMorph title: title extensions: exts path: path preview: preview [
-	"Answer the result of a file name chooser dialog with the given title, extensions
-	path and preview type.
-	Answer nil or a filename."
+UITheme >> chooseExistingFileReferenceIn: aThemedMorph title: titleString extensions: extensions path: path preview: preview [
+	"Answer the result of a file name chooser dialog with the given titleString, extensions, path and preview type.
+		extensions : <Collection> of <String> each one representing a file extension.
+		path : <String> or <FileReference>. It can be a directory or a file. 
+			If it is a directory, the dialog will open showing it. 
+			If it is a file, the directory where the file resides will be selected and displayed.
+		preview : <String> or <nil>. If it's a <String>, try to match with a specific previewer subclass of `StFileBrowserAbstractPreviewer`.
+		
+	Answer nil or the selected <FileReference>."
 
-	| pathFileReference |
+	| pathFileReference newDialog |
 	
-	self flag: #ToDo.
-	pathFileReference := path asFileReference.
-	^ StOpenFileDialog new
-		showDirectory: path;
-		selectFile: pathFileReference;
-		previewer: StFileBrowserContentPreviewer new;
-		title: (title ifNil: [ 'Choose File' ]);
+	newDialog := StOpenFileDialog new
+		extensions: (extensions ifNil: [ Array empty ]);
+		title: (titleString ifNil: [ 'Choose File' ]);
+		yourself.
+	(pathFileReference := path asFileReference) isFile
+		ifTrue: [ 
+			newDialog 
+				showDirectory: pathFileReference parent;
+				selectFile: pathFileReference ]
+		ifFalse: [ 
+			newDialog 
+				showDirectory: pathFileReference ].
+	^ newDialog
 		openModal;
 		selectedEntry.
-	
- "	exts ifNotNil: [ dialog validExtensions: exts ].
-	path ifNotNil: [ dialog selectPath: pathFileReference pathString ].
-	^ dialog openModal answer ifNotNil: #asFileReference"
 ]
 
 { #category : 'services' }
-UITheme >> chooseFileIn: aThemedMorph title: title extensions: exts path: path preview: preview [
-	"Answer the result of a file open dialog with the given title, extensions path and preview type.
-	Answer nil or a filename."
+UITheme >> chooseFileIn: aThemedMorph title: titleString extensions: extensions path: path preview: preview [
+	"Answer the result of a file name chooser dialog with the given titleString, extensions, path and preview type.
+		extensions : <Collection> of <String> each one representing a file extension.
+		path : <String> or <FileReference>. It can be a directory or a file. 
+			If it is a directory, the dialog will open showing it. 
+			If it is a file, the directory where the file resides will be displayed.
+		preview : <String> or <nil>. If it's a <String>, try to match with a specific previewer subclass of `StFileBrowserAbstractPreviewer`.
+		
+	Answer nil or the selected <FileReference>."
 
-	| pathFileReference |
+	| pathFileReference newDialog |
 	
-	self flag: #ToDo.
-	pathFileReference := path asFileReference.
-	^ StOpenFileDialog new
-		showDirectory: path;
-		selectFile: pathFileReference;
-		previewer: StFileBrowserContentPreviewer new;
-		title: (title ifNil: [ 'Choose File' ]);
+	newDialog := StOpenFileDialog new
+		extensions: (extensions ifNil: [ Array empty ]);
+		title: (titleString ifNil: [ 'Choose File' ]);
+		yourself.
+	(pathFileReference := path asFileReference) isFile
+		ifTrue: [ newDialog showDirectory: pathFileReference parent ]
+		ifFalse: [ newDialog showDirectory: pathFileReference ].
+	^ newDialog
 		openModal;
 		selectedEntry.
-
-	"exts ifNotNil: [ dialog validExtensions: exts ].
-	path ifNotNil: [ dialog selectPath: path ].
-	^ dialog openModal answer" 
 ]
 
 { #category : 'services' }
@@ -844,7 +854,7 @@ UITheme >> chooseFullFileNameIn: aThemedMorph title: title patterns: patterns pa
 	| dialog |
 	
 	dialog := StOpenFileDialog new
-		previewer: StFileBrowserContentPreviewer new;
+		previewer: StFileBrowserTextBasedContentPreviewer new;
 		setTitle: title;				
 		yourself.
 	path ifNotNil: [ dialog showDirectory: path ].
