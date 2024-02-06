@@ -119,7 +119,8 @@ RBExtractMethodTransformation >> buildTransformations [
 	selectorOfExistingMethod := self findMethodWithSimilarBody.
 	selectorOfExistingMethod 
 		ifNotNil: [
-			^ OrderedCollection with: (self parseTreeRewriterClass
+			^ OrderedCollection with: 
+					(self parseTreeRewriterClass
 					   replaceCode: subtree
 					   byMessageSendTo: selectorOfExistingMethod
 					   in:
@@ -133,7 +134,7 @@ RBExtractMethodTransformation >> buildTransformations [
 			  ifFalse: [
 				  | newMethodName |
 				  newMethodName := self newMethodName.
-				  newMethodName ifNil: [ ^ OrderedCollection new ].
+				  newMethodName ifNil: [ OrderedCollection new ].
 				  self
 					  buildTransformationFor: newMethodName
 					  withRemovedTemps: tempsToRemove ] ]
