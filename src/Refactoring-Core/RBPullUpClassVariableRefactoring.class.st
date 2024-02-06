@@ -10,7 +10,8 @@ Class {
 }
 
 { #category : 'preconditions' }
-RBPullUpClassVariableRefactoring >> preconditions [
+RBPullUpClassVariableRefactoring >> applicabilityPreconditions [ 
+
 	^(RBCondition isMetaclass: class) not
 ]
 

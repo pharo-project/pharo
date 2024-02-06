@@ -548,6 +548,14 @@ StringTest >> testAsTime [
 ]
 
 { #category : 'tests' }
+StringTest >> testAsUncommentedCode [
+		self assert: '"abc"' asUncommentedCode equals: 'abc'.
+		self assert: '""' asUncommentedCode equals: ''.
+		self assert: '"Hello'' world"' asUncommentedCode equals: 'Hello'' world'.
+
+]
+
+{ #category : 'tests' }
 StringTest >> testAsUppercase [
 
 	self assert: ('éèàôütest' asUppercase) equals: 'ÉÈÀÔÜTEST'.
@@ -595,6 +603,13 @@ StringTest >> testCapitalized [
 	"the string gets copied"
 	self deny: uc capitalized identicalTo: uc.
 	self deny: empty capitalized identicalTo: empty
+]
+
+{ #category : 'tests - converting' }
+StringTest >> testCapitalizedStartingWithEmptySpace [
+	
+	self assert: ' abc' capitalized equals: ' abc'.
+
 ]
 
 { #category : 'tests' }

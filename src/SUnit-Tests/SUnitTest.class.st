@@ -168,12 +168,14 @@ SUnitTest >> noop [
 
 { #category : 'testing' }
 SUnitTest >> raiseDeprecationWarnings [
+
 	| oldRaiseWarning |
 	oldRaiseWarning := Deprecation raiseWarning.
-	[ Deprecation raiseWarning: true.
-	self deprecatedMessage.
-	self fail ]
-		ensure: [ Deprecation raiseWarning: oldRaiseWarning ]
+	[
+		Deprecation raiseWarning: true.
+		self deprecatedMessage 
+	] ensure: [ 
+		Deprecation raiseWarning: oldRaiseWarning ]
 ]
 
 { #category : 'private' }
@@ -565,15 +567,18 @@ SUnitTest >> testLongRunningTestThenGreenTest [
 
 { #category : 'testing' }
 SUnitTest >> testRaiseDeprecationWarnings [
-	| case result |
+
+	| case result deprecationWasRaised |
 	case := self newTestCase: #raiseDeprecationWarnings.
-	result := case run.
-	self assert: result defects asArray equals: (Array with: case).
+	deprecationWasRaised := false.
+	[ result := case run ] on: Deprecation do:[ :e | deprecationWasRaised := true. e resume ].
+	self assert: deprecationWasRaised.
+	self assertEmpty: result defects asArray.
 	self
 		assertForTestResult: result
 		runCount: 1
-		passed: 0
-		failed: 1
+		passed: 1
+		failed: 0
 		errors: 0
 ]
 

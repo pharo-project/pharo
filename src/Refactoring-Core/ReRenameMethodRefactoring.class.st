@@ -172,7 +172,7 @@ ReRenameMethodRefactoring >> localConditions [
 { #category : 'preconditions' }
 ReRenameMethodRefactoring >> methodDefinedInClassCondition [
 
-	^ (RBDefinesSelectorsCondition new definesSelectors: {oldSelector} in: class)
+	^ (ReDefinesSelectorsCondition new definesSelectors: {oldSelector} in: class)
 ]
 
 { #category : 'private' }
@@ -214,7 +214,7 @@ ReRenameMethodRefactoring >> renameChanges [
 	^ self changes
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 ReRenameMethodRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	aStream nextPutAll: self class name.

@@ -697,55 +697,6 @@ Context >> endPC [
 	^ self compiledCode endPC
 ]
 
-{ #category : 'debugger access' }
-Context >> errorReportOn: stream [
-	"Write a detailed error report on the stack (above me) on a
-	stream.  For both the error file, and emailing a bug report.
-	Suppress any errors while getting printStrings.  Limit the length."
-
-	| stackDepth aContext |
-	stream print: Date today; space; print: Time now; cr.
-	stream cr.
-	stream nextPutAll: 'VM: ';
-		nextPutAll: Smalltalk os name asString;
-		nextPutAll: ' - ';
-		nextPutAll: Smalltalk os subtype asString;
-		nextPutAll: ' - ';
-		nextPutAll: Smalltalk os version asString;
-		nextPutAll: ' - ';
-		nextPutAll: Smalltalk vm version asString;
-		cr.
-	stream nextPutAll: 'Image: ';
-		nextPutAll:  SystemVersion current version asString;
-		nextPutAll: ' [';
-		nextPutAll: Smalltalk lastUpdateString asString;
-		nextPutAll: ']';
-		cr.
-	stream cr.
-	"Note: The following is an open-coded version of  Context>>stackOfSize: since this method may be called during a  low space condition and we might run out of space for allocating the  full stack."
-	stackDepth := 0.
-	aContext := self.
-	[ aContext isNotNil and: [ (stackDepth := stackDepth + 1) < 40 ]]
-		whileTrue: [
-			"variable values"
-			aContext printDetails: stream.
-			stream cr.
-			aContext := aContext sender ].
-	stream cr; nextPutAll: '--- The full stack ---'; cr.
-	aContext := self.
-	stackDepth := 0.
-	[ aContext == nil ] whileFalse:	[
-		stackDepth := stackDepth + 1.
-		stackDepth = 40 ifTrue: [ stream nextPutAll: ' - - - - - - - - - - - - - - -
-			- - - - - - - - - - - - - - - - - -'; cr ].
-		"just class>>selector"
-		stream print: aContext; cr.
-		stackDepth > 200 ifTrue: [
-			stream nextPutAll: '-- and more not shown --'.
-			^  self ].
-		aContext := aContext sender ]
-]
-
 { #category : 'private - exceptions' }
 Context >> evaluateSignal: exception [
 	"The following primitive is just a marker used to find the evaluation context.
@@ -996,11 +947,8 @@ Context >> isContext [
 
 { #category : 'testing' }
 Context >> isDead [
-	"Context is dead when
-	- it is self finished (returned to sender)
-	- it is at the last instruction of process termination (it is unwinded and process is suspended)"
 
-	^ pc isNil or: [  self isEndOfProcessTermination ]
+	^ pc isNil
 ]
 
 { #category : 'testing' }
@@ -1800,9 +1748,9 @@ Context >> return: value from: aSender [
 	"For simulation.  Roll back self to aSender and return value from it.  Execute any unwind blocks on the way.  ASSUMES aSender is a sender of self"
 	<reflection: 'Stack Manipulation - Controlling the stack'>
 	| newTop context |
-	aSender isDead ifTrue: [
-		^ self send: #cannotReturn: to: self with: {value} super: false ].
 	newTop := aSender sender.
+	(aSender isDead or: [newTop isNil or: [newTop isDead]]) ifTrue:
+		[^self pc: nil; send: #cannotReturn: to: self with: {value} super: false ].
 	context := self findNextUnwindContextUpTo: newTop.
 	(context isNotNil and: [ context unwindBlock = closureOrNil ]) ifTrue: [
 		"Here the return happens inside the unwind block like in following example:
@@ -1856,7 +1804,7 @@ Context >> runUntilErrorOrReturnFrom: aSender [
 	"Control resumes here once above ensure block or exception handler is executed"
 	^ error ifNil: [
 		"No error was raised, remove ensure context by stepping until popped"
-		[ context isDead or: [ topContext isNil  ]] whileFalse: [topContext := topContext stepToCallee].
+		[ context isDead or: [ topContext isNil  ]] whileFalse: [topContext := topContext stepToCalleeOrNil].
 		{topContext. nil}
 
 	] ifNotNil: [
@@ -2162,6 +2110,17 @@ Context >> stepToCallee [
 	^ context
 ]
 
+{ #category : 'private' }
+Context >> stepToCalleeOrNil [
+	"Step to callee or sender; step to return and answer nil in case sender cannot be returned to."
+
+	| ctxt |
+	ctxt := self.
+	[ctxt willFailReturn not and: [(ctxt := ctxt step) == self]] whileTrue.
+	ctxt == self ifTrue: [^nil].
+	^ctxt
+]
+
 { #category : 'controlling' }
 Context >> stepUntilSomethingOnStack [
 	"Simulate the execution of bytecodes until either sending a message or
@@ -2402,6 +2361,13 @@ Context >> unwindTo: aContext [
 			top := ctx unwindBlock asContextWithSender: ctx.
 			top runUntilReturnFrom: top].
 		ctx := ctx findNextUnwindContextUpTo: aContext]
+]
+
+{ #category : 'private' }
+Context >> willFailReturn [
+	"Answer whether self step will cause an illegal return."
+
+	^(self method encoderClass isReturnAt: pc in: self method) and: [self sender isNil or: [self sender isDead]]
 ]
 
 { #category : 'private' }

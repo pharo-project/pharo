@@ -273,7 +273,7 @@ SystemDictionary >> hasBindingThatBeginsWith: aString [
 	name := self classNames findBinary: searchBlock ifNone: [ nil ].
 	name ifNotNil: [ ^ true ].
 	name := self nonClassNames findBinary: searchBlock ifNone: [ nil ].
-	^ name notNil
+	^ name isNotNil
 ]
 
 { #category : 'accessing - classes and traits' }

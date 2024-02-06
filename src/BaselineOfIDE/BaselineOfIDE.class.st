@@ -46,8 +46,7 @@ BaselineOfIDE >> baseline: spec [
 		spec postLoadDoIt: #postload:package:.
 		spec baseline: 'BasicTools' with: [ spec repository: repository ].
 		spec baseline: 'Athens' with: [ spec repository: repository ].
-		spec baseline: 'KernelTests' with: [ spec repository: repository ].
-    spec baseline: 'Flashback' with: [ spec repository: repository ].
+		spec baseline: 'Flashback' with: [ spec repository: repository ].
 
 		self
 			load: 'Shift' group: 'shift-tests' spec: spec;
@@ -62,7 +61,6 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Math-Operations-Extensions-Tests'.
 		spec package: 'Network-Tests'.
 		spec package: 'Network-Mail-Tests'.
-		spec package: 'Gofer-Tests'.
 		spec package: 'Rubric-SpecFindReplaceDialog'.
 		spec package: 'OpalCompiler-UI'.
 

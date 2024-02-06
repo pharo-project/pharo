@@ -6,7 +6,6 @@ mcPackages := #(
  'StartupPreferences'
  'PragmaCollector'
  'System-FileRegistry'
- 'Gofer-Core'
  'MonticelloFileTree-Core'
  'MonticelloFileTree-FileSystem-Utilities'
  'Metacello-Base'

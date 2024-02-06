@@ -114,12 +114,14 @@ RubShoutStylerDecorator >> style: aText [
 
 { #category : 'accessing' }
 RubShoutStylerDecorator >> styler [
-	"The styler responsible for highlighting text in the receiver"
+	"Answer a <SHRBStyler>, responsible for highlighting text in the receiver. 
+	Handle the case where `self model selectedClassOrMetaClass` is a RGBehavior (for example browsing unloaded code from Calypso)"
 
 	^ styler ifNil: [
-		styler := (self model isNotNil and: [  self model selectedClassOrMetaClass isNotNil ])
+		| selectedClassOrMeta |
+		styler := (self model isNotNil and: [ (selectedClassOrMeta := self model selectedClassOrMetaClass) isNotNil ])
 			ifTrue: [
-				self model selectedClassOrMetaClass syntaxHighlighter
+				selectedClassOrMeta realClass syntaxHighlighter
 					view: self;
 					yourself ]
 			ifFalse: [ self defaultStyler ] ]

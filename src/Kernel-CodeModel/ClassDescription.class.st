@@ -1132,7 +1132,7 @@ ClassDescription >> spaceUsed [
 		ifFalse: [0])
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 ClassDescription >> storeOn: aStream [
 	"Classes and Metaclasses have global names."
 

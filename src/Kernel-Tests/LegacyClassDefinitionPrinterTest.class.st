@@ -27,10 +27,10 @@ LegacyClassDefinitionPrinterTest >> testArray [
 LegacyClassDefinitionPrinterTest >> testArrayedCollectionWithPoolDictionary [
 
 	self assert: (self forClass: ExampleForTestWithSharedPool)
-		equals: 'ArrayedCollection subclass: #ExampleForTestWithSharedPool
+		equals: 'Object subclass: #ExampleForTestWithSharedPool
 	instanceVariableNames: ''''
 	classVariableNames: ''''
-	poolDictionaries: ''ChronologyConstants''
+	poolDictionaries: ''PoolDefiner''
 	category: ''Kernel-Tests-Classes'''
 ]
 
@@ -47,15 +47,15 @@ LegacyClassDefinitionPrinterTest >> testByteString [
 ]
 
 { #category : 'tests - classes' }
-LegacyClassDefinitionPrinterTest >> testChronologyConstants [
+LegacyClassDefinitionPrinterTest >> testClassPool [
 
 	self
-		assert: (self forClass: ChronologyConstants)
-		equals: 'SharedPool subclass: #ChronologyConstants
+		assert: (self forClass: PoolDefiner)
+		equals: 'SharedPool subclass: #PoolDefiner
 	instanceVariableNames: ''''
-	classVariableNames: ''DayNames DaysInMonth HoursInDay MicrosecondsInDay MinutesInHour MonthNames NanosInMicroSecond NanosInMillisecond NanosInSecond SecondsInDay SecondsInHour SecondsInMinute SqueakEpoch''
+	classVariableNames: ''AnAuthor Gloups''
 	poolDictionaries: ''''
-	category: ''Kernel-Chronology-Extras'''
+	category: ''Kernel-Tests-Classes'''
 ]
 
 { #category : 'tests - metaclasses' }

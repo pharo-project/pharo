@@ -187,7 +187,7 @@ FileReference >> deviceId [
 	^ filesystem deviceIdOf: path
 ]
 
-{ #category : 'printing' }
+{ #category : 'displaying' }
 FileReference >> displayStringOn: stream [
 	filesystem printPath: path on: stream
 ]

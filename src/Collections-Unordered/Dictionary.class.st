@@ -936,7 +936,7 @@ Dictionary >> select: selectBlock thenCollect: collectBlock [
 	^ newDictionary
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 Dictionary >> storeOn: aStream [
 	| noneYet |
 	aStream nextPutAll: '(('.

@@ -686,7 +686,7 @@ Point >> squaredDistanceTo: aPoint [
 	^ delta dotProduct: delta
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 Point >> storeOn: aStream [
 	"x@y printed form is good for storing too"
 	aStream nextPut: $(.

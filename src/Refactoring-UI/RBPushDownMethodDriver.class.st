@@ -24,9 +24,9 @@ Class {
 }
 
 { #category : 'initialization' }
-RBPushDownMethodDriver class >> model: aRBNamespace scopes: refactoringScopes pushDown: methods [
+RBPushDownMethodDriver class >> model: aRBNamespace scopes: refactoringScopes pushDownMethods: methods [
 
-	^ self new model: aRBNamespace scopes: refactoringScopes pushDown: methods
+	^ self new model: aRBNamespace scopes: refactoringScopes pushDownMethods: methods
 ]
 
 { #category : 'resources' }
@@ -39,7 +39,7 @@ RBPushDownMethodDriver >> configureRefactoring [
 ]
 
 { #category : 'initialization' }
-RBPushDownMethodDriver >> model: aRBNamespace scopes: refactoringScopes pushDown: methodsList [
+RBPushDownMethodDriver >> model: aRBNamespace scopes: refactoringScopes pushDownMethods: methodsList [
 
 	model := aRBNamespace.
 	scopes := refactoringScopes.

@@ -31,7 +31,7 @@ ReSentButNotUnderstoodBySuperRule >> check: aMethod forCritiquesDo: aCriticBlock
 
 	notUnderstoodSends := aMethod sendNodes select: [ :msgSend | msgSend receiver isSuperVariable ].
 	notUnderstoodSends := notUnderstoodSends reject: [ :msgSend |
-			superclass notNil and: [ superclass canUnderstand: msgSend selector ]].
+			superclass isNotNil and: [ superclass canUnderstand: msgSend selector ]].
 
 	notUnderstoodSends do: [ :msgSend |
 		aCriticBlock cull: (self

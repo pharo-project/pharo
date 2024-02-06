@@ -375,6 +375,12 @@ ReleaseTest >> testNoShadowedVariablesInMethods [
 ]
 
 { #category : 'tests' }
+ReleaseTest >> testNoSuperInitializeOnClassSideInitialization [
+
+	self assertValidLintRule: ReDoNotSendSuperInitializeInClassSideRule new
+]
+
+{ #category : 'tests' }
 ReleaseTest >> testObsoleteClasses [
 	| obsoleteClasses |
 

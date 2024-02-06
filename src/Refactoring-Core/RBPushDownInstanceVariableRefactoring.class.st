@@ -12,7 +12,7 @@ Class {
 }
 
 { #category : 'preconditions' }
-RBPushDownInstanceVariableRefactoring >> preconditions [
+RBPushDownInstanceVariableRefactoring >> applicabilityPreconditions [ 
 
 	| references |
 	references := RBCondition referencesInstanceVariable: variableName in: class.

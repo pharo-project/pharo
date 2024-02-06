@@ -43,17 +43,17 @@ RBRefactoring class >> preconditionSignal [
 	^ RBRefactoringError , RBRefactoringWarning
 ]
 
-{ #category : 'preconditions' }
-RBRefactoring >> applicabilityPreconditions [
-
-	^ self trueCondition 
-]
-
 { #category : 'converting' }
 RBRefactoring >> asRefactoring [
 
 	self deprecated: 'This method is a no-op and can be removed' transformWith: '`@rec asRefactoring' -> '`@rec'.
 	^ self
+]
+
+{ #category : 'preconditions' }
+RBRefactoring >> breakingChangePreconditions [
+
+	^ self trueCondition 
 ]
 
 { #category : 'testing' }
@@ -71,6 +71,16 @@ RBRefactoring >> checkApplicabilityPreconditions [
 	failedPreconditions := self failedApplicabilityPreconditions.
 	failedPreconditions ifEmpty: [ ^ self ].
 	RBRefactoringError signalFor: failedPreconditions
+]
+
+{ #category : 'scripting api - conditions' }
+RBRefactoring >> checkBreakingChangePreconditions [
+	"Check a preconditions and raise an error on violations. This method is part of the scripting API since it raises an error."
+	
+	| failedPreconditions |
+	failedPreconditions := self failedBreakingChangePreconditions.
+	failedPreconditions ifEmpty: [ ^ self ].
+	RBRefactoringWarning signalFor: failedPreconditions
 ]
 
 { #category : 'private' }
@@ -114,19 +124,13 @@ RBRefactoring >> convertClasses: classSet select: aBlock using: searchReplacer [
 						using: searchReplacer]]
 ]
 
-{ #category : 'accessing' }
-RBRefactoring >> copyOptionsFrom: aDictionary [
-	| dict |
-	dict := self options.
-	dict == self class refactoringOptions
-		ifTrue: [^self options: aDictionary copy].
-	dict keysAndValuesDo:
-			[:key :value |
-			value == (self class refactoringOptions at: key ifAbsent: [nil])
-				ifTrue: [ dict at: key put: (aDictionary at: key) ]].
-	(aDictionary keys difference: dict keys) do:
-		[ :e | dict at: e put: (aDictionary at: e) ].
-	self options: dict
+{ #category : 'preconditions' }
+RBRefactoring >> eagerlyCheckApplicabilityPreconditions [
+
+	self applicabilityPreconditions
+		do: [ :cond | cond check ifFalse:
+				[ self refactoringError:
+					(String streamContents: [ :aStream | cond violationMessageOn: aStream ] ) ] ]
 ]
 
 { #category : 'preconditions' }
@@ -134,6 +138,13 @@ RBRefactoring >> failedApplicabilityPreconditions [
 	"Returne the failed preconditions without raising error. It should only be called by drivers."
 	
 	^ self applicabilityPreconditions reject: [ :cond | cond check ]
+]
+
+{ #category : 'preconditions' }
+RBRefactoring >> failedBreakingChangePreconditions [
+	"Returne the failed preconditions without raising error. It should only be called by drivers."
+	
+	^ self breakingChangePreconditions reject: [ :cond | cond check ]
 ]
 
 { #category : 'private' }
@@ -185,15 +196,6 @@ RBRefactoring >> safeVariableNameFor: aClass temporaries: allTempVars basedOn: a
 			i := i + 1.
 			newString := baseString , i printString ].
 	^ newString
-]
-
-{ #category : 'accessing' }
-RBRefactoring >> setOption: aSymbol toUse: aBlock [
-	| dict |
-	dict := self options.
-	dict == self class refactoringOptions ifTrue: [dict := dict copy].
-	dict at: aSymbol put: aBlock.
-	self options: dict
 ]
 
 { #category : 'transforming' }

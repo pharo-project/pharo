@@ -36,6 +36,7 @@ Class {
 { #category : 'tools registration' }
 ClyOldMessageBrowserAdapter class >> beDefaultBrowser [
 	<script>
+	
 	self registerToolsOn: Smalltalk tools
 ]
 
@@ -79,6 +80,14 @@ ClyOldMessageBrowserAdapter class >> browseImplementorsOf: aSymbol inNameResolve
 { #category : 'opening' }
 ClyOldMessageBrowserAdapter class >> browseSendersOf: aSymbol [
 	^ClyQueryBrowserMorph browseSendersOf: aSymbol
+]
+
+{ #category : 'instance creation' }
+ClyOldMessageBrowserAdapter class >> on: aNavigationEnvironment systemScope: aSystemEnvironmentScope [ 
+	
+	^ ClyQueryBrowserMorph
+		on: aNavigationEnvironment 
+		systemScope: aSystemEnvironmentScope
 ]
 
 { #category : 'tools registration' }

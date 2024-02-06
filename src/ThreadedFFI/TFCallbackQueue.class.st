@@ -72,7 +72,7 @@ TFCallbackQueue >> executeCallback: aCallbackInvocation [
 { #category : 'initialization' }
 TFCallbackQueue >> forkCallbackProcess [
 
-	(callbackProcess notNil and: [ callbackProcess isTerminated not ])
+	(callbackProcess isNotNil and: [ callbackProcess isTerminated not ])
 		ifTrue: [ ^ self ].
 
 	callbackProcess := [

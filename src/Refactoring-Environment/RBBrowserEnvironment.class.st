@@ -769,7 +769,7 @@ RBBrowserEnvironment >> shortDescription [
 	^ self description contractTo: 50
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBBrowserEnvironment >> storeOn: aStream [
 	aStream
 		nextPutAll: self class name;
