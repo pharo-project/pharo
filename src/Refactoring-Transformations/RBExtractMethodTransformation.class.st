@@ -125,21 +125,18 @@ RBExtractMethodTransformation >> buildTransformations [
 					   in:
 					   (self definingClass methodFor: self calculateTree selector)) ]
 		ifNil: [
-			^ (parseTree isNil or: [ subtree isNil ])
-				  ifTrue: [ OrderedCollection new ]
-				  ifFalse: [
-					  | tempsToRemove |
-					  tempsToRemove := self calculateTemporariesToRemove.
+		  | tempsToRemove |
+		  tempsToRemove := self calculateTemporariesToRemove.
 
-					  assignments size > 1
-						  ifTrue: [ OrderedCollection new ]
-						  ifFalse: [
-							  | newMethodName |
-							  newMethodName := self newMethodName.
-							  newMethodName ifNil: [ ^ OrderedCollection new ].
-							  self
-								  buildTransformationFor: newMethodName
-								  withRemovedTemps: tempsToRemove ] ] ]
+		  ^ assignments size > 1
+			  ifTrue: [ OrderedCollection new ]
+			  ifFalse: [
+				  | newMethodName |
+				  newMethodName := self newMethodName.
+				  newMethodName ifNil: [ ^ OrderedCollection new ].
+				  self
+					  buildTransformationFor: newMethodName
+					  withRemovedTemps: tempsToRemove ] ]
 ]
 
 { #category : 'querying' }
