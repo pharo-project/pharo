@@ -390,7 +390,9 @@ RBExtractMethodTransformation >> preconditionOneAssignmentMaximum [
 { #category : 'preconditions' }
 RBExtractMethodTransformation >> preconditionParsableSubtree [
 
-	^ ReParsableSubtreeCondition new subtree: subtree
+	^ RBCondition
+		  withBlock: [ parseTree isNotNil & subtree isNotNil ]
+		  errorString: 'Cannot extract selected code, it is not a valid subtree.'
 ]
 
 { #category : 'preconditions' }
