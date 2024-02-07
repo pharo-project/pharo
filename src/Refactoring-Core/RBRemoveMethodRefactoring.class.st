@@ -40,9 +40,10 @@ RBRemoveMethodRefactoring >> applicabilityPreconditions [
 { #category : 'preconditions' }
 RBRemoveMethodRefactoring >> breakingChangePreconditions [
 
-	^ (RBCondition withBlock: [
-		   self checkSuperMethods.
-		   true ]) & (RBCondition withBlock: [ self senders isEmpty ] errorString: 'Cannot remove method because it has senders')
+	^ (RBCondition withBlock: [ self checkSuperMethods ]) 
+	& (RBCondition
+		   withBlock: [ self senders isEmpty ]
+		   errorString: 'Cannot remove method because it has senders')
 ]
 
 { #category : 'preconditions' }
@@ -108,7 +109,7 @@ RBRemoveMethodRefactoring >> checkReferencesToSuperSendsToAnyOf: superMessages [
 RBRemoveMethodRefactoring >> checkSuperMethods [
 
 
-	(self justSendsSuper: selector) ifFalse: [ ^ self ].
+	(self justSendsSuper: selector) ifFalse: [ ^ true ].
 	
 	(self superclassEquivalentlyDefines: selector)
 		ifTrue:
@@ -116,6 +117,8 @@ RBRemoveMethodRefactoring >> checkSuperMethods [
 					[self checkReferencesToSuperSendsToAnyOf: selector]]
 
 		ifFalse: [self checkReferencesToAnyOf: selector].
+
+	^ true
 ]
 
 { #category : 'executing' }
