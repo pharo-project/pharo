@@ -32,11 +32,19 @@ RBRemoveMethodRefactoring class >> selector: aSelector from: aClass [
 ]
 
 { #category : 'preconditions' }
+RBRemoveMethodRefactoring >> applicabilityPreconditions [ 
+
+	^ transformation applicabilityPreconditions 
+]
+
+{ #category : 'preconditions' }
 RBRemoveMethodRefactoring >> breakingChangePreconditions [
 
-	^ (RBCondition withBlock: [
-		   self checkSuperMethods.
-		   true ]) & (RBCondition withBlock: [ self senders isEmpty ] errorString: 'Cannot remove method because it has senders')
+	^ ((RBCondition withBlock: [ self checkSuperMethods ]) errorBlock: [ ])
+	& ((RBCondition
+		   withBlock: [ self senders isEmpty ]
+		   errorString: 'Cannot remove method because it has senders')
+		errorBlock: [ ])
 ]
 
 { #category : 'preconditions' }
@@ -81,13 +89,6 @@ RBRemoveMethodRefactoring >> checkBrowseOccurrences: anCollectionOfOccurrences [
 ]
 
 { #category : 'preconditions' }
-RBRemoveMethodRefactoring >> checkPreconditions [ 
-
-	transformation checkPreconditions.
-	super checkPreconditions 
-]
-
-{ #category : 'preconditions' }
 RBRemoveMethodRefactoring >> checkReferencesToAnyOf: aSelector [
 
 	| occurrences |
@@ -109,7 +110,7 @@ RBRemoveMethodRefactoring >> checkReferencesToSuperSendsToAnyOf: superMessages [
 RBRemoveMethodRefactoring >> checkSuperMethods [
 
 
-	(self justSendsSuper: selector) ifFalse: [ ^ self ].
+	(self justSendsSuper: selector) ifFalse: [ ^ true ].
 	
 	(self superclassEquivalentlyDefines: selector)
 		ifTrue:
@@ -117,21 +118,8 @@ RBRemoveMethodRefactoring >> checkSuperMethods [
 					[self checkReferencesToSuperSendsToAnyOf: selector]]
 
 		ifFalse: [self checkReferencesToAnyOf: selector].
-]
 
-{ #category : 'executing' }
-RBRemoveMethodRefactoring >> generateChanges [
-	"Prepare, check the preconditions, and perform the actual transformation (i.e., creating a list of changes that can be accessible using the changes message). This method should not be invoked from drivers since drivers usually check in finer grained mode the preconditions - and that this stage they already checked the preconditions."
-	
-	self prepareForExecution.
-
-	transformation applicabilityPreconditions check ifFalse: [
-		^ RBApplicabilityChecksFailedError signal:
-			  transformation applicabilityPreconditions errorString ].
-	self breakingChangePreconditions check ifFalse: [
-		RBBreakingChangeChecksFailedWarning signal:
-			self breakingChangePreconditions errorString ].
-	^ self removeMethodChanges 
+	^ true
 ]
 
 { #category : 'preconditions' }
@@ -163,7 +151,7 @@ RBRemoveMethodRefactoring >> justSendsSuper: aSelector [
 { #category : 'preconditions' }
 RBRemoveMethodRefactoring >> preconditions [
 
-	^ self breakingChangePreconditions 
+	^ self applicabilityPreconditions & self breakingChangePreconditions 
 ]
 
 { #category : 'transforming' }
