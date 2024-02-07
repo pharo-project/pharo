@@ -55,21 +55,27 @@ RBAddMethodRefactoring class >> sourceCode: aString in: aClass withProtocol: aPr
 { #category : 'preconditions' }
 RBAddMethodRefactoring >> applicabilityPreconditions [ 
 
-	^ (RBCondition canUnderstand: transformation selector in: class) not
+	^ transformation applicabilityPreconditions 
 ]
 
 { #category : 'preconditions' }
-RBAddMethodRefactoring >> checkPreconditions [
-	"We should have same preconditions checking API for all refactorings.
-	Some of them do it like: 
-	preconditions
-	^ self applicabilityPreconditions & self breakingChangePreconditions
-	
-	and refactorings that are decorators do it like this method:
-	"
+RBAddMethodRefactoring >> breakingChangePreconditions [ 
 
-	transformation checkPreconditions.
-	super checkPreconditions 
+	^ ((RBCondition canUnderstand: transformation selector in: class) 
+		errorBlock: [ "this is here so a warning is raised until we refactor all precondition checking logic" ])
+		not
+]
+
+{ #category : 'preconditions' }
+RBAddMethodRefactoring >> preconditions [ 
+
+	^ self applicabilityPreconditions & self breakingChangePreconditions 
+]
+
+{ #category : 'transforming' }
+RBAddMethodRefactoring >> prepareForExecution [ 
+
+	transformation prepareForExecution 
 ]
 
 { #category : 'transforming' }

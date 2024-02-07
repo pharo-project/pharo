@@ -14,7 +14,9 @@ Class {
 }
 
 { #category : 'preconditions' }
-RBAddOverrideMethodTransformation >> applicabilityPreconditions [ 
+RBAddOverrideMethodTransformation >> breakingChangePreconditions [
 
-	^ (RBCondition definesSelector: transformation selector in: class) not
+	^ ((RBCondition definesSelector: transformation selector in: class)
+		errorBlock: [ "this is here so a warning is raised until we refactor all precondition checking logic" ])
+		not
 ]

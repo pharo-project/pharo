@@ -119,7 +119,7 @@ RBPullUpMethodTransformation >> checkInstVarsFor: aSelector [
 								with: each
 								with: class))
 						ifTrue: [ self previousTransformations add: (self pushUpVariable: each) ]
-						ifFalse: [ self refactoringError: 'You are about to push your method without the instance variable it uses.
+						ifFalse: [ self refactoringWarning: 'You are about to push your method without the instance variable it uses.
 						It will bring the system is an inconsistent state. But this may be what you want.
 						So do you want to push up anyway?' ] ]]
 ]
