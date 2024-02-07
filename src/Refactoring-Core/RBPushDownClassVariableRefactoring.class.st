@@ -6,9 +6,6 @@ My precondition verifies that the moved variable is not referenced in the method
 Class {
 	#name : 'RBPushDownClassVariableRefactoring',
 	#superclass : 'RBVariableRefactoring',
-	#instVars : [
-		'destinationClass'
-	],
 	#category : 'Refactoring-Core-Refactorings',
 	#package : 'Refactoring-Core',
 	#tag : 'Refactorings'
@@ -22,11 +19,17 @@ RBPushDownClassVariableRefactoring >> applicabilityPreconditions [
 
 { #category : 'preconditions' }
 RBPushDownClassVariableRefactoring >> breakingChangePreconditions [
-	"Preconditions are that only one subclass refers to the class variable."
 
-	^ RBCondition withBlock: [
-		  self findDestinationClass.
-		  true ]
+	| references |
+	references := RBCondition referencesClassVariable: variableName in: class.
+	class realClass
+		ifNil: [ references errorMacro: ( '<1s> is referenced.' expandMacrosWith: variableName ) ]
+		ifNotNil: [ references
+				errorMacro: ( '<1s> is referenced.<n>Browse references?' expandMacrosWith: variableName );
+				errorBlock:
+						[ self openBrowserOn: ( RBBrowserEnvironment new classVarRefsTo: variableName in: class realClass ) ]
+			].
+	^ references not
 ]
 
 { #category : 'preconditions' }
