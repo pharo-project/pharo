@@ -42,6 +42,16 @@ ZipArchive class >> compressionStored [
 ]
 
 { #category : 'file in/out' }
+ZipArchive class >> extractAllIn: aFileReferenceOrFileName [
+	"Service method to extract all contents of a zip."
+	| directory |
+	directory := (UIManager default chooseDirectoryFrom: aFileReferenceOrFileName asFileReference) ifNil: [^ self].
+	^ (self new)
+		readFrom: aFileReferenceOrFileName;
+		extractAllTo: directory
+]
+
+{ #category : 'file in/out' }
 ZipArchive class >> extractFrom: aZipFile to: aDirectory [
 
 	^ self new
@@ -138,8 +148,8 @@ ZipArchive >> extractAllTo: aDirectory [
 ZipArchive >> extractAllTo: aDirectory informing: job [
 	"Extract all elements to the given directory; notifying user via UI on progress and if existing files exist"
 
-	| barValue |
-
+	| job1 barValue |
+	job1 := job ifNil: [ DummySystemProgressItem new ].
 	barValue := 0.
 	self members select: #isDirectory thenDo: [ :entry |
 		| dir shouldUpdateInfos lastUpdate |
@@ -147,24 +157,24 @@ ZipArchive >> extractAllTo: aDirectory informing: job [
 		(shouldUpdateInfos := (Time millisecondsSince: lastUpdate) >= 100)
 			ifTrue: [
 				lastUpdate := Time millisecondClockValue.
-				job title: 'Creating ' , entry fileName ].
+				job1 title: 'Creating ' , entry fileName ].
 		dir := (entry fileName findTokens: '/')
 			       inject: aDirectory
 			       into: [ :base :part | base / part ].
 		dir ensureCreateDirectory.
 		barValue := barValue + 1.
-		shouldUpdateInfos ifTrue: [ job currentValue: barValue ] ].
+		shouldUpdateInfos ifTrue: [ job1 currentValue: barValue ] ].
 	self members reject: #isDirectory thenDo: [ :entry |
 		| shouldUpdateInfos lastUpdate |
 		lastUpdate := 0.
 		(shouldUpdateInfos := (Time millisecondsSince: lastUpdate) >= 100)
 			ifTrue: [
 				lastUpdate := Time millisecondClockValue.
-				job title: 'Extracting ' , entry fileName ].
+				job1 title: 'Extracting ' , entry fileName ].
 		entry extractInDirectory: aDirectory.
 		barValue := barValue + 1.
 		shouldUpdateInfos ifTrue: [
-			job currentValue: barValue.
+			job1 currentValue: barValue.
 			lastUpdate := Time millisecondClockValue ] ].
 	^ self
 ]
@@ -173,8 +183,8 @@ ZipArchive >> extractAllTo: aDirectory informing: job [
 ZipArchive >> extractAllTo: aDirectory informing: aBar overwrite: allOverwrite [
 	"Extract all elements to the given directory. Informs user when a file exists and set to overwrite"
 
-	| overwriteAll barValue |
-
+	| bar overwriteAll barValue |
+	bar := aBar ifNil: [ DummySystemProgressItem new ].
 	overwriteAll := allOverwrite.
 	barValue := 0.
 	self members select: #isDirectory thenDo: [ :entry |
@@ -183,24 +193,24 @@ ZipArchive >> extractAllTo: aDirectory informing: aBar overwrite: allOverwrite [
 		(shouldUpdateInfos := (Time millisecondsSince: lastUpdate) >= 100)
 			ifTrue: [
 				lastUpdate := Time millisecondClockValue.
-				aBar label: 'Creating ' , entry fileName ].
+				bar label: 'Creating ' , entry fileName ].
 		dir := (entry fileName findTokens: '/')
 			       inject: aDirectory
 			       into: [ :base :part | base / part ].
 		dir ensureCreateDirectory.
 		barValue := barValue + 1.
-		shouldUpdateInfos ifTrue: [ aBar value: barValue ] ].
+		shouldUpdateInfos ifTrue: [ bar value: barValue ] ].
 	self members reject: #isDirectory thenDo: [ :entry |
 		| shouldUpdateInfos lastUpdate |
 		lastUpdate := 0.
 		(shouldUpdateInfos := (Time millisecondsSince: lastUpdate) >= 100)
 			ifTrue: [
 				lastUpdate := Time millisecondClockValue.
-				aBar label: 'Extracting ' , entry fileName ].
+				bar label: 'Extracting ' , entry fileName ].
 		entry extractInDirectory: aDirectory.
 		barValue := barValue + 1.
 		shouldUpdateInfos ifTrue: [
-			aBar value: barValue.
+			bar value: barValue.
 			lastUpdate := Time millisecondClockValue ] ]
 ]
 
