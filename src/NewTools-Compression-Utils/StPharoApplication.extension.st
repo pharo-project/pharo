@@ -1,6 +1,6 @@
 Extension { #name : 'StPharoApplication' }
 
-{ #category : '*System-Spec' }
+{ #category : '*NewTools-Compression-Utils' }
 StPharoApplication >> openDirectoryDialog [
 	
 	^ StOpenDirectoryDialog new

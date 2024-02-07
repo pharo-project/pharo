@@ -1,6 +1,6 @@
 Extension { #name : 'GZipReadStream' }
 
-{ #category : '*System-Spec' }
+{ #category : '*NewTools-Compression-Utils' }
 GZipReadStream class >> openWithContents: contentsString label: titleString [
 	"Open a text viewer on contentsString and window label titleString"
 
@@ -13,7 +13,7 @@ GZipReadStream class >> openWithContents: contentsString label: titleString [
 				extent: 600 @ 800 ]
 ]
 
-{ #category : '*System-Spec' }
+{ #category : '*NewTools-Compression-Utils' }
 GZipReadStream class >> viewContents: fullFileName [
 	"Open the decompressed contents of the .gz file with the given name."
 
