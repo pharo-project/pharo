@@ -33,22 +33,13 @@ RBPushDownClassVariableRefactoring >> breakingChangePreconditions [
 ]
 
 { #category : 'preconditions' }
-RBPushDownClassVariableRefactoring >> findDestinationClass [
+RBPushDownClassVariableRefactoring >> findDestinationClasses [
+
 	| classes |
 	classes := class withAllSubclasses reject: [ :each |
 		(each whichSelectorsReferToClassVariable: variableName) isEmpty
 			and: [ (each classSide whichSelectorsReferToClassVariable: variableName) isEmpty ] ].
-	destinationClass := classes ifEmpty: [ nil ]
-		ifNotEmpty: [ classes asOrderedCollection first ].
-	classes do: [ :each |
-		(destinationClass includesClass: each)
-			ifTrue: [ destinationClass := each ]
-				ifFalse: [
-					(each includesClass: destinationClass)
-						ifFalse: [ self signalMultipleReferenceError ] ] ].
-	destinationClass = class
-		ifTrue: [ self signalStillReferencedError ].
-	^ destinationClass
+	^ classes
 ]
 
 { #category : 'preconditions' }
@@ -60,37 +51,9 @@ RBPushDownClassVariableRefactoring >> preconditions [
 { #category : 'transforming' }
 RBPushDownClassVariableRefactoring >> privateTransform [
 
+	| destinationClasses |
 	class removeClassVariable: variableName.
-	destinationClass ifNil: [ ^ self ].
-	destinationClass addClassVariable: variableName
-]
-
-{ #category : 'preconditions' }
-RBPushDownClassVariableRefactoring >> signalMultipleReferenceError [
-	self signalReferenceError: ('Multiple subclasses reference <1s>'
-				expandMacrosWith: variableName)
-]
-
-{ #category : 'preconditions' }
-RBPushDownClassVariableRefactoring >> signalReferenceError: errorString [
-
-	class realClass
-		ifNil: [ self refactoringError: errorString ]
-		ifNotNil: [ | classVarName error |
-
-			error := '<1s><n>Browse references?' expandMacrosWith: errorString.
-			classVarName := variableName asSymbol.
-			self
-				refactoringWarning: error
-				with: [ self
-						openBrowserOn: ( RBVariableEnvironment referencesToClassVariable: classVarName in: class realClass )
-					]
-			]
-]
-
-{ #category : 'preconditions' }
-RBPushDownClassVariableRefactoring >> signalStillReferencedError [
-	self signalReferenceError: ('<1p> has references to <2s>'
-				expandMacrosWith: class
-				with: variableName)
+	destinationClasses := self findDestinationClasses.
+	destinationClasses ifEmpty: [ ^ self ].
+	destinationClasses do: [ :aClass | aClass addClassVariable: variableName ]
 ]
