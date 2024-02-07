@@ -119,27 +119,25 @@ RBExtractMethodTransformation >> buildTransformations [
 	selectorOfExistingMethod := self findMethodWithSimilarBody.
 	selectorOfExistingMethod 
 		ifNotNil: [
-			^ OrderedCollection with: (self parseTreeRewriterClass
+			^ OrderedCollection with: 
+					(self parseTreeRewriterClass
 					   replaceCode: subtree
 					   byMessageSendTo: selectorOfExistingMethod
 					   in:
 					   (self definingClass methodFor: self calculateTree selector)) ]
 		ifNil: [
-			^ (parseTree isNil or: [ subtree isNil ])
-				  ifTrue: [ OrderedCollection new ]
-				  ifFalse: [
-					  | tempsToRemove |
-					  tempsToRemove := self calculateTemporariesToRemove.
+		  | tempsToRemove |
+		  tempsToRemove := self calculateTemporariesToRemove.
 
-					  assignments size > 1
-						  ifTrue: [ OrderedCollection new ]
-						  ifFalse: [
-							  | newMethodName |
-							  newMethodName := self newMethodName.
-							  newMethodName ifNil: [ ^ OrderedCollection new ].
-							  self
-								  buildTransformationFor: newMethodName
-								  withRemovedTemps: tempsToRemove ] ] ]
+		  ^ assignments size > 1
+			  ifTrue: [ OrderedCollection new ]
+			  ifFalse: [
+				  | newMethodName |
+				  newMethodName := self newMethodName.
+				  newMethodName ifNil: [ OrderedCollection new ].
+				  self
+					  buildTransformationFor: newMethodName
+					  withRemovedTemps: tempsToRemove ] ]
 ]
 
 { #category : 'querying' }
@@ -390,7 +388,9 @@ RBExtractMethodTransformation >> preconditionOneAssignmentMaximum [
 { #category : 'preconditions' }
 RBExtractMethodTransformation >> preconditionParsableSubtree [
 
-	^ ReParsableSubtreeCondition new subtree: subtree
+	^ RBCondition
+		  withBlock: [ parseTree isNotNil & subtree isNotNil ]
+		  errorString: 'Cannot extract selected code, it is not a valid subtree.'
 ]
 
 { #category : 'preconditions' }
