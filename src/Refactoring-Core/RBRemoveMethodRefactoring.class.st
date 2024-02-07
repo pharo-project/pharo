@@ -122,21 +122,6 @@ RBRemoveMethodRefactoring >> checkSuperMethods [
 	^ true
 ]
 
-{ #category : 'executing' }
-RBRemoveMethodRefactoring >> generateChanges [
-	"Prepare, check the preconditions, and perform the actual transformation (i.e., creating a list of changes that can be accessible using the changes message). This method should not be invoked from drivers since drivers usually check in finer grained mode the preconditions - and that this stage they already checked the preconditions."
-	
-	self prepareForExecution.
-
-	transformation applicabilityPreconditions check ifFalse: [
-		^ RBApplicabilityChecksFailedError signal:
-			  transformation applicabilityPreconditions errorString ].
-	self breakingChangePreconditions check ifFalse: [
-		RBBreakingChangeChecksFailedWarning signal:
-			self breakingChangePreconditions errorString ].
-	^ self removeMethodChanges 
-]
-
 { #category : 'preconditions' }
 RBRemoveMethodRefactoring >> justSendsSuper: aSelector [
 
