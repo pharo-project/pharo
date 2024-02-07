@@ -4,7 +4,7 @@ I'm a composite that evaluates all the applicability preconditions and breaking 
 So do not use me if your sequence has side effects you rely on later on the following refactorings.
 "
 Class {
-	#name : 'RBUpFrontPreconditionCheckingCompositeRefactoring',
+	#name : 'ReUpFrontPreconditionCheckingCompositeRefactoring',
 	#superclass : 'ReCompositeRefactoring',
 	#category : 'Refactoring-Core-Refactorings',
 	#package : 'Refactoring-Core',
@@ -12,27 +12,27 @@ Class {
 }
 
 { #category : 'preconditions' }
-RBUpFrontPreconditionCheckingCompositeRefactoring >> applicabilityPreconditions [
+ReUpFrontPreconditionCheckingCompositeRefactoring >> applicabilityPreconditions [
 	"Return the list of the all the applicabilityPreconditions of the composite"
 	
 	^ refactorings collect: [ :each |  each applicabilityPreconditions ] 
 ]
 
 { #category : 'preconditions' }
-RBUpFrontPreconditionCheckingCompositeRefactoring >> breakingChangePreconditions [
+ReUpFrontPreconditionCheckingCompositeRefactoring >> breakingChangePreconditions [
 	"Return the list of the all the breakingChangePreconditions of the composite"
 	
 	^ refactorings collect: [ :each | each breakingChangePreconditions ]
 ]
 
 { #category : 'accessing' }
-RBUpFrontPreconditionCheckingCompositeRefactoring >> privateTransform [
+ReUpFrontPreconditionCheckingCompositeRefactoring >> privateTransform [
 	"pay attention we are not checking preconditions of children at this level"
 	
 	refactorings do: [ :each | each privateTransform ]
 ]
 
 { #category : 'accessing' }
-RBUpFrontPreconditionCheckingCompositeRefactoring >> violators [ 
+ReUpFrontPreconditionCheckingCompositeRefactoring >> violators [ 
 	^ self breakingChangePreconditions flatCollect: [ :cond | cond violators ]
 ]

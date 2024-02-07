@@ -2,7 +2,7 @@
 I represent a sequence of refactorings but I will skip refactorings failing and execute as much as possible.
 "
 Class {
-	#name : 'RBCompositeContinuingRefactoring',
+	#name : 'ReCompositeContinuingRefactoring',
 	#superclass : 'ReCompositeRefactoring',
 	#category : 'Refactoring-Core-Refactorings',
 	#package : 'Refactoring-Core',
@@ -10,7 +10,7 @@ Class {
 }
 
 { #category : 'preconditions' }
-RBCompositeContinuingRefactoring >> privateTransform [
+ReCompositeContinuingRefactoring >> privateTransform [
 
 	refactorings do: [ :each | [ each generateChanges] on: RBRefactoringError do: [ :ex | ] ]
 ]
