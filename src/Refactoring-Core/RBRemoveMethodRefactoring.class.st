@@ -32,6 +32,12 @@ RBRemoveMethodRefactoring class >> selector: aSelector from: aClass [
 ]
 
 { #category : 'preconditions' }
+RBRemoveMethodRefactoring >> applicabilityPreconditions [ 
+
+	^ transformation applicabilityPreconditions 
+]
+
+{ #category : 'preconditions' }
 RBRemoveMethodRefactoring >> breakingChangePreconditions [
 
 	^ (RBCondition withBlock: [
@@ -78,13 +84,6 @@ RBRemoveMethodRefactoring >> checkBrowseOccurrences: anCollectionOfOccurrences [
 	^ anCollectionOfOccurrences size = 1
 		ifTrue: [ self checkBrowseOccurrenceOf: anCollectionOfOccurrences first key in: anCollectionOfOccurrences first value ]
 		ifFalse: [ self checkBrowseAllOccurrences: anCollectionOfOccurrences ]
-]
-
-{ #category : 'preconditions' }
-RBRemoveMethodRefactoring >> checkPreconditions [ 
-
-	transformation checkPreconditions.
-	super checkPreconditions 
 ]
 
 { #category : 'preconditions' }
@@ -163,7 +162,7 @@ RBRemoveMethodRefactoring >> justSendsSuper: aSelector [
 { #category : 'preconditions' }
 RBRemoveMethodRefactoring >> preconditions [
 
-	^ self breakingChangePreconditions 
+	^ self applicabilityPreconditions & self breakingChangePreconditions 
 ]
 
 { #category : 'transforming' }
