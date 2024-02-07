@@ -51,7 +51,7 @@ SaveCommandLineHandler >> saveImage [
 	oldImageFile := File named: Smalltalk imagePath.
 	oldChangesFile := File named: (Smalltalk imagePath copyUpToLast: '.') , '.changes'.
 
-	(Smalltalk saveAs: imageName)
+	(Smalltalk saveAs: imageName) isImageStarting 
 		ifTrue: [
 			"rebooting, when executing this, we are already in the renamed image"
 			^ self ].
