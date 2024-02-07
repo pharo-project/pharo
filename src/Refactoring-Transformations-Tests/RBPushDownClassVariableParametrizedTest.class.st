@@ -97,8 +97,7 @@ RBPushDownClassVariableParametrizedTest >> testModelPushDownVariableToClassDownT
 RBPushDownClassVariableParametrizedTest >> testModelPushDownVariableToMultipleClassesInSameHierarchy [
 
 	| class1 class2 |
-	"this test passes for the transformation but fails for the refactoring."
-	self skip.
+
 	model
 		defineClass: [ :aBuilder |
 			aBuilder
