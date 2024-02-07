@@ -32,6 +32,12 @@ RBPushDownInstanceVariableRefactoring >> breakingChangePreconditions [
 	^ references not
 ]
 
+{ #category : 'preconditions' }
+RBPushDownInstanceVariableRefactoring >> preconditions [ 
+
+	^ self applicabilityPreconditions & self breakingChangePreconditions 
+]
+
 { #category : 'transforming' }
 RBPushDownInstanceVariableRefactoring >> privateTransform [
 	class removeInstanceVariable: variableName.
