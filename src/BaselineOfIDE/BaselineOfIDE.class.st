@@ -45,7 +45,7 @@ BaselineOfIDE >> baseline: spec [
 	spec for: #common do: [
 		spec postLoadDoIt: #postload:package:.
 		spec baseline: 'BasicTools' with: [ spec repository: repository ].
-		spec baseline: 'Tool-MorphicProfiler' with: [ spec requires: #( 'BasicTools' ) ].
+		spec package: 'Tool-MorphicProfiler' with: [ spec requires: #( 'BasicTools' ) ].
 		spec baseline: 'Athens' with: [ spec repository: repository ].
 		spec baseline: 'Flashback' with: [ spec repository: repository ].
 
