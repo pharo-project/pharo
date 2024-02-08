@@ -215,7 +215,7 @@ ScaledDecimal >> squared [
 	^self class newFromNumber: super squared scale: scale
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 ScaledDecimal >> storeOn: aStream [
 	"ScaledDecimal sometimes have more digits than they print (potentially an infinity).
 	In this case, do not use printOn: because it would loose some extra digits"

@@ -53,6 +53,24 @@ ClassDescription >> fileOutOn: aFileStream [
 ]
 
 { #category : '*CodeExport' }
+ClassDescription >> fileOutProtocol: protocolName on: aFileStream [
+	"File a description of the receiver's protocolName on aFileStream."
+
+	aFileStream
+		cr;
+		nextPut: $!;
+		nextChunkPut: self name , ' reorganize';
+		cr;
+		nextChunkPut: (String streamContents: [ :aStream |
+							 aStream
+								 nextPut: $(;
+								 nextPutAll: protocolName printString;
+								 nextPut: $);
+								 cr ]);
+		cr
+]
+
+{ #category : '*CodeExport' }
 ClassDescription >> fileOutProtocolsOn: aFileStream [
 	"File a description of the receiver's organization on aFileStream."
 
@@ -112,32 +130,6 @@ ClassDescription >> printMethodChunk: selector on: outStream [
 		nextChunkPut: ' '; cr.
 
 	^ outStream
-]
-
-{ #category : '*CodeExport' }
-ClassDescription >> printProtocolChunk: protocol on: aFileStream withStamp: changeStamp priorMethod: priorMethod [
-	"Print a method preamble.  This must have a protocol name.
-	It may have an author/date stamp, and it may have a prior source link.
-	If it has a prior source link, it MUST have a stamp, even if it is empty."
-
-	"The current design is that changeStamps and prior source links are preserved in the changes file.  All fileOuts include changeStamps.  Condensing sources, however, eliminates all stamps (and links, natch)."
-
-	aFileStream
-		cr;
-		nextPut: $!.
-	aFileStream nextChunkPut: (String streamContents: [ :strm |
-			 strm
-				 nextPutAll: self name;
-				 nextPutAll: ' methodsFor: ';
-				 print: protocol name asString.
-			 (changeStamp isNotNil and: [ changeStamp size > 0 or: [ priorMethod isNotNil ] ]) ifTrue: [
-				 strm
-					 nextPutAll: ' stamp: ';
-					 print: changeStamp ].
-			 priorMethod ifNotNil: [
-				 strm
-					 nextPutAll: ' prior: ';
-					 print: priorMethod sourcePointer ] ])
 ]
 
 { #category : '*CodeExport' }

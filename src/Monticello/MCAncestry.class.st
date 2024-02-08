@@ -22,14 +22,6 @@ MCAncestry >> allAncestorsDo: aBlock [
 ]
 
 { #category : 'ancestry' }
-MCAncestry >> allAncestorsOnPathTo: aVersionInfo [
-	^ MCFilteredVersionSorter new
-		target: aVersionInfo;
-		addAllVersionInfos: self ancestors;
-		sortedVersionInfos
-]
-
-{ #category : 'ancestry' }
 MCAncestry >> ancestorString [
 	^ String streamContents:
 		[:s | self ancestors do: [:ea | s nextPutAll: ea name] separatedBy: [s nextPutAll: ', ']]
@@ -132,18 +124,6 @@ MCAncestry >> stepChildren [
 MCAncestry >> stepChildrenString [
 	^ String streamContents:
 		[:s | self stepChildren do: [:ea | s nextPutAll: ea name] separatedBy: [s nextPutAll: ', ']]
-]
-
-{ #category : 'ancestry' }
-MCAncestry >> topologicalAncestors [
-	
-	^ Array streamContents:
-		[:s | | f frontier |
-		frontier := MCFrontier frontierOn: self.
-		[f := frontier frontier.
-		s nextPutAll: f.
-		frontier removeAll: f.
-		f isEmpty] whileFalse] 
 ]
 
 { #category : 'ancestry' }

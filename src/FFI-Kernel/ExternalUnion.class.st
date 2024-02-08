@@ -69,7 +69,7 @@ ExternalUnion class >> compileFields: specArray withAccessors: aSymbol [
 		spec size > 2 ifTrue: [ "extra size"
 			spec third < typeSize ifTrue: [ ^ self error: 'Explicit type size is less than expected' ].
 			typeSize := spec third ].
-		(fieldName notNil and: [ self shouldGenerate: fieldName policy: aSymbol ]) ifTrue: [
+		(fieldName isNotNil and: [ self shouldGenerate: fieldName policy: aSymbol ]) ifTrue: [
 			self defineFieldAccessorsFor: fieldName startingAt: byteOffset type: externalType ].
 		typeSpec nextPutAll: (externalType embeddedSpecWithSize: typeSize).
 		maxByteSize := maxByteSize max: typeSize ].

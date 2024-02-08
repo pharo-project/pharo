@@ -143,11 +143,6 @@ RBMessageNode >> equalTo: anObject withMapping: aDictionary [
 	^true
 ]
 
-{ #category : 'fluid parser' }
-RBMessageNode >> handleMetaclassName: aCDFluidClassDefinitionParser [
-	aCDFluidClassDefinitionParser handleMetaclassNameFromMessage: self
-]
-
 { #category : 'comparing' }
 RBMessageNode >> hash [
 	^ (self receiver hash bitXor: self selector hash) bitXor: (self hashForCollection: self arguments)
@@ -165,7 +160,7 @@ RBMessageNode >> isBinary [
 
 { #category : 'testing' }
 RBMessageNode >> isCascaded [
-	^parent notNil and: [parent isCascade]
+	^parent isNotNil and: [parent isCascade]
 ]
 
 { #category : 'private - replacing' }
@@ -362,7 +357,7 @@ RBMessageNode >> replaceNode: aNode withNode: anotherNode [
 	receiver == aNode
 		ifTrue:
 			[self receiver: anotherNode.
-			(parent notNil and: [parent isCascade])
+			(parent isNotNil and: [parent isCascade])
 				ifTrue: [parent messages do: [:each | each isMessage ifTrue: [ each receiver: anotherNode]]]].
 	self arguments: (arguments
 				collect: [:each | each == aNode ifTrue: [anotherNode] ifFalse: [each]])

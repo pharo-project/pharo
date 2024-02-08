@@ -15,9 +15,9 @@ You can create my instance and execute the refactoring by running:
 Class {
 	#name : 'RBMoveMethodsToClassSideDriver',
 	#superclass : 'RBInteractionDriver',
-	#category : 'Refactoring-UI-Drivers',
+	#category : 'Refactoring-UI-Drivers to migrate to new architecture',
 	#package : 'Refactoring-UI',
-	#tag : 'Drivers'
+	#tag : 'Drivers to migrate to new architecture'
 }
 
 { #category : 'instance creation' }
@@ -56,7 +56,7 @@ RBMoveMethodsToClassSideDriver >> scopes: scopesList methods: methods [
 
 	scopes := scopesList.
 	model := self refactoringScopeOn: scopesList first.
-	refactoring := RBCompositeRefactoring new
+	refactoring := ReCompositeRefactoring new
 		               model: model;
 		               refactorings: (methods collect: [ :m |
 					                RBMoveMethodToClassSideRefactoring

@@ -93,13 +93,13 @@ RBClassRegexRefactoring >> privateTransform [
 			replacement = class name asString ifFalse: [
 				refactoring := self perform: mode
 					with: class with: replacement asSymbol.
-				(refactoring notNil and: [ refactoring preconditions check ])
+				(refactoring isNotNil and: [ refactoring preconditions check ])
 					ifTrue: [ refactoring privateTransform ] ] ] ]
 ]
 
 { #category : 'transforming' }
 RBClassRegexRefactoring >> rename: aClass name: aSymbol [
-	^ RBRenameClassRefactoring
+	^ ReRenameClassRefactoring
 		model: self model
 		rename: aClass name
 		to: aSymbol

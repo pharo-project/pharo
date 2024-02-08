@@ -15,12 +15,6 @@ Class {
 	#tag : 'Gestures'
 }
 
-{ #category : 'class initialization' }
-OSTouchSwipeDetector class >> initialize [
-	super initialize.
-	MinDistToBorder := 0.1
-]
-
 { #category : 'accessing' }
 OSTouchSwipeDetector class >> minDistToBorder [
 	^ MinDistToBorder

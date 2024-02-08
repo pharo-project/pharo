@@ -147,7 +147,7 @@ ProcessBrowser class >> initialize [
 
 { #category : 'process control' }
 ProcessBrowser class >> isUIProcess: aProcess [
-	^ aProcess == UIManager default uiProcess
+	^ aProcess == MorphicUIManager uiProcess
 ]
 
 { #category : 'world menu' }
@@ -248,7 +248,7 @@ ProcessBrowser class >> registerWellKnownProcesses [
 		allowStop: false
 		allowDebug: false.
 	self
-		registerWellKnownProcess: [ UIManager default uiProcess ]
+		registerWellKnownProcess: [ MorphicUIManager uiProcess ]
 		label: nil
 		allowStop: false
 		allowDebug: false.
@@ -326,15 +326,17 @@ ProcessBrowser class >> tallyCPUUsageFor: seconds [
 ProcessBrowser class >> tallyCPUUsageFor: seconds every: msec [
 	"Compute CPU usage using a msec millisecond sample for the given number of seconds,
 	then dump the usage statistics on the Transcript. The UI is free to continue, meanwhile"
+
 	"ProcessBrowser tallyCPUUsageFor: 10 every: 100"
 
 	| promise |
 	promise := Processor tallyCPUUsageFor: seconds every: msec.
 
-	[ | tally |
-		tally := promise value.
-		UIManager default defer: [ self dumpTallyOnTranscript: tally ].
-	] fork
+	[
+	| tally |
+	tally := promise value.
+	MorphicUIManager new defer: [ self dumpTallyOnTranscript: tally ] ]
+		fork
 ]
 
 { #category : 'icons' }
@@ -429,7 +431,7 @@ ProcessBrowser >> changePriority [
 	nameAndRules third
 		ifFalse: [self inform: 'Nope, won''t change priority of ' , nameAndRules first.
 			^ self].
-	str := UIManager default
+	str := self morphicUIManager
 				request: 'New priority'
 		  initialAnswer: selectedProcess priority asString.
 	str ifNil: [str := String new].
@@ -519,7 +521,7 @@ ProcessBrowser >> findContext [
 	| initialProcessIndex initialStackIndex found |
 	initialProcessIndex := self processListIndex.
 	initialStackIndex := self stackListIndex.
-	searchString := UIManager default
+	searchString := self morphicUIManager
 			request: 'Enter a string to search for in the process stack lists'
 	  initialAnswer: searchString.
 	searchString isEmptyOrNil
@@ -579,12 +581,14 @@ ProcessBrowser >> inspectReceiver [
 
 { #category : 'updating' }
 ProcessBrowser >> isAutoUpdating [
-	^autoUpdateProcess notNil and: [ autoUpdateProcess isSuspended  not ]
+
+	^ autoUpdateProcess isNotNil and: [ autoUpdateProcess isSuspended  not ]
 ]
 
 { #category : 'updating' }
 ProcessBrowser >> isAutoUpdatingPaused [
-	^autoUpdateProcess notNil and: [ autoUpdateProcess isSuspended ]
+
+	^ autoUpdateProcess isNotNil and: [ autoUpdateProcess isSuspended ]
 ]
 
 { #category : 'testing' }
@@ -804,7 +808,7 @@ ProcessBrowser >> menuStackList: aMenuMorph [
 ProcessBrowser >> messageTally [
 
 	| secString secs |
-	secString := UIManager default
+	secString := self morphicUIManager
 		             request: 'Profile for how many seconds?'
 		             initialAnswer: '4'.
 	secString ifNil: [ secString := String new ].
@@ -836,6 +840,12 @@ ProcessBrowser >> methodText [
 { #category : 'stack list' }
 ProcessBrowser >> moreStack [
 	self updateStackList: 2000
+]
+
+{ #category : 'process actions' }
+ProcessBrowser >> morphicUIManager [
+
+	^ MorphicUIManager new
 ]
 
 { #category : 'process actions' }
@@ -1031,7 +1041,7 @@ ProcessBrowser >> stackListIndex [
 { #category : 'accessing' }
 ProcessBrowser >> stackListIndex: index [
 	stackListIndex := index.
-	selectedContext := (stackList notNil
+	selectedContext := (stackList isNotNil
 						and: [index > 0]) ifTrue:
 							[stackList at: index ifAbsent: []].
 	selectedClass := nil.
@@ -1180,7 +1190,7 @@ ProcessBrowser >> updateStackList: depth [
 	| suspendedContext oldHighlight |
 	selectedProcess
 		ifNil: [^ self changeStackListTo: nil].
-	(stackList notNil and: [ stackListIndex > 0 ])
+	(stackList isNotNil and: [ stackListIndex > 0 ])
 		ifTrue: [oldHighlight := stackList at: stackListIndex].
 	selectedProcess == Processor activeProcess
 		ifTrue: [self

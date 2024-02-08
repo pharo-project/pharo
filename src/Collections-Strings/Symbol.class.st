@@ -143,11 +143,6 @@ Symbol class >> new: aSize [
 	self shouldNotImplement
 ]
 
-{ #category : 'stream creation' }
-Symbol class >> new: size streamContents: aBlock [
-	^ (super new: size streamContents: aBlock) asSymbol
-]
-
 { #category : 'instance creation' }
 Symbol class >> newFrom: aCollection [
 	"Answer an instance of me containing the same elements as aCollection."
@@ -239,7 +234,7 @@ Symbol class >> selectorThatStartsCaseSensitive: leadingCharacters skipping: ski
 	firstMatch := leadingCharacters at: 1.
 	size > 1 ifTrue: [key := leadingCharacters copyFrom: 2 to: size].
 	self selectorTable do: [:each |
-			(each notNil and: [each size >= size]) ifTrue:
+			(each isNotNil and: [each size >= size]) ifTrue:
 				[
 					((each at: 1) == firstMatch and:
 						[key == nil or:
@@ -584,7 +579,7 @@ Symbol >> sorted: aSortBlockOrNil [
 	^self asArray sort: aSortBlockOrNil
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 Symbol >> storeOn: aStream [
 
 	aStream nextPut: $#.

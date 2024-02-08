@@ -38,15 +38,11 @@ DAPackageCycleDetector class >> new [
 ]
 
 { #category : 'instance creation' }
-DAPackageCycleDetector class >> onPackages: aCollection [
-	^ self basicNew
-		initializeWithRPackageSet: aCollection;
-		yourself
-]
-
-{ #category : 'instance creation' }
 DAPackageCycleDetector class >> onPackagesNamed: aCollection [
-	^ self onPackages: (aCollection collect: [ :each | RPackageSet named: each ])
+
+	^ self basicNew
+		  initializeWith: aCollection;
+		  yourself
 ]
 
 { #category : 'instance creation' }
@@ -165,8 +161,9 @@ DAPackageCycleDetector >> initializeVisitedNodes [
 ]
 
 { #category : 'initialization' }
-DAPackageCycleDetector >> initializeWithRPackageSet: aCollection [
-	relationGraph := DAPackageRelationGraph onPackages: (aCollection collect: [ :each | DAPackage on: each ]).
+DAPackageCycleDetector >> initializeWith: packageNames [
+
+	relationGraph := DAPackageRelationGraph onPackages: (packageNames collect: [ :packageName | DAPackage onPackageNamed: packageName ]).
 	cycles := OrderedCollection new.
 	self relationGraph build.
 	sccs := self runTarjan

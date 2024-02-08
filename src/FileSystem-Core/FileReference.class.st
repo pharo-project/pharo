@@ -187,7 +187,7 @@ FileReference >> deviceId [
 	^ filesystem deviceIdOf: path
 ]
 
-{ #category : 'printing' }
+{ #category : 'displaying' }
 FileReference >> displayStringOn: stream [
 	filesystem printPath: path on: stream
 ]
@@ -313,6 +313,12 @@ FileReference >> isFIFO [
 { #category : 'testing' }
 FileReference >> isFile [
 	^ filesystem isFile: path
+]
+
+{ #category : 'testing' }
+FileReference >> isHidden [
+
+	^ filesystem isHidden: path attributes: nil
 ]
 
 { #category : 'testing' }

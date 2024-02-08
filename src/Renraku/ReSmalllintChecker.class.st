@@ -7,7 +7,7 @@ ReSmallintChecker is responsible for running a set of rules on a given subsystem
 rules := ReRuleManager defaultRules.
 
 checker := ReSmalllintChecker new
-	runRules: rules onPackage: (RPackageOrganizer default packageNamed: #'Manifest-Core').
+	runRules: rules onPackage: (PackageOrganizer default packageNamed: #'Manifest-Core').
 
 ```
 "
@@ -49,16 +49,17 @@ ReSmalllintChecker >> checkClass: aClass [
 ReSmalllintChecker >> checkMethodsForClass: aClass [
 
 	environment methodsForClass: aClass do: [ :method |
-		| ast |
 		self getCritiquesAbout: method by: methodRules.
 		nodeRules do: [ :r |
-			ast := method ast.
-			"for rewrite rules, we run every rule on a copy of the ast"
-			r isRewriteRule ifTrue: [ ast := ast copy ].
-			ast nodesDo: [ :node |
-				r check: node forCritiquesDo: [ :crit |
-					crit sourceAnchor initializeEnitity: method.
-					self addCritique: crit ] ] ] ]
+			(r shouldCheckMethod: method) ifTrue: [
+				| ast |
+				ast := method ast.
+				"for rewrite rules, we run every rule on a copy of the ast"
+				r isRewriteRule ifTrue: [ ast := ast copy ].
+				ast nodesDo: [ :node |
+					r check: node forCritiquesDo: [ :crit |
+						crit sourceAnchor initializeEnitity: method.
+						self addCritique: crit ] ] ] ] ]
 ]
 
 { #category : 'private' }
@@ -145,21 +146,15 @@ ReSmalllintChecker >> isTruePositive: aCritic forRuleId: ruleId versionId: versi
 ]
 
 { #category : 'accessing' }
-ReSmalllintChecker >> manifestBuilderOf: aPackage [
+ReSmalllintChecker >> manifestBuilderOf: anEntity [
 
-	^ aPackage manifestBuilderForRuleChecker: self
+	^ anEntity manifestBuilderForRuleChecker: self
 ]
 
 { #category : 'accessing' }
 ReSmalllintChecker >> manifestBuilderOfClass: aClass [
-	| key |
-	key := aClass instanceSide category.
-	^ manifestClassCache
-		at: key
-		ifAbsentPut: [
-			(self builderManifestClass hasManifestFor: aClass)
-				ifTrue: [ self builderManifestClass of: aClass ]
-				ifFalse: [ nil ] ]
+
+	^ self manifestBuilderOfPackage: aClass package
 ]
 
 { #category : 'accessing' }
@@ -174,12 +169,10 @@ ReSmalllintChecker >> manifestBuilderOfMethod: aMethod [
 { #category : 'accessing' }
 ReSmalllintChecker >> manifestBuilderOfPackage: aPackage [
 
-	| key |
-	key := aPackage name.
-	^ manifestClassCache at: key ifAbsentPut: [
-		  (self builderManifestClass hasPackageNamed: key)
-			  ifTrue: [ self builderManifestClass ofPackageNamed: key ]
-			  ifFalse: [ nil ] ]
+	^ manifestClassCache at: aPackage name ifAbsentPut: [
+		  self builderManifestClass allManifestClasses
+			  detect: [ :class | class package = aPackage ]
+			  ifNone: [ nil ] ]
 ]
 
 { #category : 'private' }

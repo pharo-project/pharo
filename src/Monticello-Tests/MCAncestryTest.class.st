@@ -30,13 +30,6 @@ MCAncestryTest >> assertNamesOf: versionInfoCollection are: nameArray [
 	self assert: names asArray equals: nameArray
 ]
 
-{ #category : 'asserting' }
-MCAncestryTest >> assertPathTo: aSymbol is: anArray [
-	self
-		assertNamesOf: (self tree allAncestorsOnPathTo: (self treeFrom: {aSymbol}))
-		are: anArray
-]
-
 { #category : 'tests' }
 MCAncestryTest >> testCommonAncestors [
 	self assertCommonAncestorOf: #a2 and: #e2 is: #a1 in: self tree.
@@ -69,16 +62,6 @@ MCAncestryTest >> testDescendants [
 	c2 := MCWorkingAncestry new addAncestor: c1.
 	self assert: (q2 commonAncestorWith: c2) equals: q1.
 	self assert: (c2 commonAncestorWith: q2) equals: q1
-]
-
-{ #category : 'tests' }
-MCAncestryTest >> testLinearPath [
-	self assertPathTo: #b1 is: #(b3 b2)
-]
-
-{ #category : 'tests' }
-MCAncestryTest >> testPathToMissingAncestor [
-	self assertEmpty: (self tree allAncestorsOnPathTo: MCVersionInfo new)
 ]
 
 { #category : 'building' }

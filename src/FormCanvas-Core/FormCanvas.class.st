@@ -62,7 +62,7 @@ FormCanvas class >> defaultTranslucentPatterns [
 { #category : 'instance creation' }
 FormCanvas class >> extent: aPoint [
 
-	^ self extent: aPoint depth: Display depth
+	^ self extent: aPoint depth: 32
 ]
 
 { #category : 'instance creation' }
@@ -213,7 +213,13 @@ FormCanvas >> drawString: aString from: firstIndex to: lastIndex at: aPoint font
 
 { #category : 'drawing - text' }
 FormCanvas >> drawString: aString from: firstIndex to: lastIndex in: bounds font: fontOrNil color: c [
-	| font portRect |
+
+	^ self drawString: aString from: firstIndex to: lastIndex in: bounds font: fontOrNil color: c scale: 1
+]
+
+{ #category : 'scaled drawing' }
+FormCanvas >> drawString: aString from: firstIndex to: lastIndex in: bounds font: fontOrNil color: c scale: scale [
+	| font portRect point |
 	port colorMap: nil.
 	portRect := port clipRect.
 	port clipByX1: bounds left + origin x
@@ -224,15 +230,24 @@ FormCanvas >> drawString: aString from: firstIndex to: lastIndex in: bounds font
 	port combinationRule: Form paint.
 	font installOn: port
 		foregroundColor: c
-		backgroundColor: Color transparent.
+		backgroundColor: Color transparent
+		scale: scale.
+	point := bounds topLeft + origin.
 	font displayString: aString asString on: port
-		from: firstIndex to: lastIndex at: (bounds topLeft + origin) kern: 0.
+		from: firstIndex to: lastIndex at: point kern: 0
+		baselineY: point y + (font ascent * scale) scale: scale.
 	port clipRect: portRect
 ]
 
 { #category : 'drawing - text' }
 FormCanvas >> drawString: aString from: firstIndex to: lastIndex in: bounds font: fontOrNil color: c underline: underline underlineColor: uc strikethrough: strikethrough strikethroughColor: sc [
-	| font portRect endPoint |
+
+	^ self drawString: aString from: firstIndex to: lastIndex in: bounds font: fontOrNil color: c underline: underline underlineColor: uc strikethrough: strikethrough strikethroughColor: sc scale: 1
+]
+
+{ #category : 'scaled drawing' }
+FormCanvas >> drawString: aString from: firstIndex to: lastIndex in: bounds font: fontOrNil color: c underline: underline underlineColor: uc strikethrough: strikethrough strikethroughColor: sc scale: scale [
+	| font portRect endPoint point |
 	port colorMap: nil.
 	portRect := port clipRect.
 	port clipByX1: bounds left + origin x
@@ -243,20 +258,25 @@ FormCanvas >> drawString: aString from: firstIndex to: lastIndex in: bounds font
 	port combinationRule: Form paint.
 	font installOn: port
 		foregroundColor: c
-		backgroundColor: Color transparent.
+		backgroundColor: Color transparent
+		scale: scale.
+	point := bounds topLeft + origin.
 	endPoint := font displayString: aString asString on: port
-		from: firstIndex to: lastIndex at: (bounds topLeft + origin) kern: 0.
+		from: firstIndex to: lastIndex at: point kern: 0
+		baselineY: point y + (font ascent * scale) scale: scale.
 	underline ifTrue:[
 		font installOn: port
 			foregroundColor: uc
-			backgroundColor: Color transparent;
-			displayUnderlineOn: port from: (bounds topLeft + origin + (0@font ascent)) to: endPoint.
+			backgroundColor: Color transparent
+			scale: scale;
+			displayUnderlineOn: port from: (bounds topLeft + origin + (0@(font ascent * scale))) to: endPoint scale: scale.
 		].
 	strikethrough ifTrue: [
 		font installOn: port
 			foregroundColor: sc
-			backgroundColor: Color transparent;
-			displayStrikeoutOn: port from: (bounds topLeft + origin + (0@font ascent)) to: endPoint.
+			backgroundColor: Color transparent
+			scale: scale;
+			displayStrikeoutOn: port from: (bounds topLeft + origin + (0@(font ascent * scale))) to: endPoint scale: scale.
 	].
 
 	port clipRect: portRect
@@ -473,10 +493,17 @@ FormCanvas >> origin [
 { #category : 'drawing' }
 FormCanvas >> paragraph: para bounds: bounds color: c [
 
+	^ self paragraph: para bounds: bounds color: c scale: 1
+]
+
+{ #category : 'scaled drawing' }
+FormCanvas >> paragraph: para bounds: bounds color: c scale: scale [
+
 	| scanner |
 	self setPaintColor: c.
 	scanner := (port clippedBy: (bounds translateBy: origin)) displayScannerFor: para
 		foreground: c.
+	scanner scale: scale.
 	para displayOn: (self copyClipRect: bounds) using: scanner at: origin+ bounds topLeft
 ]
 
@@ -527,6 +554,12 @@ FormCanvas >> resetGrafPort [
 
 	port := GrafPort toForm: form.
 	port clipRect: clipRect
+]
+
+{ #category : 'accessing' }
+FormCanvas >> scale [
+
+	^ 1
 ]
 
 { #category : 'private' }
@@ -630,25 +663,6 @@ FormCanvas >> setPaintColor: aColor [
 	patternWord := form pixelWordFor: paintColor.
 	port fillPattern: (screen collect: [:maskWord | maskWord bitAnd: patternWord]).
 	port combinationRule: Form paint
-]
-
-{ #category : 'other' }
-FormCanvas >> showAt: pt [
-
-	^ form displayAt: pt
-]
-
-{ #category : 'other' }
-FormCanvas >> showAt: pt invalidRects: updateRects [
-	| blt |
-	blt := (BitBlt toForm: Display)
-			sourceForm: form;
-			combinationRule: Form over.
-	updateRects do:
-		[:rect |
-		blt sourceRect: rect;
-			destOrigin: rect topLeft + pt;
-			copyBits]
 ]
 
 { #category : 'drawing - images' }

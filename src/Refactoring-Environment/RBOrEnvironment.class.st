@@ -106,7 +106,7 @@ RBOrEnvironment >> selectorsForClass: aClass do: aBlock [
 				ifFalse: [ aBlock value: each ] ]
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBOrEnvironment >> storeOn: aStream [
 	aStream nextPut: $(.
 	environment storeOn: aStream.

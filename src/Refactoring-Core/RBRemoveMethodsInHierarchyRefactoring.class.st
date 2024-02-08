@@ -13,11 +13,7 @@ Script
 "
 Class {
 	#name : 'RBRemoveMethodsInHierarchyRefactoring',
-	#superclass : 'RBCompositeRefactoring',
-	#instVars : [
-		'selectors',
-		'class'
-	],
+	#superclass : 'ReRemoveMethodsRefactoring',
 	#category : 'Refactoring-Core-Refactorings',
 	#package : 'Refactoring-Core',
 	#tag : 'Refactorings'
@@ -29,50 +25,30 @@ RBRemoveMethodsInHierarchyRefactoring class >> selectors: aSelectorsCollection f
 	^ self new selectors: aSelectorsCollection from: aClass
 ]
 
-{ #category : 'preconditions' }
-RBRemoveMethodsInHierarchyRefactoring >> applicabilityPreconditions [ 
+{ #category : 'transforming' }
+RBRemoveMethodsInHierarchyRefactoring >> initializeRefactorings [
 
-	^ selectors
-			inject: self trueCondition
-			into: [ :cond :sel | cond & (RBCondition definesSelector: sel in: class) ]
+	classSelectorMapping keysAndValuesDo: [ :class :selectors |
+		class allSubclasses do: [ :aClass |
+			self remove: selectors in: aClass ] ]
 ]
 
 { #category : 'transforming' }
-RBRemoveMethodsInHierarchyRefactoring >> delete: aSelectorsCollection in: aClass [
+RBRemoveMethodsInHierarchyRefactoring >> remove: aSelectorsCollection in: aClass [
 
 	| containingMethods |
 	containingMethods := aSelectorsCollection select: [ :sel |
 		                     aClass realClass includesSelector: sel ].
 	containingMethods ifNotEmpty: [
-		refactorings add: (RBRemoveMethodsRefactoring
+		refactorings add: (ReRemoveMethodsRefactoring
 				 model: self model
 				 selectors: containingMethods
 				 from: aClass) ]
 ]
 
-{ #category : 'transforming' }
-RBRemoveMethodsInHierarchyRefactoring >> initializeRefactorings [
-
-	class withAllSubclasses do: [ :aClass |
-		self delete: selectors in: aClass ]
-]
-
-{ #category : 'removing' }
+{ #category : 'accessing' }
 RBRemoveMethodsInHierarchyRefactoring >> selectors: aSelectorsCollection from: aClass [
 
-	class := self classObjectFor: aClass.
-	selectors := aSelectorsCollection.
-	refactorings := OrderedCollection new.
+	super selectors: aSelectorsCollection from: aClass.
 	self initializeRefactorings 
-]
-
-{ #category : 'printing' }
-RBRemoveMethodsInHierarchyRefactoring >> storeOn: aStream [
-	aStream nextPut: $(.
-	self class storeOn: aStream.
-	aStream nextPutAll: ' removeMethods: '.
-	selectors asArray storeOn: aStream.
-	aStream nextPutAll: ' from: '.
-	class storeOn: aStream.
-	aStream nextPut: $)
 ]

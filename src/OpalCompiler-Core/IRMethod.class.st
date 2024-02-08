@@ -236,11 +236,12 @@ IRMethod >> isSend [
 ]
 
 { #category : 'printing' }
-IRMethod >> longPrintOn: stream [
+IRMethod >> longPrintString [
 
-	IRPrinter new
-		stream: stream;
-		visitNode: self
+	^ String streamContents: [ :stream |
+		IRPrinter new
+			stream: stream;
+			visitNode: self ]
 ]
 
 { #category : 'accessing' }

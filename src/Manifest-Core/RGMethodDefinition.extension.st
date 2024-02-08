@@ -16,16 +16,3 @@ RGMethodDefinition class >> manifestReadOn: aArray [
 		selector: (aArray at: 2)
 		isMeta: ((aArray at: 3) = #true)
 ]
-
-{ #category : '*Manifest-Core' }
-RGMethodDefinition >> storeOn: aStream [
-	aStream nextPut: $(.
-	aStream nextPutAll: self class asString.
-	aStream nextPutAll: ' className: '''.
-	aStream nextPutAll: self parentName.
-	aStream nextPutAll: ''' selector: '.
-	aStream nextPutAll: self selector printString.
-	aStream nextPutAll: ' isMeta: '.
-	aStream nextPutAll: self isMeta printString.
-	aStream nextPut: $)
-]

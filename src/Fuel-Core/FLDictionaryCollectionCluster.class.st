@@ -4,6 +4,9 @@ A FLDictionaryCollectionCluster is a cluster that rather than using the default 
 Class {
 	#name : 'FLDictionaryCollectionCluster',
 	#superclass : 'FLAbstractCollectionCluster',
+	#instVars : [
+		'ephemeronKeys'
+	],
 	#category : 'Fuel-Core-Clusters-Optimized',
 	#package : 'Fuel-Core',
 	#tag : 'Clusters-Optimized'
@@ -14,18 +17,35 @@ FLDictionaryCollectionCluster >> encodeExtraInformationForReferencesFor: aDictio
 	anEncoder encodeByte: (self hasRealAssociations: aDictionary) asBit
 ]
 
+{ #category : 'analyzing' }
+FLDictionaryCollectionCluster >> ephemeron: anEphemeron do: aBlock [
+	anEphemeron fuelCheckEphemeronSupport.
+	"Add strong reference to key so we know that from
+	now on the ephemeron won't be finalized."
+	ephemeronKeys add: anEphemeron key.
+	"Check that the ephemeron wasn't mourned yet. We might
+	have added the strong reference after finalization."
+	anEphemeron fuelWasMourned ifFalse: [ aBlock value: anEphemeron ]
+]
+
 { #category : 'testing' }
 FLDictionaryCollectionCluster >> hasRealAssociations: aDictionary [
-	"Only check the first association, assume that all other entries
+	"Weak assocations and ephemerons should not be serialized as simple key / value tuples
+	but with their actual class.
+
+	Only check the first association, assume that all other entries
 	are of the same type"
 	aDictionary associationsDo: [ :assoc |
-		^ #(
-			Association
-			WeakKeyAssociation
-			WeakValueAssociation
-		) includes: assoc className ].
+		^ assoc class == Association ].
 	
 	^ true
+]
+
+{ #category : 'initialization' }
+FLDictionaryCollectionCluster >> initialize [
+	super initialize.
+	
+	ephemeronKeys := OrderedCollection new
 ]
 
 { #category : 'serialize/materialize' }
@@ -55,13 +75,25 @@ FLDictionaryCollectionCluster >> materializeReferencesOf: aDictionary with: aDec
 
 { #category : 'analyzing' }
 FLDictionaryCollectionCluster >> referencesOf: aDictionary do: aBlock [	
-	"In Pharo 9 the class pool is a dictionary containing ClassVariables
-	pretending to be Associations. For that case we need to skip the optimization."
 	(self hasRealAssociations: aDictionary)
 		ifTrue: [
 			aDictionary keysAndValuesDo: [ :key :value |
 				aBlock
 					value: key;
 					value: value ] ]
-		ifFalse: [ aDictionary associationsDo: aBlock ]
+		ifFalse: [
+			self
+				specialAssociationsOf: aDictionary
+				do: aBlock ]
+]
+
+{ #category : 'analyzing' }
+FLDictionaryCollectionCluster >> specialAssociationsOf: aDictionary do: aBlock [
+	aDictionary associationsDo: [ :association |
+		association fuelIsEphemeron
+			ifFalse: [ aBlock value: association ]
+			ifTrue: [
+				self
+					ephemeron: association
+					do: aBlock ] ]
 ]

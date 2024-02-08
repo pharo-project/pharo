@@ -205,9 +205,10 @@ RBSequenceNode >> allDefinedVariables [
 
 { #category : 'accessing' }
 RBSequenceNode >> allStatements [
-	^ statements asOrderedCollection copy
-			addAll: super allStatements;
-			yourself
+
+	^ (OrderedCollection withAll: statements)
+		  addAll: super allStatements;
+		  yourself
 ]
 
 { #category : 'accessing' }

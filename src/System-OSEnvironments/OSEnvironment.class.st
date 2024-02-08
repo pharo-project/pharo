@@ -42,7 +42,7 @@ OSEnvironment class >> environmentFor: aPlatform [
 		detect: [ :each | each isDefaultFor: aPlatform ]
 		ifNone: [ nil ].
 
-	^ (environmentClass notNil and: [ environmentClass isAvailable  ])
+	^ (environmentClass isNotNil and: [ environmentClass isAvailable  ])
 		ifTrue: [ environmentClass platform: aPlatform ]
 		ifFalse: [ NullOSEnvironment platform: aPlatform ]
 ]

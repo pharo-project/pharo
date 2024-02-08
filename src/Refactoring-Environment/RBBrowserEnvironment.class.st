@@ -360,7 +360,7 @@ RBBrowserEnvironment >> forPragmas: aKeywordCollection [
 RBBrowserEnvironment >> handleSystemChange: aSystemAnnouncement [
 
 	| todoList todoSize anyResult |
-	todoList := 	(queryCache values select: [ :each | each notNil ]) as: IdentitySet.
+	todoList := 	(queryCache values select: [ :each | each isNotNil ]) as: IdentitySet.
 	todoSize := 0.
 	[[todoSize = todoList size] whileFalse: [
 		todoSize := todoList size.
@@ -769,7 +769,7 @@ RBBrowserEnvironment >> shortDescription [
 	^ self description contractTo: 50
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBBrowserEnvironment >> storeOn: aStream [
 	aStream
 		nextPutAll: self class name;

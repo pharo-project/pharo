@@ -604,33 +604,29 @@ String >> asCamelCase [
 String >> asComment [
 	"return this string, munged so that it can be treated as a comment in Smalltalk code.  Quote marks are added to the beginning and end of the string, and whenever a solitary quote mark appears within the string, it is doubled"
 
-	^String streamContents:  [ :str |
-		| quoteCount first |
+	^ String streamContents: [ :str |
+		  | quoteCount first |
+		  str nextPut: $".
 
-		str nextPut: $".
+		  quoteCount := 0.
+		  first := true.
+		  self withIndexDo: [ :char :index |
+			  char = $"
+				  ifTrue: [
+					  (first or: (index = self size) ) ifFalse: [
+						  str nextPut: char.
+						  quoteCount := quoteCount + 1 ] ]
+				  ifFalse: [
+					  quoteCount odd ifTrue: [ "add a quote to even the number of quotes in a row"
+						  str nextPut: $" ].
+					  quoteCount := 0.
+					  str nextPut: char ].
+			  first := false ].
+		
+		   quoteCount odd
+			  ifTrue: [ "check at the end" str nextPut: $" ].
 
-		quoteCount := 0.
-		first := true.
-		self do: [ :char |
-			char = $"
-				ifTrue: [
-					first ifFalse: [
-						str nextPut: char.
-						quoteCount := quoteCount + 1 ] ]
-				ifFalse: [
-					quoteCount odd ifTrue: [
-						"add a quote to even the number of quotes in a row"
-						str nextPut: $" ].
-					quoteCount := 0.
-					str nextPut: char ].
-			first := false ].
-
-		quoteCount odd ifTrue: [
-			"check at the end"
-			str nextPut: $". ].
-
-		str nextPut: $".
-	]
+		  str nextPut: $" ]
 ]
 
 { #category : 'converting' }
@@ -769,29 +765,6 @@ String >> asTime [
 ]
 
 { #category : 'converting' }
-String >> asUncommentedCode [
-	"this string represents a commented code, let's uncomment it"
-
-	^ String streamContents:  [ :str |
-
-		|doubleQuoteAlreadyFound|
-		doubleQuoteAlreadyFound := false.
-
-		self withoutQuoting do: [ :char |
-			char = $"
-				ifTrue: [
-					doubleQuoteAlreadyFound 	ifTrue: [
-							str nextPut: $" ].
-					doubleQuoteAlreadyFound := doubleQuoteAlreadyFound not.
-				]
-				ifFalse: [
-					str nextPut: char
-				]
-		 ]
-	]
-]
-
-{ #category : 'converting' }
 String >> asUnsignedInteger [
 	"Returns the first integer it can find or nil."
 	| start stream |
@@ -857,6 +830,7 @@ String >> beginsWith: prefix [
 	"('pharo' beginsWith: 'pharo-project') >>> false"
 	"('pharo' beginsWith: 'phuro') >>> false"
 	"('pharo' beginsWith: 'pha') >>> true"
+	
 	prefix ifEmpty: [ ^true ].
 	(self class isBytes and: [ prefix class isBytes ]) ifFalse: [^super beginsWith: prefix].
 
@@ -908,6 +882,9 @@ String >> byteSize [
 { #category : 'converting' }
 String >> capitalized [
 	"Return a copy with the first letter capitalized"
+	
+	"'abc' capitalized >>> 'Abc'"
+	
 	| cap |
 	self isEmpty ifTrue: [ ^self copy ].
 	cap := self copy.
@@ -1165,7 +1142,7 @@ String >> deepCopy [
 	^self shallowCopy
 ]
 
-{ #category : 'printing' }
+{ #category : 'displaying' }
 String >> displayStringOn: aStream [
 	"Make sure that this is not printOn: because we do not want to have multiple quotes."
 	aStream nextPutAll: self
@@ -1412,20 +1389,18 @@ String >> findBetweenSubstrings: delimiters [
 ]
 
 { #category : 'finding/searching' }
-String >> findCloseParenthesisFor: startIndex [
-	"assume (self at: startIndex) is $(.  Find the matching $), allowing parentheses to nest."
-	" '(1+(2-3))-3.14159' findCloseParenthesisFor: 1 "
-	" '(1+(2-3))-3.14159' findCloseParenthesisFor: 4 "
-	| pos nestLevel |
-	pos := startIndex+1.
+String >> findClosing: close startingAt: startIndex [
+	"Assume the opening character is given at startIndex. Find the matching closing character, taking nesting into account."
+
+	| open nestLevel current |
+	self size < startIndex ifTrue: [ ^ 0 ].
+	open := self at: startIndex.
 	nestLevel := 1.
-	[ pos <= self size ] whileTrue: [
-		(self at: pos) = $( ifTrue: [ nestLevel := nestLevel + 1 ].
-		(self at: pos) = $) ifTrue: [ nestLevel := nestLevel - 1 ].
-		nestLevel = 0 ifTrue: [ ^pos ].
-		pos := pos + 1.
-	].
-	^self size + 1
+	startIndex + 1 to: self size do: [ :pos |
+		(current := self at: pos) == close
+			ifTrue: [ (nestLevel := nestLevel - 1) == 0 ifTrue: [ ^ pos ] ]
+			ifFalse: [ current == open ifTrue: [ nestLevel := nestLevel + 1 ] ] ].
+	^ 0
 ]
 
 { #category : 'finding/searching' }
@@ -2522,7 +2497,7 @@ String >> stemAndNumericSuffix [
 	^ { stem . suffix }
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 String >> storeOn: aStream [
 	"Print inside string quotes, doubling inbedded quotes."
 

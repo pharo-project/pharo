@@ -119,6 +119,7 @@ DAPackageTreePresenter >> initializePresenters [
 		children: [ :node | node buildChildren ];
 		display: [ :node | node label ];
 		displayIcon: [ :node | node icon ];
+		expandRoots; "<= We want to open the browser with the dependencies displayed to the user"
 		yourself.
 
 	buttonRefresh := self newButton

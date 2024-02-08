@@ -42,6 +42,18 @@ RBExtractMethodRefactoring class >> model: aRBSmalltalk extract: anInterval from
 		yourself
 ]
 
+{ #category : 'preconditions' }
+RBExtractMethodRefactoring >> applicabilityPreconditions [ 
+	^(RBCondition definesSelector: selector in: class)
+		& (RBCondition withBlock:
+					[self extractMethod.
+					self checkSpecialExtractions.
+					self checkReturn.
+					needsReturn ifTrue: [extractedParseTree addReturn].
+					self checkTemporaries.
+					true])
+]
+
 { #category : 'transforming' }
 RBExtractMethodRefactoring >> checkAssignments: variableNames [
 	| node outsideVars removeAssigned |
@@ -282,7 +294,7 @@ RBExtractMethodRefactoring >> isParseTreeEquivalentTo: aSelector [
 					(class superclass whichClassIncludesSelector: aSelector)
 						~= (definingClass superclass whichClassIncludesSelector: each)]) not])
 		ifFalse: [^false].
-	^self shouldUseExistingMethod: aSelector
+	^ true
 ]
 
 { #category : 'accessing' }
@@ -348,18 +360,6 @@ RBExtractMethodRefactoring >> placeholderNode [
 		in: modifiedParseTree.
 	node ifNil: [ self refactoringError: 'Cannot extract code' ].
 	^ node
-]
-
-{ #category : 'preconditions' }
-RBExtractMethodRefactoring >> preconditions [
-	^(RBCondition definesSelector: selector in: class)
-		& (RBCondition withBlock:
-					[self extractMethod.
-					self checkSpecialExtractions.
-					self checkReturn.
-					needsReturn ifTrue: [extractedParseTree addReturn].
-					self checkTemporaries.
-					true])
 ]
 
 { #category : 'transforming' }
@@ -436,7 +436,7 @@ RBExtractMethodRefactoring >> startLimit: aNumber [
 	^ aNumber
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBExtractMethodRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

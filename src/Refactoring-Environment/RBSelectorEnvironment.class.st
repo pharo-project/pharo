@@ -200,12 +200,12 @@ RBSelectorEnvironment >> classesDo: aBlock [
 	classSelectors keysDo: [ :each |
 		| class |
 		class := self systemDictionary at: each ifAbsent: [ nil ].
-		(class notNil and: [ environment includesClass: class ])
+		(class isNotNil and: [ environment includesClass: class ])
 			ifTrue: [ aBlock value: class ] ].
 	metaClassSelectors keysDo: [ :each |
 		| class |
 		class := self systemDictionary at: each ifAbsent: [ nil ].
-		(class notNil and: [ environment includesClass: class class ])
+		(class isNotNil and: [ environment includesClass: class class ])
 			ifTrue: [ aBlock value: class class ] ]
 ]
 
@@ -311,7 +311,7 @@ RBSelectorEnvironment >> selectorsForClass: aClass do: aBlock [
 		  (aClass includesSelector: each) ifTrue: [ aBlock value: each ] ]
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBSelectorEnvironment >> storeOn: aStream [
 	| classBlock |
 	aStream

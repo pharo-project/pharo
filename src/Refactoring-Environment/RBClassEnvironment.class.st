@@ -43,11 +43,6 @@ RBClassEnvironment class >> onEnvironment: anEnvironment classes: aCollection [
 		classes: aCollection; yourself
 ]
 
-{ #category : 'visiting' }
-RBClassEnvironment >> acceptVisitor: aEnvVisitor [
-	^ aEnvVisitor visitClassEnv: self
-]
-
 { #category : 'adding' }
 RBClassEnvironment >> addClass: aClass [
 	aClass isMeta
@@ -106,12 +101,12 @@ RBClassEnvironment >> classesDo: aBlock [
 	classes do: [ :each |
 		| class |
 		class := self systemDictionary at: each ifAbsent: [ nil ].
-		(class notNil and: [ environment includesClass: class ])
+		(class isNotNil and: [ environment includesClass: class ])
 			ifTrue: [ aBlock value: class ] ].
 		metaClasses do: [ :each |
 		| class |
 		class := self systemDictionary at: each ifAbsent: [ nil ].
-		(class notNil and: [ environment includesClass: class classSide ])
+		(class isNotNil and: [ environment includesClass: class classSide ])
 			ifTrue: [ aBlock value: class classSide ] ]
 ]
 
@@ -207,7 +202,7 @@ RBClassEnvironment >> selectors [
 			self selectorsForClass: class do: [ :selector | stream nextPut: selector ] ] ]
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBClassEnvironment >> storeOn: aStream [
 	aStream nextPut: $(.
 	super storeOn: aStream.

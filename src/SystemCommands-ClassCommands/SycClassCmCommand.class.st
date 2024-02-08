@@ -5,7 +5,8 @@ Class {
 	#name : 'SycClassCmCommand',
 	#superclass : 'SycCmCommand',
 	#instVars : [
-		'targetClass'
+		'targetClass',
+		'refactoringScopes'
 	],
 	#category : 'SystemCommands-ClassCommands',
 	#package : 'SystemCommands-ClassCommands'
@@ -19,5 +20,6 @@ SycClassCmCommand class >> activationStrategy [
 { #category : 'preparation' }
 SycClassCmCommand >> prepareFullExecution [
 	super prepareFullExecution.
+	refactoringScopes := context refactoringScopes.
 	targetClass := context lastSelectedClass
 ]

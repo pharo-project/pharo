@@ -6,7 +6,7 @@ I just ask user to type trait definition in dialog window. Then I compile trait 
 Internal Representation and Key Implementation Points.
 
     Instance Variables
-	package:		<RPackage>
+	package:		<Package>
 	classTag:		<Symcol>
 
 "
@@ -47,19 +47,12 @@ ClyCreateTraitCommand >> defaultMenuItemName [
 
 { #category : 'command execution' }
 ClyCreateTraitCommand >> execute [
-	| traitDefinition category resultTrait |
-	category := package name.
-	packageTag ifNotNil: [ category := category , '-' , packageTag ].
-	traitDefinition := ClassDefinitionPrinter fluid traitDefinitionTemplateInPackage: category.
-	traitDefinition := UIManager default
-		                   multiLineRequest: 'Define trait:'
-		                   initialAnswer: traitDefinition
-		                   answerHeight: 250.
+
+	| traitDefinition resultTrait |
+	traitDefinition := ClassDefinitionPrinter fluid traitDefinitionTemplateInPackage: package name tag: packageTag named: #TMyTrait.
+	traitDefinition := self morphicUIManager multiLineRequest: 'Define trait:' initialAnswer: traitDefinition answerHeight: 250.
 	traitDefinition isEmptyOrNil ifTrue: [ ^ self ].
-	resultTrait := browser
-		               compileANewClassFrom: traitDefinition
-		               notifying: nil
-		               startingFrom: nil.
+	resultTrait := browser compileANewClassFrom: traitDefinition notifying: nil startingFrom: nil.
 	resultTrait ifNotNil: [ browser selectClass: resultTrait ]
 ]
 

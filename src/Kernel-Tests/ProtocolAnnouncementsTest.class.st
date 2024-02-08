@@ -3,28 +3,11 @@ I am a test case specialized in checking that the announcements linked to protoc
 "
 Class {
 	#name : 'ProtocolAnnouncementsTest',
-	#superclass : 'AbstractClassDescriptionTest',
-	#instVars : [
-		'numberOfAnnouncements'
-	],
+	#superclass : 'AbstractClassDescriptionAnnouncementTest',
 	#category : 'Kernel-Tests-Classes',
 	#package : 'Kernel-Tests',
 	#tag : 'Classes'
 }
-
-{ #category : 'running' }
-ProtocolAnnouncementsTest >> setUp [
-
-	super setUp.
-	numberOfAnnouncements := 0
-]
-
-{ #category : 'running' }
-ProtocolAnnouncementsTest >> tearDown [
-
-	SystemAnnouncer uniqueInstance unsubscribe: self.
-	super tearDown
-]
 
 { #category : 'tests - adding' }
 ProtocolAnnouncementsTest >> testAddProtocolAnnouncement [
@@ -190,15 +173,4 @@ ProtocolAnnouncementsTest >> testRenameProtocolAsAnnounceNewProtocol [
 	class renameProtocol: #demon as: #titan.
 
 	self assert: numberOfAnnouncements equals: 1
-]
-
-{ #category : 'helpers' }
-ProtocolAnnouncementsTest >> when: anAnnouncement do: aBlock [
-
-	SystemAnnouncer uniqueInstance
-		when: anAnnouncement
-		do: [ :ann |
-			numberOfAnnouncements := numberOfAnnouncements + 1.
-			aBlock cull: ann ]
-		for: self
 ]

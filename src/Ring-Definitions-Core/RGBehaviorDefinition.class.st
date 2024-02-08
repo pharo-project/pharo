@@ -464,7 +464,7 @@ RGBehaviorDefinition >> soleInstance [
 	^self instanceSide
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RGBehaviorDefinition >> storeOn: aStream [
 	self name storeOn: aStream
 ]

@@ -192,7 +192,7 @@ OldClassDefinitionBuilder >> build [
 		  aBuilder package: converter packageName.
 		  aBuilder tag: converter tagName.
 
-		  poolDictionariesNames ifNotNil: [ aBuilder sharedPools: poolDictionariesNames ].
+		  poolDictionariesNames ifNotNil: [ aBuilder sharedPoolsFromString: poolDictionariesNames ].
 		  isTrait ifTrue: [ aBuilder beTrait ].
 		  traitsDefinition ifNotNil: [ aBuilder traitComposition: (self class compiler evaluate: traitsDefinition) ] ]
 ]

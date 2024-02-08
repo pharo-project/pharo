@@ -18,17 +18,17 @@ Class {
 }
 
 { #category : 'instance creation' }
-RBPushDownMethodRefactoring class >> model: aRBSmalltalk pushDown: selectorCollection from: aClass [
+RBPushDownMethodRefactoring class >> model: anEnvironment pushDown: selectorCollection from: aClass [
 	^ self new
-		model: aRBSmalltalk;
+		model: anEnvironment;
 		pushDown: selectorCollection from: aClass;
 		yourself
 ]
 
 { #category : 'instance creation' }
-RBPushDownMethodRefactoring class >> model: aRBSmalltalk pushDown: selectorCollection from: aClass in: classes [
+RBPushDownMethodRefactoring class >> model: anEnvironment pushDown: selectorCollection from: aClass in: classes [
 	^ self new
-		model: aRBSmalltalk;
+		model: anEnvironment;
 		pushDown: selectorCollection from: aClass in: classes;
 		yourself
 ]
@@ -89,19 +89,18 @@ RBPushDownMethodRefactoring >> classes: aCollection [
 
 { #category : 'executing' }
 RBPushDownMethodRefactoring >> generateChanges [
-
+	"Prepare, check the preconditions, and perform the actual transformation (i.e., creating a list of changes that can be accessible using the changes message). This method should not be invoked from drivers since drivers usually check in finer grained mode the preconditions - and that this stage they already checked the preconditions."
+	
 	self prepareForExecution.
 
 	self applicabilityPreconditions check ifFalse: [
 		RBApplicabilityChecksFailedError signal:
 			self applicabilityPreconditions errorString ].
-
 	self breakingChangePreconditions check ifFalse: [
 		RBBreakingChangeChecksFailedWarning signal:
 			self breakingChangePreconditions errorString ].
 
 	self privateTransform.
-
 	^ self changes
 ]
 
@@ -164,7 +163,7 @@ RBPushDownMethodRefactoring >> selectors: aList [
 	selectors := aList
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBPushDownMethodRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

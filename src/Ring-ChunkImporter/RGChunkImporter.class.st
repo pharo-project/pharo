@@ -159,7 +159,7 @@ RGChunkImporter >> createBehavior: subclassName superclassName: superclassName i
 
 	| behavior superclass |
 
-	self assert: subclassName notNil.
+	self assert: subclassName isNotNil.
 
 	isTrait
 		ifTrue: [

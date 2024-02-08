@@ -1,13 +1,6 @@
 Extension { #name : 'String' }
 
 { #category : '*Graphics-Canvas' }
-String >> displayAt: aPoint [
-	"Display the receiver as a DisplayText at aPoint on the display screen."
-
-	self displayOn: Display at: aPoint
-]
-
-{ #category : '*Graphics-Canvas' }
 String >> displayOn: aDisplayMedium [
 	"Display the receiver on the given DisplayMedium."
 

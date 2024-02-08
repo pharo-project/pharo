@@ -11,5 +11,5 @@ Class {
 
 { #category : 'meta-data - dependency analyser' }
 ManifestCodeExport class >> manuallyResolvedDependencies [
-	^ #(#'Slot-Core' #'Collections-Abstract')
+	^ #(#'Collections-Abstract')
 ]

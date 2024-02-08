@@ -15,15 +15,10 @@ BaselineOfRing >> baseline: spec [
 				package: 'Ring-Core';
 				package: 'Ring-Monticello';
 				package: 'Ring-ChunkImporter';
-				package: 'Ring-Tests-Core';
-				package: 'Ring-Tests-Monticello';
-				package: 'Ring-Tests-ChunkImporter';
-				package: 'Ring-TraitsV2Support';
+				package: 'Ring-Core-Tests';
+				package: 'Ring-Monticello-Tests';
+				package: 'Ring-ChunkImporter-Tests';
+				package: 'Ring-TraitsSupport';
 				package: 'Ring-RuntimeSupport';
 				package: 'Calypso-Ring' ]
-]
-
-{ #category : 'accessing' }
-BaselineOfRing >> repository [
-	^ self packageRepositoryURL
 ]

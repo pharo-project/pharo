@@ -316,11 +316,11 @@ RBNamespace >> createNewClassFor: aBehavior [
 	className := aBehavior instanceSide name.
 	aBehavior isTrait
 		ifTrue: [
-			rbType := modelFactory rbTrait.
-			rbMetaType := modelFactory rbTraitMetaclass ]
+			rbType := self rbTraitClass.
+			rbMetaType := self rbTraitedMetaclassClass ]
 		ifFalse: [
-			rbType := modelFactory rbClass.
-			rbMetaType := modelFactory rbMetaclass ].
+			rbType := self rbClassClass.
+			rbMetaType := self rbMetaclassClass ].
 	nonMeta := rbType existingNamed: className model: self.
 	meta := rbMetaType existingNamed: className model: self.
 	nonMeta packageName: aBehavior package name.
@@ -331,7 +331,7 @@ RBNamespace >> createNewClassFor: aBehavior [
 { #category : 'accessing - classes' }
 RBNamespace >> createNewPackageFor: aPackage [
 	| package |
-	package := modelFactory rbPackage existingNamed: aPackage model: self.
+	package := self rbPackageClass existingNamed: aPackage model: self.
 	^changedPackages at: aPackage put: (Array with: package)
 ]
 
@@ -345,8 +345,8 @@ RBNamespace >> defineClass: aBlock [
 	newClass ifNil: [
 		| newMetaclass |
 		self unmarkAsRemoved: newClassName.
-		newClass := modelFactory rbClass named: newClassName.
-		newMetaclass := modelFactory rbMetaclass named: newClassName.
+		newClass := self rbClassClass named: newClassName.
+		newMetaclass := self rbMetaclassClass named: newClassName.
 		newClass model: self.
 		newMetaclass model: self.
 		newClasses at: newClassName put: (Array with: newClass with: newMetaclass) ].
@@ -356,7 +356,6 @@ RBNamespace >> defineClass: aBlock [
 			self rootClasses add: newClass.
 			newClass classSide superclass: (self classFor: Object class superclass) ]
 		ifNotNil: [ newClass classSide superclass: newClass superclass classSide ].
-	self flag: #refacto. "We shoult let the change create and fill the RB class IMO."
 	newClass instanceVariableNames: (change instanceVariableNames ifNil: [ '' ]).
 	newClass classVariableNames: (change classVariableNames ifNil: [ '' ]).
 	newClass poolDictionaryNames: (change sharedPoolNames ifNil: [ '' ]).
@@ -412,7 +411,7 @@ RBNamespace >> hasRemoved: aSymbol [
 
 { #category : 'testing' }
 RBNamespace >> includesClassNamed: aSymbol [
-	^(self classNamed: aSymbol) notNil
+	^(self classNamed: aSymbol) isNotNil
 ]
 
 { #category : 'testing' }
@@ -576,7 +575,7 @@ RBNamespace >> privateRootClasses [
 	{ ProtoObject } do: [ :each |
 		| class |
 		class := self classFor: each.
-		(class notNil and: [ class superclass isNil ]) ifTrue: [
+		(class isNotNil and: [ class superclass isNil ]) ifTrue: [
 			classes add: class ] ].
 	^ classes
 ]
@@ -701,7 +700,7 @@ RBNamespace >> reparentClasses: aRBClassCollection to: newClass [
 				name: aClass name;
 				slots: aClass instanceVariableNames;
 				sharedVariables: aClass classVariableNames;
-				sharedPools: (' ' join: aClass sharedPoolNames);
+				sharedPools: aClass sharedPoolNames;
 				package: aClass packageName;
 				tag: aClass tagName ] ]
 ]

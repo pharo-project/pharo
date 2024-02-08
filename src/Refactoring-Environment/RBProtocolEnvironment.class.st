@@ -34,11 +34,6 @@ RBProtocolEnvironment class >> onEnvironment: anEnvironment class: aClass protoc
 		class: aClass protocols: aCollection; yourself
 ]
 
-{ #category : 'visiting' }
-RBProtocolEnvironment >> acceptVisitor: aEnvVisitor [
-	^ aEnvVisitor visitProtocolEnv: self
-]
-
 { #category : 'adding' }
 RBProtocolEnvironment >> addProtocol: aSymbol [
 	protocols add: aSymbol
@@ -131,7 +126,7 @@ RBProtocolEnvironment >> removeProtocol: aSymbol [
 	protocols remove: aSymbol ifAbsent: [  ]
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBProtocolEnvironment >> storeOn: aStream [
 	aStream nextPut: $(.
 	super storeOn: aStream.

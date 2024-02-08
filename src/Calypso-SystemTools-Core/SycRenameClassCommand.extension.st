@@ -10,7 +10,7 @@ SycRenameClassCommand class >> browserContextMenuActivation [
 { #category : '*Calypso-SystemTools-Core' }
 SycRenameClassCommand class >> browserShortcutActivation [
 	<classAnnotation>
-
+	
 	^CmdShortcutActivation renamingFor: ClyClass asCalypsoItemContext
 ]
 

@@ -12,18 +12,10 @@ Class {
 	#instVars : [
 		'arguments'
 	],
-	#classInstVars : [
-		'singleton'
-	],
 	#category : 'System-BasicCommandLineHandler-Utilities',
 	#package : 'System-BasicCommandLineHandler',
 	#tag : 'Utilities'
 }
-
-{ #category : 'instance creation' }
-CommandLineArguments class >> default [
-	^singleton ifNil: [ singleton := self new ]
-]
 
 { #category : 'instance creation' }
 CommandLineArguments class >> withArguments: aCollection [

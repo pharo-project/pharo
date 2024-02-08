@@ -160,7 +160,7 @@ CharacterSetComplement >> size [
 	^Character maxVal + 1 - absent size
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 CharacterSetComplement >> storeOn: aStream [
 	"Store a description of the elements of the complement rather than self."
 

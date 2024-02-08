@@ -152,7 +152,7 @@ RBRefactoryChangeManager >> clearUndoRedoList [
 { #category : 'initialization' }
 RBRefactoryChangeManager >> connectToChanges [
 
-	SystemAnnouncer uniqueInstance weak
+	self class codeChangeAnnouncer weak
 		when: PackageTagAnnouncement,
 				ClassAdded,
 				ClassModifiedClassDefinition,
@@ -169,7 +169,7 @@ RBRefactoryChangeManager >> connectToChanges [
 { #category : 'initialization' }
 RBRefactoryChangeManager >> disconnectFromChanges [
 
-	SystemAnnouncer uniqueInstance unsubscribe: self
+	self class codeChangeAnnouncer unsubscribe: self
 ]
 
 { #category : 'testing' }
@@ -228,8 +228,7 @@ RBRefactoryChangeManager >> redoOperation [
 { #category : 'initialization' }
 RBRefactoryChangeManager >> release [
 
-	self disconnectFromChanges.
-	super release
+	self disconnectFromChanges
 ]
 
 { #category : 'public access' }

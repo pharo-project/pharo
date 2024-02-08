@@ -47,7 +47,7 @@ Screenshot >> makeAScreenshot [
 
 	| filePrefix |
 	filePrefix := 'PharoScreenshot'.
-	(UIManager default
+	(MorphicUIManager new
 		 chooseFrom: {
 				 'The entire world' translated.
 				 'A selected area' translated }
@@ -66,7 +66,7 @@ Screenshot >> makeAScreenshot [
 			putForm: form
 			onFileNamed:
 			(FileSystem workingDirectory / filePrefix , 'png') nextVersion.
-		UIManager default
+		MorphicUIManager new
 			inform: (String streamContents: [ :s |
 					 s
 						 nextPutAll: 'Screenshot saved under ';

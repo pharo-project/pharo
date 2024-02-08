@@ -93,6 +93,14 @@ RBCreateAccessorsForVariableTransformation class >> variable: aVarName class: aC
 		classVariable: aBoolean; yourself
 ]
 
+{ #category : 'preconditions' }
+RBCreateAccessorsForVariableTransformation >> applicabilityPreconditions [ 
+
+	^ classVariable
+		ifTrue: [RBCondition definesClassVariable: variableName asSymbol in: class]
+		ifFalse: [RBCondition definesInstanceVariable: variableName in: class]
+]
+
 { #category : 'initialization' }
 RBCreateAccessorsForVariableTransformation >> classVariable: aBoolean [
 	classVariable := aBoolean
@@ -169,7 +177,7 @@ RBCreateAccessorsForVariableTransformation >> findGetterMethod [
 	matcher := self createMatcher.
 	^ self possibleGetterSelectors
 		detect: [ :each |
-			(self checkClass: definingClass selector: each using: matcher) notNil
+			(self checkClass: definingClass selector: each using: matcher) isNotNil
 				and: [ (definingClass subclassRedefines: each) not ] ]
 		ifNone: [ nil ]
 ]
@@ -186,7 +194,7 @@ RBCreateAccessorsForVariableTransformation >> findSetterMethod [
 		ifFalse: [ self parseTreeSearcherClass setterMethod: variableName ].
 	^ self possibleSetterSelectors
 		detect: [ :each |
-			(self checkClass: definingClass selector: each using: matcher) notNil
+			(self checkClass: definingClass selector: each using: matcher) isNotNil
 				and: [ (definingClass subclassRedefines: each) not ] ]
 		ifNone: [ nil ]
 ]
@@ -245,15 +253,6 @@ RBCreateAccessorsForVariableTransformation >> possibleSetterSelectors [
 	^self methodsReferencingVariable select: [:each | each numArgs == 1]
 ]
 
-{ #category : 'preconditions' }
-RBCreateAccessorsForVariableTransformation >> preconditions [
-	"Checks that the class actually defines the variable from which we will build setter and getter."
-
-	^ classVariable
-		ifTrue: [RBCondition definesClassVariable: variableName asSymbol in: class]
-		ifFalse: [RBCondition definesInstanceVariable: variableName in: class]
-]
-
 { #category : 'transforming' }
 RBCreateAccessorsForVariableTransformation >> privateTransform [
 	self
@@ -281,7 +280,7 @@ RBCreateAccessorsForVariableTransformation >> setterMethodName [
 	^ setterMethodName
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBCreateAccessorsForVariableTransformation >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

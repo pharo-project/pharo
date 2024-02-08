@@ -16,26 +16,6 @@ DAMessageSendAnalyzerTest >> setUp [
 ]
 
 { #category : 'tests' }
-DAMessageSendAnalyzerTest >> testRPackage [
-
-	self assert: (analyzer rPackage isKindOf: RPackage).
-	analyzer := DAMessageSendAnalyzer on: 'Unloaded-Dummy-Package'.
-	self
-		assert: (analyzer rPackage isKindOf: RPackage)
-		description: 'It test that rPackage still answer a RPackage even when the analyzer was instantiated with an unexisting or unloaded package'.
-	self assert: analyzer rPackage definedClasses isEmpty.
-
-]
-
-{ #category : 'tests' }
-DAMessageSendAnalyzerTest >> testRPackageIsAnsweredWithLoadedPackage [
-
-	self
-		assertCollection: analyzer rPackage definedClasses
-		hasSameElements: { DASomeClass }
-]
-
-{ #category : 'tests' }
 DAMessageSendAnalyzerTest >> testShouldFindDependencyWhenUnimplementedCalls [
 	self
 		assert: analyzer missingMethods size
@@ -47,8 +27,25 @@ DAMessageSendAnalyzerTest >> testShouldGetPotentialMatchForUnimplementedCalls [
 
 	self
 		assert: (analyzer missingMethodsWithPotentialMatch values collect: [:each | each size])
-		equals: #(0 2 10).
+		equals: #(0 2 9).
 	self
 		assert: (analyzer missingMethodsWithPotentialMatchAfterManuallyResolvedDependenciesAddition values collect: #size)
-		equals: #(0 2 10)
+		equals: #(0 2 9)
+]
+
+{ #category : 'tests' }
+DAMessageSendAnalyzerTest >> testSystemPackage [
+
+	self assert: analyzer systemPackage class equals: Package.
+	analyzer := DAMessageSendAnalyzer on: 'Unloaded-Dummy-Package'.
+	self
+		assert: analyzer systemPackage class = Package
+		description: 'It test that rPackage still answer a Package even when the analyzer was instantiated with an unexisting or unloaded package'.
+	self assertEmpty: analyzer systemPackage definedClasses
+]
+
+{ #category : 'tests' }
+DAMessageSendAnalyzerTest >> testSystemPackageIsAnsweredWithLoadedPackage [
+
+	self assertCollection: analyzer systemPackage definedClasses hasSameElements: { DASomeClass }
 ]

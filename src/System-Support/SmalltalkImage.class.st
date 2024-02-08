@@ -92,24 +92,6 @@ SmalltalkImage class >> wordSize [
 	^ Smalltalk vm wordSize
 ]
 
-{ #category : 'startup - shutdown' }
-SmalltalkImage >> addToShutDownList: aClass [
-	"Startup and Shutdown are the responsibility of the SessionManager.
-	If you need to register in a specific category,
-	Please use registration methods provided in SessionManager / registration category."
-
-	SessionManager default registerUserClassNamed: aClass name
-]
-
-{ #category : 'startup - shutdown' }
-SmalltalkImage >> addToStartUpList: aClass [
-	"Startup and Shutdown are the responsibility of the SessionManager.
-	If you need to register in a specific category,
-	Please use registration methods provided in SessionManager / registration category."
-
-	SessionManager default registerUserClassNamed: aClass name
-]
-
 { #category : 'to clean later' }
 SmalltalkImage >> allClasses [
 	"Return all the class defines in the SmalltalkImage"
@@ -360,7 +342,7 @@ SmalltalkImage >> cleanUp [
 
 { #category : 'cleanup' }
 SmalltalkImage >> cleanUp: aggressive [
-	"Clean up. When aggressive is true, this will destroy change sets, etc."
+	"Clean up. When aggressive is true, this will destroy resources, etc."
 	"Smalltalk cleanUp: false"
 	"Smalltalk cleanUp: true"
 
@@ -369,20 +351,20 @@ SmalltalkImage >> cleanUp: aggressive [
 
 { #category : 'cleanup' }
 SmalltalkImage >> cleanUp: aggressive except: exclusions [
-	"Clean up. When aggressive is true, this will destroy resources, change sets, etc.
+	"Clean up. When aggressive is true, this will destroy resources, etc.
 	Leave out any classes specifically listed in exclusions."
 
-	"Smalltalk cleanUp: true except: {Point . ChangeSet}"
+	"Smalltalk cleanUp: true except: {Point}"
 
 	^self cleanUp: aggressive except: exclusions confirming: aggressive
 ]
 
 { #category : 'cleanup' }
 SmalltalkImage >> cleanUp: aggressive except: exclusions confirming: aBool [
-	"Clean up. When aggressive is true, this will destroy resources, change sets, etc.
+	"Clean up. When aggressive is true, this will destroy resources, etc.
 	Leave out any classes specifically listed in exclusions."
 
-	"Smalltalk cleanUp: true except: {Point . ChangeSet}
+	"Smalltalk cleanUp: true except: {Point}
 		- will ask for confirmation"
 	"SmalltalkImage current cleanUp: true except: {} confirming: false
 		- will not ask for confirmation"
@@ -699,8 +681,8 @@ SmalltalkImage >> fullNameForImageNamed: aString [
 { #category : 'memory space' }
 SmalltalkImage >> garbageCollect [
 	"Primitive. Reclaims all garbage and answers the size of the largest free chunk in old space."
-	Object flushDependents.
-	^self primitiveGarbageCollect
+
+	^ self primitiveGarbageCollect
 ]
 
 { #category : 'memory space' }
@@ -1334,6 +1316,12 @@ SmalltalkImage >> organization [
 	^globals organization
 ]
 
+{ #category : 'accessing' }
+SmalltalkImage >> packages [
+
+	^ self organization packages
+]
+
 { #category : 'memory space' }
 SmalltalkImage >> primBytesLeft [
 	"Primitive. Answer the number of free bytes available in old space.
@@ -1676,11 +1664,6 @@ SmalltalkImage >> saveSession [
 	"Save the current image without quitting and return it resuming status (whether it was restarted or in the same flow)."
 
 	^ self snapshot: true andQuit: false
-]
-
-{ #category : 'accessing' }
-SmalltalkImage >> session [
-	^ SessionManager default currentSession
 ]
 
 { #category : 'image, changes name' }

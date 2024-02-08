@@ -35,7 +35,7 @@ RBRealizeClassTransformation >> privateTransform [
 	self transform: self theClass classSide
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBRealizeClassTransformation >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.
@@ -58,9 +58,9 @@ RBRealizeClassTransformation >> transform: aClass [
 	
 	aClass allSelectors do: [ :selector |
 		definingClass := aClass whoDefinesMethod: selector.
-		(definingClass notNil and: [ definingClass ~= aClass ]) ifTrue: [
+		(definingClass isNotNil and: [ definingClass ~= aClass ]) ifTrue: [
 			method := definingClass methodFor: selector.
-			(method notNil and: [ method refersToSymbol: #subclassResponsibility ]) ifTrue: [
+			(method isNotNil and: [ method refersToSymbol: #subclassResponsibility ]) ifTrue: [
 				parseTree := method parseTree.
 				parseTree body
 					temporaries: OrderedCollection new;

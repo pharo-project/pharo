@@ -49,10 +49,40 @@ ByteArray >> asByteArray [
 	^ self
 ]
 
+{ #category : 'converting' }
+ByteArray >> asByteArrayOfSize: size [
+	"
+		'34523' asByteArray asByteArrayOfSize: 100.
+
+	(((
+		| repeats bytes |
+		repeats := 1000000.
+		bytes := '123456789123456789123456789123456789123456789123456789' asByteArray.
+		 [repeats timesRepeat: (bytes asByteArrayOfSize: 1024) ] timeToRun.
+	)))"
+
+	| bytes |
+	size < self size
+		ifTrue: [^ self error: 'bytearray bigger than ', size asString].
+	bytes := self asByteArray.
+	^ (ByteArray new: (size - bytes size)), bytes
+]
+
 { #category : 'private' }
 ByteArray >> asByteArrayPointer [
 	"Return a ByteArray describing a pointer to the contents of the receiver."
 	^self shouldNotImplement
+]
+
+{ #category : 'converting' }
+ByteArray >> asInteger [
+	"Convert me to an Integer, network byte order, most significant byte first, big endian"
+
+	| integer |
+	integer := 0.
+	self withIndexDo: [ :each :index |
+		integer := integer + (each bitShift: (self size - index) * 8) ].
+	^ integer
 ]
 
 { #category : 'converting' }
@@ -75,6 +105,20 @@ ByteArray >> atAllPut: value [
 
 	<primitive: 145>
 	super atAllPut: value
+]
+
+{ #category : 'bit manipulation' }
+ByteArray >> bitXor: aByteArray [
+	| answer |
+	answer := self copy.
+	1
+		to: (self size min: aByteArray size)
+		do:
+			[ :each |
+			answer
+				at: each
+				put: ((self at: each) bitXor: (aByteArray at: each)) ].
+	^ answer
 ]
 
 { #category : 'accessing' }
@@ -163,7 +207,7 @@ ByteArray >> hexDumpOn: aStream max: maxBytes [
 	i := 0.
 	self readStreamDo: [ :stream |
 		ch := stream next.
-		[ch notNil and: [ i < maxBytes ]] whileTrue: [
+		[ch isNotNil and: [ i < maxBytes ]] whileTrue: [
 			remainder := i \\ 16.
 			remainder = 0 ifTrue: [
 				i = 0 ifFalse: [ aStream cr ].
@@ -325,7 +369,7 @@ ByteArray >> shortAt: index put: value bigEndian: aBool [
 	^value
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 ByteArray >> storeOn: aStream [
 	aStream nextPutAll: '#['.
 	self

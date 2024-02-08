@@ -20,7 +20,7 @@ FLFullBlockClosureSerializationTest >> testBlockClosureChangeDifferentBytecodes 
 		in: aClass.
 	aClosure := aClass new perform: #methodWithClosure.
 	self assert: aClosure isClean.
-	self assert: aClosure outerContext notNil.
+	self assert: aClosure outerContext isNotNil.
 	
 	self serializer fullySerializeMethod: aClosure compiledBlock method.
 	self serialize: aClosure.
@@ -69,7 +69,7 @@ FLFullBlockClosureSerializationTest >> testBlockClosureChangeDifferentBytecodesN
 		in: aClass.
 	aClosure := aClass new perform: #methodWithClosure.
 	self deny: aClosure isClean.
-	self assert: aClosure outerContext notNil.
+	self assert: aClosure outerContext isNotNil.
 	
 	self serializer fullySerializeMethod: aClosure compiledBlock method.
 	self serialize: aClosure.
@@ -123,7 +123,7 @@ FLFullBlockClosureSerializationTest >> testBlockClosureRemoved [
 		in: aClass.
 	aClosure := aClass new perform: #methodWithClosure.
 	self assert: aClosure isClean.
-	self assert: aClosure outerContext notNil.
+	self assert: aClosure outerContext isNotNil.
 	
 	self serializer fullySerializeMethod: aClosure compiledBlock method.
 	self serialize: aClosure.
@@ -168,7 +168,7 @@ FLFullBlockClosureSerializationTest >> testBlockClosureRemovedNonClean [
 		in: aClass.
 	aClosure := aClass new perform: #methodWithClosure.
 	self deny: aClosure isClean.
-	self assert: aClosure outerContext notNil.
+	self assert: aClosure outerContext isNotNil.
 	
 	self serializer fullySerializeMethod: aClosure compiledBlock method.
 	self serialize: aClosure.

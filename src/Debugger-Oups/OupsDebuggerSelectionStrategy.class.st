@@ -78,7 +78,8 @@ OupsDebuggerSelectionStrategy >> handled [
 
 { #category : 'accessing' }
 OupsDebuggerSelectionStrategy >> hasErrors [
-	^error notNil
+
+	^ error isNotNil
 ]
 
 { #category : 'iterating' }

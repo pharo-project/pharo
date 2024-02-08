@@ -169,12 +169,6 @@ Number >> addAssignToFloatArray: aFloatArray [
 ]
 
 { #category : 'converting' }
-Number >> asDuration [
-
- 	^ Duration seconds: self asInteger
-]
-
-{ #category : 'converting' }
 Number >> asFloat [
 	"Answer a floating-point number approximating the receiver."
 
@@ -220,11 +214,6 @@ Number >> asScaledDecimal: scale [
 	"Answer the receiver converted to a ScaledDecimal."
 
 	^ ScaledDecimal newFromNumber: self scale: scale
-]
-
-{ #category : 'converting' }
-Number >> asSeconds [
-	^ Duration milliSeconds: self * 1000
 ]
 
 { #category : 'converting' }
@@ -275,18 +264,6 @@ Number >> copySignTo: aNumber [
 		ifFalse: [aNumber abs negated]
 ]
 
-{ #category : 'accessing' }
-Number >> day [
-
- 	^ self days
-]
-
-{ #category : 'accessing' }
-Number >> days [
-
- 	^ Duration days: self
-]
-
 { #category : 'truncation and round off' }
 Number >> detentBy: detent atMultiplesOf: grid snap: snap [
 	"Map all values that are within detent/2 of any multiple of grid to that multiple.  Otherwise, if snap is true, return self, meaning that the values in the dead zone will never be returned.  If snap is false, then expand the range between dead zones so that it covers the range between multiples of the grid, and scale the value by that factor."
@@ -331,18 +308,6 @@ Number >> fractionPart [
 	^self - self integerPart
 ]
 
-{ #category : 'accessing' }
-Number >> hour [
-
- 	^ self hours
-]
-
-{ #category : 'accessing' }
-Number >> hours [
-
- 	^ Duration hours: self
-]
-
 { #category : 'truncation and round off' }
 Number >> integerPart [
 	"Added for ANSI compatibility"
@@ -373,55 +338,6 @@ Number >> isPowerOfTwo [
 { #category : 'testing' }
 Number >> isZero [
 	^self = 0
-]
-
-{ #category : 'accessing' }
-Number >> milliSecond [
-	"1 milliSecond printString >>> '0:00:00:00.001'"
-	"(1 second + 1 milliSecond) printString >>> '0:00:00:01.001'"
-
- 	^ self milliSeconds
-]
-
-{ #category : 'accessing' }
-Number >> milliSeconds [
-
-	"2 milliSeconds printString >>> '0:00:00:00.002'"
-	"(1 second + 2 milliSeconds) printString >>> '0:00:00:01.002'"
-
- 	^ Duration milliSeconds: self
-]
-
-{ #category : 'accessing' }
-Number >> minute [
-	"1 minute printString >>> '0:00:01:00'"
-	"(1 hour + 1 minute) printString >>> '0:01:01:00'"
-
- 	^ self minutes
-]
-
-{ #category : 'accessing' }
-Number >> minutes [
-	"2 minutes printString >>> '0:00:02:00'"
-	"(1 hour + 2 minutes) printString >>> '0:01:02:00'"
-
- 	^ Duration minutes: self
-]
-
-{ #category : 'accessing' }
-Number >> nanoSecond [
-	"1 nanoSecond printString >>> '0:00:00:00.000000001'"
-	"(1 milliSecond + 1 nanoSecond) printString >>> '0:00:00:00.001000001'"
-
- 	^ self nanoSeconds
-]
-
-{ #category : 'accessing' }
-Number >> nanoSeconds [
-	"2 nanoSeconds printString >>> '0:00:00:00.000000002'"
-	"(1 milliSecond + 2 nanoSeconds) printString >>> '0:00:00:00.001000002'"
-
- 	^ Duration nanoSeconds: self
 ]
 
 { #category : 'arithmetic' }
@@ -663,23 +579,6 @@ Number >> rounded [
 	^(self + (self sign / 2)) truncated
 ]
 
-{ #category : 'accessing' }
-Number >> second [
-	"1 second printString >>> '0:00:00:01'"
-	"(1 minute + 1 second) printString >>> '0:00:01:01'"
-
- 	^ self seconds
-]
-
-{ #category : 'accessing' }
-Number >> seconds [
-
-	"2 seconds printString >>> '0:00:00:02'"
-	"(1 minute + 2 seconds) printString >>> '0:00:01:02'"
-
- 	^ Duration seconds: self
-]
-
 { #category : 'converting' }
 Number >> sign [
 	"Answer 1 if the receiver is greater than 0, -1 if less than 0, else 0."
@@ -704,12 +603,12 @@ Number >> signBit [
 	^0
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 Number >> storeOn: aStream [
 	self printOn: aStream
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 Number >> storeOn: aStream base: base [
 	"This method should print a representation of the number for the given base,
 	including the base prefix (with letter r for radix)"
@@ -717,13 +616,18 @@ Number >> storeOn: aStream base: base [
 	^self subclassResponsibility
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 Number >> storeStringBase: base [
 	"Returns a string representation of the receiver in base 16 in a way that executing it will return the receiver."
 	"(10 storeStringBase: 16) >>> '16rA'"
 	"(10 storeStringBase: 10) >>> '10'"
 
 	^ String streamContents: [:strm | self storeOn: strm base: base]
+]
+
+{ #category : 'testing' }
+Number >> strictlyPositive [
+	^ self > 0
 ]
 
 { #category : 'printing' }
@@ -750,28 +654,4 @@ Number >> truncated [
 	"Answer an integer nearest the receiver toward zero."
 
 	^self quo: 1
-]
-
-{ #category : 'accessing' }
-Number >> week [
-
- 	^ self weeks
-]
-
-{ #category : 'accessing' }
-Number >> weeks [
-
- 	^ Duration weeks: self
-]
-
-{ #category : 'accessing' }
-Number >> year [
-
- 	^self years
-]
-
-{ #category : 'accessing' }
-Number >> years [
-
- 	^ Duration years: self
 ]

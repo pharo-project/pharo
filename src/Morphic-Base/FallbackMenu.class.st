@@ -64,7 +64,7 @@ FallbackMenu >> menu [
 	"Build the menu that is put up if something is going wrong with the menubuilder"
 
 	| menu |
-	menu := UIManager default newMenuIn: self currentWorld for: self.
+	menu := self morphicUIManager newMenuIn: self currentWorld for: self.
 	menu buildTitle: [ :menuTitle | menuTitle
 		onlyCloseAndPinable
 	].
@@ -77,4 +77,10 @@ FallbackMenu >> menu [
 	menu addLine.
 	client fallbackMenuOn: menu.
 	^ menu
+]
+
+{ #category : 'private' }
+FallbackMenu >> morphicUIManager [
+
+	^ MorphicUIManager new
 ]

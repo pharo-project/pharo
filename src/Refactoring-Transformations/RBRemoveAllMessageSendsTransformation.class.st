@@ -105,7 +105,7 @@ RBRemoveAllMessageSendsTransformation >> privateTransform [
 		self definingClass compileTree: methodTree ]
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBRemoveAllMessageSendsTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.

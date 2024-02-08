@@ -11,7 +11,8 @@ Class {
 		'repositories',
 		'operator',
 		'postLoadDoIt',
-		'className'
+		'className',
+		'projectInitialized'
 	],
 	#category : 'Metacello-Core-Specs',
 	#package : 'Metacello-Core',
@@ -44,17 +45,6 @@ MetacelloProjectSpec >> addToMetacelloPackages: aMetacelloPackagesSpec [
 			name: spec name;
 			spec: spec;
 			yourself)
-]
-
-{ #category : 'testing' }
-MetacelloProjectSpec >> allPackagesLoaded: aLoader [
-	"answer true if all of the packages (excluding projects) are loaded"
-
-	| vrsn pkgs |
-	(vrsn := self versionOrNil) ifNil: [ ^ false ].
-	pkgs := OrderedCollection new.
-	(self loadListForVersion: vrsn) do: [ :nm | vrsn packages do: [ :pkg | (pkg isPackageLoaded: aLoader) ifFalse: [ ^ false ] ] ].
-	^ true
 ]
 
 { #category : 'scripting' }
@@ -124,18 +114,6 @@ MetacelloProjectSpec >> className: aString [
 	self projectPackage: nil
 ]
 
-{ #category : 'testing' }
-MetacelloProjectSpec >> compareCurrentVersion: anOperator targetVersionStatus: targetVersionStatus using: anMCLoader [
-
-	^ (MetacelloLookupProjectSpecForLoad new
-		   projectSpec: self;
-		   yourself) signal
-		  performCurrentVersionTestAgainst: self versionOrNil
-		  operator: anOperator
-		  targetVersionStatus: targetVersionStatus
-		  using: anMCLoader
-]
-
 { #category : 'scripting' }
 MetacelloProjectSpec >> compareEqual: aMetacelloProjectSpec [
 	"'projectPackage repositories'"
@@ -160,12 +138,13 @@ MetacelloProjectSpec >> compareVersions: aMetacelloProjectSpec usingOperator: an
 
 { #category : 'scripting' }
 MetacelloProjectSpec >> compareVersionsEqual: aMetacelloProjectSpec [
-  | vrsn otherVrsn |
-  vrsn := self versionOrNil.
-  otherVrsn := aMetacelloProjectSpec versionOrNil.
-  vrsn ifNil: [ ^ vrsn = otherVrsn ].
-  otherVrsn ifNil: [ ^ false ].
-  ^ vrsn versionNumber = otherVrsn versionNumber
+
+	| vrsn otherVrsn |
+	vrsn := self versionOrNil.
+	otherVrsn := aMetacelloProjectSpec versionOrNil.
+	vrsn ifNil: [ ^ vrsn = otherVrsn ].
+	otherVrsn ifNil: [ ^ false ].
+	^ vrsn versionNumber = otherVrsn versionNumber
 ]
 
 { #category : 'printing' }
@@ -369,129 +348,25 @@ MetacelloProjectSpec >> copyForScriptingInto: aProjectSpec [
         file: file
 ]
 
-{ #category : 'loading' }
-MetacelloProjectSpec >> determineCurrentVersionForLoad [
-	"don't use self currentVersion, because we are interested in the currentVersion of the project as loaded in image, not the current version relative to our load list"
+{ #category : 'enumerating' }
+MetacelloProjectSpec >> currentlyLoadedClassesInVersion [
 
-	| prjct version currentVersion cvs |
-	self projectClass ifNil: [ ^ nil ].
-	(version := self versionOrNil) ifNil: [ ^ nil ].
-	version blessing == #baseline ifTrue: [ ^ version ].
-	self loader ignoreImage ifTrue: [ ^ version ].
-	prjct := self projectClass new project.
-	prjct loader: self loader.
-	(currentVersion := prjct currentVersion) ifNil: [ ^ nil ].
-	(cvs := currentVersion versionStatus) == #somethingLoaded ifTrue: [ ^ nil ].
-	(#( #allLoadedToSpec #loadedToSpec #loadedMatchConstraints ) includes: (cvs := currentVersion versionStatus)) ifTrue: [
-		(currentVersion perform: self operator with: version) ifTrue: [ "load currentVersion" ^ currentVersion ]. "load version"
-		^ nil ].
-	version = currentVersion ifTrue: [ ^ currentVersion ]. "I don't believe that it is possible to reach this point in the method, so I will be interested if I run across a case that produces this error"
-	(MetacelloProjectSpecLoadConflict projectSpec: self) signal:
-		'Project load conflict for' , prjct label printString , ' between current version ' , currentVersion printString , '(' , cvs asString
-		, ') and specified version ' , version printString , '. Press resume to continue with load anyway'.
-	^ nil
+	self versionOrNil ifNotNil: [ :vrsn |
+		^ vrsn spec currentlyLoadedClassesInVersion ].
+	^ #(  )
 ]
 
 { #category : 'loading' }
-MetacelloProjectSpec >> ensureConfigurationLoaded: vrsn ensured: ensured [
-  "answer true if the configuration should be reloaded:
-    blessing is #development
-    symbolic version (https://github.com/dalehenrich/metacello-work/issues/283)"
-
-  (vrsn blessing == #'development' or: [ self versionString isSymbol ])
-    ifTrue: [ 
-      ensured ~~ #'latest'
-        ifTrue: [ ^ MetacelloScriptEnsureProjectLoadedForDevelopment signal ] ].
-  ^ false
-]
-
-{ #category : 'loading' }
-MetacelloProjectSpec >> ensureLoadUsing: aLoader [
-  | pp |
-  pp := (MetacelloLookupProjectSpec new
-    projectSpec: self;
-    yourself) signal projectPackage.
-  pp
-    ifNil: [ 
-      self
-        error:
-          'Unable to resolve project package for ' , self name printString
-            ,
-              '. It is likely that that the configuration referencing this project will not validate properly (see MetacelloToolBox class>>validateConfiguration:).' ].
-  pp forceLoadUsing: aLoader
-]
-
-{ #category : 'loading' }
-MetacelloProjectSpec >> ensureLoadedForDevelopmentUsing: mcLoader [
-  "for #development projects, always need latest version of package when contemplating a load"
-  | ensured |
-
-	self isLocked ifTrue: [ 
-		mcLoader ensuredMap at: self name put: #'present'.
-		^ self ].
-
-	ensured := mcLoader ensuredMap at: self name ifAbsent: [ nil ].	
-	self projectClass ifNotNil: [
-		self ensureProjectLoaded: mcLoader ensured: ensured.
-		^ self ].
-
-  ensured ifNil: [ 
-	self ensureProjectFetch: mcLoader ]
-]
-
-{ #category : 'private - loading' }
-MetacelloProjectSpec >> ensureProjectFetch: mcLoader [
-
-	"projectClass == nil or version == nil"
-	mcLoader ensureForDevelopment 
-		ifTrue: [ 
-			self notifyCleanStackCache.
-			self ensureLoadUsing: mcLoader ]
-		ifFalse: [ 
-			self fetchUsing: mcLoader ].
-		
-	mcLoader ensuredMap 
-		at: self name 
-		put: #'present'
-]
-
-{ #category : 'loading' }
-MetacelloProjectSpec >> ensureProjectLoaded [
+MetacelloProjectSpec >> ensureProjectLoadedWithEngine: anEngine [
 	"Ensure that the MetacelloProject is loaded in image. 
 	 projectClass == nil or requested version non-existent warrants a project package load."
 
-	"answer true if the projectClass exists"
+	(projectInitialized and: [
+		 (self isMutable and: [ anEngine ignoreImage ]) not ]) ifTrue: [
+		^ self ].
 
-	(self projectClass isNil or: [ self versionOrNil isNil or: [ (loader notNil or: [ self isMutable ]) and: [ self loader ignoreImage ] ] ]) ifTrue: [
-		self projectClass ifNotNil: [ :pc |
-			MetacelloClearStackCacheNotification signal: #( #currentVersion #currentVersionAgainst: #currentVersionInfo #versionConstructor #loadableSpecNames ) , { pc } ].
-		self projectPackage ifNil: [ ^ true ].
-		self ensureLoadUsing: self loader ].
-	^ self projectClass isNotNil
-]
-
-{ #category : 'private - loading' }
-MetacelloProjectSpec >> ensureProjectLoaded: mcLoader ensured: ensured [
-	| version |
-
-	version := self versionOrNil.
-	version ifNil: [ ^ self ].
-	(self ensureConfigurationLoaded: version ensured: ensured)  ifFalse: [ ^ self ].
-	
-	mcLoader ensureForDevelopment
-		ifTrue: [ 
-			self notifyCleanStackCache.
-			self ensureLoadUsing: mcLoader ]
-		ifFalse: [ 
-			self projectPackage fetchUsing: mcLoader ].
-	mcLoader ensuredMap at: self name put: #'latest'
-]
-
-{ #category : 'loading' }
-MetacelloProjectSpec >> fetchUsing: aLoader [
-    (MetacelloLookupProjectSpec new
-        projectSpec: self;
-        yourself) signal projectPackage fetchUsing: aLoader
+	projectInitialized := true.
+	project := anEngine loader loadProject: self
 ]
 
 { #category : 'querying' }
@@ -605,6 +480,13 @@ MetacelloProjectSpec >> hasRepository [
     ^ self repositorySpecs notEmpty
 ]
 
+{ #category : 'initialization' }
+MetacelloProjectSpec >> initialize [
+
+	super initialize.
+	projectInitialized := false
+]
+
 { #category : 'testing' }
 MetacelloProjectSpec >> isBaselineOfProjectSpec [
 	^ false
@@ -623,27 +505,10 @@ MetacelloProjectSpec >> isLocked [
 	ifNil: [ false ]
 ]
 
-{ #category : 'testing' }
-MetacelloProjectSpec >> isPartiallyLoaded: aLoader [
-
-	| vrsn |
-	(vrsn := self versionOrNil) ifNil: [ ^ false ].
-	(self loadListForVersion: vrsn) do: [ :nm | (vrsn packagesForSpecNamed: nm) do: [ :pkg | (pkg isPackageLoaded: aLoader) ifTrue: [ ^ true ] ] ].
-	^ false
-]
-
 { #category : 'printing' }
 MetacelloProjectSpec >> label [
 
 	^self name
-]
-
-{ #category : 'loading' }
-MetacelloProjectSpec >> load [
-
-    (MetacelloLookupProjectSpecForLoad new
-        projectSpec: self;
-        yourself) signal performLoad
 ]
 
 { #category : 'private' }
@@ -661,63 +526,6 @@ MetacelloProjectSpec >> loadPackageList [
 	(vrsn := self versionOrNil) ifNil: [ ^ #(  ) ].
 	pkgs := OrderedCollection new.
 	(self loadListForVersion: vrsn) do: [ :nm | pkgs addAll: ((vrsn packagesForSpecNamed: nm) collect: [ :each | each name ]) ].
-	^ pkgs
-]
-
-{ #category : 'private - loading' }
-MetacelloProjectSpec >> loadProjectIsLocked: version [
-	"Just inform is already loaded"
-
-	MetacelloProjectSpecLoadedNotification new
-		projectSpec: (self copy versionString: version versionString);
-		signal
-]
-
-{ #category : 'loading' }
-MetacelloProjectSpec >> loadVersion: aVersionOrNil [
-	"Load the correct version of the project"
-
-	| vrsn mcLoader list |
-	self ensureProjectLoaded.
-	vrsn := aVersionOrNil.
-	vrsn ifNil: [
-		[ vrsn := self version ]
-			on: MetacelloVersionDoesNotExistError
-			do: [ :ex |
-				^ (MetacelloProjectSpecLoadError projectSpec: self)
-					  versionDoesNotExistException: ex;
-					  signal: 'No version found for ' , self versionString printString , ' of ' , self className asString , ' because: ' , ex description ] ].
-	mcLoader := self loader copy.
-	mcLoader operator: self operator.
-	vrsn loader: mcLoader.
-	list := (mcLoader ignoreImage
-		         ifTrue: [ self loadListForVersion: vrsn ]
-		         ifFalse: [ vrsn packageAndProjectNamesToLoad: (self loadListForVersion: vrsn) loader: mcLoader ]) asSet.
-	MetacelloPlatform current
-		useStackCacheDuring: [ :dict |
-			| projectCache |
-			projectCache := dict at: self projectClass ifAbsent: [ dict at: self projectClass put: Dictionary new ].
-			(projectCache at: vrsn ifAbsent: [  ])
-				ifNotNil: [ :cachedList |
-					(cachedList size = list size and: [ cachedList allSatisfy: [ :each | list includes: each ] ])
-						ifTrue: [ "no need to refetch list ... recursion stoppper (Issue 95)" ^ self ]
-						ifFalse: [ projectCache at: vrsn put: list ] ]
-				ifNil: [ projectCache at: vrsn put: list ].
-			vrsn versionString ~= self versionString ifTrue: [ MetacelloNotification signal: ' [' , vrsn versionString , ']' ].
-			mcLoader preLoad: self.
-			vrsn fetchRequiredFromArray: list. "do the load"
-			(MetacelloProjectSpecLoadedNotification new projectSpec: (self copy versionString: vrsn versionString)) signal.
-			mcLoader postLoad: self ]
-		defaultDictionary: Dictionary new
-]
-
-{ #category : 'accessing' }
-MetacelloProjectSpec >> loadedPackageNames: aLoader [
-
-	| vrsn pkgs |
-	(vrsn := self versionOrNil) ifNil: [ ^ #(  ) ].
-	pkgs := OrderedCollection new.
-	(self loadListForVersion: vrsn) do: [ :nm | (vrsn packagesForSpecNamed: nm) do: [ :pkg | (pkg isPackageLoaded: aLoader) ifTrue: [ pkgs add: pkg name ] ] ].
 	^ pkgs
 ]
 
@@ -758,10 +566,12 @@ MetacelloProjectSpec >> mergeRepositoriesSpec: anotherRepositories [
 
 { #category : 'scripting' }
 MetacelloProjectSpec >> mergeScriptLoads: aSpec [
-    self shouldBeMutable.
-    aSpec loads
-        ifNotNil: [ :otherLoads | self loads ifNil: [ loads := otherLoads ] ifNotNil: [ loads := (loads , otherLoads) asSet asArray ] ].
-    self loader: aSpec loader
+
+	self shouldBeMutable.
+	aSpec loads ifNotNil: [ :otherLoads |
+		self loads
+			ifNil: [ loads := otherLoads ]
+			ifNotNil: [ loads := (loads , otherLoads) asSet asArray ] ]
 ]
 
 { #category : 'scripting' }
@@ -814,13 +624,6 @@ MetacelloProjectSpec >> name: aString [
 { #category : 'merging' }
 MetacelloProjectSpec >> nonOverridable [
     ^ super nonOverridable , #(#'projectPackage' #'repositories')
-]
-
-{ #category : 'private - loading' }
-MetacelloProjectSpec >> notifyCleanStackCache [
-
-	self projectClass ifNotNil: [ :pc |
-		MetacelloClearStackCacheNotification signal: #( #currentVersion #currentVersionAgainst: #currentVersionInfo #versionConstructor #loadableSpecNames ) , { pc } ]
 ]
 
 { #category : 'querying' }
@@ -877,25 +680,14 @@ MetacelloProjectSpec >> preLoadDoIt: anObject [
 	anObject setPreLoadDoItInMetacelloSpec: self
 ]
 
-{ #category : 'querying' }
-MetacelloProjectSpec >> projectClass [
-
-	self className ifNil: [ ^ nil ].
-	^ Smalltalk at: self className asSymbol ifAbsent: [  ]
-]
-
-{ #category : 'querying' }
-MetacelloProjectSpec >> projectClassProject [
-    "indirection needed when projectClass is _not_ a subclass of MetacelloProject"
-
-    ^ self projectClass new project
-        setBaselineRepositoryDescription: self repositoryDescriptions;
-        yourself
-]
-
 { #category : 'visiting' }
 MetacelloProjectSpec >> projectDo: projectBlock packageDo: packageBlock groupDo: groupBlock [
     projectBlock value: self
+]
+
+{ #category : 'accessing' }
+MetacelloProjectSpec >> projectInitialized [
+	^ projectInitialized
 ]
 
 { #category : 'printing' }
@@ -931,27 +723,11 @@ MetacelloProjectSpec >> registration [
 
 { #category : 'scripting' }
 MetacelloProjectSpec >> registrationsCompareEqual: aMetacelloProjectSpec [
-    "name className versionString operator loads preLoadDoIt postLoadDoIt"
+	"name className versionString operator loads preLoadDoIt postLoadDoIt"
 
-    ^ self className = aMetacelloProjectSpec className
-        and: [ self versionString = aMetacelloProjectSpec versionString and: [ self operator == aMetacelloProjectSpec operator ] ]
-]
-
-{ #category : 'querying' }
-MetacelloProjectSpec >> relativeCurrentVersion [
-	"currentVersion calculated relative to the loadList"
-
-	| vrsn expanded loadList |
-	(vrsn := self versionOrNil) ifNil: [ ^ nil ].
-	expanded := [ vrsn expandToLoadableSpecNames: (loadList := self loadListForVersion: vrsn) ]
-		            on: Error
-		            do: [ :ex |
-			            vrsn blessing == #development ifTrue: [
-				            self ensureLoadUsing: self loader.
-				            vrsn := self versionOrNil.
-				            ex return: (vrsn expandToLoadableSpecNames: loadList) ].
-			            ex pass ].
-	^ self projectClassProject currentVersionAgainst: expanded
+	^ self className = aMetacelloProjectSpec className and: [
+		  self versionString = aMetacelloProjectSpec versionString and: [
+			  self operator == aMetacelloProjectSpec operator ] ]
 ]
 
 { #category : 'accessing' }
@@ -1036,100 +812,63 @@ MetacelloProjectSpec >> updateForSpawnMethod: sourceSpec [
 	sourceSpec ifNotNil: [ versionString := sourceSpec versionString ]
 ]
 
-{ #category : 'development support' }
-MetacelloProjectSpec >> updatePackageSpec: updatedSpecs [
-	"Add project copy to updatedSpecs if the current version of the project 
-	 is different from the receiver's version"
-
-	| prj currentVersion spec |
-	className ifNil: [ ^ self ].
-	prj := self projectClassProject.
-	(currentVersion := prj currentVersion) = self versionOrNil ifTrue: [ ^ self ].
-	currentVersion ifNil: [ ^ self ].
-	spec := self copy.
-	spec versionString: currentVersion versionString.
-	updatedSpecs at: spec name put: spec
-]
-
 { #category : 'scripting' }
 MetacelloProjectSpec >> validateForScriptLoad: aScriptEngine withDefaultVersionString: defaultVersionString withDefaultRepositoryDecription: defaultRepositoryDecription [
-    | issues callSite |
-    issues := OrderedCollection new.
-    callSite := #'validateForScriptLoad:withDefaultVersionString:withDefaultRepositoryDecription:'.
-    self name
-        ifNil: [ 
-            issues
-                add:
-                    (MetacelloValidationError
-                        configurationClass: self projectClass
-                        reasonCode: #'incompleteProjectSpec'
-                        callSite: callSite
-                        explanation: 'name field required') ].
-    self className
-        ifNil: [ 
-            issues
-                add:
-                    (MetacelloValidationError
-                        configurationClass: self projectClass
-                        reasonCode: #'incompleteProjectSpec'
-                        callSite: callSite
-                        explanation: 'className field required') ].
-    self repositories isEmpty
-        ifTrue: [ 
-            defaultRepositoryDecription
-                ifNotNil: [ self repository: defaultRepositoryDecription ]
-                ifNil: [ 
-                    issues
-                        add:
-                            (MetacelloValidationError
-                                configurationClass: self projectClass
-                                reasonCode: #'incompleteProjectSpec'
-                                callSite: callSite
-                                explanation: 'repository field required') ] ].
-    self validateVersionString: issues withDefaultVersionString: defaultVersionString.
-    ^ issues
+
+	| issues callSite |
+	issues := OrderedCollection new.
+	callSite := #validateForScriptLoad:withDefaultVersionString:withDefaultRepositoryDecription:.
+	self name ifNil: [
+		issues add: (MetacelloValidationError
+				 reasonCode: #incompleteProjectSpec
+				 callSite: callSite
+				 explanation: 'name field required') ].
+	self className ifNil: [
+		issues add: (MetacelloValidationError
+				 reasonCode: #incompleteProjectSpec
+				 callSite: callSite
+				 explanation: 'className field required') ].
+	self repositories isEmpty ifTrue: [
+		defaultRepositoryDecription
+			ifNotNil: [ self repository: defaultRepositoryDecription ]
+			ifNil: [
+				issues add: (MetacelloValidationError
+						 reasonCode: #incompleteProjectSpec
+						 callSite: callSite
+						 explanation: 'repository field required') ] ].
+	self
+		validateVersionString: issues
+		withDefaultVersionString: defaultVersionString.
+	^ issues
 ]
 
 { #category : 'scripting' }
 MetacelloProjectSpec >> validateVersionString: issues withDefaultVersionString: defaultVersionString [
-    self versionString
-        ifNil: [ 
-            defaultVersionString
-                ifNotNil: [ self versionString: defaultVersionString ]
-                ifNil: [ 
-                    issues
-                        add:
-                            (MetacelloValidationError
-                                configurationClass: self projectClass
-                                reasonCode: #'incompleteProjectSpec'
-                                callSite:
-                                    #'validateForScriptLoad:withDefaultVersionString:withDefaultRepositoryDecription:'
-                                explanation: 'version field required') ] ]
+
+	self versionString ifNil: [
+		defaultVersionString
+			ifNotNil: [ self versionString: defaultVersionString ]
+			ifNil: [
+				issues add: (MetacelloValidationError
+						 reasonCode: #incompleteProjectSpec
+						 callSite:
+						 #validateForScriptLoad:withDefaultVersionString:withDefaultRepositoryDecription:
+						 explanation: 'version field required') ] ]
 ]
 
 { #category : 'querying' }
 MetacelloProjectSpec >> version [
 	"Empty version string means use latestVersion or #bleedingEdge"
 
-	self projectClass ifNil: [ ^ nil ].
 	^ self versionString
-		  ifNotNil: [ self projectClassProject version: self versionString ]
+		  ifNotNil: [ self project versionString ]
 		  ifNil: [
 			  | vrsn |
 			  "Eventually it will become an error to not specify a project reference version as default: #stable is the preferred default""self deprecated: 'Must specify a project reference version.'."
 			  self flag: 'deprecate after version 1.0'.
-			  (vrsn := self projectClassProject latestVersion) isNil
-				  ifTrue: [ self projectClassProject version: #bleedingEdge ]
+			  (vrsn := self project latestVersion) isNil
+				  ifTrue: [ self project version: #bleedingEdge ]
 				  ifFalse: [ vrsn ] ]
-]
-
-{ #category : 'scripting' }
-MetacelloProjectSpec >> versionForScriptEngine: aMetacelloScriptEngine [
-    | prj |
-    prj := self projectClass ifNil: [ self project ] ifNotNil: [ self projectClassProject ].
-    ^ ((prj projectForScriptEngine: aMetacelloScriptEngine) version: self versionString)
-        silently: aMetacelloScriptEngine silently;
-        ignoreImage: aMetacelloScriptEngine ignoreImage
 ]
 
 { #category : 'querying' }
@@ -1142,11 +881,14 @@ MetacelloProjectSpec >> versionKey [
 { #category : 'querying' }
 MetacelloProjectSpec >> versionOrNil [
 
-	^[ self version ] on: MetacelloVersionDoesNotExistError do: [:ex | ^nil ].
+	^ [ self version ]
+		  on: MetacelloVersionDoesNotExistError
+		  do: [ :ex | nil ]
 ]
 
 { #category : 'querying' }
 MetacelloProjectSpec >> versionString [
+
 	^ versionString
 ]
 
@@ -1154,9 +896,4 @@ MetacelloProjectSpec >> versionString [
 MetacelloProjectSpec >> versionString: anObject [
     self shouldBeMutable.
     versionString := anObject
-]
-
-{ #category : 'accessing' }
-MetacelloProjectSpec >> workingCopy [
-  ^ self projectPackage workingCopy
 ]
