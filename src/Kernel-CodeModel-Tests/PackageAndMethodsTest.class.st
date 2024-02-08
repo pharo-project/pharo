@@ -4,8 +4,9 @@ SUnit tests for RPackage method synchronization
 Class {
 	#name : 'PackageAndMethodsTest',
 	#superclass : 'PackageTestCase',
-	#category : 'RPackage-Tests',
-	#package : 'RPackage-Tests'
+	#category : 'Kernel-CodeModel-Tests-Packages',
+	#package : 'Kernel-CodeModel-Tests',
+	#tag : 'Packages'
 }
 
 { #category : 'tests - extension methods' }

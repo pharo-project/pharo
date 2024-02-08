@@ -8,8 +8,9 @@ Therefore the new created PackageOrganizer is not registered to listen to event.
 Class {
 	#name : 'PackageOrganizerTest',
 	#superclass : 'PackageTestCase',
-	#category : 'RPackage-Tests',
-	#package : 'RPackage-Tests'
+	#category : 'Kernel-CodeModel-Tests-Packages',
+	#package : 'Kernel-CodeModel-Tests',
+	#tag : 'Packages'
 }
 
 { #category : 'utilities' }
