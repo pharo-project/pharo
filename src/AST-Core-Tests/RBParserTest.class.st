@@ -187,24 +187,6 @@ RBParserTest >> testBinarySelectors [
 ]
 
 { #category : 'tests' }
-RBParserTest >> testBlockNodeIsUsed [
-	| tree |
-	" block node is not a used-node"
-	tree := self parserClass parseMethod:
-			'tmp [ 3+4 ]'.
-	self deny: tree body statements last isUsed.
-	" even a block node with non-local return is not *used* "
-	tree := self parserClass parseMethod:
-	      'tmp [^ 3+4 ]'.
-	self deny: tree body statements last isUsed.
-
-	"an explicit return node is *used*"
-	tree := self parserClass parseMethod:
-			'tmp ^[ 3+4 ]'.
-	self assert: tree body statements last isUsed
-]
-
-{ #category : 'tests' }
 RBParserTest >> testBlockReturnNode [
 	| tree |
 	" no explicit return"
@@ -908,6 +890,34 @@ RBParserTest >> testIsA [
 			types add: each first ].
 	self treeWithEverything nodesDo: [ :each | types do: [ :sel | ((each respondsTo: sel) and: [ each perform: sel ]) ifTrue: [ nodes remove: sel ] ] ].
 	self assertEmpty: nodes
+]
+
+{ #category : 'tests - isUsed' }
+RBParserTest >> testIsUsedWhenABlockNodeIsReturnedExpectIsUsed [
+	| tree |
+	"an explicit return node is *used*"
+	tree := self parserClass parseMethod:
+			'tmp ^[ 3+4 ]'.
+	self assert: tree body statements last isUsed
+]
+
+{ #category : 'tests - isUsed' }
+RBParserTest >> testIsUsedWhenBlockAloneExpectIsNotUsed [
+	| tree |
+	" block node is not a used-node"
+	tree := self parserClass parseMethod:
+			'tmp [ 3+4 ]'.
+	self deny: tree body statements last isUsed.
+
+]
+
+{ #category : 'tests - isUsed' }
+RBParserTest >> testIsUsedWhenNonLocalReturnExpectNotUsed [
+	| tree |
+	" even a block node with non-local return is not *used* "
+	tree := self parserClass parseMethod:
+	      'tmp [^ 3+4 ]'.
+	self deny: tree body statements last isUsed.
 ]
 
 { #category : 'foreign use of test' }
