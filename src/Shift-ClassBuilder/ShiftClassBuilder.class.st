@@ -319,7 +319,7 @@ ShiftClassBuilder >> fillClassSideFromEnvironment: anEnvironment [
 
 	self metaclassClass: old class class.
 	self classSlots: old class slots.
-	self classTraits: old class basicTraitComposition
+	self classTraits: old class traitComposition
 ]
 
 { #category : 'initialization' }
