@@ -79,9 +79,10 @@ RBExtractMethodTransformation >> applicabilityPreconditions [
 ]
 
 { #category : 'executing' }
-RBExtractMethodTransformation >> buildTransformationFor: newMethodName withRemovedTemps: tempsToRemove [
+RBExtractMethodTransformation >> buildTransformationFor: newMethodName [
 
-	| needsReturn messageSend newArguments |
+	| needsReturn messageSend newArguments tempsToRemove |
+	tempsToRemove := self calculateTemporariesToRemove.
 	needsReturn := self calculateIfReturnIsNeeded.
 	newMethod := self generateNewMethodWith: newMethodName.
 	newArguments := self calculateNewArgumentsIn: newMethodName.
@@ -126,18 +127,10 @@ RBExtractMethodTransformation >> buildTransformations [
 					   in:
 					   (self definingClass methodFor: self calculateTree selector)) ]
 		ifNil: [
-		  | tempsToRemove |
-		  tempsToRemove := self calculateTemporariesToRemove.
-
-		  ^ assignments size > 1
-			  ifTrue: [ OrderedCollection new ]
-			  ifFalse: [
-				  | newMethodName |
-				  newMethodName := self newMethodName.
-				  newMethodName ifNil: [ OrderedCollection new ].
-				  self
-					  buildTransformationFor: newMethodName
-					  withRemovedTemps: tempsToRemove ] ]
+			  | newMethodName |
+			  newMethodName := self newMethodName.
+			  newMethodName ifNil: [ ^ OrderedCollection new ].
+			  ^ self buildTransformationFor: newMethodName ]
 ]
 
 { #category : 'querying' }
