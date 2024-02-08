@@ -912,6 +912,19 @@ RBParserTest >> testIsUsedWhenBlockAloneExpectIsNotUsed [
 ]
 
 { #category : 'tests - isUsed' }
+RBParserTest >> testIsUsedWhenInAssignmentExpectIsUsed [
+	| tree |
+	"an explicit return node is *used*"
+	tree := self parserClass parseMethod:
+			'newMethod
+			| asdf |
+	asdf := OrderedCollection new.
+	asdf add: 1.
+	^ asdf.'.
+	self assert: tree body statements first value isUsed
+]
+
+{ #category : 'tests - isUsed' }
 RBParserTest >> testIsUsedWhenNonLocalReturnExpectNotUsed [
 	| tree |
 	" even a block node with non-local return is not *used* "
