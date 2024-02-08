@@ -4,6 +4,7 @@ I package specific morphic profiling tools, glueing together morphic and the pro
 Class {
 	#name : 'ManifestToolMorphicProfiler',
 	#superclass : 'PackageManifest',
-	#category : 'Tool-MorphicProfiler',
-	#package : 'Tool-MorphicProfiler'
+	#category : 'Tool-MorphicProfiler-Manifest',
+	#package : 'Tool-MorphicProfiler',
+	#tag : 'Manifest'
 }
