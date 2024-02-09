@@ -197,7 +197,7 @@ RBCascadeNode >> stopWithoutParentheses [
 
 { #category : 'testing' }
 RBCascadeNode >> uses: aNode [
-	^messages last = aNode and: [self isUsed]
+	^messages last = aNode and: [self isUsedAsReturnValue]
 ]
 
 { #category : 'querying' }

@@ -195,7 +195,7 @@ RBAssignmentNode >> stopWithoutParentheses [
 
 { #category : 'testing' }
 RBAssignmentNode >> uses: aNode [
-	^aNode = value ifTrue: [true] ifFalse: [self isUsed]
+	^aNode = value ifTrue: [true] ifFalse: [self isUsedAsReturnValue]
 ]
 
 { #category : 'accessing' }

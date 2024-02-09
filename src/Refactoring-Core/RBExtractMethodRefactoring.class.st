@@ -76,7 +76,7 @@ RBExtractMethodRefactoring >> checkAssignments: variableNames [
 
 { #category : 'transforming' }
 RBExtractMethodRefactoring >> checkReturn [
-	needsReturn := self placeholderNode isUsed.
+	needsReturn := self placeholderNode isUsedAsReturnValue.
 	extractedParseTree containsReturn ifFalse: [^self].
 	extractedParseTree lastIsReturn ifTrue: [^self].
 	(modifiedParseTree isLast: self placeholderNode)

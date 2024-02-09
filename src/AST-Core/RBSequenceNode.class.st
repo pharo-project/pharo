@@ -412,7 +412,7 @@ RBSequenceNode >> references: aVariableName [
 
 { #category : 'replacing' }
 RBSequenceNode >> removeDeadCode [
-	(self isUsed ifTrue: [statements size - 1] ifFalse: [statements size])
+	(self isUsedAsReturnValue ifTrue: [statements size - 1] ifFalse: [statements size])
 		to: 1
 		by: -1
 		do:
@@ -539,7 +539,7 @@ RBSequenceNode >> transformLastToReturn [
 RBSequenceNode >> uses: aNode [
 	statements isEmpty ifTrue: [^false].
 	aNode == statements last ifFalse: [^false].
-	^self isUsed
+	^self isUsedAsReturnValue
 ]
 
 { #category : 'querying' }

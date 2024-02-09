@@ -265,5 +265,5 @@ RBArrayNode >> stopWithoutParentheses [
 
 { #category : 'testing' }
 RBArrayNode >> uses: aNode [
-	^ (statements anySatisfy: [ :each | each == aNode ]) or: [ self isUsed ]
+	^ (statements anySatisfy: [ :each | each == aNode ]) or: [ self isUsedAsReturnValue ]
 ]

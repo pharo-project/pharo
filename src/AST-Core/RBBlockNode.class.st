@@ -412,6 +412,6 @@ RBBlockNode >> uses: aNode [
 		ifTrue:
 			[(#(#ifTrue:ifFalse: #ifTrue: #ifFalse: #ifFalse:ifTrue:)
 				includes: parent selector) not
-				or: [parent isUsed]]
-		ifFalse: [self isUsed]
+				or: [parent isUsedAsReturnValue]]
+		ifFalse: [self isUsedAsReturnValue]
 ]
