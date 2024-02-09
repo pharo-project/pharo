@@ -645,6 +645,106 @@ RBProgramNodeTest >> testHasProperty [
 ]
 
 { #category : 'tests' }
+RBProgramNodeTest >> testIsEssentialWhenItIsReceiverExpectTrue [
+
+	| ast statement |
+	ast := RBParser parseMethod: 'a1
+	               self foo bar'.
+	statement := ast body statements last receiver.
+	self assert: statement isEssential 
+]
+
+{ #category : 'tests' }
+RBProgramNodeTest >> testIsEssentialWhenNodeIsArgumentExpectTrue [
+
+	| ast statement |
+	ast := RBParser parseMethod: 'a1
+	               self ars: self foo'.
+	statement := ast body statements first arguments first.
+	self assert: statement isEssential 
+]
+
+{ #category : 'tests' }
+RBProgramNodeTest >> testIsEssentialWhenOnlyNodeInABlockNodeExpectFalse [
+
+	| ast statement |
+	ast := RBParser parseMethod: 'a1
+	               [self foo]'.
+	statement := ast body statements last body statements first.
+	self deny: statement isEssential 
+]
+
+{ #category : 'tests' }
+RBProgramNodeTest >> testIsEssentialWhenPartOfABlockNodeExpectTrue [
+
+	| ast statement |
+	ast := RBParser parseMethod: 'a1
+	               [self foo]'.
+	statement := ast body statements last.
+	self deny: statement isEssential 
+]
+
+{ #category : 'tests' }
+RBProgramNodeTest >> testIsEssentialWhenPartOfAReturnStatementExpectTrue [
+
+	| ast statement |
+	ast := RBParser parseMethod: 'a1
+	               ^ self foo'.
+	statement := ast body statements last value.
+	self assert: statement isEssential 
+]
+
+{ #category : 'tests' }
+RBProgramNodeTest >> testIsEssentialWhenPartOfASequenceExpectFalse [
+
+	| ast statement |
+	ast := RBParser parseMethod: 'a1
+	               self foo. self bar. ^ 1'.
+	statement := ast body statements first.
+	self deny: statement isEssential 
+]
+
+{ #category : 'tests' }
+RBProgramNodeTest >> testIsEssentialWhenPartOfASequenceLastNodeExpectFalse [
+
+	| ast statement |
+	ast := RBParser parseMethod: 'a1
+	               self foo. self bar'.
+	statement := ast body statements last.
+	self deny: statement isEssential 
+]
+
+{ #category : 'tests' }
+RBProgramNodeTest >> testIsEssentialWhenPartOfASequenceOneStatementOnlyExpectFalse [
+
+	| ast statement |
+	ast := RBParser parseMethod: 'a1
+	               self foo'.
+	statement := ast body statements last.
+	self deny: statement isEssential 
+]
+
+{ #category : 'tests' }
+RBProgramNodeTest >> testIsEssentialWhenPartOfAnAssignementInBlockNodeExpectTrue [
+
+	| ast statement |
+	ast := RBParser parseMethod: 'a1
+	               [ a := self foo]'.
+	statement := ast body statements last body statements first value.
+	self assert: statement isEssential 
+]
+
+{ #category : 'tests' }
+RBProgramNodeTest >> testIsEssentialWhenPartOfAnAssignmentExpectTrue [
+
+	| ast statement |
+	ast := RBParser parseMethod: 'a1
+	               |m1| m1 := self foo'.
+	statement := ast body statements last value.
+	self assert: statement isEssential 
+]
+
+{ #category : 'tests' }
 RBProgramNodeTest >> testNumberOfSentMessages [
 	| tree messages |
 	tree := self parserClass parseMethod:

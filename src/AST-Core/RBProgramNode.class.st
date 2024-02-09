@@ -683,6 +683,7 @@ RBProgramNode >> isError [
 RBProgramNode >> isEssential [
 	"This node can not be removed from the expression, else the expression is not valid anymore.
 	 An argument, receiver, or part of an assignment or part of a return can not be removed.
+	 This ensures that if the node would be removed, a resulting expression will still be syntatically correct.
      For example, self foo can not be removed from the following:
 	^ self foo
 	x := self foo
