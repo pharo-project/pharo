@@ -269,11 +269,6 @@ RBSequenceNode >> defines: aName [
 	^temporaries anySatisfy: [:each | each name = aName]
 ]
 
-{ #category : 'testing' }
-RBSequenceNode >> directlyUses: aNode [
-	^false
-]
-
 { #category : 'comparing' }
 RBSequenceNode >> equalTo: anObject withMapping: aDictionary [
 	self class = anObject class ifFalse: [^false].
@@ -328,6 +323,11 @@ RBSequenceNode >> initialize [
 	periods := OrderedCollection new.
 	statements := OrderedCollection new.
 	temporaries := OrderedCollection new
+]
+
+{ #category : 'testing' }
+RBSequenceNode >> isEssentialChild: aNode [
+	^false
 ]
 
 { #category : 'errors' }

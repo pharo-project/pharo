@@ -191,11 +191,6 @@ RBBlockNode >> defines: aName [
 	^arguments anySatisfy: [:each | each name = aName]
 ]
 
-{ #category : 'testing' }
-RBBlockNode >> directlyUses: aNode [
-	^false
-]
-
 { #category : 'comparing' }
 RBBlockNode >> equalTo: anObject withMapping: aDictionary [
 	self class = anObject class ifFalse: [^false].
@@ -270,6 +265,11 @@ RBBlockNode >> isConstant [
 	^ body statements
 		ifEmpty: [ true "empty block returns nil" ]
 		ifNotEmpty: [:statements | statements first isLiteralNode ]
+]
+
+{ #category : 'testing' }
+RBBlockNode >> isEssentialChild: aNode [
+	^false
 ]
 
 { #category : 'errors' }

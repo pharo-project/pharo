@@ -88,11 +88,6 @@ RBAssignmentNode >> copyInContext: aDictionary [
 		yourself
 ]
 
-{ #category : 'testing' }
-RBAssignmentNode >> directlyUses: aNode [
-	^aNode = value ifTrue: [true] ifFalse: [self isEssential]
-]
-
 { #category : 'comparing' }
 RBAssignmentNode >> equalTo: anObject withMapping: aDictionary [
 	^self class = anObject class and:
@@ -108,6 +103,11 @@ RBAssignmentNode >> hash [
 { #category : 'testing' }
 RBAssignmentNode >> isAssignment [
 	^true
+]
+
+{ #category : 'testing' }
+RBAssignmentNode >> isEssentialChild: aNode [
+	^aNode = value ifTrue: [true] ifFalse: [self isEssential]
 ]
 
 { #category : 'errors' }

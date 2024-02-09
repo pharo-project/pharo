@@ -68,11 +68,6 @@ RBCascadeNode >> copyInContext: aDictionary [
 		yourself
 ]
 
-{ #category : 'testing' }
-RBCascadeNode >> directlyUses: aNode [
-	^messages last = aNode and: [self isEssential]
-]
-
 { #category : 'comparing' }
 RBCascadeNode >> equalTo: anObject withMapping: aDictionary [
 	self class = anObject class ifFalse: [^false].
@@ -91,6 +86,11 @@ RBCascadeNode >> hash [
 { #category : 'testing' }
 RBCascadeNode >> isCascade [
 	^true
+]
+
+{ #category : 'testing' }
+RBCascadeNode >> isEssentialChild: aNode [
+	^messages last = aNode and: [self isEssential]
 ]
 
 { #category : 'errors' }

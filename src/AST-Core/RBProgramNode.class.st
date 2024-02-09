@@ -474,11 +474,6 @@ RBProgramNode >> defines: aName [
 	^false
 ]
 
-{ #category : 'testing' }
-RBProgramNode >> directlyUses: aNode [
-	^true
-]
-
 { #category : 'enumeration' }
 RBProgramNode >> do: aBlock [
 	"Hacked to fit collection protocols"
@@ -690,7 +685,12 @@ RBProgramNode >> isEssential [
 	self foo bar
 	self arg: self foo"
 
-	^parent ifNil: [false] ifNotNil: [parent directlyUses: self]
+	^parent ifNil: [false] ifNotNil: [parent isEssentialChild: self]
+]
+
+{ #category : 'testing' }
+RBProgramNode >> isEssentialChild: aNode [
+	^true
 ]
 
 { #category : 'testing' }
