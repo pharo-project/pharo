@@ -337,7 +337,13 @@ RBProgramNode >> blockVariables [
 
 { #category : 'testing' }
 RBProgramNode >> canBeReplacedByVoid [
-	"This node is directly used as an argument, receiver, or part of an assignment."
+	"This node can not be removed from the expression, else the expression is not valid anymore.
+	 An argument, receiver, or part of an assignment or part of a return can not be removed.
+     For example, self foo can not be removed from the following:
+	^ self foo
+	x := self foo
+	self foo bar
+	self arg: self foo"
 
 	^parent ifNil: [false] ifNotNil: [parent directlyUses: self]
 ]
