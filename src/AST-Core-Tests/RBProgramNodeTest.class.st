@@ -785,6 +785,106 @@ RBProgramNodeTest >> testIsEssentialWhenVariableOfAnAssignmentExpectTrue [
 ]
 
 { #category : 'tests' }
+RBProgramNodeTest >> testIsUsedAsReturnValueWhenBlockNodeInSequenceNodeExpectFalse [
+
+	| ast statement |
+	ast := RBParser parseMethod: 'a1
+	               self foo. [self bar]. ^ self end'.
+	statement := ast body statements second.
+	self deny: statement isUsedAsReturnValue 
+]
+
+{ #category : 'tests' }
+RBProgramNodeTest >> testIsUsedAsReturnValueWhenFirstNodeInSequenceNodeExpectFalse [
+
+	| ast statement |
+	ast := RBParser parseMethod: 'a1
+	               self foo. self bar. ^ self end'.
+	statement := ast body statements first.
+	self deny: statement isUsedAsReturnValue 
+]
+
+{ #category : 'tests' }
+RBProgramNodeTest >> testIsUsedAsReturnValueWhenInSequenceNodeExpectFalse [
+
+	| ast statement |
+	ast := RBParser parseMethod: 'a1
+	               self foo. self bar. ^ self end'.
+	statement := ast body statements second.
+	self deny: statement isUsedAsReturnValue 
+]
+
+{ #category : 'tests' }
+RBProgramNodeTest >> testIsUsedAsReturnValueWhenLastNodeInSequenceExpectFalse [
+
+	| ast statement |
+	ast := RBParser parseMethod: 'a1
+	               self foo. self end'.
+	statement := ast body statements last.
+	self deny: statement isUsedAsReturnValue 
+]
+
+{ #category : 'tests' }
+RBProgramNodeTest >> testIsUsedAsReturnValueWhenLastNodeIsReturnStatementInSequenceExpectTrue [
+
+	| ast statement |
+	ast := RBParser parseMethod: 'a1
+	               self foo. ^ self end'.
+	statement := ast body statements last.
+	self assert: statement isUsedAsReturnValue 
+]
+
+{ #category : 'tests' }
+RBProgramNodeTest >> testIsUsedAsReturnValueWhenNodeIsAssignmentExpectFalse [
+
+	| ast statement |
+	ast := RBParser parseMethod: 'a1
+	               self foo. a := self end'.
+	statement := ast body statements last.
+	self deny: statement isUsedAsReturnValue 
+]
+
+{ #category : 'tests' }
+RBProgramNodeTest >> testIsUsedAsReturnValueWhenNodeIsAssignmentInSequenceExpectFalse [
+
+	| ast statement |
+	ast := RBParser parseMethod: 'a1
+	               self foo. a := self end. ^ 1'.
+	statement := ast body statements second.
+	self deny: statement isUsedAsReturnValue 
+]
+
+{ #category : 'tests' }
+RBProgramNodeTest >> testIsUsedAsReturnValueWhenNodeIsAssignmentValueExpectTrue [
+
+	| ast statement |
+	ast := RBParser parseMethod: 'a1
+	               self foo. a := self end'.
+	statement := ast body statements last value.
+	self assert: statement isUsedAsReturnValue 
+]
+
+{ #category : 'tests' }
+RBProgramNodeTest >> testIsUsedAsReturnValueWhenNodeIsLastInBlockExpectTrue [
+
+	| ast statement |
+	ast := RBParser parseMethod: 'a1
+	               [ self foo. self bar ]'.
+	statement := ast body statements first body statements second.
+	self assert: statement isUsedAsReturnValue 
+]
+
+{ #category : 'tests' }
+RBProgramNodeTest >> testIsUsedAsReturnValueWhenNodeIsNotLastInBlockExpectFalse [
+
+	| ast statement |
+	ast := RBParser parseMethod: 'a1
+	               [ self foo. self bar ]'.
+	statement := ast body statements first body statements first.
+	self deny: statement isUsedAsReturnValue 
+]
+
+{ #category : 'tests' }
 RBProgramNodeTest >> testNumberOfSentMessages [
 	| tree messages |
 	tree := self parserClass parseMethod:
