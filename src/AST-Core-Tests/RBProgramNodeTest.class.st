@@ -645,12 +645,42 @@ RBProgramNodeTest >> testHasProperty [
 ]
 
 { #category : 'tests' }
+RBProgramNodeTest >> testIsEssentialWhenFirstMessageInACascadeExpectTrue [
+
+	| ast statement |
+	ast := RBParser parseMethod: 'a1
+	               self foo; bar; end'.
+	statement := ast body statements last messages first.
+	self assert: statement isEssential 
+]
+
+{ #category : 'tests' }
 RBProgramNodeTest >> testIsEssentialWhenItIsReceiverExpectTrue [
 
 	| ast statement |
 	ast := RBParser parseMethod: 'a1
 	               self foo bar'.
 	statement := ast body statements last receiver.
+	self assert: statement isEssential 
+]
+
+{ #category : 'tests' }
+RBProgramNodeTest >> testIsEssentialWhenLastMessageInACascadeExpectTrue [
+
+	| ast statement |
+	ast := RBParser parseMethod: 'a1
+	               self foo; bar; end'.
+	statement := ast body statements last messages last.
+	self assert: statement isEssential 
+]
+
+{ #category : 'tests' }
+RBProgramNodeTest >> testIsEssentialWhenMessageInACascadeExpectTrue [
+
+	| ast statement |
+	ast := RBParser parseMethod: 'a1
+	               self foo; bar; end'.
+	statement := ast body statements last messages second.
 	self assert: statement isEssential 
 ]
 
@@ -735,12 +765,22 @@ RBProgramNodeTest >> testIsEssentialWhenPartOfAnAssignementInBlockNodeExpectTrue
 ]
 
 { #category : 'tests' }
-RBProgramNodeTest >> testIsEssentialWhenPartOfAnAssignmentExpectTrue [
+RBProgramNodeTest >> testIsEssentialWhenValueOfAnAssignmentExpectTrue [
 
 	| ast statement |
 	ast := RBParser parseMethod: 'a1
 	               |m1| m1 := self foo'.
 	statement := ast body statements last value.
+	self assert: statement isEssential 
+]
+
+{ #category : 'tests' }
+RBProgramNodeTest >> testIsEssentialWhenVariableOfAnAssignmentExpectTrue [
+
+	| ast statement |
+	ast := RBParser parseMethod: 'a1
+	               |m1| m1 := self foo'.
+	statement := ast body statements last variable.
 	self assert: statement isEssential 
 ]
 

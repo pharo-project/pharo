@@ -105,11 +105,6 @@ RBAssignmentNode >> isAssignment [
 	^true
 ]
 
-{ #category : 'testing' }
-RBAssignmentNode >> isEssentialChild: aNode [
-	^aNode = value ifTrue: [true] ifFalse: [self isEssential]
-]
-
 { #category : 'errors' }
 RBAssignmentNode >> isFaulty [
 	self isError ifTrue: [ ^ true ].

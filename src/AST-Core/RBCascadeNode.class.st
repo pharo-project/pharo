@@ -88,11 +88,6 @@ RBCascadeNode >> isCascade [
 	^true
 ]
 
-{ #category : 'testing' }
-RBCascadeNode >> isEssentialChild: aNode [
-	^messages last = aNode and: [self isEssential]
-]
-
 { #category : 'errors' }
 RBCascadeNode >> isFaulty [
 	self isError ifTrue: [ ^ true ].
