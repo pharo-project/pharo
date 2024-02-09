@@ -413,14 +413,14 @@ Process >> on: exception do: handlerAction [
 	"This method inject new bottom context into process with exception handler.
 	It uses context jump tricks to achieve it"
 	| currentContext root newRoot |
-	currentContext := self isActiveProcess ifTrue: [ thisContext ] ifFalse: [self suspendedContext].
+	currentContext := self isActive ifTrue: [ thisContext ] ifFalse: [self suspendedContext].
 	root := currentContext bottomContext.
 	newRoot := [
 			[root insertSender: thisContext.
 			currentContext jump] on: exception do: handlerAction.
 		Processor terminateRealActive] asContext.
 
-	self isActiveProcess
+	self isActive
 		ifTrue: [ newRoot jump ]
 		ifFalse: [ self install: newRoot ]
 ]
@@ -527,7 +527,7 @@ Process >> pvtSignal: anException list: aList [
 	have the potential to push an unwanted object on the caller's stack)."
 	<debuggerCompleteToSender>
 	| blocker |
-	self isActiveProcess ifFalse: [^self].
+	self isActive ifFalse: [^self].
 	anException signal.
 	blocker := Semaphore new.
 	[self suspend.
@@ -614,7 +614,7 @@ Process >> signalException: anException [
 	will return to a blocked state unless the blocking Semaphore has excess signals"
 	| oldList |
 	"If we are the active process, go ahead and signal the exception"
-	self isActiveProcess ifTrue: [^anException signal].
+	self isActive ifTrue: [^anException signal].
 
 	"Suspend myself first to ensure that I won't run away in the
 	midst of the following modifications."
