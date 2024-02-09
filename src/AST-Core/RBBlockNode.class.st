@@ -267,11 +267,6 @@ RBBlockNode >> isConstant [
 		ifNotEmpty: [:statements | statements first isLiteralNode ]
 ]
 
-{ #category : 'testing' }
-RBBlockNode >> isEssentialChild: aNode [
-	^false
-]
-
 { #category : 'errors' }
 RBBlockNode >> isFaulty [
 	self isError ifTrue: [ ^ true ].
