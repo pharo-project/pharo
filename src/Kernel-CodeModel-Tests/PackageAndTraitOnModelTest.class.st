@@ -12,8 +12,9 @@ Class {
 		'yPackage',
 		'zPackage'
 	],
-	#category : 'RPackage-Tests',
-	#package : 'RPackage-Tests'
+	#category : 'Kernel-CodeModel-Tests-Packages',
+	#package : 'Kernel-CodeModel-Tests',
+	#tag : 'Packages'
 }
 
 { #category : 'running' }

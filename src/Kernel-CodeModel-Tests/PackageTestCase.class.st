@@ -7,8 +7,9 @@ Class {
 	#instVars : [
 		'testEnvironment'
 	],
-	#category : 'RPackage-Tests',
-	#package : 'RPackage-Tests'
+	#category : 'Kernel-CodeModel-Tests-Packages',
+	#package : 'Kernel-CodeModel-Tests',
+	#tag : 'Packages'
 }
 
 { #category : 'testing' }
