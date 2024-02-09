@@ -86,7 +86,7 @@ RBRemoveSenderRefactoring >> applicabilityPreconditions [
 RBRemoveSenderRefactoring >> checkSelectedMessage [
 
 	super checkSelectedMessage.
-	sourceMessage isDirectlyUsed ifTrue: [
+	sourceMessage canBeReplacedByVoid ifTrue: [
 		self refactoringError: 'The sender is directly used' ]
 ]
 

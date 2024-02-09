@@ -335,6 +335,13 @@ RBProgramNode >> blockVariables [
 	^parent ifNil: [#()] ifNotNil: [parent blockVariables]
 ]
 
+{ #category : 'testing' }
+RBProgramNode >> canBeReplacedByVoid [
+	"This node is directly used as an argument, receiver, or part of an assignment."
+
+	^parent ifNil: [false] ifNotNil: [parent directlyUses: self]
+]
+
 { #category : 'testing - matching' }
 RBProgramNode >> canMatchMethod: aCompiledMethod [
 	^self sentMessages allSatisfy:
@@ -660,13 +667,6 @@ RBProgramNode >> isClassVariable [
 { #category : 'testing' }
 RBProgramNode >> isCommentNode [
 	^false
-]
-
-{ #category : 'testing' }
-RBProgramNode >> isDirectlyUsed [
-	"This node is directly used as an argument, receiver, or part of an assignment."
-
-	^parent ifNil: [false] ifNotNil: [parent directlyUses: self]
 ]
 
 { #category : 'testing' }

@@ -70,7 +70,7 @@ RBCascadeNode >> copyInContext: aDictionary [
 
 { #category : 'testing' }
 RBCascadeNode >> directlyUses: aNode [
-	^messages last = aNode and: [self isDirectlyUsed]
+	^messages last = aNode and: [self canBeReplacedByVoid]
 ]
 
 { #category : 'comparing' }
