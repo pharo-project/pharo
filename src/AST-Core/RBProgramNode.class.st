@@ -335,19 +335,6 @@ RBProgramNode >> blockVariables [
 	^parent ifNil: [#()] ifNotNil: [parent blockVariables]
 ]
 
-{ #category : 'testing' }
-RBProgramNode >> canBeReplacedByVoid [
-	"This node can not be removed from the expression, else the expression is not valid anymore.
-	 An argument, receiver, or part of an assignment or part of a return can not be removed.
-     For example, self foo can not be removed from the following:
-	^ self foo
-	x := self foo
-	self foo bar
-	self arg: self foo"
-
-	^parent ifNil: [false] ifNotNil: [parent directlyUses: self]
-]
-
 { #category : 'testing - matching' }
 RBProgramNode >> canMatchMethod: aCompiledMethod [
 	^self sentMessages allSatisfy:
@@ -690,6 +677,19 @@ RBProgramNode >> isError [
 	"An error node is either a RBParseErrorNode (for syntactic errors) or has error information (for other errors)"
 
 	^ self errorNotices isNotEmpty
+]
+
+{ #category : 'testing' }
+RBProgramNode >> isEssential [
+	"This node can not be removed from the expression, else the expression is not valid anymore.
+	 An argument, receiver, or part of an assignment or part of a return can not be removed.
+     For example, self foo can not be removed from the following:
+	^ self foo
+	x := self foo
+	self foo bar
+	self arg: self foo"
+
+	^parent ifNil: [false] ifNotNil: [parent directlyUses: self]
 ]
 
 { #category : 'testing' }

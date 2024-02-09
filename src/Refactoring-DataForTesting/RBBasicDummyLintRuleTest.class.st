@@ -612,7 +612,7 @@ RBBasicDummyLintRuleTest class >> missingYourself [
 					[:aNode :answer |
 					answer or:
 							[aNode parent isCascade
-								and: [aNode canBeReplacedByVoid and: [aNode selector ~~ #yourself]]]].
+								and: [aNode isEssential and: [aNode selector ~~ #yourself]]]].
 	detector methodBlock:
 			[:context :result |
 			(matcher executeTree: context parseTree initialAnswer: false)

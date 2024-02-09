@@ -18,7 +18,7 @@ ReUsesAddRule class >> uniqueIdentifierName [
 
 { #category : 'running' }
 ReUsesAddRule >> basicCheck: node [
-	^ node isMessage and: [ (#(#add: #addAll:) includes: node selector) and: [ node canBeReplacedByVoid ] ]
+	^ node isMessage and: [ (#(#add: #addAll:) includes: node selector) and: [ node isEssential ] ]
 ]
 
 { #category : 'accessing' }

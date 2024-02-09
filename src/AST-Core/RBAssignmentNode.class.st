@@ -90,7 +90,7 @@ RBAssignmentNode >> copyInContext: aDictionary [
 
 { #category : 'testing' }
 RBAssignmentNode >> directlyUses: aNode [
-	^aNode = value ifTrue: [true] ifFalse: [self canBeReplacedByVoid]
+	^aNode = value ifTrue: [true] ifFalse: [self isEssential]
 ]
 
 { #category : 'comparing' }
