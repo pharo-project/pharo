@@ -177,24 +177,6 @@ RubTextAreaExamples class >> presentationInput [
 ]
 
 { #category : 'examples' }
-RubTextAreaExamples class >> profileSourcesFileViewing [
-	"The big test to check that a TextArea is able to compose and ''quickly'' show
-	 a big file content "
-
-	<script>
-	| contents |
-	"Do not profile reading of source file."
-	contents := Smalltalk sourcesFile contents.
-
-	TimeProfiler
-		spyAllOn: [ RubEditingArea new
-				beWrapped;
-				width: 600;
-				updateTextWith: contents;
-				openInWorld ]
-]
-
-{ #category : 'examples' }
 RubTextAreaExamples class >> rightFlushed [
 
 	"self rightFlushed"

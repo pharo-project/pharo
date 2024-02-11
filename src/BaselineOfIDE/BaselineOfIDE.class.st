@@ -45,6 +45,7 @@ BaselineOfIDE >> baseline: spec [
 	spec for: #common do: [
 		spec postLoadDoIt: #postload:package:.
 		spec baseline: 'BasicTools' with: [ spec repository: repository ].
+		spec package: 'Tool-MorphicProfiler' with: [ spec requires: #( 'BasicTools' ) ].
 		spec baseline: 'Athens' with: [ spec repository: repository ].
 		spec baseline: 'Flashback' with: [ spec repository: repository ].
 
@@ -268,7 +269,6 @@ BaselineOfIDE >> postload: loader package: packageSpec [
 	Smalltalk tools register: FileList as: #fileList.
 	Smalltalk tools register: Finder as: #finder.
 	Smalltalk tools register: ProcessBrowser as: #processBrowser.
-	Smalltalk tools register: TimeProfiler as: #timeProfiler.
 
 	(MorphicCoreUIManager readClassVariableNamed: #UIProcess) ifNotNil: [ :proc | proc terminate ].
 	MorphicCoreUIManager writeClassVariableNamed: #UIProcess   value: nil.

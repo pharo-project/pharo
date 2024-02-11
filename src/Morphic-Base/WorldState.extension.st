@@ -87,25 +87,6 @@ WorldState class >> sourcesWorldMenuOn: aBuilder [
 ]
 
 { #category : '*Morphic-Base' }
-WorldState >> startMessageTally [
-
-	self class startMessageTally
-]
-
-{ #category : '*Morphic-Base' }
-WorldState class >> startMessageTally [
-
-	(self confirm: 'MessageTally will start now,
-and stop when the cursor goes
-to the top of the screen' translated)
-		ifFalse: [ ^ self ].
-
-	TimeProfiler spyAllOn: [
-		MorphicRenderLoop new doOneCycleWhile: [
-			self currentWorld activeHand position y > 0 ] ]
-]
-
-{ #category : '*Morphic-Base' }
 WorldState >> startStepping: aMorph at: scheduledTime selector: aSelector arguments: args stepTime: stepTime [
 	"Add the given morph to the step list. Do nothing if it is already being stepped."
 
@@ -124,19 +105,6 @@ WorldState >> startStepping: aMorph at: scheduledTime selector: aSelector argume
 WorldState >> startThenBrowseMessageTally [
 
 	self class startThenBrowseMessageTally
-]
-
-{ #category : '*Morphic-Base' }
-WorldState class >> startThenBrowseMessageTally [
-	"Tally only the UI process"
-
-	(self confirm: 'MessageTally the UI process until the
-mouse pointer goes to the top of the screen')
-		ifFalse: [ ^ self ].
-
-	TimeProfiler onBlock: [
-		MorphicRenderLoop new doOneCycleWhile: [
-			self currentWorld activeHand position y > 10 ] ]
 ]
 
 { #category : '*Morphic-Base' }

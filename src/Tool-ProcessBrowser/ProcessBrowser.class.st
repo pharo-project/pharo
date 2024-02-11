@@ -610,7 +610,6 @@ ProcessBrowser >> keyEventsDict [
 			$s #suspendProcess
 			$d #debugProcess
 			$p #changePriority
-			$m #messageTally
 			$f #findContext
 			$g #nextContext
 			$a #toggleAutoUpdate
@@ -690,12 +689,6 @@ ProcessBrowser >> menuProcessList: aMenuMorph [
 						selector: #debugProcess;
 						target: self;
 						yourself) ].
-
-			aMenuMorph addMenuItem: ((ToggleMenuItemMorph new contents: #'Profile messages')
-				keyText: 'm';
-				selector: #messageTally;
-				target: self;
-				yourself).
 
 			(selectedProcess suspendingList isKindOf: Semaphore)
 				ifTrue: [
@@ -802,22 +795,6 @@ ProcessBrowser >> menuStackList: aMenuMorph [
 		selector: #browseContext;
 		target: self;
 		yourself)
-]
-
-{ #category : 'stack list' }
-ProcessBrowser >> messageTally [
-
-	| secString secs |
-	secString := self morphicUIManager
-		             request: 'Profile for how many seconds?'
-		             initialAnswer: '4'.
-	secString ifNil: [ secString := String new ].
-	secs := secString asNumber asInteger.
-	(secs isNil or: [ secs isZero ]) ifTrue: [ ^ self ].
-	[
-	self tools timeProfiler
-		spyOnProcess: selectedProcess
-		forMilliseconds: secs * 1000 ] forkAt: selectedProcess priority + 1
 ]
 
 { #category : 'accessing' }
