@@ -77,7 +77,7 @@ Deprecation class >> initialize [
 { #category : 'settings' }
 Deprecation class >> raiseWarning [
 	"If true, then a dialog is popup for each deprecated method invocation"
-	^ RaiseWarning ifNil: [RaiseWarning := true]
+	^ RaiseWarning ifNil: [RaiseWarning := false]
 ]
 
 { #category : 'settings' }
