@@ -90,7 +90,6 @@ DADependencyTreePresenter >> actionOnButtons [
 		actionOnDefaultSettings;
 		actionOnRemovePackage;
 		actionOnAddPackage;
-		 actionOnGenerateGraphViz;
 		actionOnReverseAnalysis;
 		actionOnSave
 ]
@@ -116,16 +115,6 @@ DADependencyTreePresenter >> actionOnFindCycles [
 	systemCycles
 		updateWithFilter: selectedPackages;
 		open
-]
-
-{ #category : 'protocol' }
-DADependencyTreePresenter >> actionOnGenerateGraphViz [
-	| graphvizGenerator |
-	buttonGenerateGraphViz
-		action: [
-			self ifGraphVizAbsent: [ self error: 'Please install Graphviz Support' ].
-			graphvizGenerator := DAPackageRelationGraphGenerator newWith: self relationGraph named: 'PackageDependencyGraph'.
-			self saveGraphAndOpenWith: graphvizGenerator ]
 ]
 
 { #category : 'protocol' }
