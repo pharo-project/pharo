@@ -644,7 +644,7 @@ RBProgramNodeTest >> testHasProperty [
 	self assert: (self node hasProperty: #foo)
 ]
 
-{ #category : 'tests' }
+{ #category : 'tests - isEssential' }
 RBProgramNodeTest >> testIsEssentialWhenFirstMessageInACascadeExpectTrue [
 
 	| ast statement |
@@ -654,7 +654,7 @@ RBProgramNodeTest >> testIsEssentialWhenFirstMessageInACascadeExpectTrue [
 	self assert: statement isEssential 
 ]
 
-{ #category : 'tests' }
+{ #category : 'tests - isEssential' }
 RBProgramNodeTest >> testIsEssentialWhenItIsReceiverExpectTrue [
 
 	| ast statement |
@@ -664,7 +664,7 @@ RBProgramNodeTest >> testIsEssentialWhenItIsReceiverExpectTrue [
 	self assert: statement isEssential 
 ]
 
-{ #category : 'tests' }
+{ #category : 'tests - isEssential' }
 RBProgramNodeTest >> testIsEssentialWhenLastMessageInACascadeExpectTrue [
 
 	| ast statement |
@@ -674,7 +674,7 @@ RBProgramNodeTest >> testIsEssentialWhenLastMessageInACascadeExpectTrue [
 	self assert: statement isEssential 
 ]
 
-{ #category : 'tests' }
+{ #category : 'tests - isEssential' }
 RBProgramNodeTest >> testIsEssentialWhenMessageInACascadeExpectTrue [
 
 	| ast statement |
@@ -684,7 +684,7 @@ RBProgramNodeTest >> testIsEssentialWhenMessageInACascadeExpectTrue [
 	self assert: statement isEssential 
 ]
 
-{ #category : 'tests' }
+{ #category : 'tests - isEssential' }
 RBProgramNodeTest >> testIsEssentialWhenNodeIsArgumentExpectTrue [
 
 	| ast statement |
@@ -694,7 +694,7 @@ RBProgramNodeTest >> testIsEssentialWhenNodeIsArgumentExpectTrue [
 	self assert: statement isEssential 
 ]
 
-{ #category : 'tests' }
+{ #category : 'tests - isEssential' }
 RBProgramNodeTest >> testIsEssentialWhenOnlyNodeInABlockNodeExpectFalse [
 
 	| ast statement |
@@ -704,7 +704,7 @@ RBProgramNodeTest >> testIsEssentialWhenOnlyNodeInABlockNodeExpectFalse [
 	self deny: statement isEssential 
 ]
 
-{ #category : 'tests' }
+{ #category : 'tests - isEssential' }
 RBProgramNodeTest >> testIsEssentialWhenPartOfABlockNodeExpectTrue [
 
 	| ast statement |
@@ -714,7 +714,7 @@ RBProgramNodeTest >> testIsEssentialWhenPartOfABlockNodeExpectTrue [
 	self deny: statement isEssential 
 ]
 
-{ #category : 'tests' }
+{ #category : 'tests - isEssential' }
 RBProgramNodeTest >> testIsEssentialWhenPartOfAReturnStatementExpectTrue [
 
 	| ast statement |
@@ -724,7 +724,7 @@ RBProgramNodeTest >> testIsEssentialWhenPartOfAReturnStatementExpectTrue [
 	self assert: statement isEssential 
 ]
 
-{ #category : 'tests' }
+{ #category : 'tests - isEssential' }
 RBProgramNodeTest >> testIsEssentialWhenPartOfASequenceExpectFalse [
 
 	| ast statement |
@@ -734,7 +734,7 @@ RBProgramNodeTest >> testIsEssentialWhenPartOfASequenceExpectFalse [
 	self deny: statement isEssential 
 ]
 
-{ #category : 'tests' }
+{ #category : 'tests - isEssential' }
 RBProgramNodeTest >> testIsEssentialWhenPartOfASequenceLastNodeExpectFalse [
 
 	| ast statement |
@@ -744,7 +744,7 @@ RBProgramNodeTest >> testIsEssentialWhenPartOfASequenceLastNodeExpectFalse [
 	self deny: statement isEssential 
 ]
 
-{ #category : 'tests' }
+{ #category : 'tests - isEssential' }
 RBProgramNodeTest >> testIsEssentialWhenPartOfASequenceOneStatementOnlyExpectFalse [
 
 	| ast statement |
@@ -754,7 +754,7 @@ RBProgramNodeTest >> testIsEssentialWhenPartOfASequenceOneStatementOnlyExpectFal
 	self deny: statement isEssential 
 ]
 
-{ #category : 'tests' }
+{ #category : 'tests - isEssential' }
 RBProgramNodeTest >> testIsEssentialWhenPartOfAnAssignementInBlockNodeExpectTrue [
 
 	| ast statement |
@@ -764,7 +764,7 @@ RBProgramNodeTest >> testIsEssentialWhenPartOfAnAssignementInBlockNodeExpectTrue
 	self assert: statement isEssential 
 ]
 
-{ #category : 'tests' }
+{ #category : 'tests - isEssential' }
 RBProgramNodeTest >> testIsEssentialWhenValueOfAnAssignmentExpectTrue [
 
 	| ast statement |
@@ -774,7 +774,7 @@ RBProgramNodeTest >> testIsEssentialWhenValueOfAnAssignmentExpectTrue [
 	self assert: statement isEssential 
 ]
 
-{ #category : 'tests' }
+{ #category : 'tests - isEssential' }
 RBProgramNodeTest >> testIsEssentialWhenVariableOfAnAssignmentExpectTrue [
 
 	| ast statement |
@@ -784,7 +784,7 @@ RBProgramNodeTest >> testIsEssentialWhenVariableOfAnAssignmentExpectTrue [
 	self assert: statement isEssential 
 ]
 
-{ #category : 'tests' }
+{ #category : 'tests - isUsedAsReturnValue' }
 RBProgramNodeTest >> testIsUsedAsReturnValueWhenBlockNodeInSequenceNodeExpectFalse [
 
 	| ast statement |
@@ -794,7 +794,7 @@ RBProgramNodeTest >> testIsUsedAsReturnValueWhenBlockNodeInSequenceNodeExpectFal
 	self deny: statement isUsedAsReturnValue 
 ]
 
-{ #category : 'tests' }
+{ #category : 'tests - isUsedAsReturnValue' }
 RBProgramNodeTest >> testIsUsedAsReturnValueWhenFirstNodeInSequenceNodeExpectFalse [
 
 	| ast statement |
@@ -804,7 +804,7 @@ RBProgramNodeTest >> testIsUsedAsReturnValueWhenFirstNodeInSequenceNodeExpectFal
 	self deny: statement isUsedAsReturnValue 
 ]
 
-{ #category : 'tests' }
+{ #category : 'tests - isUsedAsReturnValue' }
 RBProgramNodeTest >> testIsUsedAsReturnValueWhenInSequenceNodeExpectFalse [
 
 	| ast statement |
@@ -814,7 +814,7 @@ RBProgramNodeTest >> testIsUsedAsReturnValueWhenInSequenceNodeExpectFalse [
 	self deny: statement isUsedAsReturnValue 
 ]
 
-{ #category : 'tests' }
+{ #category : 'tests - isUsedAsReturnValue' }
 RBProgramNodeTest >> testIsUsedAsReturnValueWhenLastNodeInSequenceExpectFalse [
 
 	| ast statement |
@@ -824,7 +824,7 @@ RBProgramNodeTest >> testIsUsedAsReturnValueWhenLastNodeInSequenceExpectFalse [
 	self deny: statement isUsedAsReturnValue 
 ]
 
-{ #category : 'tests' }
+{ #category : 'tests - isUsedAsReturnValue' }
 RBProgramNodeTest >> testIsUsedAsReturnValueWhenLastNodeIsReturnStatementInSequenceExpectTrue [
 
 	| ast statement |
@@ -834,7 +834,7 @@ RBProgramNodeTest >> testIsUsedAsReturnValueWhenLastNodeIsReturnStatementInSeque
 	self assert: statement isUsedAsReturnValue 
 ]
 
-{ #category : 'tests' }
+{ #category : 'tests - isUsedAsReturnValue' }
 RBProgramNodeTest >> testIsUsedAsReturnValueWhenNodeIsAssignmentExpectFalse [
 
 	| ast statement |
@@ -844,7 +844,7 @@ RBProgramNodeTest >> testIsUsedAsReturnValueWhenNodeIsAssignmentExpectFalse [
 	self deny: statement isUsedAsReturnValue 
 ]
 
-{ #category : 'tests' }
+{ #category : 'tests - isUsedAsReturnValue' }
 RBProgramNodeTest >> testIsUsedAsReturnValueWhenNodeIsAssignmentInSequenceExpectFalse [
 
 	| ast statement |
@@ -854,7 +854,7 @@ RBProgramNodeTest >> testIsUsedAsReturnValueWhenNodeIsAssignmentInSequenceExpect
 	self deny: statement isUsedAsReturnValue 
 ]
 
-{ #category : 'tests' }
+{ #category : 'tests - isUsedAsReturnValue' }
 RBProgramNodeTest >> testIsUsedAsReturnValueWhenNodeIsAssignmentValueExpectTrue [
 
 	| ast statement |
@@ -864,7 +864,7 @@ RBProgramNodeTest >> testIsUsedAsReturnValueWhenNodeIsAssignmentValueExpectTrue 
 	self assert: statement isUsedAsReturnValue 
 ]
 
-{ #category : 'tests' }
+{ #category : 'tests - isUsedAsReturnValue' }
 RBProgramNodeTest >> testIsUsedAsReturnValueWhenNodeIsAssignmentVariableExpectTrue [
 
 	| ast statement |
@@ -874,7 +874,7 @@ RBProgramNodeTest >> testIsUsedAsReturnValueWhenNodeIsAssignmentVariableExpectTr
 	self assert: statement isUsedAsReturnValue 
 ]
 
-{ #category : 'tests' }
+{ #category : 'tests - isUsedAsReturnValue' }
 RBProgramNodeTest >> testIsUsedAsReturnValueWhenNodeIsLastInBlockExpectTrue [
 
 	| ast statement |
@@ -884,7 +884,7 @@ RBProgramNodeTest >> testIsUsedAsReturnValueWhenNodeIsLastInBlockExpectTrue [
 	self assert: statement isUsedAsReturnValue 
 ]
 
-{ #category : 'tests' }
+{ #category : 'tests - isUsedAsReturnValue' }
 RBProgramNodeTest >> testIsUsedAsReturnValueWhenNodeIsNotLastInBlockExpectFalse [
 
 	| ast statement |
