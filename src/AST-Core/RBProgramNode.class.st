@@ -895,7 +895,7 @@ RBProgramNode >> isWorkspaceVariable [
 
 { #category : 'testing' }
 RBProgramNode >> lastIsReturn [
-	^self isReturn
+	^ false
 ]
 
 { #category : 'accessing - meta variable' }

@@ -92,6 +92,11 @@ RBReturnNode >> isReturn [
 	^true
 ]
 
+{ #category : 'testing' }
+RBReturnNode >> lastIsReturn [ 
+	^ true
+]
+
 { #category : 'matching' }
 RBReturnNode >> match: aNode inContext: aDictionary [
 	aNode class = self class ifFalse: [^false].
