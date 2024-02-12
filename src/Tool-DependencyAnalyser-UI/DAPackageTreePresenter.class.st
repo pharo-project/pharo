@@ -106,11 +106,6 @@ DAPackageTreePresenter >> defaultFormat [
 	^ #png
 ]
 
-{ #category : 'testing' }
-DAPackageTreePresenter >> ifGraphVizAbsent: aBlock [
-	Smalltalk at: #GVGraphViz ifAbsent: aBlock
-]
-
 { #category : 'initialization' }
 DAPackageTreePresenter >> initializePresenters [
 	tree := self newTree
