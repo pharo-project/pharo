@@ -1176,3 +1176,172 @@ RBProgramNodeTest >> testWithAllParents [
 	self assert: parentsOf7 last value equals: 7.
 	self assert: parentsOf7 first equals: me ast
 ]
+
+{ #category : 'tests - lastIsReturn' }
+RBProgramNodeTest >> testlastIsReturnWhenArrayNodeWithFirstReturnExpectFalse [
+
+	| ast statement |
+	ast := RBParser parseMethod: 'a1
+							{ ^ 1 . #a }'.
+	statement := ast body statements last.
+	self deny: statement lastIsReturn 
+]
+
+{ #category : 'tests - lastIsReturn' }
+RBProgramNodeTest >> testlastIsReturnWhenArrayNodeWithLastReturnExpectFalse [
+
+	| ast statement |
+	ast := RBParser parseMethod: 'a1
+							{ ^ 1 }'.
+	statement := ast body statements last.
+	self deny: statement lastIsReturn 
+]
+
+{ #category : 'tests - lastIsReturn' }
+RBProgramNodeTest >> testlastIsReturnWhenBlockNodeExpectFalse [
+
+	| ast statement |
+	ast := RBParser parseMethod: 'a1
+							[ ^ 2 ]'.
+	statement := ast body statements last.
+	self deny: statement lastIsReturn 
+]
+
+{ #category : 'tests - lastIsReturn' }
+RBProgramNodeTest >> testlastIsReturnWhenEmptyArrayNodeExpectFalse [
+
+	| ast statement |
+	ast := RBParser parseMethod: 'a1
+							{ }'.
+	statement := ast body statements last.
+	self deny: statement lastIsReturn 
+]
+
+{ #category : 'tests - lastIsReturn' }
+RBProgramNodeTest >> testlastIsReturnWhenEmptySequenceExpectFalse [
+
+	| ast statement |
+	ast := RBParser parseMethod: 'a1'.
+	statement := ast body.
+	self deny: statement lastIsReturn 
+]
+
+{ #category : 'tests - lastIsReturn' }
+RBProgramNodeTest >> testlastIsReturnWhenMessageNodeIsInlinedIfAndHasOneArgumentExpectFalse [
+
+	| ast statement |
+	ast := RBParser parseMethod: 'a1
+							true ifTrue: [ ]'.
+	statement := ast body statements last.
+	self deny: statement lastIsReturn 
+]
+
+{ #category : 'tests - lastIsReturn' }
+RBProgramNodeTest >> testlastIsReturnWhenMessageNodeIsInlinedIfAndHasTwoArgumentExpectFalse [
+
+	| ast statement |
+	ast := RBParser parseMethod: 'a1
+							true ifTrue: [ ] ifFalse: [ ]'.
+	statement := ast body statements last.
+	self deny: statement lastIsReturn 
+]
+
+{ #category : 'tests - lastIsReturn' }
+RBProgramNodeTest >> testlastIsReturnWhenMessageNodeIsInlinedIfAndHasTwoArgumentsAndBothArgsHaveReturnExpectTrue [
+
+	| ast statement |
+	ast := RBParser parseMethod: 'a1
+							true ifTrue: [ ^ 1 ] ifFalse: [ ^ 1 ]'.
+	statement := ast body statements last.
+	self assert: statement lastIsReturn 
+]
+
+{ #category : 'tests - lastIsReturn' }
+RBProgramNodeTest >> testlastIsReturnWhenMessageNodeIsInlinedIfAndHasTwoArgumentsAndFirstArgHasReturnExpectFalse [
+
+	| ast statement |
+	ast := RBParser parseMethod: 'a1
+							true ifTrue: [ ^ 1 ] ifFalse: [ ]'.
+	statement := ast body statements last.
+	self deny: statement lastIsReturn 
+]
+
+{ #category : 'tests - lastIsReturn' }
+RBProgramNodeTest >> testlastIsReturnWhenMessageNodeIsInlinedIfAndHasTwoArgumentsAndSecondArgHasReturnExpectFalse [
+
+	| ast statement |
+	ast := RBParser parseMethod: 'a1
+							true ifTrue: [ ] ifFalse: [ ^ 1 ]'.
+	statement := ast body statements last.
+	self deny: statement lastIsReturn 
+]
+
+{ #category : 'tests - lastIsReturn' }
+RBProgramNodeTest >> testlastIsReturnWhenMessageNodeIsNotInlinedIfExpectFalse [
+
+	| ast statement |
+	ast := RBParser parseMethod: 'a1
+							self foo'.
+	statement := ast body statements last.
+	self deny: statement lastIsReturn 
+]
+
+{ #category : 'tests - lastIsReturn' }
+RBProgramNodeTest >> testlastIsReturnWhenMethodNodeWithLastReturnExpectTrue [
+
+	| ast statement |
+	ast := RBParser parseMethod: 'a1
+							^ 1'.
+	statement := ast.
+	self assert: statement lastIsReturn 
+]
+
+{ #category : 'tests - lastIsReturn' }
+RBProgramNodeTest >> testlastIsReturnWhenNodeIsNotReturnExpectFalse [
+
+	| ast statement |
+	ast := RBParser parseMethod: 'a1
+	               self bar'.
+	statement := ast body statements last.
+	self deny: statement lastIsReturn 
+]
+
+{ #category : 'tests - lastIsReturn' }
+RBProgramNodeTest >> testlastIsReturnWhenNodeIsReturnExpectTrue [
+
+	| ast statement |
+	ast := RBParser parseMethod: 'a1
+	               ^ self bar'.
+	statement := ast body statements last.
+	self assert: statement lastIsReturn 
+]
+
+{ #category : 'tests - lastIsReturn' }
+RBProgramNodeTest >> testlastIsReturnWhenNodeIsSequenceWithLastReturnNodeExpectTrue [
+
+	| ast statement |
+	ast := RBParser parseMethod: 'a1
+	               ^ self bar'.
+	statement := ast body.
+	self assert: statement lastIsReturn 
+]
+
+{ #category : 'tests - lastIsReturn' }
+RBProgramNodeTest >> testlastIsReturnWhenNodeIsSequenceWithoutLastReturnNodeExpectFalse [
+
+	| ast statement |
+	ast := RBParser parseMethod: 'a1
+	               self bar'.
+	statement := ast body.
+	self deny: statement lastIsReturn 
+]
+
+{ #category : 'tests - lastIsReturn' }
+RBProgramNodeTest >> testlastIsReturnWhenReturnNodeWithBlockNodeExpectTrue [
+
+	| ast statement |
+	ast := RBParser parseMethod: 'a1
+							^ [ 2 ]'.
+	statement := ast body statements last.
+	self assert: statement lastIsReturn 
+]
