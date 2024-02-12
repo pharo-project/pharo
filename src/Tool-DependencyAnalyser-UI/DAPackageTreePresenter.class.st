@@ -167,12 +167,6 @@ DAPackageTreePresenter >> refresh [
 	self subclassResponsibility
 ]
 
-{ #category : 'protocol' }
-DAPackageTreePresenter >> saveGraphAndOpenWith: graphvizGenerator [
-	graphvizGenerator saveDotFileAndGenerateForType: self defaultFormat.
-	^ graphvizGenerator openWith: self defaultFormat
-]
-
 { #category : 'actions' }
 DAPackageTreePresenter >> selectedItemFromTree [
 	^ self tree selectedItem
