@@ -645,13 +645,13 @@ RBProgramNodeTest >> testHasProperty [
 ]
 
 { #category : 'tests - isEssential' }
-RBProgramNodeTest >> testIsEssentialWhenFirstMessageInACascadeExpectTrue [
+RBProgramNodeTest >> testIsEssentialWhenFirstMessageInACascadeExpectFalse [
 
 	| ast statement |
 	ast := RBParser parseMethod: 'a1
 	               self foo; bar; end'.
 	statement := ast body statements last messages first.
-	self assert: statement isEssential 
+	self deny: statement isEssential 
 ]
 
 { #category : 'tests - isEssential' }
@@ -665,23 +665,33 @@ RBProgramNodeTest >> testIsEssentialWhenItIsReceiverExpectTrue [
 ]
 
 { #category : 'tests - isEssential' }
-RBProgramNodeTest >> testIsEssentialWhenLastMessageInACascadeExpectTrue [
+RBProgramNodeTest >> testIsEssentialWhenLastMessageInACascadeAndCascadeIsEssentialExpectFalse [
+
+	| ast statement |
+	ast := RBParser parseMethod: 'a1
+	               a := self foo; bar; end'.
+	statement := ast body statements last value messages last.
+	self deny: statement isEssential 
+]
+
+{ #category : 'tests - isEssential' }
+RBProgramNodeTest >> testIsEssentialWhenLastMessageInACascadeAndCascadeIsNotEssentialExpectFalse [
 
 	| ast statement |
 	ast := RBParser parseMethod: 'a1
 	               self foo; bar; end'.
-	statement := ast body statements last messages last.
-	self assert: statement isEssential 
+	statement := ast body statements last value messages last.
+	self deny: statement isEssential 
 ]
 
 { #category : 'tests - isEssential' }
-RBProgramNodeTest >> testIsEssentialWhenMessageInACascadeExpectTrue [
+RBProgramNodeTest >> testIsEssentialWhenMessageInACascadeExpectFalse [
 
 	| ast statement |
 	ast := RBParser parseMethod: 'a1
 	               self foo; bar; end'.
 	statement := ast body statements last messages second.
-	self assert: statement isEssential 
+	self deny: statement isEssential 
 ]
 
 { #category : 'tests - isEssential' }
@@ -762,6 +772,16 @@ RBProgramNodeTest >> testIsEssentialWhenPartOfAnAssignementInBlockNodeExpectTrue
 	               [ a := self foo]'.
 	statement := ast body statements last body statements first value.
 	self assert: statement isEssential 
+]
+
+{ #category : 'tests - isEssential' }
+RBProgramNodeTest >> testIsEssentialWhenTwoMessagesInACascadeExpectFalse [
+
+	| ast statement |
+	ast := RBParser parseMethod: 'a1
+	               a := self foo; bar'.
+	statement := ast body statements last value messages last.
+	self deny: statement isEssential 
 ]
 
 { #category : 'tests - isEssential' }

@@ -88,6 +88,13 @@ RBCascadeNode >> isCascade [
 	^true
 ]
 
+{ #category : 'testing' }
+RBCascadeNode >> isEssentialChild: aNode [
+	"Removing a message in a cascade is not considered as a problem from a syntatic point of view."
+
+	^ false
+]
+
 { #category : 'errors' }
 RBCascadeNode >> isFaulty [
 	self isError ifTrue: [ ^ true ].
