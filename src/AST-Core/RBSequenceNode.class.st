@@ -540,8 +540,9 @@ RBSequenceNode >> uses: aNode [
 	statements isEmpty ifTrue: [^false].
 	aNode == statements last ifFalse: [^false].
 	"We will come to this line only if the `aNode` is the last node in the sequence.
-	If the parent is block it should return true, otherwise we let the parent decide."
+	If the parent is block we return true since it's return value of the block and it cannot be removed."
 	self parent isBlock ifTrue: [ ^ true ].
+	"Otherwise, we let the parent decide."
 	^self isUsedAsReturnValue
 ]
 
