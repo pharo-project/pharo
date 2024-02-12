@@ -94,6 +94,11 @@ RBCascadeNode >> isFaulty [
 	^self messages anySatisfy: [:each | each isFaulty ]
 ]
 
+{ #category : 'testing' }
+RBCascadeNode >> isUsingAsReturnValue: aNode [
+	^messages last = aNode and: [self isUsedAsReturnValue]
+]
+
 { #category : 'accessing' }
 RBCascadeNode >> leftmostChainReceiver [
 
@@ -193,11 +198,6 @@ RBCascadeNode >> statementComments [
 { #category : 'accessing' }
 RBCascadeNode >> stopWithoutParentheses [
 	^messages last stop
-]
-
-{ #category : 'testing' }
-RBCascadeNode >> uses: aNode [
-	^messages last = aNode and: [self isUsedAsReturnValue]
 ]
 
 { #category : 'querying' }

@@ -284,7 +284,7 @@ RBExtractMethodTransformation >> generateNewMethodWith: aMethodName [
 									statements: (OrderedCollection with: subtree)]).
 	temporaries do: [:each | newMethodNode body addTemporaryNamed: each].
 
-	((parseTree parentOfSubtree: subtree) uses: subtree)
+	((parseTree parentOfSubtree: subtree) isUsingAsReturnValue: subtree)
 		ifTrue: [ newMethodNode addReturn ].
 
 	assignments size = 1 ifTrue: [

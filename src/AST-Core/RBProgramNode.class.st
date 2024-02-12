@@ -875,7 +875,12 @@ RBProgramNode >> isUsedAsReturnValue [
 	return value of a block. This differs from isDirectlyUsed in that it is conservative since it also includes
 	return values of blocks."
 
-	^parent ifNil: [false] ifNotNil: [parent uses: self]
+	^parent ifNil: [false] ifNotNil: [parent isUsingAsReturnValue: self]
+]
+
+{ #category : 'testing' }
+RBProgramNode >> isUsingAsReturnValue: aNode [
+	^true
 ]
 
 { #category : 'testing' }
@@ -1314,11 +1319,6 @@ RBProgramNode >> tempVariableReadNodes [
 { #category : 'accessing' }
 RBProgramNode >> temporaryVariables [
 	^parent ifNil: [#()] ifNotNil: [parent temporaryVariables]
-]
-
-{ #category : 'testing' }
-RBProgramNode >> uses: aNode [
-	^true
 ]
 
 { #category : 'querying' }

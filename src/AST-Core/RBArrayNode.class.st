@@ -166,6 +166,11 @@ RBArrayNode >> isFaulty [
 	^self statements anySatisfy: [:each | each isFaulty]
 ]
 
+{ #category : 'testing' }
+RBArrayNode >> isUsingAsReturnValue: aNode [
+	^ (statements anySatisfy: [ :each | each == aNode ]) or: [ self isUsedAsReturnValue ]
+]
+
 { #category : 'accessing - token' }
 RBArrayNode >> left [
 	^ left
@@ -255,9 +260,4 @@ RBArrayNode >> statements: statements0 [
 { #category : 'accessing' }
 RBArrayNode >> stopWithoutParentheses [
 	^ right
-]
-
-{ #category : 'testing' }
-RBArrayNode >> uses: aNode [
-	^ (statements anySatisfy: [ :each | each == aNode ]) or: [ self isUsedAsReturnValue ]
 ]

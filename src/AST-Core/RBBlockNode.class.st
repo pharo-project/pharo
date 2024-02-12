@@ -283,6 +283,17 @@ RBBlockNode >> isLast: aNode [
 	^body isLast: aNode
 ]
 
+{ #category : 'testing' }
+RBBlockNode >> isUsingAsReturnValue: aNode [
+	aNode = body ifFalse: [^false].
+	^parent isMessage
+		ifTrue:
+			[(#(#ifTrue:ifFalse: #ifTrue: #ifFalse: #ifFalse:ifTrue:)
+				includes: parent selector) not
+				or: [parent isUsedAsReturnValue]]
+		ifFalse: [self isUsedAsReturnValue]
+]
+
 { #category : 'accessing - token' }
 RBBlockNode >> left [
 	^ left
@@ -398,15 +409,4 @@ RBBlockNode >> temporaries [
 { #category : 'accessing' }
 RBBlockNode >> temporaryNames [
 	^ self body temporaryNames
-]
-
-{ #category : 'testing' }
-RBBlockNode >> uses: aNode [
-	aNode = body ifFalse: [^false].
-	^parent isMessage
-		ifTrue:
-			[(#(#ifTrue:ifFalse: #ifTrue: #ifFalse: #ifFalse:ifTrue:)
-				includes: parent selector) not
-				or: [parent isUsedAsReturnValue]]
-		ifFalse: [self isUsedAsReturnValue]
 ]

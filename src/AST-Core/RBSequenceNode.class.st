@@ -354,6 +354,17 @@ RBSequenceNode >> isSequence [
 ]
 
 { #category : 'testing' }
+RBSequenceNode >> isUsingAsReturnValue: aNode [
+	statements isEmpty ifTrue: [^false].
+	aNode == statements last ifFalse: [^false].
+	"We will come to this line only if the `aNode` is the last node in the sequence.
+	If the parent is block we return true since it's return value of the block and it cannot be removed."
+	self parent isBlock ifTrue: [ ^ true ].
+	"Otherwise, we let the parent decide."
+	^self isUsedAsReturnValue
+]
+
+{ #category : 'testing' }
 RBSequenceNode >> lastIsReturn [
 	^statements notEmpty and: [statements last lastIsReturn]
 ]
@@ -533,17 +544,6 @@ RBSequenceNode >> temporaryVariables [
 RBSequenceNode >> transformLastToReturn [
 	"transform the last statement, but this method returns the sequence, not the returnNode"
 	self addReturn
-]
-
-{ #category : 'testing' }
-RBSequenceNode >> uses: aNode [
-	statements isEmpty ifTrue: [^false].
-	aNode == statements last ifFalse: [^false].
-	"We will come to this line only if the `aNode` is the last node in the sequence.
-	If the parent is block we return true since it's return value of the block and it cannot be removed."
-	self parent isBlock ifTrue: [ ^ true ].
-	"Otherwise, we let the parent decide."
-	^self isUsedAsReturnValue
 ]
 
 { #category : 'querying' }
