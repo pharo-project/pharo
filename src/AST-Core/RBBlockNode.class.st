@@ -283,11 +283,6 @@ RBBlockNode >> isLast: aNode [
 	^body isLast: aNode
 ]
 
-{ #category : 'testing' }
-RBBlockNode >> lastIsReturn [
-	^ false
-]
-
 { #category : 'accessing - token' }
 RBBlockNode >> left [
 	^ left
