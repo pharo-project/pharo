@@ -1,7 +1,6 @@
 Class {
 	#name : 'SycSuperclassImplementorsCommand',
 	#superclass : 'SycMessageCommand',
-	#classTraits : '{} + TraitedClass',
 	#category : 'SystemCommands-MessageCommands',
 	#package : 'SystemCommands-MessageCommands'
 }
