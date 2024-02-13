@@ -1222,7 +1222,7 @@ RBProgramNodeTest >> testlastIsReturnWhenBlockNodeExpectFalse [
 
 	| ast statement |
 	ast := RBParser parseMethod: 'a1
-							[ ^ 2 ]'.
+							[ 2 ]'.
 	statement := ast body statements last.
 	self deny: statement lastIsReturn 
 ]
