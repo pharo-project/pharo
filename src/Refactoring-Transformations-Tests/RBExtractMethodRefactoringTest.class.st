@@ -88,7 +88,10 @@ RBExtractMethodRefactoringTest >> testExtractMethodThatNeedsTemporaryVariable [
 { #category : 'tests' }
 RBExtractMethodRefactoringTest >> testExtractMethodToSuperclass [
 	| refactoring class |
-	refactoring := RBExtractMethodRefactoring extract: (143 to: 340) from: #checkMethod: in: RBTransformationRuleTestData.
+	refactoring := RBExtractMethodRefactoring extractSource: '(RecursiveSelfRule executeTree: rewriteRule tree initialAnswer: false) ifFalse:
+		[builder compile: rewriteRule tree printString
+		in: class
+		classified: aSmalllintContext protocols]' from: #checkMethod: in: RBTransformationRuleTestData.
 	self setupMethodNameFor: refactoring toReturn: #foo:.
 	self setupExtractionClassFor: refactoring toReturn: RBFooLintRuleTestData.
 	self executeRefactoring: refactoring.
