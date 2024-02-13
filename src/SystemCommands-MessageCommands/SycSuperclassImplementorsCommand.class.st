@@ -1,6 +1,7 @@
 Class {
 	#name : 'SycSuperclassImplementorsCommand',
-	#superclass : 'SycChangeMessageSignatureCommand',
+	#superclass : 'SycMessageCommand',
+	#classTraits : '{} + TraitedClass',
 	#category : 'SystemCommands-MessageCommands',
 	#package : 'SystemCommands-MessageCommands'
 }
@@ -16,21 +17,31 @@ SycSuperclassImplementorsCommand >> defaultMenuIconName [
 
 { #category : 'accessing' }
 SycSuperclassImplementorsCommand >> defaultMenuItemName [
-	^'Hierarchical implementors'
+
+	^ 'Hierarchical implementors'
 ]
 
 { #category : 'execution' }
 SycSuperclassImplementorsCommand >> execute [
 
-	| sup |
-	sup := refactoredClass withAllSuperclasses 
-		detect: [ :cl | cl includesSelector: originalMessage selector ] 
-		ifNone: [ ^ self ].
-	Smalltalk tools messageList browse: { sup >> originalMessage selector }
+	Smalltalk tools messageList browse: self searchInTheWholeHierarchy.
 ]
 
 { #category : 'execution' }
 SycSuperclassImplementorsCommand >> isComplexRefactoring [
 
 	^ false
+]
+
+{ #category : 'execution' }
+SycSuperclassImplementorsCommand >> searchInTheWholeHierarchy [
+
+	| mthImplementors |
+	mthImplementors := OrderedCollection new.
+	self selectedClass withAllSuperAndSubclasses do: [ : class | 
+		(class includesSelector: self selectedSelector) 
+			ifTrue: [ mthImplementors add: class >> self selectedSelector ].
+		(class class includesSelector: self selectedSelector)
+			ifTrue: [ mthImplementors add: class class >> self selectedSelector ] ].
+	^ mthImplementors
 ]
