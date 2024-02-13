@@ -58,7 +58,7 @@ MetacelloMonticelloLoader >> loadAtomicPackageDirectives: packageDirectives [
 	packageDirectives do: [ :e |
 		MetacelloNotification signal:
 			'Loaded -> ' , e packageName , ' --- '
-			, e repositorySpecs first description ]
+			, e repositorySpecs first fullDescription ]
 ]
 
 { #category : 'loading' }
