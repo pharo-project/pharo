@@ -294,11 +294,6 @@ RBBlockNode >> isUsingAsReturnValue: aNode [
 		ifFalse: [self isUsedAsReturnValue]
 ]
 
-{ #category : 'testing' }
-RBBlockNode >> lastIsReturn [ 
-	^body lastIsReturn
-]
-
 { #category : 'accessing - token' }
 RBBlockNode >> left [
 	^ left
