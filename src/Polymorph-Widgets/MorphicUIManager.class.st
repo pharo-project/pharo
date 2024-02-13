@@ -62,7 +62,9 @@ MorphicUIManager >> activate [
 			Transcript := activeTranscript ]
 		ifNil: [
 			Transcript class == ThreadSafeTranscript 
-				ifFalse: [ ThreadSafeTranscript install ] ]
+				ifFalse: [ ThreadSafeTranscript install ] ].
+			
+	SystemProgressMorph enable
 ]
 
 { #category : 'ui requests' }
