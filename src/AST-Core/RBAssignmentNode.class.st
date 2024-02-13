@@ -111,6 +111,11 @@ RBAssignmentNode >> isFaulty [
 	^self variable isFaulty or: [ self value isFaulty ]
 ]
 
+{ #category : 'testing' }
+RBAssignmentNode >> isUsingAsReturnValue: aNode [
+	^aNode = value ifTrue: [true] ifFalse: [self isUsedAsReturnValue ]
+]
+
 { #category : 'matching' }
 RBAssignmentNode >> match: aNode inContext: aDictionary [
 	aNode class = self class ifFalse: [^false].
