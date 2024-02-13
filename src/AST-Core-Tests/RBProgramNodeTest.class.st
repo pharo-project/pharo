@@ -895,13 +895,13 @@ RBProgramNodeTest >> testIsUsedAsReturnValueWhenNodeIsAssignmentValueExpectTrue 
 ]
 
 { #category : 'tests - isUsedAsReturnValue' }
-RBProgramNodeTest >> testIsUsedAsReturnValueWhenNodeIsAssignmentVariableExpectTrue [
+RBProgramNodeTest >> testIsUsedAsReturnValueWhenNodeIsAssignmentVariableExpectFalse [
 
 	| ast statement |
 	ast := RBParser parseMethod: 'a1
 	               self foo. a := self end'.
 	statement := ast body statements last variable.
-	self assert: statement isUsedAsReturnValue 
+	self deny: statement isUsedAsReturnValue 
 ]
 
 { #category : 'tests - isUsedAsReturnValue' }
