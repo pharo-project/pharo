@@ -157,6 +157,18 @@ RBExtractMethodRefactoringTest >> testFailureExtract [
 ]
 
 { #category : 'failure tests' }
+RBExtractMethodRefactoringTest >> testFailureExtractMethodWhenGivenSourceIsNotInTheMethod [
+
+	self
+		should: [
+			RBExtractMethodRefactoring
+				extractSource: 'some source that is not from the method'
+				from: #subclassOf:overrides:
+				in: RBBasicLintRuleTestData class ]
+		raise: RBRefactoringError
+]
+
+{ #category : 'failure tests' }
 RBExtractMethodRefactoringTest >> testFailureNonExistantSelector [
 	self shouldFail: (RBExtractMethodRefactoring extract: (10 to: 20) from: #checkClass1: in: RBBasicLintRuleTestData)
 ]
