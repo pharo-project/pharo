@@ -1805,10 +1805,13 @@ Object >> storeOn: aStream [
 
 	aStream nextPut: $(.
 	self class isVariable
-		ifTrue: [aStream nextPutAll: '(', self class name, ' basicNew: ';
-					store: self basicSize;
-					nextPutAll: ') ']
-		ifFalse: [aStream nextPutAll: self class name, ' basicNew'].
+		ifTrue: [aStream  
+						nextPut: $(;
+						nextPutAll: self class name;
+						nextPutAll:' basicNew: ';
+						store: self basicSize;
+						nextPutAll: ') ']
+		ifFalse: [aStream nextPutAll: self class name; nextPutAll:' basicNew'].
 	1 to: self class instSize do:
 		[:i |
 		aStream nextPutAll: ' instVarAt: ';
