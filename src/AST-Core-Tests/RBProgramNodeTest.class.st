@@ -855,6 +855,16 @@ RBProgramNodeTest >> testIsUsedAsReturnValueWhenLastNodeIsReturnStatementInSeque
 ]
 
 { #category : 'tests - isUsedAsReturnValue' }
+RBProgramNodeTest >> testIsUsedAsReturnValueWhenNodeIsArrayExpectFalse [
+
+	| ast statement |
+	ast := RBParser parseMethod: 'a1
+	               { self foo . a := self end }'.
+	statement := ast body statements last.
+	self deny: statement isUsedAsReturnValue 
+]
+
+{ #category : 'tests - isUsedAsReturnValue' }
 RBProgramNodeTest >> testIsUsedAsReturnValueWhenNodeIsAssignmentExpectFalse [
 
 	| ast statement |
@@ -912,6 +922,16 @@ RBProgramNodeTest >> testIsUsedAsReturnValueWhenNodeIsNotLastInBlockExpectFalse 
 	               [ self foo. self bar ]'.
 	statement := ast body statements first body statements first.
 	self deny: statement isUsedAsReturnValue 
+]
+
+{ #category : 'tests - isUsedAsReturnValue' }
+RBProgramNodeTest >> testIsUsedAsReturnValueWhenNodeIsPartOfArrayExpectTrue [
+
+	| ast statement |
+	ast := RBParser parseMethod: 'a1
+	               { self foo . a := self end }'.
+	statement := ast body statements last statements first.
+	self assert: statement isUsedAsReturnValue 
 ]
 
 { #category : 'tests' }
