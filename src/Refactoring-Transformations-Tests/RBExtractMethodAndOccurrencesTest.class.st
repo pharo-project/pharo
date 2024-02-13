@@ -1,9 +1,9 @@
 Class {
 	#name : 'RBExtractMethodAndOccurrencesTest',
 	#superclass : 'RBAbstractRefactoringTest',
-	#category : 'Refactoring-Transformations-Tests-SingleParametrized',
+	#category : 'Refactoring-Transformations-Tests-Test',
 	#package : 'Refactoring-Transformations-Tests',
-	#tag : 'SingleParametrized'
+	#tag : 'Test'
 }
 
 { #category : 'running' }
