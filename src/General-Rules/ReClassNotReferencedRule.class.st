@@ -23,7 +23,7 @@ ReClassNotReferencedRule class >> uniqueIdentifierName [
 
 { #category : 'enumerating' }
 ReClassNotReferencedRule >> basicCheck: aClass [
-	^ aClass isUsedAsReturnValue not
+	^ aClass isUsed not
 ]
 
 { #category : 'accessing' }
