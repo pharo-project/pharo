@@ -269,11 +269,6 @@ RBSequenceNode >> defines: aName [
 	^temporaries anySatisfy: [:each | each name = aName]
 ]
 
-{ #category : 'testing' }
-RBSequenceNode >> directlyUses: aNode [
-	^false
-]
-
 { #category : 'comparing' }
 RBSequenceNode >> equalTo: anObject withMapping: aDictionary [
 	self class = anObject class ifFalse: [^false].
@@ -330,6 +325,11 @@ RBSequenceNode >> initialize [
 	temporaries := OrderedCollection new
 ]
 
+{ #category : 'testing' }
+RBSequenceNode >> isEssentialChild: aNode [
+	^false
+]
+
 { #category : 'errors' }
 RBSequenceNode >> isFaulty [
 	self isError ifTrue: [ ^ true ].
@@ -351,6 +351,17 @@ RBSequenceNode >> isLast: aNode [
 { #category : 'testing' }
 RBSequenceNode >> isSequence [
 	^true
+]
+
+{ #category : 'testing' }
+RBSequenceNode >> isUsingAsReturnValue: aNode [
+	statements isEmpty ifTrue: [^false].
+	aNode == statements last ifFalse: [^false].
+	"We will come to this line only if the `aNode` is the last node in the sequence.
+	If the parent is block we return true since it's return value of the block and it cannot be removed."
+	"self parent isBlock ifTrue: [ ^ true ]."
+	"Otherwise, we let the parent decide."
+	^self isUsedAsReturnValue
 ]
 
 { #category : 'testing' }
@@ -412,7 +423,7 @@ RBSequenceNode >> references: aVariableName [
 
 { #category : 'replacing' }
 RBSequenceNode >> removeDeadCode [
-	(self isUsed ifTrue: [statements size - 1] ifFalse: [statements size])
+	(self isUsedAsReturnValue ifTrue: [statements size - 1] ifFalse: [statements size])
 		to: 1
 		by: -1
 		do:
@@ -533,13 +544,6 @@ RBSequenceNode >> temporaryVariables [
 RBSequenceNode >> transformLastToReturn [
 	"transform the last statement, but this method returns the sequence, not the returnNode"
 	self addReturn
-]
-
-{ #category : 'testing' }
-RBSequenceNode >> uses: aNode [
-	statements isEmpty ifTrue: [^false].
-	aNode == statements last ifFalse: [^false].
-	^self isUsed
 ]
 
 { #category : 'querying' }
