@@ -37,7 +37,7 @@ MetacelloPackageLoadDirective >> hash [
 { #category : 'printing' }
 MetacelloPackageLoadDirective >> label [
 
-	^ spec name , ' -- ', repositorySpecs first description
+	^ spec name , ' -- ', repositorySpecs first fullDescription
 ]
 
 { #category : 'enumerating' }
