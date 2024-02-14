@@ -78,6 +78,13 @@ RBCascadeNode >> equalTo: anObject withMapping: aDictionary [
 	^true
 ]
 
+{ #category : 'testing' }
+RBCascadeNode >> hasBlock [
+
+	"They all have same receiver so we only check with the first one."
+	^ messages first hasBlock
+]
+
 { #category : 'comparing' }
 RBCascadeNode >> hash [
 	^ self hashForCollection: self messages

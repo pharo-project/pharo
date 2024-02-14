@@ -558,6 +558,12 @@ RBProgramNode >> getCommentsFor: anInterval [
 ]
 
 { #category : 'testing' }
+RBProgramNode >> hasBlock [
+
+	^ false
+]
+
+{ #category : 'testing' }
 RBProgramNode >> hasComments [
 	"Answer whether the receiver as comments"
 
@@ -584,6 +590,18 @@ RBProgramNode >> hasProperty: aKey [
 	"Test if the property aKey is present."
 
 	^ properties isNotNil and: [ properties includesKey: aKey ]
+]
+
+{ #category : 'testing' }
+RBProgramNode >> hasSameExitPoint [
+
+	^ self hasSameExitPoint: false
+]
+
+{ #category : 'testing' }
+RBProgramNode >> hasSameExitPoint: aBoolean [ 
+
+	^ true
 ]
 
 { #category : 'comparing' }

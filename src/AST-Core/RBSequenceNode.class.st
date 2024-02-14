@@ -284,12 +284,36 @@ RBSequenceNode >> equalTo: anObject withMapping: aDictionary [
 ]
 
 { #category : 'testing' }
+RBSequenceNode >> hasBlock [
+
+	^ statements anySatisfy: [ :stm | stm hasBlock ]
+]
+
+{ #category : 'testing' }
 RBSequenceNode >> hasNonLocalReturn [
 	"check if there is a non-local return anywhere
 	Note: returns in a method itself are local returns"
 	^ self lastIsReturn
 		  ifTrue: [ parent isMethod not ]
 		  ifFalse: [ super hasNonLocalReturn ]
+]
+
+{ #category : 'testing' }
+RBSequenceNode >> hasSameExitPoint [
+
+	statements last isReturn ifTrue: [ ^ true ].
+	^ self hasSameExitPoint: false
+]
+
+{ #category : 'testing' }
+RBSequenceNode >> hasSameExitPoint: aBoolean [ 
+
+	| statementsWithBlocks |
+	aBoolean ifTrue: [ ^ true ].
+	statements ifEmpty: [ ^ true ].
+	statementsWithBlocks := statements select: [ :stm | stm hasBlock ].
+	^ (statements last isReturn not and: [
+		statementsWithBlocks allSatisfy: [ :stm | stm hasSameExitPoint: false ] ]).
 ]
 
 { #category : 'testing' }

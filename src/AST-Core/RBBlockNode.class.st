@@ -216,8 +216,29 @@ RBBlockNode >> hasArguments [
 ]
 
 { #category : 'testing' }
+RBBlockNode >> hasBlock [
+
+	^ true
+]
+
+{ #category : 'testing' }
 RBBlockNode >> hasBlockReturn [
+
+	self deprecated: 'This method is deprecated, don''t use it. Use on your own responsibility.'.
+
 	^ self body lastIsReturn
+]
+
+{ #category : 'testing' }
+RBBlockNode >> hasSameExitPoint [
+
+	^ body hasSameExitPoint 
+]
+
+{ #category : 'testing' }
+RBBlockNode >> hasSameExitPoint: aBoolean [ 
+
+	^ body hasSameExitPoint: aBoolean 
 ]
 
 { #category : 'testing' }

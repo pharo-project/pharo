@@ -83,7 +83,7 @@ RBExtractMethodTransformation >> buildTransformationFor: newMethodName [
 
 	| needsReturn messageSend newArguments tempsToRemove |
 	tempsToRemove := self calculateTemporariesToRemove.
-	needsReturn := self calculateIfReturnIsNeeded.
+	needsReturn := self calculateIfReturnIsNeededInCaller.
 	newMethod := self generateNewMethodWith: newMethodName.
 	newArguments := self calculateNewArgumentsIn: newMethodName.
 	messageSend := self
@@ -171,7 +171,7 @@ RBExtractMethodTransformation >> calculateAssignments [
 ]
 
 { #category : 'querying' }
-RBExtractMethodTransformation >> calculateIfReturnIsNeeded [
+RBExtractMethodTransformation >> calculateIfReturnIsNeededInCaller [
 
 	| searcher |
 	searcher := self parseTreeSearcher.

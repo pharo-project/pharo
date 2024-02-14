@@ -646,6 +646,195 @@ RBProgramNodeTest >> testHasProperty [
 	self assert: (self node hasProperty: #foo)
 ]
 
+{ #category : 'tests - hasSameExitPoint' }
+RBProgramNodeTest >> testHasSameExitPointWhenBlockWithoutReturnExpectTrue [
+
+	| ast statement |
+	ast := RBParser parseMethod: 'a1
+							[ 2 ]'.
+	statement := ast body statements last.
+	self assert: statement hasSameExitPoint 
+]
+
+{ #category : 'tests - hasSameExitPoint' }
+RBProgramNodeTest >> testHasSameExitPointWhenMessageWithReturnBlockExpectFalse [
+
+	| ast statement |
+	ast := RBParser parseMethod: 'a1
+							instVar at: #foo ifAbsentPut: [ ^ 2 ]'.
+	statement := ast body statements last.
+	self deny: statement hasSameExitPoint 
+]
+
+{ #category : 'tests - hasSameExitPoint' }
+RBProgramNodeTest >> testHasSameExitPointWhenMessageWithoutReturnBlockExpectTrue [
+
+	| ast statement |
+	ast := RBParser parseMethod: 'a1
+							instVar at: #foo ifAbsentPut: [ 2 ]'.
+	statement := ast body statements last.
+	self assert: statement hasSameExitPoint 
+]
+
+{ #category : 'tests - hasSameExitPoint' }
+RBProgramNodeTest >> testHasSameExitPointWhenReturnNodeExpectTrue [
+
+	| ast statement |
+	ast := RBParser parseMethod: 'a1
+							^ 2'.
+	statement := ast body statements last.
+	self assert: statement hasSameExitPoint 
+]
+
+{ #category : 'tests - hasSameExitPoint' }
+RBProgramNodeTest >> testHasSameExitPointWhenReturnNodeWithAssignmentExpectTrue [
+
+	| ast statement |
+	ast := RBParser parseMethod: 'a1
+							^ a := 3'.
+	statement := ast body statements last.
+	self assert: statement hasSameExitPoint 
+]
+
+{ #category : 'tests - hasSameExitPoint' }
+RBProgramNodeTest >> testHasSameExitPointWhenReturnNodeWithMessageSendExpectTrue [
+
+	| ast statement |
+	ast := RBParser parseMethod: 'a1
+							^ self foo: 2'.
+	statement := ast body statements last.
+	self assert: statement hasSameExitPoint 
+]
+
+{ #category : 'tests - hasSameExitPoint' }
+RBProgramNodeTest >> testHasSameExitPointWhenReturnWithBlockAndSequenceWithNestedBlockWithoutReturnExpectTrue [
+
+	| ast statement |
+	ast := RBParser parseMethod: 'a1
+							^ [ self foo: [ :a | a + 1 ]. ^ 2 ]'.
+	statement := ast body statements last.
+	self assert: statement hasSameExitPoint 
+]
+
+{ #category : 'tests - hasSameExitPoint' }
+RBProgramNodeTest >> testHasSameExitPointWhenReturnWithBlockWithoutReturnExpectTrue [
+
+	| ast statement |
+	ast := RBParser parseMethod: 'a1
+							^ [ 2 ]'.
+	statement := ast body statements last.
+	self assert: statement hasSameExitPoint 
+]
+
+{ #category : 'tests - hasSameExitPoint' }
+RBProgramNodeTest >> testHasSameExitPointWhenReturnWithEmptyBlockExpectTrue [
+
+	| ast statement |
+	ast := RBParser parseMethod: 'a1
+							^ [ ]'.
+	statement := ast body statements last.
+	self assert: statement hasSameExitPoint 
+]
+
+{ #category : 'tests - hasSameExitPoint' }
+RBProgramNodeTest >> testHasSameExitPointWhenReturnWithMessageWithReturnBlockExpectTrue [
+
+	| ast statement |
+	ast := RBParser parseMethod: 'a1
+							^ instVar at: #foo ifAbsentPut: [ ^ 2 ]'.
+	statement := ast body statements last.
+	self assert: statement hasSameExitPoint 
+]
+
+{ #category : 'tests - hasSameExitPoint' }
+RBProgramNodeTest >> testHasSameExitPointWhenReturnWithMessageWithoutReturnBlockExpecTrue [
+
+	| ast statement |
+	ast := RBParser parseMethod: 'a1
+							^ instVar at: #foo ifAbsentPut: [ 2 ]'.
+	statement := ast body statements last.
+	self assert: statement hasSameExitPoint 
+]
+
+{ #category : 'tests - hasSameExitPoint' }
+RBProgramNodeTest >> testHasSameExitPointWhenReturnWithWhileFalseBlockWithReturnExpectFalse [
+
+	| ast statement |
+	ast := RBParser parseMethod: 'a1
+							[ ^ false ] whileFalse: [ true ]'.
+	statement := ast body statements last.
+	self deny: statement hasSameExitPoint 
+]
+
+{ #category : 'tests - hasSameExitPoint' }
+RBProgramNodeTest >> testHasSameExitPointWhenSequenceWithLastReturnAndNonLocalReturnExpectTrue [
+
+	| ast sequence |
+	ast := RBParser parseMethod: 'a1
+							self foo.
+							instVar := true ifFalse: [ ^ 1 ].
+							instVar isOdd ifTrue: [ instVar := instVar + 1 ].
+							^ self end'.
+	sequence := RBSequenceNode statements: ast body statements allButFirst.
+	sequence parent: ast body.
+	self assert: sequence hasSameExitPoint 
+]
+
+{ #category : 'tests - hasSameExitPoint' }
+RBProgramNodeTest >> testHasSameExitPointWhenSequenceWithLastReturnExpectTrue [
+
+	| ast sequence |
+	ast := RBParser parseMethod: 'a1
+							self foo.
+							instVar := true ifFalse: [ 1 ].
+							^ 2'.
+	sequence := RBSequenceNode statements: ast body statements allButFirst.
+	sequence parent: ast body.
+	self assert: sequence hasSameExitPoint 
+]
+
+{ #category : 'tests - hasSameExitPoint' }
+RBProgramNodeTest >> testHasSameExitPointWhenSequenceWithoutAnyReturnsExpectTrue [
+
+	| ast sequence |
+	ast := RBParser parseMethod: 'a1
+							self foo.
+							instVar := true ifFalse: [ 1 ]
+							self end'.
+	sequence := RBSequenceNode statements: ast body statements allButFirst.
+	sequence parent: ast body.
+	self assert: sequence hasSameExitPoint 
+]
+
+{ #category : 'tests - hasSameExitPoint' }
+RBProgramNodeTest >> testHasSameExitPointWhenSequenceWithoutLastReturnAndMultipleNonLocalReturnExpectFalse [
+
+	| ast sequence |
+	ast := RBParser parseMethod: 'a1
+							self foo.
+							[  instVar isOdd ifTrue: [ ^ 2 ]. 
+								instVar := instVar + 1] 
+								whileTrue: [ instVar < 10 ].
+							instVar := true ifFalse: [ ^ 1 ].
+							self end'.
+	sequence := RBSequenceNode statements: ast body statements allButLast.
+	sequence parent: ast body.
+	self deny: sequence hasSameExitPoint 
+]
+
+{ #category : 'tests - hasSameExitPoint' }
+RBProgramNodeTest >> testHasSameExitPointWhenSequenceWithoutLastReturnAndNonLocalReturnExpectFalse [
+
+	| ast sequence |
+	ast := RBParser parseMethod: 'a1
+							self foo.
+							instVar := true ifFalse: [ ^ 1 ]
+							self end'.
+	sequence := RBSequenceNode statements: ast body statements allButFirst.
+	sequence parent: ast body.
+	self deny: sequence hasSameExitPoint 
+]
+
 { #category : 'tests - isEssential' }
 RBProgramNodeTest >> testIsEssentialWhenFirstMessageInACascadeExpectFalse [
 
@@ -907,13 +1096,13 @@ RBProgramNodeTest >> testIsUsedAsReturnValueWhenNodeIsAssignmentVariableExpectFa
 ]
 
 { #category : 'tests - isUsedAsReturnValue' }
-RBProgramNodeTest >> testIsUsedAsReturnValueWhenNodeIsLastInBlockExpectTrue [
+RBProgramNodeTest >> testIsUsedAsReturnValueWhenNodeIsLastInBlockExpectFalse [
 
 	| ast statement |
 	ast := RBParser parseMethod: 'a1
 	               [ self foo. self bar ]'.
 	statement := ast body statements first body statements second.
-	self assert: statement isUsedAsReturnValue 
+	self deny: statement isUsedAsReturnValue 
 ]
 
 { #category : 'tests - isUsedAsReturnValue' }
