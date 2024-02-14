@@ -221,7 +221,6 @@
 			(Smalltalk globals at: cn) removeFromSystem ].
 
 	" final cleaning "
-	Author reset.
 	SmalltalkImage classPool at: #Tools put: nil.
 	Job jobAnnouncer initialize.
 	EncodedCharSet initialize.
