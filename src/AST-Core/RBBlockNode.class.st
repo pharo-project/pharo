@@ -217,6 +217,9 @@ RBBlockNode >> hasArguments [
 
 { #category : 'testing' }
 RBBlockNode >> hasBlockReturn [
+
+	self deprecated: 'This method is deprecated, don''t use it. Use on your own responsibility.'.
+
 	^ self body lastIsReturn
 ]
 
