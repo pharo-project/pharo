@@ -250,6 +250,16 @@ RBExtractMethodTransformation >> extract: aString from: aSelector to: aNewSelect
 	sourceCode := aString
 ]
 
+{ #category : 'api' }
+RBExtractMethodTransformation >> extractSource: aString fromMethodSource: source to: aNewSelector in: aClassName [
+
+	class := aClassName.
+	parseTree := RBParser parseMethod: source. 
+	selector := parseTree selector.
+	newSelector := aNewSelector.
+	sourceCode := aString
+]
+
 { #category : 'preconditions' }
 RBExtractMethodTransformation >> findMethodWithSimilarBody [
 
