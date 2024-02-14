@@ -581,12 +581,14 @@ ProcessBrowser >> inspectReceiver [
 
 { #category : 'updating' }
 ProcessBrowser >> isAutoUpdating [
-	^autoUpdateProcess notNil and: [ autoUpdateProcess isSuspended  not ]
+
+	^ autoUpdateProcess isNotNil and: [ autoUpdateProcess isSuspended  not ]
 ]
 
 { #category : 'updating' }
 ProcessBrowser >> isAutoUpdatingPaused [
-	^autoUpdateProcess notNil and: [ autoUpdateProcess isSuspended ]
+
+	^ autoUpdateProcess isNotNil and: [ autoUpdateProcess isSuspended ]
 ]
 
 { #category : 'testing' }
@@ -608,7 +610,6 @@ ProcessBrowser >> keyEventsDict [
 			$s #suspendProcess
 			$d #debugProcess
 			$p #changePriority
-			$m #messageTally
 			$f #findContext
 			$g #nextContext
 			$a #toggleAutoUpdate
@@ -688,12 +689,6 @@ ProcessBrowser >> menuProcessList: aMenuMorph [
 						selector: #debugProcess;
 						target: self;
 						yourself) ].
-
-			aMenuMorph addMenuItem: ((ToggleMenuItemMorph new contents: #'Profile messages')
-				keyText: 'm';
-				selector: #messageTally;
-				target: self;
-				yourself).
 
 			(selectedProcess suspendingList isKindOf: Semaphore)
 				ifTrue: [
@@ -800,22 +795,6 @@ ProcessBrowser >> menuStackList: aMenuMorph [
 		selector: #browseContext;
 		target: self;
 		yourself)
-]
-
-{ #category : 'stack list' }
-ProcessBrowser >> messageTally [
-
-	| secString secs |
-	secString := self morphicUIManager
-		             request: 'Profile for how many seconds?'
-		             initialAnswer: '4'.
-	secString ifNil: [ secString := String new ].
-	secs := secString asNumber asInteger.
-	(secs isNil or: [ secs isZero ]) ifTrue: [ ^ self ].
-	[
-	self tools timeProfiler
-		spyOnProcess: selectedProcess
-		forMilliseconds: secs * 1000 ] forkAt: selectedProcess priority + 1
 ]
 
 { #category : 'accessing' }
@@ -1039,7 +1018,7 @@ ProcessBrowser >> stackListIndex [
 { #category : 'accessing' }
 ProcessBrowser >> stackListIndex: index [
 	stackListIndex := index.
-	selectedContext := (stackList notNil
+	selectedContext := (stackList isNotNil
 						and: [index > 0]) ifTrue:
 							[stackList at: index ifAbsent: []].
 	selectedClass := nil.
@@ -1188,7 +1167,7 @@ ProcessBrowser >> updateStackList: depth [
 	| suspendedContext oldHighlight |
 	selectedProcess
 		ifNil: [^ self changeStackListTo: nil].
-	(stackList notNil and: [ stackListIndex > 0 ])
+	(stackList isNotNil and: [ stackListIndex > 0 ])
 		ifTrue: [oldHighlight := stackList at: stackListIndex].
 	selectedProcess == Processor activeProcess
 		ifTrue: [self

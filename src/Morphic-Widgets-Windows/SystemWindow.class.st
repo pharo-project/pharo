@@ -909,11 +909,7 @@ SystemWindow >> deleteCloseBox [
 
 { #category : 'open/close' }
 SystemWindow >> deleteDiscardingChanges [
-	| thisWorld announcement animateClose |
-	animateClose := self visible
-		and: [ self world isNotNil
-				and: [ self theme shouldUseAnimations
-						and: [ self theme animationSettings animateClosing ] ] ].
+	| thisWorld announcement |
 	self removePaneSplitters.	"in case we add some panes and reopen!"
 	thisWorld := self world.
 	self isFlexed
@@ -924,8 +920,6 @@ SystemWindow >> deleteDiscardingChanges [
 				windowIsClosing;
 				releaseActionMap ].
 	model := nil.
-	animateClose
-		ifTrue: [ self animateClose ].
 	SystemWindow noteTopWindowIn: thisWorld.
 	announcement := WindowClosed new
 		window: self;
@@ -1320,8 +1314,6 @@ SystemWindow >> minimizeOrRestore [
 	| mc windowEvent |
 	isCollapsed
 		ifTrue: [ "Expand -- restore panes to morphics structure"
-			self theme shouldUseAnimations ifTrue: [
-				self animateRestoreFromMinimized ].
 			isCollapsed := false.
 			"Bring to front first"
 			self
@@ -1345,7 +1337,6 @@ SystemWindow >> minimizeOrRestore [
 			self
 				setBoundsWithFlex: (-100 @ -100 extent: 2 @ 2);
 				"place offscreen"hide.
-			self theme shouldUseAnimations ifTrue: [ self animateMinimize ].
 			self isActive ifTrue: [ self world navigateVisibleWindowForward ] ].
 	self layoutChanged.
 
@@ -1519,11 +1510,8 @@ SystemWindow >> paneColor: aColor [
 
 { #category : 'panes' }
 SystemWindow >> paneColorToUse [
-	^ Display depth <= 2
-		ifTrue:
-			[Color white]
-		ifFalse:
-			[self paneColor]
+
+	^ self paneColor
 ]
 
 { #category : 'panes' }

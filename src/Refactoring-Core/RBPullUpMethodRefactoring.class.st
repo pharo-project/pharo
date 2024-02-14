@@ -49,6 +49,31 @@ RBPullUpMethodRefactoring class >> pullUp: selectorCollection from: aClass to: a
 ]
 
 { #category : 'preconditions' }
+RBPullUpMethodRefactoring >> applicabilityPreconditions [ 
+
+	^(selectors 
+		inject: (RBCondition hasSuperclass: class)
+		into: [:cond :each | 
+			cond 
+			& (RBCondition definesSelector: each in: class)])
+			& (RBCondition withBlock:
+						[
+						self checkClassVars.
+						self checkSuperclass.
+						self checkSuperMessages.
+						true])
+]
+
+{ #category : 'preconditions' }
+RBPullUpMethodRefactoring >> breakingChangePreconditions [
+
+	^ selectors 
+		inject: self trueCondition 
+		into: [ :cond :each |
+		  	cond & (RBCondition withBlock: [ self checkInstVars. true ]) ]
+]
+
+{ #category : 'preconditions' }
 RBPullUpMethodRefactoring >> checkBackReferencesTo: aSelector [
 	"If `aSelector` is defined in `targetSuperclass` or one of its superclasses check for
 	super sends to `aSelector` in `targetSuperclass` hierarchy.
@@ -114,7 +139,7 @@ RBPullUpMethodRefactoring >> checkInstVarsFor: aSelector [
 								with: each
 								with: class))
 						ifTrue: [ self pushUpVariable: each ]
-						ifFalse: [ self refactoringError: 'You are about to push your method without the instance variable it uses.
+						ifFalse: [ self refactoringWarning: 'You are about to push your method without the instance variable it uses.
 						It will bring the system is an inconsistent state. But this may be what you want.
 						So do you want to push up anyway?' ] ]]
 ]
@@ -248,28 +273,10 @@ RBPullUpMethodRefactoring >> copyDownMethods [
 	selectors do: [:each | self copyDownMethod: each]
 ]
 
-{ #category : 'actions' }
-RBPullUpMethodRefactoring >> generateChanges [
-	
-	self flag: #todo.
-	"Revisit this in the context of the comments of RBAbstractTransformation>>generateChanges. 
-	It looks like the self changes should not be invoked here! "
-	super generateChanges.
-
-	^ self changes
-]
-
 { #category : 'preconditions' }
 RBPullUpMethodRefactoring >> preconditions [
-	self requestSuperClass.
-	^(selectors inject: (RBCondition hasSuperclass: class)
-		into: [:cond :each | cond & (RBCondition definesSelector: each in: class)])
-			& (RBCondition withBlock:
-						[self checkInstVars.
-						self checkClassVars.
-						self checkSuperclass.
-						self checkSuperMessages.
-						true])
+
+	^ self applicabilityPreconditions & self breakingChangePreconditions 
 ]
 
 { #category : 'transforming' }
@@ -306,7 +313,7 @@ RBPullUpMethodRefactoring >> pullUp: selectorCollection from: aClass [
 
 { #category : 'initialization' }
 RBPullUpMethodRefactoring >> pullUp: selectorCollection from: aClass to: aSuperClass [
-	self setOption: #superClass toUse: [ :ref | ].
+
 	class := self classObjectFor: aClass.
 	targetSuperclass := self classObjectFor: aSuperClass .
 	selectors := selectorCollection.
@@ -362,11 +369,6 @@ RBPullUpMethodRefactoring >> removePulledUpMethods [
 			(RBRemoveMethodTransformation selector: each from: class) ]
 ]
 
-{ #category : 'preconditions' }
-RBPullUpMethodRefactoring >> requestSuperClass [
-	^(self options at: #superClass) value: self
-]
-
 { #category : 'initialization' }
 RBPullUpMethodRefactoring >> selectors [
 	^ selectors
@@ -377,7 +379,7 @@ RBPullUpMethodRefactoring >> selectors: aList [
 	selectors := aList
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBPullUpMethodRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

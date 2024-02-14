@@ -620,13 +620,13 @@ Integer >> digitAdd: arg [
 { #category : 'accessing' }
 Integer >> digitAt: anExponent base: base [
 
-	"Return number that represents digit at given position.
-		42 digitAt: 2 base: 10 -> 4
-		42 digitAt: 1 base: 10 -> 1
-	It is always a number or zero:
-		16rFF digitAt: 1 base: 16 -> 15
-		1 digitAt: 2 base: 10 -> 0
-	Results are not defined for base smaller than 2 and non-integer arguments."
+	"Return number that represents digit at given position."
+		"(42 digitAt: 2 base: 10) >>> 4"
+		"(42 digitAt: 1 base: 10) >>> 2"
+	"It is always a number or zero:"
+		"(16rFF digitAt: 1 base: 16) >>> 15"
+		"(1 digitAt: 2 base: 10) >>> 0"
+	"Results are not defined for base smaller than 2 and non-integer arguments."
 
 	^ self // (base raisedToInteger: anExponent - 1) \\ base
 ]
@@ -1122,7 +1122,7 @@ Integer >> printOn: aStream base: b nDigits: n [
 
 { #category : 'arithmetic' }
 Integer >> quo: aNumber [
-	"Refer to the comment in Number quo: "
+	"Refer to the comment in Number#quo: "
 	| ng quo |
 	aNumber isInteger ifTrue:
 		[ng := self negative == aNumber negative == false.
@@ -1178,7 +1178,7 @@ Integer >> round: numberOfWishedDecimal [
 
 { #category : 'truncation and round off' }
 Integer >> rounded [
-	"Refer to the comment in Number|rounded."
+	"Refer to the comment in Number#rounded."
 ]
 
 { #category : 'enumerating' }
@@ -1196,7 +1196,7 @@ Integer >> timesRepeat: aBlock [
 
 { #category : 'truncation and round off' }
 Integer >> truncated [
-	"Refer to the comment in Number|truncated."
+	"Refer to the comment in Number#truncated."
 ]
 
 { #category : 'bit manipulation' }

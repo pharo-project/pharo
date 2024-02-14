@@ -39,6 +39,17 @@ RBExtractToTemporaryRefactoring class >> model: aRBSmalltalk extract: anInterval
 ]
 
 { #category : 'preconditions' }
+RBExtractToTemporaryRefactoring >> applicabilityPreconditions [
+
+	^ (RBCondition definesSelector: selector in: class)
+	  & (RBCondition isValidInstanceVariableName: newVariableName for: class)
+	  & (RBCondition withBlock: [
+		   self verifySelectedInterval.
+		   self checkVariableName.
+		   true ])
+]
+
+{ #category : 'preconditions' }
 RBExtractToTemporaryRefactoring >> checkVariableName [
 	(class whoDefinesInstanceVariable: newVariableName) ifNotNil:
 			[self refactoringError: ('<1p> defines an instance variable named <2s>'
@@ -107,16 +118,6 @@ RBExtractToTemporaryRefactoring >> parseTree [
 	^ parseTree doSemanticAnalysis
 ]
 
-{ #category : 'preconditions' }
-RBExtractToTemporaryRefactoring >> preconditions [
-	^(RBCondition definesSelector: selector in: class)
-		& (RBCondition isValidInstanceVariableName: newVariableName for: class)
-			& (RBCondition withBlock:
-						[self verifySelectedInterval.
-						self checkVariableName.
-						true])
-]
-
 { #category : 'transforming' }
 RBExtractToTemporaryRefactoring >> privateTransform [
 	self
@@ -137,7 +138,7 @@ RBExtractToTemporaryRefactoring >> selectedSource [
 	^ source copyFrom: sourceInterval first to: sourceInterval last
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBExtractToTemporaryRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

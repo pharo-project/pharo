@@ -270,12 +270,6 @@ Number >> copySignTo: aNumber [
 		ifFalse: [aNumber abs negated]
 ]
 
-{ #category : 'accessing' }
-Number >> day [
-
- 	^ self days
-]
-
 { #category : 'truncation and round off' }
 Number >> detentBy: detent atMultiplesOf: grid snap: snap [
 	"Map all values that are within detent/2 of any multiple of grid to that multiple.  Otherwise, if snap is true, return self, meaning that the values in the dead zone will never be returned.  If snap is false, then expand the range between dead zones so that it covers the range between multiples of the grid, and scale the value by that factor."
@@ -320,12 +314,6 @@ Number >> fractionPart [
 	^self - self integerPart
 ]
 
-{ #category : 'accessing' }
-Number >> hour [
-
- 	^ self hours
-]
-
 { #category : 'truncation and round off' }
 Number >> integerPart [
 	"Added for ANSI compatibility"
@@ -356,30 +344,6 @@ Number >> isPowerOfTwo [
 { #category : 'testing' }
 Number >> isZero [
 	^self = 0
-]
-
-{ #category : 'accessing' }
-Number >> milliSecond [
-	"1 milliSecond printString >>> '0:00:00:00.001'"
-	"(1 second + 1 milliSecond) printString >>> '0:00:00:01.001'"
-
- 	^ self milliSeconds
-]
-
-{ #category : 'accessing' }
-Number >> minute [
-	"1 minute printString >>> '0:00:01:00'"
-	"(1 hour + 1 minute) printString >>> '0:01:01:00'"
-
- 	^ self minutes
-]
-
-{ #category : 'accessing' }
-Number >> nanoSecond [
-	"1 nanoSecond printString >>> '0:00:00:00.000000001'"
-	"(1 milliSecond + 1 nanoSecond) printString >>> '0:00:00:00.001000001'"
-
- 	^ self nanoSeconds
 ]
 
 { #category : 'arithmetic' }
@@ -578,14 +542,6 @@ Number >> rounded [
 	^(self + (self sign / 2)) truncated
 ]
 
-{ #category : 'accessing' }
-Number >> second [
-	"1 second printString >>> '0:00:00:01'"
-	"(1 minute + 1 second) printString >>> '0:00:01:01'"
-
- 	^ self seconds
-]
-
 { #category : 'converting' }
 Number >> sign [
 	"Answer 1 if the receiver is greater than 0, -1 if less than 0, else 0."
@@ -634,16 +590,4 @@ Number >> truncated [
 	"Answer an integer nearest the receiver toward zero."
 
 	^self quo: 1
-]
-
-{ #category : 'accessing' }
-Number >> week [
-
- 	^ self weeks
-]
-
-{ #category : 'accessing' }
-Number >> year [
-
- 	^self years
 ]

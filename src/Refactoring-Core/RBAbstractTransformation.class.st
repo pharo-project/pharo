@@ -198,6 +198,21 @@ RBAbstractTransformation >> convertMethod: selector for: aClass using: searchRep
 		ifTrue: [ aClass compileTree: searchReplacer tree ]
 ]
 
+{ #category : 'accessing' }
+RBAbstractTransformation >> copyOptionsFrom: aDictionary [
+	| dict |
+	dict := self options.
+	dict == self class refactoringOptions
+		ifTrue: [^self options: aDictionary copy].
+	dict keysAndValuesDo:
+			[:key :value |
+			value == (self class refactoringOptions at: key ifAbsent: [nil])
+				ifTrue: [ dict at: key put: (aDictionary at: key) ]].
+	(aDictionary keys difference: dict keys) do:
+		[ :e | dict at: e put: (aDictionary at: e) ].
+	self options: dict
+]
+
 { #category : 'initialize' }
 RBAbstractTransformation >> defaultEnvironment [
 
@@ -220,14 +235,13 @@ RBAbstractTransformation >> execute [
 
 { #category : 'scripting api - executing' }
 RBAbstractTransformation >> generateChanges [
-	"Prepare, check the preconditions, and perform the actual transformation (i.e., creating a list of changes that can be accessible using the changes message). This method should not be invoked from drivers since drivers usually check in finer grained mode the preconditions - and that this stage they already checked the preconditions."
+	"Prepare, check the preconditions, perform the actual transformation (i.e., creating a list of changes that can be accessible using the changes message), and return the changes. This method should not be invoked from drivers since drivers usually check in finer grained mode the preconditions - and that this stage they already checked the preconditions."
 	
 	self prepareForExecution.
 	self checkPreconditions.
-	self privateTransform
+	self privateTransform.
 	
-	"below executes the refactoring without prompt"
-	"RBRefactoringManager instance addRefactoring: self"
+	
 ]
 
 { #category : 'transforming' }
@@ -337,7 +351,7 @@ RBAbstractTransformation >> poolVariableNamesIn: poolName [
 { #category : 'preconditions' }
 RBAbstractTransformation >> preconditions [
 
-	self subclassResponsibility
+	^ self applicabilityPreconditions
 ]
 
 { #category : 'transforming' }
@@ -412,6 +426,17 @@ RBAbstractTransformation >> selectVariableTypesFrom: initialTypeCollection selec
 		value: self
 		value: initialTypeCollection
 		value: selectedTypeCollection
+]
+
+{ #category : 'accessing' }
+RBAbstractTransformation >> setOption: aSymbol toUse: aBlock [
+	"Unshare on usage"
+	
+	| dict |
+	dict := self options.
+	dict == self class refactoringOptions ifTrue: [dict := dict copy].
+	dict at: aSymbol put: aBlock.
+	self options: dict
 ]
 
 { #category : 'requests' }

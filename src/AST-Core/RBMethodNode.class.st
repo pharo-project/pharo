@@ -150,9 +150,10 @@ RBMethodNode >> allSequenceNodes [
 { #category : 'accessing' }
 RBMethodNode >> allStatements [
 	"return the statements including variable definition."
-	^ self temporaries asOrderedCollection copy
-			addAll: super allStatements;
-			yourself
+
+	^ (OrderedCollection withAll: self temporaries)
+		  addAll: super allStatements;
+		  yourself
 ]
 
 { #category : 'accessing' }
@@ -403,6 +404,11 @@ RBMethodNode >> isMethod [
 { #category : 'testing' }
 RBMethodNode >> isPrimitive [
 	^ self pragmas anySatisfy: [ :each | each isPrimitive ]
+]
+
+{ #category : 'testing' }
+RBMethodNode >> isUsingAsReturnValue: aNode [
+	^body == aNode and: [aNode lastIsReturn]
 ]
 
 { #category : 'accessing' }
@@ -723,11 +729,6 @@ RBMethodNode >> temporaries [
 { #category : 'accessing' }
 RBMethodNode >> temporaryNames [
 	^ self body temporaryNames
-]
-
-{ #category : 'testing' }
-RBMethodNode >> uses: aNode [
-	^body == aNode and: [aNode lastIsReturn]
 ]
 
 { #category : 'tree accessing' }

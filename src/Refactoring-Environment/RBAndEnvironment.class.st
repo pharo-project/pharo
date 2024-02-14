@@ -114,7 +114,7 @@ RBAndEnvironment >> selectorsForClass: aClass do: aBlock [
 				ifTrue: [aBlock value: each]]
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBAndEnvironment >> storeOn: aStream [
 	aStream nextPut: $(.
 	environment storeOn: aStream.

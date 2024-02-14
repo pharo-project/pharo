@@ -28,7 +28,7 @@ ReOverridesSpecialMessageRule >> check: aClass forCritiquesDo: aCriticBlock [
 		ifTrue: [ self metaclassShouldNotOverride ]
 		ifFalse: [ self classShouldNotOverride ].
 	(selectors anySatisfy: [ :each |
-		(aClass superclass notNil
+		(aClass superclass isNotNil
 			and: [ (aClass superclass canUnderstand: each)
 			and: [ (aClass includesSelector: each) ] ]) ]) ifTrue: [
 		aCriticBlock cull: (self critiqueFor: aClass) ]

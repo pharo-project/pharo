@@ -5,7 +5,8 @@ Class {
 		'description',
 		'username',
 		'password',
-		'type'
+		'type',
+		'resolvedReference'
 	],
 	#category : 'Metacello-Core-Specs',
 	#package : 'Metacello-Core',
@@ -51,14 +52,11 @@ MetacelloRepositorySpec >> configMethodOn: aStream indent: indent [
 
 { #category : 'mc support' }
 MetacelloRepositorySpec >> createRepository [
-  | repo |
 
-  repo := self project createRepository: self.
-  ^ MCRepositoryGroup default repositories
-    detect: [ :each | each = repo ]
-    ifNone: [ 
-      MCRepositoryGroup default addRepository: repo.
-      repo ]
+	| repo |
+	repo := MetacelloPlatform current createRepository: self.
+	MCRepositoryGroup default addRepository: repo.
+	^ repo
 ]
 
 { #category : 'querying' }
@@ -71,6 +69,12 @@ MetacelloRepositorySpec >> description [
 MetacelloRepositorySpec >> description: aString [
 
 	description := aString
+]
+
+{ #category : 'printing' }
+MetacelloRepositorySpec >> fullDescription [
+
+	^ resolvedReference ifNil: [ 'unresolved' ]
 ]
 
 { #category : 'mc support' }
@@ -131,6 +135,12 @@ MetacelloRepositorySpec >> removeFromMetacelloRepositories: aMetacelloRepositori
 			name: self name;
 			spec: self;
 			yourself)
+]
+
+{ #category : 'accessing' }
+MetacelloRepositorySpec >> resolvedReference: aString [ 
+	
+	resolvedReference := aString
 ]
 
 { #category : 'querying' }

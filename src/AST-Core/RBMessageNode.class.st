@@ -236,6 +236,7 @@ RBMessageNode >> keywordsPositions: aPositionsList [
 
 { #category : 'testing' }
 RBMessageNode >> lastIsReturn [
+	"Ideally, we want to remove this method so it returns false like the superclass"
 	(self isInlineIf or: [ self isInlineIfNil]) ifFalse: [ ^false ].
 	arguments size = 1 ifTrue: [ ^false ].
 	^ arguments first isBlock and: [ arguments first body lastIsReturn

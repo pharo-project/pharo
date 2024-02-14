@@ -1155,41 +1155,6 @@ RubSmalltalkEditor >> sendersOfIt: aKeyboardEvent [
 	^ true
 ]
 
-{ #category : 'do-its' }
-RubSmalltalkEditor >> tally: aStream [
-	"Treat the current selection as an expression; evaluate and tally it."
-	| receiver context v compiledMethod profiler |
-	receiver := self doItReceiver.
-	context := self doItContext.
-	
-	compiledMethod := self compile: aStream for: receiver in: context.
-	compiledMethod ifNil: [^ self].
-	profiler := TimeProfiler spyOn: [ v:= compiledMethod valueWithReceiver: receiver].
-	profiler showResult: v
-]
-
-{ #category : 'do-its' }
-RubSmalltalkEditor >> tallyHighlight [
-	"Treat the current highlight as an expression; evaluate and tally it."
-
-	self highlightAndEmptyCheck: [ ^ self ].
-	self tally: self highlightedTextAsStream
-]
-
-{ #category : 'do-its' }
-RubSmalltalkEditor >> tallyIt [
-
-	^ self tallySelection
-]
-
-{ #category : 'do-its' }
-RubSmalltalkEditor >> tallySelection [
-	"Treat the current selection as an expression; evaluate and tally it."
-
-	self expressionSelectAndEmptyCheck: [ ^ self ].
-	self tally: self selection
-]
-
 { #category : 'completion engine' }
 RubSmalltalkEditor >> textArea: atextArea [
 

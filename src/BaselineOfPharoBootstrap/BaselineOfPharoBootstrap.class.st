@@ -94,7 +94,7 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		spec package: 'Kernel'.
 		spec package: 'Kernel-CodeModel'.
 		spec package: 'Kernel-BytecodeEncoders'.
-		spec package: 'Kernel-Chronology-Extras'.
+		spec package: 'System-Time'.
 		spec package: 'NumberParser'.
 
 		spec package: 'Math-Operations-Extensions'.
@@ -191,7 +191,7 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		spec group: 'AdditionalPackages' with: {
 			'ReflectionMirrors-Primitives'.
 			'InitializePackagesCommandLineHandler'.
-			'Kernel-Chronology-Extras'.
+			'System-Time'.
 			'Math-Operations-Extensions'.
 			'Debugging-Core'.
 			'System-NumberPrinting'.

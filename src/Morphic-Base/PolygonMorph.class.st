@@ -142,76 +142,6 @@ PolygonMorph class >> example4 [
 ]
 
 { #category : 'instance creation' }
-PolygonMorph class >> fromHand: hand [
-	"Let the user draw a polygon, clicking at each vertex, and ending by clicking within 5 of the first point..."
-	"self fromHand: ActiveHand"
-
-	| p1 poly oldVerts pN opposite |
-	"wait till guy will press the mouse button"
-	hand captureEventsUntil: [:evt |
-		evt isMouse ifTrue: [ p1 := evt cursorPoint].
-		(evt isMouse and: [ evt anyButtonPressed ]) not ].
-
-	opposite := (Display colorAt: p1) negated.
-	opposite = Color transparent ifTrue: [opposite := Color red].
-	(poly := LineMorph from: p1 to: p1 color: opposite width: 2) openInWorld.
-	oldVerts := {p1}.
-
-	[true] whileTrue: [
-		"wait till button release"
-		hand captureEventsWhile: [:evt |
-			evt isMouse
-				ifTrue: [
-					pN := evt cursorPoint.
-					poly setVertices: (oldVerts copyWith: pN).
-					evt anyButtonPressed ]
-				ifFalse: [ true ] ].
-
-		(oldVerts size > 1 and: [(pN distanceTo: p1) < 5])
-			ifFalse: [
-				oldVerts := poly vertices.
-				"loop till button will be pressed"
-				hand captureEventsUntil: [:evt |
-					evt isMouse
-						ifTrue: [
-							pN := evt cursorPoint.
-							poly setVertices: (oldVerts copyWith: pN).
-							evt anyButtonPressed ]
-					ifFalse: [ false ]]]
-			ifTrue: [ ^ (poly setVertices: (poly vertices copyWith: p1)) delete].
-	]
-]
-
-{ #category : 'instance creation' }
-PolygonMorph class >> fromHandFreehand: hand [
-	"Let the user draw a polygon, holding the mouse down, and ending by clicking within 5 of the first point..."
-	"self fromHandFreehand: ActiveHand"
-
-	| p1 poly pN opposite |
-	"wait till guy will press the mouse button"
-	hand captureEventsUntil: [:evt |
-		evt isMouse ifTrue: [ p1 := evt cursorPoint].
-		(evt isMouse and: [ evt anyButtonPressed ])  ].
-
-	opposite := (Display colorAt: p1) negated.
-	opposite = Color transparent ifTrue: [opposite := Color red].
-	(poly := LineMorph from: p1 to: p1 color: opposite width: 2) openInWorld.
-
-	hand captureEventsWhile: [:evt |
-
-		evt isMouse ifTrue:[
-			pN := evt cursorPoint.
-			(pN distanceTo: poly vertices last) > 3 ifTrue:
-				[poly setVertices: (poly vertices copyWith: pN) ].
-
-			evt anyButtonPressed
-			]
-		ifFalse: [ true ]
-	].
-	^ (poly setVertices: (poly vertices copyWith: p1)) delete
-]
-
-{ #category : 'instance creation' }
 PolygonMorph class >> vertices: verts color: c borderWidth: bw borderColor: bc [
 	"(PolygonMorph
 		vertices: {261@400. 388@519. 302@595. 	222@500.	141@583. 34@444}
@@ -464,15 +394,19 @@ PolygonMorph >> borderForm [
 	"A form must be created for drawing the border whenever the borderColor is translucent."
 
 	| borderCanvas |
-	borderForm ifNotNil: [^ borderForm].
-	borderCanvas := (Display defaultCanvasClass extent: bounds extent depth: 1)
-		asShadowDrawingCanvas: Color black.
-	borderCanvas translateBy: bounds topLeft negated
-		during:[:tempCanvas| self drawBorderOn: tempCanvas].
+	borderForm ifNotNil: [ ^ borderForm ].
+	borderCanvas := (FormCanvas extent: bounds extent depth: 1)
+		                asShadowDrawingCanvas: Color black.
+	borderCanvas
+		translateBy: bounds topLeft negated
+		during: [ :tempCanvas | self drawBorderOn: tempCanvas ].
 	borderForm := borderCanvas form.
-	self arrowForms do:
-		[:f |  "Eliminate overlap between line and arrowheads if transparent."
-		borderForm copy: f boundingBox from: f to: f offset - self position rule: Form erase].
+	self arrowForms do: [ :f | "Eliminate overlap between line and arrowheads if transparent."
+		borderForm
+			copy: f boundingBox
+			from: f
+			to: f offset - self position
+			rule: Form erase ].
 	^ borderForm
 ]
 

@@ -233,23 +233,21 @@ ColorSelectorDialogWindow >> pickColor [
 	h
 		showTemporaryCursor: (self iconNamed: #eyedropperIcon)
 		hotSpotOffset: 6 @ 31.
-	h
-		captureEventsUntil: [ :evt |
-			evt isMove
-				ifTrue: [ p := evt position.
-					(self hsvaMorph containsPoint: p)
-						ifFalse:
-							[ "deal with the fact that 32 bit displays may have garbage in the alpha bits"
-							c := Display depth = 32
-								ifTrue: [ Color
-										colorFromPixelValue: ((Display pixelValueAt: p) bitOr: 16rFF000000)
-										depth: 32 ]
-								ifFalse: [ Display colorAt: p ] ].
-					h position: p.
-					self selectedColor ~= c
-						ifTrue: [ self selectedColor: c ] ].
-			"			self world displayWorldSafely. "
-			h anyButtonPressed ].
+	h captureEventsUntil: [ :evt |
+		evt isMove ifTrue: [
+			p := evt position.
+			(self hsvaMorph containsPoint: p) ifFalse: [ "deal with the fact that 32 bit displays may have garbage in the alpha bits"
+				c := self currentWorld depth = 32
+					     ifTrue: [
+						     Color
+							     colorFromPixelValue:
+							     ((self currentWorld display pixelValueAt: p) bitOr:
+								      16rFF000000)
+							     depth: 32 ]
+					     ifFalse: [ self currentWorld display colorAt: p ] ].
+			h position: p.
+			self selectedColor ~= c ifTrue: [ self selectedColor: c ] ].
+		h anyButtonPressed ].
 	h showTemporaryCursor: nil
 ]
 

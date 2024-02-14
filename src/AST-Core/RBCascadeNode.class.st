@@ -68,11 +68,6 @@ RBCascadeNode >> copyInContext: aDictionary [
 		yourself
 ]
 
-{ #category : 'testing' }
-RBCascadeNode >> directlyUses: aNode [
-	^messages last = aNode and: [self isDirectlyUsed]
-]
-
 { #category : 'comparing' }
 RBCascadeNode >> equalTo: anObject withMapping: aDictionary [
 	self class = anObject class ifFalse: [^false].
@@ -93,10 +88,22 @@ RBCascadeNode >> isCascade [
 	^true
 ]
 
+{ #category : 'testing' }
+RBCascadeNode >> isEssentialChild: aNode [
+	"Removing a message in a cascade is not considered as a problem from a syntatic point of view."
+
+	^ false
+]
+
 { #category : 'errors' }
 RBCascadeNode >> isFaulty [
 	self isError ifTrue: [ ^ true ].
 	^self messages anySatisfy: [:each | each isFaulty ]
+]
+
+{ #category : 'testing' }
+RBCascadeNode >> isUsingAsReturnValue: aNode [
+	^messages last = aNode and: [self isUsedAsReturnValue]
 ]
 
 { #category : 'accessing' }
@@ -198,11 +205,6 @@ RBCascadeNode >> statementComments [
 { #category : 'accessing' }
 RBCascadeNode >> stopWithoutParentheses [
 	^messages last stop
-]
-
-{ #category : 'testing' }
-RBCascadeNode >> uses: aNode [
-	^messages last = aNode and: [self isUsed]
 ]
 
 { #category : 'querying' }

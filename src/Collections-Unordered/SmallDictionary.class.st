@@ -643,7 +643,7 @@ SmallDictionary >> keysSortedSafely [
 			ifFalse: [x class == y class
 				ifTrue: [x printString < y printString]
 				ifFalse: [x class name < y class name]]].
-	self keysDo: [:each | sortedKeys addLast: each].
+	self keysDo: [:each | sortedKeys addNoSort: each].
 	^ sortedKeys reSort
 ]
 
@@ -768,7 +768,7 @@ SmallDictionary >> size [
 	^size
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 SmallDictionary >> storeOn: aStream [
 	| noneYet |
 	aStream nextPutAll: '(('.

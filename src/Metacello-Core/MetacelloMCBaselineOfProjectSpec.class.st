@@ -81,16 +81,6 @@ MetacelloMCBaselineOfProjectSpec >> ensureConfigurationLoaded: vrsn ensured: ens
   ^ true
 ]
 
-{ #category : 'loading' }
-MetacelloMCBaselineOfProjectSpec >> ensureLoadUsingEngine: anEngine [
-	"see https://github.com/dalehenrich/metacello-work/issues/244 ... uncoditionally load
-   baseline"
-
-	[ super ensureLoadUsingEngine: anEngine ]
-		on: MetacelloIgnorePackageLoaded
-		do: [ :ex | ex resume: ex packageSpec name = self name ]
-]
-
 { #category : 'printing' }
 MetacelloMCBaselineOfProjectSpec >> hasClassName [
 
@@ -167,31 +157,29 @@ MetacelloMCBaselineOfProjectSpec >> repositoryVersionString [
 
 { #category : 'scripting' }
 MetacelloMCBaselineOfProjectSpec >> validateVersionString: issues withDefaultVersionString: ignored [
-    self versionString
-        ifNotNil: [ :vs | 
-            | prj |
-            prj := self project asBaselineProject.
-            vs ~= prj singletonVersionName
-                ifTrue: [ 
-                    issues
-                        add:
-                            (MetacelloValidationError
-                                configurationClass: self projectClass
-                                reasonCode: #'invalidVersionString'
-                                callSite:
-                                    #'validateForScriptLoad:withDefaultVersionString:withDefaultRepositoryDecription:'
-                                explanation:
-                                    'version field is incorrect, should be: ' , prj singletonVersionName printString) ] ]
+
+	self versionString ifNotNil: [ :vs |
+		| prj |
+		prj := self project asBaselineProject.
+		vs ~= prj singletonVersionName ifTrue: [
+			issues add: (MetacelloValidationError
+					 reasonCode: #invalidVersionString
+					 callSite:
+					 #validateForScriptLoad:withDefaultVersionString:withDefaultRepositoryDecription:
+					 explanation: 'version field is incorrect, should be: '
+						 , prj singletonVersionName printString) ] ]
 ]
 
 { #category : 'querying' }
 MetacelloMCBaselineOfProjectSpec >> version [
 
-	self projectClass ifNil: [ ^ nil ].
-	^ self projectClassProject version
+	projectInitialized ifFalse: [ ^ nil ].
+	^ self project version
 ]
 
 { #category : 'querying' }
 MetacelloMCBaselineOfProjectSpec >> versionString [
-    ^ versionString ifNil: [ self version ifNotNil: [:v | v versionString] ]
+
+	^ versionString ifNil: [
+		  self version ifNotNil: [ :v | v versionString ] ]
 ]

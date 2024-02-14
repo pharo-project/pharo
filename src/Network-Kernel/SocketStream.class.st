@@ -280,14 +280,17 @@ SocketStream >> destroy [
 { #category : 'control' }
 SocketStream >> flush [
 	"If the other end is connected and we have something
-	to send, then we send it and reset the outBuffer."
+	to send, then we send it and reset the outBuffer.
+	If the other end is closed and we are signaling errors, do so."
 
-	((outNextToWrite > 1) and: [socket isOtherEndClosed not])
-		ifTrue: [
-			[socket sendData: outBuffer count: outNextToWrite - 1]
-				on: ConnectionTimedOut
-				do: [:ex | shouldSignal ifFalse: ["swallow"]].
-			outNextToWrite := 1]
+	(outNextToWrite > 1 and: [ socket isOtherEndClosed not ]) ifTrue: [
+		[ socket sendData: outBuffer count: outNextToWrite - 1 ]
+			on: NetworkError
+			do: [ :ex |
+				shouldSignal
+					ifTrue: [ ex pass ]
+					ifFalse: [ "swallow" ] ].
+		outNextToWrite := 1 ]
 ]
 
 { #category : 'private' }
@@ -548,12 +551,17 @@ SocketStream >> nextPutAllFlush: aCollection [
 	and also flushes any other pending data first."
 
 	| toPut |
-	toPut := binary ifTrue: [aCollection asByteArray] ifFalse: [aCollection asString].
+	toPut := binary
+		         ifTrue: [ aCollection asByteArray ]
+		         ifFalse: [ aCollection asString ].
 	self flush. "first flush pending stuff, then directly send"
 	socket isOtherEndClosed ifFalse: [
-		[socket sendData: toPut count: toPut size]
-			on: ConnectionTimedOut
-			do: [:ex | shouldSignal ifFalse: ["swallow"]]]
+		[ socket sendData: toPut count: toPut size ]
+			on: NetworkError
+			do: [ :ex |
+				shouldSignal
+					ifTrue: [ ex pass ]
+					ifFalse: [ "swallow" ] ] ]
 ]
 
 { #category : 'configuration' }
@@ -923,7 +931,7 @@ SocketStream >> upTo: aCharacterOrByte limit: nBytes [
 		].
 
 		"Check if we've exceeded the max. amount"
-		(nBytes notNil and:[inNextToWrite - lastRead > nBytes])
+		(nBytes isNotNil and:[inNextToWrite - lastRead > nBytes])
 			ifTrue:[^self nextAllInBuffer].
 	].
 
@@ -976,7 +984,7 @@ SocketStream >> upToAll: aStringOrByteArray limit: nBytes [
 			^ result
 		].
 		"Check if we've exceeded the max. amount"
-		(nBytes notNil and:[inNextToWrite - lastRead > nBytes])
+		(nBytes isNotNil and:[inNextToWrite - lastRead > nBytes])
 			ifTrue:[^self nextAllInBuffer].
 	].
 

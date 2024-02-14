@@ -78,47 +78,28 @@ MetacelloProjectRegistration class >> configurationProjectSpecs [
 ]
 
 { #category : 'mutability' }
-MetacelloProjectRegistration class >> copyRegistryRestoreOnErrorWhile: aBlock [
-  "install copy of registry for duration of <aBlock> execution."
+MetacelloProjectRegistration class >> copyRegistryDuring: aBlock commitIfSuccess: aBoolean [
+	"install copy of registry for duration of <aBlock> execution."
 
-  "registrations will be copied on write during <aBlock> execution."
+	"registrations will be copied on write during <aBlock> execution."
 
-  "if <aBlock> does not return control to this context, revert to the original
+	"if <aBlock> does not return control to this context, revert to the original
 	version of the registry. Otherwise leave the new copy installed."
 
-  | oldRegistry newRegistry |
-  oldRegistry := self registry.
-  newRegistry := self registry copy.
-  self registry: newRegistry.
-  aBlock
-    ensure: [ 
-      "install old version of registry"
-      newRegistry := self registry.	"see https://github.com/dalehenrich/metacello-work/issues/210"
-      self registry: oldRegistry ].
-  self registry: newRegistry	"if control returned, install newRegistry"
-]
+	| oldRegistry newRegistry |
+	oldRegistry := self registry.
+	newRegistry := self registry copy.
+	self registry: newRegistry.
+	aBlock ensure: [ "install old version of registry"
+		newRegistry := self registry. "see https://github.com/dalehenrich/metacello-work/issues/210"
+		self registry: oldRegistry ].
 
-{ #category : 'mutability' }
-MetacelloProjectRegistration class >> copyRegistryWhile: aBlock [
-    "install copy of registry for duration of <aBlock> execution."
-
-    "registrations will be copied on write during <aBlock> execution."
-
-    "Unconditionally revert to the original
-	version of the registry. Otherwise leave the new copy installed."
-
-    | oldRegistry newRegistry |
-    oldRegistry := self registry.
-    newRegistry := self registry copy.
-    self registry: newRegistry.
-    aBlock
-        ensure: [ 
-            "install old version of registry"
-            self registry: oldRegistry ]
+	aBoolean ifTrue: [ self registry: newRegistry ]
 ]
 
 { #category : 'instance creation' }
 MetacelloProjectRegistration class >> fromMCBaselineProjectSpec: aProjectSpec [
+
     ^ self new
         projectName: aProjectSpec name;
         baselineProjectSpec: aProjectSpec;
@@ -207,6 +188,7 @@ MetacelloProjectRegistration >> baselineProjectSpec: anObject [
   self shouldBeMutable.
   configurationProjectSpec := nil.
   self assert: anObject isBaselineOfProjectSpec.
+
   baselineProjectSpec := anObject
 ]
 
@@ -317,8 +299,9 @@ MetacelloProjectRegistration >> currentVersionString [
 		  ifNil: [ baselineProjectSpec repositoryVersionString ]
 ]
 
-{ #category : 'accessing' }
+{ #category : 'testing' }
 MetacelloProjectRegistration >> currentlyLoadedClassesInProject [
+
 	^ self projectSpec currentlyLoadedClassesInVersion asSet
 ]
 
@@ -360,7 +343,7 @@ MetacelloProjectRegistration >> isValid [
 	" has a name and one or the other of the projectSpecs is non-nil, but not both ... this is CRITICAL"
 
 	projectName ifNil: [ ^ false ].
-	configurationProjectSpec ifNil: [ ^ baselineProjectSpec notNil ].
+	configurationProjectSpec ifNil: [ ^ baselineProjectSpec isNotNil ].
 	^ baselineProjectSpec isNil
 ]
 
@@ -390,24 +373,23 @@ MetacelloProjectRegistration >> locked: anObject [
 
 { #category : 'accessing' }
 MetacelloProjectRegistration >> merge: aProjectRegistration [
-  " ... merge is done when a spec has been loaded into the image"
+	" ... merge is done when a spec has been loaded into the image"
 
-  self shouldBeMutable.
-  aProjectRegistration validate.
-  aProjectRegistration configurationProjectSpec
-    ifNotNil: [ :aSpec |
-      configurationProjectSpec := aSpec copy.
-      configurationProjectSpec versionOrNil
-        ifNotNil: [ :version | 
-          "resolve symbolic versions for loaded projects"
-          configurationProjectSpec versionString: version versionString ].
-      baselineProjectSpec := nil.
-      self versionInfo versionString: configurationProjectSpec versionString ]
-    ifNil: [ 
-      baselineProjectSpec := aProjectRegistration baselineProjectSpec.
-      configurationProjectSpec := nil.
-      self versionInfo
-        versionString: baselineProjectSpec repositoryVersionString ]
+	self shouldBeMutable.
+	aProjectRegistration validate.
+	aProjectRegistration configurationProjectSpec
+		ifNotNil: [ :aSpec |
+			configurationProjectSpec := aSpec copy.
+			configurationProjectSpec versionOrNil ifNotNil: [ :version | "resolve symbolic versions for loaded projects"
+				configurationProjectSpec versionString: version versionString ].
+			baselineProjectSpec := nil.
+			self versionInfo versionString:
+				configurationProjectSpec versionString ]
+		ifNil: [
+			baselineProjectSpec := aProjectRegistration baselineProjectSpec.
+			configurationProjectSpec := nil.
+			self versionInfo versionString:
+				baselineProjectSpec repositoryVersionString ]
 ]
 
 { #category : 'mutability' }
@@ -464,7 +446,7 @@ MetacelloProjectRegistration >> projectName: anObject [
 MetacelloProjectRegistration >> projectSpec [
 	^ baselineProjectSpec
 		ifNil: [ 
-			self assert: configurationProjectSpec notNil.
+			self assert: configurationProjectSpec isNotNil.
 			configurationProjectSpec ]
 ]
 

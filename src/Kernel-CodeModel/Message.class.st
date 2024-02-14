@@ -176,7 +176,7 @@ Message >> setSelector: aSymbol arguments: anArray [
 	arguments := anArray
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 Message >> storeOn: aStream [
 	"Refer to the comment in Object|storeOn:."
 

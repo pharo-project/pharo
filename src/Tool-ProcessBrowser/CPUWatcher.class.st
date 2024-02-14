@@ -69,7 +69,7 @@ CPUWatcher class >> initialize [
 { #category : 'testing' }
 CPUWatcher class >> isMonitoring [
 
-	^CurrentCPUWatcher notNil and: [ CurrentCPUWatcher isMonitoring ]
+	^CurrentCPUWatcher isNotNil and: [ CurrentCPUWatcher isMonitoring ]
 ]
 
 { #category : 'setting' }
@@ -178,7 +178,7 @@ CPUWatcher >> findThePig [
 
 { #category : 'accessing' }
 CPUWatcher >> isMonitoring [
-	^watcher notNil
+	^watcher isNotNil
 ]
 
 { #category : 'startup - shutdown' }

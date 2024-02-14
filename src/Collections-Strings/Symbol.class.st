@@ -579,7 +579,7 @@ Symbol >> sorted: aSortBlockOrNil [
 	^self asArray sort: aSortBlockOrNil
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 Symbol >> storeOn: aStream [
 
 	aStream nextPut: $#.

@@ -14,7 +14,7 @@ RBNotInCascadedMessageConditionTest >> testInCascadedMessageExpectFalse [
 	parseTree := class parseTreeForSelector: self selector.
 	subtree := parseTree extractSubtreeWith: '(precondition not) errorBlock'.
 	
-	precondition := RBNotInCascadedMessageCondition new subtree: subtree.
+	precondition := ReNotInCascadedMessageCondition new subtree: subtree.
 	
 	(precondition not) errorBlock; errorBlock.
 	
@@ -30,7 +30,7 @@ RBNotInCascadedMessageConditionTest >> testNotInCascadedMessageExpectTrue [
 	parseTree := class parseTreeForSelector: self selector.
 	subtree := parseTree extractSubtreeWith: 'precondition not'.
 
-	precondition := RBNotInCascadedMessageCondition new subtree: subtree.
+	precondition := ReNotInCascadedMessageCondition new subtree: subtree.
 	
 	(precondition not) errorBlock; errorBlock.
 	

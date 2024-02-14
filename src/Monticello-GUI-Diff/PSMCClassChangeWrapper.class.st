@@ -72,7 +72,7 @@ PSMCClassChangeWrapper >> isConflict [
 
 	| op |
 	op := self operation.
-	^ op notNil and: [op isConflict ]
+	^ op isNotNil and: [op isConflict ]
 ]
 
 { #category : 'testing' }

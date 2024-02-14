@@ -15,6 +15,12 @@ MetacelloVersionLoadDirective >> add: aDirective [
 	self loadDirectives add: aDirective
 ]
 
+{ #category : 'testing' }
+MetacelloVersionLoadDirective >> includes: aDirective [
+	
+	self subclassResponsibility
+]
+
 { #category : 'printing' }
 MetacelloVersionLoadDirective >> label [
 

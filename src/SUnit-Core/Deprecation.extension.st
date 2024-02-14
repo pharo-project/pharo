@@ -8,5 +8,6 @@ Deprecation >> manageTestProcessBy: aProcessMonitorTestService [
 
 { #category : '*SUnit-Core' }
 Deprecation >> sunitAnnounce: aTestCase toResult: aTestResult [
-	self resume
+
+	self pass
 ]

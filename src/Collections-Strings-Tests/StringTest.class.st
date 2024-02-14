@@ -597,6 +597,13 @@ StringTest >> testCapitalized [
 	self deny: empty capitalized identicalTo: empty
 ]
 
+{ #category : 'tests - converting' }
+StringTest >> testCapitalizedStartingWithEmptySpace [
+	
+	self assert: ' abc' capitalized equals: ' abc'.
+
+]
+
 { #category : 'tests' }
 StringTest >> testCaseInsensitiveLessOrEqual [
 

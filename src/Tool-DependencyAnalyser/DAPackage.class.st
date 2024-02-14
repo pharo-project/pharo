@@ -156,7 +156,7 @@ DAPackage >> dependentPackagesSize [
 	^ dependencies size
 ]
 
-{ #category : 'printing' }
+{ #category : 'displaying' }
 DAPackage >> displayString [
 	| numberOfExtension |
 	numberOfExtension := self extensionDependenciesSize.

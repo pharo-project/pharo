@@ -29,7 +29,7 @@ FinalizationProcess class >> finalizationProcess [
 	[true] whileTrue: [FinalizationSemaphore wait; initSignals.
 	 "Support the old scheme until things have changed over..."
 	 [firstMourner := self primitiveFetchMourner.
-	  firstMourner notNil] whileTrue:
+	  firstMourner isNotNil] whileTrue:
 		[[throttle signal.
 		  self mournLoopWith: firstMourner] forkAt: Processor activePriority + 1.
 		 throttle wait]]
@@ -55,7 +55,7 @@ FinalizationProcess class >> mournLoopWith: firstMourner [
 	mourner := firstMourner.
 	[
 	mourner mourn.
-	 (mourner := self primitiveFetchMourner) notNil] whileTrue
+	 (mourner := self primitiveFetchMourner) isNotNil] whileTrue
 ]
 
 { #category : 'private - mourning' }
