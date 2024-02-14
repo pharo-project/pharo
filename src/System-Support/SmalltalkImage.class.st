@@ -235,12 +235,12 @@ SmalltalkImage >> backupImageInFileNamed: aFileReference [
 	Unlike #saveImageInFileNamed: this method continues evaluation in the original image after saving a backup copy.
 	Note: This method does not save the .changes file, use #saveAs:"
 
-	| imageFile previousFullImageName isNewSession |
+	| imageFile previousFullImageName snapshotReturn |
 
 	imageFile := aFileReference asFileReference.
 	imageFile parent ensureCreateDirectory.
 	previousFullImageName := self imagePath.
-	isNewSession := false.
+	snapshotReturn := false.
 
 	[
 		"change to the new image name "
@@ -249,9 +249,9 @@ SmalltalkImage >> backupImageInFileNamed: aFileReference [
 			closeSourceFiles;
 			openSourceFiles.  "so SNAPSHOT appears in new changes file"
 
-		isNewSession := self snapshot: true andQuit: false.
+		snapshotReturn := self snapshot: true andQuit: false.
 	] ensure: [
-		isNewSession ifFalse: [
+		snapshotReturn isImageStarting ifFalse: [
 			"unlike #saveImageInFileNamed: we do NOT continue in the new image"
 			"switch back to the old image"
 			self
@@ -259,7 +259,7 @@ SmalltalkImage >> backupImageInFileNamed: aFileReference [
 				closeSourceFiles;
 				openSourceFiles ]].
 
-	^ isNewSession
+	^ snapshotReturn
 ]
 
 { #category : #saving }
@@ -1710,21 +1710,6 @@ SmalltalkImage >> signalLowSpace [
 SmalltalkImage >> snapshot: save andQuit: quit [
 	DefaultExecutionEnvironment beActiveDuring:
 		 [^SessionManager default snapshot: save andQuit: quit]
-]
-
-{ #category : #'snapshot and quit' }
-SmalltalkImage >> snapshotPrimitive [
-	"Primitive. Write the current state of the object memory on a file in the
-	same format as the Smalltalk-80 release. The file can later be resumed,
-	returning you to this exact state. Return normally after writing the file.
-	Essential. See Object documentation whatIsAPrimitive."
-
-	"I will return
-		true if the image is starting or
-		false if the image is just resuming"
-
-	<primitive: 97>
-	^nil "indicates error writing image file"
 ]
 
 { #category : #'image, changes name' }
