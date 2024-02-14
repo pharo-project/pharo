@@ -334,7 +334,7 @@ SDL2 class >> moduleName [
 
 { #category : 'mouse' }
 SDL2 class >> mouseState [
-	^ self ffiCall: #( Uint32 SDL_GetMouseState ( nil , nil ) )
+	^ self ffiCall: #( Uint32 SDL_GetMouseState ( int* 0 , int* 0) )
 ]
 
 { #category : 'mouse' }
@@ -377,8 +377,8 @@ SDL2 class >> primClipboardText: text [
 { #category : 'cairo' }
 SDL2 class >> primCreateRGBSurfaceForCairoWidth: width height: height [
 	^ self ffiCall: #( SDL_Surface* SDL_CreateRGBSurface
-						( 0 , int width , int height , 32 ,
-						  16r00FF0000 , 16r0000FF00 , 16r000000FF , 0 ) )
+						( Uint32 0 , int width , int height , int 32 ,
+						  Uint32 16r00FF0000 , Uint32 16r0000FF00 , Uint32 16r000000FF , 0 ) )
 ]
 
 { #category : 'audio' }
