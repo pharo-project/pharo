@@ -3,7 +3,7 @@ I represent a local variable: either a temporary variables, a block temporary or
 "
 Class {
 	#name : 'NECLocalEntry',
-	#superclass : 'NECCVariableEntry',
+	#superclass : 'NECVariableEntry',
 	#category : 'NECompletion-Model',
 	#package : 'NECompletion',
 	#tag : 'Model'

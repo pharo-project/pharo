@@ -231,8 +231,8 @@ FreeTypeCache >> removeAllForFont: aFreeTypeFont [
 	toRemove do: [ :entry |
 		| d |
 		fifo remove: entry.
-		d := (fontTable at: entry font) at: entry charCode.
-		d removeKey: entry type.
+		d := ((fontTable at: entry font) at: entry charCode) at: entry type.
+		d removeKey: entry scale.
 		used := used - (self sizeOf: entry object) ]
 ]
 
@@ -246,8 +246,8 @@ FreeTypeCache >> removeAllForType: typeFlag [
 	toRemove do: [ :entry |
 		| d |
 		fifo remove: entry.
-		d := (fontTable at: entry font) at: entry charCode.
-		d removeKey: entry type.
+		d := ((fontTable at: entry font) at: entry charCode) at: entry type.
+		d removeKey: entry scale.
 		used := used - (self sizeOf: entry object) ]
 ]
 

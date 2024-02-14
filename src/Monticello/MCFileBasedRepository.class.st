@@ -135,7 +135,7 @@ MCFileBasedRepository >> cachedFileNames [
 MCFileBasedRepository >> canReadFileNamed: aString [
 	| reader |
 	reader := MCVersionReader readerClassForFileNamed: aString.
-	^ reader notNil
+	^ reader isNotNil
 ]
 
 { #category : 'accessing' }
@@ -144,6 +144,14 @@ MCFileBasedRepository >> closestAncestorVersionFor: anAncestry ifNone: errorBloc
 		cacheAllFileNamesDuring: [ 
 			anAncestry breadthFirstAncestorsDo: [ :ancestorInfo | (self notCachedVersionWithInfo: ancestorInfo) ifNotNil: [ :v | ^ v ] ].
 			^ errorBlock value ]
+]
+
+{ #category : 'fetching' }
+MCFileBasedRepository >> fetchPackageNamed: aName [
+
+	| references |
+	references := self packageNamed: aName.
+	MCCacheRepository default storeVersion: references
 ]
 
 { #category : 'accessing' }
@@ -178,6 +186,15 @@ MCFileBasedRepository >> loadNotCachedVersionFromFileNamed: aString [
 	^ self versionReaderForFileNamed: aString do: [:r | r version]
 ]
 
+{ #category : 'accessing' }
+MCFileBasedRepository >> loadPackageNamed: aString intoLoader: aMCVersionLoader [ 
+
+	| found |
+	found := self packageNamed: aString.
+	aMCVersionLoader addVersion: found.
+	^ { found . self }
+]
+
 { #category : 'private' }
 MCFileBasedRepository >> loadVersionFromFileNamed: aString [
 
@@ -207,6 +224,39 @@ MCFileBasedRepository >> notCachedVersionWithInfo: aVersionInfo [
 			version info = aVersionInfo
 				ifTrue: [ ^ version ] ].
 	^ nil
+]
+
+{ #category : 'accessing' }
+MCFileBasedRepository >> packageDescriptionsFromReadableFileNames [
+	^ self readableFileNames
+		collect: [ :each | 
+			| name |
+			name := (each copyUpToLast: $.) copyUpTo: $(.
+			name last isDigit
+				ifFalse: [ 
+					{name.
+					''.
+					''.
+					each} ]
+				ifTrue: [ 
+					| packageName author versionNumber |
+					packageName := name copyUpToLast: $-.
+					author := (name copyAfterLast: $-) copyUpTo: $..
+					versionNumber := ((name copyAfterLast: $-) copyAfter: $.) asInteger ifNil: [ 0 ].
+					{packageName.
+					author.
+					versionNumber.
+					each} ] ]
+]
+
+{ #category : 'accessing' }
+MCFileBasedRepository >> packageNamed: aName ifPresent: presentBlock ifAbsent: absentBlock [
+
+	| versionName |
+	versionName := self packageDescriptionsFromReadableFileNames
+		               detect: [ :e | e first = aName ]
+		               ifNone: [ ^ absentBlock value ].
+	^ presentBlock value: (self versionFromFileNamed: versionName last)
 ]
 
 { #category : 'loading' }
@@ -250,7 +300,7 @@ MCFileBasedRepository >> storeVersion: aVersion [
 { #category : 'private' }
 MCFileBasedRepository >> updateCachedVersionFromFileName: aString with: aVersion [
 	self resizeCache: cache.
-	(aVersion notNil and: [aVersion isCacheable]) ifTrue: [cache at: aString put: aVersion].
+	(aVersion isNotNil and: [aVersion isCacheable]) ifTrue: [cache at: aString put: aVersion].
 
 ]
 

@@ -22,16 +22,16 @@ TextStyleAsFontFamilyMember >> <= aTextStyleAsFontFamilyMember [
 
 { #category : 'squeak emphasis' }
 TextStyleAsFontFamilyMember >> emphasisCode [
-	"Answer the squeak emphasis code (1=bold, 2=italic, 3=boldItalic etc"
+	"Answer the emphasis code (1=bold, 2=italic, 3=boldItalic etc"
 
 	| answer |
 	answer := 0.
 	(styleName includesSubstring: 'Italic') ifTrue: [
-		answer := answer bitOr: LogicalFont squeakSlantItalic ].
+		answer := answer bitOr: LogicalFont pharoSlantItalic ].
 	(styleName includesSubstring: 'Condensed') ifTrue: [
-		answer := answer bitOr: LogicalFont squeakStretchCondensed ].
+		answer := answer bitOr: LogicalFont stretchExtraExtended ].
 	(styleName includesSubstring: 'Bold') ifTrue: [
-		answer := answer bitOr: LogicalFont squeakWeightBold ].
+		answer := answer bitOr: LogicalFont pharoWeightBold ].
 	^ answer
 ]
 

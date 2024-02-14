@@ -98,42 +98,46 @@ starting loopback test' traceCr.
 	sock2 connectTo: NetNameResolver localHostAddress port: 54321.
 	sock1 waitForConnectionFor: self standardTimeout.
 	sock2 waitForConnectionFor: self standardTimeout.
-	sock1 isConnected ifFalse: [self error: 'sock1 not connected'].
-	sock2 isConnected ifFalse: [self error: 'sock2 not connected'].
+	sock1 isConnected ifFalse: [ self error: 'sock1 not connected' ].
+	sock2 isConnected ifFalse: [ self error: 'sock2 not connected' ].
 	'connection established' traceCr.
 	bytesToSend := 5000000.
 	sendBuf := String new: 5000 withAll: $x.
 	receiveBuf := String new: 50000.
 	done := false.
 	packetsSent := packetsRead := bytesSent := bytesReceived := 0.
-	t := Time millisecondsToRun:
-					[[done] whileFalse:
-							[(sock1 sendDone and: [bytesSent < bytesToSend])
-								ifTrue:
-									[packetsSent := packetsSent + 1.
-									bytesSent := bytesSent + (sock1 sendSomeData: sendBuf)].
-							sock2 dataAvailable
-								ifTrue:
-									[packetsRead := packetsRead + 1.
-									bytesReceived := bytesReceived + (sock2 receiveDataInto: receiveBuf)].
-							done := bytesSent >= bytesToSend and: [bytesReceived = bytesSent]]].
+	t := [
+	     [ done ] whileFalse: [
+		     (sock1 sendDone and: [ bytesSent < bytesToSend ]) ifTrue: [
+			     packetsSent := packetsSent + 1.
+			     bytesSent := bytesSent + (sock1 sendSomeData: sendBuf) ].
+		     sock2 dataAvailable ifTrue: [
+			     packetsRead := packetsRead + 1.
+			     bytesReceived := bytesReceived
+			                      + (sock2 receiveDataInto: receiveBuf) ].
+		     done := bytesSent >= bytesToSend and: [
+			             bytesReceived = bytesSent ] ] ] millisecondsToRun.
 	'closing connection' traceCr.
 	sock1 waitForSendDoneFor: self standardTimeout.
 	sock1 close.
 	sock2 waitForDisconnectionFor: self standardTimeout.
 	extraBytes := sock2 discardReceivedData.
-	extraBytes > 0
-		ifTrue: [ ' *** received ' , extraBytes size printString , ' extra bytes ***' traceCr ].
+	extraBytes > 0 ifTrue: [
+		' *** received ' , extraBytes size printString
+		, ' extra bytes ***' traceCr ].
 	sock2 close.
 	sock1 waitForDisconnectionFor: self standardTimeout.
-	sock1 isUnconnectedOrInvalid ifFalse: [self error: 'sock1 not closed'].
-	sock2 isUnconnectedOrInvalid ifFalse: [self error: 'sock2 not closed'].
+	sock1 isUnconnectedOrInvalid ifFalse: [
+		self error: 'sock1 not closed' ].
+	sock2 isUnconnectedOrInvalid ifFalse: [
+		self error: 'sock2 not closed' ].
 	'---------- Connection Closed ----------' traceCr.
 	sock1 destroy.
 	sock2 destroy.
 	('loopback test done; time = ' , t printString) traceCr.
-	((bytesToSend asFloat / t roundTo: 0.01) printString , '* 1000 bytes/sec') traceCr.
-	Smalltalk tools transcript endEntry.
+	((bytesToSend asFloat / t roundTo: 0.01) printString
+	 , '* 1000 bytes/sec') traceCr.
+	Smalltalk tools transcript endEntry
 ]
 
 { #category : 'utilities' }
@@ -288,46 +292,6 @@ Socket class >> register: anObject [
 Socket class >> registry [
 
 	^ Registry ifNil: [ Registry := FinalizationRegistry new ]
-]
-
-{ #category : 'tests' }
-Socket class >> sendTest [
-	"Send data to the 'discard' socket of the given host.
-	Tests the speed of one-way data transfers across the
-	network to the given host. Note that most hosts
-	do not run a discard server."
-
-	"Socket sendTest"
-
-	| sock bytesToSend sendBuf bytesSent t serverName serverAddr |
-	'
-starting send test' traceCr.
-	self initializeNetwork.
-	serverName := UIManager default request: 'What is the destination server?' initialAnswer: 'create.ucsb.edu'.
-	serverAddr := NetNameResolver addressForName: serverName timeout: 10.
-	serverAddr
-		ifNil: [ ^ self inform: 'Could not find an address for ' , serverName ].
-	sock := self new.
-	'---------- Connecting ----------' traceCr.
-	sock connectTo: serverAddr port: 9.
-	sock isConnected
-		ifFalse: [
-			sock destroy.
-			^ self inform: 'could not connect' ].
-	'connection established; sending data' traceCr.
-	bytesToSend := 1000000.
-	sendBuf := String new: 64 * 1024 withAll: $x.
-	bytesSent := 0.
-	t := Time millisecondsToRun: [
-		[ bytesSent < bytesToSend ] whileTrue: [
-			sock sendDone
-				ifTrue: [ bytesSent := bytesSent + (sock sendSomeData: sendBuf) ] ] ].
-	sock waitForSendDoneFor: self standardTimeout.
-	sock destroy.
-	'---------- Connection Closed ----------' traceCr.
-	('send test done; time = ' , t printString) traceCr.
-	((bytesToSend asFloat / t roundTo: 0.01) printString , ' * 1000 bytes/sec') traceCr.
-	Smalltalk tools transcript endEntry.
 ]
 
 { #category : 'utilities' }
@@ -773,26 +737,16 @@ Socket >> listenWithBacklog: anIntegerBacklog [
 Socket >> localAddress [
 	"If in the process of connecting, wait for connection to be established and binding to address completed before resolving."
 
-	^ [ self primSocketLocalAddress: socketHandle ]
-		on: Error
-		do: [ :e |
-			self isWaitingForConnection
-				ifTrue: [ self waitForConnectionFor: Socket standardTimeout ifTimedOut: nil.
-					self primSocketLocalAddress: socketHandle ]
-				ifFalse: [ e pass ] ]
+	^ self retryIfWaitingForConnection: [
+		  self primSocketLocalAddress: socketHandle ]
 ]
 
 { #category : 'accessing' }
 Socket >> localPort [
 	"If in the process of connecting, wait for connection to be established and binding to address completed before resolving."
 
-	^ [ self primSocketLocalPort: socketHandle ]
-		on: Error
-		do: [ :e |
-			self isWaitingForConnection
-				ifTrue: [ self waitForConnectionFor: Socket standardTimeout ifTimedOut: nil.
-					self primSocketLocalPort: socketHandle ]
-				ifFalse: [ e pass ] ]
+	^ self retryIfWaitingForConnection: [
+		  self primSocketLocalPort: socketHandle ]
 ]
 
 { #category : 'accessing' }
@@ -1359,26 +1313,30 @@ Socket >> register [
 Socket >> remoteAddress [
 	"If in the process of connecting, wait for connection to be established and binding to address completed before resolving."
 
-	^ [ self primSocketRemoteAddress: socketHandle ]
-		on: Error
-		do: [ :e |
-			self isWaitingForConnection
-				ifTrue: [ self waitForConnectionFor: Socket standardTimeout ifTimedOut: nil.
-					self primSocketRemoteAddress: socketHandle ]
-				ifFalse: [ e pass ] ]
+	^ self retryIfWaitingForConnection: [
+		  self primSocketRemoteAddress: socketHandle ]
 ]
 
 { #category : 'accessing' }
 Socket >> remotePort [
 	"If in the process of connecting, wait for connection to be established and binding to address completed before resolving."
 
-	^ [ self primSocketRemotePort: socketHandle ]
-		on: Error
-		do: [ :e |
-			self isWaitingForConnection
-				ifTrue: [ self waitForConnectionFor: Socket standardTimeout ifTimedOut: nil.
-					self primSocketRemotePort: socketHandle ]
-				ifFalse: [ e pass ] ]
+	^ self retryIfWaitingForConnection: [ self primSocketRemotePort: socketHandle ]
+]
+
+{ #category : 'waiting' }
+Socket >> retryIfWaitingForConnection: aBlock [
+
+	^ aBlock
+		  on: SocketError
+		  do: [ :e |
+			  self isWaitingForConnection
+				  ifTrue: [
+					  self
+						  waitForConnectionFor: Socket standardTimeout
+						  ifTimedOut: nil.
+					  aBlock value ]
+				  ifFalse: [ e pass ] ]
 ]
 
 { #category : 'accessing' }
@@ -1402,14 +1360,14 @@ Socket >> sendData: aStringOrByteArray [
 	| bytesSent bytesToSend count |
 	bytesToSend := aStringOrByteArray size.
 	bytesSent := 0.
-	[bytesSent < bytesToSend] whileTrue: [
-		(self waitForSendDoneFor: 60)
-			ifFalse: [ConnectionTimedOut signal: 'send data timeout; data not sent'].
-		count := self primSocket: socketHandle
-			sendData: aStringOrByteArray
-			startIndex: bytesSent + 1
-			count: (bytesToSend - bytesSent min: 5000).
-		bytesSent := bytesSent + count].
+	[ bytesSent < bytesToSend ] whileTrue: [
+		self waitForSendDoneFor: 60.
+		count := self
+			         primSocket: socketHandle
+			         sendData: aStringOrByteArray
+			         startIndex: bytesSent + 1
+			         count: (bytesToSend - bytesSent min: 5000).
+		bytesSent := bytesSent + count ].
 
 	^ bytesSent
 ]
@@ -1475,17 +1433,15 @@ Socket >> sendSomeData: aStringOrByteArray startIndex: startIndex count: count [
 { #category : 'sending' }
 Socket >> sendSomeData: aStringOrByteArray startIndex: startIndex count: count for: aTimeoutInSeconds [
 	"Send up to count bytes of the given data starting at the given index. Answer the number of bytes actually sent."
+
 	"Note: This operation may have to be repeated multiple times to send a large amount of data."
 
-	| bytesSent |
-	(self waitForSendDoneFor: aTimeoutInSeconds)
-		ifTrue: [
-			bytesSent := self primSocket: socketHandle
-				sendData: aStringOrByteArray
-				startIndex: startIndex
-				count: count ]
-		ifFalse: [ ConnectionTimedOut signal: 'send data timeout; data not sent' ].
-	^ bytesSent
+	self waitForSendDoneFor: aTimeoutInSeconds.
+	^ self
+		  primSocket: socketHandle
+		  sendData: aStringOrByteArray
+		  startIndex: startIndex
+		  count: count
 ]
 
 { #category : 'sending' }
@@ -1515,28 +1471,27 @@ Socket >> sendStreamContents: stream checkBlock: checkBlock [
 { #category : 'datagrams' }
 Socket >> sendUDPData: aStringOrByteArray toHost: hostAddress port: portNumber [
 	"Send a UDP packet containing the given data to the specified host/port."
-	| bytesToSend bytesSent count |
 
+	| bytesToSend bytesSent count |
 	bytesToSend := aStringOrByteArray size.
 	bytesSent := 0.
 	[
-		(self waitForSendDoneFor: 20)
-			ifFalse: [ConnectionTimedOut signal: 'send data timeout; data not sent'].
-		count := self primSocket: socketHandle
-			sendUDPData: aStringOrByteArray
-			toHost: hostAddress
-			port: portNumber
-			startIndex: bytesSent + 1
-			count: bytesToSend - bytesSent.
-		count = 0 ifTrue:
-			["Usually broadcast fails in primitive without the proper option set,
+	self waitForSendDoneFor: 20.
+	count := self
+		         primSocket: socketHandle
+		         sendUDPData: aStringOrByteArray
+		         toHost: hostAddress
+		         port: portNumber
+		         startIndex: bytesSent + 1
+		         count: bytesToSend - bytesSent.
+	count = 0 ifTrue: [ "Usually broadcast fails in primitive without the proper option set,
 			but some platforms simply return count=0"
-			(self broadcastMisconfiguredForSendingTo: hostAddress)
-				ifTrue: [ ^ self broadcastError: hostAddress ].
-			bytesToSend ~= count
-				ifTrue: [ ^NetworkError signal: 'failed to send data']].
-		bytesSent := bytesSent + count.
-		bytesSent < bytesToSend] whileTrue.
+		(self broadcastMisconfiguredForSendingTo: hostAddress) ifTrue: [
+			^ self broadcastError: hostAddress ].
+		bytesToSend ~= count ifTrue: [
+			^ NetworkError signal: 'failed to send data' ] ].
+	bytesSent := bytesSent + count.
+	bytesSent < bytesToSend ] whileTrue.
 
 	^ bytesSent
 ]
@@ -1643,7 +1598,7 @@ Socket >> waitForConnectionFor: timeout ifTimedOut: timeoutBlock [
 	status := self primSocketConnectionStatus: socketHandle.
 	[(status = WaitingForConnection) and: [(msecsEllapsed := Time millisecondsSince: startTime) < msecsDelta]]
 		whileTrue: [
-			semaphore waitTimeoutMSecs: msecsDelta - msecsEllapsed.
+			semaphore waitTimeoutMilliseconds: msecsDelta - msecsEllapsed.
 			status := self primSocketConnectionStatus: socketHandle].
 
 	status = Connected ifFalse: [^timeoutBlock value].
@@ -1675,18 +1630,14 @@ Socket >> waitForDataFor: timeout [
 Socket >> waitForDataFor: timeout ifClosed: closedBlock ifTimedOut: timedOutBlock [
 	"Wait for the given nr of seconds for data to arrive."
 
-	| startTime msecsDelta |
+	| startTime msecsDelta msecsElapsed |
 	startTime := Time millisecondClockValue.
 	msecsDelta := (timeout * 1000) truncated.
-	[ (Time millisecondsSince: startTime) < msecsDelta ]
-		whileTrue: [ self dataAvailable ifTrue: [ ^ self ].
-			self isConnected ifFalse: [ ^ closedBlock value ].
-			self readSemaphore waitTimeoutMSecs: (msecsDelta - (Time millisecondsSince: startTime) max: 0) ].
-
-	self dataAvailable
-		ifFalse: [ ^ (self isConnected
-				ifTrue: [ timedOutBlock ]
-				ifFalse: [ closedBlock ]) value ]
+	[ self dataAvailable ] whileFalse: [
+		self isConnected ifFalse: [ ^ closedBlock value ].
+		(msecsElapsed := Time millisecondsSince: startTime) < msecsDelta
+			ifFalse: [ ^ timedOutBlock value ].
+		self readSemaphore waitTimeoutMilliseconds: msecsDelta - msecsElapsed ]
 ]
 
 { #category : 'waiting' }
@@ -1718,7 +1669,7 @@ Socket >> waitForDisconnectionFor: timeout [
 	[((status == Connected) or: [(status == ThisEndClosed)]) and:
 	 [(Time millisecondsSince: startTime) < msecsDelta]] whileTrue: [
 		self discardReceivedData.
-		self readSemaphore waitTimeoutMSecs:
+		self readSemaphore waitTimeoutMilliseconds:
 			(msecsDelta - (Time millisecondsSince: startTime) max: 0).
 		status := self primSocketConnectionStatus: socketHandle].
 	^ status ~= Connected
@@ -1728,15 +1679,27 @@ Socket >> waitForDisconnectionFor: timeout [
 Socket >> waitForSendDoneFor: timeout [
 	"Wait up until the given deadline for the current send operation to complete. Return true if it completes by the deadline, false if not."
 
-	| startTime msecsDelta msecsEllapsed sendDone |
+	^ self
+		  waitForSendDoneFor: timeout
+		  ifClosed: [ ConnectionClosed signal: 'connection closed while sending data' ]
+		  ifTimedOut: [ ConnectionTimedOut signal: 'send data timeout; data not sent' ]
+]
+
+{ #category : 'waiting' }
+Socket >> waitForSendDoneFor: timeout ifClosed: closedBlock ifTimedOut: timedOutBlock [
+	"Wait up until the given deadline for the current send operation to complete.
+	If it does not, execute <timedOutBlock>. If the connection is closed before
+	the send completes, execute <closedBlock>."
+
+	| startTime msecsDelta msecsElapsed |
 	startTime := Time millisecondClockValue.
 	msecsDelta := (timeout * 1000) truncated.
-	[(sendDone := self primSocketSendDone: socketHandle) not and: [ self isConnected
-			"Connection end and final data can happen fast, so test in this order"
-		and: [(msecsEllapsed := Time millisecondsSince: startTime) < msecsDelta]]] whileTrue: [
-			self writeSemaphore waitTimeoutMSecs: msecsDelta - msecsEllapsed].
-
-	^ sendDone
+	"Connection end and final data can happen fast, so test in this order"
+	[ self sendDone ] whileFalse: [
+		self isConnected ifFalse: [ ^ closedBlock value ].
+		(msecsElapsed := Time millisecondsSince: startTime) < msecsDelta
+			ifFalse: [ ^ timedOutBlock value ].
+		self writeSemaphore waitTimeoutMilliseconds: msecsDelta - msecsElapsed ]
 ]
 
 { #category : 'accessing' }

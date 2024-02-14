@@ -23,7 +23,7 @@ SycCMakeAbstractCommand >> icon [
 { #category : 'accessing' }
 SycCMakeAbstractCommand >> isApplicable [
 
-	^ context lastSelectedClass isAbstract not
+	^ context lastSelectedClass realClass isAbstract not
 ]
 
 { #category : 'testing' }

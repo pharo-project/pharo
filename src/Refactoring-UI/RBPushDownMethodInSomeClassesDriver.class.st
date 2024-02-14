@@ -17,9 +17,9 @@ Class {
 	#instVars : [
 		'classes'
 	],
-	#category : 'Refactoring-UI-Drivers',
+	#category : 'Refactoring-UI-Drivers to migrate to new architecture',
 	#package : 'Refactoring-UI',
-	#tag : 'Drivers'
+	#tag : 'Drivers to migrate to new architecture'
 }
 
 { #category : 'resources' }

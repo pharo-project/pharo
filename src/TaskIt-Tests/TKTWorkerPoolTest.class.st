@@ -8,25 +8,27 @@ Class {
 
 { #category : 'tests' }
 TKTWorkerPoolTest >> testPriorityAfterStart [
-	| pool workerProcess newPriority doneSemaphore|
+
+	| pool workerProcess newPriority doneSemaphore |
 	newPriority := 32.
 	pool := TKTWorkerPool new.
 	pool name: 'Test pool'.
 	pool poolMaxSize: 4.
 	pool start.
-	pool schedule: (TKTTask valuable: [Semaphore new wait]).
+	pool schedule: (TKTTask valuable: [ Semaphore new wait ]).
 	doneSemaphore := Semaphore new.
-	pool schedule: (TKTTask valuable: [doneSemaphore signal]).
-	doneSemaphore wait: 500 milliSeconds.
+	pool schedule: (TKTTask valuable: [ doneSemaphore signal ]).
+	doneSemaphore waitTimeoutMilliseconds: 500.
 	pool priority: newPriority.
 	self assert: pool priority equals: newPriority.
-	pool workers do: [: each |
-		workerProcess :=  each process process.
-		self assert: workerProcess priority equals: newPriority]
+	pool workers do: [ :each |
+		workerProcess := each process process.
+		self assert: workerProcess priority equals: newPriority ]
 ]
 
 { #category : 'tests' }
 TKTWorkerPoolTest >> testPrioritySetBeforeStart [
+
 	| pool workerProcess initialPriority doneSemaphore |
 	initialPriority := 32.
 	pool := TKTWorkerPool new.
@@ -35,13 +37,13 @@ TKTWorkerPoolTest >> testPrioritySetBeforeStart [
 	pool priority: initialPriority.
 	self assert: pool priority equals: initialPriority.
 	pool start.
-	pool schedule: (TKTTask valuable: [Semaphore new wait]).
+	pool schedule: (TKTTask valuable: [ Semaphore new wait ]).
 	doneSemaphore := Semaphore new.
-	pool schedule: (TKTTask valuable: [doneSemaphore signal]).
-	doneSemaphore wait: 500 milliSeconds.
-	pool workers do: [: each |
-		workerProcess :=  each process process.
-		self assert: workerProcess priority equals: initialPriority]
+	pool schedule: (TKTTask valuable: [ doneSemaphore signal ]).
+	doneSemaphore waitTimeoutMilliseconds: 500.
+	pool workers do: [ :each |
+		workerProcess := each process process.
+		self assert: workerProcess priority equals: initialPriority ]
 ]
 
 { #category : 'tests' }

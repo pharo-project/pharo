@@ -27,6 +27,13 @@ EpPackageChange class >> packageName: aPackageName [
 ]
 
 { #category : 'accessing' }
+EpPackageChange >> affectedName [
+	"See superimplementor's comment"
+
+	^ self affectedPackageName
+]
+
+{ #category : 'accessing' }
 EpPackageChange >> affectedPackageName [
 
 	^ self packageName

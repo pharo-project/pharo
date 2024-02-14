@@ -39,9 +39,18 @@ ProjectManager >> projects [
 	"Maybe we should cache this and invalidate the cache when a package announcement or class (impacting baselines) is received?"
 
 	| projects packages |
-	projects := self environment allClasses
-		            select: [ :class | (class inheritsFrom: BaselineOf) and: [ class isProject ] ]
-		            thenCollect: [ :baseline | Project baseline: baseline ].
+	projects := OrderedCollection new.
+	packages := OrderedCollection new.
+
+	self environment allClasses
+		select: [ :class | (class inheritsFrom: BaselineOf) and: [ class isProject ] ]
+		thenDo: [ :baseline |
+			| project |
+			project := Project baseline: baseline.
+			"We have in some projects some mock baselines that do not implement the #baseline method and end up crashing when we ask the packages... This is a safe guard. For example MicMockBaselineOf from Microdown (not the default loaded in the image)"
+			[
+			packages addAll: project packages.
+			projects add: project ] onErrorDo: [ "We skip this project." ] ].
 
 	packages := projects flatCollect: [ :project | project packages ].
 

@@ -26,6 +26,21 @@ EpPackageTagRename >> accept: aVisitor [
 ]
 
 { #category : 'accessing' }
+EpPackageTagRename >> fileOutEntryOn: aWriteStream [ 
+	"Write a code chunk to rename a package tag"
+
+	aWriteStream
+		nextPutAll: 'self packageOrganizer renameTag: ';
+		nextPutAll: self oldTagName;
+		nextPutAll: ' to: ';
+		nextPutAll: self newTagName;
+		nextPutAll: ' inPackage: ';
+		nextChunkPut: self packageName;
+		cr.
+
+]
+
+{ #category : 'accessing' }
 EpPackageTagRename >> newTagName [
 
 	^ self tagName

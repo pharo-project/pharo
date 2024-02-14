@@ -60,7 +60,7 @@ RBPullUpMethodParametrizedTest >> addClassHierarchyForPools [
 			aBuilder
 				superclassName: #TotoSuperclass;
 				name: #Toto;
-				sharedPools: 'TotoSharedPool';
+				sharedPools: #(TotoSharedPool);
 				package: #'Refactory-Test data' ].
 
 	(model classNamed: #Toto) compile: 'poolReference ^ SP' classified: #( #accessing )
@@ -69,20 +69,6 @@ RBPullUpMethodParametrizedTest >> addClassHierarchyForPools [
 { #category : 'accessing' }
 RBPullUpMethodParametrizedTest >> constructor [
 	^ #pullUp:from:
-]
-
-{ #category : 'failure tests' }
-RBPullUpMethodParametrizedTest >> testFailureDoesntPullUpReferencesInstVar [
-
-	| refactoring class |
-	class := model classNamed:
-		         ('RBTransformation' , 'RuleTestData1') asSymbol.
-	refactoring := self
-		               createRefactoringWithModel: model
-		               andArguments: {
-				               #( #foo ).
-				               class }.
-	[ self shouldFail: refactoring ] valueSupplyingAnswer: false
 ]
 
 { #category : 'failure tests' }
@@ -284,4 +270,18 @@ RBPullUpMethodParametrizedTest >> testPullUpReferencesInstVar [
 	self assert: (superClass directlyDefinesInstanceVariable: #foo).
 	self deny: (class directlyDefinesMethod: #foo).
 	self deny: (class directlyDefinesInstanceVariable: #foo)
+]
+
+{ #category : 'failure tests' }
+RBPullUpMethodParametrizedTest >> testWarnDoesntPullUpReferencesInstVar [
+
+	| refactoring class |
+	class := model classNamed:
+		         ('RBTransformation' , 'RuleTestData1') asSymbol.
+	refactoring := self
+		               createRefactoringWithModel: model
+		               andArguments: {
+				               #( #foo ).
+				               class }.
+	[ self shouldWarn: refactoring ] valueSupplyingAnswer: false
 ]

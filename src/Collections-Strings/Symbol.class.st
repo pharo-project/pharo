@@ -143,11 +143,6 @@ Symbol class >> new: aSize [
 	self shouldNotImplement
 ]
 
-{ #category : 'stream creation' }
-Symbol class >> new: size streamContents: aBlock [
-	^ (super new: size streamContents: aBlock) asSymbol
-]
-
 { #category : 'instance creation' }
 Symbol class >> newFrom: aCollection [
 	"Answer an instance of me containing the same elements as aCollection."
@@ -584,7 +579,7 @@ Symbol >> sorted: aSortBlockOrNil [
 	^self asArray sort: aSortBlockOrNil
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 Symbol >> storeOn: aStream [
 
 	aStream nextPut: $#.

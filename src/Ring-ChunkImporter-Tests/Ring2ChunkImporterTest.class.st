@@ -407,7 +407,7 @@ Ring2ChunkImporterTest >> testStandardComment [
 
 	self assert: comment content equals: 'I''m a nice comment!, treat me well :).'.
 	self assert: comment author equals: 'GuillermoPolito'.
-	self assert: comment time equals: ('5/2/2012 13:35' asDateAndTime)
+	self assert: comment time equals: ('2012-05-02T13:35' asDateAndTime)
 ]
 
 { #category : 'tests' }
@@ -440,7 +440,7 @@ Ring2ChunkImporterTest >> testStandardMetaclassMethod [
 
 	importer := RGChunkImporter new.
 
-	code := '!SomeClass class methodsFor: ''some protocol'' stamp: ''GuillermoPolito 5/2/2012 13:35''!someMethod
+	code := '!SomeClass class methodsFor: ''some protocol'' stamp: ''GuillermoPolito 2012-05-02T13:35''!someMethod
 	^true'.
 
 	importer fileInFrom: code readStream.
@@ -455,7 +455,7 @@ Ring2ChunkImporterTest >> testStandardMetaclassMethod [
 	self assert: method name equals: #someMethod.
 	self assert: method protocol equals: 'some protocol'.
 	self assert: method author equals: 'GuillermoPolito'.
-	self assert: method time equals: ('5/2/2012 13:35' asDateAndTime).
+	self assert: method time equals: ('2012-05-02T13:35' asDateAndTime).
 	self assert: method sourceCode equals: 'someMethod
 	^true'
 ]
@@ -517,7 +517,7 @@ Ring2ChunkImporterTest >> testStandardMethod [
 
 	importer := RGChunkImporter new.
 
-	code := '!SomeClass methodsFor: ''some protocol'' stamp: ''GuillermoPolito 5/2/2012 13:35''!someMethod
+	code := '!SomeClass methodsFor: ''some protocol'' stamp: ''GuillermoPolito 2012-05-02T13:35''!someMethod
 	^true'.
 
 	importer fileInFrom: code readStream.
@@ -533,7 +533,7 @@ Ring2ChunkImporterTest >> testStandardMethod [
 	self assert: method name equals: #someMethod.
 	self assert: method protocol equals: 'some protocol'.
 	self assert: method author equals: 'GuillermoPolito'.
-	self assert: method time equals: ('5/2/2012 13:35' asDateAndTime).
+	self assert: method time equals: ('2012-05-02T13:35' asDateAndTime).
 	self assert: method sourceCode equals: 'someMethod
 	^true'
 ]
@@ -546,7 +546,7 @@ Ring2ChunkImporterTest >> testStandardMethodInExistingClass [
 	importer := RGChunkImporter new.
 	class := importer environment ensureClassNamed: #SomeClass.
 
-	code := '!SomeClass methodsFor: ''some protocol'' stamp: ''GuillermoPolito 5/2/2012 13:35''!someMethod
+	code := '!SomeClass methodsFor: ''some protocol'' stamp: ''GuillermoPolito 2012-05-02T13:35''!someMethod
 	^true'.
 
 	importer fileInFrom: code readStream.
@@ -561,7 +561,7 @@ Ring2ChunkImporterTest >> testStandardMethodInExistingClass [
 	self assert: method name equals: #someMethod.
 	self assert: method protocol equals: 'some protocol'.
 	self assert: method author equals: 'GuillermoPolito'.
-	self assert: method time equals: ('5/2/2012 13:35' asDateAndTime).
+	self assert: method time equals: ('2012-05-02T13:35' asDateAndTime).
 	self assert: method sourceCode equals: 'someMethod
 	^true'
 ]
@@ -575,7 +575,7 @@ Ring2ChunkImporterTest >> testStandardMethodInExistingMetaclassTrait [
 
 	trait := importer environment ensureMetaclassTraitNamed: #'SomeTrait classTrait'.
 
-	code := '!SomeTrait classTrait methodsFor: ''some protocol'' stamp: ''GuillermoPolito 5/2/2012 13:35''!someMethod
+	code := '!SomeTrait classTrait methodsFor: ''some protocol'' stamp: ''GuillermoPolito 2012-05-02T13:35''!someMethod
 	^true'.
 
 	importer fileInFrom: code readStream.
@@ -590,7 +590,7 @@ Ring2ChunkImporterTest >> testStandardMethodInExistingMetaclassTrait [
 	self assert: method name equals: #someMethod.
 	self assert: method protocol equals: 'some protocol'.
 	self assert: method author equals: 'GuillermoPolito'.
-	self assert: method time equals: ('5/2/2012 13:35' asDateAndTime).
+	self assert: method time equals: ('2012-05-02T13:35' asDateAndTime).
 	self assert: method sourceCode equals: 'someMethod
 	^true'
 ]
@@ -604,7 +604,7 @@ Ring2ChunkImporterTest >> testStandardMethodInExistingTrait [
 
 	trait := importer environment ensureTraitNamed: #'SomeTrait'.
 
-	code := '!SomeTrait methodsFor: ''some protocol'' stamp: ''GuillermoPolito 5/2/2012 13:35''!someMethod
+	code := '!SomeTrait methodsFor: ''some protocol'' stamp: ''GuillermoPolito 2012-05-02T13:35''!someMethod
 	^true'.
 
 	importer fileInFrom: code readStream.
@@ -619,7 +619,7 @@ Ring2ChunkImporterTest >> testStandardMethodInExistingTrait [
 	self assert: method name equals: #someMethod.
 	self assert: method protocol equals: 'some protocol'.
 	self assert: method author equals: 'GuillermoPolito'.
-	self assert: method time equals: ('5/2/2012 13:35' asDateAndTime).
+	self assert: method time equals: ('2012-05-02T13:35' asDateAndTime).
 	self assert: method sourceCode equals: 'someMethod
 	^true'
 ]
@@ -631,7 +631,7 @@ Ring2ChunkImporterTest >> testStandardMethodInNewMetaclass [
 
 	importer := RGChunkImporter new.
 
-	code := '!SomeClass class methodsFor: ''some protocol'' stamp: ''GuillermoPolito 5/2/2012 13:35''!someMethod
+	code := '!SomeClass class methodsFor: ''some protocol'' stamp: ''GuillermoPolito 2012-05-02T13:35''!someMethod
 	^true'.
 
 	importer fileInFrom: code readStream.
@@ -647,7 +647,7 @@ Ring2ChunkImporterTest >> testStandardMethodInNewMetaclass [
 	self assert: method name equals: #someMethod.
 	self assert: method protocol equals: 'some protocol'.
 	self assert: method author equals: 'GuillermoPolito'.
-	self assert: method time equals: ('5/2/2012 13:35' asDateAndTime).
+	self assert: method time equals: ('2012-05-02T 13:35' asDateAndTime).
 	self assert: method sourceCode equals: 'someMethod
 	^true'
 ]
@@ -799,7 +799,7 @@ Ring2ChunkImporterTest >> testingCommentFor: aClassName [
 
 	comment := 'I''m a nice comment!, treat me well :).'.
 	commentToWrite := 'I''m a nice comment!!, treat me well :).' replaceAll: '!' with: '!!'.
-	^ ('!{1} commentStamp: ''GuillermoPolito 5/2/2012 13:35'' prior: 0!{2}!' format: { aClassName. commentToWrite })
+	^ ('!{1} commentStamp: ''GuillermoPolito 2012-05-02T13:35'' prior: 0!{2}!' format: { aClassName. commentToWrite })
 ]
 
 { #category : 'private - utilities' }

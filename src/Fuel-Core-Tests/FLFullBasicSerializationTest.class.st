@@ -94,11 +94,11 @@ FLFullBasicSerializationTest >> testCreateClassWithChangedSuperclassFormat [
 	"Tests issue #221"
 
 	| a b |
-	a := self classFactory make: [ :aBuilder | aBuilder slotsFromString: 'one' ].
+	a := self classFactory make: [ :aBuilder | aBuilder slots: #(one) ].
 	b := self classFactory make: [ :aBuilder |
 		     aBuilder
 			     superclass: a;
-			     slotsFromString: 'two' ].
+			     slots: #(two) ].
 	self serializer fullySerializeBehavior: b.
 	self serialize: {
 			b new.

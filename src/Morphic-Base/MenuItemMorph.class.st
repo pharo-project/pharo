@@ -62,7 +62,7 @@ MenuItemMorph >> aboutToBeGrabbedBy: aHand [
 		owner stayUp: true.
 		^owner aboutToBeGrabbedBy: aHand].
 	box := self bounds.
-	menu := UIManager default newMenuIn: self for: nil.
+	menu := self morphicUIManager newMenuIn: self for: nil.
 	menu addMorphFront: self.
 	menu bounds: box.
 	menu stayUp: true.
@@ -282,7 +282,7 @@ MenuItemMorph >> duplicateMorph: evt [
 	"Make and return a duplicate of the receiver's argument"
 	| dup menu |
 	dup := self duplicate isSelected: false.
-	menu := UIManager default newMenuIn: self for: nil.
+	menu := self morphicUIManager newMenuIn: self for: nil.
 	menu addMorphFront: dup.
 	menu bounds: self bounds.
 	menu stayUp: true.
@@ -620,7 +620,6 @@ MenuItemMorph >> selectionFillStyle [
 	"answer the fill style to use with the receiver is the selected
 	element"
 
-	Display depth <= 2 ifTrue: [ ^ Color gray ].
 	^ self theme menuSelectionColor
 ]
 

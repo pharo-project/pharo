@@ -104,9 +104,10 @@ RBBlockNode >> allDefinedVariables [
 { #category : 'accessing' }
 RBBlockNode >> allStatements [
 	"including temp variable definition."
-	^ self temporaries asOrderedCollection copy
-			addAll: super allStatements;
-			yourself
+
+	^ (OrderedCollection withAll: self temporaries)
+		  addAll: super allStatements;
+		  yourself
 ]
 
 { #category : 'accessing' }
@@ -188,11 +189,6 @@ RBBlockNode >> copyInContext: aDictionary [
 { #category : 'testing' }
 RBBlockNode >> defines: aName [
 	^arguments anySatisfy: [:each | each name = aName]
-]
-
-{ #category : 'testing' }
-RBBlockNode >> directlyUses: aNode [
-	^false
 ]
 
 { #category : 'comparing' }
@@ -288,8 +284,14 @@ RBBlockNode >> isLast: aNode [
 ]
 
 { #category : 'testing' }
-RBBlockNode >> lastIsReturn [
-	^ false
+RBBlockNode >> isUsingAsReturnValue: aNode [
+	aNode = body ifFalse: [^false].
+	^parent isMessage
+		ifTrue:
+			[(#(#ifTrue:ifFalse: #ifTrue: #ifFalse: #ifFalse:ifTrue:)
+				includes: parent selector) not
+				or: [parent isUsedAsReturnValue]]
+		ifFalse: [self isUsedAsReturnValue]
 ]
 
 { #category : 'accessing - token' }
@@ -407,15 +409,4 @@ RBBlockNode >> temporaries [
 { #category : 'accessing' }
 RBBlockNode >> temporaryNames [
 	^ self body temporaryNames
-]
-
-{ #category : 'testing' }
-RBBlockNode >> uses: aNode [
-	aNode = body ifFalse: [^false].
-	^parent isMessage
-		ifTrue:
-			[(#(#ifTrue:ifFalse: #ifTrue: #ifFalse: #ifFalse:ifTrue:)
-				includes: parent selector) not
-				or: [parent isUsed]]
-		ifFalse: [self isUsed]
 ]

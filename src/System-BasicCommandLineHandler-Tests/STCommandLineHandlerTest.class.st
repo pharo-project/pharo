@@ -49,7 +49,7 @@ STCommandLineHandlerTest >> testLoadSourceFiles [
 		'/not/existing/codeLoad1.st'.
 		'/not/existing/codeLoad2.st'}.
 
-	self assert: (codeLoader instVarNamed: 'sourceFiles') notNil.
+	self assert: (codeLoader instVarNamed: 'sourceFiles') isNotNil.
 	self assert: (codeLoader instVarNamed: 'sourceFiles') size equals: 2.
 	self assert: ((codeLoader instVarNamed: 'sourceFiles') allSatisfy: [ :each | each isKindOf: File ])
 ]
@@ -67,7 +67,7 @@ STCommandLineHandlerTest >> testSelectSourceFiles [
 	codeLoader selectSourceFiles.
 
 	"Now verify that it doesn't try to load localhost"
-	self assert: (codeLoader instVarNamed: 'sourceFiles') notNil.
+	self assert: (codeLoader instVarNamed: 'sourceFiles') isNotNil.
 	self assert: (codeLoader instVarNamed: 'sourceFiles') size equals: 1.
 	self assert: (codeLoader instVarNamed: 'sourceFiles') first name equals: 'does-not-exist.st'
 ]

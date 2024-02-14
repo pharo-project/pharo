@@ -18,7 +18,7 @@ MCRepositoryAuthorizationTest >> assert: registry on: serverUrlString hasUser: n
 MCRepositoryAuthorizationTest >> exampleServerUrl [
 	<sampleInstance>
 
-	^ 'http://www.squeaksource.com'.
+	^ 'http://www.github.com'.
 ]
 
 { #category : 'tests' }

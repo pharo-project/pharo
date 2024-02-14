@@ -17,7 +17,7 @@ packageNames := #BaselineOfPharoBootstrap asClass kernelPackageNames, toExport.
 environment := repository asRing2EnvironmentWith: packageNames.		
 
 environment fixProtoObjectClassSuperclass.
-environment addGlobalsNamed: #(Undeclared Smalltalk UTF8TextConverter MacRomanTextConverter FileStream ChangeSet Character Processor).
+environment addGlobalsNamed: #(Undeclared Smalltalk UTF8TextConverter MacRomanTextConverter FileStream Character Processor).
 
 environment clean.
 

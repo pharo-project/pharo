@@ -507,9 +507,7 @@ IntervalTest >> testInclusion [
 ]
 
 { #category : 'tests' }
-IntervalTest >> testInclusionBug1603 [
-	"This test is by german morales.
-	It is about mantis bug 1603"
+IntervalTest >> testInclusion2 [
 
 	self shouldnt: ((1 to: 5 by: 1) includes: 2.5). "obvious"
 	self shouldnt: ((100000000000000 to: 500000000000000 by: 100000000000000)
@@ -517,8 +515,8 @@ IntervalTest >> testInclusionBug1603 [
 ]
 
 { #category : 'tests' }
-IntervalTest >> testInclusionBug6455 [
-	"This test is about mantis bug http://bugs.squeak.org/view.php?id=6455
+IntervalTest >> testInclusionForFloat [
+	"
 	It should work as long as Fuzzy inclusion test feature for Interval of Float is maintained.
 	This is a case when tested element is near ones of actual value, but by default.
 	Code used to work only in the case of close numbers by excess..."
@@ -537,18 +535,8 @@ IntervalTest >> testIndexOfBug1602 [
 ]
 
 { #category : 'tests' }
-IntervalTest >> testIndexOfBug6455 [
-	"This test is about mantis bug http://bugs.squeak.org/view.php?id=6455
-	It should work as long as Fuzzy inclusion test feature for Interval of Float is maintained.
-	This is a case when tested element is near ones of actual value, but by default.
-	Code used to work only in the case of close numbers by excess..."
-
-	self assert: ((0 to: Float pi by: Float pi / 100) indexOf: Float pi * (3 / 100)) equals: 4
-]
-
-{ #category : 'tests' }
-IntervalTest >> testInfiniteLoopBug6456 [
-	"This is a non regression test against mantis bug #6456.
+IntervalTest >> testInfiniteLoop [
+	"
 	Some Float interval size was not consistent with do: loop.
 	Some Float Interval used to do: infinite loops"
 

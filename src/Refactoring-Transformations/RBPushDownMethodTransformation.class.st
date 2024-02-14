@@ -53,24 +53,6 @@ RBPushDownMethodTransformation >> applicabilityPreconditions [
 	^ condition 
 ]
 
-{ #category : 'preconditions' }
-RBPushDownMethodTransformation >> breakingChangePreconditions [
-	"Check that that none of the subclasses of `class` is doing a supercall to any of the selectors
-	that will be pushed down.
-	
-	Also, to ensure that an instance of the class is not sent a message which is pushed down,  forces that 
-	we can only push down methods from abstract class. 
-	This should be controlled via a flag on the ui.
-	"
-	
-	| condition |
-	condition := selectors
-		             inject: (RBCondition isAbstractClass: class)
-		             into: [ :cond :each |
-			             cond & (RBCondition subclassesOf: class isDoingASuperSendFor: each) not ].
-	^ condition 
-]
-
 { #category : 'executing' }
 RBPushDownMethodTransformation >> buildTransformations [
 
@@ -130,7 +112,7 @@ RBPushDownMethodTransformation >> removeSelectors [
 		from: class
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBPushDownMethodTransformation >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

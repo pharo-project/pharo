@@ -400,7 +400,7 @@ FLBasicSerializationTest >> testExceptions [
 FLBasicSerializationTest >> testExecuteAfterMaterialization [
 
 	| anObject result aClass |
-	aClass := self classFactory silentlyMake: [ :aBuilder | aBuilder slotsFromString: 'a' ].
+	aClass := self classFactory silentlyMake: [ :aBuilder | aBuilder slots: #(a) ].
 	self classFactory silentlyCompile: 'fuelAfterMaterialization a := #A' in: aClass.
 	anObject := aClass new.
 

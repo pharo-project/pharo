@@ -13,11 +13,9 @@ BaselineOfReflectivity >> baseline: spec [
 		spec postLoadDoIt: #postload:package:.
 
 		spec
-			"Reflectivity requires using code instrumentation"
 			baseline: 'Instrumentation'
-			with: [ spec repository: self packageRepositoryURL ];
-			package: 'Reflectivity'
-			with: [ spec requires: 'Instrumentation' ];
+			with: [ spec repository: (self packageRepositoryURLForSpec: spec) ];
+			package: 'Reflectivity' with: [ spec requires: 'Instrumentation' ];
 			package: 'Reflectivity-Tools'
 			with: [ spec requires: 'Reflectivity' ];
 			package: 'Reflectivity-Tools-Tests'
@@ -26,6 +24,7 @@ BaselineOfReflectivity >> baseline: spec [
 			with: [ spec requires: 'Reflectivity' ];
 			package: 'Reflectivity-Tests'
 			with: [ spec requires: #( Reflectivity 'Reflectivity-Tools' ) ].
+		"Reflectivity requires using code instrumentation"
 
 		spec
 			group: 'default' with: #( 'Reflectivity' );

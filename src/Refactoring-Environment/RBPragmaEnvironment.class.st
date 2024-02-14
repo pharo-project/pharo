@@ -98,7 +98,7 @@ RBPragmaEnvironment >> postCopy [
 	keywords := keywords copy
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBPragmaEnvironment >> storeOn: aStream [
 	aStream nextPut: $(.
 	super storeOn: aStream.

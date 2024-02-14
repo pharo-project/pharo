@@ -13,7 +13,7 @@ Script
 "
 Class {
 	#name : 'RBRemoveMethodsInHierarchyRefactoring',
-	#superclass : 'RBRemoveMethodsRefactoring',
+	#superclass : 'ReRemoveMethodsRefactoring',
 	#category : 'Refactoring-Core-Refactorings',
 	#package : 'Refactoring-Core',
 	#tag : 'Refactorings'
@@ -40,7 +40,7 @@ RBRemoveMethodsInHierarchyRefactoring >> remove: aSelectorsCollection in: aClass
 	containingMethods := aSelectorsCollection select: [ :sel |
 		                     aClass realClass includesSelector: sel ].
 	containingMethods ifNotEmpty: [
-		refactorings add: (RBRemoveMethodsRefactoring
+		refactorings add: (ReRemoveMethodsRefactoring
 				 model: self model
 				 selectors: containingMethods
 				 from: aClass) ]

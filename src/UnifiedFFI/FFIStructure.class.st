@@ -211,7 +211,7 @@ FFIStructure class >> defineFieldOffset: fieldName value: offset [
 		ifNil: [
 			(self hasClassVarNamed: offsetVarName)
 				ifFalse: [ self addClassVarNamed: offsetVarName ].
-			self classVarNamed: offsetVarName put: offset ]
+			self writeClassVariableNamed: offsetVarName value: offset ]
 ]
 
 { #category : 'register marshalling' }
@@ -306,11 +306,8 @@ FFIStructure class >> offsetVariableNameFor: fieldName [
 { #category : 'private' }
 FFIStructure class >> rebuildFieldAccessors [
 
-	Author useAuthor: 'UFFIGenerator' during: [
-		self removeAllOffsetVariables.
-		self
-			compileFields: self fields
-			withAccessors: #always]
+	self removeAllOffsetVariables.
+	self compileFields: self fields withAccessors: #always
 ]
 
 { #category : 'private' }

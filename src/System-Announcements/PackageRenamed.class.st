@@ -28,34 +28,6 @@ PackageRenamed class >> to: aPackage oldName: aSymbol newName: anotherSymbol [
 		  yourself
 ]
 
-{ #category : 'testing' }
-PackageRenamed >> affectsClass: aClass [
-	^package == aClass package
-]
-
-{ #category : 'testing' }
-PackageRenamed >> affectsMethod: aMethod [
-	^package == aMethod package
-]
-
-{ #category : 'testing' }
-PackageRenamed >> affectsMethods [
-	"methods belong to package which could be represented by tools as part of method"
-	^true
-]
-
-{ #category : 'testing' }
-PackageRenamed >> affectsMethodsDefinedInClass: aClass [
-
-	^ (package includesClass: aClass) or: [ package extendsClass: aClass ]
-]
-
-{ #category : 'testing' }
-PackageRenamed >> affectsMethodsDefinedInPackage: aPackage [
-
-	^package == aPackage
-]
-
 { #category : 'accessing' }
 PackageRenamed >> newName [
 

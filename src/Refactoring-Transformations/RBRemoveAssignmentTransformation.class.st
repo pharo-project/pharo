@@ -106,7 +106,7 @@ RBRemoveAssignmentTransformation >> privateTransform [
 	class compileTree: methodTree
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBRemoveAssignmentTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.

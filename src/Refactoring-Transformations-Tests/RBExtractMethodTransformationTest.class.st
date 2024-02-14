@@ -60,7 +60,7 @@ RBExtractMethodTransformationTest >> testFailureBadInterval [
 ]
 
 { #category : 'tests - failures' }
-RBExtractMethodTransformationTest >> testFailureExtract [
+RBExtractMethodTransformationTest >> testFailureCannotExtractProperSubtreeFromInterval [
 
 	self shouldFail: (RBExtractMethodTransformation
 			 extract: (self
@@ -79,6 +79,10 @@ RBExtractMethodTransformationTest >> testFailureExtract [
 			 from: #subclassOf:overrides:
 			 to: #foo
 			 in: #'RBBasicLintRuleTestData class').
+]
+
+{ #category : 'tests' }
+RBExtractMethodTransformationTest >> testFailureCannotExtractTwoAssignmentsToTemporaries [
 
 	self shouldFail: (RBExtractMethodTransformation
 			 extract: (self
@@ -91,7 +95,7 @@ RBExtractMethodTransformationTest >> testFailureExtract [
 ]
 
 { #category : 'tests - failures' }
-RBExtractMethodTransformationTest >> testMethodDoesNotExist [
+RBExtractMethodTransformationTest >> testFailureWhenMethodDoesNotExist [
 
 	self shouldFail: (RBExtractMethodTransformation
 			extract: 'bla'
@@ -102,7 +106,37 @@ RBExtractMethodTransformationTest >> testMethodDoesNotExist [
 ]
 
 { #category : 'tests' }
+RBExtractMethodTransformationTest >> testFailureWhenTemporaryReadBeforeWritten [
+
+	| class method |
+	model := self modelOnClasses: { self class }.
+	class := model classNamed: self class name.
+	method := 'foo
+			| temp bar |
+			bar := temp.
+			temp := bar * bar.
+			Transcript show: temp printString; cr.
+			^temp * temp'.
+	class compile: method classified: #( #accessing ).
+
+	self
+		should: [
+			(RBExtractMethodTransformation
+				 model: model
+				 extract: '
+			bar := temp.
+			temp := bar * bar.'
+				 from: #foo
+				 to: #foobar
+				 in: class) generateChanges ]
+		raise: RBRefactoringError
+]
+
+{ #category : 'tests' }
 RBExtractMethodTransformationTest >> testNeedsReturn [
+	"When code to be extracted contains explicit returns,
+	then when replacing it with the extracted method name,
+	we should return the result of the method"
 
 	| refactoring class |
 	model := self modelOnClasses: { RBDummyLintRuleTest }.
@@ -128,45 +162,6 @@ RBExtractMethodTransformationTest >> testNeedsReturn [
 		equals: (self parseMethod: 'foo: rules
 				rules isEmpty ifTrue: [^self].
 				rules size == 1 ifTrue: [^rules first viewResults]')
-]
-
-{ #category : 'tests' }
-RBExtractMethodTransformationTest >> testRefactoring [
-
-	| transformation class |
-	model := self modelOnClasses: { RBTransformationRuleTestData }.
-
-	transformation := (RBExtractMethodTransformation
-		                   model: model
-		                   extract:
-			                   '(RecursiveSelfRule executeTree: rewriteRule tree initialAnswer: false)
-			ifFalse: [builder
-						compile: rewriteRule tree printString
-						in: class
-						classified: aSmalllintContext protocols]'
-		                   from: #checkMethod:
-		                   to: #foo:
-		                   in: #RBTransformationRuleTestData)
-		                  generateChanges.
-
-	self assert: transformation model changes changes size equals: 2.
-
-	class := transformation model classNamed:
-		         #RBTransformationRuleTestData.
-	self
-		assert: (class parseTreeForSelector: #checkMethod:)
-		equals: (self parseMethod: 'checkMethod: aSmalllintContext
-			class := aSmalllintContext selectedClass.
-			(rewriteRule executeTree: aSmalllintContext parseTree)
-				ifTrue: [self foo: aSmalllintContext]').
-	self
-		assert: (class parseTreeForSelector: #foo:)
-		equals: (self parseMethod: 'foo: aSmalllintContext
-			(RecursiveSelfRule executeTree: rewriteRule tree initialAnswer: false)
-				ifFalse: [ builder
-							compile: rewriteRule tree printString
-							in: class
-							classified: aSmalllintContext protocols ]')
 ]
 
 { #category : 'tests' }
@@ -215,6 +210,40 @@ RBExtractMethodTransformationTest >> testTransform [
 ]
 
 { #category : 'tests' }
+RBExtractMethodTransformationTest >> testWhenTemporaryVariableBecomesArgumentOfExtractedMethod [
+
+	| refactoring class |
+	model := self modelOnClasses: { RBDummyLintRuleTest }.
+	refactoring := (RBExtractMethodTransformation
+							 model: model
+		                extract: (self
+				                 sourceCodeAt: (78 to: 197)
+				                 forMethod: #displayName
+				                 in: RBDummyLintRuleTest)
+		                from: #displayName
+		                to: #foo:
+		                in: #RBDummyLintRuleTest) generateChanges.
+
+	self assert: refactoring model changes changes size equals: 2.
+
+	class := refactoring model classNamed: #RBDummyLintRuleTest.
+	self
+		assert: (class parseTreeForSelector: #displayName)
+		equals: (self parseMethod: 'displayName
+					| nameStream |
+					nameStream := WriteStream on: (String new: 64).
+					self foo: nameStream.
+					^nameStream contents').
+	self
+		assert: (class parseTreeForSelector: #foo:)
+		equals: (self parseMethod: 'foo: nameStream
+					nameStream nextPutAll: self name;
+								nextPutAll: '' (''.
+					self problemCount printOn: nameStream.
+					nameStream nextPut: $).')
+]
+
+{ #category : 'tests' }
 RBExtractMethodTransformationTest >> testWithArgument [
 
 	| refactoring class |
@@ -222,10 +251,12 @@ RBExtractMethodTransformationTest >> testWithArgument [
 
 	refactoring := (RBExtractMethodTransformation
 		                model: model
-		                extract: (self
-				                 sourceCodeAt: (143 to: 340)
-				                 forMethod: #checkMethod:
-				                 in: RBTransformationRuleTestData)
+		                extract:
+			                '(RecursiveSelfRule executeTree: rewriteRule tree initialAnswer: false)
+			ifFalse: [builder
+						compile: rewriteRule tree printString
+						in: class
+						classified: aSmalllintContext protocols]'
 		                from: #checkMethod:
 		                to: #foo:
 		                in: #RBTransformationRuleTestData) generateChanges.
@@ -277,6 +308,8 @@ RBExtractMethodTransformationTest >> testWithTemporariesSelected [
 
 { #category : 'tests' }
 RBExtractMethodTransformationTest >> testWithTemporaryAssigned [
+	"test when selected code contains temporary that has assignment
+	extracted method will also have that temporary"
 
 	| class method refactoring |
 	model := self modelOnClasses: { self class }.
@@ -291,7 +324,9 @@ RBExtractMethodTransformationTest >> testWithTemporaryAssigned [
 
 	refactoring := (RBExtractMethodTransformation
 		                model: model
-		                extract: (method copyFrom: 24 to: 98)
+		                extract: 'bar := 5.
+			temp := bar * bar.
+			Transcript show: temp printString; cr.'
 		                from: #foo
 		                to: #foobar
 		                in: class) generateChanges.
@@ -342,38 +377,4 @@ RBExtractMethodTransformationTest >> testWithTemporaryVariable [
 						ifNone: [nil]) isNil]
 							-> ''self `@message: ``@args'').
 				^rule')
-]
-
-{ #category : 'tests' }
-RBExtractMethodTransformationTest >> testWithTemporaryVariable2 [
-
-	| refactoring class |
-	model := self modelOnClasses: { RBDummyLintRuleTest }.
-	refactoring := (RBExtractMethodTransformation
-							 model: model
-		                extract: (self
-				                 sourceCodeAt: (78 to: 197)
-				                 forMethod: #displayName
-				                 in: RBDummyLintRuleTest)
-		                from: #displayName
-		                to: #foo:
-		                in: #RBDummyLintRuleTest) generateChanges.
-
-	self assert: refactoring model changes changes size equals: 2.
-
-	class := refactoring model classNamed: #RBDummyLintRuleTest.
-	self
-		assert: (class parseTreeForSelector: #displayName)
-		equals: (self parseMethod: 'displayName
-					| nameStream |
-					nameStream := WriteStream on: (String new: 64).
-					self foo: nameStream.
-					^nameStream contents').
-	self
-		assert: (class parseTreeForSelector: #foo:)
-		equals: (self parseMethod: 'foo: nameStream
-					nameStream nextPutAll: self name;
-								nextPutAll: '' (''.
-					self problemCount printOn: nameStream.
-					nameStream nextPut: $).')
 ]

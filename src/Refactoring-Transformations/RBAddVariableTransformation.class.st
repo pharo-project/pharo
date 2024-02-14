@@ -36,14 +36,9 @@ RBAddVariableTransformation >> applicabilityPreconditions [
 				    isValidInstanceVariableName: variableName
 				    for: class) ])
 	  & self isNotGlobal
-]
-
-{ #category : 'preconditions' }
-RBAddVariableTransformation >> breakingChangePreconditions [ 
-
-	^ (RBCondition
+	  & (RBCondition
 			   hierarchyOf: class
-			   definesVariable: variableName asString) not
+			   definesVariable: variableName asString) not	
 ]
 
 { #category : 'preconditions' }

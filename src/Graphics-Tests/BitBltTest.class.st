@@ -100,21 +100,3 @@ BitBltTest >> testAlphaCompositingSimulated [
 				self assert: (result blue - (1.0 - mixColor alpha)) abs < eps.
 				self assert: result alpha equals: 1.0 ] ]
 ]
-
-{ #category : 'tests - bugs' }
-BitBltTest >> testPeekerUnhibernateBug [
-
-	| bitBlt |
-	bitBlt := BitBlt bitPeekerFromForm: Display.
-	bitBlt destForm hibernate.
-	bitBlt pixelAt: 1 @ 1
-]
-
-{ #category : 'tests - bugs' }
-BitBltTest >> testPokerUnhibernateBug [
-
-	| bitBlt |
-	bitBlt := BitBlt bitPokerToForm: Display.
-	bitBlt sourceForm hibernate.
-	bitBlt pixelAt: 1 @ 1 put: 0
-]

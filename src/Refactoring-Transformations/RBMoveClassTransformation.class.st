@@ -89,7 +89,7 @@ RBMoveClassTransformation >> privateTransform [
 	self model repackage: self definingClass in: self packageName tag: self tagName
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBMoveClassTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.

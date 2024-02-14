@@ -75,7 +75,8 @@ PluggableMenuItemSpec >> enabledBlock: aBlock [
 
 { #category : 'accessing' }
 PluggableMenuItemSpec >> hasCheckBox [
-	^ checked notNil
+
+	^ checked isNotNil
 ]
 
 { #category : 'accessing' }

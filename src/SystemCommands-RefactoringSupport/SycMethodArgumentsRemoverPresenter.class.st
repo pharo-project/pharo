@@ -110,9 +110,9 @@ SycMethodArgumentsRemoverPresenter >> getParametersOrder [
 SycMethodArgumentsRemoverPresenter >> initializeDialogWindow: aModalPresenter [
 
 	aModalPresenter
-		addButton: 'Accept' do: [ :presenter | self renameMethodAndClose: presenter ];
+		initialExtent: 300 @ 300;
 		addButton: 'Cancel' do: [ :presenter | presenter beCancel; close ];
-		initialExtent: 300 @ 300
+		addDefaultButton: 'Accept' do: [ :presenter | self renameMethodAndClose: presenter ]
 ]
 
 { #category : 'initialization' }

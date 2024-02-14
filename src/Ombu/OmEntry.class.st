@@ -36,6 +36,13 @@ OmEntry >> content: anObject [
 	content := anObject
 ]
 
+{ #category : 'accessing' }
+OmEntry >> fileOutEntryOn: aWriteStream [ 
+	"Write the receiver's contents to aWriteStream"
+
+	self content fileOutEntryOn: aWriteStream.
+]
+
 { #category : 'comparing' }
 OmEntry >> hash [
 	^ self species hash bitXor: self content hash
@@ -51,6 +58,16 @@ OmEntry >> initializeWithContent: anObject [
 { #category : 'testing' }
 OmEntry >> isEmpty [
 	^ false
+]
+
+{ #category : 'testing' }
+OmEntry >> matches: aString [ 
+	"Answer <true> if the receiver is a code change and its contents name matches aString"
+	
+	| epEvent |
+	
+	epEvent := self content.
+	^ epEvent isCodeChange and: [ epEvent matches: aString ]
 ]
 
 { #category : 'printing' }

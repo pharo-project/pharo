@@ -166,7 +166,7 @@ RBRenameVariableChange >> removeOldVariable [
 { #category : 'accessing' }
 RBRenameVariableChange >> textToDisplay [
 
-	self printString
+	^ self printString
 ]
 
 { #category : 'accessing' }

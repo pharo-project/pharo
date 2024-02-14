@@ -168,8 +168,9 @@ RBPackageEnvironment >> printBasisObject: aClass on: aStream [
 
 { #category : 'printing' }
 RBPackageEnvironment >> printOn: aStream [
+
 	aStream nextPutAll: 'Pck: '.
-	packages do: [ :pkg | aStream nextPutAll: pkg packageName, ', ']
+	packages do: [ :pkg | aStream nextPutAll: pkg name , ', ' ]
 ]
 
 { #category : 'removing' }
@@ -177,7 +178,7 @@ RBPackageEnvironment >> removePackage: aSymbol [
 	packages remove: aSymbol ifAbsent: []
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBPackageEnvironment >> storeOn: aStream [
 	aStream nextPut: $(; nextPutAll: self class name; nextPutAll: ' onEnvironment: '.
 	environment storeOn: aStream.

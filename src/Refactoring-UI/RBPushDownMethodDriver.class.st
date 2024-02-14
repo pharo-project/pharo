@@ -18,15 +18,15 @@ Class {
 		'methods',
 		'class'
 	],
-	#category : 'Refactoring-UI-Drivers',
+	#category : 'Refactoring-UI-Drivers to migrate to new architecture',
 	#package : 'Refactoring-UI',
-	#tag : 'Drivers'
+	#tag : 'Drivers to migrate to new architecture'
 }
 
 { #category : 'initialization' }
-RBPushDownMethodDriver class >> model: aRBNamespace scopes: refactoringScopes pushDown: methods [
+RBPushDownMethodDriver class >> model: aRBNamespace scopes: refactoringScopes pushDownMethods: methods [
 
-	^ self new model: aRBNamespace scopes: refactoringScopes pushDown: methods
+	^ self new model: aRBNamespace scopes: refactoringScopes pushDownMethods: methods
 ]
 
 { #category : 'resources' }
@@ -39,21 +39,12 @@ RBPushDownMethodDriver >> configureRefactoring [
 ]
 
 { #category : 'initialization' }
-RBPushDownMethodDriver >> model: aRBNamespace scopes: refactoringScopes pushDown: methodsList [
+RBPushDownMethodDriver >> model: aRBNamespace scopes: refactoringScopes pushDownMethods: methodsList [
 
 	model := aRBNamespace.
 	scopes := refactoringScopes.
 	methods := methodsList.
 	class := methods first origin
-]
-
-{ #category : 'resources' }
-RBPushDownMethodDriver >> refactoring [
-
-	refactoring :=  RBPushDownMethodRefactoring
-		  model: model
-		  pushDown: (methods collect: [ :each | each selector ])
-		  from: class
 ]
 
 { #category : 'execution' }

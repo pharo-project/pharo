@@ -109,6 +109,34 @@ ReleaseTest >> testAllGlobalBindingAreGlobalVariables [
 ]
 
 { #category : 'tests - variables' }
+ReleaseTest >> testAllInstanceVariablesDefiningClass [
+	"Make sure that all slots (ivars) have a correct defining class
+	This should never happen but the test is a good way to avoid future bugs"
+	| violating |
+
+	violating := Smalltalk globals allBehaviors select: [ :class |
+		class localSlots anySatisfy: [:var | var definingClass ~= class ]].
+
+	self
+		assert: violating isEmpty
+		description: 'Slot with wrong defining Class in: ', violating asArray asString
+]
+
+{ #category : 'tests - variables' }
+ReleaseTest >> testAllInstanceVariablesOwningClass [
+	"Make sure that all slots (ivars) have a correct owning class
+	This should never happen but the test is a good way to avoid future bugs"
+	| violating |
+
+	violating := Smalltalk globals allBehaviors select: [ :class |
+		class slots anySatisfy: [:var | var owningClass ~= class ]].
+
+	self
+		assert: violating isEmpty
+		description: 'Slot with wrong owning Class in: ', violating asArray asString
+]
+
+{ #category : 'tests - variables' }
 ReleaseTest >> testAllInstanceVariablesStartLowercase [
 	"Make sure that all class instance variable names start with a lowercase letter"
 	| violating |
@@ -119,6 +147,20 @@ ReleaseTest >> testAllInstanceVariablesStartLowercase [
 	self
 		assert: violating isEmpty
 		description: 'Instance variable names must start with a lowercase letter: ', violating asArray asString
+]
+
+{ #category : 'tests - variables' }
+ReleaseTest >> testAllSharedVariablesOwningClass [
+	"Make sure that all SharedVariables (ClassVariables) have a correct owning class
+	This should never happen but the test is a good way to avoid future bugs"
+	| violating |
+
+	violating := Smalltalk globals allBehaviors select: [ :class |
+		class classVariables anySatisfy: [:var | var owningClass ~= class instanceSide]].
+
+	self
+		assert: violating isEmpty
+		description: 'ClassVar with wrong owning Class in: ', violating asArray asString
 ]
 
 { #category : 'tests - variables' }
@@ -140,7 +182,7 @@ ReleaseTest >> testExistingPackageNamesDoesNotContainIllegalCharacters [
 
 	self packageOrganizer packages do: [ :package |
 		self deny: (package name includesAnyOf: illegalCharacters).
-		package classTags do: [ :tag | self deny: (tag name includesAnyOf: illegalCharacters) ] ]
+		package tags do: [ :tag | self deny: (tag name includesAnyOf: illegalCharacters) ] ]
 ]
 
 { #category : 'tests' }
@@ -175,7 +217,7 @@ ReleaseTest >> testKeyClassesArePresentInStartupList [
 		self assert: (registeredHandlers includes: className).
 		self assert: (self hasStartUpOrShutDownMethod: (testingEnvironment at: className)) ].
 
-	self assert: (registeredHandlers includes: #UIManagerSessionHandler)
+	self assert: (registeredHandlers includes: #ErrorHandlerSessionHandler)
 ]
 
 { #category : 'tests' }
@@ -250,6 +292,7 @@ ReleaseTest >> testNoEquivalentSuperclassMethods [
 		           method overriddenMethod
 			           ifNotNil: [ :overridenMethod | method equivalentTo: overridenMethod ]
 			           ifNil: [ false ] ].
+
 	self assert: methods size <= 326
 ]
 
@@ -310,66 +353,6 @@ ReleaseTest >> testNoPeriodInMethodSignature [
 				print: methods ] ]
 ]
 
-{ #category : 'tests - methods' }
-ReleaseTest >> testNoSentButNotImplementedSelectors [
-	"There is a long term cleanup to fix 'selectors send but not implemented'.
-	 This test makes sure that we do not introduce new cases until we are down to zero"
-
-	| knownFailures violations |
-	"String streamContents: [ :aStream | aStream << '#( '.  SystemNavigation default allSentButNotImplementedSelectors do: [ :m | .aStream << '''' << m printString  << ''' ' ]. aStream << ')' ]"
-	knownFailures := #( 'AthensCCWArcSegment>>#accept:' 'AthensCWArcSegment>>#accept:' 'AthensCairoCanvas>>#visitCubicSegment:'
-	                    'AthensCairoCanvas>>#visitQuadSegment:' 'AthensCloseSegment>>#accept:' 'AthensCubicSegment>>#accept:' 'AthensEllipticalArcSegment>>#accept:'
-	                    'AthensInteractiveScene>>#eventHandledByScene:' 'AthensLineSegment>>#accept:' 'AthensMoveSegment>>#accept:' 'AthensParagraph>>#compose:style:from:in:'
-	                    'AthensPolygon>>#paintFillsUsing:on:' 'BalloonEdgeData>>#stepToFirstScanLine' 'BalloonEdgeData>>#stepToNextScanLine'
-	                    'BalloonEngine>>#registerFills:' 'BalloonFillData>>#computeFill' 'ClyFullBrowserMorph>>#extendClassScopeForMethods:'
-	                    'ComplexBorderStyle>>#drawPolyPatchFrom:to:on:usingEnds:' 'ComplexBorderStyle>>#drawLineFrom:to:on:'
-	                    'Context>>#simulatePrimitive:in:receiver:arguments:' 'Context>>#doPrimitive:method:receiver:args:'
-	                    'Context>>#failPrimitiveWith:' 'DAPackageRelationGraphGenerator>>#buildEdges' 'DAPackageCycleGenerator>>#buildEdges' 'DAGraphVizGenerator>>#buildGraphViz' 'DAGraphVizGenerator>>#openWith:' 'DAGraphVizGenerator>>#saveDotFileAndGenerateForType:'
-	                    'DAPackageAnalyzerDiffTreePresenter>>#buildRoots' 'DTReRunConfiguration>>#items' 'DebugSession>>#shouldDisplayContext:basedOnFilters:'
-	                    'DiskDirectoryEntry class>>#store:path:node:' 'EDEmergencyDebugger>>#resetDisplay' 'EDTest>>#prepareMethodVersionTest'
-	                    'ExternalDropHandler class>>#defaultHandler' 'FFICallbackArgumentReader>>#stackPointer' 'FFIFloat32>>#callbackReturnOn:for:'
-	                    'FFIFloatType>>#callbackReturnOn:for:' 'FFIIndirectFunctionResolution>>#resolveFunction:'
-	                    'FFILibrary>>#macLibraryName' 'FFILibrary>>#win32LibraryName' 'FileDialogWindow>>#saveForcedSelectedFile'
-	                    'FileList class>>#morphicViewOnFile:contents:fileList:' 'GLMOSWindowWorldMorph>>#delete' 'IRReconstructor>>#fixPushNilsForTemps'
-	                    'IceLibgitCommitWalk>>#shouldInclude:' 'IcePackage>>#outgoingCommits' 'IceRemote>>#upstreamForBranch:backend:'
-	                    'IceTag>>#lastCommit' 'IceTipHiedraAltComponentHistoryBrowser>>#newCommitRow:commit:'
-	                    'IceTipHiedraAltHistoryBrowser>>#newCommitRow:commit:' 'IceTipHiedraAltHistoryBrowser>>#initializeCommitList'
-	                    'InstructionStream>>#interpretNext3ByteSistaV1Instruction:for:extA:extB:startPC:'
-	                    'KMDispatcher>>#spotterForKeysFor:' 'KMMetaModifier>>#printOsRepresentationOn:' 'LGitDiff>>#includesFileNamed:'
-	                    'LGitRepository>>#cloneRemote:signature:branch:checkoutOptions:' 'LazyListMorph>>#drawOnAthensCanvas:'
-	                    'MCAddition>>#myVersionOn:' 'MCFileTreeAbstractReader>>#packageProperties' 'MCModification>>#myVersionOn:' 'MCOrganizationDefinition>>#addAnalysisToPackageChangeSet:change:'
-	                    'MicrodownSpecComponentForTest class>>#open' 'MockLessonView>>#showTutorialNode:' 'MorphTreeMorph>>#nodeExpandRequest:'
-	                    'MorphTreeMorph>>#selectItemsRequest:' 'PSMCClassChangeWrapper>>#remoteChosen' 'PolygonMorph>>#intersects:' 'RBBasicDummyLintRuleTest class>>#createMatcherFor:method:'
-	                    'RBBasicDummyLintRuleTest class>>#usesAdd' 'RBBasicDummyLintRuleTest class>>#unreferencedVariables'
-	                    'RBBasicDummyLintRuleTest class>>#classNotReferenced' 'RBBasicDummyLintRuleTest class>>#canCall:in:from:'
-	                    'RBBasicDummyLintRuleTest class>>#tempsReadBeforeWritten' 'RBBasicDummyLintRuleTest class>>#usesTrue'
-	                    'RBBasicDummyLintRuleTest class>>#variableAssignedLiteral' 'RBBasicDummyLintRuleTest class>>#onlyReadOrWritten'
-	                    'RBBasicDummyLintRuleTest class>>#sentNotImplementedInApplication' 'RBBasicDummyLintRuleTest class>>#tempVarOverridesInstVar'
-	                    'RBBasicDummyLintRuleTest class>>#instVarInSubclasses' 'RBBasicDummyLintRuleTest class>>#utilityMethods'
-	                    'RBBasicLintRuleTestData class>>#canCall:in:from:' 'RBBasicLintRuleTestData class>>#createMatcherFor:method:'
-	                    'RBBasicLintRuleTestData class>>#sentNotImplementedInApplication' 'RBBasicLintRuleTestData class>>#utilityMethods'
-	                    'RBClassDataForRefactoringTest>>#inlineComponent' 'RBClassDataForRefactoringTest>>#textInput:name:symbol:'
-	                    'RBClassDataForRefactoringTest>>#inlineFailed' 'RBClassDataForRefactoringTest>>#renderContentOn:'
-	                    'RBEnvironmentVisitor>>#visitPackageEnv:' 'RBEnvironmentVisitor>>#visitClassEnv:' 'RBEnvironmentVisitor>>#visitProtocolEnv:'
-	                    'RBFindAndReplacePreviewPresenter>>#initializeDialogWindow:' 'RBLintRuleTestData>>#runOnEnvironment:'
-	                    'RBRemoveClassRefactoring>>#senders' 'RBTransformationDummyRuleTest class>>#initializeAfterLoad1'
-	                    'RBTransformationDummyRuleTest class>>#rewrite:methods:name:' 'RBTransformationRuleTestData class>>#initializeAfterLoad1'
-	                    'RBTransformationRuleTestData class>>#rewrite:methods:name:' 'RGChunkImporter>>#visitDoItChunk:' 'ReSentNotImplementedRuleTest>>#sampleMethod'
-	                    'Rectangle>>#newRectButtonPressedDo:inWorld:' 'RubSegmentMorph>>#intersects:' 'RubTextSegmentMorph>>#displayIconAt:onAthensCanvas:'
-	                    'SpApplication>>#ensureConfiguration' 'SpApplicationBackend>>#notify:' 'SpChangeSorterPresenter>>#createRingMethodForRemovedSelector:inClass:'
-	                    'SpRenameDefaultSpecToDefaultLayoutRefactoring>>#preconditions' 'SpRenameDefaultSpecToDefaultLayoutRefactoring>>#initialize'
-	                    'SpTransmission>>#from:port:to:transform:postTransmission:' 'SpTreeColumn>>#rowMorphFor:' 'SpUIThemeDecoratorTest>>#testDoesNotUnderstand'
-	                    'SpWindowPresenter>>#notify:' 'StSpotterPragmaBasedProcessor>>#installKeymappingsOn:'
-	                    'StringMorph>>#launchEditor:' 'SycRemoveKeepingSubclassesClassStrategy>>#execute:' 'TransferMorph>>#justDroppedInto:event:'
-	                    'TransferMorph>>#delete' 'ZnConstants class>>#frameworkMCVersion' ).
-
-	violations := (SystemNavigation default allSentButNotImplementedSelectors collect: [ :method | method printString ]) asOrderedCollection.
-	"This next line is to ignore this for SmalltalkCI and not make external Pharo projects fail :("
-	violations removeAllSuchThat: [ :violation | violation beginsWithAnyOf: #( SCI SmalltalkCI ) ].
-
-	self assertEmpty: (violations difference: knownFailures)
-]
-
 { #category : 'tests - variables' }
 ReleaseTest >> testNoShadowedVariablesInMethods [
 	"Fail if there are methods who define shadowed temps or args"
@@ -389,6 +372,12 @@ ReleaseTest >> testNoShadowedVariablesInMethods [
 	self
 		assert: remaining isEmpty
 		description: ('the following methods have shadowing variable definitions and should be cleaned: ', remaining asString)
+]
+
+{ #category : 'tests' }
+ReleaseTest >> testNoSuperInitializeOnClassSideInitialization [
+
+	self assertValidLintRule: ReDoNotSendSuperInitializeInClassSideRule new
 ]
 
 { #category : 'tests' }
@@ -483,7 +472,7 @@ ReleaseTest >> testShouldWorldMorphBeAfterFontClassesInStartupList [
 	startupList := (SessionManager default startupList collect: [:each | each handledId]).
 	#(StrikeFont LogicalFont FreeTypeSettings FreeTypeCache)
 		do: [ :fontClass |
-			self should: [ (startupList indexOf: #UIManagerSessionHandler) > (startupList indexOf: #SystemSettingsPersistence) ] ]
+			self should: [ (startupList indexOf: #ErrorHandlerSessionHandler) > (startupList indexOf: #SystemSettingsPersistence) ] ]
 ]
 
 { #category : 'tests' }
@@ -502,10 +491,78 @@ ReleaseTest >> testThatAllMethodsArePackaged [
 	self assertEmpty: methodsWithoutPackageInfo
 ]
 
+{ #category : 'tests - methods' }
+ReleaseTest >> testThatThereAreNoSelectorsRemainingThatAreSentButNotImplemented [
+	"There is a long term cleanup to fix 'selectors send but not implemented'.
+	 This test makes sure that we do not introduce new cases until we are down to one"
+
+	| knownFailures violations wantedAndValidViolations |
+	
+	"String streamContents: [ :aStream | aStream << '#( '.  SystemNavigation default allSentButNotImplementedSelectors do: [ :m | .aStream << '''' << m printString  << ''' ' ]. aStream << ')' ]"
+	knownFailures := #( 'AthensCCWArcSegment>>#accept:' 'AthensCWArcSegment>>#accept:' 'AthensCairoCanvas>>#visitCubicSegment:'
+	                    'AthensCairoCanvas>>#visitQuadSegment:' 'AthensCloseSegment>>#accept:' 'AthensCubicSegment>>#accept:' 'AthensEllipticalArcSegment>>#accept:'
+	                    'AthensInteractiveScene>>#eventHandledByScene:' 'AthensLineSegment>>#accept:' 'AthensMoveSegment>>#accept:' 'AthensParagraph>>#compose:style:from:in:'
+	                    'AthensPolygon>>#paintFillsUsing:on:' 'BalloonEdgeData>>#stepToFirstScanLine' 'BalloonEdgeData>>#stepToNextScanLine'
+	                    'BalloonEngine>>#registerFills:' 'BalloonFillData>>#computeFill' 'ClyFullBrowserMorph>>#extendClassScopeForMethods:'
+	                    'ComplexBorderStyle>>#drawPolyPatchFrom:to:on:usingEnds:' 'ComplexBorderStyle>>#drawLineFrom:to:on:'
+	                    'Context>>#simulatePrimitive:in:receiver:arguments:' 'Context>>#doPrimitive:method:receiver:args:'
+	                    'Context>>#failPrimitiveWith:'
+	          
+'DAPackageAnalyzerDiffTreePresenter>>#buildRoots' 'DTReRunConfiguration>>#items' 'DebugSession>>#shouldDisplayContext:basedOnFilters:'
+	                    'DiskDirectoryEntry class>>#store:path:node:' 'EDEmergencyDebugger>>#resetDisplay' 'EDTest>>#prepareMethodVersionTest'
+	                    'ExternalDropHandler class>>#defaultHandler' 'FFICallbackArgumentReader>>#stackPointer' 'FFIFloat32>>#callbackReturnOn:for:'
+	                    'FFIFloatType>>#callbackReturnOn:for:' 'FFIIndirectFunctionResolution>>#resolveFunction:'
+	                    'FFILibrary>>#macLibraryName' 'FFILibrary>>#win32LibraryName' 'FileDialogWindow>>#saveForcedSelectedFile'
+	                    'FileList class>>#morphicViewOnFile:contents:fileList:' 'GLMOSWindowWorldMorph>>#delete' 'IRReconstructor>>#fixPushNilsForTemps'
+	                    'IceLibgitCommitWalk>>#shouldInclude:' 'IcePackage>>#outgoingCommits' 'IceRemote>>#upstreamForBranch:backend:'
+	                    'IceTag>>#lastCommit' 'IceTipHiedraAltComponentHistoryBrowser>>#newCommitRow:commit:'
+	                    'IceTipHiedraAltHistoryBrowser>>#newCommitRow:commit:' 'IceTipHiedraAltHistoryBrowser>>#initializeCommitList'
+	                    'InstructionStream>>#interpretNext3ByteSistaV1Instruction:for:extA:extB:startPC:'
+	                    'KMDispatcher>>#spotterForKeysFor:' 'KMMetaModifier>>#printOsRepresentationOn:' 'LGitDiff>>#includesFileNamed:'
+	                    'LGitRepository>>#cloneRemote:signature:branch:checkoutOptions:' 'LazyListMorph>>#drawOnAthensCanvas:'
+	                    'MCAddition>>#myVersionOn:' 'MCFileTreeAbstractReader>>#packageProperties' 'MCModification>>#myVersionOn:' 'MCOrganizationDefinition>>#addAnalysisToPackageChangeSet:change:'
+	                    'MicrodownSpecComponentForTest class>>#open' 'MockLessonView>>#showTutorialNode:' 'MorphTreeMorph>>#nodeExpandRequest:'
+	                    'MorphTreeMorph>>#selectItemsRequest:' 'PSMCClassChangeWrapper>>#remoteChosen' 'PolygonMorph>>#intersects:' 'RBBasicDummyLintRuleTest class>>#createMatcherFor:method:'
+	                    'RBBasicDummyLintRuleTest class>>#usesAdd' 'RBBasicDummyLintRuleTest class>>#unreferencedVariables'
+	                    'RBBasicDummyLintRuleTest class>>#classNotReferenced' 'RBBasicDummyLintRuleTest class>>#canCall:in:from:'
+	                    'RBBasicDummyLintRuleTest class>>#tempsReadBeforeWritten' 'RBBasicDummyLintRuleTest class>>#usesTrue'
+	                    'RBBasicDummyLintRuleTest class>>#variableAssignedLiteral' 'RBBasicDummyLintRuleTest class>>#onlyReadOrWritten'
+	                    'RBBasicDummyLintRuleTest class>>#sentNotImplementedInApplication' 'RBBasicDummyLintRuleTest class>>#tempVarOverridesInstVar'
+	                    'RBBasicDummyLintRuleTest class>>#instVarInSubclasses' 'RBBasicDummyLintRuleTest class>>#utilityMethods'
+	                    'RBBasicLintRuleTestData class>>#canCall:in:from:' 'RBBasicLintRuleTestData class>>#createMatcherFor:method:'
+	                    'RBBasicLintRuleTestData class>>#sentNotImplementedInApplication' 'RBBasicLintRuleTestData class>>#utilityMethods'
+	                    'RBClassDataForRefactoringTest>>#inlineComponent' 'RBClassDataForRefactoringTest>>#textInput:name:symbol:'
+	                    'RBClassDataForRefactoringTest>>#inlineFailed' 'RBClassDataForRefactoringTest>>#renderContentOn:'
+	                    'RBEnvironmentVisitor>>#visitPackageEnv:' 'RBEnvironmentVisitor>>#visitClassEnv:' 'RBEnvironmentVisitor>>#visitProtocolEnv:'
+	                    'RBFindAndReplacePreviewPresenter>>#initializeDialogWindow:' 'RBLintRuleTestData>>#runOnEnvironment:'
+	                    'RBRemoveClassRefactoring>>#senders' 'RBTransformationDummyRuleTest class>>#initializeAfterLoad1'
+	                    'RBTransformationDummyRuleTest class>>#rewrite:methods:name:' 'RBTransformationRuleTestData class>>#initializeAfterLoad1'
+	                    'RBTransformationRuleTestData class>>#rewrite:methods:name:' 'RGChunkImporter>>#visitDoItChunk:' 'ReSentNotImplementedRuleTest>>#sampleMethod'
+	                    'Rectangle>>#newRectButtonPressedDo:inWorld:' 'RubSegmentMorph>>#intersects:' 'RubTextSegmentMorph>>#displayIconAt:onAthensCanvas:'
+	                    'SpApplication>>#ensureConfiguration' 'SpApplicationBackend>>#notify:' 'SpChangeSorterPresenter>>#createRingMethodForRemovedSelector:inClass:'
+	                    'SpRenameDefaultSpecToDefaultLayoutRefactoring>>#preconditions' 'SpRenameDefaultSpecToDefaultLayoutRefactoring>>#initialize'
+	                    'SpTransmission>>#from:port:to:transform:postTransmission:' 'SpTreeColumn>>#rowMorphFor:' 'SpUIThemeDecoratorTest>>#testDoesNotUnderstand'
+	                    'SpWindowPresenter>>#notify:' 'StSpotterPragmaBasedProcessor>>#installKeymappingsOn:'
+	                    'StringMorph>>#launchEditor:' 'SycRemoveKeepingSubclassesClassStrategy>>#execute:' 'TransferMorph>>#justDroppedInto:event:'
+	                    'TransferMorph>>#delete' 'ZnConstants class>>#frameworkMCVersion' ).
+
+	violations := (SystemNavigation default allSentButNotImplementedSelectors collect: [ :method | method printString ]) asOrderedCollection.
+	"This next line is to ignore this for SmalltalkCI and not make external Pharo projects fail :("
+	violations removeAllSuchThat: [ :violation | violation beginsWithAnyOf: #( SCI SmalltalkCI ) ].
+
+	"There is a violation that we explicitly want for rule tesing"
+	wantedAndValidViolations := #('ReSentButNotUnderstoodBySuperRuleTest>>#sampleMethod').
+	
+	violations removeAll: wantedAndValidViolations.
+	self assertEmpty: (violations difference: knownFailures)
+]
+
 { #category : 'tests - variables' }
 ReleaseTest >> testUndeclared [
-	| undeclaredVariables validExceptions remaining description |
+	| undeclaredVariables validExceptions remaining description  |
 
+	"we compile a second method with the undeclared #undeclaredStubInstVar1 to trigger the code path of removing twice in #cleanOutUndeclared"
+	self class compile: 'methodForTest ^undeclaredStubInstVar1'.
 	Smalltalk cleanOutUndeclared.
 	undeclaredVariables := Undeclared associations select: [:each |
 			each isUndeclaredVariable].
@@ -530,7 +587,8 @@ ReleaseTest >> testUndeclared [
 					nextPutAll: '>>';
 					print: method selector]].
 
-	self assert: remaining isEmpty description: description
+	self assert: remaining isEmpty description: description.
+	self class removeSelector: #methodForTest.
 ]
 
 { #category : 'tests - package' }

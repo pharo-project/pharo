@@ -88,11 +88,6 @@ RBAssignmentNode >> copyInContext: aDictionary [
 		yourself
 ]
 
-{ #category : 'testing' }
-RBAssignmentNode >> directlyUses: aNode [
-	^aNode = value ifTrue: [true] ifFalse: [self isDirectlyUsed]
-]
-
 { #category : 'comparing' }
 RBAssignmentNode >> equalTo: anObject withMapping: aDictionary [
 	^self class = anObject class and:
@@ -114,6 +109,11 @@ RBAssignmentNode >> isAssignment [
 RBAssignmentNode >> isFaulty [
 	self isError ifTrue: [ ^ true ].
 	^self variable isFaulty or: [ self value isFaulty ]
+]
+
+{ #category : 'testing' }
+RBAssignmentNode >> isUsingAsReturnValue: aNode [
+	^aNode = value ifTrue: [true] ifFalse: [self isUsedAsReturnValue ]
 ]
 
 { #category : 'matching' }
@@ -196,11 +196,6 @@ RBAssignmentNode >> startWithoutParentheses [
 { #category : 'accessing' }
 RBAssignmentNode >> stopWithoutParentheses [
 	^value stop
-]
-
-{ #category : 'testing' }
-RBAssignmentNode >> uses: aNode [
-	^aNode = value ifTrue: [true] ifFalse: [self isUsed]
 ]
 
 { #category : 'accessing' }

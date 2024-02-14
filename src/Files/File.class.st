@@ -503,7 +503,7 @@ File class >> deleteFile: fullPathString [
 	utf8Path := fullPathString utf8Encoded.
 	self
 		retryWithGC: [ self primDeleteFile: utf8Path ]
-		until: [ :result | result notNil ]
+		until: [ :result | result isNotNil ]
 		forFileNamed: fullPathString.
 	(self primExists: utf8Path) ifTrue:
 		[ (CannotDeleteFileException new messageText: 'Could not delete file ' , name,
@@ -1400,7 +1400,7 @@ File >> basicOpenForWrite: writeMode [
 
 	^ self class
 		retryWithGC: [ self class open: name utf8Encoded writable: writeMode ]
-		until:[ :id | id notNil ]
+		until:[ :id | id isNotNil ]
 		forFileNamed: name
 ]
 

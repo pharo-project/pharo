@@ -163,7 +163,7 @@ StringMorph >> cancelEdits [
 StringMorph >> changeEmphasis [
 
 	| reply |
-	reply := UIManager default
+	reply := self morphicUIManager
 				chooseFrom: (self emphasisChoices collect: [:t | t translated])
 				values: self emphasisChoices.
 	reply ifNotNil: [ self emphasis: (TextEmphasis perform: reply) emphasisCode ]
@@ -370,7 +370,7 @@ StringMorph >> heightToDisplayInList: aList [
 { #category : 'drawing' }
 StringMorph >> imageForm: depth forRectangle: rect [
 	| canvas |
-	canvas := Display defaultCanvasClass extent: rect extent depth: depth.
+	canvas := FormCanvas extent: rect extent depth: depth.
 
 	backgroundColor isTransparent ifTrue: [
 		canvas form fillColor: self theme backgroundColor.

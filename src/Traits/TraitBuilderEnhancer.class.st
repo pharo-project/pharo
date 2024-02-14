@@ -172,11 +172,11 @@ TraitBuilderEnhancer >> eliminateDuplicates: aSlotCollection withSuperclassSlots
 { #category : 'initialization' }
 TraitBuilderEnhancer >> fillBuilder: aBuilder from: aClass [
 
-	(aBuilder superclass isNil and: [ aClass superclass isNil ])
-		ifTrue: [ aBuilder metaSuperclass: aClass class superclass ].
+	(aBuilder superclass isNil and: [ aClass superclass isNil ]) ifTrue: [
+		aBuilder metaSuperclass: aClass class superclass ].
 
 	aBuilder traitComposition: aClass traitComposition.
-	aBuilder classTraitComposition: aClass class traitComposition.
+	aBuilder classTraitComposition: aClass class basicTraitComposition.
 
 	aBuilder metaclassClass: aClass class class
 ]

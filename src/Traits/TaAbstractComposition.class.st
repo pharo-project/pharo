@@ -141,12 +141,12 @@ TaAbstractComposition >> compile: selector into: aClass [
 		             source: sourceCode;
 		             permitUndeclared: true;
 		             compile.
-	newMethod sourcePointer: method sourcePointer.
+		
 	selector == newMethod selector ifFalse: [ self error: 'selector changed!' ].
 
 	(selector ~= method selector or: [ self changesSourceCode: selector ])
 		ifTrue: [ self saveSourceCode: sourceCode ofMethod: newMethod ]
-		ifFalse: [ newMethod setSourcePointer: method sourcePointer ].
+		ifFalse: [ newMethod sourcePointer: method sourcePointer ].
 
 	aClass classify: selector under: (self protocolForMethod: method).
 
@@ -203,7 +203,7 @@ TaAbstractComposition >> copyMethod: aSelector into: aClass replacing: replacing
 	newMethod selector: aSelector.
 	newMethod methodClass: aClass.
 
-	newMethod setSourcePointer: aCompiledMethod sourcePointer.
+	newMethod sourcePointer: aCompiledMethod sourcePointer.
 
 	"This step should not announce anything in the system."
 	SystemAnnouncer uniqueInstance suspendAllWhile: [ aClass classify: aSelector under: aCompiledMethod protocolName ].
@@ -256,10 +256,11 @@ TaAbstractComposition >> hash [
 	^ self subclassResponsibility
 ]
 
-{ #category : 'querying' }
+{ #category : 'testing' }
 TaAbstractComposition >> includesTrait: aTrait [
 	"Checks if the trait is used in the trait composition"
-	^ self allTraits includes: aTrait
+
+	^ self subclassResponsibility
 ]
 
 { #category : 'operations' }
@@ -335,7 +336,7 @@ TaAbstractComposition >> isNotEmpty [
 { #category : 'operations' }
 TaAbstractComposition >> isSourcesPresentInSystem [
 
-	^ ((Smalltalk globals includesKey: #SourceFiles) and: [ (Smalltalk globals at: #SourceFiles) notNil])
+	^ ((Smalltalk globals includesKey: #SourceFiles) and: [ (Smalltalk globals at: #SourceFiles) isNotNil])
 ]
 
 { #category : 'testing' }
@@ -392,7 +393,7 @@ TaAbstractComposition >> saveSourceCode: sourceCode ofMethod: newMethod [
 
 	"I have to check because during bootstrap there is no SouceFiles"
 	(sourceCode isNotNil and: [((Smalltalk globals includesKey: #SourceFiles)
-		and: [ (Smalltalk globals at: #SourceFiles) notNil])]) ifTrue: [
+		and: [ (Smalltalk globals at: #SourceFiles) isNotNil])]) ifTrue: [
 			newMethod putSource: sourceCode
 					withPreamble: [:f | f cr; nextPut: $!; nextChunkPut: 'Trait method'; cr]].
 ]

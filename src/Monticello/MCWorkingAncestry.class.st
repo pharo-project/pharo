@@ -32,7 +32,6 @@ MCWorkingAncestry >> infoWithName: nameString message: messageString [
 		message: messageString
 		date: Date today
 		time: Time now
-		author: Author fullName
 		ancestors: ancestors asArray
 		stepChildren: self stepChildren asArray
 ]

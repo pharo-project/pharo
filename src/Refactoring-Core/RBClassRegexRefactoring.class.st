@@ -99,7 +99,7 @@ RBClassRegexRefactoring >> privateTransform [
 
 { #category : 'transforming' }
 RBClassRegexRefactoring >> rename: aClass name: aSymbol [
-	^ RBRenameClassRefactoring
+	^ ReRenameClassRefactoring
 		model: self model
 		rename: aClass name
 		to: aSymbol

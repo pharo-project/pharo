@@ -98,7 +98,7 @@ RBRemovePragmaTransformation >> privateTransform [
 	self definingClass compileTree: methodTree
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBRemovePragmaTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.

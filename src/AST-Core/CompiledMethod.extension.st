@@ -7,7 +7,7 @@ CompiledMethod >> ast [
 	"Workaround, see https://github.com/pharo-project/pharo/issues/14871
 	We force recompile to make sure the next call creates a correct BC to AST mapping"
 	
-	 ((self hasLiteral: #runtimeUndeclaredRead) or: [self hasLiteral: #runtimeUndeclaredWrite:])
+	 ((self hasLiteral: #runtimeUndeclaredReadInContext:) or: [self hasLiteral: #runtimeUndeclaredWrite:inContext:])
  			ifTrue: [self isInstalled ifTrue: [self recompile]].
 	
 	^ ASTCache at: self

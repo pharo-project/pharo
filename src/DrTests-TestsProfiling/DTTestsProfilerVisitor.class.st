@@ -33,12 +33,13 @@ DTTestsProfilerVisitor >> visitTestCase: aTestCase [
 	"Defines the behaviour while visiting a TestCase.
 	 This method must be overriden by concrete subclasses.
 	"
-
+	"We make explicit the dependency to duration"
+	
 	| aTestresult |
 	self profilingData
 		add:
 			(DTTestCaseProfilingData
 				testCase: aTestCase
-				duration: [ aTestresult := aTestCase run ] timeToRun
+				duration: (Duration milliSeconds: ([ aTestresult := aTestCase run ] millisecondsToRun))
 				testResult: aTestresult)
 ]

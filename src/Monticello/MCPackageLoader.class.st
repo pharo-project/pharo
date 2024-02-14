@@ -136,7 +136,7 @@ MCPackageLoader >> installSnapshot: aSnapshot [
 MCPackageLoader >> load [
 
 	self validate.
-	self useNewChangeSetDuring: [ self basicLoad ]
+	self basicLoad
 ]
 
 { #category : 'private' }
@@ -144,12 +144,13 @@ MCPackageLoader >> loadClassDefinitions [
 	"Here we are loading the class definitions.
 	
 	When loading a class it is possible that it fails. The reason is that a class can use a trait from this package, but the dependency sorter of Monticello does not sort those traits before the classes using it.
-	In that case we are implementing a retry mechanisme."
+	In that case we are implementing a retry mechanism. If error persist, the exception message is logged to the Transcript"
 
 	| errorDefinitions |
 	errorDefinitions := OrderedCollection new.
 
 	"We first load the class definitions and store the potential errors"
+	[
 	(additions select: [ :aDefinition | aDefinition isClassDefinition ])
 		do: [ :aDefinition |
 			[ aDefinition load ]
@@ -166,24 +167,11 @@ MCPackageLoader >> loadClassDefinitions [
 			errorDefinitions remove: aClassDefinition.
 			[ aClassDefinition load ]
 				on: Error
-				do: [ errorDefinitions add: aClassDefinition ] ]
+				do: [ :ex | errorDefinitions add: aClassDefinition ] ]
 		displayingProgress: 'Reloading erroneous definitions...'.
-	previousErrors size = errorDefinitions size ] whileFalse.
-
-	"Finally we warn about the errors we could not fix."
-	errorDefinitions ifNotEmpty: [ self warnAboutErrors: errorDefinitions ]
-]
-
-{ #category : 'public' }
-MCPackageLoader >> loadWithName: baseName [
-	self validate.
-	self useChangeSetNamed: baseName during: [self basicLoad]
-]
-
-{ #category : 'public' }
-MCPackageLoader >> loadWithNameLike: baseName [
-	self validate.
-	self useNewChangeSetNamedLike: baseName during: [self basicLoad]
+	previousErrors size = errorDefinitions size ] whileFalse ] ensure: [ "Finally we warn about the errors we could not fix."
+		errorDefinitions ifNotEmpty: [
+			self warnAboutErrors: errorDefinitions ] ]
 ]
 
 { #category : 'patch ops' }
@@ -240,27 +228,6 @@ MCPackageLoader >> updatePackage: aPackage withSnapshot: aSnapshot [
 	patch applyTo: self.
 	packageSnap definitions do: [:ea | self provisions addAll: ea provisions]
 
-]
-
-{ #category : 'private' }
-MCPackageLoader >> useChangeSetNamed: baseName during: aBlock [
-	"Use the named change set, or create one with the given name."
-	| oldChanges newChanges |
-	oldChanges := ChangeSet current.
-	newChanges := (ChangeSet named: baseName) ifNil: [ ChangeSet new name: baseName ].
-	ChangeSet newChanges: newChanges.
-	aBlock ensure: [ ChangeSet newChanges: oldChanges ].
-
-]
-
-{ #category : 'private' }
-MCPackageLoader >> useNewChangeSetDuring: aBlock [
-	^self useNewChangeSetNamedLike: 'MC' during: aBlock
-]
-
-{ #category : 'private' }
-MCPackageLoader >> useNewChangeSetNamedLike: baseName during: aBlock [
-	^self useChangeSetNamed: (ChangeSet uniqueNameLike: baseName) during: aBlock
 ]
 
 { #category : 'private' }

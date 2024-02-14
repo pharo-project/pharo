@@ -79,8 +79,11 @@ MenuRegistrationExample class >> pragmaKeyword [
 
 { #category : 'menu actions' }
 MenuRegistrationExample class >> quitSession [
+
 	Smalltalk
-		snapshot: (UIManager default confirm: 'Save changes before quitting?' translated orCancel: [ ^ self ])
+		snapshot: (MorphicUIManager new
+				 confirm: 'Save changes before quitting?' translated
+				 orCancel: [ ^ self ])
 		andQuit: true
 ]
 

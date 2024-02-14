@@ -22,7 +22,7 @@ RBAbstractTransformationTest >> modelOnClasses: aCollection [
 { #category : 'mocking' }
 RBAbstractTransformationTest >> objectClassVariable [
 
-	^ Object classPool keys detect: [:each | true]
+	^ Character classVariables first name
 ]
 
 { #category : 'parsing' }

@@ -34,6 +34,18 @@ EpMethodModification >> affectedPackageName [
 	^ self newMethod package
 ]
 
+{ #category : 'accessing' }
+EpMethodModification >> fileOutEntryOn: aWriteStream [
+	"File out the receiver into aWriteStream if its affected method was not already deleted"
+
+	self methodAffected realParent
+		ifNotNil: [  
+			self methodAffected origin 
+				printMethodChunk: self methodAffected selector 
+				on: aWriteStream ]
+
+]
+
 { #category : 'initialization' }
 EpMethodModification >> initializeWithOldMethod: anOldMethod newMethod: aNewMethod [
 
