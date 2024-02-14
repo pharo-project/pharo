@@ -75,6 +75,18 @@ RBReturnNode >> hasBlock [
 	^ value hasBlock 
 ]
 
+{ #category : 'testing' }
+RBReturnNode >> hasSameExitPoint [
+
+	^ true
+]
+
+{ #category : 'testing' }
+RBReturnNode >> hasSameExitPoint: aBoolean [
+
+	^ value hasSameExitPoint: aBoolean 
+]
+
 { #category : 'comparing' }
 RBReturnNode >> hash [
 	^self value hash

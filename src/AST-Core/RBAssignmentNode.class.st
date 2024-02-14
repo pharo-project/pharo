@@ -101,6 +101,12 @@ RBAssignmentNode >> hasBlock [
 	^ value hasBlock 
 ]
 
+{ #category : 'testing' }
+RBAssignmentNode >> hasSameExitPoint: aBoolean [ 
+
+	^ value hasSameExitPoint: aBoolean
+]
+
 { #category : 'comparing' }
 RBAssignmentNode >> hash [
 	^self variable hash bitXor: self value hash

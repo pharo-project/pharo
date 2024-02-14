@@ -298,6 +298,24 @@ RBSequenceNode >> hasNonLocalReturn [
 ]
 
 { #category : 'testing' }
+RBSequenceNode >> hasSameExitPoint [
+
+	statements last isReturn ifTrue: [ ^ true ].
+	^ self hasSameExitPoint: false
+]
+
+{ #category : 'testing' }
+RBSequenceNode >> hasSameExitPoint: aBoolean [ 
+
+	| statementsWithBlocks |
+	aBoolean ifTrue: [ ^ true ].
+	statements ifEmpty: [ ^ true ].
+	statementsWithBlocks := statements select: [ :stm | stm hasBlock ].
+	^ (statements last isReturn not and: [
+		statementsWithBlocks allSatisfy: [ :stm | stm hasSameExitPoint: false ] ]).
+]
+
+{ #category : 'testing' }
 RBSequenceNode >> hasTemporaries [
 
 	^ temporaries isNotEmpty

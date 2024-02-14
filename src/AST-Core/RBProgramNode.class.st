@@ -592,6 +592,18 @@ RBProgramNode >> hasProperty: aKey [
 	^ properties isNotNil and: [ properties includesKey: aKey ]
 ]
 
+{ #category : 'testing' }
+RBProgramNode >> hasSameExitPoint [
+
+	^ self hasSameExitPoint: false
+]
+
+{ #category : 'testing' }
+RBProgramNode >> hasSameExitPoint: aBoolean [ 
+
+	^ true
+]
+
 { #category : 'comparing' }
 RBProgramNode >> hashForCollection: aCollection [
 	^ aCollection isEmpty ifTrue: [ 0 ] ifFalse: [ aCollection first hash ]

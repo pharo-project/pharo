@@ -230,6 +230,18 @@ RBBlockNode >> hasBlockReturn [
 ]
 
 { #category : 'testing' }
+RBBlockNode >> hasSameExitPoint [
+
+	^ body hasSameExitPoint 
+]
+
+{ #category : 'testing' }
+RBBlockNode >> hasSameExitPoint: aBoolean [ 
+
+	^ body hasSameExitPoint: aBoolean 
+]
+
+{ #category : 'testing' }
 RBBlockNode >> hasTemporaries [
 
 	^ self temporaries isNotEmpty

@@ -149,6 +149,13 @@ RBMessageNode >> hasBlock [
 	^ receiver hasBlock | (arguments anySatisfy: [ :arg | arg hasBlock ])
 ]
 
+{ #category : 'testing' }
+RBMessageNode >> hasSameExitPoint: aBoolean [
+
+	^ (receiver hasSameExitPoint: aBoolean )
+	& (arguments allSatisfy: [ :arg | arg hasSameExitPoint: aBoolean ])
+]
+
 { #category : 'comparing' }
 RBMessageNode >> hash [
 	^ (self receiver hash bitXor: self selector hash) bitXor: (self hashForCollection: self arguments)
