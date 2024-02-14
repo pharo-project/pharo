@@ -159,7 +159,7 @@ MetacelloRecordTarget >> visitVersionSpecChildren: aSpec [
 	aSpec resolveToLoadableSpecs: required map: packages.
 	
 	oldCurrentRepositorySpecs := currentRepositorySpecs.
-	currentRepositorySpecs := aSpec repositorySpecs.
+	currentRepositorySpecs := engine loader resolveRepositorySpecs: aSpec repositorySpecs.
 	packages := aSpec packageSpecsInLoadOrderForMap: packages.
 	
 	["Iterate the internals of the version spec"
