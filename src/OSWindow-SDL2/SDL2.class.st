@@ -334,7 +334,7 @@ SDL2 class >> moduleName [
 
 { #category : 'mouse' }
 SDL2 class >> mouseState [
-	^ self ffiCall: #( Uint32 SDL_GetMouseState ( nil , nil ) )
+	^ self ffiCall: #( Uint32 SDL_GetMouseState ( void* 0 , void* 0 ) )
 ]
 
 { #category : 'mouse' }
