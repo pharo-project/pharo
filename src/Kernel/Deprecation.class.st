@@ -71,18 +71,27 @@ Deprecation class >> deprecationsWhile: aBlock [
 
 { #category : 'class initialization' }
 Deprecation class >> initialize [
-	Log := nil "#deprecationsWhile: logs all deprecations here"
+	self reset
 ]
 
 { #category : 'settings' }
 Deprecation class >> raiseWarning [
 	"If true, then a dialog is popup for each deprecated method invocation"
-	^ RaiseWarning ifNil: [RaiseWarning := true]
+	^ RaiseWarning ifNil: [RaiseWarning := false]
 ]
 
 { #category : 'settings' }
 Deprecation class >> raiseWarning: aBoolean [
 	RaiseWarning := aBoolean
+]
+
+{ #category : 'class initialization' }
+Deprecation class >> reset [
+	<script>
+	Log := nil.
+	RaiseWarning := nil.
+	ShowWarning := nil.
+	Active := nil
 ]
 
 { #category : 'settings' }
