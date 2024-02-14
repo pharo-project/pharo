@@ -32,6 +32,7 @@ ReSemanticsOfExtractMethodTransformationTest >> setUp [
 		aBuilder
 			superclass: Object;
 			name: #ReClassForTesting;
+			slots: { #instVar };
 			package: 'Refactoring-DataForTesting'].
 	class := model classNamed: 'ReClassForTesting'
 ]
