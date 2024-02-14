@@ -37,6 +37,50 @@ ReSemanticsOfExtractMethodTransformationTest >> setUp [
 ]
 
 { #category : 'tests' }
+ReSemanticsOfExtractMethodTransformationTest >> testBeginningExpressionsOfASequenceGotExtracted [
+
+	| transformation |
+	transformation := self 
+extractSource: 'self foo. self bar.' 
+fromSource: 'm 
+		self foo.
+		self bar.
+		self end'
+withNewSelector: #extractedMethod.
+	transformation generateChanges.
+	
+self 
+		assert: (class parseTreeForSelector: #extractedMethod)
+		equals: (self parseMethod: 'extractedMethod self foo. self bar.').
+		
+	self 
+		assert: (class parseTreeForSelector: #m)
+		equals: (self parseMethod: 'm self extractedMethod. self end')
+]
+
+{ #category : 'tests' }
+ReSemanticsOfExtractMethodTransformationTest >> testCompleteSequenceGotExtracted [
+
+	| transformation |
+	transformation := self 
+extractSource: 'self foo. self bar. self end' 
+fromSource: 'm 
+		self foo.
+		self bar.
+		self end'
+withNewSelector: #extractedMethod.
+	transformation generateChanges.
+	
+self 
+		assert: (class parseTreeForSelector: #extractedMethod)
+		equals: (self parseMethod: 'extractedMethod self foo. self bar. self end').
+		
+	self 
+		assert: (class parseTreeForSelector: #m)
+		equals: (self parseMethod: 'm self extractedMethod')
+]
+
+{ #category : 'tests' }
 ReSemanticsOfExtractMethodTransformationTest >> testMiddleExpressionsOfASequenceGotExtracted [
 
 	| transformation |
