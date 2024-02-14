@@ -139,6 +139,7 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		spec package: 'FileSystem-Core'.
 		spec package: 'FileSystem-Disk'.
 
+		spec package: 'System-NumberPrinting'.
 		spec package: 'SUnit-Core'.
 		spec package: 'SUnit-Tests'.
 		spec package: 'Kernel-Tests'.
@@ -193,6 +194,7 @@ BaselineOfPharoBootstrap >> baseline: spec [
 			'System-Time'.
 			'Math-Operations-Extensions'.
 			'Debugging-Core'.
+			'System-NumberPrinting'.
 		}.
 
 		spec group: 'MultilingualGroup' with: {
