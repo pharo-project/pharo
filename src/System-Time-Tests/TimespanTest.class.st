@@ -113,8 +113,8 @@ TimespanTest >> testArithmetic [
 
 { #category : 'tests' }
 TimespanTest >> testAsDate [
+
 	self assert: aTimespan asDate equals: jan01 asDate
-	"MessageNotUnderstood: Date class>>starting:"
 ]
 
 { #category : 'tests' }
@@ -393,7 +393,7 @@ TimespanTest >> testMonth [
 
 { #category : 'tests' }
 TimespanTest >> testNew [
-	self assert: Timespan new equals: (Timespan starting: '01-01-1901' asDate)
+	self assert: Timespan new equals: (Timespan starting: (Date readFrom: '1-1-1901' pattern: 'd-m-y'))
 ]
 
 { #category : 'tests' }
