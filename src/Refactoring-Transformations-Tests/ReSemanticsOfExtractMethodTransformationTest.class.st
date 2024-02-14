@@ -82,6 +82,56 @@ self
 ]
 
 { #category : 'tests' }
+ReSemanticsOfExtractMethodTransformationTest >> testExtractClassFromAssignmentExpectExtracted [
+
+	| transformation |
+	transformation := self 
+extractSource: 'ReClassForTesting' 
+fromSource: 'm 
+		| temp |
+		temp := ReClassForTesting'
+withNewSelector: #extractedMethod.
+	transformation generateChanges.
+	
+self 
+		assert: (class parseTreeForSelector: #extractedMethod)
+		equals: (self parseMethod: 'extractedMethod 
+					^ ReClassForTesting').
+		
+	self 
+		assert: (class parseTreeForSelector: #m)
+		equals: (self parseMethod: 'm 
+				| temp | 
+				temp := self extractedMethod')
+]
+
+{ #category : 'tests' }
+ReSemanticsOfExtractMethodTransformationTest >> testExtractSequenceEndingWithReturnExpectExtracted [
+
+	| transformation |
+	transformation := self 
+extractSource: 'self bar. ^ self end.' 
+fromSource: 'm 
+		self foo.
+		self bar.
+		^ self end'
+withNewSelector: #extractedMethod.
+	transformation generateChanges.
+	
+self 
+		assert: (class parseTreeForSelector: #extractedMethod)
+		equals: (self parseMethod: 'extractedMethod 
+					self bar. 
+					^ self end').
+		
+	self 
+		assert: (class parseTreeForSelector: #m)
+		equals: (self parseMethod: 'm 
+				self foo. 
+				^ self extractedMethod')
+]
+
+{ #category : 'tests' }
 ReSemanticsOfExtractMethodTransformationTest >> testMiddleExpressionsOfASequenceGotExtracted [
 
 	| transformation |
