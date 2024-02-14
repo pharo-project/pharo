@@ -365,6 +365,12 @@ AthensCanvasWrapper >> form [
 	^ self canvas surface asForm
 ]
 
+{ #category : 'private' }
+AthensCanvasWrapper >> formSet: aFormSet at: aPoint sourceRect: sourceRect rule: rule [
+
+	^ self image: aFormSet asForm at: aPoint sourceRect: sourceRect rule: rule
+]
+
 { #category : 'canvas drawing - rectangles' }
 AthensCanvasWrapper >> frameAndFillRectangle: aRectangle fillColor: aFillColor borderWidth: aBorderWidth borderColor: aBorderColor [
 	self
@@ -517,6 +523,12 @@ AthensCanvasWrapper >> rubParagraph: para bounds: bounds color: c [
 	self paragraph: para bounds: bounds color: c
 ]
 
+{ #category : 'canvas accessing' }
+AthensCanvasWrapper >> scale [
+
+	^ 1
+]
+
 { #category : 'formcanvas copying' }
 AthensCanvasWrapper >> setOrigin: aPoint clipRect: aRectangle [
 	origin := aPoint.
@@ -526,7 +538,7 @@ AthensCanvasWrapper >> setOrigin: aPoint clipRect: aRectangle [
 { #category : 'canvas converting' }
 AthensCanvasWrapper >> shadowDrawingCanvasWithExtent: extent shadowColor: shadowColor [
 
-	^ (Display defaultCanvasClass extent: extent depth: 1)
+	^ (FormCanvas extent: extent depth: 1)
 		asShadowDrawingCanvas: shadowColor
 ]
 

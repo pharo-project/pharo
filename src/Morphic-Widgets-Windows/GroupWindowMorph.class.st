@@ -80,7 +80,7 @@ GroupWindowMorph >> grabWindow [
 
 	|windows choice|
 	windows := self world visibleSystemWindows.
-	choice := UIManager default
+	choice := self morphicUIManager
 		chooseFrom: (windows collect: [:e | e labelString])
 		values: windows
 		lines: #()

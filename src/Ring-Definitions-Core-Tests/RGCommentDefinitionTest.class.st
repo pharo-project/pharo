@@ -15,8 +15,8 @@ RGCommentDefinitionTest >> testActiveComment [
 	rgComment := RGCommentDefinition realClass: RGClassDefinition.
 	self assert: rgComment isActive.
 	self assert: rgComment sourcePointer isNil.
-	self assert: rgComment content notNil.
-	self assert: rgComment stamp notNil.
+	self assert: rgComment content isNotNil.
+	self assert: rgComment stamp isNotNil.
 	rgComment content: ''.
 	"it always reads from the organization and the previous changes was not commited"
 	self assert: rgComment content ~= ''.
@@ -24,17 +24,17 @@ RGCommentDefinitionTest >> testActiveComment [
 	rgComment fromActiveToPassive.
 	self assert: rgComment isPassive.
 	self assert: rgComment sourcePointer isNil.
-	self assert: rgComment content notNil.
-	self assert: rgComment stamp notNil.
+	self assert: rgComment content isNotNil.
+	self assert: rgComment stamp isNotNil.
 	rgComment content: ''.
 	self assert: rgComment content equals: ''.
 
 	rgComment := RGCommentDefinition realClass: RGClassDefinition.
 	rgComment fromActiveToHistorical.
 	self assert: rgComment isHistorical.
-	self assert: rgComment sourcePointer notNil.
-	self assert: rgComment content notNil.
-	self assert: rgComment stamp notNil.
+	self assert: rgComment sourcePointer isNotNil.
+	self assert: rgComment content isNotNil.
+	self assert: rgComment stamp isNotNil.
 	rgComment content: ''.
 	"it always reads from the source file and the previous changes was not commited"
 	self assert: rgComment content ~= ''
@@ -46,9 +46,9 @@ RGCommentDefinitionTest >> testCommentFromSourceFile [
 
 	rgComment := (RGCommentDefinition realClass: RGClassDefinition) asHistorical.
 	self assert: rgComment isHistorical.
-	self assert: rgComment sourcePointer notNil.
-	self assert: rgComment content notNil.
-	self assert: rgComment stamp notNil
+	self assert: rgComment sourcePointer isNotNil.
+	self assert: rgComment content isNotNil.
+	self assert: rgComment stamp isNotNil
 ]
 
 { #category : 'testing' }
@@ -76,7 +76,7 @@ RGCommentDefinitionTest >> testNewComment [
 	self assert: newComment name equals: #Comment.
 	self assert: newComment hasStamp.
 	self assert: newComment hasAuthor.
-	self assert: newComment timeStamp notNil.
+	self assert: newComment timeStamp isNotNil.
 
 	self assert: newComment author equals: 'VeronicaUquillas'.
 	self assert: newComment timeStamp equals: '2011-03-22T14:51' asDateAndTime.

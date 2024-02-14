@@ -377,7 +377,7 @@ Fraction >> setNumerator: n denominator: d [
 			d < 0 ifTrue: [numerator := numerator negated]]
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 Fraction >> storeOn: aStream base: base [
 
 	aStream nextPut: $(.

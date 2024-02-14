@@ -207,7 +207,7 @@ LiteralVariable >> readInContext: aContext [
 ]
 
 { #category : 'code generation' }
-LiteralVariable >> runtimeUndeclaredRead [
+LiteralVariable >> runtimeUndeclaredReadInContext: aContext [
 	"This method is used internally to compile polymorphic read on undeclared variables.
 	Do not call it youself to not polute senders."
 
@@ -224,7 +224,7 @@ LiteralVariable >> runtimeUndeclaredRead [
 ]
 
 { #category : 'code generation' }
-LiteralVariable >> runtimeUndeclaredWrite: anObject [
+LiteralVariable >> runtimeUndeclaredWrite: anObject inContext: aContext [
 	"This method is used internally to compile polymorphic write on undeclared variables.
 	Do not call it youself to not polute senders."
 
@@ -244,7 +244,7 @@ LiteralVariable >> scope [
 	^self definingClass
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 LiteralVariable >> storeOn: aStream [
 	"Store in the format (key->value)"
 	aStream nextPut: $(.

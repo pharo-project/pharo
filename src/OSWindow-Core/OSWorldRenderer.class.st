@@ -173,6 +173,17 @@ OSWorldRenderer >> deferUpdatesDuring: aBlock [
 	self osWindowRenderer ifNotNil: [:renderer | renderer deferUpdatesWhile: aBlock ]
 ]
 
+{ #category : 'screenshot' }
+OSWorldRenderer >> depth [
+
+	^ display depth
+]
+
+{ #category : 'accessing' }
+OSWorldRenderer >> display [
+	^ display
+]
+
 { #category : 'private' }
 OSWorldRenderer >> doActivate [
 

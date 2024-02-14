@@ -2,35 +2,42 @@ Class {
 	#name : 'MetacelloPackageLoadDirective',
 	#superclass : 'MetacelloDirective',
 	#instVars : [
-		'resolvedReference',
-		'externalReference'
+		'repositorySpecs'
 	],
 	#category : 'Metacello-Core-Directives',
 	#package : 'Metacello-Core',
 	#tag : 'Directives'
 }
 
-{ #category : 'accessing' }
-MetacelloPackageLoadDirective >> externalReference [
-	^ externalReference
+{ #category : 'comparing' }
+MetacelloPackageLoadDirective >> = anotherPackageDirective [
+
+	anotherPackageDirective species = self species ifFalse: [ ^ false ].
+	^ anotherPackageDirective packageName = self packageName
+]
+
+{ #category : 'visiting' }
+MetacelloPackageLoadDirective >> acceptVisitor: aVisitor [ 
+	
+	^ aVisitor visitPackageLoadDirective: self
 ]
 
 { #category : 'accessing' }
 MetacelloPackageLoadDirective >> file [
 
-	^self externalReference name
+	^ self repositorySpecs asString
+]
+
+{ #category : 'comparing' }
+MetacelloPackageLoadDirective >> hash [
+
+	^ self packageName hash
 ]
 
 { #category : 'printing' }
 MetacelloPackageLoadDirective >> label [
 
-	^self file
-]
-
-{ #category : 'actions' }
-MetacelloPackageLoadDirective >> loadUsing: aLoaderDirective gofer: aGofer [
-
-	aLoaderDirective loadPackageDirective: self gofer: aGofer
+	^ spec name , ' -- ', repositorySpecs first description
 ]
 
 { #category : 'enumerating' }
@@ -42,30 +49,31 @@ MetacelloPackageLoadDirective >> packageDirectivesDo: aBlock [
 { #category : 'accessing' }
 MetacelloPackageLoadDirective >> packageName [
 
-	^self externalReference packageName
+	^ self spec name
+]
+
+{ #category : 'accessing' }
+MetacelloPackageLoadDirective >> packages [
+	
+	^ { spec }
 ]
 
 { #category : 'accessing' }
 MetacelloPackageLoadDirective >> repository [
 
-	^self externalReference repository
+	^self repositorySpecs repository
 ]
 
 { #category : 'accessing' }
-MetacelloPackageLoadDirective >> resolvedReference [
-	^ resolvedReference
-]
-
-{ #category : 'accessing' }
-MetacelloPackageLoadDirective >> resolvedReference: anObject [
-	resolvedReference := anObject
+MetacelloPackageLoadDirective >> repositorySpecs [
+	^ repositorySpecs
 ]
 
 { #category : 'initialization' }
-MetacelloPackageLoadDirective >> spec: aPackageSpec externalReference: anExternalReference loader: aLoader [
+MetacelloPackageLoadDirective >> spec: aPackageSpec repositorySpecs: anExternalReference [
 
-	self spec: aPackageSpec loader: aLoader.
-	externalReference := anExternalReference
+	self spec: aPackageSpec.
+	repositorySpecs := anExternalReference
 ]
 
 { #category : 'accessing' }

@@ -23,12 +23,9 @@ ReMultiplePeriodsTerminatingStatementRule class >> uniqueIdentifierName [
 { #category : 'running' }
 ReMultiplePeriodsTerminatingStatementRule >> check: aMethod forCritiquesDo: aCriticBlock [
 
-	aMethod ast
-		nodesDo: [ :node |
-			(node isSequence and:
-			[ node periods size > node statements size ])
-				ifTrue: [
-					self periodPairs: node critiqueBlock: aCriticBlock in: aMethod ] ]
+	aMethod ast nodesDo: [ :node |
+		node isSequence and: [
+			self periodPairs: node critiqueBlock: aCriticBlock in: aMethod ] ]
 ]
 
 { #category : 'accessing' }
@@ -43,17 +40,18 @@ ReMultiplePeriodsTerminatingStatementRule >> name [
 
 { #category : 'running' }
 ReMultiplePeriodsTerminatingStatementRule >> periodPairs: node critiqueBlock: aCriticBlock in: aMethod [
-	| periods |
+
+	| periods critique |
 	periods := node periods.
-	2 to: periods size do: [ :index | |code start stop |
-		start := periods at: index-1.
+	2 to: periods size do: [ :index | | code start stop trimmed |
+		start := periods at: index - 1.
 		stop := periods at: index.
-		code := node methodNode sourceCode copyFrom: start+1 to: stop-1.
-		code trim ifEmpty: [
-			aCriticBlock cull: (ReTrivialCritique
-			withAnchor: (ReIntervalSourceAnchor
-				entity: aMethod
-				interval: (start to: stop))
-			by: self
-			hint: 'two periods') ] ]
+		code := node methodNode sourceCode copyFrom: start + 1 to: stop - 1.
+		trimmed := code trim.
+		(trimmed isEmpty or: [ trimmed first = $" and: [ trimmed last = $" ] ]) ifTrue: [
+			critique := ReTrivialCritique 
+					 withAnchor: (ReIntervalSourceAnchor entity: aMethod interval: (start to: stop))
+					 by: self
+					 hint: 'two periods'.
+			aCriticBlock cull: critique ] ]
 ]

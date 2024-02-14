@@ -52,7 +52,6 @@ StRefactoringPreviewPresenter class >> title [
 StRefactoringPreviewPresenter >> accept [
 	
 	(self okToChange not or: [ selectedChanges isEmptyOrNil ]) ifTrue: [
-		"UIManager default inform: 'No changes to apply.'."
 		self application newInform 
 				title: 'No changes to apply.';
 				acceptLabel: 'Close this!';
@@ -157,11 +156,10 @@ StRefactoringPreviewPresenter >> initializeDialogWindow: aDialogWindowPresenter 
 	 Override this to set buttons other than the default (Ok, Cancel)."
 	
 	aDialogWindowPresenter
-		addButton: 'Ok' do: [ :presenter | 
+		addButton: 'Cancel' do: [ :presenter | presenter close ];
+		addDefaultButton: 'Ok' do: [ :presenter | 
 			self accept.
-			presenter close ];
-		addButton: 'Cancel' do: [ :presenter | 
-			presenter close ]	
+			presenter close ]
 ]
 
 { #category : 'initialization' }
@@ -201,7 +199,6 @@ StRefactoringPreviewPresenter >> initializeWindow: aWindowPresenter [
 
 { #category : 'action' }
 StRefactoringPreviewPresenter >> performChanges [ 
-	
 	"the following behavior should not be kept in the UI. 
 	It should be moved to the driver or the refactoring itself because the driver is a model of interaction.
 	May be this should be in the refactoring."

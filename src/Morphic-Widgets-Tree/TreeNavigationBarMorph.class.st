@@ -253,7 +253,7 @@ TreeNavigationBarMorph >> pageSearchText: aString [
 	founds size > 1
 		ifTrue: [
 			chosen :=
-				UIManager default
+				self morphicUIManager
 					chooseFrom: (founds collect: [:l | l value] )
 					values: (founds collect: [:l | l key] )
 					lines: nil

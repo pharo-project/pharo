@@ -48,7 +48,7 @@ SycExtractMethodAndOccurrencesCommand >> defaultMenuIconName [
 
 { #category : 'accessing' }
 SycExtractMethodAndOccurrencesCommand >> defaultMenuItemName [
-	^ 'Extract method and occurances'
+	^ '(R) Extract method and occurrences'
 ]
 
 { #category : 'execution' }
@@ -65,7 +65,7 @@ SycExtractMethodAndOccurrencesCommand >> setUpOptionToChangeExtractionClass: ref
 		cls := ref methodClass realClass.
 		superclasses := cls allSuperclasses reversed copyWithoutAll: { Object . ProtoObject }.
 		superclasses ifNotEmpty: [
-			cls := UIManager default
+			cls := self morphicUIManager
 				chooseFrom: ((superclasses, {cls}) collect: #name)
 				values: superclasses, {cls}
 				title: 'Choose the class where you want to extract the method'

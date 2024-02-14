@@ -261,12 +261,6 @@ OrderedDictionary >> at: aKey put: aValue [
 ]
 
 { #category : 'accessing' }
-OrderedDictionary >> at: key update: updateBlock [
-	"I am used to update the value at a given key, or if the key does not exist, to throw an error"
-	self at: key update: updateBlock initial: [ KeyNotFound signalFor: key ]
-]
-
-{ #category : 'accessing' }
 OrderedDictionary >> at: key update: updateBlock initial: initBlocktOrValue [
 	"I am used to update the value at a given key. The updateBlock is passed
 	the existing value, and the result of the block is stored back.
@@ -307,26 +301,9 @@ OrderedDictionary >> collect: aBlock [
 			each key -> (aBlock value: each value)])
 ]
 
-{ #category : 'adding' }
-OrderedDictionary >> declare: aKey from: aDictionary [
-	(self includesKey: aKey)
-		ifTrue: [^ self].
-
-	(aDictionary includesKey: aKey)
-		ifTrue: [
-			self add: (aDictionary associationAt: aKey).
-			aDictionary removeKey: aKey]
-		ifFalse: [self add: aKey -> nil]
-]
-
 { #category : 'private' }
 OrderedDictionary >> dictionary [
 	^ dictionary
-]
-
-{ #category : 'accessing' }
-OrderedDictionary >> dictionaryClass [
-	^ Dictionary
 ]
 
 { #category : 'enumerating' }
@@ -618,7 +595,7 @@ OrderedDictionary >> size [
 	^ dictionary size
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 OrderedDictionary >> storeOn: aStream [
 	aStream << '((' << self class name << ' new)'.
 	self associations

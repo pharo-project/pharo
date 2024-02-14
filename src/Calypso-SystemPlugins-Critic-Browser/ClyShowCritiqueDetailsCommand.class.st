@@ -22,5 +22,5 @@ ClyShowCritiqueDetailsCommand >> description [
 { #category : 'execution' }
 ClyShowCritiqueDetailsCommand >> execute [
 
-	UIManager default longMessage: critique description title: critique title
+	self morphicUIManager longMessage: critique description title: critique title
 ]

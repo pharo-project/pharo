@@ -35,7 +35,7 @@ RBProtectVariableTransformation >> buildTransformations [
 				classVariable: isClassVariable)
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBProtectVariableTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.

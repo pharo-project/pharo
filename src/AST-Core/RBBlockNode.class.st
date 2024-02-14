@@ -104,9 +104,10 @@ RBBlockNode >> allDefinedVariables [
 { #category : 'accessing' }
 RBBlockNode >> allStatements [
 	"including temp variable definition."
-	^ self temporaries asOrderedCollection copy
-			addAll: super allStatements;
-			yourself
+
+	^ (OrderedCollection withAll: self temporaries)
+		  addAll: super allStatements;
+		  yourself
 ]
 
 { #category : 'accessing' }

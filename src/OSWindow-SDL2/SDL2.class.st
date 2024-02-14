@@ -28,7 +28,7 @@ SDL2 class >> checkForError [
 
 { #category : 'native' }
 SDL2 class >> checkLibraryName: aName [
-	^ (ExternalAddress loadSymbol: 'SDL_Init' from: aName) notNil
+	^ (ExternalAddress loadSymbol: 'SDL_Init' from: aName) isNotNil
 ]
 
 { #category : 'clipboard' }
@@ -290,7 +290,7 @@ SDL2 class >> initVideo [
 
 { #category : 'common' }
 SDL2 class >> isAvailable [
-	^ [ (ExternalAddress loadSymbol: 'SDL_Init' from: SDL2 moduleName) notNil ]
+	^ [ (ExternalAddress loadSymbol: 'SDL_Init' from: SDL2 moduleName) isNotNil ]
 		onErrorDo: [ false ]
 ]
 

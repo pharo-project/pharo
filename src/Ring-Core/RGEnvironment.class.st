@@ -416,7 +416,7 @@ RGEnvironment >> ensureMetaclassTraitNamed: aSymbol [
 	self assert: (aSymbol endsWith: ' classTrait').
 
 	found := self ask behaviorNamedExactlyAs: aSymbol.
-	(found notNil and: [ found isMetaclassTrait ]) ifTrue: [ ^ found ].
+	(found isNotNil and: [ found isMetaclassTrait ]) ifTrue: [ ^ found ].
 
 	^ found
 		ifNil: [
@@ -524,7 +524,7 @@ RGEnvironment >> ensureTraitNamed: aSymbol [
 
 	"a trait with the same name already exists"
 	found := self ask behaviorNamedExactlyAs: aSymbol.
-	(found notNil and: [ found isTrait ]) ifTrue: [ ^ found ].
+	(found isNotNil and: [ found isTrait ]) ifTrue: [ ^ found ].
 
 	^ found
 		ifNil: [
@@ -778,7 +778,7 @@ RGEnvironment >> removeBehavior: anRGBehavior [
 	anRGBehavior extensions do: [ :each |
 		each package removeExtensionMethod: each ].
 
-	(anRGBehavior package notNil and: [anRGBehavior package  definedBehaviors includes: anRGBehavior]) ifTrue: [
+	(anRGBehavior package isNotNil and: [anRGBehavior package  definedBehaviors includes: anRGBehavior]) ifTrue: [
 	anRGBehavior package removeDefinedBehavior: anRGBehavior.
 	].
 

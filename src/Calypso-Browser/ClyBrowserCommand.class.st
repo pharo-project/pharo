@@ -30,6 +30,12 @@ ClyBrowserCommand >> browser: anObject [
 	browser := anObject
 ]
 
+{ #category : 'private' }
+ClyBrowserCommand >> morphicUIManager [
+
+	^ MorphicUIManager new
+]
+
 { #category : 'execution' }
 ClyBrowserCommand >> readParametersFromContext: aToolContext [
 	super readParametersFromContext: aToolContext.

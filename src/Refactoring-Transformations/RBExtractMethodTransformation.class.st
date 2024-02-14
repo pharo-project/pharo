@@ -79,9 +79,10 @@ RBExtractMethodTransformation >> applicabilityPreconditions [
 ]
 
 { #category : 'executing' }
-RBExtractMethodTransformation >> buildTransformationFor: newMethodName withRemovedTemps: tempsToRemove [
+RBExtractMethodTransformation >> buildTransformationFor: newMethodName [
 
-	| needsReturn messageSend newArguments |
+	| needsReturn messageSend newArguments tempsToRemove |
+	tempsToRemove := self calculateTemporariesToRemove.
 	needsReturn := self calculateIfReturnIsNeeded.
 	newMethod := self generateNewMethodWith: newMethodName.
 	newArguments := self calculateNewArgumentsIn: newMethodName.
@@ -119,27 +120,17 @@ RBExtractMethodTransformation >> buildTransformations [
 	selectorOfExistingMethod := self findMethodWithSimilarBody.
 	selectorOfExistingMethod 
 		ifNotNil: [
-			^ OrderedCollection with: (self parseTreeRewriterClass
+			^ OrderedCollection with: 
+					(self parseTreeRewriterClass
 					   replaceCode: subtree
 					   byMessageSendTo: selectorOfExistingMethod
 					   in:
 					   (self definingClass methodFor: self calculateTree selector)) ]
 		ifNil: [
-			^ (parseTree isNil or: [ subtree isNil ])
-				  ifTrue: [ OrderedCollection new ]
-				  ifFalse: [
-					  | tempsToRemove |
-					  tempsToRemove := self calculateTemporariesToRemove.
-
-					  assignments size > 1
-						  ifTrue: [ OrderedCollection new ]
-						  ifFalse: [
-							  | newMethodName |
-							  newMethodName := self newMethodName.
-							  newMethodName ifNil: [ ^ OrderedCollection new ].
-							  self
-								  buildTransformationFor: newMethodName
-								  withRemovedTemps: tempsToRemove ] ] ]
+			  | newMethodName |
+			  newMethodName := self newMethodName.
+			  newMethodName ifNil: [ ^ OrderedCollection new ].
+			  ^ self buildTransformationFor: newMethodName ]
 ]
 
 { #category : 'querying' }
@@ -366,13 +357,13 @@ RBExtractMethodTransformation >> preconditionAssignmentsNotReadBeforeWritten [
 
 	assignments isEmptyOrNil ifTrue: [ ^ self trueCondition ].
 
-	^ RBVariablesNotReadBeforeWrittenCondition new subtree: subtree; variables: assignments
+	^ ReVariablesNotReadBeforeWrittenCondition new subtree: subtree; variables: assignments
 ]
 
 { #category : 'preconditions' }
 RBExtractMethodTransformation >> preconditionNotInCascadedMessage [
 
-	^ RBNotInCascadedMessageCondition new subtree: subtree
+	^ ReNotInCascadedMessageCondition new subtree: subtree
 ]
 
 { #category : 'preconditions' }
@@ -383,14 +374,16 @@ RBExtractMethodTransformation >> preconditionOneAssignmentMaximum [
 	we don't support return of multiple values, instead we notify the user that all references
 	to those temps should be extracted as well."
 
-	^ RBMaxOneAssignmentWithReferencesCondition new
+	^ ReMaxOneAssignmentWithReferencesCondition new
 		  assignments: assignments
 ]
 
 { #category : 'preconditions' }
 RBExtractMethodTransformation >> preconditionParsableSubtree [
 
-	^ RBParsableSubtreeCondition new subtree: subtree
+	^ RBCondition
+		  withBlock: [ parseTree isNotNil & subtree isNotNil ]
+		  errorString: 'Cannot extract selected code, it is not a valid subtree.'
 ]
 
 { #category : 'preconditions' }
@@ -398,13 +391,13 @@ RBExtractMethodTransformation >> preconditionSubtreeDoesNotContainsReturn [
 
 	assignments isEmptyOrNil ifTrue: [ ^ self trueCondition ].
 
-	^ RBSubtreeDoesNotContainReturnCondition new subtree: subtree
+	^ ReSubtreeDoesNotContainReturnCondition new subtree: subtree
 ]
 
 { #category : 'preconditions' }
 RBExtractMethodTransformation >> preconditionTemporariesAreNotReadBeforeWritten [
 
-	^ RBVariablesNotReadBeforeWrittenCondition new subtree: subtree; variables: temporaries 
+	^ ReVariablesNotReadBeforeWrittenCondition new subtree: subtree; variables: temporaries 
 ]
 
 { #category : 'transforming' }
@@ -416,7 +409,7 @@ RBExtractMethodTransformation >> prepareForExecution [
 	arguments := self calculateArguments 
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBExtractMethodTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.

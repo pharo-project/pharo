@@ -88,7 +88,7 @@ RelationSlot >> emitStore: aMethodBuilder [
 { #category : 'testing' }
 RelationSlot >> hasInverse [
 
-	^inverseName notNil
+	^inverseName isNotNil
 ]
 
 { #category : 'comparing' }

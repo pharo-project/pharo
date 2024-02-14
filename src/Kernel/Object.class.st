@@ -53,20 +53,10 @@ best Eliot Miranda
 Class {
 	#name : 'Object',
 	#superclass : 'ProtoObject',
-	#classVars : [
-		'DependentsFields'
-	],
 	#category : 'Kernel-Objects',
 	#package : 'Kernel',
 	#tag : 'Objects'
 }
-
-{ #category : 'class initialization' }
-Object class >> flushDependents [
-	DependentsFields keysAndValuesDo:[:key :dep|
-		key ifNotNil:[key removeDependent: nil].
-	].
-]
 
 { #category : 'documentation' }
 Object class >> howToModifyPrimitives [
@@ -120,17 +110,11 @@ Object class >> howToModifyPrimitives [
 ]
 
 { #category : 'class initialization' }
-Object class >> initialize [
-	"Upon loading a class, this selector is not looked up.
-	If you want a class to be initialized upon loading, this class should define the selector #intialize explicitly"
-	DependentsFields ifNil:[ self initializeDependentsFields ]
-]
+Object class >> initialize [ 
 
-{ #category : 'class initialization' }
-Object class >> initializeDependentsFields [
-	<script: 'Object initialize'>
-
-	DependentsFields := WeakIdentityKeyDictionary new
+	"This method is empty but this is on purpose. This is to protect subclasses that are wrongly calling super initialize or classes that are receiving initialize.
+	
+	If you remove this method, the method Behavior >> initialize will be executed and the class will be nuked because reinitialized."
 ]
 
 { #category : 'instance creation' }
@@ -151,17 +135,6 @@ Object class >> newFromArray: anArray [
 	See Collection class>>newFromArray: for the rationale."
 
 	^ self newFrom: anArray
-]
-
-{ #category : 'class initialization' }
-Object class >> reInitializeDependentsFields [
-	<script>
-
-	| oldFields |
-	oldFields := DependentsFields.
-	self initializeDependentsFields.
-	oldFields
-		keysAndValuesDo: [ :obj :deps | deps do: [ :d | obj addDependent: d ] ]
 ]
 
 { #category : 'instance creation' }
@@ -265,13 +238,6 @@ Object >> = anObject [
 	^ self == anObject
 ]
 
-{ #category : 'finalization' }
-Object >> actAsExecutor [
-	"Prepare the receiver to act as executor for any resources associated with it"
-
-	self breakDependents
-]
-
 { #category : 'converting' }
 Object >> adaptToFloat: rcvr andCompare: selector [
 	"If I am involved in comparison with a Float.
@@ -318,17 +284,6 @@ Object >> adaptToInteger: rcvr andSend: selector [
 	then it may be adequate to simply adapt it to a number."
 
 	^ self adaptToNumber: rcvr andSend: selector
-]
-
-{ #category : 'dependencies' }
-Object >> addDependent: anObject [
-	"Make the given object one of the receiver's dependents."
-
-	| dependents |
-	dependents := self dependents.
-	(dependents includes: anObject) ifFalse:
-		[self myDependents: (dependents copyWithDependent: anObject)].
-	^ anObject
 ]
 
 { #category : 'converting' }
@@ -525,23 +480,6 @@ Object >> beWritableObject [
 	^ self setIsReadOnlyObject: false
 ]
 
-{ #category : 'dependencies' }
-Object >> breakDependents [
-	"Remove all of the receiver's dependents."
-
-	self myDependents: nil
-]
-
-{ #category : 'dependencies' }
-Object >> canDiscardEdits [
-	"Answer true if none of the views on this model has unaccepted edits that matter."
-
-	self dependents
-		do: [:each | each canDiscardEdits ifFalse: [^ false]]
-		without: self.
-	^ true
-]
-
 { #category : 'casing-To be deprecated' }
 Object >> caseError [
 	"DO NOT USE THIS METHOD! It will be removed from Pharo."
@@ -698,14 +636,6 @@ It doesn't handle cycles, #veryDeepCopy does. In the future we will make it hand
 	^newObject
 ]
 
-{ #category : 'dependencies' }
-Object >> dependents [
-	"Answer a collection of objects that are 'dependent' on the receiver;
-	 that is, all objects that should be notified if the receiver changes."
-
-	^ self myDependents ifNil: [#()]
-]
-
 { #category : 'deprecation' }
 Object >> deprecated: anExplanationString [
 	"Warn that the sending method has been deprecated"
@@ -738,7 +668,7 @@ Object >> deprecated: anExplanationString on: date in: version transformWith: aR
 		date: date;
 		version: version;
 		rule: aRule;
-		transform
+		signal
 ]
 
 { #category : 'deprecation' }
@@ -752,7 +682,7 @@ Object >> deprecated: anExplanationString on: date in: version transformWith: aR
 		version: version;
 		rule: aRule;
 		condition: conditionBlock;
-		transform
+		signal
 ]
 
 { #category : 'deprecation' }
@@ -763,7 +693,7 @@ Object >> deprecated: anExplanationString transformWith: aRule [
 		context: thisContext sender;
 		explanation: anExplanationString;
 		rule: aRule;
-		transform
+		signal
 ]
 
 { #category : 'deprecation' }
@@ -775,7 +705,7 @@ Object >> deprecated: anExplanationString transformWith: aRule when: conditionBl
 		explanation: anExplanationString;
 		rule: aRule;
 		condition: conditionBlock;
-		transform
+		signal
 ]
 
 { #category : 'displaying' }
@@ -1056,7 +986,7 @@ Object >> isCharacter [
 
 { #category : 'testing' }
 Object >> isClass [
-	<reflection: 'Class structural inspection - Class/Metaclass shift'>
+	<reflection: 'Class structural inspection - Class kind testing'>
 	^ false
 ]
 
@@ -1381,22 +1311,6 @@ Object >> longPrintStringLimitedTo: aLimitValue [
 	^ str ifEmpty: [ self printString , String cr ]
 ]
 
-{ #category : 'dependencies' }
-Object >> myDependents [
-	"Private. Answer a list of all the receiver's dependents."
-
-	^ DependentsFields at: self ifAbsent: []
-]
-
-{ #category : 'dependencies' }
-Object >> myDependents: aCollectionOrNil [
-	"Private. Set (or remove) the receiver's dependents list."
-
-	aCollectionOrNil
-		ifNil: [DependentsFields removeKey: self ifAbsent: []]
-		ifNotNil: [DependentsFields at: self put: aCollectionOrNil]
-]
-
 { #category : 'flagging' }
 Object >> nominallyUnsent: aSelectorSymbol [
 	"From within the body of a method which is not formally sent within the system, but which you intend to have remain in the system (for potential manual invocation, or for documentation, or perhaps because it's sent by commented-out-code that you anticipate uncommenting out someday, send this message, with the selector itself as the argument.
@@ -1701,22 +1615,12 @@ Object >> release [
 	subclass should also include the expression super release."
 ]
 
-{ #category : 'dependencies' }
-Object >> removeDependent: anObject [
-	"Remove the given object as one of the receiver's dependents."
-
-	| dependents |
-	dependents := self dependents reject: [ :each | each == anObject ].
-	self myDependents: dependents.
-	^ anObject
-]
-
 { #category : 'class membership' }
 Object >> respondsTo: aSymbol [
 	"Answer whether the receiver can understand the specified message selector
 	aSymbol (ie. will respond meaningfully when such a message is sent to the
 	receiver)."
-	<reflection: 'Class structural inspection - Selectors and methods inspection'>
+	<reflection: 'Message sending and code execution - Method lookup'>
 	^self class canUnderstand: aSymbol
 ]
 
@@ -1894,7 +1798,7 @@ Object >> storeAt: offset inTempFrame: aContext [
 	^ aContext tempAt: offset put: self
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 Object >> storeOn: aStream [
 	"Append to the argument aStream a sequence of characters that is an
 	expression whose evaluation creates an object similar to the receiver."
@@ -1922,7 +1826,7 @@ Object >> storeOn: aStream [
 	aStream nextPutAll: ' yourself)'
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 Object >> storeString [
 	"Answer a String representation of the receiver from which the receiver
 	can be reconstructed."
@@ -2006,19 +1910,6 @@ Object >> value [
 Object >> valueWithArguments: aSequenceOfArguments [
 
 	^self
-]
-
-{ #category : 'copying' }
-Object >> veryDeepCopy [
-	"Do a complete tree copy using a dictionary.  An object in the tree twice is only copied once.  All references to the object in the copy of the tree will point to the new copy."
-
-	| copier new |
-	copier := DeepCopier new initialize: 4096 "self initialDeepCopierSize".
-	new := self veryDeepCopyWith: copier.
-	copier references associationsDo: [:assoc |
-		assoc value veryDeepFixupWith: copier].
-	copier fixDependents.
-	^ new
 ]
 
 { #category : 'copying' }

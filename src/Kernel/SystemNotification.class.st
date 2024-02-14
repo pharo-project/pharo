@@ -9,8 +9,8 @@ Class {
 	#tag : 'Exceptions'
 }
 
-{ #category : 'exceptiondescription' }
+{ #category : 'handling' }
 SystemNotification >> defaultAction [
 
-	UIManager default systemNotificationDefaultAction: self
+	^ Processor activeProcess handleNotification: self
 ]

@@ -8,6 +8,6 @@ Class {
 
 { #category : 'testing' }
 ForbiddenClassAnnotationExample >> isForbidden [
-	self assert: annotatedClass notNil.
-	^true
+	self assert: annotatedClass isNotNil.
+	^ true
 ]

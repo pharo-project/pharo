@@ -369,7 +369,7 @@ SystemNavigation >> obsoleteClasses [
 		allInstancesDo: [ :m |
 			| c |
 			c := m soleInstance.
-			(c notNil and: [ c isObsolete ])
+			(c isNotNil and: [ c isObsolete ])
 				ifTrue: [ obs add: c ] ].
 	^ obs asArray
 
@@ -419,23 +419,16 @@ from the system?'
 ]
 
 { #category : 'removing' }
-SystemNavigation >> removeMethod: aMethod inClass: aClass [
+SystemNavigation >> removeMethod: aCompiledMethod inClass: aClass [
 	"If a message is selected, create a Confirmer so the user can verify that
 	the currently selected message should be removed from the system. If
 	so, remove it. "
-	| messageName confirmation |
+	| messageName |
 
-	aMethod ifNil: [^ false].
-	messageName := aMethod selector.
-	confirmation := self confirmRemovalOf: messageName on: aClass.
-	confirmation = 3
-		ifTrue: [^ false].
+	aCompiledMethod ifNil: [ ^ false ].
+	messageName := aCompiledMethod selector.
 	(aClass includesLocalSelector: messageName)
 		ifTrue: [ aClass removeSelector: messageName ].
-
-	"In case organization not cached"
-	confirmation = 2
-		ifTrue: [self browseAllSendersOf: messageName].
 
 	^ true
 ]

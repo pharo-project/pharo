@@ -87,6 +87,7 @@ RBMoveMethodToClassSideRefactoring >> checkVariableNamed: aString [
 
 { #category : 'executing' }
 RBMoveMethodToClassSideRefactoring >> generateChanges [
+	"Prepare, check the preconditions, and perform the actual transformation (i.e., creating a list of changes that can be accessible using the changes message). This method should not be invoked from drivers since drivers usually check in finer grained mode the preconditions - and that this stage they already checked the preconditions."
 	
 	self prepareForExecution.
 
@@ -203,7 +204,7 @@ RBMoveMethodToClassSideRefactoring >> removeMethod: selector from: aRBClass [
 			from: aRBClass)
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBMoveMethodToClassSideRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

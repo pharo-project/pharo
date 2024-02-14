@@ -38,7 +38,7 @@ FLBlockClosureSerializationTest >> testBlockClosureChangeDifferentBytecodes [
 		in: aClass.
 	aClosure := aClass new perform: #methodWithClosure.
 	self assert: aClosure isClean.
-	self assert: aClosure notNil.
+	self assert: aClosure isNotNil.
 	
 	self serialize: aClosure.
 	self classFactory
@@ -87,7 +87,7 @@ FLBlockClosureSerializationTest >> testBlockClosureChangeSameBytecodes [
 		in: aClass.
 	aClosure := aClass new perform: #methodWithClosure.
 	self assert: aClosure isClean.
-	self assert: aClosure outerContext notNil.
+	self assert: aClosure outerContext isNotNil.
 	
 	self serialize: aClosure.
 	self classFactory
@@ -155,7 +155,7 @@ FLBlockClosureSerializationTest >> testBlockClosureRemoved [
 		in: aClass.
 	aClosure := aClass new perform: #methodWithClosure.
 	self assert: aClosure isClean.
-	self assert: aClosure outerContext notNil.
+	self assert: aClosure outerContext isNotNil.
 	
 	self serialize: aClosure.
 	aClass removeSelectorSilently: #methodWithClosure.
@@ -192,7 +192,7 @@ FLBlockClosureSerializationTest >> testBlockClosureRemovedNonClean [
 		in: aClass.
 	aClosure := aClass new perform: #methodWithClosure.
 	self deny: aClosure isClean.
-	self assert: aClosure outerContext notNil.
+	self assert: aClosure outerContext isNotNil.
 	
 	self serialize: aClosure.
 	aClass removeSelectorSilently: #methodWithClosure.

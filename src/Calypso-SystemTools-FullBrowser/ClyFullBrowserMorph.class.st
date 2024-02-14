@@ -578,7 +578,7 @@ ClyFullBrowserMorph >> prepareDefaultState [
 	DefaultPackageFilter ifNotNil: [
 		packageView activateFilterWith: DefaultPackageFilter].
 
-	UIManager default defer: [packageView takeKeyboardFocus]
+	self morphicUIManager defer: [packageView takeKeyboardFocus]
 ]
 
 { #category : 'initialization' }

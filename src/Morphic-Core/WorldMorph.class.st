@@ -11,7 +11,8 @@ Class {
 		'AllowDropFiles',
 		'CursorOwnerWorld',
 		'ExtraWorldList',
-		'ExtraWorldListMutex'
+		'ExtraWorldListMutex',
+		'LastScreenModeSelected'
 	],
 	#classInstVars : [
 		'displayScaleFactor'
@@ -88,6 +89,19 @@ WorldMorph class >> displayScaleFactorSettingsOn: aBuilder [
 		range: (0.5 to: 5 by: 0.5)
 ]
 
+{ #category : 'settings' }
+WorldMorph class >> displaySettingsOn: aBuilder [
+	<systemsettings>
+	(aBuilder setting: #displayFullscreen)
+		label: 'Fullscreen mode';
+		parent: #desktopSettings;
+		target: #WorldMorph;
+		getSelector: #isFullscreen;
+		setSelector: #fullscreen:;
+		description: 'On platforms that support it, set fullscreen mode';
+		default: false
+]
+
 { #category : 'updating' }
 WorldMorph class >> doOneCycle [
 
@@ -108,9 +122,23 @@ WorldMorph class >> extraWorldList [
 	^ ExtraWorldList
 ]
 
+{ #category : 'settings' }
+WorldMorph class >> fullscreen: aBoolean [
+
+	self class codeSupportAnnouncer announce:
+		(FullscreenAnnouncement new fullscreen:
+			 (LastScreenModeSelected := aBoolean))
+]
+
 { #category : 'class initialization' }
 WorldMorph class >> initialize [
 	ExtraWorldListMutex := Semaphore forMutualExclusion
+]
+
+{ #category : 'settings' }
+WorldMorph class >> isFullscreen [
+
+	^ LastScreenModeSelected ifNil: [ LastScreenModeSelected := false ]
 ]
 
 { #category : 'extra worlds' }
@@ -131,6 +159,11 @@ WorldMorph class >> scaleFactor [
 WorldMorph class >> scaleFactor: aValue [
 
 	World scaleFactor: aValue
+]
+
+{ #category : 'settings' }
+WorldMorph class >> toggleFullscreen [
+	self fullscreen: self isFullscreen not
 ]
 
 { #category : 'operations' }
@@ -225,7 +258,7 @@ WorldMorph >> becomeActiveDuring: aBlock [
 { #category : 'meta-actions' }
 WorldMorph >> buildMetaMenu: evt [
 	| menu |
-	menu := UIManager default newMenuIn: self for: self.
+	menu := self morphicUIManager newMenuIn: self for: self.
 	self addStandardHaloMenuItemsTo: menu hand: evt hand.
 	^ menu
 ]
@@ -296,9 +329,21 @@ WorldMorph >> deleteBalloonTarget: aMorph [
 	self handsDo: [ :h | h deleteBalloonTarget: aMorph ]
 ]
 
+{ #category : 'accessing' }
+WorldMorph >> depth [
+	
+	^ self worldState worldRenderer depth
+]
+
 { #category : 'world menu' }
 WorldMorph >> discoveredWorldMenu [
 	^ worldState discoveredWorldMenu
+]
+
+{ #category : 'api' }
+WorldMorph >> display [
+
+	^ self worldState worldRenderer display
 ]
 
 { #category : 'accessing' }

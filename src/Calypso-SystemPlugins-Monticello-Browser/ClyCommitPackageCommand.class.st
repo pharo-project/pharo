@@ -62,7 +62,7 @@ ClyCommitPackageCommand >> execute [
 	targetRepo := repos size = 1
 		              ifTrue: [ repos first ]
 		              ifFalse: [
-			              UIManager default
+			              self morphicUIManager
 				              chooseFrom: (repos collect: [ :each | each name ])
 				              values: repos
 				              title: 'Choose repository' ].
@@ -72,7 +72,7 @@ ClyCommitPackageCommand >> execute [
 			 targetRepo workingCopy isDetached or: [
 				 targetRepo head isDetached or: [
 					 targetRepo workingCopy project isUnborn ] ] ] ]) ifTrue: [
-		UIManager default
+		self morphicUIManager
 			alert:
 				'The ' , targetRepo name
 				, ' repository is not operational to commit.

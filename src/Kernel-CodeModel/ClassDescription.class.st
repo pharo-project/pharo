@@ -373,7 +373,7 @@ ClassDescription >> copyAllMethodsFrom: originClass [
 { #category : 'slots' }
 ClassDescription >> definesSlot: aSlot [
 	"Return true whether the receiver defines an instance variable named aString"
-	<reflection: 'Object Inspection - Slot inspection'>
+	<reflection: 'Class structural inspection - Slot inspection'>
 	^ self slots identityIncludes: aSlot
 ]
 
@@ -1132,7 +1132,7 @@ ClassDescription >> spaceUsed [
 		ifFalse: [0])
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 ClassDescription >> storeOn: aStream [
 	"Classes and Metaclasses have global names."
 

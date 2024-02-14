@@ -15,7 +15,7 @@ Class {
 	#tag : 'Methods'
 }
 
-{ #category : 'printing' }
+{ #category : 'displaying' }
 CompiledBlock >> displayStringOn: stream [
 	self printOn: stream
 ]

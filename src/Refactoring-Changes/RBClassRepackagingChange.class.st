@@ -85,8 +85,7 @@ RBClassRepackagingChange >> printOn: aStream [
 			nextPutAll: tag ].
 	aStream
 		nextPutAll: ' stamp: ';
-		print: self changeStamp;
-		nextPutAll: '!'
+		print: self changeStamp
 ]
 
 { #category : 'accessing' }

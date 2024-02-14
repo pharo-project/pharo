@@ -765,29 +765,6 @@ String >> asTime [
 ]
 
 { #category : 'converting' }
-String >> asUncommentedCode [
-	"this string represents a commented code, let's uncomment it"
-
-	^ String streamContents:  [ :str |
-
-		|doubleQuoteAlreadyFound|
-		doubleQuoteAlreadyFound := false.
-
-		self withoutQuoting do: [ :char |
-			char = $"
-				ifTrue: [
-					doubleQuoteAlreadyFound 	ifTrue: [
-							str nextPut: $" ].
-					doubleQuoteAlreadyFound := doubleQuoteAlreadyFound not.
-				]
-				ifFalse: [
-					str nextPut: char
-				]
-		 ]
-	]
-]
-
-{ #category : 'converting' }
 String >> asUnsignedInteger [
 	"Returns the first integer it can find or nil."
 	| start stream |
@@ -853,6 +830,7 @@ String >> beginsWith: prefix [
 	"('pharo' beginsWith: 'pharo-project') >>> false"
 	"('pharo' beginsWith: 'phuro') >>> false"
 	"('pharo' beginsWith: 'pha') >>> true"
+	
 	prefix ifEmpty: [ ^true ].
 	(self class isBytes and: [ prefix class isBytes ]) ifFalse: [^super beginsWith: prefix].
 
@@ -904,6 +882,9 @@ String >> byteSize [
 { #category : 'converting' }
 String >> capitalized [
 	"Return a copy with the first letter capitalized"
+	
+	"'abc' capitalized >>> 'Abc'"
+	
 	| cap |
 	self isEmpty ifTrue: [ ^self copy ].
 	cap := self copy.
@@ -1161,7 +1142,7 @@ String >> deepCopy [
 	^self shallowCopy
 ]
 
-{ #category : 'printing' }
+{ #category : 'displaying' }
 String >> displayStringOn: aStream [
 	"Make sure that this is not printOn: because we do not want to have multiple quotes."
 	aStream nextPutAll: self
@@ -2516,7 +2497,7 @@ String >> stemAndNumericSuffix [
 	^ { stem . suffix }
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 String >> storeOn: aStream [
 	"Print inside string quotes, doubling inbedded quotes."
 

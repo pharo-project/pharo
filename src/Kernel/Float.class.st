@@ -581,22 +581,21 @@ Float >> adaptToInteger: rcvr andCompare: selector [
 	"If I am involved in comparison with an Integer, convert myself to a
 	Fraction. This way, no bit is lost and comparison is exact."
 
-	self isFinite
-		ifFalse: [
-			selector == #= ifTrue: [^false].
-			selector == #~= ifTrue: [^true].
-			self isNaN ifTrue: [^ false].
-			(selector = #< or: [selector = #'<='])
-				ifTrue: [^ self positive].
-			(selector = #> or: [selector = #'>='])
-				ifTrue: [^ self positive not].
-			^self error: 'unknow comparison selector'].
+	self isFinite ifFalse: [
+		selector == #= ifTrue: [ ^ false ].
+		selector == #'~=' ifTrue: [ ^ true ].
+		self isNaN ifTrue: [ ^ false ].
+		(selector = #< or: [ selector = #'<=' ]) ifTrue: [ ^ self positive ].
+		(selector = #> or: [ selector = #'>=' ]) ifTrue: [ ^ self positive not ].
+		^ self error: 'unknow comparison selector' ].
 
 	"Try to avoid asTrueFraction because it can cost"
-	selector == #= ifTrue: [
-		self fractionPart = 0.0 ifFalse: [^false]].
-	selector == #~= ifTrue: [
-		self fractionPart = 0.0 ifFalse: [^true]].
+	selector == #= ifTrue: [ self fractionPart = 0.0 ifFalse: [ ^ false ] ].
+	selector == #'~=' ifTrue: [ self fractionPart = 0.0 ifFalse: [ ^ true ] ].
+	selector == #< ifTrue: [ ^ self > rcvr ].
+	selector == #> ifTrue: [ ^ self < rcvr ].
+	selector == #'<=' ifTrue: [ ^ self >= rcvr ].
+	selector == #'>=' ifTrue: [ ^ self <= rcvr ].
 
 	^ rcvr perform: selector with: self asTrueFraction
 ]
@@ -1145,14 +1144,14 @@ Float >> significandAsInteger [
 	^(((self basicAt: 1) bitAnd: 16r000FFFFF) bitShift: 32) bitOr: (self basicAt: 2)
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 Float >> storeOn: aStream [
 	"Print the Number exactly so it can be interpreted back unchanged"
 
 	self storeOn: aStream base: 10
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 Float >> storeOn: aStream base: base [
 	"Print the Number exactly so it can be interpreted back unchanged"
 	self isFinite

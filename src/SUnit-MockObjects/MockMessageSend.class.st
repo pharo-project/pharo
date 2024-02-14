@@ -9,8 +9,9 @@ Class {
 		'arguments',
 		'behavior'
 	],
-	#category : 'SUnit-MockObjects',
-	#package : 'SUnit-MockObjects'
+	#category : 'SUnit-MockObjects-Core',
+	#package : 'SUnit-MockObjects',
+	#tag : 'Core'
 }
 
 { #category : 'instance creation' }
@@ -30,7 +31,8 @@ MockMessageSend >> matches: aMessage [
 
 { #category : 'testing' }
 MockMessageSend >> matchesArguments: anArray [
-
+	"implementation note: the MockObject any acts as a joker to say that the object is counted but we do not care of its value. See the class comment of MockObject."
+	
 	arguments ifNil: [ ^ true ].
 	arguments size = anArray size ifFalse: [ ^ false ].
 	anArray with: arguments do: [ :actual :expected |

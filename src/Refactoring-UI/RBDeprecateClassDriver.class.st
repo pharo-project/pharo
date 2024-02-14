@@ -123,7 +123,7 @@ RBDeprecateClassDriver >> selectDialog [
 	^ SpSelectDialog new 
 		title: 'Deprecate class with strategy';
 		label: 'Select a strategy';
-		items: (RBDeprecateClassChoice subclasses collect: [ :each | each  new driver: self]);
+		items: (ReDeprecateClassChoice subclasses collect: [ :each | each  new driver: self]);
 		display: [ :each | each description ];
 		displayIcon: [ :each | self iconNamed: each systemIconName ];
 		openModal.

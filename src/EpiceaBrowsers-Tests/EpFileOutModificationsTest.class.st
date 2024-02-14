@@ -371,7 +371,6 @@ EpFileOutModificationsTest >> testFileOutSingleTraitAddition [
 
 	| aTrait outputFileReference chunks literalNodes |
 	aTrait := classFactory newTrait.
-	aTrait.
 
 	chunkExporter fileOut: (self allLogEntriesWith: EpTraitAddition).
 	outputFileReference := chunkExporter outputFileReference.

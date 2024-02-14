@@ -18,7 +18,8 @@ Class {
 		'shouldSerializeError'
 	],
 	#classVars : [
-		'CurrentStageName'
+		'CurrentStageName',
+		'ShuffleSeed'
 	],
 	#category : 'JenkinsTools-Core',
 	#package : 'JenkinsTools-Core'
@@ -39,18 +40,32 @@ HDTestReport class >> runClasses: aCollectionOfClasses named: packageName [
 
 	| suite classes time result |
 	suite := TestSuite named: packageName.
-	classes := (aCollectionOfClasses select: [ :class | class isTestCase and: [ class isAbstract not ] ]) asSortedCollection: [ :a :b | a name <= b name ].
+
+	"Use the configured shuffle seed if any, or a random one otherwise"
+	ShuffleSeed ifNotNil: [ suite shuffleSeed: ShuffleSeed asInteger ].
+
+	classes := (aCollectionOfClasses select: [ :class |
+		            class isTestCase and: [ class isAbstract not ] ])
+		           asSortedCollection: [ :a :b | a name <= b name ].
 
 	classes ifEmpty: [ ^ nil ].
 
 	classes do: [ :class | suite addTests: class buildSuite tests ].
 
 	time := DateAndTime now.
-	Transcript << 'Beginning to run tests of ' << packageName << OSPlatform current lineEnding.
+	Transcript
+		<< 'Beginning to run tests of ' << packageName
+		<< ' with random seed ' << suite shuffleSeed asString
+		<< OSPlatform current lineEnding.
 	"We flush so that if a crash happens during the tests, we print in which package is the naughty test in the logs."
 	Transcript flush.
+	
 	result := self runSuite: suite.
-	Transcript << 'Finished to run tests of ' << packageName << ' in ' << (DateAndTime now - time) humanReadablePrintString << OSPlatform current lineEnding.
+	
+	Transcript
+		<< 'Finished to run tests of ' << packageName << ' in '
+		<< (DateAndTime now - time) humanReadablePrintString
+		<< OSPlatform current lineEnding.
 	Transcript flush.
 
 	^ result
@@ -66,6 +81,11 @@ HDTestReport class >> runPackage: aString [
 HDTestReport class >> runSuite: aTestSuite [
 
 	^ self new runSuite: aTestSuite
+]
+
+{ #category : 'running' }
+HDTestReport class >> shuffleSeed: aSeed [
+	ShuffleSeed := aSeed
 ]
 
 { #category : 'private' }
@@ -124,7 +144,7 @@ HDTestReport >> initialize [
 
 	super initialize.
 	shouldSerializeError := true.
-	suiteTime := 0 asDuration.
+	suiteTime := 0.
 	suitePosition := suiteFailures := suiteErrors := 0.
 	progressFileName := 'progress.log'.
 	stageName := self class currentStageName.
@@ -221,7 +241,7 @@ HDTestReport >> reportTestCase: aTestCase runBlock: aBlock [
 	Otherwise any new xml element would be written out of the test node.
 	To allow reporting during test we set a temp log stream 
 	which we append to the main stream at the end of test as part of test element"
-	testLog := self newLogDuring: [ time := aBlock timeToRun ].
+	testLog := self newLogDuring: [ time := aBlock millisecondsToRun ].
 	stream
 		tab; nextPutAll: '<testcase classname="';
 		nextPutAll: (self encode: (self generateTestName: aTestCase));
@@ -230,7 +250,7 @@ HDTestReport >> reportTestCase: aTestCase runBlock: aBlock [
 		nextPutAll: '" name="';
 		nextPutAll: (self encode: aTestCase nameForReport);
 		nextPutAll: '" time="';
-		print: time asMilliSeconds / 1000.0;
+		print: time / 1000.0;
 		nextPutAll: '">';
 		lf.
 	stream nextPutAll: testLog.
@@ -242,11 +262,12 @@ HDTestReport >> reportTestCase: aTestCase runBlock: aBlock [
 HDTestReport >> run [
 	Author uniqueInstance
 		ifUnknownAuthorUse: 'hudson'
-		during: [ [ 
+		during: [ 
+			[ 
 			self setUp.
-			suiteTime := [ self runAll ]
-				timeToRun ]
-					ensure: [ self tearDown ] ]
+			suiteTime := [ self runAll ] millisecondsToRun ]
+				ensure: [ self tearDown ] 
+		]
 ]
 
 { #category : 'running' }
@@ -327,6 +348,7 @@ HDTestReport >> setUp [
 		nextPutAll: 'name="'; nextPutAll: (self encode: suite name); nextPutAll: '" ';
 		nextPutAll: 'tests="'; print: suite tests size; nextPutAll: '" ';
 		nextPutAll: 'timestamp="'; print: Time now; nextPutAll: '" ';
+		nextPutAll: 'seed="'; print: suite shuffleSeed; nextPutAll: '" ';
 		nextPutAll: '>'.
 	
 	"Now this is ugly. We want to update the time and the number of failures and errors, but still at the same time stream a valid XML. So remember this position and add some whitespace, that we can fill later."
@@ -410,7 +432,7 @@ HDTestReport >> tearDown [
 	stream 
 		nextPutAll: ' failures="'; print: suiteFailures; 
 		nextPutAll: '" errors="'; print: suiteErrors; 
-		nextPutAll: '" time="'; print: suiteTime asMilliSeconds / 1000.0; 
+		nextPutAll: '" time="'; print: suiteTime / 1000.0; 
 		nextPutAll: '">'.
 	stream close.
 	

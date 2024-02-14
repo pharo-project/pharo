@@ -80,7 +80,7 @@ RBRemoveProtocolTransformation >> protocol: aString inClass: aClassName [
 	protocol := aString
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBRemoveProtocolTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.

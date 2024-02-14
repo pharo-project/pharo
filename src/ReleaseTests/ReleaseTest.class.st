@@ -217,7 +217,7 @@ ReleaseTest >> testKeyClassesArePresentInStartupList [
 		self assert: (registeredHandlers includes: className).
 		self assert: (self hasStartUpOrShutDownMethod: (testingEnvironment at: className)) ].
 
-	self assert: (registeredHandlers includes: #UIManagerSessionHandler)
+	self assert: (registeredHandlers includes: #ErrorHandlerSessionHandler)
 ]
 
 { #category : 'tests' }
@@ -292,6 +292,7 @@ ReleaseTest >> testNoEquivalentSuperclassMethods [
 		           method overriddenMethod
 			           ifNotNil: [ :overridenMethod | method equivalentTo: overridenMethod ]
 			           ifNil: [ false ] ].
+
 	self assert: methods size <= 326
 ]
 
@@ -371,6 +372,12 @@ ReleaseTest >> testNoShadowedVariablesInMethods [
 	self
 		assert: remaining isEmpty
 		description: ('the following methods have shadowing variable definitions and should be cleaned: ', remaining asString)
+]
+
+{ #category : 'tests' }
+ReleaseTest >> testNoSuperInitializeOnClassSideInitialization [
+
+	self assertValidLintRule: ReDoNotSendSuperInitializeInClassSideRule new
 ]
 
 { #category : 'tests' }
@@ -465,7 +472,7 @@ ReleaseTest >> testShouldWorldMorphBeAfterFontClassesInStartupList [
 	startupList := (SessionManager default startupList collect: [:each | each handledId]).
 	#(StrikeFont LogicalFont FreeTypeSettings FreeTypeCache)
 		do: [ :fontClass |
-			self should: [ (startupList indexOf: #UIManagerSessionHandler) > (startupList indexOf: #SystemSettingsPersistence) ] ]
+			self should: [ (startupList indexOf: #ErrorHandlerSessionHandler) > (startupList indexOf: #SystemSettingsPersistence) ] ]
 ]
 
 { #category : 'tests' }

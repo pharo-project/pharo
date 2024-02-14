@@ -46,8 +46,7 @@ BaselineOfIDE >> baseline: spec [
 		spec postLoadDoIt: #postload:package:.
 		spec baseline: 'BasicTools' with: [ spec repository: repository ].
 		spec baseline: 'Athens' with: [ spec repository: repository ].
-		spec baseline: 'KernelTests' with: [ spec repository: repository ].
-    spec baseline: 'Flashback' with: [ spec repository: repository ].
+		spec baseline: 'Flashback' with: [ spec repository: repository ].
 
 		self
 			load: 'Shift' group: 'shift-tests' spec: spec;
@@ -62,9 +61,8 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Math-Operations-Extensions-Tests'.
 		spec package: 'Network-Tests'.
 		spec package: 'Network-Mail-Tests'.
-		spec package: 'Gofer-Tests'.
 		spec package: 'Rubric-SpecFindReplaceDialog'.
-
+		spec package: 'OpalCompiler-UI'.
 
 		self load: 'Metacello' group: 'Tests' spec: spec.
 
@@ -109,6 +107,7 @@ BaselineOfIDE >> baseline: spec [
 			with: [ spec repository: repository ].
 		spec baseline: 'ClassParser' with: [ spec repository: repository ].
 
+		
 		self
 			load: 'Calypso'
 			group: #( 'FullEnvironment' 'SystemBrowser' 'Tests' )
@@ -131,7 +130,6 @@ BaselineOfIDE >> baseline: spec [
 		self roassal: spec.
 
 		spec baseline: 'ThreadedFFI' with: [ spec repository: repository ].
-		spec baseline: 'ProfilerUI' with: [ spec repository: repository ].
 
 		spec package: 'Kernel-ExtraUtils' ]
 ]

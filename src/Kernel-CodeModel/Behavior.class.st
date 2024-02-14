@@ -1044,6 +1044,13 @@ Behavior >> isDisabledSelector: selector [
 ]
 
 { #category : 'testing' }
+Behavior >> isDoubleWords [
+	"Answer true if the receiver is made of 64-bit instance variables."
+
+	^self classLayout isDoubleWords
+]
+
+{ #category : 'testing' }
 Behavior >> isEphemeronClass [
 	"Answer whether the receiver has ephemeral instance variables.  The garbage collector will
 	 fire (queue for finalization) any ephemeron whose first instance variable is not referenced
@@ -1160,7 +1167,7 @@ Behavior >> isWeak [
 Behavior >> isWords [
 	"Answer true if the receiver is made of 32-bit instance variables."
 
-	^self isBytes not
+	^self classLayout isWords
 ]
 
 { #category : 'accessing - method dictionary' }
@@ -1627,7 +1634,7 @@ Behavior >> superclass: aClass [
 
 	"Note: Do not use 'aClass isKindOf: Behavior' here
 		in case we recompile from Behavior itself."
-		<reflection: 'Class structural inspection - Iterating and querying hierarchy'>
+		<reflection: 'Class structural modification - Hierarchy modification'>
 	aClass
 		ifNil: [ self basicSuperclass: aClass.
 			Object flushCache.
