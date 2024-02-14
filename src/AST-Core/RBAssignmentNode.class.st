@@ -95,6 +95,12 @@ RBAssignmentNode >> equalTo: anObject withMapping: aDictionary [
 				and: [self value equalTo: anObject value withMapping: aDictionary]]
 ]
 
+{ #category : 'testing' }
+RBAssignmentNode >> hasBlock [
+
+	^ value hasBlock 
+]
+
 { #category : 'comparing' }
 RBAssignmentNode >> hash [
 	^self variable hash bitXor: self value hash

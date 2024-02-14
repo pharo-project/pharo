@@ -69,6 +69,12 @@ RBReturnNode >> equalTo: anObject withMapping: aDictionary [
 		and: [self value equalTo: anObject value withMapping: aDictionary]
 ]
 
+{ #category : 'testing' }
+RBReturnNode >> hasBlock [
+
+	^ value hasBlock 
+]
+
 { #category : 'comparing' }
 RBReturnNode >> hash [
 	^self value hash

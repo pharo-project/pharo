@@ -128,6 +128,12 @@ RBArrayNode >> equalTo: anObject withMapping: aDictionary [
 	^ true
 ]
 
+{ #category : 'testing' }
+RBArrayNode >> hasBlock [
+
+	^ statements anySatisfy: [ :stm | stm hasBlock ]
+]
+
 { #category : 'comparing' }
 RBArrayNode >> hash [
 	^ self hashForCollection: self statements

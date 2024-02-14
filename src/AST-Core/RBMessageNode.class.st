@@ -143,6 +143,12 @@ RBMessageNode >> equalTo: anObject withMapping: aDictionary [
 	^true
 ]
 
+{ #category : 'testing' }
+RBMessageNode >> hasBlock [
+
+	^ receiver hasBlock | (arguments anySatisfy: [ :arg | arg hasBlock ])
+]
+
 { #category : 'comparing' }
 RBMessageNode >> hash [
 	^ (self receiver hash bitXor: self selector hash) bitXor: (self hashForCollection: self arguments)

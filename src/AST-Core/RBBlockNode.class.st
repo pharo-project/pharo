@@ -216,6 +216,12 @@ RBBlockNode >> hasArguments [
 ]
 
 { #category : 'testing' }
+RBBlockNode >> hasBlock [
+
+	^ true
+]
+
+{ #category : 'testing' }
 RBBlockNode >> hasBlockReturn [
 
 	self deprecated: 'This method is deprecated, don''t use it. Use on your own responsibility.'.

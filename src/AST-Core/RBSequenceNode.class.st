@@ -283,6 +283,12 @@ RBSequenceNode >> equalTo: anObject withMapping: aDictionary [
 ]
 
 { #category : 'testing' }
+RBSequenceNode >> hasBlock [
+
+	^ statements anySatisfy: [ :stm | stm hasBlock ]
+]
+
+{ #category : 'testing' }
 RBSequenceNode >> hasNonLocalReturn [
 	"check if there is a non-local return anywhere
 	Note: returns in a method itself are local returns"
