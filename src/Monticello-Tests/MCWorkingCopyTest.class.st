@@ -177,25 +177,25 @@ MCWorkingCopyTest >> testNaming [
 	| repos version |
 
 	repos := MCDictionaryRepository new.
-	self assertNameWhenSavingTo: repos is: self packageName, '-abc.1'.
-	self assertNameWhenSavingTo: repos is: self packageName, '-abc.2'.
+	self assertNameWhenSavingTo: repos is: self packageName, '-.1'.
+	self assertNameWhenSavingTo: repos is: self packageName, '-.2'.
 	repos := MCDictionaryRepository new.
-	self assertNameWhenSavingTo: repos is: self packageName, '-abc.3'.
+	self assertNameWhenSavingTo: repos is: self packageName, '-.3'.
 	version := self snapshot.
-	version info instVarNamed: 'name' put: 'foo-jf.32'.
+	version info instVarNamed: 'name' put: 'foo-.32'.
 	version load.
-	self assertNameWhenSavingTo: repos is: 'foo-abc.33'.
-	self assertNameWhenSavingTo: repos is: 'foo-abc.34'.
-	version info instVarNamed: 'name' put: 'foo-abc.35'.
+	self assertNameWhenSavingTo: repos is: 'foo-.33'.
+	self assertNameWhenSavingTo: repos is: 'foo-.34'.
+	version info instVarNamed: 'name' put: 'foo-.35'.
 	repos storeVersion: version.
-	self assertNameWhenSavingTo: repos is: 'foo-abc.36'.
-	self assertNameWhenSavingTo: repos is: 'foo-abc.37'.
-	version info instVarNamed: 'name' put: 'foo-abc.10'.
+	self assertNameWhenSavingTo: repos is: 'foo-.36'.
+	self assertNameWhenSavingTo: repos is: 'foo-.37'.
+	version info instVarNamed: 'name' put: 'foo-.10'.
 	repos storeVersion: version.
-	self assertNameWhenSavingTo: repos is: 'foo-abc.38'.
-	version info instVarNamed: 'name' put: 'foo2-ab.40'.
+	self assertNameWhenSavingTo: repos is: 'foo-.38'.
+	version info instVarNamed: 'name' put: 'foo2-.40'.
 	version load.
-	self assertNameWhenSavingTo: repos is: 'foo2-abc.41'.
+	self assertNameWhenSavingTo: repos is: 'foo2-.41'.
 ]
 
 { #category : 'tests' }
