@@ -113,12 +113,14 @@ SDL_Renderer >> initialize [
 
 { #category : 'rendering' }
 SDL_Renderer >> noClipRect [
-	^ self ffiCall: #( int SDL_RenderSetClipRect ( self , void* nil ) )
+
+  ^ self ffiCall: #( int SDL_RenderSetClipRect ( self , void* 0 ) )
 ]
 
 { #category : 'rendering' }
 SDL_Renderer >> noRenderTarget [
-	^ self ffiCall: #( int SDL_SetRenderTarget ( self , void* nil ) )
+
+  ^ self ffiCall: #( int SDL_SetRenderTarget ( self , void* 0 ) )
 ]
 
 { #category : 'rendering' }

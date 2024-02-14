@@ -69,7 +69,8 @@ SDL_Texture >> unlock [
 
 { #category : 'initialization' }
 SDL_Texture >> updateTexturePixels: pixels pitch: pitch [
-	^ self ffiCall: #( int SDL_UpdateTexture ( self , void* nil , void* pixels , int pitch ) )
+
+  ^ self ffiCall: #( int SDL_UpdateTexture ( self , void* 0 , void* pixels , int pitch ) )
 ]
 
 { #category : 'initialization' }
