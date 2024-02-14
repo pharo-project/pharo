@@ -171,6 +171,14 @@ RBArrayNode >> isUsingAsReturnValue: aNode [
 	^ (statements anySatisfy: [ :each | each == aNode ]) or: [ self isUsedAsReturnValue ]
 ]
 
+{ #category : 'testing' }
+RBArrayNode >> lastIsReturn [
+
+	^ statements isEmpty
+		  ifTrue: [ false ]
+		  ifFalse: [ statements last lastIsReturn ]
+]
+
 { #category : 'accessing - token' }
 RBArrayNode >> left [
 	^ left
