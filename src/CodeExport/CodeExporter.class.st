@@ -12,9 +12,15 @@ Class {
 { #category : 'file-out' }
 CodeExporter class >> writeSourceCodeFrom: aStream baseName: baseName isSt: stOrCsFlag [
 
-	| extension targetFile |
-	extension := stOrCsFlag ifTrue: ['st']  ifFalse: ['cs'].
-	targetFile := FileLocator imageDirectory / baseName asFileName, extension.
+	| extension targetFile validFilename targetFilename |
+	
+	extension := stOrCsFlag ifTrue: ['.st'] ifFalse: ['.cs'].
+	
+	validFilename := FilePathEncoder encode: (FileSystem disk 
+		checkName: baseName
+		fixErrors: true).
+	targetFilename := (FilePathEncoder decode: validFilename) , extension.
+	targetFile := FileLocator imageDirectory / targetFilename.
 
 	self writeSourceCodeFrom: aStream toFileReference: targetFile
 ]
