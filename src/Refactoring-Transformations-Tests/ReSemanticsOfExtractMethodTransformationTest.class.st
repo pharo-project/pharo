@@ -36,7 +36,7 @@ ReSemanticsOfExtractMethodTransformationTest >> setUp [
 	class := model classNamed: 'ReClassForTesting'
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'tests' }
 ReSemanticsOfExtractMethodTransformationTest >> testMiddleExpressionsOfASequenceGotExtracted [
 
 	| transformation |
@@ -58,7 +58,7 @@ self
 		equals: (self parseMethod: 'm self foo. self extractedMethod. self end')
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'tests' }
 ReSemanticsOfExtractMethodTransformationTest >> testTwoLastExpressionsOfASequenceGotExtracted [
 
 	| transformation |
