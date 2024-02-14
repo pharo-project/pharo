@@ -327,7 +327,7 @@ SmalltalkImage >> cleanOutUndeclared [
 					unreferenced
 						remove: lit key
 						ifAbsent: [ "Sanity check--a binding with more than one reference may already be gone from the unreferenced set, but should be present in Undeclared itself"
-							self at: lit key ] ] ] ] ].
+							Undeclared at: lit key ] ] ] ] ].
 
 	unreferenced do: [ :key | Undeclared removeKey: key ]
 ]
