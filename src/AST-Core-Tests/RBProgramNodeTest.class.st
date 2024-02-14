@@ -156,7 +156,8 @@ RBProgramNodeTest >> testAddReturn [
 	| tree return existingReturn lastStatement |
 	tree := self parseExpression: '1. 2'.
 	lastStatement := tree statements last.
-	return := tree addReturn.
+	tree addReturn.
+	return := tree statements last.
 	self assert: return start equals: lastStatement start.
 	self assert: return value equals: lastStatement.
 	self assert: tree statements last equals: return.
@@ -164,7 +165,8 @@ RBProgramNodeTest >> testAddReturn [
 
 	tree := self parseExpression: '3. ^ 4'.
 	existingReturn := tree statements last.
-	return := tree addReturn.
+	tree addReturn.
+	return := tree statements last.
 	self assert: return identicalTo: existingReturn.
 	self assert: tree statements last equals: return.
 	self assert: (self parseExpression: '3. ^ 4') equals: tree
