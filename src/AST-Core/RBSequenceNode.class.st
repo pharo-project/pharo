@@ -163,6 +163,7 @@ RBSequenceNode >> addNodesFirst: aCollection [
 { #category : 'adding nodes' }
 RBSequenceNode >> addReturn [
 	| node |
+
 	statements isEmpty
 		ifTrue: [ ^ nil ].
 	statements last isReturn
@@ -170,7 +171,7 @@ RBSequenceNode >> addReturn [
 	node := RBReturnNode start: statements last start value: statements last.
 	statements at: statements size put: node.
 	node parent: self.
-	^ node
+
 ]
 
 { #category : 'adding nodes' }
