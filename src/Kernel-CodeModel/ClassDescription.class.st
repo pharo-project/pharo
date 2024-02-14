@@ -296,7 +296,11 @@ ClassDescription >> compile: sourceCode classified: protocol [
 { #category : 'compiling' }
 ClassDescription >> compile: sourceCode classified: protcol notifying: requestor [
 
-	^ self compile: sourceCode classified: protcol withStamp: Author changeStamp notifying: requestor
+	^ self
+		  compile: sourceCode
+		  classified: protcol
+		  withStamp: nil
+		  notifying: requestor
 ]
 
 { #category : 'compiling' }

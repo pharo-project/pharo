@@ -239,7 +239,9 @@ Deprecation >> signal [
 
 { #category : 'handling' }
 Deprecation >> transform [
+
 	| node rewriteRule aMethod |
+
 	self rewriterClass ifNil:[ ^ self ].
 	aMethod := self contextOfSender homeMethod.
 	aMethod isDoIt ifTrue:[ ^ self ]. "no need to transform doits"
@@ -250,9 +252,9 @@ Deprecation >> transform [
 		(rewriteRule executeTree: node)
 			ifFalse: [ ^ self ].
 		node replaceWith: rewriteRule tree.
-		Author
-			useAuthor: 'AutoDeprecationRefactoring'
-			during: [ aMethod origin compile: aMethod ast formattedCode classified: aMethod protocol ].
+		aMethod origin
+			compile: aMethod ast formattedCode
+			classified: aMethod protocol.
 		Log ifNotNil: [ :log | log add: self ] ]
 ]
 

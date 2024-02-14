@@ -110,8 +110,6 @@ BaselineOfBasicTools >> postload: loader package: packageSpec [
 	
 	CompletionSorter register.
 	RubSmalltalkEditor completionEngineClass: CompletionEngine.
-	
-	Author reset.
 
 	Initialized := true.
 ]
