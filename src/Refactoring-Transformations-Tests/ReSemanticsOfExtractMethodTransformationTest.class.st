@@ -155,6 +155,51 @@ self
 ]
 
 { #category : 'tests' }
+ReSemanticsOfExtractMethodTransformationTest >> testMultipleTempAssignmentWithReferencesAfterExtractedCodeExpectFailure [
+
+	| transformation |
+	transformation := self 
+extractSource: 'a := 2. b := self foo: 8.' 
+fromSource: 'm 
+		| a b |
+		a := 2.
+		b := self foo: 8.
+		^ a + b'
+withNewSelector: #extractedMethod.
+
+	self should: [ transformation generateChanges ]
+		raise: RBRefactoringError
+]
+
+{ #category : 'tests' }
+ReSemanticsOfExtractMethodTransformationTest >> testMultipleTempAssignmentWithoutReferencesAfterExtractedCodeExpectGotExtracted [
+
+	| transformation |
+	transformation := self 
+extractSource: 'a := 2. b := self foo: 8.' 
+fromSource: 'm 
+		| a b |
+		a := 2.
+		b := self foo: 8.
+		self end'
+withNewSelector: #extractedMethod.
+	transformation generateChanges.
+	
+self 
+		assert: (class parseTreeForSelector: #extractedMethod)
+		equals: (self parseMethod: 'extractedMethod 
+					| a b |
+					a := 2. 
+					^ b := self foo: 8').
+		
+	self 
+		assert: (class parseTreeForSelector: #m)
+		equals: (self parseMethod: 'm
+				self extractedMethod.
+				self end')
+]
+
+{ #category : 'tests' }
 ReSemanticsOfExtractMethodTransformationTest >> testTempAssignmentAndReferenceAfterExtractedCodeExpectGotExtracted [
 
 	| transformation |
