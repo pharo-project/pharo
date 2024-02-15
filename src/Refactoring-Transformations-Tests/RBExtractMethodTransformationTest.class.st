@@ -128,7 +128,7 @@ RBExtractMethodTransformationTest >> testFailureWhenTemporaryReadBeforeWritten [
 			temp := bar * bar.'
 				 from: #foo
 				 to: #foobar
-				 in: class) generateChanges ]
+				 in: class name) generateChanges ]
 		raise: RBRefactoringError
 ]
 
@@ -161,7 +161,7 @@ RBExtractMethodTransformationTest >> testNeedsReturn [
 		assert: (class parseTreeForSelector: #foo:)
 		equals: (self parseMethod: 'foo: rules
 				rules isEmpty ifTrue: [^self].
-				rules size == 1 ifTrue: [^rules first viewResults]')
+				^ rules size == 1 ifTrue: [^rules first viewResults]')
 ]
 
 { #category : 'tests' }
@@ -187,7 +187,7 @@ RBExtractMethodTransformationTest >> testTransform [
 							temp := bar * bar.
 							Transcript show: temp printString; cr'
 		                   from: #foo
-		                   to: #foobar
+		                   to: #extractedMethod
 		                   in: self changeMockClass name) generateChanges.
 
 	self assert: transformation model changes changes size equals: 4.
@@ -197,11 +197,11 @@ RBExtractMethodTransformationTest >> testTransform [
 		assert: (class parseTreeForSelector: #foo)
 		equals: (self parseMethod: 'foo
 													| temp |
-													temp := self foobar.
+													temp := self extractedMethod.
 													^temp * temp').
 	self
-		assert: (class parseTreeForSelector: #foobar)
-		equals: (self parseMethod: 'foobar
+		assert: (class parseTreeForSelector: #extractedMethod)
+		equals: (self parseMethod: 'extractedMethod
 													| temp bar |
 													bar := 5.
 													temp := bar * bar.
@@ -240,7 +240,7 @@ RBExtractMethodTransformationTest >> testWhenTemporaryVariableBecomesArgumentOfE
 					nameStream nextPutAll: self name;
 								nextPutAll: '' (''.
 					self problemCount printOn: nameStream.
-					nameStream nextPut: $).')
+					^ nameStream nextPut: $).')
 ]
 
 { #category : 'tests' }
@@ -273,7 +273,7 @@ RBExtractMethodTransformationTest >> testWithArgument [
 	self
 		assert: (class parseTreeForSelector: #foo:)
 		equals: (self parseMethod: 'foo: aSmalllintContext
-					(RecursiveSelfRule executeTree: rewriteRule tree initialAnswer: false)
+					^ (RecursiveSelfRule executeTree: rewriteRule tree initialAnswer: false)
 						ifFalse:
 							[builder compile: rewriteRule tree printString
 										in: class
@@ -295,7 +295,7 @@ RBExtractMethodTransformationTest >> testWithTemporariesSelected [
 		                extract: '| temp | temp := 5. temp * temp'
 		                from: #foo
 		                to: #foobar
-		                in: class) generateChanges.
+		                in: class name) generateChanges.
 
 	self assert: refactoring model changes changes size equals: 4.
 	self
@@ -329,7 +329,7 @@ RBExtractMethodTransformationTest >> testWithTemporaryAssigned [
 			Transcript show: temp printString; cr.'
 		                from: #foo
 		                to: #foobar
-		                in: class) generateChanges.
+		                in: class name) generateChanges.
 
 	self assert: refactoring model changes changes size equals: 4.
 	self
