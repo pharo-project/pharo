@@ -515,7 +515,10 @@ Socket >> destroy [
 			                  readSemaphore.
 			                  writeSemaphore }.
 		semaphore := readSemaphore := writeSemaphore := nil.
-		saveSemaphores do: [ :each | each signalAll ].
+		"A single #signal should be sufficient, as multiple processes trying to
+		read or write at once will result in undefined behavior anyway as their
+		data gets all mixed up together."
+		saveSemaphores do: [ :each | each signal ].
 		self unregister ]
 ]
 
