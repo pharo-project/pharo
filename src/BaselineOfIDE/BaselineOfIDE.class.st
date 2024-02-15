@@ -45,7 +45,9 @@ BaselineOfIDE >> baseline: spec [
 	spec for: #common do: [
 		spec postLoadDoIt: #postload:package:.
 		spec baseline: 'BasicTools' with: [ spec repository: repository ].
-		spec package: 'Tool-MorphicProfiler' with: [ spec requires: #( 'BasicTools' ) ].
+		spec
+			package: 'Tool-MorphicProfiler'
+			with: [ spec requires: #( 'BasicTools' ) ].
 		spec baseline: 'Athens' with: [ spec repository: repository ].
 		spec baseline: 'Flashback' with: [ spec repository: repository ].
 
@@ -57,6 +59,7 @@ BaselineOfIDE >> baseline: spec [
 			load: 'SUnit' group: 'Tests' spec: spec;
 			load: 'EnlumineurFormatter' group: 'Tests' spec: spec;
 			load: 'Reflectivity' group: 'tests' spec: spec;
+			load: 'DebugPoints' group: 'Tests' spec: spec;
 			load: 'Refactoring' group: 'Tests' spec: spec.
 
 		spec package: 'Math-Operations-Extensions-Tests'.
@@ -109,7 +112,7 @@ BaselineOfIDE >> baseline: spec [
 			with: [ spec repository: repository ].
 		spec baseline: 'ClassParser' with: [ spec repository: repository ].
 
-		
+
 		self
 			load: 'Calypso'
 			group: #( 'FullEnvironment' 'SystemBrowser' 'Tests' )
