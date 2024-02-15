@@ -16,7 +16,8 @@ Class {
 	#superclass : 'RBInteractionDriver',
 	#instVars : [
 		'methods',
-		'class'
+		'class',
+		'methodSelectionPresenterClass'
 	],
 	#category : 'Refactoring-UI-Drivers to migrate to new architecture',
 	#package : 'Refactoring-UI',
@@ -42,7 +43,7 @@ RePushDownMethodDriver >> configureRefactoring [
 	refactoring :=  RBPushDownMethodRefactoring
 		  model: model
 		  pushDown: (methods collect: [ :each | each selector ])
-		  from: class
+		  from: class name
 ]
 
 { #category : 'configuration' }

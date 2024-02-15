@@ -18,10 +18,10 @@ Class {
 }
 
 { #category : 'instance creation' }
-RBPushDownMethodRefactoring class >> model: anEnvironment pushDown: selectorCollection from: aClass [
+RBPushDownMethodRefactoring class >> model: anEnvironment pushDown: selectorCollection from: aClassName [
 	^ self new
 		model: anEnvironment;
-		pushDown: selectorCollection from: aClass;
+		pushDown: selectorCollection from: aClassName;
 		yourself
 ]
 
@@ -138,8 +138,8 @@ RBPushDownMethodRefactoring >> pushDown: aSelector [
 ]
 
 { #category : 'initialization' }
-RBPushDownMethodRefactoring >> pushDown: selectorCollection from: aClass [
-	class := self classObjectFor: aClass.
+RBPushDownMethodRefactoring >> pushDown: selectorCollection from: aClassName [
+	class := self model classNamed: aClassName.
 	selectors := selectorCollection
 ]
 
