@@ -81,8 +81,7 @@ RBExtractMethodTransformation >> applicabilityPreconditions [
 { #category : 'executing' }
 RBExtractMethodTransformation >> buildTransformationFor: newMethodName [
 
-	| needsReturn messageSend newArguments tempsToRemove |
-	tempsToRemove := self calculateTemporariesToRemove.
+	| needsReturn messageSend newArguments |
 	needsReturn := self calculateIfReturnIsNeededInCaller.
 	newMethod := self generateNewMethodWith: newMethodName.
 	newArguments := self calculateNewArgumentsIn: newMethodName.
@@ -103,12 +102,10 @@ RBExtractMethodTransformation >> buildTransformationFor: newMethodName [
 				   to: messageSend
 				   inMethod: selector
 				   inClass: class);
-		  addAll: (tempsToRemove collect: [ :temporary |
-					   RBRemoveTemporaryVariableTransformation
-						   model: self model
-						   variable: temporary
-						   inMethod: selector
-						   inClass: class ]);
+		  add: (ReRemoveUnusedTemporaryVariableRefactoring
+				   model: self model
+				   inMethod: selector
+				   inClass: class name);
 		  yourself
 ]
 
@@ -223,16 +220,6 @@ RBExtractMethodTransformation >> calculateTemporaries [
 		accesses := allVariables select: [ :each | subtree references: each ].
 
 		temporaries := accesses select: [ :each | subtree assigns: each ] ]
-]
-
-{ #category : 'querying' }
-RBExtractMethodTransformation >> calculateTemporariesToRemove [
-	"returns a collection of variables that should be removed from the original method"
-
-	| newParseTree |
-	newParseTree := parseTree copy removeSubtree: subtree.
-	^ newParseTree allDefinedVariables
-		reject: [ :var | newParseTree references: var ]
 ]
 
 { #category : 'querying' }
