@@ -32,11 +32,106 @@ ReSemanticsOfExtractMethodTransformationTest >> setUp [
 		aBuilder
 			superclass: Object;
 			name: #ReClassForTesting;
+			slots: { #instVar };
 			package: 'Refactoring-DataForTesting'].
 	class := model classNamed: 'ReClassForTesting'
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'tests' }
+ReSemanticsOfExtractMethodTransformationTest >> testBeginningExpressionsOfASequenceGotExtracted [
+
+	| transformation |
+	transformation := self 
+extractSource: 'self foo. self bar.' 
+fromSource: 'm 
+		self foo.
+		self bar.
+		self end'
+withNewSelector: #extractedMethod.
+	transformation generateChanges.
+	
+self 
+		assert: (class parseTreeForSelector: #extractedMethod)
+		equals: (self parseMethod: 'extractedMethod self foo. self bar.').
+		
+	self 
+		assert: (class parseTreeForSelector: #m)
+		equals: (self parseMethod: 'm self extractedMethod. self end')
+]
+
+{ #category : 'tests' }
+ReSemanticsOfExtractMethodTransformationTest >> testCompleteSequenceGotExtracted [
+
+	| transformation |
+	transformation := self 
+extractSource: 'self foo. self bar. self end' 
+fromSource: 'm 
+		self foo.
+		self bar.
+		self end'
+withNewSelector: #extractedMethod.
+	transformation generateChanges.
+	
+self 
+		assert: (class parseTreeForSelector: #extractedMethod)
+		equals: (self parseMethod: 'extractedMethod self foo. self bar. self end').
+		
+	self 
+		assert: (class parseTreeForSelector: #m)
+		equals: (self parseMethod: 'm self extractedMethod')
+]
+
+{ #category : 'tests' }
+ReSemanticsOfExtractMethodTransformationTest >> testExtractClassFromAssignmentExpectExtracted [
+
+	| transformation |
+	transformation := self 
+extractSource: 'ReClassForTesting' 
+fromSource: 'm 
+		| temp |
+		temp := ReClassForTesting'
+withNewSelector: #extractedMethod.
+	transformation generateChanges.
+	
+self 
+		assert: (class parseTreeForSelector: #extractedMethod)
+		equals: (self parseMethod: 'extractedMethod 
+					^ ReClassForTesting').
+		
+	self 
+		assert: (class parseTreeForSelector: #m)
+		equals: (self parseMethod: 'm 
+				| temp | 
+				temp := self extractedMethod')
+]
+
+{ #category : 'tests' }
+ReSemanticsOfExtractMethodTransformationTest >> testExtractSequenceEndingWithReturnExpectExtracted [
+
+	| transformation |
+	transformation := self 
+extractSource: 'self bar. ^ self end.' 
+fromSource: 'm 
+		self foo.
+		self bar.
+		^ self end'
+withNewSelector: #extractedMethod.
+	transformation generateChanges.
+	
+self 
+		assert: (class parseTreeForSelector: #extractedMethod)
+		equals: (self parseMethod: 'extractedMethod 
+					self bar. 
+					^ self end').
+		
+	self 
+		assert: (class parseTreeForSelector: #m)
+		equals: (self parseMethod: 'm 
+				self foo. 
+				^ self extractedMethod')
+]
+
+{ #category : 'tests' }
 ReSemanticsOfExtractMethodTransformationTest >> testMiddleExpressionsOfASequenceGotExtracted [
 
 	| transformation |
@@ -58,7 +153,7 @@ self
 		equals: (self parseMethod: 'm self foo. self extractedMethod. self end')
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'tests' }
 ReSemanticsOfExtractMethodTransformationTest >> testTwoLastExpressionsOfASequenceGotExtracted [
 
 	| transformation |

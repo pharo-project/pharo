@@ -347,6 +347,12 @@ RBMethodNode >> hasArguments [
 ]
 
 { #category : 'testing' }
+RBMethodNode >> hasBlock [
+
+	^ body hasBlock 
+]
+
+{ #category : 'testing' }
 RBMethodNode >> hasPragmaNamed: aSymbol [
 	self pragmaNamed: aSymbol ifAbsent: [ ^ false ].
 	^ true

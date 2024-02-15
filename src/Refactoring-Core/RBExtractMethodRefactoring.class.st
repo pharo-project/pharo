@@ -98,6 +98,8 @@ RBExtractMethodRefactoring >> checkReturn [
 	needsReturn := self placeholderNode isUsedAsReturnValue.
 	extractedParseTree containsReturn ifFalse: [^self].
 	extractedParseTree lastIsReturn ifTrue: [^self].
+	"Since we have a return that is not last in the extracted tree,
+	extraction is only possible if the modified method's last statement is being extracted"
 	(modifiedParseTree isLast: self placeholderNode)
 		ifFalse:
 			[self refactoringError: 'Couldn''t extract code since it contains a return.'].
