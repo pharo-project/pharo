@@ -297,10 +297,12 @@ RBExtractMethodTransformation >> generateNewMethodWith: aMethodName [
 	((parseTree parentOfSubtree: subtree) isUsingAsReturnValue: subtree)
 		ifTrue: [ newMethodNode addReturn ].
 
-	assignments size = 1 ifTrue: [
+	assignments size = 1 
+		ifTrue: [
 		newMethodNode addNode:
 			(RBReturnNode value:
-			(RBVariableNode named: assignments first asString)) ].
+			(RBVariableNode named: assignments first asString)) ]
+		ifFalse: [RBReturnNodeAdderVisitor new visit: newMethodNode ].
 
 	^ newMethodNode
 ]
