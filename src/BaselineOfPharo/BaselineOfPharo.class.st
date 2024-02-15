@@ -12,23 +12,6 @@ Class {
 	#tag : 'Base'
 }
 
-{ #category : 'accessing - external projects' }
-BaselineOfPharo class >> beautifulComments [
-	<externalProject>
-
-	^ PharoExternalProject 
-		newName: 'BeautifulComments' 
-		owner: 'pillar-markup' 
-		project: 'BeautifulComments' 
-		version: 'Pharo12'
-]
-
-{ #category : 'repository urls' }
-BaselineOfPharo class >> beautifulCommentsRepository [
-
-	^ (self externalProjectNamed: 'BeautifulComments') repository
-]
-
 { #category : 'private' }
 BaselineOfPharo class >> declareExternalProjects [
 
