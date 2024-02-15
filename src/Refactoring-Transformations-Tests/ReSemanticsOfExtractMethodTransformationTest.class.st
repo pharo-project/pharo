@@ -52,7 +52,7 @@ withNewSelector: #extractedMethod.
 	
 self 
 		assert: (class parseTreeForSelector: #extractedMethod)
-		equals: (self parseMethod: 'extractedMethod self foo. self bar.').
+		equals: (self parseMethod: 'extractedMethod self foo. ^ self bar.').
 		
 	self 
 		assert: (class parseTreeForSelector: #m)
@@ -74,7 +74,7 @@ withNewSelector: #extractedMethod.
 	
 self 
 		assert: (class parseTreeForSelector: #extractedMethod)
-		equals: (self parseMethod: 'extractedMethod self foo. self bar. self end').
+		equals: (self parseMethod: 'extractedMethod self foo. self bar. ^ self end').
 		
 	self 
 		assert: (class parseTreeForSelector: #m)
@@ -146,7 +146,7 @@ withNewSelector: #extractedMethod.
 	
 self 
 		assert: (class parseTreeForSelector: #extractedMethod)
-		equals: (self parseMethod: 'extractedMethod self bar.').
+		equals: (self parseMethod: 'extractedMethod ^ self bar.').
 		
 	self 
 		assert: (class parseTreeForSelector: #m)
@@ -170,7 +170,7 @@ self
 		assert: (class parseTreeForSelector: #extractedMethod)
 		equals: (self parseMethod: 'extractedMethod 
 					self bar. 
-					self end').
+					^ self end').
 		
 	self 
 		assert: (class parseTreeForSelector: #m)

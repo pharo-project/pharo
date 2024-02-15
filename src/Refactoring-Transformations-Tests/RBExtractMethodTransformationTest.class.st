@@ -161,7 +161,7 @@ RBExtractMethodTransformationTest >> testNeedsReturn [
 		assert: (class parseTreeForSelector: #foo:)
 		equals: (self parseMethod: 'foo: rules
 				rules isEmpty ifTrue: [^self].
-				rules size == 1 ifTrue: [^rules first viewResults]')
+				^ rules size == 1 ifTrue: [^rules first viewResults]')
 ]
 
 { #category : 'tests' }
@@ -240,7 +240,7 @@ RBExtractMethodTransformationTest >> testWhenTemporaryVariableBecomesArgumentOfE
 					nameStream nextPutAll: self name;
 								nextPutAll: '' (''.
 					self problemCount printOn: nameStream.
-					nameStream nextPut: $).')
+					^ nameStream nextPut: $).')
 ]
 
 { #category : 'tests' }
@@ -273,7 +273,7 @@ RBExtractMethodTransformationTest >> testWithArgument [
 	self
 		assert: (class parseTreeForSelector: #foo:)
 		equals: (self parseMethod: 'foo: aSmalllintContext
-					(RecursiveSelfRule executeTree: rewriteRule tree initialAnswer: false)
+					^ (RecursiveSelfRule executeTree: rewriteRule tree initialAnswer: false)
 						ifFalse:
 							[builder compile: rewriteRule tree printString
 										in: class
