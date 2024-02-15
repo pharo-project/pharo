@@ -55,10 +55,7 @@ RBPushDownMethodRefactoring >> allClasses [
 RBPushDownMethodRefactoring >> applicabilityPreconditions [
 	"Check that all selectors are defined in `class`"
 
-	^ selectors
-		  inject: self trueCondition
-		  into: [ :cond :each |
-		  	cond & (RBCondition definesSelector: each in: class) ]
+	^ selectors collect: [ :selector | RBCondition definesSelector: selector in: class ]
 ]
 
 { #category : 'preconditions' }
@@ -71,13 +68,13 @@ RBPushDownMethodRefactoring >> breakingChangePreconditions [
 	This should be controlled via a flag on the ui.
 	"
 
-	| condition |
-	condition := selectors
-		             inject: (RBCondition isAbstractClass: class)
-		             into: [ :cond :each |
-			             cond & (RBCondition subclassesOf: class isDoingASuperSendFor: each)
-				             not ].
-	^ condition
+	| conditions |
+	conditions := OrderedCollection with: (RBCondition isAbstractClass: class).
+	conditions addAll: (selectors collect: [ :selector |
+		              (RBCondition
+			              subclassesOf: class
+			              isDoingASuperSendFor: selector) not ]).
+	^ conditions
 ]
 
 { #category : 'transforming' }
