@@ -126,7 +126,7 @@ BaselineOfIDE >> baseline: spec [
 		self newTools: spec.
 		self drTests: spec.
 		self microdown: spec.
-		self beautifulComments: spec.
+		spec package: #'BeautifulComments'  with: [ spec requires:  #( 'Microdown') ].
 		self documentBrowserCore: spec.
 		self welcomeBrowser: spec.
 		self roassal: spec.
@@ -134,13 +134,6 @@ BaselineOfIDE >> baseline: spec [
 		spec baseline: 'ThreadedFFI' with: [ spec repository: repository ].
 
 		spec package: 'Kernel-ExtraUtils' ]
-]
-
-{ #category : 'baselines - dependencies' }
-BaselineOfIDE >> beautifulComments: spec [ 
-
-	spec baseline: 'BeautifulComments' with: [ 
-		spec repository: (self class environment at: #BaselineOfPharo) beautifulCommentsRepository ]
 ]
 
 { #category : 'baselines - dependencies' }
@@ -219,7 +212,6 @@ BaselineOfIDE >> loadIceberg [
 	self registerProject: 'NewTools'.
 	self registerProject: 'Roassal'.
 	self registerProject: 'Microdown'.
-	self registerProject: 'BeautifulComments'.
 	self registerProject: 'DocumentBrowser' baseline: 'NewToolsDocumentBrowser' otherBaselines: #().
 	self registerProject: 'WelcomeBrowser'.
 	self registerIceberg
