@@ -1680,7 +1680,7 @@ Socket >> waitForDataFor: timeout ifClosed: closedBlock ifTimedOut: timedOutBloc
 		self isConnected ifFalse: [ ^ closedBlock value ].
 		(msecsElapsed := Time millisecondsSince: startTime) < msecsDelta
 			ifFalse: [ ^ timedOutBlock value ].
-		self readSemaphore waitTimeoutMilliseconds: msecsDelta - msecsElapsed ]
+		readSemaphore waitTimeoutMilliseconds: msecsDelta - msecsElapsed ]
 ]
 
 { #category : 'waiting' }
@@ -1688,13 +1688,9 @@ Socket >> waitForDataIfClosed: closedBlock [
 	"Wait indefinitely for data to arrive.  This method will block until
 	data is available or the socket is closed."
 
-	[true]
-		whileTrue: [
-			self dataAvailable
-				ifTrue: [^self].
-			self isConnected
-				ifFalse: [^closedBlock value].
-			self readSemaphore wait]
+	[ self dataAvailable ] whileFalse: [
+		self isConnected ifFalse: [ ^ closedBlock value ].
+		readSemaphore wait ]
 ]
 
 { #category : 'waiting' }
@@ -1715,7 +1711,7 @@ Socket >> waitForDisconnectionFor: timeout [
 		(msecsElapsed := Time millisecondsSince: startTime) < msecsDelta ] ]
 		whileTrue: [
 			self discardReceivedData.
-			self readSemaphore waitTimeoutMilliseconds: msecsDelta - msecsElapsed ].
+			readSemaphore waitTimeoutMilliseconds: msecsDelta - msecsElapsed ].
 	^ status ~= Connected
 ]
 
@@ -1744,7 +1740,7 @@ Socket >> waitForSendDoneFor: timeout ifClosed: closedBlock ifTimedOut: timedOut
 		self isConnected ifFalse: [ ^ closedBlock value ].
 		(msecsElapsed := Time millisecondsSince: startTime) < msecsDelta
 			ifFalse: [ ^ timedOutBlock value ].
-		self writeSemaphore waitTimeoutMilliseconds: msecsDelta - msecsElapsed ].
+		writeSemaphore waitTimeoutMilliseconds: msecsDelta - msecsElapsed ].
 	
 	^ sendDone
 ]
