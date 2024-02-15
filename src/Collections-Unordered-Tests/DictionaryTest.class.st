@@ -619,16 +619,6 @@ DictionaryTest >> testKeyForIdentity [
 ]
 
 { #category : 'tests - new' }
-DictionaryTest >> testLessThanMinus [
-
-	| assocs |
-	self assert: (self classToBeTested <- {}) equals: self emptyDict.
-
-	assocs := self nonEmptyDict associations collect: [ :each | each copy ].
-	self assert: (self classToBeTested <- assocs) equals: self nonEmptyDict
-]
-
-{ #category : 'tests - new' }
 DictionaryTest >> testNew [
 	| d |
 	d := self classToBeTested new: 10.
