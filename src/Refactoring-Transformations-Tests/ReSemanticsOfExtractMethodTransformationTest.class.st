@@ -258,6 +258,37 @@ self
 				^ self extractedMethod someMethod')
 ]
 
+{ #category : 'tests - failures' }
+ReSemanticsOfExtractMethodTransformationTest >> testExtractedCodeHasMoreThanOneExitPointExpectFailure [
+
+	| transformation |
+	transformation := self 
+extractSource: 'arg ifOdd: [ ^ false ]. arg ifEven: [ ^ true ].' 
+fromSource: 'm: arg
+		arg ifOdd: [ ^ false ].
+		arg ifEven: [ ^ true ].
+		self calculateOn: arg'
+withNewSelector: #extractedMethod:.
+
+	self should: [ transformation generateChanges ]
+		raise: RBRefactoringError 
+]
+
+{ #category : 'tests - failures' }
+ReSemanticsOfExtractMethodTransformationTest >> testExtractedCodeHasTwoExitPointExpectFailure [
+
+	| transformation |
+	transformation := self 
+extractSource: 'arg ifOdd: [ ^ false ]' 
+fromSource: 'm: arg
+		arg ifOdd: [ ^ false ].
+		self calculateOn: arg'
+withNewSelector: #extractedMethod:.
+
+	self should: [ transformation generateChanges ]
+		raise: RBRefactoringError 
+]
+
 { #category : 'tests' }
 ReSemanticsOfExtractMethodTransformationTest >> testInstanceVariableIsAssignedInExtractedCodeExpectGotExtracted [
 

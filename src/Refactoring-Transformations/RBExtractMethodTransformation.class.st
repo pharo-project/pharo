@@ -76,6 +76,7 @@ RBExtractMethodTransformation >> applicabilityPreconditions [
 	  & self preconditionOneAssignmentMaximum
 	  & self preconditionAssignmentsNotReadBeforeWritten
 	  & self preconditionSubtreeDoesNotContainsReturn
+	  & self preconditionHasSameExitPoint 
 ]
 
 { #category : 'executing' }
@@ -357,6 +358,14 @@ RBExtractMethodTransformation >> preconditionAssignmentsNotReadBeforeWritten [
 	assignments isEmptyOrNil ifTrue: [ ^ self trueCondition ].
 
 	^ ReVariablesNotReadBeforeWrittenCondition new subtree: subtree; variables: assignments
+]
+
+{ #category : 'preconditions' }
+RBExtractMethodTransformation >> preconditionHasSameExitPoint [
+
+	^ RBCondition
+		withBlock: [ subtree hasSameExitPoint ]
+		errorString: 'You cannot extract guard clauses and other expressions that directly impact the methods execution flow.'
 ]
 
 { #category : 'preconditions' }
