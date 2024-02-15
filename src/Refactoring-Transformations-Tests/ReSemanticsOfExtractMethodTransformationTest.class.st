@@ -22,7 +22,7 @@ ReSemanticsOfExtractMethodTransformationTest >> extractSource: sourceToExtract f
 		  in: class name
 ]
 
-{ #category : 'set up' }
+{ #category : 'running' }
 ReSemanticsOfExtractMethodTransformationTest >> setUp [
 
 	| package |
@@ -234,6 +234,28 @@ self
 		equals: (self parseMethod: 'm 
 				self foo. 
 				^ self extractedMethod')
+]
+
+{ #category : 'tests' }
+ReSemanticsOfExtractMethodTransformationTest >> testExtractSuperExpectExtracted [
+
+	| transformation |
+	transformation := self 
+extractSource: 'super' 
+fromSource: 'm 
+		^ super someMethod'
+withNewSelector: #extractedMethod.
+	transformation generateChanges.
+	
+self 
+		assert: (class parseTreeForSelector: #extractedMethod)
+		equals: (self parseMethod: 'extractedMethod 
+					^ super').
+		
+	self 
+		assert: (class parseTreeForSelector: #m)
+		equals: (self parseMethod: 'm 
+				^ self extractedMethod someMethod')
 ]
 
 { #category : 'tests' }
