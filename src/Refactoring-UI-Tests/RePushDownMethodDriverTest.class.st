@@ -6,6 +6,14 @@ Class {
 	#tag : 'Driver'
 }
 
+{ #category : 'initialization' }
+RePushDownMethodDriverTest >> setUpDriver: driver [
+
+	super setUpDriver: driver.
+	
+	driver methodsSelectionPresenterClass: StMethodsSelectionPresenterMock
+]
+
 { #category : 'tests' }
 RePushDownMethodDriverTest >> testPushDownMethodDriverWhenHappyPathExpectChanges [
 
@@ -15,7 +23,7 @@ RePushDownMethodDriverTest >> testPushDownMethodDriverWhenHappyPathExpectChanges
 	method := MyClassA methodNamed: #methodForPushDown.
 	
 	driver := RePushDownMethodDriver new
-					model: model scopes: { } pushDownMethods: { method }.
+					model: model scopes: { rbclasses } pushDownMethods: { method }.
 
 	self setUpDriver: driver.
 	

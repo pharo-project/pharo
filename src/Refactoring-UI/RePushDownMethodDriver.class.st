@@ -66,12 +66,18 @@ RePushDownMethodDriver >> handleBreakingChanges [
 	select ifNotNil: [ select action ]
 ]
 
+{ #category : 'for mocks' }
+RePushDownMethodDriver >> methodsSelectionPresenterClass: aClass [ 
+
+	methodSelectionPresenterClass := aClass
+]
+
 { #category : 'initialization' }
 RePushDownMethodDriver >> model: aRBNamespace scopes: refactoringScopes pushDownMethods: methodsList [
 	"Push down a list of methods of the same class"
 	
-	model := aRBNamespace.
 	scopes := refactoringScopes.
+	model := self refactoringScopeOn: scopes first.
 	methods := methodsList.
 	class := methods first origin
 ]
@@ -96,12 +102,12 @@ RePushDownMethodDriver >> runRefactoring [
 RePushDownMethodDriver >> selectMethods [
 
 	| dialog |
-	dialog := StMethodsSelectionPresenter
+	dialog := methodSelectionPresenterClass 
 		          label: 'Push down methods from ' , class name
 		          withItems:
 			          (class methods sort: [ :a :b | a asString < b asString ])
 				          asOrderedCollection
 		          selecting: methods asOrderedCollection.
 	dialog cancelled ifTrue: [ ^ nil ].
-	^ dialog presenter selectedItems
+	^ dialog selectedItems
 ]
