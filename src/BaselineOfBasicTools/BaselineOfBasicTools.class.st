@@ -47,11 +47,14 @@ BaselineOfBasicTools >> baseline: spec [
 		spec
 			baseline: 'UI' with: [ spec repository: repository ];
 			baseline: 'Reflectivity' with: [ spec repository: repository ];
-			baseline: 'DebugPoints' with: [ spec repository: repository ];
-			baseline: 'Athens' with: [
+			baseline: 'DebugPoints' with: [
 				spec
-					loads: 'Cairo-core';
+					requires: #( 'Reflectivity' );
 					repository: repository ];
+			baseline: 'Athens' with: [
+			spec
+				loads: 'Cairo-core';
+				repository: repository ];
 			baseline: 'SUnit' with: [
 			spec
 				loads: #( 'UI' 'JenkinsSupport' );
