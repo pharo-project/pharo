@@ -155,6 +155,88 @@ self
 ]
 
 { #category : 'tests' }
+ReSemanticsOfExtractMethodTransformationTest >> testTempAssignmentAndReferenceAfterExtractedCodeExpectGotExtracted [
+
+	| transformation |
+	transformation := self 
+extractSource: 'a := 2. self foo: a.' 
+fromSource: 'm 
+		| a |
+		a := 2.
+		self foo: a.
+		self end: a'
+withNewSelector: #extractedMethod.
+	transformation generateChanges.
+	
+self 
+		assert: (class parseTreeForSelector: #extractedMethod)
+		equals: (self parseMethod: 'extractedMethod 
+					| a |
+					a := 2. 
+					self foo: a.
+					^ a').
+		
+	self 
+		assert: (class parseTreeForSelector: #m)
+		equals: (self parseMethod: 'm
+				| a |
+				a := self extractedMethod.
+				self end: a')
+]
+
+{ #category : 'tests' }
+ReSemanticsOfExtractMethodTransformationTest >> testTempAssignmentAndReferenceExpectGotExtracted [
+
+	| transformation |
+	transformation := self 
+extractSource: 'a := 2. self foo: a' 
+fromSource: 'm 
+		| a |
+		a := 2.
+		self foo: a'
+withNewSelector: #extractedMethod.
+	transformation generateChanges.
+	
+self 
+		assert: (class parseTreeForSelector: #extractedMethod)
+		equals: (self parseMethod: 'extractedMethod 
+					| a |
+					a := 2. 
+					^ self foo: a').
+		
+	self 
+		assert: (class parseTreeForSelector: #m)
+		equals: (self parseMethod: 'm
+				self extractedMethod')
+]
+
+{ #category : 'tests' }
+ReSemanticsOfExtractMethodTransformationTest >> testTempAssignmentAndReturnWithTempReferenceExpectGotExtracted [
+
+	| transformation |
+	transformation := self 
+extractSource: 'a := 2. ^ self foo: a.' 
+fromSource: 'm 
+		| a |
+		a := 2.
+		^ self foo: a'
+withNewSelector: #extractedMethod.
+	transformation generateChanges.
+	
+self 
+		assert: (class parseTreeForSelector: #extractedMethod)
+		equals: (self parseMethod: 'extractedMethod 
+					| a |
+					a := 2. 
+					^ self foo: a').
+		
+	self 
+		assert: (class parseTreeForSelector: #m)
+		equals: (self parseMethod: 'm
+				^ self extractedMethod')
+]
+
+{ #category : 'tests' }
 ReSemanticsOfExtractMethodTransformationTest >> testTwoLastExpressionsOfASequenceGotExtracted [
 
 	| transformation |
