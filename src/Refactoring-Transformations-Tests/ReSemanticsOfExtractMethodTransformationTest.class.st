@@ -15,10 +15,11 @@ ReSemanticsOfExtractMethodTransformationTest >> extractSource: sourceToExtract f
 	class compile: source classified: '#test data'.
 
 	^ RBExtractMethodTransformation new
+		  model: model;
 		  extractSource: sourceToExtract
 		  fromMethodSource: source
 		  to: newSelector
-		  in: class
+		  in: class name
 ]
 
 { #category : 'set up' }

@@ -128,7 +128,7 @@ RBExtractMethodTransformationTest >> testFailureWhenTemporaryReadBeforeWritten [
 			temp := bar * bar.'
 				 from: #foo
 				 to: #foobar
-				 in: class) generateChanges ]
+				 in: class name) generateChanges ]
 		raise: RBRefactoringError
 ]
 
@@ -187,7 +187,7 @@ RBExtractMethodTransformationTest >> testTransform [
 							temp := bar * bar.
 							Transcript show: temp printString; cr'
 		                   from: #foo
-		                   to: #foobar
+		                   to: #extractedMethod
 		                   in: self changeMockClass name) generateChanges.
 
 	self assert: transformation model changes changes size equals: 4.
@@ -197,11 +197,11 @@ RBExtractMethodTransformationTest >> testTransform [
 		assert: (class parseTreeForSelector: #foo)
 		equals: (self parseMethod: 'foo
 													| temp |
-													temp := self foobar.
+													temp := self extractedMethod.
 													^temp * temp').
 	self
-		assert: (class parseTreeForSelector: #foobar)
-		equals: (self parseMethod: 'foobar
+		assert: (class parseTreeForSelector: #extractedMethod)
+		equals: (self parseMethod: 'extractedMethod
 													| temp bar |
 													bar := 5.
 													temp := bar * bar.
@@ -295,7 +295,7 @@ RBExtractMethodTransformationTest >> testWithTemporariesSelected [
 		                extract: '| temp | temp := 5. temp * temp'
 		                from: #foo
 		                to: #foobar
-		                in: class) generateChanges.
+		                in: class name) generateChanges.
 
 	self assert: refactoring model changes changes size equals: 4.
 	self
@@ -329,7 +329,7 @@ RBExtractMethodTransformationTest >> testWithTemporaryAssigned [
 			Transcript show: temp printString; cr.'
 		                from: #foo
 		                to: #foobar
-		                in: class) generateChanges.
+		                in: class name) generateChanges.
 
 	self assert: refactoring model changes changes size equals: 4.
 	self

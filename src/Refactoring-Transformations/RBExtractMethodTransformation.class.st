@@ -45,25 +45,25 @@ RBExtractMethodTransformation class >> allMethodsInHierarchyOf: aRBClass [
 ]
 
 { #category : 'api' }
-RBExtractMethodTransformation class >> extract: aString from: aSelector to: aNewSelector in: aClass [
+RBExtractMethodTransformation class >> extract: aString from: aSelector to: aNewSelector in: aClassName [
 
 	^ self new
 		extract: aString
 		from: aSelector
 		to: aNewSelector
-		in: aClass;
+		in: aClassName;
 		yourself
 ]
 
 { #category : 'api' }
-RBExtractMethodTransformation class >> model: aRBModel extract: aString from: aSelector to: aNewSelector in: aClass [
+RBExtractMethodTransformation class >> model: aRBModel extract: aString from: aSelector to: aNewSelector in: aClassName [
 
 	^ self new
 		model: aRBModel;
 		extract: aString
 		from: aSelector
 		to: aNewSelector
-		in: aClass;
+		in: aClassName;
 		yourself
 ]
 
@@ -244,7 +244,7 @@ RBExtractMethodTransformation >> calculateTree [
 { #category : 'api' }
 RBExtractMethodTransformation >> extract: aString from: aSelector to: aNewSelector in: aClassName [
 
-	class := aClassName.
+	class := self model classNamed: aClassName.
 	selector := aSelector.
 	newSelector := aNewSelector.
 	sourceCode := aString
@@ -253,7 +253,7 @@ RBExtractMethodTransformation >> extract: aString from: aSelector to: aNewSelect
 { #category : 'api' }
 RBExtractMethodTransformation >> extractSource: aString fromMethodSource: source to: aNewSelector in: aClassName [
 
-	class := aClassName.
+	class := self model classNamed: aClassName.
 	parseTree := RBParser parseMethod: source. 
 	selector := parseTree selector.
 	newSelector := aNewSelector.
