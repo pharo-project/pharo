@@ -155,6 +155,37 @@ self
 ]
 
 { #category : 'tests' }
+ReSemanticsOfExtractMethodTransformationTest >> testMultipleTempAssignmentWithOneReferencedAfterExtractedCodeExpectGotExtracted [
+
+	| transformation |
+	transformation := self 
+extractSource: 'a := 2. b := self foo: 8.' 
+fromSource: 'm 
+		| a b |
+		a := 2.
+		b := self foo: 8.
+		^ a'
+withNewSelector: #extractedMethod.
+
+	transformation generateChanges.
+
+	self 
+		assert: (class parseTreeForSelector: #extractedMethod)
+		equals: (self parseMethod: 'extractedMethod 
+					| a b |
+					a := 2. 
+					b := self foo: 8.
+					^ a').
+		
+	self 
+		assert: (class parseTreeForSelector: #m)
+		equals: (self parseMethod: 'm
+				| a |
+				a := self extractedMethod.
+				^ a')
+]
+
+{ #category : 'tests - failures' }
 ReSemanticsOfExtractMethodTransformationTest >> testMultipleTempAssignmentWithReferencesAfterExtractedCodeExpectFailure [
 
 	| transformation |
