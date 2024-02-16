@@ -800,17 +800,6 @@ Object >> errorSubscriptBounds: index [
 	SubscriptOutOfBounds signalFor: index
 ]
 
-{ #category : 'finalization' }
-Object >> executor [
-	"Return an object which can act as executor for finalization of the receiver"
-
-	self
-		deprecated: 'Please use #finalizer instead. See Phep0003'
-		transformWith: '`@receiver executor' -> '`@receiver finalizer'.
-
-	^ self finalizer
-]
-
 { #category : 'error handling' }
 Object >> explicitRequirement [
 	"If one of the superclasses can perform the selector, we execute the method of that class, otherwise, the explicit requirement error is thrown"

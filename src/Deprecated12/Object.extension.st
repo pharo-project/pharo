@@ -10,3 +10,14 @@ Object >> asOrderedCollection [
 		"transformWith: '`@receiver asOrderedCollection' -> 'OrderedCollection with: `@receiver'".
 	^ OrderedCollection with: self
 ]
+
+{ #category : '*Deprecated12' }
+Object >> executor [
+	"Return an object which can act as executor for finalization of the receiver"
+
+	self
+		deprecated: 'Please use #finalizer instead. See Phep0003'
+		transformWith: '`@receiver executor' -> '`@receiver finalizer'.
+
+	^ self finalizer
+]

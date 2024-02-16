@@ -518,13 +518,6 @@ Package >> packageManifestOrNil [
 		ifNone: [ nil ]
 ]
 
-{ #category : 'accessing' }
-Package >> packageName [
-
-	self deprecated: 'Use #name instead.' transformWith: '`@rcv packageName' -> '`@rcv name'.
-	^ self name
-]
-
 { #category : 'system compatibility' }
 Package >> packages [
 	"Compatibility with monticello and old PackageInfo"

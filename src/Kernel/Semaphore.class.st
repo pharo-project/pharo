@@ -217,16 +217,6 @@ Semaphore >> wait [
 ]
 
 { #category : 'communication' }
-Semaphore >> waitTimeoutMSecs: anInteger [
-
-	self
-		deprecated: 'Use #waitTimeoutMilliseconds: instead'
-		transformWith:
-		'`@x waitTimeoutMSecs: `@y' -> '`@x waitTimeoutMilliseconds: `@y'.
-	^ self waitTimeoutMilliseconds: anInteger
-]
-
-{ #category : 'communication' }
 Semaphore >> waitTimeoutMilliseconds: anInteger [
 	"Wait on this semaphore for up to the given number of milliseconds, then timeout.
 	Return true if the deadline expired, false otherwise."

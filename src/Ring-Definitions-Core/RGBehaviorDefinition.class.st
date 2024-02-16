@@ -517,28 +517,6 @@ RGBehaviorDefinition >> superclassName: aSymbol [
 		put: aSymbol
 ]
 
-{ #category : 'accessing - deprecated parallel hierarchy' }
-RGBehaviorDefinition >> theMetaClass [
-	"This method is deprecated so consider to migrate."
-
-	self
-		deprecated: 'Please use #classSide instead'
-		transformWith: '`@receiver theMetaClass' -> '`@receiver classSide'.
-
-	^ self classSide
-]
-
-{ #category : 'accessing - deprecated parallel hierarchy' }
-RGBehaviorDefinition >> theNonMetaClass [
-	"This method is deprecated so consider to migrate."
-
-	self
-		deprecated: 'Please use #instanceSide instead'
-		transformWith: '`@receiver theNonMetaClass' -> '`@receiver instanceSide'.
-
-	^ self instanceSide
-]
-
 { #category : 'annotations' }
 RGBehaviorDefinition >> traitCompositionSource [
 	"Retrieves aString representing the used traits"

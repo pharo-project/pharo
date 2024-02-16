@@ -28,6 +28,22 @@ Class >> category: aString [
 ]
 
 { #category : '*Deprecated12' }
+Class >> classComment: aString [
+	self
+		deprecated: 'use comment:'
+		transformWith: '`@rcv classComment: `@arg' -> '`@rcv comment: `@arg'.
+	self comment: aString
+]
+
+{ #category : '*Deprecated12' }
+Class >> classComment: aString stamp: aStamp [
+		self
+		deprecated: 'Use #comment:stamp: instead.'
+		transformWith: '`@rcv classComment: `@arg1 classComment: aString stamp: aStamp `@arg2' -> '`@rcv comment: `@arg1 stamp: `@arg2'.
+	^self comment: aString stamp: aStamp
+]
+
+{ #category : '*Deprecated12' }
 Class >> ephemeronSubclass: className instanceVariableNames: instVarNameList classVariableNames: classVarNames package: package [
 	"Added to allow for a simplified subclass creation experience. "
 
@@ -259,6 +275,17 @@ Class >> immediateSubclass: aName uses: aTraitComposition instanceVariableNames:
 			  sharedPoolsFromString: someSharedPoolNames;
 			  traitComposition: aTraitComposition;
 			  package: package ]
+]
+
+{ #category : '*Deprecated12' }
+Class >> removeClassVarNamed: aStringOrSymbol interactive: interactive [
+	"Interaction should be handled by the UI, this had no users in the system"
+	
+	self
+		deprecated: 'Interaction should be handled by the UI, use removeClassVarNamed:'
+		transformWith: '`@rcv removeClassVarNamed: `@arg1 interactive: `@arg2' -> '`@rcv removeClassVarNamed: `@arg1'.
+		
+	self removeClassVarNamed: aStringOrSymbol
 ]
 
 { #category : '*Deprecated12' }

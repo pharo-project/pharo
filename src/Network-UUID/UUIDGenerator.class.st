@@ -75,20 +75,6 @@ UUIDGenerator class >> initialize [
 		registerNetworkClassNamed: self name
 ]
 
-{ #category : 'accessing' }
-UUIDGenerator class >> next [
-	"Return a UUID using the shared generator"
-
-	"self next"
-
-	self
-		deprecated:
-		'The UUIDGenerator method should not be used directly to generate new UUIDs'
-		transformWith: 'UUIDGenerator next' -> 'UUID new'.
-
-	^ UUID new
-]
-
 { #category : 'system startup' }
 UUIDGenerator class >> startUp [
 	"Whenever the image comes up, reset so that a new node ID is computed."
@@ -133,17 +119,6 @@ UUIDGenerator >> initialize [
 	lock := Mutex new.
 	node := self computeNodeIdentifier.
 	counter := self nextRandom16
-]
-
-{ #category : 'accessing' }
-UUIDGenerator >> next [
-	"Return the next UUID, see my class comment"
-
-	self
-		deprecated:
-		'The UUIDGenerator method should not be used directly to generate new UUIDs'
-		transformWith: '`@receiver next' -> 'UUID new'.
-	^ UUID new
 ]
 
 { #category : 'private' }

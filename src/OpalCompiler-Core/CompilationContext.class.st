@@ -481,24 +481,6 @@ CompilationContext >> isScripting: aBoolean [
 		semanticScope := OCReceiverDoItSemanticScope targetingNilReceiver ]
 ]
 
-{ #category : 'accessing' }
-CompilationContext >> noPattern [
-	self
-		deprecated: 'Use #isScripting instead'
-		transformWith: '`@receiver noPattern' -> '`@receiver isScripting'.
-	^self isScripting
-]
-
-{ #category : 'accessing' }
-CompilationContext >> noPattern: aBoolean [
-
-		self
-		deprecated: 'Use #isScripting: instead'
-		transformWith: '`@receiver noPattern: `@arg' -> '`@receiver isScripting: `@arg'.
-
-	self isScripting: aBoolean
-]
-
 { #category : 'options' }
 CompilationContext >> optionBlockClosureOptionalOuter [
 	^ options includes: #optionBlockClosureOptionalOuter
