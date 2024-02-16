@@ -469,7 +469,7 @@ Date >> storeOn: aStream [
 { #category : 'adding' }
 Date >> subtractDate: aDate [
 	"Answer the number of days between self and aDate"
-	"((Date year: 2018 month: 9 day: 28) subtractDate: '27 September 2018') >>> 1"
+	"((Date year: 2018 month: 9 day: 28) subtractDate: '2018-09-27') >>> 1"
 
 	^ (self start - aDate asDateAndTime) days
 ]
