@@ -71,7 +71,10 @@ SocketStreamTest >> testFlushOtherEndClosed [
 				nextPutAll: 'A line of text';
 				flush ]
 		raise: NetworkError.
-	"The next send will wait for the first to finish and discover the error condition."
+	"Wait for the state of the underlying socket to update--normally this happens near-instantly,
+	but when running this test in a batch of other sockets-related tests, e.g. in CI, it often fails without the wait."
+	(Delay forMilliseconds: 100) wait.
+	"The #waitForSendDone as part of #flush will now raise an error."
 	self
 		should: [
 			clientStream
