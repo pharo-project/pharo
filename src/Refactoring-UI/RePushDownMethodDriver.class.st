@@ -17,7 +17,9 @@ Class {
 	#instVars : [
 		'methods',
 		'class',
-		'methodSelectionPresenterClass'
+		'methodSelectionPresenterClass',
+		'subclassesSendSuper',
+		'isAbstract'
 	],
 	#category : 'Refactoring-UI-Drivers to migrate to new architecture',
 	#package : 'Refactoring-UI',
@@ -77,7 +79,7 @@ RePushDownMethodDriver >> model: aRBNamespace scopes: refactoringScopes pushDown
 	"Push down a list of methods of the same class"
 	
 	scopes := refactoringScopes.
-	model := self refactoringScopeOn: scopes first.
+	model := aRBNamespace ifNil: [ self refactoringScopeOn: scopes first ].
 	methods := methodsList.
 	class := methods first origin
 ]
@@ -92,7 +94,7 @@ RePushDownMethodDriver >> runRefactoring [
 
 	refactoring failedApplicabilityPreconditions 
 		ifNotEmpty: [ ^ self inform: 'The shared variable does not exist' ].
-
+	self setBreakingChangesPreconditions.
 	refactoring failedBreakingChangePreconditions
 		ifEmpty: [ self applyChanges ]
 		ifNotEmpty: [ self handleBreakingChanges ]
@@ -110,4 +112,11 @@ RePushDownMethodDriver >> selectMethods [
 		          selecting: methods asOrderedCollection.
 	dialog cancelled ifTrue: [ ^ nil ].
 	^ dialog selectedItems
+]
+
+{ #category : 'initialization' }
+RePushDownMethodDriver >> setBreakingChangesPreconditions [ 
+
+	isAbstract := refactoring preconditionIsAbstract.
+	subclassesSendSuper := refactoring preconditionSubclassesDontSendSuper
 ]
