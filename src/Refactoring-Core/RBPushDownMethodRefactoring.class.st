@@ -68,13 +68,9 @@ RBPushDownMethodRefactoring >> breakingChangePreconditions [
 	This should be controlled via a flag on the ui.
 	"
 
-	| conditions |
-	conditions := OrderedCollection with: (RBCondition isAbstractClass: class).
-	conditions addAll: (selectors collect: [ :selector |
-		              (RBCondition
-			              subclassesOf: class
-			              isDoingASuperSendFor: selector) not ]).
-	^ conditions
+	^ OrderedCollection
+		  with: self preconditionIsAbstract
+		  with: self preconditionSubclassesDontSendSuper
 ]
 
 { #category : 'transforming' }
@@ -99,6 +95,20 @@ RBPushDownMethodRefactoring >> generateChanges [
 
 	self privateTransform.
 	^ self changes
+]
+
+{ #category : 'preconditions' }
+RBPushDownMethodRefactoring >> preconditionIsAbstract [
+
+	^ ReClassesAreAbstractCondition new classes: { class }
+]
+
+{ #category : 'preconditions' }
+RBPushDownMethodRefactoring >> preconditionSubclassesDontSendSuper [
+
+	^ ReSubclassesDontSendSuperCondition new
+		  class: class
+		  selectors: selectors
 ]
 
 { #category : 'preconditions' }
