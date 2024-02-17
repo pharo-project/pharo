@@ -55,7 +55,7 @@ RBPushDownMethodRefactoring >> allClasses [
 RBPushDownMethodRefactoring >> applicabilityPreconditions [
 	"Check that all selectors are defined in `class`"
 
-	^ selectors collect: [ :selector | RBCondition definesSelector: selector in: class ]
+	^ { ReDefinesSelectorsCondition new definesSelectors: selectors in: class }
 ]
 
 { #category : 'preconditions' }
@@ -80,18 +80,14 @@ RBPushDownMethodRefactoring >> classes: aCollection [
 	]
 ]
 
-{ #category : 'executing' }
+{ #category : 'scripting api - executing' }
 RBPushDownMethodRefactoring >> generateChanges [
 	"Prepare, check the preconditions, and perform the actual transformation (i.e., creating a list of changes that can be accessible using the changes message). This method should not be invoked from drivers since drivers usually check in finer grained mode the preconditions - and that this stage they already checked the preconditions."
 	
 	self prepareForExecution.
 
-	self applicabilityPreconditions check ifFalse: [
-		RBApplicabilityChecksFailedError signal:
-			self applicabilityPreconditions errorString ].
-	self breakingChangePreconditions check ifFalse: [
-		RBBreakingChangeChecksFailedWarning signal:
-			self breakingChangePreconditions errorString ].
+	self checkApplicabilityPreconditions.
+	self checkBreakingChangePreconditions.
 
 	self privateTransform.
 	^ self changes
