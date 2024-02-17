@@ -44,7 +44,8 @@ StItemsSelectionPresenter class >> defaultLayout [
 StItemsSelectionPresenter class >> label: aString withItems: items selecting: selectedItems [
 	^ self new
 		label: aString withItems: items selecting: selectedItems;
-		openBlockedDialog
+		openBlockedDialog;
+		yourself 
 ]
 
 { #category : 'actions' }

@@ -161,6 +161,13 @@ RBPushDownMethodRefactoring >> pushDown: selectorCollection from: aClass in: aCo
 ]
 
 { #category : 'transforming' }
+RBPushDownMethodRefactoring >> pushDownMethodChanges [
+
+	self privateTransform.
+	^ self changes
+]
+
+{ #category : 'transforming' }
 RBPushDownMethodRefactoring >> selectors [
 	^ selectors
 ]
