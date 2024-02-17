@@ -21,9 +21,9 @@ Class {
 		'subclassesSendSuper',
 		'isAbstract'
 	],
-	#category : 'Refactoring-UI-Drivers to migrate to new architecture',
+	#category : 'Refactoring-UI-Drivers',
 	#package : 'Refactoring-UI',
-	#tag : 'Drivers to migrate to new architecture'
+	#tag : 'Drivers'
 }
 
 { #category : 'initialization' }

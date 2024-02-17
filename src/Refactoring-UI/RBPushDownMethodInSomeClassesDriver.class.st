@@ -13,9 +13,11 @@ You can create my instance and execute the refactoring by running:
 "
 Class {
 	#name : 'RBPushDownMethodInSomeClassesDriver',
-	#superclass : 'RBPushDownMethodDriver',
+	#superclass : 'RBInteractionDriver',
 	#instVars : [
-		'classes'
+		'classes',
+		'methods',
+		'class'
 	],
 	#category : 'Refactoring-UI-Drivers to migrate to new architecture',
 	#package : 'Refactoring-UI',
@@ -30,6 +32,15 @@ RBPushDownMethodInSomeClassesDriver >> configureRefactoring [
 		pushDown: (methods collect: [ :each | each selector ])
 		from: class
 		in: classes.
+]
+
+{ #category : 'initialization' }
+RBPushDownMethodInSomeClassesDriver >> model: aRBNamespace scopes: refactoringScopes pushDownMethods: methodsList [
+
+	model := aRBNamespace.
+	scopes := refactoringScopes.
+	methods := methodsList.
+	class := methods first origin
 ]
 
 { #category : 'resources' }
@@ -77,4 +88,18 @@ RBPushDownMethodInSomeClassesDriver >> selectClasses [
 		          selecting: class subclasses.
 	dialog cancelled ifTrue: [ ^ nil ].
 	^ dialog presenter selectedItems collect: [ :each | each name ]
+]
+
+{ #category : 'execution' }
+RBPushDownMethodInSomeClassesDriver >> selectMethods [
+
+	| dialog |
+	dialog := StMethodsSelectionPresenter
+		          label: 'Push down methods from ' , class name
+		          withItems:
+			          (class methods sort: [ :a :b | a asString < b asString ])
+				          asOrderedCollection
+		          selecting: methods asOrderedCollection.
+	dialog cancelled ifTrue: [ ^ nil ].
+	^ dialog presenter selectedItems
 ]
