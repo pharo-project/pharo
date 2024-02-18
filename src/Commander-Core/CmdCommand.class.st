@@ -140,11 +140,17 @@ CmdCommand >> asCommandActivator [
 
 { #category : 'accessing' }
 CmdCommand >> defaultMenuIcon [
+
+	^ self defaultMenuIconFormSet ifNotNil: [ :formSet | formSet asForm ]
+]
+
+{ #category : 'accessing' }
+CmdCommand >> defaultMenuIconFormSet [
 	"By default the result is nil which is not really nice
 	but it is already expected by many tools.	So it is easy to allow nil.
 	For simple cases users should implement class side method #defaultMenuIconName"
 	^self defaultMenuIconName ifNotNil: [ :iconName |
-		Smalltalk ui iconNamed: iconName ]
+		Smalltalk ui iconFormSetNamed: iconName ]
 ]
 
 { #category : 'accessing' }
