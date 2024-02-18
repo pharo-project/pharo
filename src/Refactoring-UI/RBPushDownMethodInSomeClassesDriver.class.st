@@ -13,15 +13,13 @@ You can create my instance and execute the refactoring by running:
 "
 Class {
 	#name : 'RBPushDownMethodInSomeClassesDriver',
-	#superclass : 'RBInteractionDriver',
+	#superclass : 'RePushDownMethodDriver',
 	#instVars : [
-		'classes',
-		'methods',
-		'class'
+		'classes'
 	],
-	#category : 'Refactoring-UI-Drivers to migrate to new architecture',
+	#category : 'Refactoring-UI-Drivers',
 	#package : 'Refactoring-UI',
-	#tag : 'Drivers to migrate to new architecture'
+	#tag : 'Drivers'
 }
 
 { #category : 'resources' }
@@ -32,6 +30,13 @@ RBPushDownMethodInSomeClassesDriver >> configureRefactoring [
 		pushDown: (methods collect: [ :each | each selector ])
 		from: class
 		in: classes.
+]
+
+{ #category : 'execution' }
+RBPushDownMethodInSomeClassesDriver >> gatherUserInput [
+
+	super gatherUserInput.
+	classes := self selectClasses
 ]
 
 { #category : 'initialization' }
@@ -56,24 +61,11 @@ RBPushDownMethodInSomeClassesDriver >> refactoring [
 { #category : 'execution' }
 RBPushDownMethodInSomeClassesDriver >> runRefactoring [
 
-	| changes  |
-	methods := self selectMethods.
+	self gatherUserInput.
 	methods ifNil: [ ^ self ].
-	classes := self selectClasses.
 	classes ifNil: [ ^ self ].
 	
-	self configureRefactoring.
-	changes := [
-	           [ refactoring generateChanges ]
-		           on: RBApplicabilityChecksFailedError
-		           do: [ :err |
-		           ^ RBRefactoringError signal: err messageText ] ]
-		           on: RBBreakingChangeChecksFailedWarning
-		           do: [ :err |
-			           RBRefactoringWarning signal: err messageText.
-			           "If user answers no, error is being propagated."
-			           err resume ].
-	self openPreviewWithChanges: changes
+	self configureAndRunRefactoring 
 ]
 
 { #category : 'execution' }
@@ -87,19 +79,5 @@ RBPushDownMethodInSomeClassesDriver >> selectClasses [
 				          asOrderedCollection
 		          selecting: class subclasses.
 	dialog cancelled ifTrue: [ ^ nil ].
-	^ dialog presenter selectedItems collect: [ :each | each name ]
-]
-
-{ #category : 'execution' }
-RBPushDownMethodInSomeClassesDriver >> selectMethods [
-
-	| dialog |
-	dialog := StMethodsSelectionPresenter
-		          label: 'Push down methods from ' , class name
-		          withItems:
-			          (class methods sort: [ :a :b | a asString < b asString ])
-				          asOrderedCollection
-		          selecting: methods asOrderedCollection.
-	dialog cancelled ifTrue: [ ^ nil ].
-	^ dialog presenter selectedItems
+	^ dialog selectedItems collect: [ :each | each name ]
 ]

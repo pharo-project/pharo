@@ -60,6 +60,19 @@ RePushDownMethodDriver >> changes [
 
 ]
 
+{ #category : 'execution' }
+RePushDownMethodDriver >> configureAndRunRefactoring [
+
+	self configureRefactoring.
+
+	refactoring failedApplicabilityPreconditions ifNotEmpty: [
+		^ self inform: 'The shared variable does not exist' ].
+	self setBreakingChangesPreconditions.
+	refactoring failedBreakingChangePreconditions
+		ifEmpty: [ self applyChanges ]
+		ifNotEmpty: [ self handleBreakingChanges ]
+]
+
 { #category : 'resources' }
 RePushDownMethodDriver >> configureRefactoring [
 
@@ -79,6 +92,12 @@ RePushDownMethodDriver >> defaultSelectDialog [
 		          display: [ :each | each description ];
 		          displayIcon: [ :each | self iconNamed: each systemIconName ];
 		          openModal
+]
+
+{ #category : 'execution' }
+RePushDownMethodDriver >> gatherUserInput [
+
+	methods := self selectMethods
 ]
 
 { #category : 'execution' }
@@ -133,17 +152,11 @@ RePushDownMethodDriver >> pushDownMethods [
 { #category : 'execution' }
 RePushDownMethodDriver >> runRefactoring [
 
-	methods := self selectMethods.
 	"the user can still select if needed. Nil = cancel refactoring"
+	self gatherUserInput.
 	methods ifNil: [ ^ self ].
-	self configureRefactoring.
-
-	refactoring failedApplicabilityPreconditions 
-		ifNotEmpty: [ ^ self inform: 'The shared variable does not exist' ].
-	self setBreakingChangesPreconditions.
-	refactoring failedBreakingChangePreconditions
-		ifEmpty: [ self applyChanges ]
-		ifNotEmpty: [ self handleBreakingChanges ]
+	
+	self configureAndRunRefactoring
 ]
 
 { #category : 'execution' }

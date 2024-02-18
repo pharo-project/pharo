@@ -62,6 +62,12 @@ StItemsSelectionPresenter >> accept: presenter [
 				close
 ]
 
+{ #category : 'TOREMOVE' }
+StItemsSelectionPresenter >> cancelled [ 
+
+	^ self window cancelled 
+]
+
 { #category : 'attributes' }
 StItemsSelectionPresenter >> columnName [
 	self shouldBeImplemented

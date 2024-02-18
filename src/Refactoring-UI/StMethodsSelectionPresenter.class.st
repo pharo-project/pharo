@@ -19,12 +19,6 @@ StMethodsSelectionPresenter class >> title [
 	^ 'Methods'
 ]
 
-{ #category : 'TOREMOVE' }
-StMethodsSelectionPresenter >> cancelled [ 
-
-	^ self window cancelled 
-]
-
 { #category : 'attributes' }
 StMethodsSelectionPresenter >> columnName [
 	^ 'Methods'
