@@ -39,10 +39,10 @@ CmdCommand >> registerContextMenuItemsFor: aCommandItem withBuilder: aBuilder [
 ]
 
 { #category : '*Commander-Activators-ContextMenu' }
-CmdCommand >> setUpIconForMenuItem: aMenuItemMorph [
+CmdCommand >> setUpIconForMenuItem: menuItem [
 
 	self defaultMenuIconFormSet ifNotNil: [:iconFormSet |
-		aMenuItemMorph iconFormSet: iconFormSet ]
+		menuItem iconFormSet: iconFormSet ]
 ]
 
 { #category : '*Commander-Activators-ContextMenu' }
