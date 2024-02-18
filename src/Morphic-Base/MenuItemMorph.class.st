@@ -244,11 +244,11 @@ MenuItemMorph >> doButtonAction [
 
 { #category : 'drawing' }
 MenuItemMorph >> drawIconOn: aCanvas [
-	| iconForm |
+	| toggledIconFormSet |
 	self hasIcon ifFalse: [ ^ self ].
 
-	iconForm := self iconForm.
-	aCanvas translucentImage: iconForm at: bounds left @ (self top + ((self height - iconForm height) // 2))
+	toggledIconFormSet := self toggledIconFormSet.
+	aCanvas translucentFormSet: toggledIconFormSet at: bounds left @ (self top + ((self height - toggledIconFormSet height) // 2))
 ]
 
 { #category : 'drawing' }
@@ -374,14 +374,6 @@ MenuItemMorph >> icon: aForm [
 	icon := aForm
 ]
 
-{ #category : 'private' }
-MenuItemMorph >> iconForm [
-	"private - answer the form to be used as the icon"
-	^ isEnabled
-		ifTrue: [self icon]
-		ifFalse: [self icon asGrayScale]
-]
-
 { #category : 'initialization' }
 MenuItemMorph >> initialize [
 	"initialize the state of the receiver"
@@ -485,9 +477,9 @@ MenuItemMorph >> leftArrow [
 MenuItemMorph >> menuStringBounds [
 	| stringBounds |
 	stringBounds := bounds.
-	self hasIcon ifTrue: [ | iconForm |
-		iconForm := self iconForm.
-		stringBounds := stringBounds left: stringBounds left + iconForm width + 2 ].
+	self hasIcon ifTrue: [ | toggledIconFormSet |
+		toggledIconFormSet := self toggledIconFormSet.
+		stringBounds := stringBounds left: stringBounds left + toggledIconFormSet width + 2 ].
 	self hasMarker ifTrue: [
 		stringBounds := stringBounds left: stringBounds left + self submorphBounds width + 8 ].
 	^ stringBounds top: (stringBounds top + stringBounds bottom - self fontToUse height) // 2
@@ -688,6 +680,14 @@ MenuItemMorph >> themeChanged [
 
 	super themeChanged.
 	self subMenu ifNotNil:[ :m | m themeChanged ]
+]
+
+{ #category : 'private' }
+MenuItemMorph >> toggledIconFormSet [
+	"private - answer the form set to be used as the icon"
+	^ isEnabled
+		ifTrue: [FormSet form: self icon]
+		ifFalse: [FormSet form: self icon asGrayScale]
 ]
 
 { #category : 'private' }

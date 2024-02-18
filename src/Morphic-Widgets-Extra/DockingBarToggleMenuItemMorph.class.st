@@ -58,10 +58,10 @@ DockingBarToggleMenuItemMorph >> drawOn: aCanvas [
 	stringBounds := bounds.
 	stringBounds := stringBounds left: stringBounds left + 4.
 	self hasIcon
-		ifTrue: [ | iconForm |
-			iconForm := self iconForm.
-			aCanvas translucentImage: iconForm at: stringBounds left @ (self top + ((self height - iconForm height) // 2)).
-			stringBounds := stringBounds left: stringBounds left + iconForm width + 2 ].
+		ifTrue: [ | toggledIconFormSet |
+			toggledIconFormSet := self toggledIconFormSet.
+			aCanvas translucentFormSet: toggledIconFormSet at: stringBounds left @ (self top + ((self height - toggledIconFormSet height) // 2)).
+			stringBounds := stringBounds left: stringBounds left + toggledIconFormSet width + 2 ].
 	self hasMarker ifTrue: [ stringBounds := stringBounds left: stringBounds left + self submorphBounds width + 8 ].
 	stringBounds := stringBounds top: (stringBounds top + stringBounds bottom - self fontToUse height) // 2.
 	aCanvas
