@@ -52,7 +52,7 @@ ReRemoveClassPushingStateToSubclassesRefactoring >> createRefactoringPushDownIns
 
 { #category : 'transforming' }
 ReRemoveClassPushingStateToSubclassesRefactoring >> createRefactoringPushDownMethodsOf: class [
-	refactorings add: (RBPushDownMethodRefactoring model: self model pushDown: class selectors from: class)
+	refactorings add: (RBPushDownMethodRefactoring model: self model pushDown: class selectors from: class name)
 ]
 
 { #category : 'transforming' }
