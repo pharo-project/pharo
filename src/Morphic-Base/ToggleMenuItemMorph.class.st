@@ -51,9 +51,8 @@ ToggleMenuItemMorph >> basicDrawOn: aCanvas [
 			fillRectangle: self bounds
 			fillStyle: self selectionFillStyle
 			borderStyle: self selectionBorderStyle].
-	self hasIcon ifTrue: [ |iconForm|
-		iconForm := self icon.
-		self drawIcon: iconForm on: aCanvas in: stringBounds ].
+	self hasIcon ifTrue: [
+		self drawIcon: self iconFormSet on: aCanvas in: stringBounds ].
 	maxItemsIconWidth := self owner maxItemsIconWidth.
 	maxItemsIconWidth > 0 ifTrue: [
 		stringBounds := stringBounds left: stringBounds left + maxItemsIconWidth + (2*self displayScaleFactor) ].
@@ -68,20 +67,24 @@ ToggleMenuItemMorph >> basicDrawOn: aCanvas [
 ]
 
 { #category : 'private - drawing' }
-ToggleMenuItemMorph >> drawIcon: aForm on: aCanvas in: aRectangle [
+ToggleMenuItemMorph >> drawIcon: aFormSet on: aCanvas in: aRectangle [
 	"Draw the icon on the canvas within the given bounds."
 
-	|iconForm|
-	self isEnabled
-		ifTrue: [iconForm := aForm]
-		ifFalse: [iconForm := Form extent: aForm extent depth: 32.
-				iconForm fillColor: (Color white alpha: 0.003922).
-				(iconForm getCanvas asAlphaBlendingCanvas: 0.5)
-					drawImage: aForm
-					at: 0@0].
+	| toggledIconFormSet |
+	toggledIconFormSet := self isEnabled
+		ifTrue: [ aFormSet ]
+		ifFalse: [
+			| baseIconForm toggledIconForm |
+			baseIconForm := aFormSet asFormAtScale: aCanvas scale.
+			toggledIconForm := Form extent: baseIconForm extent depth: 32.
+			toggledIconForm fillColor: (Color white alpha: 0.003922).
+			(toggledIconForm getCanvas asAlphaBlendingCanvas: 0.5)
+				drawImage: baseIconForm
+				at: 0@0.
+			FormSet extent: aFormSet extent depth: 32 forms: { toggledIconForm } ].
 	aCanvas
-		translucentImage: iconForm
-		at: aRectangle topLeft + (0@(aRectangle height - iconForm height // 2))
+		translucentFormSet: toggledIconFormSet
+		at: aRectangle topLeft + (0@(aRectangle height - toggledIconFormSet height // 2))
 ]
 
 { #category : 'private - drawing' }
@@ -108,7 +111,7 @@ ToggleMenuItemMorph >> drawSubMenuMarker: aForm on: aCanvas in: aRectangle [
 
 	|markerRect|
 	markerRect := aRectangle topRight + ((aForm width * self displayScaleFactor) negated @ (aRectangle height - (aForm height * self displayScaleFactor) // 2)) extent: aForm extent * self displayScaleFactor.
-	self drawIcon: aForm scaledByDisplayScaleFactor on: aCanvas in: markerRect
+	self drawIcon: (FormSet form: aForm scaledByDisplayScaleFactor) on: aCanvas in: markerRect
 ]
 
 { #category : 'private - drawing' }

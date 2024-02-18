@@ -84,7 +84,7 @@ DockingBarToggleMenuItemMorph >> drawSubMenuMarker: aForm on: aCanvas in: aRecta
 	|markerRect|
 	markerRect := aRectangle topRight + (aForm width negated @ (aRectangle height - aForm height // 2)) extent: aForm extent.
 	markerRect translateBy: -4@1.
-	self drawIcon: aForm on: aCanvas in: markerRect
+	self drawIcon: (FormSet form: aForm) on: aCanvas in: markerRect
 ]
 
 { #category : 'events' }
