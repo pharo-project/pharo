@@ -12,7 +12,7 @@ Class {
 		'enabled',
 		'separator',
 		'subMenu',
-		'icon',
+		'iconFormSet',
 		'enabledBlock',
 		'keyText',
 		'help',
@@ -93,12 +93,22 @@ PluggableMenuItemSpec >> help: aSymbol [
 
 { #category : 'accessing' }
 PluggableMenuItemSpec >> icon [
-	^ icon
+	^ self iconFormSet ifNotNil: [ :formSet | formSet asForm ]
 ]
 
 { #category : 'accessing' }
 PluggableMenuItemSpec >> icon: aForm [
-	 icon := aForm
+	self iconFormSet: (aForm ifNotNil: [ FormSet form: aForm ])
+]
+
+{ #category : 'accessing' }
+PluggableMenuItemSpec >> iconFormSet [
+	^ iconFormSet
+]
+
+{ #category : 'accessing' }
+PluggableMenuItemSpec >> iconFormSet: aFormSet [
+	iconFormSet := aFormSet
 ]
 
 { #category : 'accessing' }
