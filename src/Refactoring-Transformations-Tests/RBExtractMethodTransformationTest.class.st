@@ -140,13 +140,15 @@ RBExtractMethodTransformationTest >> testNeedsReturn [
 
 	| refactoring class |
 	model := self modelOnClasses: { RBDummyLintRuleTest }.
-	refactoring := (RBExtractMethodTransformation
+	refactoring := [(RBExtractMethodTransformation
 		                model: model
 		                extract: 'rules isEmpty ifTrue: [^self].
 						rules size == 1 ifTrue: [^rules first viewResults]'
 		                from: #openEditor
 		                to: #foo:
-		                in: #RBDummyLintRuleTest) generateChanges.
+		                in: #RBDummyLintRuleTest) generateChanges ]
+		               on: RBRefactoringWarning
+		               do: [ :ex | ex resume ].
 
 	self assert: refactoring model changes changes size equals: 2.
 
