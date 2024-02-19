@@ -41,7 +41,7 @@ ReRemoveClassDriver >> browseReferences [
 
 	haveNoReferences violators keysAndValuesDo: [ :violator :references |
 		"we should pass the application! "
-		StMessageBrowserPresenter
+		StMessageBrowser
 			browse: (references collect: [ :ref | ref method ])
 			asSendersOf: violator realClass ]
 ]

@@ -123,6 +123,7 @@ MetacelloMonticelloLoader >> resolveRepositorySpecs: aCollection [
 	"Return a resolved repository spec with a concrete commit id or tag"
 
 	| repository |
+	aCollection ifEmpty: [ ^ aCollection ].
 	repository := self repositoriesFrom: aCollection.
 	aCollection first resolvedReference:
 		repository repositoryDescription , '('

@@ -27,7 +27,7 @@ ReRemoveInstanceVariablesDriver >> breakingChoices [
 { #category : 'execution' }
 ReRemoveInstanceVariablesDriver >> browseInstanceVariableReferences [
 
-	StMessageBrowserPresenter
+	StMessageBrowser
 		browse: refactoring violators
 		
 ]

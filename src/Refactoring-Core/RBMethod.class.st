@@ -116,6 +116,12 @@ RBMethod >> modelClass: aRBClass [
 ]
 
 { #category : 'accessing' }
+RBMethod >> origin [
+
+	^ class
+]
+
+{ #category : 'accessing' }
 RBMethod >> package [
 
 	compiledMethod ifNotNil: [ ^ compiledMethod package name ].

@@ -692,7 +692,7 @@ DateAndTime >> asDateAndTime [
 	^ self
 ]
 
-{ #category : 'accessing' }
+{ #category : 'converting' }
 DateAndTime >> asDosTimestamp [
 
 	^ (DosTimestamp fromDateAndTime: self) value
@@ -705,7 +705,7 @@ DateAndTime >> asDuration [
 	^ Duration seconds: self secondsSinceMidnightLocalTime nanoSeconds: nanos
 ]
 
-{ #category : 'accessing' }
+{ #category : 'converting' }
 DateAndTime >> asFileNameCompatibleString [
 	| stream |
 	stream := String new writeStream.
@@ -715,7 +715,7 @@ DateAndTime >> asFileNameCompatibleString [
 	^ stream contents
 ]
 
-{ #category : 'accessing' }
+{ #category : 'converting' }
 DateAndTime >> asLocal [
 
 	^ (self offset = self class localOffset)
@@ -723,20 +723,20 @@ DateAndTime >> asLocal [
 		ifFalse: [self offset: self class localOffset]
 ]
 
-{ #category : 'accessing' }
+{ #category : 'converting' }
 DateAndTime >> asMonth [
 
 	^ Month starting: self
 ]
 
-{ #category : 'accessing' }
+{ #category : 'converting' }
 DateAndTime >> asNanoSeconds [
 	"Answer the number of nanoseconds since midnight"
 
 	^ self asDuration asNanoSeconds
 ]
 
-{ #category : 'accessing' }
+{ #category : 'converting' }
 DateAndTime >> asSeconds [
  	"Return the number of seconds since the epoch"
 
@@ -769,13 +769,13 @@ DateAndTime >> asUnixTime [
 	^((self offset: Duration zero) - self class unixEpoch) asSeconds
 ]
 
-{ #category : 'accessing' }
+{ #category : 'converting' }
 DateAndTime >> asWeek [
 
 	^ Week starting: self
 ]
 
-{ #category : 'accessing' }
+{ #category : 'converting' }
 DateAndTime >> asYear [
 
 	^ Year starting: self
