@@ -15,6 +15,13 @@ ReMethodSelectorKeywordCasingRule class >> checksMethod [
 	^ true
 ]
 
+{ #category : 'manifest' }
+ReMethodSelectorKeywordCasingRule class >> uniqueIdentifierName [
+	"The return value hould be unique and should change only when the rule completely change semantics"
+
+	^'MethodSelectorKeywordCasingRule'
+]
+
 { #category : 'running' }
 ReMethodSelectorKeywordCasingRule >> basicCheck: aMethod [
  
@@ -25,10 +32,12 @@ ReMethodSelectorKeywordCasingRule >> basicCheck: aMethod [
 
 { #category : 'accessing' }
 ReMethodSelectorKeywordCasingRule >> group [
+
 	^ 'Design Flaws'
 ]
 
 { #category : 'accessing' }
 ReMethodSelectorKeywordCasingRule >> name [
-	^ 'Keyword selector has wrong casing'
+
+	^ 'Keyword selector has wrong casing (camel case required)'
 ]
