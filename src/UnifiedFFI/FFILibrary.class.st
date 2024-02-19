@@ -32,7 +32,7 @@ FFILibrary class >> new [
 { #category : 'options' }
 FFILibrary class >> options [
 
-	^ #()
+	^ #( #+ optStrict )
 ]
 
 { #category : 'instance creation' }

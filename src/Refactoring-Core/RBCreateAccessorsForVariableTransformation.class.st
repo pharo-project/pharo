@@ -304,7 +304,7 @@ RBCreateAccessorsForVariableTransformation >> usesAssignmentOf: aString in: aCla
 		matches: aString , ' := ``@object'
 			do: [ :aNode :answer |
 			answer
-				or: [ aNode isUsed and: [ aNode methodNode selector ~= aString ] ] ].
+				or: [ aNode isUsedAsReturnValue and: [ aNode methodNode selector ~= aString ] ] ].
 	definingClass := isClassVar
 		ifTrue: [ aClass instanceSide ]
 		ifFalse: [ aClass ].

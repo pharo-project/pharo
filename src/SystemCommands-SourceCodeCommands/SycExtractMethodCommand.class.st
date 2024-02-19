@@ -40,7 +40,7 @@ SycExtractMethodCommand >> asRefactorings [
 				                to: selectedInterval last)
 		               from: method selector
 		               to: self getNewSelector selector
-		               in: method origin.
+		               in: method origin name.
 	self setUpOptionsOf: refactoring.
 	^ { refactoring }
 ]

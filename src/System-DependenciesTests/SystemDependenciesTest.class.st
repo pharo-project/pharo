@@ -94,8 +94,7 @@ SystemDependenciesTest >> knownMorphicCoreDependencies [
 SystemDependenciesTest >> knownMorphicDependencies [
 	"ideally this list should be empty"
 
-	^ #(#'Refactoring-Critics' #'Refactoring-Environment' #'Spec2-Core' #'Tool-Profilers'
-	#'Athens-Morphic' #'Tools-CodeNavigation' "Rubric has a dependency on It" 'Debugger-Oups')
+	^ #(#'Refactoring-Critics' #'Refactoring-Environment' #'Spec2-Core' #'Athens-Morphic' #'Tools-CodeNavigation' 'Debugger-Oups')
 ]
 
 { #category : 'known dependencies' }
@@ -125,8 +124,7 @@ SystemDependenciesTest >> knownUIDependencies [
 
 	"ideally this list should be empty"
 
-	^ #('AST-Core-Tests'  'Athens-Cairo' 'Athens-Core'
-	#'Athens-Morphic' #'Refactoring-Critics' #'Refactoring-Environment' 'Reflectivity-Tools' #Shout #'Tool-Diff' #'Tool-Profilers' #'HeuristicCompletion-Model' 'NECompletion-Morphic' #VariablesLibrary #'Tools-CodeNavigation' #'Spec2-CommonWidgets')
+	^ #('AST-Core-Tests'  'Athens-Cairo' 'Athens-Core' 'Athens-Morphic' 'Refactoring-Critics' 'Refactoring-Environment' 'Reflectivity-Tools' 'Shout' 'Tool-Diff' 'HeuristicCompletion-Model' 'NECompletion-Morphic' 'VariablesLibrary' 'Tools-CodeNavigation' 'Spec2-CommonWidgets')
 ]
 
 { #category : 'accessing' }

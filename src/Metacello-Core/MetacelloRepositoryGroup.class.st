@@ -27,3 +27,8 @@ MetacelloRepositoryGroup >> loadPackageNamed: aName intoLoader: aLoader [
 			ifPresent: [ :found |
 			^ repo loadPackageNamed: aName intoLoader: aLoader ] ]
 ]
+
+{ #category : 'accessing' }
+MetacelloRepositoryGroup >> repositories: aCollection [ 
+	repositories := aCollection
+]

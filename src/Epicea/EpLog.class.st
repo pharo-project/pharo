@@ -22,11 +22,6 @@ Class {
 	#tag : 'Log'
 }
 
-{ #category : 'tag keys' }
-EpLog class >> authorKey [
-	^ #author
-]
-
 { #category : 'instance creation' }
 EpLog class >> freshFromFile: aFileReference [
 
@@ -130,22 +125,6 @@ EpLog >> announceAdded: anEntry [
 EpLog >> announcer [
 
 	^ announcer ifNil: [ announcer := Announcer new ]
-]
-
-{ #category : 'accessing' }
-EpLog >> authorAt: anEntry [
-
-	^ self
-		authorAt: anEntry
-		ifAbsent: [ self error ]
-]
-
-{ #category : 'accessing' }
-EpLog >> authorAt: anEntry ifAbsent: aBlock [
-
-	^ anEntry tags
-		at: self class authorKey
-		ifAbsent: aBlock
 ]
 
 { #category : 'private' }
@@ -275,16 +254,6 @@ EpLog >> fromHeadDetect: aBlockReturningBoolean ifNotFound: notFoundBlock [
 		from: self headReference
 		detect: aBlockReturningBoolean
 		ifNotFound: notFoundBlock
-]
-
-{ #category : 'testing' }
-EpLog >> hasAuthor: anEntry [
-
-	self
-		authorAt: anEntry
-		ifAbsent: [ ^ false ].
-
-	^ true
 ]
 
 { #category : 'testing' }

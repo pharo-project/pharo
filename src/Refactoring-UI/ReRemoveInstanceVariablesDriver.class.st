@@ -27,7 +27,7 @@ ReRemoveInstanceVariablesDriver >> breakingChoices [
 { #category : 'execution' }
 ReRemoveInstanceVariablesDriver >> browseInstanceVariableReferences [
 
-	StMessageBrowserPresenter
+	StMessageBrowser
 		browse: refactoring violators
 		
 ]
@@ -42,7 +42,7 @@ ReRemoveInstanceVariablesDriver >> changes [
 { #category : 'resources' }
 ReRemoveInstanceVariablesDriver >> configureRefactoring [
 
-	refactoring := RBUpFrontPreconditionCheckingCompositeRefactoring new
+	refactoring := ReUpFrontPreconditionCheckingCompositeRefactoring new
 							model: model; 
 							refactorings: (variables collect: [:each | 
 									ReRemoveInstanceVariableRefactoring model: model remove: each from: class]);

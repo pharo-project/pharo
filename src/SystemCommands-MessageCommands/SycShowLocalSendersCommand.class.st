@@ -45,23 +45,3 @@ SycShowLocalSendersCommand >> searchInTheWholeHierarchy [
 		flatCollect: [ :class |
 			(class thoroughWhichMethodsReferTo: self selectedSelector) , (class class thoroughWhichMethodsReferTo: self selectedSelector) ].
 ]
-
-{ #category : 'accessing' }
-SycShowLocalSendersCommand >> selectedClass [
-	"Answer the receiver's selected <Class>"
-
-	^ self selectedMessage methodClass
-]
-
-{ #category : 'accessing' }
-SycShowLocalSendersCommand >> selectedMessage [
-	"Answer a <SycMessageDescription> describing the selected message"
-
-	^ self messages anyOne
-]
-
-{ #category : 'execution' }
-SycShowLocalSendersCommand >> selectedSelector [
-
-	^ self selectedMessage selector
-]

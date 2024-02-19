@@ -21,7 +21,6 @@ Class {
 
 { #category : 'preconditions' }
 RBPushDownVariableTransformation >> applicabilityPreconditionsForClassVariable [
-	"it does not perform when two subclasses (and/or their subclasses) accesses this variable"
 
 	^ RBCondition
 		  definesClassVariable: variableName
@@ -57,8 +56,6 @@ RBPushDownVariableTransformation >> buildTransformations [
 
 { #category : 'preconditions' }
 RBPushDownVariableTransformation >> preconditions [
-	"it does not perform when two subclasses
-	(and/or their subclasses) access this variable"
 
 	^ isClassVariable
 		ifTrue: [ self applicabilityPreconditionsForClassVariable ]
@@ -89,6 +86,9 @@ RBPushDownVariableTransformation >> variable: aVariableName class: aClassName cl
 
 { #category : 'private' }
 RBPushDownVariableTransformation >> variableDefinitionsInHierarchy [
+	"For class variable return only classes that reference the class variable 
+	both from instance and class side.
+	For instance variable return all subclasses."
 
 	self flag: #pharoTodo. "why the behavior is different for class and instance variable?"
 	^ isClassVariable

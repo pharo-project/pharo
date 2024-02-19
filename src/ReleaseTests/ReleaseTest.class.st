@@ -506,8 +506,9 @@ ReleaseTest >> testThatThereAreNoSelectorsRemainingThatAreSentButNotImplemented 
 	                    'BalloonEngine>>#registerFills:' 'BalloonFillData>>#computeFill' 'ClyFullBrowserMorph>>#extendClassScopeForMethods:'
 	                    'ComplexBorderStyle>>#drawPolyPatchFrom:to:on:usingEnds:' 'ComplexBorderStyle>>#drawLineFrom:to:on:'
 	                    'Context>>#simulatePrimitive:in:receiver:arguments:' 'Context>>#doPrimitive:method:receiver:args:'
-	                    'Context>>#failPrimitiveWith:' 'DAPackageRelationGraphGenerator>>#buildEdges' 'DAPackageCycleGenerator>>#buildEdges' 'DAGraphVizGenerator>>#buildGraphViz' 'DAGraphVizGenerator>>#openWith:' 'DAGraphVizGenerator>>#saveDotFileAndGenerateForType:'
-	                    'DAPackageAnalyzerDiffTreePresenter>>#buildRoots' 'DTReRunConfiguration>>#items' 'DebugSession>>#shouldDisplayContext:basedOnFilters:'
+	                    'Context>>#failPrimitiveWith:'
+	          
+'DAPackageAnalyzerDiffTreePresenter>>#buildRoots' 'DTReRunConfiguration>>#items' 'DebugSession>>#shouldDisplayContext:basedOnFilters:'
 	                    'DiskDirectoryEntry class>>#store:path:node:' 'EDEmergencyDebugger>>#resetDisplay' 'EDTest>>#prepareMethodVersionTest'
 	                    'ExternalDropHandler class>>#defaultHandler' 'FFICallbackArgumentReader>>#stackPointer' 'FFIFloat32>>#callbackReturnOn:for:'
 	                    'FFIFloatType>>#callbackReturnOn:for:' 'FFIIndirectFunctionResolution>>#resolveFunction:'
@@ -558,8 +559,10 @@ ReleaseTest >> testThatThereAreNoSelectorsRemainingThatAreSentButNotImplemented 
 
 { #category : 'tests - variables' }
 ReleaseTest >> testUndeclared [
-	| undeclaredVariables validExceptions remaining description |
+	| undeclaredVariables validExceptions remaining description  |
 
+	"we compile a second method with the undeclared #undeclaredStubInstVar1 to trigger the code path of removing twice in #cleanOutUndeclared"
+	self class compile: 'methodForTest ^undeclaredStubInstVar1'.
 	Smalltalk cleanOutUndeclared.
 	undeclaredVariables := Undeclared associations select: [:each |
 			each isUndeclaredVariable].
@@ -584,7 +587,8 @@ ReleaseTest >> testUndeclared [
 					nextPutAll: '>>';
 					print: method selector]].
 
-	self assert: remaining isEmpty description: description
+	self assert: remaining isEmpty description: description.
+	self class removeSelector: #methodForTest.
 ]
 
 { #category : 'tests - package' }

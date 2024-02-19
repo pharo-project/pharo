@@ -177,16 +177,6 @@ ReAbstractCritique >> printOn: aStream [
 	aStream nextPutAll: ' (', self title, ')'
 ]
 
-{ #category : 'actions' }
-ReAbstractCritique >> provideNegativeFeedback: aComment [
-	ReFeedbacker negativeFeedback: aComment about: self
-]
-
-{ #category : 'actions' }
-ReAbstractCritique >> providePositiveFeedback: aComment [
-	ReFeedbacker positiveFeedback: aComment about: self
-]
-
 { #category : 'testing' }
 ReAbstractCritique >> providesChange [
 

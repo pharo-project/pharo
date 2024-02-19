@@ -21,7 +21,5 @@ EpProtocolRemoval >> fileOutEntryOn: aWriteStream [
 		nextPutAll: self behaviorAffectedName;
 		nextPutAll: ' removeProtocolNamed: ';
 		print: self protocol;
-		nextPutAll: ' stamp: ';
-		print: Author changeStamp;
 		nextPutAll: '!'
 ]

@@ -317,6 +317,7 @@ ShiftClassBuilder >> fillClassSideFromEnvironment: anEnvironment [
 	| old |
 	old := anEnvironment at: name ifAbsent: [ ^ self ].
 
+	self metaclassClass: old class class.
 	self classSlots: old class slots.
 	self classTraits: old class traitComposition
 ]

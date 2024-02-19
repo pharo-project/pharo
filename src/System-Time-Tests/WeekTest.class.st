@@ -37,7 +37,7 @@ WeekTest >> setUp [
 	super setUp.
 	restoredStartDay := Week startDay.
 	Week startDay: #Sunday.
-	week := Week starting: '4 July 1998' asDate
+	week := Week starting: (Date readFrom: '4-7-1998' pattern: 'd-m-y')
 ]
 
 { #category : 'running' }
@@ -84,7 +84,7 @@ WeekTest >> testDayNames [
 WeekTest >> testEnumerating [
 	| days |
 	days := OrderedCollection new.
-	0 to: 6 do: [ :i | days add: ('28 June 1998' asDate addDays: i) ].
+	0 to: 6 do: [ :i | days add: ((Date readFrom: '28-6-1998' pattern: 'd-m-y') addDays: i) ].
 
 	week datesDo: [ :d | days remove: d ].
 
@@ -109,8 +109,8 @@ WeekTest >> testIndexOfDay [
 { #category : 'tests' }
 WeekTest >> testInquiries [
 	self
-		assert: week start asDate equals: '28 June 1998' asDate;
-		assert: week end asDate equals: '4 July 1998' asDate;
+		assert: week start asDate equals: (Date readFrom: '28-6-1998' pattern: 'd-m-y');
+		assert: week end asDate equals: (Date readFrom: '4-7-1998' pattern: 'd-m-y');
 		assert: week index equals: 5;
 		assert: week duration equals: 7 days
 ]
@@ -133,7 +133,7 @@ WeekTest >> testOffset [
 
 	| dt newWeek |
 
-	dt := DateAndTime fromString: '2018/01/01T00:00:00+10'.
+	dt := DateAndTime fromString: '2018-01-01T00:00:00+10'.
 	newWeek := Week starting: dt duration: 0. "duration is ignored"
 	self assert: newWeek asDateAndTime offset equals: dt offset
 ]
@@ -141,6 +141,6 @@ WeekTest >> testOffset [
 { #category : 'tests' }
 WeekTest >> testPreviousNext [
 	self
-		assert: week next equals: (Week starting: '6 July 1998' asDate);
-		assert: week previous equals: (Week starting: '22 June 1998' asDate)
+		assert: week next equals: (Week starting: (Date readFrom: '6-7-1998' pattern: 'd-m-y'));
+		assert: week previous equals: (Week starting: (Date readFrom: '22-6-1998' pattern: 'd-m-y'))
 ]

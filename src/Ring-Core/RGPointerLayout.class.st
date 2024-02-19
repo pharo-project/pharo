@@ -62,10 +62,9 @@ RGPointerLayout >> isPointerLayout [
 
 { #category : 'resolving' }
 RGPointerLayout >> makeResolved [
-
 	super makeResolved.
 
-	slots := self slots asOrderedCollection markAsRingResolved
+	slots := self slots do: [ :each | each markAsRingResolved]
 ]
 
 { #category : 'private - backend access' }

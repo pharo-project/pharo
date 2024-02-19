@@ -128,6 +128,12 @@ RBArrayNode >> equalTo: anObject withMapping: aDictionary [
 	^ true
 ]
 
+{ #category : 'testing' }
+RBArrayNode >> hasBlock [
+
+	^ statements anySatisfy: [ :stm | stm hasBlock ]
+]
+
 { #category : 'comparing' }
 RBArrayNode >> hash [
 	^ self hashForCollection: self statements
@@ -167,9 +173,16 @@ RBArrayNode >> isFaulty [
 ]
 
 { #category : 'testing' }
+RBArrayNode >> isUsingAsReturnValue: aNode [
+	^ (statements anySatisfy: [ :each | each == aNode ]) or: [ self isUsedAsReturnValue ]
+]
+
+{ #category : 'testing' }
 RBArrayNode >> lastIsReturn [
-	statements isEmpty ifTrue:[ ^false ].
-	^statements last lastIsReturn
+
+	^ statements isEmpty
+		  ifTrue: [ false ]
+		  ifFalse: [ statements last lastIsReturn ]
 ]
 
 { #category : 'accessing - token' }
@@ -261,9 +274,4 @@ RBArrayNode >> statements: statements0 [
 { #category : 'accessing' }
 RBArrayNode >> stopWithoutParentheses [
 	^ right
-]
-
-{ #category : 'testing' }
-RBArrayNode >> uses: aNode [
-	^ (statements anySatisfy: [ :each | each == aNode ]) or: [ self isUsed ]
 ]

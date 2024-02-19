@@ -31,7 +31,7 @@ DateAndTimeLeapTest >> setUp [
 
 { #category : 'tests' }
 DateAndTimeLeapTest >> testAsDate [
-	self assert: aDateAndTime asDate equals:  ('February 29, 2004' asDate translateTo: 2 hours)
+	self assert: aDateAndTime asDate equals:  ((Date readFrom: '29-2-2004' pattern: 'd-m-y') translateTo: 2 hours)
 ]
 
 { #category : 'tests' }
@@ -76,7 +76,7 @@ DateAndTimeLeapTest >> testAsUTC [
 
 { #category : 'tests' }
 DateAndTimeLeapTest >> testAsWeek [
-	self assert: aDateAndTime asWeek equals: ((Week starting: '02-29-2004' asDate) translateTo: 2 hours)
+	self assert: aDateAndTime asWeek equals: ((Week starting: (Date readFrom: '29-2-2004' pattern: 'd-m-y')) translateTo: 2 hours)
 ]
 
 { #category : 'tests' }
@@ -84,10 +84,10 @@ DateAndTimeLeapTest >> testAsYear [
 	"A year always starts at January 1"
 	self
 		assert: aDateAndTime asYear
-		equals: ((Year starting: '02-29-2004' asDate) translateTo: 2 hours ).
+		equals: ((Year starting: (Date readFrom: '29-2-2004' pattern: 'd-m-y')) translateTo: 2 hours ).
 	self
 		assert: aDateAndTime asYear
-		equals: ((Year starting: '01-01-2004' asDate) translateTo: 2 hours)
+		equals: ((Year starting: (Date readFrom: '29-2-2004' pattern: 'd-m-y')) translateTo: 2 hours)
 ]
 
 { #category : 'tests' }
@@ -143,7 +143,7 @@ DateAndTimeLeapTest >> testFirstDayOfMonth [
 
 { #category : 'tests' }
 DateAndTimeLeapTest >> testFromString [
-	self assert: aDateAndTime equals: (DateAndTime fromString: ' 2004-02-29T13:33:00+02:00')
+	self assert: aDateAndTime equals: (DateAndTime fromString: '2004-02-29T13:33:00+02:00')
 ]
 
 { #category : 'tests' }

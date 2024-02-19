@@ -268,12 +268,6 @@ PharoCommonTools >> testRunner [
 	^ self toolNamed: #testRunner
 ]
 
-{ #category : 'registry access' }
-PharoCommonTools >> timeProfiler [
-
-	^ self toolNamed: #timeProfiler
-]
-
 { #category : 'private' }
 PharoCommonTools >> toolNamed: aSymbol [
 

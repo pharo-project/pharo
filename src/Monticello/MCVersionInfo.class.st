@@ -18,29 +18,40 @@ Class {
 }
 
 { #category : 'instance creation' }
-MCVersionInfo class >> name: vName id: id message: message date: date time: time author: author ancestors: ancestors [
+MCVersionInfo class >> name: vName id: id message: message date: date time: time ancestors: ancestors [
 	^ self 
 		name: vName
 		id: id
 		message: message
 		date: date
 		time: time
-		author: author
 		ancestors: ancestors
 		stepChildren: #()
 ]
 
 { #category : 'instance creation' }
-MCVersionInfo class >> name: vName id: id message: message date: date time: time author: author ancestors: ancestors stepChildren: stepChildren [
+MCVersionInfo class >> name: vName id: id message: message date: date time: time ancestors: ancestors stepChildren: stepChildren [
 	^ self new
 		initializeWithName: vName
 		id: id
 		message: message
 		date: date
 		time: time
-		author: author
 		ancestors: ancestors
 		stepChildren: stepChildren
+]
+
+{ #category : 'instance creation' }
+MCVersionInfo class >> name: vName id: id message: message date: date time: time author: author ancestors: ancestors stepChildren: stepChildren [
+
+	^ self
+		  name: vName
+		  id: id
+		  message: message
+		  date: date
+		  time: time
+		  ancestors: ancestors
+		  stepChildren: stepChildren
 ]
 
 { #category : 'comparing' }
@@ -57,7 +68,6 @@ MCVersionInfo >> asDictionary [
 		at: #message put: message;
 		at: #date put: date;
 		at: #time put: time;
-		at: #author put: author;
 		at: #ancestors put: (self ancestors collect: [:a | a asDictionary]);
 		yourself
 ]
@@ -93,13 +103,13 @@ MCVersionInfo >> id [
 ]
 
 { #category : 'initialization' }
-MCVersionInfo >> initializeWithName: vName id: aUUID message: aString date: aDate time: aTime author: initials ancestors: aCollection stepChildren: stepCollection [
+MCVersionInfo >> initializeWithName: vName id: aUUID message: aString date: aDate time: aTime ancestors: aCollection stepChildren: stepCollection [
+
 	name := vName.
 	id := aUUID.
 	message := aString.
 	date := aDate ifNil: [ Date today ].
 	time := aTime.
-	author := initials.
 	ancestors := aCollection.
 	stepChildren := stepCollection
 ]
@@ -184,21 +194,30 @@ MCVersionInfo >> summary [
 
 { #category : 'accessing' }
 MCVersionInfo >> summaryHeader [
-	^ String streamContents:
-		[:s |
-		s
-			nextPutAll: 'Name: '; nextPutAll: self name; cr.
-		date ifNotNil:
-			[s
-				nextPutAll: 'Author: '; nextPutAll: author; cr;
-				nextPutAll: 'Time: '; nextPutAll:  date asString, ', ', time asString; cr].
-		id ifNotNil:
-			[s nextPutAll: 'UUID: '; nextPutAll: id asString; cr].
-		s
-			nextPutAll: 'Ancestors: '; nextPutAll: self ancestorString.
-		self stepChildren isEmpty ifFalse:
-			[s cr; nextPutAll: 'Backported From: '; nextPutAll: self stepChildrenString].
-		]
+
+	^ String streamContents: [ :s |
+		  s
+			  nextPutAll: 'Name: ';
+			  nextPutAll: self name;
+			  cr.
+		  date ifNotNil: [
+			  s
+				  nextPutAll: 'Time: ';
+				  nextPutAll: date asString , ', ' , time asString;
+				  cr ].
+		  id ifNotNil: [
+			  s
+				  nextPutAll: 'UUID: ';
+				  nextPutAll: id asString;
+				  cr ].
+		  s
+			  nextPutAll: 'Ancestors: ';
+			  nextPutAll: self ancestorString.
+		  self stepChildren isEmpty ifFalse: [
+			  s
+				  cr;
+				  nextPutAll: 'Backported From: ';
+				  nextPutAll: self stepChildrenString ] ]
 ]
 
 { #category : 'pillaging' }

@@ -8,7 +8,7 @@ Class {
 
 { #category : 'tests' }
 DeprecationTest >> testTransformingDeprecation [
-
+	<ignoreNotImplementedSelectors: #(sendsDeprecatedMessageWithTransform)>
 	| classFactory oldRaiseWarning oldActivateTransformations |
 	classFactory := ClassFactoryForTestCase new.
 	classFactory 
