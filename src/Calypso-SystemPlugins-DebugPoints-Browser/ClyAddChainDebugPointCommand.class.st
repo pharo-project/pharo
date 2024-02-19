@@ -35,7 +35,7 @@ ClyAddChainDebugPointCommand >> execute [
 	| dp |
 	dp := (DebugPointManager
 		       installNew: DebugPoint
-		       On: sourceNode
+		       on: sourceNode
 		       withBehaviors: { ChainBehavior }) name: #ChainLink.
 
 	self putIconInProperties: dp 

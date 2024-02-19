@@ -21,7 +21,7 @@ Object >> breakOnCallTo: aMethodSelector [
 
 	^ DebugPointManager
 		  installNew: BreakDebugPoint
-		  On: (self class compiledMethodAt: aMethodSelector) ast
+		  on: (self class compiledMethodAt: aMethodSelector) ast
 		  forObject: self
 ]
 
@@ -66,7 +66,7 @@ Object >> breakOnceOnCallTo: aMethodSelector [
 
 	^ DebugPointManager
 		  installNew: BreakDebugPoint
-		  On: (self class compiledMethodAt: aMethodSelector) ast
+		  on: (self class compiledMethodAt: aMethodSelector) ast
 		  forObject: self
 		  withBehaviors: { OnceBehavior }
 ]

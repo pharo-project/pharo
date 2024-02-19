@@ -35,7 +35,7 @@ ClyAddScriptDebugPointCommand >> execute [
 	| dp | 
 	dp := (DebugPointManager
 		       installNew: DebugPoint
-		       On: sourceNode
+		       on: sourceNode
 		       withBehaviors: { ScriptBehavior }) name: #Script.
 
 	dp script: self popUp.

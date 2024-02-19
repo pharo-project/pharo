@@ -35,7 +35,7 @@ ClyAddConditionBreakCommand >> execute [
 	| dp |
 	dp := DebugPointManager
 		      installNew: BreakDebugPoint
-		      On: sourceNode
+		      on: sourceNode
 		      withBehaviors: { ConditionBehavior }.
  
 	dp condition: self popUp.

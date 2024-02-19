@@ -54,45 +54,6 @@ DebugPointManager class >> installDebugPoint: dp withBehaviors: aListOfBehaviorC
 ]
 
 { #category : 'API' }
-DebugPointManager class >> installNew: aDebugPointClass On: aNode [
-
-	^self installNew: aDebugPointClass On: aNode withBehaviors: {  }.
-]
-
-{ #category : 'API' }
-DebugPointManager class >> installNew: aDebugPointClass On: aNode forObject: anObject [
-
-	^self installNew: aDebugPointClass On: aNode forObject: anObject withBehaviors: {  }.
-]
-
-{ #category : 'API' }
-DebugPointManager class >> installNew: aDebugPointClass On: aNode forObject: anObject withBehaviors: aListOfBehaviorClasses [
-	"this should be the single point of installation for debug points, removal is in the remove method of debug point instances"
-
-	| dp |
-	dp := aDebugPointClass new
-		      node: aNode;
-		      targetInstance: anObject;
-		      yourself.
-
-	^ self installDebugPoint: dp withBehaviors: aListOfBehaviorClasses
-]
-
-{ #category : 'API' }
-DebugPointManager class >> installNew: aDebugPointClass On: aNode withBehaviors: aListOfBehaviorClasses [
-	"this should be the single point of installation for debug points, removal is in the remove method of debug point instances"
-
-	| dp |
-	dp := aDebugPointClass new
-		      node: aNode;
-		      yourself.
-
-	^ self
-		  installDebugPoint: dp
-		  withBehaviors: aListOfBehaviorClasses
-]
-
-{ #category : 'API' }
 DebugPointManager class >> installNew: aDebugPointClass forObject: anObject onVariableAccessNamed: aSlotNameSymbol [
 	"access strategy can be #all or #read or #write"
 
@@ -318,6 +279,45 @@ DebugPointManager class >> installNew: aDebugPointClass inClass: aClass onVariab
 		  inClass: aClass
 		  onVariableNamed: aSlotNameSymbol
 		  accessStrategy: #write
+		  withBehaviors: aListOfBehaviorClasses
+]
+
+{ #category : 'API' }
+DebugPointManager class >> installNew: aDebugPointClass on: aNode [
+
+	^self installNew: aDebugPointClass on: aNode withBehaviors: {  }.
+]
+
+{ #category : 'API' }
+DebugPointManager class >> installNew: aDebugPointClass on: aNode forObject: anObject [
+
+	^self installNew: aDebugPointClass on: aNode forObject: anObject withBehaviors: {  }.
+]
+
+{ #category : 'API' }
+DebugPointManager class >> installNew: aDebugPointClass on: aNode forObject: anObject withBehaviors: aListOfBehaviorClasses [
+	"this should be the single point of installation for debug points, removal is in the remove method of debug point instances"
+
+	| dp |
+	dp := aDebugPointClass new
+		      node: aNode;
+		      targetInstance: anObject;
+		      yourself.
+
+	^ self installDebugPoint: dp withBehaviors: aListOfBehaviorClasses
+]
+
+{ #category : 'API' }
+DebugPointManager class >> installNew: aDebugPointClass on: aNode withBehaviors: aListOfBehaviorClasses [
+	"this should be the single point of installation for debug points, removal is in the remove method of debug point instances"
+
+	| dp |
+	dp := aDebugPointClass new
+		      node: aNode;
+		      yourself.
+
+	^ self
+		  installDebugPoint: dp
 		  withBehaviors: aListOfBehaviorClasses
 ]
 

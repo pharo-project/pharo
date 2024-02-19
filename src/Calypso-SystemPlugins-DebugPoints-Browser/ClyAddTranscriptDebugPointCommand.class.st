@@ -35,7 +35,7 @@ ClyAddTranscriptDebugPointCommand >> execute [
 	| dp | 
 	dp := (DebugPointManager
 		       installNew: DebugPoint
-		       On: sourceNode
+		       on: sourceNode
 		       withBehaviors: { TranscriptBehavior }) name: #Transcript.
 	dp text: self popUp.
 	self putIconInProperties: dp

@@ -35,7 +35,7 @@ ClyAddOnceBreakPointCommand >> execute [
 	| dp | 
 	dp := DebugPointManager
 		      installNew: BreakDebugPoint
-		      On: sourceNode
+		      on: sourceNode
 		      withBehaviors: { OnceBehavior }.
 	self putIconInProperties: dp
 ]

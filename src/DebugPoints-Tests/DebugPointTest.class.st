@@ -52,7 +52,7 @@ DebugPointTest >> tearDown [
 { #category : 'tests' }
 DebugPointTest >> testBehaviorPriority [
 	| a b c set |
-	dp := DebugPointManager installNew: DebugPoint On: node.
+	dp := DebugPointManager installNew: DebugPoint on: node.
 	a := OnceBehavior new priority: 2.
 	b := CountBehavior new priority: 1.
 	c := ChainBehavior new priority: 3.
@@ -69,7 +69,7 @@ DebugPointTest >> testBehaviorPriority [
 
 { #category : 'tests' }
 DebugPointTest >> testBreakDebugPoint [
-	dp := DebugPointManager installNew: BreakDebugPoint On: node.
+	dp := DebugPointManager installNew: BreakDebugPoint on: node.
 	self should: [dp hitWithContext: context] raise: Break.
 	self should: [DummyTestClass new id:2 ] raise: Break.
 ]
@@ -131,11 +131,11 @@ DebugPointTest >> testChainBehaviorHitWithContext [
 
 	dp := DebugPointManager
 		      installNew: DebugPoint
-		      On: node
+		      on: node
 		      withBehaviors: { ChainBehavior }.
 	dp2 := DebugPointManager
 		       installNew: DebugPoint
-		       On: node
+		       on: node
 		       withBehaviors: { ChainBehavior }.
 
 
@@ -158,8 +158,8 @@ DebugPointTest >> testChainBehaviorHitWithContext [
 
 { #category : 'tests' }
 DebugPointTest >> testChainBehaviorPutChild [
-	dp := DebugPointManager installNew: DebugPoint  On: node withBehaviors: {ChainBehavior}.
-	dp2 := DebugPointManager installNew: DebugPoint  On: node withBehaviors: {ChainBehavior}.
+	dp := DebugPointManager installNew: DebugPoint  on: node withBehaviors: {ChainBehavior}.
+	dp2 := DebugPointManager installNew: DebugPoint  on: node withBehaviors: {ChainBehavior}.
 	
 	"check parent/child"
 	self assert: (dp child) equals: nil.
@@ -179,11 +179,11 @@ DebugPointTest >> testChainBehaviorRemoveBehavior [
 
 	dp := DebugPointManager
 		      installNew: DebugPoint
-		      On: node
+		      on: node
 		      withBehaviors: { ChainBehavior }.
 	dp2 := DebugPointManager
 		       installNew: DebugPoint
-		       On: node
+		       on: node
 		       withBehaviors: { ChainBehavior }.
 
 	"check parent/child"
@@ -211,8 +211,8 @@ DebugPointTest >> testChainBehaviorRemoveBehavior [
 
 { #category : 'tests' }
 DebugPointTest >> testChainBehaviorResetChain [
-	dp := DebugPointManager installNew: DebugPoint  On: node withBehaviors: {ChainBehavior}.
-	dp2 := DebugPointManager installNew: DebugPoint  On: node withBehaviors: {ChainBehavior}.
+	dp := DebugPointManager installNew: DebugPoint  on: node withBehaviors: {ChainBehavior}.
+	dp2 := DebugPointManager installNew: DebugPoint  on: node withBehaviors: {ChainBehavior}.
 	
 	dp putChild: dp2.
 	"hit parent, check states"
@@ -234,7 +234,7 @@ DebugPointTest >> testChainBehaviorResetChain [
 DebugPointTest >> testConditionBehavior [
 	| behavior |
 	behavior := ConditionBehavior new condition: 'corner=(300@200)'.
-	dp := DebugPointManager installNew: BreakDebugPoint On: node.
+	dp := DebugPointManager installNew: BreakDebugPoint on: node.
 	dp addBehavior: behavior.
 	"dp addBehavior: BreakBehavior new."
 
@@ -258,7 +258,7 @@ DebugPointTest >> testConditionBehavior [
 DebugPointTest >> testConditionBehaviorThisContext [
 	| behavior |
 	
-	dp := DebugPointManager installNew: BreakDebugPoint On: node.
+	dp := DebugPointManager installNew: BreakDebugPoint on: node.
 
 	behavior := ConditionBehavior new condition: 'thisContext method = 2'.
 	dp addBehavior: behavior.
@@ -281,7 +281,7 @@ DebugPointTest >> testConditionBehaviorThisContext [
 DebugPointTest >> testCountBehavior [
 	| cbh |
 	
-	dp := DebugPointManager installNew: DebugPoint  On: node withBehaviors: {CountBehavior}.
+	dp := DebugPointManager installNew: DebugPoint  on: node withBehaviors: {CountBehavior}.
 	cbh := dp getBehavior: CountBehavior.
 	self assert: ( cbh count ) equals: 0.
 	dp hitWithContext: context.
@@ -299,7 +299,7 @@ DebugPointTest >> testObjectCentricBreakDebugPoint [
 	obj2 := DummyTestClass new.
 	dp := DebugPointManager
 		      installNew: BreakDebugPoint
-		      On: node
+		      on: node
 		      forObject: obj.
 
 	self should: [ dp hitWithContext: context ] raise: Break.
@@ -409,7 +409,7 @@ DebugPointTest >> testObjectCentricWatchOnceDebugPoint [
 
 { #category : 'tests' }
 DebugPointTest >> testOnceBehavior [
-	dp := DebugPointManager installNew: DebugPoint On: node.
+	dp := DebugPointManager installNew: DebugPoint on: node.
 	dp addBehavior: (OnceBehavior new).
 	self assert: (dp enabled) equals: true.
 	dp hitWithContext: context.
@@ -420,7 +420,7 @@ DebugPointTest >> testOnceBehavior [
 
 { #category : 'tests' }
 DebugPointTest >> testOnceBreakBehavior [
-	dp := DebugPointManager installNew: BreakDebugPoint On: node withBehaviors: {OnceBehavior}.
+	dp := DebugPointManager installNew: BreakDebugPoint on: node withBehaviors: {OnceBehavior}.
 
 	self assert: (dp enabled) equals: true.
 	self should: [dp hitWithContext: context] raise: Break.
@@ -449,7 +449,7 @@ DebugPointTest >> testOnceEvaluatesAfterConditionBehavior [
 		                     'corner = (300@200) '.
 	dp := DebugPointManager
 		      installNew: BreakDebugPoint
-		      On: node
+		      on: node
 		      withBehaviors: { OnceBehavior }.
 	dp addBehavior: conditionBehavior.
 	dp saveContext: context.
@@ -475,7 +475,7 @@ DebugPointTest >> testOnceEvaluatesAfterConditionBehavior [
 DebugPointTest >> testScriptDebugPoint [
 
 	"dp := DebugPointManager installNew: TranscriptDebugPoint On: node."
-	dp := DebugPointManager installNew: DebugPoint On: node withBehaviors: {ScriptBehavior}.
+	dp := DebugPointManager installNew: DebugPoint on: node withBehaviors: {ScriptBehavior}.
 	dp script: 'true'.
 	self shouldnt: [dp hitWithContext: context] raise: Break.
 	self shouldnt: [DummyTestClass new id:2 ] raise: Break.
@@ -490,7 +490,7 @@ DebugPointTest >> testTestEnvironmentBehavior [
 	| currentEnvironment |
 	dp := DebugPointManager
 		      installNew: BreakDebugPoint
-		      On: node
+		      on: node
 		      withBehaviors: { TestEnvironmentBehavior }.
 
 
@@ -509,7 +509,7 @@ DebugPointTest >> testTestEnvironmentBehavior [
 DebugPointTest >> testTranscriptDebugPoint [
 
 	"dp := DebugPointManager installNew: TranscriptDebugPoint On: node."
-	dp := DebugPointManager installNew: DebugPoint On: node withBehaviors: {TranscriptBehavior}.
+	dp := DebugPointManager installNew: DebugPoint on: node withBehaviors: {TranscriptBehavior}.
 	dp text: 'string'.
 	dp hitWithContext: context.
 	Transcript stepGlobal .
@@ -524,8 +524,8 @@ DebugPointTest >> testTwoDebugPointsOnSameTargetBothActivate [
 	node2 := (DummyTestClass methods select: [ :method |
 		          method name = 'DummyTestClass>>#id:' ]) first ast children
 		         second children first children first children first.
-	dp := DebugPointManager installNew: WatchDebugPoint On: node2.
-	dp2 := DebugPointManager installNew: WatchDebugPoint On: node2.
+	dp := DebugPointManager installNew: WatchDebugPoint on: node2.
+	dp2 := DebugPointManager installNew: WatchDebugPoint on: node2.
 	his := OrderedCollection new.
 
 	"check empty history"
@@ -546,7 +546,7 @@ DebugPointTest >> testWatchDebugPoint [
 	node2 := (DummyTestClass methods select: [ :method |
 		          method name = 'DummyTestClass>>#id:' ]) first ast children
 		         second children first children first children first.
-	dp := DebugPointManager installNew: WatchDebugPoint On: node2.
+	dp := DebugPointManager installNew: WatchDebugPoint on: node2.
 	his := OrderedCollection new.
 
 	"check empty history"

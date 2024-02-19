@@ -35,7 +35,7 @@ ClyAddCountDebugPointCommand >> execute [
 	| dp | 
 	dp := DebugPointManager
 		      installNew: DebugPoint
-		      On: sourceNode
+		      on: sourceNode
 		      withBehaviors: { CountBehavior }.
 
 	dp name: #Counter.
