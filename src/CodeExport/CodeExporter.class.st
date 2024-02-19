@@ -14,14 +14,14 @@ CodeExporter class >> writeSourceCodeFrom: aStream baseName: baseName isSt: stOr
 	"Write aStream as a file in the image directory. baseName should be a valid file name <String>.
 	If stOrCsFlag is <true>, then append '.st' extension, otherwise use '.cs' extension"
 
-	| extension targetFileReference |
+	| extension targetFileName |
 	
 	extension := stOrCsFlag ifTrue: ['.st'] ifFalse: ['.cs'].
-	targetFileReference := (baseName , extension) asFileReference.
+	targetFileName := baseName , extension.
 
 	self 
 		writeSourceCodeFrom: aStream 
-		toFileReference: FileLocator imageDirectory / targetFileReference
+		toFileReference: FileLocator imageDirectory / targetFileName
 ]
 
 { #category : 'file-out' }
