@@ -102,6 +102,12 @@ IdentifierChooserMorph >> activate: evt [
 	"Backstop."
 ]
 
+{ #category : 'as yet unclassified' }
+IdentifierChooserMorph >> allowedArea [
+	
+	^ RealEstateAgent maximumUsableAreaInWorld: self currentWorld
+]
+
 { #category : 'accessing' }
 IdentifierChooserMorph >> baseColor [
 	^ baseColor ifNil: [baseColor := self defaultBaseColor]
