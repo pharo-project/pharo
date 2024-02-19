@@ -271,7 +271,7 @@ fromSource: 'm: arg
 withNewSelector: #extractedMethod:.
 
 	self should: [ transformation generateChanges ]
-		raise: RBRefactoringError 
+		raise: RBRefactoringWarning
 ]
 
 { #category : 'tests - failures' }
@@ -286,7 +286,7 @@ fromSource: 'm: arg
 withNewSelector: #extractedMethod:.
 
 	self should: [ transformation generateChanges ]
-		raise: RBRefactoringError 
+		raise: RBRefactoringWarning
 ]
 
 { #category : 'tests' }

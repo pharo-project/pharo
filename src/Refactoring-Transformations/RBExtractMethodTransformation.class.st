@@ -76,7 +76,12 @@ RBExtractMethodTransformation >> applicabilityPreconditions [
 	  & self preconditionOneAssignmentMaximum
 	  & self preconditionAssignmentsNotReadBeforeWritten
 	  & self preconditionSubtreeDoesNotContainsReturn
-	  & self preconditionHasSameExitPoint 
+]
+
+{ #category : 'preconditions' }
+RBExtractMethodTransformation >> breakingChangePreconditions [ 
+
+	  ^ self preconditionHasSameExitPoint 
 ]
 
 { #category : 'executing' }
@@ -227,6 +232,15 @@ RBExtractMethodTransformation >> calculateTemporaries [
 RBExtractMethodTransformation >> calculateTree [
 
 	^ parseTree ifNil: [ parseTree := self definingMethod ]
+]
+
+{ #category : 'scripting api - conditions' }
+RBExtractMethodTransformation >> checkPreconditions [
+
+	super checkPreconditions.
+	self breakingChangePreconditions check ifFalse: [
+		self refactoringWarning:
+			self breakingChangePreconditions errorString ]
 ]
 
 { #category : 'api' }

@@ -1419,13 +1419,13 @@ RBProgramNodeTest >> testlastIsReturnWhenArrayNodeWithFirstReturnExpectFalse [
 ]
 
 { #category : 'tests - lastIsReturn' }
-RBProgramNodeTest >> testlastIsReturnWhenArrayNodeWithLastReturnExpectFalse [
+RBProgramNodeTest >> testlastIsReturnWhenArrayNodeWithLastReturnExpectTrue [
 
 	| ast statement |
 	ast := RBParser parseMethod: 'a1
 							{ ^ 1 }'.
 	statement := ast body statements last.
-	self deny: statement lastIsReturn 
+	self assert: statement lastIsReturn 
 ]
 
 { #category : 'tests - lastIsReturn' }
