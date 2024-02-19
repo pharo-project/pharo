@@ -12,7 +12,6 @@ Class {
 		'enabledBlock',
 		'label',
 		'help',
-		'icon',
 		'iconFormSet',
 		'selector',
 		'arguments',
