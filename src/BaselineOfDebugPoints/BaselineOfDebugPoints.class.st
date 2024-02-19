@@ -10,7 +10,13 @@ BaselineOfDebugPoints >> baseline: spec [
 
 	<baseline>
 	spec for: #common do: [
-		spec package: 'DebugPoints'.
+		spec
+			baseline: 'Reflectivity'
+			with: [ spec repository: (self packageRepositoryURLForSpec: spec) ].
+
+		spec
+			package: 'DebugPoints'
+			with: [ spec requires: #( 'Reflectivity' ) ].
 
 		spec
 			package: 'DebugPoints-Tests'
