@@ -36,7 +36,7 @@ It will be possible to configure debug points via a UI tool, the Debug Point Bro
 Debug points can be installed on different types of targets:
 
 - an *AST node*, which can be targeted by selecting source code in the Calypso browser:
- ![Targeting an AST node by selecting source code in the Calypso browser](https://github.com/adri09070/pharo/assets/97704417/c2f17276-2a3b-431c-bdec-0784bccaea2a).
+  ![Targeting an AST node by selecting source code in the Calypso browser](https://github.com/adri09070/pharo/assets/97704417/c2f17276-2a3b-431c-bdec-0784bccaea2a).
   In this case, the debug point is reached when the corresponding code is executed. 
   *NB: To put basic breakpoints quickly on AST nodes, it is still possible to double-click the left bar in the method editor, just like with the ancient breakpoint system:*
   ![Activating basic breakpoint by double-clicking the left bar in the method editor](https://github.com/adri09070/pharo/assets/97704417/99c5ad24-8224-4e37-9b4f-697a7092c786)
