@@ -7,7 +7,7 @@ Class {
 	#name : 'DebugPointTarget',
 	#superclass : 'Object',
 	#instVars : [
-		'target'
+		'#target => WeakSlot'
 	],
 	#category : 'DebugPoints-Base',
 	#package : 'DebugPoints',
@@ -27,6 +27,13 @@ DebugPointTarget >> beForObject: anObject [
 DebugPointTarget >> browse [
 
 	self subclassResponsibility 
+]
+
+{ #category : 'initialization' }
+DebugPointTarget >> initialize [
+
+	self class initializeSlots: self.
+	super initialize.
 ]
 
 { #category : 'installing' }
