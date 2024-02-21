@@ -25,6 +25,23 @@ ReleaseTest >> actualProcesses [
 	^ self class actualProcesses
 ]
 
+{ #category : 'accessing' }
+ReleaseTest >> allowedObsoletes [
+	"take obsoletes from a configuration variable if it exist. 
+	 this is used because some CI (e.g. iceberg) require the project to be unloaded 
+	 and after reload to properly test, and this can left some obsoletes.
+	 WARNING: This has to be used carefully. it may lead to obsoletes to be left in 
+	 system incorrectly."
+	| allowed |
+			
+	allowed := Smalltalk os environment 
+		at: 'CI_PHARO_ALLOWED_OBSOLETES'
+		ifAbsent: [ nil ].
+	allowed ifNil: [ ^ #() ].
+			
+	^ (allowed substrings: ', ') collect: [ :each |  'AnObsolete', each ]
+]
+
 { #category : 'helpers' }
 ReleaseTest >> assertValidLintRule: aLintRule [
 	self assertValidLintRule: aLintRule withExceptions: {}
@@ -387,7 +404,7 @@ ReleaseTest >> testObsoleteClasses [
 	Smalltalk fixObsoleteReferences.
 	Smalltalk garbageCollect.
 	obsoleteClasses := SystemNavigation new obsoleteClasses
-		select: [ :each | each isAnonymous not ].
+		reject: [ :each | each isAnonymous or: [ (self allowedObsoletes includes: each name) ] ].
 
 	self
 		assert: obsoleteClasses isEmpty
