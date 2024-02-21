@@ -340,6 +340,7 @@ ProcessTest >> testIsNotSuspendedWhenItIsRunningButNotActiveProcess [
 	semaphore := Semaphore new.
 	process := [ semaphore signal. Processor yield ] fork.
 	semaphore wait.
+	self assert: process isReady.
 	self deny: process isTerminated.
 	self deny: process isSuspended
 ]
@@ -554,6 +555,20 @@ ProcessTest >> testIsTerminatingNormalTermination [
 	self assert: unwound.
 	"A process should terminte itself."
 	self assert: terminator identicalTo: process
+]
+
+{ #category : 'tests' }
+ProcessTest >> testIsWaiting [
+
+	| semaphore process |
+	semaphore := Semaphore new.
+	process := [ semaphore wait. Processor yield.  ] fork.
+	self assert: process isReady.
+	self deny: process isWaiting.
+	Processor yield.
+	self assert: process isWaiting.
+	semaphore signal.
+	self deny: process isWaiting.
 ]
 
 { #category : 'tests - creation' }

@@ -10,7 +10,7 @@ Process >> debugWithTitle: title [
 
 	<debuggerCompleteToSender>
 	| context |
-	context := self isActiveProcess
+	context := self isActive
 		           ifTrue: [ thisContext ]
 		           ifFalse: [ self suspendedContext ].
 
