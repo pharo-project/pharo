@@ -126,6 +126,7 @@ DebugPoint >> initialize [
 { #category : 'installing' }
 DebugPoint >> install [
 
+	self link ifNil: [ ^ self ].
 	self link uninstall.
 	self target install: self link
 ]
@@ -258,7 +259,8 @@ DebugPoint >> targetClass [
 { #category : 'scope' }
 DebugPoint >> targetInstance: anObject [
 
-	target := self target beForObject: anObject
+	target := self target beForObject: anObject.
+	self install
 ]
 
 { #category : 'description' }

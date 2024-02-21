@@ -8,22 +8,33 @@ Class {
 		'dp',
 		'node',
 		'context',
-		'dp2'
+		'dp2',
+		'cls'
 	],
 	#category : 'DebugPoints-Tests-Model',
 	#package : 'DebugPoints-Tests',
 	#tag : 'Model'
 }
 
+{ #category : 'tests' }
+DebugPointTest >> newDummyClass [
+
+	^ self class classInstaller make: [ :aBuilder |
+		  aBuilder
+			  name: #DummyClassForBreakpoint;
+			  package: 'DummyPackage' ]
+]
+
 { #category : 'running' }
 DebugPointTest >> setUp [
+
 	super setUp.
-	
+
 	"set a node to install the dp on"
-	node := (DummyTestClass methods select: [ :method | method name = 'DummyTestClass>>#id:' ]) first ast.
+	node := (DummyTestClass methods select: [ :method |
+		         method name = 'DummyTestClass>>#id:' ]) first ast.
 	context := self setUpContext.
-	
-	
+	cls := self newDummyClass
 ]
 
 { #category : 'initialization' }
@@ -46,7 +57,57 @@ DebugPointTest >> tearDown [
 
 	dp ifNotNil: [ dp remove ].
 	dp2 ifNotNil: [ dp2 remove ].
+
+	DummyTestClass removeSelector: #dummy.
+	cls ifNotNil: [ cls isObsolete ifFalse: [ cls removeFromSystem ] ].
+	self packageOrganizer removePackage: 'DummyPackage'.
 	super tearDown
+]
+
+{ #category : 'tests' }
+DebugPointTest >> testAddRemoveBreakpoint [
+
+	| method |
+	DummyTestClass compile: 'dummy ^42'.
+	method := DummyTestClass >> #dummy.
+	self assertEmpty: Breakpoint all.
+	dp := DebugPointManager
+		      installNew: BreakDebugPoint
+		      on: (DummyTestClass >> #dummy) ast.
+	"after the breakpoint is installed, the method is different"
+	self
+		deny: (DummyTestClass >> #dummy) bytecodes
+		equals: method bytecodes.
+
+	self assertCollection: DebugPoint all includesAll: { dp }.
+	dp remove.
+	self denyCollection: DebugPoint all includesAll: { dp }.
+
+	"Check that the method is correcty reverted"
+	self
+		assert: (DummyTestClass >> #dummy) bytecodes
+		equals: method bytecodes
+]
+
+{ #category : 'tests' }
+DebugPointTest >> testAddRemoveBreakpointKeepTimestamp [
+
+	| method |
+	DummyTestClass compile: 'dummy ^42'.
+	method := DummyTestClass >> #dummy.
+	self assertEmpty: Breakpoint all.
+	dp := DebugPointManager
+		      installNew: BreakDebugPoint
+		      on: (DummyTestClass >> #dummy) ast.
+
+	self
+		assert: (DummyTestClass >> #dummy) timeStamp
+		equals: method timeStamp.
+
+	dp remove.
+	self
+		assert: (DummyTestClass >> #dummy) timeStamp
+		equals: method timeStamp
 ]
 
 { #category : 'tests' }
@@ -124,6 +185,19 @@ DebugPointTest >> testBreakDebugPointOnVariableWrite [
 		      onVariableWriteNamed: #id.
 	self should: [ DummyTestClass new ] raise: Break.
 	self shouldnt: [ DummyTestClass basicNew id ] raise: Break
+]
+
+{ #category : 'tests' }
+DebugPointTest >> testBreakLink [
+
+	| link |
+	dp := DebugPointManager
+		      installNew: BreakDebugPoint
+		      on: (DummyTestClass >> #id:) ast.
+	link := dp link.
+	self assert: link metaObject identicalTo: dp.
+	self assert: link selector equals: #hitWithContext:.
+	self assertCollection: link arguments equals: #( #context )
 ]
 
 { #category : 'tests' }
@@ -231,6 +305,24 @@ DebugPointTest >> testChainBehaviorResetChain [
 ]
 
 { #category : 'tests' }
+DebugPointTest >> testChangeTargetInstance [
+
+	| object |
+	DummyTestClass compile: 'dummy ^42'.
+	dp := DebugPointManager
+		      installNew: BreakDebugPoint
+		      on: (DummyTestClass >> #dummy) ast.
+	object := DummyTestClass new.
+
+
+	self should: [ DummyTestClass new dummy ] raise: Break.
+	self should: [ object dummy ] raise: Break.
+	dp targetInstance: object.
+	self shouldnt: [ DummyTestClass new dummy ] raise: Break.
+	self should: [ object dummy ] raise: Break
+]
+
+{ #category : 'tests' }
 DebugPointTest >> testConditionBehavior [
 	| behavior |
 	behavior := ConditionBehavior new condition: 'corner=(300@200)'.
@@ -289,6 +381,20 @@ DebugPointTest >> testCountBehavior [
 	dp hitWithContext: context.
 	self assert:  ( cbh count ) equals: 2.
 
+]
+
+{ #category : 'tests' }
+DebugPointTest >> testModifyMethodWithBreakpoint [
+
+	DummyTestClass compile: 'dummy ^42'.
+	dp := DebugPointManager
+		      installNew: BreakDebugPoint
+		      on: (DummyTestClass >> #dummy) ast.
+	self assertCollection: DebugPoint all includesAll: { dp }.
+	self should: [ DummyTestClass new dummy ] raise: Break.
+	DummyTestClass compile: 'dummy ^43'.
+	self denyCollection: DebugPoint all includesAll: { dp }.
+	self shouldnt: [ DummyTestClass new dummy ] raise: Break
 ]
 
 { #category : 'tests' }
@@ -469,6 +575,32 @@ DebugPointTest >> testOnceEvaluatesAfterConditionBehavior [
 	self deny: dp enabled.
 	self assert: conditionBehavior execute.
 	self shouldnt: [ dp hitWithContext: context ] raise: Break
+]
+
+{ #category : 'tests' }
+DebugPointTest >> testRemoveClassWithBreakpoint [
+
+	cls compile: 'dummy ^42'.
+	self assertEmpty: Breakpoint all.
+	dp := DebugPointManager
+		      installNew: BreakDebugPoint
+		      on: (cls >> #dummy) ast.
+	self assertCollection: DebugPoint all includesAll: { dp }.
+	cls removeFromSystem.
+	self assertEmpty: Breakpoint all
+]
+
+{ #category : 'tests' }
+DebugPointTest >> testRemovePackageWithBreakpoint [
+
+	cls compile: 'dummy ^42'.
+	self assertEmpty: Breakpoint all.
+	dp := DebugPointManager
+		      installNew: BreakDebugPoint
+		      on: (cls >> #dummy) ast.
+	self assertCollection: DebugPoint all includesAll: { dp }.
+	cls package removeFromSystem.
+	self denyCollection: DebugPoint all includesAll: { dp }
 ]
 
 { #category : 'tests' }
