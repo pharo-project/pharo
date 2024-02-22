@@ -12,6 +12,17 @@ Object >> asOrderedCollection [
 ]
 
 { #category : '*Deprecated12' }
+Object >> executor [
+	"Return an object which can act as executor for finalization of the receiver"
+
+	self
+		deprecated: 'Please use #finalizer instead. See Phep0003'
+		transformWith: '`@receiver executor' -> '`@receiver finalizer'.
+
+	^ self finalizer
+]
+
+{ #category : '*Deprecated12' }
 Object >> nominallyUnsent: aSelectorSymbol [
 	"From within the body of a method which is not formally sent within the system, but which you intend to have remain in the system (for potential manual invocation, or for documentation, or perhaps because it's sent by commented-out-code that you anticipate uncommenting out someday, send this message, with the selector itself as the argument.
 

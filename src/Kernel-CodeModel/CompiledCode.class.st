@@ -236,15 +236,6 @@ CompiledCode >> author [
 ]
 
 { #category : 'accessing' }
-CompiledCode >> bytecode [
-	self
-		deprecated: 'Changed selector for coherency'
-		transformWith: '`@receiver bytecode'
-						-> '`@receiver bytecodes'.
-	^ self bytecodes
-]
-
-{ #category : 'accessing' }
 CompiledCode >> bytecodes [
 	"Answer an ByteArray of the btyecode of the method."
 

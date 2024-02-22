@@ -1,6 +1,15 @@
 Extension { #name : 'String' }
 
 { #category : '*Deprecated12' }
+String >> asClass [
+	"Returns a global class with my name"
+
+	self deprecated: 'Use #asClassInEnvironment: with an appropriate environment instead' transformWith: '`@receiver asClass' -> '`@receiver asClassInEnvironment: self class environment'.
+
+	^ self asClassInEnvironment: Smalltalk globals
+]
+
+{ #category : '*Deprecated12' }
 String >> asUncommentedCode [
 	"This string represents a commented code, let''s uncomment it.   
 	''""""abc""""'' asUncommentedCode.

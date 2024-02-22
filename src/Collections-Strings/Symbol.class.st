@@ -69,30 +69,12 @@ Symbol class >> cleanUp [
 	self rehash
 ]
 
-{ #category : 'cleanup' }
-Symbol class >> compactSymbolTable [
-	"this used to create a set with just 25% empty space, but that reduces lookup performance"
-		self
-		deprecated: 'Use #rehash instead'
-		transformWith: '`@receiver compactSymbolTable' -> '`@receiver rehash'.
-	self rehash
-]
-
 { #category : 'symbol table' }
 Symbol class >> findInterned: aStringOrSymbol [
 
 	^(SymbolTable like: aStringOrSymbol) ifNil: [
 		NewSymbols like: aStringOrSymbol
 	]
-]
-
-{ #category : 'selector table' }
-Symbol class >> findInternedSelector: aString [
-	"return a selector if the argument is used as a selector, nil if not"
-	self deprecated: 'use #isSelectorSymbol instead'.
-	^ (self findInterned: aString) ifNotNil: [ :symbol |
-		  (self selectorTable like: symbol) ifNotNil: [ :selectorSymbol |
-			  selectorSymbol ] ]
 ]
 
 { #category : 'symbol table' }
@@ -126,15 +108,6 @@ Symbol class >> intern: aStringOrSymbol [
 
 	^ (self findInterned: aStringOrSymbol) ifNil: [
 		  NewSymbols add: aStringOrSymbol createSymbol ]
-]
-
-{ #category : 'symbol table' }
-Symbol class >> lookup: aStringOrSymbol [
-	self
-		deprecated: 'Use #findInterned: instead'
-		transformWith: '`@receiver lookup: `@statements1' -> '`@receiver findInterned: `@statements1'.
-
-	^ self findInterned: aStringOrSymbol
 ]
 
 { #category : 'instance creation' }

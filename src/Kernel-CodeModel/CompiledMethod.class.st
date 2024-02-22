@@ -145,13 +145,6 @@ CompiledMethod >> cachePragmas [
 	self pragmas do: [ :pragma | pragma class addToCache: pragma ]
 ]
 
-{ #category : 'deprecated' }
-CompiledMethod >> category [
-
-	self deprecated: 'Use #protocolName instead.' transformWith: '`@rcv category' -> '`@rcv protocolName'.
-	^ self protocolName
-]
-
 { #category : 'accessing' }
 CompiledMethod >> classBinding [
 	"answer the association to the class that I am installed in, or nil if none."
@@ -947,11 +940,6 @@ CompiledMethod >> storeOn: aStream [
 CompiledMethod >> tempNames [
 	"on the level of the compiled method, tempNames includes argument names"
 	^self ast argumentNames, self ast temporaryNames
-]
-
-{ #category : 'accessing' }
-CompiledMethod >> trailer [
-	^self deprecated: 'CompiledMethodTrailer has been removed in Pharo12. Just use sourcePointer / sourcePointer to read and set. See class comment of CompiledMethodTrailer for more information'
 ]
 
 { #category : 'protocols' }

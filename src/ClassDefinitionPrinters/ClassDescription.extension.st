@@ -1,15 +1,6 @@
 Extension { #name : 'ClassDescription' }
 
 { #category : '*ClassDefinitionPrinters' }
-ClassDescription >> definition [
-	"Answer a String that defines the receiver."
-	self
-		deprecated: #definition
-		transformWith: '`@receiver definition' -> '`@receiver definitionString'.
-	^ self definitionString
-]
-
-{ #category : '*ClassDefinitionPrinters' }
 ClassDescription >> definitionPrinter [
 	"Return a configurated printer associated with the current class definition format."
 

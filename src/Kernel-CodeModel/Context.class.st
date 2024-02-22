@@ -849,14 +849,6 @@ Context >> hasContext: aContext [
 ]
 
 { #category : 'testing' }
-Context >> hasMethodReturn [
-	self
-		deprecated: 'use #hasNonLocalReturn'
-		transformWith: '`@receiver hasMethodReturn' -> '`@receiver hasNonLocalReturn'.
-	^self hasNonLocalReturn
-]
-
-{ #category : 'testing' }
 Context >> hasNonLocalReturn [
 	"check if this context does a non-local return, do not recurse into nested blocks as they will have anohter context"
 	^ closureOrNil
@@ -1075,14 +1067,6 @@ Context >> methodNode [
 	^ self homeMethod methodNode
 ]
 
-{ #category : 'accessing' }
-Context >> methodReturnContext [
-	self
-		deprecated: 'Use #home instead'
-		transformWith: '`@receiver methodReturnContext' -> '`@receiver home'.
-	^ self home
-]
-
 { #category : 'instruction decoding' }
 Context >> methodReturnReceiver [
 	"Simulate the action of a 'return receiver' bytecode. This corresponds to
@@ -1098,14 +1082,6 @@ Context >> methodReturnTop [
 	 to source expressions like '^something'."
 
 	^ self return: self pop from: self home
-]
-
-{ #category : 'accessing' }
-Context >> methodSelector [
-	self
-		deprecated: 'use #selector'
-		transformWith: '`@receiver methodSelector' -> '`@receiver selector'.
-	^ self selector
 ]
 
 { #category : 'private - exceptions' }
