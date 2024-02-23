@@ -23,7 +23,7 @@ DAWelcomePresenter class >> menuCommandOn: aBuilder [
 		order: 2;
 		parent: #Packaging;
 		label: 'Dependency Analyser';
-		icon: (self iconNamed: #package);
+		iconName: #package;
 		help: 'Analyze dependencies between different packages in the image.';
 		action: [ self new open ]
 ]

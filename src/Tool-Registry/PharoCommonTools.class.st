@@ -103,7 +103,7 @@ PharoCommonTools class >> worldMenuOn: aBuilder [
 		iconName: #smallSystemBrowser.
 	(aBuilder item: 'Git Repositories Browser')
 		order: 1;
-		icon: (self iconNamed: #komitterSmalltalkhubRemote);
+		iconName: #komitterSmalltalkhubRemote;
 		parent: #Browsing;
 		keyText: 'o, i';
 		help:
