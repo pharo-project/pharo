@@ -13,11 +13,28 @@ Class {
 	#tag : 'Behaviors'
 }
 
+{ #category : 'accessing' }
+ScriptBehavior >> context [
+	^self getArgument: #context
+]
+
+{ #category : 'accessing' }
+ScriptBehavior >> evaluate: expression withContext: aContext [
+
+	^ Smalltalk compiler
+		  source: expression;
+		  context: aContext;
+		  receiver: aContext receiver;
+		  bindings: { (#thisContext -> aContext) };
+		  evaluate
+]
+
 { #category : 'execution' }
 ScriptBehavior >> execute [
-	self script ifNil: [ ^true ].
-	Smalltalk compiler evaluate: self script.
-	^true.
+
+	self script ifNil: [ ^ true ].
+	self evaluate: self script withContext: self context.
+	^ true
 ]
 
 { #category : 'cleanup' }
