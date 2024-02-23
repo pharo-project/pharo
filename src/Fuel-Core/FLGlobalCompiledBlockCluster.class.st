@@ -26,22 +26,23 @@ FLGlobalCompiledBlockCluster >> materializeInstanceWith: aDecoder [
 
 	"It's ok if the method was changed or removed."
 	method := methodClass compiledMethodAt: selector ifAbsent: [ ^ nil ].
+
+	"Follow the saved path from the method to the compiled block"
 	theBlock := method.
 	path do: [ :index |
-		theBlock := index = 0 ifTrue: [ theBlock compiledBlock ] ifFalse: [theBlock literalAt: index]
-	].
-
+		theBlock := index = 0
+			            ifTrue: [ theBlock compiledBlock "0 means it is in a Clean Block" ]
+			            ifFalse: [ theBlock literalAt: index ] ].
 	^ theBlock
 ]
 
 { #category : 'serialize/materialize' }
 FLGlobalCompiledBlockCluster >> serializeInstance: aCompiledBlock with: anEncoder [
 	"The method will be looked up on the existing class upon materialization
-	and the block will be compiled as part of that method (possibly with a different
-	set of instructions than this one but that's expected behavior).
-	
-	See #testBlockClosureChangeDifferendBytecodes and #testBlockClosureChangeSameBytecodes
-	on FLBlockClosureSerializationTest."
+	and the block:
+	  - will be compiled as part of that method (possibly with a different set of instructions than this one but that's expected behavior).
+	  - or the method will have a Clean Block with the compiled block inside (that's why we save all the path from the method)
+	See #testBlockClosureChangeDifferendBytecodes and #testBlockClosureChangeSameBytecodes on FLBlockClosureSerializationTest."
 
 	| method path |
 	method := aCompiledBlock method.
