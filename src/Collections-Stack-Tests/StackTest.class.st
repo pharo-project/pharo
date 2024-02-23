@@ -3,7 +3,7 @@ SUnit tests for stacks
 "
 Class {
 	#name : 'StackTest',
-	#superclass : 'TestCase',
+	#superclass : 'ParametrizedTestCase',
 	#traits : 'TEmptyTest - {#testIfNotEmptyifEmpty. #testIfEmpty. #testNotEmpty} + (TCloneTest - {#testCopyNonEmpty})',
 	#classTraits : 'TEmptyTest classTrait + TCloneTest classTrait',
 	#instVars : [
@@ -15,10 +15,29 @@ Class {
 	#tag : 'Base'
 }
 
+{ #category : 'building suites' }
+StackTest class >> testParameters [
+
+	^ ParametrizedTestMatrix new
+		  addCase: {
+				  (#empty -> Stack new).
+				  (#nonEmpty -> Stack new) };
+		  addCase: {
+				  (#empty -> NewStack new).
+				  (#nonEmpty -> NewStack new) };
+		  yourself
+]
+
 { #category : 'accessing' }
 StackTest >> empty [
 
  	^ empty
+]
+
+{ #category : 'accessing' }
+StackTest >> empty: anObject [
+
+	empty := anObject
 ]
 
 { #category : 'accessing' }
@@ -27,11 +46,17 @@ StackTest >> nonEmpty [
  	^ nonEmpty
 ]
 
+{ #category : 'accessing' }
+StackTest >> nonEmpty: anObject [
+
+	nonEmpty := anObject
+]
+
 { #category : 'running' }
 StackTest >> setUp [
 	super setUp.
-	empty := Stack new.
-	nonEmpty := Stack new.
+	"empty := NewStack new.
+	nonEmpty := NewStack new."
 	nonEmpty push: 1.
 	nonEmpty push: -2.
 	nonEmpty push: 3.
