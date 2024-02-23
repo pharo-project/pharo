@@ -41,7 +41,7 @@ EpUnifiedBrowserPresenter class >> worldMenuItemOn: aBuilder [
 	(aBuilder item: 'Code Changes')
 		parent: #Changes;
 		action: [ self open ];
-		icon: (aBuilder iconNamed: self taskbarIconName);
+		iconName: self taskbarIconName;
 		help: 'Browse recorded change logs during from Pharo coding sessions and replay changes.';
 		order: 1
 ]
