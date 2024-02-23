@@ -6,6 +6,6 @@ Exception >> debug [
 
 	<debuggerCompleteToSender>
 	(OupsDebugRequest newForContext: self signalerContext)
-		label: self message;
+		label: self messageText;
 		submit
 ]
