@@ -55,8 +55,6 @@ StackTest >> nonEmpty: anObject [
 { #category : 'running' }
 StackTest >> setUp [
 	super setUp.
-	"empty := NewStack new.
-	nonEmpty := NewStack new."
 	nonEmpty push: 1.
 	nonEmpty push: -2.
 	nonEmpty push: 3.
