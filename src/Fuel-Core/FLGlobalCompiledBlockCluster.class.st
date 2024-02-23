@@ -16,18 +16,22 @@ Class {
 
 { #category : 'serialize/materialize' }
 FLGlobalCompiledBlockCluster >> materializeInstanceWith: aDecoder [
-	| methodClass selector method literalIndex |
+
+	| methodClass selector method pathSize path theBlock |
 	methodClass := self materializeGlobalClassFrom: aDecoder.
 	selector := aDecoder nextEncodedString asSymbol.
-	literalIndex := aDecoder nextEncodedUint8.
-	
+	pathSize := aDecoder nextEncodedUint8.
+	path := ByteArray new: pathSize.
+	aDecoder nextEncodedBytesInto: path.
+
 	"It's ok if the method was changed or removed."
-	method := methodClass  
-		compiledMethodAt: selector
-		ifAbsent: [ ^ nil ].
-	^ literalIndex > method numLiterals
-		ifTrue: [ nil ]
-		ifFalse: [ method literalAt: literalIndex ]
+	method := methodClass compiledMethodAt: selector ifAbsent: [ ^ nil ].
+	theBlock := method.
+	path do: [ :index |
+		theBlock := index = 0 ifTrue: [ theBlock compiledBlock ] ifFalse: [theBlock literalAt: index]
+	].
+
+	^ theBlock
 ]
 
 { #category : 'serialize/materialize' }
@@ -38,14 +42,13 @@ FLGlobalCompiledBlockCluster >> serializeInstance: aCompiledBlock with: anEncode
 	
 	See #testBlockClosureChangeDifferendBytecodes and #testBlockClosureChangeSameBytecodes
 	on FLBlockClosureSerializationTest."
-	| method literalIndex |
+
+	| method path |
 	method := aCompiledBlock method.
-	literalIndex := method literals indexOf: aCompiledBlock.
-	
-	self
-		serializeGlobalClass: aCompiledBlock methodClass
-		on: anEncoder.
+	self serializeGlobalClass: aCompiledBlock methodClass on: anEncoder.
+	path := aCompiledBlock path.
 	anEncoder
 		encodeString: method selector;
-		encodeUint8: literalIndex
+		encodeUint8: path size;
+		encodeBytes: path
 ]
