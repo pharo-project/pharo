@@ -19,6 +19,16 @@ Class {
 	#tag : 'Base'
 }
 
+{ #category : 'instance creation' }
+NewStack class >> withAll: aCollection [
+	"Answer an instance with same elements as aCollection."
+
+	| newStack |
+	newStack := self new.
+	aCollection do: [ :e | newStack push: e ].
+	^ newStack
+]
+
 { #category : 'comparing' }
 NewStack >> = anotherStack [
 
