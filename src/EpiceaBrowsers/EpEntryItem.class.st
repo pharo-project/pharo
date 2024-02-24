@@ -96,7 +96,7 @@ EpEntryItem >> hash [
 { #category : 'private' }
 EpEntryItem >> icon [
 
-	^ self iconNamed: (self eventAccept: EpIconVisitor new)
+	^ self iconNamed: (self eventAccept: EpIconNameVisitor new)
 ]
 
 { #category : 'accessing' }
