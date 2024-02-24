@@ -169,7 +169,8 @@ EntryCompletion >> openChooserWith: aToken from: aFieldMorph [
 		chooser requestor: aFieldMorph.
 		chooser position:
 			aFieldMorph bottomLeft + (aFieldMorph borderWidth @ 0).
-		chooser forcesHeight: 0 - (chooser boundsInWorld topLeft y + 2).
+		chooser boundsInWorld bottomLeft y > chooser allowedArea bottom
+				ifTrue: [ chooser forcesHeight: chooser allowedArea bottom - (chooser boundsInWorld topLeft y + 2) ].
 		chooser open ].
 	^ chooser
 ]
