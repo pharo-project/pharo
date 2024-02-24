@@ -66,7 +66,7 @@ EpIconVisitor >> visitClassRemoval: aClassRemovedChange [
 
 { #category : 'visitor' }
 EpIconVisitor >> visitEvent: anEvent [
-	^ self empty
+	^ self emptyIcon
 ]
 
 { #category : 'visitor' }
