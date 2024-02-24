@@ -25,7 +25,7 @@ EpEntryItem >> asMorph [
 	| morphs |
 	morphs := OrderedCollection new.
 	morphs addAll: self triggerMarkMorphs.
-	morphs add: self icon asMorph.
+	morphs add: self iconFormSet asMorph.
 	morphs addAll: self eventMorphs.
 	morphs add: self morphFactory smallGap.
 	morphs addAll: self timeMorphs.
@@ -96,7 +96,13 @@ EpEntryItem >> hash [
 { #category : 'private' }
 EpEntryItem >> icon [
 
-	^ self iconNamed: (self eventAccept: EpIconNameVisitor new)
+	^ self iconFormSet asForm
+]
+
+{ #category : 'private' }
+EpEntryItem >> iconFormSet [
+
+	^ self iconFormSetNamed: (self eventAccept: EpIconNameVisitor new)
 ]
 
 { #category : 'accessing' }
@@ -172,5 +178,5 @@ EpEntryItem >> triggerItems: anObject [
 EpEntryItem >> triggerMarkMorphs [
 
 	^ self triggerItems collect: [:item |
-		self morphFactory semiTransparent: item icon ]
+		self morphFactory semiTransparent: item iconFormSet ]
 ]
