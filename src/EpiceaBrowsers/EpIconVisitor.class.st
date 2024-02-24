@@ -1,5 +1,5 @@
 "
-I answer an icon for each EpEvent.
+I answer an icon name for each EpEvent.
 "
 Class {
 	#name : 'EpIconVisitor',
@@ -11,22 +11,22 @@ Class {
 
 { #category : 'private' }
 EpIconVisitor >> additionIcon [
-	^ self iconNamed: #changeAdd
+	^ #changeAdd
 ]
 
 { #category : 'private' }
 EpIconVisitor >> emptyIcon [
-	^ self iconNamed: #empty
+	^ #empty
 ]
 
 { #category : 'private' }
 EpIconVisitor >> modificationIcon [
-	^ self iconNamed: #changeUpdate
+	^ #changeUpdate
 ]
 
 { #category : 'private' }
 EpIconVisitor >> removalIcon [
-	^ self iconNamed: #changeRemove
+	^ #changeRemove
 ]
 
 { #category : 'visitor' }
@@ -36,7 +36,7 @@ EpIconVisitor >> visitBehaviorCommentChange: aChange [
 
 { #category : 'visitor' }
 EpIconVisitor >> visitBehaviorCopy: anEvent [
-	^ self iconNamed: #configuration
+	^ #configuration
 ]
 
 { #category : 'visitor' }
@@ -71,12 +71,12 @@ EpIconVisitor >> visitEvent: anEvent [
 
 { #category : 'visitor' }
 EpIconVisitor >> visitExpressionEvaluation: anExpressionEvaluation [
-	^ self iconNamed: #workspace
+	^ #workspace
 ]
 
 { #category : 'visitor' }
 EpIconVisitor >> visitLogCommentModification: aLogCommentModification [
-	^ self iconNamed: #announcement
+	^ #announcement
 ]
 
 { #category : 'visitor' }
@@ -96,12 +96,12 @@ EpIconVisitor >> visitMethodRemoval: aMethodRemoved [
 
 { #category : 'visitor' }
 EpIconVisitor >> visitMonticelloVersionSave: aChange [
-	^ self iconNamed: #package
+	^ #package
 ]
 
 { #category : 'visitor' }
 EpIconVisitor >> visitMonticelloVersionsLoad: aMonticelloVersionLoaded [
-	^ self iconNamed: #package
+	^ #package
 ]
 
 { #category : 'visitor' }
@@ -148,27 +148,27 @@ EpIconVisitor >> visitProtocolRemoval: aProtocolChange [
 
 { #category : 'visitor' }
 EpIconVisitor >> visitRedo: aRedoEvent [
-	^ self iconNamed: #smallRedo
+	^ #smallRedo
 ]
 
 { #category : 'visitor' }
 EpIconVisitor >> visitRefactoring: aRefactoring [
-	^ self iconNamed: #configuration
+	^ #configuration
 ]
 
 { #category : 'visitor' }
 EpIconVisitor >> visitSessionEnd: anEvent [
-	^ self iconNamed: #smallQuit
+	^ #smallQuit
 ]
 
 { #category : 'visitor' }
 EpIconVisitor >> visitSessionSnapshot: aSnapshotChange [
-	^ self iconNamed: #smallSave
+	^ #smallSave
 ]
 
 { #category : 'visitor' }
 EpIconVisitor >> visitSessionStart: anEvent [
-	^ self iconNamed: #smallDoIt
+	^ #smallDoIt
 ]
 
 { #category : 'visitor' }
@@ -188,5 +188,5 @@ EpIconVisitor >> visitTraitRemoval:  aTraitRemoval [
 
 { #category : 'visitor' }
 EpIconVisitor >> visitUndo: anUndoEvent [
-	^ self iconNamed: #smallUndo
+	^ #smallUndo
 ]
