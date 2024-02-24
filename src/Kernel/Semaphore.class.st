@@ -194,6 +194,13 @@ Semaphore >> signal [
 		ifFalse: [Processor resume: self removeFirstLink]"
 ]
 
+{ #category : 'communication' }
+Semaphore >> signalAll [
+
+	[ self isEmpty ]
+	whileFalse: [ self signal ]
+]
+
 { #category : 'initialize-release' }
 Semaphore >> terminateProcess [
 	"Terminate the process waiting on this semaphore, if any."
