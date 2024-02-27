@@ -25,7 +25,7 @@ RBClassRepackagingChange class >> repackage: aClass in: aPackage tag: aTag [
 { #category : 'converting' }
 RBClassRepackagingChange >> asUndoOperation [
 
-	^ self class repackage: self changeClass in: self changeClass packageName tag: self changeClass packageName
+	^ self class repackage: self changeClass in: self changeClass packageName tag: self changeClass packageTagName 
 ]
 
 { #category : 'accessing' }
