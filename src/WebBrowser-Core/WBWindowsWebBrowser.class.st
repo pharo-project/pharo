@@ -25,9 +25,9 @@ WBWindowsWebBrowser class >> shellExecute: lpOperation file: lpFile parameters: 
 	^self ffiCall: #( 
 			FFIConstantHandle ShellExecuteA(
      				0,
-     				String* lpOperation,
-         			String* lpFile,
-     				String* lpParameters,
-     				String* lpDirectory,
+     				String lpOperation,
+         			String lpFile,
+     				String lpParameters,
+     				String lpDirectory,
         			int nShowCmd)) module: #shell32
 ]
