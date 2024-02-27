@@ -15,7 +15,7 @@ DebugPointClassTarget >> install: aLink [
 	self install: aLink on: self targetClass
 ]
 
-{ #category : 'private ' }
+{ #category : 'private' }
 DebugPointClassTarget >> install: aLink on: aClassOrObject [
 
 	self subclassResponsibility

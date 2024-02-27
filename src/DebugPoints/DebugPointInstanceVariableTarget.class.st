@@ -41,7 +41,7 @@ DebugPointInstanceVariableTarget >> impactedNodes [
 	^ self instanceVariable accessingNodesFor: self accessStrategy
 ]
 
-{ #category : 'private ' }
+{ #category : 'private' }
 DebugPointInstanceVariableTarget >> install: aLink on: aClassOrObject [
 
 	aClassOrObject
