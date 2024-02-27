@@ -161,8 +161,10 @@ DebugPointTest >> testBreakDebugPointOnVariableDetectsNewVariableAccessAfterComp
 		source: 'id2: aNumber
 		id := aNumber';
 		install.
-	self should: [ DummyTestClass basicNew id2: 42 ] raise: Break ]
-		ensure: [ DummyTestClass removeSelector: #id2: ]
+	self
+		should: [
+		Smalltalk compiler evaluate: 'DummyTestClass basicNew id2: 42' ]
+		raise: Break ] ensure: [ DummyTestClass removeSelector: #id2: ]
 ]
 
 { #category : 'tests' }
