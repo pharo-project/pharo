@@ -15,7 +15,7 @@ DebugPointNodeTarget >> browse [
 	^ self method browse
 ]
 
-{ #category : 'private ' }
+{ #category : 'private' }
 DebugPointNodeTarget >> install: aLink on: aClassOrObject [
 
 	aClassOrObject link: aLink toAST: self node

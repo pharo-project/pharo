@@ -161,8 +161,10 @@ DebugPointTest >> testBreakDebugPointOnVariableDetectsNewVariableAccessAfterComp
 		source: 'id2: aNumber
 		id := aNumber';
 		install.
-	self should: [ DummyTestClass basicNew id2: 42 ] raise: Break ]
-		ensure: [ DummyTestClass removeSelector: #id2: ]
+	self
+		should: [
+		Smalltalk compiler evaluate: 'DummyTestClass basicNew id2: 42' ]
+		raise: Break ] ensure: [ DummyTestClass removeSelector: #id2: ]
 ]
 
 { #category : 'tests' }
@@ -640,11 +642,14 @@ DebugPointTest >> testTestEnvironmentBehavior [
 { #category : 'tests' }
 DebugPointTest >> testTranscriptDebugPoint [
 
-	"dp := DebugPointManager installNew: TranscriptDebugPoint On: node."
-	dp := DebugPointManager installNew: DebugPoint on: node withBehaviors: {TranscriptBehavior}.
+	self skipOnPharoCITestingEnvironment.
+	dp := DebugPointManager
+		      installNew: DebugPoint
+		      on: node
+		      withBehaviors: { TranscriptBehavior }.
 	dp text: 'string'.
 	dp hitWithContext: context.
-	Transcript stepGlobal .
+	Transcript stepGlobal.
 	self assert: Transcript contents equals: 'string'
 ]
 
