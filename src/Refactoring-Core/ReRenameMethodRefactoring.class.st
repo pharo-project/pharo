@@ -86,7 +86,7 @@ ReRenameMethodRefactoring >> areNamesTheSame [
 { #category : 'preconditions' }
 ReRenameMethodRefactoring >> breakingChangePreconditions [
 
-	^ self doesNotOverrideExistingMethodPreconditions isEmpty
+	^ self doesNotOverrideExistingMethodPreconditions
 ]
 
 { #category : 'printing' }
@@ -111,7 +111,7 @@ ReRenameMethodRefactoring >> doesNotOverrideExistingMethodPreconditions [
 			cond := (ReUpToRootDefinesMethod new class: each ; selector: newSelector).
 			cond check
 				ifTrue: [ self violations addAll: cond violators ] ].
-	^ self violations
+	^ self violations isEmpty
 	
 ]
 
