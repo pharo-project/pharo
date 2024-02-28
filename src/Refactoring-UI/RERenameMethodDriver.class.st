@@ -16,6 +16,27 @@ Class {
 	#tag : 'Drivers'
 }
 
+{ #category : 'execution' }
+ReRenameMethodDriver >> breakingChoices [
+
+	| items |
+	items := OrderedCollection new.
+	items add: (ReRenameMethodChoice new driver: self).
+	items add: (ReRenameAndBrowseMethodOverridesChoice new driver: self).
+	items add: (ReBrowseMethodOverridesChoice new driver: self).
+	^ items
+]
+
+{ #category : 'actions' }
+ReRenameMethodDriver >> browseOverrides [
+
+	| overrides |
+	overrides := refactoring violations.
+	StMessageBrowser
+		browse: (overrides collect: [ :ref | ref realClass methodNamed: newMessage selector ])
+		asImplementorsOf: newMessage selector
+]
+
 { #category : 'private testing' }
 ReRenameMethodDriver >> canAddArgs [
 	^ false
@@ -61,6 +82,26 @@ ReRenameMethodDriver >> configureRefactoring [
 	refactoring := ReRenameMethodRefactoring new renameMethod: originalMessage selector in: class 
 ]
 
+{ #category : 'configuration' }
+ReRenameMethodDriver >> defaultSelectDialog [ 
+
+	^ SpSelectDialog new
+		    title: 'There are potential breaking changes!';
+		          label: 'Watchout potential override detected!';
+		          items: self breakingChoices;
+		          display: [ :each | each description ];
+		          displayIcon: [ :each | self iconNamed: each systemIconName ];
+		          openModal
+]
+
+{ #category : 'execution' }
+ReRenameMethodDriver >> handleBreakingChanges [
+
+	| select |
+	select := self selectDialog.
+	select ifNotNil: [ select action ]
+]
+
 { #category : 'initialization' }
 ReRenameMethodDriver >> initialize [ 
 	
@@ -86,6 +127,12 @@ ReRenameMethodDriver >> model: aModel renameMethodSignature: aMessage in: aClass
 	originalMessage := aMessage.
 	"while we could think that the class is not needed, it is because a rename should not override existing methods."
 	class := aClass
+]
+
+{ #category : 'actions' }
+ReRenameMethodDriver >> renameMethod [
+
+	self applyChanges 
 ]
 
 { #category : 'interaction' }
@@ -135,20 +182,11 @@ ReRenameMethodDriver >> runRefactoring [
 
 	"names are different so we should check because this is not a permutation" 
 	refactoring doesNotOverrideExistingMethodPreconditions 
-		ifFalse: [ 
-			"We need to mockify it"
-			| ok |
-			ok := self application newConfirm
-				 title: 'Watchout potential override detected!';
-		  	    label: (String streamContents: 
-							[:s | refactoring breakingChangeViolationMessageOn: s.
-								s nextPutAll: '. Do you want the override(s)?']);
-		  	    acceptLabel: 'Sure!';
-		  	    cancelLabel: 'No, forget it';
-		   	   openModal.
-			ok ifFalse: [ ^ self ] ].
-	self configureMessage.
-	self applyChanges.
+		ifTrue: [ 	
+			self configureMessage.
+			self applyChanges ]
+		ifFalse: [ self handleBreakingChanges ]
+
 ]
 
 { #category : 'initialization' }
