@@ -62,7 +62,7 @@ ReRemoveClassDriver >> configureRefactoring [
 	refactoring prepareForInteractiveMode
 ]
 
-{ #category : 'private execution' }
+{ #category : 'configuration' }
 ReRemoveClassDriver >> defaultSelectDialog [
 
 	^ SpSelectDialog new
