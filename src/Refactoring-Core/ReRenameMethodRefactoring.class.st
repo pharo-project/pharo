@@ -73,8 +73,8 @@ ReRenameMethodRefactoring >> applicabilityPreconditions [
 
 { #category : 'torevisit' }
 ReRenameMethodRefactoring >> areArgumentsPermuted [
-	
-	^ (permutation asArray = (1 to: oldSelector numArgs) asArray ) not
+
+	^ permutation asArray ~= (1 to: oldSelector numArgs) asArray
 ]
 
 { #category : 'testing' }
