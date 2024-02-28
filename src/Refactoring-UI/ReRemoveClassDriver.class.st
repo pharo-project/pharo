@@ -127,13 +127,6 @@ ReRemoveClassDriver >> scopes: refactoringScopes classes: aColclasses [
 ]
 
 { #category : 'private execution' }
-ReRemoveClassDriver >> selectDialog [
-	
-	^ selectDialog ifNil: [ selectDialog := self defaultSelectDialog ].
-	
-]
-
-{ #category : 'private execution' }
 ReRemoveClassDriver >> setBreakingChangesPreconditions [
 	
 	haveNoReferences := refactoring preconditionHaveNoReferences.
