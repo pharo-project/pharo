@@ -128,25 +128,25 @@ ReRenameMethodDriver >> runRefactoring [
 				"We need to mockify it"
 				self application newInform
 					label: cond errorString;
-					title: 'Invalid name';
+					title: 'Invalid method name';
 					openModal ] ].
 	
-	refactoring areNamesTheSame 
-		ifFalse: [ 
-			"names are different so we should check because this is not a permutation" 
-			refactoring doesNotOverrideExistingMethodPreconditions 
-				ifNotEmpty: [ 
-				"We need to mockify it"
-				| ok |
-				ok := self application newConfirm
-					title: 'Watchout potential override detected!';
+	refactoring areNamesTheSame ifTrue: [ ^ self ].
+
+	"names are different so we should check because this is not a permutation" 
+	refactoring doesNotOverrideExistingMethodPreconditions 
+		ifNotEmpty: [ 
+			"We need to mockify it"
+			| ok |
+			ok := self application newConfirm
+				 title: 'Watchout potential override detected!';
 		  	    label: (String streamContents: 
 							[:s | refactoring breakingChangeViolationMessageOn: s.
 								s nextPutAll: '. Do you want the override(s)?']);
 		  	    acceptLabel: 'Sure!';
 		  	    cancelLabel: 'No, forget it';
 		   	   openModal.
-			ok ifFalse: [ ^ self ] ] ].
+			ok ifFalse: [ ^ self ] ].
 	self configureMessage.
 	self applyChanges.
 ]
