@@ -135,7 +135,7 @@ ReRenameMethodDriver >> runRefactoring [
 
 	"names are different so we should check because this is not a permutation" 
 	refactoring doesNotOverrideExistingMethodPreconditions 
-		ifNotEmpty: [ 
+		ifFalse: [ 
 			"We need to mockify it"
 			| ok |
 			ok := self application newConfirm
