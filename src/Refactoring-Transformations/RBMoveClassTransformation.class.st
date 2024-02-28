@@ -51,10 +51,13 @@ RBMoveClassTransformation >> applicabilityPreconditions [
 
 	^ self classExist & (RBCondition
 		   withBlock: [
-			   (self model environment packageAt: self packageName ifAbsent: [ nil ])
-				   ifNil: [ false ]
-				   ifNotNil: [ :package | self tagName ifNotNil: [ :name | package hasTag: name ] ] ]
-		   errorString: 'No package named ' , self packageName , (self tagName
+			   (self model environment
+				    packageAt: self packageName
+				    ifAbsent: [ nil ]) ifNil: [ false ] ifNotNil: [ :package |
+				   self tagName ifNotNil: [ :name | package hasTag: name ].
+				   true ] ]
+		   errorString:
+			   'No package named ' , self packageName , (self tagName
 				    ifNil: [ '' ]
 				    ifNotNil: [ :name | ' with tag named ' , name ]))
 ]
