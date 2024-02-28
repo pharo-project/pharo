@@ -68,7 +68,7 @@ ReRenameMethodRefactoring >> applicabilityPreconditions [
 		self validSelectorCondition .
 		self methodDefinedInClassCondition . 
 		self newNameDoesNotRequireRefactoringPrecondition not . 
-		self localConditions }
+		self selectorsHaveSameArity }
 ]
 
 { #category : 'torevisit' }
@@ -160,16 +160,6 @@ ReRenameMethodRefactoring >> implementorsCanBePrimitives [
 ]
 
 { #category : 'preconditions' }
-ReRenameMethodRefactoring >> localConditions [
-	"For a rename we only check for the same arity, in add parameter obviously it should be different"
-	
-	^ ReBlockCondition new 
-		block: [ self haveSelectorsSameArity ];
-		violatorErrorString: newSelector printString
-				, ' doesn''t have the same number of arguments as ', oldSelector printString
-]
-
-{ #category : 'preconditions' }
 ReRenameMethodRefactoring >> methodDefinedInClassCondition [
 
 	^ (ReDefinesSelectorsCondition new definesSelectors: {oldSelector} in: class)
@@ -212,6 +202,16 @@ ReRenameMethodRefactoring >> renameChanges [
 
 	self privateTransform.
 	^ self changes
+]
+
+{ #category : 'preconditions' }
+ReRenameMethodRefactoring >> selectorsHaveSameArity [
+	"For a rename we only check for the same arity, in add parameter obviously it should be different"
+	
+	^ ReBlockCondition new 
+		block: [ self haveSelectorsSameArity ];
+		violatorErrorString: newSelector printString
+				, ' doesn''t have the same number of arguments as ', oldSelector printString
 ]
 
 { #category : 'storing' }
