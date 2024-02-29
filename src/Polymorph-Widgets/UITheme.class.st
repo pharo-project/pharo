@@ -754,12 +754,12 @@ UITheme >> chooseColorIn: aThemedMorph title: aString color: aColor for: aBlock 
 UITheme >> chooseDirectoryIn: aThemedMorph title: title path: path [
 	"Answer the result of a file dialog with the given title, choosing directories only."
 
-	| dialog |
-	dialog := (FileDialogWindow newWithTheme: aThemedMorph theme)
-		title: title;
-		answerDirectory.
-	path ifNotNil: [ dialog selectPath: path ].
-	^ dialog openModal answer
+	^ StOpenDirectoryDialog new
+		defaultFolder: path;
+		title: (title ifNil: [ 'Choose Directory' translated ]);
+		openModal;
+		selectedEntry
+
 ]
 
 { #category : 'services' }
@@ -774,40 +774,58 @@ UITheme >> chooseDropListIn: aThemedMorph text: aStringOrText title: aString lis
 ]
 
 { #category : 'services' }
-UITheme >> chooseExistingFileReferenceIn: aThemedMorph title: title extensions: exts path: path preview: preview [
-	"Answer the result of a file name chooser dialog with the given title, extensions
-	path and preview type.
-	Answer nil or a filename."
+UITheme >> chooseExistingFileReferenceIn: aThemedMorph title: titleString extensions: extensions path: path preview: preview [
+	"Answer the result of a file name chooser dialog with the given titleString, extensions, path and preview type.
+		extensions : <Collection> of <String> each one representing a file extension.
+		path : <String> or <FileReference>. It can be a directory or a file. 
+			If it is a directory, the dialog will open showing it. 
+			If it is a file, the directory where the file resides will be selected and displayed.
+		preview : <String> or <nil>. If it's a <String>, try to match with a specific previewer subclass of `StFileBrowserAbstractPreviewer`.
+		
+	Answer nil or the selected <FileReference>."
 
-	| dialog pathFileReference |
-	pathFileReference := path asFileReference.
-	dialog := FileDialogWindow basicNew
-		basicTheme: aThemedMorph theme;
-		previewType: preview;
-		fileNameText: pathFileReference basename;
-		initialize;
-		title: title;
-		answerPathName.
-	exts ifNotNil: [ dialog validExtensions: exts ].
-	path ifNotNil: [ dialog selectPath: pathFileReference pathString ].
-	^ dialog openModal answer ifNotNil: #asFileReference
+	| pathFileReference newDialog |
+	
+	newDialog := StOpenFileDialog new
+		extensions: (extensions ifNil: [ Array empty ]);
+		title: (titleString ifNil: [ 'Choose File' ]);
+		yourself.
+	(pathFileReference := path asFileReference) isFile
+		ifTrue: [ 
+			newDialog 
+				showDirectory: pathFileReference parent;
+				selectFile: pathFileReference ]
+		ifFalse: [ 
+			newDialog 
+				showDirectory: pathFileReference ].
+	^ newDialog
+		openModal;
+		selectedEntry.
 ]
 
 { #category : 'services' }
-UITheme >> chooseFileIn: aThemedMorph title: title extensions: exts path: path preview: preview [
-	"Answer the result of a file open dialog with the given title, extensions path and preview type.
-	Answer nil or a filename."
+UITheme >> chooseFileIn: aThemedMorph title: titleString extensions: extensions path: path preview: preview [
+	"Answer the result of a file name chooser dialog with the given titleString, extensions, path and preview type.
+		extensions : <Collection> of <String> each one representing a file extension.
+		path : <String> or <FileReference>. It can be a directory or a file. 
+			If it is a directory, the dialog will open showing it. 
+			If it is a file, the directory where the file resides will be displayed.
+		preview : <String> or <nil>. If it's a <String>, try to match with a specific previewer subclass of `StFileBrowserAbstractPreviewer`.
+		
+	Answer nil or the selected <FileReference>."
 
-	| dialog |
-	dialog := FileDialogWindow basicNew
-		basicTheme: aThemedMorph theme;
-		previewType: preview;
-		initialize;
-		title: title;
-		answerFileEntry.
-	exts ifNotNil: [ dialog validExtensions: exts ].
-	path ifNotNil: [ dialog selectPath: path ].
-	^ dialog openModal answer
+	| pathFileReference newDialog |
+	
+	newDialog := StOpenFileDialog new
+		extensions: (extensions ifNil: [ Array empty ]);
+		title: (titleString ifNil: [ 'Choose File' ]);
+		yourself.
+	(pathFileReference := path asFileReference) isFile
+		ifTrue: [ newDialog showDirectory: pathFileReference parent ]
+		ifFalse: [ newDialog showDirectory: pathFileReference ].
+	^ newDialog
+		openModal;
+		selectedEntry.
 ]
 
 { #category : 'services' }
@@ -816,37 +834,34 @@ UITheme >> chooseForSaveFileReferenceIn: aThemedMorph title: title extensions: e
 	path and preview type.
 	Answer nil or a filename."
 
-	| dialog pathFileReference |
+	| pathFileReference |
+	
 	pathFileReference := path asFileReference.
-	dialog := (FileDialogWindow newWithTheme: aThemedMorph theme)
-		title: title;
-		fileNameText: pathFileReference basename;
-		answerSaveFile.
-	exts ifNotNil: [ dialog validExtensions: exts ].
-	path ifNotNil: [ dialog selectPath: path ].
-	^ dialog openModal answer
+	^ StSaveFileDialog new
+		setTitle: title;
+		showDirectory: path parent;
+		extensions: exts;				
+		selectFile: pathFileReference basename;
+		openModal;
+		selectedEntry
 ]
 
 { #category : 'services' }
 UITheme >> chooseFullFileNameIn: aThemedMorph title: title patterns: patterns path: path preview: preview [
 	"Answer the result of a file name chooser dialog with the given title, patterns
-	path and preview type.
-	Answer nil or a filename."
+	path and preview type. Answer nil or a filename."
 
 	| dialog |
-	dialog := FileDialogWindow basicNew
-		basicTheme: aThemedMorph theme;
-		previewType: preview;
-		initialize;
-		title: title;
-		answerPathName.
-	patterns
-		ifNotNil: [ dialog
-				fileSelectionBlock: [ :de |
-					(dialog defaultFileSelectionBlock value: de)
-						and: [ de isDirectory or: [ patterns anySatisfy: [ :pat | pat match: de name ] ] ] ] ].
-	path ifNotNil: [ dialog selectPath: path ].
-	^ dialog openModal answer
+	
+	dialog := StOpenFileDialog new
+		previewer: StFileBrowserTextBasedContentPreviewer new;
+		setTitle: title;				
+		yourself.
+	path ifNotNil: [ dialog showDirectory: path ].
+	patterns ifNotNil: [ dialog extensions: patterns ].
+	^ dialog
+		openModal;
+		selectedEntry.
 ]
 
 { #category : 'services' }

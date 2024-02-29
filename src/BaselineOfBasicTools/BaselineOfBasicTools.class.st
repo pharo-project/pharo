@@ -96,7 +96,6 @@ BaselineOfBasicTools >> baseline: spec [
 
 		spec package: 'Tools-CodeNavigation'.
 		spec package: 'Tool-Diff'.
-		spec package: 'Tool-FileList'.
 		spec package: 'Tool-Finder'.
 		spec package: 'Tool-Finder-UI'.
 		spec package: 'Tool-ImageCleaner'.
