@@ -136,6 +136,40 @@ DebugPointTest >> testBreakDebugPoint [
 ]
 
 { #category : 'tests' }
+DebugPointTest >> testBreakDebugPointOnClassVariableAccess [
+
+	dp := DebugPointManager
+		      installNew: BreakDebugPoint
+		      inClass: DummyTestClass
+		      onVariableAccessNamed: #ClassVar.
+	self should: [ DummyTestClass new classVarRead ] raise: Break.
+	self should: [ DummyTestClass new classVarWrite ] raise: Break.
+	self shouldnt: [ DummyTestClass new id ] raise: Break.
+	self
+		assertCollection: dp link nodes asIdentitySet
+		equals:
+			(DummyTestClass classVariableNamed: #ClassVar) accessingNodes
+				asIdentitySet
+]
+
+{ #category : 'tests' }
+DebugPointTest >> testBreakDebugPointOnClassVariableWrite [
+
+	dp := DebugPointManager
+		      installNew: BreakDebugPoint
+		      inClass: DummyTestClass
+		      onVariableWriteNamed: #ClassVar.
+	self shouldnt: [ DummyTestClass new classVarRead ] raise: Break.
+	self should: [ DummyTestClass new classVarWrite ] raise: Break.
+	self shouldnt: [ DummyTestClass new id ] raise: Break.
+	self
+		assertCollection: dp link nodes asIdentitySet
+		equals:
+			(DummyTestClass classVariableNamed: #ClassVar) assignmentNodes
+				asIdentitySet
+]
+
+{ #category : 'tests' }
 DebugPointTest >> testBreakDebugPointOnVariableAccess [
 
 	dp := DebugPointManager
