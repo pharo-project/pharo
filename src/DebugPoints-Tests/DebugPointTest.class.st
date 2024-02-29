@@ -9,12 +9,32 @@ Class {
 		'node',
 		'context',
 		'dp2',
-		'cls'
+		'cls',
+		'testClass',
+		'testSubclass'
 	],
 	#category : 'DebugPoints-Tests-Model',
 	#package : 'DebugPoints-Tests',
 	#tag : 'Model'
 }
+
+{ #category : 'nil' }
+DebugPointTest >> compileTestClass [
+
+	testClass := ((DummyTestClass << #DummyTestSubclass)
+		              slots: { #v3 };
+		              package: 'DummyPackage') install.
+	testClass compile: 'accessingId ^id'.
+	testClass compile: 'accessingtemp |temp| temp := 0'
+]
+
+{ #category : 'compiling' }
+DebugPointTest >> compileTestClass2 [
+
+	testSubclass := (testClass << #DummyTestSubclass2 package:
+		                 'DummyPackage') install.
+	testSubclass compile: 'accessingId ^id'
+]
 
 { #category : 'tests' }
 DebugPointTest >> newDummyClass [
@@ -110,6 +130,28 @@ DebugPointTest >> testAddRemoveBreakpointKeepTimestamp [
 ]
 
 { #category : 'tests' }
+DebugPointTest >> testAddRemoveVariableBreakpoint [
+
+	| method |
+	method := DummyTestClass >> #id.
+	dp := DebugPointManager
+		      installNew: BreakDebugPoint
+		      inClass: DummyTestClass
+		      onVariableAccessNamed: #id.
+	"after the breakpoint is installed, the method is different"
+	self deny: (DummyTestClass >> #id) bytecodes equals: method bytecodes.
+
+	self assertCollection: DebugPoint all includesAll: { dp }.
+	dp remove.
+	self denyCollection: DebugPoint all includesAll: { dp }.
+
+	"Check that the method is correcty reverted"
+	self
+		assert: (DummyTestClass >> #id) bytecodes
+		equals: method bytecodes
+]
+
+{ #category : 'tests' }
 DebugPointTest >> testBehaviorPriority [
 	| a b c set |
 	dp := DebugPointManager installNew: DebugPoint on: node.
@@ -149,6 +191,23 @@ DebugPointTest >> testBreakDebugPointOnClassVariableAccess [
 		equals:
 			(DummyTestClass classVariableNamed: #ClassVar) accessingNodes
 				asIdentitySet
+]
+
+{ #category : 'tests' }
+DebugPointTest >> testBreakDebugPointOnClassVariableRead [
+
+	dp := DebugPointManager
+		      installNew: BreakDebugPoint
+		      inClass: DummyTestClass
+		      onVariableReadNamed: #ClassVar.
+	self should: [ DummyTestClass new classVarRead ] raise: Break.
+	self shouldnt: [ DummyTestClass new classVarWrite ] raise: Break.
+	self shouldnt: [ DummyTestClass new id ] raise: Break.
+	self
+		assertCollection: dp link nodes asIdentitySet
+		equals:
+		(DummyTestClass classVariableNamed: #ClassVar) readNodes
+			asIdentitySet
 ]
 
 { #category : 'tests' }
@@ -706,6 +765,31 @@ DebugPointTest >> testTwoDebugPointsOnSameTargetBothActivate [
 	his add: 2.
 	self assertCollection: dp history equals: his.
 	self assertCollection: dp2 history equals: his
+]
+
+{ #category : 'tests' }
+DebugPointTest >> testVariableDebugPointNoRemoveAfterSubclassRemoved [
+	"Removing the class where the target variable of a variable breakpoint is defined should uninstall the variable breakpoint"
+	|testClassNode testSubclassNode|
+	<ignoreNotImplementedSelectors: #(accessingId)>
+	self compileTestClass.
+	self compileTestClass2.
+	testClassNode := (testClass >> #accessingId) ast allChildren detect:[:n| n isVariable].
+	testSubclassNode := (testSubclass >> #accessingId) ast allChildren detect:[:n| n isVariable].
+
+	dp := DebugPointManager
+		      installNew: BreakDebugPoint
+		      inClass: testClass
+		      onVariableAccessNamed: #id.
+
+	self should: [testClass basicNew accessingId] raise: Break.
+
+	testSubclass removeFromSystem.
+
+	self deny: (dp link nodes anySatisfy:[:n| n == testSubclassNode]).
+	self assert: (dp link nodes anySatisfy:[:n| n == testClassNode]).
+	self assert: (DebugPoint all includes: dp).
+	self should: [ testClass basicNew accessingId ] raise: Break
 ]
 
 { #category : 'tests' }

@@ -215,6 +215,24 @@ DebugPoint >> removeBehavior: aDebugPointBehaviorClass [
 ]
 
 { #category : 'removing' }
+DebugPoint >> removeFromClass: aClass [
+	"If the removed class is the class we target or one of its superclasses,
+	then after that class is removed we have no reason to exist. We need to uninstall."
+
+	(self targetClass = aClass or: [
+		 self targetClass allSuperclasses includes: aClass ]) ifTrue: [
+		self remove.
+		^ self ].
+
+	"We removed a aClass, but it is not our target class nor one of its superclasses.
+	It is then one of its subclasses, we can continue to exist since the variable
+	we target still exist in the target class.
+	However, we need to remove the nodes of the removed class from our metalink"
+	(self link nodes select: [ :n | n methodNode methodClass == aClass ])
+		do: [ :n | self link removeNode: n ]
+]
+
+{ #category : 'removing' }
 DebugPoint >> removeFromMethod: aMethod [
 	"only used when editing methods with debug points"
 
