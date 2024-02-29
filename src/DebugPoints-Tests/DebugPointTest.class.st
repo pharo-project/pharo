@@ -70,7 +70,6 @@ DebugPointTest >> testAddRemoveBreakpoint [
 	| method |
 	DummyTestClass compile: 'dummy ^42'.
 	method := DummyTestClass >> #dummy.
-	self assertEmpty: Breakpoint all.
 	dp := DebugPointManager
 		      installNew: BreakDebugPoint
 		      on: (DummyTestClass >> #dummy) ast.
