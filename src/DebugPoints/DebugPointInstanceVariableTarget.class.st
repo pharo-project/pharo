@@ -14,6 +14,12 @@ Class {
 	#tag : 'Implementations'
 }
 
+{ #category : 'accessing - classes' }
+DebugPointInstanceVariableTarget class >> hitAnnouncementClass [
+
+	^ VariableDebugPointHit
+]
+
 { #category : 'accessing' }
 DebugPointInstanceVariableTarget >> accessStrategy [
 
@@ -33,6 +39,19 @@ DebugPointInstanceVariableTarget >> browse [
 		openOnClass: self instanceVariable owningClass;
 		switchToVariables;
 		selectVariableNamed: self instanceVariable name
+]
+
+{ #category : 'announcements' }
+DebugPointInstanceVariableTarget >> hitAnnouncementOn: aDebugPoint inContext: aContext [
+
+	| announcement |
+	announcement := super
+		                hitAnnouncementOn: aDebugPoint
+		                inContext: aContext.
+	^ announcement
+		  variableValue:
+			  (aContext readVariableNamed: self instanceVariable name);
+		  yourself
 ]
 
 { #category : 'accessing' }

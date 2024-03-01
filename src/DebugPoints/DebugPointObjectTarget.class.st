@@ -26,6 +26,12 @@ DebugPointObjectTarget >> browse [
 	^ self subTarget browse
 ]
 
+{ #category : 'announcements' }
+DebugPointObjectTarget >> hitAnnouncementOn: aDebugPoint inContext: aContext [
+
+	^ self subTarget hitAnnouncementOn: aDebugPoint inContext: aContext
+]
+
 { #category : 'actions' }
 DebugPointObjectTarget >> install: aLink [
 

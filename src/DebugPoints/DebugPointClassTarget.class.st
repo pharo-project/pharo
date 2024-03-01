@@ -9,6 +9,22 @@ Class {
 	#tag : 'Base'
 }
 
+{ #category : 'accessing - classes' }
+DebugPointClassTarget class >> hitAnnouncementClass [
+
+	^ self subclassResponsibility
+]
+
+{ #category : 'announcements' }
+DebugPointClassTarget >> hitAnnouncementOn: aDebugPoint inContext: aContext [
+
+	^ self class hitAnnouncementClass
+		  on: aDebugPoint
+		  nodes:
+		  { (aContext compiledCode sourceNodeForPC: aContext pc) parent }
+			  asSet
+]
+
 { #category : 'installing' }
 DebugPointClassTarget >> install: aLink [
 

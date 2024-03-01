@@ -107,11 +107,18 @@ DebugPoint >> getBehavior: aBehaviorClass [
 	^self behaviors detect: [ :bh | bh class = aBehaviorClass ] ifNone: [nil]
 ]
 
+{ #category : 'announcements' }
+DebugPoint >> hitAnnouncementOn: aDebugPoint inContext: aContext [
+
+	^ self target hitAnnouncementOn: aDebugPoint inContext: aContext
+]
+
 { #category : 'API' }
 DebugPoint >> hitWithContext: aContext [
 	"returns false if the execution should be stopped, else true"
 
 	<debuggerCompleteToSender>
+	DebugPointManager notifyDebugPointHit: self inContext: aContext.
 	self enabled ifFalse: [ ^ false ].
 	self saveContext: aContext.
 	^ self behaviors allSatisfy: [ :behavior | behavior execute ]

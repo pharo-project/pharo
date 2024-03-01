@@ -9,6 +9,12 @@ Class {
 	#tag : 'Implementations'
 }
 
+{ #category : 'accessing - classes' }
+DebugPointNodeTarget class >> hitAnnouncementClass [
+
+	^ DebugPointHit
+]
+
 { #category : 'actions' }
 DebugPointNodeTarget >> browse [
 

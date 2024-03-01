@@ -29,6 +29,12 @@ DebugPointTarget >> browse [
 	self subclassResponsibility 
 ]
 
+{ #category : 'announcements' }
+DebugPointTarget >> hitAnnouncementOn: aDebugPoint inContext: aContext [
+
+	^ self subclassResponsibility 
+]
+
 { #category : 'initialization' }
 DebugPointTarget >> initialize [
 

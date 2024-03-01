@@ -340,6 +340,16 @@ DebugPointManager class >> notifyDebugPointChanged: aDebugPoint [
 ]
 
 { #category : 'announcements' }
+DebugPointManager class >> notifyDebugPointHit: aDebugPoint inContext: aContext [
+
+	| announcement |
+	announcement := aDebugPoint
+		                hitAnnouncementOn: aDebugPoint
+		                inContext: aContext.
+	SystemAnnouncer uniqueInstance announce: announcement
+]
+
+{ #category : 'announcements' }
 DebugPointManager class >> notifyDebugPointRemoved: aDebugPoint fromNodes: nodes [
 	"nodes have to be seperate because they will be removed from the debugpoint before this method is called"
 	| announcement |
