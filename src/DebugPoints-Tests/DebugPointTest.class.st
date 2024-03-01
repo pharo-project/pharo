@@ -31,9 +31,11 @@ DebugPointTest >> compileTestClass [
 { #category : 'compiling' }
 DebugPointTest >> compileTestClass2 [
 
-	testSubclass := (testClass << #DummyTestSubclass2 package:
-		                 'DummyPackage') install.
-	testSubclass compile: 'accessingId ^id'
+	testSubclass := ((testClass << #DummyTestSubclass2)
+		                 slots: { #v4 };
+		                 package: 'DummyPackage') install.
+	testSubclass compile: 'accessingId ^id'.
+	testSubclass compile: 'accessingV4 ^v4'
 ]
 
 { #category : 'tests' }
@@ -669,6 +671,50 @@ DebugPointTest >> testOnceEvaluatesAfterConditionBehavior [
 	self deny: dp enabled.
 	self assert: conditionBehavior execute.
 	self shouldnt: [ dp hitWithContext: context ] raise: Break
+]
+
+{ #category : 'tests' }
+DebugPointTest >> testRemoveAfterClassRemoved [
+	"Removing a superclass of the class where the target variable of a variable breakpoint is defined should uninstall the variable breakpoint"
+
+	<ignoreNotImplementedSelectors: #( accessingId )>
+	| testClassNodes |
+	self compileTestClass.
+	self compileTestClass2.
+	testClassNodes := (testSubclass >> #accessingV4) ast allChildren.
+
+	dp := DebugPointManager
+		      installNew: BreakDebugPoint
+		      inClass: testSubclass
+		      onVariableAccessNamed: #v4.
+
+	self assert: (DebugPoint all includes: dp).
+	self should: [ testSubclass basicNew accessingV4 ] raise: Break.
+
+	testSubclass removeFromSystem.
+	self deny: (DebugPoint all includes: dp)
+]
+
+{ #category : 'tests' }
+DebugPointTest >> testRemoveAfterSuperclassRemoved [
+	"Removing a superclass of the class where the target variable of a variable breakpoint is defined should uninstall the variable breakpoint"
+
+	<ignoreNotImplementedSelectors: #( accessingId )>
+	| testClassNodes |
+	self compileTestClass.
+	self compileTestClass2.
+	testClassNodes := (testSubclass >> #accessingV4) ast allChildren.
+
+	dp := DebugPointManager
+		      installNew: BreakDebugPoint
+		      inClass: testSubclass
+		      onVariableAccessNamed: #v4.
+
+	self assert: (DebugPoint all includes: dp).
+	self should: [ testSubclass basicNew accessingV4 ] raise: Break.
+
+	testClass removeFromSystem.
+	self deny: (DebugPoint all includes: dp)
 ]
 
 { #category : 'tests' }
