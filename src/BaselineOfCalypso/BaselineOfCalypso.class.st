@@ -237,6 +237,7 @@ BaselineOfCalypso >> baseline: spec [
 				   #'Calypso-SystemPlugins-MethodDiffTool'
 				   #'Calypso-SystemPlugins-Deprecation-Browser'
 				   #'Calypso-SystemPlugins-Reflectivity-Browser'
+				   #'Calypso-SystemPlugins-DebugPoints-Browser'
 				   #'Calypso-SystemPlugins-Undeclared-Browser'
 				   #'Calypso-SystemPlugins-FFI-Browser'
 				   #'Calypso-SystemPlugins-Flags-Browser'
