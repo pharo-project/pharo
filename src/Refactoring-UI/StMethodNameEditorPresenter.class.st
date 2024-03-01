@@ -328,6 +328,12 @@ StMethodNameEditorPresenter >> invalidArgNames: aSet [
 	invalidArgNames := aSet
 ]
 
+{ #category : 'accessing' }
+StMethodNameEditorPresenter >> methodName [
+
+	^ methodName
+]
+
 { #category : 'utilities' }
 StMethodNameEditorPresenter >> newArgName [
 	| baseString index newString |
