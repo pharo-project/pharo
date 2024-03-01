@@ -6,43 +6,57 @@ Class {
 }
 
 { #category : 'tests' }
-ReRenameMethodDriverTest >> setUpDriver: driver [
+ReRenameMethodDriverTest >> testInvalidNameFollowedByAValidNameExpectSuccess [
 
-	super setUpDriver: driver.
-	
-	driver methodNameEditorPresenterClass: StMethodNameEditorPresenterMock
-]
-
-{ #category : 'tests' }
-ReRenameMethodDriverTest >> testInvalidNameFollowedByAValidName [
-
-	| rbclasses driver |
-	self skip.
+	| rbclasses driver model method dialog |
 	rbclasses := RBClassEnvironment classes: { MyClassARoot }.
+	model := RBNamespace onEnvironment: rbclasses.
+	method := (model classObjectFor: MyClassARoot) methodFor: 'accessingSharedVariable' asSymbol.
 	driver := ReRenameMethodDriver new
-					scopes: {} model: rbclasses renameMethodSignature: #accessing in: MyClassARoot.
+		          scopes: { rbclasses }
+		          model: model
+		          renameMethodSignature: method
+		          in: MyClassARoot.
 
 	self setUpDriver: driver.
 	
-	" this is unclear that the methodname presenter should be a mock class. 
-	It looks more complex. "
+	dialog := MockObject new.
+	dialog
+		on: #methodName
+		respond: (RBMethodName selector: '2a' asSymbol arguments: #(  )).
+	dialog
+		on: #methodName
+		respond: (RBMethodName selector: #testName arguments: #(  )).
+
+	driver requestDialog: dialog.
+
+	driver runRefactoring.
+
+	self assert: driver refactoring model changes changes size equals: 4
+]
+
+{ #category : 'tests' }
+ReRenameMethodDriverTest >> testValidNameExpectSuccess [
+
+	| rbclasses driver model method dialog |
+	rbclasses := RBClassEnvironment classes: { MyClassARoot }.
+	model := RBNamespace onEnvironment: rbclasses.
+	method := (model classObjectFor: MyClassARoot) methodFor: 'accessingSharedVariable' asSymbol.
+	driver := ReRenameMethodDriver new
+		          scopes: { rbclasses }
+		          model: model
+		          renameMethodSignature: method
+		          in: MyClassARoot.
+
+	self setUpDriver: driver.
 	
-	
-	
-	
-	"requestDialog := MockObject new.
-	 openOn: methodName
-		          withInvalidArgs: (RBCondition invalidArgumentNamesForSelector: originalMessage selector in: model)
-		          canRenameArgs: self canRenameArgs
-		          canRemoveArgs: self canRemoveArgs
-		          canAddArgs: self canAddArgs
-		          canEditName:
-	requestDialog on: #openModal respond: #unusedVar2.
-	requestDialog on: #openModal respond: #okName.
-	requestDialog on: #title: respond: 'nothing'.
-	requestDialog on: #text: respond: 'nothing'.
-	driver requestDialog: requestDialog."
-	
-	"it like a smoke test and for the moment we cannot control better what happen."
-	"driver runRefactoring"
+	dialog := MockObject new.
+	dialog
+		on: #methodName
+		respond: (RBMethodName selector: #newName arguments: #(  )).
+	driver requestDialog: dialog.
+
+	driver runRefactoring.
+
+	self assert: driver refactoring model changes changes size equals: 4
 ]
