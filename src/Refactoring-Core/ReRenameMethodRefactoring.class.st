@@ -94,23 +94,12 @@ ReRenameMethodRefactoring >> breakingChangePreconditions [
 { #category : 'redefined locally waiting for superclass migration' }
 ReRenameMethodRefactoring >> generateChanges [
 	"Prepare, check the preconditions, and perform the actual transformation (i.e., creating a list of changes that can be accessible using the changes message). This method should not be invoked from drivers since drivers usually check in finer grained mode the preconditions - and that this stage they already checked the preconditions."
-		
-	"since we locally redefine generate changes we do not need anymore preconditions.
-	We should probably reintroduce it in the future as preconditions 
-	^ self applicabilityPreconditions addAll: self breakingChangesPreconditions but it will be once the complete hierarchy is
-	migrated to the new way."	
 
 	self prepareForExecution.
-	
-	"this is a bit bad since on error we execute twice the preconditions
-	once to check and one to report. to be fixed later"
-	
-	self failedApplicabilityPreconditions ifNotEmpty: [
-		^ RBApplicabilityChecksFailedError signal: 'Prpblems with selector'
-			  "should fix this later self applicabilityPreconditions errorString" ].
-	self breakingChangePreconditions ifFalse: [
-		RBBreakingChangeChecksFailedWarning signal:
-			(String streamContents: [ :s | self breakingChangeViolationMessageOn: s  ])].
+
+	self checkApplicabilityPreconditions.
+	self checkBreakingChangePreconditions.
+		
 	self privateTransform.
 	^ self changes
 ]
