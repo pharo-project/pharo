@@ -194,11 +194,11 @@ ReRenameMethodDriver >> runRefactoring [
 	refactoring areNamesTheSame ifTrue: [ ^ self ].
 
 	"names are different so we should check because this is not a permutation" 
-	refactoring doesNotOverrideExistingMethodPreconditions 
-		ifTrue: [ 	
+	refactoring failedBreakingChangePreconditions 
+		ifEmpty: [ 	
 			self configureMessage.
 			self applyChanges ]
-		ifFalse: [ self handleBreakingChanges ]
+		ifNotEmpty: [ self handleBreakingChanges ]
 
 ]
 

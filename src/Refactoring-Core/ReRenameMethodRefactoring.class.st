@@ -86,33 +86,9 @@ ReRenameMethodRefactoring >> areNamesTheSame [
 { #category : 'preconditions' }
 ReRenameMethodRefactoring >> breakingChangePreconditions [
 
-	^ self doesNotOverrideExistingMethodPreconditions
-]
-
-{ #category : 'printing' }
-ReRenameMethodRefactoring >> breakingChangeViolationMessageOn: aStream [
-	
-	self violations size = 1
-		ifTrue: [ aStream nextPutAll: violations first name; nextPutAll: ' defines the method ' ]
-		ifFalse: [ 
-	self violations 
-			do: [ :each | aStream nextPutAll: each name ] 
-			separatedBy: [ aStream nextPutAll: ', '].
-	aStream nextPutAll: ' define the method '. ].
-	aStream nextPutAll: newSelector.
-]
-
-{ #category : 'interactive' }
-ReRenameMethodRefactoring >> doesNotOverrideExistingMethodPreconditions [
-	"Check that the new selector is not already defined in class or superclasses of the implementors of the oldSelector."
-	
-	self implementors asOrderedCollection do: [ :each | 
-			| cond |
-			cond := (ReUpToRootDefinesMethod new class: each ; selector: newSelector).
-			cond check
-				ifTrue: [ self violations addAll: cond violators ] ].
-	^ self violations isEmpty
-	
+	^ { ReUpToRootDoesNotDefinesMethod new
+		  classes: self implementors;
+		  selector: newSelector }
 ]
 
 { #category : 'redefined locally waiting for superclass migration' }
@@ -242,5 +218,5 @@ ReRenameMethodRefactoring >> validSelectorCondition [
 { #category : 'accessing' }
 ReRenameMethodRefactoring >> violations [ 
 
-	^ violations ifNil: [ violations := OrderedCollection new ]
+	^ self breakingChangePreconditions violators
 ]
