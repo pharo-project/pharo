@@ -135,6 +135,24 @@ ReRenameMethodDriver >> renameMethod [
 	self applyChanges 
 ]
 
+{ #category : 'accessing' }
+ReRenameMethodDriver >> requestDialogWith: methodName [
+	"This is lazy loaded and tests expect lazy loading, because they set `requestDialog`
+	and thus side-step methodNameEditorPresenter"
+
+	^ requestDialog ifNil: [
+		  requestDialog := (self methodNameEditorPresenterClass
+			                   openOn: methodName
+			                   withInvalidArgs: (RBCondition
+					                    invalidArgumentNamesForSelector:
+					                    originalMessage selector
+					                    in: model)
+			                   canRenameArgs: self canRenameArgs
+			                   canRemoveArgs: self canRemoveArgs
+			                   canAddArgs: self canAddArgs
+			                   canEditName: self canEditName) presenter ]
+]
+
 { #category : 'interaction' }
 ReRenameMethodDriver >> requestNewMessage [
 
