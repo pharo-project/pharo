@@ -135,6 +135,7 @@ ReRenameMethodDriver >> renameMethod [
 	self applyChanges 
 ]
 
+
 { #category : 'accessing' }
 ReRenameMethodDriver >> requestDialogWith: methodName [
 	"This is lazy loaded and tests expect lazy loading, because they set `requestDialog`
