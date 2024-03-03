@@ -135,6 +135,25 @@ ReRenameMethodDriver >> renameMethod [
 	self applyChanges 
 ]
 
+
+{ #category : 'accessing' }
+ReRenameMethodDriver >> requestDialogWith: methodName [
+	"This is lazy loaded and tests expect lazy loading, because they set `requestDialog`
+	and thus side-step methodNameEditorPresenter"
+
+	^ requestDialog ifNil: [
+		  requestDialog := (self methodNameEditorPresenterClass
+			                   openOn: methodName
+			                   withInvalidArgs: (RBCondition
+					                    invalidArgumentNamesForSelector:
+					                    originalMessage selector
+					                    in: model)
+			                   canRenameArgs: self canRenameArgs
+			                   canRemoveArgs: self canRemoveArgs
+			                   canAddArgs: self canAddArgs
+			                   canEditName: self canEditName) presenter ]
+]
+
 { #category : 'interaction' }
 ReRenameMethodDriver >> requestNewMessage [
 
@@ -143,22 +162,11 @@ ReRenameMethodDriver >> requestNewMessage [
 	methodName := RBMethodName
 		              selector: originalMessage selector
 		              arguments: originalMessage argumentNames.
-	dialog := self methodNameEditorPresenterClass
-		          openOn: methodName
-		          withInvalidArgs: (RBCondition invalidArgumentNamesForSelector: originalMessage selector in: model)
-		          canRenameArgs: self canRenameArgs
-		          canRemoveArgs: self canRemoveArgs
-		          canAddArgs: self canAddArgs
-		          canEditName: self canEditName.
+	dialog := self requestDialogWith: methodName.
+	
 	dialog ifNil: [ shouldEscape := true. ^ self ].
-	"If the name is the same then there is no need to perform the refactoring 
-	and in such case we can just escape."
-	"note that it would be better to pass a method name to the refactoring instead of splitting tlla the arguments this way"
-	refactoring newSelector: methodName selector; permutation: methodName permutation.
-	refactoring newNameDoesNotRequireRefactoringPrecondition check
-		ifTrue: [ shouldEscape := true. ^ self ].
 
-	^ methodName
+	^ dialog methodName
 ]
 
 { #category : 'execution' }
@@ -167,13 +175,19 @@ ReRenameMethodDriver >> runRefactoring [
 	| failedConditions |
 	self configureRefactoring.
 	[ newMessage := self requestNewMessage.
+	"note that it would be better to pass a method name to the refactoring instead of splitting the arguments this way"
+	refactoring newSelector: newMessage selector; permutation: newMessage permutation.
+	"If the name is the same then there is no need to perform the refactoring 
+	and in such case we can just escape."
+	refactoring newNameDoesNotRequireRefactoringPrecondition check
+		ifTrue: [ ^ self ].
 	shouldEscape ifTrue: [ ^ self ].
 	failedConditions := refactoring failedApplicabilityPreconditions.
 	failedConditions isEmpty ]
 		whileFalse: [
 			failedConditions do: [ :cond |
 				"We need to mockify it"
-				self application newInform
+				self informDialog
 					label: cond errorString;
 					title: 'Invalid method name';
 					openModal ] ].
