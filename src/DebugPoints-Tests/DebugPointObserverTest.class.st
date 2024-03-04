@@ -26,6 +26,7 @@ DebugPointObserverTest >> setUp [
 DebugPointObserverTest >> tearDown [
 
 	dp ifNotNil: [ dp remove ].
+	SystemAnnouncer uniqueInstance unsubscribe: observer.
 
 	super tearDown
 ]
