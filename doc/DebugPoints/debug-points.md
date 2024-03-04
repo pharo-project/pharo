@@ -10,6 +10,12 @@ For now, there are two concrete types of debug points: **breakpoints and watchpo
 As commonly known, breakpoints halts the program and watchpoints saves a value in its history when they are hit.
 Basic debug points can also be used but they do nothing unless we add **behaviors** to them.
 
+It is possible to double-click on the left bar in the Calypso browser to set a basic breakpoint on the corresponding line.
+
+Moreover, in the Calypso browser, it is also possible to right-click on a piece of code to set a debug point on the corresponding instruction:
+
+![Installing basic debug points from the Calypso browser in the method editor](https://github.com/adri09070/pharo/assets/97704417/9a5076b5-a7b5-4966-a5db-8fd1f4225eea)
+
 ## Behaviors of debug points
 
 A debug point can have **different types of behaviors** that will execute before the debug point is actually hit.
@@ -23,13 +29,9 @@ Among these behaviors, there are:
 - *Script* behavior: executes a script each time the debug point is hit
 - *Transcript* behavior: logs a string to the Transcript each time the debug point is hit
 
-All these behaviors can be set when creating a breakpoint from the Calypso browser in the method editor:
+To configure behaviors of existing debug points or at the creation of debug points, it is possible to use an API on `DebugPoint` objects or via the `DebugPointManager`.
 
-![Installing a breakpoint with behaviors from the Calypso browser in the method editor](https://github.com/adri09070/pharo/assets/97704417/c2f17276-2a3b-431c-bdec-0784bccaea2a)
-
-To have more flexibility to configure existing debug points or to create different types of debug points, it is possible to use an API on `DebugPoint` objects or via the `DebugPointManager`.
-
-It will be possible to configure debug points via a UI tool, the Debug Point Browser, which will be the object of another PR in NewTools.
+It will soon be possible to configure debug points via a UI tool, the Debug Point Browser, whose documentation will be found in NewTools.
 
 ## Debug Point Targets
 
