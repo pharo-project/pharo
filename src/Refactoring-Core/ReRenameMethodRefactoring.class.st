@@ -68,13 +68,13 @@ ReRenameMethodRefactoring >> applicabilityPreconditions [
 		self validSelectorCondition .
 		self methodDefinedInClassCondition . 
 		self newNameDoesNotRequireRefactoringPrecondition not . 
-		self localConditions }
+		self selectorsHaveSameArity }
 ]
 
 { #category : 'torevisit' }
 ReRenameMethodRefactoring >> areArgumentsPermuted [
-	
-	^ (permutation asArray = (1 to: oldSelector numArgs) asArray ) not
+
+	^ permutation asArray ~= (1 to: oldSelector numArgs) asArray
 ]
 
 { #category : 'testing' }
@@ -86,7 +86,7 @@ ReRenameMethodRefactoring >> areNamesTheSame [
 { #category : 'preconditions' }
 ReRenameMethodRefactoring >> breakingChangePreconditions [
 
-	^ self doesNotOverrideExistingMethodPreconditions isEmpty
+	^ self doesNotOverrideExistingMethodPreconditions
 ]
 
 { #category : 'printing' }
@@ -111,7 +111,7 @@ ReRenameMethodRefactoring >> doesNotOverrideExistingMethodPreconditions [
 			cond := (ReUpToRootDefinesMethod new class: each ; selector: newSelector).
 			cond check
 				ifTrue: [ self violations addAll: cond violators ] ].
-	^ self violations
+	^ self violations isEmpty
 	
 ]
 
@@ -160,16 +160,6 @@ ReRenameMethodRefactoring >> implementorsCanBePrimitives [
 ]
 
 { #category : 'preconditions' }
-ReRenameMethodRefactoring >> localConditions [
-	"For a rename we only check for the same arity, in add parameter obviously it should be different"
-	
-	^ ReBlockCondition new 
-		block: [ self haveSelectorsSameArity ];
-		violatorErrorString: newSelector printString
-				, ' doesn''t have the same number of arguments as ', oldSelector printString
-]
-
-{ #category : 'preconditions' }
 ReRenameMethodRefactoring >> methodDefinedInClassCondition [
 
 	^ (ReDefinesSelectorsCondition new definesSelectors: {oldSelector} in: class)
@@ -212,6 +202,16 @@ ReRenameMethodRefactoring >> renameChanges [
 
 	self privateTransform.
 	^ self changes
+]
+
+{ #category : 'preconditions' }
+ReRenameMethodRefactoring >> selectorsHaveSameArity [
+	"For a rename we only check for the same arity, in add parameter obviously it should be different"
+	
+	^ ReBlockCondition new 
+		block: [ self haveSelectorsSameArity ];
+		violatorErrorString: newSelector printString
+				, ' doesn''t have the same number of arguments as ', oldSelector printString
 ]
 
 { #category : 'storing' }
