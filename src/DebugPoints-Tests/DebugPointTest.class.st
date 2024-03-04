@@ -699,7 +699,7 @@ DebugPointTest >> testRemoveAfterClassRemoved [
 DebugPointTest >> testRemoveAfterSuperclassRemoved [
 	"Removing a superclass of the class where the target variable of a variable breakpoint is defined should uninstall the variable breakpoint"
 
-	<ignoreNotImplementedSelectors: #( accessingId )>
+	<ignoreNotImplementedSelectors: #( accessingV4 )>
 	| testClassNodes |
 	self compileTestClass.
 	self compileTestClass2.
@@ -828,7 +828,7 @@ DebugPointTest >> testUpdateNodesForVariableDebugPointAfterRecompilingMethod [
 
 	"Let us recompile a method touching id in the super class of our test class.
 	This is meant so simulate, e.g., a modification in the debugger after a break in that method."
-	DummyTestClass compile: 'id ^id'.
+	DummyTestClass compile: (DummyTestClass >> #id) sourceCode , ' '.
 
 	self assert: (DebugPoint all includes: dp).
 
