@@ -32,6 +32,35 @@ RBMakeClassAbstractTransformation class >> isTransformation [
 	^ true
 ]
 
+{ #category : 'preconditions' }
+RBMakeClassAbstractTransformation >> applicabilityPreconditions [
+	"We cannot validate that the class is actually not used and not receiving a message new."
+
+	^ { 
+		(RBCondition isAbstractClass: targetClass) not .
+
+		RBCondition withBlock: [
+				self checkExistingInstances.
+				self checkDirectReferences.
+				true ] 
+		}
+]
+
+{ #category : 'preconditions' }
+RBMakeClassAbstractTransformation >> checkDirectReferences [
+	"Answer <true> if there are no references to the receiver's target class"
+
+	^ targetClass realClass users notEmpty
+]
+
+{ #category : 'preconditions' }
+RBMakeClassAbstractTransformation >> checkExistingInstances [
+
+	^ targetClass realClass allInstances
+		ifNotEmpty: [ self refactoringWarning: ('There are instances of <n> Do you make it abstract anyway?' , targetClass , '.') expandMacros ]
+		ifEmpty: [ true ]
+]
+
 { #category : 'instance creation' }
 RBMakeClassAbstractTransformation >> class: class [
 
