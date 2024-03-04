@@ -813,6 +813,32 @@ DebugPointTest >> testTwoDebugPointsOnSameTargetBothActivate [
 	self assertCollection: dp2 history equals: his
 ]
 
+{ #category : 'running' }
+DebugPointTest >> testUpdateNodesForVariableDebugPointAfterRecompilingMethod [
+
+	| ast |
+	"We get the variable node one which the variable breakpoint will be installed"
+	ast := (DummyTestClass >> #id) ast allChildren last.
+
+	"Removing a variable breakpoint should not uninstall the breakpoint"
+	dp := DebugPointManager
+		      installNew: BreakDebugPoint
+		      inClass: DummyTestClass
+		      onVariableAccessNamed: #id.
+
+	"Let us recompile a method touching id in the super class of our test class.
+	This is meant so simulate, e.g., a modification in the debugger after a break in that method."
+	DummyTestClass compile: 'id ^id'.
+
+	self assert: (DebugPoint all includes: dp).
+
+	"First, the breakpoint should still be installed in that method"
+	self should: [ DummyTestClass basicNew id ] raise: Break.
+
+	"Second, the old method ast's is not referenced by the breakpoint's link anymore"
+	self assert: (dp link nodes noneSatisfy: [ :n | n == ast ])
+]
+
 { #category : 'tests' }
 DebugPointTest >> testVariableDebugPointNoRemoveAfterSubclassRemoved [
 	"Removing the class where the target variable of a variable breakpoint is defined should uninstall the variable breakpoint"
