@@ -468,7 +468,10 @@ ShiftClassBuilder >> markIsInRemake [
 { #category : 'accessing' }
 ShiftClassBuilder >> metaSuperclass [
 
-	^ metaSuperclass ifNil:[ (superclass ifNil: [ Class ] ifNotNil: [ superclass class ]) ]
+	^ metaSuperclass ifNil: [
+		  self superclass
+			  ifNil: [ Class ]
+			  ifNotNil: [ self superclass class ] ]
 ]
 
 { #category : 'accessing' }

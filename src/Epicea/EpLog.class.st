@@ -415,6 +415,14 @@ EpLog >> triggererReferenceOf: anEntry ifPresent: presentBlock ifAbsent: absentB
 		ifAbsent: absentBlock
 ]
 
+{ #category : 'accessing' }
+EpLog >> triggererReferenceOf: anEntry put: triggerReference [
+
+	^ anEntry tags
+		at: self class triggererReferenceKey
+		put: triggerReference
+]
+
 { #category : 'private' }
 EpLog >> updateEntriesCache [
 

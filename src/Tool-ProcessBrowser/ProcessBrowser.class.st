@@ -158,7 +158,7 @@ ProcessBrowser class >> menuCommandOn: aBuilder [
 		order: 3;
 		action:[ self open ];
 		help: 'Provides a view of all of the processes (threads) executing in Smalltalk.';
-		icon: (aBuilder iconNamed: self taskbarIconName)
+		iconName: self taskbarIconName
 ]
 
 { #category : 'process control' }

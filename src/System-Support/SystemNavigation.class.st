@@ -266,15 +266,6 @@ SystemNavigation >> allSymbolsStartingWith: aString do: aBlock [
 ]
 
 { #category : 'query' }
-SystemNavigation >> allUnimplementedCalls [
-	"call is not a good term here, these are selectors"
-	self
-		deprecated: 'Changed selector for coherency'
-		transformWith: '`@receiver allUnimplementedCalls' -> '`@receiver allSentButNotImplementedSelectors'.
-	^ self allSentButNotImplementedSelectors
-]
-
-{ #category : 'query' }
 SystemNavigation >> allUnsentMessagesIn: selectorSet [
 	"Answer the subset of selectorSet which are not sent anywhere in the system. As allSentMessages does not recurse into nested Arrays, filter with #allCallsOn, which does"
 

@@ -18,12 +18,6 @@ PseudoVariable class >> initialize [
 	self deprecatedAliases: { #ReservedVariable }
 ]
 
-{ #category : 'accessing' }
-PseudoVariable class >> instance [
-	self deprecated: 'use new to get a new instance or #lookupVar: for the shared instance'.
-	^self new.
-]
-
 { #category : 'testing' }
 PseudoVariable class >> isAbstract [
 	^self = PseudoVariable

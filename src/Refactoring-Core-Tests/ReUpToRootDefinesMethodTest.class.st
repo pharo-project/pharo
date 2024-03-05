@@ -24,6 +24,14 @@ ReUpToRootDefinesMethodTest >> testUpToRootDefinesByCheckingInRootDefiningTheMet
 	" the class MyClassARoot defines the method #accessing "
 	self assert: hier check. 
 	
+	self assert: hier violators isEmpty.
+	
+	hier := ReUpToRootDoesNotDefinesMethod new 
+		class: myClassARoot; selector: #accessing.
+		
+	" the class MyClassARoot defines the method #accessing "
+	self deny: hier check. 
+	
 	self assert: hier violators isNotEmpty.
 	self assert: hier violators size equals: 1
 ]
@@ -40,6 +48,14 @@ ReUpToRootDefinesMethodTest >> testUpToRootDefinesByCheckingInSubclassDefiningTh
 	" the class MySubAccessingSuperclassState defines the method #accessing "
 	self assert: hier check. 
 	
+	self assert: hier violators isEmpty.
+	
+	hier := ReUpToRootDoesNotDefinesMethod new 
+		class: myClassARoot; selector: #accessing.
+		
+	" the class MySubAccessingSuperclassState defines the method #accessing "
+	self deny: hier check. 
+	
 	self assert: hier violators isNotEmpty.
 	self assert: hier violators size equals: 1
 ]
@@ -50,14 +66,21 @@ ReUpToRootDefinesMethodTest >> testUpToRootDefinesByCheckingInSubclassNotDefinin
 	| myClassARoot hier |
 	myClassARoot := self model classNamed: #MySubAccessingSuperclassState.
 	
-	hier := ReHierarchyDefinesMethod new 
+	hier := ReUpToRootDefinesMethod new 
 		class: myClassARoot; selector: #initialize.
 		
 	" the superclass of MySubAccessingSuperclassState defines the method #initialize "
 	self assert: hier check. 
+
+	self assert: hier violators isEmpty.
 	
-	self assert: hier violators isNotEmpty.
-	self assert: hier violators size equals: 1
+	hier := ReUpToRootDoesNotDefinesMethod new 
+		class: myClassARoot; selector: #initialize.
+		
+	" the superclass of MySubAccessingSuperclassState defines the method #initialize "
+	self deny: hier check. 
+
+	self assert: hier violators isNotEmpty
 ]
 
 { #category : 'tests' }
@@ -73,8 +96,14 @@ ReUpToRootDefinesMethodTest >> testUpToRootNotDefineTheMethod [
 	andnMyClassARoot does not define it."
 	self deny: hier check. 
 	
-	self assert: hier violators isEmpty.
+	self assert: hier violators size equals: 1.
 	
+	hier := ReUpToRootDoesNotDefinesMethod new 
+		class: myClassARoot; selector: #accessingSharedVariable2.
+		
+	self assert: hier check. 
+	
+	self assert: hier violators isEmpty.
 ]
 
 { #category : 'tests' }
@@ -90,6 +119,12 @@ ReUpToRootDefinesMethodTest >> testUpToRootNotDefineTheMethodStartingFromSubclas
 	andnMyClassARoot does not define it."
 	self deny: hier check. 
 	
-	self assert: hier violators isEmpty.
+	self assert: hier violators size equals: 1.
 	
+	hier := ReUpToRootDoesNotDefinesMethod new 
+		class: myClassARoot; selector: #doesNotExist.
+		
+	self assert: hier check. 
+	
+	self assert: hier violators isEmpty
 ]

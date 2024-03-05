@@ -70,7 +70,7 @@ RBClassRegexRefactoring >> duplicate: aClass name: aSymbol deep: aBoolean [
 		aBuilder
 			superclassName: superclassName;
 			name: aSymbol;
-			package: aClass package name ].
+			package: aClass packageName ].
 	aBoolean ifTrue: [
 		(class := self model classNamed: aSymbol) ifNil: [ ^ self ].
 		self copyFrom: aClass to: class.

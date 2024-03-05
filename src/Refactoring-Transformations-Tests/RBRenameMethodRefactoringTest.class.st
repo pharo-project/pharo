@@ -14,5 +14,5 @@ RBRenameMethodRefactoringTest >> testFailureExistingSelector [
 
 	self
 		should: [ refactoring generateChanges ]
-		raise: RBBreakingChangeChecksFailedWarning 
+		raise: RBRefactoringWarning 
 ]

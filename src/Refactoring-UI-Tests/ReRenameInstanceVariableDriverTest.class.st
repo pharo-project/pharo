@@ -6,7 +6,7 @@ Class {
 }
 
 { #category : 'tests' }
-ReRenameInstanceVariableDriverTest >> testInvalidNameFollowedByAValidName [
+ReRenameInstanceVariableDriverTest >> testInvalidNameFollowedByAValidNameExpectSuccess [
 
 	| rbclasses driver requestDialog |
 	rbclasses := RBClassEnvironment classes: { MyClassARoot }.

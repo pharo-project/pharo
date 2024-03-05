@@ -376,9 +376,19 @@ SDL2 class >> primClipboardText: text [
 
 { #category : 'cairo' }
 SDL2 class >> primCreateRGBSurfaceForCairoWidth: width height: height [
-	^ self ffiCall: #( SDL_Surface* SDL_CreateRGBSurface
-						( Uint32 0 , int width , int height , int 32 ,
-						  Uint32 16r00FF0000 , Uint32 16r0000FF00 , Uint32 16r000000FF , 0 ) )
+	"See: https://wiki.libsdl.org/SDL2/SDL_CreateRGBSurface"
+
+	^ self ffiCall: #(
+		SDL_Surface*
+		SDL_CreateRGBSurface (
+			Uint32 0,
+			int width,
+			int height,
+			int 32,
+			Uint32 16r00FF0000,
+			Uint32 16r0000FF00,
+			Uint32 16r000000FF,
+			Uint32 0 ) )
 ]
 
 { #category : 'audio' }
