@@ -204,15 +204,19 @@ OrderedDictionary >> at: firstKey at: secondKey ifAbsent: aZeroArgBlock [
 OrderedDictionary >> at: firstKey at: secondKey ifAbsentPut: aZeroArgBlock [
 	"Return the object stored in the second dictionary at secondKey. The second dictionary is accessed via the key firstKey. If firstKey is not defined, set a new dictionary for the second key and set the value of aZeroArgBlock execution. If firstKey is defined and not second key set the value of aZeroArgBlock execution. See NestedDictionaryTest for examples."
 
-	^ dictionary at: firstKey at: secondKey ifAbsentPut: aZeroArgBlock
-
+	^ self
+		  value: [
+		  dictionary at: firstKey at: secondKey ifAbsentPut: aZeroArgBlock ]
+		  registeringAtOrderedKeys: firstKey
 ]
 
 { #category : 'nested dictionaries' }
 OrderedDictionary >> at: firstKey at: secondKey put: aValue [
 	"Set a value at secondKey in the dictionary returned by firstKey."
 
-	^ dictionary at: firstKey at: secondKey put: aValue
+	^ self
+		  value: [ dictionary at: firstKey at: secondKey put: aValue ]
+		  registeringAtOrderedKeys: firstKey
 ]
 
 { #category : 'accessing' }
@@ -248,16 +252,10 @@ OrderedDictionary >> at: aKey ifPresent: aPresentBlock ifAbsentPut: anAbsentBloc
 
 { #category : 'accessing' }
 OrderedDictionary >> at: aKey put: aValue [
-	| oldSize |
 
-	oldSize := dictionary size.
-	dictionary at: aKey put: aValue.
-	dictionary size > oldSize
-		ifTrue: [
-			orderedKeys size > oldSize
-				ifFalse: [self growOrderedKeys].
-			orderedKeys at: oldSize + 1 put: aKey].
-	^ aValue
+	^ self
+		  value: [ dictionary at: aKey put: aValue ]
+		  registeringAtOrderedKeys: aKey
 ]
 
 { #category : 'accessing' }
@@ -597,6 +595,21 @@ OrderedDictionary >> storeOn: aStream [
 				separatedBy: [ aStream << ';' ].
 			aStream << '; yourself' ].
 	aStream << ')'
+]
+
+{ #category : 'private' }
+OrderedDictionary >> value: aBlock registeringAtOrderedKeys: aKey [
+
+	| oldSize value |
+
+	oldSize := dictionary size.
+	value := aBlock value.
+	dictionary size > oldSize
+		ifTrue: [
+			orderedKeys size > oldSize
+				ifFalse: [self growOrderedKeys].
+			orderedKeys at: oldSize + 1 put: aKey].
+	^ value
 ]
 
 { #category : 'accessing' }

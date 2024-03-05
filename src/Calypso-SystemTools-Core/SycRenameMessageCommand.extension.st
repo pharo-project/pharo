@@ -13,3 +13,17 @@ SycRenameMessageCommand class >> methodShortcutActivation [
 
 	^CmdShortcutActivation renamingFor: ClyMethod asCalypsoItemContext
 ]
+
+{ #category : '*Calypso-SystemTools-Core' }
+SycRenameMessageCommand class >> sourceCodeMenuActivation [
+	<classAnnotation>
+
+	^SycSourceCodeMenuActivation byRootGroupItemOrder: 1.2 for: ClyMethodSourceCodeContext
+]
+
+{ #category : '*Calypso-SystemTools-Core' }
+SycRenameMessageCommand class >> sourceCodeShortcutActivation [
+
+	<classAnnotation>
+	^ CmdShortcutActivation by: $r meta for: ClyMethodSourceCodeContext
+]
