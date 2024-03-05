@@ -677,7 +677,7 @@ DebugPointTest >> testOnceEvaluatesAfterConditionBehavior [
 DebugPointTest >> testRemoveAfterClassRemoved [
 	"Removing a superclass of the class where the target variable of a variable breakpoint is defined should uninstall the variable breakpoint"
 
-	<ignoreNotImplementedSelectors: #( accessingId )>
+	<ignoreNotImplementedSelectors: #( accessingV4 )>
 	| testClassNodes |
 	self compileTestClass.
 	self compileTestClass2.

@@ -52,6 +52,12 @@ DebugPointNodeTarget >> node: aNode [
 	self target: aNode
 ]
 
+{ #category : 'removing' }
+DebugPointNodeTarget >> removeFromMethod: aMethod for: aDebugPoint [
+
+	aDebugPoint remove
+]
+
 { #category : 'accessing' }
 DebugPointNodeTarget >> sourceCode [
 

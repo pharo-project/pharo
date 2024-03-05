@@ -189,25 +189,26 @@ DebugPoint >> node: aNode [
 ]
 
 { #category : 'accessing' }
+DebugPoint >> nodes [
+
+	^ self link nodes
+]
+
+{ #category : 'accessing' }
 DebugPoint >> properties [ 
 	^properties ifNil: [ properties := Dictionary new. ]
 ]
 
 { #category : 'removing' }
 DebugPoint >> remove [
-	| announcement nodes |
+
+	| nodes |
 	nodes := self link nodes copy.
 	self behaviors do: [ :bh | bh remove ].
 	self class remove: self.
-	self link ifNotNil: [self link uninstall].
-	
-	announcement := DebugPointRemoved
-	on: self
-	nodes: nodes.
-	SystemAnnouncer uniqueInstance announce: announcement.
-	
-	
-	
+	self link ifNotNil: [ self link uninstall ].
+
+	DebugPointManager notifyDebugPointRemoved: self fromNodes: nodes
 ]
 
 { #category : 'API' }
@@ -243,12 +244,13 @@ DebugPoint >> removeFromClass: aClass [
 DebugPoint >> removeFromMethod: aMethod [
 	"only used when editing methods with debug points"
 
-	| nodes |
-	nodes := self link nodes copy.
-	self behaviors do: [ :bh | bh remove ].
-	self class remove: self.
+	self target removeFromMethod: aMethod for: self
+]
 
-	DebugPointManager notifyDebugPointRemoved: self fromNodes: nodes
+{ #category : 'removing' }
+DebugPoint >> removeNode: aRBNode [
+
+	self link removeNode: aRBNode
 ]
 
 { #category : 'scope' }

@@ -38,6 +38,12 @@ DebugPointObjectTarget >> install: aLink [
 	self subTarget install: aLink on: self targetInstance
 ]
 
+{ #category : 'removing' }
+DebugPointObjectTarget >> removeFromMethod: aMethod for: aDebugPoint [
+
+	self subTarget removeFromMethod: aMethod for: aDebugPoint
+]
+
 { #category : 'description' }
 DebugPointObjectTarget >> scope [
 

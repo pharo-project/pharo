@@ -48,6 +48,12 @@ DebugPointTarget >> install: aLink [
 	self subclassResponsibility
 ]
 
+{ #category : 'removing' }
+DebugPointTarget >> removeFromMethod: aMethod for: aDebugPoint [
+
+	self subclassResponsibility
+]
+
 { #category : 'description' }
 DebugPointTarget >> scope [
 

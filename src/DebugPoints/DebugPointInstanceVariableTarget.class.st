@@ -99,6 +99,14 @@ DebugPointInstanceVariableTarget >> isWriteOnly [
 	^ accessStrategy = #write
 ]
 
+{ #category : 'removing' }
+DebugPointInstanceVariableTarget >> removeFromMethod: aMethod for: aDebugPoint [
+
+	(aDebugPoint nodes select: [ :n |
+		 n methodNode compiledCode == aMethod ]) do: [ :n |
+		aDebugPoint removeNode: n ]
+]
+
 { #category : 'accessing' }
 DebugPointInstanceVariableTarget >> targetClass [
 
