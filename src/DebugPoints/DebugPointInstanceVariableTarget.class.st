@@ -103,7 +103,7 @@ DebugPointInstanceVariableTarget >> isWriteOnly [
 DebugPointInstanceVariableTarget >> removeFromMethod: aMethod for: aDebugPoint [
 
 	(aDebugPoint nodes select: [ :n |
-		 n methodNode compiledCode == aMethod ]) do: [ :n |
+		 n methodNode compiledMethod == aMethod ]) do: [ :n |
 		aDebugPoint removeNode: n ]
 ]
 
