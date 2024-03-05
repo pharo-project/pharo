@@ -255,7 +255,11 @@ HDTestReport >> reportTestCase: aTestCase runBlock: aBlock [
 		lf.
 	stream nextPutAll: testLog.
 	stream tab; nextPutAll: '</testcase>'; lf.
-	progressStream nextPutAll: 'finished' ; crlf; flush
+	progressStream
+		nextPutAll: 'finished in ';
+		nextPutAll: (Duration milliSeconds: time) humanReadablePrintString;
+		crlf;
+		flush
 ]
 
 { #category : 'running' }
