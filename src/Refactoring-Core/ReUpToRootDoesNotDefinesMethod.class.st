@@ -2,7 +2,7 @@
 This condition checks in the class and its superclasses if a class defines a given selector
 "
 Class {
-	#name : 'ReUpToRootDefinesMethod',
+	#name : 'ReUpToRootDoesNotDefinesMethod',
 	#superclass : 'ReClassesCondition',
 	#instVars : [
 		'selector'
@@ -13,13 +13,13 @@ Class {
 }
 
 { #category : 'instance creation' }
-ReUpToRootDefinesMethod >> class: aRBClass [ 
+ReUpToRootDoesNotDefinesMethod >> class: aRBClass [ 
 
 	classes := { aRBClass }
 ]
 
 { #category : 'checking' }
-ReUpToRootDefinesMethod >> doesClass: argClass definesMethod: aSelector [
+ReUpToRootDoesNotDefinesMethod >> doesClass: argClass definesMethod: aSelector [
 	"We could avoid the aSelector argument. I do not have a good name."
 
 	(argClass directlyDefinesMethod: aSelector) ifTrue: [ ^ true ].
@@ -27,28 +27,28 @@ ReUpToRootDefinesMethod >> doesClass: argClass definesMethod: aSelector [
 ]
 
 { #category : 'accessing' }
-ReUpToRootDefinesMethod >> selector: aSymbol [
+ReUpToRootDoesNotDefinesMethod >> selector: aSymbol [
 
 	selector := aSymbol
 ]
 
 { #category : 'displaying' }
-ReUpToRootDefinesMethod >> violationMessageOn: aStream [
+ReUpToRootDoesNotDefinesMethod >> violationMessageOn: aStream [
 
 	self violators size = 1
-		ifTrue: [ aStream nextPutAll: self violators first name; nextPutAll: ' does not define the method ' ]
+		ifTrue: [ aStream nextPutAll: self violators first name; nextPutAll: ' defines the method ' ]
 		ifFalse: [ 
 	self violators 
 			do: [ :each | aStream nextPutAll: each name ] 
 			separatedBy: [ aStream nextPutAll: ', '].
-	aStream nextPutAll: ' don''t define the method '. ].
+	aStream nextPutAll: ' define the method '. ].
 	aStream nextPutAll: selector.
 ]
 
 { #category : 'accessing' }
-ReUpToRootDefinesMethod >> violators [
+ReUpToRootDoesNotDefinesMethod >> violators [
 
 	^ violators ifNil: [
-		  violators := (classes reject: [ :class |
+		  violators := (classes select: [ :class |
 			  self doesClass: class definesMethod: selector ]) asOrderedCollection ]
 ]
