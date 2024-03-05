@@ -2,7 +2,7 @@ Class {
 	#name : 'ReBlockCondition',
 	#superclass : 'RBNewAbstractCondition',
 	#instVars : [
-		'violators',
+		'errorMessage',
 		'block'
 	],
 	#category : 'Refactoring-Core-Conditions',
@@ -23,8 +23,14 @@ ReBlockCondition >> check [
 
 ]
 
+{ #category : 'displaying' }
+ReBlockCondition >> violationMessageOn: aStream [
+
+	aStream nextPutAll: errorMessage
+]
+
 { #category : 'checking' }
 ReBlockCondition >> violatorErrorString: aString [
 
-	violators := aString
+	errorMessage := aString
 ]
