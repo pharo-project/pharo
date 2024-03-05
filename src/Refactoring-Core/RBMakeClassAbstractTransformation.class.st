@@ -14,12 +14,6 @@ Class {
 	#tag : 'Transformation'
 }
 
-{ #category : 'displaying' }
-RBMakeClassAbstractTransformation class >> basicMenuItemString [
-
-	^ 'Make abstract'
-]
-
 { #category : 'instance creation' }
 RBMakeClassAbstractTransformation class >> class: targetClass [
 
@@ -38,27 +32,8 @@ RBMakeClassAbstractTransformation >> applicabilityPreconditions [
 
 	^ { 
 		(RBCondition isAbstractClass: targetClass) not .
-
-		RBCondition withBlock: [
-				self checkExistingInstances.
-				self checkDirectReferences.
-				true ] 
+		self preconditionHaveNoReferences
 		}
-]
-
-{ #category : 'preconditions' }
-RBMakeClassAbstractTransformation >> checkDirectReferences [
-	"Answer <true> if there are no references to the receiver's target class"
-
-	^ targetClass realClass users notEmpty
-]
-
-{ #category : 'preconditions' }
-RBMakeClassAbstractTransformation >> checkExistingInstances [
-
-	^ targetClass realClass allInstances
-		ifNotEmpty: [ self refactoringWarning: ('There are instances of <n> Do you make it abstract anyway?' , targetClass , '.') expandMacros ]
-		ifEmpty: [ true ]
 ]
 
 { #category : 'instance creation' }
@@ -68,10 +43,11 @@ RBMakeClassAbstractTransformation >> class: class [
 ]
 
 { #category : 'preconditions' }
-RBMakeClassAbstractTransformation >> preconditions [
-	"We cannot validate that the class is actually not used and not receiving a message new."
-	
-	^ self skippingPreconditions
+RBMakeClassAbstractTransformation >> preconditionHaveNoReferences [
+
+	^ ReClassesHaveNoReferencesCondition new
+		  model: model;
+		  classes: { targetClass }
 ]
 
 { #category : 'transforming' }
@@ -80,14 +56,7 @@ RBMakeClassAbstractTransformation >> privateTransform [
 	(RBAddMethodTransformation
 		 sourceCode: 'isAbstract
 
-	^ self == ' , targetClass asString
+	^ self == ' , className
 		 in: targetClass classSide
 		 withProtocol: #testing) execute
-]
-
-{ #category : 'preconditions' }
-RBMakeClassAbstractTransformation >> skippingPreconditions [
-	"We cannot validate that the class is actually not used and not receiving a message new."
-	
-	^ (RBCondition isAbstractClass: targetClass) not
 ]

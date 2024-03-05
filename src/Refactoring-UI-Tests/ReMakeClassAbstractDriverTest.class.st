@@ -1,19 +1,21 @@
 Class {
 	#name : 'ReMakeClassAbstractDriverTest',
 	#superclass : 'ReDriverTest',
-	#instVars : [
-		'model',
-		'environment'
-	],
 	#category : 'Refactoring-UI-Tests-Driver',
 	#package : 'Refactoring-UI-Tests',
 	#tag : 'Driver'
 }
 
 { #category : 'tests' }
-ReMakeClassAbstractDriverTest >> classToAbstract [
+ReMakeClassAbstractDriverTest >> classWithReferenceToAbstract [
 
-	^ MyClassA.
+	^ RBWithSelfClassReferenceTest.
+]
+
+{ #category : 'tests' }
+ReMakeClassAbstractDriverTest >> classWithoutReferenceToAbstract [
+
+	^ RBClassWithoutSelfClassReferenceTest.
 ]
 
 { #category : 'initialization' }
@@ -31,25 +33,58 @@ ReMakeClassAbstractDriverTest >> setUpDriver: driver [
 { #category : 'running' }
 ReMakeClassAbstractDriverTest >> tearDown [
 
-	self classToAbstract class removeSelector: #isAbstract.
+	self classWithoutReferenceToAbstract class removeSelector: #isAbstract.
 	super tearDown.
+]
+
+{ #category : 'tests' }
+ReMakeClassAbstractDriverTest >> testMakeClassAbstractWhenClassIsReferenced [
+	"Test making a class abstract when it is referenced"
+
+	| driver environment rbClass |
+
+	environment := RBClassEnvironment class: self classWithReferenceToAbstract.
+	driver := RBMakeClassAbstractDriver new
+			scopes: { environment } class: self classWithReferenceToAbstract;
+			yourself.
+
+	rbClass := driver model classFor: self classWithReferenceToAbstract.
+
+	self 
+		deny: rbClass isAbstract
+		description: 'It tests that the RB class is not abstract because it contains its class reference'.
+		
+	self setUpDriver: driver.
+	driver runRefactoring.
+	
+	self 
+		deny: rbClass isAbstract
+		description: 'It tests that the RB class is still abstract after applying the refactoring'.
 ]
 
 { #category : 'tests' }
 ReMakeClassAbstractDriverTest >> testMakeClassAbstractWhenClassNotUsed [
 	"Test making a class abstract when it is not used anywhere in the system"
-	| driver |
+	| driver environment rbClass |
 
-	environment := RBClassEnvironment class: self classToAbstract.
-	model := RBNamespace onEnvironment: environment.
-	
+	environment := RBClassEnvironment class: self classWithoutReferenceToAbstract.
 	driver := RBMakeClassAbstractDriver new
-			class: self classToAbstract;
-			scopes: { environment };
+			scopes: { environment } class: self classWithoutReferenceToAbstract;
 			yourself.
-	self setUpDriver: driver.
+
+	rbClass := driver model classFor: self classWithoutReferenceToAbstract.
+
+	self 
+		assert: rbClass isAbstract
+		description: 'It tests that the RB class is abstract by default'.
 		
 	driver runRefactoring.
-	self assert: (self classToAbstract class respondsTo: #isAbstract).
-	self assert: self classToAbstract isAbstract.
+
+	self 
+		assert: (self classWithoutReferenceToAbstract class respondsTo: #isAbstract)
+		description: 'It test that we successfully applied the refactoring which adds #isAbstract to the target class'.
+		
+	self 
+		assert: rbClass isAbstract
+		description: 'It tests that the RB class is still abstract after applying the refactoring'.
 ]
