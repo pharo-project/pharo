@@ -13,6 +13,13 @@ RBRefactoringChangeManagerTest >> newMockChange [
 	^ RBRefactoringChangeMock new
 ]
 
+{ #category : 'running' }
+RBRefactoringChangeManagerTest >> setUp [
+	super setUp.
+	RBRefactoryChangeManager nuke.
+	manager := RBRefactoryChangeManager instance
+]
+
 { #category : 'tests' }
 RBRefactoringChangeManagerTest >> testAddUndoAddsTheChangeToTheUndoStackAndEmptiesTheRedoCollection [
 
