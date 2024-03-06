@@ -33,8 +33,7 @@ Class {
 	#name : 'ReRenameMethodRefactoring',
 	#superclass : 'RBChangeMethodNameRefactoring',
 	#instVars : [
-		'hasPermutedArguments',
-		'violations'
+		'hasPermutedArguments'
 	],
 	#category : 'Refactoring-Core-Refactorings',
 	#package : 'Refactoring-Core',
