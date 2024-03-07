@@ -7,7 +7,8 @@ Class {
 	#instVars : [
 		'name',
 		'enabled',
-		'behaviors',
+		'checkBehaviors',
+		'sideEffectBehaviors',
 		'arguments',
 		'metaLink',
 		'properties',
@@ -41,11 +42,24 @@ DebugPoint class >> remove: aDebugPoint [
 { #category : 'API' }
 DebugPoint >> addBehavior: aDebugPointBehavior [
 	"adding a new behavior"
-	(self getBehavior: aDebugPointBehavior class) ifNotNil: [ :bh | ^bh ].
+
+	(self getBehavior: aDebugPointBehavior class) ifNotNil: [ :bh | ^ bh ].
 	self behaviors add: aDebugPointBehavior.
+	aDebugPointBehavior addToDebugPoint: self.
 	aDebugPointBehavior debugPoint: self.
-	DebugPointManager notifyDebugPointChanged: self.
-	
+	DebugPointManager notifyDebugPointChanged: self
+]
+
+{ #category : 'adding' }
+DebugPoint >> addCheckBehavior: aConditionBehavior [
+
+	checkBehaviors add: aConditionBehavior
+]
+
+{ #category : 'adding' }
+DebugPoint >> addSideEffectBehavior: aSideEffectBehavior [
+
+	sideEffectBehaviors add: aSideEffectBehavior
 ]
 
 { #category : 'accessing' }
@@ -61,18 +75,20 @@ DebugPoint >> arguments: aDictionary [
 
 { #category : 'accessing' }
 DebugPoint >> behaviors [
-	^behaviors
-]
 
-{ #category : 'accessing' }
-DebugPoint >> behaviors: aSetOfBehaviors [
-	behaviors := aSetOfBehaviors 
+	^ checkBehaviors , sideEffectBehaviors
 ]
 
 { #category : 'actions' }
 DebugPoint >> browse [
 
 	^ self target browse
+]
+
+{ #category : 'accessing' }
+DebugPoint >> checkBehaviors [
+
+	^ checkBehaviors
 ]
 
 { #category : 'reflective operations' }
@@ -115,19 +131,26 @@ DebugPoint >> hitAnnouncementOn: aDebugPoint inContext: aContext [
 
 { #category : 'API' }
 DebugPoint >> hitWithContext: aContext [
-	"returns false if the execution should be stopped, else true"
+	"executes side effect behaviors if and only if this debug point is enabled and if all check behaviors return true"
 
 	<debuggerCompleteToSender>
 	DebugPointManager notifyDebugPointHit: self inContext: aContext.
 	self enabled ifFalse: [ ^ false ].
 	self saveContext: aContext.
-	^ self behaviors allSatisfy: [ :behavior | behavior execute ]
+	(self checkBehaviors allSatisfy: [ :behavior | behavior execute ])
+		ifFalse: [ ^ false ].
+	self sideEffectBehaviors do: [ :behavior | behavior execute ].
+	^ true
 ]
 
 { #category : 'initialization' }
-DebugPoint >> initialize [ 
+DebugPoint >> initialize [
+
 	enabled := true.
-	self behaviors: (SortedCollection sortUsing: [ :elem1 :elem2 | elem1 priority >= elem2 priority]).
+	checkBehaviors := SortedCollection sortUsing: [ :elem1 :elem2 |
+		                  elem1 priority >= elem2 priority ].
+	sideEffectBehaviors := SortedCollection sortUsing: [ :elem1 :elem2 |
+		                       elem1 priority >= elem2 priority ]
 ]
 
 { #category : 'installing' }
@@ -269,6 +292,12 @@ DebugPoint >> saveContext: aContext [
 DebugPoint >> scope [
 
 	^ self target scope
+]
+
+{ #category : 'accessing' }
+DebugPoint >> sideEffectBehaviors [
+
+	^ sideEffectBehaviors
 ]
 
 { #category : 'accessing' }
