@@ -420,49 +420,61 @@ DebugPointTest >> testChangeTargetInstance [
 
 { #category : 'tests' }
 DebugPointTest >> testConditionBehavior [
+
 	| behavior |
 	behavior := ConditionBehavior new condition: 'corner=(300@200)'.
 	dp := DebugPointManager installNew: BreakDebugPoint on: node.
 	dp addBehavior: behavior.
+
+	self
+		assertCollection: dp checkBehaviors
+		hasSameElements: { behavior }.
+	self
+		assertCollection: dp behaviors
+		hasSameElements: { behavior }.
 	"dp addBehavior: BreakBehavior new."
 
 	"hit the point so the arguments are actually saved in the debug point"
 	dp hitWithContext: context.
 	"condition is false and should not trigger break"
-	self assert: (behavior execute) equals: false.
-	self shouldnt: [dp hitWithContext: context.] raise: Break.
+	self assert: behavior execute equals: false.
+	self shouldnt: [ dp hitWithContext: context ] raise: Break.
 	"condition is false and should not trigger break"
 	behavior condition: 'self corner=(300@200)'.
-	self assert: (behavior execute) equals: false.
-	self shouldnt: [dp hitWithContext: context.] raise: Break.
+	self assert: behavior execute equals: false.
+	self shouldnt: [ dp hitWithContext: context ] raise: Break.
 	"condition is true and should trigger the break"
 	behavior condition: 'corner=(200@200)'.
-	self assert: (behavior execute) equals: true .
-	self should: [dp hitWithContext: context.] raise: Break.
-
+	self assert: behavior execute equals: true.
+	self should: [ dp hitWithContext: context ] raise: Break
 ]
 
 { #category : 'tests' }
 DebugPointTest >> testConditionBehaviorThisContext [
+
 	| behavior |
-	
 	dp := DebugPointManager installNew: BreakDebugPoint on: node.
 
 	behavior := ConditionBehavior new condition: 'thisContext method = 2'.
 	dp addBehavior: behavior.
-	
+
+	self
+		assertCollection: dp checkBehaviors
+		hasSameElements: { behavior }.
+	self assertCollection: dp behaviors hasSameElements: { behavior }.
+
 	"hit the point so the arguments are actually saved in the debug point"
 	dp hitWithContext: context.
-	
+
 	"it should not break with incorrect condition"
-	self assert: (behavior execute) equals: false.
-	self shouldnt: [dp hitWithContext: context] raise: Break.
+	self assert: behavior execute equals: false.
+	self shouldnt: [ dp hitWithContext: context ] raise: Break.
 
 	"here the condition is correct and it should break"
-	behavior condition: 'thisContext method = (Rectangle methodDict at: #areasOutside:)'.
-	self assert: (behavior execute) equals: true .
-	self should: [dp hitWithContext: context] raise: Break.
-
+	behavior condition:
+		'thisContext method = (Rectangle methodDict at: #areasOutside:)'.
+	self assert: behavior execute equals: true.
+	self should: [ dp hitWithContext: context ] raise: Break
 ]
 
 { #category : 'tests' }
@@ -471,11 +483,21 @@ DebugPointTest >> testCountBehavior [
 	
 	dp := DebugPointManager installNew: DebugPoint  on: node withBehaviors: {CountBehavior}.
 	cbh := dp getBehavior: CountBehavior.
+	
+	self
+		assertCollection: dp sideEffectBehaviors 
+		hasSameElements: { cbh }.
+	self
+		assertCollection: dp behaviors
+		hasSameElements: { cbh }.
+	
 	self assert: ( cbh count ) equals: 0.
 	dp hitWithContext: context.
 	self assert: ( cbh count ) equals: 1.
 	dp hitWithContext: context.
 	self assert:  ( cbh count ) equals: 2.
+	
+	
 
 ]
 
@@ -611,13 +633,20 @@ DebugPointTest >> testObjectCentricWatchOnceDebugPoint [
 
 { #category : 'tests' }
 DebugPointTest >> testOnceBehavior [
+
+	| behavior |
 	dp := DebugPointManager installNew: DebugPoint on: node.
-	dp addBehavior: (OnceBehavior new).
-	self assert: (dp enabled) equals: true.
+	dp addBehavior: OnceBehavior new.
+	behavior := dp getBehavior: OnceBehavior.
+
+	self
+		assertCollection: dp sideEffectBehaviors
+		hasSameElements: { behavior }.
+	self assertCollection: dp behaviors hasSameElements: { behavior }.
+
+	self assert: dp enabled equals: true.
 	dp hitWithContext: context.
-	self assert: (dp enabled) equals: false.
-
-
+	self assert: dp enabled equals: false
 ]
 
 { #category : 'tests' }
@@ -646,7 +675,7 @@ DebugPointTest >> testOnceBreakOnVariable [
 { #category : 'tests' }
 DebugPointTest >> testOnceEvaluatesAfterConditionBehavior [
 
-	| conditionBehavior |
+	| conditionBehavior onceBehavior |
 	conditionBehavior := ConditionBehavior new condition:
 		                     'corner = (300@200) '.
 	dp := DebugPointManager
@@ -655,6 +684,17 @@ DebugPointTest >> testOnceEvaluatesAfterConditionBehavior [
 		      withBehaviors: { OnceBehavior }.
 	dp addBehavior: conditionBehavior.
 	dp saveContext: context.
+	onceBehavior := dp getBehavior: OnceBehavior.
+
+	self
+		assertCollection: dp sideEffectBehaviors
+		hasSameElements: { onceBehavior }.
+	self
+		assertCollection: dp checkBehaviors
+		hasSameElements: { conditionBehavior }.
+	self assertCollection: dp behaviors hasSameElements: {
+			conditionBehavior.
+			onceBehavior }.
 
 	self assert: dp enabled.
 	self deny: conditionBehavior execute.
