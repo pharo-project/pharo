@@ -106,7 +106,8 @@ RBInsertNewClassRefactoring >> storeOn: aStream [
 { #category : 'initialization' }
 RBInsertNewClassRefactoring >> subclasses: aCollection [
 
-	subclasses := aCollection collect: [ :each | self classObjectFor: each ]
+	subclasses := aCollection collect: [ :each | self classObjectFor: each ].
+	self halt.
 ]
 
 { #category : 'initialization' }
