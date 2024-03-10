@@ -124,9 +124,13 @@ RBRefactoryChangeManager class >> unload [
 
 { #category : 'public access' }
 RBRefactoryChangeManager >> addUndo: aRefactoringChange [
+	
 	undo push: aRefactoringChange.
 	undo size > UndoSize
-		ifTrue: [ undo removeFirst ].
+		ifTrue: [ 
+			"Remove the element at the bottom of the stack"
+			undo removeLast 
+		].
 	redo := OrderedCollection new
 ]
 
@@ -243,7 +247,8 @@ RBRefactoryChangeManager >> undoOperation [
 	undo ifEmpty: [ ^ self ].
 	self ignoreChangesWhile: [
 		| change |
-		change := undo removeLast.
+		"Retrieve the element at the top"
+		change := self undoChange.
 		redo add: change execute ]
 ]
 
