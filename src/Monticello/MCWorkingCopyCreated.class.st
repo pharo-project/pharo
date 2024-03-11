@@ -5,8 +5,8 @@ Class {
 	#name : #MCWorkingCopyCreated,
 	#superclass : #Announcement,
 	#instVars : [
-		'package',
-		'workingCopy'
+		#package,
+		#workingCopy
 	],
 	#category : #'Monticello-Announcements'
 }

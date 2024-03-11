@@ -12,7 +12,7 @@ Class {
 	#name : #ZnCookie,
 	#superclass : #Object,
 	#instVars : [
-		'attributes'
+		#attributes
 	],
 	#category : #'Zinc-HTTP-Support'
 }

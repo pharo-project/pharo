@@ -5,9 +5,9 @@ Class {
 	#name : #MCClassTraitDefinition,
 	#superclass : #MCDefinition,
 	#instVars : [
-		'baseTrait',
-		'classTraitComposition',
-		'category'
+		#baseTrait,
+		#classTraitComposition,
+		#category
 	],
 	#category : #'Monticello-Modeling'
 }

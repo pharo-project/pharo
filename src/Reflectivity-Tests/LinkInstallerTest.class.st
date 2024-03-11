@@ -2,10 +2,10 @@ Class {
 	#name : #LinkInstallerTest,
 	#superclass : #TestCase,
 	#instVars : [
-		'obj1',
-		'obj2',
-		'obj3',
-		'obj4'
+		#obj1,
+		#obj2,
+		#obj3,
+		#obj4
 	],
 	#category : #'Reflectivity-Tests-Base'
 }

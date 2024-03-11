@@ -14,11 +14,11 @@ Class {
 	#name : #RBChangeMethodNameRefactoring,
 	#superclass : #RBMethodRefactoring,
 	#instVars : [
-		'newSelector',
-		'oldSelector',
-		'permutation',
-		'implementors',
-		'renameMap'
+		#newSelector,
+		#oldSelector,
+		#permutation,
+		#implementors,
+		#renameMap
 	],
 	#category : #'Refactoring-Core-Refactorings'
 }

@@ -117,7 +117,7 @@ DateAndTimeEpochTest >> testDayOfMonth [
 DateAndTimeEpochTest >> testDayOfWeek [
 	self assert: aDateAndTime dayOfWeek equals: 3.
 	self assert: aDateAndTime dayOfWeekAbbreviation equals: 'Tue'.
-	self assert: aDateAndTime dayOfWeekName equals: 'Tuesday'
+	self assert: aDateAndTime dayOfWeekName equals: #'Tuesday'
 ]
 
 { #category : #tests }
@@ -251,7 +251,7 @@ DateAndTimeEpochTest >> testMinutes [
 DateAndTimeEpochTest >> testMonth [
 	self assert: aDateAndTime month equals: 1.
 	self assert: aDateAndTime monthAbbreviation equals: 'Jan'.
-	self assert: aDateAndTime monthName equals: 'January'.
+	self assert: aDateAndTime monthName equals: #'January'.
 	self assert: aDateAndTime monthIndex equals: 1
 ]
 

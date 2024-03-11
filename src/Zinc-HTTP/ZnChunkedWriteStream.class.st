@@ -12,10 +12,10 @@ Class {
 	#name : #ZnChunkedWriteStream,
 	#superclass : #Object,
 	#instVars : [
-		'stream',
-		'extraHeaders',
-		'totalSize',
-		'chunkCount'
+		#stream,
+		#extraHeaders,
+		#totalSize,
+		#chunkCount
 	],
 	#category : #'Zinc-HTTP-Streaming'
 }

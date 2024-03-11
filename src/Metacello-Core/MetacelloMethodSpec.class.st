@@ -2,11 +2,11 @@ Class {
 	#name : #MetacelloMethodSpec,
 	#superclass : #Object,
 	#instVars : [
-		'project',
-		'selector',
-		'category',
-		'versionString',
-		'methodSections'
+		#project,
+		#selector,
+		#category,
+		#versionString,
+		#methodSections
 	],
 	#category : #'Metacello-Core-Constructors'
 }

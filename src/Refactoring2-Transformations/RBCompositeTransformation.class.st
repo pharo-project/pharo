@@ -2,9 +2,9 @@ Class {
 	#name : #RBCompositeTransformation,
 	#superclass : #RBTransformation,
 	#instVars : [
-		'previousTransformations',
-		'transformations',
-		'delegatesPreconditions'
+		#previousTransformations,
+		#transformations,
+		#delegatesPreconditions
 	],
 	#category : #'Refactoring2-Transformations-Model'
 }

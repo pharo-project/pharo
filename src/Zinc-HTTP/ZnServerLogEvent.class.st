@@ -8,8 +8,8 @@ Class {
 	#name : #ZnServerLogEvent,
 	#superclass : #ZnLogEvent,
 	#instVars : [
-		'serverId',
-		'processId'
+		#serverId,
+		#processId
 	],
 	#category : #'Zinc-HTTP-Logging'
 }

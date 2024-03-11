@@ -5,11 +5,11 @@ Class {
 	#name : #FFIExternalStructureFlatLayout,
 	#superclass : #Object,
 	#instVars : [
-		'fields',
-		'size',
-		'alignment',
-		'integerRegisterCount',
-		'floatRegisterCount'
+		#fields,
+		#size,
+		#alignment,
+		#integerRegisterCount,
+		#floatRegisterCount
 	],
 	#category : #'UnifiedFFI-External-StructureHandling'
 }

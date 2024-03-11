@@ -6,11 +6,11 @@ Class {
 	#name : #ClyNotebookPageMorph,
 	#superclass : #SpNotebookPageMorph,
 	#instVars : [
-		'icon',
-		'labelPresenter',
-		'label',
-		'actions',
-		'closeable'
+		#icon,
+		#labelPresenter,
+		#label,
+		#actions,
+		#closeable
 	],
 	#category : #'Calypso-Browser-Tabs'
 }

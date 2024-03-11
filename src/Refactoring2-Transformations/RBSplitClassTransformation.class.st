@@ -20,10 +20,10 @@ Class {
 	#name : #RBSplitClassTransformation,
 	#superclass : #RBCompositeTransformation,
 	#instVars : [
-		'class',
-		'instanceVariables',
-		'newClassName',
-		'referenceVariableName'
+		#class,
+		#instanceVariables,
+		#newClassName,
+		#referenceVariableName
 	],
 	#category : #'Refactoring2-Transformations-Model-Unused'
 }

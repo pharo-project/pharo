@@ -5,7 +5,7 @@ Class {
 	#name : #MCVersionLoader,
 	#superclass : #Object,
 	#instVars : [
-		'versions'
+		#versions
 	],
 	#category : #'Monticello-Loading'
 }

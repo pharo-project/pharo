@@ -2,7 +2,7 @@ Class {
 	#name : #SlotMigrationTest,
 	#superclass : #SlotSilentTest,
 	#instVars : [
-		'instance'
+		#instance
 	],
 	#category : #'Slot-Tests-ClassBuilder'
 }

@@ -5,7 +5,7 @@ Class {
 	#name : #RBParseTreeSearcherTest,
 	#superclass : #TestCase,
 	#instVars : [
-		'searcher'
+		#searcher
 	],
 	#category : #'AST-Core-Tests-Matching'
 }
@@ -15,7 +15,7 @@ RBParseTreeSearcherTest >> assertCodeForSymbolAt: aSymbol in: myContextDictionar
 
 	^self
 		assert: (myContextDictionary at: aSymbol asSymbol)
-		equals: expectedCode
+		equals: expectedCode asSymbol
 ]
 
 { #category : #asserting }

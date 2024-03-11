@@ -9,7 +9,7 @@ Class {
 	#name : #ZnUnknownHttpMethod,
 	#superclass : #ZnParseError,
 	#instVars : [
-		'method'
+		#method
 	],
 	#category : #'Zinc-HTTP-Exceptions'
 }

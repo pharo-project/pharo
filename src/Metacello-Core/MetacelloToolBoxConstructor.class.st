@@ -2,8 +2,8 @@ Class {
 	#name : #MetacelloToolBoxConstructor,
 	#superclass : #MetacelloAbstractVersionConstructor,
 	#instVars : [
-		'currentSection',
-		'methodSections'
+		#currentSection,
+		#methodSections
 	],
 	#category : #'Metacello-Core-Constructors'
 }

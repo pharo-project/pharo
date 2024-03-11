@@ -5,7 +5,7 @@ Class {
 	#name : #MCRemoval,
 	#superclass : #MCPatchOperation,
 	#instVars : [
-		'definition'
+		#definition
 	],
 	#category : #'Monticello-Patching'
 }

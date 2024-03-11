@@ -5,7 +5,7 @@ Class {
 	#name : #FooSharedPool,
 	#superclass : #SharedPool,
 	#classVars : [
-		'FooValue1'
+		#FooValue1
 	],
 	#category : #'Tests-System'
 }

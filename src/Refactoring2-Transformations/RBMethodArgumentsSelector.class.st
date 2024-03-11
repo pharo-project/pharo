@@ -17,16 +17,16 @@ Class {
 	#name : #RBMethodArgumentsSelector,
 	#superclass : #DialogWindowMorph,
 	#instVars : [
-		'arguments',
-		'values',
-		'argsAndValues',
-		'argumentsList',
-		'selectedArgumentIndex',
-		'valuesList',
-		'selectedValueIndex',
-		'selectedAssociationIndex',
-		'sourceCodeMorph',
-		'tree'
+		#arguments,
+		#values,
+		#argsAndValues,
+		#argumentsList,
+		#selectedArgumentIndex,
+		#valuesList,
+		#selectedValueIndex,
+		#selectedAssociationIndex,
+		#sourceCodeMorph,
+		#tree
 	],
 	#category : #'Refactoring2-Transformations-Utilities'
 }

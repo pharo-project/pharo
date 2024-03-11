@@ -13,7 +13,7 @@ Class {
 	#name : #ReSystemAnnouncer,
 	#superclass : #Announcer,
 	#classInstVars : [
-		'uniqueInstance'
+		#uniqueInstance
 	],
 	#category : #'Renraku-Announcements'
 }

@@ -5,12 +5,12 @@ Class {
 	#name : #OCAbstractMethodScope,
 	#superclass : #OCAbstractScope,
 	#instVars : [
-		'tempVars',
-		'copiedVars',
-		'tempVector',
-		'id',
-		'tempVectorVar',
-		'node'
+		#tempVars,
+		#copiedVars,
+		#tempVector,
+		#id,
+		#tempVectorVar,
+		#node
 	],
 	#category : #'OpalCompiler-Core-Semantics'
 }
@@ -276,7 +276,7 @@ OCAbstractMethodScope >> tempVector [
 OCAbstractMethodScope >> tempVectorName [
 	"the name of the tempVector is not a valid name of a temp variable
 	 This way we avoid name clashes "
-	^'0vector', id asString
+	^ #'0vector', id asString
 ]
 
 { #category : #'temp vars - vector' }

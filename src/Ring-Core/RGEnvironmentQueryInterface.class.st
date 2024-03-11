@@ -2,8 +2,8 @@ Class {
 	#name : #RGEnvironmentQueryInterface,
 	#superclass : #Object,
 	#instVars : [
-		'environment',
-		'behaviorsDictionary'
+		#environment,
+		#behaviorsDictionary
 	],
 	#category : #'Ring-Core-Environment'
 }
@@ -178,7 +178,7 @@ RGEnvironmentQueryInterface >> invalidateName: aSymbol [
 RGEnvironmentQueryInterface >> packageNamed: aString [
 
 	self packagesDo: [:each |
-		(each name = aString) ifTrue: [ ^ each ] ].
+		(each name sameContents: aString) ifTrue: [ ^ each ] ].
 
 	^ nil
 ]

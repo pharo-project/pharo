@@ -21,12 +21,12 @@ Class {
 	#name : #ClassFactoryForTestCase,
 	#superclass : #Object,
 	#instVars : [
-		'createdClasses',
-		'createdTraits',
-		'createdSilently'
+		#createdClasses,
+		#createdTraits,
+		#createdSilently
 	],
 	#classVars : [
-		'Counter'
+		#Counter
 	],
 	#category : #'SUnit-Core-Extensions'
 }

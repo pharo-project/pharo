@@ -12,7 +12,7 @@ Class {
 	#name : #ZnValueDelegate,
 	#superclass : #Object,
 	#instVars : [
-		'object'
+		#object
 	],
 	#category : #'Zinc-HTTP-Client-Server'
 }

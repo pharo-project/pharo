@@ -44,7 +44,7 @@ Class {
 	#name : #Date,
 	#superclass : #Timespan,
 	#pools : [
-		'ChronologyConstants'
+		#ChronologyConstants
 	],
 	#category : #'Kernel-Chronology'
 }

@@ -2,9 +2,9 @@ Class {
 	#name : #MCFileInTest,
 	#superclass : #MCTestCase,
 	#instVars : [
-		'stream',
-		'expected',
-		'diff'
+		#stream,
+		#expected,
+		#diff
 	],
 	#category : #'Monticello-Tests-IO'
 }

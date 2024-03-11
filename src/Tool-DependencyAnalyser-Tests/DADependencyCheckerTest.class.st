@@ -2,7 +2,7 @@ Class {
 	#name : #DADependencyCheckerTest,
 	#superclass : #TestCase,
 	#instVars : [
-		'checker'
+		#checker
 	],
 	#category : #'Tool-DependencyAnalyser-Tests-Core'
 }

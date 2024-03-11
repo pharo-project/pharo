@@ -6,8 +6,8 @@ Class {
 	#name : #RBErrorToken,
 	#superclass : #RBValueToken,
 	#instVars : [
-		'cause',
-		'location'
+		#cause,
+		#location
 	],
 	#category : #'AST-Core-Tokens'
 }

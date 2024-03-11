@@ -12,9 +12,9 @@ Class {
 	#name : #RBStringReplacement,
 	#superclass : #Object,
 	#instVars : [
-		'startPosition',
-		'stopPosition',
-		'string'
+		#startPosition,
+		#stopPosition,
+		#string
 	],
 	#category : #'AST-Core-Nodes'
 }

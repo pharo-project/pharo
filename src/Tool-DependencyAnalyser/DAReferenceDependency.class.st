@@ -11,9 +11,9 @@ Class {
 	#name : #DAReferenceDependency,
 	#superclass : #DADependencyFromClass,
 	#instVars : [
-		'selector',
-		'reference',
-		'method'
+		#selector,
+		#reference,
+		#method
 	],
 	#category : #'Tool-DependencyAnalyser-Core'
 }

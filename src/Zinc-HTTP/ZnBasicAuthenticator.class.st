@@ -11,8 +11,8 @@ Class {
 	#name : #ZnBasicAuthenticator,
 	#superclass : #Object,
 	#instVars : [
-		'credentials',
-		'realm'
+		#credentials,
+		#realm
 	],
 	#category : #'Zinc-HTTP-Support'
 }

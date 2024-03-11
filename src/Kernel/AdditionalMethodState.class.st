@@ -7,8 +7,8 @@ Class {
 	#superclass : #Object,
 	#type : #variable,
 	#instVars : [
-		'method',
-		'selector'
+		#method,
+		#selector
 	],
 	#category : #'Kernel-Methods'
 }

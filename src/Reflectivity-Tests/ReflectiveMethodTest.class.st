@@ -2,7 +2,7 @@ Class {
 	#name : #ReflectiveMethodTest,
 	#superclass : #AbstractEnvironmentTestCase,
 	#instVars : [
-		'selector'
+		#selector
 	],
 	#category : #'Reflectivity-Tests-Base'
 }

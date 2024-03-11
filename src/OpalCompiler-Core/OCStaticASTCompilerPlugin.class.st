@@ -5,7 +5,7 @@ Class {
 	#name : #OCStaticASTCompilerPlugin,
 	#superclass : #OCASTCompilerPlugin,
 	#instVars : [
-		'ast'
+		#ast
 	],
 	#category : #'OpalCompiler-Core-Plugins'
 }

@@ -63,10 +63,10 @@ Class {
 	#name : #FFIExternalResourceManager,
 	#superclass : #Object,
 	#instVars : [
-		'registry'
+		#registry
 	],
 	#classInstVars : [
-		'uniqueInstance'
+		#uniqueInstance
 	],
 	#category : #'UnifiedFFI-External-Resources'
 }

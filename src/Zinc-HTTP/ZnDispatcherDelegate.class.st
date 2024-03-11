@@ -12,7 +12,7 @@ Class {
 	#name : #ZnDispatcherDelegate,
 	#superclass : #Object,
 	#instVars : [
-		'dispatcherDictionary'
+		#dispatcherDictionary
 	],
 	#category : #'Zinc-HTTP-Client-Server'
 }

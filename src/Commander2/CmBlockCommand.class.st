@@ -7,8 +7,8 @@ Class {
 	#name : #CmBlockCommand,
 	#superclass : #CmCommand,
 	#instVars : [
-		'block',
-		'canBeExecutedBlock'
+		#block,
+		#canBeExecutedBlock
 	],
 	#category : #'Commander2-Commands'
 }

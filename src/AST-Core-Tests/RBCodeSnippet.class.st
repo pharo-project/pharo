@@ -23,17 +23,17 @@ Class {
 	#name : #RBCodeSnippet,
 	#superclass : #Object,
 	#instVars : [
-		'source',
-		'isMethod',
-		'isParseFaulty',
-		'isFaulty',
-		'value',
-		'hasValue',
-		'formattedCode',
-		'skippedTests',
-		'raise',
-		'messageNotUnderstood',
-		'numberOfCritiques'
+		#source,
+		#isMethod,
+		#isParseFaulty,
+		#isFaulty,
+		#value,
+		#hasValue,
+		#formattedCode,
+		#skippedTests,
+		#raise,
+		#messageNotUnderstood,
+		#numberOfCritiques
 	],
 	#category : #'AST-Core-Tests-Snippets'
 }

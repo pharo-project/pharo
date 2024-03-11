@@ -5,7 +5,7 @@ Class {
 	#name : #MCChangeSelector,
 	#superclass : #MCPatchBrowser,
 	#instVars : [
-		'kept'
+		#kept
 	],
 	#category : #'MonticelloGUI-Tools'
 }

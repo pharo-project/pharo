@@ -28,12 +28,12 @@ Class {
 	#name : #ZnOptions,
 	#superclass : #Object,
 	#instVars : [
-		'options',
-		'parent',
-		'writable'
+		#options,
+		#parent,
+		#writable
 	],
 	#classVars : [
-		'globalDefault'
+		#globalDefault
 	],
 	#category : #'Zinc-HTTP-Support'
 }

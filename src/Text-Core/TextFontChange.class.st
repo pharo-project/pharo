@@ -6,7 +6,7 @@ Class {
 	#name : #TextFontChange,
 	#superclass : #TextAttribute,
 	#instVars : [
-		'fontNumber'
+		#fontNumber
 	],
 	#category : #'Text-Core-Attributes'
 }

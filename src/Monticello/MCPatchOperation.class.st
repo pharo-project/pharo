@@ -5,8 +5,8 @@ Class {
 	#name : #MCPatchOperation,
 	#superclass : #Object,
 	#instVars : [
-		'isApplicable',
-		'isConflict'
+		#isApplicable,
+		#isConflict
 	],
 	#category : #'Monticello-Patching'
 }

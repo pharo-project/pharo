@@ -37,9 +37,9 @@ Class {
 	#superclass : #Object,
 	#type : #variable,
 	#instVars : [
-		'outerContext',
-		'compiledBlock',
-		'numArgs'
+		#outerContext,
+		#compiledBlock,
+		#numArgs
 	],
 	#category : #'Kernel-Methods'
 }
@@ -558,7 +558,7 @@ BlockClosure >> outerContext: ctxt [
 	outerContext := ctxt
 ]
 
-{ #category : #printing }
+{ #category : #'not defined category' }
 BlockClosure >> printOn: aStream [
 
 	[self doPrintOn: aStream]

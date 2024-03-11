@@ -6,9 +6,9 @@ Class {
 	#name : #RBPackage,
 	#superclass : #RBEntity,
 	#instVars : [
-		'model',
-		'name',
-		'realPackage'
+		#model,
+		#name,
+		#realPackage
 	],
 	#category : #'Refactoring-Core-Model'
 }

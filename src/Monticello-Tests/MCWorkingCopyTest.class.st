@@ -2,11 +2,11 @@ Class {
 	#name : #MCWorkingCopyTest,
 	#superclass : #MCTestCase,
 	#instVars : [
-		'workingCopy',
-		'repositoryGroup',
-		'versions',
-		'versions2',
-		'savedName'
+		#workingCopy,
+		#repositoryGroup,
+		#versions,
+		#versions2,
+		#savedName
 	],
 	#category : #'Monticello-Tests-Base'
 }

@@ -48,12 +48,12 @@ Class {
 	#name : #FFICallbackArgumentReader,
 	#superclass : #Object,
 	#instVars : [
-		'callback',
-		'callbackContext',
-		'currentStackOffset',
-		'extractedArguments',
-		'returnValueHolder',
-		'nextArgumentIndex'
+		#callback,
+		#callbackContext,
+		#currentStackOffset,
+		#extractedArguments,
+		#returnValueHolder,
+		#nextArgumentIndex
 	],
 	#category : #'UnifiedFFI-Callbacks'
 }

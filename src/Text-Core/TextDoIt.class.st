@@ -17,7 +17,7 @@ Class {
 	#name : #TextDoIt,
 	#superclass : #TextAction,
 	#instVars : [
-		'evalString'
+		#evalString
 	],
 	#category : #'Text-Core-Attributes'
 }

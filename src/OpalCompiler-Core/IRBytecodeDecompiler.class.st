@@ -5,10 +5,10 @@ Class {
 	#name : #IRBytecodeDecompiler,
 	#superclass : #InstructionClient,
 	#instVars : [
-		'instructionStream',
-		'irBuilder',
-		'newTempVector',
-		'scopeStack'
+		#instructionStream,
+		#irBuilder,
+		#newTempVector,
+		#scopeStack
 	],
 	#category : #'OpalCompiler-Core-Bytecode'
 }

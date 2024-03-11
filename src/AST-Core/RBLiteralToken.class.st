@@ -10,8 +10,8 @@ Class {
 	#name : #RBLiteralToken,
 	#superclass : #RBValueToken,
 	#instVars : [
-		'stopPosition',
-		'source'
+		#stopPosition,
+		#source
 	],
 	#category : #'AST-Core-Tokens'
 }

@@ -62,9 +62,9 @@ Class {
 	#name : #FFIExternalResourceExecutor,
 	#superclass : #Object,
 	#instVars : [
-		'session',
-		'data',
-		'resourceClass'
+		#session,
+		#data,
+		#resourceClass
 	],
 	#category : #'UnifiedFFI-External-Resources'
 }

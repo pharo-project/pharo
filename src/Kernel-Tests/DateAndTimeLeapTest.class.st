@@ -87,8 +87,8 @@ DateAndTimeLeapTest >> testDayOfMonth [
 { #category : #tests }
 DateAndTimeLeapTest >> testDayOfWeek [
 	self assert: aDateAndTime dayOfWeek equals: 1.
-	self assert: aDateAndTime dayOfWeekAbbreviation equals: 'Sun'.
-	self assert: aDateAndTime dayOfWeekName equals: 'Sunday'
+	self assert: aDateAndTime dayOfWeekAbbreviation equals: #'Sun'.
+	self assert: aDateAndTime dayOfWeekName equals: #'Sunday'
 ]
 
 { #category : #tests }
@@ -176,8 +176,8 @@ DateAndTimeLeapTest >> testMinutes [
 { #category : #tests }
 DateAndTimeLeapTest >> testMonth [
 	self assert: aDateAndTime month equals: 2.
-	self assert: aDateAndTime monthAbbreviation equals: 'Feb'.
-	self assert: aDateAndTime monthName equals: 'February'.
+	self assert: aDateAndTime monthAbbreviation equals: #'Feb'.
+	self assert: aDateAndTime monthName equals: #'February'.
 	self assert: aDateAndTime monthIndex equals: 2
 ]
 

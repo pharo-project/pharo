@@ -2,8 +2,8 @@ Class {
 	#name : #RBVariableTransformation,
 	#superclass : #RBClassTransformation,
 	#instVars : [
-		'variableName',
-		'isClassVariable'
+		#variableName,
+		#isClassVariable
 	],
 	#category : #'Refactoring2-Transformations-Model'
 }

@@ -17,7 +17,7 @@ Class {
 	#name : #RBAddProtocolTransformation,
 	#superclass : #RBClassTransformation,
 	#instVars : [
-		'protocol'
+		#protocol
 	],
 	#category : #'Refactoring2-Transformations-Model-Unused'
 }

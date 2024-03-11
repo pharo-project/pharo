@@ -22,7 +22,7 @@ Class {
 	#name : #RBAddMessageSendTransformation,
 	#superclass : #RBMethodTransformation,
 	#instVars : [
-		'message'
+		#message
 	],
 	#category : #'Refactoring2-Transformations-Model-Unused'
 }

@@ -5,7 +5,7 @@ Class {
 	#name : #SlotTest,
 	#superclass : #TestCase,
 	#instVars : [
-		'ivarForTesting'
+		#ivarForTesting
 	],
 	#category : #'Slot-Tests-VariablesAndSlots'
 }

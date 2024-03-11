@@ -5,11 +5,11 @@ Class {
 	#name : #ReMethodSourceCleaner,
 	#superclass : #Object,
 	#instVars : [
-		'sourceLines',
-		'keepFinalDot'
+		#sourceLines,
+		#keepFinalDot
 	],
 	#classVars : [
-		'KeepFinalDotInMethodBody'
+		#KeepFinalDotInMethodBody
 	],
 	#category : #'Renraku-Utility'
 }

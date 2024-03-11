@@ -8,7 +8,7 @@ Class {
 	#name : #RBPatternWrapperBlockNode,
 	#superclass : #RBPatternBlockNode,
 	#instVars : [
-		'wrappedNode'
+		#wrappedNode
 	],
 	#category : #'AST-Core-Pattern'
 }

@@ -23,13 +23,13 @@ Class {
 	#name : #IRBuilder,
 	#superclass : #Object,
 	#instVars : [
-		'ir',
-		'currentScope',
-		'jumpBackTargetStacks',
-		'jumpAheadStacks',
-		'currentSequence',
-		'sourceMapNodes',
-		'sourceMapByteIndex'
+		#ir,
+		#currentScope,
+		#jumpBackTargetStacks,
+		#jumpAheadStacks,
+		#currentSequence,
+		#sourceMapNodes,
+		#sourceMapByteIndex
 	],
 	#category : #'OpalCompiler-Core-IR-Manipulation'
 }

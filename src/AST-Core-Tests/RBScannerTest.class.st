@@ -1613,7 +1613,7 @@ RBScannerTest >> testScanTokenObjects1 [
 	inp := 'Object subclass: #NameOfSubclass'.
 	exp := {'Object'.
 	'subclass:'.
-	#NameOfSubclass asString}.
+	#NameOfSubclass}.
 	self assert: ((self scannerClass scanTokenObjects: inp) collect: [ :each | each value ]) equals: exp
 ]
 

@@ -2,7 +2,7 @@ Class {
 	#name : #DoItVariableTest,
 	#superclass : #TestCase,
 	#instVars : [
-		'instVarForTest'
+		#instVarForTest
 	],
 	#category : #'Slot-Tests-VariablesAndSlots'
 }

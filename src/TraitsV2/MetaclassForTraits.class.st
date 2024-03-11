@@ -6,7 +6,7 @@ Class {
 	#name : #MetaclassForTraits,
 	#superclass : #TraitedMetaclass,
 	#instVars : [
-		'users'
+		#users
 	],
 	#category : #'TraitsV2-Base'
 }
@@ -92,7 +92,7 @@ MetaclassForTraits >> isTraitExclusion [
 { #category : #accessing }
 MetaclassForTraits >> name [
 
-	^ thisClass ifNil: [ 'a MetaclassForTraits' ] ifNotNil: [ thisClass name asString , ' classTrait' ]
+	^ thisClass ifNil: [ #'a MetaclassForTraits' ] ifNotNil: [ thisClass name, ' classTrait' ]
 ]
 
 { #category : #'organization updating' }

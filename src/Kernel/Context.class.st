@@ -20,17 +20,17 @@ Class {
 	#superclass : #Object,
 	#type : #variable,
 	#instVars : [
-		'sender',
-		'pc',
-		'stackp',
-		'method',
-		'closureOrNil',
-		'receiver'
+		#sender,
+		#pc,
+		#stackp,
+		#method,
+		#closureOrNil,
+		#receiver
 	],
 	#classVars : [
-		'PrimitiveFailToken',
-		'SpecialPrimitiveSimulators',
-		'TryNamedPrimitiveTemplateMethod'
+		#PrimitiveFailToken,
+		#SpecialPrimitiveSimulators,
+		#TryNamedPrimitiveTemplateMethod
 	],
 	#category : #'Kernel-Methods'
 }

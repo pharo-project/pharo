@@ -30,7 +30,7 @@ Class {
 	#name : #RBGeneratePrintOnTransformation,
 	#superclass : #RBClassRefactoring,
 	#instVars : [
-		'variables'
+		#variables
 	],
 	#category : #'Refactoring-Core-Transformation'
 }

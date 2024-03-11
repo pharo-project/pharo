@@ -114,16 +114,16 @@ Class {
 	#name : #ClyBrowserMorph,
 	#superclass : #PanelMorph,
 	#instVars : [
-		'navigationPanel',
-		'navigationViews',
-		'toolPanel',
-		'toolbar',
-		'tabManager',
-		'navigationHistory',
-		'navigationStarted',
-		'plugins',
-		'navigationEnvironment',
-		'systemScope'
+		#navigationPanel,
+		#navigationViews,
+		#toolPanel,
+		#toolbar,
+		#tabManager,
+		#navigationHistory,
+		#navigationStarted,
+		#plugins,
+		#navigationEnvironment,
+		#systemScope
 	],
 	#category : #'Calypso-Browser-UI'
 }

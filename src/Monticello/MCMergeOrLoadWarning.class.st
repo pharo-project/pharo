@@ -5,7 +5,7 @@ Class {
 	#name : #MCMergeOrLoadWarning,
 	#superclass : #Warning,
 	#instVars : [
-		'versions'
+		#versions
 	],
 	#category : #'Monticello-Loading'
 }

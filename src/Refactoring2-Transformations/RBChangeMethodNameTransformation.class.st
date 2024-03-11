@@ -2,11 +2,11 @@ Class {
 	#name : #RBChangeMethodNameTransformation,
 	#superclass : #RBMethodTransformation,
 	#instVars : [
-		'newSelector',
-		'oldSelector',
-		'permutation',
-		'implementors',
-		'renameMap'
+		#newSelector,
+		#oldSelector,
+		#permutation,
+		#implementors,
+		#renameMap
 	],
 	#category : #'Refactoring2-Transformations-Model-Unused'
 }

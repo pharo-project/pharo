@@ -7,8 +7,8 @@ Class {
 	#name : #DomainError,
 	#superclass : #ArithmeticError,
 	#instVars : [
-		'from',
-		'to'
+		#from,
+		#to
 	],
 	#category : #'Kernel-Exceptions'
 }

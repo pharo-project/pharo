@@ -5,9 +5,9 @@ Class {
 	#name : #IRReconstructor,
 	#superclass : #IRBuilder,
 	#instVars : [
-		'temps',
-		'remoteTemps',
-		'closureCopiedValues'
+		#temps,
+		#remoteTemps,
+		#closureCopiedValues
 	],
 	#category : #'OpalCompiler-Core-Bytecode'
 }

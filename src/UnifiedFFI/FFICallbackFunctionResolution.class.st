@@ -24,7 +24,7 @@ Class {
 	#name : #FFICallbackFunctionResolution,
 	#superclass : #FFIFunctionResolutionStrategy,
 	#classVars : [
-		'CallbackRegistry'
+		#CallbackRegistry
 	],
 	#category : #'UnifiedFFI-Callouts'
 }

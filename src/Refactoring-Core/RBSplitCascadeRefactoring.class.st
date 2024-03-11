@@ -11,13 +11,13 @@ Class {
 	#name : #RBSplitCascadeRefactoring,
 	#superclass : #RBMethodRefactoring,
 	#instVars : [
-		'selector',
-		'selectedInterval',
-		'parseTree',
-		'cascadeNode',
-		'beforeNodes',
-		'afterNodes',
-		'ancestorNode'
+		#selector,
+		#selectedInterval,
+		#parseTree,
+		#cascadeNode,
+		#beforeNodes,
+		#afterNodes,
+		#ancestorNode
 	],
 	#category : #'Refactoring-Core-Refactorings-Unused'
 }

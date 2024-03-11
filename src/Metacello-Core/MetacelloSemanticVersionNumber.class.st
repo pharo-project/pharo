@@ -94,9 +94,9 @@ Class {
 	#name : #MetacelloSemanticVersionNumber,
 	#superclass : #Magnitude,
 	#instVars : [
-		'normalVersion',
-		'preReleaseVersion',
-		'buildVersion'
+		#normalVersion,
+		#preReleaseVersion,
+		#buildVersion
 	],
 	#category : #'Metacello-Core-Model'
 }

@@ -47,7 +47,7 @@ Class {
 	#name : #Bag,
 	#superclass : #Collection,
 	#instVars : [
-		'contents'
+		#contents
 	],
 	#category : #'Collections-Unordered-Bags'
 }

@@ -8,9 +8,9 @@ Class {
 	#name : #FFIFunctionSpec,
 	#superclass : #Object,
 	#instVars : [
-		'returnType',
-		'functionName',
-		'arguments'
+		#returnType,
+		#functionName,
+		#arguments
 	],
 	#category : #'UnifiedFFI-Base'
 }

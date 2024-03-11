@@ -47,10 +47,10 @@ Class {
 	#name : #FFIExternalValueHolder,
 	#superclass : #Object,
 	#instVars : [
-		'data'
+		#data
 	],
 	#classInstVars : [
-		'type'
+		#type
 	],
 	#category : #'UnifiedFFI-Objects'
 }

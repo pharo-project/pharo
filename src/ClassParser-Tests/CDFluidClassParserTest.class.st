@@ -200,7 +200,7 @@ CDFluidClassParserTest >> testSharedPools [
 		package: #MyPackage'.
 
 	def := parser parse: defString.
-	self assert: def sharedPools first name equals: 'TextConstants'
+	self assert: def sharedPools first name equals: #'TextConstants'
 ]
 
 { #category : #'tests - (r) class variables' }
@@ -274,7 +274,7 @@ CDFluidClassParserTest >> testSimpleDefinitionPackageIsCorrect [
 	| def |
 	def := self classDefinitionParserClass parse: 'Object << #Point
 			package: ''Kernel-BasicObjects'''.
-	self assert: def packageName equals: 'Kernel-BasicObjects'
+	self assert: def packageName equals: #'Kernel-BasicObjects'
 ]
 
 { #category : #'tests - (r) simple class definition' }
@@ -284,7 +284,7 @@ CDFluidClassParserTest >> testSimpleDefinitionSuperclassName [
 	def := self classDefinitionParserClass parse: 'Object << #Point
 			package: ''Kernel-BasicObjects'''.
 
-	self assert: def superclassName equals: 'Object'
+	self assert: def superclassName equals: #'Object'
 ]
 
 { #category : #'tests - (r) slots' }

@@ -110,10 +110,10 @@ Class {
 	#name : #FFIEnumeration,
 	#superclass : #SharedPool,
 	#instVars : [
-		'value'
+		#value
 	],
 	#classInstVars : [
-		'representationType'
+		#representationType
 	],
 	#category : #'UnifiedFFI-Objects'
 }

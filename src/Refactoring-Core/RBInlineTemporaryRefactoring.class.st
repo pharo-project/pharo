@@ -8,11 +8,11 @@ Class {
 	#name : #RBInlineTemporaryRefactoring,
 	#superclass : #RBMethodRefactoring,
 	#instVars : [
-		'sourceInterval',
-		'selector',
-		'sourceTree',
-		'assignmentNode',
-		'definingNode'
+		#sourceInterval,
+		#selector,
+		#sourceTree,
+		#assignmentNode,
+		#definingNode
 	],
 	#category : #'Refactoring-Core-Refactorings'
 }

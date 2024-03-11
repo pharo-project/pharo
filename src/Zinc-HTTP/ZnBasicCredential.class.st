@@ -9,8 +9,8 @@ Class {
 	#name : #ZnBasicCredential,
 	#superclass : #ZnCredential,
 	#instVars : [
-		'username',
-		'password'
+		#username,
+		#password
 	],
 	#category : #'Zinc-HTTP-Support'
 }

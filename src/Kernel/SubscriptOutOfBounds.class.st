@@ -13,9 +13,9 @@ Class {
 	#name : #SubscriptOutOfBounds,
 	#superclass : #Error,
 	#instVars : [
-		'subscript',
-		'lowerBound',
-		'upperBound'
+		#subscript,
+		#lowerBound,
+		#upperBound
 	],
 	#category : #'Kernel-Exceptions'
 }

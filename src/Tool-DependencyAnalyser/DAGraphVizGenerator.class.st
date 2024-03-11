@@ -5,9 +5,9 @@ Class {
 	#name : #DAGraphVizGenerator,
 	#superclass : #Object,
 	#instVars : [
-		'builder',
-		'graphviz',
-		'nameOfGraph'
+		#builder,
+		#graphviz,
+		#nameOfGraph
 	],
 	#category : #'Tool-DependencyAnalyser-Core'
 }

@@ -17,7 +17,7 @@ Class {
 	#name : #ClyItemStringFilter,
 	#superclass : #ClyItemFilter,
 	#instVars : [
-		'pattern'
+		#pattern
 	],
 	#category : #'Calypso-NavigationModel-Model'
 }

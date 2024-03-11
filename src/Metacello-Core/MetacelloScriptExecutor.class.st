@@ -5,17 +5,17 @@ Class {
 	#name : #MetacelloScriptExecutor,
 	#superclass : #Object,
 	#instVars : [
-		'options',
-		'roots',
-		'singleRoot',
-		'projectSpecGenerator',
-		'actionArg',
-		'configurationArg',
-		'baselineArg',
-		'projectArg',
-		'classNameArg',
-		'versionArg',
-		'repositoryArg'
+		#options,
+		#roots,
+		#singleRoot,
+		#projectSpecGenerator,
+		#actionArg,
+		#configurationArg,
+		#baselineArg,
+		#projectArg,
+		#classNameArg,
+		#versionArg,
+		#repositoryArg
 	],
 	#category : #'Metacello-Core-Scripts'
 }

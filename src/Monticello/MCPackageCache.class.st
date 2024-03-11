@@ -5,8 +5,8 @@ Class {
 	#name : #MCPackageCache,
 	#superclass : #Object,
 	#instVars : [
-		'sorter',
-		'fileNames'
+		#sorter,
+		#fileNames
 	],
 	#category : #'Monticello-Repositories'
 }

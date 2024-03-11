@@ -5,8 +5,8 @@ Class {
 	#name : #MCMczWriter,
 	#superclass : #MCWriter,
 	#instVars : [
-		'zip',
-		'infoWriter'
+		#zip,
+		#infoWriter
 	],
 	#category : #'Monticello-Storing'
 }

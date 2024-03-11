@@ -12,8 +12,8 @@ Class {
 	#superclass : #Integer,
 	#type : #immediate,
 	#classInstVars : [
-		'minVal',
-		'maxVal'
+		#minVal,
+		#maxVal
 	],
 	#category : #'Kernel-Numbers'
 }

@@ -10,7 +10,7 @@ Class {
 	#name : #RBStringReplaceRule,
 	#superclass : #RBReplaceRule,
 	#instVars : [
-		'replaceTree'
+		#replaceTree
 	],
 	#category : #'AST-Core-Matching'
 }

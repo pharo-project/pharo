@@ -37,7 +37,7 @@ Class {
 	#name : #ClyAsyncQuery,
 	#superclass : #ClyWrapperQuery,
 	#instVars : [
-		'asyncResult'
+		#asyncResult
 	],
 	#category : #'Calypso-NavigationModel-Query'
 }

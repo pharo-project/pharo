@@ -2,7 +2,7 @@ Class {
 	#name : #FLFullBasicSerializationTest,
 	#superclass : #FLBasicSerializationTest,
 	#classVars : [
-		'ClassVariableForTesting'
+		#ClassVariableForTesting
 	],
 	#category : #'Fuel-Tests-Core-FullSerialization'
 }

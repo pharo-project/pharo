@@ -5,9 +5,9 @@ Class {
 	#name : #ClassOrganization,
 	#superclass : #Object,
 	#instVars : [
-		'protocolOrganizer',
-		'organizedClass',
-		'commentSourcePointer'
+		#protocolOrganizer,
+		#organizedClass,
+		#commentSourcePointer
 	],
 	#category : #'Kernel-Protocols'
 }
@@ -109,8 +109,10 @@ ClassOrganization >> classify: aSymbol under: aProtocolName [
 ]
 
 { #category : #'backward compatibility' }
-ClassOrganization >> classify: selector under: aProtocolName suppressIfDefault: aBoolean [
-	| oldCategory forceNotify oldProtocols |
+ClassOrganization >> classify: aSelector under: aProtocol suppressIfDefault: aBoolean [
+	| oldCategory forceNotify oldProtocols selector aProtocolName |
+	selector := aSelector asSymbol.
+	aProtocolName := aProtocol asSymbol.
 	forceNotify := (self protocolOrganizer includesSelector: selector) not.
 	oldCategory := self categoryOfElement: selector.
 	(forceNotify or: [ oldCategory ~= aProtocolName or: [ aBoolean not or: [ aProtocolName ~= Protocol unclassified ] ] ])

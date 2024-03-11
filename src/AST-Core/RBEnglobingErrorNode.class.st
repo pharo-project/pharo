@@ -17,8 +17,8 @@ Class {
 	#name : #RBEnglobingErrorNode,
 	#superclass : #RBParseErrorNode,
 	#instVars : [
-		'valueAfter',
-		'contents'
+		#valueAfter,
+		#contents
 	],
 	#category : #'AST-Core-Nodes - ErrorNodes'
 }

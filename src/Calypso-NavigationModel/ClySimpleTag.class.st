@@ -15,7 +15,7 @@ Class {
 	#name : #ClySimpleTag,
 	#superclass : #ClyProperty,
 	#classInstVars : [
-		'instance'
+		#instance
 	],
 	#category : #'Calypso-NavigationModel-Tag'
 }

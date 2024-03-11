@@ -2,7 +2,7 @@ Class {
 	#name : #FFIFunctionResolutionTest,
 	#superclass : #FFIAbstractTest,
 	#instVars : [
-		'stack'
+		#stack
 	],
 	#category : #'UnifiedFFI-Tests-Tests'
 }

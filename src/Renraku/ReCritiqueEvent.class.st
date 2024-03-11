@@ -5,7 +5,7 @@ Class {
 	#name : #ReCritiqueEvent,
 	#superclass : #Announcement,
 	#instVars : [
-		'entity'
+		#entity
 	],
 	#category : #'Renraku-Announcements'
 }

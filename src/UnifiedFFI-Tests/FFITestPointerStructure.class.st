@@ -5,10 +5,10 @@ Class {
 	#name : #FFITestPointerStructure,
 	#superclass : #FFIExternalStructure,
 	#classVars : [
-		'OFFSET_NESTEDPOINTER',
-		'OFFSET_ONE',
-		'OFFSET_POINTER',
-		'OFFSET_TWO'
+		#'OFFSET_NESTEDPOINTER',
+		#'OFFSET_ONE',
+		#'OFFSET_POINTER',
+		#'OFFSET_TWO'
 	],
 	#category : #'UnifiedFFI-Tests-Test-Data'
 }

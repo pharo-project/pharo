@@ -5,8 +5,8 @@ Class {
 	#name : #DuplicatedVariableError,
 	#superclass : #Error,
 	#instVars : [
-		'superclass',
-		'variable'
+		#superclass,
+		#variable
 	],
 	#category : #'Kernel-Exceptions'
 }

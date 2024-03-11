@@ -2,9 +2,9 @@ Class {
 	#name : #MetacelloProjectSpecForLoad,
 	#superclass : #Object,
 	#instVars : [
-		'projectSpec',
-		'useDetermineVersionForLoad',
-		'overrideProjectSpec'
+		#projectSpec,
+		#useDetermineVersionForLoad,
+		#overrideProjectSpec
 	],
 	#category : #'Metacello-Core-Scripts'
 }

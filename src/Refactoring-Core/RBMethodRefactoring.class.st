@@ -7,7 +7,7 @@ Class {
 	#name : #RBMethodRefactoring,
 	#superclass : #RBRefactoring,
 	#instVars : [
-		'class'
+		#class
 	],
 	#category : #'Refactoring-Core-Refactorings'
 }

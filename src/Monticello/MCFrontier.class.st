@@ -5,8 +5,8 @@ Class {
 	#name : #MCFrontier,
 	#superclass : #Object,
 	#instVars : [
-		'frontier',
-		'bag'
+		#frontier,
+		#bag
 	],
 	#category : #'Monticello-Versioning'
 }

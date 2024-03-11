@@ -6,7 +6,7 @@ Class {
 	#name : #FFILibrary,
 	#superclass : #Object,
 	#classInstVars : [
-		'uniqueInstance'
+		#uniqueInstance
 	],
 	#category : #'UnifiedFFI-Libraries'
 }

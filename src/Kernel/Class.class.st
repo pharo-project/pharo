@@ -13,12 +13,12 @@ Class {
 	#name : #Class,
 	#superclass : #ClassDescription,
 	#instVars : [
-		'subclasses',
-		'name',
-		'classPool',
-		'sharedPools',
-		'environment',
-		'category'
+		#subclasses,
+		#name,
+		#classPool,
+		#sharedPools,
+		#environment,
+		#category
 	],
 	#category : #'Kernel-Classes'
 }
@@ -282,9 +282,9 @@ Class >> category [
 
 	| result |
 	self basicCategory ifNotNil: [ :symbol |
-		((self environment organization listAtCategoryNamed: symbol) includes: self name)
+		((self environment organization listAtCategoryNamed: symbol) includes: self name asSymbol)
 			ifTrue: [ ^symbol ] ].
-	result := (self environment organization categoryOfElement: self name)
+	result := (self environment organization categoryOfElement: self name asSymbol)
 		ifNil: [ #Unclassified ]
 		ifNotNil: [:value | value].
 	self basicCategory: result.
@@ -781,7 +781,7 @@ Class >> obsolete [
 	"Change the receiver and all of its subclasses to an obsolete class."
 	self == Object
 		ifTrue: [^self error: 'Object is NOT obsolete'].
-	self setName: 'AnObsolete' , self name.
+	self setName: #'AnObsolete' , self name.
 	Object class instSize + 1 to: self classSide instSize do:
 		[:i | self instVarAt: i put: nil]. "Store nil over class instVars."
 	self classPool: nil.
@@ -970,7 +970,7 @@ from Undeclared. Check them after this change.']
 { #category : #private }
 Class >> setName: aSymbol [
 
-	name := aSymbol
+	name := aSymbol asSymbol
 ]
 
 { #category : #'pool variables' }

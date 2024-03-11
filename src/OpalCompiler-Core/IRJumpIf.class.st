@@ -5,8 +5,8 @@ Class {
 	#name : #IRJumpIf,
 	#superclass : #IRJump,
 	#instVars : [
-		'boolean',
-		'otherwise'
+		#boolean,
+		#otherwise
 	],
 	#category : #'OpalCompiler-Core-IR-Nodes'
 }

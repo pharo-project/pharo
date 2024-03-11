@@ -5,8 +5,8 @@ Class {
 	#name : #FLPair,
 	#superclass : #Object,
 	#instVars : [
-		'left',
-		'right'
+		#left,
+		#right
 	],
 	#category : #'Fuel-Tests-Core-Support-Mocks'
 }

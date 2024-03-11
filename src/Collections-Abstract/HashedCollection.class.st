@@ -21,8 +21,8 @@ Class {
 	#name : #HashedCollection,
 	#superclass : #Collection,
 	#instVars : [
-		'tally',
-		'array'
+		#tally,
+		#array
 	],
 	#category : #'Collections-Abstract-Base'
 }

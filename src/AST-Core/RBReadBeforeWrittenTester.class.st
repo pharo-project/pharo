@@ -12,9 +12,9 @@ Class {
 	#name : #RBReadBeforeWrittenTester,
 	#superclass : #RBProgramNodeVisitor,
 	#instVars : [
-		'read',
-		'checkNewTemps',
-		'scopeStack'
+		#read,
+		#checkNewTemps,
+		#scopeStack
 	],
 	#category : #'AST-Core-Visitors'
 }

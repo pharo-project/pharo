@@ -12,9 +12,9 @@ Class {
 	#name : #RBAssignmentNode,
 	#superclass : #RBValueNode,
 	#instVars : [
-		'variable',
-		'assignment',
-		'value'
+		#variable,
+		#assignment,
+		#value
 	],
 	#category : #'AST-Core-Nodes'
 }

@@ -5,8 +5,8 @@ Class {
 	#name : #OCSemanticError,
 	#superclass : #Error,
 	#instVars : [
-		'compilationContext',
-		'node'
+		#compilationContext,
+		#node
 	],
 	#category : #'OpalCompiler-Core-Exception'
 }

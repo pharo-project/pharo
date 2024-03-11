@@ -10,7 +10,7 @@ Class {
 	#name : #RBSearchRule,
 	#superclass : #RBParseTreeRule,
 	#instVars : [
-		'answerBlock'
+		#answerBlock
 	],
 	#category : #'AST-Core-Matching'
 }

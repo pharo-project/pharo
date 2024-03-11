@@ -11,7 +11,7 @@ Class {
 	#name : #NotFound,
 	#superclass : #Error,
 	#instVars : [
-		'object'
+		#object
 	],
 	#category : #'Collections-Abstract-Errors'
 }

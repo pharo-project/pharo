@@ -5,7 +5,7 @@ Class {
 	#name : #MCPatcher,
 	#superclass : #Object,
 	#instVars : [
-		'definitions'
+		#definitions
 	],
 	#category : #'Monticello-Patching'
 }

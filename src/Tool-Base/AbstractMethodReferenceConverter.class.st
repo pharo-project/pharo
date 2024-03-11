@@ -5,7 +5,7 @@ Class {
 	#name : #AbstractMethodReferenceConverter,
 	#superclass : #AbstractMethodConverter,
 	#instVars : [
-		'referencesList'
+		#referencesList
 	],
 	#category : #'Tool-Base-Converter'
 }

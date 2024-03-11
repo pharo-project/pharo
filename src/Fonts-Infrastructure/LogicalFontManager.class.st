@@ -12,13 +12,13 @@ Class {
 	#name : #LogicalFontManager,
 	#superclass : #Object,
 	#instVars : [
-		'fontProviders'
+		#fontProviders
 	],
 	#pools : [
-		'TextConstants'
+		#TextConstants
 	],
 	#classInstVars : [
-		'current'
+		#current
 	],
 	#category : #'Fonts-Infrastructure-Logical'
 }

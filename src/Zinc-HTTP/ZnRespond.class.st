@@ -9,7 +9,7 @@ Class {
 	#name : #ZnRespond,
 	#superclass : #Notification,
 	#instVars : [
-		'response'
+		#response
 	],
 	#category : #'Zinc-HTTP-Exceptions'
 }

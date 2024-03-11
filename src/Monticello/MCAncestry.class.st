@@ -5,8 +5,8 @@ Class {
 	#name : #MCAncestry,
 	#superclass : #Object,
 	#instVars : [
-		'ancestors',
-		'stepChildren'
+		#ancestors,
+		#stepChildren
 	],
 	#category : #'Monticello-Versioning'
 }

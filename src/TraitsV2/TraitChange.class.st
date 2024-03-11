@@ -19,9 +19,9 @@ Class {
 	#name : #TraitChange,
 	#superclass : #Object,
 	#instVars : [
-		'addedSelectors',
-		'removedSelectors',
-		'updatedSelectors'
+		#addedSelectors,
+		#removedSelectors,
+		#updatedSelectors
 	],
 	#category : #'TraitsV2-Changes'
 }

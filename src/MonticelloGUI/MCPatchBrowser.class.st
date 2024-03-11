@@ -5,7 +5,7 @@ Class {
 	#name : #MCPatchBrowser,
 	#superclass : #MCCodeTool,
 	#instVars : [
-		'selection'
+		#selection
 	],
 	#category : #'MonticelloGUI-Tools'
 }

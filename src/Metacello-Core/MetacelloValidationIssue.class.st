@@ -2,10 +2,10 @@ Class {
 	#name : #MetacelloValidationIssue,
 	#superclass : #Object,
 	#instVars : [
-		'configurationClass',
-		'explanation',
-		'reasonCode',
-		'callSite'
+		#configurationClass,
+		#explanation,
+		#reasonCode,
+		#callSite
 	],
 	#category : #'Metacello-Core-Validation'
 }

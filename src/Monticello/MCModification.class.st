@@ -5,8 +5,8 @@ Class {
 	#name : #MCModification,
 	#superclass : #MCPatchOperation,
 	#instVars : [
-		'obsoletion',
-		'modification'
+		#obsoletion,
+		#modification
 	],
 	#category : #'Monticello-Patching'
 }

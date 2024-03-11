@@ -21,17 +21,17 @@ Class {
 	#name : #RBMethodNode,
 	#superclass : #RBProgramNode,
 	#instVars : [
-		'scope',
-		'selector',
-		'keywordsPositions',
-		'body',
-		'source',
-		'arguments',
-		'pragmas',
-		'replacements',
-		'nodeReplacements',
-		'compilationContext',
-		'bcToASTCache'
+		#scope,
+		#selector,
+		#keywordsPositions,
+		#body,
+		#source,
+		#arguments,
+		#pragmas,
+		#replacements,
+		#nodeReplacements,
+		#compilationContext,
+		#bcToASTCache
 	],
 	#category : #'AST-Core-Nodes'
 }
@@ -298,8 +298,8 @@ RBMethodNode >> decompileString [
 
 { #category : #testing }
 RBMethodNode >> defines: aName [
-	^ (arguments anySatisfy: [ :each | each name = aName ])
-		or: [ self pragmas anySatisfy: [ :pragma | pragma defines: aName ] ]
+	^ (arguments anySatisfy: [ :each | each name = aName asSymbol ])
+		or: [ self pragmas anySatisfy: [ :pragma | pragma defines: aName asSymbol ] ]
 ]
 
 { #category : #comparing }
@@ -464,7 +464,7 @@ RBMethodNode >> match: aNode inContext: aDictionary [
 { #category : #matching }
 RBMethodNode >> matchPragmas: matchNodes against: pragmaNodes inContext: aDictionary [
 	matchNodes isEmpty ifTrue: [
-		aDictionary at: '-pragmas-' put: pragmaNodes.
+		aDictionary at: #'-pragmas-' put: pragmaNodes.
 		^ true ].
 	^ matchNodes allSatisfy: [ :matchNode |
 		pragmaNodes anySatisfy: [ :pragmaNode |

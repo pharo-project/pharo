@@ -2,8 +2,8 @@ Class {
 	#name : #EpHasImpactFilterTest,
 	#superclass : #TestCase,
 	#instVars : [
-		'classFactory',
-		'impactFilter'
+		#classFactory,
+		#impactFilter
 	],
 	#category : #'EpiceaBrowsers-Tests-Filters'
 }

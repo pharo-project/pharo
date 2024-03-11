@@ -5,8 +5,8 @@ Class {
 	#name : #MCMcdReader,
 	#superclass : #MCMczReader,
 	#instVars : [
-		'baseInfo',
-		'patch'
+		#baseInfo,
+		#patch
 	],
 	#category : #'Monticello-Storing'
 }

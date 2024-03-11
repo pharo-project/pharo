@@ -12,11 +12,11 @@ Class {
 	#name : #FFICallback,
 	#superclass : #Object,
 	#instVars : [
-		'backendCallback',
-		'functionSpec',
-		'block',
-		'calloutAPIClass',
-		'library'
+		#backendCallback,
+		#functionSpec,
+		#block,
+		#calloutAPIClass,
+		#library
 	],
 	#category : #'UnifiedFFI-Callbacks'
 }

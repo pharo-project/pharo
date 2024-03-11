@@ -9,7 +9,7 @@ Class {
 	#name : #ZnByteArrayEntity,
 	#superclass : #ZnEntity,
 	#instVars : [
-		'bytes'
+		#bytes
 	],
 	#category : #'Zinc-HTTP-Core'
 }

@@ -103,7 +103,7 @@ DateAndTimeUnixEpochTest >> testDayOfMonth [
 DateAndTimeUnixEpochTest >> testDayOfWeek [
 	self assert: aDateAndTime dayOfWeek equals: 5.
 	self assert: aDateAndTime dayOfWeekAbbreviation equals: 'Thu'.
-	self assert: aDateAndTime dayOfWeekName equals: 'Thursday'
+	self assert: aDateAndTime dayOfWeekName equals: #'Thursday'
 ]
 
 { #category : #tests }
@@ -236,8 +236,8 @@ DateAndTimeUnixEpochTest >> testMinutes [
 { #category : #tests }
 DateAndTimeUnixEpochTest >> testMonth [
 	self assert: aDateAndTime month equals: 1.
-	self assert: aDateAndTime monthAbbreviation equals: 'Jan'.
-	self assert: aDateAndTime monthName equals: 'January'.
+	self assert: aDateAndTime monthAbbreviation equals: #'Jan'.
+	self assert: aDateAndTime monthName equals: #'January'.
 	self assert: aDateAndTime monthIndex equals: 1
 ]
 

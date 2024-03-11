@@ -7,7 +7,7 @@ Class {
 	#name : #ZnUnknownHttpStatusCode,
 	#superclass : #ZnParseError,
 	#instVars : [
-		'code'
+		#code
 	],
 	#category : #'Zinc-HTTP-Exceptions'
 }

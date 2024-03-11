@@ -12,7 +12,7 @@ Class {
 	#name : #Metaclass,
 	#superclass : #ClassDescription,
 	#instVars : [
-		'thisClass'
+		#thisClass
 	],
 	#category : #'Kernel-Classes'
 }
@@ -227,7 +227,7 @@ Metaclass >> name [
 	"Answer a String that is the name of the receiver, either 'Metaclass' or
 	the name of the receiver's class followed by ' class'."
 
-	^ thisClass ifNil: [ 'a Metaclass' ] ifNotNil: [ thisClass name asString , ' class' ]
+	^ thisClass ifNil: [ #'a Metaclass' ] ifNotNil: [ thisClass name, ' class' ]
 ]
 
 { #category : #'instance creation' }

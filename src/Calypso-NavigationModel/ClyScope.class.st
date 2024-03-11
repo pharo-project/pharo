@@ -76,9 +76,9 @@ Class {
 	#name : #ClyScope,
 	#superclass : #Object,
 	#instVars : [
-		'environment',
-		'basisObjects',
-		'name'
+		#environment,
+		#basisObjects,
+		#name
 	],
 	#category : #'Calypso-NavigationModel-Model'
 }

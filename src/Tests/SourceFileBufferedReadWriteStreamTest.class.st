@@ -2,7 +2,7 @@ Class {
 	#name : #SourceFileBufferedReadWriteStreamTest,
 	#superclass : #TestCase,
 	#instVars : [
-		'classFactory'
+		#classFactory
 	],
 	#category : #'Tests-Streams'
 }

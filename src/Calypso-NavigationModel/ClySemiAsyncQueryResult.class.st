@@ -16,7 +16,7 @@ Class {
 	#name : #ClySemiAsyncQueryResult,
 	#superclass : #ClyAsyncQueryResult,
 	#instVars : [
-		'asyncModeIsActive'
+		#asyncModeIsActive
 	],
 	#category : #'Calypso-NavigationModel-Result'
 }

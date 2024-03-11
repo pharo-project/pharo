@@ -5,11 +5,11 @@ Class {
 	#name : #ZnConnectionEstablishedEvent,
 	#superclass : #ZnClientLogEvent,
 	#instVars : [
-		'hostname',
-		'port',
-		'address',
-		'duration',
-		'proxy'
+		#hostname,
+		#port,
+		#address,
+		#duration,
+		#proxy
 	],
 	#category : #'Zinc-HTTP-Logging'
 }

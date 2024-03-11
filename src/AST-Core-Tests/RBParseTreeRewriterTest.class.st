@@ -5,7 +5,7 @@ Class {
 	#name : #RBParseTreeRewriterTest,
 	#superclass : #TestCase,
 	#instVars : [
-		'rewriter'
+		#rewriter
 	],
 	#category : #'AST-Core-Tests-Matching'
 }

@@ -12,7 +12,7 @@ Class {
 	#name : #ClyIconProperty,
 	#superclass : #ClyProperty,
 	#instVars : [
-		'iconName'
+		#iconName
 	],
 	#category : #'Calypso-NavigationModel-Property'
 }

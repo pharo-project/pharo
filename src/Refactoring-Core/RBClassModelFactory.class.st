@@ -7,13 +7,13 @@ Class {
 	#name : #RBClassModelFactory,
 	#superclass : #Object,
 	#classVars : [
-		'RBclass',
-		'RBmetaclass',
-		'RBmethod',
-		'RBnamespace',
-		'RBpackage',
-		'RBtrait',
-		'RBtraitMetaclass'
+		#RBclass,
+		#RBmetaclass,
+		#RBmethod,
+		#RBnamespace,
+		#RBpackage,
+		#RBtrait,
+		#RBtraitMetaclass
 	],
 	#category : #'Refactoring-Core-Model'
 }

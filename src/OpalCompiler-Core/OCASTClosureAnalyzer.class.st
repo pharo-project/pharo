@@ -5,7 +5,7 @@ Class {
 	#name : #OCASTClosureAnalyzer,
 	#superclass : #RBProgramNodeVisitor,
 	#instVars : [
-		'scope'
+		#scope
 	],
 	#category : #'OpalCompiler-Core-Semantics'
 }

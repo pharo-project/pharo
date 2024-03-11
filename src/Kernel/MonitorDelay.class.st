@@ -5,8 +5,8 @@ Class {
 	#name : #MonitorDelay,
 	#superclass : #Delay,
 	#instVars : [
-		'monitor',
-		'queue'
+		#monitor,
+		#queue
 	],
 	#category : #'Kernel-Delays'
 }

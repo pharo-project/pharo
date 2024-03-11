@@ -10,7 +10,7 @@ Class {
 	#name : #RBPackageEnvironment,
 	#superclass : #RBBrowserEnvironmentWrapper,
 	#instVars : [
-		'packages'
+		#packages
 	],
 	#category : #'Refactoring-Environment'
 }

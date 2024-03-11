@@ -2,8 +2,8 @@ Class {
 	#name : #MetacelloProjectRegistry,
 	#superclass : #Object,
 	#instVars : [
-		'baselineRegistry',
-		'configurationRegistry'
+		#baselineRegistry,
+		#configurationRegistry
 	],
 	#category : #'Metacello-Core-Scripts'
 }

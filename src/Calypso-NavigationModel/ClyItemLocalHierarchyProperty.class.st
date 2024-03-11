@@ -20,7 +20,7 @@ Class {
 	#name : #ClyItemLocalHierarchyProperty,
 	#superclass : #ClyProperty,
 	#instVars : [
-		'subtreeSize'
+		#subtreeSize
 	],
 	#category : #'Calypso-NavigationModel-Property'
 }

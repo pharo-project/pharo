@@ -10,7 +10,7 @@ Class {
 	#name : #RBPatternPragmaNode,
 	#superclass : #RBPragmaNode,
 	#instVars : [
-		'isList'
+		#isList
 	],
 	#category : #'AST-Core-Pattern'
 }

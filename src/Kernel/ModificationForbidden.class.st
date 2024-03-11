@@ -12,10 +12,10 @@ Class {
 	#name : #ModificationForbidden,
 	#superclass : #Error,
 	#instVars : [
-		'object',
-		'fieldIndex',
-		'newValue',
-		'retrySelector'
+		#object,
+		#fieldIndex,
+		#newValue,
+		#retrySelector
 	],
 	#category : #'Kernel-Exceptions'
 }

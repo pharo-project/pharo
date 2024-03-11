@@ -5,7 +5,7 @@ Class {
 	#name : #FLBasicSerializationTest,
 	#superclass : #FLSerializationTest,
 	#instVars : [
-		'currentTimeZone'
+		#currentTimeZone
 	],
 	#category : #'Fuel-Tests-Core-Base'
 }
@@ -824,7 +824,7 @@ FLBasicSerializationTest >> testWideString [
 { #category : #'tests-strings' }
 FLBasicSerializationTest >> testWideStringClassName [
 	| class className |	
-	className := 'Foox' asWideString
+	className := #'Foox' asWideString
 		at: 4 put: (Character value: 265);
 		yourself.
 	class := self classFactory silentlyNewClass
@@ -844,8 +844,8 @@ FLBasicSerializationTest >> testWideStringGlobal [
 	| global globalValue |
 	global := 'Foox' asWideString
 		at: 4 put: (Character value: 265);
-		yourself.
-	globalValue := global , 'value'.
+		asSymbol.
+	globalValue := global asSymbol , 'value'.
 	self environmentOfTest
 		at: global
 		put: globalValue.

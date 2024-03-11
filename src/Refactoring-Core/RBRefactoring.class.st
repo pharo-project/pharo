@@ -30,11 +30,11 @@ Class {
 	#traits : 'RBTRefactoringBuilder',
 	#classTraits : 'RBTRefactoringBuilder classTrait',
 	#instVars : [
-		'model',
-		'options'
+		#model,
+		#options
 	],
 	#classVars : [
-		'RefactoringOptions'
+		#RefactoringOptions
 	],
 	#category : #'Refactoring-Core-Refactorings'
 }

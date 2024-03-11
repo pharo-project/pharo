@@ -16,17 +16,17 @@ Class {
 	#name : #MCMethodDefinition,
 	#superclass : #MCDefinition,
 	#instVars : [
-		'classIsMeta',
-		'source',
-		'category',
-		'selector',
-		'className',
-		'timeStamp',
-		'sortKey'
+		#classIsMeta,
+		#source,
+		#category,
+		#selector,
+		#className,
+		#timeStamp,
+		#sortKey
 	],
 	#classVars : [
-		'Definitions',
-		'InitializersEnabled'
+		#Definitions,
+		#InitializersEnabled
 	],
 	#category : #'Monticello-Modeling'
 }

@@ -19,7 +19,7 @@ Class {
 	#name : #ClyBrowserToolbarItemMorph,
 	#superclass : #Morph,
 	#instVars : [
-		'activator'
+		#activator
 	],
 	#category : #'Calypso-Browser-Toolbar'
 }

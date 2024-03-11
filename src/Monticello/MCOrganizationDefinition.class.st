@@ -5,7 +5,7 @@ Class {
 	#name : #MCOrganizationDefinition,
 	#superclass : #MCDefinition,
 	#instVars : [
-		'categories'
+		#categories
 	],
 	#category : #'Monticello-Modeling'
 }

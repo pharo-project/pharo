@@ -2,8 +2,8 @@ Class {
 	#name : #TraitsTestCase,
 	#superclass : #AbstractEnvironmentTestCase,
 	#instVars : [
-		'createdClassesAndTraits',
-		'oldAnnouncer'
+		#createdClassesAndTraits,
+		#oldAnnouncer
 	],
 	#category : #'Tests-Traits'
 }

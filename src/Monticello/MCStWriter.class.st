@@ -14,8 +14,8 @@ Class {
 	#name : #MCStWriter,
 	#superclass : #MCWriter,
 	#instVars : [
-		'initializers',
-		'writeInitializers'
+		#initializers,
+		#writeInitializers
 	],
 	#category : #'Monticello-Storing'
 }

@@ -10,7 +10,7 @@ Class {
 	#name : #ClyTextWrapModeSwitchMorph,
 	#superclass : #ClyTextMorphToolMorph,
 	#instVars : [
-		'wrapModeLabel'
+		#wrapModeLabel
 	],
 	#category : #'Calypso-Browser-TextEditors'
 }

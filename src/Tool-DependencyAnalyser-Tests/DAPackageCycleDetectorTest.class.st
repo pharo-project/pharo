@@ -2,15 +2,15 @@ Class {
 	#name : #DAPackageCycleDetectorTest,
 	#superclass : #TestCase,
 	#instVars : [
-		'packageA',
-		'packageB',
-		'packageC',
-		'packageD',
-		'packageE',
-		'aPackageCycleDetection',
-		'cycleA',
-		'cycleB',
-		'cycleC'
+		#packageA,
+		#packageB,
+		#packageC,
+		#packageD,
+		#packageE,
+		#aPackageCycleDetection,
+		#cycleA,
+		#cycleB,
+		#cycleC
 	],
 	#category : #'Tool-DependencyAnalyser-Tests-Packages'
 }

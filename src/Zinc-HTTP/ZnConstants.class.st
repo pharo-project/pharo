@@ -7,7 +7,7 @@ Class {
 	#name : #ZnConstants,
 	#superclass : #Object,
 	#classVars : [
-		'HTTPStatusCodes'
+		#HTTPStatusCodes
 	],
 	#category : #'Zinc-HTTP-Support'
 }

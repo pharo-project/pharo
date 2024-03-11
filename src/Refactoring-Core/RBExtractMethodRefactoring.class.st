@@ -10,14 +10,14 @@ Class {
 	#name : #RBExtractMethodRefactoring,
 	#superclass : #RBMethodRefactoring,
 	#instVars : [
-		'selector',
-		'extractionInterval',
-		'extractedParseTree',
-		'modifiedParseTree',
-		'parameters',
-		'needsReturn',
-		'parameterMap',
-		'newExtractedSelector'
+		#selector,
+		#extractionInterval,
+		#extractedParseTree,
+		#modifiedParseTree,
+		#parameters,
+		#needsReturn,
+		#parameterMap,
+		#newExtractedSelector
 	],
 	#category : #'Refactoring-Core-Refactorings'
 }

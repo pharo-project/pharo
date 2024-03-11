@@ -42,13 +42,13 @@ Class {
 	#name : #ClyNotebookManager,
 	#superclass : #Object,
 	#instVars : [
-		'browser',
-		'tabMorph',
-		'tools',
-		'updatingStarted',
-		'selectionPriorities',
-		'desiredSelection',
-		'shouldSkipCurrentDesiredSelection'
+		#browser,
+		#tabMorph,
+		#tools,
+		#updatingStarted,
+		#selectionPriorities,
+		#desiredSelection,
+		#shouldSkipCurrentDesiredSelection
 	],
 	#category : #'Calypso-Browser-Tabs'
 }

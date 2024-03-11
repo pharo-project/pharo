@@ -33,9 +33,9 @@ Class {
 	#name : #RBComment,
 	#superclass : #RBProgramNode,
 	#instVars : [
-		'contents',
-		'start',
-		'stop'
+		#contents,
+		#start,
+		#stop
 	],
 	#category : #'AST-Core-Nodes'
 }

@@ -65,11 +65,11 @@ Class {
 	#name : #RBParseTreeSearcher,
 	#superclass : #RBProgramNodeVisitor,
 	#instVars : [
-		'searches',
-		'answer',
-		'argumentSearches',
-		'context',
-		'messages'
+		#searches,
+		#answer,
+		#argumentSearches,
+		#context,
+		#messages
 	],
 	#category : #'AST-Core-Matching'
 }
@@ -367,7 +367,7 @@ RBParseTreeSearcher >> recusivelySearchInContext [
 { #category : #'accessing - context' }
 RBParseTreeSearcher >> variableNamed: aString [
 
-	^ (context associations detect: [ :assoc | assoc key name = aString  ]) value
+	^ (context associations detect: [ :assoc | assoc key name asString = aString  ]) value
 ]
 
 { #category : #visiting }

@@ -5,8 +5,8 @@ Class {
 	#name : #FFICalloutTest,
 	#superclass : #TestCase,
 	#classVars : [
-		'CLASSVAR',
-		'TYPEVAR'
+		#CLASSVAR,
+		#TYPEVAR
 	],
 	#category : #'UnifiedFFI-Tests-Tests'
 }

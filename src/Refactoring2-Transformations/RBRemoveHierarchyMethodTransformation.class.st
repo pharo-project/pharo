@@ -2,7 +2,7 @@ Class {
 	#name : #RBRemoveHierarchyMethodTransformation,
 	#superclass : #RBCompositeMethodTransformation,
 	#instVars : [
-		'selectors'
+		#selectors
 	],
 	#category : #'Refactoring2-Transformations-Model-Unused'
 }

@@ -5,7 +5,7 @@ Class {
 	#name : #ZnServerErrorEvent,
 	#superclass : #ZnServerLogEvent,
 	#instVars : [
-		'exception'
+		#exception
 	],
 	#category : #'Zinc-HTTP-Logging'
 }

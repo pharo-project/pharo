@@ -14,7 +14,7 @@ Class {
 	#name : #FloatPrintPolicy,
 	#superclass : #DynamicVariable,
 	#instVars : [
-		'default'
+		#default
 	],
 	#category : #'Kernel-Numbers'
 }

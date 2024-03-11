@@ -17,7 +17,7 @@ Class {
 	#name : #ClyTextMorphToolMorph,
 	#superclass : #Morph,
 	#instVars : [
-		'textMorph'
+		#textMorph
 	],
 	#category : #'Calypso-Browser-TextEditors'
 }

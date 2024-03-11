@@ -16,10 +16,10 @@ Class {
 	#name : #Margin,
 	#superclass : #Object,
 	#instVars : [
-		'right',
-		'bottom',
-		'left',
-		'top'
+		#right,
+		#bottom,
+		#left,
+		#top
 	],
 	#category : #'Kernel-BasicObjects'
 }

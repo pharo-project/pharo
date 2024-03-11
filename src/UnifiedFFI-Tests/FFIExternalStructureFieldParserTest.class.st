@@ -5,7 +5,7 @@ Class {
 	#name : #FFIExternalStructureFieldParserTest,
 	#superclass : #TestCase,
 	#instVars : [
-		'architecture'
+		#architecture
 	],
 	#category : #'UnifiedFFI-Tests-Tests'
 }

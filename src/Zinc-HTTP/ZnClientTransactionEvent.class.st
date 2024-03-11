@@ -13,10 +13,10 @@ Class {
 	#name : #ZnClientTransactionEvent,
 	#superclass : #ZnClientLogEvent,
 	#instVars : [
-		'request',
-		'response',
-		'requestDuration',
-		'responseDuration'
+		#request,
+		#response,
+		#requestDuration,
+		#responseDuration
 	],
 	#category : #'Zinc-HTTP-Logging'
 }

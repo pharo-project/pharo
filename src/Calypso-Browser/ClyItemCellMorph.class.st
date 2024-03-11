@@ -12,7 +12,7 @@ Class {
 	#name : #ClyItemCellMorph,
 	#superclass : #FTCellMorph,
 	#instVars : [
-		'label'
+		#label
 	],
 	#category : #'Calypso-Browser-Table'
 }

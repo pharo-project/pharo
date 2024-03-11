@@ -5,9 +5,9 @@ Class {
 	#name : #MCMockDependentItem,
 	#superclass : #MCMock,
 	#instVars : [
-		'name',
-		'provides',
-		'requires'
+		#name,
+		#provides,
+		#requires
 	],
 	#category : #'Monticello-Mocks'
 }

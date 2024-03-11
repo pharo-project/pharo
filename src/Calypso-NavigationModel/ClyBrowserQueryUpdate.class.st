@@ -17,9 +17,9 @@ Class {
 	#name : #ClyBrowserQueryUpdate,
 	#superclass : #Object,
 	#instVars : [
-		'metadata',
-		'itemCache',
-		'totalItemCount'
+		#metadata,
+		#itemCache,
+		#totalItemCount
 	],
 	#category : #'Calypso-NavigationModel-Model'
 }

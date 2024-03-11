@@ -5,9 +5,9 @@ Class {
 	#name : #RBMatchVisitor,
 	#superclass : #RBProgramNodeVisitor,
 	#instVars : [
-		'arguments',
-		'temporaries',
-		'difference'
+		#arguments,
+		#temporaries,
+		#difference
 	],
 	#category : #'Refactoring-Core-Base'
 }

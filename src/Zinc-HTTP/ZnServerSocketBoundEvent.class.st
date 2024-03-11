@@ -5,8 +5,8 @@ Class {
 	#name : #ZnServerSocketBoundEvent,
 	#superclass : #ZnServerLogEvent,
 	#instVars : [
-		'address',
-		'port'
+		#address,
+		#port
 	],
 	#category : #'Zinc-HTTP-Logging'
 }

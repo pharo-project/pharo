@@ -77,11 +77,11 @@ Class {
 	#name : #RGMethod,
 	#superclass : #RGElement,
 	#instVars : [
-		'sourceCode',
-		'package',
-		'author',
-		'time',
-		'tags'
+		#sourceCode,
+		#package,
+		#author,
+		#time,
+		#tags
 	],
 	#category : #'Ring-Core-Kernel'
 }

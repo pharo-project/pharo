@@ -9,8 +9,8 @@ Class {
 	#name : #ZnUnexpectedContentType,
 	#superclass : #Error,
 	#instVars : [
-		'expectedContentType',
-		'actualContentType'
+		#expectedContentType,
+		#actualContentType
 	],
 	#category : #'Zinc-HTTP-Exceptions'
 }

@@ -5,7 +5,7 @@ Class {
 	#name : #ZnConnectionAcceptedEvent,
 	#superclass : #ZnServerLogEvent,
 	#instVars : [
-		'address'
+		#address
 	],
 	#category : #'Zinc-HTTP-Logging'
 }

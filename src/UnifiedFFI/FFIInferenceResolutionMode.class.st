@@ -22,8 +22,8 @@ FFIInferenceResolutionMode >> isStrict [
 FFIInferenceResolutionMode >> resolveUndeclaredTypeForArgument: aFFIValueArgument withResolver: aResolver [
 
 	(aFFIValueArgument value isNil
-		or: [aFFIValueArgument value = 'nil'
-			or: [ aFFIValueArgument value = 'NULL' ]])
+		or: [(aFFIValueArgument value sameContents: 'nil')
+			or: [ aFFIValueArgument value sameContents: 'NULL' ]])
 				ifTrue: [ ^ (aResolver resolveType: #'void *') ].
 	(#(true false) includes: aFFIValueArgument value)
 		ifTrue: [ ^ aResolver resolveType: #bool ].

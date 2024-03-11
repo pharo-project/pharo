@@ -22,7 +22,7 @@ Class {
 	#name : #UnhandledError,
 	#superclass : #UnhandledException,
 	#instVars : [
-		'exception'
+		#exception
 	],
 	#category : #'Kernel-Exceptions'
 }

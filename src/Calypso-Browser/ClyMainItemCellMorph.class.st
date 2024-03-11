@@ -33,11 +33,11 @@ Class {
 	#name : #ClyMainItemCellMorph,
 	#superclass : #ClyItemCellMorph,
 	#instVars : [
-		'item',
-		'definitionMorph',
-		'extraToolMorphs',
-		'itemDepth',
-		'fullIndentation'
+		#item,
+		#definitionMorph,
+		#extraToolMorphs,
+		#itemDepth,
+		#fullIndentation
 	],
 	#category : #'Calypso-Browser-Table'
 }

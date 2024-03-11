@@ -5,7 +5,7 @@ Class {
 	#name : #MCFilteredVersionSorter,
 	#superclass : #MCVersionSorter,
 	#instVars : [
-		'target'
+		#target
 	],
 	#category : #'Monticello-Versioning'
 }

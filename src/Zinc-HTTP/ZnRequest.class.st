@@ -10,7 +10,7 @@ Class {
 	#name : #ZnRequest,
 	#superclass : #ZnMessage,
 	#instVars : [
-		'requestLine'
+		#requestLine
 	],
 	#category : #'Zinc-HTTP-Core'
 }

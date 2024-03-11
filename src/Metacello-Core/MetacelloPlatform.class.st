@@ -2,11 +2,11 @@ Class {
 	#name : #MetacelloPlatform,
 	#superclass : #Object,
 	#instVars : [
-		'bypassProgressBars',
-		'bypassGoferLoadUpdateCategories'
+		#bypassProgressBars,
+		#bypassGoferLoadUpdateCategories
 	],
 	#classVars : [
-		'Current'
+		#Current
 	],
 	#category : #'Metacello-Core-Model'
 }

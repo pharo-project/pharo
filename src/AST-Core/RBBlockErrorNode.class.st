@@ -10,7 +10,7 @@ Class {
 	#name : #RBBlockErrorNode,
 	#superclass : #RBEnglobingErrorNode,
 	#instVars : [
-		'arguments'
+		#arguments
 	],
 	#category : #'AST-Core-Nodes - ErrorNodes'
 }

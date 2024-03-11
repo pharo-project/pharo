@@ -5,9 +5,9 @@ Class {
 	#name : #RGComment,
 	#superclass : #RGElement,
 	#instVars : [
-		'content',
-		'author',
-		'time'
+		#content,
+		#author,
+		#time
 	],
 	#category : #'Ring-Core-Kernel'
 }

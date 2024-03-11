@@ -5,7 +5,7 @@ Class {
 	#name : #FFICalloutMethodBuilderTest,
 	#superclass : #TestCase,
 	#instVars : [
-		'architecture'
+		#architecture
 	],
 	#category : #'UnifiedFFI-Tests-Tests'
 }

@@ -16,7 +16,7 @@ Class {
 	#name : #OCVectorTempVariable,
 	#superclass : #TemporaryVariable,
 	#instVars : [
-		'vectorName'
+		#vectorName
 	],
 	#category : #'OpalCompiler-Core-Semantics'
 }

@@ -5,7 +5,7 @@ Class {
 	#name : #ReTransformationCritique,
 	#superclass : #ReAbstractCritique,
 	#instVars : [
-		'newTree'
+		#newTree
 	],
 	#category : #'Renraku-Critiques'
 }

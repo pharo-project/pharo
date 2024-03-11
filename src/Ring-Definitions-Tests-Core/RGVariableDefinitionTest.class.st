@@ -10,11 +10,11 @@ Class {
 { #category : #testing }
 RGVariableDefinitionTest >> testClassInstanceVariable [
 	| instVar newClass metaClass |
-	instVar := RGClassInstanceVariableDefinition named: 'sizes'.
+	instVar := RGClassInstanceVariableDefinition named: #'sizes'.
 
 	self assert: instVar isClassInstanceVariable.
 	self assert: instVar isVariable.
-	self assert: instVar name equals: 'sizes'.
+	self assert: instVar name equals: #'sizes'.
 	self assert: instVar parent isNil.
 	self assert: instVar isMetaSide.
 
@@ -33,7 +33,7 @@ RGVariableDefinitionTest >> testClassVariable [
 
 	self assert: instVar isClassVariable.
 	self assert: instVar isVariable.
-	self assert: instVar name equals: 'DependentsFields'.
+	self assert: instVar name equals: #'DependentsFields'.
 	self assert: instVar parent isNil.
 	self assert: instVar isMetaSide not.
 

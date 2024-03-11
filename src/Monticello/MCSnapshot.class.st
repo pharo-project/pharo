@@ -7,8 +7,8 @@ Class {
 	#name : #MCSnapshot,
 	#superclass : #Object,
 	#instVars : [
-		'definitions',
-		'classDefinitionCache'
+		#definitions,
+		#classDefinitionCache
 	],
 	#category : #'Monticello-Base'
 }

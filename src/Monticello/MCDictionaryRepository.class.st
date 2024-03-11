@@ -5,8 +5,8 @@ Class {
 	#name : #MCDictionaryRepository,
 	#superclass : #MCRepository,
 	#instVars : [
-		'description',
-		'dict'
+		#description,
+		#dict
 	],
 	#category : #'Monticello-Repositories'
 }

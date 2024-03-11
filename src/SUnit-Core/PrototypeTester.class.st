@@ -6,7 +6,7 @@ Class {
 	#name : #PrototypeTester,
 	#superclass : #Object,
 	#instVars : [
-		'prototype'
+		#prototype
 	],
 	#category : #'SUnit-Core-Utilities'
 }

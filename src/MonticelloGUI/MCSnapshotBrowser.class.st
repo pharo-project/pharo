@@ -5,11 +5,11 @@ Class {
 	#name : #MCSnapshotBrowser,
 	#superclass : #MCCodeTool,
 	#instVars : [
-		'categorySelection',
-		'classSelection',
-		'protocolSelection',
-		'methodSelection',
-		'switch'
+		#categorySelection,
+		#classSelection,
+		#protocolSelection,
+		#methodSelection,
+		#switch
 	],
 	#category : #'MonticelloGUI-Tools'
 }
@@ -130,7 +130,7 @@ MCSnapshotBrowser >> extensionClassNames [
 
 { #category : #accessing }
 MCSnapshotBrowser >> extensionsCategory [
-	^ '*Extensions'
+	^ #'*Extensions'
 ]
 
 { #category : #accessing }

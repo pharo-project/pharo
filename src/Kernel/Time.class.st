@@ -8,11 +8,11 @@ Class {
 	#name : #Time,
 	#superclass : #Magnitude,
 	#instVars : [
-		'seconds',
-		'nanos'
+		#seconds,
+		#nanos
 	],
 	#pools : [
-		'ChronologyConstants'
+		#ChronologyConstants
 	],
 	#category : #'Kernel-Chronology'
 }

@@ -14,10 +14,10 @@ Class {
 	#name : #RBParseErrorNode,
 	#superclass : #RBValueNode,
 	#instVars : [
-		'errorMessage',
-		'value',
-		'start',
-		'stop'
+		#errorMessage,
+		#value,
+		#start,
+		#stop
 	],
 	#category : #'AST-Core-Nodes - ErrorNodes'
 }

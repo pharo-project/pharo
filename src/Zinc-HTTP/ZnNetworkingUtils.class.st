@@ -14,13 +14,13 @@ Class {
 	#name : #ZnNetworkingUtils,
 	#superclass : #Object,
 	#instVars : [
-		'socketStreamClass',
-		'secureSocketStreamClass',
-		'sslSessionClass'
+		#socketStreamClass,
+		#secureSocketStreamClass,
+		#sslSessionClass
 	],
 	#classVars : [
-		'Default',
-		'DefaultSocketStreamTimeout'
+		#Default,
+		#DefaultSocketStreamTimeout
 	],
 	#category : #'Zinc-HTTP-Support'
 }

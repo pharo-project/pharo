@@ -2,8 +2,8 @@ Class {
 	#name : #FLEncoderTest,
 	#superclass : #TestCase,
 	#instVars : [
-		'encoder',
-		'stream'
+		#encoder,
+		#stream
 	],
 	#category : #'Fuel-Tests-Core-Base'
 }

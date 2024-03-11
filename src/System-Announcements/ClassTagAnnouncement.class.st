@@ -5,8 +5,8 @@ Class {
 	#name : #ClassTagAnnouncement,
 	#superclass : #SystemAnnouncement,
 	#instVars : [
-		'package',
-		'tag'
+		#package,
+		#tag
 	],
 	#category : #'System-Announcements-System-Packages'
 }

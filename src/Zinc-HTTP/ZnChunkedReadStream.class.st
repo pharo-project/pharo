@@ -11,14 +11,14 @@ Class {
 	#name : #ZnChunkedReadStream,
 	#superclass : #Object,
 	#instVars : [
-		'stream',
-		'chunk',
-		'position',
-		'limit',
-		'atEnd',
-		'totalSize',
-		'chunkCount',
-		'extraHeaders'
+		#stream,
+		#chunk,
+		#position,
+		#limit,
+		#atEnd,
+		#totalSize,
+		#chunkCount,
+		#extraHeaders
 	],
 	#category : #'Zinc-HTTP-Streaming'
 }

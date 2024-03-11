@@ -5,7 +5,7 @@ Class {
 	#name : #VariableBreakpointMockSubclass,
 	#superclass : #VariableBreakpointMockClass,
 	#instVars : [
-		'v2'
+		#v2
 	],
 	#category : #'Reflectivity-Tests-Data'
 }

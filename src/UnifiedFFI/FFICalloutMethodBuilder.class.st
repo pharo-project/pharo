@@ -6,13 +6,13 @@ Class {
 	#name : #FFICalloutMethodBuilder,
 	#superclass : #Object,
 	#instVars : [
-		'calloutAPI',
-		'requestor',
-		'sender',
-		'signature',
-		'functionResolutionStrategies',
-		'library',
-		'fixedArgumentCount'
+		#calloutAPI,
+		#requestor,
+		#sender,
+		#signature,
+		#functionResolutionStrategies,
+		#library,
+		#fixedArgumentCount
 	],
 	#category : #'UnifiedFFI-Callouts'
 }

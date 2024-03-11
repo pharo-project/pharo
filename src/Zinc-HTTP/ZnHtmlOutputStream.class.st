@@ -31,7 +31,7 @@ Class {
 	#name : #ZnHtmlOutputStream,
 	#superclass : #Object,
 	#instVars : [
-		'stream'
+		#stream
 	],
 	#category : #'Zinc-HTTP-Streaming'
 }

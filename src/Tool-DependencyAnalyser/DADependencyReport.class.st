@@ -5,10 +5,10 @@ Class {
 	#name : #DADependencyReport,
 	#superclass : #Object,
 	#instVars : [
-		'dependencies',
-		'warnings',
-		'imageVersion',
-		'analysisRunString'
+		#dependencies,
+		#warnings,
+		#imageVersion,
+		#analysisRunString
 	],
 	#category : #'Tool-DependencyAnalyser-Report'
 }

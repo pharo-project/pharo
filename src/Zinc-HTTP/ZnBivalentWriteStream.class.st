@@ -11,8 +11,8 @@ Class {
 	#name : #ZnBivalentWriteStream,
 	#superclass : #Object,
 	#instVars : [
-		'stream',
-		'binary'
+		#stream,
+		#binary
 	],
 	#category : #'Zinc-HTTP-Streaming'
 }

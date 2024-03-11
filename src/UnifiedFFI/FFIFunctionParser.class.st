@@ -5,9 +5,9 @@ Class {
 	#name : #FFIFunctionParser,
 	#superclass : #Object,
 	#instVars : [
-		'requestor',
-		'stream',
-		'fnSpec'
+		#requestor,
+		#stream,
+		#fnSpec
 	],
 	#category : #'UnifiedFFI-Base'
 }
@@ -119,7 +119,7 @@ FFIFunctionParser >> parseArgument [
 			argName := argName.
 			indirectIndex := self parseInt ].
 	"for sole 'void' fake argument "
-	(typeAndPtrArity = #('void' 0) and: [ argName isNil ])
+	(typeAndPtrArity = #(#'void' 0) and: [ argName isNil ])
 		ifTrue: [ ^ nil ].
 	argument := self
 		argName: argName
@@ -238,7 +238,7 @@ FFIFunctionParser >> parseType [
 	typeName ifNil: [ ^ self error: 'type name expected' ].
 
 	"skip 'const' , which is often used but has no any use for us "
-	typeName = 'const'
+	typeName asSymbol = #'const'
 		ifTrue: [
 			typeName := stream next.
 			typeName ifNil: [ ^ self error: 'type name expected' ]

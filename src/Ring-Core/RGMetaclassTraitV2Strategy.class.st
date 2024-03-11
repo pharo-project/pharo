@@ -2,7 +2,7 @@ Class {
 	#name : #RGMetaclassTraitV2Strategy,
 	#superclass : #RGTraitV2DescriptionStrategy,
 	#instVars : [
-		'baseClass'
+		#baseClass
 	],
 	#category : #'Ring-Core-Kernel'
 }

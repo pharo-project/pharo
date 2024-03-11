@@ -2,9 +2,9 @@ Class {
 	#name : #RGTraitStrategy,
 	#superclass : #RGTraitDescriptionStrategy,
 	#instVars : [
-		'classTrait',
-		'comment',
-		'package'
+		#classTrait,
+		#comment,
+		#package
 	],
 	#category : #'Ring-Core-Kernel'
 }
