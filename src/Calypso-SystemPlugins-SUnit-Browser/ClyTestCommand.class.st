@@ -25,9 +25,9 @@ ClyTestCommand >> applyResultInContext: aToolContext [
 ]
 
 { #category : 'context menu support' }
-ClyTestCommand >> defaultMenuIcon [
+ClyTestCommand >> defaultMenuIconName [
 
-	^self testResult createIcon
+	^self testResult iconName
 ]
 
 { #category : 'execution' }

@@ -9,7 +9,7 @@ PluggableMenuItemSpec >> asMenuItemMorphFrom: parentMenu isLast: aBoolean [
 	"here checked can be nil, true, false"
 	checked ifNotNil: [ lbl := self hasCheckBox -> lbl ].
 	it contents: lbl.
-	it icon: self icon.
+	it iconFormSet: self iconFormSet.
 	it keyText: self keyText.
 	it isEnabled: self enabled.
 	it balloonText: self help.

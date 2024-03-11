@@ -12,7 +12,7 @@ Class {
 		'enabledBlock',
 		'label',
 		'help',
-		'icon',
+		'iconFormSet',
 		'selector',
 		'arguments',
 		'withSeparatorAfter',
@@ -132,13 +132,25 @@ PragmaMenuAndShortcutRegistrationItem >> help: aString [
 { #category : 'accessing' }
 PragmaMenuAndShortcutRegistrationItem >> icon [
 
-	^ icon
+	^ self iconFormSet ifNotNil: [ :formSet | formSet asForm ]
 ]
 
 { #category : 'menu protocol' }
-PragmaMenuAndShortcutRegistrationItem >> icon: anIcon [
+PragmaMenuAndShortcutRegistrationItem >> icon: aForm [
 
-	icon := anIcon
+	self iconFormSet: (aForm ifNotNil: [ FormSet form: aForm ])
+]
+
+{ #category : 'menu protocol' }
+PragmaMenuAndShortcutRegistrationItem >> iconFormSet [
+
+	^ iconFormSet
+]
+
+{ #category : 'menu protocol' }
+PragmaMenuAndShortcutRegistrationItem >> iconFormSet: aFormSet [
+
+	iconFormSet := aFormSet
 ]
 
 { #category : 'initialization' }

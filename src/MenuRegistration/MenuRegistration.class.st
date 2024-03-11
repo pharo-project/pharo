@@ -299,6 +299,12 @@ MenuRegistration >> icon: aForm [
 	self spec icon: aForm
 ]
 
+{ #category : 'spec accessing' }
+MenuRegistration >> iconFormSet: aFormSet [
+	"set the icon that is shown in the menu"
+	self spec iconFormSet: aFormSet
+]
+
 { #category : 'initialization' }
 MenuRegistration >> initialize [
 	super initialize.

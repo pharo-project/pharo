@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 set -x
-set -e
 
 if [ $# -lt 1 ]
   then

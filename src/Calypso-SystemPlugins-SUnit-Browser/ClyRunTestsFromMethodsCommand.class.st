@@ -24,15 +24,15 @@ ClyRunTestsFromMethodsCommand class >> contextClass [
 ]
 
 { #category : 'execution' }
-ClyRunTestsFromMethodsCommand >> defaultMenuIcon [
+ClyRunTestsFromMethodsCommand >> defaultMenuIconName [
 
 	| fullResult |
 	fullResult := self testResult.
 	runTestCases do: [ :each |
 		fullResult concreteResultOf: runTestCases first ifPresent: [:testResult |
-			^testResult createIcon ]].
+			^testResult iconName ]].
 
-	^fullResult createIcon
+	^fullResult iconName
 ]
 
 { #category : 'execution' }
