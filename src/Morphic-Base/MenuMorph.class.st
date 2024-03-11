@@ -1047,7 +1047,7 @@ MenuMorph >> maxItemsIconWidth [
 
 	^ self menuItems inject: 0 into: [ :maxWidth :menuItemMorph |
 		menuItemMorph hasIcon
-			ifTrue: [ maxWidth max: menuItemMorph iconForm width ]
+			ifTrue: [ maxWidth max: menuItemMorph toggledIconFormSet width ]
 			ifFalse: [ maxWidth ] ]
 ]
 

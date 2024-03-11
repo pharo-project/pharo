@@ -198,7 +198,7 @@ PragmaMenuBuilder >> interpretRegistration: aRegistration [
 			node
 				keyText: item keyText;
 				help: item help;
-				icon: item icon;
+				iconFormSet: item iconFormSet;
 				order: item order;
 				parent: item parent.
 			item enabled

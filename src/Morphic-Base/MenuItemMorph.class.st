@@ -10,7 +10,7 @@ Instance variables:
 	target 		<Object>		The target of the associated action.
 	selector 		<Symbol>	The associated action.
 	arguments 	<Array>		The arguments for the associated action.
-	icon		<Form | nil>	An optional icon form to be displayed to my left.
+	iconFormSet	<FormSet | nil>	An optional icon form set to be displayed to my left.
 
 
 "
@@ -24,7 +24,7 @@ Class {
 		'target',
 		'selector',
 		'arguments',
-		'icon',
+		'iconFormSet',
 		'keyText'
 	],
 	#classVars : [
@@ -244,11 +244,11 @@ MenuItemMorph >> doButtonAction [
 
 { #category : 'drawing' }
 MenuItemMorph >> drawIconOn: aCanvas [
-	| iconForm |
+	| toggledIconFormSet |
 	self hasIcon ifFalse: [ ^ self ].
 
-	iconForm := self iconForm.
-	aCanvas translucentImage: iconForm at: bounds left @ (self top + ((self height - iconForm height) // 2))
+	toggledIconFormSet := self toggledIconFormSet.
+	aCanvas translucentFormSet: toggledIconFormSet at: bounds left @ (self top + ((self height - toggledIconFormSet height) // 2))
 ]
 
 { #category : 'drawing' }
@@ -334,7 +334,7 @@ MenuItemMorph >> handlesMouseOverDragging: evt [
 { #category : 'accessing' }
 MenuItemMorph >> hasIcon [
 	"Answer whether the receiver has an icon."
-	^ icon isNotNil
+	^ iconFormSet isNotNil
 ]
 
 { #category : 'accessing' }
@@ -364,22 +364,26 @@ MenuItemMorph >> hasSubMenu: aMenuMorph [
 
 { #category : 'accessing' }
 MenuItemMorph >> icon [
-	"answer the receiver's icon"
-	^ icon
+
+	^ self iconFormSet ifNotNil: [ :formSet | formSet asForm ]
 ]
 
 { #category : 'accessing' }
 MenuItemMorph >> icon: aForm [
-	"change the the receiver's icon"
-	icon := aForm
+
+	self iconFormSet: (aForm ifNotNil: [ FormSet form: aForm ])
 ]
 
-{ #category : 'private' }
-MenuItemMorph >> iconForm [
-	"private - answer the form to be used as the icon"
-	^ isEnabled
-		ifTrue: [self icon]
-		ifFalse: [self icon asGrayScale]
+{ #category : 'accessing' }
+MenuItemMorph >> iconFormSet [
+	"answer the receiver's icon form set"
+	^ iconFormSet
+]
+
+{ #category : 'accessing' }
+MenuItemMorph >> iconFormSet: aFormSet [
+	"change the the receiver's icon form set"
+	iconFormSet := aFormSet
 ]
 
 { #category : 'initialization' }
@@ -485,9 +489,9 @@ MenuItemMorph >> leftArrow [
 MenuItemMorph >> menuStringBounds [
 	| stringBounds |
 	stringBounds := bounds.
-	self hasIcon ifTrue: [ | iconForm |
-		iconForm := self iconForm.
-		stringBounds := stringBounds left: stringBounds left + iconForm width + 2 ].
+	self hasIcon ifTrue: [ | toggledIconFormSet |
+		toggledIconFormSet := self toggledIconFormSet.
+		stringBounds := stringBounds left: stringBounds left + toggledIconFormSet width + 2 ].
 	self hasMarker ifTrue: [
 		stringBounds := stringBounds left: stringBounds left + self submorphBounds width + 8 ].
 	^ stringBounds top: (stringBounds top + stringBounds bottom - self fontToUse height) // 2
@@ -691,6 +695,18 @@ MenuItemMorph >> themeChanged [
 ]
 
 { #category : 'private' }
+MenuItemMorph >> toggledIconFormSet [
+	"private - answer the form set to be used as the icon"
+	| baseIconFormSet |
+	baseIconFormSet := self iconFormSet.
+	^ isEnabled
+		ifTrue: [ baseIconFormSet ]
+		ifFalse: [
+			FormSet extent: baseIconFormSet extent depth: 8
+				forms: (baseIconFormSet forms collect: [ :form | form asGrayScale ]) ]
+]
+
+{ #category : 'private' }
 MenuItemMorph >> upArrow [
 
 	^ UpArrow
@@ -715,7 +731,7 @@ MenuItemMorph >> veryDeepInner: deepCopier [
 	isEnabled := isEnabled veryDeepCopyWith: deepCopier.
 	subMenu := subMenu veryDeepCopyWith: deepCopier.
 	isSelected := isSelected veryDeepCopyWith: deepCopier.
-	icon := icon veryDeepCopyWith: deepCopier.
+	iconFormSet := iconFormSet veryDeepCopyWith: deepCopier.
 	"target := target.		Weakly copied"
 	"selector := selector.		a Symbol"
 	arguments := arguments

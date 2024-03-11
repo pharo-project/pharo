@@ -84,8 +84,8 @@ CmdCommand >> decorateToolbarItem: aBrowserToolbarItem [
 	self description ifNotNil: [ :d |
 		aBrowserToolbarItem setBalloonText: d ].
 
-	self defaultMenuIcon ifNotNil: [:icon |
-		aBrowserToolbarItem addIcon: icon asMorph]
+	self defaultMenuIconFormSet ifNotNil: [:iconFormSet |
+		aBrowserToolbarItem addIcon: iconFormSet asMorph]
 ]
 
 { #category : '*Calypso-Browser' }
