@@ -21,3 +21,11 @@ ManifestCollectionsWeak class >> manuallyResolvedDependencies [
 ManifestCollectionsWeak class >> packageName [
 	^ #'Collections-Weak'
 ]
+
+{ #category : #'code-critics' }
+ManifestCollectionsWeak class >> ruleNoUnusedInstanceVariableRuleV1FalsePositive [
+
+	<ignoreForCoverage>
+	"This rule is banned because the bootstrap cannot run without the third #flag instance variable in WeakSet and WeakIdentitySet"
+	^ #(#(#(#RGPackageDefinition #(#'Collections-Weak')) #'2023-04-06T09:49:05.271404+02:00') )
+]
