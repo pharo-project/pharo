@@ -234,15 +234,16 @@ NumberParser >> nextElementaryLargeIntegerBase: aRadix [
 	nDigits := 0.
 	lastNonZero := 0.
 	[value isLarge or: [(char := sourceStream next) isNil
-		or: [digit := char digitValue.
+		or: [ char ~= $_ and: [digit := char digitValue.
 			(0 > digit or: [digit >= aRadix])
 				and: [sourceStream skip: -1.
-					true]]]]
+					true]]]]]
 		whileFalse: [
+			char ~= $_ ifTrue: [ 
 			nDigits := nDigits + 1.
 			0 = digit
 				ifFalse: [lastNonZero := nDigits].
-			value := value * aRadix + digit].
+			value := value * aRadix + digit]].
 	^value
 ]
 
