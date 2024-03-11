@@ -268,15 +268,6 @@ PasteUpMorph >> collapseNonWindows [
 	self nonWindows reject: [:m | m isSticky] thenDo: [:m | m collapse]
 ]
 
-{ #category : #'world menu' }
-PasteUpMorph >> commandKeySelectors [
-	"Answer my command-key table"
-
-	| aDict |
-	aDict := self valueOfProperty: #commandKeySelectors ifAbsentPut: [self initializeDesktopCommandKeySelectors].
-	^ aDict
-]
-
 { #category : #'menu & halo' }
 PasteUpMorph >> contentsMenu: aMenu [
 	"Build the menu used from PopUpContentsMenu:"
@@ -341,20 +332,6 @@ PasteUpMorph >> defersHaloOnClickTo: aSubMorph [
 { #category : #'world menu' }
 PasteUpMorph >> discoveredWorldMenu [
 	^ owner discoveredWorldMenu
-]
-
-{ #category : #'world menu' }
-PasteUpMorph >> dispatchCommandKeyInWorld: aChar event: evt [
-	"Dispatch the desktop command key if possible.  Answer whether handled"
-
-	| aMessageSend |
-	aMessageSend := self commandKeySelectors at: aChar ifAbsent: [^ false].
-	aMessageSend selector numArgs = 0
-		ifTrue:
-			[aMessageSend value]
-		ifFalse:
-			[aMessageSend valueWithArguments: (Array with: evt)].
-	^ true
 ]
 
 { #category : #'menu & halo' }
@@ -616,21 +593,6 @@ PasteUpMorph >> initialize [
 ]
 
 { #category : #'world menu' }
-PasteUpMorph >> initializeDesktopCommandKeySelectors [
-	"Provide the starting settings for desktop command key selectors.  Answer the dictionary."
-
-	"ActiveWorld initializeDesktopCommandKeySelectors"
-	| dict |
-	dict := IdentityDictionary new.
-	self defaultDesktopCommandKeyTriplets do:
-		[:trip | | messageSend |
-			messageSend := MessageSend receiver: trip second selector: trip third.
-			dict at: trip first put: messageSend].
-	self setProperty: #commandKeySelectors toValue: dict.
-	^ dict
-]
-
-{ #category : #'world menu' }
 PasteUpMorph >> invokeWorldMenu: evt [
 	"Put up the world menu, triggered by the passed-in event."
 	| menu |
@@ -642,11 +604,6 @@ PasteUpMorph >> invokeWorldMenu: evt [
 	"put up screen menu"
 	(menu := self worldMenu) popUpEvent: evt in: self.
 	^ menu
-]
-
-{ #category : #'world menu' }
-PasteUpMorph >> invokeWorldMenuFromEscapeKey [
-	self invokeWorldMenu: self activeHand lastEvent
 ]
 
 { #category : #cursor }
@@ -670,7 +627,6 @@ PasteUpMorph >> keyStroke: anEvent [
 	"A keystroke has been made.  Service event handlers and, if it's a keystroke presented to the world, dispatch it to #unfocusedKeystroke:"
 
 	super keyStroke: anEvent.	"Give event handlers a chance"
-	self selectedObject ifNotNil: [ :selected | selected moveOrResizeFromKeystroke: anEvent ].
 	self dispatchKeystroke: anEvent
 ]
 
@@ -695,18 +651,6 @@ PasteUpMorph >> keyboardNavigationHandler: aHandler [
 			[self removeProperty: #keyboardNavigationHandler]
 		ifNotNil:
 			[self setProperty: #keyboardNavigationHandler toValue: aHandler]
-]
-
-{ #category : #'world menu' }
-PasteUpMorph >> lastKeystroke [
-	"Answer the last keystroke fielded by the receiver"
-	^ self valueOfProperty: #lastKeystroke ifAbsent: ['']
-]
-
-{ #category : #'world menu' }
-PasteUpMorph >> lastKeystroke: aString [
-	"Remember the last keystroke fielded by the receiver"
-	^ self setProperty: #lastKeystroke toValue: aString
 ]
 
 { #category : #accessing }

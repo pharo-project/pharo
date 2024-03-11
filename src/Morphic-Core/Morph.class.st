@@ -835,9 +835,6 @@ Morph >> addYellowButtonMenuItemsTo: aMenu event: evt [
 			aMenu add: 'inspect' selector: #inspect].
 	aMenu addLine.
 	self isWorldMorph ifFalse: [aMenu add: 'delete' selector: #delete].
-	self world selectedObject == self
-		ifTrue: [aMenu add: 'halo off' selector: #removeHalo]
-		ifFalse: [aMenu add: 'halo on' selector: #addHalo].
 	(self isWorldMorph
 			or: [self wantsToBeTopmost])
 		ifFalse: [
@@ -4392,28 +4389,6 @@ Morph >> mouseWheel: evt [
 	"Handle a mouseWheel event."
 ]
 
-{ #category : #'event handling' }
-Morph >> moveOrResizeFromKeystroke: anEvent [
-	"move or resize the receiver based on a keystroke"
-
-	| dir |
-	anEvent keyValue = 28
-		ifTrue: [ dir := -1 @ 0 ].
-	anEvent keyValue = 29
-		ifTrue: [ dir := 1 @ 0 ].
-	anEvent keyValue = 30
-		ifTrue: [ dir := 0 @ -1 ].
-	anEvent keyValue = 31
-		ifTrue: [ dir := 0 @ 1 ].
-	dir notNil
-		ifTrue: [
-			anEvent controlKeyPressed
-				ifTrue: [ dir := dir * 10 ].
-			anEvent shiftPressed
-				ifTrue: [ self extent: self extent + dir ]
-				ifFalse: [ self position: self position + dir ] ]
-]
-
 { #category : #naming }
 Morph >> name: aName [
 	(aName isString) ifTrue: [self setNameTo: aName]
@@ -5462,12 +5437,6 @@ Morph >> screenRectangle [
 	"For compatibility only"
 
 	^ self fullBounds
-]
-
-{ #category : #'selected object' }
-Morph >> selectedObject [
-	"answer the selected object for the hand or nil is none"
-	^ self primaryHand selectedObject
 ]
 
 { #category : #'dropping/grabbing' }
