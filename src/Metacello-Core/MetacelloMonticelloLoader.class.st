@@ -58,7 +58,7 @@ MetacelloMonticelloLoader >> loadAtomicPackageDirectives: packageDirectives [
 	packageDirectives do: [ :e |
 		MetacelloNotification signal:
 			'Loaded -> ' , e packageName , ' --- '
-			, e repositorySpecs first description ]
+			, e repositorySpecs first fullDescription ]
 ]
 
 { #category : 'loading' }
@@ -107,7 +107,7 @@ MetacelloMonticelloLoader >> lookupProjectClassNamed: aString [
 	^ Smalltalk at: aString asSymbol ifAbsent: [ nil ]
 ]
 
-{ #category : 'repositories' }
+{ #category : 'repository-resolution' }
 MetacelloMonticelloLoader >> repositoriesFrom: aMetacelloMVRepositorySpecs [
 
 	aMetacelloMVRepositorySpecs size = 1 ifTrue: [
@@ -116,4 +116,17 @@ MetacelloMonticelloLoader >> repositoriesFrom: aMetacelloMVRepositorySpecs [
 	^ MetacelloRepositoryGroup onRepositories:
 		  (aMetacelloMVRepositorySpecs collect: [ :aSpec |
 			   aSpec createRepository ])
+]
+
+{ #category : 'repository-resolution' }
+MetacelloMonticelloLoader >> resolveRepositorySpecs: aCollection [
+	"Return a resolved repository spec with a concrete commit id or tag"
+
+	| repository |
+	aCollection ifEmpty: [ ^ aCollection ].
+	repository := self repositoriesFrom: aCollection.
+	aCollection first resolvedReference:
+		repository repositoryDescription , '('
+		, repository repositoryVersionString , ')'.
+	^ aCollection
 ]

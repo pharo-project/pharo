@@ -260,7 +260,7 @@ Fraction >> hash [
 	^numerator hash bitXor: denominator hash
 ]
 
-{ #category : 'converting' }
+{ #category : 'testing' }
 Fraction >> isFraction [
 	^ true
 ]
@@ -294,16 +294,6 @@ Fraction >> negative [
 Fraction >> numerator [
 
 	^numerator
-]
-
-{ #category : 'printing' }
-Fraction >> printOn: aStream [
-
-	aStream nextPut: $(.
-	numerator printOn: aStream.
-	aStream nextPut: $/.
-	denominator printOn: aStream.
-	aStream nextPut: $)
 ]
 
 { #category : 'printing' }
@@ -375,16 +365,6 @@ Fraction >> setNumerator: n denominator: d [
 			[numerator := n asInteger.
 			denominator := d asInteger abs. "keep sign in numerator"
 			d < 0 ifTrue: [numerator := numerator negated]]
-]
-
-{ #category : 'storing' }
-Fraction >> storeOn: aStream base: base [
-
-	aStream nextPut: $(.
-	numerator storeOn: aStream base: base.
-	aStream nextPut: $/.
-	denominator storeOn: aStream base: base.
-	aStream nextPut: $)
 ]
 
 { #category : 'truncation and round off' }

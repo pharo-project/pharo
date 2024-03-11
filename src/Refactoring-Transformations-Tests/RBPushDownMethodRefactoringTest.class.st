@@ -12,7 +12,7 @@ RBPushDownMethodRefactoringTest >> testFailurePushDownMethodOnNonAbstractClass [
 	| refactoring |
 	refactoring := RBPushDownMethodRefactoring
 		               pushDown: #( #isArray )
-		               from: Array.
+		               from: 'Array'.
 
 	self
 		should: [ refactoring generateChanges ]
@@ -42,7 +42,7 @@ RBPushDownMethodRefactoringTest >> testFailurePushDownMethodSubclassesReferToSel
 	(model classNamed: #Superclass) compile: 'yourself ^1' classified: #( #accessing ).
 	(model classNamed: #Foo1) compile: 'method1 ^super yourself' classified: #( #accessing ).
 
-	refactoring := RBPushDownMethodRefactoring model: model pushDown: #( #yourself ) from: (model classNamed: #Superclass).
+	refactoring := RBPushDownMethodRefactoring model: model pushDown: #( #yourself ) from: 'Superclass'.
 
 
 	self should: [ refactoring generateChanges ] raise: RBRefactoringWarning

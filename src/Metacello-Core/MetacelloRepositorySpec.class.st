@@ -5,7 +5,8 @@ Class {
 		'description',
 		'username',
 		'password',
-		'type'
+		'type',
+		'resolvedReference'
 	],
 	#category : 'Metacello-Core-Specs',
 	#package : 'Metacello-Core',
@@ -70,6 +71,12 @@ MetacelloRepositorySpec >> description: aString [
 	description := aString
 ]
 
+{ #category : 'printing' }
+MetacelloRepositorySpec >> fullDescription [
+
+	^ resolvedReference ifNil: [ 'unresolved' ]
+]
+
 { #category : 'mc support' }
 MetacelloRepositorySpec >> hasNoLoadConflicts: aMetacelloRepositorySpec [
 
@@ -128,6 +135,12 @@ MetacelloRepositorySpec >> removeFromMetacelloRepositories: aMetacelloRepositori
 			name: self name;
 			spec: self;
 			yourself)
+]
+
+{ #category : 'accessing' }
+MetacelloRepositorySpec >> resolvedReference: aString [ 
+	
+	resolvedReference := aString
 ]
 
 { #category : 'querying' }

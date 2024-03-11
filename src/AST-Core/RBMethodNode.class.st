@@ -347,6 +347,12 @@ RBMethodNode >> hasArguments [
 ]
 
 { #category : 'testing' }
+RBMethodNode >> hasBlock [
+
+	^ body hasBlock 
+]
+
+{ #category : 'testing' }
 RBMethodNode >> hasPragmaNamed: aSymbol [
 	self pragmaNamed: aSymbol ifAbsent: [ ^ false ].
 	^ true
@@ -404,6 +410,11 @@ RBMethodNode >> isMethod [
 { #category : 'testing' }
 RBMethodNode >> isPrimitive [
 	^ self pragmas anySatisfy: [ :each | each isPrimitive ]
+]
+
+{ #category : 'testing' }
+RBMethodNode >> isUsingAsReturnValue: aNode [
+	^body == aNode and: [aNode lastIsReturn]
 ]
 
 { #category : 'accessing' }
@@ -724,11 +735,6 @@ RBMethodNode >> temporaries [
 { #category : 'accessing' }
 RBMethodNode >> temporaryNames [
 	^ self body temporaryNames
-]
-
-{ #category : 'testing' }
-RBMethodNode >> uses: aNode [
-	^body == aNode and: [aNode lastIsReturn]
 ]
 
 { #category : 'tree accessing' }

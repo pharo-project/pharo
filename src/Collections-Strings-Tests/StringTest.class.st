@@ -436,17 +436,6 @@ StringTest >> testAsCamelCase [
 ]
 
 { #category : 'tests' }
-StringTest >> testAsDate [
-
-	self assert: 'Jan 1 2015' asDate asString equals: '1 January 2015'.
-	self assert: '1/1/2015' asDate asString equals: '1 January 2015'.
-	self assert: '1 1 1' asDate asString equals: '1 January 2001'.
-	self assert: '1 J 1' asDate asString equals: '1 January 2001'.
-	self should: [ '' asDate ] raise: Error.
-	self should: [ '1234' asDate ] raise: Error
-]
-
-{ #category : 'tests' }
 StringTest >> testAsHTMLString [
 
 	self assert: '<a>' asHTMLString equals: '&lt;a&gt;'.
@@ -545,14 +534,6 @@ StringTest >> testAsTime [
 	self assert: '1:00' asTime asString equals: '1:00 am'.
 	self assert: '1' asTime asString equals: '1:00 am'.
 	self assert: '13' asTime asString equals: '1:00 pm'
-]
-
-{ #category : 'tests' }
-StringTest >> testAsUncommentedCode [
-		self assert: '"abc"' asUncommentedCode equals: 'abc'.
-		self assert: '""' asUncommentedCode equals: ''.
-		self assert: '"Hello'' world"' asUncommentedCode equals: 'Hello'' world'.
-
 ]
 
 { #category : 'tests' }

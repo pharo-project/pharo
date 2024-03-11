@@ -55,9 +55,8 @@ RBPushUpMethodDriver >> model: aRBNamespace scopes: refactoringScopes pushUp: me
 
 { #category : 'resources' }
 RBPushUpMethodDriver >> refactoring [
-	"I'm gathering user input and creating refactoring instance"
+	"I am creating the refactoring instance"
 
-	self selectMethodsAndSuperclass.
 	refactoring := RBPullUpMethodRefactoring
 		  model: model
 		  pullUp: (methods collect: [ :each | each selector ])

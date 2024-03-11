@@ -183,7 +183,7 @@ TimeTest >> testFromSeconds [
 TimeTest >> testGeneralInquiries [
 	| date aDateAndTime |
 
-	date := '2 June 1973' asDate.
+	date := Date readFrom: '2-6-1973' pattern: 'd-m-y'.
 	time := '4:02:47 am' asTime.
 	aDateAndTime := self timeClass dateAndTimeFromSeconds: (2285280000 + 14567).
 	self

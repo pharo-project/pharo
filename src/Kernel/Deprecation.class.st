@@ -71,18 +71,27 @@ Deprecation class >> deprecationsWhile: aBlock [
 
 { #category : 'class initialization' }
 Deprecation class >> initialize [
-	Log := nil "#deprecationsWhile: logs all deprecations here"
+	self reset
 ]
 
 { #category : 'settings' }
 Deprecation class >> raiseWarning [
 	"If true, then a dialog is popup for each deprecated method invocation"
-	^ RaiseWarning ifNil: [RaiseWarning := true]
+	^ RaiseWarning ifNil: [RaiseWarning := false]
 ]
 
 { #category : 'settings' }
 Deprecation class >> raiseWarning: aBoolean [
 	RaiseWarning := aBoolean
+]
+
+{ #category : 'class initialization' }
+Deprecation class >> reset [
+	<script>
+	Log := nil.
+	RaiseWarning := nil.
+	ShowWarning := nil.
+	Active := nil
 ]
 
 { #category : 'settings' }
@@ -230,7 +239,9 @@ Deprecation >> signal [
 
 { #category : 'handling' }
 Deprecation >> transform [
+
 	| node rewriteRule aMethod |
+
 	self rewriterClass ifNil:[ ^ self ].
 	aMethod := self contextOfSender homeMethod.
 	aMethod isDoIt ifTrue:[ ^ self ]. "no need to transform doits"
@@ -241,9 +252,9 @@ Deprecation >> transform [
 		(rewriteRule executeTree: node)
 			ifFalse: [ ^ self ].
 		node replaceWith: rewriteRule tree.
-		Author
-			useAuthor: 'AutoDeprecationRefactoring'
-			during: [ aMethod origin compile: aMethod ast formattedCode classified: aMethod protocol ].
+		aMethod origin
+			compile: aMethod ast formattedCode
+			classified: aMethod protocol.
 		Log ifNotNil: [ :log | log add: self ] ]
 ]
 

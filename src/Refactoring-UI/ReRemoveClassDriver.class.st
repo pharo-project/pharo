@@ -41,7 +41,7 @@ ReRemoveClassDriver >> browseReferences [
 
 	haveNoReferences violators keysAndValuesDo: [ :violator :references |
 		"we should pass the application! "
-		StMessageBrowserPresenter
+		StMessageBrowser
 			browse: (references collect: [ :ref | ref method ])
 			asSendersOf: violator realClass ]
 ]
@@ -62,7 +62,7 @@ ReRemoveClassDriver >> configureRefactoring [
 	refactoring prepareForInteractiveMode
 ]
 
-{ #category : 'private execution' }
+{ #category : 'configuration' }
 ReRemoveClassDriver >> defaultSelectDialog [
 
 	^ SpSelectDialog new
@@ -124,13 +124,6 @@ ReRemoveClassDriver >> scopes: refactoringScopes classes: aColclasses [
 	scopes := refactoringScopes.
 	model := self refactoringScopeOn: scopes first.
 	classes := aColclasses
-]
-
-{ #category : 'private execution' }
-ReRemoveClassDriver >> selectDialog [
-	
-	^ selectDialog ifNil: [ selectDialog := self defaultSelectDialog ].
-	
 ]
 
 { #category : 'private execution' }

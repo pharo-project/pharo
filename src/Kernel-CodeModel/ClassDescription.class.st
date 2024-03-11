@@ -166,14 +166,6 @@ ClassDescription >> authors [
 	^(self methods, self classSide methods) collect: [ :each | each author ] as: Bag
 ]
 
-{ #category : 'accessing - deprecated parallel hierarchy' }
-ClassDescription >> baseClass [
-	"This method is deprecated so consider to migrate."
-	self deprecated:  'Please use #instanceSide instead' transformWith:  '`@receiver baseClass'
-						-> '`@receiver instanceSide'.
-	^ self instanceSide
-]
-
 { #category : 'accessing - comment' }
 ClassDescription >> classCommentBlank [
 	"Classes can override this method to show another template."
@@ -296,7 +288,11 @@ ClassDescription >> compile: sourceCode classified: protocol [
 { #category : 'compiling' }
 ClassDescription >> compile: sourceCode classified: protcol notifying: requestor [
 
-	^ self compile: sourceCode classified: protcol withStamp: Author changeStamp notifying: requestor
+	^ self
+		  compile: sourceCode
+		  classified: protcol
+		  withStamp: nil
+		  notifying: requestor
 ]
 
 { #category : 'compiling' }
@@ -1169,22 +1165,6 @@ ClassDescription >> superclass: aSuperclass withLayoutType: layoutType slots: sl
 	self
 		superclass: aSuperclass
 		layout: newLayout
-]
-
-{ #category : 'accessing - deprecated parallel hierarchy' }
-ClassDescription >> theMetaClass [
-	"This method is deprecated so consider to migrate."
-	self deprecated:  'Please use #classSide instead' transformWith:  '`@receiver theMetaClass'
-						-> '`@receiver classSide'.
-	^ self classSide
-]
-
-{ #category : 'accessing - deprecated parallel hierarchy' }
-ClassDescription >> theNonMetaClass [
-	"This method is deprecated so consider to migrate."
-	self deprecated:  'Please use #instanceSide instead' transformWith:  '`@receiver theNonMetaClass'
-						-> '`@receiver instanceSide'.
-	^ self instanceSide
 ]
 
 { #category : 'accessing - method dictionary' }

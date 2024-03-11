@@ -25,6 +25,23 @@ ReleaseTest >> actualProcesses [
 	^ self class actualProcesses
 ]
 
+{ #category : 'accessing' }
+ReleaseTest >> allowedObsoletes [
+	"take obsoletes from a configuration variable if it exist. 
+	 this is used because some CI (e.g. iceberg) require the project to be unloaded 
+	 and after reload to properly test, and this can left some obsoletes.
+	 WARNING: This has to be used carefully. it may lead to obsoletes to be left in 
+	 system incorrectly."
+	| allowed |
+			
+	allowed := Smalltalk os environment 
+		at: 'PHARO_CI_ALLOWED_OBSOLETES'
+		ifAbsent: [ nil ].
+	allowed ifNil: [ ^ #() ].
+			
+	^ (allowed substrings: ', ') collect: [ :each |  'AnObsolete', each ]
+]
+
 { #category : 'helpers' }
 ReleaseTest >> assertValidLintRule: aLintRule [
 	self assertValidLintRule: aLintRule withExceptions: {}
@@ -387,7 +404,7 @@ ReleaseTest >> testObsoleteClasses [
 	Smalltalk fixObsoleteReferences.
 	Smalltalk garbageCollect.
 	obsoleteClasses := SystemNavigation new obsoleteClasses
-		select: [ :each | each isAnonymous not ].
+		reject: [ :each | each isAnonymous or: [ (self allowedObsoletes includes: each name) ] ].
 
 	self
 		assert: obsoleteClasses isEmpty
@@ -506,8 +523,9 @@ ReleaseTest >> testThatThereAreNoSelectorsRemainingThatAreSentButNotImplemented 
 	                    'BalloonEngine>>#registerFills:' 'BalloonFillData>>#computeFill' 'ClyFullBrowserMorph>>#extendClassScopeForMethods:'
 	                    'ComplexBorderStyle>>#drawPolyPatchFrom:to:on:usingEnds:' 'ComplexBorderStyle>>#drawLineFrom:to:on:'
 	                    'Context>>#simulatePrimitive:in:receiver:arguments:' 'Context>>#doPrimitive:method:receiver:args:'
-	                    'Context>>#failPrimitiveWith:' 'DAPackageRelationGraphGenerator>>#buildEdges' 'DAPackageCycleGenerator>>#buildEdges' 'DAGraphVizGenerator>>#buildGraphViz' 'DAGraphVizGenerator>>#openWith:' 'DAGraphVizGenerator>>#saveDotFileAndGenerateForType:'
-	                    'DAPackageAnalyzerDiffTreePresenter>>#buildRoots' 'DTReRunConfiguration>>#items' 'DebugSession>>#shouldDisplayContext:basedOnFilters:'
+	                    'Context>>#failPrimitiveWith:'
+	          
+'DAPackageAnalyzerDiffTreePresenter>>#buildRoots' 'DTReRunConfiguration>>#items' 'DebugSession>>#shouldDisplayContext:basedOnFilters:'
 	                    'DiskDirectoryEntry class>>#store:path:node:' 'EDEmergencyDebugger>>#resetDisplay' 'EDTest>>#prepareMethodVersionTest'
 	                    'ExternalDropHandler class>>#defaultHandler' 'FFICallbackArgumentReader>>#stackPointer' 'FFIFloat32>>#callbackReturnOn:for:'
 	                    'FFIFloatType>>#callbackReturnOn:for:' 'FFIIndirectFunctionResolution>>#resolveFunction:'
@@ -558,8 +576,10 @@ ReleaseTest >> testThatThereAreNoSelectorsRemainingThatAreSentButNotImplemented 
 
 { #category : 'tests - variables' }
 ReleaseTest >> testUndeclared [
-	| undeclaredVariables validExceptions remaining description |
+	| undeclaredVariables validExceptions remaining description  |
 
+	"we compile a second method with the undeclared #undeclaredStubInstVar1 to trigger the code path of removing twice in #cleanOutUndeclared"
+	self class compile: 'methodForTest ^undeclaredStubInstVar1'.
 	Smalltalk cleanOutUndeclared.
 	undeclaredVariables := Undeclared associations select: [:each |
 			each isUndeclaredVariable].
@@ -584,7 +604,8 @@ ReleaseTest >> testUndeclared [
 					nextPutAll: '>>';
 					print: method selector]].
 
-	self assert: remaining isEmpty description: description
+	self assert: remaining isEmpty description: description.
+	self class removeSelector: #methodForTest.
 ]
 
 { #category : 'tests - package' }

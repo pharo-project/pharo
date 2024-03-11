@@ -317,6 +317,7 @@ ShiftClassBuilder >> fillClassSideFromEnvironment: anEnvironment [
 	| old |
 	old := anEnvironment at: name ifAbsent: [ ^ self ].
 
+	self metaclassClass: old class class.
 	self classSlots: old class slots.
 	self classTraits: old class traitComposition
 ]
@@ -467,7 +468,10 @@ ShiftClassBuilder >> markIsInRemake [
 { #category : 'accessing' }
 ShiftClassBuilder >> metaSuperclass [
 
-	^ metaSuperclass ifNil:[ (superclass ifNil: [ Class ] ifNotNil: [ superclass class ]) ]
+	^ metaSuperclass ifNil: [
+		  self superclass
+			  ifNil: [ Class ]
+			  ifNotNil: [ self superclass class ] ]
 ]
 
 { #category : 'accessing' }

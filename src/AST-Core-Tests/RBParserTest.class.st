@@ -187,24 +187,6 @@ RBParserTest >> testBinarySelectors [
 ]
 
 { #category : 'tests' }
-RBParserTest >> testBlockNodeIsUsed [
-	| tree |
-	" block node is not a used-node"
-	tree := self parserClass parseMethod:
-			'tmp [ 3+4 ]'.
-	self deny: tree body statements last isUsed.
-	" even a block node with non-local return is not *used* "
-	tree := self parserClass parseMethod:
-	      'tmp [^ 3+4 ]'.
-	self deny: tree body statements last isUsed.
-
-	"an explicit return node is *used*"
-	tree := self parserClass parseMethod:
-			'tmp ^[ 3+4 ]'.
-	self assert: tree body statements last isUsed
-]
-
-{ #category : 'tests' }
 RBParserTest >> testBlockReturnNode [
 	| tree |
 	" no explicit return"
@@ -902,12 +884,53 @@ RBParserTest >> testIsA [
 	| nodes types |
 	nodes := Bag new.
 	types := Set new.
-	#(#(#isAssignment 1) #(#isBlock 1) #(#isCascade 1) #(#isLiteralNode 2) #(#isMessage 3) #(#isMethod 1) #(#isReturn 1) #(#isSequence 2) #(#isValue 15) #(#isVariable 7) #(#isUsed 10) #(#isDirectlyUsed 9) #(#hasParentheses 1) #(#isBinary 0) #(#isPrimitive 0) #(#isImmediateNode 10) #(#isWrite 1) #(#isRead 3))
+	#(#(#isAssignment 1) #(#isBlock 1) #(#isCascade 1) #(#isLiteralNode 2) #(#isMessage 3) #(#isMethod 1) #(#isReturn 1) #(#isSequence 2) #(#isValue 15) #(#isVariable 7) #(#isUsedAsReturnValue 10) #(#isEssential 12) #(#hasParentheses 1) #(#isBinary 0) #(#isPrimitive 0) #(#isImmediateNode 10) #(#isWrite 1) #(#isRead 3))
 		do: [ :each |
 			each last timesRepeat: [ nodes add: each first ].
 			types add: each first ].
 	self treeWithEverything nodesDo: [ :each | types do: [ :sel | ((each respondsTo: sel) and: [ each perform: sel ]) ifTrue: [ nodes remove: sel ] ] ].
 	self assertEmpty: nodes
+]
+
+{ #category : 'tests - isUsed' }
+RBParserTest >> testIsUsedWhenABlockNodeIsReturnedExpectIsUsed [
+	| tree |
+	"an explicit return node is *used*"
+	tree := self parserClass parseMethod:
+			'tmp ^[ 3+4 ]'.
+	self assert: tree body statements last isUsedAsReturnValue
+]
+
+{ #category : 'tests - isUsed' }
+RBParserTest >> testIsUsedWhenBlockAloneExpectIsNotUsed [
+	| tree |
+	" block node is not a used-node"
+	tree := self parserClass parseMethod:
+			'tmp [ 3+4 ]'.
+	self deny: tree body statements last isUsedAsReturnValue.
+
+]
+
+{ #category : 'tests - isUsed' }
+RBParserTest >> testIsUsedWhenInAssignmentExpectIsUsed [
+	| tree |
+	"an explicit return node is *used*"
+	tree := self parserClass parseMethod:
+			'newMethod
+			| asdf |
+	asdf := OrderedCollection new.
+	asdf add: 1.
+	^ asdf.'.
+	self assert: tree body statements first value isUsedAsReturnValue
+]
+
+{ #category : 'tests - isUsed' }
+RBParserTest >> testIsUsedWhenNonLocalReturnExpectNotUsed [
+	| tree |
+	" even a block node with non-local return is not *used* "
+	tree := self parserClass parseMethod:
+	      'tmp [^ 3+4 ]'.
+	self deny: tree body statements last isUsedAsReturnValue.
 ]
 
 { #category : 'foreign use of test' }
@@ -1044,8 +1067,8 @@ RBParserTest >> testModifying [
 	| tree |
 	tree := self parserClass parseMethod: 'foo: a bar: b | c | self first. self second. a + b + c'.
 	self deny: tree lastIsReturn.
-	self deny: (tree body statements at: 2) isUsed.
-	self assert: tree body statements last arguments first isUsed.
+	self deny: (tree body statements at: 2) isUsedAsReturnValue.
+	self assert: tree body statements last arguments first isUsedAsReturnValue.
 	self assert: (tree isLast: tree body statements last).
 	self deny: (tree isLast: tree body statements first).
 	self assert: (tree defines: 'a').

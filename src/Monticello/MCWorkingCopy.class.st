@@ -121,9 +121,8 @@ MCWorkingCopy class >> infoFromDictionary: aDictionary cache: cache [
 			name: (aDictionary at: #name ifAbsent: [''])
 			id: (UUID fromString: id)
 			message: (aDictionary at: #message ifAbsent: [''])
-			date: ([Date fromString: (aDictionary at: #date)] onErrorDo: [nil])
+			date: ([Date readFrom: (aDictionary at: #date) pattern: 'yyyy-mm-dd' ] onErrorDo: [nil])
 			time: ([Time fromString: (aDictionary at: #time)] onErrorDo: [nil])
-			author: (aDictionary at: #author ifAbsent: [''])
 			ancestors: (self ancestorsFromArray: (aDictionary at: #ancestors ifAbsent: []) cache: cache)
 			stepChildren: (self ancestorsFromArray: (aDictionary at: #stepChildren ifAbsent: []) cache: cache)]
 ]
@@ -437,7 +436,7 @@ MCWorkingCopy >> nextAncestors [
 { #category : 'private' }
 MCWorkingCopy >> nextVersionName [
 
-	| branch oldName base author |
+	| branch oldName base |
 	branch := ''.
 	ancestry ancestors isEmpty
 		ifTrue: [
@@ -449,20 +448,19 @@ MCWorkingCopy >> nextVersionName [
 				ifFalse: [ base := oldName ]
 				ifTrue: [
 					base := oldName copyUpToLast: $-.
-					branch := ((oldName copyAfterLast: $-) copyUpToLast: $.) copyAfter: $. ].
+					branch := ((oldName copyAfterLast: $-) copyUpToLast: $.)
+						          copyAfter: $. ].
 			counter ifNil: [
 				counter := (ancestry ancestors collect: [ :each |
 					            each name last isDigit
 						            ifFalse: [ 0 ]
-						            ifTrue: [ ('0' , (each name copyAfterLast: $.) select: [ :ea | ea isDigit ]) asNumber ] ]) max ] ].
+						            ifTrue: [
+							            ('0' , (each name copyAfterLast: $.) select: [ :ea |
+								             ea isDigit ]) asNumber ] ]) max ] ].
 
 	branch isEmpty ifFalse: [ branch := '.' , branch ].
 	counter := counter + 1.
-	author := Author fullName collect: [ :each |
-		          each isAlphaNumeric
-			          ifTrue: [ each ]
-			          ifFalse: [ $_ ] ].
-	^ base , '-' , author , branch , '.' , counter asString
+	^ base , '-' , branch , '.' , counter asString
 ]
 
 { #category : 'accessing' }

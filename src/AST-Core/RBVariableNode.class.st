@@ -171,7 +171,7 @@ RBVariableNode >> isPseudoVariable [
 
 { #category : 'testing' }
 RBVariableNode >> isRead [
-	^ self isWrite not and: [ self isUsed ]
+	^ self isWrite not and: [ self isUsedAsReturnValue ]
 ]
 
 { #category : 'testing' }

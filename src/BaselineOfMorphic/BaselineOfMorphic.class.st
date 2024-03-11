@@ -132,18 +132,17 @@ BaselineOfMorphic >> baseline: spec [
 { #category : 'actions' }
 BaselineOfMorphic >> cleanUpAfterMorphicInitialization [
 
-	Author fullName: self class name.
 	MCDataStream initialize.
 	GradientFillStyle initPixelRampCache.
 	FreeTypeCache clearCurrent.
-	ImageMorph writeClassVariableNamed: #DefaultForm value: (Form extent: 1 @ 1 depth: 1).
+	ImageMorph
+		writeClassVariableNamed: #DefaultForm
+		value: (Form extent: 1 @ 1 depth: 1).
 	World cleanseOtherworldlySteppers.
 	MCFileBasedRepository flushAllCaches.
 	MCMethodDefinition shutDown.
 	ExternalDropHandler resetRegisteredHandlers.
-	ScrollBarMorph initializeImagesCache.
-
-	Author reset
+	ScrollBarMorph initializeImagesCache
 ]
 
 { #category : 'fonts' }
@@ -257,8 +256,6 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 
 	SystemNotification signal: 'Starting postload action'.
 
-	Author fullName: self class name.
-
 	TextConstants initialize.
 
 	"Initialize Fuel"
@@ -303,9 +300,9 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 
 	UIManager default: MorphicUIManager new.
 	MorphicUIManager uiProcess resume.
-	
+
 	ErrorHandler defaultErrorHandler: UIManager default.
-	
+
 	PharoLightTheme beCurrent.
 	ScalingCanvas initialize.
 	self cleanUpAfterMorphicInitialization.
@@ -331,9 +328,8 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 	   #FreeTypeFontProvider #GradientFillStyle #IconicButtonMorph
 	   #KMLog #LogicalFont #LucidaGrandeRegular #OSEnvironment
 	   #ScrollBarMorph #StrikeFont #SystemSettingsPersistence
-	   #TabMorph #TaskbarMorph #TextAction #TextConstants
-	   #TextStyle ) do: [ :each |
-		(Smalltalk globals at: each) initialize ].
+	   #TabMorph #TaskbarMorph #TextAction #TextConstants #TextStyle )
+		do: [ :each | (Smalltalk globals at: each) initialize ].
 
 	LogicalFontManager current addFontProvider:
 		FreeTypeFontProvider current.
@@ -342,10 +338,9 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 	array at: 5 put: Bitmap.
 	Smalltalk specialObjectsArray becomeForward: array.
 
-	Author reset.
 	MCMethodDefinition initializersEnabled: initializersEnabled.
-	
-	Initialized := true.
+
+	Initialized := true
 ]
 
 { #category : 'actions' }
@@ -362,8 +357,6 @@ BaselineOfMorphic >> preload: loader package: packageSpec [
 	
 	initializersEnabled := MCMethodDefinition initializersEnabled.
 	MCMethodDefinition initializersEnabled: false.
-	
-	Author fullName: self class name
 ]
 
 { #category : 'baseline' }

@@ -1,6 +1,13 @@
 Extension { #name : 'CompiledMethod' }
 
 { #category : '*Deprecated12' }
+CompiledMethod >> category [
+
+	self deprecated: 'Use #protocolName instead.' transformWith: '`@rcv category' -> '`@rcv protocolName'.
+	^ self protocolName
+]
+
+{ #category : '*Deprecated12' }
 CompiledMethod >> isDefinedInPackage: aPackage [
 
 	self
@@ -46,6 +53,11 @@ CompiledMethod >> tags [
 	protocol ifNil: [ ^ #(  ) ].
 	protocol = Protocol unclassified ifTrue: [ ^ #(  ) ].
 	^ { protocol }
+]
+
+{ #category : '*Deprecated12' }
+CompiledMethod >> trailer [
+	^self deprecated: 'CompiledMethodTrailer has been removed in Pharo12. Just use sourcePointer / sourcePointer to read and set. See class comment of CompiledMethodTrailer for more information'
 ]
 
 { #category : '*Deprecated12' }

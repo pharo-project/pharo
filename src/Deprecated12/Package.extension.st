@@ -264,6 +264,13 @@ Package class >> organizer: aPackageOrganizer [
 ]
 
 { #category : '*Deprecated12' }
+Package >> packageName [
+
+	self deprecated: 'Use #name instead.' transformWith: '`@rcv packageName' -> '`@rcv name'.
+	^ self name
+]
+
+{ #category : '*Deprecated12' }
 Package >> register [
 
 	self

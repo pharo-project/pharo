@@ -328,7 +328,9 @@ DateAndTime class >> readFrom: aStream defaultOffset: defaultOffset [
 	"self readFrom: '2013-03-04T23:47:52.876+01:00' readStream"
 
 	| date time offset |
-	date := Date readFrom: aStream.
+	date := (DateParser readingFrom: aStream pattern: 'y-mm-dd')
+		        continueAfterParsing;
+		        parse.
 	[ aStream atEnd or: [ '0123456789Z+-' includes: aStream peek ] ]
 		whileFalse: [ aStream next ].
   	('0123456789' includes: aStream peek)
@@ -369,7 +371,9 @@ DateAndTime class >> readSeparateDateAndTimeFrom: stream [
 
 	| date time |
 	stream skipSeparators.
-	date := Date readFrom: stream.
+	date := (DateParser readingFrom: stream pattern: 'yyyy-mm-dd')
+		        continueAfterParsing;
+		        parse.
 	stream skipSeparators.
 	time := Time readFrom: stream.
 	^ self
@@ -678,7 +682,7 @@ DateAndTime >> = other [
 { #category : 'converting' }
 DateAndTime >> asDate [
     "Convert the receiver in a date object."
-    "(DateAndTime fromString: ' 2019-08-17T13:33:00+02:00') asDate printString >>> (Date newDay: 17 month: 8 year: 2019) printString"
+    "(DateAndTime fromString: '2019-08-17T13:33:00+02:00') asDate printString >>> (Date newDay: 17 month: 8 year: 2019) printString"
     ^ Date starting: self
 ]
 
@@ -688,7 +692,7 @@ DateAndTime >> asDateAndTime [
 	^ self
 ]
 
-{ #category : 'accessing' }
+{ #category : 'converting' }
 DateAndTime >> asDosTimestamp [
 
 	^ (DosTimestamp fromDateAndTime: self) value
@@ -701,7 +705,7 @@ DateAndTime >> asDuration [
 	^ Duration seconds: self secondsSinceMidnightLocalTime nanoSeconds: nanos
 ]
 
-{ #category : 'accessing' }
+{ #category : 'converting' }
 DateAndTime >> asFileNameCompatibleString [
 	| stream |
 	stream := String new writeStream.
@@ -711,7 +715,7 @@ DateAndTime >> asFileNameCompatibleString [
 	^ stream contents
 ]
 
-{ #category : 'accessing' }
+{ #category : 'converting' }
 DateAndTime >> asLocal [
 
 	^ (self offset = self class localOffset)
@@ -719,20 +723,20 @@ DateAndTime >> asLocal [
 		ifFalse: [self offset: self class localOffset]
 ]
 
-{ #category : 'accessing' }
+{ #category : 'converting' }
 DateAndTime >> asMonth [
 
 	^ Month starting: self
 ]
 
-{ #category : 'accessing' }
+{ #category : 'converting' }
 DateAndTime >> asNanoSeconds [
 	"Answer the number of nanoseconds since midnight"
 
 	^ self asDuration asNanoSeconds
 ]
 
-{ #category : 'accessing' }
+{ #category : 'converting' }
 DateAndTime >> asSeconds [
  	"Return the number of seconds since the epoch"
 
@@ -765,13 +769,13 @@ DateAndTime >> asUnixTime [
 	^((self offset: Duration zero) - self class unixEpoch) asSeconds
 ]
 
-{ #category : 'accessing' }
+{ #category : 'converting' }
 DateAndTime >> asWeek [
 
 	^ Week starting: self
 ]
 
-{ #category : 'accessing' }
+{ #category : 'converting' }
 DateAndTime >> asYear [
 
 	^ Year starting: self
@@ -996,7 +1000,7 @@ DateAndTime >> midnight [
 DateAndTime >> minute [
 	"Answer a number that represents the number of complete minutes in the receiver' time part,
 	after the number of complete hours has been removed."
-	"(DateAndTime fromString: ' 2004-02-29T13:33:00+02:00') minute >>> 33"
+	"(DateAndTime fromString: '2004-02-29T13:33:00+02:00') minute >>> 33"
 
  	^ self localSeconds // SecondsInMinute \\ 60
 ]
@@ -1177,7 +1181,7 @@ DateAndTime >> rounded [
 DateAndTime >> second [
 	"Answer a number that represents the number of complete seconds in the receiver's time part,
 	after the number of complete minutes has been removed."
-   "(DateAndTime fromString: ' 2004-02-29T13:33:12+02:00') second >>> 12"
+   "(DateAndTime fromString: '2004-02-29T13:33:12+02:00') second >>> 12"
 
  	^ self localSeconds \\ 60
 ]

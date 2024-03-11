@@ -111,6 +111,7 @@ Date class >> fromSeconds: seconds [
 { #category : 'instance creation' }
 Date class >> fromString: aString [
 	"Answer an instance of created from a string with format mm.dd.yyyy or mm-dd-yyyy or mm/dd/yyyy"
+	self deprecated: 'Use Date>>#readFrom:pattern: specifying a concrete pattern instead.'.
 
 	^ self readFrom: aString readStream
 ]
@@ -170,6 +171,10 @@ Date class >> readFrom: aStream [
 		<month> <day> <year>		(April 15, 1982; 4/15/82)
 		<year>-<month>-<day>			(1982-04-15) (ISO8601)"
 	| day month year parsedNumber prefix |
+	
+	self deprecated: 'Use Date>>#readFrom:pattern: specifying a concrete pattern instead.'.
+
+	
 	aStream peek = $-
 		ifTrue: [prefix := -1]
 		ifFalse: [prefix := 1].
@@ -202,7 +207,6 @@ Date class >> readFrom: aStream [
 				ifNil: ["MM-DD-YY or DD-MM-YY"
 					parsedNumber > 12
 						ifTrue: ["DD-MM-YY"
-							Error signal: 'Month out of bounds: ', parsedNumber asString, '.'.
 							day := parsedNumber.
 							month := Month nameOfMonth: (Integer readFrom: aStream) ]
 						ifFalse: ["MM-DD-YY"
@@ -465,7 +469,7 @@ Date >> storeOn: aStream [
 { #category : 'adding' }
 Date >> subtractDate: aDate [
 	"Answer the number of days between self and aDate"
-	"((Date year: 2018 month: 9 day: 28) subtractDate: '27 September 2018') >>> 1"
+	"((Date year: 2018 month: 9 day: 28) subtractDate: '2018-09-27') >>> 1"
 
 	^ (self start - aDate asDateAndTime) days
 ]

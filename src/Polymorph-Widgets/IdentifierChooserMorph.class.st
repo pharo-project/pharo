@@ -103,6 +103,12 @@ IdentifierChooserMorph >> activate: evt [
 ]
 
 { #category : 'accessing' }
+IdentifierChooserMorph >> allowedArea [
+	
+	^ RealEstateAgent maximumUsableAreaInWorld: self currentWorld
+]
+
+{ #category : 'accessing' }
 IdentifierChooserMorph >> baseColor [
 	^ baseColor ifNil: [baseColor := self defaultBaseColor]
 ]

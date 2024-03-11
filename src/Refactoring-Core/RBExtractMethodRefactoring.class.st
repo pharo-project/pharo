@@ -33,12 +33,31 @@ RBExtractMethodRefactoring class >> extract: anInterval from: aSelector in: aCla
 ]
 
 { #category : 'instance creation' }
+RBExtractMethodRefactoring class >> extractSource: aString from: aSelector in: aClass [ 
+
+	^ self new
+		extractSource: aString 
+		from: aSelector
+		in: aClass
+]
+
+{ #category : 'instance creation' }
 RBExtractMethodRefactoring class >> model: aRBSmalltalk extract: anInterval from: aSelector in: aClass [
 	^ self new
 		model: aRBSmalltalk;
 		extract: anInterval
 			from: aSelector
 			in: aClass;
+		yourself
+]
+
+{ #category : 'instance creation' }
+RBExtractMethodRefactoring class >> model: aRBSmalltalk extractSource: aString from: aSelector in: aClass [
+	^ self new
+		model: aRBSmalltalk;
+		extractSource: aString
+		from: aSelector
+		in: aClass;
 		yourself
 ]
 
@@ -76,9 +95,11 @@ RBExtractMethodRefactoring >> checkAssignments: variableNames [
 
 { #category : 'transforming' }
 RBExtractMethodRefactoring >> checkReturn [
-	needsReturn := self placeholderNode isUsed.
+	needsReturn := self placeholderNode isUsedAsReturnValue.
 	extractedParseTree containsReturn ifFalse: [^self].
 	extractedParseTree lastIsReturn ifTrue: [^self].
+	"Since we have a return that is not last in the extracted tree,
+	extraction is only possible if the modified method's last statement is being extracted"
 	(modifiedParseTree isLast: self placeholderNode)
 		ifFalse:
 			[self refactoringError: 'Couldn''t extract code since it contains a return.'].
@@ -227,6 +248,14 @@ RBExtractMethodRefactoring >> extractMethod [
 				onInterval: extractionInterval ]
 ]
 
+{ #category : 'instance creation' }
+RBExtractMethodRefactoring >> extractSource: aString from: aSelector in: aClass [ 
+
+	class := self classObjectFor: aClass.
+	selector := aSelector.
+	extractionInterval := self getIntervalForSource: aString
+]
+
 { #category : 'accessing' }
 RBExtractMethodRefactoring >> extractedParseTree [
 	^ extractedParseTree
@@ -240,6 +269,21 @@ RBExtractMethodRefactoring >> getExtractedSource [
 		and: [extractionInterval last between: 1 and: source size])
 			ifFalse: [self refactoringError: 'Invalid interval'].
 	^source copyFrom: extractionInterval first to: extractionInterval last
+]
+
+{ #category : 'transforming' }
+RBExtractMethodRefactoring >> getIntervalForSource: aString [
+	"I return interval where aString is situated in the `selector`"
+
+	| method expression searcher matchedNode |
+	method := class methodFor: selector.
+	expression := RBParser parseExpression: aString.
+
+	searcher := RBParseTreeSearcher new.
+	searcher matchesTree: expression do: [ :aNode :answer | aNode ].
+	matchedNode := searcher executeTree: method ast.
+	matchedNode ifNil: [ self refactoringError: 'Could not find given source in the method.' ].
+	^ matchedNode start to: matchedNode stop
 ]
 
 { #category : 'transforming' }

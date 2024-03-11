@@ -14,24 +14,15 @@ RBAddMethodRefactoringTest >> setUp [
 ]
 
 { #category : 'failure tests' }
-RBAddMethodRefactoringTest >> testFailureExistingSelector [
-
-	self shouldFail: (RBAddMethodRefactoring
-			 sourceCode: 'printString ^super printString'
-			 in: RBBasicLintRuleTestData
-			 withProtocol: #accessing)
-]
-
-{ #category : 'failure tests' }
-RBAddMethodRefactoringTest >> testFailureModelExistingSelector [
+RBAddMethodRefactoringTest >> testWarnModelExistingSelector [
 
 	self
-		shouldFail: (RBAddMethodRefactoring
+		shouldWarn: (RBAddMethodRefactoring
 				 model: model
 				 sourceCode: 'classVarName1 ^super printString'
 				 in: (model classNamed: #Bar)
 				 withProtocol: #accessing);
-		shouldFail: (RBAddMethodRefactoring
+		shouldWarn: (RBAddMethodRefactoring
 				 model: model
 				 sourceCode: 'printString ^super printString'
 				 in: (model classNamed: #Bar)
@@ -39,7 +30,7 @@ RBAddMethodRefactoringTest >> testFailureModelExistingSelector [
 ]
 
 { #category : 'failure tests' }
-RBAddMethodRefactoringTest >> testFailureModelInheritedSelector [
+RBAddMethodRefactoringTest >> testWarnModelInheritedSelector [
 
 	| refactoring |
 	refactoring := RBAddMethodRefactoring
@@ -47,5 +38,14 @@ RBAddMethodRefactoringTest >> testFailureModelInheritedSelector [
 		               sourceCode: 'printString ^super printString'
 		               in: (model classNamed: #Bar)
 		               withProtocol: #accessing .
-	self shouldFail: refactoring
+	self shouldWarn: refactoring
+]
+
+{ #category : 'failure tests' }
+RBAddMethodRefactoringTest >> testWarnWhenSelectorAlreadyExists [
+
+	self shouldWarn: (RBAddMethodRefactoring
+			 sourceCode: 'printString ^super printString'
+			 in: RBBasicLintRuleTestData
+			 withProtocol: #accessing)
 ]

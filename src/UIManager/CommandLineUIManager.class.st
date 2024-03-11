@@ -377,7 +377,7 @@ CommandLineUIManager >> quitFrom: aContext withMessage: aString [
 		Process allInstances do: [:each | | ctx |
 			logger nextPutAll: 'Process: '; print: each; cr; nextPutAll: '  stack:'; cr; cr.
 
-			ctx := each isActiveProcess ifTrue: [ thisContext sender ] ifFalse: [ each suspendedContext ].
+			ctx := each isActive ifTrue: [ thisContext sender ] ifFalse: [ each suspendedContext ].
 			ctx ifNotNil: [
 				(ctx stackOfSize: 20) do: [:s | logger print: s; cr ]].
 			logger nextPutAll: '------------------------------'; cr; cr.

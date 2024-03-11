@@ -106,11 +106,6 @@ DAPackageTreePresenter >> defaultFormat [
 	^ #png
 ]
 
-{ #category : 'testing' }
-DAPackageTreePresenter >> ifGraphVizAbsent: aBlock [
-	Smalltalk at: #GVGraphViz ifAbsent: aBlock
-]
-
 { #category : 'initialization' }
 DAPackageTreePresenter >> initializePresenters [
 	tree := self newTree
@@ -170,12 +165,6 @@ DAPackageTreePresenter >> openTreeFor: namesOfSelected [
 { #category : 'actions' }
 DAPackageTreePresenter >> refresh [
 	self subclassResponsibility
-]
-
-{ #category : 'protocol' }
-DAPackageTreePresenter >> saveGraphAndOpenWith: graphvizGenerator [
-	graphvizGenerator saveDotFileAndGenerateForType: self defaultFormat.
-	^ graphvizGenerator openWith: self defaultFormat
 ]
 
 { #category : 'actions' }

@@ -366,9 +366,6 @@ PBAbstractImageBuilder >> createInitialObjects [
 			self log: 'Initializing CompiledMethod constants'.
 			self bootstrapInterpreter evaluateCode: 'CompiledMethod initialize.'.
 
-			self log: 'Initializing object dependent fields'.
-			self bootstrapInterpreter evaluateCode: 'Object initialize.'.
-
 			self log: 'Installing symbol table'.
 			self bootstrapInterpreter evaluateCode: 'Symbol initialize.
 	Symbol classPool at: #SymbolTable put: (WeakSet withAll: ByteSymbol allInstances)'.

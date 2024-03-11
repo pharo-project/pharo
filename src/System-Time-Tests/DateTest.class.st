@@ -54,7 +54,7 @@ DateTest >> selectorsToBeIgnored [
 DateTest >> setUp [
 	super setUp.
 	june2nd1973 := self dateClass year: 1973 day: 153.
-	january23rd2004 := Date readFrom: '01-23-2004' readStream.
+	january23rd2004 := self dateClass newDay: 23 month: 1 year: 2004.
 	aTime := Time readFrom: '12:34:56 pm' readStream
 ]
 
@@ -74,17 +74,17 @@ DateTest >> testAccessing [
 { #category : 'tests' }
 DateTest >> testAddDays [
 
-	self assert: (january23rd2004 addDays: 0) equals: '2004-01-23' asDate.
-	self assert: (january23rd2004 addDays: 31) equals: '2004-02-23' asDate.
-	self assert: (january23rd2004 addDays: 366) equals: '2005-01-23' asDate
+	self assert: (january23rd2004 addDays: 0) equals: (Date readFrom: '23-1-2004' pattern: 'd-m-y').
+	self assert: (january23rd2004 addDays: 31) equals: (Date readFrom: '23-2-2004' pattern: 'd-m-y').
+	self assert: (january23rd2004 addDays: 366) equals: (Date readFrom: '23-1-2005' pattern: 'd-m-y')
 ]
 
 { #category : 'tests' }
 DateTest >> testAddMonths [
 
-	self assert: (january23rd2004 addMonths: 0) equals: '2004-01-23' asDate.
-	self assert: (january23rd2004 addMonths: 1) equals: '2004-02-23' asDate.
-	self assert: (january23rd2004 addMonths: 12) equals: '2005-01-23' asDate
+	self assert: (january23rd2004 addMonths: 0) equals: (Date readFrom: '23-1-2004' pattern: 'd-m-y').
+	self assert: (january23rd2004 addMonths: 1) equals: (Date readFrom: '23-2-2004' pattern: 'd-m-y').
+	self assert: (january23rd2004 addMonths: 12) equals: (Date readFrom: '23-1-2005' pattern: 'd-m-y')
 ]
 
 { #category : 'tests' }
@@ -116,19 +116,19 @@ DateTest >> testAsSeconds [
 
 	| secondsSinceEpoch dateUTC dateEDT datePST |
 	self useTimeZone: 'UTC' during: [
-		dateUTC := Date readFrom: '01-23-2004' readStream.
+		dateUTC := self dateClass newDay: 23 month: 1 year: 2004.
 		secondsSinceEpoch := (dateUTC start - DateAndTime epoch) asSeconds.
 		self assert: dateUTC asSeconds equals: secondsSinceEpoch.
 		self assert: (Date fromSeconds: dateUTC asSeconds) equals: dateUTC ].
 
 	self useTimeZone: 'EDT' during: [
-		dateEDT := Date readFrom: '01-23-2004' readStream.
+		dateEDT := self dateClass newDay: 23 month: 1 year: 2004.
 		secondsSinceEpoch := (dateEDT start - DateAndTime epoch) asSeconds.
 		self assert: dateEDT asSeconds equals: secondsSinceEpoch.
 		self assert: (Date fromSeconds: dateEDT asSeconds) equals: dateEDT ].
 
 	self useTimeZone: 'PST' during: [
-		datePST := Date readFrom: '01-23-2004' readStream.
+		datePST := self dateClass newDay: 23 month: 1 year: 2004.
 		secondsSinceEpoch := (datePST start - DateAndTime epoch) asSeconds.
 		self assert: datePST asSeconds equals: secondsSinceEpoch.
 		self assert: (Date fromSeconds: datePST asSeconds) equals: datePST ].
@@ -161,7 +161,7 @@ DateTest >> testBetweenAnd [
 DateTest >> testComparing [
 
 	| sameDate laterDate earlierDate |
-	sameDate := june2nd1973 asString asDate.
+	sameDate := june2nd1973 copy.
 	laterDate := june2nd1973 + 1 day.
 	earlierDate := june2nd1973 - 1 day.
 
@@ -222,7 +222,7 @@ DateTest >> testDuration [
 
 { #category : 'tests' }
 DateTest >> testEqual [
-	self assert: january23rd2004 equals: 'January 23, 2004' asDate
+	self assert: january23rd2004 equals: (Date readFrom: '23-1-2004' pattern: 'd-m-y')
 ]
 
 { #category : 'tests' }
@@ -256,7 +256,7 @@ DateTest >> testFromDays [
 	june2nd1973FromDays := self dateClass fromDays: (june2nd1973 - self epoch) asDays.
 	self assert: june2nd1973FromDays equals: (june2nd1973 translateTo: 0).
 
-	march18th1627 := '18 March 1627' asDate.
+	march18th1627 := Date readFrom: '18-3-1627' pattern: 'd-m-y'.
 	march18th1627FromDays := self dateClass fromDays: (march18th1627 - self epoch) asDays.
 	self assert: march18th1627FromDays equals: (march18th1627 translateTo: 0).
 
@@ -435,7 +435,7 @@ DateTest >> testNext [
 
 	| nextDay |
 	nextDay := june2nd1973 next.
-	self assert: nextDay equals: '3 June, 1973' asDate
+	self assert: nextDay equals: (Date readFrom: '3-6-1973' pattern: 'd-m-y')
 ]
 
 { #category : 'tests' }
@@ -443,13 +443,13 @@ DateTest >> testPrevious [
 
 	| previousDay |
 	previousDay := june2nd1973 previous.
-	self assert: previousDay equals: '1 June, 1973' asDate
+	self assert: previousDay equals: (Date readFrom: '1-6-1973' pattern: 'd-m-y')
 ]
 
 { #category : 'tests' }
 DateTest >> testPreviousByName [
 
-	self assert: (january23rd2004 previous: #Friday) equals: '2004-01-16' asDate
+	self assert: (january23rd2004 previous: #Friday) equals: (Date readFrom: '16-1-2004' pattern: 'd-m-y')
 ]
 
 { #category : 'tests' }
@@ -523,22 +523,6 @@ DateTest >> testPrintOnFormat [
 ]
 
 { #category : 'tests' }
-DateTest >> testReadFrom [
-	| s1 s2 s3 s4 s5 |
-	s1 := '2 June 1973' readStream.
-	s2 := '2-JUN-73' readStream.
-	s3 := 'June 2, 1973' readStream.
-	s4 := '6/2/73' readStream.
-	s5 := '2JUN73' readStream.
-
-	self assert: (self dateClass readFrom: s1) equals: june2nd1973.
-	self assert: (self dateClass readFrom: s2) equals: june2nd1973.
-	self assert: (self dateClass readFrom: s3) equals: june2nd1973.
-	self assert: (self dateClass readFrom: s4) equals: june2nd1973.
-	self assert: (self dateClass readFrom: s5) equals: june2nd1973
-]
-
-{ #category : 'tests' }
 DateTest >> testStarting [
 
 	| aDateAndTime anyTime |
@@ -563,8 +547,8 @@ DateTest >> testSubtractDate [
 { #category : 'tests' }
 DateTest >> testSubtractDays [
 
-	self assert: (january23rd2004 subtractDays: 0) equals: '2004-01-23' asDate.
-	self assert: (january23rd2004 subtractDays: 30) equals: '2003-12-24' asDate
+	self assert: (january23rd2004 subtractDays: 0) equals: (Date readFrom: '23-1-2004' pattern: 'd-m-y').
+	self assert: (january23rd2004 subtractDays: 30) equals: (Date readFrom: '24-12-2003' pattern: 'd-m-y')
 ]
 
 { #category : 'tests' }

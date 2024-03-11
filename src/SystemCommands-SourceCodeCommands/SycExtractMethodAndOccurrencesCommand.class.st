@@ -48,7 +48,7 @@ SycExtractMethodAndOccurrencesCommand >> defaultMenuIconName [
 
 { #category : 'accessing' }
 SycExtractMethodAndOccurrencesCommand >> defaultMenuItemName [
-	^ 'Extract method and occurances'
+	^ '(R) Extract method and occurrences'
 ]
 
 { #category : 'execution' }

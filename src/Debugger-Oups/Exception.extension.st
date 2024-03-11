@@ -5,7 +5,7 @@ Exception >> debug [
 	"requests a debugger on myself"
 
 	<debuggerCompleteToSender>
-	(OupsDebugRequest newForContext: self stack)
-		label: self message;
+	(OupsDebugRequest newForContext: self signalerContext)
+		label: self messageText;
 		submit
 ]

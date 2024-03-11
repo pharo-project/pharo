@@ -800,17 +800,6 @@ Object >> errorSubscriptBounds: index [
 	SubscriptOutOfBounds signalFor: index
 ]
 
-{ #category : 'finalization' }
-Object >> executor [
-	"Return an object which can act as executor for finalization of the receiver"
-
-	self
-		deprecated: 'Please use #finalizer instead. See Phep0003'
-		transformWith: '`@receiver executor' -> '`@receiver finalizer'.
-
-	^ self finalizer
-]
-
 { #category : 'error handling' }
 Object >> explicitRequirement [
 	"If one of the superclasses can perform the selector, we execute the method of that class, otherwise, the explicit requirement error is thrown"
@@ -1311,18 +1300,6 @@ Object >> longPrintStringLimitedTo: aLimitValue [
 	^ str ifEmpty: [ self printString , String cr ]
 ]
 
-{ #category : 'flagging' }
-Object >> nominallyUnsent: aSelectorSymbol [
-	"From within the body of a method which is not formally sent within the system, but which you intend to have remain in the system (for potential manual invocation, or for documentation, or perhaps because it's sent by commented-out-code that you anticipate uncommenting out someday, send this message, with the selector itself as the argument.
-
-This will serve two purposes:
-
-	(1)  The method will not be returned by searches for unsent selectors (because it, in a manner of speaking, sends itself).
-	(2)	You can locate all such methods by browsing senders of #nominallyUnsent:"
-
-	false ifTrue: [self flag: #nominallyUnsent:]    "So that this method itself will appear to be sent"
-]
-
 { #category : 'testing' }
 Object >> notNil [
 	"Coerces nil to false and everything else to true."
@@ -1805,10 +1782,13 @@ Object >> storeOn: aStream [
 
 	aStream nextPut: $(.
 	self class isVariable
-		ifTrue: [aStream nextPutAll: '(', self class name, ' basicNew: ';
-					store: self basicSize;
-					nextPutAll: ') ']
-		ifFalse: [aStream nextPutAll: self class name, ' basicNew'].
+		ifTrue: [aStream  
+						nextPut: $(;
+						nextPutAll: self class name;
+						nextPutAll:' basicNew: ';
+						store: self basicSize;
+						nextPutAll: ') ']
+		ifFalse: [aStream nextPutAll: self class name; nextPutAll:' basicNew'].
 	1 to: self class instSize do:
 		[:i |
 		aStream nextPutAll: ' instVarAt: ';
