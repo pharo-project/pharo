@@ -758,6 +758,54 @@ DebugPointTest >> testRemoveAfterSuperclassRemoved [
 ]
 
 { #category : 'tests' }
+DebugPointTest >> testRemoveBehavior [
+
+	| conditionBehavior onceBehavior |
+	conditionBehavior := ConditionBehavior new condition:
+		                     'corner = (300@200) '.
+	dp := DebugPointManager
+		      installNew: BreakDebugPoint
+		      on: node
+		      withBehaviors: { OnceBehavior }.
+	dp addBehavior: conditionBehavior.
+	dp saveContext: context.
+	onceBehavior := dp getBehavior: OnceBehavior.
+
+	self
+		assertCollection: dp sideEffectBehaviors
+		hasSameElements: { onceBehavior }.
+	self
+		assertCollection: dp checkBehaviors
+		hasSameElements: { conditionBehavior }.
+	self assertCollection: dp behaviors hasSameElements: {
+			conditionBehavior.
+			onceBehavior }.
+
+	self assert: dp enabled.
+	self deny: conditionBehavior execute.
+
+	self shouldnt: [ dp hitWithContext: context ] raise: Break.
+
+	dp removeBehavior: ConditionBehavior.
+
+	self
+		assertCollection: dp sideEffectBehaviors
+		hasSameElements: { onceBehavior }.
+	self assertCollection: dp checkBehaviors hasSameElements: {  }.
+	self assertCollection: dp behaviors hasSameElements: { onceBehavior }.
+
+	dp removeBehavior: OnceBehavior.
+
+	self assertCollection: dp sideEffectBehaviors hasSameElements: {  }.
+	self assertCollection: dp checkBehaviors hasSameElements: {  }.
+	self assertCollection: dp behaviors hasSameElements: {  }.
+
+	self assert: dp enabled.
+	self should: [ dp hitWithContext: context ] raise: Break.
+	self assert: dp enabled
+]
+
+{ #category : 'tests' }
 DebugPointTest >> testRemoveClassWithBreakpoint [
 
 	cls compile: 'dummy ^42'.
