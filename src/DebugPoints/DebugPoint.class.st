@@ -291,7 +291,8 @@ DebugPoint >> removeSideEffectBehavior: aSideEffectBehavior [
 { #category : 'scope' }
 DebugPoint >> resetObjectScope [
 
-	target resetObjectScope
+	target := target resetObjectScope.
+	self install
 ]
 
 { #category : 'API' }
@@ -300,10 +301,16 @@ DebugPoint >> saveContext: aContext [
 	self arguments at: #context put: aContext
 ]
 
-{ #category : 'description' }
+{ #category : 'scope' }
 DebugPoint >> scope [
 
 	^ self target scope
+]
+
+{ #category : 'scope' }
+DebugPoint >> scopeString [
+
+	^ self target scopeString
 ]
 
 { #category : 'accessing' }

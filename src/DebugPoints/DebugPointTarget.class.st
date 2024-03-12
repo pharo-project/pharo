@@ -54,8 +54,20 @@ DebugPointTarget >> removeFromMethod: aMethod for: aDebugPoint [
 	self subclassResponsibility
 ]
 
+{ #category : 'scope' }
+DebugPointTarget >> resetObjectScope [
+
+	^ self subclassResponsibility
+]
+
 { #category : 'description' }
 DebugPointTarget >> scope [
+
+	^ self subclassResponsibility
+]
+
+{ #category : 'description' }
+DebugPointTarget >> scopeString [
 
 	^ self subclassResponsibility
 ]

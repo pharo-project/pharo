@@ -44,10 +44,22 @@ DebugPointObjectTarget >> removeFromMethod: aMethod for: aDebugPoint [
 	self subTarget removeFromMethod: aMethod for: aDebugPoint
 ]
 
+{ #category : 'scope' }
+DebugPointObjectTarget >> resetObjectScope [
+
+	^ self subTarget
+]
+
 { #category : 'description' }
 DebugPointObjectTarget >> scope [
 
-	^ 'obj {1}' format: { self targetInstance }
+	^ self targetInstance
+]
+
+{ #category : 'description' }
+DebugPointObjectTarget >> scopeString [
+
+	^ 'obj {1}' format: { self scope }
 ]
 
 { #category : 'accessing' }
