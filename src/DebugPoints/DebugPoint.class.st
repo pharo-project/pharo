@@ -237,12 +237,18 @@ DebugPoint >> remove [
 { #category : 'API' }
 DebugPoint >> removeBehavior: aDebugPointBehaviorClass [
 	"removing a behavior"
-	|behavior|
-	behavior := (self getBehavior: aDebugPointBehaviorClass).
-	behavior remove.
-	self behaviors remove: behavior.
-	DebugPointManager notifyDebugPointChanged: self.
 
+	| behavior |
+	behavior := self getBehavior: aDebugPointBehaviorClass.
+	behavior remove.
+	behavior removeFromDebugPoint: self.
+	DebugPointManager notifyDebugPointChanged: self
+]
+
+{ #category : 'removing' }
+DebugPoint >> removeCheckBehavior: aCheckBehavior [
+
+	checkBehaviors remove: aCheckBehavior
 ]
 
 { #category : 'removing' }
@@ -274,6 +280,12 @@ DebugPoint >> removeFromMethod: aMethod [
 DebugPoint >> removeNode: aRBNode [
 
 	self link removeNode: aRBNode
+]
+
+{ #category : 'removing' }
+DebugPoint >> removeSideEffectBehavior: aSideEffectBehavior [
+
+	sideEffectBehaviors remove: aSideEffectBehavior
 ]
 
 { #category : 'scope' }

@@ -27,3 +27,9 @@ DebugPointCheckBehavior >> initialize [
 	super initialize.
 	self priority: SmallInteger maxVal
 ]
+
+{ #category : 'removing' }
+DebugPointCheckBehavior >> removeFromDebugPoint: aDebugPoint [
+
+	aDebugPoint removeCheckBehavior: self
+]

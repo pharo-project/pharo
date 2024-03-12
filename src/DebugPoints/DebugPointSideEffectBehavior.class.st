@@ -20,3 +20,9 @@ DebugPointSideEffectBehavior >> addToDebugPoint: aDebugPoint [
 
 	aDebugPoint addSideEffectBehavior: self
 ]
+
+{ #category : 'removing' }
+DebugPointSideEffectBehavior >> removeFromDebugPoint: aDebugPoint [
+
+	aDebugPoint removeSideEffectBehavior: self
+]

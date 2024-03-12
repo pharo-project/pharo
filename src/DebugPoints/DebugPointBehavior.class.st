@@ -86,3 +86,9 @@ DebugPointBehavior >> remove [
 	"cleanup actions should be taken here"
 	^self.
 ]
+
+{ #category : 'removing' }
+DebugPointBehavior >> removeFromDebugPoint: aDebugPoint [
+
+	self subclassResponsibility
+]
