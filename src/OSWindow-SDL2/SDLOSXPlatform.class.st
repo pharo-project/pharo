@@ -37,11 +37,16 @@ SDLOSXPlatform >> ffiLibraryName [
 
 { #category : 'initialization' }
 SDLOSXPlatform >> initPlatformSpecific [
-	| sel cls |
+	| sel cls sharedApplication |
 
 	sel := self lookupSelector: 'sharedApplication'.
 	cls := self lookupClass: 'NSApplication'.
-	self sendMessage: sel to: cls
+	sharedApplication := self sendMessage: sel to: cls.
+	
+	self sendMessage: (self lookupSelector: 'finishLaunching') to: sharedApplication.
+	
+	SDLOSXPharoMenu uniqueInstance installInOSXWindow.
+
 ]
 
 { #category : 'utilities - objectiveC' }
