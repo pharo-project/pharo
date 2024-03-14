@@ -59,6 +59,7 @@ StRefactoringPreviewPresenter >> accept [
 		
 		self closeWindow ].
 	self performChanges.
+	self updateGlobalActiveScope.
 	self closeWindow
 ]
 
@@ -150,6 +151,12 @@ StRefactoringPreviewPresenter >> defaultLayout [
 		yourself
 ]
 
+{ #category : 'accessing' }
+StRefactoringPreviewPresenter >> globalActiveScope [
+
+	^ ScopesManager activeScope
+]
+
 { #category : 'initialization' }
 StRefactoringPreviewPresenter >> initializeDialogWindow: aDialogWindowPresenter [
 	"Used to initialize the model in the case of the use into a dialog window.
@@ -176,7 +183,7 @@ StRefactoringPreviewPresenter >> initializePresenters [
 	scopeLabel := self newLabel label: 'Scope '.
 	scopeDropList := self newDropList.
 	scopeDropList display: [ :scope | scope description ].
-
+	
 	buttonOk := self newButton
 		            label: 'Ok';
 		            icon: (self iconNamed: #smallOk).
@@ -232,9 +239,16 @@ StRefactoringPreviewPresenter >> updateChanges [
 ]
 
 { #category : 'update' }
+StRefactoringPreviewPresenter >> updateGlobalActiveScope [
+
+	ScopesManager activeScope: scopeDropList selectedItem asRBEnvironment
+]
+
+{ #category : 'update' }
 StRefactoringPreviewPresenter >> updateScopeList [
 
-	scopeDropList items: scopes
+	scopeDropList items: scopes.
+	self globalActiveScope ifNotNil: [ :scope | scopeDropList selectItem: scope ]
 ]
 
 { #category : 'update' }

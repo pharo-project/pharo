@@ -294,7 +294,7 @@ RBBrowserEnvironment >> definesClass: aClass [
 { #category : 'description' }
 RBBrowserEnvironment >> description [
 
-	^ self label
+	^ self defaultName
 ]
 
 { #category : 'description' }
@@ -577,7 +577,7 @@ RBBrowserEnvironment >> packageAt: aName ifAbsent: absentBlock [
 
 { #category : 'accessing - packages' }
 RBBrowserEnvironment >> packages [
-
+	"Contrary to `full packages`, `packages` include both packages directly defined in the environment and packages from the clases belonging to the environment. For example, if an environment contains the class Object, the package Kernel is a defined package in the environment, even though this package does is not directly defined in the environment "
 	^ self packageOrganizer packages select: [ :package | self includesPackage: package ]
 ]
 
