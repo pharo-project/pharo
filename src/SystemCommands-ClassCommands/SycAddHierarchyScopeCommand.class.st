@@ -17,7 +17,8 @@ SycAddHierarchyScopeCommand >> defaultMenuItemName [
 { #category : 'execution' }
 SycAddHierarchyScopeCommand >> execute [
 	| scope |
-	self halt: 'Fix me! I should use ScopesManager to create the new scope'.
+	self inform: 'Implementation is pending'.
+	^ self.
 	scope :=  RBBrowserEnvironment new forClassHierarchy: targetClass.
 	ScopesManager addScope: scope.
 	ScopesPresenter openSelecting: scope
