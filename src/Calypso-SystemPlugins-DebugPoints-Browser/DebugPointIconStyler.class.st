@@ -75,11 +75,6 @@ DebugPointIconStyler >> allDebugPointsOn: aNode [
 	^(aNode links select: [ :link | link metaObject isKindOf: self forClass ]) collect: [:link | link metaObject].
 ]
 
-{ #category : 'private' }
-DebugPointIconStyler >> debugPointOn: aNode [
-	^(aNode links detect: [ :link | link metaObject isKindOf: self forClass ]) metaObject.
-]
-
 { #category : 'styling' }
 DebugPointIconStyler >> disableIcon: anIcon dp: dp [
 
