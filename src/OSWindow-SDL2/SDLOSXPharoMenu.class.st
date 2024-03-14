@@ -31,15 +31,15 @@ SDLOSXPharoMenu class >> uniqueInstance [
 { #category : 'private' }
 SDLOSXPharoMenu >> addPharoMenuOptions [
 
-	| selAddMenuItem selSetTarget selDoAbout selDoQuit selAlloc |
+	| selAddMenuItem selSetTarget selDoAbout selDoQuit selRemoveAllItems |
 	selAddMenuItem := self lookupSelector: 'addItemWithTitle:action:keyEquivalent:'.
 	selSetTarget := self lookupSelector: 'setTarget:'.
 	selDoAbout := self lookupSelector: 'doAbout'.
 	selDoQuit := self lookupSelector: 'doQuit'.
-	selAlloc := self lookupSelector: 'alloc'.
-	
-	pharoTargetObject := self sendMessage: selAlloc to: pharoMenuTargetClass.
+	selRemoveAllItems := self lookupSelector: 'removeAllItems'.
 
+	self sendMessage: selRemoveAllItems to: self pharoMenu.
+	
 	aboutPharoItem := self
 		sendMessage: selAddMenuItem
 		to: self pharoMenu
@@ -57,6 +57,36 @@ SDLOSXPharoMenu >> addPharoMenuOptions [
 		with: (self nsStringOf: 'q').
 		
 		self sendMessage: selSetTarget to: quitPharoItem withPointer: pharoTargetObject
+
+]
+
+{ #category : 'private' }
+SDLOSXPharoMenu >> allocatePharoMenuTarget [
+	
+	| nsObjectCls selAlloc |
+
+	(pharoTargetObject isNotNil and: [ pharoTargetObject isNull not ])
+		ifTrue: [ ^ self ].
+
+	nsObjectCls := self lookupClass: 'NSObject'.
+	selAlloc := self lookupSelector: 'alloc'.
+
+	pharoMenuTargetClass := self 
+		objc_allocateClassPairSuperclass: nsObjectCls 
+		name: 'PharoMenuTargetClass' 
+		extraBytes: 0.
+		
+	doAboutCallback := FFICallback signature: #(void (void* rcvr, void* objCSel)) block: [:rcvr :sel | self doAbout].	
+		
+	self class_addMethodClass: pharoMenuTargetClass selector: (self lookupSelector: 'doAbout') implementation: doAboutCallback  signature: 'v@:'.
+
+	doQuitCallback := FFICallback signature: #(void (void* rcvr, void* objCSel)) block: [:rcvr :sel | self doQuit].	
+
+	self class_addMethodClass: pharoMenuTargetClass selector: (self lookupSelector: 'doQuit') implementation: doQuitCallback  signature: 'v@:'.
+	
+	self objc_registerClassPair: pharoMenuTargetClass.
+	
+	pharoTargetObject := self sendMessage: selAlloc to: pharoMenuTargetClass.
 
 ]
 
@@ -110,7 +140,7 @@ SDLOSXPharoMenu >> ffiLibraryName [
 { #category : 'api' }
 SDLOSXPharoMenu >> installInOSXWindow [
 
-	self registerPharoMenuTargetClass.
+	self allocatePharoMenuTarget.
 	self addPharoMenuOptions.
 ]
 
@@ -164,29 +194,6 @@ SDLOSXPharoMenu >> pharoMenu [
 	^( pharoMenu isNil or: [ pharoMenu isNull ])
 		ifTrue: [ pharoMenu := self doGetPharoMenu ]
 		ifFalse: [ pharoMenu ].
-]
-
-{ #category : 'private' }
-SDLOSXPharoMenu >> registerPharoMenuTargetClass [
-	
-	| nsObjectCls |
-
-	nsObjectCls := self lookupClass: 'NSObject'.
-
-	pharoMenuTargetClass := self 
-		objc_allocateClassPairSuperclass: nsObjectCls 
-		name: 'PharoMenuTargetClass' 
-		extraBytes: 0.
-		
-	doAboutCallback := FFICallback signature: #(void (void* rcvr, void* objCSel)) block: [:rcvr :sel | self doAbout].	
-		
-	self class_addMethodClass: pharoMenuTargetClass selector: (self lookupSelector: 'doAbout') implementation: doAboutCallback  signature: 'v@:'.
-
-	doQuitCallback := FFICallback signature: #(void (void* rcvr, void* objCSel)) block: [:rcvr :sel | self doQuit].	
-
-	self class_addMethodClass: pharoMenuTargetClass selector: (self lookupSelector: 'doQuit') implementation: doQuitCallback  signature: 'v@:'.
-	
-	self objc_registerClassPair: pharoMenuTargetClass.
 ]
 
 { #category : 'private - ffi' }
