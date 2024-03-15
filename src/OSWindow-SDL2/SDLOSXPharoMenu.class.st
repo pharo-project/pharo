@@ -7,12 +7,11 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'pharoMenu',
-		'aboutPharoItem',
-		'quitPharoItem',
 		'pharoMenuTargetClass',
 		'doAboutCallback',
 		'pharoTargetObject',
-		'doQuitCallback'
+		'doQuitCallback',
+		'doPreferencesCallback'
 	],
 	#classVars : [
 		'UniqueInstance'
@@ -29,34 +28,103 @@ SDLOSXPharoMenu class >> uniqueInstance [
 ]
 
 { #category : 'private' }
-SDLOSXPharoMenu >> addPharoMenuOptions [
+SDLOSXPharoMenu >> addCallbackForSelector: aSelector withBlock: aBlock toTargetClass: aTargetClass [
 
-	| selAddMenuItem selSetTarget selDoAbout selDoQuit selRemoveAllItems |
+	| aCallback |
+
+	aCallback := FFICallback signature: #(void (void* rcvr, void* objCSel)) block: [:rcvr :sel | aBlock value ].			
+	ObjCLibrary uniqueInstance class_addMethodClass: aTargetClass selector: (ObjCLibrary uniqueInstance lookupSelector: aSelector) implementation: aCallback  signature: 'v@:'.
+
+	^ aCallback
+]
+
+{ #category : 'private' }
+SDLOSXPharoMenu >> addMenuItemTo: aNSMenu title: aTitle shortcut: aShortcut selector: aNSSelector [
+
+	| selAddMenuItem selSetTarget newItem selectorPointer |
 	selAddMenuItem := ObjCLibrary uniqueInstance lookupSelector: 'addItemWithTitle:action:keyEquivalent:'.
 	selSetTarget := ObjCLibrary uniqueInstance lookupSelector: 'setTarget:'.
+	
+	selectorPointer := aNSSelector ifNil: [ ExternalAddress null ] ifNotNil: [ aNSSelector ].
+	
+	newItem := ObjCLibrary uniqueInstance
+		sendMessage: selAddMenuItem
+		to: aNSMenu
+		with: (ObjCLibrary uniqueInstance nsStringOf: aTitle)
+		with: selectorPointer
+		with: (ObjCLibrary uniqueInstance nsStringOf: aShortcut).
+
+	selectorPointer isNull 
+		ifFalse: [ ObjCLibrary uniqueInstance sendMessage: selSetTarget to: newItem withPointer: pharoTargetObject].
+
+	^ newItem
+
+]
+
+{ #category : 'private' }
+SDLOSXPharoMenu >> addMenuItemTo: menu title: aTitle withSubMenu: aNSMenu [
+
+	| selSetSubMenu menuItem |
+	
+	selSetSubMenu := ObjCLibrary uniqueInstance lookupSelector: 'setSubmenu:'.
+	menuItem := self addMenuItemTo: menu title: aTitle shortcut: '' selector: nil.
+	
+	ObjCLibrary uniqueInstance sendMessage: selSetSubMenu to: menuItem withPointer: aNSMenu.
+
+]
+
+{ #category : 'private' }
+SDLOSXPharoMenu >> addPharoMenuOptions [
+
+	| selDoAbout selDoQuit selRemoveAllItems selDoPreferences |
 	selDoAbout := ObjCLibrary uniqueInstance lookupSelector: 'doAbout'.
 	selDoQuit := ObjCLibrary uniqueInstance lookupSelector: 'doQuit'.
+	selDoPreferences := ObjCLibrary uniqueInstance lookupSelector: 'doPreferences'.
+
 	selRemoveAllItems := ObjCLibrary uniqueInstance lookupSelector: 'removeAllItems'.
-
 	ObjCLibrary uniqueInstance sendMessage: selRemoveAllItems to: self pharoMenu.
+
+	self addMenuItemTo: self pharoMenu title: 'About Pharo' shortcut: '' selector: selDoAbout.
+	self addSeparatorTo: self pharoMenu.
+
+	self addMenuItemTo: self pharoMenu title: 'Preferences' shortcut: ',' selector: selDoPreferences.
+	self addSeparatorTo: self pharoMenu.
 	
-	aboutPharoItem := ObjCLibrary uniqueInstance
-		sendMessage: selAddMenuItem
-		to: self pharoMenu
-		with: (ObjCLibrary uniqueInstance nsStringOf: 'About Pharo')
-		with: selDoAbout
-		with: (ObjCLibrary uniqueInstance nsStringOf: '').
+	self addServicesMenuTo: self pharoMenu.
+	
+	self addMenuItemTo: self pharoMenu title: 'Quit Pharo' shortcut: 'q' selector: selDoQuit.
+]
 
-	ObjCLibrary uniqueInstance sendMessage: selSetTarget to: aboutPharoItem withPointer: pharoTargetObject.
+{ #category : 'private' }
+SDLOSXPharoMenu >> addSeparatorTo: aNSMenu [
 
-	quitPharoItem := ObjCLibrary uniqueInstance
-		sendMessage: selAddMenuItem
-		to: self pharoMenu
-		with: (ObjCLibrary uniqueInstance nsStringOf: 'Quit Pharo')
-		with: selDoQuit
-		with: (ObjCLibrary uniqueInstance nsStringOf: 'q').
-		
-		ObjCLibrary uniqueInstance sendMessage: selSetTarget to: quitPharoItem withPointer: pharoTargetObject
+	| menuItemCls selSeparatorItem selAddItem newSeparator |
+	menuItemCls := ObjCLibrary uniqueInstance lookupClass: 'NSMenuItem'.
+	selSeparatorItem := ObjCLibrary uniqueInstance lookupSelector: 'separatorItem'.
+	selAddItem := ObjCLibrary uniqueInstance lookupSelector: 'addItem:'.
+
+	newSeparator := ObjCLibrary uniqueInstance sendMessage: selSeparatorItem to: menuItemCls.
+
+	ObjCLibrary uniqueInstance sendMessage: selAddItem to: aNSMenu withPointer: newSeparator.
+
+]
+
+{ #category : 'private' }
+SDLOSXPharoMenu >> addServicesMenuTo: aNSMenu [
+
+	| selServicesMenu servicesMenu sharedApplication selSetServicesMenu |
+	selServicesMenu := ObjCLibrary uniqueInstance lookupSelector: 'servicesMenu'.
+	sharedApplication := ObjCLibrary uniqueInstance sharedApplication.
+	servicesMenu := ObjCLibrary uniqueInstance sendMessage: selServicesMenu to: sharedApplication.
+	selSetServicesMenu := ObjCLibrary uniqueInstance lookupSelector: 'setServicesMenu:'.
+
+	"If there is no Services Menu, we have to create it and register it"
+	servicesMenu isNull ifTrue: [ 
+		servicesMenu := self newNSMenu.
+		ObjCLibrary uniqueInstance sendMessage: selSetServicesMenu to: sharedApplication  withPointer: servicesMenu].
+
+	self addMenuItemTo: aNSMenu title: 'Services' withSubMenu: servicesMenu.
+	self addSeparatorTo: aNSMenu
 
 ]
 
@@ -75,15 +143,11 @@ SDLOSXPharoMenu >> allocatePharoMenuTarget [
 		objc_allocateClassPairSuperclass: nsObjectCls 
 		name: 'PharoMenuTargetClass' 
 		extraBytes: 0.
-		
-	doAboutCallback := FFICallback signature: #(void (void* rcvr, void* objCSel)) block: [:rcvr :sel | self doAbout].	
-		
-	ObjCLibrary uniqueInstance class_addMethodClass: pharoMenuTargetClass selector: (ObjCLibrary uniqueInstance lookupSelector: 'doAbout') implementation: doAboutCallback  signature: 'v@:'.
-
-	doQuitCallback := FFICallback signature: #(void (void* rcvr, void* objCSel)) block: [:rcvr :sel | self doQuit].	
-
-	ObjCLibrary uniqueInstance class_addMethodClass: pharoMenuTargetClass selector: (ObjCLibrary uniqueInstance lookupSelector: 'doQuit') implementation: doQuitCallback  signature: 'v@:'.
 	
+	doAboutCallback := self addCallbackForSelector: 'doAbout' withBlock: [ self doAbout ] toTargetClass: pharoMenuTargetClass.
+	doPreferencesCallback := self addCallbackForSelector: 'doPreferences' withBlock: [ self doPreferences ] toTargetClass: pharoMenuTargetClass.
+	doQuitCallback := self addCallbackForSelector: 'doQuit' withBlock: [ self doQuit ] toTargetClass: pharoMenuTargetClass.
+			
 	ObjCLibrary uniqueInstance objc_registerClassPair: pharoMenuTargetClass.
 	
 	pharoTargetObject := ObjCLibrary uniqueInstance sendMessage: selAlloc to: pharoMenuTargetClass.
@@ -99,36 +163,26 @@ SDLOSXPharoMenu >> doAbout [
 { #category : 'private' }
 SDLOSXPharoMenu >> doCreatePharoMenu [
 
-	| selSharedApplication selItemAtIndex clsNSApplication sharedApplication menu pharoMenuItem selSetMainMenu selSetSubMenu selAlloc selAddMenuItem clsNSMenu |
+	| selItemAtIndex mainMenu pharoMenuItem selSetMainMenu sharedApplication |
 
-	selSharedApplication := ObjCLibrary uniqueInstance lookupSelector: 'sharedApplication'.
 	selSetMainMenu := ObjCLibrary uniqueInstance lookupSelector: 'setMainMenu:'.
 	selItemAtIndex := ObjCLibrary uniqueInstance lookupSelector: 'itemAtIndex:'.
-	selSetSubMenu := ObjCLibrary uniqueInstance lookupSelector: 'setSubmenu:'.
-	selAlloc := ObjCLibrary uniqueInstance lookupSelector: 'alloc'.
-	selAddMenuItem := ObjCLibrary uniqueInstance lookupSelector: 'addItemWithTitle:action:keyEquivalent:'.
 
-	clsNSApplication := ObjCLibrary uniqueInstance lookupClass: 'NSApplication'.
-	clsNSMenu := ObjCLibrary uniqueInstance lookupClass: 'NSMenu'.
-
-	menu := ObjCLibrary uniqueInstance sendMessage: selAlloc to: clsNSMenu.
+	mainMenu := self newNSMenu.		
+	pharoMenu := self newNSMenu. 
 	
-	pharoMenuItem := ObjCLibrary uniqueInstance
-		sendMessage: selAddMenuItem
-		to: menu
-		with: (ObjCLibrary uniqueInstance nsStringOf: 'Pharo')
-		with: ExternalAddress null
-		with: (ObjCLibrary uniqueInstance nsStringOf: '').
-
-	pharoMenu := ObjCLibrary uniqueInstance sendMessage: selAlloc to: clsNSMenu. 
+	pharoMenuItem := self addMenuItemTo: mainMenu title: 'Pharo' withSubMenu: pharoMenu.
 	
-	ObjCLibrary uniqueInstance sendMessage: selSetSubMenu to: pharoMenuItem withPointer: pharoMenu.
-	
-	sharedApplication := ObjCLibrary uniqueInstance sendMessage: selSharedApplication to: clsNSApplication.
-
-	ObjCLibrary uniqueInstance sendMessage: selSetMainMenu to: sharedApplication withPointer: menu.
+	sharedApplication := ObjCLibrary uniqueInstance sharedApplication.
+	ObjCLibrary uniqueInstance sendMessage: selSetMainMenu to: sharedApplication withPointer: mainMenu.
 
 	^ pharoMenu
+]
+
+{ #category : 'menu options' }
+SDLOSXPharoMenu >> doPreferences [
+
+	UIManager default defer: [ SettingBrowser open ]
 ]
 
 { #category : 'menu options' }
@@ -142,6 +196,17 @@ SDLOSXPharoMenu >> installInOSXWindow [
 
 	self allocatePharoMenuTarget.
 	self addPharoMenuOptions.
+]
+
+{ #category : 'private' }
+SDLOSXPharoMenu >> newNSMenu [	
+
+	| selAlloc clsNSMenu |
+	selAlloc := ObjCLibrary uniqueInstance lookupSelector: 'alloc'.
+	clsNSMenu := ObjCLibrary uniqueInstance lookupClass: 'NSMenu'.
+
+	^ ObjCLibrary uniqueInstance sendMessage: selAlloc to: clsNSMenu.
+
 ]
 
 { #category : 'accessing' }

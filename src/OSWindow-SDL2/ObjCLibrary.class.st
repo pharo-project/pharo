@@ -102,3 +102,15 @@ ObjCLibrary >> sendMessage: sel to: rcv withPointer: aParam [
 
 	^ self ffiCall: #(void* objc_msgSend(void* rcv, void* sel, void* aParam))
 ]
+
+{ #category : 'utilities - objectiveC' }
+ObjCLibrary >> sharedApplication [
+
+	| sel cls sharedApplication |
+
+	sel := self lookupSelector: 'sharedApplication'.
+	cls := self lookupClass: 'NSApplication'.
+	sharedApplication := self sendMessage: sel to: cls.
+
+	^ sharedApplication 
+]

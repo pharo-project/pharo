@@ -31,11 +31,9 @@ SDLOSXPlatform >> afterSetWindowTitle: aString onWindow: aOSSDLWindow [
 
 { #category : 'initialization' }
 SDLOSXPlatform >> initPlatformSpecific [
-	| sel cls sharedApplication |
 
-	sel := ObjCLibrary uniqueInstance lookupSelector: 'sharedApplication'.
-	cls := ObjCLibrary uniqueInstance lookupClass: 'NSApplication'.
-	sharedApplication := ObjCLibrary uniqueInstance sendMessage: sel to: cls.
+	| sharedApplication |
+	sharedApplication := ObjCLibrary uniqueInstance sharedApplication.
 	
 	ObjCLibrary uniqueInstance sendMessage: (ObjCLibrary uniqueInstance lookupSelector: 'finishLaunching') to: sharedApplication.
 	
