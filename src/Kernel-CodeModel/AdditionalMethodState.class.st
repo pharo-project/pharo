@@ -81,6 +81,7 @@ AdditionalMethodState >> analogousCodeTo: aMethodProperties [
 		[:i|
 		((self basicAt: i) analogousCodeTo: (aMethodProperties basicAt: i)) ifFalse:
 			[^false]].
+	self selector = aMethodProperties selector ifFalse: [ ^ false ].
 	^true
 ]
 
