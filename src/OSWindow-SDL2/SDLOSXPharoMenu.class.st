@@ -32,31 +32,31 @@ SDLOSXPharoMenu class >> uniqueInstance [
 SDLOSXPharoMenu >> addPharoMenuOptions [
 
 	| selAddMenuItem selSetTarget selDoAbout selDoQuit selRemoveAllItems |
-	selAddMenuItem := self lookupSelector: 'addItemWithTitle:action:keyEquivalent:'.
-	selSetTarget := self lookupSelector: 'setTarget:'.
-	selDoAbout := self lookupSelector: 'doAbout'.
-	selDoQuit := self lookupSelector: 'doQuit'.
-	selRemoveAllItems := self lookupSelector: 'removeAllItems'.
+	selAddMenuItem := ObjCLibrary uniqueInstance lookupSelector: 'addItemWithTitle:action:keyEquivalent:'.
+	selSetTarget := ObjCLibrary uniqueInstance lookupSelector: 'setTarget:'.
+	selDoAbout := ObjCLibrary uniqueInstance lookupSelector: 'doAbout'.
+	selDoQuit := ObjCLibrary uniqueInstance lookupSelector: 'doQuit'.
+	selRemoveAllItems := ObjCLibrary uniqueInstance lookupSelector: 'removeAllItems'.
 
-	self sendMessage: selRemoveAllItems to: self pharoMenu.
+	ObjCLibrary uniqueInstance sendMessage: selRemoveAllItems to: self pharoMenu.
 	
-	aboutPharoItem := self
+	aboutPharoItem := ObjCLibrary uniqueInstance
 		sendMessage: selAddMenuItem
 		to: self pharoMenu
-		with: (self nsStringOf: 'About Pharo')
+		with: (ObjCLibrary uniqueInstance nsStringOf: 'About Pharo')
 		with: selDoAbout
-		with: (self nsStringOf: '').
+		with: (ObjCLibrary uniqueInstance nsStringOf: '').
 
-	self sendMessage: selSetTarget to: aboutPharoItem withPointer: pharoTargetObject.
+	ObjCLibrary uniqueInstance sendMessage: selSetTarget to: aboutPharoItem withPointer: pharoTargetObject.
 
-	quitPharoItem := self
+	quitPharoItem := ObjCLibrary uniqueInstance
 		sendMessage: selAddMenuItem
 		to: self pharoMenu
-		with: (self nsStringOf: 'Quit Pharo')
+		with: (ObjCLibrary uniqueInstance nsStringOf: 'Quit Pharo')
 		with: selDoQuit
-		with: (self nsStringOf: 'q').
+		with: (ObjCLibrary uniqueInstance nsStringOf: 'q').
 		
-		self sendMessage: selSetTarget to: quitPharoItem withPointer: pharoTargetObject
+		ObjCLibrary uniqueInstance sendMessage: selSetTarget to: quitPharoItem withPointer: pharoTargetObject
 
 ]
 
@@ -68,31 +68,26 @@ SDLOSXPharoMenu >> allocatePharoMenuTarget [
 	(pharoTargetObject isNotNil and: [ pharoTargetObject isNull not ])
 		ifTrue: [ ^ self ].
 
-	nsObjectCls := self lookupClass: 'NSObject'.
-	selAlloc := self lookupSelector: 'alloc'.
+	nsObjectCls := ObjCLibrary uniqueInstance lookupClass: 'NSObject'.
+	selAlloc := ObjCLibrary uniqueInstance lookupSelector: 'alloc'.
 
-	pharoMenuTargetClass := self 
+	pharoMenuTargetClass := ObjCLibrary uniqueInstance 
 		objc_allocateClassPairSuperclass: nsObjectCls 
 		name: 'PharoMenuTargetClass' 
 		extraBytes: 0.
 		
 	doAboutCallback := FFICallback signature: #(void (void* rcvr, void* objCSel)) block: [:rcvr :sel | self doAbout].	
 		
-	self class_addMethodClass: pharoMenuTargetClass selector: (self lookupSelector: 'doAbout') implementation: doAboutCallback  signature: 'v@:'.
+	ObjCLibrary uniqueInstance class_addMethodClass: pharoMenuTargetClass selector: (ObjCLibrary uniqueInstance lookupSelector: 'doAbout') implementation: doAboutCallback  signature: 'v@:'.
 
 	doQuitCallback := FFICallback signature: #(void (void* rcvr, void* objCSel)) block: [:rcvr :sel | self doQuit].	
 
-	self class_addMethodClass: pharoMenuTargetClass selector: (self lookupSelector: 'doQuit') implementation: doQuitCallback  signature: 'v@:'.
+	ObjCLibrary uniqueInstance class_addMethodClass: pharoMenuTargetClass selector: (ObjCLibrary uniqueInstance lookupSelector: 'doQuit') implementation: doQuitCallback  signature: 'v@:'.
 	
-	self objc_registerClassPair: pharoMenuTargetClass.
+	ObjCLibrary uniqueInstance objc_registerClassPair: pharoMenuTargetClass.
 	
-	pharoTargetObject := self sendMessage: selAlloc to: pharoMenuTargetClass.
+	pharoTargetObject := ObjCLibrary uniqueInstance sendMessage: selAlloc to: pharoMenuTargetClass.
 
-]
-
-{ #category : 'private - ffi' }
-SDLOSXPharoMenu >> class_addMethodClass: cls selector: name implementation: imp signature: types [
-	^ self ffiCall: #(int class_addMethod(void* cls, void* name, void* imp, const char *types))
 ]
 
 { #category : 'menu options' }
@@ -106,35 +101,29 @@ SDLOSXPharoMenu >> doGetPharoMenu [
 
 	| selSharedApplication selMainMenu selNumberOfItems selItemAtIndex selSubMenu clsNSApplication sharedApplication menu pharoMenuItem |
 
-	selSharedApplication := self lookupSelector: 'sharedApplication'.
-	selMainMenu := self lookupSelector: 'mainMenu'.
-	selNumberOfItems := self lookupSelector: 'numberOfItems'.
-	selItemAtIndex := self lookupSelector: 'itemAtIndex:'.
-	selSubMenu := self lookupSelector: 'submenu'.
+	selSharedApplication := ObjCLibrary uniqueInstance lookupSelector: 'sharedApplication'.
+	selMainMenu := ObjCLibrary uniqueInstance lookupSelector: 'mainMenu'.
+	selNumberOfItems := ObjCLibrary uniqueInstance lookupSelector: 'numberOfItems'.
+	selItemAtIndex := ObjCLibrary uniqueInstance lookupSelector: 'itemAtIndex:'.
+	selSubMenu := ObjCLibrary uniqueInstance lookupSelector: 'submenu'.
 
-	clsNSApplication := self lookupClass: 'NSApplication'.
-	sharedApplication := self sendMessage: selSharedApplication to: clsNSApplication.
+	clsNSApplication := ObjCLibrary uniqueInstance lookupClass: 'NSApplication'.
+	sharedApplication := ObjCLibrary uniqueInstance sendMessage: selSharedApplication to: clsNSApplication.
 
-	menu := self sendMessage: selMainMenu to: sharedApplication.
+	menu := ObjCLibrary uniqueInstance sendMessage: selMainMenu to: sharedApplication.
 
-	pharoMenuItem := self
+	pharoMenuItem := ObjCLibrary uniqueInstance
 		                 sendMessage: selItemAtIndex
 		                 to: menu
 		                 withInteger: 0.
 
-	^ self sendMessage: selSubMenu to: pharoMenuItem
+	^ ObjCLibrary uniqueInstance sendMessage: selSubMenu to: pharoMenuItem
 ]
 
 { #category : 'menu options' }
 SDLOSXPharoMenu >> doQuit [
 
 	UIManager default defer: [WorldState quitSession] 
-]
-
-{ #category : 'private - ffi' }
-SDLOSXPharoMenu >> ffiLibraryName [
-
-	^ 'libobjc.dylib'
 ]
 
 { #category : 'api' }
@@ -144,78 +133,10 @@ SDLOSXPharoMenu >> installInOSXWindow [
 	self addPharoMenuOptions.
 ]
 
-{ #category : 'private - ffi' }
-SDLOSXPharoMenu >> lookupClass: aString [
-
-	^ self ffiCall: #(void* objc_lookUpClass(char *aString))
-]
-
-{ #category : 'private - ffi' }
-SDLOSXPharoMenu >> lookupSelector: aString [
-
-	^ self ffiCall: #(void* sel_registerName(const char *aString))
-]
-
-{ #category : 'private' }
-SDLOSXPharoMenu >> nsStringOf: aString [
-
-	| class selector encoded param |
-	class := self lookupClass: 'NSString'.
-	selector:= self lookupSelector: 'stringWithUTF8String:'.
-
-	encoded := aString utf8Encoded.
-	param := ByteArray new: encoded size + 1.
-	param pinInMemory.
-
-	LibC memCopy: encoded to: param size: encoded size.
-	param at: encoded size + 1 put: 0.
-
-	^ self sendMessage: selector to: class withPointer: param
-]
-
-{ #category : 'private - ffi' }
-SDLOSXPharoMenu >> objc_allocateClassPairSuperclass: superclass name: name extraBytes: extraBytes [
-	
-	^ self ffiCall: #(void* objc_allocateClassPair(void* superclass, const char *name, size_t extraBytes))
-	
-]
-
-{ #category : 'private - ffi' }
-SDLOSXPharoMenu >> objc_registerClassPair: cls [
-	
-	self ffiCall: #(void objc_registerClassPair(void* cls))
-	
-	
-]
-
 { #category : 'accessing' }
 SDLOSXPharoMenu >> pharoMenu [
 	
 	^( pharoMenu isNil or: [ pharoMenu isNull ])
 		ifTrue: [ pharoMenu := self doGetPharoMenu ]
 		ifFalse: [ pharoMenu ].
-]
-
-{ #category : 'private - ffi' }
-SDLOSXPharoMenu >> sendMessage: sel to: cls [
-
-	^ self ffiCall: #(void* objc_msgSend(void* cls, void* sel))
-]
-
-{ #category : 'private - ffi' }
-SDLOSXPharoMenu >> sendMessage: sel to: rcv with: aParam1 with:aParam2 with:aParam3 [
-
-	^ self ffiCall: #(void* objc_msgSend(void* rcv, void* sel, void* aParam1, void* aParam2, void* aParam3))
-]
-
-{ #category : 'private - ffi' }
-SDLOSXPharoMenu >> sendMessage: sel to: rcv withInteger: aParam [
-
-	^ self ffiCall: #(void* objc_msgSend(void* rcv, void* sel, int aParam))
-]
-
-{ #category : 'private - ffi' }
-SDLOSXPharoMenu >> sendMessage: sel to: rcv withPointer: aParam [
-
-	^ self ffiCall: #(void* objc_msgSend(void* rcv, void* sel, void* aParam))
 ]
