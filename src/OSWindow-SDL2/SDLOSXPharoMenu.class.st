@@ -97,27 +97,38 @@ SDLOSXPharoMenu >> doAbout [
 ]
 
 { #category : 'private' }
-SDLOSXPharoMenu >> doGetPharoMenu [
+SDLOSXPharoMenu >> doCreatePharoMenu [
 
-	| selSharedApplication selMainMenu selNumberOfItems selItemAtIndex selSubMenu clsNSApplication sharedApplication menu pharoMenuItem |
+	| selSharedApplication selItemAtIndex clsNSApplication sharedApplication menu pharoMenuItem selSetMainMenu selSetSubMenu selAlloc selAddMenuItem clsNSMenu |
 
 	selSharedApplication := ObjCLibrary uniqueInstance lookupSelector: 'sharedApplication'.
-	selMainMenu := ObjCLibrary uniqueInstance lookupSelector: 'mainMenu'.
-	selNumberOfItems := ObjCLibrary uniqueInstance lookupSelector: 'numberOfItems'.
+	selSetMainMenu := ObjCLibrary uniqueInstance lookupSelector: 'setMainMenu:'.
 	selItemAtIndex := ObjCLibrary uniqueInstance lookupSelector: 'itemAtIndex:'.
-	selSubMenu := ObjCLibrary uniqueInstance lookupSelector: 'submenu'.
+	selSetSubMenu := ObjCLibrary uniqueInstance lookupSelector: 'setSubmenu:'.
+	selAlloc := ObjCLibrary uniqueInstance lookupSelector: 'alloc'.
+	selAddMenuItem := ObjCLibrary uniqueInstance lookupSelector: 'addItemWithTitle:action:keyEquivalent:'.
 
 	clsNSApplication := ObjCLibrary uniqueInstance lookupClass: 'NSApplication'.
+	clsNSMenu := ObjCLibrary uniqueInstance lookupClass: 'NSMenu'.
+
+	menu := ObjCLibrary uniqueInstance sendMessage: selAlloc to: clsNSMenu.
+	
+	pharoMenuItem := ObjCLibrary uniqueInstance
+		sendMessage: selAddMenuItem
+		to: menu
+		with: (ObjCLibrary uniqueInstance nsStringOf: 'Pharo')
+		with: ExternalAddress null
+		with: (ObjCLibrary uniqueInstance nsStringOf: '').
+
+	pharoMenu := ObjCLibrary uniqueInstance sendMessage: selAlloc to: clsNSMenu. 
+	
+	ObjCLibrary uniqueInstance sendMessage: selSetSubMenu to: pharoMenuItem withPointer: pharoMenu.
+	
 	sharedApplication := ObjCLibrary uniqueInstance sendMessage: selSharedApplication to: clsNSApplication.
 
-	menu := ObjCLibrary uniqueInstance sendMessage: selMainMenu to: sharedApplication.
+	ObjCLibrary uniqueInstance sendMessage: selSetMainMenu to: sharedApplication withPointer: menu.
 
-	pharoMenuItem := ObjCLibrary uniqueInstance
-		                 sendMessage: selItemAtIndex
-		                 to: menu
-		                 withInteger: 0.
-
-	^ ObjCLibrary uniqueInstance sendMessage: selSubMenu to: pharoMenuItem
+	^ pharoMenu
 ]
 
 { #category : 'menu options' }
@@ -137,6 +148,6 @@ SDLOSXPharoMenu >> installInOSXWindow [
 SDLOSXPharoMenu >> pharoMenu [
 	
 	^( pharoMenu isNil or: [ pharoMenu isNull ])
-		ifTrue: [ pharoMenu := self doGetPharoMenu ]
+		ifTrue: [ pharoMenu := self doCreatePharoMenu ]
 		ifFalse: [ pharoMenu ].
 ]
