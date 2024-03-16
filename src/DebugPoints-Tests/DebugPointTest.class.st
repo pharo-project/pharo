@@ -9,12 +9,34 @@ Class {
 		'node',
 		'context',
 		'dp2',
-		'cls'
+		'cls',
+		'testClass',
+		'testSubclass'
 	],
 	#category : 'DebugPoints-Tests-Model',
 	#package : 'DebugPoints-Tests',
 	#tag : 'Model'
 }
+
+{ #category : 'nil' }
+DebugPointTest >> compileTestClass [
+
+	testClass := ((DummyTestClass << #DummyTestSubclass)
+		              slots: { #v3 };
+		              package: 'DummyPackage') install.
+	testClass compile: 'accessingId ^id'.
+	testClass compile: 'accessingtemp |temp| temp := 0'
+]
+
+{ #category : 'compiling' }
+DebugPointTest >> compileTestClass2 [
+
+	testSubclass := ((testClass << #DummyTestSubclass2)
+		                 slots: { #v4 };
+		                 package: 'DummyPackage') install.
+	testSubclass compile: 'accessingId ^id'.
+	testSubclass compile: 'accessingV4 ^v4'
+]
 
 { #category : 'tests' }
 DebugPointTest >> newDummyClass [
@@ -70,7 +92,6 @@ DebugPointTest >> testAddRemoveBreakpoint [
 	| method |
 	DummyTestClass compile: 'dummy ^42'.
 	method := DummyTestClass >> #dummy.
-	self assertEmpty: Breakpoint all.
 	dp := DebugPointManager
 		      installNew: BreakDebugPoint
 		      on: (DummyTestClass >> #dummy) ast.
@@ -111,6 +132,28 @@ DebugPointTest >> testAddRemoveBreakpointKeepTimestamp [
 ]
 
 { #category : 'tests' }
+DebugPointTest >> testAddRemoveVariableBreakpoint [
+
+	| method |
+	method := DummyTestClass >> #id.
+	dp := DebugPointManager
+		      installNew: BreakDebugPoint
+		      inClass: DummyTestClass
+		      onVariableAccessNamed: #id.
+	"after the breakpoint is installed, the method is different"
+	self deny: (DummyTestClass >> #id) bytecodes equals: method bytecodes.
+
+	self assertCollection: DebugPoint all includesAll: { dp }.
+	dp remove.
+	self denyCollection: DebugPoint all includesAll: { dp }.
+
+	"Check that the method is correcty reverted"
+	self
+		assert: (DummyTestClass >> #id) bytecodes
+		equals: method bytecodes
+]
+
+{ #category : 'tests' }
 DebugPointTest >> testBehaviorPriority [
 	| a b c set |
 	dp := DebugPointManager installNew: DebugPoint on: node.
@@ -133,6 +176,57 @@ DebugPointTest >> testBreakDebugPoint [
 	dp := DebugPointManager installNew: BreakDebugPoint on: node.
 	self should: [dp hitWithContext: context] raise: Break.
 	self should: [DummyTestClass new id:2 ] raise: Break.
+]
+
+{ #category : 'tests' }
+DebugPointTest >> testBreakDebugPointOnClassVariableAccess [
+
+	dp := DebugPointManager
+		      installNew: BreakDebugPoint
+		      inClass: DummyTestClass
+		      onVariableAccessNamed: #ClassVar.
+	self should: [ DummyTestClass new classVarRead ] raise: Break.
+	self should: [ DummyTestClass new classVarWrite ] raise: Break.
+	self shouldnt: [ DummyTestClass new id ] raise: Break.
+	self
+		assertCollection: dp link nodes asIdentitySet
+		equals:
+			(DummyTestClass classVariableNamed: #ClassVar) accessingNodes
+				asIdentitySet
+]
+
+{ #category : 'tests' }
+DebugPointTest >> testBreakDebugPointOnClassVariableRead [
+
+	dp := DebugPointManager
+		      installNew: BreakDebugPoint
+		      inClass: DummyTestClass
+		      onVariableReadNamed: #ClassVar.
+	self should: [ DummyTestClass new classVarRead ] raise: Break.
+	self shouldnt: [ DummyTestClass new classVarWrite ] raise: Break.
+	self shouldnt: [ DummyTestClass new id ] raise: Break.
+	self
+		assertCollection: dp link nodes asIdentitySet
+		equals:
+		(DummyTestClass classVariableNamed: #ClassVar) readNodes
+			asIdentitySet
+]
+
+{ #category : 'tests' }
+DebugPointTest >> testBreakDebugPointOnClassVariableWrite [
+
+	dp := DebugPointManager
+		      installNew: BreakDebugPoint
+		      inClass: DummyTestClass
+		      onVariableWriteNamed: #ClassVar.
+	self shouldnt: [ DummyTestClass new classVarRead ] raise: Break.
+	self should: [ DummyTestClass new classVarWrite ] raise: Break.
+	self shouldnt: [ DummyTestClass new id ] raise: Break.
+	self
+		assertCollection: dp link nodes asIdentitySet
+		equals:
+			(DummyTestClass classVariableNamed: #ClassVar) assignmentNodes
+				asIdentitySet
 ]
 
 { #category : 'tests' }
@@ -326,49 +420,61 @@ DebugPointTest >> testChangeTargetInstance [
 
 { #category : 'tests' }
 DebugPointTest >> testConditionBehavior [
+
 	| behavior |
 	behavior := ConditionBehavior new condition: 'corner=(300@200)'.
 	dp := DebugPointManager installNew: BreakDebugPoint on: node.
 	dp addBehavior: behavior.
+
+	self
+		assertCollection: dp checkBehaviors
+		hasSameElements: { behavior }.
+	self
+		assertCollection: dp behaviors
+		hasSameElements: { behavior }.
 	"dp addBehavior: BreakBehavior new."
 
 	"hit the point so the arguments are actually saved in the debug point"
 	dp hitWithContext: context.
 	"condition is false and should not trigger break"
-	self assert: (behavior execute) equals: false.
-	self shouldnt: [dp hitWithContext: context.] raise: Break.
+	self assert: behavior execute equals: false.
+	self shouldnt: [ dp hitWithContext: context ] raise: Break.
 	"condition is false and should not trigger break"
 	behavior condition: 'self corner=(300@200)'.
-	self assert: (behavior execute) equals: false.
-	self shouldnt: [dp hitWithContext: context.] raise: Break.
+	self assert: behavior execute equals: false.
+	self shouldnt: [ dp hitWithContext: context ] raise: Break.
 	"condition is true and should trigger the break"
 	behavior condition: 'corner=(200@200)'.
-	self assert: (behavior execute) equals: true .
-	self should: [dp hitWithContext: context.] raise: Break.
-
+	self assert: behavior execute equals: true.
+	self should: [ dp hitWithContext: context ] raise: Break
 ]
 
 { #category : 'tests' }
 DebugPointTest >> testConditionBehaviorThisContext [
+
 	| behavior |
-	
 	dp := DebugPointManager installNew: BreakDebugPoint on: node.
 
 	behavior := ConditionBehavior new condition: 'thisContext method = 2'.
 	dp addBehavior: behavior.
-	
+
+	self
+		assertCollection: dp checkBehaviors
+		hasSameElements: { behavior }.
+	self assertCollection: dp behaviors hasSameElements: { behavior }.
+
 	"hit the point so the arguments are actually saved in the debug point"
 	dp hitWithContext: context.
-	
+
 	"it should not break with incorrect condition"
-	self assert: (behavior execute) equals: false.
-	self shouldnt: [dp hitWithContext: context] raise: Break.
+	self assert: behavior execute equals: false.
+	self shouldnt: [ dp hitWithContext: context ] raise: Break.
 
 	"here the condition is correct and it should break"
-	behavior condition: 'thisContext method = (Rectangle methodDict at: #areasOutside:)'.
-	self assert: (behavior execute) equals: true .
-	self should: [dp hitWithContext: context] raise: Break.
-
+	behavior condition:
+		'thisContext method = (Rectangle methodDict at: #areasOutside:)'.
+	self assert: behavior execute equals: true.
+	self should: [ dp hitWithContext: context ] raise: Break
 ]
 
 { #category : 'tests' }
@@ -377,11 +483,21 @@ DebugPointTest >> testCountBehavior [
 	
 	dp := DebugPointManager installNew: DebugPoint  on: node withBehaviors: {CountBehavior}.
 	cbh := dp getBehavior: CountBehavior.
+	
+	self
+		assertCollection: dp sideEffectBehaviors 
+		hasSameElements: { cbh }.
+	self
+		assertCollection: dp behaviors
+		hasSameElements: { cbh }.
+	
 	self assert: ( cbh count ) equals: 0.
 	dp hitWithContext: context.
 	self assert: ( cbh count ) equals: 1.
 	dp hitWithContext: context.
 	self assert:  ( cbh count ) equals: 2.
+	
+	
 
 ]
 
@@ -517,13 +633,20 @@ DebugPointTest >> testObjectCentricWatchOnceDebugPoint [
 
 { #category : 'tests' }
 DebugPointTest >> testOnceBehavior [
+
+	| behavior |
 	dp := DebugPointManager installNew: DebugPoint on: node.
-	dp addBehavior: (OnceBehavior new).
-	self assert: (dp enabled) equals: true.
+	dp addBehavior: OnceBehavior new.
+	behavior := dp getBehavior: OnceBehavior.
+
+	self
+		assertCollection: dp sideEffectBehaviors
+		hasSameElements: { behavior }.
+	self assertCollection: dp behaviors hasSameElements: { behavior }.
+
+	self assert: dp enabled equals: true.
 	dp hitWithContext: context.
-	self assert: (dp enabled) equals: false.
-
-
+	self assert: dp enabled equals: false
 ]
 
 { #category : 'tests' }
@@ -552,7 +675,7 @@ DebugPointTest >> testOnceBreakOnVariable [
 { #category : 'tests' }
 DebugPointTest >> testOnceEvaluatesAfterConditionBehavior [
 
-	| conditionBehavior |
+	| conditionBehavior onceBehavior |
 	conditionBehavior := ConditionBehavior new condition:
 		                     'corner = (300@200) '.
 	dp := DebugPointManager
@@ -561,6 +684,17 @@ DebugPointTest >> testOnceEvaluatesAfterConditionBehavior [
 		      withBehaviors: { OnceBehavior }.
 	dp addBehavior: conditionBehavior.
 	dp saveContext: context.
+	onceBehavior := dp getBehavior: OnceBehavior.
+
+	self
+		assertCollection: dp sideEffectBehaviors
+		hasSameElements: { onceBehavior }.
+	self
+		assertCollection: dp checkBehaviors
+		hasSameElements: { conditionBehavior }.
+	self assertCollection: dp behaviors hasSameElements: {
+			conditionBehavior.
+			onceBehavior }.
 
 	self assert: dp enabled.
 	self deny: conditionBehavior execute.
@@ -577,6 +711,98 @@ DebugPointTest >> testOnceEvaluatesAfterConditionBehavior [
 	self deny: dp enabled.
 	self assert: conditionBehavior execute.
 	self shouldnt: [ dp hitWithContext: context ] raise: Break
+]
+
+{ #category : 'tests' }
+DebugPointTest >> testRemoveAfterClassRemoved [
+	"Removing a superclass of the class where the target variable of a variable breakpoint is defined should uninstall the variable breakpoint"
+
+	<ignoreNotImplementedSelectors: #( accessingV4 )>
+	| testClassNodes |
+	self compileTestClass.
+	self compileTestClass2.
+	testClassNodes := (testSubclass >> #accessingV4) ast allChildren.
+
+	dp := DebugPointManager
+		      installNew: BreakDebugPoint
+		      inClass: testSubclass
+		      onVariableAccessNamed: #v4.
+
+	self assert: (DebugPoint all includes: dp).
+	self should: [ testSubclass basicNew accessingV4 ] raise: Break.
+
+	testSubclass removeFromSystem.
+	self deny: (DebugPoint all includes: dp)
+]
+
+{ #category : 'tests' }
+DebugPointTest >> testRemoveAfterSuperclassRemoved [
+	"Removing a superclass of the class where the target variable of a variable breakpoint is defined should uninstall the variable breakpoint"
+
+	<ignoreNotImplementedSelectors: #( accessingV4 )>
+	| testClassNodes |
+	self compileTestClass.
+	self compileTestClass2.
+	testClassNodes := (testSubclass >> #accessingV4) ast allChildren.
+
+	dp := DebugPointManager
+		      installNew: BreakDebugPoint
+		      inClass: testSubclass
+		      onVariableAccessNamed: #v4.
+
+	self assert: (DebugPoint all includes: dp).
+	self should: [ testSubclass basicNew accessingV4 ] raise: Break.
+
+	testClass removeFromSystem.
+	self deny: (DebugPoint all includes: dp)
+]
+
+{ #category : 'tests' }
+DebugPointTest >> testRemoveBehavior [
+
+	| conditionBehavior onceBehavior |
+	conditionBehavior := ConditionBehavior new condition:
+		                     'corner = (300@200) '.
+	dp := DebugPointManager
+		      installNew: BreakDebugPoint
+		      on: node
+		      withBehaviors: { OnceBehavior }.
+	dp addBehavior: conditionBehavior.
+	dp saveContext: context.
+	onceBehavior := dp getBehavior: OnceBehavior.
+
+	self
+		assertCollection: dp sideEffectBehaviors
+		hasSameElements: { onceBehavior }.
+	self
+		assertCollection: dp checkBehaviors
+		hasSameElements: { conditionBehavior }.
+	self assertCollection: dp behaviors hasSameElements: {
+			conditionBehavior.
+			onceBehavior }.
+
+	self assert: dp enabled.
+	self deny: conditionBehavior execute.
+
+	self shouldnt: [ dp hitWithContext: context ] raise: Break.
+
+	dp removeBehavior: ConditionBehavior.
+
+	self
+		assertCollection: dp sideEffectBehaviors
+		hasSameElements: { onceBehavior }.
+	self assertCollection: dp checkBehaviors hasSameElements: {  }.
+	self assertCollection: dp behaviors hasSameElements: { onceBehavior }.
+
+	dp removeBehavior: OnceBehavior.
+
+	self assertCollection: dp sideEffectBehaviors hasSameElements: {  }.
+	self assertCollection: dp checkBehaviors hasSameElements: {  }.
+	self assertCollection: dp behaviors hasSameElements: {  }.
+
+	self assert: dp enabled.
+	self should: [ dp hitWithContext: context ] raise: Break.
+	self assert: dp enabled
 ]
 
 { #category : 'tests' }
@@ -673,6 +899,57 @@ DebugPointTest >> testTwoDebugPointsOnSameTargetBothActivate [
 	his add: 2.
 	self assertCollection: dp history equals: his.
 	self assertCollection: dp2 history equals: his
+]
+
+{ #category : 'running' }
+DebugPointTest >> testUpdateNodesForVariableDebugPointAfterRecompilingMethod [
+
+	| ast |
+	"We get the variable node one which the variable breakpoint will be installed"
+	ast := (DummyTestClass >> #id) ast allChildren last.
+
+	"Removing a variable breakpoint should not uninstall the breakpoint"
+	dp := DebugPointManager
+		      installNew: BreakDebugPoint
+		      inClass: DummyTestClass
+		      onVariableAccessNamed: #id.
+
+	"Let us recompile a method touching id in the super class of our test class.
+	This is meant so simulate, e.g., a modification in the debugger after a break in that method."
+	DummyTestClass compile: (DummyTestClass >> #id) sourceCode , ' '.
+
+	self assert: (DebugPoint all includes: dp).
+
+	"First, the breakpoint should still be installed in that method"
+	self should: [ DummyTestClass basicNew id ] raise: Break.
+
+	"Second, the old method ast's is not referenced by the breakpoint's link anymore"
+	self assert: (dp link nodes noneSatisfy: [ :n | n == ast ])
+]
+
+{ #category : 'tests' }
+DebugPointTest >> testVariableDebugPointNoRemoveAfterSubclassRemoved [
+	"Removing the class where the target variable of a variable breakpoint is defined should uninstall the variable breakpoint"
+	|testClassNode testSubclassNode|
+	<ignoreNotImplementedSelectors: #(accessingId)>
+	self compileTestClass.
+	self compileTestClass2.
+	testClassNode := (testClass >> #accessingId) ast allChildren detect:[:n| n isVariable].
+	testSubclassNode := (testSubclass >> #accessingId) ast allChildren detect:[:n| n isVariable].
+
+	dp := DebugPointManager
+		      installNew: BreakDebugPoint
+		      inClass: testClass
+		      onVariableAccessNamed: #id.
+
+	self should: [testClass basicNew accessingId] raise: Break.
+
+	testSubclass removeFromSystem.
+
+	self deny: (dp link nodes anySatisfy:[:n| n == testSubclassNode]).
+	self assert: (dp link nodes anySatisfy:[:n| n == testClassNode]).
+	self assert: (DebugPoint all includes: dp).
+	self should: [ testClass basicNew accessingId ] raise: Break
 ]
 
 { #category : 'tests' }
