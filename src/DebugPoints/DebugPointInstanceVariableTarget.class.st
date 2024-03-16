@@ -14,6 +14,12 @@ Class {
 	#tag : 'Implementations'
 }
 
+{ #category : 'accessing - classes' }
+DebugPointInstanceVariableTarget class >> hitAnnouncementClass [
+
+	^ VariableDebugPointHit
+]
+
 { #category : 'accessing' }
 DebugPointInstanceVariableTarget >> accessStrategy [
 
@@ -29,10 +35,23 @@ DebugPointInstanceVariableTarget >> accessStrategy: aSymbol [
 { #category : 'actions' }
 DebugPointInstanceVariableTarget >> browse [
 
-	Smalltalk tools browser
-		openOnClass: self instanceVariable owningClass;
+	(Smalltalk tools browser openOnClass:
+			 self instanceVariable owningClass)
 		switchToVariables;
 		selectVariableNamed: self instanceVariable name
+]
+
+{ #category : 'announcements' }
+DebugPointInstanceVariableTarget >> hitAnnouncementOn: aDebugPoint inContext: aContext [
+
+	| announcement |
+	announcement := super
+		                hitAnnouncementOn: aDebugPoint
+		                inContext: aContext.
+	^ announcement
+		  variableValue:
+			  (aContext readVariableNamed: self instanceVariable name);
+		  yourself
 ]
 
 { #category : 'accessing' }
@@ -78,6 +97,14 @@ DebugPointInstanceVariableTarget >> isReadWrite [
 DebugPointInstanceVariableTarget >> isWriteOnly [
 
 	^ accessStrategy = #write
+]
+
+{ #category : 'removing' }
+DebugPointInstanceVariableTarget >> removeFromMethod: aMethod for: aDebugPoint [
+
+	(aDebugPoint nodes select: [ :n |
+		 n methodNode compiledMethod == aMethod ]) do: [ :n |
+		aDebugPoint removeNode: n ]
 ]
 
 { #category : 'accessing' }

@@ -34,7 +34,7 @@ RBRemoveDirectAccessToVariableTransformationTest >> testClassVariable [
 		equals: (self parseMethod: 'addUndo: aRefactoringChange
 				undo push: aRefactoringChange.
 				undo size > self class undoSize
-					ifTrue: [ undo removeFirst ].
+					ifTrue: [ undo removeLast ].
 				redo := OrderedCollection new')
 ]
 

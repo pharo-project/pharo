@@ -16,8 +16,8 @@ Class {
 { #category : 'testing' }
 SycExtractMethodCommand class >> canBeExecutedInContext: aSourceCodeContext [
 
-	^ (super canBeExecutedInContext: aSourceCodeContext) and: [
-		  aSourceCodeContext isMethodSelected not ]
+	^ false. "(super canBeExecutedInContext: aSourceCodeContext) and: [
+		  aSourceCodeContext isMethodSelected not ]"
 ]
 
 { #category : 'testing' }

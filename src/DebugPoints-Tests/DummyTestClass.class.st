@@ -7,10 +7,24 @@ Class {
 	#instVars : [
 		'id'
 	],
+	#classVars : [
+		'ClassVar'
+	],
 	#category : 'DebugPoints-Tests-Utils',
 	#package : 'DebugPoints-Tests',
 	#tag : 'Utils'
 }
+
+{ #category : 'nil' }
+DummyTestClass >> classVarRead [
+
+	^ ClassVar
+]
+
+{ #category : 'accessing' }
+DummyTestClass >> classVarWrite [
+	^ClassVar := 1
+]
 
 { #category : 'accessing' }
 DummyTestClass >> id [

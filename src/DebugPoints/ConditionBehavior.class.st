@@ -4,7 +4,7 @@ If my condition evaluates to true or nil, the #execute method will return true, 
 "
 Class {
 	#name : 'ConditionBehavior',
-	#superclass : 'DebugPointBehavior',
+	#superclass : 'DebugPointCheckBehavior',
 	#instVars : [
 		'condition'
 	],
@@ -12,6 +12,12 @@ Class {
 	#package : 'DebugPoints',
 	#tag : 'Behaviors'
 }
+
+{ #category : 'testing' }
+ConditionBehavior class >> isAbstract [
+
+	^ false
+]
 
 { #category : 'accessing' }
 ConditionBehavior >> condition [
@@ -45,11 +51,11 @@ ConditionBehavior >> execute [
 ]
 
 { #category : 'initialization' }
-ConditionBehavior >> initialize [ 
+ConditionBehavior >> initialize [
 	"should be executed before once and count etc."
+
 	super initialize.
-	self priority: 50.
-	self condition: 'false'.
+	self condition: 'false'
 ]
 
 { #category : 'cleanup' }
