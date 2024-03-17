@@ -391,6 +391,17 @@ ScalingCanvas >> drawPolygon: vertices color: aColor borderWidth: bw borderColor
 			transformedCanvas drawPolygon: vertices color: aColor borderWidth: bw borderColor: bc ]
 ]
 
+{ #category : 'drawing - polygons' }
+ScalingCanvas >> drawPolygon: vertices fillStyle: aFillStyle borderWidth: bw borderColor: bc [
+
+	aFillStyle isColor ifTrue: [
+		self drawPolygon: vertices color: aFillStyle borderWidth: bw borderColor: bc.
+		^ self ].
+	self applyClippingTo: (vertices min floor corner: vertices max floor + 1)
+		during: [ :transformedCanvas |
+			transformedCanvas drawPolygon: vertices fillStyle: aFillStyle borderWidth: bw borderColor: bc ]
+]
+
 { #category : 'drawing - text' }
 ScalingCanvas >> drawString: s from: firstIndex to: lastIndex in: boundsRect font: fontOrNil color: c [
 
