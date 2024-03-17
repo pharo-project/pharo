@@ -247,6 +247,25 @@ ScalingCanvas class >> exampleLine2 [
 							width: width color: Color blue translucent ] ] ] ]
 ]
 
+{ #category : 'examples' }
+ScalingCanvas class >> exampleRubScrolledTextMorph [
+
+	| source |
+
+	source := String streamContents: [ :stream |
+		stream nextPutAll: 'OrderedCollection new'; cr.
+		(1 to: 100) groupsOf: 5 atATimeDo: [ :numbers |
+			stream tab; nextPutAll: ('addAll: {1};' format: { numbers printString }); cr ].
+		stream tab; nextPutAll: 'yourself'; cr ].
+	^ self privateExampleWithMorph:
+		(RubScrolledTextMorph new
+			model: (RubScrolledTextModel new text: source; yourself);
+			beForSmalltalkCode;
+			withCodeSizeFeedback;
+			extent: 320@200;
+			yourself)
+]
+
 { #category : 'instance creation' }
 ScalingCanvas class >> formCanvas: formCanvas scale: scale [
 
