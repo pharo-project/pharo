@@ -63,7 +63,7 @@ SystemDependenciesTest >> knownIDEDependencies [
 	"ideally this list should be empty"
 
 	^ #( 'Spec2-CommonWidgets' #'Calypso-SystemPlugins-Traits-Queries-Tests-PWithTraits'
-	     #'AI-Algorithms-Graph' 'Microdown' 'Microdown-RichTextComposer'
+	     #'AI-Algorithms-Graph' 'DebugPoints' 'Microdown' 'Microdown-RichTextComposer'
 	     #'NewTools-Scopes' #'NewTools-Scopes-Editor' )
 ]
 

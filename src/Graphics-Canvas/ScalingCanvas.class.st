@@ -328,7 +328,7 @@ ScalingCanvas >> applyClippingTo: clipRect during: aBlock [
 			sourceForm := Form extent: scaledClipRect extent / scale depth: 32.
 			(FormCanvas on: sourceForm) translateBy: scaledClipRect origin negated / scale during: aBlock.
 			(formCanvas warpFrom: sourceForm boundingBox innerCorners toRect: scaledClipRect)
-				combinationRule: Form blend;
+				combinationRule: Form blendAlphaScaled;
 				sourceForm: sourceForm;
 				warpBits
 		] ifFalse: [

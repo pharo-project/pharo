@@ -223,8 +223,8 @@ ClyMethodEditorToolMorph >> setUpTargetClasses [
 
 { #category : 'events handling' }
 ClyMethodEditorToolMorph >> textChanged: aTextChanged [
+
 	super textChanged: aTextChanged.
-	ast := self currentEditedAST.
 	textMorph segments copy do: #delete.
 	IconStyler new
 	   stylerClasses: {ErrorNodeStyler . SemanticMessageIconStyler . SemanticWarningIconStyler };

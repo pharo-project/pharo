@@ -1186,7 +1186,7 @@ Morph >> balloonText [
 	a Viewer"
 
 	^ extension ifNotNil: [:ext | ext balloonText ifNotNil: [:text |
-				text asString withNoLineLongerThan: self theme settings maxBalloonHelpLineLength]]
+				text withNoLineLongerThan: self theme settings maxBalloonHelpLineLength]]
 ]
 
 { #category : 'theme' }
@@ -5450,7 +5450,7 @@ Morph >> setBalloonText: stringOrText maxLineLength: aLength [
 	"Set receiver's balloon help text. Pass nil to remove the help."
 	(extension isNil and: [stringOrText isNil]) ifTrue: [^ self].
 	self assureExtension balloonText:
-		(stringOrText ifNotNil: [stringOrText asString withNoLineLongerThan: aLength])
+		(stringOrText ifNotNil: [stringOrText withNoLineLongerThan: aLength])
 ]
 
 { #category : 'accessing' }

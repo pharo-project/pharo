@@ -5,21 +5,20 @@ The execution of behaviors continues only if the debug point is reached while ru
 "
 Class {
 	#name : 'TestEnvironmentBehavior',
-	#superclass : 'DebugPointBehavior',
+	#superclass : 'DebugPointCheckBehavior',
 	#category : 'DebugPoints-Behaviors',
 	#package : 'DebugPoints',
 	#tag : 'Behaviors'
 }
 
+{ #category : 'testing' }
+TestEnvironmentBehavior class >> isAbstract [
+
+	^ false
+]
+
 { #category : 'execution' }
 TestEnvironmentBehavior >> execute [
 	^(CurrentExecutionEnvironment value isTest).
 
-]
-
-{ #category : 'initialization' }
-TestEnvironmentBehavior >> initialize [ 
-	"should be executed before once and count etc."
-	super initialize.
-	self priority: 50.
 ]
