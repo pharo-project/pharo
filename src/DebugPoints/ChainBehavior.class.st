@@ -4,7 +4,7 @@ I maintain a chain of debug points. When a debug point in the chain is hit I dea
 "
 Class {
 	#name : 'ChainBehavior',
-	#superclass : 'DebugPointBehavior',
+	#superclass : 'DebugPointSideEffectBehavior',
 	#classVars : [
 		'Chains'
 	],
@@ -21,6 +21,12 @@ ChainBehavior class >> allChains [
 { #category : 'accessing' }
 ChainBehavior class >> childFor: aDebugPoint [
 	^self allChains at: aDebugPoint ifAbsent: [ ^nil ]
+]
+
+{ #category : 'testing' }
+ChainBehavior class >> isAbstract [
+
+	^ false
 ]
 
 { #category : 'accessing' }

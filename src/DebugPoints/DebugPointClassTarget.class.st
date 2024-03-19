@@ -9,6 +9,22 @@ Class {
 	#tag : 'Base'
 }
 
+{ #category : 'accessing - classes' }
+DebugPointClassTarget class >> hitAnnouncementClass [
+
+	^ self subclassResponsibility
+]
+
+{ #category : 'announcements' }
+DebugPointClassTarget >> hitAnnouncementOn: aDebugPoint inContext: aContext [
+
+	^ self class hitAnnouncementClass
+		  on: aDebugPoint
+		  nodes:
+		  { (aContext compiledCode sourceNodeForPC: aContext pc) parent }
+			  asSet
+]
+
 { #category : 'installing' }
 DebugPointClassTarget >> install: aLink [
 
@@ -21,8 +37,20 @@ DebugPointClassTarget >> install: aLink on: aClassOrObject [
 	self subclassResponsibility
 ]
 
+{ #category : 'scope' }
+DebugPointClassTarget >> resetObjectScope [
+
+	^ self
+]
+
 { #category : 'description' }
 DebugPointClassTarget >> scope [
 
-	^ 'class {1}' format: { self targetClass }
+	^ self targetClass
+]
+
+{ #category : 'description' }
+DebugPointClassTarget >> scopeString [
+
+	^ 'class {1}' format: { self scope }
 ]

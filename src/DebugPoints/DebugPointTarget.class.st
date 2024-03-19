@@ -29,6 +29,12 @@ DebugPointTarget >> browse [
 	self subclassResponsibility 
 ]
 
+{ #category : 'announcements' }
+DebugPointTarget >> hitAnnouncementOn: aDebugPoint inContext: aContext [
+
+	^ self subclassResponsibility 
+]
+
 { #category : 'initialization' }
 DebugPointTarget >> initialize [
 
@@ -42,8 +48,26 @@ DebugPointTarget >> install: aLink [
 	self subclassResponsibility
 ]
 
+{ #category : 'removing' }
+DebugPointTarget >> removeFromMethod: aMethod for: aDebugPoint [
+
+	self subclassResponsibility
+]
+
+{ #category : 'scope' }
+DebugPointTarget >> resetObjectScope [
+
+	^ self subclassResponsibility
+]
+
 { #category : 'description' }
 DebugPointTarget >> scope [
+
+	^ self subclassResponsibility
+]
+
+{ #category : 'description' }
+DebugPointTarget >> scopeString [
 
 	^ self subclassResponsibility
 ]

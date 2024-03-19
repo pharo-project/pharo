@@ -67,10 +67,7 @@ DebugPointAnnouncement >> debugPoint: aDebugPoint [
 DebugPointAnnouncement >> methods [
 
 	^ methods ifNil: [
-		  methods := nodes flatCollect: [ :entity |
-			             (entity isKindOf: RBProgramNode)
-				             ifTrue: [ { entity methodNode compiledMethod } ]
-				             ifFalse: [ entity usingMethods ] ] ]
+		  methods := nodes flatCollect: [ :entity | entity usingMethods ] ]
 ]
 
 { #category : 'accessing' }
