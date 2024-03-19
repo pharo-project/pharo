@@ -9,19 +9,20 @@ Class {
 	#tag : 'SingleParametrized'
 }
 
-{ #category : 'tests' }
+{ #category : 'building suites' }
 RBMakeClassAbstractParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
-		addCase: { #rbClass -> RBMakeClassAbstractTransformation };
+		addCase: { 
+			#rbClass -> RBMakeClassAbstractTransformation .
+			#constructor -> #class: };
 		yourself
 ]
 
 { #category : 'running' }
 RBMakeClassAbstractParametrizedTest >> setUp [
 	super setUp.
-	model := self rbModelForVariableTest.
 
-	testClass := RBBasicLintRuleTestData.
+	testClass := #[82 66 67 108 97 115 115 87 105 116 104 111 117 116 83 101 108 102 67 108 97 115 115 82 101 102 101 114 101 110 99 101 84 101 115 116] asString asSymbol.
 	testClass class removeSelector: #isAbstract
 ]
 
@@ -35,12 +36,12 @@ RBMakeClassAbstractParametrizedTest >> tearDown [
 { #category : 'tests' }
 RBMakeClassAbstractParametrizedTest >> testMakeClassAbstractAddsIsAbstractMethodToClassSide [
 	| refactoring |
-	refactoring := rbClass class: testClass.
 
+	refactoring := self createRefactoringWithArguments: { testClass }.
 	self executeRefactoring: refactoring.
-	self assert: ((refactoring model classNamed: testClass name) classSide
+	self assert: ((refactoring model classNamed: testClass) classSide
 			parseTreeForSelector: #isAbstract)
-		equals: (self parseMethod: 'isAbstract ^self == ', testClass name)
+		equals: (self parseMethod: 'isAbstract ^self == ', testClass)
 ]
 
 { #category : 'tests' }
@@ -51,10 +52,9 @@ RBMakeClassAbstractParametrizedTest >> testMakeClassAbstractPerformChanges [
 	that check `performChanges` logic."
 
 	| refactoring |
-	refactoring := rbClass class: testClass.
-
-	refactoring execute.
-	self assert: ((refactoring model classNamed: testClass name) classSide
+	refactoring := self createRefactoringWithArguments: { testClass }.
+	self executeRefactoring: refactoring.
+	self assert: ((refactoring model classNamed: testClass) classSide
 			parseTreeForSelector: #isAbstract)
-		equals: (self parseMethod: 'isAbstract ^self == ', testClass name)
+		equals: (self parseMethod: 'isAbstract ^self == ', testClass)
 ]

@@ -28,18 +28,25 @@ RBMakeClassAbstractTransformation class >> isTransformation [
 
 { #category : 'preconditions' }
 RBMakeClassAbstractTransformation >> applicabilityPreconditions [
-	"We cannot validate that the class is actually not used and not receiving a message new."
+	"Answer a <Collection> of <RBCondition>"
 
 	^ { 
-		(RBCondition isAbstractClass: targetClass) not .
+		(RBCondition isAbstractClass: targetClass) .
 		self preconditionHaveNoReferences
 		}
 ]
 
-{ #category : 'instance creation' }
-RBMakeClassAbstractTransformation >> class: class [
+{ #category : 'scripting api - conditions' }
+RBMakeClassAbstractTransformation >> checkPreconditions [ 
 
-	targetClass := class
+	self checkApplicabilityPreconditions 
+]
+
+{ #category : 'instance creation' }
+RBMakeClassAbstractTransformation >> class: aClassName [
+
+	className := aClassName.
+	targetClass := self classObjectFor: aClassName.
 ]
 
 { #category : 'preconditions' }
