@@ -43,13 +43,12 @@ SystemDependenciesTest >> externalDependendiesOf: packagesCollection [
 
 { #category : 'known dependencies' }
 SystemDependenciesTest >> knownBasicToolsDependencies [
-
 	"ideally this list should be empty"
 
 	^ #( 'AST-Core-Tests' 'Athens-Cairo' 'Athens-Core' #'Athens-Morphic'
-	     #'Refactoring-Critics' #'Commander-Core'
-	     #Reflectivity #'Reflectivity-Tools' #Shout
-	     'HeuristicCompletion-Model' #VariablesLibrary #'Spec2-CommonWidgets')
+	     #'Refactoring-Critics' #'Commander-Core' #Reflectivity
+	     #'Reflectivity-Tools' #Shout 'HeuristicCompletion-Model'
+	     #VariablesLibrary #'Spec2-CommonWidgets' #'NewTools-Scopes' )
 ]
 
 { #category : 'known dependencies' }
@@ -61,10 +60,11 @@ SystemDependenciesTest >> knownCompilerDependencies [
 
 { #category : 'known dependencies' }
 SystemDependenciesTest >> knownIDEDependencies [
-
 	"ideally this list should be empty"
 
-	^ #('Spec2-CommonWidgets' #'Calypso-SystemPlugins-Traits-Queries-Tests-PWithTraits' #'AI-Algorithms-Graph' 'Microdown' 'Microdown-RichTextComposer')
+	^ #( 'Spec2-CommonWidgets' #'Calypso-SystemPlugins-Traits-Queries-Tests-PWithTraits'
+	     #'AI-Algorithms-Graph' 'Microdown' 'Microdown-RichTextComposer'
+	     #'NewTools-Scopes' #'NewTools-Scopes-Editor' )
 ]
 
 { #category : 'known dependencies' }
