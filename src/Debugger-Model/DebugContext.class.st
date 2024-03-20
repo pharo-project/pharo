@@ -164,14 +164,12 @@ DebugContext >> recompileCurrentMethodTo: aText notifying: aNotifyer [
 		selector := self selectedClass compiler parseSelector: aText.
 		(self checkSelectorUnchanged: selector) ifFalse: [ ^ nil ] ].
 
-	self context method isInstalled ifFalse: [
-		(self selectedClass compiledMethodAt: selector ifAbsent: nil)
-			ifNil: [
-				^ self selectedClass compiler
-					  protocol: self selectedMessageCategoryName;
-					  isScripting: self selectedMessageName isDoIt;
-					  requestor: aNotifyer;
-					  compile: aText ] ].
+	(self selectedClass includesSelector: selector) ifFalse: [
+		^ self selectedClass compiler
+			  protocol: self selectedMessageCategoryName;
+			  isScripting: self selectedMessageName isDoIt;
+			  requestor: aNotifyer;
+			  compile: aText ].
 
 	classOrTraitOfMethod := self
 		                        confirmOnTraitOverwrite: selector
