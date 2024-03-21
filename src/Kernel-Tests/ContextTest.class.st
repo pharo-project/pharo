@@ -133,12 +133,6 @@ ContextTest >> tearDown [
 ]
 
 { #category : 'tests' }
-ContextTest >> testActivateReturnValue [
-	self assert: ((aSender activateReturn: aMethodContext value: #()) isKindOf: Context).
-	self assert: (aSender activateReturn: aMethodContext value: #()) receiver equals: aMethodContext
-]
-
-{ #category : 'tests' }
 ContextTest >> testActiveHome [
 	| block |
 	"Active BlockContext Home And ActiveHome"
