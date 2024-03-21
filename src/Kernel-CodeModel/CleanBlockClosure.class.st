@@ -101,6 +101,12 @@ CleanBlockClosure >> outerCode: aCompiledCode [
 	self compiledBlock outerCode: aCompiledCode
 ]
 
+{ #category : 'accessing' }
+CleanBlockClosure >> path [
+	
+	^ self compiledBlock path allButLast
+]
+
 { #category : 'scanning' }
 CleanBlockClosure >> readsField: varIndex [
 	"Clean blocks by definition do not read fields"
