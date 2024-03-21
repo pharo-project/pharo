@@ -20,6 +20,12 @@ TDebuggerTest class >> debugSession: aDebugSession [
 	^true
 ]
 
+{ #category : 'debugging' }
+TDebuggerTest class >> handlesDebugSession: aDebugSession [
+
+	^ true
+]
+
 { #category : 'tests' }
 TDebuggerTest >> testAvailableAutomatically [
 	self class availableAutomatically: nil.
