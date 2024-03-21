@@ -13,7 +13,7 @@ Class {
 { #category : 'queries' }
 ClyPackageExtensionScope >> classesDo: aBlock [
 	self packagesDo: [ :package |
-		package extendedClasses
+		(environment system extendedClassesInPackage: package) 
 			collect: [ :each | each instanceSide ]
 			thenDo: aBlock]
 ]
@@ -22,7 +22,7 @@ ClyPackageExtensionScope >> classesDo: aBlock [
 ClyPackageExtensionScope >> methodsDo: aBlock [
 
 	self packagesDo: [ :package |
-		package extensionMethods do: aBlock ]
+		(environment system extensionMethodsInPackage: package) do: aBlock ]
 ]
 
 { #category : 'queries' }
