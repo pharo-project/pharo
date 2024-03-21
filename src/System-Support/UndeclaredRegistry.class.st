@@ -10,3 +10,11 @@ Class {
 	#package : 'System-Support',
 	#tag : 'Utilities'
 }
+
+{ #category : 'private' }
+UndeclaredRegistry >> atNewIndex: index put: anUndeclaredVariable [
+
+	anUndeclaredVariable isAssociation ifTrue: [
+		self error: 'Only global variables should be added to the SystemDictionary and not associations. Undeclared: ' , anUndeclaredVariable name ].
+	^ super atNewIndex: index put: anUndeclaredVariable
+]
