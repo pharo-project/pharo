@@ -30,7 +30,7 @@ ClyRemoveMethodGroupCommand >> defaultMenuIconName [
 
 { #category : 'accessing' }
 ClyRemoveMethodGroupCommand >> defaultMenuItemName [
-	^'Remove 2222'
+	^'Remove'
 ]
 
 { #category : 'execution' }
