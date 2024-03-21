@@ -111,6 +111,11 @@ ThreadSafeTranscript >> flush [
 	self critical: [ deferredEndEntry := true ]
 ]
 
+{ #category : 'testing' }
+ThreadSafeTranscript >> hasBindingOf: aString [
+	^ false
+]
+
 { #category : 'ui building' }
 ThreadSafeTranscript >> initialExtent [
 
