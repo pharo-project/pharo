@@ -27,7 +27,7 @@ MCScanner >> next [
 	 for some packages on some platforms, so we implement it using a local stack."
 
 	| stack |
-	stack := Stack with: Stack new.
+	stack := Stack new push: Stack new.
 	[
 		| c |
 		stream skipSeparators.
