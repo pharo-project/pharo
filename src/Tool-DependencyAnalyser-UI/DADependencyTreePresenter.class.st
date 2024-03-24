@@ -231,7 +231,8 @@ DADependencyTreePresenter >> initializeButtons [
 		label: 'Open the graph'.
 	buttonReverseAnalysis := self newButton
 		help: 'Reverse the analysis : set the dependent packages as root packages';
-		label: 'Reverse the analysis'.
+		label: 'Reverse the analysis';
+		icon: (self iconNamed: #refresh).
 	buttonSave := self newButton
 		help: 'Serialize the current object relation graph dependencies';
 		label: 'Save current analysis'.
