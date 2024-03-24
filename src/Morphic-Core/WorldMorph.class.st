@@ -280,14 +280,14 @@ WorldMorph >> contentsMenu: aMenu [
 	(expanded asSortedCollection: [ :w1 :w2 | w1 label caseInsensitiveLessOrEqual: w2 label ])
 		do: [ :w |
 			aMenu add: (self truncatedMenuLabelFor: w label) target: w selector: #activateAndForceLabelToShow.
-			aMenu lastItem icon: (self iconNamed: w taskbarIconName).
+			aMenu lastItem iconFormSet: (self iconFormSetNamed: w taskbarIconName).
 			w model canDiscardEdits
 				ifFalse: [ aMenu lastItem color: Color red ] ].
 	aMenu addLine.
 	(collapsed asSortedCollection: [ :w1 :w2 | w1 label caseInsensitiveLessOrEqual: w2 label ])
 		do: [ :w |
 			aMenu add: (self truncatedMenuLabelFor: w label) target: w selector: #collapseOrExpand.
-			aMenu lastItem icon: (self iconNamed: w taskbarIconName).
+			aMenu lastItem iconFormSet: (self iconFormSetNamed: w taskbarIconName).
 			w model canDiscardEdits
 				ifFalse: [ aMenu lastItem color: Color red ] ].
 	aMenu addLine.
@@ -295,7 +295,7 @@ WorldMorph >> contentsMenu: aMenu [
 		asSortedCollection: [ :w1 :w2 | w1 class name caseInsensitiveLessOrEqual: w2 class name ])
 		do: [ :w |
 			aMenu add: (self truncatedMenuLabelFor: w class name) target: w selector: #comeToFront.
-			aMenu lastItem icon: (self iconNamed: w taskbarIconName) ].
+			aMenu lastItem iconFormSet: (self iconFormSetNamed: w taskbarIconName) ].
 
 	^ aMenu
 ]
