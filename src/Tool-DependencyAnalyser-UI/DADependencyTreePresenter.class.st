@@ -31,7 +31,7 @@ DADependencyTreePresenter class >> defaultLayout [
 		add: ( SpBoxLayout newHorizontal
 					add: #textPackageField;
 					add: #buttonBrowseCycles;
-					add: #buttonRefresh;
+					add: #buttonRefresh expand: false;
 					add: #buttonDefault;
 					yourself)
 			expand: false;
