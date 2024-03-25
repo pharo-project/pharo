@@ -9,6 +9,22 @@ Class {
 	#tag : 'Parametrized'
 }
 
+{ #category : 'helpers' }
+RBAbstractRefactoringTest class >> unreferencedClass [
+	"Answer a <Class> which should not have any references"
+
+	| env |
+	env := (RBNamespace onEnvironment: (RBPackageEnvironment packageName: 'Refactoring-DataForTesting')).
+	^ env classNamed: self unreferencedClassName 
+]
+
+{ #category : 'helpers' }
+RBAbstractRefactoringTest class >> unreferencedClassName [
+	"Answer a <Symbol> representing a <Class> which should not have any references"
+
+	^ #[82 66 67 108 97 115 115 87 105 116 104 111 117 116 83 101 108 102 67 108 97 115 115 82 101 102 101 114 101 110 99 101 84 101 115 116] asString asSymbol
+]
+
 { #category : 'accessing' }
 RBAbstractRefactoringTest >> constructor [
 ]
@@ -204,4 +220,11 @@ RBAbstractRefactoringTest >> testConditions [
 	self assert: newCondition errorString equals: 'false'.
 	self assert: (condition not & condition not) check.
 	self assert: (condition & condition) errorString equals: 'false OR false'
+]
+
+{ #category : 'helpers' }
+RBAbstractRefactoringTest >> unreferencedClassName [
+	"Answer a <Symbol> representing a <Class> which should not have any references"
+
+	^ self class unreferencedClassName 
 ]
