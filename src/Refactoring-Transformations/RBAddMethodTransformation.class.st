@@ -80,9 +80,10 @@ RBAddMethodTransformation >> prepareForExecution [
 { #category : 'transforming' }
 RBAddMethodTransformation >> privateTransform [
 
-	self definingClass
-		compile: sourceCode
-		classified: protocol
+	self model changes addChange: (
+		self definingClass
+			compile: sourceCode
+			classified: protocol)
 ]
 
 { #category : 'accessing' }
