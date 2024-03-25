@@ -32,7 +32,7 @@ ReRemoveClassReparentChoice >> description [
 		classesHaveSubclasses ifTrue: [
 			aStream nextPutAll: ' and reparent subclasses' ].
 		emptyClasses ifFalse: [ 
-			aStream nextPutAll: '. Pay attention you lose all the class state' ] ]
+			aStream nextPutAll: '. WARNING: you will lose the class state' ] ]
 ]
 
 { #category : 'accessing' }
