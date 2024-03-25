@@ -19,6 +19,23 @@ SocketStreamTest >> classToBeTested [
 	^ SocketStream
 ]
 
+{ #category : 'stream protocol' }
+SocketStreamTest >> closeServerAndSendOnceFromClient [
+
+	serverStream close.
+	"The first send after the other end is closed will not have problems as long as it fits within the send buffer."
+	self
+		shouldnt: [
+			clientStream
+				nextPutAll: 'A line of text';
+				flush ]
+		raise: NetworkError.
+	"Wait for the state of the underlying socket to update--normally this happens near-instantly,
+	but when running tests in a batch of other sockets-related tests, e.g. in CI, often a subsequent send
+	will still succeed without the wait, causing the test to fail."
+	(Delay forMilliseconds: 100) wait
+]
+
 { #category : 'running' }
 SocketStreamTest >> setUp [
 	| listener clientSocket serverSocket |
@@ -63,18 +80,7 @@ SocketStreamTest >> testFlushLargeMessageOtherEndClosed [
 SocketStreamTest >> testFlushOtherEndClosed [
 	"Ensure that #flush properly raises an error when called when the other end is closed."
 
-	serverStream close.
-	"The first send after the other end is closed will not have problems as long as it fits within the send buffer."
-	self
-		shouldnt: [
-			clientStream
-				nextPutAll: 'A line of text';
-				flush ]
-		raise: NetworkError.
-	"Wait for the state of the underlying socket to update--normally this happens near-instantly,
-	but when running this test in a batch of other sockets-related tests, e.g. in CI, it often fails without the wait."
-	(Delay forMilliseconds: 100) wait.
-	"The #waitForSendDone as part of #flush will now raise an error."
+	self closeServerAndSendOnceFromClient.
 	self
 		should: [
 			clientStream
@@ -108,15 +114,11 @@ SocketStreamTest >> testNextIntoCloseNonSignaling [
 
 { #category : 'stream protocol' }
 SocketStreamTest >> testNextPutAllFlushOtherEndClosed [
-	"#nextPutAllFlush: does its own error handling, so needs to be tested separately.
-	Having some content in the buffer first means that the direct send of the second buffer will encounter an error."
+	"#nextPutAllFlush: does its own error handling, so needs to be tested separately."
 
-	serverStream close.
+	self closeServerAndSendOnceFromClient.
 	self
-		should: [
-			clientStream
-				nextPutAll: 'A line of text';
-				nextPutAllFlush: 'Another line of text' ]
+		should: [ clientStream nextPutAllFlush: 'Another line of text' ]
 		raise: ConnectionClosed
 ]
 
