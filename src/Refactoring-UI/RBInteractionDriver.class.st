@@ -109,6 +109,13 @@ RBInteractionDriver >> initialize [
 ]
 
 { #category : 'accessing' }
+RBInteractionDriver >> model [
+	"Answer the receiver's <RBBrowserEnvironment>"
+
+	^ model
+]
+
+{ #category : 'accessing' }
 RBInteractionDriver >> model: aRBBrowserEnvironment [ 
 	model := aRBBrowserEnvironment
 ]
@@ -168,6 +175,12 @@ RBInteractionDriver >> requestDialog: aStRequestDialog [
 RBInteractionDriver >> runRefactoring [
 
 	self subclassResponsibility
+]
+
+{ #category : 'accessing' }
+RBInteractionDriver >> scopes: anObject [
+
+	scopes := anObject
 ]
 
 { #category : 'configuration' }
