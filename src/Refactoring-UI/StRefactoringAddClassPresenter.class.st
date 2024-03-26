@@ -25,6 +25,17 @@ StRefactoringAddClassPresenter class >> example [
 	presenter openDialog
 ]
 
+{ #category : 'initialization' }
+StRefactoringAddClassPresenter >> connectPresenters [ 
+
+	packagePresenter 
+		transmitTo: tagPresenter 
+		transform: [ : item |
+			| pkg |
+			pkg := PackageOrganizer default packageNamed: item label.
+			tagPresenter items: pkg tagNames asOrderedCollection ]
+]
+
 { #category : 'layout' }
 StRefactoringAddClassPresenter >> defaultLayout [ 
 
@@ -54,10 +65,6 @@ StRefactoringAddClassPresenter >> initializePresenters [
 	newClassPresenter := self newTextInput.
 	packagePresenter := self newDropList
 		items: PackageOrganizer default packageNames;
-		whenSelectedItemChangedDo: [ : item | 
-			| pkg |
-			pkg := PackageOrganizer default packageNamed: item.
-			tagPresenter items: pkg tagNames asOrderedCollection ];
 		yourself.
 	tagPresenter := self newDropList.
 	commentPresenter := self newText.
@@ -76,12 +83,29 @@ StRefactoringAddClassPresenter >> initializeWindow: aSpWindowPresenter [
 	aSpWindowPresenter aboutText: String empty
 ]
 
+{ #category : 'instance creation' }
+StRefactoringAddClassPresenter >> newClassName [
+	"Answer a <String> containing the current contents of the new class name presenter"
+	
+	^ newClassPresenter text
+]
+
 { #category : 'showing' }
 StRefactoringAddClassPresenter >> open [
 
 	super
 		open;
 		centered
+]
+
+{ #category : 'api - showing' }
+StRefactoringAddClassPresenter >> openModal [
+	| dialog |
+	
+	dialog := self asModalWindow open; centered.
+	^ dialog isOk
+		ifTrue: [ self newClassName trimmed ]
+		ifFalse: [ nil ]
 ]
 
 { #category : 'initialization' }

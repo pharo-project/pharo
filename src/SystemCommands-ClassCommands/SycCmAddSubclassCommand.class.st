@@ -46,8 +46,6 @@ SycCmAddSubclassCommand >> prepareFullExecution [
 	targetClass := context lastSelectedClass.
 	newClassName := StRefactoringAddClassPresenter new 
 		onCancel: [ CmdCommandAborted signal ];
-		onAccept: [ :dialog | 
-			dialog close.
-			dialog presenter text ];
+		onAccept: [ :dialog | dialog close ];
 		openModal
 ]
