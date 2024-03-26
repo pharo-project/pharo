@@ -514,7 +514,7 @@ ReleaseTest >> testThatThereAreNoSelectorsRemainingThatAreSentButNotImplemented 
 	 This test makes sure that we do not introduce new cases until we are down to one"
 
 	| knownFailures violations wantedAndValidViolations |
-	
+
 	"String streamContents: [ :aStream | aStream << '#( '.  SystemNavigation default allSentButNotImplementedSelectors do: [ :m | .aStream << '''' << m printString  << ''' ' ]. aStream << ')' ]"
 	knownFailures := #( 'AthensCCWArcSegment>>#accept:' 'AthensCWArcSegment>>#accept:' 'AthensCairoCanvas>>#visitCubicSegment:'
 	                    'AthensCairoCanvas>>#visitQuadSegment:' 'AthensCloseSegment>>#accept:' 'AthensCubicSegment>>#accept:' 'AthensEllipticalArcSegment>>#accept:'
@@ -523,16 +523,13 @@ ReleaseTest >> testThatThereAreNoSelectorsRemainingThatAreSentButNotImplemented 
 	                    'BalloonEngine>>#registerFills:' 'BalloonFillData>>#computeFill' 'ClyFullBrowserMorph>>#extendClassScopeForMethods:'
 	                    'ComplexBorderStyle>>#drawPolyPatchFrom:to:on:usingEnds:' 'ComplexBorderStyle>>#drawLineFrom:to:on:'
 	                    'Context>>#simulatePrimitive:in:receiver:arguments:' 'Context>>#doPrimitive:method:receiver:args:'
-	                    'Context>>#failPrimitiveWith:'
-	          
-'DAPackageAnalyzerDiffTreePresenter>>#buildRoots' 'DTReRunConfiguration>>#items' 'DebugSession>>#shouldDisplayContext:basedOnFilters:'
-	                    'DiskDirectoryEntry class>>#store:path:node:' 'EDEmergencyDebugger>>#resetDisplay' 'EDTest>>#prepareMethodVersionTest'
-	                    'ExternalDropHandler class>>#defaultHandler' 'FFICallbackArgumentReader>>#stackPointer' 'FFIFloat32>>#callbackReturnOn:for:'
-	                    'FFIFloatType>>#callbackReturnOn:for:' 'FFIIndirectFunctionResolution>>#resolveFunction:'
-	                    'FFILibrary>>#macLibraryName' 'FFILibrary>>#win32LibraryName' 'FileDialogWindow>>#saveForcedSelectedFile'
-	                    'FileList class>>#morphicViewOnFile:contents:fileList:' 'GLMOSWindowWorldMorph>>#delete' 'IRReconstructor>>#fixPushNilsForTemps'
-	                    'IceLibgitCommitWalk>>#shouldInclude:' 'IcePackage>>#outgoingCommits' 'IceRemote>>#upstreamForBranch:backend:'
-	                    'IceTag>>#lastCommit' 'IceTipHiedraAltComponentHistoryBrowser>>#newCommitRow:commit:'
+	                    'Context>>#failPrimitiveWith:' 'DAPackageAnalyzerDiffTreePresenter>>#buildRoots' 'DTReRunConfiguration>>#items'
+	                    'DebugSession>>#shouldDisplayContext:basedOnFilters:' 'DiskDirectoryEntry class>>#store:path:node:'
+	                    'EDEmergencyDebugger>>#resetDisplay' 'EDTest>>#prepareMethodVersionTest' 'ExternalDropHandler class>>#defaultHandler'
+	                    'FFICallbackArgumentReader>>#stackPointer' 'FFIFloat32>>#callbackReturnOn:for:' 'FFIFloatType>>#callbackReturnOn:for:'
+	                    'FFIIndirectFunctionResolution>>#resolveFunction:' 'FileDialogWindow>>#saveForcedSelectedFile' 'FileList class>>#morphicViewOnFile:contents:fileList:'
+	                    'GLMOSWindowWorldMorph>>#delete' 'IRReconstructor>>#fixPushNilsForTemps' 'IceLibgitCommitWalk>>#shouldInclude:'
+	                    'IcePackage>>#outgoingCommits' 'IceRemote>>#upstreamForBranch:backend:' 'IceTag>>#lastCommit' 'IceTipHiedraAltComponentHistoryBrowser>>#newCommitRow:commit:'
 	                    'IceTipHiedraAltHistoryBrowser>>#newCommitRow:commit:' 'IceTipHiedraAltHistoryBrowser>>#initializeCommitList'
 	                    'InstructionStream>>#interpretNext3ByteSistaV1Instruction:for:extA:extB:startPC:'
 	                    'KMDispatcher>>#spotterForKeysFor:' 'KMMetaModifier>>#printOsRepresentationOn:' 'LGitDiff>>#includesFileNamed:'
@@ -568,8 +565,8 @@ ReleaseTest >> testThatThereAreNoSelectorsRemainingThatAreSentButNotImplemented 
 	violations removeAllSuchThat: [ :violation | violation beginsWithAnyOf: #( SCI SmalltalkCI ) ].
 
 	"There is a violation that we explicitly want for rule tesing"
-	wantedAndValidViolations := #('ReSentButNotUnderstoodBySuperRuleTest>>#sampleMethod').
-	
+	wantedAndValidViolations := #( 'ReSentButNotUnderstoodBySuperRuleTest>>#sampleMethod' ).
+
 	violations removeAll: wantedAndValidViolations.
 	self assertEmpty: (violations difference: knownFailures)
 ]
