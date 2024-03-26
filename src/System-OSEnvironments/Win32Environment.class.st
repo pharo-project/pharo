@@ -121,7 +121,7 @@ Win32Environment >> keysAndValuesDo: aBlock [
 { #category : 'private' }
 Win32Environment >> removeEnvironmentVariable: nameString [
 
-	 ^ self ffiCall: #( int SetEnvironmentVariableW ( Win32WideString nameString, 0 ) )
+	 ^ self ffiCall: #( int SetEnvironmentVariableW ( Win32WideString nameString, Win32WideString 0 ) )
 ]
 
 { #category : 'accessing' }
