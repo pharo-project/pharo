@@ -65,13 +65,20 @@ SocketStreamTest >> tearDown [
 
 { #category : 'stream protocol' }
 SocketStreamTest >> testFlushLargeMessageOtherEndClosed [
-	"A large send will be broken into chunks and fail on the second one."
+	"A large send will be broken into chunks and fail once the TCP send buffer
+	is full. Ensure we actually exceed the size of the send buffer, but also try
+	to reduce it first so we don't need an excessively large message. Some platforms
+	(Linux) have minimum values for this setting that prevent us from relying on
+	lowering it alone. Attempt to set a 65KiB buffer and double whatever we get."
 
+	| bufferSize |
+	clientStream socket setOption: 'SO_SNDBUF' value: 2 ** 16.
+	bufferSize := (clientStream socket getOption: 'SO_SNDBUF') second.
 	serverStream close.
 	self
-		should: [ "256kiB"
+		should: [
 			clientStream
-				nextPutAll: (String new: 2 ** 18 withAll: $a);
+				nextPutAll: (String new: bufferSize * 2 withAll: $a);
 				flush ]
 		raise: ConnectionClosed
 ]
