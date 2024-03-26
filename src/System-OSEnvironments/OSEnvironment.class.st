@@ -262,7 +262,7 @@ OSEnvironment >> setEnv: nameString value: valueString during: aBlock [
 	aBlock value ] ensure: [
 		oldValue
 			ifNil: [ self removeKey: nameString ]
-			ifNotNil: [ self setEnv: nameString value: valueString ] ]
+			ifNotNil: [ self setEnv: nameString value: oldValue ] ]
 ]
 
 { #category : 'accessing' }
