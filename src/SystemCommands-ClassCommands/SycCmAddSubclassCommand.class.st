@@ -38,3 +38,16 @@ SycCmAddSubclassCommand >> name [
 SycCmAddSubclassCommand >> order [
 	^ 10100.1
 ]
+
+{ #category : 'preparation' }
+SycCmAddSubclassCommand >> prepareFullExecution [
+	
+	refactoringScopes := context refactoringScopes.
+	targetClass := context lastSelectedClass.
+	newClassName := StRefactoringAddClassPresenter new 
+		onCancel: [ CmdCommandAborted signal ];
+		onAccept: [ :dialog | 
+			dialog close.
+			dialog presenter text ];
+		openModal
+]
