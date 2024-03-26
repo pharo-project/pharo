@@ -11,11 +11,11 @@ Class {
 { #category : 'executing' }
 SycCmAddSubclassCommand >> executeRefactoring [
 
-	(RBInsertNewClassRefactoring className: newClassName)
-		superclass: targetClass asString;
-		packageName: targetClass package name;
-		tagName: targetClass packageTag name;
-		execute
+	(ReAddSubclassDriver new
+		scopes: refactoringScopes subclass: newClassName;
+		superclass: targetClass;		
+		package: targetClass package;
+		tag: targetClass packageTag) runRefactoring.
 ]
 
 { #category : 'accessing' }

@@ -26,20 +26,13 @@ Class {
 { #category : 'preconditions' }
 RBInsertNewClassRefactoring >> applicabilityPreconditions [
 
-	| cond |
-	cond := { ((RBCondition isMetaclass: superclass) errorMacro:
-		         'Superclass must not be a metaclass') not }.
-	subclasses do: [ :sub |
-		        cond := cond , {
-				 	((RBCondition isMetaclass: sub) errorMacro:
-				         'Subclass must <1?not :>be a metaclass') not.
-			        (RBCondition isImmediateSubclass: sub of: superclass) } ].
-	^ cond , {
-			(RBCondition isValidClassName: className).
-			(RBCondition isGlobal: className in: self model) not.
-			(RBCondition isSymbol: packageName).
-			((RBCondition withBlock: [ packageName isNotEmpty ]) errorMacro:
-				 'Invalid package name') }
+	^ { 
+		(ReClassChainAllowsClassInsertionCondition new superclass: superclass) .
+		(RBCondition isValidClassName: className) .
+		(RBCondition isGlobal: className in: self model) not .
+		(RBCondition isSymbol: packageName) .
+		((RBCondition withBlock: [ packageName isNotEmpty ]) errorMacro: 'Invalid package name')
+		}
 ]
 
 { #category : 'accessing' }
@@ -105,13 +98,13 @@ RBInsertNewClassRefactoring >> storeOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : 'initialization' }
+{ #category : 'accessing' }
 RBInsertNewClassRefactoring >> subclasses: aCollection [
 
-	subclasses := aCollection collect: [ :each | self classObjectFor: each ]
+	subclasses := aCollection collect: [ :each | self classObjectFor: each ].
 ]
 
-{ #category : 'initialization' }
+{ #category : 'accessing' }
 RBInsertNewClassRefactoring >> superclass: aClass [
 
 	superclass := self classObjectFor: aClass
