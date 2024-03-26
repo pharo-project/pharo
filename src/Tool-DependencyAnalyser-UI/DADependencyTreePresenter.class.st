@@ -4,7 +4,6 @@ A PDPackageAnalyzerTreeModel shows all dependent packages from a set of packages
 Class {
 	#name : 'DADependencyTreePresenter',
 	#superclass : 'DAPackageTreePresenter',
-	#classTraits : '{} + TraitedClass',
 	#instVars : [
 		'systemCycles',
 		'packageLabel',
