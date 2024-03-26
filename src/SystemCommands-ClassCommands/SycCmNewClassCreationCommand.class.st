@@ -13,8 +13,9 @@ Class {
 	#instVars : [
 		'newClassName'
 	],
-	#category : 'SystemCommands-ClassCommands',
-	#package : 'SystemCommands-ClassCommands'
+	#category : 'SystemCommands-ClassCommands-Creation',
+	#package : 'SystemCommands-ClassCommands',
+	#tag : 'Creation'
 }
 
 { #category : 'execution' }
@@ -34,6 +35,7 @@ SycCmNewClassCreationCommand >> isApplicable [
 
 { #category : 'preparation' }
 SycCmNewClassCreationCommand >> prepareFullExecution [
+
 	super prepareFullExecution.
 	newClassName := UIManager default request: 'Name of new class'.
 	newClassName isEmptyOrNil | (newClassName = targetClass name) ifTrue: [ CmdCommandAborted signal]

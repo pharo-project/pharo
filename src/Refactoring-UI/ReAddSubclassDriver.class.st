@@ -4,8 +4,9 @@ Class {
 	#instVars : [
 		'superclass',
 		'subclass',
-		'package',
-		'tag'
+		'comment',
+		'tagName',
+		'packageName'
 	],
 	#category : 'Refactoring-UI-Drivers',
 	#package : 'Refactoring-UI',
@@ -21,6 +22,18 @@ ReAddSubclassDriver >> changes [
 ]
 
 { #category : 'accessing' }
+ReAddSubclassDriver >> comment [
+
+	^ comment
+]
+
+{ #category : 'accessing' }
+ReAddSubclassDriver >> comment: aString [ 
+
+	comment := aString
+]
+
+{ #category : 'accessing' }
 ReAddSubclassDriver >> configureRefactoring [
 
 	refactoring := (RBAddNewClassRefactoring className: self subclass)
@@ -28,29 +41,23 @@ ReAddSubclassDriver >> configureRefactoring [
 		superclass: self superclass;
 		subclasses: self superclass subclasses;
 		packageName: self packageName;
-		tagName: self tag name;
+		tagName: self tagName;
 		yourself
-]
-
-{ #category : 'accessing' }
-ReAddSubclassDriver >> package [
-
-	^ package
-]
-
-{ #category : 'accessing' }
-ReAddSubclassDriver >> package: anObject [
-
-	package := anObject
 ]
 
 { #category : 'accessing' }
 ReAddSubclassDriver >> packageName [
 	"Answer a <Symbol> representing the receiver's package name where the new class will be add"
 
-	^ self package 
+	^ packageName
 		ifNil: [ self superclass packageName ] 
-		ifNotNil: [ self package name ]
+
+]
+
+{ #category : 'accessing' }
+ReAddSubclassDriver >> packageName: anObject [
+
+	packageName := anObject
 ]
 
 { #category : 'execution' }
@@ -66,7 +73,7 @@ ReAddSubclassDriver >> runRefactoring [
 ReAddSubclassDriver >> scopes: refactoringScopes subclass: newSubclass [
 
 	scopes := refactoringScopes.
-	model := self refactoringScopeOn: scopes first.
+	model := self refactoringScopeOn: scopes last.
 	superclass := model classFor: model environment classes anyOne.
 	subclass := newSubclass.
 ]
@@ -90,13 +97,16 @@ ReAddSubclassDriver >> superclass: anObject [
 ]
 
 { #category : 'accessing' }
-ReAddSubclassDriver >> tag [
+ReAddSubclassDriver >> tagName [
+	"Answer a <Symbol> representing the receiver's tag name where the new class will be add"
 
-	^ tag
+	^ tagName
+		ifNil: [ self superclass tagName ]
+
 ]
 
 { #category : 'accessing' }
-ReAddSubclassDriver >> tag: aPackageTag [ 
+ReAddSubclassDriver >> tagName: anObject [
 
-	tag := aPackageTag
+	tagName := anObject
 ]

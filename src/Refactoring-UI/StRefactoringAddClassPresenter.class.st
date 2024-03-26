@@ -10,7 +10,8 @@ Class {
 		'newClassPresenter',
 		'packagePresenter',
 		'tagPresenter',
-		'commentPresenter'
+		'commentPresenter',
+		'sycCmAddSubclassCommand'
 	],
 	#category : 'Refactoring-UI-UI',
 	#package : 'Refactoring-UI',
@@ -19,21 +20,9 @@ Class {
 
 { #category : 'examples' }
 StRefactoringAddClassPresenter class >> example [
-
-	| presenter |
-	presenter := self new.
-	presenter openDialog
-]
-
-{ #category : 'initialization' }
-StRefactoringAddClassPresenter >> connectPresenters [ 
-
-	packagePresenter 
-		transmitTo: tagPresenter 
-		transform: [ : item |
-			| pkg |
-			pkg := PackageOrganizer default packageNamed: item label.
-			tagPresenter items: pkg tagNames asOrderedCollection ]
+	<script>
+	
+	self new openModal
 ]
 
 { #category : 'layout' }
@@ -62,12 +51,22 @@ StRefactoringAddClassPresenter >> initialExtentForWindow [
 { #category : 'initialization' }
 StRefactoringAddClassPresenter >> initializePresenters [ 
 
-	newClassPresenter := self newTextInput.
+	newClassPresenter := self newTextInput
+		whenTextChangedDo: [ : text | sycCmAddSubclassCommand newClassName: self newClassName ];
+		yourself.
 	packagePresenter := self newDropList
 		items: PackageOrganizer default packageNames;
+		whenSelectedItemChangedDo: [ : item | 
+			self updateTagItems: item.		
+			self updateTagSelection: item ];
 		yourself.
-	tagPresenter := self newDropList.
-	commentPresenter := self newText.
+	tagPresenter := self newDropList
+		whenSelectedItemChangedDo: [ : item |
+			self updateTagSelection: item ];
+		yourself.
+	commentPresenter := self newText
+		whenTextChangedDo: [ : text | sycCmAddSubclassCommand comment: commentPresenter text trimmed ];
+		yourself.
 	
 	self 
 		acceptLabel: 'Create';
@@ -87,7 +86,7 @@ StRefactoringAddClassPresenter >> initializeWindow: aSpWindowPresenter [
 StRefactoringAddClassPresenter >> newClassName [
 	"Answer a <String> containing the current contents of the new class name presenter"
 	
-	^ newClassPresenter text
+	^ newClassPresenter text trimmed
 ]
 
 { #category : 'showing' }
@@ -104,7 +103,7 @@ StRefactoringAddClassPresenter >> openModal [
 	
 	dialog := self asModalWindow open; centered.
 	^ dialog isOk
-		ifTrue: [ self newClassName trimmed ]
+		ifTrue: [ self ]
 		ifFalse: [ nil ]
 ]
 
@@ -112,6 +111,12 @@ StRefactoringAddClassPresenter >> openModal [
 StRefactoringAddClassPresenter >> setInitialExtentTo: aSpWindowPresenter [
 
 	aSpWindowPresenter initialExtent: self initialExtentForWindow
+]
+
+{ #category : 'accessing - model' }
+StRefactoringAddClassPresenter >> setModelBeforeInitialization: aSycCmAddSubclassCommand [
+
+	sycCmAddSubclassCommand := aSycCmAddSubclassCommand
 ]
 
 { #category : 'initialization' }
@@ -124,6 +129,21 @@ StRefactoringAddClassPresenter >> setTitleTo: aSpWindowPresenter [
 StRefactoringAddClassPresenter >> setWindowIconTo: aSpWindowPresenter [
 
 	aSpWindowPresenter windowIcon: (self iconNamed: #add)
+]
+
+{ #category : 'initialization' }
+StRefactoringAddClassPresenter >> updateTagItems: item [
+
+	| pkg |
+	
+	pkg := PackageOrganizer default packageNamed: item.
+	tagPresenter items: pkg tagNames asOrderedCollection.	
+]
+
+{ #category : 'initialization' }
+StRefactoringAddClassPresenter >> updateTagSelection: item [
+
+	sycCmAddSubclassCommand tagName: tagPresenter selectedItem.
 ]
 
 { #category : 'private' }
