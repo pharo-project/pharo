@@ -11,7 +11,8 @@ Class {
 		'packagePresenter',
 		'tagPresenter',
 		'commentPresenter',
-		'sycCmAddSubclassCommand'
+		'sycCmAddSubclassCommand',
+		'useTemplateCheckPresenter'
 	],
 	#category : 'Refactoring-UI-UI',
 	#package : 'Refactoring-UI',
@@ -35,8 +36,11 @@ StRefactoringAddClassPresenter >> defaultLayout [
 		  add: packagePresenter at: 2 @ 2 span: 2 @ 1;
 		  add: 'Tag' at: 1 @ 3;
 		  add: tagPresenter at: 2 @ 3 span: 2 @ 1;
-		  add: 'Coment' at: 1 @ 4;
-		  add: commentPresenter at: 2 @ 4 span: 2 @ 1;
+		  add: 'Comment' at: 1 @ 4;
+		  add: (SpBoxLayout newTopToBottom
+				add: useTemplateCheckPresenter expand: false;
+				add: commentPresenter withConstraints: [ : c | c height: 500 ];
+				yourself) at: 2 @ 4 span: 2 @ 1;
 		  beColumnNotHomogeneous;
 		  yourself
 		
@@ -45,32 +49,85 @@ StRefactoringAddClassPresenter >> defaultLayout [
 { #category : 'initialization' }
 StRefactoringAddClassPresenter >> initialExtentForWindow [
 
-	^ (500 @ 250) scaledByDisplayScaleFactor
+	^ (500 @ 450) scaledByDisplayScaleFactor
+]
+
+{ #category : 'initialization' }
+StRefactoringAddClassPresenter >> initializeClassNamePresenter [
+
+	newClassPresenter := self newTextInput
+		whenTextChangedDo: [ : text | 
+			(Smalltalk globals hasClassNamed: text asSymbol)
+				ifTrue: [ self inform: 'Class ' , text asString , ' already exists' ]
+				ifFalse: [ sycCmAddSubclassCommand newClassName: self newClassName ] ];
+		yourself.
+]
+
+{ #category : 'initialization' }
+StRefactoringAddClassPresenter >> initializeCommentPresenter [
+
+	useTemplateCheckPresenter := self newCheckBox
+		state: false;
+		help: 'When checked, the comment will be prefilled with a generic class comment';
+		label: 'Use comment template';
+		whenActivatedDo: [ commentPresenter text: sycCmAddSubclassCommand targetClass classCommentBlank  ];
+		whenDeactivatedDo: [ commentPresenter text: String empty ];
+		yourself.
+	commentPresenter := self newText
+		beWrapWord;
+		placeholder: 'A comment for your new class';
+		whenTextChangedDo: [ : text | sycCmAddSubclassCommand comment: commentPresenter text trimmed ];
+		yourself.
+]
+
+{ #category : 'initialization' }
+StRefactoringAddClassPresenter >> initializeFocus [
+
+	self focusOrder 
+		add: newClassPresenter;
+		add: packagePresenter;
+		add: tagPresenter;
+		add: commentPresenter
+]
+
+{ #category : 'initialization' }
+StRefactoringAddClassPresenter >> initializePackagesPresenter [
+
+	packagePresenter := self newDropList
+		startWithSelection;
+		items: sycCmAddSubclassCommand packageNames;
+		displayIcon: [ : aPackage | self iconNamed: aPackage systemIconName ];
+		sortingBlock: [ : a : b | a model < b model ];
+		whenSelectedItemChangedDo: [ : item | 
+			self updateTagItems: item.		
+			self updateTagSelection: item ];
+		selectItem: sycCmAddSubclassCommand targetPackageName;		
+		yourself.
 ]
 
 { #category : 'initialization' }
 StRefactoringAddClassPresenter >> initializePresenters [ 
 
-	newClassPresenter := self newTextInput
-		whenTextChangedDo: [ : text | sycCmAddSubclassCommand newClassName: self newClassName ];
-		yourself.
-	packagePresenter := self newDropList
-		items: PackageOrganizer default packageNames;
-		whenSelectedItemChangedDo: [ : item | 
-			self updateTagItems: item.		
-			self updateTagSelection: item ];
-		yourself.
-	tagPresenter := self newDropList
-		whenSelectedItemChangedDo: [ : item |
-			self updateTagSelection: item ];
-		yourself.
-	commentPresenter := self newText
-		whenTextChangedDo: [ : text | sycCmAddSubclassCommand comment: commentPresenter text trimmed ];
-		yourself.
+	self
+		initializeClassNamePresenter;
+		initializeTagsPresenter;
+		initializePackagesPresenter;
+		initializeCommentPresenter.
 	
 	self 
 		acceptLabel: 'Create';
-		validateAnswer: self validateAnswerBlock
+		validateAnswer: self validateAnswerBlock;
+		initializeFocus.
+]
+
+{ #category : 'initialization' }
+StRefactoringAddClassPresenter >> initializeTagsPresenter [
+
+	tagPresenter := self newDropList
+		startWithSelection;
+		whenSelectedItemChangedDo: [ : item |
+			self updateTagSelection: item ];
+		yourself.
 ]
 
 { #category : 'initialization' }
@@ -99,12 +156,8 @@ StRefactoringAddClassPresenter >> open [
 
 { #category : 'api - showing' }
 StRefactoringAddClassPresenter >> openModal [
-	| dialog |
 	
-	dialog := self asModalWindow open; centered.
-	^ dialog isOk
-		ifTrue: [ self ]
-		ifFalse: [ nil ]
+	^ self asModalWindow open; centered.
 ]
 
 { #category : 'initialization' }
@@ -122,7 +175,7 @@ StRefactoringAddClassPresenter >> setModelBeforeInitialization: aSycCmAddSubclas
 { #category : 'initialization' }
 StRefactoringAddClassPresenter >> setTitleTo: aSpWindowPresenter [
 
-	aSpWindowPresenter title: 'Add new class'
+	aSpWindowPresenter title: 'Add new subclass of ' , sycCmAddSubclassCommand targetClass name
 ]
 
 { #category : 'initialization' }
@@ -131,16 +184,19 @@ StRefactoringAddClassPresenter >> setWindowIconTo: aSpWindowPresenter [
 	aSpWindowPresenter windowIcon: (self iconNamed: #add)
 ]
 
-{ #category : 'initialization' }
+{ #category : 'callbacks' }
 StRefactoringAddClassPresenter >> updateTagItems: item [
-
+	"Note that as it seems there is no Spec drop list with editable text, we provide a 'Core' tag by default if the package has no tags"
 	| pkg |
 	
 	pkg := PackageOrganizer default packageNamed: item.
-	tagPresenter items: pkg tagNames asOrderedCollection.	
+	pkg tagNames
+		ifEmpty: [ tagPresenter items: { 'Core' }  ]
+		ifNotEmpty: [ : tagNames | tagPresenter items: tagNames asOrderedCollection ].
+	tagPresenter selectIndex: 1
 ]
 
-{ #category : 'initialization' }
+{ #category : 'callbacks' }
 StRefactoringAddClassPresenter >> updateTagSelection: item [
 
 	sycCmAddSubclassCommand tagName: tagPresenter selectedItem.

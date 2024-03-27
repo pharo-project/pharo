@@ -23,3 +23,9 @@ SycClassCmCommand >> prepareFullExecution [
 	refactoringScopes := context refactoringScopes.
 	targetClass := context lastSelectedClass
 ]
+
+{ #category : 'accessing' }
+SycClassCmCommand >> targetClass [
+
+	^ targetClass
+]

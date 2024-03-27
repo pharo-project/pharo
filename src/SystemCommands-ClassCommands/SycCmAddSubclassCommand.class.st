@@ -8,7 +8,8 @@ Class {
 	#instVars : [
 		'packageName',
 		'tagName',
-		'comment'
+		'comment',
+		'cancelled'
 	],
 	#category : 'SystemCommands-ClassCommands-Creation',
 	#package : 'SystemCommands-ClassCommands',
@@ -40,6 +41,13 @@ SycCmAddSubclassCommand >> executeRefactoring [
 { #category : 'accessing' }
 SycCmAddSubclassCommand >> icon [
 	^self iconNamed:#add
+]
+
+{ #category : 'initialization' }
+SycCmAddSubclassCommand >> initialize [
+
+	super initialize.
+	cancelled := false.
 ]
 
 { #category : 'testing' }
@@ -82,15 +90,32 @@ SycCmAddSubclassCommand >> packageName: anObject [
 	packageName := anObject
 ]
 
+{ #category : 'accessing' }
+SycCmAddSubclassCommand >> packageNames [
+	"Answer a <Collection> of <Symbol> of the packages available to the new class"
+	
+	^ PackageOrganizer default packageNames
+]
+
 { #category : 'preparation' }
 SycCmAddSubclassCommand >> prepareFullExecution [
 	
 	refactoringScopes := context refactoringScopes.
 	targetClass := context lastSelectedClass.
 	(StRefactoringAddClassPresenter on: self)
-		onCancel: [ CmdCommandAborted signal ];
+		onCancel: [ : dialog |
+			"CmdCommandAborted signal"
+			cancelled := true.
+			dialog close ];
 		onAccept: [ :dialog | dialog close ];
 		openModal
+]
+
+{ #category : 'execution' }
+SycCmAddSubclassCommand >> processCommandFailure: anException [
+
+	cancelled 
+		ifFalse: [ super processCommandFailure: anException ]
 ]
 
 { #category : 'accessing' }
@@ -103,4 +128,11 @@ SycCmAddSubclassCommand >> tagName [
 SycCmAddSubclassCommand >> tagName: anObject [
 
 	tagName := anObject
+]
+
+{ #category : 'accessing' }
+SycCmAddSubclassCommand >> targetPackageName [ 
+	"Answer a <Symbol> with the name of the package of the target class (this is the class choosen as superclass to the new one to be created)"
+	
+	^ self targetClass packageName
 ]

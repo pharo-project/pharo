@@ -42,6 +42,7 @@ ReAddSubclassDriver >> configureRefactoring [
 		subclasses: self superclass subclasses;
 		packageName: self packageName;
 		tagName: self tagName;
+		comment: self comment;
 		yourself
 ]
 
