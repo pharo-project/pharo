@@ -5,7 +5,6 @@ It provides a request dialog to add a new class in the system, including present
 Class {
 	#name : 'StRefactoringAddClassPresenter',
 	#superclass : 'SpRequestDialog',
-	#classTraits : '{} + TraitedClass',
 	#instVars : [
 		'newClassPresenter',
 		'packagePresenter',
