@@ -23,6 +23,20 @@ Object >> executor [
 ]
 
 { #category : '*Deprecated12' }
+Object >> explicitRequirement [
+	"If one of the superclasses can perform the selector, we execute the method of that class, otherwise, the explicit requirement error is thrown"
+
+	<debuggerCompleteToSender>
+	| sender |
+
+	self deprecated: 'This method will be removed in the future version of Pharo. See https://github.com/pharo-project/pharo/issues/15507 for details'.
+	sender := thisContext sender.
+	[ sender return: (self perform: sender selector withArguments: sender arguments inSuperclass: sender methodClass superclass) ]
+		on: MessageNotUnderstood
+		do: [ self error: 'Explicitly required method' ]
+]
+
+{ #category : '*Deprecated12' }
 Object >> nominallyUnsent: aSelectorSymbol [
 	"From within the body of a method which is not formally sent within the system, but which you intend to have remain in the system (for potential manual invocation, or for documentation, or perhaps because it's sent by commented-out-code that you anticipate uncommenting out someday, send this message, with the selector itself as the argument.
 
