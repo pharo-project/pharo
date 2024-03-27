@@ -174,6 +174,11 @@ RBPackageEnvironment >> printOn: aStream [
 ]
 
 { #category : 'removing' }
+RBPackageEnvironment >> removeAll [
+	packages removeAll
+]
+
+{ #category : 'removing' }
 RBPackageEnvironment >> removePackage: aSymbol [
 	packages remove: aSymbol ifAbsent: []
 ]

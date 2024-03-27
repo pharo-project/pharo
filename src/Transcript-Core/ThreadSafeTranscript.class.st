@@ -111,6 +111,11 @@ ThreadSafeTranscript >> flush [
 	self critical: [ deferredEndEntry := true ]
 ]
 
+{ #category : 'testing' }
+ThreadSafeTranscript >> hasBindingOf: aString [
+	^ false
+]
+
 { #category : 'ui building' }
 ThreadSafeTranscript >> initialExtent [
 
@@ -177,7 +182,7 @@ ThreadSafeTranscript >> shoutAboutToStyle: aPluggableShoutMorphOrView [
 
 { #category : 'updating' }
 ThreadSafeTranscript >> stepGlobal [
-"	The superclass method Model>>step indicates a convention that might be used to interoperate
+	"	The superclass method Model>>step indicates a convention that might be used to interoperate
 	synchronously with the UI-thread.  However when multiple Transcript windows are open, their
 	PluggableTextMorphs share a single instance, from the global Transcript.  To avoid potential trouble,
 	this method should not be named #step.
@@ -188,23 +193,21 @@ ThreadSafeTranscript >> stepGlobal [
 "
 
 	"Next three lines required temporarily to initialize instance variables added to existing instance"
+
 	deferredClear ifNil: [ deferredClear := false ].
 	deferredEndEntry ifNil: [ deferredEndEntry := false ].
 	stepContents ifNil: [ stepContents := '' ].
 
-	deferredClear ifTrue:
-	[ 	deferredClear := false.
+	deferredClear ifTrue: [
+		deferredClear := false.
 		stepContents := ''.
-		self changed: #clearText.
-	].
-	deferredEndEntry ifTrue:
-	[	deferredEndEntry := false.
-		self critical:
-		[	stepContents := stream contents.
+		self critical: [ self changed: #clearText ] ].
+	deferredEndEntry ifTrue: [
+		deferredEndEntry := false.
+		self critical: [
+			stepContents := stream contents.
 			stream resetContents.
-		].
-		self changed: #appendEntry.
-	]
+			self changed: #appendEntry ] ]
 ]
 
 { #category : 'ui building' }

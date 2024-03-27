@@ -257,7 +257,7 @@ MorphicNativeWindow >> taskbarButtonMenu: aMenu [
 		getStateSelector: nil
 		enablementSelector: #isNotRestored.
 	menu lastItem
-		icon: theme windowMaximizeForm;
+		iconFormSet: theme windowMaximizeFormSet;
 		font: theme menuFont.
 		
 	menu
@@ -267,7 +267,7 @@ MorphicNativeWindow >> taskbarButtonMenu: aMenu [
 		getStateSelector: nil
 		enablementSelector: #isNotMinimized.
 	menu lastItem
-		icon:  theme windowMinimizeForm;
+		iconFormSet: theme windowMinimizeFormSet;
 		font: theme menuFont.
 		
 	menu
@@ -277,7 +277,7 @@ MorphicNativeWindow >> taskbarButtonMenu: aMenu [
 		getStateSelector: nil
 		enablementSelector: #canBeMaximized.
 	menu lastItem
-		icon: theme windowMaximizeForm;
+		iconFormSet: theme windowMaximizeFormSet;
 		font: theme menuFont.
 		
 	menu addLine.
@@ -285,7 +285,7 @@ MorphicNativeWindow >> taskbarButtonMenu: aMenu [
 	submenu := theme newMenuIn: self for: self.
 	menu
 		add: 'Close all'
-		icon: theme windowCloseForm
+		iconFormSet: theme windowCloseFormSet
 		subMenu: submenu.
 	submenu
 		addToggle: 'Close all' translated
@@ -318,7 +318,7 @@ MorphicNativeWindow >> taskbarButtonMenu: aMenu [
 		getStateSelector: nil
 		enablementSelector: #allowedToClose.
 	menu lastItem
-		icon: theme windowCloseForm;
+		iconFormSet: theme windowCloseFormSet;
 		font: theme menuFont.
 
 	^menu

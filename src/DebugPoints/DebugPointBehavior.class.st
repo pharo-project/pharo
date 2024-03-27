@@ -3,6 +3,7 @@ I am the base class for different behaviors that can be added to all debug point
 
 In which order the behaviors are executed is decided by the priority variable.
 The highest value is executed first.
+However, all debug point check behaviors will be executed before all debug point side effect behaviors. Those are different types of debug points defined by subclasses.
 
 
 API:
@@ -25,6 +26,24 @@ Class {
 DebugPointBehavior class >> addToDebugPoint: aDebugPoint [
 	aDebugPoint addBehavior: (self new debugPoint: aDebugPoint).
 	^aDebugPoint 
+]
+
+{ #category : 'testing' }
+DebugPointBehavior class >> isAbstract [
+
+	^ true
+]
+
+{ #category : 'comparing' }
+DebugPointBehavior >> <= aDebugPointBehavior [
+
+	^ self priority <= aDebugPointBehavior priority
+]
+
+{ #category : 'adding' }
+DebugPointBehavior >> addToDebugPoint: aDebugPoint [
+
+	self subclassResponsibility 
 ]
 
 { #category : 'accessing' }
@@ -66,4 +85,10 @@ DebugPointBehavior >> priority: anInteger [
 DebugPointBehavior >> remove [
 	"cleanup actions should be taken here"
 	^self.
+]
+
+{ #category : 'removing' }
+DebugPointBehavior >> removeFromDebugPoint: aDebugPoint [
+
+	self subclassResponsibility
 ]

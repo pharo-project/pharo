@@ -56,7 +56,7 @@ NativeBrowserOpenVisitor >> pathString: aString [
 NativeBrowserOpenVisitor >> privShellExecute: lpOperation file: lpFile parameters: lpParameters directory: lpDirectory show: nShowCmd [
 	^ self ffiCall: #(
 			FFIConstantHandle ShellExecuteA(
-     				0,
+     				int 0, "Operation is not associated with a window"
      				char* lpOperation,
          			char* lpFile,
      				char* lpParameters,

@@ -584,3 +584,33 @@ Text >> withInternalLineEndings [
 	(newText asString includes: Character lf) ifFalse: [ ^newText ].
 	^newText copyReplaceAll: String lf with: String cr
 ]
+
+{ #category : 'converting' }
+Text >> withNoLineLongerThan: aNumber [
+
+	"Answer a string with the same content as receiver, but rewrapped so that no line has more characters than the given number"
+
+	(aNumber isNumber not or: [ aNumber < 1 ]) ifTrue: [self error: 'too narrow'].
+	^self species
+		new: self size * (aNumber + 1) // aNumber "provision for supplementary line breaks"
+		streamContents: [ :stream |
+			self string lineIndicesDo: [ :start :endWithoutDelimiters :end |
+				| pastEnd lineStart |
+				pastEnd := endWithoutDelimiters + 1.
+				"eliminate spaces at beginning of line"
+				lineStart := (self indexOfAnyOf: CharacterSet separators complement startingAt: start ifAbsent: [pastEnd]) min: pastEnd.
+				[| lineStop lineEnd spacePosition |
+				lineEnd := lineStop  := lineStart + aNumber min: pastEnd.
+				spacePosition := lineStart.
+				[spacePosition < lineStop] whileTrue: [
+					spacePosition := self indexOfAnyOf: CharacterSet separators startingAt: spacePosition + 1 ifAbsent: [pastEnd].
+					spacePosition <= lineStop ifTrue: [lineEnd := spacePosition].
+				].
+				"split before space or before lineStop if no space"
+				stream nextPutAll: (self copyFrom: lineStart to: lineEnd - 1).
+				"eliminate spaces at beginning of next line"
+				lineStart := self indexOfAnyOf: CharacterSet separators complement startingAt: lineEnd ifAbsent: [pastEnd].
+				lineStart <= endWithoutDelimiters ]
+					whileTrue: [stream cr].
+				stream nextPutAll: (self copyFrom: pastEnd to: end) ] ].
+]

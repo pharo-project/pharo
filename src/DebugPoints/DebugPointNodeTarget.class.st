@@ -9,6 +9,12 @@ Class {
 	#tag : 'Implementations'
 }
 
+{ #category : 'accessing - classes' }
+DebugPointNodeTarget class >> hitAnnouncementClass [
+
+	^ DebugPointHit
+]
+
 { #category : 'actions' }
 DebugPointNodeTarget >> browse [
 
@@ -44,6 +50,12 @@ DebugPointNodeTarget >> node [
 DebugPointNodeTarget >> node: aNode [
 
 	self target: aNode
+]
+
+{ #category : 'removing' }
+DebugPointNodeTarget >> removeFromMethod: aMethod for: aDebugPoint [
+
+	aDebugPoint remove
 ]
 
 { #category : 'accessing' }

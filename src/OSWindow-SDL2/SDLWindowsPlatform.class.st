@@ -4,9 +4,9 @@ Specific SDL initialization for Windows
 Class {
 	#name : 'SDLWindowsPlatform',
 	#superclass : 'SDLAbstractPlatform',
-	#category : 'OSWindow-SDL2-Bindings',
+	#category : 'OSWindow-SDL2-Platforms',
 	#package : 'OSWindow-SDL2',
-	#tag : 'Bindings'
+	#tag : 'Platforms'
 }
 
 { #category : 'operations' }

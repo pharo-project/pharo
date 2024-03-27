@@ -29,8 +29,8 @@ RBNotEnvironment >> includesClass: aClass [
 ]
 
 { #category : 'testing' }
-RBNotEnvironment >> includesProtocol: aProtocol in: aClass [
-
+RBNotEnvironment >> includesProtocol: aProtocol in: aClass [ 
+	 "aClass name = 'StRefactoringPreviewPresenter class' ifTrue: [^ true]."
 	(aClass hasProtocol: aProtocol) ifFalse: [ ^ false ].
 
 	^ (aClass selectorsInProtocol: aProtocol) anySatisfy: [ :selector | self includesSelector: selector in: aClass ]

@@ -196,7 +196,7 @@ ZnMimePart >> hasEntity [
 { #category : 'testing' }
 ZnMimePart >> hasHeaders [
 
-	^ headers isNotNil and: [ self headers isNotEmpty ]
+	^ headers isNotNil and: [ self headers isEmpty not ]
 ]
 
 { #category : 'comparing' }

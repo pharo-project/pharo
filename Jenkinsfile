@@ -34,9 +34,9 @@ def runTests(architecture, prefix=''){
         unstash "bootstrap${architecture}"
         shell "bash -c 'bootstrap/scripts/run${prefix}Tests.sh ${architecture} ${env.STAGE_NAME}${prefix}'"
         junit allowEmptyResults: true, testResults: "${env.STAGE_NAME}${prefix}*.xml"
+    } finally {
         archiveArtifacts allowEmptyArchive: true, artifacts: "${env.STAGE_NAME}${prefix}*.xml", fingerprint: true
         archiveArtifacts allowEmptyArchive: true, artifacts: "*.fuel", fingerprint: true
-    } finally {
         // I am archiving the logs to check for crashes and errors.
         if(fileExists('PharoDebug.log')){
             shell "mv PharoDebug.log PharoDebug-${env.STAGE_NAME}${prefix}.log"

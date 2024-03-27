@@ -24,7 +24,7 @@ SycExtractMethodAndOccurrencesCommand class >> canBeExecutedInContext: aSourceCo
 SycExtractMethodAndOccurrencesCommand class >> methodEditorShortcutActivation [
 	<classAnnotation>
 
-	^CmdShortcutActivation by: $e meta, $m meta, $o meta for: ClySourceCodeContext
+	^CmdShortcutActivation by: $e meta, $m meta for: ClySourceCodeContext
 ]
 
 { #category : 'converting' }
@@ -48,7 +48,7 @@ SycExtractMethodAndOccurrencesCommand >> defaultMenuIconName [
 
 { #category : 'accessing' }
 SycExtractMethodAndOccurrencesCommand >> defaultMenuItemName [
-	^ '(R) Extract method and occurrences'
+	^ '(R) Extract method'
 ]
 
 { #category : 'execution' }

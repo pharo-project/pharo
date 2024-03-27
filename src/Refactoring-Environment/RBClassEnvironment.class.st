@@ -103,7 +103,7 @@ RBClassEnvironment >> classesDo: aBlock [
 		class := self systemDictionary at: each ifAbsent: [ nil ].
 		(class isNotNil and: [ environment includesClass: class ])
 			ifTrue: [ aBlock value: class ] ].
-		metaClasses do: [ :each |
+	metaClasses do: [ :each |
 		| class |
 		class := self systemDictionary at: each ifAbsent: [ nil ].
 		(class isNotNil and: [ environment includesClass: class classSide ])
@@ -162,6 +162,12 @@ RBClassEnvironment >> metaClassSelectorDictionary [
 				yourself ]
 ]
 
+{ #category : 'accessing - classes' }
+RBClassEnvironment >> orphanClasses [
+
+	^ self classes reject: [ :class | class isMeta ]
+]
+
 { #category : 'copying' }
 RBClassEnvironment >> postCopy [
 	super postCopy.
@@ -185,6 +191,11 @@ RBClassEnvironment >> printOn: aStream [
 { #category : 'accessing' }
 RBClassEnvironment >> problemCount [
 	^self numberClasses
+]
+
+{ #category : 'removing' }
+RBClassEnvironment >> removeAll [
+	classes removeAll
 ]
 
 { #category : 'removing' }

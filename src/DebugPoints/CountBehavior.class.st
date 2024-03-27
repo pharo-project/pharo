@@ -5,7 +5,7 @@ I only increase the count if conditions are evaluated to true: all previous beha
 "
 Class {
 	#name : 'CountBehavior',
-	#superclass : 'DebugPointBehavior',
+	#superclass : 'DebugPointSideEffectBehavior',
 	#instVars : [
 		'count'
 	],
@@ -13,6 +13,12 @@ Class {
 	#package : 'DebugPoints',
 	#tag : 'Behaviors'
 }
+
+{ #category : 'testing' }
+CountBehavior class >> isAbstract [
+
+	^ false
+]
 
 { #category : 'accessing' }
 CountBehavior >> count [

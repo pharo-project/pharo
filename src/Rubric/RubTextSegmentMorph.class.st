@@ -5,7 +5,7 @@ Class {
 		'textArea',
 		'firstIndex',
 		'lastIndex',
-		'icon',
+		'iconFormSet',
 		'iconBlock',
 		'label',
 		'changeable'
@@ -34,7 +34,7 @@ RubTextSegmentMorph >> addItemToMenu: aMenu [
 		target: self iconBlock;
 		selector: #cull:;
 		arguments: {self};
-		icon: self icon;
+		iconFormSet: self iconFormSet;
 		segment: self.
 
 		^ aMenu addMenuItem: item
@@ -180,8 +180,8 @@ RubTextSegmentMorph >> delete [
 
 { #category : 'drawing' }
 RubTextSegmentMorph >> displayIconAt: aPosition on: aCanvas [
-	self icon ifNil: [ ^self ].
-	aCanvas translucentImage: self icon at: aPosition
+	self iconFormSet ifNil: [ ^self ].
+	aCanvas translucentFormSet: self iconFormSet at: aPosition
 ]
 
 { #category : 'drawing' }
@@ -229,12 +229,12 @@ RubTextSegmentMorph >> handlesMouseOver: evt [
 
 { #category : 'accessing' }
 RubTextSegmentMorph >> icon [
-	^ icon
+	^ self iconFormSet ifNotNil: [ :formSet | formSet asForm ]
 ]
 
 { #category : 'accessing' }
 RubTextSegmentMorph >> icon: aForm [
-	icon := aForm
+	self iconFormSet: (aForm ifNotNil: [ FormSet form: aForm ])
 ]
 
 { #category : 'accessing' }
@@ -245,6 +245,16 @@ RubTextSegmentMorph >> iconBlock [
 { #category : 'accessing' }
 RubTextSegmentMorph >> iconBlock: aBlock [
 	iconBlock := aBlock
+]
+
+{ #category : 'accessing' }
+RubTextSegmentMorph >> iconFormSet [
+	^ iconFormSet
+]
+
+{ #category : 'accessing' }
+RubTextSegmentMorph >> iconFormSet: aFormSet [
+	iconFormSet := aFormSet
 ]
 
 { #category : 'accessing' }

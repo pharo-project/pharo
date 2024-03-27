@@ -14,10 +14,8 @@ Class {
 { #category : 'announcement handling' }
 DebugPointManager class >> handleClassRemoved: anAnnouncement [
 
-	DebugPoint all copy do: [ :debugPoint |
-		debugPoint link methods
-			detect: [ :m | m methodClass = anAnnouncement classRemoved ]
-			ifFound: [ debugPoint remove ] ]
+	DebugPoint all copy do: [ :dp |
+		dp removeFromClass: anAnnouncement classRemoved ]
 ]
 
 { #category : 'announcement handling' }
@@ -217,7 +215,7 @@ DebugPointManager class >> installNew: aDebugPointClass inClass: aClass onVariab
 	"this should be the single point of installation for debug points, removal is in the remove method of debug point instances"
 
 	| dp instanceVariable |
-	instanceVariable := aClass slotNamed: aSlotNameSymbol.
+	instanceVariable := aClass lookupVar: aSlotNameSymbol.
 	dp := aDebugPointClass new
 		      instanceVariable: instanceVariable
 		      accessStrategy: anAccessStrategySymbol;
@@ -338,6 +336,16 @@ DebugPointManager class >> notifyDebugPointChanged: aDebugPoint [
 	announcement := DebugPointChanged
 		on: aDebugPoint
 		nodes: aDebugPoint link nodes.
+	SystemAnnouncer uniqueInstance announce: announcement
+]
+
+{ #category : 'announcements' }
+DebugPointManager class >> notifyDebugPointHit: aDebugPoint inContext: aContext [
+
+	| announcement |
+	announcement := aDebugPoint
+		                hitAnnouncementOn: aDebugPoint
+		                inContext: aContext.
 	SystemAnnouncer uniqueInstance announce: announcement
 ]
 

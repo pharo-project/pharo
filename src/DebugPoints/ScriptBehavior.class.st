@@ -4,7 +4,7 @@ I execute arbitrary code that is saved in my script variable.
 "
 Class {
 	#name : 'ScriptBehavior',
-	#superclass : 'DebugPointBehavior',
+	#superclass : 'DebugPointSideEffectBehavior',
 	#instVars : [
 		'script'
 	],
@@ -12,6 +12,12 @@ Class {
 	#package : 'DebugPoints',
 	#tag : 'Behaviors'
 }
+
+{ #category : 'testing' }
+ScriptBehavior class >> isAbstract [
+
+	^ false
+]
 
 { #category : 'accessing' }
 ScriptBehavior >> context [

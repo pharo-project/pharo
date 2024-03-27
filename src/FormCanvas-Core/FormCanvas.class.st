@@ -703,7 +703,7 @@ FormCanvas >> transformBy: aDisplayTransform clippingTo: aClipRect during: aBloc
 		"If this is true B&W, then we need a first pass for erasure."
 		ifTrue: [1] ifFalse: [2].
 	"If my depth has alpha, do blending rather than paint"
-	rule := self depth = 32 ifTrue: [Form blend] ifFalse: [Form paint].
+	rule := self depth = 32 ifTrue: [Form blendAlphaScaled] ifFalse: [Form paint].
 	start to: 2 do:
 		[:i | "If i=1 we first make a shadow and erase it for opaque whites in B&W"
 		subCanvas := self class extent: patchRect extent depth: self depth.

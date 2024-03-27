@@ -1,7 +1,7 @@
 Extension { #name : 'Project' }
 
 { #category : '*Calypso-SystemQueries' }
-Project classSide >> convertToCalypsoBrowserItem: aProject [
+Project class >> convertToCalypsoBrowserItem: aProject [
 
 	| item |
 	item := ClyBrowserItem named: aProject name with: aProject.
@@ -11,7 +11,7 @@ Project classSide >> convertToCalypsoBrowserItem: aProject [
 ]
 
 { #category : '*Calypso-SystemQueries' }
-Project classSide >> defaultSortFunctionForCalypso [
+Project class >> defaultSortFunctionForCalypso [
 
 	^ ClySortByNameFunction ascending
 ]
@@ -23,7 +23,7 @@ Project class >> prepareClassQueriesFrom: packages in: aNavigationEnvironment [
 ]
 
 { #category : '*Calypso-SystemQueries' }
-Project classSide >> prepareProjectItemsQueryFrom: aProjectChildItem in: aNavigationEnvironment [
+Project class >> prepareProjectItemsQueryFrom: aProjectChildItem in: aNavigationEnvironment [
 
 	^ ClyProjectContentQuery sortedFrom: (ClyProjectScope of: aProjectChildItem in: aNavigationEnvironment)
 ]

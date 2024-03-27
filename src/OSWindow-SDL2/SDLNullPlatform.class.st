@@ -4,9 +4,9 @@ I am the default platform. All my methods are empty or have a default implementa
 Class {
 	#name : 'SDLNullPlatform',
 	#superclass : 'SDLAbstractPlatform',
-	#category : 'OSWindow-SDL2-Bindings',
+	#category : 'OSWindow-SDL2-Platforms',
 	#package : 'OSWindow-SDL2',
-	#tag : 'Bindings'
+	#tag : 'Platforms'
 }
 
 { #category : 'operations' }

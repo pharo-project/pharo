@@ -4,11 +4,17 @@ When I am executed I will disable the debug point to which I am attached.
 "
 Class {
 	#name : 'OnceBehavior',
-	#superclass : 'DebugPointBehavior',
+	#superclass : 'DebugPointSideEffectBehavior',
 	#category : 'DebugPoints-Behaviors',
 	#package : 'DebugPoints',
 	#tag : 'Behaviors'
 }
+
+{ #category : 'testing' }
+OnceBehavior class >> isAbstract [
+
+	^ false
+]
 
 { #category : 'execution' }
 OnceBehavior >> execute [
