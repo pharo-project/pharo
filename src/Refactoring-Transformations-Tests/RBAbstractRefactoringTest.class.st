@@ -22,7 +22,7 @@ RBAbstractRefactoringTest class >> unreferencedClass [
 RBAbstractRefactoringTest class >> unreferencedClassName [
 	"Answer a <Symbol> representing a <Class> which should not have any references"
 
-	^ #[82 66 67 108 97 115 115 87 105 116 104 111 117 116 83 101 108 102 67 108 97 115 115 82 101 102 101 114 101 110 99 101 84 101 115 116] asString asSymbol
+	^ 'RBClassWithoutSelfClassReferenceTest' asSymbol
 ]
 
 { #category : 'accessing' }
