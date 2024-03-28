@@ -31,10 +31,12 @@ RBMakeClassAbstractDriver >> configureRefactoring [
 RBMakeClassAbstractDriver >> runRefactoring [
 	"Run the transformation"
 
+	| preconditions |
+	
 	self configureRefactoring.
-	preconditions := refactoring failedApplicabilityPreconditions
+	preconditions := refactoring failedApplicabilityPreconditions.
 	preconditions
-		ifNotEmpty: [ ^ self inform: preconditions first errorMessage ].
+		ifNotEmpty: [ ^ self inform: preconditions first errorString ].
 	self applyChanges.
 ]
 
