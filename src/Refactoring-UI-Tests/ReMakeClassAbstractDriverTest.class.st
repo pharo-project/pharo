@@ -74,8 +74,8 @@ ReMakeClassAbstractDriverTest >> testMakeClassAbstractWhenClassNotUsed [
 	rbClass := driver model classFor: self classWithoutReferenceToAbstract.
 
 	self 
-		deny: rbClass isAbstract
-		description: 'It tests that the RB class is not abstract by default'.
+		assert: rbClass isAbstract
+		description: 'It tests that the RB class is abstract by default'.
 
 	self 
 		deny: (self classWithoutReferenceToAbstract canUnderstand: #isAbstract)
