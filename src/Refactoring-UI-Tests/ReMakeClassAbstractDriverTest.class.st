@@ -58,7 +58,7 @@ ReMakeClassAbstractDriverTest >> testMakeClassAbstractWhenClassIsReferenced [
 	
 	self 
 		deny: rbClass isAbstract
-		description: 'It tests that the RB class is still abstract after applying the refactoring'.
+		description: 'It tests that the RB class is not abstract after applying the refactoring'.
 ]
 
 { #category : 'tests' }
