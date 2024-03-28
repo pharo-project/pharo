@@ -84,7 +84,7 @@ MessageDialogWindow >> minimumWidth [
 MessageDialogWindow >> newButtons [
 	"Answer new buttons as appropriate."
 
-	^{self newOKButton isDefault: true}
+	^ { self newOKButton isDefault: true }
 ]
 
 { #category : 'actions' }

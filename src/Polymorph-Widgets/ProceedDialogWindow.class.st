@@ -46,7 +46,10 @@ ProceedDialogWindow >> keyStroke: evt [
 ProceedDialogWindow >> newButtons [
 	"Answer new buttons as appropriate."
 
-	^{self newOKButton. self newCancelButton isDefault: true}
+	^ {
+		self newCancelButton. 
+		self newOKButton isDefault: true
+	}
 ]
 
 { #category : 'accessing' }
