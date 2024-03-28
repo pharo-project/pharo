@@ -109,6 +109,13 @@ RBInteractionDriver >> initialize [
 ]
 
 { #category : 'accessing' }
+RBInteractionDriver >> model [
+	"Answer the receiver's <RBBrowserEnvironment>"
+
+	^ model
+]
+
+{ #category : 'accessing' }
 RBInteractionDriver >> model: aRBBrowserEnvironment [ 
 	model := aRBBrowserEnvironment
 ]

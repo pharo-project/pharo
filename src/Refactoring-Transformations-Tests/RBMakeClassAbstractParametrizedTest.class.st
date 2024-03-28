@@ -2,45 +2,59 @@ Class {
 	#name : 'RBMakeClassAbstractParametrizedTest',
 	#superclass : 'RBWithDifferentConstructorsParametrizedTest',
 	#instVars : [
-		'testClass'
+		'testClassName'
 	],
 	#category : 'Refactoring-Transformations-Tests-SingleParametrized',
 	#package : 'Refactoring-Transformations-Tests',
 	#tag : 'SingleParametrized'
 }
 
-{ #category : 'tests' }
+{ #category : 'building suites' }
 RBMakeClassAbstractParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
-		addCase: { #rbClass -> RBMakeClassAbstractTransformation };
+		addCase: { 
+			#rbClass -> RBMakeClassAbstractTransformation .
+			#testClassName -> self unreferencedClassName .
+			#constructor -> #classNamed: };
 		yourself
 ]
 
 { #category : 'running' }
 RBMakeClassAbstractParametrizedTest >> setUp [
 	super setUp.
-	model := self rbModelForVariableTest.
 
-	testClass := RBBasicLintRuleTestData.
-	testClass class removeSelector: #isAbstract
+	testClassName := self unreferencedClassName.
+	testClassName class removeSelector: #isAbstract
 ]
 
 { #category : 'running' }
 RBMakeClassAbstractParametrizedTest >> tearDown [
 
-	testClass class removeSelector: #isAbstract.
+	(Smalltalk globals at: testClassName) class removeSelector: #isAbstract.
 	super tearDown
+]
+
+{ #category : 'accessing' }
+RBMakeClassAbstractParametrizedTest >> testClassName [
+
+	^ testClassName
+]
+
+{ #category : 'accessing' }
+RBMakeClassAbstractParametrizedTest >> testClassName: anObject [
+
+	testClassName := anObject
 ]
 
 { #category : 'tests' }
 RBMakeClassAbstractParametrizedTest >> testMakeClassAbstractAddsIsAbstractMethodToClassSide [
-	| refactoring |
-	refactoring := rbClass class: testClass.
 
+	| refactoring |
+	refactoring := self createRefactoringWithArguments: { testClassName }.
 	self executeRefactoring: refactoring.
-	self assert: ((refactoring model classNamed: testClass name) classSide
-			parseTreeForSelector: #isAbstract)
-		equals: (self parseMethod: 'isAbstract ^self == ', testClass name)
+	self 
+		assert: ((refactoring model classNamed: testClassName) classSide parseTreeForSelector: #isAbstract)
+		equals: (self parseMethod: 'isAbstract ^self == ', testClassName)
 ]
 
 { #category : 'tests' }
@@ -51,10 +65,10 @@ RBMakeClassAbstractParametrizedTest >> testMakeClassAbstractPerformChanges [
 	that check `performChanges` logic."
 
 	| refactoring |
-	refactoring := rbClass class: testClass.
+	refactoring := self createRefactoringWithArguments: { testClassName }.
+	self executeRefactoring: refactoring.
 
-	refactoring execute.
-	self assert: ((refactoring model classNamed: testClass name) classSide
-			parseTreeForSelector: #isAbstract)
-		equals: (self parseMethod: 'isAbstract ^self == ', testClass name)
+	self 
+		assert: ((refactoring model classNamed: testClassName) classSide parseTreeForSelector: #isAbstract)
+		equals: (self parseMethod: 'isAbstract ^self == ', testClassName)
 ]
