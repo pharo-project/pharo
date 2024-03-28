@@ -19,5 +19,7 @@ WinPlatformTest >> testGetTempPathFromTMP [
 	OSEnvironment current at: 'TMP' put: expected.
 	actual := OSPlatform current getTempPath.
 	self assert: actual equals: expected ] ensure: [
-		value ifNotNil: [ OSEnvironment current at: 'TMP' put: value ] ]
+		value
+			ifNil: [ OSEnvironment current removeKey: 'TMP' ]
+			ifNotNil: [ OSEnvironment current at: 'TMP' put: value ] ]
 ]
