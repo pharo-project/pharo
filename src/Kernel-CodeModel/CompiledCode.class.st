@@ -130,6 +130,10 @@ CompiledCode class >> newMethod: numberOfBytes header: headerWord [
 	 Essential. See Object documentation whatIsAPrimitive."
 
 	<primitive: 79 error: ec>
+	self 
+		deprecated: 'Use #basicNew:header: instead.' 
+		transformWith: '`@rcv newMethod: `@numberOfBytes header: `@headerWord' -> '`@rcv basicNew: `@numberOfBytes header: `@headerWord'.
+	
 	ec == #'insufficient object memory' ifTrue:
 		[^self handleFailingNew: numberOfBytes header: headerWord].
 	^self primitiveFailed
