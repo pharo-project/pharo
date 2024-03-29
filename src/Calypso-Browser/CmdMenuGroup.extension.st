@@ -9,14 +9,6 @@ CmdMenuGroup >> buildBrowserNotebookActions [
 ]
 
 { #category : '*Calypso-Browser' }
-CmdMenuGroup >> buildBrowserTabActions [
-
-	self isActive ifFalse: [ ^#()].
-
-	^contents flatCollect: [ :each | each buildBrowserTabActions ]
-]
-
-{ #category : '*Calypso-Browser' }
 CmdMenuGroup >> buildBrowserToolbar: toolbarMorph [
 
 	self isActive ifFalse: [ ^self].

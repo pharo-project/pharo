@@ -25,17 +25,6 @@ CmdCommand >> buildBrowserNotebookActionsUsing: aCommandActivator [
 ]
 
 { #category : '*Calypso-Browser' }
-CmdCommand >> buildBrowserTabActionsUsing: aCommandActivator [
-
-	^{
-		TabAction
-			action: [ aCommandActivator executeCommand ]
-			icon: self browserTabActionIcon
-			label: aCommandActivator commandDescription
-	}
-]
-
-{ #category : '*Calypso-Browser' }
 CmdCommand >> createTableCellButtonUsing: aCommandActivator [
 
 	| icon |

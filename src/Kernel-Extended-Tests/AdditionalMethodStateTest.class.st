@@ -37,6 +37,16 @@ AdditionalMethodStateTest >> testAnalogousCodeTo [
 ]
 
 { #category : 'tests' }
+AdditionalMethodStateTest >> testAnalogousCodeToTakesSelectorIntoAccount [
+	| pragma anotherAmState |
+	pragma := (Object compiledMethodAt: #at:) penultimateLiteral at: #primitive:.
+
+	anotherAmState := AdditionalMethodState selector: #at2: with: pragma copy.
+	
+	self deny: (amState analogousCodeTo: anotherAmState).
+]
+
+{ #category : 'tests' }
 AdditionalMethodStateTest >> testCopy [
 	| copy |
 	copy := amState copy.

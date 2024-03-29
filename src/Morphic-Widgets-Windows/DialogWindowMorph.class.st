@@ -281,7 +281,10 @@ DialogWindowMorph >> newButtonRow [
 DialogWindowMorph >> newButtons [
 	"Answer new buttons as appropriate."
 
-	^{self newOKButton isDefault: true. self newCancelButton}
+	^ {
+		self newCancelButton.
+		self newOKButton isDefault: true 
+	}
 ]
 
 { #category : 'actions' }
