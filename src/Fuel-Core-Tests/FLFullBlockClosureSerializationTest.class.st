@@ -44,7 +44,8 @@ FLFullBlockClosureSerializationTest >> testBlockClosureChangeDifferentBytecodesC
 		in: aClass.
 	aClosure := aClass new perform: #methodWithClosure.
 	self assert: aClosure isClean.
-	self assert: aClosure outerContext isNil.
+	CompilationContext optionCleanBlockClosure ifTrue: [ 
+		self assert: aClosure outerContext isNil ].
 	
 	self serializer fullySerializeMethod: aClosure compiledBlock method.
 	self serialize: aClosure.
@@ -68,8 +69,9 @@ FLFullBlockClosureSerializationTest >> testBlockClosureChangeDifferentBytecodesC
 		in: aClass.
 	aClosure := aClass new perform: #methodWithClosure.
 	self assert: aClosure isClean.
-	self assert: aClosure outerContext isNil.
-	self assert: aClosure class equals: (Smalltalk at: #ConstantBlockClosure).
+	CompilationContext optionConstantBlockClosure ifTrue: [ 
+		self assert: aClosure outerContext isNil.
+		self assert: aClosure class equals: (Smalltalk at: #ConstantBlockClosure) ].
 	
 	self serializer fullySerializeMethod: aClosure compiledBlock method.
 	self serialize: aClosure.
@@ -119,8 +121,9 @@ FLFullBlockClosureSerializationTest >> testBlockClosureChangeSameBytecodesConsta
 		in: aClass.
 	aClosure := aClass new perform: #methodWithClosure.
 	self assert: aClosure isClean.
-	self assert: aClosure outerContext isNil.
-	self assert: aClosure class equals: (Smalltalk at: #ConstantBlockClosure).
+	CompilationContext optionConstantBlockClosure ifTrue: [ 
+		self assert: aClosure outerContext isNil.
+		self assert: aClosure class equals: (Smalltalk at: #ConstantBlockClosure) ].
 	
 	self serializer fullySerializeMethod: aClosure compiledBlock method.
 	self serialize: aClosure.
@@ -169,8 +172,9 @@ FLFullBlockClosureSerializationTest >> testBlockClosureRemovedConstant [
 		in: aClass.
 	aClosure := aClass new perform: #methodWithClosure.
 	self assert: aClosure isClean.
-	self assert: aClosure outerContext isNil.
-	self assert: aClosure class equals: (Smalltalk at: #ConstantBlockClosure).
+	CompilationContext optionConstantBlockClosure ifTrue: [ 
+		self assert: aClosure outerContext isNil.
+		self assert: aClosure class equals: (Smalltalk at: #ConstantBlockClosure) ].
 	
 	self serializer fullySerializeMethod: aClosure compiledBlock method.
 	self serialize: aClosure.
