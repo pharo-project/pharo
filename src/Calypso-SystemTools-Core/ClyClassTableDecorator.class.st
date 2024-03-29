@@ -17,7 +17,9 @@ ClyClassTableDecorator class >> decorateTableCell: anItemCellMorph of: aDataSour
 
 	| labelMorphExtension |
 	labelMorphExtension := anItemCellMorph label assureExtension.
-	labelMorphExtension balloonText: aDataSourceItem actualObject comment. 
+	labelMorphExtension balloonText:
+		(aDataSourceItem actualObject comment ifEmpty: [
+			 ClyUncommentedItemTableDecorator balloonText ])
 ]
 
 { #category : 'decoration' }
