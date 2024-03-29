@@ -54,6 +54,23 @@ ShiftClassBuilderTest >> testBuildClassTraitsAPI [
 ]
 
 { #category : 'tests - gathering' }
+ShiftClassBuilderTest >> testBuildClassWithSuperclassWithTraits [
+
+	| clas subClassBuilder subClas |
+	builder := Object << #Point2.
+	builder traits: { TViewModelMock }.
+	builder package: self packageNameForTest.
+	clas := builder build.
+
+	subClassBuilder := clas << (#Sub, clas name).
+	subClassBuilder package: self packageNameForTest.
+	subClas := subClassBuilder build.
+
+	self assert: subClas superclass equals: clas.
+	self assert: subClas class traitComposition isEmpty
+]
+
+{ #category : 'tests - gathering' }
 ShiftClassBuilderTest >> testBuildLayout [
 
 	builder

@@ -322,14 +322,15 @@ TraitedMetaclass >> slots [
 
 { #category : 'accessing' }
 TraitedMetaclass >> traitComposition [
-
 	"Return the trait composition used publicly to compute usages and (re) compilation.
 	It must contain TraitedClass to consider the methods defined there.
 	
 	Internally use directly the instance variable `composition`"
 
 	(composition includesTrait: TraitedClass) ifTrue: [ ^ composition ].
-	^ composition + TraitedClass asTraitComposition
+	self isTrait ifTrue: [
+		^ composition + TraitedClass asTraitComposition ].
+	^ composition
 ]
 
 { #category : 'accessing' }
