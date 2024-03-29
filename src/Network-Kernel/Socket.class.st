@@ -1677,7 +1677,8 @@ Socket >> waitForDisconnectionFor: timeout [
 
 { #category : 'waiting' }
 Socket >> waitForSendDoneFor: timeout [
-	"Wait up until the given deadline for the current send operation to complete. Return true if it completes by the deadline, false if not."
+	"Wait up until the given deadline for the current send operation to complete. 
+	Raise an exception if the timeout expires or the connection is closed before sending finishes."
 
 	^ self
 		  waitForSendDoneFor: timeout
