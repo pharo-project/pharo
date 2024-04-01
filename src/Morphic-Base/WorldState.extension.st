@@ -70,7 +70,7 @@ WorldState >> menuBuilder [
 WorldState class >> newToolsMenuOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #NewToolsMenu)
-		label: 'New Tools';
+		label: 'New Tools (Preview)';
 		parent: #SystemTools;
 		order: 4;
 		help: 'New tools related.';
