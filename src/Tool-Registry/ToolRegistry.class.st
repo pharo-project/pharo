@@ -146,8 +146,6 @@ ToolRegistry >> menuItems [
 		-
 		('Test Runner'				#openTestRunner)
 		('Process Browser' 			#openProcessBrowser)
-		-
-		('Monticello Browser'		#openMonticelloBrowser)
 	)
 ]
 
@@ -159,11 +157,6 @@ ToolRegistry >> openClassBrowser [
 { #category : 'menu' }
 ToolRegistry >> openFileList [
 	self fileList open
-]
-
-{ #category : 'menu' }
-ToolRegistry >> openMonticelloBrowser [
-	self monticelloBrowser open
 ]
 
 { #category : 'menu' }
