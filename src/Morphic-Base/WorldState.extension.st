@@ -67,6 +67,17 @@ WorldState >> menuBuilder [
 ]
 
 { #category : '*Morphic-Base' }
+WorldState class >> newToolsMenuOn: aBuilder [
+	<worldMenu>
+	(aBuilder item: #NewToolsMenu)
+		label: 'New Tools (Preview)';
+		parent: #SystemTools;
+		order: 4;
+		help: 'New tools related.';
+		iconName: #tools
+]
+
+{ #category : '*Morphic-Base' }
 WorldState class >> sourcesWorldMenuOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #Sources)
