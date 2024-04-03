@@ -117,6 +117,7 @@ SettingDeclaration >> addToList: anItem [
 { #category : 'accessing' }
 SettingDeclaration >> default [
 	^ default
+		ifNil: [ default := String empty ]
 ]
 
 { #category : 'accessing' }
@@ -181,7 +182,7 @@ SettingDeclaration >> ghostHelp: aString [
 	ghostHelp := aString
 ]
 
-{ #category : 'testing' }
+{ #category : 'accessing' }
 SettingDeclaration >> hasDefault [
 	^ default ~~ UniqueObject
 ]
