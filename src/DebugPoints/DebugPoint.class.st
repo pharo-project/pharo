@@ -32,11 +32,42 @@ DebugPoint class >> all [
 	^AllDebugPoints ifNil: [ AllDebugPoints := Set new. ]
 ]
 
+{ #category : 'world menu' }
+DebugPoint class >> menuCommandOn: aBuilder [
+
+	<worldMenu>
+	(aBuilder item: #'Remove all Debug Points')
+		parent: #Debug;
+		order: -2;
+		help: 'Remove all the debug points of the image.';
+		action: [ self removeAll ].
+
+	(aBuilder item: #'Enable all Debug Points')
+		parent: #Debug;
+		order: -1;
+		help: 'Enable all the debug points of the image.';
+		action: [ self all do: #enable ].
+
+	(aBuilder item: #'Disable all Debug Points')
+		parent: #Debug;
+		order: 0;
+		help: 'Disable all the debug points of the image.';
+		action: [ self all do: #disable ].
+	aBuilder withSeparatorAfter
+]
+
 { #category : 'removing' }
 DebugPoint class >> remove: aDebugPoint [
 
 	self all remove: aDebugPoint ifAbsent: [].
 	
+]
+
+{ #category : 'removing' }
+DebugPoint class >> removeAll [
+
+	<script>
+	self all copy do: #remove
 ]
 
 { #category : 'API' }
@@ -91,6 +122,12 @@ DebugPoint >> checkBehaviors [
 	^ checkBehaviors
 ]
 
+{ #category : 'protocol' }
+DebugPoint >> disable [
+
+	self enabled: false
+]
+
 { #category : 'reflective operations' }
 DebugPoint >> doesNotUnderstand: message [
 	"forward not understood messages to behaviors, 'delegation complements composition' "
@@ -100,6 +137,12 @@ DebugPoint >> doesNotUnderstand: message [
 		].
 	
 	^super doesNotUnderstand: message
+]
+
+{ #category : 'protocol' }
+DebugPoint >> enable [
+
+	self enabled: true
 ]
 
 { #category : 'accessing' }
