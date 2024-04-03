@@ -44,6 +44,17 @@ EpBehaviorNameChange >> classAffected [
 	^ behavior
 ]
 
+{ #category : 'accessing' }
+EpBehaviorNameChange >> fileOutEntryOn: aWriteStream [ 
+
+	aWriteStream
+		nextPutAll: '(Smalltalk globals at: #';
+		nextPutAll: self oldName;
+		nextPutAll: ' rename: ';
+		nextChunkPut: self newName;
+		cr
+]
+
 { #category : 'initialization' }
 EpBehaviorNameChange >> initializeOldName: anOldName newName: aNewName class: aBehavior [
 

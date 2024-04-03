@@ -54,6 +54,17 @@ EpBehaviorCommentChange >> behaviorAffectedName [
 	^ behavior name
 ]
 
+{ #category : 'accessing' }
+EpBehaviorCommentChange >> fileOutEntryOn: aWriteStream [ 
+
+	aWriteStream
+		nextPutAll: '(Smalltalk globals at: #';
+		nextPutAll: self behaviorAffectedName;
+		nextPutAll: ' comment: ';
+		nextChunkPut: self newComment surroundedBySingleQuotes;
+		cr
+]
+
 { #category : 'initialization' }
 EpBehaviorCommentChange >> initializeWithBehavior: aBehavior oldComment: anOldComment newComment: aNewComment oldStamp: anOldStamp newStamp: aNewStamp [
 
