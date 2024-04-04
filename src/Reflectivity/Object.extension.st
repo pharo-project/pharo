@@ -15,6 +15,7 @@ Object >> asMethodConstant [
 	constNode := thisContext sender sourceNodeExecuted.
 	link := MetaLink new
 		        metaObject: const;
+				  optionCompileOnLinkInstallation: true;
 		        control: #instead.
 	constNode link: link.
 	^ const
