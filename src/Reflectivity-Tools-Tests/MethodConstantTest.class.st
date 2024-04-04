@@ -23,6 +23,13 @@ MethodConstantTest >> sumOfTwoConsts: firstBlock and: secondBlock [
 	^firstBlock asMethodConstant + secondBlock asMethodConstant
 ]
 
+{ #category : 'running' }
+MethodConstantTest >> tearDown [
+	"recompile method to remove the caching"
+	(self class>>#constFromReceiverExpression) recompile.
+	super tearDown
+]
+
 { #category : 'tests' }
 MethodConstantTest >> testAPIFromBlock [
 	| constInitialResult constSecondResult |
