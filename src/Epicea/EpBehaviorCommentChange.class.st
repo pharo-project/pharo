@@ -58,7 +58,7 @@ EpBehaviorCommentChange >> behaviorAffectedName [
 EpBehaviorCommentChange >> fileOutEntryOn: aWriteStream [ 
 
 	aWriteStream
-		nextPutAll: '(Smalltalk globals at: #';
+		nextPutAll: '(self class environment at: #';
 		nextPutAll: self behaviorAffectedName;
 		nextPutAll: ' comment: ';
 		nextChunkPut: self newComment surroundedBySingleQuotes;

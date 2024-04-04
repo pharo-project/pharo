@@ -48,7 +48,7 @@ EpBehaviorNameChange >> classAffected [
 EpBehaviorNameChange >> fileOutEntryOn: aWriteStream [ 
 
 	aWriteStream
-		nextPutAll: '(Smalltalk globals at: #';
+		nextPutAll: '(self class environment at: #';
 		nextPutAll: self oldName;
 		nextPutAll: ' rename: ';
 		nextChunkPut: self newName;
