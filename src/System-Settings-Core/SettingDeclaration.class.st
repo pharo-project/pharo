@@ -182,7 +182,7 @@ SettingDeclaration >> ghostHelp: aString [
 	ghostHelp := aString
 ]
 
-{ #category : 'accessing' }
+{ #category : 'testing' }
 SettingDeclaration >> hasDefault [
 	^ default ~~ UniqueObject
 ]
