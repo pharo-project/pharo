@@ -50,7 +50,7 @@ EpBehaviorNameChange >> fileOutEntryOn: aWriteStream [
 	aWriteStream
 		nextPutAll: '(self class environment at: #';
 		nextPutAll: self oldName;
-		nextPutAll: ' rename: ';
+		nextPutAll: ') rename: ';
 		nextChunkPut: self newName;
 		cr
 ]
