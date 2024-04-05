@@ -39,6 +39,28 @@ EpCodeChangeIntegrationTest >> testBehaviorCommentChange [
 ]
 
 { #category : 'tests' }
+EpCodeChangeIntegrationTest >> testBehaviorCommentChangeWithoutStamp [
+
+	| newClass |
+	self assert: (self countLogEventsWith: EpBehaviorCommentChange) equals: 0.
+
+	newClass := classFactory newClass.
+	newClass comment: 'This is a comment'.
+	self assert: (self countLogEventsWith: EpBehaviorCommentChange) equals: 1
+]
+
+{ #category : 'tests' }
+EpCodeChangeIntegrationTest >> testBehaviorNameChange [
+
+	| newClass |
+	self assert: (self countLogEventsWith: EpBehaviorNameChange) equals: 0.
+
+	newClass := classFactory newClass.
+	newClass rename: #AnotherClassNameForTesting1.
+	self assert: (self countLogEventsWith: EpBehaviorNameChange) equals: 1
+]
+
+{ #category : 'tests' }
 EpCodeChangeIntegrationTest >> testClassAddition [
 
 	self assert: (self countLogEventsWith: EpClassAddition) equals: 0.
