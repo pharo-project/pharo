@@ -42,7 +42,7 @@ RBInsertClassParametrizedTest >> testFailureExistingClassName [
 
 	self shouldFail: ((rbClass className: #Object)
 			 superclass: self class name;
-			 packageName: #'Refactoring-Testirg')
+			 packageName: #'Refactoring-Testing')
 ]
 
 { #category : 'failure tests' }
