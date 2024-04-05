@@ -24,12 +24,6 @@ MethodRecategorized class >> method: aCompiledMethod oldProtocol: anOldProtocol 
 		yourself
 ]
 
-{ #category : 'testing' }
-MethodRecategorized >> affectsMethodsInProtocol: protocol [
-
-	^ (super affectsMethodsInProtocol: protocol) or: [ self oldProtocol name = protocol ]
-]
-
 { #category : 'accessing' }
 MethodRecategorized >> methodRecategorized [
 

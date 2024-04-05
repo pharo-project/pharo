@@ -281,22 +281,6 @@ Class >> classBuilder [
 		^ self classInstaller new builder
 ]
 
-{ #category : 'accessing - comment' }
-Class >> classComment: aString [
-	self
-		deprecated: 'use comment:'
-		transformWith: '`@rcv classComment: `@arg' -> '`@rcv comment: `@arg'.
-	self comment: aString
-]
-
-{ #category : 'accessing - comment' }
-Class >> classComment: aString stamp: aStamp [
-		self
-		deprecated: 'Use #comment:stamp: instead.'
-		transformWith: '`@rcv classComment: `@arg1 classComment: aString stamp: aStamp `@arg2' -> '`@rcv comment: `@arg1 stamp: `@arg2'.
-	^self comment: aString stamp: aStamp
-]
-
 { #category : 'subclass creation' }
 Class >> classInstaller [
 	"Answer the class responsible of creating subclasses of myself in the system."
@@ -704,7 +688,7 @@ Class >> isAnonymous [
 
 { #category : 'testing' }
 Class >> isClass [
-	<reflection: 'Class structural inspection - Class/Metaclass shift'>
+	<reflection: 'Class structural inspection - Class kind testing'>
 	^ true
 ]
 
@@ -851,17 +835,6 @@ Class >> removeClassVarNamed: aStringOrSymbol [
 ]
 
 { #category : 'class variables' }
-Class >> removeClassVarNamed: aStringOrSymbol interactive: interactive [
-	"Interaction should be handled by the UI, this had no users in the system"
-	
-	self
-		deprecated: 'Interaction should be handled by the UI, use removeClassVarNamed:'
-		transformWith: '`@rcv removeClassVarNamed: `@arg1 interactive: `@arg2' -> '`@rcv removeClassVarNamed: `@arg1'.
-		
-	self removeClassVarNamed: aStringOrSymbol
-]
-
-{ #category : 'class variables' }
 Class >> removeClassVariable: aClassVariable [
 	"Remove the class variable"
 	<reflection: 'Class structural modification - Class variable modification'>
@@ -896,7 +869,11 @@ Class >> removeFromSystem: logged [
 	self superclass ifNotNil: [ "If we have no superclass there's nothing to be remembered" self superclass addObsoleteSubclass: self ].
 
 	"we add the class to Undeclared so that if references still exist, they will  be automatically fixed if this class is loaded again. We do not check if references exist as it is too slow"
-	Undeclared declare: self name asSymbol from: self environment.
+	
+	(Undeclared includesKey: self name) ifFalse: [
+		self environment associationAt: self name ifPresent: [  
+			Undeclared add: ((self environment associationAt: self name) primitiveChangeClassTo: UndeclaredVariable new)]].
+	
 	self environment forgetClass: self.
 
 	"In case the class has deprecated aliases we need to remove them from the system dictionary.
@@ -1074,7 +1051,7 @@ Class >> subclasses [
 
 { #category : 'accessing - class hierarchy' }
 Class >> subclasses: aCollection [
-	<reflection: 'Class structural inspection - Iterating and querying hierarchy'>
+	<reflection: 'Class structural inspection - Hierarchy modification'>
 	subclasses := aCollection
 ]
 

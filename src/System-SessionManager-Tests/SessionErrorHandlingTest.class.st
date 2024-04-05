@@ -14,9 +14,10 @@ Class {
 
 { #category : 'utilities' }
 SessionErrorHandlingTest >> newTestSessionfor: aManager [
+
 	^ TestWorkingSession new
-		manager: aManager;
-		yourself
+		  manager: aManager;
+		  yourself
 ]
 
 { #category : 'running' }
@@ -29,24 +30,34 @@ SessionErrorHandlingTest >> setUp [
 
 { #category : 'tests' }
 SessionErrorHandlingTest >> testErrorCaughtAndDefferedIfExceptionSignaledAtStartupWhenStartupUiManagerActive [
-	<haltOrBreakpointForTesting>
-	UIManager nonInteractiveDuring: [	manager register: (TestSessionHandler onStartup: [ Halt now ]).
-		session errorHandler:
-			(TestStartupUIManager new
-				sessionManager: manager;
-				yourself).
 
-		self
-			shouldnt: [ session start: false ]
-			raise: Halt.
-		self
-			assert: (session instVarNamed: 'deferredStartupActions') size
-			equals: 1]
+	<haltOrBreakpointForTesting>
+	| finished startupProcess error |
+	finished := Semaphore new.
+	startupProcess := [
+	                  [
+	                  manager register:
+		                  (TestSessionHandler onStartup: [ Halt now ]).
+	                  session start: false ]
+		                  on: Error
+		                  do: [ :e | error := e ].
+	                  finished signal ] newProcess.
+	session errorHandler:
+		(TestStartupUIManager new sessionManager: manager).
+
+	startupProcess resume.
+	finished wait.
+
+	self assert: error isNil.
+	self
+		assert: (session instVarNamed: 'deferredStartupActions') size
+		equals: 1
 ]
 
 { #category : 'tests' }
 SessionErrorHandlingTest >> testErrorCaughtIfExceptionSignaledAtShutdownWhenDefaultUiManagerActive [
 	"session errorHandler will be TestWorkingSession that will register caught errors"
+
 	<haltOrBreakpointForTesting>
 	manager register: (TestSessionHandler onShutdown: [ Halt now ]).
 
@@ -60,16 +71,15 @@ SessionErrorHandlingTest >> testErrorCaughtIfExceptionSignaledAtShutdownWhenDefa
 
 { #category : 'tests' }
 SessionErrorHandlingTest >> testErrorHandledIfExceptionSignaledAtShutdownWhenStartupUiManagerActive [
-	<haltOrBreakpointForTesting>
-	manager register: (TestSessionHandler onShutdown: [ ZeroDivide signal ]).
-	session errorHandler:
-		(TestStartupUIManager new
-			sessionManager: manager;
-			yourself).
 
-	self
-		shouldnt: [ session stop: false ]
-		raise: ZeroDivide.
+	<haltOrBreakpointForTesting>
+	manager register:
+		(TestSessionHandler onShutdown: [ ZeroDivide signal ]).
+	session errorHandler: (TestStartupUIManager new
+			 sessionManager: manager;
+			 yourself).
+
+	self shouldnt: [ session stop: false ] raise: ZeroDivide.
 	self
 		assert: (session instVarNamed: 'deferredStartupActions') size
 		equals: 1
@@ -77,9 +87,9 @@ SessionErrorHandlingTest >> testErrorHandledIfExceptionSignaledAtShutdownWhenSta
 
 { #category : 'tests' }
 SessionErrorHandlingTest >> testErrorHandledIfExceptionSignaledAtStartupWhenDefaultUiManagerActive [
-	<haltOrBreakpointForTesting>
 	"session errorHandler will be TestWorkingSession that will register caught errors"
 
+	<haltOrBreakpointForTesting>
 	manager register: (TestSessionHandler onStartup: [ Halt now ]).
 
 	"ensure error handled"

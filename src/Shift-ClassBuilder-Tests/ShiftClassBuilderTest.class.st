@@ -399,3 +399,15 @@ ShiftClassBuilderTest >> testInstallSimplePoint2 [
 		(self class environment at: #Point2 ifAbsent: [ self fail ]) removeFromSystem.
 		self assert: (self class environment at: #Point2 ifAbsent: [ true ]) ]
 ]
+
+{ #category : 'tests - class creation' }
+ShiftClassBuilderTest >> testMetaSuperclassShouldUseTheSuperclassName [
+
+	| sup |
+	self assert: builder superclass isNotNil.
+	sup := builder superclass.
+	builder superclass: nil.
+	builder superclassName: sup name.
+	builder metaSuperclass: nil.
+	self assert: builder metaSuperclass equals: sup class
+]

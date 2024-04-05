@@ -10,18 +10,16 @@ Class {
 }
 
 { #category : 'accessing' }
-SycAddHierarchyScopeCommand >> defaultMenuIconName [
-	^ #add
-]
-
-{ #category : 'accessing' }
 SycAddHierarchyScopeCommand >> defaultMenuItemName [
-	^ 'Add hierarchy to scope list'
+	^ 'Create scope from selected class hierarchy'
 ]
 
 { #category : 'execution' }
 SycAddHierarchyScopeCommand >> execute [
 	| scope |
+	self inform: 'Implementation is pending'.
+	^ self.
 	scope :=  RBBrowserEnvironment new forClassHierarchy: targetClass.
-	RefactoringSettings addScope: scope
+	ScopesManager addScope: scope.
+	ScopesPresenter openSelecting: scope
 ]

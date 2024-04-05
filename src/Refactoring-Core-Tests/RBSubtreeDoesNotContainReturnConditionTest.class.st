@@ -14,7 +14,7 @@ RBSubtreeDoesNotContainReturnConditionTest >> testFailureWhenSubtreeContainsRetu
 	parseTree := class parseTreeForSelector: self selector.
 	subtree := parseTree extractSubtreeWith: '^ ''Just for test purpose'''.
 	
-	precondition := RBSubtreeDoesNotContainReturnCondition new subtree: subtree.
+	precondition := ReSubtreeDoesNotContainReturnCondition new subtree: subtree.
 	
 	self deny: precondition check.
 	^ 'Just for test purpose' "maybe this is a bad thing to do in a test, I can change it if needed"
@@ -29,7 +29,7 @@ RBSubtreeDoesNotContainReturnConditionTest >> testSubtreeDoesNotContainReturnExp
 	parseTree := class parseTreeForSelector: self selector.
 	subtree := parseTree extractSubtreeWith: 'precondition check'.
 	
-	precondition := RBSubtreeDoesNotContainReturnCondition new subtree: subtree.
+	precondition := ReSubtreeDoesNotContainReturnCondition new subtree: subtree.
 	
 	self assert: precondition check
 ]

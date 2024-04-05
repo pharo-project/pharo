@@ -143,6 +143,19 @@ RBMessageNode >> equalTo: anObject withMapping: aDictionary [
 	^true
 ]
 
+{ #category : 'testing' }
+RBMessageNode >> hasBlock [
+
+	^ receiver hasBlock | (arguments anySatisfy: [ :arg | arg hasBlock ])
+]
+
+{ #category : 'testing' }
+RBMessageNode >> hasSameExitPoint: aBoolean [
+
+	^ (receiver hasSameExitPoint: aBoolean )
+	& (arguments allSatisfy: [ :arg | arg hasSameExitPoint: aBoolean ])
+]
+
 { #category : 'comparing' }
 RBMessageNode >> hash [
 	^ (self receiver hash bitXor: self selector hash) bitXor: (self hashForCollection: self arguments)
@@ -160,7 +173,7 @@ RBMessageNode >> isBinary [
 
 { #category : 'testing' }
 RBMessageNode >> isCascaded [
-	^parent notNil and: [parent isCascade]
+	^parent isNotNil and: [parent isCascade]
 ]
 
 { #category : 'private - replacing' }
@@ -236,6 +249,7 @@ RBMessageNode >> keywordsPositions: aPositionsList [
 
 { #category : 'testing' }
 RBMessageNode >> lastIsReturn [
+	"Ideally, we want to remove this method so it returns false like the superclass"
 	(self isInlineIf or: [ self isInlineIfNil]) ifFalse: [ ^false ].
 	arguments size = 1 ifTrue: [ ^false ].
 	^ arguments first isBlock and: [ arguments first body lastIsReturn
@@ -357,7 +371,7 @@ RBMessageNode >> replaceNode: aNode withNode: anotherNode [
 	receiver == aNode
 		ifTrue:
 			[self receiver: anotherNode.
-			(parent notNil and: [parent isCascade])
+			(parent isNotNil and: [parent isCascade])
 				ifTrue: [parent messages do: [:each | each isMessage ifTrue: [ each receiver: anotherNode]]]].
 	self arguments: (arguments
 				collect: [:each | each == aNode ifTrue: [anotherNode] ifFalse: [each]])

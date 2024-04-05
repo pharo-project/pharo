@@ -52,10 +52,10 @@ RBDeprecateClassRefactoring >> applicabilityPreconditions [
 
 	| class |
 	class := self model classNamed: className.
-	^ { (RBClassesExistCondition new classes: { class }).
-		 (RBClassesAreNotMetaClassCondition new classes: { class }).
-		 (RBNameIsGlobalCondition new model: self model className: newName).
-	    (RBValidClassNameCondition new className: newName) }
+	^ { (ReClassesExistCondition new classes: { class }).
+		 (ReClassesAreNotMetaClassCondition new classes: { class }).
+		 (ReNameIsGlobalCondition new model: self model className: newName).
+	    (ReValidClassNameCondition new className: newName) }
 ]
 
 { #category : 'preconditions' }
@@ -139,12 +139,6 @@ RBDeprecateClassRefactoring >> instanceSideExtensionMethodsOf: anRBClass [
 RBDeprecateClassRefactoring >> newClass [
 
 	^ self model classNamed: newName
-]
-
-{ #category : 'preconditions' }
-RBDeprecateClassRefactoring >> preconditions [
-
-	self applicabilityPreconditions 
 ]
 
 { #category : 'transforming' }
@@ -239,7 +233,7 @@ RBDeprecateClassRefactoring >> shouldRemoveExtensions: anObject [
 	shouldRemoveExtensions := anObject
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBDeprecateClassRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

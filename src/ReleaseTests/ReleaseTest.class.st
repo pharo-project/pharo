@@ -25,6 +25,23 @@ ReleaseTest >> actualProcesses [
 	^ self class actualProcesses
 ]
 
+{ #category : 'accessing' }
+ReleaseTest >> allowedObsoletes [
+	"take obsoletes from a configuration variable if it exist. 
+	 this is used because some CI (e.g. iceberg) require the project to be unloaded 
+	 and after reload to properly test, and this can left some obsoletes.
+	 WARNING: This has to be used carefully. it may lead to obsoletes to be left in 
+	 system incorrectly."
+	| allowed |
+			
+	allowed := Smalltalk os environment 
+		at: 'PHARO_CI_ALLOWED_OBSOLETES'
+		ifAbsent: [ nil ].
+	allowed ifNil: [ ^ #() ].
+			
+	^ (allowed substrings: ', ') collect: [ :each |  'AnObsolete', each ]
+]
+
 { #category : 'helpers' }
 ReleaseTest >> assertValidLintRule: aLintRule [
 	self assertValidLintRule: aLintRule withExceptions: {}
@@ -217,7 +234,7 @@ ReleaseTest >> testKeyClassesArePresentInStartupList [
 		self assert: (registeredHandlers includes: className).
 		self assert: (self hasStartUpOrShutDownMethod: (testingEnvironment at: className)) ].
 
-	self assert: (registeredHandlers includes: #UIManagerSessionHandler)
+	self assert: (registeredHandlers includes: #ErrorHandlerSessionHandler)
 ]
 
 { #category : 'tests' }
@@ -292,6 +309,7 @@ ReleaseTest >> testNoEquivalentSuperclassMethods [
 		           method overriddenMethod
 			           ifNotNil: [ :overridenMethod | method equivalentTo: overridenMethod ]
 			           ifNil: [ false ] ].
+
 	self assert: methods size <= 326
 ]
 
@@ -374,13 +392,19 @@ ReleaseTest >> testNoShadowedVariablesInMethods [
 ]
 
 { #category : 'tests' }
+ReleaseTest >> testNoSuperInitializeOnClassSideInitialization [
+
+	self assertValidLintRule: ReDoNotSendSuperInitializeInClassSideRule new
+]
+
+{ #category : 'tests' }
 ReleaseTest >> testObsoleteClasses [
 	| obsoleteClasses |
 
 	Smalltalk fixObsoleteReferences.
 	Smalltalk garbageCollect.
 	obsoleteClasses := SystemNavigation new obsoleteClasses
-		select: [ :each | each isAnonymous not ].
+		reject: [ :each | each isAnonymous or: [ (self allowedObsoletes includes: each name) ] ].
 
 	self
 		assert: obsoleteClasses isEmpty
@@ -465,7 +489,7 @@ ReleaseTest >> testShouldWorldMorphBeAfterFontClassesInStartupList [
 	startupList := (SessionManager default startupList collect: [:each | each handledId]).
 	#(StrikeFont LogicalFont FreeTypeSettings FreeTypeCache)
 		do: [ :fontClass |
-			self should: [ (startupList indexOf: #UIManagerSessionHandler) > (startupList indexOf: #SystemSettingsPersistence) ] ]
+			self should: [ (startupList indexOf: #ErrorHandlerSessionHandler) > (startupList indexOf: #SystemSettingsPersistence) ] ]
 ]
 
 { #category : 'tests' }
@@ -490,7 +514,7 @@ ReleaseTest >> testThatThereAreNoSelectorsRemainingThatAreSentButNotImplemented 
 	 This test makes sure that we do not introduce new cases until we are down to one"
 
 	| knownFailures violations wantedAndValidViolations |
-	
+
 	"String streamContents: [ :aStream | aStream << '#( '.  SystemNavigation default allSentButNotImplementedSelectors do: [ :m | .aStream << '''' << m printString  << ''' ' ]. aStream << ')' ]"
 	knownFailures := #( 'AthensCCWArcSegment>>#accept:' 'AthensCWArcSegment>>#accept:' 'AthensCairoCanvas>>#visitCubicSegment:'
 	                    'AthensCairoCanvas>>#visitQuadSegment:' 'AthensCloseSegment>>#accept:' 'AthensCubicSegment>>#accept:' 'AthensEllipticalArcSegment>>#accept:'
@@ -499,15 +523,13 @@ ReleaseTest >> testThatThereAreNoSelectorsRemainingThatAreSentButNotImplemented 
 	                    'BalloonEngine>>#registerFills:' 'BalloonFillData>>#computeFill' 'ClyFullBrowserMorph>>#extendClassScopeForMethods:'
 	                    'ComplexBorderStyle>>#drawPolyPatchFrom:to:on:usingEnds:' 'ComplexBorderStyle>>#drawLineFrom:to:on:'
 	                    'Context>>#simulatePrimitive:in:receiver:arguments:' 'Context>>#doPrimitive:method:receiver:args:'
-	                    'Context>>#failPrimitiveWith:' 'DAPackageRelationGraphGenerator>>#buildEdges' 'DAPackageCycleGenerator>>#buildEdges' 'DAGraphVizGenerator>>#buildGraphViz' 'DAGraphVizGenerator>>#openWith:' 'DAGraphVizGenerator>>#saveDotFileAndGenerateForType:'
-	                    'DAPackageAnalyzerDiffTreePresenter>>#buildRoots' 'DTReRunConfiguration>>#items' 'DebugSession>>#shouldDisplayContext:basedOnFilters:'
-	                    'DiskDirectoryEntry class>>#store:path:node:' 'EDEmergencyDebugger>>#resetDisplay' 'EDTest>>#prepareMethodVersionTest'
-	                    'ExternalDropHandler class>>#defaultHandler' 'FFICallbackArgumentReader>>#stackPointer' 'FFIFloat32>>#callbackReturnOn:for:'
-	                    'FFIFloatType>>#callbackReturnOn:for:' 'FFIIndirectFunctionResolution>>#resolveFunction:'
-	                    'FFILibrary>>#macLibraryName' 'FFILibrary>>#win32LibraryName' 'FileDialogWindow>>#saveForcedSelectedFile'
-	                    'FileList class>>#morphicViewOnFile:contents:fileList:' 'GLMOSWindowWorldMorph>>#delete' 'IRReconstructor>>#fixPushNilsForTemps'
-	                    'IceLibgitCommitWalk>>#shouldInclude:' 'IcePackage>>#outgoingCommits' 'IceRemote>>#upstreamForBranch:backend:'
-	                    'IceTag>>#lastCommit' 'IceTipHiedraAltComponentHistoryBrowser>>#newCommitRow:commit:'
+	                    'Context>>#failPrimitiveWith:' 'DAPackageAnalyzerDiffTreePresenter>>#buildRoots' 'DTReRunConfiguration>>#items'
+	                    'DebugSession>>#shouldDisplayContext:basedOnFilters:' 'DiskDirectoryEntry class>>#store:path:node:'
+	                    'EDEmergencyDebugger>>#resetDisplay' 'EDTest>>#prepareMethodVersionTest' 'ExternalDropHandler class>>#defaultHandler'
+	                    'FFICallbackArgumentReader>>#stackPointer' 'FFIFloat32>>#callbackReturnOn:for:' 'FFIFloatType>>#callbackReturnOn:for:'
+	                    'FFIIndirectFunctionResolution>>#resolveFunction:' 'FileDialogWindow>>#saveForcedSelectedFile' 'FileList class>>#morphicViewOnFile:contents:fileList:'
+	                    'GLMOSWindowWorldMorph>>#delete' 'IRReconstructor>>#fixPushNilsForTemps' 'IceLibgitCommitWalk>>#shouldInclude:'
+	                    'IcePackage>>#outgoingCommits' 'IceRemote>>#upstreamForBranch:backend:' 'IceTag>>#lastCommit' 'IceTipHiedraAltComponentHistoryBrowser>>#newCommitRow:commit:'
 	                    'IceTipHiedraAltHistoryBrowser>>#newCommitRow:commit:' 'IceTipHiedraAltHistoryBrowser>>#initializeCommitList'
 	                    'InstructionStream>>#interpretNext3ByteSistaV1Instruction:for:extA:extB:startPC:'
 	                    'KMDispatcher>>#spotterForKeysFor:' 'KMMetaModifier>>#printOsRepresentationOn:' 'LGitDiff>>#includesFileNamed:'
@@ -543,16 +565,18 @@ ReleaseTest >> testThatThereAreNoSelectorsRemainingThatAreSentButNotImplemented 
 	violations removeAllSuchThat: [ :violation | violation beginsWithAnyOf: #( SCI SmalltalkCI ) ].
 
 	"There is a violation that we explicitly want for rule tesing"
-	wantedAndValidViolations := #('ReSentButNotUnderstoodBySuperRuleTest>>#sampleMethod').
-	
+	wantedAndValidViolations := #( 'ReSentButNotUnderstoodBySuperRuleTest>>#sampleMethod' ).
+
 	violations removeAll: wantedAndValidViolations.
 	self assertEmpty: (violations difference: knownFailures)
 ]
 
 { #category : 'tests - variables' }
 ReleaseTest >> testUndeclared [
-	| undeclaredVariables validExceptions remaining description |
+	| undeclaredVariables validExceptions remaining description  |
 
+	"we compile a second method with the undeclared #undeclaredStubInstVar1 to trigger the code path of removing twice in #cleanOutUndeclared"
+	self class compile: 'methodForTest ^undeclaredStubInstVar1'.
 	Smalltalk cleanOutUndeclared.
 	undeclaredVariables := Undeclared associations select: [:each |
 			each isUndeclaredVariable].
@@ -577,7 +601,8 @@ ReleaseTest >> testUndeclared [
 					nextPutAll: '>>';
 					print: method selector]].
 
-	self assert: remaining isEmpty description: description
+	self assert: remaining isEmpty description: description.
+	self class removeSelector: #methodForTest.
 ]
 
 { #category : 'tests - package' }

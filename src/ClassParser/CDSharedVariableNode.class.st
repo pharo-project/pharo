@@ -37,6 +37,14 @@ CDSharedVariableNode >> isClassVariable [
 ]
 
 { #category : 'testing' }
+CDSharedVariableNode >> isGlobalClassNameBinding [
+	"To be polymorphic to RB method nodes. This is a bit odd as this is just called due to
+	#binding returning self, normally this should be called on LiteralVariable"
+
+	^false
+]
+
+{ #category : 'testing' }
 CDSharedVariableNode >> isInstanceVariable [
 	"To be polymorphic to RB method nodes"
 	^false

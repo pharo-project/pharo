@@ -15,13 +15,13 @@ SycRemoveClassCommand >> defaultMenuIconName [
 
 { #category : 'accessing' }
 SycRemoveClassCommand >> defaultMenuItemName [
-	^'Remove Class'
+	^'(R) Remove'
 ]
 
 { #category : 'execution' }
 SycRemoveClassCommand >> execute [
 
-	(RBRemoveClassDriver new
+	(ReRemoveClassDriver new
 				 scopes: toolContext refactoringScopes
 				 classes:  classes) runRefactoring
 ]

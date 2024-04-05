@@ -39,6 +39,12 @@ Package >> includesClassesAffectedBy: aSystemAnnouncement [
 ]
 
 { #category : '*Calypso-SystemQueries' }
+Package >> includesMethodsAffectedBy: aSystemAnnouncement [
+
+	^aSystemAnnouncement affectsMethodsDefinedInPackage: self
+]
+
+{ #category : '*Calypso-SystemQueries' }
 Package >> isAboutPackage: aPackage [
 
 	^self == aPackage

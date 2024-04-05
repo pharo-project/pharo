@@ -30,10 +30,10 @@ SycPushDownMethodCommand >> defaultMenuItemName [
 { #category : 'execution' }
 SycPushDownMethodCommand >> executeRefactorings [
 
-	(RBPushDownMethodDriver
+	(RePushDownMethodDriver
 		model: model
 		scopes: refactoringScopes
-		pushDown: methods) runRefactoring
+		pushDownMethods: methods) runRefactoring
 ]
 
 { #category : 'testing' }

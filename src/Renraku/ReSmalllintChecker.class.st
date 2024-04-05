@@ -49,16 +49,17 @@ ReSmalllintChecker >> checkClass: aClass [
 ReSmalllintChecker >> checkMethodsForClass: aClass [
 
 	environment methodsForClass: aClass do: [ :method |
-		| ast |
 		self getCritiquesAbout: method by: methodRules.
 		nodeRules do: [ :r |
-			ast := method ast.
-			"for rewrite rules, we run every rule on a copy of the ast"
-			r isRewriteRule ifTrue: [ ast := ast copy ].
-			ast nodesDo: [ :node |
-				r check: node forCritiquesDo: [ :crit |
-					crit sourceAnchor initializeEnitity: method.
-					self addCritique: crit ] ] ] ]
+			(r shouldCheckMethod: method) ifTrue: [
+				| ast |
+				ast := method ast.
+				"for rewrite rules, we run every rule on a copy of the ast"
+				r isRewriteRule ifTrue: [ ast := ast copy ].
+				ast nodesDo: [ :node |
+					r check: node forCritiquesDo: [ :crit |
+						crit sourceAnchor initializeEnitity: method.
+						self addCritique: crit ] ] ] ] ]
 ]
 
 { #category : 'private' }

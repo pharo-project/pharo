@@ -134,6 +134,24 @@ RBReplaceMessageSendTransformation class >> replaceCallMethod: aSelector in: aCl
 		newArgs: anArgsCollection 
 ]
 
+{ #category : 'preconditions' }
+RBReplaceMessageSendTransformation >> applicabilityPreconditions [
+
+	| conditions |
+	conditions := (RBCondition withBlock: [
+		               oldSelector numArgs < newSelector numArgs ifTrue: [
+			               oldSelector numArgs + self newArgs size
+			               = newSelector numArgs ifFalse: [
+				               self refactoringError:
+					               'You don''t have the necessary initializers to replace senders.' ] ].
+		               true ])
+	              & (RBCondition definesSelector: oldSelector in: class)
+	              & (RBCondition definesSelector: newSelector in: class).
+	"This is unclear that the targeting method should already be defined."
+
+	^ conditions
+]
+
 { #category : 'support' }
 RBReplaceMessageSendTransformation >> convertAllReferencesTo: aSymbol of: classes using: searchReplacer [
 	(self model allReferencesTo: aSymbol in: classes)
@@ -193,24 +211,6 @@ RBReplaceMessageSendTransformation >> parseTreeRewriterInstance [
 	^ self parseTreeRewriterClass
 		  replaceLiteral: oldSelector
 		  with: newSelector
-]
-
-{ #category : 'preconditions' }
-RBReplaceMessageSendTransformation >> preconditions [
-
-	| conditions |
-	conditions := (RBCondition withBlock: [
-		               oldSelector numArgs < newSelector numArgs ifTrue: [
-			               oldSelector numArgs + self newArgs size
-			               = newSelector numArgs ifFalse: [
-				               self refactoringError:
-					               'You don''t have the necessary initializers to replace senders.' ] ].
-		               true ])
-	              & (RBCondition definesSelector: oldSelector in: class)
-	              & (RBCondition definesSelector: newSelector in: class).
-	"This is unclear that the targeting method should already be defined."
-
-	^ conditions
 ]
 
 { #category : 'transforming' }

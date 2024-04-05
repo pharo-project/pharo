@@ -68,7 +68,7 @@ RBMoveMethodToClassTransformation >> privateTransform [
 		withProtocol: originalProtocol) generateChanges
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBMoveMethodToClassTransformation >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

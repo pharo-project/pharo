@@ -14,7 +14,7 @@ OCASTTranslatorMappingForFullBlockClosuresTest >> assertBlockNodeHasCorrectIR: b
 	| sequence |
 	blockNode methodNode ir.
 	sequence := blockNode ir startSequence sequence.
-	self assert: (sequence allSatisfy: [ :ir | ir sourceNode notNil ]).
+	self assert: (sequence allSatisfy: [ :ir | ir sourceNode isNotNil ]).
 	self assert: sequence last sourceNode equals: blockNode body
 ]
 

@@ -91,7 +91,7 @@ RBArgumentName >> printOn: aStream [
 	aStream nextPutAll: self newName
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBArgumentName >> storeOn: aStream [
 	aStream
 ]

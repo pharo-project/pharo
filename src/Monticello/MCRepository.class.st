@@ -99,7 +99,7 @@ MCRepository >> description [
 	^ self class name
 ]
 
-{ #category : 'printing' }
+{ #category : 'displaying' }
 MCRepository >> displayStringOn: aStream [
 	aStream nextPutAll: self description
 ]
@@ -122,6 +122,36 @@ MCRepository >> includesVersionNamed: aString [
 { #category : 'testing' }
 MCRepository >> isValid [
 	^true
+]
+
+{ #category : 'accessing' }
+MCRepository >> packageNamed: aName [
+
+	^ self packageNamed: aName ifAbsent: [ NotFound signal: aName ]
+]
+
+{ #category : 'accessing' }
+MCRepository >> packageNamed: aName ifAbsent: aBlock [
+
+	^ self
+		packageNamed: aName
+		ifPresent: [ :found | found ]
+		ifAbsent: aBlock
+]
+
+{ #category : 'accessing' }
+MCRepository >> packageNamed: aName ifPresent: aBlock [
+
+	^ self
+		  packageNamed: aName
+		  ifPresent: aBlock
+		  ifAbsent: [ NotFound signal: aName ]
+]
+
+{ #category : 'accessing' }
+MCRepository >> packageNamed: aName ifPresent: presentBlock ifAbsent: absentBlock [
+
+	^ absentBlock value
 ]
 
 { #category : 'printing' }

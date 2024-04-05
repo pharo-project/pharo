@@ -5,7 +5,7 @@ Class {
 	#name : 'RBRefactoringError',
 	#superclass : 'Error',
 	#instVars : [
-		'failedConditions'
+		'failedPreconditions'
 	],
 	#category : 'Refactoring-Core-Support',
 	#package : 'Refactoring-Core',
@@ -20,18 +20,18 @@ RBRefactoringError class >> signalFor: failingConditions [
 			                cond violationMessageOn: aStream ] ].
 	
 	^ self new
-		faledConditions: failingConditions;
+		failedPreconditions: failingConditions;
 		messageText: errorStrings;
 		signal	
 ]
 
 { #category : 'accessing' }
-RBRefactoringError >> failedConditions [
-	^ failedConditions
+RBRefactoringError >> failedPreconditions [
+	^ failedPreconditions
 ]
 
 { #category : 'accessing' }
-RBRefactoringError >> faledConditions: aCollection [
+RBRefactoringError >> failedPreconditions: aCollection [
 	"aCollection should contain objects of kind RBNewAbstractCondition"
-	failedConditions := aCollection
+	failedPreconditions := aCollection
 ]

@@ -9,13 +9,6 @@ Class {
 	#tag : 'Breakpoints'
 }
 
-{ #category : 'activation' }
-ClyAddStaticBreakpointCommand class >> methodEditorLeftBarClickActivation [
-	<classAnnotation>
-
-	^CmdTextLeftBarDoubleClickActivation for: ClyMethodSourceCodeContext
-]
-
 { #category : 'execution' }
 ClyAddStaticBreakpointCommand >> applyBreakpointCondition: aBreakpoint [
 	aBreakpoint

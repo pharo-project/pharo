@@ -244,9 +244,6 @@ AbstractWorldRenderer >> displayWorldState: aWorldState ofWorld: aWorld [
 			"draw hands onto world canvas"
 			handsToDraw reverseDo: [:h | aMorphicCanvas fullDrawMorph: h].
 
-			"*make this true to flash damaged areas for testing*"
-			WorldState debugShowDamage ifTrue: [aWorld flashRects: allDamage color: Color black].
-
 			aMorphicCanvas finish.
 			self updateDamage: allDamage.
 

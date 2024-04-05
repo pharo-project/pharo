@@ -173,7 +173,7 @@ RBAddParameterTransformation >> senders [
 	^ senders
 ]
 
-{ #category : 'adding' }
+{ #category : 'storing' }
 RBAddParameterTransformation >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

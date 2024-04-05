@@ -296,16 +296,6 @@ UUID >> readFrom: aStream [
 ]
 
 { #category : 'accessing' }
-UUID >> size [
-
-	self
-		deprecated:
-		'The UUIDs are no longer a subclass of ByteArray, and should not be directly modified.'
-		transformWith: '`@receiver size' -> '`@receiver uuidData size'.
-	^ 16
-]
-
-{ #category : 'accessing' }
 UUID >> timestamp [
 	"Returns the timestamp of the version 1 UUID as a local DateAndTime. See https://tools.ietf.org/html/rfc4122"
 

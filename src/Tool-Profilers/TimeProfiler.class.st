@@ -44,7 +44,7 @@ TimeProfiler class >> example [
 { #category : 'examples' }
 TimeProfiler class >> exampleOnBlock [
 
-	TimeProfiler onBlock: [ 20 timesRepeat: [self trace: 100 factorial printString]]
+	self onBlock: [ 20 timesRepeat: [self trace: 100 factorial printString]]
 ]
 
 { #category : 'opening' }
@@ -73,22 +73,6 @@ TimeProfiler class >> fullReportMenuOn: aBuilder [
 		iconName: #smallCopy
 ]
 
-{ #category : 'world menu' }
-TimeProfiler class >> menuProfilingOn: aBuilder [
-	<worldMenu>
-
-	(aBuilder item: #'Start profiling all Processes')
-		parent: #Profiling;
-		help: 'Profile all Pharo processes.';
-		order: 10;
-		action: [ self currentWorld worldState startMessageTally ].
-	(aBuilder item: #'Start profiling UI ')
-		parent: #Profiling;
-		help: 'Profile the UI process of Pharo.';
-		order: 20;
-		action: [ self currentWorld worldState startThenBrowseMessageTally ]
-]
-
 { #category : 'opening' }
 TimeProfiler class >> onBlock: block [
 	"Open a profile browser on the given block, thereby running the block and
@@ -100,12 +84,6 @@ TimeProfiler class >> onBlock: block [
 	inst open.
 	inst showResult: result.
 	^ result
-]
-
-{ #category : 'tools-registry' }
-TimeProfiler class >> registerToolsOn: registry [
-	"Add ourselves to registry. See [Smalltalk tools]"
-	registry register: self as: #timeProfiler
 ]
 
 { #category : 'opening' }

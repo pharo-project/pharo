@@ -160,7 +160,7 @@ RGClassDescriptionDefinition >> removeVariable: aRGVariableDefinition from: aCol
 	aCollection remove: aRGVariableDefinition ifAbsent:[]
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RGClassDescriptionDefinition >> storeOn: aStream [
 	aStream
 		nextPutAll: '(';

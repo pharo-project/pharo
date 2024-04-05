@@ -86,12 +86,6 @@ MCVersion >> allDependenciesNotIn: aDictionary do: aBlock ifUnresolved: failBloc
 						aBlock value: version]]]
 ]
 
-{ #category : 'testing' }
-MCVersion >> canOptimizeLoading [
-	"Answer wether I can provide a patch for the working copy without the usual diff pass"
-	^false
-]
-
 { #category : 'accessing' }
 MCVersion >> changes [
 	^ self completeSnapshot patchRelativeToBase: self completePackageSnapshot

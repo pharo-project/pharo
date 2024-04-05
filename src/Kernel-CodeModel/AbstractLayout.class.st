@@ -50,7 +50,7 @@ AbstractLayout >> checkSanity [
 
 { #category : 'api' }
 AbstractLayout >> definesSlot: aSlot [
-	<reflection: 'Object Inspection - Slot inspection'>
+	<reflection: 'Class structural inspection - Slot inspection'>
 	^self slots identityIncludes: aSlot
 ]
 
@@ -148,6 +148,21 @@ AbstractLayout >> isBits [
 ]
 
 { #category : 'testing' }
+AbstractLayout >> isBytes [
+	^ false
+]
+
+{ #category : 'testing' }
+AbstractLayout >> isDoubleBytes [
+	^ false
+]
+
+{ #category : 'testing' }
+AbstractLayout >> isDoubleWords [
+	^ false
+]
+
+{ #category : 'testing' }
 AbstractLayout >> isFixedLayout [
 	^false
 ]
@@ -159,6 +174,11 @@ AbstractLayout >> isVariable [
 
 { #category : 'testing' }
 AbstractLayout >> isWeak [
+	^ false
+]
+
+{ #category : 'testing' }
+AbstractLayout >> isWords [
 	^ false
 ]
 

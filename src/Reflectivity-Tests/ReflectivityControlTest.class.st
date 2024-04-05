@@ -6,7 +6,8 @@ Class {
 	#superclass : 'ReflectivityTestCase',
 	#instVars : [
 		'tag',
-		'link'
+		'link',
+		'link2'
 	],
 	#category : 'Reflectivity-Tests-Base',
 	#package : 'Reflectivity-Tests',
@@ -36,6 +37,7 @@ ReflectivityControlTest >> tagExec: aTag [
 { #category : 'running' }
 ReflectivityControlTest >> tearDown [
 	link ifNotNil: [ link uninstall ].
+	link2 ifNotNil: [ link2 uninstall ].
 	super tearDown
 ]
 
@@ -428,6 +430,41 @@ ReflectivityControlTest >> testAfterVariableNode [
 	self assert: tag equals: 'yes'.
 	self assert: (ReflectivityExamples >> #exampleGlobalRead) class equals: CompiledMethod.
 	self deny: (ReflectivityExamples >> #exampleGlobalRead) isQuick
+]
+
+{ #category : 'tests' }
+ReflectivityControlTest >> testBeforeAndAfterSend [
+
+	| sendNode collection |
+	collection := OrderedCollection new.
+	sendNode := (ReflectivityExamples >> #exampleMethod) sendNodes first.
+	self assert: sendNode isMessage.
+	link := MetaLink new
+		        metaObject: [ collection add: #before ];
+		        selector: #value;
+		        control: #before;
+		        arguments: #(  ).
+	link2 := MetaLink new
+		         metaObject: [ collection add: #after ];
+		         selector: #value;
+		         control: #after;
+		         arguments: #(  ).
+	sendNode link: link.
+	sendNode link: link2.
+
+	self assert: sendNode hasMetalinkAfter.
+	self assertEmpty: collection.
+	self
+		assert: (ReflectivityExamples >> #exampleMethod) class
+		equals: ReflectiveMethod.
+
+	self assert: ReflectivityExamples new exampleMethod equals: 5.
+	self
+		assertCollection: collection
+		equals: #( #before #after ) asOrderedCollection.
+	self
+		assert: (ReflectivityExamples >> #exampleMethod) class
+		equals: CompiledMethod
 ]
 
 { #category : 'tests - before' }

@@ -174,11 +174,16 @@ RBPackageEnvironment >> printOn: aStream [
 ]
 
 { #category : 'removing' }
+RBPackageEnvironment >> removeAll [
+	packages removeAll
+]
+
+{ #category : 'removing' }
 RBPackageEnvironment >> removePackage: aSymbol [
 	packages remove: aSymbol ifAbsent: []
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBPackageEnvironment >> storeOn: aStream [
 	aStream nextPut: $(; nextPutAll: self class name; nextPutAll: ' onEnvironment: '.
 	environment storeOn: aStream.

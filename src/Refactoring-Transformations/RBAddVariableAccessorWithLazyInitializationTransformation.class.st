@@ -121,7 +121,7 @@ RBAddVariableAccessorWithLazyInitializationTransformation >> getterMethod [
 	^ self safeMethodNameFor: self definingClass basedOn: variableName asString
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBAddVariableAccessorWithLazyInitializationTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.

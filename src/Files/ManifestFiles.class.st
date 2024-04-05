@@ -13,7 +13,7 @@ Class {
 ManifestFiles class >> manuallyResolvedDependencies [
 
 	<ignoreForCoverage>
-	^ #(#'Kernel-Chronology-Extras' #'Collections-Abstract' #'System-Platforms' #'System-Support')
+	^ #( #'Collections-Abstract' #'System-Platforms' #'System-Support' )
 ]
 
 { #category : 'code-critics' }

@@ -39,7 +39,7 @@ SycCopyPackageCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 
 	package := aToolContext lastSelectedPackage.
-	newName := UIManager default
+	newName := self morphicUIManager
 		request: 'New name of copied package'
 		initialAnswer: package name
 		title: 'Copy package'.

@@ -87,6 +87,7 @@ OldClassDefinitionBuilder class >> allowedSelectors [
 #named:instanceVariableNames:package:
 #named:uses:instanceVariableNames:package:
 #named:uses:instanceVariableNames:package:env:
+#uses:instanceVariableNames:
 )
 ]
 
@@ -121,9 +122,26 @@ OldClassDefinitionBuilder >> ast: anObject [
 OldClassDefinitionBuilder >> build [
 
 	| layoutClass selectorParts superclassName subclassName instanceVariableNames classVariableNames packageName poolDictionariesNames traitsDefinition isTrait |
+	
 	superclassName := ast receiver formattedCode.
 	selectorParts := ast selector findBetweenSubstrings: { $: }.
 	isTrait := superclassName endsWith: ' classTrait'.
+	
+	ast selector == #uses:instanceVariableNames: ifTrue: [ | trait updatedTrait|
+		"this case does not fit in the scheme used later, we treat it specially here"
+
+		trait :=  self class compiler evaluate: superclassName.
+		self if: selectorParts includes: #uses do: [ :argument | traitsDefinition := argument value ].
+		self if: selectorParts includes: #instanceVariableNames do: [ :argument | instanceVariableNames := argument value ].
+
+		updatedTrait := trait instanceSide classInstaller update: trait instanceSide to: [ :aBuilder |
+			aBuilder
+				environment: trait environment;
+				classTraitComposition: (self class compiler evaluate: traitsDefinition formattedCode);
+				classSlots: instanceVariableNames.
+			isTrait ifTrue: [ aBuilder beTrait ]]. 
+		^ updatedTrait classSide	
+	].
 	layoutClass := FixedLayout.
 
 	self if: selectorParts includes: #subclass do: [ :argument | subclassName := argument value ].

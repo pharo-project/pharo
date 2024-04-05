@@ -184,7 +184,12 @@ RubFindReplaceDialogWindow >> maxPreviousListSize [
 RubFindReplaceDialogWindow >> newButtons [
 	"Answer new buttons as appropriate."
 
-	^{self newFindButton isDefault: true. self newReplaceButton. self newReplaceAllButton. self newCancelButton}
+	^ {
+	self newFindButton. 
+	self newReplaceButton. 
+	self newReplaceAllButton. 
+	self newCancelButton isDefault: true
+	}
 ]
 
 { #category : 'user-interface' }

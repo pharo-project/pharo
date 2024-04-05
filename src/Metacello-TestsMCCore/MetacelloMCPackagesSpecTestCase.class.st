@@ -5,11 +5,6 @@ Class {
 	#package : 'Metacello-TestsMCCore'
 }
 
-{ #category : 'accessing' }
-MetacelloMCPackagesSpecTestCase >> projectClass [
-    ^ MetacelloProject
-]
-
 { #category : 'tests' }
 MetacelloMCPackagesSpecTestCase >> testAddPackageA [
 	"used by MetacelloAbstractVersionConstructor>>package: and MetacelloAbstractVersionConstructor>>package:overrides:"

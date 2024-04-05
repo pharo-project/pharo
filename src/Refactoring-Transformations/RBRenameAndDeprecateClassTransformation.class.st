@@ -67,11 +67,11 @@ RBRenameAndDeprecateClassTransformation >> applicabilityPreconditions [
 
 	| class |
 	class := self model classNamed: className.
-	^ { (RBClassesExistCondition new classes: { class }).
-		 (RBClassesAreNotMetaClassCondition new classes: { class }).
-		 (RBNameIsGlobalCondition new model: self model
+	^ { (ReClassesExistCondition new classes: { class }).
+		 (ReClassesAreNotMetaClassCondition new classes: { class }).
+		 (ReNameIsGlobalCondition new model: self model
 			   className: newClassName) not.
-	     (RBValidClassNameCondition new className: newClassName) }
+	     (ReValidClassNameCondition new className: newClassName) }
 ]
 
 { #category : 'executing' }
@@ -79,7 +79,7 @@ RBRenameAndDeprecateClassTransformation >> buildTransformations [
 
 	^ transformations ifNil: [
 		transformations := OrderedCollection
-			with: (RBRenameClassRefactoring
+			with: (ReRenameClassRefactoring
 						model: self model
 						rename: className to: newClassName)
 			with: ((RBInsertNewClassTransformation
@@ -118,7 +118,7 @@ RBRenameAndDeprecateClassTransformation >> newClassName: aNewClassName [
 	newClassName := aNewClassName asSymbol 
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBRenameAndDeprecateClassTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.

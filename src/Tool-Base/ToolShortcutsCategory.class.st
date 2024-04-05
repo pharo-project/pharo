@@ -16,15 +16,6 @@ ToolShortcutsCategory class >> isGlobalCategory [
 ]
 
 { #category : 'keymaps' }
-ToolShortcutsCategory >> openMonticelloPackageBrowser [
-
-	<shortcut>
-	^ KMKeymap
-		  shortcut: PharoShortcuts current openMonticielloShortcut
-		  action: [ self tools openMonticelloBrowser ]
-]
-
-{ #category : 'keymaps' }
 ToolShortcutsCategory >> openSettings [
 	<shortcut>
 	^ KMKeymap shortcut: PharoShortcuts current openSettingsShortcut action: [ SettingBrowser open ]
@@ -72,6 +63,6 @@ ToolShortcutsCategory >> saveImage [
 	^ KMKeymap
 		shortcut: PharoShortcuts current saveImageShortcut
 		action: [
-			(Smalltalk snapshot: true andQuit: false)
-				ifFalse: [ self inform: 'Image saved' ] ]
+			(Smalltalk snapshot: true andQuit: false) hasSavedSuccessfully
+				ifTrue: [ self inform: 'Image saved' ] ]
 ]

@@ -39,6 +39,14 @@ ClassDescription >> allProtocolsUpTo: mostGenericClass [
 ]
 
 { #category : '*Deprecated12' }
+ClassDescription >> baseClass [
+	"This method is deprecated so consider to migrate."
+	self deprecated:  'Please use #instanceSide instead' transformWith:  '`@receiver baseClass'
+						-> '`@receiver instanceSide'.
+	^ self instanceSide
+]
+
+{ #category : '*Deprecated12' }
 ClassDescription >> categories [
 
 	self deprecated: 'Use #protocolNames instead.' transformWith: '`@rcv categories' -> '`@rcv protocolNames'.
@@ -171,6 +179,15 @@ ClassDescription >> copyCategory: protocolName from: aClass classified: newProto
 ]
 
 { #category : '*Deprecated12' }
+ClassDescription >> definition [
+	"Answer a String that defines the receiver."
+	self
+		deprecated: #definition
+		transformWith: '`@receiver definition' -> '`@receiver definitionString'.
+	^ self definitionString
+]
+
+{ #category : '*Deprecated12' }
 ClassDescription >> isDefinedInPackage: aPackage [
 
 	self
@@ -299,6 +316,22 @@ ClassDescription >> tagsForMethods [
 
 	self deprecated: 'Use #protocolNames instead.' transformWith: '`@rcv tagsForMethods' -> '`@rcv protocolNames'.
 	^ self protocolNames
+]
+
+{ #category : '*Deprecated12' }
+ClassDescription >> theMetaClass [
+	"This method is deprecated so consider to migrate."
+	self deprecated:  'Please use #classSide instead' transformWith:  '`@receiver theMetaClass'
+						-> '`@receiver classSide'.
+	^ self classSide
+]
+
+{ #category : '*Deprecated12' }
+ClassDescription >> theNonMetaClass [
+	"This method is deprecated so consider to migrate."
+	self deprecated:  'Please use #instanceSide instead' transformWith:  '`@receiver theNonMetaClass'
+						-> '`@receiver instanceSide'.
+	^ self instanceSide
 ]
 
 { #category : '*Deprecated12' }

@@ -103,7 +103,7 @@ PharoCommonTools class >> worldMenuOn: aBuilder [
 		iconName: #smallSystemBrowser.
 	(aBuilder item: 'Git Repositories Browser')
 		order: 1;
-		icon: (self iconNamed: #komitterSmalltalkhubRemote);
+		iconName: #komitterSmalltalkhubRemote;
 		parent: #Browsing;
 		keyText: 'o, i';
 		help:
@@ -266,12 +266,6 @@ PharoCommonTools >> register: anTool as: aNameSelector [
 PharoCommonTools >> testRunner [
 
 	^ self toolNamed: #testRunner
-]
-
-{ #category : 'registry access' }
-PharoCommonTools >> timeProfiler [
-
-	^ self toolNamed: #timeProfiler
 ]
 
 { #category : 'private' }

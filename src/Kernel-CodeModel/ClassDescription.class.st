@@ -3,7 +3,7 @@ I add a number of facilities to basic Behaviors:
 	Named instance variables
 	Category organization for methods
 	The notion of a name of this class (implemented as subclass responsibility)
-	The maintenance of a ChangeSet, and logging changes on a file
+	Logging changes on a file
 	Most of the mechanism for fileOut.
 	
 I am an abstract class, in particular, my facilities are intended for inheritance by two subclasses, Class and Metaclass.
@@ -166,14 +166,6 @@ ClassDescription >> authors [
 	^(self methods, self classSide methods) collect: [ :each | each author ] as: Bag
 ]
 
-{ #category : 'accessing - deprecated parallel hierarchy' }
-ClassDescription >> baseClass [
-	"This method is deprecated so consider to migrate."
-	self deprecated:  'Please use #instanceSide instead' transformWith:  '`@receiver baseClass'
-						-> '`@receiver instanceSide'.
-	^ self instanceSide
-]
-
 { #category : 'accessing - comment' }
 ClassDescription >> classCommentBlank [
 	"Classes can override this method to show another template."
@@ -296,7 +288,11 @@ ClassDescription >> compile: sourceCode classified: protocol [
 { #category : 'compiling' }
 ClassDescription >> compile: sourceCode classified: protcol notifying: requestor [
 
-	^ self compile: sourceCode classified: protcol withStamp: Author changeStamp notifying: requestor
+	^ self
+		  compile: sourceCode
+		  classified: protcol
+		  withStamp: nil
+		  notifying: requestor
 ]
 
 { #category : 'compiling' }
@@ -373,7 +369,7 @@ ClassDescription >> copyAllMethodsFrom: originClass [
 { #category : 'slots' }
 ClassDescription >> definesSlot: aSlot [
 	"Return true whether the receiver defines an instance variable named aString"
-	<reflection: 'Object Inspection - Slot inspection'>
+	<reflection: 'Class structural inspection - Slot inspection'>
 	^ self slots identityIncludes: aSlot
 ]
 
@@ -1132,7 +1128,7 @@ ClassDescription >> spaceUsed [
 		ifFalse: [0])
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 ClassDescription >> storeOn: aStream [
 	"Classes and Metaclasses have global names."
 
@@ -1171,22 +1167,6 @@ ClassDescription >> superclass: aSuperclass withLayoutType: layoutType slots: sl
 		layout: newLayout
 ]
 
-{ #category : 'accessing - deprecated parallel hierarchy' }
-ClassDescription >> theMetaClass [
-	"This method is deprecated so consider to migrate."
-	self deprecated:  'Please use #classSide instead' transformWith:  '`@receiver theMetaClass'
-						-> '`@receiver classSide'.
-	^ self classSide
-]
-
-{ #category : 'accessing - deprecated parallel hierarchy' }
-ClassDescription >> theNonMetaClass [
-	"This method is deprecated so consider to migrate."
-	self deprecated:  'Please use #instanceSide instead' transformWith:  '`@receiver theNonMetaClass'
-						-> '`@receiver instanceSide'.
-	^ self instanceSide
-]
-
 { #category : 'accessing - method dictionary' }
 ClassDescription >> uncategorizedSelectors [
 
@@ -1204,13 +1184,6 @@ ClassDescription >> usesPoolVarNamed: aString [
 	"Only classes may use a pool variable named: aString"
 	<reflection: 'Class structural inspection - Shared pool inspection'>
 	^ false
-]
-
-{ #category : 'compiling' }
-ClassDescription >> wantsChangeSetLogging [
-	"Answer whether code submitted for the receiver should be remembered by the changeSet mechanism."
-
-	^ true
 ]
 
 { #category : 'queries' }

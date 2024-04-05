@@ -64,8 +64,7 @@ RBRemoveMethodChange >> printOn: aStream [
 	aStream
 		nextPutAll: self displayClassName;
 		nextPutAll: ' removeSelector: ';
-		print: self selector;
-		nextPut: $!
+		print: self selector
 ]
 
 { #category : 'private' }

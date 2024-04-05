@@ -38,18 +38,6 @@ RBTemporaryToInstanceVariableParametrizedTest >> setUp [
 ]
 
 { #category : 'failure tests' }
-RBTemporaryToInstanceVariableParametrizedTest >> testFailureHierarchyDefinesVarableNamedAsTemporary [
-
-	| class |
-	self addClassHierarchy.
-	class := model classNamed: #Foo.
-	self shouldWarn: (self createRefactoringWithArguments: {
-				 class.
-				 #someMethod.
-				 'foo' })
-]
-
-{ #category : 'failure tests' }
 RBTemporaryToInstanceVariableParametrizedTest >> testFailureNonExistantName [
 
 	self shouldFail: (self createRefactoringWithArguments: {

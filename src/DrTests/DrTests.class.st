@@ -53,7 +53,7 @@ DrTests class >> menuCommandOn: aBuilder [
 		order: 2;
 		keyText: 'o, u';
 		help: 'Let you run and debug SUnit tests.';
-		icon: (aBuilder iconNamed: self taskbarIconName);
+		iconName: self taskbarIconName;
 		withSeparatorAfter
 ]
 

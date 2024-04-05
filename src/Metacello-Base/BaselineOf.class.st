@@ -159,28 +159,6 @@ BaselineOf >> newProjectWithRepositoryDescription: aListOrRepositoryDescriptions
 ]
 
 { #category : 'accessing' }
-BaselineOf >> packageRepository [
-
-	" Tries to determine a repository from which the baseline is being loaded. Useful for 
-	refering other baselines in the same repository. "
-
-	^ (self class package mcWorkingCopy repositoryGroup repositories reject: [:each | each = MCCacheRepository uniqueInstance]) 
-		ifNotEmpty: [ :repositories | repositories anyOne ]
-		ifEmpty: [ nil ]
-]
-
-{ #category : 'accessing' }
-BaselineOf >> packageRepositoryURL [
-
-	" Tries to determine a repository URL from which the baseline is being loaded. Useful for 
-	refering other baselines in the same repository. "
-
-	^ self packageRepository
-		ifNotNil: [ :aRepository | aRepository description ]
-		ifNil: [ '' ]
-]
-
-{ #category : 'accessing' }
 BaselineOf >> packageRepositoryURLForSpec: spec [
 	" Tries to determine a repository URL from which the baseline is being loaded. Useful for 
 	refering other baselines in the same repository. "
