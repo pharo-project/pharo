@@ -27,6 +27,8 @@ MethodConstantTest >> sumOfTwoConsts: firstBlock and: secondBlock [
 MethodConstantTest >> tearDown [
 	"recompile method to remove the caching"
 	(self class>>#constFromReceiverExpression) recompile.
+	(self class>>#sumOfTwoConsts:and:) recompile.
+	(self class>>#constFromBlock:) recompile.
 	super tearDown
 ]
 
@@ -55,8 +57,10 @@ MethodConstantTest >> testConstPlaceInTransformedMethod [
 	const := self constFromReceiverExpression.
 
 	transformedMethod := self class >> #constFromReceiverExpression.
+	self assert: const identicalTo: self constFromReceiverExpression.
 
-	self assert: (transformedMethod literals anySatisfy:  [ :each | each == const ])
+	self assert:
+		(transformedMethod allLiterals anySatisfy: [ :each | each == const ])
 ]
 
 { #category : 'tests' }
