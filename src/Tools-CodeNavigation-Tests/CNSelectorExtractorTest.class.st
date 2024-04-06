@@ -13,7 +13,7 @@ Class {
 
 { #category : 'running' }
 CNSelectorExtractorTest >> setUp [
-
+	super setUp.
 	selectorExtractor := CNSelectorExtractor new
 ]
 
