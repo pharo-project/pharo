@@ -25,17 +25,17 @@ FailingTearDownTest >> failTearDown [
 	shouldFailTearDown := true
 ]
 
-{ #category : 'initialization' }
-FailingTearDownTest >> initialize [
-
-	super initialize.
-	shouldFailTearDown := false
-]
-
 { #category : 'running' }
 FailingTearDownTest >> isClean [
 
 	^ assignedVariableToTestCleanup isNil
+]
+
+{ #category : 'initialization' }
+FailingTearDownTest >> setUp [
+
+	super setUp.
+	shouldFailTearDown := false
 ]
 
 { #category : 'running' }

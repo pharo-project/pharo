@@ -4,7 +4,7 @@ A CNSelectorExtractorTest is a test class for testing the behavior of CNSelector
 Class {
 	#name : 'CNSelectorExtractorTest',
 	#superclass : 'TestCase',
-	#classVars : [
+	#instVars : [
 		'selectorExtractor'
 	],
 	#category : 'Tools-CodeNavigation-Tests',
@@ -12,7 +12,7 @@ Class {
 }
 
 { #category : 'initialization' }
-CNSelectorExtractorTest >> initialize [
+CNSelectorExtractorTest >> setUp [
 
 	selectorExtractor := CNSelectorExtractor new
 ]
