@@ -116,7 +116,7 @@ DateAndTime class >> dosEpoch [
 DateAndTime class >> epoch [
   "Answer a DateAndTime representing the epoch: 1 January 1901"
 
-  ^ (self julianDayNumber: SqueakEpoch) offset: 0
+  ^ (self julianDayNumber: Epoch) offset: 0
 ]
 
 { #category : 'instance creation' }
@@ -157,7 +157,7 @@ DateAndTime class >> fromSeconds: utcSecondsSinceEpoch offset: aUTCOffset [
 	nanos := integerSeconds = utcSecondsSinceEpoch
 		ifTrue: [ 0 ]
 		ifFalse: [ ((utcSecondsSinceEpoch - integerSeconds) * NanosInSecond) asInteger ].
-	^ self basicNew ticks: {SqueakEpoch . integerSeconds . nanos} offset: aUTCOffset asDuration
+	^ self basicNew ticks: {Epoch . integerSeconds . nanos} offset: aUTCOffset asDuration
 ]
 
 { #category : 'input' }
@@ -304,7 +304,7 @@ DateAndTime class >> now [
 	| nanoTicks |
 	nanoTicks := self clock microsecondClockValue * 1000.
 	^ self basicNew
-		setJdn: SqueakEpoch
+		setJdn: Epoch
 		seconds: 0
 		nano: nanoTicks
 		offset: self localOffset

@@ -98,7 +98,7 @@ Date class >> firstWeekdayOfMonth: month year: year [
 Date class >> fromDays: dayCount [
 	"Days since 1 January 1901"
 
-	^ self julianDayNumber: SqueakEpoch + dayCount
+	^ self julianDayNumber: Epoch + dayCount
 ]
 
 { #category : 'instance creation' }

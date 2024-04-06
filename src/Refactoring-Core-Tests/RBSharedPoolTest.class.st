@@ -26,7 +26,7 @@ RBSharedPoolTest >> setUp [
 			name: #ChronologyConstants;
 			sharedVariables:
 				{ #DayNames. #DaysInMonth. #HoursInDay. #MicrosecondsInDay. #MinutesInHour. #MonthNames. #NanosInMillisecond. #NanosInSecond. #SecondsInDay. #SecondsInHour.
-				#SecondsInMinute. #SqueakEpoch };
+				#SecondsInMinute. #Epoch };
 			package: 'Kernel-Chronology' ].
 
 	defineOf := rbNamespace classNamed: #ChronologyConstants.
