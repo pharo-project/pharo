@@ -11,7 +11,7 @@ Class {
 	#package : 'Tools-CodeNavigation-Tests'
 }
 
-{ #category : 'initialization' }
+{ #category : 'running' }
 CNSelectorExtractorTest >> setUp [
 
 	selectorExtractor := CNSelectorExtractor new

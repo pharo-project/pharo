@@ -31,7 +31,7 @@ FailingTearDownTest >> isClean [
 	^ assignedVariableToTestCleanup isNil
 ]
 
-{ #category : 'initialization' }
+{ #category : 'running' }
 FailingTearDownTest >> setUp [
 
 	super setUp.
