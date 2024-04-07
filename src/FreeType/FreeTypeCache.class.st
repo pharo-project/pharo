@@ -215,59 +215,64 @@ FreeTypeCache >> maximumSize [
 { #category : 'public' }
 FreeTypeCache >> maximumSize: anIntegerOrNil [
 
-	maximumSize := anIntegerOrNil.
-	maximumSize ifNotNil:[
-		used > maximumSize
-			ifTrue:["shrink"
-				self shrinkTo: maximumSize]]
+	mutex criticalReleasingOnError:[
+		maximumSize := anIntegerOrNil.
+		maximumSize ifNotNil:[
+			used > maximumSize
+				ifTrue:["shrink"
+					self shrinkTo: maximumSize]]]
 ]
 
 { #category : 'add-remove' }
 FreeTypeCache >> removeAll [
 
-	self basicRemoveAll
+	mutex criticalReleasingOnError: [
+		self basicRemoveAll ]
 ]
 
 { #category : 'add-remove' }
 FreeTypeCache >> removeAllForFont: aFreeTypeFont [
 
-	| toRemove |
-	(fontTable includesKey: aFreeTypeFont) ifFalse: [ ^ self ].
-	toRemove := IdentitySet new.
-	fifo do: [ :entry |
-		entry font = aFreeTypeFont ifTrue: [ toRemove add: entry ] ].
-	toRemove do: [ :entry |
-		| d |
-		fifo remove: entry.
-		d := ((fontTable at: entry font) at: entry charCode) at: entry type.
-		d removeKey: entry scale.
-		used := used - (self sizeOf: entry object) ]
+	mutex criticalReleasingOnError: [
+		| toRemove |
+		(fontTable includesKey: aFreeTypeFont) ifFalse: [ ^ self ].
+		toRemove := IdentitySet new.
+		fifo do: [ :entry |
+			entry font = aFreeTypeFont ifTrue: [ toRemove add: entry ] ].
+		toRemove do: [ :entry |
+			| d |
+			fifo remove: entry.
+			d := ((fontTable at: entry font) at: entry charCode) at: entry type.
+			d removeKey: entry scale.
+			used := used - (self sizeOf: entry object) ] ]
 ]
 
 { #category : 'add-remove' }
 FreeTypeCache >> removeAllForType: typeFlag [
 
-	| toRemove |
-	toRemove := IdentitySet new.
-	fifo do: [ :entry |
-		entry type = typeFlag ifTrue: [ toRemove add: entry ] ].
-	toRemove do: [ :entry |
-		| d |
-		fifo remove: entry.
-		d := ((fontTable at: entry font) at: entry charCode) at: entry type.
-		d removeKey: entry scale.
-		used := used - (self sizeOf: entry object) ]
+	mutex criticalReleasingOnError: [
+		| toRemove |
+		toRemove := IdentitySet new.
+		fifo do: [ :entry |
+			entry type = typeFlag ifTrue: [ toRemove add: entry ] ].
+		toRemove do: [ :entry |
+			| d |
+			fifo remove: entry.
+			d := ((fontTable at: entry font) at: entry charCode) at: entry type.
+			d removeKey: entry scale.
+			used := used - (self sizeOf: entry object) ] ]
 ]
 
 { #category : 'reporting' }
 FreeTypeCache >> reportCacheState [
 	"Answer a description of the current state of the cache"
 
-	| usedPercent |
-	usedPercent := maximumSize
-		ifNil: [0]
-		ifNotNil: [(used * 100 / maximumSize) asFloat rounded].
-	^ usedPercent asString,'% Full (maximumSize: ', maximumSize asString, ' , used: ', used asString,')'
+	^ mutex criticalReleasingOnError: [
+		| usedPercent |
+		usedPercent := maximumSize
+			ifNil: [0]
+			ifNotNil: [(used * 100 / maximumSize) asFloat rounded].
+		usedPercent asString,'% Full (maximumSize: ', maximumSize asString, ' , used: ', used asString,')' ]
 ]
 
 { #category : 'private - sizing' }
