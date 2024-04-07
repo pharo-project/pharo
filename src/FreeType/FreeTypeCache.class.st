@@ -157,6 +157,14 @@ FreeTypeCache >> atFont: aFreeTypeFont charCode: charCodeInteger type: typeFlag 
 		^ anObject ]
 ]
 
+{ #category : 'private - sizing' }
+FreeTypeCache >> basicRemoveAll [
+
+	fontTable := self dictionaryClass new: 100.
+	fifo := self fifoClass new.
+	used := 0
+]
+
 { #category : 'public' }
 FreeTypeCache >> cacheSize [
 
@@ -217,9 +225,7 @@ FreeTypeCache >> maximumSize: anIntegerOrNil [
 { #category : 'add-remove' }
 FreeTypeCache >> removeAll [
 
-	fontTable := self dictionaryClass new: 100.
-	fifo := self fifoClass new.
-	used := 0
+	self basicRemoveAll
 ]
 
 { #category : 'add-remove' }
@@ -268,7 +274,7 @@ FreeTypeCache >> reportCacheState [
 FreeTypeCache >> shrinkTo: newSize [
 	"if the used size is greater than newSize, then remove all the receiver's entries"
 
-	used > newSize ifTrue:[self removeAll]
+	used > newSize ifTrue:[self basicRemoveAll]
 ]
 
 { #category : 'private - accessing' }
