@@ -239,12 +239,7 @@ FreeTypeCache >> removeAllForFont: aFreeTypeFont [
 		toRemove := IdentitySet new.
 		fifo do: [ :entry |
 			entry font = aFreeTypeFont ifTrue: [ toRemove add: entry ] ].
-		toRemove do: [ :entry |
-			| d |
-			fifo remove: entry.
-			d := ((fontTable at: entry font) at: entry charCode) at: entry type.
-			d removeKey: entry scale.
-			used := used - (self sizeOf: entry object) ] ]
+		toRemove do: [ :entry | self removeEntry: entry ] ]
 ]
 
 { #category : 'add-remove' }
@@ -255,12 +250,18 @@ FreeTypeCache >> removeAllForType: typeFlag [
 		toRemove := IdentitySet new.
 		fifo do: [ :entry |
 			entry type = typeFlag ifTrue: [ toRemove add: entry ] ].
-		toRemove do: [ :entry |
-			| d |
-			fifo remove: entry.
-			d := ((fontTable at: entry font) at: entry charCode) at: entry type.
-			d removeKey: entry scale.
-			used := used - (self sizeOf: entry object) ] ]
+		toRemove do: [ :entry | self removeEntry: entry ] ]
+]
+
+{ #category : 'private - sizing' }
+FreeTypeCache >> removeEntry: entry [
+
+	| d |
+
+	fifo remove: entry.
+	d := ((fontTable at: entry font) at: entry charCode) at: entry type.
+	d removeKey: entry scale.
+	used := used - (self sizeOf: entry object)
 ]
 
 { #category : 'reporting' }
