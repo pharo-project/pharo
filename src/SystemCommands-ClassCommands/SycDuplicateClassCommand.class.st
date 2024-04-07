@@ -11,7 +11,7 @@ Internal Representation and Key Implementation Points.
 "
 Class {
 	#name : 'SycDuplicateClassCommand',
-	#superclass : 'CmdCommand',
+	#superclass : 'SycClassCommand',
 	#instVars : [
 		'originalClass',
 		'newClassName',
@@ -20,11 +20,6 @@ Class {
 	#category : 'SystemCommands-ClassCommands',
 	#package : 'SystemCommands-ClassCommands'
 }
-
-{ #category : 'testing' }
-SycDuplicateClassCommand class >> canBeExecutedInContext: aToolContext [
-	^aToolContext isClassSelected
-]
 
 { #category : 'execution' }
 SycDuplicateClassCommand >> applyResultInContext: aToolContext [

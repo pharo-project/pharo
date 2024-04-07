@@ -1,3 +1,6 @@
+"
+Generate the `printOn:` method for the selected class, to distinguish instances of the selected class by printing a description.
+"
 Class {
 	#name : 'SycGeneratePrintOnCommand',
 	#superclass : 'SycSingleClassCommand',
