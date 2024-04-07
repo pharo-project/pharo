@@ -576,8 +576,14 @@ FreeTypeCacheTest >> validateCollections: aFreeTypeCache [
 	fifo := aFreeTypeCache instVarNamed: #fifo.
 	lastLink := fifo instVarNamed: #lastLink.
 	fontTableEntries := Set new.
-	fontTable keysAndValuesDo: [ :k1 :v1 | v1 keysAndValuesDo: [ :k2 :v2 | v2 keysAndValuesDo: [ :k3 :v3 | v3 keysAndValuesDo: [ :k4 :v4 |
-		fontTableEntries add: v4 ] ] ] ].
+	fontTable keysAndValuesDo: [ :k1 :v1 |
+		self denyEmpty: v1.
+		v1 keysAndValuesDo: [ :k2 :v2 |
+			self denyEmpty: v2.
+			v2 keysAndValuesDo: [ :k3 :v3 |
+				self denyEmpty: v3.
+				v3 keysAndValuesDo: [ :k4 :v4 |
+					fontTableEntries add: v4 ] ] ] ].
 	self assert: fifo size equals: fontTableEntries size.
 	self assert: fifo asSet equals: fontTableEntries.
 	self assert: (lastLink isNil or: [ lastLink nextLink isNil ])

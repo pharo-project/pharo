@@ -106,10 +106,16 @@ FreeTypeCache >> atFont: aFreeTypeFont charCode: charCodeInteger type: typeFlag 
 			ifNotNil:[
 				fifo moveDown: entry.
 				^entry object].
-		v := aBlock value.
+		v := aBlock on: Error do: [ :error |
+			self removeIfEmptyScaleTable: scaleTable type: typeFlag typeTable: typeTable
+				charCode: charCodeInteger charCodeTable: charCodeTable font: aFreeTypeFont.
+			error pass].
 		vSize := self sizeOf: v.
 		(maximumSize isNotNil and:[vSize > maximumSize])
-			ifTrue:[^v].
+			ifTrue:[
+				self removeIfEmptyScaleTable: scaleTable type: typeFlag typeTable: typeTable
+					charCode: charCodeInteger charCodeTable: charCodeTable font: aFreeTypeFont.
+				^v].
 		used := used + vSize.
 		entry := (self fifoEntryClass new
 			 font: aFreeTypeFont;
@@ -160,7 +166,7 @@ FreeTypeCache >> atFont: aFreeTypeFont charCode: charCodeInteger type: typeFlag 
 { #category : 'private - sizing' }
 FreeTypeCache >> basicRemoveAll [
 
-	fontTable := self dictionaryClass new: 100.
+	fontTable := self dictionaryClass new: self fontTableInitialMinimumCapacity.
 	fifo := self fifoClass new.
 	used := 0
 ]
@@ -195,13 +201,19 @@ FreeTypeCache >> fifoEntryClass [
 	^ FreeTypeCacheEntry
 ]
 
+{ #category : 'private - sizing' }
+FreeTypeCache >> fontTableInitialMinimumCapacity [
+
+	^ 100
+]
+
 { #category : 'initialization' }
 FreeTypeCache >> initialize [
 
 	super initialize.
 	mutex := Semaphore forMutualExclusion.
 	maximumSize := self class defaultMaximumSize.
-	fontTable := self dictionaryClass new: 100.
+	fontTable := self dictionaryClass new: self fontTableInitialMinimumCapacity.
 	used := 0.
 	fifo := self fifoClass new
 ]
@@ -256,12 +268,37 @@ FreeTypeCache >> removeAllForType: typeFlag [
 { #category : 'private - sizing' }
 FreeTypeCache >> removeEntry: entry [
 
-	| d |
-
 	fifo remove: entry.
-	d := ((fontTable at: entry font) at: entry charCode) at: entry type.
-	d removeKey: entry scale.
+	self removeFont: entry font charCode: entry charCode type: entry type scale: entry scale.
 	used := used - (self sizeOf: entry object)
+]
+
+{ #category : 'private - sizing' }
+FreeTypeCache >> removeFont: font charCode: charCode type: type scale: scale [
+
+	| charCodeTable typeTable scaleTable |
+
+	charCodeTable := fontTable at: font.
+	typeTable := charCodeTable at: charCode.
+	scaleTable := typeTable at: type.
+
+	scaleTable removeKey: scale.
+	self removeIfEmptyScaleTable: scaleTable type: type typeTable: typeTable
+		charCode: charCode charCodeTable: charCodeTable font: font
+]
+
+{ #category : 'private - sizing' }
+FreeTypeCache >> removeIfEmptyScaleTable: scaleTable type: type typeTable: typeTable charCode: charCode charCodeTable: charCodeTable font: font [
+
+	scaleTable ifNotEmpty: [ ^ self ].
+	typeTable removeKey: type.
+	typeTable ifNotEmpty: [ ^ self ].
+	charCodeTable removeKey: charCode.
+	charCodeTable ifNotEmpty: [ ^ self ].
+	fontTable removeKey: font.
+	(fontTable capacity // 2 > self fontTableInitialMinimumCapacity
+		and: [ fontTable capacity // 4 > fontTable size ]) ifFalse: [ ^ self ].
+	fontTable compact
 ]
 
 { #category : 'reporting' }
