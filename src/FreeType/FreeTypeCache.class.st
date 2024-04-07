@@ -5,6 +5,7 @@ Class {
 	#name : 'FreeTypeCache',
 	#superclass : 'Object',
 	#instVars : [
+		'mutex',
 		'maximumSize',
 		'used',
 		'fontTable',
@@ -96,7 +97,7 @@ FreeTypeCache >> atFont: aFreeTypeFont charCode: charCodeInteger type: typeFlag 
 
 	| charCodeTable typeTable scaleTable entry v vSize |
 
-	aFreeTypeFont mutex criticalReleasingOnError: [
+	mutex criticalReleasingOnError: [
 		charCodeTable := fontTable at: aFreeTypeFont ifAbsentPut:[self dictionaryClass new: 60].
 		typeTable := charCodeTable at: charCodeInteger ifAbsentPut:[self dictionaryClass new: 10].
 		scaleTable := typeTable at: typeFlag ifAbsentPut:[self dictionaryClass new: 1].
@@ -128,7 +129,7 @@ FreeTypeCache >> atFont: aFreeTypeFont charCode: charCodeInteger type: typeFlag 
 
 	| charCodeTable typeTable scaleTable anObjectSize oldEntry oldEntrySize entry |
 
-	aFreeTypeFont mutex criticalReleasingOnError: [
+	mutex criticalReleasingOnError: [
 		anObjectSize := self sizeOf: anObject.
 		(maximumSize isNotNil and:[anObjectSize > maximumSize])
 			ifTrue:[^anObject].
@@ -190,6 +191,7 @@ FreeTypeCache >> fifoEntryClass [
 FreeTypeCache >> initialize [
 
 	super initialize.
+	mutex := Semaphore forMutualExclusion.
 	maximumSize := self class defaultMaximumSize.
 	fontTable := self dictionaryClass new: 100.
 	used := 0.
