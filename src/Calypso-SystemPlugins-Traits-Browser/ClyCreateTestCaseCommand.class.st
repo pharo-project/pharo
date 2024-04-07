@@ -1,3 +1,6 @@
+"
+Generate New Test Class: Automatically create a test class for the selected class, to include test methods and setup/teardown stubs.
+"
 Class {
 	#name : 'ClyCreateTestCaseCommand',
 	#superclass : 'ClyBrowserCommand',

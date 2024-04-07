@@ -1,3 +1,7 @@
+"
+Rename Class Refactoring: Change the name of a selected class, update all references, and preview changes before applying.
+
+"
 Class {
 	#name : 'SycRenameClassCommand',
 	#superclass : 'SycSingleClassCommand',
