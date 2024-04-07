@@ -315,9 +315,9 @@ FreeTypeCache >> reportCacheState [
 
 { #category : 'private - sizing' }
 FreeTypeCache >> shrinkTo: newSize [
-	"if the used size is greater than newSize, then remove all the receiver's entries"
+	"while the used size is greater than newSize, remove the receiver's first entry"
 
-	used > newSize ifTrue:[self basicRemoveAll]
+	[ used > newSize ] whileTrue: [ self removeEntry: fifo firstLink ]
 ]
 
 { #category : 'private - accessing' }

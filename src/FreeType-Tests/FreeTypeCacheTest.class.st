@@ -230,17 +230,18 @@ FreeTypeCacheTest >> testMaximumSizeRespectedOnIfAbsentPut [
 		ifAbsentPut: [font1XGlyph].
 	self validateSizes: cache.
 	self validateCollections: cache.
+	self assert: (cache instVarNamed: #used) equals: (cache sizeOf: font1XGlyph).
 	cache
 		atFont: font1
 		charCode: $Y asInteger
 		type: FreeTypeCacheGlyph
 		scale: 1
 		ifAbsentPut: [font1XGlyph].
-	self assert: (cache instVarNamed: #used) equals: 0.	"cache has been cleared on reaching max size"
+	self assert: (cache instVarNamed: #used) equals: (cache sizeOf: font1XGlyph). "cache has been shrunk on reaching max size"
 	self validateSizes: cache.
 	self validateCollections: cache.
 	self should: [ cache atFont: font1 charCode: $X asInteger type: FreeTypeCacheGlyph scale: 1 ] raise: Error.
-	self should: [ cache atFont: font1 charCode: $Y asInteger type: FreeTypeCacheGlyph scale: 1 ] raise: Error
+	self assert: (cache atFont: font1 charCode: $Y asInteger type: FreeTypeCacheGlyph scale: 1) identicalTo: font1XGlyph.
 ]
 
 { #category : 'tests' }
@@ -255,17 +256,18 @@ FreeTypeCacheTest >> testMaximumSizeRespectedOnPut [
 		put: font1XGlyph.
 	self validateSizes: cache.
 	self validateCollections: cache.
+	self assert: (cache instVarNamed: #used) equals: (cache sizeOf: font1XGlyph).
 	cache
 		atFont: font1
 		charCode: $Y asInteger
 		type: FreeTypeCacheGlyph
 		scale: 1
 		put: font1XGlyph.
-	self assert: (cache instVarNamed: #used) equals: 0.	"cache has been cleared on reaching max size"
+	self assert: (cache instVarNamed: #used) equals: (cache sizeOf: font1XGlyph). "cache has been shrunk on reaching max size"
 	self validateSizes: cache.
 	self validateCollections: cache.
 	self should: [ cache atFont: font1 charCode: $X asInteger type: FreeTypeCacheGlyph scale: 1 ] raise: Error.
-	self should: [ cache atFont: font1 charCode: $Y asInteger type: FreeTypeCacheGlyph scale: 1 ] raise: Error
+	self assert: (cache atFont: font1 charCode: $Y asInteger type: FreeTypeCacheGlyph scale: 1) identicalTo: font1XGlyph.
 ]
 
 { #category : 'tests' }
@@ -544,7 +546,7 @@ FreeTypeCacheTest >> testSetMaximumSizeShrink [
 	| m |
 	m := fullCache instVarNamed: #maximumSize.
 	fullCache maximumSize: m // 2.	"shrink"
-	self assert: (fullCache instVarNamed: #used) equals: 0.	"cache is cleared when used > maximumSize"
+	self assert: (fullCache instVarNamed: #used) equals: 5 * (fullCache sizeOf: font1YGlyph). "cache is shrunk when used > maximumSize"
 	self validateSizes: fullCache.
 	self validateCollections: fullCache
 ]
