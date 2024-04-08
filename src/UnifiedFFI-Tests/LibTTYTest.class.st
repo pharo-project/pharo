@@ -127,12 +127,15 @@ LibTTYTest >> readOutput: fdm [
 { #category : 'tests' }
 LibTTYTest >> test1 [
 
-	| fileDescriptorPseudoTerminal template fileDescriptorFile |
+	| path fileDescriptorPseudoTerminal template fileDescriptorFile |
 		
+	path := (#('/bin' '/usr/bin') collect: [ :element | element , '/true' ])
+		detect: [ :element | element asFileReference exists ].
+
 	fileDescriptorPseudoTerminal := self openPseudoTerminal.
 	self assertProcessSpawnedWithFileDescriptor: fileDescriptorPseudoTerminal
-		path: '/usr/bin/true'
-		arguments: { '/usr/bin/true' }
+		path: path
+		arguments: { path }
 		environment: Smalltalk os environment
 		input: ''
 		writes: ''
@@ -144,8 +147,8 @@ LibTTYTest >> test1 [
 	self deny: fileDescriptorFile equals: -1.
 	[
 		self assertProcessSpawnedWithFileDescriptor: fileDescriptorFile
-			path: '/usr/bin/true'
-			arguments: { '/usr/bin/true' }
+			path: path
+			arguments: { path }
 			environment: Smalltalk os environment
 			input: ''
 			writes: ''
