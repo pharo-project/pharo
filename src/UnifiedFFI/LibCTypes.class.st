@@ -5,7 +5,8 @@ Class {
 	#name : 'LibCTypes',
 	#superclass : 'SharedPool',
 	#classVars : [
-		'pid_t'
+		'pid_t',
+		'ssize_t'
 	],
 	#category : 'UnifiedFFI-Libraries',
 	#package : 'UnifiedFFI',
@@ -15,5 +16,6 @@ Class {
 { #category : 'class initialization' }
 LibCTypes class >> initialize [
 
+	ssize_t := #long.
 	pid_t := #int.
 ]
