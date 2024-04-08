@@ -6,6 +6,9 @@ Under windows I provide similar functionality through the functions defined in m
 Class {
 	#name : 'LibC',
 	#superclass : 'FFILibrary',
+	#pools : [
+		'LibCTypes'
+	],
 	#category : 'UnifiedFFI-Libraries',
 	#package : 'UnifiedFFI',
 	#tag : 'Libraries'
@@ -61,7 +64,7 @@ LibC class >> system: command [
 LibC >> currentProcessId [
 	"Returns the process identifier (PID) of the calling process."
 
-	 ^self ffiCall: #(int getpid(void))
+	 ^self ffiCall: #(pid_t getpid(void))
 ]
 
 { #category : 'api - accessing' }
@@ -75,7 +78,7 @@ LibC >> fgetc: stream [
 LibC >> getpid [
 	"Get PID of current process."
 
-	 ^self ffiCall: #(int getpid(void))
+	 ^self ffiCall: #(pid_t getpid(void))
 ]
 
 { #category : 'private - accessing' }
@@ -93,7 +96,7 @@ LibC >> memCopy: src to: dest size: n [
 LibC >> parentProcessId [
 	"Returns the process ID of the parent of the calling process."
 
-	 ^self ffiCall: #(int getppid(void))
+	 ^self ffiCall: #(pid_t getppid(void))
 ]
 
 { #category : 'api - piping' }
