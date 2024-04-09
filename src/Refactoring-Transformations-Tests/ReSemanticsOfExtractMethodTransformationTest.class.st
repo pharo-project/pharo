@@ -119,6 +119,37 @@ self
 ]
 
 { #category : 'tests' }
+ReSemanticsOfExtractMethodTransformationTest >> testBeginningExpressionsOfASequenceGotExtracted2 [
+
+	| transformation |
+	transformation := self 
+extractSource: 'self bar.
+		self end.' 
+fromSource: 'm 
+		self foo.
+		self bar.
+		self end.
+		self zoo'
+withNewSelector: #extractedMethod.
+	transformation generateChanges.
+	
+self 
+		assert: (class parseTreeForSelector: #extractedMethod)
+		equals: (self parseMethod: ' extractedMethod
+
+	self bar.
+	^ self end').
+		
+	self 
+		assert: (class parseTreeForSelector: #m) 
+		equals: (self parseMethod: 'm
+
+	self foo.
+	self extractedMethod.
+	self zoo')
+]
+
+{ #category : 'tests' }
 ReSemanticsOfExtractMethodTransformationTest >> testCompleteSequenceGotExtracted [
 
 	| transformation |
@@ -138,6 +169,34 @@ self
 	self 
 		assert: (class parseTreeForSelector: #m)
 		equals: (self parseMethod: 'm self extractedMethod')
+]
+
+{ #category : 'tests' }
+ReSemanticsOfExtractMethodTransformationTest >> testExtractClass [
+
+	| transformation |
+	transformation := self 
+extractSource: 'Point' 
+fromSource: 'm: arg
+		| a |
+		a := Point new.
+		^ a'
+withNewSelector: #extractedMethod.
+
+	transformation generateChanges.
+
+	self 
+		assert: (class parseTreeForSelector: #extractedMethod)
+		equals: (self parseMethod: 'extractedMethod 
+					
+					^ Point').
+		
+	self 
+		assert: (class parseTreeForSelector: #m:)
+		equals: (self parseMethod: 'm: arg
+				| a |
+				a := self extractedMethod new.
+				^ a')
 ]
 
 { #category : 'tests' }

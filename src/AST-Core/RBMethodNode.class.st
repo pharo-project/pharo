@@ -326,7 +326,7 @@ RBMethodNode >> extractSubtreeWith: aSourceCode [
 		ifFalse:
 			[ RBParseTreeSearcher treeMatching: aSourceCode in: self ].	"or: [aTree isReturn]"
 	^ extractedTree
-		ifNotNil: [ extractedTree parent: (self parentOfSubtree: extractedTree) ]
+		"ifNotNil: [ extractedTree parent: (self parentOfSubtree: extractedTree) ]"
 ]
 
 { #category : 'accessing' }
