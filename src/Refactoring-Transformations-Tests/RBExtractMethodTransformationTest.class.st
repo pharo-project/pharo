@@ -166,6 +166,20 @@ RBExtractMethodTransformationTest >> testNeedsReturn [
 				^ rules size == 1 ifTrue: [^rules first viewResults]')
 ]
 
+{ #category : 'tests - utilities' }
+RBExtractMethodTransformationTest >> testSelectorStartingFromArgumentsSize [
+
+	self 
+		assert: (RBExtractMethodTransformation new selectorStartingFrom: 'foo' argumentsSize: 2)
+		equals: #'foo_:_:'.
+	self 
+		assert: (RBExtractMethodTransformation new selectorStartingFrom: 'foo' argumentsSize: 0)
+		equals: #foo.
+	self 
+		assert: (RBExtractMethodTransformation new selectorStartingFrom: '' argumentsSize: 2)
+		equals: #_:_:.
+]
+
 { #category : 'tests' }
 RBExtractMethodTransformationTest >> testTransform [
 
