@@ -57,6 +57,7 @@ RBParseTreeSearcher class >> treeMatchings: aString in: aParseTree [
 RBParseTreeSearcher class >> whichMethodIn: aCollection matches: subtree [
 
 	| isGetterBlock searchTree |
+	self halt: 'Bullshit'.
 	isGetterBlock := self new
 		matchesAnyMethodOf: #( '`method ^ `@aValue`{ :aNode | aNode isKindOf: RBLiteralValueNode }' )
 		do: [ :node :answer | true ].

@@ -140,22 +140,24 @@ RBExtractMethodTransformation >> buildTransformationFor: newMethodName [
 { #category : 'executing' }
 RBExtractMethodTransformation >> buildTransformations [
 
-	| selectorOfExistingMethod |
+"	| existingMethod |
 	
-	selectorOfExistingMethod := self findMethodWithSimilarBody.
-	selectorOfExistingMethod 
+	existingMethod := self findMethodWithSimilarBody.
+	existingMethod 
 		ifNotNil: [
+			self halt.
 			^ OrderedCollection with: 
-					(self parseTreeRewriterClass
+					(self  
 					   replaceCode: subtree
-					   byMessageSendTo: selectorOfExistingMethod
+					   byMessageSendTo: existingMethod
 					   in:
-					   (self definingClass methodFor: self calculateTree selector)) ]
-		ifNil: [
+					   (self definingClass methodFor: self sourceMethodTree selector)
+						) ]
+		ifNil: ["
 			  | newMethodName |
 			  newMethodName := self newMethodName.
 			  newMethodName ifNil: [ ^ OrderedCollection new ].
-			  ^ self buildTransformationFor: newMethodName ]
+			  ^ self buildTransformationFor: newMethodName "]"
 ]
 
 { #category : 'querying' }
@@ -227,12 +229,12 @@ RBExtractMethodTransformation >> calculateNewArgumentsIn: aMethodName [
 RBExtractMethodTransformation >> calculateSubtree [
 
 	^ subtree ifNil: [
-		subtree := self calculateTree ifNotNil: [ parseTree extractSubtreeWith: sourceCode ] ]
+		subtree := self sourceMethodTree ifNotNil: [ parseTree extractSubtreeWith: sourceCode ] ]
 ]
 
 { #category : 'querying' }
 RBExtractMethodTransformation >> calculateTemporaries [
-	"returns a collection of variables that should be defined inside the method.
+	"returns a collection of variables that should be defined inside the extracted method.
 	Those are all variables (temps and args) that are defined outside of subtree,
 	but are part of an assignment in the subtree.
 	If we want to assign something to them, we need to have a temp for it.
@@ -306,11 +308,13 @@ RBExtractMethodTransformation >> findMethodWithSimilarBody [
 RBExtractMethodTransformation >> generateNewMethodWith: aMethodName [
 
 	| args newMethodNode |
+	
 	args := aMethodName arguments
-		collect: [ :p | RBVariableNode named: p ].
+		collect: [ :p | 
+				RBVariableNode named: p ].
 
 	newMethodNode := RBMethodNode
-							selector: aMethodName selector
+							selector: newSelector
 							arguments: args asArray
 							body: (subtree isSequence
 								ifTrue: [ subtree ]
@@ -319,17 +323,50 @@ RBExtractMethodTransformation >> generateNewMethodWith: aMethodName [
 									statements: (OrderedCollection with: subtree)]).
 	temporaries do: [:each | newMethodNode body addTemporaryNamed: each].
 
-	((parseTree parentOfSubtree: subtree) isUsingAsReturnValue: subtree)
+	(subtree parent isUsingAsReturnValue: subtree)
 		ifTrue: [ newMethodNode addReturn ].
 
 	assignments size = 1 
 		ifTrue: [
 		newMethodNode addNode:
 			(RBReturnNode value:
-			(RBVariableNode named: assignments first asString)) ]
-		ifFalse: [RBReturnNodeAdderVisitor new visit: newMethodNode ].
+				(RBVariableNode named: assignments first asString)) ]
+			ifFalse: [RBReturnNodeAdderVisitor new visit: newMethodNode ].
 
 	^ newMethodNode
+]
+
+{ #category : 'utilities' }
+RBExtractMethodTransformation >> isMethodEquivalentTo: aSelector [
+	
+	self halt: 'Does not work for now'.
+	selector == aSelector ifTrue: [^false].
+	aSelector numArgs ~~ arguments size ifTrue: [^false].
+
+	(self isParseTreeEquivalentTo: aSelector) ifFalse: [^false].
+	"self reorderParametersToMatch: aSelector."
+	^true
+]
+
+{ #category : 'utilities' }
+RBExtractMethodTransformation >> isParseTreeEquivalentTo: aSelector [
+	self flag: #toredo.
+	"| tree definingClass |
+	definingClass := class whoDefinesMethod: aSelector.
+	tree := definingClass parseTreeForSelector: aSelector.
+	tree ifNil: [^false].
+	tree isPrimitive ifTrue: [^false].
+	needsReturn ifFalse: [ tree := self removeReturnsOf: tree ].
+	(tree body equalTo: extractedParseTree body
+		exceptForVariables: (tree arguments collect: [:each | each name]))
+			ifFalse: [^false].
+	(definingClass = class or:
+			[(tree superMessages anySatisfy:
+					[:each |
+					(class superclass whichClassIncludesSelector: aSelector)
+						~= (definingClass superclass whichClassIncludesSelector: each)]) not])
+		ifFalse: [^false].
+	^ true"
 ]
 
 { #category : 'utilities' }
