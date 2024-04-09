@@ -503,17 +503,6 @@ RBMethodNode >> offsetIsComment: anOffset [
 		anySatisfy: [ :comment | anOffset between: comment start and: comment stop ]
 ]
 
-{ #category : 'tree accessing' }
-RBMethodNode >> parentOfSubtree: subtree [
-
-	| sourceCode |
-	sourceCode := subtree formattedCode.
-	^ self allChildren reversed
-		detect: [ :e | e formattedCode includesSubstring: sourceCode ]
-		ifFound: [ :e | e parent ]
-		ifNone: [ nil ]
-]
-
 { #category : 'copying' }
 RBMethodNode >> postCopy [
 	super postCopy.
