@@ -53,7 +53,7 @@ RBMethodNode class >> selector: aSymbol arguments: valueNodes [
 
 { #category : 'instance creation' }
 RBMethodNode class >> selector: aSymbol arguments: variableNodes body: aSequenceNode [
-	^(self new)
+	^ self new 
 		arguments: variableNodes;
 		selector: aSymbol;
 		body: aSequenceNode;
