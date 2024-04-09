@@ -245,12 +245,6 @@ RBExtractMethodTransformation >> calculateTemporaries [
 		temporaries := accesses select: [ :each | subtree assigns: each ] ]
 ]
 
-{ #category : 'querying' }
-RBExtractMethodTransformation >> calculateTree [
-
-	^ parseTree ifNil: [ parseTree := self definingMethod ]
-]
-
 { #category : 'scripting api - conditions' }
 RBExtractMethodTransformation >> checkPreconditions [
 
@@ -485,6 +479,12 @@ RBExtractMethodTransformation >> replaceCodeByMessageSendTo: aMethod in: aCompil
 		to: newSourceCode
 		inMethod: aCompiledMethod selector
 		inClass: aCompiledMethod methodClass
+]
+
+{ #category : 'querying' }
+RBExtractMethodTransformation >> sourceMethodTree [
+
+	^ parseTree ifNil: [ parseTree := self definingMethod ]
 ]
 
 { #category : 'storing' }
