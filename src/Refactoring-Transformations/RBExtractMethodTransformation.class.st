@@ -78,6 +78,11 @@ RBExtractMethodTransformation >> applicabilityPreconditions [
 	  & self preconditionSubtreeDoesNotContainsReturn
 ]
 
+{ #category : 'accessing' }
+RBExtractMethodTransformation >> arguments [
+	^ arguments
+]
+
 { #category : 'preconditions' }
 RBExtractMethodTransformation >> breakingChangePreconditions [ 
 
@@ -254,6 +259,13 @@ RBExtractMethodTransformation >> checkPreconditions [
 			self breakingChangePreconditions errorString ]
 ]
 
+{ #category : 'instance creation' }
+RBExtractMethodTransformation >> extract: aString from: aSelector in: aClass [ 
+	class := self model classNamed: aClass name.
+	selector := aSelector.
+	sourceCode := aString
+]
+
 { #category : 'api' }
 RBExtractMethodTransformation >> extract: aString from: aSelector to: aNewSelector in: aClassName [
 
@@ -397,6 +409,12 @@ RBExtractMethodTransformation >> newMethodName [
 	^ methodName
 ]
 
+{ #category : 'accessing' }
+RBExtractMethodTransformation >> newSelector: aSymbol [
+
+	newSelector := aSymbol
+]
+
 { #category : 'preconditions' }
 RBExtractMethodTransformation >> preconditionAssignmentsNotReadBeforeWritten [
 
@@ -479,6 +497,15 @@ RBExtractMethodTransformation >> replaceCodeByMessageSendTo: aMethod in: aCompil
 		to: newSourceCode
 		inMethod: aCompiledMethod selector
 		inClass: aCompiledMethod methodClass
+]
+
+{ #category : 'utilities' }
+RBExtractMethodTransformation >> selectorStartingFrom: aString argumentsSize: aNumber [
+
+	| str | 
+	str := aString.
+	aNumber timesRepeat: [ str := str, '_:' ].
+	^ str asSymbol		
 ]
 
 { #category : 'querying' }
