@@ -84,6 +84,23 @@ RBExtractMethodTransformation >> breakingChangePreconditions [
 	  ^ self preconditionHasSameExitPoint 
 ]
 
+{ #category : 'utilities' }
+RBExtractMethodTransformation >> buildMessageSendWith: aSelector and: argsAndValues needsReturn: aBoolean [
+
+	^ String streamContents: [ :string |
+		aBoolean ifTrue: [ string nextPutAll: '^ ' ].
+
+		string nextPutAll: 'self '.
+		argsAndValues
+			ifEmpty: [ string nextPutAll: aSelector asString ]
+			ifNotEmpty: [
+				aSelector keywords with: argsAndValues associations
+					do: [ :key :arg |
+						string nextPutAll: key asString; nextPut: $ .
+						string nextPutAll: (argsAndValues at: arg key).
+						string nextPut: $ ] ] ]
+]
+
 { #category : 'executing' }
 RBExtractMethodTransformation >> buildTransformationFor: newMethodName [
 
@@ -309,6 +326,26 @@ RBExtractMethodTransformation >> generateNewMethodWith: aMethodName [
 	^ newMethodNode
 ]
 
+{ #category : 'utilities' }
+RBExtractMethodTransformation >> mapArguments: args toValues: values in: aTree [
+
+	^ (args size = values size)
+		"map directly"
+		ifTrue: [
+			| argsAndValues |
+			argsAndValues := OrderedCollection new.
+			args with: values do: [ :arg :val |
+				argsAndValues add: (arg name asString -> val value storeString) ].
+			argsAndValues ]
+		"open browser"
+		ifFalse: [
+			(RBMethodArgumentsSelector
+				openOn: (args collect: [:e | e name asString])
+				and: (values collect: [ :e | e value storeString ])
+				in: aTree)
+				argumentsAndValues ]
+]
+
 { #category : 'executing' }
 RBExtractMethodTransformation >> messageSendWith: aMethodName and: newArguments needsReturn: aBoolean [
 
@@ -429,6 +466,25 @@ RBExtractMethodTransformation >> prepareForExecution [
 	temporaries := self calculateTemporaries.
 	assignments := self calculateAssignments.
 	arguments := self calculateArguments 
+]
+
+{ #category : 'utilities' }
+RBExtractMethodTransformation >> replaceCodeByMessageSendTo: aMethod in: aCompiledMethod [
+
+	| argsAndValues newSourceCode |
+	self flag:#todo.  "fix when support for existing methods is reintroduced"
+	argsAndValues := self mapArguments: aMethod ast arguments
+								toValues: (subtree allChildren select: #isLiteralNode)
+								in: subtree.
+	newSourceCode := self buildMessageSendWith: aMethod selector
+			and: argsAndValues asDictionary
+			needsReturn: subtree isReturn.
+
+	^ RBReplaceSubtreeTransformation
+		replace: subtree sourceCode
+		to: newSourceCode
+		inMethod: aCompiledMethod selector
+		inClass: aCompiledMethod methodClass
 ]
 
 { #category : 'storing' }
