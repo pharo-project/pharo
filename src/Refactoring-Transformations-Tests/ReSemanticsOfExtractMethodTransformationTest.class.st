@@ -12,14 +12,15 @@ Class {
 { #category : 'private - testing' }
 ReSemanticsOfExtractMethodTransformationTest >> extractSource: sourceToExtract fromSource: source withNewSelector: newSelector [
 
-	class compile: source classified: '#test data'.
+	| method |
+	method := class compile: source classified: '#test data'.
 
 	^ RBExtractMethodTransformation new
 		  model: model;
-		  extractSource: sourceToExtract
-		  fromMethodSource: source
+		  extract: sourceToExtract
+		  from: method selector
 		  to: newSelector
-		  in: class name
+		  in: class
 ]
 
 { #category : 'running' }
