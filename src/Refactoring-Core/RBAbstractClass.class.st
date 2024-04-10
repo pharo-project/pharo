@@ -99,8 +99,8 @@ RBAbstractClass >> allInstanceVariableNames [
 RBAbstractClass >> allMethods [
 
 	^ self allSelectors
-		collect: [ :selector | self methodFor: selector ]
-		thenSelect: #isNotNil
+		  collect: [ :selector | self methodFor: selector ]
+		  thenSelect: [ :each | each isNotNil ]
 ]
 
 { #category : 'accessing' }
@@ -153,7 +153,7 @@ RBAbstractClass >> allSuperclasses [
 
 { #category : 'accessing' }
 RBAbstractClass >> allSuperclassesUntil: aClass [
-
+	"aClass is excluded."
 	| supers sprClass |
 	supers := OrderedCollection new.
 	sprClass := self superclass.
@@ -979,7 +979,8 @@ RBAbstractClass >> withAllSuperclasses [
 
 { #category : 'accessing' }
 RBAbstractClass >> withAllSuperclassesUntil: aClass [
-
+	"Excluding aClass"
+	
 	^ (self allSuperclassesUntil: aClass)
 		add: self;
 		yourself
