@@ -65,13 +65,18 @@ SocketStreamTest >> tearDown [
 
 { #category : 'stream protocol' }
 SocketStreamTest >> testFlushLargeMessageOtherEndClosed [
-	"A large send will be broken into chunks and fail once the TCP send buffer
+	"A large send should be broken into chunks and fail once the TCP send buffer
 	is full. Ensure we actually exceed the size of the send buffer, but also try
 	to reduce it first so we don't need an excessively large message. Some platforms
 	(Linux) have minimum values for this setting that prevent us from relying on
 	lowering it alone. Attempt to set a 65KiB buffer and double whatever we get."
 
 	| bufferSize |
+	"Windows seems to accept arbitrarily large send() payloads regardless of the
+	send buffer size, so we can't force a wait other than by calling #flush twice,
+	which would defeat the whole purpose of the test.
+	Skip on Windows for now as this is not a regression."
+	OSPlatform current isWindows ifTrue: [ self skip ].
 	clientStream socket setOption: 'SO_SNDBUF' value: 2 ** 16.
 	bufferSize := (clientStream socket getOption: 'SO_SNDBUF') second.
 	serverStream close.
