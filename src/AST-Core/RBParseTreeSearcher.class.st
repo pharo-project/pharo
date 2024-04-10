@@ -145,7 +145,7 @@ RBParseTreeSearcher class >> setterMethod: aVarName [
 
 { #category : 'accessing' }
 RBParseTreeSearcher class >> treeMatching: aString in: aParseTree [
-	(self new)
+	self new
 		matches: aString do: [:aNode :answer | ^aNode];
 		executeTree: aParseTree.
 	^nil

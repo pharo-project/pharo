@@ -165,10 +165,9 @@ RBExtractMethodTransformation >> calculateArguments [
 	"returns a collection of variables that should be passed as arguments"
 
 	| allVariables accesses assigned |
-	
 	subtree ifNil: [ ^ nil ].
 	
-	allVariables := parseTree allDefinedVariables difference: subtree allDefinedVariables.
+	allVariables := self sourceMethodTree allDefinedVariables difference: subtree allDefinedVariables.
 
 	accesses := allVariables select: [ :each | subtree references: each ].
 	assigned := allVariables select: [ :each | subtree assigns: each ].
@@ -188,7 +187,7 @@ RBExtractMethodTransformation >> calculateAssignments [
 	
 	^ assignments ifNil: [
 		| sequenceNode whoDefinesTemp |
-		sequenceNode := (parseTree allChildren select: [ :each | each isSequence ]) last.
+		sequenceNode := (self sourceMethodTree allChildren select: [ :each | each isSequence ]) last.
 
 		assignments := temporaries select: [ :temp |
 			whoDefinesTemp := (sequenceNode whoDefines: temp).
@@ -229,7 +228,7 @@ RBExtractMethodTransformation >> calculateNewArgumentsIn: aMethodName [
 RBExtractMethodTransformation >> calculateSubtree [
 
 	^ subtree ifNil: [
-		subtree := self sourceMethodTree ifNotNil: [ parseTree extractSubtreeWith: sourceCode ] ]
+		subtree := self sourceMethodTree ifNotNil: [ :t | t extractSubtreeWith: sourceCode ] ]
 ]
 
 { #category : 'querying' }
@@ -246,7 +245,7 @@ RBExtractMethodTransformation >> calculateTemporaries [
 	
 	^ temporaries ifNil: [
 		| allVariables accesses |
-		allVariables := parseTree allDefinedVariables difference: subtree allDefinedVariables.
+		allVariables := self sourceMethodTree allDefinedVariables difference: subtree allDefinedVariables.
 		accesses := allVariables select: [ :each | subtree references: each ].
 
 		temporaries := accesses select: [ :each | subtree assigns: each ] ]
@@ -270,21 +269,11 @@ RBExtractMethodTransformation >> extract: aString from: aSelector in: aClass [
 
 { #category : 'api' }
 RBExtractMethodTransformation >> extract: aString from: aSelector to: aNewSelector in: aClassName [
-
-	class := self model classNamed: aClassName.
-	selector := aSelector.
+	"partial instantiation."
+	
+	self extract: aString from: aSelector in: aClassName.
 	newSelector := aNewSelector.
-	sourceCode := aString
-]
-
-{ #category : 'api' }
-RBExtractMethodTransformation >> extractSource: aString fromMethodSource: source to: aNewSelector in: aClassName [
-
-	class := self model classNamed: aClassName.
-	parseTree := RBParser parseMethod: source. 
-	selector := parseTree selector.
-	newSelector := aNewSelector.
-	sourceCode := aString
+	
 ]
 
 { #category : 'preconditions' }
@@ -490,7 +479,7 @@ RBExtractMethodTransformation >> preconditionOneAssignmentMaximum [
 RBExtractMethodTransformation >> preconditionParsableSubtree [
 
 	^ RBCondition
-		  withBlock: [ parseTree isNotNil & subtree isNotNil ]
+		  withBlock: [ self sourceMethodTree isNotNil & subtree isNotNil ]
 		  errorString: 'Cannot extract selected code, it is not a valid subtree.'
 ]
 
