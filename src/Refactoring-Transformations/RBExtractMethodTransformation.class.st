@@ -28,7 +28,8 @@ Class {
 		'subtree',
 		'arguments',
 		'temporaries',
-		'assignments'
+		'assignments',
+		'needsReturn'
 	],
 	#category : 'Refactoring-Transformations-Model-Unused',
 	#package : 'Refactoring-Transformations',
@@ -109,8 +110,7 @@ RBExtractMethodTransformation >> buildMessageSendWith: aSelector and: argsAndVal
 { #category : 'executing' }
 RBExtractMethodTransformation >> buildTransformationFor: newMethodName [
 
-	| needsReturn messageSend |
-	needsReturn := self calculateIfReturnIsNeededInCaller.
+	| messageSend |
 	newMethod := self generateNewMethodWith: newMethodName.
 	messageSend := self
 		               messageSendWith: newMethodName
@@ -163,8 +163,6 @@ RBExtractMethodTransformation >> calculateArguments [
 	"returns a collection of variables that should be passed as arguments"
 
 	| allVariables accesses assigned |
-	subtree ifNil: [ ^ nil ].
-	
 	allVariables := self sourceMethodTree allDefinedVariables difference: subtree allDefinedVariables.
 
 	accesses := allVariables select: [ :each | subtree references: each ].
@@ -179,9 +177,6 @@ RBExtractMethodTransformation >> calculateAssignments [
 	"Those are temporaries (without temps defined in the subtree; see `calculateTemporaries` for details)
 	that have reference in a statement outside of the subtree.
 	For those variables we would need to return newly assigned value to preserve behavior."
-
-	"asssignments depend on subtree, if the subtree is nil, assignment will be nil as well"
-	subtree ifNil: [ ^ nil ].
 	
 	^ assignments ifNil: [
 		| sequenceNode whoDefinesTemp |
@@ -221,8 +216,6 @@ RBExtractMethodTransformation >> calculateTemporaries [
 	See calculateAssignments which then checks if we can preserve behavior
 	by returning that assignment value as extracted method's return value"
 	
-	"temporaries depend on subtree, if the subtree is nil, temporaries will be nil as well"
-	subtree ifNil: [ ^ nil ].
 	
 	^ temporaries ifNil: [
 		| allVariables accesses |
@@ -506,9 +499,11 @@ RBExtractMethodTransformation >> preconditionTemporariesAreNotReadBeforeWritten 
 RBExtractMethodTransformation >> prepareForExecution [
 
 	subtree := self calculateSubtree.
-	temporaries := self calculateTemporaries.
-	assignments := self calculateAssignments.
-	arguments := self calculateArguments 
+	subtree ifNotNil: [  
+		temporaries := self calculateTemporaries.
+		assignments := self calculateAssignments.
+		arguments := self calculateArguments.
+		needsReturn := self calculateIfReturnIsNeededInCaller]
 ]
 
 { #category : 'utilities' }
