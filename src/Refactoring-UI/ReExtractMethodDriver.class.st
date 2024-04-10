@@ -62,7 +62,7 @@ ReExtractMethodDriver >> configureRefactoring [
 	refactoring := RBExtractMethodTransformation new
 		               extract: body
 		               from: sourceMethod selector
-		               in: class.
+		               in: class name.
 	refactoring prepareForExecution 
 ]
 

@@ -20,7 +20,7 @@ ReSemanticsOfExtractMethodTransformationTest >> extractSource: sourceToExtract f
 		  extract: sourceToExtract
 		  from: method selector
 		  to: newSelector
-		  in: class
+		  in: class name
 ]
 
 { #category : 'running' }

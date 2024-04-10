@@ -109,13 +109,12 @@ RBExtractMethodTransformation >> buildMessageSendWith: aSelector and: argsAndVal
 { #category : 'executing' }
 RBExtractMethodTransformation >> buildTransformationFor: newMethodName [
 
-	| needsReturn messageSend newArguments |
+	| needsReturn messageSend |
 	needsReturn := self calculateIfReturnIsNeededInCaller.
 	newMethod := self generateNewMethodWith: newMethodName.
-	newArguments := self calculateNewArgumentsIn: newMethodName.
 	messageSend := self
 		               messageSendWith: newMethodName
-		               and: newArguments
+		               and: Dictionary new
 		               needsReturn: needsReturn.
 
 	^ OrderedCollection new
@@ -210,17 +209,6 @@ RBExtractMethodTransformation >> calculateIfReturnIsNeededInCaller [
 { #category : 'querying' }
 RBExtractMethodTransformation >> calculateNewArgumentsIn: aMethodName [
 
-	aMethodName arguments size > arguments size ifTrue: [
-		| selection |
-		selection := RBMethodArgumentsSelector
-			openOn: aMethodName arguments copy
-			and: (newMethod body allChildren
-					select: #isLiteralNode
-					thenCollect: [ :e | e value storeString ])
-			in: newMethod.
-
-		newMethod := selection newTree.
-		^ selection argumentsAndValues ].
 	^ Dictionary new
 ]
 
@@ -261,8 +249,8 @@ RBExtractMethodTransformation >> checkPreconditions [
 ]
 
 { #category : 'instance creation' }
-RBExtractMethodTransformation >> extract: aString from: aSelector in: aClass [ 
-	class := self model classNamed: aClass name.
+RBExtractMethodTransformation >> extract: aString from: aSelector in: aClassName [ 
+	class := self model classNamed: aClassName.
 	selector := aSelector.
 	sourceCode := aString
 ]
