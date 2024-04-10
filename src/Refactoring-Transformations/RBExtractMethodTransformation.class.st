@@ -112,9 +112,7 @@ RBExtractMethodTransformation >> buildTransformationFor: newMethodName [
 
 	| messageSend |
 	newMethod := self generateNewMethodWith: newMethodName.
-	messageSend := self
-		               messageSendWith: newMethodName
-		               needsReturn: needsReturn.
+	messageSend := self messageSendWith: newMethodName.
 
 	^ OrderedCollection new
 		  add: (RBAddMethodTransformation
@@ -353,6 +351,30 @@ RBExtractMethodTransformation >> mapArguments: args toValues: values in: aTree [
 ]
 
 { #category : 'executing' }
+RBExtractMethodTransformation >> messageSendWith: aMethodName [
+
+	^ String streamContents: [ :string |
+		needsReturn ifTrue: [ string nextPutAll: '^ ' ].
+
+		assignments size = 1
+			ifTrue: [ string
+				nextPutAll: assignments first asString;
+				nextPutAll: ' := ' ].
+
+		string nextPutAll: 'self '.
+		aMethodName arguments
+			ifEmpty: [ string nextPutAll: aMethodName selector asString ]
+			ifNotEmpty: [
+				(aMethodName selector keywords size = aMethodName arguments size)
+					ifTrue: [ aMethodName selector keywords
+								with: aMethodName arguments
+								do: [ :key :arg |
+									string nextPutAll: key asString; nextPut: $ .
+									string nextPutAll: arg asString.
+								string nextPut: $ ] ] ] ]
+]
+
+{ #category : 'executing' }
 RBExtractMethodTransformation >> messageSendWith: aMethodName and: newArguments needsReturn: aBoolean [
 
 	^ String streamContents: [ :string |
@@ -375,30 +397,6 @@ RBExtractMethodTransformation >> messageSendWith: aMethodName and: newArguments 
 									(newArguments includesKey: arg asString)
 										ifTrue: [ string nextPutAll: (newArguments at: arg asString) ]
 										ifFalse: [ string nextPutAll: arg asString ].
-								string nextPut: $ ] ] ] ]
-]
-
-{ #category : 'executing' }
-RBExtractMethodTransformation >> messageSendWith: aMethodName needsReturn: aBoolean [
-
-	^ String streamContents: [ :string |
-		aBoolean ifTrue: [ string nextPutAll: '^ ' ].
-
-		assignments size = 1
-			ifTrue: [ string
-				nextPutAll: assignments first asString;
-				nextPutAll: ' := ' ].
-
-		string nextPutAll: 'self '.
-		aMethodName arguments
-			ifEmpty: [ string nextPutAll: aMethodName selector asString ]
-			ifNotEmpty: [
-				(aMethodName selector keywords size = aMethodName arguments size)
-					ifTrue: [ aMethodName selector keywords
-								with: aMethodName arguments
-								do: [ :key :arg |
-									string nextPutAll: key asString; nextPut: $ .
-									string nextPutAll: arg asString.
 								string nextPut: $ ] ] ] ]
 ]
 
