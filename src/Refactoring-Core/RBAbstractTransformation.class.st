@@ -350,7 +350,8 @@ RBAbstractTransformation >> poolVariableNamesIn: poolName [
 
 { #category : 'preconditions' }
 RBAbstractTransformation >> preconditions [
-
+	"By default we define applicabilityPreconditions, if you need to check
+	breakingChangePreconditions, you need to override me"
 	^ self applicabilityPreconditions
 ]
 
