@@ -168,10 +168,14 @@ RBReplaceMessageSendTransformation >> convertAllReferencesTo: aSymbol using: sea
 
 	(self model allReferencesTo: aSymbol)
 		reject: [ :rbMethod | "We reject methods from trait to not recompile them in the class and duplicate the code."
-			rbMethod method
+			rbMethod compiledMethod
 				ifNil: [ false ]
 				ifNotNil: [ :m | m isFromTrait ] ]
-		thenDo: [ :method | self convertMethod: method selector for: method modelClass using: searchReplacer ]
+		thenDo: [ :method |
+			self
+				convertMethod: method selector
+				for: method modelClass
+				using: searchReplacer ]
 ]
 
 { #category : 'accessing' }
