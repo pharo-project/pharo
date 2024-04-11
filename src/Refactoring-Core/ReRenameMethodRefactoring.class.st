@@ -199,7 +199,7 @@ ReRenameMethodRefactoring >> storeOn: aStream [
 ReRenameMethodRefactoring >> validSelectorCondition [
 
 	^ (ReBlockCondition new 
-			block: [ newSelector asString isValidSelector ];
+			block: [ newSelector asString isValidSelector. ];
 			violatorErrorString: newSelector ,' is not a valid selector').
 ]
 

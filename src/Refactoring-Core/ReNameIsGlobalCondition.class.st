@@ -1,6 +1,6 @@
 Class {
 	#name : 'ReNameIsGlobalCondition',
-	#superclass : 'RBCondition',
+	#superclass : 'ReReifiedCondition',
 	#instVars : [
 		'className',
 		'model'

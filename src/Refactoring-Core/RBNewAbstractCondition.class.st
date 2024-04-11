@@ -19,7 +19,8 @@ RBNewAbstractCondition >> check [
 { #category : 'accessing' }
 RBNewAbstractCondition >> errorString [ 
 
-	^ ' please redefine me '
+	| errorMessage |
+	^ errorMessage 
 ]
 
 { #category : 'logical operations' }

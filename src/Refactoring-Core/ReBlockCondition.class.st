@@ -23,6 +23,12 @@ ReBlockCondition >> check [
 
 ]
 
+{ #category : 'accessing' }
+ReBlockCondition >> errorString [ 
+
+	^ errorMessage 
+]
+
 { #category : 'displaying' }
 ReBlockCondition >> violationMessageOn: aStream [
 
