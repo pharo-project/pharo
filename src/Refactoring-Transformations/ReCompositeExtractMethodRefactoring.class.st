@@ -68,6 +68,19 @@ ReCompositeExtractMethodRefactoring class >> model: aRBModel extract: aString fr
 		yourself
 ]
 
+{ #category : 'execution' }
+ReCompositeExtractMethodRefactoring >> addReturnIfNeeded: newMethodNode [
+
+	(subtree parent isUsingAsReturnValue: subtree) ifTrue: [
+		newMethodNode addReturn ].
+	
+	assignments size = 1
+		ifTrue: [
+			newMethodNode addNode: (RBReturnNode value:
+					 (RBVariableNode named: assignments first asString)) ]
+		ifFalse: [ RBReturnNodeAdderVisitor new visit: newMethodNode ].
+]
+
 { #category : 'preconditions' }
 ReCompositeExtractMethodRefactoring >> applicabilityPreconditions [
 
@@ -235,30 +248,21 @@ ReCompositeExtractMethodRefactoring >> extract: aString from: aSelector to: aNew
 ReCompositeExtractMethodRefactoring >> generateNewMethodWith: aMethodName [
 
 	| args newMethodNode |
-	
-	args := aMethodName arguments
-		collect: [ :p | 
-				RBVariableNode named: p ].
+	args := aMethodName arguments collect: [ :p |
+		        RBVariableNode named: p ].
 
 	newMethodNode := RBMethodNode
-							selector: newSelector
-							arguments: args asArray
-							body: (subtree isSequence
-								ifTrue: [ subtree ]
-								ifFalse: [ RBSequenceNode
-									temporaries: #()
-									statements: (OrderedCollection with: subtree)]).
-	temporaries do: [:each | newMethodNode body addTemporaryNamed: each].
-
-	(subtree parent isUsingAsReturnValue: subtree)
-		ifTrue: [ newMethodNode addReturn ].
-
-	assignments size = 1 
-		ifTrue: [
-		newMethodNode addNode:
-			(RBReturnNode value:
-				(RBVariableNode named: assignments first asString)) ]
-			ifFalse: [RBReturnNodeAdderVisitor new visit: newMethodNode ].
+		                 selector: newSelector
+		                 arguments: args asArray
+		                 body: (subtree isSequence
+				                  ifTrue: [ subtree ]
+				                  ifFalse: [
+					                  RBSequenceNode
+						                  temporaries: #(  )
+						                  statements: (OrderedCollection with: subtree) ]).
+	temporaries do: [ :each | newMethodNode body addTemporaryNamed: each ].
+	
+	self addReturnIfNeeded: newMethodNode.
 
 	^ newMethodNode
 ]
